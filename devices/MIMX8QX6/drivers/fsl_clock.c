@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 NXP
+ * Copyright 2017-2019 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -63,7 +63,7 @@ bool CLOCK_EnableClockExt(clock_ip_name_t name, uint32_t gate)
     err = sc_pm_clock_enable(ipcHandle, LPCG_TUPLE_RSRC(name), SC_PM_CLK_PER, true, (bool)gate);
 
     /* Enable the Clock Gate control in LPCG */
-    CLOCK_ConfigLPCG(name, 1U, gate);
+    CLOCK_ConfigLPCG(name, (bool)1U, (bool)gate);
 
     if (err != SC_ERR_NONE)
     {
@@ -86,7 +86,7 @@ bool CLOCK_DisableClock(clock_ip_name_t name)
     sc_err_t err;
 
     /* Disable the Clock Gate control in LPCG */
-    CLOCK_ConfigLPCG(name, 0U, 0U);
+    CLOCK_ConfigLPCG(name, (bool)0U, (bool)0U);
 
     err = sc_pm_clock_enable(ipcHandle, LPCG_TUPLE_RSRC(name), SC_PM_CLK_PER, false, false);
 
@@ -160,7 +160,8 @@ uint32_t CLOCK_GetCoreSysClkFreq(void)
     sc_err_t err;
 
     err = sc_pm_get_clock_rate(ipcHandle, SC_R_M4_0_PID0, SC_PM_CLK_PER, &freq);
-    if (err != SC_ERR_NONE) {
+    if (err != SC_ERR_NONE)
+    {
         freq = 0U;
     }
 
@@ -201,12 +202,12 @@ uint32_t CLOCK_GetFreq(clock_name_t name)
  *
  * param regBase LPCG register base address.
  * param swGate Software clock gating. 0: clock is gated;  1: clock is enabled
- * param swGate Hardware auto gating. 0: disable the HW clock gate control;  1: HW clock gating is enabled
+ * param hwGate Hardware auto gating. 0: disable the HW clock gate control;  1: HW clock gating is enabled
  * param bitsMask The available bits in LPCG register. Each bit indicate the corresponding bit is available or not.
  */
-void CLOCK_SetLpcgGate(volatile uint32_t *regBase, uint32_t swGate, uint32_t hwGate, uint32_t bitsMask)
+void CLOCK_SetLpcgGate(volatile uint32_t *regBase, bool swGate, bool hwGate, uint32_t bitsMask)
 {
-    if (regBase)
+    if (regBase != NULL)
     {
         if (swGate)
         {
@@ -233,16 +234,16 @@ void CLOCK_SetLpcgGate(volatile uint32_t *regBase, uint32_t swGate, uint32_t hwG
  *
  * param name  Which clock to enable, see \ref clock_ip_name_t.
  * param swGate Software clock gating. 0: clock is gated;  1: clock is enabled
- * param swGate Hardware auto gating. 0: disable the HW clock gate control;  1: HW clock gating is enabled
+ * param hwGate Hardware auto gating. 0: disable the HW clock gate control;  1: HW clock gating is enabled
  */
-void CLOCK_ConfigLPCG(clock_ip_name_t name, uint32_t swGate, uint32_t hwGate)
+void CLOCK_ConfigLPCG(clock_ip_name_t name, bool swGate, bool hwGate)
 {
     volatile uint32_t *regBase;
 
     regBase = LPCG_TUPLE_REG_BASE(name);
 
     /* Return if LPCG Cell is not available. */
-    if (regBase == NV)
+    if (regBase == NULL)
     {
         return;
     }
@@ -257,16 +258,6 @@ void CLOCK_ConfigLPCG(clock_ip_name_t name, uint32_t swGate, uint32_t hwGate)
             CLOCK_SetLpcgGate(regBase + 0x1U, swGate, hwGate, 0xAU);
             break;
 
-        /* LPCG cell avalialbe bits field mask 0xAB. */
-        case kCLOCK_M4_0_Lpit:
-        case kCLOCK_M4_0_Lpuart:
-        case kCLOCK_M4_0_Lpi2c:
-        case kCLOCK_SCU_Lpit:
-        case kCLOCK_SCU_Lpuart:
-        case kCLOCK_SCU_Lpi2c:
-            CLOCK_SetLpcgGate(regBase, swGate, hwGate, 0xABU);
-            break;
-            
         /* LPCG cell avalialbe bits field mask 0xBAB0AAB.*/
         case kCLOCK_LSIO_Gpt0:
         case kCLOCK_LSIO_Gpt1:
@@ -283,7 +274,7 @@ void CLOCK_ConfigLPCG(clock_ip_name_t name, uint32_t swGate, uint32_t hwGate)
         case kCLOCK_LSIO_Pwm7:
             CLOCK_SetLpcgGate(regBase, swGate, hwGate, 0xBAB0AAB);
             break;
-            
+
         /* LPCG cell avalialbe bits field mask 0xB0000.*/
         case kCLOCK_HSIO_Gpio:
         case kCLOCK_LSIO_Gpio0:
@@ -356,21 +347,43 @@ void CLOCK_ConfigLPCG(clock_ip_name_t name, uint32_t swGate, uint32_t hwGate)
         case kCLOCK_M4_0_Tpm:
             CLOCK_SetLpcgGate(regBase, swGate, hwGate, 0xBB000B);
             break;
-            
+
         /* LPCG cell avalialbe bits field mask 0xAB000A.*/
         case kCLOCK_CONNECTIVITY_Usdhc0:
         case kCLOCK_CONNECTIVITY_Usdhc1:
             CLOCK_SetLpcgGate(regBase, swGate, hwGate, 0xAB000A);
-            break; 
-            
+            break;
+
         /* LPCG cell avalialbe bits field mask 0xBAA000A.*/
         case kCLOCK_LSIO_Flexspi0:
         case kCLOCK_LSIO_Flexspi1:
             CLOCK_SetLpcgGate(regBase, swGate, hwGate, 0xBAA000A);
             break;
 
+        /* LPCG cells avalialbe bits field mask 0xAA, 0xAB0000.*/
+        case kCLOCK_Dpu0:
+            CLOCK_SetLpcgGate(regBase, swGate, hwGate, 0xAA);
+            CLOCK_SetLpcgGate(regBase + 0x5U, swGate, hwGate, 0xAB0000);
+            break;
+
+        /* LPCG cell avalialbe bits field mask 0xB000B.*/
+        case kCLOCK_DiMiPiDsiLvds0Lpi2c0:
+        case kCLOCK_DiMiPiDsiLvds1Lpi2c0:
+            CLOCK_SetLpcgGate(regBase + 0x4U, swGate, hwGate, 0xB000B);
+            break;
+
+        /* LPCG cell does not config due to LPCG back to back write protection. */
+        case kCLOCK_M4_0_Lpit:
+        case kCLOCK_M4_0_Lpuart:
+        case kCLOCK_M4_0_Lpi2c:
+        case kCLOCK_SCU_Lpit:
+        case kCLOCK_SCU_Lpuart:
+        case kCLOCK_SCU_Lpi2c:
+            break;
+
         /* LPCG cell is not avaliable or is not supported by this function. */
         default:
+            assert(false);
             break;
     }
 }

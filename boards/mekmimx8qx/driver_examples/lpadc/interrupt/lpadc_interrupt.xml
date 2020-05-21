@@ -10,6 +10,7 @@
     <definition extID="device.MIMX8QX6_startup.MIMX8QX6"/>
     <definition extID="platform.Include_common.MIMX8QX6"/>
     <definition extID="platform.Include_core_cm4.MIMX8QX6"/>
+    <definition extID="platform.Include_dsp.MIMX8QX6"/>
     <definition extID="platform.drivers.clock.MIMX8QX6"/>
     <definition extID="platform.drivers.common.MIMX8QX6"/>
     <definition extID="platform.drivers.igpio.MIMX8QX6"/>
@@ -18,13 +19,14 @@
     <definition extID="platform.drivers.lpuart.MIMX8QX6"/>
     <definition extID="platform.drivers.scfwapi.MIMX8QX6"/>
     <definition extID="platform.utilities.assert.MIMX8QX6"/>
+    <definition extID="platform.utilities.misc_utilities.MIMX8QX6"/>
     <definition extID="utility.debug_console.MIMX8QX6"/>
     <definition extID="iar"/>
-    <definition extID="mdk"/>
     <definition extID="armgcc"/>
+    <definition extID="mdk"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="mekmimx8qx_lpadc_interrupt" name="lpadc_interrupt" category="driver_examples/lpadc" dependency="platform.drivers.irqsteer.MIMX8QX6 platform.drivers.lpadc.MIMX8QX6 platform.drivers.clock.MIMX8QX6 platform.drivers.common.MIMX8QX6 device.MIMX8QX6_CMSIS.MIMX8QX6 utility.debug_console.MIMX8QX6 component.lpuart_adapter.MIMX8QX6 component.serial_manager.MIMX8QX6 component.serial_manager_uart.MIMX8QX6 platform.drivers.lpuart.MIMX8QX6 component.lists.MIMX8QX6 device.MIMX8QX6_startup.MIMX8QX6 platform.drivers.scfwapi.MIMX8QX6 platform.drivers.igpio.MIMX8QX6 platform.utilities.assert.MIMX8QX6 platform.Include_core_cm4.MIMX8QX6 platform.Include_common.MIMX8QX6">
+  <example id="mekmimx8qx_lpadc_interrupt" name="lpadc_interrupt" category="driver_examples/lpadc" dependency="platform.drivers.irqsteer.MIMX8QX6 platform.drivers.lpadc.MIMX8QX6 platform.drivers.clock.MIMX8QX6 platform.drivers.common.MIMX8QX6 device.MIMX8QX6_CMSIS.MIMX8QX6 utility.debug_console.MIMX8QX6 component.lpuart_adapter.MIMX8QX6 component.serial_manager.MIMX8QX6 component.lists.MIMX8QX6 component.serial_manager_uart.MIMX8QX6 platform.drivers.lpuart.MIMX8QX6 device.MIMX8QX6_startup.MIMX8QX6 platform.drivers.scfwapi.MIMX8QX6 platform.drivers.igpio.MIMX8QX6 platform.utilities.assert.MIMX8QX6 platform.Include_core_cm4.MIMX8QX6 platform.Include_common.MIMX8QX6 platform.Include_dsp.MIMX8QX6 platform.utilities.misc_utilities.MIMX8QX6">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -41,12 +43,13 @@
         </option>
         <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
           <value>CPU_MIMX8QX6AVLFZ</value>
+          <value>SERIAL_PORT_TYPE_UART=1</value>
         </option>
         <option id="gnu.c.compiler.option.optimization.flags" type="string">
           <value>-fno-common</value>
         </option>
         <option id="gnu.c.compiler.option.misc.other" type="string">
-          <value>-c  -ffunction-sections  -fdata-sections  -ffreestanding  -fno-builtin  -fno-strict-aliasing  -fshort-enums</value>
+          <value>-fno-strict-aliasing  -fshort-enums  -c  -ffunction-sections  -fdata-sections  -ffreestanding  -fno-builtin</value>
         </option>
         <option id="com.crt.advproject.link.fpu" type="enum">
           <value>com.crt.advproject.link.fpu.fpv4.hard</value>
@@ -56,16 +59,13 @@
         </option>
       </toolchainSetting>
     </toolchainSettings>
-    <source path="boards/mekmimx8qx/driver_examples/lpadc/interrupt/armgcc" target_path="src" type="linker" toolchain="armgcc">
-      <files mask="MIMX8QX6xxxFZ_cm4_ddr_ram.ld"/>
-      <files mask="MIMX8QX6xxxFZ_cm4_ram.ld"/>
+    <source path="boards/mekmimx8qx/driver_examples/lpadc/interrupt/armgcc" target_path="MIMX8QX6/gcc" type="linker" toolchain="armgcc">
+      <files mask="MIMX8QX6xxxxx_cm4_ddr_ram.ld"/>
+      <files mask="MIMX8QX6xxxxx_cm4_ram.ld"/>
     </source>
-    <source path="boards/mekmimx8qx/driver_examples/lpadc/interrupt/iar" target_path="src" type="linker" toolchain="iar">
-      <files mask="MIMX8QX6xxxFZ_cm4_ddr_ram.icf"/>
-      <files mask="MIMX8QX6xxxFZ_cm4_ram.icf"/>
-    </source>
-    <source path="boards/mekmimx8qx/driver_examples/lpadc/interrupt/mdk" target_path="src" type="linker" toolchain="mdk">
-      <files mask="MIMX8QX6xxxFZ_cm4_ram.scf"/>
+    <source path="boards/mekmimx8qx/driver_examples/lpadc/interrupt/iar" target_path="MIMX8QX6/iar" type="linker" toolchain="iar">
+      <files mask="MIMX8QX6xxxxx_cm4_ddr_ram.icf"/>
+      <files mask="MIMX8QX6xxxxx_cm4_ram.icf"/>
     </source>
     <source path="boards/mekmimx8qx/driver_examples/lpadc/interrupt" target_path="board" type="c_include">
       <files mask="board.h"/>
@@ -82,6 +82,9 @@
     </source>
     <source path="boards/mekmimx8qx/driver_examples/lpadc/interrupt" target_path="source" type="src">
       <files mask="lpadc_interrupt.c"/>
+    </source>
+    <source path="devices/MIMX8QX6/arm" target_path="MIMX8QX6/arm" type="linker" toolchain="mdk">
+      <files mask="MIMX8QX6xxxxx_cm4_ram.scf"/>
     </source>
   </example>
 </ksdk:examples>

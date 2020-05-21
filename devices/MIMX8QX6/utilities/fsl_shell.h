@@ -171,7 +171,7 @@ _Pragma("diag_suppress=Pm120")
      * @retval kStatus_SHELL_Success Successfully register the command.
      * @retval kStatus_SHELL_Error An error occurred.
      */
-    shell_status_t SHELL_RegisterCommand(shell_handle_t shellHandle, shell_command_t * command);
+    shell_status_t SHELL_RegisterCommand(shell_handle_t shellHandle, shell_command_t * shellCommand);
 
     /*!
      * @brief Unregisters the shell command
@@ -181,7 +181,7 @@ _Pragma("diag_suppress=Pm120")
      * @param command The command element.
      * @retval kStatus_SHELL_Success Successfully unregister the command.
      */
-    shell_status_t SHELL_UnregisterCommand(shell_command_t * command);
+    shell_status_t SHELL_UnregisterCommand(shell_command_t * shellCommand);
 
     /*!
      * @brief Sends data to the shell output stream.

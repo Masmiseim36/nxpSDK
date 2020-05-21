@@ -54,7 +54,7 @@ uint32_t RGPIO_GetInstance(RGPIO_Type *base)
     uint32_t instance;
 
     /* Find the instance index from base address mappings. */
-    for (instance = 0; instance < ARRAY_SIZE(s_rgpioBases); instance++)
+    for (instance = 0U; instance < ARRAY_SIZE(s_rgpioBases); instance++)
     {
         if (s_rgpioBases[instance] == base)
         {
@@ -75,13 +75,13 @@ uint32_t RGPIO_GetInstance(RGPIO_Type *base)
  *
  * This is an example to define an input pin or an output pin configuration.
  * code
- * // Define a digital input pin configuration,
+ *  Define a digital input pin configuration,
  * rgpio_pin_config_t config =
  * {
  *   kRGPIO_DigitalInput,
  *   0,
  * }
- * //Define a digital output pin configuration,
+ * Define a digital output pin configuration,
  * rgpio_pin_config_t config =
  * {
  *   kRGPIO_DigitalOutput,
@@ -95,16 +95,16 @@ uint32_t RGPIO_GetInstance(RGPIO_Type *base)
  */
 void RGPIO_PinInit(RGPIO_Type *base, uint32_t pin, const rgpio_pin_config_t *config)
 {
-    assert(config);
+    assert(NULL != config);
 
     if (config->pinDirection == kRGPIO_DigitalInput)
     {
-        base->PDDR &= ~(1U << pin);
+        base->PDDR &= ~(1UL << pin);
     }
     else
     {
         RGPIO_WritePinOutput(base, pin, config->outputLogic);
-        base->PDDR |= (1U << pin);
+        base->PDDR |= (1UL << pin);
     }
 }
 
@@ -191,7 +191,7 @@ uint32_t FGPIO_GetInstance(FGPIO_Type *base)
     uint32_t instance;
 
     /* Find the instance index from base address mappings. */
-    for (instance = 0; instance < ARRAY_SIZE(s_fgpioBases); instance++)
+    for (instance = 0U; instance < ARRAY_SIZE(s_fgpioBases); instance++)
     {
         if (s_fgpioBases[instance] == base)
         {
@@ -222,13 +222,13 @@ void FGPIO_PortInit(FGPIO_Type *base)
  *
  * This is an example to define an input pin or an output pin configuration:
  * code
- * // Define a digital input pin configuration,
+ * Define a digital input pin configuration,
  * rgpio_pin_config_t config =
  * {
  *   kRGPIO_DigitalInput,
  *   0,
  * }
- * //Define a digital output pin configuration,
+ * Define a digital output pin configuration,
  * rgpio_pin_config_t config =
  * {
  *   kRGPIO_DigitalOutput,
@@ -242,16 +242,16 @@ void FGPIO_PortInit(FGPIO_Type *base)
  */
 void FGPIO_PinInit(FGPIO_Type *base, uint32_t pin, const rgpio_pin_config_t *config)
 {
-    assert(config);
+    assert(NULL != config);
 
     if (config->pinDirection == kRGPIO_DigitalInput)
     {
-        base->PDDR &= ~(1U << pin);
+        base->PDDR &= ~(1UL << pin);
     }
     else
     {
         FGPIO_WritePinOutput(base, pin, config->outputLogic);
-        base->PDDR |= (1U << pin);
+        base->PDDR |= (1UL << pin);
     }
 }
 

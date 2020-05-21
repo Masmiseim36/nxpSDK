@@ -22,8 +22,8 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief RGPIO driver version 2.0.1. */
-#define FSL_RGPIO_DRIVER_VERSION (MAKE_VERSION(2, 0, 1))
+/*! @brief RGPIO driver version 2.0.2. */
+#define FSL_RGPIO_DRIVER_VERSION (MAKE_VERSION(2, 0, 2))
 /*@}*/
 
 /*! @brief RGPIO direction definition */
@@ -98,13 +98,13 @@ extern "C" {
  *
  * This is an example to define an input pin or an output pin configuration.
  * @code
- * // Define a digital input pin configuration,
+ *  Define a digital input pin configuration,
  * rgpio_pin_config_t config =
  * {
  *   kRGPIO_DigitalInput,
  *   0,
  * }
- * //Define a digital output pin configuration,
+ * Define a digital output pin configuration,
  * rgpio_pin_config_t config =
  * {
  *   kRGPIO_DigitalOutput,
@@ -143,11 +143,11 @@ static inline void RGPIO_PinWrite(RGPIO_Type *base, uint32_t pin, uint8_t output
 {
     if (output == 0U)
     {
-        base->PCOR = 1U << pin;
+        base->PCOR = 1UL << pin;
     }
     else
     {
-        base->PSOR = 1U << pin;
+        base->PSOR = 1UL << pin;
     }
 }
 
@@ -359,13 +359,13 @@ static inline void FGPIO_Init(FGPIO_Type *base)
  *
  * This is an example to define an input pin or an output pin configuration:
  * @code
- * // Define a digital input pin configuration,
+ *  Define a digital input pin configuration,
  * rgpio_pin_config_t config =
  * {
  *   kRGPIO_DigitalInput,
  *   0,
  * }
- * //Define a digital output pin configuration,
+ * Define a digital output pin configuration,
  * rgpio_pin_config_t config =
  * {
  *   kRGPIO_DigitalOutput,
@@ -404,11 +404,11 @@ static inline void FGPIO_PinWrite(FGPIO_Type *base, uint32_t pin, uint8_t output
 {
     if (output == 0U)
     {
-        base->PCOR = 1 << pin;
+        base->PCOR = 1UL << pin;
     }
     else
     {
-        base->PSOR = 1 << pin;
+        base->PSOR = 1UL << pin;
     }
 }
 

@@ -21,6 +21,16 @@ void __aeabi_assert(const char *failedExpr, const char *file, int line)
     }
 }
 #elif (defined(__GNUC__))
+#if defined(__REDLIB__)
+void __assertion_failed(char *failedExpr)
+{
+    PRINTF("ASSERT ERROR \" %s \n", failedExpr);
+    for (;;)
+    {
+        __BKPT(0);
+    }
+}
+#else
 void __assert_func(const char *file, int line, const char *func, const char *failedExpr)
 {
     PRINTF("ASSERT ERROR \" %s \": file \"%s\" Line \"%d\" function name \"%s\" \n", failedExpr, file, line, func);
@@ -29,5 +39,6 @@ void __assert_func(const char *file, int line, const char *func, const char *fai
         __BKPT(0);
     }
 }
+#endif /* defined(__REDLIB__) */
 #endif /* (defined(__CC_ARM) || (defined(__ICCARM__)) || (defined(__ARMCC_VERSION)) */
 #endif /* NDEBUG */

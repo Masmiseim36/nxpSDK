@@ -8,12 +8,14 @@
 #include "fsl_esai_edma.h"
 #include "fsl_debug_console.h"
 #include "fsl_lpi2c.h"
+#include "fsl_codec_common.h"
 #include "fsl_cs42888.h"
 #include "pin_mux.h"
 #include "clock_config.h"
 #include "fsl_lpuart.h"
 #include "fsl_irqsteer.h"
 #include "fsl_gpio.h"
+#include "fsl_codec_adapter.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -48,48 +50,37 @@
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-void BOARD_CS42888_I2C_Init(void *handle);
-status_t BOARD_CS42888_I2C_Send(
-    uint8_t deviceAddress, uint32_t subAddress, uint8_t subAddressSize, const uint8_t *txBuff, uint8_t txBuffSize);
-status_t BOARD_CS42888_I2C_Receive(
-    uint8_t deviceAddress, uint32_t subAddress, uint8_t subAddressSize, uint8_t *rxBuff, uint8_t rxBuffSize);
 void BOARD_CodecReset(bool state);
-void BOARD_Delay(uint32_t ms);
 static void txCallback(ESAI_Type *base, esai_edma_handle_t *handle, status_t status, void *userData);
 static void rxCallback(ESAI_Type *base, esai_edma_handle_t *handle, status_t status, void *userData);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
+
+cs42888_config_t cs42888Config = {
+    .DACMode      = kCS42888_ModeSlave,
+    .ADCMode      = kCS42888_ModeSlave,
+    .reset        = BOARD_CodecReset,
+    .master       = false,
+    .i2cConfig    = {.codecI2CInstance = BOARD_CODEC_I2C_INSTANCE, .codecI2CSourceClock = SC_24MHZ},
+    .format       = {.mclk_HZ = ESAI_MASTER_CLOCK_FREQ, .sampleRate = 48000U, .bitWidth = 16U},
+    .bus          = kCS42888_BusI2S,
+    .slaveAddress = CS42888_I2C_ADDR,
+};
+
+codec_config_t boardCodecConfig = {.codecDevType = kCODEC_CS42888, .codecDevConfig = &cs42888Config};
 AT_NONCACHEABLE_SECTION_INIT(esai_edma_handle_t txHandle)                                 = {0};
 AT_NONCACHEABLE_SECTION_INIT(esai_edma_handle_t rxHandle)                                 = {0};
 AT_NONCACHEABLE_SECTION_INIT(edma_handle_t txDmaHandle)                                   = {0};
 AT_NONCACHEABLE_SECTION_INIT(edma_handle_t rxDmaHandle)                                   = {0};
 AT_NONCACHEABLE_SECTION_ALIGN_INIT(static uint8_t audioBuff[BUFFER_SIZE * BUFFER_NUM], 4) = {0};
-cs42888_handle_t codecHandle                                                              = {0}; /* Codec handler */
-#if defined(FSL_FEATURE_SOC_LPI2C_COUNT) && (FSL_FEATURE_SOC_LPI2C_COUNT)
-lpi2c_master_handle_t i2cHandle = {0};
-#else
-i2c_master_handle_t i2cHandle = {{0, 0, kI2C_Write, 0, 0, NULL, 0}, 0, 0, NULL, NULL};
-#endif
-volatile bool istxFinished             = false;
-volatile bool isrxFinished             = false;
-volatile uint32_t beginCount           = 0;
-volatile uint32_t sendCount            = 0;
-volatile uint32_t receiveCount         = 0;
-static cs42888_config_t cs42888_config = {
-    .DACMode = kCS42888_ModeSlave,
-    .ADCMode = kCS42888_ModeSlave,
-    .bus     = kCS42888_BusI2S,
-    .reset   = BOARD_CodecReset,
-};
-codec_config_t codecConfig = {.I2C_SendFunc    = BOARD_CS42888_I2C_Send,
-                              .I2C_ReceiveFunc = BOARD_CS42888_I2C_Receive,
-                              .delayMs         = BOARD_Delay,
-                              .op.Init         = CS42888_Init,
-                              .op.Deinit       = CS42888_Deinit,
-                              .op.SetFormat    = CS42888_ConfigDataFormat,
-                              .codecConfig     = &cs42888_config};
-volatile uint32_t g_systickCounter;
+volatile bool istxFinished                                                                = false;
+volatile bool isrxFinished                                                                = false;
+volatile uint32_t beginCount                                                              = 0;
+volatile uint32_t sendCount                                                               = 0;
+volatile uint32_t receiveCount                                                            = 0;
+codec_handle_t codecHandle;
+extern codec_config_t boardCodecConfig;
 /*******************************************************************************
  * Code
  ******************************************************************************/
@@ -152,39 +143,6 @@ static bool PCA9646_WriteReg(LPI2C_Type *base, const uint8_t dev_addr, uint8_t *
     return kStatus_Success;
 }
 
-void BOARD_CS42888_I2C_Init(void *handle)
-{
-    uint32_t i2cSourceClock = I2C_SOURCE_CLOCK_FREQ;
-
-    lpi2c_master_config_t i2cConfig = {0};
-
-    /*
-     * i2cConfig.debugEnable = false;
-     * i2cConfig.ignoreAck = false;
-     * i2cConfig.pinConfig = kLPI2C_2PinOpenDrain;
-     * i2cConfig.baudRate_Hz = 100000U;
-     * i2cConfig.busIdleTimeout_ns = 0;
-     * i2cConfig.pinLowTimeout_ns = 0;
-     * i2cConfig.sdaGlitchFilterWidth_ns = 0;
-     * i2cConfig.sclGlitchFilterWidth_ns = 0;
-     */
-    LPI2C_MasterGetDefaultConfig(&i2cConfig);
-    LPI2C_MasterInit(EXAMPLE_I2C, &i2cConfig, i2cSourceClock);
-    LPI2C_MasterTransferCreateHandle(EXAMPLE_I2C, (lpi2c_master_handle_t *)handle, NULL, NULL);
-}
-
-status_t BOARD_CS42888_I2C_Send(
-    uint8_t deviceAddress, uint32_t subAddress, uint8_t subAddressSize, const uint8_t *txBuff, uint8_t txBuffSize)
-{
-    return BOARD_LPI2C_Send(EXAMPLE_I2C, deviceAddress, subAddress, subAddressSize, (uint8_t *)txBuff, txBuffSize);
-}
-
-status_t BOARD_CS42888_I2C_Receive(
-    uint8_t deviceAddress, uint32_t subAddress, uint8_t subAddressSize, uint8_t *rxBuff, uint8_t rxBuffSize)
-{
-    return BOARD_LPI2C_Receive(EXAMPLE_I2C, deviceAddress, subAddress, subAddressSize, rxBuff, rxBuffSize);
-}
-
 void BOARD_CodecReset(bool state)
 {
     lpi2c_master_config_t masterConfig;
@@ -220,24 +178,6 @@ void BOARD_CodecReset(bool state)
     }
 
     LPI2C_MasterDeinit(EXAMPLE_IOEXP_LPI2C_MASTER);
-}
-
-extern volatile uint32_t g_systickCounter;
-
-void BOARD_Delay(uint32_t ms)
-{
-    g_systickCounter = ms;
-    while (g_systickCounter != 0U)
-    {
-    }
-}
-
-void SysTick_Handler(void)
-{
-    if (g_systickCounter != 0U)
-    {
-        g_systickCounter--;
-    }
 }
 
 static void txCallback(ESAI_Type *base, esai_edma_handle_t *handle, status_t status, void *userData)
@@ -403,29 +343,12 @@ int main(void)
     sc_pad_set(ipc, SC_P_COMP_CTL_GPIO_1V8_3V3_ENET_ENETB1, 0x400014a0);
     sc_pad_set(ipc, SC_P_COMP_CTL_GPIO_1V8_3V3_GPIORHB, 0x400514a0);
 
-    NVIC_EnableIRQ(SysTick_IRQn);
-
-    /* system tick configured as a 1ms timer */
-    if (SysTick_Config(SystemCoreClock / 1000U))
-    {
-        while (1)
-        {
-        }
-    }
-
     PRINTF("\r\nESAI EDMA example started! \r\n");
 
-    BOARD_CS42888_I2C_Init(&i2cHandle);
     /* Init codec */
-    if (CODEC_Init(&codecHandle, &codecConfig) != kStatus_Success)
+    if (CODEC_Init(&codecHandle, &boardCodecConfig) != kStatus_Success)
     {
         PRINTF("CODEC_Init failed!\r\n");
-        return -1;
-    }
-
-    if (CODEC_SetFormat(&codecHandle, SAMPLE_RATE * 256U, SAMPLE_RATE, 16) != kStatus_Success)
-    {
-        PRINTF("CODEC_SetFormat failed!\r\n");
         return -1;
     }
 

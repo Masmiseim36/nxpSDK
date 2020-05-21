@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -29,7 +29,7 @@
 #define RESET_CHECK_FLAG (*((uint32_t *)0x20002000))
 #define RESET_CHECK_INIT_VALUE 0x0D0D
 #define EXAMPLE_WDOG_BASE CM4__WDOG
-#define EXAMPLE_ASMC_BASE BBS_SIM
+#define EXAMPLE_ASMC_BASE CM4__ASMC
 #define DELAY_TIME 100000U
 
 #define WDOG_WCT_INSTRUCITON_COUNT (128U)
@@ -129,7 +129,7 @@ void Wdog32FastTesting(void)
 
     config.enableInterrupt = true;
     config.timeoutValue    = 0xf0f0U;
-    current_test_mode = GetTestMode(wdog32_base);
+    current_test_mode      = GetTestMode(wdog32_base);
 
     if (current_test_mode == kWDOG32_TestModeDisabled)
     {
@@ -215,6 +215,8 @@ void Wdog32FastTesting(void)
  */
 void Wdog32RefreshTest(void)
 {
+    uint32_t primaskValue = 0U;
+
     /*
      * config.enableWdog32 = true;
      * config.clockSource = kWDOG32_ClockSource1;
@@ -256,9 +258,12 @@ void Wdog32RefreshTest(void)
             }
         }
     }
+    /* Disable the global interrupt to protect refresh sequence */
+    primaskValue = DisableGlobalIRQ();
     WDOG32_Unlock(wdog32_base);
     WDOG32_Disable(wdog32_base);
     WaitWctClose(wdog32_base);
+    EnableGlobalIRQ(primaskValue);
     /* Refresh test in window mode */
     PRINTF("----- Window mode -----\r\n");
 

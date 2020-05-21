@@ -7,8 +7,8 @@ user defined button.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.1
-- GCC ARM Embedded  7.3.1
+- IAR embedded Workbench  8.40.2
+- GCC ARM Embedded  8.3.1
 
 Hardware requirements
 =====================
@@ -47,17 +47,17 @@ Press any key to start the example
 Tickless Demo example
 
 Tick count :
-1
-5001
-10001
-15001
-20001
-25001
-30001
-35001
-40001
-45001
-50001
+0
+5000
+10000
+15000
+20000
+25000
+30000
+35000
+40000
+45000
+50000
 ...
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Customization options

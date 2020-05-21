@@ -8,8 +8,8 @@ Once the interface is being bound to an IP address obtained from DHCP server, ad
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.1
-- GCC ARM Embedded  7.3.1
+- IAR embedded Workbench  8.40.2
+- GCC ARM Embedded  8.3.1
 
 Hardware requirements
 =====================
@@ -44,7 +44,9 @@ Prepare the Demo
 Running the demo
 ================
 When the demo runs, the log would be seen on the terminal like:
-	
+
+Initializing PHY...
+
 ************************************************
  DHCP example
 ************************************************
@@ -56,6 +58,7 @@ When the demo runs, the log would be seen on the terminal like:
  IPv4 Address     : 192.168.0.4
  IPv4 Subnet mask : 255.255.255.0
  IPv4 Gateway     : 192.168.0.1
+
 Customization options
 =====================
 

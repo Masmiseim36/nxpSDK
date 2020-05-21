@@ -65,8 +65,14 @@
 #endif
 #endif
 
+#if SDK_DEBUGCONSOLE
+#define DEBUG_CONSOLE_FUNCTION_PREFIX
+#else
+#define DEBUG_CONSOLE_FUNCTION_PREFIX static
+#endif
+
 /*! @brief character backspace ASCII value */
-#define DEBUG_CONSOLE_BACKSPACE 127
+#define DEBUG_CONSOLE_BACKSPACE 127U
 
 /* lock definition */
 #if (DEBUG_CONSOLE_SYNCHRONIZATION_MODE == DEBUG_CONSOLE_SYNCHRONIZATION_FREERTOS)
@@ -97,14 +103,23 @@ static volatile uint8_t s_debugConsoleReadWaitSemaphore;
 #if (DEBUG_CONSOLE_SYNCHRONIZATION_MODE == DEBUG_CONSOLE_SYNCHRONIZATION_FREERTOS)
 
 /* mutex semaphore */
-#define DEBUG_CONSOLE_CREATE_MUTEX_SEMAPHORE(mutex) (mutex = xSemaphoreCreateMutex())
-
 /* clang-format off */
+#define DEBUG_CONSOLE_CREATE_MUTEX_SEMAPHORE(mutex) ((mutex) = xSemaphoreCreateMutex())
+#define DEBUG_CONSOLE_DESTROY_MUTEX_SEMAPHORE(mutex)   \
+        do                                             \
+        {                                              \
+            if(NULL != mutex)                          \
+            {                                          \
+                vSemaphoreDelete(mutex);               \
+                mutex = NULL;                          \
+            }                                          \
+        } while(0)
+
 #define DEBUG_CONSOLE_GIVE_MUTEX_SEMAPHORE(mutex) \
 {                                                 \
         if (IS_RUNNING_IN_ISR() == 0U)            \
         {                                         \
-            xSemaphoreGive(mutex);                \
+            (void)xSemaphoreGive(mutex);          \
         }                                         \
 }
 
@@ -112,7 +127,7 @@ static volatile uint8_t s_debugConsoleReadWaitSemaphore;
 {                                                          \
         if (IS_RUNNING_IN_ISR() == 0U)                     \
         {                                                  \
-            xSemaphoreTake(mutex, portMAX_DELAY);          \
+            (void)xSemaphoreTake(mutex, portMAX_DELAY);    \
         }                                                  \
 }
 
@@ -127,21 +142,31 @@ static volatile uint8_t s_debugConsoleReadWaitSemaphore;
             result = 1U;                                              \
         }                                                             \
 }
-/* clang-format on */
 
 /* Binary semaphore */
-#define DEBUG_CONSOLE_CREATE_BINARY_SEMAPHORE(binary) (binary = xSemaphoreCreateBinary())
-#define DEBUG_CONSOLE_TAKE_BINARY_SEMAPHORE_BLOCKING(binary) (xSemaphoreTake(binary, portMAX_DELAY))
-#define DEBUG_CONSOLE_GIVE_BINARY_SEMAPHORE_FROM_ISR(binary) (xSemaphoreGiveFromISR(binary, NULL))
+#define DEBUG_CONSOLE_CREATE_BINARY_SEMAPHORE(binary) ((binary) = xSemaphoreCreateBinary())
+#define DEBUG_CONSOLE_DESTROY_BINARY_SEMAPHORE(binary) \
+        do                                             \
+        {                                              \
+            if(NULL != binary)                         \
+            {                                          \
+                vSemaphoreDelete(binary);              \
+                binary = NULL;                         \
+            }                                          \
+        } while(0)
+#define DEBUG_CONSOLE_TAKE_BINARY_SEMAPHORE_BLOCKING(binary) ((void)xSemaphoreTake(binary, portMAX_DELAY))
+#define DEBUG_CONSOLE_GIVE_BINARY_SEMAPHORE_FROM_ISR(binary) ((void)xSemaphoreGiveFromISR(binary, NULL))
 
 #elif (DEBUG_CONSOLE_SYNCHRONIZATION_BM == DEBUG_CONSOLE_SYNCHRONIZATION_MODE)
 
 #define DEBUG_CONSOLE_CREATE_MUTEX_SEMAPHORE(mutex)
+#define DEBUG_CONSOLE_DESTROY_MUTEX_SEMAPHORE(mutex)
 #define DEBUG_CONSOLE_TAKE_MUTEX_SEMAPHORE_BLOCKING(mutex)
 #define DEBUG_CONSOLE_GIVE_MUTEX_SEMAPHORE(mutex)
 #define DEBUG_CONSOLE_TAKE_MUTEX_SEMAPHORE_NONBLOCKING(mutex, result) (result = 1U)
 
 #define DEBUG_CONSOLE_CREATE_BINARY_SEMAPHORE(binary)
+#define DEBUG_CONSOLE_DESTROY_BINARY_SEMAPHORE(binary)
 #ifdef DEBUG_CONSOLE_TRANSFER_NON_BLOCKING
 #define DEBUG_CONSOLE_TAKE_BINARY_SEMAPHORE_BLOCKING(binary) \
     {                                                        \
@@ -155,6 +180,7 @@ static volatile uint8_t s_debugConsoleReadWaitSemaphore;
 #define DEBUG_CONSOLE_TAKE_BINARY_SEMAPHORE_BLOCKING(binary)
 #define DEBUG_CONSOLE_GIVE_BINARY_SEMAPHORE_FROM_ISR(binary)
 #endif /* DEBUG_CONSOLE_TRANSFER_NON_BLOCKING */
+/* clang-format on */
 
 /* add other implementation here
  *such as :
@@ -212,12 +238,20 @@ serial_handle_t g_serialHandle; /*!< serial manager handle */
  *
  */
 #if SDK_DEBUGCONSOLE
-static void DbgConsole_PrintCallback(char *buf, int32_t *indicator, char val, int len);
+static void DbgConsole_PrintCallback(char *buf, int32_t *indicator, char dbgVal, int len);
 #endif
 
+status_t DbgConsole_ReadOneCharacter(uint8_t *ch);
 int DbgConsole_SendData(uint8_t *ch, size_t size);
-status_t DbgConsole_Flush(void);
+int DbgConsole_SendDataReliable(uint8_t *ch, size_t size);
+int DbgConsole_ReadLine(uint8_t *buf, size_t size);
+int DbgConsole_ReadCharacter(uint8_t *ch);
 
+#if ((SDK_DEBUGCONSOLE > 0U) ||                                                   \
+     ((SDK_DEBUGCONSOLE == 0U) && defined(DEBUG_CONSOLE_TRANSFER_NON_BLOCKING) && \
+      (defined(DEBUG_CONSOLE_TX_RELIABLE_ENABLE) && (DEBUG_CONSOLE_TX_RELIABLE_ENABLE > 0U))))
+DEBUG_CONSOLE_FUNCTION_PREFIX status_t DbgConsole_Flush(void);
+#endif
 /*******************************************************************************
  * Code
  ******************************************************************************/
@@ -257,13 +291,19 @@ static void DbgConsole_SerialManagerTxCallback(void *callbackParam,
                 sendDataLength = ioState->writeRingBuffer.ringBufferSize - ioState->writeRingBuffer.ringTail;
             }
 
-            SerialManager_WriteNonBlocking(((serial_write_handle_t)&ioState->serialWriteHandleBuffer[0]),
-                                           &ioState->writeRingBuffer.ringBuffer[ioState->writeRingBuffer.ringTail],
-                                           sendDataLength);
+            (void)SerialManager_WriteNonBlocking(
+                ((serial_write_handle_t)&ioState->serialWriteHandleBuffer[0]),
+                &ioState->writeRingBuffer.ringBuffer[ioState->writeRingBuffer.ringTail], sendDataLength);
         }
+    }
+    else if (kStatus_SerialManager_Canceled == status)
+    {
+        ioState->writeRingBuffer.ringTail = 0U;
+        ioState->writeRingBuffer.ringHead = 0U;
     }
     else
     {
+        /*MISRA rule 16.4*/
     }
 }
 
@@ -288,6 +328,7 @@ static void DbgConsole_SerialManagerRxCallback(void *callbackParam,
     }
     else
     {
+        /*MISRA rule 16.4*/
     }
 }
 #endif
@@ -302,28 +343,29 @@ status_t DbgConsole_ReadOneCharacter(uint8_t *ch)
     (DEBUG_CONSOLE_SYNCHRONIZATION_MODE == DEBUG_CONSOLE_SYNCHRONIZATION_BM) && defined(OSA_USED)
     return kStatus_Fail;
 #else
-    status_t status = kStatus_SerialManager_Error;
+    status_t status = (status_t)kStatus_SerialManager_Error;
 
 /* recieve one char every time */
 #if defined(DEBUG_CONSOLE_TRANSFER_NON_BLOCKING)
-    status =
-        SerialManager_ReadNonBlocking(((serial_read_handle_t)&s_debugConsoleState.serialReadHandleBuffer[0]), ch, 1);
+    status = (status_t)SerialManager_ReadNonBlocking(
+        ((serial_read_handle_t)&s_debugConsoleState.serialReadHandleBuffer[0]), ch, 1);
 #else
-    status = SerialManager_ReadBlocking(((serial_read_handle_t)&s_debugConsoleState.serialReadHandleBuffer[0]), ch, 1);
+    status = (status_t)SerialManager_ReadBlocking(
+        ((serial_read_handle_t)&s_debugConsoleState.serialReadHandleBuffer[0]), ch, 1);
 #endif
-    if (kStatus_SerialManager_Success != status)
+    if ((status_t)kStatus_SerialManager_Success != status)
     {
-        return kStatus_Fail;
+        return (status_t)kStatus_Fail;
     }
     /* wait s_debugConsoleReadWaitSemaphore from RX callback */
     DEBUG_CONSOLE_TAKE_BINARY_SEMAPHORE_BLOCKING(s_debugConsoleReadWaitSemaphore);
 
-    return kStatus_Success;
+    return (status_t)kStatus_Success;
 #endif
 
 #else
 
-    return kStatus_Fail;
+    return (status_t)kStatus_Fail;
 
 #endif
 }
@@ -332,16 +374,16 @@ status_t DbgConsole_ReadOneCharacter(uint8_t *ch)
 static status_t DbgConsole_EchoCharacter(uint8_t *ch, bool isGetChar, int *index)
 {
     /* Due to scanf take \n and \r as end of string,should not echo */
-    if (((*ch != '\r') && (*ch != '\n')) || (isGetChar))
+    if (((*ch != (uint8_t)'\r') && (*ch != (uint8_t)'\n')) || (isGetChar))
     {
         /* recieve one char every time */
         if (1 != DbgConsole_SendDataReliable(ch, 1U))
         {
-            return kStatus_Fail;
+            return (status_t)kStatus_Fail;
         }
     }
 
-    if ((!isGetChar) && (index))
+    if ((!isGetChar) && (index != NULL))
     {
         if (DEBUG_CONSOLE_BACKSPACE == *ch)
         {
@@ -356,13 +398,13 @@ static status_t DbgConsole_EchoCharacter(uint8_t *ch, bool isGetChar, int *index
         }
     }
 
-    return kStatus_Success;
+    return (status_t)kStatus_Success;
 }
 #endif
 
 int DbgConsole_SendData(uint8_t *ch, size_t size)
 {
-    status_t status = kStatus_SerialManager_Error;
+    status_t status = (status_t)kStatus_SerialManager_Error;
 #if defined(DEBUG_CONSOLE_TRANSFER_NON_BLOCKING)
     uint32_t sendDataLength;
     int txBusy = 0;
@@ -384,13 +426,13 @@ int DbgConsole_SendData(uint8_t *ch, size_t size)
     {
         sendDataLength = 0U;
     }
-    sendDataLength = s_debugConsoleState.writeRingBuffer.ringBufferSize - sendDataLength;
-    if (sendDataLength <= size)
+    sendDataLength = s_debugConsoleState.writeRingBuffer.ringBufferSize - sendDataLength - 1;
+    if (sendDataLength < size)
     {
         EnableGlobalIRQ(regPrimask);
         return -1;
     }
-    for (int i = 0; i < size; i++)
+    for (int i = 0; i < (int)size; i++)
     {
         s_debugConsoleState.writeRingBuffer.ringBuffer[s_debugConsoleState.writeRingBuffer.ringHead++] = ch[i];
         if (s_debugConsoleState.writeRingBuffer.ringHead >= s_debugConsoleState.writeRingBuffer.ringBufferSize)
@@ -399,9 +441,9 @@ int DbgConsole_SendData(uint8_t *ch, size_t size)
         }
     }
 
-    status = kStatus_SerialManager_Success;
+    status = (status_t)kStatus_SerialManager_Success;
 
-    if (!txBusy)
+    if (txBusy == 0)
     {
         if (s_debugConsoleState.writeRingBuffer.ringHead > s_debugConsoleState.writeRingBuffer.ringTail)
         {
@@ -424,21 +466,33 @@ int DbgConsole_SendData(uint8_t *ch, size_t size)
     status = (status_t)SerialManager_WriteBlocking(
         ((serial_write_handle_t)&s_debugConsoleState.serialWriteHandleBuffer[0]), ch, size);
 #endif
-    return ((kStatus_Success == status) ? (int)size : -1);
+    return (((status_t)kStatus_Success == status) ? (int)size : -1);
 }
 
 int DbgConsole_SendDataReliable(uint8_t *ch, size_t size)
 {
-    status_t status = kStatus_SerialManager_Error;
 #if defined(DEBUG_CONSOLE_TRANSFER_NON_BLOCKING)
+#if (defined(DEBUG_CONSOLE_TX_RELIABLE_ENABLE) && (DEBUG_CONSOLE_TX_RELIABLE_ENABLE > 0U))
+    status_t status = kStatus_SerialManager_Error;
     uint32_t sendDataLength;
     uint32_t totalLength = size;
     int sentLength;
-#endif
+#endif /* DEBUG_CONSOLE_TX_RELIABLE_ENABLE */
+#else
+    status_t status = kStatus_SerialManager_Error;
+#endif /* DEBUG_CONSOLE_TRANSFER_NON_BLOCKING */
+
     assert(NULL != ch);
     assert(0 != size);
 
+    if (NULL == g_serialHandle)
+    {
+        return 0;
+    }
+
 #if defined(DEBUG_CONSOLE_TRANSFER_NON_BLOCKING)
+
+#if (defined(DEBUG_CONSOLE_TX_RELIABLE_ENABLE) && (DEBUG_CONSOLE_TX_RELIABLE_ENABLE > 0U))
     do
     {
         uint32_t regPrimask = DisableGlobalIRQ();
@@ -453,9 +507,9 @@ int DbgConsole_SendDataReliable(uint8_t *ch, size_t size)
         {
             sendDataLength = 0U;
         }
-        sendDataLength = s_debugConsoleState.writeRingBuffer.ringBufferSize - sendDataLength - 1;
+        sendDataLength = s_debugConsoleState.writeRingBuffer.ringBufferSize - sendDataLength - 1U;
 
-        if (sendDataLength > 0)
+        if (sendDataLength > 0U)
         {
             if (sendDataLength > totalLength)
             {
@@ -465,73 +519,84 @@ int DbgConsole_SendDataReliable(uint8_t *ch, size_t size)
             sentLength = DbgConsole_SendData(&ch[size - totalLength], sendDataLength);
             if (sentLength > 0)
             {
-                totalLength = totalLength - sentLength;
+                totalLength = totalLength - (uint32_t)sentLength;
             }
         }
         EnableGlobalIRQ(regPrimask);
 
-        if ((totalLength))
+        if (totalLength != 0U)
         {
             status = DbgConsole_Flush();
-
-            if (kStatus_Success != status)
+            if ((status_t)kStatus_Success != status)
             {
                 break;
             }
         }
-    } while (totalLength);
-    return (size - totalLength);
+    } while (totalLength != 0U);
+    return (status_t)(uint32_t)((uint32_t)size - totalLength);
 #else
-    status = (status_t)SerialManager_WriteBlocking(
+    return DbgConsole_SendData(ch, size);
+#endif /* DEBUG_CONSOLE_TX_RELIABLE_ENABLE */
+
+#else
+    status          = (status_t)SerialManager_WriteBlocking(
         ((serial_write_handle_t)&s_debugConsoleState.serialWriteHandleBuffer[0]), ch, size);
-    return ((kStatus_Success == status) ? (int)size : -1);
-#endif
+    return (((status_t)kStatus_Success == status) ? (int)size : -1);
+#endif /* DEBUG_CONSOLE_TRANSFER_NON_BLOCKING */
 }
 
 int DbgConsole_ReadLine(uint8_t *buf, size_t size)
 {
-    int i;
+    int i = 0;
 
     assert(buf != NULL);
+
+    if (NULL == g_serialHandle)
+    {
+        return -1;
+    }
 
     /* take mutex lock function */
     DEBUG_CONSOLE_TAKE_MUTEX_SEMAPHORE_BLOCKING(s_debugConsoleReadSemaphore);
 
-    for (i = 0; i < size; i++)
+    do
     {
         /* recieve one char every time */
-        if (kStatus_Success != DbgConsole_ReadOneCharacter(&buf[i]))
+        if ((status_t)kStatus_Success != DbgConsole_ReadOneCharacter(&buf[i]))
         {
             /* release mutex lock function */
             DEBUG_CONSOLE_GIVE_MUTEX_SEMAPHORE(s_debugConsoleReadSemaphore);
-            return -1;
+            i = -1;
+            break;
         }
 #if DEBUG_CONSOLE_ENABLE_ECHO_FUNCTION
-        DbgConsole_EchoCharacter(&buf[i], false, &i);
+        (void)DbgConsole_EchoCharacter(&buf[i], false, &i);
 #endif
         /* analysis data */
-        if (('\r' == buf[i]) || ('\n' == buf[i]))
+        if (((uint8_t)'\r' == buf[i]) || ((uint8_t)'\n' == buf[i]))
         {
             /* End of Line. */
             if (0 == i)
             {
-                buf[i] = '\0';
-                i      = -1;
+                buf[i] = (uint8_t)'\0';
+                continue;
             }
             else
             {
                 break;
             }
         }
-    }
+        i++;
+    } while (i < (int)size);
+
     /* get char should not add '\0'*/
-    if (i == size)
+    if (i == (int)size)
     {
-        buf[i] = '\0';
+        buf[i] = (uint8_t)'\0';
     }
     else
     {
-        buf[i + 1] = '\0';
+        buf[i + 1] = (uint8_t)'\0';
     }
 
     /* release mutex lock function */
@@ -546,14 +611,19 @@ int DbgConsole_ReadCharacter(uint8_t *ch)
 
     assert(ch);
 
+    if (NULL == g_serialHandle)
+    {
+        return -1;
+    }
+
     /* take mutex lock function */
     DEBUG_CONSOLE_TAKE_MUTEX_SEMAPHORE_BLOCKING(s_debugConsoleReadSemaphore);
     /* read one character */
-    if (kStatus_Success == DbgConsole_ReadOneCharacter(ch))
+    if ((status_t)kStatus_Success == DbgConsole_ReadOneCharacter(ch))
     {
         ret = 1;
 #if DEBUG_CONSOLE_ENABLE_ECHO_FUNCTION
-        DbgConsole_EchoCharacter(ch, true, NULL);
+        (void)DbgConsole_EchoCharacter(ch, true, NULL);
 #endif
     }
     else
@@ -568,19 +638,19 @@ int DbgConsole_ReadCharacter(uint8_t *ch)
 }
 
 #if SDK_DEBUGCONSOLE
-static void DbgConsole_PrintCallback(char *buf, int32_t *indicator, char val, int len)
+static void DbgConsole_PrintCallback(char *buf, int32_t *indicator, char dbgVal, int len)
 {
     int i = 0;
 
     for (i = 0; i < len; i++)
     {
-        if ((*indicator + 1) >= DEBUG_CONSOLE_PRINTF_MAX_LOG_LEN)
+        if (((uint32_t)*indicator + 1UL) >= DEBUG_CONSOLE_PRINTF_MAX_LOG_LEN)
         {
-            DbgConsole_SendDataReliable((uint8_t *)buf, *indicator);
-            *indicator = 0U;
+            (void)DbgConsole_SendDataReliable((uint8_t *)buf, (uint32_t)(*indicator));
+            *indicator = 0;
         }
 
-        buf[*indicator] = val;
+        buf[*indicator] = dbgVal;
         (*indicator)++;
     }
 }
@@ -588,11 +658,12 @@ static void DbgConsole_PrintCallback(char *buf, int32_t *indicator, char val, in
 
 /*************Code for DbgConsole Init, Deinit, Printf, Scanf *******************************/
 
+#if ((SDK_DEBUGCONSOLE == DEBUGCONSOLE_REDIRECT_TO_SDK) || defined(SDK_DEBUGCONSOLE_UART))
 /* See fsl_debug_console.h for documentation of this function. */
 status_t DbgConsole_Init(uint8_t instance, uint32_t baudRate, serial_port_type_t device, uint32_t clkSrcFreq)
 {
     serial_manager_config_t serialConfig;
-    status_t status = kStatus_SerialManager_Error;
+    status_t status = (status_t)kStatus_SerialManager_Error;
 
 #if (defined(SERIAL_PORT_TYPE_UART) && (SERIAL_PORT_TYPE_UART > 0U))
     serial_port_uart_config_t uartConfig = {
@@ -621,6 +692,11 @@ status_t DbgConsole_Init(uint8_t instance, uint32_t baudRate, serial_port_type_t
     };
 #endif
 
+#if (defined(SERIAL_PORT_TYPE_USBCDC_VIRTUAL) && (SERIAL_PORT_TYPE_USBCDC_VIRTUAL > 0U))
+    serial_port_usb_cdc_virtual_config_t usbCdcVirtualConfig = {
+        .controllerIndex = (serial_port_usb_cdc_virtual_controller_index_t)instance,
+    };
+#endif
     serialConfig.type = device;
 #if defined(DEBUG_CONSOLE_TRANSFER_NON_BLOCKING)
     serialConfig.ringBuffer     = &s_debugConsoleState.readRingBuffer[0];
@@ -651,16 +727,27 @@ status_t DbgConsole_Init(uint8_t instance, uint32_t baudRate, serial_port_type_t
         return status;
 #endif
     }
+    else if (kSerialPort_UsbCdcVirtual == device)
+    {
+#if (defined(SERIAL_PORT_TYPE_USBCDC_VIRTUAL) && (SERIAL_PORT_TYPE_USBCDC_VIRTUAL > 0U))
+        serialConfig.portConfig = &usbCdcVirtualConfig;
+#else
+        return status;
+#endif
+    }
     else
     {
         return status;
     }
 
-    memset(&s_debugConsoleState, 0U, sizeof(s_debugConsoleState));
+    (void)memset(&s_debugConsoleState, 0, sizeof(s_debugConsoleState));
+
+#if defined(DEBUG_CONSOLE_TRANSFER_NON_BLOCKING)
+    s_debugConsoleState.writeRingBuffer.ringBufferSize = DEBUG_CONSOLE_TRANSMIT_BUFFER_LEN;
+#endif
 
     s_debugConsoleState.serialHandle = (serial_handle_t)&s_debugConsoleState.serialHandleBuffer[0];
-    g_serialHandle                   = s_debugConsoleState.serialHandle;
-    status                           = SerialManager_Init(s_debugConsoleState.serialHandle, &serialConfig);
+    status                           = (status_t)SerialManager_Init(s_debugConsoleState.serialHandle, &serialConfig);
 
     assert(kStatus_SerialManager_Success == status);
 
@@ -669,31 +756,30 @@ status_t DbgConsole_Init(uint8_t instance, uint32_t baudRate, serial_port_type_t
     DEBUG_CONSOLE_CREATE_BINARY_SEMAPHORE(s_debugConsoleReadWaitSemaphore);
 #endif
 
-#if defined(DEBUG_CONSOLE_TRANSFER_NON_BLOCKING)
-    s_debugConsoleState.writeRingBuffer.ringBufferSize = DEBUG_CONSOLE_TRANSMIT_BUFFER_LEN;
-#endif
-
     {
-        status = SerialManager_OpenWriteHandle(
+        status = (status_t)SerialManager_OpenWriteHandle(
             s_debugConsoleState.serialHandle, ((serial_write_handle_t)&s_debugConsoleState.serialWriteHandleBuffer[0]));
         assert(kStatus_SerialManager_Success == status);
 #if defined(DEBUG_CONSOLE_TRANSFER_NON_BLOCKING)
-        SerialManager_InstallTxCallback(((serial_write_handle_t)&s_debugConsoleState.serialWriteHandleBuffer[0]),
-                                        DbgConsole_SerialManagerTxCallback, &s_debugConsoleState);
+        (void)SerialManager_InstallTxCallback(((serial_write_handle_t)&s_debugConsoleState.serialWriteHandleBuffer[0]),
+                                              DbgConsole_SerialManagerTxCallback, &s_debugConsoleState);
 #endif
     }
 
 #if (defined(DEBUG_CONSOLE_RX_ENABLE) && (DEBUG_CONSOLE_RX_ENABLE > 0U))
     {
-        status = SerialManager_OpenReadHandle(s_debugConsoleState.serialHandle,
-                                              ((serial_read_handle_t)&s_debugConsoleState.serialReadHandleBuffer[0]));
+        status = (status_t)SerialManager_OpenReadHandle(
+            s_debugConsoleState.serialHandle, ((serial_read_handle_t)&s_debugConsoleState.serialReadHandleBuffer[0]));
         assert(kStatus_SerialManager_Success == status);
 #if defined(DEBUG_CONSOLE_TRANSFER_NON_BLOCKING)
-        SerialManager_InstallRxCallback(((serial_read_handle_t)&s_debugConsoleState.serialReadHandleBuffer[0]),
-                                        DbgConsole_SerialManagerRxCallback, &s_debugConsoleState);
+        (void)SerialManager_InstallRxCallback(((serial_read_handle_t)&s_debugConsoleState.serialReadHandleBuffer[0]),
+                                              DbgConsole_SerialManagerRxCallback, &s_debugConsoleState);
 #endif
     }
 #endif
+
+    g_serialHandle = s_debugConsoleState.serialHandle;
+
     return kStatus_Success;
 }
 
@@ -701,23 +787,41 @@ status_t DbgConsole_Init(uint8_t instance, uint32_t baudRate, serial_port_type_t
 status_t DbgConsole_Deinit(void)
 {
     {
-        if (s_debugConsoleState.serialHandle)
+        if (s_debugConsoleState.serialHandle != NULL)
         {
-            SerialManager_CloseWriteHandle(((serial_write_handle_t)&s_debugConsoleState.serialWriteHandleBuffer[0]));
+            (void)SerialManager_CloseWriteHandle(
+                ((serial_write_handle_t)&s_debugConsoleState.serialWriteHandleBuffer[0]));
         }
     }
 #if (defined(DEBUG_CONSOLE_RX_ENABLE) && (DEBUG_CONSOLE_RX_ENABLE > 0U))
     {
-        if (s_debugConsoleState.serialHandle)
+        if (s_debugConsoleState.serialHandle != NULL)
         {
-            SerialManager_CloseReadHandle(((serial_read_handle_t)&s_debugConsoleState.serialReadHandleBuffer[0]));
+            (void)SerialManager_CloseReadHandle(((serial_read_handle_t)&s_debugConsoleState.serialReadHandleBuffer[0]));
         }
     }
 #endif
-    return kStatus_Success;
-}
+    if (s_debugConsoleState.serialHandle)
+    {
+        if (kStatus_SerialManager_Success == SerialManager_Deinit(s_debugConsoleState.serialHandle))
+        {
+            s_debugConsoleState.serialHandle = NULL;
+            g_serialHandle                   = NULL;
+        }
+    }
+#if (defined(DEBUG_CONSOLE_RX_ENABLE) && (DEBUG_CONSOLE_RX_ENABLE > 0U))
+    DEBUG_CONSOLE_DESTROY_BINARY_SEMAPHORE(s_debugConsoleReadWaitSemaphore);
+#endif
+    DEBUG_CONSOLE_DESTROY_MUTEX_SEMAPHORE(s_debugConsoleReadSemaphore);
 
-status_t DbgConsole_Flush(void)
+    return (status_t)kStatus_Success;
+}
+#endif /* ((SDK_DEBUGCONSOLE == DEBUGCONSOLE_REDIRECT_TO_SDK) || defined(SDK_DEBUGCONSOLE_UART)) */
+
+#if ((SDK_DEBUGCONSOLE > 0U) ||                                                   \
+     ((SDK_DEBUGCONSOLE == 0U) && defined(DEBUG_CONSOLE_TRANSFER_NON_BLOCKING) && \
+      (defined(DEBUG_CONSOLE_TX_RELIABLE_ENABLE) && (DEBUG_CONSOLE_TX_RELIABLE_ENABLE > 0U))))
+DEBUG_CONSOLE_FUNCTION_PREFIX status_t DbgConsole_Flush(void)
 {
 #if defined(DEBUG_CONSOLE_TRANSFER_NON_BLOCKING)
 
@@ -725,7 +829,7 @@ status_t DbgConsole_Flush(void)
 
     if (s_debugConsoleState.writeRingBuffer.ringHead != s_debugConsoleState.writeRingBuffer.ringTail)
     {
-        return kStatus_Fail;
+        return (status_t)kStatus_Fail;
     }
 
 #else
@@ -742,7 +846,7 @@ status_t DbgConsole_Flush(void)
         }
         else
         {
-            return kStatus_Fail;
+            return (status_t)kStatus_Fail;
         }
 #endif
     }
@@ -750,16 +854,17 @@ status_t DbgConsole_Flush(void)
 #endif
 
 #endif
-    return kStatus_Success;
+    return (status_t)kStatus_Success;
 }
+#endif
 
 #if SDK_DEBUGCONSOLE
 /* See fsl_debug_console.h for documentation of this function. */
 int DbgConsole_Printf(const char *formatString, ...)
 {
     va_list ap;
-    int logLength = 0U, result = 0U;
-    char printBuf[DEBUG_CONSOLE_PRINTF_MAX_LOG_LEN] = {0U};
+    int logLength = 0, dbgResult = 0;
+    char printBuf[DEBUG_CONSOLE_PRINTF_MAX_LOG_LEN] = {'\0'};
 
     if (NULL == g_serialHandle)
     {
@@ -770,11 +875,11 @@ int DbgConsole_Printf(const char *formatString, ...)
     /* format print log first */
     logLength = StrFormatPrintf(formatString, ap, printBuf, DbgConsole_PrintCallback);
     /* print log */
-    result = DbgConsole_SendDataReliable((uint8_t *)printBuf, logLength);
+    dbgResult = DbgConsole_SendDataReliable((uint8_t *)printBuf, (size_t)logLength);
 
     va_end(ap);
 
-    return result;
+    return dbgResult;
 }
 
 /* See fsl_debug_console.h for documentation of this function. */
@@ -788,19 +893,48 @@ int DbgConsole_Putchar(int ch)
 int DbgConsole_Scanf(char *formatString, ...)
 {
     va_list ap;
-    int result;
-    char scanfBuf[DEBUG_CONSOLE_SCANF_MAX_LOG_LEN + 1U] = {0U};
+    int formatResult;
+    char scanfBuf[DEBUG_CONSOLE_SCANF_MAX_LOG_LEN + 1U] = {'\0'};
 
     /* scanf log */
-    DbgConsole_ReadLine((uint8_t *)scanfBuf, DEBUG_CONSOLE_SCANF_MAX_LOG_LEN);
+    (void)DbgConsole_ReadLine((uint8_t *)scanfBuf, DEBUG_CONSOLE_SCANF_MAX_LOG_LEN);
     /* get va_list */
     va_start(ap, formatString);
     /* format scanf log */
-    result = StrFormatScanf(scanfBuf, formatString, ap);
+    formatResult = StrFormatScanf(scanfBuf, formatString, ap);
 
     va_end(ap);
 
-    return result;
+    return formatResult;
+}
+/* See fsl_debug_console.h for documentation of this function. */
+int DbgConsole_BlockingPrintf(const char *formatString, ...)
+{
+    va_list ap;
+    status_t status = (status_t)kStatus_SerialManager_Error;
+    int logLength = 0, dbgResult = 0;
+    char printBuf[DEBUG_CONSOLE_PRINTF_MAX_LOG_LEN] = {'\0'};
+
+    if (NULL == g_serialHandle)
+    {
+        return 0;
+    }
+
+    va_start(ap, formatString);
+    /* format print log first */
+    logLength = StrFormatPrintf(formatString, ap, printBuf, DbgConsole_PrintCallback);
+
+#if defined(DEBUG_CONSOLE_TRANSFER_NON_BLOCKING)
+    SerialManager_CancelWriting(((serial_write_handle_t)&s_debugConsoleState.serialWriteHandleBuffer[0]));
+#endif
+    /* print log */
+    status =
+        (status_t)SerialManager_WriteBlocking(((serial_write_handle_t)&s_debugConsoleState.serialWriteHandleBuffer[0]),
+                                              (uint8_t *)printBuf, (size_t)logLength);
+    dbgResult = (((status_t)kStatus_Success == status) ? (int)logLength : -1);
+    va_end(ap);
+
+    return dbgResult;
 }
 
 #ifdef DEBUG_CONSOLE_TRANSFER_NON_BLOCKING
@@ -808,9 +942,14 @@ status_t DbgConsole_TryGetchar(char *ch)
 {
 #if (defined(DEBUG_CONSOLE_RX_ENABLE) && (DEBUG_CONSOLE_RX_ENABLE > 0U))
     uint32_t length = 0;
-    status_t status = kStatus_Fail;
+    status_t status = (status_t)kStatus_Fail;
 
     assert(ch);
+
+    if (NULL == g_serialHandle)
+    {
+        return kStatus_Fail;
+    }
 
     /* take mutex lock function */
     DEBUG_CONSOLE_TAKE_MUTEX_SEMAPHORE_BLOCKING(s_debugConsoleReadSemaphore);
@@ -819,19 +958,19 @@ status_t DbgConsole_TryGetchar(char *ch)
         SerialManager_TryRead(((serial_read_handle_t)&s_debugConsoleState.serialReadHandleBuffer[0]), (uint8_t *)ch, 1,
                               &length))
     {
-        if (length)
+        if (length != 0U)
         {
 #if DEBUG_CONSOLE_ENABLE_ECHO_FUNCTION
-            DbgConsole_EchoCharacter(ch, true, NULL);
+            (void)DbgConsole_EchoCharacter((uint8_t *)ch, true, NULL);
 #endif
-            status = kStatus_Success;
+            status = (status_t)kStatus_Success;
         }
     }
     /* release mutex lock function */
     DEBUG_CONSOLE_GIVE_MUTEX_SEMAPHORE(s_debugConsoleReadSemaphore);
     return status;
 #else
-    return kStatus_Fail;
+    return (status_t)kStatus_Fail;
 #endif
 }
 #endif
@@ -842,7 +981,7 @@ int DbgConsole_Getchar(void)
     uint8_t ch = 0U;
 
     /* Get char */
-    DbgConsole_ReadCharacter(&ch);
+    (void)DbgConsole_ReadCharacter(&ch);
 
     return (int)ch;
 }
@@ -909,7 +1048,7 @@ size_t __read(int handle, unsigned char *buffer, size_t size)
 /* support LPC Xpresso with RedLib */
 #elif (defined(__REDLIB__))
 
-#if (!SDK_DEBUGCONSOLE) && (defined(SDK_DEBUGCONSOLE_UART))
+#if (defined(SDK_DEBUGCONSOLE_UART))
 int __attribute__((weak)) __sys_write(int handle, char *buffer, int size)
 {
     if (buffer == 0)
@@ -1010,11 +1149,11 @@ char *_sys_command_string(char *cmd, int len)
 #elif (defined(__GNUC__))
 
 #if ((defined(__GNUC__) && (!defined(__MCUXPRESSO)) && (defined(SDK_DEBUGCONSOLE_UART))) || \
-     (defined(__MCUXPRESSO) && (!SDK_DEBUGCONSOLE) && (defined(SDK_DEBUGCONSOLE_UART))))
-
+     (defined(__MCUXPRESSO) && (defined(SDK_DEBUGCONSOLE_UART))))
+int __attribute__((weak)) _write(int handle, char *buffer, int size);
 int __attribute__((weak)) _write(int handle, char *buffer, int size)
 {
-    if (buffer == 0)
+    if (buffer == NULL)
     {
         /* return -1 if error. */
         return -1;
@@ -1027,15 +1166,16 @@ int __attribute__((weak)) _write(int handle, char *buffer, int size)
     }
 
     /* Send data. */
-    DbgConsole_SendDataReliable((uint8_t *)buffer, size);
+    (void)DbgConsole_SendDataReliable((uint8_t *)buffer, (size_t)size);
 
     return size;
 }
 
+int __attribute__((weak)) _read(int handle, char *buffer, int size);
 int __attribute__((weak)) _read(int handle, char *buffer, int size)
 {
     uint8_t ch     = 0U;
-    int actualSize = 0U;
+    int actualSize = 0;
 
     /* This function only reads from "standard in", for all other file handles it returns failure. */
     if (handle != 0)
@@ -1051,10 +1191,10 @@ int __attribute__((weak)) _read(int handle, char *buffer, int size)
             break;
         }
 
-        *buffer++ = ch;
+        *buffer++ = (char)ch;
         actualSize++;
 
-        if ((ch == 0) || (ch == '\n') || (ch == '\r'))
+        if ((ch == 0U) || (ch == (uint8_t)'\n') || (ch == (uint8_t)'\r'))
         {
             break;
         }

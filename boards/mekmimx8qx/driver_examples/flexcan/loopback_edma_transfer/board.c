@@ -13,9 +13,6 @@
 #if defined(SDK_I2C_BASED_COMPONENT_USED) && SDK_I2C_BASED_COMPONENT_USED
 #include "fsl_lpi2c.h"
 #endif /* SDK_I2C_BASED_COMPONENT_USED */
-#ifdef BOARD_USE_CODEC
-#include "fsl_wm8960.h"
-#endif
 #ifdef FSL_RTOS_FREE_RTOS
 #include "FreeRTOS.h"
 #include "task.h"
@@ -33,7 +30,8 @@
 #ifdef BOARD_USE_SCFW_IRQ
 typedef struct _pad_ele *pad_ele_t;
 
-struct _pad_ele {
+struct _pad_ele
+{
     sc_pad_t pad;
     pad_ele_t next;
     pad_ele_t prev;
@@ -44,24 +42,16 @@ struct _pad_ele {
  * Variables
  ******************************************************************************/
 static sc_ipc_t ipcHandle; /* ipc handle */
-
 #ifdef BOARD_USE_SCFW_IRQ
 #ifdef FSL_RTOS_FREE_RTOS
 static TimerHandle_t s_scuEventTimer = NULL;
 #endif
 static sc_rm_pt_t a_pt;
 static eventHandler s_BOARDEventHandler[kSCEvent_Last] = {NULL};
-static void* s_BOARDEventHandlerParam[kSCEvent_Last] = {NULL};
-static pad_ele_t wakeup_padlist = NULL;
+static void *s_BOARDEventHandlerParam[kSCEvent_Last]   = {NULL};
+static pad_ele_t wakeup_padlist                        = NULL;
 #endif
 
-#if defined BOARD_USE_CODEC
-codec_config_t boardCodecConfig = {.I2C_SendFunc    = BOARD_Codec_I2C_Send,
-                                   .I2C_ReceiveFunc = BOARD_Codec_I2C_Receive,
-                                   .op.Init         = WM8960_Init,
-                                   .op.Deinit       = WM8960_Deinit,
-                                   .op.SetFormat    = WM8960_ConfigDataFormat};
-#endif
 /*******************************************************************************
  * Code
  ******************************************************************************/
@@ -142,7 +132,7 @@ void BOARD_InitMemory(void)
        Since the base address of MPU region should be multiples of region size, to make it simple, the MPU region 0 set
        the all 512M of SRAM space
        with device attributes, then disable subregion 0 and 1 (address space 0x20000000 ~ 0x27FFFFFF) to use the
-       background memory attributes。
+       background memory attributes.
     */
 
     /* Select Region 0 and set its base address to the M4 code bus start address. */
@@ -259,50 +249,41 @@ status_t BOARD_LPI2C_Send(LPI2C_Type *base,
                           uint8_t *txBuff,
                           uint32_t txSize)
 {
-    status_t reVal = kStatus_Fail;
+    lpi2c_master_transfer_t xfer;
 
-    if (kStatus_Success == LPI2C_MasterStart(base, dev_addr, kLPI2C_Write))
-    {
-#if 0
-        while (LPI2C_MasterGetStatusFlags(base) & kLPI2C_MasterNackDetectFlag)
-        {
-        }
-#endif
+    xfer.flags          = kLPI2C_TransferDefaultFlag;
+    xfer.slaveAddress   = dev_addr;
+    xfer.direction      = kLPI2C_Write;
+    xfer.subaddress     = subAddress;
+    xfer.subaddressSize = subaddressSize;
+    xfer.data           = txBuff;
+    xfer.dataSize       = txSize;
 
-        reVal = LPI2C_MasterSend(base, &subAddress, subaddressSize);
-        if (reVal != kStatus_Success)
-        {
-            return -1;
-        }
-
-        reVal = LPI2C_MasterSend(base, txBuff, txSize);
-        if (reVal != kStatus_Success)
-        {
-            return -1;
-        }
-
-        reVal = LPI2C_MasterStop(base);
-        if (reVal != kStatus_Success)
-        {
-            return -1;
-        }
-    }
-    return reVal;
+    return LPI2C_MasterTransferBlocking(base, &xfer);
 }
 
-status_t BOARD_LPI2C_SendWithoutSubAddr(LPI2C_Type *base, uint8_t deviceAddress, uint8_t *txBuff, uint8_t txBuffSize, bool needStop)
+status_t BOARD_LPI2C_SendWithoutSubAddr(
+    LPI2C_Type *base, uint8_t deviceAddress, uint8_t *txBuff, uint8_t txBuffSize, bool needStop)
 {
     status_t reVal;
+    size_t txCount = 0xFFU;
 
     /* Send master blocking data to slave */
     reVal = LPI2C_MasterStart(base, deviceAddress, kLPI2C_Write);
     if (kStatus_Success == reVal)
     {
-#if 0
-        while (LPI2C_MasterGetStatusFlags(base) & kLPI2C_MasterNackDetectFlag)
+        /* Check master tx FIFO empty or not */
+        LPI2C_MasterGetFifoCounts(base, NULL, &txCount);
+        while (txCount)
         {
+            LPI2C_MasterGetFifoCounts(base, NULL, &txCount);
         }
-#endif
+
+        /* Check communicate with slave successful or not */
+        if (LPI2C_MasterGetStatusFlags(base) & kLPI2C_MasterNackDetectFlag)
+        {
+            return kStatus_LPI2C_Nak;
+        }
 
         reVal = LPI2C_MasterSend(base, txBuff, txBuffSize);
         if (reVal != kStatus_Success)
@@ -310,9 +291,11 @@ status_t BOARD_LPI2C_SendWithoutSubAddr(LPI2C_Type *base, uint8_t deviceAddress,
             return reVal;
         }
 
-        if (needStop) {
+        if (needStop)
+        {
             reVal = LPI2C_MasterStop(base);
-            if (reVal != kStatus_Success) {
+            if (reVal != kStatus_Success)
+            {
                 return reVal;
             }
         }
@@ -328,57 +311,35 @@ status_t BOARD_LPI2C_Receive(LPI2C_Type *base,
                              uint8_t *rxBuff,
                              uint8_t rxBuffSize)
 {
-    status_t reVal;
+    lpi2c_master_transfer_t xfer;
 
-    reVal = LPI2C_MasterStart(base, deviceAddress, kLPI2C_Write);
-    if (kStatus_Success == reVal)
-    {
-#if 0
-        while (LPI2C_MasterGetStatusFlags(base) & kLPI2C_MasterNackDetectFlag)
-        {
-        }
-#endif
+    xfer.flags          = kLPI2C_TransferDefaultFlag;
+    xfer.slaveAddress   = deviceAddress;
+    xfer.direction      = kLPI2C_Read;
+    xfer.subaddress     = subAddress;
+    xfer.subaddressSize = subAddressSize;
+    xfer.data           = rxBuff;
+    xfer.dataSize       = rxBuffSize;
 
-        reVal = LPI2C_MasterSend(base, &subAddress, subAddressSize);
-        if (reVal != kStatus_Success)
-        {
-            return reVal;
-        }
-
-        reVal = LPI2C_MasterRepeatedStart(base, deviceAddress, kLPI2C_Read);
-
-        if (reVal != kStatus_Success)
-        {
-            return reVal;
-        }
-
-        reVal = LPI2C_MasterReceive(base, rxBuff, rxBuffSize);
-        if (reVal != kStatus_Success)
-        {
-            return reVal;
-        }
-
-        reVal = LPI2C_MasterStop(base);
-        if (reVal != kStatus_Success)
-        {
-            return reVal;
-        }
-    }
-    return reVal;
+    return LPI2C_MasterTransferBlocking(base, &xfer);
 }
 
-status_t BOARD_LPI2C_ReceiveWithoutSubAddr(LPI2C_Type *base, uint8_t deviceAddress, uint8_t *rxBuff, uint8_t rxBuffSize, uint8_t flags)
+status_t BOARD_LPI2C_ReceiveWithoutSubAddr(
+    LPI2C_Type *base, uint8_t deviceAddress, uint8_t *rxBuff, uint8_t rxBuffSize, uint8_t flags)
 {
     status_t reVal;
 
     reVal = LPI2C_MasterStart(base, deviceAddress, kLPI2C_Read);
     if (kStatus_Success == reVal)
     {
-#if 0
-        while (LPI2C_MasterGetStatusFlags(base) & kLPI2C_MasterNackDetectFlag)
+        /*Can't do FIFO check here because data may reach the FIFO eariler in read operation*/
+
+        /* Check communicate with slave successful or not */
+        if (LPI2C_MasterGetStatusFlags(base) & kLPI2C_MasterNackDetectFlag)
         {
+            return kStatus_LPI2C_Nak;
         }
-#endif
+
         reVal = LPI2C_MasterReceive(base, rxBuff, rxBuffSize);
         if (reVal != kStatus_Success)
         {
@@ -401,7 +362,17 @@ status_t BOARD_LPI2C_SendSCCB(LPI2C_Type *base,
                               uint8_t *txBuff,
                               uint8_t txBuffSize)
 {
-    return BOARD_LPI2C_Send(base, deviceAddress, subAddress, subAddressSize, txBuff, txBuffSize);
+    lpi2c_master_transfer_t xfer;
+
+    xfer.flags          = kLPI2C_TransferDefaultFlag;
+    xfer.slaveAddress   = deviceAddress;
+    xfer.direction      = kLPI2C_Write;
+    xfer.subaddress     = subAddress;
+    xfer.subaddressSize = subAddressSize;
+    xfer.data           = txBuff;
+    xfer.dataSize       = txBuffSize;
+
+    return LPI2C_MasterTransferBlocking(base, &xfer);
 }
 
 status_t BOARD_LPI2C_ReceiveSCCB(LPI2C_Type *base,
@@ -411,51 +382,30 @@ status_t BOARD_LPI2C_ReceiveSCCB(LPI2C_Type *base,
                                  uint8_t *rxBuff,
                                  uint8_t rxBuffSize)
 {
-    status_t reVal;
+    status_t status;
+    lpi2c_master_transfer_t xfer;
 
-    reVal = LPI2C_MasterStart(base, deviceAddress, kLPI2C_Write);
-    if (kStatus_Success == reVal)
+    xfer.flags          = kLPI2C_TransferDefaultFlag;
+    xfer.slaveAddress   = deviceAddress;
+    xfer.direction      = kLPI2C_Write;
+    xfer.subaddress     = subAddress;
+    xfer.subaddressSize = subAddressSize;
+    xfer.data           = NULL;
+    xfer.dataSize       = 0;
+
+    status = LPI2C_MasterTransferBlocking(base, &xfer);
+
+    if (kStatus_Success == status)
     {
-#if 0
-        while (LPI2C_MasterGetStatusFlags(base) & kLPI2C_MasterNackDetectFlag)
-        {
-        }
-#endif
+        xfer.subaddressSize = 0;
+        xfer.direction      = kLPI2C_Read;
+        xfer.data           = rxBuff;
+        xfer.dataSize       = rxBuffSize;
 
-        reVal = LPI2C_MasterSend(base, &subAddress, subAddressSize);
-        if (reVal != kStatus_Success)
-        {
-            return reVal;
-        }
-
-        /* SCCB does not support LPI2C repeat start, must stop then start. */
-        reVal = LPI2C_MasterStop(base);
-
-        if (reVal != kStatus_Success)
-        {
-            return reVal;
-        }
-
-        reVal = LPI2C_MasterStart(base, deviceAddress, kLPI2C_Read);
-
-        if (reVal != kStatus_Success)
-        {
-            return reVal;
-        }
-
-        reVal = LPI2C_MasterReceive(base, rxBuff, rxBuffSize);
-        if (reVal != kStatus_Success)
-        {
-            return reVal;
-        }
-
-        reVal = LPI2C_MasterStop(base);
-        if (reVal != kStatus_Success)
-        {
-            return reVal;
-        }
+        status = LPI2C_MasterTransferBlocking(base, &xfer);
     }
-    return reVal;
+
+    return status;
 }
 
 void BOARD_Display0_I2C_Init(void)
@@ -677,8 +627,9 @@ status_t BOARD_Codec_I2C_Receive(
 static inline void BOARDInvokeHandler(sc_event_type_t event)
 {
     eventHandler handler = s_BOARDEventHandler[event];
-    void* param = s_BOARDEventHandlerParam[event];
-    if (handler) {
+    void *param          = s_BOARDEventHandlerParam[event];
+    if (handler)
+    {
         handler(param);
     }
 }
@@ -690,28 +641,33 @@ static sc_pad_t BOARD_CheckNextWakeupButton(void)
     pad_ele_t pad_ele;
     sc_pad_wakeup_t status;
 
-
     pad_ele = wakeup_padlist;
-    if (NULL == pad_ele) {
+    if (NULL == pad_ele)
+    {
         return 0;
     }
 
-    for (;;) {
+    for (;;)
+    {
         sc_pad_get_wakeup(ipcHandle, pad_ele->pad, &status);
-        if (SC_PAD_WAKEUP_OFF == status) {
+        if (SC_PAD_WAKEUP_OFF == status)
+        {
             return pad_ele->pad;
-        } else {
+        }
+        else
+        {
             pad_ele = pad_ele->next;
-            if (pad_ele == wakeup_padlist) {
+            if (pad_ele == wakeup_padlist)
+            {
                 return 0;
             }
         }
     }
 }
 
-void BOARD_RegisterEventHandler(sc_event_type_t event, eventHandler handler, void* param)
+void BOARD_RegisterEventHandler(sc_event_type_t event, eventHandler handler, void *param)
 {
-    s_BOARDEventHandler[event] = handler;
+    s_BOARDEventHandler[event]      = handler;
     s_BOARDEventHandlerParam[event] = param;
 }
 
@@ -729,7 +685,8 @@ static void BOARD_SCEventHandler(void)
     /*
      * If Peer Core Reset happens
      */
-    if (status & (0x1 << a_pt)) {
+    if (status & (0x1 << a_pt))
+    {
         BOARDInvokeHandler(kSCEvent_PeerCoreReboot);
     }
 
@@ -740,7 +697,7 @@ static void BOARD_SCEventHandler(void)
     }
     if (status & SC_IRQ_PAD)
     {
-        *(sc_pad_t*)s_BOARDEventHandlerParam[kSCEvent_Pad] = BOARD_CheckNextWakeupButton();
+        *(sc_pad_t *)s_BOARDEventHandlerParam[kSCEvent_Pad] = BOARD_CheckNextWakeupButton();
         BOARDInvokeHandler(kSCEvent_Pad);
     }
     /*
@@ -754,28 +711,33 @@ static inline pad_ele_t Padlist_Find(pad_ele_t head, sc_pad_t pad)
     if (NULL == head)
         return NULL;
     pad_ele = head;
-    for (;;) {
-        if (pad_ele->pad == pad) {
+    for (;;)
+    {
+        if (pad_ele->pad == pad)
+        {
             return pad_ele;
         }
         pad_ele = pad_ele->next;
-        if (pad_ele == head) {
+        if (pad_ele == head)
+        {
             return NULL;
         }
     }
 }
 
-static inline void Padlist_Insert(pad_ele_t head, pad_ele_t ele) {
+static inline void Padlist_Insert(pad_ele_t head, pad_ele_t ele)
+{
     assert(head);
     assert(ele);
 
-    ele->prev = head->prev;
-    ele->next = head;
+    ele->prev        = head->prev;
+    ele->next        = head;
     head->prev->next = ele;
-    head->prev = ele;
+    head->prev       = ele;
 }
 
-static inline void Padlist_Remove(pad_ele_t head, pad_ele_t ele) {
+static inline void Padlist_Remove(pad_ele_t head, pad_ele_t ele)
+{
     ele->prev->next = ele->next;
     ele->next->prev = ele->prev;
 }
@@ -783,31 +745,37 @@ static inline void Padlist_Remove(pad_ele_t head, pad_ele_t ele) {
  * BOARD_EnablePadWakeup
  */
 
-
 void BOARD_EnablePadWakeup(sc_pad_t pad, bool enable, sc_pad_wakeup_t pad_wakeup_config)
 {
     pad_ele_t pad_ele;
 
-    if (enable) {
+    if (enable)
+    {
         /*
          * Create the new element
          */
-        if (Padlist_Find(wakeup_padlist, pad)) {
+        if (Padlist_Find(wakeup_padlist, pad))
+        {
             /*
              * Already enabled
              */
             return;
-        } else {
-            pad_ele = malloc(sizeof(struct _pad_ele));
+        }
+        else
+        {
+            pad_ele       = malloc(sizeof(struct _pad_ele));
             pad_ele->next = pad_ele;
             pad_ele->prev = pad_ele;
-            pad_ele->pad = pad;
+            pad_ele->pad  = pad;
             /*
              * Insert to link list
              */
-            if (NULL == wakeup_padlist) {
+            if (NULL == wakeup_padlist)
+            {
                 wakeup_padlist = pad_ele;
-            } else {
+            }
+            else
+            {
                 Padlist_Insert(wakeup_padlist, pad_ele);
             }
 
@@ -817,20 +785,27 @@ void BOARD_EnablePadWakeup(sc_pad_t pad, bool enable, sc_pad_wakeup_t pad_wakeup
             sc_pad_set_wakeup(ipcHandle, pad, pad_wakeup_config);
         }
     }
-    else {
+    else
+    {
         pad_ele = Padlist_Find(wakeup_padlist, pad);
-        if (pad_ele != NULL) {
-            if (pad_ele->next == pad_ele) {
+        if (pad_ele != NULL)
+        {
+            if (pad_ele->next == pad_ele)
+            {
                 wakeup_padlist = NULL;
-            } else {
+            }
+            else
+            {
                 Padlist_Remove(wakeup_padlist, pad_ele);
             }
-            pad_ele->pad = 0;
+            pad_ele->pad  = 0;
             pad_ele->next = NULL;
             pad_ele->prev = NULL;
             free(pad_ele);
             sc_pad_set_wakeup(ipcHandle, pad, SC_PAD_WAKEUP_OFF);
-        } else {
+        }
+        else
+        {
             /*
              * not enabled yet
              */
@@ -846,16 +821,19 @@ void BOARD_EnableSCEvent(uint32_t mask, bool enable)
 {
     sc_ipc_t ipc;
     uint32_t status;
-    ipc = BOARD_GetRpcHandle();
+    ipc                                      = BOARD_GetRpcHandle();
     static uint8_t enable_cnt[kSCEvent_Last] = {0};
-    static uint8_t overall_enable_cnt = 0;
+    static uint8_t overall_enable_cnt        = 0;
 
-    if (enable) {
+    if (enable)
+    {
         /*
          * Enable Peer Core Reset IRQ
          */
-        if (mask & SC_EVENT_MASK(kSCEvent_PeerCoreReboot)) {
-            if (1 == ++enable_cnt[kSCEvent_PeerCoreReboot]) {
+        if (mask & SC_EVENT_MASK(kSCEvent_PeerCoreReboot))
+        {
+            if (1 == ++enable_cnt[kSCEvent_PeerCoreReboot])
+            {
                 sc_rm_get_resource_owner(ipc, SC_R_A35, &a_pt);
                 sc_irq_enable(ipc, IPC_MU_RSRC, SC_IRQ_GROUP_REBOOT, 0x1 << a_pt, true);
             }
@@ -864,8 +842,10 @@ void BOARD_EnableSCEvent(uint32_t mask, bool enable)
         /*
          * PAD IRQ
          */
-        if (mask & SC_EVENT_MASK(kSCEvent_Pad)) {
-            if (1 == ++enable_cnt[kSCEvent_Pad]) {
+        if (mask & SC_EVENT_MASK(kSCEvent_Pad))
+        {
+            if (1 == ++enable_cnt[kSCEvent_Pad])
+            {
                 /*
                  * Clear the interrupt first to avoid residue pending status
                  */
@@ -877,8 +857,10 @@ void BOARD_EnableSCEvent(uint32_t mask, bool enable)
         /*
          * BUTTON IRQ
          */
-        if (mask & SC_EVENT_MASK(kSCEvent_Button)) {
-            if (1 == ++enable_cnt[kSCEvent_Button]) {
+        if (mask & SC_EVENT_MASK(kSCEvent_Button))
+        {
+            if (1 == ++enable_cnt[kSCEvent_Button])
+            {
                 /*
                  * Clear the interrupt first to avoid residue pending status
                  */
@@ -890,8 +872,10 @@ void BOARD_EnableSCEvent(uint32_t mask, bool enable)
         /*
          *  SYSCTR IRQ
          */
-        if (mask & SC_EVENT_MASK(kSCEvent_SysCtr)) {
-            if (1 == ++enable_cnt[kSCEvent_SysCtr]) {
+        if (mask & SC_EVENT_MASK(kSCEvent_SysCtr))
+        {
+            if (1 == ++enable_cnt[kSCEvent_SysCtr])
+            {
                 sc_irq_enable(ipc, IPC_MU_RSRC, SC_IRQ_GROUP_SYSCTR, SC_IRQ_SYSCTR, true);
             }
             overall_enable_cnt++;
@@ -906,14 +890,16 @@ void BOARD_EnableSCEvent(uint32_t mask, bool enable)
         /*
          * Enable the MU Interrupt to receive SCFW IRQ
          */
-
     }
-    else {
+    else
+    {
         /*
          * Disable Peer Core Reset IRQ
          */
-        if ((mask & SC_EVENT_MASK(kSCEvent_PeerCoreReboot)) && (enable_cnt[kSCEvent_PeerCoreReboot] > 0)) {
-            if (0 == --enable_cnt[kSCEvent_PeerCoreReboot]) {
+        if ((mask & SC_EVENT_MASK(kSCEvent_PeerCoreReboot)) && (enable_cnt[kSCEvent_PeerCoreReboot] > 0))
+        {
+            if (0 == --enable_cnt[kSCEvent_PeerCoreReboot])
+            {
                 sc_irq_enable(ipc, IPC_MU_RSRC, SC_IRQ_GROUP_REBOOT, 0x1 << a_pt, false);
             }
             overall_enable_cnt--;
@@ -921,8 +907,10 @@ void BOARD_EnableSCEvent(uint32_t mask, bool enable)
         /*
          * PAD IRQ
          */
-        if ((mask & SC_EVENT_MASK(kSCEvent_Pad)) && (enable_cnt[kSCEvent_Pad] > 0)) {
-            if (0 == --enable_cnt[kSCEvent_Pad]) {
+        if ((mask & SC_EVENT_MASK(kSCEvent_Pad)) && (enable_cnt[kSCEvent_Pad] > 0))
+        {
+            if (0 == --enable_cnt[kSCEvent_Pad])
+            {
                 sc_irq_enable(ipc, IPC_MU_RSRC, SC_IRQ_GROUP_WAKE, SC_IRQ_PAD, false);
             }
             overall_enable_cnt--;
@@ -930,8 +918,10 @@ void BOARD_EnableSCEvent(uint32_t mask, bool enable)
         /*
          * BUTTON IRQ
          */
-        if ((mask & SC_EVENT_MASK(kSCEvent_Button)) && (enable_cnt[kSCEvent_Button] > 0)) {
-            if (0 == --enable_cnt[kSCEvent_Button]) {
+        if ((mask & SC_EVENT_MASK(kSCEvent_Button)) && (enable_cnt[kSCEvent_Button] > 0))
+        {
+            if (0 == --enable_cnt[kSCEvent_Button])
+            {
                 sc_irq_enable(ipc, IPC_MU_RSRC, SC_IRQ_GROUP_WAKE, SC_IRQ_BUTTON, false);
             }
             overall_enable_cnt--;
@@ -939,8 +929,10 @@ void BOARD_EnableSCEvent(uint32_t mask, bool enable)
         /*
          *  SYSCTR IRQ
          */
-        if ((mask & (1 << kSCEvent_SysCtr)) && (enable_cnt[kSCEvent_SysCtr] > 0)) {
-            if (0 == --enable_cnt[kSCEvent_SysCtr]) {
+        if ((mask & (1 << kSCEvent_SysCtr)) && (enable_cnt[kSCEvent_SysCtr] > 0))
+        {
+            if (0 == --enable_cnt[kSCEvent_SysCtr])
+            {
                 sc_irq_enable(ipc, IPC_MU_RSRC, SC_IRQ_GROUP_SYSCTR, SC_IRQ_SYSCTR, false);
             }
             overall_enable_cnt--;
@@ -964,12 +956,14 @@ void BOARD_Enable_SCIRQ(bool enable)
     static uint32_t enable_cnt = 0;
     MU_ClearStatusFlags(IPC_MU, MU_SR_GIPn_MASK);
 
-    if (enable) {
+    if (enable)
+    {
         enable_cnt++;
         /*
          * Create a timer
          */
-        if (enable_cnt == 1) {
+        if (enable_cnt == 1)
+        {
 #ifdef FSL_RTOS_FREE_RTOS
             /*
              * SCFW API cannot be invoked in ISR context. The Reboot ISR will start a timer with its callback
@@ -985,10 +979,13 @@ void BOARD_Enable_SCIRQ(bool enable)
             EnableIRQ(IPC_MU_IRQn);
             MU_EnableInterrupts(IPC_MU, MU_SR_GIPn_MASK);
         }
-    } else {
+    }
+    else
+    {
         assert(enable_cnt > 0);
         enable_cnt--;
-        if (enable_cnt == 0) {
+        if (enable_cnt == 0)
+        {
             /*
              * Destroy the timer
              */

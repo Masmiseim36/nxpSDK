@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 NXP
+ * Copyright 2017-2019 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -13,7 +13,7 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v4.1
+product: Pins v7.0
 processor: MIMX8QX6xxxFZ
 package_id: MIMX8QX6AVLFZ
 mcu_data: ksdk2_0
@@ -42,19 +42,19 @@ void BOARD_InitBootPins(void)
 BOARD_InitPins:
 - options: {callFromInitBoot: 'false', coreID: m4}
 - pin_list:
-  - {pin_num: V32, peripheral: M40__UART0, signal: uart_rx, pin_signal: ADC_IN2, sw_config: sw_config_0}
-  - {pin_num: V30, peripheral: M40__UART0, signal: uart_tx, pin_signal: ADC_IN3, sw_config: sw_config_0}
-  - {pin_num: AK14, peripheral: LSIO__QSPI0, signal: 'qspi_a_data, 0', pin_signal: QSPI0A_DATA0, sw_config: sw_config_0}
-  - {pin_num: AR13, peripheral: LSIO__QSPI0, signal: 'qspi_a_data, 1', pin_signal: QSPI0A_DATA1, sw_config: sw_config_0}
-  - {pin_num: AJ13, peripheral: LSIO__QSPI0, signal: 'qspi_a_data, 2', pin_signal: QSPI0A_DATA2, sw_config: sw_config_0}
-  - {pin_num: AH12, peripheral: LSIO__QSPI0, signal: 'qspi_a_data, 3', pin_signal: QSPI0A_DATA3, sw_config: sw_config_0}
-  - {pin_num: AL11, peripheral: LSIO__QSPI0, signal: qspi_a_dqs, pin_signal: QSPI0A_DQS, sw_config: sw_config_0}
-  - {pin_num: AP12, peripheral: LSIO__QSPI0, signal: qspi_a_sclk, pin_signal: QSPI0A_SCLK, sw_config: sw_config_0}
-  - {pin_num: AM12, peripheral: LSIO__QSPI0, signal: qspi_a_ss0_b, pin_signal: QSPI0A_SS0_B, sw_config: sw_config_0}
-  - {pin_num: AM10, peripheral: LSIO__QSPI0, signal: 'qspi_b_data, 0', pin_signal: QSPI0B_DATA0, sw_config: sw_config_0}
-  - {pin_num: AL9, peripheral: LSIO__QSPI0, signal: 'qspi_b_data, 1', pin_signal: QSPI0B_DATA1, sw_config: sw_config_0}
-  - {pin_num: AJ11, peripheral: LSIO__QSPI0, signal: 'qspi_b_data, 2', pin_signal: QSPI0B_DATA2, sw_config: sw_config_0}
-  - {pin_num: AM8, peripheral: LSIO__QSPI0, signal: 'qspi_b_data, 3', pin_signal: QSPI0B_DATA3, sw_config: sw_config_0}
+  - {pin_num: V32, peripheral: M40__UART0, signal: uart_rx, pin_signal: ADC_IN2, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: V30, peripheral: M40__UART0, signal: uart_tx, pin_signal: ADC_IN3, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: AK14, peripheral: LSIO__QSPI0, signal: 'qspi_a_data, 0', pin_signal: QSPI0A_DATA0, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: AR13, peripheral: LSIO__QSPI0, signal: 'qspi_a_data, 1', pin_signal: QSPI0A_DATA1, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: AJ13, peripheral: LSIO__QSPI0, signal: 'qspi_a_data, 2', pin_signal: QSPI0A_DATA2, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: AH12, peripheral: LSIO__QSPI0, signal: 'qspi_a_data, 3', pin_signal: QSPI0A_DATA3, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: AL11, peripheral: LSIO__QSPI0, signal: qspi_a_dqs, pin_signal: QSPI0A_DQS, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: AP12, peripheral: LSIO__QSPI0, signal: qspi_a_sclk, pin_signal: QSPI0A_SCLK, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: AM12, peripheral: LSIO__QSPI0, signal: qspi_a_ss0_b, pin_signal: QSPI0A_SS0_B, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: AM10, peripheral: LSIO__QSPI0, signal: 'qspi_b_data, 0', pin_signal: QSPI0B_DATA0, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: AL9, peripheral: LSIO__QSPI0, signal: 'qspi_b_data, 1', pin_signal: QSPI0B_DATA1, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: AJ11, peripheral: LSIO__QSPI0, signal: 'qspi_b_data, 2', pin_signal: QSPI0B_DATA2, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: AM8, peripheral: LSIO__QSPI0, signal: 'qspi_b_data, 3', pin_signal: QSPI0B_DATA3, PULL: PULL_0, sw_config: sw_config_0}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 NXP
+ * Copyright 2017, 2019 NXP
  * All rights reserved.
  *
  *
@@ -45,10 +45,6 @@
 #define DSI_HOST_PKT_CONTROL_BTA_MASK (1U << 25U)
 #define DSI_HOST_PKT_CONTROL_BTA_ONLY_MASK (1U << 26U)
 
-/* The APB TX FIFO and RX FIFO DEPTH. */
-#define DSI_TX_FIFO_DEPTH_WORD 64
-#define DSI_RX_FIFO_DEPTH_WORD 64
-
 /* Macro used for D-PHY timing setting. */
 #define DSI_THS_ZERO_BYTE_CLK_BASE 6U
 #define DSI_TCLK_ZERO_BYTE_CLK_BASE 3U
@@ -69,7 +65,24 @@
 #define DSI_INT_STATUS_ERROR_REPORT_MASK (0xFFFFU << 9U)
 
 #if (defined(FSL_FEATURE_DSI_CSR_OFFSET) && FSL_FEATURE_DSI_CSR_OFFSET)
+#if (defined(FSL_FEATURE_LDB_COMBO_PHY) && FSL_FEATURE_LDB_COMBO_PHY)
+typedef MIPI_DSI_LVDS_COMBO_CSR_Type MIPI_DSI_CSR_Type;
+#define MIPI_DSI_CSR_ULPS_CTRL(csr) ((csr)->ULPS_CTRL)
+#define MIPI_DSI_CSR_ULPS_CTRL_ULPS_MASK MIPI_DSI_LVDS_COMBO_CSR_ULPS_CTRL_TX_ULPS_MASK
+#define MIPI_DSI_CSR_PXL2DPI(csr) ((csr)->PXL2DPI_CTRL)
+#else
+#define MIPI_DSI_CSR_ULPS_CTRL(csr) ((csr)->TX_ULPS_ENABLE)
+#define MIPI_DSI_CSR_ULPS_CTRL_ULPS_MASK MIPI_DSI_TX_ULPS_ENABLE_TX_ULPS_ENABLE_MASK
+#define MIPI_DSI_CSR_PXL2DPI(csr) ((csr)->PXL2DPI_CONFIG)
+#endif
+
 #define DSI_GET_CSR(dsi_base) (MIPI_DSI_CSR_Type *)((uint32_t)(dsi_base)-FSL_FEATURE_DSI_CSR_OFFSET)
+#endif
+
+#if defined(MIPI_DSI_HOST_DPHY_PD_TX_dphy_pd_tx_MASK)
+#define DPHY_PD_REG DPHY_PD_TX
+#elif defined(MIPI_DSI_HOST_DPHY_PD_DPHY_dphy_pd_dphy_MASK)
+#define DPHY_PD_REG DPHY_PD_DPHY
 #endif
 
 /*! @brief Typedef for MIPI DSI interrupt handler. */
@@ -78,6 +91,10 @@ typedef void (*dsi_isr_t)(MIPI_DSI_HOST_Type *base, dsi_handle_t *handle);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
+#if defined(MIPI_DSI_HOST_IRQS)
+/* Array of DSI IRQ number. */
+static const IRQn_Type s_dsiIRQ[] = MIPI_DSI_HOST_IRQS;
+#endif
 /*! @brief Pointers to MIPI DSI bases for each instance. */
 static MIPI_DSI_HOST_Type *const s_dsiBases[] = MIPI_DSI_HOST_BASE_PTRS;
 /*! @brief MIPI DSI internal handle pointer array */
@@ -101,6 +118,7 @@ static const clock_ip_name_t s_dsiClocks[] = MIPI_DSI_HOST_CLOCKS;
  */
 uint32_t DSI_GetInstance(MIPI_DSI_HOST_Type *base);
 
+#if !((defined(FSL_FEATURE_MIPI_DSI_HOST_NO_DPHY_PLL) && (FSL_FEATURE_MIPI_DSI_HOST_NO_DPHY_PLL)))
 /*!
  * @brief Convert the D-PHY PLL CN to the value could be set to register.
  *
@@ -137,6 +155,7 @@ static uint8_t DSI_EncodeDphyPllCm(uint8_t cm);
  */
 static uint32_t DSI_DphyGetPllDivider(
     uint32_t *cn, uint32_t *cm, uint32_t *co, uint32_t refClkFreq_Hz, uint32_t desiredOutFreq_Hz);
+#endif
 
 /*!
  * @brief Clear the RX FIFO.
@@ -199,6 +218,7 @@ uint32_t DSI_GetInstance(MIPI_DSI_HOST_Type *base)
     return instance;
 }
 
+#if !((defined(FSL_FEATURE_MIPI_DSI_HOST_NO_DPHY_PLL) && (FSL_FEATURE_MIPI_DSI_HOST_NO_DPHY_PLL)))
 static uint8_t DSI_EncodeDphyPllCn(uint8_t cn)
 {
     assert((cn >= 1) && (cn <= 32));
@@ -318,6 +338,7 @@ static uint32_t DSI_DphyGetPllDivider(
 
     return pllFreqCandidate;
 }
+#endif
 
 static void DSI_ApbClearRxFifo(MIPI_DSI_HOST_Type *base)
 {
@@ -353,11 +374,11 @@ void DSI_Init(MIPI_DSI_HOST_Type *base, const dsi_config_t *config)
     MIPI_DSI_CSR_Type *csr = DSI_GET_CSR(base);
     if (config->enableTxUlps)
     {
-        csr->TX_ULPS_ENABLE = MIPI_DSI_TX_ULPS_ENABLE_TX_ULPS_ENABLE_MASK;
+        MIPI_DSI_CSR_ULPS_CTRL(csr) = MIPI_DSI_CSR_ULPS_CTRL_ULPS_MASK;
     }
     else
     {
-        csr->TX_ULPS_ENABLE = 0;
+        MIPI_DSI_CSR_ULPS_CTRL(csr) = 0U;
     }
 #endif
 
@@ -387,6 +408,12 @@ void DSI_Init(MIPI_DSI_HOST_Type *base, const dsi_config_t *config)
     base->DSI_HOST_CFG_BTA_H_TO_COUNT        = config->btaTo_ByteClk;
 
     DSI_ApbClearRxFifo(base);
+
+    /* Disable all interrupts by default, user could enable
+     * the desired interrupts later.
+     */
+    base->DSI_HOST_IRQ_MASK  = 0xFFFFFFFFU;
+    base->DSI_HOST_IRQ_MASK2 = 0xFFFFFFFFU;
 }
 
 /*!
@@ -462,8 +489,8 @@ void DSI_SetDpiConfig(MIPI_DSI_HOST_Type *base,
     uint32_t coff = (numLanes * dsiHsBitClkFreq_Hz) / (dpiPixelClkFreq_Hz * 8);
 
 #if (defined(FSL_FEATURE_DSI_CSR_OFFSET) && FSL_FEATURE_DSI_CSR_OFFSET)
-    MIPI_DSI_CSR_Type *csr = DSI_GET_CSR(base);
-    csr->PXL2DPI_CONFIG    = config->dpiColorCoding;
+    MIPI_DSI_CSR_Type *csr    = DSI_GET_CSR(base);
+    MIPI_DSI_CSR_PXL2DPI(csr) = config->dpiColorCoding;
 #endif
 
     base->DSI_HOST_CFG_DPI_PIXEL_PAYLOAD_SIZE     = config->pixelPayloadSize;
@@ -544,6 +571,7 @@ uint32_t DSI_InitDphy(MIPI_DSI_HOST_Type *base, const dsi_dphy_config_t *config,
 {
     assert(config);
 
+#if !((defined(FSL_FEATURE_MIPI_DSI_HOST_NO_DPHY_PLL) && (FSL_FEATURE_MIPI_DSI_HOST_NO_DPHY_PLL)))
     uint32_t cn, cm, co, outputPllFreq;
 
     outputPllFreq = DSI_DphyGetPllDivider(&cn, &cm, &co, refClkFreq_Hz, config->txHsBitClk_Hz);
@@ -558,6 +586,7 @@ uint32_t DSI_InitDphy(MIPI_DSI_HOST_Type *base, const dsi_dphy_config_t *config,
     base->DPHY_CN = DSI_EncodeDphyPllCn(cn);
     base->DPHY_CM = DSI_EncodeDphyPllCm(cm);
     base->DPHY_CO = co;
+#endif
 
     /* Set the timing parameters. */
     base->DPHY_M_PRG_HS_PREPARE  = config->tHsPrepare_HalfEscClk - DSI_THS_PREPARE_HALF_ESC_CLK_BASE;
@@ -572,15 +601,21 @@ uint32_t DSI_InitDphy(MIPI_DSI_HOST_Type *base, const dsi_dphy_config_t *config,
     base->DSI_HOST_CFG_TX_GAP  = config->tHsExit_ByteClk;
     base->DSI_HOST_CFG_TWAKEUP = config->tWakeup_EscClk;
 
+#if defined(MIPI_DSI_HOST_DPHY_RTERM_SEL_dphy_rterm_sel_MASK)
+    base->DPHY_RTERM_SEL = MIPI_DSI_HOST_DPHY_RTERM_SEL_dphy_rterm_sel_MASK;
+#endif
+#if defined(MIPI_DSI_HOST_DPHY_TX_RCAL_dphy_tx_rcal_MASK)
     base->DPHY_TX_RCAL = 1;
-    base->DPHY_RXLPRP  = 1;
-    base->DPHY_RXCDRP  = 1;
+#endif
+    base->DPHY_RXLPRP = 1;
+    base->DPHY_RXCDRP = 1;
 
     /* Auto power down the inactive lanes. */
     base->DPHY_AUTO_PD_EN = 0x1U;
 
     base->DPHY_TST = 0x25U;
 
+#if !((defined(FSL_FEATURE_MIPI_DSI_HOST_NO_DPHY_PLL) && (FSL_FEATURE_MIPI_DSI_HOST_NO_DPHY_PLL)))
     /* Power up the PLL. */
     base->DPHY_PD_PLL = 0U;
 
@@ -588,11 +623,16 @@ uint32_t DSI_InitDphy(MIPI_DSI_HOST_Type *base, const dsi_dphy_config_t *config,
     while (!base->DPHY_LOCK)
     {
     }
+#endif
 
     /* Power up the DPHY. */
-    base->DPHY_PD_TX = 0U;
+    base->DPHY_PD_REG = 0U;
 
+#if !((defined(FSL_FEATURE_MIPI_DSI_HOST_NO_DPHY_PLL) && (FSL_FEATURE_MIPI_DSI_HOST_NO_DPHY_PLL)))
     return outputPllFreq;
+#else
+    return config->txHsBitClk_Hz;
+#endif
 }
 
 /*!
@@ -604,11 +644,13 @@ uint32_t DSI_InitDphy(MIPI_DSI_HOST_Type *base, const dsi_dphy_config_t *config,
  */
 void DSI_DeinitDphy(MIPI_DSI_HOST_Type *base)
 {
+#if !((defined(FSL_FEATURE_MIPI_DSI_HOST_NO_DPHY_PLL) && (FSL_FEATURE_MIPI_DSI_HOST_NO_DPHY_PLL)))
     /* Power down the PLL. */
     base->DPHY_PD_PLL = 1U;
+#endif
 
     /* Power down the DPHY. */
-    base->DPHY_PD_TX = 1U;
+    base->DPHY_PD_REG = 1U;
 }
 
 /*!
@@ -726,15 +768,52 @@ void DSI_SetApbPacketControl(
  */
 void DSI_WriteApbTxPayload(MIPI_DSI_HOST_Type *base, const uint8_t *payload, uint16_t payloadSize)
 {
-    assert(payloadSize <= DSI_TX_FIFO_DEPTH_WORD * sizeof(uint32_t));
+    DSI_WriteApbTxPayloadExt(base, payload, payloadSize, false, 0U);
+}
 
-    uint16_t i;
+void DSI_WriteApbTxPayloadExt(
+    MIPI_DSI_HOST_Type *base, const uint8_t *payload, uint16_t payloadSize, bool sendDscCmd, uint8_t dscCmd)
+{
+    uint32_t firstWord;
+    uint32_t i;
+
+    payloadSize = sendDscCmd ? payloadSize + 1U : payloadSize;
+
+    assert(payloadSize <= FSL_DSI_TX_MAX_PAYLOAD_BYTE);
+
+    /* The first 4-byte. */
+    if (sendDscCmd)
+    {
+        firstWord = dscCmd;
+    }
+    else
+    {
+        firstWord = *payload;
+        payload++;
+    }
+
+    payloadSize--;
+
+    for (i = 1; i < 4; i++)
+    {
+        if (payloadSize > 0)
+        {
+            firstWord |= ((*payload) << (i << 3U));
+            payload++;
+            payloadSize--;
+        }
+        else
+        {
+            break;
+        }
+    }
+
+    base->DSI_HOST_TX_PAYLOAD = firstWord;
 
     /* Write the payload to the FIFO. */
     for (i = 0; i < payloadSize / 4U; i++)
     {
-        base->DSI_HOST_TX_PAYLOAD = ((uint32_t)payload[0] | ((uint32_t)payload[1] << 8U) |
-                                     ((uint32_t)payload[2] << 16U) | ((uint32_t)payload[3] << 24U));
+        base->DSI_HOST_TX_PAYLOAD = *(uint32_t *)payload;
         payload += 4U;
     }
 
@@ -758,11 +837,13 @@ void DSI_WriteApbTxPayload(MIPI_DSI_HOST_Type *base, const uint8_t *payload, uin
 static status_t DSI_PrepareApbTransfer(MIPI_DSI_HOST_Type *base, dsi_transfer_t *xfer)
 {
     /* The receive data size should be smaller than the RX FIRO. */
-    assert(xfer->rxDataSize <= DSI_RX_FIFO_DEPTH_WORD * sizeof(uint32_t));
-    assert(xfer->txDataSize <= DSI_TX_FIFO_DEPTH_WORD * sizeof(uint32_t));
+    assert(xfer->rxDataSize <= FSL_DSI_RX_MAX_PAYLOAD_BYTE);
+    assert(xfer->txDataSize <= FSL_DSI_TX_MAX_PAYLOAD_BYTE);
 
+    uint8_t txDataIndex;
     uint16_t wordCount;
     uint32_t intFlags1, intFlags2;
+    uint32_t txDataSize;
 
     if (xfer->rxDataSize > 2)
     {
@@ -775,27 +856,42 @@ static status_t DSI_PrepareApbTransfer(MIPI_DSI_HOST_Type *base, dsi_transfer_t 
     }
 
     /* ========================== Prepare TX. ========================== */
+    /* If xfer->sendDscCmd is true, then the DSC command is not included in the
+       xfer->txData, but specified by xfer->dscCmd.
+     */
+    txDataSize = xfer->sendDscCmd ? xfer->txDataSize + 1U : xfer->txDataSize;
+
     /* Short packet. */
-    if (xfer->txDataSize <= 2U)
+    if (txDataSize <= 2U)
     {
-        if (2U == xfer->txDataSize)
+        if (0U == txDataSize)
         {
-            wordCount = ((uint32_t)xfer->txData[1] << 8U) | xfer->txData[0];
-        }
-        else if (1U == xfer->txDataSize)
-        {
-            wordCount = (uint16_t)xfer->txData[0];
+            wordCount = 0U;
         }
         else
         {
-            wordCount = 0U;
+            txDataIndex = 0;
+
+            if (xfer->sendDscCmd)
+            {
+                wordCount = xfer->dscCmd;
+            }
+            else
+            {
+                wordCount = xfer->txData[txDataIndex++];
+            }
+
+            if (2U == txDataSize)
+            {
+                wordCount |= ((uint32_t)xfer->txData[txDataIndex] << 8U);
+            }
         }
     }
     /* Long packet. */
     else
     {
-        wordCount = (uint16_t)xfer->txDataSize;
-        DSI_WriteApbTxPayload(base, xfer->txData, xfer->txDataSize);
+        wordCount = (uint16_t)txDataSize;
+        DSI_WriteApbTxPayloadExt(base, xfer->txData, xfer->txDataSize, xfer->sendDscCmd, xfer->dscCmd);
     }
 
     DSI_SetApbPacketControl(base, wordCount, xfer->virtualChannel, xfer->txDataType, xfer->flags);
@@ -1004,6 +1100,11 @@ status_t DSI_TransferCreateHandle(MIPI_DSI_HOST_Type *base,
     handle->isBusy        = false;
     s_dsiIsr              = DSI_TransferHandleIRQ;
 
+#if defined(MIPI_DSI_HOST_IRQS)
+    /* Enable interrupt in NVIC. */
+    EnableIRQ(s_dsiIRQ[instance]);
+#endif
+
     return kStatus_Success;
 }
 
@@ -1150,6 +1251,27 @@ void DSI_TransferHandleIRQ(MIPI_DSI_HOST_Type *base, dsi_handle_t *handle)
         handle->callback(base, handle, status, handle->userData);
     }
 }
+
+#if defined(MIPI_DSI_HOST)
+void MIPI_IRQHandler(void)
+{
+    s_dsiIsr(MIPI_DSI_HOST, s_dsiHandle[0]);
+}
+#endif
+
+#if defined(DI_MIPI_DSI_LVDS_0__MIPI_DSI_HOST)
+void MIPI_DSI0_INT_OUT_IRQHandler(void)
+{
+    s_dsiIsr(DI_MIPI_DSI_LVDS_0__MIPI_DSI_HOST, s_dsiHandle[0]);
+}
+#endif
+
+#if defined(DI_MIPI_DSI_LVDS_1__MIPI_DSI_HOST)
+void MIPI_DSI1_INT_OUT_IRQHandler(void)
+{
+    s_dsiIsr(DI_MIPI_DSI_LVDS_1__MIPI_DSI_HOST, s_dsiHandle[1]);
+}
+#endif
 
 #if defined(MIPI_DSI_HOST0)
 void MIPI_DSI0_INT_OUT_IRQHandler(void)

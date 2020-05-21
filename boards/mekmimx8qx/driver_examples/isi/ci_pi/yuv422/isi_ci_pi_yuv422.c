@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 NXP
+ * Copyright 2017, 2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -25,6 +25,11 @@
 #define APP_FRAME_BUFFER_COUNT 4
 #define APP_BPP 2 /* In this exaple, the camera pixel format is RGB565. */
 
+#ifndef APP_FB_STRIDE_ALIGN_BYTE
+#define APP_FB_STRIDE_ALIGN_BYTE APP_BPP
+#endif
+
+#define APP_FB_STRIDE_BYTE (SDK_SIZEALIGN(APP_CAMERA_WIDTH * APP_BPP, APP_FB_STRIDE_ALIGN_BYTE))
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -35,7 +40,7 @@
  * Variables
  ******************************************************************************/
 AT_NONCACHEABLE_SECTION_ALIGN(static uint8_t s_frameBuffer[APP_FRAME_BUFFER_COUNT][SDK_SIZEALIGN(
-                                  APP_CAMERA_HEIGHT * APP_CAMERA_WIDTH * APP_BPP, APP_FB_ALIGN_BYTE)],
+                                  APP_CAMERA_HEIGHT * APP_FB_STRIDE_BYTE, APP_FB_ALIGN_BYTE)],
                               APP_FB_ALIGN_BYTE);
 
 extern camera_device_handle_t cameraDevice;

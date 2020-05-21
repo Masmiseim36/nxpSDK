@@ -38,33 +38,33 @@
 
 #if (DPU_EXAMPLE_DI == DPU_DI_MIPI)
 
-#if (APP_MIPI_DSI_BASE == MIPI_DSI_HOST0_BASE)
+#if (APP_MIPI_DSI_BASE == DI_MIPI_DSI_LVDS_0__MIPI_DSI_HOST_BASE)
 #define BOARD_Display_I2C_Init BOARD_Display0_I2C_Init
 #define BOARD_Display_I2C_Send BOARD_Display0_I2C_Send
 #define BOARD_Display_I2C_Receive BOARD_Display0_I2C_Receive
 #define MIPI_DSI_RSRC SC_R_MIPI_0
-#else /* (APP_MIPI_DSI_BASE == MIPI_DSI_HOST0_BASE) */
+#else /* (APP_MIPI_DSI_BASE == DI_MIPI_DSI_LVDS_0__MIPI_DSI_HOST_BASE) */
 #define BOARD_Display_I2C_Init BOARD_Display1_I2C_Init
 #define BOARD_Display_I2C_Send BOARD_Display1_I2C_Send
 #define BOARD_Display_I2C_Receive BOARD_Display1_I2C_Receive
 #define MIPI_DSI_RSRC SC_R_MIPI_1
-#endif /* (APP_MIPI_DSI_BASE == MIPI_DSI_HOST0_BASE) */
+#endif /* (APP_MIPI_DSI_BASE == DI_MIPI_DSI_LVDS_0__MIPI_DSI_HOST_BASE) */
 
 #elif (DPU_EXAMPLE_DI == DPU_DI_LVDS)
 
-#if (APP_LDB_BASE == DI_MIPI_DSI_LVDS_0__LDB_BASE)
+#if (APP_LDB_BASE == MIPI_DSI_LVDS_COMBO0_CSR_BASE)
 #define BOARD_Display_I2C_Init BOARD_Display0_I2C_Init
 #define BOARD_Display_I2C_Send BOARD_Display0_I2C_Send
 #define BOARD_Display_I2C_Receive BOARD_Display0_I2C_Receive
 #define LDB_RSRC SC_R_LVDS_0
 #define MIPI_DSI_RSRC SC_R_MIPI_0
-#else /* (APP_LDB_BASE == DI_MIPI_DSI_LVDS_0__LDB_BASE) */
+#else /* (APP_LDB_BASE == MIPI_DSI_LVDS_COMBO0_CSR_BASE) */
 #define BOARD_Display_I2C_Init BOARD_Display1_I2C_Init
 #define BOARD_Display_I2C_Send BOARD_Display1_I2C_Send
 #define BOARD_Display_I2C_Receive BOARD_Display1_I2C_Receive
 #define LDB_RSRC SC_R_LVDS_1
 #define MIPI_DSI_RSRC SC_R_MIPI_1
-#endif /* (APP_LDB_BASE == DI_MIPI_DSI_LVDS_0__LDB_BASE) */
+#endif /* (APP_LDB_BASE == MIPI_DSI_LVDS_COMBO0_CSR_BASE) */
 
 #endif /*DPU_EXAMPLE_DI */
 
@@ -84,13 +84,13 @@
 
 #define SWITCH_I2C_ADDR 0x71
 
-#if (APP_MIPI_DSI_BASE == MIPI_DSI_HOST0_BASE) || (APP_LDB_BASE == DI_MIPI_DSI_LVDS_0__LDB_BASE)
+#if (APP_MIPI_DSI_BASE == DI_MIPI_DSI_LVDS_0__MIPI_DSI_HOST_BASE) || (APP_LDB_BASE == MIPI_DSI_LVDS_COMBO0_CSR_BASE)
 #define IOEXP_I2C_ADDR 0x1A
 #define IOEXP_MIPI_DSI_PIN 6
 #else
 #define IOEXP_I2C_ADDR 0x1D
 #define IOEXP_MIPI_DSI_PIN 7
-#endif /* (APP_MIPI_DSI_BASE == MIPI_DSI_HOST0_BASE) */
+#endif /* (APP_MIPI_DSI_BASE == DI_MIPI_DSI_LVDS_0__MIPI_DSI_HOST_BASE) */
 
 #define PCA9557_REG_INTPUT_PORT (0x00)
 #define PCA9557_REG_OUTPUT_PORT (0x01)
@@ -192,7 +192,7 @@ static status_t PCA9557_ModifyReg(
 
         if (kStatus_Success != status)
         {
-            LPI2C_MasterStop(base);
+            (void)LPI2C_MasterStop(base);
         }
         else
         {
@@ -200,13 +200,13 @@ static status_t PCA9557_ModifyReg(
         }
     }
 
-    LPI2C_MasterSend(base, data, 1);
+    (void)LPI2C_MasterSend(base, data, 1);
 
-    LPI2C_MasterStart(base, dev_addr, kLPI2C_Read);
+    (void)LPI2C_MasterStart(base, dev_addr, kLPI2C_Read);
 
-    LPI2C_MasterReceive(base, &data[1], 1);
+    (void)LPI2C_MasterReceive(base, &data[1], 1);
 
-    LPI2C_MasterStop(base);
+    (void)LPI2C_MasterStop(base);
 
     /* Modify the register value. */
     data[1] &= ~mask;
@@ -219,7 +219,7 @@ static status_t PCA9557_ModifyReg(
 
         if (kStatus_Success != status)
         {
-            LPI2C_MasterStop(base);
+            (void)LPI2C_MasterStop(base);
         }
         else
         {
@@ -227,7 +227,7 @@ static status_t PCA9557_ModifyReg(
         }
     }
 
-    LPI2C_MasterSend(base, data, 2);
+    (void)LPI2C_MasterSend(base, data, 2);
 
     return LPI2C_MasterStop(base);
 }
@@ -243,7 +243,7 @@ static status_t PCA9646_Write(LPI2C_Type *base, const uint8_t dev_addr, uint8_t 
 
         if (kStatus_Success != status)
         {
-            LPI2C_MasterStop(base);
+            (void)LPI2C_MasterStop(base);
         }
         else
         {
@@ -251,7 +251,7 @@ static status_t PCA9646_Write(LPI2C_Type *base, const uint8_t dev_addr, uint8_t 
         }
     }
 
-    LPI2C_MasterSend(base, &value, 1);
+    (void)LPI2C_MasterSend(base, &value, 1);
 
     return LPI2C_MasterStop(base);
 }
@@ -418,13 +418,13 @@ status_t SOC_SetDpuMipiDsiPixelLink(sc_ipc_t ipc, IRIS_MVPL_Type *dpu, uint8_t d
         {
             .dpu             = DC__IRIS_MVPL,
             .dpuDisplayIndex = 0,
-            .dsi             = MIPI_DSI_HOST0,
+            .dsi             = DI_MIPI_DSI_LVDS_0__MIPI_DSI_HOST,
             .plAddr          = 0,
         },
         {
             .dpu             = DC__IRIS_MVPL,
             .dpuDisplayIndex = 1,
-            .dsi             = MIPI_DSI_HOST1,
+            .dsi             = DI_MIPI_DSI_LVDS_1__MIPI_DSI_HOST,
             .plAddr          = 0,
         },
     };
@@ -529,13 +529,13 @@ status_t SOC_SetDpuLdbPixelLink(sc_ipc_t ipc, IRIS_MVPL_Type *dpu, uint8_t displ
         {
             .dpu             = DC__IRIS_MVPL,
             .dpuDisplayIndex = 0,
-            .ldb             = DI_MIPI_DSI_LVDS_0__LDB,
+            .ldb             = MIPI_DSI_LVDS_COMBO0_CSR,
             .plAddr          = 0,
         },
         {
             .dpu             = DC__IRIS_MVPL,
             .dpuDisplayIndex = 1,
-            .ldb             = DI_MIPI_DSI_LVDS_1__LDB,
+            .ldb             = MIPI_DSI_LVDS_COMBO1_CSR,
             .plAddr          = 0,
         },
     };
@@ -704,6 +704,45 @@ void BOARD_PrepareDisplay(void)
     }
 
     err = sc_pm_clock_enable(ipc, DC_RSRC, DC_DISPLAY_CLOCK, true, false);
+    if (SC_ERR_NONE != err)
+    {
+        assert(false);
+    }
+
+    /*
+     * Assign the display kachuck signal to fetch unit, the relationship between
+     * resource and fetch unit is:
+     *
+     * SC_R_DC_0_FRAC0 : fetchLayer0
+     * SC_R_DC_0_VIDEO0 : fetchDecode0, fetchEco0
+     * SC_R_DC_0_VIDEO1 : fetchDecode1, fetchEco1
+     * SC_R_DC_0_WARP0 : fetchWarp2, fetchEco2
+     *
+     * The kachuck signal should be assigned according to application requirement,
+     * for example, if fetchDecode0 is used by display 0 and fetchDecode1 is used by
+     * display 1, then SC_R_DC_0_VIDEO0 kachucksel should be set to 0, and
+     * SC_R_DC_0_VIDEO1 should be set to 1. In the driver example, only one display
+     * stream is used, so set all resource to this display stream.
+     */
+    err = sc_misc_set_control(ipc, SC_R_DC_0_VIDEO0, SC_C_KACHUNK_SEL, APP_DPU_DISPLAY_INDEX);
+    if (SC_ERR_NONE != err)
+    {
+        assert(false);
+    }
+
+    err = sc_misc_set_control(ipc, SC_R_DC_0_VIDEO1, SC_C_KACHUNK_SEL, APP_DPU_DISPLAY_INDEX);
+    if (SC_ERR_NONE != err)
+    {
+        assert(false);
+    }
+
+    err = sc_misc_set_control(ipc, SC_R_DC_0_FRAC0, SC_C_KACHUNK_SEL, APP_DPU_DISPLAY_INDEX);
+    if (SC_ERR_NONE != err)
+    {
+        assert(false);
+    }
+
+    err = sc_misc_set_control(ipc, SC_R_DC_0_WARP, SC_C_KACHUNK_SEL, APP_DPU_DISPLAY_INDEX);
     if (SC_ERR_NONE != err)
     {
         assert(false);

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 NXP
+ * Copyright 2017-2019 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -13,7 +13,7 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v4.1
+product: Pins v7.0
 processor: MIMX8QX6xxxFZ
 package_id: MIMX8QX6AVLFZ
 mcu_data: ksdk2_0
@@ -61,8 +61,8 @@ void BOARD_InitPins(sc_ipc_t ipc)                          /*!< Function assigne
 LPUART_InitPins:
 - options: {callFromInitBoot: 'false', coreID: m4}
 - pin_list:
-  - {pin_num: AB32, peripheral: ADMA__UART0, signal: uart_rx, pin_signal: UART0_RX, sw_config: sw_config_2}
-  - {pin_num: AA29, peripheral: ADMA__UART0, signal: uart_tx, pin_signal: UART0_TX, sw_config: sw_config_3}
+  - {pin_num: AB32, peripheral: ADMA__UART0, signal: uart_rx, pin_signal: UART0_RX, PULL: PULL_0, sw_config: sw_config_2}
+  - {pin_num: AA29, peripheral: ADMA__UART0, signal: uart_tx, pin_signal: UART0_TX, PULL: PULL_0, sw_config: sw_config_3}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 
@@ -94,8 +94,8 @@ void LPUART_InitPins(sc_ipc_t ipc)                         /*!< Function assigne
 LPUART_DeinitPins:
 - options: {callFromInitBoot: 'false', coreID: m4}
 - pin_list:
-  - {pin_num: AA29, peripheral: LSIO__GPIO1, signal: 'gpio_io, 22', pin_signal: UART0_TX, sw_config: sw_config_0}
-  - {pin_num: AB32, peripheral: LSIO__GPIO1, signal: 'gpio_io, 21', pin_signal: UART0_RX, sw_config: sw_config_0}
+  - {pin_num: AA29, peripheral: LSIO__GPIO1, signal: 'gpio_io, 22', pin_signal: UART0_TX, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: AB32, peripheral: LSIO__GPIO1, signal: 'gpio_io, 21', pin_signal: UART0_RX, PULL: PULL_0, sw_config: sw_config_0}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 

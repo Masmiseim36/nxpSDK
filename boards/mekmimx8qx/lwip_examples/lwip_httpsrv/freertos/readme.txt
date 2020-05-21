@@ -8,8 +8,8 @@ page back to the PC.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.1
-- GCC ARM Embedded  7.3.1
+- IAR embedded Workbench  8.40.2
+- GCC ARM Embedded  8.3.1
 
 Hardware requirements
 =====================
@@ -45,6 +45,8 @@ Prepare the Demo
 Running the demo
 ================
 1.  When the demo runs successfully, the terminal will display the following:
+        Initializing PHY...
+
         ************************************************
          HTTP Server example
         ************************************************
@@ -53,26 +55,28 @@ Running the demo
          IPv4 Gateway     : 192.168.0.100
         ************************************************
 2.  On the browser address bar, type 192.168.0.102(IP address of the board).
-    The browser should show a web page.
+	The browser should show a web page. The board also advertises itself using mDNS so that it can be accessed using URL http://lwip-http.local.
+	Please note that your system may not support mDNS out-of-the-box as it is necessary to have an mDNS resolver installed.
+    For instance Bonjour Print Services for Windows contain such resolver. In case of Linux nss-mdns serves this purpose.
 
 Modifying content of static web pages
 To modify content available through the web server you must complete following steps:
   1. Modify, add or delete files in folder "middleware\lwip\src\apps\httpsrv\mkfs\web_pages".
   2. Run the script file "middleware\lwip\src\apps\httpsrv\mkfs\mkfs.pl <directory name>" to generate new "httpsrv_fs_data.c".
-     For example:
-        C:\sdk\middleware\lwip\src\apps\httpsrv\mkfs> mkfs.pl webpage
-        Processing file webpage/auth.html
-        Processing file webpage/cgi.html
-        Processing file webpage/favicon.ico
-        Processing file webpage/help.html
-        Processing file webpage/httpsrv.css
-        Processing file webpage/index.html
-        Processing file webpage/NXP_logo.png
-        Processing file webpage/poll.html
-        Processing file webpage/request.js
-        Processing file webpage/ssi.shtml
-        Processing file webpage/welcome.html
-        Done.
+	 For example:
+		C:\sdk\middleware\lwip\src\apps\httpsrv\mkfs> mkfs.pl webpage
+		Processing file webpage/auth.html
+		Processing file webpage/cgi.html
+		Processing file webpage/favicon.ico
+		Processing file webpage/help.html
+		Processing file webpage/httpsrv.css
+		Processing file webpage/index.html
+		Processing file webpage/NXP_logo.png
+		Processing file webpage/poll.html
+		Processing file webpage/request.js
+		Processing file webpage/ssi.shtml
+		Processing file webpage/welcome.html
+		Done.
   3. Overwrite the middleware\lwip\src\apps\httpsrv\httpsrv_fs_data.c file by the new generated middleware\lwip\src\apps\httpsrv\mkfs\httpsrv_fs_data.c file.
   4. Re-compile the HTTP server application example and download it to your board. 
 Customization options

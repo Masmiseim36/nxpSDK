@@ -33,7 +33,7 @@
  * Variables
  ******************************************************************************/
 volatile bool g_LpadcConversionCompletedFlag = false;
-volatile uint32_t g_LpadcInterruptCounter = 0U;
+volatile uint32_t g_LpadcInterruptCounter    = 0U;
 lpadc_conv_result_t g_LpadcResultConfigStruct;
 const uint32_t g_Lpadc_12bitFullRange = 4096U;
 
@@ -128,7 +128,7 @@ int main(void)
 
     /* Set trigger configuration. */
     LPADC_GetDefaultConvTriggerConfig(&mLpadcTriggerConfigStruct);
-    mLpadcTriggerConfigStruct.targetCommandId = DEMO_LPADC_USER_CMDID; /* CMD15 is executed. */
+    mLpadcTriggerConfigStruct.targetCommandId       = DEMO_LPADC_USER_CMDID; /* CMD15 is executed. */
     mLpadcTriggerConfigStruct.enableHardwareTrigger = false;
     LPADC_SetConvTriggerConfig(DEMO_LPADC_BASE, 0U, &mLpadcTriggerConfigStruct); /* Configurate the trigger0. */
 
@@ -153,8 +153,8 @@ int main(void)
 #endif
 
     /* When the number of datawords stored in the ADC Result FIFO is greater
-    * than watermark value(0U), LPADC watermark interrupt would be triggered.
-    */
+     * than watermark value(0U), LPADC watermark interrupt would be triggered.
+     */
     PRINTF("Please press any key to get user channel's ADC value.\r\n");
     while (1)
     {

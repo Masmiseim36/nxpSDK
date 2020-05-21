@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 NXP
+ * Copyright 2017-2019 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -13,7 +13,7 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v4.1
+product: Pins v7.0
 processor: MIMX8QX6xxxFZ
 package_id: MIMX8QX6AVLFZ
 mcu_data: ksdk2_0
@@ -42,23 +42,23 @@ void BOARD_InitBootPins(void)
 BOARD_InitPins:
 - options: {callFromInitBoot: 'false', coreID: m4}
 - pin_list:
-  - {pin_num: V32, peripheral: M40__UART0, signal: uart_rx, pin_signal: ADC_IN2, sw_config: sw_config_0}
-  - {pin_num: V30, peripheral: M40__UART0, signal: uart_tx, pin_signal: ADC_IN3, sw_config: sw_config_0}
-  - {pin_num: U35, peripheral: M40__I2C0, signal: i2c_scl, pin_signal: ADC_IN0, sw_config: sw_config_0}
-  - {pin_num: U33, peripheral: M40__I2C0, signal: i2c_sda, pin_signal: ADC_IN1, sw_config: sw_config_0}
-  - {pin_num: F30, peripheral: ADMA__ESAI0, signal: esai_fsr, pin_signal: ESAI0_FSR, identifier: ESAI0_FSR, sw_config: sw_config_0}
-  - {pin_num: G29, peripheral: ADMA__ESAI0, signal: esai_fst, pin_signal: ESAI0_FST, identifier: ESAI0_FST, sw_config: sw_config_0}
-  - {pin_num: H28, peripheral: ADMA__ESAI0, signal: esai_sckr, pin_signal: ESAI0_SCKR, identifier: ESAI0_SCKR, sw_config: sw_config_0}
-  - {pin_num: E31, peripheral: ADMA__ESAI0, signal: esai_sckt, pin_signal: ESAI0_SCKT, identifier: ESAI0_SCKT, sw_config: sw_config_0}
-  - {pin_num: D32, peripheral: ADMA__ESAI0, signal: 'esai_tx, 0', pin_signal: ESAI0_TX0, identifier: BB_ESAI0_TX0, sw_config: sw_config_0}
-  - {pin_num: B34, peripheral: ADMA__ESAI0, signal: 'esai_tx, 1', pin_signal: ESAI0_TX1, identifier: BB_ESAI0_TX1, sw_config: sw_config_0}
-  - {pin_num: K28, peripheral: ADMA__ESAI0, signal: 'esai_tx2_rx, 3', pin_signal: ESAI0_TX2_RX3, identifier: BB_ESAI0_TX2_RX3, sw_config: sw_config_0}
-  - {pin_num: C33, peripheral: ADMA__ESAI0, signal: 'esai_tx3_rx, 2', pin_signal: ESAI0_TX3_RX2, identifier: BB_ESAI0_TX3_RX2, sw_config: sw_config_0}
-  - {pin_num: F32, peripheral: ADMA__ESAI0, signal: 'esai_tx4_rx, 1', pin_signal: ESAI0_TX4_RX1, identifier: ESAI0_TX4_RX1, sw_config: sw_config_0}
-  - {pin_num: J29, peripheral: ADMA__ESAI0, signal: 'esai_tx5_rx, 0', pin_signal: ESAI0_TX5_RX0, identifier: ESAI0_TX5_RX0, sw_config: sw_config_0}
-  - {pin_num: L29, peripheral: ADMA__ESAI0, signal: esai_tx_hf_clk, pin_signal: MCLK_OUT0, identifier: AUDIO_MCLK, sw_config: sw_config_0}
-  - {pin_num: H14, peripheral: ADMA__I2C1, signal: i2c_scl, pin_signal: USB_SS3_TC1, sw_config: sw_config_2}
-  - {pin_num: C15, peripheral: ADMA__I2C1, signal: i2c_sda, pin_signal: USB_SS3_TC3, sw_config: sw_config_2}
+  - {pin_num: V32, peripheral: M40__UART0, signal: uart_rx, pin_signal: ADC_IN2, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: V30, peripheral: M40__UART0, signal: uart_tx, pin_signal: ADC_IN3, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: U35, peripheral: M40__I2C0, signal: i2c_scl, pin_signal: ADC_IN0, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: U33, peripheral: M40__I2C0, signal: i2c_sda, pin_signal: ADC_IN1, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: F30, peripheral: ADMA__ESAI0, signal: esai_fsr, pin_signal: ESAI0_FSR, identifier: ESAI0_FSR, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: G29, peripheral: ADMA__ESAI0, signal: esai_fst, pin_signal: ESAI0_FST, identifier: ESAI0_FST, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: H28, peripheral: ADMA__ESAI0, signal: esai_sckr, pin_signal: ESAI0_SCKR, identifier: ESAI0_SCKR, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: E31, peripheral: ADMA__ESAI0, signal: esai_sckt, pin_signal: ESAI0_SCKT, identifier: ESAI0_SCKT, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: D32, peripheral: ADMA__ESAI0, signal: 'esai_tx, 0', pin_signal: ESAI0_TX0, identifier: BB_ESAI0_TX0, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: B34, peripheral: ADMA__ESAI0, signal: 'esai_tx, 1', pin_signal: ESAI0_TX1, identifier: BB_ESAI0_TX1, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: K28, peripheral: ADMA__ESAI0, signal: 'esai_tx2_rx, 3', pin_signal: ESAI0_TX2_RX3, identifier: BB_ESAI0_TX2_RX3, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: C33, peripheral: ADMA__ESAI0, signal: 'esai_tx3_rx, 2', pin_signal: ESAI0_TX3_RX2, identifier: BB_ESAI0_TX3_RX2, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: F32, peripheral: ADMA__ESAI0, signal: 'esai_tx4_rx, 1', pin_signal: ESAI0_TX4_RX1, identifier: ESAI0_TX4_RX1, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: J29, peripheral: ADMA__ESAI0, signal: 'esai_tx5_rx, 0', pin_signal: ESAI0_TX5_RX0, identifier: ESAI0_TX5_RX0, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: L29, peripheral: ADMA__ESAI0, signal: esai_tx_hf_clk, pin_signal: MCLK_OUT0, identifier: AUDIO_MCLK, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: H14, peripheral: ADMA__I2C1, signal: i2c_scl, pin_signal: USB_SS3_TC1, PULL: PULL_0, sw_config: sw_config_2}
+  - {pin_num: C15, peripheral: ADMA__I2C1, signal: i2c_sda, pin_signal: USB_SS3_TC3, PULL: PULL_0, sw_config: sw_config_2}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 

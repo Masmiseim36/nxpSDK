@@ -139,7 +139,7 @@ void OSA_MemoryFree(void *p)
     vPortFree(p);
 }
 
-void OSA_EnterCritical(uint32_t *sr)
+void OSA_FreeRTOSEnterCritical(uint32_t *sr)
 {
 #if defined(__GIC_PRIO_BITS)
     if ((__get_CPSR() & CPSR_M_Msk) == 0x13)
@@ -155,7 +155,7 @@ void OSA_EnterCritical(uint32_t *sr)
     }
 }
 
-void OSA_ExitCritical(uint32_t sr)
+void OSA_FreeRTOSExitCritical(uint32_t sr)
 {
 #if defined(__GIC_PRIO_BITS)
     if ((__get_CPSR() & CPSR_M_Msk) == 0x13)

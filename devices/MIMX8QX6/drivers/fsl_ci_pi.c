@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 NXP
+ * Copyright 2017, 2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -21,13 +21,13 @@
  * @param base CI_PI peripheral base address.
  * @return CI_PI instance.
  */
-uint32_t CI_PI_GetInstance(CI_PI_Type *base);
+uint32_t CI_PI_GetInstance(CI_PI_CSR_Type *base);
 
 /*******************************************************************************
  * Variables
  ******************************************************************************/
 /* Array of CI_PI peripheral base address. */
-static CI_PI_Type *const s_cipiBases[] = CI_PI_BASE_PTRS;
+static CI_PI_CSR_Type *const s_cipiBases[] = CI_PI_CSR_BASE_PTRS;
 #if !(defined(FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL) && FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL)
 /* Array of CI_PI clock name. */
 static const clock_ip_name_t s_cipiClock[] = CI_PI_CLOCKS;
@@ -36,7 +36,7 @@ static const clock_ip_name_t s_cipiClock[] = CI_PI_CLOCKS;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-uint32_t CI_PI_GetInstance(CI_PI_Type *base)
+uint32_t CI_PI_GetInstance(CI_PI_CSR_Type *base)
 {
     uint32_t instance;
     uint32_t cipiArrayCount = (sizeof(s_cipiBases) / sizeof(s_cipiBases[0]));
@@ -61,7 +61,7 @@ uint32_t CI_PI_GetInstance(CI_PI_Type *base)
  * param base CI_PI peripheral address.
  * param config CI_PI module configuration structure.
  */
-void CI_PI_Init(CI_PI_Type *base, const ci_pi_config_t *config)
+void CI_PI_Init(CI_PI_CSR_Type *base, const ci_pi_config_t *config)
 {
     uint32_t ifCtrl   = 0U;
     uint32_t csiCtrl0 = 0U;
@@ -76,37 +76,38 @@ void CI_PI_Init(CI_PI_Type *base, const ci_pi_config_t *config)
     CI_PI_Stop(base);
 
     /* Configure the pixel link. */
-    ifCtrl = CI_PI_IF_CTRL_IF_ADDR(config->pixelLinkAddr);
+    ifCtrl = CI_PI_CSR_IF_CTRL_REG_PL_ADDR(config->pixelLinkAddr);
 
-    base->IF_CTRL = ifCtrl;
+    base->IF_CTRL_REG.RW = ifCtrl;
 
     /* Enable the pixel link. */
-    base->IF_CTRL_SET = CI_PI_IF_CTRL_IF_ENABLE_MASK | CI_PI_IF_CTRL_IF_VALID_MASK;
+    base->IF_CTRL_REG.SET = CI_PI_CSR_IF_CTRL_REG_PL_ENABLE_MASK | CI_PI_CSR_IF_CTRL_REG_PL_VALID_MASK;
 
     /* Configure the CSI. */
-    csiCtrl0 = CI_PI_CSI_CTRL0_HSYNC_FORCE_EN_MASK | CI_PI_CSI_CTRL0_VSYNC_FORCE_EN_MASK |
-               CI_PI_CSI_CTRL0_CCIR_VSYNC_RESET_EN_MASK | config->polarityFlags /* Signal polarity. */
-               | CI_PI_CSI_CTRL0_MASK_VSYNC_COUNTER(2)                          /* Mask 2 frames. */
-               | CI_PI_CSI_CTRL0_CCIR_ECC_ERR_CORRECT_EN_MASK                   /* Enable ECC correction. */
-               | CI_PI_CSI_CTRL0_HSYNC_PULSE(config->hsyncWidth)                /* Set HSYNC pulse. */
-               | CI_PI_CSI_CTRL0_DATA_TYPE(config->inputFormat)                 /* CSI data format. */
-               | config->workMode;                                              /* CSI work mode. */
+    csiCtrl0 = CI_PI_CSR_CSI_CTRL_REG_HSYNC_FORCE_EN_MASK | CI_PI_CSR_CSI_CTRL_REG_VSYNC_FORCE_EN_MASK |
+               CI_PI_CSR_CSI_CTRL_REG_CCIR_VSYNC_RESET_EN_MASK | config->polarityFlags /* Signal polarity. */
+               | CI_PI_CSR_CSI_CTRL_REG_MASK_VSYNC_COUNTER(2)                          /* Mask 2 frames. */
+               | CI_PI_CSR_CSI_CTRL_REG_CCIR_ECC_ERR_CORRECT_EN_MASK                   /* Enable ECC correction. */
+               | CI_PI_CSR_CSI_CTRL_REG_HSYNC_PULSE(config->hsyncWidth)                /* Set HSYNC pulse. */
+               | CI_PI_CSR_CSI_CTRL_REG_DATA_TYPE_IN(config->inputFormat)              /* CSI data format. */
+               | config->workMode;                                                     /* CSI work mode. */
 
     if (config->useExtVsync)
     {
-        csiCtrl0 |= CI_PI_CSI_CTRL0_CCIR_EXT_VSYNC_EN_MASK;
+        csiCtrl0 |= CI_PI_CSR_CSI_CTRL_REG_CCIR_EXT_VSYNC_EN_MASK;
     }
 
     if (config->swapUV)
     {
-        csiCtrl0 |= CI_PI_CSI_CTRL0_UV_SWAP_EN_MASK;
+        csiCtrl0 |= CI_PI_CSR_CSI_CTRL_REG_UV_SWAP_EN_MASK;
     }
 
-    base->CSI_CTRL0 = csiCtrl0;
+    base->CSI_CTRL_REG.RW = csiCtrl0;
 
-    /* CSI_CTRL1[VSYNC_PULSE] means the pixel clock count of VSYNC. */
-    base->CSI_CTRL1 = CI_PI_CSI_CTRL1_VSYNC_PULSE(config->vsyncWidth * (config->width + config->hsyncWidth)) |
-                      CI_PI_CSI_CTRL1_PIXEL_WIDTH(config->width - 1);
+    /* CSI_CTRL_REG1[VSYNC_PULSE] means the pixel clock count of VSYNC. */
+    base->CSI_CTRL_REG1.RW =
+        CI_PI_CSR_CSI_CTRL_REG1_VSYNC_PULSE(config->vsyncWidth * (config->width + config->hsyncWidth)) |
+        CI_PI_CSR_CSI_CTRL_REG1_PIXEL_WIDTH(config->width - 1);
 }
 
 /*!
@@ -114,7 +115,7 @@ void CI_PI_Init(CI_PI_Type *base, const ci_pi_config_t *config)
  *
  * param base CI_PI peripheral address.
  */
-void CI_PI_Deinit(CI_PI_Type *base)
+void CI_PI_Deinit(CI_PI_CSR_Type *base)
 {
     CI_PI_Stop(base);
     CI_PI_Reset(base);
@@ -167,12 +168,12 @@ void CI_PI_GetDefaultConfig(ci_pi_config_t *config)
  *
  * param base CI_PI peripheral address.
  */
-void CI_PI_Start(CI_PI_Type *base)
+void CI_PI_Start(CI_PI_CSR_Type *base)
 {
     /* Enable the CSI. */
-    base->CSI_CTRL0_SET = CI_PI_CSI_CTRL0_CSI_ENABLE_MASK;
+    base->CSI_CTRL_REG.SET = CI_PI_CSR_CSI_CTRL_REG_CSI_EN_MASK;
     /* Disable force sync, then the input signal is processed. */
-    base->CSI_CTRL0_CLR = CI_PI_CSI_CTRL0_HSYNC_FORCE_EN_MASK | CI_PI_CSI_CTRL0_VSYNC_FORCE_EN_MASK;
+    base->CSI_CTRL_REG.CLR = CI_PI_CSR_CSI_CTRL_REG_HSYNC_FORCE_EN_MASK | CI_PI_CSR_CSI_CTRL_REG_VSYNC_FORCE_EN_MASK;
 }
 
 /*!
@@ -180,10 +181,10 @@ void CI_PI_Start(CI_PI_Type *base)
  *
  * param base CI_PI peripheral address.
  */
-void CI_PI_Stop(CI_PI_Type *base)
+void CI_PI_Stop(CI_PI_CSR_Type *base)
 {
     /* Disable the CSI. */
-    base->CSI_CTRL0_CLR = CI_PI_CSI_CTRL0_CSI_ENABLE_MASK;
+    base->CSI_CTRL_REG.CLR = CI_PI_CSR_CSI_CTRL_REG_CSI_EN_MASK;
     /* Enable force sync, the signal is latched. */
-    base->CSI_CTRL0_SET = CI_PI_CSI_CTRL0_HSYNC_FORCE_EN_MASK | CI_PI_CSI_CTRL0_VSYNC_FORCE_EN_MASK;
+    base->CSI_CTRL_REG.SET = CI_PI_CSR_CSI_CTRL_REG_HSYNC_FORCE_EN_MASK | CI_PI_CSR_CSI_CTRL_REG_VSYNC_FORCE_EN_MASK;
 }

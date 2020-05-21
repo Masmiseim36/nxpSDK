@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 NXP
+ * Copyright 2017, 2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -20,8 +20,8 @@
  ******************************************************************************/
 /*! @name Driver version */
 /*@{*/
-/*! @brief CI_PI driver version 2.0.0. */
-#define FSL_CI_PI_DRIVER_VERSION (MAKE_VERSION(2, 0, 0))
+/*! @brief CI_PI driver version. */
+#define FSL_CI_PI_DRIVER_VERSION (MAKE_VERSION(2, 0, 1))
 /*@}*/
 
 /*!
@@ -29,8 +29,8 @@
  */
 enum _ci_pi_flags
 {
-    kCI_PI_ChangeOfFieldFlag = CI_PI_CSI_STATUS_FIELD_TOGGLE_MASK, /*!< Change of field. */
-    kCI_PI_EccErrorFlag      = CI_PI_CSI_STATUS_ECC_ERROR_MASK,    /*!< ECC error detected. */
+    kCI_PI_ChangeOfFieldFlag = CI_PI_CSR_CSI_STATUS_FIELD_TOGGLE_MASK, /*!< Change of field. */
+    kCI_PI_EccErrorFlag      = CI_PI_CSR_CSI_STATUS_ECC_ERROR_MASK,    /*!< ECC error detected. */
 };
 
 /*!
@@ -56,15 +56,15 @@ typedef enum _ci_pi_input_format
 /*! @brief CI_PI signal polarity. */
 enum _ci_pi_polarity_flags
 {
-    kCI_PI_HsyncActiveLow        = 0U,                             /*!< HSYNC is active low. */
-    kCI_PI_HsyncActiveHigh       = CI_PI_CSI_CTRL0_HSYNC_POL_MASK, /*!< HSYNC is active high. */
+    kCI_PI_HsyncActiveLow        = 0U,                                    /*!< HSYNC is active low. */
+    kCI_PI_HsyncActiveHigh       = CI_PI_CSR_CSI_CTRL_REG_HSYNC_POL_MASK, /*!< HSYNC is active high. */
     kCI_PI_DataLatchOnRisingEdge = 0, /*!< Pixel data latched at rising edge of pixel clock. */
     kCI_PI_DataLatchOnFallingEdge =
-        CI_PI_CSI_CTRL0_PIXEL_CLK_POL_MASK, /*!< Pixel data latched at falling edge of pixel clock. */
-    kCI_PI_DataEnableActiveHigh = 0U,       /*!< Data enable signal (DE) is active high. */
-    kCI_PI_DataEnableActiveLow  = CI_PI_CSI_CTRL0_DE_POL_MASK,    /*!< Data enable signal (DE) is active low. */
-    kCI_PI_VsyncActiveHigh      = CI_PI_CSI_CTRL0_VSYNC_POL_MASK, /*!< VSYNC is active high. */
-    kCI_PI_VsyncActiveLow       = 0,                              /*!< VSYNC is active low. */
+        CI_PI_CSR_CSI_CTRL_REG_PIXEL_CLK_POL_MASK, /*!< Pixel data latched at falling edge of pixel clock. */
+    kCI_PI_DataEnableActiveHigh = 0U,              /*!< Data enable signal (DE) is active high. */
+    kCI_PI_DataEnableActiveLow  = CI_PI_CSR_CSI_CTRL_REG_DE_POL_MASK,    /*!< Data enable signal (DE) is active low. */
+    kCI_PI_VsyncActiveHigh      = CI_PI_CSR_CSI_CTRL_REG_VSYNC_POL_MASK, /*!< VSYNC is active high. */
+    kCI_PI_VsyncActiveLow       = 0,                                     /*!< VSYNC is active low. */
 };
 
 /*!
@@ -74,11 +74,12 @@ enum _ci_pi_polarity_flags
  */
 typedef enum _ci_pi_work_mode
 {
-    kCI_PI_GatedClockMode = CI_PI_CSI_CTRL0_GCLK_MODE_EN_MASK, /*!< HSYNC, VSYNC, and PIXCLK signals are used. */
-    kCI_PI_GatedClockDataEnableMode = CI_PI_CSI_CTRL0_GCLK_MODE_EN_MASK |
-                                      CI_PI_CSI_CTRL0_VALID_SEL_MASK, /*!< DE, VSYNC, and PIXCLK signals are used. */
-    kCI_PI_NonGatedClockMode      = 0U,                               /*!< VSYNC, and PIXCLK signals are used. */
-    kCI_PI_CCIR656ProgressiveMode = CI_PI_CSI_CTRL0_CCIR_EN_MASK,     /*!< CCIR656 progressive mode. */
+    kCI_PI_GatedClockMode = CI_PI_CSR_CSI_CTRL_REG_GCLK_MODE_EN_MASK, /*!< HSYNC, VSYNC, and PIXCLK signals are used. */
+    kCI_PI_GatedClockDataEnableMode =
+        CI_PI_CSR_CSI_CTRL_REG_GCLK_MODE_EN_MASK |
+        CI_PI_CSR_CSI_CTRL_REG_VALID_SEL_MASK,                           /*!< DE, VSYNC, and PIXCLK signals are used. */
+    kCI_PI_NonGatedClockMode      = 0U,                                  /*!< VSYNC, and PIXCLK signals are used. */
+    kCI_PI_CCIR656ProgressiveMode = CI_PI_CSR_CSI_CTRL_REG_CCIR_EN_MASK, /*!< CCIR656 progressive mode. */
 } ci_pi_work_mode_t;
 
 typedef struct _ci_pi_config
@@ -110,14 +111,14 @@ extern "C" {
  * @param base CI_PI peripheral address.
  * @param config CI_PI module configuration structure.
  */
-void CI_PI_Init(CI_PI_Type *base, const ci_pi_config_t *config);
+void CI_PI_Init(CI_PI_CSR_Type *base, const ci_pi_config_t *config);
 
 /*!
  * @brief Disables the CI_PI peripheral module.
  *
  * @param base CI_PI peripheral address.
  */
-void CI_PI_Deinit(CI_PI_Type *base);
+void CI_PI_Deinit(CI_PI_CSR_Type *base);
 
 /*!
  * @brief Get the default configuration to initialize CI_PI.
@@ -145,11 +146,11 @@ void CI_PI_GetDefaultConfig(ci_pi_config_t *config);
  *
  * @param base CI_PI peripheral address.
  */
-static inline void CI_PI_Reset(CI_PI_Type *base)
+static inline void CI_PI_Reset(CI_PI_CSR_Type *base)
 {
     uint32_t i = 0;
 
-    base->CSI_CTRL0_SET = CI_PI_CSI_CTRL0_SOFTRST_MASK;
+    base->CSI_CTRL_REG.SET = CI_PI_CSR_CSI_CTRL_REG_SOFTRST_MASK;
 
     i = 0x10;
     while (i--)
@@ -157,7 +158,7 @@ static inline void CI_PI_Reset(CI_PI_Type *base)
         __NOP();
     }
 
-    base->CSI_CTRL0_CLR = CI_PI_CSI_CTRL0_SOFTRST_MASK;
+    base->CSI_CTRL_REG.CLR = CI_PI_CSR_CSI_CTRL_REG_SOFTRST_MASK;
 }
 
 /*!
@@ -165,14 +166,14 @@ static inline void CI_PI_Reset(CI_PI_Type *base)
  *
  * @param base CI_PI peripheral address.
  */
-void CI_PI_Start(CI_PI_Type *base);
+void CI_PI_Start(CI_PI_CSR_Type *base);
 
 /*!
  * @brief Stops the CI_PI peripheral module.
  *
  * @param base CI_PI peripheral address.
  */
-void CI_PI_Stop(CI_PI_Type *base);
+void CI_PI_Stop(CI_PI_CSR_Type *base);
 
 /*!
  * @brief Gets the CI_PI peripheral module status.
@@ -180,9 +181,9 @@ void CI_PI_Stop(CI_PI_Type *base);
  * @param base CI_PI peripheral address.
  * @return Status returned as the OR'ed value of @ref _ci_pi_flags.
  */
-static inline uint32_t CI_PI_GetStatus(CI_PI_Type *base)
+static inline uint32_t CI_PI_GetStatus(CI_PI_CSR_Type *base)
 {
-    return base->CSI_STATUS;
+    return base->CSI_STATUS.RW;
 }
 
 #if defined(__cIFusIFus)

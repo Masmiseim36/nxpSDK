@@ -19,10 +19,10 @@
  ******************************************************************************/
 
 /*! @brief PHY driver version */
-/*  
+/*
     -2.0.1
       - Default configure RMII I/O to 1.8v in PHY_Init
-      - Enable RMII rx delay. 
+      - Enable RMII rx delay.
 */
 #define FSL_PHY_DRIVER_VERSION (MAKE_VERSION(2, 0, 1)) /*!< Version 2.0.1. */
 

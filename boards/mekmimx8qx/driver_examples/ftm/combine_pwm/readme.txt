@@ -8,8 +8,8 @@ And if the board do not support LEDs to show, the outputs can be observed by osc
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.1
-- GCC ARM Embedded  7.3.1
+- IAR embedded Workbench  8.40.2
+- GCC ARM Embedded  8.3.1
 
 Hardware requirements
 =====================

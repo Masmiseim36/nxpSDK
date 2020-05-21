@@ -23,15 +23,23 @@
 #define EXAMPLE_CAN ADMA__CAN0
 #define EXAMPLE_CAN_DMA ADMA__EDMA3
 #define EXAMPLE_CAN_DMA_CHANNEL (12)
-#define EXAMPLE_CAN_CLKSRC kCLOCK_DMA_Can0
 /*
  * When CLK_SRC=1, the protocol engine works at fixed frequency of 160M.
  * If other frequency wanted, please use CLK_SRC=0 and set the working frequency for SC_R_CAN_0.
  */
+#define EXAMPLE_CAN_CLK_SOURCE (kFLEXCAN_ClkSrc1)
 #define EXAMPLE_CAN_CLK_FREQ (SC_160MHZ)
-#define EXAMPLE_CAN_DMAMUX DMAMUX0
+/* Considering that the first valid MB must be used as Reserved TX MB for ERR005641,
+ * if RX FIFO enables (RFEN bit in MCE set as 1) and RFFN in CTRL2 is set default as zero,
+ * the first valid TX MB Number shall be 8;
+ * if RX FIFO enables (RFEN bit in MCE set as 1) and RFFN in CTRL2 is set by other values (0x1~0xF),
+ * the user should consider to detail the first valid MB number;
+ * if RX FIFO disables (RFEN bit in MCE set as 0) , the first valid MB number would be zero.
+ */
 #define TX_MESSAGE_BUFFER_NUM (9)
-
+#define EXAMPLE_CAN_DMAMUX DMAMUX0
+/* Fix MISRA_C-2012 Rule 17.7. */
+#define LOG_INFO (void)PRINTF
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -122,33 +130,32 @@ int main(void)
     IRQSTEER_EnableInterrupt(IRQSTEER, ADMA_FLEXCAN0_INT_IRQn);
     IRQSTEER_EnableInterrupt(IRQSTEER, ADMA_FLEXCAN0_DMA_INT_IRQn);
 
-    PRINTF("\r\n==FlexCAN loopback edma example -- Start.==\r\n\r\n");
+    LOG_INFO("\r\n==FlexCAN loopback edma example -- Start.==\r\n\r\n");
 
     /* Init FlexCAN module. */
     /*
-     * flexcanConfig.clkSrc = kFLEXCAN_ClkSrcOsc;
-     * flexcanConfig.baudRate = 1000000U;
-     * flexcanConfig.maxMbNum = 16;
-     * flexcanConfig.enableLoopBack = false;
-     * flexcanConfig.enableSelfWakeup = false;
-     * flexcanConfig.enableIndividMask = false;
-     * flexcanConfig.enableDoze = false;
+     * flexcanConfig.clkSrc                 = kFLEXCAN_ClkSrc0;
+     * flexcanConfig.baudRate               = 1000000U;
+     * flexcanConfig.baudRateFD             = 2000000U;
+     * flexcanConfig.maxMbNum               = 16;
+     * flexcanConfig.enableLoopBack         = false;
+     * flexcanConfig.enableSelfWakeup       = false;
+     * flexcanConfig.enableIndividMask      = false;
+     * flexcanConfig.disableSelfReception   = false;
+     * flexcanConfig.enableListenOnlyMode   = false;
+     * flexcanConfig.enableDoze             = false;
      */
     FLEXCAN_GetDefaultConfig(&flexcanConfig);
-#if (!defined(FSL_FEATURE_FLEXCAN_SUPPORT_ENGINE_CLK_SEL_REMOVE)) || !FSL_FEATURE_FLEXCAN_SUPPORT_ENGINE_CLK_SEL_REMOVE
-    flexcanConfig.clkSrc = kFLEXCAN_ClkSrcPeri;
-#else
-#if defined(CAN_CTRL1_CLKSRC_MASK)
-    if (!FSL_FEATURE_FLEXCAN_INSTANCE_SUPPORT_ENGINE_CLK_SEL_REMOVEn(EXAMPLE_CAN))
-    {
-        flexcanConfig.clkSrc = kFLEXCAN_ClkSrcPeri;
-    }
+
+#if defined(EXAMPLE_CAN_CLK_SOURCE)
+    flexcanConfig.clkSrc = EXAMPLE_CAN_CLK_SOURCE;
 #endif
-#endif /* FSL_FEATURE_FLEXCAN_SUPPORT_ENGINE_CLK_SEL_REMOVE */
+
     flexcanConfig.enableLoopBack = true;
 
 #if (defined(USE_IMPROVED_TIMING_CONFIG) && USE_IMPROVED_TIMING_CONFIG)
     flexcan_timing_config_t timing_config;
+    memset(&timing_config, 0, sizeof(flexcan_timing_config_t));
     if (FLEXCAN_CalculateImprovedTimingValues(flexcanConfig.baudRate, EXAMPLE_CAN_CLK_FREQ, &timing_config))
     {
         /* Update the improved timing configuration*/
@@ -156,7 +163,7 @@ int main(void)
     }
     else
     {
-        PRINTF("No found Improved Timing Configuration. Just used default configuration\r\n\r\n");
+        LOG_INFO("No found Improved Timing Configuration. Just used default configuration\r\n\r\n");
     }
 #endif
 
@@ -199,81 +206,81 @@ int main(void)
                                      &flexcanRxFifoEdmaHandle);
 
     /* Send first message through Tx Message Buffer. */
-    txFrame.format    = kFLEXCAN_FrameFormatStandard;
-    txFrame.type      = kFLEXCAN_FrameTypeData;
+    txFrame.format    = (uint8_t)kFLEXCAN_FrameFormatStandard;
+    txFrame.type      = (uint8_t)kFLEXCAN_FrameTypeData;
     txFrame.id        = FLEXCAN_ID_STD(0x123);
-    txFrame.length    = 8;
+    txFrame.length    = 8U;
     txFrame.dataWord0 = CAN_WORD0_DATA_BYTE_0(0x11) | CAN_WORD0_DATA_BYTE_1(0x11) | CAN_WORD0_DATA_BYTE_2(0x11) |
                         CAN_WORD0_DATA_BYTE_3(0x11);
     txFrame.dataWord1 = CAN_WORD1_DATA_BYTE_4(0x11) | CAN_WORD1_DATA_BYTE_5(0x11) | CAN_WORD1_DATA_BYTE_6(0x11) |
                         CAN_WORD1_DATA_BYTE_7(0x11);
 
     txXfer.frame = &txFrame;
-    txXfer.mbIdx = TX_MESSAGE_BUFFER_NUM;
-    FLEXCAN_TransferSendNonBlocking(EXAMPLE_CAN, &flexcanHandle, &txXfer);
+    txXfer.mbIdx = (uint8_t)TX_MESSAGE_BUFFER_NUM;
+    (void)FLEXCAN_TransferSendNonBlocking(EXAMPLE_CAN, &flexcanHandle, &txXfer);
     while (!txComplete)
     {
     }
     txComplete = false;
-    PRINTF("Send Msg1 to Rx FIFO: word0 = 0x%x, word1 = 0x%x.\r\n", txFrame.dataWord0, txFrame.dataWord1);
+    LOG_INFO("Send Msg1 to Rx FIFO: word0 = 0x%x, word1 = 0x%x.\r\n", txFrame.dataWord0, txFrame.dataWord1);
 
     /* Send second message through Tx Message Buffer. */
     txFrame.dataWord0 = CAN_WORD0_DATA_BYTE_0(0x22) | CAN_WORD0_DATA_BYTE_1(0x22) | CAN_WORD0_DATA_BYTE_2(0x22) |
                         CAN_WORD0_DATA_BYTE_3(0x22);
     txFrame.dataWord1 = CAN_WORD1_DATA_BYTE_4(0x22) | CAN_WORD1_DATA_BYTE_5(0x22) | CAN_WORD1_DATA_BYTE_6(0x22) |
                         CAN_WORD1_DATA_BYTE_7(0x22);
-    FLEXCAN_TransferSendNonBlocking(EXAMPLE_CAN, &flexcanHandle, &txXfer);
+    (void)FLEXCAN_TransferSendNonBlocking(EXAMPLE_CAN, &flexcanHandle, &txXfer);
     while (!txComplete)
     {
     }
     txComplete = false;
-    PRINTF("Send Msg2 to Rx FIFO: word0 = 0x%x, word1 = 0x%x.\r\n", txFrame.dataWord0, txFrame.dataWord1);
+    LOG_INFO("Send Msg2 to Rx FIFO: word0 = 0x%x, word1 = 0x%x.\r\n", txFrame.dataWord0, txFrame.dataWord1);
 
     /* Send third message through Tx Message Buffer. */
     txXfer.frame      = &txFrame;
-    txXfer.mbIdx      = TX_MESSAGE_BUFFER_NUM;
+    txXfer.mbIdx      = (uint8_t)TX_MESSAGE_BUFFER_NUM;
     txFrame.dataWord0 = CAN_WORD0_DATA_BYTE_0(0x33) | CAN_WORD0_DATA_BYTE_1(0x33) | CAN_WORD0_DATA_BYTE_2(0x33) |
                         CAN_WORD0_DATA_BYTE_3(0x33);
     txFrame.dataWord1 = CAN_WORD1_DATA_BYTE_4(0x33) | CAN_WORD1_DATA_BYTE_5(0x33) | CAN_WORD1_DATA_BYTE_6(0x33) |
                         CAN_WORD1_DATA_BYTE_7(0x33);
-    FLEXCAN_TransferSendNonBlocking(EXAMPLE_CAN, &flexcanHandle, &txXfer);
+    (void)FLEXCAN_TransferSendNonBlocking(EXAMPLE_CAN, &flexcanHandle, &txXfer);
     while (!txComplete)
     {
     }
     txComplete = false;
-    PRINTF("Send Msg3 to Rx FIFO: word0 = 0x%x, word1 = 0x%x.\r\n", txFrame.dataWord0, txFrame.dataWord1);
+    LOG_INFO("Send Msg3 to Rx FIFO: word0 = 0x%x, word1 = 0x%x.\r\n", txFrame.dataWord0, txFrame.dataWord1);
 
     /* Send fourth message through Tx Message Buffer. */
     txXfer.frame      = &txFrame;
-    txXfer.mbIdx      = TX_MESSAGE_BUFFER_NUM;
+    txXfer.mbIdx      = (uint8_t)TX_MESSAGE_BUFFER_NUM;
     txFrame.dataWord0 = CAN_WORD0_DATA_BYTE_0(0x44) | CAN_WORD0_DATA_BYTE_1(0x44) | CAN_WORD0_DATA_BYTE_2(0x44) |
                         CAN_WORD0_DATA_BYTE_3(0x44);
     txFrame.dataWord1 = CAN_WORD1_DATA_BYTE_4(0x44) | CAN_WORD1_DATA_BYTE_5(0x44) | CAN_WORD1_DATA_BYTE_6(0x44) |
                         CAN_WORD1_DATA_BYTE_7(0x44);
-    FLEXCAN_TransferSendNonBlocking(EXAMPLE_CAN, &flexcanHandle, &txXfer);
+    (void)FLEXCAN_TransferSendNonBlocking(EXAMPLE_CAN, &flexcanHandle, &txXfer);
     while (!txComplete)
     {
     }
     txComplete = false;
-    PRINTF("Send Msg4 to Rx FIFO: word0 = 0x%x, word1 = 0x%x.\r\n\r\n", txFrame.dataWord0, txFrame.dataWord1);
+    LOG_INFO("Send Msg4 to Rx FIFO: word0 = 0x%x, word1 = 0x%x.\r\n\r\n", txFrame.dataWord0, txFrame.dataWord1);
 
     /* Receive data through Rx FIFO. */
     rxFifoXfer.frame = &rxFrame;
     for (i = 0; i < 4; i++)
     {
-        FLEXCAN_TransferReceiveFifoEDMA(EXAMPLE_CAN, &flexcanEdmaHandle, &rxFifoXfer);
+        (void)FLEXCAN_TransferReceiveFifoEDMA(EXAMPLE_CAN, &flexcanEdmaHandle, &rxFifoXfer);
         while (!rxComplete)
         {
         }
         rxComplete = false;
 
-        PRINTF("Receive Msg%d from FIFO: word0 = 0x%x, word1 = 0x%x, ID Filter Hit%d.\r\n", i + 1, rxFrame.dataWord0,
-               rxFrame.dataWord1, rxFrame.idhit);
+        LOG_INFO("Receive Msg%d from FIFO: word0 = 0x%x, word1 = 0x%x, ID Filter Hit%d.\r\n", i + 1, rxFrame.dataWord0,
+                 rxFrame.dataWord1, rxFrame.idhit);
     }
 
-    PRINTF("\r\n==FlexCAN loopback EDMA example -- Finish.==\r\n");
+    LOG_INFO("\r\n==FlexCAN loopback EDMA example -- Finish.==\r\n");
 
-    while (1)
+    while (true)
     {
         __WFI();
     }

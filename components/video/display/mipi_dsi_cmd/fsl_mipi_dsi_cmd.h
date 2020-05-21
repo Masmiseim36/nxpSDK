@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017, NXP Semiconductors, Inc.
+ * Copyright 2017-2019 NXP
  * All rights reserved.
  *
  *
@@ -11,6 +11,16 @@
 
 #include "fsl_common.h"
 #include "fsl_mipi_dsi.h"
+
+/*
+ * Change log:
+ *
+ *   1.0.1
+ *     - Add more functions for panel works in command mode.
+ *
+ *   1.0.0
+ *     - Initial version
+ */
 
 /*******************************************************************************
  * Definitions
@@ -72,14 +82,46 @@ enum _mipi_dsc
     kMIPI_DCS_ReadDDBContinue      = 0xA8,
 };
 
+/*!
+ * @brief Pixel format used by DSC command.
+ */
+typedef enum _mipi_dsc_pixel_format
+{
+    kMIPI_DCS_Pixel3Bits  = 1U, /*!< 3-bit per pixel. */
+    kMIPI_DCS_Pixel8Bits  = 2U, /*!< 8-bit per pixel. */
+    kMIPI_DCS_Pixel12Bits = 3U, /*!< 12-bit per pixel. */
+    kMIPI_DCS_Pixel16Bits = 5U, /*!< 16-bit per pixel. */
+    kMIPI_DCS_Pixel18Bits = 6U, /*!< 18-bit per pixel. */
+    kMIPI_DCS_Pixel24Bits = 7U, /*!< 24-bit per pixel. */
+} mipi_dsc_pixel_format_t;
+
+/*!
+ * @brief Callback function when the write memory finished.
+ *
+ * If transfer done successfully, the @p status is kStatus_Success.
+ */
+typedef void (*mipi_dsi_mem_done_callback_t)(status_t status, void *userData);
+
 /*! @brief MIPI DSI transfer function. */
 typedef status_t (*mipi_dsi_transfer_func_t)(dsi_transfer_t *xfer);
+
+/*! @brief MIPI DSI memory write function. */
+typedef status_t (*mipi_dsi_mem_write_func_t)(uint8_t virtualChannel, const uint8_t *data, uint32_t length);
 
 /*! @brief MIPI DSI device. */
 typedef struct _mipi_dsi_device
 {
     uint8_t virtualChannel;
     mipi_dsi_transfer_func_t xferFunc;
+    mipi_dsi_mem_write_func_t memWriteFunc; /*!< Function to write display memory,
+                                              it should be non-blocking function and
+                                              notify upper layer using callback when finished.
+                                              Not used when panel works in video mode. */
+    mipi_dsi_mem_done_callback_t callback;  /*!< The callback function to notify upper layer
+                                               that memory write done. Not used when panel
+                                               works in video mode. */
+    void *userData;                         /*!< Parameter for the memory write done callback.
+                                            not used when panel works in video mode. */
 } mipi_dsi_device_t;
 
 /*******************************************************************************
@@ -162,6 +204,69 @@ status_t MIPI_DSI_DCS_Write(mipi_dsi_device_t *device, const uint8_t *txData, in
  * @return Returns @ref kStatus_Success if success, otherwise returns error code.
  */
 status_t MIPI_DSI_GenericWrite(mipi_dsi_device_t *device, const uint8_t *txData, int32_t txDataSize);
+
+/*!
+ * @brief Set the panel pixel format.
+ *
+ * @param device The MIPI DSI device.
+ * @param dbiFormat The DBI interface pixel format.
+ * @param dpiFormat The DPI interface pixel format.
+ * @return Returns @ref kStatus_Success if success, otherwise returns error code.
+ */
+status_t MIPI_DSI_DCS_SetPixelFormat(mipi_dsi_device_t *device,
+                                     mipi_dsc_pixel_format_t dbiFormat,
+                                     mipi_dsc_pixel_format_t dpiFormat);
+
+/*!
+ * @brief Select area to write or read pixels.
+ *
+ * @param device The MIPI DSI device.
+ * @param startX Start point X coordination.
+ * @param startY Start point Y coordination.
+ * @param endX End point X coordination.
+ * @param endY End point Y coordination.
+ * @return Returns @ref kStatus_Success if success, otherwise returns error code.
+ */
+status_t MIPI_DSI_SelectArea(mipi_dsi_device_t *device, uint16_t startX, uint16_t startY, uint16_t endX, uint16_t endY);
+
+/*!
+ * @brief Send pixel data to the display controller's frame memory.
+ *
+ * The pixels will be shown in the region selected by @ref MIPI_DSI_SelectArea.
+ * This function is non-blocking function, user should install callback function
+ * using @ref MIPI_DSI_SetMemoryDoneCallback to get informed when write finished.
+ *
+ * @param device The MIPI DSI device.
+ * @param data The pixel data to send.
+ * @param length Length of the data in byte.
+ * @return Returns @ref kStatus_Success if success, otherwise returns error code.
+ */
+status_t MIPI_DSI_WriteMemory(mipi_dsi_device_t *device, const uint8_t *data, uint32_t length);
+
+/*!
+ * @brief Install the callback called when write memory finished.
+ *
+ * Upper layer should install callback function using this function to
+ * get memory write done notification.
+ *
+ * @param device The MIPI DSI device.
+ * @param callback The callback function to inform upper layer that memory write done.
+ * @param userData Parameter used by the callback.
+ * @return Returns @ref kStatus_Success if success, otherwise returns error code.
+ */
+void MIPI_DSI_SetMemoryDoneCallback(mipi_dsi_device_t *device, mipi_dsi_mem_done_callback_t callback, void *userData);
+
+/*!
+ * @brief The callback function lower layer should call when write memory finished.
+ *
+ * When implement the @ref mipi_dsi_device_t, this function should be called when
+ * the memory writing finished. The parameter @p userData should be pointer to the
+ * @ref mipi_dsi_device_t.
+ *
+ * @param status The memory writing result. @ref kStatus_Success if success.
+ * @param userData Must be pointer to the @ref mipi_dsi_device_t instance.
+ */
+void MIPI_DSI_MemoryDoneDriverCallback(status_t status, void *userData);
 
 #if defined(__cplusplus)
 }

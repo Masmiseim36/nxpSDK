@@ -1,13 +1,15 @@
 /*
 ** ###################################################################
-**     Processor:           MIMX8QX2AVOFZ
+**     Processors:          MIMX8QX2AVLFZ
+**                          MIMX8QX2AVOFZ
+**
 **     Compilers:           GNU C Compiler
 **                          IAR ANSI C/C++ Compiler for ARM
 **                          Keil ARM C/C++ Compiler
 **
-**     Reference manual:    IMX8DQXPRM, Rev. B, 5/2018
-**     Version:             rev. 3.0, 2018-08-22
-**     Build:               b181123
+**     Reference manual:    IMX8DQXPRM, Rev. E, 6/2019
+**     Version:             rev. 4.0, 2018-08-22
+**     Build:               b191126
 **
 **     Abstract:
 **         Provides a system configuration function and a global variable that
@@ -15,7 +17,7 @@
 **         the oscillator (PLL) that is part of the microcontroller device.
 **
 **     Copyright 2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2018 NXP
+**     Copyright 2016-2019 NXP
 **     All rights reserved.
 **
 **     SPDX-License-Identifier: BSD-3-Clause
@@ -30,23 +32,24 @@
 **         RevA Header EAR
 **     - rev. 3.0 (2018-08-22)
 **         RevB Header EAR
+**     - rev. 4.0 (2018-08-22)
+**         RevC Header RFP
 **
 ** ###################################################################
 */
 
 /*!
  * @file MIMX8QX2_cm4
- * @version 3.0
- * @date 2018-08-22
+ * @version 1.0
+ * @date 261119
  * @brief Device specific configuration file for MIMX8QX2_cm4 (header file)
  *
  * Provides a system configuration function and a global variable that contains
  * the system frequency. It configures the device and initializes the oscillator
  * (PLL) that is part of the microcontroller device.
  */
-
-#ifndef _SYSTEM_MIMX8QX2_cm4_H_
-#define _SYSTEM_MIMX8QX2_cm4_H_                  /**< Symbol preventing repeated inclusion */
+#ifndef _SYSTEM_MIMX8QX2_CM4_H_
+#define _SYSTEM_MIMX8QX2_CM4_H_                    /**< Symbol preventing repeated inclusion */
 
 #ifdef __cplusplus
 extern "C" {
@@ -60,7 +63,15 @@ extern "C" {
   #define DISABLE_WDOG  1
 #endif
 
-#define DEFAULT_SYSTEM_CLOCK           266000000u            /* Default System clock value */
+/**
+ * When downloading/debuging with Debugger, the Parity/ECC error check is disabled by debugger.
+ * Define ENABLE_ECC_DEBUG to non-zero value to re-enable the check during debugging.
+ */
+#ifndef ENABLE_ECC_DEBUG
+  #define ENABLE_ECC_DEBUG 0
+#endif
+
+#define DEFAULT_SYSTEM_CLOCK           264000000u            /* Default System clock value */
 
 /**
  * @brief System clock frequency (core clock)
@@ -112,4 +123,4 @@ sc_ipc_t SystemGetScfwIpcHandle (void);
 }
 #endif
 
-#endif  /* _SYSTEM_MIMX8QX2_cm4_H_ */
+#endif  /* _SYSTEM_MIMX8QX2_CM4_H_ */

@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -23,13 +23,13 @@
 /*! @name Driver version */
 /*@{*/
 /*! @brief SEMA42 driver version */
-#define FSL_SEMA42_DRIVER_VERSION (MAKE_VERSION(2, 0, 0))
+#define FSL_SEMA42_DRIVER_VERSION (MAKE_VERSION(2, 0, 1))
 /*@}*/
 
 /*!
  * @brief SEMA42 status return codes.
  */
-enum _sema42_status
+enum
 {
     kStatus_SEMA42_Busy = MAKE_STATUS(kStatusGroup_SEMA42, 0), /*!< SEMA42 gate has been locked by other processor. */
     kStatus_SEMA42_Reseting = MAKE_STATUS(kStatusGroup_SEMA42, 1) /*!< SEMA42 gate reseting is ongoing. */
@@ -78,7 +78,7 @@ typedef enum _sema42_gate_status
  * 7 ^ 3 = 4
  * ...
  */
-#define SEMA42_GATEn(base, n) (*(&((base)->GATE3) + ((n) ^ 3U)))
+#define SEMA42_GATEn(base, n) (((volatile uint8_t *)(&((base)->GATE3)))[(n) ^ 3U])
 
 /*******************************************************************************
  * API
@@ -150,10 +150,10 @@ void SEMA42_Lock(SEMA42_Type *base, uint8_t gateNum, uint8_t procNum);
  */
 static inline void SEMA42_Unlock(SEMA42_Type *base, uint8_t gateNum)
 {
-    assert(gateNum < FSL_FEATURE_SEMA42_GATE_COUNT);
+    assert(gateNum < (uint8_t)FSL_FEATURE_SEMA42_GATE_COUNT);
 
     /* ^= 0x03U because SEMA42 gates are in the order 3, 2, 1, 0, 7, 6, 5, 4, 11, 10, 9, 8, 7, ...*/
-    SEMA42_GATEn(base, gateNum) = kSEMA42_Unlocked;
+    SEMA42_GATEn(base, gateNum) = (uint8_t)kSEMA42_Unlocked;
 }
 
 /*!
@@ -168,7 +168,7 @@ static inline void SEMA42_Unlock(SEMA42_Type *base, uint8_t gateNum)
  */
 static inline sema42_gate_status_t SEMA42_GetGateStatus(SEMA42_Type *base, uint8_t gateNum)
 {
-    assert(gateNum < FSL_FEATURE_SEMA42_GATE_COUNT);
+    assert(gateNum < (uint8_t)FSL_FEATURE_SEMA42_GATE_COUNT);
 
     return (sema42_gate_status_t)(SEMA42_GATEn(base, gateNum));
 }

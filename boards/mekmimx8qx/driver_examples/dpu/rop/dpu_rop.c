@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 NXP
+ * Copyright 2017, 2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -10,11 +10,19 @@
 #include "fsl_debug_console.h"
 #include "board.h"
 
+#if (defined(APP_DPU_USE_PREFETCH) && APP_DPU_USE_PREFETCH)
+#include "fsl_prg.h"
+#include "fsl_dpr.h"
+#endif
+
 #include "fsl_common.h"
 #include "pin_mux.h"
 /*******************************************************************************
  * Definitions
  *******************************************************************************/
+
+/* ARGB8888, 4 bytes per pixel. */
+#define APP_BPP 4
 
 #define APP_MAKE_COLOR(red, green, blue, alpha) \
     ((((uint32_t)(alpha)) << 24U) | (((uint32_t)(red)) << 16U) | (((uint32_t)(green)) << 8U) | ((uint32_t)(blue)))
@@ -42,6 +50,23 @@
 #define APP_WIN2_OFFSET_X (APP_PANEL_WIDTH / 8)
 #define APP_WIN2_OFFSET_Y (APP_PANEL_HEIGHT / 4)
 
+#if (defined(APP_DPU_USE_PREFETCH) && APP_DPU_USE_PREFETCH)
+/* Fetch Decode 1 is used in safety stream. */
+#define APP_SAFETY_STREAM_DPR APP_FETCH_DECODE1_DPR
+#define APP_SAFETY_STREAM_PRG APP_FETCH_DECODE1_PRG
+#endif
+
+#if (defined(APP_DPU_USE_PREFETCH) && APP_DPU_USE_PREFETCH)
+#define APP_PANEL_FB_ADDR_ALIGN_BYTE DPU_FETCH_UNIT_BURST_SIZE
+#define APP_PANEL_FB_STRIDE_ALIGN_BYTE DPU_FETCH_UNIT_BURST_SIZE
+#else
+#define APP_PANEL_FB_ADDR_ALIGN_BYTE (32U)
+#define APP_PANEL_FB_STRIDE_ALIGN_BYTE APP_BPP
+#endif
+
+#define APP_PANEL_FB_STRIDE_BYTE (SDK_SIZEALIGN(APP_BPP * APP_PANEL_WIDTH, APP_PANEL_FB_STRIDE_ALIGN_BYTE))
+#define APP_PANEL_FB_STRIDE_PIXEL (APP_PANEL_FB_STRIDE_BYTE / APP_BPP)
+
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -58,7 +83,8 @@ AT_NONCACHEABLE_SECTION_ALIGN(uint32_t s_greenWinFrameBuffer[APP_WIN_HEIGHT][APP
 /* Frame buffer for blue window */
 AT_NONCACHEABLE_SECTION_ALIGN(uint32_t s_blueWinFrameBuffer[APP_WIN_HEIGHT][APP_WIN_WIDTH], 32);
 /* Frame buffer to display. */
-AT_NONCACHEABLE_SECTION_ALIGN(uint32_t s_displayFrameBuffer[2][APP_PANEL_HEIGHT][APP_PANEL_WIDTH], 32);
+AT_NONCACHEABLE_SECTION_ALIGN(uint32_t s_displayFrameBuffer[2][APP_PANEL_HEIGHT][APP_PANEL_FB_STRIDE_PIXEL],
+                              APP_PANEL_FB_ADDR_ALIGN_BYTE);
 
 volatile bool s_isSafetyStreamShadowPending = false;
 volatile bool s_isBlitEngineFrameComplete   = false;
@@ -66,7 +92,7 @@ volatile bool s_isBlitEngineFrameComplete   = false;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-void APP_InitFrameBuffer(uint32_t frameBuffer, uint16_t height, uint16_t width, uint32_t color)
+void APP_InitFrameBuffer(uint32_t frameBuffer, uint16_t height, uint16_t width, uint16_t strideBytes, uint32_t color)
 {
     uint32_t i, j;
 
@@ -74,7 +100,7 @@ void APP_InitFrameBuffer(uint32_t frameBuffer, uint16_t height, uint16_t width, 
     {
         for (j = 0; j < width; j++)
         {
-            *((uint32_t *)frameBuffer + (width * i) + j) = color;
+            ((uint32_t *)(frameBuffer + strideBytes * i))[j] = color;
         }
     }
 }
@@ -105,6 +131,7 @@ void APP_TriggerAndStartBlitEngine(void)
 void APP_DPU_Display(void)
 {
     uint8_t displayFbIdx = 0;
+    uint32_t bufferAddr  = 0;
 
     dpu_display_timing_config_t displayTimingConfig;
     dpu_const_frame_config_t cfConfig;
@@ -114,6 +141,10 @@ void APP_DPU_Display(void)
     dpu_display_config_t displayConfig;
 
     /* Step 1: Configure the safety stream */
+#if (defined(APP_DPU_USE_PREFETCH) && APP_DPU_USE_PREFETCH)
+    dpr_buffer_config_t dprConfig;
+    prg_buffer_config_t prgConfig;
+#endif
 
     /* Pipeline. */
     DPU_InitPipeline(APP_DPU, APP_SAFETY_STREAM_PIPELINE);
@@ -150,13 +181,40 @@ void APP_DPU_Display(void)
     sbConfig.constColor   = DPU_MAKE_CONST_COLOR(0, 0, 0, 0);
 
     /* Sublayer 0. */
-    sbConfig.strideBytes  = 4 * APP_PANEL_WIDTH;
+    sbConfig.strideBytes  = APP_PANEL_FB_STRIDE_BYTE;
     sbConfig.bufferHeight = APP_PANEL_HEIGHT;
     sbConfig.bufferWidth  = APP_PANEL_WIDTH;
     sbConfig.baseAddr     = (uint32_t)s_displayFrameBuffer[displayFbIdx];
     DPU_SetFetchUnitSrcBufferConfig(APP_DPU, kDPU_FetchDecode1, 0, &sbConfig);
     DPU_SetFetchUnitOffset(APP_DPU, kDPU_FetchDecode1, 0, 0, 0);
     DPU_EnableFetchUnitSrcBuffer(APP_DPU, kDPU_FetchDecode1, 0, true);
+
+#if (defined(APP_DPU_USE_PREFETCH) && APP_DPU_USE_PREFETCH)
+    /* PRG config. */
+    PRG_BufferGetDefaultConfig(&prgConfig);
+    prgConfig.width       = APP_PANEL_WIDTH;
+    prgConfig.height      = APP_PANEL_HEIGHT;
+    prgConfig.strideBytes = APP_PANEL_FB_STRIDE_BYTE;
+    prgConfig.dataType    = kPRG_DataType32Bpp;
+
+    PRG_Init(APP_SAFETY_STREAM_PRG);
+    PRG_SetBufferConfig(APP_SAFETY_STREAM_PRG, &prgConfig);
+    PRG_SetBufferAddr(APP_SAFETY_STREAM_PRG, sbConfig.baseAddr);
+    PRG_Enable(APP_SAFETY_STREAM_PRG, true);
+    PRG_UpdateRegister(APP_SAFETY_STREAM_PRG);
+
+    /* DPR config. */
+    DPR_BufferGetDefaultConfig(&dprConfig);
+    dprConfig.width       = APP_PANEL_WIDTH;
+    dprConfig.height      = APP_PANEL_HEIGHT;
+    dprConfig.strideBytes = APP_PANEL_FB_STRIDE_BYTE;
+    dprConfig.dataType    = kDPR_DataType32Bpp;
+
+    DPR_Init(APP_SAFETY_STREAM_DPR);
+    DPR_SetBufferConfig(APP_SAFETY_STREAM_DPR, &dprConfig);
+    DPR_SetBufferAddr(APP_SAFETY_STREAM_DPR, sbConfig.baseAddr);
+    DPR_Start(APP_SAFETY_STREAM_DPR);
+#endif
 
     /* Configuration complete, trigger the shadow load. */
     APP_TriggerSafetyStreamShadowLoad();
@@ -203,6 +261,13 @@ void APP_DPU_Display(void)
 
     DPU_StartDisplay(APP_DPU, APP_DPU_DISPLAY_INDEX);
 
+#if (defined(APP_DPU_USE_PREFETCH) && APP_DPU_USE_PREFETCH)
+    PRG_EnableShadowLoad(APP_SAFETY_STREAM_PRG, true);
+    PRG_UpdateRegister(APP_SAFETY_STREAM_PRG);
+
+    DPR_StartRepeat(APP_SAFETY_STREAM_DPR);
+#endif
+
     /* Moving the float window. */
     for (;;)
     {
@@ -218,7 +283,17 @@ void APP_DPU_Display(void)
 
         /* Show the other frame buffer. */
         displayFbIdx ^= 1;
-        DPU_SetFetchUnitSrcBufferAddr(APP_DPU, kDPU_FetchDecode1, 0, (uint32_t)s_displayFrameBuffer[displayFbIdx]);
+        bufferAddr = (uint32_t)s_displayFrameBuffer[displayFbIdx];
+
+#if (defined(APP_DPU_USE_PREFETCH) && APP_DPU_USE_PREFETCH)
+        DPR_SetBufferAddr(APP_SAFETY_STREAM_DPR, bufferAddr);
+
+        PRG_SetBufferAddr(APP_SAFETY_STREAM_PRG, bufferAddr);
+
+        PRG_UpdateRegister(APP_SAFETY_STREAM_PRG);
+#endif
+
+        DPU_SetFetchUnitSrcBufferAddr(APP_DPU, kDPU_FetchDecode1, 0, bufferAddr);
 
         APP_TriggerSafetyStreamShadowLoad();
     }
@@ -243,7 +318,7 @@ void APP_DPU_Rop(void)
 
     DPU_DstBufferGetDefaultConfig(&dbConfig);
     dbConfig.baseAddr     = (uint32_t)s_displayFrameBuffer[0];
-    dbConfig.strideBytes  = 4 * APP_PANEL_WIDTH;
+    dbConfig.strideBytes  = APP_PANEL_FB_STRIDE_BYTE;
     dbConfig.bitsPerPixel = 32U;
     dbConfig.pixelFormat  = kDPU_PixelFormatARGB8888;
     dbConfig.bufferHeight = APP_PANEL_HEIGHT;
@@ -376,9 +451,12 @@ int main(void)
     BOARD_InitDebugConsole();
     PRINTF("DPU ROP Example:\r\n");
 
-    APP_InitFrameBuffer((uint32_t)s_redWinFrameBuffer, APP_WIN_HEIGHT, APP_WIN_WIDTH, APP_COLOR_RED);
-    APP_InitFrameBuffer((uint32_t)s_blueWinFrameBuffer, APP_WIN_HEIGHT, APP_WIN_WIDTH, APP_COLOR_BLUE);
-    APP_InitFrameBuffer((uint32_t)s_greenWinFrameBuffer, APP_WIN_HEIGHT, APP_WIN_WIDTH, APP_COLOR_GREEN);
+    APP_InitFrameBuffer((uint32_t)s_redWinFrameBuffer, APP_WIN_HEIGHT, APP_WIN_WIDTH, sizeof(s_redWinFrameBuffer[0]),
+                        APP_COLOR_RED);
+    APP_InitFrameBuffer((uint32_t)s_blueWinFrameBuffer, APP_WIN_HEIGHT, APP_WIN_WIDTH, sizeof(s_blueWinFrameBuffer[0]),
+                        APP_COLOR_BLUE);
+    APP_InitFrameBuffer((uint32_t)s_greenWinFrameBuffer, APP_WIN_HEIGHT, APP_WIN_WIDTH,
+                        sizeof(s_greenWinFrameBuffer[0]), APP_COLOR_GREEN);
 
     DPU_Init(APP_DPU);
 

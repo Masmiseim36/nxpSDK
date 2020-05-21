@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 NXP
+ * Copyright 2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -23,25 +23,19 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief LDB driver version 2.0.0. */
+/*! @brief LDB driver version. */
 #define FSL_LDB_DRIVER_VERSION (MAKE_VERSION(2, 0, 0))
 /*@}*/
+
+typedef MIPI_DSI_LVDS_COMBO_CSR_Type LDB_Type;
 
 /*! @brief LDB output bus format. */
 typedef enum _ldb_output_bus
 {
     kLDB_OutputRGB666_7Bit_SPWG = 0U,
-#if (defined(FSL_FEATURE_LDB_COMBO_PHY) && FSL_FEATURE_LDB_COMBO_PHY)
-    kLDB_OutputRGB888_7Bit_SPWG  = LDB_PM_CTRL_REG_CH0_DATA_WIDTH_MASK,
-    kLDB_OutputRGB888_7Bit_JEIDA = LDB_PM_CTRL_REG_CH0_DATA_WIDTH_MASK | LDB_PM_CTRL_REG_CH0_BIT_MAPPING_MASK,
-#else
-    kLDB_OutputRGB888_7Bit_SPWG = LDB_PM_CTRL_REG_CH0_DATA_WIDTH_MASK | LDB_PM_CTRL_REG_DI0_DATA_WIDTH(1),
+    kLDB_OutputRGB888_7Bit_SPWG = MIPI_DSI_LVDS_COMBO_CSR_PM_CTRL_CH0_DATA_WIDTH_MASK,
     kLDB_OutputRGB888_7Bit_JEIDA =
-        LDB_PM_CTRL_REG_CH0_DATA_WIDTH_MASK | LDB_PM_CTRL_REG_DI0_DATA_WIDTH(1) | LDB_PM_CTRL_REG_CH0_BIT_MAPPING_MASK,
-    kLDB_OutputRGB101010_10Bit_SPWG = LDB_PM_CTRL_REG_CH0_10B_EN_MASK | LDB_PM_CTRL_REG_DI0_DATA_WIDTH(2),
-    kLDB_OutputRGB101010_10Bit_JEIDA =
-        LDB_PM_CTRL_REG_CH0_10B_EN_MASK | LDB_PM_CTRL_REG_DI0_DATA_WIDTH(2) | LDB_PM_CTRL_REG_CH0_BIT_MAPPING_MASK,
-#endif /* FSL_FEATURE_LDB_COMBO_PHY */
+        MIPI_DSI_LVDS_COMBO_CSR_PM_CTRL_CH0_DATA_WIDTH_MASK | MIPI_DSI_LVDS_COMBO_CSR_PM_CTRL_CH0_BIT_MAPPING_MASK,
 } ldb_output_bus_t;
 
 /*! @brief LDB input signal priority. */

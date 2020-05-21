@@ -14,8 +14,8 @@ Note: The example echo every 8 characters, so input 8 characters every time.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.1
-- GCC ARM Embedded  7.3.1
+- IAR embedded Workbench  8.40.2
+- GCC ARM Embedded  8.3.1
 
 Hardware requirements
 =====================

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017, NXP Semiconductors, Inc.
+ * Copyright 2017-2019 NXP
  * All rights reserved.
  *
  *
@@ -50,6 +50,24 @@ status_t MIPI_DSI_DCS_SetDisplayOn(mipi_dsi_device_t *device, bool on)
     {
         txData = kMIPI_DCS_SetDisplayOff;
     }
+
+    return device->xferFunc(&dsiXfer);
+}
+
+status_t MIPI_DSI_DCS_SetPixelFormat(mipi_dsi_device_t *device,
+                                     mipi_dsc_pixel_format_t dbiFormat,
+                                     mipi_dsc_pixel_format_t dpiFormat)
+{
+    dsi_transfer_t dsiXfer = {0};
+    uint8_t txData[2];
+
+    dsiXfer.virtualChannel = device->virtualChannel;
+    dsiXfer.txDataType     = kDSI_TxDataDcsShortWrOneParam;
+    dsiXfer.txDataSize     = 2;
+    dsiXfer.txData         = txData;
+
+    txData[0] = kMIPI_DCS_SetPixelFormat;
+    txData[1] = ((uint8_t)dbiFormat << 0U) | ((uint8_t)dpiFormat << 4U);
 
     return device->xferFunc(&dsiXfer);
 }
@@ -197,4 +215,59 @@ status_t MIPI_DSI_GenericWrite(mipi_dsi_device_t *device, const uint8_t *txData,
     }
 
     return device->xferFunc(&dsiXfer);
+}
+
+status_t MIPI_DSI_SelectArea(mipi_dsi_device_t *device, uint16_t startX, uint16_t startY, uint16_t endX, uint16_t endY)
+{
+    status_t status;
+    dsi_transfer_t dsiXfer = {0};
+    uint8_t txData[4];
+
+    dsiXfer.virtualChannel = device->virtualChannel;
+    dsiXfer.txDataType     = kDSI_TxDataDcsLongWr;
+    dsiXfer.txDataSize     = 4;
+    dsiXfer.txData         = txData;
+    dsiXfer.sendDscCmd     = true;
+    dsiXfer.dscCmd         = kMIPI_DCS_SetColumnAddress;
+
+    txData[0] = (startX >> 8U) & 0xFFU;
+    txData[1] = startX & 0xFFU;
+    txData[2] = (endX >> 8U) & 0xFFU;
+    txData[3] = endX & 0xFFU;
+
+    status = device->xferFunc(&dsiXfer);
+
+    if (kStatus_Success != status)
+    {
+        return status;
+    }
+
+    dsiXfer.dscCmd = kMIPI_DCS_SetPageAddress;
+    txData[0]      = (startY >> 8U) & 0xFFU;
+    txData[1]      = startY & 0xFFU;
+    txData[2]      = (endY >> 8U) & 0xFFU;
+    txData[3]      = endY & 0xFFU;
+
+    return device->xferFunc(&dsiXfer);
+}
+
+status_t MIPI_DSI_WriteMemory(mipi_dsi_device_t *device, const uint8_t *data, uint32_t length)
+{
+    return device->memWriteFunc(device->virtualChannel, data, length);
+}
+
+void MIPI_DSI_SetMemoryDoneCallback(mipi_dsi_device_t *device, mipi_dsi_mem_done_callback_t callback, void *userData)
+{
+    device->callback = callback;
+    device->userData = userData;
+}
+
+void MIPI_DSI_MemoryDoneDriverCallback(status_t status, void *userData)
+{
+    mipi_dsi_device_t *device = (mipi_dsi_device_t *)userData;
+
+    if (device->callback)
+    {
+        device->callback(status, device->userData);
+    }
 }

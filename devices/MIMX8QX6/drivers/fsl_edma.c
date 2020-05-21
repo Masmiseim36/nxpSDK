@@ -925,8 +925,10 @@ void EDMA_PrepareTransfer(edma_transfer_config_t *config,
     assert(config != NULL);
     assert(srcAddr != NULL);
     assert(destAddr != NULL);
-    assert((srcWidth == 1U) || (srcWidth == 2U) || (srcWidth == 4U) || (srcWidth == 16U) || (srcWidth == 32U));
-    assert((destWidth == 1U) || (destWidth == 2U) || (destWidth == 4U) || (destWidth == 16U) || (destWidth == 32U));
+    assert((srcWidth == 1U) || (srcWidth == 2U) || (srcWidth == 4U) || (srcWidth == 8U) || (srcWidth == 16U) ||
+           (srcWidth == 32U));
+    assert((destWidth == 1U) || (destWidth == 2U) || (destWidth == 4U) || (destWidth == 8U) || (destWidth == 16U) ||
+           (destWidth == 32U));
     assert(transferBytes % bytesEachRequest == 0);
 
     /* Initializes the configure structure to zero. */
@@ -952,6 +954,9 @@ void EDMA_PrepareTransfer(edma_transfer_config_t *config,
         case 4U:
             config->srcTransferSize = kEDMA_TransferSize4Bytes;
             break;
+        case 8U:
+            config->srcTransferSize = kEDMA_TransferSize8Bytes;
+            break;
         case 16U:
             config->srcTransferSize = kEDMA_TransferSize16Bytes;
             break;
@@ -971,6 +976,9 @@ void EDMA_PrepareTransfer(edma_transfer_config_t *config,
             break;
         case 2U:
             config->destTransferSize = kEDMA_TransferSize2Bytes;
+            break;
+        case 8U:
+            config->destTransferSize = kEDMA_TransferSize8Bytes;
             break;
         case 4U:
             config->destTransferSize = kEDMA_TransferSize4Bytes;

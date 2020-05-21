@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 NXP
+ * Copyright 2017, 2019 NXP
  * All rights reserved.
  *
  *
@@ -22,8 +22,12 @@
 
 /*! @name Driver version */
 /*@{*/
-#define FSL_MIPI_DSI_DRIVER_VERSION (MAKE_VERSION(2, 0, 0)) /*!< Version 2.0.0 */
+#define FSL_MIPI_DSI_DRIVER_VERSION (MAKE_VERSION(2, 0, 3))
 /*@}*/
+
+/* The max APB transfer size. */
+#define FSL_DSI_TX_MAX_PAYLOAD_BYTE (64 * 4)
+#define FSL_DSI_RX_MAX_PAYLOAD_BYTE (64 * 4)
 
 /*! @brief Error codes for the MIPI DSI driver. */
 enum _dsi_status
@@ -314,6 +318,9 @@ typedef struct _dsi_transfer
     uint8_t *rxData;               /*!< The TX data buffer. */
     uint16_t txDataSize;           /*!< Size of the TX data. */
     uint16_t rxDataSize;           /*!< Size of the RX data. */
+    bool sendDscCmd;               /*!< If set to true, the DSC command is specified by @ref dscCmd, otherwise
+                                        the DSC command is included in the @ref txData. */
+    uint8_t dscCmd;                /*!< The DSC command to send, only valid when @ref sendDscCmd is true. */
 } dsi_transfer_t;
 
 /*! @brief MIPI DSI transfer handle. */
@@ -434,6 +441,10 @@ void DSI_SetDpiConfig(MIPI_DSI_HOST_Type *base,
  * user configuration. The configuration structure could be got by the function
  * @ref DSI_GetDphyDefaultConfig.
  *
+ * For some platforms there is not dedicated D-PHY PLL, indicated by the macro
+ * FSL_FEATURE_MIPI_DSI_NO_DPHY_PLL. For these platforms, the @p refClkFreq_Hz
+ * is useless.
+ *
  * @param base MIPI DSI host peripheral base address.
  * @param config Pointer to the D-PHY configuration.
  * @param refClkFreq_Hz The REFCLK frequency in Hz.
@@ -549,6 +560,30 @@ void DSI_SetApbPacketControl(
  * @param payloadSize Payload size in byte.
  */
 void DSI_WriteApbTxPayload(MIPI_DSI_HOST_Type *base, const uint8_t *payload, uint16_t payloadSize);
+
+/*!
+ * @brief Extended function to fill the payload to TX FIFO.
+ *
+ * Write the long packet payload to TX FIFO. This function could be used in two ways
+ *
+ * 1. Include the DSC command in parameter @p payload. In this case, the DSC command
+ *    is the first byte of @p payload. The parameter @p sendDscCmd is set to false,
+ *    the @p dscCmd is not used. This function is the same as @ref DSI_WriteApbTxPayload
+ *    when used in this way.
+ *
+ * 2. The DSC command in not in parameter @p payload, but specified by parameter @p dscCmd.
+ *    In this case, the parameter @p sendDscCmd is set to true, the @p dscCmd is the DSC
+ *    command to send. The @p payload is sent after @p dscCmd.
+ *
+ * @param base MIPI DSI host peripheral base address.
+ * @param payload Pointer to the payload.
+ * @param payloadSize Payload size in byte.
+ * @param sendDscCmd If set to true, the DSC command is specified by @p dscCmd,
+ *        otherwise the DSC command is included in the @p payload.
+ * @param dscCmd The DSC command to send, only used when @p sendDscCmd is true.
+ */
+void DSI_WriteApbTxPayloadExt(
+    MIPI_DSI_HOST_Type *base, const uint8_t *payload, uint16_t payloadSize, bool sendDscCmd, uint8_t dscCmd);
 
 /*!
  * @brief Read the long APB packet payload.

@@ -8,8 +8,8 @@ from the PC, which can be used to test whether a UDP connection is available.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.1
-- GCC ARM Embedded  7.3.1
+- IAR embedded Workbench  8.40.2
+- GCC ARM Embedded  8.3.1
 
 Hardware requirements
 =====================
@@ -45,25 +45,27 @@ Prepare the Demo
 Running the demo
 ================
 1. When the demo runs, the log would be seen on the terminal like:
-        ************************************************
-         UDP Echo example
-        ************************************************
-         IPv4 Address     : 192.168.0.102
-         IPv4 Subnet mask : 255.255.255.0
-         IPv4 Gateway     : 192.168.0.100
-        ************************************************
+		Initializing PHY...
+
+		************************************************
+		 UDP Echo example
+		************************************************
+		 IPv4 Address     : 192.168.0.102
+		 IPv4 Subnet mask : 255.255.255.0
+		 IPv4 Gateway     : 192.168.0.100
+		************************************************
 2. From the command window, type echotool 192.168.0.102 /p udp /r 7 /d hello
-    NOTE: The echotool.exe application can be found here https://github.com/PavelBansky/EchoTool
+	NOTE: The echotool.exe application can be found here https://github.com/PavelBansky/EchoTool
 3. The command window should get response:
-        Hostname 192.168.0.102 resolved as 192.168.0.102
+		Hostname 192.168.0.102 resolved as 192.168.0.102
 
-        Reply from 192.168.0.102:7, time 1 ms OK
-        Reply from 192.168.0.102:7, time 1 ms OK
-        Reply from 192.168.0.102:7, time 0 ms OK
-        Reply from 192.168.0.102:7, time 0 ms OK
-        Reply from 192.168.0.102:7, time 0 ms OK
+		Reply from 192.168.0.102:7, time 1 ms OK
+		Reply from 192.168.0.102:7, time 1 ms OK
+		Reply from 192.168.0.102:7, time 0 ms OK
+		Reply from 192.168.0.102:7, time 0 ms OK
+		Reply from 192.168.0.102:7, time 0 ms OK
 
-        Statistics: Received=5, Corrupted=0
+		Statistics: Received=5, Corrupted=0
 Customization options
 =====================
 

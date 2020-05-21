@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 NXP
+ * Copyright 2017-2019 NXP
  * All rights reserved.
  *
  *
@@ -11,6 +11,9 @@
 /*******************************************************************************
  * Configuration
  ******************************************************************************/
+/* Use DPU prefetch. */
+#define APP_DPU_USE_PREFETCH 1
+
 #define DPU_DI_MIPI 0
 #define DPU_DI_LVDS 1
 
@@ -62,19 +65,19 @@
 
 /* Configuration for display interface. */
 #if DPU_EXAMPLE_DI == DPU_DI_MIPI
-#define APP_MIPI_DSI_BASE MIPI_DSI_HOST0_BASE
+#define APP_MIPI_DSI_BASE DI_MIPI_DSI_LVDS_0__MIPI_DSI_HOST_BASE
 #define APP_MIPI_DSI ((MIPI_DSI_HOST_Type *)APP_MIPI_DSI_BASE)
 #define APP_MIPI_DSI_LANE_NUM 4 /* Lane number. */
-#if (APP_MIPI_DSI_BASE == MIPI_DSI_HOST0_BASE)
+#if (APP_MIPI_DSI_BASE == DI_MIPI_DSI_LVDS_0__MIPI_DSI_HOST_BASE)
 #define APP_DPU_DISPLAY_INDEX 0
 #else
 #define APP_DPU_DISPLAY_INDEX 1
 #endif
 #elif DPU_EXAMPLE_DI == DPU_DI_LVDS
-#define APP_LDB_BASE DI_MIPI_DSI_LVDS_0__LDB_BASE
+#define APP_LDB_BASE MIPI_DSI_LVDS_COMBO0_CSR_BASE
 #define APP_LDB ((LDB_Type *)APP_LDB_BASE)
 #define APP_LDB_CH 0
-#if (APP_LDB_BASE == DI_MIPI_DSI_LVDS_0__LDB_BASE)
+#if (APP_LDB_BASE == MIPI_DSI_LVDS_COMBO0_CSR_BASE)
 #define APP_DPU_DISPLAY_INDEX 0
 #else
 #define APP_DPU_DISPLAY_INDEX 1
@@ -118,6 +121,26 @@
 #define APP_BLIT_SEQ_INT_GROUP1 0U
 #define APP_BLIT_COM_INT_GROUP0 kDPU_Group0Store9FrameCompleteInterrupt
 #define APP_BLIT_COM_INT_GROUP1 0U
+
+#define APP_FETCH_DECODE9_PRG DC__PRG0
+#define APP_FETCH_WARP9_PRG DC__PRG1
+#define APP_FETCH_LAYER0_PRG DC__PRG2
+#define APP_FETCH_DECODE0_PRG DC__PRG3
+#define APP_FETCH_ECO0_PRG DC__PRG4
+#define APP_FETCH_DECODE1_PRG DC__PRG5
+#define APP_FETCH_ECO1_PRG DC__PRG6
+#define APP_FETCH_WARP2_PRG DC__PRG7
+#define APP_FETCH_ECO2_PRG DC__PRG8
+
+#define APP_FETCH_DECODE9_DPR DC__DPR0_CH0
+#define APP_FETCH_WARP9_DPR DC__DPR0_CH1
+#define APP_FETCH_LAYER0_DPR DC__DPR0_CH2
+#define APP_FETCH_DECODE0_DPR DC__DPR1_CH0
+#define APP_FETCH_ECO0_DPR DC__DPR1_CH0
+#define APP_FETCH_DECODE1_DPR DC__DPR1_CH1
+#define APP_FETCH_ECO1_DPR DC__DPR1_CH1
+#define APP_FETCH_WARP2_DPR DC__DPR1_CH2
+#define APP_FETCH_ECO2_DPR DC__DPR1_CH2
 
 #if DPU_EXAMPLE_DI == DPU_DI_MIPI
 extern uint32_t mipiDsiTxEscClkFreq_Hz;

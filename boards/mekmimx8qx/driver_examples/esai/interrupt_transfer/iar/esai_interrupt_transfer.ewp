@@ -183,6 +183,8 @@
           <state>DEBUG</state>
           <state>CPU_MIMX8QX6AVLFZ</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
+          <state>CODEC_CS42888_ENABLE</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -259,7 +261,7 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IExtraOptions</name>
@@ -324,23 +326,21 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/scfw_api/svc/pad</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/scfw_api/svc/pm</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/scfw_api/svc/rm</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/scfw_api/svc/seco</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/scfw_api/svc/timer</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/cs42888</state>
           <state>$PROJ_DIR$/../../../../../../components/codec</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec/port</state>
+          <state>$PROJ_DIR$/../../../../../../components/i2c</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec/i2c</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/utilities</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -754,7 +754,7 @@
         </option>
         <option>
           <name>IlinkIcfFile</name>
-          <state>$PROJ_DIR$/MIMX8QX6xxxFZ_cm4_ram.icf</state>
+          <state>$PROJ_DIR$/MIMX8QX6xxxxx_cm4_ram.icf</state>
         </option>
         <option>
           <name>IlinkIcfFileSlave</name>
@@ -1170,6 +1170,8 @@
           <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
           <state>CPU_MIMX8QX6AVLFZ</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
+          <state>CODEC_CS42888_ENABLE</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1246,7 +1248,7 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IExtraOptions</name>
@@ -1311,23 +1313,21 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/scfw_api/svc/pad</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/scfw_api/svc/pm</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/scfw_api/svc/rm</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/scfw_api/svc/seco</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/scfw_api/svc/timer</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/cs42888</state>
           <state>$PROJ_DIR$/../../../../../../components/codec</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec/port</state>
+          <state>$PROJ_DIR$/../../../../../../components/i2c</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec/i2c</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/utilities</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1741,7 +1741,7 @@
         </option>
         <option>
           <name>IlinkIcfFile</name>
-          <state>$PROJ_DIR$/MIMX8QX6xxxFZ_cm4_flash.icf</state>
+          <state>$PROJ_DIR$/MIMX8QX6xxxxx_cm4_flash.icf</state>
         </option>
         <option>
           <name>IlinkIcfFileSlave</name>
@@ -2157,6 +2157,8 @@
           <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
           <state>CPU_MIMX8QX6AVLFZ</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
+          <state>CODEC_CS42888_ENABLE</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -2233,7 +2235,7 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IExtraOptions</name>
@@ -2298,23 +2300,21 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/scfw_api/svc/pad</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/scfw_api/svc/pm</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/scfw_api/svc/rm</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/scfw_api/svc/seco</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/scfw_api/svc/timer</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/cs42888</state>
           <state>$PROJ_DIR$/../../../../../../components/codec</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec/port</state>
+          <state>$PROJ_DIR$/../../../../../../components/i2c</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec/i2c</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/utilities</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -2728,7 +2728,7 @@
         </option>
         <option>
           <name>IlinkIcfFile</name>
-          <state>$PROJ_DIR$/MIMX8QX6xxxFZ_cm4_ddr_ram.icf</state>
+          <state>$PROJ_DIR$/MIMX8QX6xxxxx_cm4_ddr_ram.icf</state>
         </option>
         <option>
           <name>IlinkIcfFileSlave</name>
@@ -3144,6 +3144,8 @@
           <state>NDEBUG</state>
           <state>CPU_MIMX8QX6AVLFZ</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
+          <state>CODEC_CS42888_ENABLE</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -3285,23 +3287,21 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/scfw_api/svc/pad</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/scfw_api/svc/pm</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/scfw_api/svc/rm</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/scfw_api/svc/seco</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/scfw_api/svc/timer</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/cs42888</state>
           <state>$PROJ_DIR$/../../../../../../components/codec</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec/port</state>
+          <state>$PROJ_DIR$/../../../../../../components/i2c</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec/i2c</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/utilities</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -3715,7 +3715,7 @@
         </option>
         <option>
           <name>IlinkIcfFile</name>
-          <state>$PROJ_DIR$/MIMX8QX6xxxFZ_cm4_ram.icf</state>
+          <state>$PROJ_DIR$/MIMX8QX6xxxxx_cm4_ram.icf</state>
         </option>
         <option>
           <name>IlinkIcfFileSlave</name>
@@ -4131,6 +4131,8 @@
           <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
           <state>CPU_MIMX8QX6AVLFZ</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
+          <state>CODEC_CS42888_ENABLE</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -4272,23 +4274,21 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/scfw_api/svc/pad</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/scfw_api/svc/pm</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/scfw_api/svc/rm</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/scfw_api/svc/seco</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/scfw_api/svc/timer</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/cs42888</state>
           <state>$PROJ_DIR$/../../../../../../components/codec</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec/port</state>
+          <state>$PROJ_DIR$/../../../../../../components/i2c</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec/i2c</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/utilities</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -4702,7 +4702,7 @@
         </option>
         <option>
           <name>IlinkIcfFile</name>
-          <state>$PROJ_DIR$/MIMX8QX6xxxFZ_cm4_flash.icf</state>
+          <state>$PROJ_DIR$/MIMX8QX6xxxxx_cm4_flash.icf</state>
         </option>
         <option>
           <name>IlinkIcfFileSlave</name>
@@ -5118,6 +5118,8 @@
           <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
           <state>CPU_MIMX8QX6AVLFZ</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
+          <state>CODEC_CS42888_ENABLE</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -5259,23 +5261,21 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/scfw_api/svc/pad</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/scfw_api/svc/pm</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/scfw_api/svc/rm</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/scfw_api/svc/seco</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/scfw_api/svc/timer</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/cs42888</state>
           <state>$PROJ_DIR$/../../../../../../components/codec</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec/port</state>
+          <state>$PROJ_DIR$/../../../../../../components/i2c</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec/i2c</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/utilities</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -5689,7 +5689,7 @@
         </option>
         <option>
           <name>IlinkIcfFile</name>
-          <state>$PROJ_DIR$/MIMX8QX6xxxFZ_cm4_ddr_ram.icf</state>
+          <state>$PROJ_DIR$/MIMX8QX6xxxxx_cm4_ddr_ram.icf</state>
         </option>
         <option>
           <name>IlinkIcfFileSlave</name>
@@ -5959,10 +5959,10 @@
   <group>
     <name>drivers</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers/fsl_irqsteer.h</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers/fsl_irqsteer.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers/fsl_irqsteer.c</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers/fsl_irqsteer.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers/fsl_lpi2c.c</name>
@@ -5971,61 +5971,121 @@
       <name>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers/fsl_lpi2c.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers/fsl_gpio.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers/fsl_gpio.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers/fsl_clock.h</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers/fsl_gpio.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers/fsl_clock.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers/fsl_esai.h</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers/fsl_clock.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers/fsl_esai.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers/fsl_common.h</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers/fsl_esai.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers/fsl_common.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers/fsl_lpuart.h</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers/fsl_common.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers/fsl_lpuart.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers/fsl_lpuart.h</name>
     </file>
   </group>
   <group>
     <name>codec</name>
     <file>
+      <name>$PROJ_DIR$/../../../../../../components/codec/cs42888/fsl_cs42888.c</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../../components/codec/cs42888/fsl_cs42888.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../components/codec/cs42888/fsl_cs42888.c</name>
+      <name>$PROJ_DIR$/../../../../../../components/codec/fsl_codec_common.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../components/codec/fsl_codec_common.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../components/codec/fsl_codec_common.c</name>
+      <name>$PROJ_DIR$/../../../../../../components/codec/port/fsl_codec_adapter.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/codec/port/cs42888/fsl_codec_adapter.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/codec/i2c/fsl_codec_i2c.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/codec/i2c/fsl_codec_i2c.h</name>
     </file>
   </group>
   <group>
+    <name>component</name>
+    <group>
+      <name>i2c</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/i2c/i2c.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/i2c/lpi2c_adapter.c</name>
+      </file>
+    </group>
+    <group>
+      <name>uart</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/uart/lpuart_adapter.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/uart/uart.h</name>
+      </file>
+    </group>
+    <group>
+      <name>serial_manager</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/serial_manager.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/serial_manager.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/serial_port_internal.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/serial_port_uart.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/serial_port_uart.h</name>
+      </file>
+    </group>
+    <group>
+      <name>lists</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/lists/generic_list.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/lists/generic_list.h</name>
+      </file>
+    </group>
+  </group>
+  <group>
     <name>device</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/fsl_device_registers.h</name>
-    </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/MIMX8QX6_cm4.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/MIMX8QX6_cm4_features.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/fsl_device_registers.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/system_MIMX8QX6_cm4.c</name>
@@ -6037,12 +6097,6 @@
   <group>
     <name>utilities</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/utilities/str/fsl_str.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/utilities/debug_console/fsl_debug_console.c</name>
     </file>
     <file>
@@ -6052,44 +6106,14 @@
       <name>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/utilities/debug_console/fsl_debug_console_conf.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/utilities/str/fsl_str.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/utilities/str/fsl_str.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/utilities/fsl_assert.c</name>
     </file>
-  </group>
-  <group>
-    <name>component</name>
-    <group>
-      <name>uart</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/uart/uart.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/uart/lpuart_adapter.c</name>
-      </file>
-    </group>
-    <group>
-      <name>serial_manager</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/serial_manager.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/serial_manager.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/serial_port_uart.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/serial_port_uart.c</name>
-      </file>
-    </group>
-    <group>
-      <name>lists</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/lists/generic_list.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/lists/generic_list.c</name>
-      </file>
-    </group>
   </group>
   <group>
     <name>startup</name>
@@ -6183,6 +6207,18 @@
         </file>
       </group>
       <group>
+        <name>seco</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/scfw_api/svc/seco/seco_api.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/scfw_api/svc/seco/seco_rpc.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/scfw_api/svc/seco/seco_rpc_clnt.c</name>
+        </file>
+      </group>
+      <group>
         <name>timer</name>
         <file>
           <name>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/scfw_api/svc/timer/timer_api.h</name>
@@ -6208,22 +6244,34 @@
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_armclang.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_gcc.h</name>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_armclang_ltm.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_compiler.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_gcc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_iccarm.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_version.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/mpu_armv7.h</name>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_armv81mml.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_armv8mbl.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_armv8mml.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/mpu_armv7.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/mpu_armv8.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/arm_common_tables.h</name>
@@ -6233,12 +6281,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/arm_math.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_iccarm.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/mpu_armv8.h</name>
     </file>
   </group>
 </project>

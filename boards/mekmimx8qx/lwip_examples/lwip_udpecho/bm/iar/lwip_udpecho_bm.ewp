@@ -182,6 +182,7 @@
           <name>CCDefines</name>
           <state>DEBUG</state>
           <state>CPU_MIMX8QX6AVLFZ</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -258,7 +259,7 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IExtraOptions</name>
@@ -322,27 +323,21 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/scfw_api/svc/pad</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/scfw_api/svc/pm</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/scfw_api/svc/rm</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/scfw_api/svc/seco</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/scfw_api/svc/timer</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
           <state>$PROJ_DIR$/../../../../../../components/phyar8031</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/contrib/apps/udpecho_raw</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/lwip/port</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src/include</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/lwip/port</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src/include</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/utilities</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -727,7 +722,6 @@
           <name>IlinkConfigDefines</name>
           <state>__stack_size__=0x1000</state>
           <state>__heap_size__=0x1000</state>
-          <state>__ram_vector_table__=1</state>
         </option>
         <option>
           <name>IlinkMapFile</name>
@@ -759,7 +753,7 @@
         </option>
         <option>
           <name>IlinkIcfFile</name>
-          <state>$PROJ_DIR$/MIMX8QX6xxxFZ_cm4_ram.icf</state>
+          <state>$PROJ_DIR$/MIMX8QX6xxxxx_cm4_ram.icf</state>
         </option>
         <option>
           <name>IlinkIcfFileSlave</name>
@@ -1174,6 +1168,7 @@
           <name>CCDefines</name>
           <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
           <state>CPU_MIMX8QX6AVLFZ</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1250,7 +1245,7 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IExtraOptions</name>
@@ -1314,27 +1309,21 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/scfw_api/svc/pad</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/scfw_api/svc/pm</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/scfw_api/svc/rm</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/scfw_api/svc/seco</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/scfw_api/svc/timer</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
           <state>$PROJ_DIR$/../../../../../../components/phyar8031</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/contrib/apps/udpecho_raw</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/lwip/port</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src/include</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/lwip/port</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src/include</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/utilities</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1719,7 +1708,6 @@
           <name>IlinkConfigDefines</name>
           <state>__stack_size__=0x1000</state>
           <state>__heap_size__=0x1000</state>
-          <state>__ram_vector_table__=1</state>
         </option>
         <option>
           <name>IlinkMapFile</name>
@@ -1751,7 +1739,7 @@
         </option>
         <option>
           <name>IlinkIcfFile</name>
-          <state>$PROJ_DIR$/MIMX8QX6xxxFZ_cm4_flash.icf</state>
+          <state>$PROJ_DIR$/MIMX8QX6xxxxx_cm4_flash.icf</state>
         </option>
         <option>
           <name>IlinkIcfFileSlave</name>
@@ -2167,6 +2155,7 @@
           <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
           <state>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1</state>
           <state>CPU_MIMX8QX6AVLFZ</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -2243,7 +2232,7 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IExtraOptions</name>
@@ -2307,27 +2296,21 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/scfw_api/svc/pad</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/scfw_api/svc/pm</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/scfw_api/svc/rm</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/scfw_api/svc/seco</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/scfw_api/svc/timer</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
           <state>$PROJ_DIR$/../../../../../../components/phyar8031</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/contrib/apps/udpecho_raw</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/lwip/port</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src/include</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/lwip/port</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src/include</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/utilities</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -2712,7 +2695,6 @@
           <name>IlinkConfigDefines</name>
           <state>__stack_size__=0x1000</state>
           <state>__heap_size__=0x1000</state>
-          <state>__ram_vector_table__=1</state>
         </option>
         <option>
           <name>IlinkMapFile</name>
@@ -2744,7 +2726,7 @@
         </option>
         <option>
           <name>IlinkIcfFile</name>
-          <state>$PROJ_DIR$/MIMX8QX6xxxFZ_cm4_ddr_ram.icf</state>
+          <state>$PROJ_DIR$/MIMX8QX6xxxxx_cm4_ddr_ram.icf</state>
         </option>
         <option>
           <name>IlinkIcfFileSlave</name>
@@ -3159,6 +3141,7 @@
           <name>CCDefines</name>
           <state>NDEBUG</state>
           <state>CPU_MIMX8QX6AVLFZ</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -3299,27 +3282,21 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/scfw_api/svc/pad</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/scfw_api/svc/pm</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/scfw_api/svc/rm</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/scfw_api/svc/seco</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/scfw_api/svc/timer</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
           <state>$PROJ_DIR$/../../../../../../components/phyar8031</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/contrib/apps/udpecho_raw</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/lwip/port</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src/include</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/lwip/port</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src/include</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/utilities</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -3704,7 +3681,6 @@
           <name>IlinkConfigDefines</name>
           <state>__stack_size__=0x1000</state>
           <state>__heap_size__=0x1000</state>
-          <state>__ram_vector_table__=1</state>
         </option>
         <option>
           <name>IlinkMapFile</name>
@@ -3736,7 +3712,7 @@
         </option>
         <option>
           <name>IlinkIcfFile</name>
-          <state>$PROJ_DIR$/MIMX8QX6xxxFZ_cm4_ram.icf</state>
+          <state>$PROJ_DIR$/MIMX8QX6xxxxx_cm4_ram.icf</state>
         </option>
         <option>
           <name>IlinkIcfFileSlave</name>
@@ -4151,6 +4127,7 @@
           <name>CCDefines</name>
           <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
           <state>CPU_MIMX8QX6AVLFZ</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -4291,27 +4268,21 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/scfw_api/svc/pad</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/scfw_api/svc/pm</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/scfw_api/svc/rm</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/scfw_api/svc/seco</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/scfw_api/svc/timer</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
           <state>$PROJ_DIR$/../../../../../../components/phyar8031</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/contrib/apps/udpecho_raw</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/lwip/port</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src/include</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/lwip/port</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src/include</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/utilities</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -4696,7 +4667,6 @@
           <name>IlinkConfigDefines</name>
           <state>__stack_size__=0x1000</state>
           <state>__heap_size__=0x1000</state>
-          <state>__ram_vector_table__=1</state>
         </option>
         <option>
           <name>IlinkMapFile</name>
@@ -4728,7 +4698,7 @@
         </option>
         <option>
           <name>IlinkIcfFile</name>
-          <state>$PROJ_DIR$/MIMX8QX6xxxFZ_cm4_flash.icf</state>
+          <state>$PROJ_DIR$/MIMX8QX6xxxxx_cm4_flash.icf</state>
         </option>
         <option>
           <name>IlinkIcfFileSlave</name>
@@ -5144,6 +5114,7 @@
           <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
           <state>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1</state>
           <state>CPU_MIMX8QX6AVLFZ</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -5284,27 +5255,21 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/scfw_api/svc/pad</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/scfw_api/svc/pm</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/scfw_api/svc/rm</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/scfw_api/svc/seco</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/scfw_api/svc/timer</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
           <state>$PROJ_DIR$/../../../../../../components/phyar8031</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/contrib/apps/udpecho_raw</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/lwip/port</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src/include</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/lwip/port</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/lwip/src/include</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/utilities</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -5689,7 +5654,6 @@
           <name>IlinkConfigDefines</name>
           <state>__stack_size__=0x1000</state>
           <state>__heap_size__=0x1000</state>
-          <state>__ram_vector_table__=1</state>
         </option>
         <option>
           <name>IlinkMapFile</name>
@@ -5721,7 +5685,7 @@
         </option>
         <option>
           <name>IlinkIcfFile</name>
-          <state>$PROJ_DIR$/MIMX8QX6xxxFZ_cm4_ddr_ram.icf</state>
+          <state>$PROJ_DIR$/MIMX8QX6xxxxx_cm4_ddr_ram.icf</state>
         </option>
         <option>
           <name>IlinkIcfFileSlave</name>
@@ -5985,10 +5949,10 @@
       <name>$PROJ_DIR$/../clock_config.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../components/phyar8031/fsl_phy.h</name>
+      <name>$PROJ_DIR$/../../../../../../components/phyar8031/fsl_phy.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../components/phyar8031/fsl_phy.c</name>
+      <name>$PROJ_DIR$/../../../../../../components/phyar8031/fsl_phy.h</name>
     </file>
   </group>
   <group>
@@ -6000,10 +5964,10 @@
   <group>
     <name>drivers</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers/fsl_irqsteer.h</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers/fsl_irqsteer.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers/fsl_irqsteer.c</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers/fsl_irqsteer.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers/fsl_memory.h</name>
@@ -6015,34 +5979,34 @@
       <name>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers/fsl_cache.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers/fsl_clock.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers/fsl_clock.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers/fsl_enet.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers/fsl_enet.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers/fsl_common.h</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers/fsl_clock.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers/fsl_common.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers/fsl_lpuart.h</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers/fsl_common.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers/fsl_lpuart.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers/fsl_gpio.h</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers/fsl_lpuart.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers/fsl_gpio.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers/fsl_gpio.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers/fsl_enet.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/drivers/fsl_enet.h</name>
     </file>
   </group>
   <group>
@@ -6064,15 +6028,6 @@
     </group>
     <group>
       <name>port</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/lwip/port/ethernetif.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/lwip/port/ethernetif.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/lwip/port/sys_arch.c</name>
-      </file>
       <group>
         <name>arch</name>
         <file>
@@ -6085,6 +6040,21 @@
           <name>$PROJ_DIR$/../../../../../../middleware/lwip/port/arch/sys_arch.h</name>
         </file>
       </group>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/lwip/port/sys_arch.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/lwip/port/enet_ethernetif_kinetis.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/lwip/port/enet_ethernetif.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/lwip/port/enet_ethernetif.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/lwip/port/enet_ethernetif_priv.h</name>
+      </file>
     </group>
     <group>
       <name>src</name>
@@ -6144,42 +6114,6 @@
         <file>
           <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/ip.c</name>
         </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/mem.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/memp.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/netif.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/pbuf.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/raw.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/stats.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/sys.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/tcp.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/tcp_in.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/tcp_out.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/timeouts.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/udp.c</name>
-        </file>
         <group>
           <name>ipv4</name>
           <file>
@@ -6237,6 +6171,42 @@
             <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/ipv6/nd6.c</name>
           </file>
         </group>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/mem.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/memp.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/netif.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/pbuf.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/raw.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/stats.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/sys.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/tcp.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/tcp_in.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/tcp_out.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/timeouts.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/udp.c</name>
+        </file>
       </group>
       <group>
         <name>include</name>
@@ -6244,9 +6214,6 @@
           <name>compat</name>
           <group>
             <name>posix</name>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/compat/posix/netdb.h</name>
-            </file>
             <group>
               <name>arpa</name>
               <file>
@@ -6259,6 +6226,9 @@
                 <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/compat/posix/net/if.h</name>
               </file>
             </group>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/compat/posix/netdb.h</name>
+            </file>
             <group>
               <name>sys</name>
               <file>
@@ -6345,9 +6315,6 @@
             <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/ip.h</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/ip_addr.h</name>
-          </file>
-          <file>
             <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/ip4.h</name>
           </file>
           <file>
@@ -6367,6 +6334,9 @@
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/ip6_zone.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/ip_addr.h</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/mem.h</name>
@@ -6397,39 +6367,6 @@
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/pbuf.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/raw.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/sio.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/snmp.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/sockets.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/stats.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/sys.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/tcp.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/tcpbase.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/tcpip.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/timeouts.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/udp.h</name>
           </file>
           <group>
             <name>priv</name>
@@ -6521,6 +6458,39 @@
               <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/prot/udp.h</name>
             </file>
           </group>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/raw.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/sio.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/snmp.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/sockets.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/stats.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/sys.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/tcp.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/tcpbase.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/tcpip.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/timeouts.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/udp.h</name>
+          </file>
         </group>
         <group>
           <name>netif</name>
@@ -6551,25 +6521,19 @@
           <file>
             <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/lowpan6_opts.h</name>
           </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/slipif.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/zepif.h</name>
-          </file>
           <group>
             <name>ppp</name>
             <file>
               <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/ccp.h</name>
             </file>
             <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/chap_ms.h</name>
-            </file>
-            <file>
               <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/chap-md5.h</name>
             </file>
             <file>
               <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/chap-new.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/chap_ms.h</name>
             </file>
             <file>
               <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/eap.h</name>
@@ -6598,6 +6562,24 @@
             <file>
               <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/mppe.h</name>
             </file>
+            <group>
+              <name>polarssl</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/polarssl/arc4.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/polarssl/des.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/polarssl/md4.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/polarssl/md5.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/polarssl/sha1.h</name>
+              </file>
+            </group>
             <file>
               <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/ppp.h</name>
             </file>
@@ -6631,25 +6613,13 @@
             <file>
               <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/vj.h</name>
             </file>
-            <group>
-              <name>polarssl</name>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/polarssl/arc4.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/polarssl/des.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/polarssl/md4.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/polarssl/md5.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/polarssl/sha1.h</name>
-              </file>
-            </group>
           </group>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/slipif.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/zepif.h</name>
+          </file>
         </group>
       </group>
       <group>
@@ -6672,12 +6642,6 @@
         <file>
           <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/netif/lowpan6_common.c</name>
         </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/netif/slipif.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/netif/zepif.c</name>
-        </file>
         <group>
           <name>ppp</name>
           <file>
@@ -6687,13 +6651,13 @@
             <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/netif/ppp/ccp.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/netif/ppp/chap_ms.c</name>
-          </file>
-          <file>
             <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/netif/ppp/chap-md5.c</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/netif/ppp/chap-new.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/netif/ppp/chap_ms.c</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/netif/ppp/demand.c</name>
@@ -6756,19 +6720,25 @@
             <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/netif/ppp/vj.c</name>
           </file>
         </group>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/netif/slipif.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/netif/zepif.c</name>
+        </file>
       </group>
     </group>
   </group>
   <group>
     <name>device</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/fsl_device_registers.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/MIMX8QX6_cm4.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/MIMX8QX6_cm4_features.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/fsl_device_registers.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/system_MIMX8QX6_cm4.c</name>
@@ -6780,12 +6750,6 @@
   <group>
     <name>utilities</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/utilities/str/fsl_str.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/utilities/debug_console/fsl_debug_console.c</name>
     </file>
     <file>
@@ -6793,6 +6757,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/utilities/debug_console/fsl_debug_console_conf.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/utilities/str/fsl_str.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/utilities/str/fsl_str.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/utilities/fsl_assert.c</name>
@@ -6803,34 +6773,37 @@
     <group>
       <name>uart</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../components/uart/uart.h</name>
+        <name>$PROJ_DIR$/../../../../../../components/uart/lpuart_adapter.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../components/uart/lpuart_adapter.c</name>
+        <name>$PROJ_DIR$/../../../../../../components/uart/uart.h</name>
       </file>
     </group>
     <group>
       <name>serial_manager</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/serial_manager.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../../components/serial_manager/serial_manager.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/serial_port_uart.h</name>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/serial_manager.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/serial_port_internal.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../components/serial_manager/serial_port_uart.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/serial_port_uart.h</name>
       </file>
     </group>
     <group>
       <name>lists</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../components/lists/generic_list.h</name>
+        <name>$PROJ_DIR$/../../../../../../components/lists/generic_list.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../components/lists/generic_list.c</name>
+        <name>$PROJ_DIR$/../../../../../../components/lists/generic_list.h</name>
       </file>
     </group>
   </group>
@@ -6926,6 +6899,18 @@
         </file>
       </group>
       <group>
+        <name>seco</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/scfw_api/svc/seco/seco_api.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/scfw_api/svc/seco/seco_rpc.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/scfw_api/svc/seco/seco_rpc_clnt.c</name>
+        </file>
+      </group>
+      <group>
         <name>timer</name>
         <file>
           <name>$PROJ_DIR$/../../../../../../devices/MIMX8QX6/scfw_api/svc/timer/timer_api.h</name>
@@ -6951,22 +6936,34 @@
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_armclang.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_gcc.h</name>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_armclang_ltm.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_compiler.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_gcc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_iccarm.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_version.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/mpu_armv7.h</name>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_armv81mml.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_armv8mbl.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_armv8mml.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/mpu_armv7.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/mpu_armv8.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/arm_common_tables.h</name>
@@ -6976,12 +6973,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/arm_math.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_iccarm.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/mpu_armv8.h</name>
     </file>
   </group>
 </project>

@@ -1,13 +1,15 @@
 /*
 ** ###################################################################
-**     Processor:           MIMX8QX6AVLFZ
-**     Compilers:           Keil ARM C/C++ Compiler
-**                          GNU C Compiler
-**                          IAR ANSI C/C++ Compiler for ARM
+**     Processors:          MIMX8QX6AVLFZ
+**                          MIMX8QX6CVLDZ
 **
-**     Reference manual:    i.MX8DQXPRM, Rev. A, Jun. 2017
-**     Version:             rev. 2.0, 2017-08-23
-**     Build:               b180801
+**     Compilers:           GNU C Compiler
+**                          IAR ANSI C/C++ Compiler for ARM
+**                          Keil ARM C/C++ Compiler
+**
+**     Reference manual:    IMX8DQXPRM, Rev. E, 6/2019
+**     Version:             rev. 4.0, 2018-08-22
+**     Build:               b191126
 **
 **     Abstract:
 **         Provides a system configuration function and a global variable that
@@ -15,7 +17,8 @@
 **         the oscillator (PLL) that is part of the microcontroller device.
 **
 **     Copyright 2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2018 NXP
+**     Copyright 2016-2019 NXP
+**     All rights reserved.
 **
 **     SPDX-License-Identifier: BSD-3-Clause
 **
@@ -27,16 +30,19 @@
 **         Initial version.
 **     - rev. 2.0 (2017-08-23)
 **         RevA Header EAR
+**     - rev. 3.0 (2018-08-22)
+**         RevB Header EAR
+**     - rev. 4.0 (2018-08-22)
+**         RevC Header RFP
 **
 ** ###################################################################
 */
 
 /*!
  * @file MIMX8QX6_cm4
- * @version 2.0
- * @date 2017-08-23
- * @brief Device specific configuration file for MIMX8QX6_cm4 (implementation
- *        file)
+ * @version 1.0
+ * @date 261119
+ * @brief Device specific configuration file for MIMX8QX6_cm4 (implementation file)
  *
  * Provides a system configuration function and a global variable that contains
  * the system frequency. It configures the device and initializes the oscillator
@@ -61,7 +67,7 @@ static sc_ipc_t ipcHandle;
 
 void SystemInit (void) {
 #if (ENABLE_ECC_DEBUG)
-  volatile uint32_t *p = (uint32_t *)0xE0080480;
+  volatile uint32_t *p = (uint32_t *)0xE0080480U;
 
   /* Configure LMEM Parity/ECC Control Register
   ;
@@ -94,24 +100,24 @@ void SystemInit (void) {
   CM4__WDOG->TOVAL = 0xFFFF;
   CM4__WDOG->CS = (uint32_t) ((CM4__WDOG->CS) & ~WDOG_CS_EN_MASK) | WDOG_CS_UPDATE_MASK;
 #endif /* (DISABLE_WDOG) */
-  
+
   /* Initialize Cache */
   /* Enable Code Bus Cache */
   /* set command to invalidate all ways, and write GO bit to initiate command */
   LMEM->PCCCR |= LMEM_PCCCR_INVW1_MASK | LMEM_PCCCR_INVW0_MASK;
   LMEM->PCCCR |= LMEM_PCCCR_GO_MASK;
   /* Wait until the command completes */
-  while (LMEM->PCCCR & LMEM_PCCCR_GO_MASK) {
+  while ((LMEM->PCCCR & LMEM_PCCCR_GO_MASK) != 0) {
   }
   /* Enable cache, enable write buffer */
   LMEM->PCCCR |= (LMEM_PCCCR_ENWRBUF_MASK | LMEM_PCCCR_ENCACHE_MASK);
-  
+
   /* Enable System Bus Cache */
   /* set command to invalidate all ways, and write GO bit to initiate command */
   LMEM->PSCCR |= LMEM_PSCCR_INVW1_MASK | LMEM_PSCCR_INVW0_MASK;
   LMEM->PSCCR |= LMEM_PSCCR_GO_MASK;
   /* Wait until the command completes */
-  while (LMEM->PSCCR & LMEM_PSCCR_GO_MASK) {
+  while ((LMEM->PSCCR & LMEM_PSCCR_GO_MASK) != 0) {
   }
   /* Enable cache, enable write buffer */
   LMEM->PSCCR |= (LMEM_PSCCR_ENWRBUF_MASK | LMEM_PSCCR_ENCACHE_MASK);
@@ -128,7 +134,7 @@ void SystemCoreClockUpdate (void) {
   uint32_t freq = SystemCoreClock;
 
   err = sc_pm_get_clock_rate(ipcHandle, SC_R_M4_0_PID0, SC_PM_CLK_CPU, &freq);
-    
+
   if (SC_ERR_NONE == err)
   {
       SystemCoreClock = freq;
@@ -142,9 +148,9 @@ void SystemCoreClockUpdate (void) {
 void SystemInitScfwIpc (void) {
     sc_ipc_t ipc;
     sc_err_t err;
-    
+
     err = sc_ipc_open(&ipc, (sc_ipc_id_t)CM4__MU1_A);
-    
+
     if (err == SC_ERR_NONE)
     {
         ipcHandle = ipc;

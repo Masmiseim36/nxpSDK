@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 NXP
+ * Copyright 2017-2019 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -13,7 +13,7 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v4.1
+product: Pins v7.0
 processor: MIMX8QX6xxxFZ
 package_id: MIMX8QX6AVLFZ
 mcu_data: ksdk2_0
@@ -42,10 +42,10 @@ void BOARD_InitBootPins(void)
 BOARD_InitPins:
 - options: {callFromInitBoot: 'false', coreID: m4}
 - pin_list:
-  - {pin_num: V32, peripheral: M40__UART0, signal: uart_rx, pin_signal: ADC_IN2, sw_config: sw_config_0}
-  - {pin_num: V30, peripheral: M40__UART0, signal: uart_tx, pin_signal: ADC_IN3, sw_config: sw_config_0}
-  - {pin_num: AD34, peripheral: ADMA__FTM, signal: 'ftm_ch, 0', pin_signal: UART2_RX, sw_config: sw_config_0}
-  - {pin_num: AC35, peripheral: ADMA__FTM, signal: 'ftm_ch, 1', pin_signal: UART2_TX, sw_config: sw_config_0}
+  - {pin_num: V32, peripheral: M40__UART0, signal: uart_rx, pin_signal: ADC_IN2, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: V30, peripheral: M40__UART0, signal: uart_tx, pin_signal: ADC_IN3, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: AD34, peripheral: ADMA__FTM, signal: 'ftm_ch, 0', pin_signal: UART2_RX, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: AC35, peripheral: ADMA__FTM, signal: 'ftm_ch, 1', pin_signal: UART2_TX, PULL: PULL_0, sw_config: sw_config_0}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 

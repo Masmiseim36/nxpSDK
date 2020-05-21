@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -143,7 +143,12 @@ int LPUART_RTOS_Init(lpuart_rtos_handle_t *handle, lpuart_handle_t *t_handle, co
     defcfg.baudRate_Bps = cfg->baudrate;
     defcfg.parityMode   = cfg->parity;
     defcfg.stopBitCount = cfg->stopbits;
-
+#if defined(FSL_FEATURE_LPUART_HAS_MODEM_SUPPORT) && FSL_FEATURE_LPUART_HAS_MODEM_SUPPORT
+    defcfg.enableRxRTS = cfg->enableRxRTS;
+    defcfg.enableTxCTS = cfg->enableTxCTS;
+    defcfg.txCtsSource = cfg->txCtsSource;
+    defcfg.txCtsConfig = cfg->txCtsConfig;
+#endif
     LPUART_Init(handle->base, &defcfg, cfg->srcclk);
     LPUART_TransferCreateHandle(handle->base, handle->t_state, LPUART_RTOS_Callback, handle);
     LPUART_TransferStartRingBuffer(handle->base, handle->t_state, cfg->buffer, cfg->buffer_size);

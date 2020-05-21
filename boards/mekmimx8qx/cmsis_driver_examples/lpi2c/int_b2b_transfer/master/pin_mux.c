@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 NXP
+ * Copyright 2017-2019 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -13,7 +13,7 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v4.1
+product: Pins v7.0
 processor: MIMX8QX6xxxFZ
 package_id: MIMX8QX6AVLFZ
 mcu_data: ksdk2_0
@@ -42,8 +42,8 @@ void BOARD_InitBootPins(void)
 BOARD_InitPins:
 - options: {callFromInitBoot: 'false', coreID: m4}
 - pin_list:
-  - {pin_num: V32, peripheral: M40__UART0, signal: uart_rx, pin_signal: ADC_IN2, sw_config: sw_config_0}
-  - {pin_num: V30, peripheral: M40__UART0, signal: uart_tx, pin_signal: ADC_IN3, sw_config: sw_config_0}
+  - {pin_num: V32, peripheral: M40__UART0, signal: uart_rx, pin_signal: ADC_IN2, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: V30, peripheral: M40__UART0, signal: uart_tx, pin_signal: ADC_IN3, PULL: PULL_0, sw_config: sw_config_0}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 
@@ -75,8 +75,8 @@ void BOARD_InitPins(sc_ipc_t ipc)                          /*!< Function assigne
 LPI2C_InitPins:
 - options: {callFromInitBoot: 'false', coreID: m4}
 - pin_list:
-  - {pin_num: H14, peripheral: ADMA__I2C1, signal: i2c_scl, pin_signal: USB_SS3_TC1, sw_config: sw_config_2}
-  - {pin_num: C15, peripheral: ADMA__I2C1, signal: i2c_sda, pin_signal: USB_SS3_TC3, sw_config: sw_config_2}
+  - {pin_num: H14, peripheral: ADMA__I2C1, signal: i2c_scl, pin_signal: USB_SS3_TC1, PULL: PULL_0, sw_config: sw_config_2}
+  - {pin_num: C15, peripheral: ADMA__I2C1, signal: i2c_sda, pin_signal: USB_SS3_TC3, PULL: PULL_0, sw_config: sw_config_2}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 
@@ -108,8 +108,8 @@ void LPI2C_InitPins(sc_ipc_t ipc)                          /*!< Function assigne
 LPI2C_DeinitPins:
 - options: {callFromInitBoot: 'false', coreID: m4}
 - pin_list:
-  - {pin_num: H14, peripheral: LSIO__GPIO4, signal: 'gpio_io, 04', pin_signal: USB_SS3_TC1, sw_config: sw_config_0}
-  - {pin_num: C15, peripheral: LSIO__GPIO4, signal: 'gpio_io, 06', pin_signal: USB_SS3_TC3, sw_config: sw_config_0}
+  - {pin_num: H14, peripheral: LSIO__GPIO4, signal: 'gpio_io, 04', pin_signal: USB_SS3_TC1, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: C15, peripheral: LSIO__GPIO4, signal: 'gpio_io, 06', pin_signal: USB_SS3_TC3, PULL: PULL_0, sw_config: sw_config_0}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 

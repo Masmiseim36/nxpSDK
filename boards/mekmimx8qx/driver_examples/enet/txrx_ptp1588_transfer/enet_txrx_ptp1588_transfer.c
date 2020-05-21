@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -63,7 +63,7 @@ enet_ptp_time_data_t g_rxPtpTsBuff[ENET_RXBD_NUM];
 enet_ptp_time_data_t g_txPtpTsBuff[ENET_TXBD_NUM];
 
 enet_handle_t g_handle;
-uint8_t g_frame[ENET_DATA_LENGTH + 14];
+uint8_t g_frame[ENET_DATA_LENGTH];
 uint32_t g_testTxNum = 0;
 
 /* The MAC address for ENET device. */

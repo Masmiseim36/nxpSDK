@@ -60,7 +60,6 @@ status_t PHY_Init(ENET_Type *base, uint32_t phyAddr, uint32_t srcClock_Hz)
         counter--;
     }
 
-
     if (!counter)
     {
         return kStatus_Fail;

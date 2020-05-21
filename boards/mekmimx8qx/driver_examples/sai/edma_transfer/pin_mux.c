@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 NXP
+ * Copyright 2017-2019 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -13,7 +13,7 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v4.1
+product: Pins v7.0
 processor: MIMX8QX6xxxFZ
 package_id: MIMX8QX6AVLFZ
 mcu_data: ksdk2_0
@@ -42,13 +42,13 @@ void BOARD_InitBootPins(void)
 BOARD_InitPins:
 - options: {callFromInitBoot: 'false', coreID: m4}
 - pin_list:
-  - {pin_num: V32, peripheral: M40__UART0, signal: uart_rx, pin_signal: ADC_IN2, sw_config: sw_config_0}
-  - {pin_num: V30, peripheral: M40__UART0, signal: uart_tx, pin_signal: ADC_IN3, sw_config: sw_config_0}
-  - {pin_num: L29, peripheral: ADMA__ACM, signal: 'acm_mclk_out, 0', pin_signal: MCLK_OUT0, identifier: AUDIO_MCLK, sw_config: sw_config_0}
-  - {pin_num: L35, peripheral: ADMA__SAI1, signal: sai_txc, pin_signal: SAI1_RXC, sw_config: sw_config_0}
-  - {pin_num: N35, peripheral: ADMA__SAI1, signal: sai_txfs, pin_signal: SAI1_RXFS, sw_config: sw_config_0}
-  - {pin_num: R35, peripheral: ADMA__SAI1, signal: sai_txd, pin_signal: SPI0_CS1, sw_config: sw_config_0}
-  - {pin_num: M32, peripheral: ADMA__SAI1, signal: sai_rxd, pin_signal: SAI1_RXD, sw_config: sw_config_2}
+  - {pin_num: V32, peripheral: M40__UART0, signal: uart_rx, pin_signal: ADC_IN2, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: V30, peripheral: M40__UART0, signal: uart_tx, pin_signal: ADC_IN3, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: L29, peripheral: ADMA__ACM, signal: 'acm_mclk_out, 0', pin_signal: MCLK_OUT0, identifier: AUDIO_MCLK, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: L35, peripheral: ADMA__SAI1, signal: sai_txc, pin_signal: SAI1_RXC, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: N35, peripheral: ADMA__SAI1, signal: sai_txfs, pin_signal: SAI1_RXFS, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: R35, peripheral: ADMA__SAI1, signal: sai_txd, pin_signal: SPI0_CS1, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: M32, peripheral: ADMA__SAI1, signal: sai_rxd, pin_signal: SAI1_RXD, PULL: PULL_0, sw_config: sw_config_2}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 
@@ -103,10 +103,10 @@ void BOARD_InitPins(sc_ipc_t ipc)                          /*!< Function assigne
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 BOARD_I2C_ConfigurePins:
-- options: {callFromInitBoot: 'true', coreID: m4}
+- options: {callFromInitBoot: 'false', coreID: m4}
 - pin_list:
-  - {pin_num: U35, peripheral: M40__I2C0, signal: i2c_scl, pin_signal: ADC_IN0, sw_config: sw_config_0}
-  - {pin_num: U33, peripheral: M40__I2C0, signal: i2c_sda, pin_signal: ADC_IN1, sw_config: sw_config_0}
+  - {pin_num: U35, peripheral: M40__I2C0, signal: i2c_scl, pin_signal: ADC_IN0, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: U33, peripheral: M40__I2C0, signal: i2c_sda, pin_signal: ADC_IN1, PULL: PULL_0, sw_config: sw_config_0}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 

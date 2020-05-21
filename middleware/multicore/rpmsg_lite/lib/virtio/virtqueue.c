@@ -238,7 +238,7 @@ int32_t virtqueue_fill_avail_buffers(struct virtqueue *vq, void *buffer, uint32_
  * virtqueue_get_buffer - Returns used buffers from VirtIO queue
  *
  * @param vq            - Pointer to VirtIO queue control block
- * @param len           - Length of consumed buffer
+ * @param len           - Length of conumed buffer
  * @param idx           - Index to buffer descriptor pool
  *
  * @return              - Pointer to used buffer

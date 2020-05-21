@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017-2018, NXP Semiconductors, Inc.
+ * Copyright  2017-2018 NXP
  * All rights reserved.
  *
  *
@@ -31,16 +31,17 @@ enum _display_flags
 /*! @brief Display configuration. */
 typedef struct _display_config
 {
-    uint32_t resolution;    /*!< Resolution, see @ref video_resolution_t and @ref FSL_VIDEO_RESOLUTION. */
-    uint16_t hsw;           /*!< HSYNC pulse width. */
-    uint16_t hfp;           /*!< Horizontal front porch. */
-    uint16_t hbp;           /*!< Horizontal back porch. */
-    uint16_t vsw;           /*!< VSYNC pulse width. */
-    uint16_t vfp;           /*!< Vrtical front porch. */
-    uint16_t vbp;           /*!< Vertical back porch. */
-    uint32_t controlFlags;  /*!< Control flags, OR'ed value of @ref _display_flags. */
-    uint8_t dsiLanes;       /*!< MIPI DSI data lanes number. */
-    uint32_t pixelClock_Hz; /*!< Pixel clock in Hz. */
+    uint32_t resolution;              /*!< Resolution, see @ref video_resolution_t and @ref FSL_VIDEO_RESOLUTION. */
+    uint16_t hsw;                     /*!< HSYNC pulse width. */
+    uint16_t hfp;                     /*!< Horizontal front porch. */
+    uint16_t hbp;                     /*!< Horizontal back porch. */
+    uint16_t vsw;                     /*!< VSYNC pulse width. */
+    uint16_t vfp;                     /*!< Vrtical front porch. */
+    uint16_t vbp;                     /*!< Vertical back porch. */
+    uint32_t controlFlags;            /*!< Control flags, OR'ed value of @ref _display_flags. */
+    uint8_t dsiLanes;                 /*!< MIPI DSI data lanes number. */
+    uint32_t pixelClock_Hz;           /*!< Pixel clock in Hz. */
+    video_pixel_format_t pixelFormat; /*!< Pixel format. */
 } display_config_t;
 
 typedef struct _display_handle display_handle_t;
@@ -59,6 +60,9 @@ struct _display_handle
 {
     const void *resource;
     const display_operations_t *ops;
+    uint16_t width;
+    uint16_t height;
+    video_pixel_format_t pixelFormat;
 };
 
 /*******************************************************************************

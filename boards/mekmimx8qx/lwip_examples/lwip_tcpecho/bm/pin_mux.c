@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 NXP
+ * Copyright 2017-2019 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -13,7 +13,7 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v4.1
+product: Pins v7.0
 processor: MIMX8QX6xxxFZ
 package_id: MIMX8QX6AVLFZ
 mcu_data: ksdk2_0
@@ -42,23 +42,23 @@ void BOARD_InitBootPins(void)
 BOARD_InitPins:
 - options: {callFromInitBoot: 'false', coreID: m4}
 - pin_list:
-  - {pin_num: V32, peripheral: M40__UART0, signal: uart_rx, pin_signal: ADC_IN2, sw_config: sw_config_0}
-  - {pin_num: V30, peripheral: M40__UART0, signal: uart_tx, pin_signal: ADC_IN3, sw_config: sw_config_0}
-  - {pin_num: D30, peripheral: CONN__ENET0, signal: enet_mdc, pin_signal: ENET0_MDC, sw_config: sw_config_0}
-  - {pin_num: B32, peripheral: CONN__ENET0, signal: enet_mdio, pin_signal: ENET0_MDIO, sw_config: sw_config_0}
-  - {pin_num: F28, peripheral: CONN__ENET0, signal: enet_refclk_125m_25m, pin_signal: ENET0_REFCLK_125M_25M, sw_config: sw_config_0}
-  - {pin_num: D28, peripheral: CONN__ENET0, signal: enet_rgmii_rxc, pin_signal: ENET0_RGMII_RXC, sw_config: sw_config_0}
-  - {pin_num: A31, peripheral: CONN__ENET0, signal: 'enet_rgmii_rxd, 0', pin_signal: ENET0_RGMII_RXD0, sw_config: sw_config_0}
-  - {pin_num: C29, peripheral: CONN__ENET0, signal: 'enet_rgmii_rxd, 1', pin_signal: ENET0_RGMII_RXD1, sw_config: sw_config_0}
-  - {pin_num: G27, peripheral: CONN__ENET0, signal: 'enet_rgmii_rxd, 2', pin_signal: ENET0_RGMII_RXD2, sw_config: sw_config_0}
-  - {pin_num: H26, peripheral: CONN__ENET0, signal: 'enet_rgmii_rxd, 3', pin_signal: ENET0_RGMII_RXD3, sw_config: sw_config_0}
-  - {pin_num: B30, peripheral: CONN__ENET0, signal: enet_rgmii_rx_ctl, pin_signal: ENET0_RGMII_RX_CTL, sw_config: sw_config_0}
-  - {pin_num: H24, peripheral: CONN__ENET0, signal: enet_rgmii_txc, pin_signal: ENET0_RGMII_TXC, sw_config: sw_config_0}
-  - {pin_num: G25, peripheral: CONN__ENET0, signal: 'enet_rgmii_txd, 0', pin_signal: ENET0_RGMII_TXD0, sw_config: sw_config_0}
-  - {pin_num: B28, peripheral: CONN__ENET0, signal: 'enet_rgmii_txd, 1', pin_signal: ENET0_RGMII_TXD1, sw_config: sw_config_0}
-  - {pin_num: E27, peripheral: CONN__ENET0, signal: 'enet_rgmii_txd, 2', pin_signal: ENET0_RGMII_TXD2, sw_config: sw_config_0}
-  - {pin_num: F26, peripheral: CONN__ENET0, signal: 'enet_rgmii_txd, 3', pin_signal: ENET0_RGMII_TXD3, sw_config: sw_config_0}
-  - {pin_num: A29, peripheral: CONN__ENET0, signal: enet_rgmii_tx_ctl, pin_signal: ENET0_RGMII_TX_CTL, sw_config: sw_config_0}
+  - {pin_num: V32, peripheral: M40__UART0, signal: uart_rx, pin_signal: ADC_IN2, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: V30, peripheral: M40__UART0, signal: uart_tx, pin_signal: ADC_IN3, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: D30, peripheral: CONN__ENET0, signal: enet_mdc, pin_signal: ENET0_MDC, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: B32, peripheral: CONN__ENET0, signal: enet_mdio, pin_signal: ENET0_MDIO, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: F28, peripheral: CONN__ENET0, signal: enet_refclk_125m_25m, pin_signal: ENET0_REFCLK_125M_25M, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: D28, peripheral: CONN__ENET0, signal: enet_rgmii_rxc, pin_signal: ENET0_RGMII_RXC, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: A31, peripheral: CONN__ENET0, signal: 'enet_rgmii_rxd, 0', pin_signal: ENET0_RGMII_RXD0, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: C29, peripheral: CONN__ENET0, signal: 'enet_rgmii_rxd, 1', pin_signal: ENET0_RGMII_RXD1, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: G27, peripheral: CONN__ENET0, signal: 'enet_rgmii_rxd, 2', pin_signal: ENET0_RGMII_RXD2, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: H26, peripheral: CONN__ENET0, signal: 'enet_rgmii_rxd, 3', pin_signal: ENET0_RGMII_RXD3, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: B30, peripheral: CONN__ENET0, signal: enet_rgmii_rx_ctl, pin_signal: ENET0_RGMII_RX_CTL, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: H24, peripheral: CONN__ENET0, signal: enet_rgmii_txc, pin_signal: ENET0_RGMII_TXC, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: G25, peripheral: CONN__ENET0, signal: 'enet_rgmii_txd, 0', pin_signal: ENET0_RGMII_TXD0, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: B28, peripheral: CONN__ENET0, signal: 'enet_rgmii_txd, 1', pin_signal: ENET0_RGMII_TXD1, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: E27, peripheral: CONN__ENET0, signal: 'enet_rgmii_txd, 2', pin_signal: ENET0_RGMII_TXD2, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: F26, peripheral: CONN__ENET0, signal: 'enet_rgmii_txd, 3', pin_signal: ENET0_RGMII_TXD3, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: A29, peripheral: CONN__ENET0, signal: enet_rgmii_tx_ctl, pin_signal: ENET0_RGMII_TX_CTL, PULL: PULL_0, sw_config: sw_config_0}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 

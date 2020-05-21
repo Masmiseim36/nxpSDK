@@ -23,7 +23,7 @@
 /*! @name Driver version */
 /*@{*/
 /*! @brief eDMA driver version */
-#define FSL_EDMA_DRIVER_VERSION (MAKE_VERSION(2, 1, 0)) /*!< Version 2.1.0. */
+#define FSL_EDMA_DRIVER_VERSION (MAKE_VERSION(2, 1, 1)) /*!< Version 2.1.1. */
 /*@}*/
 
 /*! @brief eDMA transfer configuration */
@@ -32,6 +32,7 @@ typedef enum _edma_transfer_size
     kEDMA_TransferSize1Bytes  = 0x0U, /*!< Source/Destination data transfer size is 1 byte every time */
     kEDMA_TransferSize2Bytes  = 0x1U, /*!< Source/Destination data transfer size is 2 bytes every time */
     kEDMA_TransferSize4Bytes  = 0x2U, /*!< Source/Destination data transfer size is 4 bytes every time */
+    kEDMA_TransferSize8Bytes  = 0x3U, /*!< Source/Destination data transfer size is 8 bytes every time */
     kEDMA_TransferSize16Bytes = 0x4U, /*!< Source/Destination data transfer size is 16 bytes every time */
     kEDMA_TransferSize32Bytes = 0x5U, /*!< Source/Destination data transfer size is 32 bytes every time */
     kEDMA_TransferSize64Bytes = 0x6U, /*!< Source/Destination data transfer size is 64 bytes every time */

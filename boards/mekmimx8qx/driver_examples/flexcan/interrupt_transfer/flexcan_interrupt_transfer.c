@@ -23,7 +23,15 @@
  * When CLK_SRC=1, the protocol engine works at fixed frequency of 160M.
  * If other frequency wanted, please use CLK_SRC=0 and set the working frequency for SC_R_CAN_0.
  */
+#define EXAMPLE_CAN_CLK_SOURCE (kFLEXCAN_ClkSrc1)
 #define EXAMPLE_CAN_CLK_FREQ (SC_160MHZ)
+/* Considering that the first valid MB must be used as Reserved TX MB for ERR005641,
+ * if RX FIFO enables (RFEN bit in MCE set as 1) and RFFN in CTRL2 is set default as zero,
+ * the first valid TX MB Number shall be 8;
+ * if RX FIFO enables (RFEN bit in MCE set as 1) and RFFN in CTRL2 is set by other values (0x1~0xF),
+ * the user should consider to detail the first valid MB number;
+ * if RX FIFO disables (RFEN bit in MCE set as 0) , the first valid MB number would be zero.
+ */
 #define RX_MESSAGE_BUFFER_NUM (9)
 #define TX_MESSAGE_BUFFER_NUM (8)
 /*
@@ -75,24 +83,8 @@
 #define FPSEG1 6
 #define FPSEG2 4
 #define FPROPSEG 7
-#if (defined(FSL_FEATURE_FLEXCAN_HAS_ERRATA_5829) && FSL_FEATURE_FLEXCAN_HAS_ERRATA_5829)
-/* To consider the First valid MB must be used as Reserved TX MB for ERR005829
-   If RX FIFO enable(RFEN bit in MCE set as 1) and RFFN in CTRL2 is set default zero, the first valid TX MB Number is 8
-   If RX FIFO enable(RFEN bit in MCE set as 1) and RFFN in CTRL2 is set by other value(0x1~0xF), User should consider
-   detail first valid MB number
-   If RX FIFO disable(RFEN bit in MCE set as 0) , the first valid MB number is zero */
-#ifdef RX_MESSAGE_BUFFER_NUM
-#undef RX_MESSAGE_BUFFER_NUM
-#define RX_MESSAGE_BUFFER_NUM (10)
-#endif
-#ifdef TX_MESSAGE_BUFFER_NUM
-#undef TX_MESSAGE_BUFFER_NUM
-#define TX_MESSAGE_BUFFER_NUM (9)
-#endif
-#endif
-#ifndef DEMO_FORCE_CAN_SRC_OSC
-#define DEMO_FORCE_CAN_SRC_OSC 0
-#endif
+/* Fix MISRA_C-2012 Rule 17.7. */
+#define LOG_INFO (void)PRINTF
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -366,22 +358,22 @@ int main(void)
     NVIC_EnableIRQ(IRQSTEER_4_IRQn);
     IRQSTEER_EnableInterrupt(IRQSTEER, ADMA_FLEXCAN0_INT_IRQn);
 
-    PRINTF("********* FLEXCAN Interrupt EXAMPLE *********\r\n");
-    PRINTF("    Message format: Standard (11 bit id)\r\n");
-    PRINTF("    Message buffer %d used for Rx.\r\n", RX_MESSAGE_BUFFER_NUM);
-    PRINTF("    Message buffer %d used for Tx.\r\n", TX_MESSAGE_BUFFER_NUM);
-    PRINTF("    Interrupt Mode: Enabled\r\n");
-    PRINTF("    Operation Mode: TX and RX --> Normal\r\n");
-    PRINTF("*********************************************\r\n\r\n");
+    LOG_INFO("********* FLEXCAN Interrupt EXAMPLE *********\r\n");
+    LOG_INFO("    Message format: Standard (11 bit id)\r\n");
+    LOG_INFO("    Message buffer %d used for Rx.\r\n", RX_MESSAGE_BUFFER_NUM);
+    LOG_INFO("    Message buffer %d used for Tx.\r\n", TX_MESSAGE_BUFFER_NUM);
+    LOG_INFO("    Interrupt Mode: Enabled\r\n");
+    LOG_INFO("    Operation Mode: TX and RX --> Normal\r\n");
+    LOG_INFO("*********************************************\r\n\r\n");
 
     do
     {
-        PRINTF("Please select local node as A or B:\r\n");
-        PRINTF("Note: Node B should start first.\r\n");
-        PRINTF("Node:");
+        LOG_INFO("Please select local node as A or B:\r\n");
+        LOG_INFO("Note: Node B should start first.\r\n");
+        LOG_INFO("Node:");
         node_type = GETCHAR();
-        PRINTF("%c", node_type);
-        PRINTF("\r\n");
+        LOG_INFO("%c", node_type);
+        LOG_INFO("\r\n");
     } while ((node_type != 'A') && (node_type != 'B') && (node_type != 'a') && (node_type != 'b'));
 
     /* Select mailbox ID. */
@@ -398,30 +390,23 @@ int main(void)
 
     /* Get FlexCAN module default Configuration. */
     /*
-     * flexcanConfig.clkSrc = kFLEXCAN_ClkSrcOsc;
-     * flexcanConfig.baudRate = 1000000U;
-     * flexcanConfig.baudRateFD = 2000000U;
-     * flexcanConfig.maxMbNum = 16;
-     * flexcanConfig.enableLoopBack = false;
-     * flexcanConfig.enableSelfWakeup = false;
-     * flexcanConfig.enableIndividMask = false;
-     * flexcanConfig.enableDoze = false;
-     * flexcanConfig.timingConfig = timingConfig;
+     * flexcanConfig.clkSrc                 = kFLEXCAN_ClkSrc0;
+     * flexcanConfig.baudRate               = 1000000U;
+     * flexcanConfig.baudRateFD             = 2000000U;
+     * flexcanConfig.maxMbNum               = 16;
+     * flexcanConfig.enableLoopBack         = false;
+     * flexcanConfig.enableSelfWakeup       = false;
+     * flexcanConfig.enableIndividMask      = false;
+     * flexcanConfig.disableSelfReception   = false;
+     * flexcanConfig.enableListenOnlyMode   = false;
+     * flexcanConfig.enableDoze             = false;
      */
     FLEXCAN_GetDefaultConfig(&flexcanConfig);
-/* Init FlexCAN module. */
-#if (!defined(DEMO_FORCE_CAN_SRC_OSC)) || !DEMO_FORCE_CAN_SRC_OSC
-#if (!defined(FSL_FEATURE_FLEXCAN_SUPPORT_ENGINE_CLK_SEL_REMOVE)) || !FSL_FEATURE_FLEXCAN_SUPPORT_ENGINE_CLK_SEL_REMOVE
-    flexcanConfig.clkSrc = kFLEXCAN_ClkSrcPeri;
-#else
-#if defined(CAN_CTRL1_CLKSRC_MASK)
-    if (!FSL_FEATURE_FLEXCAN_INSTANCE_SUPPORT_ENGINE_CLK_SEL_REMOVEn(EXAMPLE_CAN))
-    {
-        flexcanConfig.clkSrc = kFLEXCAN_ClkSrcPeri;
-    }
+
+#if defined(EXAMPLE_CAN_CLK_SOURCE)
+    flexcanConfig.clkSrc = EXAMPLE_CAN_CLK_SOURCE;
 #endif
-#endif /* FSL_FEATURE_FLEXCAN_SUPPORT_ENGINE_CLK_SEL_REMOVE */
-#endif /* DEMO_FORCE_CAN_SRC_OSC */
+
 /* If special quantum setting is needed, set the timing parameters. */
 #if (defined(SET_CAN_QUANTUM) && SET_CAN_QUANTUM)
     flexcanConfig.timingConfig.phaseSeg1 = PSEG1;
@@ -436,6 +421,7 @@ int main(void)
 
 #if (defined(USE_IMPROVED_TIMING_CONFIG) && USE_IMPROVED_TIMING_CONFIG)
     flexcan_timing_config_t timing_config;
+    memset(&timing_config, 0, sizeof(flexcan_timing_config_t));
 #if (defined(USE_CANFD) && USE_CANFD)
     if (FLEXCAN_FDCalculateImprovedTimingValues(flexcanConfig.baudRate, flexcanConfig.baudRateFD, EXAMPLE_CAN_CLK_FREQ,
                                                 &timing_config))
@@ -445,7 +431,7 @@ int main(void)
     }
     else
     {
-        PRINTF("No found Improved Timing Configuration. Just used default configuration\r\n\r\n");
+        LOG_INFO("No found Improved Timing Configuration. Just used default configuration\r\n\r\n");
     }
 #else
     if (FLEXCAN_CalculateImprovedTimingValues(flexcanConfig.baudRate, EXAMPLE_CAN_CLK_FREQ, &timing_config))
@@ -455,7 +441,7 @@ int main(void)
     }
     else
     {
-        PRINTF("No found Improved Timing Configuration. Just used default configuration\r\n\r\n");
+        LOG_INFO("No found Improved Timing Configuration. Just used default configuration\r\n\r\n");
     }
 #endif
 #endif
@@ -491,34 +477,34 @@ int main(void)
 
     if ((node_type == 'A') || (node_type == 'a'))
     {
-        PRINTF("Press any key to trigger one-shot transmission\r\n\r\n");
+        LOG_INFO("Press any key to trigger one-shot transmission\r\n\r\n");
         frame.dataByte0 = 0;
     }
     else
     {
-        PRINTF("Start to Wait data from Node A\r\n\r\n");
+        LOG_INFO("Start to Wait data from Node A\r\n\r\n");
     }
 
-    while (1)
+    while (true)
     {
         if ((node_type == 'A') || (node_type == 'a'))
         {
             GETCHAR();
 
             frame.id     = FLEXCAN_ID_STD(txIdentifier);
-            frame.format = kFLEXCAN_FrameFormatStandard;
-            frame.type   = kFLEXCAN_FrameTypeData;
-            frame.length = DLC;
+            frame.format = (uint8_t)kFLEXCAN_FrameFormatStandard;
+            frame.type   = (uint8_t)kFLEXCAN_FrameTypeData;
+            frame.length = (uint8_t)DLC;
 #if (defined(USE_CANFD) && USE_CANFD)
-            frame.brs = 1;
+            frame.brs = (uint8_t)1U;
 #endif
-            txXfer.mbIdx = TX_MESSAGE_BUFFER_NUM;
+            txXfer.mbIdx = (uint8_t)TX_MESSAGE_BUFFER_NUM;
 #if (defined(USE_CANFD) && USE_CANFD)
             txXfer.framefd = &frame;
-            FLEXCAN_TransferFDSendNonBlocking(EXAMPLE_CAN, &flexcanHandle, &txXfer);
+            (void)FLEXCAN_TransferFDSendNonBlocking(EXAMPLE_CAN, &flexcanHandle, &txXfer);
 #else
             txXfer.frame = &frame;
-            FLEXCAN_TransferSendNonBlocking(EXAMPLE_CAN, &flexcanHandle, &txXfer);
+            (void)FLEXCAN_TransferSendNonBlocking(EXAMPLE_CAN, &flexcanHandle, &txXfer);
 #endif
 
             while (!txComplete)
@@ -527,13 +513,13 @@ int main(void)
             txComplete = false;
 
             /* Start receive data through Rx Message Buffer. */
-            rxXfer.mbIdx = RX_MESSAGE_BUFFER_NUM;
+            rxXfer.mbIdx = (uint8_t)RX_MESSAGE_BUFFER_NUM;
 #if (defined(USE_CANFD) && USE_CANFD)
             rxXfer.framefd = &frame;
-            FLEXCAN_TransferFDReceiveNonBlocking(EXAMPLE_CAN, &flexcanHandle, &rxXfer);
+            (void)FLEXCAN_TransferFDReceiveNonBlocking(EXAMPLE_CAN, &flexcanHandle, &rxXfer);
 #else
             rxXfer.frame = &frame;
-            FLEXCAN_TransferReceiveNonBlocking(EXAMPLE_CAN, &flexcanHandle, &rxXfer);
+            (void)FLEXCAN_TransferReceiveNonBlocking(EXAMPLE_CAN, &flexcanHandle, &rxXfer);
 #endif
 
             /* Wait until Rx MB full. */
@@ -542,9 +528,9 @@ int main(void)
             };
             rxComplete = false;
 
-            PRINTF("Rx MB ID: 0x%3x, Rx MB data: 0x%x, Time stamp: %d\r\n", frame.id >> CAN_ID_STD_SHIFT,
-                   frame.dataByte0, frame.timestamp);
-            PRINTF("Press any key to trigger the next transmission!\r\n\r\n");
+            LOG_INFO("Rx MB ID: 0x%3x, Rx MB data: 0x%x, Time stamp: %d\r\n", frame.id >> CAN_ID_STD_SHIFT,
+                     frame.dataByte0, frame.timestamp);
+            LOG_INFO("Press any key to trigger the next transmission!\r\n\r\n");
             frame.dataByte0++;
             frame.dataByte1 = 0x55;
         }
@@ -559,17 +545,17 @@ int main(void)
              * output in the terminal B received is the same second frame N). */
             if (wakenUp)
             {
-                PRINTF("B has been waken up!\r\n\r\n");
+                LOG_INFO("B has been waken up!\r\n\r\n");
             }
 
             /* Start receive data through Rx Message Buffer. */
-            rxXfer.mbIdx = RX_MESSAGE_BUFFER_NUM;
+            rxXfer.mbIdx = (uint8_t)RX_MESSAGE_BUFFER_NUM;
 #if (defined(USE_CANFD) && USE_CANFD)
             rxXfer.framefd = &frame;
-            FLEXCAN_TransferFDReceiveNonBlocking(EXAMPLE_CAN, &flexcanHandle, &rxXfer);
+            (void)FLEXCAN_TransferFDReceiveNonBlocking(EXAMPLE_CAN, &flexcanHandle, &rxXfer);
 #else
             rxXfer.frame = &frame;
-            FLEXCAN_TransferReceiveNonBlocking(EXAMPLE_CAN, &flexcanHandle, &rxXfer);
+            (void)FLEXCAN_TransferReceiveNonBlocking(EXAMPLE_CAN, &flexcanHandle, &rxXfer);
 #endif
 
             /* Wait until Rx receive full. */
@@ -578,25 +564,25 @@ int main(void)
             };
             rxComplete = false;
 
-            PRINTF("Rx MB ID: 0x%3x, Rx MB data: 0x%x, Time stamp: %d\r\n", frame.id >> CAN_ID_STD_SHIFT,
-                   frame.dataByte0, frame.timestamp);
+            LOG_INFO("Rx MB ID: 0x%3x, Rx MB data: 0x%x, Time stamp: %d\r\n", frame.id >> CAN_ID_STD_SHIFT,
+                     frame.dataByte0, frame.timestamp);
 
             frame.id     = FLEXCAN_ID_STD(txIdentifier);
-            txXfer.mbIdx = TX_MESSAGE_BUFFER_NUM;
+            txXfer.mbIdx = (uint8_t)TX_MESSAGE_BUFFER_NUM;
 #if (defined(USE_CANFD) && USE_CANFD)
             frame.brs      = 1;
             txXfer.framefd = &frame;
-            FLEXCAN_TransferFDSendNonBlocking(EXAMPLE_CAN, &flexcanHandle, &txXfer);
+            (void)FLEXCAN_TransferFDSendNonBlocking(EXAMPLE_CAN, &flexcanHandle, &txXfer);
 #else
             txXfer.frame = &frame;
-            FLEXCAN_TransferSendNonBlocking(EXAMPLE_CAN, &flexcanHandle, &txXfer);
+            (void)FLEXCAN_TransferSendNonBlocking(EXAMPLE_CAN, &flexcanHandle, &txXfer);
 #endif
 
             while (!txComplete)
             {
             };
             txComplete = false;
-            PRINTF("Wait Node A to trigger the next transmission!\r\n\r\n");
+            LOG_INFO("Wait Node A to trigger the next transmission!\r\n\r\n");
         }
     }
 }

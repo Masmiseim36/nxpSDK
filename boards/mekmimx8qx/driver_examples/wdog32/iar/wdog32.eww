@@ -19,6 +19,14 @@
         <project>wdog32</project>
         <configuration>ddr_release</configuration>
       </member>
+      <member>
+        <project>wdog32</project>
+        <configuration>flash_debug</configuration>
+      </member>
+      <member>
+        <project>wdog32</project>
+        <configuration>flash_release</configuration>
+      </member>
     </batchDefinition>
     <batchDefinition>
       <name>release</name>
@@ -46,6 +54,20 @@
       <member>
         <project>wdog32</project>
         <configuration>ddr_release</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>flash_debug</name>
+      <member>
+        <project>wdog32</project>
+        <configuration>flash_debug</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>flash_release</name>
+      <member>
+        <project>wdog32</project>
+        <configuration>flash_release</configuration>
       </member>
     </batchDefinition>
   </batchBuild>

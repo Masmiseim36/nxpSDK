@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2017-2018 NXP
+ * Copyright 2017-2019 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  *
@@ -34,7 +34,7 @@
  * Header file containing the public API for the System Controller (SC)
  * Timer function.
  *
- * @addtogroup TIMER_SVC (SVC) Timer Service
+ * @addtogroup TIMER_SVC TIMER: Timer Service
  *
  * Module for the Timer service. This includes support for the watchdog, RTC,
  * and system counter. Note every resource partition has a watchdog it can
@@ -86,7 +86,7 @@ typedef uint32_t sc_timer_wdog_time_t;
 /* Functions */
 
 /*!
- * @name Wathdog Functions
+ * @name Watchdog Functions
  * @{
  */
 
@@ -122,6 +122,23 @@ sc_err_t sc_timer_set_wdog_pre_timeout(sc_ipc_t ipc,
     sc_timer_wdog_time_t pre_timeout);
 
 /*!
+ * This function sets the watchdog window in milliseconds. If not
+ * set then the window defaults to the 0. Once locked this value
+ * cannot be changed.
+ *
+ * @param[in]     ipc         IPC handle
+ * @param[in]     window      window period for the watchdog
+ *
+ * @return Returns an error code (SC_ERR_NONE = success, SC_ERR_LOCKED
+ *         = locked).
+ *
+ * Calling sc_timer_ping_wdog() before the window time has expired will
+ * result in the watchdog action being taken.
+ */
+sc_err_t sc_timer_set_wdog_window(sc_ipc_t ipc,
+    sc_timer_wdog_time_t window);
+
+/*!
  * This function starts the watchdog.
  *
  * @param[in]     ipc         IPC handle
@@ -129,8 +146,15 @@ sc_err_t sc_timer_set_wdog_pre_timeout(sc_ipc_t ipc,
  *
  * @return Returns an error code (SC_ERR_NONE = success).
  *
+ * Return errors:
+ * - SC_ERR_NOACCESS if caller's partition is not isolated
+ *
  * If \a lock is set then the watchdog cannot be stopped or the timeout
  * period changed.
+ *
+ * If the calling partition is not isolated then the wdog cannot be used.
+ * This is always the case if a non-secure partition is running on the same
+ * CPU as a secure partition (e.g. Linux under TZ). See sc_rm_partition_alloc().
  */
 sc_err_t sc_timer_start_wdog(sc_ipc_t ipc, sc_bool_t lock);
 
@@ -318,11 +342,11 @@ sc_err_t sc_timer_cancel_rtc_alarm(sc_ipc_t ipc);
  * calibration.
  *
  * @param[in]     ipc         IPC handle
- * @param[in]     count       calbration count (-16 to 15)
+ * @param[in]     count       calibration count (-16 to 15)
  *
  * The calibration value is a 5-bit value including the sign bit, which is
  * implemented in 2's complement. It is added or subtracted from the RTC on
- * a perdiodic basis, once per 32768 cycles of the RTC clock.
+ * a periodic basis, once per 32768 cycles of the RTC clock.
  *
  * @return Returns an error code (SC_ERR_NONE = success).
  */

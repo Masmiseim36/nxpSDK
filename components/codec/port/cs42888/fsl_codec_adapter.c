@@ -6,8 +6,8 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
+#include "fsl_cs42888.h"
 #include "fsl_codec_adapter.h"
-#include "fsl_codec_common.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -37,17 +37,17 @@ static const codec_capability_t s_cs42888_capability = {
  * param config codec configuration.
  * return kStatus_Success is success, else initial failed.
  */
-status_t HAL_CODEC_Init(void *handle, void *config)
+status_t HAL_CODEC_Init(codec_handle_t *handle, void *config)
 {
     assert((config != NULL) && (handle != NULL));
 
     codec_config_t *codecConfig = (codec_config_t *)config;
 
     cs42888_config_t *cs42888Config = (cs42888_config_t *)(codecConfig->codecDevConfig);
-    cs42888_handle_t *cs42888Handle = (cs42888_handle_t *)((uint32_t)(((codec_handle_t *)handle)->codecDevHandle));
+    cs42888_handle_t *cs42888Handle = (cs42888_handle_t *)((uint32_t)(handle->codecDevHandle));
 
     /* load codec capability */
-    ((codec_handle_t *)handle)->codecCapability = &s_cs42888_capability;
+    handle->codecCapability = &s_cs42888_capability;
     /* codec device initialization */
     return CS42888_Init(cs42888Handle, cs42888Config);
 }
@@ -58,11 +58,11 @@ status_t HAL_CODEC_Init(void *handle, void *config)
  * param handle codec handle.
  * return kStatus_Success is success, else de-initial failed.
  */
-status_t HAL_CODEC_Deinit(void *handle)
+status_t HAL_CODEC_Deinit(codec_handle_t *handle)
 {
     assert(handle != NULL);
 
-    return CS42888_Deinit((cs42888_handle_t *)((uint32_t)(((codec_handle_t *)handle)->codecDevHandle)));
+    return CS42888_Deinit((cs42888_handle_t *)((uint32_t)(handle->codecDevHandle)));
 }
 
 /*!
@@ -74,12 +74,12 @@ status_t HAL_CODEC_Deinit(void *handle)
  * param bitWidth bit width.
  * return kStatus_Success is success, else configure failed.
  */
-status_t HAL_CODEC_SetFormat(void *handle, uint32_t mclk, uint32_t sampleRate, uint32_t bitWidth)
+status_t HAL_CODEC_SetFormat(codec_handle_t *handle, uint32_t mclk, uint32_t sampleRate, uint32_t bitWidth)
 {
     assert(handle != NULL);
 
-    return CS42888_ConfigDataFormat((cs42888_handle_t *)((uint32_t)(((codec_handle_t *)handle)->codecDevHandle)), mclk,
-                                    sampleRate, bitWidth);
+    return CS42888_ConfigDataFormat((cs42888_handle_t *)((uint32_t)(handle->codecDevHandle)), mclk, sampleRate,
+                                    bitWidth);
 }
 
 /*!
@@ -90,7 +90,7 @@ status_t HAL_CODEC_SetFormat(void *handle, uint32_t mclk, uint32_t sampleRate, u
  * param volume volume value, support 0 ~ 100, 0 is mute, 100 is the maximum volume value.
  * return kStatus_Success is success, else configure failed.
  */
-status_t HAL_CODEC_SetVolume(void *handle, uint32_t playChannel, uint32_t volume)
+status_t HAL_CODEC_SetVolume(codec_handle_t *handle, uint32_t playChannel, uint32_t volume)
 {
     assert(handle != NULL);
     uint32_t i   = 0U;
@@ -103,8 +103,7 @@ status_t HAL_CODEC_SetVolume(void *handle, uint32_t playChannel, uint32_t volume
             continue;
         }
 
-        ret = CS42888_SetAOUTVolume((cs42888_handle_t *)((uint32_t)(((codec_handle_t *)handle)->codecDevHandle)),
-                                    i + 1U, volume);
+        ret = CS42888_SetAOUTVolume((cs42888_handle_t *)((uint32_t)(handle->codecDevHandle)), i + 1U, volume);
         if (ret != kStatus_Success)
         {
             return ret;
@@ -122,7 +121,7 @@ status_t HAL_CODEC_SetVolume(void *handle, uint32_t playChannel, uint32_t volume
  * param isMute true is mute, false is unmute.
  * return kStatus_Success is success, else configure failed.
  */
-status_t HAL_CODEC_SetMute(void *handle, uint32_t playChannel, bool isMute)
+status_t HAL_CODEC_SetMute(codec_handle_t *handle, uint32_t playChannel, bool isMute)
 {
     assert(handle != NULL);
     uint32_t i   = 0U;
@@ -135,8 +134,7 @@ status_t HAL_CODEC_SetMute(void *handle, uint32_t playChannel, bool isMute)
             continue;
         }
 
-        ret = CS42888_SetChannelMute((cs42888_handle_t *)((uint32_t)(((codec_handle_t *)handle)->codecDevHandle)),
-                                     i + 1U, isMute);
+        ret = CS42888_SetChannelMute((cs42888_handle_t *)((uint32_t)(handle->codecDevHandle)), i + 1U, isMute);
         if (ret != kStatus_Success)
         {
             return ret;
@@ -154,7 +152,7 @@ status_t HAL_CODEC_SetMute(void *handle, uint32_t playChannel, bool isMute)
  * param powerOn true is power on, false is power down.
  * return kStatus_Success is success, else configure failed.
  */
-status_t HAL_CODEC_SetPower(void *handle, uint32_t module, bool powerOn)
+status_t HAL_CODEC_SetPower(codec_handle_t *handle, codec_module_t module, bool powerOn)
 {
     return kStatus_CODEC_NotSupport;
 }
@@ -167,7 +165,7 @@ status_t HAL_CODEC_SetPower(void *handle, uint32_t module, bool powerOn)
  *
  * return kStatus_Success is success, else configure failed.
  */
-status_t HAL_CODEC_SetRecord(void *handle, uint32_t recordSource)
+status_t HAL_CODEC_SetRecord(codec_handle_t *handle, uint32_t recordSource)
 {
     return kStatus_CODEC_NotSupport;
 }
@@ -183,7 +181,7 @@ status_t HAL_CODEC_SetRecord(void *handle, uint32_t recordSource)
 
  * return kStatus_Success is success, else configure failed.
  */
-status_t HAL_CODEC_SetRecordChannel(void *handle, uint32_t leftRecordChannel, uint32_t rightRecordChannel)
+status_t HAL_CODEC_SetRecordChannel(codec_handle_t *handle, uint32_t leftRecordChannel, uint32_t rightRecordChannel)
 {
     return kStatus_CODEC_NotSupport;
 }
@@ -196,7 +194,7 @@ status_t HAL_CODEC_SetRecordChannel(void *handle, uint32_t leftRecordChannel, ui
  *
  * return kStatus_Success is success, else configure failed.
  */
-status_t HAL_CODEC_SetPlay(void *handle, uint32_t playSource)
+status_t HAL_CODEC_SetPlay(codec_handle_t *handle, uint32_t playSource)
 {
     return kStatus_CODEC_NotSupport;
 }
@@ -211,7 +209,7 @@ status_t HAL_CODEC_SetPlay(void *handle, uint32_t playSource)
  *  codec specific driver for detail configurations.
  * return kStatus_Success is success, else configure failed.
  */
-status_t HAL_CODEC_ModuleControl(void *handle, uint32_t cmd, uint32_t data)
+status_t HAL_CODEC_ModuleControl(codec_handle_t *handle, codec_module_ctrl_cmd_t cmd, uint32_t data)
 {
     return kStatus_CODEC_NotSupport;
 }

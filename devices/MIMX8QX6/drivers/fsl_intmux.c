@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -88,7 +88,7 @@ static void INTMUX_CommonIRQHandler(INTMUX_Type *intmuxBase, uint32_t channel)
     uint32_t pendingIrqOffset;
 
     pendingIrqOffset = intmuxBase->CHANNEL[channel].CHn_VEC;
-    if (pendingIrqOffset)
+    if (pendingIrqOffset != 0x00U)
     {
         uint32_t isr = *(uint32_t *)(SCB->VTOR + pendingIrqOffset);
         ((void (*)(void))isr)();
@@ -120,7 +120,7 @@ void INTMUX_Init(INTMUX_Type *base)
     CLOCK_EnableClock(s_intmuxClockName[instance]);
 #endif /* FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL */
     /* Reset all channels and enable NVIC vectors for all INTMUX channels. */
-    for (channel = 0; channel < FSL_FEATURE_INTMUX_CHANNEL_COUNT; channel++)
+    for (channel = 0; channel < (uint32_t)FSL_FEATURE_INTMUX_CHANNEL_COUNT; channel++)
     {
         INTMUX_ResetChannel(base, channel);
 #if !(defined(FSL_FEATURE_INTMUX_DIRECTION_OUT) && FSL_FEATURE_INTMUX_DIRECTION_OUT)
@@ -146,7 +146,7 @@ void INTMUX_Deinit(INTMUX_Type *base)
     CLOCK_DisableClock(s_intmuxClockName[instance]);
 #endif /* FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL */
     /* Disable NVIC vectors for all of the INTMUX channels. */
-    for (channel = 0; channel < FSL_FEATURE_INTMUX_CHANNEL_COUNT; channel++)
+    for (channel = 0; channel < (uint32_t)FSL_FEATURE_INTMUX_CHANNEL_COUNT; channel++)
     {
 #if !(defined(FSL_FEATURE_INTMUX_DIRECTION_OUT) && FSL_FEATURE_INTMUX_DIRECTION_OUT)
         NVIC_DisableIRQ(s_intmuxIRQNumber[instance][channel]);

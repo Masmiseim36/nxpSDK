@@ -38,8 +38,7 @@ hal_pwm_status_t HAL_PwmInit(hal_pwm_handle_t halPwmHandle, uint8_t instance, ui
     tpm_config_t tpmInfo;
     hal_pwm_handle_struct_t *halPwmState = halPwmHandle;
 
-    assert(instance < (sizeof(s_tpmBase) / sizeof(s_tpmBase[0])));
-    assert(s_tpmBase[instance]);
+    assert(instance < FSL_FEATURE_SOC_TPM_COUNT);
     assert(halPwmHandle);
     assert(sizeof(hal_pwm_handle_struct_t) == HAL_PWM_HANDLE_SIZE);
     halPwmState->pwmClock_Hz = srcClock_Hz;
@@ -56,7 +55,7 @@ void HAL_PwmDeinit(hal_pwm_handle_t halPwmHandle)
     hal_pwm_handle_struct_t *halPwmState = halPwmHandle;
 
     assert(halPwmHandle);
-    assert(halPwmState->instance < (sizeof(s_tpmBase) / sizeof(s_tpmBase[0])));
+    assert(halPwmState->instance < FSL_FEATURE_SOC_TPM_COUNT);
     /* DeInitialize tpm module */
     TPM_Deinit(s_tpmBase[halPwmState->instance]);
 }
@@ -70,7 +69,7 @@ hal_pwm_status_t HAL_PwmSetupPwm(hal_pwm_handle_t halPwmHandle, uint8_t channel,
 
     assert(halPwmHandle);
     assert(channel <= kTPM_Chnl_7);
-    assert(halPwmState->instance < (sizeof(s_tpmBase) / sizeof(s_tpmBase[0])));
+    assert(halPwmState->instance < FSL_FEATURE_SOC_TPM_COUNT);
     assert(setupConfig);
     tpm_chnl_pwm_signal_param_t pwmChannelConfig = {
         .chnlNumber       = (tpm_chnl_t)channel,
@@ -103,7 +102,7 @@ hal_pwm_status_t HAL_PwmUpdateDutycycle(hal_pwm_handle_t halPwmHandle,
 
     assert(halPwmHandle);
     assert(channel <= kTPM_Chnl_7);
-    assert(halPwmState->instance < (sizeof(s_tpmBase) / sizeof(s_tpmBase[0])));
+    assert(halPwmState->instance < FSL_FEATURE_SOC_TPM_COUNT);
 
     TPM_UpdatePwmDutycycle(s_tpmBase[halPwmState->instance], (tpm_chnl_t)channel, (tpm_pwm_mode_t)mode,
                            dutyCyclePercent);

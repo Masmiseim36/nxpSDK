@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 NXP
+ * Copyright 2017, 2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -10,6 +10,11 @@
 #include "isi_config.h"
 #include "isi_example.h"
 #include "fsl_dpu.h"
+
+#if (defined(APP_DPU_USE_PREFETCH) && APP_DPU_USE_PREFETCH)
+#include "fsl_prg.h"
+#include "fsl_dpr.h"
+#endif
 
 /*******************************************************************************
  * Definitions
@@ -113,6 +118,10 @@ void APP_InitDisplay(uint32_t frameBuffer, app_display_callback_t callback)
 #if APP_RESIZE_CAMERA_IMAGE
     dpu_scaler_config_t scConfig;
 #endif
+#if (defined(APP_DPU_USE_PREFETCH) && APP_DPU_USE_PREFETCH)
+    dpr_buffer_config_t dprConfig;
+    prg_buffer_config_t prgConfig;
+#endif
 
     memset(&s_displayHandle, 0, sizeof(s_displayHandle));
 
@@ -204,6 +213,33 @@ void APP_InitDisplay(uint32_t frameBuffer, app_display_callback_t callback)
     DPU_SetFetchUnitSrcBufferConfig(APP_DPU, kDPU_FetchDecode0, 0, &sbConfig);
     DPU_EnableFetchUnitSrcBuffer(APP_DPU, kDPU_FetchDecode0, 0, true);
 
+#if (defined(APP_DPU_USE_PREFETCH) && APP_DPU_USE_PREFETCH)
+    /* Configure PRG. */
+    PRG_BufferGetDefaultConfig(&prgConfig);
+    prgConfig.width       = sbConfig.bufferWidth;
+    prgConfig.height      = sbConfig.bufferHeight;
+    prgConfig.strideBytes = sbConfig.strideBytes;
+    prgConfig.dataType    = kPRG_DataType16Bpp;
+
+    PRG_Init(APP_FETCH_DECODE0_PRG);
+    PRG_SetBufferConfig(APP_FETCH_DECODE0_PRG, &prgConfig);
+    PRG_SetBufferAddr(APP_FETCH_DECODE0_PRG, sbConfig.baseAddr);
+    PRG_Enable(APP_FETCH_DECODE0_PRG, true);
+    PRG_UpdateRegister(APP_FETCH_DECODE0_PRG);
+
+    /* Configure DPR. */
+    DPR_BufferGetDefaultConfig(&dprConfig);
+    dprConfig.width       = sbConfig.bufferWidth;
+    dprConfig.height      = sbConfig.bufferHeight;
+    dprConfig.strideBytes = sbConfig.strideBytes;
+    dprConfig.dataType    = kDPR_DataType16Bpp;
+
+    DPR_Init(APP_FETCH_DECODE0_DPR);
+    DPR_SetBufferConfig(APP_FETCH_DECODE0_DPR, &dprConfig);
+    DPR_SetBufferAddr(APP_FETCH_DECODE0_DPR, sbConfig.baseAddr);
+    DPR_Start(APP_FETCH_DECODE0_DPR);
+#endif
+
     DPU_TriggerPipelineShadowLoad(APP_DPU, APP_CONTENT_STREAM_PIPELINE);
 
     /* Step 3: Configure the display stream. */
@@ -248,6 +284,12 @@ void APP_InitDisplay(uint32_t frameBuffer, app_display_callback_t callback)
 
     DPU_StartDisplay(APP_DPU, APP_DPU_DISPLAY_INDEX);
 
+#if (defined(APP_DPU_USE_PREFETCH) && APP_DPU_USE_PREFETCH)
+    PRG_EnableShadowLoad(APP_FETCH_DECODE0_PRG, true);
+    PRG_UpdateRegister(APP_FETCH_DECODE0_PRG);
+    DPR_StartRepeat(APP_FETCH_DECODE0_DPR);
+#endif
+
     /* Wait for the initial setting shadow load finished. */
     while (1)
     {
@@ -271,6 +313,12 @@ void APP_InitDisplay(uint32_t frameBuffer, app_display_callback_t callback)
 
 void APP_SetDisplayFrameBuffer(uint32_t frameBuffer)
 {
+#if (defined(APP_DPU_USE_PREFETCH) && APP_DPU_USE_PREFETCH)
+    DPR_SetBufferAddr(APP_FETCH_DECODE0_DPR, frameBuffer);
+    PRG_SetBufferAddr(APP_FETCH_DECODE0_PRG, frameBuffer);
+    PRG_UpdateRegister(APP_FETCH_DECODE0_PRG);
+#endif
+
     DPU_SetFetchUnitSrcBufferAddr(APP_DPU, kDPU_FetchDecode0, 0, frameBuffer);
     s_displayHandle.isFramePending = true;
     s_displayHandle.inactiveFb     = frameBuffer;

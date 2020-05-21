@@ -412,8 +412,7 @@ hal_gpio_status_t HAL_GpioGetTriggerMode(hal_gpio_handle_t gpioHandle, hal_gpio_
 hal_gpio_status_t HAL_GpioSetTriggerMode(hal_gpio_handle_t gpioHandle, hal_gpio_interrupt_trigger_t gpioTrigger)
 {
     hal_gpio_state_t *gpioStateHandle;
-    GPIO_Type *gpioList[] = GPIO_BASE_PTRS;
-    uint32_t regPrimask;
+    GPIO_Type *gpioList[]        = GPIO_BASE_PTRS;
     IRQn_Type gpioLowIRQsList[]  = GPIO_COMBINED_LOW_IRQS;
     IRQn_Type gpioHighIRQsList[] = GPIO_COMBINED_HIGH_IRQS;
     gpio_interrupt_mode_t triggerType;
@@ -451,16 +450,12 @@ hal_gpio_status_t HAL_GpioSetTriggerMode(hal_gpio_handle_t gpioHandle, hal_gpio_
 
     gpioStateHandle->pin.trigger = (uint16_t)gpioTrigger;
 
-    /* Disbale Global Interrupt */
-    regPrimask = DisableGlobalIRQ();
-
     /* initialize gpio interrupt */
     GPIO_PinSetInterruptConfig(gpioList[gpioStateHandle->pin.port], gpioStateHandle->pin.pin, triggerType);
 
     /* Enable IRQ */
     if (triggerType != kGPIO_NoIntmode)
     {
-        GPIO_PortEnableInterrupts(gpioList[gpioStateHandle->pin.port], (1U << gpioStateHandle->pin.pin));
         if (gpioStateHandle->pin.pin <= 15)
         {
             NVIC_SetPriority(gpioLowIRQsList[gpioStateHandle->pin.port], HAL_GPIO_ISR_PRIORITY);
@@ -471,14 +466,12 @@ hal_gpio_status_t HAL_GpioSetTriggerMode(hal_gpio_handle_t gpioHandle, hal_gpio_
             NVIC_SetPriority(gpioHighIRQsList[gpioStateHandle->pin.port], HAL_GPIO_ISR_PRIORITY);
             EnableIRQ(gpioHighIRQsList[gpioStateHandle->pin.port]);
         }
+        GPIO_PortEnableInterrupts(gpioList[gpioStateHandle->pin.port], (1U << gpioStateHandle->pin.pin));
     }
     else
     {
         GPIO_PortDisableInterrupts(gpioList[gpioStateHandle->pin.port], (1U << gpioStateHandle->pin.pin));
     }
-
-    /* Enable Global Interrupt */
-    EnableGlobalIRQ(regPrimask);
 
     return kStatus_HAL_GpioSuccess;
 }

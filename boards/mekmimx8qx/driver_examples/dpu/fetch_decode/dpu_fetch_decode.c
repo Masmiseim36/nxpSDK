@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 NXP
+ * Copyright 2017, 2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -10,11 +10,20 @@
 #include "fsl_debug_console.h"
 #include "board.h"
 
+#if (defined(APP_DPU_USE_PREFETCH) && APP_DPU_USE_PREFETCH)
+#include "fsl_prg.h"
+#include "fsl_dpr.h"
+#endif
+
 #include "fsl_common.h"
 #include "pin_mux.h"
 /*******************************************************************************
  * Definitions
  *************************************************************i*****************/
+
+
+/* ARGB8888, 4 bytes per pixel. */
+#define APP_BPP 4
 
 /* Landscape or portrait. */
 #if (APP_PANEL_WIDTH < APP_PANEL_HEIGHT)
@@ -54,6 +63,17 @@
 #define APP_COLOR_SILVER APP_MAKE_COLOR(0xC0, 0xC0, 0xC0, 0xFF)
 #define APP_COLOR_GRAY APP_MAKE_COLOR(0x80, 0x80, 0x80, 0xFF)
 
+#if (defined(APP_DPU_USE_PREFETCH) && APP_DPU_USE_PREFETCH)
+#define APP_FB_ADDR_ALIGN_BYTE DPU_FETCH_UNIT_BURST_SIZE
+#define APP_FB_STRIDE_ALIGN_BYTE DPU_FETCH_UNIT_BURST_SIZE
+#else
+#define APP_FB_ADDR_ALIGN_BYTE (32U)
+#define APP_FB_STRIDE_ALIGN_BYTE APP_BPP
+#endif
+
+#define APP_FB_STRIDE_BYTE (SDK_SIZEALIGN(APP_BPP * APP_SUBLAYER_WIDTH, APP_FB_STRIDE_ALIGN_BYTE))
+#define APP_FB_STRIDE_PIXEL (APP_FB_STRIDE_BYTE / APP_BPP)
+
 typedef void (*app_draw_func_t)(uint32_t *addr,
                                 uint16_t startX,
                                 uint16_t startY,
@@ -71,6 +91,8 @@ typedef struct app_dpu_sublayer
     uint16_t height;    /* Height of the sublayer. */
     uint16_t width;     /* Width of the sublayer. */
 
+    uint16_t strideBytes; /* Frame buffer stride. */
+
     uint32_t fbAddr[2]; /* Frame buffer address. */
     uint8_t fbIdx;      /* Active frame buffer index. */
 
@@ -84,7 +106,7 @@ typedef struct app_dpu_sublayer
     app_draw_func_t fbInitFunc; /* Function to initialize frame buffer. */
     uint32_t fbInitColor[2];    /* Color used to initialize the frame buffer. */
 
-} app_uint8_t;
+} app_dpu_sublayer_t;
 
 typedef struct app_dpu_stream
 {
@@ -94,10 +116,16 @@ typedef struct app_dpu_stream
 
     /* Fetch unit. */
     dpu_unit_t fetchUnit;
-    app_uint8_t *sublayers;
+    app_dpu_sublayer_t *sublayers;
     uint8_t sublayerCount;
     uint16_t planeHeight;
     uint16_t planeWidth;
+
+#if (defined(APP_DPU_USE_PREFETCH) && APP_DPU_USE_PREFETCH)
+    /* Prefetch. */
+    DPR_Type *dpr;
+    PRG_Type *prg;
+#endif
 
     /* Scaler unit. */
     dpu_unit_t vscaler;
@@ -146,9 +174,12 @@ static void APP_DrawRectangle(uint32_t *addr,
  ******************************************************************************/
 
 AT_NONCACHEABLE_SECTION_ALIGN(
-    uint32_t s_frameBuffers[APP_STREAM_COUNT][APP_SUBLAYER_COUNT][2][APP_SUBLAYER_WIDTH][APP_SUBLAYER_HEIGHT], 32);
+    uint32_t s_frameBuffers[APP_STREAM_COUNT][APP_SUBLAYER_COUNT][2][APP_SUBLAYER_HEIGHT][APP_FB_STRIDE_PIXEL], 32);
 
-app_uint8_t safetySreamSublayer[] = {
+app_dpu_sublayer_t safetySreamSublayer[] = {
+    /* When prefetch enabled, the DPU fetch unit could not fetch
+     * multiple sublayers, so there should be only one sublayer here.
+     */
     /* sublayer 0 */
     {
         .offsetX     = 0,
@@ -157,6 +188,7 @@ app_uint8_t safetySreamSublayer[] = {
         .offsetIncY  = 1,
         .height      = APP_SUBLAYER_HEIGHT,
         .width       = APP_SUBLAYER_WIDTH,
+        .strideBytes = APP_FB_STRIDE_BYTE,
         .fbAddr      = {(uint32_t)s_frameBuffers[0][0][0], (uint32_t)s_frameBuffers[0][0][1]},
         .fbIdx       = 0,
         .sublayerIdx = 0,
@@ -169,6 +201,12 @@ app_dpu_stream_t safetyStream = {
     /* General. */
     .height = APP_STREAM_HEIGHT,
     .width  = APP_STREAM_WIDTH,
+
+#if (defined(APP_DPU_USE_PREFETCH) && APP_DPU_USE_PREFETCH)
+    /* Prefetch. */
+    .dpr = APP_FETCH_DECODE1_DPR,
+    .prg = APP_FETCH_DECODE1_PRG,
+#endif
 
     /* Fetch unit. */
     .fetchUnit     = kDPU_FetchDecode1,
@@ -217,7 +255,10 @@ app_dpu_stream_t safetyStream = {
     .intGroup1 = APP_SAFETY_STREAM_INT_GROUP1,
 };
 
-app_uint8_t contentSreamSublayer[] = {
+app_dpu_sublayer_t contentSreamSublayer[] = {
+    /* When prefetch enabled, the DPU fetch unit could not fetch
+     * multiple sublayers, so there should be only one sublayer here.
+     */
     /* sublayer 0 */
     {
         .offsetX     = 0,
@@ -226,6 +267,7 @@ app_uint8_t contentSreamSublayer[] = {
         .offsetIncY  = 1,
         .height      = APP_SUBLAYER_HEIGHT,
         .width       = APP_SUBLAYER_WIDTH,
+        .strideBytes = APP_FB_STRIDE_BYTE,
         .fbAddr      = {(uint32_t)s_frameBuffers[1][0][0], (uint32_t)s_frameBuffers[1][0][1]},
         .fbIdx       = 0,
         .sublayerIdx = 0,
@@ -238,6 +280,12 @@ app_dpu_stream_t contentStream = {
     /* General. */
     .height = APP_STREAM_HEIGHT,
     .width  = APP_STREAM_WIDTH,
+
+#if (defined(APP_DPU_USE_PREFETCH) && APP_DPU_USE_PREFETCH)
+    /* Prefetch. */
+    .dpr = APP_FETCH_DECODE0_DPR,
+    .prg = APP_FETCH_DECODE0_PRG,
+#endif
 
     /* Fetch unit. */
     .fetchUnit     = kDPU_FetchDecode0,
@@ -309,10 +357,15 @@ void APP_CheckAndUpdateStreamStatus(app_dpu_stream_t *stream, uint32_t intGroup0
     }
 }
 
-void APP_UpdateSublayer(app_uint8_t *sublayer, uint16_t planeHeight, uint16_t planeWidth, dpu_unit_t fetchUnit)
+void APP_UpdateSublayer(app_dpu_stream_t *stream,
+                        app_dpu_sublayer_t *sublayer,
+                        uint16_t planeHeight,
+                        uint16_t planeWidth,
+                        dpu_unit_t fetchUnit)
 {
     /* Switch to use the other frame buffer or not. */
     bool fbSwitch = false;
+    uint32_t newBufferAddr;
 
     if (0U == sublayer->offsetX)
     {
@@ -341,8 +394,17 @@ void APP_UpdateSublayer(app_uint8_t *sublayer, uint16_t planeHeight, uint16_t pl
     if (fbSwitch)
     {
         sublayer->fbIdx ^= 1;
-        DPU_SetFetchUnitSrcBufferAddr(APP_DPU, fetchUnit, sublayer->sublayerIdx,
-                                      (uint32_t)sublayer->fbAddr[sublayer->fbIdx]);
+        newBufferAddr = (uint32_t)sublayer->fbAddr[sublayer->fbIdx];
+
+#if (defined(APP_DPU_USE_PREFETCH) && APP_DPU_USE_PREFETCH)
+        DPR_SetBufferAddr(stream->dpr, newBufferAddr);
+
+        PRG_SetBufferAddr(stream->prg, newBufferAddr);
+
+        PRG_UpdateRegister(stream->prg);
+#endif
+
+        DPU_SetFetchUnitSrcBufferAddr(APP_DPU, fetchUnit, sublayer->sublayerIdx, newBufferAddr);
     }
 
     /* Update the format: color and offset. */
@@ -360,7 +422,7 @@ void APP_UpdateStream(app_dpu_stream_t *stream)
     {
         for (sublayerIdx = 0; sublayerIdx < stream->sublayerCount; sublayerIdx++)
         {
-            APP_UpdateSublayer(&(stream->sublayers[sublayerIdx]), stream->planeHeight, stream->planeWidth,
+            APP_UpdateSublayer(stream, &(stream->sublayers[sublayerIdx]), stream->planeHeight, stream->planeWidth,
                                stream->fetchUnit);
         }
 
@@ -368,7 +430,7 @@ void APP_UpdateStream(app_dpu_stream_t *stream)
     }
 }
 
-void APP_InitFrameBuffer(app_uint8_t *sublayer)
+void APP_InitFrameBuffer(app_dpu_sublayer_t *sublayer)
 {
     sublayer->fbIdx = 0;
     sublayer->fbInitFunc((uint32_t *)sublayer->fbAddr[0], 0, 0, sublayer->width, sublayer->height,
@@ -384,6 +446,11 @@ void APP_InitStream(app_dpu_stream_t *stream)
     dpu_fetch_unit_config_t fetchConfig;
     dpu_src_buffer_config_t sbConfig;
     dpu_scaler_config_t scConfig;
+
+#if (defined(APP_DPU_USE_PREFETCH) && APP_DPU_USE_PREFETCH)
+    dpr_buffer_config_t dprConfig;
+    prg_buffer_config_t prgConfig;
+#endif
 
     /* Pipeline. */
     DPU_InitPipeline(APP_DPU, stream->pipeline);
@@ -432,13 +499,16 @@ void APP_InitStream(app_dpu_stream_t *stream)
 
     DPU_SrcBufferGetDefaultConfig(&sbConfig);
 
-    sbConfig.strideBytes  = 4 * APP_SUBLAYER_WIDTH;
+    sbConfig.strideBytes  = APP_FB_STRIDE_BYTE;
     sbConfig.bitsPerPixel = 32;
     sbConfig.pixelFormat  = kDPU_PixelFormatARGB8888;
     sbConfig.bufferHeight = APP_SUBLAYER_HEIGHT;
     sbConfig.bufferWidth  = APP_SUBLAYER_WIDTH;
     sbConfig.constColor   = DPU_MAKE_CONST_COLOR(0, 0, 0, 0);
 
+    /* When prefetch enabled, the DPU fetch unit could not fetch
+     * multiple sublayers, so there should be only one sublayer here.
+     */
     for (uint8_t i = 0; i < stream->sublayerCount; i++)
     {
         sbConfig.baseAddr = stream->sublayers[i].fbAddr[0];
@@ -449,6 +519,33 @@ void APP_InitStream(app_dpu_stream_t *stream)
                                stream->sublayers[i].offsetX, stream->sublayers[i].offsetY);
         DPU_EnableFetchUnitSrcBuffer(APP_DPU, stream->fetchUnit, stream->sublayers[i].sublayerIdx, true);
     }
+
+#if (defined(APP_DPU_USE_PREFETCH) && APP_DPU_USE_PREFETCH)
+    /* Configure PRG. */
+    PRG_BufferGetDefaultConfig(&prgConfig);
+    prgConfig.width       = sbConfig.bufferWidth;
+    prgConfig.height      = sbConfig.bufferHeight;
+    prgConfig.strideBytes = sbConfig.strideBytes;
+    prgConfig.dataType    = kPRG_DataType32Bpp;
+
+    PRG_Init(stream->prg);
+    PRG_SetBufferConfig(stream->prg, &prgConfig);
+    PRG_SetBufferAddr(stream->prg, sbConfig.baseAddr);
+    PRG_Enable(stream->prg, true);
+    PRG_UpdateRegister(stream->prg);
+
+    /* Configure DPR. */
+    DPR_BufferGetDefaultConfig(&dprConfig);
+    dprConfig.width       = sbConfig.bufferWidth;
+    dprConfig.height      = sbConfig.bufferHeight;
+    dprConfig.strideBytes = sbConfig.strideBytes;
+    dprConfig.dataType    = kDPR_DataType32Bpp;
+
+    DPR_Init(stream->dpr);
+    DPR_SetBufferConfig(stream->dpr, &dprConfig);
+    DPR_SetBufferAddr(stream->dpr, sbConfig.baseAddr);
+    DPR_Start(stream->dpr);
+#endif
 
     /* Trigger the pipeline. */
     APP_TriggerStreamShadowLoad(stream);
@@ -533,6 +630,16 @@ void APP_DPU_FetchDecode(void)
     APP_StartDisplayInterface();
 
     DPU_StartDisplay(APP_DPU, APP_DPU_DISPLAY_INDEX);
+
+#if (defined(APP_DPU_USE_PREFETCH) && APP_DPU_USE_PREFETCH)
+    PRG_EnableShadowLoad(safetyStream.prg, true);
+    PRG_UpdateRegister(safetyStream.prg);
+    DPR_StartRepeat(safetyStream.dpr);
+
+    PRG_EnableShadowLoad(contentStream.prg, true);
+    PRG_UpdateRegister(contentStream.prg);
+    DPR_StartRepeat(contentStream.dpr);
+#endif
 }
 
 void DPU_IRQHandler(void)

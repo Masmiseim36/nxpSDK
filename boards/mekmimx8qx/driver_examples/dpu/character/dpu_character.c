@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 NXP
+ * Copyright 2018, 2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -9,6 +9,11 @@
 #include "dpu_example.h"
 #include "fsl_debug_console.h"
 #include "board.h"
+
+#if (defined(APP_DPU_USE_PREFETCH) && APP_DPU_USE_PREFETCH)
+#include "fsl_prg.h"
+#include "fsl_dpr.h"
+#endif
 
 #include "fsl_common.h"
 #include "pin_mux.h"
@@ -40,6 +45,26 @@
 #define FONT_HSIZE 6
 #define FONT_VSIZE 8
 
+#if (defined(APP_DPU_USE_PREFETCH) && APP_DPU_USE_PREFETCH)
+/* Fetch Decode 1 is used in safety stream. */
+#define APP_SAFETY_STREAM_DPR APP_FETCH_DECODE1_DPR
+#define APP_SAFETY_STREAM_PRG APP_FETCH_DECODE1_PRG
+#endif
+
+#define APP_FB_WIDTH APP_PANEL_WIDTH
+#define APP_FB_HEIGHT APP_PANEL_HEIGHT
+
+#if (defined(APP_DPU_USE_PREFETCH) && APP_DPU_USE_PREFETCH)
+#define APP_FB_ADDR_ALIGN_BYTE DPU_FETCH_UNIT_BURST_SIZE
+#define APP_FB_STRIDE_ALIGN_BYTE DPU_FETCH_UNIT_BURST_SIZE
+#else
+#define APP_FB_ADDR_ALIGN (32U)
+#define APP_FB_STRIDE_ALIGN_BYTE APP_BPP
+#endif
+
+#define APP_FB_STRIDE_BYTE (SDK_SIZEALIGN(APP_BPP * APP_FB_WIDTH, APP_FB_STRIDE_ALIGN_BYTE))
+#define APP_FB_STRIDE_PIXEL (APP_FB_STRIDE_BYTE / APP_BPP)
+
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -50,7 +75,8 @@
  * Variables
  ******************************************************************************/
 /* Frame buffer to display. */
-AT_NONCACHEABLE_SECTION_ALIGN(uint32_t s_displayFrameBuffer[2][APP_PANEL_HEIGHT][APP_PANEL_WIDTH], 32);
+AT_NONCACHEABLE_SECTION_ALIGN(uint32_t s_displayFrameBuffer[2][APP_FB_HEIGHT][APP_FB_STRIDE_PIXEL],
+                              APP_FB_ADDR_ALIGN_BYTE);
 
 volatile uint8_t s_inactiveFbIdx;
 volatile bool s_safetyStreamPending;
@@ -209,9 +235,9 @@ int32_t APP_DrawChar(
     uint16_t k;
     uint32_t color;
 
-    if (x > (APP_PANEL_WIDTH - FONT_HSIZE * scale))
+    if (x > (APP_FB_WIDTH - FONT_HSIZE * scale))
         return (0);
-    if (y > (APP_PANEL_HEIGHT - FONT_VSIZE * scale))
+    if (y > (APP_FB_HEIGHT - FONT_VSIZE * scale))
         return (0);
 
     if (ch >= 0x20)
@@ -324,6 +350,11 @@ void APP_InitSafetyStream(void)
                            +-----------------+
      */
 
+#if (defined(APP_DPU_USE_PREFETCH) && APP_DPU_USE_PREFETCH)
+    dpr_buffer_config_t dprConfig;
+    prg_buffer_config_t prgConfig;
+#endif
+
     /* Pipeline. */
     DPU_InitPipeline(APP_DPU, APP_SAFETY_STREAM_PIPELINE);
 
@@ -364,11 +395,11 @@ void APP_InitSafetyStream(void)
 
     /* Frame buffer for fetch unit. */
     DPU_SrcBufferGetDefaultConfig(&sbConfig);
-    sbConfig.strideBytes  = 4 * APP_PANEL_WIDTH;
+    sbConfig.strideBytes  = APP_FB_STRIDE_BYTE;
     sbConfig.bitsPerPixel = 32;
     sbConfig.pixelFormat  = kDPU_PixelFormatARGB8888;
-    sbConfig.bufferHeight = APP_PANEL_HEIGHT;
-    sbConfig.bufferWidth  = APP_PANEL_WIDTH;
+    sbConfig.bufferHeight = APP_FB_HEIGHT;
+    sbConfig.bufferWidth  = APP_FB_WIDTH;
     sbConfig.constColor   = DPU_MAKE_CONST_COLOR(0, 0, 0, 0);
     sbConfig.baseAddr     = (uint32_t)s_displayFrameBuffer[0];
 
@@ -376,12 +407,39 @@ void APP_InitSafetyStream(void)
      * The first active frame buffer is 0. The s_inactiveFbIdx is set to 0 here,
      * when the first shadow load interrupt occurs, s_inactiveFbIdx will be set to 1.
      */
-    s_inactiveFbIdx       = 1;
+    s_inactiveFbIdx       = 0;
     s_safetyStreamPending = true;
 
     DPU_SetFetchUnitSrcBufferConfig(APP_DPU, kDPU_FetchDecode1, 0, &sbConfig);
     DPU_SetFetchUnitOffset(APP_DPU, kDPU_FetchDecode1, 0, 0, 0);
     DPU_EnableFetchUnitSrcBuffer(APP_DPU, kDPU_FetchDecode1, 0, true);
+
+#if (defined(APP_DPU_USE_PREFETCH) && APP_DPU_USE_PREFETCH)
+    /* Configure PRG. */
+    PRG_BufferGetDefaultConfig(&prgConfig);
+    prgConfig.width       = APP_FB_WIDTH;
+    prgConfig.height      = APP_FB_HEIGHT;
+    prgConfig.strideBytes = APP_FB_STRIDE_BYTE;
+    prgConfig.dataType    = kPRG_DataType32Bpp;
+
+    PRG_Init(APP_SAFETY_STREAM_PRG);
+    PRG_SetBufferConfig(APP_SAFETY_STREAM_PRG, &prgConfig);
+    PRG_SetBufferAddr(APP_SAFETY_STREAM_PRG, sbConfig.baseAddr);
+    PRG_Enable(APP_SAFETY_STREAM_PRG, true);
+    PRG_UpdateRegister(APP_SAFETY_STREAM_PRG);
+
+    /* Configure DPR. */
+    DPR_BufferGetDefaultConfig(&dprConfig);
+    dprConfig.width       = APP_FB_WIDTH;
+    dprConfig.height      = APP_FB_HEIGHT;
+    dprConfig.strideBytes = APP_FB_STRIDE_BYTE;
+    dprConfig.dataType    = kDPR_DataType32Bpp;
+
+    DPR_Init(APP_SAFETY_STREAM_DPR);
+    DPR_SetBufferConfig(APP_SAFETY_STREAM_DPR, &dprConfig);
+    DPR_SetBufferAddr(APP_SAFETY_STREAM_DPR, sbConfig.baseAddr);
+    DPR_Start(APP_SAFETY_STREAM_DPR);
+#endif
 
     DPU_TriggerPipelineShadowLoad(APP_DPU, APP_SAFETY_STREAM_PIPELINE);
 }
@@ -449,14 +507,14 @@ void APP_ShowCharacter(void)
     uint8_t i;
 
     /* Find a scale suitable for current panel. */
-    scaleH = (APP_PANEL_WIDTH - 4 * APP_BOARDER) / FONT_HSIZE;
-    scaleV = (APP_PANEL_HEIGHT - 4 * APP_BOARDER) / FONT_VSIZE;
+    scaleH = (APP_FB_WIDTH - 4 * APP_BOARDER) / FONT_HSIZE;
+    scaleV = (APP_FB_HEIGHT - 4 * APP_BOARDER) / FONT_VSIZE;
 
     scale = scaleH > scaleV ? scaleV : scaleH;
 
     /* Character upper left corner. */
-    x = (APP_PANEL_WIDTH - scale * FONT_HSIZE) / 2;
-    y = (APP_PANEL_HEIGHT - scale * FONT_VSIZE) / 2;
+    x = (APP_FB_WIDTH - scale * FONT_HSIZE) / 2;
+    y = (APP_FB_HEIGHT - scale * FONT_VSIZE) / 2;
 
     while (1)
     {
@@ -472,6 +530,14 @@ void APP_ShowCharacter(void)
 
             /* Write to the inactive buffer. */
             APP_DrawChar(s_inactiveFbIdx, stringToShow[i], x, y, scale, APP_COLOR_BLUE, APP_COLOR_BLACK);
+
+#if (defined(APP_DPU_USE_PREFETCH) && APP_DPU_USE_PREFETCH)
+            DPR_SetBufferAddr(APP_SAFETY_STREAM_DPR, (uint32_t)s_displayFrameBuffer[s_inactiveFbIdx]);
+
+            PRG_SetBufferAddr(APP_SAFETY_STREAM_PRG, (uint32_t)s_displayFrameBuffer[s_inactiveFbIdx]);
+
+            PRG_UpdateRegister(APP_SAFETY_STREAM_PRG);
+#endif
 
             /* Pass the inactive buffer to DPU. */
             DPU_SetFetchUnitSrcBufferAddr(APP_DPU, kDPU_FetchDecode1, 0,
@@ -511,8 +577,8 @@ int main(void)
     /* Draw rectangle to the frame buffer. */
     for (i = 0; i < APP_BOARDER; i++)
     {
-        APP_DrawRectangle(0, i, i, APP_PANEL_WIDTH - i - 1, APP_PANEL_HEIGHT - i - 1, APP_COLOR_YELLOW);
-        APP_DrawRectangle(1, i, i, APP_PANEL_WIDTH - i - 1, APP_PANEL_HEIGHT - i - 1, APP_COLOR_YELLOW);
+        APP_DrawRectangle(0, i, i, APP_FB_WIDTH - i - 1, APP_FB_HEIGHT - i - 1, APP_COLOR_YELLOW);
+        APP_DrawRectangle(1, i, i, APP_FB_WIDTH - i - 1, APP_FB_HEIGHT - i - 1, APP_COLOR_YELLOW);
     }
 
     /*
@@ -541,6 +607,13 @@ int main(void)
     DPU_EnableInterrupts(APP_DPU, 1, APP_SAFETY_STREAM_INT_GROUP0);
 
     DPU_StartDisplay(APP_DPU, APP_DPU_DISPLAY_INDEX);
+
+#if (defined(APP_DPU_USE_PREFETCH) && APP_DPU_USE_PREFETCH)
+    PRG_EnableShadowLoad(APP_SAFETY_STREAM_PRG, true);
+    PRG_UpdateRegister(APP_SAFETY_STREAM_PRG);
+
+    DPR_StartRepeat(APP_SAFETY_STREAM_DPR);
+#endif
 
     APP_ShowCharacter();
 

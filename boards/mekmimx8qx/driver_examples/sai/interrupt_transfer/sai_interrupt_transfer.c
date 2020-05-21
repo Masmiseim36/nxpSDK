@@ -10,6 +10,7 @@
 #include "fsl_debug_console.h"
 #include "fsl_sai.h"
 #include "music.h"
+#include "fsl_codec_common.h"
 
 #include "fsl_wm8960.h"
 #include "pin_mux.h"
@@ -18,6 +19,7 @@
 #include "svc/pad/pad_api.h"
 #include "fsl_gpio.h"
 #include "fsl_irqsteer.h"
+#include "fsl_codec_adapter.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -44,6 +46,13 @@
 #define DEMO_AUDIO_DATA_CHANNEL (2U)
 /* demo audio bit width */
 #define DEMO_AUDIO_BIT_WIDTH kSAI_WordWidth16bits
+
+#ifndef DEMO_SAI_TX_SYNC_MODE
+#define DEMO_SAI_TX_SYNC_MODE kSAI_ModeAsync
+#endif
+#ifndef DEMO_SAI_RX_SYNC_MODE
+#define DEMO_SAI_RX_SYNC_MODE kSAI_ModeSync
+#endif
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -51,12 +60,22 @@
 /*******************************************************************************
  * Variables
  ******************************************************************************/
+wm8960_config_t wm8960Config = {
+    .i2cConfig        = {.codecI2CInstance = BOARD_CODEC_I2C_INSTANCE, .codecI2CSourceClock = SC_24MHZ},
+    .route            = kWM8960_RoutePlaybackandRecord,
+    .rightInputSource = kWM8960_InputDifferentialMicInput2,
+    .playSource       = kWM8960_PlaySourceDAC,
+    .slaveAddress     = WM8960_I2C_ADDR,
+    .bus              = kWM8960_BusI2S,
+    .format           = {.mclk_HZ    = 24576000U,
+               .sampleRate = kWM8960_AudioSampleRate16KHz,
+               .bitWidth   = kWM8960_AudioBitWidth16bit},
+    .master_slave     = false,
+};
+codec_config_t boardCodecConfig = {.codecDevType = kCODEC_WM8960, .codecDevConfig = &wm8960Config};
 sai_handle_t txHandle           = {0};
 static volatile bool isFinished = false;
-#if !defined(DEMO_CODEC_WM8524)
-codec_handle_t codecHandle = {0};
 extern codec_config_t boardCodecConfig;
-#endif
 #if (defined(FSL_FEATURE_SAI_HAS_MCR) && (FSL_FEATURE_SAI_HAS_MCR)) || \
     (defined(FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER) && (FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER))
 sai_master_clock_t mclkConfig = {
@@ -68,6 +87,7 @@ sai_master_clock_t mclkConfig = {
 #endif
 };
 #endif
+codec_handle_t codecHandle;
 
 /*******************************************************************************
  * Code
@@ -83,8 +103,7 @@ static void callback(I2S_Type *base, sai_handle_t *handle, status_t status, void
 int main(void)
 {
     sai_transfer_t xfer;
-    uint32_t temp       = 0;
-    uint32_t delayCycle = 500000;
+    uint32_t temp = 0;
     sai_transceiver_t config;
 
     sc_ipc_t ipc;
@@ -172,9 +191,6 @@ int main(void)
     /* Enable interrupt in irqsteer */
     IRQSTEER_Init(IRQSTEER);
     IRQSTEER_EnableInterrupt(IRQSTEER, ADMA_SAI1_INT_IRQn);
-#if !defined DEMO_CODEC_WM8524
-    BOARD_Codec_I2C_Init();
-#endif
 
     PRINTF("SAI example started!\n\r");
 
@@ -183,7 +199,15 @@ int main(void)
     SAI_TransferTxCreateHandle(DEMO_SAI, &txHandle, callback, NULL);
     /* I2S mode configurations */
     SAI_GetClassicI2SConfig(&config, DEMO_AUDIO_BIT_WIDTH, kSAI_Stereo, kSAI_Channel0Mask);
+    config.syncMode = DEMO_SAI_TX_SYNC_MODE;
     SAI_TransferTxSetConfig(DEMO_SAI, &txHandle, &config);
+
+#if DEMO_SAI_RX_SYNC_MODE == kSAI_ModeAsync
+    config.syncMode = DEMO_SAI_RX_SYNC_MODE;
+    SAI_RxSetConfig(DEMO_SAI, &config);
+    SAI_RxSetBitClockRate(DEMO_SAI, DEMO_AUDIO_MASTER_CLOCK, DEMO_AUDIO_SAMPLE_RATE, DEMO_AUDIO_BIT_WIDTH,
+                          DEMO_AUDIO_DATA_CHANNEL);
+#endif
 
     /* set bit clock divider */
     SAI_TxSetBitClockRate(DEMO_SAI, DEMO_AUDIO_MASTER_CLOCK, DEMO_AUDIO_SAMPLE_RATE, DEMO_AUDIO_BIT_WIDTH,
@@ -199,29 +223,8 @@ int main(void)
     SAI_SetMasterClockConfig(DEMO_SAI, &mclkConfig);
 #endif
 
-#if defined(DEMO_CODEC_WM8524)
-    wm8524_config_t codecConfig = {0};
-    wm8524_handle_t codecHandle = {0};
-    codecConfig.busPinNum       = CODEC_BUS_PIN_NUM;
-    codecConfig.busPin          = CODEC_BUS_PIN;
-    codecConfig.mutePin         = CODEC_MUTE_PIN;
-    codecConfig.mutePinNum      = CODEC_MUTE_PIN_NUM;
-    codecConfig.protocol        = kWM8524_ProtocolI2S;
-    WM8524_Init(&codecHandle, &codecConfig);
-#else
     /* Use default setting to init codec */
     CODEC_Init(&codecHandle, &boardCodecConfig);
-    CODEC_SetFormat(&codecHandle, DEMO_AUDIO_MASTER_CLOCK, DEMO_AUDIO_SAMPLE_RATE, DEMO_AUDIO_BIT_WIDTH);
-#endif
-
-#if defined(CODEC_CYCLE)
-    delayCycle = CODEC_CYCLE;
-#endif
-    while (delayCycle)
-    {
-        __ASM("nop");
-        delayCycle--;
-    }
 
     /*  xfer structure */
     temp          = (uint32_t)music;

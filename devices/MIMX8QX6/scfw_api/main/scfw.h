@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2017-2018 NXP
+ * Copyright 2017-2019 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  *
@@ -57,3 +57,4 @@ typedef uint32_t sc_ipc_t;
 typedef uint32_t sc_ipc_id_t;
 
 #endif /* SC_SCFW_H */
+

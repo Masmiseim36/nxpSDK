@@ -2,13 +2,13 @@
 ;  @file:    startup_MIMX8QX2_cm4.s
 ;  @purpose: CMSIS Cortex-M4 Core Device Startup File
 ;            MIMX8QX2_cm4
-;  @version: 3.0
+;  @version: 4.0
 ;  @date:    2018-8-22
-;  @build:   b181123
+;  @build:   b191126
 ; -------------------------------------------------------------------------
 ;
 ; Copyright 1997-2016 Freescale Semiconductor, Inc.
-; Copyright 2016-2018 NXP
+; Copyright 2016-2019 NXP
 ; All rights reserved.
 ;
 ; SPDX-License-Identifier: BSD-3-Clause
@@ -34,6 +34,8 @@
         SECTION CSTACK:DATA:NOROOT(3)
         SECTION HEAP:DATA:NOROOT(3)
         SECTION RW:DATA:NOROOT(2)
+        SECTION QACCESS_CODE_VAR:DATA:NOROOT(3)
+        SECTION QACCESS_DATA_VAR:DATA:NOROOT(3)
 
         SECTION .intvec:CODE:NOROOT(2)
 
@@ -95,9 +97,9 @@ __vector_table_0x1c
         DCD     Reserved40_IRQHandler                         ;Reserved
         DCD     M4_LPUART_IRQHandler                          ;Low Power UART
         DCD     Reserved42_IRQHandler                         ;Reserved
-        DCD     M4_LPI2C_IRQHandler                           ;Low-Power I2C – Logical OR of master and slave interrupts
+        DCD     M4_LPI2C_IRQHandler                           ;Low-Power I2C - Logical OR of master and slave interrupts
         DCD     Reserved44_IRQHandler                         ;Reserved
-        DCD     M4_MU0_B0_IRQHandler                          ;Messaging Unit 0 (IPC with other subsystems) – Side B (local), Port 0, Logical OR of all general-purpose, TX, and RX interrupts
+        DCD     M4_MU0_B0_IRQHandler                          ;Messaging Unit 0 (IPC with other subsystems) - Side B (local), Port 0, Logical OR of all general-purpose, TX, and RX interrupts
         DCD     Reserved46_IRQHandler                         ;Reserved
         DCD     Reserved47_IRQHandler                         ;Reserved
         DCD     IRQSTEER_0_IRQHandler                         ;External interrupt 0
@@ -112,12 +114,12 @@ __vector_table_0x1c
         DCD     Reserved57_IRQHandler                         ;Reserved
         DCD     Reserved58_IRQHandler                         ;Reserved
         DCD     Reserved59_IRQHandler                         ;Reserved
-        DCD     M4_MU0_B1_IRQHandler                          ;Messaging Unit 0 (IPC with other subsystems) – Side B (local), Port 1, Logical OR of all general-purpose, TX, and RX interrupts
-        DCD     M4_MU0_B2_IRQHandler                          ;Messaging Unit 0 (IPC with other subsystems) – Side B (local), Port 2, Logical OR of all general-purpose, TX, and RX interrupts
-        DCD     M4_MU0_B3_IRQHandler                          ;Messaging Unit 0 (IPC with other subsystems) – Side B (local), Port 3, Logical OR of all general-purpose, TX, and RX interrupts
+        DCD     M4_MU0_B1_IRQHandler                          ;Messaging Unit 0 (IPC with other subsystems) - Side B (local), Port 1, Logical OR of all general-purpose, TX, and RX interrupts
+        DCD     M4_MU0_B2_IRQHandler                          ;Messaging Unit 0 (IPC with other subsystems) - Side B (local), Port 2, Logical OR of all general-purpose, TX, and RX interrupts
+        DCD     M4_MU0_B3_IRQHandler                          ;Messaging Unit 0 (IPC with other subsystems) - Side B (local), Port 3, Logical OR of all general-purpose, TX, and RX interrupts
         DCD     Reserved63_IRQHandler                         ;Reserved
         DCD     Reserved64_IRQHandler                         ;Reserved
-        DCD     M4_MU1_A_IRQHandler                           ;Messaging Unit 1 (IPC with System Controller) – Side A (MCU), Logical OR of all general-purpose, TX, and RX interrupts
+        DCD     M4_MU1_A_IRQHandler                           ;Messaging Unit 1 (IPC with System Controller) - Side A (MCU), Logical OR of all general-purpose, TX, and RX interrupts
         DCD     M4_SW_IRQHandler                              ;Software interrupt (asserted/cleared via NVIC registers, INTISR[50] input tied low)
         DCD     Reserved67_IRQHandler                         ;xxx Interrupt 67
         DCD     Reserved68_IRQHandler                         ;xxx Interrupt 68
@@ -155,7 +157,7 @@ __vector_table_0x1c
         DCD     A35_NINTERRIRQ_IRQHandler                     ;Shared Int Source nINTERRIRQ from A35 Sub-System
         DCD     Reserved101_IRQHandler                        ;xxx Interrupt 101
         DCD     Reserved102_IRQHandler                        ;xxx Interrupt 102
-        DCD     VPU_NEXTERRIRQ_IRQHandler                     ;Shared Int Source nEXTERRIRQ from VPU Sub-System
+        DCD     Reserved103_IRQHandler                        ;xxx Interrupt 103
         DCD     Reserved104_IRQHandler                        ;xxx Interrupt 104
         DCD     Reserved105_IRQHandler                        ;xxx Interrupt 105
         DCD     Reserved106_IRQHandler                        ;xxx Interrupt 106
@@ -473,7 +475,7 @@ __vector_table_0x1c
         DCD     ADMA_SAI2_DMA_INT_IRQHandler                  ;Shared Int Source SAI2_DMA_INT from ADMA Sub-System
         DCD     MIPI_CSI0_OUT_INT_IRQHandler                  ;Shared Int Source OUT_INT from MIPI_CSI0 Sub-System
         DCD     Reserved420_IRQHandler                        ;xxx Interrupt 420
-        DCD     PARALLEL_CAM_INT_OUT_IRQHandler               ;All interrupts of parallel camera interface are combined into a single output
+        DCD     Reserved421_IRQHandler                        ;xxx Interrupt 421
         DCD     ADMA_SAI3_MOD_INT_IRQHandler                  ;Shared Int Source SAI3_MOD_INT from ADMA Sub-System
         DCD     ADMA_SAI3_DMA_INT_IRQHandler                  ;Shared Int Source SAI3_DMA_INT from ADMA Sub-System
         DCD     Reserved424_IRQHandler                        ;xxx Interrupt 424
@@ -541,7 +543,7 @@ __vector_table_0x1c
         DCD     ADMA_DMA1_CH5_INT_IRQHandler                  ;Shared Int Source DMA1_CH5_INT from ADMA Sub-System
         DCD     ADMA_ESAI0_INT_IRQHandler                     ;Shared Int Source ESAI0_INT from ADMA Sub-System
         DCD     Reserved488_IRQHandler                        ;xxx Interrupt 488
-        DCD     ADMA_UNUSED_IRQHandler                        ;Shared Int Source Unused from ADMA Sub-System
+        DCD     Reserved489_IRQHandler                        ;xxx Interrupt 489
         DCD     ADMA_GPT0_INT_IRQHandler                      ;Shared Int Source GPT0_INT from ADMA Sub-System
         DCD     ADMA_GPT1_INT_IRQHandler                      ;Shared Int Source GPT1_INT from ADMA Sub-System
         DCD     ADMA_GPT2_INT_IRQHandler                      ;Shared Int Source GPT2_INT from ADMA Sub-System
@@ -599,9 +601,9 @@ __vector_table_0x1c
         DCD     Reserved544_IRQHandler                        ;xxx Interrupt 544
         DCD     Reserved545_IRQHandler                        ;xxx Interrupt 545
         DCD     Reserved546_IRQHandler                        ;xxx Interrupt 546
-        DCD     SECURITY_MU0_B1_INT_IRQHandler                ;Shared Int Source MU0_B1_INT from Security Sub-System
-        DCD     SECURITY_MU0_B2_INT_IRQHandler                ;Shared Int Source MU0_B2_INT from Security Sub-System
-        DCD     SECURITY_MU0_B3_INT_IRQHandler                ;Shared Int Source MU0_B3_INT from Security Sub-System
+        DCD     SECURITY_MU1_A_INT_IRQHandler                 ;Shared Int Source MU1_A_INT from Security Sub-System
+        DCD     SECURITY_MU2_A_INT_IRQHandler                 ;Shared Int Source MU2_A_INT from Security Sub-System
+        DCD     SECURITY_MU3_A_INT_IRQHandler                 ;Shared Int Source MU3_A_INT from Security Sub-System
         DCD     SECURITY_CAAM_INT0_IRQHandler                 ;Shared Int Source CAAM_INT0 from Security Sub-System
         DCD     SECURITY_CAAM_INT1_IRQHandler                 ;Shared Int Source CAAM_INT1 from Security Sub-System
         DCD     SECURITY_CAAM_INT2_IRQHandler                 ;Shared Int Source CAAM_INT2 from Security Sub-System
@@ -744,6 +746,25 @@ Reset_Handler
         ITT     LT
         STRLT   R0, [R1], #4
         BLT     .LC4
+
+#if defined(FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE) && FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE
+        LDR     R1, =SFB(QACCESS_CODE_VAR)
+        LDR     R2, =SFE(QACCESS_CODE_VAR)
+.LC5:
+        CMP     R1, R2
+        ITT     LT
+        STRLT   R0, [R1], #4
+        BLT     .LC5
+
+        LDR     R1, =SFB(QACCESS_DATA_VAR)
+        LDR     R2, =SFE(QACCESS_DATA_VAR)
+.LC6:
+        CMP     R1, R2
+        ITT     LT
+        STRLT   R0, [R1], #4
+        BLT     .LC6
+#endif
+
 ; End RW / stack / heap initialization
 ;
         CPSIE   I               ; Unmask interrupts
@@ -942,7 +963,7 @@ IRQSTEER_7_IRQHandler
         PUBWEAK A35_NINTERRIRQ_IRQHandler
         PUBWEAK Reserved101_IRQHandler
         PUBWEAK Reserved102_IRQHandler
-        PUBWEAK VPU_NEXTERRIRQ_IRQHandler
+        PUBWEAK Reserved103_IRQHandler
         PUBWEAK Reserved104_IRQHandler
         PUBWEAK Reserved105_IRQHandler
         PUBWEAK Reserved106_IRQHandler
@@ -1609,7 +1630,7 @@ ADMA_SAI2_DMA_INT_IRQHandler
 
         PUBWEAK MIPI_CSI0_OUT_INT_IRQHandler
         PUBWEAK Reserved420_IRQHandler
-        PUBWEAK PARALLEL_CAM_INT_OUT_IRQHandler
+        PUBWEAK Reserved421_IRQHandler
         PUBWEAK ADMA_SAI3_MOD_INT_IRQHandler
         PUBWEAK ADMA_SAI3_MOD_INT_DriverIRQHandler
         SECTION .text:CODE:REORDER:NOROOT(2)
@@ -1964,13 +1985,7 @@ ADMA_ESAI0_INT_IRQHandler
         BX      R0
 
         PUBWEAK Reserved488_IRQHandler
-        PUBWEAK ADMA_UNUSED_IRQHandler
-        PUBWEAK ADMA_UNUSED_DriverIRQHandler
-        SECTION .text:CODE:REORDER:NOROOT(2)
-ADMA_UNUSED_IRQHandler
-        LDR     R0, =ADMA_UNUSED_DriverIRQHandler
-        BX      R0
-
+        PUBWEAK Reserved489_IRQHandler
         PUBWEAK ADMA_GPT0_INT_IRQHandler
         PUBWEAK ADMA_GPT0_INT_DriverIRQHandler
         SECTION .text:CODE:REORDER:NOROOT(2)
@@ -2243,9 +2258,9 @@ ADMA_UART3_DMA_TX_INT_IRQHandler
         PUBWEAK Reserved544_IRQHandler
         PUBWEAK Reserved545_IRQHandler
         PUBWEAK Reserved546_IRQHandler
-        PUBWEAK SECURITY_MU0_B1_INT_IRQHandler
-        PUBWEAK SECURITY_MU0_B2_INT_IRQHandler
-        PUBWEAK SECURITY_MU0_B3_INT_IRQHandler
+        PUBWEAK SECURITY_MU1_A_INT_IRQHandler
+        PUBWEAK SECURITY_MU2_A_INT_IRQHandler
+        PUBWEAK SECURITY_MU3_A_INT_IRQHandler
         PUBWEAK SECURITY_CAAM_INT0_IRQHandler
         PUBWEAK SECURITY_CAAM_INT1_IRQHandler
         PUBWEAK SECURITY_CAAM_INT2_IRQHandler
@@ -2466,7 +2481,7 @@ A35_NEXTERRIRQ_IRQHandler
 A35_NINTERRIRQ_IRQHandler
 Reserved101_IRQHandler
 Reserved102_IRQHandler
-VPU_NEXTERRIRQ_IRQHandler
+Reserved103_IRQHandler
 Reserved104_IRQHandler
 Reserved105_IRQHandler
 Reserved106_IRQHandler
@@ -2730,7 +2745,6 @@ CONNECTIVITY_ND_FLASH_BCH_INT_IRQHandler
 CONNECTIVITY_ND_FLASH_GPMI_INT_IRQHandler
 CONNECTIVITY_APBHDMA_DriverIRQHandler
 CONNECTIVITY_DMA_INT_DriverIRQHandler
-CONNECTIVITY_DMA_ERR_INT_DriverIRQHandler
 Reserved376_IRQHandler
 Reserved377_IRQHandler
 Reserved378_IRQHandler
@@ -2774,7 +2788,7 @@ ADMA_SAI1_MOD_INT_DriverIRQHandler
 ADMA_SAI2_MOD_INT_DriverIRQHandler
 MIPI_CSI0_OUT_INT_IRQHandler
 Reserved420_IRQHandler
-PARALLEL_CAM_INT_OUT_IRQHandler
+Reserved421_IRQHandler
 ADMA_SAI3_MOD_INT_DriverIRQHandler
 Reserved424_IRQHandler
 Reserved425_IRQHandler
@@ -2817,7 +2831,7 @@ ADMA_ASRC1_INT1_DriverIRQHandler
 ADMA_ASRC1_INT2_DriverIRQHandler
 ADMA_ESAI0_INT_DriverIRQHandler
 Reserved488_IRQHandler
-ADMA_UNUSED_DriverIRQHandler
+Reserved489_IRQHandler
 ADMA_GPT0_INT_DriverIRQHandler
 ADMA_GPT1_INT_DriverIRQHandler
 ADMA_GPT2_INT_DriverIRQHandler
@@ -2850,9 +2864,9 @@ Reserved543_IRQHandler
 Reserved544_IRQHandler
 Reserved545_IRQHandler
 Reserved546_IRQHandler
-SECURITY_MU0_B1_INT_IRQHandler
-SECURITY_MU0_B2_INT_IRQHandler
-SECURITY_MU0_B3_INT_IRQHandler
+SECURITY_MU1_A_INT_IRQHandler
+SECURITY_MU2_A_INT_IRQHandler
+SECURITY_MU3_A_INT_IRQHandler
 SECURITY_CAAM_INT0_IRQHandler
 SECURITY_CAAM_INT1_IRQHandler
 SECURITY_CAAM_INT2_IRQHandler

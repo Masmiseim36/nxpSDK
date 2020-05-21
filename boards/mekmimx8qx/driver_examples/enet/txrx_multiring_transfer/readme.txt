@@ -19,8 +19,8 @@ auto-negotiation when phy is in loop back mode. However, the auto-negotiation fa
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.1
-- GCC ARM Embedded  7.3.1
+- IAR embedded Workbench  8.40.2
+- GCC ARM Embedded  8.3.1
 
 Hardware requirements
 =====================
@@ -33,7 +33,7 @@ Hardware requirements
 
 Board settings
 ==============
-J7 connected with PC through RJ45 network cable.
+No special is needed.
 
 #### Please note this application can't support running with Linux BSP! ####
 This example aims to show the basic usage of the IP's function, some of the used Pads/Resources are also used by Cortex-A core.

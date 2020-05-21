@@ -9,8 +9,8 @@ throuth internal loopback interconnect and print out the Message payload to term
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.1
-- GCC ARM Embedded  7.3.1
+- IAR embedded Workbench  8.40.2
+- GCC ARM Embedded  8.3.1
 
 Hardware requirements
 =====================
@@ -46,7 +46,7 @@ When the example runs successfully, you can see the similar information from the
 ~~~~~~~~~~~~~~~~~~~~~
 ==FlexCAN loopback functional example -- Start.==
 
-Send message from MB9 to MB8
+Send message from MB8 to MB9
 tx word0 = 0x0
 tx word1 = 0x1
 tx word2 = 0x2
@@ -56,7 +56,7 @@ tx word5 = 0x5
 tx word6 = 0x6
 tx word7 = 0x7
 
-Received message from MB8
+Received message from MB9
 rx word0 = 0x0
 rx word1 = 0x1
 rx word2 = 0x2

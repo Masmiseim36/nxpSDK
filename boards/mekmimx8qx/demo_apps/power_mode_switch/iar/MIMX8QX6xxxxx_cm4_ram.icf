@@ -1,0 +1,109 @@
+/*
+** ###################################################################
+**     Processor:           MIMX8QX6AVLFZ
+**     Compiler:            GNU C Compiler
+**     Reference manual:    i.MX8DQXPRM, Rev. A, Jun. 2017
+**     Version:             rev. 2.0, 2017-08-23
+**     Build:               b170913
+**
+**     Abstract:
+**         Linker file for the IAR ANSI C/C++ Compiler for ARM
+**
+**     Copyright 2016 Freescale Semiconductor, Inc.
+**     Copyright 2016-2018 NXP
+**     All rights reserved.
+**     
+**     SPDX-License-Identifier: BSD-3-Clause
+**
+**     http:                 www.nxp.com
+**     mail:                 support@nxp.com
+**
+** ###################################################################
+*/
+
+
+define symbol m_interrupts_start       = 0x1FFE0000;
+define symbol m_interrupts_end         = 0x1FFE09FF;
+
+define symbol m_text_start             = 0x1FFE0A00;
+define symbol m_text_end               = 0x1FFFFFFF;
+
+define symbol m_data_start             = 0x20000000;
+define symbol m_data_end               = 0x2001FFFF;
+
+/* DDR Memory region [0x88000000-0x880FFFFF] 1MB is allocated for CM4_0 LPM resume memory */
+define symbol m_resume_start	       = 0x88000000;
+define symbol m_resume_end	           = 0x880FFFFF;
+
+/* DDR Memory region [0x88100000-0x887FFFFF] 7MB is allocated for CM4_0 noncachable data */
+define symbol m_data2_start            = 0x88100000;
+define symbol m_data2_end              = 0x8FFFFFFF;
+
+
+/* Sizes */
+if (isdefinedsymbol(__stack_size__)) {
+  define symbol __size_cstack__        = __stack_size__;
+} else {
+  define symbol __size_cstack__        = 0x0400;
+}
+
+if (isdefinedsymbol(__resume_stack_size__)) {
+  define symbol __size_rstack__        = __resume_stack_size__;
+} else {
+  define symbol __size_rstack__        = 0x0400;
+}
+
+if (isdefinedsymbol(__lpm_region_size__)) {
+  define symbol __size_lpm__        = __lpm_region_size__;
+} else {
+  define symbol __size_lpm__        = 0x10000;
+}
+
+/* TCM size 256 KB */
+if (isdefinedsymbol(__tcm_mem_size__)) {
+  define symbol __size_tcm__        = __tcm_mem_size__;
+} else {
+  define symbol __size_tcm__         = 0x40000;
+}
+
+if (isdefinedsymbol(__heap_size__)) {
+  define symbol __size_heap__          = __heap_size__;
+} else {
+  define symbol __size_heap__          = 0x0400;
+}
+
+define exported symbol __CACHE_REGION_START   = m_resume_start;
+define exported symbol __CACHE_REGION_SIZE    = m_resume_end-m_resume_start+1;
+define exported symbol __BACKUP_REGION_START  = m_resume_start; /* Symbol used in lpm_asm.s for TCM backup */
+
+define memory mem with size = 4G;
+define region TEXT_region = mem:[from m_interrupts_start to m_interrupts_end]
+                          | mem:[from m_text_start to m_text_end];
+define region DATA_region = mem:[from m_data_start to m_data_end-__size_cstack__];
+define region CSTACK_region = mem:[from m_data_end-__size_cstack__+1 to m_data_end];
+define region DATA2_region = mem:[from m_data2_start to m_data2_end];
+define region LPM_region = mem:[from m_resume_start+__size_tcm__ to m_resume_end-__size_rstack__];
+define region RSTACK_region = mem: [from m_resume_end-__size_rstack__+1 to m_resume_end];
+
+define block CSTACK    with alignment = 8, size = __size_cstack__   { };
+define block HEAP      with alignment = 8, size = __size_heap__     { };
+define block RW        { readwrite };
+define block ZI        { zi };
+define block NCACHE_VAR    { section NonCacheable , section NonCacheable.init };
+define block RSTACK    with alignment = 8, size = __size_rstack__   { };
+define block LPM_TEXT_VAR   with alignment = 8 { section TextLpm };
+define block LPM_DATA_VAR   with alignment = 8 { section DataLpm };
+
+initialize by copy { readwrite, section .textrw, section TextLpm, section DataLpm};
+do not initialize  { section .noinit };
+
+place at address mem: m_interrupts_start    { readonly section .intvec };
+place in TEXT_region                        { readonly };
+place in DATA_region                        { block RW };
+place in DATA_region                        { block ZI };
+place in DATA_region                        { last block HEAP };
+place in CSTACK_region                      { block CSTACK };
+place in DATA2_region                       { block NCACHE_VAR };
+place in RSTACK_region                      { block RSTACK};
+place in LPM_region                         { block LPM_TEXT_VAR };
+place in LPM_region                         { block LPM_DATA_VAR };

@@ -9,8 +9,8 @@ PC.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.1
-- GCC ARM Embedded  7.3.1
+- IAR embedded Workbench  8.40.2
+- GCC ARM Embedded  8.3.1
 
 Hardware requirements
 =====================
@@ -46,6 +46,8 @@ Prepare the Demo
 Running the demo
 ================
 When the demo runs, the log would be seen on the terminal like:
+	Initializing PHY...
+
 	************************************************
 	 PING example
 	************************************************
@@ -59,7 +61,7 @@ When the demo runs, the log would be seen on the terminal like:
 
 	ping: recv
 	192.168.0.100
-	 3 ms
+	 4 ms
 
 	ping: send
 	192.168.0.100
@@ -76,6 +78,7 @@ When the demo runs, the log would be seen on the terminal like:
 	ping: recv
 	192.168.0.100
 	 3 ms
+
 Customization options
 =====================
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 NXP
+ * Copyright 2017-2019 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -13,7 +13,7 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v4.1
+product: Pins v7.0
 processor: MIMX8QX6xxxFZ
 package_id: MIMX8QX6AVLFZ
 mcu_data: ksdk2_0
@@ -42,29 +42,29 @@ void BOARD_InitBootPins(void)
 BOARD_InitPins:
 - options: {callFromInitBoot: 'false', coreID: m4}
 - pin_list:
-  - {pin_num: V32, peripheral: M40__UART0, signal: uart_rx, pin_signal: ADC_IN2, sw_config: sw_config_0}
-  - {pin_num: V30, peripheral: M40__UART0, signal: uart_tx, pin_signal: ADC_IN3, sw_config: sw_config_0}
-  - {pin_num: AC31, peripheral: MIPI_DSI0__I2C0, signal: i2c_scl, pin_signal: MIPI_DSI0_I2C0_SCL, sw_config: sw_config_2}
-  - {pin_num: AB28, peripheral: MIPI_DSI0__I2C0, signal: i2c_sda, pin_signal: MIPI_DSI0_I2C0_SDA, sw_config: sw_config_2}
-  - {pin_num: AE33, peripheral: MIPI_DSI1__I2C0, signal: i2c_scl, pin_signal: MIPI_DSI1_I2C0_SCL, sw_config: sw_config_2}
-  - {pin_num: AC29, peripheral: MIPI_DSI1__I2C0, signal: i2c_sda, pin_signal: MIPI_DSI1_I2C0_SDA, sw_config: sw_config_2}
-  - {pin_num: H14, peripheral: ADMA__I2C1, signal: i2c_scl, pin_signal: USB_SS3_TC1, sw_config: sw_config_2}
-  - {pin_num: C15, peripheral: ADMA__I2C1, signal: i2c_sda, pin_signal: USB_SS3_TC3, sw_config: sw_config_2}
-  - {pin_num: AK28, peripheral: CI_PI__CSI, signal: 'csi_d, 02', pin_signal: CSI_D00, identifier: BB_CSI_D0, sw_config: sw_config_0}
-  - {pin_num: AL29, peripheral: CI_PI__CSI, signal: 'csi_d, 03', pin_signal: CSI_D01, identifier: BB_CSI_D1, sw_config: sw_config_0}
-  - {pin_num: AP30, peripheral: CI_PI__CSI, signal: 'csi_d, 04', pin_signal: CSI_D02, identifier: BB_CSI_D2, sw_config: sw_config_0}
-  - {pin_num: AJ27, peripheral: CI_PI__CSI, signal: 'csi_d, 05', pin_signal: CSI_D03, identifier: BB_CSI_D3, sw_config: sw_config_0}
-  - {pin_num: AN29, peripheral: CI_PI__CSI, signal: 'csi_d, 06', pin_signal: CSI_D04, identifier: BB_CSI_D4, sw_config: sw_config_0}
-  - {pin_num: AM30, peripheral: CI_PI__CSI, signal: 'csi_d, 07', pin_signal: CSI_D05, identifier: BB_CSI_D5, sw_config: sw_config_0}
-  - {pin_num: AJ25, peripheral: CI_PI__CSI, signal: 'csi_d, 08', pin_signal: CSI_D06, identifier: BB_CSI_D6, sw_config: sw_config_0}
-  - {pin_num: AM28, peripheral: CI_PI__CSI, signal: 'csi_d, 09', pin_signal: CSI_D07, identifier: BB_CSI_D7, sw_config: sw_config_0}
-  - {pin_num: AK26, peripheral: CI_PI__CSI, signal: csi_pclk, pin_signal: CSI_PCLK, sw_config: sw_config_0}
-  - {pin_num: AM26, peripheral: CI_PI__CSI, signal: csi_mclk, pin_signal: CSI_MCLK, sw_config: sw_config_0}
-  - {pin_num: AR29, peripheral: CI_PI__CSI, signal: csi_hsync, pin_signal: CSI_HSYNC, identifier: BB_CSI_HSYNC, sw_config: sw_config_0}
-  - {pin_num: AL27, peripheral: CI_PI__CSI, signal: csi_vsync, pin_signal: CSI_VSYNC, identifier: BB_CSI_VSYNC, sw_config: sw_config_0}
-  - {pin_num: U35, peripheral: M40__I2C0, signal: i2c_scl, pin_signal: ADC_IN0}
-  - {pin_num: U33, peripheral: M40__I2C0, signal: i2c_sda, pin_signal: ADC_IN1}
-  - {pin_num: AR27, peripheral: LSIO__GPIO3, signal: 'gpio_io, 03', pin_signal: CSI_RESET, sw_config: sw_config_0}
+  - {pin_num: V32, peripheral: M40__UART0, signal: uart_rx, pin_signal: ADC_IN2, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: V30, peripheral: M40__UART0, signal: uart_tx, pin_signal: ADC_IN3, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: AC31, peripheral: MIPI_DSI0__I2C0, signal: i2c_scl, pin_signal: MIPI_DSI0_I2C0_SCL, PULL: PULL_0, sw_config: sw_config_2}
+  - {pin_num: AB28, peripheral: MIPI_DSI0__I2C0, signal: i2c_sda, pin_signal: MIPI_DSI0_I2C0_SDA, PULL: PULL_0, sw_config: sw_config_2}
+  - {pin_num: AE33, peripheral: MIPI_DSI1__I2C0, signal: i2c_scl, pin_signal: MIPI_DSI1_I2C0_SCL, PULL: PULL_0, sw_config: sw_config_2}
+  - {pin_num: AC29, peripheral: MIPI_DSI1__I2C0, signal: i2c_sda, pin_signal: MIPI_DSI1_I2C0_SDA, PULL: PULL_0, sw_config: sw_config_2}
+  - {pin_num: H14, peripheral: ADMA__I2C1, signal: i2c_scl, pin_signal: USB_SS3_TC1, PULL: PULL_0, sw_config: sw_config_2}
+  - {pin_num: C15, peripheral: ADMA__I2C1, signal: i2c_sda, pin_signal: USB_SS3_TC3, PULL: PULL_0, sw_config: sw_config_2}
+  - {pin_num: AK28, peripheral: CI_PI__CSI, signal: 'csi_d, 02', pin_signal: CSI_D00, identifier: BB_CSI_D0, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: AL29, peripheral: CI_PI__CSI, signal: 'csi_d, 03', pin_signal: CSI_D01, identifier: BB_CSI_D1, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: AP30, peripheral: CI_PI__CSI, signal: 'csi_d, 04', pin_signal: CSI_D02, identifier: BB_CSI_D2, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: AJ27, peripheral: CI_PI__CSI, signal: 'csi_d, 05', pin_signal: CSI_D03, identifier: BB_CSI_D3, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: AN29, peripheral: CI_PI__CSI, signal: 'csi_d, 06', pin_signal: CSI_D04, identifier: BB_CSI_D4, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: AM30, peripheral: CI_PI__CSI, signal: 'csi_d, 07', pin_signal: CSI_D05, identifier: BB_CSI_D5, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: AJ25, peripheral: CI_PI__CSI, signal: 'csi_d, 08', pin_signal: CSI_D06, identifier: BB_CSI_D6, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: AM28, peripheral: CI_PI__CSI, signal: 'csi_d, 09', pin_signal: CSI_D07, identifier: BB_CSI_D7, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: AK26, peripheral: CI_PI__CSI, signal: csi_pclk, pin_signal: CSI_PCLK, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: AM26, peripheral: CI_PI__CSI, signal: csi_mclk, pin_signal: CSI_MCLK, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: AR29, peripheral: CI_PI__CSI, signal: csi_hsync, pin_signal: CSI_HSYNC, identifier: BB_CSI_HSYNC, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: AL27, peripheral: CI_PI__CSI, signal: csi_vsync, pin_signal: CSI_VSYNC, identifier: BB_CSI_VSYNC, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: U35, peripheral: M40__I2C0, signal: i2c_scl, pin_signal: ADC_IN0, PULL: PULL_0, sw_config: sw_config_2}
+  - {pin_num: U33, peripheral: M40__I2C0, signal: i2c_sda, pin_signal: ADC_IN1, PULL: PULL_0, sw_config: sw_config_2}
+  - {pin_num: AR27, peripheral: LSIO__GPIO3, signal: 'gpio_io, 03', pin_signal: CSI_RESET, PULL: PULL_0, sw_config: sw_config_0}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 

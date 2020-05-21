@@ -278,7 +278,6 @@ autoip_start(struct netif *netif)
                   ("autoip_start(): could not allocate autoip\n"));
       return ERR_MEM;
     }
-    autoip->is_allocated = 1;
     /* store this AutoIP client in the netif */
     netif_set_client_data(netif, LWIP_NETIF_CLIENT_DATA_INDEX_AUTOIP, autoip);
     LWIP_DEBUGF(AUTOIP_DEBUG | LWIP_DBG_TRACE, ("autoip_start(): allocated autoip"));
@@ -319,7 +318,7 @@ autoip_start_probing(struct netif *netif)
    * acquiring and probing address
    * compliant to RFC 3927 Section 2.2.1
    */
-  if (autoip->tried_llipaddr >= MAX_CONFLICTS) {
+  if (autoip->tried_llipaddr > MAX_CONFLICTS) {
     autoip->ttw = RATE_LIMIT_INTERVAL * AUTOIP_TICKS_PER_SECOND;
   }
 }
@@ -354,15 +353,6 @@ autoip_stop(struct netif *netif)
   LWIP_ASSERT_CORE_LOCKED();
   if (autoip != NULL) {
     autoip->state = AUTOIP_STATE_OFF;
-    /* If autoip is dynamically allocated in start, free autoip structure and reset autoip index in netif */
-    if (autoip->is_allocated != 0) {
-      /* Reset the auto IP index and then free autoip structure */
-      netif_set_client_data(netif, LWIP_NETIF_CLIENT_DATA_INDEX_AUTOIP, NULL);
-      mem_free(autoip);
-      autoip = NULL;
-    } else {
-      autoip->tried_llipaddr = 0;
-    }
     if (ip4_addr_islinklocal(netif_ip4_addr(netif))) {
       netif_set_addr(netif, IP4_ADDR_ANY4, IP4_ADDR_ANY4, IP4_ADDR_ANY4);
     }

@@ -15,7 +15,7 @@
       arm_simulator_memory_simulation_parameter="RAM;0x00000000;0x00020000;RAM;0x20000000;0x00020000;RAM;0x20200000;0x00040000;ROM;0x60000000;0x00040000"
       arm_target_loader_applicable_loaders=""
       arm_target_loader_default_loader=""
-      c_preprocessor_definitions="NDEBUG;CPU_MCIMX7U5DVP08"
+      c_preprocessor_definitions="NDEBUG;CPU_MCIMX7U5DVP08#;SERIAL_PORT_TYPE_UART=1"
       c_system_include_directories="$(StudioDir)/include;$(PackagesDir)/include;$(TargetsDir)/iMX7"
       c_user_include_directories=";./..;./../../../..;./../../../../../../CMSIS/Include;./../../../../../../devices;./../../../../../../devices/MCIMX7U5/drivers;./../../../../../../devices/MCIMX7U5/drivers;./../../../../../../devices/MCIMX7U5/drivers;./../../../../../../devices/MCIMX7U5/drivers;./../../../../../../devices/MCIMX7U5/drivers;./../../../../../../devices/MCIMX7U5/drivers;./../../../../../../devices/MCIMX7U5/drivers;./../../../../../../devices/MCIMX7U5/drivers;./../../../../../../devices/MCIMX7U5;./../../../../../../devices/MCIMX7U5/utilities/str;./../../../../../../devices/MCIMX7U5/utilities/debug_console;./../../../../../../components/uart;./../../../../../../components/serial_manager;./../../../../../../components/serial_manager;./../../../../../../devices/MCIMX7U5/drivers;./../../../../../../components/lists;./../../../../../../devices/MCIMX7U5/drivers"
       debug_register_definition_file="$(TargetsDir)/iMX7/$(DeviceName)_registers.xml"
@@ -98,22 +98,6 @@
         <file file_name="./../../../../../../components/lists/generic_list.h" />
         <file file_name="./../../../../../../components/lists/generic_list.c" />
       </folder>
-    </folder>
-    <folder Name="CMSIS">
-      <file file_name="./../../../../../../CMSIS/Include/core_cm4.h" />
-      <file file_name="./../../../../../../CMSIS/Include/cmsis_armcc.h" />
-      <file file_name="./../../../../../../CMSIS/Include/cmsis_armclang.h" />
-      <file file_name="./../../../../../../CMSIS/Include/cmsis_gcc.h" />
-      <file file_name="./../../../../../../CMSIS/Include/cmsis_compiler.h" />
-      <file file_name="./../../../../../../CMSIS/Include/cmsis_version.h" />
-      <file file_name="./../../../../../../CMSIS/Include/mpu_armv7.h" />
-      <file file_name="./../../../../../../CMSIS/Include/core_armv8mbl.h" />
-      <file file_name="./../../../../../../CMSIS/Include/core_armv8mml.h" />
-      <file file_name="./../../../../../../CMSIS/Include/arm_common_tables.h" />
-      <file file_name="./../../../../../../CMSIS/Include/arm_const_structs.h" />
-      <file file_name="./../../../../../../CMSIS/Include/arm_math.h" />
-      <file file_name="./../../../../../../CMSIS/Include/cmsis_iccarm.h" />
-      <file file_name="./../../../../../../CMSIS/Include/mpu_armv8.h" />
     </folder>
   </project>
   <configuration Name="THUMB Debug" inherited_configurations="THUMB;Debug" />

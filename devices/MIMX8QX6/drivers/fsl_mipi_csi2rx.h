@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 NXP
+ * Copyright 2017, 2019 NXP
  * All rights reserved.
  *
  *
@@ -22,8 +22,8 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief CSI2RX driver version 2.0.0. */
-#define FSL_CSI2RX_DRIVER_VERSION (MAKE_VERSION(2, 0, 0))
+/*! @brief CSI2RX driver version. */
+#define FSL_CSI2RX_DRIVER_VERSION (MAKE_VERSION(2, 0, 2))
 /*@}*/
 
 /*! @brief CSI2RX data lanes.  */

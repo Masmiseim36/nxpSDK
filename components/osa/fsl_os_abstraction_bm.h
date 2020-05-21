@@ -47,6 +47,19 @@ typedef uint32_t event_flags_t;
 /*! @brief The default interrupt handler installed in vector table. */
 extern void DefaultISR(void);
 
+/*
+ * alloc the temporary memory to store the status
+ */
+#define OSA_SR_ALLOC() uint32_t osaCurrentSr;
+/*
+ * Enter critical mode
+ */
+#define OSA_ENTER_CRITICAL() OSA_BmEnterCritical(&osaCurrentSr)
+/*
+ * Exit critical mode and retore the previous mode
+ */
+#define OSA_EXIT_CRITICAL() OSA_BmExitCritical(osaCurrentSr)
+
 /*!
  * @name Thread management
  * @{
@@ -66,6 +79,25 @@ extern void DefaultISR(void);
 #define PRIORITY_RTOS_TO_OSA(rtos_prio) (rtos_prio)
 
 /*! @}*/
+
+/*******************************************************************************
+ * API
+ ******************************************************************************/
+
+/*!
+ * @brief Enter critical with nesting mode.
+ *
+ * @param sr Store current status and return to caller.
+ */
+void OSA_BmEnterCritical(uint32_t *sr);
+
+/*!
+ * @brief Exit critical with nesting mode.
+ *
+ * @param sr Previous status to restore.
+ */
+void OSA_BmExitCritical(uint32_t sr);
+
 /*! @}*/
 #endif /* __FSL_OS_ABSTRACTION_BM_H__ */
 /*******************************************************************************

@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -22,8 +22,8 @@
 
 /*! @name Driver version */
 /*@{*/
-/*!< Version 2.0.1. */
-#define FSL_INTMUX_DRIVER_VERSION (MAKE_VERSION(2, 0, 1))
+/*!< Version 2.0.2. */
+#define FSL_INTMUX_DRIVER_VERSION (MAKE_VERSION(2, 0, 2))
 /*@}*/
 
 /*! @brief INTMUX channel logic mode. */
@@ -116,7 +116,7 @@ static inline void INTMUX_EnableInterrupt(INTMUX_Type *base, uint32_t channel, I
     assert(channel < FSL_FEATURE_INTMUX_CHANNEL_COUNT);
     assert(irq >= FSL_FEATURE_INTMUX_IRQ_START_INDEX);
 
-    base->CHANNEL[channel].CHn_IER_31_0 |= (1U << ((uint32_t)irq - FSL_FEATURE_INTMUX_IRQ_START_INDEX));
+    base->CHANNEL[channel].CHn_IER_31_0 |= (1UL << ((uint32_t)irq - (uint32_t)FSL_FEATURE_INTMUX_IRQ_START_INDEX));
 }
 
 /*!
@@ -131,7 +131,7 @@ static inline void INTMUX_DisableInterrupt(INTMUX_Type *base, uint32_t channel, 
     assert(channel < FSL_FEATURE_INTMUX_CHANNEL_COUNT);
     assert(irq >= FSL_FEATURE_INTMUX_IRQ_START_INDEX);
 
-    base->CHANNEL[channel].CHn_IER_31_0 &= ~(1U << ((uint32_t)irq - FSL_FEATURE_INTMUX_IRQ_START_INDEX));
+    base->CHANNEL[channel].CHn_IER_31_0 &= ~(1UL << ((uint32_t)irq - (uint32_t)FSL_FEATURE_INTMUX_IRQ_START_INDEX));
 }
 
 /*@}*/

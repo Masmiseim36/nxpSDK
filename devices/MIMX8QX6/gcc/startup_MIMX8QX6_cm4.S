@@ -2,15 +2,16 @@
 /*  @file:    startup_MIMX8QX6_cm4.s                                         */
 /*  @purpose: CMSIS Cortex-M4 Core Device Startup File                       */
 /*            MIMX8QX6_cm4                                                   */
-/*  @version: 2.0                                                            */
-/*  @date:    2017-8-23                                                      */
-/*  @build:   b180801                                                        */
+/*  @version: 4.0                                                            */
+/*  @date:    2018-8-22                                                      */
+/*  @build:   b191126                                                        */
 /* ------------------------------------------------------------------------- */
 /*                                                                           */
 /* Copyright 1997-2016 Freescale Semiconductor, Inc.                         */
-/* Copyright 2016-2018 NXP                                                   */
+/* Copyright 2016-2019 NXP                                                   */
+/* All rights reserved.                                                      */
 /*                                                                           */
-/* SPDX-License-Identifier: BSD-3-Clause              */
+/* SPDX-License-Identifier: BSD-3-Clause                                     */
 /*****************************************************************************/
 /* Version: GCC for ARM Embedded Processors                                  */
 /*****************************************************************************/
@@ -66,9 +67,9 @@ __isr_vector:
     .long   Reserved40_IRQHandler                           /* Reserved*/
     .long   M4_LPUART_IRQHandler                            /* Low Power UART*/
     .long   Reserved42_IRQHandler                           /* Reserved*/
-    .long   M4_LPI2C_IRQHandler                             /* Low-Power I2C – Logical OR of master and slave interrupts*/
+    .long   M4_LPI2C_IRQHandler                             /* Low-Power I2C - Logical OR of master and slave interrupts*/
     .long   Reserved44_IRQHandler                           /* Reserved*/
-    .long   M4_MU0_B0_IRQHandler                            /* Messaging Unit 0 (IPC with other subsystems) – Side B (local), Port 0, Logical OR of all general-purpose, TX, and RX interrupts*/
+    .long   M4_MU0_B0_IRQHandler                            /* Messaging Unit 0 (IPC with other subsystems) - Side B (local), Port 0, Logical OR of all general-purpose, TX, and RX interrupts*/
     .long   Reserved46_IRQHandler                           /* Reserved*/
     .long   Reserved47_IRQHandler                           /* Reserved*/
     .long   IRQSTEER_0_IRQHandler                           /* External interrupt 0*/
@@ -83,12 +84,12 @@ __isr_vector:
     .long   Reserved57_IRQHandler                           /* Reserved*/
     .long   Reserved58_IRQHandler                           /* Reserved*/
     .long   Reserved59_IRQHandler                           /* Reserved*/
-    .long   M4_MU0_B1_IRQHandler                            /* Messaging Unit 0 (IPC with other subsystems) – Side B (local), Port 1, Logical OR of all general-purpose, TX, and RX interrupts*/
-    .long   M4_MU0_B2_IRQHandler                            /* Messaging Unit 0 (IPC with other subsystems) – Side B (local), Port 2, Logical OR of all general-purpose, TX, and RX interrupts*/
-    .long   M4_MU0_B3_IRQHandler                            /* Messaging Unit 0 (IPC with other subsystems) – Side B (local), Port 3, Logical OR of all general-purpose, TX, and RX interrupts*/
+    .long   M4_MU0_B1_IRQHandler                            /* Messaging Unit 0 (IPC with other subsystems) - Side B (local), Port 1, Logical OR of all general-purpose, TX, and RX interrupts*/
+    .long   M4_MU0_B2_IRQHandler                            /* Messaging Unit 0 (IPC with other subsystems) - Side B (local), Port 2, Logical OR of all general-purpose, TX, and RX interrupts*/
+    .long   M4_MU0_B3_IRQHandler                            /* Messaging Unit 0 (IPC with other subsystems) - Side B (local), Port 3, Logical OR of all general-purpose, TX, and RX interrupts*/
     .long   Reserved63_IRQHandler                           /* Reserved*/
     .long   Reserved64_IRQHandler                           /* Reserved*/
-    .long   M4_MU1_A_IRQHandler                             /* Messaging Unit 1 (IPC with System Controller) – Side A (MCU), Logical OR of all general-purpose, TX, and RX interrupts*/
+    .long   M4_MU1_A_IRQHandler                             /* Messaging Unit 1 (IPC with System Controller) - Side A (MCU), Logical OR of all general-purpose, TX, and RX interrupts*/
     .long   M4_SW_IRQHandler                                /* Software interrupt (asserted/cleared via NVIC registers, INTISR[50] input tied low)*/
     .long   Reserved67_IRQHandler                           /* xxx Interrupt 67*/
     .long   Reserved68_IRQHandler                           /* xxx Interrupt 68*/
@@ -126,7 +127,7 @@ __isr_vector:
     .long   A35_NINTERRIRQ_IRQHandler                       /* Shared Int Source nINTERRIRQ from A35 Sub-System*/
     .long   Reserved101_IRQHandler                          /* xxx Interrupt 101*/
     .long   Reserved102_IRQHandler                          /* xxx Interrupt 102*/
-    .long   VPU_NEXTERRIRQ_IRQHandler                       /* Shared Int Source nEXTERRIRQ from VPU Sub-System*/
+    .long   Reserved103_IRQHandler                          /* xxx Interrupt 103*/
     .long   Reserved104_IRQHandler                          /* xxx Interrupt 104*/
     .long   Reserved105_IRQHandler                          /* xxx Interrupt 105*/
     .long   Reserved106_IRQHandler                          /* xxx Interrupt 106*/
@@ -444,7 +445,7 @@ __isr_vector:
     .long   ADMA_SAI2_DMA_INT_IRQHandler                    /* Shared Int Source SAI2_DMA_INT from ADMA Sub-System*/
     .long   MIPI_CSI0_OUT_INT_IRQHandler                    /* Shared Int Source OUT_INT from MIPI_CSI0 Sub-System*/
     .long   Reserved420_IRQHandler                          /* xxx Interrupt 420*/
-    .long   PARALLEL_CAM_INT_OUT_IRQHandler                 /* All interrupts of parallel camera interface are combined into a single output*/
+    .long   Reserved421_IRQHandler                          /* xxx Interrupt 421*/
     .long   ADMA_SAI3_MOD_INT_IRQHandler                    /* Shared Int Source SAI3_MOD_INT from ADMA Sub-System*/
     .long   ADMA_SAI3_DMA_INT_IRQHandler                    /* Shared Int Source SAI3_DMA_INT from ADMA Sub-System*/
     .long   Reserved424_IRQHandler                          /* xxx Interrupt 424*/
@@ -512,7 +513,7 @@ __isr_vector:
     .long   ADMA_DMA1_CH5_INT_IRQHandler                    /* Shared Int Source DMA1_CH5_INT from ADMA Sub-System*/
     .long   ADMA_ESAI0_INT_IRQHandler                       /* Shared Int Source ESAI0_INT from ADMA Sub-System*/
     .long   Reserved488_IRQHandler                          /* xxx Interrupt 488*/
-    .long   ADMA_UNUSED_IRQHandler                          /* Shared Int Source Unused from ADMA Sub-System*/
+    .long   Reserved489_IRQHandler                          /* xxx Interrupt 489*/
     .long   ADMA_GPT0_INT_IRQHandler                        /* Shared Int Source GPT0_INT from ADMA Sub-System*/
     .long   ADMA_GPT1_INT_IRQHandler                        /* Shared Int Source GPT1_INT from ADMA Sub-System*/
     .long   ADMA_GPT2_INT_IRQHandler                        /* Shared Int Source GPT2_INT from ADMA Sub-System*/
@@ -570,9 +571,9 @@ __isr_vector:
     .long   Reserved544_IRQHandler                          /* xxx Interrupt 544*/
     .long   Reserved545_IRQHandler                          /* xxx Interrupt 545*/
     .long   Reserved546_IRQHandler                          /* xxx Interrupt 546*/
-    .long   SECURITY_MU0_B1_INT_IRQHandler                  /* Shared Int Source MU0_B1_INT from Security Sub-System*/
-    .long   SECURITY_MU0_B2_INT_IRQHandler                  /* Shared Int Source MU0_B2_INT from Security Sub-System*/
-    .long   SECURITY_MU0_B3_INT_IRQHandler                  /* Shared Int Source MU0_B3_INT from Security Sub-System*/
+    .long   SECURITY_MU1_A_INT_IRQHandler                   /* Shared Int Source MU1_A_INT from Security Sub-System*/
+    .long   SECURITY_MU2_A_INT_IRQHandler                   /* Shared Int Source MU2_A_INT from Security Sub-System*/
+    .long   SECURITY_MU3_A_INT_IRQHandler                   /* Shared Int Source MU3_A_INT from Security Sub-System*/
     .long   SECURITY_CAAM_INT0_IRQHandler                   /* Shared Int Source CAAM_INT0 from Security Sub-System*/
     .long   SECURITY_CAAM_INT1_IRQHandler                   /* Shared Int Source CAAM_INT1 from Security Sub-System*/
     .long   SECURITY_CAAM_INT2_IRQHandler                   /* Shared Int Source CAAM_INT2 from Security Sub-System*/
@@ -741,8 +742,8 @@ Reset_Handler:
     ble    .LC3
 .LC2:
     subs    r3, #4
-    ldr    r0, [r1, r3]
-    str    r0, [r2, r3]
+    ldr     r0, [r1, r3]
+    str     r0, [r2, r3]
     bgt    .LC2
 .LC3:
 #endif
@@ -751,7 +752,7 @@ Reset_Handler:
 /*      __resume_mem_start__/__resume_mem_end__: DDR address range that data should be
  *      retained during LPM. Both must be aligned to 4 bytes boundary.  */
 #ifdef __STARTUP_INITIALIZE_RESUMEMEM
-    ldr    r1, =__RDATA_ROM
+    ldr    r1, = __RDATA_ROM
     ldr    r2, = __resume_mem_start__
     ldr    r3, = __resume_mem_end__
 #if 1
@@ -2012,15 +2013,6 @@ ADMA_ESAI0_INT_IRQHandler:
 
     .align 1
     .thumb_func
-    .weak ADMA_UNUSED_IRQHandler
-    .type ADMA_UNUSED_IRQHandler, %function
-ADMA_UNUSED_IRQHandler:
-    ldr   r0,=ADMA_UNUSED_DriverIRQHandler
-    bx    r0
-    .size ADMA_UNUSED_IRQHandler, . - ADMA_UNUSED_IRQHandler
-
-    .align 1
-    .thumb_func
     .weak ADMA_GPT0_INT_IRQHandler
     .type ADMA_GPT0_INT_IRQHandler, %function
 ADMA_GPT0_INT_IRQHandler:
@@ -2588,7 +2580,7 @@ M4_INTMUX_SOURCE_MU0_A0_IRQHandler:
     def_irq_handler    A35_NINTERRIRQ_IRQHandler
     def_irq_handler    Reserved101_IRQHandler
     def_irq_handler    Reserved102_IRQHandler
-    def_irq_handler    VPU_NEXTERRIRQ_IRQHandler
+    def_irq_handler    Reserved103_IRQHandler
     def_irq_handler    Reserved104_IRQHandler
     def_irq_handler    Reserved105_IRQHandler
     def_irq_handler    Reserved106_IRQHandler
@@ -2895,7 +2887,7 @@ M4_INTMUX_SOURCE_MU0_A0_IRQHandler:
     def_irq_handler    ADMA_SAI2_MOD_INT_DriverIRQHandler
     def_irq_handler    MIPI_CSI0_OUT_INT_IRQHandler
     def_irq_handler    Reserved420_IRQHandler
-    def_irq_handler    PARALLEL_CAM_INT_OUT_IRQHandler
+    def_irq_handler    Reserved421_IRQHandler
     def_irq_handler    ADMA_SAI3_MOD_INT_DriverIRQHandler
     def_irq_handler    Reserved424_IRQHandler
     def_irq_handler    Reserved425_IRQHandler
@@ -2938,7 +2930,7 @@ M4_INTMUX_SOURCE_MU0_A0_IRQHandler:
     def_irq_handler    ADMA_ASRC1_INT2_DriverIRQHandler
     def_irq_handler    ADMA_ESAI0_INT_DriverIRQHandler
     def_irq_handler    Reserved488_IRQHandler
-    def_irq_handler    ADMA_UNUSED_DriverIRQHandler
+    def_irq_handler    Reserved489_IRQHandler
     def_irq_handler    ADMA_GPT0_INT_DriverIRQHandler
     def_irq_handler    ADMA_GPT1_INT_DriverIRQHandler
     def_irq_handler    ADMA_GPT2_INT_DriverIRQHandler
@@ -2971,9 +2963,9 @@ M4_INTMUX_SOURCE_MU0_A0_IRQHandler:
     def_irq_handler    Reserved544_IRQHandler
     def_irq_handler    Reserved545_IRQHandler
     def_irq_handler    Reserved546_IRQHandler
-    def_irq_handler    SECURITY_MU0_B1_INT_IRQHandler
-    def_irq_handler    SECURITY_MU0_B2_INT_IRQHandler
-    def_irq_handler    SECURITY_MU0_B3_INT_IRQHandler
+    def_irq_handler    SECURITY_MU1_A_INT_IRQHandler
+    def_irq_handler    SECURITY_MU2_A_INT_IRQHandler
+    def_irq_handler    SECURITY_MU3_A_INT_IRQHandler
     def_irq_handler    SECURITY_CAAM_INT0_IRQHandler
     def_irq_handler    SECURITY_CAAM_INT1_IRQHandler
     def_irq_handler    SECURITY_CAAM_INT2_IRQHandler

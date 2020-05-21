@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 NXP
+ * Copyright 2017-2019 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -13,7 +13,7 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v4.1
+product: Pins v7.0
 processor: MIMX8QX6xxxFZ
 package_id: MIMX8QX6AVLFZ
 mcu_data: ksdk2_0
@@ -42,19 +42,19 @@ void BOARD_InitBootPins(void)
 BOARD_InitPins:
 - options: {callFromInitBoot: 'false', coreID: m4}
 - pin_list:
-  - {pin_num: V32, peripheral: M40__UART0, signal: uart_rx, pin_signal: ADC_IN2, sw_config: sw_config_0}
-  - {pin_num: V30, peripheral: M40__UART0, signal: uart_tx, pin_signal: ADC_IN3, sw_config: sw_config_0}
-  - {pin_num: AR25, peripheral: MIPI_CSI0__GPIO0, signal: 'gpio_io, 00', pin_signal: MIPI_CSI0_GPIO0_00, sw_config: sw_config_0}
-  - {pin_num: AP24, peripheral: MIPI_CSI0__GPIO0, signal: 'gpio_io, 01', pin_signal: MIPI_CSI0_GPIO0_01, sw_config: sw_config_0}
-  - {pin_num: AP26, peripheral: MIPI_CSI0__I2C0, signal: i2c_scl, pin_signal: MIPI_CSI0_I2C0_SCL, sw_config: sw_config_2}
-  - {pin_num: AM24, peripheral: MIPI_CSI0__I2C0, signal: i2c_sda, pin_signal: MIPI_CSI0_I2C0_SDA, sw_config: sw_config_2}
-  - {pin_num: AN25, peripheral: MIPI_CSI0__ACM, signal: mclk_out, pin_signal: MIPI_CSI0_MCLK_OUT, sw_config: sw_config_0}
-  - {pin_num: AC31, peripheral: MIPI_DSI0__I2C0, signal: i2c_scl, pin_signal: MIPI_DSI0_I2C0_SCL, sw_config: sw_config_2}
-  - {pin_num: AB28, peripheral: MIPI_DSI0__I2C0, signal: i2c_sda, pin_signal: MIPI_DSI0_I2C0_SDA, sw_config: sw_config_2}
-  - {pin_num: AE33, peripheral: MIPI_DSI1__I2C0, signal: i2c_scl, pin_signal: MIPI_DSI1_I2C0_SCL, sw_config: sw_config_2}
-  - {pin_num: AC29, peripheral: MIPI_DSI1__I2C0, signal: i2c_sda, pin_signal: MIPI_DSI1_I2C0_SDA, sw_config: sw_config_2}
-  - {pin_num: H14, peripheral: ADMA__I2C1, signal: i2c_scl, pin_signal: USB_SS3_TC1, sw_config: sw_config_2}
-  - {pin_num: C15, peripheral: ADMA__I2C1, signal: i2c_sda, pin_signal: USB_SS3_TC3, sw_config: sw_config_2}
+  - {pin_num: V32, peripheral: M40__UART0, signal: uart_rx, pin_signal: ADC_IN2, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: V30, peripheral: M40__UART0, signal: uart_tx, pin_signal: ADC_IN3, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: AR25, peripheral: MIPI_CSI0__GPIO0, signal: 'gpio_io, 00', pin_signal: MIPI_CSI0_GPIO0_00, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: AP24, peripheral: MIPI_CSI0__GPIO0, signal: 'gpio_io, 01', pin_signal: MIPI_CSI0_GPIO0_01, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: AP26, peripheral: MIPI_CSI0__I2C0, signal: i2c_scl, pin_signal: MIPI_CSI0_I2C0_SCL, PULL: PULL_0, sw_config: sw_config_2}
+  - {pin_num: AM24, peripheral: MIPI_CSI0__I2C0, signal: i2c_sda, pin_signal: MIPI_CSI0_I2C0_SDA, PULL: PULL_0, sw_config: sw_config_2}
+  - {pin_num: AN25, peripheral: MIPI_CSI0__ACM, signal: mclk_out, pin_signal: MIPI_CSI0_MCLK_OUT, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: AC31, peripheral: MIPI_DSI0__I2C0, signal: i2c_scl, pin_signal: MIPI_DSI0_I2C0_SCL, PULL: PULL_0, sw_config: sw_config_2}
+  - {pin_num: AB28, peripheral: MIPI_DSI0__I2C0, signal: i2c_sda, pin_signal: MIPI_DSI0_I2C0_SDA, PULL: PULL_0, sw_config: sw_config_2}
+  - {pin_num: AE33, peripheral: MIPI_DSI1__I2C0, signal: i2c_scl, pin_signal: MIPI_DSI1_I2C0_SCL, PULL: PULL_0, sw_config: sw_config_2}
+  - {pin_num: AC29, peripheral: MIPI_DSI1__I2C0, signal: i2c_sda, pin_signal: MIPI_DSI1_I2C0_SDA, PULL: PULL_0, sw_config: sw_config_2}
+  - {pin_num: H14, peripheral: ADMA__I2C1, signal: i2c_scl, pin_signal: USB_SS3_TC1, PULL: PULL_0, sw_config: sw_config_2}
+  - {pin_num: C15, peripheral: ADMA__I2C1, signal: i2c_sda, pin_signal: USB_SS3_TC3, PULL: PULL_0, sw_config: sw_config_2}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 

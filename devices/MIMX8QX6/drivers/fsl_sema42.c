@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -113,7 +113,9 @@ void SEMA42_Deinit(SEMA42_Type *base)
  */
 status_t SEMA42_TryLock(SEMA42_Type *base, uint8_t gateNum, uint8_t procNum)
 {
-    assert(gateNum < FSL_FEATURE_SEMA42_GATE_COUNT);
+    status_t status;
+
+    assert(gateNum < (uint8_t)FSL_FEATURE_SEMA42_GATE_COUNT);
 
     ++procNum;
 
@@ -123,10 +125,14 @@ status_t SEMA42_TryLock(SEMA42_Type *base, uint8_t gateNum, uint8_t procNum)
     /* Check locked or not. */
     if (procNum != SEMA42_GATEn(base, gateNum))
     {
-        return kStatus_SEMA42_Busy;
+        status = kStatus_SEMA42_Busy;
+    }
+    else
+    {
+        status = kStatus_Success;
     }
 
-    return kStatus_Success;
+    return status;
 }
 
 /*!
@@ -142,14 +148,14 @@ status_t SEMA42_TryLock(SEMA42_Type *base, uint8_t gateNum, uint8_t procNum)
  */
 void SEMA42_Lock(SEMA42_Type *base, uint8_t gateNum, uint8_t procNum)
 {
-    assert(gateNum < FSL_FEATURE_SEMA42_GATE_COUNT);
+    assert(gateNum < (uint8_t)FSL_FEATURE_SEMA42_GATE_COUNT);
 
     ++procNum;
 
     while (procNum != SEMA42_GATEn(base, gateNum))
     {
         /* Wait for unlocked status. */
-        while (SEMA42_GATEn(base, gateNum))
+        while (0U != SEMA42_GATEn(base, gateNum))
         {
         }
 
@@ -171,22 +177,28 @@ void SEMA42_Lock(SEMA42_Type *base, uint8_t gateNum, uint8_t procNum)
  */
 status_t SEMA42_ResetGate(SEMA42_Type *base, uint8_t gateNum)
 {
+    status_t status;
+
     /*
      * Reset all gates if gateNum >= SEMA42_GATE_NUM_RESET_ALL
      * Reset specific gate if gateNum < FSL_FEATURE_SEMA42_GATE_COUNT
      */
-    assert(!((gateNum < SEMA42_GATE_NUM_RESET_ALL) && (gateNum >= FSL_FEATURE_SEMA42_GATE_COUNT)));
+    assert(!((gateNum < SEMA42_GATE_NUM_RESET_ALL) && (gateNum >= (uint8_t)FSL_FEATURE_SEMA42_GATE_COUNT)));
 
     /* Check whether some reset is ongoing. */
-    if (base->RSTGT_R & SEMA42_RSTGT_R_RSTGSM_MASK)
+    if (0U != (base->RSTGT_R & SEMA42_RSTGT_R_RSTGSM_MASK))
     {
-        return kStatus_SEMA42_Reseting;
+        status = kStatus_SEMA42_Reseting;
+    }
+    else
+    {
+        /* First step. */
+        base->RSTGT_W = SEMA42_RSTGT_W_RSTGDP(SEMA42_GATE_RESET_PATTERN_1);
+        /* Second step. */
+        base->RSTGT_W = SEMA42_RSTGT_W_RSTGDP(SEMA42_GATE_RESET_PATTERN_2) | SEMA42_RSTGT_W_RSTGTN(gateNum);
+
+        status = kStatus_Success;
     }
 
-    /* First step. */
-    base->RSTGT_W = SEMA42_RSTGT_W_RSTGDP(SEMA42_GATE_RESET_PATTERN_1);
-    /* Second step. */
-    base->RSTGT_W = SEMA42_RSTGT_W_RSTGDP(SEMA42_GATE_RESET_PATTERN_2) | SEMA42_RSTGT_W_RSTGTN(gateNum);
-
-    return kStatus_Success;
+    return status;
 }

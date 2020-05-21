@@ -17,12 +17,19 @@
  * Definitions
  ******************************************************************************/
 #define EXAMPLE_CAN ADMA__CAN0
-#define EXAMPLE_CAN_CLKSRC kCLOCK_DMA_Can0
 /*
  * When CLK_SRC=1, the protocol engine works at fixed frequency of 160M.
  * If other frequency wanted, please use CLK_SRC=0 and set the working frequency for SC_R_CAN_0.
  */
+#define EXAMPLE_CAN_CLK_SOURCE (kFLEXCAN_ClkSrc1)
 #define EXAMPLE_CAN_CLK_FREQ (SC_160MHZ)
+/* Considering that the first valid MB must be used as Reserved TX MB for ERR005641,
+ * if RX FIFO enables (RFEN bit in MCE set as 1) and RFFN in CTRL2 is set default as zero,
+ * the first valid TX MB Number shall be 8;
+ * if RX FIFO enables (RFEN bit in MCE set as 1) and RFFN in CTRL2 is set by other values (0x1~0xF),
+ * the user should consider to detail the first valid MB number;
+ * if RX FIFO disables (RFEN bit in MCE set as 0) , the first valid MB number would be zero.
+ */
 #define RX_MESSAGE_BUFFER_NUM (9)
 #define TX_MESSAGE_BUFFER_NUM (8)
 #define USE_CANFD (1)
@@ -39,21 +46,8 @@
 #define DWORD_IN_MB (8)
 #define DLC (13)
 #define BYTES_IN_MB kFLEXCAN_32BperMB
-#if (defined(FSL_FEATURE_FLEXCAN_HAS_ERRATA_5829) && FSL_FEATURE_FLEXCAN_HAS_ERRATA_5829)
-/* To consider the First valid MB must be used as Reserved TX MB for ERR005829
-   If RX FIFO enable(RFEN bit in MCE set as 1) and RFFN in CTRL2 is set default zero, the first valid TX MB Number is 8
-   If RX FIFO enable(RFEN bit in MCE set as 1) and RFFN in CTRL2 is set by other value(0x1~0xF), User should consider
-   detail first valid MB number
-   If RX FIFO disable(RFEN bit in MCE set as 0) , the first valid MB number is zero */
-#ifdef RX_MESSAGE_BUFFER_NUM
-#undef RX_MESSAGE_BUFFER_NUM
-#define RX_MESSAGE_BUFFER_NUM (10)
-#endif
-#ifdef TX_MESSAGE_BUFFER_NUM
-#undef TX_MESSAGE_BUFFER_NUM
-#define TX_MESSAGE_BUFFER_NUM (9)
-#endif
-#endif
+/* Fix MISRA_C-2012 Rule 17.7. */
+#define LOG_INFO (void)PRINTF
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -130,34 +124,32 @@ int main(void)
     IRQSTEER_Init(IRQSTEER);
     IRQSTEER_EnableInterrupt(IRQSTEER, ADMA_FLEXCAN0_INT_IRQn);
 
-    PRINTF("\r\n==FlexCAN loopback example -- Start.==\r\n\r\n");
+    LOG_INFO("\r\n==FlexCAN loopback example -- Start.==\r\n\r\n");
 
     /* Init FlexCAN module. */
     /*
-     * flexcanConfig.clkSrc = kFLEXCAN_ClkSrcOsc;
-     * flexcanConfig.baudRate = 1000000U;
-     * flexcanConfig.baudRateFD = 2000000U;
-     * flexcanConfig.maxMbNum = 16;
-     * flexcanConfig.enableLoopBack = false;
-     * flexcanConfig.enableSelfWakeup = false;
-     * flexcanConfig.enableIndividMask = false;
-     * flexcanConfig.enableDoze = false;
+     * flexcanConfig.clkSrc                 = kFLEXCAN_ClkSrc0;
+     * flexcanConfig.baudRate               = 1000000U;
+     * flexcanConfig.baudRateFD             = 2000000U;
+     * flexcanConfig.maxMbNum               = 16;
+     * flexcanConfig.enableLoopBack         = false;
+     * flexcanConfig.enableSelfWakeup       = false;
+     * flexcanConfig.enableIndividMask      = false;
+     * flexcanConfig.disableSelfReception   = false;
+     * flexcanConfig.enableListenOnlyMode   = false;
+     * flexcanConfig.enableDoze             = false;
      */
     FLEXCAN_GetDefaultConfig(&flexcanConfig);
-#if (!defined(FSL_FEATURE_FLEXCAN_SUPPORT_ENGINE_CLK_SEL_REMOVE)) || !FSL_FEATURE_FLEXCAN_SUPPORT_ENGINE_CLK_SEL_REMOVE
-    flexcanConfig.clkSrc = kFLEXCAN_ClkSrcPeri;
-#else
-#if defined(CAN_CTRL1_CLKSRC_MASK)
-    if (!FSL_FEATURE_FLEXCAN_INSTANCE_SUPPORT_ENGINE_CLK_SEL_REMOVEn(EXAMPLE_CAN))
-    {
-        flexcanConfig.clkSrc = kFLEXCAN_ClkSrcPeri;
-    }
+
+#if defined(EXAMPLE_CAN_CLK_SOURCE)
+    flexcanConfig.clkSrc = EXAMPLE_CAN_CLK_SOURCE;
 #endif
-#endif /* FSL_FEATURE_FLEXCAN_SUPPORT_ENGINE_CLK_SEL_REMOVE */
+
     flexcanConfig.enableLoopBack = true;
 
 #if (defined(USE_IMPROVED_TIMING_CONFIG) && USE_IMPROVED_TIMING_CONFIG)
     flexcan_timing_config_t timing_config;
+    memset(&timing_config, 0, sizeof(flexcan_timing_config_t));
 #if (defined(USE_CANFD) && USE_CANFD)
     if (FLEXCAN_FDCalculateImprovedTimingValues(flexcanConfig.baudRate, flexcanConfig.baudRateFD, EXAMPLE_CAN_CLK_FREQ,
                                                 &timing_config))
@@ -167,7 +159,7 @@ int main(void)
     }
     else
     {
-        PRINTF("No found Improved Timing Configuration. Just used default configuration\r\n\r\n");
+        LOG_INFO("No found Improved Timing Configuration. Just used default configuration\r\n\r\n");
     }
 #else
     if (FLEXCAN_CalculateImprovedTimingValues(flexcanConfig.baudRate, EXAMPLE_CAN_CLK_FREQ, &timing_config))
@@ -177,7 +169,7 @@ int main(void)
     }
     else
     {
-        PRINTF("No found Improved Timing Configuration. Just used default configuration\r\n\r\n");
+        LOG_INFO("No found Improved Timing Configuration. Just used default configuration\r\n\r\n");
     }
 #endif
 #endif
@@ -209,22 +201,22 @@ int main(void)
     FLEXCAN_TransferCreateHandle(EXAMPLE_CAN, &flexcanHandle, flexcan_callback, NULL);
 
     /* Start receive data through Rx Message Buffer. */
-    rxXfer.mbIdx = RX_MESSAGE_BUFFER_NUM;
+    rxXfer.mbIdx = (uint8_t)RX_MESSAGE_BUFFER_NUM;
 #if (defined(USE_CANFD) && USE_CANFD)
     rxXfer.framefd = &rxFrame;
-    FLEXCAN_TransferFDReceiveNonBlocking(EXAMPLE_CAN, &flexcanHandle, &rxXfer);
+    (void)FLEXCAN_TransferFDReceiveNonBlocking(EXAMPLE_CAN, &flexcanHandle, &rxXfer);
 #else
     rxXfer.frame = &rxFrame;
-    FLEXCAN_TransferReceiveNonBlocking(EXAMPLE_CAN, &flexcanHandle, &rxXfer);
+    (void)FLEXCAN_TransferReceiveNonBlocking(EXAMPLE_CAN, &flexcanHandle, &rxXfer);
 #endif
 
     /* Prepare Tx Frame for sending. */
-    txFrame.format = kFLEXCAN_FrameFormatStandard;
-    txFrame.type   = kFLEXCAN_FrameTypeData;
+    txFrame.format = (uint8_t)kFLEXCAN_FrameFormatStandard;
+    txFrame.type   = (uint8_t)kFLEXCAN_FrameTypeData;
     txFrame.id     = FLEXCAN_ID_STD(0x123);
-    txFrame.length = DLC;
+    txFrame.length = (uint8_t)DLC;
 #if (defined(USE_CANFD) && USE_CANFD)
-    txFrame.brs = 1;
+    txFrame.brs = 1U;
 #endif
 #if (defined(USE_CANFD) && USE_CANFD)
     uint8_t i = 0;
@@ -239,25 +231,25 @@ int main(void)
                         CAN_WORD1_DATA_BYTE_7(0x88);
 #endif
 
-    PRINTF("Send message from MB%d to MB%d\r\n", TX_MESSAGE_BUFFER_NUM, RX_MESSAGE_BUFFER_NUM);
+    LOG_INFO("Send message from MB%d to MB%d\r\n", TX_MESSAGE_BUFFER_NUM, RX_MESSAGE_BUFFER_NUM);
 #if (defined(USE_CANFD) && USE_CANFD)
     for (i = 0; i < DWORD_IN_MB; i++)
     {
-        PRINTF("tx word%d = 0x%x\r\n", i, txFrame.dataWord[i]);
+        LOG_INFO("tx word%d = 0x%x\r\n", i, txFrame.dataWord[i]);
     }
 #else
-    PRINTF("tx word0 = 0x%x\r\n", txFrame.dataWord0);
-    PRINTF("tx word1 = 0x%x\r\n", txFrame.dataWord1);
+    LOG_INFO("tx word0 = 0x%x\r\n", txFrame.dataWord0);
+    LOG_INFO("tx word1 = 0x%x\r\n", txFrame.dataWord1);
 #endif
 
     /* Send data through Tx Message Buffer. */
-    txXfer.mbIdx = TX_MESSAGE_BUFFER_NUM;
+    txXfer.mbIdx = (uint8_t)TX_MESSAGE_BUFFER_NUM;
 #if (defined(USE_CANFD) && USE_CANFD)
     txXfer.framefd = &txFrame;
-    FLEXCAN_TransferFDSendNonBlocking(EXAMPLE_CAN, &flexcanHandle, &txXfer);
+    (void)FLEXCAN_TransferFDSendNonBlocking(EXAMPLE_CAN, &flexcanHandle, &txXfer);
 #else
     txXfer.frame = &txFrame;
-    FLEXCAN_TransferSendNonBlocking(EXAMPLE_CAN, &flexcanHandle, &txXfer);
+    (void)FLEXCAN_TransferSendNonBlocking(EXAMPLE_CAN, &flexcanHandle, &txXfer);
 #endif
 
     /* Waiting for Rx Message finish. */
@@ -265,20 +257,20 @@ int main(void)
     {
     };
 
-    PRINTF("\r\nReceived message from MB%d\r\n", RX_MESSAGE_BUFFER_NUM);
+    LOG_INFO("\r\nReceived message from MB%d\r\n", RX_MESSAGE_BUFFER_NUM);
 #if (defined(USE_CANFD) && USE_CANFD)
     for (i = 0; i < DWORD_IN_MB; i++)
     {
-        PRINTF("rx word%d = 0x%x\r\n", i, rxFrame.dataWord[i]);
+        LOG_INFO("rx word%d = 0x%x\r\n", i, rxFrame.dataWord[i]);
     }
 #else
-    PRINTF("rx word0 = 0x%x\r\n", rxFrame.dataWord0);
-    PRINTF("rx word1 = 0x%x\r\n", rxFrame.dataWord1);
+    LOG_INFO("rx word0 = 0x%x\r\n", rxFrame.dataWord0);
+    LOG_INFO("rx word1 = 0x%x\r\n", rxFrame.dataWord1);
 #endif
 
-    PRINTF("\r\n==FlexCAN loopback example -- Finish.==\r\n");
+    LOG_INFO("\r\n==FlexCAN loopback example -- Finish.==\r\n");
 
-    while (1)
+    while (true)
     {
     }
 }

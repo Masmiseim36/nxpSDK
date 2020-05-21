@@ -9,8 +9,8 @@ PC.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.1
-- GCC ARM Embedded  7.3.1
+- GCC ARM Embedded  8.3.1
+- IAR embedded Workbench  8.40.2
 
 Hardware requirements
 =====================
@@ -46,6 +46,8 @@ Prepare the Demo
 Running the demo
 ================
 When the demo runs, the log would be seen on the terminal like:
+	Initializing PHY...
+
 	************************************************
 	 PING example
 	************************************************

@@ -78,7 +78,6 @@ int main(void)
 
     BOARD_InitPins();
     BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
     BOARD_InitMemory();
     /*
      * config.baudRate_Bps = 115200U;

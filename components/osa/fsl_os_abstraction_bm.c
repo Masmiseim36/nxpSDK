@@ -198,12 +198,12 @@ void OSA_MemoryFree(void *p)
     free(p);
 }
 
-void OSA_BmEnterCritical(uint32_t *sr)
+void OSA_EnterCritical(uint32_t *sr)
 {
     *sr = DisableGlobalIRQ();
 }
 
-void OSA_BmExitCritical(uint32_t sr)
+void OSA_ExitCritical(uint32_t sr)
 {
     EnableGlobalIRQ(sr);
 }

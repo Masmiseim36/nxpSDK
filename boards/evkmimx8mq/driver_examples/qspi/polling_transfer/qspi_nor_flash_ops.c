@@ -192,7 +192,7 @@ void program_page(uint32_t dest_addr, uint32_t *src_addr)
 void qspi_nor_flash_init(QuadSPI_Type *base)
 {
     uint32_t clockSourceFreq = 0;
-    qspi_config_t config = {0};
+    qspi_config_t config     = {0};
 
     /*Get QSPI default settings and configure the qspi */
     QSPI_GetDefaultQspiConfig(&config);

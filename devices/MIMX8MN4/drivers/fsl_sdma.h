@@ -31,6 +31,7 @@ typedef enum _sdma_transfer_size
 {
     kSDMA_TransferSize1Bytes = 0x1U, /*!< Source/Destination data transfer size is 1 byte every time */
     kSDMA_TransferSize2Bytes = 0x2U, /*!< Source/Destination data transfer size is 2 bytes every time */
+    kSDMA_TransferSize3Bytes = 0x3U, /*!< Source/Destination data transfer size is 3 bytes every time */
     kSDMA_TransferSize4Bytes = 0x0U, /*!< Source/Destination data transfer size is 4 bytes every time */
 } sdma_transfer_size_t;
 
@@ -44,7 +45,7 @@ typedef enum _sdma_bd_status
     kSDMA_BDStatusError      = 0x10U, /*!< Error occurred on buffer descriptor command. */
     kSDMA_BDStatusLast =
         0x20U, /*!< This BD is the last BD in this array. It means the transfer ended after this buffer */
-    kSDMA_BDStatusExtend = 0x80, /*!< Buffer descriptor extend status for SDMA scripts */
+    kSDMA_BDStatusExtend = 0x80U, /*!< Buffer descriptor extend status for SDMA scripts */
 } sdma_bd_status_t;
 
 /*! @brief SDMA buffer descriptor command */
@@ -100,16 +101,16 @@ typedef enum sdma_peripheral
     kSDMA_PeripheralASRCP2P,          /*!< asrc p2p */
 } sdma_peripheral_t;
 
-/*! @brief SDMA transfer status */
-enum _sdma_transfer_status
+/*! @brief _sdma_transfer_status SDMA transfer status */
+enum
 {
     kStatus_SDMA_ERROR = MAKE_STATUS(kStatusGroup_SDMA, 0), /*!< SDMA context error. */
     kStatus_SDMA_Busy  = MAKE_STATUS(kStatusGroup_SDMA, 1), /*!< Channel is busy and can't handle the
                                                                  transfer request. */
 };
 
-/*! @brief SDMA multi fifo mask */
-enum _sdma_multi_fifo_mask
+/*! @brief _sdma_multi_fifo_mask SDMA multi fifo mask */
+enum
 {
     kSDMA_MultiFifoWatermarkLevelMask = 0xFFFU, /*!< multi fifo watermark level mask */
     kSDMA_MultiFifoNumsMask           = 0xFU,   /*!< multi fifo nums mask */
@@ -118,8 +119,8 @@ enum _sdma_multi_fifo_mask
     kSDMA_MultiFifoSwDoneSelectorMask = 0xFU,   /*!< multi fifo sw done selector mask */
 };
 
-/*! @brief SDMA multi fifo shift */
-enum _sdma_multi_fifo_shift
+/*! @brief _sdma_multi_fifo_shift SDMA multi fifo shift */
+enum
 {
     kSDMA_MultiFifoWatermarkLevelShift = 0U,  /*!< multi fifo watermark level shift */
     kSDMA_MultiFifoNumsShift           = 12U, /*!< multi fifo nums shift */
@@ -128,8 +129,8 @@ enum _sdma_multi_fifo_shift
     kSDMA_MultiFifoSwDoneSelectorShift = 24U, /*!< multi fifo sw done selector shift */
 };
 
-/*! @brief SDMA done channel */
-enum _sdma_done_channel
+/*! @brief _sdma_done_channel SDMA done channel */
+enum
 {
     kSDMA_DoneChannel0 = 0U, /*!< SDMA done channel 0 */
     kSDMA_DoneChannel1 = 1U, /*!< SDMA done channel 1 */
@@ -404,7 +405,7 @@ void SDMA_ResetModule(SDMAARM_Type *base);
  */
 static inline void SDMA_EnableChannelErrorInterrupts(SDMAARM_Type *base, uint32_t channel)
 {
-    base->INTRMASK |= (1U << channel);
+    base->INTRMASK |= (1UL << channel);
 }
 
 /*!
@@ -415,7 +416,7 @@ static inline void SDMA_EnableChannelErrorInterrupts(SDMAARM_Type *base, uint32_
  */
 static inline void SDMA_DisableChannelErrorInterrupts(SDMAARM_Type *base, uint32_t channel)
 {
-    base->INTRMASK &= ~(1U << channel);
+    base->INTRMASK &= ~(1UL << channel);
 }
 
 /* @} */
@@ -499,7 +500,7 @@ static inline void SDMA_SetSourceChannel(SDMAARM_Type *base, uint32_t source, ui
  */
 static inline void SDMA_StartChannelSoftware(SDMAARM_Type *base, uint32_t channel)
 {
-    base->HSTART = (1U << channel);
+    base->HSTART = (1UL << channel);
 }
 
 /*!
@@ -512,7 +513,7 @@ static inline void SDMA_StartChannelSoftware(SDMAARM_Type *base, uint32_t channe
  */
 static inline void SDMA_StartChannelEvents(SDMAARM_Type *base, uint32_t channel)
 {
-    base->EVTPEND = (1U << channel);
+    base->EVTPEND = (1UL << channel);
 }
 
 /*!
@@ -525,7 +526,7 @@ static inline void SDMA_StartChannelEvents(SDMAARM_Type *base, uint32_t channel)
  */
 static inline void SDMA_StopChannel(SDMAARM_Type *base, uint32_t channel)
 {
-    base->STOP_STAT = (1U << channel);
+    base->STOP_STAT = (1UL << channel);
 }
 
 /*!

@@ -96,19 +96,6 @@ typedef EventBits_t event_flags_t;
 
 extern void DefaultISR(void);
 
-/*
- * alloc the temporary memory to store the status
- */
-#define OSA_SR_ALLOC() uint32_t osaCurrentSr;
-/*
- * Enter critical mode
- */
-#define OSA_ENTER_CRITICAL() OSA_FreeRTOSEnterCritical(&osaCurrentSr)
-/*
- * Exit critical mode and retore the previous mode
- */
-#define OSA_EXIT_CRITICAL() OSA_FreeRTOSExitCritical(osaCurrentSr)
-
 /*!
  * @name Thread management
  * @{
@@ -138,24 +125,8 @@ extern void DefaultISR(void);
 
 /* @}*/
 
-/*******************************************************************************
- * API
- ******************************************************************************/
-
-/*!
- * @brief Enter critical with nesting mode.
- *
- * @param sr Store current status and return to caller.
- */
-void OSA_FreeRTOSEnterCritical(uint32_t *sr);
-
-/*!
- * @brief Exit critical with nesting mode.
- *
- * @param sr Previous status to restore.
- */
-void OSA_FreeRTOSExitCritical(uint32_t sr);
-
+/*! @}*/
+/*! @}*/
 /*! @}*/
 
 #endif // __FSL_OS_ABSTRACTION_FREERTOS_H__

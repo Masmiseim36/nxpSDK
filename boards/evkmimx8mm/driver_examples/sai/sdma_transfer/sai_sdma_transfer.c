@@ -81,8 +81,8 @@ sai_master_clock_t mclkConfig = {
 #endif
 };
 #endif
-uint8_t codecHandleBuffer[CODEC_HANDLE_SIZE] = {0U};
-codec_handle_t *codecHandle                  = (codec_handle_t *)codecHandleBuffer;
+codec_handle_t codecHandle;
+
 /*******************************************************************************
  * Code
  ******************************************************************************/
@@ -159,7 +159,7 @@ int main(void)
 #endif
 
     /* Use default setting to init codec */
-    CODEC_Init(codecHandle, &boardCodecConfig);
+    CODEC_Init(&codecHandle, &boardCodecConfig);
 
     /* Enable SAI interrupt to clear the FIFO error */
     EnableIRQ(DEMO_IRQn);
@@ -176,7 +176,7 @@ int main(void)
     {
     }
 
-    CODEC_Deinit(codecHandle);
+    CODEC_Deinit(&codecHandle);
 
     PRINTF("\n\r SAI SDMA example finished!\n\r ");
     while (1)

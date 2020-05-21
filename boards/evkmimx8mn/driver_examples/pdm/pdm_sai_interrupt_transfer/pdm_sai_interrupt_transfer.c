@@ -9,13 +9,13 @@
 #include "board.h"
 #include "fsl_pdm.h"
 #include "fsl_sai.h"
-#include "fsl_wm8524.h"
 #include "fsl_debug_console.h"
 #include "fsl_codec_common.h"
 #include "pin_mux.h"
 #include "clock_config.h"
 #include "fsl_common.h"
 #include "fsl_gpio.h"
+#include "fsl_wm8524.h"
 #include "fsl_codec_adapter.h"
 /*******************************************************************************
  * Definitions
@@ -27,7 +27,6 @@
 #define DEMO_PDM_CIC_OVERSAMPLE_RATE (0U)
 #define DEMO_PDM_ENABLE_CHANNEL_LEFT (0U)
 #define DEMO_PDM_ENABLE_CHANNEL_RIGHT (1U)
-#define DEMO_PDM_SAMPLE_CLOCK_RATE (1536000U * 4U) /* 6.144MHZ */
 
 #define DEMO_SAI (I2S3)
 #define DEMO_SAI_CLK_FREQ (24576000U)
@@ -78,7 +77,7 @@ static const pdm_config_t pdmConfig         = {
 };
 static pdm_channel_config_t channelConfig = {
     .cutOffFreq = kPDM_DcRemoverCutOff152Hz,
-    .gain       = kPDM_DfOutputGain4,
+    .gain       = kPDM_DfOutputGain7,
 };
 #if (defined(FSL_FEATURE_SAI_HAS_MCR) && (FSL_FEATURE_SAI_HAS_MCR)) || \
     (defined(FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER) && (FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER))
@@ -178,7 +177,7 @@ int main(void)
     gpio_pin_config_t gpioConfig = {kGPIO_DigitalOutput, 1};
     GPIO_PinInit(DEMO_CODEC_MUTE_PIN, DEMO_CODEC_MUTE_PIN_NUM, &gpioConfig);
 
-    PRINTF("PDM sai interrupt example started!\n\r");
+    PRINTF("PDM SAI interrupt transfer example started!\n\r");
 
     memset(s_buffer, 0U, sizeof(s_buffer));
 
@@ -214,9 +213,11 @@ int main(void)
     PDM_Init(DEMO_PDM, &pdmConfig);
     PDM_SetChannelConfig(DEMO_PDM, DEMO_PDM_ENABLE_CHANNEL_LEFT, &channelConfig);
     PDM_SetChannelConfig(DEMO_PDM, DEMO_PDM_ENABLE_CHANNEL_RIGHT, &channelConfig);
-    PDM_SetSampleRate(DEMO_PDM, (1U << DEMO_PDM_ENABLE_CHANNEL_LEFT) | (1U << DEMO_PDM_ENABLE_CHANNEL_RIGHT),
-                      pdmConfig.qualityMode, pdmConfig.cicOverSampleRate,
-                      DEMO_PDM_CLK_FREQ / DEMO_PDM_SAMPLE_CLOCK_RATE);
+    if (PDM_SetSampleRateConfig(DEMO_PDM, DEMO_PDM_CLK_FREQ, DEMO_AUDIO_SAMPLE_RATE) != kStatus_Success)
+    {
+        PRINTF("PDM configure sample rate failed.\r\n");
+        return -1;
+    }
     PDM_Reset(DEMO_PDM);
     PDM_TransferCreateHandle(DEMO_PDM, &s_pdmHandle, pdmCallback, NULL);
 

@@ -25,8 +25,8 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief CLOCK driver version 2.1.0. */
-#define FSL_CLOCK_DRIVER_VERSION (MAKE_VERSION(2, 1, 0))
+/*! @brief CLOCK driver version 2.3.1. */
+#define FSL_CLOCK_DRIVER_VERSION (MAKE_VERSION(2, 3, 1))
 /*@}*/
 
 /* Definition for delay API in clock driver, users can redefine it to the real application. */
@@ -153,12 +153,12 @@
 /*!
  * @brief CCM reg macros to extract corresponding registers bit field.
  */
-#define CCM_BIT_FIELD_EXTRACTION(val, mask, shift) (((val)&mask) >> shift)
+#define CCM_BIT_FIELD_EXTRACTION(val, mask, shift) (((val) & (mask)) >> (shift))
 
 /*!
  * @brief CCM reg macros to map corresponding registers.
  */
-#define CCM_REG_OFF(root, off) (*((volatile uint32_t *)((uint32_t)root + off)))
+#define CCM_REG_OFF(root, off) (*((volatile uint32_t *)((uint32_t)(root) + (off))))
 #define CCM_REG(root) CCM_REG_OFF(root, 0U)
 #define CCM_REG_SET(root) CCM_REG_OFF(root, 4U)
 #define CCM_REG_CLR(root) CCM_REG_OFF(root, 8U)
@@ -182,18 +182,18 @@
 /*!
  * @brief CCM ANALOG tuple macros to map corresponding registers and bit fields.
  */
-#define CCM_ANALOG_TUPLE(reg, shift) (((reg & 0xFFFFU) << 16U) | (shift))
-#define CCM_ANALOG_TUPLE_SHIFT(tuple) (((uint32_t)tuple) & 0x1FU)
+#define CCM_ANALOG_TUPLE(reg, shift) ((((reg)&0xFFFFU) << 16U) | (shift))
+#define CCM_ANALOG_TUPLE_SHIFT(tuple) (((uint32_t)(tuple)) & 0x1FU)
 #define CCM_ANALOG_TUPLE_REG_OFF(base, tuple, off) \
-    (*((volatile uint32_t *)((uint32_t)base + (((uint32_t)tuple >> 16U) & 0xFFFFU) + off)))
+    (*((volatile uint32_t *)((uint32_t)(base) + (((uint32_t)(tuple) >> 16U) & 0xFFFFU) + (off))))
 #define CCM_ANALOG_TUPLE_REG(base, tuple) CCM_ANALOG_TUPLE_REG_OFF(base, tuple, 0U)
 
 /*!
  * @brief CCM CCGR and root tuple
  */
-#define CCM_TUPLE(ccgr, root) (ccgr << 16U | root)
-#define CCM_TUPLE_CCGR(tuple) ((uint32_t)(&(CCM)->CCGR[(uint32_t)tuple >> 16U].CCGR))
-#define CCM_TUPLE_ROOT(tuple) ((uint32_t)(&(CCM)->ROOT[(uint32_t)tuple & 0xFFFFU].TARGET_ROOT))
+#define CCM_TUPLE(ccgr, root) ((ccgr) << 16U | (root))
+#define CCM_TUPLE_CCGR(tuple) ((uint32_t)(&(CCM)->CCGR[(uint32_t)(tuple) >> 16U].CCGR))
+#define CCM_TUPLE_ROOT(tuple) ((uint32_t)(&(CCM)->ROOT[(uint32_t)(tuple)&0xFFFFU].TARGET_ROOT))
 
 /*! @brief Clock name used to get clock frequency. */
 typedef enum _clock_name
@@ -925,7 +925,7 @@ void CLOCK_DeinitOSC27M(void);
  */
 static inline void CLOCK_SwitchOSC32Src(osc32_src_t sel)
 {
-    CCM_ANALOG->OSC_MISC_CFG = (CCM_ANALOG->OSC_MISC_CFG & (~CCM_ANALOG_OSC_MISC_CFG_OSC_32K_SEL_MASK)) | sel;
+    CCM_ANALOG->OSC_MISC_CFG = (CCM_ANALOG->OSC_MISC_CFG & (~CCM_ANALOG_OSC_MISC_CFG_OSC_32K_SEL_MASK)) | (uint32_t)sel;
 }
 
 /*!
@@ -942,7 +942,7 @@ static inline void CLOCK_SwitchOSC32Src(osc32_src_t sel)
  */
 static inline void CLOCK_ControlGate(uint32_t ccmGate, clock_gate_value_t control)
 {
-    CCM_REG(ccmGate) = control;
+    CCM_REG(ccmGate) = (uint32_t)control;
 }
 
 /*!
@@ -980,7 +980,7 @@ void CLOCK_DisableClock(clock_ip_name_t ccmGate);
  */
 static inline void CLOCK_PowerUpPll(CCM_ANALOG_Type *base, clock_pll_ctrl_t pllControl)
 {
-    CCM_ANALOG_TUPLE_REG(base, pllControl) &= ~(1U << CCM_ANALOG_TUPLE_SHIFT(pllControl));
+    CCM_ANALOG_TUPLE_REG(base, pllControl) &= ~(1UL << CCM_ANALOG_TUPLE_SHIFT(pllControl));
 }
 
 /*!
@@ -991,7 +991,7 @@ static inline void CLOCK_PowerUpPll(CCM_ANALOG_Type *base, clock_pll_ctrl_t pllC
  */
 static inline void CLOCK_PowerDownPll(CCM_ANALOG_Type *base, clock_pll_ctrl_t pllControl)
 {
-    CCM_ANALOG_TUPLE_REG(base, pllControl) |= 1U << CCM_ANALOG_TUPLE_SHIFT(pllControl);
+    CCM_ANALOG_TUPLE_REG(base, pllControl) |= 1UL << CCM_ANALOG_TUPLE_SHIFT(pllControl);
 }
 
 /*!
@@ -1007,11 +1007,11 @@ static inline void CLOCK_SetPllBypass(CCM_ANALOG_Type *base, clock_pll_bypass_ct
 {
     if (bypass)
     {
-        CCM_ANALOG_TUPLE_REG(base, pllControl) |= 1U << CCM_ANALOG_TUPLE_SHIFT(pllControl);
+        CCM_ANALOG_TUPLE_REG(base, pllControl) |= 1UL << CCM_ANALOG_TUPLE_SHIFT(pllControl);
     }
     else
     {
-        CCM_ANALOG_TUPLE_REG(base, pllControl) &= ~(1U << CCM_ANALOG_TUPLE_SHIFT(pllControl));
+        CCM_ANALOG_TUPLE_REG(base, pllControl) &= ~(1UL << CCM_ANALOG_TUPLE_SHIFT(pllControl));
     }
 }
 
@@ -1026,7 +1026,7 @@ static inline void CLOCK_SetPllBypass(CCM_ANALOG_Type *base, clock_pll_bypass_ct
  */
 static inline bool CLOCK_IsPllBypassed(CCM_ANALOG_Type *base, clock_pll_bypass_ctrl_t pllControl)
 {
-    return (bool)(CCM_ANALOG_TUPLE_REG(base, pllControl) & (1U << CCM_ANALOG_TUPLE_SHIFT(pllControl)));
+    return (bool)(CCM_ANALOG_TUPLE_REG(base, pllControl) & (1UL << CCM_ANALOG_TUPLE_SHIFT(pllControl)));
 }
 
 /*!
@@ -1051,7 +1051,7 @@ static inline bool CLOCK_IsPllLocked(CCM_ANALOG_Type *base, clock_pll_ctrl_t pll
  */
 static inline void CLOCK_EnableAnalogClock(CCM_ANALOG_Type *base, clock_pll_clke_t pllClock)
 {
-    CCM_ANALOG_TUPLE_REG(base, pllClock) |= 1U << CCM_ANALOG_TUPLE_SHIFT(pllClock);
+    CCM_ANALOG_TUPLE_REG(base, pllClock) |= 1UL << CCM_ANALOG_TUPLE_SHIFT(pllClock);
 }
 
 /*!
@@ -1062,7 +1062,7 @@ static inline void CLOCK_EnableAnalogClock(CCM_ANALOG_Type *base, clock_pll_clke
  */
 static inline void CLOCK_DisableAnalogClock(CCM_ANALOG_Type *base, clock_pll_clke_t pllClock)
 {
-    CCM_ANALOG_TUPLE_REG(base, pllClock) &= ~(1U << CCM_ANALOG_TUPLE_SHIFT(pllClock));
+    CCM_ANALOG_TUPLE_REG(base, pllClock) &= ~(1UL << CCM_ANALOG_TUPLE_SHIFT(pllClock));
 }
 
 /*!
@@ -1078,11 +1078,11 @@ static inline void CLOCK_OverrideAnalogClke(CCM_ANALOG_Type *base, clock_pll_clk
 {
     if (override)
     {
-        CCM_ANALOG_TUPLE_REG(base, ovClock) |= 1U << (CCM_ANALOG_TUPLE_SHIFT(ovClock) - 1U);
+        CCM_ANALOG_TUPLE_REG(base, ovClock) |= 1UL << (CCM_ANALOG_TUPLE_SHIFT(ovClock) - 1UL);
     }
     else
     {
-        CCM_ANALOG_TUPLE_REG(base, ovClock) &= ~(1U << (CCM_ANALOG_TUPLE_SHIFT(ovClock) - 1U));
+        CCM_ANALOG_TUPLE_REG(base, ovClock) &= ~(1UL << (CCM_ANALOG_TUPLE_SHIFT(ovClock) - 1UL));
     }
 }
 
@@ -1099,11 +1099,11 @@ static inline void CLOCK_OverridePllPd(CCM_ANALOG_Type *base, clock_pll_ctrl_t p
 {
     if (override)
     {
-        CCM_ANALOG_TUPLE_REG(base, pdClock) |= 1U << (CCM_ANALOG_TUPLE_SHIFT(pdClock) - 1U);
+        CCM_ANALOG_TUPLE_REG(base, pdClock) |= 1UL << (CCM_ANALOG_TUPLE_SHIFT(pdClock) - 1UL);
     }
     else
     {
-        CCM_ANALOG_TUPLE_REG(base, pdClock) &= ~(1U << (CCM_ANALOG_TUPLE_SHIFT(pdClock) - 1U));
+        CCM_ANALOG_TUPLE_REG(base, pdClock) &= ~(1UL << (CCM_ANALOG_TUPLE_SHIFT(pdClock) - 1UL));
     }
 }
 
@@ -1336,16 +1336,6 @@ uint32_t CLOCK_GetAxiFreq(void);
  * @return  Clock frequency; If the clock is invalid, returns 0.
  */
 uint32_t CLOCK_GetAhbFreq(void);
-
-/*!
- * @brief Use DWT to delay at least for some time.
- *  Please note that, this API will calculate the microsecond period with the maximum
- *  supported CPU frequency, so this API will only delay for at least the given microseconds, if precise
- *  delay count was needed, please implement a new timer count to achieve this function.
- *
- * @param delay_us  Delay time in unit of microsecond.
- */
-void SDK_DelayAtLeastUs(uint32_t delay_us);
 
 /* @} */
 

@@ -23,19 +23,13 @@
 #define DEMO_PDM_CIC_OVERSAMPLE_RATE (0U)
 #define DEMO_PDM_ENABLE_CHANNEL_LEFT (0U)
 #define DEMO_PDM_ENABLE_CHANNEL_RIGHT (1U)
-#define DEMO_PDM_SAMPLE_CLOCK_RATE (640000U) /* 16KHZ */
+#define DEMO_AUDIO_SAMPLE_RATE (48000) /* 48KHZ */
 
 #define DEMO_SAI (I2S3)
 #define DEMO_SAI_CLK_FREQ                                                                  \
     CLOCK_GetPllFreq(kCLOCK_SystemPll1Ctrl) / (CLOCK_GetRootPreDivider(kCLOCK_RootSai3)) / \
         (CLOCK_GetRootPostDivider(kCLOCK_RootSai3)) / 6
 #define DEMO_SAI_FIFO_WATER_MARK (FSL_FEATURE_SAI_FIFO_COUNT / 2U)
-
-#define DEMO_CODEC_WM8524
-#define DEMO_CODEC_BUS_PIN (NULL)
-#define DEMO_CODEC_BUS_PIN_NUM (0)
-#define DEMO_CODEC_MUTE_PIN (GPIO5)
-#define DEMO_CODEC_MUTE_PIN_NUM (21)
 #define BUFFER_SIZE (256)
 /*******************************************************************************
  * Prototypes
@@ -56,8 +50,8 @@ static const pdm_config_t pdmConfig         = {
     .cicOverSampleRate = DEMO_PDM_CIC_OVERSAMPLE_RATE,
 };
 static pdm_channel_config_t channelConfig = {
-    .cutOffFreq = kPDM_DcRemoverCutOff21Hz,
-    .gain       = kPDM_DfOutputGain4,
+    .cutOffFreq = kPDM_DcRemoverCutOff152Hz,
+    .gain       = kPDM_DfOutputGain1,
 };
 /*******************************************************************************
  * Code
@@ -147,9 +141,11 @@ int main(void)
     PDM_Init(DEMO_PDM, &pdmConfig);
     PDM_SetChannelConfig(DEMO_PDM, DEMO_PDM_ENABLE_CHANNEL_LEFT, &channelConfig);
     PDM_SetChannelConfig(DEMO_PDM, DEMO_PDM_ENABLE_CHANNEL_RIGHT, &channelConfig);
-    PDM_SetSampleRate(DEMO_PDM, (1U << DEMO_PDM_ENABLE_CHANNEL_LEFT) | (1U << DEMO_PDM_ENABLE_CHANNEL_RIGHT),
-                      pdmConfig.qualityMode, pdmConfig.cicOverSampleRate,
-                      DEMO_PDM_CLK_FREQ / DEMO_PDM_SAMPLE_CLOCK_RATE);
+    if (PDM_SetSampleRateConfig(DEMO_PDM, DEMO_PDM_CLK_FREQ, DEMO_AUDIO_SAMPLE_RATE) != kStatus_Success)
+    {
+        PRINTF("PDM configure sample rate failed.\r\n");
+        return -1;
+    }
     PDM_Reset(DEMO_PDM);
     PDM_EnableInterrupts(DEMO_PDM, kPDM_ErrorInterruptEnable | kPDM_FIFOInterruptEnable);
     EnableIRQ(PDM_EVENT_IRQn);

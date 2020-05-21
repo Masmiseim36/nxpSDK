@@ -67,9 +67,7 @@ int main(void)
     PRINTF("TMU temperature polling example.\r\n");
 
     /* Initialize the TMU mode. */
-    k_tmuConfig.amplifierGain = DEMO_TMU_AMPGAIN_VALUE;
-    k_tmuConfig.amplifierVref = DEMO_TMU_AMPVREF_VALUE;
-    k_tmuConfig.averageLPF    = kTMU_AverageLowPassFilter0_5;
+    k_tmuConfig.averageLPF = kTMU_AverageLowPassFilter0_5;
     TMU_Init(DEMO_TMU_BASE, &k_tmuConfig);
 
     TMU_Enable(DEMO_TMU_BASE, true);
@@ -84,7 +82,7 @@ int main(void)
         }
         else
         {
-            PRINTF("Average temperature is %d°„C\r\n", temp - 21U);
+            PRINTF("Average temperature is %d celsius degree\r\n", temp - 21U);
         }
         Delay(20000000U);
     }

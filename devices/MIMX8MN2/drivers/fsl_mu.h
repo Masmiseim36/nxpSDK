@@ -589,7 +589,7 @@ static inline void MU_ResetBothSides(MU_Type *base)
 
 #if (defined(FSL_FEATURE_MU_HAS_SR_RS) && FSL_FEATURE_MU_HAS_SR_RS)
     /* Wait for the other side out of reset. */
-    while (base->SR & MU_SR_RS_MASK)
+    while (0U != (base->SR & MU_SR_RS_MASK))
     {
     }
 #endif /* FSL_FEATURE_MU_HAS_SR_RS */

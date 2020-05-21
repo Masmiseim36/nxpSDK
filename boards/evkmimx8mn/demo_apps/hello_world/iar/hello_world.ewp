@@ -182,10 +182,12 @@
           <name>CCDefines</name>
           <state>DEBUG</state>
           <state>CPU_MIMX8MN6DVTJZ</state>
+          <state>SDK_DELAY_USE_DWT</state>
           <state>PRINTF_FLOAT_ENABLE=0</state>
           <state>SCANF_FLOAT_ENABLE=0</state>
           <state>PRINTF_ADVANCED_ENABLE=0</state>
           <state>SCANF_ADVANCED_ENABLE=0</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -319,16 +321,13 @@
           <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../devices</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMX8MN6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMX8MN6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMX8MN6/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMX8MN6</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMX8MN6/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMX8MN6/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMX8MN6/drivers</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMX8MN6/utilities</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1157,10 +1156,12 @@
           <name>CCDefines</name>
           <state>FLASH_TARGET</state>
           <state>CPU_MIMX8MN6DVTJZ</state>
+          <state>SDK_DELAY_USE_DWT</state>
           <state>PRINTF_FLOAT_ENABLE=0</state>
           <state>SCANF_FLOAT_ENABLE=0</state>
           <state>PRINTF_ADVANCED_ENABLE=0</state>
           <state>SCANF_ADVANCED_ENABLE=0</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1294,16 +1295,13 @@
           <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../devices</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMX8MN6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMX8MN6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMX8MN6/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMX8MN6</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMX8MN6/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMX8MN6/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMX8MN6/drivers</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMX8MN6/utilities</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -2130,10 +2128,12 @@
         <option>
           <name>CCDefines</name>
           <state>CPU_MIMX8MN6DVTJZ</state>
+          <state>SDK_DELAY_USE_DWT</state>
           <state>PRINTF_FLOAT_ENABLE=0</state>
           <state>SCANF_FLOAT_ENABLE=0</state>
           <state>PRINTF_ADVANCED_ENABLE=0</state>
           <state>SCANF_ADVANCED_ENABLE=0</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -2267,16 +2267,13 @@
           <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../devices</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMX8MN6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMX8MN6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMX8MN6/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMX8MN6</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMX8MN6/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMX8MN6/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMX8MN6/drivers</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMX8MN6/utilities</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -3104,10 +3101,12 @@
           <name>CCDefines</name>
           <state>NDEBUG</state>
           <state>CPU_MIMX8MN6DVTJZ</state>
+          <state>SDK_DELAY_USE_DWT</state>
           <state>PRINTF_FLOAT_ENABLE=0</state>
           <state>SCANF_FLOAT_ENABLE=0</state>
           <state>PRINTF_ADVANCED_ENABLE=0</state>
           <state>SCANF_ADVANCED_ENABLE=0</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -3241,16 +3240,13 @@
           <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../devices</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMX8MN6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMX8MN6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMX8MN6/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMX8MN6</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMX8MN6/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMX8MN6/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMX8MN6/drivers</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMX8MN6/utilities</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -4079,10 +4075,12 @@
           <name>CCDefines</name>
           <state>FLASH_TARGET</state>
           <state>CPU_MIMX8MN6DVTJZ</state>
+          <state>SDK_DELAY_USE_DWT</state>
           <state>PRINTF_FLOAT_ENABLE=0</state>
           <state>SCANF_FLOAT_ENABLE=0</state>
           <state>PRINTF_ADVANCED_ENABLE=0</state>
           <state>SCANF_ADVANCED_ENABLE=0</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -4216,16 +4214,13 @@
           <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../devices</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMX8MN6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMX8MN6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMX8MN6/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMX8MN6</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMX8MN6/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMX8MN6/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMX8MN6/drivers</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMX8MN6/utilities</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -5052,10 +5047,12 @@
         <option>
           <name>CCDefines</name>
           <state>CPU_MIMX8MN6DVTJZ</state>
+          <state>SDK_DELAY_USE_DWT</state>
           <state>PRINTF_FLOAT_ENABLE=0</state>
           <state>SCANF_FLOAT_ENABLE=0</state>
           <state>PRINTF_ADVANCED_ENABLE=0</state>
           <state>SCANF_ADVANCED_ENABLE=0</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -5189,16 +5186,13 @@
           <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../devices</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMX8MN6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMX8MN6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMX8MN6/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMX8MN6</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMX8MN6/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMX8MN6/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMX8MN6/drivers</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMX8MN6/utilities</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>

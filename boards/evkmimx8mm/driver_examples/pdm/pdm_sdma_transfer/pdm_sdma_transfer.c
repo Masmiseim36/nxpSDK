@@ -11,7 +11,7 @@
 #include "fsl_debug_console.h"
 #include "fsl_pdm_sdma.h"
 #include "fsl_sdma.h"
-#include "sdma_multi_fifo_script.h"
+#include "fsl_sdma_script.h"
 #include "pin_mux.h"
 #include "clock_config.h"
 #include "fsl_common.h"
@@ -57,7 +57,7 @@ static const pdm_channel_config_t channelConfig = {
     .cutOffFreq = kPDM_DcRemoverCutOff152Hz,
     .gain       = kPDM_DfOutputGain4,
 };
-
+const short g_sdma_multi_fifo_script[] = FSL_SDMA_MULTI_FIFO_SCRIPT;
 /*******************************************************************************
  * Code
  ******************************************************************************/
@@ -114,8 +114,8 @@ int main(void)
     SDMA_Init(DEMO_DMA, &dmaConfig);
     SDMA_CreateHandle(&dmaHandle, DEMO_DMA, DEMO_DMA_CHANNEL, &sdma_context);
     SDMA_SetChannelPriority(DEMO_DMA, DEMO_DMA_CHANNEL, 2);
-    SDMA_LoadScript(DEMO_DMA, SCRIPT_CODE_START_ADDR, (void *)sdma_multi_fifo_script, SCRIPT_CODE_SIZE * sizeof(short));
-
+    SDMA_LoadScript(DEMO_DMA, FSL_SDMA_SCRIPT_CODE_START_ADDR, (void *)g_sdma_multi_fifo_script,
+                    FSL_SDMA_SCRIPT_CODE_SIZE);
     /* Set up pdm */
     PDM_Init(DEMO_PDM, &pdmConfig);
     PDM_TransferCreateHandleSDMA(DEMO_PDM, &pdmRxHandle, pdmSdmallback, NULL, &dmaHandle, DEMO_PDM_DMA_REQUEST_SOURCE);

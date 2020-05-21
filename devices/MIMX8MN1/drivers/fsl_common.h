@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015-2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -38,8 +38,8 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief common driver version 2.1.3. */
-#define FSL_COMMON_DRIVER_VERSION (MAKE_VERSION(2, 1, 3))
+/*! @brief common driver version 2.2.1. */
+#define FSL_COMMON_DRIVER_VERSION (MAKE_VERSION(2, 2, 1))
 /*@}*/
 
 /* Debug console type definition. */
@@ -154,6 +154,9 @@ enum _status_groups
     kStatusGroup_SDK_FLEXSPINOR = 147,        /*!< Group number for FLEXSPINOR status codes.*/
     kStatusGroup_CODEC = 148,                 /*!< Group number for codec status codes. */
     kStatusGroup_ASRC = 149,                 /*!< Group number for codec status ASRC. */
+    kStatusGroup_OTFAD = 150,                 /*!< Group number for codec status codes. */
+    kStatusGroup_SDIOSLV = 151,                 /*!< Group number for SDIOSLV status codes. */
+
 };
 
 /*! @brief Generic status return codes. */
@@ -223,7 +226,7 @@ typedef int32_t status_t;
 #if (defined(__ICCARM__))
 /**
  * Workaround to disable MISRA C message suppress warnings for IAR compiler.
- * http://supp.iar.com/Support/?note=24725
+ * http:/ /supp.iar.com/Support/?note=24725
  */
 _Pragma("diag_suppress=Pm120")
 #define SDK_PRAGMA(x) _Pragma(#x)
@@ -273,7 +276,7 @@ _Pragma("diag_suppress=Pm120")
 
 /*! Macro to change a value to a given size aligned value */
 #define SDK_SIZEALIGN(var, alignbytes) \
-    ((unsigned int)((var) + ((alignbytes)-1)) & (unsigned int)(~(unsigned int)((alignbytes)-1)))
+    ((unsigned int)((var) + ((alignbytes)-1U)) & (unsigned int)(~(unsigned int)((alignbytes)-1U)))
 /* @} */
 
 /*! @name Non-cacheable region definition macros */
@@ -297,12 +300,18 @@ _Pragma("diag_suppress=Pm120")
 #endif
 #elif(defined(__CC_ARM) || defined(__ARMCC_VERSION))
 #if ((!(defined(FSL_FEATURE_HAS_NO_NONCACHEABLE_SECTION) && FSL_FEATURE_HAS_NO_NONCACHEABLE_SECTION)) && defined(FSL_FEATURE_L1ICACHE_LINESIZE_BYTE))
-#define AT_NONCACHEABLE_SECTION(var) __attribute__((section("NonCacheable"), zero_init)) var
-#define AT_NONCACHEABLE_SECTION_ALIGN(var, alignbytes) \
-    __attribute__((section("NonCacheable"), zero_init)) __attribute__((aligned(alignbytes))) var
 #define AT_NONCACHEABLE_SECTION_INIT(var) __attribute__((section("NonCacheable.init"))) var
 #define AT_NONCACHEABLE_SECTION_ALIGN_INIT(var, alignbytes) \
     __attribute__((section("NonCacheable.init"))) __attribute__((aligned(alignbytes))) var
+#if(defined(__CC_ARM))
+#define AT_NONCACHEABLE_SECTION(var) __attribute__((section("NonCacheable"), zero_init)) var
+#define AT_NONCACHEABLE_SECTION_ALIGN(var, alignbytes) \
+    __attribute__((section("NonCacheable"), zero_init)) __attribute__((aligned(alignbytes))) var
+#else
+#define AT_NONCACHEABLE_SECTION(var) __attribute__((section(".bss.NonCacheable"))) var
+#define AT_NONCACHEABLE_SECTION_ALIGN(var, alignbytes) \
+    __attribute__((section(".bss.NonCacheable"))) __attribute__((aligned(alignbytes))) var
+#endif
 #else
 #define AT_NONCACHEABLE_SECTION(var) var
 #define AT_NONCACHEABLE_SECTION_ALIGN(var, alignbytes) __attribute__((aligned(alignbytes))) var
@@ -392,13 +401,16 @@ _Pragma("diag_suppress=Pm120")
  case section which misses "break;"statement.
  */
 /* @{ */
-#if (defined(__GNUC__))
+#if defined(__GNUC__) && !defined(__ARMCC_VERSION)
 #define SUPPRESS_FALL_THROUGH_WARNING() __attribute__ ((fallthrough))
 #else
 #define SUPPRESS_FALL_THROUGH_WARNING()
-#endif /* defined(__GNUC__) */
+#endif
 /* @} */
 
+#if defined ( __ARMCC_VERSION ) && ( __ARMCC_VERSION >= 6010050 )
+void DefaultISR(void);
+#endif
 /*
  * The fsl_clock.h is included here because it needs MAKE_VERSION/MAKE_STATUS/status_t
  * defined in previous of this file.
@@ -561,7 +573,6 @@ _Pragma("diag_suppress=Pm120")
 #endif /* ENABLE_RAM_VECTOR_TABLE. */
 
 #if (defined(FSL_FEATURE_SOC_SYSCON_COUNT) && (FSL_FEATURE_SOC_SYSCON_COUNT > 0))
-#if !(defined(FSL_FEATURE_SYSCON_STARTER_DISCONTINUOUS) && FSL_FEATURE_SYSCON_STARTER_DISCONTINUOUS)
     /*!
      * @brief Enable specific interrupt for wake-up from deep-sleep mode.
      *
@@ -591,7 +602,6 @@ _Pragma("diag_suppress=Pm120")
      * @param interrupt The IRQ number.
      */
     void DisableDeepSleepIRQ(IRQn_Type interrupt);
-#endif /* FSL_FEATURE_SYSCON_STARTER_DISCONTINUOUS */
 #endif /* FSL_FEATURE_SOC_SYSCON_COUNT */
 
     /*!
@@ -611,6 +621,16 @@ _Pragma("diag_suppress=Pm120")
      * @param ptr The memory to be release.
      */
     void SDK_Free(void *ptr);
+
+    /*!
+    * @brief Delay at least for some time.
+    *  Please note that, this API uses while loop for delay, different run-time environments make the time not precise,
+    *  if precise delay count was needed, please implement a new delay function with hardware timer.
+    *
+    * @param delay_us  Delay time in unit of microsecond.
+    * @param coreClock_Hz  Core clock frequency with Hz.
+    */
+    void SDK_DelayAtLeastUs(uint32_t delay_us, uint32_t coreClock_Hz);
 
 #if defined(__cplusplus)
 }

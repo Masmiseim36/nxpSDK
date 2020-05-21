@@ -8,7 +8,6 @@
 #ifndef __FSL_I2C_FREERTOS_H__
 #define __FSL_I2C_FREERTOS_H__
 
-#include "FreeRTOSConfig.h"
 #include "FreeRTOS.h"
 #include "portable.h"
 #include "semphr.h"

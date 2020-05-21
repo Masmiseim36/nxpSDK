@@ -132,7 +132,7 @@ void PWM_GetDefaultConfig(pwm_config_t *config)
     assert(config);
 
     /* Initializes the configure structure to zero. */
-    memset(config, 0, sizeof(*config));
+    (void)memset(config, 0, sizeof(*config));
 
     /* Stop mode disabled */
     config->enableStopMode = false;

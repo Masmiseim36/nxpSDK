@@ -75,7 +75,7 @@ int main(void)
     BOARD_InitDebugConsole();
 
     CLOCK_SetRootMux(kCLOCK_RootEcspi2, kCLOCK_EcspiRootmuxSysPll1); /* Set ECSPI2 source to SYSTEM PLL1 800MHZ */
-    CLOCK_SetRootDivider(kCLOCK_RootEcspi1, 2U, 5U);                 /* Set root clock to 800MHZ / 10 = 80MHZ */
+    CLOCK_SetRootDivider(kCLOCK_RootEcspi2, 2U, 5U);                 /* Set root clock to 800MHZ / 10 = 80MHZ */
 
     PRINTF("This is ECSPI CMSIS interrupt loopback transfer example.\r\n");
     PRINTF("The ECSPI will connect the transmitter and receiver sections internally.\r\n");

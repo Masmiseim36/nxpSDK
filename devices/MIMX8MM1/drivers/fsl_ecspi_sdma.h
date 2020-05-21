@@ -19,7 +19,7 @@
  ******************************************************************************/
 /*! @name Driver version */
 /*@{*/
-/*! @brief ECSPI freertos driver version 2.0.1. */
+/*! @brief ECSPI FreeRTOS driver version 2.0.1. */
 #define FSL_ECSPI_FREERTOS_DRIVER_VERSION (MAKE_VERSION(2, 0, 1))
 /*@}*/
 

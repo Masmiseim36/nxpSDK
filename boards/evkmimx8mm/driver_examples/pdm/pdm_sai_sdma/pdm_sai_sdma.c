@@ -14,7 +14,7 @@
 #include "fsl_sai_sdma.h"
 #include "fsl_wm8524.h"
 #include "fsl_debug_console.h"
-#include "sdma_multi_fifo_script.h"
+#include "fsl_sdma_script.h"
 #include "fsl_codec_common.h"
 #include "pin_mux.h"
 #include "clock_config.h"
@@ -109,9 +109,10 @@ sai_master_clock_t mclkConfig = {
 #endif
 };
 #endif
-uint8_t codecHandleBuffer[CODEC_HANDLE_SIZE] = {0U};
-codec_handle_t *codecHandle                  = (codec_handle_t *)codecHandleBuffer;
+codec_handle_t codecHandle;
+
 extern codec_config_t boardCodecConfig;
+const short g_sdma_multi_fifo_script[] = FSL_SDMA_MULTI_FIFO_SCRIPT;
 /*******************************************************************************
  * Code
  ******************************************************************************/
@@ -197,8 +198,8 @@ int main(void)
     SDMA_Init(DEMO_SAI_DMA, &dmaConfig);
     SDMA_CreateHandle(&s_pdmDmaHandle, DEMO_PDM_DMA, DEMO_PDM_DMA_CHANNEL, &s_pdmSdmaContext);
     SDMA_SetChannelPriority(DEMO_PDM_DMA, DEMO_PDM_DMA_CHANNEL, DEMO_PDM_DMA_CHANNEL_PRIORITY);
-    SDMA_LoadScript(DEMO_PDM_DMA, SCRIPT_CODE_START_ADDR, (void *)sdma_multi_fifo_script,
-                    SCRIPT_CODE_SIZE * sizeof(short));
+    SDMA_LoadScript(DEMO_PDM_DMA, FSL_SDMA_SCRIPT_CODE_START_ADDR, (void *)g_sdma_multi_fifo_script,
+                    FSL_SDMA_SCRIPT_CODE_SIZE);
 
     SDMA_CreateHandle(&s_saiDmaHandle, DEMO_SAI_DMA, DEMO_SAI_DMA_CHANNEL, &s_saiSdmaContext);
     SDMA_SetChannelPriority(DEMO_SAI_DMA, DEMO_SAI_DMA_CHANNEL, DEMO_SAI_DMA_CHANNEL_PRIORITY);
@@ -210,7 +211,7 @@ int main(void)
     /* I2S mode configurations */
     SAI_GetClassicI2SConfig(&config, DEMO_AUDIO_BIT_WIDTH, kSAI_Stereo, kSAI_Channel0Mask);
 
-    CODEC_Init(codecHandle, &boardCodecConfig);
+    CODEC_Init(&codecHandle, &boardCodecConfig);
 
 #if defined DEMO_SAI_CLOCK_SOURCE
     config.bitClock.bclkSource = (sai_bclk_source_t)DEMO_SAI_CLOCK_SOURCE;

@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -21,23 +21,23 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief I2C driver version 2.0.4. */
-#define FSL_I2C_DRIVER_VERSION (MAKE_VERSION(2, 0, 4))
+/*! @brief I2C driver version 2.0.5. */
+#define FSL_I2C_DRIVER_VERSION (MAKE_VERSION(2, 0, 5))
 /*@}*/
 
-/*! @brief Timeout times for waiting flag. */
-#ifndef I2C_WAIT_TIMEOUT
-#define I2C_WAIT_TIMEOUT 0U /* Define to zero means keep waiting until the flag is assert/deassert. */
+/*! @brief Retry times for waiting flag. */
+#ifndef I2C_RETRY_TIMES
+#define I2C_RETRY_TIMES 0U /* Define to zero means keep waiting until the flag is assert/deassert. */
 #endif
 
 /*! @brief  I2C status return codes. */
-enum _i2c_status
+enum
 {
     kStatus_I2C_Busy            = MAKE_STATUS(kStatusGroup_I2C, 0), /*!< I2C is busy with current transfer. */
     kStatus_I2C_Idle            = MAKE_STATUS(kStatusGroup_I2C, 1), /*!< Bus is Idle. */
     kStatus_I2C_Nak             = MAKE_STATUS(kStatusGroup_I2C, 2), /*!< NAK received during transfer. */
     kStatus_I2C_ArbitrationLost = MAKE_STATUS(kStatusGroup_I2C, 3), /*!< Arbitration lost during transfer. */
-    kStatus_I2C_Timeout         = MAKE_STATUS(kStatusGroup_I2C, 4), /*!< Timeout poling status flags. */
+    kStatus_I2C_Timeout         = MAKE_STATUS(kStatusGroup_I2C, 4), /*!< Timeout polling status flags. */
     kStatus_I2C_Addr_Nak        = MAKE_STATUS(kStatusGroup_I2C, 5), /*!< NAK received during the address probe. */
 };
 
@@ -300,7 +300,7 @@ static inline void I2C_Enable(I2C_Type *base, bool enable)
     }
     else
     {
-        base->I2CR &= ~I2C_I2CR_IEN_MASK;
+        base->I2CR &= ~(uint16_t)I2C_I2CR_IEN_MASK;
     }
 }
 

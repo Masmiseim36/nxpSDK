@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -21,11 +21,12 @@
  ******************************************************************************/
 /*! @name Driver version */
 /*@{*/
-#define FSL_UART_DRIVER_VERSION (MAKE_VERSION(2, 0, 0))
+/*! @brief UART driver version 2.0.2. */
+#define FSL_UART_DRIVER_VERSION (MAKE_VERSION(2, 0, 2))
 /*@}*/
 
 /*! @brief Error codes for the UART driver. */
-enum _uart_status
+enum
 {
     kStatus_UART_TxBusy              = MAKE_STATUS(kStatusGroup_IUART, 0), /*!< Transmitter is busy. */
     kStatus_UART_RxBusy              = MAKE_STATUS(kStatusGroup_IUART, 1), /*!< Receiver is busy. */
@@ -239,7 +240,7 @@ uint32_t UART_GetInstance(UART_Type *base);
 static inline void UART_SoftwareReset(UART_Type *base)
 {
     base->UCR2 &= ~UART_UCR2_SRST_MASK;
-    while ((base->UCR2 & UART_UCR2_SRST_MASK) == 0)
+    while ((base->UCR2 & UART_UCR2_SRST_MASK) == 0U)
     {
     }
 }
@@ -500,7 +501,7 @@ static inline void UART_EnableRx(UART_Type *base, bool enable)
  */
 static inline void UART_WriteByte(UART_Type *base, uint8_t data)
 {
-    base->UTXD = data & UART_UTXD_TX_DATA_MASK;
+    base->UTXD = (uint32_t)data & UART_UTXD_TX_DATA_MASK;
 }
 
 /*!
@@ -523,10 +524,6 @@ static inline uint8_t UART_ReadByte(UART_Type *base)
  *
  * This function polls the TX register, waits for the TX register to be empty or for the TX FIFO
  * to have room and writes data to the TX buffer.
- *
- * @note This function does not check whether all data is sent out to the bus.
- * Before disabling the TX, check kUART_TransmissionCompleteFlag to ensure that the TX is
- * finished.
  *
  * @param base UART peripheral base address.
  * @param data Start address of the data to write.
@@ -744,7 +741,7 @@ void UART_TransferHandleIRQ(UART_Type *base, uart_handle_t *handle);
  */
 static inline void UART_EnableTxDMA(UART_Type *base, bool enable)
 {
-    assert(base);
+    assert(base != NULL);
 
     if (enable)
     {
@@ -768,7 +765,7 @@ static inline void UART_EnableTxDMA(UART_Type *base, bool enable)
  */
 static inline void UART_EnableRxDMA(UART_Type *base, bool enable)
 {
-    assert(base);
+    assert(base != NULL);
 
     if (enable)
     {
@@ -797,7 +794,7 @@ static inline void UART_EnableRxDMA(UART_Type *base, bool enable)
  */
 static inline void UART_SetTxFifoWatermark(UART_Type *base, uint8_t watermark)
 {
-    assert((watermark >= 2) && (watermark <= FSL_FEATURE_IUART_FIFO_SIZEn(base)));
+    assert((watermark >= 2U) && (watermark <= FSL_FEATURE_IUART_FIFO_SIZEn(base)));
     base->UFCR = (base->UFCR & ~UART_UFCR_TXTL_MASK) | UART_UFCR_TXTL(watermark);
 }
 
@@ -857,7 +854,7 @@ static inline void UART_EnableAutoBaudRate(UART_Type *base, bool enable)
  */
 static inline bool UART_IsAutoBaudRateComplete(UART_Type *base)
 {
-    if (UART_USR2_ACST_MASK & base->USR2)
+    if ((UART_USR2_ACST_MASK & base->USR2) != 0U)
     {
         base->USR2 |= UART_USR2_ACST_MASK;
         return true;

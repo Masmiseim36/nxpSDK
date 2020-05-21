@@ -1,16 +1,16 @@
 Overview
 ========
-In this demo, A core decoded music data and put it to DDR buffer and informs M4 with the related information. 
-Then M4 will take the ownership of consuming the buffer, it will copy buffer from DDR to TCM, manipulating SDMA to transfer the data to SAI and codec for playback. 
-It gives DDR and A core opportunity to do power saving for rather long time frame. M4 core will also take ownership of codec initialization.
-SRTM(Simplified Real Time Messaging) protocol is used to communicate between A core an M4 core. 
-The protocol provides various commands for A core and M4 core to communicate with each other. 
-If there is no audio palyback, M4 will enter the STOP mode, and the whole SOC system would enter deep sleep mode(DSM) once A core enter low power status.
+In this demo, A core decoded music data and put it to DDR buffer and informs M core with the related information. 
+Then M core will take the ownership of consuming the buffer, it will copy buffer from DDR to TCM, manipulating SDMA to transfer the data to SAI and codec for playback. 
+It gives DDR and A core opportunity to do power saving for rather long time frame. M core will also take ownership of codec initialization.
+SRTM(Simplified Real Time Messaging) protocol is used to communicate between A core and M core. 
+The protocol provides various commands for A core and M core to communicate with each other. 
+If there is no audio palyback, M core will enter the STOP mode, and the whole SOC system would enter deep sleep mode(DSM) once A core enter low power status.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.3
-- GCC ARM Embedded  8.2.1
+- IAR embedded Workbench  8.40.2
+- GCC ARM Embedded  8.3.1
 
 Hardware requirements
 =====================
@@ -44,7 +44,7 @@ Prepare the Demo
 ******************
 NOTE
 ******************
-1.  The 16/32bit for PCM and DSD64/128/256/512( DSD playabck only supported by ak4497 codec) Music stream are supported
+1.  The 16/24/32bit for PCM and DSD64/128/256/512( DSD playabck only supported by ak4497 codec) Music stream are supported
 2.  The wm8524 codec on the EVK board and the ak4497 codec on the audio board are both supported,
     but please note that only one codec can be used at the same time which is determained by the macro "APP_SRTM_CODEC_WM8524_USED" and "APP_SRTM_CODEC_AK4497_USED" in app_srtm.h.
 3.  Since the  DSD files are typically large, users could create a new large size patition in the SD card to place the music files.

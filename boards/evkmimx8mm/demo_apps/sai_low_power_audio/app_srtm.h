@@ -38,16 +38,16 @@
 #if APP_SRTM_CODEC_WM8524_USED
 #define APP_SRTM_SAI (I2S3)
 #define APP_SRTM_SAI_IRQn I2S3_IRQn
-#define APP_SAI_CLK_FREQ                                                                  \
-    CLOCK_GetPllFreq(kCLOCK_AudioPll1Ctrl) / (CLOCK_GetRootPreDivider(kCLOCK_RootSai3)) / \
-        (CLOCK_GetRootPostDivider(kCLOCK_RootSai3))
 #else
 #define APP_SRTM_SAI (I2S1)
 #define APP_SRTM_SAI_IRQn I2S1_IRQn
-#define APP_SAI_CLK_FREQ                                                                  \
-    CLOCK_GetPllFreq(kCLOCK_AudioPll1Ctrl) / (CLOCK_GetRootPreDivider(kCLOCK_RootSai1)) / \
-        (CLOCK_GetRootPostDivider(kCLOCK_RootSai1))
 #endif
+/* The MCLK of the SAI is 24576000Hz by default which can be changed when playback the music. */
+#define APP_SAI_CLK_FREQ (24576000U)
+/* The frequency of the audio pll 1/2 are the fixed value. */
+#define APP_AUDIO_PLL1_FREQ (393216000U)
+#define APP_AUDIO_PLL2_FREQ (361267200U)
+
 #define APP_SRTM_DMA SDMAARM3
 #define APP_SRTM_DMA_IRQn SDMA3_IRQn
 /* IRQ handler priority definition, bigger number stands for lower priority */

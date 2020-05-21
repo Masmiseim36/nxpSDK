@@ -73,36 +73,28 @@ void BOARD_BootClockRUN(void)
 
     /* switch AHB NOC root to 24M first in order to configure the SYSTEM PLL1. */
     CLOCK_SetRootMux(kCLOCK_RootAhb, kCLOCK_AhbRootmuxOsc24M);
-    //    CLOCK_SetRootMux(kCLOCK_RootNoc, kCLOCK_NocRootmuxOsc24M);
+
     /* switch AXI M7 root to 24M first in order to configure the SYSTEM PLL2. */
-    //    CLOCK_SetRootMux(kCLOCK_RootAxi, kCLOCK_AxiRootmuxOsc24M);
     CLOCK_SetRootMux(kCLOCK_RootM7, kCLOCK_M7RootmuxOsc24M);
 
-    //    CLOCK_InitSysPll1(&g_sysPll1Config); /* init SYSTEM PLL1 run at 800MHZ */
-    //    CLOCK_InitSysPll2(&g_sysPll2Config); /* init SYSTEM PLL2 run at 1000MHZ */
-    //    CLOCK_InitSysPll3(&g_sysPll3Config); /* init SYSTEM PLL3 run at 750MHZ */
-
+    /* Init Audio PLL1/Audio PLL2 */
     CLOCK_InitAudioPll1(&g_audioPll1Config); /* init AUDIO PLL1 run at 393215996HZ */
     CLOCK_InitAudioPll2(&g_audioPll2Config); /* init AUDIO PLL2 run at 361267197HZ */
 
-    CLOCK_SetRootDivider(kCLOCK_RootM7, 1U, 1U);              /* Set root clock to 600M */
+    CLOCK_SetRootDivider(kCLOCK_RootM7, 1U, 1U);              /* Set M7 root clock freq to 600M / 1 = 600M */
     CLOCK_SetRootMux(kCLOCK_RootM7, kCLOCK_M7RootmuxSysPll3); /* switch cortex-m7 to SYSTEM PLL3 */
-                                                              //
-    //    CLOCK_SetRootMux(kCLOCK_RootNoc, kCLOCK_NocRootmuxSysPll1); /* change back to SYSTEM PLL1*/
 
-    CLOCK_SetRootDivider(kCLOCK_RootAhb, 1U, 1U);
-    CLOCK_SetRootMux(kCLOCK_RootAhb, kCLOCK_AhbRootmuxSysPll1Div6); /* switch AHB to SYSTEM PLL1 DIV6 = 133MHZ */
+    CLOCK_SetRootDivider(kCLOCK_RootAhb, 1U, 1U);                   /* Set root clock freq to 133M / 1= 133MHZ */
+    CLOCK_SetRootMux(kCLOCK_RootAhb, kCLOCK_AhbRootmuxSysPll1Div6); /* switch AHB to SYSTEM PLL1 DIV6 */
 
-    CLOCK_SetRootDivider(kCLOCK_RootAudioAhb, 1U, 2U);                    /* Set root clock to 800MHZ/ 2= 400MHZ*/
+    CLOCK_SetRootDivider(kCLOCK_RootAudioAhb, 1U, 2U);                    /* Set root clock freq to 800MHZ/ 2= 400MHZ*/
     CLOCK_SetRootMux(kCLOCK_RootAudioAhb, kCLOCK_AudioAhbRootmuxSysPll1); /* switch AUDIO AHB to SYSTEM PLL1 */
 
-    //  CLOCK_SetRootDivider(kCLOCK_RootAxi, 1U, 2);
-    //  CLOCK_SetRootMux(kCLOCK_RootAxi, kCLOCK_AxiRootmuxSysPll1); /* switch AXI to SYSTEM PLL1 800MHZ */
-
-    CLOCK_SetRootDivider(kCLOCK_RootUart4, 1U, 1U);                     /* Set root clock to 80MHZ/ 1= 80MHZ */
+    CLOCK_SetRootDivider(kCLOCK_RootUart4, 1U, 1U);                     /* Set root clock freq to 80MHZ/ 1= 80MHZ */
     CLOCK_SetRootMux(kCLOCK_RootUart4, kCLOCK_UartRootmuxSysPll1Div10); /* Set UART source to SysPLL1 Div10 80MHZ */
 
-    CLOCK_EnableClock(kCLOCK_Rdc); /* Enable RDC clock */
+    CLOCK_EnableClock(kCLOCK_Rdc);   /* Enable RDC clock */
+    CLOCK_EnableClock(kCLOCK_Ocram); /* Enable Ocram clock */
 
     /* The purpose to enable the following modules clock is to make sure the M7 core could work normally when A53 core
      * enters the low power status.*/

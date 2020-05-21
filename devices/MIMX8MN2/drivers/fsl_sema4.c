@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 NXP
+ * Copyright 2017-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -133,7 +133,9 @@ void SEMA4_Deinit(SEMA4_Type *base)
  */
 status_t SEMA4_TryLock(SEMA4_Type *base, uint8_t gateNum, uint8_t procNum)
 {
-    assert(gateNum < FSL_FEATURE_SEMA4_GATE_COUNT);
+    status_t status;
+
+    assert(gateNum < (uint8_t)FSL_FEATURE_SEMA4_GATE_COUNT);
 
     ++procNum;
 
@@ -143,10 +145,14 @@ status_t SEMA4_TryLock(SEMA4_Type *base, uint8_t gateNum, uint8_t procNum)
     /* Check locked or not. */
     if (procNum != SEMA4_GATEn(base, gateNum))
     {
-        return kStatus_Fail;
+        status = kStatus_Fail;
+    }
+    else
+    {
+        status = kStatus_Success;
     }
 
-    return kStatus_Success;
+    return status;
 }
 
 /*!
@@ -162,14 +168,14 @@ status_t SEMA4_TryLock(SEMA4_Type *base, uint8_t gateNum, uint8_t procNum)
  */
 void SEMA4_Lock(SEMA4_Type *base, uint8_t gateNum, uint8_t procNum)
 {
-    assert(gateNum < FSL_FEATURE_SEMA4_GATE_COUNT);
+    assert(gateNum < (uint8_t)FSL_FEATURE_SEMA4_GATE_COUNT);
 
     ++procNum;
 
     while (procNum != SEMA4_GATEn(base, gateNum))
     {
         /* Wait for unlocked status. */
-        while (SEMA4_GATEn(base, gateNum))
+        while (0U != SEMA4_GATEn(base, gateNum))
         {
         }
 
@@ -191,24 +197,30 @@ void SEMA4_Lock(SEMA4_Type *base, uint8_t gateNum, uint8_t procNum)
  */
 status_t SEMA4_ResetGate(SEMA4_Type *base, uint8_t gateNum)
 {
+    status_t status;
+
     /*
      * Reset all gates if gateNum >= SEMA4_GATE_NUM_RESET_ALL
      * Reset specific gate if gateNum < FSL_FEATURE_SEMA4_GATE_COUNT
      */
-    assert(!((gateNum < SEMA4_GATE_NUM_RESET_ALL) && (gateNum >= FSL_FEATURE_SEMA4_GATE_COUNT)));
+    assert(!((gateNum < SEMA4_GATE_NUM_RESET_ALL) && (gateNum >= (uint8_t)FSL_FEATURE_SEMA4_GATE_COUNT)));
 
     /* Check whether some reset is ongoing. */
-    if (base->RSTGT & SEMA4_RSTGT_RSTNSM_MASK)
+    if (0U != (base->RSTGT & SEMA4_RSTGT_RSTNSM_MASK))
     {
-        return kStatus_Fail;
+        status = kStatus_Fail;
+    }
+    else
+    {
+        /* First step. */
+        base->RSTGT = SEMA4_RSTGT_RSTGSM_RSTGMS_RSTGDP(SEMA4_GATE_RESET_PATTERN_1);
+        /* Second step. */
+        base->RSTGT = SEMA4_RSTGT_RSTGSM_RSTGMS_RSTGDP(SEMA4_GATE_RESET_PATTERN_2) | SEMA4_RSTGT_RSTGTN(gateNum);
+
+        status = kStatus_Success;
     }
 
-    /* First step. */
-    base->RSTGT = SEMA4_RSTGT_RSTGSM_RSTGMS_RSTGDP(SEMA4_GATE_RESET_PATTERN_1);
-    /* Second step. */
-    base->RSTGT = SEMA4_RSTGT_RSTGSM_RSTGMS_RSTGDP(SEMA4_GATE_RESET_PATTERN_2) | SEMA4_RSTGT_RSTGTN(gateNum);
-
-    return kStatus_Success;
+    return status;
 }
 
 /*!
@@ -224,22 +236,28 @@ status_t SEMA4_ResetGate(SEMA4_Type *base, uint8_t gateNum)
  */
 status_t SEMA4_ResetGateNotify(SEMA4_Type *base, uint8_t gateNum)
 {
+    status_t status;
+
     /*
      * Reset all gates if gateNum >= SEMA4_GATE_NUM_RESET_ALL
      * Reset specific gate if gateNum < FSL_FEATURE_SEMA4_GATE_COUNT
      */
-    assert(!((gateNum < SEMA4_GATE_NUM_RESET_ALL) && (gateNum >= FSL_FEATURE_SEMA4_GATE_COUNT)));
+    assert(!((gateNum < (uint8_t)SEMA4_GATE_NUM_RESET_ALL) && (gateNum >= (uint8_t)FSL_FEATURE_SEMA4_GATE_COUNT)));
 
     /* Check whether some reset is ongoing. */
-    if (base->RSTNTF & SEMA4_RSTNTF_RSTNSM_MASK)
+    if (0U != (base->RSTNTF & SEMA4_RSTNTF_RSTNSM_MASK))
     {
-        return kStatus_Fail;
+        status = kStatus_Fail;
+    }
+    else
+    {
+        /* First step. */
+        base->RSTNTF = SEMA4_RSTNTF_RSTNSM_RSTNMS_RSTNDP(SEMA4_GATE_IRQ_RESET_PATTERN_1);
+        /* Second step. */
+        base->RSTNTF = SEMA4_RSTNTF_RSTNSM_RSTNMS_RSTNDP(SEMA4_GATE_IRQ_RESET_PATTERN_2) | SEMA4_RSTNTF_RSTNTN(gateNum);
+
+        status = kStatus_Success;
     }
 
-    /* First step. */
-    base->RSTNTF = SEMA4_RSTNTF_RSTNSM_RSTNMS_RSTNDP(SEMA4_GATE_IRQ_RESET_PATTERN_1);
-    /* Second step. */
-    base->RSTNTF = SEMA4_RSTNTF_RSTNSM_RSTNMS_RSTNDP(SEMA4_GATE_IRQ_RESET_PATTERN_2) | SEMA4_RSTNTF_RSTNTN(gateNum);
-
-    return kStatus_Success;
+    return status;
 }

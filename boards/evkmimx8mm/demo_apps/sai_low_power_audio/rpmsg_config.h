@@ -30,14 +30,14 @@
 //!
 //! Size of the buffer payload, it must be equal to (240, 496, 1008, ...)
 //! [2^n - 16].
-//! The default value is 496.
-#define RL_BUFFER_PAYLOAD_SIZE (496)
+//! The default value is 496U.
+#define RL_BUFFER_PAYLOAD_SIZE (496U)
 
 //! @def RL_BUFFER_COUNT
 //!
 //! Number of the buffers, it must be power of two (2, 4, ...).
-//! The default value is 2.
-#define RL_BUFFER_COUNT (256)
+//! The default value is 2U.
+#define RL_BUFFER_COUNT (256U)
 
 //! @def RL_API_HAS_ZEROCOPY
 //!
@@ -72,7 +72,6 @@
 //! Added for QNX port mainly, but can be used if required.
 //! The default value is 0 (no context, saves some RAM).
 #define RL_USE_ENVIRONMENT_CONTEXT (0)
-
 
 //! @def RL_DEBUG_CHECK_BUFFERS
 //!

@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -31,7 +31,7 @@ static uint32_t MU_GetInstance(MU_Type *base)
     uint32_t instance;
 
     /* Find the instance index from base address mappings. */
-    for (instance = 0; instance < (sizeof(s_muBases) / sizeof(s_muBases[0])); instance++)
+    for (instance = 0U; instance < (sizeof(s_muBases) / sizeof(s_muBases[0])); instance++)
     {
         if (s_muBases[instance] == base)
         {
@@ -86,8 +86,9 @@ void MU_SendMsg(MU_Type *base, uint32_t regIndex, uint32_t msg)
     assert(regIndex < MU_TR_COUNT);
 
     /* Wait TX register to be empty. */
-    while (!(base->SR & (kMU_Tx0EmptyFlag >> regIndex)))
+    while (0U == (base->SR & (((uint32_t)kMU_Tx0EmptyFlag) >> regIndex)))
     {
+        ; /* Intentional empty while*/
     }
 
     base->TR[regIndex] = msg;
@@ -107,8 +108,9 @@ uint32_t MU_ReceiveMsg(MU_Type *base, uint32_t regIndex)
     assert(regIndex < MU_TR_COUNT);
 
     /* Wait RX register to be full. */
-    while (!(base->SR & (kMU_Rx0FullFlag >> regIndex)))
+    while (0U == (base->SR & (((uint32_t)kMU_Rx0FullFlag) >> regIndex)))
     {
+        ; /* Intentional empty while*/
     }
 
     return base->RR[regIndex];
@@ -130,8 +132,9 @@ uint32_t MU_ReceiveMsg(MU_Type *base, uint32_t regIndex)
 void MU_SetFlags(MU_Type *base, uint32_t flags)
 {
     /* Wait for update finished. */
-    while (base->SR & MU_SR_FUP_MASK)
+    while (0U != (base->SR & ((uint32_t)MU_SR_FUP_MASK)))
     {
+        ; /* Intentional empty while*/
     }
 
     MU_SetFlagsNonBlocking(base, flags);
@@ -149,8 +152,8 @@ void MU_SetFlags(MU_Type *base, uint32_t flags)
  * code
  * if (kStatus_Success != MU_TriggerInterrupts(base, kMU_GenInt0InterruptTrigger | kMU_GenInt2InterruptTrigger))
  * {
- *     // Previous general purpose interrupt 0 or general purpose interrupt 2
- *     // has not been processed by the other core.
+ *     Previous general purpose interrupt 0 or general purpose interrupt 2
+ *     has not been processed by the other core.
  * }
  * endcode
  *
@@ -161,20 +164,23 @@ void MU_SetFlags(MU_Type *base, uint32_t flags)
  */
 status_t MU_TriggerInterrupts(MU_Type *base, uint32_t mask)
 {
-    uint32_t reg = base->CR;
+    status_t status = kStatus_Success;
+    uint32_t reg    = base->CR;
 
     /* Previous interrupt has been accepted. */
-    if (!(reg & mask))
+    if (0U == (reg & mask))
     {
         /* All interrupts have been accepted, trigger now. */
         reg      = (reg & ~(MU_CR_GIRn_MASK | MU_CR_NMI_MASK)) | mask;
         base->CR = reg;
-        return kStatus_Success;
+        status   = kStatus_Success;
     }
     else
     {
-        return kStatus_Fail;
+        status = kStatus_Fail;
     }
+
+    return status;
 }
 
 #if !(defined(FSL_FEATURE_MU_NO_RSTH) && FSL_FEATURE_MU_NO_RSTH)
@@ -190,7 +196,7 @@ status_t MU_TriggerInterrupts(MU_Type *base, uint32_t mask)
  */
 void MU_BootCoreB(MU_Type *base, mu_core_boot_mode_t mode)
 {
-#if (defined(FSL_FEATURE_MU_HAS_RESET_INT) && FSL_FEATURE_MU_HAS_RESET_INT)
+#if (defined(FSL_FEATURE_MU_HAS_RESET_DEASSERT_INT) && FSL_FEATURE_MU_HAS_RESET_ASSERT_INT)
     /* Clean the reset de-assert pending flag. */
     base->SR = MU_SR_RDIP_MASK;
 #endif
@@ -248,9 +254,9 @@ void MU_BootOtherCore(MU_Type *base, mu_core_boot_mode_t mode)
  *
  * Example 2: Reset the other core and hold it, then boot the other core later.
  * code
- * // Here the other core enters reset, and the reset is hold
+ *    Here the other core enters reset, and the reset is hold
  * MU_HardwareResetOtherCore(MU_A, true, true, modeDontCare);
- * // Current core boot the other core when necessary.
+ *    Current core boot the other core when necessary.
  * MU_BootOtherCore(MU_A, bootMode);
  * endcode
  *
@@ -289,25 +295,25 @@ void MU_HardwareResetOtherCore(MU_Type *base, bool waitReset, bool holdReset, mu
     /* Set CCR[HR] to trigger hardware reset. */
     base->CCR = ccr | MU_CCR_HR_MASK;
 
-    /* If don't wait the other core enters reset, return directly. */
-    if (!waitReset)
+    /* If wait the other core enters reset. */
+    if (waitReset)
     {
-        return;
-    }
-
-    /* Wait for the other core go to reset. */
-    while (!(base->SR & MU_SR_RAIP_MASK))
-    {
-    }
-
-    if (!holdReset)
-    {
-        /* Clear CCR[HR]. */
-        base->CCR = ccr;
-
-        /* Wait for the other core out of reset. */
-        while (!(base->SR & MU_SR_RDIP_MASK))
+        /* Wait for the other core go to reset. */
+        while (0U == (base->SR & MU_SR_RAIP_MASK))
         {
+            ; /* Intentional empty while*/
+        }
+
+        if (!holdReset)
+        {
+            /* Clear CCR[HR]. */
+            base->CCR = ccr;
+
+            /* Wait for the other core out of reset. */
+            while (0U == (base->SR & MU_SR_RDIP_MASK))
+            {
+                ; /* Intentional empty while*/
+            }
         }
     }
 }
@@ -329,9 +335,9 @@ void MU_HardwareResetOtherCore(MU_Type *base, bool waitReset, bool holdReset, mu
  *
  * Example 2: Reset the other core and hold it, then boot the other core later.
  * code
- * // Here the other core enters reset, and the reset is hold
+ *    Here the other core enters reset, and the reset is hold
  * MU_HardwareResetOtherCore(MU_A, true, true, modeDontCare);
- * // Current core boot the other core when necessary.
+ *    Current core boot the other core when necessary.
  * MU_BootOtherCore(MU_A, bootMode);
  * endcode
  *
@@ -355,6 +361,7 @@ void MU_HardwareResetOtherCore(MU_Type *base, bool waitReset, bool holdReset, mu
     /* If MU does not support hold reset, then the parameter must be false. */
     assert(false == holdReset);
 #endif
+    uint32_t resetFlag = 0;
 
     uint32_t cr = base->CR & ~(MU_CR_HR_MASK | MU_CR_RSTH_MASK | MU_CR_BOOT_MASK | MU_CR_GIRn_MASK | MU_CR_NMI_MASK);
 
@@ -365,38 +372,42 @@ void MU_HardwareResetOtherCore(MU_Type *base, bool waitReset, bool holdReset, mu
         cr |= MU_CR_RSTH_MASK;
     }
 
-#if (defined(FSL_FEATURE_MU_HAS_RESET_INT) && FSL_FEATURE_MU_HAS_RESET_INT)
-    /* Clean the reset assert pending flag. */
-    base->SR = (MU_SR_RAIP_MASK | MU_SR_RDIP_MASK);
+#if (defined(FSL_FEATURE_MU_HAS_RESET_ASSERT_INT) && FSL_FEATURE_MU_HAS_RESET_ASSERT_INT)
+    resetFlag |= MU_SR_RAIP_MASK;
 #endif
+#if (defined(FSL_FEATURE_MU_HAS_RESET_DEASSERT_INT) && FSL_FEATURE_MU_HAS_RESET_ASSERT_INT)
+    resetFlag |= MU_SR_RDIP_MASK;
+#endif
+    /* Clean the reset assert pending flag. */
+    base->SR = resetFlag;
 
     /* Set CR[HR] to trigger hardware reset. */
     base->CR = cr | MU_CR_HR_MASK;
 
-    /* If don't wait the other core enters reset, return directly. */
-    if (!waitReset)
+    /* If wait the other core enters reset. */
+    if (waitReset)
     {
-        return;
-    }
-
-#if (defined(FSL_FEATURE_MU_HAS_RESET_INT) && FSL_FEATURE_MU_HAS_RESET_INT)
-    /* Wait for the other core go to reset. */
-    while (!(base->SR & MU_SR_RAIP_MASK))
-    {
-    }
-#endif
-
-    if (!holdReset)
-    {
-        /* Clear CR[HR]. */
-        base->CR = cr;
-
-#if (defined(FSL_FEATURE_MU_HAS_RESET_INT) && FSL_FEATURE_MU_HAS_RESET_INT)
-        /* Wait for the other core out of reset. */
-        while (!(base->SR & MU_SR_RDIP_MASK))
+#if (defined(FSL_FEATURE_MU_HAS_RESET_ASSERT_INT) && FSL_FEATURE_MU_HAS_RESET_ASSERT_INT)
+        /* Wait for the other core go to reset. */
+        while (0U == (base->SR & MU_SR_RAIP_MASK))
         {
+            ; /* Intentional empty while*/
         }
 #endif
+
+        if (!holdReset)
+        {
+            /* Clear CR[HR]. */
+            base->CR = cr;
+
+#if (defined(FSL_FEATURE_MU_HAS_RESET_DEASSERT_INT) && FSL_FEATURE_MU_HAS_RESET_ASSERT_INT)
+            /* Wait for the other core out of reset. */
+            while (0U == (base->SR & MU_SR_RDIP_MASK))
+            {
+                ; /* Intentional empty while*/
+            }
+#endif
+        }
     }
 }
 #endif /* FSL_FEATURE_MU_HAS_CCR  */

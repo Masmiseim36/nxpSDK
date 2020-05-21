@@ -36,6 +36,7 @@
 #define DEMO_CODEC_BUS_PIN_NUM (0)
 #define DEMO_CODEC_MUTE_PIN (GPIO5)
 #define DEMO_CODEC_MUTE_PIN_NUM (21)
+#define DEMO_AUDIO_SAMPLE_RATE (48000)
 #define BUFFER_SIZE (256)
 /*******************************************************************************
  * Prototypes
@@ -56,8 +57,8 @@ static const pdm_config_t pdmConfig         = {
     .cicOverSampleRate = DEMO_PDM_CIC_OVERSAMPLE_RATE,
 };
 static pdm_channel_config_t channelConfig = {
-    .cutOffFreq = kPDM_DcRemoverCutOff21Hz,
-    .gain       = kPDM_DfOutputGain4,
+    .cutOffFreq = kPDM_DcRemoverCutOff152Hz,
+    .gain       = kPDM_DfOutputGain1,
 };
 /*******************************************************************************
  * Code
@@ -143,9 +144,11 @@ int main(void)
     PDM_Init(DEMO_PDM, &pdmConfig);
     PDM_SetChannelConfig(DEMO_PDM, DEMO_PDM_ENABLE_CHANNEL_LEFT, &channelConfig);
     PDM_SetChannelConfig(DEMO_PDM, DEMO_PDM_ENABLE_CHANNEL_RIGHT, &channelConfig);
-    PDM_SetSampleRate(DEMO_PDM, (1U << DEMO_PDM_ENABLE_CHANNEL_LEFT) | (1U << DEMO_PDM_ENABLE_CHANNEL_RIGHT),
-                      pdmConfig.qualityMode, pdmConfig.cicOverSampleRate,
-                      DEMO_PDM_CLK_FREQ / DEMO_PDM_SAMPLE_CLOCK_RATE);
+    if (PDM_SetSampleRateConfig(DEMO_PDM, DEMO_PDM_CLK_FREQ, DEMO_AUDIO_SAMPLE_RATE) != kStatus_Success)
+    {
+        PRINTF("PDM configure sample rate failed.\r\n");
+        return -1;
+    }
     PDM_Reset(DEMO_PDM);
     PDM_EnableInterrupts(DEMO_PDM, kPDM_ErrorInterruptEnable | kPDM_FIFOInterruptEnable);
     EnableIRQ(PDM_EVENT_IRQn);

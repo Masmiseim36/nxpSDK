@@ -8,7 +8,6 @@
 #ifndef __FSL_I2C_FREERTOS_H__
 #define __FSL_I2C_FREERTOS_H__
 
-#include "FreeRTOSConfig.h"
 #include "FreeRTOS.h"
 #include "portable.h"
 #include "semphr.h"
@@ -26,7 +25,7 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief I2C freertos driver version 2.0.3. */
+/*! @brief I2C FreeRTOS driver version 2.0.3. */
 #define FSL_I2C_FREERTOS_DRIVER_VERSION (MAKE_VERSION(2, 0, 3))
 /*@}*/
 

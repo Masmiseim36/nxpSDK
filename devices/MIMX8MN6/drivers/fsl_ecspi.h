@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -21,8 +21,8 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief ECSPI driver version 2.0.0. */
-#define FSL_ECSPI_DRIVER_VERSION (MAKE_VERSION(2, 0, 0))
+/*! @brief ECSPI driver version 2.0.2. */
+#define FSL_ECSPI_DRIVER_VERSION (MAKE_VERSION(2, 0, 2))
 /*@}*/
 
 #ifndef ECSPI_DUMMYDATA
@@ -31,7 +31,7 @@
 #endif
 
 /*! @brief Return status for the ECSPI driver. */
-enum _ecspi_status
+enum
 {
     kStatus_ECSPI_Busy             = MAKE_STATUS(kStatusGroup_ECSPI, 0), /*!< ECSPI bus is busy */
     kStatus_ECSPI_Idle             = MAKE_STATUS(kStatusGroup_ECSPI, 1), /*!< ECSPI is idle */
@@ -55,7 +55,7 @@ typedef enum _ecspi_clock_phase
 } ecspi_clock_phase_t;
 
 /*! @brief ECSPI interrupt sources. */
-enum _ecspi_interrupt_enable
+enum
 {
     kECSPI_TxfifoEmptyInterruptEnable      = ECSPI_INTREG_TEEN_MASK,  /*!< Transmit FIFO buffer empty interrupt */
     kECSPI_TxFifoDataRequstInterruptEnable = ECSPI_INTREG_TDREN_MASK, /*!< Transmit FIFO data requst interrupt */
@@ -71,7 +71,7 @@ enum _ecspi_interrupt_enable
 };
 
 /*! @brief ECSPI status flags. */
-enum _ecspi_flags
+enum
 {
     kECSPI_TxfifoEmptyFlag      = ECSPI_STATREG_TE_MASK,  /*!< Transmit FIFO buffer empty flag */
     kECSPI_TxFifoDataRequstFlag = ECSPI_STATREG_TDR_MASK, /*!< Transmit FIFO data requst flag */
@@ -83,7 +83,7 @@ enum _ecspi_flags
     kECSPI_TransferCompleteFlag = ECSPI_STATREG_TC_MASK,  /*!< Transfer complete flag */
 };
 /*! @brief ECSPI DMA enable.*/
-enum _ecspi_dma_enable_t
+enum
 {
     kECSPI_TxDmaEnable  = ECSPI_DMAREG_TEDEN_MASK,                            /*!< Tx DMA request source */
     kECSPI_RxDmaEnable  = ECSPI_DMAREG_RXDEN_MASK,                            /*!< Rx DMA request source */
@@ -450,7 +450,8 @@ static inline void ECSPI_SoftwareReset(ECSPI_Type *base)
  */
 static inline bool ECSPI_IsMaster(ECSPI_Type *base, ecspi_channel_source_t channel)
 {
-    return (bool)(((base->CONREG & ECSPI_CONREG_CHANNEL_MODE_MASK) >> (ECSPI_CONREG_CHANNEL_MODE_SHIFT + channel)) &
+    return (bool)(((base->CONREG & ECSPI_CONREG_CHANNEL_MODE_MASK) >>
+                   (ECSPI_CONREG_CHANNEL_MODE_SHIFT + (uint32_t)channel)) &
                   0x1U);
 }
 /*! @} */

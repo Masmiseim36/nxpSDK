@@ -2,13 +2,13 @@ Overview
 ========
 The pdm interrupt example shows how to use pdm driver with interrupt:
 
-In this example, pdm wiil trigger interrupt to transfer data when watermark value reach.
+In this example, pdm will trigger interrupt to transfer data when watermark value is reached.
 
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.3
-- GCC ARM Embedded  8.2.1
+- IAR embedded Workbench  8.40.2
+- GCC ARM Embedded  8.3.1
 
 Hardware requirements
 =====================

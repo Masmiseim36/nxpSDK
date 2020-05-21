@@ -56,7 +56,7 @@ status_t AK4497_Init(ak4497_handle_t *handle, ak4497_config_t *config)
     handle->config = config;
 
     /* i2c bus initialization */
-    if (CODEC_I2C_Init(&(handle->i2cHandle), config->i2cConfig.codecI2CInstance, AK4497_I2C_BITRATE,
+    if (CODEC_I2C_Init(handle->i2cHandle, config->i2cConfig.codecI2CInstance, AK4497_I2C_BITRATE,
                        config->i2cConfig.codecI2CSourceClock) != kStatus_HAL_I2cSuccess)
     {
         return kStatus_Fail;
@@ -303,7 +303,7 @@ status_t AK4497_Deinit(ak4497_handle_t *handle)
 {
     AK4497_ModifyReg(handle, AK4497_CONTROL2, AK4497_CONTROL2_SMUTE_MASK,
                      1U << AK4497_CONTROL2_SMUTE_SHIFT); /* Soft ware mute */
-    return CODEC_I2C_Deinit(&(handle->i2cHandle));
+    return CODEC_I2C_Deinit(handle->i2cHandle);
 }
 
 status_t AK4497_ModuleControl(ak4497_handle_t *handle, ak4497_module_ctrl_cmd_t cmd, uint32_t data)
@@ -329,7 +329,7 @@ status_t AK4497_WriteReg(ak4497_handle_t *handle, uint8_t reg, uint8_t val)
 
     Delay(); /* Ensure the Codec I2C bus free before writing the slave. */
 
-    return CODEC_I2C_Send(&(handle->i2cHandle), handle->config->slaveAddress, reg, 1U, (uint8_t *)&val, 1U);
+    return CODEC_I2C_Send(handle->i2cHandle, handle->config->slaveAddress, reg, 1U, (uint8_t *)&val, 1U);
 }
 
 status_t AK4497_ReadReg(ak4497_handle_t *handle, uint8_t reg, uint8_t *val)
@@ -339,7 +339,7 @@ status_t AK4497_ReadReg(ak4497_handle_t *handle, uint8_t reg, uint8_t *val)
 
     Delay(); /* Ensure the Codec I2C bus free before reading the slave. */
 
-    return CODEC_I2C_Receive(&(handle->i2cHandle), handle->config->slaveAddress, reg, 1U, val, 1U);
+    return CODEC_I2C_Receive(handle->i2cHandle, handle->config->slaveAddress, reg, 1U, val, 1U);
 }
 
 status_t AK4497_ModifyReg(ak4497_handle_t *handle, uint8_t reg, uint8_t mask, uint8_t val)

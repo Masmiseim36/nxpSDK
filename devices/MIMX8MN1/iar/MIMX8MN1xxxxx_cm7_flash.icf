@@ -39,7 +39,7 @@ define symbol m_data2_end              = 0x80FFFFFF;
 /* M7 always start up from TCM. The first 32 bytes of the binary contains values of  MSP and PC,
 if the start address is not TCM. The TCM region [0x00000000-0x0000001F] is reserved for this purpose. */
 define symbol m_tcml_start             = 0x00000020;
-define symbol m_tcml_end               = 0x0000FFFF;
+define symbol m_tcml_end               = 0x0001FFFF;
 
 /* Sizes */
 if (isdefinedsymbol(__stack_size__)) {

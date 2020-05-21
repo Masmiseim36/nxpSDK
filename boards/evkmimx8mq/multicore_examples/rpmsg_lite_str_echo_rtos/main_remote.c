@@ -43,21 +43,21 @@ static char app_buf[512]; /* Each RPMSG buffer can carry less than 512 payload *
  ******************************************************************************/
 TaskHandle_t app_task_handle = NULL;
 
-void app_nameservice_isr_cb(unsigned int new_ept, const char *new_ept_name, unsigned long flags, void *user_data)
+void app_nameservice_isr_cb(uint32_t new_ept, const char *new_ept_name, uint32_t flags, void *user_data)
 {
 }
 
 void app_task(void *param)
 {
-    volatile unsigned long remote_addr;
+    volatile uint32_t remote_addr;
     struct rpmsg_lite_endpoint *volatile my_ept;
     volatile rpmsg_queue_handle my_queue;
     struct rpmsg_lite_instance *volatile my_rpmsg;
     void *rx_buf;
-    int len;
-    int result;
+    uint32_t len;
+    int32_t result;
     void *tx_buf;
-    unsigned long size;
+    uint32_t size;
 
     /* Print the initial banner */
     PRINTF("\r\nRPMSG String Echo FreeRTOS RTOS API Demo...\r\n");
@@ -89,8 +89,8 @@ void app_task(void *param)
     for (;;)
     {
         /* Get RPMsg rx buffer with message */
-        result = rpmsg_queue_recv_nocopy(my_rpmsg, my_queue, (unsigned long *)&remote_addr, (char **)&rx_buf, &len,
-                                         RL_BLOCK);
+        result =
+            rpmsg_queue_recv_nocopy(my_rpmsg, my_queue, (uint32_t *)&remote_addr, (char **)&rx_buf, &len, RL_BLOCK);
         if (result != 0)
         {
             assert(false);

@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2019 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -20,8 +20,8 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief UART SDMA driver version 2.0.1. */
-#define FSL_UART_SDMA_DRIVER_VERSION (MAKE_VERSION(2, 0, 1))
+/*! @brief UART SDMA driver version 2.0.2. */
+#define FSL_UART_SDMA_DRIVER_VERSION (MAKE_VERSION(2, 0, 2))
 /*@}*/
 
 /* Forward declaration of the handle typedef. */

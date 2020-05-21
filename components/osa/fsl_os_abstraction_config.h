@@ -2,7 +2,6 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2018 NXP
  *
- * ile
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -23,8 +22,15 @@
 #endif
 
 /*! @brief Definition to determine whether enable OSA's TASK module. */
+#ifndef OSA_USED
 #ifndef FSL_OSA_TASK_ENABLE
 #define FSL_OSA_TASK_ENABLE 0U
 #endif
+#else
+#if defined(FSL_OSA_TASK_ENABLE)
+#undef FSL_OSA_TASK_ENABLE
+#endif
+#define FSL_OSA_TASK_ENABLE 1U
+#endif /* OSA_USED */
 
 #endif /* _FSL_OS_ABSTRACTION_CONFIG_H_ */

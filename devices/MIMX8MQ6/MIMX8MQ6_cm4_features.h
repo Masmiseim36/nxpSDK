@@ -1,7 +1,7 @@
 /*
 ** ###################################################################
 **     Version:             rev. 4.0, 2018-01-26
-**     Build:               b190319
+**     Build:               b190711
 **
 **     Abstract:
 **         Chip specific module features.
@@ -130,20 +130,8 @@
 
 /* GPC module features */
 
-/* @brief Has DVFS0 Change Request. */
-#define FSL_FEATURE_GPC_HAS_CNTR_DVFS0CR (0)
-/* @brief Has GPC interrupt/event masking. */
-#define FSL_FEATURE_GPC_HAS_CNTR_GPCIRQM (0)
-/* @brief Has L2 cache power control. */
-#define FSL_FEATURE_GPC_HAS_CNTR_L2PGE (0)
-/* @brief Has FLEXRAM PDRAM0(bank1-7) power control. */
-#define FSL_FEATURE_GPC_HAS_CNTR_PDRAM0PGE (0)
-/* @brief Has VADC power control. */
-#define FSL_FEATURE_GPC_HAS_CNTR_VADC (0)
-/* @brief Has Display power control. */
-#define FSL_FEATURE_GPC_HAS_CNTR_DISPLAY (0)
-/* @brief Supports IRQ 0-31. */
-#define FSL_FEATURE_GPC_HAS_IRQ_0_31 (0)
+/* @brief Has PGC MF. */
+#define FSL_FEATURE_GPC_HAS_PGC_MF (1)
 
 /* IGPIO module features */
 
@@ -325,12 +313,12 @@
 
 /* @brief SPBA module start address. */
 #define FSL_FEATURE_SPBA_STARTn(x) \
-    (((x) == SPBA1) ? (0x30800000U) : \
-    (((x) == SPBA2) ? (0x30000000U) : (-1)))
+    (((x) == SPBA1) ? (0x30800000) : \
+    (((x) == SPBA2) ? (0x30000000) : (-1)))
 /* @brief SPBA module end address. */
 #define FSL_FEATURE_SPBA_ENDn(x) \
-    (((x) == SPBA1) ? (0x308FFFFFU) : \
-    (((x) == SPBA2) ? (0x300FFFFFU) : (-1)))
+    (((x) == SPBA1) ? (0x308FFFFF) : \
+    (((x) == SPBA2) ? (0x300FFFFF) : (-1)))
 
 /* SysTick module features */
 
@@ -356,6 +344,10 @@
 #define FSL_FEATURE_USDHC_HAS_SDR50_MODE (1)
 /* @brief Has SDR104 support (HOST_CTRL_CAP[SDR104_SUPPORT]) */
 #define FSL_FEATURE_USDHC_HAS_SDR104_MODE (1)
+/* @brief USDHC has reset control */
+#define FSL_FEATURE_USDHC_HAS_RESET (0)
+/* @brief USDHC has no bitfield WTMK_LVL[WR_BRST_LEN] and WTMK_LVL[RD_BRST_LEN] */
+#define FSL_FEATURE_USDHC_HAS_NO_RW_BURST_LEN (0)
 
 #endif /* _MIMX8MQ6_cm4_FEATURES_H_ */
 

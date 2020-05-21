@@ -75,7 +75,6 @@ int main(void)
 
     BOARD_InitPins();
     BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
     BOARD_InitMemory();
 
     /*

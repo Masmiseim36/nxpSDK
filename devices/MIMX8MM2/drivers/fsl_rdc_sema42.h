@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 NXP
+ * Copyright 2017-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -22,14 +22,14 @@
 /*! @name Driver version */
 /*@{*/
 /*! @brief RDC_SEMA42 driver version */
-#define FSL_RDC_SEMA42_DRIVER_VERSION (MAKE_VERSION(2, 0, 0))
+#define FSL_RDC_SEMA42_DRIVER_VERSION (MAKE_VERSION(2, 0, 2))
 /*@}*/
 
 /*! @brief The number to reset all RDC_SEMA42 gates. */
 #define RDC_SEMA42_GATE_NUM_RESET_ALL (64U)
 
 /*! @brief RDC_SEMA42 gate n register address. */
-#define RDC_SEMA42_GATEn(base, n) (*(&((base)->GATE0) + (n)))
+#define RDC_SEMA42_GATEn(base, n) (((volatile uint8_t *)(&((base)->GATE0)))[(n)])
 
 /*! @brief RDC_SEMA42 gate count. */
 #define RDC_SEMA42_GATE_COUNT (64U)
@@ -108,7 +108,7 @@ static inline void RDC_SEMA42_Unlock(RDC_SEMAPHORE_Type *base, uint8_t gateNum)
 {
     assert(gateNum < RDC_SEMA42_GATE_COUNT);
 
-    RDC_SEMA42_GATEn(base, gateNum) = 0;
+    RDC_SEMA42_GATEn(base, gateNum) = 0U;
 }
 
 /*!
@@ -126,7 +126,7 @@ static inline int32_t RDC_SEMA42_GetLockMasterIndex(RDC_SEMAPHORE_Type *base, ui
 
     uint8_t regGate = RDC_SEMA42_GATEn(base, gateNum);
 
-    return (regGate & RDC_SEMAPHORE_GATE0_GTFSM_MASK) - 1;
+    return (int32_t)((uint8_t)(regGate & RDC_SEMAPHORE_GATE0_GTFSM_MASK)) - 1;
 }
 
 /*!

@@ -31,7 +31,7 @@ volatile bool g_Transfer_Done = false;
 AT_NONCACHEABLE_SECTION_ALIGN(sdma_context_data_t context, 4);
 
 AT_NONCACHEABLE_SECTION_ALIGN_INIT(uint32_t srcAddr[BUFF_LENGTH], 4) = {0x01, 0x02, 0x03, 0x04};
-AT_NONCACHEABLE_SECTION_ALIGN(uint32_t destAddr[BUFF_LENGTH], 4);
+AT_NONCACHEABLE_SECTION_ALIGN(uint32_t destAddr[BUFF_LENGTH], 16);
 
 /*******************************************************************************
  * Code

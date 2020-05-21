@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2018, Freescale Semiconductor, Inc.
+ * Copyright 2019 NXP
  * All rights reserved.
- *
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -57,9 +57,9 @@ static void PDM_SDMACallback(sdma_handle_t *handle, void *userData, bool done, u
     pdm_sdma_handle_t *pdmHandle          = privHandle->handle;
 
     /* If finished a block, call the callback function */
-    memset(&pdmHandle->pdmQueue[pdmHandle->queueDriver], 0, sizeof(pdm_transfer_t));
-    pdmHandle->queueDriver = (pdmHandle->queueDriver + 1) % PDM_XFER_QUEUE_SIZE;
-    if (pdmHandle->callback)
+    (void)memset(&pdmHandle->pdmQueue[pdmHandle->queueDriver], 0, sizeof(pdm_transfer_t));
+    pdmHandle->queueDriver = (pdmHandle->queueDriver + 1U) % PDM_XFER_QUEUE_SIZE;
+    if (pdmHandle->callback != NULL)
     {
         (pdmHandle->callback)(privHandle->base, pdmHandle, kStatus_PDM_Idle, pdmHandle->userData);
     }
@@ -97,7 +97,7 @@ void PDM_TransferCreateHandleSDMA(PDM_Type *base,
     uint32_t instance = PDM_GetInstance(base);
 
     /* Zero the handle */
-    memset(handle, 0, sizeof(*handle));
+    (void)memset(handle, 0, sizeof(*handle));
 
     /* Set pdm base to handle */
     handle->dmaHandle   = dmaHandle;
@@ -138,11 +138,11 @@ void PDM_SetChannelConfigSDMA(PDM_Type *base,
     PDM_SetChannelConfig(base, channel, config);
 
     /* record end channel number */
-    handle->endChannel = channel;
+    handle->endChannel = (uint8_t)channel;
     /* increase totoal enabled channel number */
     handle->channelNums++;
     /* increase count pre channel numbers */
-    handle->count = handle->channelNums * (base->FIFO_CTRL & PDM_FIFO_CTRL_FIFOWMK_MASK);
+    handle->count = (uint8_t)(handle->channelNums * (base->FIFO_CTRL & PDM_FIFO_CTRL_FIFOWMK_MASK));
 }
 
 /*!
@@ -163,8 +163,9 @@ status_t PDM_TransferReceiveSDMA(PDM_Type *base, pdm_sdma_handle_t *handle, pdm_
     assert(handle && xfer);
 
     sdma_transfer_config_t config = {0};
-    uint32_t startAddr            = PDM_GetDataRegisterAddress(base, handle->endChannel - (handle->channelNums - 1U));
-    sdma_peripheral_t perType     = kSDMA_PeripheralMultiFifoPDM;
+    uint32_t startAddr =
+        PDM_GetDataRegisterAddress(base, ((uint32_t)handle->endChannel - ((uint32_t)handle->channelNums - 1U)));
+    sdma_peripheral_t perType = kSDMA_PeripheralMultiFifoPDM;
 
     /* Check if input parameter invalid */
     if ((xfer->data == NULL) || (xfer->dataSize == 0U))
@@ -172,7 +173,7 @@ status_t PDM_TransferReceiveSDMA(PDM_Type *base, pdm_sdma_handle_t *handle, pdm_
         return kStatus_InvalidArgument;
     }
 
-    if (handle->pdmQueue[handle->queueUser].data)
+    if (handle->pdmQueue[handle->queueUser].data != NULL)
     {
         return kStatus_PDM_QueueFull;
     }
@@ -184,11 +185,12 @@ status_t PDM_TransferReceiveSDMA(PDM_Type *base, pdm_sdma_handle_t *handle, pdm_
 
     /* Prepare sdma configure */
     SDMA_PrepareTransfer(&config, startAddr, (uint32_t)xfer->data, handle->fifoWidth, handle->fifoWidth,
-                         handle->count * handle->fifoWidth, xfer->dataSize, handle->eventSource, perType,
+                         (uint32_t)handle->count * handle->fifoWidth, xfer->dataSize, handle->eventSource, perType,
                          kSDMA_PeripheralToMemory);
 
     /* multi fifo configurations */
-    SDMA_SetMultiFifoConfig(&config, handle->channelNums, FSL_FEATURE_PDM_FIFO_OFFSET / sizeof(uint32_t) - 1U);
+    SDMA_SetMultiFifoConfig(&config, handle->channelNums,
+                            (uint32_t)FSL_FEATURE_PDM_FIFO_OFFSET / sizeof(uint32_t) - 1U);
     /* enable sw done for PDM */
     SDMA_SetDoneConfig(handle->dmaHandle->base, &config, kSDMA_PeripheralMultiFifoPDM, kSDMA_DoneSrcSW);
 
@@ -205,9 +207,9 @@ status_t PDM_TransferReceiveSDMA(PDM_Type *base, pdm_sdma_handle_t *handle, pdm_
                                     kSDMA_PeripheralToMemory);
     }
 
-    handle->queueUser = (handle->queueUser + 1) % PDM_XFER_QUEUE_SIZE;
+    handle->queueUser = (handle->queueUser + 1U) % PDM_XFER_QUEUE_SIZE;
 
-    if (handle->state != kStatus_PDM_Busy)
+    if (handle->state != (uint32_t)kStatus_PDM_Busy)
     {
         SDMA_SubmitTransfer(handle->dmaHandle, &config);
 

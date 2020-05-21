@@ -269,9 +269,9 @@
 /* SPBA module features */
 
 /* @brief SPBA module start address. */
-#define FSL_FEATURE_SPBA_STARTn(x) (((x) == SPBA2) ? (0x30000000U) : (((x) == SPBA1) ? (0x30800000U) : (-1)))
+#define FSL_FEATURE_SPBA_STARTn(x) (((x) == SPBA2) ? (0x30000000) : (((x) == SPBA1) ? (0x30800000) : (-1)))
 /* @brief SPBA module end address. */
-#define FSL_FEATURE_SPBA_ENDn(x) (((x) == SPBA2) ? (0x300FFFFFU) : (((x) == SPBA1) ? (0x308FFFFFU) : (-1)))
+#define FSL_FEATURE_SPBA_ENDn(x) (((x) == SPBA2) ? (0x300FFFFF) : (((x) == SPBA1) ? (0x308FFFFF) : (-1)))
 
 /* SysTick module features */
 

@@ -295,27 +295,25 @@ void MU_HardwareResetOtherCore(MU_Type *base, bool waitReset, bool holdReset, mu
     /* Set CCR[HR] to trigger hardware reset. */
     base->CCR = ccr | MU_CCR_HR_MASK;
 
-    /* If don't wait the other core enters reset, return directly. */
-    if (!waitReset)
+    /* If wait the other core enters reset. */
+    if (waitReset)
     {
-        return;
-    }
-
-    /* Wait for the other core go to reset. */
-    while (0U == (base->SR & MU_SR_RAIP_MASK))
-    {
-        ; /* Intentional empty while*/
-    }
-
-    if (!holdReset)
-    {
-        /* Clear CCR[HR]. */
-        base->CCR = ccr;
-
-        /* Wait for the other core out of reset. */
-        while (0U == (base->SR & MU_SR_RDIP_MASK))
+        /* Wait for the other core go to reset. */
+        while (0U == (base->SR & MU_SR_RAIP_MASK))
         {
             ; /* Intentional empty while*/
+        }
+
+        if (!holdReset)
+        {
+            /* Clear CCR[HR]. */
+            base->CCR = ccr;
+
+            /* Wait for the other core out of reset. */
+            while (0U == (base->SR & MU_SR_RDIP_MASK))
+            {
+                ; /* Intentional empty while*/
+            }
         }
     }
 }
@@ -386,32 +384,30 @@ void MU_HardwareResetOtherCore(MU_Type *base, bool waitReset, bool holdReset, mu
     /* Set CR[HR] to trigger hardware reset. */
     base->CR = cr | MU_CR_HR_MASK;
 
-    /* If don't wait the other core enters reset, return directly. */
-    if (!waitReset)
+    /* If wait the other core enters reset. */
+    if (waitReset)
     {
-        return;
-    }
-
 #if (defined(FSL_FEATURE_MU_HAS_RESET_ASSERT_INT) && FSL_FEATURE_MU_HAS_RESET_ASSERT_INT)
-    /* Wait for the other core go to reset. */
-    while (0U == (base->SR & MU_SR_RAIP_MASK))
-    {
-        ; /* Intentional empty while*/
-    }
-#endif
-
-    if (!holdReset)
-    {
-        /* Clear CR[HR]. */
-        base->CR = cr;
-
-#if (defined(FSL_FEATURE_MU_HAS_RESET_DEASSERT_INT) && FSL_FEATURE_MU_HAS_RESET_ASSERT_INT)
-        /* Wait for the other core out of reset. */
-        while (0U == (base->SR & MU_SR_RDIP_MASK))
+        /* Wait for the other core go to reset. */
+        while (0U == (base->SR & MU_SR_RAIP_MASK))
         {
             ; /* Intentional empty while*/
         }
 #endif
+
+        if (!holdReset)
+        {
+            /* Clear CR[HR]. */
+            base->CR = cr;
+
+#if (defined(FSL_FEATURE_MU_HAS_RESET_DEASSERT_INT) && FSL_FEATURE_MU_HAS_RESET_ASSERT_INT)
+            /* Wait for the other core out of reset. */
+            while (0U == (base->SR & MU_SR_RDIP_MASK))
+            {
+                ; /* Intentional empty while*/
+            }
+#endif
+        }
     }
 }
 #endif /* FSL_FEATURE_MU_HAS_CCR  */

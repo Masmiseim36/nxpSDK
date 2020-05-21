@@ -54,7 +54,7 @@ static char helloMsg[13];
  ******************************************************************************/
 TaskHandle_t app_task_handle = NULL;
 
-void app_nameservice_isr_cb(unsigned int new_ept, const char *new_ept_name, unsigned long flags, void *user_data)
+void app_nameservice_isr_cb(uint32_t new_ept, const char *new_ept_name, uint32_t flags, void *user_data)
 {
 }
 
@@ -74,7 +74,7 @@ void SystemInitHook(void)
 
 void app_task(void *param)
 {
-    volatile unsigned long remote_addr;
+    volatile uint32_t remote_addr;
     struct rpmsg_lite_endpoint *volatile my_ept;
     volatile rpmsg_queue_handle my_queue;
     struct rpmsg_lite_instance *volatile my_rpmsg;
@@ -108,19 +108,19 @@ void app_task(void *param)
     my_queue  = rpmsg_queue_create(my_rpmsg);
     my_ept    = rpmsg_lite_create_ept(my_rpmsg, LOCAL_EPT_ADDR, rpmsg_queue_rx_cb, my_queue);
     ns_handle = rpmsg_ns_bind(my_rpmsg, app_nameservice_isr_cb, NULL);
-    SDK_DelayAtLeastUs(1000000);
+    SDK_DelayAtLeastUs(1000000, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
     rpmsg_ns_announce(my_rpmsg, my_ept, RPMSG_LITE_NS_ANNOUNCE_STRING, RL_NS_CREATE);
     PRINTF("Nameservice announce sent.\r\n");
 
 #ifdef RPMSG_LITE_MASTER_IS_LINUX
     /* Wait Hello handshake message from Remote Core. */
-    rpmsg_queue_recv(my_rpmsg, my_queue, (unsigned long *)&remote_addr, helloMsg, sizeof(helloMsg), NULL, RL_BLOCK);
+    rpmsg_queue_recv(my_rpmsg, my_queue, (uint32_t *)&remote_addr, helloMsg, sizeof(helloMsg), NULL, RL_BLOCK);
 #endif /* RPMSG_LITE_MASTER_IS_LINUX */
 
     while (msg.DATA <= 100)
     {
         PRINTF("Waiting for ping...\r\n");
-        rpmsg_queue_recv(my_rpmsg, my_queue, (unsigned long *)&remote_addr, (char *)&msg, sizeof(THE_MESSAGE), NULL,
+        rpmsg_queue_recv(my_rpmsg, my_queue, (uint32_t *)&remote_addr, (char *)&msg, sizeof(THE_MESSAGE), NULL,
                          RL_BLOCK);
         msg.DATA++;
         PRINTF("Sending pong...\r\n");

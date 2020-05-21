@@ -45895,9 +45895,6 @@ typedef struct
     __I uint32_t TSCR;      /**< TMU Sensor Calibration register, offset: 0x1C */
     __I uint32_t TRITSR;    /**< TMU Report Immediate Temperature Site register n, offset: 0x20 */
     __I uint32_t TRATSR;    /**< TMU Report Average Temperature Site register n, offset: 0x24 */
-    __IO uint32_t TASR;     /**< , offset: 0x28 */
-    __IO uint32_t TTMC;     /**< , offset: 0x2C */
-    __IO uint32_t TCALIV;   /**< , offset: 0x30 */
 } TMU_Type;
 
 /* ----------------------------------------------------------------------------
@@ -46070,38 +46067,6 @@ typedef struct
  *  0b1..Valid.
  */
 #define TMU_TRATSR_V(x) (((uint32_t)(((uint32_t)(x)) << TMU_TRATSR_V_SHIFT)) & TMU_TRATSR_V_MASK)
-/*! @} */
-
-/*! @name TASR -  */
-/*! @{ */
-#define TMU_TASR_BUF_VERF_SEL_MASK (0x1FU)
-#define TMU_TASR_BUF_VERF_SEL_SHIFT (0U)
-#define TMU_TASR_BUF_VERF_SEL(x) \
-    (((uint32_t)(((uint32_t)(x)) << TMU_TASR_BUF_VERF_SEL_SHIFT)) & TMU_TASR_BUF_VERF_SEL_MASK)
-#define TMU_TASR_BUF_SLOP_SEL_MASK (0xF0000U)
-#define TMU_TASR_BUF_SLOP_SEL_SHIFT (16U)
-#define TMU_TASR_BUF_SLOP_SEL(x) \
-    (((uint32_t)(((uint32_t)(x)) << TMU_TASR_BUF_SLOP_SEL_SHIFT)) & TMU_TASR_BUF_SLOP_SEL_MASK)
-/*! @} */
-
-/*! @name TTMC -  */
-/*! @{ */
-#define TMU_TTMC_TMUX_MASK (0x7U)
-#define TMU_TTMC_TMUX_SHIFT (0U)
-#define TMU_TTMC_TMUX(x) (((uint32_t)(((uint32_t)(x)) << TMU_TTMC_TMUX_SHIFT)) & TMU_TTMC_TMUX_MASK)
-/*! @} */
-
-/*! @name TCALIV -  */
-/*! @{ */
-#define TMU_TCALIV_SNSR25C_MASK (0xFFU)
-#define TMU_TCALIV_SNSR25C_SHIFT (0U)
-#define TMU_TCALIV_SNSR25C(x) (((uint32_t)(((uint32_t)(x)) << TMU_TCALIV_SNSR25C_SHIFT)) & TMU_TCALIV_SNSR25C_MASK)
-#define TMU_TCALIV_SNSR85C_MASK (0xFF0000U)
-#define TMU_TCALIV_SNSR85C_SHIFT (16U)
-#define TMU_TCALIV_SNSR85C(x) (((uint32_t)(((uint32_t)(x)) << TMU_TCALIV_SNSR85C_SHIFT)) & TMU_TCALIV_SNSR85C_MASK)
-#define TMU_TCALIV_EN_MASK (0x80000000U)
-#define TMU_TCALIV_EN_SHIFT (31U)
-#define TMU_TCALIV_EN(x) (((uint32_t)(((uint32_t)(x)) << TMU_TCALIV_EN_SHIFT)) & TMU_TCALIV_EN_MASK)
 /*! @} */
 
 /*!

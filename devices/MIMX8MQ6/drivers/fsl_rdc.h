@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 NXP
+ * Copyright 2017-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -18,9 +18,9 @@
 /******************************************************************************
  * Definitions
  *****************************************************************************/
-#define FSL_RDC_DRIVER_VERSION (MAKE_VERSION(2, 0, 0)) /*!< Version 2.0.0. */
+#define FSL_RDC_DRIVER_VERSION (MAKE_VERSION(2, 0, 2))
 
-#define RDC_ACCESS_POLICY(domainID, policy) ((uint32_t)(policy) << ((domainID)*2U))
+#define RDC_ACCESS_POLICY(domainID, policy) (uint16_t)((uint16_t)(policy) << ((domainID)*2U))
 
 /*!
  * @brief RDC hardware configuration.
@@ -147,12 +147,7 @@ void RDC_Deinit(RDC_Type *base);
  * @param base RDC peripheral base address.
  * @param config Pointer to the structure to get the configuration.
  */
-static inline void RDC_GetHardwareConfig(RDC_Type *base, rdc_hardware_config_t *config)
-{
-    assert(config);
-
-    *(uint32_t *)config = base->VIR;
-}
+void RDC_GetHardwareConfig(RDC_Type *base, rdc_hardware_config_t *config);
 
 /*!
  * @brief Enable interrupts.
@@ -225,16 +220,11 @@ static inline void RDC_ClearStatus(RDC_Type *base, uint32_t mask)
  *
  * @param base RDC peripheral base address.
  * @param master Which master to set.
- * @param assignment Pointer to the assignment.
+ * @param domainAssignment Pointer to the assignment.
  */
-static inline void RDC_SetMasterDomainAssignment(RDC_Type *base,
-                                                 rdc_master_t master,
-                                                 const rdc_domain_assignment_t *assignment)
-{
-    assert(master < RDC_MDA_COUNT);
-
-    base->MDA[master] = *(uint32_t *)assignment;
-}
+void RDC_SetMasterDomainAssignment(RDC_Type *base,
+                                   rdc_master_t master,
+                                   const rdc_domain_assignment_t *domainAssignment);
 
 /*!
  * @brief Get default master domain assignment
@@ -245,14 +235,9 @@ static inline void RDC_SetMasterDomainAssignment(RDC_Type *base,
    assignment->lock = 0U;
    @endcode
  *
- * @param assignment Pointer to the assignment.
+ * @param domainAssignment Pointer to the assignment.
  */
-static inline void RDC_GetDefaultMasterDomainAssignment(rdc_domain_assignment_t *assignment)
-{
-    assert(assignment);
-
-    *(uint32_t *)assignment = 0U;
-}
+void RDC_GetDefaultMasterDomainAssignment(rdc_domain_assignment_t *domainAssignment);
 
 /*!
  * @brief Lock master domain assignment
@@ -264,9 +249,10 @@ static inline void RDC_GetDefaultMasterDomainAssignment(rdc_domain_assignment_t 
  */
 static inline void RDC_LockMasterDomainAssignment(RDC_Type *base, rdc_master_t master)
 {
-    assert(master < RDC_MDA_COUNT);
+    assert((uint32_t)master < RDC_MDA_COUNT);
 
     base->MDA[master] |= RDC_MDA_LCK_MASK;
+    __DSB();
 }
 
 /*!
@@ -304,9 +290,10 @@ void RDC_GetDefaultPeriphAccessConfig(rdc_periph_access_config_t *config);
  */
 static inline void RDC_LockPeriphAccessConfig(RDC_Type *base, rdc_periph_t periph)
 {
-    assert(periph < RDC_PDAP_COUNT);
+    assert((uint32_t)periph < RDC_PDAP_COUNT);
 
     base->PDAP[periph] |= RDC_PDAP_LCK_MASK;
+    __DSB();
 }
 
 /*!
@@ -351,9 +338,10 @@ void RDC_GetDefaultMemAccessConfig(rdc_mem_access_config_t *config);
  */
 static inline void RDC_LockMemAccessConfig(RDC_Type *base, rdc_mem_t mem)
 {
-    assert(mem < RDC_MRC_COUNT);
+    assert((uint32_t)mem < RDC_MRC_COUNT);
 
     base->MR[mem].MRC |= RDC_MRC_LCK_MASK;
+    __DSB();
 }
 
 /*!
@@ -365,7 +353,7 @@ static inline void RDC_LockMemAccessConfig(RDC_Type *base, rdc_mem_t mem)
  */
 static inline void RDC_SetMemAccessValid(RDC_Type *base, rdc_mem_t mem, bool valid)
 {
-    assert(mem < RDC_MRC_COUNT);
+    assert((uint32_t)mem < RDC_MRC_COUNT);
 
     if (valid)
     {
@@ -375,6 +363,7 @@ static inline void RDC_SetMemAccessValid(RDC_Type *base, rdc_mem_t mem, bool val
     {
         base->MR[mem].MRC &= ~RDC_MRC_ENA_MASK;
     }
+    __DSB();
 }
 
 /*!
@@ -399,7 +388,7 @@ void RDC_GetMemViolationStatus(RDC_Type *base, rdc_mem_t mem, rdc_mem_status_t *
  */
 static inline void RDC_ClearMemViolationFlag(RDC_Type *base, rdc_mem_t mem)
 {
-    assert(mem < RDC_MRC_COUNT);
+    assert((uint32_t)mem < RDC_MRC_COUNT);
 
     base->MR[mem].MRVS = RDC_MRVS_AD_MASK;
 }

@@ -302,7 +302,7 @@ static status_t ASRC_SetSampleRateRatioConfig(ASRC_Type *base,
     {
         fracBits = 39U;
     }
-    else if (format == kASRC_SampleRateRatio6Int38Frac)
+    else if (kASRC_SampleRateRatio6Int38Frac)
     {
         fracBits = 38U;
     }

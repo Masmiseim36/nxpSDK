@@ -1,5 +1,5 @@
 /*
- * Copyright  2017 NXP
+ * Copyright  2016-2019 NXP
  * All rights reserved.
  *
  *
@@ -10,6 +10,8 @@
 #if (defined(FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET) && FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET)
 #include "fsl_memory.h"
 #endif
+#include "fsl_sdma_script.h"
+
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -18,6 +20,37 @@
 #ifndef FSL_COMPONENT_ID
 #define FSL_COMPONENT_ID "platform.drivers.sdma"
 #endif
+
+/*! @brief SDMA P2P macro definition */
+#define SDMA_P2P_LOW_WATERMARK_MASK (0xFFU)
+#define SDMA_P2P_LOW_WATERMARK_SHIFT (0U)
+#define SDMA_P2P_LOW_WATERMARK(val) ((uint32_t)(val)&SDMA_P2P_LOW_WATERMARK_MASK)
+
+#define SDMA_P2P_HIGH_WATERMARK_SHIFT (16U)
+#define SDMA_P2P_HIGH_WATERMARK_MASK (0xFFUL << SDMA_P2P_HIGH_WATERMARK_SHIFT)
+#define SDMA_P2P_HIGH_WATERMARK(val) (((uint32_t)(val) << SDMA_P2P_HIGH_WATERMARK_SHIFT) & SDMA_P2P_HIGH_WATERMARK_MASK)
+
+#define SDMA_P2P_SOURCE_SPBA_SHIFT (11U)
+#define SDMA_P2P_SOURCE_SPBA_MASK (1UL << SDMA_P2P_SOURCE_SPBA_SHIFT)
+#define SDMA_P2P_SOURCE_SPBA_VAL(val) (((uint32_t)(val) << SDMA_P2P_SOURCE_SPBA_SHIFT) & SDMA_P2P_SOURCE_SPBA_MASK)
+
+#define SDMA_P2P_DEST_SPBA_SHIFT (12U)
+#define SDMA_P2P_DEST_SPBA_MASK (1UL << SDMA_P2P_DEST_SPBA_SHIFT)
+#define SDMA_P2P_DEST_SPBA(val) (((uint32_t)(val) << SDMA_P2P_DEST_SPBA_SHIFT) & SDMA_P2P_DEST_SPBA_MASK)
+
+#define SDMA_P2P_LOWER_EVENT_REG_SHIFT (28U)
+#define SDMA_P2P_LOWER_EVENT_REG_MASK (1UL << SDMA_P2P_LOWER_EVENT_REG_SHIFT)
+#define SDMA_P2P_LOWER_EVENT_REG(val) \
+    (((uint32_t)(val) << SDMA_P2P_LOWER_EVENT_REG_SHIFT) & SDMA_P2P_LOWER_EVENT_REG_MASK)
+
+#define SDMA_P2P_HIGHER_EVENT_REG_SHIFT (29U)
+#define SDMA_P2P_HIGHER_EVENT_REG_MASK (1UL << SDMA_P2P_HIGHER_EVENT_REG_SHIFT)
+#define SDMA_P2P_HIGHER_EVENT_REG(val) \
+    (((uint32_t)(val) << SDMA_P2P_HIGHER_EVENT_REG_SHIFT) & SDMA_P2P_HIGHER_EVENT_REG_MASK)
+
+#define SDMA_P2P_CONT_SHIFT (31U)
+#define SDMA_P2P_CONT_MASK (1UL << SDMA_P2P_CONT_SHIFT)
+#define SDMA_P2P_CONT(val) (((uint32_t)(val) << SDMA_P2P_CONT_SHIFT) & SDMA_P2P_CONT_MASK)
 
 /*******************************************************************************
  * Prototypes
@@ -100,7 +133,7 @@ static void SDMA_RunChannel0(SDMAARM_Type *base)
     SDMA_StartChannelSoftware(base, 0U);
 
     /* Waiting for channel 0 finished */
-    while ((base->STOP_STAT & 0x1) == 1U)
+    while ((base->STOP_STAT & 0x1U) == 1U)
     {
     }
 
@@ -125,48 +158,56 @@ static uint32_t SDMA_GetScriptAddr(sdma_peripheral_t peripheral, sdma_transfer_t
         {
             case kSDMA_PeripheralTypeUART:
             case kSDMA_PeripheralNormal:
-                val = FSL_FEATURE_SDMA_M2P_ADDR;
+                val = FSL_SDMA_M2P_ADDR;
                 break;
             case kSDMA_PeripheralTypeUART_SP:
             case kSDMA_PeripheralNormal_SP:
-                val = FSL_FEATURE_SDMA_M2SHP_ADDR;
+            case kSDMA_PeripheralASRCM2P:
+                val = FSL_SDMA_M2SHP_ADDR;
                 break;
             case kSDMA_PeripheralTypeSPDIF:
-                val = FSL_FEATURE_SDMA_M2SPDIF_ADDR;
+                val = FSL_SDMA_M2SPDIF_ADDR;
                 break;
             case kSDMA_PeripheralMultiFifoSaiTX:
-                val = FSL_FEATURE_SDMA_MULTI_FIFO_SAI_TX_ADDR;
+                val = FSL_SDMA_MULTI_FIFO_SAI_TX_ADDR;
                 break;
             default:
+                assert(false);
+                break;
+        }
+    }
+    else if (type == kSDMA_PeripheralToMemory)
+    {
+        switch (peripheral)
+        {
+            case kSDMA_PeripheralTypeUART:
+                val = FSL_SDMA_UART2M_ADDR;
+                break;
+            case kSDMA_PeripheralNormal:
+                val = FSL_SDMA_P2M_ADDR;
+                break;
+            case kSDMA_PeripheralTypeUART_SP:
+                val = FSL_SDMA_UARTSH2M_ADDR;
+                break;
+            case kSDMA_PeripheralNormal_SP:
+            case kSDMA_PeripheralASRCP2M:
+                val = FSL_SDMA_SHP2M_ADDR;
+                break;
+            case kSDMA_PeripheralTypeSPDIF:
+                val = FSL_SDMA_SPDIF2M_ADDR;
+                break;
+            case kSDMA_PeripheralMultiFifoPDM:
+            case kSDMA_PeripheralMultiFifoSaiRX:
+                val = FSL_SDMA_MULTI_FIFO_SAI_RX_ADDR;
+                break;
+            default:
+                assert(false);
                 break;
         }
     }
     else
     {
-        switch (peripheral)
-        {
-            case kSDMA_PeripheralTypeUART:
-                val = FSL_FEATURE_SDMA_UART2M_ADDR;
-                break;
-            case kSDMA_PeripheralNormal:
-                val = FSL_FEATURE_SDMA_P2M_ADDR;
-                break;
-            case kSDMA_PeripheralTypeUART_SP:
-                val = FSL_FEATURE_SDMA_UARTSH2M_ADDR;
-                break;
-            case kSDMA_PeripheralNormal_SP:
-                val = FSL_FEATURE_SDMA_SHP2M_ADDR;
-                break;
-            case kSDMA_PeripheralTypeSPDIF:
-                val = FSL_FEATURE_SDMA_SPDIF2M_ADDR;
-                break;
-            case kSDMA_PeripheralMultiFifoPDM:
-            case kSDMA_PeripheralMultiFifoSaiRX:
-                val = FSL_FEATURE_SDMA_MULTI_FIFO_SAI_RX_ADDR;
-                break;
-            default:
-                break;
-        }
+        val = FSL_SDMA_PERIPHERAL_TO_PERIPHERAL_ADDR;
     }
 
     return val;
@@ -177,50 +218,62 @@ static void SDMA_LoadContext(sdma_handle_t *handle, const sdma_transfer_config_t
     uint32_t instance            = SDMA_GetInstance(handle->base);
     sdma_context_data_t *context = handle->context;
 
-    memset(context, 0, sizeof(sdma_context_data_t));
+    (void)memset(context, 0, sizeof(sdma_context_data_t));
 
     /* Set SDMA core's PC to the channel script address */
-    context->PC = config->scriptAddr;
-
-    /* Set the request source into context */
-    if (config->eventSource >= 32)
+    context->PC = (uint16_t)config->scriptAddr;
+    if (config->type == kSDMA_PeripheralToPeripheral)
     {
-        context->GeneralReg[0] = (1U << (config->eventSource - 32));
-    }
-    else
-    {
-        context->GeneralReg[1] = (1U << config->eventSource);
-    }
-
-    /* Set source address and dest address for p2p, m2p and p2m */
-    if (config->type == kSDMA_MemoryToPeripheral)
-    {
-        context->GeneralReg[2] = (uint32_t)config->destAddr;
-        context->GeneralReg[6] = (uint32_t)config->destAddr;
-    }
-    else
-    {
+        context->GeneralReg[0] = config->eventMask1;
+        context->GeneralReg[1] = config->eventMask0;
         context->GeneralReg[2] = (uint32_t)config->srcAddr;
-        context->GeneralReg[6] = (uint32_t)config->srcAddr;
+        context->GeneralReg[6] = (uint32_t)config->destAddr;
+        context->GeneralReg[7] = config->watermarkLevel;
     }
+    else
+    {
+        /* Set the request source into context */
+        if (config->eventSource >= 32U)
+        {
+            context->GeneralReg[0] = (1UL << (config->eventSource - 32U));
+        }
+        else
+        {
+            context->GeneralReg[1] = (1UL << config->eventSource);
+        }
 
-    /* Set watermark, multi fifo for p2p, m2p and p2m into context */
-    context->GeneralReg[7] =
-        ((config->bytesPerRequest & kSDMA_MultiFifoWatermarkLevelMask) << kSDMA_MultiFifoWatermarkLevelShift) |
-        ((config->multiFifo.fifoNums & kSDMA_MultiFifoNumsMask) << kSDMA_MultiFifoNumsShift) |
-        ((config->multiFifo.fifoOffset & kSDMA_MultiFifoOffsetMask) << kSDMA_MultiFifoOffsetShift) |
-        ((config->swDone.enableSwDone & kSDMA_MultiFifoSwDoneMask) << kSDMA_MultiFifoSwDoneShift) |
-        ((config->swDone.swDoneSel & kSDMA_MultiFifoSwDoneSelectorMask) << kSDMA_MultiFifoSwDoneSelectorShift);
+        /* Set source address and dest address for p2p, m2p and p2m */
+        if (config->type == kSDMA_MemoryToPeripheral)
+        {
+            context->GeneralReg[2] = (uint32_t)config->destAddr;
+            context->GeneralReg[6] = (uint32_t)config->destAddr;
+        }
+        else
+        {
+            context->GeneralReg[2] = (uint32_t)config->srcAddr;
+            context->GeneralReg[6] = (uint32_t)config->srcAddr;
+        }
 
-    s_SDMABD[instance][0].command = kSDMA_BDCommandSETDM;
-    s_SDMABD[instance][0].status  = kSDMA_BDStatusDone | kSDMA_BDStatusWrap | kSDMA_BDStatusInterrupt;
-    s_SDMABD[instance][0].count   = sizeof(*context) / 4U;
+        /* Set watermark, multi fifo for p2p, m2p and p2m into context */
+        context->GeneralReg[7] =
+            ((config->bytesPerRequest & (uint32_t)kSDMA_MultiFifoWatermarkLevelMask)
+             << kSDMA_MultiFifoWatermarkLevelShift) |
+            ((config->multiFifo.fifoNums & (uint32_t)kSDMA_MultiFifoNumsMask) << kSDMA_MultiFifoNumsShift) |
+            ((config->multiFifo.fifoOffset & (uint32_t)kSDMA_MultiFifoOffsetMask) << kSDMA_MultiFifoOffsetShift) |
+            ((config->swDone.enableSwDone ? (uint32_t)kSDMA_MultiFifoSwDoneMask : 0UL) << kSDMA_MultiFifoSwDoneShift) |
+            ((config->swDone.swDoneSel & (uint32_t)kSDMA_MultiFifoSwDoneSelectorMask)
+             << kSDMA_MultiFifoSwDoneSelectorShift);
+    }
+    s_SDMABD[instance][0].command = (uint8_t)kSDMA_BDCommandSETDM;
+    s_SDMABD[instance][0].status =
+        (uint8_t)kSDMA_BDStatusDone | (uint8_t)kSDMA_BDStatusWrap | (uint8_t)kSDMA_BDStatusInterrupt;
+    s_SDMABD[instance][0].count = sizeof(*context) / 4U;
 #if (defined(FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET) && FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET)
     s_SDMABD[instance][0].bufferAddr = MEMORY_ConvertMemoryMapAddress((uint32_t)context, kMEMORY_Local2DMA);
 #else
     s_SDMABD[instance][0].bufferAddr     = (uint32_t)context;
 #endif
-    s_SDMABD[instance][0].extendBufferAddr = 2048 + (sizeof(*context) / 4) * handle->channel;
+    s_SDMABD[instance][0].extendBufferAddr = 2048UL + (sizeof(*context) / 4UL) * handle->channel;
 
     /* Run channel0 scripts after context prepared */
     SDMA_RunChannel0(handle->base);
@@ -233,14 +286,15 @@ void SDMA_LoadScript(SDMAARM_Type *base, uint32_t destAddr, void *srcAddr, size_
     uint32_t bufferAddr = 0U;
 
 #if (defined(FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET) && FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET)
-    bufferAddr = MEMORY_ConvertMemoryMapAddress((uint32_t)srcAddr, kMEMORY_Local2DMA);
+    bufferAddr = MEMORY_ConvertMemoryMapAddress((uint32_t)(uint32_t *)srcAddr, kMEMORY_Local2DMA);
 #else
     bufferAddr                           = (uint32_t)srcAddr;
 #endif
 
-    s_SDMABD[instance][0].command          = kSDMA_BDCommandSETPM;
-    s_SDMABD[instance][0].status           = kSDMA_BDStatusDone | kSDMA_BDStatusWrap | kSDMA_BDStatusExtend;
-    s_SDMABD[instance][0].count            = bufferSizeBytes;
+    s_SDMABD[instance][0].command = (uint8_t)kSDMA_BDCommandSETPM;
+    s_SDMABD[instance][0].status =
+        (uint8_t)kSDMA_BDStatusDone | (uint8_t)kSDMA_BDStatusWrap | (uint8_t)kSDMA_BDStatusExtend;
+    s_SDMABD[instance][0].count            = (uint16_t)bufferSizeBytes;
     s_SDMABD[instance][0].bufferAddr       = bufferAddr;
     s_SDMABD[instance][0].extendBufferAddr = destAddr;
 
@@ -255,14 +309,15 @@ void SDMA_DumpScript(SDMAARM_Type *base, uint32_t srcAddr, void *destAddr, size_
     uint32_t bufferAddr = 0U;
 
 #if (defined(FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET) && FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET)
-    bufferAddr = MEMORY_ConvertMemoryMapAddress((uint32_t)destAddr, kMEMORY_Local2DMA);
+    bufferAddr = MEMORY_ConvertMemoryMapAddress((uint32_t)(uint32_t *)destAddr, kMEMORY_Local2DMA);
 #else
     bufferAddr                           = (uint32_t)destAddr;
 #endif
 
-    s_SDMABD[instance][0].command          = kSDMA_BDCommandGETPM;
-    s_SDMABD[instance][0].status           = kSDMA_BDStatusDone | kSDMA_BDStatusWrap | kSDMA_BDStatusExtend;
-    s_SDMABD[instance][0].count            = bufferSizeBytes;
+    s_SDMABD[instance][0].command = (uint8_t)kSDMA_BDCommandGETPM;
+    s_SDMABD[instance][0].status =
+        (uint8_t)kSDMA_BDStatusDone | (uint8_t)kSDMA_BDStatusWrap | (uint8_t)kSDMA_BDStatusExtend;
+    s_SDMABD[instance][0].count            = (uint16_t)bufferSizeBytes;
     s_SDMABD[instance][0].bufferAddr       = bufferAddr;
     s_SDMABD[instance][0].extendBufferAddr = srcAddr;
 
@@ -281,7 +336,9 @@ bool SDMA_IsPeripheralInSPBA(uint32_t addr)
     for (i = 0; i < spbaNum; i++)
     {
         spbaBase = spbaArray[i];
-        if ((addr >= FSL_FEATURE_SPBA_STARTn(spbaBase)) && (addr <= FSL_FEATURE_SPBA_ENDn(spbaBase)))
+
+        if ((addr >= (uint32_t)FSL_FEATURE_SPBA_STARTn(spbaBase)) &&
+            (addr <= (uint32_t)FSL_FEATURE_SPBA_ENDn(spbaBase)))
         {
             return true;
         }
@@ -304,13 +361,14 @@ void SDMA_Init(SDMAARM_Type *base, const sdma_config_t *config)
 #endif /* FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL */
 
     /* Clear the channel CCB */
-    memset(&s_SDMACCB[instance][0], 0, sizeof(sdma_channel_control_t) * FSL_FEATURE_SDMA_MODULE_CHANNEL);
+    (void)memset(&s_SDMACCB[instance][0], 0,
+                 sizeof(sdma_channel_control_t) * (uint32_t)FSL_FEATURE_SDMA_MODULE_CHANNEL);
 
     /* Reset all SDMA registers */
     SDMA_ResetModule(base);
 
     /* Init the CCB for channel 0 */
-    memset(&s_SDMABD[instance][0], 0, sizeof(sdma_buffer_descriptor_t));
+    (void)memset(&s_SDMABD[instance][0], 0, sizeof(sdma_buffer_descriptor_t));
 #if (defined(FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET) && FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET)
     s_SDMACCB[instance][0].currentBDAddr =
         MEMORY_ConvertMemoryMapAddress((uint32_t)(&s_SDMABD[instance][0]), kMEMORY_Local2DMA);
@@ -388,13 +446,13 @@ void SDMA_ResetModule(SDMAARM_Type *base)
     base->INTRMASK = 0;
 
     /* Disable all events */
-    for (i = 0; i < FSL_FEATURE_SDMA_EVENT_NUM; i++)
+    for (i = 0; i < (uint32_t)FSL_FEATURE_SDMA_EVENT_NUM; i++)
     {
         SDMA_SetSourceChannel(base, i, 0);
     }
 
     /* Clear all channel priority */
-    for (i = 0; i < FSL_FEATURE_SDMA_MODULE_CHANNEL; i++)
+    for (i = 0; i < (uint32_t)FSL_FEATURE_SDMA_MODULE_CHANNEL; i++)
     {
         SDMA_SetChannelPriority(base, i, 0);
     }
@@ -410,8 +468,10 @@ void SDMA_ConfigBufferDescriptor(sdma_buffer_descriptor_t *bd,
                                  bool isWrap,
                                  sdma_transfer_type_t type)
 {
+    uint8_t status = 0U;
+
     /* Set the descriptor to 0 */
-    memset(bd, 0, sizeof(sdma_buffer_descriptor_t));
+    (void)memset(bd, 0, sizeof(sdma_buffer_descriptor_t));
     if (type == kSDMA_PeripheralToMemory)
     {
 #if (defined(FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET) && FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET)
@@ -435,34 +495,35 @@ void SDMA_ConfigBufferDescriptor(sdma_buffer_descriptor_t *bd,
 #endif
     if (isLast)
     {
-        bd->status |= kSDMA_BDStatusLast;
+        status |= (uint8_t)kSDMA_BDStatusLast;
     }
     else
     {
-        bd->status |= kSDMA_BDStatusContinuous;
+        status |= (uint8_t)kSDMA_BDStatusContinuous;
     }
 
     /* Set interrupt and wrap feature */
     if (enableInterrupt)
     {
-        bd->status |= kSDMA_BDStatusInterrupt;
+        status |= (uint8_t)kSDMA_BDStatusInterrupt;
     }
     if (isWrap)
     {
-        bd->status |= kSDMA_BDStatusWrap;
+        status |= (uint8_t)kSDMA_BDStatusWrap;
     }
 
-    bd->status |= kSDMA_BDStatusDone;
+    status |= (uint8_t)kSDMA_BDStatusDone;
 
     /* Configure the command according to bus width */
-    bd->command = busWidth;
-    bd->count   = bufferSize;
+    bd->status  = status;
+    bd->command = (uint8_t)busWidth;
+    bd->count   = (uint16_t)bufferSize;
 }
 
 void SDMA_SetContextSwitchMode(SDMAARM_Type *base, sdma_context_switch_mode_t mode)
 {
     uint32_t val = base->CONFIG & (~SDMAARM_CONFIG_CSM_MASK);
-    val |= mode;
+    val |= (uint32_t)mode;
     base->CONFIG = val;
 }
 
@@ -470,27 +531,27 @@ bool SDMA_GetRequestSourceStatus(SDMAARM_Type *base, uint32_t source)
 {
     if (source < 32U)
     {
-        return ((base->EVT_MIRROR & (1U << source)) >> source);
+        return ((base->EVT_MIRROR & (1UL << source)) >> source) != 0UL;
     }
     else
     {
         source -= 32U;
-        return ((base->EVT_MIRROR2 & (1U << source)) >> source);
+        return ((base->EVT_MIRROR2 & (1UL << source)) >> source) != 0UL;
     }
 }
 
 void SDMA_CreateHandle(sdma_handle_t *handle, SDMAARM_Type *base, uint32_t channel, sdma_context_data_t *context)
 {
     assert(handle != NULL);
-    assert(channel < FSL_FEATURE_SDMA_MODULE_CHANNEL);
+    assert(channel < (uint32_t)FSL_FEATURE_SDMA_MODULE_CHANNEL);
 
     uint32_t sdmaInstance;
 
     /* Zero the handle */
-    memset(handle, 0, sizeof(*handle));
+    (void)memset(handle, 0, sizeof(*handle));
 
     handle->base    = base;
-    handle->channel = channel;
+    handle->channel = (uint8_t)channel;
     handle->bdCount = 1U;
     handle->context = context;
     /* Get the DMA instance number */
@@ -508,12 +569,12 @@ void SDMA_CreateHandle(sdma_handle_t *handle, SDMAARM_Type *base, uint32_t chann
     s_SDMACCB[sdmaInstance][channel].currentBDAddr         = (uint32_t)(&s_SDMABD[sdmaInstance][channel]);
 #endif
     /* Enable interrupt */
-    EnableIRQ(s_sdmaIRQNumber[sdmaInstance]);
+    (void)EnableIRQ(s_sdmaIRQNumber[sdmaInstance]);
 }
 
 void SDMA_InstallBDMemory(sdma_handle_t *handle, sdma_buffer_descriptor_t *BDPool, uint32_t BDCount)
 {
-    assert(handle && BDPool && BDCount);
+    assert((handle != NULL) && (BDPool != NULL) && (BDCount != 0UL));
 
     uint32_t sdmaInstance = SDMA_GetInstance(handle->base);
 
@@ -546,8 +607,8 @@ void SDMA_SetMultiFifoConfig(sdma_transfer_config_t *config, uint32_t fifoNums, 
 {
     assert(config != NULL);
 
-    config->multiFifo.fifoNums   = fifoNums;
-    config->multiFifo.fifoOffset = fifoOffset;
+    config->multiFifo.fifoNums   = (uint8_t)fifoNums;
+    config->multiFifo.fifoOffset = (uint8_t)fifoOffset;
 }
 
 void SDMA_EnableSwDone(SDMAARM_Type *base, sdma_transfer_config_t *config, uint8_t sel, sdma_peripheral_t type)
@@ -578,12 +639,13 @@ void SDMA_SetDoneConfig(SDMAARM_Type *base,
     switch (type)
     {
         case kSDMA_PeripheralMultiFifoPDM:
-            doneChannel = kSDMA_DoneChannel0;
+            doneChannel = (uint32_t)kSDMA_DoneChannel0;
             doneValue   = base->DONE0_CONFIG;
             doneAddress = &base->DONE0_CONFIG;
             break;
         default:
-            assert(false);
+            doneAddress = NULL;
+            break;
     }
 
     if (NULL != doneAddress)
@@ -592,15 +654,15 @@ void SDMA_SetDoneConfig(SDMAARM_Type *base,
         {
             config->swDone.swDoneSel    = 0U;
             config->swDone.enableSwDone = true;
-            doneValue |= (1U << ((doneChannel - channelOffset) * 8 + 7U));
-            doneValue &= ~(1U << ((doneChannel - channelOffset) * 8 + 6U));
+            doneValue |= (1UL << ((doneChannel - channelOffset) * 8U + 7U));
+            doneValue &= ~(1UL << ((doneChannel - channelOffset) * 8U + 6U));
         }
         else
         {
-            doneValue &= ~(1U << ((doneChannel - channelOffset) * 8 + 7U));
-            doneValue |= (1U << ((doneChannel - channelOffset) * 8 + 6U));
-            doneValue &= ~(SDMAARM_DONE0_CONFIG_CH_SEL0_MASK << ((doneChannel - channelOffset) * 8));
-            doneValue |= SDMAARM_DONE0_CONFIG_CH_SEL0(doneSrc - 1U) << ((doneChannel - channelOffset) * 8);
+            doneValue &= ~(1UL << ((doneChannel - channelOffset) * 8U + 7U));
+            doneValue |= (1UL << ((doneChannel - channelOffset) * 8U + 6U));
+            doneValue &= ~((uint32_t)SDMAARM_DONE0_CONFIG_CH_SEL0_MASK << ((doneChannel - channelOffset) * 8U));
+            doneValue |= SDMAARM_DONE0_CONFIG_CH_SEL0((uint32_t)doneSrc - 1U) << ((doneChannel - channelOffset) * 8U);
         }
 
         *doneAddress = doneValue;
@@ -619,8 +681,8 @@ void SDMA_PrepareTransfer(sdma_transfer_config_t *config,
                           sdma_transfer_type_t type)
 {
     assert(config != NULL);
-    assert((srcWidth == 1U) || (srcWidth == 2U) || (srcWidth == 4U));
-    assert((destWidth == 1U) || (destWidth == 2U) || (destWidth == 4U));
+    assert((srcWidth == 1U) || (srcWidth == 2U) || (srcWidth == 3U) || (srcWidth == 4U));
+    assert((destWidth == 1U) || (destWidth == 2U) || (destWidth == 3U) || (destWidth == 4U));
 
 #if (defined(FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET) && FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET)
     config->srcAddr  = MEMORY_ConvertMemoryMapAddress(srcAddr, kMEMORY_Local2DMA);
@@ -632,34 +694,41 @@ void SDMA_PrepareTransfer(sdma_transfer_config_t *config,
     config->bytesPerRequest = bytesEachRequest;
     config->transferSzie    = transferSize;
     config->type            = type;
-    switch (srcWidth)
+
+    if (srcWidth == 1U)
     {
-        case 1U:
-            config->srcTransferSize = kSDMA_TransferSize1Bytes;
-            break;
-        case 2U:
-            config->srcTransferSize = kSDMA_TransferSize2Bytes;
-            break;
-        case 4U:
-            config->srcTransferSize = kSDMA_TransferSize4Bytes;
-            break;
-        default:
-            break;
+        config->srcTransferSize = kSDMA_TransferSize1Bytes;
     }
-    switch (destWidth)
+    else if (srcWidth == 2U)
     {
-        case 1U:
-            config->destTransferSize = kSDMA_TransferSize1Bytes;
-            break;
-        case 2U:
-            config->destTransferSize = kSDMA_TransferSize2Bytes;
-            break;
-        case 4U:
-            config->destTransferSize = kSDMA_TransferSize4Bytes;
-            break;
-        default:
-            break;
+        config->srcTransferSize = kSDMA_TransferSize2Bytes;
     }
+    else if (srcWidth == 3U)
+    {
+        config->srcTransferSize = kSDMA_TransferSize3Bytes;
+    }
+    else
+    {
+        config->srcTransferSize = kSDMA_TransferSize4Bytes;
+    }
+
+    if (destWidth == 1U)
+    {
+        config->destTransferSize = kSDMA_TransferSize1Bytes;
+    }
+    else if (destWidth == 2U)
+    {
+        config->destTransferSize = kSDMA_TransferSize2Bytes;
+    }
+    else if (destWidth == 3U)
+    {
+        config->destTransferSize = kSDMA_TransferSize3Bytes;
+    }
+    else
+    {
+        config->destTransferSize = kSDMA_TransferSize4Bytes;
+    }
+
     switch (type)
     {
         case kSDMA_MemoryToMemory:
@@ -681,7 +750,108 @@ void SDMA_PrepareTransfer(sdma_transfer_config_t *config,
             config->eventSource         = eventSource;
             break;
         default:
+            assert(false);
             break;
+    }
+}
+
+void SDMA_PrepareP2PTransfer(sdma_transfer_config_t *config,
+                             uint32_t srcAddr,
+                             uint32_t destAddr,
+                             uint32_t srcWidth,
+                             uint32_t destWidth,
+                             uint32_t bytesEachRequest,
+                             uint32_t transferSize,
+                             uint32_t eventSource,
+                             uint32_t eventSource1,
+                             sdma_peripheral_t peripheral,
+                             sdma_p2p_config_t *p2p)
+{
+    assert((config != NULL) && (p2p != NULL));
+    assert((srcWidth == 1U) || (srcWidth == 2U) || (srcWidth == 4U));
+    assert((destWidth == 1U) || (destWidth == 2U) || (destWidth == 4U));
+
+#if (defined(FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET) && FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET)
+    config->srcAddr  = MEMORY_ConvertMemoryMapAddress(srcAddr, kMEMORY_Local2DMA);
+    config->destAddr = MEMORY_ConvertMemoryMapAddress(destAddr, kMEMORY_Local2DMA);
+#else
+    config->srcAddr                                        = srcAddr;
+    config->destAddr                                       = destAddr;
+#endif
+    config->bytesPerRequest = bytesEachRequest;
+    config->transferSzie    = transferSize;
+    config->type            = kSDMA_PeripheralToPeripheral;
+
+    if (srcWidth == 1U)
+    {
+        config->srcTransferSize = kSDMA_TransferSize1Bytes;
+    }
+    else if (srcWidth == 2U)
+    {
+        config->srcTransferSize = kSDMA_TransferSize2Bytes;
+    }
+    else
+    {
+        config->srcTransferSize = kSDMA_TransferSize4Bytes;
+    }
+
+    if (destWidth == 1U)
+    {
+        config->destTransferSize = kSDMA_TransferSize1Bytes;
+    }
+    else if (destWidth == 2U)
+    {
+        config->destTransferSize = kSDMA_TransferSize2Bytes;
+    }
+    else
+    {
+        config->destTransferSize = kSDMA_TransferSize4Bytes;
+    }
+
+    config->scriptAddr          = SDMA_GetScriptAddr(peripheral, kSDMA_PeripheralToPeripheral);
+    config->isEventIgnore       = false;
+    config->isSoftTriggerIgnore = true;
+    config->eventSource         = eventSource;
+    config->eventSource1        = eventSource1;
+
+    if (eventSource1 > 31UL)
+    {
+        config->watermarkLevel |= SDMA_P2P_HIGHER_EVENT_REG_MASK;
+    }
+
+    if (eventSource > 31UL)
+    {
+        config->watermarkLevel |= SDMA_P2P_LOWER_EVENT_REG_MASK;
+    }
+
+    if (SDMA_IsPeripheralInSPBA(srcAddr))
+    {
+        config->watermarkLevel |= SDMA_P2P_SOURCE_SPBA_MASK;
+    }
+
+    if (SDMA_IsPeripheralInSPBA(destAddr))
+    {
+        config->watermarkLevel |= SDMA_P2P_DEST_SPBA_MASK;
+    }
+
+    if (p2p->continuousTransfer)
+    {
+        config->watermarkLevel |= SDMA_P2P_CONT_MASK;
+    }
+
+    if (p2p->sourceWatermark > p2p->destWatermark)
+    {
+        config->watermarkLevel |=
+            SDMA_P2P_LOW_WATERMARK(p2p->destWatermark) | SDMA_P2P_HIGH_WATERMARK(p2p->sourceWatermark);
+        config->eventMask0 = (1UL << (config->eventSource % 32U));
+        config->eventMask1 = (1UL << (config->eventSource1 % 32U));
+    }
+    else
+    {
+        config->watermarkLevel |=
+            SDMA_P2P_LOW_WATERMARK(p2p->sourceWatermark) | SDMA_P2P_HIGH_WATERMARK(p2p->destWatermark);
+        config->eventMask0 = (1UL << (config->eventSource1 % 32U));
+        config->eventMask1 = (1UL << (config->eventSource % 32U));
     }
 }
 
@@ -693,43 +863,50 @@ void SDMA_SubmitTransfer(sdma_handle_t *handle, const sdma_transfer_config_t *co
     uint32_t val      = 0U;
     uint32_t instance = SDMA_GetInstance(handle->base);
 
-    handle->eventSource = config->eventSource;
+    handle->eventSource  = config->eventSource;
+    handle->eventSource1 = config->eventSource1;
 
     /* Set event source channel */
     if (config->type != kSDMA_MemoryToMemory)
     {
         val = handle->base->CHNENBL[config->eventSource];
-        val |= (1U << (handle->channel));
+        val |= (1UL << (handle->channel));
         SDMA_SetSourceChannel(handle->base, config->eventSource, val);
+        if (config->type == kSDMA_PeripheralToPeripheral)
+        {
+            val = handle->base->CHNENBL[config->eventSource1];
+            val |= (1UL << (handle->channel));
+            SDMA_SetSourceChannel(handle->base, config->eventSource1, val);
+        }
     }
 
     /* DO register shall always set */
-    handle->base->DSPOVR |= (1U << handle->channel);
+    handle->base->DSPOVR |= (1UL << handle->channel);
 
     /* Configure EO bit */
     if (config->isEventIgnore)
     {
-        handle->base->EVTOVR |= (1U << handle->channel);
+        handle->base->EVTOVR |= (1UL << handle->channel);
     }
     else
     {
-        handle->base->EVTOVR &= ~(1U << handle->channel);
+        handle->base->EVTOVR &= ~(1UL << handle->channel);
     }
 
     /* Configure HO bits */
     if (config->isSoftTriggerIgnore)
     {
-        handle->base->HOSTOVR |= (1U << handle->channel);
+        handle->base->HOSTOVR |= (1UL << handle->channel);
     }
     else
     {
-        handle->base->HOSTOVR &= ~(1U << handle->channel);
+        handle->base->HOSTOVR &= ~(1UL << handle->channel);
     }
 
     /* If use default buffer descriptor, configure the buffer descriptor */
     if (handle->BDPool == NULL)
     {
-        memset(&s_SDMABD[instance][handle->channel], 0, sizeof(sdma_buffer_descriptor_t));
+        (void)memset(&s_SDMABD[instance][handle->channel], 0, sizeof(sdma_buffer_descriptor_t));
         if (config->type == kSDMA_MemoryToPeripheral)
         {
             SDMA_ConfigBufferDescriptor(&s_SDMABD[instance][handle->channel], config->srcAddr, config->destAddr,
@@ -752,18 +929,18 @@ void SDMA_StartTransfer(sdma_handle_t *handle)
     assert(handle != NULL);
 
     /* Set the channel priority */
-    if (handle->priority == 0)
+    if (handle->priority == 0U)
     {
-        handle->priority = handle->base->SDMA_CHNPRI[handle->channel];
+        handle->priority = (uint8_t)handle->base->SDMA_CHNPRI[handle->channel];
     }
 
     /* Set priority if regsiter bit is 0*/
-    if (handle->base->SDMA_CHNPRI[handle->channel] == 0)
+    if (handle->base->SDMA_CHNPRI[handle->channel] == 0UL)
     {
         SDMA_SetChannelPriority(handle->base, handle->channel, handle->priority);
     }
 
-    if (handle->eventSource != 0)
+    if ((handle->eventSource != 0UL) || (handle->eventSource1 != 0UL))
     {
         SDMA_StartChannelEvents(handle->base, handle->channel);
     }
@@ -782,7 +959,7 @@ void SDMA_StopTransfer(sdma_handle_t *handle)
 
 void SDMA_AbortTransfer(sdma_handle_t *handle)
 {
-    assert(handle);
+    assert(handle != NULL);
 
     uint32_t val = 0;
 
@@ -790,8 +967,16 @@ void SDMA_AbortTransfer(sdma_handle_t *handle)
 
     /* Clear the event map. */
     val = handle->base->CHNENBL[handle->eventSource];
-    val &= ~(1U << (handle->channel));
+    val &= ~(1UL << (handle->channel));
     SDMA_SetSourceChannel(handle->base, handle->eventSource, val);
+
+    if (handle->eventSource1 != 0UL)
+    {
+        /* Clear the event map. */
+        val = handle->base->CHNENBL[handle->eventSource1];
+        val &= ~(1UL << (handle->channel));
+        SDMA_SetSourceChannel(handle->base, handle->eventSource1, val);
+    }
 
     /* Clear the channel priority */
     SDMA_SetChannelPriority(handle->base, handle->channel, 0);
@@ -804,7 +989,7 @@ uint32_t SDMA_GetTransferredBytes(sdma_handle_t *handle)
 
     if (handle->BDPool == NULL)
     {
-        val = s_SDMABD[instance][handle->channel].count - 1U;
+        val = s_SDMABD[instance][handle->channel].count - 1UL;
     }
     else
     {
@@ -824,7 +1009,7 @@ void SDMA_HandleIRQ(sdma_handle_t *handle)
     SDMA_ClearChannelInterruptStatus(handle->base, status);
 
     /* Set the current BD address to the CCB */
-    if (handle->BDPool)
+    if (handle->BDPool != NULL)
     {
         /* Set the DONE bits */
         handle->bdIndex                             = (handle->bdIndex + 1U) % handle->bdCount;
@@ -851,7 +1036,7 @@ void SDMA_DriverIRQHandler(void)
     val = (SDMAARM->INTR) >> 1U;
     while (val)
     {
-        if (val & 0x1U)
+        if ((val & 0x1UL) != 0UL)
         {
             SDMA_HandleIRQ(s_SDMAHandle[0][i]);
         }
@@ -869,9 +1054,9 @@ void SDMA1_DriverIRQHandler(void)
     SDMA_ClearChannelInterruptStatus(SDMAARM1, 1U);
     /* Ignore channel0, as channel0 is only used for download */
     val = (SDMAARM1->INTR) >> 1U;
-    while (val)
+    while (val != 0UL)
     {
-        if (val & 0x1U)
+        if ((val & 0x1UL) != 0UL)
         {
             SDMA_HandleIRQ(s_SDMAHandle[0][i]);
         }
@@ -889,9 +1074,9 @@ void SDMA2_DriverIRQHandler(void)
     SDMA_ClearChannelInterruptStatus(SDMAARM2, 1U);
     /* Ignore channel0, as channel0 is only used for download */
     val = (SDMAARM2->INTR) >> 1U;
-    while (val)
+    while (val != 0UL)
     {
-        if (val & 0x1U)
+        if ((val & 0x1UL) != 0UL)
         {
             SDMA_HandleIRQ(s_SDMAHandle[1][i]);
         }
@@ -910,9 +1095,9 @@ void SDMA3_DriverIRQHandler(void)
     SDMA_ClearChannelInterruptStatus(SDMAARM3, 1U);
     /* Ignore channel0, as channel0 is only used for download */
     val = (SDMAARM3->INTR) >> 1U;
-    while (val)
+    while (val != 0UL)
     {
-        if (val & 0x1U)
+        if ((val & 0x1UL) != 0UL)
         {
             SDMA_HandleIRQ(s_SDMAHandle[2][i]);
         }

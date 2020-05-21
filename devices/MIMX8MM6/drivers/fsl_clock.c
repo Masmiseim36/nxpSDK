@@ -44,6 +44,7 @@
 uint32_t CLOCK_GetFreq(clock_name_t clockName)
 {
     uint32_t freq;
+    uint32_t temp;
 
     switch (clockName)
     {
@@ -57,8 +58,11 @@ uint32_t CLOCK_GetFreq(clock_name_t clockName)
             freq = CLOCK_GetAhbFreq();
             break;
         case kCLOCK_IpgClk:
-            freq = CLOCK_GetAhbFreq() / CLOCK_GetRootPostDivider(kCLOCK_RootIpg);
+        {
+            temp = CLOCK_GetAhbFreq();
+            freq = temp / CLOCK_GetRootPostDivider(kCLOCK_RootIpg);
             break;
+        }
         default:
             freq = 0U;
             break;
@@ -79,32 +83,33 @@ uint32_t CLOCK_GetCoreM4Freq(void)
 
     switch (CLOCK_GetRootMux(kCLOCK_RootM4))
     {
-        case kCLOCK_M4RootmuxOsc24M:
+        case (uint32_t)kCLOCK_M4RootmuxOsc24M:
             freq = OSC24M_CLK_FREQ;
             break;
-        case kCLOCK_M4RootmuxSysPll2Div5:
+        case (uint32_t)kCLOCK_M4RootmuxSysPll2Div5:
             freq = CLOCK_GetPllFreq(kCLOCK_SystemPll2Ctrl) / 5U;
             break;
-        case kCLOCK_M4RootmuxSysPll2Div4:
+        case (uint32_t)kCLOCK_M4RootmuxSysPll2Div4:
             freq = CLOCK_GetPllFreq(kCLOCK_SystemPll2Ctrl) / 4U;
             break;
-        case kCLOCK_M4RootmuxSysPll1Div3:
+        case (uint32_t)kCLOCK_M4RootmuxSysPll1Div3:
             freq = CLOCK_GetPllFreq(kCLOCK_SystemPll1Ctrl) / 3U;
             break;
-        case kCLOCK_M4RootmuxSysPll1:
+        case (uint32_t)kCLOCK_M4RootmuxSysPll1:
             freq = CLOCK_GetPllFreq(kCLOCK_SystemPll1Ctrl);
             break;
-        case kCLOCK_M4RootmuxAudioPll1:
+        case (uint32_t)kCLOCK_M4RootmuxAudioPll1:
             freq = CLOCK_GetPllFreq(kCLOCK_AudioPll1Ctrl);
             break;
-        case kCLOCK_M4RootmuxVideoPll1:
+        case (uint32_t)kCLOCK_M4RootmuxVideoPll1:
             freq = CLOCK_GetPllFreq(kCLOCK_VideoPll1Ctrl);
             break;
-        case kCLOCK_M4RootmuxSysPll3:
+        case (uint32_t)kCLOCK_M4RootmuxSysPll3:
             freq = CLOCK_GetPllFreq(kCLOCK_SystemPll3Ctrl);
             break;
         default:
-            return 0;
+            assert(false);
+            break;
     }
 
     return freq / pre / post;
@@ -123,32 +128,33 @@ uint32_t CLOCK_GetAxiFreq(void)
 
     switch (CLOCK_GetRootMux(kCLOCK_RootAxi))
     {
-        case kCLOCK_AxiRootmuxOsc24M:
+        case (uint32_t)kCLOCK_AxiRootmuxOsc24M:
             freq = OSC24M_CLK_FREQ;
             break;
-        case kCLOCK_AxiRootmuxSysPll2Div3:
+        case (uint32_t)kCLOCK_AxiRootmuxSysPll2Div3:
             freq = CLOCK_GetPllFreq(kCLOCK_SystemPll2Ctrl) / 3U;
             break;
-        case kCLOCK_AxiRootmuxSysPll2Div4:
+        case (uint32_t)kCLOCK_AxiRootmuxSysPll2Div4:
             freq = CLOCK_GetPllFreq(kCLOCK_SystemPll2Ctrl) / 4U;
             break;
-        case kCLOCK_AxiRootmuxSysPll2:
+        case (uint32_t)kCLOCK_AxiRootmuxSysPll2:
             freq = CLOCK_GetPllFreq(kCLOCK_SystemPll2Ctrl);
             break;
-        case kCLOCK_AxiRootmuxAudioPll1:
+        case (uint32_t)kCLOCK_AxiRootmuxAudioPll1:
             freq = CLOCK_GetPllFreq(kCLOCK_AudioPll1Ctrl);
             break;
-        case kCLOCK_AxiRootmuxVideoPll1:
+        case (uint32_t)kCLOCK_AxiRootmuxVideoPll1:
             freq = CLOCK_GetPllFreq(kCLOCK_VideoPll1Ctrl);
             break;
-        case kCLOCK_AxiRootmuxSysPll1Div8:
-            freq = CLOCK_GetPllFreq(kCLOCK_SystemPll1Ctrl) / 8;
+        case (uint32_t)kCLOCK_AxiRootmuxSysPll1Div8:
+            freq = CLOCK_GetPllFreq(kCLOCK_SystemPll1Ctrl) / 8UL;
             break;
-        case kCLOCK_AxiRootmuxSysPll1:
+        case (uint32_t)kCLOCK_AxiRootmuxSysPll1:
             freq = CLOCK_GetPllFreq(kCLOCK_SystemPll1Ctrl);
             break;
         default:
-            return 0;
+            assert(false);
+            break;
     }
 
     return freq / pre / post;
@@ -167,32 +173,33 @@ uint32_t CLOCK_GetAhbFreq(void)
 
     switch (CLOCK_GetRootMux(kCLOCK_RootAhb))
     {
-        case kCLOCK_AhbRootmuxOsc24M:
+        case (uint32_t)kCLOCK_AhbRootmuxOsc24M:
             freq = OSC24M_CLK_FREQ;
             break;
-        case kCLOCK_AhbRootmuxSysPll1Div6:
+        case (uint32_t)kCLOCK_AhbRootmuxSysPll1Div6:
             freq = CLOCK_GetPllFreq(kCLOCK_SystemPll1Ctrl) / 6U;
             break;
-        case kCLOCK_AhbRootmuxSysPll1Div2:
+        case (uint32_t)kCLOCK_AhbRootmuxSysPll1Div2:
             freq = CLOCK_GetPllFreq(kCLOCK_SystemPll1Ctrl) / 2U;
             break;
-        case kCLOCK_AhbRootmuxSysPll1:
+        case (uint32_t)kCLOCK_AhbRootmuxSysPll1:
             freq = CLOCK_GetPllFreq(kCLOCK_SystemPll1Ctrl);
             break;
-        case kCLOCK_AhbRootmuxSysPll2Div8:
+        case (uint32_t)kCLOCK_AhbRootmuxSysPll2Div8:
             freq = CLOCK_GetPllFreq(kCLOCK_SystemPll2Ctrl) / 8U;
             break;
-        case kCLOCK_AhbRootmuxSysPll3:
+        case (uint32_t)kCLOCK_AhbRootmuxSysPll3:
             freq = CLOCK_GetPllFreq(kCLOCK_SystemPll3Ctrl);
             break;
-        case kCLOCK_AhbRootmuxAudioPll1:
+        case (uint32_t)kCLOCK_AhbRootmuxAudioPll1:
             freq = CLOCK_GetPllFreq(kCLOCK_AudioPll1Ctrl);
             break;
-        case kCLOCK_AhbRootmuxVideoPll1:
+        case (uint32_t)kCLOCK_AhbRootmuxVideoPll1:
             freq = CLOCK_GetPllFreq(kCLOCK_VideoPll1Ctrl);
             break;
         default:
-            return 0;
+            assert(false);
+            break;
     }
 
     return freq / pre / post;
@@ -212,11 +219,12 @@ uint32_t CLOCK_GetPllRefClkFreq(clock_pll_ctrl_t ctrl)
 
     if (ctrl < kCLOCK_GpuPllCtrl)
     {
-        clkSel = (CCM_ANALOG_TUPLE_REG(CCM_ANALOG, ctrl) & CCM_ANALOG_AUDIO_PLL1_GEN_CTRL_PLL_REF_CLK_SEL_MASK);
+        clkSel =
+            (uint8_t)((CCM_ANALOG_TUPLE_REG(CCM_ANALOG, ctrl) & CCM_ANALOG_AUDIO_PLL1_GEN_CTRL_PLL_REF_CLK_SEL_MASK));
     }
     else
     {
-        clkSel = (CCM_ANALOG_TUPLE_REG(CCM_ANALOG, ctrl) & CCM_ANALOG_SYS_PLL1_GEN_CTRL_PLL_REF_CLK_SEL_MASK);
+        clkSel = (uint8_t)(CCM_ANALOG_TUPLE_REG(CCM_ANALOG, ctrl) & CCM_ANALOG_SYS_PLL1_GEN_CTRL_PLL_REF_CLK_SEL_MASK);
     }
 
     switch (clkSel)
@@ -231,6 +239,7 @@ uint32_t CLOCK_GetPllRefClkFreq(clock_pll_ctrl_t ctrl)
             break;
 
         default:
+            assert(false);
             break;
     }
 
@@ -288,6 +297,7 @@ uint32_t CLOCK_GetPllFreq(clock_pll_ctrl_t pll)
             fracPllBypass = CLOCK_IsPllBypassed(CCM_ANALOG, kCLOCK_DramPllInternalPll1BypassCtrl);
             break;
         default:
+            assert(false);
             break;
     }
     if (pll < kCLOCK_GpuPllCtrl)
@@ -606,16 +616,17 @@ uint32_t CLOCK_GetFracPllFreq(CCM_ANALOG_Type *base, clock_pll_ctrl_t type, uint
 
     uint32_t mainDiv = CCM_BIT_FIELD_EXTRACTION(fracCfg1, CCM_ANALOG_AUDIO_PLL1_FDIV_CTL0_PLL_MAIN_DIV_MASK,
                                                 CCM_ANALOG_AUDIO_PLL1_FDIV_CTL0_PLL_MAIN_DIV_SHIFT);
-    uint8_t preDiv   = CCM_BIT_FIELD_EXTRACTION(fracCfg1, CCM_ANALOG_AUDIO_PLL1_FDIV_CTL0_PLL_PRE_DIV_MASK,
-                                              CCM_ANALOG_AUDIO_PLL1_FDIV_CTL0_PLL_PRE_DIV_SHIFT);
-    uint8_t postDiv  = CCM_BIT_FIELD_EXTRACTION(fracCfg1, CCM_ANALOG_AUDIO_PLL1_FDIV_CTL0_PLL_POST_DIV_MASK,
-                                               CCM_ANALOG_AUDIO_PLL1_FDIV_CTL0_PLL_POST_DIV_SHIFT);
+    uint8_t preDiv   = (uint8_t)CCM_BIT_FIELD_EXTRACTION(fracCfg1, CCM_ANALOG_AUDIO_PLL1_FDIV_CTL0_PLL_PRE_DIV_MASK,
+                                                       CCM_ANALOG_AUDIO_PLL1_FDIV_CTL0_PLL_PRE_DIV_SHIFT);
+    uint8_t postDiv  = (uint8_t)CCM_BIT_FIELD_EXTRACTION(fracCfg1, CCM_ANALOG_AUDIO_PLL1_FDIV_CTL0_PLL_POST_DIV_MASK,
+                                                        CCM_ANALOG_AUDIO_PLL1_FDIV_CTL0_PLL_POST_DIV_SHIFT);
     uint32_t dsm     = CCM_BIT_FIELD_EXTRACTION(fracCfg2, CCM_ANALOG_AUDIO_PLL1_FDIV_CTL1_PLL_DSM_MASK,
                                             CCM_ANALOG_AUDIO_PLL1_FDIV_CTL1_PLL_DSM_SHIFT);
 
-    fracClk = (uint64_t)refClkFreq * (mainDiv * 65536 + dsm) / (65536 * preDiv * (1 << postDiv));
+    fracClk = (uint64_t)((uint64_t)refClkFreq * ((uint64_t)mainDiv * 65536ULL + dsm) /
+                         (65536ULL * (uint32_t)preDiv * (1ULL << postDiv)));
 
-    return fracClk;
+    return (uint32_t)fracClk;
 }
 
 /*!
@@ -677,10 +688,10 @@ uint32_t CLOCK_GetIntegerPllFreq(CCM_ANALOG_Type *base, clock_pll_ctrl_t type, u
 
     uint32_t mainDiv = CCM_BIT_FIELD_EXTRACTION(integerCfg1, CCM_ANALOG_SYS_PLL1_FDIV_CTL0_PLL_MAIN_DIV_MASK,
                                                 CCM_ANALOG_SYS_PLL1_FDIV_CTL0_PLL_MAIN_DIV_SHIFT);
-    uint8_t preDiv   = CCM_BIT_FIELD_EXTRACTION(integerCfg1, CCM_ANALOG_SYS_PLL1_FDIV_CTL0_PLL_PRE_DIV_MASK,
-                                              CCM_ANALOG_SYS_PLL1_FDIV_CTL0_PLL_PRE_DIV_SHIFT);
-    uint8_t postDiv  = CCM_BIT_FIELD_EXTRACTION(integerCfg1, CCM_ANALOG_SYS_PLL1_FDIV_CTL0_PLL_POST_DIV_MASK,
-                                               CCM_ANALOG_SYS_PLL1_FDIV_CTL0_PLL_POST_DIV_SHIFT);
+    uint8_t preDiv   = (uint8_t)CCM_BIT_FIELD_EXTRACTION(integerCfg1, CCM_ANALOG_SYS_PLL1_FDIV_CTL0_PLL_PRE_DIV_MASK,
+                                                       CCM_ANALOG_SYS_PLL1_FDIV_CTL0_PLL_PRE_DIV_SHIFT);
+    uint8_t postDiv  = (uint8_t)CCM_BIT_FIELD_EXTRACTION(integerCfg1, CCM_ANALOG_SYS_PLL1_FDIV_CTL0_PLL_POST_DIV_MASK,
+                                                        CCM_ANALOG_SYS_PLL1_FDIV_CTL0_PLL_POST_DIV_SHIFT);
 
     if (pll1Bypass)
     {
@@ -692,7 +703,7 @@ uint32_t CLOCK_GetIntegerPllFreq(CCM_ANALOG_Type *base, clock_pll_ctrl_t type, u
         pllOutClock = (uint64_t)refClkFreq * mainDiv / (((uint64_t)(1U) << postDiv) * preDiv);
     }
 
-    return pllOutClock;
+    return (uint32_t)pllOutClock;
 }
 
 /*!
@@ -745,7 +756,7 @@ void CLOCK_EnableClock(clock_ip_name_t ccmGate)
 {
     uint32_t ccgr = CCM_TUPLE_CCGR(ccmGate);
 
-    CCM_REG_SET(ccgr) = kCLOCK_ClockNeededAll;
+    CCM_REG_SET(ccgr) = (uint32_t)kCLOCK_ClockNeededAll;
 #if !(defined(NOT_CONFIG_CLK_ROOT) && NOT_CONFIG_CLK_ROOT)
     uint32_t rootClk = CCM_TUPLE_ROOT(ccmGate);
     /* if root clock is 0xFFFFU, then skip enable root clock */
@@ -769,7 +780,7 @@ void CLOCK_DisableClock(clock_ip_name_t ccmGate)
 {
     uint32_t ccgr = CCM_TUPLE_CCGR(ccmGate);
 
-    CCM_REG(ccgr) = kCLOCK_ClockNotNeeded;
+    CCM_REG(ccgr) = (uint32_t)kCLOCK_ClockNotNeeded;
 #if !(defined(NOT_CONFIG_CLK_ROOT) && NOT_CONFIG_CLK_ROOT)
     uint32_t rootClk = CCM_TUPLE_ROOT(ccmGate);
     /* if root clock is 0xFFFFU, then skip disable root clock */
@@ -778,52 +789,4 @@ void CLOCK_DisableClock(clock_ip_name_t ccmGate)
         CCM_REG_CLR(rootClk) = CCM_TARGET_ROOT_CLR_ENABLE_MASK;
     }
 #endif
-}
-
-/*!
- * brief Use DWT to delay at least for some time.
- * Please note that, this API will calculate the microsecond period with the maximum devices
- * supported CPU frequency, so this API will only delay for at least the given microseconds, if precise
- * delay count was needed, please implement a new timer count to achieve this function.
- *
- * param delay_us  Delay time in unit of microsecond.
- */
-__attribute__((weak)) void SDK_DelayAtLeastUs(uint32_t delay_us)
-{
-    assert(0U != delay_us);
-    uint64_t count  = 0U;
-    uint32_t period = SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY / 1000000;
-
-    /* Make sure the DWT trace fucntion is enabled. */
-    if (CoreDebug_DEMCR_TRCENA_Msk != (CoreDebug_DEMCR_TRCENA_Msk & CoreDebug->DEMCR))
-    {
-        CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;
-    }
-
-    /* CYCCNT not supported on this device. */
-    assert(DWT_CTRL_NOCYCCNT_Msk != (DWT->CTRL & DWT_CTRL_NOCYCCNT_Msk));
-
-    /* If CYCCENT has already been enabled, read directly, otherwise, need enable it. */
-    if (DWT_CTRL_CYCCNTENA_Msk != (DWT_CTRL_CYCCNTENA_Msk & DWT->CTRL))
-    {
-        DWT->CTRL |= DWT_CTRL_CYCCNTENA_Msk;
-    }
-
-    /* Calculate the count ticks. */
-    count = DWT->CYCCNT;
-    count += (uint64_t)period * delay_us;
-
-    if (count > 0xFFFFFFFFUL)
-    {
-        count -= 0xFFFFFFFFUL;
-        /* wait for cyccnt overflow. */
-        while (count < DWT->CYCCNT)
-        {
-        }
-    }
-
-    /* Wait for cyccnt reach count value. */
-    while (count > DWT->CYCCNT)
-    {
-    }
 }

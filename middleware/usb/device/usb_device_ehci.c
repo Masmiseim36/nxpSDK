@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 - 2017,2019 NXP
+ * Copyright 2016 - 2017 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -1230,11 +1230,6 @@ usb_status_t USB_DeviceEhciInit(uint8_t controllerId,
 #endif
 
 #endif
-    /* Reset the controller. */
-    ehciState->registerBase->USBCMD |= USBHS_USBCMD_RST_MASK;
-    while (ehciState->registerBase->USBCMD & USBHS_USBCMD_RST_MASK)
-    {
-    }
 
     /* Get the HW's endpoint count */
     ehciState->endpointCount =

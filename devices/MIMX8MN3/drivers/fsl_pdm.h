@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2018, Freescale Semiconductor, Inc.
+ * Copyright 2019 NXP
  * All rights reserved.
- *
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -22,14 +22,14 @@
 
 /*! @name Driver version */
 /*@{*/
-#define FSL_PDM_DRIVER_VERSION (MAKE_VERSION(2, 1, 1)) /*!< Version 2.1.1 */
+#define FSL_PDM_DRIVER_VERSION (MAKE_VERSION(2, 2, 1)) /*!< Version 2.2.1 */
 /*@}*/
 
 /*! @brief PDM XFER QUEUE SIZE */
-#define PDM_XFER_QUEUE_SIZE (4)
+#define PDM_XFER_QUEUE_SIZE (4U)
 
 /*! @brief PDM return status*/
-enum _pdm_status
+enum
 {
     kStatus_PDM_Busy       = MAKE_STATUS(kStatusGroup_PDM, 0), /*!< PDM is busy. */
     kStatus_PDM_CLK_LOW    = MAKE_STATUS(kStatusGroup_PDM, 1), /*!< PDM clock frequency low */
@@ -443,11 +443,11 @@ static inline void PDM_EnableChannel(PDM_Type *base, uint8_t channel, bool enabl
 {
     if (enable)
     {
-        base->CTRL_1 |= (1U << channel);
+        base->CTRL_1 |= (1UL << channel);
     }
     else
     {
-        base->CTRL_1 &= ~(1U << channel);
+        base->CTRL_1 &= ~(1UL << channel);
     }
 }
 
@@ -464,12 +464,27 @@ void PDM_SetChannelConfig(PDM_Type *base, uint32_t channel, const pdm_channel_co
 /*!
  * @brief PDM set sample rate.
  *
+ * @note This function is depend on the configuration of the PDM and PDM channel, so the correct call sequence is
+ * @code
+ * PDM_Init(base, pdmConfig)
+ * PDM_SetChannelConfig(base, channel, &channelConfig)
+ * PDM_SetSampleRateConfig(base, source, sampleRate)
+ * @endcode
+ * @param base PDM base pointer
+ * @param sourceClock_HZ PDM source clock frequency.
+ * @param sampleRate_HZ PDM sample rate.
+ */
+status_t PDM_SetSampleRateConfig(PDM_Type *base, uint32_t sourceClock_HZ, uint32_t sampleRate_HZ);
+
+/*!
+ * @brief PDM set sample rate.
+ *
+ * @deprecated Do not use this function.  It has been superceded by @ref PDM_SetSampleRateConfig
  * @param base PDM base pointer
  * @param enableChannelMask PDM channel enable mask.
  * @param qualityMode quality mode.
  * @param osr cic oversample rate
  * @param clkDiv clock divider
- * after completing the current frame in debug mode.
  */
 status_t PDM_SetSampleRate(
     PDM_Type *base, uint32_t enableChannelMask, pdm_df_quality_mode_t qualityMode, uint8_t osr, uint32_t clkDiv);
@@ -840,7 +855,7 @@ void PDM_SetHwvadZeroCrossDetectorConfig(PDM_Type *base, const pdm_hwvad_zero_cr
  */
 static inline uint16_t PDM_GetNoiseData(PDM_Type *base)
 {
-    return base->VAD0_NDATA;
+    return (uint16_t)base->VAD0_NDATA;
 }
 
 /*!
@@ -851,7 +866,7 @@ static inline uint16_t PDM_GetNoiseData(PDM_Type *base)
  */
 static inline void PDM_SetHwvadInternalFilterStatus(PDM_Type *base, pdm_hwvad_filter_status_t status)
 {
-    base->VAD0_CTRL_1 = (base->VAD0_CTRL_1 & (~PDM_VAD0_CTRL_1_VADST10_MASK)) | status;
+    base->VAD0_CTRL_1 = (base->VAD0_CTRL_1 & (~PDM_VAD0_CTRL_1_VADST10_MASK)) | (uint32_t)status;
 }
 
 /*! @} */

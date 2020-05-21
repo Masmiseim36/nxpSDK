@@ -19,23 +19,21 @@
 
 #define APP_MU_IRQ_PRIORITY (3U)
 
-static int isr_counter = 0;
-static int disable_counter = 0;
+static int32_t isr_counter     = 0;
+static int32_t disable_counter = 0;
 static void *platform_lock;
-
 
 static void platform_global_isr_disable(void)
 {
     __asm volatile("cpsid i");
 }
 
-
 static void platform_global_isr_enable(void)
 {
     __asm volatile("cpsie i");
 }
 
-int platform_init_interrupt(unsigned int vector_id, void *isr_data)
+int32_t platform_init_interrupt(uint32_t vector_id, void *isr_data)
 {
     /* Register ISR to environment layer */
     env_register_isr(vector_id, isr_data);
@@ -46,7 +44,7 @@ int platform_init_interrupt(unsigned int vector_id, void *isr_data)
     RL_ASSERT(0 <= isr_counter);
     if (isr_counter == 0)
     {
-        MU_EnableInterrupts(MUB, (1U << 27U) >> RPMSG_MU_CHANNEL);
+        MU_EnableInterrupts(MUB, (1UL << 27U) >> RPMSG_MU_CHANNEL);
     }
     isr_counter++;
 
@@ -55,7 +53,7 @@ int platform_init_interrupt(unsigned int vector_id, void *isr_data)
     return 0;
 }
 
-int platform_deinit_interrupt(unsigned int vector_id)
+int32_t platform_deinit_interrupt(uint32_t vector_id)
 {
     /* Prepare the MU Hardware */
     env_lock_mutex(platform_lock);
@@ -64,7 +62,7 @@ int platform_deinit_interrupt(unsigned int vector_id)
     isr_counter--;
     if (isr_counter == 0)
     {
-        MU_DisableInterrupts(MUB, (1U << 27U) >> RPMSG_MU_CHANNEL);
+        MU_DisableInterrupts(MUB, (1UL << 27U) >> RPMSG_MU_CHANNEL);
     }
 
     /* Unregister ISR from environment layer */
@@ -75,7 +73,7 @@ int platform_deinit_interrupt(unsigned int vector_id)
     return 0;
 }
 
-void platform_notify(unsigned int vector_id)
+void platform_notify(uint32_t vector_id)
 {
     /* As Linux suggests, use MU->Data Channel 1 as communication channel */
     uint32_t msg = (uint32_t)(vector_id << 16);
@@ -88,11 +86,11 @@ void platform_notify(unsigned int vector_id)
 /*
  * MU Interrrupt RPMsg handler
  */
-int MU_M7_IRQHandler()
+int32_t MU_M7_IRQHandler()
 {
     uint32_t channel;
 
-    if (((1U << 27U) >> RPMSG_MU_CHANNEL) & MU_GetStatusFlags(MUB))
+    if ((((1UL << 27U) >> RPMSG_MU_CHANNEL) & MU_GetStatusFlags(MUB)) != 0UL)
     {
         channel = MU_ReceiveMsgNonBlocking(MUB, RPMSG_MU_CHANNEL); // Read message from RX register.
         env_isr(channel >> 16);
@@ -113,7 +111,7 @@ int MU_M7_IRQHandler()
  *
  * This is not an accurate delay, it ensures at least num_msec passed when return.
  */
-void platform_time_delay(unsigned int num_msec)
+void platform_time_delay(uint32_t num_msec)
 {
     uint32_t loop;
 
@@ -124,7 +122,7 @@ void platform_time_delay(unsigned int num_msec)
     loop = SystemCoreClock / 3U / 1000U * num_msec;
 
     /* There's some difference among toolchains, 3 or 4 cycles each loop */
-    while (loop)
+    while (loop > 0U)
     {
         __NOP();
         loop--;
@@ -139,7 +137,7 @@ void platform_time_delay(unsigned int num_msec)
  * @return True for IRQ, false otherwise.
  *
  */
-int platform_in_isr(void)
+int32_t platform_in_isr(void)
 {
     return (((SCB->ICSR & SCB_ICSR_VECTACTIVE_Msk) != 0UL) ? 1 : 0);
 }
@@ -154,7 +152,7 @@ int platform_in_isr(void)
  * @return vector_id Return value is never checked.
  *
  */
-int platform_interrupt_enable(unsigned int vector_id)
+int32_t platform_interrupt_enable(uint32_t vector_id)
 {
     RL_ASSERT(0 < disable_counter);
 
@@ -166,7 +164,7 @@ int platform_interrupt_enable(unsigned int vector_id)
         NVIC_EnableIRQ(MU_M7_IRQn);
     }
     platform_global_isr_enable();
-    return ((int)vector_id);
+    return ((int32_t)vector_id);
 }
 
 /**
@@ -179,7 +177,7 @@ int platform_interrupt_enable(unsigned int vector_id)
  * @return vector_id Return value is never checked.
  *
  */
-int platform_interrupt_disable(unsigned int vector_id)
+int32_t platform_interrupt_disable(uint32_t vector_id)
 {
     RL_ASSERT(0 <= disable_counter);
 
@@ -192,7 +190,7 @@ int platform_interrupt_disable(unsigned int vector_id)
     }
     disable_counter++;
     platform_global_isr_enable();
-    return ((int)vector_id);
+    return ((int32_t)vector_id);
 }
 
 /**
@@ -201,7 +199,7 @@ int platform_interrupt_disable(unsigned int vector_id)
  * Dummy implementation
  *
  */
-void platform_map_mem_region(unsigned int vrt_addr, unsigned int phy_addr, unsigned int size, unsigned int flags)
+void platform_map_mem_region(uint32_t vrt_addr, uint32_t phy_addr, uint32_t size, uint32_t flags)
 {
 }
 
@@ -231,9 +229,9 @@ void platform_cache_disable(void)
  * Dummy implementation
  *
  */
-unsigned long platform_vatopa(void *addr)
+uint32_t platform_vatopa(void *addr)
 {
-    return ((unsigned long)addr);
+    return ((uint32_t)(char *)addr);
 }
 
 /**
@@ -242,9 +240,9 @@ unsigned long platform_vatopa(void *addr)
  * Dummy implementation
  *
  */
-void *platform_patova(unsigned long addr)
+void *platform_patova(uint32_t addr)
 {
-    return ((void *)addr);
+    return ((void *)(char *)addr);
 }
 
 /**
@@ -252,7 +250,7 @@ void *platform_patova(unsigned long addr)
  *
  * platform/environment init
  */
-int platform_init(void)
+int32_t platform_init(void)
 {
     /*
      * Prepare for the MU Interrupt
@@ -263,7 +261,7 @@ int platform_init(void)
     NVIC_EnableIRQ(MU_M7_IRQn);
 
     /* Create lock used in multi-instanced RPMsg */
-    if(0 != env_create_mutex(&platform_lock, 1))
+    if (0 != env_create_mutex(&platform_lock, 1))
     {
         return -1;
     }
@@ -276,7 +274,7 @@ int platform_init(void)
  *
  * platform/environment deinit process
  */
-int platform_deinit(void)
+int32_t platform_deinit(void)
 {
     /* Delete lock used in multi-instanced RPMsg */
     env_delete_mutex(platform_lock);

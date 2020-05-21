@@ -18,6 +18,14 @@ The current version is Amazon-FreeRTOS 201908.00 Original package is available a
           - iot_demo_freertos.c -  macro expansion producing 'defined' has undefined behavior
           - iot_pkcs11_mbedtls.c - comparison of address not equal to a null pointer is always true
           - pkcs11.h - '__PASTE' macro redefined
+      - changes required for se_hostlib examples
+          - iot_default_root_certificates.h  tlsCombi_ROOT_CERTIFICATE_PEM added for se_hostlib cloud demos
+          - iot_mqtt_agent.h modified structure to support for clouds which use usename and password
+          - iot_mqtt_agent.c assigning structure to support for clouds which use usename and password
+          - iot_crypto.c threading alt under MBEDTLS_THREADING_ALT
+          - iot_tls.c Supoort for secure element handling
+          - aws_pkcs11_pal.c pkcs11 handling for SE050
+      - Introduced aws_ota_pal.c for RT1060 supporting ota_bootloader (mcu-boot)
 
   - 1.4.9_rev0
       - Remove 3rd party libraries lwip, mbedtls (use MCUXpresso SDK versions).

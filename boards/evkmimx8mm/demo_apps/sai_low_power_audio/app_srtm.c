@@ -33,6 +33,7 @@
 #if APP_SRTM_CODEC_WM8524_USED
 #include "srtm_wm8524_adapter.h"
 #endif
+#include "fsl_debug_console.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -63,8 +64,9 @@ typedef enum
 app_rpmsg_monitor_t rpmsgMonitor;
 volatile app_srtm_state_t srtmState = APP_SRTM_StateRun;
 
-uint8_t codecHandleBuffer[CODEC_HANDLE_SIZE] = {0U};
-codec_handle_t *codecHandle                  = (codec_handle_t *)codecHandleBuffer;
+codec_handle_t codecHandle;
+codec_config_t boardCodecConfig;
+
 #if APP_SRTM_CODEC_AK4497_USED
 static bool powerOnAudioBoard = false;
 #endif
@@ -78,6 +80,14 @@ struct rpmsg_lite_instance *rpmsgHandle;
 void *rpmsgMonitorParam;
 TimerHandle_t linkupTimer;
 srtm_sai_adapter_t saiAdapter;
+srtm_codec_adapter_t codecAdapter;
+#if APP_SRTM_CODEC_AK4497_USED
+srtm_i2c_codec_config_t i2cCodecConfig;
+ak4497_config_t ak4497Config;
+#endif
+#if APP_SRTM_CODEC_WM8524_USED
+srtm_wm8524_config_t wm8524Config;
+#endif
 /*******************************************************************************
  * Code
  ******************************************************************************/
@@ -115,14 +125,14 @@ static uint32_t APP_SRTM_SAI_CLK_SET(mclk_type_t type)
     {
 #if APP_SRTM_CODEC_AK4497_USED
         CLOCK_SetRootMux(kCLOCK_RootSai1,
-                         kCLOCK_SaiRootmuxAudioPll2); /* Set SAI source to Audio PLL2 361267197HZ to get 22.5792MHz */
-        sai_source_clk = CLOCK_GetPllFreq(kCLOCK_AudioPll2Ctrl) / (CLOCK_GetRootPreDivider(kCLOCK_RootSai1)) /
+                         kCLOCK_SaiRootmuxAudioPll2); /* Set SAI source to Audio PLL2 361267200Hz to get 22.5792MHz */
+        sai_source_clk = APP_AUDIO_PLL2_FREQ / (CLOCK_GetRootPreDivider(kCLOCK_RootSai1)) /
                          (CLOCK_GetRootPostDivider(kCLOCK_RootSai1));
 #endif
 #if APP_SRTM_CODEC_WM8524_USED
         CLOCK_SetRootMux(kCLOCK_RootSai3,
-                         kCLOCK_SaiRootmuxAudioPll2); /* Set SAI source to Audio PLL2 361267197HZ to get 22.5792MHz */
-        sai_source_clk = CLOCK_GetPllFreq(kCLOCK_AudioPll2Ctrl) / (CLOCK_GetRootPreDivider(kCLOCK_RootSai3)) /
+                         kCLOCK_SaiRootmuxAudioPll2); /* Set SAI source to Audio PLL2 361267200Hz to get 22.5792MHz */
+        sai_source_clk = APP_AUDIO_PLL2_FREQ / (CLOCK_GetRootPreDivider(kCLOCK_RootSai3)) /
                          (CLOCK_GetRootPostDivider(kCLOCK_RootSai3));
 #endif
     }
@@ -130,14 +140,14 @@ static uint32_t APP_SRTM_SAI_CLK_SET(mclk_type_t type)
     {
 #if APP_SRTM_CODEC_AK4497_USED
         CLOCK_SetRootMux(kCLOCK_RootSai1,
-                         kCLOCK_SaiRootmuxAudioPll1); /* Set SAI source to Audio PLL1 393215996HZ to get 49.152Mhz*/
-        sai_source_clk = CLOCK_GetPllFreq(kCLOCK_AudioPll1Ctrl) / (CLOCK_GetRootPreDivider(kCLOCK_RootSai1)) /
+                         kCLOCK_SaiRootmuxAudioPll1); /* Set SAI source to Audio PLL1 393216000Hz to get 49.152Mhz*/
+        sai_source_clk = APP_AUDIO_PLL1_FREQ / (CLOCK_GetRootPreDivider(kCLOCK_RootSai1)) /
                          (CLOCK_GetRootPostDivider(kCLOCK_RootSai1));
 #endif
 #if APP_SRTM_CODEC_WM8524_USED
         CLOCK_SetRootMux(kCLOCK_RootSai3,
-                         kCLOCK_SaiRootmuxAudioPll1); /* Set SAI source to Audio PLL1 393215996HZ to get 24.576Mhz*/
-        sai_source_clk = CLOCK_GetPllFreq(kCLOCK_AudioPll1Ctrl) / (CLOCK_GetRootPreDivider(kCLOCK_RootSai3)) /
+                         kCLOCK_SaiRootmuxAudioPll1); /* Set SAI source to Audio PLL1 393216000Hz to get 24.576Mhz*/
+        sai_source_clk = APP_AUDIO_PLL1_FREQ / (CLOCK_GetRootPreDivider(kCLOCK_RootSai3)) /
                          (CLOCK_GetRootPostDivider(kCLOCK_RootSai3));
 #endif
     }
@@ -397,15 +407,7 @@ static void APP_SRTM_InitAudioService(void)
 {
     srtm_sai_sdma_config_t saiTxConfig;
     srtm_sai_sdma_config_t saiRxConfig;
-#if APP_SRTM_CODEC_AK4497_USED
-    srtm_i2c_codec_config_t i2cCodecConfig;
-    ak4497_config_t ak4497Config;
-#endif
-#if APP_SRTM_CODEC_WM8524_USED
-    srtm_wm8524_config_t wm8524Config;
-#endif
-    codec_config_t boardCodecConfig;
-    srtm_codec_adapter_t codecAdapter;
+
     APP_SRTM_InitAudioDevice();
 
     memset(&saiTxConfig, 0, sizeof(srtm_sai_sdma_config_t));
@@ -424,7 +426,7 @@ static void APP_SRTM_InitAudioService(void)
     saiTxConfig.stopOnSuspend = true; /* Audio data is in DRAM which is not accessable in A53 suspend. */
     saiTxConfig.threshold     = 1U;   /* Under the threshold value would trigger periodDone message to A53 */
     saiTxConfig.guardTime =
-        1000; /* Unit:ms. This is a lower limit that M4 should reserve such time data to wakeup A core. */
+        1000; /* Unit:ms. This is a lower limit that M core should reserve such time data to wakeup A core. */
     saiTxConfig.dmaChannel      = APP_SAI_TX_DMA_CHANNEL;
     saiTxConfig.ChannelPriority = APP_SAI_TX_DMA_CHANNEL_PRIORITY;
     saiTxConfig.eventSource     = APP_SAI_TX_DMA_SOURCE;
@@ -465,16 +467,16 @@ static void APP_SRTM_InitAudioService(void)
     boardCodecConfig.codecDevConfig = &ak4497Config;
     boardCodecConfig.codecDevType   = kCODEC_AK4497;
 
-    CODEC_Init(codecHandle, &boardCodecConfig);
+    CODEC_Init(&codecHandle, &boardCodecConfig);
 
     /* Create I2C Codec adaptor */
     i2cCodecConfig.addrType    = kCODEC_RegAddr8Bit;
     i2cCodecConfig.slaveAddr   = ak4497Config.slaveAddress;
-    i2cCodecConfig.i2cHandle   = &(((ak4497_handle_t *)((uint32_t) & (codecHandle->codecDevHandle)))->i2cHandle);
+    i2cCodecConfig.i2cHandle   = (((ak4497_handle_t *)((uint32_t)(codecHandle.codecDevHandle)))->i2cHandle);
     i2cCodecConfig.regWidth    = kCODEC_RegWidth8Bit;
     i2cCodecConfig.writeRegMap = APP_SRTM_WriteCodecRegMap;
     i2cCodecConfig.readRegMap  = APP_SRTM_ReadCodecRegMap;
-    codecAdapter               = SRTM_I2CCodecAdapter_Create(codecHandle, &i2cCodecConfig);
+    codecAdapter               = SRTM_I2CCodecAdapter_Create(&codecHandle, &i2cCodecConfig);
     assert(codecAdapter);
 #endif
 #if APP_SRTM_CODEC_WM8524_USED
@@ -489,9 +491,9 @@ static void APP_SRTM_InitAudioService(void)
     boardCodecConfig.codecDevConfig = &wm8524Config.config;
     boardCodecConfig.codecDevType   = kCODEC_WM8524;
 
-    CODEC_Init(codecHandle, &boardCodecConfig);
+    CODEC_Init(&codecHandle, &boardCodecConfig);
 
-    codecAdapter = SRTM_Wm8524Adapter_Create(codecHandle, &wm8524Config);
+    codecAdapter = SRTM_Wm8524Adapter_Create(&codecHandle, &wm8524Config);
     assert(codecAdapter);
 #endif
     /*  Set SAI DMA IRQ Priority. */
@@ -554,8 +556,18 @@ void APP_SRTM_Init(void)
     /* Create SRTM dispatcher */
     disp = SRTM_Dispatcher_Create();
 
-    xTaskCreate(SRTM_MonitorTask, "SRTM monitor", 256U, NULL, APP_SRTM_MONITOR_TASK_PRIO, NULL);
-    xTaskCreate(SRTM_DispatcherTask, "SRTM dispatcher", 512U, NULL, APP_SRTM_DISPATCHER_TASK_PRIO, NULL);
+    if (xTaskCreate(SRTM_MonitorTask, "SRTM monitor", 256U, NULL, APP_SRTM_MONITOR_TASK_PRIO, NULL) != pdPASS)
+    {
+        PRINTF("Task creation failed!.\r\n");
+        while (1)
+            ;
+    }
+    if (xTaskCreate(SRTM_DispatcherTask, "SRTM dispatcher", 512U, NULL, APP_SRTM_DISPATCHER_TASK_PRIO, NULL) != pdPASS)
+    {
+        PRINTF("Task creation failed!.\r\n");
+        while (1)
+            ;
+    }
 }
 void APP_SRTM_Suspend(void)
 {

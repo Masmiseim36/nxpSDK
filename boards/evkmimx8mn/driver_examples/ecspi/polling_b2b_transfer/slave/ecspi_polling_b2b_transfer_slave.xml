@@ -17,13 +17,14 @@
     <definition extID="platform.drivers.iuart.MIMX8MN6"/>
     <definition extID="platform.drivers.rdc.MIMX8MN6"/>
     <definition extID="platform.utilities.assert.MIMX8MN6"/>
+    <definition extID="platform.utilities.misc_utilities.MIMX8MN6"/>
     <definition extID="utility.debug_console.MIMX8MN6"/>
     <definition extID="iar"/>
     <definition extID="armgcc"/>
     <definition extID="mdk"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="evkmimx8mn_ecspi_polling_b2b_transfer_slave" name="ecspi_polling_b2b_transfer_slave" category="driver_examples/ecspi" dependency="platform.drivers.ecspi.MIMX8MN6 platform.drivers.clock.MIMX8MN6 platform.drivers.common.MIMX8MN6 platform.drivers.rdc.MIMX8MN6 device.MIMX8MN6_CMSIS.MIMX8MN6 utility.debug_console.MIMX8MN6 component.iuart_adapter.MIMX8MN6 component.serial_manager.MIMX8MN6 component.serial_manager_uart.MIMX8MN6 platform.drivers.iuart.MIMX8MN6 component.lists.MIMX8MN6 device.MIMX8MN6_startup.MIMX8MN6 platform.utilities.assert.MIMX8MN6 platform.Include_core_cm7.MIMX8MN6 platform.Include_common.MIMX8MN6 platform.Include_dsp.MIMX8MN6">
+  <example id="evkmimx8mn_ecspi_polling_b2b_transfer_slave" name="ecspi_polling_b2b_transfer_slave" category="driver_examples/ecspi" dependency="platform.drivers.ecspi.MIMX8MN6 platform.drivers.clock.MIMX8MN6 platform.drivers.common.MIMX8MN6 platform.drivers.rdc.MIMX8MN6 device.MIMX8MN6_CMSIS.MIMX8MN6 utility.debug_console.MIMX8MN6 component.iuart_adapter.MIMX8MN6 component.serial_manager.MIMX8MN6 component.lists.MIMX8MN6 component.serial_manager_uart.MIMX8MN6 platform.drivers.iuart.MIMX8MN6 device.MIMX8MN6_startup.MIMX8MN6 platform.utilities.assert.MIMX8MN6 platform.Include_core_cm7.MIMX8MN6 platform.Include_common.MIMX8MN6 platform.Include_dsp.MIMX8MN6 platform.utilities.misc_utilities.MIMX8MN6">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -40,6 +41,7 @@
         </option>
         <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
           <value>CPU_MIMX8MN6DVTJZ</value>
+          <value>SERIAL_PORT_TYPE_UART=1</value>
         </option>
         <option id="gnu.c.compiler.option.optimization.flags" type="string">
           <value>-fno-common</value>
@@ -55,10 +57,10 @@
         </option>
       </toolchainSetting>
     </toolchainSettings>
-    <source path="boards/evkmimx8mn/driver_examples/ecspi/polling_b2b_transfer/slave/armgcc" target_path="src" type="linker" toolchain="armgcc">
+    <source path="boards/evkmimx8mn/driver_examples/ecspi/polling_b2b_transfer/slave/armgcc" target_path="MIMX8MN6/gcc" type="linker" toolchain="armgcc">
       <files mask="MIMX8MN6xxxxx_cm7_ram.ld"/>
     </source>
-    <source path="boards/evkmimx8mn/driver_examples/ecspi/polling_b2b_transfer/slave/iar" target_path="src" type="linker" toolchain="iar">
+    <source path="boards/evkmimx8mn/driver_examples/ecspi/polling_b2b_transfer/slave/iar" target_path="MIMX8MN6/iar" type="linker" toolchain="iar">
       <files mask="MIMX8MN6xxxxx_cm7_ram.icf"/>
     </source>
     <source path="boards/evkmimx8mn/driver_examples/ecspi/polling_b2b_transfer/slave" target_path="board" type="c_include">

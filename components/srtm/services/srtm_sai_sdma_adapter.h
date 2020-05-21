@@ -52,7 +52,7 @@ typedef struct _srtm_sai_sdma_config
     uint8_t ChannelPriority;
     bool stopOnSuspend;
     uint32_t eventSource;
-    uint32_t guardTime; /* guardTime (unit:ms): M4 needs to make sure there is enough time for A core wake up from
+    uint32_t guardTime; /* guardTime (unit:ms): M core needs to make sure there is enough time for A core wake up from
                            suspend and fill the DDR buffer again. The time should not less than the guardTime */
     uint32_t threshold; /* threshold: under which will trigger periodDone notification. */
     sdma_context_data_t txcontext;

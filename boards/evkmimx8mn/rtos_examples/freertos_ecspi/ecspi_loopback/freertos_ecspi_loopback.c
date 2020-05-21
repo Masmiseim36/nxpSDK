@@ -74,7 +74,8 @@ int main(void)
     PRINTF("The ECSPI will connect the transmitter and receiver sections internally.\r\n");
     PRINTF("So, there is no need to connect the MOSI and MISO pins.\r\n");
 
-    if (xTaskCreate(ecspi_task, "Ecspi_task", configMINIMAL_STACK_SIZE + 10, NULL, ecspi_task_PRIORITY, NULL) != pdPASS)
+    if (xTaskCreate(ecspi_task, "Ecspi_task", configMINIMAL_STACK_SIZE + 100, NULL, ecspi_task_PRIORITY, NULL) !=
+        pdPASS)
     {
         PRINTF("Task creation failed!.\r\n");
         while (1)

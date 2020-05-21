@@ -182,9 +182,11 @@
           <name>CCDefines</name>
           <state>DEBUG</state>
           <state>CPU_MIMX8MN6DVTJZ</state>
+          <state>SDK_DELAY_USE_DWT</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>BOARD_USE_CODEC=1</state>
           <state>CODEC_WM8524_ENABLE</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -320,24 +322,16 @@
           <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../devices</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/wm8524</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8MN6/drivers</state>
           <state>$PROJ_DIR$/../../../../../../components/codec</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/port</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec/wm8524</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8MN6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8MN6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8MN6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8MN6/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8MN6</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8MN6/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8MN6/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8MN6/drivers</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMX8MN6/utilities</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1166,9 +1160,11 @@
           <name>CCDefines</name>
           <state>FLASH_TARGET</state>
           <state>CPU_MIMX8MN6DVTJZ</state>
+          <state>SDK_DELAY_USE_DWT</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>BOARD_USE_CODEC=1</state>
           <state>CODEC_WM8524_ENABLE</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1304,24 +1300,16 @@
           <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../devices</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/wm8524</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8MN6/drivers</state>
           <state>$PROJ_DIR$/../../../../../../components/codec</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/port</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec/wm8524</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8MN6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8MN6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8MN6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8MN6/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8MN6</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8MN6/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8MN6/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8MN6/drivers</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMX8MN6/utilities</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -2148,9 +2136,11 @@
         <option>
           <name>CCDefines</name>
           <state>CPU_MIMX8MN6DVTJZ</state>
+          <state>SDK_DELAY_USE_DWT</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>BOARD_USE_CODEC=1</state>
           <state>CODEC_WM8524_ENABLE</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -2286,24 +2276,16 @@
           <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../devices</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/wm8524</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8MN6/drivers</state>
           <state>$PROJ_DIR$/../../../../../../components/codec</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/port</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec/wm8524</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8MN6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8MN6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8MN6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8MN6/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8MN6</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8MN6/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8MN6/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8MN6/drivers</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMX8MN6/utilities</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -3131,9 +3113,11 @@
           <name>CCDefines</name>
           <state>NDEBUG</state>
           <state>CPU_MIMX8MN6DVTJZ</state>
+          <state>SDK_DELAY_USE_DWT</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>BOARD_USE_CODEC=1</state>
           <state>CODEC_WM8524_ENABLE</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -3269,24 +3253,16 @@
           <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../devices</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/wm8524</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8MN6/drivers</state>
           <state>$PROJ_DIR$/../../../../../../components/codec</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/port</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec/wm8524</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8MN6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8MN6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8MN6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8MN6/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8MN6</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8MN6/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8MN6/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8MN6/drivers</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMX8MN6/utilities</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -4115,9 +4091,11 @@
           <name>CCDefines</name>
           <state>FLASH_TARGET</state>
           <state>CPU_MIMX8MN6DVTJZ</state>
+          <state>SDK_DELAY_USE_DWT</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>BOARD_USE_CODEC=1</state>
           <state>CODEC_WM8524_ENABLE</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -4253,24 +4231,16 @@
           <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../devices</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/wm8524</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8MN6/drivers</state>
           <state>$PROJ_DIR$/../../../../../../components/codec</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/port</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec/wm8524</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8MN6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8MN6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8MN6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8MN6/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8MN6</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8MN6/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8MN6/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8MN6/drivers</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMX8MN6/utilities</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -5097,9 +5067,11 @@
         <option>
           <name>CCDefines</name>
           <state>CPU_MIMX8MN6DVTJZ</state>
+          <state>SDK_DELAY_USE_DWT</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>BOARD_USE_CODEC=1</state>
           <state>CODEC_WM8524_ENABLE</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -5235,24 +5207,16 @@
           <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../devices</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/wm8524</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8MN6/drivers</state>
           <state>$PROJ_DIR$/../../../../../../components/codec</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/port</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec/wm8524</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8MN6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8MN6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8MN6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8MN6/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8MN6</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8MN6/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMX8MN6/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMX8MN6/drivers</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMX8MN6/utilities</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>

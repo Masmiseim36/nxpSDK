@@ -353,6 +353,19 @@ typedef enum _osa_status
 
 extern const uint8_t gUseRtos_c;
 
+/*
+ * alloc the temporary memory to store the status
+ */
+#define OSA_SR_ALLOC() uint32_t osaCurrentSr;
+/*
+ * Enter critical mode
+ */
+#define OSA_ENTER_CRITICAL() OSA_EnterCritical(&osaCurrentSr)
+/*
+ * Exit critical mode and retore the previous mode
+ */
+#define OSA_EXIT_CRITICAL() OSA_ExitCritical(osaCurrentSr)
+
 /*******************************************************************************
  * API
  ******************************************************************************/

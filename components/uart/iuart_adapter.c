@@ -346,6 +346,20 @@ hal_uart_status_t HAL_UartSendBlocking(hal_uart_handle_t handle, const uint8_t *
     return kStatus_HAL_UartSuccess;
 }
 
+hal_uart_status_t HAL_UartEnterLowpower(hal_uart_handle_t handle)
+{
+    assert(handle);
+
+    return kStatus_HAL_UartSuccess;
+}
+
+hal_uart_status_t HAL_UartExitLowpower(hal_uart_handle_t handle)
+{
+    assert(handle);
+
+    return kStatus_HAL_UartSuccess;
+}
+
 #if (defined(UART_ADAPTER_NON_BLOCKING_MODE) && (UART_ADAPTER_NON_BLOCKING_MODE > 0U))
 
 #if (defined(HAL_UART_TRANSFER_MODE) && (HAL_UART_TRANSFER_MODE > 0U))

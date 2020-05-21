@@ -9,13 +9,13 @@
 #include "board.h"
 #include "fsl_pdm.h"
 #include "fsl_sai.h"
-#include "fsl_wm8524.h"
 #include "fsl_debug_console.h"
 #include "fsl_codec_common.h"
 #include "pin_mux.h"
 #include "clock_config.h"
 #include "fsl_common.h"
 #include "fsl_gpio.h"
+#include "fsl_wm8524.h"
 #include "fsl_codec_adapter.h"
 /*******************************************************************************
  * Definitions
@@ -81,7 +81,7 @@ static const pdm_config_t pdmConfig         = {
 };
 static pdm_channel_config_t channelConfig = {
     .cutOffFreq = kPDM_DcRemoverCutOff152Hz,
-    .gain       = kPDM_DfOutputGain4,
+    .gain       = kPDM_DfOutputGain7,
 };
 #if (defined(FSL_FEATURE_SAI_HAS_MCR) && (FSL_FEATURE_SAI_HAS_MCR)) || \
     (defined(FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER) && (FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER))
@@ -94,8 +94,8 @@ sai_master_clock_t mclkConfig = {
 #endif
 };
 #endif
-uint8_t codecHandleBuffer[CODEC_HANDLE_SIZE] = {0U};
-codec_handle_t *codecHandle                  = (codec_handle_t *)codecHandleBuffer;
+codec_handle_t codecHandle;
+
 extern codec_config_t boardCodecConfig;
 /*******************************************************************************
  * Code
@@ -206,15 +206,17 @@ int main(void)
     SAI_SetMasterClockConfig(DEMO_SAI, &mclkConfig);
 #endif
 
-    CODEC_Init(codecHandle, &boardCodecConfig);
+    CODEC_Init(&codecHandle, &boardCodecConfig);
 
     /* Set up pdm */
     PDM_Init(DEMO_PDM, &pdmConfig);
     PDM_SetChannelConfig(DEMO_PDM, DEMO_PDM_ENABLE_CHANNEL_LEFT, &channelConfig);
     PDM_SetChannelConfig(DEMO_PDM, DEMO_PDM_ENABLE_CHANNEL_RIGHT, &channelConfig);
-    PDM_SetSampleRate(DEMO_PDM, (1U << DEMO_PDM_ENABLE_CHANNEL_LEFT) | (1U << DEMO_PDM_ENABLE_CHANNEL_RIGHT),
-                      pdmConfig.qualityMode, pdmConfig.cicOverSampleRate,
-                      DEMO_PDM_CLK_FREQ / DEMO_PDM_SAMPLE_CLOCK_RATE);
+    if (PDM_SetSampleRateConfig(DEMO_PDM, DEMO_PDM_CLK_FREQ, DEMO_AUDIO_SAMPLE_RATE) != kStatus_Success)
+    {
+        PRINTF("PDM configure sample rate failed.\r\n");
+        return -1;
+    }
     PDM_Reset(DEMO_PDM);
     PDM_EnableInterrupts(DEMO_PDM, kPDM_ErrorInterruptEnable | kPDM_FIFOInterruptEnable);
     EnableIRQ(PDM_EVENT_IRQn);

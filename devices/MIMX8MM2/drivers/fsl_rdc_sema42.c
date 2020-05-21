@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 NXP
+ * Copyright 2017-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -40,8 +40,10 @@ uint32_t RDC_SEMA42_GetInstance(RDC_SEMAPHORE_Type *base);
 static RDC_SEMAPHORE_Type *const s_sema42Bases[] = RDC_SEMAPHORE_BASE_PTRS;
 
 #if !(defined(FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL) && FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL)
+#if defined(RDC_SEMA42_CLOCKS)
 /*! @brief Pointers to sema42 clocks for each instance. */
 static const clock_ip_name_t s_sema42Clocks[] = RDC_SEMA42_CLOCKS;
+#endif
 #endif /* FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL */
 
 /******************************************************************************
@@ -79,7 +81,9 @@ uint32_t RDC_SEMA42_GetInstance(RDC_SEMAPHORE_Type *base)
 void RDC_SEMA42_Init(RDC_SEMAPHORE_Type *base)
 {
 #if !(defined(FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL) && FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL)
+#if defined(RDC_SEMA42_CLOCKS)
     CLOCK_EnableClock(s_sema42Clocks[RDC_SEMA42_GetInstance(base)]);
+#endif
 #endif /* FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL */
 }
 
@@ -93,7 +97,9 @@ void RDC_SEMA42_Init(RDC_SEMAPHORE_Type *base)
 void RDC_SEMA42_Deinit(RDC_SEMAPHORE_Type *base)
 {
 #if !(defined(FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL) && FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL)
+#if defined(RDC_SEMA42_CLOCKS)
     CLOCK_DisableClock(s_sema42Clocks[RDC_SEMA42_GetInstance(base)]);
+#endif
 #endif /* FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL */
 }
 
@@ -120,7 +126,7 @@ status_t RDC_SEMA42_TryLock(RDC_SEMAPHORE_Type *base, uint8_t gateNum, uint8_t m
 
     ++masterIndex;
 
-    regGate = RDC_SEMAPHORE_GATE0_LDOM(domainId) | RDC_SEMAPHORE_GATE0_GTFSM(masterIndex);
+    regGate = (uint8_t)(RDC_SEMAPHORE_GATE0_LDOM(domainId) | RDC_SEMAPHORE_GATE0_GTFSM(masterIndex));
 
     /* Try to lock. */
     RDC_SEMA42_GATEn(base, gateNum) = masterIndex;
@@ -154,12 +160,12 @@ void RDC_SEMA42_Lock(RDC_SEMAPHORE_Type *base, uint8_t gateNum, uint8_t masterIn
 
     ++masterIndex;
 
-    regGate = RDC_SEMAPHORE_GATE0_LDOM(domainId) | RDC_SEMAPHORE_GATE0_GTFSM(masterIndex);
+    regGate = (uint8_t)(RDC_SEMAPHORE_GATE0_LDOM(domainId) | RDC_SEMAPHORE_GATE0_GTFSM(masterIndex));
 
     while (regGate != RDC_SEMA42_GATEn(base, gateNum))
     {
         /* Wait for unlocked status. */
-        while (0 != (RDC_SEMA42_GATEn(base, gateNum) & RDC_SEMAPHORE_GATE0_GTFSM_MASK))
+        while (0U != (RDC_SEMA42_GATEn(base, gateNum) & RDC_SEMAPHORE_GATE0_GTFSM_MASK))
         {
         }
 
@@ -181,17 +187,20 @@ int32_t RDC_SEMA42_GetLockDomainID(RDC_SEMAPHORE_Type *base, uint8_t gateNum)
 {
     assert(gateNum < RDC_SEMA42_GATE_COUNT);
 
+    int32_t ret;
     uint8_t regGate = RDC_SEMA42_GATEn(base, gateNum);
 
     /* Current gate is not locked. */
     if (0U == (regGate & RDC_SEMAPHORE_GATE0_GTFSM_MASK))
     {
-        return -1;
+        ret = -1;
     }
     else
     {
-        return (int32_t)(((uint32_t)regGate & RDC_SEMAPHORE_GATE0_LDOM_MASK) >> RDC_SEMAPHORE_GATE0_LDOM_SHIFT);
+        ret = (int32_t)((uint8_t)((regGate & RDC_SEMAPHORE_GATE0_LDOM_MASK) >> RDC_SEMAPHORE_GATE0_LDOM_SHIFT));
     }
+
+    return ret;
 }
 
 /*!
@@ -213,10 +222,9 @@ status_t RDC_SEMA42_ResetGate(RDC_SEMAPHORE_Type *base, uint8_t gateNum)
      * Reset all gates if gateNum >= RDC_SEMA42_GATE_NUM_RESET_ALL
      * Reset specific gate if gateNum < RDC_SEMA42_GATE_COUNT
      */
-    assert(!((gateNum < RDC_SEMA42_GATE_NUM_RESET_ALL) && (gateNum >= RDC_SEMA42_GATE_COUNT)));
 
     /* Check whether some reset is ongoing. */
-    if (base->RSTGT_R & RDC_SEMAPHORE_RSTGT_R_RSTGSM_MASK)
+    if (0U != (base->RSTGT_R & RDC_SEMAPHORE_RSTGT_R_RSTGSM_MASK))
     {
         status = kStatus_Fail;
     }

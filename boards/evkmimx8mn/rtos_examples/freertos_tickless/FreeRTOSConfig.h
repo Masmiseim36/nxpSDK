@@ -119,6 +119,13 @@
 #define INCLUDE_xTaskResumeFromISR              1
 
 
+
+#if defined(__ICCARM__)||defined(__CC_ARM)||defined(__GNUC__)
+    /* in Kinetis SDK, this contains the system core clock frequency */
+    #include <stdint.h>
+    extern uint32_t SystemCoreClock;
+#endif
+
 /* Redefine: Mutex is needed for SRTM communication */
 #undef configUSE_MUTEXES
 #define configUSE_MUTEXES                       1

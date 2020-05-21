@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -24,10 +24,22 @@
 #define MU_CR_NMI_MASK 0U
 #endif
 
+#if (defined(FSL_FEATURE_MU_HAS_RESET_INT) && FSL_FEATURE_MU_HAS_RESET_INT)
+
+#ifndef FSL_FEATURE_MU_HAS_RESET_ASSERT_INT
+#define FSL_FEATURE_MU_HAS_RESET_ASSERT_INT 1
+#endif
+
+#ifndef FSL_FEATURE_MU_HAS_RESET_DEASSERT_INT
+#define FSL_FEATURE_MU_HAS_RESET_DEASSERT_INT 1
+#endif
+
+#endif /* FSL_FEATURE_MU_HAS_RESET_INT */
+
 /*! @name Driver version */
 /*@{*/
-/*! @brief MU driver version 2.0.2. */
-#define FSL_MU_DRIVER_VERSION (MAKE_VERSION(2, 0, 2))
+/*! @brief MU driver version 2.0.3. */
+#define FSL_MU_DRIVER_VERSION (MAKE_VERSION(2, 0, 4))
 /*@}*/
 
 /*!
@@ -45,16 +57,18 @@ enum _mu_status_flags
     kMU_Rx2FullFlag = (1U << (MU_SR_RFn_SHIFT + 1U)), /*!< RX2 full.  */
     kMU_Rx3FullFlag = (1U << (MU_SR_RFn_SHIFT + 0U)), /*!< RX3 full.  */
 
-    kMU_GenInt0Flag = (1U << (MU_SR_GIPn_SHIFT + 3U)), /*!< General purpose interrupt 0 pending. */
-    kMU_GenInt1Flag = (1U << (MU_SR_GIPn_SHIFT + 2U)), /*!< General purpose interrupt 0 pending. */
-    kMU_GenInt2Flag = (1U << (MU_SR_GIPn_SHIFT + 1U)), /*!< General purpose interrupt 0 pending. */
-    kMU_GenInt3Flag = (1U << (MU_SR_GIPn_SHIFT + 0U)), /*!< General purpose interrupt 0 pending. */
+    kMU_GenInt0Flag = (int)(1U << (MU_SR_GIPn_SHIFT + 3U)), /*!< General purpose interrupt 0 pending. */
+    kMU_GenInt1Flag = (1U << (MU_SR_GIPn_SHIFT + 2U)),      /*!< General purpose interrupt 0 pending. */
+    kMU_GenInt2Flag = (1U << (MU_SR_GIPn_SHIFT + 1U)),      /*!< General purpose interrupt 0 pending. */
+    kMU_GenInt3Flag = (1U << (MU_SR_GIPn_SHIFT + 0U)),      /*!< General purpose interrupt 0 pending. */
 
     kMU_EventPendingFlag  = MU_SR_EP_MASK,  /*!< MU event pending.               */
     kMU_FlagsUpdatingFlag = MU_SR_FUP_MASK, /*!< MU flags update is on-going.    */
 
-#if (defined(FSL_FEATURE_MU_HAS_RESET_INT) && FSL_FEATURE_MU_HAS_RESET_INT)
-    kMU_ResetAssertInterruptFlag   = MU_SR_RAIP_MASK, /*!< The other core reset assert interrupt pending.    */
+#if (defined(FSL_FEATURE_MU_HAS_RESET_ASSERT_INT) && FSL_FEATURE_MU_HAS_RESET_ASSERT_INT)
+    kMU_ResetAssertInterruptFlag = MU_SR_RAIP_MASK, /*!< The other core reset assert interrupt pending.    */
+#endif
+#if (defined(FSL_FEATURE_MU_HAS_RESET_DEASSERT_INT) && FSL_FEATURE_MU_HAS_RESET_DEASSERT_INT)
     kMU_ResetDeassertInterruptFlag = MU_SR_RDIP_MASK, /*!< The other core reset de-assert interrupt pending. */
 #endif
 
@@ -85,13 +99,15 @@ enum _mu_interrupt_enable
     kMU_Rx2FullInterruptEnable = (1U << (MU_CR_RIEn_SHIFT + 1U)), /*!< RX2 full.  */
     kMU_Rx3FullInterruptEnable = (1U << (MU_CR_RIEn_SHIFT + 0U)), /*!< RX3 full.  */
 
-    kMU_GenInt0InterruptEnable = (1U << (MU_CR_GIEn_SHIFT + 3U)), /*!< General purpose interrupt 0. */
-    kMU_GenInt1InterruptEnable = (1U << (MU_CR_GIEn_SHIFT + 2U)), /*!< General purpose interrupt 1. */
-    kMU_GenInt2InterruptEnable = (1U << (MU_CR_GIEn_SHIFT + 1U)), /*!< General purpose interrupt 2. */
-    kMU_GenInt3InterruptEnable = (1U << (MU_CR_GIEn_SHIFT + 0U)), /*!< General purpose interrupt 3. */
+    kMU_GenInt0InterruptEnable = (int)(1U << (MU_CR_GIEn_SHIFT + 3U)), /*!< General purpose interrupt 0. */
+    kMU_GenInt1InterruptEnable = (1U << (MU_CR_GIEn_SHIFT + 2U)),      /*!< General purpose interrupt 1. */
+    kMU_GenInt2InterruptEnable = (1U << (MU_CR_GIEn_SHIFT + 1U)),      /*!< General purpose interrupt 2. */
+    kMU_GenInt3InterruptEnable = (1U << (MU_CR_GIEn_SHIFT + 0U)),      /*!< General purpose interrupt 3. */
 
-#if (defined(FSL_FEATURE_MU_HAS_RESET_INT) && FSL_FEATURE_MU_HAS_RESET_INT)
-    kMU_ResetAssertInterruptEnable   = MU_CR_RAIE_MASK, /*!< The other core reset assert interrupt.    */
+#if (defined(FSL_FEATURE_MU_HAS_RESET_ASSERT_INT) && FSL_FEATURE_MU_HAS_RESET_ASSERT_INT)
+    kMU_ResetAssertInterruptEnable = MU_CR_RAIE_MASK, /*!< The other core reset assert interrupt.    */
+#endif
+#if (defined(FSL_FEATURE_MU_HAS_RESET_DEASSERT_INT) && FSL_FEATURE_MU_HAS_RESET_ASSERT_INT)
     kMU_ResetDeassertInterruptEnable = MU_CR_RDIE_MASK, /*!< The other core reset de-assert interrupt. */
 #endif
 #if (defined(FSL_FEATURE_MU_HAS_SR_MURIP) && FSL_FEATURE_MU_HAS_SR_MURIP)
@@ -165,8 +181,8 @@ void MU_Deinit(MU_Type *base);
  * in ISR for better performance.
  *
  * @code
- * while (!(kMU_Tx0EmptyFlag & MU_GetStatusFlags(base))) { } // Wait for TX0 register empty.
- * MU_SendMsgNonBlocking(base, 0U, MSG_VAL); // Write message to the TX0 register.
+ * while (!(kMU_Tx0EmptyFlag & MU_GetStatusFlags(base))) { }  Wait for TX0 register empty.
+ * MU_SendMsgNonBlocking(base, 0U, MSG_VAL);  Write message to the TX0 register.
  * @endcode
  *
  * @param base MU peripheral base address.
@@ -203,9 +219,9 @@ void MU_SendMsg(MU_Type *base, uint32_t regIndex, uint32_t msg);
  * uint32_t msg;
  * while (!(kMU_Rx0FullFlag & MU_GetStatusFlags(base)))
  * {
- * } // Wait for the RX0 register full.
+ * }  Wait for the RX0 register full.
  *
- * msg = MU_ReceiveMsgNonBlocking(base, 0U);  // Read message from RX0 register.
+ * msg = MU_ReceiveMsgNonBlocking(base, 0U);  Read message from RX0 register.
  * @endcode
  *
  * @param base MU peripheral base address.
@@ -250,9 +266,9 @@ uint32_t MU_ReceiveMsg(MU_Type *base, uint32_t regIndex);
  * @code
  * while (kMU_FlagsUpdatingFlag & MU_GetStatusFlags(base))
  * {
- * } // Wait for previous MU flags updating.
+ * }  Wait for previous MU flags updating.
  *
- * MU_SetFlagsNonBlocking(base, 0U); // Set the mU flags.
+ * MU_SetFlagsNonBlocking(base, 0U);  Set the mU flags.
  * @endcode
  *
  * @param base MU peripheral base address.
@@ -307,15 +323,15 @@ static inline uint32_t MU_GetFlags(MU_Type *base)
  *
  * @code
  * uint32_t flags;
- * flags = MU_GetStatusFlags(base); // Get all status flags.
+ * flags = MU_GetStatusFlags(base);  Get all status flags.
  * if (kMU_Tx0EmptyFlag & flags)
  * {
- *     // The TX0 register is empty. Message can be sent.
+ *     The TX0 register is empty. Message can be sent.
  *     MU_SendMsgNonBlocking(base, 0U, MSG0_VAL);
  * }
  * if (kMU_Tx1EmptyFlag & flags)
  * {
- *     // The TX1 register is empty. Message can be sent.
+ *     The TX1 register is empty. Message can be sent.
  *     MU_SendMsgNonBlocking(base, 1U, MSG1_VAL);
  * }
  * @endcode
@@ -329,8 +345,11 @@ static inline uint32_t MU_GetStatusFlags(MU_Type *base)
 #if (defined(FSL_FEATURE_MU_HAS_SR_RS) && FSL_FEATURE_MU_HAS_SR_RS)
                         | MU_SR_RS_MASK
 #endif
-#if (defined(FSL_FEATURE_MU_HAS_RESET_INT) && FSL_FEATURE_MU_HAS_RESET_INT)
-                        | MU_SR_RDIP_MASK | MU_SR_RAIP_MASK
+#if (defined(FSL_FEATURE_MU_HAS_RESET_ASSERT_INT) && FSL_FEATURE_MU_HAS_RESET_ASSERT_INT)
+                        | MU_SR_RAIP_MASK
+#endif
+#if (defined(FSL_FEATURE_MU_HAS_RESET_DEASSERT_INT) && FSL_FEATURE_MU_HAS_RESET_ASSERT_INT)
+                        | MU_SR_RDIP_MASK
 #endif
 #if (defined(FSL_FEATURE_MU_HAS_SR_MURIP) && FSL_FEATURE_MU_HAS_SR_MURIP)
                         | MU_SR_MURIP_MASK
@@ -342,13 +361,27 @@ static inline uint32_t MU_GetStatusFlags(MU_Type *base)
 }
 
 /*!
+ * @brief Gets the MU IRQ pending status.
+ *
+ * This function returns the bit mask of the pending MU IRQs.
+ *
+ * @param base MU peripheral base address.
+ * @return      Bit mask of the MU IRQs pending.
+ */
+static inline uint32_t MU_GetInterruptsPending(MU_Type *base)
+{
+    uint32_t irqMask = base->CR & (MU_CR_GIRn_MASK | MU_CR_TIEn_MASK | MU_CR_RIEn_MASK);
+    return (base->SR & irqMask);
+}
+
+/*!
  * @brief Clears the specific MU status flags.
  *
  * This function clears the specific MU status flags. The flags to clear should
  * be passed in as bit mask. See _mu_status_flags.
  *
  * @code
- * //Clear general interrupt 0 and general interrupt 1 pending flags.
+ * Clear general interrupt 0 and general interrupt 1 pending flags.
  * MU_ClearStatusFlags(base, kMU_GenInt0Flag | kMU_GenInt1Flag);
  * @endcode
  *
@@ -372,8 +405,11 @@ static inline void MU_ClearStatusFlags(MU_Type *base, uint32_t mask)
     /* regMask is the mask of w1c status bits. */
     uint32_t regMask = MU_SR_GIPn_MASK;
 
-#if (defined(FSL_FEATURE_MU_HAS_RESET_INT) && FSL_FEATURE_MU_HAS_RESET_INT)
-    regMask |= (MU_SR_RDIP_MASK | MU_SR_RAIP_MASK);
+#if (defined(FSL_FEATURE_MU_HAS_RESET_ASSERT_INT) && FSL_FEATURE_MU_HAS_RESET_ASSERT_INT)
+    regMask |= MU_SR_RAIP_MASK;
+#endif
+#if (defined(FSL_FEATURE_MU_HAS_RESET_DEASSERT_INT) && FSL_FEATURE_MU_HAS_RESET_ASSERT_INT)
+    regMask |= MU_SR_RDIP_MASK;
 #endif
 
 #if (defined(FSL_FEATURE_MU_HAS_SR_MURIP) && FSL_FEATURE_MU_HAS_SR_MURIP)
@@ -394,7 +430,7 @@ static inline void MU_ClearStatusFlags(MU_Type *base, uint32_t mask)
  * should be passed in as bit mask. See _mu_interrupt_enable.
  *
  * @code
- * // Enable general interrupt 0 and TX0 empty interrupt.
+ *    Enable general interrupt 0 and TX0 empty interrupt.
  * MU_EnableInterrupts(base, kMU_GenInt0InterruptEnable | kMU_Tx0EmptyInterruptEnable);
  * @endcode
  *
@@ -415,7 +451,7 @@ static inline void MU_EnableInterrupts(MU_Type *base, uint32_t mask)
  * should be passed in as bit mask. See _mu_interrupt_enable.
  *
  * @code
- * // Disable general interrupt 0 and TX0 empty interrupt.
+ *    Disable general interrupt 0 and TX0 empty interrupt.
  * MU_DisableInterrupts(base, kMU_GenInt0InterruptEnable | kMU_Tx0EmptyInterruptEnable);
  * @endcode
  *
@@ -441,8 +477,8 @@ static inline void MU_DisableInterrupts(MU_Type *base, uint32_t mask)
  * @code
  * if (kStatus_Success != MU_TriggerInterrupts(base, kMU_GenInt0InterruptTrigger | kMU_GenInt2InterruptTrigger))
  * {
- *     // Previous general purpose interrupt 0 or general purpose interrupt 2
- *     // has not been processed by the other core.
+ *      Previous general purpose interrupt 0 or general purpose interrupt 2
+ *      has not been processed by the other core.
  * }
  * @endcode
  *
@@ -553,7 +589,7 @@ static inline void MU_ResetBothSides(MU_Type *base)
 
 #if (defined(FSL_FEATURE_MU_HAS_SR_RS) && FSL_FEATURE_MU_HAS_SR_RS)
     /* Wait for the other side out of reset. */
-    while (base->SR & MU_SR_RS_MASK)
+    while (0U != (base->SR & MU_SR_RS_MASK))
     {
     }
 #endif /* FSL_FEATURE_MU_HAS_SR_RS */
@@ -612,9 +648,9 @@ static inline void MU_MaskHardwareReset(MU_Type *base, bool mask)
  *
  * Example 2: Reset the other core and hold it, then boot the other core later.
  * @code
- * // Here the other core enters reset, and the reset is hold
+ *  Here the other core enters reset, and the reset is hold
  * MU_HardwareResetOtherCore(MU_A, true, true, modeDontCare);
- * // Current core boot the other core when necessary.
+ *  Current core boot the other core when necessary.
  * MU_BootOtherCore(MU_A, bootMode);
  * @endcode
  *
@@ -678,6 +714,7 @@ static inline void MU_SetClockOnOtherCoreEnable(MU_Type *base, bool enable)
 }
 #endif /* FSL_FEATURE_MU_NO_CLKE */
 
+#if !(defined(FSL_FEATURE_MU_NO_PM) && FSL_FEATURE_MU_NO_PM)
 /*!
  * @brief Gets the power mode of the other core.
  *
@@ -688,8 +725,11 @@ static inline void MU_SetClockOnOtherCoreEnable(MU_Type *base, bool enable)
  */
 static inline mu_power_mode_t MU_GetOtherCorePowerMode(MU_Type *base)
 {
-    return (mu_power_mode_t)((base->SR & MU_SR_PM_MASK) >> MU_SR_PM_SHIFT);
+    uint32_t ret = (base->SR & MU_SR_PM_MASK) >> MU_SR_PM_SHIFT;
+
+    return (mu_power_mode_t)ret;
 }
+#endif /* FSL_FEATURE_MU_NO_PM */
 
 /* @} */
 

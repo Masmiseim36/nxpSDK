@@ -22,7 +22,7 @@
 #define DEMO_PDM_CIC_OVERSAMPLE_RATE (0U)
 #define DEMO_PDM_ENABLE_CHANNEL_LEFT (0U)
 #define DEMO_PDM_ENABLE_CHANNEL_RIGHT (1U)
-#define DEMO_PDM_SAMPLE_CLOCK_RATE (1536000U * 2)
+#define DEMO_AUDIO_SAMPLE_RATE (48000)
 #define PDM_HWVAD_SIGNAL_GAIN (0)
 /*******************************************************************************
  * Prototypes
@@ -43,7 +43,7 @@ static const pdm_config_t pdmConfig    = {
 
 static const pdm_channel_config_t channelConfig = {
     .cutOffFreq = kPDM_DcRemoverCutOff21Hz,
-    .gain       = kPDM_DfOutputGain6,
+    .gain       = kPDM_DfOutputGain1,
 };
 
 static const pdm_hwvad_config_t hwavdConfig = {
@@ -71,8 +71,11 @@ static const pdm_hwvad_noise_filter_t noiseFilterConfig = {
  ******************************************************************************/
 void PDM_HWVAD_EVENT_IRQHandler(void)
 {
-    s_hwvadFlag = true;
-    PDM_ClearHwvadInterruptStatusFlags(DEMO_PDM, kPDM_HwvadStatusVoiceDetectFlag);
+    if (PDM_GetHwvadInterruptStatusFlags(DEMO_PDM) & kPDM_HwvadStatusVoiceDetectFlag)
+    {
+        s_hwvadFlag = true;
+        PDM_ClearHwvadInterruptStatusFlags(DEMO_PDM, kPDM_HwvadStatusVoiceDetectFlag);
+    }
 }
 
 void PDM_HWVAD_ERROR_IRQHandler(void)
@@ -108,9 +111,11 @@ int main(void)
     PDM_Init(DEMO_PDM, &pdmConfig);
     PDM_SetChannelConfig(DEMO_PDM, DEMO_PDM_ENABLE_CHANNEL_LEFT, &channelConfig);
     PDM_SetChannelConfig(DEMO_PDM, DEMO_PDM_ENABLE_CHANNEL_RIGHT, &channelConfig);
-    PDM_SetSampleRate(DEMO_PDM, (1U << DEMO_PDM_ENABLE_CHANNEL_LEFT) | (1U << DEMO_PDM_ENABLE_CHANNEL_RIGHT),
-                      pdmConfig.qualityMode, pdmConfig.cicOverSampleRate,
-                      DEMO_PDM_CLK_FREQ / DEMO_PDM_SAMPLE_CLOCK_RATE);
+    if (PDM_SetSampleRateConfig(DEMO_PDM, DEMO_PDM_CLK_FREQ, DEMO_AUDIO_SAMPLE_RATE) != kStatus_Success)
+    {
+        PRINTF("PDM configure sample rate failed.\r\n");
+        return -1;
+    }
 
     PDM_SetHwvadConfig(DEMO_PDM, &hwavdConfig);
     PDM_EnableHwvadInterrupts(DEMO_PDM, kPDM_HwvadErrorInterruptEnable | kPDM_HwvadInterruptEnable);
@@ -148,7 +153,6 @@ int main(void)
         while (!s_hwvadFlag)
         {
         }
-
         s_hwvadFlag = false;
         s_detectTimes--;
         PRINTF("\r\nVoice detected\r\n");

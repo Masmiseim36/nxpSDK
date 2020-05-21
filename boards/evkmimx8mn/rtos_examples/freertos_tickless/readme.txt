@@ -7,8 +7,8 @@ user defined button.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.3
-- GCC ARM Embedded  8.2.1
+- IAR embedded Workbench  8.40.2
+- GCC ARM Embedded  8.3.1
 
 Hardware requirements
 =====================
@@ -39,35 +39,26 @@ Prepare the Demo
 
 Running the demo
 ================
-After flashing the example to the board the console will start printing the number of tick count periodically
-when the CPU is running.
-To wake up the CPU by external interrupt, press the button, that is specified at the beginning of the
-example (SWx where x is the number of the user defined button). When the button is pressed, the console prints
-out the "CPU woken up by external interrupt" message.
+When the example runs successfully, the following message is displayed in the terminal:
 
-Example output:
-
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Press any key to start the example
 Tickless Demo example
-Press or turn on SWx to wake up the CPU
 
 Tick count :
-0
-5000
-10000
-CPU woken up by external interrupt
-15000
-20000
-25000
-
-Explanation of the example
-The example application prints the actual tick count number every time after the specified
-delay. When the vTaskDelay() is called, the CPU enters the sleep mode for that defined period
-of time.
-
-While the CPU is in sleep mode and the user defined button is pressed, the CPU is woken up
-by the external interrupt and continues to sleep after the interrupt is handled.
-The period of time delay is not changed after the external interrupt occurs.
+1
+5001
+10001
+15001
+20001
+25001
+30001
+35001
+40001
+45001
+50001
+...
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Customization options
 =====================
 

@@ -20,7 +20,7 @@
  * Definitions
  ******************************************************************************/
 /*! @brief TMU driver version. */
-#define FSL_TMU_DRIVER_VERSION (MAKE_VERSION(2, 0, 1)) /*!< Version 2.0.1. */
+#define FSL_TMU_DRIVER_VERSION (MAKE_VERSION(2, 0, 2)) /*!< Version 2.0.2. */
 
 /*!
  * @brief TMU interrupt enable.
@@ -158,8 +158,6 @@ typedef struct _tmu_config
     tmu_average_low_pass_filter_t
         averageLPF; /*!< The average temperature is calculated as: ALPF x Current_Temp + (1 - ALPF) x Average_Temp.
                          For proper operation, this field should only change when monitoring is disabled. */
-    tmu_amplifier_gain_t amplifierGain;              /*!< Amplifier gain setting. */
-    tmu_amplifier_reference_voltage_t amplifierVref; /*!< Amplifier reference voltage setting. */
 } tmu_config_t;
 
 #if defined(__cplusplus)
@@ -191,8 +189,6 @@ void TMU_Deinit(TMU_Type *base);
  *
  * Example:
    @code
-   config->amplifierGain = 12U;
-   config->amplifierRef = 19U;
    config->averageLPF = kTMU_AverageLowPassFilter0_5;
    @endcode
  *

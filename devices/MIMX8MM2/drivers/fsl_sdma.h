@@ -1,5 +1,5 @@
 /*
- * Copyright  2016 NXP
+ * Copyright  2016-2019 NXP
  * All rights reserved.
  *
  *
@@ -23,7 +23,7 @@
 /*! @name Driver version */
 /*@{*/
 /*! @brief SDMA driver version */
-#define FSL_SDMA_DRIVER_VERSION (MAKE_VERSION(2, 1, 1)) /*!< Version 2.1.1. */
+#define FSL_SDMA_DRIVER_VERSION (MAKE_VERSION(2, 3, 0)) /*!< Version 2.3.0. */
 /*@}*/
 
 /*! @brief SDMA transfer configuration */
@@ -31,6 +31,7 @@ typedef enum _sdma_transfer_size
 {
     kSDMA_TransferSize1Bytes = 0x1U, /*!< Source/Destination data transfer size is 1 byte every time */
     kSDMA_TransferSize2Bytes = 0x2U, /*!< Source/Destination data transfer size is 2 bytes every time */
+    kSDMA_TransferSize3Bytes = 0x3U, /*!< Source/Destination data transfer size is 3 bytes every time */
     kSDMA_TransferSize4Bytes = 0x0U, /*!< Source/Destination data transfer size is 4 bytes every time */
 } sdma_transfer_size_t;
 
@@ -44,7 +45,7 @@ typedef enum _sdma_bd_status
     kSDMA_BDStatusError      = 0x10U, /*!< Error occurred on buffer descriptor command. */
     kSDMA_BDStatusLast =
         0x20U, /*!< This BD is the last BD in this array. It means the transfer ended after this buffer */
-    kSDMA_BDStatusExtend = 0x80, /*!< Buffer descriptor extend status for SDMA scripts */
+    kSDMA_BDStatusExtend = 0x80U, /*!< Buffer descriptor extend status for SDMA scripts */
 } sdma_bd_status_t;
 
 /*! @brief SDMA buffer descriptor command */
@@ -77,9 +78,10 @@ typedef enum _sdma_clock_ratio
 /*! @brief SDMA transfer type */
 typedef enum _sdma_transfer_type
 {
-    kSDMA_MemoryToMemory = 0x0U, /*!< Transfer from memory to memory */
-    kSDMA_PeripheralToMemory,    /*!< Transfer from peripheral to memory */
-    kSDMA_MemoryToPeripheral,    /*!< Transfer from memory to peripheral */
+    kSDMA_MemoryToMemory = 0x0U,  /*!< Transfer from memory to memory */
+    kSDMA_PeripheralToMemory,     /*!< Transfer from peripheral to memory */
+    kSDMA_MemoryToPeripheral,     /*!< Transfer from memory to peripheral */
+    kSDMA_PeripheralToPeripheral, /*!< Transfer from peripheral to peripheral */
 } sdma_transfer_type_t;
 
 /*! @brief Peripheral type use SDMA */
@@ -94,38 +96,41 @@ typedef enum sdma_peripheral
     kSDMA_PeripheralMultiFifoPDM,     /*!< multi fifo PDM */
     kSDMA_PeripheralMultiFifoSaiRX,   /*!< multi fifo sai rx use SDMA */
     kSDMA_PeripheralMultiFifoSaiTX,   /*!< multi fifo sai tx use SDMA */
+    kSDMA_PeripheralASRCM2P,          /*!< asrc m2p */
+    kSDMA_PeripheralASRCP2M,          /*!< asrc p2m */
+    kSDMA_PeripheralASRCP2P,          /*!< asrc p2p */
 } sdma_peripheral_t;
 
-/*! @brief SDMA transfer status */
-enum _sdma_transfer_status
+/*! @brief _sdma_transfer_status SDMA transfer status */
+enum
 {
     kStatus_SDMA_ERROR = MAKE_STATUS(kStatusGroup_SDMA, 0), /*!< SDMA context error. */
     kStatus_SDMA_Busy  = MAKE_STATUS(kStatusGroup_SDMA, 1), /*!< Channel is busy and can't handle the
                                                                  transfer request. */
 };
 
-/*! @brief SDMA multi fifo mask */
-enum _sdma_multi_fifo_mask
+/*! @brief _sdma_multi_fifo_mask SDMA multi fifo mask */
+enum
 {
-    kSDMA_MultiFifoWatermarkLevelMask = 0xFFU, /*!< multi fifo watermark level mask */
-    kSDMA_MultiFifoNumsMask           = 0xFU,  /*!< multi fifo nums mask */
-    kSDMA_MultiFifoOffsetMask         = 0xFU,  /*!< multi fifo offset mask */
-    kSDMA_MultiFifoSwDoneMask         = 0x1U,  /*!< multi fifo sw done mask */
-    kSDMA_MultiFifoSwDoneSelectorMask = 0xFU,  /*!< multi fifo sw done selector mask */
+    kSDMA_MultiFifoWatermarkLevelMask = 0xFFFU, /*!< multi fifo watermark level mask */
+    kSDMA_MultiFifoNumsMask           = 0xFU,   /*!< multi fifo nums mask */
+    kSDMA_MultiFifoOffsetMask         = 0xFU,   /*!< multi fifo offset mask */
+    kSDMA_MultiFifoSwDoneMask         = 0x1U,   /*!< multi fifo sw done mask */
+    kSDMA_MultiFifoSwDoneSelectorMask = 0xFU,   /*!< multi fifo sw done selector mask */
 };
 
-/*! @brief SDMA multi fifo shift */
-enum _sdma_multi_fifo_shift
+/*! @brief _sdma_multi_fifo_shift SDMA multi fifo shift */
+enum
 {
     kSDMA_MultiFifoWatermarkLevelShift = 0U,  /*!< multi fifo watermark level shift */
-    kSDMA_MultiFifoNumsShift           = 8U,  /*!< multi fifo nums shift */
+    kSDMA_MultiFifoNumsShift           = 12U, /*!< multi fifo nums shift */
     kSDMA_MultiFifoOffsetShift         = 16U, /*!< multi fifo offset shift */
     kSDMA_MultiFifoSwDoneShift         = 23U, /*!< multi fifo sw done shift */
     kSDMA_MultiFifoSwDoneSelectorShift = 24U, /*!< multi fifo sw done selector shift */
 };
 
-/*! @brief SDMA done channel */
-enum _sdma_done_channel
+/*! @brief _sdma_done_channel SDMA done channel */
+enum
 {
     kSDMA_DoneChannel0 = 0U, /*!< SDMA done channel 0 */
     kSDMA_DoneChannel1 = 1U, /*!< SDMA done channel 1 */
@@ -198,6 +203,17 @@ typedef struct _sdma_sw_done_config
     uint8_t swDoneSel; /*!< sw done channel number per peripheral type */
 } sdma_sw_done_config_t;
 
+/*! @brief SDMA peripheral to peripheral R7 config*/
+typedef struct _sdma_p2p_config
+{
+    uint8_t sourceWatermark; /*!< lower watermark value */
+    uint8_t destWatermark;   /*!< higher water makr value */
+    bool continuousTransfer; /*!< 0: the amount of samples to be transferred is equal to the cont field of mode word
+                                      1: the amount of samples to be transferred is unknown and script will keep on
+                                transferring as long as both events are detected and script must be stopped by
+                                application.*/
+} sdma_p2p_config_t;
+
 /*!
  * @brief SDMA transfer configuration
  *
@@ -212,13 +228,18 @@ typedef struct _sdma_transfer_config
     uint32_t bytesPerRequest;              /*!< Bytes to transfer in a minor loop*/
     uint32_t transferSzie;                 /*!< Bytes to transfer for this descriptor */
     uint32_t scriptAddr;                   /*!< SDMA script address located in SDMA ROM. */
-    uint32_t eventSource; /*!< Event source number for the channel. 0 means no event, use software trigger */
-    bool isEventIgnore;   /*!< True means software trigger, false means hardware trigger */
+    uint32_t eventSource;  /*!< Event source number for the channel. 0 means no event, use software trigger */
+    uint32_t eventSource1; /*!< event source 1 */
+    bool isEventIgnore;    /*!< True means software trigger, false means hardware trigger */
     bool
         isSoftTriggerIgnore; /*!< If ignore the HE bit, 1 means use hardware events trigger, 0 means software trigger */
     sdma_transfer_type_t type;          /*!< Transfer type, transfer type used to decide the SDMA script. */
     sdma_multi_fifo_config_t multiFifo; /*!< multi fifo configurations */
     sdma_sw_done_config_t swDone;       /*!< sw done selector */
+    uint32_t watermarkLevel;            /*!< watermark level */
+    uint32_t eventMask0;                /*!< event mask 0 */
+    uint32_t eventMask1;                /*!< event mask 1 */
+
 } sdma_transfer_config_t;
 
 /*!
@@ -304,6 +325,7 @@ typedef struct _sdma_handle
     uint32_t bdCount;                 /*!< How many buffer descriptor   */
     uint32_t bdIndex;                 /*!< How many buffer descriptor   */
     uint32_t eventSource;             /*!< Event source count for the channel */
+    uint32_t eventSource1;            /*!< Event source 1 count for the channel */
     sdma_context_data_t *context;     /*!< Channel context to exectute in SDMA */
     uint8_t channel;                  /*!< SDMA channel number. */
     uint8_t priority;                 /*!< SDMA channel priority */
@@ -362,7 +384,7 @@ void SDMA_GetDefaultConfig(sdma_config_t *config);
  * @brief Sets all SDMA core register to reset status.
  *
  * If only reset ARM core, SDMA register cannot return to reset value, shall call this function to reset all SDMA
- * register to reset vaule. But the internal status cannot be reset.
+ * register to reset value. But the internal status cannot be reset.
  *
  * @param base SDMA peripheral base address.
  */
@@ -383,7 +405,7 @@ void SDMA_ResetModule(SDMAARM_Type *base);
  */
 static inline void SDMA_EnableChannelErrorInterrupts(SDMAARM_Type *base, uint32_t channel)
 {
-    base->INTRMASK |= (1U << channel);
+    base->INTRMASK |= (1UL << channel);
 }
 
 /*!
@@ -394,7 +416,7 @@ static inline void SDMA_EnableChannelErrorInterrupts(SDMAARM_Type *base, uint32_
  */
 static inline void SDMA_DisableChannelErrorInterrupts(SDMAARM_Type *base, uint32_t channel)
 {
-    base->INTRMASK &= ~(1U << channel);
+    base->INTRMASK &= ~(1UL << channel);
 }
 
 /* @} */
@@ -478,7 +500,7 @@ static inline void SDMA_SetSourceChannel(SDMAARM_Type *base, uint32_t source, ui
  */
 static inline void SDMA_StartChannelSoftware(SDMAARM_Type *base, uint32_t channel)
 {
-    base->HSTART = (1U << channel);
+    base->HSTART = (1UL << channel);
 }
 
 /*!
@@ -491,7 +513,7 @@ static inline void SDMA_StartChannelSoftware(SDMAARM_Type *base, uint32_t channe
  */
 static inline void SDMA_StartChannelEvents(SDMAARM_Type *base, uint32_t channel)
 {
-    base->EVTPEND = (1U << channel);
+    base->EVTPEND = (1UL << channel);
 }
 
 /*!
@@ -504,7 +526,7 @@ static inline void SDMA_StartChannelEvents(SDMAARM_Type *base, uint32_t channel)
  */
 static inline void SDMA_StopChannel(SDMAARM_Type *base, uint32_t channel)
 {
-    base->STOP_STAT = (1U << channel);
+    base->STOP_STAT = (1UL << channel);
 }
 
 /*!
@@ -740,6 +762,38 @@ void SDMA_PrepareTransfer(sdma_transfer_config_t *config,
                           uint32_t eventSource,
                           sdma_peripheral_t peripheral,
                           sdma_transfer_type_t type);
+
+/*!
+ * @brief Prepares the SDMA P2P transfer structure.
+ *
+ * This function prepares the transfer configuration structure according to the user input.
+ *
+ * @param config The user configuration structure of type sdma_transfer_t.
+ * @param srcAddr SDMA transfer source address.
+ * @param destAddr SDMA transfer destination address.
+ * @param srcWidth SDMA transfer source address width(bytes).
+ * @param destWidth SDMA transfer destination address width(bytes).
+ * @param bytesEachRequest SDMA transfer bytes per channel request.
+ * @param transferSize SDMA transfer bytes to be transferred.
+ * @param eventSource Event source number for the transfer.
+ * @param eventSource1 Event source1 number for the transfer.
+ * @param peripheral Peripheral type, used to decide if need to use some special scripts.
+ * @param p2p sdma p2p configuration pointer.
+ * @note The data address and the data width must be consistent. For example, if the SRC
+ *       is 4 bytes, the source address must be 4 bytes aligned, or it results in
+ *       source address error.
+ */
+void SDMA_PrepareP2PTransfer(sdma_transfer_config_t *config,
+                             uint32_t srcAddr,
+                             uint32_t destAddr,
+                             uint32_t srcWidth,
+                             uint32_t destWidth,
+                             uint32_t bytesEachRequest,
+                             uint32_t transferSize,
+                             uint32_t eventSource,
+                             uint32_t eventSource1,
+                             sdma_peripheral_t peripheral,
+                             sdma_p2p_config_t *p2p);
 
 /*!
  * @brief Submits the SDMA transfer request.

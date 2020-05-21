@@ -90,7 +90,8 @@ static void producer_task(void *pvParameters)
 
     for (i = 0; i < CONSUMER_LINE_SIZE; i++)
     {
-        if (xTaskCreate(consumer_task, "CONSUMER_TASK", configMINIMAL_STACK_SIZE, (void *)i, TASK_PRIO, NULL) != pdPASS)
+        if (xTaskCreate(consumer_task, "CONSUMER_TASK", configMINIMAL_STACK_SIZE + 128, (void *)i, TASK_PRIO, NULL) !=
+            pdPASS)
         {
             PRINTF("Task creation failed!.\r\n");
             vTaskSuspend(NULL);

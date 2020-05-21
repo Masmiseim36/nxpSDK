@@ -1,5 +1,5 @@
 /*
- * Copyright 2017, NXP
+ * Copyright 2017-2019, NXP
  * All rights reserved.
  *
  *
@@ -161,8 +161,9 @@ void TMU_Init(TMU_Type *base, const tmu_config_t *config)
     TMU_SetTranslationTable(base);
 
     /* Clear interrupt relevant register. */
-    TMU_ClearInterruptStatusFlags(base, kTMU_ImmediateTemperatureStatusFlags | kTMU_AverageTemperatureStatusFlags |
-                                            kTMU_AverageTemperatureCriticalStatusFlags);
+    TMU_ClearInterruptStatusFlags(base, (uint32_t)kTMU_ImmediateTemperatureStatusFlags |
+                                            (uint32_t)kTMU_AverageTemperatureStatusFlags |
+                                            (uint32_t)kTMU_AverageTemperatureCriticalStatusFlags);
 
     /* Configure TMR register. */
     base->TMR = TMU_TMR_ALPF(config->averageLPF) | TMU_TMR_MSITE(config->monitorSiteSelection);
@@ -205,7 +206,7 @@ void TMU_GetDefaultConfig(tmu_config_t *config)
     assert(NULL != config);
 
     /* Initializes the configure structure to zero. */
-    memset(config, 0, sizeof(*config));
+    (void)memset(config, 0, sizeof(*config));
 
     config->monitorInterval      = 0U;
     config->monitorSiteSelection = 0U; /* If no site is selected, site 0 is monitored by default. */
@@ -223,10 +224,11 @@ void TMU_GetInterruptStatusFlags(TMU_Type *base, tmu_interrupt_status_t *status)
 {
     assert(NULL != status);
 
-    status->interruptDetectMask               = base->TIDR;
-    status->immediateInterruptsSiteMask       = (TMU_TISCR_ISITE_MASK & base->TISCR) >> TMU_TISCR_ISITE_SHIFT;
-    status->AverageInterruptsSiteMask         = (TMU_TISCR_ASITE_MASK & base->TISCR) >> TMU_TISCR_ASITE_SHIFT;
-    status->AverageCriticalInterruptsSiteMask = (TMU_TICSCR_CASITE_MASK & base->TICSCR) >> TMU_TICSCR_CASITE_SHIFT;
+    status->interruptDetectMask         = base->TIDR;
+    status->immediateInterruptsSiteMask = (uint16_t)((TMU_TISCR_ISITE_MASK & base->TISCR) >> TMU_TISCR_ISITE_SHIFT);
+    status->AverageInterruptsSiteMask   = (uint16_t)((TMU_TISCR_ASITE_MASK & base->TISCR) >> TMU_TISCR_ASITE_SHIFT);
+    status->AverageCriticalInterruptsSiteMask =
+        (uint16_t)((TMU_TICSCR_CASITE_MASK & base->TICSCR) >> TMU_TICSCR_CASITE_SHIFT);
 }
 
 /*!
@@ -238,19 +240,19 @@ void TMU_GetInterruptStatusFlags(TMU_Type *base, tmu_interrupt_status_t *status)
 void TMU_ClearInterruptStatusFlags(TMU_Type *base, uint32_t mask)
 {
     /* For immediate temperature threshold interrupt. */
-    if (0U != (kTMU_ImmediateTemperatureStatusFlags & mask))
+    if (0U != ((uint32_t)kTMU_ImmediateTemperatureStatusFlags & mask))
     {
         base->TIDR = TMU_TIDR_ITTE_MASK;      /* Clear interrupt detect register. */
         base->TISCR &= ~TMU_TISCR_ISITE_MASK; /* Clear interrupt site capture register. */
     }
     /* For average temperature threshold interrupt. */
-    if (0U != (kTMU_AverageTemperatureStatusFlags & mask))
+    if (0U != ((uint32_t)kTMU_AverageTemperatureStatusFlags & mask))
     {
         base->TIDR = TMU_TIDR_ATTE_MASK;      /* Clear interrupt detect register. */
         base->TISCR &= ~TMU_TISCR_ASITE_MASK; /* Clear interrupt site capture register. */
     }
     /* For Average temperature critical threshold interrupt. */
-    if (0U != (kTMU_AverageTemperatureCriticalStatusFlags & mask))
+    if (0U != ((uint32_t)kTMU_AverageTemperatureCriticalStatusFlags & mask))
     {
         base->TIDR = TMU_TIDR_ATCTE_MASK;        /* Clear interrupt detect register. */
         base->TICSCR &= ~TMU_TICSCR_CASITE_MASK; /* Clear interrupt critical site capture register. */
@@ -273,15 +275,18 @@ status_t TMU_GetHighestTemperature(TMU_Type *base, uint32_t *temperature)
 {
     assert(NULL != temperature);
 
+    status_t ret = kStatus_Success;
+
     if (0U == (TMU_TMHTCRH_V_MASK & base->TMHTCRH))
     {
-        return kStatus_Fail;
+        ret = kStatus_Fail;
     }
     else
     {
         *temperature = (TMU_TMHTCRH_TEMP_MASK & base->TMHTCRH) >> TMU_TMHTCRH_TEMP_SHIFT;
-        return kStatus_Success;
     }
+
+    return ret;
 }
 
 /*!
@@ -300,15 +305,18 @@ status_t TMU_GetLowestTemperature(TMU_Type *base, uint32_t *temperature)
 {
     assert(NULL != temperature);
 
+    status_t ret = kStatus_Success;
+
     if (0U == (TMU_TMHTCRL_V_MASK & base->TMHTCRL))
     {
-        return kStatus_Fail;
+        ret = kStatus_Fail;
     }
     else
     {
         *temperature = (TMU_TMHTCRL_TEMP_MASK & base->TMHTCRL) >> TMU_TMHTCRL_TEMP_SHIFT;
-        return kStatus_Success;
     }
+
+    return ret;
 }
 
 /*!
@@ -329,15 +337,18 @@ status_t TMU_GetImmediateTemperature(TMU_Type *base, uint32_t siteIndex, uint32_
     assert(NULL != temperature);
     assert(siteIndex < TMU_TRITSR_COUNT);
 
+    status_t ret = kStatus_Success;
+
     if (0U == (TMU_TRITSR_V_MASK & base->TRTSR[siteIndex].TRITSR))
     {
-        return kStatus_Fail;
+        ret = kStatus_Fail;
     }
     else
     {
         *temperature = (TMU_TRITSR_TEMP_MASK & base->TRTSR[siteIndex].TRITSR) >> TMU_TRITSR_TEMP_SHIFT;
-        return kStatus_Success;
     }
+
+    return ret;
 }
 
 /*!
@@ -358,15 +369,18 @@ status_t TMU_GetAverageTemperature(TMU_Type *base, uint32_t siteIndex, uint32_t 
     assert(NULL != temperature);
     assert(siteIndex < TMU_TRATSR_COUNT);
 
+    status_t ret = kStatus_Success;
+
     if (0U == (TMU_TRATSR_V_MASK & base->TRTSR[siteIndex].TRATSR))
     {
-        return kStatus_Fail;
+        ret = kStatus_Fail;
     }
     else
     {
         *temperature = (TMU_TRATSR_TEMP_MASK & base->TRTSR[siteIndex].TRATSR) >> TMU_TRATSR_TEMP_SHIFT;
-        return kStatus_Success;
     }
+
+    return ret;
 }
 
 /*!

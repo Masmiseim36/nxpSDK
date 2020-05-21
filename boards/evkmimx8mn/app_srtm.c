@@ -62,6 +62,7 @@ app_rpmsg_monitor_t rpmsgMonitor;
 volatile app_srtm_state_t srtmState = APP_SRTM_StateRun;
 
 codec_handle_t codecHandle;
+codec_config_t boardCodecConfig;
 
 static srtm_dispatcher_t disp;
 static srtm_peercore_t core;
@@ -73,6 +74,8 @@ struct rpmsg_lite_instance *rpmsgHandle;
 void *rpmsgMonitorParam;
 TimerHandle_t linkupTimer;
 srtm_sai_adapter_t saiAdapter;
+srtm_codec_adapter_t codecAdapter;
+srtm_wm8524_config_t wm8524Config;
 /*******************************************************************************
  * Code
  ******************************************************************************/
@@ -207,10 +210,7 @@ static void APP_SRTM_InitAudioService(void)
 {
     srtm_sai_sdma_config_t saiTxConfig;
     srtm_sai_sdma_config_t saiRxConfig;
-    srtm_wm8524_config_t wm8524Config;
 
-    codec_config_t boardCodecConfig;
-    srtm_codec_adapter_t codecAdapter;
     APP_SRTM_InitAudioDevice();
 
     memset(&saiTxConfig, 0, sizeof(srtm_sai_sdma_config_t));

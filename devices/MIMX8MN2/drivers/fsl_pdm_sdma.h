@@ -1,10 +1,11 @@
 /*
  * Copyright (c) 2018, Freescale Semiconductor, Inc.
+ * Copyright 2019 NXP
  * All rights reserved.
- *
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
+
 #ifndef _FSL_PDM_SDMA_H_
 #define _FSL_PDM_SDMA_H_
 
@@ -22,7 +23,7 @@
 
 /*! @name Driver version */
 /*@{*/
-#define FSL_PDM_SDMA_DRIVER_VERSION (MAKE_VERSION(2, 1, 1)) /*!< Version 2.1.1 */
+#define FSL_PDM_SDMA_DRIVER_VERSION (MAKE_VERSION(2, 1, 2)) /*!< Version 2.1.2 */
 /*@}*/
 
 typedef struct _pdm_sdma_handle pdm_sdma_handle_t;

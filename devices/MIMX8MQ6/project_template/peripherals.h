@@ -1,3 +1,10 @@
+/*
+ * Copyright 2019 NXP.
+ * All rights reserved.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
+
 #ifndef _PERIPHERALS_H_
 #define _PERIPHERALS_H_
 

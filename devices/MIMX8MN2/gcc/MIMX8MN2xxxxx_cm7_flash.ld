@@ -3,13 +3,13 @@
 **     Processors:          MIMX8MN2CVTIZ
 **                          MIMX8MN2DVTJZ
 **
-**     Compiler:            IAR ANSI C/C++ Compiler for ARM
+**     Compiler:            GNU C Compiler
 **     Reference manual:    MX8MNRM, Rev. B, 10/2018
 **     Version:             rev. 3.0, 2018-10-24
 **     Build:               b181024
 **
 **     Abstract:
-**         Linker file for the IAR ANSI C/C++ Compiler for ARM
+**         Linker file for the GNU C Compiler
 **
 **     Copyright 2016 Freescale Semiconductor, Inc.
 **     Copyright 2016-2018 NXP

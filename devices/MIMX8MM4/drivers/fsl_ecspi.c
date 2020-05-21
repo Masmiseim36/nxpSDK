@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -18,7 +18,7 @@
 #endif
 
 /*! @brief ECSPI transfer state, which is used for ECSPI transactiaonl APIs' internal state. */
-enum _ecspi_transfer_states_t
+enum
 {
     kECSPI_Idle = 0x0, /*!< ECSPI is idle state */
     kECSPI_Busy        /*!< ECSPI is busy tranferring data. */
@@ -155,14 +155,14 @@ static void ECSPI_ReadNonBlocking(ECSPI_Type *base, uint32_t *buffer, size_t siz
 {
     if (NULL != buffer)
     {
-        while (size--)
+        while ((size--) != 0UL)
         {
             *buffer++ = ECSPI_ReadData(base);
         }
     }
     else
     {
-        while (size--)
+        while ((size--) != 0UL)
         {
             (void)ECSPI_ReadData(base);
         }
@@ -174,12 +174,14 @@ static void ECSPI_SendTransfer(ECSPI_Type *base, ecspi_master_handle_t *handle)
     assert(base);
     assert(handle);
 
-    uint32_t dataCounts = 0U;
+    uint32_t dataCounts       = 0U;
+    uint32_t txRemainingBytes = (uint32_t)(handle->txRemainingBytes);
     /* Caculate the data size to send */
-    dataCounts = (FSL_FEATURE_ECSPI_TX_FIFO_SIZEn(base) - ECSPI_GetTxFifoCount(base)) < (handle->txRemainingBytes) ?
-                     (FSL_FEATURE_ECSPI_TX_FIFO_SIZEn(base) - ECSPI_GetTxFifoCount(base)) :
-                     (handle->txRemainingBytes);
-    while (dataCounts--)
+    dataCounts =
+        ((uint32_t)FSL_FEATURE_ECSPI_TX_FIFO_SIZEn(base) - (uint32_t)ECSPI_GetTxFifoCount(base)) < txRemainingBytes ?
+            ((uint32_t)FSL_FEATURE_ECSPI_TX_FIFO_SIZEn(base) - (uint32_t)ECSPI_GetTxFifoCount(base)) :
+            txRemainingBytes;
+    while ((dataCounts--) != 0UL)
     {
         ECSPI_WriteNonBlocking(base, handle->txData, 1);
         if (NULL != handle->txData)
@@ -209,7 +211,7 @@ static void ECSPI_ReceiveTransfer(ECSPI_Type *base, ecspi_master_handle_t *handl
 static void ECSPI_GetDefaultChannelConfig(ecspi_channel_config_t *config)
 {
     /* Initializes the configure structure to zero. */
-    memset(config, 0, sizeof(*config));
+    (void)memset(config, 0, sizeof(*config));
 
     config->channelMode           = kECSPI_Slave;                    /*!< ECSPI peripheral operates in slave mode.*/
     config->clockInactiveState    = kECSPI_ClockInactiveStateLow;    /*!< Clock line (SCLK) inactive state */
@@ -238,7 +240,7 @@ static void ECSPI_GetDefaultChannelConfig(ecspi_channel_config_t *config)
 void ECSPI_MasterGetDefaultConfig(ecspi_master_config_t *config)
 {
     /* Initializes the configure structure to zero. */
-    memset(config, 0, sizeof(*config));
+    (void)memset(config, 0, sizeof(*config));
 
     config->channel           = kECSPI_Channel0;
     config->burstLength       = 8;
@@ -283,7 +285,8 @@ void ECSPI_MasterInit(ECSPI_Type *base, const ecspi_master_config_t *config, uin
     /* Reset control register to default value */
     ECSPI_SoftwareReset(base);
     /* Config CONREG register */
-    base->CONREG = ECSPI_CONREG_BURST_LENGTH(config->burstLength - 1) | ECSPI_CONREG_SMC(1) | ECSPI_CONREG_EN(1);
+    base->CONREG =
+        ECSPI_CONREG_BURST_LENGTH((uint32_t)config->burstLength - 1UL) | ECSPI_CONREG_SMC(1U) | ECSPI_CONREG_EN(1U);
     /* Config CONFIGREG register */
     ECSPI_SetChannelConfig(base, config->channel, &config->channelConfig);
     /* Config DMAREG register */
@@ -319,7 +322,7 @@ void ECSPI_SlaveGetDefaultConfig(ecspi_slave_config_t *config)
     /* Default configuration of channel nember */
 
     /* Initializes the configure structure to zero. */
-    memset(config, 0, sizeof(*config));
+    (void)memset(config, 0, sizeof(*config));
     config->channel = kECSPI_Channel0;
 
     config->burstLength     = 8;
@@ -360,7 +363,7 @@ void ECSPI_SlaveInit(ECSPI_Type *base, const ecspi_slave_config_t *config)
     /* Reset control register to default value */
     ECSPI_SoftwareReset(base);
     /* Config CONREG register */
-    base->CONREG = ECSPI_CONREG_BURST_LENGTH(config->burstLength - 1) | ECSPI_CONREG_EN(1);
+    base->CONREG = ECSPI_CONREG_BURST_LENGTH(config->burstLength - 1UL) | ECSPI_CONREG_EN(1UL);
     /* Config DMAREG register */
     base->DMAREG |=
         ECSPI_DMAREG_TX_THRESHOLD(config->txFifoThreshold) | ECSPI_DMAREG_RX_THRESHOLD(config->rxFifoThreshold);
@@ -404,11 +407,21 @@ void ECSPI_SetBaudRate(ECSPI_Type *base, uint32_t baudRate_Bps, uint32_t srcCloc
     uint32_t diff         = 0xFFFFFFFFU;
     uint32_t min_diff     = 0xFFFFFFFFU;
 
-    for (preDividerValue = 0; (preDividerValue < 16) && diff; preDividerValue++)
+    for (preDividerValue = 0U; preDividerValue < 16U; preDividerValue++)
     {
-        for (postDividerValue = 0; (postDividerValue < 16) && diff; postDividerValue++)
+        if (diff == 0U)
         {
-            realBaudrate = (srcClock_Hz / (preDividerValue + 1)) >> postDividerValue;
+            break;
+        }
+
+        for (postDividerValue = 0U; postDividerValue < 16U; postDividerValue++)
+        {
+            if (diff == 0U)
+            {
+                break;
+            }
+
+            realBaudrate = (srcClock_Hz / (preDividerValue + 1UL)) >> postDividerValue;
             if (realBaudrate > baudRate_Bps)
             {
                 diff = realBaudrate - baudRate_Bps;
@@ -461,13 +474,13 @@ void ECSPI_SetChannelConfig(ECSPI_Type *base, ecspi_channel_source_t channel, co
             break;
 
         case kECSPI_Channel1:
-            base->CONREG |= ECSPI_CONREG_CHANNEL_MODE(config->channelMode) << 1;
+            base->CONREG |= ECSPI_CONREG_CHANNEL_MODE(config->channelMode) << 1U;
             base->CONFIGREG |=
-                ((ECSPI_CONFIGREG_SCLK_CTL(config->clockInactiveState) << 1) |
-                 (ECSPI_CONFIGREG_DATA_CTL(config->dataLineInactiveState) << 1) |
-                 (ECSPI_CONFIGREG_SS_POL(config->chipSlectActiveState) << 1) |
-                 (ECSPI_CONFIGREG_SS_CTL(config->waveForm) << 1) | (ECSPI_CONFIGREG_SCLK_POL(config->polarity) << 1) |
-                 (ECSPI_CONFIGREG_SCLK_PHA(config->phase) << 1));
+                ((ECSPI_CONFIGREG_SCLK_CTL(config->clockInactiveState) << 1U) |
+                 (ECSPI_CONFIGREG_DATA_CTL(config->dataLineInactiveState) << 1U) |
+                 (ECSPI_CONFIGREG_SS_POL(config->chipSlectActiveState) << 1U) |
+                 (ECSPI_CONFIGREG_SS_CTL(config->waveForm) << 1U) | (ECSPI_CONFIGREG_SCLK_POL(config->polarity) << 1U) |
+                 (ECSPI_CONFIGREG_SCLK_PHA(config->phase) << 1U));
             break;
 
         case kECSPI_Channel2:
@@ -491,6 +504,7 @@ void ECSPI_SetChannelConfig(ECSPI_Type *base, ecspi_channel_source_t channel, co
             break;
 
         default:
+            assert(false);
             break;
     }
 }
@@ -511,7 +525,7 @@ void ECSPI_WriteBlocking(ECSPI_Type *base, uint32_t *buffer, size_t size)
     while (i < size)
     {
         /* Wait for TX fifo buffer empty */
-        while (!(base->STATREG & ECSPI_STATREG_TE_MASK))
+        while ((base->STATREG & ECSPI_STATREG_TE_MASK) == 0UL)
         {
         }
         /* Write data to tx register */
@@ -537,12 +551,12 @@ static status_t ECSPI_ReadBlocking(ECSPI_Type *base, uint32_t *buffer, size_t si
     while (i < size)
     {
         /* Wait for RX FIFO buffer ready */
-        while (!(base->STATREG & ECSPI_STATREG_RR_MASK))
+        while ((base->STATREG & ECSPI_STATREG_RR_MASK) == 0UL)
         {
             /* Get status flags of ECSPI */
             state = ECSPI_GetStatusFlags(base);
             /* If hardware overflow happen */
-            if (ECSPI_STATREG_RO_MASK & state)
+            if ((ECSPI_STATREG_RO_MASK & state) != 0UL)
             {
                 /* Clear overflow flag for next transfer */
                 ECSPI_ClearStatusFlags(base, kECSPI_RxFifoOverFlowFlag);
@@ -583,7 +597,7 @@ void ECSPI_MasterTransferCreateHandle(ECSPI_Type *base,
     assert(base);
     assert(handle);
 
-    uint8_t instance = ECSPI_GetInstance(base);
+    uint32_t instance = ECSPI_GetInstance(base);
 
     /* Initialize the handle */
     s_ecspiHandle[instance] = handle;
@@ -592,7 +606,7 @@ void ECSPI_MasterTransferCreateHandle(ECSPI_Type *base,
     s_ecspiMasterIsr        = ECSPI_MasterTransferHandleIRQ;
 
     /* Enable ECSPI NVIC */
-    EnableIRQ(s_ecspiIRQ[instance]);
+    (void)EnableIRQ(s_ecspiIRQ[instance]);
 }
 
 /*!
@@ -623,10 +637,10 @@ status_t ECSPI_MasterTransferBlocking(ECSPI_Type *base, ecspi_transfer_t *xfer)
      */
     ECSPI_SetChannelSelect(base, xfer->channel);
     /* Caculate the data size need to be send for one burst */
-    burstLength = ((base->CONREG & ECSPI_CONREG_BURST_LENGTH_MASK) >> ECSPI_CONREG_BURST_LENGTH_SHIFT) + 1;
-    dataCounts  = (burstLength % 32) ? (burstLength / 32 + 1) : (burstLength / 32);
+    burstLength = ((base->CONREG & ECSPI_CONREG_BURST_LENGTH_MASK) >> ECSPI_CONREG_BURST_LENGTH_SHIFT) + 1UL;
+    dataCounts  = ((burstLength % 32UL) != 0UL) ? (burstLength / 32UL + 1UL) : (burstLength / 32UL);
 
-    while (xfer->dataSize > 0)
+    while (xfer->dataSize > 0UL)
     {
         /* ECSPI will transmit and receive at the same time, if txData is NULL,
          * instance will transmit dummy data, the dummy data can be set by user.
@@ -673,7 +687,7 @@ status_t ECSPI_MasterTransferNonBlocking(ECSPI_Type *base, ecspi_master_handle_t
     assert(base && handle && xfer);
 
     /* Check if ECSPI is busy */
-    if (handle->state == kECSPI_Busy)
+    if (handle->state == (uint32_t)kECSPI_Busy)
     {
         return kStatus_ECSPI_Busy;
     }
@@ -712,7 +726,8 @@ status_t ECSPI_MasterTransferNonBlocking(ECSPI_Type *base, ecspi_master_handle_t
          * than the RX_THRESHOLD, then a interrupt occurred. Only enable Rx interrupt,
          * use rx interrupt to driver ECSPI transfer.
          */
-        ECSPI_EnableInterrupts(base, kECSPI_RxFifoReadyInterruptEnable | kECSPI_RxFifoOverFlowInterruptEnable);
+        ECSPI_EnableInterrupts(
+            base, (uint32_t)kECSPI_RxFifoReadyInterruptEnable | (uint32_t)kECSPI_RxFifoOverFlowInterruptEnable);
     }
     else
     {
@@ -740,14 +755,14 @@ status_t ECSPI_MasterTransferGetCount(ECSPI_Type *base, ecspi_master_handle_t *h
 
     status_t status = kStatus_Success;
 
-    if (handle->state != kStatus_ECSPI_Busy)
+    if (handle->state != (uint32_t)kStatus_ECSPI_Busy)
     {
         status = kStatus_NoTransferInProgress;
     }
     else
     {
         /* Return remaing bytes in different cases */
-        if (handle->rxData)
+        if (handle->rxData != NULL)
         {
             *count = handle->transferSize - handle->rxRemainingBytes;
         }
@@ -773,7 +788,8 @@ void ECSPI_MasterTransferAbort(ECSPI_Type *base, ecspi_master_handle_t *handle)
     /* Stop interrupts */
     if (NULL != handle->rxData)
     {
-        ECSPI_DisableInterrupts(base, kECSPI_RxFifoReadyInterruptEnable | kECSPI_RxFifoOverFlowInterruptEnable);
+        ECSPI_DisableInterrupts(
+            base, (uint32_t)kECSPI_RxFifoReadyInterruptEnable | (uint32_t)kECSPI_RxFifoOverFlowInterruptEnable);
     }
     else
     {
@@ -798,34 +814,34 @@ void ECSPI_MasterTransferHandleIRQ(ECSPI_Type *base, ecspi_master_handle_t *hand
     assert(handle);
 
     /* If hardware overflow happens */
-    if (base->STATREG & ECSPI_STATREG_RO_MASK)
+    if ((base->STATREG & ECSPI_STATREG_RO_MASK) != 0UL)
     {
         /* Clear overflow flag for next transfer */
         ECSPI_ClearStatusFlags(base, kECSPI_RxFifoOverFlowFlag);
-        if (handle->callback)
+        if ((handle->callback) != NULL)
         {
             (handle->callback)(base, handle, kStatus_ECSPI_HardwareOverFlow, handle->userData);
         }
     }
     /* If need to receive data, do a receive */
-    if (handle->rxRemainingBytes)
+    if ((handle->rxRemainingBytes) != 0UL)
     {
         ECSPI_ReceiveTransfer(base, handle);
     }
 
     /* We always need to send a data to make the ECSPI run */
-    if (handle->txRemainingBytes)
+    if ((handle->txRemainingBytes) != 0UL)
     {
         ECSPI_SendTransfer(base, handle);
     }
 
     /* All the transfer finished */
-    if ((handle->txRemainingBytes == 0) && (handle->rxRemainingBytes == 0))
+    if ((handle->txRemainingBytes == 0UL) && (handle->rxRemainingBytes == 0UL))
     {
         /* Complete the transfer */
         ECSPI_MasterTransferAbort(base, handle);
 
-        if (handle->callback)
+        if ((handle->callback) != NULL)
         {
             (handle->callback)(base, handle, kStatus_Success, handle->userData);
         }
@@ -866,34 +882,34 @@ void ECSPI_SlaveTransferHandleIRQ(ECSPI_Type *base, ecspi_slave_handle_t *handle
 {
     assert(handle);
     /* If hardware overflow happens */
-    if (base->STATREG & ECSPI_STATREG_RO_MASK)
+    if ((base->STATREG & ECSPI_STATREG_RO_MASK) != 0UL)
     {
         /* Clear overflow flag for next transfer */
         ECSPI_ClearStatusFlags(base, kECSPI_RxFifoOverFlowFlag);
-        if (handle->callback)
+        if ((handle->callback) != NULL)
         {
             (handle->callback)(base, handle, kStatus_ECSPI_HardwareOverFlow, handle->userData);
         }
     }
     /* If needs to receive data, do a receive */
-    if (handle->rxRemainingBytes)
+    if ((handle->rxRemainingBytes) != 0UL)
     {
         ECSPI_ReceiveTransfer(base, handle);
     }
 
     /* We always need to send a data to make the ECSPI run */
-    if (handle->txRemainingBytes)
+    if ((handle->txRemainingBytes) != 0UL)
     {
         ECSPI_SendTransfer(base, handle);
     }
 
     /* All the transfer finished */
-    if ((handle->txRemainingBytes == 0) && (handle->rxRemainingBytes == 0))
+    if ((handle->txRemainingBytes == 0UL) && (handle->rxRemainingBytes == 0UL))
     {
         /* Complete the transfer */
         ECSPI_SlaveTransferAbort(base, handle);
 
-        if (handle->callback)
+        if ((handle->callback) != NULL)
         {
             (handle->callback)(base, handle, kStatus_Success, handle->userData);
         }

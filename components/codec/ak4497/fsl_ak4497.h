@@ -25,8 +25,8 @@
 /*@}*/
 
 /*! @brief ak4497 handle size */
-#ifndef AK4497_HANDLE_SIZE
-#define AK4497_HANDLE_SIZE (100U)
+#ifndef AK4497_I2C_HANDLER_SIZE
+#define AK4497_I2C_HANDLER_SIZE CODEC_I2C_MASTER_HANDLER_SIZE
 #endif
 
 /*! @brief define the registers offset of AK4497. */
@@ -320,14 +320,11 @@ typedef struct _ak4497_config
 } ak4497_config_t;
 
 /*! @brief ak4497 codec handler
- * Applicationi should allocate a buffer with WM8904_HANDLE_SIZE for handle definition, such as
- * uint8_t ak4497HandleBuffer[AK4497_HANDLE_SIZE];
- * ak4497_handle_t *ak4497Handle = ak4497HandleBuffer;
  */
 typedef struct _ak4497_handle
 {
-    ak4497_config_t *config; /*!< ak4497 config pointer */
-    void *i2cHandle;         /*!< i2c handle */
+    ak4497_config_t *config;                    /*!< ak4497 config pointer */
+    uint8_t i2cHandle[AK4497_I2C_HANDLER_SIZE]; /*!< i2c handle */
 } ak4497_handle_t;
 
 /*******************************************************************************

@@ -12,22 +12,25 @@
     <definition extID="platform.CMSIS_Driver_Include.SPI_CMSISInclude.MIMX8MM6"/>
     <definition extID="platform.Include_common.MIMX8MM6"/>
     <definition extID="platform.Include_core_cm4.MIMX8MM6"/>
+    <definition extID="platform.Include_dsp.MIMX8MM6"/>
     <definition extID="platform.drivers.clock.MIMX8MM6"/>
     <definition extID="platform.drivers.common.MIMX8MM6"/>
     <definition extID="platform.drivers.ecspi.MIMX8MM6"/>
-    <definition extID="platform.drivers.ecspi_cmsis.MIMX8MM6"/>
     <definition extID="platform.drivers.ecspi_sdma.MIMX8MM6"/>
+    <definition extID="platform.drivers.ecspi_sdma_cmsis.MIMX8MM6"/>
     <definition extID="platform.drivers.iuart.MIMX8MM6"/>
+    <definition extID="platform.drivers.memory.MIMX8MM6"/>
     <definition extID="platform.drivers.rdc.MIMX8MM6"/>
     <definition extID="platform.drivers.sdma.MIMX8MM6"/>
     <definition extID="platform.utilities.assert.MIMX8MM6"/>
+    <definition extID="platform.utilities.misc_utilities.MIMX8MM6"/>
     <definition extID="utility.debug_console.MIMX8MM6"/>
     <definition extID="iar"/>
     <definition extID="armgcc"/>
     <definition extID="mdk"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="evkmimx8mm_cmsis_ecspi_sdma_loopback_transfer" name="cmsis_ecspi_sdma_loopback_transfer" category="cmsis_driver_examples/ecspi" dependency="platform.drivers.ecspi_sdma.MIMX8MM6 platform.drivers.clock.MIMX8MM6 platform.drivers.ecspi.MIMX8MM6 platform.drivers.ecspi_cmsis.MIMX8MM6 platform.drivers.common.MIMX8MM6 platform.drivers.rdc.MIMX8MM6 device.MIMX8MM6_CMSIS.MIMX8MM6 utility.debug_console.MIMX8MM6 component.iuart_adapter.MIMX8MM6 component.serial_manager.MIMX8MM6 component.serial_manager_uart.MIMX8MM6 platform.drivers.iuart.MIMX8MM6 component.lists.MIMX8MM6 device.MIMX8MM6_startup.MIMX8MM6 platform.utilities.assert.MIMX8MM6 platform.Include_core_cm4.MIMX8MM6 platform.Include_common.MIMX8MM6 platform.drivers.sdma.MIMX8MM6 platform.CMSIS_Driver_Include.SPI_CMSISInclude.MIMX8MM6 platform.CMSIS_Driver_Include.Common_CMSISInclude.MIMX8MM6">
+  <example id="evkmimx8mm_cmsis_ecspi_sdma_loopback_transfer" name="cmsis_ecspi_sdma_loopback_transfer" category="cmsis_driver_examples/ecspi" dependency="platform.drivers.ecspi_sdma.MIMX8MM6 platform.drivers.clock.MIMX8MM6 platform.drivers.ecspi_sdma_cmsis.MIMX8MM6 platform.drivers.common.MIMX8MM6 platform.drivers.rdc.MIMX8MM6 device.MIMX8MM6_CMSIS.MIMX8MM6 utility.debug_console.MIMX8MM6 component.iuart_adapter.MIMX8MM6 component.serial_manager.MIMX8MM6 component.lists.MIMX8MM6 component.serial_manager_uart.MIMX8MM6 platform.drivers.iuart.MIMX8MM6 device.MIMX8MM6_startup.MIMX8MM6 platform.utilities.assert.MIMX8MM6 platform.drivers.ecspi.MIMX8MM6 platform.Include_core_cm4.MIMX8MM6 platform.Include_common.MIMX8MM6 platform.Include_dsp.MIMX8MM6 platform.drivers.sdma.MIMX8MM6 platform.drivers.memory.MIMX8MM6 platform.CMSIS_Driver_Include.SPI_CMSISInclude.MIMX8MM6 platform.CMSIS_Driver_Include.Common_CMSISInclude.MIMX8MM6 platform.utilities.misc_utilities.MIMX8MM6">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -44,6 +47,7 @@
         </option>
         <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
           <value>CPU_MIMX8MM6DVTLZ</value>
+          <value>SERIAL_PORT_TYPE_UART=1</value>
         </option>
         <option id="gnu.c.compiler.option.optimization.flags" type="string">
           <value>-fno-common</value>
@@ -59,15 +63,11 @@
         </option>
       </toolchainSetting>
     </toolchainSettings>
-    <source path="boards/evkmimx8mm/cmsis_driver_examples/ecspi/sdma_loopback_transfer/armgcc" target_path="src" type="linker" toolchain="armgcc">
+    <source path="boards/evkmimx8mm/cmsis_driver_examples/ecspi/sdma_loopback_transfer/armgcc" target_path="MIMX8MM6/gcc" type="linker" toolchain="armgcc">
       <files mask="MIMX8MM6xxxxx_cm4_ram.ld"/>
     </source>
-    <source path="boards/evkmimx8mm/cmsis_driver_examples/ecspi/sdma_loopback_transfer/iar" target_path="src" type="linker" toolchain="iar">
+    <source path="boards/evkmimx8mm/cmsis_driver_examples/ecspi/sdma_loopback_transfer/iar" target_path="MIMX8MM6/iar" type="linker" toolchain="iar">
       <files mask="MIMX8MM6xxxxx_cm4_ram.icf"/>
-    </source>
-    <source path="boards/evkmimx8mm/cmsis_driver_examples/ecspi/sdma_loopback_transfer" target_path="CMSIS" type="c_include" exclude="true">
-      <files mask="Driver_Common.h"/>
-      <files mask="Driver_SPI.h"/>
     </source>
     <source path="boards/evkmimx8mm/cmsis_driver_examples/ecspi/sdma_loopback_transfer" target_path="board" type="c_include">
       <files mask="RTE_Device.h"/>

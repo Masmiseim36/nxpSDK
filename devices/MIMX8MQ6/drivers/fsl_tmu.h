@@ -20,7 +20,7 @@
  * Definitions
  ******************************************************************************/
 /*! @brief TMU driver version. */
-#define FSL_TMU_DRIVER_VERSION (MAKE_VERSION(2, 0, 2)) /*!< Version 2.0.2. */
+#define FSL_TMU_DRIVER_VERSION (MAKE_VERSION(2, 0, 3)) /*!< Version 2.0.3. */
 
 enum _tmu_monitor_site
 {

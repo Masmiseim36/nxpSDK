@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 NXP
+ * Copyright 2017-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -15,6 +15,18 @@
 #ifndef FSL_COMPONENT_ID
 #define FSL_COMPONENT_ID "platform.drivers.rdc"
 #endif
+
+typedef union
+{
+    rdc_domain_assignment_t _mda;
+    uint32_t _u32;
+} rdc_mda_reg_t;
+
+typedef union
+{
+    rdc_hardware_config_t _vir;
+    uint32_t _u32;
+} rdc_vir_reg_t;
 
 /*******************************************************************************
  * Prototypes
@@ -90,6 +102,64 @@ void RDC_Deinit(RDC_Type *base)
 }
 
 /*!
+ * brief Gets the RDC hardware configuration.
+ *
+ * This function gets the RDC hardware configurations, including number of bus
+ * masters, number of domains, number of memory regions and number of peripherals.
+ *
+ * param base RDC peripheral base address.
+ * param config Pointer to the structure to get the configuration.
+ */
+void RDC_GetHardwareConfig(RDC_Type *base, rdc_hardware_config_t *config)
+{
+    assert(NULL != config);
+
+    rdc_vir_reg_t vir;
+    vir._u32 = base->VIR;
+
+    *config = vir._vir;
+}
+
+/*!
+ * brief Set master domain assignment
+ *
+ * param base RDC peripheral base address.
+ * param master Which master to set.
+ * param domainAssignment Pointer to the assignment.
+ */
+void RDC_SetMasterDomainAssignment(RDC_Type *base, rdc_master_t master, const rdc_domain_assignment_t *domainAssignment)
+{
+    assert((uint32_t)master < RDC_MDA_COUNT);
+
+    rdc_mda_reg_t mda;
+
+    mda._mda = *domainAssignment;
+
+    base->MDA[master] = mda._u32;
+}
+
+/*!
+ * brief Get default master domain assignment
+ *
+ * The default configuration is:
+ * code
+   assignment->domainId = 0U;
+   assignment->lock = 0U;
+   endcode
+ *
+ * param domainAssignment Pointer to the assignment.
+ */
+void RDC_GetDefaultMasterDomainAssignment(rdc_domain_assignment_t *domainAssignment)
+{
+    assert(NULL != domainAssignment);
+
+    rdc_mda_reg_t mda;
+    mda._u32 = 0U;
+
+    *domainAssignment = mda._mda;
+}
+
+/*!
  * brief Set peripheral access policy.
  *
  * param base RDC peripheral base address.
@@ -97,9 +167,9 @@ void RDC_Deinit(RDC_Type *base)
  */
 void RDC_SetPeriphAccessConfig(RDC_Type *base, const rdc_periph_access_config_t *config)
 {
-    assert(config->periph < RDC_PDAP_COUNT);
+    assert((uint32_t)config->periph < RDC_PDAP_COUNT);
 
-    uint32_t periph  = config->periph;
+    uint32_t periph  = (uint32_t)config->periph;
     uint32_t regPDAP = config->policy;
 
     if (config->lock)
@@ -113,6 +183,8 @@ void RDC_SetPeriphAccessConfig(RDC_Type *base, const rdc_periph_access_config_t 
     }
 
     base->PDAP[periph] = regPDAP;
+
+    __DSB();
 }
 
 /*!
@@ -132,15 +204,15 @@ void RDC_SetPeriphAccessConfig(RDC_Type *base, const rdc_periph_access_config_t 
  */
 void RDC_GetDefaultPeriphAccessConfig(rdc_periph_access_config_t *config)
 {
-    assert(config);
+    assert(NULL != config);
 
     /* Initializes the configure structure to zero. */
-    memset(config, 0, sizeof(*config));
+    (void)memset(config, 0, sizeof(*config));
 
     config->lock       = false;
     config->enableSema = false;
-    config->policy     = RDC_ACCESS_POLICY(0, kRDC_ReadWrite) | RDC_ACCESS_POLICY(1, kRDC_ReadWrite) |
-                     RDC_ACCESS_POLICY(2, kRDC_ReadWrite) | RDC_ACCESS_POLICY(3, kRDC_ReadWrite);
+    config->policy     = RDC_ACCESS_POLICY(0U, kRDC_ReadWrite) | RDC_ACCESS_POLICY(1U, kRDC_ReadWrite) |
+                     RDC_ACCESS_POLICY(2U, kRDC_ReadWrite) | RDC_ACCESS_POLICY(3U, kRDC_ReadWrite);
 }
 
 /*!
@@ -155,9 +227,9 @@ void RDC_GetDefaultPeriphAccessConfig(rdc_periph_access_config_t *config)
  */
 void RDC_SetMemAccessConfig(RDC_Type *base, const rdc_mem_access_config_t *config)
 {
-    assert(config->mem < RDC_MRC_COUNT);
+    assert((uint32_t)config->mem < RDC_MRC_COUNT);
 
-    uint32_t mem = config->mem;
+    uint32_t mem = (uint32_t)config->mem;
     /* The configuration is enabled by default. */
     uint32_t regMRC = config->policy | RDC_MRC_ENA_MASK;
 
@@ -169,6 +241,8 @@ void RDC_SetMemAccessConfig(RDC_Type *base, const rdc_mem_access_config_t *confi
     base->MR[mem].MRSA = config->baseAddress;
     base->MR[mem].MREA = config->endAddress;
     base->MR[mem].MRC  = regMRC;
+
+    __DSB();
 }
 
 /*!
@@ -189,16 +263,16 @@ void RDC_SetMemAccessConfig(RDC_Type *base, const rdc_mem_access_config_t *confi
  */
 void RDC_GetDefaultMemAccessConfig(rdc_mem_access_config_t *config)
 {
-    assert(config);
+    assert(NULL != config);
 
     /* Initializes the configure structure to zero. */
-    memset(config, 0, sizeof(*config));
+    (void)memset(config, 0, sizeof(*config));
 
     config->lock        = false;
     config->baseAddress = 0;
     config->endAddress  = 0;
-    config->policy      = RDC_ACCESS_POLICY(0, kRDC_ReadWrite) | RDC_ACCESS_POLICY(1, kRDC_ReadWrite) |
-                     RDC_ACCESS_POLICY(2, kRDC_ReadWrite) | RDC_ACCESS_POLICY(3, kRDC_ReadWrite);
+    config->policy      = RDC_ACCESS_POLICY(0U, kRDC_ReadWrite) | RDC_ACCESS_POLICY(1U, kRDC_ReadWrite) |
+                     RDC_ACCESS_POLICY(2U, kRDC_ReadWrite) | RDC_ACCESS_POLICY(3U, kRDC_ReadWrite);
 }
 
 /*!
@@ -215,11 +289,11 @@ void RDC_GetDefaultMemAccessConfig(rdc_mem_access_config_t *config)
  */
 void RDC_GetMemViolationStatus(RDC_Type *base, rdc_mem_t mem, rdc_mem_status_t *status)
 {
-    assert(mem < RDC_MRC_COUNT);
+    assert((uint32_t)mem < RDC_MRC_COUNT);
 
     uint32_t regMRVS = base->MR[mem].MRVS;
 
-    status->hasViolation = (regMRVS & RDC_MRVS_AD_MASK);
-    status->domainID     = (regMRVS & RDC_MRVS_VDID_MASK) >> RDC_MRVS_VDID_SHIFT;
+    status->hasViolation = ((regMRVS & RDC_MRVS_AD_MASK) != 0U);
+    status->domainID     = (uint8_t)((regMRVS & RDC_MRVS_VDID_MASK) >> RDC_MRVS_VDID_SHIFT);
     status->address      = (regMRVS & RDC_MRVS_VADR_MASK);
 }

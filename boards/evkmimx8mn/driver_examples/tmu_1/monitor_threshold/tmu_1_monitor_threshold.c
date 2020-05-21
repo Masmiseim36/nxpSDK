@@ -52,7 +52,7 @@ void DEMO_TMU_IRQ_HANDLER_FUNC(void)
     }
     else
     {
-        PRINTF("Threshold reached, average temperature is %d°„C\r\n", temp - 21U);
+        PRINTF("Threshold reached, average temperature is %d celsius degree\r\n", temp - 21U);
     }
 }
 
@@ -79,9 +79,7 @@ int main(void)
     PRINTF("TMU monitor threshold example.\r\n");
 
     /* Initialize the TMU mode. */
-    k_tmuConfig.amplifierGain = DEMO_TMU_AMPGAIN_VALUE;
-    k_tmuConfig.amplifierVref = DEMO_TMU_AMPVREF_VALUE;
-    k_tmuConfig.averageLPF    = kTMU_AverageLowPassFilter0_5;
+    k_tmuConfig.averageLPF = kTMU_AverageLowPassFilter0_5;
     TMU_Init(DEMO_TMU_BASE, &k_tmuConfig);
 
     /* Set the temperature threshold. */

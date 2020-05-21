@@ -251,10 +251,10 @@ int main(void)
     {
         CCM->PLL_CTRL[i].PLL_CTRL = kCLOCK_ClockNeededRun;
     }
-    CLOCK_SetRootMux(kCLOCK_RootSai1, kCLOCK_SaiRootmuxAudioPll1); /* Set SAI source to Audio PLL1 393215996HZ */
-    CLOCK_SetRootDivider(kCLOCK_RootSai1, 1U, 8U);                 /* Set root clock to 393215996HZ / 8 = 49152000HZ */
+    CLOCK_SetRootMux(kCLOCK_RootSai1, kCLOCK_SaiRootmuxAudioPll1); /* Set SAI source to Audio PLL1 393216000HZ */
+    CLOCK_SetRootDivider(kCLOCK_RootSai1, 1U, 8U);                 /* Set root clock to 393216000HZ / 8 = 49152000HZ */
     CLOCK_SetRootMux(kCLOCK_RootSai3, kCLOCK_SaiRootmuxAudioPll1); /* Set SAI source to Audio PLL1 393215996HZ */
-    CLOCK_SetRootDivider(kCLOCK_RootSai3, 1U, 16U);                /* Set root clock to 393215996HZ / 16 = 27576000HZ */
+    CLOCK_SetRootDivider(kCLOCK_RootSai3, 1U, 16U);                /* Set root clock to 393216000HZ / 16 = 27576000HZ */
     CLOCK_SetRootMux(kCLOCK_RootI2c3, kCLOCK_I2cRootmuxSysPll1Div5); /* Set I2C source to SysPLL1 Div5 160MHZ */
     CLOCK_SetRootDivider(kCLOCK_RootI2c3, 1U, 10U);                  /* Set root clock to 160MHZ / 10 = 16MHZ */
     CLOCK_SetRootMux(kCLOCK_RootGpt1, kCLOCK_GptRootmuxOsc24M);      /* Set GPT source to Osc24 MHZ */
@@ -268,7 +268,12 @@ int main(void)
 
     APP_SRTM_Init();
 
-    xTaskCreate(MainTask, "Main Task", 256U, (void *)taskID, tskIDLE_PRIORITY + 1U, NULL);
+    if (xTaskCreate(MainTask, "Main Task", 256U, (void *)taskID, tskIDLE_PRIORITY + 1U, NULL) != pdPASS)
+    {
+        PRINTF("Task creation failed!.\r\n");
+        while (1)
+            ;
+    }
 
     /* Start FreeRTOS scheduler. */
     vTaskStartScheduler();

@@ -38,6 +38,10 @@
 #include "fsl_ak4458_adapter.h"
 #endif
 
+#ifdef CODEC_TFA9XXX_ENABLE
+#include "fsl_tfa9xxx_adapter.h"
+#endif
+
 #include "fsl_codec_adapter.h"
 /*******************************************************************************
  * Definitions
@@ -117,6 +121,12 @@ status_t HAL_CODEC_Init(codec_handle_t *handle, void *config)
             retVal = HAL_CODEC_AK4458_Init(handle, config);
             break;
 #endif
+
+#ifdef CODEC_TFA9XXX_ENABLE
+        case kCODEC_TFA9XXX:
+            retVal = HAL_CODEC_TFA9XXX_Init(handle, config);
+            break;
+#endif
         default:
             return kStatus_InvalidArgument;
     }
@@ -132,7 +142,7 @@ status_t HAL_CODEC_Init(codec_handle_t *handle, void *config)
  */
 status_t HAL_CODEC_Deinit(codec_handle_t *handle)
 {
-    assert((handle != NULL) && (handle->codecDevHandle != NULL));
+    assert(handle != NULL);
     status_t retVal = kStatus_Success;
 
     switch (handle->codecConfig->codecDevType)
@@ -184,6 +194,12 @@ status_t HAL_CODEC_Deinit(codec_handle_t *handle)
             retVal = HAL_CODEC_AK4458_Deinit(handle);
             break;
 #endif
+
+#ifdef CODEC_TFA9XXX_ENABLE
+        case kCODEC_TFA9XXX:
+            retVal = HAL_CODEC_TFA9XXX_Deinit(handle);
+            break;
+#endif
         default:
             return kStatus_InvalidArgument;
     }
@@ -202,7 +218,7 @@ status_t HAL_CODEC_Deinit(codec_handle_t *handle)
  */
 status_t HAL_CODEC_SetFormat(codec_handle_t *handle, uint32_t mclk, uint32_t sampleRate, uint32_t bitWidth)
 {
-    assert((handle != NULL) && (handle->codecDevHandle != NULL));
+    assert(handle != NULL);
     status_t retVal = kStatus_Success;
 
     switch (handle->codecConfig->codecDevType)
@@ -255,6 +271,11 @@ status_t HAL_CODEC_SetFormat(codec_handle_t *handle, uint32_t mclk, uint32_t sam
             break;
 #endif
 
+#ifdef CODEC_TFA9XXX_ENABLE
+        case kCODEC_TFA9XXX:
+            retVal = HAL_CODEC_TFA9XXX_SetFormat(handle, mclk, sampleRate, bitWidth);
+            break;
+#endif
         default:
             return kStatus_InvalidArgument;
     }
@@ -272,7 +293,7 @@ status_t HAL_CODEC_SetFormat(codec_handle_t *handle, uint32_t mclk, uint32_t sam
  */
 status_t HAL_CODEC_SetVolume(codec_handle_t *handle, uint32_t playChannel, uint32_t volume)
 {
-    assert((handle != NULL) && (handle->codecDevHandle != NULL));
+    assert(handle != NULL);
     status_t retVal = kStatus_Success;
 
     switch (handle->codecConfig->codecDevType)
@@ -325,6 +346,11 @@ status_t HAL_CODEC_SetVolume(codec_handle_t *handle, uint32_t playChannel, uint3
             break;
 #endif
 
+#ifdef CODEC_TFA9XXX_ENABLE
+        case kCODEC_TFA9XXX:
+            retVal = HAL_CODEC_TFA9XXX_SetVolume(handle, playChannel, volume);
+            break;
+#endif
         default:
             return kStatus_InvalidArgument;
     }
@@ -342,7 +368,7 @@ status_t HAL_CODEC_SetVolume(codec_handle_t *handle, uint32_t playChannel, uint3
  */
 status_t HAL_CODEC_SetMute(codec_handle_t *handle, uint32_t playChannel, bool isMute)
 {
-    assert((handle != NULL) && (handle->codecDevHandle != NULL));
+    assert(handle != NULL);
     status_t retVal = kStatus_Success;
 
     switch (handle->codecConfig->codecDevType)
@@ -395,6 +421,11 @@ status_t HAL_CODEC_SetMute(codec_handle_t *handle, uint32_t playChannel, bool is
             break;
 #endif
 
+#ifdef CODEC_TFA9XXX_ENABLE
+        case kCODEC_TFA9XXX:
+            retVal = HAL_CODEC_TFA9XXX_SetMute(handle, playChannel, isMute);
+            break;
+#endif
         default:
             return kStatus_InvalidArgument;
     }
@@ -412,7 +443,7 @@ status_t HAL_CODEC_SetMute(codec_handle_t *handle, uint32_t playChannel, bool is
  */
 status_t HAL_CODEC_SetPower(codec_handle_t *handle, codec_module_t module, bool powerOn)
 {
-    assert((handle != NULL) && (handle->codecDevHandle != NULL));
+    assert(handle != NULL);
     status_t retVal = kStatus_Success;
 
     switch (handle->codecConfig->codecDevType)
@@ -465,6 +496,11 @@ status_t HAL_CODEC_SetPower(codec_handle_t *handle, codec_module_t module, bool 
             break;
 #endif
 
+#ifdef CODEC_TFA9XXX_ENABLE
+        case kCODEC_TFA9XXX:
+            retVal = HAL_CODEC_TFA9XXX_SetPower(handle, module, powerOn);
+            break;
+#endif
         default:
             return kStatus_InvalidArgument;
     }
@@ -482,7 +518,7 @@ status_t HAL_CODEC_SetPower(codec_handle_t *handle, codec_module_t module, bool 
  */
 status_t HAL_CODEC_SetRecord(codec_handle_t *handle, uint32_t recordSource)
 {
-    assert((handle != NULL) && (handle->codecDevHandle != NULL));
+    assert(handle != NULL);
     status_t retVal = kStatus_Success;
 
     switch (handle->codecConfig->codecDevType)
@@ -535,6 +571,11 @@ status_t HAL_CODEC_SetRecord(codec_handle_t *handle, uint32_t recordSource)
             break;
 #endif
 
+#ifdef CODEC_TFA9XXX_ENABLE
+        case kCODEC_TFA9XXX:
+            retVal = HAL_CODEC_TFA9XXX_SetRecord(handle, recordSource);
+            break;
+#endif
         default:
             return kStatus_InvalidArgument;
     }
@@ -555,7 +596,7 @@ status_t HAL_CODEC_SetRecord(codec_handle_t *handle, uint32_t recordSource)
  */
 status_t HAL_CODEC_SetRecordChannel(codec_handle_t *handle, uint32_t leftRecordChannel, uint32_t rightRecordChannel)
 {
-    assert((handle != NULL) && (handle->codecDevHandle != NULL));
+    assert(handle != NULL);
     status_t retVal = kStatus_Success;
 
     switch (handle->codecConfig->codecDevType)
@@ -608,6 +649,11 @@ status_t HAL_CODEC_SetRecordChannel(codec_handle_t *handle, uint32_t leftRecordC
             break;
 #endif
 
+#ifdef CODEC_TFA9XXX_ENABLE
+        case kCODEC_TFA9XXX:
+            retVal = HAL_CODEC_TFA9XXX_SetRecordChannel(handle, leftRecordChannel, rightRecordChannel);
+            break;
+#endif
         default:
             return kStatus_InvalidArgument;
     }
@@ -625,7 +671,7 @@ status_t HAL_CODEC_SetRecordChannel(codec_handle_t *handle, uint32_t leftRecordC
  */
 status_t HAL_CODEC_SetPlay(codec_handle_t *handle, uint32_t playSource)
 {
-    assert((handle != NULL) && (handle->codecDevHandle != NULL));
+    assert(handle != NULL);
     status_t retVal = kStatus_Success;
 
     switch (handle->codecConfig->codecDevType)
@@ -678,6 +724,11 @@ status_t HAL_CODEC_SetPlay(codec_handle_t *handle, uint32_t playSource)
             break;
 #endif
 
+#ifdef CODEC_TFA9XXX_ENABLE
+        case kCODEC_TFA9XXX:
+            retVal = HAL_CODEC_TFA9XXX_SetPlay(handle, playSource);
+            break;
+#endif
         default:
             return kStatus_InvalidArgument;
     }
@@ -700,7 +751,7 @@ status_t HAL_CODEC_SetPlay(codec_handle_t *handle, uint32_t playSource)
  */
 status_t HAL_CODEC_ModuleControl(codec_handle_t *handle, codec_module_ctrl_cmd_t cmd, uint32_t data)
 {
-    assert((handle != NULL) && (handle->codecDevHandle != NULL));
+    assert(handle != NULL);
     status_t retVal = kStatus_Success;
 
     switch (handle->codecConfig->codecDevType)

@@ -18,7 +18,7 @@ const ccm_analog_frac_pll_config_t g_audioPll1Config = {
     .mainDiv = 262U,
     .dsm     = 9437U,
     .preDiv  = 2U,
-    .postDiv = 3U, /*!< AUDIO PLL1 frequency  = 393215996HZ */
+    .postDiv = 3U, /*!< AUDIO PLL1 frequency  = 393216000HZ */
 };
 
 /* AUDIO PLL2 configuration */
@@ -27,7 +27,7 @@ const ccm_analog_frac_pll_config_t g_audioPll2Config = {
     .mainDiv = 361U,
     .dsm     = 17511U,
     .preDiv  = 3U,
-    .postDiv = 3U, /*!< AUDIO PLL2 frequency  = 361267197HZ */
+    .postDiv = 3U, /*!< AUDIO PLL2 frequency  = 361267200HZ */
 };
 
 /* Integer PLLs: Fout = (mainDiv * refSel) / (preDiv * 2^ postDiv) */
@@ -82,8 +82,8 @@ void BOARD_BootClockRUN(void)
     //    CLOCK_InitSysPll2(&g_sysPll2Config); /* init SYSTEM PLL2 run at 1000MHZ */
     //    CLOCK_InitSysPll3(&g_sysPll3Config); /* init SYSTEM PLL3 run at 750MHZ */
 
-    CLOCK_InitAudioPll1(&g_audioPll1Config); /* init AUDIO PLL1 run at 393215996HZ */
-    CLOCK_InitAudioPll2(&g_audioPll2Config); /* init AUDIO PLL2 run at 361267197HZ */
+    CLOCK_InitAudioPll1(&g_audioPll1Config); /* init AUDIO PLL1 run at 393216000HZ */
+    CLOCK_InitAudioPll2(&g_audioPll2Config); /* init AUDIO PLL2 run at 361267200HZ */
 
     CLOCK_SetRootDivider(kCLOCK_RootM4, 1U, 2U);
     CLOCK_SetRootMux(kCLOCK_RootM4, kCLOCK_M4RootmuxSysPll1); /* switch cortex-m4 to SYSTEM PLL1 */

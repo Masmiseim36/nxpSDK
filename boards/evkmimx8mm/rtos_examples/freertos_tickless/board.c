@@ -144,6 +144,12 @@ void BOARD_InitMemory(void)
      */
     __DSB();
     __ISB();
+
+    /* Configure the force_incr programmable bit in GPV_5 of PL301_display, which fixes partial write issue.
+     * The AXI2AHB bridge is used for masters that access the TCM through system bus.
+     * Please refer to errata for more information */
+    *(uint32_t *)(GPV5_BASE_ADDR + FORCE_INCR_OFFSET) =
+        *(uint32_t *)(GPV5_BASE_ADDR + FORCE_INCR_OFFSET) | FORCE_INCR_BIT_MASK;
 }
 
 void BOARD_RdcInit(void)

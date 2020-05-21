@@ -9,8 +9,8 @@ If there is no audio palyback, M core will enter the STOP mode, and the whole SO
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.3
-- GCC ARM Embedded  8.2.1
+- IAR embedded Workbench  8.40.2
+- GCC ARM Embedded  8.3.1
 
 Hardware requirements
 =====================
@@ -59,7 +59,7 @@ Playback command
 ******************
 When playback the .wav file:
 1.  If want to test free run, could use command: 
-    aplay -Dhw:0 xxx.wav;
+    aplay xxx.wav &;
 2.  If want to test pause command, could use command: 
     aplay -Dhw:0 -i xxx.wav -N;
     press space key on the keyboard to pause, and press the space key again to resume.

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 NXP
+ * Copyright 2017-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -53,6 +53,17 @@ typedef enum
             ;                        \
     }
 
+/* For some platforms, the core's domain ID
+ * is not configured by RDC, for example, it
+ * is fixed value and not configurable.
+ * In this case, APP_ASSIGN_DOMAIN_ID_BY_RDC
+ * could be over-written to 0, and a function
+ * APP_AssignCoreDomain assigns the core's domain.
+ */
+#ifndef APP_ASSIGN_DOMAIN_ID_BY_RDC
+#define APP_ASSIGN_DOMAIN_ID_BY_RDC 1
+#endif
+
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -87,7 +98,7 @@ static void APP_RDC_Mem(void);
 /* Current demo state. */
 static volatile rdc_demo_state_t s_demoState = kRDC_DEMO_None;
 /* HardFault happened or not. */
-static volatile bool s_hardfaultFlag = false;
+static volatile bool s_faultFlag = false;
 /* How many error happens during memory region demo. */
 static volatile uint32_t memDemoError = 0;
 
@@ -109,11 +120,12 @@ void APP_TouchMem(void)
     /* Touch the memory. */
     (*(volatile uint32_t *)APP_RDC_MEM_BASE_ADDR)++;
 }
-void HardFault_Handler(void)
+
+static void Fault_Handler(void)
 {
     rdc_mem_status_t memStatus;
 
-    s_hardfaultFlag = true;
+    s_faultFlag = true;
 
     if (kRDC_DEMO_Periph == s_demoState)
     {
@@ -155,6 +167,16 @@ void HardFault_Handler(void)
     __DSB();
 }
 
+void HardFault_Handler(void)
+{
+    Fault_Handler();
+}
+
+void BusFault_Handler(void)
+{
+    Fault_Handler();
+}
+
 /*!
  * @brief Main function
  */
@@ -180,15 +202,30 @@ int main(void)
     /* Set the IOMUXC_GPR10[2:3], thus the memory violation triggers the hardfault. */
     *(volatile uint32_t *)0x30340028 |= (0x0C);
 
+    /*
+     * In this example, the core needs to access the memory to trigger
+     * access error. To ensure this is not cached, disable the cache.
+     */
+#if defined(__DCACHE_PRESENT) && __DCACHE_PRESENT
+    if (SCB_CCR_DC_Msk == (SCB_CCR_DC_Msk & SCB->CCR))
+    {
+        SCB_DisableDCache();
+    }
+#endif
+
     PRINTF("\r\nRDC Example:\r\n");
 
     RDC_Init(APP_RDC);
     RDC_SEMA42_Init(APP_RDC_SEMA42);
 
+#if APP_ASSIGN_DOMAIN_ID_BY_RDC
     /* Assign current master domain. */
     RDC_GetDefaultMasterDomainAssignment(&assignment);
     assignment.domainId = APP_CUR_MASTER_DID;
     RDC_SetMasterDomainAssignment(APP_RDC, APP_CUR_MASTER, &assignment);
+#else
+    APP_AssignCoreDomain();
+#endif
 
     APP_RDC_Periph();
 
@@ -218,12 +255,12 @@ static void APP_RDC_Periph(void)
     /* Set peripheral to accessible by all domains. */
     RDC_SetPeriphAccessConfig(APP_RDC, &periphConfig);
 
-    s_hardfaultFlag = false;
+    s_faultFlag = false;
 
     APP_TouchPeriph();
 
     /* Peripheral is accessible, there should not be hardfault. */
-    DEMO_CHECK(false == s_hardfaultFlag);
+    DEMO_CHECK(false == s_faultFlag);
 
     /*
      * Item 2: Peripheral inaccessible.
@@ -232,11 +269,11 @@ static void APP_RDC_Periph(void)
     periphConfig.policy &= ~(RDC_ACCESS_POLICY(APP_CUR_MASTER_DID, kRDC_ReadWrite));
     RDC_SetPeriphAccessConfig(APP_RDC, &periphConfig);
 
-    s_hardfaultFlag = false;
+    s_faultFlag = false;
     APP_TouchPeriph();
 
     /* Peripheral is not accessible, there should be hardfault. */
-    DEMO_CHECK(true == s_hardfaultFlag);
+    DEMO_CHECK(true == s_faultFlag);
 }
 
 static void APP_RDC_PeriphWithSema42(void)
@@ -256,12 +293,12 @@ static void APP_RDC_PeriphWithSema42(void)
     RDC_SEMA42_Unlock(APP_RDC_SEMA42, APP_RDC_SEMA42_GATE);
     DEMO_CHECK(APP_CUR_MASTER_DID != RDC_SEMA42_GetLockDomainID(APP_RDC_SEMA42, APP_RDC_SEMA42_GATE));
 
-    s_hardfaultFlag = false;
+    s_faultFlag = false;
 
     APP_TouchPeriph();
 
     /* Peripheral is not accessible because SEMA42 gate not locked, there should be hardfault. */
-    DEMO_CHECK(true == s_hardfaultFlag);
+    DEMO_CHECK(true == s_faultFlag);
 
     /* Demo finished, make the peripheral to default policy. */
     RDC_GetDefaultPeriphAccessConfig(&periphConfig);
@@ -295,10 +332,10 @@ static void APP_RDC_Mem(void)
     memConfig.policy &= ~(RDC_ACCESS_POLICY(APP_CUR_MASTER_DID, kRDC_ReadWrite));
     RDC_SetMemAccessConfig(APP_RDC, &memConfig);
 
-    s_hardfaultFlag = false;
+    s_faultFlag = false;
     APP_TouchMem();
 
     /* Memory is not accessible, there should be hardfault. */
-    DEMO_CHECK(true == s_hardfaultFlag);
+    DEMO_CHECK(true == s_faultFlag);
     DEMO_CHECK(0 == memDemoError);
 }

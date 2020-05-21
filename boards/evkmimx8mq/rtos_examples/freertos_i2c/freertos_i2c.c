@@ -116,7 +116,8 @@ int main(void)
     PRINTF("This example use two boards to connect with one as master and another as slave.\r\n");
 #endif
 
-    if (xTaskCreate(slave_task, "Slave_task", configMINIMAL_STACK_SIZE + 60, NULL, slave_task_PRIORITY, NULL) != pdPASS)
+    if (xTaskCreate(slave_task, "Slave_task", configMINIMAL_STACK_SIZE + 100, NULL, slave_task_PRIORITY, NULL) !=
+        pdPASS)
     {
         PRINTF("Failed to create slave task");
         while (1)
@@ -356,10 +357,7 @@ static void master_task(void *pvParameters)
     }
 #if (EXAMPLE_CONNECT_I2C == BOARD_TO_BOARD)
     /* Delay to wait slave is ready */
-    for (uint32_t i = 0; i < EXAMPLE_I2C_DEALY_COUNT; i++)
-    {
-        __NOP();
-    }
+    SDK_DelayAtLeastUs(5000, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
 #endif
     /* Set up master to receive data from slave. */
 

@@ -541,13 +541,14 @@ static void SRTM_SaiSdmaAdapter_SetFormat(srtm_sai_sdma_adapter_t handle, srtm_a
     srtm_sai_sdma_config_t *cfg = dir == SRTM_AudioDirTx ? &handle->txConfig : &handle->rxConfig;
     srtm_sai_sdma_runtime_t rtm = dir == SRTM_AudioDirTx ? &handle->txRtm : &handle->rxRtm;
     uint32_t channels           = rtm->streamMode == kSAI_Stereo ? 2U : 1U;
+    uint32_t bitWidth           = rtm->bitWidth == 24U ? 32U : rtm->bitWidth;
 
     cfg->config.serialData.dataMaskedWord      = rtm->streamMode;
-    cfg->config.serialData.dataWord0Length     = rtm->bitWidth;
-    cfg->config.serialData.dataWordLength      = rtm->bitWidth;
-    cfg->config.serialData.dataWordNLength     = rtm->bitWidth;
+    cfg->config.serialData.dataWord0Length     = bitWidth;
+    cfg->config.serialData.dataWordLength      = bitWidth;
+    cfg->config.serialData.dataWordNLength     = bitWidth;
     cfg->config.serialData.dataFirstBitShifted = rtm->bitWidth;
-    cfg->config.frameSync.frameSyncWidth       = rtm->bitWidth;
+    cfg->config.frameSync.frameSyncWidth       = bitWidth;
 
     /* set master clock */
     SAI_SetMasterClockConfig(handle->sai, &cfg->mclkConfig);
@@ -569,7 +570,7 @@ static void SRTM_SaiSdmaAdapter_SetFormat(srtm_sai_sdma_adapter_t handle, srtm_a
         rtm = sync ? &handle->rxRtm : &handle->txRtm;
         SAI_TransferTxSetConfigSDMA(handle->sai, &rtm->saiHandle, &cfg->config);
         /* set bit clock */
-        SAI_TxSetBitClockRate(handle->sai, cfg->mclkConfig.mclkHz, rtm->srate, rtm->bitWidth, channels);
+        SAI_TxSetBitClockRate(handle->sai, cfg->mclkConfig.mclkHz, rtm->srate, bitWidth, channels);
     }
     else
     {
@@ -577,7 +578,7 @@ static void SRTM_SaiSdmaAdapter_SetFormat(srtm_sai_sdma_adapter_t handle, srtm_a
         rtm                     = sync ? &handle->txRtm : &handle->rxRtm;
         SAI_TransferRxSetConfigSDMA(handle->sai, &rtm->saiHandle, &cfg->config);
         /* set bit clock */
-        SAI_RxSetBitClockRate(handle->sai, cfg->mclkConfig.mclkHz, rtm->srate, rtm->bitWidth, channels);
+        SAI_RxSetBitClockRate(handle->sai, cfg->mclkConfig.mclkHz, rtm->srate, bitWidth, channels);
     }
 }
 

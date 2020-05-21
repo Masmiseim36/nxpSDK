@@ -8,22 +8,25 @@
     <definition extID="component.serial_manager_uart.MIMX8MM6"/>
     <definition extID="device.MIMX8MM6_CMSIS.MIMX8MM6"/>
     <definition extID="device.MIMX8MM6_startup.MIMX8MM6"/>
-    <definition extID="middleware.amazon_freertos.freertos.MIMX8MM6"/>
-    <definition extID="middleware.amazon_freertos.freertos.heap_4.MIMX8MM6"/>
+    <definition extID="middleware.amazon_freertos-kernel.MIMX8MM6"/>
+    <definition extID="middleware.amazon_freertos-kernel.extension.MIMX8MM6"/>
+    <definition extID="middleware.amazon_freertos-kernel.heap_4.MIMX8MM6"/>
     <definition extID="platform.Include_common.MIMX8MM6"/>
     <definition extID="platform.Include_core_cm4.MIMX8MM6"/>
+    <definition extID="platform.Include_dsp.MIMX8MM6"/>
     <definition extID="platform.drivers.clock.MIMX8MM6"/>
     <definition extID="platform.drivers.common.MIMX8MM6"/>
     <definition extID="platform.drivers.iuart.MIMX8MM6"/>
     <definition extID="platform.drivers.rdc.MIMX8MM6"/>
     <definition extID="platform.utilities.assert.MIMX8MM6"/>
+    <definition extID="platform.utilities.misc_utilities.MIMX8MM6"/>
     <definition extID="utility.debug_console.MIMX8MM6"/>
     <definition extID="iar"/>
     <definition extID="armgcc"/>
     <definition extID="mdk"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="evkmimx8mm_freertos_swtimer" name="freertos_swtimer" category="rtos_examples" dependency="platform.drivers.clock.MIMX8MM6 middleware.amazon_freertos.freertos.MIMX8MM6 middleware.amazon_freertos.freertos.heap_4.MIMX8MM6 platform.drivers.common.MIMX8MM6 platform.drivers.rdc.MIMX8MM6 device.MIMX8MM6_CMSIS.MIMX8MM6 utility.debug_console.MIMX8MM6 component.iuart_adapter.MIMX8MM6 component.serial_manager.MIMX8MM6 component.serial_manager_uart.MIMX8MM6 platform.drivers.iuart.MIMX8MM6 component.lists.MIMX8MM6 device.MIMX8MM6_startup.MIMX8MM6 platform.utilities.assert.MIMX8MM6 platform.Include_core_cm4.MIMX8MM6 platform.Include_common.MIMX8MM6">
+  <example id="evkmimx8mm_freertos_swtimer" name="freertos_swtimer" category="rtos_examples" dependency="platform.drivers.clock.MIMX8MM6 middleware.amazon_freertos-kernel.heap_4.MIMX8MM6 platform.drivers.common.MIMX8MM6 platform.drivers.rdc.MIMX8MM6 device.MIMX8MM6_CMSIS.MIMX8MM6 utility.debug_console.MIMX8MM6 component.iuart_adapter.MIMX8MM6 component.serial_manager.MIMX8MM6 component.lists.MIMX8MM6 component.serial_manager_uart.MIMX8MM6 platform.drivers.iuart.MIMX8MM6 device.MIMX8MM6_startup.MIMX8MM6 platform.utilities.assert.MIMX8MM6 middleware.amazon_freertos-kernel.MIMX8MM6 middleware.amazon_freertos-kernel.extension.MIMX8MM6 platform.utilities.misc_utilities.MIMX8MM6 platform.Include_core_cm4.MIMX8MM6 platform.Include_common.MIMX8MM6 platform.Include_dsp.MIMX8MM6">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -40,6 +43,7 @@
         </option>
         <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
           <value>CPU_MIMX8MM6DVTLZ</value>
+          <value>SERIAL_PORT_TYPE_UART=1</value>
           <value>FSL_RTOS_FREE_RTOS</value>
         </option>
         <option id="gnu.c.compiler.option.optimization.flags" type="string">
@@ -56,10 +60,10 @@
         </option>
       </toolchainSetting>
     </toolchainSettings>
-    <source path="boards/evkmimx8mm/rtos_examples/freertos_swtimer/armgcc" target_path="src" type="linker" toolchain="armgcc">
+    <source path="boards/evkmimx8mm/rtos_examples/freertos_swtimer/armgcc" target_path="MIMX8MM6/gcc" type="linker" toolchain="armgcc">
       <files mask="MIMX8MM6xxxxx_cm4_ram.ld"/>
     </source>
-    <source path="boards/evkmimx8mm/rtos_examples/freertos_swtimer/iar" target_path="src" type="linker" toolchain="iar">
+    <source path="boards/evkmimx8mm/rtos_examples/freertos_swtimer/iar" target_path="MIMX8MM6/iar" type="linker" toolchain="iar">
       <files mask="MIMX8MM6xxxxx_cm4_ram.icf"/>
     </source>
     <source path="boards/evkmimx8mm/rtos_examples/freertos_swtimer" target_path="board" type="c_include">

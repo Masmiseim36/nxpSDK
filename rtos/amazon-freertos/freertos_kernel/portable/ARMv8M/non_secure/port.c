@@ -260,7 +260,7 @@
 /**
  * @brief Setup the timer to generate the tick interrupts.
  */
-static void prvSetupTimerInterrupt( void ) PRIVILEGED_FUNCTION;
+void vPortSetupTimerInterrupt( void ) PRIVILEGED_FUNCTION;
 
 /**
  * @brief Used to catch tasks that attempt to return from their implementing
@@ -323,7 +323,7 @@ static volatile uint32_t ulCriticalNesting = 0xaaaaaaaaUL;
 #endif /* configENABLE_TRUSTZONE */
 /*-----------------------------------------------------------*/
 
-static void prvSetupTimerInterrupt( void ) /* PRIVILEGED_FUNCTION */
+__weak void vPortSetupTimerInterrupt( void ) /* PRIVILEGED_FUNCTION */
 {
 	/* Stop and reset the SysTick. */
 	*( portNVIC_SYSTICK_CTRL ) = 0UL;
@@ -773,7 +773,7 @@ BaseType_t xPortStartScheduler( void ) /* PRIVILEGED_FUNCTION */
 
 	/* Start the timer that generates the tick ISR. Interrupts are disabled
 	 * here already. */
-	prvSetupTimerInterrupt();
+	vPortSetupTimerInterrupt();
 
 	/* Initialize the critical nesting count ready for the first task. */
 	ulCriticalNesting = 0;

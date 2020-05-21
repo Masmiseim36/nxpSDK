@@ -19,7 +19,9 @@
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-
+static const codec_capability_t s_ak4497_capability = {
+    .codecModuleCapability = kCODEC_SupportModuleI2SInSwitchInterface,
+};
 /*******************************************************************************
  * Code
  ******************************************************************************/
@@ -33,15 +35,13 @@
 status_t HAL_CODEC_AK4497_Init(codec_handle_t *handle, void *config)
 {
     assert((config != NULL) && (handle != NULL));
-    assert(CODEC_HANDLE_SIZE >= (sizeof(codec_handle_t) + sizeof(ak4497_handle_t)) + HAL_I2C_MASTER_HANDLE_SIZE);
 
     codec_config_t *codecConfig = (codec_config_t *)config;
 
     ak4497_config_t *ak4497Config = (ak4497_config_t *)(codecConfig->codecDevConfig);
-    ak4497_handle_t *ak4497Handle = (ak4497_handle_t *)((uint32_t) & (handle->codecDevHandle));
+    ak4497_handle_t *ak4497Handle = (ak4497_handle_t *)((uint32_t)(handle->codecDevHandle));
 
-    handle->codecCapability.codecModuleCapability = kCODEC_SupportModuleI2SInSwitchInterface;
-
+    handle->codecCapability = &s_ak4497_capability;
     /* codec device initialization */
     return AK4497_Init(ak4497Handle, ak4497Config);
 }
@@ -56,7 +56,7 @@ status_t HAL_CODEC_AK4497_Deinit(codec_handle_t *handle)
 {
     assert(handle != NULL);
 
-    return AK4497_Deinit((ak4497_handle_t *)((uint32_t) & (handle->codecDevHandle)));
+    return AK4497_Deinit((ak4497_handle_t *)((uint32_t)(handle->codecDevHandle)));
 }
 
 /*!
@@ -72,8 +72,7 @@ status_t HAL_CODEC_AK4497_SetFormat(codec_handle_t *handle, uint32_t mclk, uint3
 {
     assert(handle != NULL);
 
-    return AK4497_ConfigDataFormat((ak4497_handle_t *)((uint32_t) & (handle->codecDevHandle)), mclk, sampleRate,
-                                   bitWidth);
+    return AK4497_ConfigDataFormat((ak4497_handle_t *)((uint32_t)(handle->codecDevHandle)), mclk, sampleRate, bitWidth);
 }
 
 /*!
@@ -171,6 +170,6 @@ status_t HAL_CODEC_AK4497_ModuleControl(codec_handle_t *handle, codec_module_ctr
 {
     assert(cmd == kCODEC_ModuleSwitchI2SInInterface);
 
-    return AK4497_ModuleControl((ak4497_handle_t *)((uint32_t) & (handle->codecDevHandle)),
-                                (ak4497_module_ctrl_cmd_t)cmd, data);
+    return AK4497_ModuleControl((ak4497_handle_t *)((uint32_t)(handle->codecDevHandle)), (ak4497_module_ctrl_cmd_t)cmd,
+                                data);
 }

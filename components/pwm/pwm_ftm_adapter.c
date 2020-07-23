@@ -38,7 +38,7 @@ hal_pwm_status_t HAL_PwmInit(hal_pwm_handle_t halPwmHandle, uint8_t instance, ui
     ftm_config_t ftmInfo;
     hal_pwm_handle_struct_t *halPwmState = halPwmHandle;
 
-    assert(instance < FSL_FEATURE_SOC_FTM_COUNT);
+    assert(instance < (uint8_t)FSL_FEATURE_SOC_FTM_COUNT);
     assert(halPwmHandle);
     assert(sizeof(hal_pwm_handle_struct_t) == HAL_PWM_HANDLE_SIZE);
     halPwmState->pwmClock_Hz = srcClock_Hz;
@@ -46,7 +46,9 @@ hal_pwm_status_t HAL_PwmInit(hal_pwm_handle_t halPwmHandle, uint8_t instance, ui
     FTM_GetDefaultConfig(&ftmInfo);
     /* Initialize ftm module */
     if (kStatus_Fail == FTM_Init(s_ftmBase[instance], &ftmInfo))
+    {
         return kStatus_HAL_PwmFail;
+    }
     return kStatus_HAL_PwmSuccess;
 }
 
@@ -55,7 +57,7 @@ void HAL_PwmDeinit(hal_pwm_handle_t halPwmHandle)
     hal_pwm_handle_struct_t *halPwmState = halPwmHandle;
 
     assert(halPwmHandle);
-    assert(halPwmState->instance < FSL_FEATURE_SOC_FTM_COUNT);
+    assert(halPwmState->instance < (uint8_t)FSL_FEATURE_SOC_FTM_COUNT);
     /* DeInitialize ftm module */
     FTM_Deinit(s_ftmBase[halPwmState->instance]);
 }
@@ -68,8 +70,8 @@ hal_pwm_status_t HAL_PwmSetupPwm(hal_pwm_handle_t halPwmHandle, uint8_t channel,
     hal_pwm_handle_struct_t *halPwmState = halPwmHandle;
 
     assert(halPwmHandle);
-    assert(channel <= kFTM_Chnl_7);
-    assert(halPwmState->instance < FSL_FEATURE_SOC_FTM_COUNT);
+    assert(channel <= (uint8_t)kFTM_Chnl_7);
+    assert(halPwmState->instance < (uint8_t)FSL_FEATURE_SOC_FTM_COUNT);
     assert(setupConfig);
     ftm_chnl_pwm_signal_param_t pwmChannelConfig = {
         .chnlNumber       = (ftm_chnl_t)channel,
@@ -83,7 +85,9 @@ hal_pwm_status_t HAL_PwmSetupPwm(hal_pwm_handle_t halPwmHandle, uint8_t channel,
     if (kStatus_Success != FTM_SetupPwm(s_ftmBase[halPwmState->instance], &pwmChannelConfig, 1,
                                         (ftm_pwm_mode_t)setupConfig->mode, setupConfig->pwmFreq_Hz,
                                         halPwmState->pwmClock_Hz))
+    {
         return kStatus_HAL_PwmFail;
+    }
     FTM_StartTimer(s_ftmBase[halPwmState->instance], kFTM_SystemClock);
     return kStatus_HAL_PwmSuccess;
 }
@@ -99,8 +103,8 @@ hal_pwm_status_t HAL_PwmUpdateDutycycle(hal_pwm_handle_t halPwmHandle,
     hal_pwm_handle_struct_t *halPwmState = halPwmHandle;
 
     assert(halPwmHandle);
-    assert(channel <= kFTM_Chnl_7);
-    assert(halPwmState->instance < FSL_FEATURE_SOC_FTM_COUNT);
+    assert(channel <= (uint8_t)kFTM_Chnl_7);
+    assert(halPwmState->instance < (uint8_t)FSL_FEATURE_SOC_FTM_COUNT);
 
     FTM_UpdatePwmDutycycle(s_ftmBase[halPwmState->instance], (ftm_chnl_t)channel, (ftm_pwm_mode_t)mode,
                            dutyCyclePercent);

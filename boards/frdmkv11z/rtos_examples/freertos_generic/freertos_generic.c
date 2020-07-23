@@ -49,8 +49,8 @@ to be available here. */
 /* Priorities at which the tasks are created.  The event semaphore task is
 given the maximum priority of ( configMAX_PRIORITIES - 1 ) to ensure it runs as
 soon as the semaphore is given. */
-#define mainQUEUE_RECEIVE_TASK_PRIORITY (tskIDLE_PRIORITY + 2)
-#define mainQUEUE_SEND_TASK_PRIORITY (tskIDLE_PRIORITY + 1)
+#define mainQUEUE_RECEIVE_TASK_PRIORITY   (tskIDLE_PRIORITY + 2)
+#define mainQUEUE_SEND_TASK_PRIORITY      (tskIDLE_PRIORITY + 1)
 #define mainEVENT_SEMAPHORE_TASK_PRIORITY (configMAX_PRIORITIES - 1)
 
 /* The rate at which data is sent to the queue, specified in milliseconds, and
@@ -116,8 +116,8 @@ int main(void)
     TimerHandle_t xExampleSoftwareTimer = NULL;
 
     /* Init board hardware. */
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
 
     /* Create the queue used by the queue send and queue receive tasks. */
@@ -287,7 +287,10 @@ static void prvEventSemaphoreTask(void *pvParameters)
     for (;;)
     {
         /* Block until the semaphore is 'given'. */
-        xSemaphoreTake(xEventSemaphore, portMAX_DELAY);
+        if (xSemaphoreTake(xEventSemaphore, portMAX_DELAY) != pdTRUE)
+        {
+            PRINTF("Failed to take semaphore.\r\n");
+        }
 
         /* Count the number of times the semaphore is received. */
         ulCountOfReceivedSemaphores++;

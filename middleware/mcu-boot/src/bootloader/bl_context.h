@@ -8,25 +8,25 @@
 #define __CONTEXT_H__
 
 #include "bootloader_common.h"
-#include "bootloader/bl_peripheral.h"
-#include "memory/memory.h"
-#include "packet/command_packet.h"
-#include "bootloader/bl_command.h"
-#include "property/property.h"
+#include "bl_peripheral.h"
+#include "memory.h"
+#include "command_packet.h"
+#include "bl_command.h"
+#include "property.h"
 
-#if !(defined(BL_FEATURE_HAS_NO_INTERNAL_FLASH) && BL_FEATURE_HAS_NO_INTERNAL_FLASH)
-#if !(defined(BL_DEVICE_IS_LPC_SERIES) && BL_DEVICE_IS_LPC_SERIES)
+#if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
+#if !BL_DEVICE_IS_LPC_SERIES
 #include "fsl_flash.h"
-#include "memory/src/flash_memory.h"
-#if defined(BL_FEATURE_SUPPORT_DFLASH) && BL_FEATURE_SUPPORT_DFLASH
-#include "memory/src/flexNVM_memory.h"
+#include "flash_memory.h"
+#if BL_FEATURE_SUPPORT_DFLASH
+#include "flexNVM_memory.h"
 #endif // BL_FEATURE_SUPPORT_DFLASH
 #else
-#include "flashiap_wrapper/fsl_flashiap_wrapper.h"
-#include "memory/src/flashiap_memory.h"
+#include "fsl_iap.h"
+#include "flash_c040hd_memory.h"
 #endif
 #endif //#if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
-#if defined(BL_FEATURE_ENCRYPTION) && BL_FEATURE_ENCRYPTION
+#if BL_FEATURE_ENCRYPTION
 #include "aes_security.h"
 #endif // #if BL_FEATURE_ENCRYPTION
 
@@ -37,8 +37,8 @@
 // Definitions
 ////////////////////////////////////////////////////////////////////////////////
 
-#if !(defined(BL_FEATURE_HAS_NO_INTERNAL_FLASH) && BL_FEATURE_HAS_NO_INTERNAL_FLASH)
-#if !(defined(BL_DEVICE_IS_LPC_SERIES) && BL_DEVICE_IS_LPC_SERIES)
+#if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
+#if !BL_DEVICE_IS_LPC_SERIES
 //! @brief Interface for the flash driver.
 typedef struct FlashDriverInterface
 {
@@ -85,24 +85,22 @@ typedef struct FlashDriverInterface
 typedef struct FlashiapDriverInterface
 {
     standard_version_t version; //!< flash driver API version number.
-    status_t (*flash_init)(flashiap_config_t *config);
-    status_t (*flash_erase)(flashiap_config_t *config, uint32_t start, uint32_t lengthInBytes, uint32_t key);
-    status_t (*flash_program)(flashiap_config_t *config, uint32_t start, uint8_t *src, uint32_t lengthInBytes);
-    status_t (*flash_verify_erase)(flashiap_config_t *config, uint32_t start, uint32_t lengthInBytes);
-    status_t (*flash_verify_program)(flashiap_config_t *config,
+    status_t (*flash_init)(flash_config_t *config);
+    status_t (*flash_erase)(flash_config_t *config, uint32_t start, uint32_t lengthInBytes, uint32_t key);
+    status_t (*flash_program)(flash_config_t *config, uint32_t start, uint8_t *src, uint32_t lengthInBytes);
+    status_t (*flash_verify_erase)(flash_config_t *config, uint32_t start, uint32_t lengthInBytes);
+    status_t (*flash_verify_program)(flash_config_t *config,
                                      uint32_t start,
                                      uint32_t lengthInBytes,
                                      const uint8_t *expectedData,
-                                     ftfx_margin_value_t margin,
                                      uint32_t *failedAddress,
                                      uint32_t *failedData);
-    status_t (*flash_get_property)(flashiap_config_t *config, flash_property_tag_t whichProperty, uint32_t *value);
-    status_t (*flash_register_callback)(flashiap_config_t *config, flash_callback_t callback);
+    status_t (*flash_get_property)(flash_config_t *config, flash_property_tag_t whichProperty, uint32_t *value);
 } flashiap_driver_interface_t;
 #endif // !BL_DEVICE_IS_LPC_SERIES
 #endif //#if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
 
-#if defined(BL_DEVICE_IS_LPC_SERIES) && BL_DEVICE_IS_LPC_SERIES
+#if BL_DEVICE_IS_LPC_SERIES
 typedef struct PowerDriverInterface
 {
     uint32_t (*power_set_pll)(uint32_t multiply_by, uint32_t input_freq);
@@ -123,8 +121,8 @@ typedef struct PowerDriverInterface
 } power_driver_interface_t;
 #endif
 
-#if !(defined(BL_FEATURE_HAS_NO_INTERNAL_FLASH) && BL_FEATURE_HAS_NO_INTERNAL_FLASH)
-#if defined(BL_FEATURE_SUPPORT_DFLASH) && BL_FEATURE_SUPPORT_DFLASH
+#if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
+#if BL_FEATURE_SUPPORT_DFLASH
 //! @brief Interface for the Dflash driver.
 typedef struct DFlashDriverInterface
 {
@@ -156,12 +154,10 @@ typedef struct DFlashDriverInterface
                                     uint8_t *dst,
                                     uint32_t lengthInBytes,
                                     ftfx_read_resource_opt_t option);
-#if defined(FSL_FEATURE_FLASH_HAS_ACCESS_CONTROL) && FSL_FEATURE_FLASH_HAS_ACCESS_CONTROL
     status_t (*flash_is_execute_only)(flexnvm_config_t *config,
                                       uint32_t start,
                                       uint32_t lengthInBytes,
                                       flash_xacc_state_t *access_state);
-#endif
     status_t (*flash_erase_all_execute_only_segments)(flexnvm_config_t *config, uint32_t key);
     status_t (*flash_verify_erase_all_execute_only_segments)(flexnvm_config_t *config, ftfx_margin_value_t margin);
     status_t (*flash_set_flexram_function)(flexnvm_config_t *config, ftfx_flexram_func_opt_t option);
@@ -188,15 +184,15 @@ typedef struct _bootloaderContext
     //@{
     const memory_interface_t *memoryInterface; //!< Abstract interface to memory operations.
     const memory_map_entry_t *memoryMap;       //!< Memory map used by abstract memory interface.
-#if defined(BL_FEATURE_EXPAND_MEMORY) && BL_FEATURE_EXPAND_MEMORY
+#if BL_FEATURE_EXPAND_MEMORY
     const external_memory_map_entry_t *externalMemoryMap; //!< Memory map used by external memory devices.
 #endif                                                    // BL_FEATURE_EXPAND_MEMORY
     const property_interface_t *propertyInterface;        //!< Interface to property store.
     const command_interface_t *commandInterface;          //!< Interface to command processor operations.
-#if !(defined(BL_FEATURE_HAS_NO_INTERNAL_FLASH) && BL_FEATURE_HAS_NO_INTERNAL_FLASH)
-#if !(defined(BL_DEVICE_IS_LPC_SERIES) && BL_DEVICE_IS_LPC_SERIES)
+#if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
+#if !BL_DEVICE_IS_LPC_SERIES
     const flash_driver_interface_t *flashDriverInterface;    //!< Kinetis Flash driver interface.
-#if defined(BL_FEATURE_SUPPORT_DFLASH) && BL_FEATURE_SUPPORT_DFLASH
+#if BL_FEATURE_SUPPORT_DFLASH
     const dflash_driver_interface_t *dflashDriverInterface;    //!< Kinetis DFlash driver interface.
 #endif // BL_FEATURE_SUPPORT_DFLASH
 #else
@@ -210,16 +206,20 @@ typedef struct _bootloaderContext
     //! @name Runtime state
     //@{
     const peripheral_descriptor_t *activePeripheral; //!< The currently active peripheral.
-#if !(defined(BL_FEATURE_HAS_NO_INTERNAL_FLASH) && BL_FEATURE_HAS_NO_INTERNAL_FLASH)
-#if !(defined(BL_DEVICE_IS_LPC_SERIES) && BL_DEVICE_IS_LPC_SERIES)
+#if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
+#if !BL_DEVICE_IS_LPC_SERIES
     flash_config_t *allFlashState;                   //!< Kinetis Flash driver instance.
     ftfx_cache_config_t *allFlashCacheState;                   //!< FTFx cache driver state information
-#if defined(BL_FEATURE_SUPPORT_DFLASH) && BL_FEATURE_SUPPORT_DFLASH
+#if BL_FEATURE_SUPPORT_DFLASH
     flexnvm_config_t *dFlashState;             //!< Kinetis DFlash driver instance.
-#endif     
-#else
-    flashiap_config_t *allFlashState;                //!< LPC Flash driver instance.
 #endif
+#else
+    flash_config_t *allFlashState;                //!< LPC Flash driver instance.
+#endif
+#endif
+
+#if BL_FEATURE_RELIABLE_UPDATE
+    uint32_t imageStart;
 #endif
     //@}
 } bootloader_context_t;
@@ -229,10 +229,10 @@ typedef struct _bootloaderContext
 ////////////////////////////////////////////////////////////////////////////////
 
 extern bootloader_context_t g_bootloaderContext;
-#if !(defined(BL_FEATURE_HAS_NO_INTERNAL_FLASH) && BL_FEATURE_HAS_NO_INTERNAL_FLASH)
-#if !(defined(BL_DEVICE_IS_LPC_SERIES) && BL_DEVICE_IS_LPC_SERIES)
+#if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
+#if !BL_DEVICE_IS_LPC_SERIES
 extern const flash_driver_interface_t g_flashDriverInterface;
-#if defined(BL_FEATURE_SUPPORT_DFLASH) && BL_FEATURE_SUPPORT_DFLASH
+#if BL_FEATURE_SUPPORT_DFLASH
 extern const dflash_driver_interface_t g_dflashDriverInterface;
 #endif // BL_FEATURE_SUPPORT_DFLASH
 #else

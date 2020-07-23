@@ -32,10 +32,10 @@ extern mid_get_pp_a1_t sMIDPp;
 extern mid_align_a1_t sMIDAlignment;
 extern uint16_t ui16FaultMID;
 extern uint16_t ui16EnableMeasurement;
-extern frac16_t* pf16Ud;
-extern frac16_t* pf16Id;
-extern frac16_t* pf16Uq;
-extern frac16_t* pf16Iq;
+extern frac16_t *pf16Ud;
+extern frac16_t *pf16Id;
+extern frac16_t *pf16Uq;
+extern frac16_t *pf16Iq;
 
 /*! @brief FMSTR scales */
 extern volatile float fltMIDresistanceScale;

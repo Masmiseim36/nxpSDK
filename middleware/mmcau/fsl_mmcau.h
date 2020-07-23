@@ -16,7 +16,7 @@
  ******************************************************************************/
 
 /*!
- * @addtogroup mmcau MMCAU Peripheral Driver Wrapper
+ * @addtogroup mmcau MMCAU Peripheral Driver
  * @{
  */
 

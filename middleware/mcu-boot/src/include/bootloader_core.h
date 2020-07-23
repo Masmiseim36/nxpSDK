@@ -10,7 +10,7 @@
 #include "fsl_device_registers.h"
 
 // These functions are missing from the latest CMSIS core header files.
-#if __CORTEX_M == 0x00u
+#if __CORTEX_M == 0x00
 
 /** \brief  Clear Enabled IRQs
 
@@ -18,7 +18,7 @@
  */
 __STATIC_INLINE void NVIC_ClearEnabledIRQs(void)
 {
-    NVIC->ICER[0] = 0xFFFFFFFFu;
+    NVIC->ICER[0] = 0xFFFFFFFF;
 }
 
 /** \brief  Clear All Pending Interrupts
@@ -28,10 +28,10 @@ __STATIC_INLINE void NVIC_ClearEnabledIRQs(void)
  */
 __STATIC_INLINE void NVIC_ClearAllPendingIRQs(void)
 {
-    NVIC->ICPR[0] = 0xFFFFFFFFu;
+    NVIC->ICPR[0] = 0xFFFFFFFF;
 }
 
-#elif __CORTEX_M == 0x04u || __CORTEX_M == 0x07u
+#elif __CORTEX_M == 0x04 || __CORTEX_M == 0x07
 
 /** \brief  Clear Enabled IRQs
 
@@ -39,14 +39,14 @@ __STATIC_INLINE void NVIC_ClearAllPendingIRQs(void)
  */
 __STATIC_INLINE void NVIC_ClearEnabledIRQs(void)
 {
-    NVIC->ICER[0] = 0xFFFFFFFFu;
-    NVIC->ICER[1] = 0xFFFFFFFFu;
-    NVIC->ICER[2] = 0xFFFFFFFFu;
-    NVIC->ICER[3] = 0xFFFFFFFFu;
-    NVIC->ICER[4] = 0xFFFFFFFFu;
-    NVIC->ICER[5] = 0xFFFFFFFFu;
-    NVIC->ICER[6] = 0xFFFFFFFFu;
-    NVIC->ICER[7] = 0xFFFFFFFFu;
+    NVIC->ICER[0] = 0xFFFFFFFF;
+    NVIC->ICER[1] = 0xFFFFFFFF;
+    NVIC->ICER[2] = 0xFFFFFFFF;
+    NVIC->ICER[3] = 0xFFFFFFFF;
+    NVIC->ICER[4] = 0xFFFFFFFF;
+    NVIC->ICER[5] = 0xFFFFFFFF;
+    NVIC->ICER[6] = 0xFFFFFFFF;
+    NVIC->ICER[7] = 0xFFFFFFFF;
 }
 
 /** \brief  Clear All Pending Interrupts
@@ -56,15 +56,36 @@ __STATIC_INLINE void NVIC_ClearEnabledIRQs(void)
  */
 __STATIC_INLINE void NVIC_ClearAllPendingIRQs(void)
 {
-    NVIC->ICPR[0] = 0xFFFFFFFFu;
-    NVIC->ICPR[1] = 0xFFFFFFFFu;
-    NVIC->ICPR[2] = 0xFFFFFFFFu;
-    NVIC->ICPR[3] = 0xFFFFFFFFu;
-    NVIC->ICPR[4] = 0xFFFFFFFFu;
-    NVIC->ICPR[5] = 0xFFFFFFFFu;
-    NVIC->ICPR[6] = 0xFFFFFFFFu;
-    NVIC->ICPR[7] = 0xFFFFFFFFu;
+    NVIC->ICPR[0] = 0xFFFFFFFF;
+    NVIC->ICPR[1] = 0xFFFFFFFF;
+    NVIC->ICPR[2] = 0xFFFFFFFF;
+    NVIC->ICPR[3] = 0xFFFFFFFF;
+    NVIC->ICPR[4] = 0xFFFFFFFF;
+    NVIC->ICPR[5] = 0xFFFFFFFF;
+    NVIC->ICPR[6] = 0xFFFFFFFF;
+    NVIC->ICPR[7] = 0xFFFFFFFF;
 }
+
+#elif(__CORTEX_M == 33u)
+
+__STATIC_INLINE void NVIC_ClearEnabledIRQs(void)
+{
+    register uint32_t i;
+    for (i = 0; i < 16; i++)
+    {
+        NVIC->ICER[i] = 0xFFFFFFFFu;
+    }
+}
+
+__STATIC_INLINE void NVIC_ClearAllPendingIRQs(void)
+{
+    register uint32_t i;
+    for (i = 0; i < 16; i++)
+    {
+        NVIC->ICER[i] = 0xFFFFFFFFu;
+    }
+}
+
 #else
 #error CORTEX_M version not defined
 #endif

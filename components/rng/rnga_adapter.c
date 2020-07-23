@@ -27,7 +27,7 @@ hal_rng_status_t HAL_RngGetData(void *pRandomNo, uint32_t dataSize)
 {
     hal_rng_status_t status = kStatus_HAL_RngSuccess;
 
-    if (!pRandomNo)
+    if (NULL == pRandomNo)
     {
         status = kStatus_HAL_RngNullPointer;
     }

@@ -622,9 +622,41 @@ function HTML_write_output_blocks(blockName)
 
    // if single motor app then without prefix
    //if (MotorsNumber == "Single") prefix = "";
-     
-  var prefixM = getActiveMotor();
-   var DocLocation =  parent.document.getElementById(prefixM + "ProjectPath").innerHTML;
+
+   var prefixM = getActiveMotor();
+   var paramFile;
+   var DocLocation;
+
+   // try to open m1_acim_appconfig for reading to test file existence on ProjectPath1
+   DocLocation = parent.document.getElementById(prefixM + "ProjectPath1").innerHTML;
+   paramFile = pcm.LocalFileOpen(DocLocation + prefix.toLowerCase() + "acim_appconfig.h","r");
+
+   // Check whether the file was opened succefuly
+   if (paramFile != false)
+   {
+      // Close File (and keep the correct path in DocLocation)
+      if(!pcm.LocalFileClose(paramFile))
+         alert('File closing error');
+   }
+   else
+   {
+      // try to open m1_acim_appconfig for reading to test file existence on ProjectPath2
+      DocLocation = parent.document.getElementById(prefixM + "ProjectPath2").innerHTML;
+      paramFile = pcm.LocalFileOpen(DocLocation + prefix.toLowerCase() + "acim_appconfig.h","r");
+
+      // Check whether the file was opened succefuly
+      if (paramFile != false)
+      {
+         // Close File (and keep the correct path in DocLocation)
+         if(!pcm.LocalFileClose(paramFile))
+            alert('File closing error');
+      }
+      else
+      {
+         alert("acim_appcofig.h not found in the specified paths. Will be generated nex to the actual Freemaster pmp file.");
+         DocLocation = "";
+      }
+   }
    //var RelPath_DocLocation = getRelativePath(DocLocation);
   /*************** Headlines                              *********************/
    str = str + "/*";

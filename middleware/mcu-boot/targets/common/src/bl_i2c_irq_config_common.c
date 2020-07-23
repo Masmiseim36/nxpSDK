@@ -1,58 +1,36 @@
 /*
  * Copyright (c) 2015 Freescale Semiconductor, Inc.
+ * Copyright 2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "bootloader/bl_context.h"
+#include "bl_context.h"
 #include "bootloader_common.h"
 #include "bootloader_config.h"
-#include "bootloader/bl_irq_common.h"
-#include "autobaud/autobaud.h"
-#include "packet/serial_packet.h"
+#include "bl_irq_common.h"
+#include "autobaud.h"
+#include "serial_packet.h"
 #include "fsl_device_registers.h"
 #include "fsl_i2c.h"
-#include "utilities/fsl_assert.h"
+#include "fsl_assert.h"
 
 #if defined(BL_CONFIG_I2C) && BL_CONFIG_I2C
-static const IRQn_Type i2c_irq_ids[FSL_FEATURE_SOC_I2C_COUNT] = { I2C0_IRQn,
-#if (FSL_FEATURE_SOC_I2C_COUNT > 1u)
-                                                                  I2C1_IRQn,
-#endif // #if (FSL_FEATURE_SOC_I2C_COUNT > 1)
-#if (FSL_FEATURE_SOC_I2C_COUNT > 2u)
-                                                                  I2C2_IRQn
-#endif // #if (FSL_FEATURE_SOC_I2C_COUNT > 2)
-};
+static const IRQn_Type i2c_irqs[] = I2C_IRQS;
 
 void I2C_SetSystemIRQ(uint32_t instance, PeripheralSystemIRQSetting set)
 {
-    switch (instance)
+    if (set == kPeripheralEnableIRQ)
     {
-        case 0u:
-#if (FSL_FEATURE_SOC_I2C_COUNT > 1)
-        case 1u:
-#endif // #if (FSL_FEATURE_SOC_I2C_COUNT > 1)
-#if (FSL_FEATURE_SOC_I2C_COUNT > 2)
-        case 2u:
-#endif // #if (FSL_FEATURE_SOC_I2C_COUNT > 2)
-            if (set == kPeripheralEnableIRQ)
-            {
-                NVIC_EnableIRQ(i2c_irq_ids[instance]);
-            }
-            else
-            {
-                NVIC_DisableIRQ(i2c_irq_ids[instance]);
-            }
-            break;
-        default:
-            // doing nothing
-            break;
+        NVIC_EnableIRQ(i2c_irqs[instance]);
+    }
+    else
+    {
+        NVIC_DisableIRQ(i2c_irqs[instance]);
     }
 }
-
-#endif // BL_CONFIG_I2C
-
+#endif //BL_CONFIG_I2C
 ////////////////////////////////////////////////////////////////////////////////
 // EOF
 ////////////////////////////////////////////////////////////////////////////////

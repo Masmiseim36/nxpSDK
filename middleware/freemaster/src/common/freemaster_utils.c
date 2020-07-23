@@ -29,131 +29,256 @@
 *  optimized memory copy helper macros
 ********************************************************/
 
-#if FMSTR_PLATFORM_BIG_ENDIAN && FMSTR_MEMCPY_MAX_SIZE > 1
-#error Optimized/aligned memory copy assuming little-endian platform in this version
-#endif
+#if FMSTR_MEMCPY_MAX_SIZE >= 8
+
+/* Copy variable to destination by bytes from an aligned source address */
+FMSTR_INLINE void _FMSTR_CopySrcAligned_U64(FMSTR_U8* dest, FMSTR_U64* src)
+{
+    union { FMSTR_U64 n; FMSTR_U8 raw[8]; } value;
+    FMSTR_U8* raw = value.raw;
+    value.n = *src;      /* read aligned source value with a single operation */
+    *dest++ = *raw++;    /* copy all bytes to generally unaligned destination */
+    *dest++ = *raw++;
+    *dest++ = *raw++;
+    *dest++ = *raw++;
+    *dest++ = *raw++;
+    *dest++ = *raw++;
+    *dest++ = *raw++;
+    *dest++ = *raw++;
+}
 
 /* Copy variable from source by bytes to an aligned destination address */
-#define COPY_TO_POSTINCREMENT(dest, src, type) { \
-        volatile type s = 0; \
-        volatile FMSTR_U8 *ps8 = (volatile FMSTR_U8*)src; \
-        volatile type* pd = ((volatile type*)(dest)); \
-        for(int i=0; i<sizeof(type)*8; i+=8,ps8++)  \
-            s |= (type)(*ps8)<<i; \
-        *pd++ = s; /* single write access to aligned destination */ \
-        dest = pd; /* post increment dest */ \
-        src = ps8; /* post increment src */ \
-    }
+FMSTR_INLINE void _FMSTR_CopyDstAligned_U64(FMSTR_U64* dest, FMSTR_U8* src)
+{
+    union { FMSTR_U64 n; FMSTR_U8 raw[8]; } value;
+    FMSTR_U8* raw = value.raw;
+    *raw++ = *src++;    /* copy all bytes from generally unaligned source */
+    *raw++ = *src++;
+    *raw++ = *src++;
+    *raw++ = *src++;
+    *raw++ = *src++;
+    *raw++ = *src++;
+    *raw++ = *src++;
+    *raw++ = *src++;
+    *dest = value.n;    /* write aligned destination with a single operation */
+}
 
-/* Copy variable from an aligned source address to destination by bytes */
-#define COPY_FROM_POSTINCREMENT(dest, src, type) { \
-        volatile type* ps = ((volatile type*)(src)); \
-        volatile type s = *ps++; /* single read access from aligned source */ \
-        volatile FMSTR_U8* pd8 = ((volatile FMSTR_U8*)(dest)); \
-        for(int i=0; i<sizeof(type)*8; i+=8, pd8++)  \
-            *pd8 = (s>>i)&0xFF; \
-        dest = pd8; /* post increment dest */ \
-        src = ps;   /* post increment src */ \
-    }
+/* Masked copy variable from source by bytes to an aligned destination address */
+FMSTR_INLINE void _FMSTR_CopyMaskedDstAligned_U64(FMSTR_U64* dest, FMSTR_U8* src, FMSTR_U8* mask)
+{
+    FMSTR_U64 v, m, x;
+    _FMSTR_CopyDstAligned_U64(&v, src);
+    _FMSTR_CopyDstAligned_U64(&m, mask);
+    x = *dest;
+    x = (x & ~m) | (v & m);
+    *dest = x;
+}
+#endif
 
-/* Copy variable from source by bytes into aligned destination with mask */
-#define COPY_TO_MASKED_POSTINCREMENT(dest, src, mask, type) { \
-        volatile type s = 0; \
-        volatile type* pd = ((volatile type*)(dest)); \
-        volatile type dx = *pd; /* single read access from aligned destination */ \
-        volatile FMSTR_U8 *ps8 = (volatile FMSTR_U8*)src; \
-        volatile FMSTR_U8 *pd8 = (volatile FMSTR_U8*)&dx; \
-        volatile FMSTR_U8 *pm8 = ((volatile FMSTR_U8*)(mask)); \
-        FMSTR_U8 m; \
-        for(int i=0; i<sizeof(type)*8; i+=8,ps8++,pd8++,pm8++) { \
-            m = *pm8; \
-            s |= (type)(((*ps8) & m) | ((*pd8) & (~m)))<<i; \
-        } \
-        *pd++ = s;  /* single write access to aligned destination */ \
-        dest = pd;  /* post increment dest */ \
-        src = ps8;  /* post increment src */ \
-        mask = pm8; /* post increment mask */ \
-    }
+#if FMSTR_MEMCPY_MAX_SIZE >= 4
 
-/* Pointer ptr should be casted by platform. On 32bit platform it is cast to 32bit pointer! */
-#define TEST_MISALIGNED(ptr, bits) (((FMSTR_U32)(ptr)) & ((1<<(bits))-1))
+/* Copy variable to destination by bytes from an aligned source address */
+FMSTR_INLINE void _FMSTR_CopySrcAligned_U32(FMSTR_U8* dest, FMSTR_U32* src)
+{
+    union { FMSTR_U32 n; FMSTR_U8 raw[4]; } value;
+    FMSTR_U8* raw = value.raw;
+    value.n = *src;      /* read aligned source value with a single operation */
+    *dest++ = *raw++;    /* copy all bytes to generally unaligned destination */
+    *dest++ = *raw++;
+    *dest++ = *raw++;
+    *dest++ = *raw++;
+}
+
+/* Copy variable from source by bytes to an aligned destination address */
+FMSTR_INLINE void _FMSTR_CopyDstAligned_U32(FMSTR_U32* dest, FMSTR_U8* src)
+{
+    union { FMSTR_U32 n; FMSTR_U8 raw[4]; } value;
+    FMSTR_U8* raw = value.raw;
+    *raw++ = *src++;    /* copy all bytes from generally unaligned source */
+    *raw++ = *src++;
+    *raw++ = *src++;
+    *raw++ = *src++;
+    *dest = value.n;    /* write aligned destination with a single operation */
+}
+
+/* Masked copy variable from source by bytes to an aligned destination address */
+FMSTR_INLINE void _FMSTR_CopyMaskedDstAligned_U32(FMSTR_U32* dest, FMSTR_U8* src, FMSTR_U8* mask)
+{
+    FMSTR_U32 v, m, x;
+    _FMSTR_CopyDstAligned_U32(&v, src);
+    _FMSTR_CopyDstAligned_U32(&m, mask);
+    x = *dest;
+    x = (x & ~m) | (v & m);
+    *dest = x;
+}
+
+#endif
+
+#if FMSTR_MEMCPY_MAX_SIZE >= 2
+
+/* Copy variable to destination by bytes from an aligned source address */
+FMSTR_INLINE void _FMSTR_CopySrcAligned_U16(FMSTR_U8* dest, FMSTR_U16* src)
+{
+    union { FMSTR_U16 n; FMSTR_U8 raw[2]; } value;
+    FMSTR_U8* raw = value.raw;
+    value.n = *src;      /* read aligned source value with a single operation */
+    *dest++ = *raw++;    /* copy all bytes to generally unaligned destination */
+    *dest++ = *raw++;
+}
+
+/* Copy variable from source by bytes to an aligned destination address */
+FMSTR_INLINE void _FMSTR_CopyDstAligned_U16(FMSTR_U16* dest, FMSTR_U8* src)
+{
+    union { FMSTR_U16 n; FMSTR_U8 raw[2]; } value;
+    FMSTR_U8* raw = value.raw;
+    *raw++ = *src++;    /* copy all bytes from generally unaligned source */
+    *raw++ = *src++;
+    *dest = value.n;    /* write aligned destination with a single operation */
+}
+
+/* Masked copy variable from source by bytes to an aligned destination address */
+FMSTR_INLINE void _FMSTR_CopyMaskedDstAligned_U16(FMSTR_U16* dest, FMSTR_U8* src, FMSTR_U8* mask)
+{
+    FMSTR_U16 v, m, x;
+    _FMSTR_CopyDstAligned_U16(&v, src);
+    _FMSTR_CopyDstAligned_U16(&m, mask);
+    x = *dest;
+    x = (x & ~m) | (v & m);
+    *dest = x;
+}
+
+#endif
+
+/* Test if FMSTR_ADDR address is mis-aligned for given number of bits */
+#define TEST_MISALIGNED(addr, bits) ( (((FMSTR_U32)(addr)) & ((1<<(bits))-1)) != 0 )
 
 /* in this helper call, we are already sure that the destination pointer is 64-bit aligned */
-static void _FMSTR_MemCpyDstAligned(volatile void* dest, volatile void* src, FMSTR_SIZE size)
+static void _FMSTR_MemCpyDstAligned(FMSTR_ADDR dest, FMSTR_ADDR src, FMSTR_SIZE size)
 {
+    FMSTR_U8* src8 = (FMSTR_U8*) src;
+
 #if FMSTR_MEMCPY_MAX_SIZE >= 8
-    /* 64-bit aligned part */
-    while(size >= sizeof(FMSTR_U64))
     {
-        COPY_TO_POSTINCREMENT(dest, src, FMSTR_U64);
-        size -= sizeof(FMSTR_U64);
+        /* 64-bit aligned part */
+        FMSTR_U64* d64 = (FMSTR_U64*) dest;
+
+        while(size >= sizeof(FMSTR_U64))
+        {
+            _FMSTR_CopyDstAligned_U64(d64, src8);
+            size -= sizeof(FMSTR_U64);
+            src8 += sizeof(FMSTR_U64);
+            d64++;
+        }
+
+        dest = (FMSTR_ADDR)(d64);
     }
 #endif
 #if FMSTR_MEMCPY_MAX_SIZE >= 4
-    /* remaining word(s) */
-    while(size >= sizeof(FMSTR_U32))
     {
-        COPY_TO_POSTINCREMENT(dest, src, FMSTR_U32);
-        size -= sizeof(FMSTR_U32);
+        /* remaining word(s) */
+        FMSTR_U32* d32 = (FMSTR_U32*) dest;
+
+        while(size >= sizeof(FMSTR_U32))
+        {
+            _FMSTR_CopyDstAligned_U32(d32, src8);
+            size -= sizeof(FMSTR_U32);
+            src8 += sizeof(FMSTR_U32);
+            d32++;
+        }
+
+        dest = (FMSTR_ADDR)(d32);
     }
 #endif
 #if FMSTR_MEMCPY_MAX_SIZE >= 2
-    /* remaining halfword(s) */
-    while(size >= sizeof(FMSTR_U16))
     {
-        COPY_TO_POSTINCREMENT(dest, src, FMSTR_U16);
-        size -= sizeof(FMSTR_U16);
+        /* remaining halfword(s) */
+        FMSTR_U16* d16 = (FMSTR_U16*) dest;
+
+        while(size >= sizeof(FMSTR_U16))
+        {
+            _FMSTR_CopyDstAligned_U16(d16, src8);
+            size -= sizeof(FMSTR_U16);
+            src8 += sizeof(FMSTR_U16);
+            d16++;
+        }
+
+        dest = (FMSTR_ADDR)(d16);
     }
 #endif
     {
-        volatile FMSTR_U8* ps = (volatile FMSTR_U8*)src;
-        volatile FMSTR_U8* pd = (volatile FMSTR_U8*)dest;
+        volatile FMSTR_U8* d8 = (FMSTR_U8*) dest;
 
         /* remaining byte(s) */
         while(size >= 1)
         {
-            *pd++ = *ps++;
+            *d8++ = *src8++;
             size--;
         }
     }
 
     FMSTR_ASSERT(size == 0);
 }
+
 /* in this helper call, we are already sure that the source pointer is 64-bit aligned */
-static void _FMSTR_MemCpySrcAligned(volatile void* dest, volatile void* src, FMSTR_SIZE size)
+static void _FMSTR_MemCpySrcAligned(FMSTR_ADDR dest, FMSTR_ADDR src, FMSTR_SIZE size)
 {
+    FMSTR_U8* dest8 = (FMSTR_U8*) dest;
+
 #if FMSTR_MEMCPY_MAX_SIZE >= 8
-    /* 64-bit aligned part */
-    while(size >= sizeof(FMSTR_U64))
     {
-        COPY_FROM_POSTINCREMENT(dest, src, FMSTR_U64);
-        size -= sizeof(FMSTR_U64);
+        /* 64-bit aligned part */
+        FMSTR_U64* s64 = (FMSTR_U64*) src;
+
+        while(size >= sizeof(FMSTR_U64))
+        {
+            _FMSTR_CopySrcAligned_U64(dest8, s64);
+            size -= sizeof(FMSTR_U64);
+            dest8 += sizeof(FMSTR_U64);
+            s64++;
+        }
+
+        src = (FMSTR_ADDR)(s64);
     }
 #endif
 #if FMSTR_MEMCPY_MAX_SIZE >= 4
-    /* remaining word */
-    while(size >= sizeof(FMSTR_U32))
     {
-        COPY_FROM_POSTINCREMENT(dest, src, FMSTR_U32);
-        size -= sizeof(FMSTR_U32);
+        /* remaining word(s) */
+        FMSTR_U32* s32 = (FMSTR_U32*) src;
+
+        while(size >= sizeof(FMSTR_U32))
+        {
+            _FMSTR_CopySrcAligned_U32(dest8, s32);
+            size -= sizeof(FMSTR_U32);
+            dest8 += sizeof(FMSTR_U32);
+            s32++;
+        }
+
+        src = (FMSTR_ADDR)(s32);
     }
 #endif
 #if FMSTR_MEMCPY_MAX_SIZE >= 2
-    /* remaining halfword */
-    while(size >= sizeof(FMSTR_U16))
     {
-        COPY_FROM_POSTINCREMENT(dest, src, FMSTR_U16);
-        size -= sizeof(FMSTR_U16);
+        /* remaining halfword(s) */
+        FMSTR_U16* s16 = (FMSTR_U16*) src;
+
+        while(size >= sizeof(FMSTR_U16))
+        {
+            _FMSTR_CopySrcAligned_U16(dest8, s16);
+            size -= sizeof(FMSTR_U16);
+            dest8 += sizeof(FMSTR_U16);
+            s16++;
+        }
+
+        src = (FMSTR_ADDR)(s16);
     }
 #endif
     {
-        volatile FMSTR_U8* ps = (volatile FMSTR_U8*)src;
-        volatile FMSTR_U8* pd = (volatile FMSTR_U8*)dest;
+        volatile FMSTR_U8* s8 = (FMSTR_U8*) src;
 
         /* remaining byte(s) */
         while(size >= 1)
         {
-            *pd++ = *ps++;
+            *dest8++ = *s8++;
             size--;
         }
     }
@@ -161,46 +286,74 @@ static void _FMSTR_MemCpySrcAligned(volatile void* dest, volatile void* src, FMS
     FMSTR_ASSERT(size == 0);
 }
 
-/* in this helper call, we are already sure that the required pointer is 64-bit aligned */
-static void _FMSTR_MemCpyMaskedDstAligned(volatile void* dest, volatile void* src, volatile void* mask, FMSTR_SIZE size)
+/* in this helper call, we are already sure that the required pointer is aligned */
+static void _FMSTR_MemCpyMaskedDstAligned(FMSTR_ADDR dest, FMSTR_ADDR src, FMSTR_ADDR mask, FMSTR_SIZE size)
 {
+    FMSTR_U8* src8 = (FMSTR_U8*) src;
+    FMSTR_U8* mask8 = (FMSTR_U8*) mask;
+
 #if FMSTR_MEMCPY_MAX_SIZE >= 8
-    /* 64-bit aligned part */
-    while(size >= sizeof(FMSTR_U64))
     {
-        COPY_TO_MASKED_POSTINCREMENT(dest, src, mask, FMSTR_U64);
-        size -= sizeof(FMSTR_U64);
+        /* 64-bit aligned part */
+        FMSTR_U64* d64 = (FMSTR_U64*) dest;
+
+        while(size >= sizeof(FMSTR_U64))
+        {
+            _FMSTR_CopyMaskedDstAligned_U64(d64, src8, mask8);
+            size -= sizeof(FMSTR_U64);
+            src8 += sizeof(FMSTR_U64);
+            mask8 += sizeof(FMSTR_U64);
+            d64++;
+        }
+
+        dest = (FMSTR_ADDR)(d64);
     }
 #endif
 #if FMSTR_MEMCPY_MAX_SIZE >= 4
-    /* remaining word */
-    while(size >= sizeof(FMSTR_U32))
     {
-        COPY_TO_MASKED_POSTINCREMENT(dest, src, mask, FMSTR_U32);
-        size -= sizeof(FMSTR_U32);
+        /* remaining word(s) */
+        FMSTR_U32* d32 = (FMSTR_U32*) dest;
+
+        while(size >= sizeof(FMSTR_U32))
+        {
+            _FMSTR_CopyMaskedDstAligned_U32(d32, src8, mask8);
+            size -= sizeof(FMSTR_U32);
+            src8 += sizeof(FMSTR_U32);
+            mask8 += sizeof(FMSTR_U32);
+            d32++;
+        }
+
+        dest = (FMSTR_ADDR)(d32);
     }
 #endif
 #if FMSTR_MEMCPY_MAX_SIZE >= 2
-    /* remaining halfword */
-    while(size >= sizeof(FMSTR_U16))
     {
-        COPY_TO_MASKED_POSTINCREMENT(dest, src, mask, FMSTR_U16);
-        size -= sizeof(FMSTR_U16);
+        /* remaining halfword(s) */
+        FMSTR_U16* d16 = (FMSTR_U16*) dest;
+
+        while(size >= sizeof(FMSTR_U16))
+        {
+            _FMSTR_CopyMaskedDstAligned_U16(d16, src8, mask8);
+            size -= sizeof(FMSTR_U16);
+            src8 += sizeof(FMSTR_U16);
+            mask8 += sizeof(FMSTR_U16);
+            d16++;
+        }
+
+        dest = (FMSTR_ADDR)(d16);
     }
 #endif
     {
-        volatile FMSTR_U8* ps = (volatile FMSTR_U8*)src;
-        volatile FMSTR_U8* pd = (volatile FMSTR_U8*)dest;
-        volatile FMSTR_U8* pm = (volatile FMSTR_U8*)mask;
+        volatile FMSTR_U8* d8 = (FMSTR_U8*) dest;
         FMSTR_U8 m, s;
 
         /* remaining byte(s) */
         while(size >= 1)
         {
-            m = *pm++;
-            s = *ps++ & m;
-            s |= *pd & (~m);
-            *pd++ = s;
+            m = *mask8++;
+            s = (FMSTR_U8)(*src8++ & m);
+            s |= (FMSTR_U8)(*d8 & (~m));
+            *d8++ = s;
             size--;
         }
     }
@@ -210,139 +363,193 @@ static void _FMSTR_MemCpyMaskedDstAligned(volatile void* dest, volatile void* sr
 
 /**************************************************************************//*!
 *
-* @brief  Copy data from address in memory into buffer. Read from memory is aligned
-*         to 64, 32 or 16 bytes - depends on platform.
-*
-* @param  destBuff - pointer to destination memory in communication buffer
-* @param  srcAddr  - source memory address
-* @param  size      - buffer size (always in bytes)
-*
-* @return This function returns a pointer to next byte in comm. buffer
-*
-******************************************************************************/
-
-FMSTR_WEAK void FMSTR_MemCpyFrom(volatile void* destBuff, volatile void* srcAddr, FMSTR_SIZE size)
-{
-#if FMSTR_MEMCPY_MAX_SIZE >= 2
-    /* misaligned odd byte */
-    if(TEST_MISALIGNED(srcAddr, 1) && size >= sizeof(FMSTR_U8))
-    {
-        COPY_FROM_POSTINCREMENT(destBuff, srcAddr, FMSTR_U8);
-        size -= sizeof(FMSTR_U8);
-    }
-#endif
-#if FMSTR_MEMCPY_MAX_SIZE >= 4
-    /* misaligned odd halfword */
-    if(TEST_MISALIGNED(srcAddr, 2) && size >= sizeof(FMSTR_U16))
-    {
-        COPY_FROM_POSTINCREMENT(destBuff, srcAddr, FMSTR_U16);
-        size -= sizeof(FMSTR_U16);
-    }
-#endif
-#if FMSTR_MEMCPY_MAX_SIZE >= 8
-    /* misaligned odd word */
-    if(TEST_MISALIGNED(srcAddr, 3) && size >= sizeof(FMSTR_U32))
-    {
-        COPY_FROM_POSTINCREMENT(destBuff, srcAddr, FMSTR_U32);
-        size -= sizeof(FMSTR_U32);
-    }
-#endif
-    /* the rest is already aligned */
-    _FMSTR_MemCpySrcAligned(destBuff, srcAddr, size);
-}
-
-/**************************************************************************//*!
-*
-* @brief  Copy data from buffer into specific address in memory. Write into memory is
-*         aligned to 64, 32 or 16 bytes - depends on platform.
+* @brief  Generic memory copy routine without alignment and transfer size requirements
 *
 * @param  destAddr - destination memory address
 * @param  srcBuff  - pointer to source memory in communication buffer
 * @param  size     - buffer size (always in bytes)
 *
-* @return This function returns a pointer to next byte in comm. buffer
+******************************************************************************/
+
+void _FMSTR_MemCpy(void* dest, const void* src, FMSTR_SIZE size)
+{
+	FMSTR_MemCpyTo((FMSTR_ADDR)(dest), (FMSTR_ADDR)(src), size);
+}
+
+/**************************************************************************//*!
+*
+* @brief  Copy data. Reading from source memory is as aligned as it can be.
+*
+* @param  destAddr - destination memory address
+* @param  srcAddr  - source memory address
+* @param  size     - buffer size in bytes
 *
 ******************************************************************************/
 
-FMSTR_WEAK void FMSTR_MemCpyTo(volatile void* destAddr, volatile void* srcBuff, FMSTR_SIZE size)
+FMSTR_WEAK void FMSTR_MemCpyFrom(FMSTR_ADDR destAddr, FMSTR_ADDR srcAddr, FMSTR_SIZE size)
 {
+    FMSTR_U8* dest8 = (FMSTR_U8*) destAddr;
+
+#if FMSTR_MEMCPY_MAX_SIZE >= 2
+    /* misaligned odd byte */
+    if(TEST_MISALIGNED(srcAddr, 1) && size >= sizeof(FMSTR_U8))
+    {
+        FMSTR_U8* s8 = (FMSTR_U8*) srcAddr;
+        *dest8++ = *s8++;
+        size -= sizeof(FMSTR_U8);
+        srcAddr = (FMSTR_ADDR)(s8);
+    }
+#if FMSTR_MEMCPY_MAX_SIZE >= 4
+    /* misaligned odd halfword */
+    if(TEST_MISALIGNED(srcAddr, 2) && size >= sizeof(FMSTR_U16))
+    {
+        FMSTR_U16* s16 = (FMSTR_U16*) srcAddr;
+        _FMSTR_CopySrcAligned_U16(dest8, s16);
+        size -= sizeof(FMSTR_U16);
+        dest8 += sizeof(FMSTR_U16);
+        s16++;
+        srcAddr = (FMSTR_ADDR)(s16);
+    }
+#if FMSTR_MEMCPY_MAX_SIZE >= 8
+    /* misaligned odd word */
+    if(TEST_MISALIGNED(srcAddr, 3) && size >= sizeof(FMSTR_U32))
+    {
+        FMSTR_U32* s32 = (FMSTR_U32*) srcAddr;
+        _FMSTR_CopySrcAligned_U32(dest8, s32);
+        size -= sizeof(FMSTR_U32);
+        dest8 += sizeof(FMSTR_U32);
+        s32++;
+        srcAddr = (FMSTR_ADDR)(s32);
+    }
+#endif
+#endif
+#endif
+
+    /* the rest is already aligned */
+    _FMSTR_MemCpySrcAligned((FMSTR_ADDR)(dest8), srcAddr, size);
+}
+
+/**************************************************************************//*!
+*
+* @brief  Copy data. Writing to destination memory is as aligned as it can be.
+*
+* @param  destAddr - destination memory address
+* @param  srcAddr  - source memory address
+* @param  size     - buffer size in bytes
+*
+******************************************************************************/
+
+FMSTR_WEAK void FMSTR_MemCpyTo(FMSTR_ADDR destAddr, FMSTR_ADDR srcAddr, FMSTR_SIZE size)
+{
+    FMSTR_U8* src8 = (FMSTR_U8*) srcAddr;
+
 #if FMSTR_MEMCPY_MAX_SIZE >= 2
     /* misaligned odd byte */
     if(TEST_MISALIGNED(destAddr, 1) && size >= sizeof(FMSTR_U8))
     {
-        COPY_TO_POSTINCREMENT(destAddr, srcBuff, FMSTR_U8);
+        FMSTR_U8* d8 = (FMSTR_U8*) destAddr;
+        *d8++ = *src8++;
         size -= sizeof(FMSTR_U8);
+        destAddr = (FMSTR_ADDR)(d8);
+    }
+#if FMSTR_MEMCPY_MAX_SIZE >= 4
+    /* misaligned odd halfword */
+    if(TEST_MISALIGNED(destAddr, 2) && size >= sizeof(FMSTR_U16))
+    {
+        FMSTR_U16* d16 = (FMSTR_U16*) destAddr;
+        _FMSTR_CopyDstAligned_U16(d16, src8);
+        size -= sizeof(FMSTR_U16);
+        src8 += sizeof(FMSTR_U16);
+        d16++;
+        destAddr = (FMSTR_ADDR)(d16);
+    }
+#if FMSTR_MEMCPY_MAX_SIZE >= 8
+    /* misaligned odd word */
+    if(TEST_MISALIGNED(destAddr, 3) && size >= sizeof(FMSTR_U32))
+    {
+        FMSTR_U32* d32 = (FMSTR_U32*) destAddr;
+        _FMSTR_CopyDstAligned_U32(d32, src8);
+        size -= sizeof(FMSTR_U32);
+        src8 += sizeof(FMSTR_U32);
+        d32++;
+        destAddr = (FMSTR_ADDR)(d32);
+    }
+#endif
+#endif
+#endif
+
+    /* the rest is already aligned */
+    _FMSTR_MemCpyDstAligned(destAddr, (FMSTR_ADDR)(src8), size);
+}
+
+/**************************************************************************//*!
+*
+* @brief  Copy data with mask. Write to destination memory is as aligned as it can be.
+*
+* @param  destAddr - destination memory address
+* @param  srcAddr  - source memory address
+* @param  maskAddr - source mask address
+* @param  size     - buiffer size in bytes
+*
+******************************************************************************/
+FMSTR_WEAK void FMSTR_MemCpyToMasked(FMSTR_ADDR destAddr, FMSTR_ADDR srcAddr, FMSTR_ADDR maskAddr, FMSTR_SIZE size)
+{
+    FMSTR_U8* src8 = (FMSTR_U8*) srcAddr;
+    FMSTR_U8* mask8 = (FMSTR_U8*) maskAddr;
+
+#if FMSTR_MEMCPY_MAX_SIZE >= 2
+    /* misaligned odd byte */
+    if(TEST_MISALIGNED(destAddr, 1) && size >= sizeof(FMSTR_U8))
+    {
+        FMSTR_U8* d8 = (FMSTR_U8*) destAddr;
+        FMSTR_U8 m, s;
+
+        m = *mask8++;
+        s = *src8++ & m;
+        s |= *d8 & (~m);
+        *d8++ = s;
+        size -= sizeof(FMSTR_U8);
+        destAddr = (FMSTR_ADDR)(d8);
     }
 #endif
 #if FMSTR_MEMCPY_MAX_SIZE >= 4
     /* misaligned odd halfword */
     if(TEST_MISALIGNED(destAddr, 2) && size >= sizeof(FMSTR_U16))
     {
-        COPY_TO_POSTINCREMENT(destAddr, srcBuff, FMSTR_U16);
+        FMSTR_U16* d16 = (FMSTR_U16*) destAddr;
+        _FMSTR_CopyMaskedDstAligned_U16(d16, src8, mask8);
         size -= sizeof(FMSTR_U16);
+        src8 += sizeof(FMSTR_U16);
+        mask8 += sizeof(FMSTR_U16);
+        d16++;
+        destAddr = (FMSTR_ADDR)(d16);
     }
 #endif
 #if FMSTR_MEMCPY_MAX_SIZE >= 8
     /* misaligned odd word */
     if(TEST_MISALIGNED(destAddr, 3) && size >= sizeof(FMSTR_U32))
     {
-        COPY_TO_POSTINCREMENT(destAddr, srcBuff, FMSTR_U32);
+        FMSTR_U32* d32 = (FMSTR_U32*) destAddr;
+        _FMSTR_CopyMaskedDstAligned_U32(d32, src8, mask8);
         size -= sizeof(FMSTR_U32);
+        src8 += sizeof(FMSTR_U32);
+        mask8 += sizeof(FMSTR_U32);
+        d32++;
+        destAddr = (FMSTR_ADDR)(d32);
     }
 #endif
+
     /* the rest is already aligned */
-    _FMSTR_MemCpyDstAligned(destAddr, srcBuff, size);
+    _FMSTR_MemCpyMaskedDstAligned(destAddr, (FMSTR_ADDR)(src8), (FMSTR_ADDR)(mask8), size);
 }
 
 /**************************************************************************//*!
 *
-* @brief  Copy data from buffer into specific address in memory (register). Write into memory is
-*         aligned to 64, 32 or 16 bytes - depends on platform.
-*
-* @param  destAddr - destination memory address (register)
-* @param  srcBuff  - pointer to source memory in communication buffer
-* @param  size     - buffer size (always in bytes)
-*
-* @return This function returns a pointer to next byte in comm. buffer
-*
-******************************************************************************/
-FMSTR_WEAK void FMSTR_MemCpyToMasked(volatile void* destAddr, volatile void* srcBuff, volatile void* maskBuff, FMSTR_SIZE size)
-{
-#if FMSTR_MEMCPY_MAX_SIZE >= 2
-    /* misaligned odd byte */
-    if(TEST_MISALIGNED(destAddr, 1) && size >= sizeof(FMSTR_U8))
-    {
-        COPY_TO_MASKED_POSTINCREMENT(destAddr, srcBuff, maskBuff, FMSTR_U8);
-        size -= sizeof(FMSTR_U8);
-    }
-#endif
-#if FMSTR_MEMCPY_MAX_SIZE >= 4
-    /* misaligned odd halfword */
-    if(TEST_MISALIGNED(destAddr, 2) && size >= sizeof(FMSTR_U16))
-    {
-        COPY_TO_MASKED_POSTINCREMENT(destAddr, srcBuff, maskBuff, FMSTR_U16);
-        size -= sizeof(FMSTR_U16);
-    }
-#endif
-#if FMSTR_MEMCPY_MAX_SIZE >= 8
-    /* misaligned odd word */
-    if(TEST_MISALIGNED(destAddr, 3) && size >= sizeof(FMSTR_U32))
-    {
-        COPY_TO_MASKED_POSTINCREMENT(destAddr, srcBuff, maskBuff, FMSTR_U32);
-        size -= sizeof(FMSTR_U32);
-    }
-#endif
-    /* the rest is already aligned */
-    _FMSTR_MemCpyMaskedDstAligned(destAddr, srcBuff, maskBuff, size);
-}
-
-/**************************************************************************//*!
-*
-* @brief  Write-into the communication buffer memory
+* @brief  Write to the communication buffer memory
 *
 * @param  destBuff - pointer to destination memory in communication buffer
 * @param  srcAddr  - source memory address
-* @param  size      - buffer size (always in bytes)
+* @param  size     - buffer size in bytes
 *
 * @return This function returns a pointer to next byte in comm. buffer
 *
@@ -350,17 +557,17 @@ FMSTR_WEAK void FMSTR_MemCpyToMasked(volatile void* destAddr, volatile void* src
 
 FMSTR_WEAK FMSTR_BPTR FMSTR_CopyToBuffer(FMSTR_BPTR destBuff, FMSTR_ADDR srcAddr, FMSTR_SIZE size)
 {
-    FMSTR_MemCpyFrom(destBuff, srcAddr, size);
-    return (FMSTR_BPTR) (((FMSTR_U8*)destBuff)+size);
+    FMSTR_MemCpyFrom((FMSTR_ADDR)(destBuff), srcAddr, size);
+    return destBuff+size;
 }
 
 /**************************************************************************//*!
 *
-* @brief  Read-out memory from communication buffer
+* @brief  Read from communication buffer memory
 *
 * @param  destAddr - destination memory address
 * @param  srcBuff  - pointer to source memory in communication buffer
-* @param  size     - buffer size (always in bytes)
+* @param  size     - buffer size in bytes
 *
 * @return This function returns a pointer to next byte in comm. buffer
 *
@@ -368,46 +575,26 @@ FMSTR_WEAK FMSTR_BPTR FMSTR_CopyToBuffer(FMSTR_BPTR destBuff, FMSTR_ADDR srcAddr
 
 FMSTR_WEAK FMSTR_BPTR FMSTR_CopyFromBuffer(FMSTR_ADDR destAddr, FMSTR_BPTR srcBuff, FMSTR_SIZE size)
 {
-    FMSTR_MemCpyTo(destAddr, srcBuff, size);
-    return (FMSTR_BPTR) (((FMSTR_U8*)srcBuff)+size);
-}
-
-FMSTR_WEAK FMSTR_BPTR FMSTR_ValueFromBuffer16(FMSTR_U16* dest, FMSTR_BPTR src)
-{
-    return FMSTR_CopyFromBuffer((FMSTR_ADDR)(FMSTR_U8*)dest, src, 2U);
-}
-
-FMSTR_WEAK FMSTR_BPTR FMSTR_ValueFromBuffer32(FMSTR_U32* dest, FMSTR_BPTR src)
-{
-    return FMSTR_CopyFromBuffer((FMSTR_ADDR)(FMSTR_U8*)dest, src, 4U);
-}
-
-FMSTR_WEAK FMSTR_BPTR FMSTR_ValueToBuffer16(FMSTR_BPTR dest, FMSTR_U16 src)
-{
-    return FMSTR_CopyToBuffer(dest, (FMSTR_ADDR)(FMSTR_U8*)&src, 2U);
-}
-
-FMSTR_WEAK FMSTR_BPTR FMSTR_ValueToBuffer32(FMSTR_BPTR dest, FMSTR_U32 src)
-{
-    return FMSTR_CopyToBuffer(dest, (FMSTR_ADDR)(FMSTR_U8*)&src, 4U);
+    FMSTR_MemCpyTo(destAddr, (FMSTR_ADDR)(srcBuff), size);
+    return srcBuff+size;
 }
 
 /**************************************************************************//*!
 *
-* @brief  Read-out memory from communication buffer, perform AND-masking
+* @brief  Read from communication buffer memory and copy bytes with masking
 *
 * @param  destAddr - destination memory address
-* @param  srcBuff  - source memory in communication buffer, mask follows data
-* @param  size     - buffer size (always in bytes)
+* @param  srcBuff  - pointer to source memory and mask in communication buffer
+* @param  size     - buffer size in bytes
+*
+* @return This function returns a pointer to next byte in comm. buffer
 *
 ******************************************************************************/
 
 FMSTR_WEAK void FMSTR_CopyFromBufferWithMask(FMSTR_ADDR destAddr, FMSTR_BPTR srcBuff, FMSTR_SIZE size)
 {
-    FMSTR_MemCpyToMasked(destAddr, srcBuff, srcBuff+size, size);
+    FMSTR_MemCpyToMasked(destAddr, (FMSTR_ADDR)(srcBuff), (FMSTR_ADDR)(srcBuff+size), size);
 }
-
-/******************************************************************************/
 
 /**************************************************************************//*!
 *
@@ -542,7 +729,7 @@ static FMSTR_BPTR FMSTR_LebDecode(FMSTR_BPTR in, void* result, FMSTR_SIZE size, 
     do
     {
         b = *in++;
-        v = b & 0x7f;
+        v = (FMSTR_U8)(b & 0x7f);
 
         if(size > 0)
         {
@@ -566,7 +753,7 @@ static FMSTR_BPTR FMSTR_LebDecode(FMSTR_BPTR in, void* result, FMSTR_SIZE size, 
     {
         if(size-- > 0)
         {
-            *dest |= 0xff << shift;
+            *dest |= (FMSTR_U8)(0xff << shift);
             dest += dadd;
         }
 
@@ -638,13 +825,13 @@ FMSTR_BPTR FMSTR_UlebEncode(FMSTR_BPTR out, void* source, FMSTR_SIZE size)
             *out |= b;
 
             // shift is number of bits remaining in v
-            v >>= (7-shift);
+            v = (FMSTR_U8)(v >> (7-shift));
 
             // other bits to the next out byte
             if(size || v)
             {
                 *out++ |= 0x80;
-                *out = v & 0x7f;
+                *out = (FMSTR_BCHR)(v & 0x7f);
             }
 
             shift++;
@@ -656,7 +843,7 @@ FMSTR_BPTR FMSTR_UlebEncode(FMSTR_BPTR out, void* source, FMSTR_SIZE size)
                 if(size || v)
                 {
                     *out++ |= 0x80;
-                    *out = v & 0x7f;
+                    *out = (FMSTR_BCHR)(v & 0x7f);
                 }
 
                 shift = 1;
@@ -701,14 +888,19 @@ FMSTR_BPTR FMSTR_SkipInBufferLeb(FMSTR_BPTR dest)
 *
 ******************************************************************************/
 
-FMSTR_BPTR FMSTR_StringFromBuffer(FMSTR_BPTR in, FMSTR_U8** pStr)
+FMSTR_BPTR FMSTR_StringFromBuffer(FMSTR_BPTR in, FMSTR_CHAR* pStr, FMSTR_SIZE maxSize)
 {
     FMSTR_BCHR b;
 
-    *pStr = in;
     do
     {
         in = FMSTR_ValueFromBuffer8(&b, in);
+
+        if(maxSize > 0)
+        {
+            maxSize--;
+            *pStr++ = (FMSTR_CHAR) (maxSize ? b : 0);
+        }
     } while(b);
 
     return in;
@@ -752,13 +944,13 @@ void FMSTR_Crc16AddByte(FMSTR_U16 *crc, FMSTR_U8 data)
 {
     FMSTR_INDEX x;
 
-    *crc ^= data << 8;                               /* XOR hi-byte of CRC w/dat    */
-    for (x = 8; x; --x)                             /* Then, for 8 bit shifts...   */
+    *crc ^= data << 8;                   /* XOR hi-byte of CRC w/dat    */
+    for (x = 8; x; --x)                  /* Then, for 8 bit shifts...   */
     {
-        if (*crc & 0x8000)                        /* Test hi order bit of CRC    */
-            *crc = *crc << 1 ^ 0x1021;          /* if set, shift & XOR w/$1021 */
+        if (*crc & 0x8000)               /* Test hi order bit of CRC    */
+            *crc = *crc << 1 ^ 0x1021;   /* if set, shift & XOR w/$1021 */
         else
-            *crc <<= 1;                        /* Else, just shift left once. */
+            *crc <<= 1;                  /* Else, just shift left once. */
     }
 }
 
@@ -783,13 +975,13 @@ void FMSTR_Crc8AddByte(FMSTR_U8 *crc, FMSTR_U8 data)
 {
     FMSTR_INDEX x;
 
-    *crc ^= data;                               /* XOR hi-byte of CRC w/dat    */
-    for (x = 8; x; --x)                         /* Then, for 8 bit shifts...   */
+    *crc ^= data;                        /* XOR hi-byte of CRC w/dat    */
+    for (x = 8; x; --x)                  /* Then, for 8 bit shifts...   */
     {
-        if (*crc & 0x80)                        /* Test hi order bit of CRC    */
-            *crc = (*crc << 1) ^ 0x07;          /* if set, shift & XOR w/$07 */
+        if (*crc & 0x80)                 /* Test hi order bit of CRC    */
+            *crc = (FMSTR_U8)((*crc << 1) ^ 0x07);   /* if set, shift & XOR w/$07 */
         else
-            *crc <<= 1;                        /* Else, just shift left once. */
+            *crc <<= 1;                  /* Else, just shift left once. */
     }
 }
 
@@ -881,15 +1073,15 @@ void _FMSTR_RingBuffCreate(FMSTR_RING_BUFFER * ringBuff, FMSTR_BPTR buffer, FMST
 
 void _FMSTR_RingBuffPut(FMSTR_RING_BUFFER * ringBuff, FMSTR_BCHR nRxChar)
 {
+	FMSTR_BPTR wpnext;
+
     FMSTR_ASSERT(ringBuff != NULL);
 
     /* future value of write pointer */
-    FMSTR_BPTR wpnext = ringBuff->wp + 1;
+    wpnext = ringBuff->wp + 1;
 
     if(wpnext >= (ringBuff->buffer + ringBuff->size))
-    {
         wpnext = ringBuff->buffer;
-    }
 
     /* any space in queue? */
     if(wpnext != ringBuff->rp)
@@ -914,12 +1106,13 @@ FMSTR_BCHR _FMSTR_RingBuffGet(FMSTR_RING_BUFFER * ringBuff)
     /* get all queued characters */
     if(ringBuff->rp != ringBuff->wp)
     {
-        nChar = *ringBuff->rp++;
+    	FMSTR_BPTR rpnext = ringBuff->rp;
+        nChar = *rpnext++;
 
-        if(ringBuff->rp >= (ringBuff->buffer + ringBuff->size))
-        {
-            ringBuff->rp = ringBuff->buffer;
-        }
+        if(rpnext >= (ringBuff->buffer + ringBuff->size))
+            rpnext = ringBuff->buffer;
+
+        ringBuff->rp = rpnext;
     }
 
     return nChar;
@@ -933,9 +1126,11 @@ FMSTR_BCHR _FMSTR_RingBuffGet(FMSTR_RING_BUFFER * ringBuff)
 
 FMSTR_BOOL _FMSTR_RingBuffIsSpace(FMSTR_RING_BUFFER * ringBuff)
 {
-    FMSTR_BPTR wpnext = ringBuff->wp + 1;
+	FMSTR_BPTR wpnext;
 
     FMSTR_ASSERT(ringBuff != NULL);
+
+    wpnext = ringBuff->wp + 1;
 
     /* Is any space in buffer? */
     if(wpnext != ringBuff->rp)
@@ -961,5 +1156,96 @@ FMSTR_BOOL _FMSTR_RingBuffHasData(FMSTR_RING_BUFFER * ringBuff)
     return FMSTR_FALSE;
 }
 
+/**************************************************************************//*!
+*
+* @brief Compare helper
+*
+******************************************************************************/
+
+FMSTR_INLINE FMSTR_INDEX _FMSTR_Compare(FMSTR_U8 c1, FMSTR_U8 c2)
+{
+	if(c1 < c2)
+		return -1;
+	if(c1 > c2)
+		return +1;
+	return 0;
+}
+
+/**************************************************************************//*!
+*
+* @brief Standard strcmp library function
+*
+******************************************************************************/
+
+FMSTR_INDEX _FMSTR_StrCmp(const FMSTR_CHAR* str1, const FMSTR_CHAR* str2)
+{
+	FMSTR_INDEX cmp = 0;
+	FMSTR_CHAR c1, c2;
+
+    if(str1 == str2)
+        return 0;
+
+    FMSTR_ASSERT_RETURN(str1 != NULL, 1);
+    FMSTR_ASSERT_RETURN(str2 != NULL, -1);
+
+	do
+	{
+		c1 = *str1++;
+		c2 = *str2++;
+		cmp = _FMSTR_Compare((FMSTR_U8)c1, (FMSTR_U8)c2);
+		if(cmp)
+			return cmp;
+	}
+	while(c1 && c2);
+
+	return 0;
+}
+
+FMSTR_INDEX _FMSTR_MemCmp(const void* b1, const void* b2, FMSTR_SIZE size)
+{
+	FMSTR_INDEX cmp = 0;
+	FMSTR_U8* p1 = (FMSTR_U8*)b1;
+	FMSTR_U8* p2 = (FMSTR_U8*)b2;
+	FMSTR_U8 c1, c2;
+
+    if(p1 == p2)
+        return 0;
+
+    FMSTR_ASSERT_RETURN(p1 != NULL, 1);
+    FMSTR_ASSERT_RETURN(p2 != NULL, -1);
+
+	while(size-- > 0)
+	{
+		c1 = *p1++;
+		c2 = *p2++;
+		cmp = _FMSTR_Compare(c1, c2);
+		if(cmp)
+			return cmp;
+	}
+
+	return 0;
+}
+
+FMSTR_SIZE _FMSTR_StrLen(const FMSTR_CHAR* str)
+{
+	const FMSTR_CHAR* s = str;
+	while(*s)
+		s++;
+	return (FMSTR_SIZE)(s - str);
+}
+
+void _FMSTR_MemSet(void* dest, FMSTR_U8 fill, FMSTR_SIZE size)
+{
+	FMSTR_U8* d = dest;
+	while(size-- > 0)
+		*d++ = fill;
+}
+
+/* Random number generation not yet implemented, use stdlib function
+FMSTR_U32 _FMSTR_Rand(void)
+{
+    return 0;
+}
+*/
 
 #endif /* !FMSTR_DISABLE */

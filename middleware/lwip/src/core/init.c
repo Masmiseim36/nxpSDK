@@ -184,8 +184,8 @@ PACK_STRUCT_END
 #if (((!LWIP_DHCP) || (!LWIP_AUTOIP)) && LWIP_DHCP_AUTOIP_COOP)
 #error "If you want to use DHCP/AUTOIP cooperation mode, you have to define LWIP_DHCP=1 and LWIP_AUTOIP=1 in your lwipopts.h"
 #endif
-#if (((!LWIP_DHCP) || (!LWIP_ARP)) && DHCP_DOES_ARP_CHECK)
-#error "If you want to use DHCP ARP checking, you have to define LWIP_DHCP=1 and LWIP_ARP=1 in your lwipopts.h"
+#if (((!LWIP_DHCP) || (!LWIP_ARP) || (!LWIP_ACD)) && LWIP_DHCP_DOES_ACD_CHECK)
+#error "If you want to use DHCP ACD checking, you have to define LWIP_DHCP=1, LWIP_ARP=1 and LWIP_ACD=1 in your lwipopts.h"
 #endif
 #if (!LWIP_ARP && LWIP_AUTOIP)
 #error "If you want to use AUTOIP, you have to define LWIP_ARP=1 in your lwipopts.h"
@@ -237,8 +237,9 @@ PACK_STRUCT_END
 #error "NETCONN_MORE != TCP_WRITE_FLAG_MORE"
 #endif
 #endif /* LWIP_NETCONN && LWIP_TCP */
-#if LWIP_SOCKET
-#endif /* LWIP_SOCKET */
+#if LWIP_NETCONN_FULLDUPLEX && !LWIP_NETCONN_SEM_PER_THREAD
+#error "For LWIP_NETCONN_FULLDUPLEX to work, LWIP_NETCONN_SEM_PER_THREAD is required"
+#endif
 
 
 /* Compile-time checks for deprecated options.
@@ -304,6 +305,9 @@ PACK_STRUCT_END
 #endif
 #if TCP_SNDLOWAT >= TCP_SND_BUF
 #error "lwip_sanity_check: WARNING: TCP_SNDLOWAT must be less than TCP_SND_BUF. If you know what you are doing, define LWIP_DISABLE_TCP_SANITY_CHECKS to 1 to disable this error."
+#endif
+#if TCP_MSS >= ((16 * 1024) - 1)
+#error "lwip_sanity_check: WARNING: TCP_MSS must be <= 16382 to prevent u16_t underflow in TCP_SNDLOWAT calculation!"
 #endif
 #if TCP_SNDLOWAT >= (0xFFFF - (4 * TCP_MSS))
 #error "lwip_sanity_check: WARNING: TCP_SNDLOWAT must at least be 4*MSS below u16_t overflow!"

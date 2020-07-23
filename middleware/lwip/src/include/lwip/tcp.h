@@ -1,6 +1,6 @@
 /**
  * @file
- * TCP API (to be used from TCPIP thread)\n
+ * TCP API (to be used from TCPIP thread)<br>
  * See also @ref tcp_raw
  */
 
@@ -386,6 +386,10 @@ struct tcp_pcb {
   u8_t snd_scale;
   u8_t rcv_scale;
 #endif
+#if LWIP_TCP_USER_TIMEOUT  
+  /* Socket TCP_USER_TIMEOUT in ms */
+  u32_t user_timeout;
+#endif
 };
 
 #if LWIP_EVENT_API
@@ -474,7 +478,9 @@ err_t            tcp_write   (struct tcp_pcb *pcb, const void *dataptr, u16_t le
                               u8_t apiflags);
 
 void             tcp_setprio (struct tcp_pcb *pcb, u8_t prio);
-
+#if LWIP_SIOCOUTQ
+int              tcp_seg_get_unacked_count(struct tcp_pcb *pcb);
+#endif /* LWIP_SIOCOUTQ */
 err_t            tcp_output  (struct tcp_pcb *pcb);
 
 err_t            tcp_tcp_get_tcp_addrinfo(struct tcp_pcb *pcb, int local, ip_addr_t *addr, u16_t *port);
@@ -486,9 +492,9 @@ err_t            tcp_tcp_get_tcp_addrinfo(struct tcp_pcb *pcb, int local, ip_add
 
 #if LWIP_TCP_PCB_NUM_EXT_ARGS
 u8_t tcp_ext_arg_alloc_id(void);
-void tcp_ext_arg_set_callbacks(struct tcp_pcb *pcb, uint8_t id, const struct tcp_ext_arg_callbacks * const callbacks);
-void tcp_ext_arg_set(struct tcp_pcb *pcb, uint8_t id, void *arg);
-void *tcp_ext_arg_get(const struct tcp_pcb *pcb, uint8_t id);
+void tcp_ext_arg_set_callbacks(struct tcp_pcb *pcb, u8_t id, const struct tcp_ext_arg_callbacks * const callbacks);
+void tcp_ext_arg_set(struct tcp_pcb *pcb, u8_t id, void *arg);
+void *tcp_ext_arg_get(const struct tcp_pcb *pcb, u8_t id);
 #endif
 
 #ifdef __cplusplus

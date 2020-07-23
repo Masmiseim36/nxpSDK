@@ -35,9 +35,9 @@ typedef void (*pfcn_void_void)(void);
 typedef enum _sm_app_state
 {
     kSM_AppFault = 0,
-    kSM_AppInit = 1,
-    kSM_AppStop = 2,
-    kSM_AppRun = 3,
+    kSM_AppInit  = 1,
+    kSM_AppStop  = 2,
+    kSM_AppRun   = 3,
 } sm_app_state_t;
 
 /*! @brief User state machine functions structure */
@@ -122,4 +122,3 @@ static inline void SM_StateMachineSlow(sm_app_ctrl_t *sAppCtrl)
 #endif
 
 #endif //_STATE_MACHINE_H_
-

@@ -17,32 +17,32 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_ADC_BASE0 ADC0
-#define DEMO_ADC_BASE1 ADC1
-#define DEMO_ADC_USER_CHANNEL1 1U
-#define DEMO_ADC_USER_CHANNEL7 7U
+#define DEMO_ADC_BASE0          ADC0
+#define DEMO_ADC_BASE1          ADC1
+#define DEMO_ADC_USER_CHANNEL1  1U
+#define DEMO_ADC_USER_CHANNEL7  7U
 #define DEMO_ADC_USER_CHANNEL26 26U /* Temperature sensor. */
 #define DEMO_ADC_CHANNEL_GROUP0 0U
 #define DEMO_ADC_CHANNEL_GROUP1 1U
-#define DEMO_ADC_CLOCK_SOURCE kADC16_ClockSourceAlt2
-#define DEMO_ADC_CLOCK_DIVIDER kADC16_ClockDivider1
+#define DEMO_ADC_CLOCK_SOURCE   kADC16_ClockSourceAlt2
+#define DEMO_ADC_CLOCK_DIVIDER  kADC16_ClockDivider1
 
-#define DEMO_ADC_IRQ_ID0 ADC0_IRQn
-#define DEMO_ADC_IRQ_ID1 ADC1_IRQn
+#define DEMO_ADC_IRQ_ID0      ADC0_IRQn
+#define DEMO_ADC_IRQ_ID1      ADC1_IRQn
 #define DEMO_ADC_IRQ_HANDLER0 ADC0_IRQHandler
 #define DEMO_ADC_IRQ_HANDLER1 ADC1_IRQHandler
 
-#define DEMO_PDB_BASE PDB0
-#define DEMO_PDB_TRIGGER_CHANNEL0 kPDB_ADCTriggerChannel0
-#define DEMO_PDB_TRIGGER_CHANNEL1 kPDB_ADCTriggerChannel1
+#define DEMO_PDB_BASE                     PDB0
+#define DEMO_PDB_TRIGGER_CHANNEL0         kPDB_ADCTriggerChannel0
+#define DEMO_PDB_TRIGGER_CHANNEL1         kPDB_ADCTriggerChannel1
 #define DEMO_PDB_PRETRIGGER_CHANNEL0_MASK 1U
 #define DEMO_PDB_PRETRIGGER_CHANNEL1_MASK 2U
 
 #define DEMO_FTM_BASE FTM0
 
 #define FTM_SOURCE_CLOCK CLOCK_GetFreq(kCLOCK_CoreSysClk)
-#define PDB_MODUL_VALUE 2000U
-#define PDB_INT_VALUE 1500U
+#define PDB_MODUL_VALUE        2000U
+#define PDB_INT_VALUE          1500U
 #define PRETRIGGER_DELAY_VALUE 500U
 /*******************************************************************************
  * Prototypes

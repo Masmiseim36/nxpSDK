@@ -53,6 +53,7 @@
 #include "lwip/udp.h"
 #include "lwip/tcp.h"
 #include "lwip/sys.h"
+#include "lwip/inet.h"
 #include "lwip/timeouts.h"
 #include "lwip/igmp.h"
 #include "lwip/mld6.h"
@@ -179,7 +180,7 @@ typedef struct _lwiperf_state_udp {
   u32_t delay_target;
   u32_t frames_per_delay;
   u32_t time_started;
-  u32_t bytes_transferred;
+  u64_t bytes_transferred;
   lwiperf_report_fn report_fn;
   void *report_arg;
   struct timespec udp_lastpkt;
@@ -204,7 +205,7 @@ typedef struct _lwiperf_state_tcp {
   u8_t next_num;
   /* 1=start server when client is closed */
   u8_t client_tradeoff_mode;
-  u32_t bytes_transferred;
+  u64_t bytes_transferred;
   lwiperf_settings_t settings;
   u8_t have_settings_buf;
   u8_t specific_remote;
@@ -345,7 +346,7 @@ lwip_tcp_conn_report(lwiperf_state_tcp_t *conn, enum lwiperf_report_type report_
     if (duration_ms == 0) {
       bandwidth_kbitpsec = 0;
     } else {
-      bandwidth_kbitpsec = (conn->bytes_transferred * 8U) / duration_ms;
+      bandwidth_kbitpsec = (u32_t)((conn->bytes_transferred * 8U) / duration_ms);
     }
     if (conn->conn_pcb)
       conn->report_fn(conn->report_arg, report_type,
@@ -1306,7 +1307,7 @@ lwiperf_udp_recv(void *arg, struct udp_pcb *pcb, struct pbuf *p,
         LWIP_PLATFORM_DIAG(("Jitter %ld.%03ld, ", ntohl(hdr->jitter1), ntohl(hdr->jitter2)));
         LWIP_PLATFORM_DIAG(("Lost %ld/%ld datagrams, OoO %ld\n",
                             ntohl(hdr->error_cnt), ntohl(hdr->datagrams), ntohl(hdr->outorder_cnt)));
-        conn->bytes_transferred = ntohl(hdr->total_len2);
+        conn->bytes_transferred = (((u64_t)ntohl(hdr->total_len1)) << 32) + ntohl(hdr->total_len2);
       }
       if (hdr->flags & PP_HTONL(LWIPERF_FLAGS_EXTEND)) {
         LWIP_PLATFORM_DIAG(("Extended report unsupported yet.\n"));
@@ -1405,8 +1406,8 @@ lwiperf_udp_recv(void *arg, struct udp_pcb *pcb, struct pbuf *p,
       pkt->id = htonl(datagramID);
       hdr = (lwiperf_udp_report_t *)(pkt + 1);
       hdr->flags        = PP_HTONL(LWIPERF_FLAGS_ANSWER_TEST);
-      hdr->total_len1   = htonl(0);
-      hdr->total_len2   = htonl(conn->bytes_transferred);
+      hdr->total_len1   = htonl((u32_t)(conn->bytes_transferred >> 32));
+      hdr->total_len2   = htonl((u32_t)(conn->bytes_transferred & 0xFFFFFFFF));
       hdr->stop_sec     = htonl(duration_ms / 1000);
       hdr->stop_usec    = htonl((duration_ms % 1000) * 1000);
       hdr->error_cnt    = htonl(conn->udp_rx_lost);

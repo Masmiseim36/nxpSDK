@@ -1,9 +1,9 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 NXP
+ * Copyright 2016, 2019 NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 /*
@@ -248,15 +248,21 @@ void httpsrv_process_cgi(HTTPSRV_STRUCT *server, HTTPSRV_SESSION_STRUCT *session
     */
     if (session->request.content_length)
     {
-        char tmp[4];
+        char tmp[HTTPSRV_TMP_BUFFER_SIZE];
         uint32_t length = session->request.content_length;
 
         while (length)
         {
             int32_t retval;
+            int32_t chunk;
 
-            retval = httpsrv_read(session, tmp, HTTPSRV_TMP_BUFFER_SIZE);
-            if ((retval == 0) || (retval == -1))
+            chunk = sizeof(tmp);
+            if (length < chunk)
+            {
+                chunk = length;
+            }
+            retval = httpsrv_read(session, tmp, chunk);
+            if (retval < 0)
             {
                 break;
             }

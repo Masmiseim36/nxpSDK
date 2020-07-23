@@ -40,7 +40,7 @@ typedef struct _pha_bc
     uint16_t ui16ChanNumPhaB;            /* phase B channel number */
     uint16_t ui16ChanNumPhaC;            /* phase C channel number */
     uint16_t ui16AdcSmplPhaB;            /* phase B ADC sample number */
-    uint16_t ui16AdcSmplPhaC;            /* phase C ADC sample number */        
+    uint16_t ui16AdcSmplPhaC;            /* phase C ADC sample number */
     uint16_t ui16AdcNumPhaB;             /* phase B ADC module number */
     uint16_t ui16AdcNumPhaC;             /* phase C ADC module number */
     uint16_t ui16CalibPhaB;              /* phase B offset calibration */
@@ -58,7 +58,7 @@ typedef struct _pha_ac
     uint16_t ui16ChanNumPhaA;            /* phase A channel number */
     uint16_t ui16ChanNumPhaC;            /* phase C channel number */
     uint16_t ui16AdcSmplPhaA;            /* phase A ADC sample number */
-    uint16_t ui16AdcSmplPhaC;            /* phase C ADC sample number */        
+    uint16_t ui16AdcSmplPhaC;            /* phase C ADC sample number */
     uint16_t ui16AdcNumPhaA;             /* phase A ADC module number */
     uint16_t ui16AdcNumPhaC;             /* phase C ADC module number */
     uint16_t ui16CalibPhaA;              /* phase A offset calibration */
@@ -76,7 +76,7 @@ typedef struct _pha_ab
     uint16_t ui16ChanNumPhaA;            /* phase A channel number */
     uint16_t ui16ChanNumPhaB;            /* phase B channel number */
     uint16_t ui16AdcSmplPhaA;            /* phase A ADC sample number */
-    uint16_t ui16AdcSmplPhaB;            /* phase B ADC sample number */        
+    uint16_t ui16AdcSmplPhaB;            /* phase B ADC sample number */
     uint16_t ui16AdcNumPhaA;             /* phase A ADC module number */
     uint16_t ui16AdcNumPhaB;             /* phase B ADC module number */
     uint16_t ui16CalibPhaA;              /* phase A offset calibration */
@@ -94,19 +94,19 @@ typedef struct _mcdrv_adc12
     pha_ac_t sCurrSec23;        /* ADC setting for SVM sectors 2&3 */
     pha_ab_t sCurrSec45;        /* ADC setting for SVM sectors 4&5 */
 
-    ADC_Type *pui32AdcBase;     /* pointer to ADC all quantities are measured */
-    uint16_t *pui16SVMSector;   /* pointer to the SVM sector */
-    frac16_t *pui16AuxChan;     /* pointer to auxiliary ADC channel number */
-    frac16_t *pf16UDcBus;       /* pointer to DC Bus voltage variable */
+    ADC_Type *pui32AdcBase;   /* pointer to ADC all quantities are measured */
+    uint16_t *pui16SVMSector; /* pointer to the SVM sector */
+    frac16_t *pui16AuxChan;   /* pointer to auxiliary ADC channel number */
+    frac16_t *pf16UDcBus;     /* pointer to DC Bus voltage variable */
 
-    uint16_t ui16ChanNumVDcb;   /* DCB voltage channel number */
-    uint16_t ui16AdcNumVDcb;    /* DCB voltage ADC module number */
-    uint16_t ui16AdcSmplVDcb;   /* DCB voltage ADC sample number */
-    
-    uint16_t ui16ChanNumAux;    /* Auxiliary channel number */
-    uint16_t ui16AdcNumAux;     /* Auxiliary ADC module number */
-    uint16_t ui16AdcSmplAux;   /* Auxiliary ADC sample number */
-    
+    uint16_t ui16ChanNumVDcb; /* DCB voltage channel number */
+    uint16_t ui16AdcNumVDcb;  /* DCB voltage ADC module number */
+    uint16_t ui16AdcSmplVDcb; /* DCB voltage ADC sample number */
+
+    uint16_t ui16ChanNumAux; /* Auxiliary channel number */
+    uint16_t ui16AdcNumAux;  /* Auxiliary ADC module number */
+    uint16_t ui16AdcSmplAux; /* Auxiliary ADC sample number */
+
     uint16_t ui16OffsetFiltWindow; /* ADC Offset filter window */
 } mcdrv_adc12_t;
 
@@ -195,4 +195,3 @@ bool_t MCDRV_AuxValGet(mcdrv_adc12_t *this);
 #endif
 
 #endif /* _MCDRV_ADC_ADC12_H_ */
-

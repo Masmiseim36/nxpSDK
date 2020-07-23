@@ -19,11 +19,10 @@ extern "C" {
  * API
  ******************************************************************************/
 
-extern void MID_alignment(mid_align_t* sAlignmentFcn);
+extern void MID_alignment(mid_align_t *sAlignmentFcn);
 
 #ifdef __cplusplus
 }
 #endif
 
 #endif /* MID_AUXILIARY_H_ */
-

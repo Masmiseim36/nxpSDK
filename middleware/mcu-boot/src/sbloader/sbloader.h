@@ -10,7 +10,7 @@
 
 #include <stdint.h>
 #include "bootloader_common.h"
-#include "crc/crc32.h"
+#include "crc32.h"
 
 //! @addtogroup sbloader
 //! @{
@@ -24,83 +24,83 @@
 //! @brief SB loader status codes.
 enum _sbloader_status
 {
-    kStatusRomLdrSectionOverrun = MAKE_STATUS(kStatusGroup_SBLoader, 0u),
-    kStatusRomLdrSignature = MAKE_STATUS(kStatusGroup_SBLoader, 1u),
-    kStatusRomLdrSectionLength = MAKE_STATUS(kStatusGroup_SBLoader, 2u),
-    kStatusRomLdrUnencryptedOnly = MAKE_STATUS(kStatusGroup_SBLoader, 3u),
-    kStatusRomLdrEOFReached = MAKE_STATUS(kStatusGroup_SBLoader, 4u),
-    kStatusRomLdrChecksum = MAKE_STATUS(kStatusGroup_SBLoader, 5u),
-    kStatusRomLdrCrc32Error = MAKE_STATUS(kStatusGroup_SBLoader, 6u),
-    kStatusRomLdrUnknownCommand = MAKE_STATUS(kStatusGroup_SBLoader, 7u),
-    kStatusRomLdrIdNotFound = MAKE_STATUS(kStatusGroup_SBLoader, 8u),
-    kStatusRomLdrDataUnderrun = MAKE_STATUS(kStatusGroup_SBLoader, 9u),
-    kStatusRomLdrJumpReturned = MAKE_STATUS(kStatusGroup_SBLoader, 10u),
-    kStatusRomLdrCallFailed = MAKE_STATUS(kStatusGroup_SBLoader, 11u),
-    kStatusRomLdrKeyNotFound = MAKE_STATUS(kStatusGroup_SBLoader, 12u),
-    kStatusRomLdrSecureOnly = MAKE_STATUS(kStatusGroup_SBLoader, 13u),
-    kStatusRomLdrResetReturned = MAKE_STATUS(kStatusGroup_SBLoader, 14u),
-    kStatusRomLdrRollbackBlocked = MAKE_STATUS(kStatusGroup_SBLoader, 15u),
-    kStatusRomLdrInvalidSectionMacCount = MAKE_STATUS(kStatusGroup_SBLoader, 16u),
-    kStatusRomLdrUnexpectedCommand = MAKE_STATUS(kStatusGroup_SBLoader, 17u),
+    kStatusRomLdrSectionOverrun = MAKE_STATUS(kStatusGroup_SBLoader, 0),
+    kStatusRomLdrSignature = MAKE_STATUS(kStatusGroup_SBLoader, 1),
+    kStatusRomLdrSectionLength = MAKE_STATUS(kStatusGroup_SBLoader, 2),
+    kStatusRomLdrUnencryptedOnly = MAKE_STATUS(kStatusGroup_SBLoader, 3),
+    kStatusRomLdrEOFReached = MAKE_STATUS(kStatusGroup_SBLoader, 4),
+    kStatusRomLdrChecksum = MAKE_STATUS(kStatusGroup_SBLoader, 5),
+    kStatusRomLdrCrc32Error = MAKE_STATUS(kStatusGroup_SBLoader, 6),
+    kStatusRomLdrUnknownCommand = MAKE_STATUS(kStatusGroup_SBLoader, 7),
+    kStatusRomLdrIdNotFound = MAKE_STATUS(kStatusGroup_SBLoader, 8),
+    kStatusRomLdrDataUnderrun = MAKE_STATUS(kStatusGroup_SBLoader, 9),
+    kStatusRomLdrJumpReturned = MAKE_STATUS(kStatusGroup_SBLoader, 10),
+    kStatusRomLdrCallFailed = MAKE_STATUS(kStatusGroup_SBLoader, 11),
+    kStatusRomLdrKeyNotFound = MAKE_STATUS(kStatusGroup_SBLoader, 12),
+    kStatusRomLdrSecureOnly = MAKE_STATUS(kStatusGroup_SBLoader, 13),
+    kStatusRomLdrResetReturned = MAKE_STATUS(kStatusGroup_SBLoader, 14),
+    kStatusRomLdrRollbackBlocked = MAKE_STATUS(kStatusGroup_SBLoader, 15),
+    kStatusRomLdrInvalidSectionMacCount = MAKE_STATUS(kStatusGroup_SBLoader, 16),
+    kStatusRomLdrUnexpectedCommand = MAKE_STATUS(kStatusGroup_SBLoader, 17),
 };
 
 //! Defines the number of bytes in a cipher block (chunk). This is dictated by
 //! the encryption algorithm.
-#define BYTES_PER_CHUNK 16u
+#define BYTES_PER_CHUNK 16
 
 //! Boot image signature in 32-bit little-endian format "PMTS"
-#define BOOT_SIGNATURE 0x504d5453u
+#define BOOT_SIGNATURE 0x504d5453
 
 //! Boot image signature in 32-bit little-endian format "ltgs"
-#define BOOT_SIGNATURE2 0x6c746773u
+#define BOOT_SIGNATURE2 0x6c746773
 
 //! These define file header flags
-#define FFLG_DISPLAY_PROGRESS 0x0001u
+#define FFLG_DISPLAY_PROGRESS 0x0001
 
 //! These define section header flags
-#define SFLG_SECTION_BOOTABLE 0x0001u
+#define SFLG_SECTION_BOOTABLE 0x0001
 
 //! These define boot command flags
-#define CFLG_LAST_TAG 0x01u
+#define CFLG_LAST_TAG 0x01
 
 //! ROM_ERASE_CMD flags
-#define ROM_ERASE_ALL_MASK 0x01u
-#define ROM_ERASE_ALL_UNSECURE_MASK 0x02u
+#define ROM_ERASE_ALL_MASK 0x01
+#define ROM_ERASE_ALL_UNSECURE_MASK 0x02
 
 //! ROM_JUMP_CMD flags
-#define ROM_JUMP_SP_MASK 0x02u
+#define ROM_JUMP_SP_MASK 0x02
 
 //! Memory device id shift at sb command flags
-#define ROM_MEM_DEVICE_ID_SHIFT 0x8u
+#define ROM_MEM_DEVICE_ID_SHIFT 0x8
 
 //! Memory device id mask
-#define ROM_MEM_DEVICE_ID_MASK 0xff00u
+#define ROM_MEM_DEVICE_ID_MASK 0xff00
 
 //! Memory group id shift at sb command flags
-#define ROM_MEM_GROUP_ID_SHIFT 0x4u
+#define ROM_MEM_GROUP_ID_SHIFT 0x4
 
 //! Memory group id flags mask
-#define ROM_MEM_GROUP_ID_MASK 0xf0u
+#define ROM_MEM_GROUP_ID_MASK 0xf0
 
 //! ROM_PROG_CMD flags
-#define ROM_PROG_8BYTE_MASK 0x01u
+#define ROM_PROG_8BYTE_MASK 0x01
 
 //! These define the boot command tags
-#define ROM_NOP_CMD 0x00u
-#define ROM_TAG_CMD 0x01u
-#define ROM_LOAD_CMD 0x02u
-#define ROM_FILL_CMD 0x03u
-#define ROM_JUMP_CMD 0x04u
-#define ROM_CALL_CMD 0x05u
-#define ROM_MODE_CMD 0x06u
-#define ROM_ERASE_CMD 0x07u
-#define ROM_RESET_CMD 0x08u
-#define ROM_MEM_ENABLE_CMD 0x09u
-#define ROM_PROG_CMD 0x0au
+#define ROM_NOP_CMD 0x00
+#define ROM_TAG_CMD 0x01
+#define ROM_LOAD_CMD 0x02
+#define ROM_FILL_CMD 0x03
+#define ROM_JUMP_CMD 0x04
+#define ROM_CALL_CMD 0x05
+#define ROM_MODE_CMD 0x06
+#define ROM_ERASE_CMD 0x07
+#define ROM_RESET_CMD 0x08
+#define ROM_MEM_ENABLE_CMD 0x09
+#define ROM_PROG_CMD 0x0a
 
 //! Plugin return codes
-#define ROM_BOOT_SECTION_ID 1u
-#define ROM_BOOT_IMAGE_ID 2u
+#define ROM_BOOT_SECTION_ID 1
+#define ROM_BOOT_IMAGE_ID 2
 
 typedef uint8_t chunk_t[BYTES_PER_CHUNK];
 
@@ -141,13 +141,13 @@ typedef struct _boot_hdr2
 typedef struct _ldr_Context ldr_Context_t;
 
 //! Function pointer definition for all loader action functions.
-typedef status_t (*pLdrFnc_t)(ldr_Context_t *p);
+typedef status_t (*pLdrFnc_t)(ldr_Context_t *);
 
 //! Jump command function pointer definition.
-typedef status_t (*pJumpFnc_t)(uint32_t d);
+typedef status_t (*pJumpFnc_t)(uint32_t);
 
 //! Call command function pointer definition.
-typedef status_t (*pCallFnc_t)(uint32_t d, uint32_t *p);
+typedef status_t (*pCallFnc_t)(uint32_t, uint32_t *);
 
 //! Loader context definition.
 struct _ldr_Context

@@ -22,13 +22,13 @@
 #define MCRSP_VER "1.3.1" /* motor control package version */
 
 /* Application info */
-typedef struct 
+typedef struct
 {
     char cBoardID[15];
     char cMotorType[4];
     char cAppVer[5];
-}app_ver_t;
-   
+} app_ver_t;
+
 /* Structure used during clocks and modulo calculations */
 typedef struct _clock_setup
 {
@@ -46,7 +46,7 @@ typedef struct _clock_setup
 #define M1_MCDRV_ADC (MCDRV_HSADC)
 
 /* Define motor 1 3-ph PWM periphery */
-#define M1_MCDRV_PWM3PH (MCDRV_PWMA) 
+#define M1_MCDRV_PWM3PH (MCDRV_PWMA)
 
 /* Define motor 1 asynchronous time event*/
 #define M1_MCDRV_TMR_CMT (MCDRV_FTM1)
@@ -233,8 +233,8 @@ extern const uint16_t bldcCommutationTableComp[16];
 #endif
 
 /******************************************************************************
-* Define motor 1 3-ph driver control functions
-******************************************************************************/
+ * Define motor 1 3-ph driver control functions
+ ******************************************************************************/
 #define M1_MCDRV_XBAR_PERIPH_INIT() InitXBAR()
 
 /******************************************************************************

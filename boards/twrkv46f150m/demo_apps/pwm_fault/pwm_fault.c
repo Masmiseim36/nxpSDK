@@ -17,24 +17,24 @@
  * Definitions
  ******************************************************************************/
 /* The PWM base address */
-#define DEMO_PWM_BASEADDR PWMA
-#define DEMO_PWM_SUBMODULE kPWM_Module_0
-#define DEMO_PWM_FAULT_INPUT_PIN kPWM_Fault_0
+#define DEMO_PWM_BASEADDR          PWMA
+#define DEMO_PWM_SUBMODULE         kPWM_Module_0
+#define DEMO_PWM_FAULT_INPUT_PIN   kPWM_Fault_0
 #define DEMO_PWM_CONTROL_SUBMODULE kPWM_Control_Module_0
-#define DEMO_PWM_CHANNEL kPWM_PwmA
-#define DEMO_PWM_DELAY_VAL 0x0FFFU
+#define DEMO_PWM_CHANNEL           kPWM_PwmA
+#define DEMO_PWM_DELAY_VAL         0x0FFFU
 
 #define DEMO_PWM_CHANNEL_LOCATION_ON_BOARD "J501 Pin 9"
 
 #define PWM_SOURCE_CLOCK_IN_HZ CLOCK_GetFreq(kCLOCK_FastPeriphClk)
 
-#define DEMO_CMP_BASE CMP0
-#define DEMO_CMP_USER_CHANNEL 2U
-#define DEMO_CMP_DAC_CHANNEL 7U
+#define DEMO_CMP_BASE                        CMP0
+#define DEMO_CMP_USER_CHANNEL                2U
+#define DEMO_CMP_DAC_CHANNEL                 7U
 #define DEMO_CMP_INPUT_PIN_LOCATION_ON_BOARD "J501_13"
 
 #define DEMO_DEADTIME_VAL 650U
-#define PWM_SRC_CLK_FREQ CLOCK_GetFreq(kCLOCK_FastPeriphClk)
+#define PWM_SRC_CLK_FREQ  CLOCK_GetFreq(kCLOCK_FastPeriphClk)
 
 /*******************************************************************************
  * Prototypes
@@ -67,6 +67,7 @@ static void PWM_InitPhasePwm(void)
     pwmSignal.level            = kPWM_HighTrue;
     pwmSignal.dutyCyclePercent = 50U; /* 50 percent dutycycle */
     pwmSignal.deadtimeValue    = deadTimeVal;
+    pwmSignal.faultState       = kPWM_PwmFaultState0;
 
     PWM_SetupPwm(DEMO_PWM_BASEADDR, DEMO_PWM_SUBMODULE, &pwmSignal, 1U, kPWM_SignedCenterAligned, pwmFrequencyInHz,
                  pwmSourceClockInHz);

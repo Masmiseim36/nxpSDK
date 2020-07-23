@@ -222,18 +222,19 @@ void MCS_PMSMScalarCtrl(mcs_pmsm_foc_t *psFocPMSM, mcs_pmsm_scalar_ctrl_t *psSca
         MLIB_Conv_F16l(GFLIB_Ramp_F32(MLIB_Conv_F32s(psScalarPMSM->f16FreqCmd), &psScalarPMSM->sFreqRampParams));
 
     /* voltage calculation */
-    psScalarPMSM->sUDQReq.f16Q = (frac16_t)(MLIB_ShLSat_F16(
-        MLIB_Mul_F16(psScalarPMSM->f16VHzGain, psScalarPMSM->f16FreqRamp), psScalarPMSM->f16VHzGainShift));
+    psScalarPMSM->sUDQReq.f16Q = (frac16_t)(
+        GFLIB_LowerLimit_F16(MLIB_ShLSat_F16(MLIB_Mul_F16(psScalarPMSM->f16VHzGain, psScalarPMSM->f16FreqRamp),
+                                             psScalarPMSM->i16VHzGainShift),
+                             psScalarPMSM->f16UqMin));
     psScalarPMSM->sUDQReq.f16D = 0;
 
     /* stator voltage angle , used the same integrator as for the open-loop start up*/
     psScalarPMSM->f16PosElScalar = GFLIB_Integrator_F16(psScalarPMSM->f16FreqRamp, &psScalarPMSM->sFreqIntegrator);
 
     /* pass parameters to FOC structure */
-    psFocPMSM->sUDQReq = psScalarPMSM->sUDQReq;
+    psFocPMSM->sUDQReq     = psScalarPMSM->sUDQReq;
     psFocPMSM->f16PosElExt = psScalarPMSM->f16PosElScalar;
 
     /* call voltage FOC to calculate PWM duty cycles */
     MCS_PMSMFocCtrl(psFocPMSM);
 }
-

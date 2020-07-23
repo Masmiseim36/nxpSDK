@@ -184,24 +184,7 @@ status_t UsbHidPeripheral::write(const uint8_t *buffer, uint32_t byteCount, uint
         Log::debug2("]\n");
     }
 
-#ifdef LINUX
-    /*
-     * Note: Linux system doesn't support timeout for the USB HID write, so here add
-     *      a peripheral level timeout
-     */
-    int retryCnt = (timeoutMS + 5000 - 1) / 5000;
-    int count = -1;
-    while (retryCnt-- > 0)
-    {
-        count = hid_write(m_device, buffer, byteCount);
-        if (count >= 0)
-        {
-            break;
-        }
-    }
-#else
     int count = hid_write_timeout(m_device, buffer, byteCount, timeoutMS);
-#endif
     if (count < 0)
     {
         const wchar_t *errorMessage = hid_error(m_device);

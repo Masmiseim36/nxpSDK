@@ -3,7 +3,6 @@
   <externalDefinitions>
     <definition extID="com.nxp.mcuxpresso"/>
     <definition extID="component.lists.MKV31F51212"/>
-    <definition extID="component.lptmr_adapter.MKV31F51212"/>
     <definition extID="component.serial_manager.MKV31F51212"/>
     <definition extID="component.serial_manager_uart.MKV31F51212"/>
     <definition extID="component.uart_adapter.MKV31F51212"/>
@@ -17,7 +16,6 @@
     <definition extID="platform.drivers.dmamux.MKV31F51212"/>
     <definition extID="platform.drivers.edma.MKV31F51212"/>
     <definition extID="platform.drivers.gpio.MKV31F51212"/>
-    <definition extID="platform.drivers.lptmr.MKV31F51212"/>
     <definition extID="platform.drivers.lpuart.MKV31F51212"/>
     <definition extID="platform.drivers.port.MKV31F51212"/>
     <definition extID="platform.drivers.smc.MKV31F51212"/>
@@ -31,7 +29,7 @@
     <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="frdmkv31f_uart_edma_rb_transfer" name="uart_edma_rb_transfer" category="driver_examples/uart" dependency="component.lptmr_adapter.MKV31F51212 platform.drivers.lptmr.MKV31F51212 platform.drivers.port.MKV31F51212 platform.drivers.edma.MKV31F51212 platform.drivers.dmamux.MKV31F51212 platform.drivers.uart_edma.MKV31F51212 platform.drivers.uart.MKV31F51212 platform.drivers.clock.MKV31F51212 platform.drivers.common.MKV31F51212 device.MKV31F51212_CMSIS.MKV31F51212 utility.debug_console.MKV31F51212 component.uart_adapter.MKV31F51212 component.serial_manager.MKV31F51212 component.lists.MKV31F51212 component.serial_manager_uart.MKV31F51212 device.MKV31F51212_startup.MKV31F51212 platform.drivers.lpuart.MKV31F51212 platform.drivers.smc.MKV31F51212 platform.drivers.gpio.MKV31F51212 platform.utilities.assert.MKV31F51212 platform.Include_core_cm4.MKV31F51212 platform.Include_common.MKV31F51212 platform.Include_dsp.MKV31F51212 platform.utilities.misc_utilities.MKV31F51212">
+  <example id="frdmkv31f_uart_edma_rb_transfer" name="uart_edma_rb_transfer" category="driver_examples/uart" dependency="platform.drivers.port.MKV31F51212 platform.drivers.edma.MKV31F51212 platform.drivers.dmamux.MKV31F51212 platform.drivers.uart_edma.MKV31F51212 platform.drivers.uart.MKV31F51212 platform.drivers.clock.MKV31F51212 platform.drivers.common.MKV31F51212 device.MKV31F51212_CMSIS.MKV31F51212 utility.debug_console.MKV31F51212 component.uart_adapter.MKV31F51212 component.serial_manager.MKV31F51212 component.lists.MKV31F51212 component.serial_manager_uart.MKV31F51212 device.MKV31F51212_startup.MKV31F51212 platform.drivers.lpuart.MKV31F51212 platform.drivers.smc.MKV31F51212 platform.drivers.gpio.MKV31F51212 platform.utilities.assert.MKV31F51212 platform.Include_core_cm4.MKV31F51212 platform.Include_common.MKV31F51212 platform.Include_dsp.MKV31F51212 platform.utilities.misc_utilities.MKV31F51212">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>

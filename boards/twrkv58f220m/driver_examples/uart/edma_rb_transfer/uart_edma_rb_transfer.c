@@ -8,37 +8,25 @@
 #include "board.h"
 #include "fsl_uart_edma.h"
 #include "fsl_dmamux.h"
-#include "timer.h"
 
 #include "pin_mux.h"
 #include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_UART UART0
-#define EXAMPLE_UART_CLKSRC kCLOCK_FastPeriphClk
-#define EXAMPLE_UART_CLK_FREQ CLOCK_GetFreq(kCLOCK_FastPeriphClk)
-#define UART_TX_DMA_CHANNEL 0U
-#define UART_RX_DMA_CHANNEL 1U
+#define EXAMPLE_UART                 UART0
+#define EXAMPLE_UART_CLKSRC          kCLOCK_FastPeriphClk
+#define EXAMPLE_UART_CLK_FREQ        CLOCK_GetFreq(kCLOCK_FastPeriphClk)
+#define UART_TX_DMA_CHANNEL          0U
+#define UART_RX_DMA_CHANNEL          1U
 #define EXAMPLE_UART_DMAMUX_BASEADDR DMAMUX0
-#define EXAMPLE_UART_DMA_BASEADDR DMA0
-#define UART_TX_DMA_REQUEST kDmaRequestMux0UART0Tx
-#define UART_RX_DMA_REQUEST kDmaRequestMux0UART0Rx
+#define EXAMPLE_UART_DMA_BASEADDR    DMA0
+#define UART_TX_DMA_REQUEST          kDmaRequestMux0UART0Tx
+#define UART_RX_DMA_REQUEST          kDmaRequestMux0UART0Rx
 
-#define EXAMPLE_TIMEOUT_PERIOD_MS (10U)
-#define EXAMPLE_TIMEOUT_PERIOD_COUNT (EXAMPLE_TIMEOUT_PERIOD_MS * 1000U)
-#define EXAMPLE_TIMER_CLK_FREQ CLOCK_GetFreq(kCLOCK_LpoClk)
-#define EXAMPLE_TIMER_INSTANCE (0U)
+#define DEMO_UART_IRQn       UART0_RX_TX_IRQn
+#define DEMO_UART_IRQHandler UART0_RX_TX_IRQHandler
 #define EXAMPLE_RING_BUFFER_SIZE 32
-
-typedef struct _hal_timer_handle_struct_t
-{
-    uint32_t timeout;
-    uint32_t timerClock_Hz;
-    hal_timer_callback_t callback;
-    void *callbackParam;
-    uint8_t instance;
-} hal_timer_handle_struct_t;
 
 /*******************************************************************************
  * Prototypes
@@ -48,9 +36,6 @@ static void EXAMPLE_InitUART(void);
 
 /* Initialize the EDMA configuration. */
 static void EXAMPLE_InitEDMA(void);
-
-/* Initialize a hardware timer. */
-static void EXAMPLE_InitTimer(void);
 
 /* Start ring buffer configuration. */
 static void EXAMPLE_StartRingBufferEDMA(void);
@@ -64,9 +49,8 @@ static void EXAMPLE_ReadRingBufferEDMA(uint8_t *ringBuffer, uint8_t *receiveBuff
 /* UART user callback */
 void UART_UserCallback(UART_Type *base, uart_edma_handle_t *handle, status_t status, void *userData);
 
-/* Timer call back. */
-void TIMER_UserCallback(void *param);
-
+/* UART user irq handler */
+void DEMO_UART_IRQHandler(void);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
@@ -78,14 +62,11 @@ uint8_t g_tipString[] = "UART EDMA example\r\nSend back received data\r\nEcho ev
 uint8_t g_rxBuffer[EXAMPLE_RING_BUFFER_SIZE] = {0};
 volatile bool txOnGoing                      = false;
 volatile bool rxIdleLineDetected             = false;
-volatile bool timeoutFlag                    = false;
 volatile uint32_t ringBufferIndex            = 0U;
 
 AT_NONCACHEABLE_SECTION_ALIGN(uint8_t g_ringBuffer[EXAMPLE_RING_BUFFER_SIZE], 16);
 /* Allocate TCD memory poll with ring buffer used. */
 AT_NONCACHEABLE_SECTION_ALIGN(edma_tcd_t tcdMemoryPoolPtr[1], sizeof(edma_tcd_t));
-
-hal_timer_handle_struct_t g_timerHandle;
 
 /*******************************************************************************
  * Code
@@ -135,31 +116,13 @@ static void EXAMPLE_InitEDMA(void)
     UART_TransferCreateHandleEDMA(EXAMPLE_UART, &g_uartEdmaHandle, UART_UserCallback, NULL, &g_uartTxEdmaHandle, NULL);
 }
 
-/* Initialize a hardware timer. */
-static void EXAMPLE_InitTimer(void)
-{
-    hal_timer_config_t timerConfig;
-
-    timeoutFlag             = false;
-    timerConfig.timeout     = EXAMPLE_TIMEOUT_PERIOD_COUNT;
-    timerConfig.srcClock_Hz = EXAMPLE_TIMER_CLK_FREQ;
-    timerConfig.instance    = EXAMPLE_TIMER_INSTANCE;
-
-    (void)memset(&g_timerHandle, 0, sizeof(g_timerHandle));
-
-    /* Initialize the timer. */
-    HAL_TimerInit(&g_timerHandle, &timerConfig);
-    /* Install call back function. */
-    HAL_TimerInstallCallback(&g_timerHandle, TIMER_UserCallback, NULL);
-}
-
 /* Start ring buffer configuration. */
 static void EXAMPLE_StartRingBufferEDMA(void)
 {
     edma_transfer_config_t xferConfig;
 
     /* Install TCD memory. */
-    EDMA_InstallTCDMemory(&g_uartRxEdmaHandle, tcdMemoryPoolPtr, 1);
+    EDMA_InstallTCDMemory(&g_uartRxEdmaHandle, tcdMemoryPoolPtr, 1U);
 
     /* Prepare transfer to receive data to ring buffer. */
     EDMA_PrepareTransfer(&xferConfig, (void *)UART_GetDataRegisterAddress(EXAMPLE_UART), sizeof(uint8_t), g_ringBuffer,
@@ -248,10 +211,15 @@ void UART_UserCallback(UART_Type *base, uart_edma_handle_t *handle, status_t sta
     }
 }
 
-/* Timer call back. */
-void TIMER_UserCallback(void *param)
+/* UART user irq handler */
+void DEMO_UART_IRQHandler(void)
 {
-    timeoutFlag = true;
+    if ((UART_GetStatusFlags(EXAMPLE_UART) & (uint32_t)kUART_IdleLineFlag) != 0U)
+    {
+        rxIdleLineDetected = true;
+        UART_ClearStatusFlags(EXAMPLE_UART, (uint32_t)kUART_IdleLineFlag);
+    }
+    SDK_ISR_EXIT_BARRIER;
 }
 
 /*!
@@ -273,9 +241,6 @@ int main(void)
     /* Initialize the EDMA configuration for UART trasnfer. */
     EXAMPLE_InitEDMA();
 
-    /* Initialize a timer for use. */
-    EXAMPLE_InitTimer();
-
     /* Send g_tipString out. */
     xfer.data     = g_tipString;
     xfer.dataSize = sizeof(g_tipString) - 1;
@@ -290,37 +255,43 @@ int main(void)
     /* Start ring buffer. */
     EXAMPLE_StartRingBufferEDMA();
 
-    /* Start timer. */
-    HAL_TimerEnable(&g_timerHandle);
+    /* Enable IDLE line interrupt */
+    EnableIRQ(DEMO_UART_IRQn);
+    UART_EnableInterrupts(EXAMPLE_UART, (uint32_t)kUART_IdleLineInterruptEnable);
 
     while (1)
     {
         byteCount = 0U;
 
-        /* Wait for timer timeout occurred. Timeout period is defined by EXAMPLE_TIMEOUT_PERIOD_MS*/
-        while (!timeoutFlag)
+        /* Wait for idle line interrupt occur */
+        while (!rxIdleLineDetected)
         {
         }
 
-        timeoutFlag = false;
+        rxIdleLineDetected = false;
         /* Get the received bytes number stored in DMA ring buffer. */
         byteCount = EXAMPLE_GetRingBufferLengthEDMA();
 
-        if (0U != byteCount)
+        /* If byte count larger than ring buffer size, it menas data overflow occurred with ring buffer used.
+         * Users should make sure the ring buffer is large enough or read the ring buffer ASAP.
+         */
+        if (byteCount > EXAMPLE_RING_BUFFER_SIZE)
         {
-            /* Move the data from ring buffer to given buffer section. */
-            EXAMPLE_ReadRingBufferEDMA(g_ringBuffer, g_rxBuffer, byteCount);
-
-            /* Wait for sending finished */
-            while (txOnGoing)
-            {
-            }
-
-            /* Start to echo. */
-            txOnGoing         = true;
-            sendXfer.data     = g_rxBuffer;
-            sendXfer.dataSize = byteCount;
-            UART_SendEDMA(EXAMPLE_UART, &g_uartEdmaHandle, &sendXfer);
+            byteCount = EXAMPLE_RING_BUFFER_SIZE;
         }
+
+        /* Move the data from ring buffer to given buffer section. */
+        EXAMPLE_ReadRingBufferEDMA(g_ringBuffer, g_rxBuffer, byteCount);
+
+        /* Wait for sending finished */
+        while (txOnGoing)
+        {
+        }
+
+        /* Start to echo. */
+        txOnGoing         = true;
+        sendXfer.data     = g_rxBuffer;
+        sendXfer.dataSize = byteCount;
+        UART_SendEDMA(EXAMPLE_UART, &g_uartEdmaHandle, &sendXfer);
     }
 }

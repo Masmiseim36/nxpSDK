@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2013 - 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -19,13 +19,13 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_CADC_BASEADDR ADC
+#define DEMO_CADC_BASEADDR     ADC
 #define DEMO_CADC_USER_CHANNEL 6U
-#define DEMO_DMAMUX_BASEADDR DMAMUX0
-#define DEMO_DMA_CHANNEL 0U
-#define DEMO_DMA_ADC_SOURCE 40U
-#define DEMO_DMA_BASEADDR DMA0
-#define CADC_RESULT_REG_ADDR 0x4005c01cU
+#define DEMO_DMAMUX_BASEADDR   DMAMUX0
+#define DEMO_DMA_CHANNEL       0U
+#define DEMO_DMA_ADC_SOURCE    40U
+#define DEMO_DMA_BASEADDR      DMA0
+#define CADC_RESULT_REG_ADDR   0x4005c01cU
 
 #define DEMO_CADC_SAMPLE_COUNT 16U /* The cadc sample count. */
 
@@ -144,13 +144,13 @@ static void CADC_Configuration(void)
     /*
      * cadcConfigStruct.dualConverterScanMode = kCADC_DualConverterWorkAsTriggeredParallel;
      * cadcConfigStruct.enableSimultaneousMode = true;
-     * cadcConfigStruct.DMATriggerSoruce = kCADC_DMATriggerSourceAsEndOfScan;
+     * cadcConfigStruct.DMATriggerSource = kCADC_DMATriggerSourceAsEndOfScan;
      * cadcConfigStruct.idleWorkMode = kCADC_IdleKeepNormal;
      * cadcConfigStruct.powerUpDelay = 26U;
      */
     CADC_GetDefaultConfig(&cadcConfigStruct);
     cadcConfigStruct.dualConverterScanMode = kCADC_DualConverterWorkAsLoopSequential;
-    cadcConfigStruct.DMATriggerSoruce      = kCADC_DMATriggerSourceAsSampleReady;
+    cadcConfigStruct.DMATriggerSource      = kCADC_DMATriggerSourceAsSampleReady;
     CADC_Init(DEMO_CADC_BASEADDR, &cadcConfigStruct);
 
     /* Configure converterA. */
@@ -167,7 +167,7 @@ static void CADC_Configuration(void)
 
     /* Configure the samples. */
     cadcSampleConfigStruct.channelGain      = kCADC_ChannelGainx1;
-    cadcSampleConfigStruct.zeroCrossingMode = kCADC_ZeroCorssingDisabled;
+    cadcSampleConfigStruct.zeroCrossingMode = kCADC_ZeroCrossingDisabled;
     cadcSampleConfigStruct.highLimitValue   = 0xFFFFU;
     cadcSampleConfigStruct.lowLimitValue    = 0x0U;
     cadcSampleConfigStruct.offsetValue      = 0x0U;

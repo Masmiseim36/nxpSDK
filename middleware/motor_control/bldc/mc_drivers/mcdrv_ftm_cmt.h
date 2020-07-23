@@ -26,10 +26,10 @@
 
 typedef struct _mcdrv_ftm_cmt
 {
-    FTM_Type *pui32FtmBase; /* pointer FlexTimer base address */
-    uint16_t *pui16FtmCntAct; /* pointer to actual value of FTM counter */
+    FTM_Type *pui32FtmBase;     /* pointer FlexTimer base address */
+    uint16_t *pui16FtmCntAct;   /* pointer to actual value of FTM counter */
     uint16_t *pui16FtmValueAct; /* pointer to actual value of FTM value register */
-    uint16_t ui16ChannelNum; /* number of FTM channel used for compare event */
+    uint16_t ui16ChannelNum;    /* number of FTM channel used for compare event */
 } mcdrv_ftm_cmt_t;
 
 /*******************************************************************************
@@ -63,4 +63,3 @@ bool_t MCDRV_FtmCmtSet(mcdrv_ftm_cmt_t *this, uint16_t ui16TimeNew);
 #endif
 
 #endif /* _MCDRV_FTM_CMT_H_ */
-

@@ -12,8 +12,8 @@
  ******************************************************************************/
 
 /*******************************************************************************
-* Variables
-******************************************************************************/
+ * Variables
+ ******************************************************************************/
 
 static bool_t s_statusPass;
 
@@ -40,11 +40,11 @@ bool_t MCDRV_Curr3Ph2ShGet(mcdrv_adc12_t *this)
         case 3:
             /* direct sensing of phase A and C, calculation of B */
             sIABCtemp.f16A =
-                MLIB_ShLSat_F16(((frac16_t)((int16_t) this->pui32AdcBase->RSLT[this->sCurrSec23.ui16AdcNumPhaA]) -
+                MLIB_ShLSat_F16(((frac16_t)((int16_t)this->pui32AdcBase->RSLT[this->sCurrSec23.ui16AdcNumPhaA]) -
                                  this->sCurrSec23.ui16OffsetPhaA),
                                 1);
             sIABCtemp.f16C =
-                MLIB_ShLSat_F16(((frac16_t)((int16_t) this->pui32AdcBase->RSLT[this->sCurrSec23.ui16AdcNumPhaC]) -
+                MLIB_ShLSat_F16(((frac16_t)((int16_t)this->pui32AdcBase->RSLT[this->sCurrSec23.ui16AdcNumPhaC]) -
                                  this->sCurrSec23.ui16OffsetPhaC),
                                 1);
             sIABCtemp.f16B = MLIB_Neg_F16(MLIB_AddSat_F16(sIABCtemp.f16A, sIABCtemp.f16C));
@@ -54,11 +54,11 @@ bool_t MCDRV_Curr3Ph2ShGet(mcdrv_adc12_t *this)
         case 5:
             /* direct sensing of phase A and B, calculation of C */
             sIABCtemp.f16A =
-                MLIB_ShLSat_F16(((frac16_t)((int16_t) this->pui32AdcBase->RSLT[this->sCurrSec45.ui16AdcNumPhaA]) -
+                MLIB_ShLSat_F16(((frac16_t)((int16_t)this->pui32AdcBase->RSLT[this->sCurrSec45.ui16AdcNumPhaA]) -
                                  this->sCurrSec45.ui16OffsetPhaA),
                                 1);
             sIABCtemp.f16B =
-                MLIB_ShLSat_F16(((frac16_t)((int16_t) this->pui32AdcBase->RSLT[this->sCurrSec45.ui16AdcNumPhaB]) -
+                MLIB_ShLSat_F16(((frac16_t)((int16_t)this->pui32AdcBase->RSLT[this->sCurrSec45.ui16AdcNumPhaB]) -
                                  this->sCurrSec45.ui16OffsetPhaB),
                                 1);
             sIABCtemp.f16C = MLIB_Neg_F16(MLIB_AddSat_F16(sIABCtemp.f16A, sIABCtemp.f16B));
@@ -69,11 +69,11 @@ bool_t MCDRV_Curr3Ph2ShGet(mcdrv_adc12_t *this)
         default:
             /* direct sensing of phase B and C, calculation of A */
             sIABCtemp.f16B =
-                MLIB_ShLSat_F16(((frac16_t)((int16_t) this->pui32AdcBase->RSLT[this->sCurrSec16.ui16AdcNumPhaB]) -
+                MLIB_ShLSat_F16(((frac16_t)((int16_t)this->pui32AdcBase->RSLT[this->sCurrSec16.ui16AdcNumPhaB]) -
                                  this->sCurrSec16.ui16OffsetPhaB),
                                 1);
             sIABCtemp.f16C =
-                MLIB_ShLSat_F16(((frac16_t)((int16_t) this->pui32AdcBase->RSLT[this->sCurrSec16.ui16AdcNumPhaC]) -
+                MLIB_ShLSat_F16(((frac16_t)((int16_t)this->pui32AdcBase->RSLT[this->sCurrSec16.ui16AdcNumPhaC]) -
                                  this->sCurrSec16.ui16OffsetPhaC),
                                 1);
             sIABCtemp.f16A = MLIB_Neg_F16(MLIB_AddSat_F16(sIABCtemp.f16B, sIABCtemp.f16C));
@@ -98,100 +98,96 @@ bool_t MCDRV_Curr3Ph2ShGet(mcdrv_adc12_t *this)
 bool_t MCDRV_Curr3Ph2ShChanAssignInit(mcdrv_adc12_t *this)
 {
     s_statusPass = TRUE;
-   
+
     /* set pointers to required CLIST registers for samples 0&8
      * ADC0 -> CLIST1, ADC1 -> CLIST3
      */
     /* sector 1&6, direct sensing of phases B and C */
     /* phase current B on ADC0 and phase C on ADC1 */
-    if((this->sCurrSec16.ui16AdcNumPhaB == ADC0)&&(this->sCurrSec16.ui16AdcNumPhaC == ADC1))
+    if ((this->sCurrSec16.ui16AdcNumPhaB == ADC0) && (this->sCurrSec16.ui16AdcNumPhaC == ADC1))
     {
-        this->sCurrSec16.pui16ClistPhaB = (uint16_t *)&this->pui32AdcBase->CLIST1;
-        this->sCurrSec16.pui16ClistPhaC = (uint16_t *)&this->pui32AdcBase->CLIST3;
+        this->sCurrSec16.pui16ClistPhaB  = (uint16_t *)&this->pui32AdcBase->CLIST1;
+        this->sCurrSec16.pui16ClistPhaC  = (uint16_t *)&this->pui32AdcBase->CLIST3;
         this->sCurrSec16.ui16AdcSmplPhaB = ADC_CLIST1_SAMPLE0(this->sCurrSec16.ui16ChanNumPhaB);
         this->sCurrSec16.ui16AdcSmplPhaC = ADC_CLIST3_SAMPLE8(this->sCurrSec16.ui16ChanNumPhaC + 8);
-        
     }
     /* phase current B on ADC1 and phase C on ADC0 */
     else
     {
-        this->sCurrSec16.pui16ClistPhaB = (uint16_t *)&this->pui32AdcBase->CLIST3;
-        this->sCurrSec16.pui16ClistPhaC = (uint16_t *)&this->pui32AdcBase->CLIST1;
+        this->sCurrSec16.pui16ClistPhaB  = (uint16_t *)&this->pui32AdcBase->CLIST3;
+        this->sCurrSec16.pui16ClistPhaC  = (uint16_t *)&this->pui32AdcBase->CLIST1;
         this->sCurrSec16.ui16AdcSmplPhaC = ADC_CLIST1_SAMPLE0(this->sCurrSec16.ui16ChanNumPhaC);
         this->sCurrSec16.ui16AdcSmplPhaB = ADC_CLIST3_SAMPLE8(this->sCurrSec16.ui16ChanNumPhaB + 8);
     }
-    
+
     /* sector 2&3, direct sensing of phases A and C */
     /* phase current A on ADC0 and phase C on ADC1 */
-    if((this->sCurrSec23.ui16AdcNumPhaA == ADC0)&&(this->sCurrSec23.ui16AdcNumPhaC == ADC1))
+    if ((this->sCurrSec23.ui16AdcNumPhaA == ADC0) && (this->sCurrSec23.ui16AdcNumPhaC == ADC1))
     {
-        this->sCurrSec23.pui16ClistPhaA = (uint16_t *)&this->pui32AdcBase->CLIST1;
-        this->sCurrSec23.pui16ClistPhaC = (uint16_t *)&this->pui32AdcBase->CLIST3;
+        this->sCurrSec23.pui16ClistPhaA  = (uint16_t *)&this->pui32AdcBase->CLIST1;
+        this->sCurrSec23.pui16ClistPhaC  = (uint16_t *)&this->pui32AdcBase->CLIST3;
         this->sCurrSec23.ui16AdcSmplPhaA = ADC_CLIST1_SAMPLE0(this->sCurrSec23.ui16ChanNumPhaA);
         this->sCurrSec23.ui16AdcSmplPhaC = ADC_CLIST3_SAMPLE8(this->sCurrSec23.ui16ChanNumPhaC + 8);
     }
     /* phase current A on ADC1 and phase C on ADC0 */
     else
     {
-        this->sCurrSec23.pui16ClistPhaA = (uint16_t *)&this->pui32AdcBase->CLIST3;
-        this->sCurrSec23.pui16ClistPhaC = (uint16_t *)&this->pui32AdcBase->CLIST1;
+        this->sCurrSec23.pui16ClistPhaA  = (uint16_t *)&this->pui32AdcBase->CLIST3;
+        this->sCurrSec23.pui16ClistPhaC  = (uint16_t *)&this->pui32AdcBase->CLIST1;
         this->sCurrSec23.ui16AdcSmplPhaC = ADC_CLIST1_SAMPLE0(this->sCurrSec23.ui16ChanNumPhaC);
         this->sCurrSec23.ui16AdcSmplPhaA = ADC_CLIST3_SAMPLE8(this->sCurrSec23.ui16ChanNumPhaA + 8);
     }
-    
+
     /* sector 4&5, direct sensing of phases A and B */
     /* phase current A on ADC0 and phase B on ADC1 */
-    if((this->sCurrSec45.ui16AdcNumPhaA == ADC0)&&(this->sCurrSec45.ui16AdcNumPhaB == ADC1))
+    if ((this->sCurrSec45.ui16AdcNumPhaA == ADC0) && (this->sCurrSec45.ui16AdcNumPhaB == ADC1))
     {
-        this->sCurrSec45.pui16ClistPhaA = (uint16_t *)&this->pui32AdcBase->CLIST1;
-        this->sCurrSec45.pui16ClistPhaB = (uint16_t *)&this->pui32AdcBase->CLIST3;
+        this->sCurrSec45.pui16ClistPhaA  = (uint16_t *)&this->pui32AdcBase->CLIST1;
+        this->sCurrSec45.pui16ClistPhaB  = (uint16_t *)&this->pui32AdcBase->CLIST3;
         this->sCurrSec45.ui16AdcSmplPhaA = ADC_CLIST1_SAMPLE0(this->sCurrSec45.ui16ChanNumPhaA);
         this->sCurrSec45.ui16AdcSmplPhaB = ADC_CLIST3_SAMPLE8(this->sCurrSec45.ui16ChanNumPhaB + 8);
     }
     /* phase current A on ADC1 and phase B on ADC0 */
     else
     {
-        this->sCurrSec45.pui16ClistPhaA = (uint16_t *)&this->pui32AdcBase->CLIST3;
-        this->sCurrSec45.pui16ClistPhaB = (uint16_t *)&this->pui32AdcBase->CLIST1;
+        this->sCurrSec45.pui16ClistPhaA  = (uint16_t *)&this->pui32AdcBase->CLIST3;
+        this->sCurrSec45.pui16ClistPhaB  = (uint16_t *)&this->pui32AdcBase->CLIST1;
         this->sCurrSec45.ui16AdcSmplPhaB = ADC_CLIST1_SAMPLE0(this->sCurrSec45.ui16ChanNumPhaB);
         this->sCurrSec45.ui16AdcSmplPhaA = ADC_CLIST3_SAMPLE8(this->sCurrSec45.ui16ChanNumPhaA + 8);
     }
-   
+
     /* Vdcb sampling - select CLIST1 (sample number 1) or CLIST3 (sample number 9) */
-    if(this->ui16AdcNumVDcb == ADC0)
-    {    
-        this->pui32AdcBase->CLIST1 = ((this->pui32AdcBase->CLIST1 & ~(uint16_t)ADC_CLIST1_SAMPLE1_MASK) | 
-                                       ADC_CLIST1_SAMPLE1(this->ui16ChanNumVDcb));
-        this->ui16AdcSmplVDcb = 1;
-        
+    if (this->ui16AdcNumVDcb == ADC0)
+    {
+        this->pui32AdcBase->CLIST1 = ((this->pui32AdcBase->CLIST1 & ~(uint16_t)ADC_CLIST1_SAMPLE1_MASK) |
+                                      ADC_CLIST1_SAMPLE1(this->ui16ChanNumVDcb));
+        this->ui16AdcSmplVDcb      = 1;
+
         /* Auxiliary channel assigned to ADCB */
-        this->pui32AdcBase->CLIST3 = ((this->pui32AdcBase->CLIST3 & ~ADC_CLIST3_SAMPLE9_MASK) |
-                                      (ADC_CLIST3_SAMPLE9(this->ui16ChanNumAux + 8)));
-        this->ui16AdcSmplAux = 9;        
-                
+        this->pui32AdcBase->CLIST3 =
+            ((this->pui32AdcBase->CLIST3 & ~ADC_CLIST3_SAMPLE9_MASK) | (ADC_CLIST3_SAMPLE9(this->ui16ChanNumAux + 8)));
+        this->ui16AdcSmplAux = 9;
     }
     else
-    {    
-        this->pui32AdcBase->CLIST3 = ((this->pui32AdcBase->CLIST3 & ~(uint16_t)ADC_CLIST3_SAMPLE9_MASK) | 
+    {
+        this->pui32AdcBase->CLIST3 = ((this->pui32AdcBase->CLIST3 & ~(uint16_t)ADC_CLIST3_SAMPLE9_MASK) |
                                       ADC_CLIST3_SAMPLE9(this->ui16ChanNumVDcb + 8));
-        this->ui16AdcSmplVDcb = 9;
-        
+        this->ui16AdcSmplVDcb      = 9;
+
         /* Auxiliary channel assigned to ADCA */
-        this->pui32AdcBase->CLIST1 = ((this->pui32AdcBase->CLIST1 & ~ADC_CLIST1_SAMPLE1_MASK) |
-                                      (ADC_CLIST1_SAMPLE1(this->ui16ChanNumAux)));
-        this->ui16AdcSmplAux = 1;        
-    }    
+        this->pui32AdcBase->CLIST1 =
+            ((this->pui32AdcBase->CLIST1 & ~ADC_CLIST1_SAMPLE1_MASK) | (ADC_CLIST1_SAMPLE1(this->ui16ChanNumAux)));
+        this->ui16AdcSmplAux = 1;
+    }
 
     /* default channel assignment for default SVM sector = 2 */
     /* direct sensing of phases A and C */
-    *this->sCurrSec23.pui16ClistPhaA = 
-            ((*this->sCurrSec23.pui16ClistPhaA & ~(uint16_t)0xFU) |
-               this->sCurrSec23.ui16AdcSmplPhaA);
-        
-        *this->sCurrSec23.pui16ClistPhaC =
-                ((*this->sCurrSec23.pui16ClistPhaC & ~(uint16_t)0xFU) |
-                   this->sCurrSec23.ui16AdcSmplPhaC);
-    
+    *this->sCurrSec23.pui16ClistPhaA =
+        ((*this->sCurrSec23.pui16ClistPhaA & ~(uint16_t)0xFU) | this->sCurrSec23.ui16AdcSmplPhaA);
+
+    *this->sCurrSec23.pui16ClistPhaC =
+        ((*this->sCurrSec23.pui16ClistPhaC & ~(uint16_t)0xFU) | this->sCurrSec23.ui16AdcSmplPhaC);
+
     return (s_statusPass);
 }
 
@@ -213,12 +209,10 @@ bool_t MCDRV_Curr3Ph2ShChanAssign(mcdrv_adc12_t *this)
         case 3:
             /* CLISTx update with ADC channel - phase current A */
             *this->sCurrSec23.pui16ClistPhaA =
-                ((*this->sCurrSec23.pui16ClistPhaA & ~(uint16_t)0xFU) |
-                   this->sCurrSec23.ui16AdcSmplPhaA);
+                ((*this->sCurrSec23.pui16ClistPhaA & ~(uint16_t)0xFU) | this->sCurrSec23.ui16AdcSmplPhaA);
             /* CLISTx update with ADC channel - phase current C */
             *this->sCurrSec23.pui16ClistPhaC =
-                ((*this->sCurrSec23.pui16ClistPhaC & ~(uint16_t)0xFU) |
-                   this->sCurrSec23.ui16AdcSmplPhaC);           
+                ((*this->sCurrSec23.pui16ClistPhaC & ~(uint16_t)0xFU) | this->sCurrSec23.ui16AdcSmplPhaC);
             break;
 
         /* direct sensing of phases A and B */
@@ -226,26 +220,22 @@ bool_t MCDRV_Curr3Ph2ShChanAssign(mcdrv_adc12_t *this)
         case 5:
             /* CLISTx update with ADC channel - phase current A */
             *this->sCurrSec45.pui16ClistPhaA =
-                ((*this->sCurrSec45.pui16ClistPhaA & ~(uint16_t)0xFU) |
-                   this->sCurrSec45.ui16AdcSmplPhaA);
+                ((*this->sCurrSec45.pui16ClistPhaA & ~(uint16_t)0xFU) | this->sCurrSec45.ui16AdcSmplPhaA);
             /* CLISTx update with ADC channel - phase current B */
             *this->sCurrSec45.pui16ClistPhaB =
-                ((*this->sCurrSec45.pui16ClistPhaB & ~(uint16_t)0xFU) |
-                   this->sCurrSec45.ui16AdcSmplPhaB);
+                ((*this->sCurrSec45.pui16ClistPhaB & ~(uint16_t)0xFU) | this->sCurrSec45.ui16AdcSmplPhaB);
             break;
-        
+
         /* direct sensing of phases B and C */
         case 1:
         case 6:
         default:
             /* CLISTx update with ADC channel - phase current B */
             *this->sCurrSec16.pui16ClistPhaB =
-                ((*this->sCurrSec16.pui16ClistPhaB & ~(uint16_t)0xFU) |
-                   this->sCurrSec16.ui16AdcSmplPhaB);
+                ((*this->sCurrSec16.pui16ClistPhaB & ~(uint16_t)0xFU) | this->sCurrSec16.ui16AdcSmplPhaB);
             /* CLISTx update with ADC channel - phase current C */
             *this->sCurrSec16.pui16ClistPhaC =
-                ((*this->sCurrSec16.pui16ClistPhaC & ~(uint16_t)0xFU) |
-                   this->sCurrSec16.ui16AdcSmplPhaC);
+                ((*this->sCurrSec16.pui16ClistPhaC & ~(uint16_t)0xFU) | this->sCurrSec16.ui16AdcSmplPhaC);
             break;
     }
     return (s_statusPass);
@@ -312,22 +302,18 @@ bool_t MCDRV_Curr3Ph2ShCalib(mcdrv_adc12_t *this)
         case 3:
             /* direct sensing of measurement offsets on phases A and C */
             this->sCurrSec23.ui16CalibPhaA = GDFLIB_FilterMA_F16(
-                (frac16_t) this->pui32AdcBase->RSLT[this->sCurrSec23.ui16AdcNumPhaA], 
-                          &this->sCurrSec23.ui16FiltPhaA);
+                (frac16_t)this->pui32AdcBase->RSLT[this->sCurrSec23.ui16AdcNumPhaA], &this->sCurrSec23.ui16FiltPhaA);
             this->sCurrSec23.ui16CalibPhaC = GDFLIB_FilterMA_F16(
-                (frac16_t) this->pui32AdcBase->RSLT[this->sCurrSec23.ui16AdcNumPhaC], 
-                           &this->sCurrSec23.ui16FiltPhaC);
+                (frac16_t)this->pui32AdcBase->RSLT[this->sCurrSec23.ui16AdcNumPhaC], &this->sCurrSec23.ui16FiltPhaC);
             break;
 
         case 4:
         case 5:
             /* direct sensing of measurement offsets on phases A and B */
             this->sCurrSec45.ui16CalibPhaA = GDFLIB_FilterMA_F16(
-                (frac16_t) this->pui32AdcBase->RSLT[this->sCurrSec45.ui16AdcNumPhaA], 
-                          &this->sCurrSec45.ui16FiltPhaA);
+                (frac16_t)this->pui32AdcBase->RSLT[this->sCurrSec45.ui16AdcNumPhaA], &this->sCurrSec45.ui16FiltPhaA);
             this->sCurrSec45.ui16CalibPhaB = GDFLIB_FilterMA_F16(
-                (frac16_t) this->pui32AdcBase->RSLT[this->sCurrSec45.ui16AdcNumPhaB], 
-                          &this->sCurrSec45.ui16FiltPhaB);
+                (frac16_t)this->pui32AdcBase->RSLT[this->sCurrSec45.ui16AdcNumPhaB], &this->sCurrSec45.ui16FiltPhaB);
             break;
 
         case 1:
@@ -335,11 +321,9 @@ bool_t MCDRV_Curr3Ph2ShCalib(mcdrv_adc12_t *this)
         default:
             /* direct sensing of measurement offsets on phases B and C */
             this->sCurrSec16.ui16CalibPhaB = GDFLIB_FilterMA_F16(
-                (frac16_t) this->pui32AdcBase->RSLT[this->sCurrSec16.ui16AdcNumPhaB], 
-                          &this->sCurrSec16.ui16FiltPhaB);
+                (frac16_t)this->pui32AdcBase->RSLT[this->sCurrSec16.ui16AdcNumPhaB], &this->sCurrSec16.ui16FiltPhaB);
             this->sCurrSec16.ui16CalibPhaC = GDFLIB_FilterMA_F16(
-                (frac16_t) this->pui32AdcBase->RSLT[this->sCurrSec16.ui16AdcNumPhaC], 
-                          &this->sCurrSec16.ui16FiltPhaC);
+                (frac16_t)this->pui32AdcBase->RSLT[this->sCurrSec16.ui16AdcNumPhaC], &this->sCurrSec16.ui16FiltPhaC);
             break;
     }
 
@@ -405,4 +389,3 @@ bool_t MCDRV_AuxValGet(mcdrv_adc12_t *this)
 
     return (s_statusPass);
 }
-

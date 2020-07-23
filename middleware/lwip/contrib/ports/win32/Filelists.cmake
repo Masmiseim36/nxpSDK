@@ -1,12 +1,16 @@
 # This file is indended to be included in end-user CMakeLists.txt
 # include(/path/to/Filelists.cmake)
 # It assumes the variable LWIP_CONTRIB_DIR is defined pointing to the
-# root path of lwIP contrib sources.
+# root path of lwIP/contrib sources.
 #
 # This file is NOT designed (on purpose) to be used as cmake
 # subdir via add_subdirectory()
-# The intention is to provide greater flexibility to users to 
+# The intention is to provide greater flexibility to users to
 # create their own targets using the *_SRCS variables.
+
+if(NOT ${CMAKE_VERSION} VERSION_LESS "3.10.0")
+    include_guard(GLOBAL)
+endif()
 
 set(lwipcontribportwindows_SRCS
     ${LWIP_CONTRIB_DIR}/ports/win32/sys_arch.c
@@ -16,7 +20,10 @@ set(lwipcontribportwindows_SRCS
 )
 
 # pcapif needs WinPcap developer package: https://www.winpcap.org/devel.htm
-set(WPDPACK_DIR ${LWIP_CONTRIB_DIR}/../WpdPack)
+if(NOT DEFINED WPDPACK_DIR)
+    set(WPDPACK_DIR ${LWIP_DIR}/../WpdPack)
+    message(STATUS "WPDPACK_DIR not set - using default location ${WPDPACK_DIR}")
+endif()
 find_library(WPCAP  wpcap  HINTS ${WPDPACK_DIR}/lib)
 find_library(PACKET packet HINTS ${WPDPACK_DIR}/lib)
 

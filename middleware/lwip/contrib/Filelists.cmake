@@ -1,15 +1,20 @@
 # This file is indended to be included in end-user CMakeLists.txt
 # include(/path/to/Filelists.cmake)
 # It assumes the variable LWIP_CONTRIB_DIR is defined pointing to the
-# root path of lwIP contrib sources.
+# root path of lwIP/contrib sources.
 #
 # This file is NOT designed (on purpose) to be used as cmake
 # subdir via add_subdirectory()
-# The intention is to provide greater flexibility to users to 
+# The intention is to provide greater flexibility to users to
 # create their own targets using the *_SRCS variables.
+
+if(NOT ${CMAKE_VERSION} VERSION_LESS "3.10.0")
+    include_guard(GLOBAL)
+endif()
 
 set(lwipcontribexamples_SRCS
     ${LWIP_CONTRIB_DIR}/examples/httpd/fs_example/fs_example.c
+    ${LWIP_CONTRIB_DIR}/examples/httpd/https_example/https_example.c
     ${LWIP_CONTRIB_DIR}/examples/httpd/ssi_example/ssi_example.c
     ${LWIP_CONTRIB_DIR}/examples/lwiperf/lwiperf_example.c
     ${LWIP_CONTRIB_DIR}/examples/mdns/mdns_example.c

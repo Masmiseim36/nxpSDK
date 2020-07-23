@@ -17,23 +17,23 @@
  * Definitions
  ******************************************************************************/
 /* Version info */
-#define MCRSP_VER       "2.0.0"        /* motor control package version */
+#define MCRSP_VER "2.0.0" /* motor control package version */
 
 /* Application info */
-typedef struct 
+typedef struct
 {
-    char    cBoardID[15];
-    char    cMotorType[4];
-    char    cAppVer[5];
-}app_ver_t;
-   
+    char cBoardID[15];
+    char cMotorType[4];
+    char cAppVer[5];
+} app_ver_t;
+
 /* Structure used during clocks and modulo calculations */
 typedef struct _clock_setup
 {
     uint32_t ui32SystemClock;
     uint32_t ui32BusClock;
     uint16_t ui16PwmFreq;
-    uint16_t ui16M1PwmDeadTime;    
+    uint16_t ui16M1PwmDeadTime;
     uint16_t ui16PwmModulo;
     uint32_t ui32CmtTimerFreq;
     uint16_t ui16CtrlLoopFreq;
@@ -58,9 +58,9 @@ typedef struct _clock_setup
 /******************************************************************************
  * Clock & PWM definition
  ******************************************************************************/
-#define PWM_FREQ (20000)        /* PWM frequency - 20kHz */
-#define CTRL_LOOP_FREQ (1000)   /* Control loop frequency */
-#define M1_PWM_DEADTIME (1560)  /* Output PWM deadtime value in nanoseconds */
+#define PWM_FREQ (20000)       /* PWM frequency - 20kHz */
+#define CTRL_LOOP_FREQ (1000)  /* Control loop frequency */
+#define M1_PWM_DEADTIME (1560) /* Output PWM deadtime value in nanoseconds */
 
 /* Assignment of FTM channels to motor phases
  * 0 - FTM channels 0&1
@@ -93,7 +93,7 @@ extern const char bldcCommutationTableComp[16];
 
 /* Configuration table of ADC channels according to the input pin signals:
  * Valid for Kinetis KV11 HVP board (HVP-KV11Z) together with HVP-MC-3PH
- * 
+ *
  * Proper ADC channel assignment needs to follow these rules:
  *   - only one ADC module can be assigned to sense required variable
  *   - auxiliary quantity must be assigned to last free ADC module
@@ -103,7 +103,7 @@ extern const char bldcCommutationTableComp[16];
  *   BEMF_A            | ADC0_SE8  (0x08) | ADC1_SE8  (0x08)
  *   BEMF_B            | ADC0_SE10  (0x0A)| ADC1_SE10 (0xA)
  *   BEMF_C            | ADC0_SE7  (0x07) | ADC1_SE0  (0x00)
- *   U_dcb             | ADC0_SE4  (0x04) |  
+ *   U_dcb             | ADC0_SE4  (0x04) |
  *   I_dcb             | ADC0_SE6  (0x01) | ADC1_SE1  (0x01)
  */
 /* BEMF phase A assigned to ADC0 only */
@@ -159,7 +159,7 @@ extern const char bldcCommutationTableComp[16];
 #define M1_MCDRV_PWM_PERIPH_INIT() (InitFTM0())
 #define M1_MCDRV_PWM3PH_SET_PWM_OUTPUT(par1, par2) (MCDRV_FtmSetPwmOutput(par1, par2))
 #define M1_MCDRV_PWM3PH_SET_DUTY(par1, par2) (MCDRV_FtmSetDutyCycle(par1, par2))
-#define MC_MCDRV_PWM3PH_FLT_GET(par) (MCDRV_FtmPwm3PhFltGet(par))    
+#define MC_MCDRV_PWM3PH_FLT_GET(par) (MCDRV_FtmPwm3PhFltGet(par))
 #else
 #error MCDRV: Unsupported PWM periphery!
 #endif

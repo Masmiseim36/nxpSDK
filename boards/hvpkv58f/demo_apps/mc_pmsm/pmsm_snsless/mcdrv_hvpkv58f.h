@@ -17,15 +17,15 @@
  * Definitions
  ******************************************************************************/
 /* Version info */
-#define MCRSP_VER       "2.0.0"        /* motor control package version */ //
+#define MCRSP_VER "2.0.0" /* motor control package version */ //
 
 /* Application info */
 typedef struct _app_ver
 {
-    char    cBoardID[15];
-    char    cMotorType[4];
-    char    cAppVer[5];
-}app_ver_t;
+    char cBoardID[15];
+    char cMotorType[4];
+    char cAppVer[5];
+} app_ver_t;
 
 /* Structure used during clocks and modulo calculations */
 typedef struct _clock_setup
@@ -36,8 +36,8 @@ typedef struct _clock_setup
     uint16_t ui16M1SpeedLoopModulo;
     uint16_t ui16M1PwmFreq;
     uint16_t ui16M1PwmModulo;
-    uint16_t ui16M1PwmDeadTime;    
-    
+    uint16_t ui16M1PwmDeadTime;
+
 } clock_setup_t;
 
 /******************************************************************************
@@ -52,14 +52,14 @@ typedef struct _clock_setup
 /* Output PWM deadtime value in nanoseconds */
 #define M1_PWM_DEADTIME (1500)
 
-#define M1_FAST_LOOP_TS ((float_t)1.0/(float_t)(M1_PWM_FREQ / M1_FOC_FREQ_VS_PWM_FREQ))
-#define M1_SLOW_LOOP_TS ((float_t)1.0/(float_t)(M1_SLOW_LOOP_FREQ))
+#define M1_FAST_LOOP_TS ((float_t)1.0 / (float_t)(M1_PWM_FREQ / M1_FOC_FREQ_VS_PWM_FREQ))
+#define M1_SLOW_LOOP_TS ((float_t)1.0 / (float_t)(M1_SLOW_LOOP_FREQ))
 #define M1_TIME_ONESEC_COUNT (M1_PWM_FREQ / M1_FOC_FREQ_VS_PWM_FREQ)
 
-/* Assignment of PWM channels to motor phases 
+/* Assignment of PWM channels to motor phases
  * 0 - PWM channels 0&1
  * 1 - PWM channels 2&3
- * 2 - PWM channels 4&5 
+ * 2 - PWM channels 4&5
  */
 #define M1_PWM_PAIR_PHA (0)
 #define M1_PWM_PAIR_PHB (1)
@@ -77,7 +77,7 @@ typedef struct _clock_setup
  ******************************************************************************/
 /* Configuration table of ADC channels according to the input pin signals:
  * Valid for Kinetis KV58 HVP board (HVP-KV58F220M) together with HVP-MC3PH
- * 
+ *
  * Proper ADC channel assignment needs to follow these rules:
  *   - at least one phase current must be assigned to both ADC modules
  *   - two other phase current channels must be assigned to different ADC modules
@@ -107,7 +107,7 @@ typedef struct _clock_setup
 #define M1_ADC0_AUX (MCDRV_CHAN_OFF)
 #define M1_ADC1_AUX (6)
 
-/* offset measurement filter window */     
+/* offset measurement filter window */
 #define ADC_OFFSET_WINDOW (3)
 /******************************************************************************
  * MC driver macro definition and check - do not change this part
@@ -138,7 +138,7 @@ typedef struct _clock_setup
  * Define motor 1 slow control loop timer
  ******************************************************************************/
 #define M1_MCDRV_TMR_SLOWLOOP_INIT() InitFTM2()
-      
+
 /******************************************************************************
  * Global variable definitions
  ******************************************************************************/
@@ -160,9 +160,7 @@ void InitFTM2(void);
 void InitHSADC(void);
 void InitRelay(void);
 
-
 #ifdef __cplusplus
 }
 #endif
 #endif /* _MCDRV_HVP_KV58F_H_ */
-

@@ -11,13 +11,11 @@
  * Definitions
  ******************************************************************************/
 
- static bool_t MCDRV_Driver3PhSendCmd(mcdrv_spi_drv3ph_t *this, 
-                                     uint8_t *pui8TxData, 
-                                     uint8_t *pui8RxData);
+static bool_t MCDRV_Driver3PhSendCmd(mcdrv_spi_drv3ph_t *this, uint8_t *pui8TxData, uint8_t *pui8RxData);
 
 /*******************************************************************************
-* Variables
-******************************************************************************/
+ * Variables
+ ******************************************************************************/
 
 static bool_t s_statusPass;
 
@@ -44,11 +42,11 @@ static bool_t MCDRV_Driver3PhSendCmd(mcdrv_spi_drv3ph_t *this, uint8_t *pui8TxDa
     /* clear TCF bit */
     this->sSpiData.pSpiBase->SR |= (SPI_SR_TCF_MASK);
 
-    commandData.whichPcs = (dspi_which_pcs_t) this->sSpiData.ui32Pcs;
-    commandData.whichCtar = kDSPI_Ctar0;
+    commandData.whichPcs           = (dspi_which_pcs_t)this->sSpiData.ui32Pcs;
+    commandData.whichCtar          = kDSPI_Ctar0;
     commandData.clearTransferCount = 0;
-    commandData.isEndOfQueue = 0;
-    commandData.isPcsContinuous = 0;
+    commandData.isEndOfQueue       = 0;
+    commandData.isPcsContinuous    = 0;
 
     /* push data */
     DSPI_MasterWriteData(this->sSpiData.pSpiBase, &commandData, (*pui8TxData));
@@ -343,4 +341,3 @@ bool_t MCDRV_Driver3PhConfig(mcdrv_spi_drv3ph_t *this)
 
     return (s_statusPass);
 }
-

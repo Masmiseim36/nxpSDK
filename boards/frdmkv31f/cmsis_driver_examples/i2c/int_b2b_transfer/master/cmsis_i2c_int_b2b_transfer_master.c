@@ -20,10 +20,10 @@
  * Definitions
  ******************************************************************************/
 #define EXAMPLE_I2C_DMAMUX_BASEADDR DMAMUX
-#define EXAMPLE_I2C_DMA_BASEADDR DMA0
-#define EXAMPLE_I2C_MASTER Driver_I2C1
+#define EXAMPLE_I2C_DMA_BASEADDR    DMA0
+#define EXAMPLE_I2C_MASTER          Driver_I2C1
 #define I2C_MASTER_SLAVE_ADDR 0x7EU
-#define I2C_DATA_LENGTH 32U
+#define I2C_DATA_LENGTH       32U
 
 /*******************************************************************************
  * Prototypes

@@ -42,6 +42,7 @@ public:
         kBusPalFunction_SPI,
         kBusPalFunction_I2C,
         kBusPalFunction_CAN,
+        kBusPalFunction_SAI,
         kBusPalFunction_GPIO_CONFIG,
         kBusPalFunction_GPIO_SET,
         kBusPalFunction_FPGA_CLOCK_SET
@@ -70,6 +71,24 @@ public:
         kSpiLsbFirst = 1  //!< Data transfers start with least significant bit.
     };
 
+    //! @brief Define the SAI bus type
+    enum sai_protocol_t
+    {
+        kSaiProtocol_BusLeftJustified = 0,  /*!< Uses left justified format.*/
+        kSaiProtocol_BusRightJustified = 1, /*!< Uses right justified format. */
+        kSaiProtocol_BusI2S = 2,            /*!< Uses I2S format. */
+        kSaiProtocol_BusPCMA = 3,           /*!< Uses I2S PCM A format.*/
+        kSaiProtocol_BusPCMB = 4            /*!< Uses I2S PCM B format. */
+    };
+
+    //! @brief Mono or stereo audio format
+    enum sai_mono_stereo_t
+    {
+        kSaiMonoStereo_Stereo = 0,    /*!< Stereo sound. */
+        kSaiMonoStereo_MonoRight = 1, /*!< Only Right channel have sound. */
+        kSaiMonoStereo_MonoLeft = 2   /*!< Only left channel have sound. */
+    };
+
     //! @brief I2C default address.
     static const uint8_t kBusPalDefaultI2cSlaveAddress = 0x10; // I2C Slave 7-bit address
 
@@ -87,6 +106,10 @@ public:
         uint32_t canSpeed;
         uint32_t canTxid;
         uint32_t canRxid;
+        uint32_t saiSpeedHz;
+        sai_protocol_t saiProtocol;
+        sai_mono_stereo_t saiStereo;
+        uint8_t reserved0[2];
         uint8_t gpioPort;
         uint8_t gpioPinNum;
         uint8_t gpioLevel;
@@ -105,6 +128,9 @@ public:
             canSpeed = 4; // 4: 1M
             canTxid = 0x321;
             canRxid = 0x123;
+            saiSpeedHz = 8000;
+            saiProtocol = BusPal::kSaiProtocol_BusI2S;
+            saiStereo = BusPal::kSaiMonoStereo_Stereo;
             gpioPort = 0;
             gpioPinNum = 0;
             gpioLevel = 0;
@@ -141,6 +167,9 @@ public:
 
     //! @brief Enter I2c mode.
     virtual bool enterI2cMode();
+
+    //! @brief Enter Sai mode.
+    virtual bool enterSaiMode();
 
     //! @brief Enter Uart mode. Not currently supported for bus pal
     virtual bool enterUartMode() { return false; }
@@ -182,6 +211,12 @@ public:
     //! @brief Set CAN rxid.
     virtual bool setCanRxid(unsigned int rxid);
 
+    //! @brief Set SAI speed.
+    virtual bool setSaiSpeed(unsigned int speed);
+
+    //! @brief Sets the SAI configuration
+    virtual bool setSaiConfig(sai_protocol_t protocol, sai_mono_stereo_t stereo);
+
     //! @brief Read response.
     //!
     //! @retval NULL No response from device
@@ -213,6 +248,9 @@ protected:
     //! @brief write via Can
     virtual bool writeCan(const uint8_t *data, size_t byteCount = 1);
 
+    //! @brief write via Sai
+    virtual bool writeSai(const uint8_t *data, size_t byteCount = 1);
+
     //! @brief read via Spi
     virtual int readSpi(uint8_t *data, size_t byteCount);
 
@@ -224,6 +262,9 @@ protected:
 
     //! @brief read via I2c
     virtual int readI2c(uint8_t *data, size_t byteCount);
+
+    //! @brief read via Sai
+    virtual int readSai(uint8_t *data, size_t byteCount);
 
     //! @brief Overriden serial_read for logging
     int buspal_serial_read(uint8_t *buf, int size, bool isCommandData = false);
@@ -240,7 +281,8 @@ protected:
         kBusPalModeBitBang,
         kBusPalModeSpi,
         kBusPalModeI2c,
-        kBusPalModeCan
+        kBusPalModeCan,
+        kBusPalModeSai
     };
     int m_fileDescriptor;                   //!< PC COM port file descriptor.
     uint8_t m_responseBuffer[kMaxResponse]; //!< Command response buffer.
@@ -248,6 +290,7 @@ protected:
     unsigned int m_spiWriteByteCount;
     unsigned int m_canWriteByteCount;
     unsigned int m_canFirstReadDelay;
+    unsigned int m_saiWriteByteCount;
 };
 
 } // namespace blfwk

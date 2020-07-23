@@ -52,9 +52,8 @@ static uint8 s_checkbuf[OUT_BUF_SIZE];
 /* tdefl_compressor contains all the state needed by the low-level compressor so it's a pretty big struct (~300k).
    This example makes it a global vs. putting it on the stack, of course in real-world usage you'll probably malloc() or new it. */
 tdefl_compressor g_deflator;
-tinfl_decompressor g_inflator;
 
-int deflate_level = 10; /* default compression level, can be changed via command line */
+static int deflate_level; /* default compression level, can be changed via command line */
 #define USAGE_ARG_DEFLATE " [-defl<:compr_level>]"
 #else /* MAKEFS_SUPPORT_DEFLATE */
 #define USAGE_ARG_DEFLATE ""
@@ -63,12 +62,14 @@ int deflate_level = 10; /* default compression level, can be changed via command
 #ifdef WIN32
 
 #define GETCWD(path, len)             GetCurrentDirectoryA(len, path)
+#define GETCWD_SUCCEEDED(ret)         (ret != 0)
 #define CHDIR(path)                   SetCurrentDirectoryA(path)
 #define CHDIR_SUCCEEDED(ret)          (ret == TRUE)
 
 #elif __linux__
 
 #define GETCWD(path, len)             getcwd(path, len)
+#define GETCWD_SUCCEEDED(ret)         (ret != NULL)
 #define CHDIR(path)                   chdir(path)
 #define CHDIR_SUCCEEDED(ret)          (ret == 0)
 
@@ -80,6 +81,10 @@ int deflate_level = 10; /* default compression level, can be changed via command
 
 #define NEWLINE     "\r\n"
 #define NEWLINE_LEN 2
+
+/* Define this here since we don't include any external C files and ports might override it */
+#define LWIP_PLATFORM_ASSERT(x) do {printf("Assertion \"%s\" failed at line %d in %s\n", \
+                                     x, __LINE__, __FILE__); fflush(NULL); abort();} while(0)
 
 /* define this to get the header variables we use to build HTTP headers */
 #define LWIP_HTTPD_DYNAMIC_HEADERS 1
@@ -128,7 +133,7 @@ static int file_can_be_compressed(const char* filename);
 /* 5 bytes per char + 3 bytes per line */
 static char file_buffer_c[COPY_BUFSIZE * 5 + ((COPY_BUFSIZE / HEX_BYTES_PER_LINE) * 3)];
 
-char curSubdir[MAX_PATH_LEN];
+char curSubdir[MAX_PATH_LEN-3];
 char lastFileVar[MAX_PATH_LEN];
 char hdr_buf[4096];
 
@@ -229,19 +234,20 @@ int main(int argc, char *argv[])
         printf("Writing to file \"%s\"\n", targetfile);
       } else if (!strcmp(argv[i], "-m")) {
         includeLastModified = 1;
-      } else if (!strcmp(argv[i], "-defl")) {
+      } else if (strstr(argv[i], "-defl") == argv[i]) {
 #if MAKEFS_SUPPORT_DEFLATE
-        char *colon = strstr(argv[i], ":");
-        if (colon) {
-          if (colon[1] != 0) {
-            int defl_level = atoi(&colon[1]);
-            if ((defl_level >= 0) && (defl_level <= 10)) {
-              deflate_level = defl_level;
-            } else {
-              printf("ERROR: deflate level must be [0..10]" NEWLINE);
-              exit(0);
-            }
+        const char *colon = &argv[i][5];
+        if (*colon == ':') {
+          int defl_level = atoi(&colon[1]);
+          if ((colon[1] != 0) && (defl_level >= 0) && (defl_level <= 10)) {
+            deflate_level = defl_level;
+          } else {
+            printf("ERROR: deflate level must be [0..10]" NEWLINE);
+            exit(0);
           }
+        } else {
+          /* default to highest compression */
+          deflate_level = 10;
         }
         deflateNonSsiFiles = 1;
         printf("Deflating all non-SSI files with level %d (but only if size is reduced)" NEWLINE, deflate_level);
@@ -272,7 +278,10 @@ int main(int argc, char *argv[])
     exit(-1);
   }
 
-  GETCWD(appPath, MAX_PATH_LEN);
+  if(!GETCWD_SUCCEEDED(GETCWD(appPath, MAX_PATH_LEN))) {
+    printf("Unable to get current dir." NEWLINE);
+    exit(-1);
+  }
   /* if command line param or subdir named 'fs' not found spout usage verbiage */
   if (!CHDIR_SUCCEEDED(CHDIR(path))) {
     /* if no subdir named 'fs' (or the one which was given) exists, spout usage verbiage */
@@ -280,7 +289,10 @@ int main(int argc, char *argv[])
     print_usage();
     exit(-1);
   }
-  CHDIR(appPath);
+  if(!CHDIR_SUCCEEDED(CHDIR(appPath))) {
+    printf("Invalid path: \"%s\"." NEWLINE, appPath);
+    exit(-1);
+  }
 
   printf("HTTP %sheader will %s statically included." NEWLINE,
          (includeHttpHeader ? (useHttp11 ? "1.1 " : "1.0 ") : ""),
@@ -306,7 +318,10 @@ int main(int argc, char *argv[])
     exit(-1);
   }
 
-  CHDIR(path);
+  if(!CHDIR_SUCCEEDED(CHDIR(path))) {
+    printf("Invalid path: \"%s\"." NEWLINE, path);
+    exit(-1);
+  }
 
   fprintf(data_file, "#include \"lwip/apps/fs.h\"" NEWLINE);
   fprintf(data_file, "#include \"lwip/def.h\"" NEWLINE NEWLINE NEWLINE);
@@ -340,7 +355,11 @@ int main(int argc, char *argv[])
   fclose(data_file);
   fclose(struct_file);
 
-  CHDIR(appPath);
+  if(!CHDIR_SUCCEEDED(CHDIR(appPath))) {
+    printf("Invalid path: \"%s\"." NEWLINE, appPath);
+    exit(-1);
+  }
+
   /* append struct_file to data_file */
   printf(NEWLINE "Creating target file..." NEWLINE NEWLINE);
   concat_files("fsdata.tmp", "fshdr.tmp", targetfile);
@@ -469,13 +488,19 @@ int process_sub(FILE *data_file, FILE *struct_file)
             continue;
           }
           if (freelen > 0) {
-            CHDIR(currName);
+            if(!CHDIR_SUCCEEDED(CHDIR(currName))) {
+              printf("Invalid path: \"%s\"." NEWLINE, currName);
+              exit(-1);
+            }
             strncat(curSubdir, "/", freelen);
             strncat(curSubdir, currName, freelen - 1);
             curSubdir[sizeof(curSubdir) - 1] = 0;
             printf("processing subdirectory %s/..." NEWLINE, curSubdir);
             filesProcessed += process_sub(data_file, struct_file);
-            CHDIR("..");
+            if(!CHDIR_SUCCEEDED(CHDIR(".."))) {
+              printf("Unable to get back to parent dir of: \"%s\"." NEWLINE, currName);
+              exit(-1);
+            }
             curSubdir[sublen] = 0;
           } else {
             printf("WARNING: cannot process sub due to path length restrictions: \"%s/%s\"\n", curSubdir, currName);
@@ -853,6 +878,7 @@ static int is_ssi_file(const char *filename)
       }
       curSubdir[sublen] = 0;
       return ret;
+#if LWIP_HTTPD_SSI_BY_FILE_EXTENSION
     } else {
       /* check file extension */
       size_t loop;
@@ -861,6 +887,7 @@ static int is_ssi_file(const char *filename)
           return 1;
         }
       }
+#endif /* LWIP_HTTPD_SSI_BY_FILE_EXTENSION */
     }
   }
   return 0;
@@ -920,9 +947,9 @@ int process_file(FILE *data_file, FILE *struct_file, const char *filename)
   int flags_printed;
 
   /* create qualified name (@todo: prepend slash or not?) */
-  sprintf(qualifiedName, "%s/%s", curSubdir, filename);
+  snprintf(qualifiedName, sizeof(qualifiedName), "%s/%s", curSubdir, filename);
   /* create C variable name */
-  strcpy(varname, qualifiedName);
+  strncpy(varname, qualifiedName, sizeof(varname));
   /* convert slashes & dots to underscores */
   fix_filename_for_c(varname, MAX_PATH_LEN);
   register_filename(varname);

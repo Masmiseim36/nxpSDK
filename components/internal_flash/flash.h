@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 NXP
+ * Copyright 2018-2019 NXP
  * All rights reserved.
  *
  *
@@ -8,6 +8,11 @@
 
 #ifndef __FLASH_H__
 #define __FLASH_H__
+
+/*!
+ * @addtogroup FLASH_Adapter
+ * @{
+ */
 
 /*! *********************************************************************************
 *************************************************************************************
@@ -20,6 +25,34 @@
 * Public macros
 *************************************************************************************
 ********************************************************************************** */
+/*! @brief Definition of flash adapter handle size. */
+#define HAL_FLASH_HANDLE_SIZE (104U)
+
+/*!
+ * @brief Defines the flash handle
+ *
+ * This macro is used to define a 4 byte aligned flash handle.
+ * Then use "(hal_flash_handle_t)name" to get the flash handle.
+ *
+ * The macro should be global and could be optional. You could also define flash handle by yourself.
+ *
+ * This is an example,
+ * @code
+ * FLASH_HANDLE_DEFINE(flashHandle);
+ * @endcode
+ *
+ * @param name The name string of the flash handle.
+ */
+#define FLASH_HANDLE_DEFINE(name) uint32_t name[((HAL_FLASH_HANDLE_SIZE + sizeof(uint32_t) - 1U) / sizeof(uint32_t))]
+
+/*! *********************************************************************************
+*************************************************************************************
+* Public type definitions
+*************************************************************************************
+********************************************************************************** */
+/*! @brief Hal flash handle. */
+typedef void *hal_flash_handle_t;
+
 /*! @brief Hal flash status. */
 typedef enum _hal_flash_status
 {
@@ -62,17 +95,6 @@ typedef enum _hal_flash_security_state
     kHAL_Flash_SecurityStateBackdoorDisabled = 0x5ac33ca5U  /*!< Flash backdoor is disabled.*/
 } hal_flash_security_state_t;
 
-#define HAL_FLASH_HANDLE_SIZE (104U)
-
-/*! @brief Hal flash handle. */
-typedef void *hal_flash_handle_t;
-
-/*! *********************************************************************************
-*************************************************************************************
-* Public type definitions
-*************************************************************************************
-********************************************************************************** */
-
 /*! @brief Hal flash margin value. */
 typedef enum _hal_flash_margin_value
 {
@@ -107,14 +129,17 @@ extern "C" {
  *
  * This function initializes the Flash module for the other Flash APIs.
  *  @code
- *   uint32_t halFlashHandleBuffer[((HAL_FLASH_HANDLE_SIZE + sizeof(uint32_t) - 1) / sizeof(uitn32_t))];
- *   hal_flash_handle_t halFlashHandle = (hal_flash_handle_t)&halFlashHandleBuffer[0];
- *   HAL_FlashInit(halFlashHandle);
+ *   FLASH_HANDLE_DEFINE(halFlashHandle);
+ *   HAL_FlashInit((hal_flash_handle_t)halFlashHandle);
  *  @endcode
  *
  * @param halFlashHandle  Hal flash adapter handle, the handle buffer with size #HAL_FLASH_HANDLE_SIZE
  * should be allocated at upper level.
- * The handle should be 4 byte aligned, because unaligned access does not support on some devices.
+ * The handle should be 4 byte aligned, because unaligned access doesn't be supported on some devices.
+ * You can define the handle in the following two ways:
+ * #FLASH_HANDLE_DEFINE(halFlashHandle);
+ * or
+ * uint32_t halFlashHandle[((HAL_FLASH_HANDLE_SIZE + sizeof(uint32_t) - 1U) / sizeof(uint32_t))];
  * @retval #kStatus_HAL_Flash_Success API was executed successfully.
  * @retval #kStatus_HAL_Flash_InvalidArgument An invalid argument is provided.
  * @retval #kStatus_HAL_Flash_ExecuteInRamFunctionNotReady Execute-in-RAM function is not available.
@@ -244,4 +269,5 @@ hal_flash_status_t HAL_FlashGetSecurityState(hal_flash_handle_t halFlashHandle, 
 #if defined(__cplusplus)
 }
 #endif
+/*! @}*/
 #endif /* __FLASH_H__ */

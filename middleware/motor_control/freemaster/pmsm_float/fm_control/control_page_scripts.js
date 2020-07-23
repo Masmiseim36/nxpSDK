@@ -728,13 +728,13 @@ function ApplicationSwitchUpdate()
             {
                 $('#jqxSliderSetSpeed').jqxSlider({value: 0});
                 $('#gaugeContainerSpeedActual').jqxGauge({value: 0, });
-                $("#jqxAppSwitchButton").jqxButton('val', "RUN");
+                $("#jqxAppSwitchButton").jqxButton('val', "PWM RUN");
                 $("#jqxAppSwitchButton").jqxButton({template: 'success'});
                 $("#jqxDemoButton").jqxButton({disabled:true});
             }
             else
             {
-                 $("#jqxAppSwitchButton").jqxButton('val', "STOP");
+                 $("#jqxAppSwitchButton").jqxButton('val', "PWM STOP");
                  $("#jqxAppSwitchButton").jqxButton({template: 'danger'});
                  $("#jqxDemoButton").jqxButton({disabled:false});
             }

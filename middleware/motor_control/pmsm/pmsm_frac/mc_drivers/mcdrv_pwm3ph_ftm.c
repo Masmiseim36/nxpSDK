@@ -43,22 +43,19 @@ bool_t MCDRV_FtmPwm3PhSet(mcdrv_pwm3ph_ftm_t *this)
     sUABCtemp = *this->psUABC;
 
     /* phase A */
-    f16DutyCycle = MLIB_Mul_F16(this->pui32PwmBase->MOD, 
-                                sUABCtemp.f16A);
-    this->pui32PwmBase->CONTROLS[this->ui16ChanPhA].CnV = FTM_CnV_VAL(MLIB_Neg_F16(f16DutyCycle));
+    f16DutyCycle                                            = MLIB_Mul_F16(this->pui32PwmBase->MOD, sUABCtemp.f16A);
+    this->pui32PwmBase->CONTROLS[this->ui16ChanPhA].CnV     = FTM_CnV_VAL(MLIB_Neg_F16(f16DutyCycle));
     this->pui32PwmBase->CONTROLS[this->ui16ChanPhA + 1].CnV = FTM_CnV_VAL(f16DutyCycle);
 
     /* phase B */
-    f16DutyCycle = MLIB_Mul_F16(this->pui32PwmBase->MOD, 
-                                sUABCtemp.f16B);
-    this->pui32PwmBase->CONTROLS[this->ui16ChanPhB].CnV = FTM_CnV_VAL(MLIB_Neg_F16(f16DutyCycle));
-    this->pui32PwmBase->CONTROLS[this->ui16ChanPhB+1].CnV = FTM_CnV_VAL(f16DutyCycle);
+    f16DutyCycle                                            = MLIB_Mul_F16(this->pui32PwmBase->MOD, sUABCtemp.f16B);
+    this->pui32PwmBase->CONTROLS[this->ui16ChanPhB].CnV     = FTM_CnV_VAL(MLIB_Neg_F16(f16DutyCycle));
+    this->pui32PwmBase->CONTROLS[this->ui16ChanPhB + 1].CnV = FTM_CnV_VAL(f16DutyCycle);
 
     /* phase C */
-    f16DutyCycle = MLIB_Mul_F16(this->pui32PwmBase->MOD,
-                                sUABCtemp.f16C);
-    this->pui32PwmBase->CONTROLS[this->ui16ChanPhC].CnV = FTM_CnV_VAL(MLIB_Neg_F16(f16DutyCycle));
-    this->pui32PwmBase->CONTROLS[this->ui16ChanPhC+1].CnV = FTM_CnV_VAL(f16DutyCycle);
+    f16DutyCycle                                            = MLIB_Mul_F16(this->pui32PwmBase->MOD, sUABCtemp.f16C);
+    this->pui32PwmBase->CONTROLS[this->ui16ChanPhC].CnV     = FTM_CnV_VAL(MLIB_Neg_F16(f16DutyCycle));
+    this->pui32PwmBase->CONTROLS[this->ui16ChanPhC + 1].CnV = FTM_CnV_VAL(f16DutyCycle);
 
     /* Set LDOK bit in FTm PWMLOAD register */
     this->pui32PwmBase->PWMLOAD = 0x0200;
@@ -76,12 +73,10 @@ bool_t MCDRV_FtmPwm3PhSet(mcdrv_pwm3ph_ftm_t *this)
 bool_t MCDRV_FtmPwm3PhOutEn(mcdrv_pwm3ph_ftm_t *this)
 {
     s_statusPass = TRUE;
-    
-    uint8_t ui8MaskTemp = 0U;  
-    
-    ui8MaskTemp = ~((3U << (this->ui16ChanPhA))|
-                    (3U << (this->ui16ChanPhB))|
-                    (3U << (this->ui16ChanPhC)));
+
+    uint8_t ui8MaskTemp = 0U;
+
+    ui8MaskTemp = ~((3U << (this->ui16ChanPhA)) | (3U << (this->ui16ChanPhB)) | (3U << (this->ui16ChanPhC)));
 
     /* FlexTIMER
      * OUTMASK register = mcPWM_BASE + $0x60
@@ -100,7 +95,7 @@ bool_t MCDRV_FtmPwm3PhOutEn(mcdrv_pwm3ph_ftm_t *this)
      */
 
     /* PWM outputs enabled required FTM channels */
-    this->pui32PwmBase->OUTMASK &= ui8MaskTemp; 
+    this->pui32PwmBase->OUTMASK &= ui8MaskTemp;
 
     return (s_statusPass);
 }
@@ -115,11 +110,11 @@ bool_t MCDRV_FtmPwm3PhOutEn(mcdrv_pwm3ph_ftm_t *this)
 bool_t MCDRV_FtmPwm3PhOutDis(mcdrv_pwm3ph_ftm_t *this)
 {
     s_statusPass = TRUE;
-    
-    uint8_t ui8MaskTemp = 0U;  
 
-    ui8MaskTemp = (3U << (this->ui16ChanPhA))|(3U << (this->ui16ChanPhB))|(3U << (this->ui16ChanPhC));
-    
+    uint8_t ui8MaskTemp = 0U;
+
+    ui8MaskTemp = (3U << (this->ui16ChanPhA)) | (3U << (this->ui16ChanPhB)) | (3U << (this->ui16ChanPhC));
+
     /* FlexTIMER
      * OUTMASK register = mcPWM_BASE + $0x60
      *
@@ -155,8 +150,7 @@ bool_t MCDRV_FtmPwm3PhFltGet(mcdrv_pwm3ph_ftm_t *this)
     s_statusPass = this->pui32PwmBase->FMS & (1 << this->ui16FaultFixNum | 1 << this->ui16FaultAdjNum);
 
     /* Clear fault flags */
-    this->pui32PwmBase->FMS &= ~FTM_FMS_FAULTF_MASK; 
+    this->pui32PwmBase->FMS &= ~FTM_FMS_FAULTF_MASK;
 
     return ((s_statusPass > 0));
 }
-

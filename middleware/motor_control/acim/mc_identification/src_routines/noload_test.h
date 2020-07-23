@@ -3,15 +3,15 @@
  * Copyright 2016-2019 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
- */	
+ */
 
 #ifndef _NOLOAD_TEST_H_
 #define _NOLOAD_TEST_H_
 
 #include "mid_def.h"
-#include "mlib_fp.h"
-#include "gflib_fp.h"
-#include "gmclib_fp.h"
+#include "mlib_FP.h"
+#include "gflib_FP.h"
+#include "gmclib_FP.h"
 
 /*******************************************************************************
  * API
@@ -28,4 +28,3 @@ extern void MID_testNoLoad(void);
 #endif
 
 #endif /* _NOLOAD_TEST_H_ */
-

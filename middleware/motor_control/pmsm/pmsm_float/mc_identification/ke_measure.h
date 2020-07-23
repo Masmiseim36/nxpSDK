@@ -18,7 +18,7 @@ extern "C" {
 /*******************************************************************************
  * API
  ******************************************************************************/
-extern void MID_getKe(mid_get_ke_t* sKeMeasFcn);
+extern void MID_getKe(mid_get_ke_t *sKeMeasFcn);
 
 #ifdef __cplusplus
 }

@@ -8,7 +8,7 @@
 #ifndef _FSL_PHY_H_
 #define _FSL_PHY_H_
 
-#include "fsl_enet.h"
+#include "fsl_common.h"
 
 /*!
  * @addtogroup phy_driver

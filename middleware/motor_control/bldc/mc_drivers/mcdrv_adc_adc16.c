@@ -13,8 +13,8 @@
  ******************************************************************************/
 
 /*******************************************************************************
-* Variables
-******************************************************************************/
+ * Variables
+ ******************************************************************************/
 
 static bool_t s_statusPass;
 
@@ -81,54 +81,54 @@ bool_t MCDRV_Adc16Init(mcdrv_adc16_t *this, mcdrv_adc16_init_t *init)
         /* 0 -> result register 0 for ADC0 or ADC1 */
         /* 1 -> result register 1 for ADC0 or ADC1 */
         this->ui16IndexBemf = 0;
-        this->ui16IndexAux = 0;
+        this->ui16IndexAux  = 0;
         this->ui16IndexUdcb = 1;
         this->ui16IndexIdcb = 1;
 
         /* BEMF phase A measurement */
         if (init->ui16AdcArray[MCDRV_ADC0_BEMFA] == MCDRV_CHAN_OFF)
         {
-            this->pui32BemfAAdcBase = init->pui32Adc1Base;
+            this->pui32BemfAAdcBase    = init->pui32Adc1Base;
             this->bldcAdc1SectorCfg[2] = init->ui16AdcArray[MCDRV_ADC1_BEMFA];
-            this->bldcAdcSelCfg[2] = init->pui32Adc1Base;
+            this->bldcAdcSelCfg[2]     = init->pui32Adc1Base;
             this->bldcAdc1SectorCfg[5] = init->ui16AdcArray[MCDRV_ADC1_BEMFA];
-            this->bldcAdcSelCfg[5] = init->pui32Adc1Base;
+            this->bldcAdcSelCfg[5]     = init->pui32Adc1Base;
         }
         else
         {
-            this->pui32BemfAAdcBase = init->pui32Adc0Base;
+            this->pui32BemfAAdcBase    = init->pui32Adc0Base;
             this->bldcAdc0SectorCfg[2] = init->ui16AdcArray[MCDRV_ADC0_BEMFA];
-            this->bldcAdcSelCfg[2] = init->pui32Adc0Base;
+            this->bldcAdcSelCfg[2]     = init->pui32Adc0Base;
             this->bldcAdc0SectorCfg[5] = init->ui16AdcArray[MCDRV_ADC0_BEMFA];
-            this->bldcAdcSelCfg[5] = init->pui32Adc0Base;
+            this->bldcAdcSelCfg[5]     = init->pui32Adc0Base;
         }
 
         /* BEMF phase B measurement */
         if (init->ui16AdcArray[MCDRV_ADC0_BEMFB] == MCDRV_CHAN_OFF)
         {
-            this->pui32BemfBAdcBase = init->pui32Adc1Base;
+            this->pui32BemfBAdcBase    = init->pui32Adc1Base;
             this->bldcAdc1SectorCfg[1] = init->ui16AdcArray[MCDRV_ADC1_BEMFB];
-            this->bldcAdcSelCfg[1] = init->pui32Adc1Base;
+            this->bldcAdcSelCfg[1]     = init->pui32Adc1Base;
             this->bldcAdc1SectorCfg[4] = init->ui16AdcArray[MCDRV_ADC1_BEMFB];
-            this->bldcAdcSelCfg[4] = init->pui32Adc1Base;
+            this->bldcAdcSelCfg[4]     = init->pui32Adc1Base;
         }
         else
         {
-            this->pui32BemfBAdcBase = init->pui32Adc0Base;
+            this->pui32BemfBAdcBase    = init->pui32Adc0Base;
             this->bldcAdc0SectorCfg[1] = init->ui16AdcArray[MCDRV_ADC0_BEMFB];
-            this->bldcAdcSelCfg[1] = init->pui32Adc0Base;
+            this->bldcAdcSelCfg[1]     = init->pui32Adc0Base;
             this->bldcAdc0SectorCfg[4] = init->ui16AdcArray[MCDRV_ADC0_BEMFB];
-            this->bldcAdcSelCfg[4] = init->pui32Adc0Base;
+            this->bldcAdcSelCfg[4]     = init->pui32Adc0Base;
         }
 
         /* BEMF phase C measurement */
         if (init->ui16AdcArray[MCDRV_ADC0_BEMFC] == MCDRV_CHAN_OFF)
         {
-            this->pui32BemfCAdcBase = init->pui32Adc1Base;
+            this->pui32BemfCAdcBase    = init->pui32Adc1Base;
             this->bldcAdc1SectorCfg[0] = init->ui16AdcArray[MCDRV_ADC1_BEMFC];
-            this->bldcAdcSelCfg[0] = init->pui32Adc1Base;
+            this->bldcAdcSelCfg[0]     = init->pui32Adc1Base;
             this->bldcAdc1SectorCfg[3] = init->ui16AdcArray[MCDRV_ADC1_BEMFC];
-            this->bldcAdcSelCfg[3] = init->pui32Adc1Base;
+            this->bldcAdcSelCfg[3]     = init->pui32Adc1Base;
             /* Set ADC_SC1_ADCH bitfield */
             this->pui32BemfCAdcBase->SC1[this->ui16IndexBemf] =
                 (this->pui32BemfCAdcBase->SC1[this->ui16IndexBemf] & ~(uint16_t)(ADC_SC1_ADCH(ADC_SC1_ADCH_MASK))) |
@@ -136,11 +136,11 @@ bool_t MCDRV_Adc16Init(mcdrv_adc16_t *this, mcdrv_adc16_init_t *init)
         }
         else
         {
-            this->pui32BemfCAdcBase = init->pui32Adc0Base;
+            this->pui32BemfCAdcBase    = init->pui32Adc0Base;
             this->bldcAdc0SectorCfg[0] = init->ui16AdcArray[MCDRV_ADC0_BEMFC];
-            this->bldcAdcSelCfg[0] = init->pui32Adc0Base;
+            this->bldcAdcSelCfg[0]     = init->pui32Adc0Base;
             this->bldcAdc0SectorCfg[3] = init->ui16AdcArray[MCDRV_ADC0_BEMFC];
-            this->bldcAdcSelCfg[3] = init->pui32Adc0Base;
+            this->bldcAdcSelCfg[3]     = init->pui32Adc0Base;
             /* Set ADC_SC1_ADCH bitfield */
             this->pui32BemfCAdcBase->SC1[this->ui16IndexBemf] =
                 (this->pui32BemfCAdcBase->SC1[this->ui16IndexBemf] & ~(uint16_t)(ADC_SC1_ADCH(ADC_SC1_ADCH_MASK))) |
@@ -393,7 +393,7 @@ bool_t MCDRV_CurrOffsetCalibInit(mcdrv_adc16_t *this)
 
     /* clear offset values */
     this->ui16OffsetDcCurr = 0x3fff;
-    this->ui16CalibDcCurr = 0;
+    this->ui16CalibDcCurr  = 0;
 
     /* initialize offset filters */
     this->ui16FiltDcCurr.u16Sh = this->ui16OffsetFiltWindow;
@@ -416,7 +416,7 @@ bool_t MCDRV_CurrOffsetCalib(mcdrv_adc16_t *this)
 
     /* sensing of DC Bus Current offset */
     this->ui16CalibDcCurr =
-        GDFLIB_FilterMA_F16((frac16_t) this->pui32IdcbAdcBase->R[this->ui16IndexIdcb], &this->ui16FiltDcCurr);
+        GDFLIB_FilterMA_F16((frac16_t)this->pui32IdcbAdcBase->R[this->ui16IndexIdcb], &this->ui16FiltDcCurr);
     return (s_statusPass);
 }
 
@@ -436,4 +436,3 @@ bool_t MCDRV_CurrOffsetCalibSet(mcdrv_adc16_t *this)
 
     return (s_statusPass);
 }
-

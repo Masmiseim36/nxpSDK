@@ -8,8 +8,8 @@
 #if !defined(__FLASH_MEMORY_INTERFACE_H__)
 #define __FLASH_MEMORY_INTERFACE_H__
 
-#include "memory/memory.h"
-#if !(defined(BL_FEATURE_HAS_NO_INTERNAL_FLASH) && BL_FEATURE_HAS_NO_INTERNAL_FLASH)
+#include "memory.h"
+#if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
 #include "fsl_flash.h"
 #endif
 
@@ -25,8 +25,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 //! @brief flash memory array.
-#if !(defined(BL_FEATURE_HAS_NO_INTERNAL_FLASH) && BL_FEATURE_HAS_NO_INTERNAL_FLASH)
-#if !(defined(BL_DEVICE_IS_LPC_SERIES) && BL_DEVICE_IS_LPC_SERIES)
+#if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
+#if !BL_DEVICE_IS_LPC_SERIES
 extern flash_config_t g_flashState;
 extern ftfx_cache_config_t g_flashcacheState;
 #endif // !BL_DEVICE_IS_LPC_SERIES
@@ -49,7 +49,7 @@ extern "C" {
 status_t flash_mem_init(void);
 
 //! @brief Read selected Flash memory.
-status_t flash_mem_read(uint32_t address, uint32_t length, uint8_t *buffer);
+status_t flash_mem_read(uint32_t address, uint32_t length, uint8_t *restrict buffer);
 
 //! @brief Write selected Flash memory.
 status_t flash_mem_write(uint32_t address, uint32_t length, const uint8_t *buffer);

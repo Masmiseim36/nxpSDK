@@ -63,14 +63,20 @@
 #include "mbedtls/ecjpake.h"
 #include "mbedtls/timing.h"
 #include "mbedtls/nist_kw.h"
-
+#if defined(MBEDTLS_ECDH_C) && defined(MBEDTLS_ECDH_ALT) && defined(MBEDTLS_NXP_SSSAPI)
+#include "mbedtls/ecdh.h"
+#endif
 #include <string.h>
 
 #if defined(MBEDTLS_PLATFORM_C)
 #if defined(FREESCALE_KSDK_BM)
 #include "board.h"
 #include "fsl_debug_console.h"
+#if defined(MBEDTLS_NXP_SSSAPI)
+#include "sssapi_mbedtls.h"
+#else
 #include "ksdk_mbedtls.h"
+#endif
 #include "mbedtls/version.h"
 
 #define mbedtls_printf PRINTF
@@ -304,6 +310,9 @@ const selftest_t selftests[] =
 #if defined(MBEDTLS_PKCS5_C)
     {"pkcs5", mbedtls_pkcs5_self_test},
 #endif
+#if defined(MBEDTLS_ECDH_C) && defined(MBEDTLS_ECDH_ALT) && defined(MBEDTLS_NXP_SSSAPI)
+    {"ecdh", mbedtls_ecdh_self_test},
+#endif
 /* Slower test after the faster ones */
 #if defined(MBEDTLS_TIMING_C)
     {"timing", mbedtls_timing_self_test},
@@ -334,6 +343,10 @@ static int bench_print_features(void)
     text = "DCP HW accelerated";
 #elif defined(MBEDTLS_FREESCALE_HASHCRYPT_SHA256)
     text = "HASHCRYPT HW accelerated";
+#elif defined(MBEDTLS_NXP_SENTINEL200)
+    text = "S200 HW accelerated";
+#elif defined(MBEDTLS_NXP_SENTINEL300)
+    text = "S300 HW accelerated";
 #else
     text = "Software implementation";
 #endif
@@ -350,6 +363,10 @@ static int bench_print_features(void)
     text = "DCP HW accelerated";
 #elif defined(MBEDTLS_FREESCALE_HASHCRYPT_AES)
     text = "HASHCRYPT HW accelerated";
+#elif defined(MBEDTLS_NXP_SENTINEL200)
+    text = "SW AES, S200 HW accelerated CCM and CMAC";
+#elif defined(MBEDTLS_NXP_SENTINEL300)
+    text = "SW AES, S300 HW accelerated CCM and CMAC";
 #else
     text = "Software implementation";
 #endif
@@ -385,7 +402,15 @@ static int bench_print_features(void)
 #else
     text = "Software implementation";
 #endif
-    mbedtls_printf("  Asymmetric encryption: %s\r\n\n", text);
+    mbedtls_printf("  Asymmetric encryption: %s\r\n", text);
+#if defined(MBEDTLS_NXP_SENTINEL200)
+    text = "S200 HW accelerated ECDSA and ECDH";
+#elif defined(MBEDTLS_NXP_SENTINEL300)
+    text = "S300 HW accelerated ECDSA and ECDH";
+#else
+    text = "Software implementation";
+#endif
+    mbedtls_printf("  ECC: %s\r\n\n", text);
     return 0;
 }
 
@@ -407,7 +432,7 @@ int main(int argc, char *argv[])
 
 #if defined(FREESCALE_KSDK_BM)
     /* HW init */
-    BOARD_InitPins();
+    BOARD_InitBootPins();
     BOARD_BootClockRUN();
     BOARD_InitDebugConsole();
     CRYPTO_InitHardware();

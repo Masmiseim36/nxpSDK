@@ -23,13 +23,13 @@
 typedef struct _mcdrv_pwm3ph_ftm
 {
     GMCLIB_3COOR_T_F16 *psUABC; /* pointer to the 3-phase pwm duty cycles */
-    FTM_Type *pui32PwmBase; /* pointer to phase A top value */
-    uint16_t ui16ChanPhA; /* number of channel for phase A */
-    uint16_t ui16ChanPhB; /* number of channel for phase A top */
-    uint16_t ui16ChanPhC; /* number of channel for phase B bottom */
-    uint16_t ui16FaultNum; /* FTM Fault number for over current fault detection */
-    uint16_t ui16FaultFixNum; /* FTM fault number for fixed over-current fault detection */
-    uint16_t ui16FaultAdjNum; /* FTM fault number for adjustable over-current fault detection */
+    FTM_Type *pui32PwmBase;     /* pointer to phase A top value */
+    uint16_t ui16ChanPhA;       /* number of channel for phase A */
+    uint16_t ui16ChanPhB;       /* number of channel for phase A top */
+    uint16_t ui16ChanPhC;       /* number of channel for phase B bottom */
+    uint16_t ui16FaultNum;      /* FTM Fault number for over current fault detection */
+    uint16_t ui16FaultFixNum;   /* FTM fault number for fixed over-current fault detection */
+    uint16_t ui16FaultAdjNum;   /* FTM fault number for adjustable over-current fault detection */
 } mcdrv_pwm3ph_ftm_t;
 
 /*******************************************************************************
@@ -80,4 +80,3 @@ bool_t MCDRV_FtmPwm3PhFltGet(mcdrv_pwm3ph_ftm_t *this);
 #endif
 
 #endif /* _MCDRV_PWM3PH_FTM_H_ */
-

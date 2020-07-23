@@ -13,20 +13,20 @@
  ******************************************************************************/
 #define MID_ONETHIRD (0.333333333333333333333)
 
-typedef struct                                                                  
+typedef struct
 {
-    float fltUphA; 
-    float fltUphB; 
-    float fltUphC; 
-    float *pfltIphA; 
-    float *pfltIphB; 
-    float *pfltIphC; 
+    float fltUphA;
+    float fltUphB;
+    float fltUphC;
+    float *pfltIphA;
+    float *pfltIphB;
+    float *pfltIphC;
     float fltUrmsAvg; /* stator average phase rms voltage [V] */
     float fltIrmsAvg; /* stator average phase rms current [A] */
-    float fltPAvg; /* average stator real power [W] */
-    float fltQAvg; /* average reactive stator power [var] */
-    float fltSAvg; /* average stator apparent power [VA] */
-    int bCalcPwr; /* parameter calculation flag */
+    float fltPAvg;    /* average stator real power [W] */
+    float fltQAvg;    /* average reactive stator power [var] */
+    float fltSAvg;    /* average stator apparent power [VA] */
+    int bCalcPwr;     /* parameter calculation flag */
 } mid_calc_power_a1_t;
 
 /*******************************************************************************
@@ -45,4 +45,3 @@ void MID_ReadPwr(mid_calc_power_a1_t *sCalcPwr);
 #endif
 
 #endif /* _CALC_POWER_H_ */
-

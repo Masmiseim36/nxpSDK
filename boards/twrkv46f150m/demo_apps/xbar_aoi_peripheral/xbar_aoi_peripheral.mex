@@ -1,0 +1,535 @@
+<?xml version="1.0" encoding= "UTF-8" ?>
+<configuration name="MKV46F256xxx16" version="1.6" xsi:schemaLocation="http://mcuxpresso.nxp.com/XSD/mex_configuration_1.7 http://mcuxpresso.nxp.com/XSD/mex_configuration_1.7.xsd" uuid="968bc3b6-1b96-47b1-987b-079a47dbf35b" xmlns="http://mcuxpresso.nxp.com/XSD/mex_configuration_1.7" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <common>
+      <processor>MKV46F256xxx16</processor>
+      <package>MKV46F256VLL16</package>
+      <board>TWR-KV46F150M</board>
+      <mcu_data>ksdk2_0</mcu_data>
+      <cores selected="core0">
+         <core name="Cortex-M4F" id="core0" description="M4 core"/>
+      </cores>
+      <description></description>
+   </common>
+   <preferences>
+      <validate_boot_init_only>true</validate_boot_init_only>
+      <generate_extended_information>false</generate_extended_information>
+      <generate_code_modified_registers_only>false</generate_code_modified_registers_only>
+   </preferences>
+   <tools>
+      <pins name="Pins" version="7.0" enabled="true" update_project_code="true">
+         <pins_profile>
+            <processor_version>0.7.9</processor_version>
+         </pins_profile>
+         <functions_list>
+            <function name="BOARD_InitPins">
+               <description>Configures pin routing and optionally pin electrical features.</description>
+               <options>
+                  <callFromInitBoot>true</callFromInitBoot>
+                  <prefix>BOARD_</prefix>
+                  <coreID>core0</coreID>
+                  <enableClock>true</enableClock>
+               </options>
+               <dependencies>
+                  <dependency resourceType="Peripheral" resourceId="UART1" description="Peripheral UART1 is not initialized" problem_level="1" source="Pins:BOARD_InitPins">
+                     <feature name="initialized" evaluation="equal">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="Peripheral" resourceId="CMP0" description="Peripheral CMP0 is not initialized" problem_level="1" source="Pins:BOARD_InitPins">
+                     <feature name="initialized" evaluation="equal">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="Peripheral" resourceId="JTAG" description="Peripheral JTAG is not initialized" problem_level="1" source="Pins:BOARD_InitPins">
+                     <feature name="initialized" evaluation="equal">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="SWComponent" resourceId="platform.drivers.common" description="Pins initialization requires the COMMON Driver in the project." problem_level="2" source="Pins:BOARD_InitPins">
+                     <feature name="enabled" evaluation="equal" configuration="core0">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="SWComponent" resourceId="platform.drivers.port" description="Pins initialization requires the PORT Driver in the project." problem_level="2" source="Pins:BOARD_InitPins">
+                     <feature name="enabled" evaluation="equal" configuration="core0">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
+               </dependencies>
+               <pins>
+                  <pin peripheral="UART1" signal="TX" pin_num="1" pin_signal="ADCB_CH6f/PTE0/UART1_TX/XBAROUT10/XBARIN11"/>
+                  <pin peripheral="UART1" signal="RX" pin_num="2" pin_signal="ADCB_CH7f/PTE1/LLWU_P0/UART1_RX/XBAROUT11/XBARIN7"/>
+                  <pin peripheral="CMP0" signal="IN, 1" pin_num="79" pin_signal="CMP3_IN4/CMP0_IN1/PTC7/SPI0_SIN/XBARIN4/UART0_TX/XBAROUT7/I2C0_SDA"/>
+                  <pin peripheral="JTAG" signal="TRACE_SWO" pin_num="36" pin_signal="PTA2/UART0_TX/FTM0_CH7/CMP1_OUT/FTM1_CH0/JTAG_TDO/TRACE_SWO">
+                     <pin_features>
+                        <pin_feature name="identifier" value=""/>
+                        <pin_feature name="pull_select" value="down"/>
+                        <pin_feature name="pull_enable" value="disable"/>
+                     </pin_features>
+                  </pin>
+               </pins>
+            </function>
+         </functions_list>
+      </pins>
+      <clocks name="Clocks" version="7.0" enabled="true" update_project_code="true">
+         <clocks_profile>
+            <processor_version>0.7.9</processor_version>
+         </clocks_profile>
+         <clock_configurations>
+            <clock_configuration name="BOARD_BootClockHSRUN">
+               <description></description>
+               <options/>
+               <dependencies>
+                  <dependency resourceType="PinSignal" resourceId="OSC.EXTAL0" description="&apos;EXTAL0&apos; (Pins tool id: OSC.EXTAL0, Clocks tool id: OSC.EXTAL0) needs to be routed" problem_level="1" source="Clocks:BOARD_BootClockHSRUN">
+                     <feature name="routed" evaluation="">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="PinSignal" resourceId="OSC.EXTAL0" description="&apos;EXTAL0&apos; (Pins tool id: OSC.EXTAL0, Clocks tool id: OSC.EXTAL0) needs to have &apos;INPUT&apos; direction" problem_level="1" source="Clocks:BOARD_BootClockHSRUN">
+                     <feature name="direction" evaluation="">
+                        <data>INPUT</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="PinSignal" resourceId="OSC.XTAL0" description="&apos;XTAL0&apos; (Pins tool id: OSC.XTAL0, Clocks tool id: OSC.XTAL0) needs to be routed" problem_level="1" source="Clocks:BOARD_BootClockHSRUN">
+                     <feature name="routed" evaluation="">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="PinSignal" resourceId="OSC.XTAL0" description="&apos;XTAL0&apos; (Pins tool id: OSC.XTAL0, Clocks tool id: OSC.XTAL0) needs to have &apos;OUTPUT&apos; direction" problem_level="1" source="Clocks:BOARD_BootClockHSRUN">
+                     <feature name="direction" evaluation="">
+                        <data>OUTPUT</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="SWComponent" resourceId="platform.drivers.common" description="Clocks initialization requires the COMMON Driver in the project." problem_level="2" source="Clocks:BOARD_BootClockHSRUN">
+                     <feature name="enabled" evaluation="equal" configuration="core0">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="SWComponent" resourceId="platform.drivers.smc" description="Clocks initialization requires the SMC Driver in the project." problem_level="2" source="Clocks:BOARD_BootClockHSRUN">
+                     <feature name="enabled" evaluation="equal" configuration="core0">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
+               </dependencies>
+               <clock_sources>
+                  <clock_source id="OSC.OSC.outFreq" value="8 MHz" locked="false" enabled="true"/>
+               </clock_sources>
+               <clock_outputs>
+                  <clock_output id="Bus_clock.outFreq" value="84 MHz" locked="false" accuracy=""/>
+                  <clock_output id="Core_clock.outFreq" value="168 MHz" locked="false" accuracy=""/>
+                  <clock_output id="ERCLK32K.outFreq" value="1 kHz" locked="false" accuracy=""/>
+                  <clock_output id="Flash_clock.outFreq" value="21 MHz" locked="false" accuracy=""/>
+                  <clock_output id="LPO_clock.outFreq" value="1 kHz" locked="false" accuracy=""/>
+                  <clock_output id="MCGFFCLK.outFreq" value="250 kHz" locked="false" accuracy=""/>
+                  <clock_output id="MCGIRCLK.outFreq" value="32.768 kHz" locked="false" accuracy=""/>
+                  <clock_output id="NANOEDGE2XCLK.outFreq" value="168 MHz" locked="false" accuracy=""/>
+                  <clock_output id="OSCERCLK.outFreq" value="8 MHz" locked="false" accuracy=""/>
+                  <clock_output id="OSCERCLK_UNDIV.outFreq" value="8 MHz" locked="false" accuracy=""/>
+                  <clock_output id="System_clock.outFreq" value="168 MHz" locked="false" accuracy=""/>
+               </clock_outputs>
+               <clock_settings>
+                  <setting id="MCGMode" value="PEE" locked="false"/>
+                  <setting id="powerMode" value="HSRUN" locked="false"/>
+                  <setting id="MCG.FCRDIV.scale" value="1" locked="false"/>
+                  <setting id="MCG.FRDIV.scale" value="32" locked="false"/>
+                  <setting id="MCG.IREFS.sel" value="MCG.FRDIV" locked="false"/>
+                  <setting id="MCG.PLLS.sel" value="MCG.PLL_DIV2" locked="false"/>
+                  <setting id="MCG.VDIV.scale" value="42" locked="false"/>
+                  <setting id="MCG_C1_IRCLKEN_CFG" value="Enabled" locked="false"/>
+                  <setting id="MCG_C2_OSC_MODE_CFG" value="ModeOscLowPower" locked="false"/>
+                  <setting id="MCG_C2_RANGE0_CFG" value="High" locked="false"/>
+                  <setting id="MCG_C2_RANGE0_FRDIV_CFG" value="High" locked="false"/>
+                  <setting id="NANOEDGE2XClkConfig" value="yes" locked="false"/>
+                  <setting id="OSC_CR_ERCLKEN_CFG" value="Enabled" locked="false"/>
+                  <setting id="OSC_CR_ERCLKEN_UNDIV_CFG" value="Enabled" locked="false"/>
+                  <setting id="SIM.CLKOUTSEL.sel" value="OSC.OSCERCLK" locked="false"/>
+                  <setting id="SIM.OSC32KSEL.sel" value="PMC.LPOCLK" locked="false"/>
+                  <setting id="SIM.OUTDIV2.scale" value="2" locked="false"/>
+                  <setting id="SIM.OUTDIV4.scale" value="8" locked="false"/>
+                  <setting id="SIM.WDOGCLKS.sel" value="MCG.MCGIRCLK" locked="false"/>
+               </clock_settings>
+               <called_from_default_init>false</called_from_default_init>
+            </clock_configuration>
+            <clock_configuration name="BOARD_BootClockRUN">
+               <description></description>
+               <options/>
+               <dependencies>
+                  <dependency resourceType="PinSignal" resourceId="OSC.EXTAL0" description="&apos;EXTAL0&apos; (Pins tool id: OSC.EXTAL0, Clocks tool id: OSC.EXTAL0) needs to be routed" problem_level="1" source="Clocks:BOARD_BootClockRUN">
+                     <feature name="routed" evaluation="">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="PinSignal" resourceId="OSC.EXTAL0" description="&apos;EXTAL0&apos; (Pins tool id: OSC.EXTAL0, Clocks tool id: OSC.EXTAL0) needs to have &apos;INPUT&apos; direction" problem_level="1" source="Clocks:BOARD_BootClockRUN">
+                     <feature name="direction" evaluation="">
+                        <data>INPUT</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="PinSignal" resourceId="OSC.XTAL0" description="&apos;XTAL0&apos; (Pins tool id: OSC.XTAL0, Clocks tool id: OSC.XTAL0) needs to be routed" problem_level="1" source="Clocks:BOARD_BootClockRUN">
+                     <feature name="routed" evaluation="">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="PinSignal" resourceId="OSC.XTAL0" description="&apos;XTAL0&apos; (Pins tool id: OSC.XTAL0, Clocks tool id: OSC.XTAL0) needs to have &apos;OUTPUT&apos; direction" problem_level="1" source="Clocks:BOARD_BootClockRUN">
+                     <feature name="direction" evaluation="">
+                        <data>OUTPUT</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="SWComponent" resourceId="platform.drivers.common" description="Clocks initialization requires the COMMON Driver in the project." problem_level="2" source="Clocks:BOARD_BootClockRUN">
+                     <feature name="enabled" evaluation="equal" configuration="core0">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
+               </dependencies>
+               <clock_sources>
+                  <clock_source id="OSC.OSC.outFreq" value="8 MHz" locked="false" enabled="true"/>
+               </clock_sources>
+               <clock_outputs>
+                  <clock_output id="Bus_clock.outFreq" value="84 MHz" locked="false" accuracy=""/>
+                  <clock_output id="Core_clock.outFreq" value="84 MHz" locked="false" accuracy=""/>
+                  <clock_output id="ERCLK32K.outFreq" value="1 kHz" locked="false" accuracy=""/>
+                  <clock_output id="Flash_clock.outFreq" value="21 MHz" locked="false" accuracy=""/>
+                  <clock_output id="LPO_clock.outFreq" value="1 kHz" locked="false" accuracy=""/>
+                  <clock_output id="MCGFFCLK.outFreq" value="250 kHz" locked="false" accuracy=""/>
+                  <clock_output id="MCGIRCLK.outFreq" value="32.768 kHz" locked="false" accuracy=""/>
+                  <clock_output id="NANOEDGE2XCLK.outFreq" value="168 MHz" locked="false" accuracy=""/>
+                  <clock_output id="OSCERCLK.outFreq" value="8 MHz" locked="false" accuracy=""/>
+                  <clock_output id="OSCERCLK_UNDIV.outFreq" value="8 MHz" locked="false" accuracy=""/>
+                  <clock_output id="System_clock.outFreq" value="84 MHz" locked="false" accuracy=""/>
+               </clock_outputs>
+               <clock_settings>
+                  <setting id="MCGMode" value="PEE" locked="false"/>
+                  <setting id="MCG.FCRDIV.scale" value="1" locked="false"/>
+                  <setting id="MCG.FRDIV.scale" value="32" locked="false"/>
+                  <setting id="MCG.IREFS.sel" value="MCG.FRDIV" locked="false"/>
+                  <setting id="MCG.PLLS.sel" value="MCG.PLL_DIV2" locked="false"/>
+                  <setting id="MCG.VDIV.scale" value="42" locked="false"/>
+                  <setting id="MCG_C1_IRCLKEN_CFG" value="Enabled" locked="false"/>
+                  <setting id="MCG_C2_OSC_MODE_CFG" value="ModeOscLowPower" locked="false"/>
+                  <setting id="MCG_C2_RANGE0_CFG" value="High" locked="false"/>
+                  <setting id="MCG_C2_RANGE0_FRDIV_CFG" value="High" locked="false"/>
+                  <setting id="NANOEDGE2XClkConfig" value="yes" locked="false"/>
+                  <setting id="OSC_CR_ERCLKEN_CFG" value="Enabled" locked="false"/>
+                  <setting id="OSC_CR_ERCLKEN_UNDIV_CFG" value="Enabled" locked="false"/>
+                  <setting id="SIM.CLKOUTSEL.sel" value="OSC.OSCERCLK" locked="false"/>
+                  <setting id="SIM.OSC32KSEL.sel" value="PMC.LPOCLK" locked="false"/>
+                  <setting id="SIM.OUTDIV1.scale" value="2" locked="false"/>
+                  <setting id="SIM.OUTDIV2.scale" value="2" locked="false"/>
+                  <setting id="SIM.OUTDIV4.scale" value="8" locked="false"/>
+                  <setting id="SIM.WDOGCLKS.sel" value="MCG.MCGIRCLK" locked="false"/>
+               </clock_settings>
+               <called_from_default_init>true</called_from_default_init>
+            </clock_configuration>
+            <clock_configuration name="BOARD_BootClockVLPR">
+               <description></description>
+               <options/>
+               <dependencies>
+                  <dependency resourceType="SWComponent" resourceId="platform.drivers.common" description="Clocks initialization requires the COMMON Driver in the project." problem_level="2" source="Clocks:BOARD_BootClockVLPR">
+                     <feature name="enabled" evaluation="equal" configuration="core0">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="SWComponent" resourceId="platform.drivers.smc" description="Clocks initialization requires the SMC Driver in the project." problem_level="2" source="Clocks:BOARD_BootClockVLPR">
+                     <feature name="enabled" evaluation="equal" configuration="core0">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
+               </dependencies>
+               <clock_sources/>
+               <clock_outputs>
+                  <clock_output id="Bus_clock.outFreq" value="4 MHz" locked="false" accuracy=""/>
+                  <clock_output id="Core_clock.outFreq" value="4 MHz" locked="false" accuracy=""/>
+                  <clock_output id="ERCLK32K.outFreq" value="1 kHz" locked="false" accuracy=""/>
+                  <clock_output id="Flash_clock.outFreq" value="800 kHz" locked="false" accuracy=""/>
+                  <clock_output id="LPO_clock.outFreq" value="1 kHz" locked="false" accuracy=""/>
+                  <clock_output id="MCGIRCLK.outFreq" value="4 MHz" locked="false" accuracy=""/>
+                  <clock_output id="System_clock.outFreq" value="4 MHz" locked="false" accuracy=""/>
+               </clock_outputs>
+               <clock_settings>
+                  <setting id="MCGMode" value="BLPI" locked="false"/>
+                  <setting id="powerMode" value="VLPR" locked="false"/>
+                  <setting id="MCG.CLKS.sel" value="MCG.IRCS" locked="false"/>
+                  <setting id="MCG.FCRDIV.scale" value="1" locked="true"/>
+                  <setting id="MCG.IRCS.sel" value="MCG.FCRDIV" locked="false"/>
+                  <setting id="MCG_C1_IRCLKEN_CFG" value="Enabled" locked="false"/>
+                  <setting id="SIM.OSC32KSEL.sel" value="PMC.LPOCLK" locked="false"/>
+                  <setting id="SIM.OUTDIV4.scale" value="5" locked="false"/>
+               </clock_settings>
+               <called_from_default_init>false</called_from_default_init>
+            </clock_configuration>
+         </clock_configurations>
+      </clocks>
+      <dcdx name="DCDx" version="2.0" enabled="false" update_project_code="true">
+         <dcdx_profile>
+            <processor_version>N/A</processor_version>
+         </dcdx_profile>
+         <dcdx_configurations/>
+      </dcdx>
+      <periphs name="Peripherals" version="7.0" enabled="true" update_project_code="true">
+         <dependencies>
+            <dependency resourceType="SWComponent" resourceId="platform.drivers.aoi" description="AOI Driver not found in the toolchain/IDE project. Project will not compile!" problem_level="2" source="Peripherals">
+               <feature name="enabled" evaluation="equal">
+                  <data type="Boolean">true</data>
+               </feature>
+            </dependency>
+            <dependency resourceType="SWComponent" resourceId="platform.drivers.aoi" description="Unsupported version of the AOI Driver in the toolchain/IDE project. Required: ${required_value}, actual: ${actual_value}. Project might not compile correctly." problem_level="1" source="Peripherals">
+               <feature name="version" evaluation="equivalent">
+                  <data type="Version">2.0.0</data>
+               </feature>
+            </dependency>
+            <dependency resourceType="SWComponent" resourceId="platform.drivers.cmp" description="CMP Driver not found in the toolchain/IDE project. Project will not compile!" problem_level="2" source="Peripherals">
+               <feature name="enabled" evaluation="equal">
+                  <data type="Boolean">true</data>
+               </feature>
+            </dependency>
+            <dependency resourceType="SWComponent" resourceId="platform.drivers.cmp" description="Unsupported version of the CMP Driver in the toolchain/IDE project. Required: ${required_value}, actual: ${actual_value}. Project might not compile correctly." problem_level="1" source="Peripherals">
+               <feature name="version" evaluation="equivalent">
+                  <data type="Version">2.0.0</data>
+               </feature>
+            </dependency>
+            <dependency resourceType="SWComponent" resourceId="platform.drivers.pit" description="PIT Driver not found in the toolchain/IDE project. Project will not compile!" problem_level="2" source="Peripherals">
+               <feature name="enabled" evaluation="equal">
+                  <data type="Boolean">true</data>
+               </feature>
+            </dependency>
+            <dependency resourceType="SWComponent" resourceId="platform.drivers.pit" description="Unsupported version of the PIT Driver in the toolchain/IDE project. Required: ${required_value}, actual: ${actual_value}. Project might not compile correctly." problem_level="1" source="Peripherals">
+               <feature name="version" evaluation="equivalent">
+                  <data type="Version">2.0.0</data>
+               </feature>
+            </dependency>
+         </dependencies>
+         <peripherals_profile>
+            <processor_version>0.7.9</processor_version>
+         </peripherals_profile>
+         <functional_groups>
+            <functional_group name="BOARD_InitPeripherals" uuid="6eb47672-193b-473c-96e7-f01de9e989c5" called_from_default_init="true" id_prefix="DEMO_" core="core0">
+               <description></description>
+               <options/>
+               <dependencies>
+                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="AOI.aoi_a.0" description="Signal Input A, 0 of the peripheral AOI is not routed. Problem must be resolved in another tool." problem_level="1" source="Peripherals:BOARD_InitPeripherals">
+                     <feature name="routed" evaluation="">
+                        <data type="Boolean">true</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="AOI.aoi_b.0" description="Signal Input B, 0 of the peripheral AOI is not routed. Problem must be resolved in another tool." problem_level="1" source="Peripherals:BOARD_InitPeripherals">
+                     <feature name="routed" evaluation="">
+                        <data type="Boolean">true</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="AOI.aoi_out.0" description="Signal Output 0 of the peripheral AOI is not routed. Problem must be resolved in another tool." problem_level="1" source="Peripherals:BOARD_InitPeripherals">
+                     <feature name="routed" evaluation="">
+                        <data type="Boolean">true</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="CMP0.cmp_in.1" description="Signal Input 1 of the peripheral CMP0 is not routed. Problem must be resolved in another tool." problem_level="1" source="Peripherals:BOARD_InitPeripherals">
+                     <feature name="routed" evaluation="">
+                        <data type="Boolean">true</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="ClockOutput" resourceId="Flash_clock" description="Bus/Flash clock is inactive. Problem must be resolved in another tool." problem_level="2" source="Peripherals:BOARD_InitPeripherals">
+                     <feature name="frequency" evaluation="greaterThan">
+                        <data type="Frequency" unit="Hz">0</data>
+                     </feature>
+                  </dependency>
+               </dependencies>
+               <instances>
+                  <instance name="AOI" uuid="2951b4ca-5712-418c-9667-f224bce1a249" type="aoi" type_id="aoi_5a2efbfd7a8a5208f8f552077e2b4ded" mode="AOI" peripheral="AOI" enabled="true" comment="" custom_name_enabled="true">
+                     <config_set name="fsl_aoi">
+                        <array name="events">
+                           <struct name="0">
+                              <array name="product_terms">
+                                 <struct name="0">
+                                    <setting name="input0" value="AOI_A.0"/>
+                                    <setting name="input1" value="invertedAOI_B.0"/>
+                                    <setting name="input2" value="kAOI_LogicOne"/>
+                                    <setting name="input3" value="kAOI_LogicOne"/>
+                                 </struct>
+                                 <struct name="1">
+                                    <setting name="input0" value="kAOI_LogicZero"/>
+                                    <setting name="input1" value="kAOI_LogicOne"/>
+                                    <setting name="input2" value="kAOI_LogicOne"/>
+                                    <setting name="input3" value="kAOI_LogicOne"/>
+                                 </struct>
+                                 <struct name="2">
+                                    <setting name="input0" value="kAOI_LogicZero"/>
+                                    <setting name="input1" value="kAOI_LogicOne"/>
+                                    <setting name="input2" value="kAOI_LogicOne"/>
+                                    <setting name="input3" value="kAOI_LogicOne"/>
+                                 </struct>
+                                 <struct name="3">
+                                    <setting name="input0" value="kAOI_LogicZero"/>
+                                    <setting name="input1" value="kAOI_LogicOne"/>
+                                    <setting name="input2" value="kAOI_LogicOne"/>
+                                    <setting name="input3" value="kAOI_LogicOne"/>
+                                 </struct>
+                              </array>
+                              <setting name="define" value="true"/>
+                              <setting name="initialize" value="true"/>
+                           </struct>
+                           <struct name="1">
+                              <array name="product_terms">
+                                 <struct name="0">
+                                    <setting name="input0" value="kAOI_LogicZero"/>
+                                    <setting name="input1" value="kAOI_LogicZero"/>
+                                    <setting name="input2" value="kAOI_LogicZero"/>
+                                    <setting name="input3" value="kAOI_LogicZero"/>
+                                 </struct>
+                                 <struct name="1">
+                                    <setting name="input0" value="kAOI_LogicZero"/>
+                                    <setting name="input1" value="kAOI_LogicZero"/>
+                                    <setting name="input2" value="kAOI_LogicZero"/>
+                                    <setting name="input3" value="kAOI_LogicZero"/>
+                                 </struct>
+                                 <struct name="2">
+                                    <setting name="input0" value="kAOI_LogicZero"/>
+                                    <setting name="input1" value="kAOI_LogicZero"/>
+                                    <setting name="input2" value="kAOI_LogicZero"/>
+                                    <setting name="input3" value="kAOI_LogicZero"/>
+                                 </struct>
+                                 <struct name="3">
+                                    <setting name="input0" value="kAOI_LogicZero"/>
+                                    <setting name="input1" value="kAOI_LogicZero"/>
+                                    <setting name="input2" value="kAOI_LogicZero"/>
+                                    <setting name="input3" value="kAOI_LogicZero"/>
+                                 </struct>
+                              </array>
+                              <setting name="define" value="false"/>
+                              <setting name="initialize" value="false"/>
+                           </struct>
+                           <struct name="2">
+                              <array name="product_terms">
+                                 <struct name="0">
+                                    <setting name="input0" value="kAOI_LogicZero"/>
+                                    <setting name="input1" value="kAOI_LogicZero"/>
+                                    <setting name="input2" value="kAOI_LogicZero"/>
+                                    <setting name="input3" value="kAOI_LogicZero"/>
+                                 </struct>
+                                 <struct name="1">
+                                    <setting name="input0" value="kAOI_LogicZero"/>
+                                    <setting name="input1" value="kAOI_LogicZero"/>
+                                    <setting name="input2" value="kAOI_LogicZero"/>
+                                    <setting name="input3" value="kAOI_LogicZero"/>
+                                 </struct>
+                                 <struct name="2">
+                                    <setting name="input0" value="kAOI_LogicZero"/>
+                                    <setting name="input1" value="kAOI_LogicZero"/>
+                                    <setting name="input2" value="kAOI_LogicZero"/>
+                                    <setting name="input3" value="kAOI_LogicZero"/>
+                                 </struct>
+                                 <struct name="3">
+                                    <setting name="input0" value="kAOI_LogicZero"/>
+                                    <setting name="input1" value="kAOI_LogicZero"/>
+                                    <setting name="input2" value="kAOI_LogicZero"/>
+                                    <setting name="input3" value="kAOI_LogicZero"/>
+                                 </struct>
+                              </array>
+                              <setting name="define" value="false"/>
+                              <setting name="initialize" value="false"/>
+                           </struct>
+                           <struct name="3">
+                              <array name="product_terms">
+                                 <struct name="0">
+                                    <setting name="input0" value="kAOI_LogicZero"/>
+                                    <setting name="input1" value="kAOI_LogicZero"/>
+                                    <setting name="input2" value="kAOI_LogicZero"/>
+                                    <setting name="input3" value="kAOI_LogicZero"/>
+                                 </struct>
+                                 <struct name="1">
+                                    <setting name="input0" value="kAOI_LogicZero"/>
+                                    <setting name="input1" value="kAOI_LogicZero"/>
+                                    <setting name="input2" value="kAOI_LogicZero"/>
+                                    <setting name="input3" value="kAOI_LogicZero"/>
+                                 </struct>
+                                 <struct name="2">
+                                    <setting name="input0" value="kAOI_LogicZero"/>
+                                    <setting name="input1" value="kAOI_LogicZero"/>
+                                    <setting name="input2" value="kAOI_LogicZero"/>
+                                    <setting name="input3" value="kAOI_LogicZero"/>
+                                 </struct>
+                                 <struct name="3">
+                                    <setting name="input0" value="kAOI_LogicZero"/>
+                                    <setting name="input1" value="kAOI_LogicZero"/>
+                                    <setting name="input2" value="kAOI_LogicZero"/>
+                                    <setting name="input3" value="kAOI_LogicZero"/>
+                                 </struct>
+                              </array>
+                              <setting name="define" value="false"/>
+                              <setting name="initialize" value="false"/>
+                           </struct>
+                        </array>
+                     </config_set>
+                  </instance>
+                  <instance name="CMP" uuid="96d4c9d5-9f3e-4044-a15a-5a290f5e48a9" type="cmp" type_id="cmp_306724f57b92dbe1771f1514089d2b18" mode="polling" peripheral="CMP0" enabled="true" comment="" custom_name_enabled="true">
+                     <config_set name="fsl_filter" quick_selection="ContinuousMode">
+                        <struct name="filter_config">
+                           <set name="filteringOptions">
+                              <selected/>
+                           </set>
+                        </struct>
+                     </config_set>
+                     <config_set name="fsl_cmp">
+                        <struct name="main_config">
+                           <setting name="explicitEnableCmp" value="true"/>
+                           <setting name="hysteresisMode" value="kCMP_HysteresisLevel0"/>
+                           <setting name="enableHighSpeed" value="false"/>
+                           <setting name="enableInvertOutput" value="false"/>
+                           <setting name="useUnfilteredOutput" value="false"/>
+                           <setting name="enablePinOut" value="false"/>
+                           <setting name="enableTriggerMode" value="false"/>
+                        </struct>
+                        <setting name="positiveChannel" value="IN.7"/>
+                        <setting name="negativeChannel" value="IN.1"/>
+                     </config_set>
+                     <config_set name="fsl_dac">
+                        <setting name="enableDAC" value="true"/>
+                        <struct name="dac_config">
+                           <setting name="referenceVoltageSource" value="DAC_6bit_VIN2"/>
+                           <setting name="DACValue" value="33"/>
+                        </struct>
+                     </config_set>
+                  </instance>
+                  <instance name="PIT" uuid="5bb07567-68b1-4edc-99c3-2fb93a819593" type="pit" type_id="pit_a4782ba5223c8a2527ba91aeb2bc4159" mode="LPTMR_GENERAL" peripheral="PIT" enabled="true" comment="" custom_name_enabled="true">
+                     <config_set name="fsl_pit">
+                        <setting name="enableRunInDebug" value="false"/>
+                        <struct name="timingConfig">
+                           <setting name="clockSource" value="BusInterfaceClock"/>
+                           <setting name="clockSourceFreq" value="BOARD_BootClockRUN"/>
+                        </struct>
+                        <array name="channels">
+                           <struct name="0">
+                              <setting name="channel_id" value="CHANNEL_0"/>
+                              <setting name="channelNumber" value="0"/>
+                              <setting name="enableChain" value="false"/>
+                              <setting name="timerPeriod" value="500ms"/>
+                              <setting name="startTimer" value="true"/>
+                              <setting name="enableInterrupt" value="false"/>
+                              <struct name="interrupt">
+                                 <setting name="IRQn" value="PIT0_IRQn"/>
+                                 <setting name="enable_priority" value="false"/>
+                                 <setting name="priority" value="0"/>
+                                 <setting name="enable_custom_name" value="false"/>
+                              </struct>
+                           </struct>
+                        </array>
+                     </config_set>
+                  </instance>
+               </instances>
+            </functional_group>
+         </functional_groups>
+         <components>
+            <component name="system" uuid="419a5d95-97de-48bc-9ffd-5d379b57d3c8" type_id="system_54b53072540eeeb8f8e9343e71f28176">
+               <config_set_global name="global_system_definitions"/>
+            </component>
+            <component name="msg" uuid="55b91529-181e-47f9-9f17-ba29f3862045" type_id="msg_6e2baaf3b97dbeef01c0043275f9a0e7">
+               <config_set_global name="global_messages"/>
+            </component>
+         </components>
+      </periphs>
+      <tee name="TEE" version="1.0" enabled="false" update_project_code="true">
+         <tee_profile>
+            <processor_version>N/A</processor_version>
+         </tee_profile>
+         <global_options/>
+         <user_memory_regions/>
+      </tee>
+   </tools>
+</configuration>

@@ -31,15 +31,15 @@ clock_setup_t g_sClockSetup;
  ******************************************************************************/
 
 /*!
-* @brief   void MCDRV_Init_M1(void)
-*           - Motor control driver main initialization
-*           - Calls initialization functions of peripherals required for motor
-*             control functionality
-*
-* @param   void
-*
-* @return  none
-*/
+ * @brief   void MCDRV_Init_M1(void)
+ *           - Motor control driver main initialization
+ *           - Calls initialization functions of peripherals required for motor
+ *             control functionality
+ *
+ * @param   void
+ *
+ * @return  none
+ */
 void MCDRV_Init_M1(void)
 {
     /* Init application clock dependent variables */
@@ -56,40 +56,40 @@ void MCDRV_Init_M1(void)
 }
 
 /*!
-* @brief      Core, bus, flash clock setup
-*
-* @param      void
-*
-* @return     none
-*/
+ * @brief      Core, bus, flash clock setup
+ *
+ * @param      void
+ *
+ * @return     none
+ */
 void InitClock(void)
 {
     /* Calculate clock dependant variables for PMSM sensorless control algorithm */
-    g_sClockSetup.ui32FastPeripheralClock  = CLOCK_GetFreq(kCLOCK_FastPeriphClk); 
-    g_sClockSetup.ui32BusClock             = CLOCK_GetFreq(kCLOCK_BusClk); 
-    g_sClockSetup.ui16M1PwmFreq = M1_PWM_FREQ; /* 10kHz */
-                                             /* PWM module calculated as follows:
-                                              * PWM_MOD = PWM_CLOCK / PWM_FREQUNCY = 84 MHz / 10 kHz = 8400   */
-    g_sClockSetup.ui16M1PwmModulo = g_sClockSetup.ui32FastPeripheralClock / g_sClockSetup.ui16M1PwmFreq;
-    g_sClockSetup.ui16M1PwmDeadTime = g_sClockSetup.ui32FastPeripheralClock / (1000000000U / M1_PWM_DEADTIME);
+    g_sClockSetup.ui32FastPeripheralClock = CLOCK_GetFreq(kCLOCK_FastPeriphClk);
+    g_sClockSetup.ui32BusClock            = CLOCK_GetFreq(kCLOCK_BusClk);
+    g_sClockSetup.ui16M1PwmFreq           = M1_PWM_FREQ; /* 10kHz */
+                                                         /* PWM module calculated as follows:
+                                                          * PWM_MOD = PWM_CLOCK / PWM_FREQUNCY = 84 MHz / 10 kHz = 8400   */
+    g_sClockSetup.ui16M1PwmModulo     = g_sClockSetup.ui32FastPeripheralClock / g_sClockSetup.ui16M1PwmFreq;
+    g_sClockSetup.ui16M1PwmDeadTime   = g_sClockSetup.ui32FastPeripheralClock / (1000000000U / M1_PWM_DEADTIME);
     g_sClockSetup.ui16M1SpeedLoopFreq = M1_SPEED_LOOP_FREQ; /* 1kHz */
 }
 
 /*!
-* @brief   void InitPWMA(void)
-*           - Initialization of the eFlexPWMA peripheral for motor M1
-*           - 3-phase center-aligned PWM
-*
-* @param   void
-*
-* @return  none
-*/
+ * @brief   void InitPWMA(void)
+ *           - Initialization of the eFlexPWMA peripheral for motor M1
+ *           - 3-phase center-aligned PWM
+ *
+ * @param   void
+ *
+ * @return  none
+ */
 void InitPWMA(void)
 {
     /* Enable clock for eFlexPWM modules 0,1 and 2 in SIM module */
     SIM->SCGC4 |=
         SIM_SCGC4_eFlexPWM0_MASK | SIM_SCGC4_eFlexPWM1_MASK | SIM_SCGC4_eFlexPWM2_MASK | SIM_SCGC4_eFlexPWM3_MASK;
-    
+
     /* Enable clock for XBARA module */
     SIM->SCGC5 |= SIM_SCGC5_XBARA_MASK;
 
@@ -114,9 +114,10 @@ void InitPWMA(void)
     PWMA->SM[0].VAL1 = PWM_VAL1_VAL1((uint16_t)((g_sClockSetup.ui16M1PwmModulo / 2) - 1));
     PWMA->SM[1].VAL1 = PWM_VAL1_VAL1((uint16_t)((g_sClockSetup.ui16M1PwmModulo / 2) - 1));
     PWMA->SM[2].VAL1 = PWM_VAL1_VAL1((uint16_t)((g_sClockSetup.ui16M1PwmModulo / 2) - 1));
-    PWMA->SM[3].VAL1 = PWM_VAL1_VAL1((uint16_t)((g_sClockSetup.ui16M1PwmModulo * 
-                                                 M1_FOC_FREQ_VS_PWM_FREQ) - 
-                                                (g_sClockSetup.ui16M1PwmModulo / 2)) / 2 - 1);
+    PWMA->SM[3].VAL1 = PWM_VAL1_VAL1(
+        (uint16_t)((g_sClockSetup.ui16M1PwmModulo * M1_FOC_FREQ_VS_PWM_FREQ) - (g_sClockSetup.ui16M1PwmModulo / 2)) /
+            2 -
+        1);
 
     PWMA->SM[0].VAL2 = PWM_VAL2_VAL2((uint16_t)(-(g_sClockSetup.ui16M1PwmModulo / 4)));
     PWMA->SM[1].VAL2 = PWM_VAL2_VAL2((uint16_t)(-(g_sClockSetup.ui16M1PwmModulo / 4)));
@@ -214,14 +215,14 @@ void InitPWMA(void)
 }
 
 /*!
-* @brief   void InitFTM1(void)
-*           - Initialization of the FTM2 peripheral
-*           - performs slow control loop counter
-*
-* @param   void
-*
-* @return  none
-*/
+ * @brief   void InitFTM1(void)
+ *           - Initialization of the FTM2 peripheral
+ *           - performs slow control loop counter
+ *
+ * @param   void
+ *
+ * @return  none
+ */
 void InitFTM1(void)
 {
     /* enable clock to FTM module */
@@ -258,14 +259,14 @@ void InitFTM1(void)
 }
 
 /*!
-* @brief   void InitADC12(void)
-*           - Initialization of the ADC12 peripheral
-*           - Initialization of the A/D converter for current and voltage sensing
-*
-* @param   void
-*
-* @return  none
-*/
+ * @brief   void InitADC12(void)
+ *           - Initialization of the ADC12 peripheral
+ *           - Initialization of the A/D converter for current and voltage sensing
+ *
+ * @param   void
+ *
+ * @return  none
+ */
 void InitADC12(void)
 {
     /* Enable clock for ADC modules */
@@ -279,10 +280,10 @@ void InitADC12(void)
     /* Start ADC */
     ADC->CTRL1 &= ~(ADC_CTRL1_STOP0_MASK);
 
-    /* input clock is 24.66MHz (74MHz Fast Peripheral clock divided by 3), 
+    /* input clock is 24.66MHz (74MHz Fast Peripheral clock divided by 3),
        single ended */
     /* Simultaneous mode */
-    ADC->CTRL2 =(ADC_CTRL2_DIV0(2) | ADC_CTRL2_STOP1(1) | ADC_CTRL2_SYNC1(1) | ADC_CTRL2_SIMULT(1)); 
+    ADC->CTRL2 = (ADC_CTRL2_DIV0(2) | ADC_CTRL2_STOP1(1) | ADC_CTRL2_SYNC1(1) | ADC_CTRL2_SIMULT(1));
 
     /* Enable samples 0, 1, 8, 9 */
     ADC->SDIS = ADC_SDIS_DS(0xFCFC);
@@ -295,40 +296,40 @@ void InitADC12(void)
     /**************************************/
     /* offset filter window */
     g_sM1AdcSensor.ui16OffsetFiltWindow = ADC_OFFSET_WINDOW;
-    
+
     /* adc base address */
     g_sM1AdcSensor.pui32AdcBase = (ADC_Type *)ADC;
-        
+
     /* Phase current measurement */
     /* Sector 1,6 - measured currents Ic & Ib */
     /* ADC0, channel Ic = M1_ADC0_PH_C, , SAMPLE & RESULT = 0 */
     g_sM1AdcSensor.sCurrSec16.ui16ChanNumPhaC = M1_ADC0_PH_C;
-    g_sM1AdcSensor.sCurrSec16.ui16AdcNumPhaC = ADC0;
+    g_sM1AdcSensor.sCurrSec16.ui16AdcNumPhaC  = ADC0;
     /* ADC1, channel Ib = M1_ADC1_PH_B, , SAMPLE & RESULT = 8 */
     g_sM1AdcSensor.sCurrSec16.ui16ChanNumPhaB = M1_ADC1_PH_B;
-    g_sM1AdcSensor.sCurrSec16.ui16AdcNumPhaB = ADC1;
+    g_sM1AdcSensor.sCurrSec16.ui16AdcNumPhaB  = ADC1;
 
     /* Sector 2,3 - measured currents Ic & Ia*/
     /* ADC0, channel Ic = M1_ADC0_PH_C, SAMPLE & RESULT = 0 */
     g_sM1AdcSensor.sCurrSec23.ui16ChanNumPhaC = M1_ADC1_PH_C;
-    g_sM1AdcSensor.sCurrSec23.ui16AdcNumPhaC = ADC1;
+    g_sM1AdcSensor.sCurrSec23.ui16AdcNumPhaC  = ADC1;
     /* ADC1, channel Ia = M1_ADC1_PH_A, SAMPLE & RESULT = 8 */
     g_sM1AdcSensor.sCurrSec23.ui16ChanNumPhaA = M1_ADC0_PH_A;
-    g_sM1AdcSensor.sCurrSec23.ui16AdcNumPhaA = ADC0;
+    g_sM1AdcSensor.sCurrSec23.ui16AdcNumPhaA  = ADC0;
 
     /* Sector 4,5 - measured currents Ia & Ib */
     /* ADC0, channel Ia = M1_ADC0_PH_A, SAMPLE & RESULT = 0 */
     g_sM1AdcSensor.sCurrSec45.ui16ChanNumPhaA = M1_ADC0_PH_A;
-    g_sM1AdcSensor.sCurrSec45.ui16AdcNumPhaA = ADC0;
+    g_sM1AdcSensor.sCurrSec45.ui16AdcNumPhaA  = ADC0;
     /* ADC1, channel Ib = M1_ADC1_PH_B, SAMPLE & RESULT = 8  */
     g_sM1AdcSensor.sCurrSec45.ui16ChanNumPhaB = M1_ADC1_PH_B;
-    g_sM1AdcSensor.sCurrSec45.ui16AdcNumPhaB = ADC1;
-    
+    g_sM1AdcSensor.sCurrSec45.ui16AdcNumPhaB  = ADC1;
+
     /* UDCbus channel measurement */
     /*  channel Udcb = M1_ADC1_UDCB, SAMPLE & RESULT = 9 */
     g_sM1AdcSensor.ui16ChanNumVDcb = M1_ADC0_UDCB;
-    g_sM1AdcSensor.ui16AdcNumVDcb = ADC0;
-    
+    g_sM1AdcSensor.ui16AdcNumVDcb  = ADC0;
+
     /* Assign channels and init all pointers */
     MCDRV_Curr3Ph2ShChanAssignInit(&g_sM1AdcSensor);
 
@@ -338,30 +339,31 @@ void InitADC12(void)
 }
 
 /*!
-*@brief      Set Inrush relay on HVP
-*
-*@param      none
-*            
-*@return     none
-*/
+ *@brief      Set Inrush relay on HVP
+ *
+ *@param      none
+ *
+ *@return     none
+ */
 void InitRelay(void)
 {
     volatile register uint32_t ui32DelayMs = 0;
 
     /* setup SysTick */
     SysTick->LOAD = 0xFFFFFF;
-    SysTick->VAL = SysTick->LOAD;
+    SysTick->VAL  = SysTick->LOAD;
     SysTick->CTRL |= SysTick_CTRL_CLKSOURCE_Msk;
     SysTick->CTRL |= SysTick_CTRL_ENABLE_Msk;
-        
+
     /* wait 1000 milliseconds to turn on the relay */
-    while(ui32DelayMs++ < 1000)
+    while (ui32DelayMs++ < 1000)
     {
-        while(((SysTick->LOAD - SysTick->VAL) * 1000) < 
-                SystemCoreClock){}
+        while (((SysTick->LOAD - SysTick->VAL) * 1000) < SystemCoreClock)
+        {
+        }
         SysTick->VAL = SysTick->LOAD;
     }
-    
+
     /* turn on relay */
     GPIOC->PSOR = GPIO_PSOR_PTSO(1 << 13);
 }

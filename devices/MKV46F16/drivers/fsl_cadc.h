@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -22,8 +22,8 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief CADC driver version 2.0.1. */
-#define FSL_CADC_DRIVER_VERSION (MAKE_VERSION(2, 0, 1))
+/*! @brief CADC driver version 2.1.0. */
+#define FSL_CADC_DRIVER_VERSION (MAKE_VERSION(2, 1, 0))
 /*@}*/
 
 #define CADC_SAMPLE_MASK(index) (1U << (index)) /*!< Convert index to mask for sample slot. */
@@ -122,10 +122,10 @@ typedef enum _cadc_speed_mode
  */
 typedef enum _cadc_zero_crossing_mode
 {
-    kCADC_ZeroCorssingDisabled          = 0U, /*!< Zero Crossing disabled. */
-    kCADC_ZeroCorssingForPtoNSign       = 1U, /*!< Zero Crossing enabled for positive to negative sign change. */
-    kCADC_ZeroCorssingForNtoPSign       = 2U, /*!< Zero Crossing enabled for negative to positive sign change. */
-    kCADC_ZeroCorssingForAnySignChanged = 3U, /*!< Zero Crossing enabled for any sign change. */
+    kCADC_ZeroCrossingDisabled          = 0U, /*!< Zero Crossing disabled. */
+    kCADC_ZeroCrossingForPtoNSign       = 1U, /*!< Zero Crossing enabled for positive-to-negative sign change. */
+    kCADC_ZeroCrossingForNtoPSign       = 2U, /*!< Zero Crossing enabled for negative-to-positive sign change. */
+    kCADC_ZeroCrossingForAnySignChanged = 3U, /*!< Zero Crossing enabled for any sign change. */
 } cadc_zero_crossing_mode_t;
 
 /*!
@@ -145,7 +145,7 @@ typedef struct _cadc_config
 {
     cadc_dual_converter_scan_mode_t dualConverterScanMode; /*!< Dual converter's scan mode. */
     bool enableSimultaneousMode;                           /*!< Using Simultaneous mode. */
-    cadc_dma_trigger_source_t DMATriggerSoruce;            /*!< DMA trigger source. */
+    cadc_dma_trigger_source_t DMATriggerSource;            /*!< DMA trigger source. */
     cadc_idle_work_mode_t idleWorkMode;                    /*!< Converter's work mode when in idle. */
     uint16_t powerUpDelay; /*!< Delay clock count to wait for the clock is stable. Available range is 0-63.*/
 } cadc_config_t;
@@ -216,7 +216,7 @@ void CADC_Init(ADC_Type *base, const cadc_config_t *config);
  * @code
  *   config->dualConverterScanMode = kCADC_DualConverterWorkAsTriggeredParallel;
  *   config->enableSimultaneousMode = true;
- *   config->DMATriggerSoruce = kCADC_DMATriggerSourceAsEndOfScan;
+ *   config->DMATriggerSource = kCADC_DMATriggerSourceAsEndOfScan;
  *   config->idleWorkMode = kCADC_IdleKeepNormal;
  *   config->powerUpDelay = 26U;
  * @endcode

@@ -14,6 +14,15 @@
 #ifndef __LWIPOPTS_H__
 #define __LWIPOPTS_H__
 
+#include "fsl_device_registers.h"
+
+#ifndef USE_RTOS
+#ifdef FSL_RTOS_FREE_RTOS
+#define USE_RTOS 1
+#else
+#define USE_RTOS 0
+#endif /* FSL_RTOS_FREE_RTOS */
+#endif /* USE_RTOS */
 
 #if USE_RTOS
 
@@ -57,7 +66,36 @@
  */
 #define LWIP_SOCKET             0
 
+/**
+ * LWIP_ALLOW_MEM_FREE_FROM_OTHER_CONTEXT=1: we need to free PBUF_RAM pbufs
+ * from ISR context on LPC.
+ */
+#if defined(FSL_FEATURE_SOC_LPC_ENET_COUNT) && (FSL_FEATURE_SOC_LPC_ENET_COUNT > 0)
+#ifndef LWIP_ALLOW_MEM_FREE_FROM_OTHER_CONTEXT
+#define LWIP_ALLOW_MEM_FREE_FROM_OTHER_CONTEXT 1
 #endif
+#endif
+
+#endif
+
+/* ---------- Core locking ---------- */
+
+#if !NO_SYS
+#define LWIP_TCPIP_CORE_LOCKING 1
+
+void sys_lock_tcpip_core(void);
+#define LOCK_TCPIP_CORE() sys_lock_tcpip_core()
+
+void sys_unlock_tcpip_core(void);
+#define UNLOCK_TCPIP_CORE() sys_unlock_tcpip_core()
+
+void sys_mark_tcpip_thread(void);
+#define LWIP_MARK_TCPIP_THREAD() sys_mark_tcpip_thread()
+#endif
+
+void sys_check_core_locking(void);
+#define LWIP_ASSERT_CORE_LOCKED() sys_check_core_locking()
+
 /* ---------- Memory options ---------- */
 /**
  * MEM_ALIGNMENT: should be set to the alignment of the CPU

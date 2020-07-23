@@ -31,4 +31,3 @@ extern mid_struct_t g_sMID;
 /*! @brief global variables */
 
 #endif /* _MID_SM_STATES_ */
-

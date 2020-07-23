@@ -16,13 +16,13 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_DSPI_MASTER_BASEADDR SPI0
-#define DSPI_MASTER_CLK_SRC DSPI0_CLK_SRC
-#define DSPI_MASTER_CLK_FREQ CLOCK_GetFreq(DSPI0_CLK_SRC)
-#define EXAMPLE_DSPI_MASTER_PCS_FOR_INIT kDSPI_Pcs0
+#define EXAMPLE_DSPI_MASTER_BASEADDR         SPI0
+#define DSPI_MASTER_CLK_SRC                  DSPI0_CLK_SRC
+#define DSPI_MASTER_CLK_FREQ                 CLOCK_GetFreq(DSPI0_CLK_SRC)
+#define EXAMPLE_DSPI_MASTER_PCS_FOR_INIT     kDSPI_Pcs0
 #define EXAMPLE_DSPI_MASTER_PCS_FOR_TRANSFER kDSPI_MasterPcs0
-#define EXAMPLE_DSPI_DEALY_COUNT 0xfffffU
-#define TRANSFER_SIZE 64U         /*! Transfer dataSize */
+#define EXAMPLE_DSPI_DEALY_COUNT             0xfffffU
+#define TRANSFER_SIZE     64U     /*! Transfer dataSize */
 #define TRANSFER_BAUDRATE 500000U /*! Transfer baudrate - 500k */
 
 /*******************************************************************************
@@ -30,7 +30,7 @@
  ******************************************************************************/
 uint8_t masterRxData[TRANSFER_SIZE] = {0U};
 uint8_t masterTxData[TRANSFER_SIZE] = {0U};
-
+volatile uint32_t g_systickCounter  = 20U;
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -38,6 +38,13 @@ uint8_t masterTxData[TRANSFER_SIZE] = {0U};
 /*******************************************************************************
  * Code
  ******************************************************************************/
+void SysTick_Handler(void)
+{
+    if (g_systickCounter != 0U)
+    {
+        g_systickCounter--;
+    }
+}
 
 int main(void)
 {
@@ -115,9 +122,16 @@ int main(void)
         DSPI_MasterTransferBlocking(EXAMPLE_DSPI_MASTER_BASEADDR, &masterXfer);
 
         /* Delay to wait slave is ready */
-        for (i = 0U; i < EXAMPLE_DSPI_DEALY_COUNT; i++)
+        if (SysTick_Config(SystemCoreClock / 1000U))
         {
-            __NOP();
+            while (1)
+            {
+            }
+        }
+        /* Delay 20 ms */
+        g_systickCounter = 20U;
+        while (g_systickCounter != 0U)
+        {
         }
 
         /* Start master transfer, receive data from slave */

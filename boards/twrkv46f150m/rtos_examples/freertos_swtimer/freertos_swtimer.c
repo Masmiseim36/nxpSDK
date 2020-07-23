@@ -45,7 +45,7 @@ int main(void)
     TimerHandle_t SwTimerHandle = NULL;
 
     /* Init board hardware. */
-    BOARD_InitPins();
+    BOARD_InitBootPins();
     BOARD_BootClockRUN();
     BOARD_InitDebugConsole();
     SystemCoreClockUpdate();

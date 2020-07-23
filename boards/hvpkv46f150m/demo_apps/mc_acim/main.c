@@ -16,7 +16,7 @@
  * Variables
  ******************************************************************************/
 /* CPU load measurement using Systick*/
-uint32_t g_ui32NumberOfCycles = 0;
+uint32_t g_ui32NumberOfCycles    = 0;
 uint32_t g_ui32MaxNumberOfCycles = 0;
 
 /* Demo mode enabled/disabled */
@@ -26,13 +26,13 @@ bool_t bDemoMode = FALSE;
 static uint32_t ui32SpeedStimulatorCnt = 0;
 
 /* Application and board ID  */
-app_ver_t   g_sAppId = {
-    "hvp-kv46f",        /* board id */
-    "acim",             /* motor type */
-    MCRSP_VER,          /* sw version */
+app_ver_t g_sAppId = {
+    "hvp-kv46f", /* board id */
+    "acim",      /* motor type */
+    MCRSP_VER,   /* sw version */
 };
 /* Structure used in FM to get required ID's */
-app_ver_t   g_sAppIdFM;
+app_ver_t g_sAppIdFM;
 
 /*******************************************************************************
  * Prototypes
@@ -43,13 +43,13 @@ app_ver_t   g_sAppIdFM;
  ******************************************************************************/
 
 /*!
-* @brief   Application main function processing peripheral function calling and
-*          infinite loop
-*
-* @param   void
-*
-* @return  none
-*/
+ * @brief   Application main function processing peripheral function calling and
+ *          infinite loop
+ *
+ * @param   void
+ *
+ * @return  none
+ */
 int main(void)
 {
     uint32_t ui32PrimaskReg;
@@ -59,18 +59,18 @@ int main(void)
 
     /* Init board hardware. */
     BOARD_Init();
-           
+
     /* Turn on the HVP inrush relay for 1s */
     InitRelay();
 
     /* initialize peripheral motor control driver for motor M1*/
     MCDRV_Init_M1();
-    
-    /* Init UART for FreeMaster communication */ 
+
+    /* Init UART for FreeMaster communication */
     BOARD_InitUART(g_sClockSetup.ui32FastPeripheralClock, BOARD_FMSTR_UART_BAUDRATE);
-    
+
     /* SysTick initialization for CPU load measurement */
-    InitSysTick();         
+    InitSysTick();
 
     /* FreeMaster init */
     FMSTR_Init();
@@ -79,7 +79,7 @@ int main(void)
     M1_SetAppSwitch(0);
 
     /* Disable demo mode after reset */
-    bDemoMode = FALSE;
+    bDemoMode              = FALSE;
     ui32SpeedStimulatorCnt = 0;
 
     /* Pass actual demo id and board info to FM */
@@ -89,20 +89,20 @@ int main(void)
     EnableGlobalIRQ(ui32PrimaskReg);
 
     /* Infinite loop */
-    while(1)
+    while (1)
     {
         FMSTR_Poll();
     }
 }
 
 /*!
-* @brief   ADC conversion complete ISR called with 100us period processes
-*           - motor M1 fast application machine function
-*
-* @param   void
-*
-* @return  none
-*/
+ * @brief   ADC conversion complete ISR called with 100us period processes
+ *           - motor M1 fast application machine function
+ *
+ * @param   void
+ *
+ * @return  none
+ */
 void ADCA_IRQHandler(void)
 {
     /* Start CPU tick number couting */
@@ -113,7 +113,8 @@ void ADCA_IRQHandler(void)
 
     /* stop CPU tick number couting and store actual and maximum ticks */
     SYSTICK_STOP_COUNT(g_ui32NumberOfCycles);
-    g_ui32MaxNumberOfCycles = g_ui32NumberOfCycles>g_ui32MaxNumberOfCycles ? g_ui32NumberOfCycles : g_ui32MaxNumberOfCycles;
+    g_ui32MaxNumberOfCycles =
+        g_ui32NumberOfCycles > g_ui32MaxNumberOfCycles ? g_ui32NumberOfCycles : g_ui32MaxNumberOfCycles;
 
     /* Call FreeMASTER recorder */
     FMSTR_Recorder(0);
@@ -122,17 +123,17 @@ void ADCA_IRQHandler(void)
     ADC->STAT |= ADC_STAT_EOSI0_MASK;
 
     /* Add empty instructions for correct interrupt flag clearing */
-    M1_END_OF_ISR;  
+    M1_END_OF_ISR;
 }
 
 /*!
-* @brief   FTM1 reload ISR called with 1ms period and processes following functions:
-*           - motor M1 slow application machine function
-*
-* @param   void
-*
-* @return  none
-*/
+ * @brief   FTM1 reload ISR called with 1ms period and processes following functions:
+ *           - motor M1 slow application machine function
+ *
+ * @param   void
+ *
+ * @return  none
+ */
 void FTM1_IRQHandler(void)
 {
     /* Slow StateMachine call */
@@ -145,18 +146,18 @@ void FTM1_IRQHandler(void)
     FTM1->SC &= ~(FTM_SC_TOF_MASK);
 
     /* Add empty instructions for correct interrupt flag clearing */
-    M1_END_OF_ISR;  
+    M1_END_OF_ISR;
 }
 
 /*!
-* @brief   DemoSpeedStimulator
-*           - When demo mode is enabled it changes the required speed according
-*             to predefined profile
-*
-* @param   void
-*
-* @return  none
-*/
+ * @brief   DemoSpeedStimulator
+ *           - When demo mode is enabled it changes the required speed according
+ *             to predefined profile
+ *
+ * @param   void
+ *
+ * @return  none
+ */
 void DemoSpeedStimulator(void)
 {
     if (bDemoMode)
@@ -164,26 +165,26 @@ void DemoSpeedStimulator(void)
         ui32SpeedStimulatorCnt++;
         switch (ui32SpeedStimulatorCnt)
         {
-        case 1:
-            M1_SetSpeed(1000.0F);
-            break;        
-        case (5000):
-            M1_SetSpeed(1400.0F);
-            break;
-        case (10000):
-            M1_SetSpeed(-1000.0F);
-            break;
-        case (15000):
-            M1_SetSpeed(-1400.0F);
-            break; 
-        case (20000):
-            M1_SetSpeed(200.0F);
-            break;
-        case (25000):
-            ui32SpeedStimulatorCnt = 0;
-            break;
-        default:
-            break;
+            case 1:
+                M1_SetSpeed(1000.0F);
+                break;
+            case (5000):
+                M1_SetSpeed(1400.0F);
+                break;
+            case (10000):
+                M1_SetSpeed(-1000.0F);
+                break;
+            case (15000):
+                M1_SetSpeed(-1400.0F);
+                break;
+            case (20000):
+                M1_SetSpeed(200.0F);
+                break;
+            case (25000):
+                ui32SpeedStimulatorCnt = 0;
+                break;
+            default:
+                break;
         }
     }
 }
@@ -191,22 +192,22 @@ void DemoSpeedStimulator(void)
 void BOARD_Init(void)
 {
     /* Initialize clock configuration */
-    BOARD_BootClockHSRUN();  
-    
+    BOARD_BootClockHSRUN();
+
     /* Init pins set in pin_mux file */
     BOARD_InitBootPins();
-    
+
     /* Init GPIO pins */
-    BOARD_InitGPIO();     
+    BOARD_InitGPIO();
 }
 
 /*!
-*@brief      Initialization of the GPIO pins
-*
-*@param      none
-*            
-*@return     none
-*/
+ *@brief      Initialization of the GPIO pins
+ *
+ *@param      none
+ *
+ *@return     none
+ */
 void BOARD_InitGPIO(void)
 {
     /* LED pin configuration */
@@ -225,37 +226,37 @@ void BOARD_InitGPIO(void)
     GPIO_PinInit(GPIOC, 16U, &led_config);
 
     /* enable port for Inrush relay */
-    GPIO_PinInit(GPIOC, 13U, &led_config);   
+    GPIO_PinInit(GPIOC, 13U, &led_config);
 }
 
 /*!
-*@brief      SysTick initialization for CPU cycle measurement
-*
-*@param      none
-*            
-*@return     none
-*/
+ *@brief      SysTick initialization for CPU cycle measurement
+ *
+ *@param      none
+ *
+ *@return     none
+ */
 void InitSysTick(void)
 {
     /* Initialize SysTick core timer to run free */
     /* Set period to maximum value 2^24*/
     SysTick->LOAD = 0xFFFFFF;
-    
+
     /*Clock source - System Clock*/
     SysTick->CTRL |= SysTick_CTRL_CLKSOURCE_Msk;
-    
+
     /*Start Sys Timer*/
     SysTick->CTRL |= SysTick_CTRL_ENABLE_Msk;
 }
 
 /*!
-*@brief      Initialization of the UART module 
-*
-*@param      u32UClockSpeedinHz  UART module input clock in Hz
-*            u32BaudRate         Baud rate
-*            
-*@return     none
-*/
+ *@brief      Initialization of the UART module
+ *
+ *@param      u32UClockSpeedinHz  UART module input clock in Hz
+ *            u32BaudRate         Baud rate
+ *
+ *@return     none
+ */
 void BOARD_InitUART(uint32_t u32UClockSpeedinHz, uint32_t u32BaudRate)
 {
     uart_config_t config;
@@ -271,17 +272,17 @@ void BOARD_InitUART(uint32_t u32UClockSpeedinHz, uint32_t u32BaudRate)
      */
     UART_GetDefaultConfig(&config);
     config.baudRate_Bps = BOARD_FMSTR_UART_BAUDRATE;
-    config.enableTx = true;
-    config.enableRx = true;
+    config.enableTx     = true;
+    config.enableRx     = true;
 
     UART_Init(BOARD_FMSTR_UART_PORT, &config, u32UClockSpeedinHz);
-    
+
     /* Register communication module used by FreeMASTER driver. */
     FMSTR_SerialSetBaseAddress(BOARD_FMSTR_UART_PORT);
 
-    #if FMSTR_SHORT_INTR || FMSTR_LONG_INTR
-        /* Enable UART interrupts. */
-        EnableIRQ(BOARD_UART_IRQ);
-        EnableGlobalIRQ(0);
-    #endif   
+#if FMSTR_SHORT_INTR || FMSTR_LONG_INTR
+    /* Enable UART interrupts. */
+    EnableIRQ(BOARD_UART_IRQ);
+    EnableGlobalIRQ(0);
+#endif
 }

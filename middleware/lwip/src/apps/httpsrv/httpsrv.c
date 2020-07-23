@@ -1,9 +1,9 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 NXP
+ * Copyright 2016,2019 NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -193,6 +193,11 @@ uint32_t HTTPSRV_cgi_read(uint32_t ses_handle, char *buffer, uint32_t length)
     if ((session == NULL) || (buffer == NULL) || (length == 0))
     {
         return (0);
+    }
+
+    if ((session->request.content_length != 0) && (length > session->request.content_length))
+    {
+        length = session->request.content_length;
     }
 
     retval = httpsrv_read(session, buffer, length);

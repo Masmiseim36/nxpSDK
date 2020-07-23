@@ -41,7 +41,7 @@ bool_t MCDRV_eFlexPwm3PhInit(mcdrv_pwm3ph_pwma_t *this, mcdrv_pwm3ph_pwma_init_t
     this->ui16PhCSubNum = init->ui16PhCSubNum; /* PWMA phase C sub-module number */
 
     this->ui16PwmModulo = init->ui16PwmModulo;
-    this->pcBldcTable = init->pcBldcTable;
+    this->pcBldcTable   = init->pcBldcTable;
 
     return (s_statusPass);
 }
@@ -67,20 +67,20 @@ bool_t MCDRV_eFlexPwm3PhSet(mcdrv_pwm3ph_pwma_t *this)
     f16ModuloTemp = this->pui32PwmBaseAddress->SM[this->ui16PhASubNum].VAL1 + 1;
 
     /* phase A */
-    f16DutyCycle = MLIB_Mul_F16(f16ModuloTemp, sUABCtemp.f16A);
-    f16DutyCycleTemp = MLIB_Neg_F16(f16DutyCycle);
+    f16DutyCycle                                            = MLIB_Mul_F16(f16ModuloTemp, sUABCtemp.f16A);
+    f16DutyCycleTemp                                        = MLIB_Neg_F16(f16DutyCycle);
     this->pui32PwmBaseAddress->SM[this->ui16PhASubNum].VAL2 = f16DutyCycleTemp;
     this->pui32PwmBaseAddress->SM[this->ui16PhASubNum].VAL3 = f16DutyCycle;
 
     /* phase B */
-    f16DutyCycle = MLIB_Mul_F16(f16ModuloTemp, sUABCtemp.f16B);
-    f16DutyCycleTemp = MLIB_Neg_F16(f16DutyCycle);
+    f16DutyCycle                                            = MLIB_Mul_F16(f16ModuloTemp, sUABCtemp.f16B);
+    f16DutyCycleTemp                                        = MLIB_Neg_F16(f16DutyCycle);
     this->pui32PwmBaseAddress->SM[this->ui16PhBSubNum].VAL2 = f16DutyCycleTemp;
     this->pui32PwmBaseAddress->SM[this->ui16PhBSubNum].VAL3 = f16DutyCycle;
 
     /* phase C */
-    f16DutyCycle = MLIB_Mul_F16(f16ModuloTemp, sUABCtemp.f16C);
-    f16DutyCycleTemp = MLIB_Neg_F16(f16DutyCycle);
+    f16DutyCycle                                            = MLIB_Mul_F16(f16ModuloTemp, sUABCtemp.f16C);
+    f16DutyCycleTemp                                        = MLIB_Neg_F16(f16DutyCycle);
     this->pui32PwmBaseAddress->SM[this->ui16PhCSubNum].VAL2 = f16DutyCycleTemp;
     this->pui32PwmBaseAddress->SM[this->ui16PhCSubNum].VAL3 = f16DutyCycle;
 
@@ -194,22 +194,21 @@ bool_t MCDRV_eFlexSetDutyCycle(mcdrv_pwm3ph_pwma_t *this, int16_t i16InpDuty)
 }
 
 /*!
-* @brief Function set pwm sector from input
-*
-* @param this Pointer to the current object
-* @param sector Actual commutation sector
-*
-* @return boot_t true on success
-*/
+ * @brief Function set pwm sector from input
+ *
+ * @param this Pointer to the current object
+ * @param sector Actual commutation sector
+ *
+ * @return boot_t true on success
+ */
 bool_t MCDRV_eFlexSetPwmOutput(mcdrv_pwm3ph_pwma_t *this, int16_t i16Sector)
 {
     s_statusPass = TRUE;
 
-    this->pui32PwmBaseAddress->MASK = *((this->pcBldcTable) + (2 * i16Sector));
+    this->pui32PwmBaseAddress->MASK     = *((this->pcBldcTable) + (2 * i16Sector));
     this->pui32PwmBaseAddress->DTSRCSEL = *((this->pcBldcTable) + (2 * i16Sector + 1));
 
     this->pui32PwmBaseAddress->SM[0].CTRL2 |= PWM_CTRL2_FORCE(1);
 
     return (s_statusPass);
 }
-

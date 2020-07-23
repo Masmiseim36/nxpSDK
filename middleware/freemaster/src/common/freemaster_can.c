@@ -115,9 +115,9 @@ static void _FMSTR_SendResponse(FMSTR_BPTR pResponse, FMSTR_SIZE nLength, FMSTR_
 
 const FMSTR_TRANSPORT_INTF FMSTR_CAN =
 {
-    .Init = _FMSTR_InitCan,
-    .Poll = _FMSTR_Poll,
-    .SendResponse = _FMSTR_SendResponse,
+	FMSTR_C99_INIT(Init) _FMSTR_InitCan,
+	FMSTR_C99_INIT(Poll) _FMSTR_Poll,
+	FMSTR_C99_INIT(SendResponse) _FMSTR_SendResponse,
 };
 
 /******************************************************************************
@@ -270,13 +270,13 @@ static void _FMSTR_SendResponse(FMSTR_BPTR pResponse, FMSTR_SIZE nLength, FMSTR_
     if(statusCode & FMSTR_STSF_VARLEN)
     {
         /* variable-length frame starts at [0] and contains the length byte */
-        fmstr_pCommBuffer[0] = statusCode;
-        fmstr_pCommBuffer[1] = nLength;
+        fmstr_pCommBuffer[0] = (FMSTR_BCHR)statusCode;
+        fmstr_pCommBuffer[1] = (FMSTR_BCHR)nLength;
     }
     else
     {
         /* fixed-length frame starts at [1] and omits the length byte */
-        fmstr_pCommBuffer[1] = statusCode;
+        fmstr_pCommBuffer[1] = (FMSTR_BCHR)statusCode;
         fmstr_pTxBuff++;
         fmstr_nTxTodo--;
     }
@@ -615,7 +615,7 @@ void FMSTR_ProcessCanRx(void)
     else if(fmstr_doDebugTx && fmstr_nDebugTxPollCount == 0)
     {
         /* yes, start sending it now */
-        if(FMSTR_SendTestFrame(fmstr_pCommBuffer))
+        if(FMSTR_SendTestFrame(&fmstr_pCommBuffer[2]))
         {
             /* measure how long it takes to transmit it */
             fmstr_nDebugTxPollCount = -1;

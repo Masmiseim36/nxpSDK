@@ -26,20 +26,20 @@
 #define CYCLES_FOR_THROUGHPUT 128
 
 /*AES specific*/
-#define AES128 128
-#define AES128_KEY_SIZE 16
+#define AES128           128
+#define AES128_KEY_SIZE  16
 #define AES_BLOCK_LENGTH 16
 
 /*DES specific*/
 #define DES3_BLOCK_LENGTH 8
-#define DES3_KEY_LENGTH 24
+#define DES3_KEY_LENGTH   24
 
 /*length of AES & DES encrypted data array*/
 #define OUTPUT_ARRAY_LEN 512
 /*length of result hash in bytes*/
-#define SHA1_RESULT_LENGTH 20
+#define SHA1_RESULT_LENGTH   20
 #define SHA256_RESULT_LENGTH 32
-#define MD5_RESULT_LENGTH 16
+#define MD5_RESULT_LENGTH    16
 
 /*size of one crypto block*/
 #define CRYPTO_BLOCK_LENGTH 64
@@ -47,7 +47,7 @@
 #define TEST_LENGTH 64
 
 /*MMCAU result codes*/
-#define MMCAU_OK 0
+#define MMCAU_OK    0
 #define MMCAU_ERROR -1
 
 /*******************************************************************************

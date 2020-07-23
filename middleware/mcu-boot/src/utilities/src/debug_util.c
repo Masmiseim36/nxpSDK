@@ -9,24 +9,25 @@
 /*====================================================================================================
                                         INCLUDE FILES
 ==================================================================================================*/
+#include <stdarg.h>
+#include <stdlib.h>
 #include "bootloader_common.h"
 #include "fsl_device_registers.h"
-#include <stdlib.h>
-#include <stdarg.h>
-#ifdef DEBUG_UART
-#include "lpuart/fsl_lpuart.h"
-#endif
 
 /*==================================================================================================
                                      MACROs
 ==================================================================================================*/
 
-#if (defined(DEBUG) || defined(_DEBUG)) && !defined(DEBUG_PRINT_DISABLE)
+#if (defined(DEBUG) || defined(_DEBUG))
 /*==================================================================================================
                                      Prototypes
 ==================================================================================================*/
 static void convert_digit_to_string(uint32_t digit, char *str, uint32_t *length);
 static void convert_hexdigit_to_string(uint32_t digit, char *str, uint32_t *length);
+
+#ifdef DEBUG_UART
+extern void debug_uart_print(const uint8_t *buffer, uint32_t lengthInBytes);
+#endif
 
 /*==================================================================================================
                                      LOCAL FUNCTIONS
@@ -98,12 +99,12 @@ static void convert_hexdigit_to_string(uint32_t digit, char *str, uint32_t *leng
 
 void debug_printf(const char *format, ...)
 {
-	static char buffer[256];
+    static char buffer[256];
     char *stringBuffer = (char *)buffer;
 
     va_list arg;
     va_start(arg, format);
-    
+
     const char *fmt = format;
     uint32_t digitLength = 0;
     char *printStr = stringBuffer;
@@ -154,7 +155,9 @@ void debug_printf(const char *format, ...)
     *printStr = '\0';
 
 #ifdef DEBUG_UART
-    LPUART_WriteBlocking(DEBUG_UART, (const uint8_t *)stringBuffer, printStr - stringBuffer);
+    debug_uart_print((const uint8_t *)stringBuffer, printStr - stringBuffer);
+#elif defined(DEBUG_SEMIHOST)
+    printf("%s", stringBuffer);
 #endif
 }
 

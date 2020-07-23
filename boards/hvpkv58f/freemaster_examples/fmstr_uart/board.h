@@ -21,20 +21,20 @@
 
 /*! @brief The UART to use for debug messages. */
 #define BOARD_USE_UART
-#define BOARD_DEBUG_UART_TYPE kSerialPort_Uart
-#define BOARD_DEBUG_UART_BASEADDR UART1
+#define BOARD_DEBUG_UART_TYPE     kSerialPort_Uart
+#define BOARD_DEBUG_UART_BASEADDR (uint32_t) UART1
 #define BOARD_DEBUG_UART_INSTANCE 1U
-#define BOARD_DEBUG_UART_CLKSRC kCLOCK_FastPeriphClk
+#define BOARD_DEBUG_UART_CLKSRC   kCLOCK_FastPeriphClk
 #define BOARD_DEBUG_UART_CLK_FREQ CLOCK_GetFastPeriphClkFreq()
-#define BOARD_UART_IRQ UART1_RX_TX_IRQn
-#define BOARD_UART_IRQ_HANDLER UART1_RX_TX_IRQHandler
+#define BOARD_UART_IRQ            UART1_RX_TX_IRQn
+#define BOARD_UART_IRQ_HANDLER    UART1_RX_TX_IRQHandler
 
 #ifndef BOARD_DEBUG_UART_BAUDRATE
 #define BOARD_DEBUG_UART_BAUDRATE 115200
 #endif /* BOARD_DEBUG_UART_BAUDRATE */
 
 /* Board led color mapping */
-#define LOGIC_LED_ON 0U
+#define LOGIC_LED_ON  0U
 #define LOGIC_LED_OFF 1U
 #ifndef BOARD_LED_RED_GPIO
 #define BOARD_LED_RED_GPIO GPIOB
@@ -53,9 +53,9 @@
 
 #define LED_RED_INIT(output)                                           \
     GPIO_PinWrite(BOARD_LED_RED_GPIO, BOARD_LED_RED_GPIO_PIN, output); \
-    BOARD_LED_RED_GPIO->PDDR |= (1U << BOARD_LED_RED_GPIO_PIN)                        /*!< Enable target LED_RED */
-#define LED_RED_ON() GPIO_PortClear(BOARD_LED_RED_GPIO, 1U << BOARD_LED_RED_GPIO_PIN) /*!< Turn on target LED_RED */
-#define LED_RED_OFF() GPIO_PortSet(BOARD_LED_RED_GPIO, 1U << BOARD_LED_RED_GPIO_PIN)  /*!< Turn off target LED_RED */
+    BOARD_LED_RED_GPIO->PDDR |= (1U << BOARD_LED_RED_GPIO_PIN)                         /*!< Enable target LED_RED */
+#define LED_RED_ON()  GPIO_PortClear(BOARD_LED_RED_GPIO, 1U << BOARD_LED_RED_GPIO_PIN) /*!< Turn on target LED_RED */
+#define LED_RED_OFF() GPIO_PortSet(BOARD_LED_RED_GPIO, 1U << BOARD_LED_RED_GPIO_PIN)   /*!< Turn off target LED_RED */
 #define LED_RED_TOGGLE() \
     GPIO_PortToggle(BOARD_LED_RED_GPIO, 1U << BOARD_LED_RED_GPIO_PIN) /*!< Toggle on target LED_RED */
 

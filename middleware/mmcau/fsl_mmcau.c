@@ -13,8 +13,8 @@
 #define MMCAU_AES_BLOCK_SIZE (16)
 #define MMCAU_DES_BLOCK_SIZE (8)
 
-#define MMCAU_MD5_STATE_SIZE (16)
-#define MMCAU_SHA1_STATE_SIZE (20)
+#define MMCAU_MD5_STATE_SIZE    (16)
+#define MMCAU_SHA1_STATE_SIZE   (20)
 #define MMCAU_SHA256_STATE_SIZE (32)
 
 /* these are maximum for CAU API has functions. HAST_STATE shall be set to maximum of MD5_STATE,SHA1_STATE and

@@ -44,9 +44,9 @@ srv_txt(struct mdns_service *service, void *txt_userdata)
 
 #if LWIP_MDNS_RESPONDER
 static void
-mdns_example_report(struct netif* netif, u8_t result)
+mdns_example_report(struct netif* netif, u8_t result, s8_t service)
 {
-  LWIP_PLATFORM_DIAG(("mdns status[netif %d]: %d\n", netif->num, result));
+  LWIP_PLATFORM_DIAG(("mdns status[netif %d][service %d]: %d\n", netif->num, service, result));
 }
 #endif
 
@@ -56,8 +56,8 @@ mdns_example_init(void)
 #if LWIP_MDNS_RESPONDER
   mdns_resp_register_name_result_cb(mdns_example_report);
   mdns_resp_init();
-  mdns_resp_add_netif(netif_default, "lwip", 3600);
-  mdns_resp_add_service(netif_default, "myweb", "_http", DNSSD_PROTO_TCP, 80, 3600, srv_txt, NULL);
+  mdns_resp_add_netif(netif_default, "lwip");
+  mdns_resp_add_service(netif_default, "myweb", "_http", DNSSD_PROTO_TCP, 80, srv_txt, NULL);
   mdns_resp_announce(netif_default);
 #endif
 }

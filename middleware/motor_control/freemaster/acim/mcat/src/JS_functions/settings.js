@@ -663,7 +663,7 @@ function swapPI(in_formName, in_checkVal)
      } 
      
     ////// Initialization of project path - read from parent doc table
-    var pathRelativeFolder =  parent.parent.document.getElementById('ProjectPath').innerHTML;
+    var pathRelativeFolder =  parent.parent.document.getElementById('ProjectPath1').innerHTML;
     var pathRelativeFolderOutput = "{FM_project_loc}/" + pathRelativeFolder;
   
     if (pathRelativeFolderOutput.length>100)
@@ -841,7 +841,7 @@ function clickApply()
    activePage.style.left="0px";
    activePage.style.height="510px";   
 /* copy new path to generated .h file from setting to M1_params_....txt file*/
-   parent.parent.document.getElementById('M1_ProjectPath').innerHTML = parent.parent.document.getElementById('ProjectPath').innerHTML;
+   parent.parent.document.getElementById('M1_ProjectPath1').innerHTML = parent.parent.document.getElementById('ProjectPath1').innerHTML;
 
 }
 

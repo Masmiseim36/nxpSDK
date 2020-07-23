@@ -21,12 +21,12 @@
  ******************************************************************************/
 #define DEMO_PWM_BASEADDR PWMA
 
-#define DEMO_CADC_BASEADDR ADC
-#define DEMO_ADC_IRQ_ID ADCA_IRQn
+#define DEMO_CADC_BASEADDR   ADC
+#define DEMO_ADC_IRQ_ID      ADCA_IRQn
 #define DEMO_ADC_IRQ_HANDLER ADCA_IRQHandler
-#define DEMO_CADC_CHANNEL 5U
+#define DEMO_CADC_CHANNEL    5U
 
-#define DEMO_DAC_BASEADDR DAC0
+#define DEMO_DAC_BASEADDR             DAC0
 #define DEMO_DAC_TRG_INTERVAL_FREQ_HZ 3000UL /* Interval freq for the change of DAC output */
 
 #define SYSTICK_CLK CLOCK_GetFreq(SYS_CLK)
@@ -36,8 +36,8 @@
 #define CHART_COLS 100U /*!< chart column for sampled data */
 
 #define ADC_12BIT_MAXVALUE (0x1000U)
-#define RATIO (ADC_12BIT_MAXVALUE / CHART_ROWS)
-#define PWM_SRC_CLK_FREQ CLOCK_GetFreq(kCLOCK_FastPeriphClk)
+#define RATIO              (ADC_12BIT_MAXVALUE / CHART_ROWS)
+#define PWM_SRC_CLK_FREQ   CLOCK_GetFreq(kCLOCK_FastPeriphClk)
 typedef struct sparse_node
 {
     struct sparse_node *next; /* Next node */
@@ -113,11 +113,7 @@ void DEMO_ADC_IRQ_HANDLER(void)
         CADC_ClearStatusFlags(DEMO_CADC_BASEADDR, kCADC_ConverterAEndOfScanFlag);
     }
     gAdcDone = true;
-    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-      exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 static void InitTriggerSource(void)
@@ -148,6 +144,7 @@ static void InitTriggerSource(void)
     pwmSignal[0].level            = kPWM_HighTrue;
     pwmSignal[0].dutyCyclePercent = 50;
     pwmSignal[0].deadtimeValue    = deadTimeVal;
+    pwmSignal[0].faultState       = kPWM_PwmFaultState0;
     PWM_GetDefaultConfig(&pwmConfig);
 
     /* Use full cycle reload */
@@ -210,7 +207,7 @@ static void Init_ADC(void)
     cadcSampleConfigStruct.channelNumber          = DEMO_CADC_CHANNEL;
     cadcSampleConfigStruct.channelGain            = kCADC_ChannelGainx1;
     cadcSampleConfigStruct.enableDifferentialPair = 0U;
-    cadcSampleConfigStruct.zeroCrossingMode       = kCADC_ZeroCorssingDisabled;
+    cadcSampleConfigStruct.zeroCrossingMode       = kCADC_ZeroCrossingDisabled;
     cadcSampleConfigStruct.lowLimitValue          = 0U;
     cadcSampleConfigStruct.highLimitValue         = 0xFFFFU;
     cadcSampleConfigStruct.offsetValue            = 0U;

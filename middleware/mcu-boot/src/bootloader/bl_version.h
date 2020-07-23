@@ -10,11 +10,11 @@
 #define __BL_VERSION_H__
 
 #include "bootloader_common.h"
-#include "bootloader/bl_peripheral.h"
-#include "memory/memory.h"
-#include "packet/command_packet.h"
-#include "bootloader/bl_command.h"
-#include "property/property.h"
+#include "bl_peripheral.h"
+#include "memory.h"
+#include "command_packet.h"
+#include "bl_command.h"
+#include "property.h"
 
 //! @addtogroup context
 //! @{

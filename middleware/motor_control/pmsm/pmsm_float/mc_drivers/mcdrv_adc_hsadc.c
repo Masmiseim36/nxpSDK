@@ -45,9 +45,9 @@ bool_t MCDRV_Curr3Ph2ShGet(mcdrv_hsadc_t *this)
         case 3:
             /* direct sensing of phase A and C, calculation of B */
             sIABCtemp.f16A = MLIB_ShLSat_F16(
-                ((frac16_t)((int16_t) this->sCurrSec23.pui32AdcBasePhaA->RSLT[0]) - this->sCurrSec23.ui16OffsetPhaA), 1);
+                ((frac16_t)((int16_t)this->sCurrSec23.pui32AdcBasePhaA->RSLT[0]) - this->sCurrSec23.ui16OffsetPhaA), 1);
             sIABCtemp.f16C = MLIB_ShLSat_F16(
-                ((frac16_t)((int16_t) this->sCurrSec23.pui32AdcBasePhaC->RSLT[0]) - this->sCurrSec23.ui16OffsetPhaC), 1);
+                ((frac16_t)((int16_t)this->sCurrSec23.pui32AdcBasePhaC->RSLT[0]) - this->sCurrSec23.ui16OffsetPhaC), 1);
             sIABCtemp.f16B = MLIB_Neg_F16(MLIB_AddSat_F16(sIABCtemp.f16A, sIABCtemp.f16C));
             break;
 
@@ -55,9 +55,9 @@ bool_t MCDRV_Curr3Ph2ShGet(mcdrv_hsadc_t *this)
         case 5:
             /* direct sensing of phase A and B, calculation of C */
             sIABCtemp.f16A = MLIB_ShLSat_F16(
-                ((frac16_t)((int16_t) this->sCurrSec45.pui32AdcBasePhaA->RSLT[0]) - this->sCurrSec45.ui16OffsetPhaA), 1);
+                ((frac16_t)((int16_t)this->sCurrSec45.pui32AdcBasePhaA->RSLT[0]) - this->sCurrSec45.ui16OffsetPhaA), 1);
             sIABCtemp.f16B = MLIB_ShLSat_F16(
-                ((frac16_t)((int16_t) this->sCurrSec45.pui32AdcBasePhaB->RSLT[0]) - this->sCurrSec45.ui16OffsetPhaB), 1);
+                ((frac16_t)((int16_t)this->sCurrSec45.pui32AdcBasePhaB->RSLT[0]) - this->sCurrSec45.ui16OffsetPhaB), 1);
             sIABCtemp.f16C = MLIB_Neg_F16(MLIB_AddSat_F16(sIABCtemp.f16A, sIABCtemp.f16B));
             break;
 
@@ -66,9 +66,9 @@ bool_t MCDRV_Curr3Ph2ShGet(mcdrv_hsadc_t *this)
         default:
             /* direct sensing of phase B and C, calculation of A */
             sIABCtemp.f16B = MLIB_ShLSat_F16(
-                ((frac16_t)((int16_t) this->sCurrSec16.pui32AdcBasePhaB->RSLT[0]) - this->sCurrSec16.ui16OffsetPhaB), 1);
+                ((frac16_t)((int16_t)this->sCurrSec16.pui32AdcBasePhaB->RSLT[0]) - this->sCurrSec16.ui16OffsetPhaB), 1);
             sIABCtemp.f16C = MLIB_ShLSat_F16(
-                ((frac16_t)((int16_t) this->sCurrSec16.pui32AdcBasePhaC->RSLT[0]) - this->sCurrSec16.ui16OffsetPhaC), 1);
+                ((frac16_t)((int16_t)this->sCurrSec16.pui32AdcBasePhaC->RSLT[0]) - this->sCurrSec16.ui16OffsetPhaC), 1);
             sIABCtemp.f16A = MLIB_Neg_F16(MLIB_AddSat_F16(sIABCtemp.f16B, sIABCtemp.f16C));
             break;
     }
@@ -91,37 +91,36 @@ bool_t MCDRV_Curr3Ph2ShGet(mcdrv_hsadc_t *this)
 bool_t MCDRV_Curr3Ph2ShChanAssignInit(mcdrv_hsadc_t *this)
 {
     s_statusPass = TRUE;
-   
+
     /* sector 1&6, direct sensing of phases B and C */
     /* phase current B on ADC1 and phase C on ADC0 */
     this->sCurrSec16.ui16AdcSmplPhaB = HSADC_CLIST1_SAMPLE0(this->sCurrSec16.ui16ChanNumPhaB);
     this->sCurrSec16.ui16AdcSmplPhaC = HSADC_CLIST1_SAMPLE0(this->sCurrSec16.ui16ChanNumPhaC);
-    
+
     /* sector 2&3, direct sensing of phases A and C */
     /* phase current A on ADC1 and phase C on ADC0 */
     this->sCurrSec23.ui16AdcSmplPhaA = HSADC_CLIST1_SAMPLE0(this->sCurrSec23.ui16ChanNumPhaA);
     this->sCurrSec23.ui16AdcSmplPhaC = HSADC_CLIST1_SAMPLE0(this->sCurrSec23.ui16ChanNumPhaC);
-    
+
     /* sector 4&5, direct sensing of phases A and B */
     /* phase current A on ADC0 and phase B on ADC1 */
     this->sCurrSec45.ui16AdcSmplPhaA = HSADC_CLIST1_SAMPLE0(this->sCurrSec45.ui16ChanNumPhaA);
     this->sCurrSec45.ui16AdcSmplPhaB = HSADC_CLIST1_SAMPLE0(this->sCurrSec45.ui16ChanNumPhaB);
-   
+
     /* Vdcb sampling - select CLIST1 (sample number 1) */
     this->ui16AdcSmplVDcb = HSADC_CLIST1_SAMPLE1(this->ui16ChanNumVDcb);
-    this->pui32AdcBaseVDcb->CLIST1 = 
-        ((this->pui32AdcBaseVDcb->CLIST1 & ~(uint16_t)HSADC_CLIST1_SAMPLE1_MASK) |
-          this->ui16AdcSmplVDcb);
+    this->pui32AdcBaseVDcb->CLIST1 =
+        ((this->pui32AdcBaseVDcb->CLIST1 & ~(uint16_t)HSADC_CLIST1_SAMPLE1_MASK) | this->ui16AdcSmplVDcb);
 
     /* default channel assignment for default SVM sector = 2 */
     /* direct sensing of phases A and C */
     this->sCurrSec23.pui32AdcBasePhaA->CLIST1 =
         ((this->sCurrSec23.pui32AdcBasePhaA->CLIST1 & ~(uint16_t)HSADC_CLIST1_SAMPLE0_MASK) |
-          this->sCurrSec23.ui16AdcSmplPhaA);
+         this->sCurrSec23.ui16AdcSmplPhaA);
     this->sCurrSec23.pui32AdcBasePhaC->CLIST1 =
         ((this->sCurrSec23.pui32AdcBasePhaC->CLIST1 & ~(uint16_t)HSADC_CLIST1_SAMPLE0_MASK) |
-          this->sCurrSec23.ui16AdcSmplPhaC);
-    
+         this->sCurrSec23.ui16AdcSmplPhaC);
+
     return (s_statusPass);
 }
 
@@ -236,29 +235,29 @@ bool_t MCDRV_Curr3Ph2ShCalib(mcdrv_hsadc_t *this)
         case 2:
         case 3:
             /* sensing of offset IA -> HSADCA and IC -> HSADCC */
-            this->sCurrSec23.ui16CalibPhaA =
-                GDFLIB_FilterMA_F16((frac16_t) this->sCurrSec23.pui32AdcBasePhaA->RSLT[0], &this->sCurrSec23.ui16FiltPhaA);
-            this->sCurrSec23.ui16CalibPhaC =
-                GDFLIB_FilterMA_F16((frac16_t) this->sCurrSec23.pui32AdcBasePhaC->RSLT[0], &this->sCurrSec23.ui16FiltPhaC);
+            this->sCurrSec23.ui16CalibPhaA = GDFLIB_FilterMA_F16((frac16_t)this->sCurrSec23.pui32AdcBasePhaA->RSLT[0],
+                                                                 &this->sCurrSec23.ui16FiltPhaA);
+            this->sCurrSec23.ui16CalibPhaC = GDFLIB_FilterMA_F16((frac16_t)this->sCurrSec23.pui32AdcBasePhaC->RSLT[0],
+                                                                 &this->sCurrSec23.ui16FiltPhaC);
             break;
 
         case 4:
         case 5:
             /* sensing of offset IA -> HSADCA and IB -> HSADCC */
-            this->sCurrSec45.ui16CalibPhaA =
-                GDFLIB_FilterMA_F16((frac16_t) this->sCurrSec45.pui32AdcBasePhaA->RSLT[0], &this->sCurrSec45.ui16FiltPhaA);
-            this->sCurrSec45.ui16CalibPhaB =
-                GDFLIB_FilterMA_F16((frac16_t) this->sCurrSec45.pui32AdcBasePhaB->RSLT[0], &this->sCurrSec45.ui16FiltPhaB);
+            this->sCurrSec45.ui16CalibPhaA = GDFLIB_FilterMA_F16((frac16_t)this->sCurrSec45.pui32AdcBasePhaA->RSLT[0],
+                                                                 &this->sCurrSec45.ui16FiltPhaA);
+            this->sCurrSec45.ui16CalibPhaB = GDFLIB_FilterMA_F16((frac16_t)this->sCurrSec45.pui32AdcBasePhaB->RSLT[0],
+                                                                 &this->sCurrSec45.ui16FiltPhaB);
             break;
 
         case 1:
         case 6:
         default:
             /* sensing of offset IB -> HSADCA and IC -> HSADCC */
-            this->sCurrSec16.ui16CalibPhaB =
-                GDFLIB_FilterMA_F16((frac16_t) this->sCurrSec16.pui32AdcBasePhaB->RSLT[0], &this->sCurrSec16.ui16FiltPhaB);
-            this->sCurrSec16.ui16CalibPhaC =
-                GDFLIB_FilterMA_F16((frac16_t) this->sCurrSec16.pui32AdcBasePhaC->RSLT[0], &this->sCurrSec16.ui16FiltPhaC);
+            this->sCurrSec16.ui16CalibPhaB = GDFLIB_FilterMA_F16((frac16_t)this->sCurrSec16.pui32AdcBasePhaB->RSLT[0],
+                                                                 &this->sCurrSec16.ui16FiltPhaB);
+            this->sCurrSec16.ui16CalibPhaC = GDFLIB_FilterMA_F16((frac16_t)this->sCurrSec16.pui32AdcBasePhaC->RSLT[0],
+                                                                 &this->sCurrSec16.ui16FiltPhaC);
             break;
     }
 

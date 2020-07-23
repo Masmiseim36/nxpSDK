@@ -25,4 +25,3 @@ extern void MID_getRs(void);
 #endif
 
 #endif /* _RS_MEASURE_H_ */
-

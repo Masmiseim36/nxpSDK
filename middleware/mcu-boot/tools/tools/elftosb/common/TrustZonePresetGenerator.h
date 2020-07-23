@@ -12,7 +12,6 @@
 #include <memory>
 #include <map>
 #include "json.h"
-#include "AuthImageGenerator.h"
 using namespace std;
 
 /*!
@@ -33,7 +32,7 @@ public:
 private:
 	string outputFile;
 	string family;
-	deviceRevision revision;
+	string revision;
 	//! \brief Connecting all particular processing steps in specific order.
 	bool process(const string& confFilePath);
 	//! \brief Saving TZ-M preset data to bin file.

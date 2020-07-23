@@ -43,9 +43,6 @@
 #include "freemaster_usb_device_descriptor.h"
 #include "freemaster_usb.h"
 
-/* Make the buffers size by USB bulk endpoint size */
-#define FMSTR_USB_BUFFER_SIZE USB_DATA_BUFF_SIZE
-
 /******************************************************************************
 * Adapter configuration
 ******************************************************************************/
@@ -55,6 +52,20 @@
 
 #if FMSTR_SERIAL_SINGLEWIRE
     #error The USB/CDC driver does not support single wire configuration of UART communication.
+#endif
+
+#define _MIN(a, b) (((a) < (b)) ? (a) : (b))
+#define _MAX(a, b) (((a) > (b)) ? (a) : (b))
+
+/* Bulk endpoint buffer sizes */
+#ifdef USB_DATA_BUFF_SIZE
+    /* USB transmit if flushed automatically when full, so it can be smaller than FreeMASTER buffer */
+    #define FMSTR_USB_TX_BUFFER_SIZE _MIN(USB_DATA_BUFF_SIZE, FMSTR_COMM_BUFFER_SIZE)
+    /* USB receive buffer must accomodate the whole frame at once, so must be at least the FreeMASTER buffer size */
+    #define FMSTR_USB_RX_BUFFER_SIZE _MAX(USB_DATA_BUFF_SIZE, FMSTR_COMM_BUFFER_SIZE)
+#else
+    #define FMSTR_USB_TX_BUFFER_SIZE FMSTR_COMM_BUFFER_SIZE
+    #define FMSTR_USB_RX_BUFFER_SIZE FMSTR_COMM_BUFFER_SIZE
 #endif
 
 /******************************************************************************
@@ -72,6 +83,7 @@ static FMSTR_BOOL _FMSTR_SerialUsbIsTransmitterActive(void);
 static void _FMSTR_SerialUsbPutChar(FMSTR_BCHR  ch);
 static FMSTR_BCHR _FMSTR_SerialUsbGetChar(void);
 static void _FMSTR_SerialUsbFlush(void);
+
 /******************************************************************************
 * Type definitions
 ******************************************************************************/
@@ -80,8 +92,8 @@ static void _FMSTR_SerialUsbFlush(void);
 typedef struct FMSTR_USB_CTX_S
 {
     volatile FMSTR_BOOL     txEnabled;                              /* Transmit is enabled */
-    FMSTR_BCHR              txBuffer[FMSTR_USB_BUFFER_SIZE];        /* Transmit buffer */
-    FMSTR_BCHR              rxBuffer[FMSTR_USB_BUFFER_SIZE];        /* Receive buffer (It is for ring buffer object) */
+    FMSTR_BCHR              txBuffer[FMSTR_USB_TX_BUFFER_SIZE];     /* Transmit buffer - max one full USB bulk frame */
+    FMSTR_BCHR              rxBuffer[FMSTR_USB_RX_BUFFER_SIZE];     /* Receive buffer - whole FreeMASTER frame must fit */
     volatile uint32_t       txSize;                                 /* Data size in transmit buffer */
     volatile FMSTR_BOOL     txActive;                               /* Transmit status (true = transmitting) */
     volatile FMSTR_BOOL     rxEnabled;                              /* Receiver enabled */
@@ -128,7 +140,7 @@ static FMSTR_BOOL _FMSTR_SerialUsbInit(void)
     if(fmstr_txFunc == NULL)
         return FMSTR_FALSE;
 
-    _FMSTR_RingBuffCreate(&fmstr_usbCtx.rxQueue, fmstr_usbCtx.rxBuffer, FMSTR_USB_BUFFER_SIZE);
+    _FMSTR_RingBuffCreate(&fmstr_usbCtx.rxQueue, fmstr_usbCtx.rxBuffer, sizeof(fmstr_usbCtx.rxBuffer));
 
     return FMSTR_TRUE;
 }
@@ -188,14 +200,14 @@ static FMSTR_BOOL _FMSTR_SerialUsbIsTransmitRegEmpty(void)
         return FMSTR_FALSE;
 
     /* Check, if buffer is not full */
-    if(fmstr_usbCtx.txSize < FMSTR_USB_BUFFER_SIZE)
+    if(fmstr_usbCtx.txSize < sizeof(fmstr_usbCtx.txBuffer))
         return FMSTR_TRUE;
 
     /* Send buffer is full -> flush data */
     _FMSTR_SerialUsbFlush();
 
     /* Check again, if buffer is not full */
-    if(fmstr_usbCtx.txSize < FMSTR_USB_BUFFER_SIZE)
+    if(fmstr_usbCtx.txSize < sizeof(fmstr_usbCtx.txBuffer))
         return FMSTR_TRUE;
 
     /* Return false, when buffer is full and upper layer cannot call putChar function. */
@@ -235,15 +247,15 @@ static FMSTR_BOOL _FMSTR_SerialUsbIsTransmitterActive(void)
 
 static void _FMSTR_SerialUsbPutChar(FMSTR_BCHR  ch)
 {
-    /* Check free size in TX buffer */
-    if(fmstr_usbCtx.txSize >= FMSTR_USB_BUFFER_SIZE)
+    /* Make sure there is free space TX buffer before writing */
+    if(fmstr_usbCtx.txSize >= sizeof(fmstr_usbCtx.txBuffer))
         return;
 
     fmstr_usbCtx.txBuffer[fmstr_usbCtx.txSize] = ch;
     fmstr_usbCtx.txSize++;
 
-    /* Send buffer is full -> flush data */
-    if(fmstr_usbCtx.txSize == FMSTR_USB_BUFFER_SIZE)
+    /* When buffer got just full, flush data now */
+    if(fmstr_usbCtx.txSize == sizeof(fmstr_usbCtx.txBuffer))
         _FMSTR_SerialUsbFlush();
 }
 

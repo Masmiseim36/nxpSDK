@@ -14,10 +14,10 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_DSPI_MASTER_BASEADDR SPI0
-#define DSPI_MASTER_CLK_SRC DSPI0_CLK_SRC
-#define DSPI_MASTER_CLK_FREQ CLOCK_GetFreq(DSPI0_CLK_SRC)
-#define EXAMPLE_DSPI_MASTER_PCS_FOR_INIT kDSPI_Pcs0
+#define EXAMPLE_DSPI_MASTER_BASEADDR         SPI0
+#define DSPI_MASTER_CLK_SRC                  DSPI0_CLK_SRC
+#define DSPI_MASTER_CLK_FREQ                 CLOCK_GetFreq(DSPI0_CLK_SRC)
+#define EXAMPLE_DSPI_MASTER_PCS_FOR_INIT     kDSPI_Pcs0
 #define EXAMPLE_DSPI_MASTER_PCS_FOR_TRANSFER kDSPI_MasterPcs0
 
 #define TRANSFER_BAUDRATE 500000U

@@ -42,20 +42,20 @@ bool_t MCDRV_eFlexPwm3PhSet(mcdrv_pwm3ph_pwma_t *this)
     f16ModuloTemp = this->pui32PwmBaseAddress->SM[this->ui16PhASubNum].VAL1 + 1;
 
     /* phase A */
-    f16DutyCycle = MLIB_Mul_F16(f16ModuloTemp, sUABCtemp.f16A);
-    f16DutyCycleTemp = MLIB_Neg_F16(f16DutyCycle);
+    f16DutyCycle                                            = MLIB_Mul_F16(f16ModuloTemp, sUABCtemp.f16A);
+    f16DutyCycleTemp                                        = MLIB_Neg_F16(f16DutyCycle);
     this->pui32PwmBaseAddress->SM[this->ui16PhASubNum].VAL2 = f16DutyCycleTemp;
     this->pui32PwmBaseAddress->SM[this->ui16PhASubNum].VAL3 = f16DutyCycle;
 
     /* phase B */
-    f16DutyCycle = MLIB_Mul_F16(f16ModuloTemp, sUABCtemp.f16B);
-    f16DutyCycleTemp = MLIB_Neg_F16(f16DutyCycle);
+    f16DutyCycle                                            = MLIB_Mul_F16(f16ModuloTemp, sUABCtemp.f16B);
+    f16DutyCycleTemp                                        = MLIB_Neg_F16(f16DutyCycle);
     this->pui32PwmBaseAddress->SM[this->ui16PhBSubNum].VAL2 = f16DutyCycleTemp;
     this->pui32PwmBaseAddress->SM[this->ui16PhBSubNum].VAL3 = f16DutyCycle;
 
     /* phase C */
-    f16DutyCycle = MLIB_Mul_F16(f16ModuloTemp, sUABCtemp.f16C);
-    f16DutyCycleTemp = MLIB_Neg_F16(f16DutyCycle);
+    f16DutyCycle                                            = MLIB_Mul_F16(f16ModuloTemp, sUABCtemp.f16C);
+    f16DutyCycleTemp                                        = MLIB_Neg_F16(f16DutyCycle);
     this->pui32PwmBaseAddress->SM[this->ui16PhCSubNum].VAL2 = f16DutyCycleTemp;
     this->pui32PwmBaseAddress->SM[this->ui16PhCSubNum].VAL3 = f16DutyCycle;
 
@@ -75,21 +75,19 @@ bool_t MCDRV_eFlexPwm3PhSet(mcdrv_pwm3ph_pwma_t *this)
 bool_t MCDRV_eFlexPwm3PhOutEn(mcdrv_pwm3ph_pwma_t *this)
 {
     s_statusPass = TRUE;
-    
-    uint8_t ui8MaskTemp = 0U;  
-    
-    ui8MaskTemp = (1U << (this->ui16PhASubNum))|(1U << (this->ui16PhBSubNum))|(1U << (this->ui16PhCSubNum));  
-      
+
+    uint8_t ui8MaskTemp = 0U;
+
+    ui8MaskTemp = (1U << (this->ui16PhASubNum)) | (1U << (this->ui16PhBSubNum)) | (1U << (this->ui16PhCSubNum));
+
     /* PWM outputs of sub-modules 0,1 and 2 enabled */
     /* PWM_A output */
-    this->pui32PwmBaseAddress->OUTEN =
-        (this->pui32PwmBaseAddress->OUTEN & ~(uint16_t)PWM_OUTEN_PWMA_EN_MASK) | PWM_OUTEN_PWMA_EN(ui8MaskTemp) 
-          | (this->pui32PwmBaseAddress->OUTEN);
+    this->pui32PwmBaseAddress->OUTEN = (this->pui32PwmBaseAddress->OUTEN & ~(uint16_t)PWM_OUTEN_PWMA_EN_MASK) |
+                                       PWM_OUTEN_PWMA_EN(ui8MaskTemp) | (this->pui32PwmBaseAddress->OUTEN);
 
     /* PWM_B output */
-    this->pui32PwmBaseAddress->OUTEN =
-        (this->pui32PwmBaseAddress->OUTEN & ~(uint16_t)PWM_OUTEN_PWMB_EN_MASK) | PWM_OUTEN_PWMB_EN(ui8MaskTemp) 
-          | (this->pui32PwmBaseAddress->OUTEN);
+    this->pui32PwmBaseAddress->OUTEN = (this->pui32PwmBaseAddress->OUTEN & ~(uint16_t)PWM_OUTEN_PWMB_EN_MASK) |
+                                       PWM_OUTEN_PWMB_EN(ui8MaskTemp) | (this->pui32PwmBaseAddress->OUTEN);
 
     return (s_statusPass);
 }
@@ -104,24 +102,24 @@ bool_t MCDRV_eFlexPwm3PhOutEn(mcdrv_pwm3ph_pwma_t *this)
 bool_t MCDRV_eFlexPwm3PhOutDis(mcdrv_pwm3ph_pwma_t *this)
 {
     s_statusPass = TRUE;
-    
-    uint32_t    ui32MaskTemp = 0U;
-    uint16_t     ui16PhSubTemp = 0U; 
 
-    ui16PhSubTemp = ~((1U << (this->ui16PhASubNum))|(1U << (this->ui16PhBSubNum))|(1U << (this->ui16PhCSubNum))); 
-    
+    uint32_t ui32MaskTemp  = 0U;
+    uint16_t ui16PhSubTemp = 0U;
+
+    ui16PhSubTemp = ~((1U << (this->ui16PhASubNum)) | (1U << (this->ui16PhBSubNum)) | (1U << (this->ui16PhCSubNum)));
+
     /* PWM outputs of used PWM sub-modules disabled */
     /* PWM_A output */
-    ui32MaskTemp = ((this->pui32PwmBaseAddress->OUTEN & PWM_OUTEN_PWMA_EN_MASK) 
-                    >> PWM_OUTEN_PWMA_EN_SHIFT) & ui16PhSubTemp;
-    
+    ui32MaskTemp =
+        ((this->pui32PwmBaseAddress->OUTEN & PWM_OUTEN_PWMA_EN_MASK) >> PWM_OUTEN_PWMA_EN_SHIFT) & ui16PhSubTemp;
+
     this->pui32PwmBaseAddress->OUTEN =
-      (this->pui32PwmBaseAddress->OUTEN & ~(uint16_t)PWM_OUTEN_PWMA_EN_MASK) | PWM_OUTEN_PWMA_EN(ui32MaskTemp);
-     
-    /* PWM_B output */  
-    ui32MaskTemp = ((this->pui32PwmBaseAddress->OUTEN & PWM_OUTEN_PWMB_EN_MASK) 
-                    >> PWM_OUTEN_PWMB_EN_SHIFT) & ui16PhSubTemp;
-    
+        (this->pui32PwmBaseAddress->OUTEN & ~(uint16_t)PWM_OUTEN_PWMA_EN_MASK) | PWM_OUTEN_PWMA_EN(ui32MaskTemp);
+
+    /* PWM_B output */
+    ui32MaskTemp =
+        ((this->pui32PwmBaseAddress->OUTEN & PWM_OUTEN_PWMB_EN_MASK) >> PWM_OUTEN_PWMB_EN_SHIFT) & ui16PhSubTemp;
+
     this->pui32PwmBaseAddress->OUTEN =
         (this->pui32PwmBaseAddress->OUTEN & ~(uint16_t)PWM_OUTEN_PWMB_EN_MASK) | PWM_OUTEN_PWMB_EN(ui32MaskTemp);
 
@@ -138,8 +136,8 @@ bool_t MCDRV_eFlexPwm3PhOutDis(mcdrv_pwm3ph_pwma_t *this)
 bool_t MCDRV_eFlexPwm3PhFltGet(mcdrv_pwm3ph_pwma_t *this)
 {
     /* read over-current flags */
-    s_statusPass = (((this->pui32PwmBaseAddress->FSTS & PWM_FSTS_FFPIN_MASK) >> 8) & 
-                            (1 << this->ui16FaultFixNum | 1 << this->ui16FaultAdjNum));
+    s_statusPass = (((this->pui32PwmBaseAddress->FSTS & PWM_FSTS_FFPIN_MASK) >> 8) &
+                    (1 << this->ui16FaultFixNum | 1 << this->ui16FaultAdjNum));
 
     /* clear faults flag */
     this->pui32PwmBaseAddress->FSTS = ((this->pui32PwmBaseAddress->FSTS & ~(uint16_t)(PWM_FSTS_FFLAG_MASK)) |
@@ -147,4 +145,3 @@ bool_t MCDRV_eFlexPwm3PhFltGet(mcdrv_pwm3ph_pwma_t *this)
 
     return ((s_statusPass > 0));
 }
-

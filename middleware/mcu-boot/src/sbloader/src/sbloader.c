@@ -9,30 +9,30 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <string.h>
-#include "sbloader/sbloader.h"
-#include "bootloader/bl_context.h"
-#include "bootloader/bootloader.h"
-#include "bootloader/bl_shutdown_cleanup.h"
-#if defined(BL_FEATURE_ENCRYPTION) && BL_FEATURE_ENCRYPTION
+#include "sbloader.h"
+#include "bl_context.h"
+#include "bootloader.h"
+#include "bl_shutdown_cleanup.h"
+#if BL_FEATURE_ENCRYPTION
 #include "aes_security.h"
 #include "cbc_mac.h"
 #endif // BL_FEATURE_ENCRYPTION
-#include "utilities/fsl_assert.h"
-#include "utilities/fsl_rtos_abstraction.h"
+#include "fsl_assert.h"
+#include "fsl_rtos_abstraction.h"
 
 #ifdef DEBUG
-#include "property/property.h"
+#include "property.h"
 #endif
 
-#if defined(BL_FEATURE_QSPI_MODULE) && BL_FEATURE_QSPI_MODULE
+#if BL_FEATURE_QSPI_MODULE
 #include "qspi.h"
 #endif
-#if defined(BL_FEATURE_OTFAD_MODULE) && BL_FEATURE_OTFAD_MODULE
+#if BL_FEATURE_OTFAD_MODULE
 #include "fsl_otfad_driver.h"
 #endif
 
-#if defined(BL_FEATURE_OCOTP_MODULE) && BL_FEATURE_OCOTP_MODULE
-#include "ocotp/fsl_ocotp.h"
+#if BL_FEATURE_OCOTP_MODULE
+#include "bl_ocotp.h"
 #endif
 
 //! @addtogroup sbloader
@@ -42,7 +42,7 @@
 // Definitions
 ////////////////////////////////////////////////////////////////////////////////
 
-#define SB_KEY_RDONCE_INDEX 0x30u
+#define SB_KEY_RDONCE_INDEX 0x30
 
 ////////////////////////////////////////////////////////////////////////////////
 // Prototypes
@@ -56,30 +56,31 @@ struct _ldr_buf
 };
 
 //! Loader utilities.
-status_t ldr_GoToNextSection(ldr_Context_t *context);
+status_t ldr_GoToNextSection(ldr_Context_t *);
 status_t sbloader_handle_chunk(void);
 
 //! Loader action (context.Action) functions for header processing.
-status_t ldr_DoHeader(ldr_Context_t *context);
-status_t ldr_DoHeader1(ldr_Context_t *context);
-status_t ldr_DoHeader2(ldr_Context_t *context);
-status_t ldr_DoHeaderMac(ldr_Context_t *context);
-status_t ldr_DoKeyTest(ldr_Context_t *context);
-status_t ldr_DoGetDek(ldr_Context_t *context);
+status_t ldr_DoHeader(ldr_Context_t *);
+status_t ldr_DoHeader1(ldr_Context_t *);
+status_t ldr_DoHeader2(ldr_Context_t *);
+status_t ldr_DoHeaderMac(ldr_Context_t *);
+status_t ldr_DoKeyTest(ldr_Context_t *);
+status_t ldr_DoGetDek(ldr_Context_t *);
 
 //! Loader action (context.Action) functions for command processing.
-status_t ldr_DoCommand(ldr_Context_t *context);
-status_t ldr_DoLoadBytes(ldr_Context_t *context);
-status_t ldr_DoLoadChunks(ldr_Context_t *context);
-status_t ldr_DoLoadCmd(ldr_Context_t *context);
-status_t ldr_DoFillCmd(ldr_Context_t *context);
-status_t ldr_DoJumpCmd(ldr_Context_t *context);
-status_t ldr_DoCallCmd(ldr_Context_t *context);
-status_t ldr_DoTagCmd(ldr_Context_t *context);
-status_t ldr_DoEraseCmd(ldr_Context_t *context);
-status_t ldr_DoResetCmd(ldr_Context_t *context);
-status_t ldr_DoMemEnableCmd(ldr_Context_t *context);
-status_t ldr_DoProgramCmd(ldr_Context_t *context);
+status_t ldr_DoInit(ldr_Context_t *);
+status_t ldr_DoCommand(ldr_Context_t *);
+status_t ldr_DoLoadBytes(ldr_Context_t *);
+status_t ldr_DoLoadChunks(ldr_Context_t *);
+status_t ldr_DoLoadCmd(ldr_Context_t *);
+status_t ldr_DoFillCmd(ldr_Context_t *);
+status_t ldr_DoJumpCmd(ldr_Context_t *);
+status_t ldr_DoCallCmd(ldr_Context_t *);
+status_t ldr_DoTagCmd(ldr_Context_t *);
+status_t ldr_DoEraseCmd(ldr_Context_t *);
+status_t ldr_DoResetCmd(ldr_Context_t *);
+status_t ldr_DoMemEnableCmd(ldr_Context_t *);
+status_t ldr_DoProgramCmd(ldr_Context_t *);
 
 ////////////////////////////////////////////////////////////////////////////////
 // Data
@@ -91,7 +92,7 @@ static ldr_Context_t s_loaderContext;
 //! static buffer queueing up a chunk worth of data
 static ldr_buf_t s_loaderBuf;
 
-#if defined(AES_SECURITY_SUPPORTED) && AES_SECURITY_SUPPORTED
+#if AES_SECURITY_SUPPORTED
 //! Pointer for the aes which will for now be a null pointer unless in debug mode
 //! we will try to read from the config area
 static uint32_t s_aesKey[AES_128_KEY_SIZE_WORDS];
@@ -109,8 +110,6 @@ static uint32_t s_aesKey[AES_128_KEY_SIZE_WORDS];
 ////////////////////////////////////////////////////////////////////////////////
 status_t ldr_GoToNextSection(ldr_Context_t *context)
 {
-    status_t status = (int32_t)kStatus_Success;
-
     // If we are not in the last section of the image file, setup to get a
     // "tag" command then skip the remaining chunks in the section. Otherwise,
     // return an error.
@@ -125,7 +124,7 @@ status_t ldr_GoToNextSection(ldr_Context_t *context)
         context->Action = ldr_DoCommand;
 
 // Reinit the encryption for the start of a new section
-#if defined(AES_SECURITY_SUPPORTED) && AES_SECURITY_SUPPORTED
+#if AES_SECURITY_SUPPORTED
         if (context->keyCount)
         {
             cbc_mac_init(context->dek, context->initVector);
@@ -135,14 +134,11 @@ status_t ldr_GoToNextSection(ldr_Context_t *context)
         // Assume for now the new section has at least one chunk
         context->sectChunks = 1;
 
-        status = (int32_t)kStatus_Success;
+        return kStatus_Success;
     }
-    else
-    {
-        // No where to skip to, so return an error
-        status = (int32_t)kStatusRomLdrEOFReached;
-    }
-    return status;
+
+    // No where to skip to, so return an error
+    return kStatusRomLdrEOFReached;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -162,14 +158,14 @@ status_t ldr_GoToNextSection(ldr_Context_t *context)
 ////////////////////////////////////////////////////////////////////////////////
 status_t ldr_DoHeader(ldr_Context_t *context)
 {
-#if defined(AES_SECURITY_SUPPORTED) && AES_SECURITY_SUPPORTED
+#if AES_SECURITY_SUPPORTED
     // Start the cbc-mac decode process which we may not need but won't know until we get
     // to the keyCount variable in the header
     cbc_mac_init((uint8_t *)&s_aesKey, 0);
 
     // The contents of header chunk[0] are used as the initialization vector
     // for the CBC decryption process. Save this value in the loader context.
-    (void)memcpy(context->initVector, context->src, sizeof(chunk_t));
+    memcpy(context->initVector, context->src, sizeof(chunk_t));
 
     // Feed the cbc mac the received data, and store the data in the DEK
     cbc_mac_encrypt(context->src, sizeof(chunk_t), context->dek);
@@ -178,7 +174,7 @@ status_t ldr_DoHeader(ldr_Context_t *context)
     // Setup to process the next header chunk
     context->Action = ldr_DoHeader1;
 
-    return (int32_t)kStatus_Success;
+    return kStatus_Success;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -199,28 +195,20 @@ status_t ldr_DoHeader(ldr_Context_t *context)
 ////////////////////////////////////////////////////////////////////////////////
 status_t ldr_DoHeader1(ldr_Context_t *context)
 {
-    union
-    {
-        uint8_t *pSrc;
-        boot_hdr1_t *pHdr1;
-    } header;
-
-    header.pSrc = context->src;
-
-    status_t status = (int32_t)kStatus_Success;
+    boot_hdr1_t *pHdr1 = (boot_hdr1_t *)context->src;
 
     // Copy the file flags and chunk count
-    context->fileFlags = header.pHdr1->fileFlags;
-    context->fileChunks = header.pHdr1->fileChunks - 2u;
+    context->fileFlags = pHdr1->fileFlags;
+    context->fileChunks = pHdr1->fileChunks - 2;
 
     // Check the file signature and version
-    if ((header.pHdr1->signature != (uint32_t)BOOT_SIGNATURE) || (header.pHdr1->major > (uint8_t)SB_FILE_MAJOR_VERSION))
+    if ((pHdr1->signature != BOOT_SIGNATURE) || (pHdr1->major > SB_FILE_MAJOR_VERSION))
     {
-        status = (int32_t)kStatusRomLdrSignature;
+        return kStatusRomLdrSignature;
     }
     else
     {
-#if defined(AES_SECURITY_SUPPORTED) && AES_SECURITY_SUPPORTED
+#if AES_SECURITY_SUPPORTED
         // Feed the cbc mac the received data
         cbc_mac_encrypt(context->src, sizeof(chunk_t), context->dek);
 #endif
@@ -228,9 +216,8 @@ status_t ldr_DoHeader1(ldr_Context_t *context)
         // Setup to process the next header chunk
         context->Action = ldr_DoHeader2;
 
-        status = (int32_t)kStatus_Success;
+        return kStatus_Success;
     }
-    return status;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -252,77 +239,63 @@ status_t ldr_DoHeader1(ldr_Context_t *context)
 ////////////////////////////////////////////////////////////////////////////////
 status_t ldr_DoHeader2(ldr_Context_t *context)
 {
-    union
-    {
-        uint8_t *pSrc;
-        boot_hdr2_t *pHdr2;
-    } header;
-
-    header.pSrc = context->src;
-
-    status_t status = (int32_t)kStatus_Success;
+    boot_hdr2_t *pHdr2 = (boot_hdr2_t *)context->src;
 
     // Save first boot section parameters
-    context->objectID = header.pHdr2->bootSectID;
+    context->objectID = pHdr2->bootSectID;
     // Set up our first sectChunks value since we can determine it now
-    context->sectChunks = header.pHdr2->bootOffset - 3u;
+    context->sectChunks = pHdr2->bootOffset - 3;
 
     // Sanity check the section chunk count
     if (context->sectChunks >= context->fileChunks)
     {
-        status = (int32_t)kStatusRomLdrSectionLength;
+        return kStatusRomLdrSectionLength;
+    }
+
+    // Check whether the image is encrypted
+    if (pHdr2->keyCount != 0)
+    {
+#if AES_SECURITY_SUPPORTED
+        // Save the key count for the dictionary search
+        context->keyCount = pHdr2->keyCount;
+
+        // Use bootCmd.count as temporary storage to hold the number of chunks
+        // remaining in the plaintext header
+        context->bootCmd.count = pHdr2->keyOffset - 3;
+
+        // Set action to finish calculation of CBC MAC over the header
+        context->Action = ldr_DoHeaderMac;
+
+        // Feed the cbc mac the received data
+        cbc_mac_encrypt(context->src, sizeof(chunk_t), context->dek);
+
+        return kStatus_Success;
+#else
+        debug_printf("Error: image is encrypted\r\n");
+        return kStatusRomLdrUnencryptedOnly;
+#endif
     }
     else
     {
-        // Check whether the image is encrypted
-        if (header.pHdr2->keyCount != 0u)
+#if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
+#if !BL_DEVICE_IS_LPC_SERIES
+        ftfx_security_state_t securityState = kFTFx_SecurityStateNotSecure;
+        // If the image is not encrypted and we have flash security enabled
+        // abort the transfer
+        // Note: Both Main and Secondary flash share the same security state
+        //  So it doesn't matter what index of allFlashState[] we use for this FLASH API.
+        g_bootloaderContext.flashDriverInterface->flash_get_security_state(
+            g_bootloaderContext.allFlashState, &securityState);
+
+        if (securityState != kFTFx_SecurityStateNotSecure)
         {
-#if defined(AES_SECURITY_SUPPORTED) && AES_SECURITY_SUPPORTED
-            // Save the key count for the dictionary search
-            context->keyCount = header.pHdr2->keyCount;
-
-            // Use bootCmd.count as temporary storage to hold the number of chunks
-            // remaining in the plaintext header
-            context->bootCmd.count = header.pHdr2->keyOffset - 3u;
-
-            // Set action to finish calculation of CBC MAC over the header
-            context->Action = ldr_DoHeaderMac;
-
-            // Feed the cbc mac the received data
-            cbc_mac_encrypt(context->src, sizeof(chunk_t), context->dek);
-
-            status = (int32_t)kStatus_Success;
-#else
-        debug_printf("Error: image is encrypted\r\n");
-            status = (int32_t)kStatusRomLdrUnencryptedOnly;
-#endif
+            return kStatusRomLdrSecureOnly;
         }
-        else
-        {
-#if !(defined(BL_FEATURE_HAS_NO_INTERNAL_FLASH) && BL_FEATURE_HAS_NO_INTERNAL_FLASH)
-#if !(defined(BL_DEVICE_IS_LPC_SERIES) && BL_DEVICE_IS_LPC_SERIES)
-            ftfx_security_state_t securityState = kFTFx_SecurityStateNotSecure;
-            // If the image is not encrypted and we have flash security enabled
-            // abort the transfer
-            // Note: Both Main and Secondary flash share the same security state
-            //  So it doesn't matter what index of allFlashState[] we use for this FLASH API.
-            (void)g_bootloaderContext.flashDriverInterface->flash_get_security_state(
-                g_bootloaderContext.allFlashState, &securityState);
-
-            if (securityState != kFTFx_SecurityStateNotSecure)
-            {
-                status = (int32_t)kStatusRomLdrSecureOnly;
-            }
-            else
 #endif // !BL_DEVICE_IS_LPC_SERIES
 #endif // #if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
-            // Skip the rest of the header
-            {
-                status = ldr_GoToNextSection(context);
-            }
-        }
+        // Skip the rest of the header
+        return ldr_GoToNextSection(context);
     }
-    return status;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -347,17 +320,17 @@ status_t ldr_DoHeaderMac(ldr_Context_t *context)
     // one chunk at a time.
     --context->sectChunks;
 
-#if defined(AES_SECURITY_SUPPORTED) && AES_SECURITY_SUPPORTED
+#if AES_SECURITY_SUPPORTED
     // Feed the cbc mac the received data
     cbc_mac_encrypt(context->src, sizeof(chunk_t), context->dek);
 #endif
 
-    if (--(context->bootCmd.count) == 0u)
+    if (--(context->bootCmd.count) == 0)
     {
         context->Action = ldr_DoKeyTest;
     }
 
-    return (int32_t)kStatus_Success;
+    return kStatus_Success;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -383,7 +356,7 @@ status_t ldr_DoGetDek(ldr_Context_t *context)
 {
     --context->sectChunks;
 
-#if defined(AES_SECURITY_SUPPORTED) && AES_SECURITY_SUPPORTED
+#if AES_SECURITY_SUPPORTED
     // Use the OTP key and the init vector from the header
     cbc_mac_init((uint8_t *)&s_aesKey, context->initVector);
 
@@ -419,7 +392,7 @@ status_t ldr_DoGetDek(ldr_Context_t *context)
 ////////////////////////////////////////////////////////////////////////////////
 status_t ldr_DoKeyTest(ldr_Context_t *context)
 {
-    status_t rc = (int32_t)kStatus_Success;
+    status_t rc = kStatus_Success;
 
     --context->sectChunks;
 
@@ -430,17 +403,17 @@ status_t ldr_DoKeyTest(ldr_Context_t *context)
         // load the key and terminate the key search.
         context->Action = ldr_DoGetDek;
     }
-    else if (--(context->keyCount) > 0u)
+    else if (--(context->keyCount) > 0)
     {
         // No, but there are more entries in the dictionary, so go get the
         // next one to test. Skip over the next chunk which is the unmatching DEK
         --context->sectChunks;
-        context->skipCount = 1u;
+        context->skipCount = 1;
     }
     else
     {
         // No, and there are no more entries in the dictionary.
-        rc = (int32_t)kStatusRomLdrKeyNotFound;
+        rc = kStatusRomLdrKeyNotFound;
     }
 
     return rc;
@@ -469,43 +442,49 @@ status_t ldr_DoLoadBytes(ldr_Context_t *context)
     uint32_t crc32Result;
 
 // Copy the trailing edge payload bytes to the load destination.
-#if defined(AES_SECURITY_SUPPORTED) && AES_SECURITY_SUPPORTED
+#if AES_SECURITY_SUPPORTED
     if (context->keyCount)
     {
         // decrypt the block in place
         cbc_mac_decrypt(context->src, sizeof(chunk_t), context->src);
     }
 #endif
-    uint32_t memoryId = MAKE_MEMORYID((context->bootCmd.flags & (uint32_t)ROM_MEM_GROUP_ID_MASK) >> (uint32_t)ROM_MEM_GROUP_ID_SHIFT,
-                                      (context->bootCmd.flags & (uint32_t)ROM_MEM_DEVICE_ID_MASK) >> (uint32_t)ROM_MEM_DEVICE_ID_SHIFT);
+    uint32_t memoryId = MAKE_MEMORYID((context->bootCmd.flags & ROM_MEM_GROUP_ID_MASK) >> ROM_MEM_GROUP_ID_SHIFT,
+                                      (context->bootCmd.flags & ROM_MEM_DEVICE_ID_MASK) >> ROM_MEM_DEVICE_ID_SHIFT);
     status_t status = g_bootloaderContext.memoryInterface->write(context->bootCmd.address, context->bootCmd.count,
                                                                  context->src, memoryId);
 
-    if (status == (int32_t)kStatus_Success)
+    if (status != kStatus_Success)
+    {
+        return status;
+    }
+
+    //    if (context->receivedChunks >= (context->sectChunks - 1))
     {
         // Force to write buffered data to target memory if it is last data
         // chunks without reset/call/jump command at the end
         assert(g_bootloaderContext.memoryInterface->flush);
         status = g_bootloaderContext.memoryInterface->flush();
-        if (status == (int32_t)kStatus_Success)
+        if (status != kStatus_Success)
         {
-            // update the crc running value then finalize
-            crc32_update(&context->crc32, context->src, sizeof(chunk_t));
-
-            crc32_finalize(&context->crc32, &crc32Result);
-
-            if (crc32Result != context->bootCmd.data)
-            {
-                status = (int32_t)kStatusRomLdrCrc32Error;
-            }
-            else
-            {
-                // Setup to get the next boot command.
-                context->Action = ldr_DoCommand;
-            }
+            return status;
         }
     }
-    return status;
+
+    // update the crc running value then finalize
+    crc32_update(&context->crc32, context->src, sizeof(chunk_t));
+
+    crc32_finalize(&context->crc32, &crc32Result);
+
+    if (crc32Result != context->bootCmd.data)
+    {
+        return kStatusRomLdrCrc32Error;
+    }
+
+    // Setup to get the next boot command.
+    context->Action = ldr_DoCommand;
+
+    return kStatus_Success;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -532,7 +511,7 @@ status_t ldr_DoLoadChunks(ldr_Context_t *context)
 {
     uint32_t crc32Result;
 
-#if defined(AES_SECURITY_SUPPORTED) && AES_SECURITY_SUPPORTED
+#if AES_SECURITY_SUPPORTED
     if (context->keyCount)
     {
         // decrypt the block in place
@@ -543,65 +522,49 @@ status_t ldr_DoLoadChunks(ldr_Context_t *context)
     // update the crc running value
     crc32_update(&context->crc32, context->src, sizeof(chunk_t));
 
-    uint32_t memoryId = MAKE_MEMORYID((context->bootCmd.flags & (uint32_t)ROM_MEM_GROUP_ID_MASK) >> (uint32_t)ROM_MEM_GROUP_ID_SHIFT,
-                                      (context->bootCmd.flags & (uint32_t)ROM_MEM_DEVICE_ID_MASK) >> (uint32_t)ROM_MEM_DEVICE_ID_SHIFT);
+    uint32_t memoryId = MAKE_MEMORYID((context->bootCmd.flags & ROM_MEM_GROUP_ID_MASK) >> ROM_MEM_GROUP_ID_SHIFT,
+                                      (context->bootCmd.flags & ROM_MEM_DEVICE_ID_MASK) >> ROM_MEM_DEVICE_ID_SHIFT);
 
     status_t status =
         g_bootloaderContext.memoryInterface->write(context->bootCmd.address, sizeof(chunk_t), context->src, memoryId);
-    if (status == (int32_t)kStatus_Success)
+    if (status != kStatus_Success)
     {
-        // Adjust the boot command parameters to reflect the last move
-        context->bootCmd.address += sizeof(chunk_t);
-#if defined(BL_FEATURE_SUPPORT_DFLASH) && BL_FEATURE_SUPPORT_DFLASH
-        const memory_map_entry_t *mapEntry; 
-        status = find_map_entry((context->bootCmd.address - sizeof(chunk_t)), sizeof(chunk_t), &mapEntry);
-        if (status == (int32_t)kStatus_Success)
-        {
-#if defined(BL_FEATURE_SUPPORT_PFLASH_DFLASH_CROSS_WRITE) && BL_FEATURE_SUPPORT_PFLASH_DFLASH_CROSS_WRITE
-            if (g_bootloaderContext.dflashDriverInterface != (void *)0u)
-            {      
-                if ((mapEntry->memoryProperty == ((uint32_t)kMemoryIsExecutable | (uint32_t)kMemoryType_FLASH)) && (context->bootCmd.address  > mapEntry->endAddress))
-                { 
-                    assert(g_bootloaderContext.memoryInterface->flush);
-                    (void)g_bootloaderContext.memoryInterface->flush(); 
-                    context->bootCmd.address = (uint32_t)FSL_FEATURE_FLASH_FLEX_NVM_START_ADDRESS;
-                }
-            }
-#endif  // BL_FEATURE_SUPPORT_PFLASH_DFLASH_CROSS_WRITE         
-        }
-#endif // BL_FEATURE_SUPPORT_DFLASH              
-    
-        context->bootCmd.count -= sizeof(chunk_t);
-        if (context->bootCmd.count > sizeof(chunk_t))
-        {
-            context->Action = ldr_DoLoadChunks;
-        }
-        else if (context->bootCmd.count != 0u)
-        {
-            context->Action = ldr_DoLoadBytes;
-        }
-        else
-        {
-            // Force to write buffered data to target memory
-            assert(g_bootloaderContext.memoryInterface->flush);
-            status = g_bootloaderContext.memoryInterface->flush();
-            if (status == (int32_t)kStatus_Success)
-            {
-                // The last amount of data we received was a full chunk so get our crc result
-                crc32_finalize(&context->crc32, &crc32Result);
-
-                if (crc32Result != context->bootCmd.data)
-                {
-                    status = (int32_t)kStatusRomLdrCrc32Error;
-                }
-                else
-                {
-                    context->Action = ldr_DoCommand;
-                }
-            }
-        }
+        return status;
     }
-    return status;
+
+    // Adjust the boot command parameters to reflect the last move
+    context->bootCmd.address += sizeof(chunk_t);
+    context->bootCmd.count -= sizeof(chunk_t);
+    if (context->bootCmd.count > sizeof(chunk_t))
+    {
+        context->Action = ldr_DoLoadChunks;
+    }
+    else if (context->bootCmd.count)
+    {
+        context->Action = ldr_DoLoadBytes;
+    }
+    else
+    {
+        // Force to write buffered data to target memory
+        assert(g_bootloaderContext.memoryInterface->flush);
+        status = g_bootloaderContext.memoryInterface->flush();
+        if (status != kStatus_Success)
+        {
+            return status;
+        }
+
+        // The last amount of data we received was a full chunk so get our crc result
+        crc32_finalize(&context->crc32, &crc32Result);
+
+        if (crc32Result != context->bootCmd.data)
+        {
+            return kStatusRomLdrCrc32Error;
+        }
+
+        context->Action = ldr_DoCommand;
+    }
+
+    return kStatus_Success;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -630,7 +593,7 @@ status_t ldr_DoLoadCmd(ldr_Context_t *context)
         context->Action = ldr_DoLoadBytes;
     }
 
-    return (int32_t)kStatus_Success;
+    return kStatus_Success;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -650,8 +613,13 @@ status_t ldr_DoFillCmd(ldr_Context_t *context)
 {
     status_t status = g_bootloaderContext.memoryInterface->fill(context->bootCmd.address, context->bootCmd.count,
                                                                 context->bootCmd.data);
+    if (status != kStatus_Success)
+    {
+        return status;
+    }
+
     // Context is already setup to get the next boot command
-    return status;
+    return kStatus_Success;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -669,33 +637,34 @@ status_t ldr_DoFillCmd(ldr_Context_t *context)
 ////////////////////////////////////////////////////////////////////////////////
 status_t ldr_DoProgramCmd(ldr_Context_t *context)
 {
-    status_t status = (int32_t)kStatus_Success;
-    uint32_t memoryId = MAKE_MEMORYID((context->bootCmd.flags & (uint32_t)ROM_MEM_GROUP_ID_MASK) >> (uint32_t)ROM_MEM_GROUP_ID_SHIFT,
-                                      (context->bootCmd.flags & (uint32_t)ROM_MEM_DEVICE_ID_MASK) >> (uint32_t)ROM_MEM_DEVICE_ID_SHIFT);
-    bool isEightByte = (context->bootCmd.flags & (uint16_t)ROM_PROG_8BYTE_MASK) != 0u;
-    uint32_t byteCount = (isEightByte ? 8u : 4u);
+    status_t status;
+    uint32_t memoryId = MAKE_MEMORYID((context->bootCmd.flags & ROM_MEM_GROUP_ID_MASK) >> ROM_MEM_GROUP_ID_SHIFT,
+                                      (context->bootCmd.flags & ROM_MEM_DEVICE_ID_MASK) >> ROM_MEM_DEVICE_ID_SHIFT);
+    bool isEightByte = (context->bootCmd.flags & ROM_PROG_8BYTE_MASK) != 0;
+    uint32_t byteCount = (isEightByte ? 8 : 4);
     uint32_t index = context->bootCmd.address;
     uint32_t *data =
         &context->bootCmd.count; // First 4 bytes are in count field, second 4 bytes are in following data field
 
-#if !(defined(BL_FEATURE_HAS_NO_INTERNAL_FLASH) && BL_FEATURE_HAS_NO_INTERNAL_FLASH) && \
-    !(defined(BL_DEVICE_IS_LPC_SERIES) && BL_DEVICE_IS_LPC_SERIES)
-    if (memoryId != (uint32_t)kMemoryIFR0_Fuse)
+#if !BL_FEATURE_HAS_NO_INTERNAL_FLASH && !BL_DEVICE_IS_LPC_SERIES
+    if (memoryId != kMemoryIFR0_Fuse)
     {
-        status = (int32_t)kStatus_InvalidArgument;
+        return kStatus_InvalidArgument;
     }
-    else
+
+    lock_acquire();
+    // Note: Both Main and Secondary flash share the same IFR Memory
+    //  So it doesn't matter what index of allFlashState[] we use for this FLASH API.
+    status = g_bootloaderContext.flashDriverInterface->flash_program_once(
+        &g_bootloaderContext.allFlashState->ftfxConfig[kFlashIndex_Main], index, (uint8_t *)data, byteCount);
+    lock_release();
+    if (status != kStatus_Success)
     {
-        lock_acquire();
-        // Note: Both Main and Secondary flash share the same IFR Memory
-        //  So it doesn't matter what index of allFlashState[] we use for this FLASH API.
-        status = g_bootloaderContext.flashDriverInterface->flash_program_once(
-            &g_bootloaderContext.allFlashState->ftfxConfig[kFlashIndex_Main], index, (uint8_t *)data, byteCount);
-        lock_release();
-        // Context is already setup to get the next boot command
+        return status;
     }
-    
-    return status;
+
+    // Context is already setup to get the next boot command
+    return kStatus_Success;
 #elif defined(BL_FEATURE_OCOTP_MODULE)
     if (memoryId != kMemoryIFR0_Fuse)
     {
@@ -722,7 +691,7 @@ status_t ldr_DoProgramCmd(ldr_Context_t *context)
 status_t ldr_DoJumpCmd(ldr_Context_t *context)
 {
     // Actual jump is implemented in sbloader_finalize().
-    return (int32_t)kStatus_AbortDataPhase;
+    return kStatus_AbortDataPhase;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -741,43 +710,36 @@ status_t ldr_DoJumpCmd(ldr_Context_t *context)
 ////////////////////////////////////////////////////////////////////////////////
 status_t ldr_DoCallCmd(ldr_Context_t *context)
 {
-    union
-    {
-        uint32_t address;
-        pCallFnc_t entry_fun;
-    } func_ptr;
-
-    func_ptr.address = context->bootCmd.address;
-    status_t rc = (int32_t)kStatusRomLdrCallFailed;
-    status_t status = (int32_t)kStatus_Success;
+    pCallFnc_t entry_fun = (pCallFnc_t)context->bootCmd.address;
+    status_t rc = kStatusRomLdrCallFailed;
 
     // todo: need common impl with bootloader call cmd
 
     // Call the plugin entry point with the specified parameter. The plugin
     // can start a new section or image by returning the appropriate code and
     // updating the object id pointed to by the second parameter.
-    if (is_valid_application_location(func_ptr.address))
+    if (is_valid_application_location((uint32_t)entry_fun))
     {
-        rc = func_ptr.entry_fun(context->bootCmd.data, &context->objectID);
+        rc = entry_fun(context->bootCmd.data, &context->objectID);
     }
 
-    if (rc == (int32_t)ROM_BOOT_SECTION_ID)
+    if (rc == ROM_BOOT_SECTION_ID)
     {
         // The plugin returned a section ID, skip ahead to the next section
-        status = ldr_GoToNextSection(context);
+        return ldr_GoToNextSection(context);
     }
-    else if (rc == (int32_t)ROM_BOOT_IMAGE_ID)
+    else if (rc == ROM_BOOT_IMAGE_ID)
     {
         // The plugin returned an image ID, restart the loader state machine
-        (void)sbloader_init();
+        sbloader_init();
+        return kStatus_Success;
     }
     else
     {
         // Otherwise, just pass on the plugin return code. Context is already
         // setup to get the next boot command.
-        status = rc;
+        return rc;
     }
-    return status;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -798,49 +760,44 @@ status_t ldr_DoCallCmd(ldr_Context_t *context)
 ////////////////////////////////////////////////////////////////////////////////
 status_t ldr_DoTagCmd(ldr_Context_t *context)
 {
-    status_t status = (int32_t)kStatus_Success;
-
     // Get the section chunk count from the boot command
     context->sectChunks = context->bootCmd.count;
 
     // Sanity check the new section count
     if (context->sectChunks > context->fileChunks)
     {
-        status = (int32_t)kStatusRomLdrSectionLength;
+        return kStatusRomLdrSectionLength;
+    }
+
+    if ((context->bootCmd.data & SFLG_SECTION_BOOTABLE) && (context->bootCmd.address == context->objectID) &&
+        (context->bootCmd.count != 0))
+    {
+        // This section is bootable and matches the ID we are looking for, so
+        // just continue getting commands from this point
+        // Reinitialize the decryption for the rest of the boot commands and the section
+
+        context->bootSectChunks = context->bootCmd.count;
+
+#if AES_SECURITY_SUPPORTED
+        if (context->keyCount)
+        {
+            cbc_mac_init(context->dek, context->initVector);
+        }
+#endif
+        return kStatus_Success;
+    }
+    else if (context->bootCmd.flags & CFLG_LAST_TAG)
+    {
+        // This isn't the right boot section and it's the last one, so return
+        // an error
+        return kStatusRomLdrIdNotFound;
     }
     else
     {
-        if ((context->bootCmd.data & SFLG_SECTION_BOOTABLE) != 0u && 
-            (context->bootCmd.address == context->objectID) &&
-            (context->bootCmd.count != 0u))
-        {
-            // This section is bootable and matches the ID we are looking for, so
-            // just continue getting commands from this point
-            // Reinitialize the decryption for the rest of the boot commands and the section
-
-            context->bootSectChunks = context->bootCmd.count;
-
-#if defined(AES_SECURITY_SUPPORTED) && AES_SECURITY_SUPPORTED
-            if (context->keyCount)
-            {
-                cbc_mac_init(context->dek, context->initVector);
-            }
-#endif
-        }
-        else if ((context->bootCmd.flags & CFLG_LAST_TAG) != 0u)
-        {
-            // This isn't the right boot section and it's the last one, so return
-            // an error
-            status = (int32_t)kStatusRomLdrIdNotFound;
-        }
-        else
-        {
-            // This isn't the boot section we are looking for and there are more, so
-            // skip to the next one
-            status = ldr_GoToNextSection(context);
-        }
+        // This isn't the boot section we are looking for and there are more, so
+        // skip to the next one
+        return ldr_GoToNextSection(context);
     }
-    return status;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -860,33 +817,33 @@ status_t ldr_DoTagCmd(ldr_Context_t *context)
 ////////////////////////////////////////////////////////////////////////////////
 status_t ldr_DoEraseCmd(ldr_Context_t *context)
 {
-    status_t status = (int32_t)kStatus_Success;
+    status_t status = kStatus_Success;
 
-    if ((context->bootCmd.flags & ROM_ERASE_ALL_UNSECURE_MASK) != 0u)
+    if (context->bootCmd.flags & ROM_ERASE_ALL_UNSECURE_MASK)
     {
-#if defined(BL_FEATURE_ERASEALL_UNSECURE) && BL_FEATURE_ERASEALL_UNSECURE
+#if BL_FEATURE_ERASEALL_UNSECURE
         status = flash_mem_erase_all_unsecure();
-#if defined(BL_FEATURE_SUPPORT_DFLASH) && BL_FEATURE_SUPPORT_DFLASH 
+#if BL_FEATURE_SUPPORT_DFLASH 
         if (g_bootloaderContext.dflashDriverInterface != NULL)
         {
             status += flexNVM_mem_erase_all_unsecure();   
         }
 #endif // BL_FEATURE_SUPPORT_DFLASH         
 #else
-        status = (int32_t)kStatus_InvalidArgument;
+        status = kStatus_InvalidArgument;
 #endif // BL_FEATURE_ERASEALL_UNSECURE
     }
-    else if ((context->bootCmd.flags & ROM_ERASE_ALL_MASK) != 0u)
+    else if (context->bootCmd.flags & ROM_ERASE_ALL_MASK)
     {
-        uint32_t memoryId = MAKE_MEMORYID((context->bootCmd.flags & (uint32_t)ROM_MEM_GROUP_ID_MASK) >> (uint32_t)ROM_MEM_GROUP_ID_SHIFT,
-                                          (context->bootCmd.flags & (uint32_t)ROM_MEM_DEVICE_ID_MASK) >> (uint32_t)ROM_MEM_DEVICE_ID_SHIFT);
+        uint32_t memoryId = MAKE_MEMORYID((context->bootCmd.flags & ROM_MEM_GROUP_ID_MASK) >> ROM_MEM_GROUP_ID_SHIFT,
+                                          (context->bootCmd.flags & ROM_MEM_DEVICE_ID_MASK) >> ROM_MEM_DEVICE_ID_SHIFT);
         switch (memoryId)
         {
-#if !(defined(BL_FEATURE_HAS_NO_INTERNAL_FLASH) && BL_FEATURE_HAS_NO_INTERNAL_FLASH)
-            case (uint32_t)kMemoryInternal:
-#if defined(BL_FEATURE_FAC_ERASE) && BL_FEATURE_FAC_ERASE
+#if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
+            case kMemoryInternal:
+#if BL_FEATURE_FAC_ERASE
                 status = flash_mem_erase_all(kFlashEraseAllOption_Blocks);
-#if defined(BL_FEATURE_SUPPORT_DFLASH) && BL_FEATURE_SUPPORT_DFLASH 
+#if BL_FEATURE_SUPPORT_DFLASH 
                 if (g_bootloaderContext.dflashDriverInterface != NULL)
                 {
                     status += flexNVM_mem_erase_all();  
@@ -894,8 +851,8 @@ status_t ldr_DoEraseCmd(ldr_Context_t *context)
 #endif // BL_FEATURE_SUPPORT_DFLASH                 
 #else
                 status = flash_mem_erase_all();  
-#if defined(BL_FEATURE_SUPPORT_DFLASH) && BL_FEATURE_SUPPORT_DFLASH 
-                if (g_bootloaderContext.dflashDriverInterface != (void *)0u)
+#if BL_FEATURE_SUPPORT_DFLASH 
+                if (g_bootloaderContext.dflashDriverInterface != NULL)
                 {
                     status += flexNVM_mem_erase_all(); 
                 }
@@ -903,40 +860,40 @@ status_t ldr_DoEraseCmd(ldr_Context_t *context)
 #endif // BL_FEATURE_FAC_ERASE
                 break;
 #endif // #if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
-#if defined(BL_FEATURE_QSPI_MODULE) && BL_FEATURE_QSPI_MODULE
-            case (uint32_t)kMemoryQuadSpi0:
+#if BL_FEATURE_QSPI_MODULE
+            case kMemoryQuadSpi0:
                 status = qspi_mem_erase_all();
                 break;
 #endif
-#if defined(BL_FEATURE_FLEXSPI_NOR_MODULE) && BL_FEATURE_FLEXSPI_NOR_MODULE
-            case (uint32_t)kMemoryFlexSpiNor:
+#if BL_FEATURE_FLEXSPI_NOR_MODULE
+            case kMemoryFlexSpiNor:
                 status = flexspi_nor_mem_erase_all();
                 break;
 #endif // #if BL_FEATURE_FLEXSPI_NOR_MODULE
-#if defined(BL_FEATURE_SPINAND_MODULE) && BL_FEATURE_SPINAND_MODULE
-            case (uint32_t)kMemorySpiNand:
+#if BL_FEATURE_SPINAND_MODULE
+            case kMemorySpiNand:
                 status = spinand_mem_erase_all();
                 break;
 #endif
-#if defined(BL_FEATURE_SEMC_NOR_MODULE) && BL_FEATURE_SEMC_NOR_MODULE
-            case (uint32_t)kMemorySemcNor:
+#if BL_FEATURE_SEMC_NOR_MODULE
+            case kMemorySemcNor:
                 status = semc_nor_mem_erase_all();
                 break;
 #endif // #if BL_FEATURE_SEMC_NOR_MODULE
-#if defined(BL_FEATURE_SEMC_NAND_MODULE) && BL_FEATURE_SEMC_NAND_MODULE
-            case (uint32_t)kMemorySemcNand:
+#if BL_FEATURE_SEMC_NAND_MODULE
+            case kMemorySemcNand:
                 status = semc_nand_mem_erase_all();
                 break;
 #endif
             default:
-                status = (int32_t)kStatus_InvalidArgument;
+                status = kStatus_InvalidArgument;
                 break;
         }
     }
     else
     {
-        uint32_t memoryId = MAKE_MEMORYID((context->bootCmd.flags & (uint32_t)ROM_MEM_GROUP_ID_MASK) >> (uint32_t)ROM_MEM_GROUP_ID_SHIFT,
-                                          (context->bootCmd.flags & (uint32_t)ROM_MEM_DEVICE_ID_MASK) >> (uint32_t)ROM_MEM_DEVICE_ID_SHIFT);
+        uint32_t memoryId = MAKE_MEMORYID((context->bootCmd.flags & ROM_MEM_GROUP_ID_MASK) >> ROM_MEM_GROUP_ID_SHIFT,
+                                          (context->bootCmd.flags & ROM_MEM_DEVICE_ID_MASK) >> ROM_MEM_DEVICE_ID_SHIFT);
         status = g_bootloaderContext.memoryInterface->erase(context->bootCmd.address, context->bootCmd.count, memoryId);
     }
 
@@ -960,7 +917,7 @@ status_t ldr_DoEraseCmd(ldr_Context_t *context)
 status_t ldr_DoResetCmd(ldr_Context_t *context)
 {
     // Actual reset is implemented in sbloader_finalize().
-    return (int32_t)kStatus_AbortDataPhase;
+    return kStatus_AbortDataPhase;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -980,50 +937,44 @@ status_t ldr_DoResetCmd(ldr_Context_t *context)
 ////////////////////////////////////////////////////////////////////////////////
 status_t ldr_DoMemEnableCmd(ldr_Context_t *context)
 {
-    status_t status = (int32_t)kStatus_Success;
-#if defined(BL_FEATURE_SPIFI_NOR_MODULE) && BL_FEATURE_SPIFI_NOR_MODULE || \
-    defined(BL_FEATURE_QSPI_MODULE) && BL_FEATURE_QSPI_MODULE || \
-    defined(BL_FEATURE_FLEXSPI_NOR_MODULE) && BL_FEATURE_FLEXSPI_NOR_MODULE || \
-    defined(BL_FEATURE_SEMC_NOR_MODULE) && BL_FEATURE_SEMC_NOR_MODULE || \
-    defined(BL_FEATURE_EXPAND_MEMORY) && BL_FEATURE_EXPAND_MEMORY
+    status_t status;
+
     uint32_t memoryId = MAKE_MEMORYID((context->bootCmd.flags & ROM_MEM_GROUP_ID_MASK) >> ROM_MEM_GROUP_ID_SHIFT,
                                       (context->bootCmd.flags & ROM_MEM_DEVICE_ID_MASK) >> ROM_MEM_DEVICE_ID_SHIFT);
-#endif
-
-#if defined(BL_FEATURE_SPIFI_NOR_MODULE) && BL_FEATURE_SPIFI_NOR_MODULE
+#if BL_FEATURE_SPIFI_NOR_MODULE
     if (memoryId == kMemorySpifiNor)
     {
         status = spifi_nor_mem_config((uint32_t*)context->bootCmd.address);
     }
     else
 #endif //BL_FEATURE_SPIFI_NOR_MODULE
-#if defined(BL_FEATURE_QSPI_MODULE) && BL_FEATURE_QSPI_MODULE
+#if BL_FEATURE_QSPI_MODULE
     if (memoryId == kMemoryQuadSpi0)
     {
         status = configure_qspi(context->bootCmd.address);
     }
     else
 #endif // #if BL_FEATURE_QSPI_MODULE
-#if defined(BL_FEATURE_FLEXSPI_NOR_MODULE) && BL_FEATURE_FLEXSPI_NOR_MODULE
+#if BL_FEATURE_FLEXSPI_NOR_MODULE
         if (memoryId == kMemoryFlexSpiNor)
     {
         status = flexspi_nor_mem_config((uint32_t *)context->bootCmd.address);
     }
     else
 #endif // #if BL_FEATURE_FLEXSPI_NOR_MODULE
-#if defined(BL_FEATURE_SEMC_NOR_MODULE) && BL_FEATURE_SEMC_NOR_MODULE
+#if BL_FEATURE_SEMC_NOR_MODULE
     if (memoryId == kMemorySemcNor)
     {
         status = semc_nor_mem_config((uint32_t *)context->bootCmd.address);
     }
     else
 #endif // #if BL_FEATURE_SEMC_NOR_MODULE
-#if defined(BL_FEATURE_EXPAND_MEMORY) && BL_FEATURE_EXPAND_MEMORY
+#if BL_FEATURE_EXPAND_MEMORY
         if (GROUPID(memoryId) == kGroup_External)
     {
         uint32_t index;
         status = find_external_map_index(memoryId, &index);
-        if (status == (int32_t)kStatus_Success)
+        if (status == kStatus_Success)
         {
             external_memory_map_entry_t *map =
                 (external_memory_map_entry_t *)&g_bootloaderContext.externalMemoryMap[index];
@@ -1033,7 +984,7 @@ status_t ldr_DoMemEnableCmd(ldr_Context_t *context)
     else
 #endif // #if BL_FEATURE_EXPAND_MEMORY
     {
-        status = (int32_t)kStatus_InvalidArgument;
+        status = kStatus_InvalidArgument;
     }
     return status;
 }
@@ -1058,9 +1009,8 @@ status_t ldr_DoCommand(ldr_Context_t *context)
     static boot_cmd_t *pCmd;
     pCmd = &context->bootCmd;
     uint32_t i, sum = 0x5a;
-    status_t status = (int32_t)kStatus_Success;
 
-#if defined(AES_SECURITY_SUPPORTED) && AES_SECURITY_SUPPORTED
+#if AES_SECURITY_SUPPORTED
     // Decrypt this boot command block if enabled
     if (context->keyCount)
     {
@@ -1068,70 +1018,47 @@ status_t ldr_DoCommand(ldr_Context_t *context)
     }
 #endif
 
-    union
-    {
-        uint8_t *src;
-        boot_cmd_t *cmd;
-    } boot_cmd;
-
-    boot_cmd.src = context->src;
     // Save the boot commmand.
-    context->bootCmd = *boot_cmd.cmd;
+    context->bootCmd = *((boot_cmd_t *)context->src);
 
     // Compute and test the boot command checksum
-    for (i = 1u; i < sizeof(boot_cmd_t); i++)
+    for (i = 1; i < sizeof(boot_cmd_t); i++)
     {
         sum += ((uint8_t *)pCmd)[i];
     }
-    if (((uint8_t *)pCmd)[0] != (sum & 0xFFu))
+    if (((uint8_t *)pCmd)[0] != (sum & 0xFF))
     {
         debug_printf("Error: invalid boot command checksum\r\n");
-        status = (int32_t)kStatusRomLdrChecksum;
+        return kStatusRomLdrChecksum;
     }
-    else
+
+    // Switch to the appropriate command handler function
+    switch (pCmd->tag)
     {
-        // Switch to the appropriate command handler function
-        switch (pCmd->tag)
-        {
-            case (uint8_t)ROM_NOP_CMD:
-                status = (int32_t)kStatus_Success;
-                break;
-            case (uint8_t)ROM_TAG_CMD:
-                status = ldr_DoTagCmd(context);
-                break;
-            case (uint8_t)ROM_LOAD_CMD:
-                status = ldr_DoLoadCmd(context);
-                break;
-            case (uint8_t)ROM_FILL_CMD:
-                status = ldr_DoFillCmd(context);
-                break;
-            case (uint8_t)ROM_JUMP_CMD:
-                status = ldr_DoJumpCmd(context);
-                break;
-            case (uint8_t)ROM_CALL_CMD:
-                status = ldr_DoCallCmd(context);
-                break;
-            case (uint8_t)ROM_ERASE_CMD:
-                status = ldr_DoEraseCmd(context);
-                break;
-            case (uint8_t)ROM_MODE_CMD:
-                status = (int32_t)kStatus_Success; // ignored for Kinetis
-                break;
-            case (uint8_t)ROM_RESET_CMD:
-                status = ldr_DoResetCmd(context);
-                break;
-            case (uint8_t)ROM_MEM_ENABLE_CMD:
-                status = ldr_DoMemEnableCmd(context);
-                break;
-            case (uint8_t)ROM_PROG_CMD:
-                status = ldr_DoProgramCmd(context);
-                break;
-            default:
-                status = (int32_t)kStatusRomLdrUnknownCommand;
-              break;
-        }
+        case ROM_NOP_CMD:
+            return kStatus_Success;
+        case ROM_TAG_CMD:
+            return ldr_DoTagCmd(context);
+        case ROM_LOAD_CMD:
+            return ldr_DoLoadCmd(context);
+        case ROM_FILL_CMD:
+            return ldr_DoFillCmd(context);
+        case ROM_JUMP_CMD:
+            return ldr_DoJumpCmd(context);
+        case ROM_CALL_CMD:
+            return ldr_DoCallCmd(context);
+        case ROM_ERASE_CMD:
+            return ldr_DoEraseCmd(context);
+        case ROM_MODE_CMD:
+            return kStatus_Success; // ignored for Kinetis
+        case ROM_RESET_CMD:
+            return ldr_DoResetCmd(context);
+        case ROM_MEM_ENABLE_CMD:
+            return ldr_DoMemEnableCmd(context);
+        case ROM_PROG_CMD:
+            return ldr_DoProgramCmd(context);
     }
-    return status;
+    return kStatusRomLdrUnknownCommand;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -1140,12 +1067,12 @@ status_t ldr_DoCommand(ldr_Context_t *context)
 status_t sbloader_init(void)
 {
     // Initialize the context
-    (void)memset(&s_loaderContext, 0, sizeof(ldr_Context_t));
+    memset(&s_loaderContext, 0, sizeof(ldr_Context_t));
 
     // Process the first chunk of the image header
     s_loaderContext.Action = ldr_DoHeader;
 
-#if defined(AES_SECURITY_SUPPORTED) && AES_SECURITY_SUPPORTED
+#if AES_SECURITY_SUPPORTED
 #ifndef BL_FEATURE_ENCRYPTION_KEY_ADDRESS
     // Ensure the process of read key cannot be interrupted by other IRQs.
     lock_acquire();
@@ -1174,9 +1101,9 @@ status_t sbloader_init(void)
 
     uint32_t i;
     // Test to see if the key is non blank
-    for (i = 0u; i < (uint32_t)AES_128_KEY_SIZE_WORDS; i++)
+    for (i = 0; i < AES_128_KEY_SIZE_WORDS; i++)
     {
-        if (s_aesKey[i] != ~0u)
+        if (s_aesKey[i] != ~0)
         {
             break;
         }
@@ -1185,11 +1112,11 @@ status_t sbloader_init(void)
     // If i went all the way through the loop the key is blank so default to a blank key
     if (i == AES_128_KEY_SIZE_WORDS)
     {
-        (void)memset(s_aesKey, 0, sizeof(s_aesKey));
+        memset(s_aesKey, 0, sizeof(s_aesKey));
     }
 #endif
 
-    return (int32_t)kStatus_Success;
+    return kStatus_Success;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -1197,10 +1124,10 @@ status_t sbloader_init(void)
 ////////////////////////////////////////////////////////////////////////////////
 status_t sbloader_pump(uint8_t *data, uint32_t length)
 {
-    status_t status = (int32_t)kStatus_Success;
+    status_t status = kStatus_Success;
     uint32_t required;
     uint32_t available;
-    uint32_t readPosition = 0u;
+    uint32_t readPosition = 0;
 
     while (readPosition != length)
     {
@@ -1208,34 +1135,30 @@ status_t sbloader_pump(uint8_t *data, uint32_t length)
         available = length - readPosition;
 
         // copy what we need to complete a full chunk into the chunk buffer
-        while ((required > 0u) && (available > 0u))
+        while ((required > 0) && (available > 0))
         {
             s_loaderBuf.data[s_loaderBuf.fillPosition++] = data[readPosition++];
             --required;
             --available;
         }
 
-        if (required == 0u)
+        if (required == 0)
         {
             // a full chunk was filled to process it
-            s_loaderBuf.fillPosition = 0u;
+            s_loaderBuf.fillPosition = 0;
 
             status = sbloader_handle_chunk();
 
-            if (status != (int32_t)kStatus_Success)
+            if (status != kStatus_Success)
             {
                 break;
             }
         }
-        else if (available == 0u)
+        else if (available == 0)
         {
             // otherwise we are just going to wait for more data
-            status = (int32_t)kStatusRomLdrDataUnderrun;
+            status = kStatusRomLdrDataUnderrun;
             break;
-        }
-        else
-        {
-            // doing nothing
         }
     }
 
@@ -1247,13 +1170,13 @@ status_t sbloader_pump(uint8_t *data, uint32_t length)
 ////////////////////////////////////////////////////////////////////////////////
 status_t sbloader_handle_chunk(void)
 {
-    status_t status = (int32_t)kStatus_Success;
+    status_t status = kStatus_Success;
 
     s_loaderContext.src = s_loaderBuf.data;
 
     // If we have found the boot section and are currently working on its commands
     // Once we have received the number of chunks in the section we will be done
-    if (s_loaderContext.bootSectChunks != 0u)
+    if (s_loaderContext.bootSectChunks)
     {
         if (s_loaderContext.receivedChunks != s_loaderContext.bootSectChunks)
         {
@@ -1264,7 +1187,7 @@ status_t sbloader_handle_chunk(void)
     else
     {
         // Otherwise this is header info or a non bootable section that might be skipped through
-        if (s_loaderContext.skipCount == 0u)
+        if (!s_loaderContext.skipCount)
         {
             status = s_loaderContext.Action(&s_loaderContext);
         }
@@ -1280,109 +1203,89 @@ status_t sbloader_handle_chunk(void)
 ////////////////////////////////////////////////////////////////////////////////
 //! @brief Implement jump or reset command
 ////////////////////////////////////////////////////////////////////////////////
-status_t sbloader_finalize(void)
+status_t sbloader_finalize()
 {
     // Force to write buffered data to target memory if it is last data
     // chunks with reset/call/jump command at the end
     assert(g_bootloaderContext.memoryInterface->flush);
     status_t status = g_bootloaderContext.memoryInterface->flush();
-    if (status == (int32_t)kStatus_Success)
+    if (status != kStatus_Success)
     {
-        if (s_loaderContext.bootCmd.tag == ROM_JUMP_CMD)
-        {
-            union
-            {
-                uint32_t address;
-                pJumpFnc_t entry_fun;
-            } func_ptr;
-
-            func_ptr.address = s_loaderContext.bootCmd.address;
-
-            // Jump to the entry point with the specified parameter
-            bool isValid = is_valid_application_location(func_ptr.address);
-#if defined(BL_FEATURE_OTFAD_MODULE) && BL_FEATURE_OTFAD_MODULE
-            if (isValid && is_qspi_present())
-            {
-                quadspi_cache_clear();
-                status_t status = otfad_init_as_needed();
-                if (status != (int32_t)kStatus_Success)
-                {
-                    isValid = false;
-                }
-                update_qspi_otfad_init_status(status);
-            }
-            if (!isValid)
-            {
-                status = (int32_t)kStatus_OtfadInvalidKeyBlob;
-            }
-#endif
-            if (isValid)
-            {
-                // Clean up prior to calling user code.
-                shutdown_cleanup(kShutdownType_Shutdown);
-
-                // Set initial SP if requested in by flag
-                if ((s_loaderContext.bootCmd.flags & (uint16_t)ROM_JUMP_SP_MASK) != 0u)
-                {
-                    static uint32_t s_addr = 0u;
-                    s_addr = s_loaderContext.bootCmd.count;
-
-                    // Get RAM address ranges
-                    const memory_map_entry_t *map = &g_bootloaderContext.memoryMap[(uint32_t)kIndexSRAM];
-
-                    // Validate stack pointer address. It must either be 0 or within the RAM range.
-                    if (!((s_addr == 0u) || ((s_addr >= map->startAddress) && (s_addr <= map->endAddress + 1u))))
-                    {
-                        // Invalid stack pointer value, respond with kStatus_InvalidArgument.
-                        status = (int32_t)kStatus_InvalidArgument;
-                    }
-                    else if (s_addr != 0u)
-                    {
-                        // Set main stack pointer and process stack pointer
-                        __set_MSP(s_addr);
-                        __set_PSP(s_addr);
-                    }
-                    else
-                    {
-                        // doing nothing.
-                    }
-                }
-
-                if (status == (int32_t)kStatus_Success)
-                {
-                    (void)func_ptr.entry_fun(s_loaderContext.bootCmd.data);
-                }
-            }
-            else
-            {
-#if defined(BL_FEATURE_OTFAD_MODULE) && BL_FEATURE_OTFAD_MODULE
-                if (status != (int32_t)kStatus_OtfadInvalidKeyBlob)
-#endif
-                {
-                    // We should never get here, so return an error if we do
-                    status = (int32_t)kStatusRomLdrJumpReturned;
-                }
-            }
-        }
-        else if (s_loaderContext.bootCmd.tag == ROM_RESET_CMD)
-        {
-            // Prepare for shutdown.
-            shutdown_cleanup(kShutdownType_Reset);
-
-            NVIC_SystemReset();
-            // Does not get here.
-            assert(0);
-
-            // We should never get here, so return an error if we do
-            status = (int32_t)kStatusRomLdrResetReturned;
-        }
-        else
-        {
-            status = (int32_t)kStatusRomLdrUnknownCommand;
-        }
+        return status;
     }
+
+    if (s_loaderContext.bootCmd.tag == ROM_JUMP_CMD)
+    {
+        pJumpFnc_t entry_fun = (pJumpFnc_t)s_loaderContext.bootCmd.address;
+
+        // Jump to the entry point with the specified parameter
+        bool isValid = is_valid_application_location((uint32_t)entry_fun);
+#if BL_FEATURE_OTFAD_MODULE
+        if (isValid && is_qspi_present())
+        {
+            quadspi_cache_clear();
+            status_t status = otfad_init_as_needed();
+            if (status != kStatus_Success)
+            {
+                isValid = false;
+            }
+            update_qspi_otfad_init_status(status);
+        }
+        if (!isValid)
+        {
+            return kStatus_OtfadInvalidKeyBlob;
+        }
+#endif
+        if (isValid)
+        {
+            // Clean up prior to calling user code.
+            shutdown_cleanup(kShutdownType_Shutdown);
+
+            // Set initial SP if requested in by flag
+            if (s_loaderContext.bootCmd.flags & ROM_JUMP_SP_MASK)
+            {
+                static uint32_t s_addr = 0;
+                s_addr = s_loaderContext.bootCmd.count;
+
+                // Get RAM address ranges
+                const memory_map_entry_t *map = &g_bootloaderContext.memoryMap[kIndexSRAM];
+
+                // Validate stack pointer address. It must either be 0 or within the RAM range.
+                if (!((s_addr == 0) || ((s_addr >= map->startAddress) && (s_addr <= map->endAddress + 1))))
+                {
+                    // Invalid stack pointer value, respond with kStatus_InvalidArgument.
+                    return kStatus_InvalidArgument;
+                }
+
+                if (s_addr)
+                {
+                    // Set main stack pointer and process stack pointer
+                    __set_MSP(s_addr);
+                    __set_PSP(s_addr);
+                }
+            }
+
+            entry_fun(s_loaderContext.bootCmd.data);
+        }
+
+        // We should never get here, so return an error if we do
+        return kStatusRomLdrJumpReturned;
+    }
+    else if (s_loaderContext.bootCmd.tag == ROM_RESET_CMD)
+    {
+        // Prepare for shutdown.
+        shutdown_cleanup(kShutdownType_Reset);
+
+        NVIC_SystemReset();
+        // Does not get here.
+        assert(0);
+
+        // We should never get here, so return an error if we do
+        return kStatusRomLdrResetReturned;
+    }
+
     // We should never get here, so return an error if we do
-    return status;
+    return kStatusRomLdrUnknownCommand;
 }
 
 //! @}

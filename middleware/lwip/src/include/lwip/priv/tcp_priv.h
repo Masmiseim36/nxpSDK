@@ -150,6 +150,10 @@ err_t            tcp_process_refused_data(struct tcp_pcb *pcb);
 #define  TCP_KEEPCNT_DEFAULT      9U        /* Default Counter for KEEPALIVE probes */
 #endif
 
+#ifndef  TCP_USER_TIMEOUT_DEFAULT
+#define  TCP_USER_TIMEOUT_DEFAULT 0U        /* Default of the socket TCP_USER_TIMEOUT option */
+#endif
+
 #define  TCP_MAXIDLE              TCP_KEEPCNT_DEFAULT * TCP_KEEPINTVL_DEFAULT  /* Maximum KEEPALIVE probe time */
 
 #define TCP_TCPLEN(seg) ((seg)->len + (((TCPH_FLAGS((seg)->tcphdr) & (TCP_FIN | TCP_SYN)) != 0) ? 1U : 0U))

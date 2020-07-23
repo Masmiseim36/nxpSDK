@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 NXP.
+ * Copyright 2018-2019 NXP.
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -31,6 +31,12 @@ extern "C" {
  *
  */
 void BOARD_InitBootPins(void);
+
+/*!
+ * @brief Configures pin routing and optionally pin electrical features.
+ *
+ */
+void BOARD_InitPins(void);
 
 /*! @name PORTD0 (number 93), MB_J11[A14]/MB_U12[18]/MB_PWM_AT/J4[A14]/PWM0
   @{ */
@@ -361,12 +367,6 @@ void MB_InitEXT_UARTPins(void);
  *
  */
 void MB_InitMISCPins(void);
-
-/*!
- * @brief Configures pin routing and optionally pin electrical features.
- *
- */
-void BOARD_InitPins(void);
 
 #define SOPT5_UART1RXSRC_UART_RX 0x00u /*!<@brief UART 1 receive data source select: UART1_RX pin */
 #define SOPT5_UART1TXSRC_UART_TX 0x00u /*!<@brief UART 1 transmit data source select: UART1_TX pin */

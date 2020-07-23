@@ -35,9 +35,9 @@ typedef void (*pfcn_void_void)(void);
 typedef enum _sm_app_state
 {
     kSM_AppFault = 0,
-    kSM_AppInit = 1,
-    kSM_AppStop = 2,
-    kSM_AppRun = 3,
+    kSM_AppInit  = 1,
+    kSM_AppStop  = 2,
+    kSM_AppRun   = 3,
 } sm_app_state_t;
 
 /*! @brief User state machine functions structure */
@@ -66,9 +66,9 @@ typedef struct _sm_app_ctrl
 {
     sm_app_state_fcn_t const *psStateFast; /* State functions */
     sm_app_state_fcn_t const *psStateSlow; /* State functions slow*/
-    sm_app_trans_fcn_t const *psTrans; /* Transition functions */
-    sm_app_ctrl uiCtrl; /* Control flags */
-    sm_app_state_t eState; /* State */
+    sm_app_trans_fcn_t const *psTrans;     /* Transition functions */
+    sm_app_ctrl uiCtrl;                    /* Control flags */
+    sm_app_state_t eState;                 /* State */
 } sm_app_ctrl_t;
 
 /*! @brief Pointer to function with a pointer to state machine control structure */
@@ -122,4 +122,3 @@ static inline void SM_StateMachineSlow(sm_app_ctrl_t *sAppCtrl)
 #endif
 
 #endif //_STATE_MACHINE_H_
-

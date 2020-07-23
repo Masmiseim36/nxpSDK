@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  *
@@ -58,7 +58,7 @@ DSTATUS ram_disk_initialize(BYTE pdrv)
 /*!
  * @brief Read Sector(s) from RAM disk.
  */
-DRESULT ram_disk_read(BYTE pdrv, BYTE *buff, DWORD sector, UINT count)
+DRESULT ram_disk_read(BYTE pdrv, BYTE* buff, LBA_t sector, UINT count)
 {
     if (pdrv != RAMDISK)
     {
@@ -71,7 +71,7 @@ DRESULT ram_disk_read(BYTE pdrv, BYTE *buff, DWORD sector, UINT count)
 /*!
  * @brief Write Sector(s) to RAM disk.
  */
-DRESULT ram_disk_write(BYTE pdrv, const BYTE *buff, DWORD sector, UINT count)
+DRESULT ram_disk_write(BYTE pdrv, const BYTE* buff, LBA_t sector, UINT count)
 {
     if (pdrv != RAMDISK)
     {
@@ -84,7 +84,7 @@ DRESULT ram_disk_write(BYTE pdrv, const BYTE *buff, DWORD sector, UINT count)
 /*!
  * @brief Miscellaneous RAM disk Functions.
  */
-DRESULT ram_disk_ioctl(BYTE pdrv, BYTE cmd, void *buff)
+DRESULT ram_disk_ioctl(BYTE pdrv, BYTE cmd, void* buff)
 {
     if (pdrv != RAMDISK)
     {

@@ -615,12 +615,45 @@ function HTML_write_output_blocks(blockName)
    //if (MotorsNumber == "Single") prefix = "";
 
    var prefixM = getActiveMotor();
-   var DocLocation =  parent.document.getElementById(prefixM + "ProjectPath").innerHTML;
+   var paramFile;
+   var DocLocation;
+
+   // try to open m1_pmsm_appconfig for reading to test file existence on ProjectPath1
+   DocLocation = parent.document.getElementById(prefixM + "ProjectPath1").innerHTML;
+   paramFile = pcm.LocalFileOpen(DocLocation + prefix.toLowerCase() + "pmsm_appconfig.h","r");
+
+   // Check whether the file was opened succefuly
+   if (paramFile != false)
+   {
+      // Close File (and keep the correct path in DocLocation)
+      if(!pcm.LocalFileClose(paramFile))
+         alert('File closing error');
+   }
+   else
+   {
+      // try to open m1_pmsm_appconfig for reading to test file existence on ProjectPath2
+      DocLocation = parent.document.getElementById(prefixM + "ProjectPath2").innerHTML;
+      paramFile = pcm.LocalFileOpen(DocLocation + prefix.toLowerCase() + "pmsm_appconfig.h","r");
+
+      // Check whether the file was opened succefuly
+      if (paramFile != false)
+      {
+         // Close File (and keep the correct path in DocLocation)
+         if(!pcm.LocalFileClose(paramFile))
+            alert('File closing error');
+      }
+      else
+      {
+         alert("pmsm_appcofig.h not found in the specified paths. Will be generated next to the actual Freemaster pmp file.");
+         DocLocation = "";
+      }
+   }
+
    //var RelPath_DocLocation = getRelativePath(DocLocation);
   /*************** Headlines                              *********************/
    
    str = write_comment_line_star(str);
-   str = str + "// File Name: {FM_project_loc}/" + DocLocation + "pmsm_appconfig.h \r\n";
+   str = str + "// File Name: {FM_project_loc}/" + DocLocation + prefix.toLowerCase() + "pmsm_appconfig.h \r\n";
    str = str + "//\r\n";
    //str = str + "// Date:  " + today.getTime()+ today.getDate()+ ". " + mounth + ", " + today.getFullYear() + "\r\n";
    //document.write(HTML_write_head_line("Date:",""+mounth+ " "+ today.getDate() + ", " + today.getFullYear() + ", " + t+ ""));

@@ -1,3 +1,20 @@
+// COPY/REUSE POLICY
+// =================
+// Permission is hereby granted to freely copy and redistribute this
+// software, provided that the author is clearly credited in all copies
+// and derivations. Neither the names of the authors nor that of their
+// employers may be used to endorse or promote products derived from this
+// software without specific written permission.
+//
+//
+// DISCLAIMER
+// ==========
+// This software is provided ``As Is'' and without any express or implied
+// warranties.  Neither the authors nor any of their employers (including
+// any of their subsidiaries and subdivisions) are responsible for maintaining
+// or supporting this software or for any consequences resulting from the
+// use of this software, no matter how awful, even if they arise from flaws
+// in the software.
 // ****************************************************************************
 // ^FILE: options.c - implement the functions defined in <options.h>
 //
@@ -21,6 +38,9 @@
 //
 //    07/31/97	Brad Appleton	<bradapp@enteract.com>
 //    - Added PARSE_POS control flag and POSITIONAL return value.
+//
+//	  09/25/18  Lukas Zajac
+//    - Added MISSINGARG option implementation
 // ^^**************************************************************************
 
 // #include <stdlib.h>
@@ -905,6 +925,8 @@ int Options::parse_opt(OptIter &iter, const char *&optarg)
     if (optspec.isValRequired() && !(optctrls & Options::QUIET))
     {
         cerr << cmdname << ": argument required for -" << optspec.OptChar() << " option." << endl;
+		if (optctrls & Options::MISSINGARG)
+			return '\t';
     }
     return optspec.OptChar();
 }

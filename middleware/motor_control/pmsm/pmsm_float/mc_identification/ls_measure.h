@@ -18,7 +18,7 @@ extern "C" {
 /*******************************************************************************
  * API
  ******************************************************************************/
-extern void MID_getLs(mid_get_ls_t* sLsMeasFcn);
+extern void MID_getLs(mid_get_ls_t *sLsMeasFcn);
 
 #ifdef __cplusplus
 }

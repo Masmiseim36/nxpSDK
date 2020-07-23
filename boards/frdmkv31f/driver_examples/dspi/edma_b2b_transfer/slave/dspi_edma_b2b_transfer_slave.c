@@ -19,9 +19,9 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_DSPI_SLAVE_BASEADDR SPI0
-#define EXAMPLE_DSPI_SLAVE_DMA_MUX_BASEADDR DMAMUX0
-#define EXAMPLE_DSPI_SLAVE_DMA_BASEADDR DMA0
+#define EXAMPLE_DSPI_SLAVE_BASEADDR              SPI0
+#define EXAMPLE_DSPI_SLAVE_DMA_MUX_BASEADDR      DMAMUX0
+#define EXAMPLE_DSPI_SLAVE_DMA_BASEADDR          DMA0
 #define EXAMPLE_DSPI_SLAVE_DMA_RX_REQUEST_SOURCE kDmaRequestMux0SPI0Rx
 #define EXAMPLE_DSPI_SLAVE_DMA_TX_REQUEST_SOURCE kDmaRequestMux0SPI0Tx
 #define TRANSFER_SIZE 64U /* Transfer dataSize */

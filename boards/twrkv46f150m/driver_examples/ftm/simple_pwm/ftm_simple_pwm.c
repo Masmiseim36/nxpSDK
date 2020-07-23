@@ -17,15 +17,15 @@
  ******************************************************************************/
 /* The Flextimer instance/channel used for board */
 #define BOARD_FTM_BASEADDR FTM0
-#define BOARD_FTM_CHANNEL kFTM_Chnl_0
+#define BOARD_FTM_CHANNEL  kFTM_Chnl_0
 
 /* Interrupt number and interrupt handler for the FTM instance used */
 #define FTM_INTERRUPT_NUMBER FTM0_IRQn
-#define FTM_LED_HANDLER FTM0_IRQHandler
+#define FTM_LED_HANDLER      FTM0_IRQHandler
 
 /* Interrupt to enable and flag to read; depends on the FTM channel used */
 #define FTM_CHANNEL_INTERRUPT_ENABLE kFTM_Chnl0InterruptEnable
-#define FTM_CHANNEL_FLAG kFTM_Chnl0Flag
+#define FTM_CHANNEL_FLAG             kFTM_Chnl0Flag
 
 /* Get source clock for FTM driver */
 #define FTM_SOURCE_CLOCK CLOCK_GetFreq(kCLOCK_FastPeriphClk)
@@ -81,11 +81,9 @@ void FTM_LED_HANDLER(void)
         }
     }
 
-    if ((FTM_GetStatusFlags(BOARD_FTM_BASEADDR) & FTM_CHANNEL_FLAG) == FTM_CHANNEL_FLAG)
-    {
-        /* Clear interrupt flag.*/
-        FTM_ClearStatusFlags(BOARD_FTM_BASEADDR, FTM_CHANNEL_FLAG);
-    }
+    /* Clear interrupt flag.*/
+    FTM_ClearStatusFlags(BOARD_FTM_BASEADDR, FTM_GetStatusFlags(BOARD_FTM_BASEADDR));
+
     __DSB();
 }
 
@@ -112,8 +110,8 @@ int main(void)
 
     /* Print a note to terminal */
     PRINTF("\r\nFTM example to output center-aligned PWM signal\r\n");
-    PRINTF("\r\nYou will see a change in LED brightness if an LED is connected to the FTM pin");
-    PRINTF("\r\nIf no LED is connected to the FTM pin, then probe the signal using an oscilloscope");
+    PRINTF("You will see a change in LED brightness if an LED is connected to the FTM pin\r\n");
+    PRINTF("If no LED is connected to the FTM pin, then probe the signal using an oscilloscope\r\n");
 
     FTM_GetDefaultConfig(&ftmInfo);
     /* Initialize FTM module */

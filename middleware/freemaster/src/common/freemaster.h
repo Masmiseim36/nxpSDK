@@ -46,6 +46,9 @@
 #elif FMSTR_PLATFORM_PA32
     #define FMSTR_PLATFORM "PA32"
     #include "freemaster_gen32be.h"
+#elif FMSTR_PLATFORM_56F800E
+    #define FMSTR_PLATFORM "56F800E"
+    #include "freemaster_56f800e.h"
 #else
     /* If you are looking for legacy Motorola and Freescale platforms like 56F800,
        HC08, HC12, ColdFire, please refer to FreeMASTER driver v2.0 available at
@@ -170,13 +173,44 @@ typedef void (*FMSTR_PPIPEFUNC)(FMSTR_HPIPE);
 #define FMSTR_ASSERT(condition)
 #endif
 
-#define FMSTR_ASSERT_RETURN(condition, ...) \
+#define FMSTR_ASSERT_RETURN(condition, ret) \
     do                                      \
     {                                       \
         FMSTR_ASSERT(condition);            \
         if (!(condition))                   \
-            return __VA_ARGS__;             \
+            return ret;                   \
     } while (0)
+
+#define FMSTR_ASSERT_RETURN_VOID(condition) FMSTR_ASSERT_RETURN_VAL(condition, /*nothing*/)
+
+/******************************************************************************
+* standard library functions; redirected to internal implementations by default.
+******************************************************************************/
+
+/* Platform header may override the defines and use custom implementations */
+#ifndef FMSTR_StrCmp
+#define FMSTR_StrCmp _FMSTR_StrCmp
+#endif
+
+#ifndef FMSTR_StrLen
+#define FMSTR_StrLen _FMSTR_StrLen
+#endif
+
+#ifndef FMSTR_Rand
+#define FMSTR_Rand _FMSTR_Rand
+#endif
+
+#ifndef FMSTR_MemSet
+#define FMSTR_MemSet _FMSTR_MemSet
+#endif
+
+#ifndef FMSTR_MemCmp
+#define FMSTR_MemCmp _FMSTR_MemCmp
+#endif
+
+#ifndef FMSTR_MemCpy
+#define FMSTR_MemCpy _FMSTR_MemCpy
+#endif
 
 /*****************************************************************************
  * Global functions
@@ -243,6 +277,14 @@ FMSTR_BOOL FMSTR_PipePrintfU16(FMSTR_HPIPE pipeHandle, const char *pszFmt, FMSTR
 FMSTR_BOOL FMSTR_PipePrintfS16(FMSTR_HPIPE pipeHandle, const char *pszFmt, FMSTR_S16 arg);
 FMSTR_BOOL FMSTR_PipePrintfU32(FMSTR_HPIPE pipeHandle, const char *pszFmt, FMSTR_U32 arg);
 FMSTR_BOOL FMSTR_PipePrintfS32(FMSTR_HPIPE pipeHandle, const char *pszFmt, FMSTR_S32 arg);
+
+/* Standard library internal implementations. Platform header makes them available using macro aliases. */
+FMSTR_INDEX _FMSTR_StrCmp(const FMSTR_CHAR* str1, const FMSTR_CHAR* str2);
+FMSTR_INDEX _FMSTR_MemCmp(const void* b1, const void* b2, FMSTR_SIZE size);
+FMSTR_SIZE  _FMSTR_StrLen(const FMSTR_CHAR* str);
+void _FMSTR_MemCpy(void* dest, const void* src, FMSTR_SIZE size);
+void _FMSTR_MemSet(void* dest, FMSTR_U8 fill, FMSTR_SIZE size);
+FMSTR_U32 _FMSTR_Rand(void);
 
 #ifdef __cplusplus
 }

@@ -16,10 +16,12 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_ADC16_BASEADDR ADC0
+#define DEMO_ADC16_BASEADDR      ADC0
 #define DEMO_ADC16_CHANNEL_GROUP 0U
-#define DEMO_ADC16_USER_CHANNEL 10U
-#define LPTMR_CLK_FREQ CLOCK_GetFreq(kCLOCK_LpoClk)
+#define DEMO_ADC16_USER_CHANNEL  10U
+#define DEMO_LPTMR_IRQn          LPTMR0_IRQn
+#define DEMO_LPTMR_IRQHandler    LPTMR0_IRQHandler
+#define LPTMR_CLK_FREQ           CLOCK_GetFreq(kCLOCK_LpoClk)
 
 /*******************************************************************************
  * Prototypes
@@ -32,15 +34,11 @@ volatile uint32_t adcResultValue = 0U;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-void LPTMR0_IRQHandler(void)
+void DEMO_LPTMR_IRQHandler(void)
 {
     LPTMR_ClearStatusFlags(LPTMR0, kLPTMR_TimerCompareFlag);
     PRINTF("\r\nThe ADC16 output value is %d.\r\n", adcResultValue);
-    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-      exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 /*!
@@ -77,7 +75,7 @@ int main(void)
     LPTMR_EnableInterrupts(LPTMR0, kLPTMR_TimerInterruptEnable);
 
     /* Enable at the NVIC */
-    EnableIRQ(LPTMR0_IRQn);
+    EnableIRQ(DEMO_LPTMR_IRQn);
     LPTMR_StartTimer(LPTMR0);
     /*
      * adc16ConfigStruct.referenceVoltageSource = kADC16_ReferenceVoltageSourceVref;

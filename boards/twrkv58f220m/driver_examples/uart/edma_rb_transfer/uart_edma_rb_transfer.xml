@@ -3,7 +3,6 @@
   <externalDefinitions>
     <definition extID="com.nxp.mcuxpresso"/>
     <definition extID="component.lists.MKV58F24"/>
-    <definition extID="component.lptmr_adapter.MKV58F24"/>
     <definition extID="component.serial_manager.MKV58F24"/>
     <definition extID="component.serial_manager_uart.MKV58F24"/>
     <definition extID="component.uart_adapter.MKV58F24"/>
@@ -17,7 +16,6 @@
     <definition extID="platform.drivers.dmamux.MKV58F24"/>
     <definition extID="platform.drivers.edma.MKV58F24"/>
     <definition extID="platform.drivers.gpio.MKV58F24"/>
-    <definition extID="platform.drivers.lptmr.MKV58F24"/>
     <definition extID="platform.drivers.port.MKV58F24"/>
     <definition extID="platform.drivers.smc.MKV58F24"/>
     <definition extID="platform.drivers.uart.MKV58F24"/>
@@ -30,7 +28,7 @@
     <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="twrkv58f220m_uart_edma_rb_transfer" name="uart_edma_rb_transfer" category="driver_examples/uart" dependency="component.lptmr_adapter.MKV58F24 platform.drivers.lptmr.MKV58F24 platform.drivers.port.MKV58F24 platform.drivers.edma.MKV58F24 platform.drivers.dmamux.MKV58F24 platform.drivers.uart_edma.MKV58F24 platform.drivers.uart.MKV58F24 platform.drivers.clock.MKV58F24 platform.drivers.common.MKV58F24 device.MKV58F24_CMSIS.MKV58F24 utility.debug_console.MKV58F24 component.uart_adapter.MKV58F24 component.serial_manager.MKV58F24 component.lists.MKV58F24 component.serial_manager_uart.MKV58F24 device.MKV58F24_startup.MKV58F24 platform.drivers.smc.MKV58F24 platform.drivers.gpio.MKV58F24 platform.utilities.assert.MKV58F24 platform.Include_core_cm7.MKV58F24 platform.Include_common.MKV58F24 platform.Include_dsp.MKV58F24 platform.utilities.misc_utilities.MKV58F24">
+  <example id="twrkv58f220m_uart_edma_rb_transfer" name="uart_edma_rb_transfer" category="driver_examples/uart" dependency="platform.drivers.port.MKV58F24 platform.drivers.edma.MKV58F24 platform.drivers.dmamux.MKV58F24 platform.drivers.uart_edma.MKV58F24 platform.drivers.uart.MKV58F24 platform.drivers.clock.MKV58F24 platform.drivers.common.MKV58F24 device.MKV58F24_CMSIS.MKV58F24 utility.debug_console.MKV58F24 component.uart_adapter.MKV58F24 component.serial_manager.MKV58F24 component.lists.MKV58F24 component.serial_manager_uart.MKV58F24 device.MKV58F24_startup.MKV58F24 platform.drivers.smc.MKV58F24 platform.drivers.gpio.MKV58F24 platform.utilities.assert.MKV58F24 platform.Include_core_cm7.MKV58F24 platform.Include_common.MKV58F24 platform.Include_dsp.MKV58F24 platform.utilities.misc_utilities.MKV58F24">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>

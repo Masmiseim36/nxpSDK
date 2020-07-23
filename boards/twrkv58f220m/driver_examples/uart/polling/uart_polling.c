@@ -14,8 +14,8 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_UART UART0
-#define DEMO_UART_CLKSRC kCLOCK_FastPeriphClk
+#define DEMO_UART          UART0
+#define DEMO_UART_CLKSRC   kCLOCK_FastPeriphClk
 #define DEMO_UART_CLK_FREQ CLOCK_GetFreq(kCLOCK_FastPeriphClk)
 
 /*******************************************************************************

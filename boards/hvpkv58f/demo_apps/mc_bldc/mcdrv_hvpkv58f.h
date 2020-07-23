@@ -18,23 +18,23 @@
  * Definitions
  ******************************************************************************/
 /* Version info */
-#define MCRSP_VER       "2.0.0"        /* motor control package version */
+#define MCRSP_VER "2.0.0" /* motor control package version */
 
 /* Application info */
-typedef struct 
+typedef struct
 {
-    char    cBoardID[15];
-    char    cMotorType[4];
-    char    cAppVer[5];
-}app_ver_t;
-   
+    char cBoardID[15];
+    char cMotorType[4];
+    char cAppVer[5];
+} app_ver_t;
+
 /* Structure used during clocks and modulo calculations */
 typedef struct _clock_setup
 {
     uint32_t ui32FastPeripheralClock;
     uint32_t ui32BusClock;
     uint16_t ui16PwmFreq;
-    uint16_t ui16PwmDeadTime;    
+    uint16_t ui16PwmDeadTime;
     uint16_t ui16PwmModulo;
     uint32_t ui32CmtTimerFreq;
     uint16_t ui16CtrlLoopFreq;
@@ -45,7 +45,7 @@ typedef struct _clock_setup
 #define M1_MCDRV_ADC (MCDRV_HSADC)
 
 /* Define motor 1 3-ph PWM periphery */
-#define M1_MCDRV_PWM3PH (MCDRV_PWMA) 
+#define M1_MCDRV_PWM3PH (MCDRV_PWMA)
 
 /* Define motor 1 asynchronous time event*/
 #define M1_MCDRV_TMR_CMT (MCDRV_FTM1)
@@ -59,14 +59,14 @@ typedef struct _clock_setup
 /******************************************************************************
  * Clock & PWM definition
  ******************************************************************************/
-#define PWM_FREQ (20000)        /* PWM frequency - 20kHz */
-#define CTRL_LOOP_FREQ (1000)   /* Control loop frequency */                                    
-#define M1_PWM_DEADTIME (1500)  /* Output PWM deadtime value in nanoseconds */
+#define PWM_FREQ (20000)       /* PWM frequency - 20kHz */
+#define CTRL_LOOP_FREQ (1000)  /* Control loop frequency */
+#define M1_PWM_DEADTIME (1500) /* Output PWM deadtime value in nanoseconds */
 
 /* FOC calculation is called every n-th PWM reload */
 #define M1_FOC_FREQ_VS_PWM_FREQ (1)
-  
-/* assignment of FTM channels to motor phases 
+
+/* assignment of FTM channels to motor phases
  * 0 - FTM channels 0&1
  * 2 - FTM channels 2&3
  * 4 - FTM channels 4&5
@@ -90,18 +90,18 @@ extern const uint16_t bldcCommutationTableComp[16];
 
 /* Configuration table of ADC channels according to the input pin signals:
  * Valid for Kinetis KV58 HVP board (HVP-KV58F) together with HVP-MC-3PH
- * 
+ *
  * Proper ADC channel assignment needs to follow these rules:
  *   - only one ADC module can be assigned to sense required variable
  *   - auxiliary quantity must be assigned to last free ADC module
  *
  *   Quantity          |     HSADC0       |   HSADC1
  *   --------------------------------------------------------------------------
- *   BEMF_A            | ADCB_CH7C        | ADCD_CH1 
- *   BEMF_B            | ADCB_CH4         | ADCD_CH4  
- *   BEMF_C            | ADCB_CH5         | ADCD_CH5 
- *   U_dcb             | ADCA_CH1         | 
- *   I_dcb             | ADCA_CH4         | 
+ *   BEMF_A            | ADCB_CH7C        | ADCD_CH1
+ *   BEMF_B            | ADCB_CH4         | ADCD_CH4
+ *   BEMF_C            | ADCB_CH5         | ADCD_CH5
+ *   U_dcb             | ADCA_CH1         |
+ *   I_dcb             | ADCA_CH4         |
  */
 /* BEMF phase A assigned to ADC0 only */
 #define HSADCA_PH_A (MCDRV_CHAN_OFF)
@@ -132,10 +132,10 @@ extern const uint16_t bldcCommutationTableComp[16];
 #ifdef M1_MCDRV_ADC
 #if (M1_MCDRV_ADC == MCDRV_HSADC)
 #define M1_MCDRV_ADC_PERIPH_INIT() InitHSADC()
-#define M1_MCDRV_ADC_GET(par)  \
+#define M1_MCDRV_ADC_GET(par)           \
     MCDRV_BemfVoltageGet_hvp_kv58(par); \
-    MCDRV_VoltDcBusGet(par);   \
-    MCDRV_CurrDcBusGet(par);   \
+    MCDRV_VoltDcBusGet(par);            \
+    MCDRV_CurrDcBusGet(par);            \
     MCDRV_AuxValGet(par);
 #define M1_MCDRV_ADC_ASSIGN_BEMF(par) MCDRV_AssignBemfChannel_hvp_kv58(par)
 #define M1_MCDRV_CURR_CALIB_INIT(par) MCDRV_CurrOffsetCalibInit(par)
@@ -218,4 +218,4 @@ void InitClock(void);
 #ifdef __cplusplus
 }
 #endif
-#endif /* _MCDRV_HVP_KV58F_H_  */ 
+#endif /* _MCDRV_HVP_KV58F_H_  */

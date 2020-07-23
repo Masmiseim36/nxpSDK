@@ -116,6 +116,19 @@ void BusPalUartPeripheral::configure(const BusPal::BusPalConfigData &config)
             }
             break;
 
+        case BusPal::kBusPalFunction_SAI:
+            if (!m_busPal->enterSaiMode())
+            {
+                throw std::runtime_error(format_string("Error: BusPalUartPeripheral() cannot enter SAI Mode."));
+            }
+
+            if (!m_busPal->setSaiSpeed(config.saiSpeedHz))
+            {
+                throw std::runtime_error(
+                    format_string("Error: BusPalUartPeripheral() cannot set SAI speed(%d Hz).", config.saiSpeedHz));
+            }
+            break;
+
         case BusPal::kBusPalFunction_GPIO_CONFIG:
             if (!m_busPal->enterBitBangMode())
             {

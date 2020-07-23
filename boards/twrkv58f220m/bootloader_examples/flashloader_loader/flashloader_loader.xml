@@ -100,6 +100,9 @@
     <source path="boards/twrkv58f220m/bootloader_examples/flashloader_loader/mdk" target_path="middleware/mcu-boot" type="linker" toolchain="mdk">
       <files mask="MKV58F1M0xxx24_flashloader_loader.scf"/>
     </source>
+    <source path="boards/twrkv58f220m/bootloader_examples/flashloader_loader" target_path="doc" type="doc" toolchain="iar mdk mcuxpresso armgcc">
+      <files mask="readme.txt"/>
+    </source>
     <source path="middleware/mcu-boot/targets/MKV58F24/src" target_path="MKV58F24" type="c_include">
       <files mask="bootloader_config.h"/>
       <files mask="target_config.h"/>

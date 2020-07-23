@@ -16,24 +16,24 @@
  * @addtogroup mmcau MMCAU Peripheral Driver
  * @{
  */
-#define cau_aes_set_key mmcau_aes_set_key
-#define cau_aes_encrypt mmcau_aes_encrypt
-#define cau_aes_decrypt mmcau_aes_decrypt
-#define cau_des_chk_parity mmcau_des_chk_parity
-#define cau_des_encrypt mmcau_des_encrypt
-#define cau_des_decrypt mmcau_des_decrypt
-#define cau_md5_initialize_output mmcau_md5_initialize_output
-#define cau_md5_hash_n mmcau_md5_hash_n
-#define cau_md5_update mmcau_md5_update
-#define cau_md5_hash mmcau_md5_hash
-#define cau_sha1_initialize_output mmcau_sha1_initialize_output
-#define cau_sha1_hash_n mmcau_sha1_hash_n
-#define cau_sha1_update mmcau_sha1_update
-#define cau_sha1_hash mmcau_sha1_hash
+#define cau_aes_set_key              mmcau_aes_set_key
+#define cau_aes_encrypt              mmcau_aes_encrypt
+#define cau_aes_decrypt              mmcau_aes_decrypt
+#define cau_des_chk_parity           mmcau_des_chk_parity
+#define cau_des_encrypt              mmcau_des_encrypt
+#define cau_des_decrypt              mmcau_des_decrypt
+#define cau_md5_initialize_output    mmcau_md5_initialize_output
+#define cau_md5_hash_n               mmcau_md5_hash_n
+#define cau_md5_update               mmcau_md5_update
+#define cau_md5_hash                 mmcau_md5_hash
+#define cau_sha1_initialize_output   mmcau_sha1_initialize_output
+#define cau_sha1_hash_n              mmcau_sha1_hash_n
+#define cau_sha1_update              mmcau_sha1_update
+#define cau_sha1_hash                mmcau_sha1_hash
 #define cau_sha256_initialize_output mmcau_sha256_initialize_output
-#define cau_sha256_hash_n mmcau_sha256_hash_n
-#define cau_sha256_update mmcau_sha256_update
-#define cau_sha256_hash mmcau_sha256_hash
+#define cau_sha256_hash_n            mmcau_sha256_hash_n
+#define cau_sha256_update            mmcau_sha256_update
+#define cau_sha256_hash              mmcau_sha256_hash
 
 /*******************************************************************************
  * API

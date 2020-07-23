@@ -43,7 +43,7 @@
 
 #define ROTLEFT(a, b) ((a << b) | (a >> (32 - b)))
 
-void FMSTR_Sha1Transform(FMSTR_SHA1_CTX *ctx, const FMSTR_U8* data)
+static void FMSTR_Sha1Transform(FMSTR_SHA1_CTX *ctx, const FMSTR_U8* data)
 {
 	// save 352 bytes on stack by making these static, we never run more instances than one anyway
 	static FMSTR_U32 a, b, c, d, e, i, j, t, m[80];
@@ -162,14 +162,14 @@ void FMSTR_Sha1Final(FMSTR_SHA1_CTX *ctx, FMSTR_U8* hash)
 
 	// Append to the padding the total message's length in bits and transform.
 	ctx->bitlen += ctx->datalen * 8;
-	ctx->data[63] = ctx->bitlen;
-	ctx->data[62] = ctx->bitlen >> 8;
-	ctx->data[61] = ctx->bitlen >> 16;
-	ctx->data[60] = ctx->bitlen >> 24;
-	ctx->data[59] = ctx->bitlen >> 32;
-	ctx->data[58] = ctx->bitlen >> 40;
-	ctx->data[57] = ctx->bitlen >> 48;
-	ctx->data[56] = ctx->bitlen >> 56;
+	ctx->data[63] = (FMSTR_U8)(ctx->bitlen);
+	ctx->data[62] = (FMSTR_U8)(ctx->bitlen >> 8);
+	ctx->data[61] = (FMSTR_U8)(ctx->bitlen >> 16);
+	ctx->data[60] = (FMSTR_U8)(ctx->bitlen >> 24);
+	ctx->data[59] = (FMSTR_U8)(ctx->bitlen >> 32);
+	ctx->data[58] = (FMSTR_U8)(ctx->bitlen >> 40);
+	ctx->data[57] = (FMSTR_U8)(ctx->bitlen >> 48);
+	ctx->data[56] = (FMSTR_U8)(ctx->bitlen >> 56);
 	FMSTR_Sha1Transform(ctx, ctx->data);
 
 #if FMSTR_PLATFORM_BIG_ENDIAN
@@ -178,13 +178,14 @@ void FMSTR_Sha1Final(FMSTR_SHA1_CTX *ctx, FMSTR_U8* hash)
 		*(FMSTR_U32*)(hash+i*4) = ctx->state[i];
 	}
 #else
-	// copy while reversing byte order 
+	// copy while reversing byte order
 	for (i = 0; i < 4; ++i) {
-		hash[i]      = (ctx->state[0] >> (24 - i * 8)) & 0x000000ff;
-		hash[i + 4]  = (ctx->state[1] >> (24 - i * 8)) & 0x000000ff;
-		hash[i + 8]  = (ctx->state[2] >> (24 - i * 8)) & 0x000000ff;
-		hash[i + 12] = (ctx->state[3] >> (24 - i * 8)) & 0x000000ff;
-		hash[i + 16] = (ctx->state[4] >> (24 - i * 8)) & 0x000000ff;
+		int shift = 24 - i * 8;
+		hash[i]      = (FMSTR_U8)((ctx->state[0] >> shift) & 0xff);
+		hash[i + 4]  = (FMSTR_U8)((ctx->state[1] >> shift) & 0xff);
+		hash[i + 8]  = (FMSTR_U8)((ctx->state[2] >> shift) & 0xff);
+		hash[i + 12] = (FMSTR_U8)((ctx->state[3] >> shift) & 0xff);
+		hash[i + 16] = (FMSTR_U8)((ctx->state[4] >> shift) & 0xff);
 	}
 #endif
 }

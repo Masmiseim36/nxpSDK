@@ -6,7 +6,7 @@
  */
 
 #include "bootloader_common.h"
-#include "bootloader/bl_context.h"
+#include "bl_context.h"
 #include "fsl_device_registers.h"
 #include "ltc.h"
 #include "mmcau.h"

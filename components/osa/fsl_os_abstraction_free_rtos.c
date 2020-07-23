@@ -72,7 +72,7 @@ typedef struct _osa_state
 {
 #if (defined(FSL_OSA_TASK_ENABLE) && (FSL_OSA_TASK_ENABLE > 0U))
     list_label_t taskList;
-    uint8_t mainTaskHandle[OSA_TASK_HANDLE_SIZE];
+    OSA_TASK_HANDLE_DEFINE(mainTaskHandle);
 #endif
     uint32_t basePriority;
     int32_t basePriorityNesting;
@@ -660,6 +660,45 @@ osa_status_t OSA_EventClear(osa_event_handle_t eventHandle, osa_event_flags_t fl
     {
         (void)xEventGroupClearBits(pEventStruct->handle, (event_flags_t)flagsToClear);
     }
+    return KOSA_StatusSuccess;
+}
+
+/*FUNCTION**********************************************************************
+ *
+ * Function Name : OSA_EventGet
+ * Description   : This function is used to get event's flags that specified by prameter
+ * flagsMask, and the flags (user specified) are obatianed by parameter pFlagsOfEvent. So
+ * you should pass the parameter 0xffffffff to specify you want to check all.
+ * Return        :KOSA_StatusSuccess if event flags were successfully got, KOSA_StatusError if failed.
+ *
+ *END**************************************************************************/
+osa_status_t OSA_EventGet(osa_event_handle_t eventHandle, osa_event_flags_t flagsMask, osa_event_flags_t *pFlagsOfEvent)
+{
+    assert(eventHandle);
+    osa_event_struct_t *pEventStruct = (osa_event_struct_t *)eventHandle;
+    EventBits_t eventFlags;
+
+    if (NULL == pEventStruct->handle)
+    {
+        return KOSA_StatusError;
+    }
+
+    if (NULL == pFlagsOfEvent)
+    {
+        return KOSA_StatusError;
+    }
+
+    if (0U != __get_IPSR())
+    {
+        eventFlags = xEventGroupGetBitsFromISR(pEventStruct->handle);
+    }
+    else
+    {
+        eventFlags = xEventGroupGetBits(pEventStruct->handle);
+    }
+
+    *pFlagsOfEvent = (osa_event_flags_t)eventFlags & flagsMask;
+
     return KOSA_StatusSuccess;
 }
 

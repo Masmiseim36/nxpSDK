@@ -26,11 +26,11 @@ static void SM_StateStopSlow(sm_app_ctrl_t *psAppCtrl);
 static void SM_StateRunSlow(sm_app_ctrl_t *psAppCtrl);
 
 /*******************************************************************************
-* Variables
-******************************************************************************/
+ * Variables
+ ******************************************************************************/
 
 /*! @brief State machine function field - fast */
-const pfcn_void_psm g_SM_STATE_TABLE_FAST[4] = {SM_StateFaultFast, SM_StateInitFast, SM_StateStopFast, SM_StateRunFast}; 
+const pfcn_void_psm g_SM_STATE_TABLE_FAST[4] = {SM_StateFaultFast, SM_StateInitFast, SM_StateStopFast, SM_StateRunFast};
 
 /*! @brief State machine function field - slow */
 const pfcn_void_psm g_SM_STATE_TABLE_SLOW[4] = {SM_StateFaultSlow, SM_StateInitSlow, SM_StateStopSlow, SM_StateRunSlow};
@@ -223,4 +223,3 @@ static void SM_StateRunSlow(sm_app_ctrl_t *psAppCtrl)
 {
     psAppCtrl->psStateSlow->Run();
 }
-

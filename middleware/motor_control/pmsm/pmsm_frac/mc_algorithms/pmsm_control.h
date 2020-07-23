@@ -24,7 +24,7 @@ typedef struct _mcs_alignment_a1
     frac16_t f16UdReq;     /* Required D voltage at alignment */
     uint16_t ui16Time;     /* Alignment time duration */
     uint16_t ui16TimeHalf; /* Alignment half time duration */
-} mcs_alignment_t;      /* PMSM simple two-step Ud voltage alignment */
+} mcs_alignment_t;         /* PMSM simple two-step Ud voltage alignment */
 
 /*! @brief mcs foc structure */
 typedef struct _mcs_pmsm_foc_a1
@@ -72,7 +72,8 @@ typedef struct _mcs_pmsm_scalar_ctrl_a1
     frac16_t f16FreqRamp;                   /* Required frequency limited by ramp - the ramp output */
     frac16_t f16PosElScalar;                /* Electrical angle of the rotor */
     frac16_t f16VHzGain;                    /* VHz_factor constant gain for scalar control */
-    int16_t f16VHzGainShift;                /* VHz_factor constant shift for scalar control */
+    frac16_t f16UqMin;                      /* Minimal Uq voltage for scalar control*/
+    int16_t i16VHzGainShift;                /* VHz_factor constant shift for scalar control */
 } mcs_pmsm_scalar_ctrl_t;
 
 /*! @brief mcs scalar structure */
@@ -111,9 +112,9 @@ typedef struct _mcs_pmsm_startup_a1
     frac16_t f16PosMerged;                     /* merged position */
     frac16_t f16SpeedCatchUp;                  /* merging speed threshold */
     frac16_t f16CurrentStartup;                /* required Iq current during open loop start up */
-    uint16_t ui16TimeStartUpFreeWheel; 		   /* Free-wheel duration if start-up aborted by user input (required zero speed) */
-    bool_t bOpenLoop;                          /* Position estimation loop is open */
-} mcs_pmsm_startup_t; 
+    uint16_t ui16TimeStartUpFreeWheel; /* Free-wheel duration if start-up aborted by user input (required zero speed) */
+    bool_t bOpenLoop;                  /* Position estimation loop is open */
+} mcs_pmsm_startup_t;
 
 #ifdef __cplusplus
 extern "C" {
@@ -129,14 +130,14 @@ extern "C" {
  ******************************************************************************/
 
 /*!
-* @brief PMSM field oriented current control.
-*
-* This function is used to compute PMSM field oriented current control.
-*
-* @param psFocPMSM     The pointer of the PMSM FOC structure
-*
-* @return None
-*/
+ * @brief PMSM field oriented current control.
+ *
+ * This function is used to compute PMSM field oriented current control.
+ *
+ * @param psFocPMSM     The pointer of the PMSM FOC structure
+ *
+ * @return None
+ */
 void MCS_PMSMFocCtrl(mcs_pmsm_foc_t *psFocPMSM);
 
 /*!
@@ -191,4 +192,3 @@ void MCS_PMSMScalarCtrl(mcs_pmsm_foc_t *psFocPMSM, mcs_pmsm_scalar_ctrl_t *psSca
 #endif
 
 #endif /* _PMSM_CONTROL_H_ */
-

@@ -19,14 +19,14 @@
 //! @brief Command/Data Packet constants.
 enum _command_packet_constants
 {
-    kMinPacketBufferSize = 32u,
-#if defined(BL_FEATURE_EXPAND_PACKET_SIZE) && BL_FEATURE_EXPAND_PACKET_SIZE
-    kDefaultFramingPacketBufferSize = 1024u,
-#if defined(BL_CONFIG_HS_USB_HID) && BL_CONFIG_HS_USB_HID
-    // Make sure that kDefaultUsbHidPacketBufferSize < 1018u
-    kDefaultUsbHidPacketBufferSize = 1016u,
+    kMinPacketBufferSize = 32,
+#if BL_FEATURE_EXPAND_PACKET_SIZE
+    kDefaultFramingPacketBufferSize = 1024,
+#if BL_CONFIG_HS_USB_HID
+    // Make sure that kDefaultUsbHidPacketBufferSize < 1018
+    kDefaultUsbHidPacketBufferSize = 1016,
 #else
-    kDefaultUsbHidPacketBufferSize = 56u,
+    kDefaultUsbHidPacketBufferSize = 56,
 #endif // BL_CONFIG_HS_USB_HID
 #if defined(BL_EXPANDED_FRAMING_PACKET_SIZE)
     kMinFramingPacketBufferSize = BL_EXPANDED_FRAMING_PACKET_SIZE,
@@ -42,53 +42,53 @@ enum _command_packet_constants
     kMinFramingPacketBufferSize = kMinPacketBufferSize,
     kMinUsbHidPacketBufferSize = kMinPacketBufferSize,
 #endif // BL_FEATURE_EXPAND_PACKET_SIZE
-    kMaxHostPacketSize = 8192u,
+    kMaxHostPacketSize = 8192,
     kMaxBootloaderPacketSize = MAX(kMinFramingPacketBufferSize, kMinUsbHidPacketBufferSize),
     kDefaultMaxPacketSize = kMinPacketBufferSize,
     kMaxPropertyReturnValues =
-        (kMinPacketBufferSize / sizeof(uint32_t)) - 2u, //!< Max number of words a property can return
+        (kMinPacketBufferSize / sizeof(uint32_t)) - 2, //!< Max number of words a property can return
                                                        //! One word is header, one parameter reserved for status
 
     kMaxProgramOnceValues =
-        (kMinPacketBufferSize / sizeof(uint32_t)) - 3u, //!< Max number of words a program once command can write
+        (kMinPacketBufferSize / sizeof(uint32_t)) - 3, //!< Max number of words a program once command can write
     //! One word is header, two parameters reserved for index and byteCount
-    kCommandTagCount = 12u //!< Number of non-response command tags
+    kCommandTagCount = 12 //!< Number of non-response command tags
 };
 
 //! @brief Commands codes.
 enum _command_tags
 {
-    kCommandTag_GenericResponse = 0xa0u,
-    kCommandTag_FlashEraseAll = 0x01u,
-    kCommandTag_FlashEraseRegion = 0x02u,
-    kCommandTag_ReadMemory = 0x03u,
-    kCommandTag_ReadMemoryResponse = 0xa3u,
-    kCommandTag_WriteMemory = 0x04u,
-    kCommandTag_FillMemory = 0x05u,
-    kCommandTag_FlashSecurityDisable = 0x06u,
-    kCommandTag_GetProperty = 0x07u,
-    kCommandTag_GetPropertyResponse = 0xa7u,
-    kCommandTag_ReceiveSbFile = 0x08u,
-    kCommandTag_Execute = 0x09u,
-    kCommandTag_Call = 0x0au,
-    kCommandTag_Reset = 0x0bu,
-    kCommandTag_SetProperty = 0x0cu,
-    kCommandTag_FlashEraseAllUnsecure = 0x0du,
-    kCommandTag_FlashProgramOnce = 0x0eu,
-    kCommandTag_FlashReadOnce = 0x0fu,
-    kCommandTag_FlashReadOnceResponse = 0xafu,
-    kCommandTag_FlashReadResource = 0x10u,
-    kCommandTag_FlashReadResourceResponse = 0xb0u,
-    kCommandTag_ConfigureMemory = 0x11u,
-    kCommandTag_ReliableUpdate = 0x12u,
-    kCommandTag_GenerateKeyBlob = 0x13u,
-    kCommandTag_GenerateKeyBlobResponse = 0xb3u,
-    kCommandTag_KeyProvisioning = 0x15u,
-    kCommandTag_KeyProvisioningResponse = 0xb5u,
+    kCommandTag_GenericResponse = 0xa0,
+    kCommandTag_FlashEraseAll = 0x01,
+    kCommandTag_FlashEraseRegion = 0x02,
+    kCommandTag_ReadMemory = 0x03,
+    kCommandTag_ReadMemoryResponse = 0xa3,
+    kCommandTag_WriteMemory = 0x04,
+    kCommandTag_FillMemory = 0x05,
+    kCommandTag_FlashSecurityDisable = 0x06,
+    kCommandTag_GetProperty = 0x07,
+    kCommandTag_GetPropertyResponse = 0xa7,
+    kCommandTag_ReceiveSbFile = 0x08,
+    kCommandTag_Execute = 0x09,
+    kCommandTag_Call = 0x0a,
+    kCommandTag_Reset = 0x0b,
+    kCommandTag_SetProperty = 0x0c,
+    kCommandTag_FlashEraseAllUnsecure = 0x0d,
+    kCommandTag_FlashProgramOnce = 0x0e,
+    kCommandTag_FlashReadOnce = 0x0f,
+    kCommandTag_FlashReadOnceResponse = 0xaf,
+    kCommandTag_FlashReadResource = 0x10,
+    kCommandTag_FlashReadResourceResponse = 0xb0,
+    kCommandTag_ConfigureMemory = 0x11,
+    kCommandTag_ReliableUpdate = 0x12,
+    kCommandTag_GenerateKeyBlob = 0x13,
+    kCommandTag_GenerateKeyBlobResponse = 0xb3,
+    kCommandTag_KeyProvisioning = 0x15,
+    kCommandTag_KeyProvisioningResponse = 0xb5,
 
-    kCommandTag_ConfigureI2c = 0xc1u, //! Reserved command tag for Bus Pal
-    kCommandTag_ConfigureSpi = 0xc2u, //! Reserved command tag for Bus Pal
-    kCommandTag_ConfigureCan = 0xc3u, //! Reserved command tag for Bus Pal
+    kCommandTag_ConfigureI2c = 0xc1, //! Reserved command tag for Bus Pal
+    kCommandTag_ConfigureSpi = 0xc2, //! Reserved command tag for Bus Pal
+    kCommandTag_ConfigureCan = 0xc3, //! Reserved command tag for Bus Pal
 
     kFirstCommandTag = kCommandTag_FlashEraseAll,
 
@@ -96,32 +96,32 @@ enum _command_tags
     kLastCommandTag = kCommandTag_KeyProvisioning,
 
     kResponseCommandHighNibbleMask =
-        0xa0u //!< Mask for the high nibble of a command tag that identifies it as a response command.
+        0xa0 //!< Mask for the high nibble of a command tag that identifies it as a response command.
 };
 
 //! @brief Command packet flags.
 enum _command_packet_flags
 {
-    kCommandFlag_None = 0u,
-    kCommandFlag_HasDataPhase = 1u
+    kCommandFlag_None = 0,
+    kCommandFlag_HasDataPhase = 1
 };
 
 enum _command_key_provisioning_operation
 {
-    kKeyProvisioning_Operation_Enroll = 0u,
-    kKeyProvisioning_Operation_SetUserKey = 1u,
-    kKeyProvisioning_Operation_SetIntrinsicKey = 2u,
-    kKeyProvisioning_Operation_WriteNonVolatile = 3u,
-    kKeyProvisioning_Operation_ReadNonVolatile = 4u,
-    kKeyProvisioning_Operation_WriteKeyStore = 5u,
-    kKeyProvisioning_Operation_ReadKeyStore = 6u,
+    kKeyProvisioning_Operation_Enroll = 0,
+    kKeyProvisioning_Operation_SetUserKey = 1,
+    kKeyProvisioning_Operation_SetIntrinsicKey = 2,
+    kKeyProvisioning_Operation_WriteNonVolatile = 3,
+    kKeyProvisioning_Operation_ReadNonVolatile = 4,
+    kKeyProvisioning_Operation_WriteKeyStore = 5,
+    kKeyProvisioning_Operation_ReadKeyStore = 6,
 };
 
 enum _command_dataPhase_option_direction
 {
-    kCmd_DataPhase_Option_Consumer = 0u,
-    kCmd_DataPhase_Option_Producer = 1u,
-    kCmd_DataPhase_Option_Skip = 2u,
+    kCmd_DataPhase_Option_Consumer = 0,
+    kCmd_DataPhase_Option_Producer = 1,
+    kCmd_DataPhase_Option_Skip = 2,
 };
 
 //! @brief Command packet format.
@@ -212,7 +212,7 @@ typedef struct FillMemoryPacket
 } fill_memory_packet_t;
 
 //! @brief Execute/Call command function pointer definition.
-typedef status_t (*call_function_t)(uint32_t param);
+typedef status_t (*call_function_t)(uint32_t);
 
 //! @brief Execute/Call packet format.
 typedef struct ExecuteCallPacket

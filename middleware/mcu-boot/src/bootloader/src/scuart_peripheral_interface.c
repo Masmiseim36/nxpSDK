@@ -5,14 +5,14 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "bootloader/bl_context.h"
-#include "bootloader/bl_irq_common.h"
+#include "bl_context.h"
+#include "bl_irq_common.h"
 #include "bootloader_common.h"
-#include "autobaud/autobaud.h"
-#include "packet/serial_packet.h"
+#include "autobaud.h"
+#include "serial_packet.h"
 #include "fsl_device_registers.h"
 #include "fsl_uart.h"
-#include "utilities/fsl_assert.h"
+#include "fsl_assert.h"
 
 #if BL_CONFIG_SCUART
 

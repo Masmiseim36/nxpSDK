@@ -15,7 +15,7 @@
 // Bootloader configuration options
 //
 
-#if(defined(__GNUC__)&&defined(BL_TARGET_RAM))
+#if (defined(__GNUC__) && defined(BL_TARGET_RAM))
 #ifdef DEBUG
 #undef DEBUG
 #define NDEBUG
@@ -51,6 +51,9 @@
 #if !defined(BL_TARGET_FLASH) && !defined(BL_TARGET_RAM)
 #define BL_TARGET_FLASH (1)
 #endif
+
+// Determines whether to support Kinetis C90TFS FTFx flash
+#define BL_FLASH_TYPE_KINETIS_C90TFS_FLASH (1)
 
 #if defined(BL_TARGET_RAM)
 #define BL_FEATURE_FLASH_SECURITY (0)

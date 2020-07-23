@@ -48,42 +48,44 @@ void Keyblob::encrypt(uint32_t length, uint8_t *data, AESKey<128> *key, AESCount
         // Copy in plaintext data.
         memcpy(tempBlock, data, blockSize);
 
-// We endian swap each uint32_t in the block and then swap word 0 <-> word 1 and word 2 <-> word 3
-// to counter for endian issues and 64 bit writes on the device with a QSPI configuration for 64 bit LE
-// this lets unencrypted byte streams as well as this encrypted byte stream be transparently used by the driver
+		if (!noByteSwap) {
+			// We endian swap each uint32_t in the block and then swap word 0 <-> word 1 and word 2 <-> word 3
+			// to counter for endian issues and 64 bit writes on the device with a QSPI configuration for 64 bit LE
+			// this lets unencrypted byte streams as well as this encrypted byte stream be transparently used by the driver
 #if WIN32
-        tempBlock[0] = _byteswap_ulong(tempBlock[0]);
-        tempBlock[1] = _byteswap_ulong(tempBlock[1]);
-        tempBlock[2] = _byteswap_ulong(tempBlock[2]);
-        tempBlock[3] = _byteswap_ulong(tempBlock[3]);
+			tempBlock[0] = _byteswap_ulong(tempBlock[0]);
+			tempBlock[1] = _byteswap_ulong(tempBlock[1]);
+			tempBlock[2] = _byteswap_ulong(tempBlock[2]);
+			tempBlock[3] = _byteswap_ulong(tempBlock[3]);
 #else
-        tempBlock[0] = __builtin_bswap32(tempBlock[0]);
-        tempBlock[1] = __builtin_bswap32(tempBlock[1]);
-        tempBlock[2] = __builtin_bswap32(tempBlock[2]);
-        tempBlock[3] = __builtin_bswap32(tempBlock[3]);
+			tempBlock[0] = __builtin_bswap32(tempBlock[0]);
+			tempBlock[1] = __builtin_bswap32(tempBlock[1]);
+			tempBlock[2] = __builtin_bswap32(tempBlock[2]);
+			tempBlock[3] = __builtin_bswap32(tempBlock[3]);
 #endif
 
-        std::swap(tempBlock[0], tempBlock[1]);
-        std::swap(tempBlock[2], tempBlock[3]);
+			std::swap(tempBlock[0], tempBlock[1]);
+			std::swap(tempBlock[2], tempBlock[3]);
+		}
 
         encrypter.encrypt((uint8_t *)tempBlock, sizeof(tempBlock), (uint8_t *)tempBlock);
-
-        // Reverse the above transform so that it is back in its original order when decrypted
-        std::swap(tempBlock[0], tempBlock[1]);
-        std::swap(tempBlock[2], tempBlock[3]);
+		if (!noByteSwap) {
+			// Reverse the above transform so that it is back in its original order when decrypted
+			std::swap(tempBlock[0], tempBlock[1]);
+			std::swap(tempBlock[2], tempBlock[3]);
 
 #if WIN32
-        tempBlock[0] = _byteswap_ulong(tempBlock[0]);
-        tempBlock[1] = _byteswap_ulong(tempBlock[1]);
-        tempBlock[2] = _byteswap_ulong(tempBlock[2]);
-        tempBlock[3] = _byteswap_ulong(tempBlock[3]);
+			tempBlock[0] = _byteswap_ulong(tempBlock[0]);
+			tempBlock[1] = _byteswap_ulong(tempBlock[1]);
+			tempBlock[2] = _byteswap_ulong(tempBlock[2]);
+			tempBlock[3] = _byteswap_ulong(tempBlock[3]);
 #else
-        tempBlock[0] = __builtin_bswap32(tempBlock[0]);
-        tempBlock[1] = __builtin_bswap32(tempBlock[1]);
-        tempBlock[2] = __builtin_bswap32(tempBlock[2]);
-        tempBlock[3] = __builtin_bswap32(tempBlock[3]);
+			tempBlock[0] = __builtin_bswap32(tempBlock[0]);
+			tempBlock[1] = __builtin_bswap32(tempBlock[1]);
+			tempBlock[2] = __builtin_bswap32(tempBlock[2]);
+			tempBlock[3] = __builtin_bswap32(tempBlock[3]);
 #endif
-
+		}
         // Overwrite plaintext data with enrypted data.
         std::memcpy(data, tempBlock, blockSize);
 
@@ -201,7 +203,7 @@ void hexToBytes(const char *hexStr, unsigned char *bytes, int numBytes)
     }
 }
 
-void Keyblob::populateKeyBlob(keyblob_t *blob, uint32_t start, uint32_t end, const char *keyHex, const char *counterHex)
+void Keyblob::populateKeyBlob(keyblob_t *blob, uint32_t start, uint32_t end, const char *keyHex, const char *counterHex, uint32_t dynamicCtrBase)
 {
     // Populate key value.
     hexToBytes(keyHex, blob->key, sizeof(blob->key));
@@ -214,6 +216,8 @@ void Keyblob::populateKeyBlob(keyblob_t *blob, uint32_t start, uint32_t end, con
     // Add default flags to endaddr register.
     blob->endaddr &= ~kFlagMask;
     blob->endaddr |= kKeyFlags;
+
+	blob->zero_fill = dynamicCtrBase;
 
     // Add CRC32.
     uint32_t result;
@@ -244,11 +248,12 @@ uint8_t *Keyblob::createWrappedKeyblobData(uint8_t *kek, uint32_t *byteCount)
     {
         uint32_t start = 0;
         uint32_t end = 0;
+		uint32_t dynamicCtrBase = 0;
         const char *keyHex = NULL;
         const char *counterHex = NULL;
 
         // If not all options are present, make it a null entry.
-        bool isValidEntry = getOptionValues(**it, &keyHex, &counterHex, &start, &end);
+        bool isValidEntry = getOptionValues(**it, &keyHex, &counterHex, &start, &end, &dynamicCtrBase);
 
         // Clear this wrapped entry.
         memset(wrapped, 0, kKeyBlobSizeBytes);
@@ -257,7 +262,7 @@ uint8_t *Keyblob::createWrappedKeyblobData(uint8_t *kek, uint32_t *byteCount)
         {
             // Fill in keyblob data.
             memset(blob, 0, sizeof(keyblob_t));
-            populateKeyBlob(blob, start, end, keyHex, counterHex);
+            populateKeyBlob(blob, start, end, keyHex, counterHex, dynamicCtrBase);
 
 #if PRINT_KEYBLOB
             uint8_t *keyData = reinterpret_cast<uint8_t *>(blob);
@@ -303,7 +308,7 @@ uint8_t *Keyblob::createWrappedKeyblobData(uint8_t *kek, uint32_t *byteCount)
     return wrappedData; // must be deleted by caller
 }
 
-bool Keyblob::getOptionValues(OptionContext &opt, const char **key, const char **ctr, uint32_t *start, uint32_t *end)
+bool Keyblob::getOptionValues(OptionContext &opt, const char **key, const char **ctr, uint32_t *start, uint32_t *end, uint32_t *dynamicCtrBase)
 {
     assert(key && ctr && start && end);
 
@@ -372,6 +377,42 @@ bool Keyblob::getOptionValues(OptionContext &opt, const char **key, const char *
             *ctr = *stringValue;
         }
     }
+
+	if (opt.hasOption(kKeyblobOptionNamedynamicCtrBase))
+	{
+		const Value *value = opt.getOption(kKeyblobOptionNamedynamicCtrBase);
+		uint32_t dynCtrValue = 0;
+		if (value) {
+			const IntegerValue *intValue = dynamic_cast<const IntegerValue *>(value);
+			if (!intValue)
+			{
+				Log::log(Logger::WARNING, "invalid type for %s option\n", kKeyblobOptionNamedynamicCtrBase);
+				return false;
+			}
+			else
+				dynCtrValue = intValue->getValue();
+		}
+		if (dynamicCtrBase)
+			*dynamicCtrBase = dynCtrValue;
+	}
+
+	if (opt.hasOption(kKeyblobOptionNameNoByteSwap))
+	{
+		const Value *value = opt.getOption(kKeyblobOptionNameNoByteSwap);
+		if(value) {
+			const IntegerValue *intValue = dynamic_cast<const IntegerValue *>(value);
+			if (!intValue)
+			{
+				Log::log(Logger::WARNING, "invalid type for %s option\n", kKeyblobOptionNameNoByteSwap);
+				return false;
+			}
+			else
+			{
+				if (intValue->getValue())
+					noByteSwap = true;					
+			}
+		}
+	}
 
     return true;
 }

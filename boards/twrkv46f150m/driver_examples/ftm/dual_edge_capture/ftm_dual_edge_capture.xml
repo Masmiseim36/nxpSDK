@@ -43,6 +43,7 @@
         </option>
         <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
           <value>CPU_MKV46F256VLL16</value>
+          <value>PRINTF_FLOAT_ENABLE=1</value>
           <value>TWR_KV46F150M</value>
           <value>TOWER</value>
           <value>SERIAL_PORT_TYPE_UART=1</value>

@@ -18,7 +18,7 @@ extern "C" {
 /*******************************************************************************
  * API
  ******************************************************************************/
-extern void MID_getMech(mid_get_mech_t* sMechMeasFcn);
+extern void MID_getMech(mid_get_mech_t *sMechMeasFcn);
 
 #ifdef __cplusplus
 }

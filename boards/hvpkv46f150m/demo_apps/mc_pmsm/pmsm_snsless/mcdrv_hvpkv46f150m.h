@@ -17,28 +17,27 @@
  * Definitions
  ******************************************************************************/
 /* Version info */
-#define MCRSP_VER       "2.0.0"        /* motor control package version */
+#define MCRSP_VER "2.0.0" /* motor control package version */
 
 /* Application info */
 typedef struct _app_ver
 {
-    char    cBoardID[15];
-    char    cMotorType[4];
-    char    cAppVer[5];
-}app_ver_t;
-
+    char cBoardID[15];
+    char cMotorType[4];
+    char cAppVer[5];
+} app_ver_t;
 
 /* Structure used during clocks and modulo calculations */
 typedef struct _clock_setup
-{   
+{
     uint32_t ui32FastPeripheralClock;
     uint32_t ui32BusClock;
     uint16_t ui16M1SpeedLoopFreq;
     uint16_t ui16M1SpeedLoopModulo;
     uint16_t ui16M1PwmFreq;
     uint16_t ui16M1PwmModulo;
-    uint16_t ui16M1PwmDeadTime;    
-    
+    uint16_t ui16M1PwmDeadTime;
+
 } clock_setup_t;
 
 /******************************************************************************
@@ -53,8 +52,8 @@ typedef struct _clock_setup
 /* Output PWM deadtime value in nanoseconds */
 #define M1_PWM_DEADTIME (1500)
 
-#define M1_FAST_LOOP_TS ((float_t)1.0/(float_t)(M1_PWM_FREQ / M1_FOC_FREQ_VS_PWM_FREQ))
-#define M1_SLOW_LOOP_TS ((float_t)1.0/(float_t)(M1_SLOW_LOOP_FREQ))
+#define M1_FAST_LOOP_TS ((float_t)1.0 / (float_t)(M1_PWM_FREQ / M1_FOC_FREQ_VS_PWM_FREQ))
+#define M1_SLOW_LOOP_TS ((float_t)1.0 / (float_t)(M1_SLOW_LOOP_FREQ))
 #define M1_TIME_ONESEC_COUNT (M1_PWM_FREQ / M1_FOC_FREQ_VS_PWM_FREQ)
 
 /* Assignment of PWM Submodules to motor phases
@@ -79,7 +78,7 @@ typedef struct _clock_setup
  ******************************************************************************/
 /* Configuration table of ADC channels according to the input pin signals:
  * Valid for Kinetis KV46 HVP board (HVP-KV46F150M) together with HVP-MC3PH
- * 
+ *
  * Proper ADC channel assignment needs to follow these rules:
  *   - at least one phase current must be assigned to both ADC modules
  *   - two other phase current channels must be assigned to different ADC modules
@@ -88,10 +87,10 @@ typedef struct _clock_setup
  Quantity     | ADC module 0                  | ADC module 1
 --------------------------------------------------------------------------
  I_phA        | ADCA_CH2 (pin18)              | -
- I_phB        | -                             | ADCB_CH2 (PTB0) 
+ I_phB        | -                             | ADCB_CH2 (PTB0)
  I_phC        | ADCA_CH3 (pin19)              | ADCB_CH3 (PTB1)
  U_dcbus      | ADCA_CH1 (PTE17)              | -
- Aux(IPM tmp) | -                             | ADCB_CH1 (PTE19) 
+ Aux(IPM tmp) | -                             | ADCB_CH1 (PTE19)
 */
 
 /* Phase current A assingned to ADC0 only */
@@ -110,7 +109,7 @@ typedef struct _clock_setup
 #define M1_ADC0_AUX (MCDRV_CHAN_OFF)
 #define M1_ADC1_AUX (4)
 
-/* offset measurement filter window */     
+/* offset measurement filter window */
 #define ADC_OFFSET_WINDOW (3)
 /******************************************************************************
  * MC driver macro definition and check - do not change this part
@@ -168,4 +167,3 @@ void InitRelay(void);
 }
 #endif
 #endif /* _MCDRV_HVP_KV46F150M_H_ */
-

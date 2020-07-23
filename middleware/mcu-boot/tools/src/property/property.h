@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2013-2015, Freescale Semiconductor, Inc.
+ * Copyright 2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -113,7 +114,7 @@ enum _property_tag
     kPropertyTag_FlashSectorSize = 0x05,
     kPropertyTag_FlashBlockCount = 0x06,
     kPropertyTag_AvailableCommands = 0x07,
-    kPropertyTag_CrcCheckStatus = 0x08,
+    kPropertyTag_CheckStatus = 0x08,
     kPropertyTag_Reserved9 = 0x09,
     kPropertyTag_VerifyWrites = 0x0a,
     kPropertyTag_MaxPacketSize = 0x0b,
@@ -122,7 +123,7 @@ enum _property_tag
     kPropertyTag_RAMStartAddress = 0x0e,
     kPropertyTag_RAMSizeInBytes = 0x0f,
     kPropertyTag_SystemDeviceId = 0x10,
-    kPropertyTag_FlashSecurityState = 0x11,
+    kPropertyTag_SecurityState = 0x11,
     kPropertyTag_UniqueDeviceId = 0x12,
     kPropertyTag_FacSupport = 0x13,
     kPropertyTag_FlashAccessSegmentSize = 0x14,
@@ -158,6 +159,23 @@ enum _clock_flags
 enum _boot_flags
 {
     kBootFlag_DirectBoot = (1 << 0)
+};
+
+//!@brief Security State definitions
+enum _security_state
+{
+    kSecurityState_Legacy_Unsecure = 0,
+    kSecurityState_Legacy_Secure = 1,
+    kSecurityState_SKBOOT_Unsecure = 0x5aa55aa5u,
+    kSecurityState_SKBOOT_Secure = 0xc33cc33cu,
+};
+
+
+//!@brief CheckStatus ID definitions
+enum __checkstatus_id
+{
+    kCheckStatusId_CrcStatus = 0,
+    kCheckSattusId_LastError = 1,
 };
 
 //! @brief Flash constants.
@@ -254,6 +272,26 @@ typedef struct
     uint32_t sectorSize;              //!< sector size of external memory
     uint32_t blockSize;               //!< block size of external memory
 } external_memory_property_store_t;
+
+//! @brief nIRQ notifier pin property store
+typedef union _irq_notifier_pin_property_store
+{
+    struct
+    {
+        uint32_t pin : 8;
+        uint32_t port : 8;
+        uint32_t rsv0 : 15;
+        uint32_t enable : 1;
+    } B;
+    uint32_t U;
+} irq_notifier_pin_property_store_t;
+
+enum _ffr_keystore_update_opt
+{
+    kFfrKeystoreUpdateOpt_KeyProvisioning = 0x0u,
+    kFfrKeystoreUpdateOpt_WriteMemory = 0x1u,
+    kFfrKeystoreUpdateOpt_Invalid = 0xFFFFFFFFu,
+};
 
 enum _ram_constants
 {

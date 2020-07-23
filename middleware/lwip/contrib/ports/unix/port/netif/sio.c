@@ -82,8 +82,8 @@ static sio_status_t statusar[4];
 
 #if ! (PPP_SUPPORT || LWIP_HAVE_SLIPIF)
 /* --private-functions----------------------------------------------------------------- */
-/** 
- * Signal handler for ttyXX0 to indicate bytes received 
+/**
+ * Signal handler for ttyXX0 to indicate bytes received
  * one per interface is needed since we cannot send a instance number / pointer as callback argument (?)
  */
 static void	signal_handler_IO_0( int status )
@@ -94,7 +94,7 @@ static void	signal_handler_IO_0( int status )
 }
 
 /**
- * Signal handler for ttyXX1 to indicate bytes received 
+ * Signal handler for ttyXX1 to indicate bytes received
  * one per interface is needed since we cannot send a instance number / pointer as callback argument (?)
  */
 static void signal_handler_IO_1( int status )
@@ -106,7 +106,7 @@ static void signal_handler_IO_1( int status )
 #endif /* ! (PPP_SUPPORT || LWIP_HAVE_SLIPIF) */
 
 /**
-* Initiation of serial device 
+* Initiation of serial device
 * @param device string with the device name and path, eg. "/dev/ttyS0"
 * @param devnum device number
 * @param siostat status
@@ -131,6 +131,7 @@ static int sio_init( char * device, int devnum, sio_status_t * siostat )
 	}
 
 #if ! (PPP_SUPPORT || LWIP_HAVE_SLIPIF)
+	memset(&saio, 0, sizeof(struct sigaction));
 	/* install the signal handler before making the device asynchronous */
 	switch ( devnum )
 	{
@@ -147,10 +148,6 @@ static int sio_init( char * device, int devnum, sio_status_t * siostat )
 			break;
 	}
 
-	saio.sa_flags = 0;
-#if defined(LWIP_UNIX_LINUX)
-	saio.sa_restorer = NULL;
-#endif /* LWIP_UNIX_LINUX */
 	sigaction( SIGIO,&saio,NULL );
 
 	/* allow the process to receive SIGIO */
@@ -210,7 +207,7 @@ static void sio_speed( int fd, int speed )
 
 	tcgetattr( fd,&oldtio ); /* get current port settings */
 
-	/* set new port settings 
+	/* set new port settings
 	* see 'man termios' for further settings */
         memset(&newtio, 0, sizeof(newtio));
 	newtio.c_cflag = speed | CS8 | CLOCAL | CREAD; /* | CRTSCTS; */
@@ -278,7 +275,7 @@ void sio_expect_string( u8_t *str, sio_status_t * siostat )
     /*	sio_status_t * siostat = ((siostruct_t*)netif->state)->sio;*/
 	u8_t c;
  	int finger=0;
-  
+
 	LWIP_DEBUGF(SIO_DEBUG, ("sio_expect_string[%d]: %s\n", siostat->fd, str));
 	while ( 1 )
 	{
@@ -295,7 +292,7 @@ void sio_expect_string( u8_t *str, sio_status_t * siostat )
 				finger = 1;
 			}
 		}
-		if ( 0 == str[finger] ) 
+		if ( 0 == str[finger] )
                     break;	/* done, we have a match */
 	}
 	LWIP_DEBUGF(SIO_DEBUG, ("sio_expect_string[%d]: [match]\n", siostat->fd));
@@ -355,7 +352,7 @@ sio_fd_t sio_open(u8_t devnum)
 			return NULL;
 		}
 		LWIP_DEBUGF(SIO_DEBUG, ("sio_open[%d]: dev=%s open.\n", siostate->fd, dev));
-	} 
+	}
 #if PPP_SUPPORT
 	else if (devnum == 2) {
 	    pid_t childpid;
@@ -486,4 +483,3 @@ void sio_change_baud( sioBaudrates baud, sio_status_t * siostat )
 			break;
 	}
 }
-

@@ -26,7 +26,7 @@ extern mid_sm_app_ctrl_t g_g_sMIDCtrl;
 #ifdef __cplusplus
 extern "C" {
 #endif
-  
+
 void M1_MIDApplyPar(mid_acim_alg_prms_a1_t *AlgPar);
 
 #ifdef __cplusplus
@@ -34,4 +34,3 @@ void M1_MIDApplyPar(mid_acim_alg_prms_a1_t *AlgPar);
 #endif
 
 #endif /* _MID_SM_STATES_ */
-

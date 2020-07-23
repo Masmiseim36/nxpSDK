@@ -43,6 +43,10 @@
 
 #if LWIP_SOCKET /* don't build if not configured for use in lwipopts.h */
 
+#if LWIP_SOCKET_EXTERNAL_HEADERS
+#include LWIP_SOCKET_EXTERNAL_HEADER_SOCKETS_H
+#else /* LWIP_SOCKET_EXTERNAL_HEADERS */
+
 #include "lwip/ip_addr.h"
 #include "lwip/netif.h"
 #include "lwip/err.h"
@@ -54,6 +58,9 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+/* sockaddr and pals include length fields */
+#define LWIP_SOCKET_HAVE_SA_LEN  1
 
 /* If your port already typedef's sa_family_t, define SA_FAMILY_T_DEFINED
    to prevent this code from redefining it. */
@@ -124,11 +131,13 @@ struct iovec {
 };
 #endif
 
+typedef int msg_iovlen_t;
+
 struct msghdr {
   void         *msg_name;
   socklen_t     msg_namelen;
   struct iovec *msg_iov;
-  int           msg_iovlen;
+  msg_iovlen_t  msg_iovlen;
   void         *msg_control;
   socklen_t     msg_controllen;
   int           msg_flags;
@@ -276,11 +285,12 @@ struct linger {
 /*
  * Options for level IPPROTO_TCP
  */
-#define TCP_NODELAY    0x01    /* don't delay send to coalesce packets */
-#define TCP_KEEPALIVE  0x02    /* send KEEPALIVE probes when idle for pcb->keep_idle milliseconds */
-#define TCP_KEEPIDLE   0x03    /* set pcb->keep_idle  - Same as TCP_KEEPALIVE, but use seconds for get/setsockopt */
-#define TCP_KEEPINTVL  0x04    /* set pcb->keep_intvl - Use seconds for get/setsockopt */
-#define TCP_KEEPCNT    0x05    /* set pcb->keep_cnt   - Use number of probes sent for get/setsockopt */
+#define TCP_NODELAY       0x01    /* don't delay send to coalesce packets */
+#define TCP_KEEPALIVE     0x02    /* send KEEPALIVE probes when idle for pcb->keep_idle milliseconds */
+#define TCP_KEEPIDLE      0x03    /* set pcb->keep_idle  - Same as TCP_KEEPALIVE, but use seconds for get/setsockopt */
+#define TCP_KEEPINTVL     0x04    /* set pcb->keep_intvl - Use seconds for get/setsockopt */
+#define TCP_KEEPCNT       0x05    /* set pcb->keep_cnt   - Use number of probes sent for get/setsockopt */
+#define TCP_USER_TIMEOUT  0x12    /* set pcb->user_timeout - How long for loss retry before timeout */	
 #endif /* LWIP_TCP */
 
 #if LWIP_IPV6
@@ -413,6 +423,9 @@ typedef struct ipv6_mreq {
 
 #define _IOW(x,y,t)     ((long)(IOC_IN|((sizeof(t)&IOCPARM_MASK)<<16)|((x)<<8)|(y)))
 #endif /* !defined(FIONREAD) || !defined(FIONBIO) */
+                                               
+/* Get (not sent + not acked) data bytes in send buffer. */
+#define SIOCOUTQ    _IOR('s', 115, unsigned long)  
 
 #ifndef FIONREAD
 #define FIONREAD    _IOR('f', 127, unsigned long) /* get # bytes to read */
@@ -524,6 +537,16 @@ struct timeval {
   long    tv_usec;        /* and microseconds */
 };
 #endif /* LWIP_TIMEVAL_PRIVATE */
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* LWIP_SOCKET_EXTERNAL_HEADERS */
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 #define lwip_socket_init() /* Compatibility define, no init needed. */
 void lwip_socket_thread_init(void); /* LWIP_NETCONN_SEM_PER_THREAD==1: initialize thread-local semaphore */

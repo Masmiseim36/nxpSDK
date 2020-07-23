@@ -243,9 +243,9 @@ function updateCCStextField(methodId, elementId, inputNo)
             break;
         case 2:
             if(inputNo==='Input1')
-                document.getElementById(MotorPrefix + 'current_ctrl_Input1').value = pcm.LastVariable_vValue.toFixed(1);            
+                document.getElementById(MotorPrefix + 'current_ctrl_Input1').value = pcm.LastVariable_vValue.toFixed(2);            
             else
-                document.getElementById(MotorPrefix + 'current_ctrl_Input2').value = pcm.LastVariable_vValue.toFixed(1);            
+                document.getElementById(MotorPrefix + 'current_ctrl_Input2').value = pcm.LastVariable_vValue.toFixed(2);            
             break;
         case 3:
             if(inputNo==='Input1')
@@ -872,6 +872,10 @@ function clickUpdateCtrlStruc()
         if (in_MethodCtrlVal === 1){
             writeFRM[0] = document.getElementById(MotorPrefix+'volt_ctrl_Input1').value;
             writeFRM[1] = document.getElementById(MotorPrefix+'volt_ctrl_Input2').value;
+
+            //Round the entered voltages to 0.1V
+            writeFRM[0] = Number(writeFRM[0]).toFixed(1);
+            writeFRM[1] = Number(writeFRM[1]).toFixed(1);
              
             var writeFRMregisterVal0 = xmlDoc.getElementsByTagName([MotorPrefix]+"Ud_req");
             var writeFRMregisterVal1 = xmlDoc.getElementsByTagName([MotorPrefix]+"Uq_req");
@@ -880,6 +884,10 @@ function clickUpdateCtrlStruc()
         if (in_MethodCtrlVal === 2){
             writeFRM[0] = document.getElementById(MotorPrefix+'current_ctrl_Input1').value;
             writeFRM[1] = document.getElementById(MotorPrefix+'current_ctrl_Input2').value;
+
+            //Round the entered currents to 0.01 Amps
+            writeFRM[0] = Number(writeFRM[0]).toFixed(2);
+            writeFRM[1] = Number(writeFRM[1]).toFixed(2);
              
             var writeFRMregisterVal0 = xmlDoc.getElementsByTagName([MotorPrefix]+"Id_req");
             var writeFRMregisterVal1 = xmlDoc.getElementsByTagName([MotorPrefix]+"Iq_req");
@@ -887,11 +895,19 @@ function clickUpdateCtrlStruc()
         
         if (in_MethodCtrlVal === 3){
             writeFRM[0] = document.getElementById(MotorPrefix+'speed_ctrl_Input1').value;
+
+            //Round the entered speed to rpm
+            writeFRM[0] = Number(writeFRM[0]).toFixed(0);
+
             var writeFRMregisterVal0 = xmlDoc.getElementsByTagName([MotorPrefix]+"Speed_req");
         }
         
         if (in_MethodCtrlVal > 3){
             writeFRM[0] = document.getElementById(MotorPrefix+'speed_ctrl_Input1').value;
+
+            //Round the entered speed to rpm
+            writeFRM[0] = Number(writeFRM[0]).toFixed(0);
+
             var writeFRMregisterVal0 = xmlDoc.getElementsByTagName([MotorPrefix]+"Speed_req");
         }
         

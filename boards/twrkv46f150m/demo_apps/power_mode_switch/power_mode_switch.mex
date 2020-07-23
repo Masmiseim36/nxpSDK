@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding= "UTF-8" ?>
-<configuration name="MKV46F256xxx16" version="1.6" xsi:schemaLocation="http://mcuxpresso.nxp.com/XSD/mex_configuration_1.7 http://mcuxpresso.nxp.com/XSD/mex_configuration_1.7.xsd" uuid="207b18d7-5d6c-4a14-86b5-48ae18defe3b" xmlns="http://mcuxpresso.nxp.com/XSD/mex_configuration_1.7" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<configuration name="MKV46F256xxx16" version="1.6" xsi:schemaLocation="http://mcuxpresso.nxp.com/XSD/mex_configuration_1.7 http://mcuxpresso.nxp.com/XSD/mex_configuration_1.7.xsd" uuid="42316155-83ab-446a-9712-5dfa209e3bec" xmlns="http://mcuxpresso.nxp.com/XSD/mex_configuration_1.7" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
    <common>
       <processor>MKV46F256xxx16</processor>
       <package>MKV46F256VLL16</package>
@@ -8,7 +8,6 @@
       <cores selected="core0">
          <core name="Cortex-M4F" id="core0" description="M4 core"/>
       </cores>
-      <description>Configuration imported from C:\Users\nxf47778\Documents\mcu-sdk-2.0\boards\twrkv46f150m\demo_apps\power_mode_switch\iar</description>
    </common>
    <preferences>
       <validate_boot_init_only>true</validate_boot_init_only>
@@ -16,13 +15,9 @@
       <generate_code_modified_registers_only>false</generate_code_modified_registers_only>
    </preferences>
    <tools>
-      <pins name="Pins" version="7.0" enabled="true" update_project_code="false">
-         <generated_project_files>
-            <file path="../pin_mux.c" update_enabled="true"/>
-            <file path="../pin_mux.h" update_enabled="true"/>
-         </generated_project_files>
+      <pins name="Pins" version="7.0" enabled="true" update_project_code="true">
          <pins_profile>
-            <processor_version>0.7.0</processor_version>
+            <processor_version>0.7.8</processor_version>
          </pins_profile>
          <functions_list>
             <function name="BOARD_InitPins">
@@ -35,6 +30,11 @@
                </options>
                <dependencies>
                   <dependency resourceType="Peripheral" resourceId="UART1" description="Peripheral UART1 is not initialized" problem_level="1" source="Pins:BOARD_InitPins">
+                     <feature name="initialized" evaluation="equal">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="Peripheral" resourceId="JTAG" description="Peripheral JTAG is not initialized" problem_level="1" source="Pins:BOARD_InitPins">
                      <feature name="initialized" evaluation="equal">
                         <data>true</data>
                      </feature>
@@ -61,17 +61,20 @@
                         <pin_feature name="pull_enable" value="enable"/>
                      </pin_features>
                   </pin>
+                  <pin peripheral="JTAG" signal="TRACE_SWO" pin_num="36" pin_signal="PTA2/UART0_TX/FTM0_CH7/CMP1_OUT/FTM1_CH0/JTAG_TDO/TRACE_SWO">
+                     <pin_features>
+                        <pin_feature name="identifier" value=""/>
+                        <pin_feature name="pull_select" value="down"/>
+                        <pin_feature name="pull_enable" value="disable"/>
+                     </pin_features>
+                  </pin>
                </pins>
             </function>
          </functions_list>
       </pins>
-      <clocks name="Clocks" version="7.0" enabled="true" update_project_code="false">
-         <generated_project_files>
-            <file path="../../../clock_config.c" update_enabled="true"/>
-            <file path="../../../clock_config.h" update_enabled="true"/>
-         </generated_project_files>
+      <clocks name="Clocks" version="7.0" enabled="true" update_project_code="true">
          <clocks_profile>
-            <processor_version>0.7.0</processor_version>
+            <processor_version>0.7.8</processor_version>
          </clocks_profile>
          <clock_configurations>
             <clock_configuration name="BOARD_BootClockHSRUN">
@@ -257,7 +260,6 @@
          </clock_configurations>
       </clocks>
       <dcdx name="DCDx" version="2.0" enabled="false" update_project_code="true">
-         <generated_project_files/>
          <dcdx_profile>
             <processor_version>N/A</processor_version>
          </dcdx_profile>
@@ -265,16 +267,6 @@
       </dcdx>
       <periphs name="Peripherals" version="7.0" enabled="true" update_project_code="true">
          <dependencies>
-            <dependency resourceType="SWComponent" resourceId="platform.drivers.lptmr" description="LPTMR Driver not found in the toolchain/IDE project. Project will not compile!" problem_level="2" source="Peripherals">
-               <feature name="enabled" evaluation="equal">
-                  <data type="Boolean">true</data>
-               </feature>
-            </dependency>
-            <dependency resourceType="SWComponent" resourceId="platform.drivers.lptmr" description="Unsupported version of the LPTMR Driver in the toolchain/IDE project. Required: ${required_value}, actual: ${actual_value}. Project might not compile correctly." problem_level="1" source="Peripherals">
-               <feature name="version" evaluation="equivalent">
-                  <data type="Version">2.0.1</data>
-               </feature>
-            </dependency>
             <dependency resourceType="SWComponent" resourceId="platform.drivers.llwu" description="LLWU Driver not found in the toolchain/IDE project. Project will not compile!" problem_level="2" source="Peripherals">
                <feature name="enabled" evaluation="equal">
                   <data type="Boolean">true</data>
@@ -285,13 +277,19 @@
                   <data type="Version">2.0.1</data>
                </feature>
             </dependency>
+            <dependency resourceType="SWComponent" resourceId="platform.drivers.lptmr" description="LPTMR Driver not found in the toolchain/IDE project. Project will not compile!" problem_level="2" source="Peripherals">
+               <feature name="enabled" evaluation="equal">
+                  <data type="Boolean">true</data>
+               </feature>
+            </dependency>
+            <dependency resourceType="SWComponent" resourceId="platform.drivers.lptmr" description="Unsupported version of the LPTMR Driver in the toolchain/IDE project. Required: ${required_value}, actual: ${actual_value}. Project might not compile correctly." problem_level="1" source="Peripherals">
+               <feature name="version" evaluation="equivalent">
+                  <data type="Version">2.0.1</data>
+               </feature>
+            </dependency>
          </dependencies>
-         <generated_project_files>
-            <file path="../peripherals.c" update_enabled="true"/>
-            <file path="../peripherals.h" update_enabled="true"/>
-         </generated_project_files>
          <peripherals_profile>
-            <processor_version>0.7.0</processor_version>
+            <processor_version>0.7.8</processor_version>
          </peripherals_profile>
          <functional_groups>
             <functional_group name="BOARD_InitPeripherals" uuid="08c0a350-359a-43a5-aa6b-478554e6abff" called_from_default_init="true" id_prefix="DEMO_" core="core0">
@@ -305,7 +303,20 @@
                   </dependency>
                </dependencies>
                <instances>
-                  <instance name="LPTMR" uuid="c53882e6-8600-438e-854b-9ae75994d492" type="lptmr" type_id="lptmr_2eeab91a1a42f8238f9ac768f18c65ae" mode="LPTMR_GENERAL" peripheral="LPTMR0" enabled="true" comment="" custom_name_enabled="true">
+                  <instance name="LLWU" uuid="39c6a973-8079-4cbc-adf0-35a8f4edf508" type="llwu" type_id="llwu_3300b573fd6e3303f27cdce526747338" mode="LLWU_GENERAL" peripheral="LLWU" enabled="true" comment="" custom_name_enabled="true">
+                     <config_set name="fsl_llwu">
+                        <setting name="enable_irq" value="true"/>
+                        <struct name="interrupt">
+                           <setting name="IRQn" value="LLWU_IRQn"/>
+                           <setting name="enable_priority" value="false"/>
+                           <setting name="priority" value="0"/>
+                           <setting name="enable_custom_name" value="false"/>
+                        </struct>
+                        <array name="input_pins"/>
+                        <array name="internal_modules"/>
+                     </config_set>
+                  </instance>
+                  <instance name="LPTMR" uuid="62fa4791-bad1-48bd-9f40-3f0f7dca0d85" type="lptmr" type_id="lptmr_2eeab91a1a42f8238f9ac768f18c65ae" mode="LPTMR_GENERAL" peripheral="LPTMR0" enabled="true" comment="" custom_name_enabled="true">
                      <config_set name="fsl_lptmr">
                         <struct name="lptmr_config">
                            <setting name="timerMode" value="kLPTMR_TimerModeTimeCounter"/>
@@ -327,33 +338,19 @@
                         </struct>
                      </config_set>
                   </instance>
-                  <instance name="LLWU" uuid="ff8a28c9-7c64-4ed2-91fe-00f80ae1fc46" type="llwu" type_id="llwu_3300b573fd6e3303f27cdce526747338" mode="LLWU_GENERAL" peripheral="LLWU" enabled="true" comment="" custom_name_enabled="true">
-                     <config_set name="fsl_llwu">
-                        <setting name="enable_irq" value="true"/>
-                        <struct name="interrupt">
-                           <setting name="IRQn" value="LLWU_IRQn"/>
-                           <setting name="enable_priority" value="false"/>
-                           <setting name="priority" value="0"/>
-                           <setting name="enable_custom_name" value="false"/>
-                        </struct>
-                        <array name="input_pins"/>
-                        <array name="internal_modules"/>
-                     </config_set>
-                  </instance>
                </instances>
             </functional_group>
          </functional_groups>
          <components>
-            <component name="system" uuid="7846cbc1-1d56-4906-9d75-1c96cd7f862e" type_id="system_54b53072540eeeb8f8e9343e71f28176">
+            <component name="system" uuid="a34f606c-7d85-4734-b0f8-c908b37bf7b0" type_id="system_54b53072540eeeb8f8e9343e71f28176">
                <config_set_global name="global_system_definitions"/>
             </component>
-            <component name="msg" uuid="c0be29ca-c0af-499c-9969-3244fef919c3" type_id="msg_6e2baaf3b97dbeef01c0043275f9a0e7">
+            <component name="msg" uuid="9ee64951-7f60-45d2-a0ce-8b709dfb60e9" type_id="msg_6e2baaf3b97dbeef01c0043275f9a0e7">
                <config_set_global name="global_messages"/>
             </component>
          </components>
       </periphs>
       <tee name="TEE" version="1.0" enabled="false" update_project_code="true">
-         <generated_project_files/>
          <tee_profile>
             <processor_version>N/A</processor_version>
          </tee_profile>

@@ -6,10 +6,10 @@
  */
 
 #include "bootloader_common.h"
-#include "bootloader/bl_context.h"
-#include "memory/memory.h"
+#include "bl_context.h"
+#include "memory.h"
 #include "fsl_device_registers.h"
-#include "utilities/fsl_assert.h"
+#include "fsl_assert.h"
 #include "sram_init.h"
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -21,78 +21,71 @@ status_t sram_init(void)
 {
 #if defined(__CORE_CM0PLUS_H_GENERIC)
 
-    uint32_t ram_size = 0u;
+    uint32_t ram_size = 0;
 
-#if defined(FSL_FEATURE_SIM_OPT_HAS_RAMSIZE) && FSL_FEATURE_SIM_OPT_HAS_RAMSIZE
+#if FSL_FEATURE_SIM_OPT_HAS_RAMSIZE
     uint32_t tmp = (SIM->SOPT1 & SIM_SOPT1_RAMSIZE_MASK) >> SIM_SOPT1_RAMSIZE_SHIFT;
     switch (tmp)
     {
-        case 1u:
-            ram_size = 8u * 1024u;
+        case 1:
+            ram_size = 8 * 1024;
             break;
-        case 3u:
-            ram_size = 16u * 1024u;
+        case 3:
+            ram_size = 16 * 1024;
             break;
-        case 4u:
-            ram_size = 24u * 1024u;
+        case 4:
+            ram_size = 24 * 1024;
             break;
-        case 5u:
-            ram_size = 32u * 1024u;
+        case 5:
+            ram_size = 32 * 1024;
             break;
-        case 6u:
-            ram_size = 48u * 1024u;
+        case 6:
+            ram_size = 48 * 1024;
             break;
-        case 7u:
-            ram_size = 64u * 1024u;
+        case 7:
+            ram_size = 64 * 1024;
             break;
-        case 8u:
-            ram_size = 96u * 1024u;
+        case 8:
+            ram_size = 96 * 1024;
             break;
-        case 9u:
-            ram_size = 128u * 1024u;
+        case 9:
+            ram_size = 128 * 1024;
             break;
-        case 11u:
-            ram_size = 256u * 1024u;
+        case 11:
+            ram_size = 256 * 1024;
             break;
         default:
-            ram_size = 0u;
             break;
     }
 #else
-    uint32_t tmp = (uint32_t)((SIM->SDID & (uint32_t)SIM_SDID_SRAMSIZE_MASK) >> (uint32_t)SIM_SDID_SRAMSIZE_SHIFT);
+    uint32_t tmp = (SIM->SDID & SIM_SDID_SRAMSIZE_MASK) >> SIM_SDID_SRAMSIZE_SHIFT;
 
     // for KW41Z4, 1001 - 128KB; 0111 - 64 KB
-    if (tmp <= (uint32_t)kMaxRamIndex)
+    if (tmp <= kMaxRamIndex)
     {
-        ram_size = (uint32_t)kMinKlRamSize << tmp;
+        ram_size = kMinKlRamSize << tmp;
     }
     else
     {
-        ram_size = (uint32_t)kMinKlRamSize << (tmp - 1u);              
+        ram_size = kMinKlRamSize << (tmp - 1);              
     }
 #endif
 
-    assert(ram_size > 0u);
+    assert(ram_size > 0);
 
-    if (ram_size > 0u)
+    if (ram_size > 0)
     {
-        union
-        {
-            memory_map_entry_t const *address;
-            memory_map_entry_t *pMap;
-        } map_ptr;
-        map_ptr.address = &g_bootloaderContext.memoryMap[(uint32_t)kIndexSRAM];
         // Update address range of SRAM
-        memory_map_entry_t *map = map_ptr.pMap;
-        tmp = ram_size / ((uint32_t)kSram_LowerPart + (uint32_t)kSram_UpperPart);
-        map->startAddress = (uint32_t)kSRAMSeparatrix - tmp * (uint32_t)kSram_LowerPart;   // start of SRAM
-        map->endAddress = (uint32_t)kSRAMSeparatrix + tmp * (uint32_t)kSram_UpperPart - 1u; // end of SRAM
+        memory_map_entry_t *map = (memory_map_entry_t *)&g_bootloaderContext.memoryMap[kIndexSRAM];
+        tmp = ram_size / (kSram_LowerPart + kSram_UpperPart);
+        map->startAddress = kSRAMSeparatrix - tmp * kSram_LowerPart;   // start of SRAM
+        map->endAddress = kSRAMSeparatrix + tmp * kSram_UpperPart - 1; // end of SRAM
     }
 #else
 #error "This function only applies to cm0plus family"
 #endif // __CORE_CM0PLUS_H_GENERIC
 
-    return (int32_t)kStatus_Success;
+    return kStatus_Success;
 }
 
 ////////////////////////////////////////////////////////////////////////////////

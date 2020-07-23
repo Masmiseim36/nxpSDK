@@ -1,13 +1,13 @@
 /*
 ** ###################################################################
 **     Version:             rev. 1.6, 2015-06-08
-**     Build:               b190822
+**     Build:               b200409
 **
 **     Abstract:
 **         Chip specific module features.
 **
 **     Copyright 2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2019 NXP
+**     Copyright 2016-2020 NXP
 **     All rights reserved.
 **
 **     SPDX-License-Identifier: BSD-3-Clause
@@ -647,6 +647,8 @@
 #define FSL_FEATURE_FTM_HAS_CHANNEL7_TRIGGER (0)
 /* @brief Has no QDCTRL. */
 #define FSL_FEATURE_FTM_HAS_NO_QDCTRL (0)
+/* @brief If instance has only TPM function. */
+#define FSL_FEATURE_FTM_IS_TPM_ONLY_INSTANCEn(x) (0)
 
 /* GPIO module features */
 
@@ -1342,49 +1344,14 @@
 
 /* PWM module features */
 
-#if defined(CPU_MKV46F128VLH16) || defined(CPU_MKV46F256VLH16)
-    /* @brief Number of each EflexPWM module channels (outputs). */
-    #define FSL_FEATURE_PWM_CHANNEL_COUNT (8U)
-    /* @brief Number of EflexPWM module A channels (outputs). */
-    #define FSL_FEATURE_PWM_CHANNELA_COUNT (4U)
-    /* @brief Number of EflexPWM module B channels (outputs). */
-    #define FSL_FEATURE_PWM_CHANNELB_COUNT (4U)
-    /* @brief Number of EflexPWM module X channels (outputs). */
-    #define FSL_FEATURE_PWM_CHANNELX_COUNT (0U)
-    /* @brief Number of each EflexPWM module compare channels interrupts. */
-    #define FSL_FEATURE_PWM_CMP_INT_HANDLER_COUNT (4U)
-    /* @brief Number of each EflexPWM module reload channels interrupts. */
-    #define FSL_FEATURE_PWM_RELOAD_INT_HANDLER_COUNT (4U)
-    /* @brief Number of each EflexPWM module capture channels interrupts. */
-    #define FSL_FEATURE_PWM_CAP_INT_HANDLER_COUNT (1U)
-    /* @brief Number of each EflexPWM module reload error channels interrupts. */
-    #define FSL_FEATURE_PWM_RERR_INT_HANDLER_COUNT (1U)
-    /* @brief Number of each EflexPWM module fault channels interrupts. */
-    #define FSL_FEATURE_PWM_FAULT_INT_HANDLER_COUNT (1U)
-    /* @brief Number of submodules in each EflexPWM module. */
-    #define FSL_FEATURE_PWM_SUBMODULE_COUNT (4U)
-#elif defined(CPU_MKV46F128VLL16) || defined(CPU_MKV46F256VLL16)
-    /* @brief Number of each EflexPWM module channels (outputs). */
-    #define FSL_FEATURE_PWM_CHANNEL_COUNT (12U)
-    /* @brief Number of EflexPWM module A channels (outputs). */
-    #define FSL_FEATURE_PWM_CHANNELA_COUNT (4U)
-    /* @brief Number of EflexPWM module B channels (outputs). */
-    #define FSL_FEATURE_PWM_CHANNELB_COUNT (4U)
-    /* @brief Number of EflexPWM module X channels (outputs). */
-    #define FSL_FEATURE_PWM_CHANNELX_COUNT (4U)
-    /* @brief Number of each EflexPWM module compare channels interrupts. */
-    #define FSL_FEATURE_PWM_CMP_INT_HANDLER_COUNT (4U)
-    /* @brief Number of each EflexPWM module reload channels interrupts. */
-    #define FSL_FEATURE_PWM_RELOAD_INT_HANDLER_COUNT (4U)
-    /* @brief Number of each EflexPWM module capture channels interrupts. */
-    #define FSL_FEATURE_PWM_CAP_INT_HANDLER_COUNT (1U)
-    /* @brief Number of each EflexPWM module reload error channels interrupts. */
-    #define FSL_FEATURE_PWM_RERR_INT_HANDLER_COUNT (1U)
-    /* @brief Number of each EflexPWM module fault channels interrupts. */
-    #define FSL_FEATURE_PWM_FAULT_INT_HANDLER_COUNT (1U)
-    /* @brief Number of submodules in each EflexPWM module. */
-    #define FSL_FEATURE_PWM_SUBMODULE_COUNT (4U)
-#endif /* defined(CPU_MKV46F128VLH16) || defined(CPU_MKV46F256VLH16) */
+/* @brief If EflexPWM has module A channels (outputs). */
+#define FSL_FEATURE_PWM_HAS_CHANNELA (1)
+/* @brief If EflexPWM has module B channels (outputs). */
+#define FSL_FEATURE_PWM_HAS_CHANNELB (1)
+/* @brief If EflexPWM has module X channels (outputs). */
+#define FSL_FEATURE_PWM_HAS_CHANNELX (1)
+/* @brief Number of submodules in each EflexPWM module. */
+#define FSL_FEATURE_PWM_SUBMODULE_COUNT (4U)
 
 /* RCM module features */
 
@@ -1704,6 +1671,8 @@
 #define FSL_FEATURE_SMC_HAS_SRS_TAMPER (0)
 /* @brief Has security violation reset (register bit SRS[SECVIO]). */
 #define FSL_FEATURE_SMC_HAS_SRS_SECVIO (0)
+/* @brief Width of SMC registers. */
+#define FSL_FEATURE_SMC_REG_WIDTH (8)
 
 /* DSPI module features */
 

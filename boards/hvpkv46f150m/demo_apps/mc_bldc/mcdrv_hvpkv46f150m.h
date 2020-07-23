@@ -17,20 +17,20 @@
  * Definitions
  ******************************************************************************/
 /* Version info */
-#define MCRSP_VER       "2.0.0"        /* motor control package version */
+#define MCRSP_VER "2.0.0" /* motor control package version */
 
 /* Application info */
-typedef struct 
+typedef struct
 {
-    char    cBoardID[15];
-    char    cMotorType[4];
-    char    cAppVer[5];
-}app_ver_t;
-   
+    char cBoardID[15];
+    char cMotorType[4];
+    char cAppVer[5];
+} app_ver_t;
+
 /* Structure used during clocks and modulo calculations */
 typedef struct _clock_setup
 {
-  uint32_t ui32FastPeripheralClock;
+    uint32_t ui32FastPeripheralClock;
     uint32_t ui32BusClock;
     uint16_t ui16PwmFreq;
     uint16_t ui16PwmDeadTime;
@@ -58,10 +58,10 @@ typedef struct _clock_setup
 /******************************************************************************
  * Clock & PWM definition
  ******************************************************************************/
-#define PWM_FREQ (20000)                /* PWM frequency - 20kHz */
-#define CTRL_LOOP_FREQ (1000)           /* Control loop frequency */
-#define M1_PWM_DEADTIME (1500)          /* Output PWM deadtime value in nanoseconds */
-#define M1_FOC_FREQ_VS_PWM_FREQ (1)     /* FOC calculation is called every n-th PWM reload */
+#define PWM_FREQ (20000)            /* PWM frequency - 20kHz */
+#define CTRL_LOOP_FREQ (1000)       /* Control loop frequency */
+#define M1_PWM_DEADTIME (1500)      /* Output PWM deadtime value in nanoseconds */
+#define M1_FOC_FREQ_VS_PWM_FREQ (1) /* FOC calculation is called every n-th PWM reload */
 
 /* Assignment of FTM channels to motor phases
  * 0 - FTM channels 0&1
@@ -87,18 +87,18 @@ extern const uint16_t bldcCommutationTableComp[16];
 
 /* Configuration table of ADC channels according to the input pin signals:
  * Valid for Kinetis KV46 HVP board (HVP-KV46F) together with HVP-MC-3PH
- * 
+ *
  * Proper ADC channel assignment needs to follow these rules:
  *   - only one ADC module can be assigned to sense required variable
  *   - auxiliary quantity must be assigned to last free ADC module
  *
  *   Quantity          |      ADCA        |      ADCB
  *   --------------------------------------------------------------------------
- *   BEMF_A (ADCA_CH6D)| ADCA_CH6D        | 
- *   BEMF_B (PTE24)    |                  | ADCB_CH4 
- *   BEMF_C (PTE25)    |                  | ADCB_CH5 
- *   U_dcb  (PTE17)    | ADCA_CH1         |  
- *   I_dcb  (PTE29)    | ADCA_CH4         |  
+ *   BEMF_A (ADCA_CH6D)| ADCA_CH6D        |
+ *   BEMF_B (PTE24)    |                  | ADCB_CH4
+ *   BEMF_C (PTE25)    |                  | ADCB_CH5
+ *   U_dcb  (PTE17)    | ADCA_CH1         |
+ *   I_dcb  (PTE29)    | ADCA_CH4         |
  */
 /* BEMF phase A assigned to ADC0 only */
 #define ADC0_PH_A (6)
@@ -116,8 +116,8 @@ extern const uint16_t bldcCommutationTableComp[16];
 #define ADC0_IDCB (4)
 #define ADC1_IDCB (MCDRV_CHAN_OFF)
 /* Aux channel is assigned to ADC1 only */
-#define ADC0_AUX  (MCDRV_CHAN_OFF)
-#define ADC1_AUX  (0)
+#define ADC0_AUX (MCDRV_CHAN_OFF)
+#define ADC1_AUX (0)
 
 /******************************************************************************
  * MC driver macro definition and check - do not change this part
@@ -229,4 +229,3 @@ void InitClock(void);
 }
 #endif
 #endif /* _MCDRV_HVP_KV46F15_H_ */
-

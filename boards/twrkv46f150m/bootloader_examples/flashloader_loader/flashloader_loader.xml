@@ -99,6 +99,9 @@
     <source path="boards/twrkv46f150m/bootloader_examples/flashloader_loader/mdk" target_path="middleware/mcu-boot" type="linker" toolchain="mdk">
       <files mask="MKV46F256xxx16_flashloader_loader.scf"/>
     </source>
+    <source path="boards/twrkv46f150m/bootloader_examples/flashloader_loader" target_path="doc" type="doc" toolchain="iar mdk mcuxpresso armgcc">
+      <files mask="readme.txt"/>
+    </source>
     <source path="middleware/mcu-boot/targets/MKV46F16/src" target_path="MKV46F16" type="c_include">
       <files mask="bootloader_config.h"/>
       <files mask="target_config.h"/>

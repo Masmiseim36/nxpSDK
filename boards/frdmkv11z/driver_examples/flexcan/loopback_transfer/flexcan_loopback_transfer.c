@@ -15,12 +15,12 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_CAN CAN0
+#define EXAMPLE_CAN            CAN0
 #define EXAMPLE_CAN_CLK_SOURCE (kFLEXCAN_ClkSrc0)
-#define EXAMPLE_CAN_CLK_FREQ CLOCK_GetFreq(kCLOCK_CoreSysClk)
-#define RX_MESSAGE_BUFFER_NUM (9)
-#define TX_MESSAGE_BUFFER_NUM (8)
-#define DLC (8)
+#define EXAMPLE_CAN_CLK_FREQ   CLOCK_GetFreq(kCLOCK_CoreSysClk)
+#define RX_MESSAGE_BUFFER_NUM  (9)
+#define TX_MESSAGE_BUFFER_NUM  (8)
+#define DLC                    (8)
 
 /* To get most precise baud rate under some circumstances, users need to set
    quantum which is composed of PSEG1/PSEG2/PROPSEG. Because CAN clock prescaler
@@ -30,9 +30,9 @@
    baud rate * 10) is an integer. Remember users must ensure the calculated
    prescaler an integer thus to get precise baud rate. */
 #define SET_CAN_QUANTUM 0
-#define PSEG1 3
-#define PSEG2 2
-#define PROPSEG 1
+#define PSEG1           3
+#define PSEG2           2
+#define PROPSEG         1
 /* Fix MISRA_C-2012 Rule 17.7. */
 #define LOG_INFO (void)PRINTF
 /*******************************************************************************

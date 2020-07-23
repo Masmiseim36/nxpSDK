@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -17,16 +17,16 @@
  ******************************************************************************/
 #define DEMO_CADC_BASEADDR ADC
 
-#define DEMO_CADC_CHANNEL1_NUMBER 4U
+#define DEMO_CADC_CHANNEL1_NUMBER      4U
 #define DEMO_CADC_CHANNEL1_ENABLE_DIFF true
 
-#define DEMO_CADC_CHANNEL2_NUMBER 6U
+#define DEMO_CADC_CHANNEL2_NUMBER      6U
 #define DEMO_CADC_CHANNEL2_ENABLE_DIFF true
 
-#define DEMO_CADC_CHANNEL3_NUMBER 12U
+#define DEMO_CADC_CHANNEL3_NUMBER      12U
 #define DEMO_CADC_CHANNEL3_ENABLE_DIFF true
 
-#define DEMO_CADC_CHANNEL4_NUMBER 14U
+#define DEMO_CADC_CHANNEL4_NUMBER      14U
 #define DEMO_CADC_CHANNEL4_ENABLE_DIFF true
 
 /*******************************************************************************
@@ -64,7 +64,7 @@ int main(void)
     /*
      * cadcConfigStruct.dualConverterScanMode = kCADC_DualConverterWorkAsTriggeredParallel;
      * cadcConfigStruct.enableSimultaneousMode = true;
-     * cadcConfigStruct.DMATriggerSoruce = kCADC_DMATriggerSourceAsEndOfScan;
+     * cadcConfigStruct.DMATriggerSource = kCADC_DMATriggerSourceAsEndOfScan;
      * cadcConfigStruct.idleWorkMode = kCADC_IdleKeepNormal;
      * cadcConfigStruct.powerUpDelay = 26U;
      */
@@ -85,7 +85,7 @@ int main(void)
 
     /* Configure the samples. */
     cadcSampleConfigStruct.channelGain      = kCADC_ChannelGainx1;
-    cadcSampleConfigStruct.zeroCrossingMode = kCADC_ZeroCorssingDisabled;
+    cadcSampleConfigStruct.zeroCrossingMode = kCADC_ZeroCrossingDisabled;
     cadcSampleConfigStruct.highLimitValue   = 0xFFFFU;
     cadcSampleConfigStruct.lowLimitValue    = 0x0U;
     cadcSampleConfigStruct.offsetValue      = 0x0U;

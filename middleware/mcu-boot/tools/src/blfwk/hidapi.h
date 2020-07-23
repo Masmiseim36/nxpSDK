@@ -202,14 +202,10 @@ HID_API_EXPORT hid_device *HID_API_CALL hid_open_path(const char *path);
         This function returns the actual number of bytes written and
         -1 on error.
 */
-#ifdef LINUX
-int HID_API_EXPORT HID_API_CALL hid_write(hid_device *device, const unsigned char *data, size_t length);
-#else
 int HID_API_EXPORT HID_API_CALL hid_write_timeout(hid_device *device,
                                                   const unsigned char *data,
                                                   size_t length,
                                                   int milliseconds);
-#endif
 
 /** @brief Read an Input report from a HID device with timeout.
 

@@ -18,7 +18,7 @@ extern "C" {
 /*******************************************************************************
  * API
  ******************************************************************************/
-extern void MID_calibHall(mid_calib_hall_t* sHallCalibFcn);
+extern void MID_calibHall(mid_calib_hall_t *sHallCalibFcn);
 
 #ifdef __cplusplus
 }

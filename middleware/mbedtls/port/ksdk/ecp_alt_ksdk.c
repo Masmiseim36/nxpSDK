@@ -43,6 +43,7 @@
 #error "CASPER hw acceleration currently supported only for SECP256R1 and SECP384R1."
 #endif
 
+/* CASPER driver allows usage of 256 or 384 ECC, not both at once */
 #if defined(CASPER_ECC_P256) && (CASPER_ECC_P256 > 0)
 #define ECC_SIZE_BITS (256)
 #elif defined(CASPER_ECC_P384) && (CASPER_ECC_P384 > 0)

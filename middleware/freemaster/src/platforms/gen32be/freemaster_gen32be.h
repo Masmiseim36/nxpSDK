@@ -32,7 +32,7 @@
 #define FMSTR_CFG_BUS_WIDTH         1
 #define FMSTR_TSA_FLAGS             0
 #define FMSTR_PLATFORM_BIG_ENDIAN   1
-#define FMSTR_MEMCPY_MAX_SIZE       1
+#define FMSTR_MEMCPY_MAX_SIZE       4
 
 #ifdef __cplusplus
   extern "C" {
@@ -79,19 +79,14 @@ typedef char           FMSTR_CHAR;      /* regular character, part of string */
 * Platform depending functionalities
 *********************************************************************************/
 
-/* Redirect to standard C functions */
-#define FMSTR_StrCmp(str1, str2)        strcmp((const char*)str1, (const char*)str2)
-#define FMSTR_StrLen(str)               strlen((const char*)str)
+#if 0  /* Uncomment to take standard C functions taken from stdlib */
+#define FMSTR_StrLen(str)               ((FMSTR_SIZE)strlen(str))
+#define FMSTR_StrCmp(str1, str2)        ((FMSTR_INDEX)strcmp(str1, str2))
+#define FMSTR_MemCmp(b1, b2, size)      ((FMSTR_INDEX)memcmp(b1, b2, size))
+#define FMSTR_MemSet(dest, mask, size)  memset(dest, mask, size)
+#endif
+
+/* Rand is taken from stdlib */
 #define FMSTR_Rand()                    rand()
-#define FMSTR_MemSet(dest, mask, size)  memset((void*)dest, mask, size)
-#define FMSTR_MemCmp(b1, b2, size)      memcmp((void*)b1, (void*)b2, size)
-
-/****************************************************************************************
-* Other helper macros
-*****************************************************************************************/
-
-/* This macro assigns C pointer to FMSTR_ADDR-typed variable */
-#define FMSTR_PTR2ADDR(tmpAddr,ptr) ( tmpAddr = (FMSTR_ADDR) (FMSTR_U8*) ptr )
-#define FMSTR_ARR2ADDR FMSTR_PTR2ADDR
 
 #endif /* _FREEMASTER_GEN32BE_H */

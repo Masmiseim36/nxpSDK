@@ -18,16 +18,16 @@
  * Definitions
  ******************************************************************************/
 /* Version info */
-#define MCRSP_VER       "2.0.0"        /* motor control package version */ 
+#define MCRSP_VER "2.0.0" /* motor control package version */
 
 /* Application info */
 typedef struct _app_ver
 {
-    char    cBoardID[15];
-    char    cMotorType[4];
-    char    cAppVer[5];
-}app_ver_t;
-    
+    char cBoardID[15];
+    char cMotorType[4];
+    char cAppVer[5];
+} app_ver_t;
+
 /* Structure used during clocks and modulo calculations */
 typedef struct _clock_setup
 {
@@ -37,8 +37,8 @@ typedef struct _clock_setup
     uint16_t ui16M1SpeedLoopModulo;
     uint16_t ui16M1PwmFreq;
     uint16_t ui16M1PwmModulo;
-    uint16_t ui16M1PwmDeadTime;    
-    
+    uint16_t ui16M1PwmDeadTime;
+
 } clock_setup_t;
 
 /* Define motor 1 ADC periphery (HSADC) */
@@ -65,8 +65,8 @@ typedef struct _clock_setup
 /* Output PWM deadtime value in nanoseconds */
 #define M1_PWM_DEADTIME (500)
 
-#define M1_FAST_LOOP_TS ((float_t)1.0/(float_t)(M1_PWM_FREQ / M1_FOC_FREQ_VS_PWM_FREQ))
-#define M1_SLOW_LOOP_TS ((float_t)1.0/(float_t)(M1_SLOW_LOOP_FREQ))
+#define M1_FAST_LOOP_TS ((float_t)1.0 / (float_t)(M1_PWM_FREQ / M1_FOC_FREQ_VS_PWM_FREQ))
+#define M1_SLOW_LOOP_TS ((float_t)1.0 / (float_t)(M1_SLOW_LOOP_FREQ))
 #define M1_TIME_ONESEC_COUNT (M1_PWM_FREQ / M1_FOC_FREQ_VS_PWM_FREQ)
 
 /* Assignment of PWM Submodules to motor phases
@@ -83,8 +83,8 @@ typedef struct _clock_setup
 #define M1_FAULT_NUM (0)
 
 /* Braking resistor macros */
-#define M1_BRAKE_SET() 
-#define M1_BRAKE_CLEAR()  
+#define M1_BRAKE_SET()
+#define M1_BRAKE_CLEAR()
 
 /******************************************************************************
  * ADC measurement definition
@@ -120,7 +120,7 @@ typedef struct _clock_setup
 #define M1_ADC0_AUX MCDRV_CHAN_OFF
 #define M1_ADC1_AUX (6)
 
-/* offset measurement filter window */     
+/* offset measurement filter window */
 #define ADC_OFFSET_WINDOW (3)
 /******************************************************************************
  * MC driver macro definition and check - do not change this part
@@ -153,8 +153,8 @@ typedef struct _clock_setup
 #define M1_MCDRV_TMR_SLOWLOOP_INIT() InitFTM2()
 
 /******************************************************************************
-* Define motor 1 3-ph driver control functions
-******************************************************************************/
+ * Define motor 1 3-ph driver control functions
+ ******************************************************************************/
 #define M1_MCDRV_DRV3PH_INIT() InitSPI()
 #define M1_MCDRV_DRV3PH_RD_OC(par) (MCDRV_Driver3PhReadOc(par))
 #define M1_MCDRV_DRV3PH_RD_INT(par) (MCDRV_Driver3PhReadInt(par))

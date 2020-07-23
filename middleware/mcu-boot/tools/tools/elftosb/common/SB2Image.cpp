@@ -55,6 +55,8 @@ SB2Image::SB2Image()
     , m_productVersion()
     , m_componentVersion()
     , m_buildNumber(0)
+	, m_majorVersion(2)
+	, m_minorVersion(0)
 {
     m_signDataSection = NULL;
 }
@@ -119,20 +121,9 @@ void SB2Image::writeToStream(std::ostream &stream)
     // always generate the session key or DEK even if image is unencrypted
     int mbedtlsError = 0;
     mbedtls_md_context_t hmac_sha256_ctx;
+	uint8_t *certData = nullptr;
     memset(m_digestHmac, 0, sizeof(m_digestHmac));
-    
-    // prepare to compute HMACs with the HMAC-SHA256 algorithm [5][6]. The MAC is generated over the entire header.
-    if (isEncrypted())
-    {
-        mbedtls_md_init(&hmac_sha256_ctx);
-        mbedtlsError = mbedtls_md_setup(&hmac_sha256_ctx, mbedtls_md_info_from_type(MBEDTLS_MD_SHA256), 1);
-        assert(mbedtlsError == 0);
-        mbedtls_md_hmac_starts(&hmac_sha256_ctx, m_macKey, sizeof(AESKey<256>::key_t)); 
-    }
-    // prepare to compute SHA-256 digest over entire image
-    mbedtls_sha256_context sha256_ctx;
-    mbedtls_sha256_init(&sha256_ctx);
-    mbedtls_sha256_starts(&sha256_ctx, false /*isSHA224 = false*/);
+	mbedtls_sha256_context sha256_ctx;   
 
     // count of total blocks written to the file
     unsigned fileBlocksWritten = 0;
@@ -142,43 +133,24 @@ void SB2Image::writeToStream(std::ostream &stream)
     if (isSigned())
     {
         prepareCertBlockHeader();
-
-        prepareSignDataSection();
+		if (isVersion20())
+			prepareSignDataSection();
+		else if (isVersion21()) {
+			if (prepareSignData(certData))
+				return;
+			if (setSignatureSize())
+				return;
+		}
+		else
+			throw std::runtime_error(format_string("wrong SB2 format version  \"%d.%d\" (%d)", m_majorVersion, m_minorVersion));        
     }
     prepareImageHeader(imageHeader);
-
-    // write plaintext header
-    {
-        // write header
-        assert(sizeOfPaddingForCipherBlocks(sizeof(sb2_header_t)) == 0);
-        stream.write(reinterpret_cast<char *>(&imageHeader), sizeof(imageHeader));
-        fileBlocksWritten += numberOfCipherBlocks(sizeof(imageHeader));
-
-        if (isEncrypted())
-        {
-            // update H-MAC over image header
-            mbedtls_md_hmac_update(&hmac_sha256_ctx, reinterpret_cast<uint8_t *>(&imageHeader), sizeof(imageHeader));
-        }
-         
-        // update SHA-256
-        mbedtls_sha256_update(&sha256_ctx, reinterpret_cast<uint8_t *>(&imageHeader), sizeof(imageHeader));
-    }
-
+	fileBlocksWritten += numberOfCipherBlocks(sizeof(imageHeader));    
     if (isEncrypted())
     {
-        // finished with the HMAC over header
-        mbedtls_md_hmac_finish(&hmac_sha256_ctx, m_digestHmac);
-        // write HMAC result for this key, then update SHA-256
-        stream.write(reinterpret_cast<const char *>(m_digestHmac), sizeof(m_digestHmac));
-        // update SHA-256
-        mbedtls_sha256_update(&sha256_ctx, reinterpret_cast<uint8_t *>(m_digestHmac), sizeof(m_digestHmac));
-
-        fileBlocksWritten += numberOfCipherBlocks(sizeof(m_digestHmac));
-    }
-          
-    // Add m_keyBlob - Wrap session key and MAC key using kek aes-ecb
-    if (isEncrypted())
-    {
+		//add size of H-MAC section
+		fileBlocksWritten += numberOfCipherBlocks(sizeof(m_digestHmac));
+		// initialize m_keyBlob - Wrap session key and MAC key using kek aes-ecb
         uint8_t plaintext[(2*256)/8];
         memset(plaintext, 0, sizeof(plaintext));
         uint8_t kek[256/8];
@@ -187,15 +159,16 @@ void SB2Image::writeToStream(std::ostream &stream)
         memset(m_keyBlob, 0, sizeof(m_keyBlob));
         memcpy(kek, (const unsigned char*)m_keys[0], 32);
         do_aes_key_wrap_N8(plaintext, m_keyBlob, kek);
-        // write m_keyBlob to the stream, then update SHA256
-        stream.write(reinterpret_cast<const char *>(m_keyBlob), sizeof(m_keyBlob));
-        // update SHA-256
-        mbedtls_sha256_update(&sha256_ctx, reinterpret_cast<uint8_t *>(m_keyBlob), sizeof(m_keyBlob));
-        fileBlocksWritten += numberOfCipherBlocks(sizeof(m_keyBlob));
+		fileBlocksWritten += numberOfCipherBlocks(sizeof(m_keyBlob));
     }
+	if (isSigned() && isVersion21()) {
+		fileBlocksWritten += numberOfCipherBlocks(m_certDataSize);
+		fileBlocksWritten += numberOfCipherBlocks(m_signatureSize);
+	}
 
     // write sections and boot tags
     {
+		bool isFirstSection = true;
         section_iterator_t it = beginSection();
         for (; it != endSection(); ++it)
         {
@@ -218,7 +191,12 @@ void SB2Image::writeToStream(std::ostream &stream)
 			}
             uint32_t completedSeq = 0;
             uint32_t offsetToSectionData = 0;
-            cipher_block_t * pEncryptedSectionBlocks = NULL;
+			cipher_block_t * pEncryptedSectionBlocks = NULL;
+			size_t sectionAllignmentSize = 0;
+			cipher_block_t * sectionAllignment = NULL;
+			size_t sectionBootTagSize = 0;
+			cipher_block_t * sectionBootTag = NULL;
+			uint8_t * sectionHmacTable = NULL;
             pEncryptedSectionBlocks = new cipher_block_t[blockCount];
 
             offset = 0;
@@ -228,6 +206,8 @@ void SB2Image::writeToStream(std::ostream &stream)
             // call to getPadBlockCountForOffset() passes an offset that excludes
             // the boot tag for this section.
             unsigned paddingBlocks = getPadBlockCountForSection(section, fileBlocksWritten);
+			sectionAllignmentSize = paddingBlocks;
+			sectionAllignment = new cipher_block_t[sectionAllignmentSize];
 
             // Insert nop commands as padding to align the start of the section, if
             // the section has special alignment requirements.
@@ -253,10 +233,7 @@ void SB2Image::writeToStream(std::ostream &stream)
                         mbedtls_aes_crypt_ctr(&ctxAES, sizeof(cipher_block_t), &offset, (uint8_t*)nonce, streamBlock,
                             block, block);
                     }
-
-                    stream.write(reinterpret_cast<char *>(&block), sizeof(cipher_block_t));
-                    // update SHA-256
-                    mbedtls_sha256_update(&sha256_ctx, reinterpret_cast<uint8_t *>(&block), sizeof(block));
+					memcpy(&sectionAllignment[sectionAllignmentSize - paddingBlocks], (uint8_t*)&block, sizeof(cipher_block_t));
 
                     blocksWritten++;
                     fileBlocksWritten++;
@@ -274,7 +251,8 @@ void SB2Image::writeToStream(std::ostream &stream)
                 unsigned nextSectionOffset = fileBlocksWritten + section->getBlockCount() + 1;
                 tag.setSectionLength(section->getBlockCount() + getPadBlockCountForSection(*itCopy, nextSectionOffset));
             }
-            blockCount = tag.getBlockCount();
+			sectionBootTagSize = tag.getBlockCount();
+			sectionBootTag = new cipher_block_t[sectionBootTagSize];
             blocksWritten = 0;
 
             // Prepare for the hmac of boot tag section header
@@ -286,7 +264,7 @@ void SB2Image::writeToStream(std::ostream &stream)
                 mbedtls_md_hmac_starts(&hmac_sha256_ctx, m_macKey, sizeof(AESKey<256>::key_t));
             }
 
-            while (blocksWritten < blockCount)
+            while (blocksWritten < sectionBootTagSize)
             {
                 tag.getBlocks(blocksWritten, 1, &block);
 
@@ -303,20 +281,15 @@ void SB2Image::writeToStream(std::ostream &stream)
                     mbedtls_aes_crypt_ctr(&ctxAES, sizeof(cipher_block_t), &offset, (uint8_t*)nonce, streamBlock,
                         block, block);
                 }
-
-                stream.write(reinterpret_cast<char *>(&block), sizeof(cipher_block_t));
-                // update SHA-256
-                mbedtls_sha256_update(&sha256_ctx, reinterpret_cast<uint8_t *>(&block), sizeof(block));
-
-                if (isEncrypted())
-                {
-                    // update H-MAC over the boot tag
+				memcpy(&sectionBootTag[blocksWritten], (uint8_t*)&block, sizeof(cipher_block_t));
+                if (isEncrypted()) // update H-MAC over the boot tag
                     mbedtls_md_hmac_update(&hmac_sha256_ctx, block, sizeof(cipher_block_t));
-                }
-
+                
                 blocksWritten++;
                 fileBlocksWritten++;
             }
+
+			sectionHmacTable = new uint8_t[(hmacSeqCount + 1) * sizeof(m_digestHmac)];
 
             if (isEncrypted())
             {
@@ -325,9 +298,8 @@ void SB2Image::writeToStream(std::ostream &stream)
 
                 mbedtls_md_hmac_finish(&hmac_sha256_ctx, m_digestHmac);
                 // write HMAC result for the boot tag, then update SHA-256
-                stream.write(reinterpret_cast<const char *>(m_digestHmac), sizeof(m_digestHmac));
-                // update SHA-256
-                mbedtls_sha256_update(&sha256_ctx, reinterpret_cast<uint8_t *>(m_digestHmac), sizeof(m_digestHmac));
+                //stream.write(reinterpret_cast<const char *>(m_digestHmac), sizeof(m_digestHmac));
+				memcpy(sectionHmacTable, m_digestHmac, sizeof(m_digestHmac));
 
                 fileBlocksWritten += numberOfCipherBlocks(sizeof(m_digestHmac));
             }
@@ -341,7 +313,7 @@ void SB2Image::writeToStream(std::ostream &stream)
             blockCountInHmacSeq = 0;
             while (blocksWritten < blockCount)
             {
-                if ((blockCountInHmacSeq == 0) && isEncrypted())
+                if ((blockCountInHmacSeq == 0) && isEncrypted() && hmacSeqCount > 0)
                 {
                     mbedtls_md_init(&hmac_sha256_ctx);
                     mbedtlsError = mbedtls_md_setup(&hmac_sha256_ctx, mbedtls_md_info_from_type(MBEDTLS_MD_SHA256), 1);
@@ -372,9 +344,8 @@ void SB2Image::writeToStream(std::ostream &stream)
 
                 blocksWritten++;
 
-                if (isEncrypted())
+                if (isEncrypted() && hmacSeqCount > 0)
                 {
-                    // update H-MAC over the boot tag
                     mbedtls_md_hmac_update(&hmac_sha256_ctx, block, sizeof(cipher_block_t));
 
                     blockCountInHmacSeq++;
@@ -386,9 +357,7 @@ void SB2Image::writeToStream(std::ostream &stream)
                         // finished with the HMAC over section data for hmacSeqLen
                         mbedtls_md_hmac_finish(&hmac_sha256_ctx, m_digestHmac);
                         // write HMAC result for the section data, then update SHA-256
-                        stream.write(reinterpret_cast<const char *>(m_digestHmac), sizeof(m_digestHmac));
-                        // update SHA-256
-                        mbedtls_sha256_update(&sha256_ctx, reinterpret_cast<uint8_t *>(m_digestHmac), sizeof(m_digestHmac));
+						memcpy(&sectionHmacTable[(sizeof(m_digestHmac) * (completedSeq + 1))], m_digestHmac, sizeof(m_digestHmac));
 
                         fileBlocksWritten += numberOfCipherBlocks(sizeof(m_digestHmac));
                         blockCountInHmacSeq = 0;
@@ -397,106 +366,208 @@ void SB2Image::writeToStream(std::ostream &stream)
                         // if we are in the last sequence
                         if (completedSeq == (hmacSeqCount - 1))
                             hmacSeqLen = lastHmacSeqLen;
-
                     }
                 }
             }
+
+			if (isFirstSection) {
+				isFirstSection = false;
+				// prepare to compute HMACs with the HMAC-SHA256 algorithm [5][6]. The MAC is generated over the entire header.
+				if (isEncrypted())
+				{
+					mbedtls_md_init(&hmac_sha256_ctx);
+					mbedtlsError = mbedtls_md_setup(&hmac_sha256_ctx, mbedtls_md_info_from_type(MBEDTLS_MD_SHA256), 1);
+					mbedtls_md_hmac_starts(&hmac_sha256_ctx, m_macKey, sizeof(AESKey<256>::key_t));
+				}
+				if (isSigned()) { // prepare to compute SHA-256 digest over entire(sb2.0) image or header(sb2.1) of image
+					mbedtls_sha256_init(&sha256_ctx);
+					mbedtls_sha256_starts(&sha256_ctx, false /*isSHA224 = false*/);
+					// update SHA-256
+					mbedtls_sha256_update(&sha256_ctx, reinterpret_cast<uint8_t *>(&imageHeader), sizeof(imageHeader));
+				}
+				// write plaintext header
+				stream.write(reinterpret_cast<char *>(&imageHeader), sizeof(imageHeader));
+				
+				if (isEncrypted() && isVersion20())	// update H-MAC over image header
+					mbedtls_md_hmac_update(&hmac_sha256_ctx, reinterpret_cast<uint8_t *>(&imageHeader), sizeof(imageHeader));
+				else if (isEncrypted() && isVersion21()) // update H-MAC over H-MAC table of next section 
+				{
+					Log::log(Logger::DEBUG2, "HMAC table: ");
+					for (size_t i = 0; i < ((hmacSeqCount + 1) * sizeof(m_digestHmac)); i++)
+					{
+						Log::log(Logger::DEBUG, "%02x", reinterpret_cast<uint8_t *>(sectionHmacTable)[i]);
+					}
+					Log::log(Logger::DEBUG, "\n");
+					mbedtls_md_hmac_update(&hmac_sha256_ctx, reinterpret_cast<uint8_t *>(sectionHmacTable), (hmacSeqCount + 1) * sizeof(m_digestHmac));
+				}
+				
+
+				if (isEncrypted()) {
+					// finished with the HMAC
+					mbedtls_md_hmac_finish(&hmac_sha256_ctx, m_digestHmac);
+					Log::log(Logger::DEBUG, "HMAC result: ");
+					for (size_t i = 0; i < (sizeof(m_digestHmac)); i++)
+					{
+						Log::log(Logger::DEBUG, "%02x", m_digestHmac[i]);
+					}
+					Log::log(Logger::DEBUG, "\n");
+					// write HMAC result for this key, then update SHA-256
+					stream.write(reinterpret_cast<const char *>(m_digestHmac), sizeof(m_digestHmac));
+					if (isSigned())// update SHA-256
+						mbedtls_sha256_update(&sha256_ctx, reinterpret_cast<uint8_t *>(m_digestHmac), sizeof(m_digestHmac));
+
+					// write m_keyBlob to the stream, then update SHA256
+					stream.write(reinterpret_cast<const char *>(m_keyBlob), sizeof(m_keyBlob));
+					if (isSigned())// update SHA-256
+						mbedtls_sha256_update(&sha256_ctx, reinterpret_cast<uint8_t *>(m_keyBlob), sizeof(m_keyBlob));
+				}
+				if (isSigned() && isVersion21()) {
+					size_t paddingSize = sizeOfPaddingForCipherBlocks(m_certDataSize);
+					stream.write(reinterpret_cast<const char *>(certData), m_certDataSize);
+					mbedtls_sha256_update(&sha256_ctx, certData, m_certDataSize);
+					delete[] certData;
+					if (paddingSize > 0) {
+						uint8_t *paddingArray = new uint8_t[paddingSize]{ 0 };
+						stream.write(reinterpret_cast<const char *>(paddingArray), paddingSize);
+						mbedtls_sha256_update(&sha256_ctx, paddingArray, paddingSize);
+					}
+					if (signDigest(sha256_ctx, stream))
+						return;
+				}				
+			}
+
+			//write padding blocks data
+			stream.write(reinterpret_cast<char *>(sectionAllignment), sizeof(cipher_block_t) * sectionAllignmentSize);
+			if (isSigned() && isVersion20()) // update SHA-256
+				mbedtls_sha256_update(&sha256_ctx, reinterpret_cast<uint8_t *>(sectionAllignment), sizeof(cipher_block_t) * sectionAllignmentSize);
+			delete[] sectionAllignment;
+
+			//write boot tag data
+			stream.write(reinterpret_cast<char *>(sectionBootTag), sizeof(cipher_block_t) * sectionBootTagSize);
+			if (isSigned() && isVersion20()) // update SHA-256
+				mbedtls_sha256_update(&sha256_ctx, reinterpret_cast<uint8_t *>(sectionBootTag), sizeof(cipher_block_t) * sectionBootTagSize);
+			delete[] sectionBootTag;
+
+			//write hmac table for section
+			stream.write(reinterpret_cast<char *>(sectionHmacTable), (hmacSeqCount + 1) * sizeof(m_digestHmac));
+			if (isSigned() && isVersion20()) // update SHA-256
+				mbedtls_sha256_update(&sha256_ctx, reinterpret_cast<uint8_t *>(sectionHmacTable), (hmacSeqCount + 1) * sizeof(m_digestHmac));
+			delete[] sectionHmacTable;
+
             // Write section data
-            for(int i=0; i<blockCount; i++)
-            {
-                stream.write(reinterpret_cast<char *>(pEncryptedSectionBlocks[i]), sizeof(cipher_block_t));
-                // update SHA-256
-                mbedtls_sha256_update(&sha256_ctx, reinterpret_cast<uint8_t *>(pEncryptedSectionBlocks[i]), sizeof(cipher_block_t));
-                fileBlocksWritten ++;
-            }
+            stream.write(reinterpret_cast<char *>(pEncryptedSectionBlocks), sizeof(cipher_block_t) * blockCount);
+			if (isSigned() && isVersion20()) // update SHA-256
+				mbedtls_sha256_update(&sha256_ctx, reinterpret_cast<uint8_t *>(pEncryptedSectionBlocks), sizeof(cipher_block_t) * blockCount);
+			fileBlocksWritten += blockCount;
             delete [] pEncryptedSectionBlocks;
         }
     }
 
     // write signature of SHA-256 digest over entire image
-    if(isSigned())
+    if(isSigned() && isVersion20())
     {
-        int ret;
-        int cert_idx = m_certBlockHeader.certificateCount - 1;
-        // allocate enough room for digest and bytes to pad out to the next cipher block
-        const unsigned padBytes = sizeOfPaddingForCipherBlocks(sizeof(sha256_digest_t));
-        unsigned digestBlocksSize = sizeof(sha256_digest_t) + padBytes;
-        smart_array_ptr<uint8_t> digestBlocks = new uint8_t[digestBlocksSize];
-
-        mbedtls_sha256_finish(&sha256_ctx, digestBlocks);
-
-        // Load and parse the certificate chain
-        mbedtls_x509_crt cert_chain;
-        mbedtls_x509_crt_init(&cert_chain);
-        if((ret = mbedtls_x509_crt_parse_der(&cert_chain, (const unsigned char *)m_certTable.entries[cert_idx].x509Certificate,
-                m_certTable.entries[cert_idx].x509CertificateLengthInBytes)) != 0)
-        {
-            Log::log(Logger::ERROR, "error: certificate parse failed: %d\n", ret);
-            return;
-        }
-        // FM:todo differentiate between CA and certificate for signing the code
-        // assuming the last certificate to be the code signing certificate - need to fix this
-
-        // Get the public key from the certificate.
-        mbedtls_rsa_context *rsa_pub_key_ctx = (mbedtls_rsa_context *)(cert_chain.pk.pk_ctx);
-
-        mbedtls_pk_context pk_ctx;
-        mbedtls_pk_init(&pk_ctx);
-
-        //FM:todo handle password protected private files
-
-        if ((ret = mbedtls_pk_parse_keyfile(&pk_ctx, m_privKeyPath, NULL)) != 0)
-        {
-            Log::log(Logger::ERROR, "error: private key parse failed: %d\n", ret);
-            return;
-        }
-        // Get the private key.
-        mbedtls_rsa_context *rsa_priv_key_ctx = (mbedtls_rsa_context *)(pk_ctx.pk_ctx);
-
-        // Generate the RSA signature
-        // Init deterministic random bit generator.
-        mbedtls_ctr_drbg_context ctr_drbg;
-        mbedtls_ctr_drbg_init(&ctr_drbg);
-        // Init entropy.
-        mbedtls_entropy_context entropy;
-        mbedtls_entropy_init(&entropy);
-        uint32_t signatureSizeInBytes = rsa_priv_key_ctx->len;
-
-        const unsigned padding = sizeOfPaddingForCipherBlocks(signatureSizeInBytes);
-        unsigned signatureBlocksSize = signatureSizeInBytes + padding;
-        smart_array_ptr<uint8_t> signatureBlocks = new uint8_t[signatureSizeInBytes];
-
-
-        if((ret = mbedtls_ctr_drbg_seed(&ctr_drbg, mbedtls_entropy_func, &entropy, NULL, 0)) != 0)
-        {
-            Log::log(Logger::ERROR, "error: Seed random bit generator failed: %d\n", ret);
-            return;
-        }
-
-        if ((ret = mbedtls_rsa_rsassa_pkcs1_v15_sign(rsa_priv_key_ctx, mbedtls_ctr_drbg_random, &ctr_drbg, MBEDTLS_RSA_PRIVATE,
-            MBEDTLS_MD_SHA256, 256, digestBlocks.get(), signatureBlocks)) != 0)
-        {
-            Log::log(Logger::ERROR, "error: Signature generation failed: %d\n", ret);
-            return;
-        }
-
-        // Verify the signature
-
-        if ((ret = mbedtls_rsa_rsassa_pkcs1_v15_verify(rsa_pub_key_ctx, mbedtls_ctr_drbg_random, &ctr_drbg, MBEDTLS_RSA_PUBLIC,
-            MBEDTLS_MD_SHA256, 256, digestBlocks.get(), signatureBlocks.get())) != 0)
-        {
-            Log::log(Logger::ERROR, "error: Signature verification failed: %d\n", ret);
-            return;
-        }
-
-
-        // set the pad bytes to random values
-        RandomNumberGenerator rng;
-        rng.generateBlock(&(signatureBlocks.get())[signatureSizeInBytes], padding);
-
-        // write to the stream
-        stream.write(reinterpret_cast<char *>(signatureBlocks.get()), signatureSizeInBytes);
+		if (signDigest(sha256_ctx, stream))
+			return;
     }
+}
+
+bool elftosb::SB2Image::setSignatureSize()
+{
+	mbedtls_pk_context pk_ctx;
+	mbedtls_pk_init(&pk_ctx);
+	int ret;
+	if ((ret = mbedtls_pk_parse_keyfile(&pk_ctx, m_privKeyPath, NULL)) != 0)
+	{
+		Log::log(Logger::ERROR, "error: private key parse failed: %d\n", ret);
+		return true;
+	}
+	// Get the private key.
+	m_signatureSize = ((mbedtls_rsa_context *)(pk_ctx.pk_ctx))->len;
+	return false;
+}
+
+bool elftosb::SB2Image::signDigest(mbedtls_sha256_context &sha256_ctx, std::ostream & stream)
+{
+	int ret;
+	int cert_idx = m_certBlockHeader.certificateCount - 1;
+	// allocate enough room for digest and bytes to pad out to the next cipher block
+	const unsigned padBytes = sizeOfPaddingForCipherBlocks(sizeof(sha256_digest_t));
+	unsigned digestBlocksSize = sizeof(sha256_digest_t) + padBytes;
+	smart_array_ptr<uint8_t> digestBlocks = new uint8_t[digestBlocksSize];
+
+	mbedtls_sha256_finish(&sha256_ctx, digestBlocks);
+
+	// Load and parse the certificate chain
+	mbedtls_x509_crt cert_chain;
+	mbedtls_x509_crt_init(&cert_chain);
+	if ((ret = mbedtls_x509_crt_parse_der(&cert_chain, (const unsigned char *)m_certTable.entries[cert_idx].x509Certificate,
+		m_certTable.entries[cert_idx].x509CertificateLengthInBytes)) != 0)
+	{
+		Log::log(Logger::ERROR, "error: certificate parse failed: %d\n", ret);
+		return true;
+	}
+	// FM:todo differentiate between CA and certificate for signing the code
+	// assuming the last certificate to be the code signing certificate - need to fix this
+
+	// Get the public key from the certificate.
+	mbedtls_rsa_context *rsa_pub_key_ctx = (mbedtls_rsa_context *)(cert_chain.pk.pk_ctx);
+
+	mbedtls_pk_context pk_ctx;
+	mbedtls_pk_init(&pk_ctx);
+
+	//FM:todo handle password protected private files
+
+	if ((ret = mbedtls_pk_parse_keyfile(&pk_ctx, m_privKeyPath, NULL)) != 0)
+	{
+		Log::log(Logger::ERROR, "error: private key parse failed: %d\n", ret);
+		return true;
+	}
+	// Get the private key.
+	mbedtls_rsa_context *rsa_priv_key_ctx = (mbedtls_rsa_context *)(pk_ctx.pk_ctx);
+
+	// Generate the RSA signature
+	// Init deterministic random bit generator.
+	mbedtls_ctr_drbg_context ctr_drbg;
+	mbedtls_ctr_drbg_init(&ctr_drbg);
+	// Init entropy.
+	mbedtls_entropy_context entropy;
+	mbedtls_entropy_init(&entropy);
+	uint32_t signatureSizeInBytes = rsa_priv_key_ctx->len;
+
+	const unsigned padding = sizeOfPaddingForCipherBlocks(signatureSizeInBytes);
+	unsigned signatureBlocksSize = signatureSizeInBytes + padding;
+	smart_array_ptr<uint8_t> signatureBlocks = new uint8_t[signatureSizeInBytes];
+
+
+	if ((ret = mbedtls_ctr_drbg_seed(&ctr_drbg, mbedtls_entropy_func, &entropy, NULL, 0)) != 0)
+	{
+		Log::log(Logger::ERROR, "error: Seed random bit generator failed: %d\n", ret);
+		return true;
+	}
+
+	if ((ret = mbedtls_rsa_rsassa_pkcs1_v15_sign(rsa_priv_key_ctx, mbedtls_ctr_drbg_random, &ctr_drbg, MBEDTLS_RSA_PRIVATE,
+		MBEDTLS_MD_SHA256, 256, digestBlocks.get(), signatureBlocks)) != 0)
+	{
+		Log::log(Logger::ERROR, "error: Signature generation failed: %d\n", ret);
+		return true;
+	}
+
+	// Verify the signature
+
+	if ((ret = mbedtls_rsa_rsassa_pkcs1_v15_verify(rsa_pub_key_ctx, mbedtls_ctr_drbg_random, &ctr_drbg, MBEDTLS_RSA_PUBLIC,
+		MBEDTLS_MD_SHA256, 256, digestBlocks.get(), signatureBlocks.get())) != 0)
+	{
+		Log::log(Logger::ERROR, "error: Signature verification failed: %d\n", ret);
+		return true;
+	}
+
+	// set the pad bytes to random values
+	RandomNumberGenerator rng;
+	rng.generateBlock(&(signatureBlocks.get())[signatureSizeInBytes], padding);
+
+	// write to the stream
+	stream.write(reinterpret_cast<char *>(signatureBlocks.get()), signatureSizeInBytes);
+	return false;
 }
 
 void SB2Image::prepareCertBlockHeader(void)
@@ -515,199 +586,207 @@ void SB2Image::prepareCertBlockHeader(void)
     m_certBlockHeader.certificateTableLengthInBytes = 0; // It will be updated later
 }
 
+
 void SB2Image::prepareSignDataSection()
 {
-    int rootKeyCertIndex = 0;
     uint32_t tag = 's'|('i'<<8)|('g'<<16)|('n'<<24);
+	uint8_t *data = NULL;
     
     m_signDataSection = new SB2Image::DataSection(tag);
     
     m_signDataSection->setLeaveUnencrypted(TRUE);
     m_signDataSection->setHmacEntries(1);
-    m_certTable.entries = new cert_entry_t[m_certBlockHeader.certificateCount];
 
-    uint32_t size_tracker=0;
+	if(prepareSignData(data))
+		return;
 
-    // copy certificates
-    string_vector_t::iterator it = m_certFilePaths.begin();
-    for (int i=0; it != m_certFilePaths.end(); ++it, i++)
-    {
-        try {
-            std::string &certPath = *it;
+	// Set data for the sign section
+	m_signDataSection->setData(data, m_certDataSize);
 
-            std::string actualPath;
-            bool found = PathSearcher::getGlobalSearcher().search(certPath, PathSearcher::kFindFile, true, actualPath);
-            if (!found)
-            {
-                throw std::runtime_error(format_string("unable to find cert file %s\n", certPath.c_str()));
-            }
+	// add section to the section list
+	addSection(m_signDataSection);
+	delete[] data;
+}
 
-            FILE * certFile = NULL;
-            certFile = fopen(actualPath.c_str(), "rb");
-            if (certFile == NULL)
-            {
-                throw std::runtime_error(format_string("unable to open cert file %s\n", certPath.c_str()));
-            }
+bool elftosb::SB2Image::prepareSignData(uint8_t * &data)
+{
+	m_certTable.entries = new cert_entry_t[m_certBlockHeader.certificateCount];
+	int rootKeyCertIndex = 0;
+	// copy certificates
+	string_vector_t::iterator it = m_certFilePaths.begin();
+	for (int i = 0; it != m_certFilePaths.end(); ++it, i++)
+	{
+		try {
+			std::string &certPath = *it;
 
-            // Get CRT file length.
-            fseek(certFile, 0, SEEK_END);
-            uint32_t certSize = ftell(certFile);
-            uint32_t alignedCertSize = ((certSize % 4) ? certSize + (4 - (certSize % 4)) : certSize);
-            fseek(certFile, 0, SEEK_SET);
-            size_tracker += sizeof(uint32_t) + alignedCertSize;
+			std::string actualPath;
+			bool found = PathSearcher::getGlobalSearcher().search(certPath, PathSearcher::kFindFile, true, actualPath);
+			if (!found)
+			{
+				throw std::runtime_error(format_string("unable to find cert file %s\n", certPath.c_str()));
+			}
 
-            m_certTable.entries[i].x509CertificateLengthInBytes = alignedCertSize;
-            m_certTable.entries[i].x509Certificate = new uint8_t[alignedCertSize];
-            memset(m_certTable.entries[i].x509Certificate, 0, alignedCertSize);
-            fread(m_certTable.entries[i].x509Certificate, 1, certSize, certFile);
-            
-            if(certFile != NULL)
-                fclose(certFile);
+			FILE * certFile = NULL;
+			certFile = fopen(actualPath.c_str(), "rb");
+			if (certFile == NULL)
+			{
+				throw std::runtime_error(format_string("unable to open cert file %s\n", certPath.c_str()));
+			}
 
-        }
-        catch (std::exception &e)
-        {
-            Log::log(Logger::ERROR, "error: %s\n", e.what());
-            return;
-        }
-        catch (...)
-        {
-            Log::log(Logger::ERROR, "error: unexpected exception\n");
-            return;
-        }
-    }
-    uint32_t certTableLength = size_tracker;
-    // generate root key hash table from root key certificates
-    for (int i=0; i<MAX_ROOT_KEY_HASH_TABLE_SIZE; i++)
-    {
-        size_tracker += sizeof(sha256_digest_t);
-        memset(m_rkhTable.entries[i].rkh, 0, sizeof(sha256_digest_t));
-    }
-    {
-        string_vector_t::iterator it = m_rootKeyCertFilePaths.begin();
-        for (rootKeyCertIndex = 0; it != m_rootKeyCertFilePaths.end(); ++it, rootKeyCertIndex++)
-        {
-            if (rootKeyCertIndex >= MAX_ROOT_KEY_HASH_TABLE_SIZE)
-            {
-                // We are done;
-                break;
-            }
-            try {
-                std::string &certPath = *it;
+			// Get CRT file length.
+			fseek(certFile, 0, SEEK_END);
+			uint32_t certSize = ftell(certFile);
+			uint32_t alignedCertSize = ((certSize % 4) ? certSize + (4 - (certSize % 4)) : certSize);
+			fseek(certFile, 0, SEEK_SET);
+			m_certDataSize += sizeof(uint32_t) + alignedCertSize;
 
-                std::string actualPath;
-                bool found = PathSearcher::getGlobalSearcher().search(certPath, PathSearcher::kFindFile, true, actualPath);
-                if (!found)
-                {
-                    throw std::runtime_error(format_string("unable to find cert file %s\n", certPath.c_str()));
-                }
+			m_certTable.entries[i].x509CertificateLengthInBytes = alignedCertSize;
+			m_certTable.entries[i].x509Certificate = new uint8_t[alignedCertSize];
+			memset(m_certTable.entries[i].x509Certificate, 0, alignedCertSize);
+			fread(m_certTable.entries[i].x509Certificate, 1, certSize, certFile);
 
-                // Load and parse the certificate chain
-                int ret;
-                mbedtls_x509_crt cert_chain;
-                mbedtls_x509_crt_init(&cert_chain);
-                if ((ret = mbedtls_x509_crt_parse_file(&cert_chain, (const char *)certPath.c_str())) != 0)
-                {
-                    Log::log(Logger::ERROR, "error: certificate parse failed: %d\n", ret);
-                    return;
-                }
+			if (certFile != NULL)
+				fclose(certFile);
 
-                // Get the public key from the certificate.
-                mbedtls_rsa_context *rsa_pub_key_ctx = (mbedtls_rsa_context *)(cert_chain.pk.pk_ctx);
-                mbedtls_sha256_context rootKeySha256_ctx;
-                mbedtls_sha256_init(&rootKeySha256_ctx);
-                mbedtls_sha256_starts(&rootKeySha256_ctx, false /*isSHA224 = false*/);
-                uint8_t * modulus = new uint8_t[mbedtls_mpi_size(&rsa_pub_key_ctx->N)];
+		}
+		catch (std::exception &e)
+		{
+			Log::log(Logger::ERROR, "error: %s\n", e.what());
+			return true;
+		}
+		catch (...)
+		{
+			Log::log(Logger::ERROR, "error: unexpected exception\n");
+			return true;
+		}
+	}
+	uint32_t certTableLength = m_certDataSize;
+	// generate root key hash table from root key certificates
+	for (int i = 0; i<MAX_ROOT_KEY_HASH_TABLE_SIZE; i++)
+	{
+		m_certDataSize += sizeof(sha256_digest_t);
+		memset(m_rkhTable.entries[i].rkh, 0, sizeof(sha256_digest_t));
+	}
+	{
+		string_vector_t::iterator it = m_rootKeyCertFilePaths.begin();
+		for (rootKeyCertIndex = 0; it != m_rootKeyCertFilePaths.end(); ++it, rootKeyCertIndex++)
+		{
+			if (rootKeyCertIndex >= MAX_ROOT_KEY_HASH_TABLE_SIZE)
+			{
+				// We are done;
+				break;
+			}
+			try {
+				std::string &certPath = *it;
 
-                uint8_t * exponent = new uint8_t[mbedtls_mpi_size(&rsa_pub_key_ctx->E)];
+				std::string actualPath;
+				bool found = PathSearcher::getGlobalSearcher().search(certPath, PathSearcher::kFindFile, true, actualPath);
+				if (!found)
+				{
+					throw std::runtime_error(format_string("unable to find cert file %s\n", certPath.c_str()));
+				}
 
-                mbedtls_mpi_write_binary(&rsa_pub_key_ctx->N, modulus, mbedtls_mpi_size(&rsa_pub_key_ctx->N));
-                mbedtls_mpi_write_binary(&rsa_pub_key_ctx->E, exponent, mbedtls_mpi_size(&rsa_pub_key_ctx->E));
+				// Load and parse the certificate chain
+				int ret;
+				mbedtls_x509_crt cert_chain;
+				mbedtls_x509_crt_init(&cert_chain);
+				if ((ret = mbedtls_x509_crt_parse_file(&cert_chain, (const char *)certPath.c_str())) != 0)
+				{
+					Log::log(Logger::ERROR, "error: certificate parse failed: %d\n", ret);
+				}
 
-                // Generate hash for Modulus
-                mbedtls_sha256_update(&rootKeySha256_ctx, modulus, mbedtls_mpi_size(&rsa_pub_key_ctx->N));
-            
-                // Generate hash for Exponent
-                mbedtls_sha256_update(&rootKeySha256_ctx, exponent, mbedtls_mpi_size(&rsa_pub_key_ctx->E));
+				// Get the public key from the certificate.
+				mbedtls_rsa_context *rsa_pub_key_ctx = (mbedtls_rsa_context *)(cert_chain.pk.pk_ctx);
+				mbedtls_sha256_context rootKeySha256_ctx;
+				mbedtls_sha256_init(&rootKeySha256_ctx);
+				mbedtls_sha256_starts(&rootKeySha256_ctx, false /*isSHA224 = false*/);
+				uint8_t * modulus = new uint8_t[mbedtls_mpi_size(&rsa_pub_key_ctx->N)];
 
-                mbedtls_sha256_finish(&rootKeySha256_ctx, m_rkhTable.entries[rootKeyCertIndex].rkh);
-            }
-            catch (std::exception &e)
-            {
-                Log::log(Logger::ERROR, "error: %s\n", e.what());
-                return;
-            }
-            catch (...)
-            {
-                Log::log(Logger::ERROR, "error: unexpected exception\n");
-                return;
-            }
-        }
-    }
-    // update certificateTableLengthInBytes of certificate block header
-    m_certBlockHeader.certificateTableLengthInBytes = ENDIAN_HOST_TO_LITTLE_U32(certTableLength);
-    
-    size_tracker += sizeof(m_certBlockHeader);
+				uint8_t * exponent = new uint8_t[mbedtls_mpi_size(&rsa_pub_key_ctx->E)];
 
-    m_signDataSection->setDataNoCopy(NULL, size_tracker);
+				mbedtls_mpi_write_binary(&rsa_pub_key_ctx->N, modulus, mbedtls_mpi_size(&rsa_pub_key_ctx->N));
+				mbedtls_mpi_write_binary(&rsa_pub_key_ctx->E, exponent, mbedtls_mpi_size(&rsa_pub_key_ctx->E));
 
-    // add section to the section list
-    addSection(m_signDataSection);
+				// Generate hash for Modulus
+				mbedtls_sha256_update(&rootKeySha256_ctx, modulus, mbedtls_mpi_size(&rsa_pub_key_ctx->N));
 
-    // update the cert header with image size and overwrite the header in the section bytes
-    m_certBlockHeader.totalImageLengthInBytes = ENDIAN_HOST_TO_LITTLE_U32(getImageSize() * sizeof(cipher_block_t));
+				// Generate hash for Exponent
+				mbedtls_sha256_update(&rootKeySha256_ctx, exponent, mbedtls_mpi_size(&rsa_pub_key_ctx->E));
 
-    {
-        // prepare data for the section
-        uint8_t *data = new uint8_t[size_tracker];
-        memset(data, 0, size_tracker);
-        uint8_t *t=data;
-        memcpy(t, reinterpret_cast<uint8_t *>(&m_certBlockHeader), sizeof(certificate_block_header_t));
-        t += sizeof(m_certBlockHeader);
-        for(int i=0; i<m_certBlockHeader.certificateCount; i++)
-        {
-            memcpy(t, reinterpret_cast<uint8_t *>(&m_certTable.entries[i].x509CertificateLengthInBytes), sizeof(uint32_t));
-            t += sizeof(uint32_t);
-            memcpy(t, m_certTable.entries[i].x509Certificate, m_certTable.entries[i].x509CertificateLengthInBytes);
-            t += m_certTable.entries[i].x509CertificateLengthInBytes;
-        }
+				mbedtls_sha256_finish(&rootKeySha256_ctx, m_rkhTable.entries[rootKeyCertIndex].rkh);
+			}
+			catch (std::exception &e)
+			{
+				Log::log(Logger::ERROR, "error: %s\n", e.what());
+				return true;
+			}
+			catch (...)
+			{
+				Log::log(Logger::ERROR, "error: unexpected exception\n");
+				return true;
+			}
+		}
+	}
+	// update certificateTableLengthInBytes of certificate block header
+	m_certBlockHeader.certificateTableLengthInBytes = ENDIAN_HOST_TO_LITTLE_U32(certTableLength);
 
-        sha256_digest_t hashOfHashes;
-        mbedtls_sha256_context hashOfHashes_ctx;
-        mbedtls_sha256_init(&hashOfHashes_ctx);
-        mbedtls_sha256_starts(&hashOfHashes_ctx, false /*isSHA224 = false*/);
+	m_certDataSize += sizeof(m_certBlockHeader);
 
-        for (int i = 0; i<MAX_ROOT_KEY_HASH_TABLE_SIZE; i++)
-        {
-            memcpy(t, m_rkhTable.entries[i].rkh, sizeof(sha256_digest_t));
-            t += sizeof(sha256_digest_t);
-            // Generate hash of hash
-            mbedtls_sha256_update(&hashOfHashes_ctx, m_rkhTable.entries[i].rkh, sizeof(sha256_digest_t));
-        }
+	// update the cert header with image size and overwrite the header in the section bytes
+	m_certBlockHeader.totalImageLengthInBytes = ENDIAN_HOST_TO_LITTLE_U32(getSignatureOffset() * sizeof(cipher_block_t));
 
-        // Set data for the sign section
-        m_signDataSection->setData(data, size_tracker);
 
-        mbedtls_sha256_finish(&hashOfHashes_ctx, hashOfHashes);
+	// prepare data for the section
+	data = new uint8_t[m_certDataSize];
+	memset(data, 0, m_certDataSize);
+	uint8_t *t = data;
+	memcpy(t, reinterpret_cast<uint8_t *>(&m_certBlockHeader), sizeof(certificate_block_header_t));
+	t += sizeof(m_certBlockHeader);
+	for (int i = 0; i<m_certBlockHeader.certificateCount; i++)
+	{
+		memcpy(t, reinterpret_cast<uint8_t *>(&m_certTable.entries[i].x509CertificateLengthInBytes), sizeof(uint32_t));
+		t += sizeof(uint32_t);
+		memcpy(t, m_certTable.entries[i].x509Certificate, m_certTable.entries[i].x509CertificateLengthInBytes);
+		t += m_certTable.entries[i].x509CertificateLengthInBytes;
+	}
 
-        // Save hashOfHashes in the output m_hashFilePath
-        FILE * hashFile = NULL;
-        hashFile = fopen(m_hashFilePath, "wb");
-        if (hashFile == NULL)
-        {
-            throw std::runtime_error(format_string("unable to open otuput hash file %s\n", m_hashFilePath));
-        }            
-        if (fwrite(hashOfHashes, 1, sizeof(sha256_digest_t), hashFile) != sizeof(sha256_digest_t))
-        {
-            int err = ferror(hashFile);
-            throw std::runtime_error(
-                format_string("failed to write data to the file \"%s\" (%d)", m_hashFilePath, err));
-        }
+	sha256_digest_t hashOfHashes;
+	mbedtls_sha256_context hashOfHashes_ctx;
+	mbedtls_sha256_init(&hashOfHashes_ctx);
+	mbedtls_sha256_starts(&hashOfHashes_ctx, false /*isSHA224 = false*/);
 
-        fclose(hashFile);
+	for (int i = 0; i<MAX_ROOT_KEY_HASH_TABLE_SIZE; i++)
+	{
+		memcpy(t, m_rkhTable.entries[i].rkh, sizeof(sha256_digest_t));
+		t += sizeof(sha256_digest_t);
+		// Generate hash of hash
+		mbedtls_sha256_update(&hashOfHashes_ctx, m_rkhTable.entries[i].rkh, sizeof(sha256_digest_t));
+	}
 
-        delete [] data;
-    }
+	mbedtls_sha256_finish(&hashOfHashes_ctx, hashOfHashes);
+	// Print out RKTH value
+	Log::log(Logger::INFO, "\nRKTH: ");
+	for (size_t i = 0; i < sizeof(sha256_digest_t); i++)
+	{
+		Log::log(Logger::INFO, "%02x", hashOfHashes[i]);
+	}
+	Log::log(Logger::INFO, "\n");
+
+	// Save hashOfHashes in the output m_hashFilePath
+	FILE * hashFile = NULL;
+	hashFile = fopen(m_hashFilePath, "wb");
+	if (hashFile == NULL)
+	{
+		throw std::runtime_error(format_string("unable to open otuput hash file %s\n", m_hashFilePath));
+	}
+	if (fwrite(hashOfHashes, 1, sizeof(sha256_digest_t), hashFile) != sizeof(sha256_digest_t))
+	{
+		int err = ferror(hashFile);
+		throw std::runtime_error(
+			format_string("failed to write data to the file \"%s\" (%d)", m_hashFilePath, err));
+	}
+	fclose(hashFile);
+	return false;
 }
 
 void SB2Image::prepareImageHeader(sb2_header_t &header)
@@ -732,8 +811,8 @@ void SB2Image::prepareImageHeader(sb2_header_t &header)
     header.m_signature[1] = 'T';
     header.m_signature[2] = 'M';
     header.m_signature[3] = 'P';
-    header.m_majorVersion = ROM_BOOT_IMAGE_MAJOR_VERSION;
-    header.m_minorVersion = ROM_BOOT_IMAGE_MINOR_VERSION;
+    header.m_majorVersion = m_majorVersion;
+    header.m_minorVersion = m_minorVersion;
     header.m_flags = ENDIAN_HOST_TO_LITTLE_U16(m_headerFlags);
     
     header.m_imageBlocks = ENDIAN_HOST_TO_LITTLE_U32(getImageSize());
@@ -753,9 +832,17 @@ void SB2Image::prepareImageHeader(sb2_header_t &header)
     header.m_buildNumber = m_buildNumber;
     if(isSigned())
     {
-        header.m_offsetToCertificateBlockInBytes = ENDIAN_HOST_TO_LITTLE_U32(
-            (getSectionOffset(m_signDataSection) * sizeof(cipher_block_t)) + // offset to sign data section past the tag block
-            (sizeof(m_digestHmac)) * 2 );  // size of hmac table, only two entries for sign section
+		if (isVersion20()) {
+			header.m_offsetToCertificateBlockInBytes = ENDIAN_HOST_TO_LITTLE_U32(
+				(getSectionOffset(m_signDataSection) * sizeof(cipher_block_t)) + // offset to sign data section past the tag block
+				(sizeof(m_digestHmac)) * 2);  // size of hmac table, only two entries for sign section
+		}
+		else if (isVersion21()) {
+			header.m_offsetToCertificateBlockInBytes = (numberOfCipherBlocks(sizeof(sb2_header_t)) + 
+				numberOfCipherBlocks(sizeof(m_keyBlob)) + (numberOfCipherBlocks(sizeof(m_digestHmac)))) * sizeof(cipher_block_t);
+		}
+		else 
+			throw std::runtime_error(format_string("wrong SB2 format version  \"%d.%d\" (%d)", m_majorVersion, m_minorVersion));
     }
     else
     {
@@ -860,13 +947,18 @@ SB2Image::Section *SB2Image::findFirstBootableSection()
 //! sections have already been added to the image.
 uint32_t SB2Image::getSectionOffset(Section *section)
 {
-    // start with boot image headers
-    uint32_t offset = numberOfCipherBlocks(sizeof(sb2_header_t));       // header
-    if(isEncrypted())
-    {
-        offset += numberOfCipherBlocks(sizeof(m_digestHmac));
-        offset += numberOfCipherBlocks(sizeof(m_keyBlob));
-    }
+	// start with boot image headers
+	uint32_t offset = numberOfCipherBlocks(sizeof(sb2_header_t));       // header
+	if (isEncrypted())
+	{
+		offset += numberOfCipherBlocks(sizeof(m_digestHmac));
+		offset += numberOfCipherBlocks(sizeof(m_keyBlob));
+	}
+	if (isSigned() && isVersion21())	{
+		offset += numberOfCipherBlocks(m_certDataSize);
+		offset += numberOfCipherBlocks(m_signatureSize);
+	}
+
     // add up sections before this one
     section_iterator_t it = beginSection();
     for (; it != endSection() && *it != section; ++it)
@@ -921,17 +1013,37 @@ unsigned SB2Image::getPadBlockCountForSection(Section *section, unsigned offset)
     return paddingBlocks;
 }
 
+uint32_t SB2Image::getSignatureOffset() {
+	uint32_t imageBlocks = numberOfCipherBlocks(sizeof(sb2_header_t));
+	if (isEncrypted())
+		imageBlocks += numberOfCipherBlocks(sizeof(m_keyBlob));	
+		imageBlocks += numberOfCipherBlocks(sizeof(m_digestHmac));
+	if (isVersion20()) {
+		// add in each section's size
+		section_iterator_t it = beginSection();
+		for (; it != endSection(); ++it)
+		{
+			// add in this section's size, padding to align it, and its boot tag
+			imageBlocks += getPadBlockCountForSection(*it, imageBlocks);
+			imageBlocks += (*it)->getBlockCount();
+			imageBlocks++;
+			// add hmac entries
+			imageBlocks += (((*it)->getHmacEntries() + 1) * numberOfCipherBlocks(sizeof(m_digestHmac)));
+
+		}
+	}
+	else if (isVersion21()) 
+		imageBlocks += numberOfCipherBlocks(m_certDataSize);
+	else
+		throw std::runtime_error(format_string("wrong SB2 format version  \"%d.%d\" (%d)", m_majorVersion, m_minorVersion));
+
+	return imageBlocks;
+}
+
 uint32_t SB2Image::getImageSize()
 {
-
     // determine to total size of the image
-    const uint32_t headerBlocks = numberOfCipherBlocks(sizeof(sb2_header_t));
-    uint32_t imageBlocks = headerBlocks;
-    if (isEncrypted())
-    {
-        imageBlocks += numberOfCipherBlocks(sizeof(m_digestHmac));
-        imageBlocks += numberOfCipherBlocks(sizeof(m_keyBlob));
-    }  
+	uint32_t imageBlocks = getTotalImageHeaderSize();
     // add in each section's size
     section_iterator_t it = beginSection();
     for (; it != endSection(); ++it)
@@ -944,8 +1056,23 @@ uint32_t SB2Image::getImageSize()
         imageBlocks += (((*it)->getHmacEntries() + 1) * numberOfCipherBlocks(sizeof(m_digestHmac)));
 
     }
-
     return imageBlocks;
+}
+/*  Fucntion can be used once are m_certDataSize and m_signatureSize initialized
+	when the sb2.1 version is used.
+*/
+uint32_t SB2Image::getTotalImageHeaderSize() {
+	uint32_t imageBlocks = numberOfCipherBlocks(sizeof(sb2_header_t));
+	if (isEncrypted())
+	{
+		imageBlocks += numberOfCipherBlocks(sizeof(m_digestHmac));
+		imageBlocks += numberOfCipherBlocks(sizeof(m_keyBlob));
+	}
+	if (isSigned() && isVersion21()) {
+		imageBlocks += numberOfCipherBlocks(m_certDataSize);
+		imageBlocks += numberOfCipherBlocks(m_signatureSize);
+	}
+	return imageBlocks;
 }
 
 void SB2Image::debugPrint() const

@@ -32,7 +32,7 @@ typedef struct _pha_bc
     uint16_t ui16ChanNumPhaB;            /* phase B channel number */
     uint16_t ui16ChanNumPhaC;            /* phase C channel number */
     uint16_t ui16AdcSmplPhaB;            /* phase B ADC sample number */
-    uint16_t ui16AdcSmplPhaC;            /* phase C ADC sample number */        
+    uint16_t ui16AdcSmplPhaC;            /* phase C ADC sample number */
     uint16_t ui16CalibPhaB;              /* phase B offset calibration */
     uint16_t ui16CalibPhaC;              /* phase C offset calibration */
     uint16_t ui16OffsetPhaB;             /* phase B offset result */
@@ -48,7 +48,7 @@ typedef struct _pha_ac
     uint16_t ui16ChanNumPhaA;            /* phase A channel number */
     uint16_t ui16ChanNumPhaC;            /* phase C channel number */
     uint16_t ui16AdcSmplPhaA;            /* phase A ADC sample number */
-    uint16_t ui16AdcSmplPhaC;            /* phase C ADC sample number */        
+    uint16_t ui16AdcSmplPhaC;            /* phase C ADC sample number */
     uint16_t ui16CalibPhaA;              /* phase A offset calibration */
     uint16_t ui16CalibPhaC;              /* phase C offset calibration */
     uint16_t ui16OffsetPhaA;             /* phase A offset result */
@@ -64,7 +64,7 @@ typedef struct _pha_ab
     uint16_t ui16ChanNumPhaA;            /* phase A channel number */
     uint16_t ui16ChanNumPhaB;            /* phase B channel number */
     uint16_t ui16AdcSmplPhaA;            /* phase A ADC sample number */
-    uint16_t ui16AdcSmplPhaB;            /* phase B ADC sample number */        
+    uint16_t ui16AdcSmplPhaB;            /* phase B ADC sample number */
     uint16_t ui16CalibPhaA;              /* phase A offset calibration */
     uint16_t ui16CalibPhaB;              /* phase B offset calibration */
     uint16_t ui16OffsetPhaA;             /* phase A offset result */
@@ -75,22 +75,22 @@ typedef struct _pha_ab
 
 typedef struct _mcdrv_hsadc
 {
-    GMCLIB_3COOR_T_F16 *psIABC;     /* pointer to the 3-phase currents */
-    pha_bc_t sCurrSec16;            /* ADC setting for SVM sectors 1&6 */
-    pha_ac_t sCurrSec23;            /* ADC setting for SVM sectors 2&3 */
-    pha_ab_t sCurrSec45;            /* ADC setting for SVM sectors 4&5 */
+    GMCLIB_3COOR_T_F16 *psIABC; /* pointer to the 3-phase currents */
+    pha_bc_t sCurrSec16;        /* ADC setting for SVM sectors 1&6 */
+    pha_ac_t sCurrSec23;        /* ADC setting for SVM sectors 2&3 */
+    pha_ab_t sCurrSec45;        /* ADC setting for SVM sectors 4&5 */
 
-    HSADC_Type *pui32AdcBaseVDcb;   /* pointer to ADC where Udcb channel is assigned */
-    uint16_t ui16ChanNumVDcb;       /* DCB voltage channel number */
-    uint16_t ui16AdcSmplVDcb;       /* DCB voltage ADC sample number */
-    HSADC_Type *pui32AdcBaseAux;    /* pointer to ADC where auxiliary channel is assigned */
-    uint16_t ui16ChanNumAux;        /* Auxiliary channel number */
-    uint16_t ui16AdcSmplAux;        /* Auxiliary ADC sample number */
-    uint16_t *pui16SVMSector;       /* pointer to the SVM sector */
-    frac16_t *pui16AuxChan;         /* pointer to auxiliary ADC channel number */
-    frac16_t *pf16UDcBus;           /* pointer to DC Bus voltage variable */
-    
-    uint16_t ui16OffsetFiltWindow;  /* ADC Offset filter window */
+    HSADC_Type *pui32AdcBaseVDcb; /* pointer to ADC where Udcb channel is assigned */
+    uint16_t ui16ChanNumVDcb;     /* DCB voltage channel number */
+    uint16_t ui16AdcSmplVDcb;     /* DCB voltage ADC sample number */
+    HSADC_Type *pui32AdcBaseAux;  /* pointer to ADC where auxiliary channel is assigned */
+    uint16_t ui16ChanNumAux;      /* Auxiliary channel number */
+    uint16_t ui16AdcSmplAux;      /* Auxiliary ADC sample number */
+    uint16_t *pui16SVMSector;     /* pointer to the SVM sector */
+    frac16_t *pui16AuxChan;       /* pointer to auxiliary ADC channel number */
+    frac16_t *pf16UDcBus;         /* pointer to DC Bus voltage variable */
+
+    uint16_t ui16OffsetFiltWindow; /* ADC Offset filter window */
 } mcdrv_hsadc_t;
 
 /*******************************************************************************
@@ -178,4 +178,3 @@ bool_t MCDRV_AuxValGet(mcdrv_hsadc_t *this);
 #endif
 
 #endif /* _MCDRV_ADC_HSADC_H_ */
-

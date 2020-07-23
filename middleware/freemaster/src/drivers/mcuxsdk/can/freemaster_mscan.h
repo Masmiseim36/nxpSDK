@@ -52,7 +52,7 @@
 * Global API functions
 ******************************************************************************/
       
-void FMSTR_CanSetBaseAddress(CAN_Type *base);
+void FMSTR_CanSetBaseAddress(MSCAN_Type *base);
 void FMSTR_CanIsr(void);
 
 #ifdef __cplusplus

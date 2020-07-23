@@ -14,11 +14,11 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v6.0
+product: Pins v7.0
 processor: MKV46F256xxx16
 package_id: MKV46F256VLL16
 mcu_data: ksdk2_0
-processor_version: 6.0.1
+processor_version: 0.7.8
 board: TWR-KV46F150M
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
@@ -47,6 +47,8 @@ BOARD_InitPins:
 - options: {callFromInitBoot: 'true', prefix: BOARD_, coreID: core0, enableClock: 'true'}
 - pin_list:
   - {pin_num: '93', peripheral: GPIOD, signal: 'GPIO, 0', pin_signal: PTD0/LLWU_P12/SPI0_PCS0/FTM3_CH0/FTM0_CH0/FlexPWM_A0, direction: OUTPUT}
+  - {pin_num: '36', peripheral: JTAG, signal: TRACE_SWO, pin_signal: PTA2/UART0_TX/FTM0_CH7/CMP1_OUT/FTM1_CH0/JTAG_TDO/TRACE_SWO, identifier: '', pull_select: down,
+    pull_enable: disable}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
@@ -59,6 +61,8 @@ BOARD_InitPins:
  * END ****************************************************************************************************************/
 void BOARD_InitPins(void)
 {
+    /* Port A Clock Gate Control: Clock enabled */
+    CLOCK_EnableClock(kCLOCK_PortA);
     /* Port D Clock Gate Control: Clock enabled */
     CLOCK_EnableClock(kCLOCK_PortD);
 
@@ -68,6 +72,20 @@ void BOARD_InitPins(void)
     };
     /* Initialize GPIO functionality on pin PTD0 (pin 93)  */
     GPIO_PinInit(BOARD_LED_GREEEN1_GPIO, BOARD_LED_GREEEN1_PIN, &LED_GREEEN1_config);
+
+    /* PORTA2 (pin 36) is configured as TRACE_SWO */
+    PORT_SetPinMux(PORTA, 2U, kPORT_MuxAlt7);
+
+    PORTA->PCR[2] = ((PORTA->PCR[2] &
+                      /* Mask bits to zero which are setting */
+                      (~(PORT_PCR_PS_MASK | PORT_PCR_PE_MASK | PORT_PCR_ISF_MASK)))
+
+                     /* Pull Select: Internal pulldown resistor is enabled on the corresponding pin, if the
+                      * corresponding PE field is set. */
+                     | PORT_PCR_PS(kPORT_PullDown)
+
+                     /* Pull Enable: Internal pullup or pulldown resistor is not enabled on the corresponding pin. */
+                     | PORT_PCR_PE(kPORT_PullDisable));
 
     /* PORTD0 (pin 93) is configured as PTD0 */
     PORT_SetPinMux(BOARD_LED_GREEEN1_PORT, BOARD_LED_GREEEN1_PIN, kPORT_MuxAsGpio);

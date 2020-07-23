@@ -1,12 +1,12 @@
 /**
  * @file
- * User Datagram Protocol module\n
- * The code for the User Datagram Protocol UDP & UDPLite (RFC 3828).\n
+ * User Datagram Protocol module<br>
+ * The code for the User Datagram Protocol UDP & UDPLite (RFC 3828).<br>
  * See also @ref udp_raw
  *
  * @defgroup udp_raw UDP
  * @ingroup callbackstyle_api
- * User Datagram Protocol module\n
+ * User Datagram Protocol module<br>
  * @see @ref api
  */
 
@@ -911,7 +911,7 @@ udp_sendto_if_src_chksum(struct udp_pcb *pcb, struct pbuf *p, const ip_addr_t *d
 /**
  * @ingroup udp_raw
  * Bind an UDP PCB.
- * 
+ *
  * @param pcb UDP PCB to be bound with a local address ipaddr and port.
  * @param ipaddr local IP address to bind with. Use IP_ANY_TYPE to
  * bind to all local interfaces.
@@ -1172,8 +1172,8 @@ udp_recv(struct udp_pcb *pcb, udp_recv_fn recv, void *recv_arg)
 
 /**
  * @ingroup udp_raw
- * Removes and deallocates the pcb.  
- * 
+ * Removes and deallocates the pcb.
+ *
  * @param pcb UDP PCB to be removed. The PCB is removed from the list of
  * UDP PCB's and the data structure is freed from memory.
  *

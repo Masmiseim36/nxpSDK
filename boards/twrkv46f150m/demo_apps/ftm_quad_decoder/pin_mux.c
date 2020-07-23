@@ -14,11 +14,11 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v6.0
+product: Pins v7.0
 processor: MKV46F256xxx16
 package_id: MKV46F256VLL16
 mcu_data: ksdk2_0
-processor_version: 6.0.1
+processor_version: 0.7.8
 board: TWR-KV46F150M
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
@@ -49,6 +49,8 @@ BOARD_InitPins:
   - {pin_num: '2', peripheral: UART1, signal: RX, pin_signal: ADCB_CH7f/PTE1/LLWU_P0/UART1_RX/XBAROUT11/XBARIN7}
   - {pin_num: '42', peripheral: FTM1, signal: 'QD_PH, A', pin_signal: CMP2_IN0/PTA12/CAN0_TX/FTM1_CH0/FTM1_QD_PHA}
   - {pin_num: '43', peripheral: FTM1, signal: 'QD_PH, B', pin_signal: CMP2_IN1/PTA13/LLWU_P4/CAN0_RX/FTM1_CH1/FTM1_QD_PHB}
+  - {pin_num: '36', peripheral: JTAG, signal: TRACE_SWO, pin_signal: PTA2/UART0_TX/FTM0_CH7/CMP1_OUT/FTM1_CH0/JTAG_TDO/TRACE_SWO, identifier: '', pull_select: down,
+    pull_enable: disable}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
@@ -71,6 +73,20 @@ void BOARD_InitPins(void)
 
     /* PORTA13 (pin 43) is configured as FTM1_QD_PHB */
     PORT_SetPinMux(PORTA, 13U, kPORT_MuxAlt7);
+
+    /* PORTA2 (pin 36) is configured as TRACE_SWO */
+    PORT_SetPinMux(PORTA, 2U, kPORT_MuxAlt7);
+
+    PORTA->PCR[2] = ((PORTA->PCR[2] &
+                      /* Mask bits to zero which are setting */
+                      (~(PORT_PCR_PS_MASK | PORT_PCR_PE_MASK | PORT_PCR_ISF_MASK)))
+
+                     /* Pull Select: Internal pulldown resistor is enabled on the corresponding pin, if the
+                      * corresponding PE field is set. */
+                     | PORT_PCR_PS(kPORT_PullDown)
+
+                     /* Pull Enable: Internal pullup or pulldown resistor is not enabled on the corresponding pin. */
+                     | PORT_PCR_PE(kPORT_PullDisable));
 
     /* PORTE0 (pin 1) is configured as UART1_TX */
     PORT_SetPinMux(BOARD_DEBUG_UART_TX_PORT, BOARD_DEBUG_UART_TX_PIN, kPORT_MuxAlt3);

@@ -6,15 +6,24 @@
  */
 
 #include <string.h>
+
 #include "bootloader_common.h"
+#include "flashloader_image.h"
 #include "fsl_device_registers.h"
 #include "vector_table_info.h"
-#include "flashloader_image.h"
 
+#if defined(__MCUXPRESSO)
 #if DEBUG
 #include "Debug/flashloader_image.c"
 #else
 #include "Release/flashloader_image.c"
+#endif
+#else
+#if DEBUG
+#include "debug/flashloader_image.c"
+#else
+#include "release/flashloader_image.c"
+#endif
 #endif
 
 ////////////////////////////////////////////////////////////////////////////////

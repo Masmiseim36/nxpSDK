@@ -2,7 +2,8 @@
 @page middleware_log Middleware Change Log
 
 @section fmstr FreeMASTER Communication Driver
-  Current version is 3.0.1
+  Current version is 3.0.2. Visit https://www.nxp.com/freemaster for more information.
+  Reach out for a support at https://community.nxp.com/community/freemaster.
   
   - 3.0.0
     - Initial version of FreeMASTER driver reworked from a standalone package to MCUXpresso SDK middleware.
@@ -11,12 +12,14 @@
     - Initial version was tested with the following boards: evkmimxrt1060, frdmk64f, frdmke15z, 
       frdmkl28z, lpcxpresso54628 lpcxpresso55s69, lpcxpresso845max and twrk64f120m.
     - Use with FreeMASTER PC Host tool version 2.5 or later.
-    - Visit www.nxp.com/freemaster for more information.
 
   - 3.0.1
-    - FreeMASTER driver was extended to support wide range of Kinetis, LPC and i.MX-RT platforms.
+    - FreeMASTER driver extended to support wide range of Kinetis, LPC and i.MX-RT platforms.
     - Low-level communication drivers also available for few non-SDK NXP platforms like S12Z, S32x and more.
-    - Ready to be used with FreeMASTER PC Host tool version 3.0 with support of multiple Oscilloscope and
-      Recorder graphs.
-    - Visit www.nxp.com/freemaster for more information.
+    - Use with FreeMASTER PC Host tool version 3.0 or later.
+
+  - 3.0.2
+    - FreeMASTER driver support of DSC56F800EX and S12 platforms extended.
+    - Removed dependency on C99 compiler features.
+    - Use with FreeMASTER PC Host tool version 3.0.2 or later.
 */

@@ -167,7 +167,7 @@ void FMSTR_Poll(void)
 *
 ******************************************************************************/
 
-void FMSTR_SendResponse(FMSTR_BPTR response, FMSTR_SIZE8 length, FMSTR_U8 statusCode)
+void FMSTR_SendResponse(FMSTR_BPTR response, FMSTR_SIZE length, FMSTR_U8 statusCode)
 {
     FMSTR_TRANSPORT.SendResponse(response, length, statusCode);
 }
@@ -370,17 +370,17 @@ FMSTR_BPTR _FMSTR_GetBoardConfig(FMSTR_BPTR msgBuffIO, FMSTR_U8 *retStatus)
 
     FMSTR_BPTR response = msgBuffIO;
     FMSTR_U8 respCode = FMSTR_STS_INVALID;
-    FMSTR_U8 *str;
-    FMSTR_SIZE ix = 0;
+    FMSTR_CHAR str[4];
+    FMSTR_INDEX ix = 0;
 
     /* Get the IX from incomming buffer */
-    msgBuffIO = FMSTR_SizeFromBuffer(&ix, msgBuffIO);
+    msgBuffIO = FMSTR_IndexFromBuffer(&ix, msgBuffIO);
 
     if(ix == 0)
     {
         FMSTR_INDEX i;
         /* Get the configuration name from incomming buffer */
-        msgBuffIO = FMSTR_StringFromBuffer(msgBuffIO, &str);
+        msgBuffIO = FMSTR_StringFromBuffer(msgBuffIO, str, sizeof(str));
 
         /* Try to find the Index of the config item */
         for(i=0; i<FMSTR_COUNTOF(fmstr_cfgParamNames); i++)
@@ -476,9 +476,11 @@ FMSTR_CHAR* _FMSTR_GetAccessPassword(FMSTR_U8 requiredAccess)
         /* fall to default, no password required */
 
     default:
-        /* no password for the requested level and any lower level */
-        return NULL;
+        break;
     }
+
+    /* no password for the requested level and any lower level */
+    return NULL;
 }
 
 /**************************************************************************//*!
@@ -559,7 +561,7 @@ FMSTR_BPTR _FMSTR_AuthenticationStep2(FMSTR_BPTR msgBuffIO, FMSTR_U8 *retStatus)
 
 #if FMSTR_USE_HASHED_PASSWORDS
         /* Password is already hashed */
-        FMSTR_MemCpyFrom(fmstr_localKey, pass, sizeof(fmstr_localKey));
+        FMSTR_MemCpyFrom(fmstr_localKey, (FMSTR_ADDR)pass, sizeof(fmstr_localKey));
 #else
         /* Password was provided as a string, compute SHA1 hash now */
         FMSTR_MemSet(fmstr_localKey, 0, sizeof(fmstr_localKey));

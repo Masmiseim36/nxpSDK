@@ -7,24 +7,25 @@
  */
 
 #include "fsl_device_registers.h"
-#include "utilities/fsl_rtos_abstraction.h"
-#include "utilities/vector_table_info.h"
-#if !(defined(BL_FEATURE_HAS_NO_INTERNAL_FLASH) && BL_FEATURE_HAS_NO_INTERNAL_FLASH)
-#if !(defined(BL_DEVICE_IS_LPC_SERIES) && BL_DEVICE_IS_LPC_SERIES)
+#include "fsl_rtos_abstraction.h"
+#include "vector_table_info.h"
+#if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
+#if !BL_DEVICE_IS_LPC_SERIES
 #include "fsl_flash.h"
 #else
-#include "flashiap_wrapper/fsl_flashiap_wrapper.h"
+#include "fsl_iap.h"
 #endif
 #endif // #if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
 #include "microseconds.h"
 #include "bootloader_common.h"
 
-#include "bootloader/bl_shutdown_cleanup.h"
-#include "bootloader/bl_context.h"
+#include "bl_shutdown_cleanup.h"
+#include "bl_context.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
 ////////////////////////////////////////////////////////////////////////////////
+extern void init_interrupts(void);
 
 ////////////////////////////////////////////////////////////////////////////////
 // Code
@@ -36,11 +37,11 @@ void shutdown_cleanup(shutdown_type_t shutdown)
     if (shutdown != kShutdownType_Reset)
     {
         // Clear (flush) the flash cache.
-#if !(defined(BL_FEATURE_HAS_NO_INTERNAL_FLASH) && BL_FEATURE_HAS_NO_INTERNAL_FLASH)
-#if !(defined(BL_DEVICE_IS_LPC_SERIES) && BL_DEVICE_IS_LPC_SERIES)
+#if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
+#if !BL_DEVICE_IS_LPC_SERIES
         //flash_cache_clear(NULL);
-    (void)FTFx_CACHE_ClearCachePrefetchSpeculation(g_bootloaderContext.allFlashCacheState, true);
-    (void)FTFx_CACHE_ClearCachePrefetchSpeculation(g_bootloaderContext.allFlashCacheState, false);
+    FTFx_CACHE_ClearCachePrefetchSpeculation(g_bootloaderContext.allFlashCacheState, true);
+    FTFx_CACHE_ClearCachePrefetchSpeculation(g_bootloaderContext.allFlashCacheState, false);
 #endif // !BL_DEVICE_IS_LPC_SERIES
 #endif // #if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
     }
@@ -49,9 +50,9 @@ void shutdown_cleanup(shutdown_type_t shutdown)
     {
         // Shutdown all peripherals because they could be active
         uint32_t i;
-        for (i = 0u; g_peripherals[i].typeMask != 0u; i++)
+        for (i = 0; g_peripherals[i].typeMask != 0; i++)
         {
-            if (g_peripherals[i].controlInterface->shutdown != (void *)0u)
+            if (g_peripherals[i].controlInterface->shutdown)
             {
                 g_peripherals[i].controlInterface->shutdown(&g_peripherals[i]);
             }
@@ -92,7 +93,7 @@ void shutdown_cleanup(shutdown_type_t shutdown)
         init_interrupts();
 
         // Set the VTOR to default.
-        SCB->VTOR = (uint32_t)kDefaultVectorTableAddress;
+        SCB->VTOR = kDefaultVectorTableAddress;
 
         // Restore clock to default before leaving bootloader.
         configure_clocks(kClockOption_ExitBootloader);
@@ -103,7 +104,7 @@ void shutdown_cleanup(shutdown_type_t shutdown)
         // Restore global interrupt.
         __enable_irq();
 
-#if defined(BL_FEATURE_BYPASS_WATCHDOG) && BL_FEATURE_BYPASS_WATCHDOG
+#if BL_FEATURE_BYPASS_WATCHDOG
         // De-initialize watchdog
         bootloader_watchdog_deinit();
 #endif // BL_FEATURE_BYPASS_WATCHDOG

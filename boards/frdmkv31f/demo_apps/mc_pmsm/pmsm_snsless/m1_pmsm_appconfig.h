@@ -1,13 +1,7 @@
-/*
- * Copyright 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
- *
- * SPDX-License-Identifier: BSD-3-Clause
- */
 /**********************************************************************/
-// File Name: {FM_project_loc}/pmsm_appconfig.h 
+// File Name: {FM_project_loc}/../../../boards/frdmkv31f/demo_apps/mc_pmsm/pmsm_snsless/m1_pmsm_appconfig.h 
 //
-// Date:  April 25, 2019, 16:35:46
+// Date:  May 26, 2020, 15:30:21
 //
 // Automatically generated file for static configuration of the PMSM FOC application
 /**********************************************************************/
@@ -38,11 +32,12 @@
 #define M1_FREQ_MAX                        (147.0F)
 #define M1_U_DCB_TRIP                      (32.0F)
 #define M1_U_DCB_UNDERVOLTAGE              (16.0F)
-#define M1_U_DCB_OVERVOLTAGE               (30.0F)
+#define M1_U_DCB_OVERVOLTAGE               (29.0F)
 #define M1_N_OVERSPEED                     (921.3F)
 #define M1_N_MIN                           (62.8F)
 #define M1_N_NOM                           (837.8F)
 #define M1_I_PH_NOM                        (2.0F)
+#define M1_SCALAR_UQ_MIN                   (1.0F)
 //DCB Voltage Filter                    
 #define M1_UDCB_IIR_B0                     (0.030459027951F)
 #define M1_UDCB_IIR_B1                     (0.030459027951F)
@@ -124,8 +119,8 @@
 //----------------------------------------------------------------------
 #define M1_SCALAR_VHZ_FACTOR_GAIN          (0.11249999999999999F)
 #define M1_SCALAR_INTEG_GAIN               ACC32(0.029333333333)
-#define M1_SCALAR_RAMP_UP                  (2.094395102393F)
-#define M1_SCALAR_RAMP_DOWN                (2.094395102393F)
+#define M1_SCALAR_RAMP_UP                  (0.033333333333F)
+#define M1_SCALAR_RAMP_DOWN                (0.033333333333F)
 
 #endif
 

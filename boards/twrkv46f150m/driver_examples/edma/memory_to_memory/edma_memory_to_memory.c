@@ -16,7 +16,7 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_DMA DMA0
+#define EXAMPLE_DMA    DMA0
 #define EXAMPLE_DMAMUX DMAMUX0
 
 #define BUFF_LENGTH 4U

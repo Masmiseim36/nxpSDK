@@ -33,31 +33,31 @@
 #define PWM_FREQ_HZ 16000
 
 /*! @brief Low pass filter */
-#define DIFF_TS 400
+#define DIFF_TS   400
 #define BUFF_SIZE 20 /* filter buf size */
 
 /*! @brief S/W timer */
 #define SWTMR_TOUT ((400 * PWM_FREQ_HZ) / 1000) /*!< 400 ms period */
-#define _100MS ((100 * PWM_FREQ_HZ) / 1000)     /*!< 100 ms period */
+#define _100MS     ((100 * PWM_FREQ_HZ) / 1000) /*!< 100 ms period */
 
 /*! @briefRT thresholds */
-#define TH_TRY 10
-#define RT1ONTH -5
+#define TH_TRY   10
+#define RT1ONTH  -5
 #define RT1OFFTH 3
-#define RT2ONTH -3
+#define RT2ONTH  -3
 #define RT2OFFTH 2
-#define RT3ONTH -TH_TRY
+#define RT3ONTH  -TH_TRY
 #define RT3OFFTH TH_TRY - 3
-#define RT4ONTH -5
+#define RT4ONTH  -5
 #define RT4OFFTH 2
 
 /*! @brief FIR algorithm related */
-#define Q15 32768
+#define Q15       32768
 #define FRAC16(a) (a * Q15)
 
 #define TEST_LENGTH_SAMPLES 1
-#define BLOCK_SIZE 1
-#define NUM_TAPS 32
+#define BLOCK_SIZE          1
+#define NUM_TAPS            32
 
 /*! @brief MAX no of ADC samples */
 #define MAX_NO_SAMPLES 16
@@ -246,7 +246,7 @@ static void DEMO_CADC_Init(void)
     CADC_EnableConverterPower(DEMO_CADC_BASEADDR, kCADC_ConverterA | kCADC_ConverterB, true);
 
     /* Configure sample */
-    cadcSampleConfigStruct.zeroCrossingMode       = kCADC_ZeroCorssingDisabled;
+    cadcSampleConfigStruct.zeroCrossingMode       = kCADC_ZeroCrossingDisabled;
     cadcSampleConfigStruct.lowLimitValue          = 0U;
     cadcSampleConfigStruct.highLimitValue         = 0xFFF8U;
     cadcSampleConfigStruct.offsetValue            = 0U;
@@ -302,11 +302,7 @@ void ADCA_IRQHandler(void)
         }
     }
     CADC_DoSoftwareTriggerConverter(DEMO_CADC_BASEADDR, kCADC_ConverterA);
-    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-      exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 /*!

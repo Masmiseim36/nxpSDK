@@ -43,4 +43,5 @@ STARTUP_CMT_COUNT=2
 STARTUP_CMT_PER=0.035
 T_OFF_CMT=22
 INTEG_TRH_CORR=100
-ProjectPath=
+ProjectPath1=../../../boards/twrkv58f220m/demo_apps/mc_bldc/
+ProjectPath2=../../board/

@@ -45,11 +45,7 @@ void BOARD_ADC16_IRQ_HANDLER_FUNC(void)
     g_Adc16ConversionDoneFlag = true;
     /* Read conversion result to clear the conversion completed flag. */
     g_Adc16ConversionValue = ADC16_GetChannelConversionValue(BOARD_ADC16_PERIPHERAL, DEMO_ADC16_CHANNEL_GROUP);
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 /*!

@@ -1,37 +1,36 @@
 /*
  * Copyright (c) 2015 Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "bootloader/bl_context.h"
+#include "bl_reliable_update.h"
+#include "bl_app_crc_check.h"
+#include "bl_context.h"
+#include "bootloader.h"
 #include "bootloader_common.h"
-#include "bootloader/bl_reliable_update.h"
-#include "bootloader/bl_app_crc_check.h"
-#include "property/property.h"
-#include "bootloader/bootloader.h"
-#if !(defined(BL_FEATURE_HAS_NO_INTERNAL_FLASH) && BL_FEATURE_HAS_NO_INTERNAL_FLASH)
-#if !(defined(BL_DEVICE_IS_LPC_SERIES) && BL_DEVICE_IS_LPC_SERIES)
+#include "property.h"
+#if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
+#if !BL_DEVICE_IS_LPC_SERIES
 #include "fsl_flash.h"
 #else
 #include "fsl_flashiap_wrapper.h"
 #endif
 #endif
-#include "memory/memory.h"
-#include "crc/crc32.h"
-#include "utilities/fsl_assert.h"
+#include "crc32.h"
+#include "memory.h"
+#include "fsl_assert.h"
 
-#if defined(BL_FEATURE_RELIABLE_UPDATE) && BL_FEATURE_RELIABLE_UPDATE
+#if BL_FEATURE_RELIABLE_UPDATE
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
 ////////////////////////////////////////////////////////////////////////////////
 
-#if defined(BL_BACKUP_APP_START) && \
-    ((BL_BACKUP_APP_START & (FSL_FEATURE_FLASH_PFLASH_BLOCK_SECTOR_SIZE - 1) != 0))
+#if (BL_BACKUP_APP_START & (FSL_FEATURE_FLASH_PFLASH_BLOCK_SECTOR_SIZE - 1))
 #error "The backup application start address must be sector-aligned!"
 #endif
 
@@ -63,9 +62,9 @@ static uint32_t get_bootloader_config_area_base(uint32_t applicationBase);
 //! @brief Get the maxmimum backup application size.
 static uint32_t get_max_backup_app_size(uint32_t address);
 
-#if defined(BL_IS_HARDWARE_SWAP_ENABLED) && BL_IS_HARDWARE_SWAP_ENABLED
+#if BL_IS_HARDWARE_SWAP_ENABLED
 
-#if defined(BL_TARGET_FLASH) && BL_TARGET_FLASH
+#if BL_TARGET_FLASH
 //! @brief Determine if the backup bootloader is valid
 static bool is_backup_bootloader_valid(void);
 #endif
@@ -93,14 +92,14 @@ void bootloader_reliable_update_as_requested(reliable_update_option_t option, ui
     // For software implementation, the option doesn't take effect, It always be kReliableUpdateOption_Swap.
     // For hardware implementation, the option works properly
     uint32_t backupApplicationBase;
-#if defined(BL_IS_HARDWARE_SWAP_ENABLED) && BL_IS_HARDWARE_SWAP_ENABLED
+#if BL_IS_HARDWARE_SWAP_ENABLED
     uint32_t swapIndicatorAddress = address;
     if (option == kReliableUpdateOption_Normal)
     {
         uint32_t mainApplicationBase = get_application_base(kSpecifiedApplicationType_Main);
         if (is_specified_application_valid(mainApplicationBase))
         {
-            update_reliable_update_status((uint32_t)kStatus_ReliableUpdateStillInMainApplication);
+            update_reliable_update_status(kStatus_ReliableUpdateStillInMainApplication);
             return;
         }
         else
@@ -108,31 +107,31 @@ void bootloader_reliable_update_as_requested(reliable_update_option_t option, ui
             // Checking the flash swap status to see if it is in Ready state
             //  if true, get the swap indicator address from IFR by ReadResource API
             status_t result = get_swap_indicator_address_if_system_is_in_ready(&swapIndicatorAddress);
-            if (result != (int32_t)kStatus_FLASH_Success)
+            if (result != kStatus_FLASH_Success)
             {
-                update_reliable_update_status((uint32_t)kStatus_ReliableUpdateSwapSystemNotReady);
+                update_reliable_update_status(kStatus_ReliableUpdateSwapSystemNotReady);
                 return;
             }
         }
     }
     backupApplicationBase = get_application_base(kSpecifiedApplicationType_Backup);
 #else
-    backupApplicationBase = (address == 0u) ? get_application_base(kSpecifiedApplicationType_Backup) : address;
+    backupApplicationBase = (address == 0) ? get_application_base(kSpecifiedApplicationType_Backup) : address;
 #endif // BL_IS_HARDWARE_SWAP_ENABLED
 
     // Below implementaion is for both kReliableUpdateOption_Normal and kReliableUpdateOption_Swap
     if (!is_reliable_update_active(backupApplicationBase))
     {
-        update_reliable_update_status((uint32_t)kStatus_ReliableUpdateInactive);
+        update_reliable_update_status(kStatus_ReliableUpdateInactive);
     }
     else
     {
         if (is_specified_application_valid(backupApplicationBase))
         {
-#if defined(BL_IS_HARDWARE_SWAP_ENABLED) && BL_IS_HARDWARE_SWAP_ENABLED
+#if BL_IS_HARDWARE_SWAP_ENABLED
             status_t status = hardware_reliable_update(swapIndicatorAddress);
             // A system reset is needed here, or we can't guarantee the integrity of swap process.
-            if ((option == kReliableUpdateOption_Normal) && (status == (int32_t)kStatus_ReliableUpdateSuccess))
+            if ((option == kReliableUpdateOption_Normal) && (status == kStatus_ReliableUpdateSuccess))
             {
                 // Prepare for shutdown.
                 shutdown_cleanup(kShutdownType_Reset);
@@ -144,11 +143,11 @@ void bootloader_reliable_update_as_requested(reliable_update_option_t option, ui
 #else
             status_t status = software_reliable_update(backupApplicationBase);
 #endif // BL_IS_HARDWARE_SWAP_ENABLED
-            update_reliable_update_status((uint32_t)status);
+            update_reliable_update_status(status);
         }
         else
         {
-            update_reliable_update_status((uint32_t)kStatus_ReliableUpdateBackupApplicationInvalid);
+            update_reliable_update_status(kStatus_ReliableUpdateBackupApplicationInvalid);
         }
     }
 }
@@ -156,19 +155,18 @@ void bootloader_reliable_update_as_requested(reliable_update_option_t option, ui
 //! @brief Get the maxmimum backup application size.
 static uint32_t get_max_backup_app_size(uint32_t address)
 {
-#if defined(BL_TARGET_ROM) && BL_TARGET_ROM
-    return (g_bootloaderContext.allFlashState->ftfxConfig[kFlashIndex_Main].flashDesc.totalSize >> 1);
-#elif defined(BL_TARGET_FLASH) && BL_TARGET_FLASH
-#if defined(BL_IS_HARDWARE_SWAP_ENABLED) && BL_IS_HARDWARE_SWAP_ENABLED
-    return (g_bootloaderContext.allFlashState->ftfxConfig[kFlashIndex_Main].flashDesc.blockBase + (g_bootloaderContext.allFlashState->ftfxConfig[kFlashIndex_Main].flashDesc.totalSize >> 1) -
+#if BL_TARGET_FLASH
+#if BL_IS_HARDWARE_SWAP_ENABLED
+    return (g_bootloaderContext.allFlashState->ftfxConfig[kFlashIndex_Main].flashDesc.blockBase +
+            (g_bootloaderContext.allFlashState->ftfxConfig[kFlashIndex_Main].flashDesc.totalSize >> 1) -
             BL_APP_VECTOR_TABLE_ADDRESS);
 #else
-    uint32_t maxAppSize;
-    uint32_t maxBackupAppSize;
+    int32_t maxAppSize;
+    int32_t maxBackupAppSize;
 
-    maxAppSize = (address - get_application_base(kSpecifiedApplicationType_Main));
+    maxAppSize = address - get_application_base(kSpecifiedApplicationType_Main);
     maxBackupAppSize =
-        (g_bootloaderContext.allFlashState->ftfxConfig[kFlashIndex_Main].flashDesc.blockBase + g_bootloaderContext.allFlashState->ftfxConfig[kFlashIndex_Main].flashDesc.totalSize - address);
+        g_bootloaderContext.allFlashState->ftfxConfig[kFlashIndex_Main].flashDesc.blockBase + g_bootloaderContext.allFlashState->ftfxConfig[kFlashIndex_Main].flashDesc.totalSize - address;
 
     maxAppSize = ALIGN_DOWN(maxAppSize, g_bootloaderContext.allFlashState->ftfxConfig[kFlashIndex_Main].flashDesc.sectorSize);
     maxBackupAppSize = ALIGN_UP(maxBackupAppSize, g_bootloaderContext.allFlashState->ftfxConfig[kFlashIndex_Main].flashDesc.sectorSize);
@@ -185,44 +183,36 @@ static uint32_t get_max_backup_app_size(uint32_t address)
 //! @brief Get the start address of specified application
 static uint32_t get_application_base(specified_application_type_t applicationType)
 {
-    uint32_t retValue = 0u;
     if (applicationType == kSpecifiedApplicationType_Main)
     {
-#if defined(BL_TARGET_ROM) && BL_TARGET_ROM
-        retValue = g_bootloaderContext.allFlashState->ftfxConfig[kFlashIndex_Main].flashDesc.blockBase;
-#elif defined(BL_TARGET_FLASH) && BL_TARGET_FLASH
-        retValue = (uint32_t)BL_APP_VECTOR_TABLE_ADDRESS;
+#if BL_TARGET_FLASH
+        return BL_APP_VECTOR_TABLE_ADDRESS;
 #else
 #error "This Bootloader type is NOT supported!"
 #endif
     }
     else if (applicationType == kSpecifiedApplicationType_Backup)
     {
-#if defined(BL_TARGET_ROM) && BL_TARGET_ROM
-        retValue = g_bootloaderContext.allFlashState->ftfxConfig[kFlashIndex_Main].flashDesc.blockBase + (g_bootloaderContext.allFlashState->ftfxConfig[kFlashIndex_Main].flashDesc.totalSize >> 1);
-#elif defined(BL_TARGET_FLASH) && BL_TARGET_FLASH
-#if defined(BL_IS_HARDWARE_SWAP_ENABLED) && BL_IS_HARDWARE_SWAP_ENABLED
-        retValue = g_bootloaderContext.allFlashState->ftfxConfig[kFlashIndex_Main].flashDesc.blockBase + (g_bootloaderContext.allFlashState->ftfxConfig[kFlashIndex_Main].flashDesc.totalSize >> 1) +
+#if BL_TARGET_FLASH
+#if BL_IS_HARDWARE_SWAP_ENABLED
+        return g_bootloaderContext.allFlashState->ftfxConfig[kFlashIndex_Main].flashDesc.blockBase +
+               (g_bootloaderContext.allFlashState->ftfxConfig[kFlashIndex_Main].flashDesc.totalSize >> 1) +
                BL_APP_VECTOR_TABLE_ADDRESS;
 #else
-        retValue = (uint32_t)BL_BACKUP_APP_START;
+        return BL_BACKUP_APP_START;
 #endif // #if BL_IS_HARDWARE_SWAP_ENABLED
 #else
 #error "This Bootloader type is NOT supported!"
 #endif
     }
-    else
-    {
-        retValue = 0;
-    }
 
-    return retValue;
+    return 0;
 }
 
 //! @brief Get the base address of Bootloader Config Area
 static uint32_t get_bootloader_config_area_base(uint32_t applicationBase)
 {
-    return (applicationBase + 0x3c0u);
+    return (applicationBase + 0x3c0);
 }
 
 // Determine if the reliable update feature is active
@@ -235,16 +225,15 @@ static bool is_reliable_update_active(uint32_t backupApplicationBase)
     uint32_t backupCrcChecksumBase = get_bootloader_config_area_base(backupApplicationBase);
     crc_checksum_header_t *pchecksumHeader = (crc_checksum_header_t *)backupCrcChecksumBase;
     appliation_header_t *pAppHeader = (appliation_header_t *)backupApplicationBase;
-    bool retValue;
-    if (is_valid_application_location(pAppHeader->applicationPointer) && ((uint32_t)kPropertyStoreTag == pchecksumHeader->tag))
+
+    if (is_valid_application_location(pAppHeader->applicationPointer) && (kPropertyStoreTag == pchecksumHeader->tag))
     {
-        retValue = true;
+        return true;
     }
     else
     {
-        retValue = false;
+        return false;
     }
-    return retValue;
 }
 
 // Update the status for reliable update
@@ -265,43 +254,38 @@ static bool is_specified_application_valid(uint32_t applicationBase)
     crc_checksum_header_t header;
     uint32_t crcChecksumBase = get_bootloader_config_area_base(applicationBase);
     uint32_t mainApplicationBase = get_application_base(kSpecifiedApplicationType_Main);
-    bool retValue = false;
-    uint32_t maxBackupAppSize;;
-    uint32_t backupAppSize;
 
-    (void)memcpy(&header, (uint8_t *)crcChecksumBase, sizeof(header));
+    memcpy(&header, (void *)crcChecksumBase, sizeof(header));
 
-    maxBackupAppSize = get_max_backup_app_size(applicationBase);
-    backupAppSize = header.crcByteCount;
-    
     // The size of the backup image must be less than or equal to maximumn reserved backup application space
-    if (applicationBase != mainApplicationBase && backupAppSize > maxBackupAppSize)
+    if (applicationBase != mainApplicationBase)
     {
-        retValue = false;
+        uint32_t maxBackupAppSize = get_max_backup_app_size(applicationBase);
+        int32_t backupAppSize = header.crcByteCount;
+        if (backupAppSize > maxBackupAppSize)
+        {
+            return false;
+        }
+    }
+    // crcStartAddress must be BL_BACKUP_APP_START, and calculated crc checksum must be expectedCrcValue
+    if (header.crcStartAddress != mainApplicationBase)
+    {
+        return false;
     }
     else
     {
-        // crcStartAddress must be BL_BACKUP_APP_START, and calculated crc checksum must be expectedCrcValue
-        if (header.crcStartAddress != mainApplicationBase)
+        header.crcStartAddress = applicationBase;
+
+        uint32_t calculatedCrc = calculate_application_crc32(&header, crcChecksumBase);
+        if (calculatedCrc != header.crcExpectedValue)
         {
-            retValue = false;
+            return false;
         }
         else
         {
-            header.crcStartAddress = applicationBase;
-
-            uint32_t calculatedCrc = calculate_application_crc32(&header, crcChecksumBase);
-            if (calculatedCrc != header.crcExpectedValue)
-            {
-                retValue = false;
-            }
-            else
-            {
-                retValue = true;
-            }
+            return true;
         }
     }
-    return retValue;
 }
 
 //! @brief Copy source appliction to destination application region and return result
@@ -311,8 +295,11 @@ static bool get_result_after_copying_application(uint32_t src, uint32_t dst, uin
     status_t status;
 
     // Erase the destination application region
-    status = mem_erase(dst, len, (uint32_t)kMemoryInternal);
-    if ((int32_t)kStatus_Success != status)
+    status = mem_erase(dst, len, kMemoryInternal);
+
+    // Erase the destination application region
+    status = mem_erase(dst, len, kMemoryInternal);
+    if (kStatus_Success != status)
     {
         updateResult = false;
     }
@@ -322,7 +309,7 @@ static bool get_result_after_copying_application(uint32_t src, uint32_t dst, uin
         uint32_t writeSize;
         uint32_t bufferSize = sizeof(copyBuffer);
         // Copy the source application to destination application region.
-        while (len != 0u)
+        while (len)
         {
             if (len >= bufferSize)
             {
@@ -332,9 +319,9 @@ static bool get_result_after_copying_application(uint32_t src, uint32_t dst, uin
             {
                 writeSize = len;
             }
-            (void)memcpy(copyBuffer, (uint8_t *)src, writeSize);
-            status = mem_write(dst, writeSize, (uint8_t *)&copyBuffer[0], (uint32_t)kMemoryInternal);
-            if ((int32_t)kStatus_Success != status)
+            memcpy(copyBuffer, (uint8_t *)src, writeSize);
+            status = mem_write(dst, writeSize, (uint8_t *)&copyBuffer[0], kMemoryInternal);
+            if (kStatus_Success != status)
             {
                 updateResult = false;
                 break;
@@ -350,19 +337,20 @@ static bool get_result_after_copying_application(uint32_t src, uint32_t dst, uin
     return updateResult;
 }
 
-#if defined(BL_IS_HARDWARE_SWAP_ENABLED) && BL_IS_HARDWARE_SWAP_ENABLED
+#if BL_IS_HARDWARE_SWAP_ENABLED
 
-#if defined(BL_TARGET_FLASH) && BL_TARGET_FLASH
+#if BL_TARGET_FLASH
 //! @brief Determine if the backup bootloader is valid
 static bool is_backup_bootloader_valid(void)
 {
     uint32_t mainBootloaderCrc32;
     uint32_t backupBootloaderCrc32;
-    uint32_t bootloaderSizeInByte =
-        get_application_base(kSpecifiedApplicationType_Main) - g_bootloaderContext.allFlashState->ftfxConfig[kFlashIndex_Main].flashDesc.blockBase;
+    uint32_t bootloaderSizeInByte = get_application_base(kSpecifiedApplicationType_Main) -
+                                    g_bootloaderContext.allFlashState->ftfxConfig[kFlashIndex_Main].flashDesc.blockBase;
     uint32_t mainBootloaderBase = g_bootloaderContext.allFlashState->ftfxConfig[kFlashIndex_Main].flashDesc.blockBase;
     uint32_t backupBootloaderBase =
-        g_bootloaderContext.allFlashState->ftfxConfig[kFlashIndex_Main].flashDesc.blockBase + (g_bootloaderContext.allFlashState->ftfxConfig[kFlashIndex_Main].flashDesc.totalSize >> 1);
+        g_bootloaderContext.allFlashState->ftfxConfig[kFlashIndex_Main].flashDesc.blockBase +
+        (g_bootloaderContext.allFlashState->ftfxConfig[kFlashIndex_Main].flashDesc.totalSize >> 1);
 
     crc32_data_t crcInfo;
     crc32_init(&crcInfo);
@@ -382,10 +370,10 @@ static bool is_backup_bootloader_valid(void)
 static status_t get_swap_indicator_address_if_system_is_in_ready(uint32_t *address)
 {
     ftfx_swap_state_config_t returnSwapInfo;
-    status_t result =
-        FTFx_CMD_SwapControl(&g_bootloaderContext.allFlashState->ftfxConfig[kFlashIndex_Main], 0x10, kFTFx_SwapControlOptionReportStatus, &returnSwapInfo);
+    status_t result = FTFx_CMD_SwapControl(&g_bootloaderContext.allFlashState->ftfxConfig[kFlashIndex_Main], 0x10,
+                                           kFTFx_SwapControlOptionReportStatus, &returnSwapInfo);
     *address = 0;
-    if ((result == (int32_t)kStatus_FLASH_Success) && (returnSwapInfo.flashSwapState == kFTFx_SwapStateReady))
+    if ((result == kStatus_FLASH_Success) && (returnSwapInfo.flashSwapState == kFTFx_SwapStateReady))
     {
         struct _flash_swap_ifr_field_config
         {
@@ -396,19 +384,20 @@ static status_t get_swap_indicator_address_if_system_is_in_ready(uint32_t *addre
             uint16_t swapDisableWord;      /*!< A Swap disable word field.*/
             uint8_t reserved2[4];          /*!< A reserved field.*/
         } flashSwapIfrFieldData;
-        result = FLASH_ReadResource(g_bootloaderContext.allFlashState, g_bootloaderContext.allFlashState->ftfxConfig[kFlashIndex_Main].ifrDesc.resRange.pflashSwapIfrStart,
-                                    (uint8_t *)&flashSwapIfrFieldData, sizeof(flashSwapIfrFieldData),
-                                    kFTFx_ResourceOptionFlashIfr);
-        if (result == (int32_t)kStatus_FLASH_Success)
+        result = FLASH_ReadResource(
+            g_bootloaderContext.allFlashState,
+            g_bootloaderContext.allFlashState->ftfxConfig[kFlashIndex_Main].ifrDesc.resRange.pflashSwapIfrStart,
+            (uint8_t *)&flashSwapIfrFieldData, sizeof(flashSwapIfrFieldData), kFTFx_ResourceOptionFlashIfr);
+        if (result == kStatus_FLASH_Success)
         {
             *address = (uint32_t)flashSwapIfrFieldData.swapIndicatorAddress *
                        FSL_FEATURE_FLASH_PFLASH_SWAP_CONTROL_CMD_ADDRESS_ALIGMENT;
 
-            return (int32_t)kStatus_FLASH_Success;
+            return kStatus_FLASH_Success;
         }
     }
     // Set the result as kStatus_FTFx_CommandFailure temporary to inform upper layer
-    return (int32_t)kStatus_FTFx_CommandFailure;
+    return kStatus_FTFx_CommandFailure;
 }
 
 // Execute hardware reliable update
@@ -421,15 +410,18 @@ status_t hardware_reliable_update(uint32_t swapIndicatorAddress)
     bool updateResult = true;
     status_t status;
 
-#if defined(BL_TARGET_FLASH) && BL_TARGET_FLASH
+#if BL_TARGET_FLASH
     // Check if backup bootloader is valid
     if (!is_backup_bootloader_valid())
     {
-        uint32_t mainBootloaderBase = g_bootloaderContext.allFlashState->ftfxConfig[kFlashIndex_Main].flashDesc.blockBase;
+        uint32_t mainBootloaderBase =
+            g_bootloaderContext.allFlashState->ftfxConfig[kFlashIndex_Main].flashDesc.blockBase;
         uint32_t backupBootloaderBase =
-            g_bootloaderContext.allFlashState->ftfxConfig[kFlashIndex_Main].flashDesc.blockBase + (g_bootloaderContext.allFlashState->ftfxConfig[kFlashIndex_Main].flashDesc.totalSize >> 1);
+            g_bootloaderContext.allFlashState->ftfxConfig[kFlashIndex_Main].flashDesc.blockBase +
+            (g_bootloaderContext.allFlashState->ftfxConfig[kFlashIndex_Main].flashDesc.totalSize >> 1);
         uint32_t bootloaderSizeInByte =
-            get_application_base(kSpecifiedApplicationType_Main) - g_bootloaderContext.allFlashState->ftfxConfig[kFlashIndex_Main].flashDesc.blockBase;
+            get_application_base(kSpecifiedApplicationType_Main) -
+            g_bootloaderContext.allFlashState->ftfxConfig[kFlashIndex_Main].flashDesc.blockBase;
 
         // Copy the Main Bootloader to Backup Bootloader region
         updateResult =
@@ -437,24 +429,24 @@ status_t hardware_reliable_update(uint32_t swapIndicatorAddress)
 
         if (!updateResult)
         {
-            update_reliable_update_status((uint32_t)kStatus_ReliableUpdateBackupBootloaderNotReady);
-            return (int32_t)kStatus_ReliableUpdateBackupBootloaderNotReady;
+            update_reliable_update_status(kStatus_ReliableUpdateBackupBootloaderNotReady);
+            return kStatus_ReliableUpdateBackupBootloaderNotReady;
         }
     }
 #endif
     // Swap flash system
     status = FLASH_Swap(g_bootloaderContext.allFlashState, swapIndicatorAddress, true);
-    if (((int32_t)kStatus_FTFx_SwapIndicatorAddressError == status) || ((int32_t)kStatus_FTFx_AlignmentError == status))
+    if ((kStatus_FTFx_SwapIndicatorAddressError == status) || (kStatus_FTFx_AlignmentError == status))
     {
-        update_reliable_update_status((uint32_t)kStatus_ReliableUpdateSwapIndicatorAddressInvalid);
-        return (int32_t)kStatus_ReliableUpdateSwapIndicatorAddressInvalid;
+        update_reliable_update_status(kStatus_ReliableUpdateSwapIndicatorAddressInvalid);
+        return kStatus_ReliableUpdateSwapIndicatorAddressInvalid;
     }
-    else if ((int32_t)kStatus_FLASH_Success != status)
+    else if (kStatus_FLASH_Success != status)
     {
         updateResult = false;
     }
 
-    return (updateResult) ? (int32_t)kStatus_ReliableUpdateSuccess : (int32_t)kStatus_ReliableUpdateFail;
+    return (updateResult) ? kStatus_ReliableUpdateSuccess : kStatus_ReliableUpdateFail;
 }
 #else
 // Execute software reliable update
@@ -463,7 +455,7 @@ status_t hardware_reliable_update(uint32_t swapIndicatorAddress)
 //      2. Copy the back applcation to the applicaion region
 //      3. Do integrity check for the copied application
 //      4. Erase the backup application
-static status_t software_reliable_update(uint32_t backupApplicationBase)
+status_t software_reliable_update(uint32_t backupApplicationBase)
 {
     bool updateResult = true;
     uint32_t applicationSizeInByte;
@@ -473,11 +465,11 @@ static status_t software_reliable_update(uint32_t backupApplicationBase)
 
     // Get actual length to be erased.
     crc_checksum_header_t header;
-    (void)memcpy(&header, (uint8_t *)backupCrcChecksumBase, sizeof(header));
-    // header.crcStartAddress = backupApplicationBase;
+    memcpy(&header, (uint8_t *)backupCrcChecksumBase, sizeof(header));
+    header.crcStartAddress = backupApplicationBase;
 
     applicationSizeInByte = header.crcByteCount;
-    applicationSizeInByte = (uint32_t)ALIGN_UP(applicationSizeInByte, g_bootloaderContext.allFlashState->ftfxConfig[kFlashIndex_Main].flashDesc.sectorSize);
+    applicationSizeInByte = ALIGN_UP(applicationSizeInByte, FSL_FEATURE_FLASH_PFLASH_BLOCK_SECTOR_SIZE);
 
     // Copy the Backup Application to Main Appliction region
     updateResult =
@@ -487,7 +479,7 @@ static status_t software_reliable_update(uint32_t backupApplicationBase)
     if (updateResult)
     {
         // Reload the user configuration data so that we can validate if the updated application is valid
-        (void)g_bootloaderContext.propertyInterface->load_user_config();
+        g_bootloaderContext.propertyInterface->load_user_config();
 
         if (!is_application_crc_check_pass())
         {
@@ -495,15 +487,15 @@ static status_t software_reliable_update(uint32_t backupApplicationBase)
         }
         else
         {
-            status_t status = mem_erase(backupApplicationBase, applicationSizeInByte, (uint32_t)kMemoryInternal);
-            if ((int32_t)kStatus_Success != status)
+            status_t status = mem_erase(backupApplicationBase, applicationSizeInByte, kMemoryInternal);
+            if (kStatus_Success != status)
             {
                 updateResult = false;
             }
         } // if (!is_application_crc_check_pass())
     }     // if (updateResult)
 
-    return (updateResult) ? (int32_t)kStatus_ReliableUpdateSuccess : (int32_t)kStatus_ReliableUpdateFail;
+    return (updateResult) ? kStatus_ReliableUpdateSuccess : kStatus_ReliableUpdateFail;
 }
 #endif // BL_IS_HARDWARE_SWAP_ENABLED
 

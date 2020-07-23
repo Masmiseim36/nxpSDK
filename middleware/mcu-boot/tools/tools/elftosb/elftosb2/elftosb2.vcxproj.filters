@@ -177,6 +177,15 @@
     <ClCompile Include="..\common\IVTDataSource.cpp">
       <Filter>Source Files\common</Filter>
     </ClCompile>
+    <ClCompile Include="..\common\json.cpp">
+      <Filter>Source Files\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\AuthImageGenerator.cpp">
+      <Filter>Source Files\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\TrustZonePresetGenerator.cpp">
+      <Filter>Source Files\common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\common\AESKey.h">
@@ -311,9 +320,6 @@
     <ClInclude Include="default_rom_key.h">
       <Filter>Header Files\elftosb</Filter>
     </ClInclude>
-    <ClInclude Include="elftosb.h">
-      <Filter>Header Files\elftosb</Filter>
-    </ClInclude>
     <ClInclude Include="elftosb_parser.tab.hpp">
       <Filter>Header Files\elftosb</Filter>
     </ClInclude>
@@ -360,6 +366,18 @@
       <Filter>Header Files\common</Filter>
     </ClInclude>
     <ClInclude Include="iMXImageGenerator.h">
+      <Filter>Header Files\elftosb</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\json.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\AuthImageGenerator.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\TrustZonePresetGenerator.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="elftosb.h">
       <Filter>Header Files\elftosb</Filter>
     </ClInclude>
   </ItemGroup>

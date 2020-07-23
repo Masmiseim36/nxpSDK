@@ -21,10 +21,10 @@ extern "C" {
 //@{
 
 //! @brief Read memory.
-status_t device_mem_read(uint32_t address, uint32_t length, uint8_t *buffer);
+status_t device_mem_read(uint32_t address, uint32_t length, uint8_t *restrict buffer);
 
 //! @brief Write memory.
-status_t device_mem_write(uint32_t address, uint32_t length, const uint8_t *buffer);
+status_t device_mem_write(uint32_t address, uint32_t length, const uint8_t *restrict buffer);
 
 //! @brief Fill memory with a word pattern.
 status_t device_mem_fill(uint32_t address, uint32_t length, uint32_t pattern);

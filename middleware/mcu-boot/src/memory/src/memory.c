@@ -7,9 +7,12 @@
  */
 
 #include "bootloader_common.h"
-#include "bootloader/bl_context.h"
-#include "memory/memory.h"
-#include "utilities/fsl_assert.h"
+#include "bl_context.h"
+#include "memory.h"
+#include "fsl_assert.h"
+#if BL_FEATURE_AES_OTP
+#include "aes_otp.h"
+#endif
 
 //! @addtogroup memif
 //! @{
@@ -18,31 +21,33 @@
 // Prototypes
 ////////////////////////////////////////////////////////////////////////////////
 
+// Forward function declarations.
+bool mem_is_block_reserved(uint32_t address, uint32_t length);
+
 ////////////////////////////////////////////////////////////////////////////////
 // Variables
 ////////////////////////////////////////////////////////////////////////////////
 
 //! @brief This variable is used to do flush operation, it is bind to write operation.
 
-static status_t (*s_flush)(void) = (void *)0u;
-#if defined(BL_FEATURE_EXPAND_MEMORY) && BL_FEATURE_EXPAND_MEMORY
-static status_t (*s_finalize)(void) = (void *)0u;
+static status_t (*s_flush)(void) = NULL;
+#if BL_FEATURE_EXPAND_MEMORY
+static status_t (*s_finalize)(void) = NULL;
 #endif // BL_FEATURE_EXPAND_MEMORY
 
 //! @brief Interface to generic memory operations.
 const memory_interface_t g_memoryInterface = {
     mem_init,     mem_read, mem_write,
-#if !(defined(BL_FEATURE_MIN_PROFILE) && BL_FEATURE_MIN_PROFILE) || \
-    defined(BL_FEATURE_FILL_MEMORY) && BL_FEATURE_FILL_MEMORY
+#if !BL_FEATURE_MIN_PROFILE || BL_FEATURE_FILL_MEMORY
     mem_fill,
 #else
-    (void *)0u,
+    NULL,
 #endif // !BL_FEATURE_MIN_PROFILE
     mem_flush,
-#if defined(BL_FEATURE_EXPAND_MEMORY) && BL_FEATURE_EXPAND_MEMORY
+#if BL_FEATURE_EXPAND_MEMORY
     mem_finalize,
 #else
-    (void *)0u,
+    NULL,
 #endif // BL_FEATURE_EXPAND_MEMORY
     mem_erase,
 };
@@ -54,118 +59,127 @@ const memory_interface_t g_memoryInterface = {
 // See memory.h for documentation on this function.
 status_t mem_read(uint32_t address, uint32_t length, uint8_t *buffer, uint32_t memoryId)
 {
-    status_t status = (int32_t)kStatus_Success;
-
-    if (length != 0u)
+    if (length == 0)
     {
-#if defined(BL_FEATURE_EXPAND_MEMORY) && BL_FEATURE_EXPAND_MEMORY
-        switch (GROUPID(memoryId))
-        {
-            case kGroup_Internal:
-            {
-#endif // BL_FEATURE_EXPAND_MEMORY
-                const memory_map_entry_t *mapEntry;
-                 status = find_map_entry(address, length, &mapEntry);
-                if (status == (int32_t)kStatus_Success)
-                {
-                    status = mapEntry->memoryInterface->read(address, length, buffer);
-                }
-#if defined(BL_FEATURE_EXPAND_MEMORY) && BL_FEATURE_EXPAND_MEMORY
-            }
-            break;
-            case kGroup_External:
-            {
-                const external_memory_map_entry_t *mapEntry;
-                status = find_external_map_entry(address, length, memoryId, &mapEntry);
-                if (status == (int32_t)kStatus_Success)
-                {
-                    s_finalize = mapEntry->memoryInterface->finalize;
-                    status = mapEntry->memoryInterface->read(address, length, buffer);
-                }
-            }
-            break;
-            default:
-                status = (int32_t)kStatusMemoryRangeInvalid;
-                break;
-        }
-#endif // BL_FEATURE_EXPAND_MEMORY
+        return kStatus_Success;
     }
 
-    return status;
+#if BL_FEATURE_EXPAND_MEMORY
+    switch (GROUPID(memoryId))
+    {
+        case kGroup_Internal:
+        {
+#endif // BL_FEATURE_EXPAND_MEMORY
+            const memory_map_entry_t *mapEntry;
+            status_t status = find_map_entry(address, length, &mapEntry);
+            if (status == kStatus_Success)
+            {
+                status = mapEntry->memoryInterface->read(address, length, buffer);
+            }
+            return status;
+#if BL_FEATURE_EXPAND_MEMORY
+        }
+        // "break;" is not needed for always executing return.
+        case kGroup_External:
+        {
+            const external_memory_map_entry_t *mapEntry;
+            status_t status = find_external_map_entry(address, length, memoryId, &mapEntry);
+            if (status == kStatus_Success)
+            {
+                s_finalize = mapEntry->memoryInterface->finalize;
+                status = mapEntry->memoryInterface->read(address, length, buffer);
+            }
+            return status;
+        }
+        // "break;" is not needed for always executing return.
+        default:
+            return kStatusMemoryRangeInvalid;
+    }
+#endif // BL_FEATURE_EXPAND_MEMORY
 }
 
 // See memory.h for documentation on this function.
 status_t mem_write(uint32_t address, uint32_t length, const uint8_t *buffer, uint32_t memoryId)
 {
-    status_t status = (int32_t)kStatus_Success;
-    if (length != 0u)
+    if (length == 0)
     {
-#if defined(BL_FEATURE_EXPAND_MEMORY) && BL_FEATURE_EXPAND_MEMORY
-        switch (GROUPID(memoryId))
+        return kStatus_Success;
+    }
+
+#if BL_FEATURE_EXPAND_MEMORY || BL_FEATURE_AES_OTP
+    switch (GROUPID(memoryId))
+    {
+        case kGroup_Internal:
         {
-            case kGroup_Internal:
+#endif // BL_FEATURE_EXPAND_MEMORY || BL_FEATURE_AES_OTP
+            if (mem_is_block_reserved(address, length))
             {
-#endif // BL_FEATURE_EXPAND_MEMORY
-                if (mem_is_block_reserved(address, length))
+                return kStatusMemoryRangeInvalid;
+            }
+
+            const memory_map_entry_t *mapEntry;
+            status_t status = find_map_entry(address, length, &mapEntry);
+            if (status == kStatus_Success)
+            {
+                status = mapEntry->memoryInterface->write(address, length, buffer);
+
+                if (status == kStatus_Success)
                 {
-                    status = (int32_t)kStatusMemoryRangeInvalid;
+                    s_flush = mapEntry->memoryInterface->flush;
                 }
                 else
                 {
-                    const memory_map_entry_t *mapEntry;
-                    status = find_map_entry(address, length, &mapEntry);
-
-                    if (status == (int32_t)kStatus_Success)
-                    {
-                        status = mapEntry->memoryInterface->write(address, length, buffer);
-
-                        if (status == (int32_t)kStatus_Success)
-                        {
-                            s_flush = mapEntry->memoryInterface->flush;
-                        }
-                        else
-                        {
-                            s_flush = (void *)0u;
-                        }
-                    }
-                }
-#if defined(BL_FEATURE_EXPAND_MEMORY) && BL_FEATURE_EXPAND_MEMORY
-            }
-            break;
-            case kGroup_External:
-            {
-                const external_memory_map_entry_t *mapEntry;
-                status = find_external_map_entry(address, length, memoryId, &mapEntry);
-                if (status == (int32_t)kStatus_Success)
-                {
-                    s_finalize = mapEntry->memoryInterface->finalize;
-                    status = mapEntry->memoryInterface->write(address, length, buffer);
-                    if (status == (int32_t)kStatus_Success)
-                    {
-                        s_flush = mapEntry->memoryInterface->flush;
-                    }
-                    else
-                    {
-                        s_flush = (void *)0u;
-                    }
+                    s_flush = NULL;
                 }
             }
-            break;
-            default:
-                status = (int32_t)kStatusMemoryRangeInvalid;
-                break;
+            return status;
+#if BL_FEATURE_EXPAND_MEMORY
         }
-#endif // BL_FEATURE_EXPAND_MEMORY
+        // "break;" is not needed for always executing return.
+        case kGroup_External:
+        {
+            const external_memory_map_entry_t *mapEntry;
+            status_t status = find_external_map_entry(address, length, memoryId, &mapEntry);
+            if (status == kStatus_Success)
+            {
+                s_finalize = mapEntry->memoryInterface->finalize;
+                status = mapEntry->memoryInterface->write(address, length, buffer);
+                if (status == kStatus_Success)
+                {
+                    s_flush = mapEntry->memoryInterface->flush;
+                }
+                else
+                {
+                    s_flush = NULL;
+                }
+            }
+            return status;
+        }
+        // "break;" is not needed for always executing return.
+        default:
+            return kStatusMemoryRangeInvalid;
     }
-
-    return status;
+#endif // BL_FEATURE_EXPAND_MEMORY
+#if BL_FEATURE_AES_OTP
+        }
+        // "break;" is not needed for always executing return.
+        case kGroup_AES_OTP:
+        {
+            uint32_t status = scramble_and_program_aes_key(buffer, length);
+            return status;
+        }
+        // "break;" is not needed for always executing return.
+        default:
+            return kStatusMemoryRangeInvalid;
+    }
+#endif // BL_FEATURE_EXPAND_MEMORY
 }
 
 status_t mem_erase(uint32_t address, uint32_t length, uint32_t memoryId)
 {
-    status_t status = (int32_t)kStatus_Success;
+    status_t status = kStatus_Success;
 
-#if defined(BL_FEATURE_EXPAND_MEMORY) && BL_FEATURE_EXPAND_MEMORY
+#if BL_FEATURE_EXPAND_MEMORY
     switch (GROUPID(memoryId))
     {
         case kGroup_Internal:
@@ -173,67 +187,50 @@ status_t mem_erase(uint32_t address, uint32_t length, uint32_t memoryId)
 #endif // BL_FEATURE_EXPAND_MEMORY
             const memory_map_entry_t *mapEntry;
             status = find_map_entry(address, length, &mapEntry);
- 
-            if (status == (int32_t)kStatus_Success)
+            if (status == kStatus_Success)
             {
                 // In this case, it means that bootloader tries to erase a range of memory
                 // which doesn't support erase operaton
-                if (mapEntry->memoryInterface->erase == (void *)0u)
+                if (mapEntry->memoryInterface->erase == NULL)
                 {
-                    status = (int32_t)kStatusMemoryUnsupportedCommand;
+                    return kStatusMemoryUnsupportedCommand;
                 }
-                else
+
+                if (mem_is_block_reserved(address, length))
                 {
-                    if (mem_is_block_reserved(address, length))
-                    {
-                        status = (int32_t)kStatusMemoryRangeInvalid;
-                    }
-                    else
-                    {
-                        status = mapEntry->memoryInterface->erase(address, length);
-                    }
+                    return kStatusMemoryRangeInvalid;
                 }
+
+                status = mapEntry->memoryInterface->erase(address, length);
             }
-            else if (length == 0u)
+            else if (length == 0)
             {
                 // if length = 0, return kStatus_Success regardless of memory address
-                status = (int32_t)kStatus_Success;
+                return kStatus_Success;
             }
-            else
-            {
-                // doing nothing
-            }
-#if defined(BL_FEATURE_EXPAND_MEMORY) && BL_FEATURE_EXPAND_MEMORY
+#if BL_FEATURE_EXPAND_MEMORY
         }
         break;
         case kGroup_External:
         {
             const external_memory_map_entry_t *mapEntry;
             status = find_external_map_entry(address, length, memoryId, &mapEntry);
-            if (status == (int32_t)kStatus_Success)
+            if (status == kStatus_Success)
             {
-                if (mapEntry->memoryInterface->erase == (void *)0u)
+                if (mapEntry->memoryInterface->erase == NULL)
                 {
-                    status = (int32_t)kStatusMemoryUnsupportedCommand;
+                    return kStatusMemoryUnsupportedCommand;
                 }
-                else
-                {
-                    status = mapEntry->memoryInterface->erase(address, length);
-                }
+                status = mapEntry->memoryInterface->erase(address, length);
             }
-            else if (length == 0u)
+            else if (length == 0)
             {
-                status = (int32_t)kStatus_Success;
-            }
-            else
-            {
-                // doing nothing
+                return kStatus_Success;
             }
         }
         break;
         default:
-            status = (int32_t)kStatusMemoryRangeInvalid;
-            break;
+            status = kStatusMemoryRangeInvalid;
     }
 #endif // BL_FEATURE_EXPAND_MEMORY
     return status;
@@ -242,23 +239,21 @@ status_t mem_erase(uint32_t address, uint32_t length, uint32_t memoryId)
 // See memory.h for documentation on this function.
 status_t mem_fill(uint32_t address, uint32_t length, uint32_t pattern)
 {
-    status_t status = (int32_t)kStatus_Success;
-    if (length != 0u)
+    if (length == 0)
     {
-        if (mem_is_block_reserved(address, length))
-        {
-            status = (int32_t)kStatusMemoryRangeInvalid;
-        }
-        else
-        {
-            const memory_map_entry_t *mapEntry;
-            status = find_map_entry(address, length, &mapEntry);
+        return kStatus_Success;
+    }
 
-            if (status == (int32_t)kStatus_Success)
-            {
-                status = mapEntry->memoryInterface->fill(address, length, pattern);
-            }
-        }
+    if (mem_is_block_reserved(address, length))
+    {
+        return kStatusMemoryRangeInvalid;
+    }
+
+    const memory_map_entry_t *mapEntry;
+    status_t status = find_map_entry(address, length, &mapEntry);
+    if (status == kStatus_Success)
+    {
+        status = mapEntry->memoryInterface->fill(address, length, pattern);
     }
     return status;
 }
@@ -283,12 +278,13 @@ status_t mem_fill(uint32_t address, uint32_t length, uint32_t pattern)
 //! @return An error code or kStatus_Success
 status_t mem_flush(void)
 {
-    status_t status = (int32_t)kStatus_Success;
+    status_t status = kStatus_Success;
 
-    if (s_flush != (void *)0u)
+    if (s_flush)
     {
         status = s_flush();
-        s_flush = (void *)0u; // Clear this variable after performing flush operation
+        s_flush = NULL; // Clear this variable after performing flush operation
+        return status;
     }
 
     return status;
@@ -297,15 +293,16 @@ status_t mem_flush(void)
 //! @brief Reset the state machine of memory interface when a read/write sequence is finished.
 //!
 //! @return An error code or kStatus_Success
-#if defined(BL_FEATURE_EXPAND_MEMORY) && BL_FEATURE_EXPAND_MEMORY
+#if BL_FEATURE_EXPAND_MEMORY
 status_t mem_finalize(void)
 {
-    status_t status = (int32_t)kStatus_Success;
+    status_t status = kStatus_Success;
 
-    if (s_finalize != (void *)0u)
+    if (s_finalize)
     {
         status = s_finalize();
-        s_finalize = (void *)0u; // Clear this variable after performing finalize operation
+        s_finalize = NULL; // Clear this variable after performing finalize operation
+        return status;
     }
 
     return status;
@@ -324,19 +321,19 @@ status_t mem_finalize(void)
 //!     the length extends past the matching entry's end address.
 status_t find_map_entry(uint32_t address, uint32_t length, const memory_map_entry_t **map)
 {
-    status_t status = (int32_t)kStatusMemoryRangeInvalid;
+    status_t status = kStatusMemoryRangeInvalid;
 
     // Set starting entry.
     assert(map);
-    if (map != (void *)0u)
+    if (map)
     {
         *map = &g_bootloaderContext.memoryMap[0];
     }
 
     // Scan memory map array looking for a match.
-    while ((length > 0u) && (map != (void *)0u) && (*map != (void *)0u))
+    while ((length > 0) && map && *map)
     {
-        if (((*map)->startAddress == 0u) && ((*map)->endAddress == 0u) && ((*map)->memoryInterface == (void *)0u))
+        if (((*map)->startAddress == 0) && ((*map)->endAddress == 0) && ((*map)->memoryInterface == NULL))
         {
             break;
         }
@@ -344,9 +341,9 @@ status_t find_map_entry(uint32_t address, uint32_t length, const memory_map_entr
         if ((address >= (*map)->startAddress) && (address <= (*map)->endAddress))
         {
             // Check that the length fits in this entry's address range.
-            if ((address + length - 1u) <= (*map)->endAddress)
+            if ((address + length - 1) <= (*map)->endAddress)
             {
-                status = (int32_t)kStatus_Success;
+                status = kStatus_Success;
             }
             break;
         }
@@ -357,13 +354,13 @@ status_t find_map_entry(uint32_t address, uint32_t length, const memory_map_entr
 }
 
 // See memory.h for documentation on this function.
-#if defined(BL_FEATURE_EXPAND_MEMORY) && BL_FEATURE_EXPAND_MEMORY
+#if BL_FEATURE_EXPAND_MEMORY
 status_t find_external_map_entry(uint32_t address,
                                  uint32_t length,
                                  uint32_t memory_id,
                                  const external_memory_map_entry_t **map)
 {
-    status_t status = (int32_t)kStatusMemoryRangeInvalid;
+    status_t status = kStatusMemoryRangeInvalid;
 
     // Set starting entry.
     assert(map);
@@ -373,10 +370,10 @@ status_t find_external_map_entry(uint32_t address,
     }
 
     // Scan memory map array looking for a match.
-    while ((length > 0u) && (map != (void *)0u) && (*map != (void *)0u))
+    while ((length > 0) && map && *map)
     {
-        if (((*map)->memoryId == 0u) && ((*map)->status == 0u) && ((*map)->basicUnitCount == 0u) &&
-            ((*map)->basicUnitSize == 0u) && ((*map)->memoryInterface == (void ()0u))
+        if (((*map)->memoryId == 0) && ((*map)->status == 0) && ((*map)->basicUnitCount == 0) &&
+            ((*map)->basicUnitSize == 0) && ((*map)->memoryInterface == NULL))
         {
             break;
         }
@@ -387,7 +384,7 @@ status_t find_external_map_entry(uint32_t address,
             // Check that the length fits in this entry's address range.
             if (((uint64_t)address + length) <= ((uint64_t)(*map)->basicUnitCount * (*map)->basicUnitSize))
             {
-                status = (int32_t)kStatus_Success;
+                status = kStatus_Success;
             }
             break;
         }
@@ -399,28 +396,31 @@ status_t find_external_map_entry(uint32_t address,
 
 status_t find_external_map_index(uint32_t memoryId, uint32_t *index)
 {
-    status_t status = (int32_t)kStatus_InvalidArgument;
+    status_t status = kStatus_InvalidArgument;
 
     const external_memory_map_entry_t *map;
-    uint32_t searchingIndex = 0u;
+    uint32_t searchingIndex = 0;
 
-    if (index != (void*)0u)
+    if (index == NULL)
     {
-        map = &g_bootloaderContext.externalMemoryMap[0];
-        // Scan memory map array looking for a match.
-        while(map && (map->memoryId != 0u) && (map->memoryInterface != (void *)0u))
-        {
-            if (memoryId == map->memoryId)
-            {
-                *index = searchingIndex;
-                // Find the correct index.
-                status = (int32_t)kStatus_Success;
-                break;
-            }
-            searchingIndex++;
-            map++;
-        };
+        return status;
     }
+
+    map = &g_bootloaderContext.externalMemoryMap[0];
+    // Scan memory map array looking for a match.
+    while(map && (map->memoryId != 0) && (map->memoryInterface != NULL))
+    {
+        if (memoryId == map->memoryId)
+        {
+            *index = searchingIndex;
+            // Find the correct index.
+            status = kStatus_Success;
+            break;
+        }
+        searchingIndex++;
+        map++;
+    };
+
     return status;
 }
 #endif // BL_FEATURE_EXPAND_MEMORY
@@ -428,11 +428,9 @@ status_t find_external_map_index(uint32_t memoryId, uint32_t *index)
 // See memory.h for documentation on this function.
 bool mem_is_block_reserved(uint32_t address, uint32_t length)
 {
-    uint32_t end = address + length - 1u;
-    uint32_t start = 0u;
-    bool retValue = (_Bool)false;
-
-    for (uint32_t i = 0u; i < (uint32_t)kProperty_ReservedRegionsCount; ++i)
+    uint32_t end = address + length - 1;
+    uint32_t start = 0;
+    for (uint32_t i = 0; i < kProperty_ReservedRegionsCount; ++i)
     {
         reserved_region_t *region = &g_bootloaderContext.propertyInterface->store->reservedRegions[i];
 
@@ -445,40 +443,39 @@ bool mem_is_block_reserved(uint32_t address, uint32_t length)
 
         if ((address <= region->endAddress) && (end >= region->startAddress))
         {
-            retValue = true;
+            return true;
         }
     }
-    return retValue;
+    return false;
 }
 
 // See memory.h for documentation on this function.
 status_t mem_init(void)
 {
-    status_t status = (int32_t)kStatus_Success;
+    status_t status = kStatus_Success;
 
     const memory_map_entry_t *map = &g_bootloaderContext.memoryMap[0];
 
-    while (map->memoryInterface != (void *)0u)
+    while (map->memoryInterface)
     {
-        if (map->memoryInterface->init != (void *)0u)
+        if (map->memoryInterface->init)
         {
-            (void)map->memoryInterface->init();
+            map->memoryInterface->init();
         }
         ++map;
     }
 
-#if defined(BL_FEATURE_EXPAND_MEMORY) && BL_FEATURE_EXPAND_MEMORY
+#if BL_FEATURE_EXPAND_MEMORY
     external_memory_map_entry_t *extMap = (external_memory_map_entry_t *)&g_bootloaderContext.externalMemoryMap[0];
-    while (extMap->memoryInterface != (void *)0u)
+    while (extMap->memoryInterface)
     {
-        if (extMap->memoryInterface->init != (void *)0u)
+        if (extMap->memoryInterface->init)
         {
             status = extMap->memoryInterface->init();
         }
         ++extMap;
     }
 #endif // BL_FEATURE_EXPAND_MEMORY
-
     return status;
 }
 
@@ -488,9 +485,9 @@ bool mem_is_erased(uint32_t address, uint32_t length)
     const uint8_t *start = (const uint8_t *)address;
     bool isMemoryErased = true;
 
-    while (length != 0u)
+    while (length)
     {
-        if (*start != 0xFFu)
+        if (*start != 0xFF)
         {
             isMemoryErased = false;
             break;

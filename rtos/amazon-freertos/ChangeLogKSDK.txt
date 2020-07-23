@@ -2,7 +2,34 @@
 @page rtos_log RTOS Change Log
 
 @section FreeRTOS FreeRTOS for MCUXpresso SDK.
-The current version is Amazon-FreeRTOS 1.4.0 Original package is available at <a href="https://github.com/aws/amazon-freertos">github.com/aws/amazon-freertos</a>.
+The current version is Amazon-FreeRTOS 201908.00 Original package is available at <a href="https://github.com/aws/amazon-freertos">github.com/aws/amazon-freertos</a>.
+
+  - 201908.00_rev0
+      - update amazon freertos version
+      - Fix freertos_tasks_c_additions.h - fix IAR build fail
+      - update queue.c - add definition for pvBuffer necessary for segger sysview
+      - iot_crypto.c - change include file to be possible include mbedtls config file defined by MBEDTLS_CONFIG_FILE macro
+      - iot_mqtt_agent.h - extend MQTTAgentConnectParams_t structure - required by se_hostlib examples
+      - Fixed build warnings:
+          - aws_dev_mode_key_provisioning.c - some variables were declared but never referenced
+          - aws_iot_network_manager.c - some functions were declared but never referenced
+          - iot_device_metrics.c - add include
+          - iot_pkcs11_mbedtls.c - incompatible pointer type, unused variable
+          - iot_demo_freertos.c -  macro expansion producing 'defined' has undefined behavior
+          - iot_pkcs11_mbedtls.c - comparison of address not equal to a null pointer is always true
+          - pkcs11.h - '__PASTE' macro redefined
+      - changes required for se_hostlib examples
+          - iot_default_root_certificates.h  tlsCombi_ROOT_CERTIFICATE_PEM added for se_hostlib cloud demos
+          - iot_mqtt_agent.h modified structure to support for clouds which use usename and password
+          - iot_mqtt_agent.c assigning structure to support for clouds which use usename and password
+          - iot_crypto.c threading alt under MBEDTLS_THREADING_ALT
+          - iot_tls.c Supoort for secure element handling
+          - aws_pkcs11_pal.c pkcs11 handling for SE050
+      - Introduced aws_ota_pal.c for RT1060 supporting ota_bootloader (mcu-boot)
+
+  - 1.4.9_rev0
+      - Remove 3rd party libraries lwip, mbedtls (use MCUXpresso SDK versions).
+      - Add missing comments to heap_useNewlib.c.
 
   - 1.4.7_rev0
     - New features:

@@ -3495,7 +3495,7 @@ int mbedtls_sha1_starts_ret(mbedtls_sha1_context *ctx)
 int mbedtls_internal_sha1_process(mbedtls_sha1_context *ctx, const unsigned char data[64])
 {
     status_t ret = kStatus_Fail;
-    ret = SHA_Update(SHA_INSTANCE, ctx, data, 64);
+    ret = SHA_Update(SHA_INSTANCE, ctx, data, 64, MANUAL_LOAD_SHA_INPUT);
     if (ret != kStatus_Success)
     {
         return MBEDTLS_ERR_SHA1_HW_ACCEL_FAILED;
@@ -3509,7 +3509,7 @@ int mbedtls_internal_sha1_process(mbedtls_sha1_context *ctx, const unsigned char
 int mbedtls_sha1_update_ret(mbedtls_sha1_context *ctx, const unsigned char *input, size_t ilen)
 {
     status_t ret = kStatus_Fail;
-    ret = SHA_Update(SHA_INSTANCE, ctx, input, ilen);
+    ret = SHA_Update(SHA_INSTANCE, ctx, input, ilen, MANUAL_LOAD_SHA_INPUT);
     if (ret != kStatus_Success)
     {
         return MBEDTLS_ERR_SHA1_HW_ACCEL_FAILED;
@@ -4075,7 +4075,7 @@ int mbedtls_sha256_starts_ret(mbedtls_sha256_context *ctx, int is224)
 int mbedtls_internal_sha256_process(mbedtls_sha256_context *ctx, const unsigned char data[64])
 {
     status_t ret = kStatus_Fail;
-    ret = SHA_Update(SHA_INSTANCE, ctx, data, 64);
+    ret = SHA_Update(SHA_INSTANCE, ctx, data, 64, MANUAL_LOAD_SHA_INPUT);
     if (ret != kStatus_Success)
     {
         return MBEDTLS_ERR_SHA256_HW_ACCEL_FAILED;
@@ -4089,7 +4089,7 @@ int mbedtls_internal_sha256_process(mbedtls_sha256_context *ctx, const unsigned 
 int mbedtls_sha256_update_ret(mbedtls_sha256_context *ctx, const unsigned char *input, size_t ilen)
 {
     status_t ret = kStatus_Fail;
-    ret = SHA_Update(SHA_INSTANCE, ctx, input, ilen);
+    ret = SHA_Update(SHA_INSTANCE, ctx, input, ilen, MANUAL_LOAD_SHA_INPUT);
     if (ret != kStatus_Success)
     {
         return MBEDTLS_ERR_SHA256_HW_ACCEL_FAILED;

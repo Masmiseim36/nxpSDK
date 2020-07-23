@@ -52,7 +52,7 @@ extern ARM_DRIVER_I2C Driver_I2C3;
 
 /* I2C Driver state flags */
 #define I2C_FLAG_UNINIT (0)
-#define I2C_FLAG_INIT (1 << 0)
-#define I2C_FLAG_POWER (1 << 1)
+#define I2C_FLAG_INIT   (1 << 0)
+#define I2C_FLAG_POWER  (1 << 1)
 
 #endif

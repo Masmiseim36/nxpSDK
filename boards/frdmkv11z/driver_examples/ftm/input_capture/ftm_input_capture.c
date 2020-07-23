@@ -21,12 +21,12 @@
 #define BOARD_FTM_INPUT_CAPTURE_CHANNEL kFTM_Chnl_2
 
 /* Interrupt number and interrupt handler for the FTM base address used */
-#define FTM_INTERRUPT_NUMBER FTM0_IRQn
+#define FTM_INTERRUPT_NUMBER      FTM0_IRQn
 #define FTM_INPUT_CAPTURE_HANDLER FTM0_IRQHandler
 
 /* Interrupt to enable and flag to read */
 #define FTM_CHANNEL_INTERRUPT_ENABLE kFTM_Chnl2InterruptEnable
-#define FTM_CHANNEL_FLAG kFTM_Chnl2Flag
+#define FTM_CHANNEL_FLAG             kFTM_Chnl2Flag
 
 /*******************************************************************************
  * Prototypes

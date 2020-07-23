@@ -25,11 +25,11 @@ float_t pfltUDtComp[DTCOMP_TABLE_SIZE] = DTCOMP_TABLE_DATA;
 /* dead-time compensation look-up table */
 GFLIB_LUT1D_T_FLT sLUTUDtComp;
 
-static void MCS_DTComp(GMCLIB_2COOR_ALBE_T_FLT *sUAlBeDTComp, 
-                GMCLIB_3COOR_T_FLT *sIABC,
-                float_t fltUDcBusFilt,
-                float_t fltPwrStgCharIRange,
-                float_t fltPwrStgCharLinCoeff);
+static void MCS_DTComp(GMCLIB_2COOR_ALBE_T_FLT *sUAlBeDTComp,
+                       GMCLIB_3COOR_T_FLT *sIABC,
+                       float_t fltUDcBusFilt,
+                       float_t fltPwrStgCharIRange,
+                       float_t fltPwrStgCharLinCoeff);
 
 /*******************************************************************************
  * Code
@@ -65,15 +65,13 @@ void MCS_PMSMFocCtrl(mcs_pmsm_foc_t *psFocPMSM)
     GMCLIB_Park_FLT(&psFocPMSM->sUAlBeReq, &psFocPMSM->sAnglePosEl, &psFocPMSM->sUDQEst);
 
     /* BEMF observer in DQ system */
-    psFocPMSM->acc32BemfErr = AMCLIB_PMSMBemfObsrvDQ_A32fff(&psFocPMSM->sIDQ, 
-                                                            &psFocPMSM->sUDQEst, 
-                                                            psFocPMSM->fltSpeedElEst, 
-                                                            &psFocPMSM->sBemfObsrv);
-    
+    psFocPMSM->acc32BemfErr = AMCLIB_PMSMBemfObsrvDQ_A32fff(&psFocPMSM->sIDQ, &psFocPMSM->sUDQEst,
+                                                            psFocPMSM->fltSpeedElEst, &psFocPMSM->sBemfObsrv);
+
     psFocPMSM->f16PosElEst = (frac16_t)AMCLIB_TrackObsrv_A32af(psFocPMSM->acc32BemfErr, &psFocPMSM->sTo);
 
     /* Speed estimation filter  */
-    psFocPMSM->fltSpeedElEst =  GDFLIB_FilterIIR1_FLT(psFocPMSM->sTo.fltSpeed, &psFocPMSM->sSpeedElEstFilt);
+    psFocPMSM->fltSpeedElEst = GDFLIB_FilterIIR1_FLT(psFocPMSM->sTo.fltSpeed, &psFocPMSM->sSpeedElEstFilt);
 
     /* for open loop control enabled parallel running of observer and FOC
      * open loop electrical position passed to rest of FOC */
@@ -102,9 +100,9 @@ void MCS_PMSMFocCtrl(mcs_pmsm_foc_t *psFocPMSM)
             GFLIB_CtrlPIpAW_FLT(psFocPMSM->sIDQError.fltD, &psFocPMSM->bIdPiStopInteg, &psFocPMSM->sIdPiParams);
 
         /*** Q - controller limitation calculation ***/
-        psFocPMSM->sIqPiParams.fltUpperLim = GFLIB_Sqrt_FLT(
-            psFocPMSM->sIdPiParams.fltUpperLim * psFocPMSM->sIdPiParams.fltUpperLim -
-            psFocPMSM->sUDQReq.fltD * psFocPMSM->sUDQReq.fltD);
+        psFocPMSM->sIqPiParams.fltUpperLim =
+            GFLIB_Sqrt_FLT(psFocPMSM->sIdPiParams.fltUpperLim * psFocPMSM->sIdPiParams.fltUpperLim -
+                           psFocPMSM->sUDQReq.fltD * psFocPMSM->sUDQReq.fltD);
         psFocPMSM->sIqPiParams.fltLowerLim = MLIB_Neg_FLT(psFocPMSM->sIqPiParams.fltUpperLim);
 
         /* Q current PI controller */
@@ -117,13 +115,10 @@ void MCS_PMSMFocCtrl(mcs_pmsm_foc_t *psFocPMSM)
 
     /* dead-time compensation */
     psFocPMSM->sUAlBeDTComp = psFocPMSM->sUAlBeReq;
-    if(psFocPMSM->bFlagDTComp)
+    if (psFocPMSM->bFlagDTComp)
     {
-        MCS_DTComp(&psFocPMSM->sUAlBeDTComp,
-                   &psFocPMSM->sIABC,
-                   psFocPMSM->fltUDcBusFilt,
-                   psFocPMSM->fltPwrStgCharIRange,
-                   psFocPMSM->fltPwrStgCharLinCoeff);
+        MCS_DTComp(&psFocPMSM->sUAlBeDTComp, &psFocPMSM->sIABC, psFocPMSM->fltUDcBusFilt,
+                   psFocPMSM->fltPwrStgCharIRange, psFocPMSM->fltPwrStgCharLinCoeff);
     }
 
     /* DCBus ripple elimination */
@@ -170,8 +165,8 @@ void MCS_PMSMFocCtrlSpeed(mcs_speed_t *psSpeed)
  */
 void MCS_PMSMFocCtrlPosition(mcs_position_t *psPosition)
 {
-    /* Position error calculation */ 
-    psPosition->a32PositionError = ((psPosition->a32PositionCmd) - (psPosition->a32Position)); 
+    /* Position error calculation */
+    psPosition->a32PositionError = ((psPosition->a32PositionCmd) - (psPosition->a32Position));
     /* Position P controller output */
     psPosition->f16SpeedReq = MLIB_MulSat_F16as((psPosition->a32PositionError), (psPosition->f16PositionPGain));
 }
@@ -197,7 +192,6 @@ void MCS_PMSMAlignment(mcs_alignment_t *psAlignment)
     {
         psAlignment->f16PosAlign = FRAC16(0.0);
     }
-
 }
 
 /*!
@@ -212,12 +206,11 @@ void MCS_PMSMAlignment(mcs_alignment_t *psAlignment)
 void MCS_PMSMOpenLoopStartUp(mcs_pmsm_startup_t *psStartUp)
 {
     /* Open loop startup speed ramp */
-    psStartUp->fltSpeedRampOpenLoop = GFLIB_Ramp_FLT(psStartUp->fltSpeedReq, 
-                                                     &psStartUp->sSpeedRampOpenLoopParams);
+    psStartUp->fltSpeedRampOpenLoop = GFLIB_Ramp_FLT(psStartUp->fltSpeedReq, &psStartUp->sSpeedRampOpenLoopParams);
 
     /* generation of open loop position from the required speed */
-    psStartUp->f16PosGen = GFLIB_Integrator_F16(MLIB_ConvSc_F16ff(psStartUp->fltSpeedRampOpenLoop,psStartUp->fltSpeedMax), 
-                                                &psStartUp->sSpeedIntegrator);
+    psStartUp->f16PosGen = GFLIB_Integrator_F16(
+        MLIB_ConvSc_F16ff(psStartUp->fltSpeedRampOpenLoop, psStartUp->fltSpeedMax), &psStartUp->sSpeedIntegrator);
 
     /* position merging starts above merging speed threshold*/
     if (MLIB_Abs_FLT(psStartUp->fltSpeedRampOpenLoop) >= psStartUp->fltSpeedCatchUp)
@@ -253,16 +246,16 @@ void MCS_PMSMScalarCtrl(mcs_pmsm_scalar_ctrl_t *psScalarPMSM)
 {
     /* this part of code is executed when scalar control is turned-on */
     /* frequency ramp */
-    psScalarPMSM->fltFreqRamp =
-        GFLIB_Ramp_FLT(psScalarPMSM->fltFreqCmd, &psScalarPMSM->sFreqRampParams);
+    psScalarPMSM->fltFreqRamp = GFLIB_Ramp_FLT(psScalarPMSM->fltFreqCmd, &psScalarPMSM->sFreqRampParams);
 
     /* voltage calculation */
-    psScalarPMSM->sUDQReq.fltQ = psScalarPMSM->fltVHzGain * psScalarPMSM->fltFreqRamp;
+    psScalarPMSM->sUDQReq.fltQ =
+        GFLIB_LowerLimit_FLT((psScalarPMSM->fltVHzGain * psScalarPMSM->fltFreqRamp), psScalarPMSM->fltUqMin);
     psScalarPMSM->sUDQReq.fltD = 0.0F;
 
     /* stator voltage angle , used the same integrator as for the open-loop start up*/
-    psScalarPMSM->f16PosElScalar = GFLIB_Integrator_F16(MLIB_ConvSc_F16ff(psScalarPMSM->fltFreqRamp, psScalarPMSM->fltFreqMax ),
-                                                        &psScalarPMSM->sFreqIntegrator);    
+    psScalarPMSM->f16PosElScalar = GFLIB_Integrator_F16(
+        MLIB_ConvSc_F16ff(psScalarPMSM->fltFreqRamp, psScalarPMSM->fltFreqMax), &psScalarPMSM->sFreqIntegrator);
 }
 
 /******************************************************************************
@@ -272,61 +265,46 @@ void MCS_PMSMScalarCtrl(mcs_pmsm_scalar_ctrl_t *psScalarPMSM)
 
 @return  N/A
 ******************************************************************************/
-static void MCS_DTComp(GMCLIB_2COOR_ALBE_T_FLT *sUAlBeDTComp, 
-                GMCLIB_3COOR_T_FLT *sIABC,
-                float_t fltUDcBusFilt,
-                float_t fltPwrStgCharIRange,
-                float_t fltPwrStgCharLinCoeff)
+static void MCS_DTComp(GMCLIB_2COOR_ALBE_T_FLT *sUAlBeDTComp,
+                       GMCLIB_3COOR_T_FLT *sIABC,
+                       float_t fltUDcBusFilt,
+                       float_t fltPwrStgCharIRange,
+                       float_t fltPwrStgCharLinCoeff)
 {
     register GMCLIB_3COOR_T_FLT sUABCErr;
-    register float_t            fltUerrMax;
-    register int16_t            i16CurrSign;
+    register float_t fltUerrMax;
+    register int16_t i16CurrSign;
 
     /* maximal error voltage */
     fltUerrMax = *pfltUDtComp;
 
     /* compensate phase A */
-    i16CurrSign = (sIABC->fltA > fltPwrStgCharIRange) - 
-                  (sIABC->fltA < -fltPwrStgCharIRange);
+    i16CurrSign = (sIABC->fltA > fltPwrStgCharIRange) - (sIABC->fltA < -fltPwrStgCharIRange);
     if (!i16CurrSign)
-        sUABCErr.fltA = GFLIB_Lut1D_FLT(sIABC->fltA, 
-                                           pfltUDtComp, 
-                                           &sLUTUDtComp);
+        sUABCErr.fltA = GFLIB_Lut1D_FLT(sIABC->fltA, pfltUDtComp, &sLUTUDtComp);
     else
-        sUABCErr.fltA = i16CurrSign * 
-            ((MLIB_Abs_FLT(sIABC->fltA) - fltPwrStgCharIRange) * 
-             fltPwrStgCharLinCoeff - fltUerrMax);
+        sUABCErr.fltA =
+            i16CurrSign * ((MLIB_Abs_FLT(sIABC->fltA) - fltPwrStgCharIRange) * fltPwrStgCharLinCoeff - fltUerrMax);
 
     /* compensate phase B */
-    i16CurrSign = (sIABC->fltB > fltPwrStgCharIRange) - 
-                  (sIABC->fltB < -fltPwrStgCharIRange);
+    i16CurrSign = (sIABC->fltB > fltPwrStgCharIRange) - (sIABC->fltB < -fltPwrStgCharIRange);
     if (!i16CurrSign)
-        sUABCErr.fltB = GFLIB_Lut1D_FLT(sIABC->fltB,
-                                           pfltUDtComp, 
-                                           &sLUTUDtComp);
+        sUABCErr.fltB = GFLIB_Lut1D_FLT(sIABC->fltB, pfltUDtComp, &sLUTUDtComp);
     else
-        sUABCErr.fltB = i16CurrSign * 
-          ((MLIB_Abs_FLT(sIABC->fltB) - fltPwrStgCharIRange) * 
-           fltPwrStgCharLinCoeff - fltUerrMax);
+        sUABCErr.fltB =
+            i16CurrSign * ((MLIB_Abs_FLT(sIABC->fltB) - fltPwrStgCharIRange) * fltPwrStgCharLinCoeff - fltUerrMax);
 
     /* compensate phase C */
-    i16CurrSign = (sIABC->fltC > fltPwrStgCharIRange) - 
-                  (sIABC->fltC < -fltPwrStgCharIRange);
+    i16CurrSign = (sIABC->fltC > fltPwrStgCharIRange) - (sIABC->fltC < -fltPwrStgCharIRange);
     if (!i16CurrSign)
-        sUABCErr.fltC = GFLIB_Lut1D_FLT(sIABC->fltC, 
-                                           pfltUDtComp, 
-                                           &sLUTUDtComp);
+        sUABCErr.fltC = GFLIB_Lut1D_FLT(sIABC->fltC, pfltUDtComp, &sLUTUDtComp);
     else
-        sUABCErr.fltC = i16CurrSign * 
-          ((MLIB_Abs_FLT(sIABC->fltC) - fltPwrStgCharIRange) * 
-           fltPwrStgCharLinCoeff - fltUerrMax);
+        sUABCErr.fltC =
+            i16CurrSign * ((MLIB_Abs_FLT(sIABC->fltC) - fltPwrStgCharIRange) * fltPwrStgCharLinCoeff - fltUerrMax);
 
     /* add compensation voltages */
-    sUAlBeDTComp->fltAlpha += (0.333333333333F) * fltUDcBusFilt * 
-                               (sUABCErr.fltA + sUABCErr.fltA - 
-                                sUABCErr.fltB - sUABCErr.fltC);
+    sUAlBeDTComp->fltAlpha +=
+        (0.333333333333F) * fltUDcBusFilt * (sUABCErr.fltA + sUABCErr.fltA - sUABCErr.fltB - sUABCErr.fltC);
 
-    sUAlBeDTComp->fltBeta += (0.5773502691896F) * fltUDcBusFilt * 
-                              (sUABCErr.fltB - sUABCErr.fltC);
+    sUAlBeDTComp->fltBeta += (0.5773502691896F) * fltUDcBusFilt * (sUABCErr.fltB - sUABCErr.fltC);
 }
-

@@ -5,14 +5,14 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "bootloader/bl_context.h"
-#include "bootloader/bl_irq_common.h"
+#include "autobaud.h"
+#include "bl_context.h"
+#include "bl_irq_common.h"
 #include "bootloader_common.h"
-#include "autobaud/autobaud.h"
-#include "packet/serial_packet.h"
+#include "fsl_assert.h"
 #include "fsl_device_registers.h"
 #include "fsl_uart.h"
-#include "utilities/fsl_assert.h"
+#include "serial_packet.h"
 
 #if (BL_CONFIG_UART)
 
@@ -28,12 +28,12 @@
 // Prototypes
 ////////////////////////////////////////////////////////////////////////////////
 
-static UART_Type *get_uart_baseAddr(uint32_t instance);
 static bool uart_poll_for_activity(const peripheral_descriptor_t *self);
 static status_t uart_full_init(const peripheral_descriptor_t *self, serial_byte_receive_func_t function);
 static void uart_full_shutdown(const peripheral_descriptor_t *self);
 
 static status_t uart_write(const peripheral_descriptor_t *self, const uint8_t *buffer, uint32_t byteCount);
+static void uart_irq_handler(uint32_t instance);
 
 ////////////////////////////////////////////////////////////////////////////////
 // Variables
@@ -43,75 +43,51 @@ const peripheral_control_interface_t g_uartControlInterface = {
     .pollForActivity = uart_poll_for_activity, .init = uart_full_init, .shutdown = uart_full_shutdown, .pump = 0
 };
 
-const peripheral_byte_inteface_t g_uartByteInterface = {.init = NULL, .write = uart_write };
+const peripheral_byte_inteface_t g_uartByteInterface = { .init = NULL, .write = uart_write };
 
 static serial_byte_receive_func_t s_uart_byte_receive_callback;
-static bool g_uartInitDone = false;
+static bool g_uartInitStatus[FSL_FEATURE_SOC_UART_COUNT] = { false }; // not initialized.
+static const uint32_t g_uartBaseAddr[] = UART_BASE_ADDRS;
 
 ////////////////////////////////////////////////////////////////////////////////
 // Code
 ////////////////////////////////////////////////////////////////////////////////
-static UART_Type *get_uart_baseAddr(uint32_t instance)
-{
-    switch (instance)
-    {
-        default:
-        case 0:
-            return (UART_Type *)UART0;
-        case 1:
-            return UART1;
-#if (FSL_FEATURE_SOC_UART_COUNT > 2U)
-        case 2:
-            return UART2;
-#if (FSL_FEATURE_SOC_UART_COUNT > 3U)
-        case 3:
-            return UART3;
-#if (FSL_FEATURE_SOC_UART_COUNT > 4U)
-        case 4:
-            return UART4;
-#if (FSL_FEATURE_SOC_UART_COUNT > 5U)
-        case 5:
-            return UART5;
-#endif // (FSL_FEATURE_SOC_UART_COUNT > 5U)
-#endif // (FSL_FEATURE_SOC_UART_COUNT > 4U)
-#endif // (FSL_FEATURE_SOC_UART_COUNT > 3U)
-#endif // (FSL_FEATURE_SOC_UART_COUNT > 2U)
-    }
-}
-
 bool uart_poll_for_activity(const peripheral_descriptor_t *self)
 {
     uint32_t baud;
-    status_t autoBaudCompleted = autobaud_get_rate(self->instance, &baud);
+    uint32_t instance;
+    instance = self->instance;
+
+    status_t autoBaudCompleted = autobaud_get_rate(instance, &baud);
 
     if (autoBaudCompleted == kStatus_Success)
     {
         uart_config_t userConfig;
-        UART_Type *base = get_uart_baseAddr(self->instance);
+        uint32_t baseAddr = g_uartBaseAddr[instance];
         UART_GetDefaultConfig(&userConfig);
 
         userConfig.baudRate_Bps = baud;
         userConfig.enableTx = true;
         userConfig.enableRx = true;
 
-        if (UART_Init(base, &userConfig, get_uart_clock(self->instance)) == kStatus_Success)
+        if (UART_Init((UART_Type *)baseAddr, &userConfig, get_uart_clock(instance)) == kStatus_Success)
         {
-            UART_SetSystemIRQ(self->instance, kPeripheralEnableIRQ);
-            UART_EnableInterrupts(base, kUART_RxDataRegFullInterruptEnable);
             // Configure selected pin as uart peripheral interface
-            self->pinmuxConfig(self->instance, kPinmuxType_Peripheral);
+            self->pinmuxConfig(instance, kPinmuxType_Peripheral);
+            // update pheripheral interface init status
+            g_uartInitStatus[instance] = true;
+
+            UART_SetSystemIRQ(instance, kPeripheralEnableIRQ);
+            UART_EnableInterrupts((UART_Type *)baseAddr, kUART_RxDataRegFullInterruptEnable);
 
             // This was the byte pattern identified in autobaud detection, inform the command layer
             s_uart_byte_receive_callback(kFramingPacketStartByte);
             s_uart_byte_receive_callback(kFramingPacketType_Ping);
-
-            g_uartInitDone = true;
-
             return true;
         }
         else
         {
-            autobaud_init(self->instance);
+            autobaud_init(instance);
         }
     }
 
@@ -134,17 +110,19 @@ status_t uart_full_init(const peripheral_descriptor_t *self, serial_byte_receive
 
 void uart_full_shutdown(const peripheral_descriptor_t *self)
 {
-    if (g_uartInitDone)
+    uint32_t instance = self->instance;
+    if (g_uartInitStatus[instance])
     {
-        UART_SetSystemIRQ(self->instance, kPeripheralDisableIRQ);
-        UART_Deinit(get_uart_baseAddr(self->instance));
+        uint32_t baseAddr = g_uartBaseAddr[instance];
+        UART_SetSystemIRQ(instance, kPeripheralDisableIRQ);
+        UART_Deinit((UART_Type *)baseAddr);
     }
 
 //! Note: if not deinit autobaud(IRQ method), user app may encounters hardfault
 //! if it doesn't provide related pin interrupt service routine.
-#if BL_UART_AUTOBAUD_IRQ
+#if BL_FEATURE_UART_AUTOBAUD_IRQ
     // De-init autobaud detector.
-    autobaud_deinit(self->instance);
+    autobaud_deinit(instance);
 #endif
 
 #if BL_FEATURE_6PINS_PERIPHERAL
@@ -152,7 +130,7 @@ void uart_full_shutdown(const peripheral_descriptor_t *self)
     //   those pin which we used to poll for activity.
     if (g_bootloaderContext.activePeripheral == NULL)
     {
-        self->pinmuxConfig(self->instance, kPinmuxType_RestoreForActivity);
+        self->pinmuxConfig(instance, kPinmuxType_RestoreForActivity);
     }
     // When the active peripheral is UART, we should restore all
     //  the UART peripheral pin.
@@ -160,16 +138,44 @@ void uart_full_shutdown(const peripheral_descriptor_t *self)
 #endif
     {
         // Restore selected pin to default state to reduce IDD.
-        self->pinmuxConfig(self->instance, kPinmuxType_Default);
+        self->pinmuxConfig(instance, kPinmuxType_Default);
     }
 }
 
 status_t uart_write(const peripheral_descriptor_t *self, const uint8_t *buffer, uint32_t byteCount)
 {
-    UART_WriteBlocking(get_uart_baseAddr(self->instance), buffer, byteCount);
+    uint32_t baseAddr = g_uartBaseAddr[self->instance];
+    UART_WriteBlocking((UART_Type *)baseAddr, buffer, byteCount);
     return kStatus_Success;
 }
 
+/*FUNCTION**********************************************************************
+ *
+ * Function Name : uart_irq_handler
+ * Description   : uart bootloader interrupt handler
+ *
+ *END**************************************************************************/
+static void uart_irq_handler(uint32_t instance)
+{
+    UART_Type *base = (UART_Type *)g_uartBaseAddr[instance];
+    if (base->S1 & UART_S1_RDRF_MASK)
+    {
+        s_uart_byte_receive_callback(base->D);
+    }
+}
+
+#if defined(FSL_FEATURE_UART_HAS_SHARED_IRQ0_IRQ1_IRQ2_IRQ3) && FSL_FEATURE_UART_HAS_SHARED_IRQ0_IRQ1_IRQ2_IRQ3
+void UART0_UART1_UART2_UART3_IRQHandler(void)
+{
+    for (uint32_t i = 0; i < FSL_FEATURE_SOC_UART_COUNT; i++)
+    {
+        if (g_uartInitStatus[i])
+        {
+            uart_irq_handler(i);
+        }
+    }
+}
+#else
 /********************************************************************/
 /*
  * UART0 IRQ Handler
@@ -196,6 +202,7 @@ void UART1_IRQHandler(void)
     }
 }
 
+#endif // defined FSL_FEATURE_UART_HAS_SHARED_IRQ0_IRQ1_IRQ2_IRQ3
 //! @}
 
 #endif // (BL_CONFIG_UART)

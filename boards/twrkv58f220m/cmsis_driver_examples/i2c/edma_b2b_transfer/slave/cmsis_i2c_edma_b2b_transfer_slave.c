@@ -22,7 +22,7 @@
  ******************************************************************************/
 #define EXAMPLE_I2C_SLAVE Driver_I2C1
 
-#define I2C_DATA_LENGTH 32U
+#define I2C_DATA_LENGTH       32U
 #define I2C_MASTER_SLAVE_ADDR 0x7E
 
 /*******************************************************************************

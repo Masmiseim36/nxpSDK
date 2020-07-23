@@ -18,18 +18,18 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_PDB_BASEADDR PDB0
-#define DEMO_PDB_CLOCK CLOCK_GetFreq(BUS_CLK)
-#define DEMO_PDB_ADC_TRIGGER_CHANNEL kPDB_ADCTriggerChannel0 /* For ADC. */
+#define DEMO_PDB_BASEADDR                PDB0
+#define DEMO_PDB_CLOCK                   CLOCK_GetFreq(BUS_CLK)
+#define DEMO_PDB_ADC_TRIGGER_CHANNEL     kPDB_ADCTriggerChannel0 /* For ADC. */
 #define DEMO_PDB_ADC_PRETRIGGER_CHANNEL0 kPDB_ADCPreTrigger0
 #define DEMO_PDB_ADC_PRETRIGGER_CHANNEL1 kPDB_ADCPreTrigger1
 
-#define DEMO_CADC_BASEADDR ADC
-#define DEMO_ADC_IRQ_ID ADCA_IRQn
+#define DEMO_CADC_BASEADDR   ADC
+#define DEMO_ADC_IRQ_ID      ADCA_IRQn
 #define DEMO_ADC_IRQ_HANDLER ADCA_IRQHandler
-#define DEMO_CADC_CHANNEL 4U
+#define DEMO_CADC_CHANNEL    4U
 
-#define DEMO_DAC_BASEADDR DAC0
+#define DEMO_DAC_BASEADDR             DAC0
 #define DEMO_DAC_TRG_INTERVAL_FREQ_HZ 500UL /* Interval freq for the change of DAC output */
 
 #define SYSTICK_CLK CLOCK_GetFreq(SYS_CLK)
@@ -39,7 +39,7 @@
 #define CHART_COLS 100U /*!< chart column for sampled data */
 
 #define ADC_12BIT_MAXVALUE (0x1000U)
-#define RATIO (ADC_12BIT_MAXVALUE / CHART_ROWS)
+#define RATIO              (ADC_12BIT_MAXVALUE / CHART_ROWS)
 typedef struct sparse_node
 {
     struct sparse_node *next; /* Next node */
@@ -114,11 +114,7 @@ void DEMO_ADC_IRQ_HANDLER(void)
         CADC_ClearStatusFlags(DEMO_CADC_BASEADDR, kCADC_ConverterAEndOfScanFlag);
     }
     gAdcDone = true;
-    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-      exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 static void InitTriggerSource(void)
@@ -198,7 +194,7 @@ static void Init_ADC(void)
     cadcSampleConfigStruct.channelNumber          = DEMO_CADC_CHANNEL;
     cadcSampleConfigStruct.channelGain            = kCADC_ChannelGainx1;
     cadcSampleConfigStruct.enableDifferentialPair = 0U;
-    cadcSampleConfigStruct.zeroCrossingMode       = kCADC_ZeroCorssingDisabled;
+    cadcSampleConfigStruct.zeroCrossingMode       = kCADC_ZeroCrossingDisabled;
     cadcSampleConfigStruct.lowLimitValue          = 0U;
     cadcSampleConfigStruct.highLimitValue         = 0xFFFFU;
     cadcSampleConfigStruct.offsetValue            = 0U;

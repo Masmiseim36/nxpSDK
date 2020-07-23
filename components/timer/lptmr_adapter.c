@@ -35,33 +35,47 @@ static hal_timer_handle_t s_timerHandle[sizeof(s_LptmrBase) / sizeof(LPTMR_Type 
 static void HAL_TimerInterruptHandle(uint8_t instance)
 {
     hal_timer_handle_struct_t *halTimerState = (hal_timer_handle_struct_t *)s_timerHandle[instance];
+    uint32_t lptmrIntFlag;
 
-    LPTMR_ClearStatusFlags(s_LptmrBase[halTimerState->instance], kLPTMR_TimerCompareFlag);
-    if (halTimerState->callback != NULL)
+    if (NULL == halTimerState)
     {
-        halTimerState->callback(halTimerState->callbackParam);
+        return;
+    }
+
+    lptmrIntFlag = LPTMR_GetStatusFlags(s_LptmrBase[instance]);
+    LPTMR_ClearStatusFlags(s_LptmrBase[instance], (uint32_t)kLPTMR_TimerCompareFlag);
+
+    if (0U != lptmrIntFlag)
+    {
+        if (halTimerState->callback != NULL)
+        {
+            halTimerState->callback(halTimerState->callbackParam);
+        }
     }
 }
 
+void PWT_LPTMR0_IRQHandler(void);
 void PWT_LPTMR0_IRQHandler(void)
 {
     HAL_TimerInterruptHandle(0);
-    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-      exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
-
+void LPTMR0_IRQHandler(void);
 void LPTMR0_IRQHandler(void)
 {
     HAL_TimerInterruptHandle(0);
-    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-      exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
+void LPTMR0_LPTMR1_IRQHandler(void);
+void LPTMR0_LPTMR1_IRQHandler(void)
+{
+    HAL_TimerInterruptHandle(0);
+#if (defined(FSL_FEATURE_SOC_LPTMR_COUNT) && (FSL_FEATURE_SOC_LPTMR_COUNT > 1U))
+    HAL_TimerInterruptHandle(1);
+#endif /* (FSL_FEATURE_SOC_LPTMR_COUNT > 1U) */
+    SDK_ISR_EXIT_BARRIER;
+}
+
 /************************************************************************************
 *************************************************************************************
 * Public functions
@@ -93,15 +107,15 @@ hal_timer_status_t HAL_TimerInit(hal_timer_handle_t halTimerHandle, hal_timer_co
      * Note : the parameter "ticks" of LPTMR_SetTimerPeriod should be equal or greater than 1.
      */
     LPTMR_SetTimerPeriod(s_LptmrBase[halTimerState->instance],
-                         USEC_TO_COUNT(halTimerState->timeout, halTimerState->timerClock_Hz));
+                         (uint32_t)USEC_TO_COUNT(halTimerState->timeout, halTimerState->timerClock_Hz));
 
     /* Enable timer interrupt */
-    LPTMR_EnableInterrupts(s_LptmrBase[halTimerState->instance], kLPTMR_TimerInterruptEnable);
+    LPTMR_EnableInterrupts(s_LptmrBase[halTimerState->instance], (uint32_t)kLPTMR_TimerInterruptEnable);
 
     s_timerHandle[halTimerState->instance] = halTimerHandle;
 
     NVIC_SetPriority((IRQn_Type)irqId, HAL_TIMER_ISR_PRIORITY);
-    EnableIRQ(irqId);
+    (void)EnableIRQ(irqId);
     return kStatus_HAL_TimerSuccess;
 }
 
@@ -147,14 +161,14 @@ uint32_t HAL_TimerGetMaxTimeout(hal_timer_handle_t halTimerHandle)
     {
         return 1000;
     }
-    return COUNT_TO_USEC(0xFFFF - reserveCount, halTimerState->timerClock_Hz);
+    return (uint32_t)COUNT_TO_USEC((0xFFFFUL - reserveCount), halTimerState->timerClock_Hz);
 }
 /* return micro us */
 uint32_t HAL_TimerGetCurrentTimerCount(hal_timer_handle_t halTimerHandle)
 {
     assert(halTimerHandle);
     hal_timer_handle_struct_t *halTimerState = halTimerHandle;
-    return COUNT_TO_USEC(LPTMR_GetCurrentTimerCount(s_LptmrBase[halTimerState->instance]),
+    return (uint32_t)COUNT_TO_USEC(LPTMR_GetCurrentTimerCount(s_LptmrBase[halTimerState->instance]),
                          halTimerState->timerClock_Hz);
 }
 
@@ -165,9 +179,11 @@ hal_timer_status_t HAL_TimerUpdateTimeout(hal_timer_handle_t halTimerHandle, uin
     assert(halTimerHandle);
     hal_timer_handle_struct_t *halTimerState = halTimerHandle;
     halTimerState->timeout                   = timeout;
-    tickCount                                = USEC_TO_COUNT(halTimerState->timeout, halTimerState->timerClock_Hz);
-    if ((tickCount < 1) || (tickCount > 0xfff0))
+    tickCount                                = (uint32_t)USEC_TO_COUNT(halTimerState->timeout, halTimerState->timerClock_Hz);
+    if ((tickCount < 1U) || (tickCount > 0xfff0U))
+    {
         return kStatus_HAL_TimerOutOfRanger;
+    }
     LPTMR_SetTimerPeriod(s_LptmrBase[halTimerState->instance], tickCount);
     return kStatus_HAL_TimerSuccess;
 }

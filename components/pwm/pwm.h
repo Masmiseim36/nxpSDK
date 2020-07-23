@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 NXP
+ * Copyright 2018-2019 NXP
  * All rights reserved.
  *
  *
@@ -58,10 +58,29 @@ typedef struct _hal_pwm_setup_config
     uint8_t dutyCyclePercent;     /*!< PWM duty cycle percent */
 } hal_pwm_setup_config_t;
 
+/*! @brief Hal pwm handle size. */
 #define HAL_PWM_HANDLE_SIZE (8U)
 
 /*! @brief Hal pwm handle. */
 typedef void *hal_pwm_handle_t;
+
+/*!
+ * @brief Defines the PMW handle
+ *
+ * This macro is used to define a 4 byte aligned PWM handle.
+ * Then use "(hal_pwm_handle_t)name" to get the PWM handle.
+ *
+ * The macro should be global and could be optional. You could also define PWM handle by yourself.
+ *
+ * This is an example,
+ * @code
+ *   HAL_PWM_HANDLE_DEFINE(pwmHandle);
+ * @endcode
+ *
+ * @param name The name string of the PMW handle.
+ */
+#define HAL_PWM_HANDLE_DEFINE(name) uint32_t name[(HAL_PWM_HANDLE_SIZE + sizeof(uint32_t) - 1U) / sizeof(uint32_t)]
+
 /************************************************************************************
 *************************************************************************************
 * Public prototypes
@@ -75,15 +94,20 @@ extern "C" {
  * @brief Initializes the pwm adapter module for a pwm basic operation.
  *
  * @note This API should be called at the beginning of the application using the pwm adapter.
- *  @code
- *   uint32_t halPwmHandleBuffer[((HAL_PWM_HANDLE_SIZE + sizeof(uint32_t) - 1) / sizeof(uitn32_t))];
- *   hal_pwm_handle_t halPwmHandle = (hal_pwm_handle_t)&halPwmHandleBuffer[0];
- *   HAL_PwmInit(halPwmHandle, BOARD_PWM_INSTANCE, BOARD_PWM_SOURCE_CLOCK);
- *  @endcode
+ *
+ * Example below shows how to use this API to configure the PWM.
+ * @code
+ *   HAL_PWM_HANDLE_DEFINE(pwmHandle);
+ *   HAL_PwmInit((hal_pwm_handle_t)pwmHandle, BOARD_PWM_INSTANCE, BOARD_PWM_SOURCE_CLOCK);
+ * @endcode
  *
  * @param  halPwmHandle Hal pwm adapter handle, the handle buffer with size #HAL_PWM_HANDLE_SIZE should be
  * allocated at upper level
- * The handle should be 4 byte aligned, because unaligned access does not support on some devices.
+ * The handle should be 4 byte aligned, because unaligned access doesn't be supported on some devices.
+ * You can define the handle in the following two ways:
+ * #HAL_PWM_HANDLE_DEFINE(halPwmHandle);
+ * or
+ * uint32_t halPwmHandle[((HAL_PWM_HANDLE_SIZE + sizeof(uint32_t) - 1U) / sizeof(uint32_t))];
  * @param  instance The instance index of the hardware PWM. For example, if FTM is used as the PWM hardware,
  * 0 should be set to "instance" to use FTM0; 2 should be set to "instance" to use FTM2
  * detail information please refer to the SOC corresponding RM.

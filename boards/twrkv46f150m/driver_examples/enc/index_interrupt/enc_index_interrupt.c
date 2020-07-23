@@ -16,7 +16,7 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_ENC_BASEADDR ENC
+#define DEMO_ENC_BASEADDR     ENC
 #define DEMO_ENC_INDEX_IRQ_ID ENC_INDEX_IRQn
 
 /*******************************************************************************
@@ -44,11 +44,7 @@ void ENC_INDEX_IRQHandler(void)
 {
     g_EncIndexCounter++;
     ENC_ClearStatusFlags(DEMO_ENC_BASEADDR, kENC_INDEXPulseFlag);
-    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-      exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 /*!

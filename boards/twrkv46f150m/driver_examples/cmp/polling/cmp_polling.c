@@ -16,12 +16,12 @@
  * Definitions
  ******************************************************************************/
 #define LED_INIT() LED_ORANGE_INIT(LOGIC_LED_OFF)
-#define LED_ON() LED_ORANGE_ON()
-#define LED_OFF() LED_ORANGE_OFF()
+#define LED_ON()   LED_ORANGE_ON()
+#define LED_OFF()  LED_ORANGE_OFF()
 
-#define DEMO_CMP_BASE CMP0
+#define DEMO_CMP_BASE         CMP0
 #define DEMO_CMP_USER_CHANNEL 5U
-#define DEMO_CMP_DAC_CHANNEL 7U
+#define DEMO_CMP_DAC_CHANNEL  7U
 
 /*******************************************************************************
  * Prototypes

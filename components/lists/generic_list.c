@@ -11,24 +11,31 @@
 * Include
 *************************************************************************************
 ********************************************************************************** */
-#include "fsl_common.h"
 #include "generic_list.h"
 
-static list_status_t LIST_Scan(list_handle_t list, list_element_handle_t newElement)
+static list_status_t LIST_Error_Check(list_handle_t list, list_element_handle_t newElement)
 {
-    list_status_t listStatus = kLIST_Ok;
+    list_status_t listStatus      = kLIST_Ok;
     list_element_handle_t element = list->head;
 
-    while (element != NULL) /*Scan list*/
+    if ((list->max != 0U) && (list->max == list->size))
     {
-        /* Determine if element is duplicated */
-        if (element == newElement)
-        {
-            listStatus = kLIST_DuplicateError;
-            break;
-        }
-        element = element->next;
+        listStatus = kLIST_Full; /*List is full*/
     }
+    else
+    {
+        while (element != NULL) /*Scan list*/
+        {
+            /* Determine if element is duplicated */
+            if (element == newElement)
+            {
+                listStatus = kLIST_DuplicateError;
+                break;
+            }
+            element = element->next;
+        }
+    }
+
     return listStatus;
 }
 
@@ -98,20 +105,12 @@ list_handle_t LIST_GetList(list_element_handle_t element)
  ********************************************************************************** */
 list_status_t LIST_AddTail(list_handle_t list, list_element_handle_t element)
 {
-    uint32_t regPrimask = DisableGlobalIRQ();
+    uint32_t regPrimask      = DisableGlobalIRQ();
     list_status_t listStatus = kLIST_Ok;
 
-    if ((list->max != 0U) && (list->max == list->size))
+    listStatus = LIST_Error_Check(list, element);
+    if (listStatus == kLIST_Ok) /* Avoiding list status error */
     {
-        listStatus =  kLIST_Full; /*List is full*/
-    }
-    else if(kLIST_DuplicateError == LIST_Scan(list, element)) /* Avoiding duplicate elements */
-    {
-        listStatus = kLIST_DuplicateError;
-    }
-    else
-    {
-        /* Links element to the tail of the list */
         if (list->size == 0U)
         {
             list->head = element;
@@ -120,9 +119,12 @@ list_status_t LIST_AddTail(list_handle_t list, list_element_handle_t element)
         {
             list->tail->next = element;
         }
+#if (defined(GENERIC_LIST_LIGHT) && (GENERIC_LIST_LIGHT > 0U))
+#else
         element->prev = list->tail;
-        element->next = NULL;
+#endif
         element->list = list;
+        element->next = NULL;
         list->tail    = element;
         list->size++;
     }
@@ -149,31 +151,27 @@ list_status_t LIST_AddTail(list_handle_t list, list_element_handle_t element)
  ********************************************************************************** */
 list_status_t LIST_AddHead(list_handle_t list, list_element_handle_t element)
 {
-    uint32_t regPrimask = DisableGlobalIRQ();
+    uint32_t regPrimask      = DisableGlobalIRQ();
     list_status_t listStatus = kLIST_Ok;
 
-    if ((list->max != 0U) && (list->max == list->size))
-    {
-        listStatus = kLIST_Full; /*List is full*/
-    }
-    else if (kLIST_DuplicateError == LIST_Scan(list, element)) /*Avoiding duplicate elements*/
-    {
-        listStatus = kLIST_DuplicateError;
-    }
-    else
+    listStatus = LIST_Error_Check(list, element);
+    if (listStatus == kLIST_Ok) /* Avoiding list status error */
     {
         /* Links element to the head of the list */
         if (list->size == 0U)
         {
             list->tail = element;
         }
+#if (defined(GENERIC_LIST_LIGHT) && (GENERIC_LIST_LIGHT > 0U))
+#else
         else
         {
             list->head->prev = element;
         }
-        element->next = list->head;
         element->prev = NULL;
+#endif
         element->list = list;
+        element->next = list->head;
         list->head    = element;
         list->size++;
     }
@@ -215,12 +213,15 @@ list_element_handle_t LIST_RemoveHead(list_handle_t list)
         {
             list->tail = NULL;
         }
+#if (defined(GENERIC_LIST_LIGHT) && (GENERIC_LIST_LIGHT > 0U))
+#else
         else
         {
             element->next->prev = NULL;
         }
-        list->head    = element->next; /*Is NULL if element is head*/
+#endif
         element->list = NULL;
+        list->head    = element->next; /*Is NULL if element is head*/
     }
 
     EnableGlobalIRQ(regPrimask);
@@ -284,7 +285,11 @@ list_element_handle_t LIST_GetNext(list_element_handle_t element)
  ********************************************************************************** */
 list_element_handle_t LIST_GetPrev(list_element_handle_t element)
 {
+#if (defined(GENERIC_LIST_LIGHT) && (GENERIC_LIST_LIGHT > 0U))
+    return NULL;
+#else
     return element->prev;
+#endif
 }
 
 /*! *********************************************************************************
@@ -305,6 +310,7 @@ list_element_handle_t LIST_GetPrev(list_element_handle_t element)
 list_status_t LIST_RemoveElement(list_element_handle_t element)
 {
     list_status_t listStatus = kLIST_Ok;
+    uint32_t regPrimask      = DisableGlobalIRQ();
 
     if (element->list == NULL)
     {
@@ -312,8 +318,23 @@ list_status_t LIST_RemoveElement(list_element_handle_t element)
     }
     else
     {
-        uint32_t regPrimask = DisableGlobalIRQ();
-
+#if (defined(GENERIC_LIST_LIGHT) && (GENERIC_LIST_LIGHT > 0U))
+        list_element_handle_t element_list = element->list->head;
+        while (element_list)
+        {
+            if (element->list->head == element)
+            {
+                element->list->head = element_list->next;
+                break;
+            }
+            if (element_list->next == element)
+            {
+                element_list->next = element->next;
+                break;
+            }
+            element_list = element_list->next;
+        }
+#else
         if (element->prev == NULL) /*Element is head or solo*/
         {
             element->list->head = element->next; /*is null if solo*/
@@ -330,12 +351,12 @@ list_status_t LIST_RemoveElement(list_element_handle_t element)
         {
             element->next->prev = element->prev;
         }
+#endif
         element->list->size--;
         element->list = NULL;
-
-        EnableGlobalIRQ(regPrimask);
     }
 
+    EnableGlobalIRQ(regPrimask);
     return listStatus;
 }
 
@@ -360,35 +381,55 @@ list_status_t LIST_RemoveElement(list_element_handle_t element)
 list_status_t LIST_AddPrevElement(list_element_handle_t element, list_element_handle_t newElement)
 {
     list_status_t listStatus = kLIST_Ok;
-    uint32_t regPrimask = DisableGlobalIRQ();
+    uint32_t regPrimask      = DisableGlobalIRQ();
 
     if (element->list == NULL)
     {
         listStatus = kLIST_OrphanElement; /*Element was previusly removed or never added*/
     }
-    else if ((element->list->max != 0U) && (element->list->max == element->list->size))
-    {
-        listStatus =  kLIST_Full; /*List is full*/
-    }
-    else if (kLIST_DuplicateError == LIST_Scan(element->list, newElement))
-    {
-        listStatus =  kLIST_DuplicateError; /*Element is duplicate*/
-    }
     else
     {
-        if (element->prev == NULL) /*Element is list head*/
+        listStatus = LIST_Error_Check(element->list, newElement);
+        if (listStatus == kLIST_Ok)
         {
-            element->list->head = newElement;
+#if (defined(GENERIC_LIST_LIGHT) && (GENERIC_LIST_LIGHT > 0U))
+            list_element_handle_t element_list = element->list->head;
+            while (element_list)
+            {
+                if ((element_list->next == element) || (element_list == element))
+                {
+                    if (element_list == element)
+                    {
+                        element->list->head = newElement;
+                    }
+                    else
+                    {
+                        element_list->next = newElement;
+                    }
+                    newElement->list = element->list;
+                    newElement->next = element;
+                    element->list->size++;
+                    break;
+                }
+                element_list = element_list->next;
+            }
+
+#else
+            if (element->prev == NULL) /*Element is list head*/
+            {
+                element->list->head = newElement;
+            }
+            else
+            {
+                element->prev->next = newElement;
+            }
+            newElement->list = element->list;
+            element->list->size++;
+            newElement->next = element;
+            newElement->prev = element->prev;
+            element->prev = newElement;
+#endif
         }
-        else
-        {
-            element->prev->next = newElement;
-        }
-        newElement->list = element->list;
-        element->list->size++;
-        newElement->next = element;
-        newElement->prev = element->prev;
-        element->prev    = newElement;
     }
 
     EnableGlobalIRQ(regPrimask);

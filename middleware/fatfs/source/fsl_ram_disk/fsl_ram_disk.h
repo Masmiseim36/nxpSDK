@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  *
@@ -26,9 +26,9 @@ extern "C" {
  ******************************************************************************/
 DSTATUS ram_disk_initialize(BYTE pdrv);
 DSTATUS ram_disk_status(BYTE pdrv);
-DRESULT ram_disk_read(BYTE pdrv, BYTE *buff, DWORD sector, UINT count);
-DRESULT ram_disk_write(BYTE pdrv, const BYTE *buff, DWORD sector, UINT count);
-DRESULT ram_disk_ioctl(BYTE pdrv, BYTE cmd, void *buff);
+DRESULT ram_disk_read(BYTE pdrv, BYTE* buff, LBA_t sector, UINT count);
+DRESULT ram_disk_write(BYTE pdrv, const BYTE* buff, LBA_t sector, UINT count);
+DRESULT ram_disk_ioctl(BYTE pdrv, BYTE cmd, void* buff);
 
 #if defined(__cplusplus)
 }

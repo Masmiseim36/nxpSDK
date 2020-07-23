@@ -83,6 +83,10 @@ struct nd6_router_list_entry default_router_list[LWIP_ND6_NUM_ROUTERS];
 u32_t reachable_time = LWIP_ND6_REACHABLE_TIME;
 u32_t retrans_timer = LWIP_ND6_RETRANS_TIMER; /* @todo implement this value in timer */
 
+#if LWIP_ND6_QUEUEING
+u8_t nd6_queue_size = 0;
+#endif
+
 /* Index for cache entries. */
 static u8_t nd6_cached_neighbor_index;
 static netif_addr_idx_t nd6_cached_destination_index;
@@ -693,11 +697,11 @@ nd6_input(struct pbuf *p, struct netif *inp)
         }
         mtu_opt = (struct mtu_option *)buffer;
         mtu32 = lwip_htonl(mtu_opt->mtu);
-        if ((mtu32 >= 1280) && (mtu32 <= 0xffff)) {
+        if ((mtu32 >= IP6_MIN_MTU_LENGTH) && (mtu32 <= 0xffff)) {
 #if LWIP_ND6_ALLOW_RA_UPDATES
           if (inp->mtu) {
             /* don't set the mtu for IPv6 higher than the netif driver supports */
-            inp->mtu6 = LWIP_MIN(inp->mtu, (u16_t)mtu32);
+            inp->mtu6 = LWIP_MIN(LWIP_MIN(inp->mtu, inp->mtu6), (u16_t)mtu32);
           } else {
             inp->mtu6 = (u16_t)mtu32;
           }
@@ -1182,15 +1186,27 @@ nd6_send_ns(struct netif *netif, const ip6_addr_t *target_addr, u8_t flags)
 {
   struct ns_header *ns_hdr;
   struct pbuf *p;
-  const ip6_addr_t *src_addr;
+  const ip6_addr_t *src_addr = NULL;
   u16_t lladdr_opt_len;
 
   LWIP_ASSERT("target address is required", target_addr != NULL);
 
-  if (!(flags & ND6_SEND_FLAG_ANY_SRC) &&
-      ip6_addr_isvalid(netif_ip6_addr_state(netif,0))) {
-    /* Use link-local address as source address. */
-    src_addr = netif_ip6_addr(netif, 0);
+  if (!(flags & ND6_SEND_FLAG_ANY_SRC)) {
+    int i;
+    for (i = 0; i < LWIP_IPV6_NUM_ADDRESSES; i++) {
+      if (ip6_addr_isvalid(netif_ip6_addr_state(netif, i)) &&
+            ip6_addr_netcmp(target_addr, netif_ip6_addr(netif, i))) {
+        src_addr = netif_ip6_addr(netif, i);
+        break;
+      }
+    }
+
+    if (i == LWIP_IPV6_NUM_ADDRESSES) {
+      LWIP_DEBUGF(IP6_DEBUG | LWIP_DBG_LEVEL_WARNING, ("ICMPv6 NS: no available src address\n"));
+      ND6_STATS_INC(nd6.err);
+      return;
+    }
+
     /* calculate option length (in 8-byte-blocks) */
     lladdr_opt_len = ((netif->hwaddr_len + 2) + 7) >> 3;
   } else {
@@ -1835,9 +1851,9 @@ nd6_new_router(const ip6_addr_t *router_addr, struct netif *netif)
   for (router_index = LWIP_ND6_NUM_ROUTERS - 1; router_index >= 0; router_index--) {
     /* check if router already exists (this is a special case for 2 netifs on the same subnet
        - e.g. wifi and cable) */
-    if(default_router_list[router_index].neighbor_entry == &(neighbor_cache[neighbor_index])){ 
-      return router_index; 
-    } 
+    if(default_router_list[router_index].neighbor_entry == &(neighbor_cache[neighbor_index])){
+      return router_index;
+    }
     if (default_router_list[router_index].neighbor_entry == NULL) {
       /* remember lowest free index to create a new entry */
       free_router_index = router_index;
@@ -2097,7 +2113,11 @@ nd6_queue_packet(s8_t neighbor_index, struct pbuf *q)
     /* queue packet ... */
 #if LWIP_ND6_QUEUEING
     /* allocate a new nd6 queue entry */
-    new_entry = (struct nd6_q_entry *)memp_malloc(MEMP_ND6_QUEUE);
+    new_entry = NULL;
+    if (nd6_queue_size < MEMP_NUM_ND6_QUEUE) {
+      new_entry = (struct nd6_q_entry *)memp_malloc(MEMP_ND6_QUEUE);
+      nd6_queue_size++;
+    }
     if ((new_entry == NULL) && (neighbor_cache[neighbor_index].q != NULL)) {
       /* Free oldest packet (as per RFC recommendation) */
       r = neighbor_cache[neighbor_index].q;
@@ -2105,6 +2125,7 @@ nd6_queue_packet(s8_t neighbor_index, struct pbuf *q)
       r->next = NULL;
       nd6_free_q(r);
       new_entry = (struct nd6_q_entry *)memp_malloc(MEMP_ND6_QUEUE);
+      nd6_queue_size++;
     }
     if (new_entry != NULL) {
       new_entry->next = NULL;
@@ -2163,6 +2184,7 @@ nd6_free_q(struct nd6_q_entry *q)
     LWIP_ASSERT("r->p != NULL", (r->p != NULL));
     pbuf_free(r->p);
     memp_free(MEMP_ND6_QUEUE, r);
+    nd6_queue_size--;
   }
 }
 #endif /* LWIP_ND6_QUEUEING */
@@ -2203,6 +2225,7 @@ nd6_send_q(s8_t i)
     pbuf_free(q->p);
     /* now queue entry can be freed */
     memp_free(MEMP_ND6_QUEUE, q);
+    nd6_queue_size--;
   }
 #else /* LWIP_ND6_QUEUEING */
   if (neighbor_cache[i].q != NULL) {
@@ -2300,7 +2323,7 @@ nd6_get_destination_mtu(const ip6_addr_t *ip6addr, struct netif *netif)
     return netif_mtu6(netif);
   }
 
-  return 1280; /* Minimum MTU */
+  return IP6_MIN_MTU_LENGTH; /* Minimum MTU */
 }
 
 

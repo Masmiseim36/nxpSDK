@@ -690,6 +690,9 @@ tcp_listen_input(struct tcp_pcb_listen *pcb)
 #if LWIP_CALLBACK_API || TCP_LISTEN_BACKLOG
     npcb->listener = pcb;
 #endif /* LWIP_CALLBACK_API || TCP_LISTEN_BACKLOG */
+#if LWIP_VLAN_PCP
+    npcb->netif_hints.tci = pcb->netif_hints.tci;
+#endif /* LWIP_VLAN_PCP */
     /* inherit socket options */
     npcb->so_options = pcb->so_options & SOF_INHERITED;
     npcb->netif_idx = pcb->netif_idx;
@@ -1143,7 +1146,6 @@ tcp_receive(struct tcp_pcb *pcb)
 {
   s16_t m;
   u32_t right_wnd_edge;
-  int found_dupack = 0;
 
   LWIP_ASSERT("tcp_receive: invalid pcb", pcb != NULL);
   LWIP_ASSERT("tcp_receive: wrong state", pcb->state >= ESTABLISHED);
@@ -1205,7 +1207,6 @@ tcp_receive(struct tcp_pcb *pcb)
           if (pcb->rtime >= 0) {
             /* Clause 5 */
             if (pcb->lastack == ackno) {
-              found_dupack = 1;
               if ((u8_t)(pcb->dupacks + 1) > pcb->dupacks) {
                 ++pcb->dupacks;
               }
@@ -1220,11 +1221,6 @@ tcp_receive(struct tcp_pcb *pcb)
             }
           }
         }
-      }
-      /* If Clause (1) or more is true, but not a duplicate ack, reset
-       * count of consecutive duplicate acks */
-      if (!found_dupack) {
-        pcb->dupacks = 0;
       }
     } else if (TCP_SEQ_BETWEEN(ackno, pcb->lastack + 1, pcb->snd_nxt)) {
       /* We come here when the ACK acknowledges new data. */

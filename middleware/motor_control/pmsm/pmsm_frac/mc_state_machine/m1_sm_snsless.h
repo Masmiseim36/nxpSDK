@@ -55,20 +55,21 @@ typedef uint16_t mcdef_fault_t;
 /*! @brief States of machine enumeration */
 typedef enum _m1_run_substate_t
 {
-    kRunState_Calib = 0,
-    kRunState_Ready = 1,
-    kRunState_Align = 2,
-    kRunState_Startup = 3,
-    kRunState_Spin = 4,
+    kRunState_Calib     = 0,
+    kRunState_Ready     = 1,
+    kRunState_Align     = 2,
+    kRunState_Startup   = 3,
+    kRunState_Spin      = 4,
     kRunState_Freewheel = 5,
-    kRunState_Measure = 6,
+    kRunState_Measure   = 6,
 } m1_run_substate_t; /* Run sub-states */
 
-typedef enum {
-    kControlMode_Scalar  = 0,
+typedef enum
+{
+    kControlMode_Scalar     = 0,
     kControlMode_VoltageFOC = 1,
     kControlMode_CurrentFOC = 2,
-    kControlMode_SpeedFOC = 3,
+    kControlMode_SpeedFOC   = 3,
 } mcs_control_mode_t; /* control modes of the motor */
 
 /*! @brief Device fault thresholds */
@@ -87,16 +88,16 @@ typedef struct _mcdef_fault_thresholds_t
 /*! @brief PMSM FOC with BEMF observer in DQ */
 typedef struct _mcdef_pmsm_t
 {
-    mcs_pmsm_foc_t sFocPMSM;                    /* Field Oriented Control structure */
-    mcs_speed_t sSpeed;                         /* Speed control loop structure  */
-    mcs_pmsm_startup_t sStartUp;                /* Open loop start-up */
-    mcs_alignment_t sAlignment;                 /* PMSM simple two-step Ud voltage alignment */
-    mcs_mcat_ctrl_t sMCATctrl;                  /* Structure containing control variables directly updated from MCAT */
-    mcs_pmsm_scalar_ctrl_t sScalarCtrl;         /* Scalar control structure */
-    mcdef_fault_t sFaultIdCaptured;                /* Captured faults (must be cleared manually) */
-    mcdef_fault_t sFaultIdPending;                 /* Fault pending structure */
-    mcdef_fault_thresholds_t sFaultThresholds;     /* Fault thresholds */
-    mcs_control_mode_t eControl;                   /* MCAT control modes */
+    mcs_pmsm_foc_t sFocPMSM;                   /* Field Oriented Control structure */
+    mcs_speed_t sSpeed;                        /* Speed control loop structure  */
+    mcs_pmsm_startup_t sStartUp;               /* Open loop start-up */
+    mcs_alignment_t sAlignment;                /* PMSM simple two-step Ud voltage alignment */
+    mcs_mcat_ctrl_t sMCATctrl;                 /* Structure containing control variables directly updated from MCAT */
+    mcs_pmsm_scalar_ctrl_t sScalarCtrl;        /* Scalar control structure */
+    mcdef_fault_t sFaultIdCaptured;            /* Captured faults (must be cleared manually) */
+    mcdef_fault_t sFaultIdPending;             /* Fault pending structure */
+    mcdef_fault_thresholds_t sFaultThresholds; /* Fault thresholds */
+    mcs_control_mode_t eControl;               /* MCAT control modes */
     GDFLIB_FILTER_MA_T_A32 msM1BlockedRotorUqFilt; /* Blocked rotor detection filter */
     frac16_t f16AdcAuxSample;                      /* Auxiliary ADC sample  */
     uint16_t ui16CounterState;                     /* Main state counter */
@@ -184,4 +185,3 @@ frac16_t M1_GetSpeed(void);
 #endif
 
 #endif /* STATEMACHINE */
-

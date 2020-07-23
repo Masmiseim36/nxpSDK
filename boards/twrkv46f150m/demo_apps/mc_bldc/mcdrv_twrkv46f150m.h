@@ -21,17 +21,17 @@
 #define MCRSP_VER "1.3.1" /* motor control package version */
 
 /* Application info */
-typedef struct 
+typedef struct
 {
     char cBoardID[15];
     char cMotorType[4];
     char cAppVer[5];
-}app_ver_t;
-   
+} app_ver_t;
+
 /* Structure used during clocks and modulo calculations */
 typedef struct _clock_setup
 {
-  uint32_t ui32FastPeripheralClock;
+    uint32_t ui32FastPeripheralClock;
     uint32_t ui32BusClock;
     uint16_t ui16PwmFreq;
     uint16_t ui16PwmDeadTime;
@@ -88,7 +88,7 @@ extern const char bldcCommutationTableComp[16];
 
 /* Predefined values of ADC channels */
 #define ADC_TEMPERATURE (26) /* Temperature sensor */
-#define ADC_NO_CHAN (31) /* Default value for unassigned channel */
+#define ADC_NO_CHAN (31)     /* Default value for unassigned channel */
 
 /* Configuration table of ADC channels according to the input pin signals:
  * Valid for Kinetis KV46 Freedom board (TWR-KV46F) together with TWR-MC-LV3PH

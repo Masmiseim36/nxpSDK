@@ -1,0 +1,17 @@
+/*!
+@page middleware_log Middleware Change Log
+
+@section sdspi SD(SPI) Card driver for MCUXpresso SDK
+The current driver version is 2.1.4.
+  - 2.1.4
+    - Bug Fixes
+      - Fixed MDK 66-D warning.
+
+  - 2.1.3
+  	- Improvements
+      - Improved sdspi code size and performance.
+
+  - 2.0.0
+    - Initial version.
+
+*/

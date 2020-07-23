@@ -16,8 +16,8 @@
  * Definitions
  ******************************************************************************/
 /* The Flextimer instance/channel used for board */
-#define BOARD_FTM_BASEADDR FTM3
-#define BOARD_FIRST_FTM_CHANNEL 6U
+#define BOARD_FTM_BASEADDR       FTM3
+#define BOARD_FIRST_FTM_CHANNEL  6U
 #define BOARD_SECOND_FTM_CHANNEL 7U
 
 /* Get source clock for FTM driver */

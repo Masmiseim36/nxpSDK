@@ -51,7 +51,7 @@ static void log_task(void *pvParameters);
  */
 int main(void)
 {
-    BOARD_InitPins();
+    BOARD_InitBootPins();
     BOARD_BootClockRUN();
     BOARD_InitDebugConsole();
     /* Initialize logger for 10 logs with maximum lenght of one log 20 B */

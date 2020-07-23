@@ -3,14 +3,16 @@
 # To compile with PKCS11: add "-lpkcs11-helper" to LDFLAGS
 
 CFLAGS	?= -O2
-WARNING_CFLAGS ?= -Wall -W -Wdeclaration-after-statement -Wno-unused-function -Wno-unused-value
+WARNING_CFLAGS ?= -Wall -W -Wdeclaration-after-statement -Wunused
 LDFLAGS ?=
 
 LOCAL_CFLAGS = $(WARNING_CFLAGS) -I../include -D_FILE_OFFSET_BITS=64
-LOCAL_LDFLAGS = -L../library			\
-		-lmbedtls$(SHARED_SUFFIX)	\
-		-lmbedx509$(SHARED_SUFFIX)	\
-		-lmbedcrypto$(SHARED_SUFFIX)
+LOCAL_LDFLAGS = 
+
+# -L../library			\
+# 		-lmbedtls$(SHARED_SUFFIX)	\
+# 		-lmbedx509$(SHARED_SUFFIX)	\
+# 		-lmbedcrypto$(SHARED_SUFFIX)
 
 # Enable definition of various functions used throughout the testsuite
 # (gethostname, strdup, fileno...) even when compiling with -std=c99. Harmless
@@ -48,6 +50,46 @@ SHARED_SUFFIX=
 PYTHON ?= python2
 endif
 
+# eRPC
+ERPC_ROOT := ../../multicore/erpc
+
+#-----------------------------------------------
+# setup variables
+# ----------------------------------------------
+
+# Get the OS name. Known values are "Linux", "CYGWIN_NT-5.1", and "Darwin".
+os_name := $(shell uname -s)
+
+ifeq "$(os_name)" ""
+os_name = MINGW
+endif
+
+APP_NAME = mbedtls_test
+LIB_NAME = erpc
+ERPC_C_ROOT = $(ERPC_ROOT)/erpc_c
+APP_ROOT = ../../../boards/src/demo_apps/mbedtls/mbedtls_test_suite
+ERPC_LIB_OUTPUT_DIR = $(ERPC_ROOT)/Debug/$(os_name)/erpc/lib
+
+
+#-----------------------------------------------
+# Include path. Add the include paths like this:
+# INCLUDES += ./include/
+#-----------------------------------------------
+INCLUDES += -I$(ERPC_C_ROOT)/config \
+			-I$(ERPC_C_ROOT)/infra \
+			-I$(ERPC_C_ROOT)/port \
+			-I$(ERPC_C_ROOT)/setup \
+			-I$(ERPC_C_ROOT)/transports \
+			-I$(APP_ROOT)/service
+
+SOURCES_NO_MAIN +=	$(APP_ROOT)/service/mbedtls_test_suite_client.cpp \
+			$(APP_ROOT)/service/mbedtls_test_suite.h \
+			$(ERPC_C_ROOT)/setup/erpc_client_setup.cpp \
+			$(ERPC_C_ROOT)/setup/erpc_setup_mbf_dynamic.cpp
+
+LIBRARIES += -L$(ERPC_LIB_OUTPUT_DIR) -lerpc -lpthread -lrt -static-libstdc++
+CXXFLAGS += -DERPC_NESTED_CALLS=1
+
 # Zlib shared library extensions:
 ifdef ZLIB
 LOCAL_LDFLAGS += -lz
@@ -67,8 +109,17 @@ BINARIES := $(addsuffix $(EXEXT),$(APPS))
 
 all: $(BINARIES)
 
-$(DEP):
-	$(MAKE) -C ../library
+# eRPC
+erpc_lib: 
+	@$(call printmessage,build,Building, erpc_lib,gray,,,\n)
+	@$(MAKE) $(silent_make) -j$(MAKETHREADS) -r -f $(ERPC_C_ROOT)/Makefile
+
+erpcgen:
+	@$(call printmessage,build,Building, $@ ,gray,,,\n)
+	@$(MAKE) $(silent_make) -j$(MAKETHREADS) -r -C $(ERPC_ROOT)/erpcgen -f Makefile
+
+$(DEP): erpc_lib
+#	$(MAKE) -C ../library
 
 C_FILES := $(addsuffix .c,$(APPS))
 
@@ -100,7 +151,7 @@ C_FILES := $(addsuffix .c,$(APPS))
 
 $(BINARIES): %$(EXEXT): %.c $(DEP)
 	echo "  CC    $<"
-	$(CC) $(LOCAL_CFLAGS) $(CFLAGS) $<	$(LOCAL_LDFLAGS) $(LDFLAGS) -o $@
+	$(CXX) $(LOCAL_CFLAGS) $(CFLAGS) $(INCLUDES) $(SOURCES_NO_MAIN) $< $(LOCAL_LDFLAGS) $(LDFLAGS) $(LIBRARIES) -o $@
 
 
 clean:

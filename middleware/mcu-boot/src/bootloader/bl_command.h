@@ -90,8 +90,7 @@ typedef struct CommandInterface
 
 //! @brief Default command interface.
 extern command_interface_t g_commandInterface;
-extern command_processor_data_t g_commandData;;
-extern const command_handler_entry_t g_commandHandlerTable[];
+
 ////////////////////////////////////////////////////////////////////////////////
 // Prototypes
 ////////////////////////////////////////////////////////////////////////////////

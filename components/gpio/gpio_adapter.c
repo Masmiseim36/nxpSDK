@@ -82,10 +82,15 @@ static void HAL_GpioInterruptHandle(uint8_t port)
 
     head = s_GpioHead;
 
+#if (defined(FSL_FEATURE_PORT_HAS_NO_INTERRUPT) && FSL_FEATURE_PORT_HAS_NO_INTERRUPT)
+    pinInterruptSetFlag = GPIO_GpioGetInterruptFlags(s_GpioPort[port]);
+    /* Clear external interrupt flag. */
+    GPIO_GpioClearInterruptFlags(s_GpioPort[port], pinInterruptSetFlag);
+#else
     pinInterruptSetFlag = GPIO_PortGetInterruptFlags(s_GpioPort[port]);
     /* Clear external interrupt flag. */
     GPIO_PortClearInterruptFlags(s_GpioPort[port], pinInterruptSetFlag);
-
+#endif
     if (0U != pinInterruptSetFlag)
     {
         pin = HAL_GPIO_BSR(pinInterruptSetFlag);
@@ -185,16 +190,73 @@ static hal_gpio_status_t HAL_GpioRemoveItem(hal_gpio_state_t **head, hal_gpio_st
     return kStatus_HAL_GpioSuccess;
 }
 
+#if (defined(FSL_FEATURE_PORT_HAS_NO_INTERRUPT) && FSL_FEATURE_PORT_HAS_NO_INTERRUPT)
+
+#if (FSL_FEATURE_SOC_GPIO_COUNT > 0U)
+void GPIOA_INT0_IRQHandler(void);
+void GPIOA_INT0_IRQHandler(void)
+{
+    HAL_GpioInterruptHandle(0);
+    SDK_ISR_EXIT_BARRIER;
+}
+
+void GPIOA_INT1_IRQHandler(void);
+void GPIOA_INT1_IRQHandler(void)
+{
+    GPIOA_INT0_IRQHandler();
+}
+#endif
+
+#if (FSL_FEATURE_SOC_GPIO_COUNT > 1U)
+void GPIOB_INT0_IRQHandler(void);
+void GPIOB_INT0_IRQHandler(void)
+{
+    HAL_GpioInterruptHandle(1);
+    SDK_ISR_EXIT_BARRIER;
+}
+void GPIOB_INT1_IRQHandler(void);
+void GPIOB_INT1_IRQHandler(void)
+{
+    GPIOB_INT0_IRQHandler();
+}
+#endif
+
+#if (FSL_FEATURE_SOC_GPIO_COUNT > 2U)
+void GPIOC_INT0_IRQHandler(void);
+void GPIOC_INT0_IRQHandler(void)
+{
+    HAL_GpioInterruptHandle(2);
+    SDK_ISR_EXIT_BARRIER;
+}
+void GPIOC_INT1_IRQHandler(void);
+void GPIOC_INT1_IRQHandler(void)
+{
+    GPIOC_INT0_IRQHandler();
+}
+#endif
+
+#if (FSL_FEATURE_SOC_GPIO_COUNT > 3U)
+void GPIOD_INT0_IRQHandler(void);
+void GPIOD_INT0_IRQHandler(void)
+{
+    HAL_GpioInterruptHandle(3);
+    SDK_ISR_EXIT_BARRIER;
+}
+void GPIOD_INT1_IRQHandler(void);
+void GPIOD_INT1_IRQHandler(void)
+{
+    GPIOD_INT0_IRQHandler();
+}
+#endif
+
+#else
+
 #if (FSL_FEATURE_SOC_GPIO_COUNT > 0U)
 void PORTA_IRQHandler(void);
 void PORTA_IRQHandler(void)
 {
     HAL_GpioInterruptHandle(0);
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 #endif
 
@@ -203,11 +265,7 @@ void PORTB_IRQHandler(void);
 void PORTB_IRQHandler(void)
 {
     HAL_GpioInterruptHandle(1);
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 #endif
 
@@ -216,11 +274,7 @@ void PORTC_IRQHandler(void);
 void PORTC_IRQHandler(void)
 {
     HAL_GpioInterruptHandle(2);
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 #endif
 
@@ -267,11 +321,7 @@ void PORTD_IRQHandler(void);
 void PORTD_IRQHandler(void)
 {
     HAL_GpioInterruptHandle(3);
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 #endif
 
@@ -280,11 +330,7 @@ void PORTE_IRQHandler(void);
 void PORTE_IRQHandler(void)
 {
     HAL_GpioInterruptHandle(4);
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 #endif
 
@@ -293,12 +339,10 @@ void PORTF_IRQHandler(void);
 void PORTF_IRQHandler(void)
 {
     HAL_GpioInterruptHandle(5);
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
+#endif
+
 #endif
 
 hal_gpio_status_t HAL_GpioInit(hal_gpio_handle_t gpioHandle, hal_gpio_pin_config_t *pinConfig)
@@ -419,10 +463,15 @@ hal_gpio_status_t HAL_GpioGetTriggerMode(hal_gpio_handle_t gpioHandle, hal_gpio_
 
 hal_gpio_status_t HAL_GpioSetTriggerMode(hal_gpio_handle_t gpioHandle, hal_gpio_interrupt_trigger_t gpioTrigger)
 {
-    PORT_Type *portList[] = PORT_BASE_PTRS;
-    IRQn_Type portIrq[]   = PORT_IRQS;
     hal_gpio_state_t *gpioState;
+#if (defined(FSL_FEATURE_PORT_HAS_NO_INTERRUPT) && FSL_FEATURE_PORT_HAS_NO_INTERRUPT)
+    IRQn_Type irqNo[] = GPIO_IRQS;
+    gpio_interrupt_config_t pinInt;
+#else
+    PORT_Type *portList[] = PORT_BASE_PTRS;
+    IRQn_Type irqNo[] = PORT_IRQS;
     port_interrupt_t pinInt;
+#endif
 
     assert(gpioHandle);
 
@@ -436,31 +485,59 @@ hal_gpio_status_t HAL_GpioSetTriggerMode(hal_gpio_handle_t gpioHandle, hal_gpio_
     switch (gpioTrigger)
     {
         case kHAL_GpioInterruptLogicZero:
+#if (defined(FSL_FEATURE_PORT_HAS_NO_INTERRUPT) && FSL_FEATURE_PORT_HAS_NO_INTERRUPT)
+            pinInt = kGPIO_InterruptLogicZero;
+#else
             pinInt = kPORT_InterruptLogicZero;
+#endif
             break;
         case kHAL_GpioInterruptLogicOne:
+#if (defined(FSL_FEATURE_PORT_HAS_NO_INTERRUPT) && FSL_FEATURE_PORT_HAS_NO_INTERRUPT)
+            pinInt = kGPIO_InterruptLogicOne;
+#else
             pinInt = kPORT_InterruptLogicOne;
+#endif
             break;
         case kHAL_GpioInterruptRisingEdge:
+#if (defined(FSL_FEATURE_PORT_HAS_NO_INTERRUPT) && FSL_FEATURE_PORT_HAS_NO_INTERRUPT)
+            pinInt = kGPIO_InterruptRisingEdge;
+#else
             pinInt = kPORT_InterruptRisingEdge;
+#endif
             break;
         case kHAL_GpioInterruptFallingEdge:
+#if (defined(FSL_FEATURE_PORT_HAS_NO_INTERRUPT) && FSL_FEATURE_PORT_HAS_NO_INTERRUPT)
+            pinInt = kGPIO_InterruptFallingEdge;
+#else
             pinInt = kPORT_InterruptFallingEdge;
+#endif
             break;
         case kHAL_GpioInterruptEitherEdge:
+#if (defined(FSL_FEATURE_PORT_HAS_NO_INTERRUPT) && FSL_FEATURE_PORT_HAS_NO_INTERRUPT)
+            pinInt = kGPIO_InterruptEitherEdge;
+#else
             pinInt = kPORT_InterruptEitherEdge;
+#endif
             break;
         default:
+#if (defined(FSL_FEATURE_PORT_HAS_NO_INTERRUPT) && FSL_FEATURE_PORT_HAS_NO_INTERRUPT)
+            pinInt = kGPIO_InterruptStatusFlagDisabled;
+#else
             pinInt = kPORT_InterruptOrDMADisabled;
+#endif
             break;
     }
 
     gpioState->pin.trigger = (uint16_t)gpioTrigger;
 
     /* initialize port interrupt */
+#if (defined(FSL_FEATURE_PORT_HAS_NO_INTERRUPT) && FSL_FEATURE_PORT_HAS_NO_INTERRUPT)
+    GPIO_SetPinInterruptConfig(s_GpioPort[gpioState->pin.port], gpioState->pin.pin, pinInt);
+#else
     PORT_SetPinInterruptConfig(portList[gpioState->pin.port], gpioState->pin.pin, pinInt);
-    NVIC_SetPriority(portIrq[gpioState->pin.port], HAL_GPIO_ISR_PRIORITY);
-    NVIC_EnableIRQ(portIrq[gpioState->pin.port]);
+#endif
+    NVIC_SetPriority(irqNo[gpioState->pin.port], HAL_GPIO_ISR_PRIORITY);
+    NVIC_EnableIRQ(irqNo[gpioState->pin.port]);
 
     return kStatus_HAL_GpioSuccess;
 }
@@ -504,7 +581,7 @@ hal_gpio_status_t HAL_GpioExitLowpower(hal_gpio_handle_t gpioHandle)
 
     gpioState = (hal_gpio_state_t *)gpioHandle;
 
-    if (kHAL_GpioDirectionOut == gpioState->pin.direction)
+    if (kHAL_GpioDirectionOut == (hal_gpio_direction_t)gpioState->pin.direction)
     {
         gpioPinconfig.pinDirection = kGPIO_DigitalOutput;
     }
@@ -513,6 +590,6 @@ hal_gpio_status_t HAL_GpioExitLowpower(hal_gpio_handle_t gpioHandle)
         gpioPinconfig.pinDirection = kGPIO_DigitalInput;
     }
     GPIO_PinInit(s_GpioPort[gpioState->pin.port], gpioState->pin.pin, &gpioPinconfig);
-    HAL_GpioSetTriggerMode(gpioHandle, (hal_gpio_interrupt_trigger_t)gpioState->pin.trigger);
+    (void)HAL_GpioSetTriggerMode(gpioHandle, (hal_gpio_interrupt_trigger_t)gpioState->pin.trigger);
     return kStatus_HAL_GpioSuccess;
 }

@@ -5,7 +5,7 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
- 
+
 #include "state_machine.h"
 
 /*******************************************************************************
@@ -27,8 +27,8 @@ static void SM_StateStopSlow(sm_app_ctrl_t *psAppCtrl);
 static void SM_StateRunSlow(sm_app_ctrl_t *psAppCtrl);
 
 /*******************************************************************************
-* Variables
-******************************************************************************/
+ * Variables
+ ******************************************************************************/
 
 /*! @brief State machine function field - fast */
 const pfcn_void_psm g_SM_STATE_TABLE_FAST[4] = {SM_StateFaultFast, SM_StateInitFast, SM_StateStopFast, SM_StateRunFast};
@@ -224,4 +224,3 @@ static void SM_StateRunSlow(sm_app_ctrl_t *psAppCtrl)
 {
     psAppCtrl->psStateSlow->Run();
 }
-

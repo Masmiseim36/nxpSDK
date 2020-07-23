@@ -18,7 +18,7 @@
     FRAC16(2.0 / 100.0) /* align current PI controller's low output limit - in percentage / 100 */
 #define M1_CURRENT_CONTROLLER_ALIGN_LIM_HIGH \
     FRAC16(90.0 / 100.0) /* align current PI controller's high output limit - in percentage / 100 */
-      
+
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -179,15 +179,15 @@ static void M1_StateInitFast(void)
     /* type the code to do when in the INIT state */
 
     /* initialize free wheel period */
-    g_sM1Drive.ui16PeriodFreewheelLong = M1_FREEWHEEL_T_LONG;
+    g_sM1Drive.ui16PeriodFreewheelLong  = M1_FREEWHEEL_T_LONG;
     g_sM1Drive.ui16PeriodFreewheelShort = M1_FREEWHEEL_T_SHORT;
 
     /* initialize alignment period */
-    g_sM1Drive.ui16TimeAlignment = M1_ALIGN_DURATION;
+    g_sM1Drive.ui16TimeAlignment        = M1_ALIGN_DURATION;
     g_sM1Drive.sCtrlBLDC.f16IDcBusAlign = M1_ALIGN_CURRENT;
 
     /* DC-bus current measurement */
-    g_sM1Drive.sCtrlBLDC.f16IDcBusLim = M1_I_DCB_LIMIT;
+    g_sM1Drive.sCtrlBLDC.f16IDcBusLim                  = M1_I_DCB_LIMIT;
     g_sM1Drive.sCtrlBLDC.sIDcBusFilter.sFltCoeff.f32B0 = M1_IDCB_IIR_B0;
     g_sM1Drive.sCtrlBLDC.sIDcBusFilter.sFltCoeff.f32B1 = M1_IDCB_IIR_B1;
     g_sM1Drive.sCtrlBLDC.sIDcBusFilter.sFltCoeff.f32A1 = M1_IDCB_IIR_A1;
@@ -196,55 +196,55 @@ static void M1_StateInitFast(void)
     g_sM1Drive.sCtrlBLDC.sUDcBusFilter.sFltCoeff.f32A1 = M1_UDCB_IIR_A1;
 
     /* current controller parameters */
-    g_sM1Drive.sCtrlBLDC.sIDcBusPiParams.a32PGain = M1_TORQUE_LOOP_KP_GAIN;
-    g_sM1Drive.sCtrlBLDC.sIDcBusPiParams.a32IGain = M1_TORQUE_LOOP_KI_GAIN;
+    g_sM1Drive.sCtrlBLDC.sIDcBusPiParams.a32PGain    = M1_TORQUE_LOOP_KP_GAIN;
+    g_sM1Drive.sCtrlBLDC.sIDcBusPiParams.a32IGain    = M1_TORQUE_LOOP_KI_GAIN;
     g_sM1Drive.sCtrlBLDC.sIDcBusPiParams.f16UpperLim = M1_CTRL_LOOP_LIM_HIGH;
     g_sM1Drive.sCtrlBLDC.sIDcBusPiParams.f16LowerLim = M1_CTRL_LOOP_LIM_LOW;
-    g_sM1Drive.sCtrlBLDC.bIDcBusPiStopIntFlag = FALSE;
+    g_sM1Drive.sCtrlBLDC.bIDcBusPiStopIntFlag        = FALSE;
 
     /* reset required speed */
-    g_sM1Drive.sCtrlBLDC.f16SpeedCmd = FRAC16(0.0);
+    g_sM1Drive.sCtrlBLDC.f16SpeedCmd     = FRAC16(0.0);
     g_sM1Drive.sCtrlBLDC.f16SpeedMinimal = M1_N_MIN;
 
     /* initialize speed ramp */
     g_sM1Drive.sCtrlBLDC.sSpeedRampParams.f32RampDown = M1_SPEED_LOOP_RAMP_DOWN;
-    g_sM1Drive.sCtrlBLDC.sSpeedRampParams.f32RampUp = M1_SPEED_LOOP_RAMP_UP;
+    g_sM1Drive.sCtrlBLDC.sSpeedRampParams.f32RampUp   = M1_SPEED_LOOP_RAMP_UP;
 
     /* speed controller parameters */
-    g_sM1Drive.sCtrlBLDC.sSpeedPiParams.a32PGain = M1_SPEED_LOOP_KP_GAIN;
-    g_sM1Drive.sCtrlBLDC.sSpeedPiParams.a32IGain = M1_SPEED_LOOP_KI_GAIN;
+    g_sM1Drive.sCtrlBLDC.sSpeedPiParams.a32PGain    = M1_SPEED_LOOP_KP_GAIN;
+    g_sM1Drive.sCtrlBLDC.sSpeedPiParams.a32IGain    = M1_SPEED_LOOP_KI_GAIN;
     g_sM1Drive.sCtrlBLDC.sSpeedPiParams.f16UpperLim = M1_CTRL_LOOP_LIM_HIGH;
     g_sM1Drive.sCtrlBLDC.sSpeedPiParams.f16LowerLim = M1_CTRL_LOOP_LIM_LOW;
-    g_sM1Drive.sCtrlBLDC.bSpeedPiStopIntFlag = FALSE;
+    g_sM1Drive.sCtrlBLDC.bSpeedPiStopIntFlag        = FALSE;
 
     g_sM1Drive.sCtrlBLDC.i16SpeedScaleConst = M1_SPEED_SCALE_CONST;
-    g_sM1Drive.sCtrlBLDC.f16SpeedNominal = M1_N_NOM;
+    g_sM1Drive.sCtrlBLDC.f16SpeedNominal    = M1_N_NOM;
 
     /* initialize sensorless algorithm */
-    g_sM1Drive.sCtrlBLDC.i16SectorCmt = 0;
+    g_sM1Drive.sCtrlBLDC.i16SectorCmt  = 0;
     g_sM1Drive.f16StartCmtAcceleration = M1_START_CMT_ACCELER;
-    g_sM1Drive.ui16StartCmtNumber = M1_STARTUP_CMT_CNT;
-    g_sM1Drive.ui16PeriodCmtNextInit = M1_STARTUP_CMT_PER;
-    g_sM1Drive.ui16PeriodToffInit = M1_CMT_T_OFF;
-    g_sM1Drive.f32UBemfIntegThreshold = M1_INTEG_TRH;
+    g_sM1Drive.ui16StartCmtNumber      = M1_STARTUP_CMT_CNT;
+    g_sM1Drive.ui16PeriodCmtNextInit   = M1_STARTUP_CMT_PER;
+    g_sM1Drive.ui16PeriodToffInit      = M1_CMT_T_OFF;
+    g_sM1Drive.f32UBemfIntegThreshold  = M1_INTEG_TRH;
 
     /* fault thresholds */
-    g_sM1Drive.sFaultThresholds.f16IDcBusOver = M1_I_DCB_OVERCURRENT;
-    g_sM1Drive.sFaultThresholds.f16UDcBusOver = M1_U_DCB_OVERVOLTAGE;
+    g_sM1Drive.sFaultThresholds.f16IDcBusOver  = M1_I_DCB_OVERCURRENT;
+    g_sM1Drive.sFaultThresholds.f16UDcBusOver  = M1_U_DCB_OVERVOLTAGE;
     g_sM1Drive.sFaultThresholds.f16UDcBusUnder = M1_U_DCB_UNDERVOLTAGE;
 
     g_sM1Drive.ui16TimeFaultRelease = M1_FAULT_DURATION;
-    g_sM1Drive.ui16TimeCalibration = M1_CALIB_DURATION;
+    g_sM1Drive.ui16TimeCalibration  = M1_CALIB_DURATION;
 
     /* frequencies of control loop and commutation timer for MCAT constant calculation */
     g_sM1Drive.ui32FreqCmtTimer = (uint32_t)g_sClockSetup.ui32CmtTimerFreq;
     g_sM1Drive.ui16FreqCtrlLoop = CTRL_LOOP_FREQ;
-    g_sM1Drive.ui16FreqPwm = PWM_FREQ;
+    g_sM1Drive.ui16FreqPwm      = PWM_FREQ;
 
     /* Defined scaling for FreeMASTER */
-    s_fltM1currentScale = M1_I_MAX;
+    s_fltM1currentScale    = M1_I_MAX;
     s_fltM1DCBvoltageScale = M1_U_DCB_MAX;
-    s_fltM1speedScale = M1_N_MAX;
+    s_fltM1speedScale      = M1_N_MAX;
 
     /* Filter init not to enter to fault */
     g_sM1Drive.sCtrlBLDC.sUDcBusFilter.f16FltBfrX[0] =
@@ -484,7 +484,7 @@ static void M1_TransStopFault(void)
 {
     /* Type the code to do when going from the STOP to the FAULT state */
     /* Disable PWM output */
-    g_sM1Drive.sFaultId = g_sM1Drive.sFaultIdPending;
+    g_sM1Drive.sFaultId         = g_sM1Drive.sFaultIdPending;
     g_sM1Drive.ui16CounterState = g_sM1Drive.ui16TimeFaultRelease;
 }
 
@@ -521,10 +521,10 @@ static void M1_TransStopRun(void)
 static void M1_TransRunFault(void)
 {
     /* type the code to do when going from the RUN to the FAULT state */
-    
+
     /* disable PWM outputs */
-    M1_MCDRV_PWM3PH_SET_PWM_OUTPUT(&g_sM1Pwm3ph, 7);  
-  
+    M1_MCDRV_PWM3PH_SET_PWM_OUTPUT(&g_sM1Pwm3ph, 7);
+
     /* turn off application */
     g_bM1SwitchAppOnOff = 0;
 
@@ -561,7 +561,7 @@ static void M1_TransRunStop(void)
     g_sM1Drive.sCtrlBLDC.f16IDcBusPiOutput = FRAC16(0.0);
     GFLIB_CtrlPIpAWInit_F16(FRAC16(0.0), &g_sM1Drive.sCtrlBLDC.sSpeedPiParams);
     g_sM1Drive.sCtrlBLDC.f16SpeedPiOutput = FRAC16(0.0);
-    g_sM1Drive.sCtrlBLDC.f16DutyCycle = FRAC16(0.0);
+    g_sM1Drive.sCtrlBLDC.f16DutyCycle     = FRAC16(0.0);
 
     /* clear speed command */
     g_sM1Drive.sCtrlBLDC.f16SpeedCmd = 0;
@@ -675,7 +675,7 @@ static void M1_StateRunSpinFast(void)
 
             /* save commutation time and periods */
             g_sM1Drive.ui16TimeOfCmtOld = g_sM1Drive.ui16TimeOfCmt;
-            g_sM1Drive.ui16TimeOfCmt = g_sM1Drive.ui16TimeCurrent;
+            g_sM1Drive.ui16TimeOfCmt    = g_sM1Drive.ui16TimeCurrent;
             g_sM1Drive.ui16PeriodCmtNext =
                 (uint16_t)MLIB_Sub_F16(g_sM1Drive.ui16TimeOfCmt, g_sM1Drive.ui16TimeOfCmtOld);
             g_sM1Drive.ui16PeriodCmt[g_sM1Drive.sCtrlBLDC.i16SectorCmt] = g_sM1Drive.ui16PeriodCmtNext;
@@ -906,7 +906,7 @@ static void M1_TransRunReadyAlign(void)
 
     /* initialize align current controller */
     g_sM1Drive.sCtrlBLDC.sIDcBusPiParams.f16InErrK_1 = FRAC16(0.0);
-    g_sM1Drive.sCtrlBLDC.sIDcBusPiParams.f32IAccK_1 = MLIB_Conv_F32s(g_sM1Drive.sCtrlBLDC.f16DutyCycle);
+    g_sM1Drive.sCtrlBLDC.sIDcBusPiParams.f32IAccK_1  = MLIB_Conv_F32s(g_sM1Drive.sCtrlBLDC.f16DutyCycle);
     g_sM1Drive.sCtrlBLDC.sIDcBusPiParams.f16UpperLim = M1_CURRENT_CONTROLLER_ALIGN_LIM_HIGH;
     g_sM1Drive.sCtrlBLDC.sIDcBusPiParams.f16LowerLim = M1_CURRENT_CONTROLLER_ALIGN_LIM_LOW;
 
@@ -992,7 +992,7 @@ static void M1_TransRunStartupSpin(void)
 
     /* speed PI controller initialization */
     g_sM1Drive.sCtrlBLDC.sSpeedPiParams.f16InErrK_1 = FRAC16(0.0);
-    g_sM1Drive.sCtrlBLDC.sSpeedPiParams.f32IAccK_1 = MLIB_Conv_F32s(g_sM1Drive.sCtrlBLDC.f16DutyCycle);
+    g_sM1Drive.sCtrlBLDC.sSpeedPiParams.f32IAccK_1  = MLIB_Conv_F32s(g_sM1Drive.sCtrlBLDC.f16DutyCycle);
 
     /* reset commutation error counter */
     g_sM1Drive.ui16CounterCmtError = 0;
@@ -1012,8 +1012,8 @@ static void M1_TransRunStartupSpin(void)
     /* this is last startup commutation, safety commutation will be
        performed in close-loop (if not commutated in sensorless mode) */
     g_sM1Drive.ui16TimeNextEvent = MLIB_Add_F16(g_sM1Drive.ui16TimeCurrentEvent, (g_sM1Drive.ui16PeriodCmtNext << 1));
-    g_sM1Drive.ui16TimeOfCmt = g_sM1Drive.ui16TimeCurrent;
-    g_sM1Drive.f32UBemfIntegSum = 0;
+    g_sM1Drive.ui16TimeOfCmt     = g_sM1Drive.ui16TimeCurrent;
+    g_sM1Drive.f32UBemfIntegSum  = 0;
 
     /* request next time event (commutation ISR) */
     M1_MCDRV_TMR_CMT_SET(&g_sM1CmtTmr, g_sM1Drive.ui16TimeNextEvent);
@@ -1033,7 +1033,7 @@ static void M1_TransRunSpinFreewheel(void)
 {
     /* set long free-wheel period - expected motor spinning */
     g_sM1Drive.ui16CounterState = g_sM1Drive.ui16PeriodFreewheelLong;
-    
+
     /* PWM output disable request */
     M1_MCDRV_PWM3PH_SET_PWM_OUTPUT(&g_sM1Pwm3ph, 7);
 
@@ -1047,7 +1047,8 @@ static void M1_TransRunSpinFreewheel(void)
  * @param void  No input parameter
  *
  * @return None
- */ static void M1_TransRunStartupFreewheel(void)
+ */
+static void M1_TransRunStartupFreewheel(void)
 {
     /* required speed is below minimum - go to free-wheel */
     /* set short free-wheel period */
@@ -1081,7 +1082,7 @@ static void M1_TransRunFreewheelReady(void)
     g_sM1Drive.sCtrlBLDC.f16IDcBusPiOutput = FRAC16(0.0);
     GFLIB_CtrlPIpAWInit_F16(FRAC16(0.0), &g_sM1Drive.sCtrlBLDC.sSpeedPiParams);
     g_sM1Drive.sCtrlBLDC.f16SpeedPiOutput = FRAC16(0.0);
-    g_sM1Drive.sCtrlBLDC.f16DutyCycle = FRAC16(0.0);
+    g_sM1Drive.sCtrlBLDC.f16DutyCycle     = FRAC16(0.0);
 
     /* Sub-state RUN READY */
     s_eM1StateRun = kRunState_Ready;
@@ -1150,8 +1151,8 @@ void M1_TimeEvent(void)
             }
 
             /* calculate next commutation time and period */
-            g_sM1Drive.ui16TimeOfCmtOld = g_sM1Drive.ui16TimeOfCmt;
-            g_sM1Drive.ui16TimeOfCmt = g_sM1Drive.ui16TimeCurrent;
+            g_sM1Drive.ui16TimeOfCmtOld  = g_sM1Drive.ui16TimeOfCmt;
+            g_sM1Drive.ui16TimeOfCmt     = g_sM1Drive.ui16TimeCurrent;
             g_sM1Drive.ui16PeriodCmtNext = MLIB_Sub_F16(g_sM1Drive.ui16TimeOfCmt, g_sM1Drive.ui16TimeOfCmtOld);
             g_sM1Drive.ui16PeriodCmt[g_sM1Drive.sCtrlBLDC.i16SectorCmt] = g_sM1Drive.ui16PeriodCmtNext;
 
@@ -1194,13 +1195,13 @@ void M1_FaultDetection(void)
 
     /* Fault:   DC-bus over-current */
 #if (defined(HVP_BOARD))
-    if(MC_MCDRV_PWM3PH_FLT_GET(&g_sM1Pwm3ph))
+    if (MC_MCDRV_PWM3PH_FLT_GET(&g_sM1Pwm3ph))
         MC_FAULT_SET(g_sM1Drive.sFaultIdPending, MC_FAULT_I_DCBUS_OVER);
 #else
     if (g_sM1Drive.sCtrlBLDC.f16IDcBus > g_sM1Drive.sFaultThresholds.f16IDcBusOver)
         MC_FAULT_SET(g_sM1Drive.sFaultIdPending, MC_FAULT_I_DCBUS_OVER);
 #endif
-    
+
     /* Fault:   DC-bus over-voltage */
     if (g_sM1Drive.sCtrlBLDC.f16UDcBus > g_sM1Drive.sFaultThresholds.f16UDcBusOver)
         MC_FAULT_SET(g_sM1Drive.sFaultIdPending, MC_FAULT_U_DCBUS_OVER);
@@ -1296,4 +1297,3 @@ frac16_t M1_GetSpeed(void)
     /* return speed */
     return g_sM1Drive.sCtrlBLDC.f16SpeedCmd;
 }
-

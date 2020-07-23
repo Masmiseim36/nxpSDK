@@ -123,7 +123,7 @@ typedef enum
 {
     EXAMPLE_ENUM_FIRST_ENTRY,
     EXAMPLE_ENUM_SECOND_ENTRY,
-    EXAMPLE_ENUM_THIRD_ENTRY,
+    EXAMPLE_ENUM_THIRD_ENTRY
 } EXAMPLE_ENUM;
 
 typedef struct
@@ -169,7 +169,6 @@ static FMSTR_BOOL TestFileHandler(FMSTR_URES_OP_CODE opCode, FMSTR_RWI_BUFF *buf
  */
 
 FMSTR_TSA_TABLE_BEGIN(first_table)
-
     FMSTR_TSA_RO_VAR(var8, FMSTR_TSA_UINT8)
     FMSTR_TSA_RW_VAR(arr8, FMSTR_TSA_UINT8)
     FMSTR_TSA_RW_VAR(var8rw, FMSTR_TSA_UINT8)
@@ -489,11 +488,6 @@ void FMSTR_Example_Init(void)
 
     arr_size = ARR_SIZE;
 
-    so1.a  = 1;
-    so2.a  = 2;
-    si1.aa = 1;
-    si2.aa = 2;
-
     for (i = 0; i < ARR_SIZE; i++)
     {
         arr8[i]  = (unsigned char)i;
@@ -518,17 +512,17 @@ void FMSTR_Example_Init(void)
 
     /* Example of dynamic TSA table definition in runtime. Use this approach to add TSA entries
        in runtime for variables whose address is not known in compilation time. This may be used for
-       dynamically allocated varaibles, provided that they remain allocated at the same place throughout
+       dynamically allocated variables, provided that they remain allocated at the same place throughout
        the whole application runtime. In this case, we just demonstrate it using var16prv symbol. */
     FMSTR_SetUpTsaBuff((FMSTR_ADDR)tsa_dyn_table_storage, sizeof(tsa_dyn_table_storage));
     FMSTR_TsaAddVar("var16prv", FMSTR_TSA_UINT16, (void *)&var16prv, sizeof(var16prv), FMSTR_TSA_INFO_RW_VAR);
 
     /* Note that Recorder #0 is set up automatically when FMSTR_USE_RECORDER>0 and FMSTR_REC_BUFF_SIZE != 0
-       this is to enable backward compatiblity with older driver versions. Extra recorder instances
-       need to be set up during intitialization (see below). */
+       this is to enable backward compatibility with older driver versions. Extra recorder instances
+       need to be set up during initialization (see below). */
 
     /* Setup the buffer for Recorder #1 */
-    recBuffCfg.addr          = recBuffer;
+    recBuffCfg.addr          = (FMSTR_ADDR)recBuffer;
     recBuffCfg.size          = sizeof(recBuffer);
     recBuffCfg.basePeriod_ns = 0; /* Unknown period, use FMSTR_RecorderSetTimeBase to set in runtime later */
     recBuffCfg.name          = "Example of additional recorder";
@@ -570,6 +564,7 @@ void FMSTR_Example_Poll(void)
 {
     static unsigned short div;
     unsigned short nAppCmdCode;
+    int i;
 
     /* scope variables, increment once a while */
     if (++div > 20)
@@ -583,12 +578,12 @@ void FMSTR_Example_Poll(void)
 #endif
 #if FMSTR_DEMO_SUPPORT_FLT
         varFLT = varFLT + varFLTinc;
-        for(int i=0; i<arrFLT_size; i++)
+        for(i=0; i<arrFLT_size; i++)
             arrFLT[i]++;
 #endif
 #if FMSTR_DEMO_SUPPORT_DBL
         varDBL = varDBL + varDBLinc;
-        for(int i=0; i<arrDBL_size; i++)
+        for(i=0; i<arrDBL_size; i++)
             arrDBL[i]++;
 #endif
 
@@ -648,36 +643,17 @@ void FMSTR_Example_Poll(void)
 #if FMSTR_USE_TSA
 static FMSTR_BOOL TestFileHandler(FMSTR_URES_OP_CODE opCode, FMSTR_RWI_BUFF *buffer, void *param)
 {
-    FMSTR_U8 random_numbers[20];
-    FMSTR_U32 length;
-    FMSTR_U32 r;
+	FMSTR_BPTR b = buffer->buff;
     FMSTR_INDEX i;
-    FMSTR_SIZE sz;
 
-    FMSTR_ASSERT(buffer != NULL);
-
-    /* Generate 20 random numbers */
-    length = sizeof(random_numbers);
-    for (i = 0; i < length; i += 4)
-    {
-        r = FMSTR_Rand();
-
-        sz = length - i;
-        if (sz > 4)
-            sz = 4;
-
-        memcpy(&random_numbers[i], (FMSTR_ADDR)&r, sz);
-    }
+    FMSTR_ASSERT_RETURN(buffer != NULL, FMSTR_FALSE);
 
     /* Read file */
     if (opCode == FMSTR_URES_OP_READ)
     {
-        buffer->sizeOut = snprintf((char *)buffer->buff, buffer->sizeOutMax, "Random numbers: ");
-        for (int i = 0; i < 20; i++)
-        {
-            buffer->sizeOut = snprintf((char *)buffer->buff + buffer->sizeOut, buffer->sizeOutMax - buffer->sizeOut,
-                                       "%d, ", random_numbers[i]);
-        }
+    	/* print alphabet */
+    	for(i=0; i<buffer->sizeOutMax; i++)
+            *b = (FMSTR_BCHR)('A' + i%26);
     }
 
     return FMSTR_TRUE;

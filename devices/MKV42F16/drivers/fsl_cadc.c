@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -21,13 +21,13 @@
  * Define the MACROs to help calculating the position of register field from sample index.
  */
 /* ADC_ZXCTRL1 & ADC_ZXCTRL2. */
-#define ADC_ZXCTRL_ZCE_MASK(index) (uint16_t)(3UL << (2U * ((uint16_t)(index))))
+#define ADC_ZXCTRL_ZCE_MASK(index)   (uint16_t)(3UL << (2U * ((uint16_t)(index))))
 #define ADC_ZXCTRL_ZCE(index, value) (uint16_t)(((uint16_t)(value)) << (2U * ((uint16_t)(index))))
 /* ADC_CLIST1 & ADC_CLIST2 & ADC_CLIST3 & ADC_CLIST4 */
-#define ADC_CLIST_SAMPLE_MASK(index) (uint16_t)(0xFUL << (4U * ((uint16_t)(index))))
+#define ADC_CLIST_SAMPLE_MASK(index)   (uint16_t)(0xFUL << (4U * ((uint16_t)(index))))
 #define ADC_CLIST_SAMPLE(index, value) (uint16_t)(((uint16_t)(value)) << (4U * ((uint16_t)(index))))
 /* ADC_GC1 & ADC_GC2. */
-#define ADC_GC_GAIN_MASK(index) (uint16_t)(0x3UL << (2U * ((uint16_t)(index))))
+#define ADC_GC_GAIN_MASK(index)   (uint16_t)(0x3UL << (2U * ((uint16_t)(index))))
 #define ADC_GC_GAIN(index, value) (uint16_t)(((uint16_t)(value)) << (2U * ((uint16_t)(index))))
 
 /*******************************************************************************
@@ -150,7 +150,7 @@ void CADC_Init(ADC_Type *base, const cadc_config_t *config)
     base->PWR = tmp16;
 
     /* ADC_CTRL3. */
-    if (kCADC_DMATriggerSourceAsSampleReady == config->DMATriggerSoruce)
+    if (kCADC_DMATriggerSourceAsSampleReady == config->DMATriggerSource)
     {
         base->CTRL3 |= ADC_CTRL3_DMASRC_MASK;
     }
@@ -168,7 +168,7 @@ void CADC_Init(ADC_Type *base, const cadc_config_t *config)
  * code
  *   config->dualConverterScanMode = kCADC_DualConverterWorkAsTriggeredParallel;
  *   config->enableSimultaneousMode = true;
- *   config->DMATriggerSoruce = kCADC_DMATriggerSourceAsEndOfScan;
+ *   config->DMATriggerSource = kCADC_DMATriggerSourceAsEndOfScan;
  *   config->idleWorkMode = kCADC_IdleKeepNormal;
  *   config->powerUpDelay = 26U;
  * endcode
@@ -184,7 +184,7 @@ void CADC_GetDefaultConfig(cadc_config_t *config)
     /* The default values are from power up reset state. */
     config->dualConverterScanMode  = kCADC_DualConverterWorkAsTriggeredParallel;
     config->enableSimultaneousMode = true;
-    config->DMATriggerSoruce       = kCADC_DMATriggerSourceAsEndOfScan;
+    config->DMATriggerSource       = kCADC_DMATriggerSourceAsEndOfScan;
     config->idleWorkMode           = kCADC_IdleKeepNormal;
     config->powerUpDelay           = 26U;
 }

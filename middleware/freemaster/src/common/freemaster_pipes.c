@@ -22,6 +22,7 @@
 #include "freemaster.h"
 #include "freemaster_private.h"
 #include "freemaster_protocol.h"
+#include "freemaster_utils.h"
 
 #if FMSTR_USE_PIPES && (!FMSTR_DISABLE)
 
@@ -43,17 +44,17 @@
 #define FMSTR_PIPE_CFGCODE_INFO 0x82
 
 /* runtime flags */
-typedef union 
+typedef union
 {
     FMSTR_FLAGS all;
-    
-    struct 
+
+    struct
     {
         unsigned bExpectOdd : 1;   /* now expecting even round */
         unsigned bInComm : 1;      /* in protocol handler now */
         unsigned bLocked : 1;      /* data buffer access is locked */
     } flg;
-    
+
 } FMSTR_PIPE_FLAGS;
 
 typedef union
@@ -67,31 +68,31 @@ typedef union
 
 } FMSTR_PIPE_BUFF_FLAGS;
 
-typedef struct 
+typedef struct
 {
-    FMSTR_ADDR buff;
+    FMSTR_U8* buff;
     FMSTR_PIPE_SIZE size;
     FMSTR_PIPE_SIZE wp;
     FMSTR_PIPE_SIZE rp;
     FMSTR_PIPE_BUFF_FLAGS flags;
 } FMSTR_PIPE_BUFF;
 
-typedef struct 
+typedef struct
 {
     /* pipe information */
     const FMSTR_CHAR *name;      /* String description of the pipe. */
-    FMSTR_U8         type;       /* Type of the usage of pipe */       
-    
+    FMSTR_U8         type;       /* Type of the usage of pipe */
+
     /* pipe configuration */
     FMSTR_PIPE_BUFF rx;
     FMSTR_PIPE_BUFF tx;
     FMSTR_PIPE_PORT pipePort;
     FMSTR_PPIPEFUNC pCallback;
 
-    /* runtime information */    
+    /* runtime information */
     FMSTR_PIPE_FLAGS flags;
     FMSTR_U8 nLastBytesReceived;
-    
+
     /* residue buffer for 8-bit handling on DSP56F8xx platform */
 #if FMSTR_CFG_BUS_WIDTH > 1
     FMSTR_U16 rd8Resid;
@@ -99,18 +100,18 @@ typedef struct
 #endif
 
 #if FMSTR_USE_PIPE_PRINTF
-    char printfBuff[FMSTR_PIPES_PRINTF_BUFF_SIZE];
-    FMSTR_SIZE8 printfBPtr;
+    FMSTR_CHAR printfBuff[FMSTR_PIPES_PRINTF_BUFF_SIZE];
+    FMSTR_SIZE printfBPtr;
 #endif
 
 } FMSTR_PIPE;
 
 /* Pipe ITOA formatting flags */
-typedef union 
+typedef union
 {
     FMSTR_FLAGS all;
-    
-    struct 
+
+    struct
     {
         unsigned upperc : 1;     /* uppercase HEX letters */
         unsigned zeroes : 1;     /* prepend with zeroes rather than spaces */
@@ -118,9 +119,9 @@ typedef union
         unsigned negative : 1;   /* sign determined during itoa */
         unsigned signedtype : 1; /* type is signed (used with va_list only) */
         unsigned isstring : 1;   /* formatting %s */
-        
+
     } flg;
-    
+
 } FMSTR_PIPE_ITOA_FLAGS;
 
 /* Pipe printf context */
@@ -130,7 +131,7 @@ typedef struct
     FMSTR_U8 radix;
     FMSTR_U8 dtsize;
     FMSTR_SIZE8 alen;
-    
+
 } FMSTR_PIPE_PRINTF_CTX;
 
 typedef FMSTR_BOOL (*FMSTR_PIPE_ITOA_FUNC)(FMSTR_HPIPE, const void*, FMSTR_PIPE_PRINTF_CTX*);
@@ -156,7 +157,7 @@ static FMSTR_PIPE pcm_pipes[FMSTR_USE_PIPES];
 #define FMSTR_I2XL(x) (((x)<10) ? ((x)+'0') : ((x)-10+'a'))
 
 /**********************************************************************
-*  local functions 
+*  local functions
 **********************************************************************/
 
 static FMSTR_PIPE* FMSTR_FindPipe(FMSTR_PIPE_PORT pipePort);
@@ -188,7 +189,7 @@ FMSTR_INLINE FMSTR_BOOL FMSTR_PipePrintfPutc(FMSTR_HPIPE pipeHandle, char c);
 void FMSTR_InitPipes(void)
 {
     FMSTR_INDEX i;
-    
+
     for(i=0; i<FMSTR_USE_PIPES; i++)
         pcm_pipes[i].pipePort = 0;
 }
@@ -200,14 +201,14 @@ void FMSTR_InitPipes(void)
 ******************************************************************************/
 
 FMSTR_HPIPE FMSTR_PipeOpen(FMSTR_PIPE_PORT pipePort, FMSTR_PPIPEFUNC pipeCallback,
-                           FMSTR_ADDR pipeRxBuff, FMSTR_PIPE_SIZE pipeRxSize, 
-                           FMSTR_ADDR pipeTxBuff, FMSTR_PIPE_SIZE pipeTxSize, 
+                           FMSTR_ADDR pipeRxBuff, FMSTR_PIPE_SIZE pipeRxSize,
+                           FMSTR_ADDR pipeTxBuff, FMSTR_PIPE_SIZE pipeTxSize,
                            FMSTR_U8 type, const FMSTR_CHAR *name)
 {
     FMSTR_PIPE* pp = &pcm_pipes[0];
     FMSTR_INDEX ifree = -1;
     FMSTR_INDEX i;
-    
+
     for(i=0; i<FMSTR_USE_PIPES; i++, pp++)
     {
         /* find first free pipe */
@@ -217,7 +218,7 @@ FMSTR_HPIPE FMSTR_PipeOpen(FMSTR_PIPE_PORT pipePort, FMSTR_PPIPEFUNC pipeCallbac
         if(pp->pipePort == pipePort)
             break;
     }
-    
+
     /* pipe not found */
     if(i >= FMSTR_USE_PIPES)
     {
@@ -230,10 +231,10 @@ FMSTR_HPIPE FMSTR_PipeOpen(FMSTR_PIPE_PORT pipePort, FMSTR_PPIPEFUNC pipeCallbac
     }
 
     FMSTR_MemSet(pp, 0, sizeof(FMSTR_PIPE));
-    
+
     /* disable pipe (just in case the interrupt would come now) */
     pp->pipePort = 0;
-        
+
     /* initialize pipe */
     pp->rx.buff = pipeRxBuff;
     pp->rx.size = pipeRxSize;
@@ -242,7 +243,7 @@ FMSTR_HPIPE FMSTR_PipeOpen(FMSTR_PIPE_PORT pipePort, FMSTR_PPIPEFUNC pipeCallbac
     pp->pCallback = pipeCallback;
     pp->name = name;
     pp->type = type;
-    
+
 #if FMSTR_USE_PIPE_PRINTF
     pp->printfBPtr = 0;
 #endif
@@ -262,7 +263,7 @@ FMSTR_HPIPE FMSTR_PipeOpen(FMSTR_PIPE_PORT pipePort, FMSTR_PPIPEFUNC pipeCallbac
 void FMSTR_PipeClose(FMSTR_HPIPE pipeHandle)
 {
     FMSTR_PIPE* pp = (FMSTR_PIPE*) pipeHandle;
-    
+
     /* un-initialize pipe */
     if(pp != NULL)
         pp->pipePort = 0;
@@ -287,7 +288,7 @@ FMSTR_PIPE_SIZE FMSTR_PipeWrite(FMSTR_HPIPE pipeHandle, FMSTR_ADDR pipeData, FMS
         /* only fill the free space */
         if(pipeDataLen > total)
             pipeDataLen = total;
-        
+
         /* obey granularity */
         if(writeGranularity > 1)
         {
@@ -305,16 +306,16 @@ FMSTR_PIPE_SIZE FMSTR_PipeWrite(FMSTR_HPIPE pipeHandle, FMSTR_ADDR pipeData, FMS
             s = (FMSTR_PIPE_SIZE) ((pbuff->size - pbuff->wp) * FMSTR_CFG_BUS_WIDTH);
             if(s > pipeDataLen)
                 s = pipeDataLen;
-            
+
             /* get the bytes */
             FMSTR_MemCpyFrom(pbuff->buff + pbuff->wp, pipeData, (FMSTR_SIZE8) s);
             pipeData += s / FMSTR_CFG_BUS_WIDTH;
-            
+
             /* advance & wrap pointer */
             pbuff->wp += s / FMSTR_CFG_BUS_WIDTH;
             if(pbuff->wp >= pbuff->size)
                 pbuff->wp = 0;
-        
+
             /* rest of frame to a (wrapped) beggining of buffer */
             pipeDataLen -= (FMSTR_SIZE8) s;
             if(pipeDataLen > 0)
@@ -328,7 +329,7 @@ FMSTR_PIPE_SIZE FMSTR_PipeWrite(FMSTR_HPIPE pipeHandle, FMSTR_ADDR pipeData, FMS
                 pbuff->flags.flg.bIsFull = 1;
         }
     }
-    
+
     return total;
 }
 
@@ -344,11 +345,11 @@ FMSTR_BOOL FMSTR_PipePuts(FMSTR_HPIPE pipeHandle, const char* pszStr)
     FMSTR_PIPE* pp = (FMSTR_PIPE*) pipeHandle;
     FMSTR_PIPE_BUFF* pbuff = &pp->tx;
     FMSTR_PIPE_SIZE free = FMSTR_PipeGetBytesFree(pbuff);
-    FMSTR_PIPE_SIZE slen = (FMSTR_PIPE_SIZE) FMSTR_StrLen((FMSTR_ADDR)pszStr);
-    
+    FMSTR_PIPE_SIZE slen = (FMSTR_PIPE_SIZE) FMSTR_StrLen(pszStr);
+
     if(slen > free)
         return FMSTR_FALSE;
-    
+
     FMSTR_PipeWrite(pipeHandle, (FMSTR_ADDR)pszStr, slen, 0);
     return FMSTR_TRUE;
 }
@@ -371,21 +372,22 @@ FMSTR_INLINE FMSTR_BOOL FMSTR_PipePrintfFlush(FMSTR_HPIPE pipeHandle)
 {
     FMSTR_PIPE* pp = (FMSTR_PIPE*) pipeHandle;
     FMSTR_BOOL ok = FMSTR_TRUE;
-    
+    FMSTR_SIZE i;
+
     if(pp->printfBPtr)
     {
-        FMSTR_SIZE8 sz = (FMSTR_SIZE8) FMSTR_PipeWrite(pipeHandle, (FMSTR_ADDR)pp->printfBuff, (FMSTR_PIPE_SIZE)pp->printfBPtr, 0);
-        
+        FMSTR_SIZE sz = FMSTR_PipeWrite(pipeHandle, (FMSTR_ADDR)pp->printfBuff, (FMSTR_PIPE_SIZE)pp->printfBPtr, 0);
+
         /* all characters could NOT be printed */
         if(sz < pp->printfBPtr)
         {
             /* Move not sent characters */
-            for(int i=0; i<(pp->printfBPtr - sz); i++)
+            for(i=0; i<(pp->printfBPtr - sz); i++)
                 pp->printfBuff[i] = pp->printfBuff[sz+i];
-            
+
             pp->printfBPtr -= sz;
-            
-            ok = FMSTR_FALSE;   
+
+            ok = FMSTR_FALSE;
         }
         else
         {
@@ -393,10 +395,10 @@ FMSTR_INLINE FMSTR_BOOL FMSTR_PipePrintfFlush(FMSTR_HPIPE pipeHandle)
             pp->printfBPtr = 0;
         }
     }
-    
+
     return ok;
 }
-    
+
 /**************************************************************************//*!
 *
 * @brief  Put one character into pipe's printf formating buffer
@@ -420,7 +422,7 @@ FMSTR_INLINE FMSTR_BOOL FMSTR_PipePrintfPutc(FMSTR_HPIPE pipeHandle, char c)
         return FMSTR_FALSE;
 
     pp->printfBuff[pp->printfBPtr++] = c;
-    return FMSTR_TRUE;    
+    return FMSTR_TRUE;
 }
 
 /**************************************************************************//*!
@@ -433,12 +435,12 @@ FMSTR_INLINE FMSTR_BOOL FMSTR_PipePrintfPutc(FMSTR_HPIPE pipeHandle, char c)
 static FMSTR_BOOL FMSTR_PipeIToAFinalize(FMSTR_HPIPE pipeHandle, FMSTR_PIPE_PRINTF_CTX* pctx)
 {
     FMSTR_PIPE* pp = (FMSTR_PIPE*) pipeHandle;
-    FMSTR_SIZE8 bptr, minlen, i, bhalf;
-    char z, sgn;
+    FMSTR_SIZE bptr, minlen, i, bhalf;
+    FMSTR_CHAR z, sgn;
 
     /* buffer pointer into local variable */
     bptr = pp->printfBPtr;
-    
+
     /* if anything goes wrong, throw our prepared string away */
     pp->printfBPtr = 0;
 
@@ -453,11 +455,11 @@ static FMSTR_BOOL FMSTR_PipeIToAFinalize(FMSTR_HPIPE pipeHandle, FMSTR_PIPE_PRIN
     while(bptr > 1 && pp->printfBuff[bptr-1] == '0')
         bptr--;
 
-    /* determine sign to print */       
+    /* determine sign to print */
     if(pctx->flags.flg.negative)
     {
         sgn = '-';
-        
+
         /* minus need to be shown always */
         pctx->flags.flg.showsign = 1U;
     }
@@ -470,12 +472,12 @@ static FMSTR_BOOL FMSTR_PipeIToAFinalize(FMSTR_HPIPE pipeHandle, FMSTR_PIPE_PRIN
     /* unsigned types can not print sign */
     if(!pctx->flags.flg.signedtype)
         pctx->flags.flg.showsign = 0U;
-    
+
     /* calculate minimum buffer length needed */
     minlen = bptr;
     if(pctx->flags.flg.showsign)
         minlen++;
-    
+
     /* will it fit? */
     if(FMSTR_PIPES_PRINTF_BUFF_SIZE < minlen)
         return FMSTR_FALSE;
@@ -488,24 +490,24 @@ static FMSTR_BOOL FMSTR_PipeIToAFinalize(FMSTR_HPIPE pipeHandle, FMSTR_PIPE_PRIN
     if(pctx->flags.flg.zeroes)
     {
         z = '0';
-        
+
         /* sign extend? */
         if(pctx->flags.flg.negative)
         {
             switch(pctx->radix)
             {
-            case FMSTR_PIPE_ITOAFMT_BIN: 
-                z = '1'; 
+            case FMSTR_PIPE_ITOAFMT_BIN:
+                z = '1';
                 break;
-            case FMSTR_PIPE_ITOAFMT_OCT: 
-                z = '7'; 
+            case FMSTR_PIPE_ITOAFMT_OCT:
+                z = '7';
                 break;
-            case FMSTR_PIPE_ITOAFMT_HEX: 
-                z = pctx->flags.flg.upperc ? 'F' : 'f'; 
+            case FMSTR_PIPE_ITOAFMT_HEX:
+                z = (FMSTR_CHAR)(pctx->flags.flg.upperc ? 'F' : 'f');
                 break;
             }
         }
-        
+
         /* the sign will be in front of added zeroes */
         if(pctx->flags.flg.showsign)
             pctx->alen--;
@@ -513,7 +515,7 @@ static FMSTR_BOOL FMSTR_PipeIToAFinalize(FMSTR_HPIPE pipeHandle, FMSTR_PIPE_PRIN
     else
     {
         z = ' ';
-        
+
         /* sign should be in front of the number */
         if(pctx->flags.flg.showsign)
         {
@@ -521,7 +523,7 @@ static FMSTR_BOOL FMSTR_PipeIToAFinalize(FMSTR_HPIPE pipeHandle, FMSTR_PIPE_PRIN
             pctx->flags.flg.showsign = 0; /* prevent it to be added again below  */
         }
     }
-    
+
     /* now fill to required len */
     while(bptr < pctx->alen)
         pp->printfBuff[bptr++] = z;
@@ -529,10 +531,10 @@ static FMSTR_BOOL FMSTR_PipeIToAFinalize(FMSTR_HPIPE pipeHandle, FMSTR_PIPE_PRIN
     /* add the sign if needed */
     if(pctx->flags.flg.showsign)
         pp->printfBuff[bptr++] = sgn;
-    
+
     /* buffer contains this number of characters */
     pp->printfBPtr = bptr;
-    
+
     /* now reverse the string and feed it to pipe */
     bhalf = bptr/2;
     bptr--;
@@ -543,7 +545,7 @@ static FMSTR_BOOL FMSTR_PipeIToAFinalize(FMSTR_HPIPE pipeHandle, FMSTR_PIPE_PRIN
         pp->printfBuff[bptr-i] = z;
     }
 
-    return FMSTR_TRUE;  
+    return FMSTR_TRUE;
 }
 
 /**************************************************************************//*!
@@ -559,60 +561,60 @@ static FMSTR_BOOL FMSTR_PipeU8ToA(FMSTR_HPIPE pipeHandle, const FMSTR_U8* parg, 
     FMSTR_U8 arg = *parg;
     FMSTR_U8 tmp;
     FMSTR_INDEX i;
-    
+
     switch(pctx->radix)
     {
         case FMSTR_PIPE_ITOAFMT_CHAR:
-            pp->printfBuff[pp->printfBPtr++] = (char)arg;
+            pp->printfBuff[pp->printfBPtr++] = (FMSTR_CHAR)arg;
             break;
-        
+
         case FMSTR_PIPE_ITOAFMT_BIN:
             if(FMSTR_PIPES_PRINTF_BUFF_SIZE < 8)
                 return FMSTR_FALSE;
-            
+
             for(i=0; arg && i<8; i++)
             {
-                pp->printfBuff[pp->printfBPtr++] = (char)((arg & 1) + '0');
+                pp->printfBuff[pp->printfBPtr++] = (FMSTR_CHAR)((arg & 1) + '0');
                 arg >>= 1;
             }
             break;
-             
+
         case FMSTR_PIPE_ITOAFMT_OCT:
             if(FMSTR_PIPES_PRINTF_BUFF_SIZE < 3)
                 return FMSTR_FALSE;
-            
+
             for(i=0; arg && i<3; i++)
             {
-                pp->printfBuff[pp->printfBPtr++] = (char)((arg & 7) + '0');
+                pp->printfBuff[pp->printfBPtr++] = (FMSTR_CHAR)((arg & 7) + '0');
                 arg >>= 3;
             }
             break;
-             
+
         case FMSTR_PIPE_ITOAFMT_DEC:
             if(FMSTR_PIPES_PRINTF_BUFF_SIZE < 3)
                 return FMSTR_FALSE;
-        
+
             for(i=0; arg && i<3; i++)
             {
-                pp->printfBuff[pp->printfBPtr++] = (char)((arg % 10) + '0');
+                pp->printfBuff[pp->printfBPtr++] = (FMSTR_CHAR)((arg % 10) + '0');
                 arg /= 10;
             }
             break;
-            
+
         case FMSTR_PIPE_ITOAFMT_HEX:
         default:
             if(FMSTR_PIPES_PRINTF_BUFF_SIZE < 2)
                 return FMSTR_FALSE;
-            
+
             for(i=0; arg && i<2; i++)
             {
-                tmp = arg & 15;
-                pp->printfBuff[pp->printfBPtr++] = (char)(pctx->flags.flg.upperc ? FMSTR_I2XU(tmp) : FMSTR_I2XL(tmp));
+                tmp = (FMSTR_U8)(arg & 15);
+                pp->printfBuff[pp->printfBPtr++] = (FMSTR_CHAR)(pctx->flags.flg.upperc ? FMSTR_I2XU(tmp) : FMSTR_I2XL(tmp));
                 arg >>= 4;
             }
             break;
     }
-    
+
     return FMSTR_PipeIToAFinalize(pipeHandle, pctx);
 }
 
@@ -626,16 +628,16 @@ static FMSTR_BOOL FMSTR_PipeU8ToA(FMSTR_HPIPE pipeHandle, const FMSTR_U8* parg, 
 static FMSTR_BOOL FMSTR_PipeS8ToA(FMSTR_HPIPE pipeHandle, const FMSTR_S8* parg, FMSTR_PIPE_PRINTF_CTX* pctx)
 {
     FMSTR_S8 arg = *parg;
-    
+
     if(arg < 0)
     {
         pctx->flags.flg.negative = 1U;
 
-        /* if sign will be shown, then negate the number */     
+        /* if sign will be shown, then negate the number */
         if(pctx->flags.flg.signedtype)
             arg *= -1;
     }
-        
+
     return FMSTR_PipeU8ToA(pipeHandle, (const FMSTR_U8*)&arg, pctx);
 }
 
@@ -652,60 +654,60 @@ static FMSTR_BOOL FMSTR_PipeU16ToA(FMSTR_HPIPE pipeHandle, const FMSTR_U16* parg
     FMSTR_U16 arg = *parg;
     FMSTR_U16 tmp;
     FMSTR_INDEX i;
-    
+
     switch(pctx->radix)
     {
         case FMSTR_PIPE_ITOAFMT_CHAR:
-            pp->printfBuff[pp->printfBPtr++] = (char)arg;
+            pp->printfBuff[pp->printfBPtr++] = (FMSTR_CHAR)arg;
             break;
-        
+
         case FMSTR_PIPE_ITOAFMT_BIN:
             if(FMSTR_PIPES_PRINTF_BUFF_SIZE < 16)
                 return FMSTR_FALSE;
-            
+
             for(i=0; arg && i<16; i++)
             {
-                pp->printfBuff[pp->printfBPtr++] = (char)((arg & 1) + '0');
+                pp->printfBuff[pp->printfBPtr++] = (FMSTR_CHAR)((arg & 1) + '0');
                 arg >>= 1;
             }
             break;
-             
+
         case FMSTR_PIPE_ITOAFMT_OCT:
             if(FMSTR_PIPES_PRINTF_BUFF_SIZE < 6)
                 return FMSTR_FALSE;
-            
+
             for(i=0; arg && i<6; i++)
             {
-                pp->printfBuff[pp->printfBPtr++] = (char)((arg & 7) + '0');
+                pp->printfBuff[pp->printfBPtr++] = (FMSTR_CHAR)((arg & 7) + '0');
                 arg >>= 3;
             }
             break;
-             
+
         case FMSTR_PIPE_ITOAFMT_DEC:
             if(FMSTR_PIPES_PRINTF_BUFF_SIZE < 5)
                 return FMSTR_FALSE;
-        
+
             for(i=0; arg && i<5; i++)
             {
-                pp->printfBuff[pp->printfBPtr++] = (char)((arg % 10) + '0');
+                pp->printfBuff[pp->printfBPtr++] = (FMSTR_CHAR)((arg % 10) + '0');
                 arg /= 10;
             }
             break;
-            
+
         case FMSTR_PIPE_ITOAFMT_HEX:
         default:
             if(FMSTR_PIPES_PRINTF_BUFF_SIZE < 4)
                 return FMSTR_FALSE;
-            
+
             for(i=0; arg && i<4; i++)
             {
                 tmp = arg & 15;
-                pp->printfBuff[pp->printfBPtr++] = (char)(pctx->flags.flg.upperc ? FMSTR_I2XU(tmp) : FMSTR_I2XL(tmp));
+                pp->printfBuff[pp->printfBPtr++] = (FMSTR_CHAR)(pctx->flags.flg.upperc ? FMSTR_I2XU(tmp) : FMSTR_I2XL(tmp));
                 arg >>= 4;
             }
             break;
     }
-    
+
     return FMSTR_PipeIToAFinalize(pipeHandle, pctx);
 }
 
@@ -719,16 +721,16 @@ static FMSTR_BOOL FMSTR_PipeU16ToA(FMSTR_HPIPE pipeHandle, const FMSTR_U16* parg
 static FMSTR_BOOL FMSTR_PipeS16ToA(FMSTR_HPIPE pipeHandle, const FMSTR_S16* parg, FMSTR_PIPE_PRINTF_CTX* pctx)
 {
     FMSTR_S16 arg = *parg;
-    
+
     if(arg < 0)
     {
         pctx->flags.flg.negative = 1U;
-        
-        /* if sign will be shown, then negate the number */     
+
+        /* if sign will be shown, then negate the number */
         if(pctx->flags.flg.signedtype)
             arg *= -1;
     }
-        
+
     return FMSTR_PipeU16ToA(pipeHandle, (const FMSTR_U16*)&arg, pctx);
 }
 
@@ -745,60 +747,60 @@ static FMSTR_BOOL FMSTR_PipeU32ToA(FMSTR_HPIPE pipeHandle, const FMSTR_U32* parg
     FMSTR_U32 arg = *parg;
     FMSTR_U32 tmp;
     FMSTR_INDEX i;
-    
+
     switch(pctx->radix)
     {
         case FMSTR_PIPE_ITOAFMT_CHAR:
             pp->printfBuff[pp->printfBPtr++] = (char)arg;
             break;
-        
+
         case FMSTR_PIPE_ITOAFMT_BIN:
             if(FMSTR_PIPES_PRINTF_BUFF_SIZE < 32)
                 return FMSTR_FALSE;
-            
+
             for(i=0; arg && i<32; i++)
             {
-                pp->printfBuff[pp->printfBPtr++] = (char)((arg & 1) + '0');
+                pp->printfBuff[pp->printfBPtr++] = (FMSTR_CHAR)((arg & 1) + '0');
                 arg >>= 1;
             }
             break;
-             
+
         case FMSTR_PIPE_ITOAFMT_OCT:
             if(FMSTR_PIPES_PRINTF_BUFF_SIZE < 11)
                 return FMSTR_FALSE;
-            
+
             for(i=0; arg && i<11; i++)
             {
-                pp->printfBuff[pp->printfBPtr++] = (char)((arg & 7) + '0');
+                pp->printfBuff[pp->printfBPtr++] = (FMSTR_CHAR)((arg & 7) + '0');
                 arg >>= 3;
             }
             break;
-             
+
         case FMSTR_PIPE_ITOAFMT_DEC:
             if(FMSTR_PIPES_PRINTF_BUFF_SIZE < 10)
                 return FMSTR_FALSE;
-        
+
             for(i=0; arg && i<10; i++)
             {
-                pp->printfBuff[pp->printfBPtr++] = (char)((arg % 10) + '0');
+                pp->printfBuff[pp->printfBPtr++] = (FMSTR_CHAR)((arg % 10) + '0');
                 arg /= 10;
             }
             break;
-            
+
         case FMSTR_PIPE_ITOAFMT_HEX:
         default:
             if(FMSTR_PIPES_PRINTF_BUFF_SIZE < 8)
                 return FMSTR_FALSE;
-            
+
             for(i=0; arg && i<8; i++)
             {
                 tmp = arg & 15;
-                pp->printfBuff[pp->printfBPtr++] = (char)(pctx->flags.flg.upperc ? FMSTR_I2XU(tmp) : FMSTR_I2XL(tmp));
+                pp->printfBuff[pp->printfBPtr++] = (FMSTR_CHAR)(pctx->flags.flg.upperc ? FMSTR_I2XU(tmp) : FMSTR_I2XL(tmp));
                 arg >>= 4;
             }
             break;
     }
-    
+
     return FMSTR_PipeIToAFinalize(pipeHandle, pctx);
 }
 
@@ -812,22 +814,22 @@ static FMSTR_BOOL FMSTR_PipeU32ToA(FMSTR_HPIPE pipeHandle, const FMSTR_U32* parg
 static FMSTR_BOOL FMSTR_PipeS32ToA(FMSTR_HPIPE pipeHandle, const FMSTR_S32* parg, FMSTR_PIPE_PRINTF_CTX* pctx)
 {
     FMSTR_S32 arg = *parg;
-    
+
     if(arg < 0)
     {
         pctx->flags.flg.negative = 1U;
-        
-        /* if sign will be shown, then negate the number */     
+
+        /* if sign will be shown, then negate the number */
         if(pctx->flags.flg.signedtype)
             arg *= -1;
     }
-        
+
     return FMSTR_PipeU32ToA(pipeHandle, (const FMSTR_U32*)&arg, pctx);
 }
 
 /**************************************************************************//*!
 *
-* @brief  This function parses the printf format and sets the context 
+* @brief  This function parses the printf format and sets the context
 *         structure properly.
 *
 * @return The function returns the pointer to end of format string handled
@@ -841,7 +843,7 @@ static const char* FMSTR_PipeParseFormat(const char* pszFmt, FMSTR_PIPE_PRINTF_C
     /* skip percent sign */
     if(*pszFmt == '%')
         pszFmt++;
-    
+
     /* show sign always? */
     if(*pszFmt == '+')
     {
@@ -856,18 +858,18 @@ static const char* FMSTR_PipeParseFormat(const char* pszFmt, FMSTR_PIPE_PRINTF_C
         pszFmt++;
     }
 
-    /* parse length */              
+    /* parse length */
     pctx->alen = 0;
     while(FMSTR_IS_DIGIT(*pszFmt))
     {
         pctx->alen *= 10;
-        pctx->alen += *pszFmt - '0';
+        pctx->alen += (FMSTR_SIZE8)(*pszFmt - '0');
         pszFmt++;
     }
-    
+
     /* default data type is 'int' */
     pctx->dtsize = sizeof(int);
-    
+
     /* parse dtsize modifier */
     switch(*pszFmt)
     {
@@ -875,7 +877,7 @@ static const char* FMSTR_PipeParseFormat(const char* pszFmt, FMSTR_PIPE_PRINTF_C
         case 'h':
             pctx->dtsize = sizeof(short);
             pszFmt++;
-            
+
             /* one more 'h' means 'char' */
             if(*pszFmt == 'h')
             {
@@ -883,13 +885,13 @@ static const char* FMSTR_PipeParseFormat(const char* pszFmt, FMSTR_PIPE_PRINTF_C
                 pszFmt++;
             }
             break;
-            
+
         case 'l':
             pctx->dtsize = sizeof(long);
             pszFmt++;
             break;
     }
-    
+
     /* now finaly concluding to format letter */
     switch(*pszFmt++)
     {
@@ -897,17 +899,17 @@ static const char* FMSTR_PipeParseFormat(const char* pszFmt, FMSTR_PIPE_PRINTF_C
         case 'X':
             pctx->flags.flg.upperc = 1U;
             /* falling thru case */
-            
+
         /* hexadecimal */
         case 'x':
             pctx->radix = FMSTR_PIPE_ITOAFMT_HEX;
             break;
-    
+
         /* octal */
         case 'o':
             pctx->radix = FMSTR_PIPE_ITOAFMT_OCT;
             break;
-    
+
         /* binary */
         case 'b':
             pctx->radix = FMSTR_PIPE_ITOAFMT_BIN;
@@ -924,20 +926,20 @@ static const char* FMSTR_PipeParseFormat(const char* pszFmt, FMSTR_PIPE_PRINTF_C
             pctx->radix = FMSTR_PIPE_ITOAFMT_DEC;
             break;
 
-        /* character */ 
+        /* character */
         case 'c':
             pctx->radix = FMSTR_PIPE_ITOAFMT_CHAR;
             pctx->dtsize = sizeof(char);
             break;
 
-        /* string */    
+        /* string */
         case 's':
             pctx->flags.flg.isstring = 1U;
             pctx->dtsize = sizeof(void*);
             break;
-    
+
     }
-    
+
     return pszFmt;
 }
 
@@ -957,7 +959,7 @@ static FMSTR_BOOL FMSTR_PipePrintfOne(FMSTR_HPIPE pipeHandle, const char* pszFmt
         if(*pszFmt == '%')
         {
             pszFmt++;
-            
+
             if(*pszFmt == '%')
             {
                 ok = FMSTR_PipePrintfPutc(pipeHandle, '%');
@@ -965,13 +967,13 @@ static FMSTR_BOOL FMSTR_PipePrintfOne(FMSTR_HPIPE pipeHandle, const char* pszFmt
                 continue;
             }
 
-            /* empty the pipe's temporary buffer */         
+            /* empty the pipe's temporary buffer */
             ok = FMSTR_PipePrintfFlush(pipeHandle);
-            
+
             if(ok)
             {
                 pszFmt = FMSTR_PipeParseFormat(pszFmt, &ctx);
-                
+
                 if(ctx.flags.flg.isstring)
                 {
                     const char* psz = (const char*) parg;
@@ -988,8 +990,8 @@ static FMSTR_BOOL FMSTR_PipePrintfOne(FMSTR_HPIPE pipeHandle, const char* pszFmt
             ok = FMSTR_PipePrintfPutc(pipeHandle, *pszFmt++);
         }
     }
-    
-    return ok && FMSTR_PipePrintfFlush(pipeHandle);
+
+    return (FMSTR_BOOL)(ok && FMSTR_PipePrintfFlush(pipeHandle));
 }
 
 /**************************************************************************//*!
@@ -1090,7 +1092,7 @@ static FMSTR_BOOL FMSTR_PipePrintfAny(FMSTR_HPIPE pipeHandle, va_list* parg, FMS
                 ok = FMSTR_PipeU8ToA(pipeHandle, &arg, pctx);
             }
             break;
-        
+
         case 2:
             if(pctx->flags.flg.signedtype)
             {
@@ -1103,7 +1105,7 @@ static FMSTR_BOOL FMSTR_PipePrintfAny(FMSTR_HPIPE pipeHandle, va_list* parg, FMS
                 ok = FMSTR_PipeU16ToA(pipeHandle, &arg, pctx);
             }
             break;
-        
+
         case 4:
             if(pctx->flags.flg.signedtype)
             {
@@ -1117,7 +1119,7 @@ static FMSTR_BOOL FMSTR_PipePrintfAny(FMSTR_HPIPE pipeHandle, va_list* parg, FMS
             }
             break;
     }
-    
+
     return ok;
 }
 
@@ -1125,7 +1127,7 @@ static FMSTR_BOOL FMSTR_PipePrintfAny(FMSTR_HPIPE pipeHandle, va_list* parg, FMS
 *
 * @brief  Printf with va_list arguments prepared.
 *
-*         This function is not declared static (may be reused as global), 
+*         This function is not declared static (may be reused as global),
 *         but public prototype is not available (not to force user to
 *         have va_list defined.
 *
@@ -1141,7 +1143,7 @@ static FMSTR_BOOL FMSTR_PipePrintfV(FMSTR_HPIPE pipeHandle, const char* pszFmt, 
         if(*pszFmt == '%')
         {
             pszFmt++;
-            
+
             if(*pszFmt == '%')
             {
                 ok = FMSTR_PipePrintfPutc(pipeHandle, '%');
@@ -1150,7 +1152,7 @@ static FMSTR_BOOL FMSTR_PipePrintfV(FMSTR_HPIPE pipeHandle, const char* pszFmt, 
             else
             {
                 ok = FMSTR_PipePrintfFlush(pipeHandle);
-            
+
                 if(ok)
                 {
                     pszFmt = FMSTR_PipeParseFormat(pszFmt, &ctx);
@@ -1172,8 +1174,8 @@ static FMSTR_BOOL FMSTR_PipePrintfV(FMSTR_HPIPE pipeHandle, const char* pszFmt, 
             ok = FMSTR_PipePrintfPutc(pipeHandle, *pszFmt++);
         }
     }
-    
-    return ok && FMSTR_PipePrintfFlush(pipeHandle);
+
+    return (FMSTR_BOOL)(ok && FMSTR_PipePrintfFlush(pipeHandle));
 }
 
 #if FMSTR_USE_PIPE_PRINTF_VARG
@@ -1187,12 +1189,12 @@ static FMSTR_BOOL FMSTR_PipePrintfV(FMSTR_HPIPE pipeHandle, const char* pszFmt, 
 FMSTR_BOOL FMSTR_PipePrintf(FMSTR_HPIPE pipeHandle, const char* pszFmt, ...)
 {
     FMSTR_BOOL ok;
-    
-    va_list args;                            
+
+    va_list args;
     va_start(args, pszFmt);
     ok = FMSTR_PipePrintfV(pipeHandle, pszFmt, &args);
     va_end(args);
-    
+
     return ok;
 }
 
@@ -1218,7 +1220,7 @@ FMSTR_PIPE_SIZE FMSTR_PipeRead(FMSTR_HPIPE pipeHandle, FMSTR_ADDR pipeData, FMST
         /* round length to bus width */
         pipeDataLen /= FMSTR_CFG_BUS_WIDTH;
         pipeDataLen *= FMSTR_CFG_BUS_WIDTH;
-        
+
         /* only fetch what we have cached */
         if(pipeDataLen > total)
             pipeDataLen = total;
@@ -1229,7 +1231,7 @@ FMSTR_PIPE_SIZE FMSTR_PipeRead(FMSTR_HPIPE pipeHandle, FMSTR_ADDR pipeData, FMST
             pipeDataLen /= readGranularity;
             pipeDataLen *= readGranularity;
         }
-        
+
         /* return value */
         total = pipeDataLen;
 
@@ -1240,16 +1242,16 @@ FMSTR_PIPE_SIZE FMSTR_PipeRead(FMSTR_HPIPE pipeHandle, FMSTR_ADDR pipeData, FMST
             s = (FMSTR_PIPE_SIZE) ((pbuff->size - pbuff->rp) * FMSTR_CFG_BUS_WIDTH);
             if(s > pipeDataLen)
                 s = pipeDataLen;
-            
+
             /* put bytes */
             FMSTR_MemCpyTo(pipeData, pbuff->buff + pbuff->rp, (FMSTR_SIZE8) s);
             pipeData += s / FMSTR_CFG_BUS_WIDTH;
-            
+
             /* advance & wrap pointer */
             pbuff->rp += s / FMSTR_CFG_BUS_WIDTH;
             if(pbuff->rp >= pbuff->size)
                 pbuff->rp = 0;
-        
+
             /* rest of frame to a (wrapped) beggining of buffer */
             pipeDataLen -= (FMSTR_SIZE8) s;
             if(pipeDataLen > 0)
@@ -1262,7 +1264,7 @@ FMSTR_PIPE_SIZE FMSTR_PipeRead(FMSTR_HPIPE pipeHandle, FMSTR_ADDR pipeData, FMST
             pbuff->flags.flg.bIsFull = 0;
         }
     }
-    
+
     return total;
 }
 
@@ -1276,14 +1278,14 @@ static FMSTR_PIPE* FMSTR_FindPipe(FMSTR_PIPE_PORT pipePort)
 {
     FMSTR_PIPE* pp = &pcm_pipes[0];
     FMSTR_INDEX i;
-    
+
     for(i=0; i<FMSTR_USE_PIPES; i++, pp++)
     {
         /* look for existing pipe with the same port */
         if(pp->pipePort == pipePort)
             return pp;
     }
-    
+
     return NULL;
 }
 
@@ -1309,7 +1311,7 @@ static FMSTR_PIPE_SIZE FMSTR_PipeGetBytesFree(FMSTR_PIPE_BUFF* pipeBuff)
     {
         free = (FMSTR_PIPE_SIZE)(pipeBuff->size - pipeBuff->wp + pipeBuff->rp);
     }
-    
+
     return (FMSTR_PIPE_SIZE)(free * FMSTR_CFG_BUS_WIDTH);
 }
 
@@ -1329,7 +1331,7 @@ static FMSTR_PIPE_SIZE FMSTR_PipeGetBytesReady(FMSTR_PIPE_BUFF* pipeBuff)
     {
         full = (FMSTR_PIPE_SIZE)(pipeBuff->size - pipeBuff->rp + pipeBuff->wp);
     }
-    
+
     return (FMSTR_PIPE_SIZE)(full * FMSTR_CFG_BUS_WIDTH);
 }
 
@@ -1337,7 +1339,7 @@ static void FMSTR_PipeDiscardBytes(FMSTR_PIPE_BUFF* pipeBuff, FMSTR_SIZE8 countB
 {
     FMSTR_PIPE_SIZE total;
     FMSTR_PIPE_SIZE discard;
-    
+
     total = FMSTR_PipeGetBytesReady(pipeBuff);
     discard = (FMSTR_PIPE_SIZE) (countBytes > total ? total : countBytes);
     discard /= FMSTR_CFG_BUS_WIDTH;
@@ -1369,22 +1371,22 @@ static FMSTR_BPTR FMSTR_PipeReceive(FMSTR_BPTR msgBuffIO, FMSTR_PIPE* pp, FMSTR_
 {
     FMSTR_PIPE_BUFF* pbuff = &pp->rx;
     FMSTR_PIPE_SIZE s;
-    
+
     if(msgBuffSize > 0)
     {
         /* total bytes available in the rest of buffer */
         s = (FMSTR_PIPE_SIZE) ((pbuff->size - pbuff->wp) * FMSTR_CFG_BUS_WIDTH);
         if(s > (FMSTR_PIPE_SIZE) msgBuffSize)
             s = (FMSTR_PIPE_SIZE) msgBuffSize;
-        
+
         /* get the bytes */
         msgBuffIO = FMSTR_CopyFromBuffer(pbuff->buff + pbuff->wp, msgBuffIO, (FMSTR_SIZE8) s);
-        
+
         /* advance & wrap pointer */
         pbuff->wp += s / FMSTR_CFG_BUS_WIDTH;
         if(pbuff->wp >= pbuff->size)
             pbuff->wp = 0;
-    
+
         /* rest of frame to a (wrapped) beginning of buffer */
         msgBuffSize -= (FMSTR_SIZE8) s;
         if(msgBuffSize > 0)
@@ -1397,7 +1399,7 @@ static FMSTR_BPTR FMSTR_PipeReceive(FMSTR_BPTR msgBuffIO, FMSTR_PIPE* pp, FMSTR_
         if(pbuff->wp == pbuff->rp)
             pbuff->flags.flg.bIsFull = 1;
     }
-    
+
     return msgBuffIO;
 }
 
@@ -1407,22 +1409,22 @@ static FMSTR_BPTR FMSTR_PipeTransmit(FMSTR_BPTR msgBuffIO, FMSTR_PIPE* pp, FMSTR
 {
     FMSTR_PIPE_BUFF* pbuff = &pp->tx;
     FMSTR_PIPE_SIZE s, rp = pbuff->rp;
-    
+
     if(msgBuffSize > 0)
     {
         /* total bytes available in the rest of buffer */
         s = (FMSTR_PIPE_SIZE) ((pbuff->size - rp) * FMSTR_CFG_BUS_WIDTH);
         if(s > (FMSTR_PIPE_SIZE) msgBuffSize)
             s = (FMSTR_PIPE_SIZE) msgBuffSize;
-        
+
         /* put bytes */
         msgBuffIO = FMSTR_CopyToBuffer(msgBuffIO, pbuff->buff + rp, (FMSTR_SIZE8) s);
-        
+
         /* advance & wrap pointer */
         rp += s / FMSTR_CFG_BUS_WIDTH;
         if(rp >= pbuff->size)
             rp = 0;
-    
+
         /* rest of frame to a (wrapped) beggining of buffer */
         msgBuffSize -= (FMSTR_SIZE8) s;
         if(msgBuffSize > 0)
@@ -1430,7 +1432,7 @@ static FMSTR_BPTR FMSTR_PipeTransmit(FMSTR_BPTR msgBuffIO, FMSTR_PIPE* pp, FMSTR
             msgBuffIO = FMSTR_CopyToBuffer(msgBuffIO, pbuff->buff + rp, msgBuffSize);
         }
     }
-    
+
     return msgBuffIO;
 }
 
@@ -1442,7 +1444,7 @@ static FMSTR_BPTR FMSTR_PipeTransmit(FMSTR_BPTR msgBuffIO, FMSTR_PIPE* pp, FMSTR
 * @param    msgSize   - size of data in buffer
 * @param    retStatus - response status
 *
-* @param  msgBuffIO - original command (in) and response buffer (out) 
+* @param  msgBuffIO - original command (in) and response buffer (out)
 *
 ******************************************************************************/
 
@@ -1451,10 +1453,10 @@ FMSTR_BPTR FMSTR_GetPipe(FMSTR_BPTR msgBuffIO, FMSTR_SIZE msgSize, FMSTR_U8 *ret
     FMSTR_BPTR response = msgBuffIO;
     FMSTR_U8 cfgCode, pipeIndex, pipeFlags;
     FMSTR_PIPE* pp;
-    
+
     FMSTR_ASSERT(msgBuffIO != NULL);
     FMSTR_ASSERT(retStatus != NULL);
-    
+
     /* need at least pipe index and cfgCode */
     if(msgSize < 2)
     {
@@ -1462,16 +1464,16 @@ FMSTR_BPTR FMSTR_GetPipe(FMSTR_BPTR msgBuffIO, FMSTR_SIZE msgSize, FMSTR_U8 *ret
         *retStatus = FMSTR_STC_PIPEERR;
         return response;
     }
-    
+
     /* get Pipe flags */
     msgBuffIO = FMSTR_ValueFromBuffer8(&pipeFlags, msgBuffIO);
-    
+
     /* get Pipe index */
     msgBuffIO = FMSTR_ValueFromBuffer8(&pipeIndex, msgBuffIO);
-    
+
     /* get Pipe cfgCode */
     msgBuffIO = FMSTR_ValueFromBuffer8(&cfgCode, msgBuffIO);
-    
+
     /* Pipe index is a port number of a pipe */
     if(pipeFlags & FMSTR_PIPE_GETPIPE_FLAG_PORT)
     {
@@ -1493,11 +1495,11 @@ FMSTR_BPTR FMSTR_GetPipe(FMSTR_BPTR msgBuffIO, FMSTR_SIZE msgSize, FMSTR_U8 *ret
             *retStatus = FMSTR_STC_INSTERR;
             return response;
         }
-        
+
         /* Get pipe from the list */
         pp = &pcm_pipes[pipeIndex];
     }
-    
+
     switch(cfgCode)
     {
     case FMSTR_PIPE_CFGCODE_NAME:
@@ -1505,13 +1507,13 @@ FMSTR_BPTR FMSTR_GetPipe(FMSTR_BPTR msgBuffIO, FMSTR_SIZE msgSize, FMSTR_U8 *ret
         if(pp->name)
             response = FMSTR_CopyToBuffer(response, (FMSTR_ADDR) pp->name, FMSTR_StrLen(pp->name));
         break;
-    case FMSTR_PIPE_CFGCODE_INFO:     
+    case FMSTR_PIPE_CFGCODE_INFO:
         pipeFlags = 0;
-        
+
         /* Add flag isOpen, when pipe is opened (has port number) */
         if(pp->pipePort != 0)
             pipeFlags |= FMSTR_PIPE_GETINFO_FLAG_ISOPEN;
-        
+
         /* Put pipe port */
         response = FMSTR_ValueToBuffer8(response, pp->pipePort);
         /* Put pipe type */
@@ -1520,7 +1522,7 @@ FMSTR_BPTR FMSTR_GetPipe(FMSTR_BPTR msgBuffIO, FMSTR_SIZE msgSize, FMSTR_U8 *ret
         response = FMSTR_ValueToBuffer8(response, pipeFlags);
         break;
     }
-    
+
     /* success  */
     *retStatus = FMSTR_STS_OK | FMSTR_STSF_VARLEN;
     return response;
@@ -1534,7 +1536,7 @@ FMSTR_BPTR FMSTR_GetPipe(FMSTR_BPTR msgBuffIO, FMSTR_SIZE msgSize, FMSTR_U8 *ret
 * @param    msgSize   - size of data in buffer
 * @param    retStatus - response status
 *
-* @param  msgBuffIO - original command (in) and response buffer (out) 
+* @param  msgBuffIO - original command (in) and response buffer (out)
 *
 ******************************************************************************/
 
@@ -1543,10 +1545,10 @@ FMSTR_BPTR FMSTR_PipeFrame(FMSTR_BPTR msgBuffIO, FMSTR_SIZE msgSize, FMSTR_U8 *r
     FMSTR_BPTR response = msgBuffIO;
     FMSTR_U8 skipLen, pipePort;
     FMSTR_PIPE* pp;
-    
+
     FMSTR_ASSERT(msgBuffIO != NULL);
     FMSTR_ASSERT(retStatus != NULL);
-    
+
     /* need at least port number and tx-discard bytes */
     if(msgSize < 1)
     {
@@ -1554,21 +1556,21 @@ FMSTR_BPTR FMSTR_PipeFrame(FMSTR_BPTR msgBuffIO, FMSTR_SIZE msgSize, FMSTR_U8 *r
         *retStatus = FMSTR_STC_PIPEERR;
         return response;
     }
-    
+
     /* get port number and even/odd flag */
     msgBuffIO = FMSTR_ValueFromBuffer8(&pipePort, msgBuffIO);
 
     /* get pipe by port */
     pp = FMSTR_FindPipe((FMSTR_PIPE_PORT)(pipePort & 0x7f));
 
-    /* pipe port must exist (i.e. be open) */    
+    /* pipe port must exist (i.e. be open) */
     if(!pp)
     {
         /* return status  */
         *retStatus = FMSTR_STC_PIPEERR;
         return response;
     }
-    
+
     /* data-in are valid only in "matching" request (even to even, odd to odd) */
     if(pipePort & 0x80)
     {
@@ -1583,20 +1585,20 @@ FMSTR_BPTR FMSTR_PipeFrame(FMSTR_BPTR msgBuffIO, FMSTR_SIZE msgSize, FMSTR_U8 *r
             msgSize = 0;
         else
             pp->flags.flg.bExpectOdd = !pp->flags.flg.bExpectOdd;
-    }    
-    
+    }
+
     /* process received data */
     if(msgSize > 0)
     {
-        /* first byte tells me how many output bytes can be discarded from my 
-           pipe-transmit buffer (this is how PC acknowledges how many bytes it 
+        /* first byte tells me how many output bytes can be discarded from my
+           pipe-transmit buffer (this is how PC acknowledges how many bytes it
            received and saved from the last response) */
         msgBuffIO = FMSTR_ValueFromBuffer8(&skipLen, msgBuffIO);
-    
+
         /* discard bytes from pipe's transmit buffer */
         if(skipLen)
             FMSTR_PipeDiscardBytes(&pp->tx, skipLen);
-        
+
         /* next come (msgSize-2) bytes to be received */
         if(msgSize > 2)
         {
@@ -1604,18 +1606,18 @@ FMSTR_BPTR FMSTR_PipeFrame(FMSTR_BPTR msgBuffIO, FMSTR_SIZE msgSize, FMSTR_U8 *r
             FMSTR_PIPE_SIZE rxFree = FMSTR_PipeGetBytesFree(&pp->rx);
             /* how many bytes PC want to push? */
             FMSTR_U8 rxToRead = (FMSTR_U8)(msgSize - 2);
-            
+
             /* round to bus width */
             rxToRead /= FMSTR_CFG_BUS_WIDTH;
             rxToRead *= FMSTR_CFG_BUS_WIDTH;
-            
+
             /* get the lower of the two numbers */
             if(rxFree < (FMSTR_PIPE_SIZE)rxToRead)
                 rxToRead = (FMSTR_U8)rxFree;
-            
+
             /* get frame data */
             /* msgBuffIO = */FMSTR_PipeReceive(msgBuffIO, pp, rxToRead);
-            
+
             /* this is the number to be returned to PC to inform it how
                many bytes it may discard in his transmit buffer */
             pp->nLastBytesReceived = rxToRead;
@@ -1626,7 +1628,7 @@ FMSTR_BPTR FMSTR_PipeFrame(FMSTR_BPTR msgBuffIO, FMSTR_SIZE msgSize, FMSTR_U8 *r
             pp->nLastBytesReceived = 0;
         }
     }
-    
+
     /* now call the pipe's handler, it may read or write data */
     if(pp->pCallback)
     {
@@ -1634,34 +1636,34 @@ FMSTR_BPTR FMSTR_PipeFrame(FMSTR_BPTR msgBuffIO, FMSTR_SIZE msgSize, FMSTR_U8 *r
         pp->pCallback((FMSTR_HPIPE) pp);
         pp->flags.flg.bInComm = 0;
     }
-    
+
     /* now put our output data */
     {
         /* how many bytes are waiting to be sent? */
         FMSTR_PIPE_SIZE txAvail = FMSTR_PipeGetBytesReady(&pp->tx);
         /* how many bytes I can safely put? */
         FMSTR_U8 txToSend = FMSTR_COMM_BUFFER_SIZE - 3;
-        
+
         /* round to bus width */
         txToSend /= FMSTR_CFG_BUS_WIDTH;
         txToSend *= FMSTR_CFG_BUS_WIDTH;
-        
+
         /* get the lower of two values */
         if(txAvail < (FMSTR_PIPE_SIZE)txToSend)
             txToSend = (FMSTR_U8)txAvail;
-        
+
         /* send pipe's transmit data back */
         response = FMSTR_ValueToBuffer8(response, pipePort);
-    
+
         /* inform PC how many bytes it may discard from its pipe's transmit buffer */
         skipLen = pp->nLastBytesReceived;
         response = FMSTR_ValueToBuffer8(response, skipLen);
 
-        /* put data */    
+        /* put data */
         if(txToSend)
-            response = FMSTR_PipeTransmit(response, pp, txToSend);        
+            response = FMSTR_PipeTransmit(response, pp, txToSend);
     }
-    
+
     /* success  */
     *retStatus = FMSTR_STS_OK | FMSTR_STSF_VARLEN;
     return response;
@@ -1672,7 +1674,7 @@ FMSTR_BPTR FMSTR_PipeFrame(FMSTR_BPTR msgBuffIO, FMSTR_SIZE msgSize, FMSTR_U8 *r
 /* implement void pipe-API functions */
 
 FMSTR_HPIPE FMSTR_PipeOpen(FMSTR_PIPE_PORT pipePort, FMSTR_PPIPEFUNC pipeCallback,
-                           FMSTR_ADDR pipeRxBuff, FMSTR_PIPE_SIZE pipeRxSize, 
+                           FMSTR_ADDR pipeRxBuff, FMSTR_PIPE_SIZE pipeRxSize,
                            FMSTR_ADDR pipeTxBuff, FMSTR_PIPE_SIZE pipeTxSize,
                            FMSTR_U8 type, const FMSTR_CHAR *name)
 {
@@ -1684,7 +1686,7 @@ FMSTR_HPIPE FMSTR_PipeOpen(FMSTR_PIPE_PORT pipePort, FMSTR_PPIPEFUNC pipeCallbac
     FMSTR_UNUSED(pipeTxSize);
     FMSTR_UNUSED(type);
     FMSTR_UNUSED(name);
-    
+
     return NULL;
 }
 
@@ -1699,7 +1701,7 @@ FMSTR_PIPE_SIZE FMSTR_PipeWrite(FMSTR_HPIPE pipeHandle, FMSTR_ADDR pipeData, FMS
     FMSTR_UNUSED(pipeData);
     FMSTR_UNUSED(pipeDataLen);
     FMSTR_UNUSED(writeGranularity);
-    
+
     return 0U;
 }
 
@@ -1709,7 +1711,7 @@ FMSTR_PIPE_SIZE FMSTR_PipeRead(FMSTR_HPIPE pipeHandle, FMSTR_ADDR pipeData, FMST
     FMSTR_UNUSED(pipeData);
     FMSTR_UNUSED(pipeDataLen);
     FMSTR_UNUSED(readGranularity);
-    
+
     return 0U;
 }
 
@@ -1724,7 +1726,7 @@ FMSTR_BOOL FMSTR_PipePrintfU8(FMSTR_HPIPE pipeHandle, const char* pszFmt, FMSTR_
     FMSTR_UNUSED(pipeHandle);
     FMSTR_UNUSED(pszFmt);
     FMSTR_UNUSED(arg);
-    
+
     return FMSTR_FALSE;
 }
 
@@ -1733,7 +1735,7 @@ FMSTR_BOOL FMSTR_PipePrintfS8(FMSTR_HPIPE pipeHandle, const char* pszFmt, FMSTR_
     FMSTR_UNUSED(pipeHandle);
     FMSTR_UNUSED(pszFmt);
     FMSTR_UNUSED(arg);
-    
+
     return FMSTR_FALSE;
 }
 
@@ -1742,7 +1744,7 @@ FMSTR_BOOL FMSTR_PipePrintfU16(FMSTR_HPIPE pipeHandle, const char* pszFmt, FMSTR
     FMSTR_UNUSED(pipeHandle);
     FMSTR_UNUSED(pszFmt);
     FMSTR_UNUSED(arg);
-    
+
     return FMSTR_FALSE;
 }
 
@@ -1751,7 +1753,7 @@ FMSTR_BOOL FMSTR_PipePrintfS16(FMSTR_HPIPE pipeHandle, const char* pszFmt, FMSTR
     FMSTR_UNUSED(pipeHandle);
     FMSTR_UNUSED(pszFmt);
     FMSTR_UNUSED(arg);
-    
+
     return FMSTR_FALSE;
 }
 
@@ -1760,7 +1762,7 @@ FMSTR_BOOL FMSTR_PipePrintfU32(FMSTR_HPIPE pipeHandle, const char* pszFmt, FMSTR
     FMSTR_UNUSED(pipeHandle);
     FMSTR_UNUSED(pszFmt);
     FMSTR_UNUSED(arg);
-    
+
     return FMSTR_FALSE;
 }
 
@@ -1769,7 +1771,7 @@ FMSTR_BOOL FMSTR_PipePrintfS32(FMSTR_HPIPE pipeHandle, const char* pszFmt, FMSTR
     FMSTR_UNUSED(pipeHandle);
     FMSTR_UNUSED(pszFmt);
     FMSTR_UNUSED(arg);
-    
+
     return FMSTR_FALSE;
 }
 
@@ -1781,7 +1783,7 @@ FMSTR_BOOL FMSTR_PipePrintf(FMSTR_HPIPE pipeHandle, const char* pszFmt, ...)
 {
     FMSTR_UNUSED(pipeHandle);
     FMSTR_UNUSED(pszFmt);
-    
+
     return FMSTR_FALSE;
 }
 

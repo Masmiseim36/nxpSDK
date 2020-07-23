@@ -30,7 +30,6 @@
 #include "lwip/apps/lwiperf.h"
 #include "lwiperf_example.h"
 
-#if LWIP_TCP
 static void
 lwiperf_report(void *arg, enum lwiperf_report_type report_type,
   const ip_addr_t* local_addr, u16_t local_port, const ip_addr_t* remote_addr, u16_t remote_port,
@@ -40,15 +39,12 @@ lwiperf_report(void *arg, enum lwiperf_report_type report_type,
   LWIP_UNUSED_ARG(local_addr);
   LWIP_UNUSED_ARG(local_port);
 
-  printf("IPERF report: type=%d, remote: %s:%d, total bytes: %"U32_F", duration in ms: %"U32_F", kbits/s: %"U32_F"\n",
-    (int)report_type, ipaddr_ntoa(remote_addr), (int)remote_port, bytes_transferred, ms_duration, bandwidth_kbitpsec);
+  LWIP_PLATFORM_DIAG(("IPERF report: type=%d, remote: %s:%d, total bytes: %"U32_F", duration in ms: %"U32_F", kbits/s: %"U32_F"\n",
+    (int)report_type, ipaddr_ntoa(remote_addr), (int)remote_port, bytes_transferred, ms_duration, bandwidth_kbitpsec));
 }
-#endif /* LWIP_TCP */
 
 void
 lwiperf_example_init(void)
 {
-#if LWIP_TCP
   lwiperf_start_tcp_server_default(lwiperf_report, NULL);
-#endif
 }

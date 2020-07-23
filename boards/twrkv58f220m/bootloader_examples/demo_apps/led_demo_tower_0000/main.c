@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2013 Freescale Semiconductor, Inc.
+ * Copyright 2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -7,6 +8,7 @@
 
 #include "fsl_device_registers.h"
 #include "milliseconds_delay.h"
+#include "pin_mux.h"
 
 #define LED1_OFFSET 11
 #define LED2_OFFSET 12
@@ -59,7 +61,7 @@ void delay(void)
 
 int main(void)
 {
-    init_hardware();
+    BOARD_InitBootPins();
     // Note: for ROM development, use this version of delay function,
     // Which is in order to test if the VTCOR is correct.
     milliseconds_delay_init();

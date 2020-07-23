@@ -62,7 +62,7 @@ static void UART_RTOS_Callback(UART_Type *base, uart_handle_t *state, status_t s
  * param handle The RTOS UART handle, the pointer to an allocated space for RTOS context.
  * param t_handle The pointer to the allocated space to store the transactional layer internal state.
  * param cfg The pointer to the parameters required to configure the UART after initialization.
- * return 0 succeed; otherwise fail.
+ * return kStatus_Success, otherwise fail.
  */
 int UART_RTOS_Init(uart_rtos_handle_t *handle, uart_handle_t *t_handle, const uart_rtos_config_t *cfg)
 {
@@ -152,7 +152,7 @@ int UART_RTOS_Init(uart_rtos_handle_t *handle, uart_handle_t *t_handle, const ua
     UART_EnableTx(handle->base, true);
     UART_EnableRx(handle->base, true);
 
-    return 0;
+    return kStatus_Success;
 }
 
 /*FUNCTION**********************************************************************
@@ -187,7 +187,7 @@ int UART_RTOS_Deinit(uart_rtos_handle_t *handle)
     handle->base    = NULL;
     handle->t_state = NULL;
 
-    return 0;
+    return kStatus_Success;
 }
 
 /*FUNCTION**********************************************************************
@@ -218,7 +218,7 @@ int UART_RTOS_Send(uart_rtos_handle_t *handle, const uint8_t *buffer, uint32_t l
     }
     if (0 == length)
     {
-        return 0;
+        return kStatus_Success;
     }
     if (NULL == buffer)
     {
@@ -287,7 +287,7 @@ int UART_RTOS_Receive(uart_rtos_handle_t *handle, uint8_t *buffer, uint32_t leng
         {
             *received = n;
         }
-        return 0;
+        return kStatus_Success;
     }
     if (NULL == buffer)
     {

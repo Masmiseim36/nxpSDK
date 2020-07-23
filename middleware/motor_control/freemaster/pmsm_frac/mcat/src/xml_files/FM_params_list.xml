@@ -26,6 +26,7 @@
     <M1_DCB_trip>Fault Threshold DcBusTrip</M1_DCB_trip>
     <M1_DCB_under>Fault Threshold DcBusUnder</M1_DCB_under>
     <M1_DCB_over>Fault Threshold DcBusOver</M1_DCB_over>
+	<M1_SCALAR_UQ_MIN>Scalar Uq_min</M1_SCALAR_UQ_MIN>
     <M1_N_min>Fault Threshold SpeedMin</M1_N_min>
     <M1_N_over>Fault Threshold SpeedOver</M1_N_over>
     <M1_N_nom>Fault Threshold SpeedNom</M1_N_nom>

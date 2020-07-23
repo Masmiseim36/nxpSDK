@@ -15,9 +15,9 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_ADC16_BASE ADC0
+#define DEMO_ADC16_BASE          ADC0
 #define DEMO_ADC16_CHANNEL_GROUP 0U
-#define DEMO_ADC16_USER_CHANNEL 5U /* PTE17, ADC0_SE5 */
+#define DEMO_ADC16_USER_CHANNEL  5U /* PTE17, ADC0_SE5 */
 
 
 /*******************************************************************************

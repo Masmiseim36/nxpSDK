@@ -456,7 +456,38 @@ function clickGenCalibFile()
   var mounth      = MounthConverter(today.getMonth());
   var t, I_calib, LinCoeff, n = 0, dUerr = 0, IStep;
   var I_calibStr, LinCoeffStr, strBoard;
-  var DocLocation = parent.document.getElementById(prefixM + "ProjectPath").innerHTML;
+    var DocLocation;
+
+    // try to open char_pwrstg.h for reading to test file existence on ProjectPath1
+    DocLocation = parent.document.getElementById(prefixM + "ProjectPath1").innerHTML;
+    paramFile = pcm.LocalFileOpen(DocLocation + "char_pwrstg.h","r");
+
+    // Check whether the file was opened succefuly
+    if (paramFile != false)
+    {
+        // Close File (and keep the correct path in DocLocation)
+        if(!pcm.LocalFileClose(paramFile))
+            alert('File closing error');
+    }
+    else
+    {
+        // try to open char_pwrstg.h for reading to test file existence on ProjectPath2
+        DocLocation = parent.document.getElementById(prefixM + "ProjectPath2").innerHTML;
+        paramFile = pcm.LocalFileOpen(DocLocation + "char_pwrstg.h","r");
+
+        // Check whether the file was opened succefuly
+        if (paramFile != false)
+        {
+            // Close File (and keep the correct path in DocLocation)
+            if(!pcm.LocalFileClose(paramFile))
+                alert('File closing error');
+        }
+        else
+        {
+            alert("char_pwrstg.h not found in the specified paths. Will be generated nex to the actual Freemaster pmp file.");
+            DocLocation = "";
+        }
+    }
     
   t = today.getHours() + ":";
   t += today.getMinutes() + ":";
@@ -541,7 +572,7 @@ function clickGenCalibFile()
 
   /*************** Writing to file process                *********************/   
   // open file for writting
-   var paramFile = pcm.LocalFileOpen(DocLocation + "board/char_pwrstg.h","w");
+   var paramFile = pcm.LocalFileOpen(DocLocation + "char_pwrstg.h","w");
 
   // write string to output file
    charNumber = pcm.LocalFileWriteString(paramFile,str); 

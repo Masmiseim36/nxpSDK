@@ -22,6 +22,10 @@
 #include "freemaster.h"
 #include "freemaster_private.h"
 
+#if FMSTR_SERIAL_SINGLEWIRE
+    #error Not supported by S32K1x
+#endif
+
 /* Numeric identifier to help pre-processor to identify whether our driver is used or not. */
 #define FMSTR_SERIAL_S32K1x_LPUART_ID 1
 
@@ -144,7 +148,7 @@ static void _FMSTR_SerialLpuartEnableTransmitInterrupt(FMSTR_BOOL enable)
 
 static void _FMSTR_SerialLpuartEnableTransmitCompleteInterrupt(FMSTR_BOOL enable)
 {
-    #warning Needs to be implemented Enable for transmit complete event.
+    // Single-wire communication is not (yet) enabled in this driver.
 }
 
 /**************************************************************************//*!

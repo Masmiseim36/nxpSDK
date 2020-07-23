@@ -5,7 +5,7 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
- 
+
 #ifndef _MCDRV_PWM3PH_PWMA_H_
 #define _MCDRV_PWM3PH_PWMA_H_
 
@@ -25,13 +25,13 @@
 
 typedef struct _mcdrv_pwma_pwm3ph
 {
-    GMCLIB_3COOR_T_F16 *psUABC; /* pointer to the 3-phase pwm duty cycles */
+    GMCLIB_3COOR_T_F16 *psUABC;    /* pointer to the 3-phase pwm duty cycles */
     PWM_Type *pui32PwmBaseAddress; /* PWMA base address */
-    uint16_t ui16PhASubNum; /* PWMA phase A sub-module number */
-    uint16_t ui16PhBSubNum; /* PWMA phase B sub-module number */
-    uint16_t ui16PhCSubNum; /* PWMA phase C sub-module number */
-    uint16_t ui16FaultFixNum; /* PWMA fault number for fixed over-current fault detection */
-    uint16_t ui16FaultAdjNum; /* PWMA fault number for adjustable over-current fault detection */
+    uint16_t ui16PhASubNum;        /* PWMA phase A sub-module number */
+    uint16_t ui16PhBSubNum;        /* PWMA phase B sub-module number */
+    uint16_t ui16PhCSubNum;        /* PWMA phase C sub-module number */
+    uint16_t ui16FaultFixNum;      /* PWMA fault number for fixed over-current fault detection */
+    uint16_t ui16FaultAdjNum;      /* PWMA fault number for adjustable over-current fault detection */
 } mcdrv_pwm3ph_pwma_t;
 
 /*******************************************************************************
@@ -83,4 +83,3 @@ bool_t MCDRV_eFlexPwm3PhFltGet(mcdrv_pwm3ph_pwma_t *this);
 #endif
 
 #endif /* _MCDRV_PWM3PH_PWMA_H_ */
-

@@ -32,4 +32,3 @@ extern void MID_CalcMechPar(void);
 #endif
 
 #endif /* _CALC_ACIM_H_ */
-

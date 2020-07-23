@@ -9,13 +9,13 @@
 #define __BOOTLOADER_H__
 
 #include "bootloader_common.h"
-#include "bootloader/bl_peripheral.h"
-#include "bootloader/bl_command.h"
-#include "bootloader/bl_context.h"
-#include "bootloader/bl_version.h"
-#include "bootloader/bl_user_entry.h"
-#include "bootloader/bl_peripheral_interface.h"
-#include "bootloader/bl_shutdown_cleanup.h"
+#include "bl_peripheral.h"
+#include "bl_command.h"
+#include "bl_context.h"
+#include "bl_version.h"
+#include "bl_user_entry.h"
+#include "bl_peripheral_interface.h"
+#include "bl_shutdown_cleanup.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
@@ -48,14 +48,14 @@ typedef struct BootloaderTree
     standard_version_t version;                  //!< Bootloader version number.
     const char *copyright;                       //!< Copyright string.
     const bootloader_context_t *runtimeContext;  //!< Pointer to the bootloader's runtime context.
-#if !(defined(BL_FEATURE_HAS_NO_INTERNAL_FLASH) && BL_FEATURE_HAS_NO_INTERNAL_FLASH)
-#if !(defined(BL_DEVICE_IS_LPC_SERIES) && BL_DEVICE_IS_LPC_SERIES)
+#if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
+#if !BL_DEVICE_IS_LPC_SERIES
     const flash_driver_interface_t *flashDriver;    //!< Kinetis Flash driver API.
 #else
     const flashiap_driver_interface_t *flashDriver; //!< LPC Flash driver API.
 #endif
 #endif
-#if defined(BL_DEVICE_IS_LPC_SERIES) && BL_DEVICE_IS_LPC_SERIES
+#if BL_DEVICE_IS_LPC_SERIES
     const power_driver_interface_t *powerDriver;
 #endif
     const aes_driver_interface_t *aesDriver;     //!< AES driver API.

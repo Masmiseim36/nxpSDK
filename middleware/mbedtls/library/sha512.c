@@ -438,6 +438,8 @@ void mbedtls_sha512_finish( mbedtls_sha512_context *ctx,
 
 #endif /* !MBEDTLS_SHA512_ALT */
 
+/* NXP adding for SSS API support */
+#if !defined(NXP_MBEDTLS_SHA512_ALT)
 /*
  * output = SHA-512( input buffer )
  */
@@ -479,6 +481,7 @@ void mbedtls_sha512( const unsigned char *input,
     mbedtls_sha512_ret( input, ilen, output, is384 );
 }
 #endif
+#endif /* !NXP_MBEDTLS_SHA512_ALT */
 
 #if defined(MBEDTLS_SELF_TEST)
 

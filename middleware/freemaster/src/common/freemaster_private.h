@@ -33,13 +33,32 @@
 /* we do not assume the inline is always supported by compiler
   rather each platform header defines its FMSTR_INLINE */
 #ifndef FMSTR_INLINE
+    #ifdef __CSMC__ /* Cosmic */
+    #define FMSTR_INLINE static
+    #else
 #define FMSTR_INLINE static inline
+    #endif
+#endif
+#ifndef FMSTR_WEAK
+    #if __ICCARM && !__ICCARM_V8
+        #define FMSTR_WEAK _Pragma("__weak")
+    #elif defined(__S12Z__) || defined(__CSMC__)
+	#define FMSTR_WEAK
+    #else
+        #define FMSTR_WEAK __attribute__((weak))
+    #endif
 #endif
 
 /* building macro-based inline code */
 #define FMSTR_MACROCODE_BEGIN()     do{
 #define FMSTR_MACROCODE_END()       }while(0)
 
+/* C99 structure member initialization */
+#if __STDC_VERSION__ >= 199901L
+   #define FMSTR_C99_INIT(member) .member =
+#else
+  #define FMSTR_C99_INIT(member)
+#endif
 
 #ifdef __cplusplus
   extern "C" {
@@ -67,6 +86,7 @@ extern const FMSTR_TRANSPORT_INTF FMSTR_TRANSPORT;
 * Global non-API functions (used internally in FreeMASTER driver)
 ******************************************************************************/
 
+void FMSTR_SendResponse(FMSTR_BPTR response, FMSTR_SIZE length, FMSTR_U8 statusCode);
 FMSTR_BOOL FMSTR_ProtocolDecoder(FMSTR_BPTR msgBuffIO, FMSTR_SIZE msgSize, FMSTR_U8 cmdCode);
 FMSTR_BOOL FMSTR_SendTestFrame(FMSTR_BPTR msgBuffIO);
 
@@ -82,7 +102,7 @@ FMSTR_BPTR FMSTR_ReadScope(FMSTR_BPTR msgBuffIO, FMSTR_U8 *retStatus, FMSTR_SIZE
 void FMSTR_InitRec(void);
 FMSTR_BPTR FMSTR_SetRecCmd(FMSTR_BPTR msgBuffIO, FMSTR_SIZE inputLen, FMSTR_U8 *retStatus);
 FMSTR_BPTR FMSTR_GetRecCmd(FMSTR_BPTR msgBuffIO, FMSTR_U8 *retStatus);
-FMSTR_BOOL FMSTR_IsInRecBuffer(FMSTR_ADDR addr, FMSTR_SIZE8 size);
+FMSTR_BOOL FMSTR_IsInRecBuffer(FMSTR_ADDR addr, FMSTR_SIZE size);
 
 void FMSTR_InitTsa(void);
 FMSTR_BPTR FMSTR_GetTsaInfo(FMSTR_BPTR msgBuffIO, FMSTR_U8 *retStatus);
@@ -98,12 +118,12 @@ FMSTR_BPTR FMSTR_GetPipe(FMSTR_BPTR msgBuffIO, FMSTR_SIZE msgSize, FMSTR_U8 *ret
 void FMSTR_InitPDBdm(void);
 
 /******************************************************************************
-* communication buffer access functions
+* aligned memory and buffer memory operations
 ******************************************************************************/
 
-void FMSTR_MemCpyTo(volatile void* destAddr, volatile void* srcBuff, FMSTR_SIZE size);
-void FMSTR_MemCpyFrom(volatile void* destBuff, volatile void* srcAddr, FMSTR_SIZE size);
-void FMSTR_MemCpyToMasked(volatile void* destAddr, volatile void* srcBuff, volatile void* maskBuff, FMSTR_SIZE size);
+void FMSTR_MemCpyTo(FMSTR_ADDR destAddr, FMSTR_ADDR srcAddr, FMSTR_SIZE size);
+void FMSTR_MemCpyFrom(FMSTR_ADDR destAddr, FMSTR_ADDR srcAddr, FMSTR_SIZE size);
+void FMSTR_MemCpyToMasked(FMSTR_ADDR destAddr, FMSTR_ADDR srcAddr, FMSTR_ADDR maskAddr, FMSTR_SIZE size);
 
 FMSTR_BPTR FMSTR_CopyToBuffer(FMSTR_BPTR destBuff, FMSTR_ADDR srcAddr, FMSTR_SIZE size);
 FMSTR_BPTR FMSTR_CopyFromBuffer(FMSTR_ADDR destAddr, FMSTR_BPTR srcBuff, FMSTR_SIZE size);
@@ -133,6 +153,10 @@ FMSTR_BPTR FMSTR_ULebToBuffer(FMSTR_BPTR dest, FMSTR_U32 num);
 FMSTR_BPTR FMSTR_ULebFromBuffer(FMSTR_U32* pnum, FMSTR_BPTR src);
 FMSTR_SIZE FMSTR_GetAlignmentCorrection(FMSTR_ADDR addr, FMSTR_SIZE size);
 
+/******************************************************************************
+* aligned memory and buffer memory operations
+******************************************************************************/
+
 #define FMSTR_GetS8(addr)  ( *(FMSTR_S8*)(addr) )
 #define FMSTR_GetU8(addr)  ( *(FMSTR_U8*)(addr) )
 #define FMSTR_GetS16(addr) ( *(FMSTR_S16*)(addr) )
@@ -151,7 +175,7 @@ FMSTR_SIZE FMSTR_GetAlignmentCorrection(FMSTR_ADDR addr, FMSTR_SIZE size);
 * SHA calculation
 ******************************************************************************/
 
-typedef struct
+typedef struct fmstr_sha1_ctx
 {
     FMSTR_U8 data[64];
     FMSTR_U32 datalen;

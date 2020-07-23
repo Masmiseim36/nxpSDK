@@ -4,7 +4,7 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
- 
+
 #ifndef _FM_TSA_BLDC_H_
 #define _FM_TSA_BLDC_H_
 
@@ -16,4 +16,3 @@
 #include "m1_sm_ref_sol.h"
 
 #endif
-

@@ -49,11 +49,11 @@ bool_t MCDRV_FtmSetDutyCycle(mcdrv_pwm3ph_ftm_t *this, int16_t i16InpDuty)
     if (i16SecondEdge > ((this->ui16PwmModulo) / 2))
         i16SecondEdge = (this->ui16PwmModulo) / 2;
 
-    this->pui32PwmBase->CONTROLS[this->ui16ChanPhA].CnV = i16FirstEdge;
+    this->pui32PwmBase->CONTROLS[this->ui16ChanPhA].CnV     = i16FirstEdge;
     this->pui32PwmBase->CONTROLS[this->ui16ChanPhA + 1].CnV = i16SecondEdge;
-    this->pui32PwmBase->CONTROLS[this->ui16ChanPhB].CnV = i16FirstEdge;
+    this->pui32PwmBase->CONTROLS[this->ui16ChanPhB].CnV     = i16FirstEdge;
     this->pui32PwmBase->CONTROLS[this->ui16ChanPhB + 1].CnV = i16SecondEdge;
-    this->pui32PwmBase->CONTROLS[this->ui16ChanPhC].CnV = i16FirstEdge;
+    this->pui32PwmBase->CONTROLS[this->ui16ChanPhC].CnV     = i16FirstEdge;
     this->pui32PwmBase->CONTROLS[this->ui16ChanPhC + 1].CnV = i16SecondEdge;
 
     this->pui32PwmBase->PWMLOAD |= (FTM_PWMLOAD_LDOK_MASK);
@@ -62,13 +62,13 @@ bool_t MCDRV_FtmSetDutyCycle(mcdrv_pwm3ph_ftm_t *this, int16_t i16InpDuty)
 }
 
 /*!
-* @brief Function set pwm sector from input
-*
-* @param this Pointer to the current object
-* @param sector Actual commutation sector
-*
-* @return boot_t true on success
-*/
+ * @brief Function set pwm sector from input
+ *
+ * @param this Pointer to the current object
+ * @param sector Actual commutation sector
+ *
+ * @return boot_t true on success
+ */
 bool_t MCDRV_FtmSetPwmOutput(mcdrv_pwm3ph_ftm_t *this, int16_t i16Sector)
 {
     s_statusPass = TRUE;
@@ -93,7 +93,7 @@ bool_t MCDRV_FtmPwm3PhFltGet(mcdrv_pwm3ph_ftm_t *this)
     s_statusPass = this->pui32PwmBase->FMS & (1 << this->ui16FaultFixNum);
 
     /* Clear fault flags */
-    this->pui32PwmBase->FMS &= ~(1<<FTM_FMS_FAULTF0_SHIFT);
+    this->pui32PwmBase->FMS &= ~(1 << FTM_FMS_FAULTF0_SHIFT);
 
     return ((s_statusPass > 0));
 }

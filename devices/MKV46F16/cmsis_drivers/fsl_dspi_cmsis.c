@@ -27,7 +27,7 @@
 
 #if ((RTE_SPI0 && defined(DSPI0)) || (RTE_SPI1 && defined(DSPI1)) || (RTE_SPI2 && defined(DSPI2)))
 
-#define ARM_DSPI_DRV_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(2, 1) /* driver version */
+#define ARM_DSPI_DRV_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(2, 2) /* driver version */
 
 /*
  * ARMCC does not support split the data section automatically, so the driver
@@ -422,10 +422,11 @@ static int32_t DSPI_EdmaSend(const void *data, uint32_t num, cmsis_dspi_edma_dri
     int32_t ret;
     status_t status;
     dspi_transfer_t xfer = {0};
+    uint32_t datawidth   = (dspi->resource->base->CTAR[kDSPI_MasterCtar0] & SPI_CTAR_FMSZ_MASK) >> SPI_CTAR_FMSZ_SHIFT;
 
     xfer.rxData   = NULL;
     xfer.txData   = (uint8_t *)data;
-    xfer.dataSize = num;
+    xfer.dataSize = num * ((datawidth + 8U) / 8U);
 
     if (DSPI_IsMaster(dspi->resource->base))
     {
@@ -487,10 +488,11 @@ static int32_t DSPI_EdmaReceive(void *data, uint32_t num, cmsis_dspi_edma_driver
     int32_t ret;
     status_t status;
     dspi_transfer_t xfer = {0};
+    uint32_t datawidth   = (dspi->resource->base->CTAR[kDSPI_MasterCtar0] & SPI_CTAR_FMSZ_MASK) >> SPI_CTAR_FMSZ_SHIFT;
 
     xfer.txData   = NULL;
     xfer.rxData   = (uint8_t *)data;
-    xfer.dataSize = num;
+    xfer.dataSize = num * ((datawidth + 8U) / 8U);
 
     if (DSPI_IsMaster(dspi->resource->base))
     {
@@ -555,10 +557,11 @@ static int32_t DSPI_EdmaTransfer(const void *data_out,
     int32_t ret;
     status_t status;
     dspi_transfer_t xfer = {0};
+    uint32_t datawidth   = (dspi->resource->base->CTAR[kDSPI_MasterCtar0] & SPI_CTAR_FMSZ_MASK) >> SPI_CTAR_FMSZ_SHIFT;
 
     xfer.txData   = (uint8_t *)data_out;
     xfer.rxData   = (uint8_t *)data_in;
-    xfer.dataSize = num;
+    xfer.dataSize = num * ((datawidth + 8U) / 8U);
 
     if (DSPI_IsMaster(dspi->resource->base))
     {
@@ -618,6 +621,7 @@ static uint32_t DSPI_EdmaGetCount(cmsis_dspi_edma_driver_state_t *dspi)
 {
     uint32_t cnt;
     size_t bytes;
+    uint32_t datawidth = (dspi->resource->base->CTAR[kDSPI_MasterCtar0] & SPI_CTAR_FMSZ_MASK) >> SPI_CTAR_FMSZ_SHIFT;
 
     if (DSPI_IsMaster(dspi->resource->base))
     {
@@ -641,6 +645,7 @@ static uint32_t DSPI_EdmaGetCount(cmsis_dspi_edma_driver_state_t *dspi)
                 EDMA_GetRemainingMajorLoopCount(dspi->dmaResource->rxEdmaBase, dspi->dmaResource->rxEdmaChannel);
         cnt = dspi->handle->slaveHandle.totalByteCount - bytes;
     }
+    cnt /= ((datawidth + 8U) / 8U);
 
     return cnt;
 }
@@ -893,10 +898,11 @@ static int32_t DSPI_InterruptSend(const void *data, uint32_t num, cmsis_dspi_int
     int32_t ret;
     status_t status;
     dspi_transfer_t xfer = {0};
+    uint32_t datawidth   = (dspi->resource->base->CTAR[kDSPI_MasterCtar0] & SPI_CTAR_FMSZ_MASK) >> SPI_CTAR_FMSZ_SHIFT;
 
     xfer.rxData   = NULL;
     xfer.txData   = (uint8_t *)data;
-    xfer.dataSize = num;
+    xfer.dataSize = num * ((datawidth + 8U) / 8U);
 
     if (DSPI_IsMaster(dspi->resource->base))
     {
@@ -958,10 +964,11 @@ static int32_t DSPI_InterruptReceive(void *data, uint32_t num, cmsis_dspi_interr
     int32_t ret;
     status_t status;
     dspi_transfer_t xfer = {0};
+    uint32_t datawidth   = (dspi->resource->base->CTAR[kDSPI_MasterCtar0] & SPI_CTAR_FMSZ_MASK) >> SPI_CTAR_FMSZ_SHIFT;
 
     xfer.txData   = NULL;
     xfer.rxData   = (uint8_t *)data;
-    xfer.dataSize = num;
+    xfer.dataSize = num * ((datawidth + 8U) / 8U);
 
     if (DSPI_IsMaster(dspi->resource->base))
     {
@@ -1026,10 +1033,11 @@ static int32_t DSPI_InterruptTransfer(const void *data_out,
     int32_t ret;
     status_t status;
     dspi_transfer_t xfer = {0};
+    uint32_t datawidth   = (dspi->resource->base->CTAR[kDSPI_MasterCtar0] & SPI_CTAR_FMSZ_MASK) >> SPI_CTAR_FMSZ_SHIFT;
 
     xfer.txData   = (uint8_t *)data_out;
     xfer.rxData   = (uint8_t *)data_in;
-    xfer.dataSize = num;
+    xfer.dataSize = num * ((datawidth + 8U) / 8U);
 
     if (DSPI_IsMaster(dspi->resource->base))
     {
@@ -1087,14 +1095,20 @@ static int32_t DSPI_InterruptTransfer(const void *data_out,
 }
 static uint32_t DSPI_InterruptGetCount(cmsis_dspi_interrupt_driver_state_t *dspi)
 {
+    uint8_t cnt;
+    uint32_t datawidth = (dspi->resource->base->CTAR[kDSPI_MasterCtar0] & SPI_CTAR_FMSZ_MASK) >> SPI_CTAR_FMSZ_SHIFT;
+
     if (DSPI_IsMaster(dspi->resource->base))
     {
-        return dspi->handle->masterHandle.totalByteCount - dspi->handle->masterHandle.remainingReceiveByteCount;
+        cnt = dspi->handle->masterHandle.totalByteCount - dspi->handle->masterHandle.remainingReceiveByteCount;
     }
     else
     {
-        return dspi->handle->slaveHandle.totalByteCount - dspi->handle->slaveHandle.remainingReceiveByteCount;
+        cnt = dspi->handle->slaveHandle.totalByteCount - dspi->handle->slaveHandle.remainingReceiveByteCount;
     }
+    cnt /= ((datawidth + 8U) / 8U);
+
+    return cnt;
 }
 
 static int32_t DSPI_InterruptControl(uint32_t control, uint32_t arg, cmsis_dspi_interrupt_driver_state_t *dspi)

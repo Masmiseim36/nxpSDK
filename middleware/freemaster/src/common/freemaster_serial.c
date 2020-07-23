@@ -116,12 +116,13 @@ static void _FMSTR_SerialSendResponse(FMSTR_BPTR pResponse, FMSTR_SIZE nLength, 
 /***********************************
 *  global variables
 ***********************************/
+
 /* Interface of this serial driver */
 const FMSTR_TRANSPORT_INTF FMSTR_SERIAL =
 {
-    .Init = _FMSTR_SerialInit,
-    .Poll = _FMSTR_SerialPoll,
-    .SendResponse = _FMSTR_SerialSendResponse,
+    FMSTR_C99_INIT(Init) _FMSTR_SerialInit,
+    FMSTR_C99_INIT(Poll) _FMSTR_SerialPoll,
+    FMSTR_C99_INIT(SendResponse) _FMSTR_SerialSendResponse,
 };
 
 /*lint -esym(752,_FMSTR_RxQueue) this may be unreferenced in some cases */
@@ -329,12 +330,12 @@ static void _FMSTR_SerialSendResponse(FMSTR_BPTR pResponse, FMSTR_SIZE nLength, 
 
     if(statusCode & FMSTR_STSF_VARLEN)
     {
-        fmstr_pCommBuffer[0] = statusCode;
-        fmstr_pCommBuffer[1] = nLength;
+        fmstr_pCommBuffer[0] = (FMSTR_BCHR)statusCode;
+        fmstr_pCommBuffer[1] = (FMSTR_BCHR)nLength;
     }
     else
     {
-        fmstr_pCommBuffer[1] = statusCode;
+        fmstr_pCommBuffer[1] = (FMSTR_BCHR)statusCode;
         fmstr_pTxBuff++;
         fmstr_nTxTodo--;
     }
@@ -468,7 +469,7 @@ static FMSTR_BOOL _FMSTR_Rx(FMSTR_BCHR rxChar)
     if(pflg->flg.bRxMsgLengthNext)
     {
         /* total data length and the checksum */
-        fmstr_nRxTodo = rxChar + 1;
+        fmstr_nRxTodo = (FMSTR_SIZE8)(rxChar + 1);
         FMSTR_Crc8AddByte(&fmstr_nRxCrc8, rxChar);
 
         *(fmstr_pRxBuff++) = rxChar;

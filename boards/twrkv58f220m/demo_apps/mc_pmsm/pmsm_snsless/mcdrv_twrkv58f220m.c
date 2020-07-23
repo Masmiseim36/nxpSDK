@@ -34,15 +34,15 @@ clock_setup_t g_sClockSetup;
  ******************************************************************************/
 
 /*!
-* @brief   void MCDRV_Init_M1(void)
-*           - Motor control driver main initialization
-*           - Calls initialization functions of peripherals required for motor
-*             control functionality
-*
-* @param   void
-*
-* @return  none
-*/
+ * @brief   void MCDRV_Init_M1(void)
+ *           - Motor control driver main initialization
+ *           - Calls initialization functions of peripherals required for motor
+ *             control functionality
+ *
+ * @param   void
+ *
+ * @return  none
+ */
 void MCDRV_Init_M1(void)
 {
     /* Init application clock dependent variables */
@@ -62,36 +62,36 @@ void MCDRV_Init_M1(void)
 }
 
 /*!
-* @brief      Core, bus, flash clock setup
-*
-* @param      void
-*
-* @return     none
-*/
+ * @brief      Core, bus, flash clock setup
+ *
+ * @param      void
+ *
+ * @return     none
+ */
 void InitClock(void)
 {
-    /* Calculate clock dependant variables for PMSM sensorless control algorithm */    
-    g_sClockSetup.ui32FastPeripheralClock =  CLOCK_GetFreq(kCLOCK_FastPeriphClk); 
-    g_sClockSetup.ui32BusClock = CLOCK_GetFreq(kCLOCK_BusClk); 
-    
+    /* Calculate clock dependant variables for PMSM sensorless control algorithm */
+    g_sClockSetup.ui32FastPeripheralClock = CLOCK_GetFreq(kCLOCK_FastPeriphClk);
+    g_sClockSetup.ui32BusClock            = CLOCK_GetFreq(kCLOCK_BusClk);
+
     g_sClockSetup.ui16M1PwmFreq = M1_PWM_FREQ; /* 10kHz */
-                                             /* PWM module calculated as follows:
-                                              * PWM_MOD = PWM_CLOCK / PWM_FREQUENCY = 240 MHz / 10 kHz = 24000 */
-    g_sClockSetup.ui16M1PwmModulo = g_sClockSetup.ui32FastPeripheralClock / g_sClockSetup.ui16M1PwmFreq;
-    g_sClockSetup.ui16M1PwmDeadTime = g_sClockSetup.ui32FastPeripheralClock / (1000000000U / M1_PWM_DEADTIME);
+                                               /* PWM module calculated as follows:
+                                                * PWM_MOD = PWM_CLOCK / PWM_FREQUENCY = 240 MHz / 10 kHz = 24000 */
+    g_sClockSetup.ui16M1PwmModulo     = g_sClockSetup.ui32FastPeripheralClock / g_sClockSetup.ui16M1PwmFreq;
+    g_sClockSetup.ui16M1PwmDeadTime   = g_sClockSetup.ui32FastPeripheralClock / (1000000000U / M1_PWM_DEADTIME);
     g_sClockSetup.ui16M1SpeedLoopFreq = M1_SPEED_LOOP_FREQ; /* 1kHz */
 }
 
 /*!
-* @brief   void InitPWMA(void)
-*           - Initialization of the eFlexPWMA peripheral for motor M1
-*           - 3-phase center-aligned PWM
-*           - top signals have negative polarity due to MC33937
-*
-* @param   void
-*
-* @return  none
-*/
+ * @brief   void InitPWMA(void)
+ *           - Initialization of the eFlexPWMA peripheral for motor M1
+ *           - 3-phase center-aligned PWM
+ *           - top signals have negative polarity due to MC33937
+ *
+ * @param   void
+ *
+ * @return  none
+ */
 void InitPWMA0(void)
 {
     /* Enable clock for eFlexPWM modules 0,1,2 & 3 in SIM module */
@@ -99,7 +99,7 @@ void InitPWMA0(void)
     SIM->SCGC4 |= SIM_SCGC4_PWM0_SM1_MASK;
     SIM->SCGC4 |= SIM_SCGC4_PWM0_SM2_MASK;
     SIM->SCGC4 |= SIM_SCGC4_PWM0_SM3_MASK;
-    
+
     /* Enable clock for XBARA module */
     SIM->SCGC5 |= SIM_SCGC5_XBARA_MASK;
 
@@ -125,9 +125,10 @@ void InitPWMA0(void)
     PWM0->SM[0].VAL1 = PWM_VAL1_VAL1((uint16_t)((g_sClockSetup.ui16M1PwmModulo / 2) - 1));
     PWM0->SM[1].VAL1 = PWM_VAL1_VAL1((uint16_t)((g_sClockSetup.ui16M1PwmModulo / 2) - 1));
     PWM0->SM[2].VAL1 = PWM_VAL1_VAL1((uint16_t)((g_sClockSetup.ui16M1PwmModulo / 2) - 1));
-    PWM0->SM[3].VAL1 = PWM_VAL1_VAL1((uint16_t)((g_sClockSetup.ui16M1PwmModulo * 
-                                                 M1_FOC_FREQ_VS_PWM_FREQ) - 
-                                                (g_sClockSetup.ui16M1PwmModulo / 2)) / 2 - 1);
+    PWM0->SM[3].VAL1 = PWM_VAL1_VAL1(
+        (uint16_t)((g_sClockSetup.ui16M1PwmModulo * M1_FOC_FREQ_VS_PWM_FREQ) - (g_sClockSetup.ui16M1PwmModulo / 2)) /
+            2 -
+        1);
 
     PWM0->SM[0].VAL2 = PWM_VAL2_VAL2((uint16_t)(-(g_sClockSetup.ui16M1PwmModulo / 4)));
     PWM0->SM[1].VAL2 = PWM_VAL2_VAL2((uint16_t)(-(g_sClockSetup.ui16M1PwmModulo / 4)));
@@ -212,9 +213,9 @@ void InitPWMA0(void)
 
     /* PWMA3_TRG0 to ADC0 - XBARA_IN26 -> XBAR_OUT12*/
     /* PWMA3_TRG0 to ADC1 - XBARA_IN26 -> XBAR_OUT42*/
-    XBARA->SEL6 = XBARA_SEL6_SEL12(26);
+    XBARA->SEL6  = XBARA_SEL6_SEL12(26);
     XBARA->SEL21 = XBARA_SEL21_SEL42(26);
-    
+
     /* Start PWMs (set load OK flags and run) */
     PWM0->MCTRL = (PWM0->MCTRL & ~(uint16_t)PWM_MCTRL_CLDOK_MASK) | PWM_MCTRL_CLDOK(0xF);
     PWM0->MCTRL = (PWM0->MCTRL & ~(uint16_t)PWM_MCTRL_LDOK_MASK) | PWM_MCTRL_LDOK(0xF);
@@ -232,38 +233,38 @@ void InitPWMA0(void)
 }
 
 /*
-* @brief   void InitSPI(void)
-*           - Initialization of the SPI peripheral for motor M1 3-phase MOSFET
-*             pre-driver
-*           - SPI configuration for MOSFET pre-driver MC33937
-*
-* @param   void
-*
-* @return  none
-*/
+ * @brief   void InitSPI(void)
+ *           - Initialization of the SPI peripheral for motor M1 3-phase MOSFET
+ *             pre-driver
+ *           - SPI configuration for MOSFET pre-driver MC33937
+ *
+ * @param   void
+ *
+ * @return  none
+ */
 void InitSPI(void)
 {
     uint32_t srcClock_Hz;
     dspi_master_config_t masterConfig;
 
     /* Master config */
-    masterConfig.whichCtar = kDSPI_Ctar0;
-    masterConfig.ctarConfig.baudRate = 500000U;
-    masterConfig.ctarConfig.bitsPerFrame = 8U;
-    masterConfig.ctarConfig.cpol = kDSPI_ClockPolarityActiveLow;
-    masterConfig.ctarConfig.cpha = kDSPI_ClockPhaseFirstEdge;
-    masterConfig.ctarConfig.direction = kDSPI_MsbFirst;
-    masterConfig.ctarConfig.pcsToSckDelayInNanoSec = 1000000000U / masterConfig.ctarConfig.baudRate;
-    masterConfig.ctarConfig.lastSckToPcsDelayInNanoSec = 1000000000U / masterConfig.ctarConfig.baudRate;
+    masterConfig.whichCtar                                = kDSPI_Ctar0;
+    masterConfig.ctarConfig.baudRate                      = 500000U;
+    masterConfig.ctarConfig.bitsPerFrame                  = 8U;
+    masterConfig.ctarConfig.cpol                          = kDSPI_ClockPolarityActiveLow;
+    masterConfig.ctarConfig.cpha                          = kDSPI_ClockPhaseFirstEdge;
+    masterConfig.ctarConfig.direction                     = kDSPI_MsbFirst;
+    masterConfig.ctarConfig.pcsToSckDelayInNanoSec        = 1000000000U / masterConfig.ctarConfig.baudRate;
+    masterConfig.ctarConfig.lastSckToPcsDelayInNanoSec    = 1000000000U / masterConfig.ctarConfig.baudRate;
     masterConfig.ctarConfig.betweenTransferDelayInNanoSec = 1000000000U / masterConfig.ctarConfig.baudRate;
 
-    masterConfig.whichPcs = kDSPI_Pcs0;
+    masterConfig.whichPcs           = kDSPI_Pcs0;
     masterConfig.pcsActiveHighOrLow = kDSPI_PcsActiveLow;
 
-    masterConfig.enableContinuousSCK = false;
-    masterConfig.enableRxFifoOverWrite = false;
+    masterConfig.enableContinuousSCK        = false;
+    masterConfig.enableRxFifoOverWrite      = false;
     masterConfig.enableModifiedTimingFormat = false;
-    masterConfig.samplePoint = kDSPI_SckToSin0Clock;
+    masterConfig.samplePoint                = kDSPI_SckToSin0Clock;
 
     srcClock_Hz = CLOCK_GetFreq(SYS_CLK);
     DSPI_MasterInit(SPI0, &masterConfig, srcClock_Hz);
@@ -271,15 +272,15 @@ void InitSPI(void)
     /* ---------------------------------------------------- */
     /* Initialization of pins required by MC33937 predriver */
     g_sM1Driver3ph.sSpiData.pSpiBase = (SPI_Type *)(SPI0); /* SPI Base Address */
-    g_sM1Driver3ph.sSpiData.ui32Pcs = (1 << 0); /* 1 << PCS_number */
+    g_sM1Driver3ph.sSpiData.ui32Pcs  = (1 << 0);           /* 1 << PCS_number */
 
     /* Enable PIN & PORT */
-    g_sM1Driver3ph.sSpiData.pGpioEnBase = (GPIO_Type *)(GPIOE); /* GPIOx Base Address */
-    g_sM1Driver3ph.sSpiData.ui32GpioEnPin = 28; /* pin number for driver enabled */
+    g_sM1Driver3ph.sSpiData.pGpioEnBase   = (GPIO_Type *)(GPIOE); /* GPIOx Base Address */
+    g_sM1Driver3ph.sSpiData.ui32GpioEnPin = 28;                   /* pin number for driver enabled */
 
     /* Interrupt PIN & PORT */
-    g_sM1Driver3ph.sSpiData.pGpioIntBase = (GPIO_Type *)(GPIOB); /* GPIOx Base Address */
-    g_sM1Driver3ph.sSpiData.ui32GpioIntPin = 8; /* pin number for interrupt detection */
+    g_sM1Driver3ph.sSpiData.pGpioIntBase   = (GPIO_Type *)(GPIOB); /* GPIOx Base Address */
+    g_sM1Driver3ph.sSpiData.ui32GpioIntPin = 8;                    /* pin number for interrupt detection */
 
     /* Reset PIN & PORT */
     g_sM1Driver3ph.sSpiData.bResetPinControl = FALSE;
@@ -296,14 +297,14 @@ void InitSPI(void)
 }
 
 /*!
-* @brief   void InitFTM2(void)
-*           - Initialization of the FTM2 peripheral
-*           - performs slow control loop counter
-*
-* @param   void
-*
-* @return  none
-*/
+ * @brief   void InitFTM2(void)
+ *           - Initialization of the FTM2 peripheral
+ *           - performs slow control loop counter
+ *
+ * @param   void
+ *
+ * @return  none
+ */
 void InitFTM2(void)
 {
     /* enable clock to FTM module */
@@ -340,14 +341,14 @@ void InitFTM2(void)
 }
 
 /*!
-* @brief   void InitHSADC(void)
-*           - Initialization of the HSADC0 & HSADC1 peripheral
-*           - Initialization of the A/D converter for current and voltage sensing
-*
-* @param   void
-*
-* @return  none
-*/
+ * @brief   void InitHSADC(void)
+ *           - Initialization of the HSADC0 & HSADC1 peripheral
+ *           - Initialization of the A/D converter for current and voltage sensing
+ *
+ * @param   void
+ *
+ * @return  none
+ */
 void InitHSADC(void)
 {
     /* Enable clock for HSADC0(HSADCA+HSADCB) and HSADC1(HSADCC+HSADCD) modules */
@@ -385,7 +386,7 @@ void InitHSADC(void)
     /* Select PWMA0_trig source (routed using XBARA) as sync signal */
     SIM->SOPT7 = (SIM->SOPT7 & ~(uint16_t)SIM_SOPT7_HSADC0AALTTRGEN_MASK) | SIM_SOPT7_HSADC0AALTTRGEN(0x00);
     SIM->SOPT7 = (SIM->SOPT7 & ~(uint16_t)SIM_SOPT7_HSADC1AALTTRGEN_MASK) | SIM_SOPT7_HSADC1AALTTRGEN(0x00);
-    
+
     /* Configure HSADC calibration process */
     /* Single-ended input calibration on HSADC0A and HSADC1C */
     HSADC0->CALIB |= HSADC_CALIB_REQSINGA_MASK;
@@ -408,37 +409,37 @@ void InitHSADC(void)
     /**************************************/
     /* offset filter window */
     g_sM1AdcSensor.ui16OffsetFiltWindow = ADC_OFFSET_WINDOW;
-    
+
     /* Phase current measurement */
     /* Sector 1,6 - measured currents Ic & Ib */
     /* ADC0, channel Ic = M1_ADC0_PH_C, , SAMPLE & RESULT = 0 */
     g_sM1AdcSensor.sCurrSec16.pui32AdcBasePhaC = (HSADC_Type *)HSADC0;
-    g_sM1AdcSensor.sCurrSec16.ui16ChanNumPhaC = M1_ADC0_PH_C;
+    g_sM1AdcSensor.sCurrSec16.ui16ChanNumPhaC  = M1_ADC0_PH_C;
     /* ADC1, channel Ib = M1_ADC1_PH_B, , SAMPLE & RESULT = 0 */
     g_sM1AdcSensor.sCurrSec16.pui32AdcBasePhaB = (HSADC_Type *)HSADC1;
-    g_sM1AdcSensor.sCurrSec16.ui16ChanNumPhaB = M1_ADC1_PH_B;
+    g_sM1AdcSensor.sCurrSec16.ui16ChanNumPhaB  = M1_ADC1_PH_B;
 
     /* Sector 2,3 - measured currents Ic & Ia*/
     /* ADC0, channel Ic = M1_ADC0_PH_C, SAMPLE & RESULT = 0 */
     g_sM1AdcSensor.sCurrSec23.pui32AdcBasePhaC = (HSADC_Type *)HSADC0;
-    g_sM1AdcSensor.sCurrSec23.ui16ChanNumPhaC = M1_ADC0_PH_C;
+    g_sM1AdcSensor.sCurrSec23.ui16ChanNumPhaC  = M1_ADC0_PH_C;
     /* ADC1, channel Ia = M1_ADC1_PH_A, SAMPLE & RESULT = 0 */
     g_sM1AdcSensor.sCurrSec23.pui32AdcBasePhaA = (HSADC_Type *)HSADC1;
-    g_sM1AdcSensor.sCurrSec23.ui16ChanNumPhaA = M1_ADC1_PH_A;
-    
+    g_sM1AdcSensor.sCurrSec23.ui16ChanNumPhaA  = M1_ADC1_PH_A;
+
     /* Sector 4,5 - measured currents Ia & Ib */
     /* ADC0, channel Ia = M1_ADC0_PH_A, SAMPLE & RESULT = 0 */
     g_sM1AdcSensor.sCurrSec45.pui32AdcBasePhaA = (HSADC_Type *)HSADC0;
-    g_sM1AdcSensor.sCurrSec45.ui16ChanNumPhaA = M1_ADC0_PH_A;
+    g_sM1AdcSensor.sCurrSec45.ui16ChanNumPhaA  = M1_ADC0_PH_A;
     /* ADC1, channel Ib = M1_ADC1_PH_B, SAMPLE & RESULT = 0  */
     g_sM1AdcSensor.sCurrSec45.pui32AdcBasePhaB = (HSADC_Type *)HSADC1;
-    g_sM1AdcSensor.sCurrSec45.ui16ChanNumPhaB = M1_ADC1_PH_B;
-    
+    g_sM1AdcSensor.sCurrSec45.ui16ChanNumPhaB  = M1_ADC1_PH_B;
+
     /* UDCbus channel measurement */
     /*  channel Udcb = M1_ADC1_UDCB, SAMPLE & RESULT = 1 */
     g_sM1AdcSensor.pui32AdcBaseVDcb = (HSADC_Type *)HSADC0;
-    g_sM1AdcSensor.ui16ChanNumVDcb = M1_ADC0_UDCB;
-    
+    g_sM1AdcSensor.ui16ChanNumVDcb  = M1_ADC0_UDCB;
+
     /* Assign channels and init all pointers */
     MCDRV_Curr3Ph2ShChanAssignInit(&g_sM1AdcSensor);
 

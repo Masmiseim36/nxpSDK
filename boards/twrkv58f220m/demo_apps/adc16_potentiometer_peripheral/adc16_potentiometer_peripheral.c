@@ -31,11 +31,7 @@ void LPTMR0_IRQHandler(void)
 {
     LPTMR_ClearStatusFlags(DEMO_LPTMR_PERIPHERAL, kLPTMR_TimerCompareFlag);
     PRINTF("\r\nThe ADC16 output value is %d.\r\n", adcResultValue);
-    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-      exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 /*!

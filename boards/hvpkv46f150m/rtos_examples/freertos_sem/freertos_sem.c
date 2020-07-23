@@ -23,7 +23,7 @@
  * Definitions
  ******************************************************************************/
 
-#define TASK_PRIO (configMAX_PRIORITIES - 1)
+#define TASK_PRIO          (configMAX_PRIORITIES - 1)
 #define CONSUMER_LINE_SIZE 3
 SemaphoreHandle_t xSemaphore_producer;
 SemaphoreHandle_t xSemaphore_consumer;
@@ -42,8 +42,8 @@ static void consumer_task(void *pvParameters);
 int main(void)
 {
     /* Init board hardware. */
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
     if (xTaskCreate(producer_task, "PRODUCER_TASK", configMINIMAL_STACK_SIZE + 128, NULL, TASK_PRIO, NULL) != pdPASS)
     {

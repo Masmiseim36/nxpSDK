@@ -7,18 +7,32 @@ microcontroller and microprocessor units. The FreeMASTER Serial Communication
 Driver implements the serial interface between the target application and the host PC. 
 The driver targets Serial and CAN communication of the supported devices.
 
-This is version 3.0 of the serial driver which implements a new version (v4) of
+This is version 3.1 of the serial driver which implements a new version (v4) of
 FreeMASTER protocol and is compatible with NXP MCUXpresso SDK suite. The driver 
-may be obtained as an MCUXpresso SDK middleware component from 
+may be obtained as an MCUXpresso SDK middleware component at 
 https://mcuxpresso.nxp.com/en/welcome.
 
 Older implementations of FreeMASTER serial driver for platforms that are not 
 supported by MCUXpresso SDK (e.g. HCS08, HCS12, S12Z, ColdFire, 56F8xxx) can 
 be downloaded from FreeMASTER home at https://www.nxp.com/freemaster.
 
+Visit community support forum at: https://community.nxp.com/community/freemaster  
+
 
 CHANGELOG version 3.x versions
 ==============================
+
+Version 3.1 (April 4th 2020)
+----------------------------
+- Use with FreeMASTER 2.5 and FreeMASTER 3.0 PC host tool or with FreeMASTER Lite
+- Support for non-C99 compilers added
+- Memory copy routines optimized for both little and big endian systems.
+- New Kinetis, LPC and i.MX-RT devices directly supported in MCUXpresso SDK.
+  Majority of MCUXpresso SDK boards now supported.
+- The driver primarily supports CortexM platform, this version also adds support of 
+  Power Architecture, S32, S12Z and DSC56F800EX platforms. Example applications 
+  are available separately.  
+
 
 Version 3.0 (April 29th 2019)
 ----------------------------
@@ -39,6 +53,6 @@ Version 3.0 (April 29th 2019)
 
 
 --------------------------------------------------------------------------------
-Copyright 2019 NXP
+Copyright 2019-2020 NXP
 ALL RIGHTS RESERVED
 www.nxp.com/freemaster

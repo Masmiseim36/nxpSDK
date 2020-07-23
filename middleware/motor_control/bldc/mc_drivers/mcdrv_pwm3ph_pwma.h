@@ -21,27 +21,27 @@
 
 typedef struct _mcdrv_pwm3ph_pwma
 {
-    GMCLIB_3COOR_T_F16 *psUABC; /* pointer to the 3-phase pwm duty cycles */
+    GMCLIB_3COOR_T_F16 *psUABC;    /* pointer to the 3-phase pwm duty cycles */
     PWM_Type *pui32PwmBaseAddress; /* PWMA base address */
-    uint16_t ui16PhASubNum; /* PWMA phase A sub-module number */
-    uint16_t ui16PhBSubNum; /* PWMA phase B sub-module number */
-    uint16_t ui16PhCSubNum; /* PWMA phase C sub-module number */
-    uint16_t ui16FaultFixNum; /* PWMA fault number for fixed over-current fault detection */
-    uint16_t ui16FaultAdjNum; /* PWMA fault number for adjustable over-current fault detection */
-    uint16_t ui16PwmModulo; /* PWMA MODULO Value */
-    const uint16_t *pcBldcTable; /* pointer to BLDC commutation Table */
+    uint16_t ui16PhASubNum;        /* PWMA phase A sub-module number */
+    uint16_t ui16PhBSubNum;        /* PWMA phase B sub-module number */
+    uint16_t ui16PhCSubNum;        /* PWMA phase C sub-module number */
+    uint16_t ui16FaultFixNum;      /* PWMA fault number for fixed over-current fault detection */
+    uint16_t ui16FaultAdjNum;      /* PWMA fault number for adjustable over-current fault detection */
+    uint16_t ui16PwmModulo;        /* PWMA MODULO Value */
+    const uint16_t *pcBldcTable;   /* pointer to BLDC commutation Table */
 } mcdrv_pwm3ph_pwma_t;
 
 typedef struct _mcdrv_pwm3ph_pwma_init
 {
     PWM_Type *pui32PwmBaseAddress; /* PWMA base address */
-    uint16_t ui16PhASubNum; /* PWMA phase A sub-module number */
-    uint16_t ui16PhBSubNum; /* PWMA phase B sub-module number */
-    uint16_t ui16PhCSubNum; /* PWMA phase C sub-module number */
-    uint16_t ui16FaultFixNum; /* PWMA fault number for fixed over-current fault detection */
-    uint16_t ui16FaultAdjNum; /* PWMA fault number for adjustable over-current fault detection */
-    uint16_t ui16PwmModulo; /* PWMA MODULO Value */
-    const uint16_t *pcBldcTable; /* pointer to BLDC commutation Table */
+    uint16_t ui16PhASubNum;        /* PWMA phase A sub-module number */
+    uint16_t ui16PhBSubNum;        /* PWMA phase B sub-module number */
+    uint16_t ui16PhCSubNum;        /* PWMA phase C sub-module number */
+    uint16_t ui16FaultFixNum;      /* PWMA fault number for fixed over-current fault detection */
+    uint16_t ui16FaultAdjNum;      /* PWMA fault number for adjustable over-current fault detection */
+    uint16_t ui16PwmModulo;        /* PWMA MODULO Value */
+    const uint16_t *pcBldcTable;   /* pointer to BLDC commutation Table */
 } mcdrv_pwm3ph_pwma_init_t;
 
 /*******************************************************************************
@@ -108,13 +108,13 @@ bool_t MCDRV_eFlexPwm3PhFltGet(mcdrv_pwm3ph_pwma_t *this);
 bool_t MCDRV_eFlexSetPwmOutput(mcdrv_pwm3ph_pwma_t *this, int16_t i16Sector);
 
 /*!
-* @brief Function set pwm sector from input
-*
-* @param this Pointer to the current object
-* @param sector Actual commutation sector
-*
-* @return boot_t true on success
-*/
+ * @brief Function set pwm sector from input
+ *
+ * @param this Pointer to the current object
+ * @param sector Actual commutation sector
+ *
+ * @return boot_t true on success
+ */
 bool_t MCDRV_eFlexSetDutyCycle(mcdrv_pwm3ph_pwma_t *this, int16_t i16InpDuty);
 
 #ifdef __cplusplus
@@ -122,4 +122,3 @@ bool_t MCDRV_eFlexSetDutyCycle(mcdrv_pwm3ph_pwma_t *this, int16_t i16InpDuty);
 #endif
 
 #endif /* _MCDRV_PWMA_PWM3PH_H_ */
-

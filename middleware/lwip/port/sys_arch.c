@@ -32,7 +32,7 @@
  
 /*
  * Copyright (c) 2013-2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -55,6 +55,7 @@
 #include "lwip/sys.h"
 #include "lwip/mem.h"
 #include "lwip/stats.h"
+#include "lwip/tcpip.h"
 #if NO_SYS
 #include "lwip/init.h"
 #endif
@@ -638,6 +639,64 @@ void sys_arch_unprotect( sys_prot_t xValue )
     }
 }
 
+#if LWIP_TCPIP_CORE_LOCKING
+
+static u8_t lwip_core_lock_count;
+static TaskHandle_t lwip_core_lock_holder_thread;
+
+void sys_lock_tcpip_core(void)
+{
+    sys_mutex_lock(&lock_tcpip_core);
+    if (lwip_core_lock_count == 0U)
+    {
+        lwip_core_lock_holder_thread = xTaskGetCurrentTaskHandle();
+    }
+    lwip_core_lock_count++;
+}
+
+void sys_unlock_tcpip_core(void)
+{
+    lwip_core_lock_count--;
+    if (lwip_core_lock_count == 0)
+    {
+        lwip_core_lock_holder_thread = 0;
+    }
+    sys_mutex_unlock(&lock_tcpip_core);
+}
+
+#endif /* LWIP_TCPIP_CORE_LOCKING */
+
+static TaskHandle_t lwip_tcpip_thread;
+
+void sys_mark_tcpip_thread(void)
+{
+    lwip_tcpip_thread = xTaskGetCurrentTaskHandle();
+}
+
+void sys_check_core_locking(void)
+{
+    LWIP_ASSERT("Function called from interrupt context",
+#ifdef __CA7_REV
+                (SystemGetIRQNestingLevel() == 0)
+#else
+                (__get_IPSR() == 0)
+#endif
+                );
+
+    if (lwip_tcpip_thread != 0)
+    {
+        TaskHandle_t current_thread = xTaskGetCurrentTaskHandle();
+        LWIP_UNUSED_ARG(current_thread); /* for LWIP_NOASSERT */
+
+#if LWIP_TCPIP_CORE_LOCKING
+        LWIP_UNUSED_ARG(lwip_core_lock_holder_thread); /* for LWIP_NOASSERT */
+        LWIP_ASSERT("Function called without core lock",
+                    current_thread == lwip_core_lock_holder_thread && lwip_core_lock_count > 0);
+#else /* LWIP_TCPIP_CORE_LOCKING */
+        LWIP_ASSERT("Function called from wrong thread", current_thread == lwip_tcpip_thread);
+#endif /* LWIP_TCPIP_CORE_LOCKING */
+    }
+}
 
 #else /* Bare-metal */
 
@@ -659,7 +718,8 @@ void time_init(void)
     SystemClearSystickFlag();
 #else
     /* Set SysTick period to 1 ms and enable its interrupts */
-    SysTick_Config(USEC_TO_COUNT(1000U, sourceClock));
+    extern uint32_t SystemCoreClock;
+    SysTick_Config(USEC_TO_COUNT(1000U, SystemCoreClock));
 #endif
 }
 
@@ -720,7 +780,19 @@ void sys_arch_unprotect( sys_prot_t xValue )
     EnableGlobalIRQ((uint32_t)xValue);
 }
 
-#endif /*NO_SYS*/
+void sys_check_core_locking(void)
+{
+    LWIP_ASSERT("Function called from interrupt context",
+#ifdef __CA7_REV
+                (SystemGetIRQNestingLevel() == 0)
+#else
+                (__get_IPSR() == 0)
+#endif
+                );
+}
+
+#endif /* !NO_SYS */
+
 /*-------------------------------------------------------------------------*
  * End of File:  sys_arch.c
  *-------------------------------------------------------------------------*/

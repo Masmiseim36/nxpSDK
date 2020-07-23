@@ -68,37 +68,35 @@ typedef u32_t          mem_ptr_t;
 // Compiler hints for packing lwip's structures
 //FSL: very important at high optimization level
 
-#if __GNUC__
-#define PACK_STRUCT_BEGIN
-#elif defined(__IAR_SYSTEMS_ICC__)
-#define PACK_STRUCT_BEGIN _Pragma("pack(1)")
-#elif defined(__arm__) && defined(__ARMCC_VERSION)
-#define PACK_STRUCT_BEGIN __packed
-#else
-#define PACK_STRUCT_BEGIN
-#endif
+#if defined(__arm__) && defined(__ARMCC_VERSION)
 
-#if __GNUC__
+#define PACK_STRUCT_BEGIN
+#define PACK_STRUCT_STRUCT __attribute__((packed, aligned(1)))
+#define PACK_STRUCT_END
+#define PACK_STRUCT_FIELD(x) __attribute__((packed, aligned(1))) x
+
+#elif __GNUC__
+
+#define PACK_STRUCT_BEGIN
 #define PACK_STRUCT_STRUCT __attribute__ ((__packed__))
-#elif defined(__IAR_SYSTEMS_ICC__)
-#define PACK_STRUCT_STRUCT
-#elif defined(__arm__) && defined(__ARMCC_VERSION)
-#define PACK_STRUCT_STRUCT
-#else
-#define PACK_STRUCT_STRUCT
-#endif
-
-#if __GNUC__
 #define PACK_STRUCT_END
-#elif defined(__IAR_SYSTEMS_ICC__)
-#define PACK_STRUCT_END _Pragma("pack()")
-#elif defined(__arm__) && defined(__ARMCC_VERSION)
-#define PACK_STRUCT_END
-#else
-#define PACK_STRUCT_END
-#endif
-
 #define PACK_STRUCT_FIELD(x) x
+
+#elif defined(__IAR_SYSTEMS_ICC__)
+
+#define PACK_STRUCT_BEGIN _Pragma("pack(1)")
+#define PACK_STRUCT_STRUCT
+#define PACK_STRUCT_END _Pragma("pack()")
+#define PACK_STRUCT_FIELD(x) x
+
+#else
+
+#define PACK_STRUCT_BEGIN
+#define PACK_STRUCT_STRUCT
+#define PACK_STRUCT_END
+#define PACK_STRUCT_FIELD(x) x
+
+#endif
 
 // Platform specific diagnostic output
 #include "sys_arch.h"//FSL

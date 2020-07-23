@@ -20,12 +20,11 @@
  *
  * @return None
  */
-void MID_calibHall(mid_calib_hall_t* sHallCalibFcn)
+void MID_calibHall(mid_calib_hall_t *sHallCalibFcn)
 {
     /* Initialization */
-    if(sHallCalibFcn->ui16Active == 0)
+    if (sHallCalibFcn->ui16Active == 0)
     {
-        sHallCalibFcn->ui16Active   = TRUE;
+        sHallCalibFcn->ui16Active = TRUE;
     }
 }
-

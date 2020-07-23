@@ -21,8 +21,8 @@
  ******************************************************************************/
 
 /*******************************************************************************
-* Code
-******************************************************************************/
+ * Code
+ ******************************************************************************/
 
 /*!
  * @brief BLDC motor commutation control.
@@ -98,13 +98,13 @@ void MCS_BLDCControl(mcs_bldc_ctrl_t *psCtrlBLDC)
     {
         /* forward */
         psCtrlBLDC->f16SpeedMeasured = f16SpeedMeasuredAbs;
-        psCtrlBLDC->f16SpeedPiErr = MLIB_SubSat_F16(psCtrlBLDC->f16SpeedRamp, psCtrlBLDC->f16SpeedMeasured);
+        psCtrlBLDC->f16SpeedPiErr    = MLIB_SubSat_F16(psCtrlBLDC->f16SpeedRamp, psCtrlBLDC->f16SpeedMeasured);
     }
     else
     {
         /* backward */
         psCtrlBLDC->f16SpeedMeasured = -f16SpeedMeasuredAbs;
-        psCtrlBLDC->f16SpeedPiErr = MLIB_SubSat_F16(psCtrlBLDC->f16SpeedMeasured, psCtrlBLDC->f16SpeedRamp);
+        psCtrlBLDC->f16SpeedPiErr    = MLIB_SubSat_F16(psCtrlBLDC->f16SpeedMeasured, psCtrlBLDC->f16SpeedRamp);
     }
 
     /* calculate Speed PI controller */
@@ -131,8 +131,7 @@ void MCS_BLDCControl(mcs_bldc_ctrl_t *psCtrlBLDC)
     {
         /* current limitation is active, duty cycle is set by current controller */
         GFLIB_CtrlPIpAWInit_F16(psCtrlBLDC->f16DutyCycle, &psCtrlBLDC->sSpeedPiParams);
-        psCtrlBLDC->f16DutyCycle = psCtrlBLDC->f16IDcBusPiOutput;
+        psCtrlBLDC->f16DutyCycle        = psCtrlBLDC->f16IDcBusPiOutput;
         psCtrlBLDC->bSpeedPiStopIntFlag = TRUE;
     }
 }
-

@@ -44,4 +44,5 @@ STARTUP_CMT_COUNT=8
 STARTUP_CMT_PER=0.024
 T_OFF_CMT=22
 INTEG_TRH_CORR=100
-ProjectPath=
+ProjectPath1=../../../boards/hvpke18f/demo_apps/mc_bldc/
+ProjectPath2=../../board/

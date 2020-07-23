@@ -9,9 +9,9 @@
 #define _BLOCKED_TEST_H_
 
 #include "mid_def.h"
-#include "mlib_fp.h"
-#include "gflib_fp.h"
-#include "gmclib_fp.h"
+#include "mlib_FP.h"
+#include "gflib_FP.h"
+#include "gmclib_FP.h"
 
 /*******************************************************************************
  * API
@@ -28,4 +28,3 @@ extern void MID_testBlocked(void);
 #endif
 
 #endif /* _BLOCKED_TEST_H_ */
-

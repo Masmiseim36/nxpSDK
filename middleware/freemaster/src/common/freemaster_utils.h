@@ -75,9 +75,9 @@ FMSTR_BPTR FMSTR_SlebDecode(FMSTR_BPTR in, void* result, FMSTR_SIZE size);
 /* Skip one LEB/SLEB field in buffer. */
 FMSTR_BPTR FMSTR_SkipInBufferLeb(FMSTR_BPTR dest);
 
-/* Get the string pointer from buffer. */
-FMSTR_BPTR FMSTR_StringFromBuffer(FMSTR_BPTR in, FMSTR_U8** pStr);
-/* Copy the string from memory to outcomming buffer. */
+/* Copy string from buffer to memory. */
+FMSTR_BPTR FMSTR_StringFromBuffer(FMSTR_BPTR in, FMSTR_CHAR* pStr, FMSTR_SIZE maxSize);
+/* Copy string from memory to buffer. */
 FMSTR_BPTR FMSTR_StringCopyToBuffer(FMSTR_BPTR out, const FMSTR_CHAR* pStr);
 
 /* Initialize CRC16 calculation. */
@@ -104,6 +104,7 @@ FMSTR_BCHR _FMSTR_RingBuffGet(FMSTR_RING_BUFFER * ringBuff);
 FMSTR_BOOL _FMSTR_RingBuffIsSpace(FMSTR_RING_BUFFER * ringBuff);
 /* Returns true, when any data in ring buffer */
 FMSTR_BOOL _FMSTR_RingBuffHasData(FMSTR_RING_BUFFER * ringBuff);
+
 
 /******************************************************************************
 * Global variable declaration

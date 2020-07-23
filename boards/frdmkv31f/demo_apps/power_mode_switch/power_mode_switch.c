@@ -21,37 +21,37 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define APP_DEBUG_UART_BAUDRATE 9600                 /* Debug console baud rate. */
+#define APP_DEBUG_UART_BAUDRATE    9600              /* Debug console baud rate. */
 #define APP_DEBUG_UART_CLKSRC_NAME kCLOCK_CoreSysClk /* System clock */
 
-#define APP_LLWU DEMO_LLWU_PERIPHERAL
+#define APP_LLWU            DEMO_LLWU_PERIPHERAL
 #define APP_LLWU_IRQHANDLER DEMO_LLWU_IRQHANDLER
 
-#define APP_LPTMR DEMO_LPTMR_PERIPHERAL
+#define APP_LPTMR            DEMO_LPTMR_PERIPHERAL
 #define APP_LPTMR_IRQHANDLER DEMO_LPTMR_IRQHANDLER
 
-#define LLWU_LPTMR_IDX 0U      /* LLWU_M0IF */
-#define LLWU_WAKEUP_PIN_IDX 3U /* LLWU_P3 */
+#define LLWU_LPTMR_IDX       0U /* LLWU_M0IF */
+#define LLWU_WAKEUP_PIN_IDX  3U /* LLWU_P3 */
 #define LLWU_WAKEUP_PIN_TYPE kLLWU_ExternalPinRisingEdge
 
-#define APP_WAKEUP_BUTTON_PORT BOARD_SW2_PORT
-#define APP_WAKEUP_BUTTON_GPIO_PIN BOARD_SW2_GPIO_PIN
-#define APP_WAKEUP_BUTTON_IRQ BOARD_SW2_IRQ
+#define APP_WAKEUP_BUTTON_PORT        BOARD_SW2_PORT
+#define APP_WAKEUP_BUTTON_GPIO_PIN    BOARD_SW2_GPIO_PIN
+#define APP_WAKEUP_BUTTON_IRQ         BOARD_SW2_IRQ
 #define APP_WAKEUP_BUTTON_IRQ_HANDLER BOARD_SW2_IRQ_HANDLER
-#define APP_WAKEUP_BUTTON_NAME BOARD_SW2_NAME
-#define APP_WAKEUP_BUTTON_IRQ_TYPE kPORT_InterruptRisingEdge
+#define APP_WAKEUP_BUTTON_NAME        BOARD_SW2_NAME
+#define APP_WAKEUP_BUTTON_IRQ_TYPE    kPORT_InterruptRisingEdge
 
 /* Debug console RX pin: PORTB16 MUX: 3 */
-#define DEBUG_CONSOLE_RX_PORT PORTB
-#define DEBUG_CONSOLE_RX_GPIO GPIOB
-#define DEBUG_CONSOLE_RX_PIN 16U
+#define DEBUG_CONSOLE_RX_PORT   PORTB
+#define DEBUG_CONSOLE_RX_GPIO   GPIOB
+#define DEBUG_CONSOLE_RX_PIN    16U
 #define DEBUG_CONSOLE_RX_PINMUX kPORT_MuxAlt3
 /* Debug console TX pin: PORTB17 MUX: 3 */
-#define DEBUG_CONSOLE_TX_PORT PORTB
-#define DEBUG_CONSOLE_TX_GPIO GPIOB
-#define DEBUG_CONSOLE_TX_PIN 17U
+#define DEBUG_CONSOLE_TX_PORT   PORTB
+#define DEBUG_CONSOLE_TX_GPIO   GPIOB
+#define DEBUG_CONSOLE_TX_PIN    17U
 #define DEBUG_CONSOLE_TX_PINMUX kPORT_MuxAlt3
-#define CORE_CLK_FREQ CLOCK_GetFreq(kCLOCK_CoreSysClk)
+#define CORE_CLK_FREQ           CLOCK_GetFreq(kCLOCK_CoreSysClk)
 
 /*******************************************************************************
  * Prototypes

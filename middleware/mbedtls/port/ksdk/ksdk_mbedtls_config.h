@@ -121,11 +121,14 @@
 #include "fsl_hashcrypt.h"
 
 #define MBEDTLS_FREESCALE_HASHCRYPT_AES    /* Enable use of HASHCRYPT AES.*/
-/* Hashcrypt is not able to calculate SHA in parallel with AES.
+/* Hashcrypt without context switch is not able to calculate SHA in parallel with AES.
  * HW acceleration of SHA is disabled by default in MbedTLS integration.
+ * HW acceleration of SHA is enabled on chip with context switch.
  */
-//#define MBEDTLS_FREESCALE_HASHCRYPT_SHA1   /* Enable use of HASHCRYPT SHA1.*/
-//#define MBEDTLS_FREESCALE_HASHCRYPT_SHA256 /* Enable use of HASHCRYPT SHA256.*/
+#if defined(FSL_FEATURE_HASHCRYPT_HAS_RELOAD_FEATURE)
+#define MBEDTLS_FREESCALE_HASHCRYPT_SHA1   /* Enable use of HASHCRYPT SHA1.*/
+#define MBEDTLS_FREESCALE_HASHCRYPT_SHA256 /* Enable use of HASHCRYPT SHA256.*/
+#endif
 #endif
 
 #if defined(MBEDTLS_FREESCALE_LTC_PKHA) || defined(MBEDTLS_FREESCALE_CAU3_PKHA) || defined(MBEDTLS_FREESCALE_CAAM_PKHA)
@@ -164,9 +167,10 @@
  * it doesn't support context switch.
  * HW acceleration of SHA is disabled by default in MbedTLS integration.
  */
-//#define SHA_INSTANCE SHA0            /* AES base register.*/
+//#define SHA_INSTANCE SHA0            /* SHA base register.*/
 //#define MBEDTLS_FREESCALE_LPC_SHA1   /* Enable use of LPC SHA.*/
 //#define MBEDTLS_FREESCALE_LPC_SHA256 /* Enable use of LPC SHA256.*/
+//#define MANUAL_LOAD_SHA_INPUT 1      /* 0 - use MEMADDR, MEMCRL (pseudo-DMA), 1 - manual load */
 #endif
 
 /* Enable CASPER use in library if there is CASPER on chip. */
@@ -177,6 +181,9 @@
 #define MBEDTLS_FREESCALE_CASPER_PKHA /* Enable use of CASPER PKHA.*/
 #define FREESCALE_PKHA_INT_MAX_BYTES (512)
 
+/* Note: While using CASPER for ECC, please enable appropriate ECC curve in fls_casper.h */
+/* (CASPER_ECC_P256 or CASPER_ECC_P384) and MbedTLS define */
+/* (MBEDTLS_ECP_DP_SECP256R1_ENABLED or MBEDTLS_ECP_DP_SECP384R1_ENABLED) */
 #define MBEDTLS_ECP_MUL_COMB_ALT /* Alternate implementation of ecp_mul_comb() */
 #define MBEDTLS_ECP_MULADD_ALT /* Alternate implementation of mbedtls_ecp_muladd() */
 #define MBEDTLS_MCUX_CASPER_ECC /* CASPER implementation */
@@ -2224,10 +2231,9 @@ void *pvPortCalloc(size_t num, size_t size); /*Calloc for HEAP3.*/
 #define MBEDTLS_CTR_DRBG_C
 #elif defined(MBEDTLS_AES_ALT_NO_256)
 /* This macros will add support for CTR_DRBG using AES-128 for crypto engines
- * without AES-256 capability. Please note, that selftest will not pass when
- * this option is enabled, since AES-256 is required by the specification of CTR_DRBG. */
-//#define MBEDTLS_CTR_DRBG_KEYSIZE            16 /**< The key size used by the cipher. */
-//#define MBEDTLS_CTR_DRBG_C
+ * without AES-256 capability.  */
+#define MBEDTLS_CTR_DRBG_USE_128_BIT_KEY
+#define MBEDTLS_CTR_DRBG_C
 #endif
 
 /**

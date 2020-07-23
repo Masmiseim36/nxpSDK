@@ -32,7 +32,7 @@
 
 /*
  * Copyright (c) 2013-2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -42,7 +42,9 @@
 #define ENET_ETHERNETIF_H
 
 #include "lwip/err.h"
+#include "lwip/netif.h"
 #include "fsl_enet.h"
+#include "fsl_phy.h"
 
 /*******************************************************************************
  * Definitions
@@ -135,8 +137,7 @@ typedef struct mem_range
  */
 typedef struct ethernetif_config
 {
-    uint32_t phyAddress;
-    clock_name_t clockName;
+    phy_handle_t *phyHandle;
     uint8_t macAddress[NETIF_MAX_HWADDR_LEN];
 #if (defined(FSL_FEATURE_SOC_LPC_ENET_COUNT) && (FSL_FEATURE_SOC_LPC_ENET_COUNT > 0))
     const mem_range_t *non_dma_memory;

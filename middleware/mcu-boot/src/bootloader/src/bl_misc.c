@@ -5,25 +5,25 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 #include "bootloader_common.h"
-#include "bootloader/bootloader.h"
-#include "memory/memory.h"
-#include "sbloader/sbloader.h"
-#include "property/property.h"
-#include "utilities/fsl_assert.h"
-#if defined(BL_FEATURE_QSPI_MODULE) && BL_FEATURE_QSPI_MODULE
+#include "bootloader.h"
+#include "memory.h"
+#include "sbloader.h"
+#include "property.h"
+#include "fsl_assert.h"
+#if BL_FEATURE_QSPI_MODULE
 #include "qspi.h"
 #endif
-#if defined(BL_FEATURE_OTFAD_MODULE) && BL_FEATURE_OTFAD_MODULE
+#if BL_FEATURE_OTFAD_MODULE
 #include "fsl_otfad_driver.h"
 #endif
 #include <string.h>
 #include <stdint.h>
 #include "fsl_device_registers.h"
-#if !(defined(BL_FEATURE_HAS_NO_INTERNAL_FLASH) && BL_FEATURE_HAS_NO_INTERNAL_FLASH)
-#if !(defined(BL_DEVICE_IS_LPC_SERIES) && BL_DEVICE_IS_LPC_SERIES)
+#if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
+#if !BL_DEVICE_IS_LPC_SERIES
 #include "fsl_flash.h"
 #else
-#include "flashiap_wrapper/fsl_flashiap_wrapper.h"
+#include "fsl_iap.h"
 #endif
 #endif // #if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
 
@@ -45,32 +45,32 @@
 enum
 {
     //! @brief Boot Source indicating that code is running from rom, needn't to configure QSPI module
-    kBootSource_ROM = 0x03u,
+    kBootSource_ROM = 0x03,
     //! @brief Boot source indicating that code is running from rom, need to configure QSPI module
-    kBootSource_QSPI = 0x02u,
+    kBootSource_QSPI = 0x02,
 
     //! @brief OTFAD module instance number
-    kOtfadInstance = 0u,
+    kOtfadInstance = 0,
 
     //! @brief Address of key blob array on internal flash
-    kKeyBlobAddress = 0x410u
+    kKeyBlobAddress = 0x410
 };
 
 ////////////////////////////////////////////////////////////////////////////////
 // Variables
 ////////////////////////////////////////////////////////////////////////////////
-#if defined(BL_FEATURE_QSPI_MODULE) && BL_FEATURE_QSPI_MODULE
-status_t s_qspi_otfad_init_status = (int32_t)kStatus_QspiNotConfigured;
+#if BL_FEATURE_QSPI_MODULE
+status_t s_qspi_otfad_init_status = kStatus_QspiNotConfigured;
 #endif // #if BL_FEATURE_QSPI_MODULE
 
-#if defined(BL_FEATURE_OTFAD_MODULE) && BL_FEATURE_OTFAD_MODULE
+#if BL_FEATURE_OTFAD_MODULE
 static bool s_isOtfadEnabled = false;
 #endif
 ////////////////////////////////////////////////////////////////////////////////
 // Local function prototypes
 ////////////////////////////////////////////////////////////////////////////////
 
-#if defined(BL_FEATURE_OTFAD_MODULE) && BL_FEATURE_OTFAD_MODULE
+#if BL_FEATURE_OTFAD_MODULE
 static status_t get_otfad_key(otfad_kek_t *kek);
 #endif // BL_FEATURE_OTFAD_MODULE
 
@@ -81,62 +81,60 @@ static status_t get_otfad_key(otfad_kek_t *kek);
 // See bootloader_common.h for documentation on this function
 bool qspi_need_configure(void)
 {
-#if defined(BL_FEATURE_QSPI_MODULE) && BL_FEATURE_QSPI_MODULE
-#if defined(BL_TARGET_ROM)
-    // Get BOOTSRC_SEL from FOPT
-    uint8_t fopt = FTFx_FOPT;
-    uint8_t bootSrc = (uint8_t)((fopt & FTFx_FOPT_BOOTSRCSEL_MASK) >> FTFx_FOPT_BOOTSRCSEL_SHIFT);
-
-    return (bootSrc == kBootSource_QSPI);
-#else
+#if BL_FEATURE_QSPI_MODULE
     return true;
-#endif //#if defined(BL_TARGET_ROM)
 #else
     return false;
 #endif
 }
 
 // See bootloader_common.h for documentation on this function
-#if defined(BL_FEATURE_OTFAD_MODULE) && BL_FEATURE_OTFAD_MODULE
+#if BL_FEATURE_OTFAD_MODULE
 status_t otfad_init_as_needed(void)
 {
     uint32_t keyBlobAddress;
-    status_t retStatus = (int32_t)kStatus_Success;
+
     // Initialize OTFAD module, if present.
     if (is_otfad_present())
     {
         otfad_kek_t otfadKek;
         status_t status = get_otfad_key(&otfadKek);
-        if (status != (int32_t)kStatus_OtfadInvalidKey)
+        if (status == kStatus_OtfadInvalidKey)
         {
-            // Reload the BCA in case the keyBlobPointer in BCA has been updated.
-            g_bootloaderContext.propertyInterface->load_user_config();
-            // If we have a valid key blob address in the BCA use that
-            if (g_bootloaderContext.propertyInterface->store->configurationData.keyBlobPointer != ~0)
-            {
-                keyBlobAddress = g_bootloaderContext.propertyInterface->store->configurationData.keyBlobPointer;
-            }
-            // Otherwise use the default
-            else
-            {
-                keyBlobAddress = kKeyBlobAddress;
-            }
-
-            status = otfad_init(kOtfadInstance, (uint8_t *)keyBlobAddress, &otfadKek);
-
-            // Clear otfadKek memory on stack.
-            memset(&otfadKek, 0, sizeof(otfadKek));
-
-            if (status == (int32-t)kStatus_Success)
-            {
-                s_isOtfadEnabled = true;
-            }
-
-            retStatus = status;
+            // KEK was not programmed, so must assume code is not
+            // encrypted on QSPI. Bypass OTFAD.
+            return kStatus_Success;
         }
-    }
 
-    return retStatus;
+        // Reload the BCA in case the keyBlobPointer in BCA has been updated.
+        g_bootloaderContext.propertyInterface->load_user_config();
+        // If we have a valid key blob address in the BCA use that
+        if (g_bootloaderContext.propertyInterface->store->configurationData.keyBlobPointer != ~0)
+        {
+            keyBlobAddress = g_bootloaderContext.propertyInterface->store->configurationData.keyBlobPointer;
+        }
+        // Otherwise use the default
+        else
+        {
+            keyBlobAddress = kKeyBlobAddress;
+        }
+
+        status = otfad_init(kOtfadInstance, (uint8_t *)keyBlobAddress, &otfadKek);
+
+        // Clear otfadKek memory on stack.
+        memset(&otfadKek, 0, sizeof(otfadKek));
+
+        if (status == kStatus_Success)
+        {
+            s_isOtfadEnabled = true;
+        }
+
+        return status;
+    }
+    else
+    {
+        return kStatus_Success;
+    }
 }
 
 // See bootloader_common.h for documentation on this function
@@ -147,7 +145,7 @@ status_t otfad_bypass_as_needed(void)
         otfad_bypass(kOtfadInstance);
     }
 
-    return (int32_t)kStatus_Success;
+    return kStatus_Success;
 }
 
 // See bootloader_common.h for documentation on this function
@@ -158,7 +156,7 @@ status_t oftfad_resume_as_needed(void)
         otfad_resume(kOtfadInstance);
     }
 
-    return (int32_t)kStatus_Success;
+    return kStatus_Success;
 }
 
 #endif // BL_FEATURE_OTFAD_MODULE
@@ -166,7 +164,7 @@ status_t oftfad_resume_as_needed(void)
 // See bootloader_common.h for documentation on this function
 bool is_qspi_present(void)
 {
-#if defined(BL_FEATURE_QSPI_MODULE) && BL_FEATURE_QSPI_MODULE
+#if BL_FEATURE_QSPI_MODULE
     return is_quadspi_configured();
 #else
     return false;
@@ -196,7 +194,7 @@ bool is_ltc_present(void)
 
     // LTC is only available on K81/2 and KL81/2 devices.
     return ((subfamily_id == 1) || (subfamily_id == 2));
-#elif defined(FSL_FEATURE_SIM_HAS_MISCCTRL_LTCEN) && FSL_FEATURE_SIM_HAS_MISCCTRL_LTCEN
+#elif FSL_FEATURE_SIM_HAS_MISCCTRL_LTCEN
     return (SIM->MISCCTRL & SIM_MISCCTRL_LTCEN_MASK);
 #else
     return false;
@@ -206,7 +204,7 @@ bool is_ltc_present(void)
 // See bootloader_common.h for documentation on this function
 bool is_flexspi_nor_present(void)
 {
-#if defined(BL_FEATURE_FLEXSPI_NOR_MODULE) && BL_FEATURE_FLEXSPI_NOR_MODULE
+#if BL_FEATURE_FLEXSPI_NOR_MODULE
     return is_flexspi_nor_configured();
 #else
     return false;
@@ -216,7 +214,7 @@ bool is_flexspi_nor_present(void)
 // See bootloader_common.h for documentation on this function
 bool is_semc_nor_present(void)
 {
-#if defined(BL_FEATURE_SEMC_NOR_MODULE) && BL_FEATURE_SEMC_NOR_MODULE
+#if BL_FEATURE_SEMC_NOR_MODULE
     return is_semc_nor_configured();
 #else
     return false;
@@ -233,10 +231,10 @@ bool is_semc_nor_present(void)
 //! @retval kStatus_Success Key is valid
 //! @retval kStatus_OtfadSecurityViolation Key is all 0
 //! @retval kStatus_Fail Key is all 0xF (not programmed)
-#if defined(BL_FEATURE_OTFAD_MODULE) && BL_FEATURE_OTFAD_MODULE
+#if BL_FEATURE_OTFAD_MODULE
 static status_t get_otfad_key(otfad_kek_t *kek)
 {
-#if defined(BL_TARGET_FLASH) && BL_TARGET_FLASH
+#if BL_TARGET_FLASH
     assert(kek);
 
     const uint32_t *kekTable = (const uint32_t *)BL_FEATURE_OTFAD_KEK_ADDRESS;
@@ -266,7 +264,7 @@ static status_t get_otfad_key(otfad_kek_t *kek)
 }
 #endif // BL_HAS_OTFAD_MODULE
 
-#if defined(BL_FEATURE_QSPI_MODULE) && BL_FEATURE_QSPI_MODULE
+#if BL_FEATURE_QSPI_MODULE
 //! @brief Return status for intializing qspi and otfad modules
 status_t get_qspi_otfad_init_status(void)
 {
@@ -283,32 +281,31 @@ void update_qspi_otfad_init_status(status_t initStatus)
 
 bool is_in_execute_only_region(uint32_t start, uint32_t lengthInBytes)
 {
-    bool retValue = false;
-#if defined(FSL_FEATURE_FLASH_HAS_ACCESS_CONTROL) && FSL_FEATURE_FLASH_HAS_ACCESS_CONTROL
+#if FSL_FEATURE_FLASH_HAS_ACCESS_CONTROL
     flash_xacc_state_t state = kFLASH_AccessStateUnLimited;
     g_bootloaderContext.flashDriverInterface->flash_is_execute_only(&g_bootloaderContext.allFlashState[kFlashIndex_Main], start,
                                                                     lengthInBytes, &state);
     if (state == kFLASH_AccessStateUnLimited)
     {
-#if defined(BL_HAS_SECONDARY_INTERNAL_FLASH) && BL_HAS_SECONDARY_INTERNAL_FLASH
+#if BL_HAS_SECONDARY_INTERNAL_FLASH
         g_bootloaderContext.flashDriverInterface->flash_is_execute_only(&g_bootloaderContext.allFlashState[kFlashIndex_Secondary], start,
                                                                         lengthInBytes, &state);
         if (state != kFLASH_AccessStateUnLimited)
         {
-            retValue = true;
+            return true;
         }
         else
 #endif // BL_HAS_SECONDARY_INTERNAL_FLASH
         {
-            retValue = false;
+            return false;
         }
     }
     else
     {
-        retValue = true;
+        return true;
     }
 #else
-    return retValue;
+    return false;
 #endif // FSL_FEATURE_FLASH_HAS_ACCESS_CONTROL
 }
 

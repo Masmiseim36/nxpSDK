@@ -110,6 +110,7 @@
   <ItemGroup>
     <ClCompile Include="..\common\aes128_key_wrap_unwrap.c" />
     <ClCompile Include="..\common\AESKey.cpp" />
+    <ClCompile Include="..\common\AuthImageGenerator.cpp" />
     <ClCompile Include="..\common\Blob.cpp" />
     <ClCompile Include="..\common\bytes_aes.c" />
     <ClCompile Include="..\common\crc.cpp" />
@@ -127,6 +128,7 @@
     <ClCompile Include="..\common\HexValues.cpp" />
     <ClCompile Include="..\common\iMXImage.cpp" />
     <ClCompile Include="..\common\IVTDataSource.cpp" />
+    <ClCompile Include="..\common\json.cpp" />
     <ClCompile Include="..\common\Keyblob.cpp" />
     <ClCompile Include="..\common\Logging.cpp" />
     <ClCompile Include="..\common\Operation.cpp" />
@@ -146,6 +148,7 @@
     <ClCompile Include="..\common\StELFFile.cpp" />
     <ClCompile Include="..\common\StExecutableImage.cpp" />
     <ClCompile Include="..\common\StSRecordFile.cpp" />
+    <ClCompile Include="..\common\TrustZonePresetGenerator.cpp" />
     <ClCompile Include="..\common\Value.cpp" />
     <ClCompile Include="..\common\Version.cpp" />
     <ClCompile Include="BootImageGenerator.cpp" />
@@ -163,6 +166,7 @@
     <ClInclude Include="..\common\aes128_key_wrap_unwrap.h" />
     <ClInclude Include="..\common\AESCounter.h" />
     <ClInclude Include="..\common\AESKey.h" />
+    <ClInclude Include="..\common\AuthImageGenerator.h" />
     <ClInclude Include="..\common\Blob.h" />
     <ClInclude Include="..\common\BootImage.h" />
     <ClInclude Include="..\common\crc.h" />
@@ -183,6 +187,7 @@
     <ClInclude Include="..\common\iMXImage.h" />
     <ClInclude Include="..\common\int_size.h" />
     <ClInclude Include="..\common\IVTDataSource.h" />
+    <ClInclude Include="..\common\json.h" />
     <ClInclude Include="..\common\Keyblob.h" />
     <ClInclude Include="..\common\KeyblobEntry.h" />
     <ClInclude Include="..\common\Logging.h" />
@@ -206,6 +211,7 @@
     <ClInclude Include="..\common\StExecutableImage.h" />
     <ClInclude Include="..\common\StringMatcher.h" />
     <ClInclude Include="..\common\StSRecordFile.h" />
+    <ClInclude Include="..\common\TrustZonePresetGenerator.h" />
     <ClInclude Include="..\common\Value.h" />
     <ClInclude Include="..\common\Version.h" />
     <ClInclude Include="BootImageGenerator.h" />

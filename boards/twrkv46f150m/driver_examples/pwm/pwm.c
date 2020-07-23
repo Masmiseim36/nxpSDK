@@ -18,7 +18,8 @@
 /* The PWM base address */
 #define BOARD_PWM_BASEADDR PWMA
 
-#define PWM_SRC_CLK_FREQ CLOCK_GetFreq(kCLOCK_FastPeriphClk)
+#define PWM_SRC_CLK_FREQ       CLOCK_GetFreq(kCLOCK_FastPeriphClk)
+#define DEMO_PWM_CLOCK_DEVIDER kPWM_Prescale_Divide_2
 
 /*******************************************************************************
  * Prototypes
@@ -47,12 +48,14 @@ static void PWM_DRV_Init3PhPwm(void)
     pwmSignal[0].level            = kPWM_HighTrue;
     pwmSignal[0].dutyCyclePercent = 50; /* 1 percent dutycycle */
     pwmSignal[0].deadtimeValue    = deadTimeVal;
+    pwmSignal[0].faultState       = kPWM_PwmFaultState0;
 
     pwmSignal[1].pwmChannel = kPWM_PwmB;
     pwmSignal[1].level      = kPWM_HighTrue;
     /* Dutycycle field of PWM B does not matter as we are running in PWM A complementary mode */
     pwmSignal[1].dutyCyclePercent = 50;
     pwmSignal[1].deadtimeValue    = deadTimeVal;
+    pwmSignal[1].faultState       = kPWM_PwmFaultState0;
 
     /*********** PWMA_SM0 - phase A, configuration, setup 2 channel as an example ************/
     PWM_SetupPwm(BOARD_PWM_BASEADDR, kPWM_Module_0, pwmSignal, 2, kPWM_SignedCenterAligned, pwmFrequencyInHz,
@@ -74,6 +77,7 @@ int main(void)
 {
     /* Structure of initialize PWM */
     pwm_config_t pwmConfig;
+    pwm_fault_param_t faultConfig;
     static uint16_t delay;
     uint32_t pwmVal = 4;
     uint16_t i;
@@ -106,6 +110,10 @@ int main(void)
      */
     PWM_GetDefaultConfig(&pwmConfig);
 
+#ifdef DEMO_PWM_CLOCK_DEVIDER
+    pwmConfig.prescale = DEMO_PWM_CLOCK_DEVIDER;
+#endif
+
     /* Use full cycle reload */
     pwmConfig.reloadLogic = kPWM_ReloadPwmFullCycle;
     /* PWM A & PWM B form a complementary PWM pair */
@@ -134,6 +142,32 @@ int main(void)
         PRINTF("PWM initialization failed\n");
         return 1;
     }
+
+    /*
+     *   config->faultClearingMode = kPWM_Automatic;
+     *   config->faultLevel = false;
+     *   config->enableCombinationalPath = true;
+     *   config->recoverMode = kPWM_NoRecovery;
+     */
+    PWM_FaultDefaultConfig(&faultConfig);
+
+#if (defined(FSL_FEATURE_PWM_FAULT_LEVEL_HIGH) && FSL_FEATURE_PWM_FAULT_LEVEL_HIGH)
+    faultConfig.faultLevel = true;
+#endif
+
+    /* Sets up the PWM fault protection */
+    PWM_SetupFaults(BOARD_PWM_BASEADDR, kPWM_Fault_0, &faultConfig);
+    PWM_SetupFaults(BOARD_PWM_BASEADDR, kPWM_Fault_1, &faultConfig);
+    PWM_SetupFaults(BOARD_PWM_BASEADDR, kPWM_Fault_2, &faultConfig);
+    PWM_SetupFaults(BOARD_PWM_BASEADDR, kPWM_Fault_3, &faultConfig);
+
+    /* Set PWM fault disable mapping for submodule 0/1/2 */
+    PWM_SetupFaultDisableMap(BOARD_PWM_BASEADDR, kPWM_Module_0, kPWM_PwmA, kPWM_faultchannel_0,
+                             kPWM_FaultDisable_0 | kPWM_FaultDisable_1 | kPWM_FaultDisable_2 | kPWM_FaultDisable_3);
+    PWM_SetupFaultDisableMap(BOARD_PWM_BASEADDR, kPWM_Module_1, kPWM_PwmA, kPWM_faultchannel_0,
+                             kPWM_FaultDisable_0 | kPWM_FaultDisable_1 | kPWM_FaultDisable_2 | kPWM_FaultDisable_3);
+    PWM_SetupFaultDisableMap(BOARD_PWM_BASEADDR, kPWM_Module_2, kPWM_PwmA, kPWM_faultchannel_0,
+                             kPWM_FaultDisable_0 | kPWM_FaultDisable_1 | kPWM_FaultDisable_2 | kPWM_FaultDisable_3);
 
     /* Call the init function with demo configuration */
     PWM_DRV_Init3PhPwm();

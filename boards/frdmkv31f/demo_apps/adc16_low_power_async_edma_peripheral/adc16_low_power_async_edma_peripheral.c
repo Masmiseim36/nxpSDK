@@ -19,7 +19,7 @@
  ******************************************************************************/
 #define ADC16_RESULT_REG_ADDR (uint32_t)(&ADC0->R[0]) /* Get adc16 result register address */
 
-#define LED_INIT() LED_BLUE_INIT(LOGIC_LED_OFF)
+#define LED_INIT()   LED_BLUE_INIT(LOGIC_LED_OFF)
 #define LED_TOGGLE() LED_BLUE_TOGGLE()
 #define DEMO_ADC16_SAMPLE_COUNT 16U /* The ADC16 sample count */
 

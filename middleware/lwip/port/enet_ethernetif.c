@@ -32,7 +32,7 @@
 
 /*
  * Copyright (c) 2013-2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -73,24 +73,27 @@ void ethernetif_phy_init(struct ethernetif *ethernetif,
                          const ethernetif_config_t *ethernetifConfig,
                          enet_config_t *config)
 {
-    uint32_t sysClock;
+    phy_config_t phyConfig;
     status_t status;
     bool link = false;
     uint32_t count = 0;
     phy_speed_t speed;
     phy_duplex_t duplex;
 
-    sysClock = CLOCK_GetFreq(ethernetifConfig->clockName);
+    phyConfig.phyAddr = ethernetifConfig->phyHandle->phyAddr;
+    phyConfig.autoNeg = true;
+
+    ethernetifConfig->phyHandle->mdioHandle->resource.base = *ethernetif_enet_ptr(ethernetif);
 
     LWIP_PLATFORM_DIAG(("Initializing PHY..."));
 
     while ((count < ENET_ATONEGOTIATION_TIMEOUT) && (!link))
     {
-        status = PHY_Init(*ethernetif_enet_ptr(ethernetif), ethernetifConfig->phyAddress, sysClock);
+        status = PHY_Init(ethernetifConfig->phyHandle, &phyConfig);
 
         if (kStatus_Success == status)
         {
-            PHY_GetLinkStatus(*ethernetif_enet_ptr(ethernetif), ethernetifConfig->phyAddress, &link);
+            PHY_GetLinkStatus(ethernetifConfig->phyHandle, &link);
         }
         else if (kStatus_PHY_AutoNegotiateFail == status)
         {
@@ -107,7 +110,7 @@ void ethernetif_phy_init(struct ethernetif *ethernetif,
     if (link)
     {
         /* Get the actual PHY link speed. */
-        PHY_GetLinkSpeedDuplex(*ethernetif_enet_ptr(ethernetif), ethernetifConfig->phyAddress, &speed, &duplex);
+        PHY_GetLinkSpeedDuplex(ethernetifConfig->phyHandle, &speed, &duplex);
         /* Change the MII speed and duplex for actual link status. */
         config->miiSpeed = (enet_mii_speed_t)speed;
         config->miiDuplex = (enet_mii_duplex_t)duplex;

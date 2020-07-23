@@ -16,7 +16,7 @@
  * Definitions
  ******************************************************************************/
 /* The Flextimer base address/channel used for board */
-#define BOARD_FTM_BASEADDR FTM0
+#define BOARD_FTM_BASEADDR    FTM0
 #define BOARD_FTM_OUT_CHANNEL kFTM_Chnl_0
 /* Set divider to FTM_PRESCALER_VALUE instead of default 1 to be the led toggling visible */
 #define FTM_PRESCALER_VALUE kFTM_Prescale_Divide_64

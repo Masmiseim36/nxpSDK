@@ -18,7 +18,7 @@ extern "C" {
 /*******************************************************************************
  * API
  ******************************************************************************/
-extern void MID_getRs(mid_get_rs_t* sRsMeasFcn);
+extern void MID_getRs(mid_get_rs_t *sRsMeasFcn);
 
 #ifdef __cplusplus
 }

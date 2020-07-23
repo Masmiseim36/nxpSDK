@@ -9,8 +9,8 @@
 #define _MECH_MEASURE_H_
 
 #include "mid_def.h"
-#include "gflib_fp.h"
-#include "gdflib_fp.h"
+#include "gflib_FP.h"
+#include "gdflib_FP.h"
 
 /*******************************************************************************
  * API
@@ -27,4 +27,3 @@ void MID_getMech(void);
 #endif
 
 #endif /* _MECH_MEASURE_H_ */
-

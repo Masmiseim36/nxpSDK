@@ -82,4 +82,3 @@ bool_t MCDRV_eFlexPwm3PhFltGet(mcdrv_pwm3ph_pwma_t *this);
 #endif
 
 #endif /* _MCDRV_PWM3PH_PWMA_H_ */
-

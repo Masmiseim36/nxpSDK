@@ -21,6 +21,7 @@ void sleep(void);
 void deepsleep(void);
 void enter_wait(void);
 void enter_stop(uint8_t partial_stop_opt);
+int32_t enter_vlpr(void);
 void exit_vlpr(void);
 void enter_vlps(void);
 #if !defined(CPU_PKE18F512VLH15)
@@ -29,12 +30,8 @@ void enter_vlls3(void);
 void enter_vlls2(void);
 void enter_vlls1(void);
 #endif
-
-#if defined(KW38A4_SERIES)
-#else
-void enter_vlls0_nopor(void);
-int32_t enter_vlpr(void);
 void enter_vlls0(uint8_t PORPO_value);
-#endif
+void enter_vlls0_nopor(void);
+
 /********************************************************************/
 #endif /* __SMC_H__ */

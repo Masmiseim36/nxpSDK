@@ -22,7 +22,7 @@
  *
  * @return None
  */
-void MID_getLs(mid_get_ls_a1_t* sLsMeasFcn)
+void MID_getLs(mid_get_ls_a1_t *sLsMeasFcn)
 {
     frac32_t f32UdAmplitude, f32UdAmplitudeShifted;
     frac32_t f32XRs;
@@ -31,58 +31,56 @@ void MID_getLs(mid_get_ls_a1_t* sLsMeasFcn)
     frac32_t f32Ld, f32XLdShifted;
 
     /* Initialisation */
-    if(sLsMeasFcn->ui16Active == FALSE)
+    if (sLsMeasFcn->ui16Active == FALSE)
     {
-        sLsMeasFcn->ui16Active = TRUE;
-        sLsMeasFcn->ui16LoopCounter = 0;
-        sLsMeasFcn->i16AmplitudeOK = FALSE;
-        sLsMeasFcn->i16FrequencyOK = FALSE;
-        sLsMeasFcn->f16AngleIncrement = FRAC16(0.0);
-        sLsMeasFcn->f16Angle = FRAC16(0.0);
-        sLsMeasFcn->f16IdAmplitude = FRAC16(0.0);
-        sLsMeasFcn->f16UdAmplitude = FRAC16(0.0);
-        sLsMeasFcn->f16Ls = FRAC16(0.0);
-        sLsMeasFcn->f16FreqActual = sLsMeasFcn->f16FreqStart;
+        sLsMeasFcn->ui16Active             = TRUE;
+        sLsMeasFcn->ui16LoopCounter        = 0;
+        sLsMeasFcn->i16AmplitudeOK         = FALSE;
+        sLsMeasFcn->i16FrequencyOK         = FALSE;
+        sLsMeasFcn->f16AngleIncrement      = FRAC16(0.0);
+        sLsMeasFcn->f16Angle               = FRAC16(0.0);
+        sLsMeasFcn->f16IdAmplitude         = FRAC16(0.0);
+        sLsMeasFcn->f16UdAmplitude         = FRAC16(0.0);
+        sLsMeasFcn->f16Ls                  = FRAC16(0.0);
+        sLsMeasFcn->f16FreqActual          = sLsMeasFcn->f16FreqStart;
         sLsMeasFcn->f16AngleIncrementConst = M1_K_ANGLE_INCREMENT;
     }
 
     /* Sine angle increment */
-    sLsMeasFcn->f16AngleIncrement = MLIB_Mul_F16(sLsMeasFcn->f16AngleIncrementConst, 
-                                                 sLsMeasFcn->f16FreqActual);
-    sLsMeasFcn->f16Angle = MLIB_Add_F16(sLsMeasFcn->f16Angle,
-                                        sLsMeasFcn->f16AngleIncrement);
+    sLsMeasFcn->f16AngleIncrement = MLIB_Mul_F16(sLsMeasFcn->f16AngleIncrementConst, sLsMeasFcn->f16FreqActual);
+    sLsMeasFcn->f16Angle          = MLIB_Add_F16(sLsMeasFcn->f16Angle, sLsMeasFcn->f16AngleIncrement);
 
     /* For time keeping */
     sLsMeasFcn->ui16LoopCounter++;
 
     /* Measuring voltage amplitude adjusting */
-    if(sLsMeasFcn->i16AmplitudeOK != TRUE)
+    if (sLsMeasFcn->i16AmplitudeOK != TRUE)
     {
         /* Apply sine voltage (start with 10V/1kHz) for 300ms */
-        if(sLsMeasFcn->ui16LoopCounter < M1_TIME_300MS)
-            *(sLsMeasFcn->pf16UdReq) = MLIB_Mul_F16(sLsMeasFcn->f16UdAmplitude,
-                                                    GFLIB_Sin_F16(sLsMeasFcn->f16Angle));
+        if (sLsMeasFcn->ui16LoopCounter < M1_TIME_300MS)
+            *(sLsMeasFcn->pf16UdReq) = MLIB_Mul_F16(sLsMeasFcn->f16UdAmplitude, GFLIB_Sin_F16(sLsMeasFcn->f16Angle));
 
         /* If current f16Idfbck > f16MeasCurrentAmp, proceed to frequency adjusting */
-        if((sLsMeasFcn->ui16LoopCounter > M1_TIME_100MS) && (*(sLsMeasFcn->pf16Idfbck) > sLsMeasFcn->f16IdAmplitudeReq))
+        if ((sLsMeasFcn->ui16LoopCounter > M1_TIME_100MS) &&
+            (*(sLsMeasFcn->pf16Idfbck) > sLsMeasFcn->f16IdAmplitudeReq))
         {
-            sLsMeasFcn->i16AmplitudeOK = TRUE;
-            *(sLsMeasFcn->pf16UdReq) = FRAC16(0.0);
+            sLsMeasFcn->i16AmplitudeOK  = TRUE;
+            *(sLsMeasFcn->pf16UdReq)    = FRAC16(0.0);
             sLsMeasFcn->ui16LoopCounter = 0;
         }
 
         /* After 300ms */
-        if(sLsMeasFcn->ui16LoopCounter >= M1_TIME_300MS)
+        if (sLsMeasFcn->ui16LoopCounter >= M1_TIME_300MS)
         {
             /* Increase voltage amplitude by f16Ls_Volt_Increment */
             sLsMeasFcn->f16UdAmplitude += sLsMeasFcn->f16UdIncrement;
 
             /* If voltage amplitude was greater than f16UdMax, proceed to frequency adjusting */
-            if(sLsMeasFcn->f16UdAmplitude > sLsMeasFcn->f16UdMax)
+            if (sLsMeasFcn->f16UdAmplitude > sLsMeasFcn->f16UdMax)
             {
                 sLsMeasFcn->f16UdAmplitude = sLsMeasFcn->f16UdMax;
                 sLsMeasFcn->i16AmplitudeOK = TRUE;
-                *(sLsMeasFcn->pf16UdReq) = FRAC16(0.0);
+                *(sLsMeasFcn->pf16UdReq)   = FRAC16(0.0);
             }
 
             sLsMeasFcn->ui16LoopCounter = 0;
@@ -90,33 +88,33 @@ void MID_getLs(mid_get_ls_a1_t* sLsMeasFcn)
     }
 
     /* Measuring frequency adjusting */
-    if(sLsMeasFcn->i16AmplitudeOK == TRUE && sLsMeasFcn->i16FrequencyOK != TRUE)
+    if (sLsMeasFcn->i16AmplitudeOK == TRUE && sLsMeasFcn->i16FrequencyOK != TRUE)
     {
         /* Apply voltage with frequency for 300ms */
-        if(sLsMeasFcn->ui16LoopCounter < M1_TIME_300MS)
-            *(sLsMeasFcn->pf16UdReq) = MLIB_Mul_F16(sLsMeasFcn->f16UdAmplitude,
-                                                    GFLIB_Sin_F16(sLsMeasFcn->f16Angle));
+        if (sLsMeasFcn->ui16LoopCounter < M1_TIME_300MS)
+            *(sLsMeasFcn->pf16UdReq) = MLIB_Mul_F16(sLsMeasFcn->f16UdAmplitude, GFLIB_Sin_F16(sLsMeasFcn->f16Angle));
 
         /* If current f16Idfbck > f16MeasCurrentAmp, proceed to measurement */
-        if((sLsMeasFcn->ui16LoopCounter > M1_TIME_100MS) && (*(sLsMeasFcn->pf16Idfbck) > sLsMeasFcn->f16IdAmplitudeReq))
+        if ((sLsMeasFcn->ui16LoopCounter > M1_TIME_100MS) &&
+            (*(sLsMeasFcn->pf16Idfbck) > sLsMeasFcn->f16IdAmplitudeReq))
         {
-            sLsMeasFcn->i16FrequencyOK = TRUE;
-            *(sLsMeasFcn->pf16UdReq) = FRAC16(0.0);
+            sLsMeasFcn->i16FrequencyOK  = TRUE;
+            *(sLsMeasFcn->pf16UdReq)    = FRAC16(0.0);
             sLsMeasFcn->ui16LoopCounter = 0;
         }
 
         /* After 300ms */
-        if(sLsMeasFcn->ui16LoopCounter >= M1_TIME_300MS)
+        if (sLsMeasFcn->ui16LoopCounter >= M1_TIME_300MS)
         {
             /* Decrease frequency by f16Ls_Freq_Decrement */
             sLsMeasFcn->f16FreqActual -= sLsMeasFcn->f16FreqDecrement;
 
             /* If frequency was lower than f16FreqMin, proceed to measurement */
-            if(sLsMeasFcn->f16FreqActual < sLsMeasFcn->f16FreqMin)
+            if (sLsMeasFcn->f16FreqActual < sLsMeasFcn->f16FreqMin)
             {
-                sLsMeasFcn->f16FreqActual = sLsMeasFcn->f16FreqMin;
+                sLsMeasFcn->f16FreqActual  = sLsMeasFcn->f16FreqMin;
                 sLsMeasFcn->i16FrequencyOK = TRUE;
-                *(sLsMeasFcn->pf16UdReq) = FRAC16(0.0);
+                *(sLsMeasFcn->pf16UdReq)   = FRAC16(0.0);
             }
 
             sLsMeasFcn->ui16LoopCounter = 0;
@@ -124,22 +122,22 @@ void MID_getLs(mid_get_ls_a1_t* sLsMeasFcn)
     }
 
     /* When amplitude and frequency adjusted, start Ld measurement */
-    if(sLsMeasFcn->i16AmplitudeOK == TRUE && sLsMeasFcn->i16FrequencyOK == TRUE)
+    if (sLsMeasFcn->i16AmplitudeOK == TRUE && sLsMeasFcn->i16FrequencyOK == TRUE)
     {
         /* Apply measuring signal */
-        if(sLsMeasFcn->ui16LoopCounter <= M1_TIME_300MS)
+        if (sLsMeasFcn->ui16LoopCounter <= M1_TIME_300MS)
         {
             /* Sine to d_axis */
-            *(sLsMeasFcn->pf16UdReq) = MLIB_Mul_F16(sLsMeasFcn->f16UdAmplitude,
-                                                    GFLIB_Sin_F16(sLsMeasFcn->f16Angle));
+            *(sLsMeasFcn->pf16UdReq) = MLIB_Mul_F16(sLsMeasFcn->f16UdAmplitude, GFLIB_Sin_F16(sLsMeasFcn->f16Angle));
 
             /* Current amplitudes after 100ms delay */
-            if((sLsMeasFcn->ui16LoopCounter > M1_TIME_100MS) && (*(sLsMeasFcn->pf16Idfbck) > sLsMeasFcn->f16IdAmplitude))
+            if ((sLsMeasFcn->ui16LoopCounter > M1_TIME_100MS) &&
+                (*(sLsMeasFcn->pf16Idfbck) > sLsMeasFcn->f16IdAmplitude))
                 sLsMeasFcn->f16IdAmplitude = *(sLsMeasFcn->pf16Idfbck);
         }
 
         /* Inductance calculation */
-        if(sLsMeasFcn->ui16LoopCounter > M1_TIME_300MS)
+        if (sLsMeasFcn->ui16LoopCounter > M1_TIME_300MS)
         {
             /* Total circuit reactance */
             /* float eq. Z = Ud / Id */
@@ -149,20 +147,18 @@ void MID_getLs(mid_get_ls_a1_t* sLsMeasFcn)
             /* Set the i16ShiftZsMax to -16 */
             sLsMeasFcn->i16ShiftZsMax = -16;
 
-            /* Divide U/I and always increase i16ShiftZsMax until the Ztotal result is positive 
+            /* Divide U/I and always increase i16ShiftZsMax until the Ztotal result is positive
                and f32UdAmplitudeShifted is not saturated */
             do
             {
                 sLsMeasFcn->i16ShiftZsMax++;
-                f32UdAmplitudeShifted = MLIB_ShLBiSat_F32(f32UdAmplitude, 
-                                                          -sLsMeasFcn->i16ShiftZsMax);
-                f32Ztotal = MLIB_DivSat_F32(f32UdAmplitudeShifted,
-                                            MLIB_Conv_F32s(sLsMeasFcn->f16IdAmplitude));
+                f32UdAmplitudeShifted = MLIB_ShLBiSat_F32(f32UdAmplitude, -sLsMeasFcn->i16ShiftZsMax);
+                f32Ztotal = MLIB_DivSat_F32(f32UdAmplitudeShifted, MLIB_Conv_F32s(sLsMeasFcn->f16IdAmplitude));
 
-            }while(f32Ztotal >= FRAC32(1.0) || f32UdAmplitudeShifted >= FRAC32(1.0));
+            } while (f32Ztotal >= FRAC32(1.0) || f32UdAmplitudeShifted >= FRAC32(1.0));
 
             /* Rs re-scaling from FM_RS_SCALE => FM_Z_SCALE */
-            f32XRs = MLIB_ShLBi_F32(MLIB_Conv_F32s(sLsMeasFcn->f16Rs), 
+            f32XRs = MLIB_ShLBi_F32(MLIB_Conv_F32s(sLsMeasFcn->f16Rs),
                                     -(sLsMeasFcn->i16ShiftZsMax - sLsMeasFcn->i16ShiftRsMax));
 
             /* Pure inductive reactance */
@@ -170,7 +166,7 @@ void MID_getLs(mid_get_ls_a1_t* sLsMeasFcn)
             /* frac  eq. f32XLd = sqrt((f32Ztotal*f32Ztotal)-(f32XRs*f32XRs)) */
             f32XLd_aux1 = MLIB_Mul_F32(f32Ztotal, f32Ztotal);
             f32XLd_aux2 = MLIB_Mul_F32(f32XRs, f32XRs);
-            f32XLd = MLIB_Conv_F32s(GFLIB_Sqrt_F16l(MLIB_Sub_F32(f32XLd_aux1, f32XLd_aux2)));
+            f32XLd      = MLIB_Conv_F32s(GFLIB_Sqrt_F16l(MLIB_Sub_F32(f32XLd_aux1, f32XLd_aux2)));
 
             /* Inductance */
             /* float eq. L = XL / (2*pi*f) */
@@ -179,36 +175,37 @@ void MID_getLs(mid_get_ls_a1_t* sLsMeasFcn)
             /* Set the i16ShiftLMax to -16 */
             sLsMeasFcn->i16ShiftLsMax = -16;
 
-            /* Divide U/I and always increase i16ShiftZMax until the Ztotal result is positive and f32UdAmplitudeShifted is not saturated */
+            /* Divide U/I and always increase i16ShiftZMax until the Ztotal result is positive and f32UdAmplitudeShifted
+             * is not saturated */
             do
             {
                 sLsMeasFcn->i16ShiftLsMax++;
                 f32XLdShifted = MLIB_ShLBiSat_F32(f32XLd, -sLsMeasFcn->i16ShiftLsMax);
-                f32Ld = MLIB_DivSat_F32(f32XLdShifted, MLIB_Conv_F32s(sLsMeasFcn->f16FreqActual));
+                f32Ld         = MLIB_DivSat_F32(f32XLdShifted, MLIB_Conv_F32s(sLsMeasFcn->f16FreqActual));
 
-            }while(f32Ld >= FRAC32(1.0) || f32XLdShifted >= FRAC32(1.0));
+            } while (f32Ld >= FRAC32(1.0) || f32XLdShifted >= FRAC32(1.0));
 
             /* Return frac16_t inductance */
             sLsMeasFcn->f16Ls = MLIB_Conv_F16l(f32Ld);
 
-            sLsMeasFcn->ui16Active = FALSE;
+            sLsMeasFcn->ui16Active   = FALSE;
             *(sLsMeasFcn->pf16UdReq) = FRAC16(0.0);
 
             /* Check Faults */
             /* Check if f16MeasCurrentAmp was reached (95% of the f16MeasCurrentAmp) */
-            if(sLsMeasFcn->f16IdAmplitude < MLIB_Mul_F16(sLsMeasFcn->f16IdAmplitudeReq, FRAC16(0.95)))
+            if (sLsMeasFcn->f16IdAmplitude < MLIB_Mul_F16(sLsMeasFcn->f16IdAmplitudeReq, FRAC16(0.95)))
                 ui16FaultMID |= MID_FAULT_AC_CUR_NOT_REACHED;
 
             /* Check negative result or saturation of Z*/
-            if(f32Ztotal < FRAC32(0.0) || f32Ztotal == FRAC32(1.0))
+            if (f32Ztotal < FRAC32(0.0) || f32Ztotal == FRAC32(1.0))
                 ui16FaultMID |= MID_FAULT_Z_OUT_OF_RANGE;
 
-                        /* Check negative result or saturation of Ls*/
-            if(sLsMeasFcn->f16Ls < FRAC16(0.0) || sLsMeasFcn->f16Ls == FRAC16(1.0))
+            /* Check negative result or saturation of Ls*/
+            if (sLsMeasFcn->f16Ls < FRAC16(0.0) || sLsMeasFcn->f16Ls == FRAC16(1.0))
                 ui16FaultMID |= MID_FAULT_LS_OUT_OF_RANGE;
 
             /* Check if motor is connected */
-            if(sLsMeasFcn->f16IdAmplitude < M1_K_I_50MA)
+            if (sLsMeasFcn->f16IdAmplitude < M1_K_I_50MA)
                 ui16FaultMID |= MID_FAULT_NO_MOTOR;
         }
     }

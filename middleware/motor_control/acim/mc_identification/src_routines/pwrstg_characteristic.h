@@ -9,8 +9,8 @@
 #define _PWRSTG_CHAR_H_
 
 #include "mid_def.h"
-#include "mlib_fp.h"
-#include "gflib_fp.h"
+#include "mlib_FP.h"
+#include "gflib_FP.h"
 
 /*******************************************************************************
  * API
@@ -27,4 +27,3 @@ extern void MID_GetTrfChar(void);
 #endif
 
 #endif /* _PWRSTG_CHAR_H_ */
-

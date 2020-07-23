@@ -18,7 +18,7 @@ extern "C" {
 /*******************************************************************************
  * API
  ******************************************************************************/
-extern void MID_GetTransferCharacteristic(mid_get_char_t* sTransferCharFcn);
+extern void MID_GetTransferCharacteristic(mid_get_char_t *sTransferCharFcn);
 
 #ifdef __cplusplus
 }

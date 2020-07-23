@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2013-2015 Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -8,8 +8,8 @@
 
 #include <cstring>
 #include "blfwk/Bootloader.h"
-#include "blfwk/UsbHidPacketizer.h"
 #include "blfwk/SerialPacketizer.h"
+#include "blfwk/UsbHidPacketizer.h"
 #include "blfwk/options.h"
 #include "blfwk/utils.h"
 
@@ -30,18 +30,26 @@ using namespace std;
 const char k_toolName[] = "blhost";
 
 //! @brief Current version number for the tool.
-const char k_version[] = "2.2.0";
+const char k_version[] = "2.4.1";
 
 //! @brief Copyright string.
-const char k_copyright[] = "Copyright (c) 2013-2015 Freescale Semiconductor, Inc.\n\
-Copyright 2016-2018 NXP\nAll rights reserved.";
+const char k_copyright[] =
+    "Copyright (c) 2013-2015 Freescale Semiconductor, Inc.\n\
+Copyright 2016-2019 NXP\nAll rights reserved.";
 
 //! @brief Command line option definitions.
-static const char *k_optionsDefinition[] = { "?|help", "v|version", "p:port <name>[,<speed>]",
+static const char *k_optionsDefinition[] = { "?|help",
+                                             "v|version",
+                                             "p:port <name>[,<speed>]",
                                              "b:buspal spi[,<speed>,<polarity>,<phase>,lsb|msb] | "
-                                             "i2c[,<address>,<speed>] | can[,<speed>,<txid>,<rxid>]",
-                                             "u?usb [[<vid>,]<pid>] | [<path>]", "V|verbose", "d|debug", "j|json", "n|noping",
-                                             "t:timeout <ms>", NULL };
+                                             "i2c[,<address>,<speed>] | can[,<speed>,<txid>,<rxid>] | sai[,<speed>]",
+                                             "u?usb [[[<vid>,]<pid>] | [<path>]]",
+                                             "V|verbose",
+                                             "d|debug",
+                                             "j|json",
+                                             "n|noping",
+                                             "t:timeout <ms>",
+                                             NULL };
 
 //! @brief Usage text.
 const char k_optionUsage[] =
@@ -55,6 +63,7 @@ const char k_optionUsage[] =
   -b/--buspal spi[,<speed>,<polarity>,<phase>,lsb|msb] |\n\
               i2c[,<address>,<speed>]\n\
               can[,<speed>,<txid>,<rxid>]\n\
+              sai[,<speed>]\n\
                                Use SPI or I2C for BusPal<-->Target link\n\
                                All parameters between square brackets are\n\
                                optional, but preceding parameters must be\n\
@@ -71,6 +80,8 @@ const char k_optionUsage[] =
                                        txid (11 bits ID),\n\
                                        rxid (11 bits ID)\n\
                                        (default=4,0x321,0x123)\n\
+                                 sai:  speed(Hz),\n\
+                                       (default=8000)\n\
   -u/--usb [[[<vid>,]<pid>] | [<path>]]\n\
                                Connect to target over USB HID device denoted by\n\
                                vid/pid (default=0x15a2,0x0073) or device path\n\
@@ -118,14 +129,22 @@ const char k_commandUsage[] =
     "\nCommand:\n\
   reset                        Reset the chip\n\
   get-property <tag> [<memoryId> | <index>]\n\
+                               Return bootloader specific property. \n\
+                               <memoryId> and <index> are required by some properties.\n\
+                               <memoryId> = 0, <index> = 0, if not specified.\n\
+                               <memoryId> and <index> are ignored for the other properties.\n\
+                               If <index> is over the range supported by the device, bootloader\n\
+                               will treat as <index> = 0.\n\
+\n\
     1                          Bootloader version\n\
     2                          Available peripherals\n\
-    3                          Start of program flash\n\
-    4                          Size of program flash\n\
-    5                          Size of flash sector\n\
-    6                          Blocks in flash array\n\
+    3                          Start of program flash, <index> is required\n\
+    4                          Size of program flash, <index> is required\n\
+    5                          Size of flash sector, <index> is required\n\
+    6                          Blocks in flash array, <index> is required\n\
     7                          Available commands\n\
-    8                          CRC check status\n\
+    8                          Check Status, <status id> is required\n\
+    9                          Last Error\n\
     10                         Verify Writes flag\n\
     11                         Max supported packet size\n\
     12                         Reserved regions\n\
@@ -140,10 +159,23 @@ const char k_commandUsage[] =
     22                         Read margin level of program flash\n\
     23                         QuadSpi initialization status\n\
     24                         Target version\n\
-    25                         External Memory Attrubutes, <memoryId> is required.\n\
+    25                         External memory attrubutes, <memoryId> is required\n\
+    26                         Reliable update status\n\
+    27                         Flash page size, <index> is required\n\
+    28                         Interrupt notifier pin\n\
+    29                         FFR key store update option\n\
   set-property <tag> <value>\n\
     10                         Verify Writes flag\n\
     22                         Read margin level of program flash\n\
+    28                         Interrupt notifier pin\n\
+                               <value>:\n\
+                                   bit[31] for enablement, 0: disable, 1: enable\n\
+                                   bit[7:0] for GPIO pin index\n\
+                                   bit[15:8] for GPIO port index\n\
+    29                         FFR key store update option\n\
+                               <value>:\n\
+                                   0 for Keyprovisioning\n\
+                                   1 for write-memory\n\
   flash-erase-region <addr> <byte_count> [memory_id]\n\
                                Erase a region of flash according to [memory_id].\n\
   flash-erase-all [memory_id]  Erase all flash according to [memory_id],\n\
@@ -208,6 +240,8 @@ const char k_commandUsage[] =
                                <read_key_store> <file>\n\
                                    Read the key store from bootloader to host(PC). <file> is the\n\
                                    binary file to store the key store\n\
+  load-image <file>\n\
+                               Load a boot image to the device via specified interface\n\
   flash-image <file> [erase] [memory_id]\n\
                                Write a formated image <file> to memory with ID\n\
                                <memory_id>. Supported file types: SRecord\n\
@@ -443,6 +477,7 @@ int BlHost::processOptions()
                     if ((strcmp(m_busPalConfig[0].c_str(), "spi") != 0) &&
                         (strcmp(m_busPalConfig[0].c_str(), "i2c") != 0) &&
                         (strcmp(m_busPalConfig[0].c_str(), "can") != 0) &&
+                        (strcmp(m_busPalConfig[0].c_str(), "sai") != 0) &&
                         (strcmp(m_busPalConfig[0].c_str(), "gpio") != 0) &&
                         (strcmp(m_busPalConfig[0].c_str(), "clock") != 0))
                     {

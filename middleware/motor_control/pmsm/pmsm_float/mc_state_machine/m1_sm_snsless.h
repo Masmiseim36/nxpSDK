@@ -4,7 +4,7 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
- 
+
 #ifndef _M1_SM_REF_SOL_H_
 #define _M1_SM_REF_SOL_H_
 
@@ -18,7 +18,7 @@
 #define M1_SPEED_CONV_SCALE 628.06F /* Speed conversion scale */
 
 #define MCAT_SENSORLESS_CTRL 0 /* Sensorless control flag */
-   
+
 /*******************************************************************************
  * Variables
  ******************************************************************************/
@@ -101,4 +101,3 @@ float_t M1_GetSpeed(void);
 #endif
 
 #endif /* _M1_SM_REF_SOL_H_ */
-

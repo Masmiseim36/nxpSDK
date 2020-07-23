@@ -11,7 +11,7 @@
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
- 
+
 static void MID_SM_StateStart(mid_sm_app_ctrl_t *psAppCtrl);
 static void MID_SM_StatePwrStgCharact(mid_sm_app_ctrl_t *psAppCtrl);
 static void MID_SM_StateRs(mid_sm_app_ctrl_t *psAppCtrl);
@@ -35,15 +35,9 @@ uint16_t ui16ElectricalParameters;
 uint16_t ui16PolePairs;
 
 /*! @brief State machine functions field */
-const mid_pfcn_void_pms g_MID_SM_STATE_TABLE[8] = {MID_SM_StateStart, 
-                                                   MID_SM_StatePwrStgCharact,
-                                                   MID_SM_StateRs,
-                                                   MID_SM_StateLd,
-                                                   MID_SM_StateLq,
-                                                   MID_SM_StatePp,
-                                                   MID_SM_StateKe,
-                                                   MID_SM_StateStop
-                                                  };
+const mid_pfcn_void_pms g_MID_SM_STATE_TABLE[8] = {
+    MID_SM_StateStart, MID_SM_StatePwrStgCharact, MID_SM_StateRs, MID_SM_StateLd, MID_SM_StateLq, MID_SM_StatePp,
+    MID_SM_StateKe,    MID_SM_StateStop};
 
 /*******************************************************************************
  * Code
@@ -59,33 +53,33 @@ const mid_pfcn_void_pms g_MID_SM_STATE_TABLE[8] = {MID_SM_StateStart,
 static void MID_SM_StateStart(mid_sm_app_ctrl_t *psAppCtrl)
 {
     /* call user Start function */
-    psAppCtrl -> psState -> MID_Start();
+    psAppCtrl->psState->MID_Start();
 
     /* if START_DONE flag is set */
-    if ((psAppCtrl -> uiCtrl & MID_SM_CTRL_START_DONE) > 0)
+    if ((psAppCtrl->uiCtrl & MID_SM_CTRL_START_DONE) > 0)
     {
         /* clear state's _ACK & _DONE SM control flags */
-        psAppCtrl -> uiCtrl &= ~(MID_SM_CTRL_START_DONE | MID_SM_CTRL_START_ACK);
+        psAppCtrl->uiCtrl &= ~(MID_SM_CTRL_START_DONE | MID_SM_CTRL_START_ACK);
 
         /* if ui16Calibration go to PWR_STG_CHARACT state */
-        if(ui16Calibration != 0)
+        if (ui16Calibration != 0)
         {
-            psAppCtrl -> psTrans -> MID_Start2PwrStgCharact();
-            psAppCtrl -> eState = kMID_PwrStgCharact;
+            psAppCtrl->psTrans->MID_Start2PwrStgCharact();
+            psAppCtrl->eState = kMID_PwrStgCharact;
         }
 
         /* if ui16ElectricalParameters go to RS state */
-        if(ui16ElectricalParameters != 0)
+        if (ui16ElectricalParameters != 0)
         {
-            psAppCtrl -> psTrans -> MID_Start2Rs();
-            psAppCtrl -> eState = kMID_Rs;
+            psAppCtrl->psTrans->MID_Start2Rs();
+            psAppCtrl->eState = kMID_Rs;
         }
 
         /* if ui16PolePairs go to PP state */
-        if(ui16PolePairs != 0)
+        if (ui16PolePairs != 0)
         {
-            psAppCtrl -> psTrans -> MID_Start2Pp();
-            psAppCtrl -> eState = kMID_Pp;
+            psAppCtrl->psTrans->MID_Start2Pp();
+            psAppCtrl->eState = kMID_Pp;
         }
     }
 }
@@ -100,21 +94,21 @@ static void MID_SM_StateStart(mid_sm_app_ctrl_t *psAppCtrl)
 static void MID_SM_StatePwrStgCharact(mid_sm_app_ctrl_t *psAppCtrl)
 {
     /* call user PwrStgCharact function */
-    psAppCtrl -> psState -> MID_PwrStgCharact();
+    psAppCtrl->psState->MID_PwrStgCharact();
 
     /* if PWR_STG_CHARACT_DONE flag is set */
-    if ((psAppCtrl -> uiCtrl & MID_SM_CTRL_PWR_STG_CHARACT_DONE) > 0)
+    if ((psAppCtrl->uiCtrl & MID_SM_CTRL_PWR_STG_CHARACT_DONE) > 0)
     {
         /* Run transition function */
-        psAppCtrl -> psTrans -> MID_PwrStgCharact2Stop();
+        psAppCtrl->psTrans->MID_PwrStgCharact2Stop();
 
-        if ((psAppCtrl -> uiCtrl & MID_SM_CTRL_PWR_STG_CHARACT_DONE) > 0)
+        if ((psAppCtrl->uiCtrl & MID_SM_CTRL_PWR_STG_CHARACT_DONE) > 0)
         {
             /* clear state's _ACK & _DONE SM control flags */
-            psAppCtrl -> uiCtrl &= ~(MID_SM_CTRL_PWR_STG_CHARACT_DONE | MID_SM_CTRL_PWR_STG_CHARACT_ACK);
+            psAppCtrl->uiCtrl &= ~(MID_SM_CTRL_PWR_STG_CHARACT_DONE | MID_SM_CTRL_PWR_STG_CHARACT_ACK);
 
             /* next go to Rs state */
-            psAppCtrl -> eState = kMID_Stop;
+            psAppCtrl->eState = kMID_Stop;
         }
     }
 }
@@ -129,21 +123,21 @@ static void MID_SM_StatePwrStgCharact(mid_sm_app_ctrl_t *psAppCtrl)
 static void MID_SM_StateRs(mid_sm_app_ctrl_t *psAppCtrl)
 {
     /* call user Rs function */
-    psAppCtrl -> psState -> MID_Rs();
+    psAppCtrl->psState->MID_Rs();
 
     /* if RS_DONE flag is set */
-    if ((psAppCtrl -> uiCtrl & MID_SM_CTRL_RS_DONE) > 0)
+    if ((psAppCtrl->uiCtrl & MID_SM_CTRL_RS_DONE) > 0)
     {
         /* Run transition function */
-        psAppCtrl -> psTrans -> MID_Rs2Ld();
+        psAppCtrl->psTrans->MID_Rs2Ld();
 
-        if ((psAppCtrl -> uiCtrl & MID_SM_CTRL_RS_DONE) > 0)
+        if ((psAppCtrl->uiCtrl & MID_SM_CTRL_RS_DONE) > 0)
         {
             /* clear state's _ACK & _DONE SM control flags */
-            psAppCtrl -> uiCtrl &= ~(MID_SM_CTRL_RS_DONE | MID_SM_CTRL_RS_ACK);
+            psAppCtrl->uiCtrl &= ~(MID_SM_CTRL_RS_DONE | MID_SM_CTRL_RS_ACK);
 
             /* next go to Ls state */
-            psAppCtrl -> eState = kMID_Ld;
+            psAppCtrl->eState = kMID_Ld;
         }
     }
 }
@@ -158,21 +152,21 @@ static void MID_SM_StateRs(mid_sm_app_ctrl_t *psAppCtrl)
 static void MID_SM_StateLd(mid_sm_app_ctrl_t *psAppCtrl)
 {
     /* call user Ls function */
-    psAppCtrl -> psState -> MID_Ld();
+    psAppCtrl->psState->MID_Ld();
 
     /* if LD_DONE flag is set */
-    if ((psAppCtrl -> uiCtrl & MID_SM_CTRL_LD_DONE) > 0)
+    if ((psAppCtrl->uiCtrl & MID_SM_CTRL_LD_DONE) > 0)
     {
         /* Run transition function */
-        psAppCtrl -> psTrans -> MID_Ld2Lq();
+        psAppCtrl->psTrans->MID_Ld2Lq();
 
-        if ((psAppCtrl -> uiCtrl & MID_SM_CTRL_LD_DONE) > 0)
+        if ((psAppCtrl->uiCtrl & MID_SM_CTRL_LD_DONE) > 0)
         {
             /* clear state's _ACK & _DONE SM control flags */
-            psAppCtrl -> uiCtrl &= ~(MID_SM_CTRL_LD_DONE | MID_SM_CTRL_LD_ACK);
+            psAppCtrl->uiCtrl &= ~(MID_SM_CTRL_LD_DONE | MID_SM_CTRL_LD_ACK);
 
             /* Stop state */
-            psAppCtrl -> eState = kMID_Lq;
+            psAppCtrl->eState = kMID_Lq;
         }
     }
 }
@@ -187,21 +181,21 @@ static void MID_SM_StateLd(mid_sm_app_ctrl_t *psAppCtrl)
 static void MID_SM_StateLq(mid_sm_app_ctrl_t *psAppCtrl)
 {
     /* call user Ls function */
-    psAppCtrl -> psState -> MID_Lq();
+    psAppCtrl->psState->MID_Lq();
 
     /* if LQ_DONE flag is set */
-    if ((psAppCtrl -> uiCtrl & MID_SM_CTRL_LQ_DONE) > 0)
+    if ((psAppCtrl->uiCtrl & MID_SM_CTRL_LQ_DONE) > 0)
     {
         /* Run transition function */
-        psAppCtrl -> psTrans -> MID_Lq2Ke();
+        psAppCtrl->psTrans->MID_Lq2Ke();
 
-        if ((psAppCtrl -> uiCtrl & MID_SM_CTRL_LQ_DONE) > 0)
+        if ((psAppCtrl->uiCtrl & MID_SM_CTRL_LQ_DONE) > 0)
         {
             /* clear state's _ACK & _DONE SM control flags */
-            psAppCtrl -> uiCtrl &= ~(MID_SM_CTRL_LQ_DONE | MID_SM_CTRL_LQ_ACK);
+            psAppCtrl->uiCtrl &= ~(MID_SM_CTRL_LQ_DONE | MID_SM_CTRL_LQ_ACK);
 
             /* Stop state */
-            psAppCtrl -> eState = kMID_Ke;
+            psAppCtrl->eState = kMID_Ke;
         }
     }
 }
@@ -216,21 +210,21 @@ static void MID_SM_StateLq(mid_sm_app_ctrl_t *psAppCtrl)
 static void MID_SM_StatePp(mid_sm_app_ctrl_t *psAppCtrl)
 {
     /* call user Ls function */
-    psAppCtrl -> psState -> MID_Pp();
+    psAppCtrl->psState->MID_Pp();
 
     /* if PP_DONE flag is set */
-    if ((psAppCtrl -> uiCtrl & MID_SM_CTRL_PP_DONE) > 0)
+    if ((psAppCtrl->uiCtrl & MID_SM_CTRL_PP_DONE) > 0)
     {
         /* Run transition function */
-        psAppCtrl -> psTrans -> MID_Pp2Stop();
+        psAppCtrl->psTrans->MID_Pp2Stop();
 
-        if ((psAppCtrl -> uiCtrl & MID_SM_CTRL_PP_DONE) > 0)
+        if ((psAppCtrl->uiCtrl & MID_SM_CTRL_PP_DONE) > 0)
         {
             /* clear state's _ACK & _DONE SM control flags */
-            psAppCtrl -> uiCtrl &= ~(MID_SM_CTRL_PP_DONE | MID_SM_CTRL_PP_ACK);
+            psAppCtrl->uiCtrl &= ~(MID_SM_CTRL_PP_DONE | MID_SM_CTRL_PP_ACK);
 
             /* Stop state */
-            psAppCtrl -> eState = kMID_Stop;
+            psAppCtrl->eState = kMID_Stop;
         }
     }
 }
@@ -245,21 +239,21 @@ static void MID_SM_StatePp(mid_sm_app_ctrl_t *psAppCtrl)
 static void MID_SM_StateKe(mid_sm_app_ctrl_t *psAppCtrl)
 {
     /* call user Ls function */
-    psAppCtrl -> psState -> MID_Ke();
+    psAppCtrl->psState->MID_Ke();
 
     /* if KE_DONE flag is set */
-    if ((psAppCtrl -> uiCtrl & MID_SM_CTRL_KE_DONE) > 0)
+    if ((psAppCtrl->uiCtrl & MID_SM_CTRL_KE_DONE) > 0)
     {
         /* Run transition function */
-        psAppCtrl -> psTrans -> MID_Ke2Stop();
+        psAppCtrl->psTrans->MID_Ke2Stop();
 
-        if ((psAppCtrl -> uiCtrl & MID_SM_CTRL_KE_DONE) > 0)
+        if ((psAppCtrl->uiCtrl & MID_SM_CTRL_KE_DONE) > 0)
         {
             /* clear state's _ACK & _DONE SM control flags */
-            psAppCtrl -> uiCtrl &= ~(MID_SM_CTRL_KE_DONE | MID_SM_CTRL_KE_ACK);
+            psAppCtrl->uiCtrl &= ~(MID_SM_CTRL_KE_DONE | MID_SM_CTRL_KE_ACK);
 
             /* Stop state */
-            psAppCtrl -> eState = kMID_Stop;
+            psAppCtrl->eState = kMID_Stop;
         }
     }
 }
@@ -274,5 +268,5 @@ static void MID_SM_StateKe(mid_sm_app_ctrl_t *psAppCtrl)
 static void MID_SM_StateStop(mid_sm_app_ctrl_t *psAppCtrl)
 {
     /* call user Stop function */
-    psAppCtrl -> psState -> MID_Stop();
+    psAppCtrl->psState->MID_Stop();
 }

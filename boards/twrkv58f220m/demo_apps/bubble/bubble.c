@@ -20,8 +20,8 @@
  * Definitions
  ******************************************************************************/
 /* The Flextimer instance/channel used for board */
-#define BOARD_FTM_BASEADDR FTM3
-#define BOARD_FIRST_TIMER_CHANNEL 6U
+#define BOARD_FTM_BASEADDR         FTM3
+#define BOARD_FIRST_TIMER_CHANNEL  6U
 #define BOARD_SECOND_TIMER_CHANNEL 7U
 
 /* Get source clock for TPM driver */
@@ -30,12 +30,12 @@
 /* I2C source clock */
 #define I2C_BAUDRATE 100000U
 
-#define I2C_RELEASE_SDA_PORT PORTD
-#define I2C_RELEASE_SCL_PORT PORTD
-#define I2C_RELEASE_SDA_GPIO GPIOD
-#define I2C_RELEASE_SDA_PIN 9U
-#define I2C_RELEASE_SCL_GPIO GPIOD
-#define I2C_RELEASE_SCL_PIN 8U
+#define I2C_RELEASE_SDA_PORT  PORTD
+#define I2C_RELEASE_SCL_PORT  PORTD
+#define I2C_RELEASE_SDA_GPIO  GPIOD
+#define I2C_RELEASE_SDA_PIN   9U
+#define I2C_RELEASE_SCL_GPIO  GPIOD
+#define I2C_RELEASE_SCL_PIN   8U
 #define I2C_RELEASE_BUS_COUNT 100U
 /* Upper bound and lower bound angle values */
 #define ANGLE_UPPER_BOUND 85U

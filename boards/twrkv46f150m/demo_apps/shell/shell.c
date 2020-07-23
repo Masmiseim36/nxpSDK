@@ -21,18 +21,18 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define LED_NUMBERS 3U
+#define LED_NUMBERS  3U
 #define LED_1_INIT() LED_YELLOW1_INIT(LOGIC_LED_OFF)
-#define LED_1_ON() LED_YELLOW1_ON()
-#define LED_1_OFF() LED_YELLOW1_OFF()
+#define LED_1_ON()   LED_YELLOW1_ON()
+#define LED_1_OFF()  LED_YELLOW1_OFF()
 
 #define LED_2_INIT() LED_GREEN1_INIT(LOGIC_LED_OFF)
-#define LED_2_ON() LED_GREEN1_ON()
-#define LED_2_OFF() LED_GREEN1_OFF()
+#define LED_2_ON()   LED_GREEN1_ON()
+#define LED_2_OFF()  LED_GREEN1_OFF()
 
 #define LED_3_INIT() LED_ORANGE_INIT(LOGIC_LED_OFF)
-#define LED_3_ON() LED_ORANGE_ON()
-#define LED_3_OFF() LED_ORANGE_OFF()
+#define LED_3_ON()   LED_ORANGE_ON()
+#define LED_3_OFF()  LED_ORANGE_OFF()
 
 #define SHELL_Printf PRINTF
 /*******************************************************************************

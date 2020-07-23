@@ -73,7 +73,7 @@
     copyParent2InnerValById("ALIGN_U");
     copyParent2InnerValById("ALIGN_I");
     copyParent2InnerValById("ALIGN_T");
-    
+    copyParent2InnerValById("Uq_Min");   
     
     if(testVarValue('Alignment','Voltage'))
     {
@@ -186,7 +186,8 @@ function clickCalculateParam()
 {
     Align_volt        = getParentHtmlValue("ALIGN_U"); //need to be global var
     Align_cur         = getParentHtmlValue("ALIGN_I"); //need to be global var
-    
+    Scalar_Uq_Min     = getParentHtmlValue("Uq_Min"); //need to be global var 
+	
     var CLOOP_Ts      = getParentHtmlValue("CLOOP_Ts");
     var SLOOP_Ts      = getParentHtmlValue("SLOOP_Ts");
     var Align_dur     = getParentHtmlValue("ALIGN_T");
@@ -213,7 +214,9 @@ function clickCalculateParam()
     Nreqmax       = getParentHtmlValue("N_req");
       
     FM_Umax = Umax;
-
+	
+	Scalar_Uq_Min_sc = Math.round(Scalar_Uq_Min/UDCmax*1000000000000)/1000000000000;
+    testFracValRange("Scalar_Uq_Min_sc",Scalar_Uq_Min_sc); 	
     Align_volt_sc = Math.round(Align_volt/Umax*1000000000000)/1000000000000;
     testFracValRange("Align_volt_sc",Align_volt_sc); 
     Align_cur_sc = Math.round(Align_cur/Imax*1000000000000)/1000000000000;
@@ -273,10 +276,11 @@ function clickCalculateParam()
       setInnerHtmlValueAsText("U_DCB_UNDERVOLTAGE",0,UDC_under_sc, UDCunder);
       setInnerHtmlValueAsText("U_DCB_OVERVOLTAGE",0,UDC_over_sc, UDCover);
       setInnerHtmlValueAsText("N_OVERSPEED",0,N_over_sc, Nover);
-      setInnerHtmlValueAsText("N_MIN",0,N_min_sc, Nmin);
+      setInnerHtmlValueAsText("N_MIN",0,N_min_sc, Nmin);  
       
       setInnerHtmlValueAsText("N_NOM",0, N_req_max_sc, Nreqmax);
       setInnerHtmlValueAsText("I_PH_NOM",0,I_ph_nom_sc,Iphnom);
+      setInnerHtmlValueAsText("SCALAR_UQ_MIN",0,Scalar_Uq_Min_sc, Scalar_Uq_Min);		  
       
       setInnerHtmlValueAsText("FM_FREQ_SCALE",8,FREQmax, FREQmax);
     
@@ -345,6 +349,7 @@ function clickUpdateParamFM()
     TestRangeTrim("UDC_under", 0, UDCmax-1, "V");
     TestRangeTrim("UDC_over", 0, UDCmax-1, "V");
     TestRangeTrim("E_block", 0, Emax, "V");
+    TestRangeTrim("Uq_Min", 0, UDCmax-1, "V");	
     errorArray.push(UpdateFMVariable(xmlDoc,'N_nom',getParentHtmlValue("N_req"),getParentHtmlValue("N_req")));
     errorArray.push(UpdateFMVariable(xmlDoc,'N_min',getParentHtmlValue("N_min"),getParentHtmlValue("N_min")));
     errorArray.push(UpdateFMVariable(xmlDoc,'N_over',getParentHtmlValue("N_over"),getParentHtmlValue("N_over")));
@@ -352,7 +357,8 @@ function clickUpdateParamFM()
     errorArray.push(UpdateFMVariable(xmlDoc,'DCB_over',getParentHtmlValue("UDC_over"),getParentHtmlValue("UDC_over")));
     errorArray.push(UpdateFMVariable(xmlDoc,'DCB_trip',getParentHtmlValue("UDC_trip"),getParentHtmlValue("UDC_trip")));
     errorArray.push(UpdateFMVariable(xmlDoc,'E_block',getParentHtmlValue("E_block"),getParentHtmlValue("E_block")));
-    
+    errorArray.push(UpdateFMVariable(xmlDoc,'SCALAR_UQ_MIN',getParentHtmlValue("Uq_Min"),getParentHtmlValue("Uq_Min")));    
+	
     // display error message if any error detected
     UpdateError(errorArray);       
     }
@@ -400,6 +406,7 @@ function writeParametersHTMLOutput(prefix,xmlObject)
     document.write(HTML_write_blank_line());
     document.write(HTML_write_define_line_number(prefix,0,"N_NOM",xmlObject));
     document.write(HTML_write_define_line_number(prefix,0,"I_PH_NOM",xmlObject));
+    document.write(HTML_write_define_line_number(prefix,0,"SCALAR_UQ_MIN",xmlObject));	
 
     /* DCB voltage filter */
     //speed IIR filter
@@ -433,6 +440,7 @@ function writeParametersHTMLOutput(prefix,xmlObject)
     document.write(HTML_write_comment_line_dash());
     document.write(HTML_write_define_line_number(prefix,0,"E_BLOCK_TRH",xmlObject));
     document.write(HTML_write_define_line_number(prefix,0,"E_BLOCK_PER",xmlObject));
+
 
     
     // motor parameters commented
@@ -492,6 +500,7 @@ function writeParametersHeaderOutput(prefix, str)
      str = write_define_line_number(prefix, str,'N_MIN');
      str = write_define_line_number(prefix, str,'N_NOM');
      str = write_define_line_number(prefix, str,'I_PH_NOM');
+     str = write_define_line_number(prefix, str,'SCALAR_UQ_MIN');	 
      
      str = write_comment_text(str,'DCB Voltage Filter',''); 
      str = write_define_line_number(prefix, str,'UDCB_IIR_B0');

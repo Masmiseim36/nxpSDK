@@ -50,6 +50,7 @@
  */
 
 #include "lwip/opt.h"
+#include "lwip/sys.h"
 
 #if LWIP_ALTCP /* don't build if not configured for use in lwipopts.h */
 
@@ -70,7 +71,7 @@
 #include "mbedtls/certs.h"
 #include "mbedtls/x509.h"
 #include "mbedtls/ssl.h"
-#include "mbedtls/net.h"
+#include "mbedtls/net_sockets.h"
 #include "mbedtls/error.h"
 #include "mbedtls/debug.h"
 #include "mbedtls/platform.h"
@@ -98,10 +99,10 @@ struct altcp_tls_config {
   mbedtls_ssl_config conf;
   mbedtls_x509_crt *cert;
   mbedtls_pk_context *pkey;
-  uint8_t cert_count;
-  uint8_t cert_max;
-  uint8_t pkey_count;
-  uint8_t pkey_max;
+  u8_t cert_count;
+  u8_t cert_max;
+  u8_t pkey_count;
+  u8_t pkey_max;
   mbedtls_x509_crt *ca;
 #if defined(MBEDTLS_SSL_CACHE_C) && ALTCP_MBEDTLS_USE_SESSION_CACHE
   /** Inter-connection cache for fast connection startup */
@@ -165,6 +166,7 @@ altcp_mbedtls_lower_connected(void *arg, struct altcp_pcb *inner_conn, err_t err
   struct altcp_pcb *conn = (struct altcp_pcb *)arg;
   LWIP_UNUSED_ARG(inner_conn); /* for LWIP_NOASSERT */
   if (conn && conn->state) {
+    altcp_mbedtls_state_t *state;
     LWIP_ASSERT("pcb mismatch", conn->inner_conn == inner_conn);
     /* upper connected is called when handshake is done */
     if (err != ERR_OK) {
@@ -172,7 +174,10 @@ altcp_mbedtls_lower_connected(void *arg, struct altcp_pcb *inner_conn, err_t err
         return conn->connected(conn->arg, conn, err);
       }
     }
-    return altcp_mbedtls_lower_recv_process(conn, (altcp_mbedtls_state_t *)conn->state);
+    state = (altcp_mbedtls_state_t *)conn->state;
+    /* ensure overhead value is valid before first write */
+    state->overhead_bytes_adjust = 0;
+    return altcp_mbedtls_lower_recv_process(conn, state);
   }
   return ERR_VAL;
 }
@@ -240,7 +245,7 @@ altcp_mbedtls_lower_recv(void *arg, struct altcp_pcb *inner_conn, struct pbuf *p
     } else {
       /* before connection setup is done: call 'err' */
       if (conn->err) {
-        conn->err(conn->arg, ERR_CLSD);
+        conn->err(conn->arg, ERR_ABRT);
       }
       altcp_close(conn);
     }
@@ -354,7 +359,7 @@ altcp_mbedtls_pass_rx_data(struct altcp_pcb *conn, altcp_mbedtls_state_t *state)
   /* application may have close the connection */
   if (conn->state != state) {
     /* return error code to ensure altcp_mbedtls_handle_rx_appldata() exits the loop */
-    return ERR_CLSD;
+    return ERR_ARG;
   }
   return ERR_OK;
 }
@@ -498,27 +503,35 @@ altcp_mbedtls_bio_recv(void *ctx, unsigned char *buf, size_t len)
 }
 
 /** Sent callback from lower connection (i.e. TCP)
- * This only informs the upper layer to try to send more, not about
- * the number of ACKed bytes.
+ * This only informs the upper layer the number of ACKed bytes.
+ * This now take care of TLS added bytes so application receive
+ * correct ACKed bytes.
  */
 static err_t
 altcp_mbedtls_lower_sent(void *arg, struct altcp_pcb *inner_conn, u16_t len)
 {
   struct altcp_pcb *conn = (struct altcp_pcb *)arg;
   LWIP_UNUSED_ARG(inner_conn); /* for LWIP_NOASSERT */
-  LWIP_UNUSED_ARG(len);
   if (conn) {
     altcp_mbedtls_state_t *state = (altcp_mbedtls_state_t *)conn->state;
+    LWIP_ASSERT("state", state != NULL);
     LWIP_ASSERT("pcb mismatch", conn->inner_conn == inner_conn);
-    if (!state || !(state->flags & ALTCP_MBEDTLS_FLAGS_HANDSHAKE_DONE)) {
-      /* @todo: do something here? */
-      return ERR_OK;
-    }
-    /* try to send more if we failed before */
+    /* calculate TLS overhead part to not send it to application */
+    int overhead = state->overhead_bytes_adjust + state->ssl_context.out_left;
+    if ((unsigned)overhead > len)
+      overhead = len;
+    /* remove ACKed bytes from overhead adjust counter */
+    state->overhead_bytes_adjust -= len;
+    /* try to send more if we failed before (may increase overhead adjust counter) */
     mbedtls_ssl_flush_output(&state->ssl_context);
-    /* call upper sent with len==0 if the application already sent data */
-    if ((state->flags & ALTCP_MBEDTLS_FLAGS_APPLDATA_SENT) && conn->sent) {
-      return conn->sent(conn->arg, conn, 0);
+    /* remove calculated overhead from ACKed bytes len */
+    len -= overhead;
+    /* update application write counter and inform application */
+    if (len)
+    {
+      state->overhead_bytes_adjust += len;
+      if (conn->sent)
+        return conn->sent(conn->arg, conn, len);
     }
   }
   return ERR_OK;
@@ -639,6 +652,44 @@ altcp_tls_wrap(struct altcp_tls_config *config, struct altcp_pcb *inner_pcb)
   return ret;
 }
 
+void
+altcp_tls_init_session(struct altcp_tls_session *session)
+{
+  if (session)
+    mbedtls_ssl_session_init(&session->data);
+}
+
+err_t
+altcp_tls_get_session(struct altcp_pcb *conn, struct altcp_tls_session *session)
+{
+  if (session && conn && conn->state) {
+    altcp_mbedtls_state_t *state = (altcp_mbedtls_state_t *)conn->state;
+    int ret = mbedtls_ssl_get_session(&state->ssl_context, &session->data);
+    return ret < 0 ? ERR_VAL : ERR_OK;
+  }
+  return ERR_ARG;
+}
+
+err_t
+altcp_tls_set_session(struct altcp_pcb *conn, struct altcp_tls_session *session)
+{
+  if (session && conn && conn->state) {
+    altcp_mbedtls_state_t *state = (altcp_mbedtls_state_t *)conn->state;
+    int ret = -1;
+    if (session->data.start)
+      ret = mbedtls_ssl_set_session(&state->ssl_context, &session->data);
+    return ret < 0 ? ERR_VAL : ERR_OK;
+  }
+  return ERR_ARG;
+}
+
+void
+altcp_tls_free_session(struct altcp_tls_session *session)
+{
+  if (session)
+    mbedtls_ssl_session_free(&session->data);
+}
+
 void *
 altcp_tls_context(struct altcp_pcb *conn)
 {
@@ -664,11 +715,60 @@ altcp_mbedtls_debug(void *ctx, int level, const char *file, int line, const char
 }
 #endif
 
+static err_t
+altcp_mbedtls_ref_entropy()
+{
+  SYS_ARCH_DECL_PROTECT(old_level);
+  SYS_ARCH_PROTECT(old_level);
+  if (!altcp_tls_entropy_rng) {
+    altcp_tls_entropy_rng = (struct altcp_tls_entropy_rng *)altcp_mbedtls_alloc_config(sizeof(struct altcp_tls_entropy_rng));
+    if (altcp_tls_entropy_rng) {
+      int ret;
+      altcp_tls_entropy_rng->ref = 1;
+      mbedtls_entropy_init(&altcp_tls_entropy_rng->entropy);
+      mbedtls_ctr_drbg_init(&altcp_tls_entropy_rng->ctr_drbg);
+      /* Seed the RNG, only once */
+      ret = mbedtls_ctr_drbg_seed(&altcp_tls_entropy_rng->ctr_drbg,
+                                  ALTCP_MBEDTLS_RNG_FN, &altcp_tls_entropy_rng->entropy,
+                                  ALTCP_MBEDTLS_ENTROPY_PTR, ALTCP_MBEDTLS_ENTROPY_LEN);
+      if (ret != 0) {
+        LWIP_DEBUGF(ALTCP_MBEDTLS_DEBUG, ("mbedtls_ctr_drbg_seed failed: %d\n", ret));
+        mbedtls_ctr_drbg_free(&altcp_tls_entropy_rng->ctr_drbg);
+        mbedtls_entropy_free(&altcp_tls_entropy_rng->entropy);
+        altcp_mbedtls_free_config(altcp_tls_entropy_rng);
+        altcp_tls_entropy_rng = NULL;
+        SYS_ARCH_UNPROTECT(old_level);
+        return ERR_ARG;
+      }
+    }
+    else {
+      SYS_ARCH_UNPROTECT(old_level);
+      return ERR_MEM;
+    }
+  }
+  else
+    altcp_tls_entropy_rng->ref++;
+  SYS_ARCH_UNPROTECT(old_level);
+  return ERR_OK;
+}
+
+
+
+static void
+altcp_mbedtls_unref_entropy()
+{
+  SYS_ARCH_DECL_PROTECT(old_level);
+  SYS_ARCH_PROTECT(old_level);
+  if (altcp_tls_entropy_rng && altcp_tls_entropy_rng->ref)
+      altcp_tls_entropy_rng->ref--;
+  SYS_ARCH_UNPROTECT(old_level);
+}
+
 /** Create new TLS configuration
  * ATTENTION: Server certificate and private key have to be added outside this function!
  */
 static struct altcp_tls_config *
-altcp_tls_create_config(int is_server, uint8_t cert_count, uint8_t pkey_count, int have_ca)
+altcp_tls_create_config(int is_server, u8_t cert_count, u8_t pkey_count, int have_ca)
 {
   size_t sz;
   int ret;
@@ -714,31 +814,9 @@ altcp_tls_create_config(int is_server, uint8_t cert_count, uint8_t pkey_count, i
 
   mbedtls_ssl_config_init(&conf->conf);
 
-  if (!altcp_tls_entropy_rng) {
-    altcp_tls_entropy_rng = (struct altcp_tls_entropy_rng *)altcp_mbedtls_alloc_config(sizeof(struct altcp_tls_entropy_rng));
-    if (altcp_tls_entropy_rng) {
-      altcp_tls_entropy_rng->ref = 1;
-      mbedtls_entropy_init(&altcp_tls_entropy_rng->entropy);
-      mbedtls_ctr_drbg_init(&altcp_tls_entropy_rng->ctr_drbg);
-      /* Seed the RNG, only once */
-      ret = mbedtls_ctr_drbg_seed(&altcp_tls_entropy_rng->ctr_drbg,
-                                  mbedtls_entropy_func, &altcp_tls_entropy_rng->entropy,
-                                  ALTCP_MBEDTLS_ENTROPY_PTR, ALTCP_MBEDTLS_ENTROPY_LEN);
-      if (ret != 0) {
-        LWIP_DEBUGF(ALTCP_MBEDTLS_DEBUG, ("mbedtls_ctr_drbg_seed failed: %d\n", ret));
-        mbedtls_ctr_drbg_free(&altcp_tls_entropy_rng->ctr_drbg);
-        mbedtls_entropy_free(&altcp_tls_entropy_rng->entropy);
-        altcp_mbedtls_free_config(altcp_tls_entropy_rng);
-        altcp_tls_entropy_rng = NULL;
-        altcp_mbedtls_free_config(conf);
-        return NULL;
-      }
-    } else {
-      altcp_mbedtls_free_config(conf);
-      return NULL;
-    }
-  } else {
-    altcp_tls_entropy_rng->ref++;
+  if (altcp_mbedtls_ref_entropy() != ERR_OK) {
+    altcp_mbedtls_free_config(conf);
+    return NULL;
   }
 
   /* Setup ssl context (@todo: what's different for a client here? -> might better be done on listen/connect) */
@@ -746,16 +824,11 @@ altcp_tls_create_config(int is_server, uint8_t cert_count, uint8_t pkey_count, i
                                     MBEDTLS_SSL_TRANSPORT_STREAM, MBEDTLS_SSL_PRESET_DEFAULT);
   if (ret != 0) {
     LWIP_DEBUGF(ALTCP_MBEDTLS_DEBUG, ("mbedtls_ssl_config_defaults failed: %d\n", ret));
-    if (altcp_tls_entropy_rng->ref == 1) {
-      mbedtls_ctr_drbg_free(&altcp_tls_entropy_rng->ctr_drbg);
-      mbedtls_entropy_free(&altcp_tls_entropy_rng->entropy);
-      altcp_mbedtls_free_config(altcp_tls_entropy_rng);
-      altcp_tls_entropy_rng = NULL;
-    }
+    altcp_mbedtls_unref_entropy();
     altcp_mbedtls_free_config(conf);
     return NULL;
   }
-  mbedtls_ssl_conf_authmode(&conf->conf, MBEDTLS_SSL_VERIFY_OPTIONAL);
+  mbedtls_ssl_conf_authmode(&conf->conf, ALTCP_MBEDTLS_AUTHMODE);
 
   mbedtls_ssl_conf_rng(&conf->conf, mbedtls_ctr_drbg_random, &altcp_tls_entropy_rng->ctr_drbg);
 #if ALTCP_MBEDTLS_LIB_DEBUG != LWIP_DBG_OFF
@@ -774,6 +847,7 @@ altcp_tls_create_config(int is_server, uint8_t cert_count, uint8_t pkey_count, i
     ALTCP_MBEDTLS_SESSION_TICKET_CIPHER, ALTCP_MBEDTLS_SESSION_TICKET_TIMEOUT_SECONDS);
   if (ret) {
     LWIP_DEBUGF(ALTCP_MBEDTLS_DEBUG, ("mbedtls_ssl_ticket_setup failed: %d\n", ret));
+    altcp_mbedtls_unref_entropy();
     altcp_mbedtls_free_config(conf);
     return NULL;
   }
@@ -785,7 +859,7 @@ altcp_tls_create_config(int is_server, uint8_t cert_count, uint8_t pkey_count, i
   return conf;
 }
 
-struct altcp_tls_config *altcp_tls_create_config_server(uint8_t cert_count)
+struct altcp_tls_config *altcp_tls_create_config_server(u8_t cert_count)
 {
   struct altcp_tls_config *conf = altcp_tls_create_config(1, cert_count, cert_count, 0);
   if (conf == NULL) {
@@ -861,7 +935,7 @@ altcp_tls_create_config_server_privkey_cert(const u8_t *privkey, size_t privkey_
 
   if (altcp_tls_config_server_add_privkey_cert(conf, privkey, privkey_len,
     privkey_pass, privkey_pass_len, cert, cert_len) != ERR_OK) {
-    altcp_mbedtls_free_config(conf);
+    altcp_tls_free_config(conf);
     return NULL;
   }
 
@@ -885,7 +959,7 @@ altcp_tls_create_config_client_common(const u8_t *ca, size_t ca_len, int is_2way
     ret = mbedtls_x509_crt_parse(conf->ca, ca, ca_len);
     if (ret != 0) {
       LWIP_DEBUGF(ALTCP_MBEDTLS_DEBUG, ("mbedtls_x509_crt_parse ca failed: %d 0x%x", ret, -1*ret));
-      altcp_mbedtls_free_config(conf);
+      altcp_tls_free_config(conf);
       return NULL;
     }
 
@@ -923,7 +997,7 @@ altcp_tls_create_config_client_2wayauth(const u8_t *ca, size_t ca_len, const u8_
   ret = mbedtls_x509_crt_parse(conf->cert, cert, cert_len);
   if (ret != 0) {
     LWIP_DEBUGF(ALTCP_MBEDTLS_DEBUG, ("mbedtls_x509_crt_parse cert failed: %d 0x%x", ret, -1*ret));
-    altcp_mbedtls_free_config(conf->cert);
+    altcp_tls_free_config(conf);
     return NULL;
   }
 
@@ -931,18 +1005,33 @@ altcp_tls_create_config_client_2wayauth(const u8_t *ca, size_t ca_len, const u8_
   ret = mbedtls_pk_parse_key(conf->pkey, privkey, privkey_len, privkey_pass, privkey_pass_len);
   if (ret != 0) {
     LWIP_DEBUGF(ALTCP_MBEDTLS_DEBUG, ("mbedtls_pk_parse_key failed: %d 0x%x", ret, -1*ret));
-    altcp_mbedtls_free_config(conf);
+    altcp_tls_free_config(conf);
     return NULL;
   }
 
   ret = mbedtls_ssl_conf_own_cert(&conf->conf, conf->cert, conf->pkey);
   if (ret != 0) {
     LWIP_DEBUGF(ALTCP_MBEDTLS_DEBUG, ("mbedtls_ssl_conf_own_cert failed: %d 0x%x", ret, -1*ret));
-    altcp_mbedtls_free_config(conf);
+    altcp_tls_free_config(conf);
     return NULL;
   }
 
   return conf;
+}
+
+int
+altcp_tls_configure_alpn_protocols(struct altcp_tls_config *conf, const char **protos)
+{
+#if defined(MBEDTLS_SSL_ALPN)
+  int ret = mbedtls_ssl_conf_alpn_protocols(&conf->conf, protos);
+  if (ret != 0) {
+    LWIP_DEBUGF(ALTCP_MBEDTLS_DEBUG, ("mbedtls_ssl_conf_alpn_protocols failed: %d\n", ret));
+  }
+
+  return ret;
+#else
+  return -1;
+#endif
 }
 
 void
@@ -957,20 +1046,24 @@ altcp_tls_free_config(struct altcp_tls_config *conf)
   if (conf->ca) {
     mbedtls_x509_crt_free(conf->ca);
   }
+  mbedtls_entropy_free(&conf->entropy);
+  mbedtls_ctr_drbg_free(&conf->ctr_drbg);
   altcp_mbedtls_free_config(conf);
-  if (altcp_tls_entropy_rng && altcp_tls_entropy_rng->ref)
-      altcp_tls_entropy_rng->ref--;
+  altcp_mbedtls_unref_entropy();
 }
 
 void
 altcp_tls_free_entropy(void)
 {
+  SYS_ARCH_DECL_PROTECT(old_level);
+  SYS_ARCH_PROTECT(old_level);
   if (altcp_tls_entropy_rng && altcp_tls_entropy_rng->ref == 0) {
     mbedtls_ctr_drbg_free(&altcp_tls_entropy_rng->ctr_drbg);
     mbedtls_entropy_free(&altcp_tls_entropy_rng->entropy);
     altcp_mbedtls_free_config(altcp_tls_entropy_rng);
     altcp_tls_entropy_rng = NULL;
   }
+  SYS_ARCH_UNPROTECT(old_level);
 }
 
 /* "virtual" functions */
@@ -1130,14 +1223,14 @@ altcp_mbedtls_write(struct altcp_pcb *conn, const void *dataptr, u16_t len, u8_t
   state = (altcp_mbedtls_state_t *)conn->state;
   if (state == NULL) {
     /* @todo: which error? */
-    return ERR_CLSD;
+    return ERR_ARG;
   }
   if (!(state->flags & ALTCP_MBEDTLS_FLAGS_HANDSHAKE_DONE)) {
     /* @todo: which error? */
     return ERR_VAL;
   }
 
-  /* HACK: if thre is something left to send, try to flush it and only
+  /* HACK: if there is something left to send, try to flush it and only
      allow sending more if this succeeded (this is a hack because neither
      returning 0 nor MBEDTLS_ERR_SSL_WANT_WRITE worked for me) */
   if (state->ssl_context.out_left) {
@@ -1151,7 +1244,8 @@ altcp_mbedtls_write(struct altcp_pcb *conn, const void *dataptr, u16_t len, u8_t
   altcp_output(conn->inner_conn);
   if (ret >= 0) {
     if (ret == len) {
-      state->flags |= ALTCP_MBEDTLS_FLAGS_APPLDATA_SENT;
+      /* update application sent counter */
+      state->overhead_bytes_adjust -= ret;
       return ERR_OK;
     } else {
       /* @todo/@fixme: assumption: either everything sent or error */
@@ -1176,6 +1270,7 @@ static int
 altcp_mbedtls_bio_send(void *ctx, const unsigned char *dataptr, size_t size)
 {
   struct altcp_pcb *conn = (struct altcp_pcb *) ctx;
+  altcp_mbedtls_state_t *state;
   int written = 0;
   size_t size_left = size;
   u8_t apiflags = TCP_WRITE_FLAG_COPY;
@@ -1184,6 +1279,8 @@ altcp_mbedtls_bio_send(void *ctx, const unsigned char *dataptr, size_t size)
   if ((conn == NULL) || (conn->inner_conn == NULL)) {
     return MBEDTLS_ERR_NET_INVALID_CONTEXT;
   }
+  state = (altcp_mbedtls_state_t *)conn->state;
+  LWIP_ASSERT("state != NULL", state != NULL);
 
   while (size_left) {
     u16_t write_len = (u16_t)LWIP_MIN(size_left, 0xFFFF);
@@ -1191,6 +1288,7 @@ altcp_mbedtls_bio_send(void *ctx, const unsigned char *dataptr, size_t size)
     if (err == ERR_OK) {
       written += write_len;
       size_left -= write_len;
+      state->overhead_bytes_adjust += write_len;
     } else if (err == ERR_MEM) {
       if (written) {
         return written;

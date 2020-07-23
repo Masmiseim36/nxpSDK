@@ -22,7 +22,7 @@ typedef union _mc33937ConfigMask
 {
     uint8_t R;
     struct
-    {/* MC33937 faults */
+    { /* MC33937 faults */
         uint8_t overTemp : 1;
         uint8_t desaturation : 1;
         uint8_t lowVls : 1;
@@ -258,4 +258,3 @@ bool_t MCDRV_Driver3PhGetSr3(mcdrv_spi_drv3ph_t *this);
 #endif
 
 #endif /* _MCDRV_MOSFET_PREDRV_SPI_H_ */
-

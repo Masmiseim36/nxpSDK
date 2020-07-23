@@ -8,12 +8,16 @@
     <definition extID="platform.Include_common.MKV11Z7"/>
     <definition extID="platform.Include_core_cm0plus.MKV11Z7"/>
     <definition extID="platform.Include_dsp.MKV11Z7"/>
+    <definition extID="platform.drivers.clock.MKV11Z7"/>
+    <definition extID="platform.drivers.common.MKV11Z7"/>
+    <definition extID="platform.drivers.gpio.MKV11Z7"/>
+    <definition extID="platform.drivers.port.MKV11Z7"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
     <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="frdmkv11z_led_demo_freedom_0000" name="led_demo_freedom_0000" category="bootloader_examples/demo_apps" dependency="device.MKV11Z7_CMSIS.MKV11Z7 middleware.mcu-boot.MKV11Z7_startup.MKV11Z7 middleware.mcu-boot.src_startup.MKV11Z7 platform.Include_core_cm0plus.MKV11Z7 platform.Include_common.MKV11Z7 platform.Include_dsp.MKV11Z7">
+  <example id="frdmkv11z_led_demo_freedom_0000" name="led_demo_freedom_0000" category="bootloader_examples/demo_apps" dependency="platform.drivers.port.MKV11Z7 platform.drivers.gpio.MKV11Z7 device.MKV11Z7_CMSIS.MKV11Z7 middleware.mcu-boot.MKV11Z7_startup.MKV11Z7 middleware.mcu-boot.src_startup.MKV11Z7 platform.drivers.common.MKV11Z7 platform.drivers.clock.MKV11Z7 platform.Include_core_cm0plus.MKV11Z7 platform.Include_common.MKV11Z7 platform.Include_dsp.MKV11Z7">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -65,7 +69,6 @@
         <option id="gnu.c.link.option.other" type="stringList">
           <value>--gc-sections</value>
           <value>-Map=${BuildArtifactFileBaseName}.map</value>
-          <value>--defsym=__ram_vector_table__=1</value>
         </option>
         <option id="com.crt.advproject.gas.hdrlib" type="enum">
           <value>com.crt.advproject.gas.hdrlib.newlibnano</value>
@@ -98,6 +101,12 @@
     </source>
     <source path="boards/frdmkv11z/bootloader_examples/demo_apps/led_demo_freedom_0000" target_path="MKV11Z7" type="src">
       <files mask="main.c"/>
+    </source>
+    <source path="boards/frdmkv11z/bootloader_examples/demo_apps/led_demo_freedom_0000" target_path="board" type="c_include">
+      <files mask="pin_mux.h"/>
+    </source>
+    <source path="boards/frdmkv11z/bootloader_examples/demo_apps/led_demo_freedom_0000" target_path="board" type="src">
+      <files mask="pin_mux.c"/>
     </source>
     <source path="middleware/mcu-boot/apps/led_demo/src" target_path="MKV11Z7" type="c_include">
       <files mask="milliseconds_delay.h"/>

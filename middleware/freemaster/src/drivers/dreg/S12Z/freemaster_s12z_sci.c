@@ -66,18 +66,18 @@ static void _FMSTR_S12zSci_Flush(void);
 
 const FMSTR_SERIAL_DRV_INTF FMSTR_SERIAL_S12Z_SCI =
 {
-    .Init                       = _FMSTR_S12zSci_Init,
-    .EnableTransmit             = _FMSTR_S12zSci_EnableTransmit,
-    .EnableReceive              = _FMSTR_S12zSci_EnableReceive,
-    .EnableTransmitInterrupt    = _FMSTR_S12zSci_EnableTransmitInterrupt,
-    .EnableTransmitCompleteInterrupt= _FMSTR_S12zSci_EnableTransmitCompleteInterrupt,
-    .EnableReceiveInterrupt     = _FMSTR_S12zSci_EnableReceiveInterrupt,
-    .IsTransmitRegEmpty         = _FMSTR_S12zSci_IsTransmitRegEmpty,
-    .IsReceiveRegFull           = _FMSTR_S12zSci_IsReceiveRegFull,
-    .IsTransmitterActive        = _FMSTR_S12zSci_IsTransmitterActive,
-    .PutChar                    = _FMSTR_S12zSci_PutChar,
-    .GetChar                    = _FMSTR_S12zSci_GetChar,
-    .Flush                      = _FMSTR_S12zSci_Flush,
+    FMSTR_C99_INIT(Init                       ) _FMSTR_S12zSci_Init,
+    FMSTR_C99_INIT(EnableTransmit             ) _FMSTR_S12zSci_EnableTransmit,
+    FMSTR_C99_INIT(EnableReceive              ) _FMSTR_S12zSci_EnableReceive,
+    FMSTR_C99_INIT(EnableTransmitInterrupt    ) _FMSTR_S12zSci_EnableTransmitInterrupt,
+    FMSTR_C99_INIT(EnableTransmitCompleteInterrupt ) _FMSTR_S12zSci_EnableTransmitCompleteInterrupt,
+    FMSTR_C99_INIT(EnableReceiveInterrupt     ) _FMSTR_S12zSci_EnableReceiveInterrupt,
+    FMSTR_C99_INIT(IsTransmitRegEmpty         ) _FMSTR_S12zSci_IsTransmitRegEmpty,
+    FMSTR_C99_INIT(IsReceiveRegFull           ) _FMSTR_S12zSci_IsReceiveRegFull,
+    FMSTR_C99_INIT(IsTransmitterActive        ) _FMSTR_S12zSci_IsTransmitterActive,
+    FMSTR_C99_INIT(PutChar                    ) _FMSTR_S12zSci_PutChar,
+    FMSTR_C99_INIT(GetChar                    ) _FMSTR_S12zSci_GetChar,
+    FMSTR_C99_INIT(Flush                      ) _FMSTR_S12zSci_Flush,
 };
 
 /****************************************************************************************
@@ -85,7 +85,7 @@ const FMSTR_SERIAL_DRV_INTF FMSTR_SERIAL_S12Z_SCI =
 *****************************************************************************************/
 
 #define FMSTR_SETBIT(base, offset, bit)         (*(((volatile FMSTR_U8*)(base))+(offset)) |= (bit))
-#define FMSTR_CLRBIT(base, offset, bit)         (*(((volatile FMSTR_U8*)(base))+(offset)) &= ~(bit))
+#define FMSTR_CLRBIT(base, offset, bit)         (*(((volatile FMSTR_U8*)(base))+(offset)) &= (FMSTR_U8)(~(bit)))
 #define FMSTR_TSTBIT(base, offset, bit)         (*(((volatile FMSTR_U8*)(base))+(offset)) & (bit))
 #define FMSTR_SETREG(base, offset, value)       (*(((volatile FMSTR_U8*)(base))+(offset)) = (value))
 #define FMSTR_GETREG(base, offset)              (*(((volatile FMSTR_U8*)(base))+(offset)))
@@ -286,7 +286,7 @@ static FMSTR_BOOL _FMSTR_S12zSci_IsReceiveRegFull(void)
 static FMSTR_BOOL _FMSTR_S12zSci_IsTransmitterActive(void)
 {
     /* 0 - Transmission in progress, 1 - No transmission in progress */
-    return (!(FMSTR_TSTBIT(fmstr_sciBaseAddr, FMSTR_SCISR1_OFFSET, FMSTR_SCISR_TC)));
+    return (FMSTR_BOOL) (!(FMSTR_TSTBIT(fmstr_sciBaseAddr, FMSTR_SCISR1_OFFSET, FMSTR_SCISR_TC)));
 }
 
 /**************************************************************************//*!

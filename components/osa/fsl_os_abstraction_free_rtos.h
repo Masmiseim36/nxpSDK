@@ -104,7 +104,7 @@ extern void DefaultISR(void);
 /*!
  * @brief To provide unified task piority for upper layer, OSA layer makes conversion.
  */
-#define PRIORITY_OSA_TO_RTOS(osa_prio) ((UBaseType_t)configMAX_PRIORITIES - (osa_prio)-2U)
+#define PRIORITY_OSA_TO_RTOS(osa_prio)  ((UBaseType_t)configMAX_PRIORITIES - (osa_prio)-2U)
 #define PRIORITY_RTOS_TO_OSA(rtos_prio) ((UBaseType_t)configMAX_PRIORITIES - (rtos_prio)-2U)
 
 /* @}*/

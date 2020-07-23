@@ -17,8 +17,8 @@
  * Definitions
  ******************************************************************************/
 #define DEMO_CADC_BASEADDR ADC
-#define DEMO_CADC_CHANNEL 5U
-#define DEMO_DAC_BASEADDR DAC0
+#define DEMO_CADC_CHANNEL  5U
+#define DEMO_DAC_BASEADDR  DAC0
 #define DAC_1_0_VOLTS 1241U
 #define DAC_1_5_VOLTS 1862U
 #define DAC_2_0_VOLTS 2482U
@@ -84,7 +84,7 @@ static void Demo_CADC_Init(void)
     CADC_EnableSample(DEMO_CADC_BASEADDR, 0U, false);
     cadcSampleConfigStruct.channelNumber          = DEMO_CADC_CHANNEL;
     cadcSampleConfigStruct.enableDifferentialPair = 0U;
-    cadcSampleConfigStruct.zeroCrossingMode       = kCADC_ZeroCorssingDisabled;
+    cadcSampleConfigStruct.zeroCrossingMode       = kCADC_ZeroCrossingDisabled;
     cadcSampleConfigStruct.lowLimitValue          = 0U;
     cadcSampleConfigStruct.highLimitValue         = 0xFFFFU;
     cadcSampleConfigStruct.offsetValue            = 0U;

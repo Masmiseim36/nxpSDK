@@ -13,8 +13,8 @@
  ******************************************************************************/
 
 /*******************************************************************************
-* Variables
-******************************************************************************/
+ * Variables
+ ******************************************************************************/
 
 static bool_t s_statusPass;
 
@@ -34,7 +34,7 @@ bool_t MCDRV_FtmCmtGet(mcdrv_ftm_cmt_t *this)
     s_statusPass = TRUE;
 
     /* read actual values of counter and defined value register */
-    *this->pui16FtmCntAct = this->pui32FtmBase->CNT;
+    *this->pui16FtmCntAct   = this->pui32FtmBase->CNT;
     *this->pui16FtmValueAct = this->pui32FtmBase->CONTROLS[this->ui16ChannelNum].CnV;
 
     return (s_statusPass);
@@ -56,4 +56,3 @@ bool_t MCDRV_FtmCmtSet(mcdrv_ftm_cmt_t *this, uint16_t ui16TimeNew)
 
     return (s_statusPass);
 }
-

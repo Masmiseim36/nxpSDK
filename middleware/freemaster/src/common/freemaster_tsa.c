@@ -39,8 +39,6 @@ static FMSTR_SIZE  fmstr_tsaBuffSize;        /* Dynamic TSA buffer size */
 static FMSTR_ADDR  fmstr_tsaBuffAddr;        /* Dynamic TSA buffer address */
 static FMSTR_SIZE  fmstr_tsaTableIndex;
 
-/* local function prototypes */
-static FMSTR_BOOL FMSTR_TsaStrCmp(FMSTR_TSATBL_STRPTR p1, FMSTR_TSATBL_STRPTR p2);
 #endif
 
 static FMSTR_BOOL _FMSTR_IsMemoryMapped(const char * type, unsigned long info);
@@ -103,33 +101,6 @@ FMSTR_TSA_FUNC_PROTO(dynamic_tsa)
 
 /**************************************************************************//*!
 *
-* @brief    Our private strcmp function, simplified to return zero/nonzero only
-*
-* @return TRUE when strings are different
-*
-******************************************************************************/
-
-#if FMSTR_USE_TSA_DYNAMIC
-static FMSTR_BOOL FMSTR_TsaStrCmp(FMSTR_TSATBL_STRPTR p1, FMSTR_TSATBL_STRPTR p2)
-{
-    const char* s1 = (const char*) p1;
-    const char* s2 = (const char*) p2;
-
-    if(p1 == p2)
-        return 0;
-
-    while(*s1)
-    {
-        if(*s1++ != *s2++)
-            return 1;
-    }
-
-    return *s2 ? 1 : 0;
-}
-#endif
-
-/**************************************************************************//*!
-*
 * @brief    Add entry to a dynamic TSA table
 *
 ******************************************************************************/
@@ -147,7 +118,7 @@ FMSTR_BOOL FMSTR_TsaAddVar(FMSTR_TSATBL_STRPTR tsaName, FMSTR_TSATBL_STRPTR tsaT
         /* Check if this record is already in table */
         for(i=0; i<fmstr_tsaTableIndex; i++, pItem++)
         {
-            if(FMSTR_TsaStrCmp(pItem->name.p, tsaName))
+            if(FMSTR_StrCmp(pItem->name.p, tsaName))
                 continue; /* name is different */
             if(pItem->type.p != tsaType)
                 continue; /* type is different */
@@ -196,7 +167,7 @@ FMSTR_BPTR FMSTR_GetTsaInfo(FMSTR_BPTR msgBuffIO, FMSTR_U8 *retStatus)
     FMSTR_SIZE tblIndex;
     FMSTR_SIZE tblSize = 0U;
     FMSTR_U8 tblFlags;
-    
+
     FMSTR_ASSERT(msgBuffIO != NULL);
     FMSTR_ASSERT(retStatus != NULL);
 
@@ -227,7 +198,7 @@ FMSTR_BPTR FMSTR_GetTsaInfo(FMSTR_BPTR msgBuffIO, FMSTR_U8 *retStatus)
 
     /* table address */
     response = FMSTR_AddressToBuffer(response, (FMSTR_ADDR)tsaTbl);
-    
+
     /* success  */
     *retStatus = FMSTR_STS_OK | FMSTR_STSF_VARLEN;
     return response;
@@ -250,13 +221,13 @@ FMSTR_BPTR FMSTR_GetStringLen(FMSTR_BPTR msgBuffIO, FMSTR_U8 *retStatus)
     FMSTR_BPTR response = msgBuffIO;
     FMSTR_ADDR strAddr;
     FMSTR_SIZE len = 0U;
-    
+
     FMSTR_ASSERT(msgBuffIO != NULL);
     FMSTR_ASSERT(retStatus != NULL);
 
     /* msgBuffIO = */ FMSTR_AddressFromBuffer(&strAddr, msgBuffIO);
 
-    len = FMSTR_StrLen(strAddr);
+    len = FMSTR_StrLen((FMSTR_CHAR*)strAddr);
 
     /* return strign size in bytes (even on 16bit DSP) */
     len *= FMSTR_CFG_BUS_WIDTH ;
@@ -281,10 +252,10 @@ FMSTR_BPTR FMSTR_GetStringLen(FMSTR_BPTR msgBuffIO, FMSTR_U8 *retStatus)
 ******************************************************************************/
 
 /* declare function prototype */
-static FMSTR_BOOL FMSTR_CheckMemSpace(FMSTR_ADDR addrUser, FMSTR_SIZE8 sizeUser,
+static FMSTR_BOOL FMSTR_CheckMemSpace(FMSTR_ADDR addrUser, FMSTR_SIZE sizeUser,
     FMSTR_ADDR addrSafe, FMSTR_SIZE sizeSafe);
 
-static FMSTR_BOOL FMSTR_CheckMemSpace(FMSTR_ADDR addrUser, FMSTR_SIZE8 sizeUser,
+static FMSTR_BOOL FMSTR_CheckMemSpace(FMSTR_ADDR addrUser, FMSTR_SIZE sizeUser,
                                FMSTR_ADDR addrSafe, FMSTR_SIZE sizeSafe)
 {
     FMSTR_BOOL ret = FMSTR_FALSE;
@@ -339,32 +310,27 @@ FMSTR_BOOL FMSTR_CheckTsaSpace(FMSTR_ADDR varAddr, FMSTR_SIZE varSize, FMSTR_BOO
         /* all table entries */
         for(i=0U; i<cnt; i++)
         {
-#if !defined(__S12Z__)
             if(sizeof(pte->addr.p) < sizeof(pte->addr.n))
                 info = (unsigned long)pte->info.n;
             else
-#endif
                 info = (unsigned long)pte->info.p;
 
-            type = pte->type.p;            
-            
+            type = pte->type.p;
+
             /* variable entry only (also check read-write flag) */
             if(_FMSTR_IsMemoryMapped(type, info) && (!writeAccess || ((info & FMSTR_TSA_INFO_VAR_MASK) == FMSTR_TSA_INFO_RW_VAR)))
             {
                 /* need to take the larger of the two in union (will be optimized by compiler anyway) */
-#if !defined(__S12Z__)
                 if(sizeof(pte->addr.p) < sizeof(pte->addr.n))
                 {
-                    if(FMSTR_CheckMemSpace(varAddr, varSize, (FMSTR_ADDR) pte->addr.n, (FMSTR_SIZE) (info >> 2)))
+                    if(FMSTR_CheckMemSpace(varAddr, varSize, pte->addr.n, (FMSTR_SIZE) (info >> 2)))
                     {
                         return FMSTR_TRUE; /* access granted! */
                     }
                 }
                 else
-#endif
                 {
-                    /*lint -e{923} casting pointer to long (on some architectures) */
-                    if(FMSTR_CheckMemSpace(varAddr, varSize, (FMSTR_ADDR) pte->addr.p, (FMSTR_SIZE) (info >> 2)))
+                    if(FMSTR_CheckMemSpace(varAddr, varSize, (FMSTR_ADDR)pte->addr.p, (FMSTR_SIZE) (info >> 2)))
                     {
                         return FMSTR_TRUE; /* access granted! */
                     }
@@ -392,14 +358,9 @@ FMSTR_BOOL FMSTR_CheckTsaSpace(FMSTR_ADDR varAddr, FMSTR_SIZE varSize, FMSTR_BOO
     /* allow reading of any C-constant string referenced in TSA tables */
     for(tableIndex=0U; (pte=FMSTR_TsaGetTable(tableIndex, &cnt)) != NULL; tableIndex++)
     {
-        FMSTR_ADDR tmpAddr;
-
         /* allow reading of the TSA table itself */
-        FMSTR_PTR2ADDR(tmpAddr, pte);
-        if(FMSTR_CheckMemSpace(varAddr, varSize, tmpAddr, cnt))
-        {
+        if(FMSTR_CheckMemSpace(varAddr, varSize, (FMSTR_ADDR)pte, cnt))
             return FMSTR_TRUE;
-        }
 
         /* number of items in a table */
         cnt /= (FMSTR_SIZE) sizeof(FMSTR_TSA_ENTRY);
@@ -407,23 +368,17 @@ FMSTR_BOOL FMSTR_CheckTsaSpace(FMSTR_ADDR varAddr, FMSTR_SIZE varSize, FMSTR_BOO
         /* all table entries */
         for(i=0U; i<cnt; i++)
         {
-            /* system strings are always accessible at C-pointers */
-            FMSTR_PTR2ADDR(tmpAddr, pte->name.p);
+            /* system strings are always accessible as C-pointers */
             if(pte->name.p)
             {
-                if(FMSTR_CheckMemSpace(varAddr, varSize, tmpAddr, FMSTR_StrLen(tmpAddr)))
-                {
+                if(FMSTR_CheckMemSpace(varAddr, varSize, (FMSTR_ADDR)(pte->name.p), FMSTR_StrLen(pte->name.p)))
                     return FMSTR_TRUE;
-                }
             }
 
-            FMSTR_PTR2ADDR(tmpAddr, pte->type.p);
             if(pte->type.p)
             {
-                if(FMSTR_CheckMemSpace(varAddr, varSize, tmpAddr, FMSTR_StrLen(tmpAddr)))
-                {
+                if(FMSTR_CheckMemSpace(varAddr, varSize, (FMSTR_ADDR)(pte->type.p), FMSTR_StrLen(pte->type.p)))
                     return FMSTR_TRUE;
-                }
             }
 
             pte++;
@@ -438,11 +393,11 @@ FMSTR_BOOL FMSTR_CheckTsaSpace(FMSTR_ADDR varAddr, FMSTR_SIZE varSize, FMSTR_BOO
 static FMSTR_BOOL _FMSTR_IsMemoryMapped(const char * type, unsigned long info)
 {
     FMSTR_ASSERT(type != NULL);
-    
+
     /* If type is special non-memory type or memeber structure (0b00 in info) */
     if(type[0] == FMSTR_TSA_SPECIAL_NOMEM[0] || (info & FMSTR_TSA_INFO_VAR_MASK) == 0)
         return FMSTR_FALSE;
-    
+
     return FMSTR_TRUE;
 }
 
@@ -452,7 +407,7 @@ const FMSTR_TSA_ENTRY * FMSTR_FindUresInTsa(FMSTR_ADDR resourceId)
     const FMSTR_TSA_ENTRY* pte;
     FMSTR_SIZE tableIndex;
     FMSTR_SIZE i, cnt;
-    
+
     for(tableIndex=0U; (pte=FMSTR_TsaGetTable(tableIndex, &cnt)) != NULL; tableIndex++)
     {
         /* number of items in a table */
@@ -461,11 +416,11 @@ const FMSTR_TSA_ENTRY * FMSTR_FindUresInTsa(FMSTR_ADDR resourceId)
         /* all table entries */
         for(i=0U; i<cnt; i++)
         {
-            if(pte->addr.p == resourceId)
+            if(pte->addr.n == resourceId)
                 return pte;
         }
     }
-    
+
     return NULL;
 }
 

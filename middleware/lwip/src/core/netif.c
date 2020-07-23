@@ -80,6 +80,9 @@
 #if LWIP_DHCP
 #include "lwip/dhcp.h"
 #endif /* LWIP_DHCP */
+#if LWIP_ACD
+#include "lwip/acd.h"
+#endif /* LWIP_ACD */
 #if LWIP_IPV6_DHCP6
 #include "lwip/dhcp6.h"
 #endif /* LWIP_IPV6_DHCP6 */
@@ -139,6 +142,14 @@ static err_t netif_loop_output_ipv6(struct netif *netif, struct pbuf *p, const i
 
 
 static struct netif loop_netif;
+
+#if LWIP_TESTMODE
+struct netif* netif_get_loopif(void)
+{
+  return &loop_netif;
+}
+#endif
+
 
 /**
  * Initialize a lwip network interface structure for a loopback interface
@@ -256,16 +267,16 @@ netif_add_noaddr(struct netif *netif, void *state, netif_init_fn init, netif_inp
  * @param state opaque data passed to the new netif
  * @param init callback function that initializes the interface
  * @param input callback function that is called to pass
- * ingress packets up in the protocol layer stack.\n
+ * ingress packets up in the protocol layer stack.<br>
  * It is recommended to use a function that passes the input directly
  * to the stack (netif_input(), NO_SYS=1 mode) or via sending a
- * message to TCPIP thread (tcpip_input(), NO_SYS=0 mode).\n
+ * message to TCPIP thread (tcpip_input(), NO_SYS=0 mode).<br>
  * These functions use netif flags NETIF_FLAG_ETHARP and NETIF_FLAG_ETHERNET
  * to decide whether to forward to ethernet_input() or ip_input().
  * In other words, the functions only work when the netif
- * driver is implemented correctly!\n
+ * driver is implemented correctly!<br>
  * Most members of struct netif should be be initialized by the
- * netif init function = netif driver (init parameter of this function).\n
+ * netif init function = netif driver (init parameter of this function).<br>
  * IPv6: Don't forget to call netif_create_ip6_linklocal_address() after
  * setting the MAC address in struct netif.hwaddr
  * (IPv6 requires a link-local address).
@@ -358,6 +369,9 @@ netif_add(struct netif *netif,
   netif->num = netif_num;
   netif->input = input;
 
+#if LWIP_ACD
+  netif->acd_list = NULL;
+#endif /* LWIP_ACD */
   NETIF_RESET_HINTS(netif);
 #if ENABLE_LOOPBACK && LWIP_LOOPBACK_MAX_PBUFS
   netif->loop_cnt_current = 0;
@@ -469,6 +483,10 @@ netif_do_set_ipaddr(struct netif *netif, const ip4_addr_t *ipaddr, ip_addr_t *ol
 
     LWIP_DEBUGF(NETIF_DEBUG | LWIP_DBG_STATE, ("netif_set_ipaddr: netif address being changed\n"));
     netif_do_ip_addr_changed(old_addr, &new_addr);
+
+#if LWIP_ACD
+    acd_netif_ip_addr_changed(netif, old_addr, &new_addr);
+#endif /* LWIP_ACD */
 
     mib2_remove_ip4(netif);
     mib2_remove_route_ip4(0, netif);
@@ -885,8 +903,11 @@ netif_issue_reports(struct netif *netif, u8_t report_type)
 #if LWIP_IPV4
   if ((report_type & NETIF_REPORT_TYPE_IPV4) &&
       !ip4_addr_isany_val(*netif_ip4_addr(netif))) {
-#if LWIP_ARP
-    /* For Ethernet network interfaces, we would like to send a "gratuitous ARP" */
+#if LWIP_ARP && !LWIP_ACD
+    /* For Ethernet network interfaces:
+     * we would like to send a "gratuitous ARP".
+     * Only needs to be done here if ACD isn't configured.
+     */
     if (netif->flags & (NETIF_FLAG_ETHARP)) {
       etharp_gratuitous(netif);
     }
@@ -995,11 +1016,11 @@ netif_set_link_up(struct netif *netif)
     netif_set_flags(netif, NETIF_FLAG_LINK_UP);
 
 #if LWIP_DHCP
-    dhcp_network_changed(netif);
+    dhcp_network_changed_link_up(netif);
 #endif /* LWIP_DHCP */
 
 #if LWIP_AUTOIP
-    autoip_network_changed(netif);
+    autoip_network_changed_link_up(netif);
 #endif /* LWIP_AUTOIP */
 
     netif_issue_reports(netif, NETIF_REPORT_TYPE_IPV4 | NETIF_REPORT_TYPE_IPV6);
@@ -1031,6 +1052,19 @@ netif_set_link_down(struct netif *netif)
 
   if (netif->flags & NETIF_FLAG_LINK_UP) {
     netif_clear_flags(netif, NETIF_FLAG_LINK_UP);
+
+#if LWIP_AUTOIP
+    autoip_network_changed_link_down(netif);
+#endif /* LWIP_AUTOIP */
+
+#if LWIP_ACD
+    acd_network_changed_link_down(netif);
+#endif /* LWIP_ACD */
+
+#if LWIP_IPV6 && LWIP_ND6_ALLOW_RA_UPDATES
+    netif->mtu6 = netif->mtu;
+#endif
+
     NETIF_LINK_CALLBACK(netif);
 #if LWIP_NETIF_EXT_STATUS_CALLBACK
     {
@@ -1710,6 +1744,10 @@ netif_find(const char *name)
   }
 
   num = (u8_t)atoi(&name[2]);
+  if (!num && (name[2] != '0')) {
+    /* this means atoi has failed */
+    return NULL;
+  }
 
   NETIF_FOREACH(netif) {
     if (num == netif->num &&

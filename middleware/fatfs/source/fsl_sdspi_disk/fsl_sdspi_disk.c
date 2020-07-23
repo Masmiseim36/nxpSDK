@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  *
@@ -44,49 +44,49 @@ sdspi_host_t g_host;
  * Code - SD disk interface
  ******************************************************************************/
 
-DRESULT sdspi_disk_write(uint8_t physicalDrive, const uint8_t *buffer, uint32_t sector, uint8_t count)
+DRESULT sdspi_disk_write(BYTE pdrv, const BYTE* buff, LBA_t sector, UINT count)
 {
-    if (physicalDrive != SDSPIDISK)
+    if (pdrv != SDSPIDISK)
     {
         return RES_PARERR;
     }
 
-    if (kStatus_Success != SDSPI_WriteBlocks(&g_card, (uint8_t *)buffer, sector, count))
+    if (kStatus_Success != SDSPI_WriteBlocks(&g_card, (uint8_t *)buff, sector, count))
     {
         return RES_ERROR;
     }
     return RES_OK;
 }
 
-DRESULT sdspi_disk_read(uint8_t physicalDrive, uint8_t *buffer, uint32_t sector, uint8_t count)
+DRESULT sdspi_disk_read(BYTE pdrv, BYTE* buff, LBA_t sector, UINT count)
 {
-    if (physicalDrive != SDSPIDISK)
+    if (pdrv != SDSPIDISK)
     {
         return RES_PARERR;
     }
 
-    if (kStatus_Success != SDSPI_ReadBlocks(&g_card, buffer, sector, count))
+    if (kStatus_Success != SDSPI_ReadBlocks(&g_card, buff, sector, count))
     {
         return RES_ERROR;
     }
     return RES_OK;
 }
 
-DRESULT sdspi_disk_ioctl(uint8_t physicalDrive, uint8_t command, void *buffer)
+DRESULT sdspi_disk_ioctl(BYTE pdrv, BYTE cmd, void* buff)
 {
     DRESULT result = RES_OK;
 
-    if (physicalDrive != SDSPIDISK)
+    if (pdrv != SDSPIDISK)
     {
         return RES_PARERR;
     }
 
-    switch (command)
+    switch (cmd)
     {
         case GET_SECTOR_COUNT:
-            if (buffer)
+            if (buff)
             {
-                *(uint32_t *)buffer = g_card.blockCount;
+                *(uint32_t *)buff = g_card.blockCount;
             }
             else
             {
@@ -94,9 +94,9 @@ DRESULT sdspi_disk_ioctl(uint8_t physicalDrive, uint8_t command, void *buffer)
             }
             break;
         case GET_SECTOR_SIZE:
-            if (buffer)
+            if (buff)
             {
-                *(uint32_t *)buffer = g_card.blockSize;
+                *(uint32_t *)buff = g_card.blockSize;
             }
             else
             {
@@ -104,9 +104,9 @@ DRESULT sdspi_disk_ioctl(uint8_t physicalDrive, uint8_t command, void *buffer)
             }
             break;
         case GET_BLOCK_SIZE:
-            if (buffer)
+            if (buff)
             {
-                *(uint32_t *)buffer = g_card.csd.eraseSectorSize;
+                *(uint32_t *)buff = g_card.csd.eraseSectorSize;
             }
             else
             {
@@ -123,18 +123,18 @@ DRESULT sdspi_disk_ioctl(uint8_t physicalDrive, uint8_t command, void *buffer)
     return result;
 }
 
-DSTATUS sdspi_disk_status(uint8_t physicalDrive)
+DSTATUS sdspi_disk_status(BYTE pdrv)
 {
-    if (physicalDrive != SDSPIDISK)
+    if (pdrv != SDSPIDISK)
     {
         return STA_NOINIT;
     }
     return 0;
 }
 
-DSTATUS sdspi_disk_initialize(uint8_t physicalDrive)
+DSTATUS sdspi_disk_initialize(BYTE pdrv)
 {
-    if (physicalDrive == SDSPIDISK)
+    if (pdrv == SDSPIDISK)
     {
         spi_init();
         sdspi_host_init();

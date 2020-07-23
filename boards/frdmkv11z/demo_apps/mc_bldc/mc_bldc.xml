@@ -75,12 +75,11 @@
     <source path="boards/frdmkv11z/demo_apps/mc_bldc/mdk" target_path="MKV11Z7/arm" type="linker" toolchain="mdk">
       <files mask="MKV11Z128xxx7_flash.scf"/>
     </source>
-    <source path="boards/frdmkv11z/demo_apps/mc_bldc" target_path="./" type="other" exclude="true">
-      <files mask="mc_bldc.mex"/>
-    </source>
     <source path="boards/frdmkv11z/demo_apps/mc_bldc" target_path="board" type="c_include">
       <files mask="board.h"/>
       <files mask="clock_config.h"/>
+      <files mask="m1_bldc_appconfig.h"/>
+      <files mask="mcdrv.h"/>
       <files mask="mcdrv_frdmkv11z.h"/>
       <files mask="pin_mux.h"/>
     </source>
@@ -93,11 +92,7 @@
     <source path="boards/frdmkv11z/demo_apps/mc_bldc" target_path="doc" type="doc">
       <files mask="readme.txt"/>
     </source>
-    <source path="boards/frdmkv11z/demo_apps/mc_bldc" target_path="motor_control/freemaster" type="other" exclude="true">
-      <files mask="bldc.pmp"/>
-    </source>
     <source path="boards/frdmkv11z/demo_apps/mc_bldc" target_path="source" type="c_include">
-      <files mask="m1_bldc_appconfig.h"/>
       <files mask="main.h"/>
     </source>
     <source path="boards/frdmkv11z/demo_apps/mc_bldc" target_path="source" type="src">
@@ -113,13 +108,10 @@
       <files mask="mcdrv_ftm_cmt.c"/>
       <files mask="mcdrv_pwm3ph_ftm.c"/>
     </source>
-    <source path="middleware/motor_control/boards/frdmkv11z/mc_bldc" target_path="board" type="c_include">
-      <files mask="mcdrv.h"/>
-    </source>
     <source path="middleware/motor_control/fmstr_cfg_uart" target_path="source" type="c_include">
       <files mask="freemaster_cfg.h"/>
     </source>
-    <source path="middleware/motor_control/freemaster/bldc/FM_control/styles/images" target_path="motor_control/freemaster/bldc/FM_control/styles/images" type="image" exclude="true">
+    <source path="middleware/motor_control/freemaster/bldc/FM_control/styles/images" target_path="motor_control/freemaster/bldc/FM_control/styles/images" type="src" exclude="true">
       <files mask="backImage.png"/>
       <files mask="backgroundTop.png"/>
       <files mask="bg_black.png"/>
@@ -258,21 +250,14 @@
       <files mask="wp_check_indeterminate_white.png"/>
       <files mask="wp_check_white.png"/>
     </source>
-    <source path="middleware/motor_control/freemaster/bldc/FM_control/styles" target_path="motor_control/freemaster/bldc/FM_control/styles" type="doc" exclude="true">
+    <source path="middleware/motor_control/freemaster/bldc/FM_control/styles" target_path="motor_control/freemaster/bldc/FM_control/styles" type="src" exclude="true">
       <files mask="jqx.base.css"/>
+      <files mask="jqx.energyblue"/>
       <files mask="jqx.energyblue.css"/>
       <files mask="jqx.energyblue.txt"/>
     </source>
-    <source path="middleware/motor_control/freemaster/bldc/FM_control/styles" target_path="motor_control/freemaster/bldc/FM_control/styles" type="other" exclude="true">
-      <files mask="jqx.energyblue"/>
-    </source>
-    <source path="middleware/motor_control/freemaster/bldc/FM_control" target_path="motor_control/freemaster/bldc/FM_control" type="doc" exclude="true">
+    <source path="middleware/motor_control/freemaster/bldc/FM_control" target_path="motor_control/freemaster/bldc/FM_control" type="src" exclude="true">
       <files mask="FM_control_M1.htm"/>
-    </source>
-    <source path="middleware/motor_control/freemaster/bldc/FM_control" target_path="motor_control/freemaster/bldc/FM_control" type="image" exclude="true">
-      <files mask="logo.png"/>
-    </source>
-    <source path="middleware/motor_control/freemaster/bldc/FM_control" target_path="motor_control/freemaster/bldc/FM_control" type="script" exclude="true">
       <files mask="control_page_config.js"/>
       <files mask="control_page_scripts.js"/>
       <files mask="jquery-1.11.1.min.js"/>
@@ -290,8 +275,9 @@
       <files mask="jqxswitchbutton.js"/>
       <files mask="jqxtooltip.js"/>
       <files mask="jqxwindow.js"/>
+      <files mask="logo.png"/>
     </source>
-    <source path="middleware/motor_control/freemaster/bldc/mcat/param_files" target_path="motor_control/freemaster/bldc/mcat/param_files" type="doc" exclude="true">
+    <source path="middleware/motor_control/freemaster/bldc/mcat/param_files" target_path="motor_control/freemaster/bldc/mcat/param_files" type="src" exclude="true">
       <files mask="M1_params.txt"/>
       <files mask="M1_params_bldc_frdm-ke15z.txt"/>
       <files mask="M1_params_bldc_frdm-kv11z.txt"/>
@@ -308,7 +294,7 @@
       <files mask="M1_params_bldc_twr-kv58f.txt"/>
       <files mask="Setting_params.txt"/>
     </source>
-    <source path="middleware/motor_control/freemaster/bldc/mcat/src/JS_functions" target_path="motor_control/freemaster/bldc/mcat/src/JS_functions" type="script" exclude="true">
+    <source path="middleware/motor_control/freemaster/bldc/mcat/src/JS_functions" target_path="motor_control/freemaster/bldc/mcat/src/JS_functions" type="src" exclude="true">
       <files mask="calculations.js"/>
       <files mask="config.js"/>
       <files mask="fileProcessing.js"/>
@@ -319,7 +305,7 @@
       <files mask="mainInclude.js"/>
       <files mask="settings.js"/>
     </source>
-    <source path="middleware/motor_control/freemaster/bldc/mcat/src/images" target_path="motor_control/freemaster/bldc/mcat/src/images" type="image" exclude="true">
+    <source path="middleware/motor_control/freemaster/bldc/mcat/src/images" target_path="motor_control/freemaster/bldc/mcat/src/images" type="src" exclude="true">
       <files mask="BLDC_concept.png"/>
       <files mask="New Picture.png"/>
       <files mask="logo.png"/>
@@ -330,11 +316,11 @@
       <files mask="onoff_red_on1.png"/>
       <files mask="pozadi.png"/>
     </source>
-    <source path="middleware/motor_control/freemaster/bldc/mcat/src/xml_files" target_path="motor_control/freemaster/bldc/mcat/src/xml_files" type="xml" exclude="true">
+    <source path="middleware/motor_control/freemaster/bldc/mcat/src/xml_files" target_path="motor_control/freemaster/bldc/mcat/src/xml_files" type="src" exclude="true">
       <files mask="FM_params_list.xml"/>
       <files mask="Header_file_constant_list.xml"/>
     </source>
-    <source path="middleware/motor_control/freemaster/bldc/mcat/src" target_path="motor_control/freemaster/bldc/mcat/src" type="doc" exclude="true">
+    <source path="middleware/motor_control/freemaster/bldc/mcat/src" target_path="motor_control/freemaster/bldc/mcat/src" type="src" exclude="true">
       <files mask="AppSetting.html"/>
       <files mask="MainPage.html"/>
       <files mask="form_PathSelector.html"/>
@@ -345,6 +331,9 @@
       <files mask="inner_Parameters.html"/>
       <files mask="inner_Sensorless.html"/>
       <files mask="style.css"/>
+    </source>
+    <source path="middleware/motor_control/freemaster" target_path="motor_control/freemaster" type="src" exclude="true">
+      <files mask="bldc.pmp"/>
     </source>
   </example>
 </ksdk:examples>

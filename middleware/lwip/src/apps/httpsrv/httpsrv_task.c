@@ -137,6 +137,7 @@ void httpsrv_server_task(void *arg)
                         {
                             httpsrv_ses_close(session);
                             httpsrv_ses_free(session);
+                            httpsrv_abort(new_sock);
                             sys_sem_signal(&server->ses_cnt);
                         }
                     }

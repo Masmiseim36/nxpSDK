@@ -25,6 +25,8 @@
 #include MBEDTLS_CONFIG_FILE
 #endif
 
+#include "mbedtls_test_suite.h"
+
 
 /*----------------------------------------------------------------------------*/
 /* Common helper code */
@@ -156,7 +158,7 @@ void execute_function_ptr(TestWrapper_t fp, void **params)
     else
     {
         /* Unexpected parameter validation error */
-        test_info.failed = 1;
+        test_info.result = TEST_RESULT_FAILED;
     }
 
     memset( param_fail_jmp, 0, sizeof(jmp_buf) );
@@ -243,7 +245,8 @@ $platform_code
  */
 int main( int argc, const char *argv[] )
 {
-    int ret = platform_setup();
+    //int ret = platform_setup();
+    int ret = 0;
     if( ret != 0 )
     {
         mbedtls_fprintf( stderr,
@@ -251,8 +254,19 @@ int main( int argc, const char *argv[] )
                          ret );
         return( -1 );
     }
+
+    /* eRPC init */
+    erpc_transport_t transport = {0};
+    transport = erpc_transport_serial_init("/dev/ttyUSB0", 115200);
+    
+    /* MessageBufferFactory initialization */
+    erpc_mbf_t message_buffer_factory;
+    message_buffer_factory = erpc_mbf_dynamic_init();
+
+    erpc_client_init(transport, message_buffer_factory);
+
     ret = execute_tests( argc, argv );
-    platform_teardown();
+    //platform_teardown();
     return( ret );
 }
 

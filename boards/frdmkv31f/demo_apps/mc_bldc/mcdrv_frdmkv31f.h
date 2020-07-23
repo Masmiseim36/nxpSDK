@@ -26,12 +26,12 @@ typedef struct _app_ver
     char cBoardID[15];
     char cMotorType[4];
     char cAppVer[5];
-}app_ver_t;
+} app_ver_t;
 
 /* Structure used during clocks and modulo calculations */
 typedef struct _clock_setup
 {
-     uint32_t ui32SystemClock;
+    uint32_t ui32SystemClock;
     uint32_t ui32BusClock;
     uint16_t ui16PwmFreq;
     uint16_t ui16PwmDeadTime;
@@ -57,17 +57,17 @@ typedef struct _clock_setup
 #define M1_MCDRV_PDB MCDRV_PDB0
 
 /* ISR priority */
-#define ISR_PRIORITY_PDB0 (1) /* PDB interrupt priority */
-#define ISR_PRIORITY_ADC0 (1) /* sensorless control */
+#define ISR_PRIORITY_PDB0 (1)       /* PDB interrupt priority */
+#define ISR_PRIORITY_ADC0 (1)       /* sensorless control */
 #define ISR_PRIORITY_SLOW_TIMER (3) /* speed control loop (low ISR priority) */
 #define ISR_PRIORITY_FORCED_CMT (1) /* forced commutation (when missed sensorless cmt, open loop, timing) */
 
 /******************************************************************************
  * Clock & PWM definition                                                     *
  ******************************************************************************/
-#define CTRL_LOOP_FREQ (1000)            /* Frequency of control loop in Hz */
-#define PWM_FREQ (20000)                 /* PWM frequency - 20kHz */
-#define PWM_DEADTIME (500)               /* Output PWM deadtime value in nanoseconds */
+#define CTRL_LOOP_FREQ (1000) /* Frequency of control loop in Hz */
+#define PWM_FREQ (20000)      /* PWM frequency - 20kHz */
+#define PWM_DEADTIME (500)    /* Output PWM deadtime value in nanoseconds */
 
 /* Assignment of FTM channels to motor phases
  * 0 - FTM channels 0&1
@@ -125,9 +125,9 @@ extern const char bldcCommutationTableComp[16];
 /* Aux channel is assigned to ADC1 only */
 #define M1_ADC0_AUX ADC_NO_CHAN
 #define M1_ADC1_AUX ADC_TEMPERATURE
-   
-/* offset measurement filter window */     
-#define ADC_OFFSET_WINDOW (3)   
+
+/* offset measurement filter window */
+#define ADC_OFFSET_WINDOW (3)
 
 /******************************************************************************
  * MC driver macro definition and check - do not change this part

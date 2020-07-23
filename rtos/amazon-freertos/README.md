@@ -41,7 +41,19 @@ The following MCU boards are supported for Amazon FreeRTOS:
 11. **Cypress CYW43907** - [Cypress CYW943907AEVAL1F Evaluation Kit](https://www.cypress.com/documentation/development-kitsboards/cyw943907aeval1f-evaluation-kit)
     * [Getting Started Guide](https://docs.aws.amazon.com/freertos/latest/userguide/getting_started_cypress_43.html)
     * IDE: [WICED Studio](https://community.cypress.com/community/wiced-wifi)
-12. **Windows Simulator** - To evaluate Amazon FreeRTOS without using MCU-based hardware, you can use the Windows Simulator.
+12. **Marvell MW320** - [Marvell MW320 AWS IoT Starter Kit](https://www.marvell.com/microcontrollers/aws-iot-starter-kit/)
+    * [Getting Started Guide](https://docs.aws.amazon.com/freertos/latest/userguide/getting_started_marvell320.html)
+13. **Marvell MW322** - [Marvell MW322 AWS IoT Starter Kit](https://www.marvell.com/microcontrollers/aws-iot-starter-kit/)
+    * [Getting Started Guide](https://docs.aws.amazon.com/freertos/latest/userguide/getting_started_marvell322.html)
+14. **Nordic nRF52840 DK** - [nRF52840 DK Development kit](https://www.nordicsemi.com/Software-and-Tools/Development-Kits/nRF52840-DK/)
+    * [Getting Started Guide](https://docs.aws.amazon.com/freertos/latest/userguide/getting_started_nordic.html)  
+15. **Nuvoton** - [NuMaker-IoT-M487](https://direct.nuvoton.com/en/numaker-iot-m487)
+    * [Getting Started Guide](https://docs.aws.amazon.com/freertos/latest/userguide/getting-started-nuvoton-m487.html)
+16. **Windows Simulator** - To evaluate Amazon FreeRTOS without using MCU-based hardware, you can use the Windows Simulator.
     * Requirements: Microsoft Windows 7 or newer, with at least a dual core and a hard-wired Ethernet connection
     * [Getting Started Guide](https://docs.aws.amazon.com/freertos/latest/userguide/getting_started_windows.html)
     * IDE: [Visual Studio Community Edition](https://www.visualstudio.com/downloads/)
+
+
+## amazon-freeRTOS/projects
+The ```./projects``` folder contains the IDE test and demo projects for each vendor and their boards. The majority of boards can be built with both IDE and cmake (there are some exceptions!). Please refer to the Getting Started Guides above for board specific instructions.

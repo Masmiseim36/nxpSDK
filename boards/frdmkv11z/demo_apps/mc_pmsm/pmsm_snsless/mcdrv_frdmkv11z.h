@@ -18,15 +18,15 @@
  ******************************************************************************/
 
 /* Version info */
-#define MCRSP_VER       "2.0.0"        /* motor control package version */
+#define MCRSP_VER "2.0.0" /* motor control package version */
 
 /* Application info */
 typedef struct _app_ver
 {
-    char    cBoardID[15];
-    char    cMotorType[4];
-    char    cAppVer[5];
-}app_ver_t;
+    char cBoardID[15];
+    char cMotorType[4];
+    char cAppVer[5];
+} app_ver_t;
 
 /* Structure used during clocks and modulo calculations */
 typedef struct _clock_setup
@@ -55,7 +55,7 @@ typedef struct _clock_setup
 /* assignment of FTM channels to motor phases
  * 0 - FTM channels 0&1
  * 2 - FTM channels 2&3
- * 4 - FTM channels 4&5 
+ * 4 - FTM channels 4&5
  * 6 - FTM channels 6&7 */
 #define M1_PWM_PAIR_PHA (0)
 #define M1_PWM_PAIR_PHB (2)
@@ -102,7 +102,7 @@ typedef struct _clock_setup
 #define M1_ADC0_AUX (MCDRV_CHAN_OFF)
 #define M1_ADC1_AUX (30)
 
-/* offset measurement filter window */     
+/* offset measurement filter window */
 #define ADC_OFFSET_WINDOW (3)
 /******************************************************************************
  * MC driver macro definition and check - do not change this part

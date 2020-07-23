@@ -15,8 +15,8 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_PDB_BASE PDB0
-#define DEMO_PDB_IRQ_ID PDB0_IRQn
+#define DEMO_PDB_BASE        PDB0
+#define DEMO_PDB_IRQ_ID      PDB0_IRQn
 #define DEMO_PDB_IRQ_HANDLER PDB0_IRQHandler
 
 /*******************************************************************************
@@ -40,11 +40,7 @@ void DEMO_PDB_IRQ_HANDLER(void)
     PDB_ClearStatusFlags(DEMO_PDB_BASE, kPDB_DelayEventFlag);
     g_PdbDelayInterruptCounter++;
     g_PdbDelayInterruptFlag = true;
-    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-      exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 /*!

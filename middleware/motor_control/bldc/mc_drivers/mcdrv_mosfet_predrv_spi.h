@@ -22,7 +22,7 @@ typedef union _mc33937ConfigMask
 {
     uint8_t R;
     struct
-    {/* MC33937 faults */
+    { /* MC33937 faults */
         uint8_t overTemp : 1;
         uint8_t desaturation : 1;
         uint8_t lowVls : 1;
@@ -39,7 +39,7 @@ typedef union _mc33937Mode
     uint8_t R;
     struct
     {
-        uint8_t lock : 1; /* lock configuration regs */
+        uint8_t lock : 1;         /* lock configuration regs */
         uint8_t enableFullOn : 1; /* enable FULL ON PWM without DT */
         uint8_t : 1;
         uint8_t disableDesat : 1; /* disable phase desaturation error */
@@ -55,14 +55,14 @@ typedef union _mc33937SR0
     uint8_t R;
     struct
     {
-        uint8_t overTemp : 1; /* TLIM flag detected on any channel */
+        uint8_t overTemp : 1;     /* TLIM flag detected on any channel */
         uint8_t desaturation : 1; /* DESAT flag detected on any channel */
-        uint8_t lowVls : 1; /* Low VLS voltage flag */
-        uint8_t overCurrent : 1; /* Over-current event flag */
-        uint8_t phaseErr : 1; /* Phase error flag */
-        uint8_t framingErr : 1; /* Framing error flag */
-        uint8_t writeErr : 1; /* Write Error After the Lock flag */
-        uint8_t resetEvent : 1; /* Reset event flag, is set upon exiting /RST */
+        uint8_t lowVls : 1;       /* Low VLS voltage flag */
+        uint8_t overCurrent : 1;  /* Over-current event flag */
+        uint8_t phaseErr : 1;     /* Phase error flag */
+        uint8_t framingErr : 1;   /* Framing error flag */
+        uint8_t writeErr : 1;     /* Write Error After the Lock flag */
+        uint8_t resetEvent : 1;   /* Reset event flag, is set upon exiting /RST */
     } B;
 } mc33937SR0_t;
 
@@ -71,14 +71,14 @@ typedef union _mc33937SR1
     uint8_t R;
     struct
     {
-        uint8_t lockbit : 1; /* LockBit indicates the IC regs are locked */
-        uint8_t fullon : 1; /* Present status of FULLON MODE */
-        uint8_t : 1; /* Reserved */
+        uint8_t lockbit : 1;      /* LockBit indicates the IC regs are locked */
+        uint8_t fullon : 1;       /* Present status of FULLON MODE */
+        uint8_t : 1;              /* Reserved */
         uint8_t deadtime_cal : 1; /* Deadtime calibration occurred */
         uint8_t calib_overfl : 1; /* Flag for a Deadtime Calibration Overflow */
-        uint8_t zds : 1; /* Zero deadtime is commanded */
-        uint8_t desat_mode : 1; /* Current state of the Desaturation/Phase Error turn-off mode */
-        uint8_t : 1; /* Reserved */
+        uint8_t zds : 1;          /* Zero deadtime is commanded */
+        uint8_t desat_mode : 1;   /* Current state of the Desaturation/Phase Error turn-off mode */
+        uint8_t : 1;              /* Reserved */
     } B;
 } mc33937SR1_t;
 
@@ -118,14 +118,14 @@ typedef struct _mc33937dspi
 
 typedef struct _mcdrv_spi_drv3ph
 {
-    mc33937dspi_t sSpiData; /* HW dependent structure*/
+    mc33937dspi_t sSpiData;               /* HW dependent structure*/
     mc33937ConfigMask_t sInterruptEnable; /* define interrupt mask */
-    mc33937Mode_t sMode; /* define required pre-driver mode */
-    mc33937SR0_t sSr0; /* status register 0 */
-    mc33937SR1_t sSr1; /* status register 1 */
-    mc33937SR2_t sSr2; /* status register 2 */
-    uint8_t sSr3; /* status register 3 */
-    uint16_t ui16Deadtime; /* define dead time of HS and LS transistors, value in [ns]*/
+    mc33937Mode_t sMode;                  /* define required pre-driver mode */
+    mc33937SR0_t sSr0;                    /* status register 0 */
+    mc33937SR1_t sSr1;                    /* status register 1 */
+    mc33937SR2_t sSr2;                    /* status register 2 */
+    uint8_t sSr3;                         /* status register 3 */
+    uint16_t ui16Deadtime;                /* define dead time of HS and LS transistors, value in [ns]*/
 } mcdrv_spi_drv3ph_t;
 
 /*******************************************************************************
@@ -258,4 +258,3 @@ bool_t MCDRV_Driver3PhGetSr3(mcdrv_spi_drv3ph_t *this);
 #endif
 
 #endif /* _MCDRV_MOSFET_PREDRV_SPI_H_ */
-

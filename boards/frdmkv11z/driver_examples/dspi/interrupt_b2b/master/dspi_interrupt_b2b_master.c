@@ -16,15 +16,15 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_DSPI_MASTER_BASEADDR SPI0
-#define EXAMPLE_DSPI_MASTER_CLK_SRC DSPI0_CLK_SRC
-#define EXAMPLE_DSPI_MASTER_CLK_FREQ CLOCK_GetFreq(DSPI0_CLK_SRC)
-#define EXAMPLE_DSPI_MASTER_PCS kDSPI_Pcs0
-#define EXAMPLE_DSPI_MASTER_IRQ SPI0_IRQn
+#define EXAMPLE_DSPI_MASTER_BASEADDR   SPI0
+#define EXAMPLE_DSPI_MASTER_CLK_SRC    DSPI0_CLK_SRC
+#define EXAMPLE_DSPI_MASTER_CLK_FREQ   CLOCK_GetFreq(DSPI0_CLK_SRC)
+#define EXAMPLE_DSPI_MASTER_PCS        kDSPI_Pcs0
+#define EXAMPLE_DSPI_MASTER_IRQ        SPI0_IRQn
 #define EXAMPLE_DSPI_MASTER_IRQHandler SPI0_IRQHandler
 
 #define EXAMPLE_DSPI_DEALY_COUNT 0xfffffU
-#define TRANSFER_SIZE 64U         /*! Transfer dataSize */
+#define TRANSFER_SIZE     64U     /*! Transfer dataSize */
 #define TRANSFER_BAUDRATE 500000U /*! Transfer baudrate - 500k */
 
 /*******************************************************************************
@@ -100,11 +100,7 @@ void EXAMPLE_DSPI_MASTER_IRQHandler(void)
         DSPI_DisableInterrupts(EXAMPLE_DSPI_MASTER_BASEADDR,
                                kDSPI_RxFifoDrainRequestInterruptEnable | kDSPI_TxFifoFillRequestInterruptEnable);
     }
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 /*!

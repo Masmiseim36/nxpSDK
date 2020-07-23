@@ -69,16 +69,16 @@ static void _FMSTR_S12zCan_SendTxFrame(FMSTR_SIZE8 len);             /* Send the
 
 const FMSTR_CAN_DRV_INTF FMSTR_CAN_S12Z_MSCAN =
 {
-    .Init = _FMSTR_S12zCan_Init,
-    .EnableTxInterrupt = _FMSTR_S12zCan_EnableTxInterrupt,
-    .EnableRxInterrupt = _FMSTR_S12zCan_EnableRxInterrupt,
-    .EnableRx =        _FMSTR_S12zCan_EnableRx,
-    .GetRxFrameLen =   _FMSTR_S12zCan_GetRxFrameLen,
-    .GetRxFrameByte =  _FMSTR_S12zCan_GetRxFrameByte,
-    .AckRxFrame =      _FMSTR_S12zCan_AckRxFrame,
-    .PrepareTxFrame =  _FMSTR_S12zCan_PrepareTxFrame,
-    .PutTxFrameByte =  _FMSTR_S12zCan_PutTxFrameByte,
-    .SendTxFrame =     _FMSTR_S12zCan_SendTxFrame,
+    FMSTR_C99_INIT(Init              ) _FMSTR_S12zCan_Init,
+    FMSTR_C99_INIT(EnableTxInterrupt ) _FMSTR_S12zCan_EnableTxInterrupt,
+    FMSTR_C99_INIT(EnableRxInterrupt ) _FMSTR_S12zCan_EnableRxInterrupt,
+    FMSTR_C99_INIT(EnableRx          ) _FMSTR_S12zCan_EnableRx,
+    FMSTR_C99_INIT(GetRxFrameLen     ) _FMSTR_S12zCan_GetRxFrameLen,
+    FMSTR_C99_INIT(GetRxFrameByte    ) _FMSTR_S12zCan_GetRxFrameByte,
+    FMSTR_C99_INIT(AckRxFrame        ) _FMSTR_S12zCan_AckRxFrame,
+    FMSTR_C99_INIT(PrepareTxFrame    ) _FMSTR_S12zCan_PrepareTxFrame,
+    FMSTR_C99_INIT(PutTxFrameByte    ) _FMSTR_S12zCan_PutTxFrameByte,
+    FMSTR_C99_INIT(SendTxFrame       ) _FMSTR_S12zCan_SendTxFrame,
 };
 
 /****************************************************************************************
@@ -86,7 +86,7 @@ const FMSTR_CAN_DRV_INTF FMSTR_CAN_S12Z_MSCAN =
 *****************************************************************************************/
 
 #define FMSTR_SETBIT(base, offset, bit)         (*(((volatile FMSTR_U8*)(base))+(offset)) |= (bit))
-#define FMSTR_CLRBIT(base, offset, bit)         (*(((volatile FMSTR_U8*)(base))+(offset)) &= ~(bit))
+#define FMSTR_CLRBIT(base, offset, bit)         (*(((volatile FMSTR_U8*)(base))+(offset)) &= (FMSTR_U8)(~(bit)))
 #define FMSTR_TSTBIT(base, offset, bit)         (*(((volatile FMSTR_U8*)(base))+(offset)) & (bit))
 #define FMSTR_SETREG(base, offset, value)       (*(((volatile FMSTR_U8*)(base))+(offset)) = (value))
 #define FMSTR_GETREG(base, offset)              (*(((volatile FMSTR_U8*)(base))+(offset)))
@@ -284,7 +284,7 @@ static FMSTR_BOOL _FMSTR_S12zCan_PrepareTxFrame(void)
     fmstr_canTxBufSel = FMSTR_GETREG(fmstr_canBaseAddr, FMSTR_MSCANTBSEL_OFFSET);
     
     /* final sanity check */
-    return fmstr_canTxBufSel ? FMSTR_TRUE : FMSTR_FALSE;
+    return (FMSTR_BOOL)(fmstr_canTxBufSel ? FMSTR_TRUE : FMSTR_FALSE);
 }
 
 static void _FMSTR_S12zCan_PutTxFrameByte(FMSTR_SIZE8 index, FMSTR_BCHR data)

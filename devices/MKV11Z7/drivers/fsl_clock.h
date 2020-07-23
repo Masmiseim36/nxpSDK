@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016 - 2019, NXP
+ * Copyright 2016 - 2020, NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -437,7 +437,7 @@ typedef enum _mcg_monitor_mode
     kMCG_MonitorReset /*!< System reset when clock lost.      */
 } mcg_monitor_mode_t;
 
-/*! @brief MCG status. */
+/*! @brief MCG status. Enumeration _mcg_status */
 enum
 {
     kStatus_MCG_ModeUnreachable = MAKE_STATUS(kStatusGroup_MCG, 0U),       /*!< Can't switch to target mode. */
@@ -451,14 +451,14 @@ enum
                                                                                it is in use. */
 };
 
-/*! @brief MCG status flags. */
+/*! @brief MCG status flags. Enumeration _mcg_status_flags_t */
 enum
 {
     kMCG_Osc0LostFlag = (1U << 0U), /*!< OSC0 lost.         */
     kMCG_Osc0InitFlag = (1U << 1U), /*!< OSC0 crystal initialized. */
 };
 
-/*! @brief MCG internal reference clock (MCGIRCLK) enable mode definition. */
+/*! @brief MCG internal reference clock (MCGIRCLK) enable mode definition. Enumeration _mcg_irclk_enable_mode */
 enum
 {
     kMCG_IrclkEnable       = MCG_C1_IRCLKEN_MASK, /*!< MCGIRCLK enable.              */
@@ -564,7 +564,7 @@ static inline void CLOCK_SetClkOutClock(uint32_t src)
  *
  * @param outdiv4 Clock 4 output divider value.
  *
- * @param outdiv1 Clock 5 output divider value.
+ * @param outdiv5 Clock 5 output divider value.
  */
 static inline void CLOCK_SetOutDiv(uint32_t outdiv1, uint32_t outdiv4, uint32_t outdiv5)
 {
@@ -643,7 +643,6 @@ void CLOCK_SetSimConfig(sim_clock_config_t const *config);
  * be used before MCG mode change, to make sure system level clocks are in allowed
  * range.
  *
- * @param config Pointer to the configure structure.
  */
 static inline void CLOCK_SetSimSafeDivs(void)
 {
@@ -731,7 +730,7 @@ static inline void CLOCK_SetLowPowerEnable(bool enable)
  * Calling this function in FBI/PBI/BLPI modes may change the system clock. As a result,
  * using the function in these modes it is not allowed.
  *
- * @param enableMode MCGIRCLK enable mode, OR'ed value of @ref _mcg_irclk_enable_mode.
+ * @param enableMode MCGIRCLK enable mode, OR'ed value of the enumeration _mcg_irclk_enable_mode.
  * @param ircs       MCGIRCLK clock source, choose fast or slow.
  * @param fcrdiv     Fast IRC divider setting (\c FCRDIV).
  * @retval kStatus_MCG_SourceUsed Because the internal reference clock is used as a clock source,
@@ -784,7 +783,7 @@ void CLOCK_SetOsc0MonitorMode(mcg_monitor_mode_t mode);
  * @brief Gets the MCG status flags.
  *
  * This function gets the MCG clock status flags. All status flags are
- * returned as a logical OR of the enumeration @ref _mcg_status_flags_t. To
+ * returned as a logical OR of the enumeration refer to _mcg_status_flags_t. To
  * check a specific flag, compare the return value with the flag.
  *
  * Example:
@@ -804,7 +803,7 @@ void CLOCK_SetOsc0MonitorMode(mcg_monitor_mode_t mode);
  * }
  * @endcode
  *
- * @return  Logical OR value of the @ref _mcg_status_flags_t.
+ * @return  Logical OR value of the enumeration _mcg_status_flags_t.
  */
 uint32_t CLOCK_GetStatusFlags(void);
 
@@ -812,7 +811,7 @@ uint32_t CLOCK_GetStatusFlags(void);
  * @brief Clears the MCG status flags.
  *
  * This function clears the MCG clock lock lost status. The parameter is a logical
- * OR value of the flags to clear. See @ref _mcg_status_flags_t.
+ * OR value of the flags to clear. See the enumeration _mcg_status_flags_t.
  *
  * Example:
  * @code
@@ -822,7 +821,7 @@ uint32_t CLOCK_GetStatusFlags(void);
  * @endcode
  *
  * @param mask The status flags to clear. This is a logical OR of members of the
- *             enumeration @ref _mcg_status_flags_t.
+ *             enumeration _mcg_status_flags_t.
  */
 void CLOCK_ClearStatusFlags(uint32_t mask);
 
@@ -1161,7 +1160,7 @@ status_t CLOCK_BootToFeeMode(
  *
  * @param  fcrdiv Fast IRC divider, FCRDIV.
  * @param  ircs   The internal reference clock to select, IRCS.
- * @param  ircEnableMode  The MCGIRCLK enable mode, OR'ed value of @ref _mcg_irclk_enable_mode.
+ * @param  ircEnableMode  The MCGIRCLK enable mode, OR'ed value of the enumeration _mcg_irclk_enable_mode.
  *
  * @retval kStatus_MCG_SourceUsed Could not change MCGIRCLK setting.
  * @retval kStatus_Success Switched to the target mode successfully.
@@ -1189,7 +1188,7 @@ status_t CLOCK_BootToBlpeMode(mcg_oscsel_t oscsel);
  * chooses the correct path.
  *
  * @param  config Pointer to the target MCG mode configuration structure.
- * @return Return kStatus_Success if switched successfully; Otherwise, it returns an error code #_mcg_status.
+ * @return Return kStatus_Success if switched successfully; Otherwise, it returns an error code _mcg_status.
  *
  * @note If the external clock is used in the target mode, ensure that it is
  * enabled. For example, if the OSC0 is used, set up OSC0 correctly before calling this

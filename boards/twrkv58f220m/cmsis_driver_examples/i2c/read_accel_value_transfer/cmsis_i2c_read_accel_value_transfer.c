@@ -21,18 +21,18 @@
  ******************************************************************************/
 #define EXAMPLE_I2C_MASTER Driver_I2C1
 
-#define I2C_RELEASE_SDA_PORT PORTD
-#define I2C_RELEASE_SCL_PORT PORTD
-#define I2C_RELEASE_SDA_GPIO GPIOD
-#define I2C_RELEASE_SDA_PIN 9U
-#define I2C_RELEASE_SCL_GPIO GPIOD
-#define I2C_RELEASE_SCL_PIN 8U
+#define I2C_RELEASE_SDA_PORT  PORTD
+#define I2C_RELEASE_SCL_PORT  PORTD
+#define I2C_RELEASE_SDA_GPIO  GPIOD
+#define I2C_RELEASE_SDA_PIN   9U
+#define I2C_RELEASE_SCL_GPIO  GPIOD
+#define I2C_RELEASE_SCL_PIN   8U
 #define I2C_RELEASE_BUS_COUNT 100U
-#define FXOS8700_WHOAMI 0xC7U
-#define MMA8451_WHOAMI 0x1AU
-#define ACCEL_STATUS 0x00U
+#define FXOS8700_WHOAMI    0xC7U
+#define MMA8451_WHOAMI     0x1AU
+#define ACCEL_STATUS       0x00U
 #define ACCEL_XYZ_DATA_CFG 0x0EU
-#define ACCEL_CTRL_REG1 0x2AU
+#define ACCEL_CTRL_REG1    0x2AU
 /* FXOS8700 and MMA8451 have the same who_am_i register address. */
 #define ACCEL_WHOAMI_REG 0x0DU
 #define ACCEL_READ_TIMES 10U

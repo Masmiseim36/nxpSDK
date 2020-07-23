@@ -35,16 +35,6 @@
 #define FMSTR_VERSION 0x00030000 /* 3.0.0 */
 #define FMSTR_VERSION_STR "3.0.0"
 
-
-/* Define "WEAK" attribute cross various compilers */
-#if __ICCARM && !__ICCARM_V8
-    #define FMSTR_WEAK _Pragma("__weak")
-#elif defined(__S12Z__)
-	#define FMSTR_WEAK
-#else
-    #define FMSTR_WEAK __attribute__((weak))
-#endif
-
 /******************************************************************************
 * Configuration check
 ******************************************************************************/

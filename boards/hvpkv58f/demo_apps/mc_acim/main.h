@@ -26,8 +26,8 @@
 /* Three instruction added after interrupt flag clearing as required */
 #define M1_END_OF_ISR \
     {                 \
-        __DSB(); \
-        __ISB(); \
+        __DSB();      \
+        __ISB();      \
     }
 
 /*******************************************************************************
@@ -39,7 +39,10 @@
 
 /* CPU load measurement SysTick START / STOP macros */
 #define SYSTICK_START_COUNT() (SysTick->VAL = SysTick->LOAD)
-#define SYSTICK_STOP_COUNT(par1) uint32_t val = SysTick->VAL; uint32_t load = SysTick->LOAD; par1 = load - val
+#define SYSTICK_STOP_COUNT(par1)   \
+    uint32_t val  = SysTick->VAL;  \
+    uint32_t load = SysTick->LOAD; \
+    par1          = load - val
 
 #if defined(__cplusplus)
 extern "C" {

@@ -89,8 +89,40 @@
             // if single motor app then without prefix
             //if (MotorsNumber == "Single") prefix = "";
             var prefixM = getActiveMotor();
+            var paramFile;
+            var DocLocation;
 
-            document.write(HTML_write_head_line("File Name:","{FM_project_loc}/" + parent.document.getElementById(prefixM + "ProjectPath").innerHTML + prefix.toLowerCase() + "bldc_appconfig.h"));
+            // try to open m1_bldc_appconfig for reading to test file existence on ProjectPath1
+            DocLocation = parent.document.getElementById(prefixM + "ProjectPath1").innerHTML;
+            paramFile = pcm.LocalFileOpen(DocLocation + prefix.toLowerCase() + "bldc_appconfig.h","r");
+
+            // Check whether the file was opened succefuly
+            if (paramFile != false)
+            {
+                // Close File (and keep the correct path in DocLocation)
+                if(!pcm.LocalFileClose(paramFile))
+                    alert('File closing error');
+            }
+            else
+            {
+                // try to open m1_bldc_appconfig for reading to test file existence on ProjectPath2
+                DocLocation = parent.document.getElementById(prefixM + "ProjectPath2").innerHTML;
+                paramFile = pcm.LocalFileOpen(DocLocation + prefix.toLowerCase() + "bldc_appconfig.h","r");
+            
+                // Check whether the file was opened succefuly
+                if (paramFile != false)
+                {
+                    // Close File (and keep the correct path in DocLocation)
+                    if(!pcm.LocalFileClose(paramFile))
+                        alert('File closing error');
+                }
+                else
+                {
+                    DocLocation = "";
+                }
+            }
+
+            document.write(HTML_write_head_line("File Name:","{FM_project_loc}/" + DocLocation + prefix.toLowerCase() + "bldc_appconfig.h"));
             document.write(HTML_write_head_line("Date:",""+mounth+ " "+ today.getDate() + ", " + today.getFullYear() + ", " + time_out + ""));
             document.write(HTML_write_head_line("Description:","Automatically generated file for static configuration of the BLDC control application"));
 

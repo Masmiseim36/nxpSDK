@@ -30,18 +30,18 @@
  * DEMO_HSADC_CONV_CHN_NUM_ENABLE_DIFF is true.
  */
 /* The converter A's channels to sample. */
-#define DEMO_HSADC_CONVA_CHN_NUM1 3U /* Configuration combination 1, ADCA_CH2 and ADCA_CH3 */
-#define DEMO_HSADC_CONVA_CHN67_MUX_NUM1 0U
+#define DEMO_HSADC_CONVA_CHN_NUM1             3U /* Configuration combination 1, ADCA_CH2 and ADCA_CH3 */
+#define DEMO_HSADC_CONVA_CHN67_MUX_NUM1       0U
 #define DEMO_HSADC_CONVA_CHN_NUM1_ENABLE_DIFF true
-#define DEMO_HSADC_CONVA_CHN_NUM2 6U /* Configuration combination 2, ADCA_CH6D */
-#define DEMO_HSADC_CONVA_CHN67_MUX_NUM2 3U
+#define DEMO_HSADC_CONVA_CHN_NUM2             6U /* Configuration combination 2, ADCA_CH6D */
+#define DEMO_HSADC_CONVA_CHN67_MUX_NUM2       3U
 #define DEMO_HSADC_CONVA_CHN_NUM2_ENABLE_DIFF false
 /* The converter B's channels to sample. */
-#define DEMO_HSADC_CONVB_CHN_NUM1 6U /* Configuration combination 2,  ADCB_CH6C(PTE2) */
-#define DEMO_HSADC_CONVB_CHN67_MUX_NUM1 2U
+#define DEMO_HSADC_CONVB_CHN_NUM1             6U /* Configuration combination 2,  ADCB_CH6C(PTE2) */
+#define DEMO_HSADC_CONVB_CHN67_MUX_NUM1       2U
 #define DEMO_HSADC_CONVB_CHN_NUM1_ENABLE_DIFF false
-#define DEMO_HSADC_CONVB_CHN_NUM2 7U /* Configuration combination 2, ADCB_CH7F(PTE1) */
-#define DEMO_HSADC_CONVB_CHN67_MUX_NUM2 5U
+#define DEMO_HSADC_CONVB_CHN_NUM2             7U /* Configuration combination 2, ADCB_CH7F(PTE1) */
+#define DEMO_HSADC_CONVB_CHN67_MUX_NUM2       5U
 #define DEMO_HSADC_CONVB_CHN_NUM2_ENABLE_DIFF false
 
 /*******************************************************************************

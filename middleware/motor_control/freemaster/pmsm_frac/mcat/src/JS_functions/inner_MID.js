@@ -704,6 +704,9 @@ function clickMeasure()
 ******************************************************************************/
 function clickPpStart()
 {
+    // Display message how to dermine Pp
+    alert("Pole-pair assistant will start, now. Observe how many stops per mechanical revolution the rotor does. The motor number of pole-pairs is the same as the number of stops. When you determine the number of pole-pairs, stop the assistant and fill the number of pole-pairs manually.");
+
   //Disable/enable buttons
   if(document.getElementById("CalibrateButton") != undefined)
     document.getElementById("CalibrateButton").disabled = true;

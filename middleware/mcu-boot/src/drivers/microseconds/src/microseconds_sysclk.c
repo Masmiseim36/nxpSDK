@@ -31,9 +31,9 @@ enum
 //! @brief Tracks number of timer rollovers for extended time keeping
 //!        with 32 bits here + the 24 bits of the counter for lower resolution
 //!        it will be years worth of time
-static volatile uint32_t s_highCounter;
-static uint32_t s_tickPerMicrosecondMul8; //!< This value equal to 8 times ticks per microseconds
-static uint64_t s_timeoutTicks;           //!< Tick value of timeout.
+volatile uint32_t s_highCounter;
+uint32_t s_tickPerMicrosecondMul8; //!< This value equal to 8 times ticks per microseconds
+uint64_t s_timeoutTicks;           //!< Tick value of timeout.
 ////////////////////////////////////////////////////////////////////////////////
 // Code
 ////////////////////////////////////////////////////////////////////////////////
@@ -41,9 +41,9 @@ static uint64_t s_timeoutTicks;           //!< Tick value of timeout.
 //! @brief Initialize and start the timer facilities using the SysTick.
 void microseconds_init(void)
 {
-    s_highCounter = 0u;
+    s_highCounter = 0;
     SysTick->LOAD = SysTick_LOAD_RELOAD_Msk; // Set reload register to max value
-    SysTick->VAL = 0u;                        // As per ARM reference initialization, set initial value to 0
+    SysTick->VAL = 0;                        // As per ARM reference initialization, set initial value to 0
                                              //  interrupts are only triggered when going from 1 to 0
 
     SysTick->CTRL = SysTick_CTRL_CLKSOURCE_Msk | // Set timer to core clock frequency
@@ -54,12 +54,12 @@ void microseconds_init(void)
      * The reason why use this solution is that lowest clock frequency supported by L0PB and L4KS
      * is 0.25MHz, this solution will make sure ticks per microscond is greater than 0.
      */
-    s_tickPerMicrosecondMul8 = (SystemCoreClock * 8u) / (uint32_t)kFrequency_1MHz;
+    s_tickPerMicrosecondMul8 = (SystemCoreClock * 8) / kFrequency_1MHz;
 
     // Make sure this value is greater than 0
-    if (s_tickPerMicrosecondMul8 == 0u)
+    if (!s_tickPerMicrosecondMul8)
     {
-        s_tickPerMicrosecondMul8 = 1u;
+        s_tickPerMicrosecondMul8 = 1;
     }
 }
 
@@ -67,10 +67,10 @@ void microseconds_init(void)
 void microseconds_shutdown(void)
 {
     // Disable the timer and interrupts from it
-    SysTick->CTRL = SysTick->CTRL & ~((uint32_t)SysTick_CTRL_CLKSOURCE_Msk | (uint32_t)SysTick_CTRL_TICKINT_Msk | (uint32_t)SysTick_CTRL_ENABLE_Msk);
+    SysTick->CTRL = SysTick->CTRL & ~(SysTick_CTRL_CLKSOURCE_Msk | SysTick_CTRL_TICKINT_Msk | SysTick_CTRL_ENABLE_Msk);
 
     // Clear the current value register
-    SysTick->VAL = 0u;
+    SysTick->VAL = 0;
 }
 
 //! @brief Read back the running tick count
@@ -87,10 +87,10 @@ uint64_t microseconds_get_ticks(void)
     do
     {
         high = s_highCounter;
-        low = ~SysTick->VAL & (uint32_t)SysTick_LOAD_RELOAD_Msk;
+        low = ~SysTick->VAL & SysTick_LOAD_RELOAD_Msk;
     } while (high != s_highCounter);
 
-    retVal = ((uint64_t)high << 24u) + low;
+    retVal = ((uint64_t)high << 24) + low;
 
     return retVal;
 }
@@ -101,13 +101,13 @@ uint64_t microseconds_get_ticks(void)
 uint32_t microseconds_convert_to_microseconds(uint32_t ticks)
 {
     // return the total ticks divided by the number of Mhz the system clock is at to give microseconds
-    return (8u * ticks / s_tickPerMicrosecondMul8); //!< Assumes system clock will never be < 0.125 Mhz
+    return (8 * ticks / s_tickPerMicrosecondMul8); //!< Assumes system clock will never be < 0.125 Mhz
 }
 
 //! @brief Returns the conversion of microseconds to ticks
 uint64_t microseconds_convert_to_ticks(uint32_t microseconds)
 {
-    return ((uint64_t)microseconds * s_tickPerMicrosecondMul8 / 8u);
+    return ((uint64_t)microseconds * s_tickPerMicrosecondMul8 / 8);
 }
 
 //! @brief Delay specified time
@@ -118,7 +118,7 @@ void microseconds_delay(uint32_t us)
     uint64_t currentTicks = microseconds_get_ticks();
 
     //! The clock value in Mhz = ticks/microsecond
-    uint64_t ticksNeeded = ((uint64_t)us * s_tickPerMicrosecondMul8 / 8u) + currentTicks;
+    uint64_t ticksNeeded = ((uint64_t)us * s_tickPerMicrosecondMul8 / 8) + currentTicks;
     while (microseconds_get_ticks() < ticksNeeded)
     {
         ;

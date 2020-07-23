@@ -17,9 +17,9 @@
  * Definitions
  ******************************************************************************/
 #define APP_MCGOUTCLK_FREQ 150000000U
-#define LED_INIT() LED_RED_INIT(LOGIC_LED_ON)
-#define LED_TOGGLE() LED_RED_TOGGLE()
-#define CORE_CLK_FREQ CLOCK_GetFreq(kCLOCK_CoreSysClk)
+#define LED_INIT()         LED_RED_INIT(LOGIC_LED_ON)
+#define LED_TOGGLE()       LED_RED_TOGGLE()
+#define CORE_CLK_FREQ      CLOCK_GetFreq(kCLOCK_CoreSysClk)
 
 /*******************************************************************************
  * Prototypes

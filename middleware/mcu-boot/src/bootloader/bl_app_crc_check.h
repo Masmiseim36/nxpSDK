@@ -10,6 +10,7 @@
 
 #include <stdint.h>
 #include "bootloader_common.h"
+#include "property.h"
 
 //! @addtogroup app_crc_check
 //! @{
@@ -45,24 +46,33 @@ typedef struct _crc_checksum_header
 // Prototypes
 ////////////////////////////////////////////////////////////////////////////////
 
-//! @name Crc check
-//@{
-
-#if defined(BL_FEATURE_CRC_ASSERT) && BL_FEATURE_CRC_ASSERT
-//! @brief Restore crc check failure pin to default state.
-void restore_crc_check_failure_pin(void);
+#if __cplusplus
+extern "C"
+{
 #endif
 
-//! @brief Initialize crc check status property based on BCA related fields.
-void init_crc_check_status(property_store_t *propertyStore);
+    //! @name Crc check
+    //@{
 
-//! @brief Compare the CRC on a range of flash(specified in BCA) against a precomputed CRC value(stored in the BCA).
-bool is_application_crc_check_pass(void);
+#if BL_FEATURE_CRC_ASSERT
+    //! @brief Restore crc check failure pin to default state.
+    void restore_crc_check_failure_pin(void);
+#endif
 
-//! @brief Calculate CRC checksum according to specified checksum header
-uint32_t calculate_application_crc32(crc_checksum_header_t *header, uint32_t crcHeaderStart);
+    //! @brief Initialize crc check status property based on BCA related fields.
+    void init_crc_check_status(property_store_t *propertyStore);
 
-//@}
+    //! @brief Compare the CRC on a range of flash(specified in BCA) against a precomputed CRC value(stored in the BCA).
+    bool is_application_crc_check_pass(void);
+
+    //! @brief Calculate CRC checksum according to specified checksum header
+    uint32_t calculate_application_crc32(crc_checksum_header_t *header, uint32_t crcHeaderStart);
+
+    //@}
+
+#if __cplusplus
+}
+#endif
 
 //! @}
 

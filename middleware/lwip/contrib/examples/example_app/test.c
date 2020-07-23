@@ -1,11 +1,11 @@
 /*
  * Copyright (c) 2001,2002 Florian Schulze.
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright
  *    notice, this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright
@@ -14,7 +14,7 @@
  * 3. Neither the name of the authors nor the names of the contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE AUTHORS AND CONTRIBUTORS ``AS IS'' AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -34,6 +34,7 @@
 /* C runtime includes */
 #include <stdio.h>
 #include <stdarg.h>
+#include <stdlib.h>
 #include <time.h>
 #include <string.h>
 
@@ -82,6 +83,7 @@
 
 #include "examples/httpd/cgi_example/cgi_example.h"
 #include "examples/httpd/fs_example/fs_example.h"
+#include "examples/httpd/https_example/https_example.h"
 #include "examples/httpd/ssi_example/ssi_example.h"
 
 #include "default_netif.h"
@@ -369,7 +371,7 @@ test_netif_init(void)
 #endif
 #if LWIP_IPV6
   netif_create_ip6_linklocal_address(netif_default, 1);
-#if LWIP_IPV6_AUTOCONFIG 
+#if LWIP_IPV6_AUTOCONFIG
   netif_default->ip6_autoconfig_enabled = 1;
 #endif
   printf("ip6 linklocal address: %s\n", ip6addr_ntoa(netif_ip6_addr(netif_default, 0)));
@@ -490,7 +492,7 @@ dns_dorequest(void *arg)
   const char* dnsname = "3com.com";
   ip_addr_t dnsresp;
   LWIP_UNUSED_ARG(arg);
- 
+
   if (dns_gethostbyname(dnsname, &dnsresp, dns_found, 0) == ERR_OK) {
     dns_found(dnsname, &dnsresp, 0);
   }
@@ -539,6 +541,9 @@ apps_init(void)
 #if defined(LWIP_HTTPD_EXAMPLE_CGI_SIMPLE) && LWIP_HTTPD_EXAMPLE_CGI_SIMPLE
   cgi_ex_init();
 #endif
+#if defined(LWIP_HTTPD_EXAMPLE_HTTPS) && LWIP_HTTPD_EXAMPLE_HTTPS
+  https_ex_init();
+#endif
 #endif /* LWIP_HTTPD_APP_NETCONN */
 #endif /* LWIP_HTTPD_APP && LWIP_TCP */
 
@@ -576,7 +581,10 @@ apps_init(void)
   sntp_example_init();
 #endif
 #if LWIP_TFTP_APP
-  tftp_example_init();
+  tftp_example_init_server();
+#endif
+#if LWIP_TFTP_CLIENT_APP
+  tftp_example_init_client();
 #endif
 #if LWIP_LWIPERF_APP
   lwiperf_example_init();
@@ -755,4 +763,14 @@ int main(void)
   main_loop();
 
   return 0;
+}
+
+/* This function is only required to prevent arch.h including stdio.h
+ * (which it does if LWIP_PLATFORM_ASSERT is undefined)
+ */
+void lwip_example_app_platform_assert(const char *msg, int line, const char *file)
+{
+  printf("Assertion \"%s\" failed at line %d in %s\n", msg, line, file);
+  fflush(NULL);
+  abort();
 }

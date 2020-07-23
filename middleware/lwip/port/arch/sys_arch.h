@@ -32,7 +32,7 @@
  
 /*
  * Copyright (c) 2013-2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2017,2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -80,8 +80,6 @@ void time_init(void);
 #if defined(__cplusplus)
 }
 #endif /* __cplusplus */
-
-#define sourceClock         			CLOCK_GetFreq(kCLOCK_CoreSysClk)
 
 #endif
 

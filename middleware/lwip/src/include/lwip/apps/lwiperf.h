@@ -91,7 +91,7 @@ enum lwiperf_client_type
     @param report_type contains the test result */
 typedef void (*lwiperf_report_fn)(void *arg, enum lwiperf_report_type report_type,
   const ip_addr_t* local_addr, u16_t local_port, const ip_addr_t* remote_addr, u16_t remote_port,
-  u32_t bytes_transferred, u32_t ms_duration, u32_t bandwidth_kbitpsec);
+  u64_t bytes_transferred, u32_t ms_duration, u32_t bandwidth_kbitpsec);
 
 void* lwiperf_start_tcp_server(const ip_addr_t* local_addr, u16_t local_port,
                                lwiperf_report_fn report_fn, void* report_arg);

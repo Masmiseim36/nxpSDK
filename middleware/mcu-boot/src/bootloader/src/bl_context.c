@@ -6,7 +6,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "bootloader/bl_context.h"
+#include "bl_context.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 // Variables
@@ -17,28 +17,28 @@
 //! @ingroup context
 bootloader_context_t g_bootloaderContext = {.memoryInterface = &g_memoryInterface,
                                             .memoryMap = g_memoryMap,
-#if defined(BL_FEATURE_EXPAND_MEMORY) && BL_FEATURE_EXPAND_MEMORY
+#if BL_FEATURE_EXPAND_MEMORY
                                             .externalMemoryMap = g_externalMemoryMap,
 #endif // BL_FEATURE_EXPAND_MEMORY
                                             .allPeripherals = g_peripherals,
                                             .activePeripheral = NULL, // Filled in at run time.
                                             .propertyInterface = &g_propertyInterface,
                                             .commandInterface = &g_commandInterface,
-#if !(defined(BL_FEATURE_HAS_NO_INTERNAL_FLASH) && BL_FEATURE_HAS_NO_INTERNAL_FLASH)
+#if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
                                             .flashDriverInterface = &g_flashDriverInterface,
-#if !(defined(BL_DEVICE_IS_LPC_SERIES) && BL_DEVICE_IS_LPC_SERIES)
+#if !BL_DEVICE_IS_LPC_SERIES
                                             .allFlashState = &g_flashState,
                                             .allFlashCacheState = &g_flashcacheState,
-#if defined(BL_FEATURE_SUPPORT_DFLASH) && BL_FEATURE_SUPPORT_DFLASH
+#if BL_FEATURE_SUPPORT_DFLASH
                                             .dflashDriverInterface = &g_dflashDriverInterface,
                                             .dFlashState = &g_dflashState,
 #endif // BL_FEATURE_SUPPORT_DFLASH
                                             
 #else
-                                            .allFlashState = g_flashiapState,
+                                            .allFlashState = g_flashState,
 #endif // !BL_DEVICE_IS_LPC_SERIES
 #endif // #if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
-#if defined(AES_SECURITY_SUPPORTED) && AES_SECURITY_SUPPORTED
+#if AES_SECURITY_SUPPORTED
                                             .aesInterface = &g_aesInterface,
 #endif
 

@@ -5,7 +5,7 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
- 
+
 #include "mcdrv_pwm3ph_pwma.h"
 
 /*******************************************************************************
@@ -43,20 +43,20 @@ bool_t MCDRV_eFlexPwm3PhSet(mcdrv_pwm3ph_pwma_t *this)
     f16ModuloTemp = this->pui32PwmBaseAddress->SM[this->ui16PhASubNum].VAL1 + 1;
 
     /* phase A */
-    f16DutyCycle = MLIB_Mul_F16(f16ModuloTemp, sUABCtemp.f16A);
-    f16DutyCycleTemp = MLIB_Neg_F16(f16DutyCycle);
+    f16DutyCycle                                            = MLIB_Mul_F16(f16ModuloTemp, sUABCtemp.f16A);
+    f16DutyCycleTemp                                        = MLIB_Neg_F16(f16DutyCycle);
     this->pui32PwmBaseAddress->SM[this->ui16PhASubNum].VAL2 = f16DutyCycleTemp;
     this->pui32PwmBaseAddress->SM[this->ui16PhASubNum].VAL3 = f16DutyCycle;
 
     /* phase B */
-    f16DutyCycle = MLIB_Mul_F16(f16ModuloTemp, sUABCtemp.f16B);
-    f16DutyCycleTemp = MLIB_Neg_F16(f16DutyCycle);
+    f16DutyCycle                                            = MLIB_Mul_F16(f16ModuloTemp, sUABCtemp.f16B);
+    f16DutyCycleTemp                                        = MLIB_Neg_F16(f16DutyCycle);
     this->pui32PwmBaseAddress->SM[this->ui16PhBSubNum].VAL2 = f16DutyCycleTemp;
     this->pui32PwmBaseAddress->SM[this->ui16PhBSubNum].VAL3 = f16DutyCycle;
 
     /* phase C */
-    f16DutyCycle = MLIB_Mul_F16(f16ModuloTemp, sUABCtemp.f16C);
-    f16DutyCycleTemp = MLIB_Neg_F16(f16DutyCycle);
+    f16DutyCycle                                            = MLIB_Mul_F16(f16ModuloTemp, sUABCtemp.f16C);
+    f16DutyCycleTemp                                        = MLIB_Neg_F16(f16DutyCycle);
     this->pui32PwmBaseAddress->SM[this->ui16PhCSubNum].VAL2 = f16DutyCycleTemp;
     this->pui32PwmBaseAddress->SM[this->ui16PhCSubNum].VAL3 = f16DutyCycle;
 
@@ -131,4 +131,3 @@ bool_t MCDRV_eFlexPwm3PhFltGet(mcdrv_pwm3ph_pwma_t *this)
 
     return ((s_statusPass > 0));
 }
-

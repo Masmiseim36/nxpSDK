@@ -181,4 +181,3 @@ bool_t MCDRV_AuxValGet(mcdrv_adc16_t *this);
 #endif
 
 #endif /* _MCDRV_ADC_ADC16_H_ */
-

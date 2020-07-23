@@ -19,17 +19,17 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_DSPI_MASTER_BASEADDR SPI0
-#define EXAMPLE_DSPI_MASTER_DMA_MUX_BASEADDR DMAMUX0
-#define EXAMPLE_DSPI_MASTER_DMA_BASEADDR DMA0
+#define EXAMPLE_DSPI_MASTER_BASEADDR              SPI0
+#define EXAMPLE_DSPI_MASTER_DMA_MUX_BASEADDR      DMAMUX0
+#define EXAMPLE_DSPI_MASTER_DMA_BASEADDR          DMA0
 #define EXAMPLE_DSPI_MASTER_DMA_RX_REQUEST_SOURCE kDmaRequestMux0SPI0Rx
 #define EXAMPLE_DSPI_MASTER_DMA_TX_REQUEST_SOURCE kDmaRequestMux0SPI0Tx
-#define DSPI_MASTER_CLK_SRC DSPI0_CLK_SRC
-#define DSPI_MASTER_CLK_FREQ CLOCK_GetFreq(DSPI0_CLK_SRC)
-#define EXAMPLE_DSPI_MASTER_PCS_FOR_INIT kDSPI_Pcs0
-#define EXAMPLE_DSPI_MASTER_PCS_FOR_TRANSFER kDSPI_MasterPcs0
-#define EXAMPLE_DSPI_DEALY_COUNT 0xfffffU
-#define TRANSFER_SIZE 64U         /* Transfer dataSize */
+#define DSPI_MASTER_CLK_SRC                       DSPI0_CLK_SRC
+#define DSPI_MASTER_CLK_FREQ                      CLOCK_GetFreq(DSPI0_CLK_SRC)
+#define EXAMPLE_DSPI_MASTER_PCS_FOR_INIT          kDSPI_Pcs0
+#define EXAMPLE_DSPI_MASTER_PCS_FOR_TRANSFER      kDSPI_MasterPcs0
+#define EXAMPLE_DSPI_DEALY_COUNT                  0xfffffU
+#define TRANSFER_SIZE     64U     /* Transfer dataSize */
 #define TRANSFER_BAUDRATE 500000U /* Transfer baudrate - 500k */
 
 /*******************************************************************************
@@ -51,10 +51,18 @@ edma_handle_t dspiEdmaMasterTxDataToIntermediaryHandle;
 #endif
 edma_handle_t dspiEdmaMasterIntermediaryToTxRegHandle;
 
-volatile bool isTransferCompleted = false;
+volatile bool isTransferCompleted  = false;
+volatile uint32_t g_systickCounter = 20U;
 /*******************************************************************************
  * Code
  ******************************************************************************/
+void SysTick_Handler(void)
+{
+    if (g_systickCounter != 0U)
+    {
+        g_systickCounter--;
+    }
+}
 
 void DSPI_MasterUserCallback(SPI_Type *base, dspi_master_edma_handle_t *handle, status_t status, void *userData)
 {
@@ -214,9 +222,16 @@ int main(void)
         }
 
         /* Delay to wait slave is ready */
-        for (i = 0U; i < EXAMPLE_DSPI_DEALY_COUNT; i++)
+        if (SysTick_Config(SystemCoreClock / 1000U))
         {
-            __NOP();
+            while (1)
+            {
+            }
+        }
+        /* Delay 20 ms */
+        g_systickCounter = 20U;
+        while (g_systickCounter != 0U)
+        {
         }
 
         /* Start master transfer, receive data from slave */

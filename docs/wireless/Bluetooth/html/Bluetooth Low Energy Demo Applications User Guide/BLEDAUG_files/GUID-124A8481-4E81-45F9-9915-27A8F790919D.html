@@ -39,8 +39,9 @@
 <p class="p">The Wireless UART service is a custom service that implements a custom writable ASCII Char characteristic (UUID: 01ff0101-ba5e-f4ee-5ca1-eb1e5e4b1ce0) 
 that holds the character written by the peer device.</p>
 
-<p class="p">The application behaves at first as a GAP central node. It enters GAP Limited Discovery Procedure and searches for other Wireless UART devices to connect.
- If the node fails to find any peripherals within seconds, it changes its role to a GAP peripheral. It enters GAP General Discoverable Mode and waits for a GAP central node to connect.</p>
+<p class="p">The application behaves at first as a GAP central node. It enters GAP Limited
+  Discovery Procedure and searches for other Wireless UART devices to connect. To change the device role to GAP peripheral, use the ROLESW button. The device enters GAP
+      General Discoverable Mode and waits for a GAP central node to connect.</p>
 
   </div>
 

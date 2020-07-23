@@ -60,7 +60,7 @@
  *  Framework Configuration
  ********************************************************************************** */
 /* enable NVM to be used as non volatile storage management by the host stack */
-#define gAppUseNvm_d                    0
+#define gAppUseNvm_d                    1
 
 /* Defines Size for Timer Task*/
 #define gTmrTaskStackSize_c  500

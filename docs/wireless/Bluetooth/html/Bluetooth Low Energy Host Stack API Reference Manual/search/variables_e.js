@@ -8,5 +8,5 @@ var searchData=
   ['requestedltksize',['requestedLtkSize',['../group___g_a_p.html#a990f6826e0cd18f85db61355161d94b8',1,'gapKeyExchangeRequestEvent_t']]],
   ['requirements',['requirements',['../group___g_a_p.html#aeb5074d58fe29fbdb641edbb4f07342e',1,'gapServiceSecurityRequirements_t']]],
   ['reserved',['reserved',['../group___b_l_e.html#af03a0e6b21c7f605f7cbbd87642941fb',1,'bleAdvertisingChannelMap_t']]],
-  ['rssi',['rssi',['../group___g_a_p.html#af61b68a7e56d24afa9e8ffd6cc157e29',1,'gapScannedDevice_t']]]
+  ['rssi',['rssi',['../group___b_l_e.html#a96c4a5ec4cc3aed4728a3124f95dd1aa',1,'bleNotificationEvent_t::rssi()'],['../group___g_a_p.html#af61b68a7e56d24afa9e8ffd6cc157e29',1,'gapScannedDevice_t::rssi()'],['../group___g_a_p.html#a59871a4a20f1e9959553a170b718efb9',1,'gapExtScannedDevice_t::rssi()'],['../group___g_a_p.html#aaeb7af0e217a9498e9c0c35cb6967ad4',1,'gapPeriodicScannedDevice_t::rssi()']]]
 ];

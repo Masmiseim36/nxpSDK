@@ -4,7 +4,7 @@
  ********************************************************************************** */
 /*! *********************************************************************************
 * Copyright 2015, Freescale Semiconductor, Inc.
-* Copyright 2016-2017 NXP
+* Copyright 2016-2020 NXP
 * All rights reserved.
 *
 * \file
@@ -22,7 +22,7 @@
  * 	Board Configuration
  ********************************************************************************** */
  /* Defines the number of available keys for the keyboard module */
-#define gKeyBoardSupported_d    FALSE
+#define gKeyBoardSupported_d    0
 
 #define gKBD_KeysCount_c        0
 
@@ -45,10 +45,6 @@
 /*! *********************************************************************************
  * 	Framework Configuration
  ********************************************************************************** */
-
-/* Do not modify. Not used for this application */
-#define gAppUseNvm_d                    0
-     
 /* Defines Num of Serial Manager interfaces */
 #define gSerialManagerMaxInterfaces_c   1
 
@@ -92,22 +88,6 @@
  ********************************************************************************** */
 
 #define gUseHciTransportUpward_d  1
-/*! *********************************************************************************
- * 	NVM Module Configuration - gAppUseNvm_d shall be defined above as 1 or 0
- ********************************************************************************** */    
-             
-#if gAppUseNvm_d
-    /* configure NVM module */
-    #define  gNvStorageIncluded_d                (1)
-    #define  gNvFragmentation_Enabled_d          (1)
-    #define  gNvUseFlexNVM_d                     (0)
-    #if gNvUseFlexNVM_d
-        #define  gUnmirroredFeatureSet_d         (0)
-    #else
-        #define  gUnmirroredFeatureSet_d         (1)
-    #endif
-    #define  gNvRecordsCopiedBufferSize_c        (128)
-#endif
 
 /*! *********************************************************************************
  * 	Memory Pools Configuration
@@ -115,7 +95,6 @@
              
 /* Defines pools by block size and number of blocks. Must be aligned to 4 bytes.
  * DO NOT MODIFY THIS DIRECTLY. CONFIGURE AppPoolsDetails_c
- * If gMaxBondedDevices_c increases, adjust memory pools
 */
 #define PoolsDetails_c \
 	 AppPoolsDetails_c

@@ -1,28 +1,31 @@
-/*
- * Copyright (c) 2013-2017 ARM Limited. All rights reserved.
+/* -----------------------------------------------------------------------------
+ * Copyright (c) 2013-2014 ARM Ltd.
  *
- * SPDX-License-Identifier: Apache-2.0
+ * This software is provided 'as-is', without any express or implied warranty.
+ * In no event will the authors be held liable for any damages arising from
+ * the use of this software. Permission is granted to anyone to use this
+ * software for any purpose, including commercial applications, and to alter
+ * it and redistribute it freely, subject to the following restrictions:
  *
- * Licensed under the Apache License, Version 2.0 (the License); you may
- * not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * 1. The origin of this software must not be misrepresented; you must not
+ *    claim that you wrote the original software. If you use this software in
+ *    a product, an acknowledgment in the product documentation would be
+ *    appreciated but is not required.
  *
- * www.apache.org/licenses/LICENSE-2.0
+ * 2. Altered source versions must be plainly marked as such, and must not be
+ *    misrepresented as being the original software.
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an AS IS BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * 3. This notice may not be removed or altered from any source distribution.
  *
- * $Date:        2. Feb 2017
- * $Revision:    V2.0
+ *
+ * $Date:        2. Jan 2014
+ * $Revision:    V2.00
  *
  * Project:      Common Driver definitions
- */
+ * -------------------------------------------------------------------------- */
 
 /* History:
- *  Version 2.0
+ *  Version 2.00
  *    Changed prefix ARM_DRV -> ARM_DRIVER
  *    Added General return codes definitions
  *  Version 1.10
@@ -31,8 +34,8 @@
  *    Initial release
  */
 
-#ifndef DRIVER_COMMON_H_
-#define DRIVER_COMMON_H_
+#ifndef __DRIVER_COMMON_H
+#define __DRIVER_COMMON_H
 
 #include <stddef.h>
 #include <stdint.h>
@@ -66,4 +69,4 @@ typedef enum _ARM_POWER_STATE {
   ARM_POWER_FULL                        ///< Power on: full operation at maximum performance
 } ARM_POWER_STATE;
 
-#endif /* DRIVER_COMMON_H_ */
+#endif /* __DRIVER_COMMON_H */

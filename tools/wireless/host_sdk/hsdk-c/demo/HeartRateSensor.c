@@ -3,7 +3,7 @@
  * Source file that demonstrates the Heart Rate Sensor profile for the
  * BLE stack, using C bindings generated from the BLE FSCI XML.
  *
- * Copyright 2017 NXP
+ * Copyright 2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -24,7 +24,7 @@ Include Files
 #include "UARTConfiguration.h"
 
 #include "ble_sig_defines.h"
-#include "cmd_ble_1.3.5.h"
+#include "cmd_ble_1.6.6.h"
 
 /*==================================================================================================
 Private macros
@@ -877,27 +877,8 @@ static void BleApp_DemoHrsSm(void)
 
         case gHrsDemoReadPublicAddress_c:
             GAPReadPublicDeviceAddressRequest(mpFramer, FSCI_BLE_IF);
-            mHrsDemoState = gHrsDemoSetAdvData_c;
-            break;
-
-        case gHrsDemoSetAdvData_c: {
-            char gBleSig_HeartRateService_d_str[5];
-            sprintf(gBleSig_HeartRateService_d_str, "%04X", gBleSig_HeartRateService_d);
-
-            Gap_AppendAdvData(&mAppAdvertisingData,
-                              GAPSetAdvertisingDataRequest_AdvertisingData_AdStructures_Type_gAdFlags_c,
-                              "6");    /* gLeGeneralDiscoverableMode_c | gBrEdrNotSupported_c */
-            Gap_AppendAdvData(&mAppAdvertisingData,
-                              GAPSetAdvertisingDataRequest_AdvertisingData_AdStructures_Type_gAdIncomplete16bitServiceList_c,
-                              gBleSig_HeartRateService_d_str);
-            Gap_AppendAdvData(&mAppAdvertisingData,
-                              GAPSetAdvertisingDataRequest_AdvertisingData_AdStructures_Type_gAdShortenedLocalName_c,
-                              HRS_SHORTENED_LOCAL_NAME);
-            GAPSetAdvertisingDataRequest(&mAppAdvertisingData, mpFramer, FSCI_BLE_IF);
-
             mHrsDemoState = gHrsDemoFindBatteryServiceHandle_c;
             break;
-        }
 
         case gHrsDemoFindBatteryServiceHandle_c: {
             GATTDBFindServiceHandleRequest_t req;
@@ -1060,8 +1041,29 @@ static void BleApp_DemoHrsSm(void)
 
         case gHrsDemoSetAdvParameters_c:
             GAPSetAdvertisingParametersRequest(&mAdvParams, mpFramer, FSCI_BLE_IF);
+            mHrsDemoState = gHrsDemoSetAdvData_c;
+            break;
+        
+        case gHrsDemoSetAdvData_c: {
+            char gBleSig_HeartRateService_d_str[5];
+            sprintf(gBleSig_HeartRateService_d_str, "%04X", gBleSig_HeartRateService_d);
+
+            Gap_AppendAdvData(&mAppAdvertisingData,
+                              GAPSetAdvertisingDataRequest_AdvertisingData_AdStructures_Type_gAdFlags_c,
+                              "6");    /* gLeGeneralDiscoverableMode_c | gBrEdrNotSupported_c */
+            Gap_AppendAdvData(&mAppAdvertisingData,
+                              GAPSetAdvertisingDataRequest_AdvertisingData_AdStructures_Type_gAdIncomplete16bitServiceList_c,
+                              gBleSig_HeartRateService_d_str);
+            Gap_AppendAdvData(&mAppAdvertisingData,
+                              GAPSetAdvertisingDataRequest_AdvertisingData_AdStructures_Type_gAdShortenedLocalName_c,
+                              HRS_SHORTENED_LOCAL_NAME);
+            GAPSetAdvertisingDataRequest(&mAppAdvertisingData, mpFramer, FSCI_BLE_IF);
+
             mHrsDemoState = gHrsDemoStartAdvertising_c;
             break;
+        }
+
+        
 
         case gHrsDemoStartAdvertising_c:
             GAPStartAdvertisingRequest(mpFramer, FSCI_BLE_IF);

@@ -36,7 +36,7 @@
   <td id="projectlogo"><img alt="Logo" src="NXP_logo.bmp"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">Generic FSK Link Layer
-   &#160;<span id="projectnumber">Rev. 12</span>
+   &#160;<span id="projectnumber">Rev. 14</span>
    </div>
    <div id="projectbrief">API Reference Manual</div>
   </td>
@@ -124,6 +124,8 @@ Files</h2></td></tr>
 Data Structures</h2></td></tr>
 <tr class="memitem:struct_g_e_n_f_s_k__nwk__addr__match__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__genfsk.html#struct_g_e_n_f_s_k__nwk__addr__match__t">GENFSK_nwk_addr_match_t</a></td></tr>
 <tr class="separator:struct_g_e_n_f_s_k__nwk__addr__match__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:struct_g_e_n_f_s_k___time_event__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__genfsk.html#struct_g_e_n_f_s_k___time_event__t">GENFSK_TimeEvent_t</a></td></tr>
+<tr class="separator:struct_g_e_n_f_s_k___time_event__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:struct_g_e_n_f_s_k__radio__config__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__genfsk.html#struct_g_e_n_f_s_k__radio__config__t">GENFSK_radio_config_t</a></td></tr>
 <tr class="separator:struct_g_e_n_f_s_k__radio__config__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:struct_g_e_n_f_s_k__packet__config__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__genfsk.html#struct_g_e_n_f_s_k__packet__config__t">GENFSK_packet_config_t</a></td></tr>
@@ -141,6 +143,23 @@ Data Structures</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
+<tr class="memitem:ga702d47382f1af02aa4c624446fa701c1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__genfsk.html#ga702d47382f1af02aa4c624446fa701c1">gGenFskVerMajor_c</a></td></tr>
+<tr class="separator:ga702d47382f1af02aa4c624446fa701c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga59e27e5dd8b536595ad3b921772b19d6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga59e27e5dd8b536595ad3b921772b19d6"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>gGenFskVerMinor_c</b></td></tr>
+<tr class="separator:ga59e27e5dd8b536595ad3b921772b19d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa15ed4b04f4a4157a56c84353832edeb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaa15ed4b04f4a4157a56c84353832edeb"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>gGenFskVerPatch_c</b></td></tr>
+<tr class="separator:gaa15ed4b04f4a4157a56c84353832edeb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae7a33c9da95585442800d46531079d55"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gae7a33c9da95585442800d46531079d55"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>gGenFskBuildNo_c</b></td></tr>
+<tr class="separator:gae7a33c9da95585442800d46531079d55"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga58454c8380b96a79a366c5b48a259686"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga58454c8380b96a79a366c5b48a259686"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>gGenFskModuleId_c</b></td></tr>
+<tr class="separator:ga58454c8380b96a79a366c5b48a259686"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae170116d48a9cd5c66cf940085c65a3d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gae170116d48a9cd5c66cf940085c65a3d"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>gGenFskVerString_c</b></td></tr>
+<tr class="separator:gae170116d48a9cd5c66cf940085c65a3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga50471fa6b5d381144d4d080ae7c9e3ed"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__genfsk.html#ga50471fa6b5d381144d4d080ae7c9e3ed">gGENFSK_IrqPriority_c</a></td></tr>
 <tr class="separator:ga50471fa6b5d381144d4d080ae7c9e3ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gad3969c71ccf040020ff5c0385c7d4bfe"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__genfsk.html#gad3969c71ccf040020ff5c0385c7d4bfe">gGENFSK_TaskStackSize_c</a></td></tr>
@@ -151,6 +170,18 @@ Macros</h2></td></tr>
 <tr class="separator:ga52c9a6a2ed2eb7952f03a0ee6a44b072"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga5b9477d8eb36c4b570a6cabc1ef891ca"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__genfsk.html#ga5b9477d8eb36c4b570a6cabc1ef891ca">gGENFSK_InvalidIdx_c</a></td></tr>
 <tr class="separator:ga5b9477d8eb36c4b570a6cabc1ef891ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga74af396564f87b2c76584d5141f316d4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__genfsk.html#ga74af396564f87b2c76584d5141f316d4">gGENFSK_XcvrInitRetryCount_c</a></td></tr>
+<tr class="separator:ga74af396564f87b2c76584d5141f316d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaec231152ff845a5c44a4edafc8cd1cf2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__genfsk.html#gaec231152ff845a5c44a4edafc8cd1cf2">gGENFSK_InvalidTimerId_c</a></td></tr>
+<tr class="separator:gaec231152ff845a5c44a4edafc8cd1cf2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6e28142b0d408d75074a40413e161d03"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__genfsk.html#ga6e28142b0d408d75074a40413e161d03">gGENFSK_NoMwsControl_c</a></td></tr>
+<tr class="separator:ga6e28142b0d408d75074a40413e161d03"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8a69eba3a842665b82d5b94e6034229f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__genfsk.html#ga8a69eba3a842665b82d5b94e6034229f">gGENFSK_LLMwsControl_c</a></td></tr>
+<tr class="separator:ga8a69eba3a842665b82d5b94e6034229f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadb9f2906d17fd7e950be5a79d6c0140d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__genfsk.html#gadb9f2906d17fd7e950be5a79d6c0140d">gGENFSK_AppMwsControl_c</a></td></tr>
+<tr class="separator:gadb9f2906d17fd7e950be5a79d6c0140d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0f4f308f91194c119d6317f4e5afb7cf"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__genfsk.html#ga0f4f308f91194c119d6317f4e5afb7cf">gGENFSK_MwsControl_c</a></td></tr>
+<tr class="separator:ga0f4f308f91194c119d6317f4e5afb7cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
@@ -158,8 +189,12 @@ Typedefs</h2></td></tr>
 <tr class="separator:ga762583b93a8549d2d9d867891abb624e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga271665c02c28262361df907604e0b703"><td class="memItemLeft" align="right" valign="top">typedef uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__genfsk.html#ga271665c02c28262361df907604e0b703">GENFSK_timestamp_t</a></td></tr>
 <tr class="separator:ga271665c02c28262361df907604e0b703"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga09468b6af4490dec52c8f2a7c64d938e"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__genfsk.html#ga09468b6af4490dec52c8f2a7c64d938e">genfskPacketReceivedCallBack_t</a>) (uint8_t *pBuffer, uint16_t bufferLength, uint64_t timestamp, uint8_t rssi, uint8_t crcValid)</td></tr>
-<tr class="separator:ga09468b6af4490dec52c8f2a7c64d938e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7a22d9ba99f0a3b0f8eb9ba30aefcbff"><td class="memItemLeft" align="right" valign="top">typedef uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__genfsk.html#ga7a22d9ba99f0a3b0f8eb9ba30aefcbff">genfskTimerId_t</a></td></tr>
+<tr class="separator:ga7a22d9ba99f0a3b0f8eb9ba30aefcbff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa370428d1b081b6e10f688ec3d8b9193"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__genfsk.html#gaa370428d1b081b6e10f688ec3d8b9193">genfskTimeCallback_t</a>) (void)</td></tr>
+<tr class="separator:gaa370428d1b081b6e10f688ec3d8b9193"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2385e7333ee1d1bb15ec172939f794dd"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__genfsk.html#ga2385e7333ee1d1bb15ec172939f794dd">genfskPacketReceivedCallBack_t</a>) (uint8_t *pBuffer, uint16_t bufferLength, uint64_t timestamp, int8_t rssi, uint8_t crcValid)</td></tr>
+<tr class="separator:ga2385e7333ee1d1bb15ec172939f794dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga13f73b86328578c2429e82904d3bd4fd"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__genfsk.html#ga13f73b86328578c2429e82904d3bd4fd">genfskEventNotifyCallBack_t</a>) (<a class="el" href="group__genfsk.html#gae758fc5ad8aa4e32cb5ca8bbb4f7c8b7">genfskEvent_t</a> event, <a class="el" href="group__genfsk.html#ga03e56989694e67b9792ef1a86ed3a95b">genfskEventStatus_t</a> eventStatus)</td></tr>
 <tr class="separator:ga13f73b86328578c2429e82904d3bd4fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -226,6 +261,8 @@ Enumerations</h2></td></tr>
 &#160;&#160;<a class="el" href="group__genfsk.html#ggae758fc5ad8aa4e32cb5ca8bbb4f7c8b7add924a3aa97bc5eccb66987e636c4df6">gGenfskNwkAddressMatch</a>, 
 <br />
 &#160;&#160;<a class="el" href="group__genfsk.html#ggae758fc5ad8aa4e32cb5ca8bbb4f7c8b7a8930de89b1a7860c91f256e745df604a">gGenfskWakeEvent</a>, 
+<br />
+&#160;&#160;<a class="el" href="group__genfsk.html#ggae758fc5ad8aa4e32cb5ca8bbb4f7c8b7a681a1cdeb53ea0b07665f4c4f6b3f7ae">gGenfskGapEvent</a>, 
 <br />
 &#160;&#160;<a class="el" href="group__genfsk.html#ggae758fc5ad8aa4e32cb5ca8bbb4f7c8b7a8e0c7a51cab638e54f7b34c67695fdf4">gGenfskAllEvents</a>
 <br />
@@ -382,6 +419,12 @@ Variables</h2></td></tr>
 <tr class="separator:ga575b0163f2e55c457b2398b81fb6ceea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf78fc918609f2454b109e8ee6d542be0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__genfsk.html#ga762583b93a8549d2d9d867891abb624e">GENFSK_nwk_addr_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__genfsk.html#gaf78fc918609f2454b109e8ee6d542be0">GENFSK_nwk_addr_match_t::nwkAddr</a></td></tr>
 <tr class="separator:gaf78fc918609f2454b109e8ee6d542be0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac8b8b49612a6266050c76441d74d474f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gac8b8b49612a6266050c76441d74d474f"></a>
+<a class="el" href="group__genfsk.html#ga271665c02c28262361df907604e0b703">GENFSK_timestamp_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>GENFSK_TimeEvent_t::timestamp</b></td></tr>
+<tr class="separator:gac8b8b49612a6266050c76441d74d474f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga876af00750eebc405f4b5ec6f33dd702"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga876af00750eebc405f4b5ec6f33dd702"></a>
+<a class="el" href="group__genfsk.html#gaa370428d1b081b6e10f688ec3d8b9193">genfskTimeCallback_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>GENFSK_TimeEvent_t::callback</b></td></tr>
+<tr class="separator:ga876af00750eebc405f4b5ec6f33dd702"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga34c26d994c78389437057fb2257d22a3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__genfsk.html#gabea7097e97a8398bd4648f0e95d3dee1">genfskRadioMode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__genfsk.html#ga34c26d994c78389437057fb2257d22a3">GENFSK_radio_config_t::radioMode</a></td></tr>
 <tr class="separator:ga34c26d994c78389437057fb2257d22a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaba6813c0660aabbb8e40be0406309533"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__genfsk.html#ga951bc347a3e269463ba5b02de581f07b">genfskDataRate_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__genfsk.html#gaba6813c0660aabbb8e40be0406309533">GENFSK_radio_config_t::dataRate</a></td></tr>
@@ -530,18 +573,28 @@ GENFSK functional Operation</h2></td></tr>
 <tr class="separator:gaaa6cd622f8e8319672bf5a7fa7bfc479"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac7b4aa7ab6f47a4e4630a5dcbbae8911"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__genfsk.html#ga4ed968606780ee600fd3fb3d2db3136e">genfskStatus_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__genfsk.html#gac7b4aa7ab6f47a4e4630a5dcbbae8911">GENFSK_StartRx</a> (uint8_t instanceId, uint8_t *pBuffer, uint16_t maxBufLengthBytes, <a class="el" href="group__genfsk.html#ga271665c02c28262361df907604e0b703">GENFSK_timestamp_t</a> rxStartTime, <a class="el" href="group__genfsk.html#ga271665c02c28262361df907604e0b703">GENFSK_timestamp_t</a> rxDuration)</td></tr>
 <tr class="separator:gac7b4aa7ab6f47a4e4630a5dcbbae8911"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacf3b52cf16711570278850cae5b669e4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__genfsk.html#ga4ed968606780ee600fd3fb3d2db3136e">genfskStatus_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__genfsk.html#gacf3b52cf16711570278850cae5b669e4">GENFSK_RestartRx</a> (uint8_t instanceId, uint8_t *pBuffer, uint16_t maxBufLengthBytes)</td></tr>
+<tr class="separator:gacf3b52cf16711570278850cae5b669e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf0ff072be84c17dfa53928ee0c1a18a4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__genfsk.html#ga4ed968606780ee600fd3fb3d2db3136e">genfskStatus_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__genfsk.html#gaf0ff072be84c17dfa53928ee0c1a18a4">GENFSK_CancelPendingRx</a> (void)</td></tr>
 <tr class="separator:gaf0ff072be84c17dfa53928ee0c1a18a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gabc2435022e68ac167beebccf626edb24"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__genfsk.html#ga4ed968606780ee600fd3fb3d2db3136e">genfskStatus_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__genfsk.html#gabc2435022e68ac167beebccf626edb24">GENFSK_AbortAll</a> (void)</td></tr>
 <tr class="separator:gabc2435022e68ac167beebccf626edb24"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gae01b9d681a0a9aa3a7c7a8fdd28cb991"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__genfsk.html#ga271665c02c28262361df907604e0b703">GENFSK_timestamp_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__genfsk.html#gae01b9d681a0a9aa3a7c7a8fdd28cb991">GENFSK_GetTimestamp</a> (void)</td></tr>
 <tr class="separator:gae01b9d681a0a9aa3a7c7a8fdd28cb991"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaad66e005bbac69ceb3f1d3cc971b3ae6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__genfsk.html#ga7a22d9ba99f0a3b0f8eb9ba30aefcbff">genfskTimerId_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__genfsk.html#gaad66e005bbac69ceb3f1d3cc971b3ae6">GENFSK_TimeScheduleEvent</a> (<a class="el" href="group__genfsk.html#struct_g_e_n_f_s_k___time_event__t">GENFSK_TimeEvent_t</a> *pEvent)</td></tr>
+<tr class="separator:gaad66e005bbac69ceb3f1d3cc971b3ae6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3760e0e53e0a6ea931374f0a505e0d05"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__genfsk.html#ga3760e0e53e0a6ea931374f0a505e0d05">GENFSK_TimeCancelEvent</a> (<a class="el" href="group__genfsk.html#ga7a22d9ba99f0a3b0f8eb9ba30aefcbff">genfskTimerId_t</a> *pTimerId)</td></tr>
+<tr class="separator:ga3760e0e53e0a6ea931374f0a505e0d05"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga1a11b21c4eb0e4fb543eb8464c109c8f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__genfsk.html#ga4ed968606780ee600fd3fb3d2db3136e">genfskStatus_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__genfsk.html#ga1a11b21c4eb0e4fb543eb8464c109c8f">GENFSK_PacketToByteArray</a> (uint8_t instanceId, <a class="el" href="group__genfsk.html#struct_g_e_n_f_s_k__packet__t">GENFSK_packet_t</a> *pPacket, uint8_t *pBuffer)</td></tr>
 <tr class="separator:ga1a11b21c4eb0e4fb543eb8464c109c8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga317956e54f039314b8e0cd8de4651772"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__genfsk.html#ga4ed968606780ee600fd3fb3d2db3136e">genfskStatus_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__genfsk.html#ga317956e54f039314b8e0cd8de4651772">GENFSK_ByteArrayToPacket</a> (uint8_t instanceId, uint8_t *pBuffer, <a class="el" href="group__genfsk.html#struct_g_e_n_f_s_k__packet__t">GENFSK_packet_t</a> *pPacket)</td></tr>
 <tr class="separator:ga317956e54f039314b8e0cd8de4651772"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4f9a3c60668370d6c579d517efe0732c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__genfsk.html#ga4ed968606780ee600fd3fb3d2db3136e">genfskStatus_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__genfsk.html#ga4f9a3c60668370d6c579d517efe0732c">GENFSK_RegisterCallbacks</a> (uint8_t instanceId, <a class="el" href="group__genfsk.html#ga09468b6af4490dec52c8f2a7c64d938e">genfskPacketReceivedCallBack_t</a> packetReceivedCallback, <a class="el" href="group__genfsk.html#ga13f73b86328578c2429e82904d3bd4fd">genfskEventNotifyCallBack_t</a> eventCallback)</td></tr>
+<tr class="memitem:ga4f9a3c60668370d6c579d517efe0732c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__genfsk.html#ga4ed968606780ee600fd3fb3d2db3136e">genfskStatus_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__genfsk.html#ga4f9a3c60668370d6c579d517efe0732c">GENFSK_RegisterCallbacks</a> (uint8_t instanceId, <a class="el" href="group__genfsk.html#ga2385e7333ee1d1bb15ec172939f794dd">genfskPacketReceivedCallBack_t</a> packetReceivedCallback, <a class="el" href="group__genfsk.html#ga13f73b86328578c2429e82904d3bd4fd">genfskEventNotifyCallBack_t</a> eventCallback)</td></tr>
 <tr class="separator:ga4f9a3c60668370d6c579d517efe0732c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad3323723530602a1981e435f7d757cca"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__genfsk.html#ga4ed968606780ee600fd3fb3d2db3136e">genfskStatus_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__genfsk.html#gad3323723530602a1981e435f7d757cca">GENFSK_RegisterRealTimeCallback</a> (uint8_t instanceId, <a class="el" href="group__genfsk.html#ga2385e7333ee1d1bb15ec172939f794dd">genfskPacketReceivedCallBack_t</a> packetReceivedCallback)</td></tr>
+<tr class="separator:gad3323723530602a1981e435f7d757cca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa365b39dc4e43dae6b8cd2fe02932527"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__genfsk.html#ga4ed968606780ee600fd3fb3d2db3136e">genfskStatus_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__genfsk.html#gaa365b39dc4e43dae6b8cd2fe02932527">GENFSK_GetState</a> (uint8_t instanceId)</td></tr>
+<tr class="separator:gaa365b39dc4e43dae6b8cd2fe02932527"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
 <a name="struct_g_e_n_f_s_k__nwk__addr__match__t" id="struct_g_e_n_f_s_k__nwk__addr__match__t"></a>
@@ -575,6 +628,34 @@ Sync (network) address matching threshold, number of bits that can mismatch and 
 nwkAddr</td>
 <td class="fielddoc">
 The network address to be matched. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="struct_g_e_n_f_s_k___time_event__t" id="struct_g_e_n_f_s_k___time_event__t"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct GENFSK_TimeEvent_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>GENFSK time structure. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a class="anchor" id="gac8b8b49612a6266050c76441d74d474f"></a><a class="el" href="group__genfsk.html#ga271665c02c28262361df907604e0b703">GENFSK_timestamp_t</a></td>
+<td class="fieldname">
+timestamp</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a class="anchor" id="ga876af00750eebc405f4b5ec6f33dd702"></a><a class="el" href="group__genfsk.html#gaa370428d1b081b6e10f688ec3d8b9193">genfskTimeCallback_t</a></td>
+<td class="fieldname">
+callback</td>
+<td class="fielddoc">
+</td></tr>
 </table>
 
 </div>
@@ -996,6 +1077,20 @@ Payload (+ CRC if reception) buffer. </td></tr>
 </div>
 </div>
 <h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="ga702d47382f1af02aa4c624446fa701c1"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define gGenFskVerMajor_c</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Generic FSK build version. </p>
+
+</div>
+</div>
 <a class="anchor" id="gacb962a8985ca8216297ef116f258a4fe"></a>
 <div class="memitem">
 <div class="memproto">
@@ -1081,6 +1176,90 @@ Payload (+ CRC if reception) buffer. </td></tr>
 
 </div>
 </div>
+<a class="anchor" id="ga74af396564f87b2c76584d5141f316d4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define gGENFSK_XcvrInitRetryCount_c</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>maximum GENFSK XCVR_Init retry count. </p>
+
+</div>
+</div>
+<a class="anchor" id="gaec231152ff845a5c44a4edafc8cd1cf2"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define gGENFSK_InvalidTimerId_c</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>GENFSK Timer invalid ID. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga6e28142b0d408d75074a40413e161d03"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define gGENFSK_NoMwsControl_c</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>GENFSK does not usw MWS. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga8a69eba3a842665b82d5b94e6034229f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define gGENFSK_LLMwsControl_c</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>The GENFSK Link Layer controls the MWS. </p>
+
+</div>
+</div>
+<a class="anchor" id="gadb9f2906d17fd7e950be5a79d6c0140d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define gGENFSK_AppMwsControl_c</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>The Application Layer controls the MWS. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga0f4f308f91194c119d6317f4e5afb7cf"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define gGENFSK_MwsControl_c</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>GENFSK MWS control option. </p>
+
+</div>
+</div>
 <h2 class="groupheader">Typedef Documentation</h2>
 <a class="anchor" id="ga762583b93a8549d2d9d867891abb624e"></a>
 <div class="memitem">
@@ -1114,12 +1293,40 @@ Payload (+ CRC if reception) buffer. </td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ga09468b6af4490dec52c8f2a7c64d938e"></a>
+<a class="anchor" id="ga7a22d9ba99f0a3b0f8eb9ba30aefcbff"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef void( * genfskPacketReceivedCallBack_t) (uint8_t *pBuffer, uint16_t bufferLength, uint64_t timestamp, uint8_t rssi, uint8_t crcValid)</td>
+          <td class="memname">typedef uint8_t <a class="el" href="group__genfsk.html#ga7a22d9ba99f0a3b0f8eb9ba30aefcbff">genfskTimerId_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>GENFSK timer ID type. </p>
+
+</div>
+</div>
+<a class="anchor" id="gaa370428d1b081b6e10f688ec3d8b9193"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef void(* genfskTimeCallback_t) (void)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>GENFSK timeout callback. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga2385e7333ee1d1bb15ec172939f794dd"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef void( * genfskPacketReceivedCallBack_t) (uint8_t *pBuffer, uint16_t bufferLength, uint64_t timestamp, int8_t rssi, uint8_t crcValid)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -1297,6 +1504,9 @@ Payload (+ CRC if reception) buffer. </td></tr>
 </td></tr>
 <tr><td class="fieldname"><a class="anchor" id="ggae758fc5ad8aa4e32cb5ca8bbb4f7c8b7a8930de89b1a7860c91f256e745df604a"></a>gGenfskWakeEvent&#160;</td><td class="fielddoc">
 <p>The SLEEP_TMR has matched GENERIC_FSK_WAKE and DSM exited. </p>
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="ggae758fc5ad8aa4e32cb5ca8bbb4f7c8b7a681a1cdeb53ea0b07665f4c4f6b3f7ae"></a>gGenfskGapEvent&#160;</td><td class="fielddoc">
+<p>Gap packet processing. </p>
 </td></tr>
 <tr><td class="fieldname"><a class="anchor" id="ggae758fc5ad8aa4e32cb5ca8bbb4f7c8b7a8e0c7a51cab638e54f7b34c67695fdf4"></a>gGenfskAllEvents&#160;</td><td class="fielddoc">
 <p>All events. </p>
@@ -2706,6 +2916,55 @@ Payload (+ CRC if reception) buffer. </td></tr>
 
 </div>
 </div>
+<a class="anchor" id="gacf3b52cf16711570278850cae5b669e4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__genfsk.html#ga4ed968606780ee600fd3fb3d2db3136e">genfskStatus_t</a> GENFSK_RestartRx </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>instanceId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>pBuffer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>maxBufLengthBytes</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Restarts receive operation. </p>
+<p>This function restarts receive operation.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">instanceId</td><td>The ID of the instance. </td></tr>
+    <tr><td class="paramname">pBuffer</td><td>The pointer to a buffer used for reception. </td></tr>
+    <tr><td class="paramname">maxBufLengthBytes</td><td>The allocated pBuffer size for the maximum packet length that can be received.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">gGenfskSuccess_c</td><td>if success or the failure reason. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a class="anchor" id="gaf0ff072be84c17dfa53928ee0c1a18a4"></a>
 <div class="memitem">
 <div class="memproto">
@@ -2782,6 +3041,60 @@ Payload (+ CRC if reception) buffer. </td></tr>
 
 </div>
 </div>
+<a class="anchor" id="gaad66e005bbac69ceb3f1d3cc971b3ae6"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__genfsk.html#ga7a22d9ba99f0a3b0f8eb9ba30aefcbff">genfskTimerId_t</a> GENFSK_TimeScheduleEvent </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__genfsk.html#struct_g_e_n_f_s_k___time_event__t">GENFSK_TimeEvent_t</a> *&#160;</td>
+          <td class="paramname"><em>pEvent</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Schedules an event. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pEvent</td><td>event to be scheduled.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">genfskTimerId_t</td><td>the ID of the allocated timer. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga3760e0e53e0a6ea931374f0a505e0d05"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void GENFSK_TimeCancelEvent </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__genfsk.html#ga7a22d9ba99f0a3b0f8eb9ba30aefcbff">genfskTimerId_t</a> *&#160;</td>
+          <td class="paramname"><em>pTimerId</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Cancels an event. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pTimerId</td><td>pointer to the ID of the timer. Will be reset to gGENFSK_InvalidTimerId_c. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a class="anchor" id="ga1a11b21c4eb0e4fb543eb8464c109c8f"></a>
 <div class="memitem">
 <div class="memproto">
@@ -2813,7 +3126,10 @@ Payload (+ CRC if reception) buffer. </td></tr>
 </div><div class="memdoc">
 
 <p>Converts a packet buffer to a byte array format to be sent by GENFSK LL. </p>
-<p>This function is used before <a class="el" href="group__genfsk.html#gadcd06cb7d4b39d0ca3f2483a9f6e165b" title="Performs a transmission. ">GENFSK_StartTx()</a> in order to convert the formatted packet in a byte array to be sent over the air. The byte array will have the format : NWK_ADDRESS | H0 | LENGTH | H1 | PAYLOAD | CRC</p>
+<p>This function is used before <a class="el" href="group__genfsk.html#gadcd06cb7d4b39d0ca3f2483a9f6e165b" title="Performs a transmission. ">GENFSK_StartTx()</a> in order to convert the formatted packet in a byte array to be sent over the air. The byte array will have the format : NWK_ADDRESS | H0 | LENGTH | H1 | PAYLOAD | CRC This API operates in two modes: "copy" mode and "no copy" mode.</p><ul>
+<li>"copy" mode is assumed when pPacket-&gt;payload is specified: packet header and payload are copied into pBuffer</li>
+<li>"no copy" is assumed when pPacket-&gt;payload is NULL. Only packet header is formed into pBuffer, payload has to be copied by the caller.</li>
+</ul>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">instanceId</td><td>The ID of the instance for which the packet to be formatted. </td></tr>
@@ -2893,7 +3209,7 @@ Payload (+ CRC if reception) buffer. </td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="group__genfsk.html#ga09468b6af4490dec52c8f2a7c64d938e">genfskPacketReceivedCallBack_t</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="group__genfsk.html#ga2385e7333ee1d1bb15ec172939f794dd">genfskPacketReceivedCallBack_t</a>&#160;</td>
           <td class="paramname"><em>packetReceivedCallback</em>, </td>
         </tr>
         <tr>
@@ -2923,6 +3239,79 @@ Payload (+ CRC if reception) buffer. </td></tr>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">gGenfskSuccess_c</td><td>if success or the failure reason. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gad3323723530602a1981e435f7d757cca"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__genfsk.html#ga4ed968606780ee600fd3fb3d2db3136e">genfskStatus_t</a> GENFSK_RegisterRealTimeCallback </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>instanceId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__genfsk.html#ga2385e7333ee1d1bb15ec172939f794dd">genfskPacketReceivedCallBack_t</a>&#160;</td>
+          <td class="paramname"><em>packetReceivedCallback</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Registers the real time callback functions for packet received. </p>
+<p>This function register the real time callback functions for packet received</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">instanceId</td><td>The ID of the instance. </td></tr>
+    <tr><td class="paramname">packetReceivedCallback</td><td>Packet received callback.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">gGenfskSuccess_c</td><td>if success or the failure reason.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Warning: packetReceivedCallback will be called in ISR context (when RX_IRQ fires) </p>
+
+</div>
+</div>
+<a class="anchor" id="gaa365b39dc4e43dae6b8cd2fe02932527"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__genfsk.html#ga4ed968606780ee600fd3fb3d2db3136e">genfskStatus_t</a> GENFSK_GetState </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>instanceId</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Retreives the GENFSK LL state receive operation. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">instanceId</td><td>The ID of the instance.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">genfskStatus_t</td><td>The status of the GENFSK instance </td></tr>
   </table>
   </dd>
 </dl>
@@ -2969,6 +3358,30 @@ Payload (+ CRC if reception) buffer. </td></tr>
 </div><div class="memdoc">
 
 <p>The network address to be matched. </p>
+
+</div>
+</div>
+<a class="anchor" id="gac8b8b49612a6266050c76441d74d474f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__genfsk.html#ga271665c02c28262361df907604e0b703">GENFSK_timestamp_t</a> GENFSK_TimeEvent_t::timestamp</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga876af00750eebc405f4b5ec6f33dd702"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__genfsk.html#gaa370428d1b081b6e10f688ec3d8b9193">genfskTimeCallback_t</a> GENFSK_TimeEvent_t::callback</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>

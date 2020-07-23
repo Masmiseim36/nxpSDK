@@ -331,7 +331,7 @@ static void ProcessCommand(p_shell_context_t context, const char *cmd)
     static const shell_command_context_t *tmpCommand = NULL;
     static const char *tmpCommandString;
     int32_t argc;
-    char *argv[SHELL_BUFFER_SIZE];
+    char *argv[SHELL_BUFFER_SIZE] = {0};
     uint8_t flag = 1;
     uint8_t tmpCommandLen;
     uint8_t tmpLen;

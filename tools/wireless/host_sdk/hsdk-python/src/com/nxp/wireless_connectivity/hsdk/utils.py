@@ -15,6 +15,7 @@ from binascii import hexlify
 from ctypes import cast, c_void_p, POINTER
 from datetime import datetime
 import sys
+import struct
 
 
 try:
@@ -144,6 +145,15 @@ def list_to_int(list_num, reverse=True):
 
 
 def to_bytes(n, length, reverse=True):
+    
+    # verify if length is byte array so transform back to unsigned value
+    if isinstance(length, bytearray):
+        if len(length) <= 2:
+            length = struct.unpack(">H", length)[0]
+        elif len(length) == 4:
+            length = struct.unpack(">I", length)[0]
+        elif len(length) == 8:
+            length = struct.unpack(">Q", length)[0]
 
     # sanity checks
     if n == [] and length > 0:

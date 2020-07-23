@@ -64,16 +64,16 @@
 
                 </li>
 
-         <li class="li"> At warm boot to restore the application entry context and re-init
+         <li class="li"> At warm boot to restore the application entry context and re-initialize
                     modules.<pre class="pre codeblock">void PWR_RegisterWarmbootCallback(pfPWRCallBack_t warmBootCallback);</pre>
 
-                    It restores everything that was saved in the VLLS entry callback and re-inits:
-                        <ul class="ul" id="GUID-73B4C7B2-68B7-4BE1-89C0-84CB1DB6C27D__UL_QNP_STG_C3B">
+                    It restores everything that was saved in the VLLS entry callback and
+                    re-initializes: <ul class="ul" id="GUID-73B4C7B2-68B7-4BE1-89C0-84CB1DB6C27D__UL_QNP_STG_C3B">
                         <li class="li"> DCDC </li>
 
                         <li class="li">Stack Timer </li>
 
-                        <li class="li">Switches  </li>
+                        <li class="li">Switches </li>
 
                     </ul>
 </li>
@@ -107,8 +107,8 @@
         <p class="p">The warm-boot config region must be located after the RAM vector table, at a location
             which is always preserved in VLLS2, and needs 8 bytes allocated.  </p>
 
-        <p class="p">When the warm-bsoot is enabled, the application stack is placed immediately after the
-            program data, to be preserved in VLLS2. </p>
+        <p class="p">When the warm-boot is enabled, the application stack is placed immediately
+            after the program data, to be preserved in VLLS2. </p>
 
         <p class="p">By default, the Low Power Module will enable the warm-boot sequence with a dedicated
             stack (USE_WARMBOOT_SP=1) when low power modes 5 or 8 are enabled. </p>

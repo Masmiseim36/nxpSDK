@@ -110,6 +110,8 @@ public:
             'STMP', //!< Signature in #elftosb::SB2Image::sb2_header_t::m_signature.
         ROM_IMAGE_HEADER_SIGNATURE2 =
             'sgtl',                       //!< Value for #elftosb::SB2Image::sb2_header_t::m_signature2;
+        ROM_BOOT_IMAGE_MAJOR_VERSION = 2, //!< Current boot image major version.
+        ROM_BOOT_IMAGE_MINOR_VERSION = 0  //!< Current boot image minor version.
     };
 
     enum
@@ -254,10 +256,7 @@ public:
         ROM_ERASE_CMD = 0x07,      //!< Flash erase command.
         ROM_RESET_CMD = 0x08,      //!< Reset command.
         ROM_MEM_ENABLE_CMD = 0x09, //!< Memory Enable command.
-        ROM_PROG_CMD = 0x0a,       //!< Program persistent bits command.
-		ROM_FW_VER_CHK = 0x0b,     //!< Check FW version fuse value with 
-		ROM_WR_KEYSTORE_TO_NV = 0x0c,   //!< Program persistent bits command.
-		ROM_WR_KEYSTORE_FROM_NV = 0x0d
+        ROM_PROG_CMD = 0x0a        //!< Program persistent bits command.
     };
 
     //! \brief Flag field constants for #ROM_TAG_CMD.
@@ -271,8 +270,7 @@ public:
     //! \brief Flag field constants for #ROM_LOAD_CMD.
     enum
     {
-        ROM_LOAD_DCD = (1 << 0), //!< Execute the DCD after loading completes.
-		ROM_LOAD_CALC_HMAC = (1 << 1) //!< Execute the hash calculation after loading completes.
+        ROM_LOAD_DCD = (1 << 0) //!< Execute the DCD after loading completes.
     };
 
     //! \brief Flag field constants for #ROM_FILL_CMD.
@@ -585,11 +583,6 @@ public:
         inline void setDCD(bool isDCD) { m_loadDCD = isDCD; }
         //@}
 
-		inline void setLoadSecret(bool isLoadSecret) { m_isLoadSecret = isLoadSecret; }
-		inline bool isLoadSecret() { return m_isLoadSecret; }
-
-		inline void setLoadHmac (bool isLoadHmac) { m_isLoadHmac = isLoadHmac; }
-		inline bool isLoadHmac() { return m_isLoadHmac; }
         //! \name Address
         //@{
         inline void setLoadAddress(uint32_t address) { m_address = address; }
@@ -631,8 +624,6 @@ public:
         uint32_t m_length;               //!< Number of bytes to load.
         uint32_t m_address;              //!< Address to which data will be loaded.
         bool m_loadDCD;                  //!< Whether to execute the DCD after loading.
-		bool m_isLoadSecret;			 //!< If load command is loading secret
-		bool m_isLoadHmac;				 //!< If load command is loading secret
         uint32_t m_memoryId;             //!< Memory device ID.
 
         void fillPadding();
@@ -1007,150 +998,6 @@ public:
     };
 
     /*!
-    * \brief KeyStoreToNv bootloader command.
-    */
-    class KeyStoreToNvCommand : public BootCommand
-    {
-    public:
-        //! \brief Default constructor.
-        KeyStoreToNvCommand()
-            : BootCommand()
-            , m_startAddress(0)
-            , m_byteCount(0)
-            , m_memoryId(0)
-        {
-        }
-
-        //! \brief Read the command contents from raw data.
-        virtual void initFromData(const cipher_block_t *blocks, unsigned count, unsigned *consumed);
-
-        //! \name Header
-        //@{
-        //! \brief Returns the tag value for this command.
-        virtual uint8_t getTag() const { return ROM_WR_KEYSTORE_TO_NV; }
-        //! \brief Constructs the header for this boot command.
-        virtual void fillCommandHeader(boot_command_t &header);
-        //@}
-
-        //! \name Memory enable address range
-        //@{
-        void setAddressRange(uint32_t startAddress, uint32_t count);
-        void getAddressRange(uint32_t *startAddress, uint32_t *count) const;
-        //@}
-
-        //! \name Memory enable controller ID
-        //@{
-        void setMemoryId(uint32_t id) { m_memoryId = id; }
-        uint32_t getMemoryId() const { return m_memoryId; }
-        //@}
-
-        //! \brief Print out a string representation of the object.
-        virtual void debugPrint() const;
-
-    protected:
-        uint32_t m_startAddress;
-        uint32_t m_byteCount;
-        uint32_t m_memoryId;
-    };
-
-	/*!
-    * \brief KeyStoreFromNv bootloader command.
-    */
-    class KeyStoreFromNvCommand : public BootCommand
-    {
-    public:
-        //! \brief Default constructor.
-        KeyStoreFromNvCommand()
-            : BootCommand()
-            , m_startAddress(0)
-            , m_byteCount(0)
-            , m_memoryId(0)
-        {
-        }
-
-        //! \brief Read the command contents from raw data.
-        virtual void initFromData(const cipher_block_t *blocks, unsigned count, unsigned *consumed);
-
-        //! \name Header
-        //@{
-        //! \brief Returns the tag value for this command.
-        virtual uint8_t getTag() const { return ROM_WR_KEYSTORE_FROM_NV; }
-        //! \brief Constructs the header for this boot command.
-        virtual void fillCommandHeader(boot_command_t &header);
-        //@}
-
-        //! \name Memory enable address range
-        //@{
-        void setAddressRange(uint32_t startAddress, uint32_t count);
-        void getAddressRange(uint32_t *startAddress, uint32_t *count) const;
-        //@}
-
-        //! \name Memory enable controller ID
-        //@{
-        void setMemoryId(uint32_t id) { m_memoryId = id; }
-        uint32_t getMemoryId() const { return m_memoryId; }
-        //@}
-
-        //! \brief Print out a string representation of the object.
-        virtual void debugPrint() const;
-
-    protected:
-        uint32_t m_startAddress;
-        uint32_t m_byteCount;
-        uint32_t m_memoryId;
-    };
-
-	/*!
-    * \brief CheckVersionCommand bootloader command.
-    */
-    class CheckVersionCommand : public BootCommand
-    {
-    public:
-        //! \brief Default constructor.
-        CheckVersionCommand()
-            : BootCommand()
-            , m_versionType(CheckVersionType::SecureVersion)
-            , m_version(0)
-        {
-        }
-		enum class CheckVersionType {
-			SecureVersion = 0x0,
-			NonSecureVersion = 0x1,
-		};
-
-        //! \brief Read the command contents from raw data.
-        virtual void initFromData(const cipher_block_t *blocks, unsigned count, unsigned *consumed);
-
-        //! \name Header
-        //@{
-        //! \brief Returns the tag value for this command.
-        virtual uint8_t getTag() const { return ROM_FW_VER_CHK; }
-        //! \brief Constructs the header for this boot command.
-        virtual void fillCommandHeader(boot_command_t &header);
-        //@}
-
-		//! \name Set version value
-        //@{
-        void setVersion(uint32_t version) { m_version = version; }
-        uint32_t getVersion() const { return m_version; }
-        //@}
-
-		//! \name Set Check Version command type
-        //@{
-        void setVersionType(CheckVersionType versionType) { m_versionType = versionType; }
-        CheckVersionType getVersionType() const { return m_versionType; }
-        //@}
-
-
-        //! \brief Print out a string representation of the object.
-        virtual void debugPrint() const;
-
-    protected:
-        CheckVersionType m_versionType;
-        uint32_t m_version;
-    };
-
-    /*!
   * \brief Base class for a section of an Encore boot image.
   *
   * Provides methods to manage the unique identifier that all sections have, and
@@ -1412,10 +1259,8 @@ public:
 
    //! \brief The image is encrypted if there is at least one key.
     inline bool isEncrypted() const { return TRUE; }
-    inline bool isSigned() const { return ((getFlags() & ROM_SIGNED) || isVersion21()); }
+    inline bool isSigned() const { return (getFlags() & ROM_SIGNED); }
     inline uint8_t getCipherMode() const { return ((getFlags() & ROM_CIPHER_MODE) >> CIPHER_MODE_SHIFT); }
-	inline bool isVersion21() const { return m_majorVersion == 2 && m_minorVersion == 1; }
-	inline bool isVersion20() const { return m_majorVersion == 2 && m_minorVersion == 0; }
     //@}
 
     //! \name Versions
@@ -1423,12 +1268,6 @@ public:
     virtual void setProductVersion(const version_t &version);
     virtual void setComponentVersion(const version_t &version);
     //@}
-
-	//! \Secure Binary Versions
-	//@{
-	virtual void setMajorVersion(uint8_t majorVersion) { m_majorVersion = majorVersion; }
-	virtual void setMinorVersion(uint8_t minorVersion) { m_minorVersion = minorVersion; }
-	//@}
 
     //! \name Flags
     //@{
@@ -1444,10 +1283,6 @@ public:
 
     //! \brief Calculates the total number of cipher blocks the image consumes.
     uint32_t getImageSize();
-	//! \brief Calculates the total number of cipher blocks of header (all data excluding sections).
-	uint32_t getTotalImageHeaderSize();
-	//! \brief Provides offset in blocks to digital signature location from the image begining.
-	uint32_t getSignatureOffset();
 
     //! \brief Returns the preferred ".sb" extension for Encore boot images.
     virtual std::string getFileExtension() const { return ".sb2"; }
@@ -1455,8 +1290,6 @@ public:
     //@{
     //! \brief Write the boot image to an output stream.
     virtual void writeToStream(std::ostream &stream);
-	bool setSignatureSize();
-	bool signDigest(mbedtls_sha256_context &sha256_ctx, std::ostream & stream);
     //@}
 
     //! \brief Print out a string representation of the object.
@@ -1481,10 +1314,6 @@ protected:
     cert_table_t m_certTable;  //! Certificate table
     rkh_table m_rkhTable;      //! Root key hashes table
     string_vector_t m_rootKeyCertFilePaths;  //!< Paths to root key certificate files.
-	uint8_t m_majorVersion;       //!< Major version for the image format
-	uint8_t m_minorVersion;       //!< Minor version of the boot image format
-	size_t m_certDataSize = 0;	  //!< Size of certificate block in bytes
-	size_t m_signatureSize = 0;	  //!< Size of signature in bytes
     
     void prepareImageHeader(sb2_header_t &header);
     uint64_t getTimestamp();
@@ -1492,7 +1321,6 @@ protected:
     unsigned getPadBlockCountForSection(Section *section, unsigned offset);
     void prepareCertBlockHeader();
     void prepareSignDataSection();
-	bool prepareSignData(uint8_t * &data);
     uint32_t getKeyBlobBlock();
     uint32_t getKeyBlobBlockCount();
     uint16_t getMaxSectionMacCount();

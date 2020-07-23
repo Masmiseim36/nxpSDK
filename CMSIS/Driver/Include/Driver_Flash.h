@@ -1,32 +1,31 @@
-/*
- * Copyright (c) 2013-2018 ARM Limited. All rights reserved.
+/* -----------------------------------------------------------------------------
+ * Copyright (c) 2013-2014 ARM Ltd.
  *
- * SPDX-License-Identifier: Apache-2.0
+ * This software is provided 'as-is', without any express or implied warranty.
+ * In no event will the authors be held liable for any damages arising from
+ * the use of this software. Permission is granted to anyone to use this
+ * software for any purpose, including commercial applications, and to alter
+ * it and redistribute it freely, subject to the following restrictions:
  *
- * Licensed under the Apache License, Version 2.0 (the License); you may
- * not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * 1. The origin of this software must not be misrepresented; you must not
+ *    claim that you wrote the original software. If you use this software in
+ *    a product, an acknowledgment in the product documentation would be
+ *    appreciated but is not required.
  *
- * www.apache.org/licenses/LICENSE-2.0
+ * 2. Altered source versions must be plainly marked as such, and must not be
+ *    misrepresented as being the original software.
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an AS IS BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * 3. This notice may not be removed or altered from any source distribution.
  *
- * $Date:        19. Apr 2018
- * $Revision:    V2.2
+ *
+ * $Date:        31. Mar 2014
+ * $Revision:    V2.00
  *
  * Project:      Flash Driver definitions
- */
+ * -------------------------------------------------------------------------- */
 
 /* History:
- *  Version 2.2
- *    Padding bytes added to ARM_FLASH_INFO
- *  Version 2.1
- *    ARM_FLASH_STATUS made volatile
- *  Version 2.0
+ *  Version 2.00
  *    Renamed driver NOR -> Flash (more generic)
  *    Non-blocking operation
  *    Added Events, Status and Capabilities
@@ -39,17 +38,12 @@
  *    Initial release
  */
 
-#ifndef DRIVER_FLASH_H_
-#define DRIVER_FLASH_H_
-
-#ifdef  __cplusplus
-extern "C"
-{
-#endif
+#ifndef __DRIVER_FLASH_H
+#define __DRIVER_FLASH_H
 
 #include "Driver_Common.h"
 
-#define ARM_FLASH_API_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(2,2)  /* API version */
+#define ARM_FLASH_API_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(2,00)  /* API version */
 
 
 #define _ARM_Driver_Flash_(n)      Driver_Flash##n
@@ -76,17 +70,15 @@ typedef struct _ARM_FLASH_INFO {
   uint32_t          page_size;          ///< Optimal programming page size in bytes
   uint32_t          program_unit;       ///< Smallest programmable unit in bytes
   uint8_t           erased_value;       ///< Contents of erased memory (usually 0xFF)
-  uint8_t           reserved[3];        ///< Reserved (must be zero)
 } const ARM_FLASH_INFO;
 
 
 /**
 \brief Flash Status
 */
-typedef volatile struct _ARM_FLASH_STATUS {
-  uint32_t busy     : 1;                ///< Flash busy flag
-  uint32_t error    : 1;                ///< Read/Program/Erase error flag (cleared on start of next operation)
-  uint32_t reserved : 30;
+typedef struct _ARM_FLASH_STATUS {
+  uint32_t busy  : 1;                   ///< Flash busy flag
+  uint32_t error : 1;                   ///< Read/Program/Erase error flag (cleared on start of next operation)
 } ARM_FLASH_STATUS;
 
 
@@ -179,7 +171,6 @@ typedef struct _ARM_FLASH_CAPABILITIES {
   uint32_t event_ready  : 1;            ///< Signal Flash Ready event
   uint32_t data_width   : 2;            ///< Data width: 0=8-bit, 1=16-bit, 2=32-bit
   uint32_t erase_chip   : 1;            ///< Supports EraseChip operation
-  uint32_t reserved     : 28;           ///< Reserved (must be zero)
 } ARM_FLASH_CAPABILITIES;
 
 
@@ -200,8 +191,4 @@ typedef struct _ARM_DRIVER_FLASH {
   ARM_FLASH_INFO *       (*GetInfo)        (void);                                          ///< Pointer to \ref ARM_Flash_GetInfo : Get Flash information.
 } const ARM_DRIVER_FLASH;
 
-#ifdef  __cplusplus
-}
-#endif
-
-#endif /* DRIVER_FLASH_H_ */
+#endif /* __DRIVER_FLASH_H */

@@ -48,11 +48,11 @@
                 
                 <thead class="thead" align="left">
                     <tr class="row">
-                        <th class="entry" valign="top" id="d46582e73"><strong class="ph b">Field name</strong></th>
+                        <th class="entry" valign="top" id="d46725e73"><strong class="ph b">Field name</strong></th>
 
-                        <th class="entry" valign="top" id="d46582e77"><strong class="ph b">Length (bytes)</strong></th>
+                        <th class="entry" valign="top" id="d46725e77"><strong class="ph b">Length (bytes)</strong></th>
 
-                        <th class="entry" valign="top" id="d46582e81"><strong class="ph b">Description</strong></th>
+                        <th class="entry" valign="top" id="d46725e81"><strong class="ph b">Description</strong></th>
 
                     </tr>
 
@@ -60,11 +60,11 @@
 
                 <tbody class="tbody">
                     <tr class="row">
-                        <td class="entry" valign="top" headers="d46582e73 ">STX</td>
+                        <td class="entry" valign="top" headers="d46725e73 ">STX</td>
 
-                        <td class="entry" valign="top" headers="d46582e77 ">1</td>
+                        <td class="entry" valign="top" headers="d46725e77 ">1</td>
 
-                        <td class="entry" valign="top" headers="d46582e81 ">
+                        <td class="entry" valign="top" headers="d46725e81 ">
                             <p class="p">Used for synchronization over the serial interface. </p>
 
                             <p class="p">The value is always 0x02.</p>
@@ -74,60 +74,60 @@
                     </tr>
 
                     <tr class="row">
-                        <td class="entry" valign="top" headers="d46582e73 ">Opcode Group</td>
+                        <td class="entry" valign="top" headers="d46725e73 ">Opcode Group</td>
 
-                        <td class="entry" valign="top" headers="d46582e77 ">1</td>
+                        <td class="entry" valign="top" headers="d46725e77 ">1</td>
 
-                        <td class="entry" valign="top" headers="d46582e81 ">Distinguishes between different Service Access Primitives (for
+                        <td class="entry" valign="top" headers="d46725e81 ">Distinguishes between different Service Access Primitives (for
                             example MLME or MCPS).</td>
 
                     </tr>
 
                     <tr class="row">
-                        <td class="entry" valign="top" headers="d46582e73 ">Message Type</td>
+                        <td class="entry" valign="top" headers="d46725e73 ">Message Type</td>
 
-                        <td class="entry" valign="top" headers="d46582e77 ">1</td>
+                        <td class="entry" valign="top" headers="d46725e77 ">1</td>
 
-                        <td class="entry" valign="top" headers="d46582e81 ">Specifies the exact message opcode that is contained in the
+                        <td class="entry" valign="top" headers="d46725e81 ">Specifies the exact message opcode that is contained in the
                             packet.</td>
 
                     </tr>
 
                     <tr class="row">
-                        <td class="entry" valign="top" headers="d46582e73 ">Length</td>
+                        <td class="entry" valign="top" headers="d46725e73 ">Length</td>
 
-                        <td class="entry" valign="top" headers="d46582e77 ">1 or 2</td>
+                        <td class="entry" valign="top" headers="d46725e77 ">1 or 2</td>
 
-                        <td class="entry" valign="top" headers="d46582e81 ">The length of the packet payload, excluding the header and FCS. The
+                        <td class="entry" valign="top" headers="d46725e81 ">The length of the packet payload, excluding the header and FCS. The
                             length field content must be provided in little‑endian format.</td>
 
                     </tr>
 
                     <tr class="row">
-                        <td class="entry" valign="top" headers="d46582e73 ">Payload</td>
+                        <td class="entry" valign="top" headers="d46725e73 ">Payload</td>
 
-                        <td class="entry" valign="top" headers="d46582e77 ">variable</td>
+                        <td class="entry" valign="top" headers="d46725e77 ">variable</td>
 
-                        <td class="entry" valign="top" headers="d46582e81 ">Payload of the actual message.</td>
+                        <td class="entry" valign="top" headers="d46725e81 ">Payload of the actual message.</td>
 
                     </tr>
 
                     <tr class="row">
-                        <td class="entry" valign="top" headers="d46582e73 ">Checksum</td>
+                        <td class="entry" valign="top" headers="d46725e73 ">Checksum</td>
 
-                        <td class="entry" valign="top" headers="d46582e77 ">1</td>
+                        <td class="entry" valign="top" headers="d46725e77 ">1</td>
 
-                        <td class="entry" valign="top" headers="d46582e81 ">Checksum field used to check the data integrity of the
+                        <td class="entry" valign="top" headers="d46725e81 ">Checksum field used to check the data integrity of the
                             packet.</td>
 
                     </tr>
 
                     <tr class="row">
-                        <td class="entry" valign="top" headers="d46582e73 ">Checksum2</td>
+                        <td class="entry" valign="top" headers="d46725e73 ">Checksum2</td>
 
-                        <td class="entry" valign="top" headers="d46582e77 ">0 or 1</td>
+                        <td class="entry" valign="top" headers="d46725e77 ">0 or 1</td>
 
-                        <td class="entry" valign="top" headers="d46582e81 ">The second CRC field appears only for virtual interfaces.</td>
+                        <td class="entry" valign="top" headers="d46725e81 ">The second CRC field appears only for virtual interfaces.</td>
 
                     </tr>
 

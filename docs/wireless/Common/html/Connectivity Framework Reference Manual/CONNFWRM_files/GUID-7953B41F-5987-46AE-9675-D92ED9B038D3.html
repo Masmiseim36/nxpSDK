@@ -26,18 +26,18 @@
     <h1 class="title topictitle1">Overview</h1>
 
     <div class="body">
-        <p class="p">Because the memory fragmentation issues can potentially occur, a generic allocation
-            scheme is not desirable. Therefore, the framework must provide a non-fragmenting memory
-            allocation solution. The solution relies on partitions to avoid the memory fragmentation
-            problem and the execution time is deterministic. Each partition has a fixed number of
-            partition blocks and each block has a fixed size. The memory management services are
-            implemented using multiple partitions of different sizes. All partitions use memory from
-            a single global array. When a new buffer is requested to be allocated, the framework
-            returns the first available partition block of equal or higher size. In other words, if
-            no buffer of the requested size is available, the allocation routine returns a larger
-            buffer. As per requirements, the partition must be defined in the ascending size order
-            and the block sizes must be multiples of four to ensure the block alignment to four
-            bytes:</p>
+        <p class="p">A generic memory allocation scheme is undesirable due to the potential for
+            memory fragmentation issues during use. Therefore, the framework provides a
+            non-fragmenting memory allocation solution. The solution relies on partitions to avoid
+            the memory fragmentation problem and the execution time is deterministic. Each partition
+            has a fixed number of partition blocks and each block has a fixed size. The memory
+            management services are implemented using multiple partitions of different sizes. All
+            partitions use memory from a single global array. When a new buffer is requested to be
+            allocated, the framework returns the first available partition block of equal or higher
+            size. In other words, if no buffer of the requested size is available, the allocation
+            routine returns a larger buffer. As per requirements, the partition must be defined in
+            the ascending size order and the block sizes must be multiples of four to ensure the
+            block alignment to four bytes:</p>
 
         <div class="example" id="GUID-7953B41F-5987-46AE-9675-D92ED9B038D3__GUID-409EF5E1-4992-451D-A822-7A7F06D95B2E">
             <pre class="pre codeblock">#ifndef PoolsDetails_c
@@ -57,7 +57,7 @@
 
 <div class="related-links">
 <div class="familylinks">
-<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-CCA67CCD-5FF2-401B-9D0C-E1AB611EA04C.html">Memory management</a></div>
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-CCA67CCD-5FF2-401B-9D0C-E1AB611EA04C.html">Memory Management</a></div>
 </div>
 </div>
 

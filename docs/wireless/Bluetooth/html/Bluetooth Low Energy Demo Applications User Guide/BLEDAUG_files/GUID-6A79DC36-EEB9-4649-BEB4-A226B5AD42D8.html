@@ -11,6 +11,9 @@
 <meta name="abstract" content=""/>
 <meta name="description" content=""/>
 <meta name="DC.Relation" scheme="URI" content="GUID-69DCE941-B29B-445D-AF65-13DA7D71E88A.html"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-0AAF09C2-6DD5-496D-92FF-1BFCB3E8B36A.html"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-97BB1293-3FAA-4EEB-B612-BFE31AC0ACDE.html"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-8C99907A-6C31-44FA-AAEE-20A64035017A.html"/>
 <meta name="DC.Format" content="XHTML"/>
 <meta name="DC.Identifier" content="GUID-6A79DC36-EEB9-4649-BEB4-A226B5AD42D8"/>
 <meta name="DC.Language" content="en-us"/>
@@ -34,30 +37,27 @@
 
       <li class="li">Configure one of the devices as a GAP peripheral and a Heart Rate server.
         Change name to HRS. Start advertising on this device.
-        <pre class="pre codeblock">
-Kinetis Shell&gt;gap devicename HRS
+        <pre class="pre codeblock">Kinetis Shell&gt;gap devicename HRS
 --&gt; GATTDB Event: Attribute Written
 HRS&gt;gap advdata 1 6
 --&gt; GAP Event: Advertising data successfully set.
 HRSHRS&gt;gap advdata 8 HRS
 --&gt; GAP Event: Advertising data successfully set.
 HRS&gt;gap advstart
---&gt; GAP Event: Advertising started.
+--&gt; GAP Event: <span class="ph">Advertising state changed successfully!</span>
 HRS&gt;gattdb addservice 0x180D
 --&gt; Heart Rate
 - Heart Rate Measurement Value Handle: 14
 - CCCD Handle: 15
 - Body Sensor Location Value Handle: 17
 - Heart Rate Control Point Value Handle: 19
---&gt; GATTDB Event: Service Added in database.
-</pre>
+--&gt; GATTDB Event: Service Added in database.</pre>
 </li>
 
       <li class="li">Configure the other device as a GAP central. Change name as Collector. Start
         scanning and connect to the HRS device by selecting the corresponding device index. In the
         example below, the HRS device is device number 2.
-        <pre class="pre codeblock">
-Kinetis Shell&gt;gap devicename Collector
+        <pre class="pre codeblock">Kinetis Shell&gt;gap devicename Collector
 --&gt; GATTDB Event: Attribute Written
 Collector&gt;gap scanstart
 --&gt; GAP Event: Scan started.
@@ -68,33 +68,28 @@ Collector&gt;
 Collector&gt;gap connect 2
 --&gt; GAP Event: Scan stopped.
 Collector&gt;
---&gt; GAP Event: Connected
-</pre>
+--&gt; GAP Event: Connected to peer 0</pre>
 </li>
 
       
       <li class="li">Optionally, the devices can be paired. On the collector initiate the pairing.
-      <pre class="pre codeblock">
-Collector&gt;gap pair
+        <pre class="pre codeblock">Collector&gt;gap pair 0
 --&gt; Pairing...
---&gt; GAP Event: Passkey is 792910
-</pre>
+--&gt; GAP Event: Passkey is 792910</pre>
 </li>
 
       <li class="li">On the HRS, enter the pin displayed by the collector, as shown below. If the
         leSecureConnectionSupported member of gPairingParameters, from app_config.c is enabled, then
         the PIN is not
-        required.<pre class="pre codeblock">
-HRS&gt;
+        required.<pre class="pre codeblock">HRS&gt;
 --&gt; GAP Event: PIN required
-HRS&gt;gap enterpin 792910
---&gt; GAP Event: Device Paired.
-</pre>
+HRS&gt;<span class="ph">gap enterpin 0 792910</span>
+--&gt; GAP Event: Device Paired.</pre>
 </li>
 
-      <li class="li">On the Collector, start service discovery. The device discovers the GAP, GATT and Heart Rate services.
-      <pre class="pre codeblock">
-Collector&gt;gatt discover -all
+      <li class="li">On the Collector, start service discovery. The device discovers the GAP, GATT
+        and Heart Rate services.
+        <pre class="pre codeblock">Collector&gt;gatt discover 0 -all
 --&gt; Discovered primary services: 3
 --&gt; Generic Access Start Handle: 1 End Handle: 7
 - Device Name Value Handle: 3
@@ -107,29 +102,24 @@ Collector&gt;gatt discover -all
 - Heart Rate Measurement Value Handle: 14
 - Client Characteristic Configuration Descriptor Handle: 15
 - Body Sensor Location Value Handle: 17
-- Heart Rate Control Point Value Handle: 19
-</pre>
+- Heart Rate Control Point Value Handle: 19</pre>
 </li>
 
-      <li class="li">Configure the HRS to send notifications by writing the CCCD from the Collector. Send a GATT write command with value 1 to the CCCD handle discovered, 15.
-      <pre class="pre codeblock">
-Collector&gt;gatt write 15 0x0001
-</pre>
+      <li class="li">Configure the HRS to send notifications by writing the CCCD from the
+        Collector. Send a GATT write command with value 1 to the CCCD handle discovered, 15.
+        <pre class="pre codeblock">Collector&gt;gatt write 0 15 0x0001</pre>
 </li>
 
-      <li class="li">Send heart rate measurement notifications from the HRS device by using the value handle obtained after adding the service in the previous step.
-      <pre class="pre codeblock">
-HRS&gt;gatt notify 14
-</pre>
+      <li class="li">Send heart rate measurement notifications from the HRS device by using the
+        value handle obtained after adding the service in the previous step.
+        <pre class="pre codeblock">HRS&gt;gatt notify 0 14</pre>
 </li>
 
       <li class="li">A notification appears on the Collector console.
-      <pre class="pre codeblock">
-Collector&gt;
+        <pre class="pre codeblock">Collector&gt;
 --&gt; GATT Event: Received Notification
 Handle: 14
-Value: B400
-</pre>
+Value: B400</pre>
 </li>
 
       
@@ -141,6 +131,15 @@ Value: B400
   </div>
 
 <div class="related-links">
+<ul class="ullinks">
+<li class="link ulchildlink"><strong><a href="GUID-0AAF09C2-6DD5-496D-92FF-1BFCB3E8B36A.html">Extended Advertising (KW37 platforms)</a></strong><br/>
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-97BB1293-3FAA-4EEB-B612-BFE31AC0ACDE.html">Periodic Advertising</a></strong><br/>
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-8C99907A-6C31-44FA-AAEE-20A64035017A.html">RSSI Monitor</a></strong><br/>
+</li>
+</ul>
+
 <div class="familylinks">
 <div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-69DCE941-B29B-445D-AF65-13DA7D71E88A.html">Bluetooth LE Shell</a></div>
 </div>

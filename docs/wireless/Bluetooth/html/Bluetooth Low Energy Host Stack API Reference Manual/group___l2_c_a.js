@@ -28,12 +28,29 @@ var group___l2_c_a =
       [ "cId", "group___l2_c_a.html#a759477336270c906f321ee431c70ad9d", null ],
       [ "localCredits", "group___l2_c_a.html#a9d860b1c2b1cf40c29213124f2f150c1", null ]
     ] ],
+    [ "l2caLeCbError_t", "group___l2_c_a.html#structl2ca_le_cb_error__t", [
+      [ "deviceId", "group___l2_c_a.html#a409f250ced34f1dcd3ef0bc6e85fdea6", null ],
+      [ "result", "group___l2_c_a.html#a3e00dddd8cf9718e6a5fd1f2620fbda5", null ],
+      [ "errorSource", "group___l2_c_a.html#ad9e5863c89043a68042e92621cd37d25", null ]
+    ] ],
+    [ "l2capControlMessage_t", "group___l2_c_a.html#structl2cap_control_message__t", [
+      [ "messageType", "group___l2_c_a.html#a43c0be5a1ab6f363581b408fd067305a", null ],
+      [ "messageData", "group___l2_c_a.html#a07b33451c5075138a54504c7aea4fbbf", null ]
+    ] ],
+    [ "l2capControlMessage_t.messageData", "group___l2_c_a.html#unionl2cap_control_message__t_8message_data", [
+      [ "connectionRequest", "group___l2_c_a.html#ae3e577d1b9f178882420c1fb513600ef", null ],
+      [ "connectionComplete", "group___l2_c_a.html#abce98f5cc332094957a14e615ece2fcc", null ],
+      [ "disconnection", "group___l2_c_a.html#aedb9d033d7e1866da7bd79abdeca6f66", null ],
+      [ "noPeerCredits", "group___l2_c_a.html#a2ca45dec08f3cc23be29ec91a4f50b44", null ],
+      [ "localCreditsNotification", "group___l2_c_a.html#a0b5ff9798eabc318f210c20f8e8cd61e", null ],
+      [ "error", "group___l2_c_a.html#acb5e100e5a9a3e7f6d1fd97512215282", null ]
+    ] ],
     [ "L2ca_RegisterLeCbCallbacks", "group___l2_c_a.html#ga0655d819f0939145728acdfebd4309b1", null ],
     [ "L2ca_RegisterLePsm", "group___l2_c_a.html#ga5c2cc4596c6c7dc6a0a8979ce1daf3fa", null ],
     [ "L2ca_DeregisterLePsm", "group___l2_c_a.html#ga1d09857a7b7858e3c2ecd754a00e2d59", null ],
     [ "L2ca_ConnectLePsm", "group___l2_c_a.html#ga7559190b3600e0f34702a31f901c9939", null ],
     [ "L2ca_DisconnectLeCbChannel", "group___l2_c_a.html#gab8c50c1c94ef2cbf095c6f34b5b2bef3", null ],
     [ "L2ca_CancelConnection", "group___l2_c_a.html#gaeb7efea8a5b91aa2e60c95b454983586", null ],
-    [ "L2ca_SendLeCbData", "group___l2_c_a.html#ga11fc3db96892b100c8169663869a12d3", null ],
+    [ "L2ca_SendLeCbData", "group___l2_c_a.html#ga57acad48637f31c8fc104840e7abdd7f", null ],
     [ "L2ca_SendLeCredit", "group___l2_c_a.html#ga66c75ebaa71f52f3df9886ebaa2f897c", null ]
 ];

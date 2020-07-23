@@ -8,8 +8,9 @@
 #include "bootloader_common.h"
 #include "fsl_device_registers.h"
 
-#if defined(DEBUG)
+void HardFault_Handler(void);
 
+#if defined(DEBUG)
 typedef struct _stack_frame
 {
     uint32_t r0;

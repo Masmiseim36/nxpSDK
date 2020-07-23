@@ -36,7 +36,7 @@
   <td id="projectlogo"><img alt="Logo" src="NXP_logo.bmp"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">Bluetooth® Low Energy Host Stack API Reference Manual
-   &#160;<span id="projectnumber">Rev. 12</span>
+   &#160;<span id="projectnumber">Rev. 13</span>
    </div>
    <div id="projectbrief">BLEHSAPIRM</div>
   </td>
@@ -104,6 +104,8 @@ $(document).ready(function(){initNavTree('group___g_a_t_t.html','');});
   <div class="summary">
 <a href="#files">Files</a> &#124;
 <a href="#nested-classes">Data Structures</a> &#124;
+<a href="#define-members">Macros</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
@@ -124,8 +126,6 @@ Files</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:structatt_prepare_write_request_params__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_t_t.html#structatt_prepare_write_request_params__t">attPrepareWriteRequestParams_t</a></td></tr>
-<tr class="separator:structatt_prepare_write_request_params__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structgatt_attribute__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_t_t.html#structgatt_attribute__t">gattAttribute_t</a></td></tr>
 <tr class="separator:structgatt_attribute__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structgatt_characteristic__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_t_t.html#structgatt_characteristic__t">gattCharacteristic_t</a></td></tr>
@@ -136,6 +136,20 @@ Data Structures</h2></td></tr>
 <tr class="separator:structgatt_db_char_pres_format__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structgatt_handle_range__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_t_t.html#structgatt_handle_range__t">gattHandleRange_t</a></td></tr>
 <tr class="separator:structgatt_handle_range__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:gac6fc382d5b27018afbf77f4c58990104"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_t_t.html#gac6fc382d5b27018afbf77f4c58990104">gCccdEmpty_c</a></td></tr>
+<tr class="separator:gac6fc382d5b27018afbf77f4c58990104"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0bb6b0f713e6b39942f13e77bd3b9653"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_t_t.html#ga0bb6b0f713e6b39942f13e77bd3b9653">gCccdNotification_c</a></td></tr>
+<tr class="separator:ga0bb6b0f713e6b39942f13e77bd3b9653"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8248c917f32b9d09795ebda937480893"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_t_t.html#ga8248c917f32b9d09795ebda937480893">gCccdIndication_c</a></td></tr>
+<tr class="separator:ga8248c917f32b9d09795ebda937480893"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ga5e1b55e68ad26ab61aa0b9c577f72b8a"><td class="memItemLeft" align="right" valign="top">typedef uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_t_t.html#ga5e1b55e68ad26ab61aa0b9c577f72b8a">gattCccdFlags_t</a></td></tr>
+<tr class="separator:ga5e1b55e68ad26ab61aa0b9c577f72b8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
@@ -186,15 +200,6 @@ Enumerations</h2></td></tr>
 <br />
  }</td></tr>
 <tr class="separator:ga6e63a0fa7fcf20d534dc49c3dad732b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2bd94f4ee24b4f90495753b671b34566"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_t_t.html#ga2bd94f4ee24b4f90495753b671b34566">gattCccdFlags_t</a> { <br />
-&#160;&#160;<a class="el" href="group___g_a_t_t.html#gga2bd94f4ee24b4f90495753b671b34566ab7aea3f4174e745e0303f39f35bfffa0">gCccdEmpty_c</a>, 
-<br />
-&#160;&#160;<a class="el" href="group___g_a_t_t.html#gga2bd94f4ee24b4f90495753b671b34566a15925dcd74f64f54f1ef57eb4e9b9c36">gCccdNotification_c</a>, 
-<br />
-&#160;&#160;<a class="el" href="group___g_a_t_t.html#gga2bd94f4ee24b4f90495753b671b34566a3c9aa3de1bc5a6b93812900c61cd1e1a">gCccdIndication_c</a>
-<br />
- }</td></tr>
-<tr class="separator:ga2bd94f4ee24b4f90495753b671b34566"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
@@ -204,46 +209,6 @@ Functions</h2></td></tr>
 <tr class="separator:ga5a47e322f0b6beca7d05be44ef44aefc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="structatt_prepare_write_request_params__t" id="structatt_prepare_write_request_params__t"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct attPrepareWriteRequestParams_t</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<div class="textblock"><p>Prepare Write Request Parameters Structure used by external reference. </p>
-</div><table class="fieldtable">
-<tr><th colspan="3">Data Fields</th></tr>
-<tr><td class="fieldtype">
-<a class="anchor" id="af64c0dd5f313756d0fcb881d636b7bc5"></a>uint16_t</td>
-<td class="fieldname">
-attributeHandle</td>
-<td class="fielddoc">
-</td></tr>
-<tr><td class="fieldtype">
-<a class="anchor" id="a093c041a227a1e418fa124a8e0e13a52"></a>uint16_t</td>
-<td class="fieldname">
-valueOffset</td>
-<td class="fielddoc">
-</td></tr>
-<tr><td class="fieldtype">
-<a class="anchor" id="aeb9d6bfed0aaa8f5fd1836c133a3fdb2"></a>uint8_t</td>
-<td class="fieldname">
-attributeValue[<a class="el" href="group___b_l_e___c_o_n_f_i_g.html#ga850a14d8d4dedeb70407be5fc206c5bd">gAttMaxMtu_c</a>-5]</td>
-<td class="fielddoc">
-</td></tr>
-<tr><td class="fieldtype">
-<a class="anchor" id="afb4ed1e88b96d390ebbf477178cc6140"></a>uint16_t</td>
-<td class="fieldname">
-attributeLength</td>
-<td class="fielddoc">
-</td></tr>
-</table>
-
-</div>
-</div>
 <a name="structgatt_attribute__t" id="structgatt_attribute__t"></a>
 <div class="memitem">
 <div class="memproto">
@@ -263,7 +228,7 @@ handle</td>
 <td class="fielddoc">
 Attribute handle. </td></tr>
 <tr><td class="fieldtype">
-<a class="anchor" id="a59e10ba8af70ce079f85d41761f77da1"></a><a class="el" href="group___b_l_e.html#ga2f05260087a91a332e4c593274c5c280">bleUuidType_t</a></td>
+<a class="anchor" id="a59e10ba8af70ce079f85d41761f77da1"></a><a class="el" href="group___b_l_e.html#ga0fef97ae06525783a6c43c8508ecc35b">bleUuidType_t</a></td>
 <td class="fieldname">
 uuidType</td>
 <td class="fielddoc">
@@ -309,7 +274,7 @@ Attribute value array. </td></tr>
 </div><table class="fieldtable">
 <tr><th colspan="3">Data Fields</th></tr>
 <tr><td class="fieldtype">
-<a class="anchor" id="a9bc0cb493806bf072d0170f5b03e1223"></a><a class="el" href="group___g_a_t_t___d_b.html#gaea0be3916af805980c4192b0311f7f5a">gattCharacteristicPropertiesBitFields_t</a></td>
+<a class="anchor" id="a9bc0cb493806bf072d0170f5b03e1223"></a><a class="el" href="group___g_a_t_t___d_b.html#ga8a83c39cb7862122da54c9ecd14dd615">gattCharacteristicPropertiesBitFields_t</a></td>
 <td class="fieldname">
 properties</td>
 <td class="fielddoc">
@@ -361,7 +326,7 @@ endHandle</td>
 <td class="fielddoc">
 The last handle belonging to this Service (followed by another Service declaration of the end of the database). </td></tr>
 <tr><td class="fieldtype">
-<a class="anchor" id="a22f8a35cce00320c39efbf9f8e1122ef"></a><a class="el" href="group___b_l_e.html#ga2f05260087a91a332e4c593274c5c280">bleUuidType_t</a></td>
+<a class="anchor" id="a22f8a35cce00320c39efbf9f8e1122ef"></a><a class="el" href="group___b_l_e.html#ga0fef97ae06525783a6c43c8508ecc35b">bleUuidType_t</a></td>
 <td class="fieldname">
 uuidType</td>
 <td class="fielddoc">
@@ -474,6 +439,64 @@ End Handle - shall be greater than or equal to Start Handle. </td></tr>
 
 </div>
 </div>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="gac6fc382d5b27018afbf77f4c58990104"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define gCccdEmpty_c</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Nothing is enabled. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga0bb6b0f713e6b39942f13e77bd3b9653"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define gCccdNotification_c</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Enables notifications. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga8248c917f32b9d09795ebda937480893"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define gCccdIndication_c</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Enabled indications. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a class="anchor" id="ga5e1b55e68ad26ab61aa0b9c577f72b8a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef uint8_t <a class="el" href="group___g_a_t_t.html#ga5e1b55e68ad26ab61aa0b9c577f72b8a">gattCccdFlags_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Flags for the value of the Client Characteristic Configuration Descriptor. </p>
+
+</div>
+</div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
 <a class="anchor" id="ga6e63a0fa7fcf20d534dc49c3dad732b2"></a>
 <div class="memitem">
@@ -486,31 +509,6 @@ End Handle - shall be greater than or equal to Start Handle. </td></tr>
 </div><div class="memdoc">
 
 <p>ATT error codes. </p>
-
-</div>
-</div>
-<a class="anchor" id="ga2bd94f4ee24b4f90495753b671b34566"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="group___g_a_t_t.html#ga2bd94f4ee24b4f90495753b671b34566">gattCccdFlags_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Flags for the value of the Client Characteristic Configuration Descriptor. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a class="anchor" id="gga2bd94f4ee24b4f90495753b671b34566ab7aea3f4174e745e0303f39f35bfffa0"></a>gCccdEmpty_c&#160;</td><td class="fielddoc">
-<p>Nothing is enabled. </p>
-</td></tr>
-<tr><td class="fieldname"><a class="anchor" id="gga2bd94f4ee24b4f90495753b671b34566a15925dcd74f64f54f1ef57eb4e9b9c36"></a>gCccdNotification_c&#160;</td><td class="fielddoc">
-<p>Enables notifications. </p>
-</td></tr>
-<tr><td class="fieldname"><a class="anchor" id="gga2bd94f4ee24b4f90495753b671b34566a3c9aa3de1bc5a6b93812900c61cd1e1a"></a>gCccdIndication_c&#160;</td><td class="fielddoc">
-<p>Enabled indications. </p>
-</td></tr>
-</table>
 
 </div>
 </div>

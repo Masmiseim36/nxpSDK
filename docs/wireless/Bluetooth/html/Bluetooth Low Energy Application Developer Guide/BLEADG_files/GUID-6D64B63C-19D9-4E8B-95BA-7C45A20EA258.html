@@ -38,13 +38,7 @@
 
         <p class="p">Before initializing the Bluetooth Low Energy Host stack, the main task calls
                 <em class="ph i">BleApp_Init</em>. This functions can store initializations of modules that work
-            independently of the host stack. For example, the Temperature Sensor application
-            initializes the temperature sensor driver:</p>
-
-        <pre class="pre codeblock"><strong class="ph b">void</strong> <strong class="ph b">BleApp_Init</strong>(<strong class="ph b">void</strong>)
-{
-    TempSensor_Init();
-}</pre>
+            independently of the host stack. </p>
 
         <p class="p">After the stack is initialized, the generic callback the application calls
                 <em class="ph i">BleApp_Config</em>. The function contains configurations made to the host stack
@@ -54,8 +48,8 @@
 
         <pre class="pre codeblock"><strong class="ph b">static</strong> <strong class="ph b">void</strong> <strong class="ph b">BleApp_Config</strong>()
 {
-    /* Configure as GAP peripheral */
-    BleConnManager_GapPeripheralConfig();
+    /* Common GAP configuration */
+    BleConnManager_GapCommonConfig();
 
     /* Register for <u class="ph u">callbacks</u> */
     App_RegisterGattServerCallback(BleApp_GattServerCallback);

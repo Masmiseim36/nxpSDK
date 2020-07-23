@@ -1,0 +1,13 @@
+/*!
+@page middleware_log Middleware Change Log
+ 
+@section mmcau MMCAU library for KSDK
+  Current version is 2.0.0.
+ 
+  - 2.0.0
+    - New Features:
+      - Q4/2013 release of the CAU library.
+      - Added fsl_mmcau.h/fsl_mmcau.c optional layer between application and legacy CAU library (cau_api.h).
+        This API has no alignment requirements.
+ 
+*/

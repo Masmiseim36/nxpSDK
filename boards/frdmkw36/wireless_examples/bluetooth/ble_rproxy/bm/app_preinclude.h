@@ -60,7 +60,7 @@
  *  Framework Configuration
  ********************************************************************************** */
 /* enable NVM to be used as non volatile storage management by the host stack */
-#define gAppUseNvm_d                    0
+#define gAppUseNvm_d                    1
 
 /* Defines pools by block size and number of blocks. Must be aligned to 4 bytes.*/
 #define AppPoolsDetails_c \

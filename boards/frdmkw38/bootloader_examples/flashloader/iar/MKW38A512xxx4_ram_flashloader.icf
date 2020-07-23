@@ -1,0 +1,67 @@
+/*
+** ###################################################################
+**     Processor:           MKW38A512VFT4
+**     Compiler:            IAR ANSI C/C++ Compiler for ARM
+**     Reference manual:    MKW38A512RM Rev. 5, 05/2018
+**     Version:             rev. 1.0, 2018-06-25
+**     Build:               b190226
+**
+**     Abstract:
+**         Linker file for the IAR ANSI C/C++ Compiler for ARM
+**
+**     Copyright 2016 Freescale Semiconductor, Inc.
+**     Copyright 2016-2019 NXP
+**     All rights reserved.
+**
+**     SPDX-License-Identifier: BSD-3-Clause
+**
+**     http:                 www.nxp.com
+**     mail:                 support@nxp.com
+**
+** ###################################################################
+*/
+
+/*###ICF### Section handled by ICF editor, don't touch! ****/
+/*-Editor annotation file-*/
+/* IcfEditorFile="$TOOLKIT_DIR$\config\ide\IcfEditor\cortex_v1_0.xml" */
+/*-Memory Regions-*/
+define symbol __ICFEDIT_region_FLASH_start__ = 0x0;
+define symbol __ICFEDIT_region_FLASH_end__   = __ICFEDIT_region_FLASH_start__ + (256*1024) - 1;
+define symbol __ICFEDIT_region_RAM_end__   = 0x20000000;
+define symbol __ICFEDIT_region_RAM_start__   = __ICFEDIT_region_RAM_end__ - (16*1024);
+/*-Specials-*/
+define symbol __ICFEDIT_intvec_start__     = __ICFEDIT_region_RAM_start__;
+
+/*-Sizes-*/
+define symbol __ICFEDIT_size_cstack__ = (1*1024);
+define symbol __ICFEDIT_size_heap__   = (0*1024);
+/**** End of ICF editor section. ###ICF###*/
+
+define symbol __region_RAM2_start__        = 0x20000000;
+define symbol __region_RAM2_end__          = __region_RAM2_start__ + (48*1024) - 1;
+
+define exported symbol __VECTOR_TABLE      = __ICFEDIT_region_FLASH_start__;
+define exported symbol __VECTOR_RAM        = __ICFEDIT_region_RAM_start__;
+
+define exported symbol __BOOT_STACK_ADDRESS = __region_RAM2_end__ - 8;
+
+define memory mem with size = 4G;
+define region FLASH_region = mem:[from __ICFEDIT_region_FLASH_start__ to __ICFEDIT_region_FLASH_end__];
+define region RAM_region   = mem:[from __ICFEDIT_region_RAM_start__   to __ICFEDIT_region_RAM_end__] | mem:[from __region_RAM2_start__ to __region_RAM2_end__];
+
+define block CSTACK    with alignment = 8, size = __ICFEDIT_size_cstack__   { };
+define block HEAP      with alignment = 8, size = __ICFEDIT_size_heap__     { };
+
+initialize manually { readwrite };
+initialize manually { section .data};
+initialize manually { section .textrw };
+do not initialize  { section .noinit };
+
+define block USBGlobal {section m_usb_bdt, section m_usb_global};
+define block CodeRelocate { section .textrw_init };
+define block CodeRelocateRam { section .textrw };
+define block ApplicationFlash { readonly, block CodeRelocate };
+define block ApplicationRam { readwrite, block CodeRelocateRam, block USBGlobal, block CSTACK, block HEAP };
+place at address mem:__ICFEDIT_intvec_start__ { readonly section .intvec, readonly section .noinit };
+place in RAM_region   { block ApplicationFlash };
+place in RAM_region   { block ApplicationRam };

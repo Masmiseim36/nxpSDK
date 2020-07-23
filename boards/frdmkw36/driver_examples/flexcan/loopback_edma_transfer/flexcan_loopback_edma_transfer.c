@@ -21,12 +21,13 @@
  * Definitions
  ******************************************************************************/
 #define EXAMPLE_CAN CAN0
-#define EXAMPLE_CAN_CLKSRC kCLOCK_BusClk
-#define EXAMPLE_CAN_CLK_FREQ CLOCK_GetFreq(kCLOCK_BusClk)
+#define DEMO_FORCE_CAN_SRC_OSC (1)
+#define EXAMPLE_CAN_CLK_FREQ CLOCK_GetFreq(kCLOCK_Osc0ErClk)/2
 #define EXAMPLE_CAN_DMA DMA0
 #define EXAMPLE_CAN_DMA_CHANNEL 0
 #define EXAMPLE_CAN_DMA_REQUEST kDmaRequestMux0CAN0
 #define EXAMPLE_CAN_DMAMUX DMAMUX0
+#define USE_IMPROVED_TIMING_CONFIG (1)
 #define TX_MESSAGE_BUFFER_NUM (9)
 
 /*******************************************************************************
@@ -107,9 +108,26 @@ int main(void)
      */
     FLEXCAN_GetDefaultConfig(&flexcanConfig);
 #if (!defined(FSL_FEATURE_FLEXCAN_SUPPORT_ENGINE_CLK_SEL_REMOVE)) || !FSL_FEATURE_FLEXCAN_SUPPORT_ENGINE_CLK_SEL_REMOVE
+#if (!defined(DEMO_FORCE_CAN_SRC_OSC)) || !DEMO_FORCE_CAN_SRC_OSC
     flexcanConfig.clkSrc = kFLEXCAN_ClkSrcPeri;
+#endif /* DEMO_FORCE_CAN_SRC_OSC */
 #endif /* FSL_FEATURE_FLEXCAN_SUPPORT_ENGINE_CLK_SEL_REMOVE */
     flexcanConfig.enableLoopBack = true;
+
+#if (defined(USE_IMPROVED_TIMING_CONFIG) && USE_IMPROVED_TIMING_CONFIG)
+    flexcan_timing_config_t timing_config;
+    memset(&timing_config, 0, sizeof(flexcan_timing_config_t));
+    if (FLEXCAN_CalculateImprovedTimingValues(flexcanConfig.baudRate, EXAMPLE_CAN_CLK_FREQ, &timing_config))
+    {
+        /* Update the improved timing configuration*/
+        memcpy(&(flexcanConfig.timingConfig), &timing_config, sizeof(flexcan_timing_config_t));
+    }
+    else
+    {
+        PRINTF("No found Improved Timing Configuration. Just used default configuration\r\n\r\n");
+    }
+#endif
+
     FLEXCAN_Init(EXAMPLE_CAN, &flexcanConfig, EXAMPLE_CAN_CLK_FREQ);
 
 #if defined(FSL_FEATURE_SOC_DMAMUX_COUNT) && FSL_FEATURE_SOC_DMAMUX_COUNT

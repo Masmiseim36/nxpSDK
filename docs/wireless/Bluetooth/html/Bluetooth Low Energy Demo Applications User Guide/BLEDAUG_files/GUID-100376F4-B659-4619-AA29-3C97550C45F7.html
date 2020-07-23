@@ -27,7 +27,11 @@
 
 		<p class="p">After flashing the board, the sensor is in idle mode (all LEDs flashing). To start advertising, press the ADVSW button. When in GAP Discoverable Mode, CONNLED is flashing. When the central node connects to the peripheral, CONNLED turns solid. To disconnect the node, hold the ADVSW button pressed for 2-3 seconds. The node then re-enters GAP Discoverable Mode.</p>
 
-		<p class="p">When the node is connected, the user can toggle the running status (running/walking) by pressing the TOGSW button. When the status is set to “walking” the RGB LED turns solid. When the status is set to “running”, the RGB LED is not lit.</p>
+		<p class="p">When the node is connected, the user can toggle the running status
+			(running/walking) by pressing the TOGSW button. A LED is turned on solid to denote the
+			'walking' status, this LED is turned off in 'running' status. On platforms other than
+			QN9090/K32W061 DK6, the RGB LED is used for that purpose, whereas on QN9090/K32W061 DK6,
+			the DS3 red LED is used. </p>
 
 		<p class="p">See details below for hardware references.</p>
 
@@ -39,13 +43,13 @@
 				
 				<thead class="thead" align="left">
 					<tr class="row">
-						<th class="entry" align="center" valign="top" id="d1490e42">Platform</th>
+						<th class="entry" align="center" valign="top" id="d1940e42">Platform</th>
 
-						<th class="entry" align="center" valign="top" id="d1490e45">ADVSW</th>
+						<th class="entry" align="center" valign="top" id="d1940e45">ADVSW</th>
 
-						<th class="entry" align="center" valign="top" id="d1490e48">CONNLED</th>
+						<th class="entry" align="center" valign="top" id="d1940e48">CONNLED</th>
 
-						<th class="entry" align="center" valign="top" id="d1490e51">TOGSW</th>
+						<th class="entry" align="center" valign="top" id="d1940e51">TOGSW</th>
 
 					</tr>
 
@@ -53,35 +57,46 @@
 
 				<tbody class="tbody">
 					<tr class="row">
-						<td class="entry" align="center" valign="top" headers="d1490e42 ">FRDM-KW41Z</td>
+						<td class="entry" align="center" valign="top" headers="d1940e42 ">FRDM-KW41Z</td>
 
-						<td class="entry" align="center" valign="top" headers="d1490e45 ">SW4</td>
+						<td class="entry" align="center" valign="top" headers="d1940e45 ">SW4</td>
 
-						<td class="entry" align="center" valign="top" headers="d1490e48 ">LED3</td>
+						<td class="entry" align="center" valign="top" headers="d1940e48 ">LED3</td>
 
-						<td class="entry" align="center" valign="top" headers="d1490e51 ">SW3</td>
-
-					</tr>
-
-					<tr class="row">
-						<td class="entry" align="center" valign="top" headers="d1490e42 ">QN9080CDK</td>
-
-						<td class="entry" align="center" valign="top" headers="d1490e45 ">BUTTON1</td>
-
-						<td class="entry" align="center" valign="top" headers="d1490e48 ">D5-RED</td>
-
-						<td class="entry" align="center" valign="top" headers="d1490e51 ">BUTTON2</td>
+						<td class="entry" align="center" valign="top" headers="d1940e51 ">SW3</td>
 
 					</tr>
 
 					<tr class="row">
-						<td class="entry" align="center" valign="top" headers="d1490e42 ">FRDM-KW36</td>
+						<td class="entry" align="center" valign="top" headers="d1940e42 ">QN9080CDK</td>
 
-						<td class="entry" align="center" valign="top" headers="d1490e45 ">SW2</td>
+						<td class="entry" align="center" valign="top" headers="d1940e45 ">BUTTON1</td>
 
-						<td class="entry" align="center" valign="top" headers="d1490e48 ">LED3</td>
+						<td class="entry" align="center" valign="top" headers="d1940e48 ">D5-RED</td>
 
-						<td class="entry" align="center" valign="top" headers="d1490e51 ">SW3</td>
+						<td class="entry" align="center" valign="top" headers="d1940e51 ">BUTTON2</td>
+
+					</tr>
+
+					<tr class="row">
+						<td class="entry" align="center" valign="top" headers="d1940e42 ">FRDM-KW36</td>
+
+						<td class="entry" align="center" valign="top" headers="d1940e45 ">SW2</td>
+
+						<td class="entry" align="center" valign="top" headers="d1940e48 ">LED3</td>
+
+						<td class="entry" align="center" valign="top" headers="d1940e51 ">SW3</td>
+
+					</tr>
+
+					<tr class="row">
+						<td class="entry" align="center" valign="top" headers="d1940e42 ">FRDM-KW38</td>
+
+						<td class="entry" align="center" valign="top" headers="d1940e45 ">SW2</td>
+
+						<td class="entry" align="center" valign="top" headers="d1940e48 ">LED3</td>
+
+						<td class="entry" align="center" valign="top" headers="d1940e51 ">SW3</td>
 
 					</tr>
 

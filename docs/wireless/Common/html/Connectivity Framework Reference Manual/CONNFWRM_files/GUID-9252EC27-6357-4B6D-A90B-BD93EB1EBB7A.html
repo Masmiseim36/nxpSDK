@@ -76,13 +76,13 @@ void
                 
                 <thead class="thead" align="left">
                     <tr class="row">
-                        <th class="entry" valign="top" id="d47037e116"><strong class="ph b">Name</strong></th>
+                        <th class="entry" valign="top" id="d47180e116"><strong class="ph b">Name</strong></th>
 
-                        <th class="entry" valign="top" id="d47037e120"><strong class="ph b">Type</strong></th>
+                        <th class="entry" valign="top" id="d47180e120"><strong class="ph b">Type</strong></th>
 
-                        <th class="entry" valign="top" id="d47037e124"><strong class="ph b">Direction</strong></th>
+                        <th class="entry" valign="top" id="d47180e124"><strong class="ph b">Direction</strong></th>
 
-                        <th class="entry" valign="top" id="d47037e128"><strong class="ph b">Description</strong></th>
+                        <th class="entry" valign="top" id="d47180e128"><strong class="ph b">Description</strong></th>
 
                     </tr>
 
@@ -90,35 +90,35 @@ void
 
                 <tbody class="tbody">
                     <tr class="row">
-                        <td class="entry" valign="top" headers="d47037e116 ">numBytes</td>
+                        <td class="entry" valign="top" headers="d47180e116 ">numBytes</td>
 
-                        <td class="entry" valign="top" headers="d47037e120 ">uint32_t</td>
+                        <td class="entry" valign="top" headers="d47180e120 ">uint32_t</td>
 
-                        <td class="entry" valign="top" headers="d47037e124 ">[IN]</td>
+                        <td class="entry" valign="top" headers="d47180e124 ">[IN]</td>
 
-                        <td class="entry" valign="top" headers="d47037e128 ">Requested buffer size, in bytes</td>
-
-                    </tr>
-
-                    <tr class="row">
-                        <td class="entry" valign="top" headers="d47037e116 ">poolId</td>
-
-                        <td class="entry" valign="top" headers="d47037e120 ">uint8_t</td>
-
-                        <td class="entry" valign="top" headers="d47037e124 ">[IN]</td>
-
-                        <td class="entry" valign="top" headers="d47037e128 ">The Id of the pools where to search for a free memory buffer</td>
+                        <td class="entry" valign="top" headers="d47180e128 ">Requested buffer size, in bytes</td>
 
                     </tr>
 
                     <tr class="row">
-                        <td class="entry" valign="top" headers="d47037e116 ">pCaller</td>
+                        <td class="entry" valign="top" headers="d47180e116 ">poolId</td>
 
-                        <td class="entry" valign="top" headers="d47037e120 ">void*</td>
+                        <td class="entry" valign="top" headers="d47180e120 ">uint8_t</td>
 
-                        <td class="entry" valign="top" headers="d47037e124 ">[IN]</td>
+                        <td class="entry" valign="top" headers="d47180e124 ">[IN]</td>
 
-                        <td class="entry" valign="top" headers="d47037e128 ">The address from where the function who called
+                        <td class="entry" valign="top" headers="d47180e128 ">The Id of the pools where to search for a free memory buffer</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d47180e116 ">pCaller</td>
+
+                        <td class="entry" valign="top" headers="d47180e120 ">void*</td>
+
+                        <td class="entry" valign="top" headers="d47180e124 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d47180e128 ">The address from where the function who called
                             MEM_BufferAllocWithId() was called (for debug purpose)</td>
 
                     </tr>
@@ -156,13 +156,13 @@ void
                 
                 <thead class="thead" align="left">
                     <tr class="row">
-                        <th class="entry" valign="top" id="d47037e233"><strong class="ph b">Name</strong></th>
+                        <th class="entry" valign="top" id="d47180e233"><strong class="ph b">Name</strong></th>
 
-                        <th class="entry" valign="top" id="d47037e237"><strong class="ph b">Type</strong></th>
+                        <th class="entry" valign="top" id="d47180e237"><strong class="ph b">Type</strong></th>
 
-                        <th class="entry" valign="top" id="d47037e241"><strong class="ph b">Direction</strong></th>
+                        <th class="entry" valign="top" id="d47180e241"><strong class="ph b">Direction</strong></th>
 
-                        <th class="entry" valign="top" id="d47037e245"><strong class="ph b">Description</strong></th>
+                        <th class="entry" valign="top" id="d47180e245"><strong class="ph b">Description</strong></th>
 
                     </tr>
 
@@ -170,13 +170,13 @@ void
 
                 <tbody class="tbody">
                     <tr class="row">
-                        <td class="entry" valign="top" headers="d47037e233 ">buffer</td>
+                        <td class="entry" valign="top" headers="d47180e233 ">buffer</td>
 
-                        <td class="entry" valign="top" headers="d47037e237 ">void * </td>
+                        <td class="entry" valign="top" headers="d47180e237 ">void * </td>
 
-                        <td class="entry" valign="top" headers="d47037e241 ">[IN]</td>
+                        <td class="entry" valign="top" headers="d47180e241 ">[IN]</td>
 
-                        <td class="entry" valign="top" headers="d47037e245 ">The buffer to be freed</td>
+                        <td class="entry" valign="top" headers="d47180e245 ">The buffer to be freed</td>
 
                     </tr>
 
@@ -192,6 +192,87 @@ void
 
         <div class="note note"><span class="notetitle">Note:</span> Call MEM_BufferFree() only on a pointer that was returned by MEM_BufferAlloc(). Do not
             call the free function for a buffer that is already free.</div>
+
+        <p class="p"><span class="ph"><strong class="ph b">MEM_BufferRealloc()</strong></span></p>
+
+        <div class="p"><strong class="ph b">Prototype</strong><pre class="pre codeblock">
+            void* MEM_BufferRealloc(void* buffer, uint32_t new_size);
+        </pre>
+</div>
+
+        <p class="p"><strong class="ph b">Description</strong></p>
+
+        <p class="p">This function can be used to request a larger buffer.</p>
+
+        <div class="p">MEM_BufferRealloc is based on standard C realloc() behavior:
+        <ul class="ul">
+            <li class="li">If new requested size is 0, acts like MEM_BufferFree and returns NULL.</li>
+
+               <li class="li">If input pointer is NULL, acts like MEM_BufferAllocate and returns pointer to
+                    allocated buffer.</li>
+
+             <li class="li">If the new requested size is smaller/equal to block size, returns input pointer. -
+                    If new requested size is bigger than block size, allocates a new buffer, copy
+                    the input buffer data to new buffer, frees the input buffer and returns pointer
+                    to new allocated buffer.</li>
+
+             <li class="li">If MEM_BufferAllocate fails, MEM_BufferRealloc returns a NULL pointer and doesn't
+                    free the input buffer </li>
+
+        </ul>
+</div>
+
+        <p class="p"><strong class="ph b">Parameters:</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-9252EC27-6357-4B6D-A90B-BD93EB1EBB7A__TABLE_XG4_RGJ_TKB" class="table" frame="border" border="1" rules="all">
+                
+                
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d47180e338"><strong class="ph b">Name</strong></th>
+
+                        <th class="entry" valign="top" id="d47180e342"><strong class="ph b">Type</strong></th>
+
+                        <th class="entry" valign="top" id="d47180e346"><strong class="ph b">Direction</strong></th>
+
+                        <th class="entry" valign="top" id="d47180e350"><strong class="ph b">Description</strong></th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d47180e338 ">buffer</td>
+
+                        <td class="entry" valign="top" headers="d47180e342 ">void*</td>
+
+                        <td class="entry" valign="top" headers="d47180e346 ">IN</td>
+
+                        <td class="entry" valign="top" headers="d47180e350 ">Pointer to original buffer to be reallocated </td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d47180e338 ">new_size</td>
+
+                        <td class="entry" valign="top" headers="d47180e342 ">uint32_t</td>
+
+                        <td class="entry" valign="top" headers="d47180e346 ">IN</td>
+
+                        <td class="entry" valign="top" headers="d47180e350 ">New size requested</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+<p class="p"><strong class="ph b">Returns</strong></p>
+<p class="p">Pointer to the newly allocated buffer or NULL if the allocation fails.</p>
 
         <p class="p"><strong class="ph b"><span class="ph" id="GUID-9252EC27-6357-4B6D-A90B-BD93EB1EBB7A___TOC346017073">MEM_GetAvailableBlocks()</span></strong></p>
 
@@ -219,13 +300,13 @@ void
                 
                 <thead class="thead" align="left">
                     <tr class="row">
-                        <th class="entry" valign="top" id="d47037e326"><strong class="ph b">Name</strong></th>
+                        <th class="entry" valign="top" id="d47180e441"><strong class="ph b">Name</strong></th>
 
-                        <th class="entry" valign="top" id="d47037e330"><strong class="ph b">Type</strong></th>
+                        <th class="entry" valign="top" id="d47180e445"><strong class="ph b">Type</strong></th>
 
-                        <th class="entry" valign="top" id="d47037e334"><strong class="ph b">Direction</strong></th>
+                        <th class="entry" valign="top" id="d47180e449"><strong class="ph b">Direction</strong></th>
 
-                        <th class="entry" valign="top" id="d47037e338"><strong class="ph b">Description</strong></th>
+                        <th class="entry" valign="top" id="d47180e453"><strong class="ph b">Description</strong></th>
 
                     </tr>
 
@@ -233,13 +314,13 @@ void
 
                 <tbody class="tbody">
                     <tr class="row">
-                        <td class="entry" valign="top" headers="d47037e326 ">size</td>
+                        <td class="entry" valign="top" headers="d47180e441 ">size</td>
 
-                        <td class="entry" valign="top" headers="d47037e330 ">uint32_t</td>
+                        <td class="entry" valign="top" headers="d47180e445 ">uint32_t</td>
 
-                        <td class="entry" valign="top" headers="d47037e334 ">[IN]</td>
+                        <td class="entry" valign="top" headers="d47180e449 ">[IN]</td>
 
-                        <td class="entry" valign="top" headers="d47037e338 ">The size on whose basis the buffers are queried</td>
+                        <td class="entry" valign="top" headers="d47180e453 ">The size on whose basis the buffers are queried</td>
 
                     </tr>
 
@@ -276,13 +357,13 @@ void
                 
                 <thead class="thead" align="left">
                     <tr class="row">
-                        <th class="entry" valign="top" id="d47037e411"><strong class="ph b">Name</strong></th>
+                        <th class="entry" valign="top" id="d47180e527"><strong class="ph b">Name</strong></th>
 
-                        <th class="entry" valign="top" id="d47037e415"><strong class="ph b">Type</strong></th>
+                        <th class="entry" valign="top" id="d47180e531"><strong class="ph b">Type</strong></th>
 
-                        <th class="entry" valign="top" id="d47037e419"><strong class="ph b">Direction</strong></th>
+                        <th class="entry" valign="top" id="d47180e535"><strong class="ph b">Direction</strong></th>
 
-                        <th class="entry" valign="top" id="d47037e423"><strong class="ph b">Description</strong></th>
+                        <th class="entry" valign="top" id="d47180e539"><strong class="ph b">Description</strong></th>
 
                     </tr>
 
@@ -290,13 +371,13 @@ void
 
                 <tbody class="tbody">
                     <tr class="row">
-                        <td class="entry" valign="top" headers="d47037e411 ">buffer</td>
+                        <td class="entry" valign="top" headers="d47180e527 ">buffer</td>
 
-                        <td class="entry" valign="top" headers="d47037e415 ">void *</td>
+                        <td class="entry" valign="top" headers="d47180e531 ">void *</td>
 
-                        <td class="entry" valign="top" headers="d47037e419 ">[IN]</td>
+                        <td class="entry" valign="top" headers="d47180e535 ">[IN]</td>
 
-                        <td class="entry" valign="top" headers="d47037e423 ">Pointer to the allocated buffer.</td>
+                        <td class="entry" valign="top" headers="d47180e539 ">Pointer to the allocated buffer.</td>
 
                     </tr>
 
@@ -334,13 +415,13 @@ void
                 
                 <thead class="thead" align="left">
                     <tr class="row">
-                        <th class="entry" valign="top" id="d47037e497"><strong class="ph b">Name</strong></th>
+                        <th class="entry" valign="top" id="d47180e612"><strong class="ph b">Name</strong></th>
 
-                        <th class="entry" valign="top" id="d47037e501"><strong class="ph b">Type</strong></th>
+                        <th class="entry" valign="top" id="d47180e616"><strong class="ph b">Type</strong></th>
 
-                        <th class="entry" valign="top" id="d47037e505"><strong class="ph b">Direction</strong></th>
+                        <th class="entry" valign="top" id="d47180e620"><strong class="ph b">Direction</strong></th>
 
-                        <th class="entry" valign="top" id="d47037e509"><strong class="ph b">Description</strong></th>
+                        <th class="entry" valign="top" id="d47180e624"><strong class="ph b">Description</strong></th>
 
                     </tr>
 
@@ -348,24 +429,24 @@ void
 
                 <tbody class="tbody">
                     <tr class="row">
-                        <td class="entry" valign="top" headers="d47037e497 ">p</td>
+                        <td class="entry" valign="top" headers="d47180e612 ">p</td>
 
-                        <td class="entry" valign="top" headers="d47037e501 ">uint8_t*</td>
+                        <td class="entry" valign="top" headers="d47180e616 ">uint8_t*</td>
 
-                        <td class="entry" valign="top" headers="d47037e505 ">[IN]</td>
+                        <td class="entry" valign="top" headers="d47180e620 ">[IN]</td>
 
-                        <td class="entry" valign="top" headers="d47037e509 ">Pointer to the location where data will be placed</td>
+                        <td class="entry" valign="top" headers="d47180e624 ">Pointer to the location where data will be placed</td>
 
                     </tr>
 
                     <tr class="row">
-                        <td class="entry" valign="top" headers="d47037e497 ">size</td>
+                        <td class="entry" valign="top" headers="d47180e612 ">size</td>
 
-                        <td class="entry" valign="top" headers="d47037e501 ">uint32_t</td>
+                        <td class="entry" valign="top" headers="d47180e616 ">uint32_t</td>
 
-                        <td class="entry" valign="top" headers="d47037e505 ">[IN]</td>
+                        <td class="entry" valign="top" headers="d47180e620 ">[IN]</td>
 
-                        <td class="entry" valign="top" headers="d47037e509 ">Number of bytes to write</td>
+                        <td class="entry" valign="top" headers="d47180e624 ">Number of bytes to write</td>
 
                     </tr>
 
@@ -425,9 +506,10 @@ void
 
         <p class="p"><strong class="ph b">Returns:</strong></p>
 
-        <p class="p">Returns MEM_SUCCESS_c if test was successful, MEM_ALLOC_ERROR_c if a buffer was not
-            allocated successufuly, MEM_FREE_ERROR_c if a buffer was not freed successfully, or
-            MEM_UNKNOWN_ERROR_c if a verify error, heap overflow or a data corruption occurred.</p>
+        <p class="p">Returns MEM_SUCCESS_c if test was successful, MEM_ALLOC_ERROR_c if a buffer
+            was not allocated successfully, MEM_FREE_ERROR_c if a buffer was not freed successfully,
+            or MEM_UNKNOWN_ERROR_c if a verify error, heap overflow or a data corruption
+            occurred.</p>
 
         <p class="p"/>
 
@@ -457,7 +539,7 @@ void
 
 <div class="related-links">
 <div class="familylinks">
-<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-CCA67CCD-5FF2-401B-9D0C-E1AB611EA04C.html">Memory management</a></div>
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-CCA67CCD-5FF2-401B-9D0C-E1AB611EA04C.html">Memory Management</a></div>
 </div>
 </div>
 

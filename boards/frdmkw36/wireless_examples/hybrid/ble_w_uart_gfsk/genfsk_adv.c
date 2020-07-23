@@ -4,7 +4,7 @@
 ********************************************************************************** */
 /*! *********************************************************************************
 * Copyright (c) 2015, Freescale Semiconductor, Inc.
-* Copyright 2016-2019 NXP
+* Copyright 2016-2020 NXP
 * All rights reserved.
 *
 * \file
@@ -139,6 +139,7 @@ static pfMwsCallback mGFSK_LL_CB = NULL;
 
 static bool_t mAppGenfskRxOn = FALSE;
 static bool_t mAppGenfskTxPending = FALSE;
+static bool_t mAppGenfskTxOngoing = FALSE;
 
 /************************************************************************************
 *************************************************************************************
@@ -164,7 +165,15 @@ static void GfskApp_RestartRx(void);
 ********************************************************************************** */
 void GfskApp_Init(uint8_t appSerMgrIf)
 {
-    (void)GENFSK_Init();
+    genfskStatus_t status;
+
+    status = GENFSK_Init();
+    if (status != gGenfskSuccess_c)
+    {
+        Serial_Print(gAppSerMgrIf, "\n\rGFSK initialization error!", gNoBlock_d);
+        panic(0, 0, 0, 0);
+        return;
+    }
 
     /* GENFSK LL Init with default register config */
     (void)GENFSK_AllocInstance(&mAppGenfskId, NULL, NULL, NULL);
@@ -211,6 +220,8 @@ void GfskApp_StartTx(void)
 
     (void)Serial_Print(gAppSerMgrIf, "\n\rGFSK: Start TX... ", gNoBlock_d);
     (void)TMR_StartIntervalTimer(mAppGenfskTmr, gGenFskApp_TxInterval_c, GfskApp_Tx, NULL);
+    mAppGenfskTxPending = TRUE;
+    mAppGenfskTxOngoing = FALSE;
 
     /* Check if GenFSK is the active protocol */
     if (MWS_GetActiveProtocol() != gMWS_GENFSK_c)
@@ -232,6 +243,7 @@ void GfskApp_StopTx(void)
 {
     (void)Serial_Print(gAppSerMgrIf, "\n\rGFSK: Stop TX", gNoBlock_d);
     (void)TMR_StopTimer(mAppGenfskTmr);
+    mAppGenfskTxPending = FALSE;
 }
 
 /*! *********************************************************************************
@@ -262,8 +274,6 @@ void GfskApp_StartRx(void)
                     (void)TMR_StartSingleShotTimer(mAppGenfskCoexistenceTmr, duration, GfskApp_CoexistenceTimeout, NULL);
                 }
             }
-
-            (void)GENFSK_StartRx(mAppGenfskId, buffer, (uint16_t)sizeof(buffer), 0U, 0U);
         }
     }
 }
@@ -279,7 +289,6 @@ void GfskApp_StopRx(void)
     if (mAppGenfskRxOn)
     {
         mAppGenfskRxOn = FALSE;
-        (void)GENFSK_AbortAll();
     }
 }
 
@@ -345,6 +354,10 @@ static void GFSK_EventNotify (genfskEvent_t event, genfskEventStatus_t eventStat
         /* Rx sequence complete. Restart it. */
         GfskApp_RestartRx();
     }
+    else if (event == gGenfskTxEvent)
+    {
+        mAppGenfskTxOngoing = FALSE;
+    }
 }
 
 /*! *********************************************************************************
@@ -357,10 +370,10 @@ static void GfskApp_Tx(void * p)
     uint16_t len;
     /* Dummy packet */
     uint8_t message[] = {gGenFSK_AdvAddress_c, /* AdvA */
-                         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* BD_ADDR */
+
 #ifdef TEST_GENFSK_ADV
-    0x02, 0x01, 0x06, 0x1B, 0xFF, 0x25, 0x00, 0xBC, 0x00, 0x00, 0x00, 0x00, 0x00,
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1E
+    /* raw advertising data: flags and device name (GFSK_AD) */
+    0x02, 0x01, 0x06, 0x08, 0x08, 0x47, 0x46, 0x53, 0x4B, 0x5F, 0x41, 0x44
 #endif
     };
     uint32_t txTime;
@@ -382,11 +395,8 @@ static void GfskApp_Tx(void * p)
           (gGenFskDefaultHeaderSizeBytes_c)+
           (gGenFskDefaultSyncAddrSize_c + 1U);
 
-    if (MWS_GetActiveProtocol() == gMWS_GENFSK_c)
+    if ((MWS_GetActiveProtocol() == gMWS_GENFSK_c) && (!mAppGenfskTxOngoing))
     {
-        /* Copy Device's address into the GenFSK payload */
-        FLib_MemCpy(&message[gcBleDeviceAddressSize_c], gBD_ADDR, gcBleDeviceAddressSize_c);
-
         (void)GENFSK_PacketToByteArray(mAppGenfskId, &pkt, buffer);
         /* Compute GenFSK Tx duration and Radio Idle duration. */
         txTime = GENFSK_GetTxDuration(mAppGenfskId, len) + (gGenFskApp_GuardTime_c * 1000);
@@ -395,18 +405,13 @@ static void GfskApp_Tx(void * p)
         /* Check if there is enough idle time to perform the TX */
         if (txTime < idleTime)
         {
-            mAppGenfskTxPending = FALSE;
-            (void)GENFSK_AbortAll();
-            (void)GENFSK_StartTx(mAppGenfskId, buffer, len, 0U);
+            genfskStatus_t status = GENFSK_StartTx(mAppGenfskId, buffer, len, 0U);
+
+            if (status == gGenfskSuccess_c)
+            {
+                mAppGenfskTxOngoing = TRUE;
+            }
         }
-        else
-        {
-            mAppGenfskTxPending = TRUE;
-        }
-    }
-    else
-    {
-        mAppGenfskTxPending = TRUE;
     }
 }
 
@@ -416,7 +421,6 @@ static void GfskApp_Tx(void * p)
 static void GfskApp_CoexistenceTimeout(void * p)
 {
     (void)p;
-    (void)GENFSK_AbortAll();
     (void)MWS_Release(gMWS_GENFSK_c);
 }
 
@@ -440,27 +444,33 @@ static uint32_t App_MwsCallback ( mwsEvents_t event )
     switch(event)
     {
     case gMWS_Idle_c:
-        /* All other protocols are Idle. GenFSK can become active */
-        duration = MWS_GetInactivityDuration(gMWS_GENFSK_c) / 1000;
-
-        if ((duration > gGenFskApp_GuardTime_c) && (gMWS_Success_c == MWS_Acquire(gMWS_GENFSK_c, FALSE)))
+        if (mAppGenfskTxPending || mAppGenfskRxOn)
         {
-            duration -= gGenFskApp_GuardTime_c;
-
-            if (mAppGenfskTxPending)
+            /* All other protocols are Idle. GenFSK can become active */
+            duration = MWS_GetInactivityDuration(gMWS_GENFSK_c) / 1000;
+            if ((duration > gGenFskApp_GuardTime_c) && (gMWS_Success_c == MWS_Acquire(gMWS_GENFSK_c, FALSE)))
             {
-                GfskApp_Tx(NULL);
+                if (mAppGenfskTxPending)
+                {
+                    mAppGenfskTxOngoing = FALSE;
+                    GfskApp_Tx(NULL);
+                }
+                else
+                {
+                    if (mAppGenfskRxOn)
+                    {
+                        (void)GENFSK_StartRx(mAppGenfskId, buffer, (uint16_t)sizeof(buffer), 0U, 0U);
+                    }
+                }
+                duration = MWS_GetInactivityDuration(gMWS_GENFSK_c) / 1000;
+                duration -= gGenFskApp_GuardTime_c;
+                /* The GenFSK acquired access to the resources. Program the release timer. */
+                (void)TMR_StartSingleShotTimer(mAppGenfskCoexistenceTmr, duration, GfskApp_CoexistenceTimeout, NULL);
             }
             else
             {
-                if (mAppGenfskRxOn)
-                {
-                    (void)GENFSK_StartRx(mAppGenfskId, buffer, (uint16_t)sizeof(buffer), 0U, 0U);
-                }
+                MWS_SignalIdle(gMWS_GENFSK_c);
             }
-
-            /* The GenFSK acquired access to the resources. Program the release timer. */
-            (void)TMR_StartSingleShotTimer(mAppGenfskCoexistenceTmr, duration, GfskApp_CoexistenceTimeout, NULL);
         }
         else
         {

@@ -55,17 +55,17 @@ Example output:
 Tickless Demo example
 Press SW3 to wake up the CPU
 Tick count :
-1
-5001
+0
+5000
 CPU waked up by EXT interrupt
-10001
+10000
 CPU waked up by EXT interrupt
-15001
+15000
 CPU waked up by EXT interrupt
 CPU waked up by EXT interrupt
-20001
-25001
-30001
+20000
+25000
+30000
 
 Explanation of the example
 The example application will get tick count number after every period time delay vTaskDelay(time)

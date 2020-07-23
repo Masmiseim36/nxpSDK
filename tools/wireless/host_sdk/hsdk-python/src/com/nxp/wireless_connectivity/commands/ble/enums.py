@@ -1,6 +1,6 @@
 '''
 * Copyright 2014-2015 Freescale Semiconductor, Inc.
-* Copyright 2016-2019 NXP
+* Copyright 2016-2018 NXP
 * All rights reserved.
 *
 * SPDX-License-Identifier: BSD-3-Clause
@@ -36,7 +36,6 @@ class L2CAPCBCancelConnectionRequestRefuseReason(GenericEnum):
     gTimerError_c = 0x000B
     gCommandRejected_c = 0x0100
     gResponseTimeout_c = 0xFFFE
-
 
 class GATTClientDiscoverPrimaryServicesByUuidRequestUuidType(GenericEnum):
 
@@ -411,7 +410,6 @@ class GATTDBDynamicAddCharacteristicDeclarationWithUniqueValueRequestValueAccess
     # Attribute may be written only by authorized peers
     gPermissionFlagWriteWithAuthorization_c = 0x80
 
-
 class GATTDBDynamicAddCharDescriptorWithUniqueValueRequestUuidType(GenericEnum):
 
     Uuid16Bits = 0x01
@@ -496,11 +494,6 @@ class GAPSetAdvertisingParametersRequestAdvertisingParameters_PeerAddressType(Ge
     gPublic_c = 0x00
     gRandom_c = 0x01
 
-
-class GAPSetAdvertisingParametersRequestAdvertisingParameters_ChannelMap(GenericEnum):
-    gChannel37_c = 0x01
-    gChannel38_c = 0x02
-    gChannel39_c = 0x04
 
 
 class GAPSetAdvertisingParametersRequestAdvertisingParameters_FilterPolicy(GenericEnum):
@@ -631,30 +624,6 @@ class GAPPairRequestPairingParameters_LocalIoCapabilities(GenericEnum):
     gIoKeyboardDisplay_c = 0x04
 
 
-class GAPPairRequestPairingParameters_CentralKeys(GenericEnum):
-
-    # No key can be distributed
-    gNoKeys_c = 0x00
-    # Long Term Key
-    gLtk_c = 0x01
-    # Identity Resolving Key
-    gIrk_c = 0x02
-    # Connection Signature Resolving Key
-    gCsrk_c = 0x04
-
-
-class GAPPairRequestPairingParameters_PeripheralKeys(GenericEnum):
-
-    # No key can be distributed
-    gNoKeys_c = 0x00
-    # Long Term Key
-    gLtk_c = 0x01
-    # Identity Resolving Key
-    gIrk_c = 0x02
-    # Connection Signature Resolving Key
-    gCsrk_c = 0x04
-
-
 class GAPSendSlaveSecurityRequestRequestPairingParameters_SecurityModeAndLevel(GenericEnum):
 
     # Mode 1 Level 1 - No Security
@@ -683,27 +652,6 @@ class GAPSendSlaveSecurityRequestRequestPairingParameters_LocalIoCapabilities(Ge
     # Has keyboard input and display
     gIoKeyboardDisplay_c = 0x04
 
-class GAPSendSlaveSecurityRequestRequestPairingParameters_CentralKeys(GenericEnum):
-
-    # No key can be distributed
-    gNoKeys_c = 0x00
-    # Long Term Key
-    gLtk_c = 0x01
-    # Identity Resolving Key
-    gIrk_c = 0x02
-    # Connection Signature Resolving Key
-    gCsrk_c = 0x04
-
-class GAPSendSlaveSecurityRequestRequestPairingParameters_PeripheralKeys(GenericEnum):
-
-    # No key can be distributed
-    gNoKeys_c = 0x00
-    # Long Term Key
-    gLtk_c = 0x01
-    # Identity Resolving Key
-    gIrk_c = 0x02
-    # Connection Signature Resolving Key
-    gCsrk_c = 0x04
 
 class GAPAcceptPairingRequestRequestPairingParameters_SecurityModeAndLevel(GenericEnum):
 
@@ -734,29 +682,6 @@ class GAPAcceptPairingRequestRequestPairingParameters_LocalIoCapabilities(Generi
     # Has keyboard input and display
     gIoKeyboardDisplay_c = 0x04
 
-
-class GAPAcceptPairingRequestRequestPairingParameters_CentralKeys(GenericEnum):
-
-    # No key can be distributed
-    gNoKeys_c = 0x00
-    # Long Term Key
-    gLtk_c = 0x01
-    # Identity Resolving Key
-    gIrk_c = 0x02
-    # Connection Signature Resolving Key
-    gCsrk_c = 0x04
-
-
-class GAPAcceptPairingRequestRequestPairingParameters_PeripheralKeys(GenericEnum):
-
-    # No key can be distributed
-    gNoKeys_c = 0x00
-    # Long Term Key
-    gLtk_c = 0x01
-    # Identity Resolving Key
-    gIrk_c = 0x02
-    # Connection Signature Resolving Key
-    gCsrk_c = 0x04
 
 
 class GAPRejectPairingRequestReason(GenericEnum):
@@ -814,10 +739,6 @@ class GAPStartScanningRequestFilterDuplicates(GenericEnum):
     # Duplicate filtering enabled, reset for each scan period
     PeriodicEnable = 0x02
 
-class ScanningParametersScanning_PHY(GenericEnum):
-    gLePhy1M_c = 0x01
-    gLePhy2M_c = 0x02
-    gLePhyCoded_c = 0x04
 
 class GAPConnectRequestCreateConnectionParameters_FilterPolicy(GenericEnum):
 
@@ -837,10 +758,6 @@ class GAPConnectRequestCreateConnectionParameters_PeerAddressType(GenericEnum):
 
     gPublic_c = 0x00
     gRandom_c = 0x01
-class GAPConnectRequestCreateConnectionParameters_Initiating_PHYs(GenericEnum):
-    gLePhy1M_c = 0x01
-    gLePhy2M_c = 0x02
-    gLePhyCoded_c = 0x04
 
 
 class GAPAddDeviceToWhiteListRequestAddressType(GenericEnum):
@@ -897,10 +814,6 @@ class AutoConnectParams_AutoConnectDataPeerAddressType(GenericEnum):
 
     gPublic_c = 0x00
     gRandom_c = 0x01
-class AutoConnectParams_AutoConnectDataInitiating_PHYs(GenericEnum):
-    gLePhy1M_c = 0x01
-    gLePhy2M_c = 0x02
-    gLePhyCoded_c = 0x04
 
 
 class PairingParametersSecurityModeAndLevel(GenericEnum):
@@ -931,30 +844,6 @@ class PairingParametersLocalIoCapabilities(GenericEnum):
     gIoNone_c = 0x03
     # Has keyboard input and display
     gIoKeyboardDisplay_c = 0x04
-
-
-class PairingParametersCentralKeys(GenericEnum):
-
-    # No key can be distributed
-    gNoKeys_c = 0x00
-    # Long Term Key
-    gLtk_c = 0x01
-    # Identity Resolving Key
-    gIrk_c = 0x02
-    # Connection Signature Resolving Key
-    gCsrk_c = 0x04
-
-
-class PairingParametersPeripheralKeys(GenericEnum):
-
-    # No key can be distributed
-    gNoKeys_c = 0x00
-    # Long Term Key
-    gLtk_c = 0x01
-    # Identity Resolving Key
-    gIrk_c = 0x02
-    # Connection Signature Resolving Key
-    gCsrk_c = 0x04
 
 
 class PeerIdentitiesIdentityAddressType(GenericEnum):
@@ -1133,6 +1022,7 @@ class GAPPeriodicAdvCreateSyncRequestDeviceAddressType(GenericEnum):
     gRandom_c = 0x01
 
 
+
 class FSCIAllowDeviceToSleepRequestSignalHostWhenWakeUp(GenericEnum):
 
     FALSE = 0x00
@@ -1160,183 +1050,6 @@ class FSCIAllowDeviceToSleepConfirmStatus(GenericEnum):
     gError = 0xFF
 
 
-class L2CAPConfirmStatus(GenericEnum):
-
-    gBleSuccess_c = 0x0000
-    gBleInvalidParameter_c = 0x0001
-    gBleOverflow_c = 0x0002
-    gBleUnavailable_c = 0x0003
-    gBleFeatureNotSupported_c = 0x0004
-    gBleOutOfMemory_c = 0x0005
-    gBleAlreadyInitialized_c = 0x0006
-    gBleOsError_c = 0x0007
-    gBleUnexpectedError_c = 0x0008
-    gBleInvalidState_c = 0x0009
-    gBleTimerError_c = 0x000A
-    gHciUnknownHciCommand_c = 0x0101
-    gHciUnknownConnectionIdentifier_c = 0x0102
-    gHciHardwareFailure_c = 0x0103
-    gHciPageTimeout_c = 0x0104
-    gHciAuthenticationFailure_c = 0x0105
-    gHciPinOrKeyMissing_c = 0x0106
-    gHciMemoryCapacityExceeded_c = 0x0107
-    gHciConnectionTimeout_c = 0x0108
-    gHciConnectionLimitExceeded_c = 0x0109
-    gHciSynchronousConnectionLimitToADeviceExceeded_c = 0x010A
-    gHciAclConnectionAlreadyExists_c = 0x010B
-    gHciCommandDisallowed_c = 0x010C
-    gHciConnectionRejectedDueToLimitedResources_c = 0x010D
-    gHciConnectionRejectedDueToSecurityReasons_c = 0x010E
-    gHciConnectionRejectedDueToUnacceptableBdAddr_c = 0x010F
-    gHciConnectionAcceptTimeoutExceeded_c = 0x0110
-    gHciUnsupportedFeatureOrParameterValue_c = 0x0111
-    gHciInvalidHciCommandParameters_c = 0x0112
-    gHciRemoteUserTerminatedConnection_c = 0x0113
-    gHciRemoteDeviceTerminatedConnectionLowResources_c = 0x0114
-    gHciRemoteDeviceTerminatedConnectionPowerOff_c = 0x0115
-    gHciConnectionTerminatedByLocalHost_c = 0x0116
-    gHciRepeatedAttempts_c = 0x0117
-    gHciPairingNotAllowed_c = 0x0118
-    gHciUnknownLpmPdu_c = 0x0119
-    gHciUnsupportedRemoteFeature_c = 0x011A
-    gHciScoOffsetRejected_c = 0x011B
-    gHciScoIntervalRejected_c = 0x011C
-    gHciScoAirModeRejected_c = 0x011D
-    gHciInvalidLpmParameters_c = 0x011E
-    gHciUnspecifiedError_c = 0x011F
-    gHciUnsupportedLpmParameterValue_c = 0x0120
-    gHciRoleChangeNotAllowed_c = 0x0121
-    gHciLLResponseTimeout_c = 0x0122
-    gHciLmpErrorTransactionCollision_c = 0x0123
-    gHciLmpPduNotAllowed_c = 0x0124
-    gHciEncryptionModeNotAcceptable_c = 0x0125
-    gHciLinkKeyCannotBeChanged_c = 0x0126
-    gHciRequestedQosNotSupported_c = 0x0127
-    gHciInstantPassed_c = 0x0128
-    gHciPairingWithUnitKeyNotSupported_c = 0x0129
-    gHciDifferentTransactionCollision_c = 0x012A
-    gHciReserved_0x2B_c = 0x012B
-    gHciQosNotAcceptableParameter_c = 0x012C
-    gHciQosRejected_c = 0x012D
-    gHciChannelClassificationNotSupported_c = 0x012E
-    gHciInsufficientSecurity_c = 0x012F
-    gHciParameterOutOfMandatoryRange_c = 0x0130
-    gHciReserved_0x31_c = 0x0131
-    gHciRoleSwitchPending_c = 0x0132
-    gHciReserved_0x33_c = 0x0133
-    gHciReservedSlotViolation_c = 0x0134
-    gHciRoleSwitchFailed_c = 0x0135
-    gHciExtendedInquiryResponseTooLarge_c = 0x0136
-    gHciSecureSimplePairingNotSupportedByHost_c = 0x0137
-    gHciHostBusyPairing_c = 0x0138
-    gHciConnectionRejectedDueToNoSuitableChannelFound_c = 0x0139
-    gHciControllerBusy_c = 0x013A
-    gHciUnacceptableConnectionParameters_c = 0x013B
-    gHciDirectedAdvertisingTimeout_c = 0x013C
-    gHciConnectionTerminatedDueToMicFailure_c = 0x013D
-    gHciConnectionFailedToBeEstablishedOrSyncTimeout_c = 0x013E
-    gHciMacConnectionFailed_c = 0x013F
-    gHciCoarseClockAdjustmentRejected_c = 0x0140
-    gHciType0SubmapNotDefined_c = 0x0141
-    gHciUnknownAdvertisingIdentifier_c = 0x0142
-    gHciLimitReached_c = 0x0143
-    gHciOperationCancelledByHost_c = 0x0144
-    gHciAlreadyInit_c = 0x01A0
-    gHciInvalidParameter_c = 0x01A1
-    gHciCallbackNotInstalled_c = 0x01A2
-    gHciCallbackAlreadyInstalled_c = 0x01A3
-    gHciCommandNotSupported_c = 0x01A4
-    gHciEventNotSupported_c = 0x01A5
-    gHciTransportError_c = 0x01A6
-    gL2caAlreadyInit_c = 0x03F0
-    gL2caInsufficientResources_c = 0x03F1
-    gL2caCallbackNotInstalled_c = 0x03F2
-    gL2caCallbackAlreadyInstalled_c = 0x03F3
-    gL2caLePsmInvalid_c = 0x03F4
-    gL2caLePsmAlreadyRegistered_c = 0x03F5
-    gL2caLePsmNotRegistered_c = 0x03F6
-    gL2caLePsmInsufficientResources_c = 0x03F7
-    gL2caChannelInvalid_c = 0x03F8
-    gL2caChannelClosed_c = 0x03F9
-    gL2caChannelAlreadyConnected_c = 0x03FA
-    gL2caConnectionParametersRejected_c = 0x03FB
-    gL2caChannelBusy_c = 0x03FC
-    gL2caInvalidParameter_c = 0x03FE
-    gL2caError_c = 0x03FF
-    gSmNullCBFunction_c = 0x0401
-    gSmCommandNotSupported_c = 0x0402
-    gSmUnexpectedCommand_c = 0x0403
-    gSmInvalidCommandCode_c = 0x0404
-    gSmInvalidCommandLength_c = 0x0405
-    gSmInvalidCommandParameter_c = 0x0406
-    gSmInvalidDeviceId_c = 0x0407
-    gSmInvalidInternalOperation_c = 0x0408
-    gSmInvalidConnectionHandle_c = 0x0409
-    gSmInproperKeyDistributionField_c = 0x040A
-    gSmUnexpectedKeyType_c = 0x040B
-    gSmUnexpectedPairingTerminationReason_c = 0x040C
-    gSmUnexpectedKeyset_c = 0x040D
-    gSmSmpTimeoutOccurred_c = 0x040E
-    gSmUnknownSmpPacketType_c = 0x040F
-    gSmInvalidSmpPacketLength_c = 0x0410
-    gSmInvalidSmpPacketParameter_c = 0x0411
-    gSmReceivedUnexpectedSmpPacket_c = 0x0412
-    gSmReceivedSmpPacketFromUnknownDevice_c = 0x0413
-    gSmReceivedUnexpectedHciEvent_c = 0x0414
-    gSmReceivedHciEventFromUnknownDevice_c = 0x0415
-    gSmInvalidHciEventParameter_c = 0x0416
-    gSmLlConnectionEncryptionInProgress_c = 0x0417
-    gSmLlConnectionEncryptionFailure_c = 0x0418
-    gSmInsufficientResources_c = 0x0419
-    gSmOobDataAddressMismatch_c = 0x041A
-    gSmSmpPacketReceivedAfterTimeoutOccurred_c = 0x041B
-    gSmReceivedTimerEventForUnknownDevice_c = 0x041C
-    gSmUnattainableLocalDeviceSecRequirements_c = 0x041D
-    gSmUnattainableLocalDeviceMinKeySize_c = 0x041E
-    gSmUnattainableSlaveSecReqRequirements_c = 0x041F
-    gSmPairingErrorPasskeyEntryFailed_c = 0x0431
-    gSmPairingErrorConfirmValueFailed_c = 0x0432
-    gSmPairingErrorCommandNotSupported_c = 0x0433
-    gSmPairingErrorInvalidParameters_c = 0x0434
-    gSmPairingErrorUnknownReason_c = 0x0435
-    gSmTbResolvableAddressDoesNotMatchIrk_c = 0x0460
-    gSmTbInvalidDataSignature_c = 0x0461
-    gAttInvalidHandle_c = 0x0501
-    gAttReadNotPermitted_c = 0x0502
-    gAttWriteNotPermitted_c = 0x0503
-    gAttInvalidPdu_c = 0x0504
-    gAttInsufficientAuthentication_c = 0x0505
-    gAttRequestNotSupported_c = 0x0506
-    gAttInvalidOffset_c = 0x0507
-    gAttInsufficientAuthorization_c = 0x0508
-    gAttPrepareQueueFull_c = 0x0509
-    gAttAttributeNotFound_c = 0x050A
-    gAttAttributeNotLong_c = 0x050B
-    gAttInsufficientEncryptionKeySize_c = 0x050C
-    gAttInvalidAttributeValueLength_c = 0x050D
-    gAttUnlikelyor_c = 0x050E
-    gAttInsufficientEncryption_c = 0x050F
-    gAttUnsupportedGroupType_c = 0x0510
-    gAttInsufficientResources_c = 0x0511
-    gGattAnotherProcedureInProgress_c = 0x0601
-    gGattLongAttributePacketsCorrupted_c = 0x0602
-    gGattMultipleAttributesOverflow_c = 0x0603
-    gGattUnexpectedReadMultipleResponseLength_c = 0x0604
-    gGattInvalidValueLength_c = 0x0605
-    gGattServerTimeout_c = 0x0606
-    gGattIndicationAlreadyInProgress_c = 0x0607
-    gGattClientConfirmationTimeout_c = 0x0608
-    gGapAdvDataTooLong_c = 0x0701
-    gGapScanRspDataTooLong_c = 0x0702
-    gGapDeviceNotBonded_c = 0x0703
-    gGapAnotherProcedureInProgress_c = 0x0704
-    gDevDbCccdLimitReached_c = 0x0801
-    gDevDbCccdNotFound_c = 0x0802
-    gGattDbInvalidHandle_c = 0x0901
-    gGattDbCharacteristicNotFound_c = 0x0902
-    gGattDbCccdNotFound_c = 0x0903
-    gGattDbServiceNotFound_c = 0x0904
-    gGattDbDescriptorNotFound_c = 0x0905
 
 
 class L2CAPCBConfirmStatus(GenericEnum):
@@ -1478,184 +1191,7 @@ class L2CAPCBConfirmStatus(GenericEnum):
     gSmPairingErrorCommandNotSupported_c = 0x0433
     gSmPairingErrorInvalidParameters_c = 0x0434
     gSmPairingErrorUnknownReason_c = 0x0435
-    gSmTbResolvableAddressDoesNotMatchIrk_c = 0x0460
-    gSmTbInvalidDataSignature_c = 0x0461
-    gAttInvalidHandle_c = 0x0501
-    gAttReadNotPermitted_c = 0x0502
-    gAttWriteNotPermitted_c = 0x0503
-    gAttInvalidPdu_c = 0x0504
-    gAttInsufficientAuthentication_c = 0x0505
-    gAttRequestNotSupported_c = 0x0506
-    gAttInvalidOffset_c = 0x0507
-    gAttInsufficientAuthorization_c = 0x0508
-    gAttPrepareQueueFull_c = 0x0509
-    gAttAttributeNotFound_c = 0x050A
-    gAttAttributeNotLong_c = 0x050B
-    gAttInsufficientEncryptionKeySize_c = 0x050C
-    gAttInvalidAttributeValueLength_c = 0x050D
-    gAttUnlikelyor_c = 0x050E
-    gAttInsufficientEncryption_c = 0x050F
-    gAttUnsupportedGroupType_c = 0x0510
-    gAttInsufficientResources_c = 0x0511
-    gGattAnotherProcedureInProgress_c = 0x0601
-    gGattLongAttributePacketsCorrupted_c = 0x0602
-    gGattMultipleAttributesOverflow_c = 0x0603
-    gGattUnexpectedReadMultipleResponseLength_c = 0x0604
-    gGattInvalidValueLength_c = 0x0605
-    gGattServerTimeout_c = 0x0606
-    gGattIndicationAlreadyInProgress_c = 0x0607
-    gGattClientConfirmationTimeout_c = 0x0608
-    gGapAdvDataTooLong_c = 0x0701
-    gGapScanRspDataTooLong_c = 0x0702
-    gGapDeviceNotBonded_c = 0x0703
-    gGapAnotherProcedureInProgress_c = 0x0704
-    gDevDbCccdLimitReached_c = 0x0801
-    gDevDbCccdNotFound_c = 0x0802
-    gGattDbInvalidHandle_c = 0x0901
-    gGattDbCharacteristicNotFound_c = 0x0902
-    gGattDbCccdNotFound_c = 0x0903
-    gGattDbServiceNotFound_c = 0x0904
-    gGattDbDescriptorNotFound_c = 0x0905
-
-class GATTConfirmStatus(GenericEnum):
-
-    gBleSuccess_c = 0x0000
-    gBleInvalidParameter_c = 0x0001
-    gBleOverflow_c = 0x0002
-    gBleUnavailable_c = 0x0003
-    gBleFeatureNotSupported_c = 0x0004
-    gBleOutOfMemory_c = 0x0005
-    gBleAlreadyInitialized_c = 0x0006
-    gBleOsError_c = 0x0007
-    gBleUnexpectedError_c = 0x0008
-    gBleInvalidState_c = 0x0009
-    gBleTimerError_c = 0x000A
-    gHciUnknownHciCommand_c = 0x0101
-    gHciUnknownConnectionIdentifier_c = 0x0102
-    gHciHardwareFailure_c = 0x0103
-    gHciPageTimeout_c = 0x0104
-    gHciAuthenticationFailure_c = 0x0105
-    gHciPinOrKeyMissing_c = 0x0106
-    gHciMemoryCapacityExceeded_c = 0x0107
-    gHciConnectionTimeout_c = 0x0108
-    gHciConnectionLimitExceeded_c = 0x0109
-    gHciSynchronousConnectionLimitToADeviceExceeded_c = 0x010A
-    gHciAclConnectionAlreadyExists_c = 0x010B
-    gHciCommandDisallowed_c = 0x010C
-    gHciConnectionRejectedDueToLimitedResources_c = 0x010D
-    gHciConnectionRejectedDueToSecurityReasons_c = 0x010E
-    gHciConnectionRejectedDueToUnacceptableBdAddr_c = 0x010F
-    gHciConnectionAcceptTimeoutExceeded_c = 0x0110
-    gHciUnsupportedFeatureOrParameterValue_c = 0x0111
-    gHciInvalidHciCommandParameters_c = 0x0112
-    gHciRemoteUserTerminatedConnection_c = 0x0113
-    gHciRemoteDeviceTerminatedConnectionLowResources_c = 0x0114
-    gHciRemoteDeviceTerminatedConnectionPowerOff_c = 0x0115
-    gHciConnectionTerminatedByLocalHost_c = 0x0116
-    gHciRepeatedAttempts_c = 0x0117
-    gHciPairingNotAllowed_c = 0x0118
-    gHciUnknownLpmPdu_c = 0x0119
-    gHciUnsupportedRemoteFeature_c = 0x011A
-    gHciScoOffsetRejected_c = 0x011B
-    gHciScoIntervalRejected_c = 0x011C
-    gHciScoAirModeRejected_c = 0x011D
-    gHciInvalidLpmParameters_c = 0x011E
-    gHciUnspecifiedError_c = 0x011F
-    gHciUnsupportedLpmParameterValue_c = 0x0120
-    gHciRoleChangeNotAllowed_c = 0x0121
-    gHciLLResponseTimeout_c = 0x0122
-    gHciLmpErrorTransactionCollision_c = 0x0123
-    gHciLmpPduNotAllowed_c = 0x0124
-    gHciEncryptionModeNotAcceptable_c = 0x0125
-    gHciLinkKeyCannotBeChanged_c = 0x0126
-    gHciRequestedQosNotSupported_c = 0x0127
-    gHciInstantPassed_c = 0x0128
-    gHciPairingWithUnitKeyNotSupported_c = 0x0129
-    gHciDifferentTransactionCollision_c = 0x012A
-    gHciReserved_0x2B_c = 0x012B
-    gHciQosNotAcceptableParameter_c = 0x012C
-    gHciQosRejected_c = 0x012D
-    gHciChannelClassificationNotSupported_c = 0x012E
-    gHciInsufficientSecurity_c = 0x012F
-    gHciParameterOutOfMandatoryRange_c = 0x0130
-    gHciReserved_0x31_c = 0x0131
-    gHciRoleSwitchPending_c = 0x0132
-    gHciReserved_0x33_c = 0x0133
-    gHciReservedSlotViolation_c = 0x0134
-    gHciRoleSwitchFailed_c = 0x0135
-    gHciExtendedInquiryResponseTooLarge_c = 0x0136
-    gHciSecureSimplePairingNotSupportedByHost_c = 0x0137
-    gHciHostBusyPairing_c = 0x0138
-    gHciConnectionRejectedDueToNoSuitableChannelFound_c = 0x0139
-    gHciControllerBusy_c = 0x013A
-    gHciUnacceptableConnectionParameters_c = 0x013B
-    gHciDirectedAdvertisingTimeout_c = 0x013C
-    gHciConnectionTerminatedDueToMicFailure_c = 0x013D
-    gHciConnectionFailedToBeEstablishedOrSyncTimeout_c = 0x013E
-    gHciMacConnectionFailed_c = 0x013F
-    gHciCoarseClockAdjustmentRejected_c = 0x0140
-    gHciType0SubmapNotDefined_c = 0x0141
-    gHciUnknownAdvertisingIdentifier_c = 0x0142
-    gHciLimitReached_c = 0x0143
-    gHciOperationCancelledByHost_c = 0x0144
-    gHciAlreadyInit_c = 0x01A0
-    gHciInvalidParameter_c = 0x01A1
-    gHciCallbackNotInstalled_c = 0x01A2
-    gHciCallbackAlreadyInstalled_c = 0x01A3
-    gHciCommandNotSupported_c = 0x01A4
-    gHciEventNotSupported_c = 0x01A5
-    gHciTransportError_c = 0x01A6
-    gL2caAlreadyInit_c = 0x03F0
-    gL2caInsufficientResources_c = 0x03F1
-    gL2caCallbackNotInstalled_c = 0x03F2
-    gL2caCallbackAlreadyInstalled_c = 0x03F3
-    gL2caLePsmInvalid_c = 0x03F4
-    gL2caLePsmAlreadyRegistered_c = 0x03F5
-    gL2caLePsmNotRegistered_c = 0x03F6
-    gL2caLePsmInsufficientResources_c = 0x03F7
-    gL2caChannelInvalid_c = 0x03F8
-    gL2caChannelClosed_c = 0x03F9
-    gL2caChannelAlreadyConnected_c = 0x03FA
-    gL2caConnectionParametersRejected_c = 0x03FB
-    gL2caChannelBusy_c = 0x03FC
-    gL2caInvalidParameter_c = 0x03FE
-    gL2caError_c = 0x03FF
-    gSmNullCBFunction_c = 0x0401
-    gSmCommandNotSupported_c = 0x0402
-    gSmUnexpectedCommand_c = 0x0403
-    gSmInvalidCommandCode_c = 0x0404
-    gSmInvalidCommandLength_c = 0x0405
-    gSmInvalidCommandParameter_c = 0x0406
-    gSmInvalidDeviceId_c = 0x0407
-    gSmInvalidInternalOperation_c = 0x0408
-    gSmInvalidConnectionHandle_c = 0x0409
-    gSmInproperKeyDistributionField_c = 0x040A
-    gSmUnexpectedKeyType_c = 0x040B
-    gSmUnexpectedPairingTerminationReason_c = 0x040C
-    gSmUnexpectedKeyset_c = 0x040D
-    gSmSmpTimeoutOccurred_c = 0x040E
-    gSmUnknownSmpPacketType_c = 0x040F
-    gSmInvalidSmpPacketLength_c = 0x0410
-    gSmInvalidSmpPacketParameter_c = 0x0411
-    gSmReceivedUnexpectedSmpPacket_c = 0x0412
-    gSmReceivedSmpPacketFromUnknownDevice_c = 0x0413
-    gSmReceivedUnexpectedHciEvent_c = 0x0414
-    gSmReceivedHciEventFromUnknownDevice_c = 0x0415
-    gSmInvalidHciEventParameter_c = 0x0416
-    gSmLlConnectionEncryptionInProgress_c = 0x0417
-    gSmLlConnectionEncryptionFailure_c = 0x0418
-    gSmInsufficientResources_c = 0x0419
-    gSmOobDataAddressMismatch_c = 0x041A
-    gSmSmpPacketReceivedAfterTimeoutOccurred_c = 0x041B
-    gSmReceivedTimerEventForUnknownDevice_c = 0x041C
-    gSmUnattainableLocalDeviceSecRequirements_c = 0x041D
-    gSmUnattainableLocalDeviceMinKeySize_c = 0x041E
-    gSmUnattainableSlaveSecReqRequirements_c = 0x041F
-    gSmPairingErrorPasskeyEntryFailed_c = 0x0431
-    gSmPairingErrorConfirmValueFailed_c = 0x0432
-    gSmPairingErrorCommandNotSupported_c = 0x0433
-    gSmPairingErrorInvalidParameters_c = 0x0434
-    gSmPairingErrorUnknownReason_c = 0x0435
+    gSmPairingErrorTimeout_c = 0x0436
     gSmTbResolvableAddressDoesNotMatchIrk_c = 0x0460
     gSmTbInvalidDataSignature_c = 0x0461
     gAttInvalidHandle_c = 0x0501
@@ -1711,8 +1247,6 @@ class LeCbConnectionCompleteResult(GenericEnum):
     gCommandRejected_c = 0x0100
     gResponseTimeout_c = 0xFFFE
 
-
-
 class GATTConfirmStatus(GenericEnum):
 
     gBleSuccess_c = 0x0000
@@ -1852,6 +1386,7 @@ class GATTConfirmStatus(GenericEnum):
     gSmPairingErrorCommandNotSupported_c = 0x0433
     gSmPairingErrorInvalidParameters_c = 0x0434
     gSmPairingErrorUnknownReason_c = 0x0435
+    gSmPairingErrorTimeout_c = 0x0436
     gSmTbResolvableAddressDoesNotMatchIrk_c = 0x0460
     gSmTbInvalidDataSignature_c = 0x0461
     gAttInvalidHandle_c = 0x0501
@@ -1890,14 +1425,6 @@ class GATTConfirmStatus(GenericEnum):
     gGattDbCccdNotFound_c = 0x0903
     gGattDbServiceNotFound_c = 0x0904
     gGattDbDescriptorNotFound_c = 0x0905
-
-class GATTClientProcedureDiscoverAllPrimaryServicesIndicationProcedureResult(GenericEnum):
-
-    # The procedure was completed successfully
-    gGattProcSuccess_c = 0x00
-    # The procedure was terminated due to an error
-    gProcedureError_c = 0x01
-
 
 
 class GATTClientProcedureExchangeMtuIndicationProcedureResult(GenericEnum):
@@ -2047,6 +1574,7 @@ class GATTClientProcedureExchangeMtuIndicationError(GenericEnum):
     gSmPairingErrorCommandNotSupported_c = 0x0433
     gSmPairingErrorInvalidParameters_c = 0x0434
     gSmPairingErrorUnknownReason_c = 0x0435
+    gSmPairingErrorTimeout_c = 0x0436
     gSmTbResolvableAddressDoesNotMatchIrk_c = 0x0460
     gSmTbInvalidDataSignature_c = 0x0461
     gAttInvalidHandle_c = 0x0501
@@ -2234,6 +1762,7 @@ class GATTClientProcedureDiscoverAllPrimaryServicesIndicationError(GenericEnum):
     gSmPairingErrorCommandNotSupported_c = 0x0433
     gSmPairingErrorInvalidParameters_c = 0x0434
     gSmPairingErrorUnknownReason_c = 0x0435
+    gSmPairingErrorTimeout_c = 0x0436
     gSmTbResolvableAddressDoesNotMatchIrk_c = 0x0460
     gSmTbInvalidDataSignature_c = 0x0461
     gAttInvalidHandle_c = 0x0501
@@ -2435,6 +1964,7 @@ class GATTClientProcedureDiscoverPrimaryServicesByUuidIndicationError(GenericEnu
     gSmPairingErrorCommandNotSupported_c = 0x0433
     gSmPairingErrorInvalidParameters_c = 0x0434
     gSmPairingErrorUnknownReason_c = 0x0435
+    gSmPairingErrorTimeout_c = 0x0436
     gSmTbResolvableAddressDoesNotMatchIrk_c = 0x0460
     gSmTbInvalidDataSignature_c = 0x0461
     gAttInvalidHandle_c = 0x0501
@@ -2622,6 +2152,7 @@ class GATTClientProcedureFindIncludedServicesIndicationError(GenericEnum):
     gSmPairingErrorCommandNotSupported_c = 0x0433
     gSmPairingErrorInvalidParameters_c = 0x0434
     gSmPairingErrorUnknownReason_c = 0x0435
+    gSmPairingErrorTimeout_c = 0x0436
     gSmTbResolvableAddressDoesNotMatchIrk_c = 0x0460
     gSmTbInvalidDataSignature_c = 0x0461
     gAttInvalidHandle_c = 0x0501
@@ -2816,6 +2347,7 @@ class GATTClientProcedureDiscoverAllCharacteristicsIndicationError(GenericEnum):
     gSmPairingErrorCommandNotSupported_c = 0x0433
     gSmPairingErrorInvalidParameters_c = 0x0434
     gSmPairingErrorUnknownReason_c = 0x0435
+    gSmPairingErrorTimeout_c = 0x0436
     gSmTbResolvableAddressDoesNotMatchIrk_c = 0x0460
     gSmTbInvalidDataSignature_c = 0x0461
     gAttInvalidHandle_c = 0x0501
@@ -3010,6 +2542,7 @@ class GATTClientProcedureDiscoverCharacteristicByUuidIndicationError(GenericEnum
     gSmPairingErrorCommandNotSupported_c = 0x0433
     gSmPairingErrorInvalidParameters_c = 0x0434
     gSmPairingErrorUnknownReason_c = 0x0435
+    gSmPairingErrorTimeout_c = 0x0436
     gSmTbResolvableAddressDoesNotMatchIrk_c = 0x0460
     gSmTbInvalidDataSignature_c = 0x0461
     gAttInvalidHandle_c = 0x0501
@@ -3197,6 +2730,7 @@ class GATTClientProcedureDiscoverAllCharacteristicDescriptorsIndicationError(Gen
     gSmPairingErrorCommandNotSupported_c = 0x0433
     gSmPairingErrorInvalidParameters_c = 0x0434
     gSmPairingErrorUnknownReason_c = 0x0435
+    gSmPairingErrorTimeout_c = 0x0436
     gSmTbResolvableAddressDoesNotMatchIrk_c = 0x0460
     gSmTbInvalidDataSignature_c = 0x0461
     gAttInvalidHandle_c = 0x0501
@@ -3406,6 +2940,7 @@ class GATTClientProcedureReadCharacteristicValueIndicationError(GenericEnum):
     gSmPairingErrorCommandNotSupported_c = 0x0433
     gSmPairingErrorInvalidParameters_c = 0x0434
     gSmPairingErrorUnknownReason_c = 0x0435
+    gSmPairingErrorTimeout_c = 0x0436
     gSmTbResolvableAddressDoesNotMatchIrk_c = 0x0460
     gSmTbInvalidDataSignature_c = 0x0461
     gAttInvalidHandle_c = 0x0501
@@ -3615,6 +3150,7 @@ class GATTClientProcedureReadUsingCharacteristicUuidIndicationError(GenericEnum)
     gSmPairingErrorCommandNotSupported_c = 0x0433
     gSmPairingErrorInvalidParameters_c = 0x0434
     gSmPairingErrorUnknownReason_c = 0x0435
+    gSmPairingErrorTimeout_c = 0x0436
     gSmTbResolvableAddressDoesNotMatchIrk_c = 0x0460
     gSmTbInvalidDataSignature_c = 0x0461
     gAttInvalidHandle_c = 0x0501
@@ -3802,6 +3338,7 @@ class GATTClientProcedureReadMultipleCharacteristicValuesIndicationError(Generic
     gSmPairingErrorCommandNotSupported_c = 0x0433
     gSmPairingErrorInvalidParameters_c = 0x0434
     gSmPairingErrorUnknownReason_c = 0x0435
+    gSmPairingErrorTimeout_c = 0x0436
     gSmTbResolvableAddressDoesNotMatchIrk_c = 0x0460
     gSmTbInvalidDataSignature_c = 0x0461
     gAttInvalidHandle_c = 0x0501
@@ -3989,6 +3526,7 @@ class GATTClientProcedureWriteCharacteristicValueIndicationError(GenericEnum):
     gSmPairingErrorCommandNotSupported_c = 0x0433
     gSmPairingErrorInvalidParameters_c = 0x0434
     gSmPairingErrorUnknownReason_c = 0x0435
+    gSmPairingErrorTimeout_c = 0x0436
     gSmTbResolvableAddressDoesNotMatchIrk_c = 0x0460
     gSmTbInvalidDataSignature_c = 0x0461
     gAttInvalidHandle_c = 0x0501
@@ -4176,6 +3714,7 @@ class GATTClientProcedureReadCharacteristicDescriptorIndicationError(GenericEnum
     gSmPairingErrorCommandNotSupported_c = 0x0433
     gSmPairingErrorInvalidParameters_c = 0x0434
     gSmPairingErrorUnknownReason_c = 0x0435
+    gSmPairingErrorTimeout_c = 0x0436
     gSmTbResolvableAddressDoesNotMatchIrk_c = 0x0460
     gSmTbInvalidDataSignature_c = 0x0461
     gAttInvalidHandle_c = 0x0501
@@ -4370,6 +3909,7 @@ class GATTClientProcedureWriteCharacteristicDescriptorIndicationError(GenericEnu
     gSmPairingErrorCommandNotSupported_c = 0x0433
     gSmPairingErrorInvalidParameters_c = 0x0434
     gSmPairingErrorUnknownReason_c = 0x0435
+    gSmPairingErrorTimeout_c = 0x0436
     gSmTbResolvableAddressDoesNotMatchIrk_c = 0x0460
     gSmTbInvalidDataSignature_c = 0x0461
     gAttInvalidHandle_c = 0x0501
@@ -4568,6 +4108,7 @@ class GATTServerErrorIndicationProcedureError_Error(GenericEnum):
     gSmPairingErrorCommandNotSupported_c = 0x0433
     gSmPairingErrorInvalidParameters_c = 0x0434
     gSmPairingErrorUnknownReason_c = 0x0435
+    gSmPairingErrorTimeout_c = 0x0436
     gSmTbResolvableAddressDoesNotMatchIrk_c = 0x0460
     gSmTbInvalidDataSignature_c = 0x0461
     gAttInvalidHandle_c = 0x0501
@@ -4747,6 +4288,7 @@ class GATTDBConfirmStatus(GenericEnum):
     gSmPairingErrorCommandNotSupported_c = 0x0433
     gSmPairingErrorInvalidParameters_c = 0x0434
     gSmPairingErrorUnknownReason_c = 0x0435
+    gSmPairingErrorTimeout_c = 0x0436
     gSmTbResolvableAddressDoesNotMatchIrk_c = 0x0460
     gSmTbInvalidDataSignature_c = 0x0461
     gAttInvalidHandle_c = 0x0501
@@ -4787,191 +4329,7 @@ class GATTDBConfirmStatus(GenericEnum):
     gGattDbDescriptorNotFound_c = 0x0905
 
 
-class GATTDBAttConfirmStatus(GenericEnum):
 
-    gBleSuccess_c = 0x0000
-    gBleInvalidParameter_c = 0x0001
-    gBleOverflow_c = 0x0002
-    gBleUnavailable_c = 0x0003
-    gBleFeatureNotSupported_c = 0x0004
-    gBleOutOfMemory_c = 0x0005
-    gBleAlreadyInitialized_c = 0x0006
-    gBleOsError_c = 0x0007
-    gBleUnexpectedError_c = 0x0008
-    gBleInvalidState_c = 0x0009
-    gBleTimerError_c = 0x000A
-    gHciUnknownHciCommand_c = 0x0101
-    gHciUnknownConnectionIdentifier_c = 0x0102
-    gHciHardwareFailure_c = 0x0103
-    gHciPageTimeout_c = 0x0104
-    gHciAuthenticationFailure_c = 0x0105
-    gHciPinOrKeyMissing_c = 0x0106
-    gHciMemoryCapacityExceeded_c = 0x0107
-    gHciConnectionTimeout_c = 0x0108
-    gHciConnectionLimitExceeded_c = 0x0109
-    gHciSynchronousConnectionLimitToADeviceExceeded_c = 0x010A
-    gHciAclConnectionAlreadyExists_c = 0x010B
-    gHciCommandDisallowed_c = 0x010C
-    gHciConnectionRejectedDueToLimitedResources_c = 0x010D
-    gHciConnectionRejectedDueToSecurityReasons_c = 0x010E
-    gHciConnectionRejectedDueToUnacceptableBdAddr_c = 0x010F
-    gHciConnectionAcceptTimeoutExceeded_c = 0x0110
-    gHciUnsupportedFeatureOrParameterValue_c = 0x0111
-    gHciInvalidHciCommandParameters_c = 0x0112
-    gHciRemoteUserTerminatedConnection_c = 0x0113
-    gHciRemoteDeviceTerminatedConnectionLowResources_c = 0x0114
-    gHciRemoteDeviceTerminatedConnectionPowerOff_c = 0x0115
-    gHciConnectionTerminatedByLocalHost_c = 0x0116
-    gHciRepeatedAttempts_c = 0x0117
-    gHciPairingNotAllowed_c = 0x0118
-    gHciUnknownLpmPdu_c = 0x0119
-    gHciUnsupportedRemoteFeature_c = 0x011A
-    gHciScoOffsetRejected_c = 0x011B
-    gHciScoIntervalRejected_c = 0x011C
-    gHciScoAirModeRejected_c = 0x011D
-    gHciInvalidLpmParameters_c = 0x011E
-    gHciUnspecifiedError_c = 0x011F
-    gHciUnsupportedLpmParameterValue_c = 0x0120
-    gHciRoleChangeNotAllowed_c = 0x0121
-    gHciLLResponseTimeout_c = 0x0122
-    gHciLmpErrorTransactionCollision_c = 0x0123
-    gHciLmpPduNotAllowed_c = 0x0124
-    gHciEncryptionModeNotAcceptable_c = 0x0125
-    gHciLinkKeyCannotBeChanged_c = 0x0126
-    gHciRequestedQosNotSupported_c = 0x0127
-    gHciInstantPassed_c = 0x0128
-    gHciPairingWithUnitKeyNotSupported_c = 0x0129
-    gHciDifferentTransactionCollision_c = 0x012A
-    gHciReserved_0x2B_c = 0x012B
-    gHciQosNotAcceptableParameter_c = 0x012C
-    gHciQosRejected_c = 0x012D
-    gHciChannelClassificationNotSupported_c = 0x012E
-    gHciInsufficientSecurity_c = 0x012F
-    gHciParameterOutOfMandatoryRange_c = 0x0130
-    gHciReserved_0x31_c = 0x0131
-    gHciRoleSwitchPending_c = 0x0132
-    gHciReserved_0x33_c = 0x0133
-    gHciReservedSlotViolation_c = 0x0134
-    gHciRoleSwitchFailed_c = 0x0135
-    gHciExtendedInquiryResponseTooLarge_c = 0x0136
-    gHciSecureSimplePairingNotSupportedByHost_c = 0x0137
-    gHciHostBusyPairing_c = 0x0138
-    gHciConnectionRejectedDueToNoSuitableChannelFound_c = 0x0139
-    gHciControllerBusy_c = 0x013A
-    gHciUnacceptableConnectionParameters_c = 0x013B
-    gHciDirectedAdvertisingTimeout_c = 0x013C
-    gHciConnectionTerminatedDueToMicFailure_c = 0x013D
-    gHciConnectionFailedToBeEstablishedOrSyncTimeout_c = 0x013E
-    gHciMacConnectionFailed_c = 0x013F
-    gHciCoarseClockAdjustmentRejected_c = 0x0140
-    gHciType0SubmapNotDefined_c = 0x0141
-    gHciUnknownAdvertisingIdentifier_c = 0x0142
-    gHciLimitReached_c = 0x0143
-    gHciOperationCancelledByHost_c = 0x0144
-    gHciAlreadyInit_c = 0x01A0
-    gHciInvalidParameter_c = 0x01A1
-    gHciCallbackNotInstalled_c = 0x01A2
-    gHciCallbackAlreadyInstalled_c = 0x01A3
-    gHciCommandNotSupported_c = 0x01A4
-    gHciEventNotSupported_c = 0x01A5
-    gHciTransportError_c = 0x01A6
-    gL2caAlreadyInit_c = 0x03F0
-    gL2caInsufficientResources_c = 0x03F1
-    gL2caCallbackNotInstalled_c = 0x03F2
-    gL2caCallbackAlreadyInstalled_c = 0x03F3
-    gL2caLePsmInvalid_c = 0x03F4
-    gL2caLePsmAlreadyRegistered_c = 0x03F5
-    gL2caLePsmNotRegistered_c = 0x03F6
-    gL2caLePsmInsufficientResources_c = 0x03F7
-    gL2caChannelInvalid_c = 0x03F8
-    gL2caChannelClosed_c = 0x03F9
-    gL2caChannelAlreadyConnected_c = 0x03FA
-    gL2caConnectionParametersRejected_c = 0x03FB
-    gL2caChannelBusy_c = 0x03FC
-    gL2caInvalidParameter_c = 0x03FE
-    gL2caError_c = 0x03FF
-    gSmNullCBFunction_c = 0x0401
-    gSmCommandNotSupported_c = 0x0402
-    gSmUnexpectedCommand_c = 0x0403
-    gSmInvalidCommandCode_c = 0x0404
-    gSmInvalidCommandLength_c = 0x0405
-    gSmInvalidCommandParameter_c = 0x0406
-    gSmInvalidDeviceId_c = 0x0407
-    gSmInvalidInternalOperation_c = 0x0408
-    gSmInvalidConnectionHandle_c = 0x0409
-    gSmInproperKeyDistributionField_c = 0x040A
-    gSmUnexpectedKeyType_c = 0x040B
-    gSmUnexpectedPairingTerminationReason_c = 0x040C
-    gSmUnexpectedKeyset_c = 0x040D
-    gSmSmpTimeoutOccurred_c = 0x040E
-    gSmUnknownSmpPacketType_c = 0x040F
-    gSmInvalidSmpPacketLength_c = 0x0410
-    gSmInvalidSmpPacketParameter_c = 0x0411
-    gSmReceivedUnexpectedSmpPacket_c = 0x0412
-    gSmReceivedSmpPacketFromUnknownDevice_c = 0x0413
-    gSmReceivedUnexpectedHciEvent_c = 0x0414
-    gSmReceivedHciEventFromUnknownDevice_c = 0x0415
-    gSmInvalidHciEventParameter_c = 0x0416
-    gSmLlConnectionEncryptionInProgress_c = 0x0417
-    gSmLlConnectionEncryptionFailure_c = 0x0418
-    gSmInsufficientResources_c = 0x0419
-    gSmOobDataAddressMismatch_c = 0x041A
-    gSmSmpPacketReceivedAfterTimeoutOccurred_c = 0x041B
-    gSmReceivedTimerEventForUnknownDevice_c = 0x041C
-    gSmUnattainableLocalDeviceSecRequirements_c = 0x041D
-    gSmUnattainableLocalDeviceMinKeySize_c = 0x041E
-    gSmUnattainableSlaveSecReqRequirements_c = 0x041F
-    gSmPairingErrorPasskeyEntryFailed_c = 0x0431
-    gSmPairingErrorConfirmValueFailed_c = 0x0432
-    gSmPairingErrorCommandNotSupported_c = 0x0433
-    gSmPairingErrorInvalidParameters_c = 0x0434
-    gSmPairingErrorUnknownReason_c = 0x0435
-    gSmTbResolvableAddressDoesNotMatchIrk_c = 0x0460
-    gSmTbInvalidDataSignature_c = 0x0461
-    gAttInvalidHandle_c = 0x0501
-    gAttReadNotPermitted_c = 0x0502
-    gAttWriteNotPermitted_c = 0x0503
-    gAttInvalidPdu_c = 0x0504
-    gAttInsufficientAuthentication_c = 0x0505
-    gAttRequestNotSupported_c = 0x0506
-    gAttInvalidOffset_c = 0x0507
-    gAttInsufficientAuthorization_c = 0x0508
-    gAttPrepareQueueFull_c = 0x0509
-    gAttAttributeNotFound_c = 0x050A
-    gAttAttributeNotLong_c = 0x050B
-    gAttInsufficientEncryptionKeySize_c = 0x050C
-    gAttInvalidAttributeValueLength_c = 0x050D
-    gAttUnlikelyor_c = 0x050E
-    gAttInsufficientEncryption_c = 0x050F
-    gAttUnsupportedGroupType_c = 0x0510
-    gAttInsufficientResources_c = 0x0511
-    gGattAnotherProcedureInProgress_c = 0x0601
-    gGattLongAttributePacketsCorrupted_c = 0x0602
-    gGattMultipleAttributesOverflow_c = 0x0603
-    gGattUnexpectedReadMultipleResponseLength_c = 0x0604
-    gGattInvalidValueLength_c = 0x0605
-    gGattServerTimeout_c = 0x0606
-    gGattIndicationAlreadyInProgress_c = 0x0607
-    gGattClientConfirmationTimeout_c = 0x0608
-    gGapAdvDataTooLong_c = 0x0701
-    gGapScanRspDataTooLong_c = 0x0702
-    gGapDeviceNotBonded_c = 0x0703
-    gGapAnotherProcedureInProgress_c = 0x0704
-    gDevDbCccdLimitReached_c = 0x0801
-    gDevDbCccdNotFound_c = 0x0802
-    gGattDbInvalidHandle_c = 0x0901
-    gGattDbCharacteristicNotFound_c = 0x0902
-    gGattDbCccdNotFound_c = 0x0903
-    gGattDbServiceNotFound_c = 0x0904
-    gGattDbDescriptorNotFound_c = 0x0905
-
-
-class GATTDBAttFindInformationIndicationParams_Format(GenericEnum):
-
-    # Uuid 16 bits format
-    Uuid16BitFormat = 0x01
-    # Uuid 128 bits format
-    Uuid128BitFormat = 0x02
 
 
 class GAPConfirmStatus(GenericEnum):
@@ -5113,6 +4471,7 @@ class GAPConfirmStatus(GenericEnum):
     gSmPairingErrorCommandNotSupported_c = 0x0433
     gSmPairingErrorInvalidParameters_c = 0x0434
     gSmPairingErrorUnknownReason_c = 0x0435
+    gSmPairingErrorTimeout_c = 0x0436
     gSmTbResolvableAddressDoesNotMatchIrk_c = 0x0460
     gSmTbInvalidDataSignature_c = 0x0461
     gAttInvalidHandle_c = 0x0501
@@ -5304,6 +4663,7 @@ class GAPGenericEventInternalErrorIndicationInternalError_ErrorCode(GenericEnum)
     gSmPairingErrorCommandNotSupported_c = 0x0433
     gSmPairingErrorInvalidParameters_c = 0x0434
     gSmPairingErrorUnknownReason_c = 0x0435
+    gSmPairingErrorTimeout_c = 0x0436
     gSmTbResolvableAddressDoesNotMatchIrk_c = 0x0460
     gSmTbInvalidDataSignature_c = 0x0461
     gAttInvalidHandle_c = 0x0501
@@ -5545,6 +4905,7 @@ class GAPGenericEventAdvertisingSetupFailedIndicationSetupFailReason(GenericEnum
     gSmPairingErrorCommandNotSupported_c = 0x0433
     gSmPairingErrorInvalidParameters_c = 0x0434
     gSmPairingErrorUnknownReason_c = 0x0435
+    gSmPairingErrorTimeout_c = 0x0436
     gSmTbResolvableAddressDoesNotMatchIrk_c = 0x0460
     gSmTbInvalidDataSignature_c = 0x0461
     gAttInvalidHandle_c = 0x0501
@@ -5724,6 +5085,7 @@ class GAPAdvertisingEventCommandFailedIndicationFailReason(GenericEnum):
     gSmPairingErrorCommandNotSupported_c = 0x0433
     gSmPairingErrorInvalidParameters_c = 0x0434
     gSmPairingErrorUnknownReason_c = 0x0435
+    gSmPairingErrorTimeout_c = 0x0436
     gSmTbResolvableAddressDoesNotMatchIrk_c = 0x0460
     gSmTbInvalidDataSignature_c = 0x0461
     gAttInvalidHandle_c = 0x0501
@@ -5903,6 +5265,7 @@ class GAPScanningEventCommandFailedIndicationFailReason(GenericEnum):
     gSmPairingErrorCommandNotSupported_c = 0x0433
     gSmPairingErrorInvalidParameters_c = 0x0434
     gSmPairingErrorUnknownReason_c = 0x0435
+    gSmPairingErrorTimeout_c = 0x0436
     gSmTbResolvableAddressDoesNotMatchIrk_c = 0x0460
     gSmTbInvalidDataSignature_c = 0x0461
     gAttInvalidHandle_c = 0x0501
@@ -6266,6 +5629,7 @@ class PairingFailedFailReason(GenericEnum):
     gSmPairingErrorCommandNotSupported_c = 0x0433
     gSmPairingErrorInvalidParameters_c = 0x0434
     gSmPairingErrorUnknownReason_c = 0x0435
+    gSmPairingErrorTimeout_c = 0x0436
     gSmTbResolvableAddressDoesNotMatchIrk_c = 0x0460
     gSmTbInvalidDataSignature_c = 0x0461
     gAttInvalidHandle_c = 0x0501
@@ -6305,6 +5669,14 @@ class PairingFailedFailReason(GenericEnum):
     gGattDbServiceNotFound_c = 0x0904
     gGattDbDescriptorNotFound_c = 0x0905
 
+
+
+class GAPConnectionEventConnectedIndicationconnectionRole(GenericEnum):
+
+    # Connection Master
+    gBleLlConnectionMaster_c = 0x00
+    # Connection Slave
+    gBleLlConnectionSlave_c = 0x01
 
 class GAPConnectionEventDisconnectedIndicationReason(GenericEnum):
 
@@ -6445,6 +5817,7 @@ class GAPConnectionEventDisconnectedIndicationReason(GenericEnum):
     gSmPairingErrorCommandNotSupported_c = 0x0433
     gSmPairingErrorInvalidParameters_c = 0x0434
     gSmPairingErrorUnknownReason_c = 0x0435
+    gSmPairingErrorTimeout_c = 0x0436
     gSmTbResolvableAddressDoesNotMatchIrk_c = 0x0460
     gSmTbInvalidDataSignature_c = 0x0461
     gAttInvalidHandle_c = 0x0501
@@ -6624,6 +5997,7 @@ class GAPConnectionEventPowerReadFailureIndicationFailReason(GenericEnum):
     gSmPairingErrorCommandNotSupported_c = 0x0433
     gSmPairingErrorInvalidParameters_c = 0x0434
     gSmPairingErrorUnknownReason_c = 0x0435
+    gSmPairingErrorTimeout_c = 0x0436
     gSmTbResolvableAddressDoesNotMatchIrk_c = 0x0460
     gSmTbInvalidDataSignature_c = 0x0461
     gAttInvalidHandle_c = 0x0501
@@ -6803,6 +6177,7 @@ class GAPConnectionEventParameterUpdateCompleteIndicationConnectionParameterUpda
     gSmPairingErrorCommandNotSupported_c = 0x0433
     gSmPairingErrorInvalidParameters_c = 0x0434
     gSmPairingErrorUnknownReason_c = 0x0435
+    gSmPairingErrorTimeout_c = 0x0436
     gSmTbResolvableAddressDoesNotMatchIrk_c = 0x0460
     gSmTbInvalidDataSignature_c = 0x0461
     gAttInvalidHandle_c = 0x0501
@@ -7054,6 +6429,7 @@ class GAPConnectionEventChannelMapReadFailureIndicationFailReason(GenericEnum):
     gSmPairingErrorCommandNotSupported_c = 0x0433
     gSmPairingErrorInvalidParameters_c = 0x0434
     gSmPairingErrorUnknownReason_c = 0x0435
+    gSmPairingErrorTimeout_c = 0x0436
     gSmTbResolvableAddressDoesNotMatchIrk_c = 0x0460
     gSmTbInvalidDataSignature_c = 0x0461
     gAttInvalidHandle_c = 0x0501
@@ -7232,6 +6608,7 @@ class GAPAdvertisingEventAdvertisingSetTerminatedIndicationStatus(GenericEnum):
     gSmPairingErrorCommandNotSupported_c = 0x0433
     gSmPairingErrorInvalidParameters_c = 0x0434
     gSmPairingErrorUnknownReason_c = 0x0435
+    gSmPairingErrorTimeout_c = 0x0436
     gSmTbResolvableAddressDoesNotMatchIrk_c = 0x0460
     gSmTbInvalidDataSignature_c = 0x0461
     gAttInvalidHandle_c = 0x0501
@@ -7425,6 +6802,7 @@ class GAPScanningEventPeriodicAdvSyncEstablishedIndicationStatus(GenericEnum):
     gSmPairingErrorCommandNotSupported_c = 0x0433
     gSmPairingErrorInvalidParameters_c = 0x0434
     gSmPairingErrorUnknownReason_c = 0x0435
+    gSmPairingErrorTimeout_c = 0x0436
     gSmTbResolvableAddressDoesNotMatchIrk_c = 0x0460
     gSmTbInvalidDataSignature_c = 0x0461
     gAttInvalidHandle_c = 0x0501
@@ -7604,6 +6982,7 @@ class LeCbErrorError(GenericEnum):
     gSmPairingErrorCommandNotSupported_c = 0x0433
     gSmPairingErrorInvalidParameters_c = 0x0434
     gSmPairingErrorUnknownReason_c = 0x0435
+    gSmPairingErrorTimeout_c = 0x0436
     gSmTbResolvableAddressDoesNotMatchIrk_c = 0x0460
     gSmTbInvalidDataSignature_c = 0x0461
     gAttInvalidHandle_c = 0x0501
@@ -7643,3 +7022,8 @@ class LeCbErrorError(GenericEnum):
     gGattDbServiceNotFound_c = 0x0904
     gGattDbDescriptorNotFound_c = 0x0905
 
+class GAPSetAdvertisingParametersRequestAdvertisingParameters_ChannelMap(GenericEnum):
+
+    gChannel37_c = 0x01
+    gChannel38_c = 0x02
+    gChannel39_c = 0x04

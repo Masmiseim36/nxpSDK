@@ -19,7 +19,7 @@
 #define APP_PREINCLUDE_H
 
 /*! *********************************************************************************
- * 	Board Configuration
+ *  Board Configuration
  ********************************************************************************** */
  /* Defines the number of available keys for the keyboard module */
 #define gKBD_KeysCount_c        2
@@ -32,15 +32,15 @@
 
 
 /*! *********************************************************************************
- * 	App Configuration
+ *  App Configuration
  ********************************************************************************** */
- 
+
  /*! Maximum number of connections supported for this application */
 #define gAppMaxConnections_c           1
 
 /*! Number of credit-based channels supported */
 #define gL2caMaxLeCbChannels_c         2
- 
+
 /*! Enable/disable use of bonding capability */
 #define gAppUseBonding_d   0
 
@@ -57,19 +57,18 @@
 #endif
 
 /*! *********************************************************************************
- * 	Framework Configuration
+ *  Framework Configuration
  ********************************************************************************** */
 /* enable NVM to be used as non volatile storage management by the host stack */
-#define gAppUseNvm_d                    0
-     
+#define gAppUseNvm_d                    1
+
 /* Defines Num of Serial Manager interfaces */
 #define gSerialManagerMaxInterfaces_c   0
 
 /* Defines Application and Stack pools by block size and number of blocks. Must be aligned to 4 bytes.*/
 #define AppPoolsDetails_c \
-         _block_size_  32  _number_of_blocks_    6 _eol_  \
-         _block_size_  64  _number_of_blocks_    5 _eol_  \
-         _block_size_  88  _number_of_blocks_    2 _eol_  \
+         _block_size_  56  _number_of_blocks_    6 _eol_  \
+         _block_size_  80  _number_of_blocks_    2 _eol_  \
          _block_size_ 248  _number_of_blocks_    2 _eol_  \
          _block_size_ 312  _number_of_blocks_    1 _eol_  \
          _block_size_ 392  _number_of_blocks_    1 _eol_
@@ -78,7 +77,7 @@
 #define gTmrTaskStackSize_c  384
 
 /* Defines number of timers needed by the application */
-#define gTmrApplicationTimers_c         4
+#define gTmrApplicationTimers_c         8
 
 /* Defines number of timers needed by the protocol stack */
 #if defined(gAppMaxConnections_c) && defined(gL2caMaxLeCbChannels_c)
@@ -97,29 +96,29 @@
 #define gTMR_EnableLowPowerTimers       0
 
 /* Enables / Disables the DCDC platform component */
-#define gDCDC_Enabled_d                 1          
+#define gDCDC_Enabled_d                 1
 
-/* Default DCDC Mode used by the application */           
+/* Default DCDC Mode used by the application */
 #define APP_DCDC_MODE                   gDCDC_Mode_Buck_c
 
 /* Default DCDC Battery Level Monitor interval */
 #define APP_DCDC_VBAT_MONITOR_INTERVAL  600000
-           
+
 /*! *********************************************************************************
- * 	RTOS Configuration
+ *  RTOS Configuration
  ********************************************************************************** */
 /* Defines number of OS events used */
 #define osNumberOfEvents        5
-          
+
 /*! *********************************************************************************
- * 	BLE Stack Configuration
+ *  BLE Stack Configuration
  ********************************************************************************** */
 
 
 /*! *********************************************************************************
- * 	NVM Module Configuration - gAppUseNvm_d shall be defined above as 1 or 0
- ********************************************************************************** */    
-             
+ *  NVM Module Configuration - gAppUseNvm_d shall be defined above as 1 or 0
+ ********************************************************************************** */
+
 #if gAppUseNvm_d
     /* configure NVM module */
     #define  gNvStorageIncluded_d                (1)
@@ -134,15 +133,15 @@
 #endif
 
 /*! *********************************************************************************
- * 	Memory Pools Configuration
- ********************************************************************************** */ 
-             
+ *  Memory Pools Configuration
+ ********************************************************************************** */
+
 /* Defines pools by block size and number of blocks. Must be aligned to 4 bytes.
  * DO NOT MODIFY THIS DIRECTLY. CONFIGURE AppPoolsDetails_c
  * If gMaxBondedDevices_c increases, adjust memory pools
 */
 #define PoolsDetails_c \
-	 AppPoolsDetails_c
+     AppPoolsDetails_c
 
 
 #endif /* APP_PREINCLUDE_H */

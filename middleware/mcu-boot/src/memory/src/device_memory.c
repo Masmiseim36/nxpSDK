@@ -22,11 +22,12 @@ static void device_copy(uint32_t address, uint32_t length, uint32_t buffer);
 //! @brief Interface to simulator memory operations.
 const memory_region_interface_t g_deviceMemoryInterface = {.read = &device_mem_read,
                                                            .write = &device_mem_write,
-#if !BL_FEATURE_MIN_PROFILE || BL_FEATURE_FILL_MEMORY
+#if !(defined(BL_FEATURE_MIN_PROFILE) && BL_FEATURE_MIN_PROFILE) || \
+    defined(BL_FEATURE_FILL_MEMORY) && BL_FEATURE_FILL_MEMORY
                                                            .fill = &device_mem_fill,
 #endif // !BL_FEATURE_MIN_PROFILE
-                                                           .flush = NULL,
-                                                           .erase = NULL };
+                                                           .flush = (void*)0u,
+                                                           .erase = (void*)0u};
 
 ////////////////////////////////////////////////////////////////////////////////
 // Code
@@ -36,13 +37,13 @@ const memory_region_interface_t g_deviceMemoryInterface = {.read = &device_mem_r
 //!
 //! Performs a memory copy using aligned accesses of no more than one word
 //! at a time.
-void device_copy(uint32_t address, uint32_t length, uint32_t buffer)
+static void device_copy(uint32_t address, uint32_t length, uint32_t buffer)
 {
     // This loop lets us reuse the byte and halfword copy code.
-    while (length)
+    while (length != 0u)
     {
         // Handle leading/trailing byte.
-        if ((address & 1) || (length == 1))
+        if (((address & 1u) != 0u) || (length == 1u))
         {
             *(uint8_t *)address = *(const uint8_t *)buffer;
             ++address;
@@ -52,7 +53,7 @@ void device_copy(uint32_t address, uint32_t length, uint32_t buffer)
         }
 
         // Handle leading/trailing halfword.
-        if ((address & 2) || (length < sizeof(uint32_t)))
+        if (((address & 2u) != 0u) || (length < sizeof(uint32_t)))
         {
             *(uint16_t *)address = *(const uint16_t *)buffer;
             address += sizeof(uint16_t);
@@ -61,10 +62,10 @@ void device_copy(uint32_t address, uint32_t length, uint32_t buffer)
         }
 
         // Copy as many whole words as remain.
-        uint32_t words = length >> 2;
-        if (words)
+        uint32_t words = (uint32_t)(length >> 2u);
+        if (words != 0u)
         {
-            uint32_t wordsLength = words << 2;
+            uint32_t wordsLength = (uint32_t)(words << 2u);
             uint32_t end = address + wordsLength;
             while (address < end)
             {
@@ -81,18 +82,18 @@ void device_copy(uint32_t address, uint32_t length, uint32_t buffer)
 status_t device_mem_read(uint32_t address, uint32_t length, uint8_t *buffer)
 {
     device_copy((uint32_t)buffer, length, address);
-    return kStatus_Success;
+    return (int32_t)kStatus_Success;
 }
 
 status_t device_mem_write(uint32_t address, uint32_t length, const uint8_t *buffer)
 {
     device_copy(address, length, (uint32_t)buffer);
-    return kStatus_Success;
+    return (int32_t)kStatus_Success;
 }
 
 status_t device_mem_fill(uint32_t address, uint32_t length, uint32_t pattern)
 {
-    status_t status = kStatus_Success;
+    status_t status = (int32_t)kStatus_Success;
     status = pattern_fill(address, pattern, length, true);
     return status;
 }

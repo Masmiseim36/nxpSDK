@@ -1,0 +1,16 @@
+
+    _etext = .;
+
+    .NVM_region :
+    {
+        FILL(0xFFFFFFFF)
+        . = ORIGIN(NVM_region) + LENGTH(NVM_region) - 1;
+        BYTE(0xFF);
+    } > NVM_region
+
+    .WARMBOOT_CONFIG (NOLOAD):
+    {
+        __warmboot_config_start__ = .;
+        KEEP(*(WarmbootConfig))
+        __warmboot_config_end__ = .;
+    } > WARMBOOT_CONFIG

@@ -45,7 +45,7 @@
  ********************************************************************************** */
 
 /* enable NVM to be used as non volatile storage management by the host stack */
-#define gAppUseNvm_d                    0
+#define gAppUseNvm_d                    1
 
 /* Defines Rx Buffer Size for Serial Manager */
 #define gSerialMgrRxBufSize_c   1000
@@ -54,7 +54,7 @@
 #define gSerialMgrTxQueueSize_c 30
 
 /* Defines Size for Serial Manager Task*/
-#define gSerialTaskStackSize_c  700
+#define gSerialTaskStackSize_c  800
 
 /* Defines Size for TMR Task*/
 #define gTmrTaskStackSize_c  600
@@ -101,7 +101,7 @@
 #define gMainThreadStackSize_c  900
 
 /* Defines total heap size used by the OS */
-#define gTotalHeapSize_c        7700
+#define gTotalHeapSize_c        8600
 
 /*! *********************************************************************************
  *  BLE Stack Configuration

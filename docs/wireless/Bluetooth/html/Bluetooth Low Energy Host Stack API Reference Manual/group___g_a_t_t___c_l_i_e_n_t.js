@@ -30,17 +30,17 @@ var group___g_a_t_t___c_l_i_e_n_t =
     [ "GattClient_RegisterProcedureCallback", "group___g_a_t_t___c_l_i_e_n_t.html#ga8dc3dd02b0a9c757838c635d7236e3eb", null ],
     [ "GattClient_RegisterNotificationCallback", "group___g_a_t_t___c_l_i_e_n_t.html#ga05abd4d2523b6b41dffb80816b084a4d", null ],
     [ "GattClient_RegisterIndicationCallback", "group___g_a_t_t___c_l_i_e_n_t.html#gab3bae03c03e2a395050bc702fed62793", null ],
-    [ "GattClient_ExchangeMtu", "group___g_a_t_t___c_l_i_e_n_t.html#gaf40da750ad9e7d5196ab25faa3c6b7c6", null ],
+    [ "GattClient_ExchangeMtu", "group___g_a_t_t___c_l_i_e_n_t.html#ga541720e1a7aa75e883b9893783993650", null ],
     [ "GattClient_DiscoverAllPrimaryServices", "group___g_a_t_t___c_l_i_e_n_t.html#gaa89ff32fa4f926161a67076506a455b3", null ],
-    [ "GattClient_DiscoverPrimaryServicesByUuid", "group___g_a_t_t___c_l_i_e_n_t.html#ga5cbe3741c3bb04f9599d2d1de18c0028", null ],
+    [ "GattClient_DiscoverPrimaryServicesByUuid", "group___g_a_t_t___c_l_i_e_n_t.html#ga029d30619a45968fc7a98f37feb2d427", null ],
     [ "GattClient_FindIncludedServices", "group___g_a_t_t___c_l_i_e_n_t.html#gae039dcdd81ba7647b0bb4c42d4cb88d5", null ],
     [ "GattClient_DiscoverAllCharacteristicsOfService", "group___g_a_t_t___c_l_i_e_n_t.html#gae710aa0199d7ceeb74d2b660c38b3b23", null ],
-    [ "GattClient_DiscoverCharacteristicOfServiceByUuid", "group___g_a_t_t___c_l_i_e_n_t.html#ga81a4e83d5f86d95e66eee687acb91ff1", null ],
+    [ "GattClient_DiscoverCharacteristicOfServiceByUuid", "group___g_a_t_t___c_l_i_e_n_t.html#ga4d6a12b53c5b508bae727f072d7d77a1", null ],
     [ "GattClient_DiscoverAllCharacteristicDescriptors", "group___g_a_t_t___c_l_i_e_n_t.html#gaca8f333a6ce18e19658f2df531dbbbdf", null ],
     [ "GattClient_ReadCharacteristicValue", "group___g_a_t_t___c_l_i_e_n_t.html#gacab92d146b7579b1071ab3e27f028e9e", null ],
-    [ "GattClient_ReadUsingCharacteristicUuid", "group___g_a_t_t___c_l_i_e_n_t.html#ga25611c7c8e17eba9160b266ffab51e65", null ],
+    [ "GattClient_ReadUsingCharacteristicUuid", "group___g_a_t_t___c_l_i_e_n_t.html#ga1871e3305754bf59c4efe9bdaa984261", null ],
     [ "GattClient_ReadMultipleCharacteristicValues", "group___g_a_t_t___c_l_i_e_n_t.html#ga4075332e66e2e32a2589913e96bc42fd", null ],
-    [ "GattClient_WriteCharacteristicValue", "group___g_a_t_t___c_l_i_e_n_t.html#gac9d3f7594b9a81f5a5881106f2a01a2c", null ],
+    [ "GattClient_WriteCharacteristicValue", "group___g_a_t_t___c_l_i_e_n_t.html#gaf4936ba4495d1f17190b1f9e82cda2e9", null ],
     [ "GattClient_ReadCharacteristicDescriptor", "group___g_a_t_t___c_l_i_e_n_t.html#ga019fcab7e495e510bfcde4260c7bea82", null ],
-    [ "GattClient_WriteCharacteristicDescriptor", "group___g_a_t_t___c_l_i_e_n_t.html#gab87a5975e40d121e2c5235255b83e3bb", null ]
+    [ "GattClient_WriteCharacteristicDescriptor", "group___g_a_t_t___c_l_i_e_n_t.html#gaf75cbef61647f1aa0eb8c7f5acdceef2", null ]
 ];

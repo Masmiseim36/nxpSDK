@@ -223,22 +223,22 @@
       <files mask="fsci_ble_otap.c"/>
       <files mask="otap_server.c"/>
     </source>
-    <source path="middleware/wireless/bluetooth_1.3.6/controller/lib" type="lib" method="copy" toolchain="mcuxpresso">
+    <source path="middleware/wireless/bluetooth_1.3.9/controller/lib" type="lib" method="copy" toolchain="mcuxpresso">
       <files mask="lib_ble_kw36z_controller_gcc.a"/>
     </source>
-    <source path="middleware/wireless/bluetooth_1.3.6/host/lib" type="lib" method="copy" toolchain="mcuxpresso">
+    <source path="middleware/wireless/bluetooth_1.3.9/host/lib" type="lib" method="copy" toolchain="mcuxpresso">
       <files mask="lib_ble_5-0_host_central_cm0p_gcc.a"/>
     </source>
-    <source path="middleware/wireless/framework_5.4.6/SecLib" type="lib" method="copy" toolchain="mcuxpresso">
+    <source path="middleware/wireless/framework_5.4.8/SecLib" type="lib" method="copy" toolchain="mcuxpresso">
       <files mask="lib_crypto_m0.a"/>
     </source>
-    <source path="middleware/wireless/bluetooth_1.3.6/controller/lib" type="lib" method="copy" toolchain="iar">
+    <source path="middleware/wireless/bluetooth_1.3.9/controller/lib" type="lib" method="copy" toolchain="iar">
       <files mask="lib_ble_kw36z_controller_iar.a"/>
     </source>
-    <source path="middleware/wireless/bluetooth_1.3.6/host/lib" type="lib" method="copy" toolchain="iar">
+    <source path="middleware/wireless/bluetooth_1.3.9/host/lib" type="lib" method="copy" toolchain="iar">
       <files mask="lib_ble_5-0_host_central_cm0p_iar.a"/>
     </source>
-    <source path="middleware/wireless/framework_5.4.6/SecLib" type="lib" method="copy" toolchain="iar">
+    <source path="middleware/wireless/framework_5.4.8/SecLib" type="lib" method="copy" toolchain="iar">
       <files mask="lib_crypto_m0.a"/>
     </source>
   </example>

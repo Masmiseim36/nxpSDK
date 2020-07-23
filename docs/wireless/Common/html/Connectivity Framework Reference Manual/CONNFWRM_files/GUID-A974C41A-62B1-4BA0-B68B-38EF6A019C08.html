@@ -26,12 +26,15 @@
     <h1 class="title topictitle1">Flex NVM</h1>
 
     <div class="body">
-        <p class="p">Several Kinetis MCU-based platforms implement the Flex-Memory technology with up to 512
-            KB of FlexNVM and up to 16 KB of FlexRAM. The FlexNVM can be partitioned to support a
-            simulated EEPROM subsystem. All the read/write operations are done in the FlexRAM area.
-            Every time a write operation occurs in this area, a new EEPROM backup record is created
-            and stored in the FlexNVM. The EEPROM endurance capability can exceed 10 000 000
-            cycles.</p>
+        <div class="p">Several Kinetis MCU-based platforms implement the Flex-Memory technology
+            with up to 512 KB of FlexNVM and up to 16 KB of FlexRAM. <div class="note note"><span class="notetitle">Note:</span> This section
+                is not applicable to JN5189/QN9090/K32W061.</div>
+</div>
+
+        <p class="p">The FlexNVM can be partitioned to support a simulated EEPROM subsystem. All
+            the read/write operations are done in the FlexRAM area. Every time a write operation
+            occurs in this area, a new EEPROM backup record is created and stored in the FlexNVM.
+            The EEPROM endurance capability can exceed 10 000 000 cycles.</p>
 
         <p class="p">The NonVolatile Memory platform component supports this feature and implements the
             associated routines. From the user point of view, the API is exactly the same. All you

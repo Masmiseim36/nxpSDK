@@ -15,12 +15,12 @@
 #include "fsl_i2c.h"
 #include "utilities/fsl_assert.h"
 
-#if BL_CONFIG_I2C
+#if defined(BL_CONFIG_I2C) && BL_CONFIG_I2C
 static const IRQn_Type i2c_irq_ids[FSL_FEATURE_SOC_I2C_COUNT] = { I2C0_IRQn,
-#if (FSL_FEATURE_SOC_I2C_COUNT > 1)
+#if (FSL_FEATURE_SOC_I2C_COUNT > 1u)
                                                                   I2C1_IRQn,
 #endif // #if (FSL_FEATURE_SOC_I2C_COUNT > 1)
-#if (FSL_FEATURE_SOC_I2C_COUNT > 2)
+#if (FSL_FEATURE_SOC_I2C_COUNT > 2u)
                                                                   I2C2_IRQn
 #endif // #if (FSL_FEATURE_SOC_I2C_COUNT > 2)
 };
@@ -29,12 +29,12 @@ void I2C_SetSystemIRQ(uint32_t instance, PeripheralSystemIRQSetting set)
 {
     switch (instance)
     {
-        case 0:
+        case 0u:
 #if (FSL_FEATURE_SOC_I2C_COUNT > 1)
-        case 1:
+        case 1u:
 #endif // #if (FSL_FEATURE_SOC_I2C_COUNT > 1)
 #if (FSL_FEATURE_SOC_I2C_COUNT > 2)
-        case 2:
+        case 2u:
 #endif // #if (FSL_FEATURE_SOC_I2C_COUNT > 2)
             if (set == kPeripheralEnableIRQ)
             {
@@ -44,6 +44,9 @@ void I2C_SetSystemIRQ(uint32_t instance, PeripheralSystemIRQSetting set)
             {
                 NVIC_DisableIRQ(i2c_irq_ids[instance]);
             }
+            break;
+        default:
+            // doing nothing
             break;
     }
 }

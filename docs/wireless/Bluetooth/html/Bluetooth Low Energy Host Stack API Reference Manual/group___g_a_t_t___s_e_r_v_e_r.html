@@ -36,7 +36,7 @@
   <td id="projectlogo"><img alt="Logo" src="NXP_logo.bmp"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">Bluetooth® Low Energy Host Stack API Reference Manual
-   &#160;<span id="projectnumber">Rev. 12</span>
+   &#160;<span id="projectnumber">Rev. 13</span>
    </div>
    <div id="projectbrief">BLEHSAPIRM</div>
   </td>
@@ -133,6 +133,8 @@ Data Structures</h2></td></tr>
 <tr class="separator:structgatt_server_attribute_read_event__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structgatt_server_procedure_error__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_t_t___s_e_r_v_e_r.html#structgatt_server_procedure_error__t">gattServerProcedureError_t</a></td></tr>
 <tr class="separator:structgatt_server_procedure_error__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structgatt_server_invalid_pdu__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_t_t___s_e_r_v_e_r.html#structgatt_server_invalid_pdu__t">gattServerInvalidPdu_t</a></td></tr>
+<tr class="separator:structgatt_server_invalid_pdu__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structgatt_server_event__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_t_t___s_e_r_v_e_r.html#structgatt_server_event__t">gattServerEvent_t</a></td></tr>
 <tr class="separator:structgatt_server_event__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:uniongatt_server_event__t_8event_data"><td class="memItemLeft" align="right" valign="top">union &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_t_t___s_e_r_v_e_r.html#uniongatt_server_event__t_8event_data">gattServerEvent_t.eventData</a></td></tr>
@@ -160,7 +162,9 @@ Enumerations</h2></td></tr>
 <br />
 &#160;&#160;<a class="el" href="group___g_a_t_t___s_e_r_v_e_r.html#gga6806d32e99a3229ad636f89f3840fcc0afd8ce826086ef0ee6d90b134e255a9ac">gEvtLongCharacteristicWritten_c</a>, 
 <br />
-&#160;&#160;<a class="el" href="group___g_a_t_t___s_e_r_v_e_r.html#gga6806d32e99a3229ad636f89f3840fcc0ab10fce66411958117986397522e4fcd1">gEvtAttributeRead_c</a>
+&#160;&#160;<a class="el" href="group___g_a_t_t___s_e_r_v_e_r.html#gga6806d32e99a3229ad636f89f3840fcc0ab10fce66411958117986397522e4fcd1">gEvtAttributeRead_c</a>, 
+<br />
+&#160;&#160;<a class="el" href="group___g_a_t_t___s_e_r_v_e_r.html#gga6806d32e99a3229ad636f89f3840fcc0a1084c84dc58b8020548ee650e75941e1">gEvtInvalidPduReceived_c</a>
 <br />
  }</td></tr>
 <tr class="separator:ga6806d32e99a3229ad636f89f3840fcc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -182,22 +186,28 @@ Functions</h2></td></tr>
 <tr class="separator:gaeb6079d09d95f9312dc2677a99ed2e45"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2e7581307bb568f2c828dad62f2dad45"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___b_l_e.html#ga50b56ac2045dae012646ed0377e3412c">bleResult_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_t_t___s_e_r_v_e_r.html#ga2e7581307bb568f2c828dad62f2dad45">GattServer_RegisterCallback</a> (<a class="el" href="group___g_a_t_t___s_e_r_v_e_r.html#gaa1aa1691e43aae7117bd1a7ca18894b1">gattServerCallback_t</a> callback)</td></tr>
 <tr class="separator:ga2e7581307bb568f2c828dad62f2dad45"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6ff81cac0be312fd79698030d3fffb37"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___b_l_e.html#ga50b56ac2045dae012646ed0377e3412c">bleResult_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_t_t___s_e_r_v_e_r.html#ga6ff81cac0be312fd79698030d3fffb37">GattServer_RegisterHandlesForWriteNotifications</a> (uint8_t handleCount, uint16_t *aAttributeHandles)</td></tr>
-<tr class="separator:ga6ff81cac0be312fd79698030d3fffb37"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2924ffc3e879c6baeff9cb3500a57993"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___b_l_e.html#ga50b56ac2045dae012646ed0377e3412c">bleResult_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_t_t___s_e_r_v_e_r.html#ga2924ffc3e879c6baeff9cb3500a57993">GattServer_RegisterHandlesForWriteNotifications</a> (uint8_t handleCount, const uint16_t *aAttributeHandles)</td></tr>
+<tr class="separator:ga2924ffc3e879c6baeff9cb3500a57993"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabe86a3b0ab677c3e8fc646b66d49f86a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___b_l_e.html#ga50b56ac2045dae012646ed0377e3412c">bleResult_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_t_t___s_e_r_v_e_r.html#gabe86a3b0ab677c3e8fc646b66d49f86a">GattServer_UnregisterHandlesForWriteNotifications</a> (uint8_t handleCount, const uint16_t *aAttributeHandles)</td></tr>
+<tr class="separator:gabe86a3b0ab677c3e8fc646b66d49f86a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7c35c777ec60e926b77fb630a5dbc6c7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___b_l_e.html#ga50b56ac2045dae012646ed0377e3412c">bleResult_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_t_t___s_e_r_v_e_r.html#ga7c35c777ec60e926b77fb630a5dbc6c7">GattServer_SendAttributeWrittenStatus</a> (<a class="el" href="group___b_l_e.html#ga79037cf180936e7aa4ef278d2164b4d5">deviceId_t</a> deviceId, uint16_t attributeHandle, uint8_t status)</td></tr>
 <tr class="separator:ga7c35c777ec60e926b77fb630a5dbc6c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaed1479c9cd83f284aae60490692afd22"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___b_l_e.html#ga50b56ac2045dae012646ed0377e3412c">bleResult_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_t_t___s_e_r_v_e_r.html#gaed1479c9cd83f284aae60490692afd22">GattServer_RegisterHandlesForReadNotifications</a> (uint8_t handleCount, uint16_t *aAttributeHandles)</td></tr>
-<tr class="separator:gaed1479c9cd83f284aae60490692afd22"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0617f3f47b1ceff922316b5d1de2cfc0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___b_l_e.html#ga50b56ac2045dae012646ed0377e3412c">bleResult_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_t_t___s_e_r_v_e_r.html#ga0617f3f47b1ceff922316b5d1de2cfc0">GattServer_RegisterHandlesForReadNotifications</a> (uint8_t handleCount, const uint16_t *aAttributeHandles)</td></tr>
+<tr class="separator:ga0617f3f47b1ceff922316b5d1de2cfc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga123b96958066b84ae2f7213a34ec04e6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___b_l_e.html#ga50b56ac2045dae012646ed0377e3412c">bleResult_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_t_t___s_e_r_v_e_r.html#ga123b96958066b84ae2f7213a34ec04e6">GattServer_UnregisterHandlesForReadNotifications</a> (uint8_t handleCount, const uint16_t *aAttributeHandles)</td></tr>
+<tr class="separator:ga123b96958066b84ae2f7213a34ec04e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaba56ef1080a8f74496b533c6ce2fde1c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___b_l_e.html#ga50b56ac2045dae012646ed0377e3412c">bleResult_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_t_t___s_e_r_v_e_r.html#gaba56ef1080a8f74496b533c6ce2fde1c">GattServer_SendAttributeReadStatus</a> (<a class="el" href="group___b_l_e.html#ga79037cf180936e7aa4ef278d2164b4d5">deviceId_t</a> deviceId, uint16_t attributeHandle, uint8_t status)</td></tr>
 <tr class="separator:gaba56ef1080a8f74496b533c6ce2fde1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2ac10b90addee712e1ec029d8fabccdf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___b_l_e.html#ga50b56ac2045dae012646ed0377e3412c">bleResult_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_t_t___s_e_r_v_e_r.html#ga2ac10b90addee712e1ec029d8fabccdf">GattServer_SendNotification</a> (<a class="el" href="group___b_l_e.html#ga79037cf180936e7aa4ef278d2164b4d5">deviceId_t</a> deviceId, uint16_t handle)</td></tr>
 <tr class="separator:ga2ac10b90addee712e1ec029d8fabccdf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga917975dbb53b33dabb255a969c844a78"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___b_l_e.html#ga50b56ac2045dae012646ed0377e3412c">bleResult_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_t_t___s_e_r_v_e_r.html#ga917975dbb53b33dabb255a969c844a78">GattServer_SendIndication</a> (<a class="el" href="group___b_l_e.html#ga79037cf180936e7aa4ef278d2164b4d5">deviceId_t</a> deviceId, uint16_t handle)</td></tr>
 <tr class="separator:ga917975dbb53b33dabb255a969c844a78"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2b103e1b4c95d43573faa6112609674b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___b_l_e.html#ga50b56ac2045dae012646ed0377e3412c">bleResult_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_t_t___s_e_r_v_e_r.html#ga2b103e1b4c95d43573faa6112609674b">GattServer_SendInstantValueNotification</a> (<a class="el" href="group___b_l_e.html#ga79037cf180936e7aa4ef278d2164b4d5">deviceId_t</a> deviceId, uint16_t handle, uint16_t valueLength, uint8_t *aValue)</td></tr>
-<tr class="separator:ga2b103e1b4c95d43573faa6112609674b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa580ed955583ba39d1a0a354875e06b0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___b_l_e.html#ga50b56ac2045dae012646ed0377e3412c">bleResult_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_t_t___s_e_r_v_e_r.html#gaa580ed955583ba39d1a0a354875e06b0">GattServer_SendInstantValueIndication</a> (<a class="el" href="group___b_l_e.html#ga79037cf180936e7aa4ef278d2164b4d5">deviceId_t</a> deviceId, uint16_t handle, uint16_t valueLength, uint8_t *aValue)</td></tr>
-<tr class="separator:gaa580ed955583ba39d1a0a354875e06b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6423c3b586ea51994ce69f681d506deb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___b_l_e.html#ga50b56ac2045dae012646ed0377e3412c">bleResult_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_t_t___s_e_r_v_e_r.html#ga6423c3b586ea51994ce69f681d506deb">GattServer_SendInstantValueNotification</a> (<a class="el" href="group___b_l_e.html#ga79037cf180936e7aa4ef278d2164b4d5">deviceId_t</a> deviceId, uint16_t handle, uint16_t valueLength, const uint8_t *aValue)</td></tr>
+<tr class="separator:ga6423c3b586ea51994ce69f681d506deb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac4bc8c8e54ef4f21123ed88f7ba68ce2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___b_l_e.html#ga50b56ac2045dae012646ed0377e3412c">bleResult_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_t_t___s_e_r_v_e_r.html#gac4bc8c8e54ef4f21123ed88f7ba68ce2">GattServer_SendInstantValueIndication</a> (<a class="el" href="group___b_l_e.html#ga79037cf180936e7aa4ef278d2164b4d5">deviceId_t</a> deviceId, uint16_t handle, uint16_t valueLength, const uint8_t *aValue)</td></tr>
+<tr class="separator:gac4bc8c8e54ef4f21123ed88f7ba68ce2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga19e587a18f2c9623177a0ff63c98f015"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___b_l_e.html#ga50b56ac2045dae012646ed0377e3412c">bleResult_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_t_t___s_e_r_v_e_r.html#ga19e587a18f2c9623177a0ff63c98f015">GattServer_RegisterUniqueHandlesForNotifications</a> (bool_t bWrite, bool_t bRead)</td></tr>
+<tr class="separator:ga19e587a18f2c9623177a0ff63c98f015"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
 <a name="structgatt_server_mtu_changed_event__t" id="structgatt_server_mtu_changed_event__t"></a>
@@ -309,7 +319,7 @@ handle</td>
 <td class="fielddoc">
 Handle of the CCCD attribute. </td></tr>
 <tr><td class="fieldtype">
-<a class="anchor" id="ab2ac535f522344467a3b6cdc70c8f82e"></a><a class="el" href="group___g_a_t_t.html#ga2bd94f4ee24b4f90495753b671b34566">gattCccdFlags_t</a></td>
+<a class="anchor" id="ab2ac535f522344467a3b6cdc70c8f82e"></a><a class="el" href="group___g_a_t_t.html#ga5e1b55e68ad26ab61aa0b9c577f72b8a">gattCccdFlags_t</a></td>
 <td class="fieldname">
 newCccd</td>
 <td class="fielddoc">
@@ -364,6 +374,28 @@ Procedure that generated error. </td></tr>
 error</td>
 <td class="fielddoc">
 Error generated. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structgatt_server_invalid_pdu__t" id="structgatt_server_invalid_pdu__t"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct gattServerInvalidPdu_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>ATT PDU that generated the error. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a class="anchor" id="ac796298821212b9b7bb5458f8c1a1443"></a>attOpcode_t</td>
+<td class="fieldname">
+attOpCode</td>
+<td class="fielddoc">
+The invalid ATT op code that generated the error. </td></tr>
 </table>
 
 </div>
@@ -443,6 +475,12 @@ For event type gEvtLongCharacteristicWritten_c: handle and value. </td></tr>
 attributeReadEvent</td>
 <td class="fielddoc">
 For event types gEvtAttributeRead_c: handle of the attempted read. </td></tr>
+<tr><td class="fieldtype">
+<a class="anchor" id="a6b37b61b6e435d2dc4866e85bb657d99"></a><a class="el" href="group___g_a_t_t___s_e_r_v_e_r.html#structgatt_server_invalid_pdu__t">gattServerInvalidPdu_t</a></td>
+<td class="fieldname">
+attributeOpCode</td>
+<td class="fielddoc">
+For event type gEvtInvalidPduReceived_c: the ATT PDU that generated the error. </td></tr>
 </table>
 
 </div>
@@ -502,6 +540,10 @@ For event types gEvtAttributeRead_c: handle of the attempted read. </td></tr>
 <tr><td class="fieldname"><a class="anchor" id="gga6806d32e99a3229ad636f89f3840fcc0ab10fce66411958117986397522e4fcd1"></a>gEvtAttributeRead_c&#160;</td><td class="fielddoc">
 <p>An attribute registered with GattServer_RegisterHandlesForReadNotifications is being read. </p>
 <p>After receiving this event, application must call GattServer_SendAttributeReadStatus. </p>
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="gga6806d32e99a3229ad636f89f3840fcc0a1084c84dc58b8020548ee650e75941e1"></a>gEvtInvalidPduReceived_c&#160;</td><td class="fielddoc">
+<p>An invalid PDU was received from Client. </p>
+<p>Application decides if disconnection is required </p>
 </td></tr>
 </table>
 
@@ -588,7 +630,7 @@ This function executes synchronously. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="ga6ff81cac0be312fd79698030d3fffb37"></a>
+<a class="anchor" id="ga2924ffc3e879c6baeff9cb3500a57993"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -601,7 +643,7 @@ This function executes synchronously. </dd></dl>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint16_t *&#160;</td>
+          <td class="paramtype">const uint16_t *&#160;</td>
           <td class="paramname"><em>aAttributeHandles</em>&#160;</td>
         </tr>
         <tr>
@@ -624,6 +666,47 @@ This function executes synchronously. </dd></dl>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>gBleSuccess_c or error.</dd></dl>
 <dl class="section remark"><dt>Remarks</dt><dd>The application is responsible for actually writing the new requested values in the GATT database. Service and profile-specific control-point characteristics should have their value handles in this list so that the application may get notified when a GATT Client writes it.</dd>
+<dd>
+This function executes synchronously. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gabe86a3b0ab677c3e8fc646b66d49f86a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___b_l_e.html#ga50b56ac2045dae012646ed0377e3412c">bleResult_t</a> GattServer_UnregisterHandlesForWriteNotifications </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>handleCount</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t *&#160;</td>
+          <td class="paramname"><em>aAttributeHandles</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><hr/>
+ </p>
+<p>Unregisters the attribute handles that will be notified through the GATT Server callback when a GATT Client attempts to modify the attributes' values.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">handleCount</td><td>Number of handles in array. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">aAttributeHandles</td><td>Array of handles.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>gBleSuccess_c or error.</dd></dl>
+<dl class="section remark"><dt>Remarks</dt><dd>To unregister all the list, pass 0 count and NULL.</dd>
 <dd>
 This function executes synchronously. </dd></dl>
 
@@ -674,7 +757,7 @@ This function executes synchronously. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="gaed1479c9cd83f284aae60490692afd22"></a>
+<a class="anchor" id="ga0617f3f47b1ceff922316b5d1de2cfc0"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -687,7 +770,7 @@ This function executes synchronously. </dd></dl>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint16_t *&#160;</td>
+          <td class="paramtype">const uint16_t *&#160;</td>
           <td class="paramname"><em>aAttributeHandles</em>&#160;</td>
         </tr>
         <tr>
@@ -710,6 +793,47 @@ This function executes synchronously. </dd></dl>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>gBleSuccess_c or error.</dd></dl>
 <dl class="section remark"><dt>Remarks</dt><dd>The application may modify the attribute's value in the GATT Database before sending the response with GattServer_SendAttributeReadStatus.</dd>
+<dd>
+This function executes synchronously. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga123b96958066b84ae2f7213a34ec04e6"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___b_l_e.html#ga50b56ac2045dae012646ed0377e3412c">bleResult_t</a> GattServer_UnregisterHandlesForReadNotifications </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>handleCount</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t *&#160;</td>
+          <td class="paramname"><em>aAttributeHandles</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><hr/>
+ </p>
+<p>Unregisters the attribute handles that will be notified through the GATT Server callback when a GATT Client attempts to read the attributes' values.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">handleCount</td><td>Number of handles in array. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">aAttributeHandles</td><td>Array of handles.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>gBleSuccess_c or error.</dd></dl>
+<dl class="section remark"><dt>Remarks</dt><dd>To unregister all the list, pass 0 count and NULL.</dd>
 <dd>
 This function executes synchronously. </dd></dl>
 
@@ -836,7 +960,7 @@ This function executes synchronously. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="ga2b103e1b4c95d43573faa6112609674b"></a>
+<a class="anchor" id="ga6423c3b586ea51994ce69f681d506deb"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -861,7 +985,7 @@ This function executes synchronously. </dd></dl>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramtype">const uint8_t *&#160;</td>
           <td class="paramname"><em>aValue</em>&#160;</td>
         </tr>
         <tr>
@@ -888,7 +1012,7 @@ This function executes synchronously. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="gaa580ed955583ba39d1a0a354875e06b0"></a>
+<a class="anchor" id="gac4bc8c8e54ef4f21123ed88f7ba68ce2"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -913,7 +1037,7 @@ This function executes synchronously. </dd></dl>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramtype">const uint8_t *&#160;</td>
           <td class="paramname"><em>aValue</em>&#160;</td>
         </tr>
         <tr>
@@ -937,6 +1061,47 @@ This function executes synchronously. </dd></dl>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>gBleSuccess_c or error. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga19e587a18f2c9623177a0ff63c98f015"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___b_l_e.html#ga50b56ac2045dae012646ed0377e3412c">bleResult_t</a> GattServer_RegisterUniqueHandlesForNotifications </td>
+          <td>(</td>
+          <td class="paramtype">bool_t&#160;</td>
+          <td class="paramname"><em>bWrite</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool_t&#160;</td>
+          <td class="paramname"><em>bRead</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><hr/>
+ </p>
+<p>Registers all GATT DB dynamic attribute handles with unique value buffers to be notified through the GATT Server callback when a GATT Client attempts to read/write the attributes' values.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">bWrite</td><td>Enables/Disables write notifications. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">bRead</td><td>Enables/Disables read notifications.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>gBleSuccess_c or error.</dd></dl>
+<dl class="section remark"><dt>Remarks</dt><dd>This function executes synchronously. </dd>
+<dd>
+This function should be called when adding GATT DB unique value buffer characteristics or descriptors. </dd></dl>
 
 </div>
 </div>

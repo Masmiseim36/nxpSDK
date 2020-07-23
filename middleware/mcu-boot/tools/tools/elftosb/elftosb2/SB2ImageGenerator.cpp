@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015 Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2018 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -11,7 +11,6 @@
 #include "OptionContext.h"
 
 #define kFlagsOption "flags"
-#define kSecBinVersion "secureBinaryVersion"
 #define kSectionFlagsOption "sectionFlags"
 #define kProductVersionOption "productVersion"
 #define kComponentVersionOption "componentVersion"
@@ -54,19 +53,6 @@ BootImage *SB2ImageGenerator::generate()
     return image;
 }
 
-void SB2ImageGenerator::validateHmacEntries(SB2Image::Section *section)
-{
-	auto blocks = section->getBlockCount();
-	auto hmacEntries = section->getHmacEntries();
-	if (hmacEntries == 0)
-		return;
-	if (blocks == 0)
-		section->setHmacEntries(0);
-	else if ((blocks / section->getHmacEntries()) == 0)
-		section->setHmacEntries(blocks);
-	return;
-}
-
 void SB2ImageGenerator::processOptions(SB2Image *image)
 {
     // bail if no option context was set
@@ -87,35 +73,6 @@ void SB2ImageGenerator::processOptions(SB2Image *image)
             Log::log(Logger::WARNING, "warning: flags option is an unexpected type\n");
         }
     }
-
-	if (m_options->hasOption(kSecBinVersion))
-	{
-		const StringValue *stringValue = dynamic_cast<const StringValue *>(m_options->getOption(kSecBinVersion));
-		const std::string value = *stringValue;
-		if (stringValue)
-		{
-			if (value == "2.0") { 
-				//value 2.0 already set by default
-			}
-			else if (value == "2.1" && m_family == kLPC_skbootFamily) {
-				image->setMajorVersion(2);
-				image->setMinorVersion(1);
-			}
-			else if (value == "2.1" && m_family != kLPC_skbootFamily) {
-				Log::log(Logger::WARNING, "warning: secureBinaryVersion 2.1 is not supported by selected device family, using default version: 2.0\n");
-				//value 2.0 already set by default
-			}
-			else {
-				Log::log(Logger::WARNING, "warning: secureBinaryVersion option have an unexpected value (%s), using default version: 2.0\n", value.c_str());
-				//value 2.0 already set by default
-			}
-		}
-		else
-		{
-			Log::log(Logger::WARNING, "warning: secureBinaryVersion option is an unexpected type, using default version: 2.0\n");
-			//value 2.0 already set by default
-		}
-	}
 
     // handle common options
     processVersionOptions(image);
@@ -217,20 +174,6 @@ void SB2ImageGenerator::processOperationSection(OperationSequenceSection *sectio
             continue;
         }
 
-		KeywrapOperation *wrapOp = dynamic_cast<KeywrapOperation *>(op);
-		if (wrapOp)
-		{
-			processKeywrapOperation(wrapOp, newSection);
-			continue;
-		}
-
-		EncryptOperation *encOp = dynamic_cast<EncryptOperation *>(op);
-		if (encOp)
-		{
-			processEncryptOperation(encOp, newSection);
-			continue;
-		}
-
         LoadOperation *loadOp = dynamic_cast<LoadOperation *>(op);
         if (loadOp)
         {
@@ -273,118 +216,14 @@ void SB2ImageGenerator::processOperationSection(OperationSequenceSection *sectio
             continue;
         }
 
-		auto keystoreToNvOp = dynamic_cast<KeystoreToNvOperation *>(op);
-        if (keystoreToNvOp)
-        {
-            processKeystoreToNvOperation(keystoreToNvOp, newSection);
-            continue;
-        }
-
-		auto keystoreFromNvOp = dynamic_cast<KeystoreFromNvOperation *>(op);
-        if (keystoreFromNvOp)
-        {
-            processKeystoreFromNvOperation(keystoreFromNvOp, newSection);
-            continue;
-        }
-
-		auto checkVersionOp = dynamic_cast<CheckVersionOperation *>(op);
-        if (checkVersionOp)
-        {
-            processCheckVersionOp(checkVersionOp, newSection);
-            continue;
-        }
-		
-
         Log::log(Logger::WARNING, "warning: unexpected operation type\n");
     }
 
     // Deal with options that apply to sections.
     processSectionOptions(newSection, section);
 
-	// Check and adjust hmac count according section data size.
-	validateHmacEntries(newSection);
-
     // add the boot section to the image
     image->addSection(newSection);
-}
-
-void SB2ImageGenerator::processKeywrapOperation(KeywrapOperation *op, SB2Image::BootSection *section)
-{
-	DataSource *source = op->getSource();
-	DataTarget *target = op->getTarget();
-
-	unsigned segmentCount = source->getSegmentCount();
-	if (!segmentCount)
-	{
-		return;
-	}
-	if (segmentCount != 1)
-	{
-		Log::log(Logger::WARNING, "warning: keywrap operation using first segment only\n");
-	}
-
-	DataSource::Segment *segment = source->getSegmentAt(0);
-	DataTarget::AddressRange range = target->getRangeForSegment(*source, *segment);
-	unsigned rangeLength = range.m_end - range.m_begin;
-
-	const uint32_t kekSize = Keyblob::getKekSizeBytes();
-	if (rangeLength != kekSize)
-	{
-		Log::log(Logger::WARNING, "warning: keywrap operation requires %d byte key segment\n", kekSize);
-		return;
-	}
-
-	// Handle a pattern segment as a special case.
-	DataSource::PatternSegment *patternSegment = dynamic_cast<DataSource::PatternSegment *>(segment);
-	if (patternSegment)
-	{
-		Log::log(Logger::WARNING, "warning: keywrap operation does not support pattern segment\n");
-		return;
-	}
-	else
-	{
-		// Get key data (kek) from source.
-		uint8_t *kek = new uint8_t[kekSize];
-		segment->getData(0, kekSize, kek);
-
-		Log::log(Logger::INFO2, "creating wrapped keyblob\n");
-
-		Keyblob *keyblob = op->getKeyblob();
-		assert(keyblob);
-		uint32_t byteCount = 0;
-		uint8_t *data = keyblob->createWrappedKeyblobData(kek, &byteCount);
-		delete[] kek;
-
-		// Create new data source with wrapped key blob.
-		source = new UnmappedDataSource(data, byteCount);
-		segment = source->getSegmentAt(0);
-
-		// Create an address range, possibly modified by target.
-		range = target->getRangeForSegment(*source, *segment);
-		unsigned length = range.m_end - range.m_begin;
-		delete source;
-
-		// Create load command with wrapped keyblob as source.
-		SB2Image::LoadCommand *command = new SB2Image::LoadCommand();
-		command->setData(data, length); // Makes a copy of the data buffer.
-		command->setLoadAddress(range.m_begin);
-		command->setDCD(false);
-
-		delete[] data;
-
-		section->addCommand(command);
-	}
-}
-
-void SB2ImageGenerator::processEncryptOperation(EncryptOperation *op, SB2Image::BootSection *section)
-{
-	m_encryptKeyBlob = op->getKeyblob();
-	assert(m_encryptKeyBlob);
-
-	// Load operation will notice non-null keyblob pointer and encrypt accordingly.
-	processLoadOperation(op, section);
-
-	m_encryptKeyBlob = NULL;
 }
 
 void SB2ImageGenerator::processLoadOperation(LoadOperation *op, SB2Image::BootSection *section)
@@ -424,35 +263,16 @@ void SB2ImageGenerator::processLoadOperation(LoadOperation *op, SB2Image::BootSe
         }
 
         unsigned allocLength = rangeLength;
-		if (m_encryptKeyBlob)
-		{
-			// Align allocation size to quadspi block
-			const unsigned align = Keyblob::k_qspiAlignlength;
-			unsigned remainder = rangeLength % align;
-			allocLength = remainder ? rangeLength + (align - remainder) : rangeLength;
-		}
-
-		// get the data from the segment
+      // get the data from the segment
         uint8_t *data = new uint8_t[allocLength];
         memset(data, 0, allocLength);
         segment->getData(0, rangeLength, data);
-
-		// Encrypt for OTFAD if keyblob provided.
-		if (m_encryptKeyBlob && m_encryptKeyBlob->encryptMatchingRange(range.m_begin, allocLength, data))
-		{
-			rangeLength = allocLength;
-		}
 
         // create the boot command
         SB2Image::LoadCommand *command = new SB2Image::LoadCommand();
         command->setData(data, rangeLength); // Makes a copy of the data buffer.
         command->setLoadAddress(range.m_begin);
         command->setDCD(op->isDCDLoad());
-
-		if (op->getLoadOperationType() == LoadOperation::LoadOperationType_t::loadHmac)
-			command->setLoadHmac(true);
-		else if (op->getLoadOperationType() == LoadOperation::LoadOperationType_t::loadSecret)
-			command->setLoadSecret(true);
 
         LoadExternalOperation *loadExtOp = dynamic_cast<LoadExternalOperation *>(op);
         if (loadExtOp)
@@ -591,50 +411,6 @@ void SB2ImageGenerator::processMemEnableOperation(MemEnableOperation *op, SB2Ima
     section->addCommand(command);
 }
 
-void SB2ImageGenerator::processKeystoreToNvOperation(KeystoreToNvOperation *op, SB2Image::BootSection *section)
-{
-    auto command = new SB2Image::KeyStoreToNvCommand();
-
-    uint32_t start;
-    uint32_t count;
-    op->getRange(&start, &count);
-    command->setAddressRange(start, count);
-
-    command->setMemoryId(op->getMemoryId());
-
-    section->addCommand(command);
-}
-
-void SB2ImageGenerator::processKeystoreFromNvOperation(KeystoreFromNvOperation *op, SB2Image::BootSection *section)
-{
-    auto command = new SB2Image::KeyStoreFromNvCommand();
-
-    uint32_t start;
-    uint32_t count;
-    op->getRange(&start, &count);
-    command->setAddressRange(start, count);
-
-    command->setMemoryId(op->getMemoryId());
-
-    section->addCommand(command);
-}
-
-void SB2ImageGenerator::processCheckVersionOp(CheckVersionOperation *op, SB2Image::BootSection *section)
-{
-    auto command = new SB2Image::CheckVersionCommand();
-
-	if (op->getVersionType() == CheckVersionOperation::CheckVersionType::SecureVersion)
-		command->setVersionType(SB2Image::CheckVersionCommand::CheckVersionType::SecureVersion);
-	else if (op->getVersionType() == CheckVersionOperation::CheckVersionType::NonSecureVersion)
-		command->setVersionType(SB2Image::CheckVersionCommand::CheckVersionType::NonSecureVersion);
-	else
-		Log::log(Logger::ERROR, "ERROR: Unknown version check type.\n");
-
-	command->setVersion(op->getVersion());
-
-    section->addCommand(command);
-}
-
 void SB2ImageGenerator::processProgramOperation(ProgramOperation *op, SB2Image::BootSection *section)
 {
     DataSource *source = op->getSource();
@@ -719,9 +495,6 @@ void SB2ImageGenerator::processDataSection(BinaryDataSection *section, SB2Image 
 
     // Handle alignment option.
     processSectionOptions(dataSection, section);
-
-	// Check and adjust hmac count according section data size.
-	validateHmacEntries(dataSection);
 
     image->addSection(dataSection);
 }

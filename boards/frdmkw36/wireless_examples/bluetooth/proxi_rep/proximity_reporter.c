@@ -4,7 +4,7 @@
 ********************************************************************************** */
 /*! *********************************************************************************
 * Copyright (c) 2014, Freescale Semiconductor, Inc.
-* Copyright 2016-2019 NXP
+* Copyright 2016-2020 NXP
 * All rights reserved.
 *
 * \file
@@ -102,7 +102,7 @@ static disConfig_t disServiceConfig = {(uint16_t)service_device_info};
 static llsConfig_t serviceLinkLossConfig = {(uint16_t)service_link_loss, gLls_NoAlert_c};
 static txsConfig_t serviceTxPowerConfig = {(uint16_t)service_tx_power, 0x00};
 static iasConfig_t serviceIasConfig = {(uint16_t)service_immediate_alert, gLls_NoAlert_c};
-static uint16_t cpHandles[] = { (uint16_t)value_alert_level_ctrl_point };
+static uint16_t cpHandles[] = { (uint16_t)value_alert_level_ctrl_point, (uint16_t)value_alert_level_lls };
 
 /* Application specific data*/
 static tmrTimerID_t mAdvTimerId;
@@ -300,7 +300,7 @@ static void BleApp_Config(void)
 }
 
 /*! *********************************************************************************
-* \brief        Configures GAP Advertise parameters. Advertise will satrt after
+* \brief        Configures GAP Advertise parameters. Advertise will start after
 *               the parameters are set.
 *
 ********************************************************************************** */
@@ -395,8 +395,8 @@ static void BleApp_AdvertisingCallback (gapAdvertisingEvent_t* pAdvertisingEvent
 ********************************************************************************** */
 static void BleApp_ConnectionCallback (deviceId_t peerDeviceId, gapConnectionEvent_t* pConnectionEvent)
 {
-	/* Connection Manager to handle Host Stack interactions */
-	BleConnManager_GapPeripheralEvent(peerDeviceId, pConnectionEvent);
+    /* Connection Manager to handle Host Stack interactions */
+    BleConnManager_GapPeripheralEvent(peerDeviceId, pConnectionEvent);
 
     switch (pConnectionEvent->eventType)
     {
@@ -440,8 +440,24 @@ static void BleApp_ConnectionCallback (deviceId_t peerDeviceId, gapConnectionEve
 
             mPeerDeviceId = gInvalidDeviceId_c;
 
-            /* Restart advertising */
-            BleApp_Start();
+            /* Connection terminated without any prior warning */
+            if (pConnectionEvent->eventData.disconnectedEvent.reason == gHciConnectionTimeout_c)
+            {
+                /* Start alerting to the previously set link loss alert level */
+                llsAlertLevel_t alertLevel;
+                if (gBleSuccess_c == Lls_GetAlertLevel((uint16_t)service_link_loss, &alertLevel))
+                {
+                    AlertUI(alertLevel);
+                }
+            }
+            else
+            {
+                /* Reset link loss alert level to No Alert */
+                Lls_SetAlertLevel(serviceLinkLossConfig.serviceHandle, gLls_NoAlert_c);
+
+                /* Restart advertising */
+                BleApp_Start();
+            }
         }
         break;
     default:
@@ -472,6 +488,19 @@ static void BleApp_GattServerCallback (deviceId_t deviceId, gattServerEvent_t* p
         }
         break;
 
+        case gEvtAttributeWritten_c:
+        {
+            if (pServerEvent->eventData.attributeWrittenEvent.handle == (uint16_t)value_alert_level_lls)
+            {
+                if (Lls_SetAlertLevel((uint16_t)service_link_loss, pServerEvent->eventData.attributeWrittenEvent.aValue[0]) == gBleSuccess_c)
+                {
+                    AlertUI(pServerEvent->eventData.attributeWrittenEvent.aValue[0]);
+                }
+                (void)GattServer_SendAttributeWrittenStatus(deviceId, (uint16_t)value_alert_level_lls, (uint8_t)gAttErrCodeNoError_c);
+            }
+        }
+        break;
+
         default:
             ; /* For MISRA compliance */
             break;
@@ -482,7 +511,7 @@ static void BleApp_GattServerCallback (deviceId_t deviceId, gattServerEvent_t* p
 /*! *********************************************************************************
 * \brief        Handles advertising timer callback.
 *
-* \param[in]    pParam        Calback parameters.
+* \param[in]    pParam        Callback parameters.
 ********************************************************************************** */
 static void AdvertisingTimerCallback(void * pParam)
 {
@@ -562,7 +591,7 @@ void AlertUI(uint8_t alertLevel)
 /*! *********************************************************************************
 * \brief        Handles battery measurement timer callback.
 *
-* \param[in]    pParam        Calback parameters.
+* \param[in]    pParam        Callback parameters.
 ********************************************************************************** */
 static void BatteryMeasurementTimerCallback(void * pParam)
 {

@@ -1,6 +1,6 @@
 '''
 * Copyright 2015 Freescale Semiconductor, Inc.
-* Copyright 2016-2019 NXP
+* Copyright 2016-2017 NXP
 * All rights reserved.
 *
 * SPDX-License-Identifier: BSD-3-Clause
@@ -374,19 +374,13 @@ class Sniffer(object):
             ((len(payload) + eth_header_len + 22) & 0x000000ff)
         ]
 
-        timestamp = time.time()
-        timestamp_sec = int(timestamp)
-        timestamp_usec = int(round((timestamp - timestamp_sec) * 1e6))
-
+        arrival_time = int('%x' % time.time(), 16)
         arrival_time_list = [
-            (timestamp_sec & 0xff000000) >> 24,
-            (timestamp_sec & 0x00ff0000) >> 16,
-            (timestamp_sec & 0x0000ff00) >> 8,
-            (timestamp_sec & 0x000000ff),
-            (timestamp_usec & 0xff000000) >> 24,
-            (timestamp_usec & 0x00ff0000) >> 16,
-            (timestamp_usec & 0x0000ff00) >> 8,
-            (timestamp_usec & 0x000000ff),
+            (arrival_time & 0xff000000) >> 24,
+            (arrival_time & 0x00ff0000) >> 16,
+            (arrival_time & 0x0000ff00) >> 8,
+            (arrival_time & 0x000000ff),
+            0, 0, 0, 0
         ]
 
         capture_length = [

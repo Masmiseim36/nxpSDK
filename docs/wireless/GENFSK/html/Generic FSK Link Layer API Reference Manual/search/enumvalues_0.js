@@ -27,6 +27,7 @@ var searchData=
   ['ggenfskfail_5fc',['gGenfskFail_c',['../group__genfsk.html#gga4ed968606780ee600fd3fb3d2db3136eae033ee01d55cb9248f610aaa481fed90',1,'genfsk_interface.h']]],
   ['ggenfskformattedpacket',['gGenfskFormattedPacket',['../group__genfsk.html#gga0fb6d8012a54eb33c47dde4ad828830ba6420ea0c758e7f79cacaf087b69300ba',1,'genfsk_interface.h']]],
   ['ggenfskfsk',['gGenfskFsk',['../group__genfsk.html#ggabea7097e97a8398bd4648f0e95d3dee1aff3fafbf50fa3185c1cb2c65523bf207',1,'genfsk_interface.h']]],
+  ['ggenfskgapevent',['gGenfskGapEvent',['../group__genfsk.html#ggae758fc5ad8aa4e32cb5ca8bbb4f7c8b7a681a1cdeb53ea0b07665f4c4f6b3f7ae',1,'genfsk_interface.h']]],
   ['ggenfskgfskbt0p3h0p5',['gGenfskGfskBt0p3h0p5',['../group__genfsk.html#ggabea7097e97a8398bd4648f0e95d3dee1a2c68d9bbd12268795f298cac006e75b7',1,'genfsk_interface.h']]],
   ['ggenfskgfskbt0p5h0p32',['gGenfskGfskBt0p5h0p32',['../group__genfsk.html#ggabea7097e97a8398bd4648f0e95d3dee1a68c0b9b8d451ccd255d0e02dc0cf60b8',1,'genfsk_interface.h']]],
   ['ggenfskgfskbt0p5h0p5',['gGenfskGfskBt0p5h0p5',['../group__genfsk.html#ggabea7097e97a8398bd4648f0e95d3dee1a3ec774c4d226a46debc194fdcd2de63a',1,'genfsk_interface.h']]],

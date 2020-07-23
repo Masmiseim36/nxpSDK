@@ -1,0 +1,30 @@
+<#-- Create additional, part family specific symbols that are required-->
+<#assign SYMBOLS_FILE = "symbols_${chipFamily}.ldt">
+<#include SYMBOLS_FILE ignore_missing=true>
+
+    /* Linker Symbols */
+    _RAM_START_ = 0x1FFFC000;
+    _RAM_END_ = 0x2000BFFF;
+    
+    __RAM_VECTOR_TABLE_SIZE_BYTES = 192;
+    __VECTOR_RAM = __base_RAM_VECTOR_TABLE;
+    __VECTOR_TABLE = __base_PROGRAM_FLASH;
+
+    __FIRMWARE_END_ADDRESS = DEFINED(gFirmwareTopAddr_c) ? gFirmwareTopAddr_c : __top_RAM;
+	__HEAP_end__ = DEFINED(gUseStackEnd_d) ? _vStackBase -1 : __FIRMWARE_END_ADDRESS;
+	__CSTACK_end__ = DEFINED(gUseStackEnd_d) ? __FIRMWARE_END_ADDRESS : __VECTOR_RAM - 1;
+    INT_STORAGE_SECTOR_SIZE = 0x800;
+    INT_STORAGE_START = DEFINED(__base_INT_STORAGE) ? __base_INT_STORAGE : 0;
+    INT_STORAGE_END =  DEFINED(__top_INT_STORAGE) ? __top_INT_STORAGE : 0;
+    INT_STORAGE_SIZE = INT_STORAGE_END - INT_STORAGE_START;
+    
+    NV_STORAGE_START_ADDRESS = DEFINED(__base_NVM_region) ? __base_NVM_region : 0;
+    NV_STORAGE_END_ADDRESS = DEFINED(__top_NVM_region) ? __top_NVM_region : 0;
+    NV_STORAGE_SECTOR_SIZE = 0x800;
+    NV_STORAGE_MAX_SECTORS = (NV_STORAGE_END_ADDRESS - NV_STORAGE_START_ADDRESS) / NV_STORAGE_SECTOR_SIZE;
+
+    FREESCALE_PROD_DATA_BASE_ADDR = __base_FREESCALE_PROD_DATA;
+    m_warmboot_stack_end = DEFINED(__top_WARMBOOT_STACK) ? __top_WARMBOOT_STACK : 0;
+    m_ram_img_end = DEFINED(gUseNVMLink_d) ? NV_STORAGE_START_ADDRESS - 1 : FREESCALE_PROD_DATA_BASE_ADDR - 1;
+    m_max_ram_img_size = DEFINED(gRamImageSizeInFlash_c) ? gRamImageSizeInFlash_c : 0x0;
+    m_ram_img_start = m_ram_img_end - m_max_ram_img_size + 1;

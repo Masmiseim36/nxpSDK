@@ -26,12 +26,13 @@
     <h1 class="title topictitle1">Overview</h1>
 
     <div class="body">
-        <p class="p">When waiting for events, a mask of events is passed to the API, which indicates the
-            desired event flags to wait for. A predefined mask <em class="ph i">osaEventFlagsAll_c </em>can be
-            usedto wait for any of the possible events. The waitAll parameter establishes whether to
-            wait for at least one of the events in the mask (waitAll = 0) or for all of them
-            (waitAll =1). For bare metal there is no context switch when a task waits for an event,
-            so the function status must be checked to decide whether an event has occurred.</p>
+        <p class="p">When waiting for events, a mask of events is passed to the API, which
+            indicates the desired event flags to wait for. A predefined mask <em class="ph i">osaEventFlagsAll_c
+            </em>can be used to wait for any of the possible events. The waitAll parameter
+            establishes whether to wait for at least one of the events in the mask (waitAll = 0) or
+            for all of them (waitAll =1). For bare metal there is no context switch when a task
+            waits for an event, so the function status must be checked to decide whether an event
+            has occurred.</p>
 
     </div>
 

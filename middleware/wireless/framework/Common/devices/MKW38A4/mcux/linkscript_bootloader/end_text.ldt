@@ -1,0 +1,10 @@
+
+    _etext = .;
+
+    .NVM_region :
+    {
+        FILL(0xFFFFFFFF)
+        . = ORIGIN(NVM_region) + LENGTH(NVM_region) - 1;
+        BYTE(0xFF);
+    } > NVM_region
+

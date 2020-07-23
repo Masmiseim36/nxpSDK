@@ -48,14 +48,14 @@ typedef struct BootloaderTree
     standard_version_t version;                  //!< Bootloader version number.
     const char *copyright;                       //!< Copyright string.
     const bootloader_context_t *runtimeContext;  //!< Pointer to the bootloader's runtime context.
-#if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
-#if !BL_DEVICE_IS_LPC_SERIES
+#if !(defined(BL_FEATURE_HAS_NO_INTERNAL_FLASH) && BL_FEATURE_HAS_NO_INTERNAL_FLASH)
+#if !(defined(BL_DEVICE_IS_LPC_SERIES) && BL_DEVICE_IS_LPC_SERIES)
     const flash_driver_interface_t *flashDriver;    //!< Kinetis Flash driver API.
 #else
     const flashiap_driver_interface_t *flashDriver; //!< LPC Flash driver API.
 #endif
 #endif
-#if BL_DEVICE_IS_LPC_SERIES
+#if defined(BL_DEVICE_IS_LPC_SERIES) && BL_DEVICE_IS_LPC_SERIES
     const power_driver_interface_t *powerDriver;
 #endif
     const aes_driver_interface_t *aesDriver;     //!< AES driver API.

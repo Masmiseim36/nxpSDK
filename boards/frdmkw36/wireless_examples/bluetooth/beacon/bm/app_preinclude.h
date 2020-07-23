@@ -4,7 +4,7 @@
  ********************************************************************************** */
 /*! *********************************************************************************
 * Copyright 2015, Freescale Semiconductor, Inc.
-* Copyright 2016-2019 NXP
+* Copyright 2016-2020 NXP
 * All rights reserved.
 *
 * \file
@@ -45,7 +45,7 @@
  ********************************************************************************** */
 
 /* Do not modify. Not used for this application */
-#define gAppUseNvm_d                    0
+#define gAppUseNvm_d                    1
 
 /* Defines Num of Serial Manager interfaces */
 #define gSerialManagerMaxInterfaces_c   0
@@ -81,7 +81,7 @@
 #define gTMR_EnableLowPowerTimers       1
 
 /* Enable/Disable PowerDown functionality in PwrLib */
-#define cPWR_UsePowerDownMode           0
+#define cPWR_UsePowerDownMode           1
 
 /* Enable/Disable BLE Link Layer DSM */
 #define cPWR_BLE_LL_Enable              1

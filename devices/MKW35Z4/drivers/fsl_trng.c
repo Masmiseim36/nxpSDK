@@ -1726,7 +1726,7 @@ status_t TRNG_GetRandomData(TRNG_Type *base, void *data, size_t dataSize)
             /* Wait for Valid or Error flag*/
             tmpValidFlag = TRNG_RD_MCTL_ENT_VAL(base);
             tmpErrorFlag = TRNG_RD_MCTL_ERR(base);
-            while (tmpValidFlag == 0u && tmpErrorFlag == 0u)
+            while ((tmpValidFlag == 0u) && (tmpErrorFlag == 0u))
             {
                 tmpValidFlag = TRNG_RD_MCTL_ENT_VAL(base);
                 tmpErrorFlag = TRNG_RD_MCTL_ERR(base);

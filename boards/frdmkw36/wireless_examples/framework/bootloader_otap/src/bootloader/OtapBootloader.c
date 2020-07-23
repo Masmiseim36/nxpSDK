@@ -1,6 +1,6 @@
 /*! *********************************************************************************
 * Copyright (c) 2015, Freescale Semiconductor, Inc.
-* Copyright 2016-2018 NXP
+* Copyright 2016-2020 NXP
 * All rights reserved.
 *
 * \file
@@ -13,12 +13,15 @@
 * Include
 *************************************************************************************
 ********************************************************************************** */
+#ifdef CPU_QN9080C
+#include "Eeprom.h"
+#else
 #include "main.h"
 #include "Eeprom_Boot.h"
+#endif
 #include "fsl_flash.h"
 #include "OtapBootloader.h"
 #include "FunctionLib.h"
-
 
 /*! *********************************************************************************
 *************************************************************************************
@@ -30,10 +33,20 @@ volatile bootFlags_t *gpBootInfo;
 volatile uint32_t gBootStorageStartAddress;
 extern flash_config_t gFTFx_config;
 
+/* Bootloader version */
+#ifdef CPU_QN9080C
+const uint8_t aBootloaderVersion[FSL_FEATURE_FLASH_PFLASH_BLOCK_WRITE_UNIT_SIZE] =
+{
+    gBootloaderVerMajor_c,
+    gBootloaderVerMinor_c,
+    gBootloaderVerPatch_c,
+    gBootloaderBuildNo_c
+};
+#endif
 
 /*! *********************************************************************************
 *************************************************************************************
-* Public Functions Pr
+* Public Functions Prototypes
 *************************************************************************************
 ********************************************************************************** */
 uint32_t Boot_GetInternalStorageStartAddr(void);
@@ -41,6 +54,9 @@ uint8_t Boot_InitExternalStorage(void);
 uint8_t Boot_ReadExternalStorage(uint16_t NoOfBytes, uint32_t Addr, uint8_t *outbuf);
 void Boot_LoadImage (void);
 
+#ifdef CPU_QN9080C
+extern void hardware_init(void);
+#endif
 
 /*! *********************************************************************************
 *************************************************************************************
@@ -60,7 +76,7 @@ uint32_t Boot_GetInternalStorageStartAddr(void)
     uint8_t mDelimiter[] = {gBootData_StartMarker_Value_c};
     uint32_t addr = gBootInvalidAddress_c;
 
-    /* Check if the address of the internal storage from the boot flags is valid */    
+    /* Check if the address of the internal storage from the boot flags is valid */
     if ((gpBootInfo->u2.internalStorageStart > gUserFlashStart_d) &&
         (gpBootInfo->u2.internalStorageStart < gMcuFlashSize))
     {
@@ -92,18 +108,23 @@ uint32_t Boot_GetInternalStorageStartAddr(void)
 * \return status
 *
 ********************************************************************************** */
+
 uint8_t Boot_InitExternalStorage(void)
 {
     uint8_t status = 0;
-    
+  
+#ifdef CPU_QN9080C
+#if (gEepromType_d != gEepromDevice_InternalFlash_c)  
+    status = (EEPROM_Init());
+#endif /* gEepromDevice_InternalFlash_c */
+#else
     if (gBootInvalidAddress_c == gBootStorageStartAddress)
     {
         status = EEPROM_Init();
     }
-
+#endif
     return status;
 }
-
 
 /*! *********************************************************************************
 * \brief   Read data from the external stoage
@@ -118,7 +139,15 @@ uint8_t Boot_InitExternalStorage(void)
 uint8_t Boot_ReadExternalStorage(uint16_t NoOfBytes, uint32_t Addr, uint8_t *outbuf)
 {
     uint8_t status = 0;
-    
+
+#ifdef CPU_QN9080C
+#if (gEepromType_d != gEepromDevice_InternalFlash_c)
+    status = EEPROM_ReadData(NoOfBytes, Addr, outbuf);
+#else
+    Addr += gBootStorageStartAddress;
+    FLib_MemCpy(outbuf, (void*)Addr, NoOfBytes);
+#endif
+#else /* CPU_QN9080C */
     if (gBootInvalidAddress_c == gBootStorageStartAddress)
     {
         status = EEPROM_ReadData(NoOfBytes, Addr, outbuf);
@@ -127,8 +156,9 @@ uint8_t Boot_ReadExternalStorage(uint16_t NoOfBytes, uint32_t Addr, uint8_t *out
     {
         Addr += gBootStorageStartAddress;
         FLib_MemCpy(outbuf, (void*)Addr, NoOfBytes);
-    }
-    
+    }    
+#endif    
+
     return status;
 }
 
@@ -157,19 +187,32 @@ void Boot_LoadImage (void)
 
     /* Check if we have a valid internal storage start address. */
     gBootStorageStartAddress = Boot_GetInternalStorageStartAddr();
-    
+
+#ifdef CPU_QN9080C
+#if (gEepromType_d == gEepromDevice_InternalFlash_c)
+    if(gBootInvalidAddress_c == gBootStorageStartAddress)
+    {
+      return;
+    }
+#endif
+#endif
+
 #if defined(CPU_QN9080C)
+    /* Initialize the hardware */
+    hardware_init();
+
     /* Enable Data Path 16/8MHz clock(some of the flash operations need this)
-     * enable BiV clock include RTC BiV register  */
+    * enable BiV clock include RTC BiV register  */
     SYSCON->CLK_EN = SYSCON_CLK_EN_CLK_DP_EN_MASK | SYSCON_CLK_EN_CLK_BIV_EN_MASK;
-    
+
     FLASH_GetDefaultConfig(&gFTFx_config);
     gFTFx_config.blockBase &= 0x000fffff; //In linker config file, flash addresses start from zero, do the same for flash configuration
 #endif
     /* Init the flash module */
     FLASH_Init(&gFTFx_config);
 
-#if (defined(CPU_MKW36Z512VFP4) || defined(CPU_MKW36Z512VHT4))
+#if (defined(CPU_MKW36A512VHT4) || defined(CPU_MKW36A512VFP4) || defined(CPU_MKW36A512VFT4) || \
+     defined(CPU_MKW36Z512VHT4) || defined(CPU_MKW36Z512VFP4) || defined(CPU_MKW34A512VFT4))
     /* KW36 has 256KB of FlexNVM mapped at adress 0x1000 0000 which also has an alias starting from address 0x0004 0000.
      * Configured the Flash driver to treat the PFLASH bloxk and FlexNVM block as a continuous memory block. */
     gFTFx_config.DFlashBlockBase = FSL_FEATURE_FLASH_PFLASH_BLOCK_SIZE * FSL_FEATURE_FLASH_PFLASH_BLOCK_COUNT;
@@ -198,10 +241,10 @@ void Boot_LoadImage (void)
     /* Ignore sector bitmap representing the internal storage */
     if (gBootInvalidAddress_c != gBootStorageStartAddress)
     {
-        len = (gBootStorageStartAddress + 
-               gBootData_ImageLength_Size_c + 
-               gBootData_SectorsBitmap_Size_c + 
-               remaingImgSize + 
+        len = (gBootStorageStartAddress +
+               gBootData_ImageLength_Size_c +
+               gBootData_SectorsBitmap_Size_c +
+               remaingImgSize +
                gFlashErasePage_c - 1) / gFlashErasePage_c;
 
         for (i = gBootStorageStartAddress / gFlashErasePage_c; i < len; i++)
@@ -210,12 +253,17 @@ void Boot_LoadImage (void)
         }
     }
 
+#ifdef CPU_QN908X
+    /* Ignore sector bitmap representing FLASH Configuration page (last 3 FLASH sectors) */
+    bitmapBuffer[31] &= gFlashConfigPageMask_c;
+#endif
+
     /* Start writing the image. Do not alter the last sector which contains HW specific data! */
-#ifndef CPU_QN9080C    
+#ifndef CPU_QN9080C
     while (flashAddr < (gMcuFlashSize - gFlashErasePage_c))
 #else
     /* Start writing the image. Do not alter the last 3 sectors which contains HW specific data (NVDS, NVDS backup, system config) */
-    while (flashAddr < (gMcuFlashSize - (3 * gFlashErasePage_c)))
+    while (flashAddr < (gMcuFlashSize - (gFlashErasePage_c << 2)))
 #endif
     {
         if (remaingImgSize > gFlashErasePage_c)
@@ -231,8 +279,8 @@ void Boot_LoadImage (void)
         if( *pBitmap & bitMask )
         {
             /* Erase Flash sector */
-            status = FLASH_Erase(&gFTFx_config, 
-                                 flashAddr, 
+            status = FLASH_Erase(&gFTFx_config,
+                                 flashAddr,
                                  gFlashErasePage_c
 #ifndef CPU_QN9080C
                                  ,kFLASH_ApiEraseKey  //skip this parameter for QN9080C
@@ -255,17 +303,17 @@ void Boot_LoadImage (void)
                 if ((flashAddr <= gBootImageFlagsAddress_c) && (flashAddr + len > gBootImageFlagsAddress_c))
                 {
                     uint32_t offset = gBootImageFlagsAddress_c - flashAddr;
-                    
+
                     /* Program the Flash before boot flags */
 #if defined(FSL_FEATURE_FLASH_HAS_PROGRAM_SECTION_CMD) && FSL_FEATURE_FLASH_HAS_PROGRAM_SECTION_CMD
-                    status = FLASH_ProgramSection(&gFTFx_config, 
+                    status = FLASH_ProgramSection(&gFTFx_config,
                                                   flashAddr,
-                                                  (uint32_t*)buffer, 
+                                                  (uint32_t*)buffer,
                                                   offset);
 #else
-                    status = FLASH_Program(&gFTFx_config, 
-                                           flashAddr, 
-                                           (uint32_t*)buffer, 
+                    status = FLASH_Program(&gFTFx_config,
+                                           flashAddr,
+                                           (uint32_t*)buffer,
                                            offset);
 #endif
                     if (kStatus_FLASH_Success != status)
@@ -277,14 +325,14 @@ void Boot_LoadImage (void)
 
                     /* Program the Flash after the boot flags*/
 #if defined(FSL_FEATURE_FLASH_HAS_PROGRAM_SECTION_CMD) && FSL_FEATURE_FLASH_HAS_PROGRAM_SECTION_CMD
-                    status = FLASH_ProgramSection(&gFTFx_config, 
+                    status = FLASH_ProgramSection(&gFTFx_config,
                                                   flashAddr + offset,
-                                                  (uint32_t*)&buffer[offset], 
+                                                  (uint32_t*)&buffer[offset],
                                                   len - offset);
 #else
-                    status = FLASH_Program(&gFTFx_config, 
-                                           flashAddr + offset, 
-                                           (uint32_t*)&buffer[offset], 
+                    status = FLASH_Program(&gFTFx_config,
+                                           flashAddr + offset,
+                                           (uint32_t*)&buffer[offset],
                                            len - offset);
 #endif
                     if (kStatus_FLASH_Success != status)
@@ -304,14 +352,14 @@ void Boot_LoadImage (void)
                     }
 
 #if defined(FSL_FEATURE_FLASH_HAS_PROGRAM_SECTION_CMD) && FSL_FEATURE_FLASH_HAS_PROGRAM_SECTION_CMD
-                    status = FLASH_ProgramSection(&gFTFx_config, 
+                    status = FLASH_ProgramSection(&gFTFx_config,
                                                   flashAddr,
-                                                  (uint32_t*)buffer, 
+                                                  (uint32_t*)buffer,
                                                   alignedLen);
 #else
-                    status = FLASH_Program(&gFTFx_config, 
-                                           flashAddr, 
-                                           (uint32_t*)buffer, 
+                    status = FLASH_Program(&gFTFx_config,
+                                           flashAddr,
+                                           (uint32_t*)buffer,
                                            alignedLen);
 #endif
                     if (kStatus_FLASH_Success != status)
@@ -336,7 +384,9 @@ void Boot_LoadImage (void)
 
         /* Update the remaining bytes*/
         if (remaingImgSize)
+        {
             remaingImgSize -= len;
+        }
     } /* while */
 
 #if defined(MCU_MK21DX256)
@@ -438,16 +488,60 @@ void Boot_LoadImage (void)
     }
 #endif
 
+#ifdef CPU_QN9080C
+    /* if boot storage start address was erased, restore and write it back to boot flags */
+    if(gpBootInfo->u2.internalStorageStart == 0xFFFFFFFFUL)
+    {
+        gpBootInfo->u2.internalStorageStart = gBootStorageStartAddress;
+      
+#if defined(FSL_FEATURE_FLASH_HAS_PROGRAM_SECTION_CMD) && FSL_FEATURE_FLASH_HAS_PROGRAM_SECTION_CMD
+        status = FLASH_ProgramSection(&gFTFx_config,
+                                  (uint32_t)&gpBootInfo->u2.aInternalStorageStart,
+                                  (uint32_t*)&gpBootInfo->u2.aInternalStorageStart,
+                                  sizeof(gpBootInfo->u2.aInternalStorageStart));
+#else
+        status = FLASH_Program(&gFTFx_config,
+                           (uint32_t)&gpBootInfo->u2.aInternalStorageStart,
+                           (uint32_t*)&gpBootInfo->u2.aInternalStorageStart,
+                           sizeof(gpBootInfo->u2.aInternalStorageStart));
+#endif
+      if( kStatus_FLASH_Success != status )
+      {
+          gHandleBootError_d();
+      }
+    }
+
+    /* Write the bootloader version */
+    if(FLib_MemCmpToVal((const void*)gpBootInfo->aBootVersion, 0xFF, sizeof(gpBootInfo->aBootVersion)))
+    {
+#if defined(FSL_FEATURE_FLASH_HAS_PROGRAM_SECTION_CMD) && FSL_FEATURE_FLASH_HAS_PROGRAM_SECTION_CMD
+        status = FLASH_ProgramSection(&gFTFx_config,
+                                  (uint32_t)&gpBootInfo->aBootVersion,
+                                  (uint32_t*)&aBootloaderVersion,
+                                  sizeof(aBootloaderVersion));
+#else
+        status = FLASH_Program(&gFTFx_config,
+                           (uint32_t)&gpBootInfo->aBootVersion,
+                           (uint32_t*)&aBootloaderVersion,
+                           sizeof(aBootloaderVersion));
+#endif
+      if( kStatus_FLASH_Success != status )
+      {
+          gHandleBootError_d();
+      }
+    }
+#endif /* QN9080C */
+
     /* Set the bBootProcessCompleted Flag */
 #if defined(FSL_FEATURE_FLASH_HAS_PROGRAM_SECTION_CMD) && FSL_FEATURE_FLASH_HAS_PROGRAM_SECTION_CMD
-    status = FLASH_ProgramSection(&gFTFx_config, 
+    status = FLASH_ProgramSection(&gFTFx_config,
                                   (uint32_t)gpBootInfo->u1.aBootProcessCompleted,
-                                  (uint32_t*)&bootProcessCompleteFlag, 
+                                  (uint32_t*)&bootProcessCompleteFlag,
                                   sizeof(bootProcessCompleteFlag));
 #else
-    status = FLASH_Program(&gFTFx_config, 
-                           (uint32_t)gpBootInfo->u1.aBootProcessCompleted, 
-                           (uint32_t*)&bootProcessCompleteFlag, 
+    status = FLASH_Program(&gFTFx_config,
+                           (uint32_t)gpBootInfo->u1.aBootProcessCompleted,
+                           (uint32_t*)&bootProcessCompleteFlag,
                            sizeof(bootProcessCompleteFlag));
 #endif
     if( kStatus_FLASH_Success != status )
@@ -467,12 +561,25 @@ void Boot_CheckOtapFlags(void)
     external EEPROM */
     gpBootInfo = (bootFlags_t*)gBootImageFlagsAddress_c;
 
+#ifdef CPU_QN9080C
+    if ((gpBootInfo->u0.aNewBootImageAvailable[0] != gBootValueForTRUE_c) &&
+        (gpBootInfo->u1.aBootProcessCompleted[0] ==  gBootValueForTRUE_c))
+    {
+        return;
+    }
+    else
+    {
+        /* Write the new image */
+        Boot_LoadImage();
+    }
+#else
     if ( !FLib_MemCmpToVal((const void*)gpBootInfo->u0.aNewBootImageAvailable, 0xFF, sizeof(gpBootInfo->u0.aNewBootImageAvailable)) ||
           FLib_MemCmpToVal((const void*)gpBootInfo->u1.aBootProcessCompleted, 0xFF, sizeof(gpBootInfo->u1.aBootProcessCompleted)))
     {
         /* Write the new image */
         Boot_LoadImage();
     }
+#endif
 }
 
 //-----------------------------------------------------------------------------

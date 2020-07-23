@@ -4,7 +4,7 @@
 ********************************************************************************** */
 /*! *********************************************************************************
 * Copyright (c) 2015, Freescale Semiconductor, Inc.
-* Copyright 2016-2019 NXP
+* Copyright 2016-2020 NXP
 * All rights reserved.
 *
 * \file
@@ -105,7 +105,7 @@ typedef struct advState_tag
 
 static deviceId_t  mPeerDeviceId = gInvalidDeviceId_c;
 
-/* Adv Parmeters */
+/* Adv Parameters */
 static advState_t  mAdvState;
 static tmrTimerID_t appTimerId;
 
@@ -151,7 +151,7 @@ void BleApp_Init(void)
     init_erpc_host();
 #endif
 
-    /* Initialize application specific peripher drivers here. */
+    /* Initialize application specific peripheral drivers here. */
 }
 
 /*! *********************************************************************************
@@ -191,7 +191,17 @@ void BleApp_Start(void)
 ********************************************************************************** */
 void BleApp_HandleKeys(key_event_t events)
 {
-    BleApp_Start();
+    switch (events)
+    {
+        case gKBD_EventPressPB1_c:
+        {
+            BleApp_Start();
+            break;
+        }
+        default:
+            ; /* For MISRA compliance */
+            break;
+    }
 }
 
 /*! *********************************************************************************
@@ -273,17 +283,17 @@ static void BleApp_Config(void)
 
     if (OtapClient_Config() == FALSE)
     {
-        /* An error occured in configuring the OTAP Client */
+        /* An error occurred in configuring the OTAP Client */
         panic(0,0,0,0);
     }
 
-    /* Allocate aplication timer */
+    /* Allocate application timer */
     appTimerId = TMR_AllocateTimer();
     mBatteryMeasurementTimerId = TMR_AllocateTimer();
 }
 
 /*! *********************************************************************************
-* \brief        Configures GAP Advertise parameters. Advertise will satrt after
+* \brief        Configures GAP Advertise parameters. Advertise will start after
 *               the parameters are set.
 *
 ********************************************************************************** */
@@ -487,7 +497,7 @@ static void BleApp_GattServerCallback (deviceId_t deviceId, gattServerEvent_t* p
                 /* Check if the devices are bonded and if this is true than the bond may have
                  * been lost on the peer device or the security properties may not be sufficient.
                  * In this case try to restart pairing and bonding. */
-                if (gBleSuccess_c == Gap_CheckIfBonded(deviceId, &isBonded) &&
+                if (gBleSuccess_c == Gap_CheckIfBonded(deviceId, &isBonded, NULL) &&
                     TRUE == isBonded)
 #endif /* gAppUseBonding_d */
                 {

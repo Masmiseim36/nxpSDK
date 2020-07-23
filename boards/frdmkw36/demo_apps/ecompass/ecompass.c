@@ -2,7 +2,7 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 #include "fsl_debug_console.h"
@@ -33,7 +33,7 @@
 #define I2C_RELEASE_SCL_PIN_ENABLE_CLOCK CLOCK_EnableClock(kCLOCK_PortB)
 #define I2C_RELEASE_BUS_COUNT 100U
 #define MAX_ACCEL_AVG_COUNT 25U
-#define HWTIMER_PERIOD      10000U
+#define HWTIMER_PERIOD 10000U
 /* multiplicative conversion constants */
 #define DegToRad 0.017453292
 #define RadToDeg 57.295779
@@ -210,15 +210,16 @@ static void Delay(uint32_t ticks)
 static void Sensor_ReadData(int16_t *Ax, int16_t *Ay, int16_t *Az, int16_t *Mx, int16_t *My, int16_t *Mz)
 {
     fxos_data_t fxos_data;
+    memset(&fxos_data, 0, sizeof(fxos_data));
 
     if (FXOS_ReadSensorData(&g_fxosHandle, &fxos_data) != kStatus_Success)
     {
         PRINTF("Failed to read acceleration data!\r\n");
     }
     /* Get the accel data from the sensor data structure in 14 bit left format data*/
-    *Ax = (int16_t)((uint16_t)((uint16_t)fxos_data.accelXMSB << 8) | (uint16_t)fxos_data.accelXLSB)/4U;
-    *Ay = (int16_t)((uint16_t)((uint16_t)fxos_data.accelYMSB << 8) | (uint16_t)fxos_data.accelYLSB)/4U;
-    *Az = (int16_t)((uint16_t)((uint16_t)fxos_data.accelZMSB << 8) | (uint16_t)fxos_data.accelZLSB)/4U;
+    *Ax = (int16_t)((uint16_t)((uint16_t)fxos_data.accelXMSB << 8) | (uint16_t)fxos_data.accelXLSB) / 4U;
+    *Ay = (int16_t)((uint16_t)((uint16_t)fxos_data.accelYMSB << 8) | (uint16_t)fxos_data.accelYLSB) / 4U;
+    *Az = (int16_t)((uint16_t)((uint16_t)fxos_data.accelZMSB << 8) | (uint16_t)fxos_data.accelZLSB) / 4U;
     *Ax *= g_dataScale;
     *Ay *= g_dataScale;
     *Az *= g_dataScale;
@@ -354,7 +355,7 @@ int main(void)
         g_fxosHandle.xfer.slaveAddress = g_sensor_address[i];
         if (FXOS_ReadReg(&g_fxosHandle, WHO_AM_I_REG, &regResult, 1) == kStatus_Success)
         {
-            if(regResult == kFXOS_WHO_AM_I_Device_ID)
+            if (regResult == kFXOS_WHO_AM_I_Device_ID)
             {
                 break;
             }
@@ -381,15 +382,15 @@ int main(void)
     {
         return -1;
     }
-    if(g_sensorRange == 0x00)
+    if (g_sensorRange == 0x00)
     {
         g_dataScale = 2U;
     }
-    else if(g_sensorRange == 0x01)
+    else if (g_sensorRange == 0x01)
     {
         g_dataScale = 4U;
     }
-    else if(g_sensorRange == 0x10)
+    else if (g_sensorRange == 0x10)
     {
         g_dataScale = 8U;
     }
@@ -447,7 +448,7 @@ int main(void)
             g_Ay /= MAX_ACCEL_AVG_COUNT;
             g_Az /= MAX_ACCEL_AVG_COUNT;
 
-            if(g_FirstRun)
+            if (g_FirstRun)
             {
                 g_Mx_LP = g_Mx_Raw;
                 g_My_LP = g_My_Raw;
@@ -474,7 +475,7 @@ int main(void)
             g_Az = g_Ay * sinAngle + g_Az * cosAngle;
 
             /* Calculate pitch angle g_Pitch (-90deg, 90deg) and sin, cos*/
-            g_Pitch = atan2(-g_Ax , g_Az) * RadToDeg;
+            g_Pitch = atan2(-g_Ax, g_Az) * RadToDeg;
             sinAngle = sin(g_Pitch * DegToRad);
             cosAngle = cos(g_Pitch * DegToRad);
 
@@ -483,7 +484,7 @@ int main(void)
 
             /* Calculate yaw = ecompass angle psi (-180deg, 180deg) */
             g_Yaw = atan2(-By, Bx) * RadToDeg;
-            if(g_FirstRun)
+            if (g_FirstRun)
             {
                 g_Yaw_LP = g_Yaw;
                 g_FirstRun = false;

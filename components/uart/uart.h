@@ -22,7 +22,7 @@
  * Definitions
  ******************************************************************************/
 
-/*! @brief Enable or disable UART adapter non-blocking mode (1 - enable, 0 - disable) */
+/*! @brief Enable or disable Uart adapter non-blocking mode (1 - enable, 0 - disable) */
 #ifdef DEBUG_CONSOLE_TRANSFER_NON_BLOCKING
 #define UART_ADAPTER_NON_BLOCKING_MODE (1U)
 #else
@@ -47,39 +47,35 @@
 #endif
 #endif
 
-#ifndef HAL_UART_ADAPTER_LOWPOWER
-#define HAL_UART_ADAPTER_LOWPOWER (0U)
-#endif /* HAL_UART_ADAPTER_LOWPOWER */
-
 #if (defined(UART_ADAPTER_NON_BLOCKING_MODE) && (UART_ADAPTER_NON_BLOCKING_MODE > 0U))
-#define HAL_UART_HANDLE_SIZE (90U + HAL_UART_ADAPTER_LOWPOWER * 16U)
+#define HAL_UART_HANDLE_SIZE (90U)
 #else
-#define HAL_UART_HANDLE_SIZE (4U + HAL_UART_ADAPTER_LOWPOWER * 16U)
+#define HAL_UART_HANDLE_SIZE (4U)
 #endif
 
-/*! @brief Whether enable transactional function of the UART. (0 - disable, 1 - enable) */
+/*! @brief Whether enable transactional function of the uart. (0 - disable, 1 - enable) */
 #define HAL_UART_TRANSFER_MODE (0U)
 
 typedef void *hal_uart_handle_t;
 
-/*! @brief UART status */
+/*! @brief uart status */
 typedef enum _hal_uart_status
 {
     kStatus_HAL_UartSuccess = kStatus_Success,                       /*!< Successfully */
     kStatus_HAL_UartTxBusy  = MAKE_STATUS(kStatusGroup_HAL_UART, 1), /*!< TX busy */
     kStatus_HAL_UartRxBusy  = MAKE_STATUS(kStatusGroup_HAL_UART, 2), /*!< RX busy */
-    kStatus_HAL_UartTxIdle  = MAKE_STATUS(kStatusGroup_HAL_UART, 3), /*!< HAL UART transmitter is idle. */
-    kStatus_HAL_UartRxIdle  = MAKE_STATUS(kStatusGroup_HAL_UART, 4), /*!< HAL UART receiver is idle */
+    kStatus_HAL_UartTxIdle  = MAKE_STATUS(kStatusGroup_HAL_UART, 3), /*!< HAL uart transmitter is idle. */
+    kStatus_HAL_UartRxIdle  = MAKE_STATUS(kStatusGroup_HAL_UART, 4), /*!< HAL uart receiver is idle */
     kStatus_HAL_UartBaudrateNotSupport =
         MAKE_STATUS(kStatusGroup_HAL_UART, 5), /*!< Baudrate is not support in current clock source */
     kStatus_HAL_UartProtocolError = MAKE_STATUS(
         kStatusGroup_HAL_UART,
         6),                                                        /*!< Error occurs for Noise, Framing, Parity, etc.
                                                                         For transactional transfer, The up layer needs to abort the transfer and then starts again */
-    kStatus_HAL_UartError = MAKE_STATUS(kStatusGroup_HAL_UART, 7), /*!< Error occurs on HAL UART */
+    kStatus_HAL_UartError = MAKE_STATUS(kStatusGroup_HAL_UART, 7), /*!< Error occurs on HAL uart */
 } hal_uart_status_t;
 
-/*! @brief UART parity mode. */
+/*! @brief uart parity mode. */
 typedef enum _hal_uart_parity_mode
 {
     kHAL_UartParityDisabled = 0x0U, /*!< Parity disabled */
@@ -87,14 +83,14 @@ typedef enum _hal_uart_parity_mode
     kHAL_UartParityOdd      = 0x2U, /*!< Parity odd enabled */
 } hal_uart_parity_mode_t;
 
-/*! @brief UART stop bit count. */
+/*! @brief uart stop bit count. */
 typedef enum _hal_uart_stop_bit_count
 {
     kHAL_UartOneStopBit = 0U, /*!< One stop bit */
     kHAL_UartTwoStopBit = 1U, /*!< Two stop bits */
 } hal_uart_stop_bit_count_t;
 
-/*! @brief UART configuration structure. */
+/*! @brief uart configuration structure. */
 typedef struct _hal_uart_config
 {
     uint32_t srcClock_Hz;                   /*!< Source clock */
@@ -108,10 +104,10 @@ typedef struct _hal_uart_config
                            Invalid instance value will cause initialization failure. */
 } hal_uart_config_t;
 
-/*! @brief UART transfer callback function. */
+/*! @brief uart transfer callback function. */
 typedef void (*hal_uart_transfer_callback_t)(hal_uart_handle_t handle, hal_uart_status_t status, void *callbackParam);
 
-/*! @brief UART transfer structure. */
+/*! @brief uart transfer structure. */
 typedef struct _hal_uart_transfer
 {
     uint8_t *data;   /*!< The buffer of data to be transfer.*/
@@ -132,14 +128,14 @@ extern "C" {
  */
 
 /*!
- * @brief Initializes a UART instance with the UART handle and the user configuration structure.
+ * @brief Initializes a uart instance with the uart handle and the user configuration structure.
  *
- * This function configures the UART module with user-defined settings. The user can configure the configuration
+ * This function configures the uart module with user-defined settings. The user can configure the configuration
  * structure. The parameter handle is a pointer to point to a memory space of size #HAL_UART_HANDLE_SIZE allocated by
- * the caller. Example below shows how to use this API to configure the UART.
+ * the caller. Example below shows how to use this API to configure the uart.
  *  @code
- *   uint32_t g_UartHandleBuffer[((HAL_UART_HANDLE_SIZE + sizeof(uint32_t) - 1) / sizeof(uitn32_t))];
- *   hal_uart_handle_t g_UartHandle = (hal_uart_handle_t)&g_UartHandleBuffer[0];
+ *   uint8_t g_UartHandleBuffer[HAL_UART_HANDLE_SIZE];
+ *   hal_uart_handle_t g_UartHandle = &g_UartHandleBuffer[0];
  *   hal_uart_config_t config;
  *   config.srcClock_Hz = 48000000;
  *   config.baudRate_Bps = 115200U;
@@ -152,20 +148,19 @@ extern "C" {
  *  @endcode
  *
  * @param handle Pointer to point to a memory space of size #HAL_UART_HANDLE_SIZE allocated by the caller.
- * The handle should be 4 byte aligned, because unaligned access does not support on some devices.
  * @param config Pointer to user-defined configuration structure.
  * @retval kStatus_HAL_UartBaudrateNotSupport Baudrate is not support in current clock source.
- * @retval kStatus_HAL_UartSuccess UART initialization succeed
+ * @retval kStatus_HAL_UartSuccess uart initialization succeed
  */
 hal_uart_status_t HAL_UartInit(hal_uart_handle_t handle, hal_uart_config_t *config);
 
 /*!
- * @brief Deinitializes a UART instance.
+ * @brief Deinitializes a uart instance.
  *
- * This function waits for TX complete, disables TX and RX, and disables the UART clock.
+ * This function waits for TX complete, disables TX and RX, and disables the uart clock.
  *
- * @param handle UART handle pointer.
- * @retval kStatus_HAL_UartSuccess UART de-initialization succeed
+ * @param handle uart handle pointer.
+ * @retval kStatus_HAL_UartSuccess uart de-initialization succeed
  */
 hal_uart_status_t HAL_UartDeinit(hal_uart_handle_t handle);
 
@@ -186,7 +181,7 @@ hal_uart_status_t HAL_UartDeinit(hal_uart_handle_t handle);
  * cannot be used at the same time.
  * And, the function #HAL_UartTransferAbortReceive cannot be used to abort the transmission of this function.
  *
- * @param handle UART handle pointer.
+ * @param handle uart handle pointer.
  * @param data Start address of the buffer to store the received data.
  * @param length Size of the buffer.
  * @retval kStatus_HAL_UartError An error occurred while receiving data.
@@ -205,7 +200,7 @@ hal_uart_status_t HAL_UartReceiveBlocking(hal_uart_handle_t handle, uint8_t *dat
  * cannot be used at the same time.
  * And, the function #HAL_UartTransferAbortSend cannot be used to abort the transmission of this function.
  *
- * @param handle UART handle pointer.
+ * @param handle uart handle pointer.
  * @param data Start address of the data to write.
  * @param length Size of the data to write.
  * @retval kStatus_HAL_UartSuccess Successfully sent all data.
@@ -228,11 +223,11 @@ hal_uart_status_t HAL_UartSendBlocking(hal_uart_handle_t handle, const uint8_t *
 /*!
  * @brief Installs a callback and callback parameter.
  *
- * This function is used to install the callback and callback parameter for UART module.
- * When any status of the UART changed, the driver will notify the upper layer by the installed callback
+ * This function is used to install the callback and callback parameter for uart module.
+ * When any status of the uart changed, the driver will notify the upper layer by the installed callback
  * function. And the status is also passed as status parameter when the callback is called.
  *
- * @param handle UART handle pointer.
+ * @param handle uart handle pointer.
  * @param callback The callback function.
  * @param callbackParam The parameter of the callback function.
  * @retval kStatus_HAL_UartSuccess Successfully install the callback.
@@ -246,16 +241,16 @@ hal_uart_status_t HAL_UartTransferInstallCallback(hal_uart_handle_t handle,
  *
  * This function receives data using an interrupt method. This is a non-blocking function, which
  * returns directly without waiting for all data to be received.
- * The receive request is saved by the UART driver.
+ * The receive request is saved by the uart driver.
  * When the new data arrives, the receive request is serviced first.
- * When all data is received, the UART driver notifies the upper layer
+ * When all data is received, the uart driver notifies the upper layer
  * through a callback function and passes the status parameter @ref kStatus_UART_RxIdle.
  *
  * @note The function #HAL_UartReceiveBlocking and the function #HAL_UartTransferReceiveNonBlocking
  * cannot be used at the same time.
  *
- * @param handle UART handle pointer.
- * @param transfer UART transfer structure, see #hal_uart_transfer_t.
+ * @param handle uart handle pointer.
+ * @param transfer uart transfer structure, see #hal_uart_transfer_t.
  * @retval kStatus_HAL_UartSuccess Successfully queue the transfer into transmit queue.
  * @retval kStatus_HAL_UartRxBusy Previous receive request is not finished.
  * @retval kStatus_HAL_UartError An error occurred.
@@ -267,14 +262,14 @@ hal_uart_status_t HAL_UartTransferReceiveNonBlocking(hal_uart_handle_t handle, h
  *
  * This function sends data using an interrupt method. This is a non-blocking function, which
  * returns directly without waiting for all data to be written to the TX register. When
- * all data is written to the TX register in the ISR, the UART driver calls the callback
+ * all data is written to the TX register in the ISR, the uart driver calls the callback
  * function and passes the @ref kStatus_UART_TxIdle as status parameter.
  *
  * @note The function #HAL_UartSendBlocking and the function #HAL_UartTransferSendNonBlocking
  * cannot be used at the same time.
  *
- * @param handle UART handle pointer.
- * @param transfer UART transfer structure. See #hal_uart_transfer_t.
+ * @param handle uart handle pointer.
+ * @param transfer uart transfer structure. See #hal_uart_transfer_t.
  * @retval kStatus_HAL_UartSuccess Successfully start the data transmission.
  * @retval kStatus_HAL_UartTxBusy Previous transmission still not finished; data not all written to TX register yet.
  * @retval kStatus_HAL_UartError An error occurred.
@@ -286,7 +281,7 @@ hal_uart_status_t HAL_UartTransferSendNonBlocking(hal_uart_handle_t handle, hal_
  *
  * This function gets the number of bytes that have been received.
  *
- * @param handle UART handle pointer.
+ * @param handle uart handle pointer.
  * @param count Receive bytes count.
  * @retval kStatus_HAL_UartError An error occurred.
  * @retval kStatus_Success Get successfully through the parameter \p count.
@@ -294,12 +289,12 @@ hal_uart_status_t HAL_UartTransferSendNonBlocking(hal_uart_handle_t handle, hal_
 hal_uart_status_t HAL_UartTransferGetReceiveCount(hal_uart_handle_t handle, uint32_t *count);
 
 /*!
- * @brief Gets the number of bytes written to the UART TX register.
+ * @brief Gets the number of bytes written to the uart TX register.
  *
- * This function gets the number of bytes written to the UART TX
+ * This function gets the number of bytes written to the uart TX
  * register by using the interrupt method.
  *
- * @param handle UART handle pointer.
+ * @param handle uart handle pointer.
  * @param count Send bytes count.
  * @retval kStatus_HAL_UartError An error occurred.
  * @retval kStatus_Success Get successfully through the parameter \p count.
@@ -315,7 +310,7 @@ hal_uart_status_t HAL_UartTransferGetSendCount(hal_uart_handle_t handle, uint32_
  * @note The function #HAL_UartTransferAbortReceive cannot be used to abort the transmission of
  * the function #HAL_UartReceiveBlocking.
  *
- * @param handle UART handle pointer.
+ * @param handle uart handle pointer.
  * @retval kStatus_Success Get successfully abort the receiving.
  */
 hal_uart_status_t HAL_UartTransferAbortReceive(hal_uart_handle_t handle);
@@ -329,7 +324,7 @@ hal_uart_status_t HAL_UartTransferAbortReceive(hal_uart_handle_t handle);
  * @note The function #HAL_UartTransferAbortSend cannot be used to abort the transmission of
  * the function #HAL_UartSendBlocking.
  *
- * @param handle UART handle pointer.
+ * @param handle uart handle pointer.
  * @retval kStatus_Success Get successfully abort the sending.
  */
 hal_uart_status_t HAL_UartTransferAbortSend(hal_uart_handle_t handle);
@@ -349,11 +344,11 @@ hal_uart_status_t HAL_UartTransferAbortSend(hal_uart_handle_t handle);
 /*!
  * @brief Installs a callback and callback parameter.
  *
- * This function is used to install the callback and callback parameter for UART module.
+ * This function is used to install the callback and callback parameter for uart module.
  * When non-blocking sending or receiving finished, the adapter will notify the upper layer by the installed callback
  * function. And the status is also passed as status parameter when the callback is called.
  *
- * @param handle UART handle pointer.
+ * @param handle uart handle pointer.
  * @param callback The callback function.
  * @param callbackParam The parameter of the callback function.
  * @retval kStatus_HAL_UartSuccess Successfully install the callback.
@@ -367,15 +362,15 @@ hal_uart_status_t HAL_UartInstallCallback(hal_uart_handle_t handle,
  *
  * This function receives data using an interrupt method. This is a non-blocking function, which
  * returns directly without waiting for all data to be received.
- * The receive request is saved by the UART adapter.
+ * The receive request is saved by the uart adapter.
  * When the new data arrives, the receive request is serviced first.
- * When all data is received, the UART adapter notifies the upper layer
+ * When all data is received, the uart adapter notifies the upper layer
  * through a callback function and passes the status parameter @ref kStatus_UART_RxIdle.
  *
  * @note The function #HAL_UartReceiveBlocking and the function #HAL_UartReceiveNonBlocking
  * cannot be used at the same time.
  *
- * @param handle UART handle pointer.
+ * @param handle uart handle pointer.
  * @param data Start address of the data to write.
  * @param length Size of the data to write.
  * @retval kStatus_HAL_UartSuccess Successfully queue the transfer into transmit queue.
@@ -389,13 +384,13 @@ hal_uart_status_t HAL_UartReceiveNonBlocking(hal_uart_handle_t handle, uint8_t *
  *
  * This function sends data using an interrupt method. This is a non-blocking function, which
  * returns directly without waiting for all data to be written to the TX register. When
- * all data is written to the TX register in the ISR, the UART driver calls the callback
+ * all data is written to the TX register in the ISR, the uart driver calls the callback
  * function and passes the @ref kStatus_UART_TxIdle as status parameter.
  *
  * @note The function #HAL_UartSendBlocking and the function #HAL_UartSendNonBlocking
  * cannot be used at the same time.
  *
- * @param handle UART handle pointer.
+ * @param handle uart handle pointer.
  * @param data Start address of the data to write.
  * @param length Size of the data to write.
  * @retval kStatus_HAL_UartSuccess Successfully start the data transmission.
@@ -409,7 +404,7 @@ hal_uart_status_t HAL_UartSendNonBlocking(hal_uart_handle_t handle, uint8_t *dat
  *
  * This function gets the number of bytes that have been received.
  *
- * @param handle UART handle pointer.
+ * @param handle uart handle pointer.
  * @param count Receive bytes count.
  * @retval kStatus_HAL_UartError An error occurred.
  * @retval kStatus_Success Get successfully through the parameter \p count.
@@ -417,12 +412,12 @@ hal_uart_status_t HAL_UartSendNonBlocking(hal_uart_handle_t handle, uint8_t *dat
 hal_uart_status_t HAL_UartGetReceiveCount(hal_uart_handle_t handle, uint32_t *reCount);
 
 /*!
- * @brief Gets the number of bytes written to the UART TX register.
+ * @brief Gets the number of bytes written to the uart TX register.
  *
- * This function gets the number of bytes written to the UART TX
+ * This function gets the number of bytes written to the uart TX
  * register by using the interrupt method.
  *
- * @param handle UART handle pointer.
+ * @param handle uart handle pointer.
  * @param count Send bytes count.
  * @retval kStatus_HAL_UartError An error occurred.
  * @retval kStatus_Success Get successfully through the parameter \p count.
@@ -438,7 +433,7 @@ hal_uart_status_t HAL_UartGetSendCount(hal_uart_handle_t handle, uint32_t *seCou
  * @note The function #HAL_UartAbortReceive cannot be used to abort the transmission of
  * the function #HAL_UartReceiveBlocking.
  *
- * @param handle UART handle pointer.
+ * @param handle uart handle pointer.
  * @retval kStatus_Success Get successfully abort the receiving.
  */
 hal_uart_status_t HAL_UartAbortReceive(hal_uart_handle_t handle);
@@ -452,7 +447,7 @@ hal_uart_status_t HAL_UartAbortReceive(hal_uart_handle_t handle);
  * @note The function #HAL_UartAbortSend cannot be used to abort the transmission of
  * the function #HAL_UartSendBlocking.
  *
- * @param handle UART handle pointer.
+ * @param handle uart handle pointer.
  * @retval kStatus_Success Get successfully abort the sending.
  */
 hal_uart_status_t HAL_UartAbortSend(hal_uart_handle_t handle);
@@ -462,35 +457,13 @@ hal_uart_status_t HAL_UartAbortSend(hal_uart_handle_t handle);
 #endif
 #endif
 
-/*!
- * @brief Prepares to enter low power consumption.
- *
- * This function is used to prepare to enter low power consumption.
- *
- * @param handle UART handle pointer.
- * @retval kStatus_HAL_UartSuccess Successful operation.
- * @retval kStatus_HAL_UartError An error occurred.
- */
-hal_uart_status_t HAL_UartEnterLowpower(hal_uart_handle_t handle);
-
-/*!
- * @brief Restores from low power consumption.
- *
- * This function is used to restore from low power consumption.
- *
- * @param handle UART handle pointer.
- * @retval kStatus_HAL_UartSuccess Successful operation.
- * @retval kStatus_HAL_UartError An error occurred.
- */
-hal_uart_status_t HAL_UartExitLowpower(hal_uart_handle_t handle);
-
 #if (defined(UART_ADAPTER_NON_BLOCKING_MODE) && (UART_ADAPTER_NON_BLOCKING_MODE > 0U))
 /*!
- * @brief UART IRQ handle function.
+ * @brief uart IRQ handle function.
  *
- * This function handles the UART transmit and receive IRQ request.
+ * This function handles the uart transmit and receive IRQ request.
  *
- * @param handle UART handle pointer.
+ * @param handle uart handle pointer.
  */
 void HAL_UartIsrFunction(hal_uart_handle_t handle);
 #endif

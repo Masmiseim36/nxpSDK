@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Implemented profile and services"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-13F224BD-B57D-4A39-AB16-8F6EFFCAA17E.html"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-A9CB8620-9303-481E-908C-AE4C959B4D16"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Implemented profile and services</title>
+</head>
+<body id="GUID-A9CB8620-9303-481E-908C-AE4C959B4D16">
+
+
+    <h1 class="title topictitle1">Implemented profile and services</h1>
+
+    <div class="body">
+        <p class="p">The adv_ext_peripheral application implements a GATT server, a custom profile and the following services.</p>
+
+   <ul class="ul">
+       <li class="li">
+           Temperature Service (UUID: 01ff0200-ba5e-f4ee-5ca1-eb1e5e4b1ce0)</li>
+
+       <li class="li">Battery Service v1.0</li>
+
+       <li class="li">Device Information Service v1.1</li>
+
+   </ul>
+
+        <p class="p">The application behaves as a GAP peripheral node. It enters GAP General Discoverable Mode and waits for a GAP central node to connect and configure notifications for the temperature value.</p>
+
+    <p class="p">
+        The Temperature service is a custom service that implements the Temperature characteristic (UUID: 0x2A6E) with a
+        Characteristic Presentation Format descriptor (UUID: 0x2904), both defined by the Bluetooth SIG.</p>
+
+        <p class="p">The adv_ext_central application implements a GATT client or server for the following profile and services.</p>
+
+        <ul class="ul">
+            <li class="li">Temperature Service (UUID: 01ff0200-ba5e-f4ee-5ca1-eb1e5e4b1ce0)</li>
+
+            <li class="li">Battery Service v1.0</li>
+
+            <li class="li">Device Information Service v1.1</li>
+
+        </ul>
+
+        <p class="p">The application behaves as a GAP central node. It enters GAP Limited Discovery Procedure and searches for peripherals devices
+            to pair with. After pairing with the peripheral, it configures notifications and displays temperature values on a terminal connected to the UART port.
+        </p>
+
+        <p class="p">Both applications use pairing with bonding by default. When connected with
+            the Low-Power Extended Advertising Peripheral application, the Extended Advertising
+            Central application sends the 999999 passcode to the host stack by default.</p>
+
+    
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-13F224BD-B57D-4A39-AB16-8F6EFFCAA17E.html">Low-Power Extended Advertising Peripheral and Extended Advertising Central (KW37 platforms)</a></div>
+</div>
+</div>
+
+</body>
+</html>

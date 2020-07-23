@@ -64,11 +64,11 @@
 
         <p class="p"> </p>
 
-        <p class="p">A Client device processes the received image by computing the CRC and filter unused data
-            and stores the received image into a non-volatile storage. After the entire image has
-            been transfered and verified, the Client device informs the Bootloader application that
-            a new image is available, and that the MCU must be reset to start the upgrade process.
-            See the following command sequence:</p>
+        <p class="p">A Client device processes the received image by computing the CRC and filter
+            unused data and stores the received image into a non-volatile storage. After the entire
+            image has been transferred and verified, the Client device informs the Bootloader
+            application that a new image is available, and that the MCU must be reset to start the
+            upgrade process. See the following command sequence:</p>
 
         <ul class="ul" id="GUID-45D76840-A21A-4088-B7F9-A2E2C31E70F1__UL_ISZ_BRK_GZ">
             <li class="li"> OTA_StartImage()</li>
@@ -83,7 +83,11 @@
 
             <li class="li"> OTA_SetNewImageFlag()</li>
 
-            <li class="li"> ResetMCU()</li>
+            <li class="li"> ResetMCU()<div class="note note"><span class="notetitle">Note:</span> For K32W061/QN9090/JN5189, with support for OTA on
+                    internal flash, a dedicated bootloader application is not required. In case of
+                    OTA on external flash a Secondary Stage Bootloader (SSBL) must be used.
+                </div>
+</li>
 
         </ul>
 
@@ -91,7 +95,7 @@
 
 <div class="related-links">
 <div class="familylinks">
-<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-F74086D7-C1F8-46AE-9F01-2509633024A4.html">Over-the-Air programming support</a></div>
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-F74086D7-C1F8-46AE-9F01-2509633024A4.html">Over-the-Air Programming Support</a></div>
 </div>
 </div>
 

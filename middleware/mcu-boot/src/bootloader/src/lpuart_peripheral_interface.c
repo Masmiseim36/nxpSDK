@@ -16,7 +16,7 @@
 #include "fsl_lpuart.h"
 #include "utilities/fsl_assert.h"
 
-#if BL_CONFIG_LPUART
+#if defined(BL_CONFIG_LPUART) && BL_CONFIG_LPUART
 
 //! @addtogroup lpuart_peripheral
 //! @{
@@ -28,24 +28,21 @@
 static bool lpuart_poll_for_activity(const peripheral_descriptor_t *self);
 static status_t lpuart_full_init(const peripheral_descriptor_t *self, serial_byte_receive_func_t function);
 static void lpuart_full_shutdown(const peripheral_descriptor_t *self);
-
 static status_t lpuart_write(const peripheral_descriptor_t *self, const uint8_t *buffer, uint32_t byteCount);
-
-extern void LPUART_SetSystemIRQ(uint32_t instance, PeripheralSystemIRQSetting set);
 
 ////////////////////////////////////////////////////////////////////////////////
 // Variables
 ////////////////////////////////////////////////////////////////////////////////
 
 const peripheral_control_interface_t g_lpuartControlInterface = {
-    .pollForActivity = lpuart_poll_for_activity, .init = lpuart_full_init, .shutdown = lpuart_full_shutdown, .pump = 0
+    .pollForActivity = lpuart_poll_for_activity, .init = lpuart_full_init, .shutdown = lpuart_full_shutdown, .pump = (void *)0u
 };
 
 const peripheral_byte_inteface_t g_lpuartByteInterface = {.init = NULL, .write = lpuart_write };
 
 static serial_byte_receive_func_t s_lpuart_byte_receive_callback;
 
-static bool g_lpuartInitStatus[FSL_FEATURE_SOC_LPUART_COUNT] = { false }; // not initialized.
+bool g_lpuartInitStatus[FSL_FEATURE_SOC_LPUART_COUNT] = { (_Bool)false }; // not initialized.
 
 static const uint32_t g_lpuartBaseAddr[] = LPUART_BASE_ADDRS;
 
@@ -58,13 +55,13 @@ static const uint32_t g_lpuartBaseAddr[] = LPUART_BASE_ADDRS;
  * the autobaud detect for this UART instance. If it is completed the UART is
  * fully initialized and ready to use.
  */
-bool lpuart_poll_for_activity(const peripheral_descriptor_t *self)
+static bool lpuart_poll_for_activity(const peripheral_descriptor_t *self)
 {
     uint32_t instance;
-#if USE_ONLY_UART(0)
-    instance = 0;
-#elif USE_ONLY_UART(1)
-    instance = 1;
+#if USE_ONLY_UART(0u)
+    instance = 0u;
+#elif USE_ONLY_UART(1u)
+    instance = 1u;
 #else
     instance = self->instance;
 #endif // USE_ONLY_UART(0)
@@ -72,9 +69,10 @@ bool lpuart_poll_for_activity(const peripheral_descriptor_t *self)
     // Check for autobaud completion.
     uint32_t baud;
     status_t autoBaudCompleted = autobaud_get_rate(instance, &baud);
+    bool retValue = (_Bool)false;
 
     // If autobaud is still running then exit immediately.
-    if (autoBaudCompleted == kStatus_Success)
+    if (autoBaudCompleted == (int32_t)kStatus_Success)
     {
         lpuart_config_t userConfig;
         uint32_t baseAddr = g_lpuartBaseAddr[instance];
@@ -82,9 +80,9 @@ bool lpuart_poll_for_activity(const peripheral_descriptor_t *self)
         LPUART_GetDefaultConfig(&userConfig);
         userConfig.baudRate_Bps = baud;
 
-        if (LPUART_Init((LPUART_Type *)baseAddr, &userConfig, get_uart_clock(instance)) == kStatus_Success)
+        if (LPUART_Init((LPUART_Type *)baseAddr, &userConfig, get_uart_clock(instance)) == (int32_t)kStatus_Success)
         {
-#if !BL_FEATURE_6PINS_PERIPHERAL
+#if !(defined(BL_FEATURE_6PINS_PERIPHERAL) && BL_FEATURE_6PINS_PERIPHERAL)
             // Configure selected pin as uart peripheral interface
             self->pinmuxConfig(instance, kPinmuxType_Peripheral);
 #endif // !BL_FEATURE_6PINS_PERIPHERAL
@@ -93,7 +91,7 @@ bool lpuart_poll_for_activity(const peripheral_descriptor_t *self)
             LPUART_SetSystemIRQ(instance, kPeripheralEnableIRQ);
 
             // Enable LPUART peripheral interrupt
-            LPUART_EnableInterrupts((LPUART_Type *)baseAddr, kLPUART_RxDataRegFullInterruptEnable);
+            LPUART_EnableInterrupts((LPUART_Type *)baseAddr, (uint32_t)kLPUART_RxDataRegFullInterruptEnable);
 
             LPUART_EnableRx((LPUART_Type *)baseAddr, true);
             LPUART_EnableTx((LPUART_Type *)baseAddr, true);
@@ -106,19 +104,19 @@ bool lpuart_poll_for_activity(const peripheral_descriptor_t *self)
             g_lpuartInitStatus[instance] = true;
 
             // Return true to indicate autobaud is complete and the UART is active.
-            return true;
+            retValue = true;
         }
         else
         {
             autobaud_init(instance);
         }
     }
-    return false;
+    return retValue;
 }
 
 //! Note that we don't ungate the LPUART clock gate here. That is done only after the
 //! autobaud process has completed successfully.
-status_t lpuart_full_init(const peripheral_descriptor_t *self, serial_byte_receive_func_t function)
+static status_t lpuart_full_init(const peripheral_descriptor_t *self, serial_byte_receive_func_t function)
 {
     s_lpuart_byte_receive_callback = function;
 
@@ -129,10 +127,10 @@ status_t lpuart_full_init(const peripheral_descriptor_t *self, serial_byte_recei
     // Init autobaud detector.
     autobaud_init(self->instance);
 
-    return kStatus_Success;
+    return (int32_t)kStatus_Success;
 }
 
-#if BL_FEATURE_6PINS_PERIPHERAL
+#if defined(BL_FEATURE_6PINS_PERIPHERAL) && BL_FEATURE_6PINS_PERIPHERAL
 #if (defined(__GNUC__))
 /* #pragma GCC push_options */
 /* #pragma GCC optimize("O0") */
@@ -145,10 +143,10 @@ void __attribute__((optimize("O0"))) lpuart_full_shutdown(const peripheral_descr
 #pragma push
 #pragma O0
 #endif
-void lpuart_full_shutdown(const peripheral_descriptor_t *self)
+static void lpuart_full_shutdown(const peripheral_descriptor_t *self)
 #endif
 #else
-void lpuart_full_shutdown(const peripheral_descriptor_t *self)
+static void lpuart_full_shutdown(const peripheral_descriptor_t *self)
 #endif
 {
     uint32_t instance;
@@ -164,8 +162,10 @@ void lpuart_full_shutdown(const peripheral_descriptor_t *self)
     {
         uint32_t baseAddr = g_lpuartBaseAddr[instance];
 
+        g_lpuartInitStatus[instance] = (_Bool)false;
+
         // Disable LPUART interrupt
-        LPUART_SetSystemIRQ(instance, kPeripheralDisableIRQ);
+//        LPUART_SetSystemIRQ(instance, kPeripheralDisableIRQ);
 
         // Reset LPUART registers
         LPUART_Deinit((LPUART_Type *)baseAddr);
@@ -173,15 +173,15 @@ void lpuart_full_shutdown(const peripheral_descriptor_t *self)
 
 //! Note: if not deinit autobaud(IRQ method), user app may encounters hardfault
 //! if it doesn't provide related pin interrupt service routine.
-#if BL_FEATURE_UART_AUTOBAUD_IRQ
+#if defined(BL_FEATURE_UART_AUTOBAUD_IRQ) && BL_FEATURE_UART_AUTOBAUD_IRQ
     // De-init autobaud detector.
     autobaud_deinit(instance);
 #endif
 
-#if BL_FEATURE_6PINS_PERIPHERAL
+#if defined(BL_FEATURE_6PINS_PERIPHERAL) && BL_FEATURE_6PINS_PERIPHERAL
     // When the active peripheral is not UART, we should only restore
     //   those pin which we used to poll for activity.
-    if (g_bootloaderContext.activePeripheral == NULL)
+    if (g_bootloaderContext.activePeripheral == (void *)0u)
     {
         self->pinmuxConfig(self->instance, kPinmuxType_RestoreForActivity);
     }
@@ -194,7 +194,7 @@ void lpuart_full_shutdown(const peripheral_descriptor_t *self)
         self->pinmuxConfig(self->instance, kPinmuxType_Default);
     }
 }
-#if BL_FEATURE_6PINS_PERIPHERAL
+#if defined(BL_FEATURE_6PINS_PERIPHERAL) && BL_FEATURE_6PINS_PERIPHERAL
 #if (defined(__CC_ARM))
 #pragma pop
 #endif
@@ -203,13 +203,13 @@ void lpuart_full_shutdown(const peripheral_descriptor_t *self)
 #endif
 #endif
 
-status_t lpuart_write(const peripheral_descriptor_t *self, const uint8_t *buffer, uint32_t byteCount)
+static status_t lpuart_write(const peripheral_descriptor_t *self, const uint8_t *buffer, uint32_t byteCount)
 {
     uint32_t instance;
-#if USE_ONLY_UART(0)
+#if USE_ONLY_UART(0u)
     instance = 0;
-#elif USE_ONLY_UART(1)
-    instance = 1;
+#elif USE_ONLY_UART(1u)
+    instance = 1u;
 #else
     instance = self->instance;
 #endif // USE_ONLY_UART(0)
@@ -218,7 +218,7 @@ status_t lpuart_write(const peripheral_descriptor_t *self, const uint8_t *buffer
 
     LPUART_WriteBlocking((LPUART_Type *)baseAddr, buffer, byteCount);
 
-    return kStatus_Success;
+    return (int32_t)kStatus_Success;
 }
 
 #if defined(BL_CONFIG_LPUART_0) && BL_CONFIG_LPUART_0
@@ -230,18 +230,28 @@ status_t lpuart_write(const peripheral_descriptor_t *self, const uint8_t *buffer
 #ifdef PKE18F15_SERIES
 void LPUART0_RxTx_IRQHandler(void)
 #endif
-#ifdef KW36Z4_SERIES
+#if defined(KW36Z4_SERIES) || defined (KW38A4_SERIES)
+void LPUART0_LPUART1_IRQHandler(void);
 void LPUART0_LPUART1_IRQHandler(void)
 #else
 void LPUART0_IRQHandler(void)
 #endif
 {
-    if (LPUART_GetStatusFlags(LPUART0) & kLPUART_RxDataRegFullFlag)
+    if (g_lpuartInitStatus[0])
     {
-        uint8_t byte;
-        byte = LPUART0->DATA;
-        s_lpuart_byte_receive_callback(byte);
+      if ((LPUART_GetStatusFlags(LPUART0) & (uint32_t)kLPUART_RxDataRegFullFlag) != 0u)
+      {
+          uint8_t byte;
+          byte = (uint8_t)LPUART0->DATA;
+          s_lpuart_byte_receive_callback(byte);
+      }
     }
+#if defined(BL_CONFIG_LIN) && BL_CONFIG_LIN
+    if (g_lpuartInitStatus[1])
+    {
+        DEMO_LIN_IRQHandler();
+    }
+#endif
 }
 #endif // #if defined (BL_CONFIG_LPUART_0) && BL_CONFIG_LPUART_0
 

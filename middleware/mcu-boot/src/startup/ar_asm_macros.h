@@ -82,7 +82,7 @@ public                \
   CFI R14 SameValue
   CFI EndCommon CFICommon0
 /* clang-format on */
-#elif defined(__CC_ARM) || defined(__ARMCC_VERSION)
+#elif defined(__CC_ARM)
 /*
  * ARM assembler
  */

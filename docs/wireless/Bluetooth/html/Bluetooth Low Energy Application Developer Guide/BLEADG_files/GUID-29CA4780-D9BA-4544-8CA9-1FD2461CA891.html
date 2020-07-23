@@ -49,11 +49,14 @@
             are handled by the <em class="ph i">OtaSupport</em> module from the Framework which contains support
             modules and drivers. The <em class="ph i">OtaSupport</em> module has support for both internal storage
             (a part of the internal flash memory is reserved for storing the upgrade image) and
-            external storage (a SPI flash memory chip). The demo applications use external storage
-            by default. The internal storage is viable only if there is enough space in the internal
-            flash for the upgrade image – the flash in this case should be at least twice the size
-            of the largest application. The <em class="ph i">OtaSupport</em> module also needs the <em class="ph i">Eeprom</em>
-            module from the Framework to work correctly.</p>
+            external storage (a SPI flash memory chip). 
+        </p>
+
+        <p class="p">The demo applications use external storage by default. The internal storage
+            is viable only if there is enough space in the internal flash for the upgrade image –
+            the flash in this case should be at least twice the size of the largest application. The
+                <em class="ph i">OtaSupport</em> module also needs the <em class="ph i">Eeprom</em> module from the Framework to
+            work correctly.</p>
 
         <p class="p">The OtaSupport module also contains the placement of the bootloader flags in a dedicated
             linker section (BOOT_FLAGS). These flags must be present in any image to correctly
@@ -62,9 +65,8 @@
         <p class="p">A bootloader is also provided as a separate application which is available
             in both source code and executable form. The OTAP Bootloader executable resides in the
                 <em class="ph i">\tools\wireless\binaries</em> folder for each board, and has the following format:
-                <em class="ph i">bootloader_otap_&lt;BOARD&gt;.bin.</em></p>
-
-        <p class="p">The details of the OTAP Bootloader are discussed in a separate section.</p>
+                <em class="ph i">bootloader_otap_&lt;BOARD&gt;.bin.</em>
+            </p>
 
         <p class="p">To use the <em class="ph i">OtaSupport</em> module and the OTAP Bootloader several
             configuration options must be set up in both the source files and the linker options of
@@ -75,8 +77,8 @@
             preprocessor definition must be given a value. </p>
 
         <p class="p">To use external storage set the <em class="ph i">gEepromType_d </em>value to the
-            appropriate type of EEPROM present on the board. The correct value for <span class="ph">FRDM-KW40</span> demo
-            boards is <em class="ph i">gEepromDevice_AT45DB021E_c</em> and the correct value for <span class="ph">FRDM-KW41 and FRDM-KW36</span> demo boards
+            appropriate type of EEPROM present on the board. The correct value for  demo
+            boards is <em class="ph i">gEepromDevice_AT45DB021E_c</em> and the correct value for  demo boards
             is <em class="ph i">gEepromDevice_AT45DB041E_c</em>.</p>
 
         <p class="p">The valid <em class="ph i">gEepromType_d </em> options can be found in the <em class="ph i">Eeprom.h</em>
@@ -115,7 +117,9 @@
             set to 1. The <em class="ph i">gUseInternalStorageLink_d</em> symbol must be set to 0 when OTAP
             external storage is used and to 1 when internal storage is used. To enable the OTAP
             Bootloader linking the <em class="ph i">gUseBootloaderLink_d</em> symbol must be set to 1 to offset the
-            application. An example linker configuration window for IAR is shown below.</p>
+            application. </p>
+
+        <p class="p">An example linker configuration window for IAR is shown below.</p>
 
         <div class="fig fignone" id="GUID-29CA4780-D9BA-4544-8CA9-1FD2461CA891__FIG_HMX_VNN_CY"><span class="figcap">Figure 1. Linker Config IAR EW IDE - OTAP Client External Storage and
                 Bootloader Configuration</span>
@@ -123,53 +127,16 @@
             <img class="image" id="GUID-29CA4780-D9BA-4544-8CA9-1FD2461CA891__IMAGE_VYJ_YNN_CY" src="GUID-D0C0A5BB-3D43-4D67-897A-A66729C1924E-high.png"/>
         </div>
 
-   <div class="note note"><span class="notetitle">Note:</span> The gEraseNVMLink_d=1 IAR linker flag will place some dummy
-            bytes into the NVM region to invalidate the data and force the application to erase the
-            entire NVM region. When generating an image for the OTA upgrade, this flag should be
-            removed. This will result in a smaller image size being transferred and lower power
-            consumption. If the NVM region must be erased after the upgrade process, the erase
-            sector bitmap should be used to mark the NVM sectors as erasable.</div>
-
-        <div class="p">For MCUX IDE the linker settings required for OTAP
-            applications can be set up from the “SDK Import Wizard” or from the “Project Properties
-            -&gt; MCU settings”. By default, the OTAP Client demo applications are configured to
-            reserve space for the Bootloader and use external image storage.<div class="fig fignone"><span class="figcap">Figure 2. SDK Import Wizard</span><img class="image" src="GUID-B6683B59-2915-4FE9-8664-D36B49589E9C-high.png"/></div>
-</div>
-
-        <div class="p">To enable the internal image storage, one must
-            split the PROGRAM_FLASH at a sector boundary and rename the new memory region to
-            “INT_STORAGE”, then change the gEepromType_d define to gEepromDevice_InternalFlash_c in
-            the app_preinclude.h file.<div class="fig fignone"><span class="figcap">Figure 3. SDK Import Wizard - Split</span>
-                
-                <img class="image" src="GUID-82543F3D-F1A5-4037-BB60-FFAC88D79AB1-high.png"/>
-            </div>
-
-            <div class="fig fignone"><span class="figcap">Figure 4. SDK Import Wizard - Memory configuration</span>
-                
-                <img class="image" src="GUID-9035981B-4EB8-4222-912A-1CD2320E0E35-high.png"/>
-            </div>
-
-            <div class="note note"><span class="notetitle">Note:</span> When internal storage is used for the OTA upgrade process, the new
-                image should be smaller than the size of the internal storage (~243KB).</div>
-<div class="note note"><span class="notetitle">Note:</span> By default, the MCUX linker file is configured to fill the NVM region
-                with dummy bytes to invalidate the data and force the application to erase the
-                entire NVM region. When generating an image for the OTA upgrade, this fill should be
-                removed (see below). This will result in a smaller image size being transferred and
-                lower power consumption. If the NVM region must be erased after the upgrade process,
-                the erase sector bitmap should be used to mark the NVM sectors as erasable.<div class="fig fignone"><span class="figcap">Figure 5. Remove NVM region fill on MCUX</span>
-                    
-                    <img class="image" src="GUID-E6B2F0FF-AF7F-498E-BAEF-B20682E44C88-high.png"/>
-                </div>
-</div>
-</div>
-
+   
+        
+        
    
         
         <p class="p">The same linker settings for OTAP applications can be configured for Keil MDK in the
             Options for Target-&gt;Linker-&gt;Misc controls text box. Edit the text box to add more linker
             symbols as shown in the figure.</p>
 
-        <div class="fig fignone" id="GUID-29CA4780-D9BA-4544-8CA9-1FD2461CA891__FIG_CPG_FKN_CCB"><span class="figcap">Figure 6. OTAP linker settings - Keil MDK</span>
+        <div class="fig fignone" id="GUID-29CA4780-D9BA-4544-8CA9-1FD2461CA891__FIG_CPG_FKN_CCB"><span class="figcap">Figure 2. OTAP linker settings - Keil MDK</span>
             
             <img class="image" id="GUID-29CA4780-D9BA-4544-8CA9-1FD2461CA891__IMAGE_LSG_KKN_CCB" src="GUID-13D67516-E1B8-423F-926A-7E15F04D1D28-high.png"/>
         </div>
@@ -199,7 +166,7 @@
             may not be explicitly present in the demo applications, this diagram is meant to
             emphasize the steps of the image download process.</p>
 
-        <div class="fig fignone" id="GUID-29CA4780-D9BA-4544-8CA9-1FD2461CA891__FIG_GKR_D4N_CY"><span class="figcap">Figure 7. OTAP Client Example State Diagram</span>
+        <div class="fig fignone" id="GUID-29CA4780-D9BA-4544-8CA9-1FD2461CA891__FIG_GKR_D4N_CY"><span class="figcap">Figure 3. OTAP Client Example State Diagram</span>
             
             <img class="image" id="GUID-29CA4780-D9BA-4544-8CA9-1FD2461CA891__IMAGE_J3M_G4N_CY" src="GUID-9ABE8F68-9659-411E-92D8-28688FC2A531-high.png"/>
         </div>

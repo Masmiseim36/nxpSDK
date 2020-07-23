@@ -4,7 +4,7 @@
  ********************************************************************************** */
 /*! *********************************************************************************
 * Copyright (c) 2015, Freescale Semiconductor, Inc.
-* Copyright 2016-2018 NXP
+* Copyright 2016-2020 NXP
 * All rights reserved.
 *
 * \file
@@ -142,6 +142,9 @@ static uint8_t gAppSerMgrIf;
 static uint16_t mAppUartBufferSize = mAppUartBufferSize_c;
 static volatile bool_t mAppUartNewLine = FALSE;
 static volatile bool_t mAppDapaPending = FALSE;
+static bool_t mAppRetryScan = FALSE;
+
+bool_t gAppCodedPhyInUse = FALSE;
 
 /************************************************************************************
  *************************************************************************************
@@ -192,6 +195,7 @@ static void BleApp_StoreServiceHandles
     gattService_t   *pService
 );
 static bool_t BleApp_CheckScanEvent(gapScannedDevice_t *pData);
+static bool_t BleApp_CheckExtScanEvent(gapExtScannedDevice_t *pScannedDevice);
 
 /* Timer Callbacks */
 static void ScanningTimerCallback(void *pParam);
@@ -221,16 +225,16 @@ void BleApp_Init(void)
 }
 
 /*! *********************************************************************************
-* \brief    Initializes application specific functionality 
+* \brief    Initializes application specific functionality
 *
 ********************************************************************************** */
 void BleApp_InitSerialInterface(uint8_t appSerMgrIf)
 {
-    gAppSerMgrIf = appSerMgrIf;  
+    gAppSerMgrIf = appSerMgrIf;
 
     /* Install Controller Events Callback handler */
     (void)Serial_SetRxCallBack(gAppSerMgrIf, Uart_RxCallBack, NULL);
-    
+
     /* allocate timer for uart */
     mUartStreamFlushTimerId = TMR_AllocateTimer();
 }
@@ -247,13 +251,13 @@ void BleApp_Start(gapRole_t gapRole)
         case gGapCentral_c:
         {
             mGapRole = gGapCentral_c;
-            (void)Serial_Print(gAppSerMgrIf, "\n\rBLE: Scanning...\n\r", gAllowToBlock_d);
             mAppUartNewLine = TRUE;
 #if gUseControllerNotifications_c
             Gap_ControllerEnhancedNotification(gNotifScanEventOver_c | gNotifScanAdvPktRx_c |
                                                gNotifScanRspRx_c | gNotifScanReqTx_c, 0);
 #endif
             gPairingParameters.localIoCapabilities = gIoKeyboardDisplay_c;
+            mAppRetryScan = FALSE;
             (void)App_StartScanning(&gScanParams, BleApp_ScanningCallback, gGapDuplicateFilteringEnable_c, gGapScanContinuously_d, gGapScanPeriodicDisabled_d);
             break;
         }
@@ -261,7 +265,6 @@ void BleApp_Start(gapRole_t gapRole)
         case gGapPeripheral_c:
         {
              mGapRole = gGapPeripheral_c;
-            (void)Serial_Print(gAppSerMgrIf, "\n\rBLE: Advertising...\n\r", gAllowToBlock_d);
             mAppUartNewLine = TRUE;
 #if gUseControllerNotifications_c
             Gap_ControllerEnhancedNotification(gNotifAdvEventOver_c | gNotifAdvTx_c |
@@ -299,6 +302,7 @@ void BleApp_GenericCallback(gapGenericEvent_t *pGenericEvent)
         break;
 
         case gAdvertisingParametersSetupComplete_c:
+        case gExtAdvertisingParametersSetupComplete_c:
         {
             (void)Gap_SetAdvertisingData(&gAppAdvertisingData, &gAppScanRspData);
         }
@@ -307,6 +311,27 @@ void BleApp_GenericCallback(gapGenericEvent_t *pGenericEvent)
         case gAdvertisingDataSetupComplete_c:
         {
             (void)App_StartAdvertising(BleApp_AdvertisingCallback, BleApp_ConnectionCallback);
+        }
+        break;
+
+        case gExtAdvertisingDataSetupComplete_c:
+        {
+            if (gAppCodedPhyInUse)
+            {
+#if gAppUseExtendedAdvertising
+                (void)App_StartExtAdvertising(BleApp_AdvertisingCallback,
+                            BleApp_ConnectionCallback,
+                            gExtAdvParams.handle,
+                            gBleExtAdvNoDuration_c,
+                            gBleExtAdvNoMaxEvents_c);
+#else
+                (void)App_StartAdvertising(BleApp_AdvertisingCallback, BleApp_ConnectionCallback);
+#endif
+            }
+            else
+            {
+                (void)App_StartAdvertising(BleApp_AdvertisingCallback, BleApp_ConnectionCallback);
+            }
         }
         break;
 
@@ -481,7 +506,18 @@ static void BleApp_Config(void)
 static void BleApp_Advertise(void)
 {
     /* Set advertising parameters*/
-    (void)Gap_SetAdvertisingParameters(&gAdvParams);
+    if (gAppCodedPhyInUse)
+    {
+#if gAppUseExtendedAdvertising
+        (void)Gap_SetExtAdvertisingParameters(&gExtAdvParams);
+#else
+        (void)Gap_SetAdvertisingParameters(&gAdvParams);
+#endif
+    }
+    else
+    {
+        (void)Gap_SetAdvertisingParameters(&gAdvParams);
+    }
 }
 
 /*! *********************************************************************************
@@ -511,6 +547,28 @@ static void BleApp_ScanningCallback(gapScanningEvent_t *pScanningEvent)
         }
         break;
 
+        case gExtDeviceScanned_c:
+        {
+            if (BleApp_CheckExtScanEvent(&pScanningEvent->eventData.extScannedDevice))
+            {
+                gConnReqParams.peerAddressType = pScanningEvent->eventData.extScannedDevice.addressType;
+                FLib_MemCpy(gConnReqParams.peerAddress,
+                            pScanningEvent->eventData.extScannedDevice.aAddress,
+                            sizeof(bleDeviceAddress_t));
+
+                (void)Gap_StopScanning();
+#if gAppUsePrivacy_d
+                gConnReqParams.usePeerIdentityAddress = pScanningEvent->eventData.extScannedDevice.advertisingAddressResolved;
+#endif
+                if (gAppCodedPhyInUse)
+                {
+                    gConnReqParams.initiatingPHYs = gLePhyCodedFlag_c;
+                }
+                (void)App_Connect(&gConnReqParams, BleApp_ConnectionCallback);
+            }
+        }
+        break;
+
         case gScanStateChanged_c:
         {
             mScanningOn = !mScanningOn;
@@ -524,12 +582,22 @@ static void BleApp_ScanningCallback(gapScanningEvent_t *pScanningEvent)
                                              TmrSeconds(gScanningTime_c),
                                              ScanningTimerCallback, NULL);
 
+                LED_StopFlashingAllLeds();
                 Led1Flashing();
+                if (gAppCodedPhyInUse)
+                {
+                    (void)Serial_Print(gAppSerMgrIf, "\n\rBLE: Scanning Long Range ...\n\r", gAllowToBlock_d);
+                }
+                else
+                {
+                    (void)Serial_Print(gAppSerMgrIf, "\n\rBLE: Scanning ...\n\r", gAllowToBlock_d);
+                }
             }
             /* Node is not scanning */
             else
             {
                 (void)TMR_StopTimer(mAppTimerId);
+                (void)Serial_Print(gAppSerMgrIf, "\n\rBLE: Stopped Scanning ...\n\r", gAllowToBlock_d);
 
                 Led1Flashing();
                 Led2Flashing();
@@ -562,6 +630,7 @@ static void BleApp_AdvertisingCallback(gapAdvertisingEvent_t *pAdvertisingEvent)
 {
     switch (pAdvertisingEvent->eventType)
     {
+        case gExtAdvertisingStateChanged_c:
         case gAdvertisingStateChanged_c:
         {
             mAdvState.advOn = !mAdvState.advOn;
@@ -573,6 +642,15 @@ static void BleApp_AdvertisingCallback(gapAdvertisingEvent_t *pAdvertisingEvent)
                 Led2Flashing();
                 Led3Flashing();
                 Led4Flashing();
+            }
+
+            if (gAppCodedPhyInUse)
+            {
+                (void)Serial_Print(gAppSerMgrIf, "\n\rBLE: Advertising Long Range...\n\r", gAllowToBlock_d);
+            }
+            else
+            {
+                (void)Serial_Print(gAppSerMgrIf, "\n\rBLE: Advertising...\n\r", gAllowToBlock_d);
             }
         }
         break;
@@ -632,7 +710,7 @@ static void BleApp_ConnectionCallback(deviceId_t peerDeviceId, gapConnectionEven
 
             if (mGapRole == gGapCentral_c)
             {
-                (void)Gap_CheckIfBonded(peerDeviceId, &maPeerInformation[peerDeviceId].isBonded);
+                (void)Gap_CheckIfBonded(peerDeviceId, &maPeerInformation[peerDeviceId].isBonded, NULL);
 
                 if ((maPeerInformation[peerDeviceId].isBonded) &&
                     (gBleSuccess_c == Gap_LoadCustomPeerInformation(peerDeviceId,
@@ -937,6 +1015,39 @@ static bool_t BleApp_CheckScanEvent(gapScannedDevice_t *pData)
 }
 
 /*! *********************************************************************************
+ * \brief        Checks Scan data for a device to connect.
+ *
+ * \param[in]    pScannedDevice    Pointer to gapExtScannedDevice_t.
+ ********************************************************************************** */
+static bool_t BleApp_CheckExtScanEvent(gapExtScannedDevice_t *pScannedDevice)
+{
+    uint8_t index = 0;
+    bool_t foundMatch = FALSE;
+
+    while (index < pScannedDevice->dataLength)
+    {
+        gapAdStructure_t adElement;
+
+        adElement.length = pScannedDevice->pData[index];
+        adElement.adType = (gapAdType_t) pScannedDevice->pData[index + 1U];
+        adElement.aData = &pScannedDevice->pData[index + 2U];
+
+        /* Search for Wireless UART Service */
+        if ((adElement.adType == gAdIncomplete128bitServiceList_c)
+            || (adElement.adType == gAdComplete128bitServiceList_c))
+        {
+            foundMatch = MatchDataInAdvElementList(&adElement,
+                                                   &uuid_service_wireless_uart, 16);
+        }
+
+        /* Move on to the next AD element type */
+        index += adElement.length + sizeof(uint8_t);
+    }
+
+    return foundMatch;
+}
+
+/*! *********************************************************************************
  * \brief        Stores handles used by the application.
  *
  * \param[in]    pService    Pointer to gattService_t.
@@ -1002,7 +1113,7 @@ void BleApp_StateMachineHandler(deviceId_t peerDeviceId, appEvent_t event)
                 {
                     /* Moving to Exchange MTU State */
                     maPeerInformation[peerDeviceId].appState = mAppExchangeMtu_c;
-                    (void)GattClient_ExchangeMtu(peerDeviceId);
+                    (void)GattClient_ExchangeMtu(peerDeviceId, gAttMaxMtu_c);
                 }
                 else
                 {
@@ -1117,6 +1228,25 @@ static void ScanningTimerCallback(void *pParam)
     /* Stop scanning */
     (void)Gap_StopScanning();
     (void)Serial_Print(gAppSerMgrIf, "\n\rBLE: Scan timeout.\n\r", gAllowToBlock_d);
+
+    if (!mAppRetryScan)
+    {
+        if (gScanParams.scanningPHYs == gLePhy1MFlag_c)
+        {
+            gScanParams.scanningPHYs = gLePhyCodedFlag_c;
+            gAppCodedPhyInUse = TRUE;
+            (void)Serial_Print(gAppSerMgrIf, "\n\rBLE: Retry scanning on coded phy.\n\r", gAllowToBlock_d);
+        }
+        else
+        {
+          gScanParams.scanningPHYs = gLePhy1MFlag_c ;
+          gAppCodedPhyInUse = FALSE;
+          (void)Serial_Print(gAppSerMgrIf, "\n\rBLE: Retry scanning on 1M phy.\n\r", gAllowToBlock_d);
+        }
+
+        BleApp_Start(gGapCentral_c);
+        mAppRetryScan = TRUE;
+    }
 }
 
 static void BleApp_FlushUartStream(void *pParam)
@@ -1195,7 +1325,7 @@ static void BleApp_ReceivedUartStream(deviceId_t peerDeviceId, uint8_t *pStream,
 
             if (gGapCentral_c != maPeerInformation[peerDeviceId].gapRole)
             {
-                additionalInfoBuff[6] = 'S';
+                additionalInfoBuff[10] = 'S';
             }
 
             FLib_MemCpy(pBuffer, additionalInfoBuff, sizeof(additionalInfoBuff));

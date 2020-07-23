@@ -41,11 +41,11 @@
             request and optionally a FSCI event that includes the out parameters of a synchronous
             function. </p>
 
-        <p class="p">There are also functions with out parameters that are not executed synchronously and they
-            will be provided asynchronously through a later FSCI event. It is the responsibility of
-            the FSCI Host layer to keep the application allocated memory between the time of the
-            request and the completion of the event with the actual values of the out parameters and
-            populate them accordingly.</p>
+        <p class="p">There are also functions without parameters that are not executed
+            synchronously and they will be provided asynchronously through a later FSCI event. It is
+            the responsibility of the FSCI Host layer to keep the application allocated memory
+            between the time of the request and the completion of the event with the actual values
+            of the out parameters and populate them accordingly.</p>
 
         <p class="p">The Bluetooth Low Energy API execution inside the FSCI Host layer will first wait for gaining access to
             the serial interface through a mutex. Once the access gained, the FSCI request is sent

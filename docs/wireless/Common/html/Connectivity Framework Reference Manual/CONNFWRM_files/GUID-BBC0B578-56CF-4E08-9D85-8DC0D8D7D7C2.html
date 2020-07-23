@@ -67,12 +67,12 @@
             other (higher-priority) tasks finish all their work. The application can also choose to
             stay awake by using the <em class="ph i">PWR_DisallowDeviceToSleep()</em> function.</p>
 
-        <div class="note note"><span class="notetitle">Note:</span> With the exception of <em class="ph i">PWR_DisallowDeviceToSleep()</em> and
-                <em class="ph i">PWR_AllowDeviceToSleep()</em>, do not call the low-power functions directly in the
+        <div class="note note"><span class="notetitle">Note:</span> With the exception of PWR_DisallowDeviceToSleep() and
+            PWR_AllowDeviceToSleep(), do not call the low-power functions directly in the
             application. The idle task already contains the proper code for entering deep or light
             sleep as appropriate in a way that coordinates with the entire system.</div>
 
-        <div class="example" id="GUID-BBC0B578-56CF-4E08-9D85-8DC0D8D7D7C2__GUID-3A7F73EA-1340-46A1-83ED-7D6F35156FF5"><h2 class="title sectiontitle"> Entering low-power state from a low-priority task</h2>
+        <div class="section" id="GUID-BBC0B578-56CF-4E08-9D85-8DC0D8D7D7C2__GUID-3A7F73EA-1340-46A1-83ED-7D6F35156FF5"><h2 class="title sectiontitle"> Entering low-power state from a low-priority task</h2>
             
             <pre class="pre codeblock">...
 if( PWR_CheckIfDeviceCanGoToSleep() )
@@ -87,7 +87,7 @@ PWR_EnterLowPower();
 
 <div class="related-links">
 <div class="familylinks">
-<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-8D22D736-AE9E-430F-9759-CB919F986990.html">Low-power library</a></div>
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-8D22D736-AE9E-430F-9759-CB919F986990.html">Low-power Library</a></div>
 </div>
 </div>
 

@@ -1,30 +1,43 @@
-/* ----------------------------------------------------------------------
- * Project:      CMSIS DSP Library
- * Title:        arm_cfft_radix4_f32.c
- * Description:  Radix-4 Decimation in Frequency CFFT & CIFFT Floating point processing function
- *
- * $Date:        27. January 2017
- * $Revision:    V.1.5.1
- *
- * Target Processor: Cortex-M cores
- * -------------------------------------------------------------------- */
-/*
- * Copyright (C) 2010-2017 ARM Limited or its affiliates. All rights reserved.
- *
- * SPDX-License-Identifier: Apache-2.0
- *
- * Licensed under the Apache License, Version 2.0 (the License); you may
- * not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an AS IS BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+/* ----------------------------------------------------------------------    
+* Copyright (C) 2010-2014 ARM Limited. All rights reserved.    
+*    
+* $Date:        19. March 2015 
+* $Revision: 	V.1.4.5  
+*    
+* Project: 	    CMSIS DSP Library    
+* Title:	    arm_cfft_radix4_f32.c    
+*    
+* Description:	Radix-4 Decimation in Frequency CFFT & CIFFT Floating point processing function    
+*    
+*    
+* Target Processor: Cortex-M4/Cortex-M3/Cortex-M0
+*  
+* Redistribution and use in source and binary forms, with or without 
+* modification, are permitted provided that the following conditions
+* are met:
+*   - Redistributions of source code must retain the above copyright
+*     notice, this list of conditions and the following disclaimer.
+*   - Redistributions in binary form must reproduce the above copyright
+*     notice, this list of conditions and the following disclaimer in
+*     the documentation and/or other materials provided with the 
+*     distribution.
+*   - Neither the name of ARM LIMITED nor the names of its contributors
+*     may be used to endorse or promote products derived from this
+*     software without specific prior written permission.
+*
+* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+* "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+* LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+* FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE 
+* COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+* INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+* BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+* LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+* CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+* LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+* ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+* POSSIBILITY OF SUCH DAMAGE.    
+* -------------------------------------------------------------------- */
 
 #include "arm_math.h"
 
@@ -34,77 +47,21 @@ uint16_t fftSize,
 uint16_t bitRevFactor,
 uint16_t * pBitRevTab);
 
-void arm_radix4_butterfly_f32(
-float32_t * pSrc,
-uint16_t fftLen,
-float32_t * pCoef,
-uint16_t twidCoefModifier);
-
-void arm_radix4_butterfly_inverse_f32(
-float32_t * pSrc,
-uint16_t fftLen,
-float32_t * pCoef,
-uint16_t twidCoefModifier,
-float32_t onebyfftLen);
-
-
-/**
-* @ingroup groupTransforms
+/**    
+* @ingroup groupTransforms    
 */
 
-/**
-* @addtogroup ComplexFFT
-* @{
-*/
+/* ----------------------------------------------------------------------    
+** Internal helper function used by the FFTs    
+** ------------------------------------------------------------------- */
 
-/**
-* @details
-* @brief Processing function for the floating-point Radix-4 CFFT/CIFFT.
-* @deprecated Do not use this function.  It has been superseded by \ref arm_cfft_f32 and will be removed
-* in the future.
-* @param[in]      *S    points to an instance of the floating-point Radix-4 CFFT/CIFFT structure.
-* @param[in, out] *pSrc points to the complex data buffer of size <code>2*fftLen</code>. Processing occurs in-place.
-* @return none.
-*/
-
-void arm_cfft_radix4_f32(
-  const arm_cfft_radix4_instance_f32 * S,
-  float32_t * pSrc)
-{
-   if (S->ifftFlag == 1U)
-   {
-      /*  Complex IFFT radix-4  */
-      arm_radix4_butterfly_inverse_f32(pSrc, S->fftLen, S->pTwiddle, S->twidCoefModifier, S->onebyfftLen);
-   }
-   else
-   {
-      /*  Complex FFT radix-4  */
-      arm_radix4_butterfly_f32(pSrc, S->fftLen, S->pTwiddle, S->twidCoefModifier);
-   }
-
-   if (S->bitReverseFlag == 1U)
-   {
-      /*  Bit Reversal */
-      arm_bitreversal_f32(pSrc, S->fftLen, S->bitRevFactor, S->pBitRevTable);
-   }
-
-}
-
-/**
-* @} end of ComplexFFT group
-*/
-
-/* ----------------------------------------------------------------------
- * Internal helper function used by the FFTs
- * ---------------------------------------------------------------------- */
-
-/*
-* @brief  Core function for the floating-point CFFT butterfly process.
-* @param[in, out] *pSrc            points to the in-place buffer of floating-point data type.
-* @param[in]      fftLen           length of the FFT.
-* @param[in]      *pCoef           points to the twiddle coefficient buffer.
-* @param[in]      twidCoefModifier twiddle coefficient modifier that supports different size FFTs with the same twiddle factor table.
-* @return none.
+/*    
+* @brief  Core function for the floating-point CFFT butterfly process.   
+* @param[in, out] *pSrc            points to the in-place buffer of floating-point data type.   
+* @param[in]      fftLen           length of the FFT.   
+* @param[in]      *pCoef           points to the twiddle coefficient buffer.   
+* @param[in]      twidCoefModifier twiddle coefficient modifier that supports different size FFTs with the same twiddle factor table.   
+* @return none.   
 */
 
 void arm_radix4_butterfly_f32(
@@ -119,7 +76,7 @@ uint16_t twidCoefModifier)
    uint32_t i0, i1, i2, i3;
    uint32_t n1, n2, j, k;
 
-#if defined (ARM_MATH_DSP)
+#ifndef ARM_MATH_CM0_FAMILY_FAMILY
 
    /* Run the below code for Cortex-M4 and Cortex-M3 */
 
@@ -137,9 +94,9 @@ uint16_t twidCoefModifier)
    n1 = n2;
 
    /* n2 = fftLen/4 */
-   n2 >>= 2U;
-   i0 = 0U;
-   ia1 = 0U;
+   n2 >>= 2u;
+   i0 = 0u;
+   ia1 = 0u;
 
    j = n2;
 
@@ -152,17 +109,17 @@ uint16_t twidCoefModifier)
       i2 = i1 + n2;
       i3 = i2 + n2;
 
-      xaIn = pSrc[(2U * i0)];
-      yaIn = pSrc[(2U * i0) + 1U];
+      xaIn = pSrc[(2u * i0)];
+      yaIn = pSrc[(2u * i0) + 1u];
 
-      xbIn = pSrc[(2U * i1)];
-      ybIn = pSrc[(2U * i1) + 1U];
+      xbIn = pSrc[(2u * i1)];
+      ybIn = pSrc[(2u * i1) + 1u];
 
-      xcIn = pSrc[(2U * i2)];
-      ycIn = pSrc[(2U * i2) + 1U];
+      xcIn = pSrc[(2u * i2)];
+      ycIn = pSrc[(2u * i2) + 1u];
 
-      xdIn = pSrc[(2U * i3)];
-      ydIn = pSrc[(2U * i3) + 1U];
+      xdIn = pSrc[(2u * i3)];
+      ydIn = pSrc[(2u * i3) + 1u];
 
       /* xa + xc */
       Xaplusc = xaIn + xcIn;
@@ -175,8 +132,8 @@ uint16_t twidCoefModifier)
 
       /*  index calculation for the coefficients */
       ia2 = ia1 + ia1;
-      co2 = pCoef[ia2 * 2U];
-      si2 = pCoef[(ia2 * 2U) + 1U];
+      co2 = pCoef[ia2 * 2u];
+      si2 = pCoef[(ia2 * 2u) + 1u];
 
       /* xa - xc */
       Xaminusc = xaIn - xcIn;
@@ -188,9 +145,9 @@ uint16_t twidCoefModifier)
       Ybminusd = ybIn - ydIn;
 
       /* xa' = xa + xb + xc + xd */
-      pSrc[(2U * i0)] = Xaplusc + Xbplusd;
+      pSrc[(2u * i0)] = Xaplusc + Xbplusd;
       /* ya' = ya + yb + yc + yd */
-      pSrc[(2U * i0) + 1U] = Yaplusc + Ybplusd;
+      pSrc[(2u * i0) + 1u] = Yaplusc + Ybplusd;
 
       /* (xa - xc) + (yb - yd) */
       Xb12C_out = (Xaminusc + Ybminusd);
@@ -205,13 +162,13 @@ uint16_t twidCoefModifier)
       /* (ya - yc) + (xb - xd) */
       Yd12C_out = (Xbminusd + Yaminusc);
 
-      co1 = pCoef[ia1 * 2U];
-      si1 = pCoef[(ia1 * 2U) + 1U];
+      co1 = pCoef[ia1 * 2u];
+      si1 = pCoef[(ia1 * 2u) + 1u];
 
       /*  index calculation for the coefficients */
       ia3 = ia2 + ia1;
-      co3 = pCoef[ia3 * 2U];
-      si3 = pCoef[(ia3 * 2U) + 1U];
+      co3 = pCoef[ia3 * 2u];
+      si3 = pCoef[(ia3 * 2u) + 1u];
 
       Xb12_out = Xb12C_out * co1;
       Yb12_out = Yb12C_out * co1;
@@ -219,7 +176,7 @@ uint16_t twidCoefModifier)
       Yc12_out = Yc12C_out * co2;
       Xd12_out = Xd12C_out * co3;
       Yd12_out = Yd12C_out * co3;
-
+         
       /* xb' = (xa+yb-xc-yd)co1 - (ya-xb-yc+xd)(si1) */
       //Xb12_out -= Yb12C_out * si1;
       p0 = Yb12C_out * si1;
@@ -238,7 +195,7 @@ uint16_t twidCoefModifier)
       /* yd' = (ya+xb-yc-xd)co3 + (xa-yb-xc+yd)(si3) */
       //Yd12_out += Xd12C_out * si3;
       p5 = Xd12C_out * si3;
-
+      
       Xb12_out += p0;
       Yb12_out -= p1;
       Xc12_out += p2;
@@ -247,22 +204,22 @@ uint16_t twidCoefModifier)
       Yd12_out -= p5;
 
       /* xc' = (xa-xb+xc-xd)co2 + (ya-yb+yc-yd)(si2) */
-      pSrc[2U * i1] = Xc12_out;
+      pSrc[2u * i1] = Xc12_out;
 
       /* yc' = (ya-yb+yc-yd)co2 - (xa-xb+xc-xd)(si2) */
-      pSrc[(2U * i1) + 1U] = Yc12_out;
+      pSrc[(2u * i1) + 1u] = Yc12_out;
 
       /* xb' = (xa+yb-xc-yd)co1 + (ya-xb-yc+xd)(si1) */
-      pSrc[2U * i2] = Xb12_out;
+      pSrc[2u * i2] = Xb12_out;
 
       /* yb' = (ya-xb-yc+xd)co1 - (xa+yb-xc-yd)(si1) */
-      pSrc[(2U * i2) + 1U] = Yb12_out;
+      pSrc[(2u * i2) + 1u] = Yb12_out;
 
       /* xd' = (xa-yb-xc+yd)co3 + (ya+xb-yc-xd)(si3) */
-      pSrc[2U * i3] = Xd12_out;
+      pSrc[2u * i3] = Xd12_out;
 
       /* yd' = (ya+xb-yc-xd)co3 - (xa-yb-xc+yd)(si3) */
-      pSrc[(2U * i3) + 1U] = Yd12_out;
+      pSrc[(2u * i3) + 1u] = Yd12_out;
 
       /*  Twiddle coefficients index modifier */
       ia1 += twidCoefModifier;
@@ -271,17 +228,17 @@ uint16_t twidCoefModifier)
       i0++;
 
    }
-   while (--j);
+   while(--j);
 
-   twidCoefModifier <<= 2U;
+   twidCoefModifier <<= 2u;
 
    /*  Calculation of second stage to excluding last stage */
-   for (k = fftLen >> 2U; k > 4U; k >>= 2U)
+   for (k = fftLen >> 2u; k > 4u; k >>= 2u)
    {
       /*  Initializations for the first stage */
       n1 = n2;
-      n2 >>= 2U;
-      ia1 = 0U;
+      n2 >>= 2u;
+      ia1 = 0u;
 
       /*  Calculation of first stage */
       j = 0;
@@ -290,16 +247,16 @@ uint16_t twidCoefModifier)
          /*  index calculation for the coefficients */
          ia2 = ia1 + ia1;
          ia3 = ia2 + ia1;
-         co1 = pCoef[ia1 * 2U];
-         si1 = pCoef[(ia1 * 2U) + 1U];
-         co2 = pCoef[ia2 * 2U];
-         si2 = pCoef[(ia2 * 2U) + 1U];
-         co3 = pCoef[ia3 * 2U];
-         si3 = pCoef[(ia3 * 2U) + 1U];
+         co1 = pCoef[ia1 * 2u];
+         si1 = pCoef[(ia1 * 2u) + 1u];
+         co2 = pCoef[ia2 * 2u];
+         si2 = pCoef[(ia2 * 2u) + 1u];
+         co3 = pCoef[ia3 * 2u];
+         si3 = pCoef[(ia3 * 2u) + 1u];
 
          /*  Twiddle coefficients index modifier */
          ia1 += twidCoefModifier;
-
+      
          i0 = j;
          do
          {
@@ -309,17 +266,17 @@ uint16_t twidCoefModifier)
             i2 = i1 + n2;
             i3 = i2 + n2;
 
-            xaIn = pSrc[(2U * i0)];
-            yaIn = pSrc[(2U * i0) + 1U];
+            xaIn = pSrc[(2u * i0)];
+            yaIn = pSrc[(2u * i0) + 1u];
 
-            xbIn = pSrc[(2U * i1)];
-            ybIn = pSrc[(2U * i1) + 1U];
+            xbIn = pSrc[(2u * i1)];
+            ybIn = pSrc[(2u * i1) + 1u];
 
-            xcIn = pSrc[(2U * i2)];
-            ycIn = pSrc[(2U * i2) + 1U];
+            xcIn = pSrc[(2u * i2)];
+            ycIn = pSrc[(2u * i2) + 1u];
 
-            xdIn = pSrc[(2U * i3)];
-            ydIn = pSrc[(2U * i3) + 1U];
+            xdIn = pSrc[(2u * i3)];
+            ydIn = pSrc[(2u * i3) + 1u];
 
             /* xa - xc */
             Xaminusc = xaIn - xcIn;
@@ -352,8 +309,8 @@ uint16_t twidCoefModifier)
             /* (ya - yc) +  (xb - xd) */
             Yd12C_out = (Xbminusd + Yaminusc);
 
-            pSrc[(2U * i0)] = Xaplusc + Xbplusd;
-            pSrc[(2U * i0) + 1U] = Yaplusc + Ybplusd;
+            pSrc[(2u * i0)] = Xaplusc + Xbplusd;
+            pSrc[(2u * i0) + 1u] = Yaplusc + Ybplusd;
 
             Xb12_out = Xb12C_out * co1;
             Yb12_out = Yb12C_out * co1;
@@ -361,7 +318,7 @@ uint16_t twidCoefModifier)
             Yc12_out = Yc12C_out * co2;
             Xd12_out = Xd12C_out * co3;
             Yd12_out = Yd12C_out * co3;
-
+         
             /* xb' = (xa+yb-xc-yd)co1 - (ya-xb-yc+xd)(si1) */
             //Xb12_out -= Yb12C_out * si1;
             p0 = Yb12C_out * si1;
@@ -380,7 +337,7 @@ uint16_t twidCoefModifier)
             /* yd' = (ya+xb-yc-xd)co3 + (xa-yb-xc+yd)(si3) */
             //Yd12_out += Xd12C_out * si3;
             p5 = Xd12C_out * si3;
-
+            
             Xb12_out += p0;
             Yb12_out -= p1;
             Xc12_out += p2;
@@ -389,28 +346,28 @@ uint16_t twidCoefModifier)
             Yd12_out -= p5;
 
             /* xc' = (xa-xb+xc-xd)co2 + (ya-yb+yc-yd)(si2) */
-            pSrc[2U * i1] = Xc12_out;
+            pSrc[2u * i1] = Xc12_out;
 
             /* yc' = (ya-yb+yc-yd)co2 - (xa-xb+xc-xd)(si2) */
-            pSrc[(2U * i1) + 1U] = Yc12_out;
+            pSrc[(2u * i1) + 1u] = Yc12_out;
 
             /* xb' = (xa+yb-xc-yd)co1 + (ya-xb-yc+xd)(si1) */
-            pSrc[2U * i2] = Xb12_out;
+            pSrc[2u * i2] = Xb12_out;
 
             /* yb' = (ya-xb-yc+xd)co1 - (xa+yb-xc-yd)(si1) */
-            pSrc[(2U * i2) + 1U] = Yb12_out;
+            pSrc[(2u * i2) + 1u] = Yb12_out;
 
             /* xd' = (xa-yb-xc+yd)co3 + (ya+xb-yc-xd)(si3) */
-            pSrc[2U * i3] = Xd12_out;
+            pSrc[2u * i3] = Xd12_out;
 
             /* yd' = (ya+xb-yc-xd)co3 - (xa-yb-xc+yd)(si3) */
-            pSrc[(2U * i3) + 1U] = Yd12_out;
+            pSrc[(2u * i3) + 1u] = Yd12_out;
 
             i0 += n1;
-         } while (i0 < fftLen);
+         } while(i0 < fftLen);
          j++;
-      } while (j <= (n2 - 1U));
-      twidCoefModifier <<= 2U;
+      } while(j <= (n2 - 1u));
+      twidCoefModifier <<= 2u;
    }
 
    j = fftLen >> 2;
@@ -468,7 +425,7 @@ uint16_t twidCoefModifier)
       a6 = (Xaminusc - Ybminusd);
       /* yd' = (ya+xb-yc-xd) */
       a7 = (Xbminusd + Yaminusc);
-
+   
       ptr1[0] = a0;
       ptr1[1] = a1;
       ptr1[2] = a2;
@@ -479,8 +436,8 @@ uint16_t twidCoefModifier)
       ptr1[7] = a7;
 
       /* increment pointer by 8 */
-      ptr1 += 8U;
-   } while (--j);
+      ptr1 += 8u;
+   } while(--j);
 
 #else
 
@@ -491,12 +448,12 @@ uint16_t twidCoefModifier)
    /*  Initializations for the fft calculation */
    n2 = fftLen;
    n1 = n2;
-   for (k = fftLen; k > 1U; k >>= 2U)
+   for (k = fftLen; k > 1u; k >>= 2u)
    {
       /*  Initializations for the fft calculation */
       n1 = n2;
-      n2 >>= 2U;
-      ia1 = 0U;
+      n2 >>= 2u;
+      ia1 = 0u;
 
       /*  FFT Calculation */
       j = 0;
@@ -505,12 +462,12 @@ uint16_t twidCoefModifier)
          /*  index calculation for the coefficients */
          ia2 = ia1 + ia1;
          ia3 = ia2 + ia1;
-         co1 = pCoef[ia1 * 2U];
-         si1 = pCoef[(ia1 * 2U) + 1U];
-         co2 = pCoef[ia2 * 2U];
-         si2 = pCoef[(ia2 * 2U) + 1U];
-         co3 = pCoef[ia3 * 2U];
-         si3 = pCoef[(ia3 * 2U) + 1U];
+         co1 = pCoef[ia1 * 2u];
+         si1 = pCoef[(ia1 * 2u) + 1u];
+         co2 = pCoef[ia2 * 2u];
+         si2 = pCoef[(ia2 * 2u) + 1u];
+         co3 = pCoef[ia3 * 2u];
+         si3 = pCoef[(ia3 * 2u) + 1u];
 
          /*  Twiddle coefficients index modifier */
          ia1 = ia1 + twidCoefModifier;
@@ -525,46 +482,46 @@ uint16_t twidCoefModifier)
             i3 = i2 + n2;
 
             /* xa + xc */
-            r1 = pSrc[(2U * i0)] + pSrc[(2U * i2)];
+            r1 = pSrc[(2u * i0)] + pSrc[(2u * i2)];
 
             /* xa - xc */
-            r2 = pSrc[(2U * i0)] - pSrc[(2U * i2)];
+            r2 = pSrc[(2u * i0)] - pSrc[(2u * i2)];
 
             /* ya + yc */
-            s1 = pSrc[(2U * i0) + 1U] + pSrc[(2U * i2) + 1U];
+            s1 = pSrc[(2u * i0) + 1u] + pSrc[(2u * i2) + 1u];
 
             /* ya - yc */
-            s2 = pSrc[(2U * i0) + 1U] - pSrc[(2U * i2) + 1U];
+            s2 = pSrc[(2u * i0) + 1u] - pSrc[(2u * i2) + 1u];
 
             /* xb + xd */
-            t1 = pSrc[2U * i1] + pSrc[2U * i3];
+            t1 = pSrc[2u * i1] + pSrc[2u * i3];
 
             /* xa' = xa + xb + xc + xd */
-            pSrc[2U * i0] = r1 + t1;
+            pSrc[2u * i0] = r1 + t1;
 
             /* xa + xc -(xb + xd) */
             r1 = r1 - t1;
 
             /* yb + yd */
-            t2 = pSrc[(2U * i1) + 1U] + pSrc[(2U * i3) + 1U];
+            t2 = pSrc[(2u * i1) + 1u] + pSrc[(2u * i3) + 1u];
 
             /* ya' = ya + yb + yc + yd */
-            pSrc[(2U * i0) + 1U] = s1 + t2;
+            pSrc[(2u * i0) + 1u] = s1 + t2;
 
             /* (ya + yc) - (yb + yd) */
             s1 = s1 - t2;
 
             /* (yb - yd) */
-            t1 = pSrc[(2U * i1) + 1U] - pSrc[(2U * i3) + 1U];
+            t1 = pSrc[(2u * i1) + 1u] - pSrc[(2u * i3) + 1u];
 
             /* (xb - xd) */
-            t2 = pSrc[2U * i1] - pSrc[2U * i3];
+            t2 = pSrc[2u * i1] - pSrc[2u * i3];
 
             /* xc' = (xa-xb+xc-xd)co2 + (ya-yb+yc-yd)(si2) */
-            pSrc[2U * i1] = (r1 * co2) + (s1 * si2);
+            pSrc[2u * i1] = (r1 * co2) + (s1 * si2);
 
             /* yc' = (ya-yb+yc-yd)co2 - (xa-xb+xc-xd)(si2) */
-            pSrc[(2U * i1) + 1U] = (s1 * co2) - (r1 * si2);
+            pSrc[(2u * i1) + 1u] = (s1 * co2) - (r1 * si2);
 
             /* (xa - xc) + (yb - yd) */
             r1 = r2 + t1;
@@ -579,36 +536,36 @@ uint16_t twidCoefModifier)
             s2 = s2 + t2;
 
             /* xb' = (xa+yb-xc-yd)co1 + (ya-xb-yc+xd)(si1) */
-            pSrc[2U * i2] = (r1 * co1) + (s1 * si1);
+            pSrc[2u * i2] = (r1 * co1) + (s1 * si1);
 
             /* yb' = (ya-xb-yc+xd)co1 - (xa+yb-xc-yd)(si1) */
-            pSrc[(2U * i2) + 1U] = (s1 * co1) - (r1 * si1);
+            pSrc[(2u * i2) + 1u] = (s1 * co1) - (r1 * si1);
 
             /* xd' = (xa-yb-xc+yd)co3 + (ya+xb-yc-xd)(si3) */
-            pSrc[2U * i3] = (r2 * co3) + (s2 * si3);
+            pSrc[2u * i3] = (r2 * co3) + (s2 * si3);
 
             /* yd' = (ya+xb-yc-xd)co3 - (xa-yb-xc+yd)(si3) */
-            pSrc[(2U * i3) + 1U] = (s2 * co3) - (r2 * si3);
-
+            pSrc[(2u * i3) + 1u] = (s2 * co3) - (r2 * si3);
+         
             i0 += n1;
-         } while ( i0 < fftLen);
+         } while( i0 < fftLen);
          j++;
-      } while (j <= (n2 - 1U));
-      twidCoefModifier <<= 2U;
+      } while(j <= (n2 - 1u));
+      twidCoefModifier <<= 2u;
    }
 
-#endif /* #if defined (ARM_MATH_DSP) */
+#endif /* #ifndef ARM_MATH_CM0_FAMILY_FAMILY */
 
 }
 
-/*
-* @brief  Core function for the floating-point CIFFT butterfly process.
-* @param[in, out] *pSrc            points to the in-place buffer of floating-point data type.
-* @param[in]      fftLen           length of the FFT.
-* @param[in]      *pCoef           points to twiddle coefficient buffer.
-* @param[in]      twidCoefModifier twiddle coefficient modifier that supports different size FFTs with the same twiddle factor table.
-* @param[in]      onebyfftLen      value of 1/fftLen.
-* @return none.
+/*    
+* @brief  Core function for the floating-point CIFFT butterfly process.   
+* @param[in, out] *pSrc            points to the in-place buffer of floating-point data type.   
+* @param[in]      fftLen           length of the FFT.   
+* @param[in]      *pCoef           points to twiddle coefficient buffer.   
+* @param[in]      twidCoefModifier twiddle coefficient modifier that supports different size FFTs with the same twiddle factor table.   
+* @param[in]      onebyfftLen      value of 1/fftLen.   
+* @return none.   
 */
 
 void arm_radix4_butterfly_inverse_f32(
@@ -623,7 +580,7 @@ float32_t onebyfftLen)
    uint32_t i0, i1, i2, i3;
    uint32_t n1, n2, j, k;
 
-#if defined (ARM_MATH_DSP)
+#ifndef ARM_MATH_CM0_FAMILY_FAMILY
 
    float32_t xaIn, yaIn, xbIn, ybIn, xcIn, ycIn, xdIn, ydIn;
    float32_t Xaplusc, Xbplusd, Yaplusc, Ybplusd, Xaminusc, Xbminusd, Yaminusc,
@@ -640,9 +597,9 @@ float32_t onebyfftLen)
    n1 = n2;
 
    /* n2 = fftLen/4 */
-   n2 >>= 2U;
-   i0 = 0U;
-   ia1 = 0U;
+   n2 >>= 2u;
+   i0 = 0u;
+   ia1 = 0u;
 
    j = n2;
 
@@ -656,17 +613,17 @@ float32_t onebyfftLen)
       i3 = i2 + n2;
 
       /*  Butterfly implementation */
-      xaIn = pSrc[(2U * i0)];
-      yaIn = pSrc[(2U * i0) + 1U];
+      xaIn = pSrc[(2u * i0)];
+      yaIn = pSrc[(2u * i0) + 1u];
 
-      xcIn = pSrc[(2U * i2)];
-      ycIn = pSrc[(2U * i2) + 1U];
+      xcIn = pSrc[(2u * i2)];
+      ycIn = pSrc[(2u * i2) + 1u];
 
-      xbIn = pSrc[(2U * i1)];
-      ybIn = pSrc[(2U * i1) + 1U];
+      xbIn = pSrc[(2u * i1)];
+      ybIn = pSrc[(2u * i1) + 1u];
 
-      xdIn = pSrc[(2U * i3)];
-      ydIn = pSrc[(2U * i3) + 1U];
+      xdIn = pSrc[(2u * i3)];
+      ydIn = pSrc[(2u * i3) + 1u];
 
       /* xa + xc */
       Xaplusc = xaIn + xcIn;
@@ -679,8 +636,8 @@ float32_t onebyfftLen)
 
       /*  index calculation for the coefficients */
       ia2 = ia1 + ia1;
-      co2 = pCoef[ia2 * 2U];
-      si2 = pCoef[(ia2 * 2U) + 1U];
+      co2 = pCoef[ia2 * 2u];
+      si2 = pCoef[(ia2 * 2u) + 1u];
 
       /* xa - xc */
       Xaminusc = xaIn - xcIn;
@@ -692,10 +649,10 @@ float32_t onebyfftLen)
       Ybminusd = ybIn - ydIn;
 
       /* xa' = xa + xb + xc + xd */
-      pSrc[(2U * i0)] = Xaplusc + Xbplusd;
+      pSrc[(2u * i0)] = Xaplusc + Xbplusd;
 
       /* ya' = ya + yb + yc + yd */
-      pSrc[(2U * i0) + 1U] = Yaplusc + Ybplusd;
+      pSrc[(2u * i0) + 1u] = Yaplusc + Ybplusd;
 
       /* (xa - xc) - (yb - yd) */
       Xb12C_out = (Xaminusc - Ybminusd);
@@ -710,13 +667,13 @@ float32_t onebyfftLen)
       /* (ya - yc) - (xb - xd) */
       Yd12C_out = (Yaminusc - Xbminusd);
 
-      co1 = pCoef[ia1 * 2U];
-      si1 = pCoef[(ia1 * 2U) + 1U];
+      co1 = pCoef[ia1 * 2u];
+      si1 = pCoef[(ia1 * 2u) + 1u];
 
       /*  index calculation for the coefficients */
       ia3 = ia2 + ia1;
-      co3 = pCoef[ia3 * 2U];
-      si3 = pCoef[(ia3 * 2U) + 1U];
+      co3 = pCoef[ia3 * 2u];
+      si3 = pCoef[(ia3 * 2u) + 1u];
 
       Xb12_out = Xb12C_out * co1;
       Yb12_out = Yb12C_out * co1;
@@ -724,7 +681,7 @@ float32_t onebyfftLen)
       Yc12_out = Yc12C_out * co2;
       Xd12_out = Xd12C_out * co3;
       Yd12_out = Yd12C_out * co3;
-
+   
       /* xb' = (xa+yb-xc-yd)co1 - (ya-xb-yc+xd)(si1) */
       //Xb12_out -= Yb12C_out * si1;
       p0 = Yb12C_out * si1;
@@ -743,7 +700,7 @@ float32_t onebyfftLen)
       /* yd' = (ya+xb-yc-xd)co3 + (xa-yb-xc+yd)(si3) */
       //Yd12_out += Xd12C_out * si3;
       p5 = Xd12C_out * si3;
-
+      
       Xb12_out -= p0;
       Yb12_out += p1;
       Xc12_out -= p2;
@@ -752,40 +709,40 @@ float32_t onebyfftLen)
       Yd12_out += p5;
 
       /* xc' = (xa-xb+xc-xd)co2 - (ya-yb+yc-yd)(si2) */
-      pSrc[2U * i1] = Xc12_out;
+      pSrc[2u * i1] = Xc12_out;
 
       /* yc' = (ya-yb+yc-yd)co2 + (xa-xb+xc-xd)(si2) */
-      pSrc[(2U * i1) + 1U] = Yc12_out;
+      pSrc[(2u * i1) + 1u] = Yc12_out;
 
       /* xb' = (xa+yb-xc-yd)co1 - (ya-xb-yc+xd)(si1) */
-      pSrc[2U * i2] = Xb12_out;
+      pSrc[2u * i2] = Xb12_out;
 
       /* yb' = (ya-xb-yc+xd)co1 + (xa+yb-xc-yd)(si1) */
-      pSrc[(2U * i2) + 1U] = Yb12_out;
+      pSrc[(2u * i2) + 1u] = Yb12_out;
 
       /* xd' = (xa-yb-xc+yd)co3 - (ya+xb-yc-xd)(si3) */
-      pSrc[2U * i3] = Xd12_out;
+      pSrc[2u * i3] = Xd12_out;
 
       /* yd' = (ya+xb-yc-xd)co3 + (xa-yb-xc+yd)(si3) */
-      pSrc[(2U * i3) + 1U] = Yd12_out;
+      pSrc[(2u * i3) + 1u] = Yd12_out;
 
       /*  Twiddle coefficients index modifier */
       ia1 = ia1 + twidCoefModifier;
 
       /*  Updating input index */
-      i0 = i0 + 1U;
+      i0 = i0 + 1u;
 
-   } while (--j);
+   } while(--j);
 
-   twidCoefModifier <<= 2U;
+   twidCoefModifier <<= 2u;
 
    /*  Calculation of second stage to excluding last stage */
-   for (k = fftLen >> 2U; k > 4U; k >>= 2U)
+   for (k = fftLen >> 2u; k > 4u; k >>= 2u)
    {
       /*  Initializations for the first stage */
       n1 = n2;
-      n2 >>= 2U;
-      ia1 = 0U;
+      n2 >>= 2u;
+      ia1 = 0u;
 
       /*  Calculation of first stage */
       j = 0;
@@ -794,12 +751,12 @@ float32_t onebyfftLen)
          /*  index calculation for the coefficients */
          ia2 = ia1 + ia1;
          ia3 = ia2 + ia1;
-         co1 = pCoef[ia1 * 2U];
-         si1 = pCoef[(ia1 * 2U) + 1U];
-         co2 = pCoef[ia2 * 2U];
-         si2 = pCoef[(ia2 * 2U) + 1U];
-         co3 = pCoef[ia3 * 2U];
-         si3 = pCoef[(ia3 * 2U) + 1U];
+         co1 = pCoef[ia1 * 2u];
+         si1 = pCoef[(ia1 * 2u) + 1u];
+         co2 = pCoef[ia2 * 2u];
+         si2 = pCoef[(ia2 * 2u) + 1u];
+         co3 = pCoef[ia3 * 2u];
+         si3 = pCoef[(ia3 * 2u) + 1u];
 
          /*  Twiddle coefficients index modifier */
          ia1 = ia1 + twidCoefModifier;
@@ -813,17 +770,17 @@ float32_t onebyfftLen)
             i2 = i1 + n2;
             i3 = i2 + n2;
 
-            xaIn = pSrc[(2U * i0)];
-            yaIn = pSrc[(2U * i0) + 1U];
+            xaIn = pSrc[(2u * i0)];
+            yaIn = pSrc[(2u * i0) + 1u];
 
-            xbIn = pSrc[(2U * i1)];
-            ybIn = pSrc[(2U * i1) + 1U];
+            xbIn = pSrc[(2u * i1)];
+            ybIn = pSrc[(2u * i1) + 1u];
 
-            xcIn = pSrc[(2U * i2)];
-            ycIn = pSrc[(2U * i2) + 1U];
+            xcIn = pSrc[(2u * i2)];
+            ycIn = pSrc[(2u * i2) + 1u];
 
-            xdIn = pSrc[(2U * i3)];
-            ydIn = pSrc[(2U * i3) + 1U];
+            xdIn = pSrc[(2u * i3)];
+            ydIn = pSrc[(2u * i3) + 1u];
 
             /* xa - xc */
             Xaminusc = xaIn - xcIn;
@@ -856,8 +813,8 @@ float32_t onebyfftLen)
             /* (ya - yc) -  (xb - xd) */
             Yd12C_out = (Yaminusc - Xbminusd);
 
-            pSrc[(2U * i0)] = Xaplusc + Xbplusd;
-            pSrc[(2U * i0) + 1U] = Yaplusc + Ybplusd;
+            pSrc[(2u * i0)] = Xaplusc + Xbplusd;
+            pSrc[(2u * i0) + 1u] = Yaplusc + Ybplusd;
 
             Xb12_out = Xb12C_out * co1;
             Yb12_out = Yb12C_out * co1;
@@ -884,7 +841,7 @@ float32_t onebyfftLen)
             /* yd' = (ya+xb-yc-xd)co3 + (xa-yb-xc+yd)(si3) */
             //Yd12_out += Xd12C_out * si3;
             p5 = Xd12C_out * si3;
-
+            
             Xb12_out -= p0;
             Yb12_out += p1;
             Xc12_out -= p2;
@@ -893,28 +850,28 @@ float32_t onebyfftLen)
             Yd12_out += p5;
 
             /* xc' = (xa-xb+xc-xd)co2 - (ya-yb+yc-yd)(si2) */
-            pSrc[2U * i1] = Xc12_out;
+            pSrc[2u * i1] = Xc12_out;
 
             /* yc' = (ya-yb+yc-yd)co2 + (xa-xb+xc-xd)(si2) */
-            pSrc[(2U * i1) + 1U] = Yc12_out;
+            pSrc[(2u * i1) + 1u] = Yc12_out;
 
             /* xb' = (xa+yb-xc-yd)co1 - (ya-xb-yc+xd)(si1) */
-            pSrc[2U * i2] = Xb12_out;
+            pSrc[2u * i2] = Xb12_out;
 
             /* yb' = (ya-xb-yc+xd)co1 + (xa+yb-xc-yd)(si1) */
-            pSrc[(2U * i2) + 1U] = Yb12_out;
+            pSrc[(2u * i2) + 1u] = Yb12_out;
 
             /* xd' = (xa-yb-xc+yd)co3 - (ya+xb-yc-xd)(si3) */
-            pSrc[2U * i3] = Xd12_out;
+            pSrc[2u * i3] = Xd12_out;
 
             /* yd' = (ya+xb-yc-xd)co3 + (xa-yb-xc+yd)(si3) */
-            pSrc[(2U * i3) + 1U] = Yd12_out;
+            pSrc[(2u * i3) + 1u] = Yd12_out;
 
             i0 += n1;
-         } while (i0 < fftLen);
+         } while(i0 < fftLen);
          j++;
-      } while (j <= (n2 - 1U));
-      twidCoefModifier <<= 2U;
+      } while(j <= (n2 - 1u));
+      twidCoefModifier <<= 2u;
    }
    /*  Initializations of last stage */
 
@@ -957,7 +914,7 @@ float32_t onebyfftLen)
 
       /* (yb-yd) */
       Ybminusd = ybIn - ydIn;
-
+      
       /* xa' = (xa+xb+xc+xd) * onebyfftLen */
       a0 = (Xaplusc + Xbplusd);
       /* ya' = (ya+yb+yc+yd) * onebyfftLen */
@@ -974,7 +931,7 @@ float32_t onebyfftLen)
       a6 = (Xaminusc + Ybminusd);
       /* yd' = (ya-xb-yc+xd) * onebyfftLen */
       a7 = (Yaminusc - Xbminusd);
-
+   
       p0 = a0 * onebyfftLen;
       p1 = a1 * onebyfftLen;
       p2 = a2 * onebyfftLen;
@@ -983,7 +940,7 @@ float32_t onebyfftLen)
       p5 = a5 * onebyfftLen;
       p6 = a6 * onebyfftLen;
       p7 = a7 * onebyfftLen;
-
+   
       /* xa' = (xa+xb+xc+xd) * onebyfftLen */
       ptr1[0] = p0;
       /* ya' = (ya+yb+yc+yd) * onebyfftLen */
@@ -1002,9 +959,9 @@ float32_t onebyfftLen)
       ptr1[7] = p7;
 
       /* increment source pointer by 8 for next calculations */
-      ptr1 = ptr1 + 8U;
+      ptr1 = ptr1 + 8u;
 
-   } while (--j);
+   } while(--j);
 
 #else
 
@@ -1017,12 +974,12 @@ float32_t onebyfftLen)
    n1 = n2;
 
    /*  Calculation of first stage */
-   for (k = fftLen; k > 4U; k >>= 2U)
+   for (k = fftLen; k > 4u; k >>= 2u)
    {
       /*  Initializations for the first stage */
       n1 = n2;
-      n2 >>= 2U;
-      ia1 = 0U;
+      n2 >>= 2u;
+      ia1 = 0u;
 
       /*  Calculation of first stage */
       j = 0;
@@ -1031,12 +988,12 @@ float32_t onebyfftLen)
          /*  index calculation for the coefficients */
          ia2 = ia1 + ia1;
          ia3 = ia2 + ia1;
-         co1 = pCoef[ia1 * 2U];
-         si1 = pCoef[(ia1 * 2U) + 1U];
-         co2 = pCoef[ia2 * 2U];
-         si2 = pCoef[(ia2 * 2U) + 1U];
-         co3 = pCoef[ia3 * 2U];
-         si3 = pCoef[(ia3 * 2U) + 1U];
+         co1 = pCoef[ia1 * 2u];
+         si1 = pCoef[(ia1 * 2u) + 1u];
+         co2 = pCoef[ia2 * 2u];
+         si2 = pCoef[(ia2 * 2u) + 1u];
+         co3 = pCoef[ia3 * 2u];
+         si3 = pCoef[(ia3 * 2u) + 1u];
 
          /*  Twiddle coefficients index modifier */
          ia1 = ia1 + twidCoefModifier;
@@ -1051,46 +1008,46 @@ float32_t onebyfftLen)
             i3 = i2 + n2;
 
             /* xa + xc */
-            r1 = pSrc[(2U * i0)] + pSrc[(2U * i2)];
+            r1 = pSrc[(2u * i0)] + pSrc[(2u * i2)];
 
             /* xa - xc */
-            r2 = pSrc[(2U * i0)] - pSrc[(2U * i2)];
+            r2 = pSrc[(2u * i0)] - pSrc[(2u * i2)];
 
             /* ya + yc */
-            s1 = pSrc[(2U * i0) + 1U] + pSrc[(2U * i2) + 1U];
+            s1 = pSrc[(2u * i0) + 1u] + pSrc[(2u * i2) + 1u];
 
             /* ya - yc */
-            s2 = pSrc[(2U * i0) + 1U] - pSrc[(2U * i2) + 1U];
+            s2 = pSrc[(2u * i0) + 1u] - pSrc[(2u * i2) + 1u];
 
             /* xb + xd */
-            t1 = pSrc[2U * i1] + pSrc[2U * i3];
+            t1 = pSrc[2u * i1] + pSrc[2u * i3];
 
             /* xa' = xa + xb + xc + xd */
-            pSrc[2U * i0] = r1 + t1;
+            pSrc[2u * i0] = r1 + t1;
 
             /* xa + xc -(xb + xd) */
             r1 = r1 - t1;
 
             /* yb + yd */
-            t2 = pSrc[(2U * i1) + 1U] + pSrc[(2U * i3) + 1U];
+            t2 = pSrc[(2u * i1) + 1u] + pSrc[(2u * i3) + 1u];
 
             /* ya' = ya + yb + yc + yd */
-            pSrc[(2U * i0) + 1U] = s1 + t2;
+            pSrc[(2u * i0) + 1u] = s1 + t2;
 
             /* (ya + yc) - (yb + yd) */
             s1 = s1 - t2;
 
             /* (yb - yd) */
-            t1 = pSrc[(2U * i1) + 1U] - pSrc[(2U * i3) + 1U];
+            t1 = pSrc[(2u * i1) + 1u] - pSrc[(2u * i3) + 1u];
 
             /* (xb - xd) */
-            t2 = pSrc[2U * i1] - pSrc[2U * i3];
+            t2 = pSrc[2u * i1] - pSrc[2u * i3];
 
             /* xc' = (xa-xb+xc-xd)co2 - (ya-yb+yc-yd)(si2) */
-            pSrc[2U * i1] = (r1 * co2) - (s1 * si2);
+            pSrc[2u * i1] = (r1 * co2) - (s1 * si2);
 
             /* yc' = (ya-yb+yc-yd)co2 + (xa-xb+xc-xd)(si2) */
-            pSrc[(2U * i1) + 1U] = (s1 * co2) + (r1 * si2);
+            pSrc[(2u * i1) + 1u] = (s1 * co2) + (r1 * si2);
 
             /* (xa - xc) - (yb - yd) */
             r1 = r2 - t1;
@@ -1105,29 +1062,29 @@ float32_t onebyfftLen)
             s2 = s2 - t2;
 
             /* xb' = (xa+yb-xc-yd)co1 - (ya-xb-yc+xd)(si1) */
-            pSrc[2U * i2] = (r1 * co1) - (s1 * si1);
+            pSrc[2u * i2] = (r1 * co1) - (s1 * si1);
 
             /* yb' = (ya-xb-yc+xd)co1 + (xa+yb-xc-yd)(si1) */
-            pSrc[(2U * i2) + 1U] = (s1 * co1) + (r1 * si1);
+            pSrc[(2u * i2) + 1u] = (s1 * co1) + (r1 * si1);
 
             /* xd' = (xa-yb-xc+yd)co3 - (ya+xb-yc-xd)(si3) */
-            pSrc[2U * i3] = (r2 * co3) - (s2 * si3);
+            pSrc[2u * i3] = (r2 * co3) - (s2 * si3);
 
             /* yd' = (ya+xb-yc-xd)co3 + (xa-yb-xc+yd)(si3) */
-            pSrc[(2U * i3) + 1U] = (s2 * co3) + (r2 * si3);
-
+            pSrc[(2u * i3) + 1u] = (s2 * co3) + (r2 * si3);
+         
             i0 += n1;
-         } while ( i0 < fftLen);
+         } while( i0 < fftLen);
          j++;
-      } while (j <= (n2 - 1U));
-      twidCoefModifier <<= 2U;
+      } while(j <= (n2 - 1u));
+      twidCoefModifier <<= 2u;
    }
    /*  Initializations of last stage */
    n1 = n2;
-   n2 >>= 2U;
+   n2 >>= 2u;
 
    /*  Calculations of last stage */
-   for (i0 = 0U; i0 <= (fftLen - n1); i0 += n1)
+   for (i0 = 0u; i0 <= (fftLen - n1); i0 += n1)
    {
       /*  index calculation for the input as, */
       /*  pSrc[i0 + 0], pSrc[i0 + fftLen/4], pSrc[i0 + fftLen/2], pSrc[i0 + 3fftLen/4] */
@@ -1137,46 +1094,46 @@ float32_t onebyfftLen)
 
       /*  Butterfly implementation */
       /* xa + xc */
-      r1 = pSrc[2U * i0] + pSrc[2U * i2];
+      r1 = pSrc[2u * i0] + pSrc[2u * i2];
 
       /* xa - xc */
-      r2 = pSrc[2U * i0] - pSrc[2U * i2];
+      r2 = pSrc[2u * i0] - pSrc[2u * i2];
 
       /* ya + yc */
-      s1 = pSrc[(2U * i0) + 1U] + pSrc[(2U * i2) + 1U];
+      s1 = pSrc[(2u * i0) + 1u] + pSrc[(2u * i2) + 1u];
 
       /* ya - yc */
-      s2 = pSrc[(2U * i0) + 1U] - pSrc[(2U * i2) + 1U];
+      s2 = pSrc[(2u * i0) + 1u] - pSrc[(2u * i2) + 1u];
 
       /* xc + xd */
-      t1 = pSrc[2U * i1] + pSrc[2U * i3];
+      t1 = pSrc[2u * i1] + pSrc[2u * i3];
 
       /* xa' = xa + xb + xc + xd */
-      pSrc[2U * i0] = (r1 + t1) * onebyfftLen;
+      pSrc[2u * i0] = (r1 + t1) * onebyfftLen;
 
       /* (xa + xb) - (xc + xd) */
       r1 = r1 - t1;
 
       /* yb + yd */
-      t2 = pSrc[(2U * i1) + 1U] + pSrc[(2U * i3) + 1U];
+      t2 = pSrc[(2u * i1) + 1u] + pSrc[(2u * i3) + 1u];
 
       /* ya' = ya + yb + yc + yd */
-      pSrc[(2U * i0) + 1U] = (s1 + t2) * onebyfftLen;
+      pSrc[(2u * i0) + 1u] = (s1 + t2) * onebyfftLen;
 
       /* (ya + yc) - (yb + yd) */
       s1 = s1 - t2;
 
       /* (yb-yd) */
-      t1 = pSrc[(2U * i1) + 1U] - pSrc[(2U * i3) + 1U];
+      t1 = pSrc[(2u * i1) + 1u] - pSrc[(2u * i3) + 1u];
 
       /* (xb-xd) */
-      t2 = pSrc[2U * i1] - pSrc[2U * i3];
+      t2 = pSrc[2u * i1] - pSrc[2u * i3];
 
       /* xc' = (xa-xb+xc-xd)co2 - (ya-yb+yc-yd)(si2) */
-      pSrc[2U * i1] = r1 * onebyfftLen;
+      pSrc[2u * i1] = r1 * onebyfftLen;
 
       /* yc' = (ya-yb+yc-yd)co2 + (xa-xb+xc-xd)(si2) */
-      pSrc[(2U * i1) + 1U] = s1 * onebyfftLen;
+      pSrc[(2u * i1) + 1u] = s1 * onebyfftLen;
 
       /* (xa - xc) - (yb-yd) */
       r1 = r2 - t1;
@@ -1191,19 +1148,63 @@ float32_t onebyfftLen)
       s2 = s2 - t2;
 
       /* xb' = (xa+yb-xc-yd)co1 - (ya-xb-yc+xd)(si1) */
-      pSrc[2U * i2] = r1 * onebyfftLen;
+      pSrc[2u * i2] = r1 * onebyfftLen;
 
       /* yb' = (ya-xb-yc+xd)co1 + (xa+yb-xc-yd)(si1) */
-      pSrc[(2U * i2) + 1U] = s1 * onebyfftLen;
+      pSrc[(2u * i2) + 1u] = s1 * onebyfftLen;
 
       /* xd' = (xa-yb-xc+yd)co3 - (ya+xb-yc-xd)(si3) */
-      pSrc[2U * i3] = r2 * onebyfftLen;
+      pSrc[2u * i3] = r2 * onebyfftLen;
 
       /* yd' = (ya+xb-yc-xd)co3 + (xa-yb-xc+yd)(si3) */
-      pSrc[(2U * i3) + 1U] = s2 * onebyfftLen;
+      pSrc[(2u * i3) + 1u] = s2 * onebyfftLen;
    }
 
-#endif /* #if defined (ARM_MATH_DSP) */
+#endif /* #ifndef ARM_MATH_CM0_FAMILY_FAMILY */
 }
 
+/**    
+* @addtogroup ComplexFFT    
+* @{    
+*/
+
+/**    
+* @details    
+* @brief Processing function for the floating-point Radix-4 CFFT/CIFFT.   
+* @deprecated Do not use this function.  It has been superseded by \ref arm_cfft_f32 and will be removed
+* in the future.
+* @param[in]      *S    points to an instance of the floating-point Radix-4 CFFT/CIFFT structure.   
+* @param[in, out] *pSrc points to the complex data buffer of size <code>2*fftLen</code>. Processing occurs in-place.   
+* @return none.   
+*/
+
+void arm_cfft_radix4_f32(
+const arm_cfft_radix4_instance_f32 * S,
+float32_t * pSrc)
+{
+
+   if(S->ifftFlag == 1u)
+   {
+      /*  Complex IFFT radix-4  */
+      arm_radix4_butterfly_inverse_f32(pSrc, S->fftLen, S->pTwiddle,
+      S->twidCoefModifier, S->onebyfftLen);
+   }
+   else
+   {
+      /*  Complex FFT radix-4  */
+      arm_radix4_butterfly_f32(pSrc, S->fftLen, S->pTwiddle,
+      S->twidCoefModifier);
+   }
+
+   if(S->bitReverseFlag == 1u)
+   {
+      /*  Bit Reversal */
+      arm_bitreversal_f32(pSrc, S->fftLen, S->bitRevFactor, S->pBitRevTable);
+   }
+
+}
+
+/**    
+* @} end of ComplexFFT group    
+*/
 

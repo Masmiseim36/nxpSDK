@@ -39,7 +39,7 @@ At first the LEDs are off on both devices.</li>
 
 <li class="li">To start scanning on the collector, press the WAKESW button and CONNLED lights up.
         The device wakes up, enters into the cPWR_DeepSleepMode deep-sleep mode 6, scans and
-        connects to a compatible sensor device. If no connection is established within 10 seconds,
+        connects to a compatible sensor device. If no connection is established within 30 seconds,
         the collector stops scanning and enters deep-sleep mode (for QN9090/K32W061 is deep sleep
         mode 3) again. CONNLED turns off.</li>
 
@@ -48,15 +48,20 @@ At first the LEDs are off on both devices.</li>
         configures notification and waits for notifications from the sensor for 5 seconds. If no
         data is sent, the node disconnects and re-enters cPWR_DeepSleepMode. The sensor exits low
         power and sends a notification with the value of the temperature read through an ADC from
-        the thermistor, if present, or random generated if not. <div class="fig fignone" id="GUID-2E81A842-F47E-4BDD-BBBC-CBBB72ED7008__BLEDAUG3009"><span class="figcap">Figure 1. Tera Term – Output Console on Temperature Collector</span>
+        the thermistor, if present, or random generated if not. <p class="p">Once the connection
+          is established the PHY is automatically updated to 2 M, if both the sensor and the
+          collector support this feature. The PHY update is configurable from the
+          application.</p>
+<div class="fig fignone"><span class="figcap">Figure 1. Output Console on Temperature Collector</span>
           
-          <img class="image" id="GUID-2E81A842-F47E-4BDD-BBBC-CBBB72ED7008__IMAGE_AJT_SN4_VDB" src="GUID-8A6BE655-3992-44BE-B3A1-F42DC895A89B-high.png" height="304" width="496"/>
+          <img class="image" src="GUID-45929BD8-F538-4962-8654-10E88CD2B71F-high.png" height="375" width="551"/>
         </div>
-</li>
+
+      </li>
 
 <li class="li">Subsequent key pressing triggers other notifications for the collector. If no key is
         pressed in an interval of 5 seconds, the sensor node disconnects and re-enters
-        cPWR_DeepSleepMode.</li>
+        cPWR_DeepSleepMode. </li>
 
 
 </ol>

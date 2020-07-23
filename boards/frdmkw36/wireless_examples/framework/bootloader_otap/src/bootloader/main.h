@@ -237,6 +237,23 @@ typedef union _FlashConfig_t
 typedef void (*vector_entry)(void);
 typedef void pointer(void);
 
+#if defined(__CC_ARM)
+typedef PACKED_STRUCT bootFlags_tag{
+    __packed union {
+        uint8_t  aNewBootImageAvailable[FSL_FEATURE_FLASH_PFLASH_BLOCK_WRITE_UNIT_SIZE];
+        uint32_t newBootImageAvailable;
+    }u0;
+    __packed union {
+        uint8_t  aBootProcessCompleted[FSL_FEATURE_FLASH_PFLASH_BLOCK_WRITE_UNIT_SIZE];
+        uint32_t bootProcessCompleted;
+    }u1;
+    uint8_t  version[FSL_FEATURE_FLASH_PFLASH_BLOCK_WRITE_UNIT_SIZE];
+    __packed union {
+        uint8_t  aInternalStorageStart[FSL_FEATURE_FLASH_PFLASH_BLOCK_WRITE_UNIT_SIZE];
+        uint32_t internalStorageStart;
+    }u2;
+}bootFlags_t;
+#else
 typedef PACKED_STRUCT bootFlags_tag{
     union {
         uint8_t  aNewBootImageAvailable[FSL_FEATURE_FLASH_PFLASH_BLOCK_WRITE_UNIT_SIZE];
@@ -252,6 +269,7 @@ typedef PACKED_STRUCT bootFlags_tag{
         uint32_t internalStorageStart;
     }u2;
 }bootFlags_t;
+#endif /* defined(__CC_ARM) */
 
 /* module info structure */
 typedef PACKED_STRUCT moduleInfo_tag {

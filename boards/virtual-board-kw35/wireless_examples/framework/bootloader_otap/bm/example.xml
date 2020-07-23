@@ -92,13 +92,13 @@
     <files mask="MKW35Z4_features.h"/>
     <files mask="fsl_device_registers.h"/>
   </source>
-  <source path="middleware/wireless/framework_5.4.6/Common" target_path="wireless/framework/Common" type="c_include">
+  <source path="middleware/wireless/framework_5.4.8/Common" target_path="wireless/framework/Common" type="c_include">
     <files mask="EmbeddedTypes.h"/>
   </source>
-  <source path="middleware/wireless/framework_5.4.6/FunctionLib" target_path="wireless/framework/FunctionLib" type="c_include">
+  <source path="middleware/wireless/framework_5.4.8/FunctionLib" target_path="wireless/framework/FunctionLib" type="c_include">
     <files mask="FunctionLib.h"/>
   </source>
-  <source path="middleware/wireless/framework_5.4.6/FunctionLib" target_path="wireless/framework/FunctionLib" type="src">
+  <source path="middleware/wireless/framework_5.4.8/FunctionLib" target_path="wireless/framework/FunctionLib" type="src">
     <files mask="FunctionLib.c"/>
   </source>
   <include_paths>

@@ -45,7 +45,7 @@
  ********************************************************************************** */
 
 /* enable NVM to be used as non volatile storage management by the host stack */
-#define gAppUseNvm_d                    0
+#define gAppUseNvm_d                    1
 
 /* Defines Rx Buffer Size for Serial Manager */
 #define gSerialMgrRxBufSize_c   1000

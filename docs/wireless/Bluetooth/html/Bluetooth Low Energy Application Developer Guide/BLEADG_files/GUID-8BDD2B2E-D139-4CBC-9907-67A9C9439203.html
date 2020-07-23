@@ -30,15 +30,7 @@
         <p class="p">The most basic setup for a Central device begins with scanning, which is performed by the
             following function from <em class="ph i">gap_interface.h</em>:</p>
 
-        <pre class="pre codeblock">bleResult_t <strong class="ph b">Gap_StartScanning</strong>
-(
-    const gapScanningParameters_t* pScanningParameters,
-    gapScanningCallback_t scanningCallback,
-    bool_t enableFilterDuplicates,
-    uint16_t duration,
-    uint16_t period  
-);</pre>
-
+        
         
         <p class="p">If the <em class="ph i">pScanningParameters</em> pointer is NULL, the currently set parameters are used.
             If no parameters have been set after a device power-up, the standard default values are
@@ -105,8 +97,9 @@ Gap_StartScanning(&amp;scanningParamters, scanningCallback, enableFilterDuplicat
 
         <pre class="pre codeblock">bleResult_t <strong class="ph b">Gap_SetScanMode</strong>
 (
-    gapScanMode_t             scanMode,
-    gapAutoConnectParams_t*   pAutoConnectParams
+    gapScanMode_t           scanMode,
+    gapAutoConnectParams_t* pAutoConnectParams,
+    gapConnectionCallback_t connCallback
 );</pre>
 
         <p class="p">The default value for the scan mode is <em class="ph i">gNoDiscovery_c,</em> which reports all packets
@@ -119,6 +112,9 @@ Gap_StartScanning(&amp;scanningParamters, scanningCallback, enableFilterDuplicat
                 <em class="ph i">gAutoConnect_c</em> value must be set, in which case the <em class="ph i">pAutoConnectParams</em>
             parameter must point to the structure that holds the target device addresses and the
             connection parameters to be used by the Host for these devices.</p>
+
+        <p class="p">If scanMode is set to gAutoConnect_c, connCallback must be set and will be triggered by
+            GAP to send the events related to the connection.</p>
 
     </div>
 

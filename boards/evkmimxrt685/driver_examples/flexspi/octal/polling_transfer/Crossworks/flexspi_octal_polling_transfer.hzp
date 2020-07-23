@@ -1,0 +1,148 @@
+<!DOCTYPE CrossStudio_Project_File>
+<solution Name="flexspi_octal_polling_transfer" target="8" version="2">
+  <project Name="flexspi_octal_polling_transfer">
+    <configuration
+      CMSIS_CORE="Yes"
+      Name="Common"
+      Placement="SRAM"
+      Target="MIMXRT633SFxxxR"
+      arm_architecture="v8M_Mainline"
+      arm_core_type="Cortex-M33"
+      arm_fpu_type="FPv5-SP-D16"
+      arm_linker_heap_size="1024"
+      arm_linker_stack_size="1024"
+      arm_simulator_memory_simulation_parameter="RAM;0x1FFE0000;0x00010000;RAM;0x20000000;0x00010000;RAM;0x20240000;0x00080000;ROM;0x30000000;0x04000000"
+      arm_target_loader_applicable_loaders=""
+      arm_target_loader_default_loader=""
+      arm_target_loader_reset_after_download="No"
+      arm_v8M_has_cmse="Yes"
+      arm_v8M_has_dsp="Yes"
+      c_preprocessor_definitions="FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1;CPU_MIMXRT685SFVKB_cm33;BOOT_HEADER_ENABLE=1;NDEBUG;ARM_MATH_CM33;SERIAL_PORT_TYPE_UART=1"
+      c_system_include_directories="$(StudioDir)/include;$(PackagesDir)/include;$(TargetsDir)/iMXRT"
+      c_user_include_directories=";./..;./../../../../..;./../../../../../../../CMSIS/Include;./../../../../../../../devices;./../../../../../../../devices/MIMXRT685S/drivers;./../../../../../../../devices/MIMXRT685S;./../../../../../../../devices/MIMXRT685S/utilities/str;./../../../../../../../devices/MIMXRT685S/utilities/debug_console;./../../../../../../../components/uart;./../../../../../flash_config;./../../../../../../../components/serial_manager;./../../../../../../../components/lists;./../../../../../../../devices/MIMXRT685S/utilities"
+      debug_register_definition_file="$(TargetsDir)/iMXRT/XML/$(DeviceName)_registers.xml"
+      debug_startup_completion_point="main"
+      linker_memory_map_file="$(TargetsDir)/iMXRT/MemoryMap_MIMXRT600.xml"
+      linker_section_placement_file="$(StudioDir)/targets/Cortex_M/ram_placement.xml"
+      linker_section_placement_macros="RAM_NAME=SRAM"
+      macros="DeviceName=MIMXRT685S_cm33;Family=iMXRT600"
+      project_directory=""
+      project_type="Executable"
+      property_groups_file_path="$(TargetsDir)/iMXRT/propertyGroups_cm33.xml"
+      target_connect_script="Connect()"
+      target_get_partname_script="GetPartName()"
+      target_reset_script="Reset()"
+      target_script_file="$(TargetsDir)/iMXRT/iMXRT_Target.js" />
+    <configuration
+      Name="Flash"
+      arm_target_flash_loader_file_path="$(TargetsDir)/iMXRT/Loader2/Loader_$(Family)_M33.elf" />
+    <folder Name="System Files">
+      <file file_name="$(StudioDir)/source/thumb_crt0.s" />
+      <file file_name="$(TargetsDir)/iMXRT/startup_$(DeviceName).s" />
+      <file file_name="$(TargetsDir)/iMXRT/system_$(DeviceName).h" />
+      <file file_name="$(TargetsDir)/iMXRT/system_$(DeviceName).c" />
+      <file file_name="$(TargetsDir)/iMXRT/$(DeviceName).h" />
+      <file file_name="$(TargetsDir)/iMXRT/$(DeviceName)_features.h" />
+      <file file_name="$(TargetsDir)/iMXRT/fsl_device_registers.h" />
+      <file file_name="ram_placement.xml" />
+    </folder>
+    <folder Name="source">
+      <file file_name="./../flexspi_octal_polling_transfer.c" />
+      <file file_name="./../flexspi_octal_flash_ops.c" />
+      <file file_name="./../app.h" />
+    </folder>
+    <folder Name="board">
+      <file file_name="./../pin_mux.c" />
+      <file file_name="./../pin_mux.h" />
+      <file file_name="./../board.c" />
+      <file file_name="./../board.h" />
+      <file file_name="./../clock_config.c" />
+      <file file_name="./../clock_config.h" />
+    </folder>
+    <folder Name="doc">
+      <file file_name="./../readme.txt" />
+    </folder>
+    <folder Name="drivers">
+      <file file_name="./../../../../../../../devices/MIMXRT685S/drivers/fsl_flexspi.c" />
+      <file file_name="./../../../../../../../devices/MIMXRT685S/drivers/fsl_flexspi.h" />
+      <file file_name="./../../../../../../../devices/MIMXRT685S/drivers/fsl_common.c" />
+      <file file_name="./../../../../../../../devices/MIMXRT685S/drivers/fsl_common.h" />
+      <file file_name="./../../../../../../../devices/MIMXRT685S/drivers/fsl_clock.c" />
+      <file file_name="./../../../../../../../devices/MIMXRT685S/drivers/fsl_clock.h" />
+      <file file_name="./../../../../../../../devices/MIMXRT685S/drivers/fsl_power.c" />
+      <file file_name="./../../../../../../../devices/MIMXRT685S/drivers/fsl_power.h" />
+      <file file_name="./../../../../../../../devices/MIMXRT685S/drivers/fsl_gpio.c" />
+      <file file_name="./../../../../../../../devices/MIMXRT685S/drivers/fsl_gpio.h" />
+      <file file_name="./../../../../../../../devices/MIMXRT685S/drivers/fsl_inputmux.c" />
+      <file file_name="./../../../../../../../devices/MIMXRT685S/drivers/fsl_inputmux.h" />
+      <file file_name="./../../../../../../../devices/MIMXRT685S/drivers/fsl_cache.c" />
+      <file file_name="./../../../../../../../devices/MIMXRT685S/drivers/fsl_cache.h" />
+      <file file_name="./../../../../../../../devices/MIMXRT685S/drivers/fsl_usart.c" />
+      <file file_name="./../../../../../../../devices/MIMXRT685S/drivers/fsl_usart.h" />
+      <file file_name="./../../../../../../../devices/MIMXRT685S/drivers/fsl_flexcomm.c" />
+      <file file_name="./../../../../../../../devices/MIMXRT685S/drivers/fsl_flexcomm.h" />
+      <file file_name="./../../../../../../../devices/MIMXRT685S/drivers/fsl_iopctl.h" />
+      <file file_name="./../../../../../../../devices/MIMXRT685S/drivers/fsl_reset.c" />
+      <file file_name="./../../../../../../../devices/MIMXRT685S/drivers/fsl_reset.h" />
+      <file file_name="./../../../../../../../devices/MIMXRT685S/drivers/fsl_inputmux_connections.h" />
+      <file file_name="../../../../../../../devices/MIMXRT685S/gcc/libpower_hardabi.a">
+        <configuration Name="Common" build_exclude_from_build="Yes" />
+      </file>
+      <file file_name="../../../../../../../devices/MIMXRT685S/gcc/libpower_softabi.a" />
+    </folder>
+    <folder Name="utilities">
+      <file file_name="./../../../../../../../devices/MIMXRT685S/utilities/debug_console/fsl_debug_console.c" />
+      <file file_name="./../../../../../../../devices/MIMXRT685S/utilities/debug_console/fsl_debug_console.h" />
+      <file file_name="./../../../../../../../devices/MIMXRT685S/utilities/debug_console/fsl_debug_console_conf.h" />
+      <file file_name="./../../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.c" />
+      <file file_name="./../../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.h" />
+      <file file_name="./../../../../../../../devices/MIMXRT685S/utilities/fsl_assert.c" />
+    </folder>
+    <folder Name="component">
+      <folder Name="uart">
+        <file file_name="./../../../../../../../components/uart/uart.h" />
+        <file file_name="./../../../../../../../components/uart/usart_adapter.c" />
+      </folder>
+      <folder Name="serial_manager">
+        <file file_name="./../../../../../../../components/serial_manager/serial_manager.c" />
+        <file file_name="./../../../../../../../components/serial_manager/serial_manager.h" />
+        <file file_name="./../../../../../../../components/serial_manager/serial_port_internal.h" />
+        <file file_name="./../../../../../../../components/serial_manager/serial_port_uart.c" />
+        <file file_name="./../../../../../../../components/serial_manager/serial_port_uart.h" />
+      </folder>
+      <folder Name="lists">
+        <file file_name="./../../../../../../../components/lists/generic_list.c" />
+        <file file_name="./../../../../../../../components/lists/generic_list.h" />
+      </folder>
+    </folder>
+    <folder Name="flash_config">
+      <file file_name="./../../../../../flash_config/flash_config.c" />
+      <file file_name="./../../../../../flash_config/flash_config.h" />
+    </folder>
+  </project>
+  <configuration Name="THUMB Debug" inherited_configurations="THUMB;Debug" />
+  <configuration
+    Name="THUMB"
+    Platform="ARM"
+    arm_instruction_set="Thumb"
+    arm_library_instruction_set="Thumb"
+    c_preprocessor_definitions="__THUMB"
+    hidden="Yes" />
+  <configuration
+    Name="Debug"
+    c_preprocessor_definitions="DEBUG"
+    gcc_debugging_level="Level 3"
+    gcc_omit_frame_pointer="Yes"
+    gcc_optimization_level="None"
+    hidden="Yes" />
+  <configuration
+    Name="THUMB Release"
+    inherited_configurations="THUMB;Release" />
+  <configuration
+    Name="Release"
+    c_preprocessor_definitions="NDEBUG"
+    gcc_debugging_level="None"
+    gcc_omit_frame_pointer="Yes"
+    gcc_optimization_level="Level 1"
+    hidden="Yes" />
+</solution>

@@ -18,39 +18,39 @@
 //! @brief SRAM size-related constants of KL series (CM0+ family)
 enum _kl_serials_sram_constants
 {
-    kMaxRamIndex = 8,
-    kMinKlRamSize = (uint32_t)512
+    kMaxRamIndex = 8u,
+    kMinKlRamSize = (uint32_t)512u
 };
 
 #if defined(__CORE_CM4_H_GENERIC) || defined(__CORE_CM7_H_GENERIC)
 //! @brief valid SRAM size index of K series (CM4 family)
 enum _k_serials_sram_index_constants
 {
-    kRamSize16kIndex = 3,
-    kRamSize24kIndex = 4,
-    kRamSize32kIndex = 5,
-    kRamSize48kIndex = 6,
-    kRamSize64kIndex = 7,
-    kRamSize96kIndex = 8,
-    kRamSize128kIndex = 9,
-    kRamSize256kIndex = 11,
-    kRamSize512kIndex = 13,
-    kRamSize1024kIndex = 15
+    kRamSize16kIndex = 3u,
+    kRamSize24kIndex = 4u,
+    kRamSize32kIndex = 5u,
+    kRamSize48kIndex = 6u,
+    kRamSize64kIndex = 7u,
+    kRamSize96kIndex = 8u,
+    kRamSize128kIndex = 9u,
+    kRamSize256kIndex = 11u,
+    kRamSize512kIndex = 13u,
+    kRamSize1024kIndex = 15u
 };
 #endif
 
 #if defined(__CORE_CM0PLUS_H_GENERIC)
 enum _k_serials_sram_index_constants
 {
-    kRamSize0p5kIndex = 0,
-    kRamSize1kIndex = 1,
-    kRamSize2kIndex = 2,
-    kRamSize4kIndex = 3,
-    kRamSize8kIndex = 4,
-    kRamSize16kIndex = 5,
-    kRamSize32kIndex = 6,
-    kRamSize64kIndex = 7,
-    kRamSize128kIndex = 9
+    kRamSize0p5kIndex = 0u,
+    kRamSize1kIndex = 1u,
+    kRamSize2kIndex = 2u,
+    kRamSize4kIndex = 3u,
+    kRamSize8kIndex = 4u,
+    kRamSize16kIndex = 5u,
+    kRamSize32kIndex = 6u,
+    kRamSize64kIndex = 7u,
+    kRamSize128kIndex = 9u
 };
 #endif
 

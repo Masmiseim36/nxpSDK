@@ -80,9 +80,14 @@ typedef void (* pTmrHookNotification) (void*);
 #define gDefaultMode_c gModeRx_c
 
 /*tx power*/
-#define gGenFskMaxTxPowerLevel_c     (0x20)
-#define gGenFskMinTxPowerLevel_c     (0x00)
+#define gGenFskLastLowPowerIdx_c     (32)
+#define gGenFskMaxTxPowerLevel_c     ((0x20*2)+1)   /* High power table is used from index 33 to index 65. */
+#define gGenFskMinTxPowerLevel_c     (0x00)         /* Low power table is used from index 0 to index 32. */
+
 #define gGenFskDefaultTxPowerLevel_c (0x08)
+//#define gGenFskMaxTxPowerLevel_c     (0x20)
+//#define gGenFskMinTxPowerLevel_c     (0x00)
+//#define gGenFskDefaultTxPowerLevel_c (0x08)
 
 /*channel*/
 #define gGenFskMaxChannel_c     (0x7F)

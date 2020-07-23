@@ -26,17 +26,18 @@
     <h1 class="title topictitle1">Standard storage system</h1>
 
     <div class="body">
-        <div class="p">Most of the MCUs have only a standard flash memory that can be used by the
-            nonvolatile storage system. The amount of memory that the NV system uses for permanent
-            storage and its boundaries are defined in the linker configuration file. The reserved
-            memory consists of two virtual pages. The virtual pages are equally sized and each page
-            is using one or more physical flash sectors. Therefore, the smallest configuration is
-            using two physical sectors, one sector per virtual page. The Flash Management and
-            Non-Volatile Storage Module holds a pointer to a RAM table, where the upper layers
-            register information about data that must be saved and restored by the storage system. A
-            table entry contains a generic pointer to a contiguous RAM data structure, how many
-            elements the structure contains, the size of a single element, a table entry ID, and an
-            entry type.<div class="fig fignone" id="GUID-794AD8DD-3778-475E-8667-54D83C78F9E9__FIG_UCV_2ZQ_NZ"><span class="figcap">Figure 1. NV Table example</span>
+        <div class="p">
+            Most of the MCUs have only a standard flash memory that
+            can be used by the nonvolatile storage system. The amount of memory that the NV system
+            uses for permanent storage and its boundaries are defined in the linker configuration
+            file. The reserved memory consists of two virtual pages. The virtual pages are equally
+            sized and each page is using one or more physical flash sectors. Therefore, the smallest
+            configuration is using two physical sectors, one sector per virtual page. The Flash
+            Management and Non-Volatile Storage Module holds a pointer to a RAM table, where the
+            upper layers register information about data that must be saved and restored by the
+            storage system. A table entry contains a generic pointer to a contiguous RAM data
+            structure, how many elements the structure contains, the size of a single element, a
+            table entry ID, and an entry type.<div class="fig fignone" id="GUID-794AD8DD-3778-475E-8667-54D83C78F9E9__FIG_UCV_2ZQ_NZ"><span class="figcap">Figure 1. NV Table example</span>
                 
                 <img class="image" id="GUID-794AD8DD-3778-475E-8667-54D83C78F9E9__IMAGE_TST_JZQ_NZ" src="GUID-24BEF26D-B514-4678-807C-15F52F756341-high.png"/>
             </div>

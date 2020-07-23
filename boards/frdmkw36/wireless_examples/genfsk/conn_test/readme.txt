@@ -9,7 +9,7 @@ For more information please refer to the "Kinetis MKW41Z Generic FSK Link Layer 
 
 Toolchain supported
 ===================
-- IAR Embedded Workbench 8.32.2
+- IAR Embedded Workbench 8.32.4
 - MCUXpresso IDE 10.3.1
 
 Hardware requirements

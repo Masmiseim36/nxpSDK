@@ -36,7 +36,7 @@
   <td id="projectlogo"><img alt="Logo" src="NXP_logo.bmp"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">Bluetooth® Low Energy Host Stack API Reference Manual
-   &#160;<span id="projectnumber">Rev. 12</span>
+   &#160;<span id="projectnumber">Rev. 13</span>
    </div>
    <div id="projectbrief">BLEHSAPIRM</div>
   </td>
@@ -143,6 +143,14 @@ Data Structures</h2></td></tr>
 <tr class="separator:structgap_controller_test_event__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structgap_phy_event__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#structgap_phy_event__t">gapPhyEvent_t</a></td></tr>
 <tr class="separator:structgap_phy_event__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structble_notification_event__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#structble_notification_event__t">bleNotificationEvent_t</a></td></tr>
+<tr class="separator:structble_notification_event__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structgap_init_complete__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#structgap_init_complete__t">gapInitComplete_t</a></td></tr>
+<tr class="separator:structgap_init_complete__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structble_bond_created_event__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#structble_bond_created_event__t">bleBondCreatedEvent_t</a></td></tr>
+<tr class="separator:structble_bond_created_event__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structgap_addr_ready_event__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#structgap_addr_ready_event__t">gapAddrReadyEvent_t</a></td></tr>
+<tr class="separator:structgap_addr_ready_event__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structgap_generic_event__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#structgap_generic_event__t">gapGenericEvent_t</a></td></tr>
 <tr class="separator:structgap_generic_event__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:uniongap_generic_event__t_8event_data"><td class="memItemLeft" align="right" valign="top">union &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#uniongap_generic_event__t_8event_data">gapGenericEvent_t.eventData</a></td></tr>
@@ -165,6 +173,9 @@ Macros</h2></td></tr>
 <tr class="memitem:gaf13188afc014750f740932d3633d4528"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaf13188afc014750f740932d3633d4528"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>gInvalidDeviceId_c</b></td></tr>
 <tr class="separator:gaf13188afc014750f740932d3633d4528"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga97dc73594434292dc1895be353f9c589"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga97dc73594434292dc1895be353f9c589"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>gInvalidNvmIndex_c</b></td></tr>
+<tr class="separator:ga97dc73594434292dc1895be353f9c589"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7e52528dfb7eb34284bb051cbf40ccab"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#ga7e52528dfb7eb34284bb051cbf40ccab">gcConnectionIntervalMin_c</a></td></tr>
 <tr class="separator:ga7e52528dfb7eb34284bb051cbf40ccab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac0627cbb300e9d52221676335e2ae321"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gac0627cbb300e9d52221676335e2ae321"></a>
@@ -192,6 +203,12 @@ Macros</h2></td></tr>
 <tr class="separator:gac161e15f0609e02f2cdcaec3b1b5dc1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gad38a7d1745fd5c4f7cf444b222d472aa"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#gad38a7d1745fd5c4f7cf444b222d472aa">gcConnectionEventMaxDefault_c</a></td></tr>
 <tr class="separator:gad38a7d1745fd5c4f7cf444b222d472aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga10b2d890d871e1489bb02b7e70d9bdfb"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#ga10b2d890d871e1489bb02b7e70d9bdfb">STATIC</a></td></tr>
+<tr class="separator:ga10b2d890d871e1489bb02b7e70d9bdfb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5b82acd6c5c8081ba9bc823fcc2aed32"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#ga5b82acd6c5c8081ba9bc823fcc2aed32">gBleAddrTypePublic_c</a></td></tr>
+<tr class="separator:ga5b82acd6c5c8081ba9bc823fcc2aed32"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad1fd480a186e55b1b3e662c75a1e7d21"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#gad1fd480a186e55b1b3e662c75a1e7d21">gBleAddrTypeRandom_c</a></td></tr>
+<tr class="separator:gad1fd480a186e55b1b3e662c75a1e7d21"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gadcd3e4ab7e0a6eccf23cdb7591d6979a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#gadcd3e4ab7e0a6eccf23cdb7591d6979a">Ble_IsPrivateResolvableDeviceAddress</a>(bleAddress)</td></tr>
 <tr class="separator:gadcd3e4ab7e0a6eccf23cdb7591d6979a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2a0547abfe0f27098d3d28d220696a5c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#ga2a0547abfe0f27098d3d28d220696a5c">Ble_IsPrivateNonresolvableDeviceAddress</a>(bleAddress)</td></tr>
@@ -202,6 +219,30 @@ Macros</h2></td></tr>
 <tr class="separator:gaf74b38f3a701b32e6246a54bf7d9741f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2dd104ddcae223d221c9bc04f01b7ebb"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#ga2dd104ddcae223d221c9bc04f01b7ebb">Ble_CopyDeviceAddress</a>(destinationAddress,  sourceAddress)</td></tr>
 <tr class="separator:ga2dd104ddcae223d221c9bc04f01b7ebb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3f372a2684d0df05a40a15c62d4b1cfe"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#ga3f372a2684d0df05a40a15c62d4b1cfe">gBleUuidType16_c</a></td></tr>
+<tr class="separator:ga3f372a2684d0df05a40a15c62d4b1cfe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac1d2a66e8b3e98a591f41740c33ad1a2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#gac1d2a66e8b3e98a591f41740c33ad1a2">gBleUuidType128_c</a></td></tr>
+<tr class="separator:gac1d2a66e8b3e98a591f41740c33ad1a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4e25fdf047eadaae7bfd784668b61e81"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#ga4e25fdf047eadaae7bfd784668b61e81">gBleUuidType32_c</a></td></tr>
+<tr class="separator:ga4e25fdf047eadaae7bfd784668b61e81"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4d6833a1bd22bae0bfa126baf52a3206"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#ga4d6833a1bd22bae0bfa126baf52a3206">gLePhy1MFlag_c</a></td></tr>
+<tr class="separator:ga4d6833a1bd22bae0bfa126baf52a3206"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7c503211ea108a85885561b03a3e4e2f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#ga7c503211ea108a85885561b03a3e4e2f">gLePhy2MFlag_c</a></td></tr>
+<tr class="separator:ga7c503211ea108a85885561b03a3e4e2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga82c82bee0e68e9ebb5ee083cd4de4022"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#ga82c82bee0e68e9ebb5ee083cd4de4022">gLePhyCodedFlag_c</a></td></tr>
+<tr class="separator:ga82c82bee0e68e9ebb5ee083cd4de4022"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6d831525305652878598906c284b73e8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#ga6d831525305652878598906c284b73e8">gUseDeviceAddress_c</a></td></tr>
+<tr class="separator:ga6d831525305652878598906c284b73e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4fc8161f0926a87e1e46f679dabc8f9f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#ga4fc8161f0926a87e1e46f679dabc8f9f">gUseWhiteList_c</a></td></tr>
+<tr class="separator:ga4fc8161f0926a87e1e46f679dabc8f9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga41063f14e54bfea5d93efabbc849daa0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#ga41063f14e54bfea5d93efabbc849daa0">gScanAll_c</a></td></tr>
+<tr class="separator:ga41063f14e54bfea5d93efabbc849daa0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga50ab3d38f56668d7b0527f263523ee93"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#ga50ab3d38f56668d7b0527f263523ee93">gScanWithWhiteList_c</a></td></tr>
+<tr class="separator:ga50ab3d38f56668d7b0527f263523ee93"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga34ba3aba3be441fe92619ca832718768"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#ga34ba3aba3be441fe92619ca832718768">gNetworkPrivacy_c</a></td></tr>
+<tr class="separator:ga34ba3aba3be441fe92619ca832718768"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7cb108a913fd83d5a02583a8a90216af"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#ga7cb108a913fd83d5a02583a8a90216af">gDevicePrivacy_c</a></td></tr>
+<tr class="separator:ga7cb108a913fd83d5a02583a8a90216af"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga54d07e77b7d5c90c38da35c061366b3f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#ga54d07e77b7d5c90c38da35c061366b3f">gBleSig_PrimaryService_d</a></td></tr>
 <tr class="separator:ga54d07e77b7d5c90c38da35c061366b3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga52e03f6155878363081aa94429a5e98c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#ga52e03f6155878363081aa94429a5e98c">gBleSig_SecondaryService_d</a></td></tr>
@@ -426,6 +467,27 @@ Macros</h2></td></tr>
 <tr class="separator:gac963facf9de42b65610e46bb9299875f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga34b8ecfd068ef1f8a1bcfbc8a4ef6720"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#ga34b8ecfd068ef1f8a1bcfbc8a4ef6720">gBleSig_HTTPS_Security_d</a></td></tr>
 <tr class="separator:ga34b8ecfd068ef1f8a1bcfbc8a4ef6720"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga65d7c59d4c0237b47fec6d4f45ed677a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#ga65d7c59d4c0237b47fec6d4f45ed677a">gBleSig_ResolvablePrivateAddressOnly_d</a></td></tr>
+<tr class="separator:ga65d7c59d4c0237b47fec6d4f45ed677a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8fba37a0c7e9d6430e0d5516e033b4d1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#ga8fba37a0c7e9d6430e0d5516e033b4d1">gBleSig_MeshProvisioningService_d</a></td></tr>
+<tr class="separator:ga8fba37a0c7e9d6430e0d5516e033b4d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga71207c643844baf8109265eac0415483"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#ga71207c643844baf8109265eac0415483">gBleSig_MeshProxyService_d</a></td></tr>
+<tr class="separator:ga71207c643844baf8109265eac0415483"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2c7bd1adf0157bfe088bbf1bf4ecee26"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#ga2c7bd1adf0157bfe088bbf1bf4ecee26">gBleSig_MeshProvDataIn_d</a></td></tr>
+<tr class="separator:ga2c7bd1adf0157bfe088bbf1bf4ecee26"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga51c4b8719c38fce10547fbe4a786c126"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#ga51c4b8719c38fce10547fbe4a786c126">gBleSig_MeshProvDataOut_d</a></td></tr>
+<tr class="separator:ga51c4b8719c38fce10547fbe4a786c126"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga69acea1bc365018844d060053e5197f2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#ga69acea1bc365018844d060053e5197f2">gBleSig_MeshProxyDataIn_d</a></td></tr>
+<tr class="separator:ga69acea1bc365018844d060053e5197f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafd269df3670c1e3a21f0bb6b871b217e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#gafd269df3670c1e3a21f0bb6b871b217e">gBleSig_MeshProxyDataOut_d</a></td></tr>
+<tr class="separator:gafd269df3670c1e3a21f0bb6b871b217e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga37155f65a69e1012a2e480fdf3be9ff9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#ga37155f65a69e1012a2e480fdf3be9ff9">gBleSig_CAR_NotSupported_d</a></td></tr>
+<tr class="separator:ga37155f65a69e1012a2e480fdf3be9ff9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga517ce4f4cc3b4b6afd9fda9ae7955243"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga517ce4f4cc3b4b6afd9fda9ae7955243"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>gBleSig_CAR_Supported_d</b></td></tr>
+<tr class="separator:ga517ce4f4cc3b4b6afd9fda9ae7955243"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3bd8308c9d8ca36f05bd082722b91123"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#ga3bd8308c9d8ca36f05bd082722b91123">gBleSig_RPAO_Used_d</a></td></tr>
+<tr class="separator:ga3bd8308c9d8ca36f05bd082722b91123"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac7922bba76962b3de59f7f3e18224ea3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#gac7922bba76962b3de59f7f3e18224ea3">BleSig_IsGroupingAttributeUuid16</a>(uuid16)</td></tr>
 <tr class="separator:gac7922bba76962b3de59f7f3e18224ea3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga836f89264ffe3f8f483585a799f43635"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#ga836f89264ffe3f8f483585a799f43635">BleSig_IsServiceDeclarationUuid16</a>(uuid16)</td></tr>
@@ -482,12 +544,40 @@ Macros</h2></td></tr>
 Typedefs</h2></td></tr>
 <tr class="memitem:ga79037cf180936e7aa4ef278d2164b4d5"><td class="memItemLeft" align="right" valign="top">typedef uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#ga79037cf180936e7aa4ef278d2164b4d5">deviceId_t</a></td></tr>
 <tr class="separator:ga79037cf180936e7aa4ef278d2164b4d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3d5807c061008dca5bc0f88ea0eea085"><td class="memItemLeft" align="right" valign="top">typedef uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#ga3d5807c061008dca5bc0f88ea0eea085">bleAddressType_t</a></td></tr>
+<tr class="separator:ga3d5807c061008dca5bc0f88ea0eea085"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga79cc8c6684c289e11ab72e839ddbd32c"><td class="memItemLeft" align="right" valign="top">typedef uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#ga79cc8c6684c289e11ab72e839ddbd32c">bleDeviceAddress_t</a>[<a class="el" href="group___b_l_e___c_o_n_f_i_g.html#gab2909f40a6c8992c5664efb47e208ef0">gcBleDeviceAddressSize_c</a>]</td></tr>
 <tr class="separator:ga79cc8c6684c289e11ab72e839ddbd32c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0fef97ae06525783a6c43c8508ecc35b"><td class="memItemLeft" align="right" valign="top">typedef uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#ga0fef97ae06525783a6c43c8508ecc35b">bleUuidType_t</a></td></tr>
+<tr class="separator:ga0fef97ae06525783a6c43c8508ecc35b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga402bc9cd47ae2000c5eb58d4950d24ef"><td class="memItemLeft" align="right" valign="top">typedef uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#ga402bc9cd47ae2000c5eb58d4950d24ef">bleAdvReportEventProperties_t</a></td></tr>
+<tr class="separator:ga402bc9cd47ae2000c5eb58d4950d24ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab59b1e825ebd8a05ba37db6eb38a398b"><td class="memItemLeft" align="right" valign="top">typedef uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#gab59b1e825ebd8a05ba37db6eb38a398b">bleAdvRequestProperties_t</a></td></tr>
+<tr class="separator:gab59b1e825ebd8a05ba37db6eb38a398b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5a4d20e50830458de9b733b04af8b7de"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga5a4d20e50830458de9b733b04af8b7de"></a>
+typedef uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>bleMasterClockAccuracy_t</b></td></tr>
+<tr class="separator:ga5a4d20e50830458de9b733b04af8b7de"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9c9359ad7ca8cd9cbeef9f6db38d77c1"><td class="memItemLeft" align="right" valign="top">typedef uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#ga9c9359ad7ca8cd9cbeef9f6db38d77c1">bleScanningFilterPolicy_t</a></td></tr>
+<tr class="separator:ga9c9359ad7ca8cd9cbeef9f6db38d77c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga755ef995251dcaf52a54d965c8eb6b10"><td class="memItemLeft" align="right" valign="top">typedef uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#ga755ef995251dcaf52a54d965c8eb6b10">bleInitiatorFilterPolicy_t</a></td></tr>
+<tr class="separator:ga755ef995251dcaf52a54d965c8eb6b10"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae9196b336d5bf22fb6bd701a406d3fdc"><td class="memItemLeft" align="right" valign="top">typedef uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#gae9196b336d5bf22fb6bd701a406d3fdc">blePrivacyMode_t</a></td></tr>
+<tr class="separator:gae9196b336d5bf22fb6bd701a406d3fdc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1c12dc7a0dcf33d96c13a2295f1ef3cf"><td class="memItemLeft" align="right" valign="top">typedef uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#ga1c12dc7a0dcf33d96c13a2295f1ef3cf">bleChannelMap_t</a>[<a class="el" href="group___b_l_e___c_o_n_f_i_g.html#ga7da14d6f6c00fabfccb385eda508d195">gcBleChannelMapSize_c</a>]</td></tr>
+<tr class="separator:ga1c12dc7a0dcf33d96c13a2295f1ef3cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga73dbaf5e04031632577ef968e6fa19a6"><td class="memItemLeft" align="right" valign="top">typedef uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#ga73dbaf5e04031632577ef968e6fa19a6">gapLePhyFlags_t</a></td></tr>
+<tr class="separator:ga73dbaf5e04031632577ef968e6fa19a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6f4692f9bbf469483dd6485a9b10be31"><td class="memItemLeft" align="right" valign="top">typedef uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#ga6f4692f9bbf469483dd6485a9b10be31">gapLePhyMode_t</a></td></tr>
+<tr class="separator:ga6f4692f9bbf469483dd6485a9b10be31"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga09a0389091c79a5dc6f8b8ec0ff31384"><td class="memItemLeft" align="right" valign="top">typedef uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#ga09a0389091c79a5dc6f8b8ec0ff31384">bleNotificationEventType_t</a></td></tr>
+<tr class="separator:ga09a0389091c79a5dc6f8b8ec0ff31384"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaceb8475d8d1d37ab79c2e96704750488"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#gaceb8475d8d1d37ab79c2e96704750488">gapGenericCallback_t</a>) (<a class="el" href="group___b_l_e.html#structgap_generic_event__t">gapGenericEvent_t</a> *pGenericEvent)</td></tr>
 <tr class="separator:gaceb8475d8d1d37ab79c2e96704750488"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac7b8a34eb97cdf37cca1c85eb02543e5"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="group___b_l_e.html#ga50b56ac2045dae012646ed0377e3412c">bleResult_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#gac7b8a34eb97cdf37cca1c85eb02543e5">hciHostToControllerInterface_t</a>) (<a class="el" href="group___b_l_e.html#gaf417bdf34d0ed563fbf40b79aae830b4">hciPacketType_t</a> packetType, void *pPacket, uint16_t packetSize)</td></tr>
 <tr class="separator:gac7b8a34eb97cdf37cca1c85eb02543e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5fcc4235fc7a3f8dc65a8fc7a7d05308"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga5fcc4235fc7a3f8dc65a8fc7a7d05308"></a>
+typedef uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>LeSupportedFeatures_t</b></td></tr>
+<tr class="separator:ga5fcc4235fc7a3f8dc65a8fc7a7d05308"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
@@ -513,6 +603,8 @@ Enumerations</h2></td></tr>
 &#160;&#160;<a class="el" href="group___b_l_e.html#gga50b56ac2045dae012646ed0377e3412ca75c517aff958a353cd5cefc8fa4de8e8">gBleUnexpectedError_c</a>, 
 <br />
 &#160;&#160;<a class="el" href="group___b_l_e.html#gga50b56ac2045dae012646ed0377e3412ca4c019ea7e74661e6442cde18fde60c81">gBleInvalidState_c</a>, 
+<br />
+&#160;&#160;<a class="el" href="group___b_l_e.html#gga50b56ac2045dae012646ed0377e3412cae21dc632029b282f44556e1594b33ec6">gBleTimerError_c</a>, 
 <br />
 &#160;&#160;<b>gHciStatusBase_c</b>, 
 <br />
@@ -640,11 +732,19 @@ Enumerations</h2></td></tr>
 <br />
 &#160;&#160;<b>gHciConnectionTerminatedDueToMicFailure_c</b>, 
 <br />
-&#160;&#160;<b>gHciConnectionFailedToBeEstablished_c</b>, 
+&#160;&#160;<b>gHciConnectionFailedToBeEstablishedOrSyncTimeout_c</b>, 
 <br />
 &#160;&#160;<b>gHciMacConnectionFailed_c</b>, 
 <br />
 &#160;&#160;<b>gHciCoarseClockAdjustmentRejected_c</b>, 
+<br />
+&#160;&#160;<b>gHciType0SubmapNotDefined_c</b>, 
+<br />
+&#160;&#160;<b>gHciUnknownAdvertisingIdentifier_c</b>, 
+<br />
+&#160;&#160;<b>gHciLimitReached_c</b>, 
+<br />
+&#160;&#160;<b>gHciOperationCancelledByHost_c</b>, 
 <br />
 &#160;&#160;<b>gHciAlreadyInit_c</b>, 
 <br />
@@ -774,6 +874,8 @@ Enumerations</h2></td></tr>
 <br />
 &#160;&#160;<b>gSmPairingErrorUnknownReason_c</b>, 
 <br />
+&#160;&#160;<b>gSmPairingErrorTimeout_c</b>, 
+<br />
 &#160;&#160;<a class="el" href="group___b_l_e.html#gga50b56ac2045dae012646ed0377e3412cad3cf2530e4a74fa3359e0d2187e765ea">gSmTbResolvableAddressDoesNotMatchIrk_c</a>, 
 <br />
 &#160;&#160;<a class="el" href="group___b_l_e.html#gga50b56ac2045dae012646ed0377e3412ca0f2ddc899159e2968f900a0c8a15a4ae">gSmTbInvalidDataSignature_c</a>, 
@@ -802,6 +904,8 @@ Enumerations</h2></td></tr>
 <br />
 &#160;&#160;<a class="el" href="group___b_l_e.html#gga50b56ac2045dae012646ed0377e3412ca36008d8bb6adfc3984924795d1483b2d">gGattClientConfirmationTimeout_c</a>, 
 <br />
+&#160;&#160;<a class="el" href="group___b_l_e.html#gga50b56ac2045dae012646ed0377e3412ca772ed62335c4a24d8ba6886f5ce78d1b">gGattInvalidPduReceived_c</a>, 
+<br />
 &#160;&#160;<a class="el" href="group___b_l_e.html#gga50b56ac2045dae012646ed0377e3412cab62739cf4b9cc0e1d45e8364746670f0">gGapStatusBase_c</a>, 
 <br />
 &#160;&#160;<a class="el" href="group___b_l_e.html#gga50b56ac2045dae012646ed0377e3412ca294e8fbe054c1b8ffdee6c74cc7a0501">gGapSuccess_c</a>, 
@@ -811,6 +915,8 @@ Enumerations</h2></td></tr>
 &#160;&#160;<a class="el" href="group___b_l_e.html#gga50b56ac2045dae012646ed0377e3412ca1f328eaeb07426cdd8ebf544f76a865b">gGapScanRspDataTooLong_c</a>, 
 <br />
 &#160;&#160;<a class="el" href="group___b_l_e.html#gga50b56ac2045dae012646ed0377e3412ca57f1dba4eac72acf04b58bd653e3de38">gGapDeviceNotBonded_c</a>, 
+<br />
+&#160;&#160;<a class="el" href="group___b_l_e.html#gga50b56ac2045dae012646ed0377e3412ca793442b4929d0105556e6e1cc095b7da">gGapAnotherProcedureInProgress_c</a>, 
 <br />
 &#160;&#160;<a class="el" href="group___b_l_e.html#gga50b56ac2045dae012646ed0377e3412caee1ee9f83b54bb1c85a132cfd3f3a602">gDevDbStatusBase_c</a>, 
 <br />
@@ -836,22 +942,6 @@ Enumerations</h2></td></tr>
 <br />
  }</td></tr>
 <tr class="separator:ga50b56ac2045dae012646ed0377e3412c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga35852845649e4390e942af40f9380c29"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#ga35852845649e4390e942af40f9380c29">bleAddressType_t</a> { <br />
-&#160;&#160;<a class="el" href="group___b_l_e.html#gga35852845649e4390e942af40f9380c29abbbad0768b71d5ce9e6355a8d394da64">gBleAddrTypePublic_c</a>, 
-<br />
-&#160;&#160;<a class="el" href="group___b_l_e.html#gga35852845649e4390e942af40f9380c29ad12e135dfda5e5263126ccc1b29d7134">gBleAddrTypeRandom_c</a>
-<br />
- }</td></tr>
-<tr class="separator:ga35852845649e4390e942af40f9380c29"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2f05260087a91a332e4c593274c5c280"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#ga2f05260087a91a332e4c593274c5c280">bleUuidType_t</a> { <br />
-&#160;&#160;<a class="el" href="group___b_l_e.html#gga2f05260087a91a332e4c593274c5c280ac5143cb8fe28273c342571236c763409">gBleUuidType16_c</a>, 
-<br />
-&#160;&#160;<a class="el" href="group___b_l_e.html#gga2f05260087a91a332e4c593274c5c280ab4b55af5fb0b4ec3033aa3ba64307193">gBleUuidType128_c</a>, 
-<br />
-&#160;&#160;<a class="el" href="group___b_l_e.html#gga2f05260087a91a332e4c593274c5c280a713933ca0edaf142921ac3db190b70cc">gBleUuidType32_c</a>
-<br />
- }</td></tr>
-<tr class="separator:ga2f05260087a91a332e4c593274c5c280"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2be06160ef0aef89a825f87350dbd551"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#ga2be06160ef0aef89a825f87350dbd551">bleAdvertisingType_t</a> { <br />
 &#160;&#160;<a class="el" href="group___b_l_e.html#gga2be06160ef0aef89a825f87350dbd551a481505cc87111a38a8cff2e25db0c545">gAdvConnectableUndirected_c</a>, 
 <br />
@@ -865,6 +955,38 @@ Enumerations</h2></td></tr>
 <br />
  }</td></tr>
 <tr class="separator:ga2be06160ef0aef89a825f87350dbd551"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad9773943102856b2004a6a51207bb8af"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#gad9773943102856b2004a6a51207bb8af">bleAdvReportEventProperties_tag</a> { <br />
+&#160;&#160;<a class="el" href="group___b_l_e.html#ggad9773943102856b2004a6a51207bb8afa587a7687dd8e2bfa903038011d5e1d5c">gAdvEventConnectable_c</a>, 
+<br />
+&#160;&#160;<a class="el" href="group___b_l_e.html#ggad9773943102856b2004a6a51207bb8afaa3cb3cd48415a7415460ec619e61ff0f">gAdvEventScannable_c</a>, 
+<br />
+&#160;&#160;<a class="el" href="group___b_l_e.html#ggad9773943102856b2004a6a51207bb8afa36f5c5f8fc0f05a19c7c70b59a6e396c">gAdvEventDirected_c</a>, 
+<br />
+&#160;&#160;<a class="el" href="group___b_l_e.html#ggad9773943102856b2004a6a51207bb8afa281cd1106872bb951ced35b99d923e99">gAdvEventScanResponse_c</a>, 
+<br />
+&#160;&#160;<a class="el" href="group___b_l_e.html#ggad9773943102856b2004a6a51207bb8afadb0d927cc8cea26ffdacfc2a499294cc">gAdvEventLegacy_c</a>, 
+<br />
+&#160;&#160;<a class="el" href="group___b_l_e.html#ggad9773943102856b2004a6a51207bb8afae67a9e85e28d655aad9e544ee657b068">gAdvEventAnonymous_c</a>
+<br />
+ }</td></tr>
+<tr class="separator:gad9773943102856b2004a6a51207bb8af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga86eba3feeac89efadd33a03abe9f53cb"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#ga86eba3feeac89efadd33a03abe9f53cb">bleAdvRequestProperties_tag</a> { <br />
+&#160;&#160;<a class="el" href="group___b_l_e.html#gga86eba3feeac89efadd33a03abe9f53cba86f2bc87725891b4bb540fc689cd0e3a">gAdvReqConnectable_c</a>, 
+<br />
+&#160;&#160;<a class="el" href="group___b_l_e.html#gga86eba3feeac89efadd33a03abe9f53cba196ae5284f63e46fe0c5ea305b9a19e1">gAdvReqScannable_c</a>, 
+<br />
+&#160;&#160;<a class="el" href="group___b_l_e.html#gga86eba3feeac89efadd33a03abe9f53cbafc200a046c6718ee5cb56e3e7dfdd017">gAdvReqDirected_c</a>, 
+<br />
+&#160;&#160;<a class="el" href="group___b_l_e.html#gga86eba3feeac89efadd33a03abe9f53cba1ed228aee831e11730302d06b1e6eb47">gAdvReqHighDutyCycle_c</a>, 
+<br />
+&#160;&#160;<a class="el" href="group___b_l_e.html#gga86eba3feeac89efadd33a03abe9f53cba0537ab9f05932548b6e2914099bc4a3f">gAdvReqLegacy_c</a>, 
+<br />
+&#160;&#160;<a class="el" href="group___b_l_e.html#gga86eba3feeac89efadd33a03abe9f53cba75bef45884231163bcc84bc8a649573b">gAdvReqAnonymous_c</a>, 
+<br />
+&#160;&#160;<a class="el" href="group___b_l_e.html#gga86eba3feeac89efadd33a03abe9f53cba4be65673a87979fb37fdfda1d521b2fc">gAdvIncludeTxPower_c</a>
+<br />
+ }</td></tr>
+<tr class="separator:ga86eba3feeac89efadd33a03abe9f53cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga9fab51bedf6e6dc5946a5e7c56eb295d"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#ga9fab51bedf6e6dc5946a5e7c56eb295d">bleAdvertisingFilterPolicy_t</a> { <br />
 &#160;&#160;<a class="el" href="group___b_l_e.html#gga9fab51bedf6e6dc5946a5e7c56eb295daec1625d30dd301edc57383ccbfc7a7f8">gBleAdvFilterAllowScanFromAnyAllowConnFromAny_c</a>, 
 <br />
@@ -883,7 +1005,7 @@ Enumerations</h2></td></tr>
 <br />
  }</td></tr>
 <tr class="separator:gafefbf929253b3b78ac0298d5dc2a4c7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab6fa66adb86b48ce127ef541494f01f2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gab6fa66adb86b48ce127ef541494f01f2"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><b>bleMasterClockAccuracy_t</b> { <br />
+<tr class="memitem:ga76ab7f7637a42158ec8e145dca9db439"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga76ab7f7637a42158ec8e145dca9db439"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><b>bleMasterClockAccuracy_tag</b> { <br />
 &#160;&#160;<b>gBleMasterClkAcc500ppm_c</b>, 
 <br />
 &#160;&#160;<b>gBleMasterClkAcc250ppm_c</b>, 
@@ -901,7 +1023,7 @@ Enumerations</h2></td></tr>
 &#160;&#160;<b>gBleMasterClkAcc20ppm_c</b>
 <br />
  }</td></tr>
-<tr class="separator:gab6fa66adb86b48ce127ef541494f01f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:ga76ab7f7637a42158ec8e145dca9db439"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga1e2a536403e3cb636bb2147853bac6b3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga1e2a536403e3cb636bb2147853bac6b3"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><b>bleAdvertisingReportEventType_t</b> { <br />
 &#160;&#160;<b>gBleAdvRepAdvInd_c</b>, 
 <br />
@@ -933,20 +1055,6 @@ Enumerations</h2></td></tr>
 <br />
  }</td></tr>
 <tr class="separator:ga9ab6cce0fc52ca3e2b095e55c5342504"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga04e2fa3454a43dec7796a73ae6b295e2"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#ga04e2fa3454a43dec7796a73ae6b295e2">bleScanningFilterPolicy_t</a> { <br />
-&#160;&#160;<a class="el" href="group___b_l_e.html#gga04e2fa3454a43dec7796a73ae6b295e2abefd86c31ba46094c775dced46de65d4">gScanAll_c</a>, 
-<br />
-&#160;&#160;<a class="el" href="group___b_l_e.html#gga04e2fa3454a43dec7796a73ae6b295e2ab97f81932dc1b7f1cbeaf7b9d01f06b4">gScanWithWhiteList_c</a>
-<br />
- }</td></tr>
-<tr class="separator:ga04e2fa3454a43dec7796a73ae6b295e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad9967cf7e96bdbf3ebfc0b3f25967622"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#gad9967cf7e96bdbf3ebfc0b3f25967622">bleInitiatorFilterPolicy_t</a> { <br />
-&#160;&#160;<a class="el" href="group___b_l_e.html#ggad9967cf7e96bdbf3ebfc0b3f25967622a38776679785528d841f619b5d27a960d">gUseDeviceAddress_c</a>, 
-<br />
-&#160;&#160;<a class="el" href="group___b_l_e.html#ggad9967cf7e96bdbf3ebfc0b3f25967622a651dd58c53cdeb72d738df4195366492">gUseWhiteList_c</a>
-<br />
- }</td></tr>
-<tr class="separator:gad9967cf7e96bdbf3ebfc0b3f25967622"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gab42415fb4ef79a2e969bfc543c087707"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#gab42415fb4ef79a2e969bfc543c087707">bleTransmitPowerLevelType_t</a> { <br />
 &#160;&#160;<a class="el" href="group___b_l_e.html#ggab42415fb4ef79a2e969bfc543c087707a5713cb14a18ffd5fb50e1b6f4ef5e4e4">gReadCurrentTxPowerLevel_c</a>, 
 <br />
@@ -1097,8 +1205,6 @@ Enumerations</h2></td></tr>
 <br />
 &#160;&#160;<a class="el" href="group___b_l_e.html#ggae0321289c44dc1da99802a87a094884aa1bee42c453e760923f98907113e384c7">gRandomAddressSet_c</a>, 
 <br />
-&#160;&#160;<a class="el" href="group___b_l_e.html#ggae0321289c44dc1da99802a87a094884aab0a691c2743bbead00bab317b20fb54b">gControllerResetComplete_c</a>, 
-<br />
 &#160;&#160;<a class="el" href="group___b_l_e.html#ggae0321289c44dc1da99802a87a094884aa5f994f559645e1cda68b876009c23d8e">gLeScPublicKeyRegenerated_c</a>, 
 <br />
 &#160;&#160;<a class="el" href="group___b_l_e.html#ggae0321289c44dc1da99802a87a094884aa2561624a00bf6f6bc6e5aadab4b742c9">gLeScLocalOobData_c</a>, 
@@ -1111,7 +1217,29 @@ Enumerations</h2></td></tr>
 <br />
 &#160;&#160;<a class="el" href="group___b_l_e.html#ggae0321289c44dc1da99802a87a094884aa090c1ad2641b301297f35990c367a828">gTxPowerLevelSetComplete_c</a>, 
 <br />
-&#160;&#160;<a class="el" href="group___b_l_e.html#ggae0321289c44dc1da99802a87a094884aa91b82b9a6b613a0c934ebf9a49651d51">gLePhyEvent_c</a>
+&#160;&#160;<a class="el" href="group___b_l_e.html#ggae0321289c44dc1da99802a87a094884aa91b82b9a6b613a0c934ebf9a49651d51">gLePhyEvent_c</a>, 
+<br />
+&#160;&#160;<a class="el" href="group___b_l_e.html#ggae0321289c44dc1da99802a87a094884aa62bb4a50b067dec78d774374eff660a3">gControllerNotificationEvent_c</a>, 
+<br />
+&#160;&#160;<a class="el" href="group___b_l_e.html#ggae0321289c44dc1da99802a87a094884aadfca6dd1bb15472c39336d74bc0baffe">gBondCreatedEvent_c</a>, 
+<br />
+&#160;&#160;<a class="el" href="group___b_l_e.html#ggae0321289c44dc1da99802a87a094884aa3e0dc0faff811a8df2b76c9247cd9f8a">gChannelMapSet_c</a>, 
+<br />
+&#160;&#160;<a class="el" href="group___b_l_e.html#ggae0321289c44dc1da99802a87a094884aa4fb4e6fac375236a1dc9ff657b0e1ca0">gExtAdvertisingParametersSetupComplete_c</a>, 
+<br />
+&#160;&#160;<a class="el" href="group___b_l_e.html#ggae0321289c44dc1da99802a87a094884aa8d0a57822ac0f651f970deea2830d2e8">gExtAdvertisingDataSetupComplete_c</a>, 
+<br />
+&#160;&#160;<a class="el" href="group___b_l_e.html#ggae0321289c44dc1da99802a87a094884aadd02d1b5cab499efcb8075b03133e755">gExtAdvertisingSetRemoveComplete_c</a>, 
+<br />
+&#160;&#160;<a class="el" href="group___b_l_e.html#ggae0321289c44dc1da99802a87a094884aa16ffd3b2173ab84d14a543eef5f3fe8c">gPeriodicAdvParamSetupComplete_c</a>, 
+<br />
+&#160;&#160;<a class="el" href="group___b_l_e.html#ggae0321289c44dc1da99802a87a094884aad38f26df0b45dc4d7427d9514e3972f8">gPeriodicAdvDataSetupComplete_c</a>, 
+<br />
+&#160;&#160;<a class="el" href="group___b_l_e.html#ggae0321289c44dc1da99802a87a094884aaed950429451ef180631a2fe8f5153517">gPeriodicAdvListUpdateComplete_c</a>, 
+<br />
+&#160;&#160;<a class="el" href="group___b_l_e.html#ggae0321289c44dc1da99802a87a094884aa5ad85d1408fffde3241608aa6e56e3d7">gPeriodicAdvCreateSyncCancelled_c</a>, 
+<br />
+&#160;&#160;<a class="el" href="group___b_l_e.html#ggae0321289c44dc1da99802a87a094884aad8237f7739691ae10a2aeb7203a0b56d">gTxEntryAvailable_c</a>
 <br />
  }</td></tr>
 <tr class="separator:gae0321289c44dc1da99802a87a094884a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1200,7 +1328,43 @@ Enumerations</h2></td></tr>
 <br />
 &#160;&#160;<b>gLeReadPhy_c</b>, 
 <br />
-&#160;&#160;<b>gLeSetPhy_c</b>
+&#160;&#160;<b>gLeSetPhy_c</b>, 
+<br />
+&#160;&#160;<b>gSaveKeys_c</b>, 
+<br />
+&#160;&#160;<b>gSetChannelMap_c</b>, 
+<br />
+&#160;&#160;<b>gReadLocalSupportedCommands_c</b>, 
+<br />
+&#160;&#160;<b>gEnableLdmTimer_c</b>, 
+<br />
+&#160;&#160;<b>gRemoveAdvertisingSet_c</b>, 
+<br />
+&#160;&#160;<b>gLePeriodicAdvSyncEstb_c</b>, 
+<br />
+&#160;&#160;<b>gLePeriodicAdvSyncLost_c</b>, 
+<br />
+&#160;&#160;<b>gLeRemoveDeviceFromPeriodicAdvList_c</b>, 
+<br />
+&#160;&#160;<b>gLeClearPeriodicAdvList_c</b>, 
+<br />
+&#160;&#160;<b>gLeAddDeviceToPeriodicAdvList_c</b>, 
+<br />
+&#160;&#160;<b>gLeReadNumOfSupportedAdvSets_c</b>, 
+<br />
+&#160;&#160;<b>gLeReadPeriodicAdvListSize_c</b>, 
+<br />
+&#160;&#160;<b>gLeReadMaxAdvDataLen_c</b>, 
+<br />
+&#160;&#160;<b>gPeriodicAdvCreateSync</b>, 
+<br />
+&#160;&#160;<b>gPeriodicAdvCancelSync</b>, 
+<br />
+&#160;&#160;<b>gPeriodicAdvTerminateSync</b>, 
+<br />
+&#160;&#160;<b>gL2capRxPacket_c</b>, 
+<br />
+&#160;&#160;<b>gExtAdvReportProcess_c</b>
 <br />
  }</td></tr>
 <tr class="separator:ga7b9f3dfd81a9e2875412ad8cf01bbd97"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1220,24 +1384,6 @@ Enumerations</h2></td></tr>
 <br />
  }</td></tr>
 <tr class="separator:ga4093b836b14ffbaccf1b572362b7006b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga14d98836cda9e4b38409ad19a901f061"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#ga14d98836cda9e4b38409ad19a901f061">gapLeTxPhyFlags_t</a> { <br />
-&#160;&#160;<a class="el" href="group___b_l_e.html#gga14d98836cda9e4b38409ad19a901f061a9468af62333e3328aca2cd56b74a3768">gLeTxPhy1MFlag_c</a>, 
-<br />
-&#160;&#160;<a class="el" href="group___b_l_e.html#gga14d98836cda9e4b38409ad19a901f061aa701afd401d3b76df834aea0fe949dd7">gLeTxPhy2MFlag_c</a>, 
-<br />
-&#160;&#160;<a class="el" href="group___b_l_e.html#gga14d98836cda9e4b38409ad19a901f061acabeaedf17896bf2d6805c68c8d12870">gLeTxPhyCodedFlag_c</a>
-<br />
- }</td></tr>
-<tr class="separator:ga14d98836cda9e4b38409ad19a901f061"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6ad1052c71337f93c2246762108dd905"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#ga6ad1052c71337f93c2246762108dd905">gapLeRxPhyFlags_t</a> { <br />
-&#160;&#160;<a class="el" href="group___b_l_e.html#gga6ad1052c71337f93c2246762108dd905a3d3f1a47a516c098659ae1d4ca3bdba1">gLeRxPhy1MFlag_c</a>, 
-<br />
-&#160;&#160;<a class="el" href="group___b_l_e.html#gga6ad1052c71337f93c2246762108dd905a28543e66a77cbb47603acac52b53cc7e">gLeRxPhy2MFlag_c</a>, 
-<br />
-&#160;&#160;<a class="el" href="group___b_l_e.html#gga6ad1052c71337f93c2246762108dd905a4dbf783a43b6b331a885b55df41cdf09">gLeRxPhyCodedFlag_c</a>
-<br />
- }</td></tr>
-<tr class="separator:ga6ad1052c71337f93c2246762108dd905"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga3a9b33736e65f4c53284aaaf1c4e7e28"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#ga3a9b33736e65f4c53284aaaf1c4e7e28">gapLePhyOptionsFlags_t</a> { <br />
 &#160;&#160;<a class="el" href="group___b_l_e.html#gga3a9b33736e65f4c53284aaaf1c4e7e28a0c8fea03996ac26f9e87036ad085527b">gLeCodingNoPreference_c</a>, 
 <br />
@@ -1247,24 +1393,15 @@ Enumerations</h2></td></tr>
 <br />
  }</td></tr>
 <tr class="separator:ga3a9b33736e65f4c53284aaaf1c4e7e28"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga72867768db595b89e49bc3b2b910a1a6"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#ga72867768db595b89e49bc3b2b910a1a6">gapLeTxPhy_t</a> { <br />
-&#160;&#160;<a class="el" href="group___b_l_e.html#gga72867768db595b89e49bc3b2b910a1a6a63b4e05f8c6ab5ad316f4c4e6c79d041">gLeTxPhy1M_c</a>, 
+<tr class="memitem:ga688da9a04429c9ba2e12234dd05d2f0f"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#ga688da9a04429c9ba2e12234dd05d2f0f">gapLePhyMode_tag</a> { <br />
+&#160;&#160;<a class="el" href="group___b_l_e.html#gga688da9a04429c9ba2e12234dd05d2f0fa26f2c535d908a3eed866f56befcd5962">gLePhy1M_c</a>, 
 <br />
-&#160;&#160;<a class="el" href="group___b_l_e.html#gga72867768db595b89e49bc3b2b910a1a6a82b3bcd1ae9b1634045de023b9807499">gLeTxPhy2M_c</a>, 
+&#160;&#160;<a class="el" href="group___b_l_e.html#gga688da9a04429c9ba2e12234dd05d2f0faa1ab07c012b984704e076fdf4de22e3a">gLePhy2M_c</a>, 
 <br />
-&#160;&#160;<a class="el" href="group___b_l_e.html#gga72867768db595b89e49bc3b2b910a1a6a62aa7129b935557fac5789cdb108672d">gLeTxPhyCoded_c</a>
-<br />
- }</td></tr>
-<tr class="separator:ga72867768db595b89e49bc3b2b910a1a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9ca72003f9b5bc125fdd374065dd8f36"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#ga9ca72003f9b5bc125fdd374065dd8f36">gapLeRxPhy_t</a> { <br />
-&#160;&#160;<a class="el" href="group___b_l_e.html#gga9ca72003f9b5bc125fdd374065dd8f36aca30e293d197a7ae2b496d18f4104cef">gLeRxPhy1M_c</a>, 
-<br />
-&#160;&#160;<a class="el" href="group___b_l_e.html#gga9ca72003f9b5bc125fdd374065dd8f36a705a50434533258c3bfbaac16baec0d8">gLeRxPhy2M_c</a>, 
-<br />
-&#160;&#160;<a class="el" href="group___b_l_e.html#gga9ca72003f9b5bc125fdd374065dd8f36a0451250bc92ab65350cf0d924d23ed9d">gLeRxPhyCoded_c</a>
+&#160;&#160;<a class="el" href="group___b_l_e.html#gga688da9a04429c9ba2e12234dd05d2f0fa783f266fd412736f17bb3a300365cbcc">gLePhyCoded_c</a>
 <br />
  }</td></tr>
-<tr class="separator:ga9ca72003f9b5bc125fdd374065dd8f36"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:ga688da9a04429c9ba2e12234dd05d2f0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga3be5333458dcdd73f5f7561b1131d08a"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#ga3be5333458dcdd73f5f7561b1131d08a">gapPhyEventType_t</a> { <br />
 &#160;&#160;<a class="el" href="group___b_l_e.html#gga3be5333458dcdd73f5f7561b1131d08aa667ec4eb34896fdb2b9a5f2f1e55171e">gPhySetDefaultComplete_c</a>, 
 <br />
@@ -1274,13 +1411,77 @@ Enumerations</h2></td></tr>
 <br />
  }</td></tr>
 <tr class="separator:ga3be5333458dcdd73f5f7561b1131d08a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacf9282aee6f32393ff29804ade6f6435"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#gacf9282aee6f32393ff29804ade6f6435">bleNotificationEventType_tag</a> { <br />
+&#160;&#160;<a class="el" href="group___b_l_e.html#ggacf9282aee6f32393ff29804ade6f6435afda2b5f89fb59f32245ed32eed6a6f0c">gNotifEventNone_c</a>, 
+<br />
+&#160;&#160;<a class="el" href="group___b_l_e.html#ggacf9282aee6f32393ff29804ade6f6435a165f99307d133d666c93a575cfa7ebf8">gNotifConnEventOver_c</a>, 
+<br />
+&#160;&#160;<a class="el" href="group___b_l_e.html#ggacf9282aee6f32393ff29804ade6f6435ac963c227da1cb07a1e5327bc5788962b">gNotifConnRxPdu_c</a>, 
+<br />
+&#160;&#160;<a class="el" href="group___b_l_e.html#ggacf9282aee6f32393ff29804ade6f6435a18f846d6d631ca2456fc841094be98c1">gNotifAdvEventOver_c</a>, 
+<br />
+&#160;&#160;<a class="el" href="group___b_l_e.html#ggacf9282aee6f32393ff29804ade6f6435aa6f67f16ee41d7bbe399ed5acc53e321">gNotifAdvTx_c</a>, 
+<br />
+&#160;&#160;<a class="el" href="group___b_l_e.html#ggacf9282aee6f32393ff29804ade6f6435af46eaffb04b3edba884b1531a7bd5e2b">gNotifAdvScanReqRx_c</a>, 
+<br />
+&#160;&#160;<a class="el" href="group___b_l_e.html#ggacf9282aee6f32393ff29804ade6f6435ad18c5dd75e09ac3167013bc1bb1eef6f">gNotifAdvConnReqRx_c</a>, 
+<br />
+&#160;&#160;<a class="el" href="group___b_l_e.html#ggacf9282aee6f32393ff29804ade6f6435af344a89b2b7acffa25caec061bc46511">gNotifScanEventOver_c</a>, 
+<br />
+&#160;&#160;<a class="el" href="group___b_l_e.html#ggacf9282aee6f32393ff29804ade6f6435aadb0f639dab14f40c93817800e805ec0">gNotifScanAdvPktRx_c</a>, 
+<br />
+&#160;&#160;<a class="el" href="group___b_l_e.html#ggacf9282aee6f32393ff29804ade6f6435a34424415916fa273472d20435c737aed">gNotifScanRspRx_c</a>, 
+<br />
+&#160;&#160;<a class="el" href="group___b_l_e.html#ggacf9282aee6f32393ff29804ade6f6435ae71c14384b193f694ddd21f8491e8d8b">gNotifScanReqTx_c</a>, 
+<br />
+&#160;&#160;<a class="el" href="group___b_l_e.html#ggacf9282aee6f32393ff29804ade6f6435af4cc6cb3724ffdeef8d0b4a5855fdd09">gNotifConnCreated_c</a>
+<br />
+ }</td></tr>
+<tr class="separator:gacf9282aee6f32393ff29804ade6f6435"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaba7de4b30828a14397a967fcd883834e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaba7de4b30828a14397a967fcd883834e"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><b>LeSupportedFeatures_tag</b> { <br />
+&#160;&#160;<b>gLeEncryption_c</b>, 
+<br />
+&#160;&#160;<b>gLeConnectionParametersRequestProcedure_c</b>, 
+<br />
+&#160;&#160;<b>gLeExtendedRejectIndication_c</b>, 
+<br />
+&#160;&#160;<b>gLeSlaveInitiatedFeaturesExchange_c</b>, 
+<br />
+&#160;&#160;<b>gLePing_c</b>, 
+<br />
+&#160;&#160;<b>gLeDataPacketLengthExtension_c</b>, 
+<br />
+&#160;&#160;<b>gLeLlPrivacy_c</b>, 
+<br />
+&#160;&#160;<b>gLeExtendedScannerFilterPolicies_c</b>, 
+<br />
+&#160;&#160;<b>gLe2MbPhy_c</b>, 
+<br />
+&#160;&#160;<b>gLeStableModulationIdxTx_c</b>, 
+<br />
+&#160;&#160;<b>gLeStableModulationIdxRx_c</b>, 
+<br />
+&#160;&#160;<b>gLeCodedPhy_c</b>, 
+<br />
+&#160;&#160;<b>gLeExtendedAdv_c</b>, 
+<br />
+&#160;&#160;<b>gLePeriodicAdv_c</b>, 
+<br />
+&#160;&#160;<b>gLeChannelSelAlg2_c</b>, 
+<br />
+&#160;&#160;<b>gLePowerClass1_c</b>, 
+<br />
+&#160;&#160;<b>gLeMinNumOfUsedChanProcedure_c</b>
+<br />
+ }</td></tr>
+<tr class="separator:gaba7de4b30828a14397a967fcd883834e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:ga790c9415da6b14c7e0893c1d3128253c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___b_l_e.html#ga50b56ac2045dae012646ed0377e3412c">bleResult_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#ga790c9415da6b14c7e0893c1d3128253c">Ble_HostInitialize</a> (<a class="el" href="group___b_l_e.html#gaceb8475d8d1d37ab79c2e96704750488">gapGenericCallback_t</a> genericCallback, <a class="el" href="group___b_l_e.html#gac7b8a34eb97cdf37cca1c85eb02543e5">hciHostToControllerInterface_t</a> hostToControllerInterface)</td></tr>
 <tr class="separator:ga790c9415da6b14c7e0893c1d3128253c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab7e90e21234765991c1ced959f496efb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___b_l_e.html#ga50b56ac2045dae012646ed0377e3412c">bleResult_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#gab7e90e21234765991c1ced959f496efb">Ble_HciRecv</a> (<a class="el" href="group___b_l_e.html#gaf417bdf34d0ed563fbf40b79aae830b4">hciPacketType_t</a> packetType, void *pPacket, uint16_t packetSize)</td></tr>
-<tr class="separator:gab7e90e21234765991c1ced959f496efb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga56d4106aaaed2c4d6340e3f05aacb239"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___b_l_e.html#ga50b56ac2045dae012646ed0377e3412c">bleResult_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#ga56d4106aaaed2c4d6340e3f05aacb239">Ble_HciRecv</a> (<a class="el" href="group___b_l_e.html#gaf417bdf34d0ed563fbf40b79aae830b4">hciPacketType_t</a> packetType, void *pHciPacket, uint16_t packetSize)</td></tr>
+<tr class="separator:ga56d4106aaaed2c4d6340e3f05aacb239"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gae2e7ba95dc3039c23098966c390a3a3a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#gae2e7ba95dc3039c23098966c390a3a3a">Host_TaskHandler</a> (void *args)</td></tr>
 <tr class="separator:gae2e7ba95dc3039c23098966c390a3a3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -1310,7 +1511,7 @@ const uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>gBleMaxActiv
 </div><table class="fieldtable">
 <tr><th colspan="3">Data Fields</th></tr>
 <tr><td class="fieldtype">
-<a class="anchor" id="a6bdafffe2e5ac1659f3274112ca00e83"></a><a class="el" href="group___b_l_e.html#ga35852845649e4390e942af40f9380c29">bleAddressType_t</a></td>
+<a class="anchor" id="a6bdafffe2e5ac1659f3274112ca00e83"></a><a class="el" href="group___b_l_e.html#ga3d5807c061008dca5bc0f88ea0eea085">bleAddressType_t</a></td>
 <td class="fieldname">
 idAddressType</td>
 <td class="fielddoc">
@@ -1527,6 +1728,173 @@ rxPhy</td>
 
 </div>
 </div>
+<a name="structble_notification_event__t" id="structble_notification_event__t"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct bleNotificationEvent_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Controller Enhanced Notification Event. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a class="anchor" id="a3c2d41d1dadcc4b9de9a45034627efb4"></a><a class="el" href="group___b_l_e.html#ga09a0389091c79a5dc6f8b8ec0ff31384">bleNotificationEventType_t</a></td>
+<td class="fieldname">
+eventType</td>
+<td class="fielddoc">
+Enhanced notification event type. </td></tr>
+<tr><td class="fieldtype">
+<a class="anchor" id="a11511a5d5991e43465298f7689599d7c"></a><a class="el" href="group___b_l_e.html#ga79037cf180936e7aa4ef278d2164b4d5">deviceId_t</a></td>
+<td class="fieldname">
+deviceId</td>
+<td class="fielddoc">
+Device id of the peer, valid for connection events. </td></tr>
+<tr><td class="fieldtype">
+<a class="anchor" id="a96c4a5ec4cc3aed4728a3124f95dd1aa"></a>int8_t</td>
+<td class="fieldname">
+rssi</td>
+<td class="fielddoc">
+RSSI, valid for Rx event types. </td></tr>
+<tr><td class="fieldtype">
+<a class="anchor" id="a0154780b556dff3501bbe059ac66139a"></a>uint8_t</td>
+<td class="fieldname">
+channel</td>
+<td class="fielddoc">
+Channel, valid for conn event over or Rx/Tx events. </td></tr>
+<tr><td class="fieldtype">
+<a class="anchor" id="ab8d704918e0a36aa9eff23d181ef3beb"></a>uint16_t</td>
+<td class="fieldname">
+ce_counter</td>
+<td class="fielddoc">
+Connection event counter, valid for conn event over or Conn Rx event. </td></tr>
+<tr><td class="fieldtype">
+<a class="anchor" id="a84926bc5a059c4fcf5eac35b770fb79d"></a><a class="el" href="group___b_l_e.html#ga50b56ac2045dae012646ed0377e3412c">bleResult_t</a></td>
+<td class="fieldname">
+status</td>
+<td class="fielddoc">
+Status of the request to select which events to be enabled/disabled. </td></tr>
+<tr><td class="fieldtype">
+<a class="anchor" id="a7b490a89f35e943dfa67ce4fe760c95c"></a>uint16_t</td>
+<td class="fieldname">
+timestamp</td>
+<td class="fielddoc">
+Timestamp in 625 us slots, valid for Conn Rx event and Conn Created event. </td></tr>
+<tr><td class="fieldtype">
+<a class="anchor" id="a4a9a1d2eab0d059f9f7979aa717c158a"></a>uint8_t</td>
+<td class="fieldname">
+adv_handle</td>
+<td class="fielddoc">
+Advertising Handle, valid for advertising events, if multiple ADV sets supported. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structgap_init_complete__t" id="structgap_init_complete__t"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct gapInitComplete_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>gInitializationComplete_c event data </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a class="anchor" id="af9bbdbf18146a1871911fc0b52600e19"></a>uint32_t</td>
+<td class="fieldname">
+supportedFeatures</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a class="anchor" id="ae242448fdabdecff4494a3aabc1a5ef1"></a>uint16_t</td>
+<td class="fieldname">
+maxAdvDataSize</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a class="anchor" id="a1ff24a37947185762e5db7ea3d371dbc"></a>uint8_t</td>
+<td class="fieldname">
+numOfSupportedAdvSets</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a class="anchor" id="a467cd564ba1d3c9018583d9761ce299e"></a>uint8_t</td>
+<td class="fieldname">
+periodicAdvListSize</td>
+<td class="fielddoc">
+</td></tr>
+</table>
+
+</div>
+</div>
+<a name="structble_bond_created_event__t" id="structble_bond_created_event__t"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct bleBondCreatedEvent_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Bond Created Event. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a class="anchor" id="a3feb41e8143ac8b49838ec746de4efe3"></a>uint8_t</td>
+<td class="fieldname">
+nvmIndex</td>
+<td class="fielddoc">
+NVM index for the new created bond. </td></tr>
+<tr><td class="fieldtype">
+<a class="anchor" id="adc3e44e7831c5258f6c44079927f788f"></a><a class="el" href="group___b_l_e.html#ga3d5807c061008dca5bc0f88ea0eea085">bleAddressType_t</a></td>
+<td class="fieldname">
+addressType</td>
+<td class="fielddoc">
+Public or Random (static) address of the bond. </td></tr>
+<tr><td class="fieldtype">
+<a class="anchor" id="ae4966889bbe8a25c8ffb23b407ac1be6"></a><a class="el" href="group___b_l_e.html#ga79cc8c6684c289e11ab72e839ddbd32c">bleDeviceAddress_t</a></td>
+<td class="fieldname">
+address</td>
+<td class="fielddoc">
+Address of the bond. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structgap_addr_ready_event__t" id="structgap_addr_ready_event__t"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct gapAddrReadyEvent_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Address Ready Event. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a class="anchor" id="a25c7452d0b01f3815c64d350d5f7b937"></a><a class="el" href="group___b_l_e.html#ga79cc8c6684c289e11ab72e839ddbd32c">bleDeviceAddress_t</a></td>
+<td class="fieldname">
+aAddress</td>
+<td class="fielddoc">
+Generated device address. </td></tr>
+<tr><td class="fieldtype">
+<a class="anchor" id="a30e835da79e5d9b55435a12f83f2f24f"></a>uint8_t</td>
+<td class="fieldname">
+advHandle</td>
+<td class="fielddoc">
+Advertising set handle if the generated device address will be used on an extended set. <p>Reserved value 0xFF for other purposes: legacy advertising or scanning and initiating address. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
 <a name="structgap_generic_event__t" id="structgap_generic_event__t"></a>
 <div class="memitem">
 <div class="memproto">
@@ -1585,7 +1953,21 @@ Data for the gWhiteListSizeReady_c event. <p>The size of the White List. </p>
 <td class="fieldname">
 aAddress</td>
 <td class="fielddoc">
-Data for the gRandomAddressReady_c, gPublicAddressRead_c events. <p>Contains the requested device address. </p>
+Data for the gPublicAddressRead_c event. <p>Contains the requested device address. </p>
+</td></tr>
+<tr><td class="fieldtype">
+<a class="anchor" id="a541b26e4af558071a01b4bcf3292bc05"></a><a class="el" href="group___b_l_e.html#structgap_addr_ready_event__t">gapAddrReadyEvent_t</a></td>
+<td class="fieldname">
+addrReady</td>
+<td class="fielddoc">
+Data for the gRandomAddressReady_c event. <p>Contains the generated device address and advertising handle if applicable (0xFF otherwise). </p>
+</td></tr>
+<tr><td class="fieldtype">
+<a class="anchor" id="a01624d613abef20a20da54f0430befc3"></a>uint8_t</td>
+<td class="fieldname">
+advHandle</td>
+<td class="fielddoc">
+Data for the gRandomAddressSet_c event. <p>Contains the handle of the configured advertising set or 0xFF for legacy advertising. </p>
 </td></tr>
 <tr><td class="fieldtype">
 <a class="anchor" id="a1bf154c9020505b31213d0f16c659015"></a><a class="el" href="group___b_l_e.html#ga50b56ac2045dae012646ed0377e3412c">bleResult_t</a></td>
@@ -1599,7 +1981,7 @@ Data for the gAdvertisingSetupFailed_c event. <p>The error that occurred during 
 <td class="fieldname">
 advTxPowerLevel_dBm</td>
 <td class="fielddoc">
-Data for the gAdvTxPowerLevelRead_c event. <p>Value in dBm. </p>
+Data for the gExtAdvertisingParametersSetupComplete_c and gAdvTxPowerLevelRead_c events. <p>Value in dBm. </p>
 </td></tr>
 <tr><td class="fieldtype">
 <a class="anchor" id="a723aa82a83c278d5e7e7be9b109b406a"></a>bool_t</td>
@@ -1637,9 +2019,9 @@ testEvent</td>
 Data for the gControllerTestEvent_c event. <p>Contains test event type and received packets. </p>
 </td></tr>
 <tr><td class="fieldtype">
-<a class="anchor" id="acba57a227db5872a9ff98fd74acdba06"></a><a class="el" href="group___b_l_e.html#ga50b56ac2045dae012646ed0377e3412c">bleResult_t</a></td>
+<a class="anchor" id="a6337ff2a8dd05309b836ffc0290df3c5"></a><a class="el" href="group___b_l_e.html#ga50b56ac2045dae012646ed0377e3412c">bleResult_t</a></td>
 <td class="fieldname">
-txPowerLeveleSetStatus</td>
+txPowerLevelSetStatus</td>
 <td class="fielddoc">
 Data for the gTxPowerLevelSetComplete_c event. <p>Status of the set request. </p>
 </td></tr>
@@ -1649,6 +2031,33 @@ Data for the gTxPowerLevelSetComplete_c event. <p>Status of the set request. </p
 phyEvent</td>
 <td class="fielddoc">
 Data for the gLePhyEvent_c event. <p>Contains Tx and Rx Phy for a connection. </p>
+</td></tr>
+<tr><td class="fieldtype">
+<a class="anchor" id="a671b750dad5f30d6eaf736b4cb910d35"></a><a class="el" href="group___b_l_e.html#ga79037cf180936e7aa4ef278d2164b4d5">deviceId_t</a></td>
+<td class="fieldname">
+deviceId</td>
+<td class="fielddoc">
+Data for the gTxEntryAvailable_c event. </td></tr>
+<tr><td class="fieldtype">
+<a class="anchor" id="ab718ced7dc9a523573233083ae4bc45b"></a><a class="el" href="group___b_l_e.html#structgap_init_complete__t">gapInitComplete_t</a></td>
+<td class="fieldname">
+initCompleteData</td>
+<td class="fielddoc">
+Data for the gInitializationComplete_c event. <p>Contains the supported features, number of advertising sets and the size of the periodic advertiser list </p>
+</td></tr>
+<tr><td class="fieldtype">
+<a class="anchor" id="a7b47c161229209839706f89e9625e06a"></a><a class="el" href="group___b_l_e.html#structble_notification_event__t">bleNotificationEvent_t</a></td>
+<td class="fieldname">
+notifEvent</td>
+<td class="fielddoc">
+Data for the gControllerNotificationEvent_c event. <p>Contains status and adv/scan/conn event data. </p>
+</td></tr>
+<tr><td class="fieldtype">
+<a class="anchor" id="a26e23b4bcc8fd1c6e8319134bc1efbaa"></a><a class="el" href="group___b_l_e.html#structble_bond_created_event__t">bleBondCreatedEvent_t</a></td>
+<td class="fieldname">
+bondCreatedEvent</td>
+<td class="fielddoc">
+Data for the gBondCreatedEvent_c event. <p>Contains the NVM index and the address of the bond. </p>
 </td></tr>
 </table>
 
@@ -1666,9 +2075,9 @@ Data for the gLePhyEvent_c event. <p>Contains Tx and Rx Phy for a connection. </
 <div class="textblock"></div><table class="fieldtable">
 <tr><th colspan="3">Data Fields</th></tr>
 <tr><td class="fieldtype">
-<a class="anchor" id="a78ac757a12c17e49e9811534ec273818"></a>uint32_t</td>
+<a class="anchor" id="abc60ed6a4f7a9bc198acad57095bafea"></a>uint32_t</td>
 <td class="fieldname">
-raw[(<a class="el" href="group___b_l_e___c_o_n_f_i_g.html#ga6db6906bb42f54bf96ace091711f0e22">gBleBondIdentityHeaderSize_c</a>+3)/sizeof(uint32_t)]</td>
+raw[(<a class="el" href="group___b_l_e___c_o_n_f_i_g.html#ga6db6906bb42f54bf96ace091711f0e22">gBleBondIdentityHeaderSize_c</a>+3U)/sizeof(uint32_t)]</td>
 <td class="fielddoc">
 </td></tr>
 </table>
@@ -1687,9 +2096,9 @@ raw[(<a class="el" href="group___b_l_e___c_o_n_f_i_g.html#ga6db6906bb42f54bf96ac
 <div class="textblock"></div><table class="fieldtable">
 <tr><th colspan="3">Data Fields</th></tr>
 <tr><td class="fieldtype">
-<a class="anchor" id="a34b6543fc76b88e14917a67e7fa2b0dc"></a>uint32_t</td>
+<a class="anchor" id="a49e5f21fc864120f54e1b2da3d38f2d7"></a>uint32_t</td>
 <td class="fieldname">
-raw[(gBleBondDataDynamicSize_c+3)/sizeof(uint32_t)]</td>
+raw[(gBleBondDataDynamicSize_c+3U)/sizeof(uint32_t)]</td>
 <td class="fielddoc">
 </td></tr>
 </table>
@@ -1708,9 +2117,9 @@ raw[(gBleBondDataDynamicSize_c+3)/sizeof(uint32_t)]</td>
 <div class="textblock"></div><table class="fieldtable">
 <tr><th colspan="3">Data Fields</th></tr>
 <tr><td class="fieldtype">
-<a class="anchor" id="a765731c08535ad306b2fb458d487896d"></a>uint32_t</td>
+<a class="anchor" id="ae1df406e885f6658b745c3f8427cd054"></a>uint32_t</td>
 <td class="fieldname">
-raw[(gBleBondDataStaticSize_c+3)/sizeof(uint32_t)]</td>
+raw[(gBleBondDataStaticSize_c+3U)/sizeof(uint32_t)]</td>
 <td class="fielddoc">
 </td></tr>
 </table>
@@ -1729,9 +2138,9 @@ raw[(gBleBondDataStaticSize_c+3)/sizeof(uint32_t)]</td>
 <div class="textblock"></div><table class="fieldtable">
 <tr><th colspan="3">Data Fields</th></tr>
 <tr><td class="fieldtype">
-<a class="anchor" id="a359cedf61dc7e1d7a668660a8734c82d"></a>uint32_t</td>
+<a class="anchor" id="ad42fcb4862f30e4a3ea23eeccc5dc68e"></a>uint32_t</td>
 <td class="fieldname">
-raw[(gBleBondDataDeviceInfoSize_c+3)/sizeof(uint32_t)]</td>
+raw[(gBleBondDataDeviceInfoSize_c+3U)/sizeof(uint32_t)]</td>
 <td class="fielddoc">
 </td></tr>
 </table>
@@ -1750,9 +2159,9 @@ raw[(gBleBondDataDeviceInfoSize_c+3)/sizeof(uint32_t)]</td>
 <div class="textblock"></div><table class="fieldtable">
 <tr><th colspan="3">Data Fields</th></tr>
 <tr><td class="fieldtype">
-<a class="anchor" id="a184ccfc1a4c7b295f44203b9e35c9217"></a>uint32_t</td>
+<a class="anchor" id="ae08d2a256f2544ad0fb0a9082ae0b31c"></a>uint32_t</td>
 <td class="fieldname">
-raw[(gBleBondDataDescriptorSize_c+3)/sizeof(uint32_t)]</td>
+raw[(gBleBondDataDescriptorSize_c+3U)/sizeof(uint32_t)]</td>
 <td class="fielddoc">
 </td></tr>
 </table>
@@ -1892,6 +2301,49 @@ bondDataBlobDeviceInfo</td>
 
 </div>
 </div>
+<a class="anchor" id="ga10b2d890d871e1489bb02b7e70d9bdfb"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define STATIC</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>When unit testing is performed, access from unit test module to static functions/variables within the tested module is not possible and therefore the static storage class identifier shall be removed. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga5b82acd6c5c8081ba9bc823fcc2aed32"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define gBleAddrTypePublic_c</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Bluetooth Device Address Types. </p>
+<p>Public Device Address - fixed into the Controller by the manufacturer. </p>
+
+</div>
+</div>
+<a class="anchor" id="gad1fd480a186e55b1b3e662c75a1e7d21"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define gBleAddrTypeRandom_c</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Random Device Address - set by the Host into the Controller for privacy reasons. </p>
+
+</div>
+</div>
 <a class="anchor" id="gadcd3e4ab7e0a6eccf23cdb7591d6979a"></a>
 <div class="memitem">
 <div class="memproto">
@@ -1999,6 +2451,177 @@ bondDataBlobDeviceInfo</td>
 </div><div class="memdoc">
 
 <p>A macro used to copy device addresses. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga3f372a2684d0df05a40a15c62d4b1cfe"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define gBleUuidType16_c</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>16-bit standard UUID </p>
+
+</div>
+</div>
+<a class="anchor" id="gac1d2a66e8b3e98a591f41740c33ad1a2"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define gBleUuidType128_c</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>128-bit long/custom UUID </p>
+
+</div>
+</div>
+<a class="anchor" id="ga4e25fdf047eadaae7bfd784668b61e81"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define gBleUuidType32_c</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>32-bit UUID - not available as ATT UUID format </p>
+
+</div>
+</div>
+<a class="anchor" id="ga4d6833a1bd22bae0bfa126baf52a3206"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define gLePhy1MFlag_c</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Host prefers to use LE 1M Tx/Rx Phy, possibly among others. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga7c503211ea108a85885561b03a3e4e2f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define gLePhy2MFlag_c</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Host prefers to use LE 2M Tx/Rx Phy, possibly among others. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga82c82bee0e68e9ebb5ee083cd4de4022"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define gLePhyCodedFlag_c</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Host prefers to use LE Coded Tx/Rx Phy, possibly among others. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga6d831525305652878598906c284b73e8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define gUseDeviceAddress_c</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Initiator filter policy values. </p>
+<p>Initiates a connection with a specific device identified by its address. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga4fc8161f0926a87e1e46f679dabc8f9f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define gUseWhiteList_c</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Initiates connections with all the devices in the White List at the same time. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga41063f14e54bfea5d93efabbc849daa0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define gScanAll_c</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Scanning filter policy values. </p>
+<p>Scans all advertising packets. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga50ab3d38f56668d7b0527f263523ee93"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define gScanWithWhiteList_c</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Scans advertising packets using the White List. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga34ba3aba3be441fe92619ca832718768"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define gNetworkPrivacy_c</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Privacy mode values. </p>
+<p>Use Network Privacy Mode for the peer device (default) </p>
+
+</div>
+</div>
+<a class="anchor" id="ga7cb108a913fd83d5a02583a8a90216af"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define gDevicePrivacy_c</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Use Device Privacy Mode for the peer device. </p>
 
 </div>
 </div>
@@ -3441,7 +4064,7 @@ bondDataBlobDeviceInfo</td>
       </table>
 </div><div class="memdoc">
 
-<p>LN Feature Charactarestic UUID. </p>
+<p>LN Feature Characteristic UUID. </p>
 
 </div>
 </div>
@@ -3455,7 +4078,7 @@ bondDataBlobDeviceInfo</td>
       </table>
 </div><div class="memdoc">
 
-<p>LN Control Point Charactarestic UUID. </p>
+<p>LN Control Point Characteristic UUID. </p>
 
 </div>
 </div>
@@ -3568,6 +4191,132 @@ bondDataBlobDeviceInfo</td>
 </div><div class="memdoc">
 
 <p>HTTPS Security Characteristic UUID. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga65d7c59d4c0237b47fec6d4f45ed677a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define gBleSig_ResolvablePrivateAddressOnly_d</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Resolvable Private Address Only Characteristic UUID. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga8fba37a0c7e9d6430e0d5516e033b4d1"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define gBleSig_MeshProvisioningService_d</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>BLE Mesh Provisioning Service UUID. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga71207c643844baf8109265eac0415483"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define gBleSig_MeshProxyService_d</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>BLE Mesh Proxy Service UUID. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga2c7bd1adf0157bfe088bbf1bf4ecee26"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define gBleSig_MeshProvDataIn_d</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>BLE Mesh Prov Data In Char UUID. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga51c4b8719c38fce10547fbe4a786c126"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define gBleSig_MeshProvDataOut_d</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>BLE Mesh Prov Data Out Char UUID. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga69acea1bc365018844d060053e5197f2"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define gBleSig_MeshProxyDataIn_d</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>BLE Mesh Proxy Data In Char UUID. </p>
+
+</div>
+</div>
+<a class="anchor" id="gafd269df3670c1e3a21f0bb6b871b217e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define gBleSig_MeshProxyDataOut_d</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>BLE Mesh Proxy Data Out Char UUID. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga37155f65a69e1012a2e480fdf3be9ff9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define gBleSig_CAR_NotSupported_d</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Central Address Resolution Characteristic Values. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga3bd8308c9d8ca36f05bd082722b91123"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define gBleSig_RPAO_Used_d</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Resolvable Private Address Only Characteristic Values. </p>
 
 </div>
 </div>
@@ -4119,6 +4868,20 @@ bondDataBlobDeviceInfo</td>
 
 </div>
 </div>
+<a class="anchor" id="ga3d5807c061008dca5bc0f88ea0eea085"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef uint8_t <a class="el" href="group___b_l_e.html#ga3d5807c061008dca5bc0f88ea0eea085">bleAddressType_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Bluetooth Device Address Type - Size: 1 Octet, Range: [gBleAddrTypePublic_c:gBleAddrTypeRandom_c]. </p>
+
+</div>
+</div>
 <a class="anchor" id="ga79cc8c6684c289e11ab72e839ddbd32c"></a>
 <div class="memitem">
 <div class="memproto">
@@ -4130,6 +4893,146 @@ bondDataBlobDeviceInfo</td>
 </div><div class="memdoc">
 
 <p>Bluetooth Device Address - array of 6 bytes. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga0fef97ae06525783a6c43c8508ecc35b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef uint8_t <a class="el" href="group___b_l_e.html#ga0fef97ae06525783a6c43c8508ecc35b">bleUuidType_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Bluetooth UUID type - values chosen to correspond with the ATT UUID format. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga402bc9cd47ae2000c5eb58d4950d24ef"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef uint16_t <a class="el" href="group___b_l_e.html#ga402bc9cd47ae2000c5eb58d4950d24ef">bleAdvReportEventProperties_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Advertising Event properties. </p>
+
+</div>
+</div>
+<a class="anchor" id="gab59b1e825ebd8a05ba37db6eb38a398b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef uint16_t <a class="el" href="group___b_l_e.html#gab59b1e825ebd8a05ba37db6eb38a398b">bleAdvRequestProperties_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Advertising Request properties. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga9c9359ad7ca8cd9cbeef9f6db38d77c1"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef uint8_t <a class="el" href="group___b_l_e.html#ga9c9359ad7ca8cd9cbeef9f6db38d77c1">bleScanningFilterPolicy_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Scanning filter policy enumeration - Size: 1 Octet, Range: [gScanAll_c:gScanWithWhiteList_c]. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga755ef995251dcaf52a54d965c8eb6b10"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef uint8_t <a class="el" href="group___b_l_e.html#ga755ef995251dcaf52a54d965c8eb6b10">bleInitiatorFilterPolicy_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Initiator filter policy enumeration - Size: 1 Octet, Range: [gUseDeviceAddress_c:gUseWhiteList_c]. </p>
+
+</div>
+</div>
+<a class="anchor" id="gae9196b336d5bf22fb6bd701a406d3fdc"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef uint8_t <a class="el" href="group___b_l_e.html#gae9196b336d5bf22fb6bd701a406d3fdc">blePrivacyMode_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Privacy Mode enumeration - Size: 1 Octet, Range: [gNetworkPrivacy_c:gDevicePrivacy_c]. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga1c12dc7a0dcf33d96c13a2295f1ef3cf"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef uint8_t bleChannelMap_t[<a class="el" href="group___b_l_e___c_o_n_f_i_g.html#ga7da14d6f6c00fabfccb385eda508d195">gcBleChannelMapSize_c</a>]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Bluetooth Channel map - array of 5 bytes. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga73dbaf5e04031632577ef968e6fa19a6"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef uint8_t <a class="el" href="group___b_l_e.html#ga73dbaf5e04031632577ef968e6fa19a6">gapLePhyFlags_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Le Tx/Rx Phys Preferences flags. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga6f4692f9bbf469483dd6485a9b10be31"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef uint8_t <a class="el" href="group___b_l_e.html#ga6f4692f9bbf469483dd6485a9b10be31">gapLePhyMode_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Le Tx/Rx Phys. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga09a0389091c79a5dc6f8b8ec0ff31384"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef uint16_t <a class="el" href="group___b_l_e.html#ga09a0389091c79a5dc6f8b8ec0ff31384">bleNotificationEventType_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Controller Enhanced Notification Event Type. </p>
 
 </div>
 </div>
@@ -4206,6 +5109,9 @@ bondDataBlobDeviceInfo</td>
 </td></tr>
 <tr><td class="fieldname"><a class="anchor" id="gga50b56ac2045dae012646ed0377e3412ca4c019ea7e74661e6442cde18fde60c81"></a>gBleInvalidState_c&#160;</td><td class="fielddoc">
 <p>The requested API cannot be called in the current state. </p>
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="gga50b56ac2045dae012646ed0377e3412cae21dc632029b282f44556e1594b33ec6"></a>gBleTimerError_c&#160;</td><td class="fielddoc">
+<p>Timer allocation failed. </p>
 </td></tr>
 <tr><td class="fieldname"><a class="anchor" id="gga50b56ac2045dae012646ed0377e3412ca6984e2724927d653d8631488659ef386"></a>gSmCommandNotSupported_c&#160;</td><td class="fielddoc">
 <p>The Security Manager (SM) does not have the required features or version to support this command. </p>
@@ -4287,8 +5193,8 @@ bondDataBlobDeviceInfo</td>
 <p>The address of the peer contained in the remote OOB data sent to the stack does not match the address used by the remote device for the connection/pairing procedure. </p>
 </td></tr>
 <tr><td class="fieldname"><a class="anchor" id="gga50b56ac2045dae012646ed0377e3412ca8e97196f8a35763f4e1d8b5d6452377e"></a>gSmSmpPacketReceivedAfterTimeoutOccurred_c&#160;</td><td class="fielddoc">
-<p>A SMP packet has been received from a peer device for which a pairing priocedure has timed out. </p>
-<p>No further operations are permitted until a new connection sisestablished. </p>
+<p>A SMP packet has been received from a peer device for which a pairing procedure has timed out. </p>
+<p>No further operations are permitted until a new connection is established. </p>
 </td></tr>
 <tr><td class="fieldname"><a class="anchor" id="gga50b56ac2045dae012646ed0377e3412cac12cb735181369b725acf9f0db3f4cb5"></a>gSmReceivedTimerEventForUnknownDevice_c&#160;</td><td class="fielddoc">
 <p>An Timer event is received but the source Device ID cannot be identified. </p>
@@ -4344,6 +5250,9 @@ bondDataBlobDeviceInfo</td>
 <tr><td class="fieldname"><a class="anchor" id="gga50b56ac2045dae012646ed0377e3412ca36008d8bb6adfc3984924795d1483b2d"></a>gGattClientConfirmationTimeout_c&#160;</td><td class="fielddoc">
 <p>No Confirmation was received from the Client after a Server Indication. </p>
 </td></tr>
+<tr><td class="fieldname"><a class="anchor" id="gga50b56ac2045dae012646ed0377e3412ca772ed62335c4a24d8ba6886f5ce78d1b"></a>gGattInvalidPduReceived_c&#160;</td><td class="fielddoc">
+<p>An invalid PDU length was received. </p>
+</td></tr>
 <tr><td class="fieldname"><a class="anchor" id="gga50b56ac2045dae012646ed0377e3412cab62739cf4b9cc0e1d45e8364746670f0"></a>gGapStatusBase_c&#160;</td><td class="fielddoc">
 <p>GAP status base. </p>
 </td></tr>
@@ -4358,6 +5267,9 @@ bondDataBlobDeviceInfo</td>
 </td></tr>
 <tr><td class="fieldname"><a class="anchor" id="gga50b56ac2045dae012646ed0377e3412ca57f1dba4eac72acf04b58bd653e3de38"></a>gGapDeviceNotBonded_c&#160;</td><td class="fielddoc">
 <p>Trying to execute an API that is only available for bonded devices. </p>
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="gga50b56ac2045dae012646ed0377e3412ca793442b4929d0105556e6e1cc095b7da"></a>gGapAnotherProcedureInProgress_c&#160;</td><td class="fielddoc">
+<p>Trying to start a GAP procedure while one is already in progress. </p>
 </td></tr>
 <tr><td class="fieldname"><a class="anchor" id="gga50b56ac2045dae012646ed0377e3412caee1ee9f83b54bb1c85a132cfd3f3a602"></a>gDevDbStatusBase_c&#160;</td><td class="fielddoc">
 <p>DeviceDatabase status base. </p>
@@ -4396,53 +5308,6 @@ bondDataBlobDeviceInfo</td>
 
 </div>
 </div>
-<a class="anchor" id="ga35852845649e4390e942af40f9380c29"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="group___b_l_e.html#ga35852845649e4390e942af40f9380c29">bleAddressType_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Bluetooth Device Address Types. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a class="anchor" id="gga35852845649e4390e942af40f9380c29abbbad0768b71d5ce9e6355a8d394da64"></a>gBleAddrTypePublic_c&#160;</td><td class="fielddoc">
-<p>Public Device Address - fixed into the Controller by the manufacturer. </p>
-</td></tr>
-<tr><td class="fieldname"><a class="anchor" id="gga35852845649e4390e942af40f9380c29ad12e135dfda5e5263126ccc1b29d7134"></a>gBleAddrTypeRandom_c&#160;</td><td class="fielddoc">
-<p>Random Device Address - set by the Host into the Controller for privacy reasons. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="ga2f05260087a91a332e4c593274c5c280"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="group___b_l_e.html#ga2f05260087a91a332e4c593274c5c280">bleUuidType_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Bluetooth UUID type - values chosen to correspond with the ATT UUID format. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a class="anchor" id="gga2f05260087a91a332e4c593274c5c280ac5143cb8fe28273c342571236c763409"></a>gBleUuidType16_c&#160;</td><td class="fielddoc">
-<p>16-bit standard UUID </p>
-</td></tr>
-<tr><td class="fieldname"><a class="anchor" id="gga2f05260087a91a332e4c593274c5c280ab4b55af5fb0b4ec3033aa3ba64307193"></a>gBleUuidType128_c&#160;</td><td class="fielddoc">
-<p>128-bit long/custom UUID </p>
-</td></tr>
-<tr><td class="fieldname"><a class="anchor" id="gga2f05260087a91a332e4c593274c5c280a713933ca0edaf142921ac3db190b70cc"></a>gBleUuidType32_c&#160;</td><td class="fielddoc">
-<p>32-bit UUID - not available as ATT UUID format </p>
-</td></tr>
-</table>
-
-</div>
-</div>
 <a class="anchor" id="ga2be06160ef0aef89a825f87350dbd551"></a>
 <div class="memitem">
 <div class="memproto">
@@ -4469,6 +5334,73 @@ bondDataBlobDeviceInfo</td>
 </td></tr>
 <tr><td class="fieldname"><a class="anchor" id="gga2be06160ef0aef89a825f87350dbd551ab42655d7aff914694411cc8a01cea046"></a>gAdvDirectedLowDutyCycle_c&#160;</td><td class="fielddoc">
 <p>Answers only to connect requests; larger advertising interval. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="gad9773943102856b2004a6a51207bb8af"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___b_l_e.html#gad9773943102856b2004a6a51207bb8af">bleAdvReportEventProperties_tag</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a class="anchor" id="ggad9773943102856b2004a6a51207bb8afa587a7687dd8e2bfa903038011d5e1d5c"></a>gAdvEventConnectable_c&#160;</td><td class="fielddoc">
+<p>Connectable Advertisement. </p>
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="ggad9773943102856b2004a6a51207bb8afaa3cb3cd48415a7415460ec619e61ff0f"></a>gAdvEventScannable_c&#160;</td><td class="fielddoc">
+<p>Scannable Advertisement. </p>
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="ggad9773943102856b2004a6a51207bb8afa36f5c5f8fc0f05a19c7c70b59a6e396c"></a>gAdvEventDirected_c&#160;</td><td class="fielddoc">
+<p>Directed Advertisement. </p>
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="ggad9773943102856b2004a6a51207bb8afa281cd1106872bb951ced35b99d923e99"></a>gAdvEventScanResponse_c&#160;</td><td class="fielddoc">
+<p>Scan Response. </p>
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="ggad9773943102856b2004a6a51207bb8afadb0d927cc8cea26ffdacfc2a499294cc"></a>gAdvEventLegacy_c&#160;</td><td class="fielddoc">
+<p>Legacy Advertisement PDU. </p>
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="ggad9773943102856b2004a6a51207bb8afae67a9e85e28d655aad9e544ee657b068"></a>gAdvEventAnonymous_c&#160;</td><td class="fielddoc">
+<p>Anonymous Advertisement. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="ga86eba3feeac89efadd33a03abe9f53cb"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___b_l_e.html#ga86eba3feeac89efadd33a03abe9f53cb">bleAdvRequestProperties_tag</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a class="anchor" id="gga86eba3feeac89efadd33a03abe9f53cba86f2bc87725891b4bb540fc689cd0e3a"></a>gAdvReqConnectable_c&#160;</td><td class="fielddoc">
+<p>Connectable Advertising. </p>
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="gga86eba3feeac89efadd33a03abe9f53cba196ae5284f63e46fe0c5ea305b9a19e1"></a>gAdvReqScannable_c&#160;</td><td class="fielddoc">
+<p>Scannable Advertising. </p>
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="gga86eba3feeac89efadd33a03abe9f53cbafc200a046c6718ee5cb56e3e7dfdd017"></a>gAdvReqDirected_c&#160;</td><td class="fielddoc">
+<p>Directed Advertising. </p>
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="gga86eba3feeac89efadd33a03abe9f53cba1ed228aee831e11730302d06b1e6eb47"></a>gAdvReqHighDutyCycle_c&#160;</td><td class="fielddoc">
+<p>High Duty Cycle. </p>
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="gga86eba3feeac89efadd33a03abe9f53cba0537ab9f05932548b6e2914099bc4a3f"></a>gAdvReqLegacy_c&#160;</td><td class="fielddoc">
+<p>Legacy Advertising PDU. </p>
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="gga86eba3feeac89efadd33a03abe9f53cba75bef45884231163bcc84bc8a649573b"></a>gAdvReqAnonymous_c&#160;</td><td class="fielddoc">
+<p>Anonymous Advertising. </p>
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="gga86eba3feeac89efadd33a03abe9f53cba4be65673a87979fb37fdfda1d521b2fc"></a>gAdvIncludeTxPower_c&#160;</td><td class="fielddoc">
+<p>Set this option to include the Tx power in advertising packet. </p>
 </td></tr>
 </table>
 
@@ -4563,50 +5495,6 @@ bondDataBlobDeviceInfo</td>
 </td></tr>
 <tr><td class="fieldname"><a class="anchor" id="gga9ab6cce0fc52ca3e2b095e55c5342504aade0ac10f69a658cc339bb1c34081d09"></a>gScanTypeActive_c&#160;</td><td class="fielddoc">
 <p>Active Scanning - the scanner sends scan requests to the advertiser and reports to the Host after the scan response is received. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="ga04e2fa3454a43dec7796a73ae6b295e2"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="group___b_l_e.html#ga04e2fa3454a43dec7796a73ae6b295e2">bleScanningFilterPolicy_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Scanning filter policy enumeration. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a class="anchor" id="gga04e2fa3454a43dec7796a73ae6b295e2abefd86c31ba46094c775dced46de65d4"></a>gScanAll_c&#160;</td><td class="fielddoc">
-<p>Scans all advertising packets. </p>
-</td></tr>
-<tr><td class="fieldname"><a class="anchor" id="gga04e2fa3454a43dec7796a73ae6b295e2ab97f81932dc1b7f1cbeaf7b9d01f06b4"></a>gScanWithWhiteList_c&#160;</td><td class="fielddoc">
-<p>Scans advertising packets using the White List. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="gad9967cf7e96bdbf3ebfc0b3f25967622"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="group___b_l_e.html#gad9967cf7e96bdbf3ebfc0b3f25967622">bleInitiatorFilterPolicy_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Initiator filter policy enumeration. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a class="anchor" id="ggad9967cf7e96bdbf3ebfc0b3f25967622a38776679785528d841f619b5d27a960d"></a>gUseDeviceAddress_c&#160;</td><td class="fielddoc">
-<p>Initiates a connection with a specific device identified by its address. </p>
-</td></tr>
-<tr><td class="fieldname"><a class="anchor" id="ggad9967cf7e96bdbf3ebfc0b3f25967622a651dd58c53cdeb72d738df4195366492"></a>gUseWhiteList_c&#160;</td><td class="fielddoc">
-<p>Initiates connections with all the devices in the White List at the same time. </p>
 </td></tr>
 </table>
 
@@ -4721,9 +5609,6 @@ bondDataBlobDeviceInfo</td>
 <p>Random address has been set into the Controller. </p>
 <p>Response to Gap_SetRandomAddress. </p>
 </td></tr>
-<tr><td class="fieldname"><a class="anchor" id="ggae0321289c44dc1da99802a87a094884aab0a691c2743bbead00bab317b20fb54b"></a>gControllerResetComplete_c&#160;</td><td class="fielddoc">
-<p>Controller has been successfully reset. </p>
-</td></tr>
 <tr><td class="fieldname"><a class="anchor" id="ggae0321289c44dc1da99802a87a094884aa5f994f559645e1cda68b876009c23d8e"></a>gLeScPublicKeyRegenerated_c&#160;</td><td class="fielddoc">
 <p>The private/public key pair used for LE Secure Connections pairing has been regenerated. </p>
 </td></tr>
@@ -4744,6 +5629,39 @@ bondDataBlobDeviceInfo</td>
 </td></tr>
 <tr><td class="fieldname"><a class="anchor" id="ggae0321289c44dc1da99802a87a094884aa91b82b9a6b613a0c934ebf9a49651d51"></a>gLePhyEvent_c&#160;</td><td class="fielddoc">
 <p>Phy Mode of a connection has been updated by the Controller. </p>
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="ggae0321289c44dc1da99802a87a094884aa62bb4a50b067dec78d774374eff660a3"></a>gControllerNotificationEvent_c&#160;</td><td class="fielddoc">
+<p>Controller Enhanced Notification received. </p>
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="ggae0321289c44dc1da99802a87a094884aadfca6dd1bb15472c39336d74bc0baffe"></a>gBondCreatedEvent_c&#160;</td><td class="fielddoc">
+<p>Bond Created Event signalling the stack created a bond after pairing or at app request. </p>
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="ggae0321289c44dc1da99802a87a094884aa3e0dc0faff811a8df2b76c9247cd9f8a"></a>gChannelMapSet_c&#160;</td><td class="fielddoc">
+<p>Channel map set complete in the Controller. </p>
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="ggae0321289c44dc1da99802a87a094884aa4fb4e6fac375236a1dc9ff657b0e1ca0"></a>gExtAdvertisingParametersSetupComplete_c&#160;</td><td class="fielddoc">
+<p>Extended advertising parameters have been successfully set. </p>
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="ggae0321289c44dc1da99802a87a094884aa8d0a57822ac0f651f970deea2830d2e8"></a>gExtAdvertisingDataSetupComplete_c&#160;</td><td class="fielddoc">
+<p>Extended advertising data has been successfully set. </p>
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="ggae0321289c44dc1da99802a87a094884aadd02d1b5cab499efcb8075b03133e755"></a>gExtAdvertisingSetRemoveComplete_c&#160;</td><td class="fielddoc">
+<p>An advertising set has been removed from the Controller. </p>
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="ggae0321289c44dc1da99802a87a094884aa16ffd3b2173ab84d14a543eef5f3fe8c"></a>gPeriodicAdvParamSetupComplete_c&#160;</td><td class="fielddoc">
+<p>Periodic advertising parameters have been successfully set. </p>
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="ggae0321289c44dc1da99802a87a094884aad38f26df0b45dc4d7427d9514e3972f8"></a>gPeriodicAdvDataSetupComplete_c&#160;</td><td class="fielddoc">
+<p>Periodic advertising data have been successfully set. </p>
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="ggae0321289c44dc1da99802a87a094884aaed950429451ef180631a2fe8f5153517"></a>gPeriodicAdvListUpdateComplete_c&#160;</td><td class="fielddoc">
+<p>Periodic advertiser list has been successfully updated. </p>
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="ggae0321289c44dc1da99802a87a094884aa5ad85d1408fffde3241608aa6e56e3d7"></a>gPeriodicAdvCreateSyncCancelled_c&#160;</td><td class="fielddoc">
+<p>Periodic advertising create sync command was successfully cancelled. </p>
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="ggae0321289c44dc1da99802a87a094884aad8237f7739691ae10a2aeb7203a0b56d"></a>gTxEntryAvailable_c&#160;</td><td class="fielddoc">
+<p>This event is generated when a TX entry becomes available after they were all in use. </p>
 </td></tr>
 </table>
 
@@ -4799,56 +5717,6 @@ bondDataBlobDeviceInfo</td>
 
 </div>
 </div>
-<a class="anchor" id="ga14d98836cda9e4b38409ad19a901f061"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="group___b_l_e.html#ga14d98836cda9e4b38409ad19a901f061">gapLeTxPhyFlags_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Le Tx Phys Preferences flags. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a class="anchor" id="gga14d98836cda9e4b38409ad19a901f061a9468af62333e3328aca2cd56b74a3768"></a>gLeTxPhy1MFlag_c&#160;</td><td class="fielddoc">
-<p>Host prefers to use LE 1M Tx Phy, possibly among others. </p>
-</td></tr>
-<tr><td class="fieldname"><a class="anchor" id="gga14d98836cda9e4b38409ad19a901f061aa701afd401d3b76df834aea0fe949dd7"></a>gLeTxPhy2MFlag_c&#160;</td><td class="fielddoc">
-<p>Host prefers to use LE 2M Tx Phy, possibly among others. </p>
-</td></tr>
-<tr><td class="fieldname"><a class="anchor" id="gga14d98836cda9e4b38409ad19a901f061acabeaedf17896bf2d6805c68c8d12870"></a>gLeTxPhyCodedFlag_c&#160;</td><td class="fielddoc">
-<p>Host prefers to use LE Coded Tx Phy, possibly among others. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="ga6ad1052c71337f93c2246762108dd905"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="group___b_l_e.html#ga6ad1052c71337f93c2246762108dd905">gapLeRxPhyFlags_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Le Rx Phys Preferences flags. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a class="anchor" id="gga6ad1052c71337f93c2246762108dd905a3d3f1a47a516c098659ae1d4ca3bdba1"></a>gLeRxPhy1MFlag_c&#160;</td><td class="fielddoc">
-<p>Host prefers to use LE 1M Rx Phy, possibly among others. </p>
-</td></tr>
-<tr><td class="fieldname"><a class="anchor" id="gga6ad1052c71337f93c2246762108dd905a28543e66a77cbb47603acac52b53cc7e"></a>gLeRxPhy2MFlag_c&#160;</td><td class="fielddoc">
-<p>Host prefers to use LE 2M Rx Phy, possibly among others. </p>
-</td></tr>
-<tr><td class="fieldname"><a class="anchor" id="gga6ad1052c71337f93c2246762108dd905a4dbf783a43b6b331a885b55df41cdf09"></a>gLeRxPhyCodedFlag_c&#160;</td><td class="fielddoc">
-<p>Host prefers to use LE Coded Rx Phy, possibly among others. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
 <a class="anchor" id="ga3a9b33736e65f4c53284aaaf1c4e7e28"></a>
 <div class="memitem">
 <div class="memproto">
@@ -4874,51 +5742,24 @@ bondDataBlobDeviceInfo</td>
 
 </div>
 </div>
-<a class="anchor" id="ga72867768db595b89e49bc3b2b910a1a6"></a>
+<a class="anchor" id="ga688da9a04429c9ba2e12234dd05d2f0f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="group___b_l_e.html#ga72867768db595b89e49bc3b2b910a1a6">gapLeTxPhy_t</a></td>
+          <td class="memname">enum <a class="el" href="group___b_l_e.html#ga688da9a04429c9ba2e12234dd05d2f0f">gapLePhyMode_tag</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Le Tx Phys. </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a class="anchor" id="gga72867768db595b89e49bc3b2b910a1a6a63b4e05f8c6ab5ad316f4c4e6c79d041"></a>gLeTxPhy1M_c&#160;</td><td class="fielddoc">
-<p>Tx Phy on the connection is LE 1M. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a class="anchor" id="gga688da9a04429c9ba2e12234dd05d2f0fa26f2c535d908a3eed866f56befcd5962"></a>gLePhy1M_c&#160;</td><td class="fielddoc">
+<p>Tx/Rx Phy on the connection is LE 1M. </p>
 </td></tr>
-<tr><td class="fieldname"><a class="anchor" id="gga72867768db595b89e49bc3b2b910a1a6a82b3bcd1ae9b1634045de023b9807499"></a>gLeTxPhy2M_c&#160;</td><td class="fielddoc">
-<p>Tx Phy on the connection is LE 2M. </p>
+<tr><td class="fieldname"><a class="anchor" id="gga688da9a04429c9ba2e12234dd05d2f0faa1ab07c012b984704e076fdf4de22e3a"></a>gLePhy2M_c&#160;</td><td class="fielddoc">
+<p>Tx/Rx Phy on the connection is LE 2M. </p>
 </td></tr>
-<tr><td class="fieldname"><a class="anchor" id="gga72867768db595b89e49bc3b2b910a1a6a62aa7129b935557fac5789cdb108672d"></a>gLeTxPhyCoded_c&#160;</td><td class="fielddoc">
-<p>Tx Phy on the connection is LE Coded. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="ga9ca72003f9b5bc125fdd374065dd8f36"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="group___b_l_e.html#ga9ca72003f9b5bc125fdd374065dd8f36">gapLeRxPhy_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Le Rx Phys. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a class="anchor" id="gga9ca72003f9b5bc125fdd374065dd8f36aca30e293d197a7ae2b496d18f4104cef"></a>gLeRxPhy1M_c&#160;</td><td class="fielddoc">
-<p>Rx Phy on the connection is LE 1M. </p>
-</td></tr>
-<tr><td class="fieldname"><a class="anchor" id="gga9ca72003f9b5bc125fdd374065dd8f36a705a50434533258c3bfbaac16baec0d8"></a>gLeRxPhy2M_c&#160;</td><td class="fielddoc">
-<p>Rx Phy on the connection is LE 2M. </p>
-</td></tr>
-<tr><td class="fieldname"><a class="anchor" id="gga9ca72003f9b5bc125fdd374065dd8f36a0451250bc92ab65350cf0d924d23ed9d"></a>gLeRxPhyCoded_c&#160;</td><td class="fielddoc">
-<p>Rx Phy on the connection is LE Coded. </p>
+<tr><td class="fieldname"><a class="anchor" id="gga688da9a04429c9ba2e12234dd05d2f0fa783f266fd412736f17bb3a300365cbcc"></a>gLePhyCoded_c&#160;</td><td class="fielddoc">
+<p>Tx/Rx Phy on the connection is LE Coded. </p>
 </td></tr>
 </table>
 
@@ -4943,7 +5784,57 @@ bondDataBlobDeviceInfo</td>
 <p>Gap_LeReadPhy return values. </p>
 </td></tr>
 <tr><td class="fieldname"><a class="anchor" id="gga3be5333458dcdd73f5f7561b1131d08aadb7d0a4877614b5e97747afe59ffd12a"></a>gPhyUpdateComplete_c&#160;</td><td class="fielddoc">
-<p>Gap_LeSetPhy return values for a connection or an update occured. </p>
+<p>Gap_LeSetPhy return values for a connection or an update occurred. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="gacf9282aee6f32393ff29804ade6f6435"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___b_l_e.html#gacf9282aee6f32393ff29804ade6f6435">bleNotificationEventType_tag</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a class="anchor" id="ggacf9282aee6f32393ff29804ade6f6435afda2b5f89fb59f32245ed32eed6a6f0c"></a>gNotifEventNone_c&#160;</td><td class="fielddoc">
+<p>No enhanced notification event enabled. </p>
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="ggacf9282aee6f32393ff29804ade6f6435a165f99307d133d666c93a575cfa7ebf8"></a>gNotifConnEventOver_c&#160;</td><td class="fielddoc">
+<p>Connection event over. </p>
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="ggacf9282aee6f32393ff29804ade6f6435ac963c227da1cb07a1e5327bc5788962b"></a>gNotifConnRxPdu_c&#160;</td><td class="fielddoc">
+<p>Connection Rx PDU. </p>
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="ggacf9282aee6f32393ff29804ade6f6435a18f846d6d631ca2456fc841094be98c1"></a>gNotifAdvEventOver_c&#160;</td><td class="fielddoc">
+<p>Advertising event over. </p>
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="ggacf9282aee6f32393ff29804ade6f6435aa6f67f16ee41d7bbe399ed5acc53e321"></a>gNotifAdvTx_c&#160;</td><td class="fielddoc">
+<p>Advertising ADV transmitted. </p>
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="ggacf9282aee6f32393ff29804ade6f6435af46eaffb04b3edba884b1531a7bd5e2b"></a>gNotifAdvScanReqRx_c&#160;</td><td class="fielddoc">
+<p>Advertising SCAN REQ Rx. </p>
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="ggacf9282aee6f32393ff29804ade6f6435ad18c5dd75e09ac3167013bc1bb1eef6f"></a>gNotifAdvConnReqRx_c&#160;</td><td class="fielddoc">
+<p>Advertising CONN REQ Rx. </p>
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="ggacf9282aee6f32393ff29804ade6f6435af344a89b2b7acffa25caec061bc46511"></a>gNotifScanEventOver_c&#160;</td><td class="fielddoc">
+<p>Scanning event over. </p>
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="ggacf9282aee6f32393ff29804ade6f6435aadb0f639dab14f40c93817800e805ec0"></a>gNotifScanAdvPktRx_c&#160;</td><td class="fielddoc">
+<p>Scanning ADV PKT Rx. </p>
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="ggacf9282aee6f32393ff29804ade6f6435a34424415916fa273472d20435c737aed"></a>gNotifScanRspRx_c&#160;</td><td class="fielddoc">
+<p>Scanning SCAN RSP Rx. </p>
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="ggacf9282aee6f32393ff29804ade6f6435ae71c14384b193f694ddd21f8491e8d8b"></a>gNotifScanReqTx_c&#160;</td><td class="fielddoc">
+<p>Scanning SCAN REQ Tx. </p>
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="ggacf9282aee6f32393ff29804ade6f6435af4cc6cb3724ffdeef8d0b4a5855fdd09"></a>gNotifConnCreated_c&#160;</td><td class="fielddoc">
+<p>Connection created. </p>
 </td></tr>
 </table>
 
@@ -4989,7 +5880,7 @@ bondDataBlobDeviceInfo</td>
 
 </div>
 </div>
-<a class="anchor" id="gab7e90e21234765991c1ced959f496efb"></a>
+<a class="anchor" id="ga56d4106aaaed2c4d6340e3f05aacb239"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -5003,7 +5894,7 @@ bondDataBlobDeviceInfo</td>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>pPacket</em>, </td>
+          <td class="paramname"><em>pHciPacket</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -5025,7 +5916,7 @@ bondDataBlobDeviceInfo</td>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">packetType</td><td>The type of the packet sent by the LE Controller </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">pPacket</td><td>Pointer to the packet sent by the LE Controller </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pHciPacket</td><td>Pointer to the packet sent by the LE Controller </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">packetSize</td><td>Number of bytes sent by the LE Controller</td></tr>
   </table>
   </dd>

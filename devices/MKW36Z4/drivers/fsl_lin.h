@@ -1,6 +1,6 @@
 /*
  *
- * Copyright (c) 2016-2018, NXP Semiconductors, Inc.
+ * Copyright (c) 2016-2018, 2020 NXP Semiconductors, Inc.
  * All rights reserved.
  *
  *
@@ -26,8 +26,8 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief LIN driver version 2.0.0 */
-#define FSL_LIN_DRIVER_VERSION (MAKE_VERSION(2, 0, 0))
+/*! @brief LIN driver version 2.0.1 */
+#define FSL_LIN_DRIVER_VERSION (MAKE_VERSION(2, 0, 1))
 
 /* node is slave */
 #define LIN_SLAVE 0U

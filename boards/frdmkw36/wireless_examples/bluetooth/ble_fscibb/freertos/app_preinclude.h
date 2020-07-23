@@ -44,7 +44,7 @@
  *  Framework Configuration
  ********************************************************************************** */
  /* enable NVM to be used as non volatile storage management by the host stack */
-#define gAppUseNvm_d                    0
+#define gAppUseNvm_d                    1
 
 /* Defines Rx Buffer Size for Serial Manager */
 /*! *********************************************************************************
@@ -83,12 +83,12 @@
 
 /* Defines pools by block size and number of blocks. Must be aligned to 4 bytes.*/
 #define AppPoolsDetails_c \
-         _block_size_   32  _number_of_blocks_    6 _eol_  \
-         _block_size_   80  _number_of_blocks_    8 _eol_  \
+         _block_size_   32  _number_of_blocks_   30 _eol_  \
+         _block_size_   80  _number_of_blocks_   20 _eol_  \
          _block_size_  280  _number_of_blocks_   20 _eol_  \
          _block_size_  312  _number_of_blocks_    2 _eol_  \
          _block_size_  392  _number_of_blocks_    2 _eol_  \
-         _block_size_ 1024  _number_of_blocks_    1 _eol_
+         _block_size_ 1024 _number_of_blocks_     2 _eol_
 
 /* Defines number of timers needed by the application */
 #define gTmrApplicationTimers_c         4
@@ -155,7 +155,7 @@
 #define gMainThreadStackSize_c  1024
 
 /* Defines total heap size used by the OS */
-#define gTotalHeapSize_c        8500 
+#define gTotalHeapSize_c        10000 
 
 /*! *********************************************************************************
  *  BLE Stack Configuration

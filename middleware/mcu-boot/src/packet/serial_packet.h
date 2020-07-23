@@ -170,6 +170,8 @@ status_t serial_send_ping_response(const peripheral_descriptor_t *peripheral);
 //! @brief Queues a byte received by the active peripheral
 void serial_packet_queue_byte(uint8_t byte);
 
+extern const ping_response_t k_PingResponse;
+
 #if defined(__cplusplus)
 }
 #endif // __cplusplus

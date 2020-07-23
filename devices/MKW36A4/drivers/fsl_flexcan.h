@@ -21,8 +21,8 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief FlexCAN driver version 2.2.4. */
-#define FSL_FLEXCAN_DRIVER_VERSION (MAKE_VERSION(2, 2, 4))
+/*! @brief FlexCAN driver version 2.2.6. */
+#define FSL_FLEXCAN_DRIVER_VERSION (MAKE_VERSION(2, 2, 6))
 /*@}*/
 
 /*! @brief FlexCAN Frame ID helper macro. */
@@ -510,6 +510,18 @@ extern "C" {
  * @return FlexCAN instance.
  */
 uint32_t FLEXCAN_GetInstance(CAN_Type *base);
+/*!
+ * @brief Calculates the improved timing values by specific baudrates for classical CAN
+ *
+ * @param baudRate  The classical CAN speed in bps defined by user
+ * @param sourceClock_Hz The Source clock data speed in bps. Zero to disable baudrate switching
+ * @param pTimingConfig Pointer to the FlexCAN timing configuration structure.
+ *
+ * @return TRUE if timing configuration found, FALSE if failed to find configuration
+ */
+bool FLEXCAN_CalculateImprovedTimingValues(uint32_t baudRate,
+                                           uint32_t sourceClock_Hz,
+                                           flexcan_timing_config_t *pTimingConfig);
 
 /*!
  * @brief Initializes a FlexCAN instance.
@@ -537,6 +549,20 @@ uint32_t FLEXCAN_GetInstance(CAN_Type *base);
 void FLEXCAN_Init(CAN_Type *base, const flexcan_config_t *config, uint32_t sourceClock_Hz);
 
 #if (defined(FSL_FEATURE_FLEXCAN_HAS_FLEXIBLE_DATA_RATE) && FSL_FEATURE_FLEXCAN_HAS_FLEXIBLE_DATA_RATE)
+/*!
+ * @brief Calculates the improved timing values by specific baudrates for CANFD
+ *
+ * @param baudRate  The CANFD bus control speed in bps defined by user
+ * @param baudRateFD  The CANFD bus data speed in bps defined by user
+ * @param sourceClock_Hz The Source clock data speed in bps. Zero to disable baudrate switching
+ * @param pTimingConfig Pointer to the FlexCAN timing configuration structure.
+ *
+ * @return TRUE if timing configuration found, FALSE if failed to find configuration
+ */
+bool FLEXCAN_FDCalculateImprovedTimingValues(uint32_t baudRate,
+                                             uint32_t baudRateFD,
+                                             uint32_t sourceClock_Hz,
+                                             flexcan_timing_config_t *pTimingConfig);
 /*!
  * @brief Initializes a FlexCAN instance.
  *

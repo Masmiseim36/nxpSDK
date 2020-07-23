@@ -148,7 +148,8 @@ void FSCI_BOOT_main(void)
     /* Init the flash module */
     FLASH_Init(&gFTFx_config);
     
-#if (defined(CPU_MKW36Z512VFP4) || defined(CPU_MKW36Z512VHT4))
+#if (defined(CPU_MKW36A512VHT4) || defined(CPU_MKW36A512VFP4) || defined(CPU_MKW36A512VFT4) || \
+     defined(CPU_MKW36Z512VHT4) || defined(CPU_MKW36Z512VFP4) || defined(CPU_MKW34A512VFT4))
     /* KW36 has 256KB of FlexNVM mapped at adress 0x1000 0000 which also has an alias starting from address 0x0004 0000.
      * Configured the Flash driver to treat the PFLASH bloxk and FlexNVM block as a continuous memory block. */
     gFTFx_config.DFlashBlockBase = FSL_FEATURE_FLASH_PFLASH_BLOCK_SIZE * FSL_FEATURE_FLASH_PFLASH_BLOCK_COUNT;

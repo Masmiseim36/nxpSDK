@@ -1,13 +1,10 @@
 /*
  * Copyright (c) 2013 Freescale Semiconductor, Inc.
- * Copyright 2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include <stdint.h>
-#include "fsl_device_registers.h"
 #include "bootloader_core.h"
 
 #if (defined(__ICCARM__))
@@ -42,7 +39,7 @@
 void init_data_bss(void)
 {
 /* Addresses for VECTOR_TABLE and VECTOR_RAM come from the linker file */
-#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
+#if defined(__CC_ARM)
     extern uint32_t Image$$VECTOR_ROM$$Base[];
     extern uint32_t Image$$VECTOR_RAM$$Base[];
     extern uint32_t Image$$RW_m_data$$Base[];
@@ -51,9 +48,9 @@ void init_data_bss(void)
 #define __VECTOR_RAM Image$$VECTOR_RAM$$Base
 #define __RAM_VECTOR_TABLE_SIZE (((uint32_t)Image$$RW_m_data$$Base - (uint32_t)Image$$VECTOR_RAM$$Base))
 #elif defined(__ICCARM__)
-    extern uint32_t __RAM_VECTOR_TABLE_SIZE[];
-    extern uint32_t __VECTOR_TABLE[];
-    extern uint32_t __VECTOR_RAM[];
+//    extern uint32_t __RAM_VECTOR_TABLE_SIZE[];
+//    extern uint32_t __VECTOR_TABLE[];
+//    extern uint32_t __VECTOR_RAM[];
 #elif defined(__GNUC__)
     extern uint32_t __VECTOR_TABLE[];
 #endif
@@ -64,7 +61,7 @@ void init_data_bss(void)
     SCB->VTOR = (uint32_t)__VECTOR_TABLE;
 #endif
 
-#if !defined(__CC_ARM) && (!defined(__ARMCC_VERSION))
+#if !defined(__CC_ARM)
 
     /* Declare pointers for various data sections. These pointers
      * are initialized using values pulled in from the linker file */
@@ -73,7 +70,7 @@ void init_data_bss(void)
     uint32_t n;
 
 // Get the addresses for the .data section (initialized data section)
-#if defined(__GNUC__) && (!defined(__ARMCC_VERSION))
+#if defined(__GNUC__)
     extern uint32_t __DATA_ROM[];
     extern uint32_t __DATA_RAM[];
     extern char __DATA_END[];
@@ -85,13 +82,13 @@ void init_data_bss(void)
     data_ram = __section_begin(".data");
     data_rom = __section_begin(".data_init");
     data_rom_end = __section_end(".data_init");
-    n = data_rom_end - data_rom;
+    n = (uint32_t)data_rom_end - (uint32_t)data_rom;
 #endif
 
     if (data_ram != data_rom)
     {
         // Copy initialized data from ROM to RAM
-        while (n)
+        while (n != 0u)
         {
             *data_ram++ = *data_rom++;
             n--;
@@ -99,7 +96,7 @@ void init_data_bss(void)
     }
 
 // Get the addresses for the .bss section (zero-initialized data)
-#if defined(__GNUC__) && (!defined(__ARMCC_VERSION))
+#if defined(__GNUC__)
     extern char __START_BSS[];
     extern char __END_BSS[];
     bss_start = (uint8_t *)__START_BSS;
@@ -110,8 +107,8 @@ void init_data_bss(void)
 #endif
 
     // Clear the zero-initialized data section
-    n = bss_end - bss_start;
-    while (n)
+    n = (uint32_t)bss_end - (uint32_t)bss_start;
+    while (n != 0u)
     {
         *bss_start++ = 0;
         n--;
@@ -123,7 +120,7 @@ void init_data_bss(void)
 
     // Clear the zero-initialized data section
     n = bss_end - bss_start;
-    while (n)
+    while (n != 0u)
     {
         *bss_start++ = 0;
         n--;
@@ -137,7 +134,7 @@ void init_data_bss(void)
 #if (defined(__ICCARM__))
     uint8_t *usbGlobal_start = __section_begin("USBGlobal");
     uint8_t *usbGlobal_end = __section_end("USBGlobal");
-#elif(defined(__GNUC__)) && (!defined(__ARMCC_VERSION))
+#elif(defined(__GNUC__))
     extern uint8_t __START_USBGLOBAL[];
     extern uint8_t __END_USBGLOBAL[];
     uint8_t *usbGlobal_start = (uint8_t *)__START_USBGLOBAL;
@@ -146,7 +143,7 @@ void init_data_bss(void)
 
     // Clear the zero-initialized data section
     n = usbGlobal_end - usbGlobal_start;
-    while (n)
+    while (n != 0u)
     {
         *usbGlobal_start++ = 0;
         n--;
@@ -159,14 +156,14 @@ void init_data_bss(void)
  * the function prototype for any routines you need to execute from RAM instead
  * of ROM. ex: __ramfunc void foo(void);
  */
-#if (defined(__ICCARM__)) 
+#if (defined(__ICCARM__))
     uint8_t *code_relocate_ram = __section_begin("CodeRelocateRam");
     uint8_t *code_relocate = __section_begin("CodeRelocate");
     uint8_t *code_relocate_end = __section_end("CodeRelocate");
 
     // Copy functions from ROM to RAM
-    n = code_relocate_end - code_relocate;
-    while (n)
+    n = (uint32_t)code_relocate_end - (uint32_t)code_relocate;
+    while (n != 0u)
     {
         *code_relocate_ram++ = *code_relocate++;
         n--;

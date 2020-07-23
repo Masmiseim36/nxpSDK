@@ -326,6 +326,20 @@ class GATTServerRegisterUniqueHandlesForNotificationsOperation(FsciOperation):
         self.observers = []
         super(GATTServerRegisterUniqueHandlesForNotificationsOperation, self).subscribeToEvents()
 
+class GATTServerUnregisterHandlesForWriteNotificationsOperation(FsciOperation):
+
+    def subscribeToEvents(self):
+        self.spec = Spec.GATTServerUnregisterHandlesForWriteNotificationsRequestFrame
+        self.observers = []
+        super(GATTServerUnregisterHandlesForWriteNotificationsOperation, self).subscribeToEvents()
+
+class GATTServerUnregisterHandlesForReadNotificationsOperation(FsciOperation):
+
+    def subscribeToEvents(self):
+        self.spec = Spec.GATTServerUnregisterHandlesForReadNotificationsRequestFrame
+        self.observers = []
+        super(GATTServerUnregisterHandlesForReadNotificationsOperation, self).subscribeToEvents()
+
 class GATTDBWriteAttributeOperation(FsciOperation):
 
     def subscribeToEvents(self):
@@ -465,7 +479,6 @@ class GATTDBDynamicAddCharDescriptorWithUniqueValueOperation(FsciOperation):
         self.spec = Spec.GATTDBDynamicAddCharDescriptorWithUniqueValueRequestFrame
         self.observers = [GATTDBDynamicAddCharDescriptorWithUniqueValueIndicationObserver('GATTDBDynamicAddCharDescriptorWithUniqueValueIndication'), ]
         super(GATTDBDynamicAddCharDescriptorWithUniqueValueOperation, self).subscribeToEvents()
-
 class BLEHostInitializeOperation(FsciOperation):
 
     def subscribeToEvents(self):
@@ -865,15 +878,6 @@ class GapUpdateLeDataLengthOperation(FsciOperation):
         self.observers = []
         super(GapUpdateLeDataLengthOperation, self).subscribeToEvents()
 
-
-class GAPControllerResetOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = Spec.GAPControllerResetRequestFrame
-        self.observers = []
-        super(GAPControllerResetOperation, self).subscribeToEvents()
-
-
 class GAPEnableHostPrivacyOperation(FsciOperation):
 
     def subscribeToEvents(self):
@@ -1109,6 +1113,12 @@ class FSCICPUResetOperation(FsciOperation):
         self.observers = []
         super(FSCICPUResetOperation, self).subscribeToEvents()
 
+class FSCIGetNumberOfFreeBuffersOperation(FsciOperation):
+
+    def subscribeToEvents(self):
+        self.spec = Spec.FSCIGetNumberOfFreeBuffersRequestFrame
+        self.observers = [FSCIGetNumberOfFreeBuffersResponseObserver('FSCIGetNumberOfFreeBuffersResponse'), ]
+        super(FSCIGetNumberOfFreeBuffersOperation, self).subscribeToEvents()
 
 class FSCIAllowDeviceToSleepOperation(FsciOperation):
 
@@ -1738,15 +1748,6 @@ class GAPConnectionEventLeScKeypressNotificationOperation(FsciOperation):
         self.observers = [GAPConnectionEventLeScKeypressNotificationIndicationObserver('GAPConnectionEventLeScKeypressNotificationIndication'), ]
         super(GAPConnectionEventLeScKeypressNotificationOperation, self).subscribeToEvents()
 
-
-class GAPGenericEventControllerResetCompleteOperation(FsciOperation):
-
-    def subscribeToEvents(self):
-        self.spec = None
-        self.observers = [GAPGenericEventControllerResetCompleteIndicationObserver('GAPGenericEventControllerResetCompleteIndication'), ]
-        super(GAPGenericEventControllerResetCompleteOperation, self).subscribeToEvents()
-
-
 class GAPLeScPublicKeyRegeneratedOperation(FsciOperation):
 
     def subscribeToEvents(self):
@@ -1958,7 +1959,6 @@ class GAPConnectionEventChannelSelectionAlgorithm2Operation(FsciOperation):
 def subscribe_to_async_ble_events_from(device, ack_policy=FsciAckPolicy.GLOBAL):
     ble_events = [
         L2CAPCBConfirmObserver('L2CAPCBConfirm'),
-        GAPConfirmObserver('GAPConfirm'),
         GAPGenericEventInitializationCompleteIndicationObserver('GAPGenericEventInitializationCompleteIndication'),
         GAPAdvertisingEventCommandFailedIndicationObserver('GAPAdvertisingEventCommandFailedIndication'),
         GAPConnectionEventLeDataLengthChangedIndicationObserver('GAPConnectionEventLeDataLengthChangedIndication'),

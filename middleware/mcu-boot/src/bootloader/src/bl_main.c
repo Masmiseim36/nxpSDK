@@ -1,40 +1,39 @@
 /*
  * Copyright (c) 2013-2015 Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2018 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#define exit exit_default
 #include <stdbool.h>
+#include "utilities/fsl_assert.h"
 #include "bootloader/bl_context.h"
 #include "bootloader/bl_peripheral.h"
 #include "bootloader/bl_shutdown_cleanup.h"
-#include "bootloader/bootloader.h"
 #include "bootloader_common.h"
-#include "utilities/fsl_assert.h"
-#if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
-#if !BL_DEVICE_IS_LPC_SERIES
+#include "bootloader/bootloader.h"
+#if !(defined(BL_FEATURE_HAS_NO_INTERNAL_FLASH) && BL_FEATURE_HAS_NO_INTERNAL_FLASH)
+#if !(defined(BL_DEVICE_IS_LPC_SERIES) && BL_DEVICE_IS_LPC_SERIES)
 #include "fsl_flash.h"
 #else
 #include "flashiap_wrapper/fsl_flashiap_wrapper.h"
 #endif
 #endif // #if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
+#include "smc.h"
 #include "microseconds.h"
 #include "property/property.h"
-#include "smc.h"
-#include "utilities/fsl_rtos_abstraction.h"
 #include "utilities/vector_table_info.h"
-#if BL_FEATURE_CRC_CHECK
+#include "utilities/fsl_rtos_abstraction.h"
+#if defined(BL_FEATURE_CRC_CHECK) && BL_FEATURE_CRC_CHECK
 #include "bootloader/bl_app_crc_check.h"
 #endif
-#if BL_FEATURE_QSPI_MODULE
+#if defined(BL_FEATURE_QSPI_MODULE) && BL_FEATURE_QSPI_MODULE
 #include "qspi.h"
 #endif
 #include "memory/memory.h"
 
-#if BL_FEATURE_RELIABLE_UPDATE
+#if defined(BL_FEATURE_RELIABLE_UPDATE) && BL_FEATURE_RELIABLE_UPDATE
 #include "bootloader/bl_reliable_update.h"
 #endif
 
@@ -49,7 +48,7 @@
 static const char *get_peripheral_name(uint32_t peripheralTypeMask);
 #endif
 
-#if !BL_FEATURE_TIMEOUT
+#if !(defined(BL_FEATURE_TIMEOUT) && BL_FEATURE_TIMEOUT)
 static void get_user_application_entry(uint32_t *appEntry, uint32_t *appStack);
 static void jump_to_application(uint32_t applicationAddress, uint32_t stackPointer);
 static bool is_direct_boot(void);
@@ -57,10 +56,10 @@ static bool is_direct_boot(void);
 static peripheral_descriptor_t const *get_active_peripheral(void);
 static void bootloader_init(void);
 static void bootloader_run(void);
-#if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
+#if !(defined(BL_FEATURE_HAS_NO_INTERNAL_FLASH) && BL_FEATURE_HAS_NO_INTERNAL_FLASH)
 static void bootloader_flash_init(void);
 #endif // #if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
-#if BL_FEATURE_QSPI_MODULE
+#if defined(BL_FEATURE_QSPI_MODULE) && BL_FEATURE_QSPI_MODULE
 static void configure_quadspi_as_needed(void);
 #endif
 
@@ -95,9 +94,9 @@ static const char *const kPeripheralNames[] = {
 const char *get_peripheral_name(uint32_t peripheralTypeMask)
 {
     uint32_t i;
-    for (i = 0; i < ARRAY_SIZE(kPeripheralNames); ++i)
+    for (i = 0u; i < ARRAY_SIZE(kPeripheralNames); ++i)
     {
-        if (peripheralTypeMask & (1 << i))
+        if (peripheralTypeMask & (1u << i))
         {
             return kPeripheralNames[i];
         }
@@ -107,7 +106,7 @@ const char *get_peripheral_name(uint32_t peripheralTypeMask)
 }
 #endif // DEBUG
 
-#if !BL_FEATURE_TIMEOUT
+#if !(defined(BL_FEATURE_TIMEOUT) && BL_FEATURE_TIMEOUT)
 //! @brief Returns the user application address and stack pointer.
 //!
 //! For flash-resident and rom-resident target, gets the user application address
@@ -119,15 +118,15 @@ static void get_user_application_entry(uint32_t *appEntry, uint32_t *appStack)
     assert(appStack);
 
 #ifdef BL_TARGET_RAM
-    *appEntry = 0;
-    *appStack = 0;
+    *appEntry = 0u;
+    *appStack = 0u;
 #else
-#if FSL_FEATURE_FLASH_HAS_ACCESS_CONTROL
+#if defined(FSL_FEATURE_FLASH_HAS_ACCESS_CONTROL) && FSL_FEATURE_FLASH_HAS_ACCESS_CONTROL
     // Check if address of SP and PC is in an execute-only region.
-    if (!is_in_execute_only_region(kDefaultVectorTableAddress, 8))
+    if (!is_in_execute_only_region(kDefaultVectorTableAddress, 8u))
     {
-        *appEntry = APP_VECTOR_TABLE[kInitialPC];
-        *appStack = APP_VECTOR_TABLE[kInitialSP];
+        *appEntry = APP_VECTOR_TABLE[(uint32_t)kInitialPC];
+        *appStack = APP_VECTOR_TABLE[(uint32_t)kInitialSP];
     }
     else
     {
@@ -135,41 +134,32 @@ static void get_user_application_entry(uint32_t *appEntry, uint32_t *appStack)
         // as ROM doesn't support jumping to an application in such region so far.
         // The main purpose of below operation is to prevent ROM from inifinit loop
         // between NVIC_SystemReset() and fetching SP and PC frome execute-only region.
-        *appEntry = 0;
-        *appStack = 0;
+        *appEntry = 0u;
+        *appStack = 0u;
     }
 #else
-#if BL_FEATURE_RELIABLE_UPDATE
-    if (g_bootloaderContext.imageStart != 0xffffffffu)
-    {
-          uint32_t *appVectorTable = (uint32_t*)g_bootloaderContext.imageStart;
-          *appEntry = appVectorTable[kInitialPC];
-          *appStack = appVectorTable[kInitialSP];
-    }
-#else
-    *appEntry = APP_VECTOR_TABLE[kInitialPC];
-    *appStack = APP_VECTOR_TABLE[kInitialSP];
-#endif // BL_FEATURE_RELIABLE_UPDATE
+    *appEntry = APP_VECTOR_TABLE[(uint32_t)kInitialPC];
+    *appStack = APP_VECTOR_TABLE[(uint32_t)kInitialSP];
 #endif //  FSL_FEATURE_FLASH_HAS_ACCESS_CONTROL
 #endif // BL_TARGET_RAM
 }
 #endif // BL_FEATURE_TIMEOUT
 
-#if !BL_FEATURE_TIMEOUT
-bool is_direct_boot(void)
+#if !(defined(BL_FEATURE_TIMEOUT) && BL_FEATURE_TIMEOUT)
+static bool is_direct_boot(void)
 {
     bootloader_configuration_data_t *configurationData =
         &g_bootloaderContext.propertyInterface->store->configurationData;
 
-    return (~configurationData->bootFlags) & kBootFlag_DirectBoot;
+    return (((~configurationData->bootFlags) & (uint8_t)kBootFlag_DirectBoot) != 0u);
 }
 #endif // !BL_FEATURE_TIMEOUT
 
-#if !BL_FEATURE_TIMEOUT
+#if !(defined(BL_FEATURE_TIMEOUT) && BL_FEATURE_TIMEOUT)
 //! @brief Exits bootloader and jumps to the user application.
 static void jump_to_application(uint32_t applicationAddress, uint32_t stackPointer)
 {
-#if BL_FEATURE_OTFAD_MODULE
+#if defined(BL_FEATURE_OTFAD_MODULE) && BL_FEATURE_OTFAD_MODULE
     quadspi_cache_clear();
     oftfad_resume_as_needed();
 #endif
@@ -179,10 +169,16 @@ static void jump_to_application(uint32_t applicationAddress, uint32_t stackPoint
     // Create the function call to the user application.
     // Static variables are needed since changed the stack pointer out from under the compiler
     // we need to ensure the values we are using are not stored on the previous stack
-    static uint32_t s_stackPointer = 0;
+    static uint32_t s_stackPointer = 0u;
     s_stackPointer = stackPointer;
-    static void (*farewellBootloader)(void) = 0;
-    farewellBootloader = (void (*)(void))applicationAddress;
+    static void (*farewellBootloader)(void) = (void*)0u;
+    union
+    {
+        uint32_t address;
+        void (*function)(void);
+    } func_ptr;
+    func_ptr.address = applicationAddress;
+    farewellBootloader = func_ptr.function;
 
     // Set the VTOR to the application vector table address.
     SCB->VTOR = (uint32_t)APP_VECTOR_TABLE;
@@ -207,22 +203,29 @@ static void jump_to_application(uint32_t applicationAddress, uint32_t stackPoint
 bool is_valid_application_location(uint32_t applicationAddress)
 {
     const memory_map_entry_t *map;
+    bool isValid;
+    const uint32_t minThumb2InstructionSize = 2u; // smallest thumb2 instruction size is 16-bit.
+
     // Verify that the jumpLocation is non zero and then either within flash or RAM, both calculations are:
     // (jumpLocation >= startAddress) && (jumpLocation < (startAddress + size))
-    if ((!applicationAddress) ||              // address is not null AND
-        (applicationAddress == 0xffffffff) || // address is not blank Flash (0xff) AND
+    if ((applicationAddress == 0u) ||              // address is not null AND
+        (applicationAddress == 0xffffffffu) || // address is not blank Flash (0xff) AND
         (applicationAddress == (uint32_t)&Reset_Handler))
     {
-        return false;
+        isValid = false;
     }
-
-    bool isValid = false;
-    const uint32_t minThumb2InstructionSize = 2; // smallest thumb2 instruction size is 16-bit.
-    // Check if the application address is in valid executable memory range
-    status_t status = find_map_entry(applicationAddress, minThumb2InstructionSize, &map);
-    if ((status == kStatus_Success) && (map->memoryProperty & kMemoryIsExecutable))
+    else
     {
-        isValid = true;
+      // Check if the application address is in valid executable memory range
+      status_t status = find_map_entry(applicationAddress, minThumb2InstructionSize, &map);
+      if ((status == (int32_t)kStatus_Success) && ((map->memoryProperty & (uint32_t)kMemoryIsExecutable) != 0u))
+      {
+          isValid = true;
+      }
+      else
+      {
+          isValid = false;
+      }
     }
 
     return isValid;
@@ -235,11 +238,12 @@ bool is_valid_stackpointer_location(uint32_t stackpointerAddress)
 
     map = &g_bootloaderContext.memoryMap[0];
 
-    while (map->memoryInterface != NULL)
+    while (map->memoryInterface != (void *)0u)
     {
-        if ((map->memoryProperty & kMemoryIsExecutable) && (map->memoryProperty & kMemoryType_RAM))
+        if (((map->memoryProperty & (uint32_t)kMemoryIsExecutable) != 0u) &&
+            ((map->memoryProperty & (uint32_t)kMemoryType_RAM) != 0u))
         {
-            if ((stackpointerAddress > map->startAddress) && (stackpointerAddress <= (map->endAddress + 1)))
+            if ((stackpointerAddress > map->startAddress) && (stackpointerAddress <= (map->endAddress + 1u)))
             {
                 isValid = true;
                 break;
@@ -252,13 +256,13 @@ bool is_valid_stackpointer_location(uint32_t stackpointerAddress)
     return isValid;
 }
 
-#if !BL_FEATURE_TIMEOUT
+#if !(defined(BL_FEATURE_TIMEOUT) && BL_FEATURE_TIMEOUT)
 //! @brief Jump application is considered ready for executing if the location is valid and crc check is passed
 static bool is_application_ready_for_executing(uint32_t applicationAddress)
 {
     bool result = is_valid_application_location(applicationAddress);
 
-#if BL_FEATURE_OTFAD_MODULE
+#if defined(BL_FEATURE_OTFAD_MODULE) && BL_FEATURE_OTFAD_MODULE
     if (result && is_qspi_present())
     {
         quadspi_cache_clear();
@@ -271,14 +275,14 @@ static bool is_application_ready_for_executing(uint32_t applicationAddress)
     }
 #endif
 
-#if BL_FEATURE_CRC_CHECK
+#if defined(BL_FEATURE_CRC_CHECK) && BL_FEATURE_CRC_CHECK
     // Validate application crc only if its location is valid
     if (result)
     {
         result = is_application_crc_check_pass();
     }
 
-#if BL_FEATURE_OTFAD_MODULE
+#if defined(BL_FEATURE_OTFAD_MODULE) && BL_FEATURE_OTFAD_MODULE
     otfad_bypass_as_needed();
 #endif // BL_FEATURE_OTFAD_MODULE
 
@@ -305,37 +309,37 @@ static bool is_application_ready_for_executing(uint32_t applicationAddress)
 static peripheral_descriptor_t const *get_active_peripheral(void)
 {
     peripheral_descriptor_t const *peripheral;
-    peripheral_descriptor_t const *activePeripheral = NULL;
+    peripheral_descriptor_t const *activePeripheral = (void *)0u;
     bootloader_configuration_data_t *configurationData =
         &g_bootloaderContext.propertyInterface->store->configurationData;
 
     // Bring up all the peripherals
-    for (peripheral = g_peripherals; peripheral->typeMask != 0; ++peripheral)
+    for (peripheral = g_peripherals; peripheral->typeMask != 0u; ++peripheral)
     {
         // Check that the peripheral is enabled in the user configuration data
-        if (configurationData->enabledPeripherals & peripheral->typeMask)
+        if ((configurationData->enabledPeripherals & peripheral->typeMask) != 0u)
         {
             assert(peripheral->controlInterface->init);
 
 #if defined(DEBUG) && !defined(DEBUG_PRINT_DISABLE)
             debug_printf("Initing %s\r\n", get_peripheral_name(peripheral->typeMask));
 #endif
-            peripheral->controlInterface->init(peripheral, peripheral->packetInterface->byteReceivedCallback);
+            (void)peripheral->controlInterface->init(peripheral, peripheral->packetInterface->byteReceivedCallback);
         }
     }
 
-#if !BL_FEATURE_TIMEOUT
-#if BL_FEATURE_POWERDOWN
+#if !(defined(BL_FEATURE_TIMEOUT) && BL_FEATURE_TIMEOUT)
+#if defined(BL_FEATURE_POWERDOWN) && BL_FEATURE_POWERDOWN
     bool shortTimeout = false;
 #endif
-    const uint64_t ticksPerMillisecond = microseconds_convert_to_ticks(1000);
+    const uint64_t ticksPerMillisecond = microseconds_convert_to_ticks(1000u);
 
     // Get the user application entry point and stack pointer.
     uint32_t applicationAddress, stackPointer;
     get_user_application_entry(&applicationAddress, &stackPointer);
 
-    uint64_t lastTicks = 0;    // Value of our last recorded ticks second marker
-    uint64_t timeoutTicks = 0; // The number of ticks we will wait for timeout, 0 means no timeout
+    uint64_t lastTicks = 0u;    // Value of our last recorded ticks second marker
+    uint64_t timeoutTicks = 0u; // The number of ticks we will wait for timeout, 0 means no timeout
 
     // If the boot to rom option is not set AND there is a valid jump application determine the timeout value
     if (!is_boot_pin_asserted() && is_application_ready_for_executing(applicationAddress))
@@ -349,7 +353,7 @@ static peripheral_descriptor_t const *get_active_peripheral(void)
         // there is a valid configuration data value for the timeout. If there's not, use the
         // default timeout value.
         uint32_t milliseconds;
-        if (configurationData->peripheralDetectionTimeoutMs != 0xFFFF)
+        if (configurationData->peripheralDetectionTimeoutMs != 0xFFFFu)
         {
             milliseconds = configurationData->peripheralDetectionTimeoutMs;
         }
@@ -361,11 +365,11 @@ static peripheral_descriptor_t const *get_active_peripheral(void)
 
         // save how many ticks we're currently at before the detection loop starts
         lastTicks = microseconds_get_ticks();
-#if BL_FEATURE_POWERDOWN
+#if defined(BL_FEATURE_POWERDOWN) && BL_FEATURE_POWERDOWN
         shortTimeout = true;
 #endif
     }
-#if BL_FEATURE_POWERDOWN
+#if defined(BL_FEATURE_POWERDOWN) && BL_FEATURE_POWERDOWN
     else
     {
         timeoutTicks = BL_DEFAULT_POWERDOWN_TIMEOUT * ticksPerMillisecond;
@@ -375,11 +379,11 @@ static peripheral_descriptor_t const *get_active_peripheral(void)
 #endif // !BL_FEATURE_TIMEOUT
 
     // Wait for a peripheral to become active
-    while (activePeripheral == NULL)
+    while (activePeripheral == (void *)0u)
     {
-#if !BL_FEATURE_TIMEOUT
+#if !(defined(BL_FEATURE_TIMEOUT) && BL_FEATURE_TIMEOUT)
         // If timeout is enabled, check to see if we've exceeded it.
-        if (timeoutTicks)
+        if (timeoutTicks != 0u)
         {
             // Note that we assume that the tick counter won't overflow and wrap back to 0.
             // The timeout value is only up to 65536 milliseconds, and the tick count starts
@@ -389,18 +393,18 @@ static peripheral_descriptor_t const *get_active_peripheral(void)
             // Check if the elapsed time is longer than the timeout.
             if (elapsedTicks >= timeoutTicks)
             {
-#if BL_FEATURE_POWERDOWN
+#if defined(BL_FEATURE_POWERDOWN) && BL_FEATURE_POWERDOWN
                 if (shortTimeout)
                 {
 #endif
                     // In the case of the typical peripheral timeout, jump to the user application.
                     jump_to_application(applicationAddress, stackPointer);
-#if BL_FEATURE_POWERDOWN
+#if defined(BL_FEATURE_POWERDOWN) && BL_FEATURE_POWERDOWN
                 }
                 else
                 {
                     // Make sure a timeout value has been defined before shutting down.
-                    if (BL_DEFAULT_POWERDOWN_TIMEOUT)
+                    if (BL_DEFAULT_POWERDOWN_TIMEOUT != 0)
                     {
                         // Shut down the bootloader and return to reset-type state prior to low
                         // power entry
@@ -415,10 +419,10 @@ static peripheral_descriptor_t const *get_active_peripheral(void)
         }
 #endif // !BL_FEATURE_TIMEOUT
         // Traverse through all the peripherals
-        for (peripheral = g_peripherals; peripheral->typeMask != 0; ++peripheral)
+        for (peripheral = g_peripherals; peripheral->typeMask != 0u; ++peripheral)
         {
             // Check that the peripheral is enabled in the user configuration data
-            if (configurationData->enabledPeripherals & peripheral->typeMask)
+            if ((configurationData->enabledPeripherals & peripheral->typeMask) != 0u)
             {
                 assert(peripheral->controlInterface->pollForActivity);
 
@@ -435,10 +439,10 @@ static peripheral_descriptor_t const *get_active_peripheral(void)
     }
 
     // Shut down all non active peripherals
-    for (peripheral = g_peripherals; peripheral->typeMask != 0; ++peripheral)
+    for (peripheral = g_peripherals; peripheral->typeMask != 0u; ++peripheral)
     {
         // Check that the peripheral is enabled in the user configuration data
-        if (configurationData->enabledPeripherals & peripheral->typeMask)
+        if ((configurationData->enabledPeripherals & peripheral->typeMask) != 0u)
         {
             if (activePeripheral != peripheral)
             {
@@ -454,7 +458,7 @@ static peripheral_descriptor_t const *get_active_peripheral(void)
     return activePeripheral;
 }
 
-#if BL_FEATURE_QSPI_MODULE
+#if defined(BL_FEATURE_QSPI_MODULE) && BL_FEATURE_QSPI_MODULE
 static void configure_quadspi_as_needed(void)
 {
     // Start the lifetime counter
@@ -478,10 +482,10 @@ static void configure_quadspi_as_needed(void)
             g_bootloaderContext.allFlashState, kFLASH_PropertyPflash0TotalSize, &flashSize);
 
         // Check if the pointer of qspi config block is valid.
-        if ((qspi_config_block_base != 0xFFFFFFFF) && (qspi_config_block_base > flashStart) &&
+        if ((qspi_config_block_base != 0xFFFFFFFFu) && (qspi_config_block_base > flashStart) &&
             (qspi_config_block_base <= (flashStart + flashSize - sizeof(qspi_config_t))))
         {
-#if FSL_FEATURE_FLASH_HAS_ACCESS_CONTROL
+#if defined(FSL_FEATURE_FLASH_HAS_ACCESS_CONTROL) && FSL_FEATURE_FLASH_HAS_ACCESS_CONTROL
             if (!is_in_execute_only_region(qspi_config_block_base, sizeof(qspi_config_t)))
             {
                 qspiOtfadInitStatus = quadspi_init((void *)qspi_config_block_base);
@@ -504,20 +508,20 @@ static void configure_quadspi_as_needed(void)
 }
 #endif
 
-#if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
+#if !(defined(BL_FEATURE_HAS_NO_INTERNAL_FLASH) && BL_FEATURE_HAS_NO_INTERNAL_FLASH)
 static void bootloader_flash_init(void)
 {
-    g_bootloaderContext.flashDriverInterface->flash_init(g_bootloaderContext.allFlashState);
-#if !BL_DEVICE_IS_LPC_SERIES
+    (void)g_bootloaderContext.flashDriverInterface->flash_init(g_bootloaderContext.allFlashState);
+#if !(defined(BL_DEVICE_IS_LPC_SERIES) && BL_DEVICE_IS_LPC_SERIES)
     (void)FTFx_CACHE_Init(g_bootloaderContext.allFlashCacheState);
 #endif
-#if BL_FEATURE_SUPPORT_DFLASH
+#if defined(BL_FEATURE_SUPPORT_DFLASH) && BL_FEATURE_SUPPORT_DFLASH
     check_available_dFlash();
-    if (g_bootloaderContext.dflashDriverInterface != NULL)
+    if (g_bootloaderContext.dflashDriverInterface != (void *)0u)
     {
         (void)g_bootloaderContext.dflashDriverInterface->flash_init(g_bootloaderContext.dFlashState);
     }
-#endif // BL_FEATURE_SUPPORT_DFLASH
+#endif // BL_FEATURE_SUPPORT_DFLASH    
 }
 #endif // #if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
 
@@ -538,13 +542,16 @@ static void bootloader_init(void)
     // Init pinmux and other hardware setup.
     init_hardware();
 
-#if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
+#if !(defined(BL_FEATURE_HAS_NO_INTERNAL_FLASH) && BL_FEATURE_HAS_NO_INTERNAL_FLASH)
     // Init flash driver.
     bootloader_flash_init();
 #endif // #if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
 
+    // Load the user configuration data so that we can configure the clocks
+    (void)g_bootloaderContext.propertyInterface->load_user_config();
+
 // Init QSPI module if needed
-#if BL_FEATURE_QSPI_MODULE
+#if defined(BL_FEATURE_QSPI_MODULE) && BL_FEATURE_QSPI_MODULE
     configure_quadspi_as_needed();
 #endif // BL_FEATURE_QSPI_MODULE
 
@@ -554,18 +561,18 @@ static void bootloader_init(void)
     // Start the lifetime counter
     microseconds_init();
 
-#if BL_FEATURE_BYPASS_WATCHDOG
+#if defined(BL_FEATURE_BYPASS_WATCHDOG) && BL_FEATURE_BYPASS_WATCHDOG
     bootloader_watchdog_init();
 #endif // BL_FEATURE_BYPASS_WATCHDOG
 
     // Init address range of flash array, SRAM_L and SRAM U.
-    g_bootloaderContext.memoryInterface->init();
+    (void)g_bootloaderContext.memoryInterface->init();
 
     // Fully init the property store.
-    g_bootloaderContext.propertyInterface->init();
+    (void)g_bootloaderContext.propertyInterface->init();
 
-#if BL_FEATURE_RELIABLE_UPDATE
-    bootloader_reliable_update_as_requested(kReliableUpdateOption_Normal, 0);
+#if defined(BL_FEATURE_RELIABLE_UPDATE) && BL_FEATURE_RELIABLE_UPDATE
+    bootloader_reliable_update_as_requested(kReliableUpdateOption_Normal, 0u);
 #endif // BL_FEATURE_RELIABLE_UPDATE
 
     // Message so python instantiated debugger can tell the
@@ -588,7 +595,7 @@ static void bootloader_init(void)
 
 #if defined(BL_FEATURE_6PINS_PERIPHERAL) && BL_FEATURE_6PINS_PERIPHERAL
     // Fully configure the pinmux
-    if (g_bootloaderContext.activePeripheral->pinmuxConfig)
+    if (g_bootloaderContext.activePeripheral->pinmuxConfig != (void *)0u)
     {
         g_bootloaderContext.activePeripheral->pinmuxConfig(g_bootloaderContext.activePeripheral->instance,
                                                            kPinmuxType_Peripheral);
@@ -596,19 +603,19 @@ static void bootloader_init(void)
 #endif // BL_FEATURE_6PINS_PERIPHERAL
 
     // Init the active peripheral.
-    if (g_bootloaderContext.activePeripheral->byteInterface &&
-        g_bootloaderContext.activePeripheral->byteInterface->init)
+    if ((g_bootloaderContext.activePeripheral->byteInterface != (void *)0)&&
+        (g_bootloaderContext.activePeripheral->byteInterface->init != (void *)0u))
     {
-        g_bootloaderContext.activePeripheral->byteInterface->init(g_bootloaderContext.activePeripheral);
+        (void)g_bootloaderContext.activePeripheral->byteInterface->init(g_bootloaderContext.activePeripheral);
     }
-    if (g_bootloaderContext.activePeripheral->packetInterface &&
-        g_bootloaderContext.activePeripheral->packetInterface->init)
+    if ((g_bootloaderContext.activePeripheral->packetInterface != (void *)0u)&&
+        (g_bootloaderContext.activePeripheral->packetInterface->init != (void *)0u))
     {
-        g_bootloaderContext.activePeripheral->packetInterface->init(g_bootloaderContext.activePeripheral);
+        (void)g_bootloaderContext.activePeripheral->packetInterface->init(g_bootloaderContext.activePeripheral);
     }
 
     // Initialize the command processor component.
-    g_bootloaderContext.commandInterface->init();
+    (void)g_bootloaderContext.commandInterface->init();
 }
 
 //! @brief Bootloader outer loop.
@@ -621,12 +628,12 @@ static void bootloader_run(void)
     assert(g_bootloaderContext.commandInterface->pump);
 
     // Read and execute commands.
-    while (1)
+    while (true)
     {
-        g_bootloaderContext.commandInterface->pump();
+        (void)g_bootloaderContext.commandInterface->pump();
 
         // Pump the active peripheral.
-        if (activePeripheral->controlInterface->pump)
+        if (activePeripheral->controlInterface->pump != (void *)0u)
         {
             activePeripheral->controlInterface->pump(activePeripheral);
         }
@@ -644,22 +651,18 @@ int main(void)
     return 0;
 }
 
-//! Since we never exit this gets rid of the C standard functions that cause
-//! extra ROM size usage.
-#undef exit
-void exit(int arg)
+#if defined(__CC_ARM)
+#define ITM_Port8(n) (*((volatile unsigned char *)(0xE0000000u + 4u * n)))
+#define ITM_Port16(n) (*((volatile unsigned short *)(0xE0000000u + 4u * n)))
+#define ITM_Port32(n) (*((volatile unsigned long *)(0xE0000000u + 4u * n)))
+
+#define DEMCR (*((volatile unsigned long *)(0xE000EDFCu)))
+#define TRCENA 0x01000000u
+
+struct __FILE
 {
-}
-
-
-#if defined(__CC_ARM) || (__ARMCC_VERSION)
-#define ITM_Port8(n) (*((volatile unsigned char *)(0xE0000000 + 4 * n)))
-#define ITM_Port16(n) (*((volatile unsigned short *)(0xE0000000 + 4 * n)))
-#define ITM_Port32(n) (*((volatile unsigned long *)(0xE0000000 + 4 * n)))
-
-#define DEMCR (*((volatile unsigned long *)(0xE000EDFC)))
-#define TRCENA 0x01000000
-
+    int handle; /* Add whatever needed */
+};
 FILE __stdout;
 FILE __stdin;
 
@@ -667,7 +670,8 @@ int fputc(int ch, FILE *f)
 {
     if (DEMCR & TRCENA)
     {
-        while (ITM_Port32(0) == 0);
+        while (ITM_Port32(0) == 0u)
+            ;
         ITM_Port8(0) = ch;
     }
     return (ch);

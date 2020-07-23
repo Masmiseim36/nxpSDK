@@ -32,13 +32,13 @@ hsdk.conf
     - First version of the configuration file. Only available on Linux.
 
 Python
-    •   Updated THCI bindings
+    â€¢   Updated THCI bindings
         o   MESHCOP_MgmtSetRequest: Added TimestampEnable boolean parameter. If
         True, also provide Seconds (6 bytes) and Ticks (2 bytes) parameters.
         See test/meshcop_mgmtset.py for example of usage.
         o   THR_SetAttrRequest - Add DoNotGeneratePartitionId attributeId.
         o   Other commands added
-    •   Framework updates
+    â€¢   Framework updates
         o   commands/comm.py - change in send() method
         o   hsdk/sniffer.py - add callback parameter on each received packet -
             defaults to print_pkt()
@@ -299,19 +299,74 @@ Python
 Add hsdk-c/ directory containing C bindings generated from the Bluetooth LE_1.3.2 FSCI XML.
 Add HeartRateSensor.c source file to demonstrate usage of the C bindings.
 
-1.8.0.1
+1.8.1
 ================================================================================
 C
     - Fix segfault when running PCAPTest
+
+C bindings
+    - Add Thread C bindings generated from the ThreadIP_1.3.1.xml FSCI XML.
+    - Add ThreadLeader.c source file to demonstrate basic usage of the C bindings.
+
+Python bindings
+    - Regenerate the command set
+
+1.8.2
+================================================================================
+C bindings
+    - Add C bindings for the KW41Z Maintenance Release 1
+    - Add ZigBeeCoordinator sample program that makes use of the C bindings
+
+Python bindings
+    - Update Python bindings for the KW41Z Maintenance Release 1
+    - Remove warnings throughout the Python scripts and bindings
+
+1.8.3
+================================================================================
+BSD-3-Clause-Clear to BSD-3-Clause license roll-back
+
+C
     - Add support for serial baudrate value 1000000
     - Fix disable flow control functionality to also disable DSR
     - Fix detection of QN9080 DK boards
+
+Python bindings
+    - Disable flow control for EEB-KW35
+    - Update Bluetooth LE bindings
+
+1.8.4
+================================================================================
+C
     - Remove IPv6 threshold defines for the length data field
     - Convert sAnnounceData from semaphore to event for Windows, for a unified
       Windows/Linux approach
 
-C bindings
-    - Update C bindings for Bluetooth LE
-
 Python bindings
+    - Add 4.2 Pairing Failed Reason Codes
+    - Update Python bindings for ThreadIP
+    - Update Python fsci_bootloader.py script K32W042 secured image
     - Update Python bindings for Bluetooth LE
+        - New Initiating_PHYs parameter to GAPConnect
+        - New Duration and Period parameters to GAPStartScanning
+
+1.9.0.5
+================================================================================
+
+HSDK DLL version 1.9.0
+C
+    -  Update C bindings for Bluetooth LE
+    -  Update HeartRateSensor.c adding GAPSetAdvertisingParameters command before GAPSetAdvertisingData command
+    -  Added FSCIGetNumberOfFreeBuffers commands, addded connectionRole parameter to GAPConnectionEventConnectedIndication,  addded Mtu parameter to GATTClientExchangeMtu
+
+Python
+    -  Update Python bindings
+    -  Update hrs.py adding GAPSetAdvertisingParameters command before GAPSetAdvertisingData command
+    -  Added FSCIGetNumberOfFreeBuffers commands, addded connectionRole parameter to GAPConnectionEventConnectedIndication,  addded Mtu parameter to GATTClientExchangeMtu
+
+1.9.0.6
+================================================================================
+
+HSDK DLL version 1.9.0
+
+Python
+    -  Update utils.py function to_bytes for GATTClientReadCharacteristicValue

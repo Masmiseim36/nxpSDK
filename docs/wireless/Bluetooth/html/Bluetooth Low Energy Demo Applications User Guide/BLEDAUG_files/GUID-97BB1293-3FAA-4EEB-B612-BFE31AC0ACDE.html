@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Periodic Advertising"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-6A79DC36-EEB9-4649-BEB4-A226B5AD42D8.html"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-97BB1293-3FAA-4EEB-B612-BFE31AC0ACDE"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Periodic Advertising</title>
+</head>
+<body id="GUID-97BB1293-3FAA-4EEB-B612-BFE31AC0ACDE">
+
+
+    <h1 class="title topictitle1">Periodic Advertising</h1>
+
+    <div class="body">
+        <p class="p">Exercise periodic advertising features using the BLE Shell application as follows:</p>
+
+        <div class="p">On the GAP Peripheral device:<ol class="ol">
+            <li class="li">Set the periodic advertising parameters and data. Start extended advertising and
+                    periodic
+                        advertising.<pre class="pre codeblock">BLE Shell&gt;gap periodiccfg
+--&gt;  Periodic Advertising Parameters:
+    --&gt;  Periodic Advertising Handle: 1
+    --&gt;  Periodic Advertising Interval: 2000 ms
+
+--&gt;  GAP Event: Periodic Advertising parameters successfully set.
+
+BLE Shell&gt;gap periodicdata 8 periodicdata
+--&gt;  GAP Event: Periodic Advertising data successfully set.
+
+BLE Shell&gt;gap extadvstart
+--&gt;  GAP Event: Advertising state changed successfully!
+
+BLE Shell&gt;gap periodicstart
+--&gt;  GAP Event: Advertising state changed successfully!
+
+BLE Shell&gt;gap address
+--&gt;  GAP Event: Public Address Read:0060374E2B8A
+            </pre>
+<p class="p">On
+                        the GAP Central device:</p>
+</li>
+<li class="li"> Start scanning. Create periodic advertising sync with the
+                    advertiser:<pre class="pre codeblock">BLE Shell&gt;gap periodicsync -peer 0060374E2B8A -type 0 
+BLE Shell&gt;gap scanstart
+BLE Shell&gt;
+--&gt;  GAP Event: Periodic Advertising Sync Established
+--&gt;  GAP Event: Periodic Device Scanned
+--&gt;  GAP Event: Periodic Device Scanned
+--&gt;  GAP Event: Periodic Device Scanned</pre>
+</li>
+
+        </ol>
+</div>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-6A79DC36-EEB9-4649-BEB4-A226B5AD42D8.html">Usage</a></div>
+</div>
+</div>
+
+</body>
+</html>

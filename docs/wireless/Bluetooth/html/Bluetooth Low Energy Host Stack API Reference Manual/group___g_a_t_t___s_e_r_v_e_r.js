@@ -24,6 +24,9 @@ var group___g_a_t_t___s_e_r_v_e_r =
       [ "procedureType", "group___g_a_t_t___s_e_r_v_e_r.html#a6b963a5fabab2c2f3bce1cc56d56934b", null ],
       [ "error", "group___g_a_t_t___s_e_r_v_e_r.html#a379f02c1c44eccc16e863ecb589cabfa", null ]
     ] ],
+    [ "gattServerInvalidPdu_t", "group___g_a_t_t___s_e_r_v_e_r.html#structgatt_server_invalid_pdu__t", [
+      [ "attOpCode", "group___g_a_t_t___s_e_r_v_e_r.html#ac796298821212b9b7bb5458f8c1a1443", null ]
+    ] ],
     [ "gattServerEvent_t", "group___g_a_t_t___s_e_r_v_e_r.html#structgatt_server_event__t", [
       [ "eventType", "group___g_a_t_t___s_e_r_v_e_r.html#ac73dfc1f48b0faf433fa243ca692e19e", null ],
       [ "eventData", "group___g_a_t_t___s_e_r_v_e_r.html#a3d32c7201d768783865ca6b64a5aac50", null ]
@@ -34,7 +37,8 @@ var group___g_a_t_t___s_e_r_v_e_r =
       [ "charCccdWrittenEvent", "group___g_a_t_t___s_e_r_v_e_r.html#aec48c5fa1873b5039aba161a3a2242e9", null ],
       [ "procedureError", "group___g_a_t_t___s_e_r_v_e_r.html#a54cccb9a8c6a494359376fc73a50c183", null ],
       [ "longCharWrittenEvent", "group___g_a_t_t___s_e_r_v_e_r.html#a0a292b0f789cc87f71b41a6047fadcec", null ],
-      [ "attributeReadEvent", "group___g_a_t_t___s_e_r_v_e_r.html#ac17c2cb0c8721cbbf4a3ec69b35ac52e", null ]
+      [ "attributeReadEvent", "group___g_a_t_t___s_e_r_v_e_r.html#ac17c2cb0c8721cbbf4a3ec69b35ac52e", null ],
+      [ "attributeOpCode", "group___g_a_t_t___s_e_r_v_e_r.html#a6b37b61b6e435d2dc4866e85bb657d99", null ]
     ] ],
     [ "gattServerCallback_t", "group___g_a_t_t___s_e_r_v_e_r.html#gaa1aa1691e43aae7117bd1a7ca18894b1", null ],
     [ "gattServerEventType_t", "group___g_a_t_t___s_e_r_v_e_r.html#ga6806d32e99a3229ad636f89f3840fcc0", [
@@ -45,7 +49,8 @@ var group___g_a_t_t___s_e_r_v_e_r =
       [ "gEvtAttributeWrittenWithoutResponse_c", "group___g_a_t_t___s_e_r_v_e_r.html#gga6806d32e99a3229ad636f89f3840fcc0ab143d9a8a9614f31e233e86855f7c228", null ],
       [ "gEvtError_c", "group___g_a_t_t___s_e_r_v_e_r.html#gga6806d32e99a3229ad636f89f3840fcc0a4f56164bc06f949dac9ac840dcf8c762", null ],
       [ "gEvtLongCharacteristicWritten_c", "group___g_a_t_t___s_e_r_v_e_r.html#gga6806d32e99a3229ad636f89f3840fcc0afd8ce826086ef0ee6d90b134e255a9ac", null ],
-      [ "gEvtAttributeRead_c", "group___g_a_t_t___s_e_r_v_e_r.html#gga6806d32e99a3229ad636f89f3840fcc0ab10fce66411958117986397522e4fcd1", null ]
+      [ "gEvtAttributeRead_c", "group___g_a_t_t___s_e_r_v_e_r.html#gga6806d32e99a3229ad636f89f3840fcc0ab10fce66411958117986397522e4fcd1", null ],
+      [ "gEvtInvalidPduReceived_c", "group___g_a_t_t___s_e_r_v_e_r.html#gga6806d32e99a3229ad636f89f3840fcc0a1084c84dc58b8020548ee650e75941e1", null ]
     ] ],
     [ "gattServerProcedureType_t", "group___g_a_t_t___s_e_r_v_e_r.html#ga27c3a9d2dcf345e4b6a47d475d593535", [
       [ "gSendAttributeWrittenStatus_c", "group___g_a_t_t___s_e_r_v_e_r.html#gga27c3a9d2dcf345e4b6a47d475d593535a599e056d750aab4d49a4587e317db25f", null ],
@@ -55,12 +60,15 @@ var group___g_a_t_t___s_e_r_v_e_r =
     ] ],
     [ "GattServer_Init", "group___g_a_t_t___s_e_r_v_e_r.html#gaeb6079d09d95f9312dc2677a99ed2e45", null ],
     [ "GattServer_RegisterCallback", "group___g_a_t_t___s_e_r_v_e_r.html#ga2e7581307bb568f2c828dad62f2dad45", null ],
-    [ "GattServer_RegisterHandlesForWriteNotifications", "group___g_a_t_t___s_e_r_v_e_r.html#ga6ff81cac0be312fd79698030d3fffb37", null ],
+    [ "GattServer_RegisterHandlesForWriteNotifications", "group___g_a_t_t___s_e_r_v_e_r.html#ga2924ffc3e879c6baeff9cb3500a57993", null ],
+    [ "GattServer_UnregisterHandlesForWriteNotifications", "group___g_a_t_t___s_e_r_v_e_r.html#gabe86a3b0ab677c3e8fc646b66d49f86a", null ],
     [ "GattServer_SendAttributeWrittenStatus", "group___g_a_t_t___s_e_r_v_e_r.html#ga7c35c777ec60e926b77fb630a5dbc6c7", null ],
-    [ "GattServer_RegisterHandlesForReadNotifications", "group___g_a_t_t___s_e_r_v_e_r.html#gaed1479c9cd83f284aae60490692afd22", null ],
+    [ "GattServer_RegisterHandlesForReadNotifications", "group___g_a_t_t___s_e_r_v_e_r.html#ga0617f3f47b1ceff922316b5d1de2cfc0", null ],
+    [ "GattServer_UnregisterHandlesForReadNotifications", "group___g_a_t_t___s_e_r_v_e_r.html#ga123b96958066b84ae2f7213a34ec04e6", null ],
     [ "GattServer_SendAttributeReadStatus", "group___g_a_t_t___s_e_r_v_e_r.html#gaba56ef1080a8f74496b533c6ce2fde1c", null ],
     [ "GattServer_SendNotification", "group___g_a_t_t___s_e_r_v_e_r.html#ga2ac10b90addee712e1ec029d8fabccdf", null ],
     [ "GattServer_SendIndication", "group___g_a_t_t___s_e_r_v_e_r.html#ga917975dbb53b33dabb255a969c844a78", null ],
-    [ "GattServer_SendInstantValueNotification", "group___g_a_t_t___s_e_r_v_e_r.html#ga2b103e1b4c95d43573faa6112609674b", null ],
-    [ "GattServer_SendInstantValueIndication", "group___g_a_t_t___s_e_r_v_e_r.html#gaa580ed955583ba39d1a0a354875e06b0", null ]
+    [ "GattServer_SendInstantValueNotification", "group___g_a_t_t___s_e_r_v_e_r.html#ga6423c3b586ea51994ce69f681d506deb", null ],
+    [ "GattServer_SendInstantValueIndication", "group___g_a_t_t___s_e_r_v_e_r.html#gac4bc8c8e54ef4f21123ed88f7ba68ce2", null ],
+    [ "GattServer_RegisterUniqueHandlesForNotifications", "group___g_a_t_t___s_e_r_v_e_r.html#ga19e587a18f2c9623177a0ff63c98f015", null ]
 ];

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2018, NXP Semiconductors, Inc.
+ * Copyright (c) 2016-2018, 2020 NXP Semiconductors, Inc.
  * All rights reserved.
  *
  * 
@@ -492,15 +492,15 @@ uint8_t LIN_MakeChecksumByte(const uint8_t *buffer,
     uint16_t checksum;
 
     assert(PID);
-    /* For PID is 0x3C or 0x3D apply classic checksum, and for other PID: Enhanced checksum */
-    if ((0x3CU != PID) && (0x3DU != PID))
+    /* For PID is 0x3C or 0x7D apply classic checksum, and for other PID: Enhanced checksum */
+    if ((0x3CU != PID) && (0x7DU != PID))
     {
         /* For PID other than 0x3c and 0x7D: Add PID in checksum calculation */
         checksum = PID;
     }
     else
     {
-        /* For 0x3C and 0x3D: Do not add PID in checksum calculation */
+        /* For 0x3C and 0x7D: Do not add PID in checksum calculation */
         checksum = 0U;
     }
 

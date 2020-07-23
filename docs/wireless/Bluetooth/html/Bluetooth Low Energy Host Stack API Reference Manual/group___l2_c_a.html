@@ -36,7 +36,7 @@
   <td id="projectlogo"><img alt="Logo" src="NXP_logo.bmp"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">Bluetooth® Low Energy Host Stack API Reference Manual
-   &#160;<span id="projectnumber">Rev. 12</span>
+   &#160;<span id="projectnumber">Rev. 13</span>
    </div>
    <div id="projectbrief">BLEHSAPIRM</div>
   </td>
@@ -134,6 +134,12 @@ Data Structures</h2></td></tr>
 <tr class="separator:structl2ca_le_cb_no_peer_credits__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structl2ca_le_cb_local_credits_notification__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l2_c_a.html#structl2ca_le_cb_local_credits_notification__t">l2caLeCbLocalCreditsNotification_t</a></td></tr>
 <tr class="separator:structl2ca_le_cb_local_credits_notification__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structl2ca_le_cb_error__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l2_c_a.html#structl2ca_le_cb_error__t">l2caLeCbError_t</a></td></tr>
+<tr class="separator:structl2ca_le_cb_error__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structl2cap_control_message__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l2_c_a.html#structl2cap_control_message__t">l2capControlMessage_t</a></td></tr>
+<tr class="separator:structl2cap_control_message__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:unionl2cap_control_message__t_8message_data"><td class="memItemLeft" align="right" valign="top">union &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l2_c_a.html#unionl2cap_control_message__t_8message_data">l2capControlMessage_t.messageData</a></td></tr>
+<tr class="separator:unionl2cap_control_message__t_8message_data"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
@@ -197,30 +203,21 @@ Macros</h2></td></tr>
 <tr class="memitem:gad93e9c64977a8674fa3b14099bc506c9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gad93e9c64977a8674fa3b14099bc506c9"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>gLePsmSigAssignedNumbersTable_m</b>(entry)</td></tr>
 <tr class="separator:gad93e9c64977a8674fa3b14099bc506c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga29c3002d9d6458ccdf94b83a20f47f31"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga29c3002d9d6458ccdf94b83a20f47f31"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>gL2caLePsmSigAssignedCount_c</b></td></tr>
-<tr class="separator:ga29c3002d9d6458ccdf94b83a20f47f31"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga161331b3c7543b10d628be9b3580ccff"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga161331b3c7543b10d628be9b3580ccff"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>gL2caLePsmDynamicCount_c</b></td></tr>
-<tr class="separator:ga161331b3c7543b10d628be9b3580ccff"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2aaacbe35c283db9f6c1f52274270f9f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga2aaacbe35c283db9f6c1f52274270f9f"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>gL2caMaxLePsmSupported_c</b></td></tr>
-<tr class="separator:ga2aaacbe35c283db9f6c1f52274270f9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:ga28babdd1475e7270113a3dbcc0b34c6e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga28babdd1475e7270113a3dbcc0b34c6e"></a>
-typedef l2caControlCallback_t&#160;</td><td class="memItemRight" valign="bottom"><b>l2caLeCbControlCallback_t</b></td></tr>
-<tr class="separator:ga28babdd1475e7270113a3dbcc0b34c6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga07afd1a64d2c3167d2e41c26dcdd0e55"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga07afd1a64d2c3167d2e41c26dcdd0e55"></a>
 typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><b>l2caLeCbDataCallback_t</b>) (<a class="el" href="group___b_l_e.html#ga79037cf180936e7aa4ef278d2164b4d5">deviceId_t</a> deviceId, uint16_t channelId, uint8_t *pPacket, uint16_t packetLength)</td></tr>
 <tr class="separator:ga07afd1a64d2c3167d2e41c26dcdd0e55"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga266b32869777f1997dc6d2b5f6cd6ca1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga266b32869777f1997dc6d2b5f6cd6ca1"></a>
+typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><b>l2caControlCallback_t</b>) (<a class="el" href="group___l2_c_a.html#structl2cap_control_message__t">l2capControlMessage_t</a> *pMessage)</td></tr>
+<tr class="separator:ga266b32869777f1997dc6d2b5f6cd6ca1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga28babdd1475e7270113a3dbcc0b34c6e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga28babdd1475e7270113a3dbcc0b34c6e"></a>
+typedef l2caControlCallback_t&#160;</td><td class="memItemRight" valign="bottom"><b>l2caLeCbControlCallback_t</b></td></tr>
+<tr class="separator:ga28babdd1475e7270113a3dbcc0b34c6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga8ac1ced41d347543d5dd88b4fad6a035"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga8ac1ced41d347543d5dd88b4fad6a035"></a>
 typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><b>l2caGenericCallback_t</b>) (<a class="el" href="group___b_l_e.html#ga79037cf180936e7aa4ef278d2164b4d5">deviceId_t</a> deviceId, uint8_t *pPacket, uint16_t packetLength)</td></tr>
 <tr class="separator:ga8ac1ced41d347543d5dd88b4fad6a035"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf40617b98b99c0d58d78d3718611ec16"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaf40617b98b99c0d58d78d3718611ec16"></a>
-typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><b>l2caControlCallback_t</b>) (l2capControlMessageType_t messageType, void *pMessage)</td></tr>
-<tr class="separator:gaf40617b98b99c0d58d78d3718611ec16"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
@@ -243,24 +240,29 @@ Enumerations</h2></td></tr>
 <br />
 &#160;&#160;<b>gSourceCidAreadyAllocated_c</b>, 
 <br />
+&#160;&#160;<b>gInvalidParameters_c</b>, 
+<br />
 &#160;&#160;<b>gCommandRejected_c</b>, 
 <br />
 &#160;&#160;<b>gResponseTimeout_c</b>
 <br />
  }</td></tr>
 <tr class="separator:gaaf9767e2c3f2971725dcf229e8e9485b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaeb8c74747b06d5ae042438a0664095e7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaeb8c74747b06d5ae042438a0664095e7"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><b>l2caLePsmSigAssignedType_t</b> { <b>gLePsmSigAssignedNumbersTable_m</b>
+<tr class="memitem:ga72fcc7300a3afdb620eb3bf38e89afec"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga72fcc7300a3afdb620eb3bf38e89afec"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><b>l2caErrorSource_t</b> { <br />
+&#160;&#160;<b>gL2ca_CancelConnection_c</b>, 
+<br />
+&#160;&#160;<b>gL2ca_SendLeFlowControlCredit_c</b>, 
+<br />
+&#160;&#160;<b>gL2ca_DisconnectLePsm_c</b>, 
+<br />
+&#160;&#160;<b>gL2ca_HandleSendLeCbData_c</b>, 
+<br />
+&#160;&#160;<b>gL2ca_HandleRecvLeCbData_c</b>, 
+<br />
+&#160;&#160;<b>gL2ca_HandleLeFlowControlCredit_c</b>
+<br />
  }</td></tr>
-<tr class="separator:gaeb8c74747b06d5ae042438a0664095e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa8607eee94c61c29c6f5ac8513a55738"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaa8607eee94c61c29c6f5ac8513a55738"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><b>l2caCommandRejectReasonType_t</b> { <br />
-&#160;&#160;<b>gCommandNotUnderstood_c</b>, 
-<br />
-&#160;&#160;<b>gSignalingMtuExceeded_c</b>, 
-<br />
-&#160;&#160;<b>gInvalidCidInRequestd_c</b>
-<br />
- }</td></tr>
-<tr class="separator:gaa8607eee94c61c29c6f5ac8513a55738"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:ga72fcc7300a3afdb620eb3bf38e89afec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2eaaffb7c080ff211d86774dd8e7f4fb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga2eaaffb7c080ff211d86774dd8e7f4fb"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><b>l2capControlMessageType_t</b> { <br />
 &#160;&#160;<b>gL2ca_LePsmConnectRequest_c</b>, 
 <br />
@@ -270,7 +272,9 @@ Enumerations</h2></td></tr>
 <br />
 &#160;&#160;<b>gL2ca_NoPeerCredits_c</b>, 
 <br />
-&#160;&#160;<b>gL2ca_LocalCreditsNotification_c</b>
+&#160;&#160;<b>gL2ca_LocalCreditsNotification_c</b>, 
+<br />
+&#160;&#160;<b>gL2ca_Error_c</b>
 <br />
  }</td></tr>
 <tr class="separator:ga2eaaffb7c080ff211d86774dd8e7f4fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -289,8 +293,8 @@ Functions</h2></td></tr>
 <tr class="separator:gab8c50c1c94ef2cbf095c6f34b5b2bef3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaeb7efea8a5b91aa2e60c95b454983586"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___b_l_e.html#ga50b56ac2045dae012646ed0377e3412c">bleResult_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l2_c_a.html#gaeb7efea8a5b91aa2e60c95b454983586">L2ca_CancelConnection</a> (uint16_t lePsm, <a class="el" href="group___b_l_e.html#ga79037cf180936e7aa4ef278d2164b4d5">deviceId_t</a> deviceId, l2caLeCbConnectionRequestResult_t refuseReason)</td></tr>
 <tr class="separator:gaeb7efea8a5b91aa2e60c95b454983586"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga11fc3db96892b100c8169663869a12d3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___b_l_e.html#ga50b56ac2045dae012646ed0377e3412c">bleResult_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l2_c_a.html#ga11fc3db96892b100c8169663869a12d3">L2ca_SendLeCbData</a> (<a class="el" href="group___b_l_e.html#ga79037cf180936e7aa4ef278d2164b4d5">deviceId_t</a> deviceId, uint16_t channelId, uint8_t *pPacket, uint16_t packetLength)</td></tr>
-<tr class="separator:ga11fc3db96892b100c8169663869a12d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga57acad48637f31c8fc104840e7abdd7f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___b_l_e.html#ga50b56ac2045dae012646ed0377e3412c">bleResult_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l2_c_a.html#ga57acad48637f31c8fc104840e7abdd7f">L2ca_SendLeCbData</a> (<a class="el" href="group___b_l_e.html#ga79037cf180936e7aa4ef278d2164b4d5">deviceId_t</a> deviceId, uint16_t channelId, const uint8_t *pPacket, uint16_t packetLength)</td></tr>
+<tr class="separator:ga57acad48637f31c8fc104840e7abdd7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga66c75ebaa71f52f3df9886ebaa2f897c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___b_l_e.html#ga50b56ac2045dae012646ed0377e3412c">bleResult_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l2_c_a.html#ga66c75ebaa71f52f3df9886ebaa2f897c">L2ca_SendLeCredit</a> (<a class="el" href="group___b_l_e.html#ga79037cf180936e7aa4ef278d2164b4d5">deviceId_t</a> deviceId, uint16_t channelId, uint16_t credits)</td></tr>
 <tr class="separator:ga66c75ebaa71f52f3df9886ebaa2f897c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -472,6 +476,117 @@ cId</td>
 <a class="anchor" id="a9d860b1c2b1cf40c29213124f2f150c1"></a>uint16_t</td>
 <td class="fieldname">
 localCredits</td>
+<td class="fielddoc">
+</td></tr>
+</table>
+
+</div>
+</div>
+<a name="structl2ca_le_cb_error__t" id="structl2ca_le_cb_error__t"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct l2caLeCbError_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"></div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a class="anchor" id="a409f250ced34f1dcd3ef0bc6e85fdea6"></a><a class="el" href="group___b_l_e.html#ga79037cf180936e7aa4ef278d2164b4d5">deviceId_t</a></td>
+<td class="fieldname">
+deviceId</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a class="anchor" id="a3e00dddd8cf9718e6a5fd1f2620fbda5"></a><a class="el" href="group___b_l_e.html#ga50b56ac2045dae012646ed0377e3412c">bleResult_t</a></td>
+<td class="fieldname">
+result</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a class="anchor" id="ad9e5863c89043a68042e92621cd37d25"></a>l2caErrorSource_t</td>
+<td class="fieldname">
+errorSource</td>
+<td class="fielddoc">
+</td></tr>
+</table>
+
+</div>
+</div>
+<a name="structl2cap_control_message__t" id="structl2cap_control_message__t"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct l2capControlMessage_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"></div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a class="anchor" id="a43c0be5a1ab6f363581b408fd067305a"></a>l2capControlMessageType_t</td>
+<td class="fieldname">
+messageType</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a class="anchor" id="a07b33451c5075138a54504c7aea4fbbf"></a>union <a class="el" href="group___l2_c_a.html#unionl2cap_control_message__t_8message_data">l2capControlMessage_t</a></td>
+<td class="fieldname">
+messageData</td>
+<td class="fielddoc">
+</td></tr>
+</table>
+
+</div>
+</div>
+<a name="unionl2cap_control_message__t_8message_data" id="unionl2cap_control_message__t_8message_data"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">union l2capControlMessage_t.messageData</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"></div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a class="anchor" id="ae3e577d1b9f178882420c1fb513600ef"></a><a class="el" href="group___l2_c_a.html#structl2ca_le_cb_connection_request__t">l2caLeCbConnectionRequest_t</a></td>
+<td class="fieldname">
+connectionRequest</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a class="anchor" id="abce98f5cc332094957a14e615ece2fcc"></a><a class="el" href="group___l2_c_a.html#structl2ca_le_cb_connection_complete__t">l2caLeCbConnectionComplete_t</a></td>
+<td class="fieldname">
+connectionComplete</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a class="anchor" id="aedb9d033d7e1866da7bd79abdeca6f66"></a><a class="el" href="group___l2_c_a.html#structl2ca_le_cb_disconnection__t">l2caLeCbDisconnection_t</a></td>
+<td class="fieldname">
+disconnection</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a class="anchor" id="a2ca45dec08f3cc23be29ec91a4f50b44"></a><a class="el" href="group___l2_c_a.html#structl2ca_le_cb_no_peer_credits__t">l2caLeCbNoPeerCredits_t</a></td>
+<td class="fieldname">
+noPeerCredits</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a class="anchor" id="a0b5ff9798eabc318f210c20f8e8cd61e"></a><a class="el" href="group___l2_c_a.html#structl2ca_le_cb_local_credits_notification__t">l2caLeCbLocalCreditsNotification_t</a></td>
+<td class="fieldname">
+localCreditsNotification</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a class="anchor" id="acb5e100e5a9a3e7f6d1fd97512215282"></a><a class="el" href="group___l2_c_a.html#structl2ca_le_cb_error__t">l2caLeCbError_t</a></td>
+<td class="fieldname">
+error</td>
 <td class="fielddoc">
 </td></tr>
 </table>
@@ -715,7 +830,7 @@ localCredits</td>
 
 </div>
 </div>
-<a class="anchor" id="ga11fc3db96892b100c8169663869a12d3"></a>
+<a class="anchor" id="ga57acad48637f31c8fc104840e7abdd7f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -734,7 +849,7 @@ localCredits</td>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramtype">const uint8_t *&#160;</td>
           <td class="paramname"><em>pPacket</em>, </td>
         </tr>
         <tr>

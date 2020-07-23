@@ -48,13 +48,13 @@ otaServer_AppCB_t *pCB
                 
                 <thead class="thead" align="left">
                     <tr class="row">
-                        <th class="entry" valign="top" id="d74021e74">Name</th>
+                        <th class="entry" valign="top" id="d74077e74">Name</th>
 
-                        <th class="entry" valign="top" id="d74021e77">Type</th>
+                        <th class="entry" valign="top" id="d74077e77">Type</th>
 
-                        <th class="entry" valign="top" id="d74021e80">Direction</th>
+                        <th class="entry" valign="top" id="d74077e80">Direction</th>
 
-                        <th class="entry" valign="top" id="d74021e83">Description</th>
+                        <th class="entry" valign="top" id="d74077e83">Description</th>
 
                     </tr>
 
@@ -62,24 +62,24 @@ otaServer_AppCB_t *pCB
 
                 <tbody class="tbody">
                     <tr class="row">
-                        <td class="entry" valign="top" headers="d74021e74 ">fsciInterface</td>
+                        <td class="entry" valign="top" headers="d74077e74 ">fsciInterface</td>
 
-                        <td class="entry" valign="top" headers="d74021e77 ">uint32_t</td>
+                        <td class="entry" valign="top" headers="d74077e77 ">uint32_t</td>
 
-                        <td class="entry" valign="top" headers="d74021e80 ">[IN]</td>
+                        <td class="entry" valign="top" headers="d74077e80 ">[IN]</td>
 
-                        <td class="entry" valign="top" headers="d74021e83 ">Id of the FSCI interface</td>
+                        <td class="entry" valign="top" headers="d74077e83 ">Id of the FSCI interface</td>
 
                     </tr>
 
                     <tr class="row">
-                        <td class="entry" valign="top" headers="d74021e74 ">pCB</td>
+                        <td class="entry" valign="top" headers="d74077e74 ">pCB</td>
 
-                        <td class="entry" valign="top" headers="d74021e77 ">otaServer_AppCB_t*</td>
+                        <td class="entry" valign="top" headers="d74077e77 ">otaServer_AppCB_t*</td>
 
-                        <td class="entry" valign="top" headers="d74021e80 ">[IN]</td>
+                        <td class="entry" valign="top" headers="d74077e80 ">[IN]</td>
 
-                        <td class="entry" valign="top" headers="d74021e83 ">Pointer to a structure containing callback functions</td>
+                        <td class="entry" valign="top" headers="d74077e83 ">Pointer to a structure containing callback functions</td>
 
                     </tr>
 
@@ -113,13 +113,13 @@ uint32_t length
                 
                 <thead class="thead" align="left">
                     <tr class="row">
-                        <th class="entry" valign="top" id="d74021e169">Name</th>
+                        <th class="entry" valign="top" id="d74077e169">Name</th>
 
-                        <th class="entry" valign="top" id="d74021e172">Type</th>
+                        <th class="entry" valign="top" id="d74077e172">Type</th>
 
-                        <th class="entry" valign="top" id="d74021e175">Direction</th>
+                        <th class="entry" valign="top" id="d74077e175">Direction</th>
 
-                        <th class="entry" valign="top" id="d74021e178">Description</th>
+                        <th class="entry" valign="top" id="d74077e178">Description</th>
 
                     </tr>
 
@@ -127,13 +127,13 @@ uint32_t length
 
                 <tbody class="tbody">
                     <tr class="row">
-                        <td class="entry" valign="top" headers="d74021e169 ">length</td>
+                        <td class="entry" valign="top" headers="d74077e169 ">length</td>
 
-                        <td class="entry" valign="top" headers="d74021e172 ">uint32_t</td>
+                        <td class="entry" valign="top" headers="d74077e172 ">uint32_t</td>
 
-                        <td class="entry" valign="top" headers="d74021e175 ">[IN]</td>
+                        <td class="entry" valign="top" headers="d74077e175 ">[IN]</td>
 
-                        <td class="entry" valign="top" headers="d74021e178 ">Length of the image to be received</td>
+                        <td class="entry" valign="top" headers="d74077e178 ">Length of the image to be received</td>
 
                     </tr>
 
@@ -154,7 +154,8 @@ uint32_t length
 (
 uint8_t* pData, 
 uint16_t length, 
-uint32_t* pImageLengt
+uint32_t* pImageLength, 
+uint32_t *pImageOffset
 );</pre>
 
         <p class="p"><strong class="ph b">Description: </strong>Saves image chunks received over-the-air into a non-volatile storage
@@ -170,13 +171,13 @@ uint32_t* pImageLengt
                 
                 <thead class="thead" align="left">
                     <tr class="row">
-                        <th class="entry" valign="top" id="d74021e249">Name</th>
+                        <th class="entry" valign="top" id="d74077e249">Name</th>
 
-                        <th class="entry" valign="top" id="d74021e252">Type</th>
+                        <th class="entry" valign="top" id="d74077e252">Type</th>
 
-                        <th class="entry" valign="top" id="d74021e255">Direction</th>
+                        <th class="entry" valign="top" id="d74077e255">Direction</th>
 
-                        <th class="entry" valign="top" id="d74021e258">Description</th>
+                        <th class="entry" valign="top" id="d74077e258">Description</th>
 
                     </tr>
 
@@ -184,36 +185,44 @@ uint32_t* pImageLengt
 
                 <tbody class="tbody">
                     <tr class="row">
-                        <td class="entry" valign="top" headers="d74021e249 ">pData</td>
+                        <td class="entry" valign="top" headers="d74077e249 ">pData</td>
 
-                        <td class="entry" valign="top" headers="d74021e252 ">uint8_t*</td>
+                        <td class="entry" valign="top" headers="d74077e252 ">uint8_t*</td>
 
-                        <td class="entry" valign="top" headers="d74021e255 ">[IN]</td>
+                        <td class="entry" valign="top" headers="d74077e255 ">[IN]</td>
 
-                        <td class="entry" valign="top" headers="d74021e258 ">Pointer to the image chunk</td>
-
-                    </tr>
-
-                    <tr class="row">
-                        <td class="entry" valign="top" headers="d74021e249 ">length</td>
-
-                        <td class="entry" valign="top" headers="d74021e252 ">uint16_t</td>
-
-                        <td class="entry" valign="top" headers="d74021e255 ">[IN]</td>
-
-                        <td class="entry" valign="top" headers="d74021e258 ">Length in bytes of the image chunk.</td>
+                        <td class="entry" valign="top" headers="d74077e258 ">Pointer to the image chunk</td>
 
                     </tr>
 
                     <tr class="row">
-                        <td class="entry" valign="top" headers="d74021e249 ">pImageLength</td>
+                        <td class="entry" valign="top" headers="d74077e249 ">length</td>
 
-                        <td class="entry" valign="top" headers="d74021e252 ">uint32_t*</td>
+                        <td class="entry" valign="top" headers="d74077e252 ">uint16_t</td>
 
-                        <td class="entry" valign="top" headers="d74021e255 ">[OUT]</td>
+                        <td class="entry" valign="top" headers="d74077e255 ">[IN]</td>
 
-                        <td class="entry" valign="top" headers="d74021e258 ">Pointer to a location where to store the currently written bytes. Can
+                        <td class="entry" valign="top" headers="d74077e258 ">Length in bytes of the image chunk.</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d74077e249 ">pImageLength</td>
+
+                        <td class="entry" valign="top" headers="d74077e252 ">uint32_t*</td>
+
+                        <td class="entry" valign="top" headers="d74077e255 ">[OUT]</td>
+
+                        <td class="entry" valign="top" headers="d74077e258 ">Pointer to a location where to store the currently written bytes. Can
                             be NULL if not used.</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d74077e249 ">pImageOffset</td>
+            <td class="entry" valign="top" headers="d74077e252 ">uint32_t*</td>
+            <td class="entry" valign="top" headers="d74077e255 ">[IN]</td>
+            <td class="entry" valign="top" headers="d74077e258 ">If it is not null contains the current offset of the image</td>
 
                     </tr>
 
@@ -235,8 +244,9 @@ uint32_t* pImageLengt
 uint8_t* pBitmap
 );</pre>
 
-        <p class="p"><strong class="ph b">Description: </strong>Writes the sector bitmap and length into the image
-            storage (Client). If the internal storage is used, the start marker is also written.</p>
+        <div class="p"><strong class="ph b">Description: </strong>Writes the sector bitmap and length into the image
+            storage (Client). If the internal storage is used, the start marker is also written.<div class="note note"><span class="notetitle">Note:</span> This argument is not used on K32W061/JN5189/QN9090</div>
+</div>
 
         <p class="p"><strong class="ph b">Parameters:</strong></p>
 
@@ -248,13 +258,13 @@ uint8_t* pBitmap
                 
                 <thead class="thead" align="left">
                     <tr class="row">
-                        <th class="entry" valign="top" id="d74021e360">Name</th>
+                        <th class="entry" valign="top" id="d74077e377">Name</th>
 
-                        <th class="entry" valign="top" id="d74021e363">Type</th>
+                        <th class="entry" valign="top" id="d74077e380">Type</th>
 
-                        <th class="entry" valign="top" id="d74021e366">Direction</th>
+                        <th class="entry" valign="top" id="d74077e383">Direction</th>
 
-                        <th class="entry" valign="top" id="d74021e369">Description</th>
+                        <th class="entry" valign="top" id="d74077e386">Description</th>
 
                     </tr>
 
@@ -262,13 +272,13 @@ uint8_t* pBitmap
 
                 <tbody class="tbody">
                     <tr class="row">
-                        <td class="entry" valign="top" headers="d74021e360 ">pBitmap</td>
+                        <td class="entry" valign="top" headers="d74077e377 ">pBitmap</td>
 
-                        <td class="entry" valign="top" headers="d74021e363 ">Uint8_t*</td>
+                        <td class="entry" valign="top" headers="d74077e380 ">Uint8_t*</td>
 
-                        <td class="entry" valign="top" headers="d74021e366 ">[IN]</td>
+                        <td class="entry" valign="top" headers="d74077e383 ">[IN]</td>
 
-                        <td class="entry" valign="top" headers="d74021e369 ">Pointer to the flash sector bitmap</td>
+                        <td class="entry" valign="top" headers="d74077e386 ">Pointer to the flash sector bitmap</td>
 
                     </tr>
 
@@ -350,13 +360,13 @@ uint32_t address
                 
                 <thead class="thead" align="left">
                     <tr class="row">
-                        <th class="entry" valign="top" id="d74021e515">Name</th>
+                        <th class="entry" valign="top" id="d74077e532">Name</th>
 
-                        <th class="entry" valign="top" id="d74021e518">Type</th>
+                        <th class="entry" valign="top" id="d74077e535">Type</th>
 
-                        <th class="entry" valign="top" id="d74021e521">Direction</th>
+                        <th class="entry" valign="top" id="d74077e538">Direction</th>
 
-                        <th class="entry" valign="top" id="d74021e524">Description</th>
+                        <th class="entry" valign="top" id="d74077e541">Description</th>
 
                     </tr>
 
@@ -364,35 +374,35 @@ uint32_t address
 
                 <tbody class="tbody">
                     <tr class="row">
-                        <td class="entry" valign="top" headers="d74021e515 ">pData</td>
+                        <td class="entry" valign="top" headers="d74077e532 ">pData</td>
 
-                        <td class="entry" valign="top" headers="d74021e518 ">Uint8_t*</td>
+                        <td class="entry" valign="top" headers="d74077e535 ">Uint8_t*</td>
 
-                        <td class="entry" valign="top" headers="d74021e521 ">[OUT]</td>
+                        <td class="entry" valign="top" headers="d74077e538 ">[OUT]</td>
 
-                        <td class="entry" valign="top" headers="d74021e524 ">Pointer where data from the image storage will be saved</td>
-
-                    </tr>
-
-                    <tr class="row">
-                        <td class="entry" valign="top" headers="d74021e515 ">length</td>
-
-                        <td class="entry" valign="top" headers="d74021e518 ">Uint16_t</td>
-
-                        <td class="entry" valign="top" headers="d74021e521 ">[IN]</td>
-
-                        <td class="entry" valign="top" headers="d74021e524 ">Data length in bytes</td>
+                        <td class="entry" valign="top" headers="d74077e541 ">Pointer where data from the image storage will be saved</td>
 
                     </tr>
 
                     <tr class="row">
-                        <td class="entry" valign="top" headers="d74021e515 ">address</td>
+                        <td class="entry" valign="top" headers="d74077e532 ">length</td>
 
-                        <td class="entry" valign="top" headers="d74021e518 ">uint32_t</td>
+                        <td class="entry" valign="top" headers="d74077e535 ">Uint16_t</td>
 
-                        <td class="entry" valign="top" headers="d74021e521 ">[IN]</td>
+                        <td class="entry" valign="top" headers="d74077e538 ">[IN]</td>
 
-                        <td class="entry" valign="top" headers="d74021e524 ">Offset into the image storage</td>
+                        <td class="entry" valign="top" headers="d74077e541 ">Data length in bytes</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d74077e532 ">address</td>
+
+                        <td class="entry" valign="top" headers="d74077e535 ">uint32_t</td>
+
+                        <td class="entry" valign="top" headers="d74077e538 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d74077e541 ">Offset into the image storage</td>
 
                     </tr>
 
@@ -428,13 +438,13 @@ uint32_t address
                 
                 <thead class="thead" align="left">
                     <tr class="row">
-                        <th class="entry" valign="top" id="d74021e625">Name</th>
+                        <th class="entry" valign="top" id="d74077e642">Name</th>
 
-                        <th class="entry" valign="top" id="d74021e628">Type</th>
+                        <th class="entry" valign="top" id="d74077e645">Type</th>
 
-                        <th class="entry" valign="top" id="d74021e631">Direction</th>
+                        <th class="entry" valign="top" id="d74077e648">Direction</th>
 
-                        <th class="entry" valign="top" id="d74021e634">Description</th>
+                        <th class="entry" valign="top" id="d74077e651">Description</th>
 
                     </tr>
 
@@ -442,35 +452,35 @@ uint32_t address
 
                 <tbody class="tbody">
                     <tr class="row">
-                        <td class="entry" valign="top" headers="d74021e625 ">pData</td>
+                        <td class="entry" valign="top" headers="d74077e642 ">pData</td>
 
-                        <td class="entry" valign="top" headers="d74021e628 ">Uint8_t*</td>
+                        <td class="entry" valign="top" headers="d74077e645 ">Uint8_t*</td>
 
-                        <td class="entry" valign="top" headers="d74021e631 ">[IN]</td>
+                        <td class="entry" valign="top" headers="d74077e648 ">[IN]</td>
 
-                        <td class="entry" valign="top" headers="d74021e634 ">Pointer to data to be written into the image storage</td>
-
-                    </tr>
-
-                    <tr class="row">
-                        <td class="entry" valign="top" headers="d74021e625 ">length</td>
-
-                        <td class="entry" valign="top" headers="d74021e628 ">Uint16_t</td>
-
-                        <td class="entry" valign="top" headers="d74021e631 ">[IN]</td>
-
-                        <td class="entry" valign="top" headers="d74021e634 ">Data length in bytes</td>
+                        <td class="entry" valign="top" headers="d74077e651 ">Pointer to data to be written into the image storage</td>
 
                     </tr>
 
                     <tr class="row">
-                        <td class="entry" valign="top" headers="d74021e625 ">address</td>
+                        <td class="entry" valign="top" headers="d74077e642 ">length</td>
 
-                        <td class="entry" valign="top" headers="d74021e628 ">uint32_t</td>
+                        <td class="entry" valign="top" headers="d74077e645 ">Uint16_t</td>
 
-                        <td class="entry" valign="top" headers="d74021e631 ">[IN]</td>
+                        <td class="entry" valign="top" headers="d74077e648 ">[IN]</td>
 
-                        <td class="entry" valign="top" headers="d74021e634 ">Offset into the image storage</td>
+                        <td class="entry" valign="top" headers="d74077e651 ">Data length in bytes</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d74077e642 ">address</td>
+
+                        <td class="entry" valign="top" headers="d74077e645 ">uint32_t</td>
+
+                        <td class="entry" valign="top" headers="d74077e648 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d74077e651 ">Offset into the image storage</td>
 
                     </tr>
 
@@ -506,13 +516,13 @@ uint16_t crcValueOld
                 
                 <thead class="thead" align="left">
                     <tr class="row">
-                        <th class="entry" valign="top" id="d74021e736">Name</th>
+                        <th class="entry" valign="top" id="d74077e753">Name</th>
 
-                        <th class="entry" valign="top" id="d74021e739">Type</th>
+                        <th class="entry" valign="top" id="d74077e756">Type</th>
 
-                        <th class="entry" valign="top" id="d74021e742">Direction</th>
+                        <th class="entry" valign="top" id="d74077e759">Direction</th>
 
-                        <th class="entry" valign="top" id="d74021e745">Description</th>
+                        <th class="entry" valign="top" id="d74077e762">Description</th>
 
                     </tr>
 
@@ -520,35 +530,35 @@ uint16_t crcValueOld
 
                 <tbody class="tbody">
                     <tr class="row">
-                        <td class="entry" valign="top" headers="d74021e736 ">pData</td>
+                        <td class="entry" valign="top" headers="d74077e753 ">pData</td>
 
-                        <td class="entry" valign="top" headers="d74021e739 ">Uint8_t*</td>
+                        <td class="entry" valign="top" headers="d74077e756 ">Uint8_t*</td>
 
-                        <td class="entry" valign="top" headers="d74021e742 ">[IN]</td>
+                        <td class="entry" valign="top" headers="d74077e759 ">[IN]</td>
 
-                        <td class="entry" valign="top" headers="d74021e745 ">Pointer to the data</td>
-
-                    </tr>
-
-                    <tr class="row">
-                        <td class="entry" valign="top" headers="d74021e736 ">lenData</td>
-
-                        <td class="entry" valign="top" headers="d74021e739 ">Uint16_t</td>
-
-                        <td class="entry" valign="top" headers="d74021e742 ">[IN]</td>
-
-                        <td class="entry" valign="top" headers="d74021e745 ">Data length in bytes</td>
+                        <td class="entry" valign="top" headers="d74077e762 ">Pointer to the data</td>
 
                     </tr>
 
                     <tr class="row">
-                        <td class="entry" valign="top" headers="d74021e736 ">crcValueOld</td>
+                        <td class="entry" valign="top" headers="d74077e753 ">lenData</td>
 
-                        <td class="entry" valign="top" headers="d74021e739 ">Uint16_t</td>
+                        <td class="entry" valign="top" headers="d74077e756 ">Uint16_t</td>
 
-                        <td class="entry" valign="top" headers="d74021e742 ">[IN]</td>
+                        <td class="entry" valign="top" headers="d74077e759 ">[IN]</td>
 
-                        <td class="entry" valign="top" headers="d74021e745 ">Current CRC value</td>
+                        <td class="entry" valign="top" headers="d74077e762 ">Data length in bytes</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d74077e753 ">crcValueOld</td>
+
+                        <td class="entry" valign="top" headers="d74077e756 ">Uint16_t</td>
+
+                        <td class="entry" valign="top" headers="d74077e759 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d74077e762 ">Current CRC value</td>
 
                     </tr>
 
@@ -599,13 +609,13 @@ uint32_t address
                 
                 <thead class="thead" align="left">
                     <tr class="row">
-                        <th class="entry" valign="top" id="d74021e873">Name</th>
+                        <th class="entry" valign="top" id="d74077e890">Name</th>
 
-                        <th class="entry" valign="top" id="d74021e876">Type</th>
+                        <th class="entry" valign="top" id="d74077e893">Type</th>
 
-                        <th class="entry" valign="top" id="d74021e879">Direction</th>
+                        <th class="entry" valign="top" id="d74077e896">Direction</th>
 
-                        <th class="entry" valign="top" id="d74021e882">Description</th>
+                        <th class="entry" valign="top" id="d74077e899">Description</th>
 
                     </tr>
 
@@ -613,13 +623,13 @@ uint32_t address
 
                 <tbody class="tbody">
                     <tr class="row">
-                        <td class="entry" valign="top" headers="d74021e873 ">address</td>
+                        <td class="entry" valign="top" headers="d74077e890 ">address</td>
 
-                        <td class="entry" valign="top" headers="d74021e876 ">uint32_t</td>
+                        <td class="entry" valign="top" headers="d74077e893 ">uint32_t</td>
 
-                        <td class="entry" valign="top" headers="d74021e879 ">[IN]</td>
+                        <td class="entry" valign="top" headers="d74077e896 ">[IN]</td>
 
-                        <td class="entry" valign="top" headers="d74021e882 ">Address of the sector/block to be erased</td>
+                        <td class="entry" valign="top" headers="d74077e899 ">Address of the sector/block to be erased</td>
 
                     </tr>
 
@@ -655,13 +665,13 @@ uint16_t devId
                 
                 <thead class="thead" align="left">
                     <tr class="row">
-                        <th class="entry" valign="top" id="d74021e953">Name</th>
+                        <th class="entry" valign="top" id="d74077e970">Name</th>
 
-                        <th class="entry" valign="top" id="d74021e956">Type</th>
+                        <th class="entry" valign="top" id="d74077e973">Type</th>
 
-                        <th class="entry" valign="top" id="d74021e959">Direction</th>
+                        <th class="entry" valign="top" id="d74077e976">Direction</th>
 
-                        <th class="entry" valign="top" id="d74021e962">Description</th>
+                        <th class="entry" valign="top" id="d74077e979">Description</th>
 
                     </tr>
 
@@ -669,35 +679,35 @@ uint16_t devId
 
                 <tbody class="tbody">
                     <tr class="row">
-                        <td class="entry" valign="top" headers="d74021e953 ">offset</td>
+                        <td class="entry" valign="top" headers="d74077e970 ">offset</td>
 
-                        <td class="entry" valign="top" headers="d74021e956 ">uint32_t</td>
+                        <td class="entry" valign="top" headers="d74077e973 ">uint32_t</td>
 
-                        <td class="entry" valign="top" headers="d74021e959 ">[IN]</td>
+                        <td class="entry" valign="top" headers="d74077e976 ">[IN]</td>
 
-                        <td class="entry" valign="top" headers="d74021e962 ">Offset of the image</td>
-
-                    </tr>
-
-                    <tr class="row">
-                        <td class="entry" valign="top" headers="d74021e953 ">len</td>
-
-                        <td class="entry" valign="top" headers="d74021e956 ">Uint16_t</td>
-
-                        <td class="entry" valign="top" headers="d74021e959 ">[IN]</td>
-
-                        <td class="entry" valign="top" headers="d74021e962 ">Length of the chunk</td>
+                        <td class="entry" valign="top" headers="d74077e979 ">Offset of the image</td>
 
                     </tr>
 
                     <tr class="row">
-                        <td class="entry" valign="top" headers="d74021e953 ">devId</td>
+                        <td class="entry" valign="top" headers="d74077e970 ">len</td>
 
-                        <td class="entry" valign="top" headers="d74021e956 ">Uint16_t</td>
+                        <td class="entry" valign="top" headers="d74077e973 ">Uint16_t</td>
 
-                        <td class="entry" valign="top" headers="d74021e959 ">[IN]</td>
+                        <td class="entry" valign="top" headers="d74077e976 ">[IN]</td>
 
-                        <td class="entry" valign="top" headers="d74021e962 ">The Id of the device</td>
+                        <td class="entry" valign="top" headers="d74077e979 ">Length of the chunk</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d74077e970 ">devId</td>
+
+                        <td class="entry" valign="top" headers="d74077e973 ">Uint16_t</td>
+
+                        <td class="entry" valign="top" headers="d74077e976 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d74077e979 ">The Id of the device</td>
 
                     </tr>
 
@@ -735,13 +745,13 @@ uint32_t fileVersion
                 
                 <thead class="thead" align="left">
                     <tr class="row">
-                        <th class="entry" valign="top" id="d74021e1064">Name</th>
+                        <th class="entry" valign="top" id="d74077e1081">Name</th>
 
-                        <th class="entry" valign="top" id="d74021e1067">Type</th>
+                        <th class="entry" valign="top" id="d74077e1084">Type</th>
 
-                        <th class="entry" valign="top" id="d74021e1070">Direction</th>
+                        <th class="entry" valign="top" id="d74077e1087">Direction</th>
 
-                        <th class="entry" valign="top" id="d74021e1073">Description</th>
+                        <th class="entry" valign="top" id="d74077e1090">Description</th>
 
                     </tr>
 
@@ -749,46 +759,46 @@ uint32_t fileVersion
 
                 <tbody class="tbody">
                     <tr class="row">
-                        <td class="entry" valign="top" headers="d74021e1064 ">devId</td>
+                        <td class="entry" valign="top" headers="d74077e1081 ">devId</td>
 
-                        <td class="entry" valign="top" headers="d74021e1067 ">Uint16_t</td>
+                        <td class="entry" valign="top" headers="d74077e1084 ">Uint16_t</td>
 
-                        <td class="entry" valign="top" headers="d74021e1070 ">[IN]</td>
+                        <td class="entry" valign="top" headers="d74077e1087 ">[IN]</td>
 
-                        <td class="entry" valign="top" headers="d74021e1073 ">Id of the device</td>
-
-                    </tr>
-
-                    <tr class="row">
-                        <td class="entry" valign="top" headers="d74021e1064 ">manufacturer</td>
-
-                        <td class="entry" valign="top" headers="d74021e1067 ">Uint16_t</td>
-
-                        <td class="entry" valign="top" headers="d74021e1070 ">[IN]</td>
-
-                        <td class="entry" valign="top" headers="d74021e1073 ">The manufacturer code</td>
+                        <td class="entry" valign="top" headers="d74077e1090 ">Id of the device</td>
 
                     </tr>
 
                     <tr class="row">
-                        <td class="entry" valign="top" headers="d74021e1064 ">imgType</td>
+                        <td class="entry" valign="top" headers="d74077e1081 ">manufacturer</td>
 
-                        <td class="entry" valign="top" headers="d74021e1067 ">Uint16_t</td>
+                        <td class="entry" valign="top" headers="d74077e1084 ">Uint16_t</td>
 
-                        <td class="entry" valign="top" headers="d74021e1070 ">[IN]</td>
+                        <td class="entry" valign="top" headers="d74077e1087 ">[IN]</td>
 
-                        <td class="entry" valign="top" headers="d74021e1073 ">The type of the image</td>
+                        <td class="entry" valign="top" headers="d74077e1090 ">The manufacturer code</td>
 
                     </tr>
 
                     <tr class="row">
-                        <td class="entry" valign="top" headers="d74021e1064 ">fileVersion</td>
+                        <td class="entry" valign="top" headers="d74077e1081 ">imgType</td>
 
-                        <td class="entry" valign="top" headers="d74021e1067 ">uint32_t</td>
+                        <td class="entry" valign="top" headers="d74077e1084 ">Uint16_t</td>
 
-                        <td class="entry" valign="top" headers="d74021e1070 ">[IN]</td>
+                        <td class="entry" valign="top" headers="d74077e1087 ">[IN]</td>
 
-                        <td class="entry" valign="top" headers="d74021e1073 ">Current image version</td>
+                        <td class="entry" valign="top" headers="d74077e1090 ">The type of the image</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d74077e1081 ">fileVersion</td>
+
+                        <td class="entry" valign="top" headers="d74077e1084 ">uint32_t</td>
+
+                        <td class="entry" valign="top" headers="d74077e1087 ">[IN]</td>
+
+                        <td class="entry" valign="top" headers="d74077e1090 ">Current image version</td>
 
                     </tr>
 
@@ -805,7 +815,7 @@ uint32_t fileVersion
 
 <div class="related-links">
 <div class="familylinks">
-<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-F74086D7-C1F8-46AE-9F01-2509633024A4.html">Over-the-Air programming support</a></div>
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-F74086D7-C1F8-46AE-9F01-2509633024A4.html">Over-the-Air Programming Support</a></div>
 </div>
 </div>
 

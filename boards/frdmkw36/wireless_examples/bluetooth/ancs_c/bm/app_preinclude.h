@@ -1,6 +1,6 @@
 /*! *********************************************************************************
 * Copyright 2015, Freescale Semiconductor, Inc.
-* Copyright 2016-2019 NXP
+* Copyright 2016-2020 NXP
 * All rights reserved.
 *
 * \file
@@ -44,7 +44,7 @@
 #define gAppUsePairing_d        1
 
 /*! Enable/disable use of privacy */
-#define gAppUsePrivacy_d        1
+#define gAppUsePrivacy_d        0
 
 #define gPasskeyValue_c         999999
 
@@ -73,6 +73,9 @@
 
 /* Defines Tx Queue Size for Serial Manager */
 #define gSerialMgrTxQueueSize_c 5
+
+/* Defines Size for Serial Manager Task*/
+#define gSerialTaskStackSize_c  700
 
 /* Defines pools by block size and number of blocks. Must be aligned to 4 bytes.*/
 #define AppPoolsDetails_c \

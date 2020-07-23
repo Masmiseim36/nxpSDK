@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Central setup"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-88EA2D64-78FC-4F1F-8C2A-F9C5D099F5C0.html"/>
+<meta name="prodname" content="MC56F825x"/>
+<meta name="version" content="1"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Creator" content=""/>
+<meta name="DC.Publisher" content="NXP Semiconductors"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-7EE72640-C25D-44EC-A012-1724CA0F4376"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Central setup</title>
+</head>
+<body id="GUID-7EE72640-C25D-44EC-A012-1724CA0F4376">
+
+
+    <h1 class="title topictitle1">Central setup</h1>
+
+    <div class="body">
+        <div class="p">The application configures the extended scanning by going through the
+            following states: <ol class="ol">
+                <li class="li">Start scanning by
+                        calling:<pre class="pre codeblock">bleResult_t Gap_StartScanning
+(
+    const gapScanningParameters_t*    pScanningParameters,
+    gapScanningCallback_t       scanningCallback,
+    gapFilterDuplicates_t       enableFilterDuplicates,
+    uint16_t                    duration,
+    uint16_t                    period
+)           </pre>
+<p class="p">Application may use the default set of parameters
+                            <em class="ph i">gGapDefaultExtScanningParameters_d</em>. If the
+                            <em class="ph i">pScanningParameters</em> pointer is NULL, the latest set of parameters
+                        are used. The <em class="ph i">scanningPHYs</em> parameter indicates the PHYs on which the
+                        advertising packets should be received on the <strong class="ph b">primary advertising
+                            channel</strong>. As a result, permitted values for the parameter are 0x01
+                        (scan LE 1M), 0x04 (scan LE Coded) and 0x05 (scan both LE 1M and LE Coded).
+                        There are no strict timing rules for scanning, yet if both PHYs are enabled
+                        for scanning, the scan interval value must be large enough to accommodate
+                        two scan windows (<em class="ph i">interval</em> &gt;= 2 * <em class="ph i">window</em>).</p>
+<p class="p">If the advertiser uses legacy advertising PDUs, the device may
+                        actively scan by sending a SCAN_REQ PDU to the advertiser on the LE 1M
+                        primary advertising channel (no secondary channel in legacy advertising).
+                        Respectively, if the advertiser uses extended advertising PDUs, the active
+                        scan operation takes place on the secondary advertising channel. After the
+                        device receives a scannable ADV_EXT_IND PDU on the primary advertising
+                        channel (PHY LE 1M or Coded), it starts listening for the AUX_ADV_IND PDU on
+                        the secondary advertising channel (PHY 1M, 2M or Coded). Once received, the
+                        device sends an AUX_SCAN_REQ to the advertiser. Next, an AUX_SCAN_RSP PDU
+                        should be received, containing the scan response data.</p>
+<p class="p">Application should wait for a <em class="ph i">gScanStateChanged_c</em> or a
+                            <em class="ph i">gScanCommandFailed_c</em> in the Scanning Callback.</p>
+</li>
+
+                <li class="li">Collect information by waiting for <em class="ph i">gDeviceScanned_c</em> (legacy advertising
+                    PDUs) or <em class="ph i">gExtDeviceScanned_c</em> (extended advertising PDUs) event in the
+                    Scanning Callback. The <em class="ph i">gExtDeviceScanned_c </em>event contains additional
+                    information pertaining to the extended received PDU, such as: primary PHY,
+                    secondary PHY, advertising SID, interval of the periodic advertising if enabled
+                    in the set.</li>
+
+                <li class="li">Stop scanning by
+                    calling:<pre class="pre codeblock">bleResult_t Gap_StopScanning(void);</pre>
+Application
+                    should wait for a gScanStateChanged_c or a gScanCommandFailed_c in the Scanning
+                    Callback.</li>
+
+                <li class="li">Connect to a device by calling:
+                        <pre class="pre codeblock">bleResult_t Gap_Connect
+(    
+    const gapConnectionRequestParameters_t*    pParameters,    
+    gapConnectionCallback_t                    connCallback
+);</pre>
+<p class="p">The
+                            <em class="ph i">initiatingPHYs</em> parameter indicates the PHYs on which the
+                        advertising packets should be received on the primary advertising channel
+                        and the PHYs for which connection parameters have been specified. The
+                        parameter is a bitmask of PHYs: BIT0 = LE 1M, BIT1 = LE 2M and BIT2 = LE
+                        Coded. The Host may enable one or more initiating PHYs, but it must at least
+                        set one bit for a PHY allowed for scanning on the primary advertising
+                        channel, i.e. BIT0 for LE 1M PHY or BIT2 for LE Coded PHY.</p>
+<p class="p">If the
+                        advertiser uses legacy advertising PDUs, the device may connect by sending a
+                        CONNECT_IND PDU to the advertiser on the LE 1M primary advertising channel
+                        (no secondary channel in legacy advertising). On the other hand, if the
+                        advertiser uses extended advertising PDUs, the extended connect operation
+                        takes place on the secondary advertising channel. After the device receives
+                        a connectable ADV_EXT_IND PDU on the primary advertising channel (PHY LE 1M
+                        or Coded), it starts listening for the connectable AUX_ADV_IND PDU on the
+                        secondary advertising channel (PHY 1M, 2M or Coded). Once received, the
+                        device sends an AUX_CONNECT_REQ to the advertiser. Next, if AUX_CONNECT_RSP
+                        PDU is received, the device enters the Connection State in the Master role
+                        on the secondary advertising channel PHY. </p>
+<p class="p">Application should wait for
+                        a <em class="ph i">gConnEvtConnected_c</em> event in the Connection Callback. If the
+                        channel selection algorithm #2 is used for this connection, then a
+                            <em class="ph i">gConnEvtChanSelectionAlgorithm2_c</em> event will also be
+                        generated.</p>
+<p class="p">After the connection is successfully established, the
+                        application may choose to read the connection PHY by calling the
+                            <em class="ph i">Gap_LeReadPhy</em> API. It may also opt to change the PHY of the
+                        connection by triggering a PHY Update Procedure using the
+                            <em class="ph i">Gap_LeSetPhy</em> API, yet the Controller might not be able to perform
+                        the change if, e.g., the peer does not support the new requested
+                    PHY.</p>
+</li>
+
+            </ol>
+</div>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-88EA2D64-78FC-4F1F-8C2A-F9C5D099F5C0.html">Extended Advertising (KW37)</a></div>
+</div>
+</div>
+
+</body>
+</html>

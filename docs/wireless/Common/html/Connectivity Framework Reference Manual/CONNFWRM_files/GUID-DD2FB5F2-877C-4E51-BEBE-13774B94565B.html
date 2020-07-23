@@ -57,16 +57,16 @@
                 
                 <thead class="thead" align="left">
                     <tr class="row">
-                        <th class="entry" valign="top" id="d63299e70">Field Name</th>
+                        <th class="entry" valign="top" id="d63355e70">Field Name</th>
 
-                        <th class="entry" valign="top" id="d63299e73">
+                        <th class="entry" valign="top" id="d63355e73">
                             <p class="p">Field Length </p>
 
                             <p class="p">(bytes)</p>
 
                         </th>
 
-                        <th class="entry" valign="top" id="d63299e82">Description</th>
+                        <th class="entry" valign="top" id="d63355e82">Description</th>
 
                     </tr>
 
@@ -74,11 +74,11 @@
 
                 <tbody class="tbody">
                     <tr class="row">
-                        <td class="entry" valign="top" headers="d63299e70 ">Image Size</td>
+                        <td class="entry" valign="top" headers="d63355e70 ">Image Size</td>
 
-                        <td class="entry" valign="top" headers="d63299e73 ">4</td>
+                        <td class="entry" valign="top" headers="d63355e73 ">4</td>
 
-                        <td class="entry" valign="top" headers="d63299e82 ">This is the <em class="ph i">Binary Image </em>field size. It is set by the
+                        <td class="entry" valign="top" headers="d63355e82 ">This is the <em class="ph i">Binary Image </em>field size. It is set by the
                                 <em class="ph i">OTA_CommitImage() </em>function from the <em class="ph i">OtaSupport </em>module.
                             Its value is equal to the sum of all image parts written using the
                                 <em class="ph i">OTA_PushImageChunk() </em>function. </td>
@@ -86,11 +86,11 @@
                     </tr>
 
                     <tr class="row">
-                        <td class="entry" valign="top" headers="d63299e70 ">Sector Bitmap</td>
+                        <td class="entry" valign="top" headers="d63355e70 ">Sector Bitmap</td>
 
-                        <td class="entry" valign="top" headers="d63299e73 ">32</td>
+                        <td class="entry" valign="top" headers="d63355e73 ">32</td>
 
-                        <td class="entry" valign="top" headers="d63299e82 ">
+                        <td class="entry" valign="top" headers="d63355e82 ">
                             <p class="p">This field contains a sector bitmap of the flash memory of the target
                                 device which tells the bootloader which sectors to overwrite and
                                 which to leave intact. This field is the <em class="ph i">Value </em>field of the
@@ -110,11 +110,11 @@
                     </tr>
 
                     <tr class="row">
-                        <td class="entry" valign="top" headers="d63299e70 ">Binary Image</td>
+                        <td class="entry" valign="top" headers="d63355e70 ">Binary Image</td>
 
-                        <td class="entry" valign="top" headers="d63299e73 ">variable</td>
+                        <td class="entry" valign="top" headers="d63355e73 ">variable</td>
 
-                        <td class="entry" valign="top" headers="d63299e82 ">This field contains the binary application which is written to the
+                        <td class="entry" valign="top" headers="d63355e82 ">This field contains the binary application which is written to the
                             APPLICATION section of the flash. This field is the <em class="ph i">Value </em>field
                             of the Upgrade Image Sub-element of the image file sent over-the-air.
                             This field is gradually set by each call to the <em class="ph i">OTA_PushImageChunk()

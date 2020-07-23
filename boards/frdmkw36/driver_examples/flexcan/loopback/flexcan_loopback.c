@@ -1,8 +1,8 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -18,12 +18,13 @@
  * Definitions
  ******************************************************************************/
 #define EXAMPLE_CAN CAN0
-#define EXAMPLE_CAN_CLKSRC kCLOCK_BusClk
-#define EXAMPLE_CAN_CLK_FREQ CLOCK_GetFreq(kCLOCK_BusClk)
+#define DEMO_FORCE_CAN_SRC_OSC (1)
+#define EXAMPLE_CAN_CLK_FREQ CLOCK_GetFreq(kCLOCK_Osc0ErClk)/2
 #define EXAMPLE_FLEXCAN_IRQn CAN0_MB_IRQn
 #define EXAMPLE_FLEXCAN_IRQHandler CAN0_MB_IRQHandler
 #define USE_CANFD (1)
-/* 
+#define USE_IMPROVED_TIMING_CONFIG (1)
+/*
  *    DWORD_IN_MB    DLC    BYTES_IN_MB             Maximum MBs
  *    2              8      kFLEXCAN_8BperMB        32
  *    4              10     kFLEXCAN_16BperMB       21
@@ -97,6 +98,7 @@ int main(void)
     /*
      * flexcanConfig.clkSrc = kFLEXCAN_ClkSrcOsc;
      * flexcanConfig.baudRate = 1000000U;
+     * flexcanConfig.baudRateFD = 1000000U;       
      * flexcanConfig.maxMbNum = 16;
      * flexcanConfig.enableLoopBack = false;
      * flexcanConfig.enableSelfWakeup = false;
@@ -105,11 +107,41 @@ int main(void)
      */
     FLEXCAN_GetDefaultConfig(&flexcanConfig);
 #if (!defined(FSL_FEATURE_FLEXCAN_SUPPORT_ENGINE_CLK_SEL_REMOVE)) || !FSL_FEATURE_FLEXCAN_SUPPORT_ENGINE_CLK_SEL_REMOVE
+#if (!defined(DEMO_FORCE_CAN_SRC_OSC)) || !DEMO_FORCE_CAN_SRC_OSC
     flexcanConfig.clkSrc = kFLEXCAN_ClkSrcPeri;
+#endif /* DEMO_FORCE_CAN_SRC_OSC */
 #endif /* FSL_FEATURE_FLEXCAN_SUPPORT_ENGINE_CLK_SEL_REMOVE */
     flexcanConfig.enableLoopBack = true;
+
+#if (defined(USE_IMPROVED_TIMING_CONFIG) && USE_IMPROVED_TIMING_CONFIG)
+    flexcan_timing_config_t timing_config;
+    memset(&timing_config, 0, sizeof(flexcan_timing_config_t));
 #if (defined(USE_CANFD) && USE_CANFD)
-    FLEXCAN_FDInit(EXAMPLE_CAN, &flexcanConfig, EXAMPLE_CAN_CLK_FREQ, BYTES_IN_MB, false);
+    if (FLEXCAN_FDCalculateImprovedTimingValues(flexcanConfig.baudRate, flexcanConfig.baudRateFD, EXAMPLE_CAN_CLK_FREQ,
+                                                &timing_config))
+    {
+        /* Update the improved timing configuration*/
+        memcpy(&(flexcanConfig.timingConfig), &timing_config, sizeof(flexcan_timing_config_t));
+    }
+    else
+    {
+        PRINTF("No found Improved Timing Configuration. Just used default configuration\r\n\r\n");
+    }
+#else
+    if (FLEXCAN_CalculateImprovedTimingValues(flexcanConfig.baudRate, EXAMPLE_CAN_CLK_FREQ, &timing_config))
+    {
+        /* Update the improved timing configuration*/
+        memcpy(&(flexcanConfig.timingConfig), &timing_config, sizeof(flexcan_timing_config_t));
+    }
+    else
+    {
+        PRINTF("No found Improved Timing Configuration. Just used default configuration\r\n\r\n");
+    }
+#endif
+#endif
+
+#if (defined(USE_CANFD) && USE_CANFD)
+    FLEXCAN_FDInit(EXAMPLE_CAN, &flexcanConfig, EXAMPLE_CAN_CLK_FREQ, BYTES_IN_MB, true);
 #else
     FLEXCAN_Init(EXAMPLE_CAN, &flexcanConfig, EXAMPLE_CAN_CLK_FREQ);
 #endif
@@ -140,6 +172,7 @@ int main(void)
     txFrame.type = kFLEXCAN_FrameTypeData;
     txFrame.id = FLEXCAN_ID_STD(0x123);
 #if (defined(USE_CANFD) && USE_CANFD)
+    txFrame.brs = 1U;
     txFrame.length = DLC;
 #else
     txFrame.length = 8;

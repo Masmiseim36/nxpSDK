@@ -212,10 +212,10 @@
       <files mask="gen_fsk_tests.c"/>
       <files mask="menus.c"/>
     </source>
-    <source path="middleware/wireless/framework_5.4.6/SecLib" type="lib" method="copy" toolchain="mcuxpresso">
+    <source path="middleware/wireless/framework_5.4.8/SecLib" type="lib" method="copy" toolchain="mcuxpresso">
       <files mask="lib_crypto_m0.a"/>
     </source>
-    <source path="middleware/wireless/framework_5.4.6/SecLib" type="lib" method="copy" toolchain="iar">
+    <source path="middleware/wireless/framework_5.4.8/SecLib" type="lib" method="copy" toolchain="iar">
       <files mask="lib_crypto_m0.a"/>
     </source>
   </example>

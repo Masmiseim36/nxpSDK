@@ -3,7 +3,7 @@
  * Copyright 2017 NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -169,6 +169,7 @@ int main(void)
     uint8_t regResult = 0;
     uint8_t array_addr_size = 0;
     bool foundDevice = false;
+    memset(&sensorData, 0, sizeof(sensorData));
 
     /* Board pin, clock, debug console init */
     BOARD_InitPins();

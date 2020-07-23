@@ -19,6 +19,7 @@
 #include "genfsk_interface.h"
 #include "gen_fsk_tests_states.h"
 #include "gen_fsk_tests.h"
+#include "genfsk_utils.h"
 #include "xcvr_test_fsk.h"
 #include "menus.h"
 
@@ -1686,6 +1687,39 @@ static bool_t CT_ApplyPrintConfigParams(void)
         }
         if(gaConfigParams[2].paramValue.decValue != crtPwr)
         {
+#ifdef RADIO_IS_GEN_2P1
+            genfskStatus_t status;
+            
+            if (GENFSK_IsHighPowerConfigured() == 0x1U)
+            {
+                if (gaConfigParams[2].paramValue.decValue > gGenFskLastLowPowerIdx_c)
+                {
+                    gaConfigParams[2].paramValue.decValue -= gGenFskLastLowPowerIdx_c + 1U;
+                }
+                else
+                {
+                    gaConfigParams[2].paramValue.decValue += gGenFskLastLowPowerIdx_c + 1U;
+                }
+            }
+            /* Enable high power TX */
+            if (gaConfigParams[2].paramValue.decValue > gGenFskLastLowPowerIdx_c)
+            {
+                gaConfigParams[2].paramValue.decValue -= gGenFskLastLowPowerIdx_c + 1U;
+                status = GENFSK_ConfigurePower(1U);
+                if (status == gGenfskSuccess_c)
+                {
+                    FLib_MemCpy(gaConfigParams[2].paramName, "Hi Power", 9);
+                }
+            }
+            else /* Enable low power TX */
+            {
+                status = GENFSK_ConfigurePower(0U);
+                if (status == gGenfskSuccess_c)
+                {
+                   FLib_MemCpy(gaConfigParams[2].paramName, "Lo Power", 9);
+                }
+            }            
+#endif /* RADIO_IS_GEN_2P1 */
             if(gGenfskSuccess_c !=
                GENFSK_SetTxPowerLevel(mAppGenfskId, gaConfigParams[2].paramValue.decValue))
             {

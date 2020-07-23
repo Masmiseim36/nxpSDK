@@ -92,10 +92,11 @@
 
         <p class="p"><strong class="ph b">Description:</strong></p>
 
-        <p class="p">This represents the value of the start marker of the internal image storage.
+        <div class="p">This represents the value of the start marker of the internal image storage.
             It is used by bootloader to determine the start address of the internal storage if the
             boot flags are invalid. If the value of this define is changed, then the define from the
-            source code of the bootloader must also be changed to remain in sync.</p>
+            source code of the bootloader must also be changed to remain in sync.<div class="note note"><span class="notetitle">Note:</span> This flag is not used on K32W061/JN5189/QN9090.</div>
+</div>
 
         <p class="p"/>
 
@@ -115,8 +116,9 @@
 
         <p class="p"><strong class="ph b">Description:</strong></p>
 
-        <p class="p">The represents size reserved for the start marker. If  internal storage is
-            not used, the size is zero.</p>
+        <div class="p">The represents size reserved for the start marker. If  internal storage is
+            not used, the size is zero.<div class="note note"><span class="notetitle">Note:</span> This flag is not used on K32W061/JN5189/QN9090.</div>
+</div>
 
         <p class="p"> </p>
 
@@ -129,7 +131,10 @@
         <p class="p">Defines the offset to the location of the image length field. Do not change. Internal use
             only.</p>
 
-        <p class="p"> </p>
+        <div class="p">
+            <div class="note note"><span class="notetitle">Note:</span> This flag is not used on K32W061/JN5189/QN9090.</div>
+
+        </div>
 
         <p class="p"><strong class="ph b">Name:</strong></p>
 
@@ -137,7 +142,9 @@
 
         <p class="p"><strong class="ph b">Description:</strong></p>
 
-        <p class="p">Defines the size of the image length field. Do not change. Internal use only.</p>
+        <div class="p">Defines the size of the image length field. Do not change. Internal use
+                only.<div class="note note"><span class="notetitle">Note:</span> This flag is not used on K32W061/JN5189/QN9090.</div>
+</div>
 
         <p class="p"> </p>
 
@@ -151,13 +158,19 @@
         <p class="p">Defines the offset to the location of the sector bitmap field. Do not change. Internal
             use only.</p>
 
+        <div class="p">
+            <div class="note note"><span class="notetitle">Note:</span> This flag is not used on K32W061/JN5189/QN9090.</div>
+
+        </div>
+
         <p class="p"><strong class="ph b">Name:</strong></p>
 
         <pre class="pre codeblock">#define gBootData_SectorsBitmap_Size_c (32) </pre>
 
         <p class="p"><strong class="ph b">Description:</strong></p>
 
-        <p class="p">Defines the length of the sector bitmap field. Do not change. Internal use only.</p>
+        <div class="p">Defines the length of the sector bitmap field. Do not change. Internal use only.<div class="note note"><span class="notetitle">Note:</span> This flag is not used on K32W061/JN5189/QN9090.</div>
+</div>
 
         <p class="p"> </p>
 
@@ -196,7 +209,7 @@
 
 <div class="related-links">
 <div class="familylinks">
-<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-F74086D7-C1F8-46AE-9F01-2509633024A4.html">Over-the-Air programming support</a></div>
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-F74086D7-C1F8-46AE-9F01-2509633024A4.html">Over-the-Air Programming Support</a></div>
 </div>
 </div>
 

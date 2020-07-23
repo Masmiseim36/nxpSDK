@@ -1,32 +1,33 @@
-/*
- * Copyright (c) 2013-2017 ARM Limited. All rights reserved.
+/* -----------------------------------------------------------------------------
+ * Copyright (c) 2013-2014 ARM Ltd.
  *
- * SPDX-License-Identifier: Apache-2.0
+ * This software is provided 'as-is', without any express or implied warranty.
+ * In no event will the authors be held liable for any damages arising from
+ * the use of this software. Permission is granted to anyone to use this
+ * software for any purpose, including commercial applications, and to alter
+ * it and redistribute it freely, subject to the following restrictions:
  *
- * Licensed under the Apache License, Version 2.0 (the License); you may
- * not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * 1. The origin of this software must not be misrepresented; you must not
+ *    claim that you wrote the original software. If you use this software in
+ *    a product, an acknowledgment in the product documentation would be
+ *    appreciated but is not required.
  *
- * www.apache.org/licenses/LICENSE-2.0
+ * 2. Altered source versions must be plainly marked as such, and must not be
+ *    misrepresented as being the original software.
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an AS IS BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * 3. This notice may not be removed or altered from any source distribution.
  *
- * $Date:        2. Feb 2017
- * $Revision:    V2.2
+ *
+ * $Date:        3. Jun 2014
+ * $Revision:    V2.01
  *
  * Project:      USB Device Driver definitions
- */
+ * -------------------------------------------------------------------------- */
 
 /* History:
- *  Version 2.2
- *    ARM_USBD_STATE made volatile
- *  Version 2.1
+ *  Version 2.01
  *    Added ARM_USBD_ReadSetupPacket function
- *  Version 2.0
+ *  Version 2.00
  *    Removed ARM_USBD_DeviceConfigure function
  *    Removed ARM_USBD_SET_ADDRESS_STAGE parameter from ARM_USBD_DeviceSetAddress function
  *    Removed ARM_USBD_EndpointReadStart function
@@ -41,27 +42,21 @@
  *    Initial release
  */
 
-#ifndef DRIVER_USBD_H_
-#define DRIVER_USBD_H_
-
-#ifdef  __cplusplus
-extern "C"
-{
-#endif
+#ifndef __DRIVER_USBD_H
+#define __DRIVER_USBD_H
 
 #include "Driver_USB.h"
 
-#define ARM_USBD_API_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(2,2)  /* API version */
+#define ARM_USBD_API_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(2,01)  /* API version */
 
 
 /**
 \brief USB Device State
 */
-typedef volatile struct _ARM_USBD_STATE {
-  uint32_t vbus     : 1;                ///< USB Device VBUS flag
-  uint32_t speed    : 2;                ///< USB Device speed setting (ARM_USB_SPEED_xxx)
-  uint32_t active   : 1;                ///< USB Device active flag
-  uint32_t reserved : 28;
+typedef struct _ARM_USBD_STATE {
+  uint32_t vbus   : 1;                  ///< USB Device VBUS flag
+  uint32_t speed  : 2;                  ///< USB Device speed setting (ARM_USB_SPEED_xxx)
+  uint32_t active : 1;                  ///< USB Device active flag
 } ARM_USBD_STATE;
 
 
@@ -233,7 +228,6 @@ typedef struct _ARM_USBD_CAPABILITIES {
   uint32_t vbus_detection  : 1;         ///< VBUS detection
   uint32_t event_vbus_on   : 1;         ///< Signal VBUS On event
   uint32_t event_vbus_off  : 1;         ///< Signal VBUS Off event
-  uint32_t reserved        : 29;        ///< Reserved (must be zero)
 } ARM_USBD_CAPABILITIES;
 
 
@@ -266,8 +260,4 @@ typedef struct _ARM_DRIVER_USBD {
 
 #endif /* __DOXYGEN_MW__ */
 
-#ifdef  __cplusplus
-}
-#endif
-
-#endif /* DRIVER_USBD_H_ */
+#endif /* __DRIVER_USBD_H */

@@ -8,7 +8,7 @@
 **
 **     Reference manual:    MKW36A512RM Rev. 7, 09/2019
 **     Version:             rev. 1.5, 2019-09-10
-**     Build:               b190910
+**     Build:               b191122
 **
 **     Abstract:
 **         CMSIS Peripheral Access Layer for MKW35Z4
@@ -20320,6 +20320,7 @@ typedef struct {
 #define RTC_CR_CLKO_MASK                                This_symbol_has_been_deprecated
 #define RTC_CR_CLKO_SHIFT                               This_symbol_has_been_deprecated
 #define RTC_CR_CLKO(x)                                  This_symbol_has_been_deprecated
+#define NXP_RADIO_GEN 201
 
 /*!
  * @}

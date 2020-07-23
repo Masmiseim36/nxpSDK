@@ -9,8 +9,6 @@
 #ifndef __SERIAL_PORT_UART_H__
 #define __SERIAL_PORT_UART_H__
 
-#include "uart.h"
-
 /*!
  * @addtogroup serial_port_uart
  * @{
@@ -21,9 +19,9 @@
  ******************************************************************************/
 /*! @brief serial port uart handle size*/
 #if (defined(SERIAL_MANAGER_NON_BLOCKING_MODE) && (SERIAL_MANAGER_NON_BLOCKING_MODE > 0U))
-#define SERIAL_PORT_UART_HANDLE_SIZE (76U + HAL_UART_HANDLE_SIZE)
+#define SERIAL_PORT_UART_HANDLE_SIZE (166U)
 #else
-#define SERIAL_PORT_UART_HANDLE_SIZE (HAL_UART_HANDLE_SIZE)
+#define SERIAL_PORT_UART_HANDLE_SIZE (4U)
 #endif
 
 /*! @brief serial port uart parity mode*/

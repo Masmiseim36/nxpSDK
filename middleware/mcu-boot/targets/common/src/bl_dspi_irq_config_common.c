@@ -21,10 +21,10 @@ static const IRQn_Type dspi_irq_ids[FSL_FEATURE_SOC_DSPI_COUNT] = {
 #else
     SPI_IRQn,
 #endif
-#if (FSL_FEATURE_SOC_DSPI_COUNT > 1)
+#if (FSL_FEATURE_SOC_DSPI_COUNT > 1u)
     SPI1_IRQn,
 #endif
-#if (FSL_FEATURE_SOC_DSPI_COUNT > 2)
+#if (FSL_FEATURE_SOC_DSPI_COUNT > 2u)
     SPI2_IRQn,
 #endif
 };
@@ -33,12 +33,12 @@ void DSPI_SetSystemIRQ(uint32_t instance, PeripheralSystemIRQSetting set)
 {
     switch (instance)
     {
-        case 0:
-#if (FSL_FEATURE_SOC_DSPI_COUNT > 1)
-        case 1:
+        case 0u:
+#if (FSL_FEATURE_SOC_DSPI_COUNT > 1u)
+        case 1u:
 #endif // #if (LPI2C_INSTANCE_COUNT > 1)
-#if (FSL_FEATURE_SOC_DSPI_COUNT > 2)
-        case 2:
+#if (FSL_FEATURE_SOC_DSPI_COUNT > 2u)
+        case 2u:
 #endif // #if (LPI2C_INSTANCE_COUNT > 2)
             if (set == kPeripheralEnableIRQ)
             {
@@ -48,6 +48,9 @@ void DSPI_SetSystemIRQ(uint32_t instance, PeripheralSystemIRQSetting set)
             {
                 NVIC_DisableIRQ(dspi_irq_ids[instance]);
             }
+            break;
+        default:
+            // doing nothing
             break;
     }
 }

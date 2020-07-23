@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016, NXP Semiconductors, Inc.
+ * Copyright (c) 2016, 2020 NXP Semiconductors, Inc.
  * All rights reserved.
  *
  * 
@@ -305,7 +305,7 @@ void timerGetTimeIntervalCallback0(uint32_t *ns)
 void CallbackHandler(uint32_t instance, void * linState)
 {
     lin_state_t * linCurrentState = (lin_state_t *) linState;
-    uint8_t bytesRemaining;
+    uint8_t bytesRemaining = 0U;
 
     const lin_protocol_user_config_t  *prot_user_config_ptr = &g_lin_protocol_user_cfg_array[HARDWARE_INSTANCE];
     lin_protocol_state_t              *prot_state_ptr       = &g_lin_protocol_state_array[HARDWARE_INSTANCE];

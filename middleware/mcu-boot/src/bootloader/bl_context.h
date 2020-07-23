@@ -14,11 +14,11 @@
 #include "bootloader/bl_command.h"
 #include "property/property.h"
 
-#if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
-#if !BL_DEVICE_IS_LPC_SERIES
+#if !(defined(BL_FEATURE_HAS_NO_INTERNAL_FLASH) && BL_FEATURE_HAS_NO_INTERNAL_FLASH)
+#if !(defined(BL_DEVICE_IS_LPC_SERIES) && BL_DEVICE_IS_LPC_SERIES)
 #include "fsl_flash.h"
 #include "memory/src/flash_memory.h"
-#if BL_FEATURE_SUPPORT_DFLASH
+#if defined(BL_FEATURE_SUPPORT_DFLASH) && BL_FEATURE_SUPPORT_DFLASH
 #include "memory/src/flexNVM_memory.h"
 #endif // BL_FEATURE_SUPPORT_DFLASH
 #else
@@ -26,7 +26,7 @@
 #include "memory/src/flashiap_memory.h"
 #endif
 #endif //#if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
-#if BL_FEATURE_ENCRYPTION
+#if defined(BL_FEATURE_ENCRYPTION) && BL_FEATURE_ENCRYPTION
 #include "aes_security.h"
 #endif // #if BL_FEATURE_ENCRYPTION
 
@@ -37,8 +37,8 @@
 // Definitions
 ////////////////////////////////////////////////////////////////////////////////
 
-#if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
-#if !BL_DEVICE_IS_LPC_SERIES
+#if !(defined(BL_FEATURE_HAS_NO_INTERNAL_FLASH) && BL_FEATURE_HAS_NO_INTERNAL_FLASH)
+#if !(defined(BL_DEVICE_IS_LPC_SERIES) && BL_DEVICE_IS_LPC_SERIES)
 //! @brief Interface for the flash driver.
 typedef struct FlashDriverInterface
 {
@@ -102,7 +102,7 @@ typedef struct FlashiapDriverInterface
 #endif // !BL_DEVICE_IS_LPC_SERIES
 #endif //#if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
 
-#if BL_DEVICE_IS_LPC_SERIES
+#if defined(BL_DEVICE_IS_LPC_SERIES) && BL_DEVICE_IS_LPC_SERIES
 typedef struct PowerDriverInterface
 {
     uint32_t (*power_set_pll)(uint32_t multiply_by, uint32_t input_freq);
@@ -123,8 +123,8 @@ typedef struct PowerDriverInterface
 } power_driver_interface_t;
 #endif
 
-#if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
-#if BL_FEATURE_SUPPORT_DFLASH
+#if !(defined(BL_FEATURE_HAS_NO_INTERNAL_FLASH) && BL_FEATURE_HAS_NO_INTERNAL_FLASH)
+#if defined(BL_FEATURE_SUPPORT_DFLASH) && BL_FEATURE_SUPPORT_DFLASH
 //! @brief Interface for the Dflash driver.
 typedef struct DFlashDriverInterface
 {
@@ -156,10 +156,12 @@ typedef struct DFlashDriverInterface
                                     uint8_t *dst,
                                     uint32_t lengthInBytes,
                                     ftfx_read_resource_opt_t option);
+#if defined(FSL_FEATURE_FLASH_HAS_ACCESS_CONTROL) && FSL_FEATURE_FLASH_HAS_ACCESS_CONTROL
     status_t (*flash_is_execute_only)(flexnvm_config_t *config,
                                       uint32_t start,
                                       uint32_t lengthInBytes,
                                       flash_xacc_state_t *access_state);
+#endif
     status_t (*flash_erase_all_execute_only_segments)(flexnvm_config_t *config, uint32_t key);
     status_t (*flash_verify_erase_all_execute_only_segments)(flexnvm_config_t *config, ftfx_margin_value_t margin);
     status_t (*flash_set_flexram_function)(flexnvm_config_t *config, ftfx_flexram_func_opt_t option);
@@ -186,15 +188,15 @@ typedef struct _bootloaderContext
     //@{
     const memory_interface_t *memoryInterface; //!< Abstract interface to memory operations.
     const memory_map_entry_t *memoryMap;       //!< Memory map used by abstract memory interface.
-#if BL_FEATURE_EXPAND_MEMORY
+#if defined(BL_FEATURE_EXPAND_MEMORY) && BL_FEATURE_EXPAND_MEMORY
     const external_memory_map_entry_t *externalMemoryMap; //!< Memory map used by external memory devices.
 #endif                                                    // BL_FEATURE_EXPAND_MEMORY
     const property_interface_t *propertyInterface;        //!< Interface to property store.
     const command_interface_t *commandInterface;          //!< Interface to command processor operations.
-#if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
-#if !BL_DEVICE_IS_LPC_SERIES
+#if !(defined(BL_FEATURE_HAS_NO_INTERNAL_FLASH) && BL_FEATURE_HAS_NO_INTERNAL_FLASH)
+#if !(defined(BL_DEVICE_IS_LPC_SERIES) && BL_DEVICE_IS_LPC_SERIES)
     const flash_driver_interface_t *flashDriverInterface;    //!< Kinetis Flash driver interface.
-#if BL_FEATURE_SUPPORT_DFLASH
+#if defined(BL_FEATURE_SUPPORT_DFLASH) && BL_FEATURE_SUPPORT_DFLASH
     const dflash_driver_interface_t *dflashDriverInterface;    //!< Kinetis DFlash driver interface.
 #endif // BL_FEATURE_SUPPORT_DFLASH
 #else
@@ -208,20 +210,16 @@ typedef struct _bootloaderContext
     //! @name Runtime state
     //@{
     const peripheral_descriptor_t *activePeripheral; //!< The currently active peripheral.
-#if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
-#if !BL_DEVICE_IS_LPC_SERIES
+#if !(defined(BL_FEATURE_HAS_NO_INTERNAL_FLASH) && BL_FEATURE_HAS_NO_INTERNAL_FLASH)
+#if !(defined(BL_DEVICE_IS_LPC_SERIES) && BL_DEVICE_IS_LPC_SERIES)
     flash_config_t *allFlashState;                   //!< Kinetis Flash driver instance.
     ftfx_cache_config_t *allFlashCacheState;                   //!< FTFx cache driver state information
-#if BL_FEATURE_SUPPORT_DFLASH
+#if defined(BL_FEATURE_SUPPORT_DFLASH) && BL_FEATURE_SUPPORT_DFLASH
     flexnvm_config_t *dFlashState;             //!< Kinetis DFlash driver instance.
-#endif
+#endif     
 #else
     flashiap_config_t *allFlashState;                //!< LPC Flash driver instance.
 #endif
-#endif
-
-#if BL_FEATURE_RELIABLE_UPDATE
-    uint32_t imageStart;
 #endif
     //@}
 } bootloader_context_t;
@@ -231,10 +229,10 @@ typedef struct _bootloaderContext
 ////////////////////////////////////////////////////////////////////////////////
 
 extern bootloader_context_t g_bootloaderContext;
-#if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
-#if !BL_DEVICE_IS_LPC_SERIES
+#if !(defined(BL_FEATURE_HAS_NO_INTERNAL_FLASH) && BL_FEATURE_HAS_NO_INTERNAL_FLASH)
+#if !(defined(BL_DEVICE_IS_LPC_SERIES) && BL_DEVICE_IS_LPC_SERIES)
 extern const flash_driver_interface_t g_flashDriverInterface;
-#if BL_FEATURE_SUPPORT_DFLASH
+#if defined(BL_FEATURE_SUPPORT_DFLASH) && BL_FEATURE_SUPPORT_DFLASH
 extern const dflash_driver_interface_t g_dflashDriverInterface;
 #endif // BL_FEATURE_SUPPORT_DFLASH
 #else

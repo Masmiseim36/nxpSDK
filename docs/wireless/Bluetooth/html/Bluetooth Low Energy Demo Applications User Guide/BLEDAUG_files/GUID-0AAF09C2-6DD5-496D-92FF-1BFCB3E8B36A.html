@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Extended Advertising (KW37 platforms)"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-6A79DC36-EEB9-4649-BEB4-A226B5AD42D8.html"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-0AAF09C2-6DD5-496D-92FF-1BFCB3E8B36A"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Extended Advertising (KW37 platforms)</title>
+</head>
+<body id="GUID-0AAF09C2-6DD5-496D-92FF-1BFCB3E8B36A">
+
+
+    <h1 class="title topictitle1">Extended Advertising (KW37 platforms)</h1>
+
+    <div class="body">
+        <p class="p">Use the Bluetooth LE Shell application to exercise the advertising extension
+            features:</p>
+
+        <p class="p">On the GAP Peripheral device:</p>
+
+        <ol class="ol">
+            <li class="li">Configure the extended advertising parameters. In the below example the advertising
+                type is set to connectable and includes TX power and the primary phy is set to Coded
+                PHY. </li>
+
+            <li class="li">Configure the extended advertising data. To send large data payload, pass the
+                command “gap extadvdata” with no parameter and the default data is added. The length
+                is configurable at compile time through SHELL_EXT_ADV_DATA_SIZE and the data pattern
+                is SHELL_EXT_ADV_DATA_PATTERN. In the below example custom data is added.</li>
+
+            <li class="li">Start extended
+                advertising.<pre class="pre codeblock">BLE Shell&gt;gap extadvcfg -type 65 -phy1 3
+
+--&gt;  GAP Event: Extended Advertising parameters successfully set.
+
+BLE Shell&gt;gap extadvdata 8 test_ext_adv_data
+
+--&gt;  GAP Event: Extended Advertising data successfully set.
+
+BLE Shell&gt;gap extadvstart
+
+--&gt;  GAP Event: Advertising state changed successfully!</pre>
+<p class="p">On the GAP Central device:</p>
+</li>
+<li class="li">Set the scanning parameters. The scanning PHY is set to match the advertising PHY,
+                in this case Coded PHY.</li>
+
+            <li class="li">Start scanning and filter
+                duplicates.<pre class="pre codeblock">BLE Shell&gt;gap scancfg -phy 4
+
+BLE Shell&gt;gap scanstart filter
+
+-&gt;  GAP Event: Scan started.
+
+BLE Shell&gt;
+--&gt;  GAP Event: Found device 0 : 0060374E2B8A -22 dBm
+ Advertising Extended Data:
+test_ext_adv_data</pre>
+</li>
+<li class="li">Set the connection initiating PHYs corresponding to the primary PHY on which the advertising is
+                performed.</li>
+
+            <li class="li">Connect to the desired device in the scanned devices
+                list.<pre class="pre codeblock">BLE Shell&gt;gap connectcfg -phy 4
+
+--&gt;  Connection Parameters:
+    --&gt;  Connection Interval: 200 ms
+    --&gt;  Connection Latency: 0
+    --&gt;  Supervision Timeout: 32000 ms
+    --&gt;  Connecting PHYs: Coded
+
+BLE Shell&gt;gap connect 0
+-&gt;  GAP Event: Scan stopped.
+
+BLE Shell&gt;
+--&gt;  GAP Event: Connected</pre>
+</li>
+
+        </ol>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-6A79DC36-EEB9-4649-BEB4-A226B5AD42D8.html">Usage</a></div>
+</div>
+</div>
+
+</body>
+</html>

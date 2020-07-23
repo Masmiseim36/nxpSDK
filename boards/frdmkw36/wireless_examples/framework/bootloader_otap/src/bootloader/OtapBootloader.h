@@ -1,6 +1,6 @@
 /*! *********************************************************************************
 * Copyright (c) 2015, Freescale Semiconductor, Inc.
-* Copyright 2016-2018 NXP
+* Copyright 2016-2019 NXP
 * All rights reserved.
 *
 * \file
@@ -20,8 +20,13 @@
 *************************************************************************************
 ********************************************************************************** */
 #include "EmbeddedTypes.h"
+#ifdef CPU_QN9080C
+#include "Eeprom.h"
+#include "OtapMain.h"
+#else
 #include "Eeprom_Boot.h"
 #include "main.h"
+#endif
 
 #ifdef __cplusplus
     extern "C" {

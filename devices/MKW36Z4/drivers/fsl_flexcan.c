@@ -17,6 +17,38 @@
 #define FSL_COMPONENT_ID "platform.drivers.flexcan"
 #endif
 
+#define IDEAL_SP_LOW (750U)
+#define IDEAL_SP_MID (800U)
+#define IDEAL_SP_HIGH (875U)
+#define IDEAL_SP_FACTOR (1000U)
+
+#define MAX_PROPSEG (CAN_CTRL1_PROPSEG_MASK >> CAN_CTRL1_PROPSEG_SHIFT)
+#define MAX_PSEG1 (CAN_CTRL1_PSEG1_MASK >> CAN_CTRL1_PSEG1_SHIFT)
+#define MAX_PSEG2 (CAN_CTRL1_PSEG2_MASK >> CAN_CTRL1_PSEG2_SHIFT)
+#define MAX_RJW (CAN_CTRL1_RJW_MASK >> CAN_CTRL1_RJW_SHIFT)
+#define MAX_PRESDIV (CAN_CTRL1_PRESDIV_MASK >> CAN_CTRL1_PRESDIV_SHIFT)
+#define CTRL1_MAX_TIME_QUANTA (1U + MAX_PROPSEG + 1U + MAX_PSEG1 + 1U + MAX_PSEG2 + 1U)
+#define CTRL1_MIN_TIME_QUANTA (8U)
+
+#define MAX_EPROPSEG (CAN_CBT_EPROPSEG_MASK >> CAN_CBT_EPROPSEG_SHIFT)
+#define MAX_EPSEG1 (CAN_CBT_EPSEG1_MASK >> CAN_CBT_EPSEG1_SHIFT)
+#define MAX_EPSEG2 (CAN_CBT_EPSEG2_MASK >> CAN_CBT_EPSEG2_SHIFT)
+#define MAX_ERJW (CAN_CBT_ERJW_MASK >> CAN_CBT_ERJW_SHIFT)
+#define MAX_EPRESDIV (CAN_CBT_EPRESDIV_MASK >> CAN_CBT_EPRESDIV_SHIFT)
+#define CBT_MAX_TIME_QUANTA (1U + MAX_EPROPSEG + 1U + MAX_EPSEG1 + 1U + MAX_EPSEG2 + 1U)
+#define CBT_MIN_TIME_QUANTA (8U)
+
+#define FDCBT_MAX_TIME_QUANTA (1U + MAX_FPROPSEG + 0U + MAX_FPSEG1 + 1U + MAX_FPSEG2 + 1U)
+#define FDCBT_MIN_TIME_QUANTA (5U)
+#define MAX_FPROPSEG (CAN_FDCBT_FPROPSEG_MASK >> CAN_FDCBT_FPROPSEG_SHIFT)
+#define MAX_FPSEG1 (CAN_FDCBT_FPSEG1_MASK >> CAN_FDCBT_FPSEG1_SHIFT)
+#define MAX_FPSEG2 (CAN_FDCBT_FPSEG2_MASK >> CAN_FDCBT_FPSEG2_SHIFT)
+#define MAX_FRJW (CAN_FDCBT_FRJW_MASK >> CAN_FDCBT_FRJW_SHIFT)
+#define MAX_FPRESDIV (CAN_FDCBT_FPRESDIV_MASK >> CAN_FDCBT_FPRESDIV_SHIFT)
+
+#define MAX_CANFD_BAUDRATE (8000000U)
+#define MAX_CAN_BAUDRATE (1000000U)
+
 /*! @brief FlexCAN Internal State. */
 enum _flexcan_state
 {
@@ -138,6 +170,15 @@ static void FLEXCAN_SetBaudRate(CAN_Type *base,
                                 uint32_t sourceClock_Hz,
                                 uint32_t baudRate_Bps,
                                 flexcan_timing_config_t timingConfig);
+/*!
+ * @brief Calculates the segment values for a single bit time for classical CAN
+ *
+ * @param baudRate The data speed in bps
+ * @param tqNum Number of time quantas per bit
+ * @param pTimingConfig Pointer to the FlexCAN timing configuration structure.
+ *
+ */
+static void FLEXCAN_GetSegments(uint32_t baudRate, uint32_t tqNum, flexcan_timing_config_t *pTimingConfig);
 
 #if (defined(FSL_FEATURE_FLEXCAN_HAS_FLEXIBLE_DATA_RATE) && FSL_FEATURE_FLEXCAN_HAS_FLEXIBLE_DATA_RATE)
 /*!
@@ -166,6 +207,25 @@ static void FLEXCAN_SetFDBaudRate(CAN_Type *base, uint32_t sourceClock_Hz, uint3
  * @param mbIdx Mailbox index.
  */
 static uint32_t FLEXCAN_GetFDMailboxOffset(CAN_Type *base, uint8_t mbIdx);
+
+/*!
+ * @brief Calculates the segment values for a single bit time for CANFD bus control baud Rate
+ *
+ * @param baudRate The canfd bus control speed in bps
+ * @param tqNum Number of time quanta per bit
+ * @param pTimingConfig Pointer to the FlexCAN timing configuration structure.
+ *
+ */
+static void FLEXCAN_FDGetSegments(uint32_t baudRate, uint32_t tqNum, flexcan_timing_config_t *pTimingConfig);
+/*!
+ * @brief Calculates the segment values for a single bit time for CANFD bus data baud Rate
+ *
+ * @param baudRatebrs The canfd bus data speed in bps
+ * @param tqNum Number of time quanta per bit
+ * @param pTimingConfig Pointer to the FlexCAN timing configuration structure.
+ *
+ */
+static void FLEXCAN_FDGetSegmentswithBRS(uint32_t baudRatebrs, uint32_t tqNum, flexcan_timing_config_t *pTimingConfig);
 #endif
 
 /*******************************************************************************
@@ -781,6 +841,129 @@ void FLEXCAN_SetTxMbConfig(CAN_Type *base, uint8_t mbIdx, bool enable)
     base->MB[mbIdx].WORD1 = 0x0;
 }
 
+/*!
+ * @brief Calculates the segment values for a single bit time for classical CAN
+ *
+ * @param baudRate The data speed in bps
+ * @param tqNum Number of time quantas per bit
+ * @param pTimingConfig Pointer to the FlexCAN timing configuration structure.
+ *
+ */
+static void FLEXCAN_GetSegments(uint32_t baudRate, uint32_t tqNum, flexcan_timing_config_t *pTimingConfig)
+{
+    uint32_t ideal_sp;
+    uint32_t p1;
+
+    /* get ideal sample point. */
+    if (baudRate >= 1000000U)
+    {
+        ideal_sp = IDEAL_SP_LOW;
+    }
+    else if (baudRate >= 800000U)
+    {
+        ideal_sp = IDEAL_SP_MID;
+    }
+    else
+    {
+        ideal_sp = IDEAL_SP_HIGH;
+    }
+
+    /* distribute time quanta. */
+    p1                       = tqNum * (uint32_t)ideal_sp;
+    pTimingConfig->phaseSeg1 = (uint8_t)(p1 / IDEAL_SP_FACTOR - 2U);
+
+    if (pTimingConfig->phaseSeg1 > (MAX_PSEG1 + MAX_PROPSEG))
+    {
+        pTimingConfig->phaseSeg1 = MAX_PSEG1;
+        pTimingConfig->propSeg   = MAX_PROPSEG;
+    }
+    else if (pTimingConfig->phaseSeg1 > MAX_PSEG1)
+    {
+        pTimingConfig->propSeg   = pTimingConfig->phaseSeg1 - MAX_PSEG1;
+        pTimingConfig->phaseSeg1 = MAX_PSEG1;
+    }
+    else
+    {
+        pTimingConfig->propSeg = 0;
+    }
+
+    pTimingConfig->phaseSeg2 = (uint8_t)tqNum - (1U + pTimingConfig->phaseSeg1 + 1U + pTimingConfig->propSeg + 1U + 1U);
+    assert(pTimingConfig->phaseSeg2 <= MAX_PSEG2);
+
+    /* subtract one TQ for sync seg. */
+    /* sjw is 20% of total TQ, rounded to nearest int. */
+    pTimingConfig->rJumpwidth = ((uint8_t)tqNum + (5U - 1U)) / 5U - 1U;
+    if (pTimingConfig->rJumpwidth > MAX_RJW)
+    {
+        pTimingConfig->rJumpwidth = MAX_RJW;
+    }
+}
+
+/*!
+ * @brief Calculates the improved timing values by specific baudrates for classical CAN
+ *
+ * @param baudRate  The classical CAN speed in bps defined by user
+ * @param sourceClock_Hz The Source clock data speed in bps. Zero to disable baudrate switching
+ * @param pTimingConfig Pointer to the FlexCAN timing configuration structure.
+ *
+ * @return TRUE if timing configuration found, FALSE if failed to find configuration
+ */
+bool FLEXCAN_CalculateImprovedTimingValues(uint32_t baudRate,
+                                           uint32_t sourceClock_Hz,
+                                           flexcan_timing_config_t *pTimingConfig)
+{
+    /* observe baud rate maximums. */
+    assert(baudRate <= MAX_CAN_BAUDRATE);
+
+    uint32_t clk;   /* the clock is tqNumb x baudRateFD. */
+    uint32_t clk2;  /* the clock2 is clk2 / Pre-scaler Division Factor. */
+    uint32_t tqNum; /* Numbers of TQ. */
+    bool fgRet = false;
+
+    /*  Auto Improved Protocal timing for CBT. */
+    tqNum = CTRL1_MAX_TIME_QUANTA;
+    do
+    {
+        clk = baudRate * tqNum;
+        if (clk > sourceClock_Hz)
+        {
+            continue; /* tqNum too large, clk has been exceed sourceClock_Hz. */
+        }
+
+        if (clk < sourceClock_Hz)
+        {
+            break; /* Non-supporting: the frequency of clock source is not divisible by target baud rate, the user
+                      should change a divisible baud rate. */
+        }
+
+        for (pTimingConfig->preDivider = 0x00; pTimingConfig->preDivider <= MAX_PRESDIV; (pTimingConfig->preDivider)++)
+        {
+            /* Consider some proessor not contain FPU, the parameter need to be exact division. */
+            if ((clk / ((uint32_t)(pTimingConfig->preDivider) + 1U) * ((uint32_t)(pTimingConfig->preDivider) + 1U)) !=
+                clk)
+            {
+                continue; /* clk need to be exact division by preDivider + 1. */
+            }
+            clk2 = clk / ((uint32_t)(pTimingConfig->preDivider) + 1U);
+            if (((sourceClock_Hz / clk2) * clk2) != sourceClock_Hz)
+            {
+                continue; /* sourceClock_Hz need to be exact division by preDivider. */
+            }
+
+            /* Get the best timing configuration. */
+            FLEXCAN_GetSegments(baudRate, tqNum, pTimingConfig);
+            fgRet = true;
+            break;
+        }
+        if (fgRet)
+        {
+            break;
+        }
+    } while (--tqNum >= CTRL1_MIN_TIME_QUANTA);
+
+    return fgRet;
+}
+
 #if (defined(FSL_FEATURE_FLEXCAN_HAS_FLEXIBLE_DATA_RATE) && FSL_FEATURE_FLEXCAN_HAS_FLEXIBLE_DATA_RATE)
 static uint32_t FLEXCAN_GetFDMailboxOffset(CAN_Type *base, uint8_t mbIdx)
 {
@@ -807,6 +990,233 @@ static uint32_t FLEXCAN_GetFDMailboxOffset(CAN_Type *base, uint8_t mbIdx)
     /* To get the dword aligned offset, need to divide by 4. */
     offset = offset / 4;
     return offset;
+}
+
+/*!
+ * @brief Calculates the segment values for a single bit time for CANFD bus control baud Rate
+ *
+ * @param baudRate The canfd bus control speed in bps
+ * @param tqNum Number of time quanta per bit
+ * @param pTimingConfig Pointer to the FlexCAN timing configuration structure.
+ *
+ */
+static void FLEXCAN_FDGetSegments(uint32_t baudRate, uint32_t tqNum, flexcan_timing_config_t *pTimingConfig)
+{
+    uint32_t ideal_sp;
+    uint32_t p1;
+
+    /* get ideal sample point. */
+    if (baudRate >= 1000000U)
+    {
+        ideal_sp = IDEAL_SP_LOW;
+    }
+    else if (baudRate >= 800000U)
+    {
+        ideal_sp = IDEAL_SP_MID;
+    }
+    else
+    {
+        ideal_sp = IDEAL_SP_HIGH;
+    }
+
+    /* distribute time quanta. */
+    p1                       = tqNum * (uint32_t)ideal_sp;
+    pTimingConfig->phaseSeg1 = (uint8_t)(p1 / (uint32_t)IDEAL_SP_FACTOR - 2U);
+    if (pTimingConfig->phaseSeg1 > (MAX_EPSEG1 + MAX_EPROPSEG))
+    {
+        pTimingConfig->phaseSeg1 = MAX_EPSEG1;
+        pTimingConfig->propSeg   = MAX_EPROPSEG;
+    }
+    else if (pTimingConfig->phaseSeg1 > MAX_EPSEG1)
+    {
+        pTimingConfig->propSeg   = pTimingConfig->phaseSeg1 - MAX_EPSEG1;
+        pTimingConfig->phaseSeg1 = MAX_EPSEG1;
+    }
+    else
+    {
+        pTimingConfig->propSeg = 0;
+    }
+
+    pTimingConfig->phaseSeg2 = (uint8_t)tqNum - (1U + pTimingConfig->phaseSeg1 + 1U + pTimingConfig->propSeg + 1U + 1U);
+    assert(pTimingConfig->phaseSeg2 <= MAX_EPSEG2);
+
+    /* subtract one TQ for sync seg. */
+    /* sjw is 20% of total TQ, rounded to nearest int. */
+    pTimingConfig->rJumpwidth = ((uint8_t)tqNum + (5U - 1U)) / 5U - 1U;
+    /* the max tqNum for CBT will reach to 129, ERJW would not larger than 26. */
+    /* Consider and max ERJW is 31, so rJumpwidth will always smaller than MAX_ERJW. */
+    assert(pTimingConfig->rJumpwidth <= MAX_ERJW);
+}
+
+/*!
+ * @brief Calculates the segment values for a single bit time for CANFD bus data baud Rate
+ *
+ * @param baudRatebrs The canfd bus data speed in bps
+ * @param tqNum Number of time quanta per bit
+ * @param pTimingConfig Pointer to the FlexCAN timing configuration structure.
+ *
+ */
+static void FLEXCAN_FDGetSegmentswithBRS(uint32_t baudRatebrs, uint32_t tqNum, flexcan_timing_config_t *pTimingConfig)
+{
+    uint32_t ideal_sp;
+    uint32_t p1;
+
+    /* get ideal sample point. */
+    if (baudRatebrs >= 1000000U)
+    {
+        ideal_sp = IDEAL_SP_LOW;
+    }
+    else if (baudRatebrs >= 800000U)
+    {
+        ideal_sp = IDEAL_SP_MID;
+    }
+    else
+    {
+        ideal_sp = IDEAL_SP_HIGH;
+    }
+
+    /* distribute time quanta. */
+    p1                        = tqNum * (uint32_t)ideal_sp;
+    pTimingConfig->fphaseSeg1 = (uint8_t)(p1 / (uint32_t)IDEAL_SP_FACTOR - 1U);
+    if (pTimingConfig->fphaseSeg1 > (MAX_FPSEG1 + MAX_FPROPSEG))
+    {
+        pTimingConfig->fphaseSeg1 = MAX_FPSEG1;
+        pTimingConfig->fpropSeg   = MAX_FPROPSEG;
+    }
+    else if (pTimingConfig->fphaseSeg1 > MAX_FPSEG1)
+    {
+        pTimingConfig->fpropSeg   = pTimingConfig->fphaseSeg1 - MAX_FPSEG1;
+        pTimingConfig->fphaseSeg1 = MAX_FPSEG1;
+    }
+    else
+    {
+        pTimingConfig->fpropSeg = 0;
+    }
+
+    pTimingConfig->fphaseSeg2 =
+        (uint8_t)tqNum - (1U + pTimingConfig->fphaseSeg1 + 1U + pTimingConfig->fpropSeg + 0U + 1U);
+
+    assert(pTimingConfig->fphaseSeg2 <= MAX_FPSEG2);
+
+    /* subtract one TQ for sync seg. */
+    /* sjw is 20% of total TQ, rounded to nearest int. */
+    pTimingConfig->frJumpwidth = ((uint8_t)tqNum + (5U - 1U)) / 5U - 1U;
+
+    if (pTimingConfig->frJumpwidth > MAX_FRJW)
+    {
+        pTimingConfig->frJumpwidth = MAX_FRJW;
+    }
+}
+
+/*!
+ * @brief Calculates the improved timing values by specific baudrates for CANFD
+ *
+ * @param baudRate  The CANFD bus control speed in bps defined by user
+ * @param baudRateFD  The CANFD bus data speed in bps defined by user
+ * @param sourceClock_Hz The Source clock data speed in bps. Zero to disable baudrate switching
+ * @param pTimingConfig Pointer to the FlexCAN timing configuration structure.
+ *
+ * @return TRUE if timing configuration found, FALSE if failed to find configuration
+ */
+bool FLEXCAN_FDCalculateImprovedTimingValues(uint32_t baudRate,
+                                             uint32_t baudRateFD,
+                                             uint32_t sourceClock_Hz,
+                                             flexcan_timing_config_t *pTimingConfig)
+{
+    /* observe baud rate maximums */
+    assert(baudRate <= MAX_CAN_BAUDRATE);
+    assert(baudRateFD <= MAX_CANFD_BAUDRATE);
+
+    uint32_t clk, clkbrs;
+    uint32_t clk2, clkbrs2;
+    uint32_t tqNum, tqNumbrs;                            /* Numbers of TQ. */
+    bool fgCaculateCBT = false, fgCaculateFDCBT = false; /* default value false means to find solution fail. */
+
+    /*  Auto Improved Protocal timing for CBT. */
+    tqNum = CBT_MAX_TIME_QUANTA;
+    do
+    {
+        clk = baudRate * tqNum;
+        if (clk > sourceClock_Hz)
+        {
+            continue; /* tqNum too large, clk x tqNum has been exceed sourceClock_Hz. */
+        }
+
+        if (clk < sourceClock_Hz)
+        {
+            break; /*  Non-supporting: the frequency of clock source is not divisible by target baud rate, the user
+                      should change a divisible baud rate. */
+        }
+
+        for (pTimingConfig->preDivider = 0x00; pTimingConfig->preDivider <= MAX_EPRESDIV; (pTimingConfig->preDivider)++)
+        {
+            /* Consider some proessor not contain FPU, the parameter need to be exact division. */
+            if ((clk / ((uint32_t)(pTimingConfig->preDivider) + 1U) * ((uint32_t)(pTimingConfig->preDivider) + 1U)) !=
+                clk)
+            {
+                continue; /* clk need to be exact division by preDivider + 1. */
+            }
+            clk2 = clk / ((uint32_t)(pTimingConfig->preDivider) + 1U);
+
+            if ((sourceClock_Hz / clk2 * clk2) != sourceClock_Hz)
+            {
+                continue; /* sourceClock_Hz need to be exact division by clk2. */
+            }
+            /* Get the best CANFD conrol bus timing configuration. */
+            FLEXCAN_FDGetSegments(baudRate, tqNum, pTimingConfig);
+            fgCaculateCBT = true;
+            break;
+        }
+
+        if (fgCaculateCBT)
+        {
+            break;
+        }
+    } while (--tqNum >= CBT_MIN_TIME_QUANTA);
+
+    /* After calculate for CBT, continue to calculate FBCBT field timing configuration. */
+    tqNumbrs = FDCBT_MAX_TIME_QUANTA;
+    do
+    {
+        clkbrs = baudRateFD * tqNumbrs;
+        if (clkbrs > sourceClock_Hz)
+        {
+            continue; /* tqNumbrs too large, clkbrs x tqNumbrs has been exceed sourceClock_Hz. */
+        }
+
+        if (clkbrs < sourceClock_Hz)
+        {
+            break; /*  Non-supporting: the frequency of clock source is not divisible by target baud rate, the user
+                      should change a divisible baud rate. */
+        }
+
+        for (pTimingConfig->fpreDivider = 0x00; pTimingConfig->fpreDivider <= MAX_FPRESDIV;
+             (pTimingConfig->fpreDivider)++)
+        {
+            /* Considering some proessor not contain FPU, the parameter need exact division. */
+            if ((clkbrs / ((uint32_t)(pTimingConfig->fpreDivider) + 1U) *
+                 ((uint32_t)(pTimingConfig->fpreDivider) + 1U)) != clkbrs)
+            {
+                continue; /* clk need to be exact division by preDivider + 1. */
+            }
+            clkbrs2 = clkbrs / ((uint32_t)(pTimingConfig->fpreDivider) + 1U);
+            if ((sourceClock_Hz / clkbrs2 * clkbrs2) != sourceClock_Hz)
+            {
+                continue; /* sourceClock_Hz need to be exact division by preDivider. */
+            }
+            /* Get the best CANFD data bus timing configuration. */
+            FLEXCAN_FDGetSegmentswithBRS(baudRateFD, tqNumbrs, pTimingConfig);
+            fgCaculateFDCBT = true;
+            break;
+        }
+        if (fgCaculateFDCBT)
+        {
+            break;
+        }
+
+    } while (--tqNumbrs >= FDCBT_MIN_TIME_QUANTA);
+
+    return (fgCaculateCBT && fgCaculateFDCBT);
 }
 #endif
 
@@ -951,8 +1361,8 @@ void FLEXCAN_SetRxFifoConfig(CAN_Type *base, const flexcan_rx_fifo_config_t *con
     /* Assertion. */
     assert((config) || (false == enable));
 
-    volatile uint32_t *idFilterRegion = (volatile uint32_t *)(&base->MB[6].CS);
-    uint8_t setup_mb, i, rffn = 0;
+    volatile uint32_t *idFilterRegion;
+    uint8_t setup_mb, i, j = 0, k, rffn = 0, numMbOccupy;
 
     /* Enter Freeze Mode. */
     FLEXCAN_EnterFreezeMode(base);
@@ -979,31 +1389,27 @@ void FLEXCAN_SetRxFifoConfig(CAN_Type *base, const flexcan_rx_fifo_config_t *con
                 break;
             }
         }
-    }
-    else
-    {
-        rffn = (base->CTRL2 & CAN_CTRL2_RFFN_MASK) >> CAN_CTRL2_RFFN_SHIFT;
-    }
 
-    /* Clean ID filter table occuyied Message Buffer Region. */
-    rffn = (rffn + 1) * 8;
-    for (i = 0; i < rffn; i++)
-    {
-        idFilterRegion[i] = 0x0;
-    }
-
-    if (enable)
-    {
-        /* Disable unused Rx FIFO Filter. */
-        for (i = config->idFilterNum; i < rffn; i++)
+        /* caculate the Number of Mailboxes occupied by RX Legacy FIFO and the filter. */
+        numMbOccupy = 6U + (rffn + 1U) * 2U;
+        
+        for (i = 6U; i < numMbOccupy; i++)
         {
-            idFilterRegion[i] = 0xFFFFFFFFU;
-        }
-
-        /* Copy ID filter table to Message Buffer Region. */
-        for (i = 0; i < config->idFilterNum; i++)
-        {
-            idFilterRegion[i] = config->idFilterTable[i];
+            /* Get address for current mail box.  */
+            idFilterRegion = &(base->MB[i].CS);
+        
+            /* One Mail box contain 4U DWORD registers. */
+            for (k = 0; k < 4U; k++)
+            {
+                /* Fill all valid filter in the mail box occupied by filter.
+                 * Disable unused Rx FIFO Filter, the other rest of register in the last Mail box occupied by fiter set
+                 * as 0xffffffff.
+                 */
+                idFilterRegion[k] = (j < config->idFilterNum) ? (config->idFilterTable[j]) : 0xFFFFFFFFU;
+        
+                /* Try to fill next filter in current Mail Box.  */
+                j++;
+            }
         }
 
         /* Setup ID Fitlter Type. */
@@ -1035,16 +1441,19 @@ void FLEXCAN_SetRxFifoConfig(CAN_Type *base, const flexcan_rx_fifo_config_t *con
     }
     else
     {
+        rffn = (base->CTRL2 & CAN_CTRL2_RFFN_MASK) >> CAN_CTRL2_RFFN_SHIFT;
+        /* caculate the Number of Mailboxes occupied by RX Legacy FIFO and the filter. */
+        numMbOccupy = 6U + (rffn + 1U) * 2U;
+
         /* Disable Rx Message FIFO. */
         base->MCR &= ~CAN_MCR_RFEN_MASK;
 
-        /* Clean MB0 ~ MB5. */
-        FLEXCAN_SetRxMbConfig(base, 0, NULL, false);
-        FLEXCAN_SetRxMbConfig(base, 1, NULL, false);
-        FLEXCAN_SetRxMbConfig(base, 2, NULL, false);
-        FLEXCAN_SetRxMbConfig(base, 3, NULL, false);
-        FLEXCAN_SetRxMbConfig(base, 4, NULL, false);
-        FLEXCAN_SetRxMbConfig(base, 5, NULL, false);
+        /* Clean MB0 ~ MB5 and all MB occupied by ID filters (Fix MISRA_C-2012 Rule 18.1). */
+
+        for (i = 0; i < numMbOccupy; i++)
+        {
+            FLEXCAN_SetRxMbConfig(base, i, NULL, false);
+        }
     }
 
     /* Exit Freeze Mode. */

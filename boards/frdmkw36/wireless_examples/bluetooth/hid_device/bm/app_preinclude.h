@@ -4,7 +4,7 @@
  ********************************************************************************** */
 /*! *********************************************************************************
 * Copyright 2015, Freescale Semiconductor, Inc.
-* Copyright 2016-2019 NXP
+* Copyright 2016-2020 NXP
 * All rights reserved.
 *
 * \file
@@ -67,10 +67,8 @@
 
 /* Defines pools by block size and number of blocks. Must be aligned to 4 bytes.*/
 #define AppPoolsDetails_c \
-         _block_size_  32  _number_of_blocks_    6 _eol_  \
-         _block_size_  64  _number_of_blocks_    3 _eol_  \
-         _block_size_  88  _number_of_blocks_    3 _eol_  \
-         _block_size_ 256  _number_of_blocks_    2 _eol_  \
+         _block_size_  88  _number_of_blocks_    6 _eol_  \
+         _block_size_ 248  _number_of_blocks_    2 _eol_  \
          _block_size_ 312  _number_of_blocks_    1 _eol_  \
          _block_size_ 392  _number_of_blocks_    1 _eol_
 

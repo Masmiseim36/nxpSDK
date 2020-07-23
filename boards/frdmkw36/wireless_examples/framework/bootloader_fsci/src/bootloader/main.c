@@ -337,7 +337,8 @@ int main(int argc, char **argv)
 #endif
 
     /* Set the maximum available MCU Flash size */
-#if (defined(CPU_MKW36Z512VFP4) || defined(CPU_MKW36Z512VHT4))
+#if (defined(CPU_MKW36A512VHT4) || defined(CPU_MKW36A512VFP4) || defined(CPU_MKW36A512VFT4) || \
+     defined(CPU_MKW36Z512VHT4) || defined(CPU_MKW36Z512VFP4) || defined(CPU_MKW34A512VFT4))
     /* Check if FlexNVM is disabled */
     if (((SIM->FCFG2 & SIM_FCFG2_MAXADDR1_MASK) >> SIM_FCFG2_MAXADDR1_SHIFT) == 0x20U)
     {
@@ -430,7 +431,10 @@ void defaultISR(void)
 ********************************************************************************** */
 void BOOT_ClockInit(void)
 {
-#if defined(CPU_MKW41Z512VHT4) || defined(CPU_MKW36Z512VHT4)
+#if defined(CPU_MKW41Z512VHT4) || \
+    (defined(CPU_MKW36A512VHT4) || defined(CPU_MKW36A512VFP4) || defined(CPU_MKW36A512VFT4) || \
+     defined(CPU_MKW36Z512VHT4) || defined(CPU_MKW36Z512VFP4) || defined(CPU_MKW35A512VFP4) || \
+     defined(CPU_MKW35A512VFT4) || defined(CPU_MKW35Z512VHT4) || defined(CPU_MKW34A512VFT4))
     RSIM->ANA_TRIM |= RSIM_ANA_TRIM_BB_LDO_XO_TRIM_MASK;
     /* Enable RF OSC in RSIM and wait for ready */
     RSIM->CONTROL &= ~RSIM_CONTROL_RF_OSC_EN_MASK;

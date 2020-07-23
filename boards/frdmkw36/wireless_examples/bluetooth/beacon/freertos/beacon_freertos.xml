@@ -164,7 +164,7 @@
           <value>nosys</value>
         </option>
         <option id="com.crt.advproject.link.memory.heapAndStack" type="string">
-          <value>&amp;Heap:Default;Default;0x0&amp;Stack:Default;Default;0x180</value>
+          <value>&amp;Heap:SRAM;Post Data;0x0000&amp;Stack:SRAM;Post Data;0x0200</value>
         </option>
         <option id="com.crt.advproject.link.memory.sections" type="stringList">
           <value>isd=*(NOINIT);region=SRAM;type=.noinit</value>
@@ -220,22 +220,22 @@
       <files mask="app_config.c"/>
       <files mask="beacon.c"/>
     </source>
-    <source path="middleware/wireless/bluetooth_1.3.6/controller/lib" type="lib" method="copy" toolchain="mcuxpresso">
+    <source path="middleware/wireless/bluetooth_1.3.9/controller/lib" type="lib" method="copy" toolchain="mcuxpresso">
       <files mask="lib_ble_kw36z_controller_gcc.a"/>
     </source>
-    <source path="middleware/wireless/bluetooth_1.3.6/host/lib" type="lib" method="copy" toolchain="mcuxpresso">
+    <source path="middleware/wireless/bluetooth_1.3.9/host/lib" type="lib" method="copy" toolchain="mcuxpresso">
       <files mask="lib_ble_5-0_host_peripheral_cm0p_gcc.a"/>
     </source>
-    <source path="middleware/wireless/framework_5.4.6/SecLib" type="lib" method="copy" toolchain="mcuxpresso">
+    <source path="middleware/wireless/framework_5.4.8/SecLib" type="lib" method="copy" toolchain="mcuxpresso">
       <files mask="lib_crypto_m0.a"/>
     </source>
-    <source path="middleware/wireless/bluetooth_1.3.6/controller/lib" type="lib" method="copy" toolchain="iar">
+    <source path="middleware/wireless/bluetooth_1.3.9/controller/lib" type="lib" method="copy" toolchain="iar">
       <files mask="lib_ble_kw36z_controller_iar.a"/>
     </source>
-    <source path="middleware/wireless/bluetooth_1.3.6/host/lib" type="lib" method="copy" toolchain="iar">
+    <source path="middleware/wireless/bluetooth_1.3.9/host/lib" type="lib" method="copy" toolchain="iar">
       <files mask="lib_ble_5-0_host_peripheral_cm0p_iar.a"/>
     </source>
-    <source path="middleware/wireless/framework_5.4.6/SecLib" type="lib" method="copy" toolchain="iar">
+    <source path="middleware/wireless/framework_5.4.8/SecLib" type="lib" method="copy" toolchain="iar">
       <files mask="lib_crypto_m0.a"/>
     </source>
   </example>

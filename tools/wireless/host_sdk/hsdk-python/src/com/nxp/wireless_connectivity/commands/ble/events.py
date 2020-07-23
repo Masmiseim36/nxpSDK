@@ -1,6 +1,6 @@
 '''
 * Copyright 2014-2015 Freescale Semiconductor, Inc.
-* Copyright 2016-2019 NXP
+* Copyright 2016-2018 NXP
 * All rights reserved.
 *
 * SPDX-License-Identifier: BSD-3-Clause
@@ -23,7 +23,29 @@ fsciLibrary = LibraryLoader().CFsciLibrary
 fsciLibrary.DestroyFSCIFrame.argtypes = [c_void_p]
 Spec = _Spec()
 
+class FSCIGetNumberOfFreeBuffersResponseObserver(Observer):
 
+    opGroup = Spec.FSCIGetNumberOfFreeBuffersResponseFrame.opGroup
+    opCode = Spec.FSCIGetNumberOfFreeBuffersResponseFrame.opCode
+
+    @overrides(Observer)
+    def observeEvent(self, framer, event, callback, sync_request):
+        # Call super, print common information
+        Observer.observeEvent(self, framer, event, callback, sync_request)
+        # Get payload
+        fsciFrame = cast(event, POINTER(FsciFrame))
+        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
+        packet = Spec.FSCIGetNumberOfFreeBuffersResponseFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
+        # Create frame object
+        frame = FSCIGetNumberOfFreeBuffersResponse()
+        frame.FreeBuffers = packet.getParamValueAsNumber("FreeBuffers")
+        framer.event_queue.put(frame) if sync_request else None
+
+        if callback is not None:
+            callback(self.deviceName, frame)
+        else:
+            print_event(self.deviceName, frame)
+        fsciLibrary.DestroyFSCIFrame(event)
 
 
 class FSCIAckIndicationObserver(Observer):
@@ -137,17 +159,6 @@ class FSCIGetWakeupReasonResponseObserver(Observer):
         # Create frame object
         frame = FSCIGetWakeupReasonResponse()
         frame.WakeUpReason = packet.getParamValueAsNumber("WakeUpReason")
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
-
-
-
-
         framer.event_queue.put(frame) if sync_request else None
 
         if callback is not None:
@@ -406,6 +417,30 @@ class L2CAPCBLeCbDataIndicationObserver(Observer):
         fsciLibrary.DestroyFSCIFrame(event)
 
 
+class L2CAPCBErrorIndicationObserver(Observer):
+
+    opGroup = Spec.L2CAPCBErrorIndicationFrame.opGroup
+    opCode = Spec.L2CAPCBErrorIndicationFrame.opCode
+
+    @overrides(Observer)
+    def observeEvent(self, framer, event, callback, sync_request):
+        # Call super, print common information
+        Observer.observeEvent(self, framer, event, callback, sync_request)
+        # Get payload
+        fsciFrame = cast(event, POINTER(FsciFrame))
+        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
+        # Create frame object
+        frame = L2CAPCBErrorIndication()
+        curr = 0
+        frame.InformationIncluded = data.contents[curr]
+        curr += 1
+        if frame.InformationIncluded:
+            # Create sub-object container
+            LeCbError = L2CAPCBErrorIndication.LeCbError()
+            LeCbError.DeviceId = data.contents[curr]
+            curr += 1
+            LeCbError.Error = list_to_int(data.contents[curr:curr + 2])
+            curr += 2
         framer.event_queue.put(frame) if sync_request else None
 
         if callback is not None:
@@ -2417,6 +2452,7 @@ class GAPCheckIfBondedIndicationObserver(Observer):
         # Create frame object
         frame = GAPCheckIfBondedIndication()
         frame.IsBonded = packet.getParamValueAsNumber("IsBonded")
+        frame.NvmIndex = packet.getParamValueAsNumber("NvmIndex")
         framer.event_queue.put(frame) if sync_request else None
 
         if callback is not None:
@@ -2811,7 +2847,6 @@ class GAPGenericEventRandomAddressSetIndicationObserver(Observer):
     def observeEvent(self, framer, event, callback, sync_request):
         # Call super, print common information
         Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
         fsciFrame = cast(event, POINTER(FsciFrame))
         data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
         packet = Spec.GAPGenericEventRandomAddressSetIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
@@ -2976,6 +3011,7 @@ class GAPConnectionEventConnectedIndicationObserver(Observer):
         frame.peerRpa = packet.getParamValueAsList("peerRpa")
         frame.localRpaUsed = packet.getParamValueAsNumber("localRpaUsed")
         frame.localRpa = packet.getParamValueAsList("localRpa")
+        frame.connectionRole = packet.getParamValueAsNumber("connectionRole")
         framer.event_queue.put(frame) if sync_request else None
 
         if callback is not None:
@@ -3631,24 +3667,6 @@ class GAPConnectionEventLeScKeypressNotificationIndicationObserver(Observer):
         fsciLibrary.DestroyFSCIFrame(event)
 
 
-class GAPGenericEventControllerResetCompleteIndicationObserver(Observer):
-
-    opGroup = Spec.GAPGenericEventControllerResetCompleteIndicationFrame.opGroup
-    opCode = Spec.GAPGenericEventControllerResetCompleteIndicationFrame.opCode
-
-    @overrides(Observer)
-    def observeEvent(self, framer, event, callback, sync_request):
-        # Call super, print common information
-        Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Create frame object
-        frame = GAPGenericEventControllerResetCompleteIndication()
-        framer.event_queue.put(frame) if sync_request else None
-
-        if callback is not None:
-            callback(self.deviceName, frame)
-        else:
-            print_event(self.deviceName, frame)
-        fsciLibrary.DestroyFSCIFrame(event)
 
 
 class GAPLeScPublicKeyRegeneratedIndicationObserver(Observer):
@@ -4373,10 +4391,10 @@ class GAPConnectionEventChannelSelectionAlgorithm2IndicationObserver(Observer):
         fsciLibrary.DestroyFSCIFrame(event)
 
 
-class L2CAPCBErrorIndicationObserver(Observer):
+class GAPGenericEventTxEntryAvailableIndicationObserver(Observer):
 
-    opGroup = Spec.L2CAPCBErrorIndicationFrame.opGroup
-    opCode = Spec.L2CAPCBErrorIndicationFrame.opCode
+    opGroup = Spec.GAPGenericEventTxEntryAvailableIndicationFrame.opGroup
+    opCode = Spec.GAPGenericEventTxEntryAvailableIndicationFrame.opCode
 
     @overrides(Observer)
     def observeEvent(self, framer, event, callback, sync_request):
@@ -4385,18 +4403,10 @@ class L2CAPCBErrorIndicationObserver(Observer):
         # Get payload
         fsciFrame = cast(event, POINTER(FsciFrame))
         data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
+        packet = Spec.GAPGenericEventTxEntryAvailableIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
         # Create frame object
-        frame = L2CAPCBErrorIndication()
-        curr = 0
-        frame.InformationIncluded = data.contents[curr]
-        curr += 1
-        if frame.InformationIncluded:
-            # Create sub-object container
-            LeCbError = L2CAPCBErrorIndication.LeCbError()
-            LeCbError.DeviceId = data.contents[curr]
-            curr += 1
-            LeCbError.Error = list_to_int(data.contents[curr:curr + 2])
-            curr += 2
+        frame = GAPGenericEventTxEntryAvailableIndication()
+        frame.DeviceId = packet.getParamValueAsNumber("DeviceId")
         framer.event_queue.put(frame) if sync_request else None
 
         if callback is not None:

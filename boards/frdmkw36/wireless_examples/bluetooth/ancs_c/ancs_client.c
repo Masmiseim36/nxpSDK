@@ -3,7 +3,7 @@
 * @{
 ********************************************************************************** */
 /*! *********************************************************************************
-* Copyright 2018-2019 NXP
+* Copyright 2018-2020 NXP
 *
 * \file ancs_client.c
 *
@@ -72,6 +72,7 @@
 #define mCharReadBufferLength_c                 (13U)           /* length of the buffer */
 #define mInitialTime_c                          (1451606400U)   /* initial timestamp - 01/01/2016 00:00:00 GMT */
 
+#define mPhoneAllowNotificationsInterval_c      (3U)            /* time interval until the user presses the Allow Notifications button*/
 #define mMaxDisplayNotifications_c              (16U)           /* The maximum number of notifications the application is
                                                                  * capable of displaying and managing. This will impact memory usage. */
 #define mMaxNotifAppNameDisplayLength_c         (40U)           /* The maximum number of characters to use to display the name of the associated application obtained from the server. */
@@ -85,7 +86,12 @@
 #define mAppEvt_GattProcError_c                 (5U)
 #define mAppEvt_AncsNsNotificationReceived_c    (6U)
 #define mAppEvt_AncsDsNotificationReceived_c    (7U)
-
+#define mAppIdentifierReservedSpace_c           (40U)           /* 40 bytes reserved space for the app identifier */
+#define mAncsNotifUidFieldLengthOffset_c        (1U)            /* notification Uid field length offset*/
+#define mAncsNotifAttrIdAppIdentifierOffset_c   (5U)            /* notification attribute id App identifier offset */
+#define mAncsAppIdOffset_c                      (1U)            /* app id offset */
+#define mNullTerminatorOffset_c                 (1U)
+#define mAncsMaxWriteCCCDProcedures_c           (2U)            /* number of write procedures after discovery */
 /************************************************************************************
 *************************************************************************************
 * Private type definitions
@@ -140,7 +146,7 @@ typedef struct appPeerInfo_tag
 /*! Structure type holding information about the notifications displayed on the ANCS Client. */
 typedef struct notifInfo_tag
 {
-    bool_t          slotUsed;       /*!< Boolean signaling if the slot is in use or not. */
+    bool_t          slotUsed;       /*!< Boolean signalling if the slot is in use or not. */
     ancsEventFlag_t notifFlags;     /*!< 0x01 = Silent = S
                                      *   0x02 = Important = I
                                      *   0x04 = Pre Existing = E
@@ -151,6 +157,11 @@ typedef struct notifInfo_tag
     uint32_t        notifUid;       /*!< Notification unique identifier. Should be displayed as is. */
     bool_t          appNameValid;   /*!< Application name has been obtained from the ANCS Server and is valid. */
     uint8_t         appName[mMaxNotifAppNameDisplayLength_c];   /*!< Application displayed name. */
+    bool_t          needGetNotifAttribute;   /*!< This is a new notification for which Notification Attribute should be obtained */
+    bool_t          needGetAppAttribute;    /*!< This is a new notification for which App Attribute should be obtained */
+    uint16_t        appIdLength;    /* Needed for getting App Attribute from server */
+    uint8_t         *pAppId;        /* Needed for getting App Attribute from server */
+
 } notifInfo_t;
 
 /*! Structure containing the OTAP Server functional data. */
@@ -237,6 +248,7 @@ static tmrTimerID_t     mAdvTimerId;
 static tmrTimerID_t     mCTSTickTimerId;
 static tmrTimerID_t     mRTUSReferenceUpdateTimerId;
 static tmrTimerID_t     mBatteryMeasurementTimerId;
+static tmrTimerID_t     mAllowNotificationsTimerId;
 
 /* Buffer used for Service Discovery */
 static gattService_t            *mpServiceDiscoveryBuffer = NULL;
@@ -267,6 +279,12 @@ static ancsClientAppData_t      ancsClientData;
 
     static uint32_t localTime = mInitialTime_c;
 #endif
+
+static uint8_t mFirstRunningBeforeReconnect;
+
+static uint8_t mReceivedNotificationsAndNeedToPrint;
+static uint8_t mGetNotifOrAppAttribute;
+static bool_t mCanSendToServer;
 
 
 /************************************************************************************
@@ -363,6 +381,7 @@ static void AdvertisingTimerCallback(void *pParam);
 static void BatteryMeasurementTimerCallback(void *pParam);
 static void CTSTickTimerCallback(void *pParam);
 static void RTUSReferenceUpdateTimerCallback(void *pParam);
+static void AllowNotificationsTimerCallback(void *pParam);
 
 static void BleApp_Advertise(void);
 
@@ -376,6 +395,8 @@ static void AncsClient_ProcessDsNotification(deviceId_t deviceId, uint8_t *pDsDa
 static void AncsClient_DisplayNotifications(void);
 static void AncsClient_SendCommandToAncsServer(deviceId_t ancsServerDevId, void *pCommand, uint16_t cmdLength);
 
+static bool_t AncsClient_CheckNeedGetNotifOrAppAttribute(void);
+static void AncsClient_SendGetNotificationOrApplicationAttribute(void);
 /************************************************************************************
 *************************************************************************************
 * Public functions
@@ -569,6 +590,7 @@ static void BleApp_Config(void)
     mBatteryMeasurementTimerId = TMR_AllocateTimer();
     mCTSTickTimerId = TMR_AllocateTimer();
     mRTUSReferenceUpdateTimerId = TMR_AllocateTimer();
+    mAllowNotificationsTimerId  = TMR_AllocateTimer();
 
     /* Start local time tick timer */
     (void)TMR_StartLowPowerTimer(mCTSTickTimerId, gTmrLowPowerIntervalMillisTimer_c,
@@ -715,10 +737,13 @@ static void BleApp_ConnectionCallback(deviceId_t peerDeviceId, gapConnectionEven
 #if gAppUseBonding_d
             mSendDataAfterEncStart = FALSE;
 
-            if ((gBleSuccess_c == Gap_CheckIfBonded(peerDeviceId, &mPeerInformation.isBonded)) &&
+            if ((gBleSuccess_c == Gap_CheckIfBonded(peerDeviceId, &mPeerInformation.isBonded, NULL)) &&
                 (TRUE == mPeerInformation.isBonded))
             {
                 mSendDataAfterEncStart = TRUE;
+                Gap_LoadCustomPeerInformation(peerDeviceId, (void*) &mPeerInformation.customInfo, 0, sizeof (appCustomInfo_t));
+                /* Reconnect after reset */
+                mFirstRunningBeforeReconnect = mAncsMaxWriteCCCDProcedures_c;
             }
 #endif
 
@@ -746,12 +771,22 @@ static void BleApp_ConnectionCallback(deviceId_t peerDeviceId, gapConnectionEven
         {
             mPeerInformation.deviceId = gInvalidDeviceId_c;
             mPeerInformation.appState = mAppIdle_c;
+            mPeerInformation.isBonded = FALSE;
+            mPeerInformation.customInfo.ancsClientConfig.hService = gGattDbInvalidHandle_d;
+            mPeerInformation.customInfo.ancsClientConfig.hNotificationSource = gGattDbInvalidHandle_d;
+            mPeerInformation.customInfo.ancsClientConfig.hNotificationSourceCccd = gGattDbInvalidHandle_d;
+            mPeerInformation.customInfo.ancsClientConfig.hControlPoint = gGattDbInvalidHandle_d;
+            mPeerInformation.customInfo.ancsClientConfig.hDataSource = gGattDbInvalidHandle_d;
+            mPeerInformation.customInfo.ancsClientConfig.hDataSourceCccd = gGattDbInvalidHandle_d;
 
-            /* Reset Service Discovery to be sure*/
+            /* Reset Service Discovery to be sure */
             BleServDisc_Stop(peerDeviceId);
 
             /* Stop battery measurements */
             (void)TMR_StopTimer(mBatteryMeasurementTimerId);
+
+            /* Stop the timer needed to wait for the user to press the Allow Notifications button */
+            (void)TMR_StopTimer(mAllowNotificationsTimerId);
 
             /* Notify application */
             AncsClient_HandleDisconnectionEvent(peerDeviceId);
@@ -766,6 +801,9 @@ static void BleApp_ConnectionCallback(deviceId_t peerDeviceId, gapConnectionEven
             (void)Cts_Unsubscribe();
             (void)Ndcs_Unsubscribe();
             (void)Rtus_Unsubscribe();
+
+            /* Restart advertising */
+            BleApp_Start();
         }
         break;
 
@@ -911,6 +949,34 @@ static void BleApp_ConnectionCallback(deviceId_t peerDeviceId, gapConnectionEven
         }
         break;
 #endif /* gAppUsePairing_d */
+
+        case gConnEvtParameterUpdateComplete_c:
+        {
+            if (pConnectionEvent->eventData.connectionUpdateComplete.status == gBleSuccess_c)
+            {
+                shell_write("\r\nConnection parameters successfully updated!\r\n");
+            }
+            else
+            {
+                shell_write("\r\nAn error occurred while updating the connection parameters!\r\n");
+            }
+        }
+        break;
+
+        case gConnEvtLeDataLengthChanged_c:
+        {
+            shell_write("\r\nData length changed:");
+            shell_write("\r\n MaxTxOctets: ");
+            shell_writeDec((uint32_t)pConnectionEvent->eventData.leDataLengthChanged.maxTxOctets);
+            shell_write("\r\n MaxTxTime: ");
+            shell_writeDec((uint32_t)pConnectionEvent->eventData.leDataLengthChanged.maxTxTime);
+            shell_write("\r\n MaxRxOctets: ");
+            shell_writeDec((uint32_t)pConnectionEvent->eventData.leDataLengthChanged.maxRxOctets);
+            shell_write("\r\n MaxRxTime: ");
+            shell_writeDec((uint32_t)pConnectionEvent->eventData.leDataLengthChanged.maxRxTime);
+            shell_write("\r\n");
+        }
+        break;
 
         default:
         {
@@ -1133,43 +1199,52 @@ static void BleApp_GattClientCallback(
     if (procedureResult == gGattProcError_c)
     {
         attErrorCode_t attError = (attErrorCode_t)((uint8_t)error);
+        uint16_t mask = 0xFF00U;
+        uint16_t receivedStatusBase = error;
+        receivedStatusBase &= mask;
 
-        if (attError == gAttErrCodeInsufficientEncryption_c         ||
+        if(receivedStatusBase == gAttStatusBase_c)
+        {
+            if (attError == gAttErrCodeInsufficientEncryption_c         ||
             attError == gAttErrCodeInsufficientEncryptionKeySize_c  ||
             attError == gAttErrCodeInsufficientAuthorization_c      ||
             attError == gAttErrCodeInsufficientAuthentication_c)
-        {
+
+            {
 #if gAppUsePairing_d && gAppUseBonding_d
             bool_t isBonded = FALSE;
 #endif /* gAppUsePairing_d && gAppUseBonding_d */
 
-            shell_write("\r\nGATT Procedure Security Error:");
-            shell_write(" 0x");
-            shell_writeHex((uint8_t *) & (attError), 1);
-            shell_write("\r\n");
+                shell_write("\r\nGATT Procedure Security Error:");
+                shell_write(" 0x");
+                shell_writeHex((uint8_t *) & (attError), 1);
+                shell_write("\r\n");
 
 #if gAppUsePairing_d
 #if gAppUseBonding_d
 
-            /* Check if the devices are bonded and if this is true than the bond may have
-             * been lost on the peer device or the security properties may not be sufficient.
-             * In this case try to restart pairing and bonding. */
-            if ((gBleSuccess_c == Gap_CheckIfBonded(serverDeviceId, &isBonded)) &&
-                (TRUE == isBonded))
+                /* Check if the devices are bonded and if this is true than the bond may have
+                 * been lost on the peer device or the security properties may not be sufficient.
+                 * In this case try to restart pairing and bonding. */
+                if ((gBleSuccess_c == Gap_CheckIfBonded(serverDeviceId, &isBonded, NULL)) &&
+                    (TRUE == isBonded))
 #endif /* gAppUseBonding_d */
-            {
-                (void)Gap_SendSlaveSecurityRequest(serverDeviceId, &gPairingParameters);
-            }
+                {
+                    (void)Gap_SendSlaveSecurityRequest(serverDeviceId, &gPairingParameters);
+                }
 
 #endif /* gAppUsePairing_d */
+            }
         }
-
         else
         {
-            shell_write("\r\nGATT Procedure Error:");
-            shell_write(" 0x");
-            shell_writeHex((uint8_t *) & (attError), 1);
-            shell_write("\r\n");
+            if(receivedStatusBase == gGattStatusBase_c)
+            {
+                shell_write("\r\nGATT Procedure Error:");
+                shell_write(" 0x");
+                shell_writeHex((uint8_t *) & (attError), 1);
+                shell_write("\r\n");
+            }
         }
 
         BleApp_StateMachineHandler(serverDeviceId, mAppEvt_GattProcError_c);
@@ -1184,7 +1259,7 @@ static void BleApp_GattClientCallback(
             }
             break;
 
-            case gGattProcDiscoverAllPrimaryServices_c:         /* Fallthrough */
+            case gGattProcDiscoverAllPrimaryServices_c:         /* Fall-through */
             case gGattProcWriteCharacteristicDescriptor_c:
                 break;
 
@@ -1304,22 +1379,19 @@ static void BleApp_AttributeNotified
     uint16_t    length
 )
 {
-    if (mPeerInformation.appState == mAppRunning_c)
+    if (handle == mPeerInformation.customInfo.ancsClientConfig.hNotificationSource)
     {
-        if (handle == mPeerInformation.customInfo.ancsClientConfig.hNotificationSource)
-        {
-            AncsClient_ProcessNsNotification(deviceId, pValue, length);
-            BleApp_StateMachineHandler(deviceId, mAppEvt_AncsNsNotificationReceived_c);
-        }
-        else if (handle == mPeerInformation.customInfo.ancsClientConfig.hDataSource)
-        {
-            AncsClient_ProcessDsNotification(deviceId, pValue, length);
-            BleApp_StateMachineHandler(deviceId, mAppEvt_AncsDsNotificationReceived_c);
-        }
-        else
-        {
-            ; /* For MISRA compliance */
-        }
+        AncsClient_ProcessNsNotification(deviceId, pValue, length);
+        BleApp_StateMachineHandler(deviceId, mAppEvt_AncsNsNotificationReceived_c);
+    }
+    else if (handle == mPeerInformation.customInfo.ancsClientConfig.hDataSource)
+    {
+        AncsClient_ProcessDsNotification(deviceId, pValue, length);
+        BleApp_StateMachineHandler(deviceId, mAppEvt_AncsDsNotificationReceived_c);
+    }
+    else
+    {
+        ; /* For MISRA compliance */
     }
 }
 
@@ -1368,7 +1440,12 @@ static void BleApp_ServiceDiscoveryCompleted(void)
 
     if (0U != mPeerInformation.customInfo.ancsClientConfig.hNotificationSourceCccd)
     {
-        mpDescProcBuffer = MEM_BufferAlloc(sizeof(gattAttribute_t) + 23U);
+        mPeerInformation.appState = mAppNsDescriptorSetup_c;
+        
+        if (NULL == mpDescProcBuffer)
+        {
+            mpDescProcBuffer = MEM_BufferAlloc(sizeof(gattAttribute_t) + gAttDefaultMtu_c);
+        }
         /* Set notification bit for a CCCD descriptor. */
         uint16_t value = gCccdNotification_c;
 
@@ -1387,8 +1464,8 @@ static void BleApp_ServiceDiscoveryCompleted(void)
             mpDescProcBuffer->paValue = (uint8_t *)&value;
             (void)GattClient_WriteCharacteristicDescriptor(mPeerInformation.deviceId, mpDescProcBuffer, sizeof(uint16_t),
                     (uint8_t *)&value);
-            shell_write("\r\nWriting ANCS Notification Source CCCD...\r\n");
         }
+        shell_write("\r\nWriting ANCS Notification Source CCCD...\r\n");
     }
     else
     {
@@ -1413,16 +1490,17 @@ static void BleApp_ServiceDiscoveryCompleted(void)
 
 static void BleApp_StateMachineHandlerExchangeMtu(deviceId_t peerDeviceId, uint8_t event)
 {
-    if (event == mAppEvt_GattProcComplete_c)
+    bool_t reconnected = !((mPeerInformation.customInfo.ancsClientConfig.hNotificationSource == gGattDbInvalidHandle_d)        ||
+                           (mPeerInformation.customInfo.ancsClientConfig.hNotificationSourceCccd == gGattDbInvalidHandle_d)    ||
+                           (mPeerInformation.customInfo.ancsClientConfig.hControlPoint == gGattDbInvalidHandle_d)              ||
+                           (mPeerInformation.customInfo.ancsClientConfig.hDataSource == gGattDbInvalidHandle_d)                ||
+                           (mPeerInformation.customInfo.ancsClientConfig.hDataSourceCccd == gGattDbInvalidHandle_d) );
+    if ( (event == mAppEvt_PairingComplete_c && !reconnected)
+               || (event == mAppEvt_GattProcComplete_c && reconnected) )
     {
         /* Check if required service characteristic discoveries by the client app have been done
          * and change the client application state accordingly. */
-        if ((mPeerInformation.customInfo.ancsClientConfig.hNotificationSource == gGattDbInvalidHandle_d)        ||
-            (mPeerInformation.customInfo.ancsClientConfig.hNotificationSourceCccd == gGattDbInvalidHandle_d)    ||
-            (mPeerInformation.customInfo.ancsClientConfig.hControlPoint == gGattDbInvalidHandle_d)              ||
-            (mPeerInformation.customInfo.ancsClientConfig.hDataSource == gGattDbInvalidHandle_d)                ||
-            (mPeerInformation.customInfo.ancsClientConfig.hDataSourceCccd == gGattDbInvalidHandle_d)
-           )
+        if ( !reconnected )
         {
             /* Allocate memory for Service Discovery */
             mpServiceDiscoveryBuffer = MEM_BufferAlloc(sizeof(gattService_t) * gMaxServicesCount_d);
@@ -1453,9 +1531,9 @@ static void BleApp_StateMachineHandlerExchangeMtu(deviceId_t peerDeviceId, uint8
 
             if (NULL == mpDescProcBuffer)
             {
-                panic(0, 0, 0, 0);
+                mpDescProcBuffer = MEM_BufferAlloc(sizeof(gattAttribute_t) + gAttDefaultMtu_c);
             }
-            else
+            if (NULL != mpDescProcBuffer)
             {
                 /* Moving to the ANCS Notification Source Descriptor Setup State */
                 mPeerInformation.appState = mAppNsDescriptorSetup_c;
@@ -1661,8 +1739,9 @@ void BleApp_StateMachineHandler(deviceId_t peerDeviceId, uint8_t event)
             if (event == mAppEvt_PeerConnected_c)
             {
                 /* Moving to Exchange MTU State */
+                mCanSendToServer = FALSE; /* After reconnect the client can not send to server before both NS and DS descriptors are written */
                 mPeerInformation.appState = mAppExchangeMtu_c;
-                (void)GattClient_ExchangeMtu(peerDeviceId);
+                (void)GattClient_ExchangeMtu(peerDeviceId, gAttMaxMtu_c);
             }
         }
         break;
@@ -1701,6 +1780,15 @@ void BleApp_StateMachineHandler(deviceId_t peerDeviceId, uint8_t event)
                     mPeerInformation.appState = mAppRunning_c;
 
                     shell_write("\r\nANCS Data Source CCCD written successfully.\r\n");
+                    mCanSendToServer = TRUE;
+
+                    AncsClient_SendGetNotificationOrApplicationAttribute();
+                    if(mFirstRunningBeforeReconnect == 0U)
+                    {
+                        mFirstRunningBeforeReconnect = 1U;
+                        (void)TMR_StartTimer(mAllowNotificationsTimerId, gTmrLowPowerIntervalMillisTimer_c,
+                                                 TmrSeconds(mPhoneAllowNotificationsInterval_c), AllowNotificationsTimerCallback, NULL);
+                            }
                 }
             }
             else if (event == mAppEvt_GattProcError_c)
@@ -1711,7 +1799,6 @@ void BleApp_StateMachineHandler(deviceId_t peerDeviceId, uint8_t event)
             {
                 ; /* Other events are not handled in this state */
             }
-
             break;
         }
 
@@ -1719,18 +1806,41 @@ void BleApp_StateMachineHandler(deviceId_t peerDeviceId, uint8_t event)
         {
             if (event == mAppEvt_GattProcComplete_c)
             {
-                /* Write data in NVM */
-                (void)Gap_SaveCustomPeerInformation(mPeerInformation.deviceId,
-                                                    (void *) &mPeerInformation.customInfo, 0,
-                                                    sizeof(appCustomInfo_t));
+                if(mFirstRunningBeforeReconnect < mAncsMaxWriteCCCDProcedures_c)
+                {
+                    mFirstRunningBeforeReconnect++;
+                    /* After the unsubscribe there is the need to subscribe to the NS characteristic again */
+                    uint16_t value = gCccdNotification_c;
+                    if (NULL == mpDescProcBuffer)
+                    {
+                        panic(0, 0, 0, 0);
+                    }
+                    else
+                    {
+                        /* Enable notifications for the ANCS Notification Source characteristic. */
+                        mpDescProcBuffer->handle = mPeerInformation.customInfo.ancsClientConfig.hNotificationSourceCccd;
+                        mpDescProcBuffer->uuid.uuid16 = gBleSig_CCCD_d;
+                        (void)GattClient_WriteCharacteristicDescriptor(peerDeviceId, mpDescProcBuffer, sizeof(uint16_t), (uint8_t *)&value);
+                    }
+
+                    (void)TMR_StopTimer(mAllowNotificationsTimerId);
+                }
+                else
+                {
+                    /* Write data in NVM */
+                    (void)Gap_SaveCustomPeerInformation(mPeerInformation.deviceId,
+                        (void *) &mPeerInformation.customInfo, 0, sizeof(appCustomInfo_t));
+                }
             }
             else if (event == mAppEvt_AncsNsNotificationReceived_c)
             {
-                AncsClient_DisplayNotifications();
+                if(mReceivedNotificationsAndNeedToPrint == 0)
+                    AncsClient_DisplayNotifications();
             }
             else if (event == mAppEvt_AncsDsNotificationReceived_c)
             {
-                AncsClient_DisplayNotifications();
+                if(mReceivedNotificationsAndNeedToPrint == 0)
+                    AncsClient_DisplayNotifications();
             }
             else
             {
@@ -1794,6 +1904,12 @@ static void AncsClient_ProcessNsNotification
     uint16_t     nsDataLength
 )
 {
+    /* Check if this is the first notification after a previous print and keep this in memory */
+    if(mReceivedNotificationsAndNeedToPrint == 0U)
+    {
+        mReceivedNotificationsAndNeedToPrint = 1U;
+    }
+
     pPayloadPacketTemp_t pPayloadPacketTemp;
     pPayloadPacketTemp.pNsDataTemp = pNsData;
     ancsNsPacket_t     *pNsPacket = pPayloadPacketTemp.pNsPacketTemp;
@@ -1909,17 +2025,19 @@ static void AncsClient_ProcessNsNotification
             }
         }
 
-        if (getNotificationAttributes == TRUE)
+         if (getNotificationAttributes == TRUE)
+         {
+            /* Mark that this is a new notification and there is the need to get more info for it */
+            ancsClientData.notifications[notifUidIndex].needGetNotifAttribute = TRUE;
+            if(mCanSendToServer == TRUE)
+            {
+                AncsClient_SendGetNotificationOrApplicationAttribute();
+            }
+        }
+        else
         {
-            /* Prepare and send a Get Notification Attributes command requesting the Application ID */
-            uint8_t ancsGetNotifAttrCmd[gAncsCmdIdFieldLength_c + gAncsNotifUidFieldLength_c + gAncsAttrIdFieldLength_c] = {0};
-
-            ancsGetNotifAttrCmd[0] = (uint8_t)gAncsCmdIdGetNotificationAttributes_c;
-            FLib_MemCpy(&(ancsGetNotifAttrCmd[1]),
-                        (uint8_t *)(&(nsEvent.notifUid)),
-                        gAncsNotifUidFieldLength_c);
-            ancsGetNotifAttrCmd[5] = (uint8_t)gAncsNotifAttrIdAppIdentifier_c;
-            AncsClient_SendCommandToAncsServer(deviceId, ancsGetNotifAttrCmd, (uint16_t)sizeof(ancsGetNotifAttrCmd));
+            /* There is just an update of an existing notification */
+            AncsClient_DisplayNotifications();
         }
     }
     else
@@ -1969,6 +2087,7 @@ static void AncsClient_SendCommandToAncsServer
     }
 }
 
+
 /*! *********************************************************************************
 * \brief    Handles BLE notification attributes from the ANCS Data Source Characteristic
 *           on the ANCS Server.
@@ -2011,6 +2130,9 @@ static void AncsClient_ProcessDsNotifAttributes
          * Otherwise just ignore the message, the corresponding notification must have been deleted. */
         if (notifUidIndex < mMaxDisplayNotifications_c)
         {
+            /* Mark that this notification does not need to send get notification attribute */
+            ancsClientData.notifications[notifUidIndex].needGetNotifAttribute = FALSE;
+
             uint16_t    appIdLength = 0;
             uint8_t    *pAppId      = NULL;
 
@@ -2089,23 +2211,10 @@ static void AncsClient_ProcessDsNotifAttributes
                 /* Prepare and send a Get Application Attributes command requesting the Application ID */
                 if (appIdLength > 0U)
                 {
-                    uint8_t     ancsGetAppAttrCmd[gAncsCmdIdFieldLength_c + gAncsAttrIdFieldLength_c + 40U] = {0}; /* 40 bytes reserved space for the app identifier */
-                    uint16_t    cmdLength = (uint16_t)(gAncsCmdIdFieldLength_c + appIdLength + 1U + gAncsAttrIdFieldLength_c); /* +1 for the NULL terminated app ID */
-
-                    if ((cmdLength) <= sizeof(ancsGetAppAttrCmd))
-                    {
-                        ancsGetAppAttrCmd[0] = (uint8_t)gAncsCmdIdGetAppAttributes_c;
-                        FLib_MemCpy(&(ancsGetAppAttrCmd[1]),
-                                    pAppId,
-                                    appIdLength);
-                        ancsGetAppAttrCmd[gAncsCmdIdFieldLength_c + appIdLength] = 0x00; /* NULL Terminate the App Id string */
-                        ancsGetAppAttrCmd[gAncsCmdIdFieldLength_c + appIdLength + 1U] = (uint8_t)gAncsAppAttrIdDisplayName_c;
-                        AncsClient_SendCommandToAncsServer(deviceId, ancsGetAppAttrCmd, cmdLength);
-                    }
-                    else
-                    {
-                        shell_write("\r\nWarning: Could not send a Get App Attributes Command, the command buffer is not large enough!\r\n");
-                    }
+                    ancsClientData.notifications[notifUidIndex].needGetAppAttribute = TRUE;
+                    ancsClientData.notifications[notifUidIndex].appIdLength = appIdLength;
+                    ancsClientData.notifications[notifUidIndex].pAppId = pAppId;
+                    AncsClient_SendGetNotificationOrApplicationAttribute();
                 }
             }
         }
@@ -2129,6 +2238,7 @@ static void AncsClient_ProcessDsNotifAppInfo(uint8_t     *pDsData,
     uint32_t    i;
     uint16_t    rcvdAppIdLength = 0U;
     uint8_t    *pRcvdAppId      = NULL;
+    mCanSendToServer = TRUE;
 
     if (dsDataLength < gAncsCmdIdFieldLength_c)
     {
@@ -2241,6 +2351,9 @@ static void AncsClient_ProcessDsNotifAppInfo(uint8_t     *pDsData,
 
                             ancsClientData.notifications[i].appNameValid = TRUE;
                             ancsClientData.notificationDataChanged = TRUE;
+
+                            /* Mark that there is not the need to get App Attribute for this index any more */
+                            ancsClientData.notifications[i].needGetAppAttribute = FALSE;
                         }
                         else
                         {
@@ -2249,6 +2362,7 @@ static void AncsClient_ProcessDsNotifAppInfo(uint8_t     *pDsData,
                             shell_writeHex((uint8_t *) & (appAttrId), 1);
                             shell_write("\r\n");
                         }
+
                     } /* while the end of the attributes was not reached */
 
                     if (dsDataIdx < dsDataLength)
@@ -2258,7 +2372,20 @@ static void AncsClient_ProcessDsNotifAppInfo(uint8_t     *pDsData,
                     }
 
                 } /* if notification slot used and app name is not valid */
-            } /* for i over the notifications table */
+            }
+
+            /* index of the first notification for which there should be sent a get Notif/App Attribute to the server */
+            uint8_t index = AncsClient_CheckNeedGetNotifOrAppAttribute();
+            if(index < mMaxDisplayNotifications_c)
+            {
+                AncsClient_SendGetNotificationOrApplicationAttribute();
+            }
+            else
+            {
+                /* If there is no other notification for which there should be
+                   Notif/App Attributes received, all the notifications should be printed*/
+                AncsClient_DisplayNotifications();
+            }
         }
     }
 }
@@ -2308,13 +2435,17 @@ static void AncsClient_ProcessDsNotification(deviceId_t   deviceId,
 
 /*! *********************************************************************************
 * \brief        Formats and displays information from the notifications
-*               table if the flag signaling changes is set.
+*               table if the flag signalling changes is set.
 *
 ********************************************************************************** */
 static void AncsClient_DisplayNotifications(void)
 {
+    /* There is no other notification for which there should be more notification attribute requested from the server */
+    mReceivedNotificationsAndNeedToPrint = 0U;
+    mCanSendToServer = TRUE;
     if (ancsClientData.notificationDataChanged == TRUE)
     {
+        shell_write("\033[2J\033[H");
         uint32_t n_idx;
         uint32_t c_idx;
 
@@ -2473,6 +2604,107 @@ static void BatteryMeasurementTimerCallback(void *pParam)
     (void)Bas_RecordBatteryMeasurement(&basServiceConfig);
 }
 
+
+/*! *********************************************************************************
+* \brief        Handles the timer used to allow the user press the Allow
+*               Notifications button callback.
+*
+* \param[in]    pParam        Callback parameters.
+********************************************************************************** */
+static void AllowNotificationsTimerCallback(void *pParam)
+{
+    /*Unsubscribe from the NS characteristic */
+    uint16_t value = 0;
+    if (NULL == mpDescProcBuffer)
+    {
+        panic(0, 0, 0, 0);
+    }
+    else
+    {
+        /* Enable notifications for the ANCS Notification Source characteristic. */
+        mpDescProcBuffer->handle = mPeerInformation.customInfo.ancsClientConfig.hNotificationSourceCccd;
+        mpDescProcBuffer->uuid.uuid16 = gBleSig_CCCD_d;
+        (void)GattClient_WriteCharacteristicDescriptor(mPeerInformation.deviceId, mpDescProcBuffer, sizeof(uint16_t),
+        (uint8_t *)&value);
+    }
+}
+
+/*! *********************************************************************************
+* \brief        Checks if there are notifications for which there should be sent
+*               a get app attribute to the server and returns the first notification
+*               index with this need or mMaxDisplayNotifications_c if there is none
+********************************************************************************** */
+static bool_t AncsClient_CheckNeedGetNotifOrAppAttribute(void)
+{
+  int notifUidIndex = 0;
+  while(notifUidIndex < mMaxDisplayNotifications_c)
+  {
+    if(ancsClientData.notifications[notifUidIndex].needGetNotifAttribute == TRUE)
+    {
+        mGetNotifOrAppAttribute = 0;
+        return notifUidIndex;
+    }
+    else
+    {
+        if(ancsClientData.notifications[notifUidIndex].needGetAppAttribute == TRUE)
+        {
+            mGetNotifOrAppAttribute = 1U;
+            return notifUidIndex;
+        }
+    }
+    notifUidIndex++;
+  }
+  return mMaxDisplayNotifications_c;
+}
+
+/*! *********************************************************************************
+* \brief        Searches for the first Notification that there is the need to send Get
+                Notification Attribute for and sends the request to the server
+********************************************************************************** */
+static void AncsClient_SendGetNotificationOrApplicationAttribute(void)
+{
+    uint8_t index = AncsClient_CheckNeedGetNotifOrAppAttribute();
+    if(index < mMaxDisplayNotifications_c)
+    {
+        mCanSendToServer = FALSE;
+        if(mGetNotifOrAppAttribute == 0U)
+        {
+            /* Need to send Get Notif Attribute */
+            uint32_t notifUid = ancsClientData.notifications[index].notifUid;
+
+            /* Prepare and send a Get Notification Attributes command requesting the Application ID */
+            uint8_t ancsGetNotifAttrCmd[gAncsCmdIdFieldLength_c + gAncsNotifUidFieldLength_c + gAncsAttrIdFieldLength_c] = {0};
+
+            ancsGetNotifAttrCmd[0] = (uint8_t)gAncsCmdIdGetNotificationAttributes_c;
+            FLib_MemCpy(&(ancsGetNotifAttrCmd[mAncsNotifUidFieldLengthOffset_c]),
+                   (uint8_t *)(&(notifUid)),
+                     gAncsNotifUidFieldLength_c);
+            ancsGetNotifAttrCmd[mAncsNotifAttrIdAppIdentifierOffset_c] = (uint8_t)gAncsNotifAttrIdAppIdentifier_c;
+            AncsClient_SendCommandToAncsServer(mPeerInformation.deviceId, ancsGetNotifAttrCmd, (uint16_t)sizeof(ancsGetNotifAttrCmd));
+        }
+        else
+        {
+            /* Need to send Get App Attribute */
+            uint8_t     ancsGetAppAttrCmd[gAncsCmdIdFieldLength_c + gAncsAttrIdFieldLength_c + mAppIdentifierReservedSpace_c] = {0};
+            uint16_t    cmdLength = (uint16_t)(gAncsCmdIdFieldLength_c + ancsClientData.notifications[index].appIdLength + mNullTerminatorOffset_c + gAncsAttrIdFieldLength_c);
+
+            if ((cmdLength) <= sizeof(ancsGetAppAttrCmd))
+            {
+                ancsGetAppAttrCmd[0] = (uint8_t)gAncsCmdIdGetAppAttributes_c;
+                FLib_MemCpy(&(ancsGetAppAttrCmd[mAncsAppIdOffset_c]),
+                            ancsClientData.notifications[index].pAppId,
+                            ancsClientData.notifications[index].appIdLength);
+                ancsGetAppAttrCmd[gAncsCmdIdFieldLength_c + ancsClientData.notifications[index].appIdLength] = 0x00; /* NULL Terminate the App Id string */
+                ancsGetAppAttrCmd[gAncsCmdIdFieldLength_c + ancsClientData.notifications[index].appIdLength + mNullTerminatorOffset_c] = (uint8_t)gAncsAppAttrIdDisplayName_c;
+                AncsClient_SendCommandToAncsServer(mPeerInformation.deviceId, ancsGetAppAttrCmd, cmdLength);
+            }
+            else
+            {
+                shell_write("\r\nWarning: Could not send a Get App Attributes Command, the command buffer is not large enough!\r\n");
+            }
+        }
+    }
+}
 /*! *********************************************************************************
 * @}
 ********************************************************************************** */

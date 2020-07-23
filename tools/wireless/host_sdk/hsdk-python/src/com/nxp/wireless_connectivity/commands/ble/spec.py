@@ -1,6 +1,6 @@
 '''
 * Copyright 2014-2015 Freescale Semiconductor, Inc.
-* Copyright 2016-2019 NXP
+* Copyright 2016-2018 NXP
 * All rights reserved.
 *
 * SPDX-License-Identifier: BSD-3-Clause
@@ -54,6 +54,8 @@ class Spec(object):
         self.GATTServerRegisterHandlesForReadNotificationsRequestFrame = self.InitGATTServerRegisterHandlesForReadNotificationsRequest()
         self.GATTServerSendAttributeReadStatusRequestFrame = self.InitGATTServerSendAttributeReadStatusRequest()
         self.GATTServerRegisterUniqueHandlesForNotificationsRequestFrame = self.InitGATTServerRegisterUniqueHandlesForNotificationsRequest()
+        self.GATTServerUnregisterHandlesForWriteNotificationsRequestFrame = self.InitGATTServerUnregisterHandlesForWriteNotificationsRequest()
+        self.GATTServerUnregisterHandlesForReadNotificationsRequestFrame = self.InitGATTServerUnregisterHandlesForReadNotificationsRequest()
         self.GATTDBWriteAttributeRequestFrame = self.InitGATTDBWriteAttributeRequest()
         self.GATTDBReadAttributeRequestFrame = self.InitGATTDBReadAttributeRequest()
         self.GATTDBFindServiceHandleRequestFrame = self.InitGATTDBFindServiceHandleRequest()
@@ -122,7 +124,6 @@ class Spec(object):
         self.GAPUpdateConnectionParametersRequestFrame = self.InitGAPUpdateConnectionParametersRequest()
         self.GAPEnableUpdateConnectionParametersRequestFrame = self.InitGAPEnableUpdateConnectionParametersRequest()
         self.GapUpdateLeDataLengthRequestFrame = self.InitGapUpdateLeDataLengthRequest()
-        self.GAPControllerResetRequestFrame = self.InitGAPControllerResetRequest()
         self.GAPEnableHostPrivacyRequestFrame = self.InitGAPEnableHostPrivacyRequest()
         self.GAPEnableControllerPrivacyRequestFrame = self.InitGAPEnableControllerPrivacyRequest()
         self.GAPLeScRegeneratePublicKeyRequestFrame = self.InitGAPLeScRegeneratePublicKeyRequest()
@@ -153,8 +154,10 @@ class Spec(object):
         self.GAPPeriodicAdvCreateSyncRequestFrame = self.InitGAPPeriodicAdvCreateSyncRequest()
         self.GAPPeriodicAdvTerminateSyncRequestFrame = self.InitGAPPeriodicAdvTerminateSyncRequest()
         self.FSCICPUResetRequestFrame = self.InitFSCICPUResetRequest()
+        self.FSCIGetNumberOfFreeBuffersRequestFrame = self.InitFSCIGetNumberOfFreeBuffersRequest()
         self.FSCIAllowDeviceToSleepRequestFrame = self.InitFSCIAllowDeviceToSleepRequest()
         self.FSCIGetWakeupReasonRequestFrame = self.InitFSCIGetWakeupReasonRequest()
+        self.FSCIGetNumberOfFreeBuffersResponseFrame = self.InitFSCIGetNumberOfFreeBuffersResponse()
         self.FSCIAckIndicationFrame = self.InitFSCIAckIndication()
         self.FSCIErrorIndicationFrame = self.InitFSCIErrorIndication()
         self.FSCIAllowDeviceToSleepConfirmFrame = self.InitFSCIAllowDeviceToSleepConfirm()
@@ -259,7 +262,6 @@ class Spec(object):
         self.GAPConnectionEventLeScOobDataRequestIndicationFrame = self.InitGAPConnectionEventLeScOobDataRequestIndication()
         self.GAPConnectionEventLeScDisplayNumericValueIndicationFrame = self.InitGAPConnectionEventLeScDisplayNumericValueIndication()
         self.GAPConnectionEventLeScKeypressNotificationIndicationFrame = self.InitGAPConnectionEventLeScKeypressNotificationIndication()
-        self.GAPGenericEventControllerResetCompleteIndicationFrame = self.InitGAPGenericEventControllerResetCompleteIndication()
         self.GAPLeScPublicKeyRegeneratedIndicationFrame = self.InitGAPLeScPublicKeyRegeneratedIndication()
         self.GAPGenericEventLeScLocalOobDataIndicationFrame = self.InitGAPGenericEventLeScLocalOobDataIndication()
         self.GAPGenericEventHostPrivacyStateChangedIndicationFrame = self.InitGAPGenericEventHostPrivacyStateChangedIndication()
@@ -289,6 +291,7 @@ class Spec(object):
         self.GAPScanningEventPeriodicDeviceScannedIndicationFrame = self.InitGAPScanningEventPeriodicDeviceScannedIndication()
         self.GAPGenericEventPeriodicAdvCreateSyncCancelledIndicationFrame = self.InitGAPGenericEventPeriodicAdvCreateSyncCancelledIndication()
         self.GAPConnectionEventChannelSelectionAlgorithm2IndicationFrame = self.InitGAPConnectionEventChannelSelectionAlgorithm2Indication()
+        self.GAPGenericEventTxEntryAvailableIndicationFrame = self.InitGAPGenericEventTxEntryAvailableIndication()
 
 
     def InitL2CAPCBRegisterLeCbCallbacksRequest(self):
@@ -393,6 +396,8 @@ class Spec(object):
         cmdParams = []
         DeviceId = FsciParameter("DeviceId", 1)
         cmdParams.append(DeviceId)
+        Mtu = FsciParameter("Mtu", 2)
+        cmdParams.append(Mtu)
         return FsciFrameDescription(0x45, 0x08, cmdParams)
 
     def InitGATTClientDiscoverAllPrimaryServicesRequest(self):
@@ -621,6 +626,16 @@ class Spec(object):
         bRead = FsciParameter("bRead", 1)
         cmdParams.append(bRead)
         return FsciFrameDescription(0x45, 0x1F, cmdParams)
+
+    def InitGATTServerUnregisterHandlesForWriteNotificationsRequest(self):
+        cmdParams = []
+        # not generated, pickle() is used instead; see frames.py
+        return FsciFrameDescription(0x45, 0x20, cmdParams)
+
+    def InitGATTServerUnregisterHandlesForReadNotificationsRequest(self):
+        cmdParams = []
+        # not generated, pickle() is used instead; see frames.py
+        return FsciFrameDescription(0x45, 0x21, cmdParams)
 
     def InitGATTDBWriteAttributeRequest(self):
         cmdParams = []
@@ -1356,10 +1371,6 @@ class Spec(object):
         cmdParams.append(TxTime)
         return FsciFrameDescription(0x48, 0x33, cmdParams)
 
-    def InitGAPControllerResetRequest(self):
-        cmdParams = []
-        return FsciFrameDescription(0x48, 0x34, cmdParams)
-
     def InitGAPEnableHostPrivacyRequest(self):
         cmdParams = []
         Enable = FsciParameter("Enable", 1)
@@ -1608,9 +1619,14 @@ class Spec(object):
         cmdParams.append(SyncHandle)
         return FsciFrameDescription(0x48, 0x5B, cmdParams)
 
+
     def InitFSCICPUResetRequest(self):
         cmdParams = []
         return FsciFrameDescription(0xA3, 0x08, cmdParams)
+
+    def InitFSCIGetNumberOfFreeBuffersRequest(self):
+        cmdParams = []
+        return FsciFrameDescription(0xA3, 0x09, cmdParams)
 
     def InitFSCIAllowDeviceToSleepRequest(self):
         cmdParams = []
@@ -1625,6 +1641,12 @@ class Spec(object):
     def InitFSCIGetWakeupReasonRequest(self):
         cmdParams = []
         return FsciFrameDescription(0xA3, 0x72, cmdParams)
+
+    def InitFSCIGetNumberOfFreeBuffersResponse(self):
+        cmdParams = []
+        FreeBuffers = FsciParameter("FreeBuffers", 2)
+        cmdParams.append(FreeBuffers)
+        return FsciFrameDescription(0xA4, 0x09, cmdParams)
 
     def InitFSCIAckIndication(self):
         cmdParams = []
@@ -1653,6 +1675,7 @@ class Spec(object):
         WakeUpReason = FsciParameter("WakeUpReason", 1)
         cmdParams.append(WakeUpReason)
         return FsciFrameDescription(0xA4, 0x72, cmdParams)
+
 
     def InitL2CAPCBConfirm(self):
         cmdParams = []
@@ -1697,6 +1720,10 @@ class Spec(object):
         cmdParams.append(Packet)
         return FsciFrameDescription(0x42, 0x86, cmdParams)
 
+    def InitL2CAPCBErrorIndication(self):
+        cmdParams = []
+        # not generated, cursor based approach in observer; see events.py
+        return FsciFrameDescription(0x42, 0x87, cmdParams)
 
     def InitGATTConfirm(self):
         cmdParams = []
@@ -2060,6 +2087,8 @@ class Spec(object):
         cmdParams = []
         IsBonded = FsciParameter("IsBonded", 1)
         cmdParams.append(IsBonded)
+        NvmIndex = FsciParameter("NvmIndex", 1)
+        cmdParams.append(NvmIndex)
         return FsciFrameDescription(0x48, 0x86, cmdParams)
 
     def InitGAPGetBondedDevicesCountIndication(self):
@@ -2232,6 +2261,8 @@ class Spec(object):
         cmdParams.append(localRpaUsed)
         localRpa = FsciParameter("localRpa", 6, localRpaUsed)
         cmdParams.append(localRpa)
+        connectionRole = FsciParameter("connectionRole", 1)
+        cmdParams.append(connectionRole)
         return FsciFrameDescription(0x48, 0x9D, cmdParams)
 
     def InitGAPConnectionEventPairingRequestIndication(self):
@@ -2470,9 +2501,6 @@ class Spec(object):
         cmdParams.append(GapLeScKeypressNotificationParams_keypressNotifType)
         return FsciFrameDescription(0x48, 0xB3, cmdParams)
 
-    def InitGAPGenericEventControllerResetCompleteIndication(self):
-        cmdParams = []
-        return FsciFrameDescription(0x48, 0xB4, cmdParams)
 
     def InitGAPLeScPublicKeyRegeneratedIndication(self):
         cmdParams = []
@@ -2533,7 +2561,7 @@ class Spec(object):
         cmdParams.append(Channel)
         ConnEvCounter = FsciParameter("ConnEvCounter", 2)
         cmdParams.append(ConnEvCounter)
-        Status = FsciParameter("Status", 1)
+        Status = FsciParameter("Status", 2)
         cmdParams.append(Status)
         Timestamp = FsciParameter("Timestamp", 2)
         cmdParams.append(Timestamp)
@@ -2699,9 +2727,8 @@ class Spec(object):
         cmdParams.append(DeviceId)
         return FsciFrameDescription(0x48, 0xD1, cmdParams)
 
-
-    def InitL2CAPCBErrorIndication(self):
+    def InitGAPGenericEventTxEntryAvailableIndication(self):
         cmdParams = []
-        # not generated, cursor based approach in observer; see events.py
-        return FsciFrameDescription(0x42, 0x87, cmdParams)
-
+        DeviceId = FsciParameter("DeviceId", 1)
+        cmdParams.append(DeviceId)
+        return FsciFrameDescription(0x48, 0xD2, cmdParams)

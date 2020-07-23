@@ -1,0 +1,7 @@
+# No reason to byte code
+*.pyc
+
+# Documentation
+doc/
+
+!HSDK.dll

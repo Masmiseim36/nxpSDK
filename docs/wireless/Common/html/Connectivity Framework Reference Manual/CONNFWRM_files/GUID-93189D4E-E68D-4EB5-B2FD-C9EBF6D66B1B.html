@@ -69,8 +69,9 @@
         <div class="note note"><span class="notetitle">Note:</span> The exact time at which a callback is executed is actually greater than or equal to
             the requested value.</div>
 
-        <p class="p">The timer resolution is 1 ms, but it is recommended to use a multiple of 4 ms because
-            timeout values increase accuracy. This is due to internal integer calculation errors. </p>
+        <p class="p">The timer resolution is 1 ms, but it is recommended to use a multiple of 4
+            ms to reduce the loss of accuracy that may occur due to rounding errors in internal
+            integer calculations. </p>
 
         <p class="p">The implementation of the Timers Manager on Kinetis MCU-based platforms uses
             either FTM or TPM peripheral. On the QN908X platforms, the RTC free-running counter is

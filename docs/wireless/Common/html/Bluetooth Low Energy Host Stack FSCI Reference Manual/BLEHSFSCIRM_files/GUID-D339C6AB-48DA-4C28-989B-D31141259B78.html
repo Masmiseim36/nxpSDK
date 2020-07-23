@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="User sync request example"/>
+<meta name="abstract" content=""/>
+<meta name="description" content=""/>
+<meta name="DC.Relation" scheme="URI" content="GUID-4EBEC8C4-9634-46BD-939D-4B24A726A6C2.html"/>
+<meta name="prodname" content="MC56F825x"/>
+<meta name="version" content="6"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-D339C6AB-48DA-4C28-989B-D31141259B78"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>User sync request example</title>
+</head>
+<body id="GUID-D339C6AB-48DA-4C28-989B-D31141259B78">
+
+
+  <h1 class="title topictitle1">User sync request example</h1>
+
+  
+  <div class="body"><p class="shortdesc"/>
+
+    <p class="p">It is recommended for the user to access the Bluetooth LE API through sync
+            requests.</p>
+
+    <p class="p"><samp class="ph codeph">GATTDBDynamicAddCharacteristicDeclarationAndValue</samp> API is used as an example:</p>
+
+    <pre class="pre codeblock">def gattdb_dynamic_add_cdv(self, char_uuid, char_prop, maxval_len, initval, val_perm):
+        '''
+        Declare a characteristic and assign it a value.
+
+        @param char_uuid: UUID of the characteristic
+        @param char_prop: properties of the characteristic
+        @param maxval_len: maximum length of the value
+        @param initval: initial value
+        @param val_perm: access permissions on the value
+        @return: handle of the characteristic
+        '''        
+        ind = GATTDBDynamicAddCharacteristicDeclarationAndValue(
+            self.serial_port,
+            UuidType=UuidType.Uuid16Bits,
+            Uuid=char_uuid,
+            CharacteristicProperties=char_prop,
+            MaxValueLength=maxval_len,
+            InitialValueLength=len(initval),
+            InitialValue=initval,
+            ValueAccessPermissions=val_perm,
+            protocol=self.protocol
+        )
+</pre>
+
+    <p class="p">if <samp class="ph codeph">ind</samp> is None:</p>
+
+    <pre class="pre codeblock">            return self.gattdb_dynamic_add_cdv(char_uuid, char_prop, maxval_len, initval, val_perm)
+
+        print '\tCharacteristic Handle for UUID 0x%04X -&gt;' % char_uuid, ind.CharacteristicHandle
+        self.handles[char_uuid] = ind.CharacteristicHandle
+        return ind.CharacteristicHandle
+</pre>
+
+
+  </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-4EBEC8C4-9634-46BD-939D-4B24A726A6C2.html">Bluetooth LE Heart Rate Service use case</a></div>
+</div>
+</div>
+
+</body>
+</html>

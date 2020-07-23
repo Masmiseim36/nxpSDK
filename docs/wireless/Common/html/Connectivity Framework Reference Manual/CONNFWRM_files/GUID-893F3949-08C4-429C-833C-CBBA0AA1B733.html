@@ -29,12 +29,12 @@
         <p class="p">The Mobile Wireless Systems (MWS) Coexistence module was modelled after the Bluetooth
             Core v4.1 and is used to allow the coexistence of multiple wireless protocols (such as
             Bluetooth and ZigBee stacks) on the same MCU and/or protocols on different MCUs (such as
-            Bluetooth and WiFi).</p>
+            Bluetooth and Wi-Fi).</p>
 
-        <p class="p">The MWS functionality is not used for the QN908X MCU-based
-            systems because they have a hardware implementation of the coexistence module. The only
-            function used is MWS_CoexistanceEnable() and its only purpose is to enable the hardware
-            module and route the proper input and output signals. </p>
+        <p class="p">The MWS functionality is not used for the QN908X MCU-based systems. The QN9080 has
+            a hardware implementation of the coexistence module. The only function used is
+            MWS_CoexistanceEnable() and its only purpose is to enable the hardware module and route
+            the proper input and output signals. </p>
 
         <p class="p">This API was intended for use by the link layers of the protocol stacks, but higher
             layers can also control the access to the resources.</p>
@@ -60,11 +60,11 @@
                 
                 <thead class="thead" align="left">
                     <tr class="row">
-                        <th class="entry" valign="top" id="d38305e70">Pin name</th>
+                        <th class="entry" valign="top" id="d38448e70">Pin name</th>
 
-                        <th class="entry" valign="top" id="d38305e73">Direction</th>
+                        <th class="entry" valign="top" id="d38448e73">Direction</th>
 
-                        <th class="entry" valign="top" id="d38305e76">Description</th>
+                        <th class="entry" valign="top" id="d38448e76">Description</th>
 
                     </tr>
 
@@ -72,21 +72,21 @@
 
                 <tbody class="tbody">
                     <tr class="row">
-                        <td class="entry" valign="top" headers="d38305e70 ">RF_ACTIVE</td>
+                        <td class="entry" valign="top" headers="d38448e70 ">RF_ACTIVE</td>
 
-                        <td class="entry" valign="top" headers="d38305e73 ">Output</td>
+                        <td class="entry" valign="top" headers="d38448e73 ">Output</td>
 
-                        <td class="entry" valign="top" headers="d38305e76 ">Signals when the transceiver becomes active. The signal is active
+                        <td class="entry" valign="top" headers="d38448e76 ">Signals when the transceiver becomes active. The signal is active
                             high.</td>
 
                     </tr>
 
                     <tr class="row">
-                        <td class="entry" valign="top" headers="d38305e70 ">RF_STATUS_PRIO</td>
+                        <td class="entry" valign="top" headers="d38448e70 ">RF_STATUS_PRIO</td>
 
-                        <td class="entry" valign="top" headers="d38305e73 ">Output</td>
+                        <td class="entry" valign="top" headers="d38448e73 ">Output</td>
 
-                        <td class="entry" valign="top" headers="d38305e76 ">If a high-priority sequence is requested, the line will go high for
+                        <td class="entry" valign="top" headers="d38448e76 ">If a high-priority sequence is requested, the line will go high for
                             50us. If access is granted within 100 us, this line will consequently
                             signal the RF activity type: goes low for RX and stays high for TX. If a
                             low-priority sequence is requested, the line will only signal the RF
@@ -95,11 +95,11 @@
                     </tr>
 
                     <tr class="row">
-                        <td class="entry" valign="top" headers="d38305e70 ">RF_DENY</td>
+                        <td class="entry" valign="top" headers="d38448e70 ">RF_DENY</td>
 
-                        <td class="entry" valign="top" headers="d38305e73 ">Input</td>
+                        <td class="entry" valign="top" headers="d38448e73 ">Input</td>
 
-                        <td class="entry" valign="top" headers="d38305e76 ">Signals if the access to the medium is granted or not. The signal
+                        <td class="entry" valign="top" headers="d38448e76 ">Signals if the access to the medium is granted or not. The signal
                             logic is configurable by the software. Default is active high meaning
                             that a low level means access granted.</td>
 
@@ -122,11 +122,11 @@
                 
                 <thead class="thead" align="left">
                     <tr class="row">
-                        <th class="entry" valign="top" id="d38305e144">Pin name</th>
+                        <th class="entry" valign="top" id="d38448e144">Pin name</th>
 
-                        <th class="entry" valign="top" id="d38305e147">Direction</th>
+                        <th class="entry" valign="top" id="d38448e147">Direction</th>
 
-                        <th class="entry" valign="top" id="d38305e150">Description</th>
+                        <th class="entry" valign="top" id="d38448e150">Description</th>
 
                     </tr>
 
@@ -134,31 +134,31 @@
 
                 <tbody class="tbody">
                     <tr class="row">
-                        <td class="entry" valign="top" headers="d38305e144 ">RF_ACTIVE</td>
+                        <td class="entry" valign="top" headers="d38448e144 ">RF_ACTIVE</td>
 
-                        <td class="entry" valign="top" headers="d38305e147 ">Output</td>
+                        <td class="entry" valign="top" headers="d38448e147 ">Output</td>
 
-                        <td class="entry" valign="top" headers="d38305e150 ">Signals when the transceiver becomes active. The signal is active
+                        <td class="entry" valign="top" headers="d38448e150 ">Signals when the transceiver becomes active. The signal is active
                             high.</td>
 
                     </tr>
 
                     <tr class="row">
-                        <td class="entry" valign="top" headers="d38305e144 ">RF__PRIO</td>
+                        <td class="entry" valign="top" headers="d38448e144 ">RF__PRIO</td>
 
-                        <td class="entry" valign="top" headers="d38305e147 ">Output</td>
+                        <td class="entry" valign="top" headers="d38448e147 ">Output</td>
 
-                        <td class="entry" valign="top" headers="d38305e150 ">For a high-priority RF sequence, the line will go high. For a
+                        <td class="entry" valign="top" headers="d38448e150 ">For a high-priority RF sequence, the line will go high. For a
                             low-priority sequence, the line will go low.</td>
 
                     </tr>
 
                     <tr class="row">
-                        <td class="entry" valign="top" headers="d38305e144 ">RF_DENY</td>
+                        <td class="entry" valign="top" headers="d38448e144 ">RF_DENY</td>
 
-                        <td class="entry" valign="top" headers="d38305e147 ">Input</td>
+                        <td class="entry" valign="top" headers="d38448e147 ">Input</td>
 
-                        <td class="entry" valign="top" headers="d38305e150 ">Signals if the access to the medium is granted or not. The signal
+                        <td class="entry" valign="top" headers="d38448e150 ">Signals if the access to the medium is granted or not. The signal
                             logic is configurable by the software. Default is active high meaning
                             that a low level means access granted.</td>
 

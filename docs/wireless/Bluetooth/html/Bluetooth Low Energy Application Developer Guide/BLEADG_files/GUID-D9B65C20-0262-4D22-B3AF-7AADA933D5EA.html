@@ -28,27 +28,38 @@
 
     <div class="body">
         <p class="p">All the APIs referenced in this document are available in the <em class="ph i">Central and
-                Peripheral</em> libraries. For example, <strong class="ph b"><em class="ph i">ble_host_lib.a</em></strong> is a
-            full-featured library with complete support for both Central and Peripheral APIs, at GAP
-            level, as well as Client and Server APIs, at GATT level.</p>
+                Peripheral</em> libraries. The support for Bluetooth 5.0 Advertising Extensions comes
+            in separate host libraries, similarly distributed by GAP/GATT role support as the legacy
+            ones, as follows:</p>
+
+        <p class="p">For example, <strong class="ph b"><em class="ph i">llib_ble_5-0_host_cm0p_iar.a and
+                    lib_ble_5-0_AE_host_cm0p_iar.a, for iar projects, and
+                    lib_ble_5-0_host_cm0p_gcc.a and lib_ble_5-0_AE_host_cm0p_gcc.a </em></strong> for MCUX
+            projects is a full-featured library with complete support for both Central and
+            Peripheral APIs, at GAP level, as well as Client and Server APIs, at GATT level.</p>
 
         <p class="p">However, some applications may be targeted to memory-constrained devices and do not need
             the full support. In the interest of reducing code size and RAM utilization, two more
             libraries are provided:</p>
 
         <ul class="ul" id="GUID-D9B65C20-0262-4D22-B3AF-7AADA933D5EA__UL_EZL_Q15_1Y">
-            <li class="li"><strong class="ph b"><em class="ph i">ble_host_peripheral_lib.a</em></strong><ul class="ul" id="GUID-D9B65C20-0262-4D22-B3AF-7AADA933D5EA__UL_YZL_Q15_1Y">
-                    <li class="li">Supports only APIs for the <em class="ph i">GAP Peripheral</em> and <em class="ph i">GAP Broadcaster</em>
-                        roles</li>
+            <li class="li"><strong class="ph b">lib_ble_5-0_host_peripheral_cm0p_iar.a</strong>,
+                    <strong class="ph b">lib_ble_5-0_AE_host_peripheral_cm0p_iar.a
+                    lib_ble_5-0_host_peripheral_cm0p_gcc.a</strong>, and
+                    <strong class="ph b">lib_ble_5-0_AE_host_peripheral_cm0p_gcc.a</strong><ul class="ul" id="GUID-D9B65C20-0262-4D22-B3AF-7AADA933D5EA__UL_YZL_Q15_1Y">
+                    <li class="li">Supports only APIs for the <em class="ph i">GAP Peripheral</em> and <em class="ph i">GAP
+                            Broadcaster</em> roles</li>
 
                     <li class="li">Supports only APIs for the <em class="ph i">GATT Server</em> role</li>
 
                 </ul>
 </li>
 
-            <li class="li"><strong class="ph b"><em class="ph i">ble_host_central_lib.a</em></strong><ul class="ul" id="GUID-D9B65C20-0262-4D22-B3AF-7AADA933D5EA__UL_I1M_Q15_1Y">
-                    <li class="li">Supports only APIs for the <em class="ph i">GAP Central</em> and <em class="ph i">GAP Observer
-                        </em>roles</li>
+            <li class="li"><em class="ph i"><strong class="ph b">lib_ble_5-0_host_central_cm0p_iar.a and
+                        lib_ble_5-0_AE_host_central_cm0p_iar.a lib_ble_5-0_host_central_cm0p_gcc.a
+                        ,</strong> and <strong class="ph b">lib_ble_5-0_AE_host_central_cm0p_gcc.a</strong></em><ul class="ul" id="GUID-D9B65C20-0262-4D22-B3AF-7AADA933D5EA__UL_I1M_Q15_1Y">
+                    <li class="li">Supports only APIs for the <em class="ph i">GAP Central</em> and <em class="ph i">GAP
+                            Observer </em>roles</li>
 
                     <li class="li">Supports only APIs for the <em class="ph i">GATT Client</em> role</li>
 
@@ -57,9 +68,14 @@
 
         </ul>
 
-        <p class="p">If one attempts to use an API that is not supported (for instance, calling <em class="ph i">Gap_Connect
-            </em>with the <em class="ph i">ble_host_peripheral_lib.a</em>), then the API returns the
-                    <strong class="ph b"><em class="ph i">gBleFeatureNotSupported_c</em> error code</strong>.</p>
+        <p class="p">If one attempts to use an API that is not supported (for instance, calling
+                <em class="ph i">Gap_Connect </em>with the <em class="ph i">lib_ble_5-0_host_peripheral_cm0p_iar.a and
+                lib_ble_5-0_host_peripheral_cm0p_gcc.a</em>), then the API returns the
+                    <strong class="ph b"><em class="ph i">gBleFeatureNotSupported_c</em> error code</strong>. Similarly, if the API for AE
+            is used with a host library that does not have support for AE (for instance, calling
+            Gap_SetExtAdvertisingParameters with the lib_ble_5-0_host_peripheral_cm0p_iar.a and
+            lib_ble_5-0_host_peripheral_cm0p_gcc.a), then <strong class="ph b">gBleFeatureNotSupported_c</strong> is
+            returned.</p>
 
         <div class="note note"><span class="notetitle">Note:</span> 
             <p class="p">See the <em class="ph i">Bluetooth Low Energy Host StackAPI Reference Manual</em> for

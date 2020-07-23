@@ -223,40 +223,8 @@
 
         <p class="p">PWR_Configurations.h</p>
 
-        <p class="p"> </p>
-
-        <p class="p"><strong class="ph b">Name</strong></p>
-
-        <pre class="pre codeblock">#define cPWR_CheckLowPowerTimers FALSE</pre>
-
-        <p class="p"><strong class="ph b">Description</strong></p>
-
-        <p class="p">If enabled, the Low-Power module searches for the first Low-Power-Timer to
-            expire and sets up the sleep duration as the minimum between the low-power timer
-            time-out value and the requested sleep duration.</p>
-
-        <p class="p"><strong class="ph b">Location</strong></p>
-
-        <p class="p">PWR_Configurations.h</p>
-
-        <p class="p"> </p>
-
-        <p class="p"><strong class="ph b">Name</strong></p>
-
-        <pre class="pre codeblock">#define cPWR_RAM2_EnabledInLLS2 (0)</pre>
-
-        <p class="p"><strong class="ph b">Description</strong></p>
-
-        <p class="p">Establishes whether RAM2 (extra 16K of RAM from 0x20004000 to 0x20007fff) is
-            retained in LLS2.</p>
-
-        <p class="p"><strong class="ph b">Location</strong></p>
-
-        <p class="p">PWR_Configurations.h</p>
-
-        <p class="p"> </p>
-
-        <p class="p"><strong class="ph b">Name</strong></p>
+        <p class="p">
+            <strong class="ph b">Name</strong></p>
 
         <pre class="pre codeblock">#define gAllowDeviceToSleep_c 0</pre>
 
@@ -313,19 +281,23 @@
 
         <p class="p"><strong class="ph b">Name</strong></p>
 
-        <pre class="pre codeblock">typedef union {
-    uint8_t AllBits;
-    struct {
-        uint8_t FromReset :1; 
-        uint8_t FromPSwitch_UART :1; 
-        uint8_t FromKeyBoard :1; 
-        uint8_t FromLPTMR :1; 
-        uint8_t FromRadio :1; 
-        uint8_t FromBLE_LLTimer :1; 
-        uint8_t DeepSleepTimeout :1; 
-        uint8_t SleepTimeout :1; 
+        <pre class="pre codeblock">typedef  union
+{
+    uint16_t AllBits;
+    struct
+    {
+        uint8_t FromReset        :1;  /* Comming from Reset */
+        uint8_t FromPSwitch      :1;  /* Wakeup by DCDC from Pswitch Pin */
+        uint8_t FromKeyBoard     :1;  /* Wakeup by TSI/Push button interrupt */
+        uint8_t FromLPTMR        :1;  /* Wakeup by LPTMR timer interrupt */
+        uint8_t FromRadio        :1;  /* Wakeup by RTC timer interrupt */
+        uint8_t FromBLE_LLTimer  :1;  /* Wakeup by BLE_LL Timer */
+        uint8_t DeepSleepTimeout :1;  /* DeepSleep timer ran out */
+        uint8_t SleepTimeout     :1;  /* Sleep timer ran out */
+        uint8_t FromSerial       :1;  /* Wakeup by Serial RX */
     } Bits;
-} PWRLib_WakeupReason_t;</pre>
+} PWRLib_WakeupReason_t;
+</pre>
 
         <p class="p"><strong class="ph b">Description</strong></p>
 
@@ -363,7 +335,7 @@
 
 <div class="related-links">
 <div class="familylinks">
-<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-BD32F550-7639-4241-A13E-03413ED8C5C3.html">Kinetis Wireless Dual Mode Microcontrollers Low-power Library Overview</a></div>
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-BD32F550-7639-4241-A13E-03413ED8C5C3.html">Kinetis Wireless Dual Mode MKW4x Microcontrollers Low-power Library Overview</a></div>
 </div>
 </div>
 

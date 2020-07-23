@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2008-2015 Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2018 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -16,7 +16,6 @@
 #include <sstream>
 #include <stdlib.h>
 #include <stdexcept>
-#include <array>
 #include "ConversionController.h"
 #include "options.h"
 #include "Version.h"
@@ -33,9 +32,6 @@
 #include "format_string.h"
 #include "AESKey.h"
 #include "time.h"
-#include "elftosb.h"
-#include "AuthImageGenerator.h"
-#include "TrustZonePresetGenerator.h"
 
 using namespace elftosb;
 
@@ -46,34 +42,14 @@ using namespace elftosb;
 const char k_toolName[] = "elftosb";
 
 //! Current version number for the tool.
-const char k_version[] = "5.1.17";
+const char k_version[] = "4.0.0";
 
 //! Copyright string.
 const char k_copyright[] = "Copyright (c) 2004-2015 Freescale Semiconductor, Inc.\n\
-Copyright 2016-2019 NXP\nAll rights reserved.";
-
-//! Changelog for the tool.
-const string k_chnageLog = "Changelog:\n\
-12/09/2019 - version 5.1.17 Partial rollback from version 5.1.11, keystore structure finally not updated for RT500 B0 ROM -> chip revision not needed as input for now.\n\
-12/09/2019 - version 5.1.16 Adding check_version command.\n\
-12/04/2019 - version 5.1.15 Adding keystore_to_nv and keystore_from_nv commands.\n\
-11/04/2019 - version 5.1.14 Support of Multicore Packed Image\n\
-10/22/2019 - version 5.1.13 Removing CRC calculation and dynamic CTR base value from OTFAD keyblob, replacing with random data.\n\
-10/22/2019 - version 5.1.12 Correcting error message preparation in bd file parsing process causing null ptr exception.\n\
-10/14/2019 - version 5.1.11 Added chip revision as input paraterer to recognize correct keystore size for rt5xx.\n\
-10/10/2019 - version 5.1.10 Added loadh command support for sb2.x file.\n\
-10/10/2019 - version 5.1.9  Merged LPC54S0XX support from separated branch.\n\
-04/09/2019 - version 5.1.8  TZ-M preset data became part of encrypted area in Load to RAM encrypted+signed images for rt6xx and rt5xx, added build number for niobe4, niobe4 mini, rt500, rt600.\n\
-05/09/2019 - version 5.1.7  Corrected error message output.\n\
-02/12/2019 - version 5.1.6  Added rt5xx support, TZM generator updated for rt6xx, lpc55xx and rt5xx. Using revision to specify TZM-data for generation (a0/a1/b0).\n\
-02/12/2019 - version 5.1.5  Added Niobe4 mini (lpc55s3x) support, TZM generator updated for rt6xx, lpc55xx. Removed imageLinkAdressFromImage feature for rt6xx, lpc55xx.\n\
-01/30/2019 - version 5.1.4  Enabled not valid certificate chain for lpc55xx and rt6xx for Master Boot image file, only warning apperas. Improvements in user messages.\n\
-12/14/2018 - version 5.1.3  Corrected calculation of counter value used by AES-CTR mode for SB2.0 and SB2.1 encrytion, causing problem when more sections created in SB2.X file.\n\
-12/14/2018 - version 5.1.2  Added SB2.1 generation support.\n";
+Copyright 2016-2018 NXP\nAll rights reserved.";
 
 static const char *k_optionsDefinition[] = { "?|help",
                                              "v|version",
-	                                         "l|change-log",
                                              "f:chip-family <family>",
                                              "c:command <file>",
                                              "o:output <file>",
@@ -97,16 +73,13 @@ static const char *k_optionsDefinition[] = { "?|help",
                                              "q|quiet",
                                              "V|verbose",
                                              "p:search-path <path>",
-											 "J:image-conf <file>",
-											 "T:tzm-conf <file>",
                                              NULL };
 
 //! Help string.
 const char k_usageText[] =
     "\nOptions:\n\
   -?/--help                    Show this help\n\
-  -v/--version                 Display tool version and print list of supported device families\n\
-  -l/--change-log              Printout the change-log\n\
+  -v/--version                 Display tool version\n\
   -f/--chip-family <family>    Select the chip family (default is kinetisK3)\n\
   -c/--command <file>          Use this command file\n\
   -o/--output <file>           Write output to this file\n\
@@ -138,9 +111,7 @@ const char k_usageText[] =
                                if argument is not provided then by default the tool creates hash.bin in the working directory,\n\
   -d/--debug                   Enable debug output\n\
   -q/--quiet                   Output only warnings and errors\n\
-  -V/--verbose                 Print extra detailed log information\n\
-  -J/--image-conf <file>       Use this json image configuration file to produce master boot image (only for k32w0x, lpc55xx and rt6xx family)\n\
-  -T/--tzm-conf <file>         Use this json trust zone configuration file to produce trust zone binary configuration file (only for lpc55xx and rt6xx family)\n";
+  -V/--verbose                 Print extra detailed log information\n\n";
 
 // prototypes
 int main(int argc, char *argv[], char *envp[]);
@@ -155,7 +126,17 @@ int main(int argc, char *argv[], char *envp[]);
 class elftosbTool
 {
 protected:
- 	/*!
+    //! Supported chip families.
+    enum chip_family_t
+    {
+        k37xxFamily,      //!< 37xx series.
+        kMX28Family,      //!< Catskills series.
+        kKinetisFamily,   //!< Kinetis devices.
+        kKinetisK3Family, //!< Kinetis K3S and up family of devices.
+        kiMXFamily,       //!< i.MX family of devices including RTs and Ultra
+    };
+
+	/*!
      * \brief A structure describing an entry in the table of chip family names.
      */
     struct FamilyNameTableEntry
@@ -196,9 +177,7 @@ protected:
     const char* m_privateKey;                  //!< Paths to private file.
     string_vector_t m_certFilePaths;           //!< Paths to certificate files.
     string_vector_t m_rootKeyCertFilePaths;    //!< Paths to root key certificate files.
-	string m_imgConfFilePath;				   //!< Path to input json image configuration file
-	string m_tzmConfFilePath;				   //!< Path to input json tzm configuration file
-	uint32_t m_keySize;						   //!< Size of key to be generated by keygen
+    uint32_t m_keySize;						   //!< Size of key to be generated by keygen
 
 public:
     /*!
@@ -298,7 +277,6 @@ public:
     int processOptions()
     {
         Options options(*m_argv, k_optionsDefinition);
-		options.ctrls(Options::MISSINGARG);
         OptArgvIter iter(--m_argc, ++m_argv);
 
         // process command line options
@@ -315,16 +293,7 @@ public:
 
                 case 'v':
                     printf("%s %s\n%s\n", k_toolName, k_version, k_copyright);
-					printf("Supported families:\n");
-					for (int i = 0; kFamilyNameTable[i].name; i++) {
-						printf("\t-%s\n", kFamilyNameTable[i].name);
-					}
-					printf("Support of SB2.0 and SB2.1.\n");
                     return 0;
-
-				case 'l':
-					cout << k_chnageLog;
-					return 0;
 
                 case 'f':
                     if (!lookupFamilyName(optarg, &m_family))
@@ -376,7 +345,7 @@ public:
 
                 case 'K':
                     m_doKeygen = true;
-					if (optarg) {
+                    if (optarg) {
 						try {
 							m_keySize = stoul(optarg, nullptr, 10);
 						}
@@ -460,22 +429,6 @@ public:
                     m_rootKeyCertFilePaths.push_back(optarg);
                     break;
 
-				case 'J':
-					m_imgConfFilePath = optarg;
-					if (!m_tzmConfFilePath.empty()){
-						Log::log(Logger::ERROR, "error: Please do not use \'-J\' and \'-T\' options at the same time.'\n\n");
-						return 0;
-					}
-					break;
-
-				case 'T':
-					m_tzmConfFilePath = optarg;
-					if (!m_imgConfFilePath.empty()) {
-						Log::log(Logger::ERROR, "error: Please do not use \'-J\' and \'-T\' options at the same time.'\n\n");
-						return 0;
-					}
-					break;
-
 				default:
                     Log::log(Logger::ERROR, "error: unrecognized option\n\n");
                     printUsage(options);
@@ -483,25 +436,12 @@ public:
             }
         }
 
-		// To avoid conflict, allow only one operation of elftosb, dump and keygen each time.
-        if ((static_cast<int>(m_doElftoSB) + static_cast<int>(m_doExtract) + static_cast<int>(m_doKeygen) + static_cast<int>(!m_imgConfFilePath.empty())) > 1)
+        // To avoid conflict, allow only one operation of elftosb, dump and keygen each time.
+        if ((static_cast<int>(m_doElftoSB) + static_cast<int>(m_doExtract) + static_cast<int>(m_doKeygen)) > 1)
         {
-            Log::log(Logger::ERROR, "Please do not specify \'-c\', \'-K\', \'-x\', \'-J\', \'-T\' options at the same time.\n");
+            Log::log(Logger::ERROR, "Please do not specify \'-c\', \'-K\' and \'-x\' options at the same time.\n");
             return 0;
         }
-
-		// Check if json image configuration file is used only with supported families.
-		if (!m_imgConfFilePath.empty() && m_family != kLPC_skbootFamily && m_family != kKinetisK3Family && m_family != kLPC54X0XXFamily)
-		{
-			Log::log(Logger::ERROR, ((string)"\'-J\' or \'-T\' parameter can be used only with target family " + LPC54X0XX + ", " + LPC55XX + ", " + NIOBE4MINI + ", " + RT6XX + ", " + RT5XX + " or kinetisk3.\n").c_str());
-			return 0;
-		}
-		// Check if json tz-m configuration file is used only with supported families.
-		if (!m_tzmConfFilePath.empty() && m_family != kLPC_skbootFamily)
-		{
-			Log::log(Logger::ERROR, ((string)"\'-J\' or \'-T\' parameter can be used only with target family " + LPC55XX + ", " + NIOBE4MINI + ", " + RT6XX + " or " + RT5XX + ".\n").c_str());
-			return 0;
-		}
 
         // handle positional args
         if (iter.index() < m_argc)
@@ -589,16 +529,7 @@ public:
                 }
 
                 readBootImage();
-            } 
-			else if (!m_imgConfFilePath.empty()) {
-					auto aig = AuthImageGenerator();
-					aig.execute(m_imgConfFilePath, m_family);
-			}
-			else if (!m_tzmConfFilePath.empty()) {
-
-					auto tzg = TrustZonePresetGenerator();
-					tzg.execute(m_tzmConfFilePath);
-			}
+            }
             else if (m_commandFilePath != NULL)
             {
                 // check argument values
@@ -620,7 +551,7 @@ public:
             else
             {
                 throw std::runtime_error(
-                    "Unknown Operation.\nPlease use one of \'-c\', \'-K\', \'-x\' \'-J\' and \'-T\' options to specify your "
+                    "Unknown Operation.\nPlease use one of \'-c\', \'-K\' and \'-x\' options to specify your "
                     "operation.");
             }
         }
@@ -634,11 +565,11 @@ public:
             Log::log(Logger::ERROR, "error: unexpected exception\n");
             return 1;
         }
+
         return 0;
     }
 
     /*!
-     * \brief Validate arguments that can be checked.
      * \brief Validate arguments that can be checked.
      * \exception std::runtime_error Thrown if an argument value fails to pass validation.
      */
@@ -662,8 +593,7 @@ public:
         {
             // verbose only affects the INFO and DEBUG filter levels
             // if the user has selected quiet mode, it overrides verbose
-
-			switch (Log::getLogger()->getFilterLevel())
+            switch (Log::getLogger()->getFilterLevel())
             {
                 case Logger::INFO:
                     Log::getLogger()->setFilterLevel(Logger::INFO2);
@@ -818,9 +748,7 @@ public:
                 elftosb::g_enableHABSupport = false;
                 break;
             case kKinetisK3Family:
-			case kLPC_skbootFamily:
-			case kLPC54X0XXFamily:
-                generator = new elftosb::SB2ImageGenerator(m_family);
+                generator = new elftosb::SB2ImageGenerator;
                 elftosb::g_enableHABSupport = false;
                 typeBootImage = BootImageGenerator::SB2;
                 break;
@@ -870,8 +798,6 @@ public:
                 break;
             }
             case kKinetisK3Family:
-			case kLPC_skbootFamily:
-			case kLPC54X0XXFamily:
             {
                 // add OTP keys
                 elftosb::SB2Image *SB2Image = dynamic_cast<elftosb::SB2Image *>(image.get());
@@ -1074,7 +1000,7 @@ public:
         std::ofstream outputStream(path.c_str(), std::ios_base::binary | std::ios_base::out | std::ios_base::trunc);
         if (outputStream.is_open())
         {
-			if (m_keySize == 128) {
+            if (m_keySize == 128) {
 				for (int i = 0; i < m_keyCount; ++i) {
 					AESKey<128> key;
 					key.randomize();
@@ -1099,6 +1025,7 @@ public:
 				ss << m_keySize << "), supported only -K [128, 256].";
 				throw std::runtime_error(ss.str());
 			}
+
             Log::log(Logger::INFO, "wrote key file %s\n", path.c_str());
         }
         else {
@@ -1504,13 +1431,7 @@ const elftosbTool::FamilyNameTableEntry elftosbTool::kFamilyNameTable[] = { { "3
                                                                             { "i.mx28", kMX28Family },
                                                                             { "kinetis", kKinetisFamily },
                                                                             { "kinetisk3", kKinetisK3Family },
-																			{ "k32w0x", kKinetisK3Family },
 																			{ "imx", kiMXFamily },
-																			{ LPC55XX, kLPC_skbootFamily },
-																			{ NIOBE4MINI, kLPC_skbootFamily },
-																			{ LPC54X0XX, kLPC54X0XXFamily },
-																			{ RT5XX, kLPC_skbootFamily },
-																			{ RT6XX, kLPC_skbootFamily },
                                                                             // Null terminator entry.
                                                                             { NULL, k37xxFamily } };
 

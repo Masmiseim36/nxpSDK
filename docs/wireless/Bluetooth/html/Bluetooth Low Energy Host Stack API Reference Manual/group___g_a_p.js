@@ -59,12 +59,45 @@ var group___g_a_p =
       [ "channelMap", "group___g_a_p.html#a015d0cb70fcf9a1b03773064bbcdc68b", null ],
       [ "filterPolicy", "group___g_a_p.html#a4a96b456a42068a9b85213250f30248f", null ]
     ] ],
+    [ "gapExtAdvertisingParameters_t", "group___g_a_p.html#structgap_ext_advertising_parameters__t", [
+      [ "SID", "group___g_a_p.html#a4a97be1665c35a894c14b6bec03f4cbd", null ],
+      [ "handle", "group___g_a_p.html#aeffcdac2078d77779fb54615a62d43d2", null ],
+      [ "minInterval", "group___g_a_p.html#af0da838f0e21bc4235c4ccf37224a6e0", null ],
+      [ "maxInterval", "group___g_a_p.html#a15d96f84adf1d9d2108a8aa6dae9f195", null ],
+      [ "ownAddressType", "group___g_a_p.html#a767c8e88351642a8256f2a8cf400442c", null ],
+      [ "ownRandomAddr", "group___g_a_p.html#ac438dda5cd7bdfa44ad6e91da3f8c6fd", null ],
+      [ "peerAddressType", "group___g_a_p.html#a2f278907f55a6f1bf0bef98410bba366", null ],
+      [ "peerAddress", "group___g_a_p.html#a6476751356440c1e4ebfdcc4c4383e6f", null ],
+      [ "channelMap", "group___g_a_p.html#a6ff6e6f49909d9cbb1596b74b02bc2a6", null ],
+      [ "filterPolicy", "group___g_a_p.html#af9af22d2ae447ce0779063013c1ae01e", null ],
+      [ "extAdvProperties", "group___g_a_p.html#a6817dc855f73b89d3a13f886ba2b378d", null ],
+      [ "txPower", "group___g_a_p.html#a57fd883be2ba2aafec0943af448234c4", null ],
+      [ "primaryPHY", "group___g_a_p.html#a323441006d338752cc09e063c4537a93", null ],
+      [ "secondaryPHY", "group___g_a_p.html#afa7555c20a01c5bc582bbb7ee6fe5b09", null ],
+      [ "secondaryAdvMaxSkip", "group___g_a_p.html#a6f117894dbaab36740e4ec4d0b0645da", null ],
+      [ "enableScanReqNotification", "group___g_a_p.html#aa5876fe0eabf0aeee9323adbf3aff7fc", null ]
+    ] ],
+    [ "gapPeriodicAdvParameters_t", "group___g_a_p.html#structgap_periodic_adv_parameters__t", [
+      [ "handle", "group___g_a_p.html#ace1c45d1a6f044c68a9c562e999a8f93", null ],
+      [ "addTxPowerInAdv", "group___g_a_p.html#abaf956d6f34087baf40866c2555f3cb3", null ],
+      [ "minInterval", "group___g_a_p.html#a623b298ef6ac8f0e9a235fa885e6e82d", null ],
+      [ "maxInterval", "group___g_a_p.html#ae899d2fbfa2ebebb85939c4503f72f2e", null ]
+    ] ],
     [ "gapScanningParameters_t", "group___g_a_p.html#structgap_scanning_parameters__t", [
       [ "type", "group___g_a_p.html#a30ef89651b8ffe790f0168b819064e27", null ],
       [ "interval", "group___g_a_p.html#adfc9a1718fc2c2f9b5f1837ca46fe84d", null ],
       [ "window", "group___g_a_p.html#a9f9b54b4673fde34f299ae41c3a9b3ec", null ],
       [ "ownAddressType", "group___g_a_p.html#aa92c631f2893c77bf5a65350fa985ce3", null ],
-      [ "filterPolicy", "group___g_a_p.html#a0dcd4050a6933ff9c5e5a01a2d7bfb5f", null ]
+      [ "filterPolicy", "group___g_a_p.html#a0dcd4050a6933ff9c5e5a01a2d7bfb5f", null ],
+      [ "scanningPHYs", "group___g_a_p.html#a3c10aedd6d5eada3781636f8bedbe6ca", null ]
+    ] ],
+    [ "gapPeriodicAdvSyncReq_t", "group___g_a_p.html#structgap_periodic_adv_sync_req__t", [
+      [ "filterPolicy", "group___g_a_p.html#a47d439d3011045e64aaee01db8ef0060", null ],
+      [ "SID", "group___g_a_p.html#a9d19ef41626c7b42acedc9a357cb3ca9", null ],
+      [ "peerAddressType", "group___g_a_p.html#a0ef1a6da395f258b70b68a80be9e903b", null ],
+      [ "peerAddress", "group___g_a_p.html#a936ed7025b88b708e97e775b59e85d1c", null ],
+      [ "skipCount", "group___g_a_p.html#a27e6969577ae1d0ef8d0be657f0bec00", null ],
+      [ "timeout", "group___g_a_p.html#acb4fadfc17f9acf97598ba2da4e1ebea", null ]
     ] ],
     [ "gapConnectionRequestParameters_t", "group___g_a_p.html#structgap_connection_request_parameters__t", [
       [ "scanInterval", "group___g_a_p.html#afd257fbbdc3c0b580b9fd1245c35393d", null ],
@@ -79,21 +112,14 @@ var group___g_a_p =
       [ "supervisionTimeout", "group___g_a_p.html#ab3ad7666655ca2df92b8fe17ec1e3262", null ],
       [ "connEventLengthMin", "group___g_a_p.html#a9e7603123e94e1b0ea9effbb359536ed", null ],
       [ "connEventLengthMax", "group___g_a_p.html#add7279f0c2c2600ddfb49a5810b5b23e", null ],
-      [ "usePeerIdentityAddress", "group___g_a_p.html#a7bd8216ad8f20062aea0b5b50a0bf706", null ]
+      [ "usePeerIdentityAddress", "group___g_a_p.html#a7bd8216ad8f20062aea0b5b50a0bf706", null ],
+      [ "initiatingPHYs", "group___g_a_p.html#a0b94b071ca4aab032931dbfcf726dd4c", null ]
     ] ],
     [ "gapConnectionParameters_t", "group___g_a_p.html#structgap_connection_parameters__t", [
       [ "connInterval", "group___g_a_p.html#a5d12ee5e6530a33098f2b6df704d541b", null ],
       [ "connLatency", "group___g_a_p.html#af2d3c7f664a015abe7c055fbc57e4ab7", null ],
       [ "supervisionTimeout", "group___g_a_p.html#a644e73ba0666faf80f2b78522ebb212a", null ],
       [ "masterClockAccuracy", "group___g_a_p.html#a4ba673cbe181977d19e5b56b6c8e0404", null ]
-    ] ],
-    [ "gapAdLeBluetoothDeviceAddress_t", "group___g_a_p.html#structgap_ad_le_bluetooth_device_address__t", [
-      [ "leDeviceAddress", "group___g_a_p.html#ad5316638dec04723f465cf41ddc32d39", null ],
-      [ "leDeviceAddressType", "group___g_a_p.html#a3650b094347a3815d8e9ee0e4625a255", null ]
-    ] ],
-    [ "gapAdChannelMapUpdateIndication_tag", "group___g_a_p.html#structgap_ad_channel_map_update_indication__tag", [
-      [ "channelMap", "group___g_a_p.html#a04e9e854ec7fe3484095100ae76c9451", null ],
-      [ "instant", "group___g_a_p.html#a4df8adee1897cf07f3906630308d3d31", null ]
     ] ],
     [ "gapAdStructure_t", "group___g_a_p.html#structgap_ad_structure__t", [
       [ "length", "group___g_a_p.html#abcbaea23b2181ca89dbaa112a9934874", null ],
@@ -104,12 +130,26 @@ var group___g_a_p =
       [ "cNumAdStructures", "group___g_a_p.html#ab4c723b952aad6dc28fbefaef0064717", null ],
       [ "aAdStructures", "group___g_a_p.html#a299645ca5189c4c693e0a104a2566d85", null ]
     ] ],
+    [ "gapExtScanNotification_t", "group___g_a_p.html#structgap_ext_scan_notification__t", [
+      [ "handle", "group___g_a_p.html#af0f6a04ba24051ab327261f35a2bcfe4", null ],
+      [ "scannerAddrType", "group___g_a_p.html#ab270954f02064c2c3e81d42379d36cc6", null ],
+      [ "aScannerAddr", "group___g_a_p.html#ad944cc4ce1431f5d7d86edc86b62fc63", null ],
+      [ "scannerAddrResolved", "group___g_a_p.html#a13d86ff05033064d1bdb98dee16a3b88", null ]
+    ] ],
+    [ "gapAdvertisingSetTerminated_t", "group___g_a_p.html#structgap_advertising_set_terminated__t", [
+      [ "status", "group___g_a_p.html#a21e6a0c233d75b0971445147e4af6f4a", null ],
+      [ "handle", "group___g_a_p.html#a296d5318e7b2c8c55be9f674fc1f1ddf", null ],
+      [ "deviceId", "group___g_a_p.html#a0f17f39089a31282b56f750a541c50b6", null ],
+      [ "numCompletedExtAdvEvents", "group___g_a_p.html#a6e879b483bcc59fc78692bc812b99204", null ]
+    ] ],
     [ "gapAdvertisingEvent_t", "group___g_a_p.html#structgap_advertising_event__t", [
       [ "eventType", "group___g_a_p.html#add9c4b3f60506e51c4dd7bdb7c256fdd", null ],
       [ "eventData", "group___g_a_p.html#aff1cb4bc7b48089574ea8f688fd220fc", null ]
     ] ],
     [ "gapAdvertisingEvent_t.eventData", "group___g_a_p.html#uniongap_advertising_event__t_8event_data", [
-      [ "failReason", "group___g_a_p.html#a1af816a5d95800f8cf1d31684e7a8678", null ]
+      [ "failReason", "group___g_a_p.html#a1af816a5d95800f8cf1d31684e7a8678", null ],
+      [ "scanNotification", "group___g_a_p.html#a9a53cab01cc0cfdf038bd7e25e81d400", null ],
+      [ "advSetTerminated", "group___g_a_p.html#a9c6511bfaea3ad1084aae1ea75aa2aee", null ]
     ] ],
     [ "gapScannedDevice_t", "group___g_a_p.html#structgap_scanned_device__t", [
       [ "addressType", "group___g_a_p.html#ad99af5a9b6be356347018579b92f2654", null ],
@@ -122,13 +162,48 @@ var group___g_a_p =
       [ "directRpa", "group___g_a_p.html#a9c52c03f7620ccba462661baf28e00e1", null ],
       [ "advertisingAddressResolved", "group___g_a_p.html#a6231b85024b8c8ad03011ef66f8681ec", null ]
     ] ],
+    [ "gapExtScannedDevice_t", "group___g_a_p.html#structgap_ext_scanned_device__t", [
+      [ "addressType", "group___g_a_p.html#a6ac31b5325da81a02b50fa66bf818dcd", null ],
+      [ "aAddress", "group___g_a_p.html#ad5914b99962bea4344e0de7e3bfcb0ad", null ],
+      [ "SID", "group___g_a_p.html#a84ac687dbaebf473e18893483e1e2d89", null ],
+      [ "advertisingAddressResolved", "group___g_a_p.html#ac51bc544c68e26e5b7ea076ef8bd579e", null ],
+      [ "advEventProperties", "group___g_a_p.html#a8272dd69a46d8ed0ba4e27e2703afe0a", null ],
+      [ "rssi", "group___g_a_p.html#a59871a4a20f1e9959553a170b718efb9", null ],
+      [ "txPower", "group___g_a_p.html#abb907639d93c57e22691d6a2ec9a05c2", null ],
+      [ "primaryPHY", "group___g_a_p.html#af16bba35ae3606f59d983cfdfa8eea56", null ],
+      [ "secondaryPHY", "group___g_a_p.html#a4c105218675b2d708d38045b9349ff2c", null ],
+      [ "periodicAdvInterval", "group___g_a_p.html#a011e343907856d9ad9959c3f4ba38954", null ],
+      [ "directRpaUsed", "group___g_a_p.html#a465b3ec059e4ac483783e08df8bb406d", null ],
+      [ "directRpaType", "group___g_a_p.html#a946e082e72d0a686e1cfd830eab5e720", null ],
+      [ "directRpa", "group___g_a_p.html#ad1f20730efdba06c6d39dfbe1cb372af", null ],
+      [ "dataLength", "group___g_a_p.html#a101596cecf801638d51cd7ec6a5fc266", null ],
+      [ "pData", "group___g_a_p.html#af402767a2401272faa7a34a9fed20ee0", null ]
+    ] ],
+    [ "gapPeriodicScannedDevice_t", "group___g_a_p.html#structgap_periodic_scanned_device__t", [
+      [ "syncHandle", "group___g_a_p.html#aa9461d71b65d41177a86823e5b1123f7", null ],
+      [ "txPower", "group___g_a_p.html#aa5064fd616ac95b02c0e0503341e9b9d", null ],
+      [ "rssi", "group___g_a_p.html#aaeb7af0e217a9498e9c0c35cb6967ad4", null ],
+      [ "dataLength", "group___g_a_p.html#a2c486b6d581e0556b9621a49fd7b6d6f", null ],
+      [ "pData", "group___g_a_p.html#a5a6c07e2caa5e2271ebb5c747c6bdf61", null ]
+    ] ],
+    [ "gapSyncEstbEventData_t", "group___g_a_p.html#structgap_sync_estb_event_data__t", [
+      [ "status", "group___g_a_p.html#aa7c537c52ad69d2e947ef27928d5b7eb", null ],
+      [ "syncHandle", "group___g_a_p.html#aa3dee98a50e1fd3fe7f17a47fc214750", null ]
+    ] ],
+    [ "gapSyncLostEventData_t", "group___g_a_p.html#structgap_sync_lost_event_data__t", [
+      [ "syncHandle", "group___g_a_p.html#a039fd1fef82f104aec9203eeb5d2ecf6", null ]
+    ] ],
     [ "gapScanningEvent_t", "group___g_a_p.html#structgap_scanning_event__t", [
       [ "eventType", "group___g_a_p.html#ac9af01cb389f846c905cb9ad50bf3c7a", null ],
       [ "eventData", "group___g_a_p.html#ae453dcac9d9f30a8f3e01d67dc156d88", null ]
     ] ],
     [ "gapScanningEvent_t.eventData", "group___g_a_p.html#uniongap_scanning_event__t_8event_data", [
       [ "failReason", "group___g_a_p.html#a1af816a5d95800f8cf1d31684e7a8678", null ],
-      [ "scannedDevice", "group___g_a_p.html#a58fd1edcf7a0233bdb5f3e56d50b21a4", null ]
+      [ "scannedDevice", "group___g_a_p.html#a58fd1edcf7a0233bdb5f3e56d50b21a4", null ],
+      [ "extScannedDevice", "group___g_a_p.html#a6d56cfbecab33f25d439a0291dd6ffdb", null ],
+      [ "periodicScannedDevice", "group___g_a_p.html#ada677702094eec2f959a4d2df3f1f3dc", null ],
+      [ "syncEstb", "group___g_a_p.html#a7ec64df01ac9d2cf19c4f111e701610d", null ],
+      [ "syncLost", "group___g_a_p.html#ad8d5830e337425d5b5007c78554fbcd0", null ]
     ] ],
     [ "gapConnectedEvent_t", "group___g_a_p.html#structgap_connected_event__t", [
       [ "connParameters", "group___g_a_p.html#a488bcc8950c3c1f8b540aca9133c8c0c", null ],
@@ -137,7 +212,8 @@ var group___g_a_p =
       [ "peerRpaResolved", "group___g_a_p.html#aae33fbef99d751b1d6144012cf4caf0a", null ],
       [ "peerRpa", "group___g_a_p.html#af563e016a359543249b998da3183bf9b", null ],
       [ "localRpaUsed", "group___g_a_p.html#a5539af014856bc4ff150e89d817512cb", null ],
-      [ "localRpa", "group___g_a_p.html#a21ea6cdaef1692c38152eb91e0429a25", null ]
+      [ "localRpa", "group___g_a_p.html#a21ea6cdaef1692c38152eb91e0429a25", null ],
+      [ "connectionRole", "group___g_a_p.html#ac2efea2b0a4203b08bd28c07d458f917", null ]
     ] ],
     [ "gapKeyExchangeRequestEvent_t", "group___g_a_p.html#structgap_key_exchange_request_event__t", [
       [ "requestedKeys", "group___g_a_p.html#aacceab4eb186fbf479972070818f70b7", null ],
@@ -209,17 +285,18 @@ var group___g_a_p =
       [ "connectionUpdateComplete", "group___g_a_p.html#a248116d200cd0a245a041563de950ad9", null ],
       [ "leDataLengthChanged", "group___g_a_p.html#a0981b6de89bace2c5c10a062c09dc798", null ],
       [ "incomingKeypressNotification", "group___g_a_p.html#ad660fdde41a82ffe7393098334a44aca", null ],
-      [ "numericValueForDisplay", "group___g_a_p.html#a26d989377855a5963e71ecd6a0337f21", null ]
+      [ "numericValueForDisplay", "group___g_a_p.html#a26d989377855a5963e71ecd6a0337f21", null ],
+      [ "channelMap", "group___g_a_p.html#a2aab9f49aafd24855ed63225a4d87792", null ]
     ] ],
     [ "gapIdentityInformation_t", "group___g_a_p.html#structgap_identity_information__t", [
       [ "identityAddress", "group___g_a_p.html#a471ca6b22cedbda92d2a7fd2ebf9d14e", null ],
-      [ "irk", "group___g_a_p.html#a3ad4907520d7e6215ebeec2d536aa21d", null ]
+      [ "irk", "group___g_a_p.html#a3ad4907520d7e6215ebeec2d536aa21d", null ],
+      [ "privacyMode", "group___g_a_p.html#ace1793dbb8420932314c61b818fc5172", null ]
     ] ],
     [ "gapAutoConnectParams_t", "group___g_a_p.html#structgap_auto_connect_params__t", [
       [ "cNumAddresses", "group___g_a_p.html#a4305cd8280e762c783c705b81760dd34", null ],
       [ "writeInWhiteList", "group___g_a_p.html#a94056fd53f2b023a26f62b0f796d989f", null ],
-      [ "aAutoConnectData", "group___g_a_p.html#a7e3dada902d773411c45a947a99a1553", null ],
-      [ "connectionCallback", "group___g_a_p.html#a1d555fbfe254c1e1d7fbd77c9e76dadf", null ]
+      [ "aAutoConnectData", "group___g_a_p.html#a7e3dada902d773411c45a947a99a1553", null ]
     ] ],
     [ "Gap_AddSecurityModesAndLevels", "group___g_a_p.html#ga38aa04b69ad4e3d0bb85ea5419918c6b", null ],
     [ "Gap_CancelInitiatingConnection", "group___g_a_p.html#gac5784a77bcb137f0f2aca0b4523faf4d", null ],
@@ -231,13 +308,22 @@ var group___g_a_p =
     [ "getSecurityLevel", "group___g_a_p.html#ga0f7c85a2659a5eedda80ea6366ddf257", null ],
     [ "getSecurityMode", "group___g_a_p.html#ga9c8613246a6d863321fb9154623f7a2f", null ],
     [ "gDefaultEncryptionKeySize_d", "group___g_a_p.html#ga518761383c688c0dac4d706f1007608d", null ],
+    [ "gMaxEncryptionKeySize_d", "group___g_a_p.html#gad560c78af928d6290c5a1dfb04034677", null ],
     [ "gGapDefaultDeviceSecurity_d", "group___g_a_p.html#ga06f1a520e8302c6d40378a9e0d36bc63", null ],
     [ "gGapDefaultSecurityRequirements_d", "group___g_a_p.html#ga59150b1154d41fceedb2acaae2fb69d1", null ],
     [ "gGapAdvertisingIntervalRangeMinimum_c", "group___g_a_p.html#ga252ed374a1f6f752d024182c1342ceb3", null ],
     [ "gGapAdvertisingIntervalDefault_c", "group___g_a_p.html#gadd8885467868ab11f39f46262a54381b", null ],
     [ "gGapAdvertisingIntervalRangeMaximum_c", "group___g_a_p.html#gadd292fa78af55ab7ea7551b38c8726d8", null ],
+    [ "gGapExtAdvertisingIntervalRangeMinimum_c", "group___g_a_p.html#ga4b7fa318bc9aca1920aeec78f19c1f1b", null ],
+    [ "gGapExtAdvertisingIntervalDefault_c", "group___g_a_p.html#ga266cadffbb4a96b7ae47fc07496419c8", null ],
+    [ "gGapExtAdvertisingIntervalRangeMaximum_c", "group___g_a_p.html#gaa6909ae0bd54e8598aaeb9e0d9767943", null ],
+    [ "gGapPeriodicAdvIntervalRangeMinimum_c", "group___g_a_p.html#ga8398a288d08ef383720e1b9c699ce2f6", null ],
+    [ "gGapPeriodicAdvIntervalDefault_c", "group___g_a_p.html#ga965252e58c3a1b910c9ba9f15b17bb88", null ],
+    [ "gGapPeriodicAdvIntervalRangeMaximum_c", "group___g_a_p.html#ga09c7548e9294eebd7d5d51dd1a11d7c0", null ],
     [ "gGapAdvertisingChannelMapDefault_c", "group___g_a_p.html#ga331a3e5fdeaf06e0fbaf0e1f0926febf", null ],
     [ "gGapDefaultAdvertisingParameters_d", "group___g_a_p.html#ga868f68b48a71ad621dfe3937ed753197", null ],
+    [ "gGapDefaultExtAdvertisingParameters_d", "group___g_a_p.html#gaec7e6c8c9455536085b9450529c356fd", null ],
+    [ "gGapDefaultPeriodicAdvParameters_d", "group___g_a_p.html#ga68f1c0cc32e608b1a41ed790bab6899b", null ],
     [ "gGapScanIntervalMin_d", "group___g_a_p.html#ga189b49dad42cabc3bf807c7a8ac333a6", null ],
     [ "gGapScanIntervalDefault_d", "group___g_a_p.html#gab9db0255dc3508152c81c7dc180bad8a", null ],
     [ "gGapScanIntervalMax_d", "group___g_a_p.html#ga0b58deb3e588103f7e28d6ac84a727da", null ],
@@ -247,6 +333,8 @@ var group___g_a_p =
     [ "gGapRssiMin_d", "group___g_a_p.html#gae8a45c2d329e494695fe4e7879d0b6cc", null ],
     [ "gGapRssiMax_d", "group___g_a_p.html#ga195f6f9cbe3260add37a3cb430a0b326", null ],
     [ "gGapRssiNotAvailable_d", "group___g_a_p.html#ga11c947dbe059cf722edf187db46aefba", null ],
+    [ "gGapScanContinuously_d", "group___g_a_p.html#ga4ce702ab5cb92226a6ea121ef11e1b56", null ],
+    [ "gGapScanPeriodicDisabled_d", "group___g_a_p.html#gaa6a5da2d67b915b18a063b082f59065b", null ],
     [ "gGapDefaultScanningParameters_d", "group___g_a_p.html#gab5d8c73ed6816d0fb6df4bf45c0fc7fa", null ],
     [ "gGapConnIntervalMin_d", "group___g_a_p.html#ga17a4d576bced9d5dd23fc2ae588bb1f3", null ],
     [ "gGapConnIntervalMax_d", "group___g_a_p.html#gacfc67d99a063c6ee07e0fb9041aa1c43", null ],
@@ -261,8 +349,54 @@ var group___g_a_p =
     [ "gGapDefaultMinConnectionInterval_d", "group___g_a_p.html#ga214d57ca4cdc68f054bf6decc12335d9", null ],
     [ "gGapDefaultMaxConnectionInterval_d", "group___g_a_p.html#gae78fc9d41d6ffb6e508ca671625f1e91", null ],
     [ "gGapDefaultConnectionRequestParameters_d", "group___g_a_p.html#ga7b80577a748f69a8d8b0073112499d0e", null ],
-    [ "gapAdSlaveConnectionIntervalRange_tag", "group___g_a_p.html#ga3c234d968b15f9bb1b68a25d4c1d24b0", null ],
+    [ "gGapChSelAlgorithmNo2", "group___g_a_p.html#ga4f621965daadc598d4e5050a939eccf8", null ],
+    [ "gBlePeriodicAdvOngoingSyncCancelHandle", "group___g_a_p.html#gad3e7867d2f5674cd4bae086fed64667a", null ],
+    [ "gGapInvalidSyncHandle", "group___g_a_p.html#gafc25c61bbe09dfd24c9474ca4dc04f1e", null ],
+    [ "gNone_c", "group___g_a_p.html#ga4ae9622caf5ed7712fa00b3caab77f41", null ],
+    [ "gLeLimitedDiscoverableMode_c", "group___g_a_p.html#ga0269d903f73ed16eff503b3403f13be0", null ],
+    [ "gLeGeneralDiscoverableMode_c", "group___g_a_p.html#gafa8a25073cdaf55461cc500208d41736", null ],
+    [ "gBrEdrNotSupported_c", "group___g_a_p.html#ga798077ed5b035bbe4874327b0e56342f", null ],
+    [ "gSimultaneousLeBrEdrCapableController_c", "group___g_a_p.html#ga9a68dba7e654b0558509702357cd503a", null ],
+    [ "gSimultaneousLeBrEdrCapableHost_c", "group___g_a_p.html#gab2a99201b30c7a19bf654a842f31781d", null ],
+    [ "gNoKeys_c", "group___g_a_p.html#ga9817c81447ae7db145187f86e140b08e", null ],
+    [ "gLtk_c", "group___g_a_p.html#ga5da5cc121e94326219e8dc049c5ea3ca", null ],
+    [ "gIrk_c", "group___g_a_p.html#gab3b1153b53c98673d1b6df6485f80ff9", null ],
+    [ "gCsrk_c", "group___g_a_p.html#gac0c0a5276817b6f7fbe45f3c1186693a", null ],
+    [ "gSecurityMode_1_c", "group___g_a_p.html#gad5a63517a68e704fd54872b407cb67a7", null ],
+    [ "gSecurityMode_2_c", "group___g_a_p.html#ga910e1161dc8478a90c538b07787b5dae", null ],
+    [ "gSecurityLevel_NoSecurity_c", "group___g_a_p.html#ga6ada98e0ceae513df9de07d3b9188a9a", null ],
+    [ "gSecurityLevel_NoMitmProtection_c", "group___g_a_p.html#gaf4a7a9e9777d846a2d58d6a7e859e62c", null ],
+    [ "gSecurityLevel_WithMitmProtection_c", "group___g_a_p.html#gad9a2227d237785f6bd184d706f0090f0", null ],
+    [ "gSecurityLevel_LeSecureConnections_c", "group___g_a_p.html#gac72988e49810494d4d8a11b81723373b", null ],
+    [ "gSecurityMode_1_Level_1_c", "group___g_a_p.html#gafe48a600b3443cc795df57ceb2d530d2", null ],
+    [ "gSecurityMode_1_Level_2_c", "group___g_a_p.html#ga0acc52488df5ed9bf283459b2c14fb2f", null ],
+    [ "gSecurityMode_1_Level_3_c", "group___g_a_p.html#ga08b3267de77f93b39ee40ee6c7a15ca1", null ],
+    [ "gSecurityMode_1_Level_4_c", "group___g_a_p.html#gaf894d81e45bfaae528624d4902e05c6a", null ],
+    [ "gSecurityMode_2_Level_1_c", "group___g_a_p.html#gadffaeb8bcffe800c5223e2eb77ea1816", null ],
+    [ "gSecurityMode_2_Level_2_c", "group___g_a_p.html#ga26eddf84f3b4ff586448c92ffb60bd0f", null ],
+    [ "gOobNotAvailable_c", "group___g_a_p.html#ga7dbe2a9773f87cb91302a5d0c3193f44", null ],
+    [ "gIncompatibleIoCapabilities_c", "group___g_a_p.html#ga4ab4dec9642ce28ee8cce61d37a70b99", null ],
+    [ "gPairingNotSupported_c", "group___g_a_p.html#ga6bf31fe6b02fe02280ca57e914547fd2", null ],
+    [ "gLowEncryptionKeySize_c", "group___g_a_p.html#ga5c4e2f29a5491edcbf7ef8d161876f90", null ],
+    [ "gUnspecifiedReason_c", "group___g_a_p.html#ga20d1a8a00fd34ae8dc94f13650c1e939", null ],
+    [ "gRepeatedAttempts_c", "group___g_a_p.html#gaba17533f0a63ccb814a46302898ba173", null ],
+    [ "gLinkEncryptionFailed_c", "group___g_a_p.html#gac7c6214936a70c7021c819b9f0995cf8", null ],
+    [ "gIoDisplayOnly_c", "group___g_a_p.html#gab8b39877d83a496f07bce9498c88ce9f", null ],
+    [ "gIoDisplayYesNo_c", "group___g_a_p.html#ga7ca1a9dee2bbfa7ecc4483c5e8eb1a62", null ],
+    [ "gIoKeyboardOnly_c", "group___g_a_p.html#ga0d89d5c7049e0249d05c4e9c7d755f07", null ],
+    [ "gIoNone_c", "group___g_a_p.html#ga79092d59905efee3fd21b29fb1ebd786", null ],
+    [ "gIoKeyboardDisplay_c", "group___g_a_p.html#ga776cca8289e0e6d394891353332eb455", null ],
+    [ "gapIoCapabilities_t", "group___g_a_p.html#ga17af7a3ca1d38dee97830a97b462c370", null ],
+    [ "gapSmpKeyFlags_t", "group___g_a_p.html#gacd5792c9618aa569f4f07853c81919ac", null ],
+    [ "gapSecurityMode_t", "group___g_a_p.html#gae30d1c9446d3e21e08abf0dfd874253a", null ],
+    [ "gapSecurityLevel_t", "group___g_a_p.html#ga80535b23be14be387c873ef6a80dc717", null ],
+    [ "gapSecurityModeAndLevel_t", "group___g_a_p.html#ga00f09e48bd08beaa4afe96bb23d65fa7", null ],
+    [ "gapKeypressNotification_t", "group___g_a_p.html#ga1253e86992d8e0e82b1e7e4f838e60e7", null ],
+    [ "gapAuthenticationRejectReason_t", "group___g_a_p.html#ga5f7479e212ef94efbad0f594aaff9608", null ],
+    [ "gapCreateSyncReqFilterPolicy_t", "group___g_a_p.html#ga45e077cb76b08fb05a7d83527355f671", null ],
+    [ "gapAdTypeFlags_t", "group___g_a_p.html#ga5b233d91637ce137eea8a5604f69dffd", null ],
     [ "gapScanResponseData_t", "group___g_a_p.html#gac3f03126df97832635352c7a21d2f61b", null ],
+    [ "gapControllerTestTxType_t", "group___g_a_p.html#gafa27f105732fe37a843ff53591f5ba77", null ],
     [ "gapDisconnectionReason_t", "group___g_a_p.html#ga6081224c3ae06d82c965e7c2f45cceed", null ],
     [ "gapAdvertisingCallback_t", "group___g_a_p.html#gaa88f67bd92d4c8c1ff3ce3a8b124ef32", null ],
     [ "gapScanningCallback_t", "group___g_a_p.html#ga6b580358617e2771909367ce2b719129", null ],
@@ -273,52 +407,12 @@ var group___g_a_p =
       [ "gGapObserver_c", "group___g_a_p.html#gga347ee8312fa6a0c3567809246b8894c5a08aea09a8f0b99c921ef7998900d7b32", null ],
       [ "gGapBroadcaster_c", "group___g_a_p.html#gga347ee8312fa6a0c3567809246b8894c5a84419fc99775346c05374b032e3a8eef", null ]
     ] ],
-    [ "gapIoCapabilities_t", "group___g_a_p.html#ga406f895aed40172ce195e7ffccbcb558", [
-      [ "gIoDisplayOnly_c", "group___g_a_p.html#gga406f895aed40172ce195e7ffccbcb558a3a38a638126fd51375ea58c5d622e560", null ],
-      [ "gIoDisplayYesNo_c", "group___g_a_p.html#gga406f895aed40172ce195e7ffccbcb558abe6b2b38ce49235b3a68194a182bea35", null ],
-      [ "gIoKeyboardOnly_c", "group___g_a_p.html#gga406f895aed40172ce195e7ffccbcb558af30a6782359b00e0e09888a92a6ee73a", null ],
-      [ "gIoNone_c", "group___g_a_p.html#gga406f895aed40172ce195e7ffccbcb558a8c2fe6092ad4f171ef7fb7b4dc640988", null ],
-      [ "gIoKeyboardDisplay_c", "group___g_a_p.html#gga406f895aed40172ce195e7ffccbcb558aaa3d2705b8d5f00668fac776499d7b23", null ]
-    ] ],
-    [ "gapSmpKeyFlags_t", "group___g_a_p.html#ga9bec952f71f6caf77904ab149b4a621c", [
-      [ "gNoKeys_c", "group___g_a_p.html#gga9bec952f71f6caf77904ab149b4a621cafb90030637154a727e0c929d5b845dc2", null ],
-      [ "gLtk_c", "group___g_a_p.html#gga9bec952f71f6caf77904ab149b4a621caaf4f49330f263e5f5b2d7ccf811bb65b", null ],
-      [ "gIrk_c", "group___g_a_p.html#gga9bec952f71f6caf77904ab149b4a621ca09df4af7d6deec5234f5c24e2b8897bc", null ],
-      [ "gCsrk_c", "group___g_a_p.html#gga9bec952f71f6caf77904ab149b4a621ca20065826a1716c9ed3222cd5b69d9533", null ]
-    ] ],
-    [ "gapSecurityMode_t", "group___g_a_p.html#ga62fa6dad609f3c0f16df89a936dd04a2", [
-      [ "gSecurityMode_1_c", "group___g_a_p.html#gga62fa6dad609f3c0f16df89a936dd04a2aaed9dbf51bdaa9d776c3922a57519c97", null ],
-      [ "gSecurityMode_2_c", "group___g_a_p.html#gga62fa6dad609f3c0f16df89a936dd04a2a6a54f50d57bf8c694d5357d235be9e92", null ]
-    ] ],
-    [ "gapSecurityLevel_t", "group___g_a_p.html#ga058ec9d51e654b419a967f566462a5e6", [
-      [ "gSecurityLevel_NoSecurity_c", "group___g_a_p.html#gga058ec9d51e654b419a967f566462a5e6a06c19cc73b6998c78ba1e08860ccb238", null ],
-      [ "gSecurityLevel_NoMitmProtection_c", "group___g_a_p.html#gga058ec9d51e654b419a967f566462a5e6a48b6606c8b57c6d55e52cf66b4ce9ae3", null ],
-      [ "gSecurityLevel_WithMitmProtection_c", "group___g_a_p.html#gga058ec9d51e654b419a967f566462a5e6ae8ad0e961d3fb916b350233df5509b48", null ],
-      [ "gSecurityLevel_LeSecureConnections_c", "group___g_a_p.html#gga058ec9d51e654b419a967f566462a5e6aa3b79c18138cbb0b6e96d1f82b123102", null ]
-    ] ],
-    [ "gapSecurityModeAndLevel_t", "group___g_a_p.html#ga88408b1cad03c8bbd4a2fb6b99b5c193", [
-      [ "gSecurityMode_1_Level_1_c", "group___g_a_p.html#gga88408b1cad03c8bbd4a2fb6b99b5c193aa621b69a1032fa30f5232c2bc12e37d0", null ],
-      [ "gSecurityMode_1_Level_2_c", "group___g_a_p.html#gga88408b1cad03c8bbd4a2fb6b99b5c193a5f462cebf5827161a06b7ad36dbda068", null ],
-      [ "gSecurityMode_1_Level_3_c", "group___g_a_p.html#gga88408b1cad03c8bbd4a2fb6b99b5c193a17f3a8aeeb869b33fd7c264948d6a6c5", null ],
-      [ "gSecurityMode_1_Level_4_c", "group___g_a_p.html#gga88408b1cad03c8bbd4a2fb6b99b5c193ad9d252458c5782f9749cb6ca70a9835e", null ],
-      [ "gSecurityMode_2_Level_1_c", "group___g_a_p.html#gga88408b1cad03c8bbd4a2fb6b99b5c193ae3357563ccf957c2de971ae2f1dba89c", null ],
-      [ "gSecurityMode_2_Level_2_c", "group___g_a_p.html#gga88408b1cad03c8bbd4a2fb6b99b5c193aa317a611686603fca8cbf11dd11c3aa6", null ]
-    ] ],
-    [ "gapKeypressNotification_t", "group___g_a_p.html#gaf00b350654b858e8b7f29dd4540595dd", [
-      [ "gKnPasskeyEntryStarted_c", "group___g_a_p.html#ggaf00b350654b858e8b7f29dd4540595dda6278c25c757a74d8ae065b91c51ecb53", null ],
-      [ "gKnPasskeyDigitStarted_c", "group___g_a_p.html#ggaf00b350654b858e8b7f29dd4540595ddac25309a282c0a8b89f6282a0333cbb26", null ],
-      [ "gKnPasskeyDigitErased_c", "group___g_a_p.html#ggaf00b350654b858e8b7f29dd4540595dda3114ff260be236360b7fd30c810ae814", null ],
-      [ "gKnPasskeyCleared_c", "group___g_a_p.html#ggaf00b350654b858e8b7f29dd4540595ddab7924d030675b8498d6712fcf4659062", null ],
-      [ "gKnPasskeyEntryCompleted_c", "group___g_a_p.html#ggaf00b350654b858e8b7f29dd4540595dda92aee73f96e4a1f5d4c9828c89aa7bf6", null ]
-    ] ],
-    [ "gapAuthenticationRejectReason_t", "group___g_a_p.html#ga574941b6321c33638822cb749e8a96c1", [
-      [ "gLinkEncryptionFailed_c", "group___g_a_p.html#gga574941b6321c33638822cb749e8a96c1a68bccfaffc7eb6402f8ddb608abe669c", null ],
-      [ "gOobNotAvailable_c", "group___g_a_p.html#gga574941b6321c33638822cb749e8a96c1a0d78c25e17cade4a027f427583a10197", null ],
-      [ "gIncompatibleIoCapabilities_c", "group___g_a_p.html#gga574941b6321c33638822cb749e8a96c1a46c4cd568aa3339345e6a4257fc860df", null ],
-      [ "gPairingNotSupported_c", "group___g_a_p.html#gga574941b6321c33638822cb749e8a96c1a5ab7ed5031d8b94328133da9a643ebef", null ],
-      [ "gLowEncryptionKeySize_c", "group___g_a_p.html#gga574941b6321c33638822cb749e8a96c1ab6e9d29875904b8ea8e4e2f825ab4f8f", null ],
-      [ "gRepeatedAttempts_c", "group___g_a_p.html#gga574941b6321c33638822cb749e8a96c1a06a60d67a81a55229a2bb44238e70f78", null ],
-      [ "gUnspecifiedReason_c", "group___g_a_p.html#gga574941b6321c33638822cb749e8a96c1aa091a54ee12014609c2928a124f77a1b", null ]
+    [ "gapKeypressNotification_tag", "group___g_a_p.html#ga6862f3694b718163a6f5178a5b15d93a", [
+      [ "gKnPasskeyEntryStarted_c", "group___g_a_p.html#gga6862f3694b718163a6f5178a5b15d93aa6278c25c757a74d8ae065b91c51ecb53", null ],
+      [ "gKnPasskeyDigitStarted_c", "group___g_a_p.html#gga6862f3694b718163a6f5178a5b15d93aac25309a282c0a8b89f6282a0333cbb26", null ],
+      [ "gKnPasskeyDigitErased_c", "group___g_a_p.html#gga6862f3694b718163a6f5178a5b15d93aa3114ff260be236360b7fd30c810ae814", null ],
+      [ "gKnPasskeyCleared_c", "group___g_a_p.html#gga6862f3694b718163a6f5178a5b15d93aab7924d030675b8498d6712fcf4659062", null ],
+      [ "gKnPasskeyEntryCompleted_c", "group___g_a_p.html#gga6862f3694b718163a6f5178a5b15d93aa92aee73f96e4a1f5d4c9828c89aa7bf6", null ]
     ] ],
     [ "gapScanMode_t", "group___g_a_p.html#ga3543b0ae6e8c583dad107be74ec4a608", [
       [ "gDefaultScan_c", "group___g_a_p.html#gga3543b0ae6e8c583dad107be74ec4a608a94fdad7ef2e989c1b4fc6653bed93887", null ],
@@ -336,6 +430,15 @@ var group___g_a_p =
       [ "gProcessConnAllScanWL_c", "group___g_a_p.html#gga971d097f69557d1c4eebfe75f4450e4fa60003038339d65862250d30a332f5d18", null ],
       [ "gProcessScanAllConnWL_c", "group___g_a_p.html#gga971d097f69557d1c4eebfe75f4450e4faa7cbe06130c26d504cfc371fec643765", null ],
       [ "gProcessWhiteListOnly_c", "group___g_a_p.html#gga971d097f69557d1c4eebfe75f4450e4faa25f608ea9c8f5a5a1a7f807536f0336", null ]
+    ] ],
+    [ "gapFilterDuplicates_t", "group___g_a_p.html#gac3aff123dae2e6babba3f213c6c27578", [
+      [ "gGapDuplicateFilteringDisable_c", "group___g_a_p.html#ggac3aff123dae2e6babba3f213c6c27578a21a9841d88bbd63a48d939ae2556aaf6", null ],
+      [ "gGapDuplicateFilteringEnable_c", "group___g_a_p.html#ggac3aff123dae2e6babba3f213c6c27578a93231f4ccab90813b33251927697a618", null ],
+      [ "gGapDuplicateFilteringPeriodicEnable_c", "group___g_a_p.html#ggac3aff123dae2e6babba3f213c6c27578ad0414814c027be3b4c811ca80ec62dcf", null ]
+    ] ],
+    [ "gapCreateSyncReqFilterPolicy_tag", "group___g_a_p.html#ga3de50b03ea9618228bda1beca7a61e4c", [
+      [ "gUseCommandParameters_c", "group___g_a_p.html#gga3de50b03ea9618228bda1beca7a61e4ca105b8b85199536622ddf6c689ad79f04", null ],
+      [ "gUsePeriodicAdvList_c", "group___g_a_p.html#gga3de50b03ea9618228bda1beca7a61e4ca539387050f882c5daf9e5a54af3ff4b1", null ]
     ] ],
     [ "gapAdType_t", "group___g_a_p.html#gac315e3d6f94ac5182418fad9164d442f", [
       [ "gAdFlags_c", "group___g_a_p.html#ggac315e3d6f94ac5182418fad9164d442fafa4cc7de66c421001356f5d405e08334", null ],
@@ -374,27 +477,6 @@ var group___g_a_p =
       [ "gAdChannelMapUpdateIndication_c", "group___g_a_p.html#ggac315e3d6f94ac5182418fad9164d442fa71d775f081f4f63445a1872b688155a0", null ],
       [ "gAdManufacturerSpecificData_c", "group___g_a_p.html#ggac315e3d6f94ac5182418fad9164d442faff0f207755c1f79559928e694d5ce621", null ]
     ] ],
-    [ "gapAdTypeFlags_t", "group___g_a_p.html#ga4f30ffed33a1c2800b4014c566eff5a2", [
-      [ "gNone_c", "group___g_a_p.html#gga4f30ffed33a1c2800b4014c566eff5a2a6295f4b66dcb963a17bdd7798acd52c0", null ],
-      [ "gLeLimitedDiscoverableMode_c", "group___g_a_p.html#gga4f30ffed33a1c2800b4014c566eff5a2a7f0a8b3bddb001b0e9e0ab7df1fb9296", null ],
-      [ "gLeGeneralDiscoverableMode_c", "group___g_a_p.html#gga4f30ffed33a1c2800b4014c566eff5a2ae72eb11c7aa68157beeba80cb1fb15f4", null ],
-      [ "gBrEdrNotSupported_c", "group___g_a_p.html#gga4f30ffed33a1c2800b4014c566eff5a2a5929161a5700937fe394e2771951261c", null ],
-      [ "gSimultaneousLeBrEdrCapableController_c", "group___g_a_p.html#gga4f30ffed33a1c2800b4014c566eff5a2a521ad835f9399fd3f6ce5d6f8ef96966", null ],
-      [ "gSimultaneousLeBrEdrCapableHost_c", "group___g_a_p.html#gga4f30ffed33a1c2800b4014c566eff5a2ac83d684d6c4319f5622baf6da97d8ffb", null ]
-    ] ],
-    [ "gapAdTypeSecuirtyManagerOobFlags_t", "group___g_a_p.html#ga33e6a931cfea54e7c4f251e28ff4feb0", [
-      [ "gNoSmOobFlags_c", "group___g_a_p.html#gga33e6a931cfea54e7c4f251e28ff4feb0ab52456a5f6bc3d8ac2619f630d11c536", null ],
-      [ "gSmOobDataPresent_c", "group___g_a_p.html#gga33e6a931cfea54e7c4f251e28ff4feb0a818caf7d5095adbfb51da3c171afd7ab", null ],
-      [ "gLeSupportedHost_c", "group___g_a_p.html#gga33e6a931cfea54e7c4f251e28ff4feb0ae9b7c8cd27067f051954482a5d60fe30", null ],
-      [ "gSimultaneousLeAndBrEdrCapableHost_c", "group___g_a_p.html#gga33e6a931cfea54e7c4f251e28ff4feb0a47073ce3ef9febe47f4e074ae6645142", null ],
-      [ "gAddressType_c", "group___g_a_p.html#gga33e6a931cfea54e7c4f251e28ff4feb0a33d53a6f68cd79a09558194c713c7940", null ]
-    ] ],
-    [ "gapAdTypeLeRole_t", "group___g_a_p.html#gacba1107fffdb539e6815801048b8c603", [
-      [ "gLeOnlyPeripheralModeSupported_c", "group___g_a_p.html#ggacba1107fffdb539e6815801048b8c603a5eb34a3e27f5c6c6a006307e760f8ef5", null ],
-      [ "gLeOnlyCentralModeSupported_c", "group___g_a_p.html#ggacba1107fffdb539e6815801048b8c603a41b194f14cca7a86b221bb5f995375d8", null ],
-      [ "gLeCentralAndPeripheralPreferred_c", "group___g_a_p.html#ggacba1107fffdb539e6815801048b8c603adcfec069a8f93dbfd757abc449bbf731", null ],
-      [ "gLeCentralPreferredAndPeripheral_c", "group___g_a_p.html#ggacba1107fffdb539e6815801048b8c603aaf44e9f8256bbddf0a60f9949183bb07", null ]
-    ] ],
     [ "gapRadioPowerLevelReadType_t", "group___g_a_p.html#ga8a86180853357185deb9703bebb87372", [
       [ "gTxPowerCurrentLevelInConnection_c", "group___g_a_p.html#gga8a86180853357185deb9703bebb87372a4a08996fe17b66f09711d64492ef2ffb", null ],
       [ "gTxPowerMaximumLevelInConnection_c", "group___g_a_p.html#gga8a86180853357185deb9703bebb87372ad1585eeb85c05babeca1219bd8bca0fd", null ],
@@ -406,24 +488,33 @@ var group___g_a_p =
       [ "gControllerTestCmdStartTx_c", "group___g_a_p.html#gga33087635d624367a9129f58d1fbdbdd6a8c48b90f6013d697ff935ee923ea61d9", null ],
       [ "gControllerTestCmdEnd_c", "group___g_a_p.html#gga33087635d624367a9129f58d1fbdbdd6a54fc6c1fc957ad773457f47b874fd999", null ]
     ] ],
-    [ "gapControllerTestTxType_t", "group___g_a_p.html#ga0795cd88b25d234ce65ca9db65981bdd", [
-      [ "gControllerTestTxPrbs9_c", "group___g_a_p.html#gga0795cd88b25d234ce65ca9db65981bdda33509bcdbbdb57e80e461f45cc3d2e79", null ],
-      [ "gControllerTestTxF0_c", "group___g_a_p.html#gga0795cd88b25d234ce65ca9db65981bddab165ad16623759ac39fd9ba748cdd52e", null ],
-      [ "gControllerTestTxAA_c", "group___g_a_p.html#gga0795cd88b25d234ce65ca9db65981bddaa5470a10d68f860a5621bced2ff22584", null ],
-      [ "gControllerTestTxPrbs15_c", "group___g_a_p.html#gga0795cd88b25d234ce65ca9db65981bddacf736bc2925238c01627cb06c85c1a31", null ],
-      [ "gControllerTestTxFF_c", "group___g_a_p.html#gga0795cd88b25d234ce65ca9db65981bddafb3ec07af14983f15eddb9f963feb296", null ],
-      [ "gControllerTestTx00_c", "group___g_a_p.html#gga0795cd88b25d234ce65ca9db65981bdda5a565ac2e494c044377999b58b4f74f8", null ],
-      [ "gControllerTestTx0F_c", "group___g_a_p.html#gga0795cd88b25d234ce65ca9db65981bdda4c397801b08d2569065490833c9764f5", null ],
-      [ "gControllerTestTx55_c", "group___g_a_p.html#gga0795cd88b25d234ce65ca9db65981bdda1fdfa8407da340e3c992d66269a4cd46", null ]
+    [ "gapControllerTestTxType_tag", "group___g_a_p.html#ga9ca00401ced52a58ca5b49c4b00aa699", [
+      [ "gControllerTestTxPrbs9_c", "group___g_a_p.html#gga9ca00401ced52a58ca5b49c4b00aa699a33509bcdbbdb57e80e461f45cc3d2e79", null ],
+      [ "gControllerTestTxF0_c", "group___g_a_p.html#gga9ca00401ced52a58ca5b49c4b00aa699ab165ad16623759ac39fd9ba748cdd52e", null ],
+      [ "gControllerTestTxAA_c", "group___g_a_p.html#gga9ca00401ced52a58ca5b49c4b00aa699aa5470a10d68f860a5621bced2ff22584", null ],
+      [ "gControllerTestTxPrbs15_c", "group___g_a_p.html#gga9ca00401ced52a58ca5b49c4b00aa699acf736bc2925238c01627cb06c85c1a31", null ],
+      [ "gControllerTestTxFF_c", "group___g_a_p.html#gga9ca00401ced52a58ca5b49c4b00aa699afb3ec07af14983f15eddb9f963feb296", null ],
+      [ "gControllerTestTx00_c", "group___g_a_p.html#gga9ca00401ced52a58ca5b49c4b00aa699a5a565ac2e494c044377999b58b4f74f8", null ],
+      [ "gControllerTestTx0F_c", "group___g_a_p.html#gga9ca00401ced52a58ca5b49c4b00aa699a4c397801b08d2569065490833c9764f5", null ],
+      [ "gControllerTestTx55_c", "group___g_a_p.html#gga9ca00401ced52a58ca5b49c4b00aa699a1fdfa8407da340e3c992d66269a4cd46", null ]
     ] ],
     [ "gapAdvertisingEventType_t", "group___g_a_p.html#ga32829540604505a535b45f228284e3b7", [
       [ "gAdvertisingStateChanged_c", "group___g_a_p.html#gga32829540604505a535b45f228284e3b7ad7098beb7626ac125aed2b5762d58016", null ],
-      [ "gAdvertisingCommandFailed_c", "group___g_a_p.html#gga32829540604505a535b45f228284e3b7a25d6d756b9a99ce36e940a6e3689b5c7", null ]
+      [ "gAdvertisingCommandFailed_c", "group___g_a_p.html#gga32829540604505a535b45f228284e3b7a25d6d756b9a99ce36e940a6e3689b5c7", null ],
+      [ "gExtAdvertisingStateChanged_c", "group___g_a_p.html#gga32829540604505a535b45f228284e3b7a16a88fbd92be26b244518fbba0e8d6f5", null ],
+      [ "gAdvertisingSetTerminated_c", "group___g_a_p.html#gga32829540604505a535b45f228284e3b7aeda2c8b9438a157a73f8c450aab7e571", null ],
+      [ "gExtScanNotification_c", "group___g_a_p.html#gga32829540604505a535b45f228284e3b7aae8e92b9a72a0f35d12ff1e289f36952", null ],
+      [ "gPeriodicAdvertisingStateChanged_c", "group___g_a_p.html#gga32829540604505a535b45f228284e3b7a3ca3d5a8230e42790703a8d1fbb64a32", null ]
     ] ],
     [ "gapScanningEventType_t", "group___g_a_p.html#ga1abbce5561d736cac4c753d7783dfa97", [
       [ "gScanStateChanged_c", "group___g_a_p.html#gga1abbce5561d736cac4c753d7783dfa97a425639a8488fe5a338df99d7ba308cb9", null ],
       [ "gScanCommandFailed_c", "group___g_a_p.html#gga1abbce5561d736cac4c753d7783dfa97a304aee5c465b7a1f5e15eff9322071f7", null ],
-      [ "gDeviceScanned_c", "group___g_a_p.html#gga1abbce5561d736cac4c753d7783dfa97ac15ca56238ed5472e93a162bffd7283a", null ]
+      [ "gDeviceScanned_c", "group___g_a_p.html#gga1abbce5561d736cac4c753d7783dfa97ac15ca56238ed5472e93a162bffd7283a", null ],
+      [ "gExtDeviceScanned_c", "group___g_a_p.html#gga1abbce5561d736cac4c753d7783dfa97a1d1bf163c9f10ebb96a94f47ffd75a7f", null ],
+      [ "gPeriodicDeviceScanned_c", "group___g_a_p.html#gga1abbce5561d736cac4c753d7783dfa97a3f903fc536d8f30bf5136e69036ceb89", null ],
+      [ "gPeriodicAdvSyncEstablished_c", "group___g_a_p.html#gga1abbce5561d736cac4c753d7783dfa97aba80fdd893b2cb1377991c90028f6a17", null ],
+      [ "gPeriodicAdvSyncLost_c", "group___g_a_p.html#gga1abbce5561d736cac4c753d7783dfa97aff9c21c07889cb9a1eeb8e5b268ba582", null ],
+      [ "gPeriodicAdvSyncTerminated_c", "group___g_a_p.html#gga1abbce5561d736cac4c753d7783dfa97a0843e9492f1b3c274c13929719105d22", null ]
     ] ],
     [ "gapConnectionEventType_t", "group___g_a_p.html#gaf32d5b65cac64cbd2d0096ec83322a11", [
       [ "gConnEvtConnected_c", "group___g_a_p.html#ggaf32d5b65cac64cbd2d0096ec83322a11a4df24f2982a102e5d7d4e4d2d77bcbbe", null ],
@@ -448,7 +539,11 @@ var group___g_a_p =
       [ "gConnEvtLeDataLengthChanged_c", "group___g_a_p.html#ggaf32d5b65cac64cbd2d0096ec83322a11a6cce67221a1733c8bfb656c31915128d", null ],
       [ "gConnEvtLeScOobDataRequest_c", "group___g_a_p.html#ggaf32d5b65cac64cbd2d0096ec83322a11a4984f7280f4090e4c291dcfb75328a44", null ],
       [ "gConnEvtLeScDisplayNumericValue_c", "group___g_a_p.html#ggaf32d5b65cac64cbd2d0096ec83322a11a16205f8312b8dc88e4aa8a65355a7f1c", null ],
-      [ "gConnEvtLeScKeypressNotification_c", "group___g_a_p.html#ggaf32d5b65cac64cbd2d0096ec83322a11a4dc2e69d10187ca5b8b76dbdc7ca788c", null ]
+      [ "gConnEvtLeScKeypressNotification_c", "group___g_a_p.html#ggaf32d5b65cac64cbd2d0096ec83322a11a4dc2e69d10187ca5b8b76dbdc7ca788c", null ],
+      [ "gConnEvtChannelMapRead_c", "group___g_a_p.html#ggaf32d5b65cac64cbd2d0096ec83322a11a26fe75287994545b6afa0794bd3677b8", null ],
+      [ "gConnEvtChannelMapReadFailure_c", "group___g_a_p.html#ggaf32d5b65cac64cbd2d0096ec83322a11aa560705d94f637233fa5b158bc8927ee", null ],
+      [ "gConnEvtChanSelectionAlgorithm2_c", "group___g_a_p.html#ggaf32d5b65cac64cbd2d0096ec83322a11a77d1a7db0b218ba0ee76cc362c7e9d40", null ],
+      [ "gConnEvtPairingNoLtk_c", "group___g_a_p.html#ggaf32d5b65cac64cbd2d0096ec83322a11a01964aea82f7e8789d7ece396912131b", null ]
     ] ],
     [ "gapCarSupport_t", "group___g_a_p.html#ga1d5213f9ebf3df622b2bba3c4a4cac76", [
       [ "CAR_Unknown", "group___g_a_p.html#gga1d5213f9ebf3df622b2bba3c4a4cac76ac345e6aab8413fa33d23a0bf04456563", null ],
@@ -457,9 +552,9 @@ var group___g_a_p =
       [ "CAR_Supported", "group___g_a_p.html#gga1d5213f9ebf3df622b2bba3c4a4cac76a5a39f92a5913bfbd94a2ca31a7698a33", null ]
     ] ],
     [ "gapAppearance_t", "group___g_a_p.html#ga689a7a9d295a71d4b241740aa401e02d", null ],
-    [ "Gap_RegisterDeviceSecurityRequirements", "group___g_a_p.html#gadbb7f3cc1630718b404a63a6067e5f0d", null ],
-    [ "Gap_SetAdvertisingParameters", "group___g_a_p.html#ga401a77ffc94db472a98ba200d58f0eac", null ],
-    [ "Gap_SetAdvertisingData", "group___g_a_p.html#gadb75405cb8744655735d346d7901c6a5", null ],
+    [ "Gap_RegisterDeviceSecurityRequirements", "group___g_a_p.html#ga09d326188a932b1de92180f89eb3bc87", null ],
+    [ "Gap_SetAdvertisingParameters", "group___g_a_p.html#ga8c27161d07a7120ec430fb8490d58bd4", null ],
+    [ "Gap_SetAdvertisingData", "group___g_a_p.html#gad4b0c1d3931c9289c335c93dba4ab5e0", null ],
     [ "Gap_StartAdvertising", "group___g_a_p.html#ga0ed20f0983b05f0989fd52dd93b2603a", null ],
     [ "Gap_StopAdvertising", "group___g_a_p.html#gada0fdc8521f72313adf079862631f465", null ],
     [ "Gap_Authorize", "group___g_a_p.html#ga377c899100a1e923125adb1cdbe41a87", null ],
@@ -467,57 +562,74 @@ var group___g_a_p =
     [ "Gap_CheckNotificationStatus", "group___g_a_p.html#gaf02c106c68d00ad5e2518234c2ad92b0", null ],
     [ "Gap_CheckIndicationStatus", "group___g_a_p.html#gad28bb437bf8969235a483db0fb67d30c", null ],
     [ "Gap_GetBondedDevicesIdentityInformation", "group___g_a_p.html#ga7b44456a2febb4a8487de0c6ffd34d35", null ],
-    [ "Gap_Pair", "group___g_a_p.html#ga0dc0429c1d37498a83fe311cdeb7aece", null ],
-    [ "Gap_SendSlaveSecurityRequest", "group___g_a_p.html#gaa3d473312a8e7829ef6d187ed990dee8", null ],
+    [ "Gap_Pair", "group___g_a_p.html#gabc990279c1a12bd27a4d9fc9bb524a5b", null ],
+    [ "Gap_SendSlaveSecurityRequest", "group___g_a_p.html#ga31f1f5b729480e0c82a6834543fe29b9", null ],
     [ "Gap_EncryptLink", "group___g_a_p.html#ga0e5ca5fa77a177e8b6d734852702db68", null ],
-    [ "Gap_AcceptPairingRequest", "group___g_a_p.html#ga48eb2faa58ac84d6d8a17319899e495b", null ],
+    [ "Gap_AcceptPairingRequest", "group___g_a_p.html#gab5867a07a1fb8275a5ab84e060d91d71", null ],
     [ "Gap_RejectPairing", "group___g_a_p.html#ga7ab6b4dab2cabaa03a8c2d5f8cf20961", null ],
     [ "Gap_EnterPasskey", "group___g_a_p.html#ga4edbc7d0de47847774d9a9d91dda311e", null ],
-    [ "Gap_ProvideOob", "group___g_a_p.html#ga93be78e99f4aa3938a069f037d63a53c", null ],
+    [ "Gap_ProvideOob", "group___g_a_p.html#gad847dce0de159580ff24eb10b7eb6b72", null ],
     [ "Gap_RejectPasskeyRequest", "group___g_a_p.html#ga0913d3461e30a4e1d718e0d98f99b261", null ],
-    [ "Gap_SendSmpKeys", "group___g_a_p.html#ga2031f0a27101afa18f187f27b85470c5", null ],
+    [ "Gap_SendSmpKeys", "group___g_a_p.html#ga59085c17b6b0a71bf5f3268615dddfbb", null ],
     [ "Gap_RejectKeyExchangeRequest", "group___g_a_p.html#ga32ded802bcd3d01982c1568542c06da1", null ],
     [ "Gap_LeScRegeneratePublicKey", "group___g_a_p.html#ga4dca80333c85bbeef6618e77f32721bf", null ],
     [ "Gap_LeScValidateNumericValue", "group___g_a_p.html#gae6469b0c99d9ea0ae1832ede688b8fdf", null ],
     [ "Gap_LeScGetLocalOobData", "group___g_a_p.html#ga4c1352d84b79cdab38998eaabad84b95", null ],
-    [ "Gap_LeScSetPeerOobData", "group___g_a_p.html#ga5ad866a7375b50085be5b50ca1f68e94", null ],
+    [ "Gap_LeScSetPeerOobData", "group___g_a_p.html#ga0c2e54139bb58c053e834f32cffb0480", null ],
     [ "Gap_LeScSendKeypressNotification", "group___g_a_p.html#gaab80c5c6115062303434ce1b91f0322f", null ],
-    [ "Gap_ProvideLongTermKey", "group___g_a_p.html#ga6094ed4c06abe181142ade1aa98e916b", null ],
+    [ "Gap_ProvideLongTermKey", "group___g_a_p.html#ga88af80723eff8e0eb9839eb9136d4d17", null ],
     [ "Gap_DenyLongTermKey", "group___g_a_p.html#ga633ba10e4dd18317a15c7e4d0ed461ad", null ],
     [ "Gap_LoadEncryptionInformation", "group___g_a_p.html#ga013676f6e769adac6605c81d114f0b4e", null ],
     [ "Gap_SetLocalPasskey", "group___g_a_p.html#ga054a57216a44191ed877b734b2fc233a", null ],
-    [ "Gap_SetScanMode", "group___g_a_p.html#gab31cbf3e6ebf4c5f94296a334bf80658", null ],
-    [ "Gap_StartScanning", "group___g_a_p.html#ga8551c086db42d6a85fd7ff9f74cd6775", null ],
+    [ "Gap_SetScanMode", "group___g_a_p.html#gac54954470692def7f6e50bd9610e81fc", null ],
+    [ "Gap_StartScanning", "group___g_a_p.html#gab088bf6fad52419fcd6c21fab4e940c8", null ],
     [ "Gap_StopScanning", "group___g_a_p.html#gaf29930dc3f70f5dcb67a38bbdcf2910a", null ],
-    [ "Gap_Connect", "group___g_a_p.html#gaec3189fe322d642f75db3c7505767740", null ],
+    [ "Gap_Connect", "group___g_a_p.html#gadc6c618f1da0700ec2c12447f521d76a", null ],
     [ "Gap_Disconnect", "group___g_a_p.html#gab39eb35710e7bc4e134879282fe843b4", null ],
-    [ "Gap_SaveCustomPeerInformation", "group___g_a_p.html#ga4de8882ac527fbe7f23af44789931ba9", null ],
+    [ "Gap_SaveCustomPeerInformation", "group___g_a_p.html#ga1ef1c6b3563005c62051a3de682c2cfe", null ],
     [ "Gap_LoadCustomPeerInformation", "group___g_a_p.html#gac0a457f9bf3d21429383a7657f411240", null ],
-    [ "Gap_CheckIfBonded", "group___g_a_p.html#ga74dbab33990e5f95be734b9530d386c2", null ],
+    [ "Gap_CheckIfBonded", "group___g_a_p.html#ga8403f4e3cc1265f1bdb87bb92ee6ae31", null ],
     [ "Gap_ReadWhiteListSize", "group___g_a_p.html#gafb3ed85966de5baafb65772ad07068f1", null ],
     [ "Gap_ClearWhiteList", "group___g_a_p.html#gaa7c1cedbb003472e8f5e90df9eed80fb", null ],
-    [ "Gap_AddDeviceToWhiteList", "group___g_a_p.html#gaeb30c68c14aa3e507b02ace9e6b1b898", null ],
-    [ "Gap_RemoveDeviceFromWhiteList", "group___g_a_p.html#ga12839f20fe8d3396184c5771378e9f7e", null ],
+    [ "Gap_AddDeviceToWhiteList", "group___g_a_p.html#ga1b08018e5427ba20de971272b1a18081", null ],
+    [ "Gap_RemoveDeviceFromWhiteList", "group___g_a_p.html#gaae29193f1092a74ada9fb1e37248804b", null ],
     [ "Gap_ReadPublicDeviceAddress", "group___g_a_p.html#ga74073a34116d85441c153f863d5e483f", null ],
-    [ "Gap_CreateRandomDeviceAddress", "group___g_a_p.html#ga651156e1e695e64204676dafb48b1a5a", null ],
-    [ "Gap_SaveDeviceName", "group___g_a_p.html#ga5271c9c2acd279a28835add2bd23a5a8", null ],
+    [ "Gap_CreateRandomDeviceAddress", "group___g_a_p.html#gac08c63eccf6bd485a3bf74421d6d0f86", null ],
+    [ "Gap_SaveDeviceName", "group___g_a_p.html#ga884a61809d98dd14c2de71f6e6e161ab", null ],
     [ "Gap_GetBondedDevicesCount", "group___g_a_p.html#ga9e04bc6645ee828a6a2442944bdc2693", null ],
     [ "Gap_GetBondedDeviceName", "group___g_a_p.html#ga7a29cb47aca5d63bc27f399542f39688", null ],
     [ "Gap_RemoveBond", "group___g_a_p.html#gaa76e63b101e26a0ccbd307c2883e2059", null ],
     [ "Gap_RemoveAllBonds", "group___g_a_p.html#gabb5925d0868269f8954d908d4ccfd576", null ],
     [ "Gap_ReadRadioPowerLevel", "group___g_a_p.html#gac16ebd89d3671fea5a4100ca3cc2a18b", null ],
     [ "Gap_SetTxPowerLevel", "group___g_a_p.html#ga3e05e37f32d889366d31cc58f08f683c", null ],
-    [ "Gap_VerifyPrivateResolvableAddress", "group___g_a_p.html#gaef70e3fe74c164c9977821f4e5c8acc7", null ],
-    [ "Gap_SetRandomAddress", "group___g_a_p.html#ga9e4eb88a2519e4dd85d67f55e1e4798d", null ],
-    [ "Gap_SetDefaultPairingParameters", "group___g_a_p.html#gac7bc6dc98166fa3d5b6e26525a2c599c", null ],
+    [ "Gap_VerifyPrivateResolvableAddress", "group___g_a_p.html#ga40d9c9ba6fb87c77b6a22b6bf69adc4e", null ],
+    [ "Gap_SetRandomAddress", "group___g_a_p.html#gacf792df7e6414d734714915c0a480dda", null ],
+    [ "Gap_SetDefaultPairingParameters", "group___g_a_p.html#gabf4981bc38b357d75a1842561220591d", null ],
     [ "Gap_UpdateConnectionParameters", "group___g_a_p.html#ga8423831269f9402b87db84919f253e13", null ],
     [ "Gap_EnableUpdateConnectionParameters", "group___g_a_p.html#ga09fda774be6040b3d67acc587f75c1a1", null ],
     [ "Gap_UpdateLeDataLength", "group___g_a_p.html#ga000a3314d7f402175fed1fcf3f261b0e", null ],
-    [ "Gap_ControllerReset", "group___g_a_p.html#ga8c3bbdccf9860eef6bf9cc036def9337", null ],
-    [ "Gap_EnableHostPrivacy", "group___g_a_p.html#gaccf0aa3bf93c9954345ea15a0da5f72c", null ],
-    [ "Gap_EnableControllerPrivacy", "group___g_a_p.html#gaaa44c125cd6b1c584e0fd730d0804f71", null ],
+    [ "Gap_EnableHostPrivacy", "group___g_a_p.html#ga3409dea772a489f2b08e5ede42d87668", null ],
+    [ "Gap_EnableControllerPrivacy", "group___g_a_p.html#ga1926b670d61d1362d3735dc2c6bdd4de", null ],
+    [ "Gap_SetPrivacyMode", "group___g_a_p.html#gad436221c6492095f4ee5faf0c0e0f93b", null ],
     [ "Gap_ControllerTest", "group___g_a_p.html#ga7abbab8f335d06c80d2a5ac3ecb32477", null ],
     [ "Gap_LeReadPhy", "group___g_a_p.html#ga4abb0b273076f152b8a96eb8289c0a0b", null ],
     [ "Gap_LeSetPhy", "group___g_a_p.html#ga69bd4064160828ddfc14c7fbdfe2a70f", null ],
-    [ "connIntervalMax", "group___g_a_p.html#gad08de4b318a8160e2cb0036b6bc5b511", null ]
+    [ "Gap_ControllerEnhancedNotification", "group___g_a_p.html#ga6dfb14506170ee45e7f840199e65671c", null ],
+    [ "Gap_LoadKeys", "group___g_a_p.html#ga8d5b97c8186711a3116e58e698c418f5", null ],
+    [ "Gap_SaveKeys", "group___g_a_p.html#ga8a5d65aef13b9b9f15b4d0542f40806e", null ],
+    [ "Gap_SetChannelMap", "group___g_a_p.html#gae4e9c5d5b5fe2dbe1001455deea1c8ab", null ],
+    [ "Gap_ReadChannelMap", "group___g_a_p.html#gaaacb74b3af6ba10bd5990fba8fb292dc", null ],
+    [ "Gap_SetExtAdvertisingParameters", "group___g_a_p.html#gadaf828f57105fe24f0d27f6bf7c95b05", null ],
+    [ "Gap_SetExtAdvertisingData", "group___g_a_p.html#gaac4e13b037602163b9599ffb88480cbe", null ],
+    [ "Gap_StartExtAdvertising", "group___g_a_p.html#ga4168b55d76203195b8819b4c573c4489", null ],
+    [ "Gap_StopExtAdvertising", "group___g_a_p.html#ga50ee99a244b5e3e331dcbc023d6ee45f", null ],
+    [ "Gap_RemoveAdvSet", "group___g_a_p.html#ga1f6a6e7d7ba4eae4256866eab2b433ed", null ],
+    [ "Gap_SetPeriodicAdvParameters", "group___g_a_p.html#gaef7ea73d50c162b0b6dc5633de163cbf", null ],
+    [ "Gap_SetPeriodicAdvertisingData", "group___g_a_p.html#ga5d702040bb5d43b49b85a08d63533390", null ],
+    [ "Gap_StartPeriodicAdvertising", "group___g_a_p.html#ga3b6577ee72c302e2931576934151ea1b", null ],
+    [ "Gap_StopPeriodicAdvertising", "group___g_a_p.html#gad74fd8cf2b6a0bf4b0cb0450a7d959f7", null ],
+    [ "Gap_UpdatePeriodicAdvList", "group___g_a_p.html#ga3d4a2b67fa6072207bc1ffe86bdbc660", null ],
+    [ "Gap_PeriodicAdvCreateSync", "group___g_a_p.html#gace2b711a42a5177af3b58bccebb4bccf", null ],
+    [ "Gap_PeriodicAdvTerminateSync", "group___g_a_p.html#gaedf77a79dc35bf0e4d5b748adec7fb38", null ],
+    [ "Gap_ResumeLeScStateMachine", "group___g_a_p.html#ga178795750537322d4e168052f59ad9e3", null ]
 ];

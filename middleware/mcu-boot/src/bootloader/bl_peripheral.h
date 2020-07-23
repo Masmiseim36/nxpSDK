@@ -47,7 +47,7 @@ typedef enum _pinmux_types
 // Forward declaration.
 typedef struct PeripheralDescriptor peripheral_descriptor_t;
 
-typedef void (*serial_byte_receive_func_t)(uint8_t);
+typedef void (*serial_byte_receive_func_t)(uint8_t data);
 
 //! @brief Peripheral control interface.
 typedef struct _peripheral_control_interface

@@ -4,7 +4,7 @@
  ********************************************************************************** */
 /*! *********************************************************************************
 * Copyright 2015, Freescale Semiconductor, Inc.
-* Copyright 2016-2019 NXP
+* Copyright 2016-2020 NXP
 * All rights reserved.
 *
 * \file
@@ -48,7 +48,7 @@
 #define gAppUsePairing_d        1
 
 /*! Enable/disable use of privacy */
-#define gAppUsePrivacy_d        1
+#define gAppUsePrivacy_d        0
 
 #define gPasskeyValue_c         999999
 

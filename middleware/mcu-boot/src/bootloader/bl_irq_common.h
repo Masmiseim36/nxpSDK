@@ -5,6 +5,9 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
+#ifndef _BL_IRQ_COMMON_H_
+#define _BL_IRQ_COMMON_H_ 
+
 #include "bootloader_common.h"
 #include "bootloader/bl_peripheral_interface.h"
 
@@ -49,6 +52,8 @@ void DSPI_SetSystemIRQ(uint32_t instance, PeripheralSystemIRQSetting set);
  */
 void LPUART_SetSystemIRQ(uint32_t instance, PeripheralSystemIRQSetting set);
 
+#if defined(KW38A4_SERIES)
+#else
 /*!
  * @brief Configure IRQ gate for UART peripherals
  *
@@ -78,6 +83,7 @@ void lpi2c_set_system_IRQ_gate(uint32_t instance, PeripheralSystemIRQSetting set
  * @param set Option for disabling or enabling IRQ gates.
  */
 void lpspi_set_system_IRQ_gate(uint32_t instance, PeripheralSystemIRQSetting set);
+#endif
 
 #if defined(__cplusplus)
 }
@@ -85,6 +91,7 @@ void lpspi_set_system_IRQ_gate(uint32_t instance, PeripheralSystemIRQSetting set
 
 //! @}
 
+#endif /* _BL_IRQ_COMMON_H_ */
 ////////////////////////////////////////////////////////////////////////////////
 // EOF
 ////////////////////////////////////////////////////////////////////////////////

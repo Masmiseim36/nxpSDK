@@ -115,11 +115,8 @@ const dcdcConfig_t mDcdcDefaultConfig =
 {
 #if APP_DCDC_MODE == gDCDC_Mode_Buck_c
   .vbatMin = 1800,
-  .vbatMax = 4200,
-#elif APP_DCDC_MODE == gDCDC_Mode_Boost_c
-  .vbatMin = 900,
-  .vbatMax = 1800,
-#endif  
+  .vbatMax = 3600,
+#endif
   .dcdcMode = APP_DCDC_MODE,
   .vBatMonitorIntervalMs = APP_DCDC_VBAT_MONITOR_INTERVAL,
   .pfDCDCAppCallback = NULL, /* .pfDCDCAppCallback = DCDCCallback, */

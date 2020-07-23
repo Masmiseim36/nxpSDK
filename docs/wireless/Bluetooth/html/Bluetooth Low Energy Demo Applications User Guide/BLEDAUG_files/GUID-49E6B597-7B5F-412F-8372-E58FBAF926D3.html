@@ -25,7 +25,19 @@
 	
 	<div class="body"><p class="shortdesc"/>
 
-		<p class="p">After flashing the board, the beacon application starts advertising. When in GAP Discoverable Mode, CONNLED is flashing. Hold the ADVSW button pressed for 2-3 seconds anytime to stop advertising. In idle mode, all LEDs are flashing. To restart advertising, press the ADVSW button.</p>
+		<p class="p">After flashing the board, the sensor is put in deep sleep (all LEDs are off). To
+			flash the board in case the sensor is put in deep sleep, press ADVSW or RESET. Also, any
+			attached debugger loses its connection. The application default configuration enables
+			low power, which disables LED support. The user can manually change the configuration
+			and enable the LED support, otherwise all subsequent LED behavior references shall be
+			ignored. First press of the ADVSW button starts legacy advertising. The following
+			applies to platforms capable of performing Extended Advertising - which excludes
+			QN9090/K32W061/KW35. Second press starts extended advertising, and the third press
+			starts periodic advertising. Another press stops the periodic advertising, and another
+			one stops the extended advertising as well. <span class="ph">For
+				FRDM-KW38 board, the default enabled low-power modes are 1 and 5. This means that
+				the MCU is put into VLLS2 or VLLS3 stop mode. In this mode, the LED module operation
+				is not implemented.</span></p>
 
 		<p class="p">See details below for hardware references.</p>
 
@@ -36,11 +48,11 @@
 				
 				<thead class="thead" align="left">
 					<tr class="row">
-						<th class="entry" valign="top" width="33.33333333333333%" id="d4786e37">Platform</th>
+						<th class="entry" valign="top" width="33.33333333333333%" id="d5296e39">Platform</th>
 
-						<th class="entry" valign="top" width="33.33333333333333%" id="d4786e40">ADVSW</th>
+						<th class="entry" valign="top" width="33.33333333333333%" id="d5296e42">ADVSW</th>
 
-						<th class="entry" valign="top" width="33.33333333333333%" id="d4786e43">CONNLED</th>
+						<th class="entry" valign="top" width="33.33333333333333%" id="d5296e45">CONNLED</th>
 
 					</tr>
 
@@ -48,33 +60,41 @@
 
 				<tbody class="tbody">
 					<tr class="row">
-						<td class="entry" valign="top" width="33.33333333333333%" headers="d4786e37 ">FRDM-KW41Z</td>
+						<td class="entry" valign="top" width="33.33333333333333%" headers="d5296e39 ">FRDM-KW41Z</td>
 
-						<td class="entry" valign="top" width="33.33333333333333%" headers="d4786e40 ">SW4</td>
+						<td class="entry" valign="top" width="33.33333333333333%" headers="d5296e42 ">SW4</td>
 
-						<td class="entry" valign="top" width="33.33333333333333%" headers="d4786e43 ">LED3</td>
-
-					</tr>
-
-					<tr class="row">
-						<td class="entry" valign="top" width="33.33333333333333%" headers="d4786e37 ">QN9080CDK</td>
-
-						<td class="entry" valign="top" width="33.33333333333333%" headers="d4786e40 ">BUTTON1</td>
-
-						<td class="entry" valign="top" width="33.33333333333333%" headers="d4786e43 ">D5-RED</td>
+						<td class="entry" valign="top" width="33.33333333333333%" headers="d5296e45 ">LED3</td>
 
 					</tr>
 
 					<tr class="row">
-						<td class="entry" valign="top" width="33.33333333333333%" headers="d4786e37 ">FRDM-KW36</td>
+						<td class="entry" valign="top" width="33.33333333333333%" headers="d5296e39 ">QN9080CDK</td>
 
-						<td class="entry" valign="top" width="33.33333333333333%" headers="d4786e40 ">SW2</td>
+						<td class="entry" valign="top" width="33.33333333333333%" headers="d5296e42 ">BUTTON1</td>
 
-						<td class="entry" valign="top" width="33.33333333333333%" headers="d4786e43 ">LED3</td>
+						<td class="entry" valign="top" width="33.33333333333333%" headers="d5296e45 ">D5-RED</td>
 
 					</tr>
 
-					
+					<tr class="row">
+						<td class="entry" valign="top" width="33.33333333333333%" headers="d5296e39 ">FRDM-KW36</td>
+
+						<td class="entry" valign="top" width="33.33333333333333%" headers="d5296e42 ">SW2</td>
+
+						<td class="entry" valign="top" width="33.33333333333333%" headers="d5296e45 ">LED3</td>
+
+					</tr>
+
+					<tr class="row">
+						<td class="entry" valign="top" width="33.33333333333333%" headers="d5296e39 ">FRDM-KW38</td>
+
+						<td class="entry" valign="top" width="33.33333333333333%" headers="d5296e42 ">SW3</td>
+
+						<td class="entry" valign="top" width="33.33333333333333%" headers="d5296e45 ">LED3</td>
+
+					</tr>
+
 					
 					
 				</tbody>

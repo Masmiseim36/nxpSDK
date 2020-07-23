@@ -23,11 +23,13 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief TRNG driver version 2.0.6
+/*! @brief TRNG driver version 2.0.7
  *
- * Current version: 2.0.6
+ * Current version: 2.0.7
  *
  * Change log:
+ * - version 2.0.7
+ *   - Fix MISRA 2004 issue rule 12.5.
  * - version 2.0.6
  *   - For KW35Z4_SERIES set TRNG_USER_CONFIG_DEFAULT_OSC_DIV to kTRNG_RingOscDiv8.
  * - version 2.0.5

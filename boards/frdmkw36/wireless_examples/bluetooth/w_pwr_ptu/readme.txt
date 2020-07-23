@@ -6,7 +6,7 @@ For more information, please consult the "BLE Demo Applications User's Guide".
 
 Toolchain supported
 ===================
-- IAR Embedded Workbench 8.32.2
+- IAR Embedded Workbench 8.32.4
 - MCUXpresso IDE 10.3.1
 
 Hardware requirements

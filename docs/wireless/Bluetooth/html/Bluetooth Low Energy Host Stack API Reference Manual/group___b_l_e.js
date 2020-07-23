@@ -34,6 +34,31 @@ var group___b_l_e =
       [ "txPhy", "group___b_l_e.html#a302704aedd02cee023dd118e6958a17d", null ],
       [ "rxPhy", "group___b_l_e.html#a7cf1a9e304881e1503e780c71a87dd1d", null ]
     ] ],
+    [ "bleNotificationEvent_t", "group___b_l_e.html#structble_notification_event__t", [
+      [ "eventType", "group___b_l_e.html#a3c2d41d1dadcc4b9de9a45034627efb4", null ],
+      [ "deviceId", "group___b_l_e.html#a11511a5d5991e43465298f7689599d7c", null ],
+      [ "rssi", "group___b_l_e.html#a96c4a5ec4cc3aed4728a3124f95dd1aa", null ],
+      [ "channel", "group___b_l_e.html#a0154780b556dff3501bbe059ac66139a", null ],
+      [ "ce_counter", "group___b_l_e.html#ab8d704918e0a36aa9eff23d181ef3beb", null ],
+      [ "status", "group___b_l_e.html#a84926bc5a059c4fcf5eac35b770fb79d", null ],
+      [ "timestamp", "group___b_l_e.html#a7b490a89f35e943dfa67ce4fe760c95c", null ],
+      [ "adv_handle", "group___b_l_e.html#a4a9a1d2eab0d059f9f7979aa717c158a", null ]
+    ] ],
+    [ "gapInitComplete_t", "group___b_l_e.html#structgap_init_complete__t", [
+      [ "supportedFeatures", "group___b_l_e.html#af9bbdbf18146a1871911fc0b52600e19", null ],
+      [ "maxAdvDataSize", "group___b_l_e.html#ae242448fdabdecff4494a3aabc1a5ef1", null ],
+      [ "numOfSupportedAdvSets", "group___b_l_e.html#a1ff24a37947185762e5db7ea3d371dbc", null ],
+      [ "periodicAdvListSize", "group___b_l_e.html#a467cd564ba1d3c9018583d9761ce299e", null ]
+    ] ],
+    [ "bleBondCreatedEvent_t", "group___b_l_e.html#structble_bond_created_event__t", [
+      [ "nvmIndex", "group___b_l_e.html#a3feb41e8143ac8b49838ec746de4efe3", null ],
+      [ "addressType", "group___b_l_e.html#adc3e44e7831c5258f6c44079927f788f", null ],
+      [ "address", "group___b_l_e.html#ae4966889bbe8a25c8ffb23b407ac1be6", null ]
+    ] ],
+    [ "gapAddrReadyEvent_t", "group___b_l_e.html#structgap_addr_ready_event__t", [
+      [ "aAddress", "group___b_l_e.html#a25c7452d0b01f3815c64d350d5f7b937", null ],
+      [ "advHandle", "group___b_l_e.html#a30e835da79e5d9b55435a12f83f2f24f", null ]
+    ] ],
     [ "gapGenericEvent_t", "group___b_l_e.html#structgap_generic_event__t", [
       [ "eventType", "group___b_l_e.html#ac4ad564a8dfaa62f1f76a4e9b2f5c3da", null ],
       [ "eventData", "group___b_l_e.html#a8431e8cd56f87cd2fc7a51771f3c5f69", null ]
@@ -42,6 +67,8 @@ var group___b_l_e =
       [ "internalError", "group___b_l_e.html#a69957037e3b1ca0136fd7fac5915094c", null ],
       [ "whiteListSize", "group___b_l_e.html#a42fd31380acc753761239bed5bf14075", null ],
       [ "aAddress", "group___b_l_e.html#abf2ce541e476cf4456577996f9ec3ad3", null ],
+      [ "addrReady", "group___b_l_e.html#a541b26e4af558071a01b4bcf3292bc05", null ],
+      [ "advHandle", "group___b_l_e.html#a01624d613abef20a20da54f0430befc3", null ],
       [ "setupFailError", "group___b_l_e.html#a1bf154c9020505b31213d0f16c659015", null ],
       [ "advTxPowerLevel_dBm", "group___b_l_e.html#a2566aa3200fcd812788b863aa1f3aea2", null ],
       [ "verified", "group___b_l_e.html#a723aa82a83c278d5e7e7be9b109b406a", null ],
@@ -49,23 +76,27 @@ var group___b_l_e =
       [ "newHostPrivacyState", "group___b_l_e.html#a613cd5d30f81bc53a62a56cb824af450", null ],
       [ "newControllerPrivacyState", "group___b_l_e.html#adc1f357f289eb1b043d2c5a0669c3e85", null ],
       [ "testEvent", "group___b_l_e.html#a9d2e413b18b5a6c7e0e4b26fb0964288", null ],
-      [ "txPowerLeveleSetStatus", "group___b_l_e.html#acba57a227db5872a9ff98fd74acdba06", null ],
-      [ "phyEvent", "group___b_l_e.html#ae05676ccab8be474d64953d1c94890ca", null ]
+      [ "txPowerLevelSetStatus", "group___b_l_e.html#a6337ff2a8dd05309b836ffc0290df3c5", null ],
+      [ "phyEvent", "group___b_l_e.html#ae05676ccab8be474d64953d1c94890ca", null ],
+      [ "deviceId", "group___b_l_e.html#a671b750dad5f30d6eaf736b4cb910d35", null ],
+      [ "initCompleteData", "group___b_l_e.html#ab718ced7dc9a523573233083ae4bc45b", null ],
+      [ "notifEvent", "group___b_l_e.html#a7b47c161229209839706f89e9625e06a", null ],
+      [ "bondCreatedEvent", "group___b_l_e.html#a26e23b4bcc8fd1c6e8319134bc1efbaa", null ]
     ] ],
     [ "bleBondIdentityHeaderBlob_t", "group___b_l_e.html#structble_bond_identity_header_blob__t", [
-      [ "raw", "group___b_l_e.html#a78ac757a12c17e49e9811534ec273818", null ]
+      [ "raw", "group___b_l_e.html#abc60ed6a4f7a9bc198acad57095bafea", null ]
     ] ],
     [ "bleBondDataDynamicBlob_t", "group___b_l_e.html#structble_bond_data_dynamic_blob__t", [
-      [ "raw", "group___b_l_e.html#a34b6543fc76b88e14917a67e7fa2b0dc", null ]
+      [ "raw", "group___b_l_e.html#a49e5f21fc864120f54e1b2da3d38f2d7", null ]
     ] ],
     [ "bleBondDataStaticBlob_t", "group___b_l_e.html#structble_bond_data_static_blob__t", [
-      [ "raw", "group___b_l_e.html#a765731c08535ad306b2fb458d487896d", null ]
+      [ "raw", "group___b_l_e.html#ae1df406e885f6658b745c3f8427cd054", null ]
     ] ],
     [ "bleBondDataDeviceInfoBlob_t", "group___b_l_e.html#structble_bond_data_device_info_blob__t", [
-      [ "raw", "group___b_l_e.html#a359cedf61dc7e1d7a668660a8734c82d", null ]
+      [ "raw", "group___b_l_e.html#ad42fcb4862f30e4a3ea23eeccc5dc68e", null ]
     ] ],
     [ "bleBondDataDescriptorBlob_t", "group___b_l_e.html#structble_bond_data_descriptor_blob__t", [
-      [ "raw", "group___b_l_e.html#a184ccfc1a4c7b295f44203b9e35c9217", null ]
+      [ "raw", "group___b_l_e.html#ae08d2a256f2544ad0fb0a9082ae0b31c", null ]
     ] ],
     [ "bleBondDataBlob_t", "group___b_l_e.html#structble_bond_data_blob__t", [
       [ "bondHeader", "group___b_l_e.html#a33f9d344dbdb65833b47fc42a8e04c79", null ],
@@ -80,11 +111,26 @@ var group___b_l_e =
     [ "gcConnectionSupervisionTimeoutDefault_c", "group___b_l_e.html#ga4fd451acb1c63ab0cc647bc4af46e5c4", null ],
     [ "gcConnectionEventMinDefault_c", "group___b_l_e.html#gac161e15f0609e02f2cdcaec3b1b5dc1a", null ],
     [ "gcConnectionEventMaxDefault_c", "group___b_l_e.html#gad38a7d1745fd5c4f7cf444b222d472aa", null ],
+    [ "STATIC", "group___b_l_e.html#ga10b2d890d871e1489bb02b7e70d9bdfb", null ],
+    [ "gBleAddrTypePublic_c", "group___b_l_e.html#ga5b82acd6c5c8081ba9bc823fcc2aed32", null ],
+    [ "gBleAddrTypeRandom_c", "group___b_l_e.html#gad1fd480a186e55b1b3e662c75a1e7d21", null ],
     [ "Ble_IsPrivateResolvableDeviceAddress", "group___b_l_e.html#gadcd3e4ab7e0a6eccf23cdb7591d6979a", null ],
     [ "Ble_IsPrivateNonresolvableDeviceAddress", "group___b_l_e.html#ga2a0547abfe0f27098d3d28d220696a5c", null ],
     [ "Ble_IsRandomStaticDeviceAddress", "group___b_l_e.html#ga9b1d6400dd25ba48097fdd115d68c644", null ],
     [ "Ble_DeviceAddressesMatch", "group___b_l_e.html#gaf74b38f3a701b32e6246a54bf7d9741f", null ],
     [ "Ble_CopyDeviceAddress", "group___b_l_e.html#ga2dd104ddcae223d221c9bc04f01b7ebb", null ],
+    [ "gBleUuidType16_c", "group___b_l_e.html#ga3f372a2684d0df05a40a15c62d4b1cfe", null ],
+    [ "gBleUuidType128_c", "group___b_l_e.html#gac1d2a66e8b3e98a591f41740c33ad1a2", null ],
+    [ "gBleUuidType32_c", "group___b_l_e.html#ga4e25fdf047eadaae7bfd784668b61e81", null ],
+    [ "gLePhy1MFlag_c", "group___b_l_e.html#ga4d6833a1bd22bae0bfa126baf52a3206", null ],
+    [ "gLePhy2MFlag_c", "group___b_l_e.html#ga7c503211ea108a85885561b03a3e4e2f", null ],
+    [ "gLePhyCodedFlag_c", "group___b_l_e.html#ga82c82bee0e68e9ebb5ee083cd4de4022", null ],
+    [ "gUseDeviceAddress_c", "group___b_l_e.html#ga6d831525305652878598906c284b73e8", null ],
+    [ "gUseWhiteList_c", "group___b_l_e.html#ga4fc8161f0926a87e1e46f679dabc8f9f", null ],
+    [ "gScanAll_c", "group___b_l_e.html#ga41063f14e54bfea5d93efabbc849daa0", null ],
+    [ "gScanWithWhiteList_c", "group___b_l_e.html#ga50ab3d38f56668d7b0527f263523ee93", null ],
+    [ "gNetworkPrivacy_c", "group___b_l_e.html#ga34ba3aba3be441fe92619ca832718768", null ],
+    [ "gDevicePrivacy_c", "group___b_l_e.html#ga7cb108a913fd83d5a02583a8a90216af", null ],
     [ "gBleSig_PrimaryService_d", "group___b_l_e.html#ga54d07e77b7d5c90c38da35c061366b3f", null ],
     [ "gBleSig_SecondaryService_d", "group___b_l_e.html#ga52e03f6155878363081aa94429a5e98c", null ],
     [ "gBleSig_Include_d", "group___b_l_e.html#ga530a5081e921a53e1a0fc7327172ea5d", null ],
@@ -197,6 +243,15 @@ var group___b_l_e =
     [ "gBleSig_HTTP_EntityBody_d", "group___b_l_e.html#ga75ece914ca8484af24f6adddcf53c9cd", null ],
     [ "gBleSig_HTTP_ControlPoint_d", "group___b_l_e.html#gac963facf9de42b65610e46bb9299875f", null ],
     [ "gBleSig_HTTPS_Security_d", "group___b_l_e.html#ga34b8ecfd068ef1f8a1bcfbc8a4ef6720", null ],
+    [ "gBleSig_ResolvablePrivateAddressOnly_d", "group___b_l_e.html#ga65d7c59d4c0237b47fec6d4f45ed677a", null ],
+    [ "gBleSig_MeshProvisioningService_d", "group___b_l_e.html#ga8fba37a0c7e9d6430e0d5516e033b4d1", null ],
+    [ "gBleSig_MeshProxyService_d", "group___b_l_e.html#ga71207c643844baf8109265eac0415483", null ],
+    [ "gBleSig_MeshProvDataIn_d", "group___b_l_e.html#ga2c7bd1adf0157bfe088bbf1bf4ecee26", null ],
+    [ "gBleSig_MeshProvDataOut_d", "group___b_l_e.html#ga51c4b8719c38fce10547fbe4a786c126", null ],
+    [ "gBleSig_MeshProxyDataIn_d", "group___b_l_e.html#ga69acea1bc365018844d060053e5197f2", null ],
+    [ "gBleSig_MeshProxyDataOut_d", "group___b_l_e.html#gafd269df3670c1e3a21f0bb6b871b217e", null ],
+    [ "gBleSig_CAR_NotSupported_d", "group___b_l_e.html#ga37155f65a69e1012a2e480fdf3be9ff9", null ],
+    [ "gBleSig_RPAO_Used_d", "group___b_l_e.html#ga3bd8308c9d8ca36f05bd082722b91123", null ],
     [ "BleSig_IsGroupingAttributeUuid16", "group___b_l_e.html#gac7922bba76962b3de59f7f3e18224ea3", null ],
     [ "BleSig_IsServiceDeclarationUuid16", "group___b_l_e.html#ga836f89264ffe3f8f483585a799f43635", null ],
     [ "Uuid16", "group___b_l_e.html#ga0a66b62b8eb8c716a6e65a05f8594d05", null ],
@@ -222,7 +277,18 @@ var group___b_l_e =
     [ "Utils_Copy64", "group___b_l_e.html#gae29c53b55397b956aca97277c68c54bf", null ],
     [ "Utils_RevertByteArray", "group___b_l_e.html#gac2705d64ac4bd78b6095b174b801cad3", null ],
     [ "deviceId_t", "group___b_l_e.html#ga79037cf180936e7aa4ef278d2164b4d5", null ],
+    [ "bleAddressType_t", "group___b_l_e.html#ga3d5807c061008dca5bc0f88ea0eea085", null ],
     [ "bleDeviceAddress_t", "group___b_l_e.html#ga79cc8c6684c289e11ab72e839ddbd32c", null ],
+    [ "bleUuidType_t", "group___b_l_e.html#ga0fef97ae06525783a6c43c8508ecc35b", null ],
+    [ "bleAdvReportEventProperties_t", "group___b_l_e.html#ga402bc9cd47ae2000c5eb58d4950d24ef", null ],
+    [ "bleAdvRequestProperties_t", "group___b_l_e.html#gab59b1e825ebd8a05ba37db6eb38a398b", null ],
+    [ "bleScanningFilterPolicy_t", "group___b_l_e.html#ga9c9359ad7ca8cd9cbeef9f6db38d77c1", null ],
+    [ "bleInitiatorFilterPolicy_t", "group___b_l_e.html#ga755ef995251dcaf52a54d965c8eb6b10", null ],
+    [ "blePrivacyMode_t", "group___b_l_e.html#gae9196b336d5bf22fb6bd701a406d3fdc", null ],
+    [ "bleChannelMap_t", "group___b_l_e.html#ga1c12dc7a0dcf33d96c13a2295f1ef3cf", null ],
+    [ "gapLePhyFlags_t", "group___b_l_e.html#ga73dbaf5e04031632577ef968e6fa19a6", null ],
+    [ "gapLePhyMode_t", "group___b_l_e.html#ga6f4692f9bbf469483dd6485a9b10be31", null ],
+    [ "bleNotificationEventType_t", "group___b_l_e.html#ga09a0389091c79a5dc6f8b8ec0ff31384", null ],
     [ "gapGenericCallback_t", "group___b_l_e.html#gaceb8475d8d1d37ab79c2e96704750488", null ],
     [ "hciHostToControllerInterface_t", "group___b_l_e.html#gac7b8a34eb97cdf37cca1c85eb02543e5", null ],
     [ "bleResult_t", "group___b_l_e.html#ga50b56ac2045dae012646ed0377e3412c", [
@@ -237,6 +303,7 @@ var group___b_l_e =
       [ "gBleOsError_c", "group___b_l_e.html#gga50b56ac2045dae012646ed0377e3412cac042405c0dfe67489b79187bc2dc6d23", null ],
       [ "gBleUnexpectedError_c", "group___b_l_e.html#gga50b56ac2045dae012646ed0377e3412ca75c517aff958a353cd5cefc8fa4de8e8", null ],
       [ "gBleInvalidState_c", "group___b_l_e.html#gga50b56ac2045dae012646ed0377e3412ca4c019ea7e74661e6442cde18fde60c81", null ],
+      [ "gBleTimerError_c", "group___b_l_e.html#gga50b56ac2045dae012646ed0377e3412cae21dc632029b282f44556e1594b33ec6", null ],
       [ "gSmCommandNotSupported_c", "group___b_l_e.html#gga50b56ac2045dae012646ed0377e3412ca6984e2724927d653d8631488659ef386", null ],
       [ "gSmUnexpectedCommand_c", "group___b_l_e.html#gga50b56ac2045dae012646ed0377e3412ca1f2f98e3956e1258219c2c8dab544286", null ],
       [ "gSmInvalidCommandCode_c", "group___b_l_e.html#gga50b56ac2045dae012646ed0377e3412ca7428b39fe4fc63344dac142a62b68d34", null ],
@@ -281,11 +348,13 @@ var group___b_l_e =
       [ "gGattServerTimeout_c", "group___b_l_e.html#gga50b56ac2045dae012646ed0377e3412ca96dd2bb4e8f996a54905a164d1595e23", null ],
       [ "gGattIndicationAlreadyInProgress_c", "group___b_l_e.html#gga50b56ac2045dae012646ed0377e3412ca1caad58b654fea5128b3dc97aa670f78", null ],
       [ "gGattClientConfirmationTimeout_c", "group___b_l_e.html#gga50b56ac2045dae012646ed0377e3412ca36008d8bb6adfc3984924795d1483b2d", null ],
+      [ "gGattInvalidPduReceived_c", "group___b_l_e.html#gga50b56ac2045dae012646ed0377e3412ca772ed62335c4a24d8ba6886f5ce78d1b", null ],
       [ "gGapStatusBase_c", "group___b_l_e.html#gga50b56ac2045dae012646ed0377e3412cab62739cf4b9cc0e1d45e8364746670f0", null ],
       [ "gGapSuccess_c", "group___b_l_e.html#gga50b56ac2045dae012646ed0377e3412ca294e8fbe054c1b8ffdee6c74cc7a0501", null ],
       [ "gGapAdvDataTooLong_c", "group___b_l_e.html#gga50b56ac2045dae012646ed0377e3412ca36da81844a933d2702b11e04e465638c", null ],
       [ "gGapScanRspDataTooLong_c", "group___b_l_e.html#gga50b56ac2045dae012646ed0377e3412ca1f328eaeb07426cdd8ebf544f76a865b", null ],
       [ "gGapDeviceNotBonded_c", "group___b_l_e.html#gga50b56ac2045dae012646ed0377e3412ca57f1dba4eac72acf04b58bd653e3de38", null ],
+      [ "gGapAnotherProcedureInProgress_c", "group___b_l_e.html#gga50b56ac2045dae012646ed0377e3412ca793442b4929d0105556e6e1cc095b7da", null ],
       [ "gDevDbStatusBase_c", "group___b_l_e.html#gga50b56ac2045dae012646ed0377e3412caee1ee9f83b54bb1c85a132cfd3f3a602", null ],
       [ "gDevDbSuccess_c", "group___b_l_e.html#gga50b56ac2045dae012646ed0377e3412ca01b7f98a17da27c6d9e2f7566b00101c", null ],
       [ "gDevDbCccdLimitReached_c", "group___b_l_e.html#gga50b56ac2045dae012646ed0377e3412ca84f3da6b0f0025d57acbc9936f382171", null ],
@@ -298,21 +367,29 @@ var group___b_l_e =
       [ "gGattDbServiceNotFound_c", "group___b_l_e.html#gga50b56ac2045dae012646ed0377e3412cae6188e5de5db478e2c3c918690dcdd80", null ],
       [ "gGattDbDescriptorNotFound_c", "group___b_l_e.html#gga50b56ac2045dae012646ed0377e3412cae647aa281b53cda5920cc0935c70d599", null ]
     ] ],
-    [ "bleAddressType_t", "group___b_l_e.html#ga35852845649e4390e942af40f9380c29", [
-      [ "gBleAddrTypePublic_c", "group___b_l_e.html#gga35852845649e4390e942af40f9380c29abbbad0768b71d5ce9e6355a8d394da64", null ],
-      [ "gBleAddrTypeRandom_c", "group___b_l_e.html#gga35852845649e4390e942af40f9380c29ad12e135dfda5e5263126ccc1b29d7134", null ]
-    ] ],
-    [ "bleUuidType_t", "group___b_l_e.html#ga2f05260087a91a332e4c593274c5c280", [
-      [ "gBleUuidType16_c", "group___b_l_e.html#gga2f05260087a91a332e4c593274c5c280ac5143cb8fe28273c342571236c763409", null ],
-      [ "gBleUuidType128_c", "group___b_l_e.html#gga2f05260087a91a332e4c593274c5c280ab4b55af5fb0b4ec3033aa3ba64307193", null ],
-      [ "gBleUuidType32_c", "group___b_l_e.html#gga2f05260087a91a332e4c593274c5c280a713933ca0edaf142921ac3db190b70cc", null ]
-    ] ],
     [ "bleAdvertisingType_t", "group___b_l_e.html#ga2be06160ef0aef89a825f87350dbd551", [
       [ "gAdvConnectableUndirected_c", "group___b_l_e.html#gga2be06160ef0aef89a825f87350dbd551a481505cc87111a38a8cff2e25db0c545", null ],
       [ "gAdvDirectedHighDutyCycle_c", "group___b_l_e.html#gga2be06160ef0aef89a825f87350dbd551a17e1ffb0c4fdc0875024364e88c1265f", null ],
       [ "gAdvScannable_c", "group___b_l_e.html#gga2be06160ef0aef89a825f87350dbd551a035d4075501b881c8a63ee10d0cc9125", null ],
       [ "gAdvNonConnectable_c", "group___b_l_e.html#gga2be06160ef0aef89a825f87350dbd551af59a55af25a4af02ac1e29a287f6cf65", null ],
       [ "gAdvDirectedLowDutyCycle_c", "group___b_l_e.html#gga2be06160ef0aef89a825f87350dbd551ab42655d7aff914694411cc8a01cea046", null ]
+    ] ],
+    [ "bleAdvReportEventProperties_tag", "group___b_l_e.html#gad9773943102856b2004a6a51207bb8af", [
+      [ "gAdvEventConnectable_c", "group___b_l_e.html#ggad9773943102856b2004a6a51207bb8afa587a7687dd8e2bfa903038011d5e1d5c", null ],
+      [ "gAdvEventScannable_c", "group___b_l_e.html#ggad9773943102856b2004a6a51207bb8afaa3cb3cd48415a7415460ec619e61ff0f", null ],
+      [ "gAdvEventDirected_c", "group___b_l_e.html#ggad9773943102856b2004a6a51207bb8afa36f5c5f8fc0f05a19c7c70b59a6e396c", null ],
+      [ "gAdvEventScanResponse_c", "group___b_l_e.html#ggad9773943102856b2004a6a51207bb8afa281cd1106872bb951ced35b99d923e99", null ],
+      [ "gAdvEventLegacy_c", "group___b_l_e.html#ggad9773943102856b2004a6a51207bb8afadb0d927cc8cea26ffdacfc2a499294cc", null ],
+      [ "gAdvEventAnonymous_c", "group___b_l_e.html#ggad9773943102856b2004a6a51207bb8afae67a9e85e28d655aad9e544ee657b068", null ]
+    ] ],
+    [ "bleAdvRequestProperties_tag", "group___b_l_e.html#ga86eba3feeac89efadd33a03abe9f53cb", [
+      [ "gAdvReqConnectable_c", "group___b_l_e.html#gga86eba3feeac89efadd33a03abe9f53cba86f2bc87725891b4bb540fc689cd0e3a", null ],
+      [ "gAdvReqScannable_c", "group___b_l_e.html#gga86eba3feeac89efadd33a03abe9f53cba196ae5284f63e46fe0c5ea305b9a19e1", null ],
+      [ "gAdvReqDirected_c", "group___b_l_e.html#gga86eba3feeac89efadd33a03abe9f53cbafc200a046c6718ee5cb56e3e7dfdd017", null ],
+      [ "gAdvReqHighDutyCycle_c", "group___b_l_e.html#gga86eba3feeac89efadd33a03abe9f53cba1ed228aee831e11730302d06b1e6eb47", null ],
+      [ "gAdvReqLegacy_c", "group___b_l_e.html#gga86eba3feeac89efadd33a03abe9f53cba0537ab9f05932548b6e2914099bc4a3f", null ],
+      [ "gAdvReqAnonymous_c", "group___b_l_e.html#gga86eba3feeac89efadd33a03abe9f53cba75bef45884231163bcc84bc8a649573b", null ],
+      [ "gAdvIncludeTxPower_c", "group___b_l_e.html#gga86eba3feeac89efadd33a03abe9f53cba4be65673a87979fb37fdfda1d521b2fc", null ]
     ] ],
     [ "bleAdvertisingFilterPolicy_t", "group___b_l_e.html#ga9fab51bedf6e6dc5946a5e7c56eb295d", [
       [ "gBleAdvFilterAllowScanFromAnyAllowConnFromAny_c", "group___b_l_e.html#gga9fab51bedf6e6dc5946a5e7c56eb295daec1625d30dd301edc57383ccbfc7a7f8", null ],
@@ -333,14 +410,6 @@ var group___b_l_e =
     [ "bleScanType_t", "group___b_l_e.html#ga9ab6cce0fc52ca3e2b095e55c5342504", [
       [ "gScanTypePassive_c", "group___b_l_e.html#gga9ab6cce0fc52ca3e2b095e55c5342504a7542876b232951f012788676e2ec15a6", null ],
       [ "gScanTypeActive_c", "group___b_l_e.html#gga9ab6cce0fc52ca3e2b095e55c5342504aade0ac10f69a658cc339bb1c34081d09", null ]
-    ] ],
-    [ "bleScanningFilterPolicy_t", "group___b_l_e.html#ga04e2fa3454a43dec7796a73ae6b295e2", [
-      [ "gScanAll_c", "group___b_l_e.html#gga04e2fa3454a43dec7796a73ae6b295e2abefd86c31ba46094c775dced46de65d4", null ],
-      [ "gScanWithWhiteList_c", "group___b_l_e.html#gga04e2fa3454a43dec7796a73ae6b295e2ab97f81932dc1b7f1cbeaf7b9d01f06b4", null ]
-    ] ],
-    [ "bleInitiatorFilterPolicy_t", "group___b_l_e.html#gad9967cf7e96bdbf3ebfc0b3f25967622", [
-      [ "gUseDeviceAddress_c", "group___b_l_e.html#ggad9967cf7e96bdbf3ebfc0b3f25967622a38776679785528d841f619b5d27a960d", null ],
-      [ "gUseWhiteList_c", "group___b_l_e.html#ggad9967cf7e96bdbf3ebfc0b3f25967622a651dd58c53cdeb72d738df4195366492", null ]
     ] ],
     [ "bleTransmitPowerLevelType_t", "group___b_l_e.html#gab42415fb4ef79a2e969bfc543c087707", [
       [ "gReadCurrentTxPowerLevel_c", "group___b_l_e.html#ggab42415fb4ef79a2e969bfc543c087707a5713cb14a18ffd5fb50e1b6f4ef5e4e4", null ],
@@ -366,14 +435,24 @@ var group___b_l_e =
       [ "gAdvTxPowerLevelRead_c", "group___b_l_e.html#ggae0321289c44dc1da99802a87a094884aa4a32d9d6df07120bb0fc03266272baaf", null ],
       [ "gPrivateResolvableAddressVerified_c", "group___b_l_e.html#ggae0321289c44dc1da99802a87a094884aa92a85cf04a5266e50c41097f803c0a5b", null ],
       [ "gRandomAddressSet_c", "group___b_l_e.html#ggae0321289c44dc1da99802a87a094884aa1bee42c453e760923f98907113e384c7", null ],
-      [ "gControllerResetComplete_c", "group___b_l_e.html#ggae0321289c44dc1da99802a87a094884aab0a691c2743bbead00bab317b20fb54b", null ],
       [ "gLeScPublicKeyRegenerated_c", "group___b_l_e.html#ggae0321289c44dc1da99802a87a094884aa5f994f559645e1cda68b876009c23d8e", null ],
       [ "gLeScLocalOobData_c", "group___b_l_e.html#ggae0321289c44dc1da99802a87a094884aa2561624a00bf6f6bc6e5aadab4b742c9", null ],
       [ "gHostPrivacyStateChanged_c", "group___b_l_e.html#ggae0321289c44dc1da99802a87a094884aa84cc28fee436918a91430e22127f7730", null ],
       [ "gControllerPrivacyStateChanged_c", "group___b_l_e.html#ggae0321289c44dc1da99802a87a094884aa5c6a50116ab988206cf049193715760d", null ],
       [ "gControllerTestEvent_c", "group___b_l_e.html#ggae0321289c44dc1da99802a87a094884aa2e1c98d5efb3e6822e12163328415f78", null ],
       [ "gTxPowerLevelSetComplete_c", "group___b_l_e.html#ggae0321289c44dc1da99802a87a094884aa090c1ad2641b301297f35990c367a828", null ],
-      [ "gLePhyEvent_c", "group___b_l_e.html#ggae0321289c44dc1da99802a87a094884aa91b82b9a6b613a0c934ebf9a49651d51", null ]
+      [ "gLePhyEvent_c", "group___b_l_e.html#ggae0321289c44dc1da99802a87a094884aa91b82b9a6b613a0c934ebf9a49651d51", null ],
+      [ "gControllerNotificationEvent_c", "group___b_l_e.html#ggae0321289c44dc1da99802a87a094884aa62bb4a50b067dec78d774374eff660a3", null ],
+      [ "gBondCreatedEvent_c", "group___b_l_e.html#ggae0321289c44dc1da99802a87a094884aadfca6dd1bb15472c39336d74bc0baffe", null ],
+      [ "gChannelMapSet_c", "group___b_l_e.html#ggae0321289c44dc1da99802a87a094884aa3e0dc0faff811a8df2b76c9247cd9f8a", null ],
+      [ "gExtAdvertisingParametersSetupComplete_c", "group___b_l_e.html#ggae0321289c44dc1da99802a87a094884aa4fb4e6fac375236a1dc9ff657b0e1ca0", null ],
+      [ "gExtAdvertisingDataSetupComplete_c", "group___b_l_e.html#ggae0321289c44dc1da99802a87a094884aa8d0a57822ac0f651f970deea2830d2e8", null ],
+      [ "gExtAdvertisingSetRemoveComplete_c", "group___b_l_e.html#ggae0321289c44dc1da99802a87a094884aadd02d1b5cab499efcb8075b03133e755", null ],
+      [ "gPeriodicAdvParamSetupComplete_c", "group___b_l_e.html#ggae0321289c44dc1da99802a87a094884aa16ffd3b2173ab84d14a543eef5f3fe8c", null ],
+      [ "gPeriodicAdvDataSetupComplete_c", "group___b_l_e.html#ggae0321289c44dc1da99802a87a094884aad38f26df0b45dc4d7427d9514e3972f8", null ],
+      [ "gPeriodicAdvListUpdateComplete_c", "group___b_l_e.html#ggae0321289c44dc1da99802a87a094884aaed950429451ef180631a2fe8f5153517", null ],
+      [ "gPeriodicAdvCreateSyncCancelled_c", "group___b_l_e.html#ggae0321289c44dc1da99802a87a094884aa5ad85d1408fffde3241608aa6e56e3d7", null ],
+      [ "gTxEntryAvailable_c", "group___b_l_e.html#ggae0321289c44dc1da99802a87a094884aad8237f7739691ae10a2aeb7203a0b56d", null ]
     ] ],
     [ "gapInternalErrorSource_t", "group___b_l_e.html#ga7b9f3dfd81a9e2875412ad8cf01bbd97", null ],
     [ "gapControllerTestEventType_t", "group___b_l_e.html#ga705391c522c8d5b50d73c161ca0267f1", null ],
@@ -381,38 +460,37 @@ var group___b_l_e =
       [ "gLeTxPhyNoPreference_c", "group___b_l_e.html#gga4093b836b14ffbaccf1b572362b7006baa1e6d6c1a7a432705b5a1b059ffcaa1b", null ],
       [ "gLeRxPhyNoPreference_c", "group___b_l_e.html#gga4093b836b14ffbaccf1b572362b7006bab3fcff11e893ee23b682b9d0ee4593a6", null ]
     ] ],
-    [ "gapLeTxPhyFlags_t", "group___b_l_e.html#ga14d98836cda9e4b38409ad19a901f061", [
-      [ "gLeTxPhy1MFlag_c", "group___b_l_e.html#gga14d98836cda9e4b38409ad19a901f061a9468af62333e3328aca2cd56b74a3768", null ],
-      [ "gLeTxPhy2MFlag_c", "group___b_l_e.html#gga14d98836cda9e4b38409ad19a901f061aa701afd401d3b76df834aea0fe949dd7", null ],
-      [ "gLeTxPhyCodedFlag_c", "group___b_l_e.html#gga14d98836cda9e4b38409ad19a901f061acabeaedf17896bf2d6805c68c8d12870", null ]
-    ] ],
-    [ "gapLeRxPhyFlags_t", "group___b_l_e.html#ga6ad1052c71337f93c2246762108dd905", [
-      [ "gLeRxPhy1MFlag_c", "group___b_l_e.html#gga6ad1052c71337f93c2246762108dd905a3d3f1a47a516c098659ae1d4ca3bdba1", null ],
-      [ "gLeRxPhy2MFlag_c", "group___b_l_e.html#gga6ad1052c71337f93c2246762108dd905a28543e66a77cbb47603acac52b53cc7e", null ],
-      [ "gLeRxPhyCodedFlag_c", "group___b_l_e.html#gga6ad1052c71337f93c2246762108dd905a4dbf783a43b6b331a885b55df41cdf09", null ]
-    ] ],
     [ "gapLePhyOptionsFlags_t", "group___b_l_e.html#ga3a9b33736e65f4c53284aaaf1c4e7e28", [
       [ "gLeCodingNoPreference_c", "group___b_l_e.html#gga3a9b33736e65f4c53284aaaf1c4e7e28a0c8fea03996ac26f9e87036ad085527b", null ],
       [ "gLeCodingS2_c", "group___b_l_e.html#gga3a9b33736e65f4c53284aaaf1c4e7e28ad78b21bd29c4afbceb29ca7fe516ebe9", null ],
       [ "gLeCodingS8_c", "group___b_l_e.html#gga3a9b33736e65f4c53284aaaf1c4e7e28acedef2f4de97aa041abf438560131075", null ]
     ] ],
-    [ "gapLeTxPhy_t", "group___b_l_e.html#ga72867768db595b89e49bc3b2b910a1a6", [
-      [ "gLeTxPhy1M_c", "group___b_l_e.html#gga72867768db595b89e49bc3b2b910a1a6a63b4e05f8c6ab5ad316f4c4e6c79d041", null ],
-      [ "gLeTxPhy2M_c", "group___b_l_e.html#gga72867768db595b89e49bc3b2b910a1a6a82b3bcd1ae9b1634045de023b9807499", null ],
-      [ "gLeTxPhyCoded_c", "group___b_l_e.html#gga72867768db595b89e49bc3b2b910a1a6a62aa7129b935557fac5789cdb108672d", null ]
-    ] ],
-    [ "gapLeRxPhy_t", "group___b_l_e.html#ga9ca72003f9b5bc125fdd374065dd8f36", [
-      [ "gLeRxPhy1M_c", "group___b_l_e.html#gga9ca72003f9b5bc125fdd374065dd8f36aca30e293d197a7ae2b496d18f4104cef", null ],
-      [ "gLeRxPhy2M_c", "group___b_l_e.html#gga9ca72003f9b5bc125fdd374065dd8f36a705a50434533258c3bfbaac16baec0d8", null ],
-      [ "gLeRxPhyCoded_c", "group___b_l_e.html#gga9ca72003f9b5bc125fdd374065dd8f36a0451250bc92ab65350cf0d924d23ed9d", null ]
+    [ "gapLePhyMode_tag", "group___b_l_e.html#ga688da9a04429c9ba2e12234dd05d2f0f", [
+      [ "gLePhy1M_c", "group___b_l_e.html#gga688da9a04429c9ba2e12234dd05d2f0fa26f2c535d908a3eed866f56befcd5962", null ],
+      [ "gLePhy2M_c", "group___b_l_e.html#gga688da9a04429c9ba2e12234dd05d2f0faa1ab07c012b984704e076fdf4de22e3a", null ],
+      [ "gLePhyCoded_c", "group___b_l_e.html#gga688da9a04429c9ba2e12234dd05d2f0fa783f266fd412736f17bb3a300365cbcc", null ]
     ] ],
     [ "gapPhyEventType_t", "group___b_l_e.html#ga3be5333458dcdd73f5f7561b1131d08a", [
       [ "gPhySetDefaultComplete_c", "group___b_l_e.html#gga3be5333458dcdd73f5f7561b1131d08aa667ec4eb34896fdb2b9a5f2f1e55171e", null ],
       [ "gPhyRead_c", "group___b_l_e.html#gga3be5333458dcdd73f5f7561b1131d08aaf4598239f767d57899ac1f357e71583a", null ],
       [ "gPhyUpdateComplete_c", "group___b_l_e.html#gga3be5333458dcdd73f5f7561b1131d08aadb7d0a4877614b5e97747afe59ffd12a", null ]
     ] ],
+    [ "bleNotificationEventType_tag", "group___b_l_e.html#gacf9282aee6f32393ff29804ade6f6435", [
+      [ "gNotifEventNone_c", "group___b_l_e.html#ggacf9282aee6f32393ff29804ade6f6435afda2b5f89fb59f32245ed32eed6a6f0c", null ],
+      [ "gNotifConnEventOver_c", "group___b_l_e.html#ggacf9282aee6f32393ff29804ade6f6435a165f99307d133d666c93a575cfa7ebf8", null ],
+      [ "gNotifConnRxPdu_c", "group___b_l_e.html#ggacf9282aee6f32393ff29804ade6f6435ac963c227da1cb07a1e5327bc5788962b", null ],
+      [ "gNotifAdvEventOver_c", "group___b_l_e.html#ggacf9282aee6f32393ff29804ade6f6435a18f846d6d631ca2456fc841094be98c1", null ],
+      [ "gNotifAdvTx_c", "group___b_l_e.html#ggacf9282aee6f32393ff29804ade6f6435aa6f67f16ee41d7bbe399ed5acc53e321", null ],
+      [ "gNotifAdvScanReqRx_c", "group___b_l_e.html#ggacf9282aee6f32393ff29804ade6f6435af46eaffb04b3edba884b1531a7bd5e2b", null ],
+      [ "gNotifAdvConnReqRx_c", "group___b_l_e.html#ggacf9282aee6f32393ff29804ade6f6435ad18c5dd75e09ac3167013bc1bb1eef6f", null ],
+      [ "gNotifScanEventOver_c", "group___b_l_e.html#ggacf9282aee6f32393ff29804ade6f6435af344a89b2b7acffa25caec061bc46511", null ],
+      [ "gNotifScanAdvPktRx_c", "group___b_l_e.html#ggacf9282aee6f32393ff29804ade6f6435aadb0f639dab14f40c93817800e805ec0", null ],
+      [ "gNotifScanRspRx_c", "group___b_l_e.html#ggacf9282aee6f32393ff29804ade6f6435a34424415916fa273472d20435c737aed", null ],
+      [ "gNotifScanReqTx_c", "group___b_l_e.html#ggacf9282aee6f32393ff29804ade6f6435ae71c14384b193f694ddd21f8491e8d8b", null ],
+      [ "gNotifConnCreated_c", "group___b_l_e.html#ggacf9282aee6f32393ff29804ade6f6435af4cc6cb3724ffdeef8d0b4a5855fdd09", null ]
+    ] ],
     [ "Ble_HostInitialize", "group___b_l_e.html#ga790c9415da6b14c7e0893c1d3128253c", null ],
-    [ "Ble_HciRecv", "group___b_l_e.html#gab7e90e21234765991c1ced959f496efb", null ],
+    [ "Ble_HciRecv", "group___b_l_e.html#ga56d4106aaaed2c4d6340e3f05aacb239", null ],
     [ "Host_TaskHandler", "group___b_l_e.html#gae2e7ba95dc3039c23098966c390a3a3a", null ],
     [ "gApp2Host_TaskQueue", "group___b_l_e.html#ga8886d369f221fa7e7f2b60d846dc290a", null ],
     [ "gHci2Host_TaskQueue", "group___b_l_e.html#gac3f4ff34d65e6ba08741e068584ab5b6", null ],

@@ -47,10 +47,10 @@ The OTAP Bootloader must be programmed separately into the MCU, before programmi
 <li class="li">Create the application to send over the air. The executable must be provided in the
         .srec or .bin format. The .srec format executable can be obtained by using the IAR Output
         Converter and setting the output format to Motorola as shown below. The created .srec
-        application image must be offset to begin after the Bootloader region. To offset the
-        application copy the settings from the Linker-&gt;Config tab of the otap_client_l2cap_credit
-        or otap_client_att example applications project properties. For more details, see the
-          <em class="ph i">Bluetooth LE Application Developer’s Guide</em> (BLEADG). <div class="fig fignone" id="GUID-662371B3-1772-460B-8C6F-E25503437F61__BLEDAUG3016"><span class="figcap">Figure 1. IAR Output Converter Dialog - .srec output</span>
+        application image must be offset to begin after the Bootloader region (not applicable for a
+        QN9090 device). To offset the application copy the settings from the Linker-&gt;Config tab
+        of the otap_client_l2cap_credit or otap_client_att example applications project properties.
+        For more details, see the <em class="ph i">Bluetooth LE Application Developer’s Guide</em> (BLEADG). <div class="fig fignone" id="GUID-662371B3-1772-460B-8C6F-E25503437F61__BLEDAUG3016"><span class="figcap">Figure 1. IAR Output Converter Dialog - .srec output</span>
           
           <img class="image" src="GUID-AC8F8C8B-189F-469E-B26B-D3F4810740E9-high.jpg" height="364" width="436"/>
         </div>
@@ -63,13 +63,13 @@ The OTAP Bootloader must be programmed separately into the MCU, before programmi
         </div>
 </li>
 
-      <li class="li">To obtain a .bin file from MCUXpresso IDE go to
-        the Project properties -&gt; Settings -&gt; Build steps window and press the Edit button for
-        the Post-build steps. A Post-build steps window will show up in which the following command
-        must be added or uncommented (by removing the '#' character at the beginning) if it is
-        already there: arm-none-eabi-objcopy -v -O binary "${BuildArtifactFileName}"
+      <li class="li">To obtain a .bin file from MCUXpresso IDE go to the Project properties -&gt;
+        Settings -&gt; Build steps window and press the Edit button for the Post-build steps. A
+        Post-build steps window will show up in which the following command must be added or
+        uncommented (by removing the '#' character at the beginning) if it is already there:
+        arm-none-eabi-objcopy -v -O binary "${BuildArtifactFileName}"
         "${BuildArtifactFileBaseName}.bin". To obtain a .srec (.s19) file add or uncomment the
-        follwoing post-build command in the same window: arm-none-eabi-objcopy -v -O srec
+        following post-build command in the same window: arm-none-eabi-objcopy -v -O srec
         "${BuildArtifactFileName}" "${BuildArtifactFileBaseName}.s19". This window, is shown in the
         figure below.<div class="fig fignone" id="GUID-662371B3-1772-460B-8C6F-E25503437F61__FIG_WQQ_4V4_VDB"><span class="figcap">Figure 3. MCUx .bin .srec file output</span>
           
@@ -166,6 +166,7 @@ After this time passes the MCU resets again and runs the new image.</li>
 
 
 </ol>
+<div class="note note"><span class="notetitle">Note:</span> For QN9090 or K32W061, <a class="xref" href=""/> explains what will happen once the image transfer is completed.</div>
 
   </div>
 

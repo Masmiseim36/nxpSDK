@@ -5,6 +5,10 @@ var group__genfsk =
       [ "nwkAddrThrBits", "group__genfsk.html#ga575b0163f2e55c457b2398b81fb6ceea", null ],
       [ "nwkAddr", "group__genfsk.html#gaf78fc918609f2454b109e8ee6d542be0", null ]
     ] ],
+    [ "GENFSK_TimeEvent_t", "group__genfsk.html#struct_g_e_n_f_s_k___time_event__t", [
+      [ "timestamp", "group__genfsk.html#gac8b8b49612a6266050c76441d74d474f", null ],
+      [ "callback", "group__genfsk.html#ga876af00750eebc405f4b5ec6f33dd702", null ]
+    ] ],
     [ "GENFSK_radio_config_t", "group__genfsk.html#struct_g_e_n_f_s_k__radio__config__t", [
       [ "radioMode", "group__genfsk.html#ga34c26d994c78389437057fb2257d22a3", null ],
       [ "dataRate", "group__genfsk.html#gaba6813c0660aabbb8e40be0406309533", null ]
@@ -65,15 +69,24 @@ var group__genfsk =
       [ "header", "group__genfsk.html#gad754c7bc7bdd7ba9687618c1c611e284", null ],
       [ "payload", "group__genfsk.html#gad4552af5abbd09d09d87eff23a9cc279", null ]
     ] ],
+    [ "gGenFskVerMajor_c", "group__genfsk.html#ga702d47382f1af02aa4c624446fa701c1", null ],
     [ "GENFSK_DRIVER_VERSION", "group__genfsk.html#gacb962a8985ca8216297ef116f258a4fe", null ],
     [ "gGENFSK_IrqPriority_c", "group__genfsk.html#ga50471fa6b5d381144d4d080ae7c9e3ed", null ],
     [ "gGENFSK_TaskStackSize_c", "group__genfsk.html#gad3969c71ccf040020ff5c0385c7d4bfe", null ],
     [ "gGENFSK_TaskPriority_c", "group__genfsk.html#gab5aa9f93222ff8b1f69b5a47f4adbe2a", null ],
     [ "gGENFSK_InstancesCnt_c", "group__genfsk.html#ga52c9a6a2ed2eb7952f03a0ee6a44b072", null ],
     [ "gGENFSK_InvalidIdx_c", "group__genfsk.html#ga5b9477d8eb36c4b570a6cabc1ef891ca", null ],
+    [ "gGENFSK_XcvrInitRetryCount_c", "group__genfsk.html#ga74af396564f87b2c76584d5141f316d4", null ],
+    [ "gGENFSK_InvalidTimerId_c", "group__genfsk.html#gaec231152ff845a5c44a4edafc8cd1cf2", null ],
+    [ "gGENFSK_NoMwsControl_c", "group__genfsk.html#ga6e28142b0d408d75074a40413e161d03", null ],
+    [ "gGENFSK_LLMwsControl_c", "group__genfsk.html#ga8a69eba3a842665b82d5b94e6034229f", null ],
+    [ "gGENFSK_AppMwsControl_c", "group__genfsk.html#gadb9f2906d17fd7e950be5a79d6c0140d", null ],
+    [ "gGENFSK_MwsControl_c", "group__genfsk.html#ga0f4f308f91194c119d6317f4e5afb7cf", null ],
     [ "GENFSK_nwk_addr_t", "group__genfsk.html#ga762583b93a8549d2d9d867891abb624e", null ],
     [ "GENFSK_timestamp_t", "group__genfsk.html#ga271665c02c28262361df907604e0b703", null ],
-    [ "genfskPacketReceivedCallBack_t", "group__genfsk.html#ga09468b6af4490dec52c8f2a7c64d938e", null ],
+    [ "genfskTimerId_t", "group__genfsk.html#ga7a22d9ba99f0a3b0f8eb9ba30aefcbff", null ],
+    [ "genfskTimeCallback_t", "group__genfsk.html#gaa370428d1b081b6e10f688ec3d8b9193", null ],
+    [ "genfskPacketReceivedCallBack_t", "group__genfsk.html#ga2385e7333ee1d1bb15ec172939f794dd", null ],
     [ "genfskEventNotifyCallBack_t", "group__genfsk.html#ga13f73b86328578c2429e82904d3bd4fd", null ],
     [ "genfskDataRate_t", "group__genfsk.html#ga951bc347a3e269463ba5b02de581f07b", [
       [ "gGenfskDR1Mbps", "group__genfsk.html#gga951bc347a3e269463ba5b02de581f07bac9369ef161ad096ec180eb5a81b5f90b", null ],
@@ -108,6 +121,7 @@ var group__genfsk =
       [ "gGenfskRxEvent", "group__genfsk.html#ggae758fc5ad8aa4e32cb5ca8bbb4f7c8b7aee5f9f8a913fc64f94a5e5efd46c680b", null ],
       [ "gGenfskNwkAddressMatch", "group__genfsk.html#ggae758fc5ad8aa4e32cb5ca8bbb4f7c8b7add924a3aa97bc5eccb66987e636c4df6", null ],
       [ "gGenfskWakeEvent", "group__genfsk.html#ggae758fc5ad8aa4e32cb5ca8bbb4f7c8b7a8930de89b1a7860c91f256e745df604a", null ],
+      [ "gGenfskGapEvent", "group__genfsk.html#ggae758fc5ad8aa4e32cb5ca8bbb4f7c8b7a681a1cdeb53ea0b07665f4c4f6b3f7ae", null ],
       [ "gGenfskAllEvents", "group__genfsk.html#ggae758fc5ad8aa4e32cb5ca8bbb4f7c8b7a8e0c7a51cab638e54f7b34c67695fdf4", null ]
     ] ],
     [ "genfskEventStatus_t", "group__genfsk.html#ga03e56989694e67b9792ef1a86ed3a95b", [
@@ -216,6 +230,7 @@ var group__genfsk =
     [ "gGenfskRxEvent", "group__genfsk.html#ggae758fc5ad8aa4e32cb5ca8bbb4f7c8b7aee5f9f8a913fc64f94a5e5efd46c680b", null ],
     [ "gGenfskNwkAddressMatch", "group__genfsk.html#ggae758fc5ad8aa4e32cb5ca8bbb4f7c8b7add924a3aa97bc5eccb66987e636c4df6", null ],
     [ "gGenfskWakeEvent", "group__genfsk.html#ggae758fc5ad8aa4e32cb5ca8bbb4f7c8b7a8930de89b1a7860c91f256e745df604a", null ],
+    [ "gGenfskGapEvent", "group__genfsk.html#ggae758fc5ad8aa4e32cb5ca8bbb4f7c8b7a681a1cdeb53ea0b07665f4c4f6b3f7ae", null ],
     [ "gGenfskAllEvents", "group__genfsk.html#ggae758fc5ad8aa4e32cb5ca8bbb4f7c8b7a8e0c7a51cab638e54f7b34c67695fdf4", null ],
     [ "gGenfskSuccess", "group__genfsk.html#gga03e56989694e67b9792ef1a86ed3a95ba72d3bb2467e24a0c848e3783f75b285c", null ],
     [ "gGenfskRxAllocLengthFail", "group__genfsk.html#gga03e56989694e67b9792ef1a86ed3a95ba47c023bf69ba4659a30f576ec6de48a2", null ],
@@ -285,12 +300,17 @@ var group__genfsk =
     [ "GENFSK_StartTx", "group__genfsk.html#gadcd06cb7d4b39d0ca3f2483a9f6e165b", null ],
     [ "GENFSK_CancelPendingTx", "group__genfsk.html#gaaa6cd622f8e8319672bf5a7fa7bfc479", null ],
     [ "GENFSK_StartRx", "group__genfsk.html#gac7b4aa7ab6f47a4e4630a5dcbbae8911", null ],
+    [ "GENFSK_RestartRx", "group__genfsk.html#gacf3b52cf16711570278850cae5b669e4", null ],
     [ "GENFSK_CancelPendingRx", "group__genfsk.html#gaf0ff072be84c17dfa53928ee0c1a18a4", null ],
     [ "GENFSK_AbortAll", "group__genfsk.html#gabc2435022e68ac167beebccf626edb24", null ],
     [ "GENFSK_GetTimestamp", "group__genfsk.html#gae01b9d681a0a9aa3a7c7a8fdd28cb991", null ],
+    [ "GENFSK_TimeScheduleEvent", "group__genfsk.html#gaad66e005bbac69ceb3f1d3cc971b3ae6", null ],
+    [ "GENFSK_TimeCancelEvent", "group__genfsk.html#ga3760e0e53e0a6ea931374f0a505e0d05", null ],
     [ "GENFSK_PacketToByteArray", "group__genfsk.html#ga1a11b21c4eb0e4fb543eb8464c109c8f", null ],
     [ "GENFSK_ByteArrayToPacket", "group__genfsk.html#ga317956e54f039314b8e0cd8de4651772", null ],
     [ "GENFSK_RegisterCallbacks", "group__genfsk.html#ga4f9a3c60668370d6c579d517efe0732c", null ],
+    [ "GENFSK_RegisterRealTimeCallback", "group__genfsk.html#gad3323723530602a1981e435f7d757cca", null ],
+    [ "GENFSK_GetState", "group__genfsk.html#gaa365b39dc4e43dae6b8cd2fe02932527", null ],
     [ "nwkAddrSizeBytes", "group__genfsk.html#ga3c4b46a8b040fdfd326184188493605f", null ],
     [ "nwkAddrThrBits", "group__genfsk.html#ga575b0163f2e55c457b2398b81fb6ceea", null ],
     [ "nwkAddr", "group__genfsk.html#gaf78fc918609f2454b109e8ee6d542be0", null ],

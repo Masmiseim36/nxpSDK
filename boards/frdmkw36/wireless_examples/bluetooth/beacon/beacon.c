@@ -4,7 +4,7 @@
 ********************************************************************************** */
 /*! *********************************************************************************
 * Copyright (c) 2015, Freescale Semiconductor, Inc.
-* Copyright 2016-2019 NXP
+* Copyright 2016-2020 NXP
 * All rights reserved.
 *
 * \file
@@ -72,12 +72,13 @@
 ************************************************************************************/
 static bleDeviceAddress_t maBleDeviceAddress;
 
-/* Adv Parmeters */
+/* Adv Parameters */
 static bool_t mAdvertisingOn = FALSE;
 
 #if defined(gBeaconAE_c) && (gBeaconAE_c)
 static bool_t mExtAdvertisingOn = FALSE;
 static bool_t mPeriodicAdvOn = FALSE;
+static bool_t mStopAdv = FALSE;
 #endif /*gBeaconAE_c */
 
 
@@ -156,78 +157,65 @@ void BleApp_HandleKeys(key_event_t events)
 {
     switch (events)
     {
+#if defined(cPWR_UsePowerDownMode) && (cPWR_UsePowerDownMode)        
         case gKBD_EventPB1_c:
-        {
-            BleApp_Start();
-        }
-        break;
-
-        case gKBD_EventLongPB1_c:
-        {
-            if (mAdvertisingOn)
-            {
-                (void)Gap_StopAdvertising();
-            }
-        }
-        break;
-
+#endif            
         case gKBD_EventPB2_c:
         {
-#if defined(cPWR_UsePowerDownMode) && (cPWR_UsePowerDownMode)
-            /* When low power is enabled, first press starts legacy advertising */
+            /* First press starts legacy advertising */
             if (mAdvertisingOn == FALSE)
             {
                 BleApp_Start();
             }
             else
             {
-#endif
 #if defined(gBeaconAE_c) && (gBeaconAE_c)
-            /* First press starts extended advertising */
-            if (mExtAdvertisingOn == FALSE)
-            {
+                /* Second press starts extended advertising */
+                if ((mExtAdvertisingOn == FALSE) && (mStopAdv == FALSE))
+                {
 #if defined(cPWR_UsePowerDownMode) && (cPWR_UsePowerDownMode)
     #if defined(MULTICORE_APPLICATION_CORE) && (MULTICORE_APPLICATION_CORE)
         #if defined(gErpcLowPowerApiServiceIncluded_c) && (gErpcLowPowerApiServiceIncluded_c)
-                (void)PWR_ChangeBlackBoxDeepSleepMode(gAppDeepSleepMode_c);
+                    (void)PWR_ChangeBlackBoxDeepSleepMode(gAppDeepSleepMode_c);
         #endif
     #else
-                (void)PWR_ChangeDeepSleepMode(gAppDeepSleepMode_c);
+                    (void)PWR_ChangeDeepSleepMode(gAppDeepSleepMode_c);
     #endif
 #endif
-                if (gBleSuccess_c != Gap_SetExtAdvertisingParameters(&gExtAdvParams))
-                {
-                    panic(0, 0, 0, 0);
+                    if (gBleSuccess_c != Gap_SetExtAdvertisingParameters(&gExtAdvParams))
+                    {
+                        panic(0, 0, 0, 0);
+                    }
                 }
-            }
-            /* Second press starts periodic advertising */
-            else if (mPeriodicAdvOn == FALSE)
-            {
-                if (gBleSuccess_c != Gap_SetPeriodicAdvParameters(&gPeriodicAdvParams))
+                /* Third press starts periodic advertising */
+                else if ((mPeriodicAdvOn == FALSE) && (mStopAdv == FALSE))
                 {
-                    panic(0, 0, 0, 0);
+                    if (gBleSuccess_c != Gap_SetPeriodicAdvParameters(&gPeriodicAdvParams))
+                    {
+                        panic(0, 0, 0, 0);
+                    }
                 }
-            }
-            /* Third press stops periodic advertising */
-            else
-            {
-                (void)Gap_StopPeriodicAdvertising(gExtAdvParams.handle);
-            }
+                /* Fourth press stops periodic advertising */
+                else if (mPeriodicAdvOn == TRUE)
+                {
+                    (void)Gap_StopPeriodicAdvertising(gExtAdvParams.handle);
+                    mStopAdv = TRUE;
+                }
+                /* Fifth press stops extended advertising */
+                else if (mExtAdvertisingOn == TRUE)
+                {
+                    (void)Gap_StopExtAdvertising(gExtAdvParams.handle);
+                }
+                /* Sixth press stops legacy advertising */
+                else
+                {
+                    (void)Gap_StopAdvertising();
+                    mStopAdv = FALSE;
+                }
+#else
+                 (void)Gap_StopAdvertising();               
 #endif /*gBeaconAE_c */
-#if defined(cPWR_UsePowerDownMode) && (cPWR_UsePowerDownMode)
             }
-#endif
-        }
-        break;
-
-        case gKBD_EventLongPB2_c:
-        {
-#if defined(gBeaconAE_c) && (gBeaconAE_c)
-            if (mExtAdvertisingOn)
-            {
-                (void)Gap_StopExtAdvertising(gExtAdvParams.handle);
-            }
-#endif /*gBeaconAE_c */
         }
         break;
 
@@ -325,7 +313,7 @@ void BleApp_GenericCallback (gapGenericEvent_t* pGenericEvent)
         }
         break;
 
-        /* Internal error has occured */
+        /* Internal error has occurred */
         case gInternalError_c:
         {
             panic(0,0,0,0);
@@ -381,7 +369,7 @@ static void BleApp_Config(void)
 }
 
 /*! *********************************************************************************
-* \brief        Configures GAP Advertise parameters. Advertise will satrt after
+* \brief        Configures GAP Advertise parameters. Advertise will start after
 *               the parameters are set.
 *
 ********************************************************************************** */

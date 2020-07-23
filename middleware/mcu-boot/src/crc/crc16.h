@@ -26,10 +26,6 @@ typedef struct Crc16Data
 // API
 ////////////////////////////////////////////////////////////////////////////////
 
-#if __cplusplus
-extern "C" {
-#endif
-
 //! @name CRC16
 //@{
 
@@ -56,10 +52,6 @@ void crc16_onfi_init(crc16_data_t *crc16Config);
 void crc16_onfi_update(crc16_data_t *crc16Config, const uint8_t *src, uint32_t lengthInBytes);
 
 //@}
-
-#if __cplusplus
-}
-#endif
 
 //! @}
 

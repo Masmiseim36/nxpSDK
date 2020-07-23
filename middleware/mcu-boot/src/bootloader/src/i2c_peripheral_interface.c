@@ -15,7 +15,7 @@
 #include "fsl_device_registers.h"
 #include "packet/serial_packet.h"
 
-#if BL_CONFIG_I2C
+#if defined(BL_CONFIG_I2C) && BL_CONFIG_I2C
 //! @addtogroup i2c_peripheral
 //! @{
 
@@ -26,16 +26,16 @@
 // Allow the default to be overridden via the bootloader_config.h file.
 #if !defined(BL_DEFAULT_I2C_SLAVE_ADDRESS)
 //! @brief Default I2C slave address in 7-bit format.
-#define BL_DEFAULT_I2C_SLAVE_ADDRESS (0x10)
+#define BL_DEFAULT_I2C_SLAVE_ADDRESS (0x10u)
 //! @brief Secondary I2C slave address in 7-bit format.
-#define BL_SECONDARY_I2C_SLAVE_ADDRESS (0x12)
+#define BL_SECONDARY_I2C_SLAVE_ADDRESS (0x12u)
 #endif // BL_DEFAULT_I2C_SLAVE_ADDRESS
 
 //! @brief Default width of glitches to filter in nanoseconds.
 enum
 {
     //! Width of glitches to filter in nanoseconds.
-    kI2CGlitchFilterWidth_ns = 50
+    kI2CGlitchFilterWidth_ns = 50u
 };
 
 //! @brief Synchronization state between I2C ISR and read/write functions.
@@ -47,12 +47,12 @@ typedef struct _i2c_transfer_info
     void (*data_sink)(uint8_t sink_byte, uint32_t instance); // !< Callback used to put received byte.
 } i2c_transfer_info_t;
 
-#define I2C_EMPTY_CHAR (0x00) //!< Empty character.
+#define I2C_EMPTY_CHAR (0x00u) //!< Empty character.
 
 enum
 {
     //! Max cycles supported to set glitch filter
-    kI2CGlitchFilterMaxCycles = 31,
+    kI2CGlitchFilterMaxCycles = 31u,
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -84,7 +84,7 @@ static void i2c_SlaveIRQHandler(uint32_t instance);
  * @brief I2C slave control interface information
  */
 const peripheral_control_interface_t g_i2cControlInterface = {
-    .pollForActivity = i2c_poll_for_activity, .init = i2c_full_init, .shutdown = i2c_full_shutdown, .pump = 0
+    .pollForActivity = i2c_poll_for_activity, .init = i2c_full_init, .shutdown = i2c_full_shutdown, .pump = 0u
 };
 
 /*!
@@ -93,14 +93,18 @@ const peripheral_control_interface_t g_i2cControlInterface = {
 const peripheral_byte_inteface_t g_i2cByteInterface = {.init = NULL, .write = i2c_write };
 
 //! @brief Global state for the I2C slave peripheral interface.
+static i2c_transfer_info_t s_i2cInfo;
 static i2c_transfer_info_t s_i2cInfo = {
-    .writeData = 0, .bytesToTransfer = 0, .data_source = i2c_data_source, .data_sink = i2c_initial_data_sink
+    .writeData = 0u, .bytesToTransfer = 0u, .data_source = i2c_data_source, .data_sink = i2c_initial_data_sink
 };
 
 //! @brief Global state for the I2C slave peripheral interface.
-static bool s_i2cActivity[FSL_FEATURE_SOC_I2C_COUNT] = { false };
+static bool s_i2cActivity[FSL_FEATURE_SOC_I2C_COUNT];
+static bool s_i2cActivity[FSL_FEATURE_SOC_I2C_COUNT] = { (_Bool)false };
+const static uint32_t g_i2cBaseAddr[];
 const static uint32_t g_i2cBaseAddr[] = I2C_BASE_ADDRS;
-static bool s_i2cIntialized[FSL_FEATURE_SOC_I2C_COUNT] = { false };
+static bool s_i2cIntialized[FSL_FEATURE_SOC_I2C_COUNT];
+static bool s_i2cIntialized[FSL_FEATURE_SOC_I2C_COUNT] = { (_Bool)false };
 
 /*!
  * @brief I2C slave receiving data call back function
@@ -115,21 +119,23 @@ static serial_byte_receive_func_t s_i2c_app_data_sink_callback;
 //! @brief Implementation of I2C0 handler named in startup code.
 //!
 //! Passes instance to generic I2C IRQ handler.
+void I2C0_IRQHandler(void);
 void I2C0_IRQHandler(void)
 {
     i2c_SlaveIRQHandler(0);
 }
 #endif // !defined(BL_FEATURE_I2C_OPTIMIZE) || USE_ONLY_I2C(0)
 
-#if (!defined(BL_FEATURE_I2C_OPTIMIZE) || USE_ONLY_I2C(1)) && (FSL_FEATURE_SOC_I2C_COUNT > 1)
+#if (!defined(BL_FEATURE_I2C_OPTIMIZE) || USE_ONLY_I2C(1)) && (FSL_FEATURE_SOC_I2C_COUNT > 1u)
 //! @brief Implementation of I2C1 handler named in startup code.
 //!
 //! Passes instance to generic I2C IRQ handler.
+void I2C1_IRQHandler(void);
 void I2C1_IRQHandler(void)
 {
     i2c_SlaveIRQHandler(1);
 }
-#endif // (!defined(BL_FEATURE_I2C_OPTIMIZE) || USE_ONLY_I2C(1)) && (FSL_FEATURE_SOC_I2C_COUNT > 1)
+#endif // (!defined(BL_FEATURE_I2C_OPTIMIZE) || USE_ONLY_I2C(1)) && (FSL_FEATURE_SOC_I2C_COUNT > 1u)
 
 /*FUNCTION**********************************************************************
  *
@@ -137,7 +143,7 @@ void I2C1_IRQHandler(void)
  * Description   : Polling for I2C slave activities
  *
  *END**************************************************************************/
-bool i2c_poll_for_activity(const peripheral_descriptor_t *self)
+static bool i2c_poll_for_activity(const peripheral_descriptor_t *self)
 {
     return s_i2cActivity[self->instance];
 }
@@ -152,14 +158,14 @@ static void i2c_data_source(uint8_t *source_byte)
 {
     assert(source_byte);
 
-    if (s_i2cInfo.bytesToTransfer)
+    if (s_i2cInfo.bytesToTransfer != 0u)
     {
         *source_byte = *s_i2cInfo.writeData++;
         s_i2cInfo.bytesToTransfer--;
     }
     else
     {
-        *source_byte = 0;
+        *source_byte = 0u;
     }
 }
 
@@ -182,7 +188,7 @@ static void i2c_data_sink(uint8_t sink_byte, uint32_t instance)
  *END**************************************************************************/
 static void i2c_initial_data_sink(uint8_t sink_byte, uint32_t instance)
 {
-    if (sink_byte == kFramingPacketStartByte)
+    if (sink_byte == (uint8_t)kFramingPacketStartByte)
     {
         s_i2cActivity[instance] = true;
         s_i2cInfo.data_sink = i2c_data_sink;
@@ -196,7 +202,7 @@ static void i2c_initial_data_sink(uint8_t sink_byte, uint32_t instance)
  * Description   : I2C slave Internal init function
  *
  *END**************************************************************************/
-void i2c_peripheral_init(uint32_t instance)
+static void i2c_peripheral_init(uint32_t instance)
 {
     uint32_t baseAddr = g_i2cBaseAddr[instance];
     i2c_slave_config_t i2cSlaveConfig;
@@ -207,11 +213,11 @@ void i2c_peripheral_init(uint32_t instance)
     // Read the address from the configuration field. If it is not set, i.e. 0xff,
     // use the default address.
     uint8_t slaveAddress = g_bootloaderContext.propertyInterface->store->configurationData.i2cSlaveAddress;
-    if (slaveAddress != 0xff)
+    if (slaveAddress != 0xffu)
     {
         i2cSlaveConfig.slaveAddress = slaveAddress;
     }
-#if BL_FEATURE_SECONDARY_I2C_SLAVE_ADDRESS
+#if defined(BL_FEATURE_SECONDARY_I2C_SLAVE_ADDRESS) && BL_FEATURE_SECONDARY_I2C_SLAVE_ADDRESS
     else if (is_secondary_i2c_slave_address_enabled())
     {
         i2cSlaveConfig.slaveAddr = BL_SECONDARY_I2C_SLAVE_ADDRESS;
@@ -220,7 +226,7 @@ void i2c_peripheral_init(uint32_t instance)
 
     I2C_SlaveInit((I2C_Type *)baseAddr, &i2cSlaveConfig, get_bus_clock());
     I2C_Enable((I2C_Type *)baseAddr, true);
-    I2C_EnableInterrupts((I2C_Type *)baseAddr, kI2C_GlobalInterruptEnable);
+    I2C_EnableInterrupts((I2C_Type *)baseAddr, (uint32_t)kI2C_GlobalInterruptEnable);
     i2c_set_glitch_filter_width((I2C_Type *)baseAddr, get_bus_clock(), kI2CGlitchFilterWidth_ns);
 
     I2C_SetSystemIRQ(instance, kPeripheralEnableIRQ);
@@ -234,7 +240,7 @@ void i2c_peripheral_init(uint32_t instance)
  * Description   : I2C slave full init function
  *
  *END**************************************************************************/
-status_t i2c_full_init(const peripheral_descriptor_t *self, serial_byte_receive_func_t function)
+static status_t i2c_full_init(const peripheral_descriptor_t *self, serial_byte_receive_func_t function)
 {
     s_i2c_app_data_sink_callback = function;
 
@@ -245,7 +251,7 @@ status_t i2c_full_init(const peripheral_descriptor_t *self, serial_byte_receive_
 
     s_i2cIntialized[self->instance] = true;
 
-    return kStatus_Success;
+    return (int32_t)kStatus_Success;
 }
 
 /*FUNCTION**********************************************************************
@@ -254,7 +260,7 @@ status_t i2c_full_init(const peripheral_descriptor_t *self, serial_byte_receive_
  * Description   : I2C slave full shutdown function
  *
  *END**************************************************************************/
-void i2c_full_shutdown(const peripheral_descriptor_t *self)
+static void i2c_full_shutdown(const peripheral_descriptor_t *self)
 {
     if (s_i2cIntialized[self->instance])
     {
@@ -281,10 +287,11 @@ status_t i2c_write(const peripheral_descriptor_t *self, const uint8_t *buffer, u
     s_i2cInfo.writeData = buffer;
     s_i2cInfo.bytesToTransfer = byteCount;
 
-    while (s_i2cInfo.bytesToTransfer)
-        ;
+    while (s_i2cInfo.bytesToTransfer != 0u)
+    {
+    }
 
-    return kStatus_Success;
+    return (int32_t)kStatus_Success;
 }
 
 /*FUNCTION**********************************************************************
@@ -309,46 +316,46 @@ static void i2c_SlaveIRQHandler(uint32_t instance)
     uint16_t status;
     I2C_Type *base = (I2C_Type *)g_i2cBaseAddr[instance];
 
-    status = I2C_SlaveGetStatusFlags(base);
+    status = (uint16_t)I2C_SlaveGetStatusFlags(base);
 
     bool doTransmit = false;
 
     /* Clear the interrupt flag*/
-    base->S = (kI2C_IntPendingFlag | kI2C_ArbitrationLostFlag) & status;
+    base->S = (uint8_t)(((uint16_t)kI2C_IntPendingFlag | (uint16_t)kI2C_ArbitrationLostFlag) & status);
 
-    if ((status & I2C_S_ARBL_MASK) && (!(status & I2C_S_IAAS_MASK)))
+    if (((status & (uint16_t)I2C_S_ARBL_MASK) != 0u) && ((status & (uint16_t)I2C_S_IAAS_MASK) == 0u))
     {
         // ArbitrationLost and not AddressedAsSlave
     }
-    else if (status & I2C_S_IAAS_MASK) // AddressedAsSlave
+    else if ((status & (uint16_t)I2C_S_IAAS_MASK) != 0u) // AddressedAsSlave
     {
-        if (status & I2C_S_SRW_MASK) // Master read from Slave. Slave transmit.
+        if ((status & (uint16_t)I2C_S_SRW_MASK) != 0u) // Master read from Slave. Slave transmit.
         {
             // Switch to TX mode
-            base->C1 |= I2C_C1_TX_MASK;
+            base->C1 |= (uint8_t)I2C_C1_TX_MASK;
 
             doTransmit = true;
         }
         else // Master write to Slave. Slave receive.
         {
             // Switch to RX mode.
-            base->C1 &= ~I2C_C1_TX_MASK;
+            base->C1 &= (uint8_t)(~I2C_C1_TX_MASK);
 
             // Dummy read character.
-            i2c_DummyRead(base);
+            (void)i2c_DummyRead(base);
         }
     }
     else // not AddressedAsSlave
     {
-        if (base->C1 & I2C_C1_TX_MASK) // Transmit.
+        if ((base->C1 & (uint8_t)I2C_C1_TX_MASK) != 0u) // Transmit.
         {
-            if (status & I2C_S_RXAK_MASK) // No ACK from receiver.
+            if ((status & (uint16_t)I2C_S_RXAK_MASK) != 0u) // No ACK from receiver.
             {
                 // Switch to RX mode.
-                base->C1 &= ~I2C_C1_TX_MASK;
+                base->C1 &= (uint8_t)(~I2C_C1_TX_MASK);
 
                 // Dummy read character.
-                i2c_DummyRead(base);
+                (void)i2c_DummyRead(base);
             }
             else // ACK from receiver.
             {
@@ -367,7 +374,7 @@ static void i2c_SlaveIRQHandler(uint32_t instance)
 
     if (doTransmit)
     {
-        uint8_t source_byte = I2C_EMPTY_CHAR;
+        uint8_t source_byte = (uint8_t)I2C_EMPTY_CHAR;
 
         s_i2cInfo.data_source(&source_byte);
 
@@ -382,7 +389,7 @@ static void i2c_SlaveIRQHandler(uint32_t instance)
  * Description   : I2C slave set glitch filter width
  *
  *END**************************************************************************/
-void i2c_set_glitch_filter_width(I2C_Type *base, uint32_t busClock_Hz, uint32_t glitchWidth_ns)
+static void i2c_set_glitch_filter_width(I2C_Type *base, uint32_t busClock_Hz, uint32_t glitchWidth_ns)
 {
 #if USE_ONLY_I2C(0)
     instance = 0;
@@ -390,30 +397,34 @@ void i2c_set_glitch_filter_width(I2C_Type *base, uint32_t busClock_Hz, uint32_t 
     instance = 1;
 #endif // USE_ONLY_I2C(0)
 
-    uint32_t busCycle_ns = 1000000 / (busClock_Hz / 1000);
+    uint32_t busCycle_ns = 1000000u / (busClock_Hz / 1000u);
 
     // Search for the cycle count just below the desired glitch width.
-    uint32_t cycles = 0;
-    while (((cycles + 1) * busCycle_ns) < glitchWidth_ns)
+    uint32_t cycles = 0u;
+    while (((cycles + 1u) * busCycle_ns) < glitchWidth_ns)
     {
         ++cycles;
     }
 
     // If we end up with zero cycles, then set the filter to a single cycle unless the
     // bus clock is greater than 10x the desired glitch width.
-    if ((cycles == 0) && (busCycle_ns <= (glitchWidth_ns * 10)))
+    if ((cycles == 0u) && (busCycle_ns <= (glitchWidth_ns * 10u)))
     {
-        cycles = 1;
+        cycles = 1u;
     }
     // If the cycles is greater the max cycles supported to set glitch filter,
     // then cycles should be equal to max cycles
-    else if (cycles > kI2CGlitchFilterMaxCycles)
+    else if (cycles > (uint32_t)kI2CGlitchFilterMaxCycles)
     {
-        cycles = kI2CGlitchFilterMaxCycles;
+        cycles = (uint32_t)kI2CGlitchFilterMaxCycles;
+    }
+    else
+    {
+        // nothing to handle
     }
 
     uint8_t temp = base->FLT;
-    base->FLT = (~I2C_FLT_FLT_MASK & temp) | cycles;
+    base->FLT = (uint8_t)(((uint8_t)(~I2C_FLT_FLT_MASK) & temp) | (uint8_t)cycles);
 }
 
 //! @}

@@ -4,7 +4,7 @@
  ********************************************************************************** */
 /*! *********************************************************************************
 * Copyright 2015, Freescale Semiconductor, Inc.
-* Copyright 2016-2019 NXP
+* Copyright 2016-2020 NXP
 * All rights reserved.
 *
 * \file
@@ -75,8 +75,8 @@
 
 /* Defines pools by block size and number of blocks. Must be aligned to 4 bytes.*/
 #define AppPoolsDetails_c \
-         _block_size_  88  _number_of_blocks_   10 _eol_  \
-         _block_size_ 248  _number_of_blocks_    2 _eol_  \
+         _block_size_  80  _number_of_blocks_    7 _eol_  \
+         _block_size_ 248   _number_of_blocks_   2 _eol_  \
          _block_size_ 312  _number_of_blocks_    1 _eol_  \
          _block_size_ 392  _number_of_blocks_    1 _eol_
 
@@ -169,8 +169,11 @@
 /* Defines main task stack size */
 #define gMainThreadStackSize_c  1024
 
+/*! Defines Size for Idle Task  (minimum 572 is required) */
+#define gAppIdleTaskStackSize_c         600
+
 /* Defines total heap size used by the OS */
-#define gTotalHeapSize_c        8900
+#define gTotalHeapSize_c        9000
 
 /*! *********************************************************************************
  *  BLE Stack Configuration

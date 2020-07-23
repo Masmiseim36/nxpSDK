@@ -4,7 +4,7 @@
  ********************************************************************************** */
 /*! *********************************************************************************
 * Copyright (c) 2015, Freescale Semiconductor, Inc.
-* Copyright 2016-2019 NXP
+* Copyright 2016-2020 NXP
 * All rights reserved.
 *
 * \file
@@ -50,8 +50,6 @@
 #include "wireless_uart.h"
 #include "genfsk_adv.h"
 
-
-
 /*************************************************************************************
 **************************************************************************************
 * Private macros
@@ -77,7 +75,7 @@ static uint8_t gAppSerMgrIf;
  *************************************************************************************
  ************************************************************************************/
 
-   
+
 /************************************************************************************
 *************************************************************************************
 * Public functions
@@ -89,7 +87,7 @@ static uint8_t gAppSerMgrIf;
 *
 ********************************************************************************** */
 void App_Init(void)
-{   
+{
     /* Init Serial interface */
 #if (defined(KW37A4_SERIES) || defined(KW37Z4_SERIES) || defined(KW38A4_SERIES) || defined(KW38Z4_SERIES) || defined(KW39A4_SERIES))
     Serial_InitManager();
@@ -100,14 +98,14 @@ void App_Init(void)
     /* Register Serial Manager interface */
     (void)Serial_InitInterface(&gAppSerMgrIf, APP_SERIAL_INTERFACE_TYPE, APP_SERIAL_INTERFACE_INSTANCE);
     (void)Serial_SetBaudRate(gAppSerMgrIf, APP_SERIAL_INTERFACE_SPEED);
-    
-    (void)Serial_Print(gAppSerMgrIf, "\n\r=====================================", gAllowToBlock_d); 
-    (void)Serial_Print(gAppSerMgrIf, "\n\rHybrid Wireless Uart - GFSK Adv demo", gAllowToBlock_d); 
-    (void)Serial_Print(gAppSerMgrIf, "\n\r=====================================\n\r", gAllowToBlock_d);     
-    
+
+    (void)Serial_Print(gAppSerMgrIf, "\n\r=====================================", gAllowToBlock_d);
+    (void)Serial_Print(gAppSerMgrIf, "\n\rHybrid Wireless Uart - GFSK Adv demo", gAllowToBlock_d);
+    (void)Serial_Print(gAppSerMgrIf, "\n\r=====================================\n\r", gAllowToBlock_d);
+
     /* init GFSK demo app */
     GfskApp_Init(gAppSerMgrIf);
-    
+
     /* init BLE serial interface */
     BleApp_InitSerialInterface(gAppSerMgrIf);
 }
@@ -120,12 +118,13 @@ void App_Init(void)
 ********************************************************************************** */
 void BleApp_HandleKeys(key_event_t events)
 {
-    static bool_t isGfskTxStarted = FALSE; 
+    static bool_t isGfskTxStarted = FALSE;
     static bool_t isGfskRxStarted = FALSE;
-    
+
     switch (events)
     {
         case gKBD_EventPressPB1_c:
+            gAppCodedPhyInUse = FALSE;
             BleApp_Start(gGapPeripheral_c);
             break;
 
@@ -159,6 +158,11 @@ void BleApp_HandleKeys(key_event_t events)
                 isGfskRxStarted = FALSE;
                 GfskApp_StopRx();
             }
+            break;
+        case gKBD_EventVeryLongPB1_c:
+            /* start extended advertising on coded phy */
+            gAppCodedPhyInUse = TRUE;
+            BleApp_Start(gGapPeripheral_c);
             break;
 
         default:

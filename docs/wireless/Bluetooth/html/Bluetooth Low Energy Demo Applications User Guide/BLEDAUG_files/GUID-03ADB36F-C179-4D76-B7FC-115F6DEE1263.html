@@ -25,7 +25,8 @@
 
         <p class="p">To make the Private Profile Server visible, press the ADVSW button to start sending advertisements, which causes CONNLED to start flashing. The device is visible with the name “NXP_QPP”. A solid CONNLED indicates a successful connection between 2 devices.</p>
 
-        <p class="p">The Private Profile is a cutom service that implements two custom characteristic:</p>
+        <p class="p">The Private Profile is a custom service that implements two custom
+      characteristic:</p>
 
         <ul class="ul">
           <li class="li">Rx Characteristic (UUID: d44bc439-abfd-45a2-b575-925416129600), used to write data to the server</li>
@@ -34,7 +35,11 @@
 
         </ul>
 
-        <p class="p">When in connection and if notifications are configured, the Private Profile Server starts sending data every 100 milliseconds through GATT instant value notifications.If the client starts writing the Rx characteristic, the value length received will be monitored in the data Rx callback. Every 10 seconds, a throughput statistics is made and Tx/Rx results are printed on the serial interface.</p>
+        <p class="p">When in connection and if notifications are configured, the Private Profile
+      Server starts sending data every 100 milliseconds through GATT instant value notifications. If
+      the client starts writing the Rx characteristic, the value length received will be monitored
+      in the data Rx callback. Every 10 seconds, a throughput statistics is made and Tx/Rx results
+      are printed on the serial interface.</p>
 
         <div class="fig fignone"><span class="figcap">Figure 1. Private Profile Server – Output Console</span>
             

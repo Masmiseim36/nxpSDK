@@ -33,9 +33,9 @@
             using the <em class="ph i">MWS_GetInactivityDuration()</em> API and release access to the XCVR before
             the next Bluetooth event.</p>
 
-        <p class="p">Also, to maximize the GenFSK application activity, the MWS idle signal should be
-            monitored. The demo application is doing this by registering it’s own callback into the
-            MWS module using: <em class="ph i">MWS_GetRegisteredCallback()</em> API.</p>
+        <p class="p">Also, to maximize the GenFSK application activity, the MWS idle signal should
+            be monitored. The demo application is doing this by registering its own callback into
+            the MWS module using: <em class="ph i">MWS_GetRegisteredCallback()</em> API.</p>
 
         <p class="p">The GenFSK link layer also needs to be informed of the MWS events, so to achieve this,
             the application will first get the registered callback for the GenFSK protocol using

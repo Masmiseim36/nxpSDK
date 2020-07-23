@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  * 
  * SPDX-License-Identifier: BSD-3-Clause
@@ -15,7 +15,10 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-
+/* If user want to use inner capacity in RTC oscillator,
+ * 8pF (the load value) is an average for most of FRDM-KW36.
+ */
+#define EXAMPLE_CAP_LOAD_VALUE RTC_CR_SC8P_MASK
 
 /*******************************************************************************
  * Prototypes
@@ -74,6 +77,13 @@ int main(void)
      */
     RTC_GetDefaultConfig(&rtcConfig);
     RTC_Init(RTC, &rtcConfig);
+#if (defined(EXAMPLE_CAP_LOAD_VALUE) && EXAMPLE_CAP_LOAD_VALUE)
+#if (defined(FSL_FEATURE_RTC_HAS_OSC_SCXP) && FSL_FEATURE_RTC_HAS_OSC_SCXP)
+    /* Change the RTC oscillator capacity load value. */
+    RTC_SetOscCapLoad(RTC, EXAMPLE_CAP_LOAD_VALUE);
+#endif /* FSL_FEATURE_RTC_HAS_OSC_SCXP */
+#endif /* EXAMPLE_CAP_LOAD_VALUE */
+    
     /* Select RTC clock source */
     RTC_SetClockSource(RTC);
 

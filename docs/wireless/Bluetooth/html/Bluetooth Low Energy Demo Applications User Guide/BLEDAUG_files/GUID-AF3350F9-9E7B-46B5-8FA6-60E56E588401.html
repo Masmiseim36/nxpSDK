@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Usage"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-13F224BD-B57D-4A39-AB16-8F6EFFCAA17E.html"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-AF3350F9-9E7B-46B5-8FA6-60E56E588401"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Usage</title>
+</head>
+<body id="GUID-AF3350F9-9E7B-46B5-8FA6-60E56E588401">
+
+
+    <h1 class="title topictitle1">Usage</h1>
+
+    <div class="body">
+        <p class="p">The setup requires two supported platforms, one for the adv ext peripheral, and one for the adv ext central.</p>
+
+        <ol class="ol"><li class="li">Open a serial port terminal and connect it to each platform with the settings provided in the previous paragraph.
+            The start screen is displayed after the boards are reset.
+        <div class="fig fignone"><span class="figcap">Figure 1. adv_ext_peripheral start screen</span>
+            
+            <img class="image" src="GUID-340A47C5-A49F-4F43-BC98-0AC42E5CC88A-high.png"/>
+                    </div>
+
+        <p class="p"/>
+
+            <div class="fig fignone"><span class="figcap">Figure 2. adv_ext_central start screen</span>
+                
+                <img class="image" src="GUID-F39AB1E2-C2FA-4648-A30C-BC21E459F38A-high.png"/>
+                
+            </div>
+
+        
+        </li>
+
+            <li class="li">On the adv_ext_peripheral board, press the WAKESW button. The board
+                exits cPWR_DeepSleepMode deep sleep mode and prints the menu. <div class="fig fignone"><span class="figcap">Figure 3. Choosing a menu option on adv_ext_peripheral</span>
+                    
+                    <img class="image" src="GUID-B978D556-8BC1-4983-A6F4-48D69D55A7FF-high.png"/>
+                </div>
+
+                <p class="p">Use the OPTSW to choose an option. The option printed on the bottom
+                    changes every time the switch is pressed. When the option matches your intention
+                    (For example, 3 Start Extended Connectable Advertising), press the WAKESW again
+                    to make a decision. The advertising type chosen is started, the deep-sleep mode
+                    changes to gAppDeepSleepMode_c and the board starts entering low-power between
+                    advertising events. Next time the WAKESW is pressed, an updated menu is printed
+                    (For example, at option 3 Stop Extended Connectable Advertising). There is no
+                    timeout for advertising. The board continues advertising until it is stopped, or
+                    a connection is established (for legacy and extended connectable advertising
+                    only) with an adv_ext_central device. The connection is terminated five seconds
+                    after the central device configures notifications for the temperature value.
+                    When all advertisings are off and all connections are terminated, the deep-sleep
+                    mode changes to cPWR_DeepSleepMode and the board enter low-power until the
+                    WAKESW is pressed again. When cPWR_UsePowerDownMode is set 0, LEDs are enabled.
+                    The ADVLED flashes whenever an advertising starts and is ON otherwise. The
+                    CONNLED flashes whenever there is a connection under way and is ON
+                    otherwise.</p>
+
+            </li>
+
+        
+            <li class="li">On the adv_ext_central board, there are only two options: Press WAKESW
+                to start active scanning or long press WAKESW to start passive scanning. If catching
+                extended scannable advertising is not an option, choose passive scanning. Otherwise
+                active scanning must be chosen. The device wakes up, starts scanning, and enters
+                deep-sleep mode 6. The scanning ends when the 60 seconds timeout is reached or when
+                a connection with an adv_ext_peripheral device is established. If a connection is
+                established, the central changes its low-power mode to gAppDeepSleepMode_c. During
+                scanning, all advertisings caught from adv_ext_peripheral devices are printed on the
+                terminal window. When an extended nonconnectable, nonscannable advertising with a
+                periodic advertising attached is detected, the adv_ext_central device attempts to
+                sync with the periodic advertising train and prints the periodic advertising data on
+                the terminal window. When the 60 seconds timer expires or the connection ends, the
+                device reenters cPWR_DeepSleepMode until the WAKESW is pressed again and all syncs
+                with periodic advertising trains are terminated. If cPWR_UsePowerDownMode is set 0,
+                LEDs are enabled. The SCANLED flashes, whenever the device is scanning and is ON
+                otherwise. The CONNLED flashes, whenever there is a connection under way and is ON
+                otherwise. <div class="fig fignone"><span class="figcap">Figure 4. Advertisings caught on adv_ext_central console</span>
+                    
+                    <img class="image" src="GUID-ABECAFEC-A899-4EA5-A08F-8EC4CD61B024-high.png"/>
+                </div>
+
+            </li>
+
+            <li class="li">If the adv_ext_central connects to an adv_ext_peripheral device, it
+                bonds (if no bond was previously made), does service discovery (only the first time
+                it connects with the peripheral), configures notification and waits for
+                notifications from the peripheral. If no data is sent within 5 seconds, the node
+                disconnects and reenters cPWR_DeepSleepMode. The peripheral sends a notification
+                with the value of the temperature read through an ADC from the thermistor, if
+                present, or random generated if not. When the central receives the notification, it
+                prints it on the terminal window and disconnects in 5 seconds. <div class="fig fignone"><span class="figcap">Figure 5. Connection on adv_ext_central console</span>
+                    
+                    <img class="image" src="GUID-48A84F59-09A0-4503-AC25-8DDDE2EE6AB9-high.png"/>
+                </div>
+
+            </li>
+
+             
+        
+        
+        </ol>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-13F224BD-B57D-4A39-AB16-8F6EFFCAA17E.html">Low-Power Extended Advertising Peripheral and Extended Advertising Central (KW37 platforms)</a></div>
+</div>
+</div>
+
+</body>
+</html>

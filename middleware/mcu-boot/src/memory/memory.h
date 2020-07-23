@@ -19,13 +19,13 @@
 // Declarations
 ////////////////////////////////////////////////////////////////////////////////
 //! @brief Bit mask for device ID.
-#define DEVICE_ID_MASK 0xff
+#define DEVICE_ID_MASK 0xffu
 //! @brief Bit position of device ID.
-#define DEVICE_ID_SHIFT 0
+#define DEVICE_ID_SHIFT 0u
 //! @brief Bit mask for group ID.
-#define GROUP_ID_MASK 0xf00
+#define GROUP_ID_MASK 0xf00u
 //! @brief Bit position of group ID.
-#define GROUP_ID_SHIFT 8
+#define GROUP_ID_SHIFT 8u
 
 /*! @brief Construct a memory ID from a given group ID and device ID. */
 #define MAKE_MEMORYID(group, device) \
@@ -39,9 +39,9 @@
 /*! @brief Memory group definition. */
 enum _bl_memory_groups
 {
-    kGroup_Internal = 0, //!<  Kinetis internal 4G memory region.
-    kGroup_External = 1, //!<  Kinetis external memory region.
-    kGroup_AES_OTP = 2,
+    kGroup_Internal = 0u, //!<  Kinetis internal 4G memory region.
+    kGroup_External = 1u, //!<  Kinetis external memory region.
+    kGroup_AES_OTP = 2u,
 };
 
 /*! @brief Memory device ID definition. */
@@ -81,40 +81,40 @@ enum _bl_memory_id
         INT : Internal 4G memory, including internal memory modules, and XIP external memory modules.
         EXT : Non-XIP external memory modules.
     */
-    kMemoryInternal = MAKE_MEMORYID(kGroup_Internal, 0),  // Internal memory (include all on chip memory)
-    kMemoryQuadSpi0 = MAKE_MEMORYID(kGroup_Internal, 1),  // Qsuad SPI memory 0
-    kMemoryIFR0_Fuse = MAKE_MEMORYID(kGroup_Internal, 4), // Nonvolatile information register 0. Only used by SB loader.
-    kMemorySemcNor = MAKE_MEMORYID(kGroup_Internal, 8),   // SEMC Nor memory
-    kMemoryFlexSpiNor = MAKE_MEMORYID(kGroup_Internal, 9),          // Flex SPI Nor memory
-    kMemorySpifiNor = MAKE_MEMORYID(kGroup_Internal, 0xA),          // SPIFI Nor memory
-    kMemoryFlashExecuteOnly = MAKE_MEMORYID(kGroup_Internal, 0x10), // Execute-only region on internal Flash
+    kMemoryInternal = MAKE_MEMORYID(kGroup_Internal, 0u),  // Internal memory (include all on chip memory)
+    kMemoryQuadSpi0 = MAKE_MEMORYID(kGroup_Internal, 1u),  // Qsuad SPI memory 0
+    kMemoryIFR0_Fuse = MAKE_MEMORYID(kGroup_Internal, 4u), // Nonvolatile information register 0. Only used by SB loader.
+    kMemorySemcNor = MAKE_MEMORYID(kGroup_Internal, 8u),   // SEMC Nor memory
+    kMemoryFlexSpiNor = MAKE_MEMORYID(kGroup_Internal, 9u),          // Flex SPI Nor memory
+    kMemorySpifiNor = MAKE_MEMORYID(kGroup_Internal, 0xAu),          // SPIFI Nor memory
+    kMemoryFlashExecuteOnly = MAKE_MEMORYID(kGroup_Internal, 0x10u), // Execute-only region on internal Flash
 
-    kMemorySemcNand = MAKE_MEMORYID(kGroup_External, 0),        // SEMC NAND memory
-    kMemorySpiNand = MAKE_MEMORYID(kGroup_External, 1),         // SPI NAND memory
-    kMemorySpiNorEeprom = MAKE_MEMORYID(kGroup_External, 0x10), // SPI NOR/EEPROM memory
-    kMemoryI2cNorEeprom = MAKE_MEMORYID(kGroup_External, 0x11), // I2C NOR/EEPROM memory
-    kMemorySDCard = MAKE_MEMORYID(kGroup_External, 0x20),       // eSD, SD, SDHC, SDXC memory Card
-    kMemoryMMCCard = MAKE_MEMORYID(kGroup_External, 0x21),      // MMC, eMMC memory Card
+    kMemorySemcNand = MAKE_MEMORYID(kGroup_External, 0u),        // SEMC NAND memory
+    kMemorySpiNand = MAKE_MEMORYID(kGroup_External, 1u),         // SPI NAND memory
+    kMemorySpiNorEeprom = MAKE_MEMORYID(kGroup_External, 0x10u), // SPI NOR/EEPROM memory
+    kMemoryI2cNorEeprom = MAKE_MEMORYID(kGroup_External, 0x11u), // I2C NOR/EEPROM memory
+    kMemorySDCard = MAKE_MEMORYID(kGroup_External, 0x20u),       // eSD, SD, SDHC, SDXC memory Card
+    kMemoryMMCCard = MAKE_MEMORYID(kGroup_External, 0x21u),      // MMC, eMMC memory Card
     //
 };
 
 //! @brief Memory interface status codes.
 enum _memory_interface_status
 {
-    kStatusMemoryRangeInvalid = MAKE_STATUS(kStatusGroup_MemoryInterface, 0),
-    kStatusMemoryReadFailed = MAKE_STATUS(kStatusGroup_MemoryInterface, 1),
-    kStatusMemoryWriteFailed = MAKE_STATUS(kStatusGroup_MemoryInterface, 2),
-    kStatusMemoryCumulativeWrite = MAKE_STATUS(kStatusGroup_MemoryInterface, 3),
-    kStatusMemoryAppOverlapWithExecuteOnlyRegion = MAKE_STATUS(kStatusGroup_MemoryInterface, 4),
-    kStatusMemoryNotConfigured = MAKE_STATUS(kStatusGroup_MemoryInterface, 5),
-    kStatusMemoryAlignmentError = MAKE_STATUS(kStatusGroup_MemoryInterface, 6),
-    kStatusMemoryVerifyFailed = MAKE_STATUS(kStatusGroup_MemoryInterface, 7),
-    kStatusMemoryWriteProtected = MAKE_STATUS(kStatusGroup_MemoryInterface, 8),
-    kStatusMemoryAddressError = MAKE_STATUS(kStatusGroup_MemoryInterface, 9),
-    kStatusMemoryBlankCheckFailed = MAKE_STATUS(kStatusGroup_MemoryInterface, 10),
-    kStatusMemoryBlankPageReadDisallowed = MAKE_STATUS(kStatusGroup_MemoryInterface, 11),
-    kStatusMemoryProtectedPageReadDisallowed = MAKE_STATUS(kStatusGroup_MemoryInterface, 12),
-    kStatusMemoryUnsupportedCommand = MAKE_STATUS(kStatusGroup_MemoryInterface, 13),
+    kStatusMemoryRangeInvalid = MAKE_STATUS(kStatusGroup_MemoryInterface, 0u),
+    kStatusMemoryReadFailed = MAKE_STATUS(kStatusGroup_MemoryInterface, 1u),
+    kStatusMemoryWriteFailed = MAKE_STATUS(kStatusGroup_MemoryInterface, 2u),
+    kStatusMemoryCumulativeWrite = MAKE_STATUS(kStatusGroup_MemoryInterface, 3u),
+    kStatusMemoryAppOverlapWithExecuteOnlyRegion = MAKE_STATUS(kStatusGroup_MemoryInterface, 4u),
+    kStatusMemoryNotConfigured = MAKE_STATUS(kStatusGroup_MemoryInterface, 5u),
+    kStatusMemoryAlignmentError = MAKE_STATUS(kStatusGroup_MemoryInterface, 6u),
+    kStatusMemoryVerifyFailed = MAKE_STATUS(kStatusGroup_MemoryInterface, 7u),
+    kStatusMemoryWriteProtected = MAKE_STATUS(kStatusGroup_MemoryInterface, 8u),
+    kStatusMemoryAddressError = MAKE_STATUS(kStatusGroup_MemoryInterface, 9u),
+    kStatusMemoryBlankCheckFailed = MAKE_STATUS(kStatusGroup_MemoryInterface, 10u),
+    kStatusMemoryBlankPageReadDisallowed = MAKE_STATUS(kStatusGroup_MemoryInterface, 11u),
+    kStatusMemoryProtectedPageReadDisallowed = MAKE_STATUS(kStatusGroup_MemoryInterface, 12u),
+    kStatusMemoryUnsupportedCommand = MAKE_STATUS(kStatusGroup_MemoryInterface, 13u),
 };
 
 // !@brief Memory property enum codes
@@ -136,11 +136,13 @@ enum
      * Bit[18] : Reserved.(Reserved for Shareable. 0 Not shareable, 1 Shareable)
      * Bit[31-19] : Reserved.
      */
-    kMemoryNotExecutable = 0,  //!< The memory doesn't support executing in place.
-    kMemoryIsExecutable = 1,   //!< The memory supports executing in place.
-    kMemoryType_FLASH = 0x00,  //!< The memory is FLASH device
-    kMemoryType_RAM = 0x10,    //!< The memory is RAM device
-    kMemoryType_Device = 0x20, //!< The memory is device register
+    kMemoryNotExecutable = 0u,  //!< The memory doesn't support executing in place.
+    kMemoryIsExecutable = 1u,   //!< The memory supports executing in place.
+    kMemoryType_FLASH = 0x00u,  //!< The memory is FLASH device
+    kMemoryType_RAM = 0x10u,    //!< The memory is RAM device
+    kMemoryType_Device = 0x20u, //!< The memory is device register
+    kMemoryAliasAddr = 0x100u,  //!< This memory map is alias memory
+    kMemoryType_DFLASH = 0x200u,  //!< The memory is FLASH device
 };
 
 //! @brief Interface to memory operations.
@@ -177,7 +179,7 @@ typedef struct _memory_map_entry
     const memory_region_interface_t *memoryInterface;
 } memory_map_entry_t;
 
-#if BL_FEATURE_EXPAND_MEMORY
+#if defined(BL_FEATURE_EXPAND_MEMORY) && BL_FEATURE_EXPAND_MEMORY
 
 typedef struct _external_memory_region_interface
 {
@@ -203,47 +205,47 @@ typedef struct _external_memory_map_entry
 //! @brief Memory Map index constants
 enum _memorymap_constants
 {
-#if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
-    kIndexFlashArray = 0,
-    kIndexSRAM = 1,
-#if BL_FEATURE_SUPPORT_DFLASH
-    kIndexDFlashArray = 2,
+#if !(defined(BL_FEATURE_HAS_NO_INTERNAL_FLASH) && BL_FEATURE_HAS_NO_INTERNAL_FLASH)
+    kIndexFlashArray = 0u,
+    kIndexSRAM = 1u,
+#if defined(BL_FEATURE_SUPPORT_DFLASH) && BL_FEATURE_SUPPORT_DFLASH
+    kIndexDFlashArray = 2u,
 #endif    
-#if CPU_IS_ARM_CORTEX_M7
-    kIndexDTCM = 2,
-    kIndexOCRAM = 3,
+#if defined(CPU_IS_ARM_CORTEX_M7) && CPU_IS_ARM_CORTEX_M7
+    kIndexDTCM = 2u,
+    kIndexOCRAM = 3u,
 #endif // CPU_IS_ARM_CORTEX_M7
 #if defined(K28F15_SERIES)
-    kIndexOCRAM = 4,
+    kIndexOCRAM = 4u,
 #endif
 #else
-    kIndexSRAM = 0,
-#if CPU_IS_ARM_CORTEX_M7
-    kIndexDTCM = 1,
-    kIndexOCRAM = 2,
+    kIndexSRAM = 0u,
+#if defined(CPU_IS_ARM_CORTEX_M7) && CPU_IS_ARM_CORTEX_M7
+    kIndexDTCM = 1u,
+    kIndexOCRAM = 2u,
 #endif // CPU_IS_ARM_CORTEX_M7
 #endif // #if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
-#if BL_FEATURE_FLEXSPI_NOR_MODULE
-    kIndexFlexSpiNor = 3,
-    kIndexFlexSpiNorAlias = 4,
+#if defined(BL_FEATURE_FLEXSPI_NOR_MODULE) && BL_FEATURE_FLEXSPI_NOR_MODULE
+    kIndexFlexSpiNor = 3u,
+    kIndexFlexSpiNorAlias = 4u,
 #endif // #if BL_FEATURE_FLEXSPI_NOR_MODULE
-#if BL_FEATURE_SPIFI_NOR_MODULE
-    kIndexSpifiNor = 5,
+#if defined(BL_FEATURE_SPIFI_NOR_MODULE) && BL_FEATURE_SPIFI_NOR_MODULE
+    kIndexSpifiNor = 5u,
 #endif // #if BL_FEATURE_SPIFI_NOR_MODULE
-#if BL_FEATURE_SEMC_NOR_MODULE
-    kIndexSemcNor = 4,
+#if defined(BL_FEATURE_SEMC_NOR_MODULE) && BL_FEATURE_SEMC_NOR_MODULE
+    kIndexSemcNor = 4u,
 #endif // #if BL_FEATURE_SEMC_NOR_MODULE
-#if BL_FEATURE_QSPI_MODULE
-    kIndexQspiMemory = 2,
-    kIndexQspiAliasArea = 3,
+#if defined(BL_FEATURE_QSPI_MODULE) && BL_FEATURE_QSPI_MODULE
+    kIndexQspiMemory = 2u,
+    kIndexQspiAliasArea = 3u,
 #endif // BL_FEATURE_QSPI_MODULE
-    kSRAMSeparatrix = (uint32_t)0x20000000 //!< This value is the start address of SRAM_U
+    kSRAMSeparatrix = (uint32_t)0x20000000u //!< This value is the start address of SRAM_U
 };
 
-#if BL_FEATURE_EXPAND_MEMORY
+#if defined(BL_FEATURE_EXPAND_MEMORY) && BL_FEATURE_EXPAND_MEMORY
 enum _external_memorymap_constants
 {
-    kIndexStart = 0,
+    kIndexStart = 0u,
     // Never add index for external memory map.
     // Because external memories don't have fixed indexes,
     // and are changed by bootloader configuration.
@@ -254,22 +256,22 @@ enum _external_memorymap_constants
 //! @brief flash memory erase all options.
 typedef enum _flash_erase_all_option
 {
-    kFlashEraseAllOption_Blocks = 0,
-    kFlashEraseAllOption_ExecuteOnlySegments = 1
+    kFlashEraseAllOption_Blocks = 0u,
+    kFlashEraseAllOption_ExecuteOnlySegments = 1u
 } flash_erase_all_option_t;
 
 //! @brief Flash index constants.
 enum _flash_index_constants
 {
-    kFlashIndex_Main = 0,
+    kFlashIndex_Main = 0u,
 #if defined(FSL_FEATURE_FLASH_HAS_MULTIPLE_FLASH) || defined(FSL_FEATURE_FLASH_PFLASH_1_START_ADDRESS)    
-    kFlashIndex_Secondary = 1,
-#if BL_FEATURE_SUPPORT_DFLASH    
-    kFalshIndex_DFlash = 2
+    kFlashIndex_Secondary = 1u,
+#if defined(BL_FEATURE_SUPPORT_DFLASH) && BL_FEATURE_SUPPORT_DFLASH    
+    kFalshIndex_DFlash = 2u
 #endif // BL_FEATURE_SUPPORT_DFLASH
 #else
-#if BL_FEATURE_SUPPORT_DFLASH   
-    kFalshIndex_DFlash = 1 
+#if defined(BL_FEATURE_SUPPORT_DFLASH) && BL_FEATURE_SUPPORT_DFLASH   
+    kFalshIndex_DFlash = 1u
 #endif // BL_FEATURE_SUPPORT_DFLASH      
 #endif //  defined(FSL_FEATURE_FLASH_HAS_MULTIPLE_FLASH) || defined(FSL_FEATURE_FLASH_PFLASH_1_START_ADDRESS)    
 };
@@ -282,7 +284,7 @@ enum _flash_index_constants
 extern memory_map_entry_t g_memoryMap[];
 
 //! @brief External memory map for the system.
-#if BL_FEATURE_EXPAND_MEMORY
+#if defined(BL_FEATURE_EXPAND_MEMORY) && BL_FEATURE_EXPAND_MEMORY
 extern external_memory_map_entry_t g_externalMemoryMap[];
 #endif // BL_FEATURE_EXPAND_MEMORY
 
@@ -295,7 +297,7 @@ extern external_memory_map_entry_t g_externalMemoryMap[];
 //! depending on the region of memory being accessed.
 extern const memory_interface_t g_memoryInterface;
 
-#if !BL_DEVICE_IS_LPC_SERIES
+#if !(defined(BL_DEVICE_IS_LPC_SERIES) && BL_DEVICE_IS_LPC_SERIES)
 //! @brief Kinetis Main Flash memory interface.
 extern const memory_region_interface_t g_flashMemoryInterface;
 #else
@@ -303,11 +305,11 @@ extern const memory_region_interface_t g_flashMemoryInterface;
 extern const memory_region_interface_t g_flashiapMemoryInterface;
 #endif
 
-#if BL_FEATURE_SUPPORT_DFLASH
+#if defined(BL_FEATURE_SUPPORT_DFLASH) && BL_FEATURE_SUPPORT_DFLASH
 extern const memory_region_interface_t g_dFlashMemoryInterface;
 #endif
 
-#if BL_HAS_SECONDARY_INTERNAL_FLASH
+#if defined(BL_HAS_SECONDARY_INTERNAL_FLASH) && BL_HAS_SECONDARY_INTERNAL_FLASH
 //! @brief Secondary Flash memory interface.
 extern const memory_region_interface_t g_secondaryFlashMemoryInterface;
 #endif
@@ -317,7 +319,7 @@ extern const memory_region_interface_t g_secondaryFlashMemoryInterface;
 //! Use of multiword loads and stores is allowed with this memory type.
 extern const memory_region_interface_t g_normalMemoryInterface;
 
-#if CPU_IS_ARM_CORTEX_M7
+#if defined(CPU_IS_ARM_CORTEX_M7) && CPU_IS_ARM_CORTEX_M7
 //! @brief Memory interface for memory with Normal type.
 //!
 //! Use of multiword loads and stores is allowed with this memory type.
@@ -336,42 +338,42 @@ extern const memory_region_interface_t g_normalOCRAMInterface;
 //! This memory type does not support multiword loads and stores.
 extern const memory_region_interface_t g_deviceMemoryInterface;
 
-#if defined BL_FEATURE_QSPI_MODULE
+#if defined(BL_FEATURE_QSPI_MODULE) && BL_FEATURE_QSPI_MODULE
 extern const memory_region_interface_t g_qspiMemoryInterface;
-#if BL_FEATURE_QSPI_ALIAS_AREA
+#if defined(BL_FEATURE_QSPI_ALIAS_AREA) && BL_FEATURE_QSPI_ALIAS_AREA
 extern const memory_region_interface_t g_qspiAliasAreaInterface;
 #endif // BL_FEATURE_QSPI_ALIAS_AREA
 #endif // BL_FEATURE_QSPI_MODULE
 
-#if BL_FEATURE_FLEXSPI_NOR_MODULE
+#if defined(BL_FEATURE_FLEXSPI_NOR_MODULE) && BL_FEATURE_FLEXSPI_NOR_MODULE
 extern const memory_region_interface_t g_flexspiMemoryInterface;
-#if BL_FEATURE_FLEXSPI_ALIAS_AREA
+#if defined(BL_FEATURE_FLEXSPI_ALIAS_AREA) && BL_FEATURE_FLEXSPI_ALIAS_AREA
 extern const memory_region_interface_t g_flexspiAliasAreaInterface;
 #endif // #if BL_FEATURE_FLEXSPI_ALIAS_AREA
 #endif // #if BL_FEATURE_FLEXSPI_NOR_MODULE
 
-#if BL_FEATURE_SPIFI_NOR_MODULE
+#if defined(BL_FEATURE_SPIFI_NOR_MODULE) && BL_FEATURE_SPIFI_NOR_MODULE
 extern const memory_region_interface_t g_spifiMemoryInterface;
 #endif // #if BL_FEATURE_SPIFI_NOR_MODULE
 
-#if BL_FEATURE_SEMC_NOR_MODULE
+#if defined(BL_FEATURE_SEMC_NOR_MODULE) && BL_FEATURE_SEMC_NOR_MODULE
 extern const memory_region_interface_t g_semcNorMemoryInterface;
 #endif // #if BL_FEATURE_SEMC_NOR_MODULE
 
-#if BL_FEATURE_EXPAND_MEMORY
-#if BL_FEATURE_SPINAND_MODULE
+#if defined(BL_FEATURE_EXPAND_MEMORY) && BL_FEATURE_EXPAND_MEMORY
+#if defined(BL_FEATURE_SPINAND_MODULE) && BL_FEATURE_SPINAND_MODULE
 extern const external_memory_region_interface_t g_spiNandMemoryInterface;
 #endif // BL_FEATURE_SPINAND_MODULE
-#if BL_FEATURE_SEMC_NAND_MODULE
+#if defined(BL_FEATURE_SEMC_NAND_MODULE) && BL_FEATURE_SEMC_NAND_MODULE
 extern const external_memory_region_interface_t g_semcNandMemoryInterface;
 #endif
-#if BL_FEATURE_SPI_NOR_EEPROM_MODULE
+#if defined(BL_FEATURE_SPI_NOR_EEPROM_MODULE) && BL_FEATURE_SPI_NOR_EEPROM_MODULE
 extern const external_memory_region_interface_t g_spiNorEepromMemoryInterface;
 #endif // BL_FEATURE_SPI_NOR_EEPROM_MODULE
-#if BL_FEATURE_SD_MODULE
+#if defined(BL_FEATURE_SD_MODULE) && BL_FEATURE_SD_MODULE
 extern const external_memory_region_interface_t g_sdMemoryInterface;
 #endif
-#if BL_FEATURE_MMC_MODULE
+#if defined(BL_FEATURE_MMC_MODULE) && BL_FEATURE_MMC_MODULE
 extern const external_memory_region_interface_t g_mmcMemoryInterface;
 #endif
 #endif // BL_FEATURE_EXPAND_MEMORY
@@ -407,13 +409,11 @@ status_t mem_erase(uint32_t address, uint32_t length, uint32_t memoryId);
 //! @brief Flush memory.
 status_t mem_flush(void);
 
-//! @brief Reset state machine of memory interface.
-status_t mem_finalize(void);
 
 //! @brief Find a map entry that matches address and length.
 status_t find_map_entry(uint32_t address, uint32_t length, const memory_map_entry_t **map);
 
-#if BL_FEATURE_EXPAND_MEMORY
+#if defined(BL_FEATURE_EXPAND_MEMORY) && BL_FEATURE_EXPAND_MEMORY
 //! @brief Find an external map entry that matches address and length.
 status_t find_external_map_entry(uint32_t address,
                                  uint32_t length,
@@ -440,10 +440,7 @@ bool mem_is_block_reserved(uint32_t address, uint32_t length);
 //! @name Flash erase operations
 //@{
 
-//! @brief Erase Flash memory.
-status_t flash_mem_erase(uint32_t address, uint32_t length);
-
-#if BL_FEATURE_FAC_ERASE
+#if defined(BL_FEATURE_FAC_ERASE) && BL_FEATURE_FAC_ERASE
 //! @brief Erase all Flash memory or all Flash execute-only segments.
 //!
 //! It is only valid for non-flash resident bootloader when option is erasing execute-only segments.
@@ -460,7 +457,7 @@ status_t flash_mem_erase_all(void);
 //! @brief Erase all Flash memory (unsecure).
 status_t flash_mem_erase_all_unsecure(void);
 
-#if BL_FEATURE_SUPPORT_DFLASH 
+#if defined(BL_FEATURE_SUPPORT_DFLASH) && BL_FEATURE_SUPPORT_DFLASH 
 //! @brief Erase all FlexNVM Flash memory.
 status_t flexNVM_mem_erase_all(void);
 
@@ -468,83 +465,54 @@ status_t flexNVM_mem_erase_all(void);
 status_t flexNVM_mem_erase_all_unsecure(void);
 #endif // #if BL_FEATURE_SUPPORT_DFLASH 
 
-//@}
-
-//! @name QSPI erase operation
-//@{
-
-//! @brief Erase all QSPI memory
-status_t qspi_mem_erase_all(void);
-
-//! @brief Configure QSPI memory
-status_t configure_qspi(const uint32_t address);
-//@}
-
+#if defined(KW38A4_SERIES)
+#else
 //! @name FlexSPI NOR erase operation
 //@{
-
 //! @brief Config FlexSPI NOR memory
 status_t flexspi_nor_mem_config(uint32_t *config);
-
 //! @brief Erase all FlexSPI NOR memory
 status_t flexspi_nor_mem_erase_all(void);
-
 //! @brief Get Property from flexspi0 NOR Flash driver
 status_t flexspi_nor_get_property(uint32_t whichProperty, uint32_t *value);
-
 //! @brief Get the status of flexspi configuration
 bool is_flexspi_nor_configured(void);
-
 //@}
 
 //! @name SPI NAND erase operation
 //@{
-
 //! @brief Erase all SPI NAND memory
 status_t spinand_mem_erase_all(void);
-
 //! @brief Get Property from spi NAND flash driver.
 status_t spinand_get_property(uint32_t whichProperty, uint32_t *value);
-
 //@}
 
 //! @name SEMC NOR
 //@{
-
 //! @brief Configure SEMC NOR memory.
 status_t semc_nor_mem_config(uint32_t *config);
-
 //! @brief Erase all SEMC NOR memory
 status_t semc_nor_mem_erase_all(void);
-
 //! @brief Get Property from semc nor driver
 status_t semc_nor_get_property(uint32_t whichProperty, uint32_t *value);
-
 //! @brief Get the status of semc nor configuration
 bool is_semc_nor_configured(void);
-
 //@}
 
 //! @name SEMC NAND erase operation
 //@{
-
 //! @brief Erase all SEMC NAND memory
 status_t semc_nand_mem_erase_all(void);
-
 //! @brief Get Property from semc nand driver
 status_t semc_nand_get_property(uint32_t whichProperty, uint32_t *value);
-
 //@}
 
 //! @name SPI NOR/EEPROM
 //@{
-
 //! @brief  Erase all Serial NOR/EEPROM memory
 status_t spi_nor_eeprom_mem_erase_all(void);
-
 //! @brief Get Property from spi NOR/EEPROM flash driver.
 status_t spi_nor_eeprom_get_property(uint32_t whichProperty, uint32_t *value);
-
 //@}
 
 //! @name SD CARD
@@ -553,7 +521,14 @@ status_t spi_nor_eeprom_get_property(uint32_t whichProperty, uint32_t *value);
 status_t sd_mem_erase_all(void);
 //! @brief Get Property from SD card driver.
 status_t sd_get_property(uint32_t whichProperty, uint32_t *value);
+//@}
 
+//! @name QSPI erase operation
+//@{
+//! @brief Configure QSPI memory
+status_t configure_qspi(const uint32_t address);
+//! @brief Erase all QSPI memory
+status_t qspi_mem_erase_all(void);
 //@}
 
 //! @name MMC CARD
@@ -562,22 +537,22 @@ status_t sd_get_property(uint32_t whichProperty, uint32_t *value);
 status_t mmc_mem_erase_all(void);
 //! @brief Get Property from MMC card driver.
 status_t mmc_get_property(uint32_t whichProperty, uint32_t *value);
-
 //@}
 
 //! @name SPIFI NOR erase operation
 //@{
-
 //! @brief Config SPIFI NOR memory
 status_t spifi_nor_mem_config(uint32_t *config);
-
 //! @brief Erase all SPIFI NOR memory
 status_t spifi_nor_mem_erase_all(void);
-
 //! @brief Get Property from spifi driver
 status_t spifi_nor_get_property(uint32_t whichProperty, uint32_t *value);
-
 //@}
+
+//! @brief Reset state machine of memory interface.
+status_t mem_finalize(void);
+
+#endif
 
 #if defined(__cplusplus)
 }

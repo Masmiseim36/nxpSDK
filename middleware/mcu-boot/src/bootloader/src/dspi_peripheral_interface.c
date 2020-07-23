@@ -15,7 +15,7 @@
 #include "fsl_device_registers.h"
 #include "packet/serial_packet.h"
 
-#if BL_CONFIG_DSPI
+#if defined(BL_CONFIG_DSPI) && BL_CONFIG_DSPI
 
 //! @addtogroup dspi_peripheral
 //! @{
@@ -52,6 +52,20 @@ static void dspi_initial_data_sink(uint8_t sink_byte, uint32_t instance);
 //! @brief DSPI slave writing data function
 status_t dspi_write(const peripheral_descriptor_t *self, const uint8_t *buffer, uint32_t byteCount);
 
+void dspi_slave_irq_handler(uint32_t instance);
+
+#if defined(SPI0)
+void SPI0_IRQHandler(void);
+#endif
+
+#if defined(SPI1)
+void SPI1_IRQHandler(void);
+#endif
+
+#if defined(SPI2)
+void SPI2_IRQHandler(void);
+#endif
+
 ////////////////////////////////////////////////////////////////////////////////
 // Variables
 ////////////////////////////////////////////////////////////////////////////////
@@ -60,7 +74,7 @@ status_t dspi_write(const peripheral_descriptor_t *self, const uint8_t *buffer, 
  * @brief DSPI slave control interface information
  */
 const peripheral_control_interface_t g_dspiControlInterface = {
-    .pollForActivity = dspi_poll_for_activity, .init = dspi_full_init, .shutdown = dspi_full_shutdown, .pump = 0
+    .pollForActivity = dspi_poll_for_activity, .init = dspi_full_init, .shutdown = dspi_full_shutdown, .pump = 0u
 };
 
 /*!
@@ -70,14 +84,14 @@ const peripheral_byte_inteface_t g_dspiByteInterface = {.init = NULL, .write = d
 
 //! @brief Global state for the DSPI slave peripheral interface.
 static dspi_transfer_info_t s_dspiInfo = {
-    .writeData = 0, .bytesToTransfer = 0, .data_source = dspi_data_source, .data_sink = dspi_initial_data_sink
+    .writeData = 0u, .bytesToTransfer = 0u, .data_source = dspi_data_source, .data_sink = dspi_initial_data_sink
 };
 
 //! @brief Flag for DSPI detecting device activity
-static bool s_dspiActivity[FSL_FEATURE_SOC_DSPI_COUNT] = { false };
+static bool s_dspiActivity[FSL_FEATURE_SOC_DSPI_COUNT] = { (_Bool)false };
 
 //! @brief Flag for DSPI intialization state
-static bool s_dspiIntialized[FSL_FEATURE_SOC_DSPI_COUNT] = { false };
+static bool s_dspiIntialized[FSL_FEATURE_SOC_DSPI_COUNT] = { (_Bool)false };
 
 /*!
  * @brief DSPI slave receiving data call back function
@@ -96,7 +110,7 @@ const static uint32_t g_dspiBaseAddr[] = SPI_BASE_ADDRS;
  * Description   : Polling for DSPI slave activities
  *
  *END**************************************************************************/
-bool dspi_poll_for_activity(const peripheral_descriptor_t *self)
+static bool dspi_poll_for_activity(const peripheral_descriptor_t *self)
 {
     return s_dspiActivity[self->instance];
 }
@@ -107,18 +121,18 @@ bool dspi_poll_for_activity(const peripheral_descriptor_t *self)
  * Description   : DSPI slave sending data function
  *
  *END**************************************************************************/
-void dspi_data_source(uint8_t *source_byte)
+static void dspi_data_source(uint8_t *source_byte)
 {
     assert(source_byte);
 
-    if (s_dspiInfo.bytesToTransfer)
+    if (s_dspiInfo.bytesToTransfer != 0u)
     {
         *source_byte = *s_dspiInfo.writeData++;
         s_dspiInfo.bytesToTransfer--;
     }
     else
     {
-        *source_byte = 0;
+        *source_byte = 0u;
     }
 }
 
@@ -128,9 +142,9 @@ void dspi_data_source(uint8_t *source_byte)
  * Description   : DSPI slave receiving first byte data function
  *
  *END**************************************************************************/
-void dspi_initial_data_sink(uint8_t sink_byte, uint32_t instance)
+static void dspi_initial_data_sink(uint8_t sink_byte, uint32_t instance)
 {
-    if (sink_byte == kFramingPacketStartByte)
+    if (sink_byte == (uint8_t)kFramingPacketStartByte)
     {
         s_dspiActivity[instance] = true;
         s_dspiInfo.data_sink = dspi_data_sink;
@@ -144,7 +158,7 @@ void dspi_initial_data_sink(uint8_t sink_byte, uint32_t instance)
  * Description   : DSPI slave receiving data function
  *
  *END**************************************************************************/
-void dspi_data_sink(uint8_t sink_byte, uint32_t instance)
+static void dspi_data_sink(uint8_t sink_byte, uint32_t instance)
 {
     s_dspi_app_data_sink_callback(sink_byte);
 }
@@ -155,7 +169,7 @@ void dspi_data_sink(uint8_t sink_byte, uint32_t instance)
  * Description   : DSPI slave full init function
  *
  *END**************************************************************************/
-status_t dspi_full_init(const peripheral_descriptor_t *self, serial_byte_receive_func_t function)
+static status_t dspi_full_init(const peripheral_descriptor_t *self, serial_byte_receive_func_t function)
 {
     s_dspi_app_data_sink_callback = function;
     dspi_slave_config_t config;
@@ -166,7 +180,8 @@ status_t dspi_full_init(const peripheral_descriptor_t *self, serial_byte_receive
     config.ctarConfig.cpol = kDSPI_ClockPolarityActiveLow;
     config.ctarConfig.cpha = kDSPI_ClockPhaseSecondEdge;
 
-    s_dspiInfo.data_source = dspi_data_source, s_dspiInfo.data_sink = dspi_initial_data_sink,
+    s_dspiInfo.data_source = dspi_data_source;
+    s_dspiInfo.data_sink = dspi_initial_data_sink;
 
     // Configure selected pin as spi peripheral interface
         self->pinmuxConfig(self->instance, kPinmuxType_Peripheral);
@@ -176,7 +191,7 @@ status_t dspi_full_init(const peripheral_descriptor_t *self, serial_byte_receive
 
     s_dspiIntialized[self->instance] = true;
 
-    return kStatus_Success;
+    return (int32_t)kStatus_Success;
 }
 
 /*FUNCTION**********************************************************************
@@ -185,7 +200,7 @@ status_t dspi_full_init(const peripheral_descriptor_t *self, serial_byte_receive
  * Description   : DSPI slave full shutdown function
  *
  *END**************************************************************************/
-void dspi_full_shutdown(const peripheral_descriptor_t *self)
+static void dspi_full_shutdown(const peripheral_descriptor_t *self)
 {
     if (s_dspiIntialized[self->instance])
     {
@@ -210,10 +225,11 @@ status_t dspi_write(const peripheral_descriptor_t *self, const uint8_t *buffer, 
     s_dspiInfo.writeData = buffer;
     s_dspiInfo.bytesToTransfer = byteCount;
 
-    while (s_dspiInfo.bytesToTransfer)
-        ;
+    while (s_dspiInfo.bytesToTransfer != 0u)
+    {
+    }
 
-    return kStatus_Success;
+    return (int32_t)kStatus_Success;
 }
 
 void dspi_slave_irq_handler(uint32_t instance)
@@ -221,16 +237,16 @@ void dspi_slave_irq_handler(uint32_t instance)
     uint32_t baseAddr = g_dspiBaseAddr[instance];
 
     /* catch tx fifo underflow conditions */
-    if (DSPI_GetStatusFlags((SPI_Type *)baseAddr) & kDSPI_TxFifoUnderflowFlag)
+    if ((DSPI_GetStatusFlags((SPI_Type *)baseAddr) & (uint32_t)kDSPI_TxFifoUnderflowFlag) != 0u)
     {
-        DSPI_ClearStatusFlags((SPI_Type *)baseAddr, kDSPI_TxFifoUnderflowFlag);
+        DSPI_ClearStatusFlags((SPI_Type *)baseAddr, (uint32_t)kDSPI_TxFifoUnderflowFlag);
     }
 
     /* Fill the tx fifo, where the fifo can be 1 entry or more */
-    while (DSPI_GetStatusFlags((SPI_Type *)baseAddr) & kDSPI_TxFifoFillRequestFlag)
+    while ((DSPI_GetStatusFlags((SPI_Type *)baseAddr) & (uint32_t)kDSPI_TxFifoFillRequestFlag) != 0u)
     {
         /* SPI transmit interrupt */
-        uint32_t sourceWord = 0;
+        uint32_t sourceWord = 0u;
         uint8_t sourceWordTemp;
 
         /* get the first 8-bits of data */
@@ -241,11 +257,11 @@ void dspi_slave_irq_handler(uint32_t instance)
         ((SPI_Type *)baseAddr)->PUSHR_SLAVE = sourceWord;
 
         /* try to clear TFFF by writing a one to it; it will not clear if TX FIFO not full */
-        DSPI_ClearStatusFlags((SPI_Type *)baseAddr, kDSPI_TxFifoFillRequestFlag);
+        DSPI_ClearStatusFlags((SPI_Type *)baseAddr, (uint32_t)kDSPI_TxFifoFillRequestFlag);
     }
 
     /* Fill the rx fifo, where the fifo can be 1 entry or more */
-    while (DSPI_GetStatusFlags((SPI_Type *)baseAddr) & kDSPI_RxFifoDrainRequestFlag)
+    while ((DSPI_GetStatusFlags((SPI_Type *)baseAddr) & (uint32_t)kDSPI_RxFifoDrainRequestFlag) != 0u)
     {
         /* SPI receive interrupt, read the data from the DSPI data register */
         uint32_t readData = ((SPI_Type *)baseAddr)->POPR;
@@ -255,7 +271,7 @@ void dspi_slave_irq_handler(uint32_t instance)
          * either remain clear if no more data is in the fifo, or it will set if there is
          * more data in the fifo.
          */
-        DSPI_ClearStatusFlags((SPI_Type *)baseAddr, kDSPI_RxFifoDrainRequestFlag);
+        DSPI_ClearStatusFlags((SPI_Type *)baseAddr, (uint32_t)kDSPI_RxFifoDrainRequestFlag);
 
         /* Sink the first 8-bits */
         s_dspiInfo.data_sink((uint8_t)readData, instance);

@@ -45,10 +45,12 @@ the OTAP Client only when an image block transfer is requested via the ATT trans
 </ul>
 
 <p class="p">The demo runs using 4 applications: an OTAP Client embedded application, an OTAP
-      Bootloader embedded application, an OTAP Server embedded application, and an OTAP Server PC
-      application. The OTAP Client embedded application has two versions, an ATT version and a L2CAP
-      version each using a different transfer method. The OTAP Bootloader and OTAP Clent
-      applications must be flashed on the same device (the program region does not overlap).</p>
+      Bootloader embedded application, an OTAP Server embedded application (for QN9090 the
+      bootloader is not required, in case of K32W061 a Secondary Stage Bootloader - SSBL is
+      required), and an OTAP Server PC application. The OTAP Client embedded application has two
+      versions, an ATT version and a L2CAP version each using a different transfer method. The OTAP
+      Bootloader (SSBL for the K32W061) and OTAP Client applications must be flashed on the same
+      device (the program region does not overlap).</p>
 
 <p class="p">The embedded OTAP Server application is a GAP Central application which scans for
       devices advertising the Bluetooth LE OTAP service. After it finds one, it connects to it and

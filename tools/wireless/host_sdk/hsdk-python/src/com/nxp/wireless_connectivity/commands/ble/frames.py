@@ -1,6 +1,6 @@
 '''
 * Copyright 2014-2015 Freescale Semiconductor, Inc.
-* Copyright 2016-2019 NXP
+* Copyright 2016-2018 NXP
 * All rights reserved.
 *
 * SPDX-License-Identifier: BSD-3-Clause
@@ -13,131 +13,6 @@ from com.nxp.wireless_connectivity.hsdk.utils import list_to_int, to_bytes
 from com.nxp.wireless_connectivity.commands.ble.enums import ValueUuidType as UuidType
 
 
-class HCIModeSelectRequest(object):
-
-    def __init__(self, Enable=bytearray(1)):
-        '''
-        @param Enable: Enable/disable HCI
-        '''
-        self.Enable = Enable
-
-
-class HCICommandRequest(object):
-
-    def __init__(self, CommandLength=bytearray(2), Command=[]):
-        '''
-        @param CommandLength: The length of the HCI command
-        @param Command: The HCI command
-        '''
-        self.CommandLength = CommandLength
-        self.Command = Command
-
-
-class HCIDataRequest(object):
-
-    def __init__(self, DataLength=bytearray(2), Data=[]):
-        '''
-        @param DataLength: The length of the HCI data
-        @param Data: The HCI data
-        '''
-        self.DataLength = DataLength
-        self.Data = Data
-
-
-class HCISynchronousDataRequest(object):
-
-    def __init__(self, SynchronousDataLength=bytearray(2), SynchronousData=[]):
-        '''
-        @param SynchronousDataLength: The length of the HCI synchronous data
-        @param SynchronousData: The HCI synchronous data
-        '''
-        self.SynchronousDataLength = SynchronousDataLength
-        self.SynchronousData = SynchronousData
-
-
-class L2CAPModeSelectRequest(object):
-
-    def __init__(self, Enable=bytearray(1)):
-        '''
-        @param Enable: Enable/disable L2CAP
-        '''
-        self.Enable = Enable
-
-
-class L2CAPInitRequest(object):
-
-    pass
-
-
-class L2CAPConfigRequest(object):
-
-    def __init__(self, ConfigStruct_LeFeatures=bytearray(4), ConfigStruct_HCILeBufferSize=bytearray(4), ConfigStruct_MaxPduPayloadSize=bytearray(2)):
-        '''
-        @param ConfigStruct_LeFeatures: The list of the supported LE features
-        @param ConfigStruct_HCILeBufferSize: The size of the HCILe buffer
-        @param ConfigStruct_MaxPduPayloadSize: The maximum size of payload data
-        '''
-        self.ConfigStruct_LeFeatures = ConfigStruct_LeFeatures
-        self.ConfigStruct_HCILeBufferSize = ConfigStruct_HCILeBufferSize
-        self.ConfigStruct_MaxPduPayloadSize = ConfigStruct_MaxPduPayloadSize
-
-
-class L2CAPSendAttDataRequest(object):
-
-    def __init__(self, DeviceId=bytearray(1), PacketLength=bytearray(2), Packet=[]):
-        '''
-        @param DeviceId: The DeviceId for which the command is intended
-        @param PacketLength: Length of the ATT data packet to be sent
-        @param Packet: The ATT data packet to be transmitted
-        '''
-        self.DeviceId = DeviceId
-        self.PacketLength = PacketLength
-        self.Packet = Packet
-
-
-class L2CAPSendSmpDataRequest(object):
-
-    def __init__(self, DeviceId=bytearray(1), PacketLength=bytearray(2), Packet=[]):
-        '''
-        @param DeviceId: The DeviceId for which the command is intended
-        @param PacketLength: Length of the SM data packet to be sent
-        @param Packet: The SM data packet to be transmitted
-        '''
-        self.DeviceId = DeviceId
-        self.PacketLength = PacketLength
-        self.Packet = Packet
-
-
-class L2CAPSendSignalingDataRequest(object):
-
-    def __init__(self, DeviceId=bytearray(1), PacketLength=bytearray(2), Packet=[]):
-        '''
-        @param DeviceId: The DeviceId for which the command is intended
-        @param PacketLength: Length of the Signaling data packet to be sent
-        @param Packet: The Signaling data packet to be transmitted
-        '''
-        self.DeviceId = DeviceId
-        self.PacketLength = PacketLength
-        self.Packet = Packet
-
-
-class L2CAPRegisterAttCallbackRequest(object):
-
-    pass
-
-
-class L2CAPRegisterSmpCallbackRequest(object):
-
-    pass
-
-
-class L2CAPCBModeSelectRequest(object):
-
-    def __init__(self, Enable=bytearray(1)):
-        '''
-        @param Enable: Enable/disable L2CAP
-        '''
-        self.Enable = Enable
 
 
 class L2CAPCBRegisterLeCbCallbacksRequest(object):
@@ -229,6 +104,11 @@ class L2CAPCBSendLeCreditRequest(object):
         self.ChannelId = ChannelId
         self.Credits = Credits
 
+
+
+
+
+
 class GATTInitRequest(object):
 
     pass
@@ -270,11 +150,13 @@ class GATTClientRegisterIndicationCallbackRequest(object):
 
 class GATTClientExchangeMtuRequest(object):
 
-    def __init__(self, DeviceId=bytearray(1)):
+    def __init__(self, DeviceId=bytearray(1), Mtu=bytearray(2)):
         '''
         @param DeviceId: Device ID of the connected peer
+        @param Mtu: Desired MTU size for the connected peer
         '''
         self.DeviceId = DeviceId
+        self.Mtu = Mtu
 
 
 class GATTClientDiscoverAllPrimaryServicesRequest(object):
@@ -1357,13 +1239,69 @@ class GATTServerSendAttributeReadStatusRequest(object):
         self.Status = Status
 
 
-class GATTDBModeSelectRequest(object):
+class GATTServerRegisterUniqueHandlesForNotificationsRequest(object):
 
-    def __init__(self, Enable=bytearray(1)):
+    def __init__(self, bWrite=bytearray(1), bRead=bytearray(1)):
         '''
-        @param Enable: Enable/disable GATT Database (application)
+        @param bWrite: Boolean value which indicates unique handles are notified for write or not
+        @param bRead: Boolean value which indicates unique handles are notified for read or not
         '''
-        self.Enable = Enable
+        self.bWrite = bWrite
+        self.bRead = bRead
+class GATTServerUnregisterHandlesForWriteNotificationsRequest(object):
+
+    class AttributeHandles(object):
+
+        def __init__(self, Handle=bytearray(2)):
+            self.Handle = Handle
+
+        def pickle(self):
+            result = bytearray()
+            result += to_bytes(self.Handle, 2)
+            return result
+
+    def __init__(self, HandleCount=bytearray(1), AttributeHandles=[]):
+        '''
+        @param HandleCount: Number of handles in array
+        @param AttributeHandles: Statically allocated array of handles
+        '''
+        self.HandleCount = HandleCount
+        self.AttributeHandles = AttributeHandles
+
+    def pickle(self):
+        result = bytearray()
+        result += to_bytes(self.HandleCount, 1)
+        for i in range(list_to_int(self.HandleCount, False)):
+            result += self.AttributeHandles[i].pickle()
+        return result
+
+
+class GATTServerUnregisterHandlesForReadNotificationsRequest(object):
+
+    class AttributeHandles(object):
+
+        def __init__(self, Handle=bytearray(2)):
+            self.Handle = Handle
+
+        def pickle(self):
+            result = bytearray()
+            result += to_bytes(self.Handle, 2)
+            return result
+
+    def __init__(self, HandleCount=bytearray(1), AttributeHandles=[]):
+        '''
+        @param HandleCount: Number of handles in array
+        @param AttributeHandles: Statically allocated array of handles
+        '''
+        self.HandleCount = HandleCount
+        self.AttributeHandles = AttributeHandles
+
+    def pickle(self):
+        result = bytearray()
+        result += to_bytes(self.HandleCount, 1)
+        for i in range(list_to_int(self.HandleCount, False)):
+            result += self.AttributeHandles[i].pickle()
+        return result
 
 
 class GATTDBWriteAttributeRequest(object):
@@ -1659,7 +1597,7 @@ class GAPRegisterDeviceSecurityRequirementsRequest(object):
 
 class GAPSetAdvertisingParametersRequest(object):
 
-    def __init__(self, AdvertisingParameters_MinInterval=bytearray(2), AdvertisingParameters_MaxInterval=bytearray(2), AdvertisingParameters_AdvertisingType=GAPSetAdvertisingParametersRequestAdvertisingParameters_AdvertisingType.gConnectableUndirected_c, AdvertisingParameters_OwnAddressType=GAPSetAdvertisingParametersRequestAdvertisingParameters_OwnAddressType.gPublic_c, AdvertisingParameters_PeerAddressType=GAPSetAdvertisingParametersRequestAdvertisingParameters_PeerAddressType.gPublic_c, AdvertisingParameters_PeerAddress=bytearray(6), AdvertisingParameters_ChannelMap=GAPSetAdvertisingParametersRequestAdvertisingParameters_ChannelMap.gChannel37_c, AdvertisingParameters_FilterPolicy=GAPSetAdvertisingParametersRequestAdvertisingParameters_FilterPolicy.gProcessAll_c):
+    def __init__(self, AdvertisingParameters_MinInterval=bytearray(2), AdvertisingParameters_MaxInterval=bytearray(2), AdvertisingParameters_AdvertisingType=GAPSetAdvertisingParametersRequestAdvertisingParameters_AdvertisingType.gConnectableUndirected_c, AdvertisingParameters_OwnAddressType=GAPSetAdvertisingParametersRequestAdvertisingParameters_OwnAddressType.gPublic_c, AdvertisingParameters_PeerAddressType=GAPSetAdvertisingParametersRequestAdvertisingParameters_PeerAddressType.gPublic_c, AdvertisingParameters_PeerAddress=bytearray(6), AdvertisingParameters_ChannelMap=bytearray(1), AdvertisingParameters_FilterPolicy=GAPSetAdvertisingParametersRequestAdvertisingParameters_FilterPolicy.gProcessAll_c):
         '''
         @param AdvertisingParameters_MinInterval: Minimum desired advertising interval - default 1.28s
         @param AdvertisingParameters_MaxInterval: Maximum desired advertising interval - default 1.28s
@@ -1823,7 +1761,7 @@ class GAPCheckIndicationStatusRequest(object):
 
 class GAPPairRequest(object):
 
-    def __init__(self, DeviceId=bytearray(1), PairingParameters_WithBonding=bytearray(1), PairingParameters_SecurityModeAndLevel=GAPPairRequestPairingParameters_SecurityModeAndLevel.gMode1Level1_c, PairingParameters_MaxEncryptionKeySize=bytearray(1), PairingParameters_LocalIoCapabilities=GAPPairRequestPairingParameters_LocalIoCapabilities.gIoDisplayOnly_c, PairingParameters_OobAvailable=bytearray(1), PairingParameters_CentralKeys=GAPPairRequestPairingParameters_CentralKeys.gNoKeys_c, PairingParameters_PeripheralKeys=GAPPairRequestPairingParameters_PeripheralKeys.gNoKeys_c, PairingParameters_LeSecureConnectionSupported=bytearray(1), PairingParameters_UseKeypressNotifications=bytearray(1)):
+    def __init__(self, DeviceId=bytearray(1), PairingParameters_WithBonding=bytearray(1), PairingParameters_SecurityModeAndLevel=GAPPairRequestPairingParameters_SecurityModeAndLevel.gMode1Level1_c, PairingParameters_MaxEncryptionKeySize=bytearray(1), PairingParameters_LocalIoCapabilities=GAPPairRequestPairingParameters_LocalIoCapabilities.gIoDisplayOnly_c, PairingParameters_OobAvailable=bytearray(1), PairingParameters_CentralKeys=bytearray(1), PairingParameters_PeripheralKeys=bytearray(1), PairingParameters_LeSecureConnectionSupported=bytearray(1), PairingParameters_UseKeypressNotifications=bytearray(1)):
         '''
         @param DeviceId: The peer to pair with
         @param PairingParameters_WithBonding: TRUE if this device is able to and wants to bond after pairing, FALSE otherwise
@@ -1850,7 +1788,7 @@ class GAPPairRequest(object):
 
 class GAPSendSlaveSecurityRequestRequest(object):
 
-    def __init__(self, DeviceId=bytearray(1), PairingParameters_WithBonding=bytearray(1), PairingParameters_SecurityModeAndLevel=GAPSendSlaveSecurityRequestRequestPairingParameters_SecurityModeAndLevel.gMode1Level1_c, PairingParameters_MaxEncryptionKeySize=bytearray(1), PairingParameters_LocalIoCapabilities=GAPSendSlaveSecurityRequestRequestPairingParameters_LocalIoCapabilities.gIoDisplayOnly_c, PairingParameters_OobAvailable=bytearray(1), PairingParameters_CentralKeys=GAPSendSlaveSecurityRequestRequestPairingParameters_CentralKeys.gNoKeys_c, PairingParameters_PeripheralKeys=GAPSendSlaveSecurityRequestRequestPairingParameters_PeripheralKeys.gNoKeys_c, PairingParameters_LeSecureConnectionSupported=bytearray(1), PairingParameters_UseKeypressNotifications=bytearray(1)):
+    def __init__(self, DeviceId=bytearray(1), PairingParameters_WithBonding=bytearray(1), PairingParameters_SecurityModeAndLevel=GAPSendSlaveSecurityRequestRequestPairingParameters_SecurityModeAndLevel.gMode1Level1_c, PairingParameters_MaxEncryptionKeySize=bytearray(1), PairingParameters_LocalIoCapabilities=GAPSendSlaveSecurityRequestRequestPairingParameters_LocalIoCapabilities.gIoDisplayOnly_c, PairingParameters_OobAvailable=bytearray(1), PairingParameters_CentralKeys=bytearray(1), PairingParameters_PeripheralKeys=bytearray(1), PairingParameters_LeSecureConnectionSupported=bytearray(1), PairingParameters_UseKeypressNotifications=bytearray(1)):
         '''
         @param DeviceId: The GAP peer to pair with
         @param PairingParameters_WithBonding: TRUE if this device is able to and wants to bond after pairing, FALSE otherwise
@@ -1886,7 +1824,7 @@ class GAPEncryptLinkRequest(object):
 
 class GAPAcceptPairingRequestRequest(object):
 
-    def __init__(self, DeviceId=bytearray(1), PairingParameters_WithBonding=bytearray(1), PairingParameters_SecurityModeAndLevel=GAPAcceptPairingRequestRequestPairingParameters_SecurityModeAndLevel.gMode1Level1_c, PairingParameters_MaxEncryptionKeySize=bytearray(1), PairingParameters_LocalIoCapabilities=GAPAcceptPairingRequestRequestPairingParameters_LocalIoCapabilities.gIoDisplayOnly_c, PairingParameters_OobAvailable=bytearray(1), PairingParameters_CentralKeys=GAPAcceptPairingRequestRequestPairingParameters_CentralKeys.gNoKeys_c, PairingParameters_PeripheralKeys=GAPAcceptPairingRequestRequestPairingParameters_PeripheralKeys.gNoKeys_c, PairingParameters_LeSecureConnectionSupported=bytearray(1), PairingParameters_UseKeypressNotifications=bytearray(1)):
+    def __init__(self, DeviceId=bytearray(1), PairingParameters_WithBonding=bytearray(1), PairingParameters_SecurityModeAndLevel=GAPAcceptPairingRequestRequestPairingParameters_SecurityModeAndLevel.gMode1Level1_c, PairingParameters_MaxEncryptionKeySize=bytearray(1), PairingParameters_LocalIoCapabilities=GAPAcceptPairingRequestRequestPairingParameters_LocalIoCapabilities.gIoDisplayOnly_c, PairingParameters_OobAvailable=bytearray(1), PairingParameters_CentralKeys=bytearray(1), PairingParameters_PeripheralKeys=bytearray(1), PairingParameters_LeSecureConnectionSupported=bytearray(1), PairingParameters_UseKeypressNotifications=bytearray(1)):
         '''
         @param DeviceId: The peer requesting authentication
         @param PairingParameters_WithBonding: TRUE if this device is able to and wants to bond after pairing, FALSE otherwise
@@ -2152,7 +2090,7 @@ class GAPConnectRequest(object):
             self.gLePhy2M_c = gLePhy2M_c
             self.gLePhyCoded_c = gLePhyCoded_c
 
-    def __init__(self, CreateConnectionParameters_ScanInterval=bytearray(2), CreateConnectionParameters_ScanWindow=bytearray(2), CreateConnectionParameters_FilterPolicy=GAPConnectRequestCreateConnectionParameters_FilterPolicy.gUseDeviceAddress_c, CreateConnectionParameters_OwnAddressType=GAPConnectRequestCreateConnectionParameters_OwnAddressType.gPublic_c, CreateConnectionParameters_PeerAddressType=GAPConnectRequestCreateConnectionParameters_PeerAddressType.gPublic_c, CreateConnectionParameters_PeerAddress=bytearray(6), CreateConnectionParameters_ConnIntervalMin=bytearray(2), CreateConnectionParameters_ConnIntervalMax=bytearray(2), CreateConnectionParameters_ConnLatency=bytearray(2), CreateConnectionParameters_SupervisionTimeout=bytearray(2), CreateConnectionParameters_ConnEventLengthMin=bytearray(2), CreateConnectionParameters_ConnEventLengthMax=bytearray(2), CreateConnectionParameters_usePeerIdentityAddress=bytearray(1), CreateConnectionParameters_Initiating_PHYs=GAPConnectRequestCreateConnectionParameters_Initiating_PHYs.gLePhy1M_c):
+    def __init__(self, CreateConnectionParameters_ScanInterval=bytearray(2), CreateConnectionParameters_ScanWindow=bytearray(2), CreateConnectionParameters_FilterPolicy=GAPConnectRequestCreateConnectionParameters_FilterPolicy.gUseDeviceAddress_c, CreateConnectionParameters_OwnAddressType=GAPConnectRequestCreateConnectionParameters_OwnAddressType.gPublic_c, CreateConnectionParameters_PeerAddressType=GAPConnectRequestCreateConnectionParameters_PeerAddressType.gPublic_c, CreateConnectionParameters_PeerAddress=bytearray(6), CreateConnectionParameters_ConnIntervalMin=bytearray(2), CreateConnectionParameters_ConnIntervalMax=bytearray(2), CreateConnectionParameters_ConnLatency=bytearray(2), CreateConnectionParameters_SupervisionTimeout=bytearray(2), CreateConnectionParameters_ConnEventLengthMin=bytearray(2), CreateConnectionParameters_ConnEventLengthMax=bytearray(2), CreateConnectionParameters_usePeerIdentityAddress=bytearray(1), CreateConnectionParameters_Initiating_PHYs=bytearray(1)):
         '''
         @param CreateConnectionParameters_ScanInterval: Scanning interval - default 10ms
         @param CreateConnectionParameters_ScanWindow: Scanning window - default 10ms
@@ -2361,7 +2299,7 @@ class GAPSetScanModeRequest(object):
 
     class AutoConnectParams_AutoConnectData(object):
 
-        def __init__(self, ScanInterval=bytearray(2), ScanWindow=bytearray(2), FilterPolicy=AutoConnectParams_AutoConnectDataFilterPolicy.gUseDeviceAddress_c, OwnAddressType=AutoConnectParams_AutoConnectDataOwnAddressType.gPublic_c, PeerAddressType=AutoConnectParams_AutoConnectDataPeerAddressType.gPublic_c, PeerAddress=bytearray(6), ConnIntervalMin=bytearray(2), ConnIntervalMax=bytearray(2), ConnLatency=bytearray(2), SupervisionTimeout=bytearray(2), ConnEventLengthMin=bytearray(2), ConnEventLengthMax=bytearray(2), usePeerIdentityAddress=bytearray(1), Initiating_PHYs=AutoConnectParams_AutoConnectDataInitiating_PHYs.gLePhy1M_c):
+        def __init__(self, ScanInterval=bytearray(2), ScanWindow=bytearray(2), FilterPolicy=AutoConnectParams_AutoConnectDataFilterPolicy.gUseDeviceAddress_c, OwnAddressType=AutoConnectParams_AutoConnectDataOwnAddressType.gPublic_c, PeerAddressType=AutoConnectParams_AutoConnectDataPeerAddressType.gPublic_c, PeerAddress=bytearray(6), ConnIntervalMin=bytearray(2), ConnIntervalMax=bytearray(2), ConnLatency=bytearray(2), SupervisionTimeout=bytearray(2), ConnEventLengthMin=bytearray(2), ConnEventLengthMax=bytearray(2), usePeerIdentityAddress=bytearray(1), Initiating_PHYs=bytearray(1)):
             self.ScanInterval = ScanInterval
             self.ScanWindow = ScanWindow
             self.FilterPolicy = FilterPolicy
@@ -2422,7 +2360,7 @@ class GAPSetDefaultPairingParametersRequest(object):
 
     class PairingParameters(object):
 
-        def __init__(self, WithBonding=bytearray(1), SecurityModeAndLevel=PairingParametersSecurityModeAndLevel.gMode1Level1_c, MaxEncryptionKeySize=bytearray(1), LocalIoCapabilities=PairingParametersLocalIoCapabilities.gIoDisplayOnly_c, OobAvailable=bytearray(1), CentralKeys=PairingParametersCentralKeys.gNoKeys_c, PeripheralKeys=PairingParametersPeripheralKeys.gNoKeys_c, LeSecureConnectionSupported=bytearray(1), UseKeypressNotifications=bytearray(1)):
+        def __init__(self, WithBonding=bytearray(1), SecurityModeAndLevel=PairingParametersSecurityModeAndLevel.gMode1Level1_c, MaxEncryptionKeySize=bytearray(1), LocalIoCapabilities=PairingParametersLocalIoCapabilities.gIoDisplayOnly_c, OobAvailable=bytearray(1), CentralKeys=bytearray(1), PeripheralKeys=bytearray(1), LeSecureConnectionSupported=bytearray(1), UseKeypressNotifications=bytearray(1)):
             self.WithBonding = WithBonding
             self.SecurityModeAndLevel = SecurityModeAndLevel
             self.MaxEncryptionKeySize = MaxEncryptionKeySize
@@ -2505,11 +2443,6 @@ class GapUpdateLeDataLengthRequest(object):
         self.DeviceId = DeviceId
         self.TxOctets = TxOctets
         self.TxTime = TxTime
-
-
-class GAPControllerResetRequest(object):
-
-    pass
 
 
 class GAPEnableHostPrivacyRequest(object):
@@ -3106,8 +3039,12 @@ class GAPPeriodicAdvTerminateSyncRequest(object):
         self.SyncHandle = SyncHandle
 
 
-
 class FSCICPUResetRequest(object):
+
+    pass
+
+
+class FSCIGetNumberOfFreeBuffersRequest(object):
 
     pass
 
@@ -3128,6 +3065,15 @@ class FSCIAllowDeviceToSleepRequest(object):
 class FSCIGetWakeupReasonRequest(object):
 
     pass
+
+
+class FSCIGetNumberOfFreeBuffersResponse(object):
+
+    def __init__(self, FreeBuffers=bytearray(2)):
+        '''
+        @param FreeBuffers: Number of free buffers
+        '''
+        self.FreeBuffers = FreeBuffers
 
 
 class FSCIAckIndication(object):
@@ -3169,6 +3115,7 @@ class FSCIGetWakeupReasonResponse(object):
         @param WakeUpReason: Wake Up Reason
         '''
         self.WakeUpReason = WakeUpReason
+
 
 
 class L2CAPCBConfirm(object):
@@ -3286,6 +3233,8 @@ class L2CAPCBLeCbDataIndication(object):
         self.SrcCid = SrcCid
         self.PacketLength = PacketLength
         self.Packet = Packet
+
+
 
 
 class GATTConfirm(object):
@@ -4186,7 +4135,7 @@ class GAPLoadKeysIndication(object):
             # Unit length: 6 bytes
             self.DeviceAddress = DeviceAddress
 
-    def __init__(self, Keys_LtkIncluded=bytearray(1), Keys_LtkInfo=Keys_LtkInfo(), Keys_IrkIncluded=bytearray(1), Keys_Irk=[], Keys_CsrkIncluded=bytearray(1), Keys_Csrk=[], Keys_RandEdivInfo=Keys_RandEdivInfo(), Keys_AddressIncluded=[], Keys_AddressInfo=Keys_AddressInfo(), KeyFlags=GAPLoadKeysIndicationKeyFlags.gNoKeys_c, LeSc=bytearray(1), Authenticated=bytearray(1)):
+    def __init__(self, Keys_LtkIncluded=bytearray(1), Keys_LtkInfo=Keys_LtkInfo(), Keys_IrkIncluded=bytearray(1), Keys_Irk=[], Keys_CsrkIncluded=bytearray(1), Keys_Csrk=[], Keys_RandEdivInfo=Keys_RandEdivInfo(), Keys_AddressIncluded=[], Keys_AddressInfo=Keys_AddressInfo(), KeyFlags=bytearray(1), LeSc=bytearray(1), Authenticated=bytearray(1)):
         '''
         @param Keys_LtkIncluded: Boolean value which indicates if LTK size and LTK are included or not
         @param Keys_LtkInfo: LTK information (size and value)
@@ -4239,11 +4188,13 @@ class GAPLoadCustomPeerInformationIndication(object):
 
 class GAPCheckIfBondedIndication(object):
 
-    def __init__(self, IsBonded=bytearray(1)):
+    def __init__(self, IsBonded=bytearray(1), NvmIndex=bytearray(1)):
         '''
         @param IsBonded: Bonded flag
+        @param NvmIndex: NVM Index
         '''
         self.IsBonded = IsBonded
+        self.NvmIndex = NvmIndex
 
 
 class GAPGetBondedDevicesCountIndication(object):
@@ -4444,7 +4395,7 @@ class GAPScanningEventDeviceScannedIndication(object):
 
 class GAPConnectionEventConnectedIndication(object):
 
-    def __init__(self, DeviceId=bytearray(1), ConnectionParameters_ConnInterval=bytearray(2), ConnectionParameters_ConnLatency=bytearray(2), ConnectionParameters_SupervisionTimeout=bytearray(2), ConnectionParameters_MasterClockAccuracy=GAPConnectionEventConnectedIndicationConnectionParameters_MasterClockAccuracy.gMasterClkAcc500ppm_c, PeerAddressType=GAPConnectionEventConnectedIndicationPeerAddressType.gPublic_c, PeerAddress=bytearray(6), peerRpaResolved=bytearray(1), peerRpa=[], localRpaUsed=bytearray(1), localRpa=[]):
+    def __init__(self, DeviceId=bytearray(1), ConnectionParameters_ConnInterval=bytearray(2), ConnectionParameters_ConnLatency=bytearray(2), ConnectionParameters_SupervisionTimeout=bytearray(2), ConnectionParameters_MasterClockAccuracy=GAPConnectionEventConnectedIndicationConnectionParameters_MasterClockAccuracy.gMasterClkAcc500ppm_c, PeerAddressType=GAPConnectionEventConnectedIndicationPeerAddressType.gPublic_c, PeerAddress=bytearray(6), peerRpaResolved=bytearray(1), peerRpa=[], localRpaUsed=bytearray(1), localRpa=[], connectionRole=GAPConnectionEventConnectedIndicationconnectionRole.gBleLlConnectionMaster_c):
         '''
         @param DeviceId: Device ID identifying the connection
         @param ConnectionParameters_ConnInterval: Interval between connection events
@@ -4457,6 +4408,7 @@ class GAPConnectionEventConnectedIndication(object):
         @param peerRpa: Peer Resolvable Private Address if Controller Privacy is active and peerRpaResolved is TRUE
         @param localRpaUsed: TRUE if the Controller has used an RPA contained in the localRpa field
         @param localRpa: Local Resolvable Private Address if Controller Privacy is active and localRpaUsed is TRUE
+        @param connectionRole: The role of the device in the connection - central (master) or peripheral (slave) 
         '''
         self.DeviceId = DeviceId
         self.ConnectionParameters_ConnInterval = ConnectionParameters_ConnInterval
@@ -4469,11 +4421,12 @@ class GAPConnectionEventConnectedIndication(object):
         self.peerRpa = peerRpa
         self.localRpaUsed = localRpaUsed
         self.localRpa = localRpa
+        self.connectionRole = connectionRole
 
 
 class GAPConnectionEventPairingRequestIndication(object):
 
-    def __init__(self, DeviceId=bytearray(1), PairingParameters_WithBonding=bytearray(1), PairingParameters_SecurityModeAndLevel=GAPConnectionEventPairingRequestIndicationPairingParameters_SecurityModeAndLevel.gMode1Level1_c, PairingParameters_MaxEncryptionKeySize=bytearray(1), PairingParameters_LocalIoCapabilities=GAPConnectionEventPairingRequestIndicationPairingParameters_LocalIoCapabilities.gIoDisplayOnly_c, PairingParameters_OobAvailable=bytearray(1), PairingParameters_CentralKeys=GAPConnectionEventPairingRequestIndicationPairingParameters_CentralKeys.gNoKeys_c, PairingParameters_PeripheralKeys=GAPConnectionEventPairingRequestIndicationPairingParameters_PeripheralKeys.gNoKeys_c, PairingParameters_LeSecureConnectionSupported=bytearray(1), PairingParameters_UseKeypressNotifications=bytearray(1)):
+    def __init__(self, DeviceId=bytearray(1), PairingParameters_WithBonding=bytearray(1), PairingParameters_SecurityModeAndLevel=GAPConnectionEventPairingRequestIndicationPairingParameters_SecurityModeAndLevel.gMode1Level1_c, PairingParameters_MaxEncryptionKeySize=bytearray(1), PairingParameters_LocalIoCapabilities=GAPConnectionEventPairingRequestIndicationPairingParameters_LocalIoCapabilities.gIoDisplayOnly_c, PairingParameters_OobAvailable=bytearray(1), PairingParameters_CentralKeys=bytearray(1), PairingParameters_PeripheralKeys=bytearray(1), PairingParameters_LeSecureConnectionSupported=bytearray(1), PairingParameters_UseKeypressNotifications=bytearray(1)):
         '''
         @param DeviceId: Device ID identifying the connection
         @param PairingParameters_WithBonding: TRUE if this device is able to and wants to bond after pairing, FALSE otherwise
@@ -4513,7 +4466,7 @@ class GAPConnectionEventSlaveSecurityRequestIndication(object):
 
 class GAPConnectionEventPairingResponseIndication(object):
 
-    def __init__(self, DeviceId=bytearray(1), PairingParameters_WithBonding=bytearray(1), PairingParameters_SecurityModeAndLevel=GAPConnectionEventPairingResponseIndicationPairingParameters_SecurityModeAndLevel.gMode1Level1_c, PairingParameters_MaxEncryptionKeySize=bytearray(1), PairingParameters_LocalIoCapabilities=GAPConnectionEventPairingResponseIndicationPairingParameters_LocalIoCapabilities.gIoDisplayOnly_c, PairingParameters_OobAvailable=bytearray(1), PairingParameters_CentralKeys=GAPConnectionEventPairingResponseIndicationPairingParameters_CentralKeys.gNoKeys_c, PairingParameters_PeripheralKeys=GAPConnectionEventPairingResponseIndicationPairingParameters_PeripheralKeys.gNoKeys_c, PairingParameters_LeSecureConnectionSupported=bytearray(1), PairingParameters_UseKeypressNotifications=bytearray(1)):
+    def __init__(self, DeviceId=bytearray(1), PairingParameters_WithBonding=bytearray(1), PairingParameters_SecurityModeAndLevel=GAPConnectionEventPairingResponseIndicationPairingParameters_SecurityModeAndLevel.gMode1Level1_c, PairingParameters_MaxEncryptionKeySize=bytearray(1), PairingParameters_LocalIoCapabilities=GAPConnectionEventPairingResponseIndicationPairingParameters_LocalIoCapabilities.gIoDisplayOnly_c, PairingParameters_OobAvailable=bytearray(1), PairingParameters_CentralKeys=bytearray(1), PairingParameters_PeripheralKeys=bytearray(1), PairingParameters_LeSecureConnectionSupported=bytearray(1), PairingParameters_UseKeypressNotifications=bytearray(1)):
         '''
         @param DeviceId: Device ID identifying the connection
         @param PairingParameters_WithBonding: TRUE if this device is able to and wants to bond after pairing, FALSE otherwise
@@ -4580,7 +4533,7 @@ class GAPConnectionEventPasskeyDisplayIndication(object):
 
 class GAPConnectionEventKeyExchangeRequestIndication(object):
 
-    def __init__(self, DeviceId=bytearray(1), RequestedKeys=GAPConnectionEventKeyExchangeRequestIndicationRequestedKeys.gNoKeys_c, RequestedLtkSize=bytearray(1)):
+    def __init__(self, DeviceId=bytearray(1), RequestedKeys=bytearray(1), RequestedLtkSize=bytearray(1)):
         '''
         @param DeviceId: Device ID identifying the connection
         @param RequestedKeys: Mask identifying the keys being requested
@@ -4813,11 +4766,6 @@ class GAPConnectionEventLeScKeypressNotificationIndication(object):
         '''
         self.DeviceId = DeviceId
         self.GapLeScKeypressNotificationParams_keypressNotifType = GapLeScKeypressNotificationParams_keypressNotifType
-
-
-class GAPGenericEventControllerResetCompleteIndication(object):
-
-    pass
 
 
 class GAPLeScPublicKeyRegeneratedIndication(object):
@@ -5119,6 +5067,8 @@ class GAPConnectionEventChannelSelectionAlgorithm2Indication(object):
         @param DeviceId: The DeviceId for which the command is intended
         '''
         self.DeviceId = DeviceId
+
+
 
 
 class L2CAPCBErrorIndication(object):

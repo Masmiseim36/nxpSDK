@@ -7,5 +7,6 @@ var searchData=
   ['genfsk_5fpacket_5fheader_5ft',['GENFSK_packet_header_t',['../group__genfsk.html#struct_g_e_n_f_s_k__packet__header__t',1,'']]],
   ['genfsk_5fpacket_5ft',['GENFSK_packet_t',['../group__genfsk.html#struct_g_e_n_f_s_k__packet__t',1,'']]],
   ['genfsk_5fradio_5fconfig_5ft',['GENFSK_radio_config_t',['../group__genfsk.html#struct_g_e_n_f_s_k__radio__config__t',1,'']]],
+  ['genfsk_5ftimeevent_5ft',['GENFSK_TimeEvent_t',['../group__genfsk.html#struct_g_e_n_f_s_k___time_event__t',1,'']]],
   ['genfsk_5fwhitener_5fconfig_5ft',['GENFSK_whitener_config_t',['../group__genfsk.html#struct_g_e_n_f_s_k__whitener__config__t',1,'']]]
 ];

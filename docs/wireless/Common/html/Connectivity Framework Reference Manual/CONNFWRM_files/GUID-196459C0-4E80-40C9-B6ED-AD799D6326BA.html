@@ -59,11 +59,11 @@
                     <em class="ph i">hardwareParameters_t </em> variable with the previous values (raw copy from
                 flash) and rewrite them to the flash memory using the dedicated function.</li>
 
-            <li class="li"> Add new fields before the <em class="ph i">gInternalStorageAddr </em> field. This method will not
-                cause a CRC fail, but the user must keep in mind to substract the total size of the
-                new fields from the size of the reserved field. For example, if a field of
-                    <em class="ph i">uint8_t size</em> is added using this method, the size of the reserved field
-                shall be changed to 31.</li>
+            <li class="li"> Add new fields before the <em class="ph i">gInternalStorageAddr </em> field. This
+                method will not cause a CRC fail, but the user must keep in mind to subtract the
+                total size of the new fields from the size of the reserved field. For example, if a
+                field of <em class="ph i">uint8_t size</em> is added using this method, the size of the reserved
+                field shall be changed to 31.</li>
 
         </ul>
 

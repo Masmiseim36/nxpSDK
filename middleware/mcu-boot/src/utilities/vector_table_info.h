@@ -37,7 +37,7 @@ enum _vector_table_address
 enum _vector_table_entries
 {
     kInitialSP = 0, //!< Initial stack pointer.
-    kInitialPC = 1, //!< Reset vector.
+    kInitialPC      //!< Reset vector.
 };
 
 //! @}

@@ -27,8 +27,10 @@
 
     <div class="body">
         <p class="p">The framework provides support for cryptography in the security module. It
-            supports both software and hardware encryption. The hardware encryption uses the MMCAU, LTC or CAU3 module instruction set. Using the hardware support directly requires the input data to be four
-            bytes aligned. </p>
+            supports both software and hardware encryption. Depending on the device, the hardware
+            encryption uses either the MMCAU, LTC or CAU3 module instruction set or dedicated AES
+            and SHA hardware blocks. Using the hardware support directly requires the input data to
+            be four bytes aligned. </p>
 
         <p class="p">Both implementations are supplied in a library format.</p>
 

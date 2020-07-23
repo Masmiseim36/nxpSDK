@@ -12,7 +12,10 @@
 
 volatile uint16_t cycle_counter;
 
-#if defined(CPU_MKW24D512VHA5) || defined(MCU_MK21DX256) || defined(CPU_MKW41Z512VHT4) || defined(CPU_MKW36Z512VHT4)
+#if defined(CPU_MKW24D512VHA5) || defined(MCU_MK21DX256) || defined(CPU_MKW41Z512VHT4) ||\
+   (defined(CPU_MKW36A512VHT4) || defined(CPU_MKW36A512VFP4) || defined(CPU_MKW36A512VFT4) || \
+    defined(CPU_MKW36Z512VHT4) || defined(CPU_MKW36Z512VFP4) || defined(CPU_MKW35A512VFP4) || \
+    defined(CPU_MKW35A512VFT4) || defined(CPU_MKW35Z512VHT4) || defined(CPU_MKW34A512VFT4))
     #define full_range 356 /* (0xFFFFFF / 48000000 * 1000) */
 #elif defined(MCU_MKW40Z160)
     #define full_range 524 /* (0xFFFFFF / 32000000 * 1000) */

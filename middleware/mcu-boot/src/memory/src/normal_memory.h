@@ -24,10 +24,10 @@ extern "C" {
 status_t normal_mem_init(void);
 
 //! @brief Read memory.
-status_t normal_mem_read(uint32_t address, uint32_t length, uint8_t *restrict buffer);
+status_t normal_mem_read(uint32_t address, uint32_t length, uint8_t *buffer);
 
 //! @brief Write memory.
-status_t normal_mem_write(uint32_t address, uint32_t length, const uint8_t *restrict buffer);
+status_t normal_mem_write(uint32_t address, uint32_t length, const uint8_t *buffer);
 
 //! @brief Fill memory with a word pattern.
 status_t normal_mem_fill(uint32_t address, uint32_t length, uint32_t pattern);

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Extended Advertising (KW37)"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-63657C9B-53F6-4C9C-BD21-827DE286933D.html"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-4A7FA5FB-6FD4-479A-BC81-88EEC6F0C66C.html"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-7EE72640-C25D-44EC-A012-1724CA0F4376.html"/>
+<meta name="prodname" content="MC56F825x"/>
+<meta name="version" content="1"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Creator" content=""/>
+<meta name="DC.Publisher" content="NXP Semiconductors"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-88EA2D64-78FC-4F1F-8C2A-F9C5D099F5C0"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Extended Advertising (KW37)</title>
+</head>
+<body id="GUID-88EA2D64-78FC-4F1F-8C2A-F9C5D099F5C0">
+
+
+    <h1 class="title topictitle1">Extended Advertising (KW37)</h1>
+
+    <div class="body">
+        <div class="p">Starting with Bluetooth 5, the advertising channels are separated in primary advertising
+            channels and secondary advertising channels:
+        <ol class="ol">
+            <li class="li"> Primary advertising channels<ul class="ul">
+                    <li class="li"> 3 legacy advertising channels 37, 38 and 39</li>
+
+                    <li class="li"> Can use either legacy 1M PHY or new LE Coded PHY</li>
+
+                    <li class="li"> PHY payload can vary from 6 to 37 bytes</li>
+
+                    <li class="li"> Packets on these channels are part of the advertising events</li>
+
+                </ul>
+</li>
+
+            <li class="li"> Secondary advertising channels<ul class="ul">
+                    <li class="li"> 37 channels, the same channel index as the data channels</li>
+
+                    <li class="li"> Can use any LE PHY, but the same PHY during an Extended Advertising
+                        Event</li>
+
+                    <li class="li"> PHY payload can vary from 0 to 255 bytes</li>
+
+                    <li class="li"> Auxiliary packets on these channels are part of the Extended Advertising
+                        Event that begins at the same time with the advertising event on primary
+                        channel and ends with the last packet on the secondary channel<div class="fig fignone"><span class="figcap">Figure 1. Extended Advertising</span>
+                            <img class="image" src="GUID-DBDEFBC2-B343-43F0-A1CC-39D60DB9B855-high.png"/>
+                        </div>
+
+                        <div class="fig fignone"><span class="figcap">Figure 2. Extended Advertising – Multiple chains</span>
+                        <img class="image" src="GUID-AAF9EE86-941C-4118-B10C-1AD2A6B16116-high.png"/>
+                    </div>
+</li>
+
+                </ul>
+</li>
+
+        </ol>
+An advertising data set is represented by advertising PDUs belonging together in an advertising event. Each set has different advertising parameters: PDU type, advertising interval and PHY mode. The advertising data sets are identified by the Advertising SID (Set ID) field from the ADI – Advertising Data Info. Advertising data or Scan response data can be changed for each adverting data set and the random value of DID (Data ID) field will be updated to differentiate between them.</div>
+
+    </div>
+
+<div class="related-links">
+<ul class="ullinks">
+<li class="link ulchildlink"><strong><a href="GUID-4A7FA5FB-6FD4-479A-BC81-88EEC6F0C66C.html">Peripheral Setup</a></strong><br/>
+</li>
+<li class="link ulchildlink"><strong><a href="GUID-7EE72640-C25D-44EC-A012-1724CA0F4376.html">Central setup</a></strong><br/>
+</li>
+</ul>
+
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-63657C9B-53F6-4C9C-BD21-827DE286933D.html">Generic Access Profile (GAP) Layer</a></div>
+</div>
+</div>
+
+</body>
+</html>

@@ -50,9 +50,6 @@ typedef struct _hal_uart_state
     hal_uart_receive_state_t rx;
     hal_uart_send_state_t tx;
 #endif
-#if (defined(HAL_UART_ADAPTER_LOWPOWER) && (HAL_UART_ADAPTER_LOWPOWER > 0U))
-    hal_uart_config_t config;
-#endif
     uint8_t instance;
 } hal_uart_state_t;
 
@@ -125,14 +122,16 @@ static hal_uart_status_t HAL_UartGetStatus(status_t status)
 #else
 static hal_uart_status_t HAL_UartGetStatus(status_t status)
 {
+    hal_uart_status_t uartStatus;
     if ((int32_t)kStatus_Success == status)
     {
-        return kStatus_HAL_UartSuccess;
+        uartStatus =  kStatus_HAL_UartSuccess; /* Successfully */
     }
     else
     {
-        return kStatus_HAL_UartError;
+        uartStatus =  kStatus_HAL_UartError; /* Error occurs on HAL uart */
     }
+    return uartStatus;
 }
 #endif
 
@@ -149,13 +148,13 @@ static void HAL_UartCallback(LPUART_Type *base, lpuart_handle_t *handle, status_
 
     if (kStatus_HAL_UartProtocolError == uartStatus)
     {
-        if (0U != uartHandle->hardwareHandle.rxDataSize)
+        if (uartHandle->hardwareHandle.rxDataSize != 0U)
         {
             uartStatus = kStatus_HAL_UartError;
         }
     }
 
-    if (NULL != uartHandle->callback)
+    if (uartHandle->callback != NULL)
     {
         uartHandle->callback(uartHandle, uartStatus, uartHandle->callbackParam);
     }
@@ -176,10 +175,10 @@ static void HAL_UartInterruptHandle(uint8_t instance)
     status = LPUART_GetStatusFlags(s_LpuartAdapterBase[instance]);
 
     /* Receive data register full */
-    if ((0U != (LPUART_STAT_RDRF_MASK & status)) && (0U != (LPUART_GetEnabledInterrupts(s_LpuartAdapterBase[instance]) &
-                                                            (uint32_t)kLPUART_RxDataRegFullInterruptEnable)))
+    if (((LPUART_STAT_RDRF_MASK & status) != 0U) && ((LPUART_GetEnabledInterrupts(s_LpuartAdapterBase[instance]) &
+                                                      (uint32_t)kLPUART_RxDataRegFullInterruptEnable) != 0U))
     {
-        if (NULL != uartHandle->rx.buffer)
+        if (uartHandle->rx.buffer != NULL)
         {
             uartHandle->rx.buffer[uartHandle->rx.bufferSofar++] = LPUART_ReadByte(s_LpuartAdapterBase[instance]);
             if (uartHandle->rx.bufferSofar >= uartHandle->rx.bufferLength)
@@ -187,7 +186,7 @@ static void HAL_UartInterruptHandle(uint8_t instance)
                 LPUART_DisableInterrupts(s_LpuartAdapterBase[instance], (uint32_t)kLPUART_RxDataRegFullInterruptEnable |
                                                                             (uint32_t)kLPUART_RxOverrunInterruptEnable);
                 uartHandle->rx.buffer = NULL;
-                if (NULL != uartHandle->callback)
+                if (uartHandle->callback != NULL)
                 {
                     uartHandle->callback(uartHandle, kStatus_HAL_UartRxIdle, uartHandle->callbackParam);
                 }
@@ -196,10 +195,10 @@ static void HAL_UartInterruptHandle(uint8_t instance)
     }
 
     /* Send data register empty and the interrupt is enabled. */
-    if ((0U != (LPUART_STAT_TDRE_MASK & status)) && (0U != (LPUART_GetEnabledInterrupts(s_LpuartAdapterBase[instance]) &
-                                                            (uint32_t)kLPUART_TxDataRegEmptyInterruptEnable)))
+    if (((LPUART_STAT_TDRE_MASK & status) != 0U) && ((LPUART_GetEnabledInterrupts(s_LpuartAdapterBase[instance]) &
+                                                      (uint32_t)kLPUART_TxDataRegEmptyInterruptEnable) != 0U))
     {
-        if (NULL != uartHandle->tx.buffer)
+        if (uartHandle->tx.buffer != NULL)
         {
             LPUART_WriteByte(s_LpuartAdapterBase[instance], uartHandle->tx.buffer[uartHandle->tx.bufferSofar++]);
             if (uartHandle->tx.bufferSofar >= uartHandle->tx.bufferLength)
@@ -207,7 +206,7 @@ static void HAL_UartInterruptHandle(uint8_t instance)
                 LPUART_DisableInterrupts(s_LpuartAdapterBase[uartHandle->instance],
                                          (uint32_t)kLPUART_TxDataRegEmptyInterruptEnable);
                 uartHandle->tx.buffer = NULL;
-                if (NULL != uartHandle->callback)
+                if (uartHandle->callback != NULL)
                 {
                     uartHandle->callback(uartHandle, kStatus_HAL_UartTxIdle, uartHandle->callbackParam);
                 }
@@ -228,6 +227,7 @@ hal_uart_status_t HAL_UartInit(hal_uart_handle_t handle, hal_uart_config_t *conf
     hal_uart_state_t *uartHandle;
     lpuart_config_t lpuartConfig;
     status_t status;
+    hal_uart_status_t uartStatus = kStatus_HAL_UartSuccess;
     assert(handle);
     assert(config);
     assert(config->instance < (sizeof(s_LpuartAdapterBase) / sizeof(LPUART_Type *)));
@@ -237,17 +237,18 @@ hal_uart_status_t HAL_UartInit(hal_uart_handle_t handle, hal_uart_config_t *conf
     LPUART_GetDefaultConfig(&lpuartConfig);
     lpuartConfig.baudRate_Bps = config->baudRate_Bps;
 
+    /* Configure uart parity mode */
     if (kHAL_UartParityEven == config->parityMode)
     {
-        lpuartConfig.parityMode = kLPUART_ParityEven;
+        lpuartConfig.parityMode = kLPUART_ParityEven; /*!< Parity enabled, type even */
     }
     else if (kHAL_UartParityOdd == config->parityMode)
     {
-        lpuartConfig.parityMode = kLPUART_ParityOdd;
+        lpuartConfig.parityMode = kLPUART_ParityOdd; /*!< Parity enabled, type odd */
     }
     else
     {
-        lpuartConfig.parityMode = kLPUART_ParityDisabled;
+        lpuartConfig.parityMode = kLPUART_ParityDisabled; /*!< Parity disabled */
     }
 
     if (kHAL_UartTwoStopBit == config->stopBitCount)
@@ -265,36 +266,36 @@ hal_uart_status_t HAL_UartInit(hal_uart_handle_t handle, hal_uart_config_t *conf
 
     if ((int32_t)kStatus_Success != status)
     {
-        return HAL_UartGetStatus(status);
+        uartStatus =  HAL_UartGetStatus(status); /*Get current uart status*/
     }
+    else
+    {
+        uartHandle           = (hal_uart_state_t *)handle;
+        uartHandle->instance = config->instance;
 
-    uartHandle           = (hal_uart_state_t *)handle;
-    uartHandle->instance = config->instance;
-#if (defined(HAL_UART_ADAPTER_LOWPOWER) && (HAL_UART_ADAPTER_LOWPOWER > 0U))
-    uartHandle->config = *config;
-#endif
 #if (defined(UART_ADAPTER_NON_BLOCKING_MODE) && (UART_ADAPTER_NON_BLOCKING_MODE > 0U))
 
 #if (defined(HAL_UART_TRANSFER_MODE) && (HAL_UART_TRANSFER_MODE > 0U))
-    LPUART_TransferCreateHandle(s_LpuartAdapterBase[config->instance], &uartHandle->hardwareHandle,
-                                (lpuart_transfer_callback_t)HAL_UartCallback, handle);
+        LPUART_TransferCreateHandle(s_LpuartAdapterBase[config->instance], &uartHandle->hardwareHandle,
+                                    (lpuart_transfer_callback_t)HAL_UartCallback, handle);
 #else
-    s_UartState[uartHandle->instance] = uartHandle;
-/* Enable interrupt in NVIC. */
+        s_UartState[uartHandle->instance] = uartHandle;
+    /* Enable interrupt in NVIC. */
 #if defined(FSL_FEATURE_LPUART_HAS_SEPARATE_RX_TX_IRQ) && FSL_FEATURE_LPUART_HAS_SEPARATE_RX_TX_IRQ
-    NVIC_SetPriority((IRQn_Type)s_LpuartRxIRQ[uartHandle->instance], HAL_UART_ISR_PRIORITY);
-    EnableIRQ(s_LpuartRxIRQ[uartHandle->instance]);
-    NVIC_SetPriority((IRQn_Type)s_LpuartTxIRQ[uartHandle->instance], HAL_UART_ISR_PRIORITY);
-    EnableIRQ(s_LpuartTxIRQ[uartHandle->instance]);
+        NVIC_SetPriority((IRQn_Type)s_LpuartRxIRQ[uartHandle->instance], HAL_UART_ISR_PRIORITY);
+        EnableIRQ(s_LpuartRxIRQ[uartHandle->instance]);
+        NVIC_SetPriority((IRQn_Type)s_LpuartTxIRQ[uartHandle->instance], HAL_UART_ISR_PRIORITY);
+        EnableIRQ(s_LpuartTxIRQ[uartHandle->instance]);
 #else
-    NVIC_SetPriority((IRQn_Type)s_LpuartIRQ[uartHandle->instance], HAL_UART_ISR_PRIORITY);
-    (void)EnableIRQ(s_LpuartIRQ[uartHandle->instance]);
+        NVIC_SetPriority((IRQn_Type)s_LpuartIRQ[uartHandle->instance], HAL_UART_ISR_PRIORITY);
+        (void)EnableIRQ(s_LpuartIRQ[uartHandle->instance]);
 #endif
 #endif
 
 #endif
+    }
 
-    return kStatus_HAL_UartSuccess;
+    return uartStatus;
 }
 
 hal_uart_status_t HAL_UartDeinit(hal_uart_handle_t handle)
@@ -305,7 +306,7 @@ hal_uart_status_t HAL_UartDeinit(hal_uart_handle_t handle)
 
     uartHandle = (hal_uart_state_t *)handle;
 
-    LPUART_Deinit(s_LpuartAdapterBase[uartHandle->instance]);
+    LPUART_Deinit(s_LpuartAdapterBase[uartHandle->instance]); /*LPUART Deinitialization*/
 
 #if (defined(UART_ADAPTER_NON_BLOCKING_MODE) && (UART_ADAPTER_NON_BLOCKING_MODE > 0U))
 
@@ -329,15 +330,16 @@ hal_uart_status_t HAL_UartReceiveBlocking(hal_uart_handle_t handle, uint8_t *dat
     uartHandle = (hal_uart_state_t *)handle;
 
 #if (defined(UART_ADAPTER_NON_BLOCKING_MODE) && (UART_ADAPTER_NON_BLOCKING_MODE > 0U))
-    if (NULL != uartHandle->rx.buffer)
+    if (uartHandle->rx.buffer != NULL)
     {
         return kStatus_HAL_UartRxBusy;
     }
 #endif
 
+    /* Receive data - blocking mode*/
     status = LPUART_ReadBlocking(s_LpuartAdapterBase[uartHandle->instance], data, length);
 
-    return HAL_UartGetStatus(status);
+    return HAL_UartGetStatus(status); /* Return UART status */
 }
 
 hal_uart_status_t HAL_UartSendBlocking(hal_uart_handle_t handle, const uint8_t *data, size_t length)
@@ -350,35 +352,16 @@ hal_uart_status_t HAL_UartSendBlocking(hal_uart_handle_t handle, const uint8_t *
     uartHandle = (hal_uart_state_t *)handle;
 
 #if (defined(UART_ADAPTER_NON_BLOCKING_MODE) && (UART_ADAPTER_NON_BLOCKING_MODE > 0U))
-    if (NULL != uartHandle->tx.buffer)
+    if (uartHandle->tx.buffer != NULL)
     {
         return kStatus_HAL_UartTxBusy;
     }
 #endif
 
+    /*Send data - blocking mode*/
     LPUART_WriteBlocking(s_LpuartAdapterBase[uartHandle->instance], data, length);
 
-    return kStatus_HAL_UartSuccess;
-}
-
-hal_uart_status_t HAL_UartEnterLowpower(hal_uart_handle_t handle)
-{
-    assert(handle);
-
-    return kStatus_HAL_UartSuccess;
-}
-
-hal_uart_status_t HAL_UartExitLowpower(hal_uart_handle_t handle)
-{
-#if (defined(HAL_UART_ADAPTER_LOWPOWER) && (HAL_UART_ADAPTER_LOWPOWER > 0U))
-    hal_uart_state_t *uartHandle;
-    assert(handle);
-
-    uartHandle = (hal_uart_state_t *)handle;
-
-    HAL_UartInit(handle, &uartHandle->config);
-#endif
-    return kStatus_HAL_UartSuccess;
+    return kStatus_HAL_UartSuccess; /* Return UART status */
 }
 
 #if (defined(UART_ADAPTER_NON_BLOCKING_MODE) && (UART_ADAPTER_NON_BLOCKING_MODE > 0U))
@@ -521,7 +504,7 @@ hal_uart_status_t HAL_UartReceiveNonBlocking(hal_uart_handle_t handle, uint8_t *
 
     uartHandle = (hal_uart_state_t *)handle;
 
-    if (NULL != uartHandle->rx.buffer)
+    if (uartHandle->rx.buffer != NULL)
     {
         return kStatus_HAL_UartRxBusy;
     }
@@ -544,7 +527,7 @@ hal_uart_status_t HAL_UartSendNonBlocking(hal_uart_handle_t handle, uint8_t *dat
 
     uartHandle = (hal_uart_state_t *)handle;
 
-    if (NULL != uartHandle->tx.buffer)
+    if (uartHandle->tx.buffer != NULL)
     {
         return kStatus_HAL_UartTxBusy;
     }
@@ -564,7 +547,7 @@ hal_uart_status_t HAL_UartGetReceiveCount(hal_uart_handle_t handle, uint32_t *re
 
     uartHandle = (hal_uart_state_t *)handle;
 
-    if (NULL != uartHandle->rx.buffer)
+    if (uartHandle->rx.buffer != NULL)
     {
         *reCount = uartHandle->rx.bufferSofar;
         return kStatus_HAL_UartSuccess;
@@ -581,7 +564,7 @@ hal_uart_status_t HAL_UartGetSendCount(hal_uart_handle_t handle, uint32_t *seCou
 
     uartHandle = (hal_uart_state_t *)handle;
 
-    if (NULL != uartHandle->tx.buffer)
+    if (uartHandle->tx.buffer != NULL)
     {
         *seCount = uartHandle->tx.bufferSofar;
         return kStatus_HAL_UartSuccess;
@@ -597,7 +580,7 @@ hal_uart_status_t HAL_UartAbortReceive(hal_uart_handle_t handle)
 
     uartHandle = (hal_uart_state_t *)handle;
 
-    if (NULL != uartHandle->rx.buffer)
+    if (uartHandle->rx.buffer != NULL)
     {
         LPUART_DisableInterrupts(
             s_LpuartAdapterBase[uartHandle->instance],
@@ -616,7 +599,7 @@ hal_uart_status_t HAL_UartAbortSend(hal_uart_handle_t handle)
 
     uartHandle = (hal_uart_state_t *)handle;
 
-    if (NULL != uartHandle->tx.buffer)
+    if (uartHandle->tx.buffer != NULL)
     {
         LPUART_DisableInterrupts(s_LpuartAdapterBase[uartHandle->instance],
                                  (uint32_t)kLPUART_TxDataRegEmptyInterruptEnable);
@@ -753,7 +736,7 @@ void LPUART0_LPUART1_IRQHandler(void)
     uint32_t rieMask;
     uint32_t tdreMask;
     uint32_t tieMask;
-    if (NULL != (s_UartState[0]))
+    if ((s_UartState[0]) != NULL)
     {
         orMask   = LPUART_STAT_OR_MASK & LPUART0->STAT;
         rdrfMask = LPUART_STAT_RDRF_MASK & LPUART0->STAT;
@@ -765,7 +748,7 @@ void LPUART0_LPUART1_IRQHandler(void)
             HAL_UartInterruptHandle(0);
         }
     }
-    if (NULL != (s_UartState[1]))
+    if ((s_UartState[1]) != NULL)
     {
         orMask   = LPUART_STAT_OR_MASK & LPUART1->STAT;
         rdrfMask = LPUART_STAT_RDRF_MASK & LPUART1->STAT;

@@ -4,7 +4,7 @@
  ********************************************************************************** */
 /*! *********************************************************************************
 * Copyright 2015, Freescale Semiconductor, Inc.
-* Copyright 2016-2019 NXP
+* Copyright 2016-2020 NXP
 * All rights reserved.
 *
 * \file
@@ -78,7 +78,7 @@
 #define AppPoolsDetails_c \
          _block_size_  64  _number_of_blocks_   10 _eol_  \
          _block_size_ 120  _number_of_blocks_    3 _eol_  \
-         _block_size_ 256  _number_of_blocks_    1 _eol_  \
+         _block_size_ 256  _number_of_blocks_    2 _eol_  \
          _block_size_ 312  _number_of_blocks_    3 _eol_  \
          _block_size_ 392  _number_of_blocks_    1 _eol_
 
@@ -134,8 +134,8 @@
 #define osNumberOfEvents        5
 
 /* Defines main task stack size */
-#define gMainThreadStackSize_c  1280
-           
+#define gMainThreadStackSize_c  1200
+
 /* Defines total heap size used by the OS */
 #define gTotalHeapSize_c        11300
            

@@ -11,8 +11,8 @@
 #include "fsl_device_registers.h"
 #include "utilities/fsl_rtos_abstraction.h"
 
-#if FSL_FEATURE_SOC_CRC_COUNT && !defined(BL_TARGET_RAM)
-#if !BL_DEVICE_IS_LPC_SERIES
+#if defined(FSL_FEATURE_SOC_CRC_COUNT) && FSL_FEATURE_SOC_CRC_COUNT && !defined(BL_TARGET_RAM)
+#if !(defined(BL_DEVICE_IS_LPC_SERIES) && BL_DEVICE_IS_LPC_SERIES)
 #include "fsl_crc.h"
 #else // BL_DEVICE_IS_LPC_SERIES
 #include "lpc_crc/fsl_crc.h"
@@ -27,7 +27,7 @@ void crc32_init(crc32_data_t *crc32Config)
     assert(crc32Config);
 
     crc32Config->currentCrc = 0xffffffffU;
-    crc32Config->byteCountCrc = 0;
+    crc32Config->byteCountCrc = 0u;
 }
 
 // "running" crc32 calculation
@@ -40,27 +40,27 @@ void crc32_update(crc32_data_t *crc32Config, const uint8_t *src, uint32_t length
 
     CRC_GetDefaultConfig(&crcUserConfigPtr);
 
-#if !BL_DEVICE_IS_LPC_SERIES
+#if !(defined(BL_DEVICE_IS_LPC_SERIES) && BL_DEVICE_IS_LPC_SERIES)
     crcUserConfigPtr.crcBits = kCrcBits32;
     crcUserConfigPtr.seed = crc32Config->currentCrc;
     crcUserConfigPtr.polynomial = 0x04c11db7U;
-    crcUserConfigPtr.complementChecksum = false;
-    crcUserConfigPtr.reflectIn = false;
-    crcUserConfigPtr.reflectOut = false;
+    crcUserConfigPtr.complementChecksum = (_Bool)false;
+    crcUserConfigPtr.reflectIn = (_Bool)false;
+    crcUserConfigPtr.reflectOut = (_Bool)false;
 #else // BL_DEVICE_IS_LPC_SERIES
     crcUserConfigPtr.seed = crc32Config->currentCrc;
     crcUserConfigPtr.polynomial = kCRC_Polynomial_CRC_32;
-    crcUserConfigPtr.reverseIn = false;
-    crcUserConfigPtr.reverseOut = false;
-    crcUserConfigPtr.complementIn = false;
-    crcUserConfigPtr.complementOut = false;
+    crcUserConfigPtr.reverseIn = (_Bool)false;
+    crcUserConfigPtr.reverseOut = (_Bool)false;
+    crcUserConfigPtr.complementIn = (_Bool)false;
+    crcUserConfigPtr.complementOut = (_Bool)false;
 #endif // !BL_DEVICE_IS_LPC_SERIES
 
     // Init CRC module and then run it
     //! Note: We must init CRC module here, As we may seperate one crc calculation into several times
     //! Note: It is better to use lock to ensure the integrity of current updating operation of crc calculation
     //        in case crc module is shared by multiple crc updating requests at the same time
-    if (lengthInBytes)
+    if (lengthInBytes != 0u)
     {
         lock_acquire();
         CRC_Init(g_crcBase[0], &crcUserConfigPtr);
@@ -79,13 +79,13 @@ void crc32_finalize(crc32_data_t *crc32Config, uint32_t *hash)
     assert(crc32Config);
     assert(hash);
 
-    uint32_t extraBytes = crc32Config->byteCountCrc % 4;
+    uint32_t extraBytes = crc32Config->byteCountCrc % 4u;
 
     // pad with zeroes
-    if (extraBytes)
+    if (extraBytes != 0)
     {
-        uint8_t temp[3] = { 0, 0, 0 };
-        crc32_update(crc32Config, temp, 4 - extraBytes);
+        uint8_t temp[3] = { 0u, 0u, 0u };
+        crc32_update(crc32Config, temp, 4u - extraBytes);
     }
 
     *hash = crc32Config->currentCrc;
@@ -102,35 +102,35 @@ void crc32_finalize(crc32_data_t *crc32Config, uint32_t *hash)
 //! Table of CRC-32's of all single byte values. The values in
 //! this table are those used in the Ethernet CRC algorithm.
 static const uint32_t s_crc32Table[] = {
-    0x00000000, 0x04c11db7, 0x09823b6e, 0x0d4326d9, 0x130476dc, 0x17c56b6b, 0x1a864db2, 0x1e475005, 0x2608edb8,
-    0x22c9f00f, 0x2f8ad6d6, 0x2b4bcb61, 0x350c9b64, 0x31cd86d3, 0x3c8ea00a, 0x384fbdbd, 0x4c11db70, 0x48d0c6c7,
-    0x4593e01e, 0x4152fda9, 0x5f15adac, 0x5bd4b01b, 0x569796c2, 0x52568b75, 0x6a1936c8, 0x6ed82b7f, 0x639b0da6,
-    0x675a1011, 0x791d4014, 0x7ddc5da3, 0x709f7b7a, 0x745e66cd, 0x9823b6e0, 0x9ce2ab57, 0x91a18d8e, 0x95609039,
-    0x8b27c03c, 0x8fe6dd8b, 0x82a5fb52, 0x8664e6e5, 0xbe2b5b58, 0xbaea46ef, 0xb7a96036, 0xb3687d81, 0xad2f2d84,
-    0xa9ee3033, 0xa4ad16ea, 0xa06c0b5d, 0xd4326d90, 0xd0f37027, 0xddb056fe, 0xd9714b49, 0xc7361b4c, 0xc3f706fb,
-    0xceb42022, 0xca753d95, 0xf23a8028, 0xf6fb9d9f, 0xfbb8bb46, 0xff79a6f1, 0xe13ef6f4, 0xe5ffeb43, 0xe8bccd9a,
-    0xec7dd02d, 0x34867077, 0x30476dc0, 0x3d044b19, 0x39c556ae, 0x278206ab, 0x23431b1c, 0x2e003dc5, 0x2ac12072,
-    0x128e9dcf, 0x164f8078, 0x1b0ca6a1, 0x1fcdbb16, 0x018aeb13, 0x054bf6a4, 0x0808d07d, 0x0cc9cdca, 0x7897ab07,
-    0x7c56b6b0, 0x71159069, 0x75d48dde, 0x6b93dddb, 0x6f52c06c, 0x6211e6b5, 0x66d0fb02, 0x5e9f46bf, 0x5a5e5b08,
-    0x571d7dd1, 0x53dc6066, 0x4d9b3063, 0x495a2dd4, 0x44190b0d, 0x40d816ba, 0xaca5c697, 0xa864db20, 0xa527fdf9,
-    0xa1e6e04e, 0xbfa1b04b, 0xbb60adfc, 0xb6238b25, 0xb2e29692, 0x8aad2b2f, 0x8e6c3698, 0x832f1041, 0x87ee0df6,
-    0x99a95df3, 0x9d684044, 0x902b669d, 0x94ea7b2a, 0xe0b41de7, 0xe4750050, 0xe9362689, 0xedf73b3e, 0xf3b06b3b,
-    0xf771768c, 0xfa325055, 0xfef34de2, 0xc6bcf05f, 0xc27dede8, 0xcf3ecb31, 0xcbffd686, 0xd5b88683, 0xd1799b34,
-    0xdc3abded, 0xd8fba05a, 0x690ce0ee, 0x6dcdfd59, 0x608edb80, 0x644fc637, 0x7a089632, 0x7ec98b85, 0x738aad5c,
-    0x774bb0eb, 0x4f040d56, 0x4bc510e1, 0x46863638, 0x42472b8f, 0x5c007b8a, 0x58c1663d, 0x558240e4, 0x51435d53,
-    0x251d3b9e, 0x21dc2629, 0x2c9f00f0, 0x285e1d47, 0x36194d42, 0x32d850f5, 0x3f9b762c, 0x3b5a6b9b, 0x0315d626,
-    0x07d4cb91, 0x0a97ed48, 0x0e56f0ff, 0x1011a0fa, 0x14d0bd4d, 0x19939b94, 0x1d528623, 0xf12f560e, 0xf5ee4bb9,
-    0xf8ad6d60, 0xfc6c70d7, 0xe22b20d2, 0xe6ea3d65, 0xeba91bbc, 0xef68060b, 0xd727bbb6, 0xd3e6a601, 0xdea580d8,
-    0xda649d6f, 0xc423cd6a, 0xc0e2d0dd, 0xcda1f604, 0xc960ebb3, 0xbd3e8d7e, 0xb9ff90c9, 0xb4bcb610, 0xb07daba7,
-    0xae3afba2, 0xaafbe615, 0xa7b8c0cc, 0xa379dd7b, 0x9b3660c6, 0x9ff77d71, 0x92b45ba8, 0x9675461f, 0x8832161a,
-    0x8cf30bad, 0x81b02d74, 0x857130c3, 0x5d8a9099, 0x594b8d2e, 0x5408abf7, 0x50c9b640, 0x4e8ee645, 0x4a4ffbf2,
-    0x470cdd2b, 0x43cdc09c, 0x7b827d21, 0x7f436096, 0x7200464f, 0x76c15bf8, 0x68860bfd, 0x6c47164a, 0x61043093,
-    0x65c52d24, 0x119b4be9, 0x155a565e, 0x18197087, 0x1cd86d30, 0x029f3d35, 0x065e2082, 0x0b1d065b, 0x0fdc1bec,
-    0x3793a651, 0x3352bbe6, 0x3e119d3f, 0x3ad08088, 0x2497d08d, 0x2056cd3a, 0x2d15ebe3, 0x29d4f654, 0xc5a92679,
-    0xc1683bce, 0xcc2b1d17, 0xc8ea00a0, 0xd6ad50a5, 0xd26c4d12, 0xdf2f6bcb, 0xdbee767c, 0xe3a1cbc1, 0xe760d676,
-    0xea23f0af, 0xeee2ed18, 0xf0a5bd1d, 0xf464a0aa, 0xf9278673, 0xfde69bc4, 0x89b8fd09, 0x8d79e0be, 0x803ac667,
-    0x84fbdbd0, 0x9abc8bd5, 0x9e7d9662, 0x933eb0bb, 0x97ffad0c, 0xafb010b1, 0xab710d06, 0xa6322bdf, 0xa2f33668,
-    0xbcb4666d, 0xb8757bda, 0xb5365d03, 0xb1f740b4
+    0x00000000u, 0x04c11db7u, 0x09823b6eu, 0x0d4326d9u, 0x130476dcu, 0x17c56b6bu, 0x1a864db2u, 0x1e475005u, 0x2608edb8u,
+    0x22c9f00fu, 0x2f8ad6d6u, 0x2b4bcb61u, 0x350c9b64u, 0x31cd86d3u, 0x3c8ea00au, 0x384fbdbdu, 0x4c11db70u, 0x48d0c6c7u,
+    0x4593e01eu, 0x4152fda9u, 0x5f15adacu, 0x5bd4b01bu, 0x569796c2u, 0x52568b75u, 0x6a1936c8u, 0x6ed82b7fu, 0x639b0da6u,
+    0x675a1011u, 0x791d4014u, 0x7ddc5da3u, 0x709f7b7au, 0x745e66cdu, 0x9823b6e0u, 0x9ce2ab57u, 0x91a18d8eu, 0x95609039u,
+    0x8b27c03cu, 0x8fe6dd8bu, 0x82a5fb52u, 0x8664e6e5u, 0xbe2b5b58u, 0xbaea46efu, 0xb7a96036u, 0xb3687d81u, 0xad2f2d84u,
+    0xa9ee3033u, 0xa4ad16eau, 0xa06c0b5du, 0xd4326d90u, 0xd0f37027u, 0xddb056feu, 0xd9714b49u, 0xc7361b4cu, 0xc3f706fbu,
+    0xceb42022u, 0xca753d95u, 0xf23a8028u, 0xf6fb9d9fu, 0xfbb8bb46u, 0xff79a6f1u, 0xe13ef6f4u, 0xe5ffeb43u, 0xe8bccd9au,
+    0xec7dd02du, 0x34867077u, 0x30476dc0u, 0x3d044b19u, 0x39c556aeu, 0x278206abu, 0x23431b1cu, 0x2e003dc5u, 0x2ac12072u,
+    0x128e9dcfu, 0x164f8078u, 0x1b0ca6a1u, 0x1fcdbb16u, 0x018aeb13u, 0x054bf6a4u, 0x0808d07du, 0x0cc9cdcau, 0x7897ab07u,
+    0x7c56b6b0u, 0x71159069u, 0x75d48ddeu, 0x6b93dddbu, 0x6f52c06cu, 0x6211e6b5u, 0x66d0fb02u, 0x5e9f46bfu, 0x5a5e5b08u,
+    0x571d7dd1u, 0x53dc6066u, 0x4d9b3063u, 0x495a2dd4u, 0x44190b0du, 0x40d816bau, 0xaca5c697u, 0xa864db20u, 0xa527fdf9u,
+    0xa1e6e04eu, 0xbfa1b04bu, 0xbb60adfcu, 0xb6238b25u, 0xb2e29692u, 0x8aad2b2fu, 0x8e6c3698u, 0x832f1041u, 0x87ee0df6u,
+    0x99a95df3u, 0x9d684044u, 0x902b669du, 0x94ea7b2au, 0xe0b41de7u, 0xe4750050u, 0xe9362689u, 0xedf73b3eu, 0xf3b06b3bu,
+    0xf771768cu, 0xfa325055u, 0xfef34de2u, 0xc6bcf05fu, 0xc27dede8u, 0xcf3ecb31u, 0xcbffd686u, 0xd5b88683u, 0xd1799b34u,
+    0xdc3abdedu, 0xd8fba05au, 0x690ce0eeu, 0x6dcdfd59u, 0x608edb80u, 0x644fc637u, 0x7a089632u, 0x7ec98b85u, 0x738aad5cu,
+    0x774bb0ebu, 0x4f040d56u, 0x4bc510e1u, 0x46863638u, 0x42472b8fu, 0x5c007b8au, 0x58c1663du, 0x558240e4u, 0x51435d53u,
+    0x251d3b9eu, 0x21dc2629u, 0x2c9f00f0u, 0x285e1d47u, 0x36194d42u, 0x32d850f5u, 0x3f9b762cu, 0x3b5a6b9bu, 0x0315d626u,
+    0x07d4cb91u, 0x0a97ed48u, 0x0e56f0ffu, 0x1011a0fau, 0x14d0bd4du, 0x19939b94u, 0x1d528623u, 0xf12f560eu, 0xf5ee4bb9u,
+    0xf8ad6d60u, 0xfc6c70d7u, 0xe22b20d2u, 0xe6ea3d65u, 0xeba91bbcu, 0xef68060bu, 0xd727bbb6u, 0xd3e6a601u, 0xdea580d8u,
+    0xda649d6fu, 0xc423cd6au, 0xc0e2d0ddu, 0xcda1f604u, 0xc960ebb3u, 0xbd3e8d7eu, 0xb9ff90c9u, 0xb4bcb610u, 0xb07daba7u,
+    0xae3afba2u, 0xaafbe615u, 0xa7b8c0ccu, 0xa379dd7bu, 0x9b3660c6u, 0x9ff77d71u, 0x92b45ba8u, 0x9675461fu, 0x8832161au,
+    0x8cf30badu, 0x81b02d74u, 0x857130c3u, 0x5d8a9099u, 0x594b8d2eu, 0x5408abf7u, 0x50c9b640u, 0x4e8ee645u, 0x4a4ffbf2u,
+    0x470cdd2bu, 0x43cdc09cu, 0x7b827d21u, 0x7f436096u, 0x7200464fu, 0x76c15bf8u, 0x68860bfdu, 0x6c47164au, 0x61043093u,
+    0x65c52d24u, 0x119b4be9u, 0x155a565eu, 0x18197087u, 0x1cd86d30u, 0x029f3d35u, 0x065e2082u, 0x0b1d065bu, 0x0fdc1becu,
+    0x3793a651u, 0x3352bbe6u, 0x3e119d3fu, 0x3ad08088u, 0x2497d08du, 0x2056cd3au, 0x2d15ebe3u, 0x29d4f654u, 0xc5a92679u,
+    0xc1683bceu, 0xcc2b1d17u, 0xc8ea00a0u, 0xd6ad50a5u, 0xd26c4d12u, 0xdf2f6bcbu, 0xdbee767cu, 0xe3a1cbc1u, 0xe760d676u,
+    0xea23f0afu, 0xeee2ed18u, 0xf0a5bd1du, 0xf464a0aau, 0xf9278673u, 0xfde69bc4u, 0x89b8fd09u, 0x8d79e0beu, 0x803ac667u,
+    0x84fbdbd0u, 0x9abc8bd5u, 0x9e7d9662u, 0x933eb0bbu, 0x97ffad0cu, 0xafb010b1u, 0xab710d06u, 0xa6322bdfu, 0xa2f33668u,
+    0xbcb4666du, 0xb8757bdau, 0xb5365d03u, 0xb1f740b4u
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -141,8 +141,8 @@ static const uint32_t s_crc32Table[] = {
 void crc32_init(crc32_data_t *crc32Config)
 {
     // initialize running crc and byte count
-    crc32Config->currentCrc = 0xFFFFFFFF;
-    crc32Config->byteCountCrc = 0;
+    crc32Config->currentCrc = 0xFFFFFFFFu;
+    crc32Config->byteCountCrc = 0u;
 }
 
 // "running" crc32 calculation
@@ -152,10 +152,10 @@ void crc32_update(crc32_data_t *crc32Config, const uint8_t *src, uint32_t length
     uint32_t crc = crc32Config->currentCrc;
     crc32Config->byteCountCrc += lengthInBytes;
 
-    while (lengthInBytes--)
+    while (lengthInBytes-- != 0u)
     {
-        uint8_t c = *src++ & 0xff;
-        crc = (crc << 8) ^ s_crc32Table[(crc >> 24) ^ c];
+        uint8_t c = *src++ & 0xffu;
+        crc = (crc << 8u) ^ s_crc32Table[(crc >> 24u) ^ c];
     }
 
     crc32Config->currentCrc = crc;
@@ -168,12 +168,12 @@ void crc32_finalize(crc32_data_t *crc32Config, uint32_t *hash)
     uint32_t byteCount = crc32Config->byteCountCrc;
 
     // pad with zeroes
-    if (byteCount % 4)
+    if ((byteCount % 4u) != 0u)
     {
         uint32_t i;
-        for (i = byteCount % 4; i < 4; i++)
+        for (i = byteCount % 4u; i < 4u; i++)
         {
-            crc = (crc << 8) ^ s_crc32Table[(crc >> 24) ^ 0];
+            crc = (crc << 8u) ^ s_crc32Table[(crc >> 24u) ^ 0u];
         }
     }
 

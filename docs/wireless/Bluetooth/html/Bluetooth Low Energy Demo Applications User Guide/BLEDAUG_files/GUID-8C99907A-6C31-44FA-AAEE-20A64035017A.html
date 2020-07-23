@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="RSSI Monitor"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-6A79DC36-EEB9-4649-BEB4-A226B5AD42D8.html"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-8C99907A-6C31-44FA-AAEE-20A64035017A"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>RSSI Monitor</title>
+</head>
+<body id="GUID-8C99907A-6C31-44FA-AAEE-20A64035017A">
+
+
+    <h1 class="title topictitle1">RSSI Monitor</h1>
+
+    <div class="body">
+        <p class="p">RSSI Monitor is an application that allows monitoring the RSSI of a remote
+            peer on advertising or connection channel. The GAP Peripheral device can modify the
+            output Tx power on both advertising and connection channels. For platforms that do not
+            support Bluetooth LE Optional features, use the legacy advertising and default phy for
+            this feature.</p>
+
+        <div class="p">On GAP Peripheral device <ol class="ol" id="GUID-8C99907A-6C31-44FA-AAEE-20A64035017A__OL_IXY_3CV_LHB">
+                <li class="li">Set the primary advertising PHY to Coded PHY. Start advertising and
+                    read the address. Set the Tx power in dbm to a value less than 20 dbm.
+                    <div class="note note"><span class="notetitle">Note:</span> For FRDM-KW38 the accepted range of values is [-127, 20]. For the Tx power to dBm lookup table see platform's datasheet (Section 4.3, Table 6, for FRDM-KW38).</div>
+
+                        <pre class="pre codeblock">BLE Shell&gt;gap extadvcfg -phy1 3
+--&gt;  GAP Event: Extended Advertising parameters successfully set.
+
+BLE Shell&gt;gap extadvstart
+--&gt;  GAP Event: Advertising state changed successfully!
+
+BLE Shell&gt;gap address
+--&gt;  GAP Event: Public Address Read:00603701A751
+
+BLE Shell&gt;gap txpower adv 0
+--&gt;  GAP Event: Success!                    </pre>
+<p class="p">On GAP Central device:</p>
+
+                </li>
+
+                <li class="li">Set the scanning PHY to Coded PHY. Start monitoring the RSSI on
+                    advertising channel. Scanning is started automatically, if not previously
+                    enabled.
+                        <pre class="pre codeblock">BLE Shell&gt;gap scancfg -phy 4
+BLE Shell&gt;gap rssimonitor 00603701A751
+--&gt;  Reading RSSI on advertising channel:
+-&gt;  GAP Event: Scan started.
+
+BLE Shell&gt;
+ RSSI: -31 dBm
+ RSSI: -30 dBm
+ RSSI: -30 dBm
+ RSSI: -30 dBm                </pre>
+<p class="p"> In the below example it is monitored the RSSI on a connection
+                        channel. </p>
+ On GAP Peripheral, start advertising in connectable mode on
+                    Coded PHY and adjust the TX power level. <pre class="pre codeblock">BLE Shell&gt;gap extadvcfg -type 65 -phy1 3
+--&gt;  GAP Event: Extended Advertising parameters successfully set.
+
+BLE Shell&gt;gap extadvdata 8 rssimonitortest
+--&gt;  GAP Event: Extended Advertising data successfully set.
+
+BLE Shell&gt;gap extadvstart
+--&gt;  GAP Event: Advertising state changed successfully!
+
+BLE Shell&gt;
+--&gt;  GAP Event: Connected to peer 0
+
+BLE Shell&gt;
+--&gt;  GAP Event: Advertising stopped!
+
+BLE Shell&gt;gap txpower conn 10
+--&gt;  GAP Event: Success!            
+         </pre>
+
+                    <div class="p">On GAP Central device, start scanning on Coded PHY, update the
+                        connection PHY also to Coded PHY, and connect to remote device and monitor
+                        continuously the RSSI on the connection channel.
+                        <pre class="pre codeblock">BLE Shell&gt;gap scancfg -phy 4
+BLE Shell&gt;gap connectcfg -phy 4
+
+--&gt;  Connection Parameters:
+    --&gt;  Connection Interval: 200 ms
+    --&gt;  Connection Latency: 0
+    --&gt;  Supervision Timeout: 32000 ms
+    --&gt;  Connecting PHYs: Coded
+
+BLE Shell&gt;gap scanstart filter
+
+-&gt;  GAP Event: Scan started.
+
+BLE Shell&gt;
+--&gt;  GAP Event: Found device 0 : 0060374E2B8A -30 dBm
+ Advertising Extended Data:
+rssimonitortest
+BLE Shell&gt;gap connect 0
+
+-&gt;  GAP Event: Scan stopped.
+
+BLE Shell&gt;
+--&gt;  GAP Event: Connected to peer 0
+
+BLE Shell&gt;gap rssimonitor 0 -c
+
+--&gt;  Reading RSSI from connected device:
+ RSSI: -29 dBm
+ RSSI: -29 dBm
+ RSSI: -29 dBm
+ RSSI: -29 dBm
+ RSSI: -29 dBm        </pre>
+</div>
+</li>
+
+                <li class="li"> Update the PHY preference and continue monitoring the RSSI. For
+                    Coded PHY the coding scheme can be configured between S2 and S8 (500kb/s and
+                    125kb/s).</li>
+
+            </ol>
+<pre class="pre codeblock">BLE Shell&gt;gap phy 0 -tx 4 -rx 4 -o 1
+
+BLE Shell&gt;
+--&gt;  GAP Event: Phy update complete!
+--&gt;  TxPhy: Coded
+--&gt;  RxPhy: Coded
+
+BLE Shell&gt;gap phy 0 -tx 4 -rx 4 -o 2
+
+BLE Shell&gt;
+--&gt;  GAP Event: Phy update complete!
+--&gt;  TxPhy: Coded
+--&gt;  RxPhy: Coded
+
+BLE Shell&gt;gap phy 0 -tx 2 -rx 2
+
+BLE Shell&gt;
+--&gt;  GAP Event: Phy update complete!
+--&gt;  TxPhy: 2M
+--&gt;  RxPhy: 2M
+
+BLE Shell&gt;gap rssimonitor 0 -c
+
+--&gt;  Reading RSSI from connected device:
+ RSSI: -21 dBm
+ RSSI: -22 dBm</pre>
+</div>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-6A79DC36-EEB9-4649-BEB4-A226B5AD42D8.html">Usage</a></div>
+</div>
+</div>
+
+</body>
+</html>

@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2013-2015 Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2018 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -8,12 +8,12 @@
 #ifndef __BOOTLOADER_COMMON_H__
 #define __BOOTLOADER_COMMON_H__
 
-#include <stdarg.h>
-#include <stdbool.h>
-#include <stdint.h>
 #include <stdio.h>
-#include "bootloader_config.h"
+#include <stdarg.h>
+#include <stdint.h>
+#include <stdbool.h>
 #include "fsl_common.h"
+#include "bootloader_config.h"
 #include "target_config.h"
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -21,16 +21,16 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #ifndef NULL
-#define NULL 0
+#define NULL (void *)0u
 #endif
 
 // The following macros are to be used when trying to save code size for specific peripheral configurations
 // that will only be using one peripheral instance. most of the peripheral driver code can use multiple instances but by
 // just using one
 // we can save space
-#define USE_ONLY_UART(instance) (defined(BL_FEATURE_UART_OPTIMIZE) && (BL_UART_USED_INSTANCE == instance))
-#define USE_ONLY_SPI(instance) (defined(BL_FEATURE_SPI_OPTIMIZE) && (BL_SPI_USED_INSTANCE == instance))
-#define USE_ONLY_I2C(instance) (defined(BL_FEATURE_I2C_OPTIMIZE) && (BL_I2C_USED_INSTANCE == instance))
+#define USE_ONLY_UART(instance) (defined(BL_FEATURE_UART_OPTIMIZE) && (BL_UART_USED_INSTANCE == (instance)))
+#define USE_ONLY_SPI(instance) (defined(BL_FEATURE_SPI_OPTIMIZE) && (BL_SPI_USED_INSTANCE == (instance)))
+#define USE_ONLY_I2C(instance) (defined(BL_FEATURE_I2C_OPTIMIZE) && (BL_I2C_USED_INSTANCE == (instance)))
 
 //! @name Min/max macros
 //@{
@@ -55,11 +55,22 @@
 
 //! @name Alignment macros
 //@{
+/*! @brief Alignment(down) utility. */
+#if !defined(ALIGN_DOWN)
+#define ALIGN_DOWN(x, a) (((uint32_t)(x)) & ~((uint32_t)(a)-1u))
+#endif
+
+/*! @brief Alignment(up) utility. */
+#if !defined(ALIGN_UP)
+#define ALIGN_UP(x, a) ALIGN_DOWN((uint32_t)(x) + (uint32_t)(a)-1u, a)
+#endif
+#if 0
 #ifndef ALIGN_DOWN
 #define ALIGN_DOWN(x, a) ((x) & -(a))
 #endif
 #ifndef ALIGN_UP
 #define ALIGN_UP(x, a) (-(-(x) & -(a)))
+#endif
 #endif
 //@}
 
@@ -71,9 +82,31 @@
 #define FOUR_CHAR_CODE(a, b, c, d) (((d) << 24) | ((c) << 16) | ((b) << 8) | ((a)))
 
 #if (defined(DEBUG) || defined(_DEBUG)) && !defined(DEBUG_PRINT_DISABLE)
-extern  void debug_printf(const char *fmt, ...);
-#else
-#define debug_printf(...)
+static inline void debug_printf(const char *format, ...);
+
+//! @brief Debug print utility.
+//!
+//! This print function will only output text when the @a DEBUG macro is defined.
+static inline void debug_printf(const char *format, ...)
+{
+    va_list args;
+    va_start(args, format);
+    vprintf(format, args);
+// Temporarily disable MISRA rule 14.2
+#if defined(__ICCARM__)
+#pragma diag_suppress = Pm049
+#endif
+    va_end(args);
+#if defined(__ICCARM__)
+#pragma diag_default = Pm049
+#endif
+}
+#else // (DEBUG || _DEBUG) && !DEBUG_PRINT_DISABLE
+// Empty macro to cause debug_printf() calls to disappear.
+#define debug_printf(x, ...) \
+    do                       \
+    {                        \
+    } while ((_Bool)false)
 #endif // (DEBUG || _DEBUG) && !DEBUG_PRINT_DISABLE
 
 //! @brief Callback function invoked for a pin change interrupt.
@@ -86,20 +119,20 @@ typedef void (*pin_irq_callback_t)(uint32_t instance);
 //! @ingroup bl_core
 enum _bl_status_groups
 {
-    kStatusGroup_Bootloader = 100,      //!< Bootloader status group number (100).
-    kStatusGroup_SBLoader = 101,        //!< SB loader status group number (101).
-    kStatusGroup_MemoryInterface = 102, //!< Memory interface status group number (102).
-    kStatusGroup_PropertyStore = 103,   //!< Property store status group number (103).
-    kStatusGroup_AppCrcCheck = 104,     //!< Application crc check status group number (104).
-    kStatusGroup_Packetizer = 105,      //!< Packetizer status group number (105).
-    kStatusGroup_ReliableUpdate = 106,  //!< Reliable Update status groupt number (106).
+    kStatusGroup_Bootloader = 100,            //!< Bootloader status group number (100).
+    kStatusGroup_SBLoader = 101,              //!< SB loader status group number (101).
+    kStatusGroup_MemoryInterface = 102,       //!< Memory interface status group number (102).
+    kStatusGroup_PropertyStore = 103,         //!< Property store status group number (103).
+    kStatusGroup_AppCrcCheck = 104,           //!< Application crc check status group number (104).
+    kStatusGroup_Packetizer = 105,            //!< Packetizer status group number (105).
+    kStatusGroup_ReliableUpdate = 106,        //!< Reliable Update status groupt number (106).
 
-    kStatusGroup_SerialNorEeprom = 107, //!< Serial NOR/EEPROM status group number
-    kStatusGroup_FlexSPINAND = 200,     //!< FlexSPINAND status group number.
-    kStatusGroup_FLEXSPINOR = 201,      //!< FlexSPINOR status group number.
-    kStatusGroup_OCOTP = 202,           //!< OCOTP status group number.
-    kStatusGroup_SemcNOR = 211,         //!< SEMC NOR status group number.
-    kStatusGroup_SemcNAND = 212,        //!< SEMC NAND status group number.
+    kStatusGroup_SerialNorEeprom = 107,       //!< Serial NOR/EEPROM status group number
+    kStatusGroup_FlexSPINAND = 200,           //!< FlexSPINAND status group number.
+    kStatusGroup_FLEXSPINOR = 201,            //!< FlexSPINOR status group number.
+    kStatusGroup_OCOTP = 202,                 //!< OCOTP status group number.
+    kStatusGroup_SemcNOR = 211,               //!< SEMC NOR status group number.
+    kStatusGroup_SemcNAND = 212,              //!< SEMC NAND status group number.
 };
 
 //! @brief Driver status group numbers.
@@ -118,7 +151,8 @@ enum _bl_driver_status_groups
 //! @brief Structure of version property.
 //!
 //! @ingroup bl_core
-typedef union StandardVersion {
+typedef union StandardVersion
+{
     struct
     {
         uint8_t bugfix; //!< bugfix version [7:0]
@@ -181,6 +215,9 @@ typedef enum _habstatus_option
 //! @addtogroup bl_hw
 //! @{
 
+#if defined(KW38A4_SERIES)
+extern void init_interrupts(void);
+
 //! @brief Initialize the hardware such as pinmux.
 void init_hardware(void);
 
@@ -189,6 +226,9 @@ void deinit_hardware(void);
 
 //! @brief Update available peripherals based on specific chips
 void update_available_peripherals(void);
+
+//! @brief Update flash properties based on specific chips
+void update_flash_properties(void);
 
 //! @brief Update DFlash based on specific chips
 void check_available_dFlash(void);
@@ -199,20 +239,8 @@ void check_available_dFlash(void);
 //! @brief Configure hardware clocks.
 void configure_clocks(bootloader_clock_option_t option);
 
-//! @brief Returns the available lirc clock frequency in Hertz.
-uint32_t get_available_lirc_clock(void);
-
 //! @brief Returns the current bus clock frequency in Hertz.
 uint32_t get_bus_clock(void);
-
-//! @brief Returns the current flexcomm clock frequency in Hertz.
-uint32_t get_flexcomm_clock(uint32_t instance);
-
-//! @brief Returns the current core clock frequency in Hertz.
-uint32_t get_system_core_clock(void);
-
-//! @brief Configure usb clock
-bool usb_clock_init(void);
 
 //! @brief Returns the value in MHz of the UART clock based on the instance.
 uint32_t get_uart_clock(uint32_t instance);
@@ -226,32 +254,8 @@ void enable_autobaud_pin_irq(uint32_t instance, pin_irq_callback_t func);
 //! @brief Disables the autobaud pin IRQ for the instance passed.
 void disable_autobaud_pin_irq(uint32_t instance);
 
-//! @brief Declaration for the reset handler, which is defined in assembler.
-void Reset_Handler(void);
-
-//! @brief Initialize watchdog
-void bootloader_watchdog_init(void);
-
-//! @brief Service watchdog
-void bootloader_watchdog_service(void);
-
-//! @brief De-initialize watchdog
-void bootloader_watchdog_deinit(void);
-
 //! @brief Determine if QSPI module to be configured.
 bool qspi_need_configure(void);
-
-//! @brief Initialize QSPI and OTFAD module.
-//! @param none
-status_t otfad_init_as_needed(void);
-
-//! @brief Bypass OTFAD module as needed.
-//! @param none
-status_t otfad_bypass_as_needed(void);
-
-//! @brief Resume OTFAD module as needed.
-//! @param none
-status_t oftfad_resume_as_needed(void);
 
 //! @brief Determine if QSPI memory is present or not.
 bool is_qspi_present(void);
@@ -262,35 +266,74 @@ bool is_otfad_present(void);
 //! @brief Determine if LTC module is present or not.
 bool is_ltc_present(void);
 
-//! @brief Return status for intializing qspi and otfad modules
-status_t get_qspi_otfad_init_status(void);
-
-//!@bief Update status for intializing qspi and otfad modules
-void update_qspi_otfad_init_status(status_t initStatus);
-
 //! @brief Determine if FlexSPI NOR module is present or not.
 bool is_flexspi_nor_present(void);
 
 //! @brief Determine if SEMC NOR module is present or not.
 bool is_semc_nor_present(void);
 
-//!@brief Determine is the Secondary I2C slave address is enabled.
-bool is_secondary_i2c_slave_address_enabled(void);
-
 //!@brief Check if data to be accessed is in execute-only region.
 bool is_in_execute_only_region(uint32_t start, uint32_t lengthInBytes);
 
-//!@brief Check if second core is present.
-bool is_second_core_present(void);
+//! @brief Declaration for the reset handler, which is defined in assembler.
+extern void Reset_Handler(void);
+
+#else
+//! @brief Service watchdog
+void bootloader_watchdog_service(void);
+
+//! @brief Return status for intializing qspi and otfad modules
+status_t get_qspi_otfad_init_status(void);
+
+//! @brief Bypass OTFAD module as needed.
+//! @param none
+status_t otfad_bypass_as_needed(void);
+
+//!@bief Update status for intializing qspi and otfad modules
+void update_qspi_otfad_init_status(status_t initStatus);
 
 //!@brief Update LPC SRAM memory map based on Device ID0
 void update_memory_map_lpc_sram(void);
 
+//! @brief Returns the available lirc clock frequency in Hertz.
+uint32_t get_available_lirc_clock(void);
+
+//! @brief Resume OTFAD module as needed.
+//! @param none
+status_t oftfad_resume_as_needed(void);
+
+//! @brief Returns the current core clock frequency in Hertz.
+uint32_t get_system_core_clock(void);
+
+//! @brief Initialize QSPI and OTFAD module.
+//! @param none
+status_t otfad_init_as_needed(void);
+
+//!@brief Check if second core is present.
+bool is_second_core_present(void);
+
+//! @brief Returns the current flexcomm clock frequency in Hertz.
+uint32_t get_flexcomm_clock(uint32_t instance);
+
+//! @brief De-initialize watchdog
+void bootloader_watchdog_deinit(void);
+
+//! @brief Initialize watchdog
+void bootloader_watchdog_init(void);
+
+//! @brief Configure usb clock
+bool usb_clock_init(void);
+
+//!@brief Determine is the Secondary I2C slave address is enabled.
+bool is_secondary_i2c_slave_address_enabled(void);
+
+//!@brief Get the hab status.
+habstatus_option_t get_hab_status(void);
+
 //!@brief Return Primary boot device type
 uint32_t get_primary_boot_device(void);
 
-//!@brief Get the hab status.
-habstatus_option_t get_hab_status();
+#endif
 //! @}
 
 #endif // __BOOTLOADER_COMMON_H__

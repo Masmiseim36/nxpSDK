@@ -1,11 +1,5 @@
 var group___g_a_t_t =
 [
-    [ "attPrepareWriteRequestParams_t", "group___g_a_t_t.html#structatt_prepare_write_request_params__t", [
-      [ "attributeHandle", "group___g_a_t_t.html#af64c0dd5f313756d0fcb881d636b7bc5", null ],
-      [ "valueOffset", "group___g_a_t_t.html#a093c041a227a1e418fa124a8e0e13a52", null ],
-      [ "attributeValue", "group___g_a_t_t.html#aeb9d6bfed0aaa8f5fd1836c133a3fdb2", null ],
-      [ "attributeLength", "group___g_a_t_t.html#afb4ed1e88b96d390ebbf477178cc6140", null ]
-    ] ],
     [ "gattAttribute_t", "group___g_a_t_t.html#structgatt_attribute__t", [
       [ "handle", "group___g_a_t_t.html#ab12ca467da034e048a3ebbf076277f0e", null ],
       [ "uuidType", "group___g_a_t_t.html#a59e10ba8af70ce079f85d41761f77da1", null ],
@@ -41,12 +35,11 @@ var group___g_a_t_t =
       [ "startHandle", "group___g_a_t_t.html#ad57b0c855ede7256f4b518110121450b", null ],
       [ "endHandle", "group___g_a_t_t.html#a7f131c25771fe7d75b92156c81414a53", null ]
     ] ],
+    [ "gCccdEmpty_c", "group___g_a_t_t.html#gac6fc382d5b27018afbf77f4c58990104", null ],
+    [ "gCccdNotification_c", "group___g_a_t_t.html#ga0bb6b0f713e6b39942f13e77bd3b9653", null ],
+    [ "gCccdIndication_c", "group___g_a_t_t.html#ga8248c917f32b9d09795ebda937480893", null ],
+    [ "gattCccdFlags_t", "group___g_a_t_t.html#ga5e1b55e68ad26ab61aa0b9c577f72b8a", null ],
     [ "attErrorCode_t", "group___g_a_t_t.html#ga6e63a0fa7fcf20d534dc49c3dad732b2", null ],
-    [ "gattCccdFlags_t", "group___g_a_t_t.html#ga2bd94f4ee24b4f90495753b671b34566", [
-      [ "gCccdEmpty_c", "group___g_a_t_t.html#gga2bd94f4ee24b4f90495753b671b34566ab7aea3f4174e745e0303f39f35bfffa0", null ],
-      [ "gCccdNotification_c", "group___g_a_t_t.html#gga2bd94f4ee24b4f90495753b671b34566a15925dcd74f64f54f1ef57eb4e9b9c36", null ],
-      [ "gCccdIndication_c", "group___g_a_t_t.html#gga2bd94f4ee24b4f90495753b671b34566a3c9aa3de1bc5a6b93812900c61cd1e1a", null ]
-    ] ],
     [ "Gatt_Init", "group___g_a_t_t.html#ga872298c8fafa6fbc2f7aa9f6b7366c84", null ],
     [ "Gatt_GetMtu", "group___g_a_t_t.html#ga5a47e322f0b6beca7d05be44ef44aefc", null ]
 ];

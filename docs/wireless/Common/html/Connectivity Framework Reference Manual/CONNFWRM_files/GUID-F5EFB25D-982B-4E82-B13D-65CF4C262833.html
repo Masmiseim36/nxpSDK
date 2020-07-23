@@ -37,7 +37,13 @@
 
 		<p class="p"><strong class="ph b">Description:</strong></p>
 
-		<p class="p">This function is used to initialize the Flash Management and Non-Volatile Storage Module. It indirectly initializes the flash HAL driver and gets the active page ID. It initializes internal state variables and counters. If the RAM entries are different from flash entries, a page copy is triggered and the different entries are skipped in the process. It also handles NVM table changes. For example, the MCU program was changed and the NVM table was updated by automaticly doing a table upgrade. To trigger this behavior, the application must change gNvFlashTableVersion_c.</p>
+		<p class="p">This function is used to initialize the Flash Management and Non-Volatile Storage
+			Module. It indirectly initializes the flash HAL driver and gets the active page ID. It
+			initializes internal state variables and counters. If the RAM entries are different from
+			flash entries, a page copy is triggered and the different entries are skipped in the
+			process. It also handles NVM table changes. For example, the MCU program was changed and
+			the NVM table was updated by automatically doing a table upgrade. To trigger this
+			behavior, the application must change gNvFlashTableVersion_c.</p>
 
 		<p class="p"><strong class="ph b">Parameters:</strong></p>
 
@@ -80,13 +86,13 @@ gNVM_MissingEndOfTableMarker_c</pre>
 				
 				<thead class="thead" align="left">
 					<tr class="row">
-						<th class="entry" valign="top" id="d78191e118"><strong class="ph b">Name</strong></th>
+						<th class="entry" valign="top" id="d78228e118"><strong class="ph b">Name</strong></th>
 
-						<th class="entry" valign="top" id="d78191e122"><strong class="ph b">Type</strong></th>
+						<th class="entry" valign="top" id="d78228e122"><strong class="ph b">Type</strong></th>
 
-						<th class="entry" valign="top" id="d78191e126"><strong class="ph b">Direction</strong></th>
+						<th class="entry" valign="top" id="d78228e126"><strong class="ph b">Direction</strong></th>
 
-						<th class="entry" valign="top" id="d78191e130"><strong class="ph b">Description</strong></th>
+						<th class="entry" valign="top" id="d78228e130"><strong class="ph b">Description</strong></th>
 
 					</tr>
 
@@ -94,24 +100,24 @@ gNVM_MissingEndOfTableMarker_c</pre>
 
 				<tbody class="tbody">
 					<tr class="row">
-						<td class="entry" valign="top" headers="d78191e118 ">ptrData</td>
+						<td class="entry" valign="top" headers="d78228e118 ">ptrData</td>
 
-						<td class="entry" valign="top" headers="d78191e122 ">void*</td>
+						<td class="entry" valign="top" headers="d78228e122 ">void*</td>
 
-						<td class="entry" valign="top" headers="d78191e126 ">IN</td>
+						<td class="entry" valign="top" headers="d78228e126 ">IN</td>
 
-						<td class="entry" valign="top" headers="d78191e130 ">A pointer to the element or the table entry to be saved</td>
+						<td class="entry" valign="top" headers="d78228e130 ">A pointer to the element or the table entry to be saved</td>
 
 					</tr>
 
 					<tr class="row">
-						<td class="entry" valign="top" headers="d78191e118 ">saveAll</td>
+						<td class="entry" valign="top" headers="d78228e118 ">saveAll</td>
 
-						<td class="entry" valign="top" headers="d78191e122 ">bool_t</td>
+						<td class="entry" valign="top" headers="d78228e122 ">bool_t</td>
 
-						<td class="entry" valign="top" headers="d78191e126 ">IN</td>
+						<td class="entry" valign="top" headers="d78228e126 ">IN</td>
 
-						<td class="entry" valign="top" headers="d78191e130 ">A flag used to specify, whether the entire table entry is saved, or just the element pointed to by ptrData</td>
+						<td class="entry" valign="top" headers="d78228e130 ">A flag used to specify, whether the entire table entry is saved, or just the element pointed to by ptrData</td>
 
 					</tr>
 
@@ -153,13 +159,13 @@ gNVM_SaveRequestRejected_c</pre>
 				
 				<thead class="thead" align="left">
 					<tr class="row">
-						<th class="entry" valign="top" id="d78191e221"><strong class="ph b">Name</strong></th>
+						<th class="entry" valign="top" id="d78228e221"><strong class="ph b">Name</strong></th>
 
-						<th class="entry" valign="top" id="d78191e225"><strong class="ph b">Type</strong></th>
+						<th class="entry" valign="top" id="d78228e225"><strong class="ph b">Type</strong></th>
 
-						<th class="entry" valign="top" id="d78191e229"><strong class="ph b">Direction</strong></th>
+						<th class="entry" valign="top" id="d78228e229"><strong class="ph b">Direction</strong></th>
 
-						<th class="entry" valign="top" id="d78191e233"><strong class="ph b">Description</strong></th>
+						<th class="entry" valign="top" id="d78228e233"><strong class="ph b">Description</strong></th>
 
 					</tr>
 
@@ -167,13 +173,13 @@ gNVM_SaveRequestRejected_c</pre>
 
 				<tbody class="tbody">
 					<tr class="row">
-						<td class="entry" valign="top" headers="d78191e221 ">ptrData</td>
+						<td class="entry" valign="top" headers="d78228e221 ">ptrData</td>
 
-						<td class="entry" valign="top" headers="d78191e225 ">void*</td>
+						<td class="entry" valign="top" headers="d78228e225 ">void*</td>
 
-						<td class="entry" valign="top" headers="d78191e229 ">IN</td>
+						<td class="entry" valign="top" headers="d78228e229 ">IN</td>
 
-						<td class="entry" valign="top" headers="d78191e233 ">A pointer to the table entry to be saved.</td>
+						<td class="entry" valign="top" headers="d78228e233 ">A pointer to the table entry to be saved.</td>
 
 					</tr>
 
@@ -213,13 +219,13 @@ gNVM_SaveRequestRejected_c</pre>
 				
 				<thead class="thead" align="left">
 					<tr class="row">
-						<th class="entry" valign="top" id="d78191e308"><strong class="ph b">Name</strong></th>
+						<th class="entry" valign="top" id="d78228e308"><strong class="ph b">Name</strong></th>
 
-						<th class="entry" valign="top" id="d78191e312"><strong class="ph b">Type</strong></th>
+						<th class="entry" valign="top" id="d78228e312"><strong class="ph b">Type</strong></th>
 
-						<th class="entry" valign="top" id="d78191e316"><strong class="ph b">Direction</strong></th>
+						<th class="entry" valign="top" id="d78228e316"><strong class="ph b">Direction</strong></th>
 
-						<th class="entry" valign="top" id="d78191e320"><strong class="ph b">Description</strong></th>
+						<th class="entry" valign="top" id="d78228e320"><strong class="ph b">Description</strong></th>
 
 					</tr>
 
@@ -227,13 +233,13 @@ gNVM_SaveRequestRejected_c</pre>
 
 				<tbody class="tbody">
 					<tr class="row">
-						<td class="entry" valign="top" headers="d78191e308 ">ptrData</td>
+						<td class="entry" valign="top" headers="d78228e308 ">ptrData</td>
 
-						<td class="entry" valign="top" headers="d78191e312 ">void*</td>
+						<td class="entry" valign="top" headers="d78228e312 ">void*</td>
 
-						<td class="entry" valign="top" headers="d78191e316 ">IN</td>
+						<td class="entry" valign="top" headers="d78228e316 ">IN</td>
 
-						<td class="entry" valign="top" headers="d78191e320 ">A pointer to the table entry to be saved</td>
+						<td class="entry" valign="top" headers="d78228e320 ">A pointer to the table entry to be saved</td>
 
 					</tr>
 
@@ -273,13 +279,13 @@ gNVM_SaveRequestRejected_c</pre>
 				
 				<thead class="thead" align="left">
 					<tr class="row">
-						<th class="entry" valign="top" id="d78191e394"><strong class="ph b">Name</strong></th>
+						<th class="entry" valign="top" id="d78228e394"><strong class="ph b">Name</strong></th>
 
-						<th class="entry" valign="top" id="d78191e398"><strong class="ph b">Type</strong></th>
+						<th class="entry" valign="top" id="d78228e398"><strong class="ph b">Type</strong></th>
 
-						<th class="entry" valign="top" id="d78191e402"><strong class="ph b">Direction</strong></th>
+						<th class="entry" valign="top" id="d78228e402"><strong class="ph b">Direction</strong></th>
 
-						<th class="entry" valign="top" id="d78191e406"><strong class="ph b">Description</strong></th>
+						<th class="entry" valign="top" id="d78228e406"><strong class="ph b">Description</strong></th>
 
 					</tr>
 
@@ -287,13 +293,13 @@ gNVM_SaveRequestRejected_c</pre>
 
 				<tbody class="tbody">
 					<tr class="row">
-						<td class="entry" valign="top" headers="d78191e394 ">newInterval</td>
+						<td class="entry" valign="top" headers="d78228e394 ">newInterval</td>
 
-						<td class="entry" valign="top" headers="d78191e398 ">NvSaveInterval_t</td>
+						<td class="entry" valign="top" headers="d78228e398 ">NvSaveInterval_t</td>
 
-						<td class="entry" valign="top" headers="d78191e402 ">IN</td>
+						<td class="entry" valign="top" headers="d78228e402 ">IN</td>
 
-						<td class="entry" valign="top" headers="d78191e406 ">The new value to be applied to the “save on interval” functionality</td>
+						<td class="entry" valign="top" headers="d78228e406 ">The new value to be applied to the “save on interval” functionality</td>
 
 					</tr>
 
@@ -329,13 +335,13 @@ gNVM_SaveRequestRejected_c</pre>
 				
 				<thead class="thead" align="left">
 					<tr class="row">
-						<th class="entry" valign="top" id="d78191e481"><strong class="ph b">Name</strong></th>
+						<th class="entry" valign="top" id="d78228e481"><strong class="ph b">Name</strong></th>
 
-						<th class="entry" valign="top" id="d78191e485"><strong class="ph b">Type</strong></th>
+						<th class="entry" valign="top" id="d78228e485"><strong class="ph b">Type</strong></th>
 
-						<th class="entry" valign="top" id="d78191e489"><strong class="ph b">Direction</strong></th>
+						<th class="entry" valign="top" id="d78228e489"><strong class="ph b">Direction</strong></th>
 
-						<th class="entry" valign="top" id="d78191e493"><strong class="ph b">Description</strong></th>
+						<th class="entry" valign="top" id="d78228e493"><strong class="ph b">Description</strong></th>
 
 					</tr>
 
@@ -343,13 +349,13 @@ gNVM_SaveRequestRejected_c</pre>
 
 				<tbody class="tbody">
 					<tr class="row">
-						<td class="entry" valign="top" headers="d78191e481 ">newCounter</td>
+						<td class="entry" valign="top" headers="d78228e481 ">newCounter</td>
 
-						<td class="entry" valign="top" headers="d78191e485 ">NvSaveCounter_t</td>
+						<td class="entry" valign="top" headers="d78228e485 ">NvSaveCounter_t</td>
 
-						<td class="entry" valign="top" headers="d78191e489 ">IN</td>
+						<td class="entry" valign="top" headers="d78228e489 ">IN</td>
 
-						<td class="entry" valign="top" headers="d78191e493 ">The new value to be applied to “save on count” functionality</td>
+						<td class="entry" valign="top" headers="d78228e493 ">The new value to be applied to “save on count” functionality</td>
 
 					</tr>
 
@@ -386,13 +392,13 @@ gNVM_SaveRequestRejected_c</pre>
 				
 				<thead class="thead" align="left">
 					<tr class="row">
-						<th class="entry" valign="top" id="d78191e566"><strong class="ph b">Name</strong></th>
+						<th class="entry" valign="top" id="d78228e566"><strong class="ph b">Name</strong></th>
 
-						<th class="entry" valign="top" id="d78191e570"><strong class="ph b">Type</strong></th>
+						<th class="entry" valign="top" id="d78228e570"><strong class="ph b">Type</strong></th>
 
-						<th class="entry" valign="top" id="d78191e574"><strong class="ph b">Direction</strong></th>
+						<th class="entry" valign="top" id="d78228e574"><strong class="ph b">Direction</strong></th>
 
-						<th class="entry" valign="top" id="d78191e578"><strong class="ph b">Description</strong></th>
+						<th class="entry" valign="top" id="d78228e578"><strong class="ph b">Description</strong></th>
 
 					</tr>
 
@@ -400,26 +406,26 @@ gNVM_SaveRequestRejected_c</pre>
 
 				<tbody class="tbody">
 					<tr class="row">
-						<td class="entry" valign="top" headers="d78191e566 ">ptrData</td>
+						<td class="entry" valign="top" headers="d78228e566 ">ptrData</td>
 
-						<td class="entry" valign="top" headers="d78191e570 ">void*</td>
+						<td class="entry" valign="top" headers="d78228e570 ">void*</td>
 
-						<td class="entry" valign="top" headers="d78191e574 ">IN</td>
+						<td class="entry" valign="top" headers="d78228e574 ">IN</td>
 
-						<td class="entry" valign="top" headers="d78191e578 "> <p class="p">Pointer to the table entry to be saved</p>
+						<td class="entry" valign="top" headers="d78228e578 "> <p class="p">Pointer to the table entry to be saved</p>
  <p class="p"> </p>
  </td>
 
 					</tr>
 
 					<tr class="row">
-						<td class="entry" valign="top" headers="d78191e566 ">saveAll</td>
+						<td class="entry" valign="top" headers="d78228e566 ">saveAll</td>
 
-						<td class="entry" valign="top" headers="d78191e570 ">bool_t</td>
+						<td class="entry" valign="top" headers="d78228e570 ">bool_t</td>
 
-						<td class="entry" valign="top" headers="d78191e574 ">IN</td>
+						<td class="entry" valign="top" headers="d78228e574 ">IN</td>
 
-						<td class="entry" valign="top" headers="d78191e578 ">Specifies whether the entire table entry shall be saved, or just the pointed element</td>
+						<td class="entry" valign="top" headers="d78228e578 ">Specifies whether the entire table entry shall be saved, or just the pointed element</td>
 
 					</tr>
 
@@ -490,13 +496,13 @@ gNVM_SaveRequestRejected_c</pre>
 				
 				<thead class="thead" align="left">
 					<tr class="row">
-						<th class="entry" valign="top" id="d78191e714"><strong class="ph b">Name</strong></th>
+						<th class="entry" valign="top" id="d78228e714"><strong class="ph b">Name</strong></th>
 
-						<th class="entry" valign="top" id="d78191e718"><strong class="ph b">Type</strong></th>
+						<th class="entry" valign="top" id="d78228e718"><strong class="ph b">Type</strong></th>
 
-						<th class="entry" valign="top" id="d78191e722"><strong class="ph b">Direction</strong></th>
+						<th class="entry" valign="top" id="d78228e722"><strong class="ph b">Direction</strong></th>
 
-						<th class="entry" valign="top" id="d78191e726"><strong class="ph b">Description</strong></th>
+						<th class="entry" valign="top" id="d78228e726"><strong class="ph b">Description</strong></th>
 
 					</tr>
 
@@ -504,13 +510,13 @@ gNVM_SaveRequestRejected_c</pre>
 
 				<tbody class="tbody">
 					<tr class="row">
-						<td class="entry" valign="top" headers="d78191e714 ">countTick</td>
+						<td class="entry" valign="top" headers="d78228e714 ">countTick</td>
 
-						<td class="entry" valign="top" headers="d78191e718 ">bool_t</td>
+						<td class="entry" valign="top" headers="d78228e718 ">bool_t</td>
 
-						<td class="entry" valign="top" headers="d78191e722 ">IN</td>
+						<td class="entry" valign="top" headers="d78228e722 ">IN</td>
 
-						<td class="entry" valign="top" headers="d78191e726 ">See API description</td>
+						<td class="entry" valign="top" headers="d78228e726 ">See API description</td>
 
 					</tr>
 
@@ -549,13 +555,13 @@ gNVM_SaveRequestRejected_c</pre>
 				
 				<thead class="thead" align="left">
 					<tr class="row">
-						<th class="entry" valign="top" id="d78191e803"><strong class="ph b">Name</strong></th>
+						<th class="entry" valign="top" id="d78228e803"><strong class="ph b">Name</strong></th>
 
-						<th class="entry" valign="top" id="d78191e807"><strong class="ph b">Type</strong></th>
+						<th class="entry" valign="top" id="d78228e807"><strong class="ph b">Type</strong></th>
 
-						<th class="entry" valign="top" id="d78191e811"><strong class="ph b">Direction</strong></th>
+						<th class="entry" valign="top" id="d78228e811"><strong class="ph b">Direction</strong></th>
 
-						<th class="entry" valign="top" id="d78191e815"><strong class="ph b">Description</strong></th>
+						<th class="entry" valign="top" id="d78228e815"><strong class="ph b">Description</strong></th>
 
 					</tr>
 
@@ -563,24 +569,24 @@ gNVM_SaveRequestRejected_c</pre>
 
 				<tbody class="tbody">
 					<tr class="row">
-						<td class="entry" valign="top" headers="d78191e803 ">ptrData</td>
+						<td class="entry" valign="top" headers="d78228e803 ">ptrData</td>
 
-						<td class="entry" valign="top" headers="d78191e807 ">void*</td>
+						<td class="entry" valign="top" headers="d78228e807 ">void*</td>
 
-						<td class="entry" valign="top" headers="d78191e811 ">IN</td>
+						<td class="entry" valign="top" headers="d78228e811 ">IN</td>
 
-						<td class="entry" valign="top" headers="d78191e815 ">A pointer to a NV table entry / element to be restored with the data from flash.</td>
+						<td class="entry" valign="top" headers="d78228e815 ">A pointer to a NV table entry / element to be restored with the data from flash.</td>
 
 					</tr>
 
 					<tr class="row">
-						<td class="entry" valign="top" headers="d78191e803 ">restoreAll</td>
+						<td class="entry" valign="top" headers="d78228e803 ">restoreAll</td>
 
-						<td class="entry" valign="top" headers="d78191e807 ">bool_t</td>
+						<td class="entry" valign="top" headers="d78228e807 ">bool_t</td>
 
-						<td class="entry" valign="top" headers="d78191e811 ">IN</td>
+						<td class="entry" valign="top" headers="d78228e811 ">IN</td>
 
-						<td class="entry" valign="top" headers="d78191e815 ">A flag used to indicate if the entire table entry shall be restored, or just a single element (indicated by ptrData). If ptrData points to an unmirrored dataset, the flag is set to false internally.</td>
+						<td class="entry" valign="top" headers="d78228e815 ">A flag used to indicate if the entire table entry shall be restored, or just a single element (indicated by ptrData). If ptrData points to an unmirrored dataset, the flag is set to false internally.</td>
 
 					</tr>
 
@@ -684,13 +690,13 @@ gNVM_Error_c</pre>
 				
 				<thead class="thead" align="left">
 					<tr class="row">
-						<th class="entry" valign="top" id="d78191e1008"><strong class="ph b">Name</strong></th>
+						<th class="entry" valign="top" id="d78228e1008"><strong class="ph b">Name</strong></th>
 
-						<th class="entry" valign="top" id="d78191e1012"><strong class="ph b">Type</strong></th>
+						<th class="entry" valign="top" id="d78228e1012"><strong class="ph b">Type</strong></th>
 
-						<th class="entry" valign="top" id="d78191e1016"><strong class="ph b">Direction</strong></th>
+						<th class="entry" valign="top" id="d78228e1016"><strong class="ph b">Direction</strong></th>
 
-						<th class="entry" valign="top" id="d78191e1020"><strong class="ph b">Description</strong></th>
+						<th class="entry" valign="top" id="d78228e1020"><strong class="ph b">Description</strong></th>
 
 					</tr>
 
@@ -698,13 +704,13 @@ gNVM_Error_c</pre>
 
 				<tbody class="tbody">
 					<tr class="row">
-						<td class="entry" valign="top" headers="d78191e1008 ">ptrData</td>
+						<td class="entry" valign="top" headers="d78228e1008 ">ptrData</td>
 
-						<td class="entry" valign="top" headers="d78191e1012 ">void*</td>
+						<td class="entry" valign="top" headers="d78228e1012 ">void*</td>
 
-						<td class="entry" valign="top" headers="d78191e1016 ">IN</td>
+						<td class="entry" valign="top" headers="d78228e1016 ">IN</td>
 
-						<td class="entry" valign="top" headers="d78191e1020 ">A pointer to the NV table entry to be checked</td>
+						<td class="entry" valign="top" headers="d78228e1020 ">A pointer to the NV table entry to be checked</td>
 
 					</tr>
 
@@ -740,13 +746,13 @@ gNVM_Error_c</pre>
 				
 				<thead class="thead" align="left">
 					<tr class="row">
-						<th class="entry" valign="top" id="d78191e1095"><strong class="ph b">Name</strong></th>
+						<th class="entry" valign="top" id="d78228e1095"><strong class="ph b">Name</strong></th>
 
-						<th class="entry" valign="top" id="d78191e1099"><strong class="ph b">Type</strong></th>
+						<th class="entry" valign="top" id="d78228e1099"><strong class="ph b">Type</strong></th>
 
-						<th class="entry" valign="top" id="d78191e1103"><strong class="ph b">Direction</strong></th>
+						<th class="entry" valign="top" id="d78228e1103"><strong class="ph b">Direction</strong></th>
 
-						<th class="entry" valign="top" id="d78191e1107"><strong class="ph b">Description</strong></th>
+						<th class="entry" valign="top" id="d78228e1107"><strong class="ph b">Description</strong></th>
 
 					</tr>
 
@@ -754,13 +760,13 @@ gNVM_Error_c</pre>
 
 				<tbody class="tbody">
 					<tr class="row">
-						<td class="entry" valign="top" headers="d78191e1095 ">ptrStat</td>
+						<td class="entry" valign="top" headers="d78228e1095 ">ptrStat</td>
 
-						<td class="entry" valign="top" headers="d78191e1099 ">NVM_Statistics_t*</td>
+						<td class="entry" valign="top" headers="d78228e1099 ">NVM_Statistics_t*</td>
 
-						<td class="entry" valign="top" headers="d78191e1103 ">OUT</td>
+						<td class="entry" valign="top" headers="d78228e1103 ">OUT</td>
 
-						<td class="entry" valign="top" headers="d78191e1107 ">Pointer to a memory location where the statistics are to be stored</td>
+						<td class="entry" valign="top" headers="d78228e1107 ">Pointer to a memory location where the statistics are to be stored</td>
 
 					</tr>
 
@@ -796,13 +802,13 @@ gNVM_Error_c</pre>
 				
 				<thead class="thead" align="left">
 					<tr class="row">
-						<th class="entry" valign="top" id="d78191e1181"><strong class="ph b">Name</strong></th>
+						<th class="entry" valign="top" id="d78228e1181"><strong class="ph b">Name</strong></th>
 
-						<th class="entry" valign="top" id="d78191e1185"><strong class="ph b">Type</strong></th>
+						<th class="entry" valign="top" id="d78228e1185"><strong class="ph b">Type</strong></th>
 
-						<th class="entry" valign="top" id="d78191e1189"><strong class="ph b">Direction</strong></th>
+						<th class="entry" valign="top" id="d78228e1189"><strong class="ph b">Direction</strong></th>
 
-						<th class="entry" valign="top" id="d78191e1193"><strong class="ph b">Description</strong></th>
+						<th class="entry" valign="top" id="d78228e1193"><strong class="ph b">Description</strong></th>
 
 					</tr>
 
@@ -810,13 +816,13 @@ gNVM_Error_c</pre>
 
 				<tbody class="tbody">
 					<tr class="row">
-						<td class="entry" valign="top" headers="d78191e1181 ">–</td>
+						<td class="entry" valign="top" headers="d78228e1181 ">–</td>
 
-						<td class="entry" valign="top" headers="d78191e1185 ">–</td>
+						<td class="entry" valign="top" headers="d78228e1185 ">–</td>
 
-						<td class="entry" valign="top" headers="d78191e1189 ">–</td>
+						<td class="entry" valign="top" headers="d78228e1189 ">–</td>
 
-						<td class="entry" valign="top" headers="d78191e1193 ">–</td>
+						<td class="entry" valign="top" headers="d78228e1193 ">–</td>
 
 					</tr>
 
@@ -862,13 +868,13 @@ gNVM_FormatFailure_c</pre>
 				
 				<thead class="thead" align="left">
 					<tr class="row">
-						<th class="entry" valign="top" id="d78191e1270"><strong class="ph b">Name</strong></th>
+						<th class="entry" valign="top" id="d78228e1270"><strong class="ph b">Name</strong></th>
 
-						<th class="entry" valign="top" id="d78191e1274"><strong class="ph b">Type</strong></th>
+						<th class="entry" valign="top" id="d78228e1274"><strong class="ph b">Type</strong></th>
 
-						<th class="entry" valign="top" id="d78191e1278"><strong class="ph b">Direction</strong></th>
+						<th class="entry" valign="top" id="d78228e1278"><strong class="ph b">Direction</strong></th>
 
-						<th class="entry" valign="top" id="d78191e1282"><strong class="ph b">Description</strong></th>
+						<th class="entry" valign="top" id="d78228e1282"><strong class="ph b">Description</strong></th>
 
 					</tr>
 
@@ -876,68 +882,68 @@ gNVM_FormatFailure_c</pre>
 
 				<tbody class="tbody">
 					<tr class="row">
-						<td class="entry" valign="top" headers="d78191e1270 ">ptrData</td>
+						<td class="entry" valign="top" headers="d78228e1270 ">ptrData</td>
 
-						<td class="entry" valign="top" headers="d78191e1274 ">void*</td>
+						<td class="entry" valign="top" headers="d78228e1274 ">void*</td>
 
-						<td class="entry" valign="top" headers="d78191e1278 ">IN</td>
+						<td class="entry" valign="top" headers="d78228e1278 ">IN</td>
 
-						<td class="entry" valign="top" headers="d78191e1282 ">Pointer to the table entry to be registered/updated</td>
-
-					</tr>
-
-					<tr class="row">
-						<td class="entry" valign="top" headers="d78191e1270 ">uniqueId</td>
-
-						<td class="entry" valign="top" headers="d78191e1274 ">NvTableEntryId_t</td>
-
-						<td class="entry" valign="top" headers="d78191e1278 ">IN</td>
-
-						<td class="entry" valign="top" headers="d78191e1282 ">The ID of the table entry to be registered/updated</td>
+						<td class="entry" valign="top" headers="d78228e1282 ">Pointer to the table entry to be registered/updated</td>
 
 					</tr>
 
 					<tr class="row">
-						<td class="entry" valign="top" headers="d78191e1270 ">elemCount</td>
+						<td class="entry" valign="top" headers="d78228e1270 ">uniqueId</td>
 
-						<td class="entry" valign="top" headers="d78191e1274 ">uint16_t</td>
+						<td class="entry" valign="top" headers="d78228e1274 ">NvTableEntryId_t</td>
 
-						<td class="entry" valign="top" headers="d78191e1278 ">IN</td>
+						<td class="entry" valign="top" headers="d78228e1278 ">IN</td>
 
-						<td class="entry" valign="top" headers="d78191e1282 ">The elements count of the table entry to be registered/updated</td>
-
-					</tr>
-
-					<tr class="row">
-						<td class="entry" valign="top" headers="d78191e1270 ">elemSize</td>
-
-						<td class="entry" valign="top" headers="d78191e1274 ">uint16_t</td>
-
-						<td class="entry" valign="top" headers="d78191e1278 ">IN</td>
-
-						<td class="entry" valign="top" headers="d78191e1282 ">The size of one element of the table entry</td>
+						<td class="entry" valign="top" headers="d78228e1282 ">The ID of the table entry to be registered/updated</td>
 
 					</tr>
 
 					<tr class="row">
-						<td class="entry" valign="top" headers="d78191e1270 ">dataEntryType</td>
+						<td class="entry" valign="top" headers="d78228e1270 ">elemCount</td>
 
-						<td class="entry" valign="top" headers="d78191e1274 ">uint16_t</td>
+						<td class="entry" valign="top" headers="d78228e1274 ">uint16_t</td>
 
-						<td class="entry" valign="top" headers="d78191e1278 ">IN</td>
+						<td class="entry" valign="top" headers="d78228e1278 ">IN</td>
 
-						<td class="entry" valign="top" headers="d78191e1282 ">The type of the entry to be registered</td>
+						<td class="entry" valign="top" headers="d78228e1282 ">The elements count of the table entry to be registered/updated</td>
 
 					</tr>
 
 					<tr class="row">
-						<td class="entry" valign="top" headers="d78191e1270 ">overwrite</td>
+						<td class="entry" valign="top" headers="d78228e1270 ">elemSize</td>
 
-						<td class="entry" valign="top" headers="d78191e1274 ">bool_t</td>
+						<td class="entry" valign="top" headers="d78228e1274 ">uint16_t</td>
 
-						<td class="entry" valign="top" headers="d78191e1278 ">IN</td>
+						<td class="entry" valign="top" headers="d78228e1278 ">IN</td>
 
-						<td class="entry" valign="top" headers="d78191e1282 ">If set to TRUE and the table entry ID already exists, the table entry will be updated with data provided by the function arguments. Otherwise, if overwrite is set to FALSE, the data will be placed in the first free position in the table.</td>
+						<td class="entry" valign="top" headers="d78228e1282 ">The size of one element of the table entry</td>
+
+					</tr>
+
+					<tr class="row">
+						<td class="entry" valign="top" headers="d78228e1270 ">dataEntryType</td>
+
+						<td class="entry" valign="top" headers="d78228e1274 ">uint16_t</td>
+
+						<td class="entry" valign="top" headers="d78228e1278 ">IN</td>
+
+						<td class="entry" valign="top" headers="d78228e1282 ">The type of the entry to be registered</td>
+
+					</tr>
+
+					<tr class="row">
+						<td class="entry" valign="top" headers="d78228e1270 ">overwrite</td>
+
+						<td class="entry" valign="top" headers="d78228e1274 ">bool_t</td>
+
+						<td class="entry" valign="top" headers="d78228e1278 ">IN</td>
+
+						<td class="entry" valign="top" headers="d78228e1282 ">If set to TRUE and the table entry ID already exists, the table entry will be updated with data provided by the function arguments. Otherwise, if overwrite is set to FALSE, the data will be placed in the first free position in the table.</td>
 
 					</tr>
 
@@ -978,13 +984,13 @@ gNVM_RegisterFailure_c</pre>
 				
 				<thead class="thead" align="left">
 					<tr class="row">
-						<th class="entry" valign="top" id="d78191e1435"><strong class="ph b">Name</strong></th>
+						<th class="entry" valign="top" id="d78228e1435"><strong class="ph b">Name</strong></th>
 
-						<th class="entry" valign="top" id="d78191e1439"><strong class="ph b">Type</strong></th>
+						<th class="entry" valign="top" id="d78228e1439"><strong class="ph b">Type</strong></th>
 
-						<th class="entry" valign="top" id="d78191e1443"><strong class="ph b">Direction</strong></th>
+						<th class="entry" valign="top" id="d78228e1443"><strong class="ph b">Direction</strong></th>
 
-						<th class="entry" valign="top" id="d78191e1447"><strong class="ph b">Description</strong></th>
+						<th class="entry" valign="top" id="d78228e1447"><strong class="ph b">Description</strong></th>
 
 					</tr>
 
@@ -992,13 +998,13 @@ gNVM_RegisterFailure_c</pre>
 
 				<tbody class="tbody">
 					<tr class="row">
-						<td class="entry" valign="top" headers="d78191e1435 ">ptrData</td>
+						<td class="entry" valign="top" headers="d78228e1435 ">ptrData</td>
 
-						<td class="entry" valign="top" headers="d78191e1439 ">void*</td>
+						<td class="entry" valign="top" headers="d78228e1439 ">void*</td>
 
-						<td class="entry" valign="top" headers="d78191e1443 ">IN</td>
+						<td class="entry" valign="top" headers="d78228e1443 ">IN</td>
 
-						<td class="entry" valign="top" headers="d78191e1447 ">Pointer to the table entry to be removed</td>
+						<td class="entry" valign="top" headers="d78228e1447 ">Pointer to the table entry to be removed</td>
 
 					</tr>
 
@@ -1041,13 +1047,13 @@ gNVM_InvalidTableEntry_c</pre>
 				
 				<thead class="thead" align="left">
 					<tr class="row">
-						<th class="entry" valign="top" id="d78191e1523"><strong class="ph b">Name</strong></th>
+						<th class="entry" valign="top" id="d78228e1523"><strong class="ph b">Name</strong></th>
 
-						<th class="entry" valign="top" id="d78191e1527"><strong class="ph b">Type</strong></th>
+						<th class="entry" valign="top" id="d78228e1527"><strong class="ph b">Type</strong></th>
 
-						<th class="entry" valign="top" id="d78191e1531"><strong class="ph b">Direction</strong></th>
+						<th class="entry" valign="top" id="d78228e1531"><strong class="ph b">Direction</strong></th>
 
-						<th class="entry" valign="top" id="d78191e1535"><strong class="ph b">Description</strong></th>
+						<th class="entry" valign="top" id="d78228e1535"><strong class="ph b">Description</strong></th>
 
 					</tr>
 
@@ -1055,13 +1061,13 @@ gNVM_InvalidTableEntry_c</pre>
 
 				<tbody class="tbody">
 					<tr class="row">
-						<td class="entry" valign="top" headers="d78191e1523 ">–</td>
+						<td class="entry" valign="top" headers="d78228e1523 ">–</td>
 
-						<td class="entry" valign="top" headers="d78191e1527 ">–</td>
+						<td class="entry" valign="top" headers="d78228e1527 ">–</td>
 
-						<td class="entry" valign="top" headers="d78191e1531 ">–</td>
+						<td class="entry" valign="top" headers="d78228e1531 ">–</td>
 
-						<td class="entry" valign="top" headers="d78191e1535 ">–</td>
+						<td class="entry" valign="top" headers="d78228e1535 ">–</td>
 
 					</tr>
 
@@ -1098,13 +1104,13 @@ gNVM_InvalidTableEntry_c</pre>
 				
 				<thead class="thead" align="left">
 					<tr class="row">
-						<th class="entry" valign="top" id="d78191e1609"><strong class="ph b">Name</strong></th>
+						<th class="entry" valign="top" id="d78228e1609"><strong class="ph b">Name</strong></th>
 
-						<th class="entry" valign="top" id="d78191e1613"><strong class="ph b">Type</strong></th>
+						<th class="entry" valign="top" id="d78228e1613"><strong class="ph b">Type</strong></th>
 
-						<th class="entry" valign="top" id="d78191e1617"><strong class="ph b">Direction</strong></th>
+						<th class="entry" valign="top" id="d78228e1617"><strong class="ph b">Direction</strong></th>
 
-						<th class="entry" valign="top" id="d78191e1621"><strong class="ph b">Description</strong></th>
+						<th class="entry" valign="top" id="d78228e1621"><strong class="ph b">Description</strong></th>
 
 					</tr>
 
@@ -1112,24 +1118,24 @@ gNVM_InvalidTableEntry_c</pre>
 
 				<tbody class="tbody">
 					<tr class="row">
-						<td class="entry" valign="top" headers="d78191e1609 ">index</td>
+						<td class="entry" valign="top" headers="d78228e1609 ">index</td>
 
-						<td class="entry" valign="top" headers="d78191e1613 ">uint16_t</td>
+						<td class="entry" valign="top" headers="d78228e1613 ">uint16_t</td>
 
-						<td class="entry" valign="top" headers="d78191e1617 ">IN</td>
+						<td class="entry" valign="top" headers="d78228e1617 ">IN</td>
 
-						<td class="entry" valign="top" headers="d78191e1621 ">The index of the RAM entry that needs to be restored</td>
+						<td class="entry" valign="top" headers="d78228e1621 ">The index of the RAM entry that needs to be restored</td>
 
 					</tr>
 
 					<tr class="row">
-						<td class="entry" valign="top" headers="d78191e1609 ">entry</td>
+						<td class="entry" valign="top" headers="d78228e1609 ">entry</td>
 
-						<td class="entry" valign="top" headers="d78191e1613 ">NVM_DataEntry_tag*</td>
+						<td class="entry" valign="top" headers="d78228e1613 ">NVM_DataEntry_tag*</td>
 
-						<td class="entry" valign="top" headers="d78191e1617 ">OUT</td>
+						<td class="entry" valign="top" headers="d78228e1617 ">OUT</td>
 
-						<td class="entry" valign="top" headers="d78191e1621 ">The entry data from flash</td>
+						<td class="entry" valign="top" headers="d78228e1621 ">The entry data from flash</td>
 
 					</tr>
 
@@ -1169,13 +1175,13 @@ gNVM_AddressOutOfRange_c</pre>
 				
 				<thead class="thead" align="left">
 					<tr class="row">
-						<th class="entry" valign="top" id="d78191e1712"><strong class="ph b">Name</strong></th>
+						<th class="entry" valign="top" id="d78228e1712"><strong class="ph b">Name</strong></th>
 
-						<th class="entry" valign="top" id="d78191e1716"><strong class="ph b">Type</strong></th>
+						<th class="entry" valign="top" id="d78228e1716"><strong class="ph b">Type</strong></th>
 
-						<th class="entry" valign="top" id="d78191e1720"><strong class="ph b">Direction</strong></th>
+						<th class="entry" valign="top" id="d78228e1720"><strong class="ph b">Direction</strong></th>
 
-						<th class="entry" valign="top" id="d78191e1724"><strong class="ph b">Description</strong></th>
+						<th class="entry" valign="top" id="d78228e1724"><strong class="ph b">Description</strong></th>
 
 					</tr>
 
@@ -1183,13 +1189,13 @@ gNVM_AddressOutOfRange_c</pre>
 
 				<tbody class="tbody">
 					<tr class="row">
-						<td class="entry" valign="top" headers="d78191e1712 ">ppData</td>
+						<td class="entry" valign="top" headers="d78228e1712 ">ppData</td>
 
-						<td class="entry" valign="top" headers="d78191e1716 ">void**</td>
+						<td class="entry" valign="top" headers="d78228e1716 ">void**</td>
 
-						<td class="entry" valign="top" headers="d78191e1720 ">IN</td>
+						<td class="entry" valign="top" headers="d78228e1720 ">IN</td>
 
-						<td class="entry" valign="top" headers="d78191e1724 ">Pointer to the table entry to be moved</td>
+						<td class="entry" valign="top" headers="d78228e1724 ">Pointer to the table entry to be moved</td>
 
 					</tr>
 
@@ -1232,13 +1238,13 @@ gNVM_Error_c</pre>
 				
 				<thead class="thead" align="left">
 					<tr class="row">
-						<th class="entry" valign="top" id="d78191e1801"><strong class="ph b">Name</strong></th>
+						<th class="entry" valign="top" id="d78228e1801"><strong class="ph b">Name</strong></th>
 
-						<th class="entry" valign="top" id="d78191e1805"><strong class="ph b">Type</strong></th>
+						<th class="entry" valign="top" id="d78228e1805"><strong class="ph b">Type</strong></th>
 
-						<th class="entry" valign="top" id="d78191e1809"><strong class="ph b">Direction</strong></th>
+						<th class="entry" valign="top" id="d78228e1809"><strong class="ph b">Direction</strong></th>
 
-						<th class="entry" valign="top" id="d78191e1813"><strong class="ph b">Description</strong></th>
+						<th class="entry" valign="top" id="d78228e1813"><strong class="ph b">Description</strong></th>
 
 					</tr>
 
@@ -1246,13 +1252,13 @@ gNVM_Error_c</pre>
 
 				<tbody class="tbody">
 					<tr class="row">
-						<td class="entry" valign="top" headers="d78191e1801 ">ppData</td>
+						<td class="entry" valign="top" headers="d78228e1801 ">ppData</td>
 
-						<td class="entry" valign="top" headers="d78191e1805 ">void**</td>
+						<td class="entry" valign="top" headers="d78228e1805 ">void**</td>
 
-						<td class="entry" valign="top" headers="d78191e1809 ">IN</td>
+						<td class="entry" valign="top" headers="d78228e1809 ">IN</td>
 
-						<td class="entry" valign="top" headers="d78191e1813 ">Pointer to the table entry to be erased</td>
+						<td class="entry" valign="top" headers="d78228e1813 ">Pointer to the table entry to be erased</td>
 
 					</tr>
 

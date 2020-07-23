@@ -11,7 +11,6 @@
 #include "OutputSection.h"
 #include "BootImage.h"
 #include "OptionContext.h"
-#include "elftosb.h"
 
 namespace elftosb
 {
@@ -36,8 +35,7 @@ class BootImageGenerator
 {
 public:
     //! \brief Constructor.
-    BootImageGenerator(): m_family(undefinedFamily) {}
-	BootImageGenerator(chip_family_t family) { m_family = family; }
+    BootImageGenerator() {}
     //! \brief Destructor.
     virtual ~BootImageGenerator() {}
     //! \brief Add another section to the output.
@@ -60,7 +58,6 @@ protected:
 
     section_vector_t m_sections; //!< Requested output sections.
     OptionContext *m_options;    //!< Global option context.
-	chip_family_t m_family; //!< Global family value.
 
     //! \brief Handle common product and component version options.
     void processVersionOptions(BootImage *image);

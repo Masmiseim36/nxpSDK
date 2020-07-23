@@ -13,6 +13,7 @@ var searchData=
   ['genfsk_5fgeteventmask',['GENFSK_GetEventMask',['../group__genfsk.html#gaa65c108a36fc030c3363e1bdcf801ab1',1,'genfsk_interface.h']]],
   ['genfsk_5fgetnetworkaddress',['GENFSK_GetNetworkAddress',['../group__genfsk.html#ga99fc346a2eccf0fbf7c357ab7a4a5c89',1,'genfsk_interface.h']]],
   ['genfsk_5fgetpacketconfig',['GENFSK_GetPacketConfig',['../group__genfsk.html#gaaac5a3107fec1cc420a62896f680c37c',1,'genfsk_interface.h']]],
+  ['genfsk_5fgetstate',['GENFSK_GetState',['../group__genfsk.html#gaa365b39dc4e43dae6b8cd2fe02932527',1,'genfsk_interface.h']]],
   ['genfsk_5fgettimestamp',['GENFSK_GetTimestamp',['../group__genfsk.html#gae01b9d681a0a9aa3a7c7a8fdd28cb991',1,'genfsk_interface.h']]],
   ['genfsk_5fgettxpowerlevel',['GENFSK_GetTxPowerLevel',['../group__genfsk.html#ga2e8ddb464ced07ef2a3f9fbbf87ae735',1,'genfsk_interface.h']]],
   ['genfsk_5fgetwhitenerconfig',['GENFSK_GetWhitenerConfig',['../group__genfsk.html#ga1c567936919332c0846ab8b016fc722e',1,'genfsk_interface.h']]],
@@ -20,7 +21,9 @@ var searchData=
   ['genfsk_5fpackettobytearray',['GENFSK_PacketToByteArray',['../group__genfsk.html#ga1a11b21c4eb0e4fb543eb8464c109c8f',1,'genfsk_interface.h']]],
   ['genfsk_5fradioconfig',['GENFSK_RadioConfig',['../group__genfsk.html#ga769d507f9de5ebbe52de40fe4dad763a',1,'genfsk_interface.h']]],
   ['genfsk_5fregistercallbacks',['GENFSK_RegisterCallbacks',['../group__genfsk.html#ga4f9a3c60668370d6c579d517efe0732c',1,'genfsk_interface.h']]],
+  ['genfsk_5fregisterrealtimecallback',['GENFSK_RegisterRealTimeCallback',['../group__genfsk.html#gad3323723530602a1981e435f7d757cca',1,'genfsk_interface.h']]],
   ['genfsk_5fresettodefaults',['GENFSK_ResetToDefaults',['../group__genfsk.html#gaf07b409ea4f069d8ad6cb0e90cd89db2',1,'genfsk_interface.h']]],
+  ['genfsk_5frestartrx',['GENFSK_RestartRx',['../group__genfsk.html#gacf3b52cf16711570278850cae5b669e4',1,'genfsk_interface.h']]],
   ['genfsk_5fsetchannelnumber',['GENFSK_SetChannelNumber',['../group__genfsk.html#ga90834e50e38fc8839f10fbffefde8f54',1,'genfsk_interface.h']]],
   ['genfsk_5fsetcrcconfig',['GENFSK_SetCrcConfig',['../group__genfsk.html#ga481e84809251a2886ec52cdc04b5d71a',1,'genfsk_interface.h']]],
   ['genfsk_5fseteventmask',['GENFSK_SetEventMask',['../group__genfsk.html#ga4333f4a09bab593afacb6063d4226729',1,'genfsk_interface.h']]],
@@ -29,5 +32,7 @@ var searchData=
   ['genfsk_5fsettxpowerlevel',['GENFSK_SetTxPowerLevel',['../group__genfsk.html#gaf65b6b2a28f611b340a3698b6c0dc453',1,'genfsk_interface.h']]],
   ['genfsk_5fsetwhitenerconfig',['GENFSK_SetWhitenerConfig',['../group__genfsk.html#ga20756831989ea23fee648545ca2a7e6b',1,'genfsk_interface.h']]],
   ['genfsk_5fstartrx',['GENFSK_StartRx',['../group__genfsk.html#gac7b4aa7ab6f47a4e4630a5dcbbae8911',1,'genfsk_interface.h']]],
-  ['genfsk_5fstarttx',['GENFSK_StartTx',['../group__genfsk.html#gadcd06cb7d4b39d0ca3f2483a9f6e165b',1,'genfsk_interface.h']]]
+  ['genfsk_5fstarttx',['GENFSK_StartTx',['../group__genfsk.html#gadcd06cb7d4b39d0ca3f2483a9f6e165b',1,'genfsk_interface.h']]],
+  ['genfsk_5ftimecancelevent',['GENFSK_TimeCancelEvent',['../group__genfsk.html#ga3760e0e53e0a6ea931374f0a505e0d05',1,'genfsk_interface.h']]],
+  ['genfsk_5ftimescheduleevent',['GENFSK_TimeScheduleEvent',['../group__genfsk.html#gaad66e005bbac69ceb3f1d3cc971b3ae6',1,'genfsk_interface.h']]]
 ];

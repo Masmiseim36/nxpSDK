@@ -19,7 +19,6 @@
 #define kKeyblobOptionNameEnd "end"
 #define kKeyblobOptionNameKey "key"
 #define kKeyblobOptionNameCounter "counter"
-#define kKeyblobOptionNameNoByteSwap "noByteSwap"
 
 namespace elftosb
 {
@@ -114,7 +113,6 @@ protected:
     bool getOptionValues(OptionContext &opt, const char **key, const char **ctr, uint32_t *start, uint32_t *end);
 
     uint32_t m_id;             //!< Unique identifier.
-	bool noByteSwap = false;
     option_vector_t m_options; //!< List of option entries.
 };
 

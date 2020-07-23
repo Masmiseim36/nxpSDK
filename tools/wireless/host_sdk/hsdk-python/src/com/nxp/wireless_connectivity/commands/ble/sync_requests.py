@@ -183,11 +183,12 @@ def GATTClientRegisterIndicationCallback(
 def GATTClientExchangeMtu(
     device,
     DeviceId=bytearray(1),
+    Mtu=bytearray(2),
     ack_policy=FsciAckPolicy.GLOBAL,
     protocol=Protocol.BLE,
     timeout=1
 ):
-    request = Frames.GATTClientExchangeMtuRequest(DeviceId)
+    request = Frames.GATTClientExchangeMtuRequest(DeviceId, Mtu)
     return GATTClientExchangeMtuOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
 
 
@@ -552,7 +553,6 @@ def GATTServerSendAttributeReadStatus(
     request = Frames.GATTServerSendAttributeReadStatusRequest(DeviceId, AttributeHandle, Status)
     return GATTServerSendAttributeReadStatusOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
 
-
 def GATTServerRegisterUniqueHandlesForNotifications(
     device,
     bWrite=False,
@@ -564,6 +564,29 @@ def GATTServerRegisterUniqueHandlesForNotifications(
     request = Frames.GATTServerRegisterUniqueHandlesForNotificationsRequest(bWrite, bRead)
     return GATTServerRegisterUniqueHandlesForNotificationsOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
 
+def GATTServerUnregisterHandlesForWriteNotifications(
+    device,
+    HandleCount=bytearray(1),
+    # Array length depends on HandleCount. Mask: 0xFF. Shift: 0x00.
+    AttributeHandles=GATTServerUnregisterHandlesForWriteNotificationsRequest.AttributeHandles(),
+    ack_policy=FsciAckPolicy.GLOBAL,
+    protocol=Protocol.BLE,
+    timeout=1
+):
+    request = Frames.GATTServerUnregisterHandlesForWriteNotificationsRequest(HandleCount, AttributeHandles)
+    return GATTServerUnregisterHandlesForWriteNotificationsOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
+
+def GATTServerUnregisterHandlesForReadNotifications(
+    device,
+    HandleCount=bytearray(1),
+    # Array length depends on HandleCount. Mask: 0xFF. Shift: 0x00.
+    AttributeHandles=GATTServerUnregisterHandlesForReadNotificationsRequest.AttributeHandles(),
+    ack_policy=FsciAckPolicy.GLOBAL,
+    protocol=Protocol.BLE,
+    timeout=1
+):
+    request = Frames.GATTServerUnregisterHandlesForReadNotificationsRequest(HandleCount, AttributeHandles)
+    return GATTServerUnregisterHandlesForReadNotificationsOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
 
 def GATTDBWriteAttribute(
     device,
@@ -643,7 +666,6 @@ def GATTDBFindDescriptorHandleForCharValueHandle(
     request = Frames.GATTDBFindDescriptorHandleForCharValueHandleRequest(CharValueHandle, UuidType, Uuid)
     return GATTDBFindDescriptorHandleForCharValueHandleOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
 
-
 def GATTDBDynamicInit(
     device,
     ack_policy=FsciAckPolicy.GLOBAL,
@@ -652,7 +674,6 @@ def GATTDBDynamicInit(
 ):
     request = Frames.GATTDBDynamicInitRequest()
     return GATTDBDynamicInitOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
 
 def GATTDBDynamicReleaseDatabase(
     device,
@@ -789,7 +810,6 @@ def GATTDBDynamicRemoveCharacteristic(
     request = Frames.GATTDBDynamicRemoveCharacteristicRequest(CharacteristicHandle)
     return GATTDBDynamicRemoveCharacteristicOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
 
-
 def GATTDBDynamicAddCharDescriptorWithUniqueValue(
     device,
     UuidType=GATTDBDynamicAddCharDescriptorWithUniqueValueRequestUuidType.Uuid16Bits,
@@ -802,7 +822,6 @@ def GATTDBDynamicAddCharDescriptorWithUniqueValue(
 ):
     request = Frames.GATTDBDynamicAddCharDescriptorWithUniqueValueRequest(UuidType, Uuid, DescriptorAccessPermissions)
     return GATTDBDynamicAddCharDescriptorWithUniqueValueOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
 
 def BLEHostInitialize(
     device,
@@ -941,16 +960,15 @@ def GAPPair(
     PairingParameters_MaxEncryptionKeySize=bytearray(1),
     PairingParameters_LocalIoCapabilities=GAPPairRequestPairingParameters_LocalIoCapabilities.gIoDisplayOnly_c,
     PairingParameters_OobAvailable=False,
-    PairingParameters_CentralKeys=GAPPairRequestPairingParameters_CentralKeys.gNoKeys_c,
-    PairingParameters_PeripheralKeys=GAPPairRequestPairingParameters_PeripheralKeys.gNoKeys_c,
+    PairingParameters_CentralKeys=bytearray(1),
+    PairingParameters_PeripheralKeys=bytearray(1),
     PairingParameters_LeSecureConnectionSupported=False,
     PairingParameters_UseKeypressNotifications=False,
     ack_policy=FsciAckPolicy.GLOBAL,
     protocol=Protocol.BLE,
     timeout=1
 ):
-    request = Frames.GAPPairRequest(DeviceId, PairingParameters_WithBonding, PairingParameters_SecurityModeAndLevel, PairingParameters_MaxEncryptionKeySize, PairingParameters_LocalIoCapabilities,
-                                    PairingParameters_OobAvailable, PairingParameters_CentralKeys, PairingParameters_PeripheralKeys, PairingParameters_LeSecureConnectionSupported, PairingParameters_UseKeypressNotifications)
+    request = Frames.GAPPairRequest(DeviceId, PairingParameters_WithBonding, PairingParameters_SecurityModeAndLevel, PairingParameters_MaxEncryptionKeySize, PairingParameters_LocalIoCapabilities, PairingParameters_OobAvailable, PairingParameters_CentralKeys, PairingParameters_PeripheralKeys, PairingParameters_LeSecureConnectionSupported, PairingParameters_UseKeypressNotifications)
     return GAPPairOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
 
 
@@ -962,16 +980,15 @@ def GAPSendSlaveSecurityRequest(
     PairingParameters_MaxEncryptionKeySize=bytearray(1),
     PairingParameters_LocalIoCapabilities=GAPSendSlaveSecurityRequestRequestPairingParameters_LocalIoCapabilities.gIoDisplayOnly_c,
     PairingParameters_OobAvailable=False,
-    PairingParameters_CentralKeys=GAPSendSlaveSecurityRequestRequestPairingParameters_CentralKeys.gNoKeys_c,
-    PairingParameters_PeripheralKeys=GAPSendSlaveSecurityRequestRequestPairingParameters_PeripheralKeys.gNoKeys_c,
+    PairingParameters_CentralKeys=bytearray(1),
+    PairingParameters_PeripheralKeys=bytearray(1),
     PairingParameters_LeSecureConnectionSupported=False,
     PairingParameters_UseKeypressNotifications=False,
     ack_policy=FsciAckPolicy.GLOBAL,
     protocol=Protocol.BLE,
     timeout=1
 ):
-    request = Frames.GAPSendSlaveSecurityRequestRequest(DeviceId, PairingParameters_WithBonding, PairingParameters_SecurityModeAndLevel, PairingParameters_MaxEncryptionKeySize, PairingParameters_LocalIoCapabilities,
-                                                        PairingParameters_OobAvailable, PairingParameters_CentralKeys, PairingParameters_PeripheralKeys, PairingParameters_LeSecureConnectionSupported, PairingParameters_UseKeypressNotifications)
+    request = Frames.GAPSendSlaveSecurityRequestRequest(DeviceId, PairingParameters_WithBonding, PairingParameters_SecurityModeAndLevel, PairingParameters_MaxEncryptionKeySize, PairingParameters_LocalIoCapabilities, PairingParameters_OobAvailable, PairingParameters_CentralKeys, PairingParameters_PeripheralKeys, PairingParameters_LeSecureConnectionSupported, PairingParameters_UseKeypressNotifications)
     return GAPSendSlaveSecurityRequestOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
 
 
@@ -994,8 +1011,8 @@ def GAPAcceptPairingRequest(
     PairingParameters_MaxEncryptionKeySize=bytearray(1),
     PairingParameters_LocalIoCapabilities=GAPAcceptPairingRequestRequestPairingParameters_LocalIoCapabilities.gIoDisplayOnly_c,
     PairingParameters_OobAvailable=False,
-    PairingParameters_CentralKeys=GAPAcceptPairingRequestRequestPairingParameters_CentralKeys.gNoKeys_c,
-    PairingParameters_PeripheralKeys=GAPAcceptPairingRequestRequestPairingParameters_PeripheralKeys.gNoKeys_c,
+    PairingParameters_CentralKeys=bytearray(1),
+    PairingParameters_PeripheralKeys=bytearray(1),
     PairingParameters_LeSecureConnectionSupported=False,
     PairingParameters_UseKeypressNotifications=False,
     ack_policy=FsciAckPolicy.GLOBAL,
@@ -1483,15 +1500,6 @@ def GapUpdateLeDataLength(
     return GapUpdateLeDataLengthOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
 
 
-def GAPControllerReset(
-    device,
-    ack_policy=FsciAckPolicy.GLOBAL,
-    protocol=Protocol.BLE,
-    timeout=1
-):
-    request = Frames.GAPControllerResetRequest()
-    return GAPControllerResetOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
 
 def GAPEnableHostPrivacy(
     device,
@@ -1709,7 +1717,6 @@ def GAPReadChannelMap(
     request = Frames.GAPReadChannelMapRequest(DeviceId)
     return GAPReadChannelMapOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
 
-
 def GAPSetPrivacyMode(
     device,
     NvmIndex=bytearray(1),
@@ -1720,7 +1727,6 @@ def GAPSetPrivacyMode(
 ):
     request = Frames.GAPSetPrivacyModeRequest(NvmIndex, PrivacyMode)
     return GAPSetPrivacyModeOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
 
 def GAPSetExtAdvertisingParameters(
     device,
@@ -1746,8 +1752,7 @@ def GAPSetExtAdvertisingParameters(
     protocol=Protocol.BLE,
     timeout=1
 ):
-    request = Frames.GAPSetExtAdvertisingParametersRequest(SID, Handle, MinInterval, MaxInterval, OwnAddressType, OwnRandomAddress, PeerAddressType,
-                                                           PeerAddress, ChannelMap, FilterPolicy, AdvProperties, AdvTxPowerLevel, PrimaryAdvPHY, SecondaryAdvPHY, SecondaryAdvMaxSkip, EnableScanReqNotification)
+    request = Frames.GAPSetExtAdvertisingParametersRequest(SID, Handle, MinInterval, MaxInterval, OwnAddressType, OwnRandomAddress, PeerAddressType, PeerAddress, ChannelMap, FilterPolicy, AdvProperties, AdvTxPowerLevel, PrimaryAdvPHY, SecondaryAdvPHY, SecondaryAdvMaxSkip, EnableScanReqNotification)
     return GAPSetExtAdvertisingParametersOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
 
 
@@ -1905,6 +1910,14 @@ def FSCICPUReset(
     request = Frames.FSCICPUResetRequest()
     return FSCICPUResetOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
 
+def FSCIGetNumberOfFreeBuffers(
+    device,
+    ack_policy=FsciAckPolicy.GLOBAL,
+    protocol=Protocol.BLE,
+    timeout=1
+):
+    request = Frames.FSCIGetNumberOfFreeBuffersRequest()
+    return FSCIGetNumberOfFreeBuffersOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
 
 def FSCIAllowDeviceToSleep(
     device,

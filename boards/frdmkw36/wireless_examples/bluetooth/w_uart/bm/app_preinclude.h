@@ -4,7 +4,7 @@
  ********************************************************************************** */
 /*! *********************************************************************************
 * Copyright 2015, Freescale Semiconductor, Inc.
-* Copyright 2016-2017 NXP
+* Copyright 2016-2020 NXP
 * All rights reserved.
 *
 * \file
@@ -59,13 +59,7 @@
  *  Framework Configuration
  ********************************************************************************** */
 /* enable NVM to be used as non volatile storage management by the host stack */
-#define gAppUseNvm_d                    0
-
-/* Defines Rx Buffer Size for Serial Manager */
-#define gSerialMgrRxBufSize_c   1000
-
-/* Defines Tx Queue Size for Serial Manager */
-#define gSerialMgrTxQueueSize_c 30
+#define gAppUseNvm_d                    1
 
 /* Defines pools by block size and number of blocks. Must be aligned to 4 bytes.*/
 #define AppPoolsDetails_c \
@@ -103,7 +97,7 @@
 /*! *********************************************************************************
  *  BLE Stack Configuration
  ********************************************************************************** */
-#define gMaxServicesCount_d         10
+#define gMaxServicesCount_d             6
 
 /*! *********************************************************************************
  *  NVM Module Configuration - gAppUseNvm_d shall be defined above as 1 or 0

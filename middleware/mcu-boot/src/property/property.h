@@ -27,18 +27,18 @@
 
 //! Sets a bit in the available commands property value to indicate a command with
 //! the given tag is available.
-#define HAS_CMD(tag) (1 << ((tag)-kFirstCommandTag))
+#define HAS_CMD(tag) (1u << ((tag)- (uint8_t)kFirstCommandTag))
 
 //! Checks whether a command with the specified tag is present in the provided command
 //! availability mask.
-#define IS_CMD_AVAILABLE(mask, tag) (((mask)&HAS_CMD(tag)) != 0)
+#define IS_CMD_AVAILABLE(mask, tag) (((mask) & HAS_CMD(tag)) != 0u)
 
 enum _available_commands
 {
     kAvailableCommands = (
-#if !BL_FEATURE_MIN_PROFILE
+#if !(defined(BL_FEATURE_MIN_PROFILE) && BL_FEATURE_MIN_PROFILE)
         HAS_CMD(kCommandTag_FlashEraseAll) | HAS_CMD(kCommandTag_FlashEraseRegion) | HAS_CMD(kCommandTag_WriteMemory)
-#if BL_FEATURE_FLASH_SECURITY
+#if defined(BL_FEATURE_FLASH_SECURITY) && BL_FEATURE_FLASH_SECURITY
         |
         HAS_CMD(kCommandTag_FlashSecurityDisable)
 #endif // BL_FEATURE_ERASEALL_UNSECURE
@@ -46,46 +46,52 @@ enum _available_commands
         HAS_CMD(kCommandTag_GetProperty) | HAS_CMD(kCommandTag_Execute) | HAS_CMD(kCommandTag_Reset) |
         HAS_CMD(kCommandTag_SetProperty) | HAS_CMD(kCommandTag_ReadMemory) | HAS_CMD(kCommandTag_FillMemory) |
         HAS_CMD(kCommandTag_ReceiveSbFile) | HAS_CMD(kCommandTag_Call)
-#if BL_FEATURE_ERASEALL_UNSECURE
+#if defined(BL_FEATURE_ERASEALL_UNSECURE) && BL_FEATURE_ERASEALL_UNSECURE
         |
         HAS_CMD(kCommandTag_FlashEraseAllUnsecure)
 #endif // BL_FEATURE_ERASEALL_UNSECURE
-#if (((!BL_FEATURE_HAS_NO_INTERNAL_FLASH) || BL_FEATURE_OCOTP_MODULE) && (!BL_DEVICE_IS_LPC_SERIES))|| \
-    ((BL_DEVICE_IS_LPC_SERIES) && defined(OTP_API))
+#if (((!(defined(BL_FEATURE_HAS_NO_INTERNAL_FLASH) && BL_FEATURE_HAS_NO_INTERNAL_FLASH)) || \
+        (defined(BL_FEATURE_OCOTP_MODULE) && BL_FEATURE_OCOTP_MODULE)) && \
+        (!(defined(BL_DEVICE_IS_LPC_SERIES) && BL_DEVICE_IS_LPC_SERIES)))|| \
+    ((defined(BL_DEVICE_IS_LPC_SERIES) && BL_DEVICE_IS_LPC_SERIES) && defined(OTP_API))
         |
         HAS_CMD(kCommandTag_FlashReadOnce) | HAS_CMD(kCommandTag_FlashProgramOnce)
 #endif // (((!BL_FEATURE_HAS_NO_INTERNAL_FLASH) || BL_FEATURE_OCOTP_MODULE) && (!BL_DEVICE_IS_LPC_SERIES))|| ((BL_DEVICE_IS_LPC_SERIES) && defined(OTP_API))
-#if !BL_FEATURE_HAS_NO_READ_SOURCE
+#if !(defined(BL_FEATURE_HAS_NO_READ_SOURCE) && BL_FEATURE_HAS_NO_READ_SOURCE)
         |
         HAS_CMD(kCommandTag_FlashReadResource)
 #endif // !BL_FEATURE_HAS_NO_READ_SOURCE
-#if BL_FEATURE_QSPI_MODULE || BL_FEATURE_FLEXSPI_NOR_MODULE || BL_FEATURE_SEMC_NOR_MODULE || \
-    BL_FEATURE_EXPAND_MEMORY || BL_FEATURE_SPI_NOR_EEPROM_MODULE || BL_FEATURE_SPIFI_NOR_MODULE
+#if defined(BL_FEATURE_QSPI_MODULE) && BL_FEATURE_QSPI_MODULE || \
+    defined(BL_FEATURE_FLEXSPI_NOR_MODULE) && BL_FEATURE_FLEXSPI_NOR_MODULE || \
+    defined(BL_FEATURE_SEMC_NOR_MODULE) && BL_FEATURE_SEMC_NOR_MODULE || \
+    defined(BL_FEATURE_EXPAND_MEMORY) && BL_FEATURE_EXPAND_MEMORY || \
+    defined(BL_FEATURE_SPI_NOR_EEPROM_MODULE) && BL_FEATURE_SPI_NOR_EEPROM_MODULE || \
+    defined(BL_FEATURE_SPIFI_NOR_MODULE) && BL_FEATURE_SPIFI_NOR_MODULE
         |
         HAS_CMD(kCommandTag_ConfigureMemory)
 #endif // BL_FEATURE_QSPI_MODULE || BL_FEATURE_FLEXSPI_NOR_MODULE || BL_FEATURE_SEMC_NOR_MODULE || BL_FEATURE_EXPAND_MEMORY || BL_FEATURE_SPI_NOR_EEPROM_MODULE || BL_FEATURE_SPIFI_NOR_MODULE
-#if BL_FEATURE_RELIABLE_UPDATE
+#if defined(BL_FEATURE_RELIABLE_UPDATE) && BL_FEATURE_RELIABLE_UPDATE
         |
         HAS_CMD(kCommandTag_ReliableUpdate)
 #endif // BL_FEATURE_RELIABLE_UPDATE
-#if BL_FEATURE_GEN_KEYBLOB
+#if defined(BL_FEATURE_GEN_KEYBLOB) && BL_FEATURE_GEN_KEYBLOB
         |
         HAS_CMD(kCommandTag_GenerateKeyBlob)
 #endif // BL_FEATURE_GEN_KEYBLOB
-#if BL_FEATURE_KEY_PROVISIONING
+#if defined(BL_FEATURE_KEY_PROVISIONING) && BL_FEATURE_KEY_PROVISIONING
         |
         HAS_CMD(kCommandTag_KeyProvisioning)
 #endif
 #else // BL_FEATURE_MIN_PROFILE
         HAS_CMD(kCommandTag_FlashEraseAll) | HAS_CMD(kCommandTag_FlashEraseRegion) | HAS_CMD(kCommandTag_WriteMemory)
-#if BL_FEATURE_FLASH_SECURITY
+#if defined(BL_FEATURE_FLASH_SECURITY) && BL_FEATURE_FLASH_SECURITY
         |
         HAS_CMD(kCommandTag_FlashSecurityDisable)
 #endif // BL_FEATURE_FLASH_SECURITY
         |
         HAS_CMD(kCommandTag_GetProperty) | HAS_CMD(kCommandTag_Execute) | HAS_CMD(kCommandTag_Reset) |
         HAS_CMD(kCommandTag_SetProperty)
-#if BL_FEATURE_READ_MEMORY
+#if defined(BL_FEATURE_READ_MEMORY) && BL_FEATURE_READ_MEMORY
         |
         HAS_CMD(kCommandTag_ReadMemory)
 #endif // BL_FEATURE_READ_MEMORY
@@ -93,7 +99,7 @@ enum _available_commands
         |
         HAS_CMD(kCommandTag_FillMemory)
 #endif // BL_FEATURE_FILL_MEMORY
-#if BL_FEATURE_ERASEALL_UNSECURE
+#if defined(BL_FEATURE_ERASEALL_UNSECURE) && BL_FEATURE_ERASEALL_UNSECURE
         |
         HAS_CMD(kCommandTag_FlashEraseAllUnsecure)
 #endif // BL_FEATURE_ERASEALL_UNSECURE
@@ -115,60 +121,61 @@ enum _property_errors
 //! @note Do not change any tag values. Add tags at the end.
 enum _property_tag
 {
-    kPropertyTag_ListProperties = 0x00,
-    kPropertyTag_BootloaderVersion = 0x01,
-    kPropertyTag_AvailablePeripherals = 0x02,
-    kPropertyTag_FlashStartAddress = 0x03,
-    kPropertyTag_FlashSizeInBytes = 0x04,
-    kPropertyTag_FlashSectorSize = 0x05,
-    kPropertyTag_FlashBlockCount = 0x06,
-    kPropertyTag_AvailableCommands = 0x07,
-    kPropertyTag_CrcCheckStatus = 0x08,
-    kPropertyTag_Reserved9 = 0x09,
-    kPropertyTag_VerifyWrites = 0x0a,
-    kPropertyTag_MaxPacketSize = 0x0b,
-    kPropertyTag_ReservedRegions = 0x0c,
-    kPropertyTag_Reserved13 = 0x0d,
-    kPropertyTag_RAMStartAddress = 0x0e,
-    kPropertyTag_RAMSizeInBytes = 0x0f,
-    kPropertyTag_SystemDeviceId = 0x10,
-    kPropertyTag_FlashSecurityState = 0x11,
-    kPropertyTag_UniqueDeviceId = 0x12,
-    kPropertyTag_FacSupport = 0x13,
-    kPropertyTag_FlashAccessSegmentSize = 0x14,
-    kPropertyTag_FlashAccessSegmentCount = 0x15,
-    kPropertyTag_FlashReadMargin = 0x16,
-    kPropertyTag_QspiInitStatus = 0x17,
-    kPropertyTag_TargetVersion = 0x18,
-    kPropertyTag_ExternalMemoryAttributes = 0x19,
-    kPropertyTag_ReliableUpdateStatus = 0x1a,
-    kPropertyTag_FlashPageSize = 0x1b,
-    kPropertyTag_InvalidProperty = 0xFF,
+    kPropertyTag_ListProperties = 0x00u,
+    kPropertyTag_BootloaderVersion = 0x01u,
+    kPropertyTag_AvailablePeripherals = 0x02u,
+    kPropertyTag_FlashStartAddress = 0x03u,
+    kPropertyTag_FlashSizeInBytes = 0x04u,
+    kPropertyTag_FlashSectorSize = 0x05u,
+    kPropertyTag_FlashBlockCount = 0x06u,
+    kPropertyTag_AvailableCommands = 0x07u,
+    kPropertyTag_CrcCheckStatus = 0x08u,
+    kPropertyTag_Reserved9 = 0x09u,
+    kPropertyTag_VerifyWrites = 0x0au,
+    kPropertyTag_MaxPacketSize = 0x0bu,
+    kPropertyTag_ReservedRegions = 0x0cu,
+    kPropertyTag_Reserved13 = 0x0du,
+    kPropertyTag_RAMStartAddress = 0x0eu,
+    kPropertyTag_RAMSizeInBytes = 0x0fu,
+    kPropertyTag_SystemDeviceId = 0x10u,
+    kPropertyTag_FlashSecurityState = 0x11u,
+    kPropertyTag_UniqueDeviceId = 0x12u,
+    kPropertyTag_FacSupport = 0x13u,
+    kPropertyTag_FlashAccessSegmentSize = 0x14u,
+    kPropertyTag_FlashAccessSegmentCount = 0x15u,
+    kPropertyTag_FlashReadMargin = 0x16u,
+    kPropertyTag_QspiInitStatus = 0x17u,
+    kPropertyTag_TargetVersion = 0x18u,
+    kPropertyTag_ExternalMemoryAttributes = 0x19u,
+    kPropertyTag_ReliableUpdateStatus = 0x1au,
+    kPropertyTag_FlashPageSize = 0x1bu,
+    kPropertyTag_InvalidProperty = 0xFFu,
 };
 
 //! @brief Property constants.
 enum _property_constants
 {
-    kProperty_ReservedRegionsCount = 2,
-    kProperty_FlashReservedRegionIndex = 0,
-    kProperty_RamReservedRegionIndex = 1,
+    kProperty_ReservedRegionsCount = 2u,
+    kProperty_FlashReservedRegionIndex = 0u,
+    kProperty_RamReservedRegionIndex = 1u,
 
-    kProperty_FlashVersionIdSizeInBytes = 8,
+    kProperty_FlashVersionIdSizeInBytes = 8u,
 };
 
 //! @brief Bit positions for clock flags in configuration data.
 enum _clock_flags
 {
-    kClockFlag_HighSpeed = (1 << 0)
+    kClockFlag_HighSpeed = (1u << 0u)
 };
 
 //! @brief Bit positions for boot flags in configuration data
 enum _boot_flags
 {
-    kBootFlag_DirectBoot = (1 << 0)
+    kBootFlag_DirectBoot = (1u << 0u)
 };
 
 //! @brief Flash constants.
+#define     kBootloaderConfigAreaAddress ((uint32_t)(APP_VECTOR_TABLE) + 0x3c0u)
 enum _flash_constants
 {
     //! @brief The bootloader configuration data location .
@@ -177,18 +184,18 @@ enum _flash_constants
     //! struct at 0x3c0 from the beginning of the application image which must
     //! be the User Application vector table for the flash-resident bootloader
     //! collaboration.
-    kBootloaderConfigAreaAddress = (uint32_t)(APP_VECTOR_TABLE) + 0x3c0,
+//    kBootloaderConfigAreaAddress = (void const *)((uint32_t)(APP_VECTOR_TABLE) + 0x3c0u),
 #if defined(FSL_FEATURE_FLASH_HAS_MULTIPLE_FLASH) || defined(FSL_FEATURE_FLASH_PFLASH_1_START_ADDRESS)
-#if BL_FEATURE_SUPPORT_DFLASH
-    kFLASHCount = 3,
+#if defined(BL_FEATURE_SUPPORT_DFLASH) && BL_FEATURE_SUPPORT_DFLASH
+    kFLASHCount = 3u,
 #else 
-    kFLASHCount = 2,
+    kFLASHCount = 2u,
 #endif // BL_FEATURE_SUPPORT_DFLASH 
 #else   
-#if BL_FEATURE_SUPPORT_DFLASH
-    kFLASHCount = 2,
+#if defined(BL_FEATURE_SUPPORT_DFLASH) && BL_FEATURE_SUPPORT_DFLASH
+    kFLASHCount = 2u,
 #else    
-    kFLASHCount = 1,
+    kFLASHCount = 1u,
 #endif // BL_FEATURE_SUPPORT_DFLASH   
 #endif    
 };
@@ -196,7 +203,7 @@ enum _flash_constants
 //!@brief Unique ID constants
 enum _uid_constrants
 {
-    kUid_MaxSizeInbytes = 16,
+    kUid_MaxSizeInbytes = 16u,
 };
 
 //! @brief Format of bootloader configuration data on Flash.
@@ -235,7 +242,7 @@ typedef struct ReservedRegion
 } reserved_region_t;
 
 //! @brief Structure of a unique device id.
-typedef struct UniqueDeviceId
+typedef struct _UniqueDeviceId
 {
     uint32_t uid[kUid_MaxSizeInbytes / sizeof(uint32_t)];
 } unique_device_id_t;
@@ -243,12 +250,12 @@ typedef struct UniqueDeviceId
 //! @brief External Memory Properties tag
 enum _external_memory_property_tags
 {
-    kExternalMemoryPropertyTag_InitStatus = 0,         //!< Init status tag
-    kExternalMemoryPropertyTag_StartAddress = 1,       //!< Start address tag
-    kExternalMemoryPropertyTag_MemorySizeInKbytes = 2, //!< Memory size tag
-    kExternalMemoryPropertyTag_PageSize = 3,           //!< Pag size tag
-    kExternalMemoryPropertyTag_SectorSize = 4,         //!< Sector size tag
-    kExternalMemoryPropertyTag_BlockSize = 5,          //!< Block size tag
+    kExternalMemoryPropertyTag_InitStatus = 0u,         //!< Init status tag
+    kExternalMemoryPropertyTag_StartAddress = 1u,       //!< Start address tag
+    kExternalMemoryPropertyTag_MemorySizeInKbytes = 2u, //!< Memory size tag
+    kExternalMemoryPropertyTag_PageSize = 3u,           //!< Pag size tag
+    kExternalMemoryPropertyTag_SectorSize = 4u,         //!< Sector size tag
+    kExternalMemoryPropertyTag_BlockSize = 5u,          //!< Block size tag
 
     kExternalMemoryPropertyTag_Start = kExternalMemoryPropertyTag_StartAddress,
     kExternalMemoryPropertyTag_End = kExternalMemoryPropertyTag_BlockSize,
@@ -267,23 +274,23 @@ typedef struct
 
 enum _ram_constants
 {
-#if CPU_IS_ARM_CORTEX_M7
-    kRAMCount = 3,
+#if defined(CPU_IS_ARM_CORTEX_M7)
+    kRAMCount = 3u,
 #elif defined(K28F15_SERIES)
-    kRAMCount = 2,
-#elif BL_FEATURE_MULTI_SRAM_SECTIONS
+    kRAMCount = 2u,
+#elif defined(BL_FEATURE_MULTI_SRAM_SECTIONS) && BL_FEATURE_MULTI_SRAM_SECTIONS
     kRAMCount = kRAMSections,
 #else
-    kRAMCount = 1,
+    kRAMCount = 1u,
 #endif
 
-    kPropertyIndex_SRAM = 0,
+    kPropertyIndex_SRAM = 0u,
 #if defined(K28F15_SERIES)
-    kPropertyIndex_OCRAM = 1,
-#elif CPU_IS_ARM_CORTEX_M7
+    kPropertyIndex_OCRAM = 1u,
+#elif defined(CPU_IS_ARM_CORTEX_M7)
 
-    kPropertyIndex_DTCM = 1,
-    kPropertyIndex_OCRAM = 2,
+    kPropertyIndex_DTCM = 1u,
+    kPropertyIndex_OCRAM = 2u,
 #endif
 };
 
@@ -356,7 +363,7 @@ extern const property_interface_t g_propertyInterface;
 // Prototypes
 ////////////////////////////////////////////////////////////////////////////////
 
-#if __cplusplus
+#if defined(__cplusplus)
 extern "C" {
 #endif
 
@@ -386,7 +393,7 @@ status_t bootloader_property_init(void);
 //!
 //! @retval kStatus_Success
 //! @retval kStatus_UnknownProperty
-status_t bootloader_property_get(uint8_t tag, uint32_t memoryId, const void **value, uint32_t *valueSize);
+status_t bootloader_property_get(uint8_t tag, uint32_t id, const void **value, uint32_t *valueSize);
 
 //! @brief Set a property.
 //!
@@ -402,7 +409,7 @@ status_t bootloader_property_set_uint32(uint8_t tag, uint32_t value);
 
 //@}
 
-#if __cplusplus
+#if defined(__cplusplus)
 }
 #endif
 

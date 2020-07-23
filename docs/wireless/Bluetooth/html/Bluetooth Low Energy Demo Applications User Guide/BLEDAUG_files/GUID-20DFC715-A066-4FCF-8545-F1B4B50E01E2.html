@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="Wireless usage with extended advertising"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-5294AE15-398C-45C4-A2ED-732BEE0E902B.html"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-20DFC715-A066-4FCF-8545-F1B4B50E01E2"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>Wireless usage with extended advertising</title>
+</head>
+<body id="GUID-20DFC715-A066-4FCF-8545-F1B4B50E01E2">
+
+
+    <h1 class="title topictitle1">Wireless usage with extended advertising</h1>
+
+    <div class="body">
+        
+        <p class="p">To use extended advertising with the hybrid application, make sure that the
+            gAppUseExtendedAdvertising define is set to 1.</p>
+
+        <p class="p">For FRDM-KW38, very long press BLESW button (about 10s) starts extended
+            advertising on the coded phy. A long press BLESW button starts the scanning procedure.
+            If a scan timeout occurs, then the application tries scanning again, but it switches the
+            phys. If it was scanning on the 1 M phy, it starts scanning on the coded phy and vice
+            versa. If an advertising report containing the wireless uart service is received, then a
+            connection is initiated on the phy on which the device was found advertising (1 M for
+            legacy advertising and coded phy for extended advertising).</p>
+
+        <p class="p"> To initiate a Bluetooth LE connection on coded phy, the following steps should be
+            followed:</p>
+
+        <ul class="ul">
+            <li class="li">Flash two boards with the ble_w_uart_gfsk application and connect to
+                each of them using a serial port. </li>
+
+            <li class="li">Very long press the BLESW button of the board you want to act as the peripheral.
+                    <div class="fig fignone"><span class="figcap">Figure 1. Long Range advertising connection slave</span>
+                    
+                    <img class="image" src="GUID-FBD6F4B5-DA06-4464-AAA4-E36E5B8661A2-high.png"/>
+                </div>
+
+            </li>
+
+            <li class="li">Long press the BLESW button of the board you want to act as the
+                central.</li>
+
+            <li class="li">Once the connection is established, you can send characters between the
+                master and slave. <div class="fig fignone"><span class="figcap">Figure 2. Long Range connection master</span>
+                    
+                    <img class="image" src="GUID-32F2874C-AFE3-48E3-A047-C22389C014D9-high.png"/>
+                </div>
+
+            </li>
+
+        </ul>
+  
+            <div class="note note"><span class="notetitle">Note:</span> The GFSK Tx/Rx behavior is still available when using extended advertising.</div>
+
+       
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-5294AE15-398C-45C4-A2ED-732BEE0E902B.html">Hybrid (Dual-Mode) Bluetooth Low Energy and Generic FSK Demo Application</a></div>
+</div>
+</div>
+
+</body>
+</html>

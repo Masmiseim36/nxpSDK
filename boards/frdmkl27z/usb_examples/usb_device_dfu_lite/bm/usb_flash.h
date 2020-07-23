@@ -13,7 +13,7 @@
 /* USB DFU config*/
 /*! @brief DFU application address and size*/
 #define USB_DFU_APP_ADDRESS (0xB000U)
-#define USB_DFU_APP_SIZE (0x5000U)
+#define USB_DFU_APP_SIZE    (0x5000U)
 
 ///*******************************************************************************
 // * Definitions

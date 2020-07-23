@@ -96,7 +96,7 @@ typedef enum _dma_transfer_options
 /*! @brief _dma_transfer_status DMA transfer status */
 enum
 {
-    kStatus_DMA_Busy = MAKE_STATUS(kStatusGroup_DMA, 0),
+    kStatus_DMA_Busy = MAKE_STATUS(kStatusGroup_DMA, 0), /*!< DMA is busy. */
 };
 
 /*! @brief DMA transfer configuration structure */

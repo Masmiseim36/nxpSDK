@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 - 2019 NXP
+ * Copyright 2016 - 2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -56,20 +56,20 @@
 #endif
 
 /* Currently configured line coding */
-#define LINE_CODING_SIZE (0x07)
-#define LINE_CODING_DTERATE (115200)
+#define LINE_CODING_SIZE       (0x07)
+#define LINE_CODING_DTERATE    (115200)
 #define LINE_CODING_CHARFORMAT (0x00)
 #define LINE_CODING_PARITYTYPE (0x00)
-#define LINE_CODING_DATABITS (0x08)
+#define LINE_CODING_DATABITS   (0x08)
 
 /* Communications feature */
 #define COMM_FEATURE_DATA_SIZE (0x02)
-#define STATUS_ABSTRACT_STATE (0x0000)
-#define COUNTRY_SETTING (0x0000)
+#define STATUS_ABSTRACT_STATE  (0x0000)
+#define COUNTRY_SETTING        (0x0000)
 
 /* Notification of serial state */
-#define NOTIF_PACKET_SIZE (0x08)
-#define UART_BITMAP_SIZE (0x02)
+#define NOTIF_PACKET_SIZE  (0x08)
+#define UART_BITMAP_SIZE   (0x02)
 #define NOTIF_REQUEST_TYPE (0xA1)
 
 typedef struct _serial_usb_send_state
@@ -653,11 +653,7 @@ void USBHS_IRQHandler(void)
         }
         serialUsbCdc = serialUsbCdc->next;
     }
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 #if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 1U)
 #if defined(FSL_FEATURE_USBHS_EHCI_COUNT) && (FSL_FEATURE_USBHS_EHCI_COUNT > 1U)
@@ -673,11 +669,7 @@ void USB1_IRQHandler(void)
         }
         serialUsbCdc = serialUsbCdc->next;
     }
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 #endif
 #endif
@@ -695,11 +687,7 @@ void USB0_IRQHandler(void)
         }
         serialUsbCdc = serialUsbCdc->next;
     }
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 #endif
 #if defined(USB_DEVICE_CONFIG_LPCIP3511FS) && (USB_DEVICE_CONFIG_LPCIP3511FS > 0U)
@@ -715,11 +703,7 @@ void USB0_IRQHandler(void)
         }
         serialUsbCdc = serialUsbCdc->next;
     }
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 #endif
 #if defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U)
@@ -735,11 +719,7 @@ void USB1_IRQHandler(void)
         }
         serialUsbCdc = serialUsbCdc->next;
     }
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 #endif
 
@@ -810,6 +790,8 @@ serial_manager_status_t Serial_UsbCdcInit(serial_handle_t serialHandle, void *se
 
     USB_DeviceIsrEnable(serialUsbCdc);
 
+    /*Add one delay here to make the DP pull down long enough to allow host to detect the previous disconnection.*/
+    SDK_DelayAtLeastUs(5000, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
     USB_DeviceRun(serialUsbCdc->deviceHandle);
 
     return kStatus_SerialManager_Success;
@@ -848,6 +830,21 @@ serial_manager_status_t Serial_UsbCdcWrite(serial_handle_t serialHandle, uint8_t
     {
         return kStatus_SerialManager_Busy;
     }
+
+#if (USB_CDC_SERIAL_MANAGER_RUN_NO_HOST == 1)
+    /* Prevents SerialManager_Write from blocking when no USB Host is attached */
+    if ((serialUsbCdc->attach == 0))
+    {
+        return kStatus_SerialManager_NotConnected;
+    }
+
+    /* Prevents SerialManager_Write from blocking when USB Host is attached but CDC terminal is closed */
+    if ((serialUsbCdc->attach == 1) && (serialUsbCdc->startTransactions == 0))
+    {
+        return kStatus_SerialManager_NotConnected;
+    }
+#endif /* USB_CDC_SERIAL_MANAGER_RUN_NO_HOST == 1 */
+
     serialUsbCdc->tx.busy          = 1;
     serialUsbCdc->tx.waiting4Prime = 0;
 

@@ -14,12 +14,12 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_UART UART2
-#define DEMO_UART_CLKSRC kCLOCK_BusClk
+#define DEMO_UART          UART2
+#define DEMO_UART_CLKSRC   kCLOCK_BusClk
 #define DEMO_UART_CLK_FREQ CLOCK_GetFreq(kCLOCK_BusClk)
 
 #define RX_RING_BUFFER_SIZE 20U
-#define ECHO_BUFFER_SIZE 8U
+#define ECHO_BUFFER_SIZE    8U
 
 /*******************************************************************************
  * Prototypes

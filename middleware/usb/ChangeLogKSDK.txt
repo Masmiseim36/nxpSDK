@@ -2,7 +2,17 @@
 @page middleware_log Middleware Change Log
 
 @section USB USB stack for MCUXpresso SDK  
-  The current version of USB stack is 2.5.0.
+  The current version of USB stack is 2.6.0.
+  - 2.6.0
+    - Improvement:
+      - Added more ufi event to support dynamic sdcard capacity.
+      - Passed MISRA-2012 mandatory and required rules.
+        - Except rule 17.2 in host hub and otg stack.
+        - Except rule 5.1, rule 5.4, rule 21.1 and rule 21.2.
+      - Re-implemented USB components and supported NPW.
+      - Improved IP3511 controller driver's cancelling transfer function.
+      - Enabled the audio2.0 defaultly for device audio demos.
+      - Enabled the host audio2.0 function in host audio class driver and host audio speaker demo.
   - 2.5.0
     - Improvement:
       - Integrated sdk components (OSA, Timer, GPIO and serial_manager) to USB stack and demos.

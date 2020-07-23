@@ -58,7 +58,7 @@ erpcsniffer -t tcp -p <port> -h <hostname> -o <outputfilname> <idlFileName>
 ```
 _For example:_
 ```
-erpcgen -t tcp -p 54321 -h localhost -o erpcOutput.txt MyFirstErpcApp.erpc
+erpcsniffer -t tcp -p 54321 -h localhost -o erpcOutput.txt MyFirstErpcApp.erpc
 ```
 
 ### Steps

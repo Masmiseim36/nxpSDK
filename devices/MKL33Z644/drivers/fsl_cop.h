@@ -27,7 +27,7 @@
 
 /*! @name COP refresh sequence. */
 /*@{*/
-#define COP_FIRST_BYTE_OF_REFRESH (0x55U)  /*!< First byte of refresh sequence */
+#define COP_FIRST_BYTE_OF_REFRESH  (0x55U) /*!< First byte of refresh sequence */
 #define COP_SECOND_BYTE_OF_REFRESH (0xAAU) /*!< Second byte of refresh sequence */
 /*@}*/
 
@@ -51,7 +51,7 @@ typedef enum _cop_timeout_cycles
 } cop_timeout_cycles_t;
 
 #if defined(FSL_FEATURE_COP_HAS_LONGTIME_MODE) && FSL_FEATURE_COP_HAS_LONGTIME_MODE
-/*! @breif Define the COP timeout mode. */
+/*! @brief Define the COP timeout mode. */
 typedef enum _cop_timeout_mode
 {
     kCOP_ShortTimeoutMode = 0U, /*!< COP selects long timeout */

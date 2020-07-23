@@ -35,6 +35,9 @@ typedef enum _usb_host_controller_control
     kUSB_HostPortAttachEnable,             /*!< Enable the port attach event */
     kUSB_HostL1Config,                     /*!< L1 suspend Bus control code */
     kUSB_HostSetChargerType,               /*!< set charger type */
+#if ((defined USB_HOST_CONFIG_COMPLIANCE_TEST) && (USB_HOST_CONFIG_COMPLIANCE_TEST))
+    kUSB_HostTestModeInit, /*!< intialize charger type */
+#endif
 } usb_host_controller_control_t;
 
 /*! @brief USB host controller bus control code */
@@ -76,7 +79,9 @@ typedef struct _usb_host_controller_interface
                                     uint32_t ioctlEvent,
                                     void *ioctlParam); /*!< Control a controller function prototype*/
 } usb_host_controller_interface_t;
-
+#if ((defined USB_HOST_CONFIG_COMPLIANCE_TEST) && (USB_HOST_CONFIG_COMPLIANCE_TEST))
+usb_status_t USB_HostTestModeInit(usb_device_handle deviceHandle);
+#endif
 /*! @}*/
 
 /*!
@@ -89,8 +94,8 @@ typedef struct _usb_host_instance
 {
     void *controllerHandle;                                          /*!< The low level controller handle*/
     host_callback_t deviceCallback;                                  /*!< Device attach/detach callback*/
-    osa_mutex_handle_t hostMutex;                              /*!< Host layer mutex*/
-    uint32_t mutexBuffer[(OSA_MUTEX_HANDLE_SIZE + 3)/4];             /*!< Host layer mutex*/
+    osa_mutex_handle_t hostMutex;                                    /*!< Host layer mutex*/
+    uint32_t mutexBuffer[(OSA_MUTEX_HANDLE_SIZE + 3) / 4];           /*!< Host layer mutex*/
     usb_host_transfer_t transferList[USB_HOST_CONFIG_MAX_TRANSFERS]; /*!< Transfer resource*/
     usb_host_transfer_t *transferHead;                               /*!< Idle transfer head*/
     const usb_host_controller_interface_t *controllerTable;          /*!< KHCI/EHCI interface*/
@@ -106,6 +111,7 @@ typedef struct _usb_host_instance
     uint8_t controllerId;      /*!< The controller ID*/
 } usb_host_instance_t;
 
+extern usb_host_instance_t g_UsbHostInstance[USB_HOST_CONFIG_MAX_HOST];
 /*! @}*/
 
 #endif /* _USB_HOST_HCI_H_ */

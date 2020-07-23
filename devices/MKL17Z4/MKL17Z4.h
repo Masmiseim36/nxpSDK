@@ -4,6 +4,7 @@
 **                          MKL17Z128VFT4
 **                          MKL17Z128VLH4
 **                          MKL17Z128VMP4
+**                          MKL17Z256CAL4R
 **                          MKL17Z256VFM4
 **                          MKL17Z256VFT4
 **                          MKL17Z256VLH4
@@ -17,13 +18,14 @@
 **
 **     Reference manual:    KL17P64M48SF6RM, Rev.3, Aug 2014
 **     Version:             rev. 1.5, 2016-02-02
-**     Build:               b180801
+**     Build:               b200424
 **
 **     Abstract:
 **         CMSIS Peripheral Access Layer for MKL17Z4
 **
 **     Copyright 1997-2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2018 NXP
+**     Copyright 2016-2020 NXP
+**     All rights reserved.
 **
 **     SPDX-License-Identifier: BSD-3-Clause
 **

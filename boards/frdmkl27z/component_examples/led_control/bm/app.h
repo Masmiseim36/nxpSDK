@@ -12,12 +12,12 @@
  ******************************************************************************/
 /*${macro:start}*/
 #define LED_TYPE_MONOCHROME_COUNT 1
-#define BOARD_SOURCE_CLOCK 48000000
-#define RED_INSTACE 2
-#define RED_CHANNEL 0
+#define BOARD_SOURCE_CLOCK        48000000
+#define RED_INSTACE               2
+#define RED_CHANNEL               0
 
 #define BUTTON_COUNT 1
-#define BUTTON_NAME BOARD_SW3_NAME
+#define BUTTON_NAME  BOARD_SW3_NAME
 
 #define TIMER_SOURCE_CLOCK CLOCK_GetFreq(kCLOCK_LpoClk)
 /*${macro:end}*/

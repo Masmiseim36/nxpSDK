@@ -18,11 +18,13 @@ erpcgen prerequisites:
 Documentation
 -------------
 
-Multicore SDK documents can be found in the top level KSDK doc directory:
-    "KSDK_ROOT/doc/multicore".
+Multicore SDK documents can be found in the top level MCUXpressoSDK doc directory:
+    "MCUXSDK_ROOT/docs/MULTICORE".
 
 Directory Structure
 -------------------
+
+(Not all MCUXpresso SDK packages contain the whole set of these folders)
 
 erpc - Embedded Remote Procedure Call. An infrastructure to abstract multicore
 communication to fully user-definable sets of function calls. A host tool,
@@ -35,10 +37,14 @@ mcmgr - Multicore Manager. Provides control of second core startup and shutdown.
 rdmgr - Resource Domain Manager. Configures the XRDC periphal, which controls
 access rights to peripherals and memory blocks.
 
+remoteproc - General source code used for remote cores (from the Linux perspective)
+to allow easy remote core applications deployment/start/debug via the remoteproc 
+Linux framework.
+
 rpmsg_lite - Remote Processor Messaging Lite software component is a lightweight
 implementation of the RPMsg protocol. Compared to the OpenAMP implementation,
 the RPMsg-Lite offers a code size reduction, API simplification and improved
 modularity.
 
-tools - Folder contains tools and utilities for multicore like a Peripheral and
-Memory Manager (PAM) GUI configuration tool for easy XRDC settings.
+tools - Folder contains tools and utilities for multicore like prebuilt 
+versions of erpcgen and erpcsniffer.

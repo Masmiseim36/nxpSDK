@@ -66,7 +66,7 @@ typedef struct _usb_shim_metadata_preamble
 typedef struct _usb_shim_agent_struct
 {
     usb_device_handle deviceHandle;               /*!< The device handle */
-    void *classHandle;                         /*!< The class handle */
+    void *classHandle;                            /*!< The class handle */
     uint8_t speed;                                /*!< Used to store the device speed */
     uint8_t attach;                               /*!< Used to store the attach event */
     uint8_t currentConfig;                        /*!< Current configuration */
@@ -80,7 +80,7 @@ typedef struct _usb_shim_agent_struct
     usb_shim_rx_data_struct_t bulkOutData;     /*!< Receive data information */
     usb_shim_tx_data_struct_t bulkInData;      /*!< Send data information */
     usb_shim_tx_data_struct_t interruptInData; /*!< Send data information */
-    uint8_t *recvDataBuffer;                    /*!< Receive data buffer */
+    uint8_t *recvDataBuffer;                   /*!< Receive data buffer */
     uint8_t *classBuffer;                      /*!< class specific transfer buffer */
 } usb_shim_agent_struct_t;
 

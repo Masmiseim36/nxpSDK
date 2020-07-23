@@ -27,7 +27,7 @@
 
 #if ((RTE_SPI0 && defined(SPI0)) || (RTE_SPI1 && defined(SPI1)))
 
-#define ARM_SPI_DRV_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(2, 1) /* driver version */
+#define ARM_SPI_DRV_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(2, 2) /* driver version */
 
 /*
  * ARMCC does not support split the data section automatically, so the driver
@@ -416,6 +416,12 @@ static int32_t SPI_DMASend(const void *data, uint32_t num, cmsis_SPI_dma_driver_
     xfer.rxData   = NULL;
     xfer.txData   = (uint8_t *)data;
     xfer.dataSize = num;
+#if defined(FSL_FEATURE_SPI_16BIT_TRANSFERS) && FSL_FEATURE_SPI_16BIT_TRANSFERS
+    if ((SPI->resource->base->C2 & SPI_C2_SPIMODE_MASK) != 0U)
+    {
+        xfer.dataSize *= 2U;
+    }
+#endif
 
     /* If transfer mode is single wire. */
     if (SPI_C2_SPC0_MASK & SPI->resource->base->C2)
@@ -460,6 +466,12 @@ static int32_t SPI_DMAReceive(void *data, uint32_t num, cmsis_SPI_dma_driver_sta
     xfer.txData   = NULL;
     xfer.rxData   = (uint8_t *)data;
     xfer.dataSize = num;
+#if defined(FSL_FEATURE_SPI_16BIT_TRANSFERS) && FSL_FEATURE_SPI_16BIT_TRANSFERS
+    if ((SPI->resource->base->C2 & SPI_C2_SPIMODE_MASK) != 0U)
+    {
+        xfer.dataSize *= 2U;
+    }
+#endif
 
 #if defined(FSL_FEATURE_SPI_HAS_FIFO) && (FSL_FEATURE_SPI_HAS_FIFO)
     /* If using DMA, disable FIFO, as the FIFO may cause data loss if the data size is not integer
@@ -519,6 +531,12 @@ static int32_t SPI_DMATransfer(const void *data_out, void *data_in, uint32_t num
     xfer.txData   = (uint8_t *)data_out;
     xfer.rxData   = (uint8_t *)data_in;
     xfer.dataSize = num;
+#if defined(FSL_FEATURE_SPI_16BIT_TRANSFERS) && FSL_FEATURE_SPI_16BIT_TRANSFERS
+    if ((SPI->resource->base->C2 & SPI_C2_SPIMODE_MASK) != 0U)
+    {
+        xfer.dataSize *= 2U;
+    }
+#endif
 
 #if defined(FSL_FEATURE_SPI_HAS_FIFO) && (FSL_FEATURE_SPI_HAS_FIFO)
     /* If using DMA, disable FIFO, as the FIFO may cause data loss if the data size is not integer
@@ -585,7 +603,12 @@ static uint32_t SPI_DMAGetCount(cmsis_SPI_dma_driver_state_t *SPI)
     {
         cnt = SPI->handle->slaveHandle.transferSize - bytes;
     }
-
+#if defined(FSL_FEATURE_SPI_16BIT_TRANSFERS) && FSL_FEATURE_SPI_16BIT_TRANSFERS
+    if ((SPI->resource->base->C2 & SPI_C2_SPIMODE_MASK) != 0U)
+    {
+        cnt /= 2U;
+    }
+#endif
     return cnt;
 }
 
@@ -870,6 +893,12 @@ static int32_t SPI_InterruptSend(const void *data, uint32_t num, cmsis_spi_inter
     xfer.rxData   = NULL;
     xfer.txData   = (uint8_t *)data;
     xfer.dataSize = num;
+#if defined(FSL_FEATURE_SPI_16BIT_TRANSFERS) && FSL_FEATURE_SPI_16BIT_TRANSFERS
+    if ((SPI->resource->base->C2 & SPI_C2_SPIMODE_MASK) != 0U)
+    {
+        xfer.dataSize *= 2U;
+    }
+#endif
 
 #if defined(FSL_FEATURE_SPI_HAS_FIFO) && (FSL_FEATURE_SPI_HAS_FIFO)
     /* If using DMA, disable FIFO, as the FIFO may cause data loss if the data size is not integer
@@ -924,6 +953,12 @@ static int32_t SPI_InterruptReceive(void *data, uint32_t num, cmsis_spi_interrup
     xfer.txData   = NULL;
     xfer.rxData   = (uint8_t *)data;
     xfer.dataSize = num;
+#if defined(FSL_FEATURE_SPI_16BIT_TRANSFERS) && FSL_FEATURE_SPI_16BIT_TRANSFERS
+    if ((SPI->resource->base->C2 & SPI_C2_SPIMODE_MASK) != 0U)
+    {
+        xfer.dataSize *= 2U;
+    }
+#endif
 
     /* If transfer mode is single wire. */
     if (SPI_C2_SPC0_MASK & SPI->resource->base->C2)
@@ -976,6 +1011,12 @@ static int32_t SPI_InterruptTransfer(const void *data_out,
     xfer.txData   = (uint8_t *)data_out;
     xfer.rxData   = (uint8_t *)data_in;
     xfer.dataSize = num;
+#if defined(FSL_FEATURE_SPI_16BIT_TRANSFERS) && FSL_FEATURE_SPI_16BIT_TRANSFERS
+    if ((SPI->resource->base->C2 & SPI_C2_SPIMODE_MASK) != 0U)
+    {
+        xfer.dataSize *= 2U;
+    }
+#endif
 
     /* If transfer mode is single wire. */
     if (SPI_C2_SPC0_MASK & SPI->resource->base->C2)
@@ -1019,14 +1060,22 @@ static int32_t SPI_InterruptTransfer(const void *data_out,
 }
 static uint32_t SPI_InterruptGetCount(cmsis_spi_interrupt_driver_state_t *SPI)
 {
+    uint32_t cnt;
     if (SPI_IsMaster(SPI->resource->base))
     {
-        return SPI->handle->masterHandle.transferSize - SPI->handle->masterHandle.rxRemainingBytes;
+        cnt = SPI->handle->masterHandle.transferSize - SPI->handle->masterHandle.rxRemainingBytes;
     }
     else
     {
-        return SPI->handle->slaveHandle.transferSize - SPI->handle->slaveHandle.rxRemainingBytes;
+        cnt = SPI->handle->slaveHandle.transferSize - SPI->handle->slaveHandle.rxRemainingBytes;
     }
+#if defined(FSL_FEATURE_SPI_16BIT_TRANSFERS) && FSL_FEATURE_SPI_16BIT_TRANSFERS
+    if ((SPI->resource->base->C2 & SPI_C2_SPIMODE_MASK) != 0U)
+    {
+        cnt /= 2U;
+    }
+#endif
+    return cnt;
 }
 
 static int32_t SPI_InterruptControl(uint32_t control, uint32_t arg, cmsis_spi_interrupt_driver_state_t *SPI)

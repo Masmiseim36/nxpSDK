@@ -1,6 +1,7 @@
 /*
  * Copyright 2014-2016 Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
+ * Copyright 2016-2020 NXP
+ * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  *
@@ -15,8 +16,8 @@
  * The CPU macro should be declared in the project or makefile.
  */
 #if (defined(CPU_MKL17Z128VFM4) || defined(CPU_MKL17Z128VFT4) || defined(CPU_MKL17Z128VLH4) || \
-    defined(CPU_MKL17Z128VMP4) || defined(CPU_MKL17Z256VFM4) || defined(CPU_MKL17Z256VFT4) || \
-    defined(CPU_MKL17Z256VLH4) || defined(CPU_MKL17Z256VMP4))
+    defined(CPU_MKL17Z128VMP4) || defined(CPU_MKL17Z256CAL4R) || defined(CPU_MKL17Z256VFM4) || \
+    defined(CPU_MKL17Z256VFT4) || defined(CPU_MKL17Z256VLH4) || defined(CPU_MKL17Z256VMP4))
 
 #define KL17Z4_SERIES
 

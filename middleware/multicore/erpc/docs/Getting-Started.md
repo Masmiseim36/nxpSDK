@@ -76,16 +76,16 @@ This chapter contains three topics:
 The basic rule is that files do not contain "client" or "server" string in their names. These files need the server and client application:
 
 - From _ERPCRootDir/erpc_c/config_ file __erpc_config.h__. This file should be copied to application specific directory and used it instead of using this global file.
-- From _ERPCRootDir/erpc_c/infra_ files __codec.h__, __basic_codec.h__, __basic_codec.cpp__, __erpc_common.h__, __erpc_version.h__, __framed_transport.h__, __framed_transport.cpp__,  __manually_constructed.h__, __message_buffer.h transport.h__ and __message_buffer.cpp__
+- From _ERPCRootDir/erpc_c/infra_ files __erpc_codec.h__, __erpc_basic_codec.h__, __erpc_basic_codec.cpp__, __erpc_common.h__, __erpc_version.h__, __erpc_framed_transport.h__, __erpc_framed_transport.cpp__,  __erpc_manually_constructed.h__, __erpc_message_buffer.h erpc_transport.h__ and __erpc_message_buffer.cpp__
 - From _ERPCRootDir/erpc_c/port_ files __erpc_config_internal.h__, __erpc_port.h__ and __erpc_port_stdlib.cpp__
 - From _ERPCRootDir/erpc_c/setup_ files __erpc_mbf_setup.h__, __erpc_setup_mbf_dynamic.cpp__, __erpc_transport_setup.h__ and __erpc_setup_uart_cmsis.cpp__
-- From _ERPCRootDir/erpc_c/transports_ files  __uart_cmsis_transport.h__ and __uart_cmsis_transport.cpp__
+- From _ERPCRootDir/erpc_c/transports_ files  __erpc_uart_cmsis_transport.h__ and __erpc_uart_cmsis_transport.cpp__
 
 ### Client
 
 The basic rule is client files contains "client" string in their names.
 
-- From _ERPCRootDir/erpc_c/infra_ files __client_manager.h__ and __client_manager.cpp__
+- From _ERPCRootDir/erpc_c/infra_ files __erpc_client_manager.h__ and __erpc_client_manager.cpp__
 - From _ERPCRootDir/erpc_c/setup_ files __erpc_client_setup.h__ and __erpc_client_setup.cpp__
 
 In source file where eRPC client environment init functions are called needs be included __erpc_client_setup.h__ header file.
@@ -94,7 +94,7 @@ In source file where eRPC client environment init functions are called needs be 
 
 The basic rule is client files contains "server" string in their names.
 
-- From _ERPCRootDir/erpc_c/infra_ files __server.h__, __server.cpp__, __simple_server.h__ and __simple_server.cpp__
+- From _ERPCRootDir/erpc_c/infra_ files __erpc_server.h__, __erpc_server.cpp__, __erpc_simple_server.h__ and __erpc_simple_server.cpp__
 - From _ERPCRootDir/erpc_c/setup files __erpc_server_setup.h__ and __erpc_server_setup.cpp__
 
 In the source file where the eRPC server environment init functions are called, the __erpc_server_setup.h__ header file needs to be included.
@@ -115,14 +115,14 @@ int main()
     /* Matrices definitions */
     Matrix matrix1, matrix2, result_matrix = {{0}};
 
-    /* init eRPC client environment */
-        /* UART transport layer initialization */
+    /* Init eRPC client environment */
+    /* UART transport layer initialization */
     erpc_transport_t transport = erpc_transport_cmsis_uart_init((void *)&DEMO_UART); /* DEMO_UART defined in fsl_uart_cmsis.h */
 
-        /* MessageBufferFactory initialization */
+    /* MessageBufferFactory initialization */
     erpc_mbf_t message_buffer_factory = erpc_mbf_dynamic_init();
 
-        /* eRPC client side initialization */
+    /* eRPC client side initialization */
     erpc_client_init(transport, message_buffer_factory);
 
     /* other code like init matrix1 and matrix2 values */
@@ -154,18 +154,19 @@ void erpcMatrixMultiply(Matrix matrix1, Matrix matrix2, Matrix result_matrix)
 
 int main()
 {
-    /* init eRPC server environment */
-        /* UART transport layer initialization */
+    /* Init eRPC server environment */
+    /* UART transport layer initialization */
     erpc_transport_t transport = erpc_transport_cmsis_uart_init((void *)&DEMO_UART); /* DEMO_UART defined in fsl_uart_cmsis.h */
 
-        /* MessageBufferFactory initialization */
+    /* MessageBufferFactory initialization */
     erpc_mbf_t message_buffer_factory = erpc_mbf_dynamic_init();
 
-        /* eRPC server side initialization */
+    /* eRPC server side initialization */
     erpc_server_init(transport, message_buffer_factory);
 
     /* connect generated service into server, look into erpc_matrix_multiply_server.h */
-    erpc_add_service_to_server(create_MatrixMultiplyService_service());
+    erpc_service_t service = create_MatrixMultiplyService_service();
+    erpc_add_service_to_server(service);
 
     /* run server */
     erpc_server_run(); /* or erpc_server_poll(); */

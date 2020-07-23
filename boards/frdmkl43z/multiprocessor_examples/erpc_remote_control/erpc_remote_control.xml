@@ -9,9 +9,9 @@
     <definition extID="device.MKL43Z4_CMSIS.MKL43Z4"/>
     <definition extID="device.MKL43Z4_startup.MKL43Z4"/>
     <definition extID="driver.mma8451q.MKL43Z4"/>
-    <definition extID="middleware.amazon_freertos-kernel.MKL43Z4"/>
-    <definition extID="middleware.amazon_freertos-kernel.extension.MKL43Z4"/>
-    <definition extID="middleware.amazon_freertos-kernel.heap_4.MKL43Z4"/>
+    <definition extID="middleware.freertos-kernel.MKL43Z4"/>
+    <definition extID="middleware.freertos-kernel.extension.MKL43Z4"/>
+    <definition extID="middleware.freertos-kernel.heap_4.MKL43Z4"/>
     <definition extID="middleware.multicore.erpc.common.MKL43Z4"/>
     <definition extID="middleware.multicore.erpc.doc.MKL43Z4"/>
     <definition extID="middleware.multicore.erpc.eRPC_arbitrator.MKL43Z4"/>
@@ -44,7 +44,7 @@
     <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="frdmkl43z_erpc_remote_control" name="erpc_remote_control" category="multiprocessor_examples" dependency="platform.drivers.dma.MKL43Z4 platform.drivers.lpuart.MKL43Z4 platform.drivers.lpuart_dma.MKL43Z4 platform.drivers.dac.MKL43Z4 driver.mma8451q.MKL43Z4 platform.drivers.lpuart_cmsis_dma.MKL43Z4 platform.drivers.gpio.MKL43Z4 platform.drivers.port.MKL43Z4 platform.drivers.i2c.MKL43Z4 platform.drivers.adc16.MKL43Z4 platform.drivers.dmamux.MKL43Z4 middleware.multicore.erpc.eRPC_arbitrator.MKL43Z4 middleware.multicore.erpc.eRPC_port_freertos.MKL43Z4 middleware.multicore.erpc.eRPC_uart_cmsis_transport.MKL43Z4 middleware.amazon_freertos-kernel.heap_4.MKL43Z4 middleware.multicore.erpc.doc.MKL43Z4 platform.drivers.clock.MKL43Z4 platform.drivers.common.MKL43Z4 device.MKL43Z4_CMSIS.MKL43Z4 utility.debug_console.MKL43Z4 component.lpuart_adapter.MKL43Z4 component.serial_manager.MKL43Z4 component.lists.MKL43Z4 component.serial_manager_uart.MKL43Z4 device.MKL43Z4_startup.MKL43Z4 platform.drivers.uart.MKL43Z4 platform.drivers.smc.MKL43Z4 platform.utilities.assert.MKL43Z4 platform.Include_core_cm0plus.MKL43Z4 platform.Include_common.MKL43Z4 platform.Include_dsp.MKL43Z4 platform.CMSIS_Driver_Include.USART_CMSISInclude.MKL43Z4 platform.CMSIS_Driver_Include.Common_CMSISInclude.MKL43Z4 middleware.multicore.erpc.common.MKL43Z4 middleware.amazon_freertos-kernel.MKL43Z4 middleware.amazon_freertos-kernel.extension.MKL43Z4 platform.utilities.misc_utilities.MKL43Z4">
+  <example id="frdmkl43z_erpc_remote_control" name="erpc_remote_control" category="multiprocessor_examples" dependency="platform.drivers.dma.MKL43Z4 platform.drivers.lpuart.MKL43Z4 platform.drivers.lpuart_dma.MKL43Z4 platform.drivers.dac.MKL43Z4 driver.mma8451q.MKL43Z4 platform.drivers.lpuart_cmsis_dma.MKL43Z4 platform.drivers.gpio.MKL43Z4 platform.drivers.port.MKL43Z4 platform.drivers.i2c.MKL43Z4 platform.drivers.adc16.MKL43Z4 platform.drivers.dmamux.MKL43Z4 middleware.multicore.erpc.eRPC_arbitrator.MKL43Z4 middleware.multicore.erpc.eRPC_port_freertos.MKL43Z4 middleware.multicore.erpc.eRPC_uart_cmsis_transport.MKL43Z4 middleware.freertos-kernel.heap_4.MKL43Z4 middleware.multicore.erpc.doc.MKL43Z4 platform.drivers.clock.MKL43Z4 platform.drivers.common.MKL43Z4 device.MKL43Z4_CMSIS.MKL43Z4 utility.debug_console.MKL43Z4 component.lpuart_adapter.MKL43Z4 component.serial_manager.MKL43Z4 component.lists.MKL43Z4 component.serial_manager_uart.MKL43Z4 device.MKL43Z4_startup.MKL43Z4 platform.drivers.uart.MKL43Z4 platform.drivers.smc.MKL43Z4 platform.utilities.assert.MKL43Z4 platform.Include_core_cm0plus.MKL43Z4 platform.Include_common.MKL43Z4 platform.Include_dsp.MKL43Z4 platform.CMSIS_Driver_Include.USART_CMSISInclude.MKL43Z4 platform.CMSIS_Driver_Include.Common_CMSISInclude.MKL43Z4 middleware.multicore.erpc.common.MKL43Z4 middleware.freertos-kernel.MKL43Z4 middleware.freertos-kernel.extension.MKL43Z4 platform.utilities.misc_utilities.MKL43Z4">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.ccnature"/>
     </projects>

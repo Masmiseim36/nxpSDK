@@ -10,7 +10,9 @@
     <definition extID="device.MKL27Z644_CMSIS.MKL27Z644"/>
     <definition extID="device.MKL27Z644_startup.MKL27Z644"/>
     <definition extID="middleware.baremetal.MKL27Z644"/>
-    <definition extID="middleware.usb.device.MKL27Z644"/>
+    <definition extID="middleware.usb.common_header.MKL27Z644"/>
+    <definition extID="middleware.usb.device.common_header.MKL27Z644"/>
+    <definition extID="middleware.usb.device.controller.driver.MKL27Z644"/>
     <definition extID="middleware.usb.device_controller_khci.MKL27Z644"/>
     <definition extID="platform.Include_common.MKL27Z644"/>
     <definition extID="platform.Include_core_cm0plus.MKL27Z644"/>
@@ -30,7 +32,7 @@
     <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="frdmkl27z_dev_composite_hid_mouse_hid_keyboard_bm" name="dev_composite_hid_mouse_hid_keyboard_bm" category="usb_examples" dependency="middleware.usb.device_controller_khci.MKL27Z644 middleware.usb.device.MKL27Z644 platform.drivers.smc.MKL27Z644 platform.drivers.clock.MKL27Z644 platform.drivers.common.MKL27Z644 device.MKL27Z644_CMSIS.MKL27Z644 device.MKL27Z644_startup.MKL27Z644 platform.drivers.lpuart.MKL27Z644 platform.drivers.uart.MKL27Z644 platform.drivers.gpio.MKL27Z644 platform.utilities.assert.MKL27Z644 utility.debug_console.MKL27Z644 component.lpuart_adapter.MKL27Z644 component.serial_manager.MKL27Z644 component.lists.MKL27Z644 component.serial_manager_uart.MKL27Z644 platform.drivers.port.MKL27Z644 component.osa.MKL27Z644 platform.Include_core_cm0plus.MKL27Z644 platform.Include_common.MKL27Z644 platform.Include_dsp.MKL27Z644 platform.utilities.misc_utilities.MKL27Z644 middleware.baremetal.MKL27Z644">
+  <example id="frdmkl27z_dev_composite_hid_mouse_hid_keyboard_bm" name="dev_composite_hid_mouse_hid_keyboard_bm" category="usb_examples" dependency="middleware.usb.device_controller_khci.MKL27Z644 platform.drivers.smc.MKL27Z644 platform.drivers.clock.MKL27Z644 platform.drivers.common.MKL27Z644 device.MKL27Z644_CMSIS.MKL27Z644 device.MKL27Z644_startup.MKL27Z644 platform.drivers.lpuart.MKL27Z644 platform.drivers.uart.MKL27Z644 platform.drivers.gpio.MKL27Z644 platform.utilities.assert.MKL27Z644 utility.debug_console.MKL27Z644 component.lpuart_adapter.MKL27Z644 component.serial_manager.MKL27Z644 component.lists.MKL27Z644 component.serial_manager_uart.MKL27Z644 platform.drivers.port.MKL27Z644 middleware.usb.device.controller.driver.MKL27Z644 component.osa.MKL27Z644 middleware.usb.device.common_header.MKL27Z644 platform.Include_core_cm0plus.MKL27Z644 platform.Include_common.MKL27Z644 platform.Include_dsp.MKL27Z644 middleware.usb.common_header.MKL27Z644 platform.utilities.misc_utilities.MKL27Z644 middleware.baremetal.MKL27Z644">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>

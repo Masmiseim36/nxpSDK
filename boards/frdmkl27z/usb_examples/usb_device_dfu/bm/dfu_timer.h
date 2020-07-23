@@ -26,7 +26,7 @@ typedef void (*dfu_timer_callback)(void);
 /*! @brief timer object structure */
 typedef struct _dfu_timer_object
 {
-    int32_t timerCount;              /*!< Time out value in milliseconds */
+    int32_t timerCount;               /*!< Time out value in milliseconds */
     dfu_timer_callback timerCallback; /*!< Callback function */
 } dfu_timer_object_t;
 

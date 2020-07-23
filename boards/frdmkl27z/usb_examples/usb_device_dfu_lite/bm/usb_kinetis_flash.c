@@ -22,8 +22,8 @@
 /*! @brief flash configuration */
 static flash_config_t dfuFlashConfig;
 static ftfx_cache_config_t s_cacheDriver;
-uint32_t pflashBlockBase = 0;
-uint32_t pflashTotalSize = 0;
+uint32_t pflashBlockBase  = 0;
+uint32_t pflashTotalSize  = 0;
 uint32_t pflashSectorSize = 0;
 /*******************************************************************************
  * Code
@@ -38,7 +38,7 @@ uint32_t pflashSectorSize = 0;
 usb_memmory_status_t USB_MemmoryInit(void)
 {
     usb_memmory_status_t status = kStatus_USB_MemmorySuccess;
-    status_t result; 
+    status_t result;
     ftfx_security_state_t securityStatus = kFTFx_SecurityStateNotSecure;
     /* clean the dfu flash configuration */
     memset(&dfuFlashConfig, 0U, sizeof(flash_config_t));
@@ -54,7 +54,7 @@ usb_memmory_status_t USB_MemmoryInit(void)
         status = kStatus_USB_MemmoryErrorUnknown;
         return status;
     }
-     /* Get memmory properties*/
+    /* Get memmory properties*/
     FLASH_GetProperty(&dfuFlashConfig, kFLASH_PropertyPflash0BlockBaseAddr, &pflashBlockBase);
     FLASH_GetProperty(&dfuFlashConfig, kFLASH_PropertyPflash0TotalSize, &pflashTotalSize);
     FLASH_GetProperty(&dfuFlashConfig, kFLASH_PropertyPflash0SectorSize, &pflashSectorSize);
@@ -116,7 +116,7 @@ usb_memmory_status_t USB_MemmoryErase(uint32_t address, uint32_t size)
 usb_memmory_status_t USB_MemmoryProgram(uint32_t address, uint8_t *buffer, uint32_t length)
 {
     usb_memmory_status_t status = kStatus_USB_MemmorySuccess;
-    int32_t flashStatus = 0U;
+    int32_t flashStatus         = 0U;
     /* Round up to alignment of FSL_FEATURE_FLASH_PFLASH_BLOCK_WRITE_UNIT_SIZE */
     length = (length + (FSL_FEATURE_FLASH_PFLASH_BLOCK_WRITE_UNIT_SIZE - 1U)) &
              ~(FSL_FEATURE_FLASH_PFLASH_BLOCK_WRITE_UNIT_SIZE - 1U);

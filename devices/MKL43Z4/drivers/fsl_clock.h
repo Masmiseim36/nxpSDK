@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016 - 2019, NXP
+ * Copyright 2016 - 2020, NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -625,8 +625,6 @@ void CLOCK_SetSimConfig(sim_clock_config_t const *config);
  * changes then the system level clocks may be out of range. This function could
  * be used before MCG mode change, to make sure system level clocks are in allowed
  * range.
- *
- * @param config Pointer to the configure structure.
  */
 static inline void CLOCK_SetSimSafeDivs(void)
 {

@@ -14,13 +14,13 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define BOARD_FLEXIO_BASE FLEXIO
-#define FLEXIO_UART_TX_PIN 5U
-#define FLEXIO_UART_RX_PIN 4U
+#define BOARD_FLEXIO_BASE      FLEXIO
+#define FLEXIO_UART_TX_PIN     5U
+#define FLEXIO_UART_RX_PIN     4U
 #define FLEXIO_CLOCK_FREQUENCY 48000000U
 
 #define RX_RING_BUFFER_SIZE 20U
-#define ECHO_BUFFER_SIZE 8U
+#define ECHO_BUFFER_SIZE    8U
 
 /*******************************************************************************
  * Prototypes

@@ -1,0 +1,366 @@
+/*
+ * Copyright 2020 NXP
+ * All rights reserved.
+ *
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
+#include <string.h>
+#include "board.h"
+#include "fsl_uart.h"
+#include "pin_mux.h"
+#include "clock_config.h"
+#include "fsl_device_registers.h"
+#include "fsl_debug_console.h"
+#include "FreeRTOS.h"
+#include "task.h"
+#include "queue.h"
+#include "timers.h"
+#include "infra_compat.h"
+#include "dev_sign_api.h"
+#include "mqtt_api.h"
+#include "wrappers.h"
+#ifdef ATM_ENABLED
+#include "at_api.h"
+#endif
+#include "ali_iot_config.h"
+#include "fsl_gpio.h"
+/*******************************************************************************
+ * Definitions
+ ******************************************************************************/
+#define DEMO_ALI_IOT_TIMER_INSTANCE               0U
+#define DEMO_ALI_IOT_TIMER_SOURCE_CLOCK_FREQUENCY CLOCK_GetFreq(kCLOCK_LpoClk)
+#define DEMO_SIM800C_STA_GPIO                     GPIOD
+#define DEMO_SIM800C_STA_GPIO_PIN                 0
+#define DEMO_SIM800C_EN_GPIO                      GPIOD
+#define DEMO_SIM800C_EN_GPIO_PIN                  1
+#define mqtt_example_PRIORITY (configMAX_PRIORITIES - 1)
+#define EXAMPLE_TRACE(fmt, ...)                        \
+    do                                                 \
+    {                                                  \
+        HAL_Printf("%s|%03d :: ", __func__, __LINE__); \
+        HAL_Printf(fmt, ##__VA_ARGS__);                \
+        HAL_Printf("%s", "\r\n");                      \
+    } while (0)
+/*******************************************************************************
+ * Prototypes
+ ******************************************************************************/
+void BOARD_Sim800C_Power_Up(void);
+static int mqtt_example();
+/*******************************************************************************
+ * Variables
+ ******************************************************************************/
+static char s_product_key[IOTX_PRODUCT_KEY_LEN + 1]     = ALI_IOT_PRODUCT_KEY;
+static char s_device_name[IOTX_DEVICE_NAME_LEN + 1]     = ALI_IOT_DEVICE_NAME;
+static char s_device_secret[IOTX_DEVICE_SECRET_LEN + 1] = ALI_IOT_DEVICE_SECRET;
+/*******************************************************************************
+ * Code
+ ******************************************************************************/
+
+void BOARD_Sim800C_Power_Up(void)
+{
+    GPIO_PinWrite(DEMO_SIM800C_EN_GPIO, DEMO_SIM800C_EN_GPIO_PIN, 0);
+    SDK_DelayAtLeastUs(1000 * 1000 * 5, BOARD_BOOTCLOCKRUN_CORE_CLOCK);
+    while (1)
+    {
+        if (GPIO_PinRead(DEMO_SIM800C_STA_GPIO, DEMO_SIM800C_STA_GPIO_PIN) == 0)
+        {
+            break;
+        }
+    }
+
+    GPIO_PinWrite(DEMO_SIM800C_EN_GPIO, DEMO_SIM800C_EN_GPIO_PIN, 1);
+
+    while (1)
+    {
+        if (GPIO_PinRead(DEMO_SIM800C_STA_GPIO, DEMO_SIM800C_STA_GPIO_PIN) == 1)
+        {
+            break;
+        }
+    }
+    /* delay 5s for sim800c power up */
+    SDK_DelayAtLeastUs(1000 * 1000 * 5, BOARD_BOOTCLOCKRUN_CORE_CLOCK);
+}
+/*!
+ * @brief Main function
+ */
+int main(void)
+{
+    BOARD_InitPins();
+    BOARD_InitBootClocks();
+    BOARD_InitDebugConsole();
+    NVIC_SetPriority(UART2_FLEXIO_IRQn, 5);
+
+    gpio_pin_config_t gpio_config = {
+        kGPIO_DigitalInput,
+        0,
+    };
+    GPIO_PinInit(DEMO_SIM800C_STA_GPIO, DEMO_SIM800C_STA_GPIO_PIN, &gpio_config);
+
+    gpio_config.pinDirection = kGPIO_DigitalOutput;
+    gpio_config.outputLogic  = 1;
+    GPIO_PinInit(DEMO_SIM800C_EN_GPIO, DEMO_SIM800C_EN_GPIO_PIN, &gpio_config);
+
+    PRINTF("Ali IoT MQTT TCP freertos demo\r\n");
+
+    BOARD_Sim800C_Power_Up();
+
+    xTaskCreate((TaskFunction_t)mqtt_example, "mqtt_example", 0x280, NULL, mqtt_example_PRIORITY, NULL);
+
+    vTaskStartScheduler();
+
+    /* Scheduler should never reach this point. */
+    while (true)
+    {
+    }
+}
+
+static void example_message_arrive(void *pcontext, void *pclient, iotx_mqtt_event_msg_pt msg)
+{
+    iotx_mqtt_topic_info_t *topic_info = (iotx_mqtt_topic_info_pt)msg->msg;
+
+    switch (msg->event_type)
+    {
+        case IOTX_MQTT_EVENT_PUBLISH_RECEIVED:
+            /* print topic name and topic message */
+            EXAMPLE_TRACE("Message Arrived:");
+            EXAMPLE_TRACE("Topic  : %.*s", topic_info->topic_len, topic_info->ptopic);
+            EXAMPLE_TRACE("Payload: %.*s", topic_info->payload_len, topic_info->payload);
+            EXAMPLE_TRACE("\n");
+            break;
+        default:
+            break;
+    }
+}
+
+static int example_subscribe(void *handle)
+{
+    int res         = 0;
+    const char *fmt = "/%s/%s/user/get";
+    char *topic     = NULL;
+    int topic_len   = 0;
+
+    topic_len = strlen(fmt) + strlen(s_product_key) + strlen(s_device_name) + 1;
+    topic     = HAL_Malloc(topic_len);
+    if (topic == NULL)
+    {
+        EXAMPLE_TRACE("memory not enough");
+        return -1;
+    }
+    memset(topic, 0, topic_len);
+    HAL_Snprintf(topic, topic_len, fmt, s_product_key, s_device_name);
+
+    res = IOT_MQTT_Subscribe(handle, topic, IOTX_MQTT_QOS0, example_message_arrive, NULL);
+    if (res < 0)
+    {
+        EXAMPLE_TRACE("subscribe failed");
+        HAL_Free(topic);
+        return -1;
+    }
+
+    HAL_Free(topic);
+    return 0;
+}
+
+static int example_publish(void *handle)
+{
+    int res         = 0;
+    const char *fmt = "/%s/%s/user/get";
+    char *topic     = NULL;
+    int topic_len   = 0;
+    char *payload   = "{\"message\":\"hello!\"}";
+
+    topic_len = strlen(fmt) + strlen(s_product_key) + strlen(s_device_name) + 1;
+    topic     = HAL_Malloc(topic_len);
+    if (topic == NULL)
+    {
+        EXAMPLE_TRACE("memory not enough");
+        return -1;
+    }
+    memset(topic, 0, topic_len);
+    HAL_Snprintf(topic, topic_len, fmt, s_product_key, s_device_name);
+
+    res = IOT_MQTT_Publish_Simple(0, topic, IOTX_MQTT_QOS0, payload, strlen(payload));
+    if (res < 0)
+    {
+        EXAMPLE_TRACE("publish failed, res = %d", res);
+        HAL_Free(topic);
+        return -1;
+    }
+
+    HAL_Free(topic);
+    return 0;
+}
+
+static void example_event_handle(void *pcontext, void *pclient, iotx_mqtt_event_msg_pt msg)
+{
+    EXAMPLE_TRACE("msg->event_type : %d", msg->event_type);
+}
+
+static int everything_state_handle(const int state_code, const char *state_message)
+{
+    EXAMPLE_TRACE("code: -0x%04x, message: %s", -state_code, state_message);
+    return 0;
+}
+
+/*
+ *  NOTE: About demo topic of /${productKey}/${deviceName}/user/get
+ *
+ *  The demo device has been configured in IoT console (https://iot.console.aliyun.com)
+ *  so that its /${productKey}/${deviceName}/user/get can both be subscribed and published
+ *
+ *  We design this to completely demonstrate publish & subscribe process, in this way
+ *  MQTT client can receive original packet sent by itself
+ *
+ *  For new devices created by yourself, pub/sub privilege also requires being granted
+ *  to its /${productKey}/${deviceName}/user/get for successfully running whole example
+ */
+
+static int mqtt_example()
+{
+    void *pclient = NULL;
+    int res       = 0;
+    int loop_cnt  = 0;
+    iotx_mqtt_param_t mqtt_params;
+
+#ifdef ATM_ENABLED
+    if (IOT_ATM_Init() < 0)
+    {
+        HAL_Printf("IOT ATM init failed!\n");
+        return -1;
+    }
+#endif
+
+    IOT_Ioctl(IOTX_IOCTL_SET_PRODUCT_KEY, s_product_key);
+    IOT_Ioctl(IOTX_IOCTL_SET_DEVICE_NAME, s_device_name);
+    IOT_Ioctl(IOTX_IOCTL_SET_DEVICE_SECRET, s_device_secret);
+
+    IOT_RegisterCallback(ITE_STATE_EVERYTHING, everything_state_handle);
+
+    EXAMPLE_TRACE("mqtt example");
+
+    /* Initialize MQTT parameter */
+    /*
+     * Note:
+     *
+     * If you did NOT set value for members of mqtt_params, SDK will use their default values
+     * If you wish to customize some parameter, just un-comment value assigning expressions below
+     *
+     **/
+    memset(&mqtt_params, 0x0, sizeof(mqtt_params));
+
+    /**
+     *
+     *  MQTT connect hostname string
+     *
+     *  MQTT server's hostname can be customized here
+     *
+     *  default value is ${productKey}.iot-as-mqtt.cn-shanghai.aliyuncs.com
+     */
+    /* mqtt_params.host = "something.iot-as-mqtt.cn-shanghai.aliyuncs.com"; */
+
+    /**
+     *
+     *  MQTT connect port number
+     *
+     *  TCP/TLS port which can be 443 or 1883 or 80 or etc, you can customize it here
+     *
+     *  default value is 1883 in TCP case, and 443 in TLS case
+     */
+    /* mqtt_params.port = 1883; */
+
+    /**
+     *
+     * MQTT request timeout interval
+     *
+     * MQTT message request timeout for waiting ACK in MQTT Protocol
+     *
+     * default value is 2000ms.
+     */
+    /* mqtt_params.request_timeout_ms = 2000; */
+
+    /**
+     *
+     * MQTT clean session flag
+     *
+     * If CleanSession is set to 0, the Server MUST resume communications with the Client based on state from
+     * the current Session (as identified by the Client identifier).
+     *
+     * If CleanSession is set to 1, the Client and Server MUST discard any previous Session and Start a new one.
+     *
+     * default value is 0.
+     */
+    /* mqtt_params.clean_session = 0; */
+
+    /**
+     *
+     * MQTT keepAlive interval
+     *
+     * KeepAlive is the maximum time interval that is permitted to elapse between the point at which
+     * the Client finishes transmitting one Control Packet and the point it starts sending the next.
+     *
+     * default value is 60000.
+     */
+    /* mqtt_params.keepalive_interval_ms = 60000; */
+
+    /**
+     *
+     * MQTT write buffer size
+     *
+     * Write buffer is allocated to place upstream MQTT messages, MQTT client will be limitted
+     * to send packet no longer than this to Cloud
+     *
+     * default value is 1024.
+     *
+     */
+    /* mqtt_params.write_buf_size = 1024; */
+
+    /**
+     *
+     * MQTT read buffer size
+     *
+     * Write buffer is allocated to place downstream MQTT messages, MQTT client will be limitted
+     * to recv packet no longer than this from Cloud
+     *
+     * default value is 1024.
+     *
+     */
+    /* mqtt_params.read_buf_size = 1024; */
+
+    /**
+     *
+     * MQTT event callback function
+     *
+     * Event callback function will be called by SDK when it want to notify user what is happening inside itself
+     *
+     * default value is NULL, which means PUB/SUB event won't be exposed.
+     *
+     */
+    mqtt_params.handle_event.h_fp = example_event_handle;
+
+    pclient = IOT_MQTT_Construct(&mqtt_params);
+    if (NULL == pclient)
+    {
+        EXAMPLE_TRACE("MQTT construct failed");
+        return -1;
+    }
+
+    res = example_subscribe(pclient);
+    if (res < 0)
+    {
+        IOT_MQTT_Destroy(&pclient);
+        return -1;
+    }
+
+    while (1)
+    {
+        if (0 == loop_cnt % 20)
+        {
+            example_publish(pclient);
+        }
+
+        IOT_MQTT_Yield(pclient, 200);
+
+        loop_cnt += 1;
+    }
+}

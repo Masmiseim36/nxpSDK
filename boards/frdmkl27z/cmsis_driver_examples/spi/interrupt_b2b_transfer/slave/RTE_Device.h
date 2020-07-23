@@ -9,7 +9,7 @@
 #define __RTE_DEVICE_H
 
 /*Driver name mapping.*/
-#define RTE_SPI1 1
+#define RTE_SPI1        1
 #define RTE_SPI1_DMA_EN 0
 
 /* SPI configuration. */

@@ -15,15 +15,15 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_SPI_MASTER SPI0
-#define EXAMPLE_SPI_SLAVE SPI1
+#define EXAMPLE_SPI_MASTER              SPI0
+#define EXAMPLE_SPI_SLAVE               SPI1
 #define EXAMPLE_SPI_MASTER_SOURCE_CLOCK kCLOCK_BusClk
-#define EXAMPLE_SPI_MASTER_CLK_FREQ CLOCK_GetFreq(kCLOCK_BusClk)
-#define EXAMPLE_SPI_SLAVE_SOURCE_CLOCK kCLOCK_SysCoreClk
-#define EXAMPLE_SPI_MASTER_IRQ SPI0_IRQn
-#define EXAMPLE_SPI_SLAVE_IRQ SPI1_IRQn
-#define SPI_MASTER_IRQHandler SPI0_IRQHandler
-#define SPI_SLAVE_IRQHandler SPI1_IRQHandler
+#define EXAMPLE_SPI_MASTER_CLK_FREQ     CLOCK_GetFreq(kCLOCK_BusClk)
+#define EXAMPLE_SPI_SLAVE_SOURCE_CLOCK  kCLOCK_SysCoreClk
+#define EXAMPLE_SPI_MASTER_IRQ          SPI0_IRQn
+#define EXAMPLE_SPI_SLAVE_IRQ           SPI1_IRQn
+#define SPI_MASTER_IRQHandler           SPI0_IRQHandler
+#define SPI_SLAVE_IRQHandler            SPI1_IRQHandler
 
 /*******************************************************************************
  * Prototypes
@@ -56,11 +56,7 @@ void SPI_MASTER_IRQHandler(void)
         masterFinished = true;
         SPI_DisableInterrupts(EXAMPLE_SPI_MASTER, kSPI_TxEmptyInterruptEnable);
     }
-    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-      exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 void SPI_SLAVE_IRQHandler(void)
@@ -75,11 +71,7 @@ void SPI_SLAVE_IRQHandler(void)
         slaveFinished = true;
         SPI_DisableInterrupts(EXAMPLE_SPI_SLAVE, kSPI_RxFullAndModfInterruptEnable);
     }
-    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-      exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 int main(void)

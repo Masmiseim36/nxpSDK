@@ -42,9 +42,9 @@ extern ARM_DRIVER_SPI Driver_SPI1;
 #endif /* spi1 */
 
 /* SPI Driver state flags */
-#define SPI_FLAG_UNINIT (0)
-#define SPI_FLAG_INIT (1 << 0)
-#define SPI_FLAG_POWER (1 << 1)
+#define SPI_FLAG_UNINIT     (0)
+#define SPI_FLAG_INIT       (1 << 0)
+#define SPI_FLAG_POWER      (1 << 1)
 #define SPI_FLAG_CONFIGURED (1 << 2)
 
 #endif

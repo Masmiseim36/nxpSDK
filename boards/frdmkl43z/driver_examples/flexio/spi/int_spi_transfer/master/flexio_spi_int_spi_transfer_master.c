@@ -16,16 +16,16 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define BOARD_FLEXIO_BASE FLEXIO
-#define FLEXIO_SPI_MOSI_PIN 6U
-#define FLEXIO_SPI_MISO_PIN 7U
-#define FLEXIO_SPI_SCK_PIN 5U
-#define FLEXIO_SPI_PCS0_PIN 4U
+#define BOARD_FLEXIO_BASE      FLEXIO
+#define FLEXIO_SPI_MOSI_PIN    6U
+#define FLEXIO_SPI_MISO_PIN    7U
+#define FLEXIO_SPI_SCK_PIN     5U
+#define FLEXIO_SPI_PCS0_PIN    4U
 #define FLEXIO_CLOCK_FREQUENCY 48000000U
-#define BOARD_SPI_SLAVE_BASE SPI1
-#define SLAVE_SPI_IRQ SPI1_IRQn
-#define MASTER_SPI_IRQ UART2_FLEXIO_IRQn
-#define TRANSFER_SIZE 256U        /*! Transfer dataSize */
+#define BOARD_SPI_SLAVE_BASE   SPI1
+#define SLAVE_SPI_IRQ          SPI1_IRQn
+#define MASTER_SPI_IRQ         UART2_FLEXIO_IRQn
+#define TRANSFER_SIZE     256U    /*! Transfer dataSize */
 #define TRANSFER_BAUDRATE 500000U /*! Transfer baudrate - 500k */
 
 /*******************************************************************************

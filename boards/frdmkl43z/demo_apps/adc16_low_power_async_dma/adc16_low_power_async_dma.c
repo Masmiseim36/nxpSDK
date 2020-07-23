@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -21,26 +21,26 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_ADC16_BASEADDR ADC0
+#define DEMO_ADC16_BASEADDR      ADC0
 #define DEMO_ADC16_CHANNEL_GROUP 0U
-#define DEMO_ADC16_CHANNEL 26U
-#define ADC16_RESULT_REG_ADDR (uint32_t)(&ADC0->R[0]) /* Get ADC16 result register address */
+#define DEMO_ADC16_CHANNEL       26U
+#define ADC16_RESULT_REG_ADDR    (uint32_t)(&ADC0->R[0]) /* Get ADC16 result register address */
 
-#define DEMO_DMA_BASEADDR DMA0
-#define DEMO_DMA_IRQ_ID DMA0_IRQn
+#define DEMO_DMA_BASEADDR         DMA0
+#define DEMO_DMA_IRQ_ID           DMA0_IRQn
 #define DEMO_DMA_IRQ_HANDLER_FUNC DMA0_IRQHandler
-#define DEMO_DMA_CHANNEL 0U
-#define DEMO_DMA_ADC_SOURCE kDmaRequestMux0ADC0
+#define DEMO_DMA_CHANNEL          0U
+#define DEMO_DMA_ADC_SOURCE       kDmaRequestMux0ADC0
 
 #define DEMO_DMAMUX_BASEADDR DMAMUX0
 
 #define DEMO_LPTMR_BASE LPTMR0
 
-#define LED_INIT() LED_RED_INIT(LOGIC_LED_OFF)
+#define LED_INIT()   LED_RED_INIT(LOGIC_LED_OFF)
 #define LED_TOGGLE() LED_RED_TOGGLE()
 
 #define DEMO_LPTMR_COMPARE_VALUE 100U /* Low Power Timer interrupt time in miliseconds */
-#define DEMO_ADC16_SAMPLE_COUNT 16U   /* The ADC16 sample count */
+#define DEMO_ADC16_SAMPLE_COUNT  16U  /* The ADC16 sample count */
 
 /*******************************************************************************
  * Prototypes
@@ -244,11 +244,7 @@ void DEMO_DMA_IRQ_HANDLER_FUNC(void)
                         (void *)g_adc16SampleDataArray, sizeof(uint32_t), sizeof(g_adc16SampleDataArray),
                         kDMA_PeripheralToMemory);
     DMA_SetTransferConfig(DEMO_DMA_BASEADDR, DEMO_DMA_CHANNEL, &g_transferConfig);
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 int main(void)
@@ -276,6 +272,9 @@ int main(void)
     PRINTF("ADC Full Range: %d\r\n", g_Adc16_16bitFullRange);
     while (1)
     {
+        PRINTF("Please press any key to trigger ADC conversion.\r\n");
+        (void)GETCHAR();
+
         /* Start low power timer */
         LPTMR_StartTimer(DEMO_LPTMR_BASE);
         /* Enter to Very Low Power Stop Mode */

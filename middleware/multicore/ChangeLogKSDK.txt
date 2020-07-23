@@ -2,7 +2,26 @@
 @page middleware_log Middleware Change Log
 
 @section multicore Multicore SDK
-  The current version of Multicore SDK is 2.7.0.
+  The current version of Multicore SDK is 2.8.0.
+  - 2.8.0
+    - Multicore SDK component versions:
+      - embedded Remote Procedure Call (eRPC) v1.7.4
+      - eRPC generator (erpcgen) v.1.7.4
+      - Multicore Manager (MCMgr) v4.1.0
+      - RPMsg-Lite v3.1.0
+    - New features:
+      - eRPC: Unit test code updated to handle service add and remove operations.
+      - eRPC: Several MISRA issues in rpmsg-based transports addressed.
+      - eRPC: Support MU transport unit testing.
+      - eRPC: Adding mbed os support.
+      - eRPC: Fixed Linux/TCP acceptance tests in release target.
+      - eRPC: Minor documentation updates, code formatting. 
+      - erpcgen: Whitespace removed from C common header template.
+      - RPMsg-Lite: MISRA C-2012 violations fixed (7.4).
+      - RPMsg-Lite: Fix missing lock in rpmsg_lite_rx_callback() for QNX env.
+      - RPMsg-Lite: Correction of rpmsg_lite_instance structure members description.
+      - RPMsg-Lite: Address -Waddress-of-packed-member warnings in GCC9.
+      - RPMsg-Lite: Clang update to v10.0.0, code re-formatted.
   - 2.7.0
     - Multicore SDK component versions:
       - embedded Remote Procedure Call (eRPC) v1.7.3
@@ -79,7 +98,7 @@
       - eRPC: Improved code size of generated code.
       - eRPC: Improved eRPC nested calls.
       - eRPC: Improved eRPC list length variable serialization.
-      - eRPC: Added @nullable support for scalar types.
+      - eRPC: Added \@nullable support for scalar types.
       - MCMgr: Added new MCMGR_TriggerEventForce() API.
 
   - 2.3.0
@@ -91,8 +110,8 @@
     - New features:
       - eRPC: Added support for unions type non-wrapped by structure.
       - eRPC: Added callbacks support.
-      - eRPC: Added support @external annotation for functions.
-      - eRPC: Added support @name annotation.
+      - eRPC: Added support \@external annotation for functions.
+      - eRPC: Added support \@name annotation.
       - eRPC: Added Messaging Unit transport layer.
       - eRPC: Added RPMSG Lite RTOS TTY transport layer.
       - eRPC: Added version verification and IDL version verification between eRPC code and eRPC generated shim code.
@@ -131,7 +150,7 @@
       - embedded Remote Procedure Call (eRPC) v1.3.0
       - eRPC generator (erpcgen) v.1.3.0
     - New features:
-      - eRPC: New annotation types introduced (@length, @max_length, ...).
+      - eRPC: New annotation types introduced (\@length, \@max_length, ...).
       - eRPC: Support for running both erpc client and erpc server on one side.
       - eRPC: New transport layers for (LP)UART, (D)SPI.
       - eRPC: Error handling support.

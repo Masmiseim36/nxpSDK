@@ -9,9 +9,9 @@
     <definition extID="device.MKL27Z644_CMSIS.MKL27Z644"/>
     <definition extID="device.MKL27Z644_startup.MKL27Z644"/>
     <definition extID="driver.mma8451q.MKL27Z644"/>
-    <definition extID="middleware.amazon_freertos-kernel.MKL27Z644"/>
-    <definition extID="middleware.amazon_freertos-kernel.extension.MKL27Z644"/>
-    <definition extID="middleware.amazon_freertos-kernel.heap_4.MKL27Z644"/>
+    <definition extID="middleware.freertos-kernel.MKL27Z644"/>
+    <definition extID="middleware.freertos-kernel.extension.MKL27Z644"/>
+    <definition extID="middleware.freertos-kernel.heap_4.MKL27Z644"/>
     <definition extID="middleware.multicore.erpc.common.MKL27Z644"/>
     <definition extID="middleware.multicore.erpc.doc.MKL27Z644"/>
     <definition extID="middleware.multicore.erpc.eRPC_arbitrator.MKL27Z644"/>
@@ -43,7 +43,7 @@
     <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="frdmkl27z_erpc_remote_control" name="erpc_remote_control" category="multiprocessor_examples" dependency="platform.drivers.dma.MKL27Z644 platform.drivers.lpuart.MKL27Z644 platform.drivers.lpuart_dma.MKL27Z644 driver.mma8451q.MKL27Z644 platform.drivers.lpuart_cmsis_dma.MKL27Z644 platform.drivers.gpio.MKL27Z644 platform.drivers.port.MKL27Z644 platform.drivers.i2c.MKL27Z644 platform.drivers.adc16.MKL27Z644 platform.drivers.dmamux.MKL27Z644 middleware.multicore.erpc.eRPC_arbitrator.MKL27Z644 middleware.multicore.erpc.eRPC_port_freertos.MKL27Z644 middleware.multicore.erpc.eRPC_uart_cmsis_transport.MKL27Z644 middleware.amazon_freertos-kernel.heap_4.MKL27Z644 middleware.multicore.erpc.doc.MKL27Z644 platform.drivers.clock.MKL27Z644 platform.drivers.common.MKL27Z644 device.MKL27Z644_CMSIS.MKL27Z644 utility.debug_console.MKL27Z644 component.lpuart_adapter.MKL27Z644 component.serial_manager.MKL27Z644 component.lists.MKL27Z644 component.serial_manager_uart.MKL27Z644 device.MKL27Z644_startup.MKL27Z644 platform.drivers.uart.MKL27Z644 platform.drivers.smc.MKL27Z644 platform.utilities.assert.MKL27Z644 platform.Include_core_cm0plus.MKL27Z644 platform.Include_common.MKL27Z644 platform.Include_dsp.MKL27Z644 platform.CMSIS_Driver_Include.USART_CMSISInclude.MKL27Z644 platform.CMSIS_Driver_Include.Common_CMSISInclude.MKL27Z644 middleware.multicore.erpc.common.MKL27Z644 middleware.amazon_freertos-kernel.MKL27Z644 middleware.amazon_freertos-kernel.extension.MKL27Z644 platform.utilities.misc_utilities.MKL27Z644">
+  <example id="frdmkl27z_erpc_remote_control" name="erpc_remote_control" category="multiprocessor_examples" dependency="platform.drivers.dma.MKL27Z644 platform.drivers.lpuart.MKL27Z644 platform.drivers.lpuart_dma.MKL27Z644 driver.mma8451q.MKL27Z644 platform.drivers.lpuart_cmsis_dma.MKL27Z644 platform.drivers.gpio.MKL27Z644 platform.drivers.port.MKL27Z644 platform.drivers.i2c.MKL27Z644 platform.drivers.adc16.MKL27Z644 platform.drivers.dmamux.MKL27Z644 middleware.multicore.erpc.eRPC_arbitrator.MKL27Z644 middleware.multicore.erpc.eRPC_port_freertos.MKL27Z644 middleware.multicore.erpc.eRPC_uart_cmsis_transport.MKL27Z644 middleware.freertos-kernel.heap_4.MKL27Z644 middleware.multicore.erpc.doc.MKL27Z644 platform.drivers.clock.MKL27Z644 platform.drivers.common.MKL27Z644 device.MKL27Z644_CMSIS.MKL27Z644 utility.debug_console.MKL27Z644 component.lpuart_adapter.MKL27Z644 component.serial_manager.MKL27Z644 component.lists.MKL27Z644 component.serial_manager_uart.MKL27Z644 device.MKL27Z644_startup.MKL27Z644 platform.drivers.uart.MKL27Z644 platform.drivers.smc.MKL27Z644 platform.utilities.assert.MKL27Z644 platform.Include_core_cm0plus.MKL27Z644 platform.Include_common.MKL27Z644 platform.Include_dsp.MKL27Z644 platform.CMSIS_Driver_Include.USART_CMSISInclude.MKL27Z644 platform.CMSIS_Driver_Include.Common_CMSISInclude.MKL27Z644 middleware.multicore.erpc.common.MKL27Z644 middleware.freertos-kernel.MKL27Z644 middleware.freertos-kernel.extension.MKL27Z644 platform.utilities.misc_utilities.MKL27Z644">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.ccnature"/>
     </projects>

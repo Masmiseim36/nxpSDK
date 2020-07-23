@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -21,13 +21,18 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief SPI driver version 2.0.5. */
-#define FSL_SPI_DRIVER_VERSION (MAKE_VERSION(2, 0, 5))
+/*! @brief SPI driver version 2.1.0. */
+#define FSL_SPI_DRIVER_VERSION (MAKE_VERSION(2, 1, 0))
 /*@}*/
 
 #ifndef SPI_DUMMYDATA
 /*! @brief SPI dummy transfer data, the data is sent while txBuff is NULL. */
 #define SPI_DUMMYDATA (0xFFU)
+#endif
+
+/*! @brief Retry times for waiting flag. */
+#ifndef SPI_RETRY_TIMES
+#define SPI_RETRY_TIMES 0U /* Define to zero means keep waiting until the flag is assert/deassert. */
 #endif
 
 /*! @brief Global variable for dummy data value setting. */
@@ -36,9 +41,10 @@ extern volatile uint8_t g_spiDummyData[];
 /*! @brief Return status for the SPI driver.*/
 enum _spi_status
 {
-    kStatus_SPI_Busy  = MAKE_STATUS(kStatusGroup_SPI, 0), /*!< SPI bus is busy */
-    kStatus_SPI_Idle  = MAKE_STATUS(kStatusGroup_SPI, 1), /*!< SPI is idle */
-    kStatus_SPI_Error = MAKE_STATUS(kStatusGroup_SPI, 2)  /*!< SPI  error */
+    kStatus_SPI_Busy    = MAKE_STATUS(kStatusGroup_SPI, 0), /*!< SPI bus is busy */
+    kStatus_SPI_Idle    = MAKE_STATUS(kStatusGroup_SPI, 1), /*!< SPI is idle */
+    kStatus_SPI_Error   = MAKE_STATUS(kStatusGroup_SPI, 2), /*!< SPI error */
+    kStatus_SPI_Timeout = MAKE_STATUS(kStatusGroup_SPI, 3)  /*!< SPI timeout polling status flags. */
 };
 
 /*! @brief SPI clock polarity configuration.*/
@@ -361,7 +367,7 @@ uint32_t SPI_GetStatusFlags(SPI_Type *base);
  * @brief Clear the interrupt if enable INCTLR.
  *
  * @param base SPI base pointer
- * @param interrupt Interrupt need to be cleared
+ * @param mask Interrupt need to be cleared
  *      The parameter could be any combination of the following values:
  *          @arg kSPI_RxFullAndModfInterruptEnable
  *          @arg kSPI_TxEmptyInterruptEnable
@@ -420,7 +426,7 @@ void SPI_DisableInterrupts(SPI_Type *base, uint32_t mask);
  * @brief Enables the DMA source for SPI.
  *
  * @param base SPI base pointer
- * @param source SPI DMA source.
+ * @param mask SPI DMA source.
  * @param enable True means enable DMA, false means disable DMA
  */
 static inline void SPI_EnableDMA(SPI_Type *base, uint8_t mask, bool enable)
@@ -471,7 +477,7 @@ uint32_t SPI_GetInstance(SPI_Type *base);
  * @brief Sets the pin mode for transfer.
  *
  * @param base SPI base pointer
- * @param pinMode pin mode for transfer AND #_spi_pin_mode could get the related configuration.
+ * @param pinMode pin mode for transfer AND _spi_pin_mode could get the related configuration.
  */
 static inline void SPI_SetPinMode(SPI_Type *base, spi_pin_mode_t pinMode)
 {
@@ -528,8 +534,9 @@ void SPI_EnableFIFO(SPI_Type *base, bool enable);
  * @param base SPI base pointer
  * @param buffer The data bytes to send
  * @param size The number of data bytes to send
+ * @return kStatus_SPI_Timeout The transfer timed out and was aborted.
  */
-void SPI_WriteBlocking(SPI_Type *base, uint8_t *buffer, size_t size);
+status_t SPI_WriteBlocking(SPI_Type *base, uint8_t *buffer, size_t size);
 
 /*!
  * @brief Writes a data into the SPI data register.
@@ -654,16 +661,13 @@ void SPI_SlaveTransferCreateHandle(SPI_Type *base,
  * @note If SPI transfer data frame size is 16 bits, the transfer size cannot be an odd number.
  *
  * @param base SPI peripheral base address.
- * @param handle pointer to spi_master_handle_t structure which stores the transfer state
+ * @param handle pointer to spi_slave_handle_t structure which stores the transfer state
  * @param xfer pointer to spi_xfer_config_t structure
  * @retval kStatus_Success Successfully start a transfer.
  * @retval kStatus_InvalidArgument Input argument is invalid.
  * @retval kStatus_SPI_Busy SPI is not idle, is running another transfer.
  */
-static inline status_t SPI_SlaveTransferNonBlocking(SPI_Type *base, spi_slave_handle_t *handle, spi_transfer_t *xfer)
-{
-    return SPI_MasterTransferNonBlocking(base, handle, xfer);
-}
+status_t SPI_SlaveTransferNonBlocking(SPI_Type *base, spi_slave_handle_t *handle, spi_transfer_t *xfer);
 
 /*!
  * @brief Gets the bytes of the SPI interrupt transferred.

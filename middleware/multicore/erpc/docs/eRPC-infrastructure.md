@@ -10,22 +10,22 @@ Holds the user-editable ``erpc_config.h`` header. This file can either be edited
 #### *infra*
 Contains C++ infrastructure code used to build server and client applications. For most use cases, the APIs in the setup/folder are easier. Accessing the C++ layer directly is only required if you need to extend eRPC, or for atypical configurations.
 __Common__:
-* The ``message_buffer.h`` and ``message_buffer.cpp`` files contain functions for working with message buffers (reading/writing data and others).
-* Codecs are used for data serialization. Prototypes of functions for codecs are declared in the ``codec.h`` file. The ``basic_codec.cpp`` file contains the first implementation of these functions.
+* The ``erpc_message_buffer.h`` and ``erpc_message_buffer.cpp`` files contain functions for working with message buffers (reading/writing data and others).
+* Codecs are used for data serialization. Prototypes of functions for codecs are declared in the ``erpc_codec.h`` file. The ``erpc_basic_codec.cpp`` file contains the first implementation of these functions.
 __Client side__:
 The role of client is to create and to send eRPC requests to the server, and to process the received response (if requested).
-  * This is implemented in ``client_manager.h``/``.cpp`` files.
+  * This is implemented in ``erpc_client_manager.h``/``.cpp`` files.
   * The main functions are ``createRequest()``, ``performRequest()``, and ``releaseRequest()``.
   * The transport layer and codec have to be set for the client manager.
 __Server side__:
 The role of the server is to receive eRPC requests from the client side, to execute requested functions, and to send the response back (if client requests a result).
-* Prototypes of server functions are declared in server.h and common functions are defined in server.cpp. The ``simple_server.h``/``.cpp`` files contain the first implementation of server-declared functions.
+* Prototypes of server functions are declared in server.h and common functions are defined in server.cpp. The ``erpc_simple_server.h``/``.cpp`` files contain the first implementation of server-declared functions.
 * Transport layer and codec have to be set for the server.
-* The ``server.h`` file also contains a prototype for a service class. For each interface declared in an IDL file, the definition for service is generated using the eRPC generator tool. These generated services must be added to the server after its initialization. Without this step, the server cannot handle client requests.
+* The ``erpc_server.h`` file also contains a prototype for a service class. For each interface declared in an IDL file, the definition for service is generated using the eRPC generator tool. These generated services must be added to the server after its initialization. Without this step, the server cannot handle client requests.
 * The simple server contains 2 functions for message processing: ``run`` and ``poll``. The ``poll`` function only supports the RPMsg transport layer.
 __Client-Server__:
-For bidirectional communication has to be used both, client and server implementation on each side. For these, the use cases were created for the ``arbitrated_client_manager.h``/``.cpp`` and ``transport_arbitrator.h``/``.cpp`` files.
-* The first two files are replacing ``client_manager.h``/``.cpp`` files to work with transport arbitrator.
+For bidirectional communication has to be used both, client and server implementation on each side. For these, the use cases were created for the ``erpc_arbitrated_client_manager.h``/``.cpp`` and ``erpc_transport_arbitrator.h``/``.cpp`` files.
+* The first two files are replacing ``erpc_client_manager.h``/``.cpp`` files to work with transport arbitrator.
 * The second two files are special transport layer created for cooperation server/client implementation on one side.
 
 #### *port*
@@ -36,7 +36,7 @@ Contains a set of plain C APIs that wrap the C++ infrastructure, providing clien
 
 #### *transports*
 Contains transport classes for the different methods of communication supported by eRPC. Transport classes connect eRPC applications with drivers for different transport mediums. Some transports are applicable only to host PCs, while others are applicable only to embedded or multicore systems.
-* Prototypes of functions for transport layers (which have to be declared for each transport medium that is used) are declared in the ``transport.h`` file.
+* Prototypes of functions for transport layers (which have to be declared for each transport medium that is used) are declared in the ``erpc_transport.h`` file.
 * Each transport layer needs to at least send and the receive implementation.
 Most transports have a corresponding C transport setup function in the setup/ folder.
 

@@ -34,7 +34,7 @@
   <td id="projectlogo"><img alt="Logo" src="nxp_logo_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">eRPC API Reference
-   &#160;<span id="projectnumber">Rev. 1.7.3</span>
+   &#160;<span id="projectnumber">Rev. 1.7.4</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -150,12 +150,12 @@ Public Member Functions</h2></td></tr>
 virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_r_p_msg_transport.html#a9170c0983cf46938b63433d1256f08c8">~RPMsgTransport</a> (void)</td></tr>
 <tr class="memdesc:a9170c0983cf46938b63433d1256f08c8"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classerpc_1_1_codec.html" title="Abstract serialization encoder/decoder interface. ">Codec</a> destructor. <br /></td></tr>
 <tr class="separator:a9170c0983cf46938b63433d1256f08c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adb606a3e06f02e45402f7b9719f1f855"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="group__infra.html#ga5f8872e58f09a16d192bf664f9898651">erpc_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_r_p_msg_transport.html#adb606a3e06f02e45402f7b9719f1f855">init</a> (uint32_t src_addr, uint32_t dst_addr, void *base_address, uint32_t length, int32_t rpmsg_link_id)</td></tr>
-<tr class="memdesc:adb606a3e06f02e45402f7b9719f1f855"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialization of <a class="el" href="classerpc_1_1_r_p_msg_transport.html" title="Transport that uses RPMsg zero copy API for interprocessor messaging. ">RPMsgTransport</a> layer - as RPMsg master.  <a href="#adb606a3e06f02e45402f7b9719f1f855">More...</a><br /></td></tr>
-<tr class="separator:adb606a3e06f02e45402f7b9719f1f855"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af2df8d557e7bf5cfacd8c1ac6ed33f98"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="group__infra.html#ga5f8872e58f09a16d192bf664f9898651">erpc_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_r_p_msg_transport.html#af2df8d557e7bf5cfacd8c1ac6ed33f98">init</a> (uint32_t src_addr, uint32_t dst_addr, void *base_address, int32_t rpmsg_link_id, void(*ready_cb)(void), char *nameservice_name)</td></tr>
-<tr class="memdesc:af2df8d557e7bf5cfacd8c1ac6ed33f98"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialization of <a class="el" href="classerpc_1_1_r_p_msg_transport.html" title="Transport that uses RPMsg zero copy API for interprocessor messaging. ">RPMsgTransport</a> layer - as RPMsg remote.  <a href="#af2df8d557e7bf5cfacd8c1ac6ed33f98">More...</a><br /></td></tr>
-<tr class="separator:af2df8d557e7bf5cfacd8c1ac6ed33f98"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5d98c0f410ac60ee1cd4705eb6310ea3"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="group__infra.html#ga5f8872e58f09a16d192bf664f9898651">erpc_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_r_p_msg_transport.html#a5d98c0f410ac60ee1cd4705eb6310ea3">init</a> (uint32_t src_addr, uint32_t dst_addr, void *base_address, uint32_t length, uint32_t rpmsg_link_id)</td></tr>
+<tr class="memdesc:a5d98c0f410ac60ee1cd4705eb6310ea3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialization of <a class="el" href="classerpc_1_1_r_p_msg_transport.html" title="Transport that uses RPMsg zero copy API for interprocessor messaging. ">RPMsgTransport</a> layer - as RPMsg master.  <a href="#a5d98c0f410ac60ee1cd4705eb6310ea3">More...</a><br /></td></tr>
+<tr class="separator:a5d98c0f410ac60ee1cd4705eb6310ea3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac88eb829b9ed54b337dc3f08fbe47a28"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="group__infra.html#ga5f8872e58f09a16d192bf664f9898651">erpc_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_r_p_msg_transport.html#ac88eb829b9ed54b337dc3f08fbe47a28">init</a> (uint32_t src_addr, uint32_t dst_addr, void *base_address, uint32_t rpmsg_link_id, void(*ready_cb)(void), char *nameservice_name)</td></tr>
+<tr class="memdesc:ac88eb829b9ed54b337dc3f08fbe47a28"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialization of <a class="el" href="classerpc_1_1_r_p_msg_transport.html" title="Transport that uses RPMsg zero copy API for interprocessor messaging. ">RPMsgTransport</a> layer - as RPMsg remote.  <a href="#ac88eb829b9ed54b337dc3f08fbe47a28">More...</a><br /></td></tr>
+<tr class="separator:ac88eb829b9ed54b337dc3f08fbe47a28"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:accaaae7170e9b1ae42a4cdf1b2213583"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="group__infra.html#ga5f8872e58f09a16d192bf664f9898651">erpc_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_r_p_msg_transport.html#accaaae7170e9b1ae42a4cdf1b2213583">receive</a> (<a class="el" href="classerpc_1_1_message_buffer.html">MessageBuffer</a> *message)</td></tr>
 <tr class="memdesc:accaaae7170e9b1ae42a4cdf1b2213583"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set message to first received message.  <a href="#accaaae7170e9b1ae42a4cdf1b2213583">More...</a><br /></td></tr>
 <tr class="separator:accaaae7170e9b1ae42a4cdf1b2213583"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -232,7 +232,7 @@ Static Protected Attributes</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="adb606a3e06f02e45402f7b9719f1f855"></a>
+<a class="anchor" id="a5d98c0f410ac60ee1cd4705eb6310ea3"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -266,7 +266,7 @@ Static Protected Attributes</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">int32_t&#160;</td>
+          <td class="paramtype">uint32_t&#160;</td>
           <td class="paramname"><em>rpmsg_link_id</em>&#160;</td>
         </tr>
         <tr>
@@ -283,7 +283,7 @@ Static Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Initialization of <a class="el" href="classerpc_1_1_r_p_msg_transport.html" title="Transport that uses RPMsg zero copy API for interprocessor messaging. ">RPMsgTransport</a> layer - as RPMsg master. </p>
-<p>Call <a class="el" href="classerpc_1_1_r_p_msg_transport.html#adb606a3e06f02e45402f7b9719f1f855" title="Initialization of RPMsgTransport layer - as RPMsg master. ">init()</a> for RPMsg. Create buffers for receiving messages.</p>
+<p>Call <a class="el" href="classerpc_1_1_r_p_msg_transport.html#a5d98c0f410ac60ee1cd4705eb6310ea3" title="Initialization of RPMsgTransport layer - as RPMsg master. ">init()</a> for RPMsg. Create buffers for receiving messages.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">src_addr</td><td>Source address. </td></tr>
@@ -304,7 +304,7 @@ Static Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="af2df8d557e7bf5cfacd8c1ac6ed33f98"></a>
+<a class="anchor" id="ac88eb829b9ed54b337dc3f08fbe47a28"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -332,7 +332,7 @@ Static Protected Attributes</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">int32_t&#160;</td>
+          <td class="paramtype">uint32_t&#160;</td>
           <td class="paramname"><em>rpmsg_link_id</em>, </td>
         </tr>
         <tr>
@@ -361,7 +361,7 @@ Static Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Initialization of <a class="el" href="classerpc_1_1_r_p_msg_transport.html" title="Transport that uses RPMsg zero copy API for interprocessor messaging. ">RPMsgTransport</a> layer - as RPMsg remote. </p>
-<p>Call <a class="el" href="classerpc_1_1_r_p_msg_transport.html#adb606a3e06f02e45402f7b9719f1f855" title="Initialization of RPMsgTransport layer - as RPMsg master. ">init()</a> for RPMsg. Create buffers for receiving messages.</p>
+<p>Call <a class="el" href="classerpc_1_1_r_p_msg_transport.html#a5d98c0f410ac60ee1cd4705eb6310ea3" title="Initialization of RPMsgTransport layer - as RPMsg master. ">init()</a> for RPMsg. Create buffers for receiving messages.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">src_addr</td><td>Source address. </td></tr>
@@ -665,7 +665,7 @@ Static Protected Attributes</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul class="foot">
-    <li class="footer">&copy; 2016 NXP Semiconductors. All rights reserved.
+    <li class="footer">Copyright 2016-2020 NXP Semiconductors. All rights reserved.
     </li>
   </ul>
 </div>

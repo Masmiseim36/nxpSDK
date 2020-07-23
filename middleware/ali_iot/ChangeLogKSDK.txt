@@ -1,0 +1,10 @@
+/**
+@page middleware_log Ali IoT Change Log
+
+@section Ali-IoT Ali-IoT for KSDK
+Current version is Ali-IoT 3.0.1_rev0.
+
+  - 3.0.1_rev0
+    - Integrate Ali IoT to SDK.
+
+*/

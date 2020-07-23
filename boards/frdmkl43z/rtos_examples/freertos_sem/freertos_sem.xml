@@ -8,9 +8,9 @@
     <definition extID="component.serial_manager_uart.MKL43Z4"/>
     <definition extID="device.MKL43Z4_CMSIS.MKL43Z4"/>
     <definition extID="device.MKL43Z4_startup.MKL43Z4"/>
-    <definition extID="middleware.amazon_freertos-kernel.MKL43Z4"/>
-    <definition extID="middleware.amazon_freertos-kernel.extension.MKL43Z4"/>
-    <definition extID="middleware.amazon_freertos-kernel.heap_4.MKL43Z4"/>
+    <definition extID="middleware.freertos-kernel.MKL43Z4"/>
+    <definition extID="middleware.freertos-kernel.extension.MKL43Z4"/>
+    <definition extID="middleware.freertos-kernel.heap_4.MKL43Z4"/>
     <definition extID="platform.Include_common.MKL43Z4"/>
     <definition extID="platform.Include_core_cm0plus.MKL43Z4"/>
     <definition extID="platform.Include_dsp.MKL43Z4"/>
@@ -29,7 +29,7 @@
     <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="frdmkl43z_freertos_sem" name="freertos_sem" category="rtos_examples" dependency="platform.drivers.port.MKL43Z4 platform.drivers.gpio.MKL43Z4 platform.drivers.clock.MKL43Z4 middleware.amazon_freertos-kernel.heap_4.MKL43Z4 platform.drivers.common.MKL43Z4 device.MKL43Z4_CMSIS.MKL43Z4 utility.debug_console.MKL43Z4 component.lpuart_adapter.MKL43Z4 component.serial_manager.MKL43Z4 component.lists.MKL43Z4 component.serial_manager_uart.MKL43Z4 platform.drivers.lpuart.MKL43Z4 device.MKL43Z4_startup.MKL43Z4 platform.drivers.uart.MKL43Z4 platform.drivers.smc.MKL43Z4 platform.utilities.assert.MKL43Z4 platform.Include_core_cm0plus.MKL43Z4 platform.Include_common.MKL43Z4 platform.Include_dsp.MKL43Z4 middleware.amazon_freertos-kernel.MKL43Z4 middleware.amazon_freertos-kernel.extension.MKL43Z4 platform.utilities.misc_utilities.MKL43Z4">
+  <example id="frdmkl43z_freertos_sem" name="freertos_sem" category="rtos_examples" dependency="platform.drivers.port.MKL43Z4 platform.drivers.gpio.MKL43Z4 platform.drivers.clock.MKL43Z4 middleware.freertos-kernel.heap_4.MKL43Z4 platform.drivers.common.MKL43Z4 device.MKL43Z4_CMSIS.MKL43Z4 utility.debug_console.MKL43Z4 component.lpuart_adapter.MKL43Z4 component.serial_manager.MKL43Z4 component.lists.MKL43Z4 component.serial_manager_uart.MKL43Z4 platform.drivers.lpuart.MKL43Z4 device.MKL43Z4_startup.MKL43Z4 platform.drivers.uart.MKL43Z4 platform.drivers.smc.MKL43Z4 platform.utilities.assert.MKL43Z4 platform.Include_core_cm0plus.MKL43Z4 platform.Include_common.MKL43Z4 platform.Include_dsp.MKL43Z4 middleware.freertos-kernel.MKL43Z4 middleware.freertos-kernel.extension.MKL43Z4 platform.utilities.misc_utilities.MKL43Z4">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>

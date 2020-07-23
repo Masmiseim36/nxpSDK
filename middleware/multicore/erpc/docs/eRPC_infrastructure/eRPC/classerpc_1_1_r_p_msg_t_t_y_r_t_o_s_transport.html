@@ -34,7 +34,7 @@
   <td id="projectlogo"><img alt="Logo" src="nxp_logo_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">eRPC API Reference
-   &#160;<span id="projectnumber">Rev. 1.7.3</span>
+   &#160;<span id="projectnumber">Rev. 1.7.4</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -148,12 +148,12 @@ Public Member Functions</h2></td></tr>
 virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_r_p_msg_t_t_y_r_t_o_s_transport.html#a91ea7a1a66c2f3fb8028296f9874a914">~RPMsgTTYRTOSTransport</a> (void)</td></tr>
 <tr class="memdesc:a91ea7a1a66c2f3fb8028296f9874a914"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classerpc_1_1_r_p_msg_r_t_o_s_transport.html" title="Transport that uses RPMsg zero copy RTOS API for interprocessor messaging. ">RPMsgRTOSTransport</a> destructor. <br /></td></tr>
 <tr class="separator:a91ea7a1a66c2f3fb8028296f9874a914"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1c78df963f8f7d9d38cb9bb28a10b72e"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="group__infra.html#ga5f8872e58f09a16d192bf664f9898651">erpc_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_r_p_msg_t_t_y_r_t_o_s_transport.html#a1c78df963f8f7d9d38cb9bb28a10b72e">init</a> (uint32_t src_addr, uint32_t dst_addr, void *base_address, uint32_t length, int32_t rpmsg_link_id)</td></tr>
-<tr class="memdesc:a1c78df963f8f7d9d38cb9bb28a10b72e"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function call RPMsg rtos init function - as RPMsg master.  <a href="#a1c78df963f8f7d9d38cb9bb28a10b72e">More...</a><br /></td></tr>
-<tr class="separator:a1c78df963f8f7d9d38cb9bb28a10b72e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae07881daaa2e414ba747f7e180deb755"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="group__infra.html#ga5f8872e58f09a16d192bf664f9898651">erpc_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_r_p_msg_t_t_y_r_t_o_s_transport.html#ae07881daaa2e414ba747f7e180deb755">init</a> (uint32_t src_addr, uint32_t dst_addr, void *base_address, int32_t rpmsg_link_id, void(*ready_cb)(void), char *nameservice_name)</td></tr>
-<tr class="memdesc:ae07881daaa2e414ba747f7e180deb755"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function call RPMsg rtos init function - as RPMsg remote.  <a href="#ae07881daaa2e414ba747f7e180deb755">More...</a><br /></td></tr>
-<tr class="separator:ae07881daaa2e414ba747f7e180deb755"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a05ebe6f363cbf90ca5258af1fe1a482d"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="group__infra.html#ga5f8872e58f09a16d192bf664f9898651">erpc_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_r_p_msg_t_t_y_r_t_o_s_transport.html#a05ebe6f363cbf90ca5258af1fe1a482d">init</a> (uint32_t src_addr, uint32_t dst_addr, void *base_address, uint32_t length, uint32_t rpmsg_link_id)</td></tr>
+<tr class="memdesc:a05ebe6f363cbf90ca5258af1fe1a482d"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function call RPMsg rtos init function - as RPMsg master.  <a href="#a05ebe6f363cbf90ca5258af1fe1a482d">More...</a><br /></td></tr>
+<tr class="separator:a05ebe6f363cbf90ca5258af1fe1a482d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aba58761e6f6e8df72db29b24e12d9a71"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="group__infra.html#ga5f8872e58f09a16d192bf664f9898651">erpc_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_r_p_msg_t_t_y_r_t_o_s_transport.html#aba58761e6f6e8df72db29b24e12d9a71">init</a> (uint32_t src_addr, uint32_t dst_addr, void *base_address, uint32_t rpmsg_link_id, void(*ready_cb)(void), char *nameservice_name)</td></tr>
+<tr class="memdesc:aba58761e6f6e8df72db29b24e12d9a71"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function call RPMsg rtos init function - as RPMsg remote.  <a href="#aba58761e6f6e8df72db29b24e12d9a71">More...</a><br /></td></tr>
+<tr class="separator:aba58761e6f6e8df72db29b24e12d9a71"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab3e7d041fb640421c52236918c1698d5"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="group__infra.html#ga5f8872e58f09a16d192bf664f9898651">erpc_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_r_p_msg_t_t_y_r_t_o_s_transport.html#ab3e7d041fb640421c52236918c1698d5">receive</a> (<a class="el" href="classerpc_1_1_message_buffer.html">MessageBuffer</a> *message)</td></tr>
 <tr class="memdesc:ab3e7d041fb640421c52236918c1698d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Store incoming message to message buffer.  <a href="#ab3e7d041fb640421c52236918c1698d5">More...</a><br /></td></tr>
 <tr class="separator:ab3e7d041fb640421c52236918c1698d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -224,7 +224,7 @@ Additional Inherited Members</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="a1c78df963f8f7d9d38cb9bb28a10b72e"></a>
+<a class="anchor" id="a05ebe6f363cbf90ca5258af1fe1a482d"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -258,7 +258,7 @@ Additional Inherited Members</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">int32_t&#160;</td>
+          <td class="paramtype">uint32_t&#160;</td>
           <td class="paramname"><em>rpmsg_link_id</em>&#160;</td>
         </tr>
         <tr>
@@ -295,7 +295,7 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ae07881daaa2e414ba747f7e180deb755"></a>
+<a class="anchor" id="aba58761e6f6e8df72db29b24e12d9a71"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -323,7 +323,7 @@ Additional Inherited Members</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">int32_t&#160;</td>
+          <td class="paramtype">uint32_t&#160;</td>
           <td class="paramname"><em>rpmsg_link_id</em>, </td>
         </tr>
         <tr>
@@ -564,7 +564,7 @@ Additional Inherited Members</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul class="foot">
-    <li class="footer">&copy; 2016 NXP Semiconductors. All rights reserved.
+    <li class="footer">Copyright 2016-2020 NXP Semiconductors. All rights reserved.
     </li>
   </ul>
 </div>

@@ -10,8 +10,8 @@ var group__rpmsg__lite__rtos__transport =
     [ "RPMsgRTOSTransport", "classerpc_1_1_r_p_msg_r_t_o_s_transport.html", [
       [ "RPMsgRTOSTransport", "classerpc_1_1_r_p_msg_r_t_o_s_transport.html#a1176c7ea6559996bf97cd4961abd5346", null ],
       [ "~RPMsgRTOSTransport", "classerpc_1_1_r_p_msg_r_t_o_s_transport.html#aa231589d297458bba899bdb0f70984b3", null ],
-      [ "init", "classerpc_1_1_r_p_msg_r_t_o_s_transport.html#a01e1c3fe80fbbd24a4e731ca9c7a3061", null ],
-      [ "init", "classerpc_1_1_r_p_msg_r_t_o_s_transport.html#a4facb958601717d881963cd33a994879", null ],
+      [ "init", "classerpc_1_1_r_p_msg_r_t_o_s_transport.html#a99cff47855d7d2cf04984e9472c02a9c", null ],
+      [ "init", "classerpc_1_1_r_p_msg_r_t_o_s_transport.html#a3813abb5e6b92edcef1399e065466b1e", null ],
       [ "receive", "classerpc_1_1_r_p_msg_r_t_o_s_transport.html#adaaccd23d645603b560482de2c016d71", null ],
       [ "send", "classerpc_1_1_r_p_msg_r_t_o_s_transport.html#aed718fd7667298a5132504109f656616", null ],
       [ "hasMessage", "classerpc_1_1_r_p_msg_r_t_o_s_transport.html#a4f68756cf6eb065eaa94b3f20b6df112", null ],
@@ -24,8 +24,8 @@ var group__rpmsg__lite__rtos__transport =
     [ "RPMsgTTYRTOSTransport", "classerpc_1_1_r_p_msg_t_t_y_r_t_o_s_transport.html", [
       [ "RPMsgTTYRTOSTransport", "classerpc_1_1_r_p_msg_t_t_y_r_t_o_s_transport.html#a1e4b22999bd5dd423973050e4175a420", null ],
       [ "~RPMsgTTYRTOSTransport", "classerpc_1_1_r_p_msg_t_t_y_r_t_o_s_transport.html#a91ea7a1a66c2f3fb8028296f9874a914", null ],
-      [ "init", "classerpc_1_1_r_p_msg_t_t_y_r_t_o_s_transport.html#a1c78df963f8f7d9d38cb9bb28a10b72e", null ],
-      [ "init", "classerpc_1_1_r_p_msg_t_t_y_r_t_o_s_transport.html#ae07881daaa2e414ba747f7e180deb755", null ],
+      [ "init", "classerpc_1_1_r_p_msg_t_t_y_r_t_o_s_transport.html#a05ebe6f363cbf90ca5258af1fe1a482d", null ],
+      [ "init", "classerpc_1_1_r_p_msg_t_t_y_r_t_o_s_transport.html#aba58761e6f6e8df72db29b24e12d9a71", null ],
       [ "receive", "classerpc_1_1_r_p_msg_t_t_y_r_t_o_s_transport.html#ab3e7d041fb640421c52236918c1698d5", null ],
       [ "send", "classerpc_1_1_r_p_msg_t_t_y_r_t_o_s_transport.html#af7d645c3f81bcc2025b06b2536f32a88", null ],
       [ "setCrc16", "classerpc_1_1_r_p_msg_t_t_y_r_t_o_s_transport.html#a8aa45d2d5926eb93221ad42b4753e6e6", null ],

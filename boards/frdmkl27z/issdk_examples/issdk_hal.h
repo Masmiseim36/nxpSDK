@@ -28,9 +28,9 @@
 
 // Pin mapping and driver information for default I2C brought to shield
 // By default, we use I2C_BB defined in the frdm_kl27z.h file.
-#define I2C_S_SCL_PIN I2C_BB_SCL_PIN
-#define I2C_S_SDA_PIN I2C_BB_SDA_PIN
-#define I2C_S_DRIVER I2C_BB_DRIVER
+#define I2C_S_SCL_PIN      I2C_BB_SCL_PIN
+#define I2C_S_SDA_PIN      I2C_BB_SDA_PIN
+#define I2C_S_DRIVER       I2C_BB_DRIVER
 #define I2C_S_SIGNAL_EVENT I2C_BB_SIGNAL_EVENT
 #define I2C_S_DEVICE_INDEX I2C_BB_DEVICE_INDEX
 

@@ -2,7 +2,7 @@ Overview
 ========
 The freertos_i2c example shows an application using RTOS tasks with I2C driver:
 
-The example supports 2 different connections:
+The example may support 2 different connections (it depends on the specific board): 
 On board connection and board to board connection.
 
 With one board connection, 2 I2C instances of the same board are used. One i2c instance used as I2C master and another I2C instance used as I2C slave .
@@ -25,10 +25,10 @@ With board to board connection, one I2C instance on one board is used as I2C mas
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.40.2
-- Keil MDK  5.29
-- GCC ARM Embedded  8.3.1
-- MCUXpresso  11.1.0
+- IAR embedded Workbench  8.50.1
+- Keil MDK  5.30
+- GCC ARM Embedded  9.2.1
+- MCUXpresso  11.2.0
 
 Hardware requirements
 =====================

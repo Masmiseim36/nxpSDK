@@ -34,7 +34,7 @@
   <td id="projectlogo"><img alt="Logo" src="nxp_logo_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">eRPC API Reference
-   &#160;<span id="projectnumber">Rev. 1.7.3</span>
+   &#160;<span id="projectnumber">Rev. 1.7.4</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -118,8 +118,8 @@ $(document).ready(function(){initNavTree('classerpc_1_1_r_p_msg_transport.html',
 <table class="directory">
   <tr class="even"><td class="entry"><a class="el" href="classerpc_1_1_r_p_msg_base_transport.html#ad5a3b7702d944d7c497ad4590364002f">get_rpmsg_lite_instance</a>(void)</td><td class="entry"><a class="el" href="classerpc_1_1_r_p_msg_base_transport.html">erpc::RPMsgBaseTransport</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr><td class="entry"><a class="el" href="classerpc_1_1_r_p_msg_transport.html#a51eac0d87a7d70408df2290c8175706d">hasMessage</a>(void)</td><td class="entry"><a class="el" href="classerpc_1_1_r_p_msg_transport.html">erpc::RPMsgTransport</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">virtual</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classerpc_1_1_r_p_msg_transport.html#adb606a3e06f02e45402f7b9719f1f855">init</a>(uint32_t src_addr, uint32_t dst_addr, void *base_address, uint32_t length, int32_t rpmsg_link_id)</td><td class="entry"><a class="el" href="classerpc_1_1_r_p_msg_transport.html">erpc::RPMsgTransport</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
-  <tr><td class="entry"><a class="el" href="classerpc_1_1_r_p_msg_transport.html#af2df8d557e7bf5cfacd8c1ac6ed33f98">init</a>(uint32_t src_addr, uint32_t dst_addr, void *base_address, int32_t rpmsg_link_id, void(*ready_cb)(void), char *nameservice_name)</td><td class="entry"><a class="el" href="classerpc_1_1_r_p_msg_transport.html">erpc::RPMsgTransport</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classerpc_1_1_r_p_msg_transport.html#a5d98c0f410ac60ee1cd4705eb6310ea3">init</a>(uint32_t src_addr, uint32_t dst_addr, void *base_address, uint32_t length, uint32_t rpmsg_link_id)</td><td class="entry"><a class="el" href="classerpc_1_1_r_p_msg_transport.html">erpc::RPMsgTransport</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classerpc_1_1_r_p_msg_transport.html#ac88eb829b9ed54b337dc3f08fbe47a28">init</a>(uint32_t src_addr, uint32_t dst_addr, void *base_address, uint32_t rpmsg_link_id, void(*ready_cb)(void), char *nameservice_name)</td><td class="entry"><a class="el" href="classerpc_1_1_r_p_msg_transport.html">erpc::RPMsgTransport</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classerpc_1_1_r_p_msg_transport.html#a6990f9092b21bb0c243d16fc06fd7180">m_dst_addr</a></td><td class="entry"><a class="el" href="classerpc_1_1_r_p_msg_transport.html">erpc::RPMsgTransport</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
   <tr><td class="entry"><a class="el" href="classerpc_1_1_r_p_msg_transport.html#a05ba7ce33f48a0c622fd3cec49f4b2a2">m_messageQueue</a></td><td class="entry"><a class="el" href="classerpc_1_1_r_p_msg_transport.html">erpc::RPMsgTransport</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classerpc_1_1_r_p_msg_transport.html#a8b9bbb8ec36ea15a065356cd9f23c871">m_rpmsg_ept</a></td><td class="entry"><a class="el" href="classerpc_1_1_r_p_msg_transport.html">erpc::RPMsgTransport</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
@@ -143,7 +143,7 @@ $(document).ready(function(){initNavTree('classerpc_1_1_r_p_msg_transport.html',
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul class="foot">
-    <li class="footer">&copy; 2016 NXP Semiconductors. All rights reserved.
+    <li class="footer">Copyright 2016-2020 NXP Semiconductors. All rights reserved.
     </li>
   </ul>
 </div>

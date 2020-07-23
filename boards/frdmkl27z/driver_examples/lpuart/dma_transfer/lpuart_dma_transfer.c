@@ -15,15 +15,15 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_LPUART LPUART0
-#define DEMO_LPUART_CLKSRC kCLOCK_McgIrc48MClk
-#define DEMO_LPUART_CLK_FREQ CLOCK_GetFreq(kCLOCK_McgIrc48MClk)
-#define LPUART_TX_DMA_CHANNEL 0U
-#define LPUART_RX_DMA_CHANNEL 1U
+#define DEMO_LPUART                    LPUART0
+#define DEMO_LPUART_CLKSRC             kCLOCK_McgIrc48MClk
+#define DEMO_LPUART_CLK_FREQ           CLOCK_GetFreq(kCLOCK_McgIrc48MClk)
+#define LPUART_TX_DMA_CHANNEL          0U
+#define LPUART_RX_DMA_CHANNEL          1U
 #define EXAMPLE_LPUART_DMAMUX_BASEADDR DMAMUX0
-#define EXAMPLE_LPUART_DMA_BASEADDR DMA0
-#define LPUART_TX_DMA_REQUEST kDmaRequestMux0LPUART0Tx
-#define LPUART_RX_DMA_REQUEST kDmaRequestMux0LPUART0Rx
+#define EXAMPLE_LPUART_DMA_BASEADDR    DMA0
+#define LPUART_TX_DMA_REQUEST          kDmaRequestMux0LPUART0Tx
+#define LPUART_RX_DMA_REQUEST          kDmaRequestMux0LPUART0Rx
 #define ECHO_BUFFER_LENGTH 8
 
 /*******************************************************************************

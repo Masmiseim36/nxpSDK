@@ -131,6 +131,20 @@ void I2C7_SignalEvent_t(uint32_t event)
 }
 #endif
 
+#ifdef MIMXRT500_AGM01
+#if defined(I2C11)
+/* The I2C11 Signal Event Handler function. */
+void I2C11_SignalEvent_t(uint32_t event)
+{
+    if (event != ARM_I2C_EVENT_TRANSFER_DONE)
+    {
+        g_I2C_ErrorEvent[11] = event;
+    }
+    b_I2C_CompletionFlag[11] = true;
+}
+#endif
+#endif
+
 /*! The interface function to block write sensor registers. */
 int32_t Register_I2C_BlockWrite(ARM_DRIVER_I2C *pCommDrv,
                                 registerDeviceInfo_t *devInfo,

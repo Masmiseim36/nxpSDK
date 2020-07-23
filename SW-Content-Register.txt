@@ -167,6 +167,48 @@ Utility Source - elf.py    Name: Bootloader Utility Source - elf.py
                            http://bazaar.launchpad.net/~zsquareplusc/python-m
                            sp430-tools/trunk/view/head:/msp430/memory/elf.py 
 
+mbedtls                    Name: Mbed TLS                                    
+                           Version: 2.16.6                                   
+                           Outgoing License: Apache-2.0                      
+                           License File: middleware/mbedtls/apache-2.0.txt   
+                           Format: source code                               
+                           Description: Cryptographic and SSL/TLS Library    
+                           Location: middleware/mbedtls                      
+                           Origin: ARM(Apache-2.0) -                         
+                           https://github.com/ARMmbed/mbedtls/releases/tag/mb
+                           edtls-2.16.6                                      
+
+mmcau                      Name: mmCAU S/W Library                           
+                           Version: 2.0.1                                    
+                           Outgoing License: BSD-3-Clause                    
+                           License File: COPYING-BSD-3                       
+                           Format: source code                               
+                           Description: S/W library that works with the      
+                           memory-mapped cryptographic acceleration unit     
+                           present on some MCUXpresso SoCs                   
+                           Location: middleware/mmcau                        
+                           Origin: NXP (BSD-3-Clause)                        
+
+metering                   Name: metering                                    
+                           Version: 4.1.0                                    
+                           Outgoing License: BSD-3-Claus                     
+                           License File: COPYING-BSD-3                       
+                           Format: object code & header files                
+                           Description: Filter and FFT based metering library
+                           for Cortex-M0+ core.                              
+                           Location: middleware/metering                     
+                           Origin: NXP (BSD-3-Clause)                        
+
+metering_tool              Name: metering_tool                               
+                           Version: 2.1.0                                    
+                           Outgoing License: LA OPT NXP Software License     
+                           License File: LA_OPT_NXP_Software_License.txt     
+                           Format: binary & object code & header files       
+                           Description: Tool for filter based metering       
+                           example configuration.                            
+                           Location: middleware/metering/meterlib_cfg_tool   
+                           Origin: NXP                                       
+
 rtcesl                     Name: rtcesl                                      
                            Version: 4.5.1                                    
                            Outgoing License: BSD-3-Clause                    

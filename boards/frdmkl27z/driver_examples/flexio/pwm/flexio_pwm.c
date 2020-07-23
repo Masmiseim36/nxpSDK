@@ -17,12 +17,12 @@
  * Definitions
  ******************************************************************************/
 #define DEMO_TIME_DELAY_FOR_DUTY_CYCLE_UPDATE 100000U
-#define DEMO_FLEXIO_BASEADDR FLEXIO
-#define DEMO_FLEXIO_OUTPUTPIN 2U /* Select FXIO_D2 as PWM output */
-#define DEMO_FLEXIO_TIMER_CH 0U  /* Flexio timer0 used */
+#define DEMO_FLEXIO_BASEADDR                  FLEXIO
+#define DEMO_FLEXIO_OUTPUTPIN                 2U /* Select FXIO_D2 as PWM output */
+#define DEMO_FLEXIO_TIMER_CH                  0U /* Flexio timer0 used */
 
 #define DEMO_FLEXIO_CLOCK_FREQUENCY CLOCK_GetFreq(kCLOCK_McgIrc48MClk)
-#define DEMO_FLEXIO_FREQUENCY 200000U
+#define DEMO_FLEXIO_FREQUENCY       200000U
 #define FLEXIO_MAX_FREQUENCY (DEMO_FLEXIO_CLOCK_FREQUENCY / 2U)
 #define FLEXIO_MIN_FREQUENCY (DEMO_FLEXIO_CLOCK_FREQUENCY / 256U)
 /*******************************************************************************

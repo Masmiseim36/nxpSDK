@@ -17,8 +17,8 @@
  * Definitions
  ******************************************************************************/
 #define EXAMPLE_SPI_SLAVE_DMA_MUX_BASEADDR DMAMUX0
-#define EXAMPLE_SPI_SLAVE_DMA_BASEADDR DMA0
-#define DRIVER_SLAVE_SPI Driver_SPI1
+#define EXAMPLE_SPI_SLAVE_DMA_BASEADDR     DMA0
+#define DRIVER_SLAVE_SPI                   Driver_SPI1
 #define TRANSFER_SIZE 64U /* Transfer dataSize */
 
 /*******************************************************************************

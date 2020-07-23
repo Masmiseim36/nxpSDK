@@ -65,12 +65,16 @@ usb_shim_agent_struct_t g_shimAgent;
 
 /*! @brief device class information */
 usb_device_class_config_struct_t g_agentDeviceConfig[1U] = {{
-    USB_DeviceWeightScaleCallback, (class_handle_t)NULL, &g_UsbDevicePhdcWeightScaleConfig,
+    USB_DeviceWeightScaleCallback,
+    (class_handle_t)NULL,
+    &g_UsbDevicePhdcWeightScaleConfig,
 }};
 
 /*! @brief device class configuration information */
 usb_device_class_config_list_struct_t g_agentDeviceConfigList = {
-    g_agentDeviceConfig, USB_DeviceCallback, 1U,
+    g_agentDeviceConfig,
+    USB_DeviceCallback,
+    1U,
 };
 
 /*! @brief scan report number */
@@ -81,16 +85,19 @@ volatile uint8_t appEvent = APP_EVENT_UNDEFINED;
 weightscale_measurement_struct_t measurement = {
     {
         /* Simple-Nu-Observed-Value = 76.2 (kg) 76.0 (kg) */
-        0x02FAU, 0x02F8U,
+        0x02FAU,
+        0x02F8U,
     },
     {
         /* Simple-Nu-Observed-Value = 24.3 (kg/m2) 24.2 (kg/m2) */
-        0x00F3U, 0x00F2U,
+        0x00F3U,
+        0x00F2U,
     },
 };
 
 /*! @brief association request data to send */
-USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t g_associationRequestData[ASSOCIATION_REQUEST_LENGTH] = {
+USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
+static uint8_t g_associationRequestData[ASSOCIATION_REQUEST_LENGTH] = {
     0xE2U, 0x00U,               /* APDU CHOICE Type (AarqApdu) */
     0x00U, 0x32U,               /* CHOICE.length = 50 */
     0x80U, 0x00U, 0x00U, 0x00U, /* assoc-version */
@@ -110,94 +117,86 @@ USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t g_associationRequest
 };
 
 /*! @brief remote operation invoke event report configuration data */
-USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t g_roivEventRepostConfigurationData[EVENT_REPORT_CONFIGURATION_LENGTH] = {
-    0xE7U, 0x00U, /* APDU CHOICE Type (PrstApdu) */
-    0x00U, 0xA2U, /* CHOICE.length = 162 */
-    0x00U, 0xA0U, /* OCTET STRING.length = 160 */
-    0x12U, 0x35U, /* invoke-id = 0x1235 (start of DataApdu. MDER encoded.) */
-    0x01U, 0x01U, /* CHOICE(Remote Operation Invoke | Confirmed Event Report) */
-    0x00U, 0x9AU, /* CHOICE.length = 154 */
-    0x00U, 0x00U, /* obj-handle = 0 (MDS object) */
-    0xFFU, 0xFFU, 0xFFU,
-    0xFFU,        /* event-time = 0xFFFFFFFF */
-    0x0DU, 0x1CU, /* event-type = MDC_NOTI_CONFIG */
-    0x00U, 0x90U, /* event-info.length = 144 (start of ConfigReport) */
-    0x40U, 0x00U, /* config-report-id */
-    0x00U, 0x03U, /* config-obj-list.count = 3 Measurement objects will be announced */
-    0x00U, 0x8AU, /* config-obj-list.length = 138 */
-    0x00U, 0x06U, /* obj-class = MDC_MOC_VMO_METRIC_NU */
-    0x00U, 0x01U, /* obj-handle = 1  (->1st Measurement is body weight) */
-    0x00U, 0x04U, /* attributes.count = 4 */
-    0x00U, 0x24U, /* attributes.length = 36 */
-    0x09U, 0x2FU, /* attribute-id = MDC_ATTR_ID_TYPE */
-    0x00U, 0x04U, /* attribute-value.length = 4 */
-    0x00U, 0x02U, 0xE1U,
-    0x40U,        /* MDC_PART_SCADA | MDC_MASS_BODY_ACTUAL */
-    0x0AU, 0x46U, /* attribute-id = MDC_ATTR_METRIC_SPEC_SMALL */
-    0x00U, 0x02U, /* attribute-value.length = 2 */
-    0xF0U, 0x40U, /* intermittent, stored data, upd & msmt aperiodic, agent init, measured */
-    0x09U, 0x96U, /* attribute-id = MDC_ATTR_UNIT_CODE */
-    0x00U, 0x02U, /* attribute-value.length = 2 */
-    0x06U, 0xC3U, /* MDC_DIM_KILO_G */
-    0x0AU, 0x55U, /* attribute-id = MDC_ATTR_ATTRIBUTE_VAL_MAP */
-    0x00U, 0x0CU, /* attribute-value.length = 12 */
-    0x00U, 0x02U, /* AttrValMap.count = 2 */
-    0x00U, 0x08U, /* AttrValMap.length = 8 */
-    0x0AU, 0x56U, 0x00U,
-    0x04U, /* MDC_ATTR_NU_VAL_OBS_SIMP | value length = 4 */
-    0x09U, 0x90U, 0x00U,
-    0x08U,        /* MDC_ATTR_TIME_STAMP_ABS | value length = 8 */
-    0x00U, 0x06U, /* obj-class = MDC_MOC_VMO_METRIC_NU */
-    0x00U, 0x02U, /* obj-handle = 2 (-> 2nd Measurement is body height) */
-    0x00U, 0x04U, /* attributes.count = 4 */
-    0x00U, 0x24U, /* attributes.length = 36 */
-    0x09U, 0x2FU, /* attribute-id = MDC_ATTR_ID_TYPE */
-    0x00U, 0x04U, /* attribute-value.length = 4 */
-    0x00U, 0x02U, 0xE1U,
-    0x44U,        /* MDC_PART_SCADA | MDC_LEN_BODY_ACTUAL */
-    0x0AU, 0x46U, /* attribute-id = MDC_ATTR_METRIC_SPEC_SMALL */
-    0x00U, 0x02U, /* attribute-value.length = 2 */
-    0xF0U, 0x48U, /* intermittent, stored data, upd & msmt aperiodic, agent init, manual */
-    0x09U, 0x96U, /* attribute-id = MDC_ATTR_UNIT_CODE */
-    0x00U, 0x02U, /* attribute-value.length = 2 */
-    0x05U, 0x11U, /* MDC_DIM_CENTI_M */
-    0x0AU, 0x55U, /* attribute-id = MDC_ATTR_ATTRIBUTE_VAL_MAP */
-    0x00U, 0x0CU, /* attribute-value.length = 12 */
-    0x00U, 0x02U, /* AttrValMap.count = 2 */
-    0x00U, 0x08U, /* AttrValMap.length = 8 */
-    0x0AU, 0x56U, 0x00U,
-    0x04U, /* MDC_ATTR_NU_VAL_OBS_SIMP, 4 */
-    0x09U, 0x90U, 0x00U,
-    0x08U,        /* MDC_ATTR_TIME_STAMP_ABS, 8 */
-    0x00U, 0x06U, /* obj-class = MDC_MOC_VMO_METRIC_NU */
-    0x00U, 0x03U, /* obj-handle = 3 (-> 3rd Measurement is body mass index) */
-    0x00U, 0x05U, /* attributes.count = 5 */
-    0x00U, 0x2AU, /* attributes.length = 42 */
-    0x09U, 0x2FU, /* attribute-id = MDC_ATTR_ID_TYPE */
-    0x00U, 0x04U, /* attribute-value.length = 4 */
-    0x00U, 0x02U, 0xE1U,
-    0x50U,        /* MDC_PART_SCADA | MDC_RATIO_MASS_BODY_LEN_SQ */
-    0x0AU, 0x46U, /* attribute-id = MDC_ATTR_METRIC_SPEC_SMALL */
-    0x00U, 0x02U, /* attribute-value.length = 2 */
-    0xF0U, 0x42U, /* intermittent, stored data, upd & msmt aperiodic, agent init, calculated */
-    0x09U, 0x96U, /* attribute-id = MDC_ATTR_UNIT_CODE */
-    0x00U, 0x02U, /* attribute-value.length = 2 */
-    0x07U, 0xA0U, /* MDC_DIM_KG_PER_M_SQ */
-    0x0AU, 0x47U, /* attribute-id = MDC_ATTR_SOURCE_HANDLE_REF */
-    0x00U, 0x02U, /* attribute-value.length = 2 */
-    0x00U, 0x01U, /* reference handle = 1 */
-    0x0AU, 0x55U, /* attribute-id = MDC_ATTR_ATTRIBUTE_VAL_MAP */
-    0x00U, 0x0CU, /* attribute-value.length = 12 */
-    0x00U, 0x02U, /* AttrValMap.count = 2 */
-    0x00U, 0x08U, /* AttrValMap.length = 8 */
-    0x0AU, 0x56U, 0x00U,
-    0x04U, /* MDC_ATTR_NU_VAL_OBS_SIMP, 4 */
-    0x09U, 0x90U, 0x00U,
-    0x08U /* MDC_ATTR_TIME_STAMP_ABS, 8 */
+USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
+static uint8_t g_roivEventRepostConfigurationData[EVENT_REPORT_CONFIGURATION_LENGTH] = {
+    0xE7U, 0x00U,               /* APDU CHOICE Type (PrstApdu) */
+    0x00U, 0xA2U,               /* CHOICE.length = 162 */
+    0x00U, 0xA0U,               /* OCTET STRING.length = 160 */
+    0x12U, 0x35U,               /* invoke-id = 0x1235 (start of DataApdu. MDER encoded.) */
+    0x01U, 0x01U,               /* CHOICE(Remote Operation Invoke | Confirmed Event Report) */
+    0x00U, 0x9AU,               /* CHOICE.length = 154 */
+    0x00U, 0x00U,               /* obj-handle = 0 (MDS object) */
+    0xFFU, 0xFFU, 0xFFU, 0xFFU, /* event-time = 0xFFFFFFFF */
+    0x0DU, 0x1CU,               /* event-type = MDC_NOTI_CONFIG */
+    0x00U, 0x90U,               /* event-info.length = 144 (start of ConfigReport) */
+    0x40U, 0x00U,               /* config-report-id */
+    0x00U, 0x03U,               /* config-obj-list.count = 3 Measurement objects will be announced */
+    0x00U, 0x8AU,               /* config-obj-list.length = 138 */
+    0x00U, 0x06U,               /* obj-class = MDC_MOC_VMO_METRIC_NU */
+    0x00U, 0x01U,               /* obj-handle = 1  (->1st Measurement is body weight) */
+    0x00U, 0x04U,               /* attributes.count = 4 */
+    0x00U, 0x24U,               /* attributes.length = 36 */
+    0x09U, 0x2FU,               /* attribute-id = MDC_ATTR_ID_TYPE */
+    0x00U, 0x04U,               /* attribute-value.length = 4 */
+    0x00U, 0x02U, 0xE1U, 0x40U, /* MDC_PART_SCADA | MDC_MASS_BODY_ACTUAL */
+    0x0AU, 0x46U,               /* attribute-id = MDC_ATTR_METRIC_SPEC_SMALL */
+    0x00U, 0x02U,               /* attribute-value.length = 2 */
+    0xF0U, 0x40U,               /* intermittent, stored data, upd & msmt aperiodic, agent init, measured */
+    0x09U, 0x96U,               /* attribute-id = MDC_ATTR_UNIT_CODE */
+    0x00U, 0x02U,               /* attribute-value.length = 2 */
+    0x06U, 0xC3U,               /* MDC_DIM_KILO_G */
+    0x0AU, 0x55U,               /* attribute-id = MDC_ATTR_ATTRIBUTE_VAL_MAP */
+    0x00U, 0x0CU,               /* attribute-value.length = 12 */
+    0x00U, 0x02U,               /* AttrValMap.count = 2 */
+    0x00U, 0x08U,               /* AttrValMap.length = 8 */
+    0x0AU, 0x56U, 0x00U, 0x04U, /* MDC_ATTR_NU_VAL_OBS_SIMP | value length = 4 */
+    0x09U, 0x90U, 0x00U, 0x08U, /* MDC_ATTR_TIME_STAMP_ABS | value length = 8 */
+    0x00U, 0x06U,               /* obj-class = MDC_MOC_VMO_METRIC_NU */
+    0x00U, 0x02U,               /* obj-handle = 2 (-> 2nd Measurement is body height) */
+    0x00U, 0x04U,               /* attributes.count = 4 */
+    0x00U, 0x24U,               /* attributes.length = 36 */
+    0x09U, 0x2FU,               /* attribute-id = MDC_ATTR_ID_TYPE */
+    0x00U, 0x04U,               /* attribute-value.length = 4 */
+    0x00U, 0x02U, 0xE1U, 0x44U, /* MDC_PART_SCADA | MDC_LEN_BODY_ACTUAL */
+    0x0AU, 0x46U,               /* attribute-id = MDC_ATTR_METRIC_SPEC_SMALL */
+    0x00U, 0x02U,               /* attribute-value.length = 2 */
+    0xF0U, 0x48U,               /* intermittent, stored data, upd & msmt aperiodic, agent init, manual */
+    0x09U, 0x96U,               /* attribute-id = MDC_ATTR_UNIT_CODE */
+    0x00U, 0x02U,               /* attribute-value.length = 2 */
+    0x05U, 0x11U,               /* MDC_DIM_CENTI_M */
+    0x0AU, 0x55U,               /* attribute-id = MDC_ATTR_ATTRIBUTE_VAL_MAP */
+    0x00U, 0x0CU,               /* attribute-value.length = 12 */
+    0x00U, 0x02U,               /* AttrValMap.count = 2 */
+    0x00U, 0x08U,               /* AttrValMap.length = 8 */
+    0x0AU, 0x56U, 0x00U, 0x04U, /* MDC_ATTR_NU_VAL_OBS_SIMP, 4 */
+    0x09U, 0x90U, 0x00U, 0x08U, /* MDC_ATTR_TIME_STAMP_ABS, 8 */
+    0x00U, 0x06U,               /* obj-class = MDC_MOC_VMO_METRIC_NU */
+    0x00U, 0x03U,               /* obj-handle = 3 (-> 3rd Measurement is body mass index) */
+    0x00U, 0x05U,               /* attributes.count = 5 */
+    0x00U, 0x2AU,               /* attributes.length = 42 */
+    0x09U, 0x2FU,               /* attribute-id = MDC_ATTR_ID_TYPE */
+    0x00U, 0x04U,               /* attribute-value.length = 4 */
+    0x00U, 0x02U, 0xE1U, 0x50U, /* MDC_PART_SCADA | MDC_RATIO_MASS_BODY_LEN_SQ */
+    0x0AU, 0x46U,               /* attribute-id = MDC_ATTR_METRIC_SPEC_SMALL */
+    0x00U, 0x02U,               /* attribute-value.length = 2 */
+    0xF0U, 0x42U,               /* intermittent, stored data, upd & msmt aperiodic, agent init, calculated */
+    0x09U, 0x96U,               /* attribute-id = MDC_ATTR_UNIT_CODE */
+    0x00U, 0x02U,               /* attribute-value.length = 2 */
+    0x07U, 0xA0U,               /* MDC_DIM_KG_PER_M_SQ */
+    0x0AU, 0x47U,               /* attribute-id = MDC_ATTR_SOURCE_HANDLE_REF */
+    0x00U, 0x02U,               /* attribute-value.length = 2 */
+    0x00U, 0x01U,               /* reference handle = 1 */
+    0x0AU, 0x55U,               /* attribute-id = MDC_ATTR_ATTRIBUTE_VAL_MAP */
+    0x00U, 0x0CU,               /* attribute-value.length = 12 */
+    0x00U, 0x02U,               /* AttrValMap.count = 2 */
+    0x00U, 0x08U,               /* AttrValMap.length = 8 */
+    0x0AU, 0x56U, 0x00U, 0x04U, /* MDC_ATTR_NU_VAL_OBS_SIMP, 4 */
+    0x09U, 0x90U, 0x00U, 0x08U  /* MDC_ATTR_TIME_STAMP_ABS, 8 */
 };
 
 /*! @brief remote operation response | Get with all MDS attributes */
-USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t g_rorsCmipGetData[EVENT_RESPONSE_GET_LENGTH] = {
+USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
+static uint8_t g_rorsCmipGetData[EVENT_RESPONSE_GET_LENGTH] = {
     0xE7U, 0x00U, /* APDU CHOICE Type (PrstApdu) */
     0x00U, 0x6EU, /* CHOICE.length = 110 */
     0x00U, 0x6CU, /* OCTET STRING.length = 108 */
@@ -238,7 +237,8 @@ USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t g_rorsCmipGetData[EV
     0x12U, 0x05U, 0x00U, 0x00};
 
 /*! @brief measurements to send */
-USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t g_eventReportData[EVENT_REPORT_DATA_LENGTH] = {
+USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
+static uint8_t g_eventReportData[EVENT_REPORT_DATA_LENGTH] = {
     0xE7U, 0x00U,               /* APDU CHOICE Type (PrstApdu) */
     0x00U, 0x5AU,               /* CHOICE.length = 90 */
     0x00U, 0x58U,               /* OCTET STRING.length = 88 */
@@ -332,7 +332,7 @@ void AGENT_MedicalCallback(void *handle, uint8_t eventType, uint8_t *data)
     {
         case AGENT_EVENT_CONNECTED:
             scanReportNumber = 0U;
-            appEvent = APP_EVENT_SEND_ASSOCIATION_REQUEST;
+            appEvent         = APP_EVENT_SEND_ASSOCIATION_REQUEST;
             break;
         case AGENT_EVENT_ACCEPTED_UNKNOWN_CONFIG_AARQ:
             appEvent = APP_EVENT_SEND_DEVICE_CONFIGURATION;
@@ -479,13 +479,13 @@ static void APP_WeightScaleSendData(void *handle, weightscale_measurement_struct
 static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *param)
 {
     usb_status_t error = kStatus_USB_Error;
-    uint16_t *temp16 = (uint16_t *)param;
-    uint8_t *temp8 = (uint8_t *)param;
+    uint16_t *temp16   = (uint16_t *)param;
+    uint8_t *temp8     = (uint8_t *)param;
     switch (event)
     {
         case kUSB_DeviceEventBusReset:
         {
-            g_shimAgent.attach = 0U;
+            g_shimAgent.attach        = 0U;
             g_shimAgent.currentConfig = 0U;
 #if (defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)) || \
     (defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))
@@ -505,18 +505,18 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
             {
                 g_shimAgent.bulkOutData.epMaxPacketSize = FS_USB_PHDC_BULK_ENDPOINT_OUT_PACKET_SIZE;
             }
-            g_shimAgent.bulkOutData.epNumber = USB_PHDC_BULK_ENDPOINT_OUT;
-            g_shimAgent.bulkOutData.transferCount = 0U;
+            g_shimAgent.bulkOutData.epNumber              = USB_PHDC_BULK_ENDPOINT_OUT;
+            g_shimAgent.bulkOutData.transferCount         = 0U;
             g_shimAgent.bulkOutData.recvData.transferSize = 0U;
-            g_shimAgent.bulkOutData.recvData.buffer = NULL;
+            g_shimAgent.bulkOutData.recvData.buffer       = NULL;
             /* bulk in endpoint information */
             g_shimAgent.bulkInData.epNumber = USB_PHDC_BULK_ENDPOINT_IN;
-            g_shimAgent.bulkInData.seller = 0U;
-            g_shimAgent.bulkInData.buyer = 0U;
+            g_shimAgent.bulkInData.seller   = 0U;
+            g_shimAgent.bulkInData.buyer    = 0U;
             /* interrupt in endpoint information */
             g_shimAgent.interruptInData.epNumber = USB_PHDC_INTERRUPT_ENDPOINT_IN;
-            g_shimAgent.interruptInData.seller = 0U;
-            g_shimAgent.interruptInData.buyer = 0U;
+            g_shimAgent.interruptInData.seller   = 0U;
+            g_shimAgent.interruptInData.buyer    = 0U;
 
             /* no endpoint has data */
             g_shimAgent.endpointsHaveData = 0U;
@@ -525,27 +525,27 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
             g_shimAgent.isMetaDataMessagePreambleEnabled = 0U;
             /* initialize the number of transfer followed preamble message */
             g_shimAgent.numberTransferBulkOut = 0U;
-            g_shimAgent.numberTransferBulkIn = 0U;
+            g_shimAgent.numberTransferBulkIn  = 0U;
 #endif
             appEvent = APP_EVENT_UNDEFINED;
             AGENT_SetAgentState(g_shimAgent.classHandle, AGENT_STATE_DISCONNECTED);
         }
         break;
         case kUSB_DeviceEventSetConfiguration:
-            if (0U ==(*temp8))
+            if (0U == (*temp8))
             {
-                g_shimAgent.attach = 0;
+                g_shimAgent.attach        = 0;
                 g_shimAgent.currentConfig = 0U;
             }
             else if (USB_PHDC_WEIGHT_SCALE_CONFIGURE_INDEX == (*temp8))
             {
-                g_shimAgent.attach = 1;
+                g_shimAgent.attach        = 1;
                 g_shimAgent.currentConfig = *temp8;
                 /* send the first NULL data to establish a connection between the device and host */
                 USB_ShimAgentSendData(g_shimAgent.classHandle, AGENT_SEND_DATA_QOS, NULL, 0U);
                 /* prepare for the first receiving */
-                USB_DevicePhdcRecv(g_shimAgent.classHandle, g_shimAgent.bulkOutData.epNumber, g_shimAgent.recvDataBuffer,
-                               g_shimAgent.bulkOutData.epMaxPacketSize);
+                USB_DevicePhdcRecv(g_shimAgent.classHandle, g_shimAgent.bulkOutData.epNumber,
+                                   g_shimAgent.recvDataBuffer, g_shimAgent.bulkOutData.epMaxPacketSize);
             }
             else
             {
@@ -555,7 +555,7 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
         case kUSB_DeviceEventSetInterface:
             if (g_shimAgent.attach)
             {
-                uint8_t interface = (uint8_t)((*temp16 & 0xFF00U) >> 0x08U);
+                uint8_t interface        = (uint8_t)((*temp16 & 0xFF00U) >> 0x08U);
                 uint8_t alternateSetting = (uint8_t)(*temp16 & 0x00FFU);
                 if (interface < 1U)
                 {
@@ -568,7 +568,7 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
             {
                 /* Get the current configuration request */
                 *temp8 = g_shimAgent.currentConfig;
-                error = kStatus_USB_Success;
+                error  = kStatus_USB_Success;
             }
             break;
         case kUSB_DeviceEventGetInterface:
@@ -578,7 +578,7 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
                 if (interface < USB_PHDC_WEIGHT_SCALE_INTERFACE_COUNT)
                 {
                     *temp16 = (*temp16 & 0xFF00U) | g_shimAgent.currentInterfaceAlternateSetting[interface];
-                    error = kStatus_USB_Success;
+                    error   = kStatus_USB_Success;
                 }
                 else
                 {
@@ -624,7 +624,7 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
 static usb_status_t USB_DeviceWeightScaleCallback(void *handle, uint32_t event, void *param)
 {
     usb_device_control_request_struct_t *request = (usb_device_control_request_struct_t *)param;
-    usb_status_t error = kStatus_USB_Success;
+    usb_status_t error                           = kStatus_USB_Success;
 
     switch (event)
     {
@@ -667,8 +667,8 @@ static usb_status_t USB_DeviceWeightScaleCallback(void *handle, uint32_t event, 
         case kUSB_DevicePhdcEventGetStatus:
             g_shimAgent.classBuffer[0] = ((uint8_t *)(&g_shimAgent.endpointsHaveData))[0];
             g_shimAgent.classBuffer[1] = ((uint8_t *)(&g_shimAgent.endpointsHaveData))[1];
-            request->buffer = g_shimAgent.classBuffer;
-            request->length = 2U;
+            request->buffer            = g_shimAgent.classBuffer;
+            request->length            = 2U;
             break;
         default:
             error = kStatus_USB_InvalidRequest;
@@ -690,11 +690,11 @@ static void USB_DeviceApplicationInit(void)
     SYSMPU_Enable(SYSMPU, 0);
 #endif /* FSL_FEATURE_SOC_SYSMPU_COUNT */
 
-    g_shimAgent.speed = USB_SPEED_FULL;
-    g_shimAgent.attach = 0U;
-    g_shimAgent.deviceHandle = NULL;
+    g_shimAgent.speed          = USB_SPEED_FULL;
+    g_shimAgent.attach         = 0U;
+    g_shimAgent.deviceHandle   = NULL;
     g_shimAgent.recvDataBuffer = (uint8_t *)(&s_RecvDataBuffer[0]);
-    g_shimAgent.classBuffer = s_PhdcClassBuffer;
+    g_shimAgent.classBuffer    = s_PhdcClassBuffer;
 
     if (kStatus_USB_Success != USB_DeviceClassInit(CONTROLLER_ID, &g_agentDeviceConfigList, &g_shimAgent.deviceHandle))
     {
@@ -710,6 +710,8 @@ static void USB_DeviceApplicationInit(void)
     /* Install isr, set priority, and enable IRQ. */
     USB_DeviceIsrEnable();
 
+    /*Add one delay here to make the DP pull down long enough to allow host to detect the previous disconnection.*/
+    SDK_DelayAtLeastUs(5000, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
     USB_DeviceRun(g_shimAgent.deviceHandle);
 }
 

@@ -1,13 +1,13 @@
 /*
 ** ###################################################################
 **     Version:             rev. 1.6, 2016-06-08
-**     Build:               b190822
+**     Build:               b200409
 **
 **     Abstract:
 **         Chip specific module features.
 **
 **     Copyright 2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2019 NXP
+**     Copyright 2016-2020 NXP
 **     All rights reserved.
 **
 **     SPDX-License-Identifier: BSD-3-Clause
@@ -215,6 +215,10 @@
 #define FSL_FEATURE_DMAMUX_DMAMUX_CHANNELS (FSL_FEATURE_SOC_DMAMUX_COUNT * 4)
 /* @brief Has the periodic trigger capability for the triggered DMA channel (register bit CHCFG0[TRIG]). */
 #define FSL_FEATURE_DMAMUX_HAS_TRIG (1)
+
+/* FGPIO module features */
+
+/* No feature definitions */
 
 /* FLEXIO module features */
 
@@ -436,7 +440,8 @@
     #define FSL_FEATURE_FLASH_FLEX_NVM_EEPROM_SIZE_FOR_EEESIZE_1110 (0xFFFF)
     /* @brief Emulated eeprom size code 1111 mapping to emulated eeprom size in bytes (0xFFFF = reserved). */
     #define FSL_FEATURE_FLASH_FLEX_NVM_EEPROM_SIZE_FOR_EEESIZE_1111 (0xFFFF)
-#elif defined(CPU_MKL17Z256VFM4) || defined(CPU_MKL17Z256VFT4) || defined(CPU_MKL17Z256VLH4) || defined(CPU_MKL17Z256VMP4)
+#elif defined(CPU_MKL17Z256CAL4R) || defined(CPU_MKL17Z256VFM4) || defined(CPU_MKL17Z256VFT4) || defined(CPU_MKL17Z256VLH4) || \
+    defined(CPU_MKL17Z256VMP4)
     /* @brief Is of type FTFA. */
     #define FSL_FEATURE_FLASH_IS_FTFA (1)
     /* @brief Is of type FTFE. */
@@ -1470,6 +1475,8 @@
 #define FSL_FEATURE_SMC_HAS_SRS_TAMPER (0)
 /* @brief Has security violation reset (register bit SRS[SECVIO]). */
 #define FSL_FEATURE_SMC_HAS_SRS_SECVIO (0)
+/* @brief Width of SMC registers. */
+#define FSL_FEATURE_SMC_REG_WIDTH (8)
 
 /* SPI module features */
 

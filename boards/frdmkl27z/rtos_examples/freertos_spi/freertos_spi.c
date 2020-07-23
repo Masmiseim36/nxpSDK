@@ -27,8 +27,8 @@
  ******************************************************************************/
 #define EXAMPLE_SPI_MASTER_BASE (SPI0_BASE)
 #define EXAMPLE_SPI_MASTER_IRQN (SPI0_IRQn)
-#define SPI_MASTER_CLK_SRC (SPI0_CLK_SRC)
-#define SPI_MASTER_CLK_FREQ CLOCK_GetFreq((SPI0_CLK_SRC))
+#define SPI_MASTER_CLK_SRC      (SPI0_CLK_SRC)
+#define SPI_MASTER_CLK_FREQ     CLOCK_GetFreq((SPI0_CLK_SRC))
 #ifndef EXAMPLE_SPI_MASTER_BASE
 #error Undefined SPI base address!
 #endif // ifndef EXAMPLE_SPI_MASTER_BASE
@@ -71,7 +71,7 @@ int main(void)
     /* Init board hardware. */
     pinmux_init_all();
 
-    BOARD_BootClockRUN();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
 
     PRINTF("SPI FreeRTOS example start.\r\n");

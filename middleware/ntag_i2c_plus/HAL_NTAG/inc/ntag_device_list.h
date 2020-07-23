@@ -2,7 +2,7 @@
  * Copyright 2016 NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  *
  */
@@ -39,7 +39,10 @@ NTAG_DEVICE_ENTRY(NTAG0, 0x55, ISR_INT_PORTC)
 #if defined(CPU_LPC55S69JBD100_cm33_core0)
 NTAG_DEVICE_ENTRY(NTAG0, 0x55, ISR_INT_IOCON)
 #endif
-#if defined(CPU_LPC5528JBD100)
+#if defined(CPU_LPC55S28JBD100)
+NTAG_DEVICE_ENTRY(NTAG0, 0x55, ISR_INT_IOCON)
+#endif
+#if defined(CPU_LPC55S16JBD100)
 NTAG_DEVICE_ENTRY(NTAG0, 0x55, ISR_INT_IOCON)
 #endif
 

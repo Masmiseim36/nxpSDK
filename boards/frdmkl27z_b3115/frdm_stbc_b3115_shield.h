@@ -20,7 +20,7 @@
 
 // FXPQ3115 Sensor Information
 #define FXPQ3115_I2C_ADDR 0x60
-#define FXPQ3115_INT1 D5
-#define FXPQ3115_INT2 D2
+#define FXPQ3115_INT1     D5
+#define FXPQ3115_INT2     D2
 
 #endif /* _FRDM_STBC_B3115_SHIELD_H_ */

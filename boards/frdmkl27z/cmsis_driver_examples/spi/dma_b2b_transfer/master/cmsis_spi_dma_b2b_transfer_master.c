@@ -17,9 +17,9 @@
  * Definitions
  ******************************************************************************/
 #define EXAMPLE_SPI_MASTER_DMA_MUX_BASEADDR DMAMUX0
-#define EXAMPLE_SPI_MASTER_DMA_BASEADDR DMA0
-#define DRIVER_MASTER_SPI Driver_SPI0
-#define TRANSFER_SIZE 64U         /* Transfer dataSize */
+#define EXAMPLE_SPI_MASTER_DMA_BASEADDR     DMA0
+#define DRIVER_MASTER_SPI                   Driver_SPI0
+#define TRANSFER_SIZE     64U     /* Transfer dataSize */
 #define TRANSFER_BAUDRATE 500000U /* Transfer baudrate - 500k */
 
 /*******************************************************************************

@@ -14,8 +14,8 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_LPUART LPUART0
-#define DEMO_LPUART_CLKSRC kCLOCK_McgIrc48MClk
+#define DEMO_LPUART          LPUART0
+#define DEMO_LPUART_CLKSRC   kCLOCK_McgIrc48MClk
 #define DEMO_LPUART_CLK_FREQ CLOCK_GetFreq(kCLOCK_McgIrc48MClk)
 
 /*******************************************************************************

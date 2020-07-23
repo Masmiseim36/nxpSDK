@@ -16,13 +16,13 @@
  ******************************************************************************/
 /* UART instance and clock */
 /* UART2: PTD2,PTD3 used which is J1-5,J1-7 on FRDM-KL27Z */
-#define DEMO_UART UART2
-#define DEMO_UART_CLKSRC UART2_CLK_SRC
+#define DEMO_UART          UART2
+#define DEMO_UART_CLKSRC   UART2_CLK_SRC
 #define DEMO_UART_CLK_FREQ CLOCK_GetFreq(UART2_CLK_SRC)
 
 
 #define RX_RING_BUFFER_SIZE 20U
-#define ECHO_BUFFER_SIZE 8U
+#define ECHO_BUFFER_SIZE    8U
 
 /*******************************************************************************
  * Prototypes

@@ -7,10 +7,10 @@ user and toggle LED.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.40.2
-- Keil MDK  5.29
-- GCC ARM Embedded  8.3.1
-- MCUXpresso  11.1.0
+- IAR embedded Workbench  8.50.1
+- Keil MDK  5.30
+- GCC ARM Embedded  9.2.1
+- MCUXpresso  11.2.0
 
 Hardware requirements
 =====================
@@ -44,10 +44,16 @@ When the demo runs successfully, the log would be seen on the OpenSDA terminal l
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ADC LOW POWER ASYNC DMA DEMO
 ADC16_DoAutoCalibration() Done.
+ADC Full Range: 65536
+Please press any key to trigger ADC conversion.
 ADC value: 15670
+Please press any key to trigger ADC conversion.
 ADC value: 16634
+Please press any key to trigger ADC conversion.
 ADC value: 16686
+Please press any key to trigger ADC conversion.
 ADC value: 16681
+Please press any key to trigger ADC conversion.
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

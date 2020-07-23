@@ -16,6 +16,9 @@
 #define USB_DEVICE_DEMO_BCD_VERSION (0x0101U)
 #define USB_DEVICE_MAX_POWER (0x32U)
 
+#define USB_DEVICE_VID (0x1FC9U)
+#define USB_DEVICE_PID (0x0096U)
+
 /*! @brief USB device class code */
 #define USB_DEVICE_CLASS (0x00U)
 #define USB_DEVICE_SUBCLASS (0x00U)

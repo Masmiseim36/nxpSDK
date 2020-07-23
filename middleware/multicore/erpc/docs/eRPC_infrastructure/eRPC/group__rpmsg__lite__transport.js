@@ -9,8 +9,8 @@ var group__rpmsg__lite__transport =
     [ "RPMsgTransport", "classerpc_1_1_r_p_msg_transport.html", [
       [ "RPMsgTransport", "classerpc_1_1_r_p_msg_transport.html#ae361cc53021d8286ac7b0ca9ff87b5ea", null ],
       [ "~RPMsgTransport", "classerpc_1_1_r_p_msg_transport.html#a9170c0983cf46938b63433d1256f08c8", null ],
-      [ "init", "classerpc_1_1_r_p_msg_transport.html#adb606a3e06f02e45402f7b9719f1f855", null ],
-      [ "init", "classerpc_1_1_r_p_msg_transport.html#af2df8d557e7bf5cfacd8c1ac6ed33f98", null ],
+      [ "init", "classerpc_1_1_r_p_msg_transport.html#a5d98c0f410ac60ee1cd4705eb6310ea3", null ],
+      [ "init", "classerpc_1_1_r_p_msg_transport.html#ac88eb829b9ed54b337dc3f08fbe47a28", null ],
       [ "receive", "classerpc_1_1_r_p_msg_transport.html#accaaae7170e9b1ae42a4cdf1b2213583", null ],
       [ "send", "classerpc_1_1_r_p_msg_transport.html#a6060897b2c31b37876dccc357d274278", null ],
       [ "hasMessage", "classerpc_1_1_r_p_msg_transport.html#a51eac0d87a7d70408df2290c8175706d", null ],

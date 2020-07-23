@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 NXP
+ * Copyright 2018-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -54,8 +54,7 @@ static int StringToInt(char *buffer, int length, uint32_t *num);
 
 extern serial_handle_t g_serialHandle;
 
-SDK_ALIGN(static uint8_t s_shellHandleBuffer[SHELL_HANDLE_SIZE], 4);
-static shell_handle_t s_shellHandle;
+static SHELL_HANDLE_DEFINE(s_shellHandle);
 
 SHELL_COMMAND_DEFINE(led,
                      "\r\n\"led arg1\": Set the LED status\r\n"
@@ -74,13 +73,11 @@ extern led_config_t g_ledMonochrome[LED_TYPE_MONOCHROME_COUNT];
 #if (defined(LED_DIMMING_ENABLEMENT) && (LED_DIMMING_ENABLEMENT > 0U))
 extern led_config_t g_ledMonochromeDim[LED_TYPE_MONOCHROME_COUNT];
 #endif
-SDK_ALIGN(static uint8_t s_ledMonochromeHandleBuffer[LED_TYPE_MONOCHROME_COUNT][LED_HANDLE_SIZE], 4);
-static led_handle_t s_ledMonochromeHandle[LED_TYPE_MONOCHROME_COUNT];
+static LED_HANDLE_ARRAY_DEFINE(s_ledMonochromeHandle, LED_TYPE_MONOCHROME_COUNT);
 
 #if (defined(BUTTON_COUNT) && (BUTTON_COUNT > 0U))
 extern button_config_t g_buttonConfig[BUTTON_COUNT];
-SDK_ALIGN(uint8_t gpioSwBuffer[BUTTON_COUNT][BUTTON_HANDLE_SIZE], 4);
-static button_handle_t buttonHandle[BUTTON_COUNT];
+static BUTTON_HANDLE_ARRAY_DEFINE(buttonHandle, BUTTON_COUNT);
 #endif
 
 /*******************************************************************************
@@ -91,11 +88,11 @@ static shell_status_t SHELL_LedCommand(shell_handle_t shellHandle, int32_t argc,
 {
     if (0 == strcmp(argv[1], "on"))
     {
-        LED_TurnOnOff(s_ledMonochromeHandle[0], 1);
+        LED_TurnOnOff((led_handle_t)s_ledMonochromeHandle[0], 1);
     }
     else if (0 == strcmp(argv[1], "off"))
     {
-        LED_TurnOnOff(s_ledMonochromeHandle[0], 0);
+        LED_TurnOnOff((led_handle_t)s_ledMonochromeHandle[0], 0);
     }
     else
     {
@@ -116,13 +113,13 @@ static shell_status_t SHELL_DimCommand(shell_handle_t shellHandle, int32_t argc,
     {
         if (0 == strcmp(argv[1], "brighten"))
         {
-            LED_TurnOnOff(s_ledMonochromeHandle[0], 0);
-            LED_Dimming(s_ledMonochromeHandle[0], duration, 1);
+            LED_TurnOnOff((led_handle_t)s_ledMonochromeHandle[0], 0);
+            LED_Dimming((led_handle_t)s_ledMonochromeHandle[0], duration, 1);
         }
         else if (0 == strcmp(argv[1], "darken"))
         {
-            LED_TurnOnOff(s_ledMonochromeHandle[0], 1);
-            LED_Dimming(s_ledMonochromeHandle[0], duration, 0);
+            LED_TurnOnOff((led_handle_t)s_ledMonochromeHandle[0], 1);
+            LED_Dimming((led_handle_t)s_ledMonochromeHandle[0], duration, 0);
         }
         else
         {
@@ -188,19 +185,19 @@ button_status_t button_callback(void *buttonHandle, button_callback_message_t *m
     {
         case kBUTTON_EventOneClick:
             PRINTF("kBUTTON_EventOneClick\r\n");
-            LED_TurnOnOff(s_ledMonochromeHandle[0], 0);
+            LED_TurnOnOff((led_handle_t)s_ledMonochromeHandle[0], 0);
             break;
         case kBUTTON_EventShortPress:
             PRINTF("kBUTTON_EventShortPress\r\n");
-            LED_TurnOnOff(s_ledMonochromeHandle[0], 0);
+            LED_TurnOnOff((led_handle_t)s_ledMonochromeHandle[0], 0);
             break;
         case kBUTTON_EventDoubleClick:
             PRINTF("kBUTTON_EventDoubleClick\r\n");
-            LED_TurnOnOff(s_ledMonochromeHandle[0], 1);
+            LED_TurnOnOff((led_handle_t)s_ledMonochromeHandle[0], 1);
             break;
         case kBUTTON_EventLongPress:
             PRINTF("kBUTTON_EventLongPress\r\n");
-            LED_TurnOnOff(s_ledMonochromeHandle[0], 1);
+            LED_TurnOnOff((led_handle_t)s_ledMonochromeHandle[0], 1);
             break;
         case kBUTTON_EventError:
             PRINTF("kBUTTON_EventError\r\n");
@@ -248,19 +245,18 @@ void main_task(void *param)
             BUTTON_NAME);
 #endif
 
-        s_shellHandle = (shell_handle_t)&s_shellHandleBuffer[0];
-        if (kStatus_SHELL_Success != SHELL_Init(s_shellHandle, g_serialHandle, "led_control@SHELL>"))
+        if (kStatus_SHELL_Success != SHELL_Init((shell_handle_t)s_shellHandle, g_serialHandle, "led_control@SHELL>"))
         {
             PRINTF("Shell initialization failed!\r\n");
         }
 
-        if (kStatus_SHELL_Success != SHELL_RegisterCommand(s_shellHandle, SHELL_COMMAND(led)))
+        if (kStatus_SHELL_Success != SHELL_RegisterCommand((shell_handle_t)s_shellHandle, SHELL_COMMAND(led)))
         {
             PRINTF("Shell register led command failed!\r\n");
         }
 
 #if (defined(LED_DIMMING_ENABLEMENT) && (LED_DIMMING_ENABLEMENT > 0U))
-        if (kStatus_SHELL_Success != SHELL_RegisterCommand(s_shellHandle, SHELL_COMMAND(dim)))
+        if (kStatus_SHELL_Success != SHELL_RegisterCommand((shell_handle_t)s_shellHandle, SHELL_COMMAND(dim)))
         {
             PRINTF("Shell register dim command failed!\r\n");
         }
@@ -268,11 +264,10 @@ void main_task(void *param)
 
         for (int i = 0; i < LED_TYPE_MONOCHROME_COUNT; i++)
         {
-            s_ledMonochromeHandle[i] = &s_ledMonochromeHandleBuffer[i][0];
 #if (defined(LED_DIMMING_ENABLEMENT) && (LED_DIMMING_ENABLEMENT > 0U))
-            if (kStatus_LED_Success != LED_Init(s_ledMonochromeHandle[i], &g_ledMonochromeDim[0]))
+            if (kStatus_LED_Success != LED_Init((led_handle_t)s_ledMonochromeHandle[i], &g_ledMonochromeDim[i]))
 #else
-            if (kStatus_LED_Success != LED_Init(s_ledMonochromeHandle[i], &g_ledMonochrome[0]))
+            if (kStatus_LED_Success != LED_Init((led_handle_t)s_ledMonochromeHandle[i], &g_ledMonochrome[i]))
 #endif
             {
                 PRINTF("LED %d initialization failed\r\n", i);
@@ -282,9 +277,8 @@ void main_task(void *param)
 #if (defined(BUTTON_COUNT) && (BUTTON_COUNT > 0U))
         for (int i = 0; i < BUTTON_COUNT; i++)
         {
-            buttonHandle[i] = (button_handle_t)&gpioSwBuffer[i][0];
-            BUTTON_Init(buttonHandle[i], &g_buttonConfig[i]);
-            BUTTON_InstallCallback(buttonHandle[i], button_callback, NULL);
+            BUTTON_Init((button_handle_t)buttonHandle[i], &g_buttonConfig[i]);
+            BUTTON_InstallCallback((button_handle_t)buttonHandle[i], button_callback, NULL);
         }
 #endif
     }
@@ -294,7 +288,7 @@ void main_task(void *param)
 #endif
     {
 #if !(defined(SHELL_NON_BLOCKING_MODE) && (SHELL_NON_BLOCKING_MODE > 0U))
-        SHELL_Task(s_shellHandle);
+        SHELL_Task((shell_handle_t)s_shellHandle);
 #endif
     }
 }

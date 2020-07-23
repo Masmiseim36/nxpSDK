@@ -40,8 +40,8 @@
  * Definitions
  ******************************************************************************/
 /*******************************************************************************
-* Prototypes
-******************************************************************************/
+ * Prototypes
+ ******************************************************************************/
 void BOARD_InitHardware(void);
 void USB_DeviceClockInit(void);
 void USB_DeviceIsrEnable(void);
@@ -55,8 +55,8 @@ extern void Board_DMIC_DMA_Init(void);
 
 usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *param);
 /*******************************************************************************
-* Variables
-******************************************************************************/
+ * Variables
+ ******************************************************************************/
 /* Composite device structure. */
 USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
 usb_device_composite_struct_t g_composite;
@@ -64,19 +64,24 @@ extern usb_device_class_struct_t g_UsbDeviceHidMouseClass;
 extern usb_device_class_struct_t g_UsbDeviceAudioClass;
 
 /* USB device class information */
-static usb_device_class_config_struct_t g_CompositeClassConfig[2] = {
-    {
-        USB_DeviceHidMouseCallback, (class_handle_t)NULL, &g_UsbDeviceHidMouseClass,
-    },
-    {
-        USB_DeviceAudioGeneratorCallback, (class_handle_t)NULL, &g_UsbDeviceAudioClass,
-    }
+static usb_device_class_config_struct_t g_CompositeClassConfig[2] = {{
+                                                                         USB_DeviceHidMouseCallback,
+                                                                         (class_handle_t)NULL,
+                                                                         &g_UsbDeviceHidMouseClass,
+                                                                     },
+                                                                     {
+                                                                         USB_DeviceAudioGeneratorCallback,
+                                                                         (class_handle_t)NULL,
+                                                                         &g_UsbDeviceAudioClass,
+                                                                     }
 
 };
 
 /* USB device class configuration information */
 static usb_device_class_config_list_struct_t g_UsbDeviceCompositeConfigList = {
-    g_CompositeClassConfig, USB_DeviceCallback, 2,
+    g_CompositeClassConfig,
+    USB_DeviceCallback,
+    2,
 };
 
 /*******************************************************************************
@@ -124,21 +129,21 @@ void USB_DeviceTaskFn(void *deviceHandle)
 usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *param)
 {
     usb_status_t error = kStatus_USB_Error;
-    uint16_t *temp16 = (uint16_t *)param;
-    uint8_t *temp8 = (uint8_t *)param;
-    uint8_t count  = 0U;
+    uint16_t *temp16   = (uint16_t *)param;
+    uint8_t *temp8     = (uint8_t *)param;
+    uint8_t count      = 0U;
 
     switch (event)
     {
         case kUSB_DeviceEventBusReset:
         {
-            for(count = 0U; count < USB_DEVICE_INTERFACE_COUNT; count++)
+            for (count = 0U; count < USB_DEVICE_INTERFACE_COUNT; count++)
             {
                 g_composite.currentInterfaceAlternateSetting[count] = 0U;
             }
-            g_composite.attach = 0U;
+            g_composite.attach               = 0U;
             g_composite.currentConfiguration = 0U;
-            error = kStatus_USB_Success;
+            error                            = kStatus_USB_Success;
 #if (defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)) || \
     (defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))
             /* Get USB speed to configure the device, including max packet size and interval of the endpoints. */
@@ -152,7 +157,7 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
         case kUSB_DeviceEventSetConfiguration:
             if (0U == (*temp8))
             {
-                g_composite.attach = 0U;
+                g_composite.attach               = 0U;
                 g_composite.currentConfiguration = 0U;
             }
             else if (USB_COMPOSITE_CONFIGURE_INDEX == (*temp8))
@@ -161,7 +166,7 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
                 USB_DeviceAudioGeneratorSetConfigure(g_composite.audioGenerator.audioHandle, *temp8);
                 USB_DeviceHidMouseSetConfigure(g_composite.hidMouse.hidHandle, *temp8);
                 g_composite.currentConfiguration = *temp8;
-                error = kStatus_USB_Success;
+                error                            = kStatus_USB_Success;
             }
             else
             {
@@ -172,7 +177,7 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
 
             if (g_composite.attach)
             {
-                uint8_t interface = (uint8_t)((*temp16 & 0xFF00U) >> 0x08U);
+                uint8_t interface        = (uint8_t)((*temp16 & 0xFF00U) >> 0x08U);
                 uint8_t alternateSetting = (uint8_t)(*temp16 & 0x00FFU);
                 if (USB_AUDIO_STREAM_INTERFACE_INDEX == interface)
                 {
@@ -186,7 +191,7 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
             if (param)
             {
                 *temp8 = g_composite.currentConfiguration;
-                error = kStatus_USB_Success;
+                error  = kStatus_USB_Success;
             }
             break;
         case kUSB_DeviceEventGetInterface:
@@ -196,7 +201,7 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
                 if (interface < USB_DEVICE_INTERFACE_COUNT)
                 {
                     *temp16 = (*temp16 & 0xFF00U) | g_composite.currentInterfaceAlternateSetting[interface];
-                    error = kStatus_USB_Success;
+                    error   = kStatus_USB_Success;
                 }
                 else
                 {
@@ -261,11 +266,11 @@ void APPInit(void)
     SYSMPU_Enable(SYSMPU, 0);
 #endif /* FSL_FEATURE_SOC_SYSMPU_COUNT */
 
-    g_composite.speed = USB_SPEED_FULL;
-    g_composite.attach = 0U;
+    g_composite.speed                      = USB_SPEED_FULL;
+    g_composite.attach                     = 0U;
     g_composite.audioGenerator.audioHandle = (class_handle_t)NULL;
-    g_composite.hidMouse.hidHandle = (class_handle_t)NULL;
-    g_composite.deviceHandle = NULL;
+    g_composite.hidMouse.hidHandle         = (class_handle_t)NULL;
+    g_composite.deviceHandle               = NULL;
 
     if (kStatus_USB_Success !=
         USB_DeviceClassInit(CONTROLLER_ID, &g_UsbDeviceCompositeConfigList, &g_composite.deviceHandle))
@@ -277,7 +282,7 @@ void APPInit(void)
     {
         usb_echo("USB device composite demo\r\n");
         g_composite.audioGenerator.audioHandle = g_UsbDeviceCompositeConfigList.config[1].classHandle;
-        g_composite.hidMouse.hidHandle = g_UsbDeviceCompositeConfigList.config[0].classHandle;
+        g_composite.hidMouse.hidHandle         = g_UsbDeviceCompositeConfigList.config[0].classHandle;
 
         USB_DeviceAudioGeneratorInit(&g_composite);
         USB_DeviceHidMouseInit(&g_composite);
@@ -285,6 +290,8 @@ void APPInit(void)
 
     USB_DeviceIsrEnable();
 
+    /*Add one delay here to make the DP pull down long enough to allow host to detect the previous disconnection.*/
+    SDK_DelayAtLeastUs(5000, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
     USB_DeviceRun(g_composite.deviceHandle);
 }
 

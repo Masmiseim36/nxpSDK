@@ -12,7 +12,6 @@
 #include "usb.h"
 #include "usb_misc.h"
 #include "usb_spec.h"
-#include "usb_host_framework.h"
 
 /*******************************************************************************
  * Definitions
@@ -92,7 +91,60 @@ typedef enum _usb_host_dev_info
     kUSB_HostGetConfigurationDes,    /*!< Device's configuration descriptor pointer */
     kUSB_HostGetConfigurationLength, /*!< Device's configuration descriptor pointer */
 } usb_host_dev_info_t;
+/*! @brief Request type */
+typedef enum _usb_host_request_type
+{
+    kRequestDevice = 1U, /*!< Control request object is device */
+    kRequestInterface,   /*!< Control request object is interface */
+    kRequestEndpoint,    /*!< Control request object is endpoint */
+} usb_host_request_type_t;
+/*! @brief For USB_REQUEST_STANDARD_GET_DESCRIPTOR and USB_REQUEST_STANDARD_SET_DESCRIPTOR */
+typedef struct _usb_host_process_descriptor_param
+{
+    uint8_t descriptorType;    /*!< See the usb_spec.h, such as the USB_DESCRIPTOR_TYPE_DEVICE */
+    uint8_t descriptorIndex;   /*!< The descriptor index is used to select a specific descriptor (only for configuration
+                                  and string descriptors) when several descriptors of the same type are implemented in a
+                                  device */
+    uint8_t languageId;        /*!< It specifies the language ID for string descriptors or is reset to zero for other
+                                  descriptors */
+    uint8_t *descriptorBuffer; /*!< Buffer pointer */
+    uint16_t descriptorLength; /*!< Buffer data length */
+} usb_host_process_descriptor_param_t;
+/*! @brief For USB_REQUEST_STANDARD_CLEAR_FEATURE and USB_REQUEST_STANDARD_SET_FEATURE */
+typedef struct _usb_host_process_feature_param
+{
+    uint8_t requestType;         /*!< See the #usb_host_request_type_t */
+    uint8_t featureSelector;     /*!< Set/cleared feature */
+    uint8_t interfaceOrEndpoint; /*!< Interface or end pointer */
+} usb_host_process_feature_param_t;
+/*! @brief For USB_REQUEST_STANDARD_GET_INTERFACE */
+typedef struct _usb_host_get_interface_param
+{
+    uint8_t interface;                 /*!< Interface number */
+    uint8_t *alternateInterfaceBuffer; /*!< Save the transfer result */
+} usb_host_get_interface_param_t;
 
+/*! @brief For USB_REQUEST_STANDARD_GET_STATUS */
+typedef struct _usb_host_get_status_param
+{
+    uint16_t statusSelector; /*!< Interface number, the end pointer number or OTG status selector */
+    uint8_t requestType;     /*!< See the #usb_host_request_type_t */
+    uint8_t *statusBuffer;   /*!< Save the transfer result */
+} usb_host_get_status_param_t;
+
+/*! @brief For USB_REQUEST_STANDARD_SET_INTERFACE */
+typedef struct _usb_host_set_interface_param
+{
+    uint8_t alternateSetting; /*!< Alternate setting value */
+    uint8_t interface;        /*!< Interface number */
+} usb_host_set_interface_param_t;
+
+/*! @brief For USB_REQUEST_STANDARD_SYNCH_FRAME */
+typedef struct _usb_host_synch_frame_param
+{
+    uint8_t endpoint;           /*!< Endpoint number */
+    uint8_t *frameNumberBuffer; /*!< Frame number data buffer */
+} usb_host_synch_frame_param_t;
 /*!
  * @brief Host callback function typedef.
  *
@@ -331,7 +383,7 @@ extern usb_status_t USB_HostHelperParseAlternateSetting(usb_host_interface_handl
  * @retval kStatus_USB_InvalidParameter     The deviceHandle instance don't belong to hostHandle instance.
  */
 extern usb_status_t USB_HostRemoveDevice(usb_host_handle hostHandle, usb_device_handle deviceHandle);
-
+#if (defined(USB_HOST_CONFIG_KHCI) && (USB_HOST_CONFIG_KHCI > 0U))
 /*!
  * @brief KHCI task function.
  *
@@ -342,7 +394,8 @@ extern usb_status_t USB_HostRemoveDevice(usb_host_handle hostHandle, usb_device_
  * @param[in] hostHandle The host handle.
  */
 extern void USB_HostKhciTaskFunction(void *hostHandle);
-
+#endif
+#if (defined(USB_HOST_CONFIG_EHCI) && (USB_HOST_CONFIG_EHCI > 0U))
 /*!
  * @brief EHCI task function.
  *
@@ -353,7 +406,8 @@ extern void USB_HostKhciTaskFunction(void *hostHandle);
  * @param[in] hostHandle The host handle.
  */
 extern void USB_HostEhciTaskFunction(void *hostHandle);
-
+#endif
+#if (defined(USB_HOST_CONFIG_OHCI) && (USB_HOST_CONFIG_OHCI > 0U))
 /*!
  * @brief OHCI task function.
  *
@@ -364,7 +418,8 @@ extern void USB_HostEhciTaskFunction(void *hostHandle);
  * @param[in] hostHandle The host handle.
  */
 extern void USB_HostOhciTaskFunction(void *hostHandle);
-
+#endif
+#if (defined(USB_HOST_CONFIG_IP3516HS) && (USB_HOST_CONFIG_IP3516HS > 0U))
 /*!
  * @brief IP3516HS task function.
  *
@@ -375,7 +430,8 @@ extern void USB_HostOhciTaskFunction(void *hostHandle);
  * @param[in] hostHandle The host handle.
  */
 extern void USB_HostIp3516HsTaskFunction(void *hostHandle);
-
+#endif
+#if (defined(USB_HOST_CONFIG_KHCI) && (USB_HOST_CONFIG_KHCI > 0U))
 /*!
  * @brief Device KHCI ISR function.
  *
@@ -384,7 +440,8 @@ extern void USB_HostIp3516HsTaskFunction(void *hostHandle);
  * @param[in] hostHandle The host handle.
  */
 extern void USB_HostKhciIsrFunction(void *hostHandle);
-
+#endif
+#if (defined(USB_HOST_CONFIG_EHCI) && (USB_HOST_CONFIG_EHCI > 0U))
 /*!
  * @brief Device EHCI ISR function.
  *
@@ -393,7 +450,8 @@ extern void USB_HostKhciIsrFunction(void *hostHandle);
  * @param[in] hostHandle The host handle.
  */
 extern void USB_HostEhciIsrFunction(void *hostHandle);
-
+#endif
+#if (defined(USB_HOST_CONFIG_OHCI) && (USB_HOST_CONFIG_OHCI > 0U))
 /*!
  * @brief Device OHCI ISR function.
  *
@@ -402,7 +460,8 @@ extern void USB_HostEhciIsrFunction(void *hostHandle);
  * @param[in] hostHandle The host handle.
  */
 extern void USB_HostOhciIsrFunction(void *hostHandle);
-
+#endif
+#if (defined(USB_HOST_CONFIG_IP3516HS) && (USB_HOST_CONFIG_IP3516HS > 0U))
 /*!
  * @brief Device IP3516HS ISR function.
  *
@@ -411,7 +470,7 @@ extern void USB_HostOhciIsrFunction(void *hostHandle);
  * @param[in] hostHandle The host handle.
  */
 extern void USB_HostIp3516HsIsrFunction(void *hostHandle);
-
+#endif
 /*! @}*/
 
 /*!

@@ -12,9 +12,9 @@
  ******************************************************************************/
 /*${macro:start}*/
 #define LED_TYPE_MONOCHROME_COUNT 1
-#define TIMER_SOURCE_CLOCK CLOCK_GetFreq(kCLOCK_McgIrc48MClk)
-#define BUTTON_COUNT 1
-#define BUTTON_NAME BOARD_SW1_NAME
+#define TIMER_SOURCE_CLOCK        CLOCK_GetFreq(kCLOCK_McgIrc48MClk)
+#define BUTTON_COUNT              1
+#define BUTTON_NAME               BOARD_SW1_NAME
 /*${macro:end}*/
 
 /*******************************************************************************

@@ -57,11 +57,11 @@ typedef struct _usb_host_device_instance
     usb_descriptor_device_t *deviceDescriptor; /*!< Standard device descriptor */
     usb_host_pipe_handle controlPipe;          /*!< Device's control pipe */
     uint8_t *configurationDesc;                /*!< Configuration descriptor pointer */
+    uint8_t *enumBuffer;                       /*!< Buffer for enumeration */
     uint16_t configurationLen;                 /*!< Configuration descriptor length */
-    uint16_t configurationValue;               /*!< Configuration index */
     uint8_t interfaceStatus[USB_HOST_CONFIG_CONFIGURATION_MAX_INTERFACE]; /*!< Interfaces' status, please reference to
                                                                              #usb_host_interface_state_t */
-    uint8_t *enumBuffer;                                                  /*!< Buffer for enumeration */
+    uint8_t configurationValue;                                           /*!< Configuration index */
     uint8_t state;                                                        /*!< Device state for enumeration */
     uint8_t enumRetries;       /*!< Re-enumeration when error in control transfer */
     uint8_t stallRetries;      /*!< Re-transfer when stall */
@@ -82,8 +82,8 @@ typedef struct _usb_host_device_instance
 
 typedef struct _usb_host_enum_process_entry
 {
-    uint8_t successState; /*!< When the last step is successful, the next state value */
-    uint8_t retryState;   /*!< When the last step need retry, the next state value */
+    usb_host_device_enumeration_status_t successState; /*!< When the last step is successful, the next state value */
+    usb_host_device_enumeration_status_t retryState;   /*!< When the last step need retry, the next state value */
     /*! When the last step transfer is done, the function is used to process the transfer data */
     usb_status_t (*process)(usb_host_device_instance_t *deviceInstance, uint32_t dataLength);
 } usb_host_enum_process_entry_t;

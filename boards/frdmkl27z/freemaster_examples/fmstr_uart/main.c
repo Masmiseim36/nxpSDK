@@ -87,10 +87,10 @@ static void init_freemaster_lpuart(void)
     config.enableTx = false;
     config.enableRx = false;
 
-    LPUART_Init(BOARD_DEBUG_UART_BASEADDR, &config, BOARD_DEBUG_UART_CLK_FREQ);
+    LPUART_Init((LPUART_Type*)BOARD_DEBUG_UART_BASEADDR, &config, BOARD_DEBUG_UART_CLK_FREQ);
 
     /* Register communication module used by FreeMASTER driver. */
-    FMSTR_SerialSetBaseAddress(BOARD_DEBUG_UART_BASEADDR);
+    FMSTR_SerialSetBaseAddress((LPUART_Type*)BOARD_DEBUG_UART_BASEADDR);
 
 #if FMSTR_SHORT_INTR || FMSTR_LONG_INTR
     /* Enable UART interrupts. */

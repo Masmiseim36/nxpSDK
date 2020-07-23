@@ -2,8 +2,8 @@ var classerpc_1_1_r_p_msg_r_t_o_s_transport =
 [
     [ "RPMsgRTOSTransport", "classerpc_1_1_r_p_msg_r_t_o_s_transport.html#a1176c7ea6559996bf97cd4961abd5346", null ],
     [ "~RPMsgRTOSTransport", "classerpc_1_1_r_p_msg_r_t_o_s_transport.html#aa231589d297458bba899bdb0f70984b3", null ],
-    [ "init", "classerpc_1_1_r_p_msg_r_t_o_s_transport.html#a01e1c3fe80fbbd24a4e731ca9c7a3061", null ],
-    [ "init", "classerpc_1_1_r_p_msg_r_t_o_s_transport.html#a4facb958601717d881963cd33a994879", null ],
+    [ "init", "classerpc_1_1_r_p_msg_r_t_o_s_transport.html#a99cff47855d7d2cf04984e9472c02a9c", null ],
+    [ "init", "classerpc_1_1_r_p_msg_r_t_o_s_transport.html#a3813abb5e6b92edcef1399e065466b1e", null ],
     [ "receive", "classerpc_1_1_r_p_msg_r_t_o_s_transport.html#adaaccd23d645603b560482de2c016d71", null ],
     [ "send", "classerpc_1_1_r_p_msg_r_t_o_s_transport.html#aed718fd7667298a5132504109f656616", null ],
     [ "hasMessage", "classerpc_1_1_r_p_msg_r_t_o_s_transport.html#a4f68756cf6eb065eaa94b3f20b6df112", null ],

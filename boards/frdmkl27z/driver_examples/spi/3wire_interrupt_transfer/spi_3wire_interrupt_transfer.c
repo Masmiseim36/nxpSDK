@@ -14,13 +14,13 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_SPI_MASTER SPI0
-#define EXAMPLE_SPI_SLAVE SPI1
+#define EXAMPLE_SPI_MASTER              SPI0
+#define EXAMPLE_SPI_SLAVE               SPI1
 #define EXAMPLE_SPI_MASTER_SOURCE_CLOCK kCLOCK_BusClk
-#define EXAMPLE_SPI_MASTER_CLK_FREQ CLOCK_GetFreq(kCLOCK_BusClk)
-#define EXAMPLE_SPI_SLAVE_SOURCE_CLOCK kCLOCK_SysCoreClk
-#define EXAMPLE_SPI_MASTER_IRQ SPI0_IRQn
-#define EXAMPLE_SPI_SLAVE_IRQ SPI1_IRQn
+#define EXAMPLE_SPI_MASTER_CLK_FREQ     CLOCK_GetFreq(kCLOCK_BusClk)
+#define EXAMPLE_SPI_SLAVE_SOURCE_CLOCK  kCLOCK_SysCoreClk
+#define EXAMPLE_SPI_MASTER_IRQ          SPI0_IRQn
+#define EXAMPLE_SPI_SLAVE_IRQ           SPI1_IRQn
 
 /*******************************************************************************
  * Prototypes

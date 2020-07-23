@@ -679,6 +679,8 @@ void APPInit(void)
 
     USB_DeviceIsrEnable();
 
+    /*Add one delay here to make the DP pull down long enough to allow host to detect the previous disconnection.*/
+    SDK_DelayAtLeastUs(5000, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
     USB_DeviceRun(s_cdcVcom.deviceHandle);
 }
 
@@ -732,7 +734,7 @@ void APP_task(void)
                 usb_echo("Waiting to enter lowpower ...\r\n");
                 for (uint32_t i = 0U; i < 16000000U; ++i)
                 {
-                    __ASM("NOP"); /* delay */
+                    __NOP(); /* delay */
                 }
 
                 s_comOpen = 0;

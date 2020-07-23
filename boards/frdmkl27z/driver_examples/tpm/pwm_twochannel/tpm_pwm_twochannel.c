@@ -15,8 +15,8 @@
  * Definitions
  ******************************************************************************/
 /* The Flextimer instance/channel used for board */
-#define BOARD_TPM_BASEADDR TPM2
-#define BOARD_FIRST_TPM_CHANNEL 0U
+#define BOARD_TPM_BASEADDR       TPM2
+#define BOARD_FIRST_TPM_CHANNEL  0U
 #define BOARD_SECOND_TPM_CHANNEL 1U
 
 /* Get source clock for TPM driver */

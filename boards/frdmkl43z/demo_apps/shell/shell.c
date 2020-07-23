@@ -21,13 +21,13 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define LED_NUMBERS 2U
+#define LED_NUMBERS  2U
 #define LED_1_INIT() LED_RED_INIT(LOGIC_LED_OFF)
 #define LED_2_INIT() LED_GREEN_INIT(LOGIC_LED_OFF)
-#define LED_1_ON() LED_RED_ON()
-#define LED_1_OFF() LED_RED_OFF()
-#define LED_2_ON() LED_GREEN_ON()
-#define LED_2_OFF() LED_GREEN_OFF()
+#define LED_1_ON()   LED_RED_ON()
+#define LED_1_OFF()  LED_RED_OFF()
+#define LED_2_ON()   LED_GREEN_ON()
+#define LED_2_OFF()  LED_GREEN_OFF()
 #define SHELL_Printf PRINTF
 /*******************************************************************************
  * Prototypes

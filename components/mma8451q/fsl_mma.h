@@ -11,7 +11,7 @@
 
 #include "fsl_common.h"
 
-#define WHO_AM_I_REG kMMA8451_WHO_AM_I
+#define WHO_AM_I_REG                   kMMA8451_WHO_AM_I
 #define MMA8451Q_ACCEL_RESOLUTION_BITS 14
 
 /*!

@@ -1,5 +1,7 @@
 ## Contributing to eRPC
-The eRPC project is placed on github. Contributing can be managed there via pull-request. Before a pull-request is created, several tasks needs to be done: the code needs to be tested and properly formatted.
+The eRPC project is placed on github. Contributing can be managed there via pull-request. Use the `develop` branch as the base branch for pull-requests. Before a pull-request is created, several tasks needs to be done: the code needs to be tested and properly formatted. 
+
+eRPC is available with an unrestrictive BSD 3-clause license and this can't be changed in pull requests. Also newly added pull request files have to be licensed as BSD 3-clause license.
 
 ### How to test eRPC code
 Two types of tests are used: pytest-based tests and acceptance tests.

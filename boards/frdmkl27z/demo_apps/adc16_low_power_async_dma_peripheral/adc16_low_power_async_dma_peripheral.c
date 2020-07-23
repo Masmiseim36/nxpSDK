@@ -21,7 +21,7 @@
 
 #define DEMO_DMA_IRQ_HANDLER_FUNC DMA0_IRQHandler
 
-#define LED_INIT() LED_RED_INIT(LOGIC_LED_OFF)
+#define LED_INIT()   LED_RED_INIT(LOGIC_LED_OFF)
 #define LED_TOGGLE() LED_RED_TOGGLE()
 
 #define DEMO_ADC16_SAMPLE_COUNT 16U /* The ADC16 sample count */
@@ -140,11 +140,7 @@ void DEMO_DMA_IRQ_HANDLER_FUNC(void)
                         (void *)g_adc16SampleDataArray, sizeof(uint32_t), sizeof(g_adc16SampleDataArray),
                         kDMA_PeripheralToMemory);
     DMA_SetTransferConfig(DEMO_DMA_DMA_BASEADDR, DEMO_DMA_ADC0_DMA_CHANNEL, &g_transferConfig);
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 int main(void)

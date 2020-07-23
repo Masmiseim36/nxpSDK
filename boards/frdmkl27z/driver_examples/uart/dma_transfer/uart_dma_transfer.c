@@ -17,15 +17,15 @@
  ******************************************************************************/
 /* UART instance and clock */
 /* UART2: PTD2,PTD3 used which is J1-5,J1-7 on FRDM-KL27Z */
-#define DEMO_UART UART2
-#define DEMO_UART_CLKSRC UART2_CLK_SRC
-#define DEMO_UART_CLK_FREQ CLOCK_GetFreq(UART2_CLK_SRC)
-#define UART_TX_DMA_CHANNEL 0U
-#define UART_RX_DMA_CHANNEL 1U
+#define DEMO_UART                    UART2
+#define DEMO_UART_CLKSRC             UART2_CLK_SRC
+#define DEMO_UART_CLK_FREQ           CLOCK_GetFreq(UART2_CLK_SRC)
+#define UART_TX_DMA_CHANNEL          0U
+#define UART_RX_DMA_CHANNEL          1U
 #define EXAMPLE_UART_DMAMUX_BASEADDR DMAMUX0
-#define EXAMPLE_UART_DMA_BASEADDR DMA0
-#define UART_TX_DMA_REQUEST kDmaRequestMux0UART2Tx
-#define UART_RX_DMA_REQUEST kDmaRequestMux0UART2Rx
+#define EXAMPLE_UART_DMA_BASEADDR    DMA0
+#define UART_TX_DMA_REQUEST          kDmaRequestMux0UART2Tx
+#define UART_RX_DMA_REQUEST          kDmaRequestMux0UART2Rx
 
 #define ECHO_BUFFER_LENGTH 8
 

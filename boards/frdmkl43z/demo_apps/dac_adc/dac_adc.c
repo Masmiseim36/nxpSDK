@@ -16,12 +16,12 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_ADC16_BASEADDR ADC0
+#define DEMO_ADC16_BASEADDR      ADC0
 #define DEMO_ADC16_CHANNEL_GROUP 0U
-#define DEMO_ADC16_USER_CHANNEL 23U /* PTE30, ADC0_SE23 */
-#define DEMO_DAC_BASEADDR DAC0
+#define DEMO_ADC16_USER_CHANNEL  23U /* PTE30, ADC0_SE23 */
+#define DEMO_DAC_BASEADDR        DAC0
 
-#define DEMO_ADC16_IRQn ADC0_IRQn
+#define DEMO_ADC16_IRQn             ADC0_IRQn
 #define DEMO_ADC16_IRQ_HANDLER_FUNC ADC0_IRQHandler
 #define DAC_1_0_VOLTS 1241U
 #define DAC_1_5_VOLTS 1862U
@@ -108,11 +108,7 @@ void DEMO_ADC16_IRQ_HANDLER_FUNC(void)
     g_Adc16ConversionDoneFlag = true;
     /* Read conversion result to clear the conversion completed flag. */
     g_Adc16ConversionValue = ADC16_GetChannelConversionValue(DEMO_ADC16_BASEADDR, DEMO_ADC16_CHANNEL_GROUP);
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 /*!

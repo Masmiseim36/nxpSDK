@@ -158,7 +158,7 @@ usb_status_t USB_DeviceHidMouseSetInterface(class_handle_t handle, uint8_t inter
 /* Initialize the HID mouse */
 usb_status_t USB_DeviceHidMouseInit(usb_device_composite_struct_t *deviceComposite)
 {
-    s_UsbDeviceComposite = deviceComposite;
+    s_UsbDeviceComposite       = deviceComposite;
     s_UsbDeviceHidMouse.buffer = s_MouseBuffer;
     return kStatus_USB_Success;
 }

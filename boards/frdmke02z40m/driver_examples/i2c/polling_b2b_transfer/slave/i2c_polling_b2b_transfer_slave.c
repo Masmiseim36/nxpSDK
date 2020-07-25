@@ -18,12 +18,12 @@
  * Definitions
  ******************************************************************************/
 /* I2C source clock */
-#define I2C_SLAVE_CLK_SRC kCLOCK_BusClk
-#define I2C_SLAVE_CLK_FREQ CLOCK_GetFreq(kCLOCK_BusClk)
+#define I2C_SLAVE_CLK_SRC          kCLOCK_BusClk
+#define I2C_SLAVE_CLK_FREQ         CLOCK_GetFreq(kCLOCK_BusClk)
 #define EXAMPLE_I2C_SLAVE_BASEADDR I2C0
 
 #define I2C_MASTER_SLAVE_ADDR_7BIT 0x7EU
-#define I2C_DATA_LENGTH 34U
+#define I2C_DATA_LENGTH            34U
 
 /*******************************************************************************
  * Prototypes

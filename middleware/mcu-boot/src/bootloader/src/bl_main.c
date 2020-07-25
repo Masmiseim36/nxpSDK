@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2013-2015 Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2018 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -8,34 +8,34 @@
 
 #define exit exit_default
 #include <stdbool.h>
-#include "bl_context.h"
-#include "bl_peripheral.h"
-#include "bl_shutdown_cleanup.h"
-#include "bootloader.h"
+#include "utilities/fsl_assert.h"
+#include "bootloader/bl_context.h"
+#include "bootloader/bl_peripheral.h"
+#include "bootloader/bl_shutdown_cleanup.h"
 #include "bootloader_common.h"
-#include "fsl_assert.h"
+#include "bootloader/bootloader.h"
 #if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
 #if !BL_DEVICE_IS_LPC_SERIES
 #include "fsl_flash.h"
 #else
-#include "fsl_iap.h"
+#include "flashiap_wrapper/fsl_flashiap_wrapper.h"
 #endif
 #endif // #if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
-#include "fsl_rtos_abstraction.h"
-#include "microseconds.h"
-#include "property.h"
 #include "smc.h"
-#include "vector_table_info.h"
+#include "microseconds.h"
+#include "property/property.h"
+#include "utilities/vector_table_info.h"
+#include "utilities/fsl_rtos_abstraction.h"
 #if BL_FEATURE_CRC_CHECK
-#include "bl_app_crc_check.h"
+#include "bootloader/bl_app_crc_check.h"
 #endif
 #if BL_FEATURE_QSPI_MODULE
 #include "qspi.h"
 #endif
-#include "memory.h"
+#include "memory/memory.h"
 
 #if BL_FEATURE_RELIABLE_UPDATE
-#include "bl_reliable_update.h"
+#include "bootloader/bl_reliable_update.h"
 #endif
 
 //! @addtogroup bl_core
@@ -45,7 +45,7 @@
 // Prototypes
 ////////////////////////////////////////////////////////////////////////////////
 
-#if defined(DEBUG) || defined(_DEBUG)
+#if defined(DEBUG) && !defined(DEBUG_PRINT_DISABLE)
 static const char *get_peripheral_name(uint32_t peripheralTypeMask);
 #endif
 
@@ -73,24 +73,27 @@ int main(void);
 // Variables
 ////////////////////////////////////////////////////////////////////////////////
 
+#if defined(DEBUG) && !defined(DEBUG_PRINT_DISABLE)
+static const char *const kPeripheralNames[] = {
+    "UART", // kPeripheralType_UART
+    "I2C",  // kPeripheralType_I2CSlave
+    "SPI",  // kPeripheralType_SPISlave
+    "CAN",  // kPeripheralType_CAN
+    "HID",  // kPeripheralType_USB_HID
+    "CDC",  // kPeripheralType_USB_CDC
+    "DFU",  // kPeripheralType_USB_DFU
+    "MSD"   // kPeripheralType_USB_MSC
+};
+#endif // DEBUG
+
 ////////////////////////////////////////////////////////////////////////////////
 // Code
 ////////////////////////////////////////////////////////////////////////////////
 
-#if defined(DEBUG) || defined(_DEBUG)
+#if defined(DEBUG) && !defined(DEBUG_PRINT_DISABLE)
 //! @brief Returns the name of a peripheral given its type mask.
 const char *get_peripheral_name(uint32_t peripheralTypeMask)
 {
-    const char *const kPeripheralNames[] = {
-        "UART", // kPeripheralType_UART
-        "I2C",  // kPeripheralType_I2CSlave
-        "SPI",  // kPeripheralType_SPISlave
-        "CAN",  // kPeripheralType_CAN
-        "HID",  // kPeripheralType_USB_HID
-        "CDC",  // kPeripheralType_USB_CDC
-        "DFU",  // kPeripheralType_USB_DFU
-        "MSD"   // kPeripheralType_USB_MSC
-    };
     uint32_t i;
     for (i = 0; i < ARRAY_SIZE(kPeripheralNames); ++i)
     {
@@ -136,22 +139,8 @@ static void get_user_application_entry(uint32_t *appEntry, uint32_t *appStack)
         *appStack = 0;
     }
 #else
-#if BL_FEATURE_RELIABLE_UPDATE
-    if (g_bootloaderContext.imageStart != 0xffffffffu)
-    {
-        uint32_t *appVectorTable = (uint32_t *)g_bootloaderContext.imageStart;
-        *appEntry = appVectorTable[kInitialPC];
-        *appStack = appVectorTable[kInitialSP];
-    }
-    else
-    {
-        *appEntry = 0xffffffffu;
-        *appStack = 0xffffffffu;
-    }
-#else
     *appEntry = APP_VECTOR_TABLE[kInitialPC];
     *appStack = APP_VECTOR_TABLE[kInitialSP];
-#endif // BL_FEATURE_RELIABLE_UPDATE
 #endif //  FSL_FEATURE_FLASH_HAS_ACCESS_CONTROL
 #endif // BL_TARGET_RAM
 }
@@ -319,7 +308,7 @@ static peripheral_descriptor_t const *get_active_peripheral(void)
         {
             assert(peripheral->controlInterface->init);
 
-#if defined(DEBUG) || defined(_DEBUG)
+#if defined(DEBUG) && !defined(DEBUG_PRINT_DISABLE)
             debug_printf("Initing %s\r\n", get_peripheral_name(peripheral->typeMask));
 #endif
             peripheral->controlInterface->init(peripheral, peripheral->packetInterface->byteReceivedCallback);
@@ -416,7 +405,7 @@ static peripheral_descriptor_t const *get_active_peripheral(void)
             }
         }
 #endif // !BL_FEATURE_TIMEOUT
-       // Traverse through all the peripherals
+        // Traverse through all the peripherals
         for (peripheral = g_peripherals; peripheral->typeMask != 0; ++peripheral)
         {
             // Check that the peripheral is enabled in the user configuration data
@@ -452,6 +441,9 @@ static peripheral_descriptor_t const *get_active_peripheral(void)
             }
         }
     }
+#if BL_FEATURE_CRC_CHECK && BL_FEATURE_CRC_ASSERT
+    restore_crc_check_failure_pin();
+#endif    
 
     return activePeripheral;
 }
@@ -473,11 +465,11 @@ static void configure_quadspi_as_needed(void)
         // Get the start address and flash size
         // Note: Basically BCA is always stored in Main flash memory
         uint32_t flashStart;
-        g_bootloaderContext.flashDriverInterface->flash_get_property(g_bootloaderContext.allFlashState,
-                                                                     kFLASH_PropertyPflash0BlockBaseAddr, &flashStart);
+        g_bootloaderContext.flashDriverInterface->flash_get_property(
+            g_bootloaderContext.allFlashState, kFLASH_PropertyPflash0BlockBaseAddr, &flashStart);
         uint32_t flashSize;
-        g_bootloaderContext.flashDriverInterface->flash_get_property(g_bootloaderContext.allFlashState,
-                                                                     kFLASH_PropertyPflash0TotalSize, &flashSize);
+        g_bootloaderContext.flashDriverInterface->flash_get_property(
+            g_bootloaderContext.allFlashState, kFLASH_PropertyPflash0TotalSize, &flashSize);
 
         // Check if the pointer of qspi config block is valid.
         if ((qspi_config_block_base != 0xFFFFFFFF) && (qspi_config_block_base > flashStart) &&
@@ -511,15 +503,15 @@ static void bootloader_flash_init(void)
 {
     g_bootloaderContext.flashDriverInterface->flash_init(g_bootloaderContext.allFlashState);
 #if !BL_DEVICE_IS_LPC_SERIES
-    (void)FTFx_CACHE_Init(g_bootloaderContext.allFlashCacheState);
+    FTFx_CACHE_Init(g_bootloaderContext.allFlashCacheState);
 #endif
 #if BL_FEATURE_SUPPORT_DFLASH
     check_available_dFlash();
     if (g_bootloaderContext.dflashDriverInterface != NULL)
     {
-        (void)g_bootloaderContext.dflashDriverInterface->flash_init(g_bootloaderContext.dFlashState);
+        g_bootloaderContext.dflashDriverInterface->flash_init(g_bootloaderContext.dFlashState);
     }
-#endif // BL_FEATURE_SUPPORT_DFLASH
+#endif // BL_FEATURE_SUPPORT_DFLASH    
 }
 #endif // #if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
 
@@ -544,6 +536,9 @@ static void bootloader_init(void)
     // Init flash driver.
     bootloader_flash_init();
 #endif // #if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
+
+    // Load the user configuration data so that we can configure the clocks
+    g_bootloaderContext.propertyInterface->load_user_config();
 
 // Init QSPI module if needed
 #if BL_FEATURE_QSPI_MODULE
@@ -649,9 +644,11 @@ int main(void)
 //! Since we never exit this gets rid of the C standard functions that cause
 //! extra ROM size usage.
 #undef exit
-void exit(int arg) {}
+void exit(int arg)
+{
+}
 
-#if defined(__CC_ARM) || (__ARMCC_VERSION)
+#if defined(__CC_ARM)
 #define ITM_Port8(n) (*((volatile unsigned char *)(0xE0000000 + 4 * n)))
 #define ITM_Port16(n) (*((volatile unsigned short *)(0xE0000000 + 4 * n)))
 #define ITM_Port32(n) (*((volatile unsigned long *)(0xE0000000 + 4 * n)))
@@ -659,6 +656,10 @@ void exit(int arg) {}
 #define DEMCR (*((volatile unsigned long *)(0xE000EDFC)))
 #define TRCENA 0x01000000
 
+struct __FILE
+{
+    int handle; /* Add whatever needed */
+};
 FILE __stdout;
 FILE __stdin;
 

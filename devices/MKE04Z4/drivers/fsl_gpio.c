@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019, NXP
+ * Copyright 2017-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -17,7 +17,7 @@
 #endif
 
 #define PORT_NUMBERS_EACH_GPIO (4U)
-#define PIN_NUMBERS_EACH_PORT (8UL)
+#define PIN_NUMBERS_EACH_PORT  (8UL)
 /*******************************************************************************
  * Variables
  ******************************************************************************/
@@ -219,15 +219,18 @@ uint32_t GPIO_PinRead(gpio_port_num_t port, uint8_t pin)
  * Code
  ******************************************************************************/
 
-#if defined(FSL_FEATURE_PCC_HAS_FGPIO_CLOCK_GATE_CONTROL) && FSL_FEATURE_PCC_HAS_FGPIO_CLOCK_GATE_CONTROL
-void FGPIO_PortInit(FGPIO_Type *base)
+void FGPIO_PortInit(gpio_port_num_t port)
 {
+#if defined(FSL_FEATURE_PCC_HAS_FGPIO_CLOCK_GATE_CONTROL) && FSL_FEATURE_PCC_HAS_FGPIO_CLOCK_GATE_CONTROL
+    uint8_t instance = (uint8_t)port / PORT_NUMBERS_EACH_GPIO;
+    FGPIO_Type *base = s_fgpioBases[instance];
+
 #if !(defined(FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL) && FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL)
     /* Ungate FGPIO periphral clock */
     CLOCK_EnableClock(s_fgpioClockName[FGPIO_GetInstance(base)]);
 #endif /* FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL */
-}
 #endif /* FSL_FEATURE_PCC_HAS_FGPIO_CLOCK_GATE_CONTROL */
+}
 
 /*!
  * brief Initializes a FGPIO pin used by the board.

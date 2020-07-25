@@ -17,15 +17,15 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_LPTMR_BASE LPTMR0
-#define DEMO_LPTMR_IRQn LPTMR0_IRQn
+#define DEMO_LPTMR_BASE   LPTMR0
+#define DEMO_LPTMR_IRQn   LPTMR0_IRQn
 #define LPTMR_LED_HANDLER LPTMR0_IRQHandler
 /* Get source clock for LPTMR driver */
 #define LPTMR_SOURCE_CLOCK CLOCK_GetFreq(kCLOCK_LpoClk)
 /* Define LPTMR microseconds counts value */
 #define LPTMR_USEC_COUNT 500000U
-#define LED_INIT() LED_RED1_INIT(LOGIC_LED_ON)
-#define LED_TOGGLE() LED_RED1_TOGGLE()
+#define LED_INIT()       LED_RED1_INIT(LOGIC_LED_ON)
+#define LED_TOGGLE()     LED_RED1_TOGGLE()
 
 /*******************************************************************************
  * Prototypes

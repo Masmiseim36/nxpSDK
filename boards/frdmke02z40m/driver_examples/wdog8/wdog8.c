@@ -18,10 +18,10 @@
  * Make sure this variable's location is proper that it will not be affected by watchdog reset,
  * that is, the variable shall not be intialized in startup code.
  */
-#define RESET_CHECK_FLAG (*((uint32_t *)0x20000100))
+#define RESET_CHECK_FLAG       (*((uint32_t *)0x20000100))
 #define RESET_CHECK_INIT_VALUE 0x0D0D
-#define EXAMPLE_WDOG_BASE WDOG
-#define DELAY_TIME 100000U
+#define EXAMPLE_WDOG_BASE      WDOG
+#define DELAY_TIME             100000U
 
 #define WDOG_WCT_INSTRUCITON_COUNT (128U)
 

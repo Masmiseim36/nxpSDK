@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 - 2019 NXP
+ * Copyright 2017 - 2020 NXP
  * All rights reserved.
  *
  *
@@ -30,9 +30,9 @@
 #endif
 
 /*! @brief Join bytes to word utility. */
-#define B1P2(b) (((uint32_t)(b)&0xFFU) << 8U)
-#define B1P1(b) ((uint32_t)(b)&0xFFU)
-#define B2P1(b) ((uint32_t)(b)&0xFFFFU)
+#define B1P2(b)                      (((uint32_t)(b)&0xFFU) << 8U)
+#define B1P1(b)                      ((uint32_t)(b)&0xFFU)
+#define B2P1(b)                      ((uint32_t)(b)&0xFFFFU)
 #define BYTES_JOIN_TO_WORD_1_1(x, y) (B1P1(x) | B1P2(y))
 #define BYTES_JOIN_TO_WORD_1_2(x, y) (B1P2(x) | B2P1(y))
 /*@}*/
@@ -95,10 +95,10 @@
  * @name Flash security status defines
  * @{
  */
-#define FLASH_SECURITY_STATE_KEYEN 0x80U
+#define FLASH_SECURITY_STATE_KEYEN     0x80U
 #define FLASH_SECURITY_STATE_UNSECURED 0x02U
-#define FLASH_NOT_SECURE 0x01U
-#define FLASH_SECURE_BACKDOOR_ENABLED 0x02U
+#define FLASH_NOT_SECURE               0x01U
+#define FLASH_SECURE_BACKDOOR_ENABLED  0x02U
 #define FLASH_SECURE_BACKDOOR_DISABLED 0x04U
 /*@}*/
 
@@ -106,23 +106,23 @@
  * @name Flash controller command numbers
  * @{
  */
-#define FTMRx_ERASE_VERIFY_ALL_BLOCK 0x01U      /*!< ERSVERALL*/
-#define FTMRx_ERASE_VERIFY_BLOCK 0x02U          /*!< ERSVERBLK*/
-#define FTMRx_ERASE_VERIFY_SECTION 0x03U        /*!< ERSVERSECT*/
-#define FTMRx_READ_ONCE 0x04U                   /*!< RDONCE or RDINDEX*/
-#define FTMRx_PROGRAM 0x06U                     /*!< PGM*/
-#define FTMRx_PROGRAM_ONCE 0x07U                /*!< PGMONCE or PGMINDEX*/
-#define FTMRx_ERASE_ALL_BLOCK 0x08U             /*!< ERSALL*/
-#define FTMRx_ERASE_BLOCK 0x09U                 /*!< ERSBLK*/
-#define FTMRx_ERASE_SECTOR 0x0AU                /*!< ERSSCR*/
-#define FTMRx_ERASE_ALL_BLOCK_UNSECURE 0x0BU    /*!< ERSALLU*/
-#define FTMRx_SECURITY_BY_PASS 0x0CU            /*!< VFYKEY*/
-#define FTMRx_SET_USER_MARGIN_LEVEL 0x0DU       /*!< SETUSERLVL*/
-#define FTMRx_SET_FACTORY_MARGIN_LEVEL 0x0EU    /*!< SETFTYLVL*/
-#define FTMRx_CONFIGURE_NVM 0x0FU               /*!< CONNVM*/
+#define FTMRx_ERASE_VERIFY_ALL_BLOCK      0x01U /*!< ERSVERALL*/
+#define FTMRx_ERASE_VERIFY_BLOCK          0x02U /*!< ERSVERBLK*/
+#define FTMRx_ERASE_VERIFY_SECTION        0x03U /*!< ERSVERSECT*/
+#define FTMRx_READ_ONCE                   0x04U /*!< RDONCE or RDINDEX*/
+#define FTMRx_PROGRAM                     0x06U /*!< PGM*/
+#define FTMRx_PROGRAM_ONCE                0x07U /*!< PGMONCE or PGMINDEX*/
+#define FTMRx_ERASE_ALL_BLOCK             0x08U /*!< ERSALL*/
+#define FTMRx_ERASE_BLOCK                 0x09U /*!< ERSBLK*/
+#define FTMRx_ERASE_SECTOR                0x0AU /*!< ERSSCR*/
+#define FTMRx_ERASE_ALL_BLOCK_UNSECURE    0x0BU /*!< ERSALLU*/
+#define FTMRx_SECURITY_BY_PASS            0x0CU /*!< VFYKEY*/
+#define FTMRx_SET_USER_MARGIN_LEVEL       0x0DU /*!< SETUSERLVL*/
+#define FTMRx_SET_FACTORY_MARGIN_LEVEL    0x0EU /*!< SETFTYLVL*/
+#define FTMRx_CONFIGURE_NVM               0x0FU /*!< CONNVM*/
 #define FTMRx_ERASE_VERIFY_EEPROM_SECTION 0x10U /*!< ERSVES*/
-#define FTMRx_PROGRAM_EEPROM 0x11U              /*!< PGME*/
-#define FTMRx_ERASE_EEPROM_SECTOR 0x12U         /*!< ERSESCR*/
+#define FTMRx_PROGRAM_EEPROM              0x11U /*!< PGME*/
+#define FTMRx_ERASE_EEPROM_SECTOR         0x12U /*!< ERSESCR*/
                                                 /*@}*/
 
 /*!
@@ -130,24 +130,24 @@
  * @{
  */
 #if defined(FTMRE)
-#define FTMRx FTMRE
-#define FTMRx_BASE FTMRE_BASE
-#define FTMRx_FCCOBIX_CCOBIX(x) FTMRE_FCCOBIX_CCOBIX(x)
-#define FTMRx_FCCOBLO_CCOB(x) FTMRE_FCCOBLO_CCOB(x)
-#define FTMRx_FCCOBHI_CCOB(x) FTMRE_FCCOBHI_CCOB(x)
+#define FTMRx                      FTMRE
+#define FTMRx_BASE                 FTMRE_BASE
+#define FTMRx_FCCOBIX_CCOBIX(x)    FTMRE_FCCOBIX_CCOBIX(x)
+#define FTMRx_FCCOBLO_CCOB(x)      FTMRE_FCCOBLO_CCOB(x)
+#define FTMRx_FCCOBHI_CCOB(x)      FTMRE_FCCOBHI_CCOB(x)
 #define FTMRx_FCLKDIV_FDIVLCK_MASK FTMRE_FCLKDIV_FDIVLCK_MASK
-#define FTMRx_FCLKDIV_FDIVLD_MASK FTMRE_FCLKDIV_FDIVLD_MASK
-#define FTMRx_FCLKDIV_FDIV_MASK FTMRE_FCLKDIV_FDIV_MASK
-#define FTMRx_FSTAT_CCIF_MASK FTMRE_FSTAT_CCIF_MASK
-#define FTMRx_FCLKDIV_FDIV(x) FTMRE_FCLKDIV_FDIV(x)
-#define FTMRx_FSTAT_ACCERR_MASK FTMRE_FSTAT_ACCERR_MASK
-#define FTMRx_FSTAT_FPVIOL_MASK FTMRE_FSTAT_FPVIOL_MASK
-#define FTMRx_FSTAT_MGBUSY_MASK FTMRE_FSTAT_MGBUSY_MASK
-#define FTMRx_FSTAT_MGSTAT_MASK FTMRE_FSTAT_MGSTAT_MASK
-#define FTMRx_FSTAT_MGSTAT0_MASK FTMRE_FSTAT_MGSTAT(1)
-#define FTMRx_FSTAT_MGSTAT1_MASK FTMRE_FSTAT_MGSTAT(2)
-#define FTMRx_FSEC_SEC_MASK FTMRE_FSEC_SEC_MASK
-#define FTMRx_FSEC_KEYEN_MASK FTMRE_FSEC_KEYEN_MASK
+#define FTMRx_FCLKDIV_FDIVLD_MASK  FTMRE_FCLKDIV_FDIVLD_MASK
+#define FTMRx_FCLKDIV_FDIV_MASK    FTMRE_FCLKDIV_FDIV_MASK
+#define FTMRx_FSTAT_CCIF_MASK      FTMRE_FSTAT_CCIF_MASK
+#define FTMRx_FCLKDIV_FDIV(x)      FTMRE_FCLKDIV_FDIV(x)
+#define FTMRx_FSTAT_ACCERR_MASK    FTMRE_FSTAT_ACCERR_MASK
+#define FTMRx_FSTAT_FPVIOL_MASK    FTMRE_FSTAT_FPVIOL_MASK
+#define FTMRx_FSTAT_MGBUSY_MASK    FTMRE_FSTAT_MGBUSY_MASK
+#define FTMRx_FSTAT_MGSTAT_MASK    FTMRE_FSTAT_MGSTAT_MASK
+#define FTMRx_FSTAT_MGSTAT0_MASK   FTMRE_FSTAT_MGSTAT(1)
+#define FTMRx_FSTAT_MGSTAT1_MASK   FTMRE_FSTAT_MGSTAT(2)
+#define FTMRx_FSEC_SEC_MASK        FTMRE_FSEC_SEC_MASK
+#define FTMRx_FSEC_KEYEN_MASK      FTMRE_FSEC_KEYEN_MASK
 #if defined(FTMRE_FPROT_FPHDIS_MASK)
 #define FTMRx_FPROT_FPHDIS_MASK FTMRE_FPROT_FPHDIS_MASK
 #endif
@@ -156,24 +156,24 @@
 #define FTMRx_FERSTAT_DFDIF_MASK FTMRE_FERSTAT_DFDIF_MASK
 #endif
 #elif defined(FTMRH)
-#define FTMRx FTMRH
-#define FTMRx_BASE FTMRH_BASE
-#define FTMRx_FCCOBIX_CCOBIX(x) FTMRH_FCCOBIX_CCOBIX(x)
-#define FTMRx_FCCOBLO_CCOB(x) FTMRH_FCCOBLO_CCOB(x)
-#define FTMRx_FCCOBHI_CCOB(x) FTMRH_FCCOBHI_CCOB(x)
+#define FTMRx                      FTMRH
+#define FTMRx_BASE                 FTMRH_BASE
+#define FTMRx_FCCOBIX_CCOBIX(x)    FTMRH_FCCOBIX_CCOBIX(x)
+#define FTMRx_FCCOBLO_CCOB(x)      FTMRH_FCCOBLO_CCOB(x)
+#define FTMRx_FCCOBHI_CCOB(x)      FTMRH_FCCOBHI_CCOB(x)
 #define FTMRx_FCLKDIV_FDIVLCK_MASK FTMRH_FCLKDIV_FDIVLCK_MASK
-#define FTMRx_FCLKDIV_FDIVLD_MASK FTMRH_FCLKDIV_FDIVLD_MASK
-#define FTMRx_FCLKDIV_FDIV_MASK FTMRH_FCLKDIV_FDIV_MASK
-#define FTMRx_FCLKDIV_FDIV(x) FTMRH_FCLKDIV_FDIV(x)
-#define FTMRx_FSTAT_CCIF_MASK FTMRH_FSTAT_CCIF_MASK
-#define FTMRx_FSTAT_ACCERR_MASK FTMRH_FSTAT_ACCERR_MASK
-#define FTMRx_FSTAT_FPVIOL_MASK FTMRH_FSTAT_FPVIOL_MASK
-#define FTMRx_FSTAT_MGBUSY_MASK FTMRH_FSTAT_MGBUSY_MASK
-#define FTMRx_FSTAT_MGSTAT_MASK FTMRH_FSTAT_MGSTAT_MASK
-#define FTMRx_FSTAT_MGSTAT0_MASK FTMRH_FSTAT_MGSTAT(1U)
-#define FTMRx_FSTAT_MGSTAT1_MASK FTMRH_FSTAT_MGSTAT(2U)
-#define FTMRx_FSEC_SEC_MASK FTMRH_FSEC_SEC_MASK
-#define FTMRx_FSEC_KEYEN_MASK FTMRH_FSEC_KEYEN_MASK
+#define FTMRx_FCLKDIV_FDIVLD_MASK  FTMRH_FCLKDIV_FDIVLD_MASK
+#define FTMRx_FCLKDIV_FDIV_MASK    FTMRH_FCLKDIV_FDIV_MASK
+#define FTMRx_FCLKDIV_FDIV(x)      FTMRH_FCLKDIV_FDIV(x)
+#define FTMRx_FSTAT_CCIF_MASK      FTMRH_FSTAT_CCIF_MASK
+#define FTMRx_FSTAT_ACCERR_MASK    FTMRH_FSTAT_ACCERR_MASK
+#define FTMRx_FSTAT_FPVIOL_MASK    FTMRH_FSTAT_FPVIOL_MASK
+#define FTMRx_FSTAT_MGBUSY_MASK    FTMRH_FSTAT_MGBUSY_MASK
+#define FTMRx_FSTAT_MGSTAT_MASK    FTMRH_FSTAT_MGSTAT_MASK
+#define FTMRx_FSTAT_MGSTAT0_MASK   FTMRH_FSTAT_MGSTAT(1U)
+#define FTMRx_FSTAT_MGSTAT1_MASK   FTMRH_FSTAT_MGSTAT(2U)
+#define FTMRx_FSEC_SEC_MASK        FTMRH_FSEC_SEC_MASK
+#define FTMRx_FSEC_KEYEN_MASK      FTMRH_FSEC_KEYEN_MASK
 #if defined(FTMRH_FPROT_FPHDIS_MASK)
 #define FTMRx_FPROT_FPHDIS_MASK FTMRH_FPROT_FPHDIS_MASK
 #endif
@@ -199,7 +199,7 @@ enum _flash_config_area_range
  * @name Flash register access type defines
  * @{
  */
-#define FTMRx_REG8_ACCESS_TYPE volatile uint8_t *
+#define FTMRx_REG8_ACCESS_TYPE  volatile uint8_t *
 #define FTMRx_REG32_ACCESS_TYPE volatile uint32_t *
 /*@}*/
 
@@ -207,7 +207,7 @@ enum _flash_config_area_range
  * @brief MCM cache register access info defines.
  */
 #if defined(MCM_PLACR_CFCC_MASK)
-#define MCM_CACHE_CLEAR_MASK MCM_PLACR_CFCC_MASK
+#define MCM_CACHE_CLEAR_MASK  MCM_PLACR_CFCC_MASK
 #define MCM_CACHE_CLEAR_SHIFT MCM_PLACR_CFCC_SHIFT
 #if defined(MCM)
 #define MCM0_CACHE_REG MCM->PLACR
@@ -218,7 +218,7 @@ enum _flash_config_area_range
 #define MCM1_CACHE_REG MCM1->PLACR
 #endif
 #elif defined(MCM_CPCR2_CCBC_MASK)
-#define MCM_CACHE_CLEAR_MASK MCM_CPCR2_CCBC_MASK
+#define MCM_CACHE_CLEAR_MASK  MCM_CPCR2_CCBC_MASK
 #define MCM_CACHE_CLEAR_SHIFT MCM_CPCR2_CCBC_SHIFT
 #if defined(MCM)
 #define MCM0_CACHE_REG MCM->CPCR2
@@ -499,7 +499,7 @@ status_t FLASH_SetCallback(flash_config_t *config, flash_callback_t callback)
     return kStatus_FLASH_Success;
 }
 
-#if FLASH_DRIVER_IS_FLASH_RESIDENT
+#if defined(FLASH_DRIVER_IS_FLASH_RESIDENT) && FLASH_DRIVER_IS_FLASH_RESIDENT
 status_t FLASH_PrepareExecuteInRamFunctions(flash_config_t *config)
 {
     flash_execute_in_ram_function_config_t *flashExecuteInRamFunctionInfo = &config->executeInRamFunction;
@@ -712,7 +712,7 @@ status_t FLASH_Erase(flash_config_t *config, uint32_t start, uint32_t lengthInBy
  * retval #kStatus_FLASH_CommandFailure Run-time error during the command
  * execution.
  */
-#if FLASH_SSD_IS_EEPROM_ENABLED
+#if defined(FLASH_SSD_IS_EEPROM_ENABLED) && FLASH_SSD_IS_EEPROM_ENABLED
 status_t FLASH_EraseEEprom(flash_config_t *config, uint32_t start, uint32_t lengthInBytes, uint32_t key)
 {
     uint32_t sectorSize;
@@ -1010,7 +1010,7 @@ status_t FLASH_ProgramOnce(flash_config_t *config, uint32_t index, uint32_t *src
     return returnCode;
 }
 
-#if FLASH_SSD_IS_EEPROM_ENABLED
+#if defined(FLASH_SSD_IS_EEPROM_ENABLED) && FLASH_SSD_IS_EEPROM_ENABLED
 status_t FLASH_EepromWrite(flash_config_t *config, uint32_t start, uint8_t *src, uint32_t lengthInBytes)
 {
     status_t returnCode;
@@ -1781,7 +1781,7 @@ status_t FLASH_PflashGetProtection(flash_config_t *config, pflash_protection_sta
     return kStatus_FLASH_Success;
 }
 
-#if FLASH_SSD_IS_EEPROM_ENABLED
+#if defined(FLASH_SSD_IS_EEPROM_ENABLED) && FLASH_SSD_IS_EEPROM_ENABLED
 status_t FLASH_EepromSetProtection(flash_config_t *config, uint8_t protectStatus)
 {
     if (config == NULL)
@@ -1805,7 +1805,7 @@ status_t FLASH_EepromSetProtection(flash_config_t *config, uint8_t protectStatus
 }
 #endif /* FLASH_SSD_IS_EEPROM_ENABLED */
 
-#if FLASH_SSD_IS_EEPROM_ENABLED
+#if defined(FLASH_SSD_IS_EEPROM_ENABLED) && FLASH_SSD_IS_EEPROM_ENABLED
 status_t FLASH_EepromGetProtection(flash_config_t *config, uint8_t *protectStatus)
 {
     if ((config == NULL) || (protectStatus == NULL))

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 NXP
+ * Copyright 2017-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -64,6 +64,9 @@ typedef enum _acmp_input_channel_selection
     kACMP_InternalDACOutput  = 3U, /*!< Internal DAC putput is selected to as input channel. >*/
 } acmp_input_channel_selection_t;
 
+/*!
+ * @brief The ACMP status flags.
+ */
 enum _acmp_status_flags
 {
     kACMP_InterruptFlag = ACMP_CS_ACF_MASK, /*!< ACMP interrupt on output valid edge. >*/
@@ -133,11 +136,11 @@ void ACMP_Deinit(ACMP_Type *base);
 void ACMP_GetDefaultConfig(acmp_config_t *config);
 
 /*!
-* @brief Enable/Disable the ACMP module.
-*
-* @param base ACMP peripheral base address.
-@ @param enable Switcher to enable/disable ACMP module.
-*/
+ * @brief Enable/Disable the ACMP module.
+ *
+ * @param base ACMP peripheral base address.
+ * @param enable Switcher to enable/disable ACMP module.
+ */
 static inline void ACMP_Enable(ACMP_Type *base, bool enable)
 {
     if (enable)
@@ -160,7 +163,7 @@ static inline void ACMP_Enable(ACMP_Type *base, bool enable)
 void ACMP_EnableInterrupt(ACMP_Type *base, acmp_interrupt_mode_t mode);
 
 /*!
- * @breif Disable the ACMP interrupt.
+ * @brief Disable the ACMP interrupt.
  *
  * @param base ACMP peripheral base address.
  */
@@ -195,6 +198,7 @@ void ACMP_SetDACConfig(ACMP_Type *base, const acmp_dac_config_t *config);
  * @param base ACMP peripheral base address.
  * @param mask The mask of the pin associated with channel ADx. Valid range is AD0:0x1U ~ AD3:0x4U.
  *             For example: If enable AD0, AD1 and AD2 pins, mask should be set to 0x7U(0x1 | 0x2 | 0x4).
+ * @param enable Switcher to enable/disable ACMP module.
  */
 void ACMP_EnableInputPin(ACMP_Type *base, uint32_t mask, bool enable);
 
@@ -219,8 +223,12 @@ static inline void ACMP_ClearInterruptFlags(ACMP_Type *base)
     base->CS &= ~(uint8_t)ACMP_CS_ACF_MASK;
 }
 
+/*@}*/
+
 #if defined(__cplusplus)
 }
 #endif
+
+/*@}*/
 
 #endif /* _FSL_ACMP_H_ */

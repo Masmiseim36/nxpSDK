@@ -17,13 +17,13 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DMAMUX0 DMAMUX
-#define EXAMPLE_DMA DMA0
+#define DMAMUX0        DMAMUX
+#define EXAMPLE_DMA    DMA0
 #define EXAMPLE_DMAMUX DMAMUX0
 
-#define BUFFER_LENGTH 8U
+#define BUFFER_LENGTH      8U
 #define HALF_BUFFER_LENGTH (BUFFER_LENGTH / 2U)
-#define TCD_QUEUE_SIZE 2U
+#define TCD_QUEUE_SIZE     2U
 
 /*******************************************************************************
  * Prototypes

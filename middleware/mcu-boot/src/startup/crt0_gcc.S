@@ -8,7 +8,7 @@
 
 //         AREA   Crt0, CODE, READONLY      ; name this block of code
         .syntax unified
-        .arch armv7-m
+        .arch armv6-m
         
         .section .Reset_Handler, "a"
         .align 2

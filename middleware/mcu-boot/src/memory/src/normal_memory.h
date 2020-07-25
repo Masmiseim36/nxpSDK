@@ -7,7 +7,7 @@
 #if !defined(__NORMAL_MEMORY_INTERFACE_H__)
 #define __NORMAL_MEMORY_INTERFACE_H__
 
-#include "memory.h"
+#include "memory/memory.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 // Prototypes

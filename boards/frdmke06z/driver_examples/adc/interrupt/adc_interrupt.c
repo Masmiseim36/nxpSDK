@@ -15,9 +15,9 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_ADC_BASE ADC
-#define DEMO_ADC_USER_CHANNEL 0U
-#define DEMO_ADC_IRQn ADC_IRQn
+#define DEMO_ADC_BASE          ADC
+#define DEMO_ADC_USER_CHANNEL  0U
+#define DEMO_ADC_IRQn          ADC_IRQn
 #define EXAMPLE_ADC_IRQHandler ADC_IRQHandler
 
 /*******************************************************************************
@@ -42,11 +42,7 @@ void EXAMPLE_ADC_IRQHandler(void)
     /* Read conversion result to clear the conversion completed flag. */
     g_AdcConversionValue = ADC_GetChannelConversionValue(DEMO_ADC_BASE);
     g_AdcInterruptCounter++;
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 /*!

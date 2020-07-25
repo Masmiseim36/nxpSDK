@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ksdk:manifest xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="SDK_2.x_MKE15Z256xxx7" name="MKE15Z256xxx7" brief="This is SDK version 2.7.0 manifest file. It describes the content of the MKE15Z256xxx7 and additional settings for tools that support SDK version 2.7.0" format_version="3.6" api_version="2.0.0" configuration="970c95763ddcf8a6f45bc7cf6da64854" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd http://nxp.com/mcuxpresso/sdk/sdk_manifest_v3.6.xsd">
-  <!--Timestamp (UTC): 2019-12-18 20:04:35.887532-->
+<ksdk:manifest xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="SDK_2.x_MKE15Z256xxx7" name="MKE15Z256xxx7" brief="This is SDK version 2.8.0 manifest file. It describes the content of the MKE15Z256xxx7 and additional settings for tools that support SDK version 2.8.0" format_version="3.6" api_version="2.0.0" configuration="11821f8cf53495a5b92a5d479b47eae2" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd http://nxp.com/mcuxpresso/sdk/sdk_manifest_v3.6.xsd">
+  <!--Timestamp (UTC): 2020-07-22 11:41:15.477670-->
+  <!--This manifest is generated based on sdk repo commit: 5df5022c7426188357d0e69b4ff94b58f0d1b557-->
   <defines>
     <define name="CPU_$|package|" value=""/>
     <define name="CPU_$|package|_$|core|" value=""/>
   </defines>
-  <ksdk id="MCUXpresso270" name="MCUXpresso270" version="2.7.0" revision="Stage 736 2019-12-18"/>
+  <ksdk id="MCUXpresso280" name="MCUXpresso280" version="2.8.0" revision="Epluginsite 356 2020-07-22"/>
   <compilers>
     <compiler id="compiler_gcc" name="gcc" type="gcc"/>
   </compilers>
   <toolchainSettings>
-    <toolchainSetting id="com.nxp.mcuxpresso" name="mcuxpresso" version="11.1.0" full_name="MCUXpresso IDE" compiler="compiler_gcc" toolchain="mcuxpresso">
+    <toolchainSetting id="com.nxp.mcuxpresso" name="mcuxpresso" version="11.2.0" full_name="MCUXpresso IDE" compiler="compiler_gcc" toolchain="mcuxpresso">
       <option id="gnu.cpp.compiler.option.optimization.flags" type="string" user_name="">
         <value>-fno-common</value>
       </option>
@@ -32,7 +33,7 @@
     </toolchainSetting>
   </toolchainSettings>
   <toolchains>
-    <toolchain id="mcuxpresso" name="MCUXpresso_IDE" version="11.1.0" full_name="MCUXpresso IDE" compiler="compiler_gcc" type="mcuxpresso" vendor="NXP Semiconductors" vendor_url="http://www.nxp.com">
+    <toolchain id="mcuxpresso" name="MCUXpresso_IDE" version="11.2.0" full_name="MCUXpresso IDE" compiler="compiler_gcc" type="mcuxpresso" vendor="NXP Semiconductors" vendor_url="http://www.nxp.com">
       <debug>
         <debug_configuration id="com.crt.advproject.config.exe.release" name="Release Configuration" probe="LinkServer">
           <scripts>
@@ -80,18 +81,11 @@ ${load}</script>
     </toolchain>
   </toolchains>
   <boards>
-    <board id="frdmke15z" name="FRDM-KE15Z" href="http://www.nxp.com/frdm-ke15z" version="1.0.0" package="MKE15Z256VLL7">
-      <description>FRDM-KE15Z: Freedom Development Platform for Kinetis KE1xMCUs</description>
-      <image path="docs/images" type="image">
-        <files mask="FRDM-KE15Z.gif"/>
+    <board id="frdmke15z" name="FRDM-KE15Z" href="https://www.nxp.com/pip/FRDM-KE15Z" version="1.0.0" package="MKE15Z256VLL7">
+      <description>Freedom Development Board for Kinetis KE14 and KE15 MCUs</description>
+      <image path="MIR/marketing_data/1.0/boards/images" type="image">
+        <files mask="16-FRDM-KE15Z.gif"/>
       </image>
-      <metadataSet>
-        <metadata key="html">
-          <specific>
-            <content>The FRDM-KE15Z Freedom Board is designed to work in standalone mode or as the main board of FRDM-TOUCH, FRDM-MC-LVBLDC, and Arduino boards. This Freedom board is compatible with DC 5v and 3.3v power supply, and features a KL15Z, a device boasting up to 256KB Flash and 32KB SRAM and numerous analog and digital peripherals. The on-board interfaces include an RGB LED, a 6-axis digital sensor, a 3-axis digital angular rate gyroscope, an ambient light sensor, and a capacitive touch slider.</content>
-          </specific>
-        </metadata>
-      </metadataSet>
       <examples>
         <example id="frdmke15z_acmp_interrupt" name="acmp_interrupt" brief="The ACMP Interrupt project is a simple demonstration program that uses the SDK software. Itcompares the selected analog input with ACMP internal DAC output continuously and toggle the LEDwhen the final comparison result changed. The purpose of this demo is to show how to use theACMP driver in SDK software by interrupt way. The ACMP can be configured based on defaultconfiguration returned by the API ACMP_GetDefaultConfig(). The default configuration is: highspeed is not enabled, invert output is not enabled, unfiltered output is not enabled, pin outis not enabled, offset level is level 0, hysteresis level is level 0." toolchain="mcuxpresso" compiler="compiler_gcc" category="driver_examples/acmp" path="boards/frdmke15z/driver_examples/acmp/interrupt">
           <external path="boards/frdmke15z/driver_examples/acmp/interrupt" type="xml">
@@ -473,9 +467,19 @@ ${load}</script>
             <files mask="lpi2c_vlps.xml"/>
           </external>
         </example>
-        <example id="frdmke15z_lpit" name="lpit" brief="The LPIT project is a simple example of the SDK LPIT driver. It sets up the LPIThardware block to trigger a periodic interrupt after every 1 second. When the LPIT interrupt is triggereda message a printed on the serial terminal and an LED is toggled on the board." toolchain="mcuxpresso" compiler="compiler_gcc" category="driver_examples" path="boards/frdmke15z/driver_examples/lpit">
-          <external path="boards/frdmke15z/driver_examples/lpit" type="xml">
-            <files mask="lpit.xml"/>
+        <example id="frdmke15z_lpi2c_vlps_peripheral" name="lpi2c_vlps_peripheral" brief="This example describes how to use kinetis SDK drivers to implement LPI2C transmit and receive in the VLPS (very low power STOP mode) with async DMA.The LPI2C module is designed to have ability to work under low power module like STOP, VLPW and VLPS. It can use DMA to transmit the data from or to application user buffer without CPU interaction.It uses LPI2C to access the on board accelerometer sensor to read the Accelerometer X, Y, Z data every 500ms. CPU would keep in VLPS low power mode, except for some trigger events and data output to LPUART0." toolchain="mcuxpresso" compiler="compiler_gcc" category="demo_apps" path="boards/frdmke15z/demo_apps/lpi2c_vlps_peripheral">
+          <external path="boards/frdmke15z/demo_apps/lpi2c_vlps_peripheral" type="xml">
+            <files mask="lpi2c_vlps_peripheral.xml"/>
+          </external>
+        </example>
+        <example id="frdmke15z_lpit_chained_channel" name="lpit_chained_channel" brief="The LPIT chained channel project is a simple example of the SDK LPIT driver. It sets up the LPIT hardware block to trigger a periodic interrupt after every 1 second in the channel No.0, the channel No.1 chained with channel No.0, if LPIT contain more than two channels, the channel No.2 chained with channel No.1....the channel No.N chained with Channel No.N-1. When the LPIT interrupt is triggered." toolchain="mcuxpresso" compiler="compiler_gcc" category="driver_examples/lpit" path="boards/frdmke15z/driver_examples/lpit/chained_channel">
+          <external path="boards/frdmke15z/driver_examples/lpit/chained_channel" type="xml">
+            <files mask="lpit_chained_channel.xml"/>
+          </external>
+        </example>
+        <example id="frdmke15z_lpit_single_channel" name="lpit_single_channel" brief="The LPIT single channel project is a simple example of the SDK LPIT driver. It sets up the LPIThardware block to trigger a periodic interrupt after every 1 second. When the LPIT interrupt is triggereda message a printed on the serial terminal and an LED is toggled on the board." toolchain="mcuxpresso" compiler="compiler_gcc" category="driver_examples/lpit" path="boards/frdmke15z/driver_examples/lpit/single_channel">
+          <external path="boards/frdmke15z/driver_examples/lpit/single_channel" type="xml">
+            <files mask="lpit_single_channel.xml"/>
           </external>
         </example>
         <example id="frdmke15z_lpspi_3wire_edma_transfer_master" name="lpspi_3wire_edma_transfer_master" brief="The lpspi_3wire_edma_transfer example shows how to use LPSPI's 3-wire mode in edma way:In this example , we need two boards, one board used as LPSPI master and another board used as LPSPI slave.The file 'lpspi_3wire_edma_transfer_master.c' includes the LPSPI master code.1. LPSPI master send/received data to/from LPSPI slave in edma . (LPSPI Slave using edma to receive/send the data)2. LPSPI master will use SOUT pin as input/output pin, and slave will use SIN pin as input/output pin." toolchain="mcuxpresso" compiler="compiler_gcc" category="driver_examples/lpspi" path="boards/frdmke15z/driver_examples/lpspi/3wire_transfer/edma_transfer/master">
@@ -705,59 +709,11 @@ ${load}</script>
         </example>
       </examples>
     </board>
-    <board id="frdmke15z_dp5004" name="FRDMKE15-DP5004" href="http://www.nxp.com/products/developer-resources/hardware-development-tools/freedom-development-boards/sensor-toolbox-development-platform-for-mpxv5004dp-differential-pressure-sensor:FRDMSTBCDP5004" version="1.0.0" package="MKE15Z256VLL7" type="kit">
-      <description>
-Sensor Toolbox Development Platform for MPXV5004DP Differential Pressure Sensor
-        </description>
-      <image path="docs/images" type="image">
-        <files mask="FRDMKE15-DP5004.gif"/>
+    <board id="frdmke15z_dp300x" name="FRDMKE15-DP300x" href="" version="1.0.0" package="MKE15Z256VLL7" type="kit">
+      <description>Freedom Development Board for Kinetis KE14 and KE15 MCUs with USB Type-C Shield Board for Kinetis Freedom and LPC Boards</description>
+      <image path="MIR/marketing_data/1.0/kits/images" type="image">
+        <files mask="115-FRDMKE15-DP300x.gif"/>
       </image>
-      <metadataSet>
-        <metadata key="vendor" value="NXP"/>
-        <metadata key="html">
-          <specific>
-            <content>
-FRDMKE15-DP5004 Demonstration Kit (FRDMSTBC-DP5004 Sensor Shield Development Board with FRDM-KE15Z Board):
-&lt;ul&gt;
-&lt;li&gt; FRDMSTBC-DP5004 Sensor Shield board is a sensor expansion board enabling NXP’s MPXV5004 differential pressure sensor.&lt;/li&gt;
-&lt;/ul&gt;
-</content>
-          </specific>
-        </metadata>
-      </metadataSet>
-      <examples>
-        <example id="frdmke15z_dp5004_hostdemo_mpxv5004dp" name="hostdemo_mpxv5004dp" brief="The MPXV5004DP FIFO example application demonstrates the use of the MPXV5004DP sensor in Buffered (FIFO) Mode.The example demonstrates configuration of all registers reguired to put the sensor in FIFO Mode and read out samples.The sensor reads samples and are buffered upto the configured Water Mark Level and then a Flag is set.The application consistently checks the Flag and when set, reads out all(count=Water Mark Level) samples." toolchain="mcuxpresso" compiler="compiler_gcc" category="issdk/sensors" path="boards/frdmke15z_dp5004/issdk_examples/sensors/hostdemo/host_demo_template">
-          <external path="boards/frdmke15z_dp5004/issdk_examples/sensors/hostdemo/host_demo_template" type="xml">
-            <files mask="hostdemo_mpxv5004dp.xml"/>
-          </external>
-        </example>
-        <example id="frdmke15z_dp5004_mpxv5004dp_interrupt" name="mpxv5004dp_interrupt" brief="The MPXV5004DP Interrupt example application demonstrates the use of the MPXV5004DP analog sensor with in ADC. The example demonstrates configuration of ADC0 and LPTMR0 reguired to get the Pressure Sample and read out samples at periodic intervals." toolchain="mcuxpresso" compiler="compiler_gcc" category="issdk/sensors" path="boards/frdmke15z_dp5004/issdk_examples/sensors/mpxv5004dp/mpxv5004dp_interrupt">
-          <external path="boards/frdmke15z_dp5004/issdk_examples/sensors/mpxv5004dp/mpxv5004dp_interrupt" type="xml">
-            <files mask="mpxv5004dp_interrupt.xml"/>
-          </external>
-        </example>
-      </examples>
-    </board>
-    <board id="frdmke15z_dp300x" name="FRDMKE15-DP300x" href="http://www.nxp.com/products/developer-resources/hardware-development-tools/freedom-development-boards/sensor-toolbox-development-platform-for-mpxv5004dp-differential-pressure-sensor:FRDMSTBCDP5004" version="1.0.0" package="MKE15Z256VLL7" type="kit">
-      <description>
-Sensor Toolbox Development Platform for DP300x Differential Pressure Sensor
-        </description>
-      <image path="docs/images" type="image">
-        <files mask="FRDMKE15-DP300x.gif"/>
-      </image>
-      <metadataSet>
-        <metadata key="vendor" value="NXP"/>
-        <metadata key="html">
-          <specific>
-            <content>
-FRDMKE15-DP300x Demonstration Kit (FRDMSTBI-DP300x Sensor Shield Development Board with FRDM-KE15Z Board):
-&lt;ul&gt;
-&lt;li&gt; FRDMSTBI-DP300x Sensor Shield board is a sensor expansion board enabling NXP’s DP300x differential pressure sensor.&lt;/li&gt;
-&lt;/ul&gt;
-</content>
-          </specific>
-        </metadata>
-      </metadataSet>
       <examples>
         <example id="frdmke15z_dp300x_hostdemo_nps300x" name="hostdemo_nps300x" brief="The NPS300X FIFO example application demonstrates the use of the NPS300X sensor in Buffered (FIFO) Mode.The example demonstrates configuration of all registers reguired to put the sensor in FIFO Mode and read out samples.The sensor reads samples and are buffered upto the configured Water Mark Level and then a Flag is set.The application consistently checks the Flag and when set, reads out all(count=Water Mark Level) samples." toolchain="mcuxpresso" compiler="compiler_gcc" category="issdk/sensors" path="boards/frdmke15z_dp300x/issdk_examples/sensors/hostdemo/host_demo_template">
           <external path="boards/frdmke15z_dp300x/issdk_examples/sensors/hostdemo/host_demo_template" type="xml">
@@ -791,47 +747,29 @@ FRDMKE15-DP300x Demonstration Kit (FRDMSTBI-DP300x Sensor Shield Development Boa
         </example>
       </examples>
     </board>
-    <board id="frdmke15z_pa7250" name="FRDMKE15-PA7250" href="http://www.nxp.com/products/developer-resources/hardware-development-tools/freedom-development-boards/sensor-toolbox-development-platform-for-mpxv5004dp-differential-pressure-sensor:FRDMSTBCDP5004" version="1.0.0" package="MKE15Z256VLL7" type="kit">
-      <description>
-Sensor Toolbox Development Platform for FXPS7250A4 Analog absolute pressure sensor Sensor
-        </description>
-      <image path="docs/images" type="image">
-        <files mask="FRDMKE15-PA7250.gif"/>
+    <board id="frdmke15z_dp5004" name="FRDMKE15-DP5004" href="" version="1.0.0" package="MKE15Z256VLL7" type="kit">
+      <description>Freedom Development Board for Kinetis KE14 and KE15 MCUs with USB Type-C Host Shield Board Gen 2 with Display Port Alt Mode</description>
+      <image path="MIR/marketing_data/1.0/kits/images" type="image">
+        <files mask="116-FRDMKE15-DP5004.gif"/>
       </image>
-      <metadataSet>
-        <metadata key="vendor" value="NXP"/>
-        <metadata key="html">
-          <specific>
-            <content>
-FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Board with FRDM-KE15Z Board):
-&lt;ul&gt;
-&lt;li&gt; FRDMSTBC-PA7250 Sensor Shield board is a sensor expansion board enabling NXP’s FXPS7250A4 differential pressure sensor.&lt;/li&gt;
-&lt;/ul&gt;
-</content>
-          </specific>
-        </metadata>
-      </metadataSet>
       <examples>
-        <example id="frdmke15z_pa7250_fxps7250a4_interrupt" name="fxps7250a4_interrupt" brief="The FXPS7250A4 Interrupt example application demonstrates the use of the FXPS7250A4 analog sensor with in ADC. The example demonstrates configuration of ADC0 and LPTMR0 reguired to get the Pressure Sample and read out samples at periodic intervals." toolchain="mcuxpresso" compiler="compiler_gcc" category="issdk/sensors" path="boards/frdmke15z_pa7250/issdk_examples/sensors/fxps7250a4/fxps7250a4_interrupt">
-          <external path="boards/frdmke15z_pa7250/issdk_examples/sensors/fxps7250a4/fxps7250a4_interrupt" type="xml">
-            <files mask="fxps7250a4_interrupt.xml"/>
+        <example id="frdmke15z_dp5004_hostdemo_mpxv5004dp" name="hostdemo_mpxv5004dp" brief="The MPXV5004DP FIFO example application demonstrates the use of the MPXV5004DP sensor in Buffered (FIFO) Mode.The example demonstrates configuration of all registers reguired to put the sensor in FIFO Mode and read out samples.The sensor reads samples and are buffered upto the configured Water Mark Level and then a Flag is set.The application consistently checks the Flag and when set, reads out all(count=Water Mark Level) samples." toolchain="mcuxpresso" compiler="compiler_gcc" category="issdk/sensors" path="boards/frdmke15z_dp5004/issdk_examples/sensors/hostdemo/host_demo_template">
+          <external path="boards/frdmke15z_dp5004/issdk_examples/sensors/hostdemo/host_demo_template" type="xml">
+            <files mask="hostdemo_mpxv5004dp.xml"/>
+          </external>
+        </example>
+        <example id="frdmke15z_dp5004_mpxv5004dp_interrupt" name="mpxv5004dp_interrupt" brief="The MPXV5004DP Interrupt example application demonstrates the use of the MPXV5004DP analog sensor with in ADC. The example demonstrates configuration of ADC0 and LPTMR0 reguired to get the Pressure Sample and read out samples at periodic intervals." toolchain="mcuxpresso" compiler="compiler_gcc" category="issdk/sensors" path="boards/frdmke15z_dp5004/issdk_examples/sensors/mpxv5004dp/mpxv5004dp_interrupt">
+          <external path="boards/frdmke15z_dp5004/issdk_examples/sensors/mpxv5004dp/mpxv5004dp_interrupt" type="xml">
+            <files mask="mpxv5004dp_interrupt.xml"/>
           </external>
         </example>
       </examples>
     </board>
   </boards>
   <devices>
-    <device id="MKE15Z256xxx7" name="MKE15Z7" href="http://www.nxp.com/kinetis" version="1.0.0" full_name="MKE15Z256xxx7" family="KE1x" platform="Kinetis">
-      <description>KE1xZ: Kinetis KE1xZ-72 MHz, Mainstream with Touch Interface 5V Microcontrollers based on ARM® Cortex®-M0+</description>
-      <image path="docs/images" type="image">
-        <files mask="device.jpg"/>
-      </image>
+    <device id="MKE15Z256xxx7" name="MKE15Z7" version="1.0.0" full_name="MKE15Z256xxx7" family="KE1x" platform="Kinetis">
+      <description>Kinetis KE1xZ-72 MHz, Mainstream with Touch Interface 5V Microcontrollers based on ARM Cortex-M0+</description>
       <metadataSet>
-        <metadata key="html">
-          <specific>
-            <content>KE1xZ MCUs are based on the ARM Cortex-M0+ core, running up to 72 MHz. These MCUs support up to 256 KB flash, 32 KB RAM, and a complete set of analog/digital features. The robust TSI module provides a high level of stability and accuracy to any HMI system. The 1-Msps ADC and FlexTimer modules provides a perfect solution for BLDC motor-control systems.</content>
-          </specific>
-        </metadata>
         <metadata key="vendor" value="NXP"/>
       </metadataSet>
       <core id="core0_MKE15Z256xxx7" name="core0" fpu="false" type="cm0plus"/>
@@ -882,7 +820,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
     </device>
   </devices>
   <components>
-    <component id="project_template.frdmke15z.MKE15Z7" name="frdmke15z" version="1.0.0" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" category="Board Support/SDK Project Template" user_visible="true" type="project_template">
+    <component id="project_template.frdmke15z.MKE15Z7" name="frdmke15z" brief="Board_project_template frdmke15z" version="1.0.0" full_name="Board_project_template frdmke15z" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" category="Board Support/SDK Project Template" user_visible="true" type="project_template">
       <dependencies>
         <all>
           <component_dependency value="platform.drivers.lpuart.MKE15Z7"/>
@@ -893,10 +831,8 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
           <component_dependency value="component.serial_manager.MKE15Z7"/>
           <component_dependency value="platform.drivers.gpio.MKE15Z7"/>
           <component_dependency value="platform.drivers.smc.MKE15Z7"/>
-          <component_dependency value="platform.drivers.clock.MKE15Z7"/>
           <component_dependency value="device.MKE15Z7_startup.MKE15Z7"/>
           <component_dependency value="platform.drivers.lpi2c.MKE15Z7"/>
-          <component_dependency value="platform.drivers.adc12.MKE15Z7"/>
         </all>
       </dependencies>
       <source path="boards/frdmke15z/project_template" target_path="board" type="src">
@@ -912,7 +848,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="pin_mux.h"/>
       </source>
     </component>
-    <component id="project_template.frdmke15z_dp300x.MKE15Z7" name="frdmke15z_dp300x" version="1.0.0" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" category="Board Support/SDK Project Template" user_visible="true" type="project_template">
+    <component id="project_template.frdmke15z_dp300x.MKE15Z7" name="frdmke15z_dp300x" brief="Board_project_template frdmke15z_dp300x" version="1.0.0" full_name="Board_project_template frdmke15z_dp300x" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" category="Board Support/SDK Project Template" user_visible="true" type="project_template">
       <dependencies>
         <all>
           <component_dependency value="device.MKE15Z7_startup.MKE15Z7"/>
@@ -938,7 +874,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="pin_mux.h"/>
       </source>
     </component>
-    <component id="project_template.frdmke15z_dp5004.MKE15Z7" name="frdmke15z_dp5004" version="1.0.0" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" category="Board Support/SDK Project Template" user_visible="true" type="project_template">
+    <component id="project_template.frdmke15z_dp5004.MKE15Z7" name="frdmke15z_dp5004" brief="Board_project_template frdmke15z_dp5004" version="1.0.0" full_name="Board_project_template frdmke15z_dp5004" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" category="Board Support/SDK Project Template" user_visible="true" type="project_template">
       <dependencies>
         <all>
           <component_dependency value="device.MKE15Z7_startup.MKE15Z7"/>
@@ -964,33 +900,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="pin_mux.h"/>
       </source>
     </component>
-    <component id="project_template.frdmke15z_pa7250.MKE15Z7" name="frdmke15z_pa7250" version="1.0.0" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" category="Board Support/SDK Project Template" user_visible="true" type="project_template">
-      <dependencies>
-        <all>
-          <component_dependency value="device.MKE15Z7_startup.MKE15Z7"/>
-          <component_dependency value="platform.drivers.lpuart.MKE15Z7"/>
-          <component_dependency value="platform.drivers.port.MKE15Z7"/>
-          <component_dependency value="platform.drivers.common.MKE15Z7"/>
-          <component_dependency value="utility.debug_console.MKE15Z7"/>
-          <component_dependency value="platform.drivers.gpio.MKE15Z7"/>
-          <component_dependency value="platform.drivers.smc.MKE15Z7"/>
-          <component_dependency value="component.lpuart_adapter.MKE15Z7"/>
-          <component_dependency value="component.serial_manager_uart.MKE15Z7"/>
-          <component_dependency value="component.serial_manager.MKE15Z7"/>
-        </all>
-      </dependencies>
-      <source path="boards/frdmke15z_pa7250/project_template" target_path="frdmke15z_pa7250/project_template" type="src">
-        <files mask="board.c"/>
-        <files mask="clock_config.c"/>
-        <files mask="pin_mux.c"/>
-      </source>
-      <source path="boards/frdmke15z_pa7250/project_template" target_path="frdmke15z_pa7250/project_template" type="c_include">
-        <files mask="board.h"/>
-        <files mask="clock_config.h"/>
-        <files mask="pin_mux.h"/>
-      </source>
-    </component>
-    <component id="platform.CMSIS.MKE15Z7" name="CMSIS" version="5.5.1" devices="MKE15Z256xxx7" user_visible="true" type="CMSIS">
+    <component id="platform.CMSIS.MKE15Z7" name="CMSIS" brief="Cmsis" version="5.6.0" full_name="Cmsis" devices="MKE15Z256xxx7" user_visible="true" type="CMSIS">
       <dependencies>
         <all>
           <component_dependency value="platform.Include_common.MKE15Z7"/>
@@ -1048,7 +958,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="LICENSE.txt"/>
       </source>
     </component>
-    <component id="platform.CMSIS_DSP_Lib.MKE15Z7" name="CMSIS_DSP_Lib" version="1.6.0" devices="MKE15Z256xxx7" user_visible="false" type="CMSIS">
+    <component id="platform.CMSIS_DSP_Lib.MKE15Z7" name="CMSIS_DSP_Lib" brief="Cmsis_dsp_lib" version="1.7.0" full_name="Cmsis_dsp_lib" devices="MKE15Z256xxx7" user_visible="false" type="CMSIS">
       <source path="CMSIS/DSP/Examples/ARM/arm_class_marks_example" target_path="DSP/Examples/ARM/arm_class_marks_example" type="doc">
         <files mask="Abstract.txt"/>
       </source>
@@ -1492,13 +1402,6 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
       <source path="CMSIS/DSP/Projects/ARM" target_path="DSP/Projects/ARM" type="script">
         <files mask="arm_cortexM_math_Build.bat"/>
       </source>
-      <source path="CMSIS/DSP/Projects/ARMCLANG" target_path="DSP/Projects/ARMCLANG" type="project">
-        <files mask="arm_cortexM_math.uvoptx"/>
-        <files mask="arm_cortexM_math.uvprojx"/>
-      </source>
-      <source path="CMSIS/DSP/Projects/ARMCLANG" target_path="DSP/Projects/ARMCLANG" type="script">
-        <files mask="arm_cortexM_math_Build.bat"/>
-      </source>
       <source path="CMSIS/DSP/Projects/GCC" target_path="DSP/Projects/GCC" type="project">
         <files mask="arm_cortexM_math.uvoptx"/>
         <files mask="arm_cortexM_math.uvprojx"/>
@@ -1821,13 +1724,13 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="arm_bitreversal2.S"/>
       </source>
     </component>
-    <component id="platform.CMSIS_DSP_Lib.arm_cortexM0b_math.MKE15Z7" name="arm_cortexM0b_math" version="1.6.0" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="CMSIS_driver"/>
-    <component id="platform.CMSIS_DSP_Lib.arm_cortexM0l_math.MKE15Z7" name="arm_cortexM0l_math" version="1.6.0" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="CMSIS_driver">
+    <component id="platform.CMSIS_DSP_Lib.arm_cortexM0b_math.MKE15Z7" name="arm_cortexM0b_math" brief="Cmsis_dsp_lib arm_cortexm0b_math" version="1.7.0" full_name="Cmsis_dsp_lib arm_cortexm0b_math" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="CMSIS_driver"/>
+    <component id="platform.CMSIS_DSP_Lib.arm_cortexM0l_math.MKE15Z7" name="arm_cortexM0l_math" brief="Cmsis_dsp_lib arm_cortexm0l_math" version="1.7.0" full_name="Cmsis_dsp_lib arm_cortexm0l_math" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="CMSIS_driver">
       <source toolchain="mcuxpresso" path="CMSIS/DSP/Lib/GCC" target_path="libs" type="lib">
         <files mask="libarm_cortexM0l_math.a"/>
       </source>
     </component>
-    <component id="platform.CMSIS_Driver" name="CMSIS_Driver" version="2.7.0" user_visible="true" type="CMSIS">
+    <component id="platform.CMSIS_Driver" name="CMSIS_Driver" brief="Cmsis_driver" version="2.7.1" full_name="Cmsis_driver" user_visible="true" type="CMSIS">
       <source path="CMSIS/Driver/DriverTemplates" target_path="Driver/DriverTemplates" type="src">
         <files mask="Driver_CAN.c"/>
         <files mask="Driver_ETH_MAC.c"/>
@@ -1843,7 +1746,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="Driver_USBH.c"/>
       </source>
     </component>
-    <component id="platform.CMSIS_Driver_Include.CAN_CMSISInclude.MKE15Z7" name="CAN" version="1.2.0" devices="MKE15Z256xxx7" user_visible="false" type="CMSIS_driver">
+    <component id="platform.CMSIS_Driver_Include.CAN_CMSISInclude.MKE15Z7" name="CAN" brief="Cmsis_driver_include can" version="1.2.0" full_name="Cmsis_driver_include can" devices="MKE15Z256xxx7" user_visible="false" type="CMSIS_driver">
       <dependencies>
         <component_dependency value="platform.CMSIS_Driver_Include.Common_CMSISInclude.MKE15Z7"/>
       </dependencies>
@@ -1851,12 +1754,12 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="Driver_CAN.h"/>
       </source>
     </component>
-    <component id="platform.CMSIS_Driver_Include.Common_CMSISInclude.MKE15Z7" name="Common" version="2.7.0" devices="MKE15Z256xxx7" user_visible="false" type="CMSIS_driver">
+    <component id="platform.CMSIS_Driver_Include.Common_CMSISInclude.MKE15Z7" name="Common" brief="Cmsis_driver_include common" version="2.7.1" full_name="Cmsis_driver_include common" devices="MKE15Z256xxx7" user_visible="false" type="CMSIS_driver">
       <source path="CMSIS/Driver/Include" target_path="CMSIS_driver" type="c_include">
         <files mask="Driver_Common.h"/>
       </source>
     </component>
-    <component id="platform.CMSIS_Driver_Include.Ethernet_CMSISInclude.MKE15Z7" name="Ethernet" version="2.1.0" devices="MKE15Z256xxx7" user_visible="false" type="CMSIS_driver">
+    <component id="platform.CMSIS_Driver_Include.Ethernet_CMSISInclude.MKE15Z7" name="Ethernet" brief="Cmsis_driver_include ethernet" version="2.1.0" full_name="Cmsis_driver_include ethernet" devices="MKE15Z256xxx7" user_visible="false" type="CMSIS_driver">
       <dependencies>
         <component_dependency value="platform.CMSIS_Driver_Include.Common_CMSISInclude.MKE15Z7"/>
       </dependencies>
@@ -1864,7 +1767,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="Driver_ETH.h"/>
       </source>
     </component>
-    <component id="platform.CMSIS_Driver_Include.Ethernet_MAC_CMSISInclude.MKE15Z7" name="Ethernet_MAC" version="2.1.0" devices="MKE15Z256xxx7" user_visible="false" type="CMSIS_driver">
+    <component id="platform.CMSIS_Driver_Include.Ethernet_MAC_CMSISInclude.MKE15Z7" name="Ethernet_MAC" brief="Cmsis_driver_include ethernet_mac" version="2.1.0" full_name="Cmsis_driver_include ethernet_mac" devices="MKE15Z256xxx7" user_visible="false" type="CMSIS_driver">
       <dependencies>
         <component_dependency value="platform.CMSIS_Driver_Include.Ethernet_CMSISInclude.MKE15Z7"/>
       </dependencies>
@@ -1872,7 +1775,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="Driver_ETH_MAC.h"/>
       </source>
     </component>
-    <component id="platform.CMSIS_Driver_Include.Ethernet_PHY_CMSISInclude.MKE15Z7" name="Ethernet_PHY" version="2.1.0" devices="MKE15Z256xxx7" user_visible="false" type="CMSIS_driver">
+    <component id="platform.CMSIS_Driver_Include.Ethernet_PHY_CMSISInclude.MKE15Z7" name="Ethernet_PHY" brief="Cmsis_driver_include ethernet_phy" version="2.1.0" full_name="Cmsis_driver_include ethernet_phy" devices="MKE15Z256xxx7" user_visible="false" type="CMSIS_driver">
       <dependencies>
         <component_dependency value="platform.CMSIS_Driver_Include.Ethernet_CMSISInclude.MKE15Z7"/>
       </dependencies>
@@ -1880,7 +1783,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="Driver_ETH_PHY.h"/>
       </source>
     </component>
-    <component id="platform.CMSIS_Driver_Include.Flash_CMSISInclude.MKE15Z7" name="Flash" version="2.2.0" devices="MKE15Z256xxx7" user_visible="false" type="CMSIS_driver">
+    <component id="platform.CMSIS_Driver_Include.Flash_CMSISInclude.MKE15Z7" name="Flash" brief="Cmsis_driver_include flash" version="2.2.0" full_name="Cmsis_driver_include flash" devices="MKE15Z256xxx7" user_visible="false" type="CMSIS_driver">
       <dependencies>
         <component_dependency value="platform.CMSIS_Driver_Include.Common_CMSISInclude.MKE15Z7"/>
       </dependencies>
@@ -1888,7 +1791,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="Driver_Flash.h"/>
       </source>
     </component>
-    <component id="platform.CMSIS_Driver_Include.I2C_CMSISInclude.MKE15Z7" name="I2C" version="2.3.0" devices="MKE15Z256xxx7" user_visible="false" type="CMSIS_driver">
+    <component id="platform.CMSIS_Driver_Include.I2C_CMSISInclude.MKE15Z7" name="I2C" brief="Cmsis_driver_include i2c" version="2.3.0" full_name="Cmsis_driver_include i2c" devices="MKE15Z256xxx7" user_visible="false" type="CMSIS_driver">
       <dependencies>
         <component_dependency value="platform.CMSIS_Driver_Include.Common_CMSISInclude.MKE15Z7"/>
       </dependencies>
@@ -1896,7 +1799,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="Driver_I2C.h"/>
       </source>
     </component>
-    <component id="platform.CMSIS_Driver_Include.MCI_CMSISInclude.MKE15Z7" name="MCI" version="2.3.0" devices="MKE15Z256xxx7" user_visible="false" type="CMSIS_driver">
+    <component id="platform.CMSIS_Driver_Include.MCI_CMSISInclude.MKE15Z7" name="MCI" brief="Cmsis_driver_include mci" version="2.3.0" full_name="Cmsis_driver_include mci" devices="MKE15Z256xxx7" user_visible="false" type="CMSIS_driver">
       <dependencies>
         <component_dependency value="platform.CMSIS_Driver_Include.Common_CMSISInclude.MKE15Z7"/>
       </dependencies>
@@ -1904,7 +1807,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="Driver_MCI.h"/>
       </source>
     </component>
-    <component id="platform.CMSIS_Driver_Include.NAND_CMSISInclude.MKE15Z7" name="NAND" version="2.3.0" devices="MKE15Z256xxx7" user_visible="false" type="CMSIS_driver">
+    <component id="platform.CMSIS_Driver_Include.NAND_CMSISInclude.MKE15Z7" name="NAND" brief="Cmsis_driver_include nand" version="2.3.0" full_name="Cmsis_driver_include nand" devices="MKE15Z256xxx7" user_visible="false" type="CMSIS_driver">
       <dependencies>
         <component_dependency value="platform.CMSIS_Driver_Include.Common_CMSISInclude.MKE15Z7"/>
       </dependencies>
@@ -1912,7 +1815,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="Driver_NAND.h"/>
       </source>
     </component>
-    <component id="platform.CMSIS_Driver_Include.SAI_CMSISInclude.MKE15Z7" name="SAI" version="1.1.0" devices="MKE15Z256xxx7" user_visible="false" type="CMSIS_driver">
+    <component id="platform.CMSIS_Driver_Include.SAI_CMSISInclude.MKE15Z7" name="SAI" brief="Cmsis_driver_include sai" version="1.1.0" full_name="Cmsis_driver_include sai" devices="MKE15Z256xxx7" user_visible="false" type="CMSIS_driver">
       <dependencies>
         <component_dependency value="platform.CMSIS_Driver_Include.Common_CMSISInclude.MKE15Z7"/>
       </dependencies>
@@ -1920,7 +1823,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="Driver_SAI.h"/>
       </source>
     </component>
-    <component id="platform.CMSIS_Driver_Include.SPI_CMSISInclude.MKE15Z7" name="SPI" version="2.2.0" devices="MKE15Z256xxx7" user_visible="false" type="CMSIS_driver">
+    <component id="platform.CMSIS_Driver_Include.SPI_CMSISInclude.MKE15Z7" name="SPI" brief="Cmsis_driver_include spi" version="2.2.0" full_name="Cmsis_driver_include spi" devices="MKE15Z256xxx7" user_visible="false" type="CMSIS_driver">
       <dependencies>
         <component_dependency value="platform.CMSIS_Driver_Include.Common_CMSISInclude.MKE15Z7"/>
       </dependencies>
@@ -1928,7 +1831,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="Driver_SPI.h"/>
       </source>
     </component>
-    <component id="platform.CMSIS_Driver_Include.USART_CMSISInclude.MKE15Z7" name="USART" version="2.3.0" devices="MKE15Z256xxx7" user_visible="false" type="CMSIS_driver">
+    <component id="platform.CMSIS_Driver_Include.USART_CMSISInclude.MKE15Z7" name="USART" brief="Cmsis_driver_include usart" version="2.3.0" full_name="Cmsis_driver_include usart" devices="MKE15Z256xxx7" user_visible="false" type="CMSIS_driver">
       <dependencies>
         <component_dependency value="platform.CMSIS_Driver_Include.Common_CMSISInclude.MKE15Z7"/>
       </dependencies>
@@ -1936,7 +1839,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="Driver_USART.h"/>
       </source>
     </component>
-    <component id="platform.CMSIS_Driver_Include.USB_CMSISInclude.MKE15Z7" name="USB" version="2.2.0" devices="MKE15Z256xxx7" user_visible="false" type="CMSIS_driver">
+    <component id="platform.CMSIS_Driver_Include.USB_CMSISInclude.MKE15Z7" name="USB" brief="Cmsis_driver_include usb" version="2.2.0" full_name="Cmsis_driver_include usb" devices="MKE15Z256xxx7" user_visible="false" type="CMSIS_driver">
       <dependencies>
         <component_dependency value="platform.CMSIS_Driver_Include.Common_CMSISInclude.MKE15Z7"/>
       </dependencies>
@@ -1944,7 +1847,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="Driver_USB.h"/>
       </source>
     </component>
-    <component id="platform.CMSIS_Driver_Include.USB_Device_CMSISInclude.MKE15Z7" name="USB_Device" version="2.2.0" devices="MKE15Z256xxx7" user_visible="false" type="CMSIS_driver">
+    <component id="platform.CMSIS_Driver_Include.USB_Device_CMSISInclude.MKE15Z7" name="USB_Device" brief="Cmsis_driver_include usb_device" version="2.2.0" full_name="Cmsis_driver_include usb_device" devices="MKE15Z256xxx7" user_visible="false" type="CMSIS_driver">
       <dependencies>
         <component_dependency value="platform.CMSIS_Driver_Include.USB_CMSISInclude.MKE15Z7"/>
       </dependencies>
@@ -1952,7 +1855,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="Driver_USBD.h"/>
       </source>
     </component>
-    <component id="platform.CMSIS_Driver_Include.USB_Host_CMSISInclude.MKE15Z7" name="USB_Host" version="2.2.0" devices="MKE15Z256xxx7" user_visible="false" type="CMSIS_driver">
+    <component id="platform.CMSIS_Driver_Include.USB_Host_CMSISInclude.MKE15Z7" name="USB_Host" brief="Cmsis_driver_include usb_host" version="2.2.0" full_name="Cmsis_driver_include usb_host" devices="MKE15Z256xxx7" user_visible="false" type="CMSIS_driver">
       <dependencies>
         <component_dependency value="platform.CMSIS_Driver_Include.USB_CMSISInclude.MKE15Z7"/>
       </dependencies>
@@ -1960,7 +1863,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="Driver_USBH.h"/>
       </source>
     </component>
-    <component id="platform.CMSIS_Driver_Include.WiFi_CMSISInclude.MKE15Z7" name="WiFi" version="1.0.0" devices="MKE15Z256xxx7" user_visible="false" type="CMSIS_driver">
+    <component id="platform.CMSIS_Driver_Include.WiFi_CMSISInclude.MKE15Z7" name="WiFi" brief="Cmsis_driver_include wifi" version="1.0.0" full_name="Cmsis_driver_include wifi" devices="MKE15Z256xxx7" user_visible="false" type="CMSIS_driver">
       <dependencies>
         <component_dependency value="platform.CMSIS_Driver_Include.Common_CMSISInclude.MKE15Z7"/>
       </dependencies>
@@ -1968,7 +1871,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="Driver_WiFi.h"/>
       </source>
     </component>
-    <component id="platform.Include_common.MKE15Z7" name="CMSIS_Include_common" version="5.2.1" devices="MKE15Z256xxx7" user_visible="true" type="CMSIS_Include">
+    <component id="platform.Include_common.MKE15Z7" name="CMSIS_Include_common" brief="Cmsis_include_common" version="5.3.0" full_name="Cmsis_include_common" devices="MKE15Z256xxx7" user_visible="true" type="CMSIS_Include">
       <source path="CMSIS/Include" target_path="CMSIS" type="c_include">
         <files mask="cmsis_armcc.h"/>
         <files mask="cmsis_armclang.h"/>
@@ -1977,14 +1880,9 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="cmsis_gcc.h"/>
         <files mask="cmsis_iccarm.h"/>
         <files mask="cmsis_version.h"/>
-        <files mask="core_armv81mml.h"/>
-        <files mask="core_armv8mbl.h"/>
-        <files mask="core_armv8mml.h"/>
-        <files mask="mpu_armv7.h"/>
-        <files mask="mpu_armv8.h"/>
       </source>
     </component>
-    <component id="platform.Include_core_cm0plus.MKE15Z7" name="CMSIS_Include_core_cm0plus" version="5.2.1" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="CMSIS_Include">
+    <component id="platform.Include_core_cm0plus.MKE15Z7" name="CMSIS_Include_core_cm0plus" brief="Cmsis_include_core_cm0plus" version="5.3.0" full_name="Cmsis_include_core_cm0plus" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="CMSIS_Include">
       <dependencies>
         <all>
           <component_dependency value="platform.Include_common.MKE15Z7"/>
@@ -1993,16 +1891,22 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
       </dependencies>
       <source path="CMSIS/Include" target_path="CMSIS" type="c_include">
         <files mask="core_cm0plus.h"/>
+        <files mask="mpu_armv7.h"/>
       </source>
     </component>
-    <component id="platform.Include_dsp.MKE15Z7" name="CMSIS_Include_dsp" version="1.6.0" devices="MKE15Z256xxx7" user_visible="true" type="CMSIS_Include">
+    <component id="platform.Include_dsp.MKE15Z7" name="CMSIS_Include_dsp" brief="Cmsis_include_dsp" version="1.7.0" full_name="Cmsis_include_dsp" devices="MKE15Z256xxx7" user_visible="true" type="CMSIS_Include">
       <source path="CMSIS/Include" target_path="CMSIS" type="c_include">
         <files mask="arm_common_tables.h"/>
         <files mask="arm_const_structs.h"/>
         <files mask="arm_math.h"/>
       </source>
     </component>
-    <component id="project_template.MKE15Z7.MKE15Z7" name="MKE15Z7" version="1.0.0" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" category="Board Support/SDK Project Template" user_visible="true" type="project_template">
+    <component id="COPY_BSD_License.MKE15Z7" name="COPY_BSD_License" brief="COPY of BSD-3-Clause license" version="1.0.0" full_name="COPY of BSD-3-Clause license" devices="MKE15Z256xxx7" user_visible="true" type="other">
+      <source path="." target_path="src" type="other">
+        <files mask="COPYING-BSD-3"/>
+      </source>
+    </component>
+    <component id="project_template.MKE15Z7.MKE15Z7" name="MKE15Z7" brief="Devices_project_template MKE15Z7" version="1.0.0" full_name="Devices_project_template MKE15Z7" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" category="Board Support/SDK Project Template" user_visible="true" type="project_template">
       <dependencies>
         <all>
           <component_dependency value="platform.drivers.lpuart.MKE15Z7"/>
@@ -2032,7 +1936,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="pin_mux.h"/>
       </source>
     </component>
-    <component id="RTE_Device.MKE15Z7" name="RTE_Device" version="1.0.0" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" category="Device/SDK Project Template" user_visible="true" type="project_template">
+    <component id="RTE_Device.MKE15Z7" name="RTE_Device" brief="Rte_device" version="1.0.0" full_name="Rte_device" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" category="Device/SDK Project Template" user_visible="true" type="project_template">
       <dependencies>
         <all>
           <component_dependency value="platform.drivers.edma.MKE15Z7"/>
@@ -2043,14 +1947,14 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="RTE_Device.h"/>
       </source>
     </component>
-    <component id="tools.MKE15Z7" name="cmake_toolchain" version="1.0.0" devices="MKE15Z256xxx7" user_visible="true" type="other">
+    <component id="tools.MKE15Z7" name="cmake_toolchain" brief="Cmake_toolchain" version="1.0.0" full_name="Cmake_toolchain" devices="MKE15Z256xxx7" user_visible="true" type="other">
       <source path="tools/cmake_toolchain_files" target_path="cmake_toolchain_files" type="script">
         <files mask="armgcc.cmake"/>
         <files mask="armgcc_force_cpp.cmake"/>
         <files mask="xcc.cmake"/>
       </source>
     </component>
-    <component id="component.button.MKE15Z7" name="button" version="1.0.0" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="software_component">
+    <component id="component.button.MKE15Z7" name="button" brief="Component button" version="1.0.0" full_name="Component button" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="software_component">
       <dependencies>
         <all>
           <component_dependency value="platform.drivers.common.MKE15Z7"/>
@@ -2065,7 +1969,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="button.h"/>
       </source>
     </component>
-    <component id="component.common_task.MKE15Z7" name="common_task" version="1.0.0" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="software_component">
+    <component id="component.common_task.MKE15Z7" name="common_task" brief="Component common_task" version="1.0.0" full_name="Component common_task" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="software_component">
       <dependencies>
         <all>
           <component_dependency value="platform.drivers.common.MKE15Z7"/>
@@ -2079,7 +1983,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="common_task.h"/>
       </source>
     </component>
-    <component id="component.crc_adapter.MKE15Z7" name="crc_adapter" version="1.0.0" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="abstraction_layer">
+    <component id="component.crc_adapter.MKE15Z7" name="crc_adapter" brief="Component crc_adapter" version="1.0.0" full_name="Component crc_adapter" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="abstraction_layer">
       <dependencies>
         <all>
           <component_dependency value="platform.drivers.common.MKE15Z7"/>
@@ -2093,15 +1997,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="crc_adapter.c"/>
       </source>
     </component>
-    <component id="component.ecspi_adapter.MKE15Z7" name="ecspi_adapter" version="1.0.0" devices="MKE15Z256xxx7" user_visible="true" type="abstraction_layer">
-      <source path="components/spi" target_path="component/spi" type="src">
-        <files mask="ecspi_adapter.c"/>
-      </source>
-      <source path="components/spi" target_path="component/spi" type="c_include">
-        <files mask="spi.h"/>
-      </source>
-    </component>
-    <component id="component.flash_adapter.MKE15Z7" name="flash_adapter" version="1.0.0" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="abstraction_layer">
+    <component id="component.flash_adapter.MKE15Z7" name="flash_adapter" brief="Component flash_adapter" version="1.0.0" full_name="Component flash_adapter" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="abstraction_layer">
       <dependencies>
         <all>
           <component_dependency value="platform.drivers.common.MKE15Z7"/>
@@ -2115,7 +2011,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="flash_adapter.c"/>
       </source>
     </component>
-    <component id="component.ftm_adapter.MKE15Z7" name="ftm_adapter" version="1.0.0" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="abstraction_layer">
+    <component id="component.ftm_adapter.MKE15Z7" name="ftm_adapter" brief="Component ftm_adapter" version="1.0.0" full_name="Component ftm_adapter" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="abstraction_layer">
       <dependencies>
         <all>
           <component_dependency value="platform.drivers.common.MKE15Z7"/>
@@ -2129,7 +2025,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="timer.h"/>
       </source>
     </component>
-    <component id="component.gpio_adapter.MKE15Z7" name="gpio_adapter" version="1.0.0" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="abstraction_layer">
+    <component id="component.gpio_adapter.MKE15Z7" name="gpio_adapter" brief="Component gpio_adapter" version="1.0.0" full_name="Component gpio_adapter" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="abstraction_layer">
       <dependencies>
         <all>
           <component_dependency value="platform.drivers.gpio.MKE15Z7"/>
@@ -2143,7 +2039,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="gpio_adapter.c"/>
       </source>
     </component>
-    <component id="component.led.MKE15Z7" name="led" version="1.0.0" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="software_component">
+    <component id="component.led.MKE15Z7" name="led" brief="Component led" version="1.0.0" full_name="Component led" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="software_component">
       <dependencies>
         <all>
           <component_dependency value="platform.drivers.common.MKE15Z7"/>
@@ -2158,7 +2054,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="led.h"/>
       </source>
     </component>
-    <component id="component.lists.MKE15Z7" name="lists" version="1.0.0" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="software_component">
+    <component id="component.lists.MKE15Z7" name="lists" brief="Component lists" version="1.0.0" full_name="Component lists" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="software_component">
       <dependencies>
         <component_dependency value="platform.drivers.common.MKE15Z7"/>
       </dependencies>
@@ -2169,7 +2065,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="generic_list.h"/>
       </source>
     </component>
-    <component id="component.lpit_adapter.MKE15Z7" name="lpit_adapter" version="1.0.0" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="abstraction_layer">
+    <component id="component.lpit_adapter.MKE15Z7" name="lpit_adapter" brief="Component lpit_adapter" version="1.0.0" full_name="Component lpit_adapter" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="abstraction_layer">
       <dependencies>
         <all>
           <component_dependency value="platform.drivers.common.MKE15Z7"/>
@@ -2183,21 +2079,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="timer.h"/>
       </source>
     </component>
-    <component id="component.lpspi_adapter.MKE15Z7" name="lpspi_adapter" version="1.0.0" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="abstraction_layer">
-      <dependencies>
-        <all>
-          <component_dependency value="platform.drivers.common.MKE15Z7"/>
-          <component_dependency value="platform.drivers.lpspi.MKE15Z7"/>
-        </all>
-      </dependencies>
-      <source path="components/spi" target_path="component/spi" type="src">
-        <files mask="lpspi_adapter.c"/>
-      </source>
-      <source path="components/spi" target_path="component/spi" type="c_include">
-        <files mask="spi.h"/>
-      </source>
-    </component>
-    <component id="component.lptmr_adapter.MKE15Z7" name="lptmr_adapter" version="1.0.0" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="abstraction_layer">
+    <component id="component.lptmr_adapter.MKE15Z7" name="lptmr_adapter" brief="Component lptmr_adapter" version="1.0.0" full_name="Component lptmr_adapter" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="abstraction_layer">
       <dependencies>
         <all>
           <component_dependency value="platform.drivers.common.MKE15Z7"/>
@@ -2211,7 +2093,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="timer.h"/>
       </source>
     </component>
-    <component id="component.lpuart_adapter.MKE15Z7" name="lpuart_adapter" version="1.0.0" full_name="lpuart_adapter" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="utilities">
+    <component id="component.lpuart_adapter.MKE15Z7" name="lpuart_adapter" brief="Component lpuart_adapter" version="1.0.0" full_name="lpuart_adapter" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="utilities">
       <dependencies>
         <all>
           <component_dependency value="platform.drivers.common.MKE15Z7"/>
@@ -2225,7 +2107,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="uart.h"/>
       </source>
     </component>
-    <component id="component.mem_manager.MKE15Z7" name="mem_manager" version="1.0.0" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="software_component">
+    <component id="component.mem_manager.MKE15Z7" name="mem_manager" brief="Component mem_manager" version="1.0.0" full_name="Component mem_manager" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="software_component">
       <dependencies>
         <all>
           <component_dependency value="platform.drivers.common.MKE15Z7"/>
@@ -2239,15 +2121,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="mem_manager.h"/>
       </source>
     </component>
-    <component id="component.minispi_adapter.MKE15Z7" name="minispi_adapter" version="1.0.0" devices="MKE15Z256xxx7" user_visible="true" type="abstraction_layer">
-      <source path="components/spi" target_path="component/spi" type="src">
-        <files mask="minispi_adapter.c"/>
-      </source>
-      <source path="components/spi" target_path="component/spi" type="c_include">
-        <files mask="spi.h"/>
-      </source>
-    </component>
-    <component id="component.osa.MKE15Z7" name="osa" version="1.0.0" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="software_component">
+    <component id="component.osa.MKE15Z7" name="osa" brief="Component osa" version="1.0.0" full_name="Component osa" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="software_component">
       <dependencies>
         <all>
           <component_dependency value="platform.drivers.common.MKE15Z7"/>
@@ -2264,14 +2138,14 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
       <source condition="middleware.baremetal.MKE15Z7" path="components/osa" target_path="component/osa" type="c_include">
         <files mask="fsl_os_abstraction_bm.h"/>
       </source>
-      <source condition="middleware.amazon_freertos-kernel.MKE15Z7" path="components/osa" target_path="component/osa" type="src">
+      <source condition="middleware.freertos-kernel.MKE15Z7" path="components/osa" target_path="component/osa" type="src">
         <files mask="fsl_os_abstraction_free_rtos.c"/>
       </source>
-      <source condition="middleware.amazon_freertos-kernel.MKE15Z7" path="components/osa" target_path="component/osa" type="c_include">
+      <source condition="middleware.freertos-kernel.MKE15Z7" path="components/osa" target_path="component/osa" type="c_include">
         <files mask="fsl_os_abstraction_free_rtos.h"/>
       </source>
     </component>
-    <component id="component.osa_bm.MKE15Z7" name="osa_bm" version="1.0.0" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="false" type="software_component">
+    <component id="component.osa_bm.MKE15Z7" name="osa_bm" brief="Component osa_bm" version="1.0.0" full_name="Component osa_bm" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="false" type="software_component">
       <dependencies>
         <all>
           <component_dependency value="platform.drivers.common.MKE15Z7"/>
@@ -2287,10 +2161,10 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="fsl_os_abstraction_bm.c"/>
       </source>
     </component>
-    <component id="component.osa_free_rtos.MKE15Z7" name="osa_free_rtos" version="1.0.0" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="false" type="software_component">
+    <component id="component.osa_free_rtos.MKE15Z7" name="osa_free_rtos" brief="Component osa_free_rtos" version="1.0.0" full_name="Component osa_free_rtos" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="false" type="software_component">
       <dependencies>
         <all>
-          <component_dependency value="middleware.amazon_freertos-kernel.MKE15Z7"/>
+          <component_dependency value="middleware.freertos-kernel.MKE15Z7"/>
           <component_dependency value="platform.drivers.common.MKE15Z7"/>
           <component_dependency value="component.lists.MKE15Z7"/>
         </all>
@@ -2304,7 +2178,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="fsl_os_abstraction_free_rtos.c"/>
       </source>
     </component>
-    <component id="component.panic.MKE15Z7" name="panic" version="1.0.0" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="software_component">
+    <component id="component.panic.MKE15Z7" name="panic" brief="Component panic" version="1.0.0" full_name="Component panic" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="software_component">
       <dependencies>
         <all>
           <component_dependency value="platform.drivers.common.MKE15Z7"/>
@@ -2318,7 +2192,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="panic.h"/>
       </source>
     </component>
-    <component id="component.pwm_ftm_adapter.MKE15Z7" name="pwm_ftm_adapter" version="1.0.0" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="abstraction_layer">
+    <component id="component.pwm_ftm_adapter.MKE15Z7" name="pwm_ftm_adapter" brief="Component pwm_ftm_adapter" version="1.0.0" full_name="Component pwm_ftm_adapter" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="abstraction_layer">
       <dependencies>
         <all>
           <component_dependency value="platform.drivers.common.MKE15Z7"/>
@@ -2332,15 +2206,12 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="pwm_ftm_adapter.c"/>
       </source>
     </component>
-    <component id="component.serial_manager.MKE15Z7" name="serial_manager" version="1.0.0" full_name="Serial Manager" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="utilities">
+    <component id="component.serial_manager.MKE15Z7" name="serial_manager" brief="Component serial_manager" version="1.0.0" full_name="Serial Manager" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="utilities">
       <dependencies>
         <all>
           <component_dependency value="platform.drivers.common.MKE15Z7"/>
           <component_dependency value="component.lists.MKE15Z7"/>
-          <any_of>
-            <component_dependency value="component.serial_manager_uart.MKE15Z7"/>
-            <component_dependency value="component.serial_manager_usb_cdc_virtual.MKE15Z7"/>
-          </any_of>
+          <component_dependency value="component.serial_manager_uart.MKE15Z7"/>
         </all>
       </dependencies>
       <source path="components/serial_manager" target_path="component/serial_manager" type="src">
@@ -2351,12 +2222,15 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="serial_port_internal.h"/>
       </source>
     </component>
-    <component id="component.serial_manager_uart.MKE15Z7" name="serial_manager_uart" version="1.0.0" full_name="Serial Manager uart" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="utilities">
+    <component id="component.serial_manager_uart.MKE15Z7" name="serial_manager_uart" brief="Component serial_manager_uart" version="1.0.0" full_name="Serial Manager uart" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="utilities">
       <defines>
         <define name="SERIAL_PORT_TYPE_UART" value="1"/>
       </defines>
       <dependencies>
-        <component_dependency value="platform.drivers.lpuart.MKE15Z7"/>
+        <all>
+          <component_dependency value="component.lpuart_adapter.MKE15Z7"/>
+          <component_dependency value="platform.drivers.lpuart.MKE15Z7"/>
+        </all>
       </dependencies>
       <source path="components/serial_manager" target_path="component/serial_manager" type="src">
         <files mask="serial_port_uart.c"/>
@@ -2365,27 +2239,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="serial_port_uart.h"/>
       </source>
     </component>
-    <component id="component.serial_manager_usb_cdc_device_config.frdmke15z.MKE15Z7" name="frdmke15z" version="1.0.0" devices="MKE15Z256xxx7" user_visible="true" type="abstraction_layer">
-      <source path="boards/frdmke15z/component_examples/config" target_path="component/serial_manager/usb_cdc_adapter" type="c_include">
-        <files mask="usb_device_config.h"/>
-      </source>
-    </component>
-    <component id="component.serial_manager_usb_cdc_virtual.MKE15Z7" name="serial_manager_usb_cdc_virtual" version="1.0.0" full_name="Serial Manager USB CDC Virtual" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="false" type="utilities">
-      <defines>
-        <define name="SERIAL_PORT_TYPE_USBCDC_VIRTUAL" value="1"/>
-        <define name="DEBUG_CONSOLE_TRANSFER_NON_BLOCKING" value=""/>
-      </defines>
-      <dependencies>
-        <component_dependency value="platform.drivers.common.MKE15Z7"/>
-      </dependencies>
-      <source path="components/serial_manager" target_path="component/serial_manager" type="src">
-        <files mask="serial_port_usb_virtual.c"/>
-      </source>
-      <source path="components/serial_manager" target_path="component/serial_manager" type="c_include">
-        <files mask="serial_port_usb_virtual.h"/>
-      </source>
-    </component>
-    <component id="component.software_crc_adapter.MKE15Z7" name="software_crc_adapter" version="1.0.0" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="abstraction_layer">
+    <component id="component.software_crc_adapter.MKE15Z7" name="software_crc_adapter" brief="Component software_crc_adapter" version="1.0.0" full_name="Component software_crc_adapter" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="abstraction_layer">
       <dependencies>
         <component_dependency value="platform.drivers.common.MKE15Z7"/>
       </dependencies>
@@ -2396,7 +2250,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="software_crc_adapter.c"/>
       </source>
     </component>
-    <component id="component.timer_manager.MKE15Z7" name="timer_manager" version="1.0.0" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="software_component">
+    <component id="component.timer_manager.MKE15Z7" name="timer_manager" brief="Component timer_manager" version="1.0.0" full_name="Component timer_manager" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="software_component">
       <dependencies>
         <all>
           <component_dependency value="platform.drivers.common.MKE15Z7"/>
@@ -2415,15 +2269,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="timer_manager.h"/>
       </source>
     </component>
-    <component id="component.vspi_adapter.MKE15Z7" name="vspi_adapter" version="1.0.0" devices="MKE15Z256xxx7" user_visible="true" type="abstraction_layer">
-      <source path="components/spi" target_path="component/spi" type="c_include">
-        <files mask="spi.h"/>
-      </source>
-      <source path="components/spi" target_path="component/spi" type="src">
-        <files mask="vspi_adapter.c"/>
-      </source>
-    </component>
-    <component id="device.MKE15Z7_CMSIS.MKE15Z7" name="MKE15Z7_CMSIS" version="1.0.0" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="CMSIS_Include">
+    <component id="device.MKE15Z7_CMSIS.MKE15Z7" name="MKE15Z7_CMSIS" brief="Device MKE15Z7_cmsis" version="1.0.0" full_name="Device MKE15Z7_cmsis" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="CMSIS_Include">
       <dependencies>
         <component_dependency value="platform.Include_core_cm0plus.MKE15Z7"/>
       </dependencies>
@@ -2433,13 +2279,13 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="fsl_device_registers.h"/>
       </source>
     </component>
-    <component id="device.MKE15Z7_debugger.MKE15Z7" name="MKE15Z7_debugger" version="1.0.0" devices="MKE15Z256xxx7" user_visible="true" type="debugger">
+    <component id="device.MKE15Z7_debugger.MKE15Z7" name="MKE15Z7_debugger" brief="Device MKE15Z7_debugger" version="1.0.0" full_name="Device MKE15Z7_debugger" devices="MKE15Z256xxx7" user_visible="true" type="debugger">
       <source path="devices/MKE15Z7" target_path="MKE15Z7" type="xml">
         <files mask="MKE15Z7.xml"/>
       </source>
     </component>
-    <component id="platform.devices.MKE15Z7_linker.MKE15Z7" name="MKE15Z7_linker" version="1.0.0" devices="MKE15Z256xxx7" user_visible="true" type="linker"/>
-    <component id="device.MKE15Z7_startup.MKE15Z7" name="MKE15Z7_startup" version="1.0.0" devices="MKE15Z256xxx7" category="Device/Startup" user_visible="true" type="startup">
+    <component id="platform.devices.MKE15Z7_linker.MKE15Z7" name="MKE15Z7_linker" brief="Device MKE15Z7_linker" version="1.0.0" full_name="Device MKE15Z7_linker" devices="MKE15Z256xxx7" user_visible="true" type="linker"/>
+    <component id="device.MKE15Z7_startup.MKE15Z7" name="MKE15Z7_startup" brief="Device MKE15Z7_startup" version="1.1.0" full_name="Device MKE15Z7_startup" devices="MKE15Z256xxx7" category="Device/Startup" user_visible="true" type="startup">
       <source toolchain="mcuxpresso" path="devices/MKE15Z7/mcuxpresso" target_path="startup" type="src_c">
         <files mask="startup_mke15z7.c"/>
       </source>
@@ -2453,21 +2299,49 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="system_MKE15Z7.h"/>
       </source>
     </component>
-    <component id="docs.MKE15Z7.MKE15Z7" name="MKE15Z7" version="1.0.0" devices="MKE15Z256xxx7" user_visible="true" type="documentation">
+    <component id="docs.MKE15Z7.MKE15Z7" name="MKE15Z7" brief="Docs mke15z7" version="1.0.0" full_name="Docs mke15z7" devices="MKE15Z256xxx7" user_visible="true" type="documentation">
       <source path="docs" target_path="docs" type="doc">
         <files mask="Getting Started with MCUXpresso SDK.pdf"/>
         <files mask="MCUXpresso SDK Release Notes for FRDM-KE15Z.pdf"/>
       </source>
     </component>
-    <component id="docs.images.MKE15Z7" name="images" version="1.0.0" devices="MKE15Z256xxx7" user_visible="true" type="documentation">
-      <source path="docs/images" target_path="images" type="image">
-        <files mask="FRDM-KE15Z.gif"/>
-        <files mask="FRDMKE15-DP300x.gif"/>
-        <files mask="FRDMKE15-DP5004.gif"/>
-        <files mask="device.jpg"/>
+    <component id="docs.motor_control_bldc.MKE15Z7" name="motor_control_bldc" brief="Docs motor_control_bldc" version="1.0.0" full_name="Docs motor_control_bldc" devices="MKE15Z256xxx7" user_visible="true" type="documentation">
+      <dependencies>
+        <component_dependency value="middleware.motor_control.bldc.MKE15Z7"/>
+      </dependencies>
+      <source path="docs/MC" target_path="MC" type="doc">
+        <files mask="BLDCDEMOUG.pdf"/>
       </source>
     </component>
-    <component id="platform.drivers.acmp.MKE15Z7" name="acmp" brief="ACMP Driver" version="2.0.5" full_name="ACMP Driver" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="driver">
+    <component id="docs.motor_control_pmsm_kv.MKE15Z7" name="motor_control_pmsm_kv" brief="Docs motor_control_pmsm_kv" version="1.0.0" full_name="Docs motor_control_pmsm_kv" devices="MKE15Z256xxx7" user_visible="true" type="documentation">
+      <dependencies>
+        <component_dependency value="middleware.motor_control.pmsm.MKE15Z7"/>
+      </dependencies>
+      <source path="docs/MC" target_path="MC" type="doc">
+        <files mask="3PPMSMCKVUG.pdf"/>
+      </source>
+    </component>
+    <component id="docs.motor_control_rn.MKE15Z7" name="motor_control_rn" brief="Docs motor_control_rn" version="1.0.0" full_name="Docs motor_control_rn" devices="MKE15Z256xxx7" user_visible="true" type="documentation">
+      <dependencies>
+        <any_of>
+          <component_dependency value="middleware.motor_control.pmsm.MKE15Z7"/>
+          <component_dependency value="middleware.motor_control.acim.MKE15Z7"/>
+          <component_dependency value="middleware.motor_control.bldc.MKE15Z7"/>
+        </any_of>
+      </dependencies>
+      <source path="docs/MC" target_path="MC" type="doc">
+        <files mask="Release_notes.pdf"/>
+      </source>
+    </component>
+    <component id="docs.touch_sensing.MKE15Z7" name="touch_sensing" brief="Docs touch_sensing" version="1.0.0" full_name="Docs touch_sensing" devices="MKE15Z256xxx7" user_visible="true" type="documentation">
+      <dependencies>
+        <component_dependency value="middleware.touch.MKE15Z7"/>
+      </dependencies>
+      <source path="docs/touch" target_path="touch" type="doc">
+        <files mask="NT20RM.pdf"/>
+      </source>
+    </component>
+    <component id="platform.drivers.acmp.MKE15Z7" name="acmp" brief="ACMP Driver" version="2.0.6" full_name="ACMP Driver" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="driver">
       <dependencies>
         <component_dependency value="platform.drivers.common.MKE15Z7"/>
       </dependencies>
@@ -2545,7 +2419,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="fsl_lpuart_cmsis.h"/>
       </source>
     </component>
-    <component id="platform.drivers.common.MKE15Z7" name="common" brief="COMMON Driver" version="2.2.2" full_name="COMMON Driver" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="driver">
+    <component id="platform.drivers.common.MKE15Z7" name="common" brief="COMMON Driver" version="2.2.4" full_name="COMMON Driver" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="driver">
       <dependencies>
         <all>
           <component_dependency value="platform.drivers.clock.MKE15Z7"/>
@@ -2581,7 +2455,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="fsl_dmamux.h"/>
       </source>
     </component>
-    <component id="platform.drivers.edma.MKE15Z7" name="edma" brief="EDMA Driver" version="2.3.0" full_name="EDMA Driver" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="driver">
+    <component id="platform.drivers.edma.MKE15Z7" name="edma" brief="EDMA Driver" version="2.3.2" full_name="EDMA Driver" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="driver">
       <dependencies>
         <all>
           <component_dependency value="platform.drivers.common.MKE15Z7"/>
@@ -2595,7 +2469,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="fsl_edma.h"/>
       </source>
     </component>
-    <component id="platform.drivers.ewm.MKE15Z7" name="ewm" brief="EWM Driver" version="2.0.2" full_name="EWM Driver" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="driver">
+    <component id="platform.drivers.ewm.MKE15Z7" name="ewm" brief="EWM Driver" version="2.0.3" full_name="EWM Driver" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="driver">
       <dependencies>
         <component_dependency value="platform.drivers.common.MKE15Z7"/>
       </dependencies>
@@ -2627,7 +2501,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="fsl_ftfx_flexnvm.c"/>
       </source>
     </component>
-    <component id="platform.drivers.flexio.MKE15Z7" name="flexio" brief="FLEXIO Driver" version="2.0.2" full_name="FLEXIO Driver" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="driver">
+    <component id="platform.drivers.flexio.MKE15Z7" name="flexio" brief="FLEXIO Driver" version="2.0.3" full_name="FLEXIO Driver" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="driver">
       <dependencies>
         <component_dependency value="platform.drivers.common.MKE15Z7"/>
       </dependencies>
@@ -2638,7 +2512,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="fsl_flexio.h"/>
       </source>
     </component>
-    <component id="platform.drivers.flexio_i2c_master.MKE15Z7" name="flexio_i2c_master" brief="FLEXIO I2C Driver" version="2.2.0" full_name="FLEXIO I2C Driver" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="driver">
+    <component id="platform.drivers.flexio_i2c_master.MKE15Z7" name="flexio_i2c_master" brief="FLEXIO I2C Driver" version="2.4.0" full_name="FLEXIO I2C Driver" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="driver">
       <dependencies>
         <component_dependency value="platform.drivers.flexio.MKE15Z7"/>
       </dependencies>
@@ -2649,7 +2523,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="fsl_flexio_i2c_master.h"/>
       </source>
     </component>
-    <component id="platform.drivers.flexio_spi.MKE15Z7" name="flexio_spi" brief="FLEXIO SPI Driver" version="2.1.3" full_name="FLEXIO SPI Driver" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="driver">
+    <component id="platform.drivers.flexio_spi.MKE15Z7" name="flexio_spi" brief="FLEXIO SPI Driver" version="2.2.0" full_name="FLEXIO SPI Driver" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="driver">
       <dependencies>
         <component_dependency value="platform.drivers.flexio.MKE15Z7"/>
       </dependencies>
@@ -2660,7 +2534,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="fsl_flexio_spi.h"/>
       </source>
     </component>
-    <component id="platform.drivers.flexio_spi_edma.MKE15Z7" name="flexio_spi_edma" brief="FLEXIO SPI EDMA Driver" version="2.1.3" full_name="FLEXIO SPI EDMA Driver" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="driver">
+    <component id="platform.drivers.flexio_spi_edma.MKE15Z7" name="flexio_spi_edma" brief="FLEXIO SPI EDMA Driver" version="2.2.0" full_name="FLEXIO SPI EDMA Driver" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="driver">
       <dependencies>
         <all>
           <component_dependency value="platform.drivers.edma.MKE15Z7"/>
@@ -2674,7 +2548,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="fsl_flexio_spi_edma.h"/>
       </source>
     </component>
-    <component id="platform.drivers.flexio_uart.MKE15Z7" name="flexio_uart" brief="FLEXIO UART Driver" version="2.1.6" full_name="FLEXIO UART Driver" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="driver">
+    <component id="platform.drivers.flexio_uart.MKE15Z7" name="flexio_uart" brief="FLEXIO UART Driver" version="2.2.0" full_name="FLEXIO UART Driver" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="driver">
       <dependencies>
         <component_dependency value="platform.drivers.flexio.MKE15Z7"/>
       </dependencies>
@@ -2685,7 +2559,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="fsl_flexio_uart.h"/>
       </source>
     </component>
-    <component id="platform.drivers.flexio_uart_edma.MKE15Z7" name="flexio_uart_edma" brief="FLEXIO UART EDMA Driver" version="2.1.6" full_name="FLEXIO UART EDMA Driver" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="driver">
+    <component id="platform.drivers.flexio_uart_edma.MKE15Z7" name="flexio_uart_edma" brief="FLEXIO UART EDMA Driver" version="2.2.0" full_name="FLEXIO UART EDMA Driver" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="driver">
       <dependencies>
         <all>
           <component_dependency value="platform.drivers.flexio_uart.MKE15Z7"/>
@@ -2699,7 +2573,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="fsl_flexio_uart_edma.h"/>
       </source>
     </component>
-    <component id="platform.drivers.ftm.MKE15Z7" name="ftm" brief="FTM Driver" version="2.2.1" full_name="FTM Driver" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="driver">
+    <component id="platform.drivers.ftm.MKE15Z7" name="ftm" brief="FTM Driver" version="2.2.3" full_name="FTM Driver" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="driver">
       <dependencies>
         <component_dependency value="platform.drivers.common.MKE15Z7"/>
       </dependencies>
@@ -2710,7 +2584,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="fsl_ftm.h"/>
       </source>
     </component>
-    <component id="driver.fxos8700cq.MKE15Z7" name="fxos8700cq" version="1.0.0" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="board_component">
+    <component id="driver.fxos8700cq.MKE15Z7" name="fxos8700cq" brief="Driver fxos8700cq" version="1.0.0" full_name="Driver fxos8700cq" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="board_component">
       <dependencies>
         <component_dependency value="platform.drivers.common.MKE15Z7"/>
       </dependencies>
@@ -2721,7 +2595,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="fsl_fxos.h"/>
       </source>
     </component>
-    <component id="platform.drivers.gpio.MKE15Z7" name="gpio" brief="GPIO Driver" version="2.4.1" full_name="GPIO Driver" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="driver">
+    <component id="platform.drivers.gpio.MKE15Z7" name="gpio" brief="GPIO Driver" version="2.5.1" full_name="GPIO Driver" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="driver">
       <dependencies>
         <component_dependency value="platform.drivers.common.MKE15Z7"/>
       </dependencies>
@@ -2732,7 +2606,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="fsl_gpio.h"/>
       </source>
     </component>
-    <component id="platform.drivers.lpi2c.MKE15Z7" name="i2c" brief="LPI2C Driver" version="2.1.10" full_name="LPI2C Driver" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="driver">
+    <component id="platform.drivers.lpi2c.MKE15Z7" name="i2c" brief="LPI2C Driver" version="2.1.11" full_name="LPI2C Driver" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="driver">
       <dependencies>
         <component_dependency value="platform.drivers.common.MKE15Z7"/>
       </dependencies>
@@ -2743,7 +2617,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="fsl_lpi2c.h"/>
       </source>
     </component>
-    <component id="platform.drivers.lpi2c_edma.MKE15Z7" name="i2c_edma" brief="LPI2C Driver" version="2.1.10" full_name="LPI2C Edma Driver" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="driver">
+    <component id="platform.drivers.lpi2c_edma.MKE15Z7" name="i2c_edma" brief="LPI2C Driver" version="2.1.11" full_name="LPI2C Edma Driver" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="driver">
       <dependencies>
         <all>
           <component_dependency value="platform.drivers.edma.MKE15Z7"/>
@@ -2757,11 +2631,11 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="fsl_lpi2c_edma.h"/>
       </source>
     </component>
-    <component id="platform.drivers.lpi2c_freertos.MKE15Z7" name="i2c_freertos" brief="LPI2C Driver" version="2.1.10" full_name="LPI2C Freerto Driver" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="driver">
+    <component id="platform.drivers.lpi2c_freertos.MKE15Z7" name="i2c_freertos" brief="LPI2C Driver" version="2.1.11" full_name="LPI2C Freerto Driver" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="driver">
       <dependencies>
         <all>
           <component_dependency value="platform.drivers.lpi2c.MKE15Z7"/>
-          <component_dependency value="middleware.amazon_freertos-kernel.MKE15Z7"/>
+          <component_dependency value="middleware.freertos-kernel.MKE15Z7"/>
         </all>
       </dependencies>
       <source path="devices/MKE15Z7/drivers" target_path="drivers/freertos" type="src">
@@ -2782,7 +2656,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="fsl_lpit.h"/>
       </source>
     </component>
-    <component id="platform.drivers.lpspi.MKE15Z7" name="lpspi" brief="LPSPI Driver" version="2.0.4" full_name="LPSPI Driver" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="driver">
+    <component id="platform.drivers.lpspi.MKE15Z7" name="lpspi" brief="LPSPI Driver" version="2.0.5" full_name="LPSPI Driver" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="driver">
       <dependencies>
         <component_dependency value="platform.drivers.common.MKE15Z7"/>
       </dependencies>
@@ -2793,7 +2667,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="fsl_lpspi.h"/>
       </source>
     </component>
-    <component id="platform.drivers.lpspi_edma.MKE15Z7" name="lpspi_edma" brief="LPSPI Driver" version="2.0.4" full_name="LPSPI Edma Driver" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="driver">
+    <component id="platform.drivers.lpspi_edma.MKE15Z7" name="lpspi_edma" brief="LPSPI Driver" version="2.0.5" full_name="LPSPI Edma Driver" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="driver">
       <dependencies>
         <all>
           <component_dependency value="platform.drivers.edma.MKE15Z7"/>
@@ -2807,11 +2681,11 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="fsl_lpspi_edma.h"/>
       </source>
     </component>
-    <component id="platform.drivers.lpspi_freertos.MKE15Z7" name="lpspi_freertos" brief="LPSPI Driver" version="2.0.4" full_name="LPSPI Freertos Driver" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="driver">
+    <component id="platform.drivers.lpspi_freertos.MKE15Z7" name="lpspi_freertos" brief="LPSPI Driver" version="2.0.5" full_name="LPSPI Freertos Driver" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="driver">
       <dependencies>
         <all>
           <component_dependency value="platform.drivers.lpspi.MKE15Z7"/>
-          <component_dependency value="middleware.amazon_freertos-kernel.MKE15Z7"/>
+          <component_dependency value="middleware.freertos-kernel.MKE15Z7"/>
         </all>
       </dependencies>
       <source path="devices/MKE15Z7/drivers" target_path="drivers/freertos" type="src">
@@ -2832,7 +2706,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="fsl_lptmr.h"/>
       </source>
     </component>
-    <component id="platform.drivers.lpuart.MKE15Z7" name="lpuart" brief="LPUART Driver" version="2.2.8" full_name="LPUART Driver" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="driver">
+    <component id="platform.drivers.lpuart.MKE15Z7" name="lpuart" brief="LPUART Driver" version="2.3.0" full_name="LPUART Driver" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="driver">
       <dependencies>
         <component_dependency value="platform.drivers.common.MKE15Z7"/>
       </dependencies>
@@ -2843,7 +2717,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="fsl_lpuart.h"/>
       </source>
     </component>
-    <component id="platform.drivers.lpuart_edma.MKE15Z7" name="lpuart_edma" brief="LPUART Driver" version="2.2.8" full_name="LPUART Edma Driver" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="driver">
+    <component id="platform.drivers.lpuart_edma.MKE15Z7" name="lpuart_edma" brief="LPUART Driver" version="2.3.0" full_name="LPUART Edma Driver" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="driver">
       <dependencies>
         <all>
           <component_dependency value="platform.drivers.edma.MKE15Z7"/>
@@ -2857,11 +2731,11 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="fsl_lpuart_edma.h"/>
       </source>
     </component>
-    <component id="platform.drivers.lpuart_freertos.MKE15Z7" name="lpuart_freertos" brief="LPUART Driver" version="2.2.8" full_name="LPUART Freertos Driver" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="driver">
+    <component id="platform.drivers.lpuart_freertos.MKE15Z7" name="lpuart_freertos" brief="LPUART Driver" version="2.3.0" full_name="LPUART Freertos Driver" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="driver">
       <dependencies>
         <all>
           <component_dependency value="platform.drivers.lpuart.MKE15Z7"/>
-          <component_dependency value="middleware.amazon_freertos-kernel.MKE15Z7"/>
+          <component_dependency value="middleware.freertos-kernel.MKE15Z7"/>
         </all>
       </dependencies>
       <source path="devices/MKE15Z7/drivers" target_path="drivers/freertos" type="src">
@@ -2882,7 +2756,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="fsl_mmdvsq.h"/>
       </source>
     </component>
-    <component id="platform.drivers.pdb.MKE15Z7" name="pdb" brief="PDB Driver" version="2.0.3" full_name="PDB Driver" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="driver">
+    <component id="platform.drivers.pdb.MKE15Z7" name="pdb" brief="PDB Driver" version="2.0.4" full_name="PDB Driver" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="driver">
       <dependencies>
         <component_dependency value="platform.drivers.common.MKE15Z7"/>
       </dependencies>
@@ -2893,7 +2767,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="fsl_pdb.h"/>
       </source>
     </component>
-    <component id="platform.drivers.pmc.MKE15Z7" name="pmc" brief="PMC Driver" version="2.0.2" full_name="PMC Driver" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="driver">
+    <component id="platform.drivers.pmc.MKE15Z7" name="pmc" brief="PMC Driver" version="2.0.3" full_name="PMC Driver" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="driver">
       <dependencies>
         <component_dependency value="platform.drivers.common.MKE15Z7"/>
       </dependencies>
@@ -2923,7 +2797,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="fsl_pwt.h"/>
       </source>
     </component>
-    <component id="platform.drivers.rcm.MKE15Z7" name="rcm" brief="RCM Driver" version="2.0.3" full_name="RCM Driver" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="driver">
+    <component id="platform.drivers.rcm.MKE15Z7" name="rcm" brief="RCM Driver" version="2.0.4" full_name="RCM Driver" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="driver">
       <dependencies>
         <component_dependency value="platform.drivers.common.MKE15Z7"/>
       </dependencies>
@@ -2956,7 +2830,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="fsl_sim.h"/>
       </source>
     </component>
-    <component id="platform.drivers.smc.MKE15Z7" name="smc" brief="SMC Driver" version="2.0.6" full_name="SMC Driver" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="driver">
+    <component id="platform.drivers.smc.MKE15Z7" name="smc" brief="SMC Driver" version="2.0.7" full_name="SMC Driver" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="driver">
       <dependencies>
         <component_dependency value="platform.drivers.common.MKE15Z7"/>
       </dependencies>
@@ -2989,7 +2863,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="fsl_tsi_v5.h"/>
       </source>
     </component>
-    <component id="platform.drivers.wdog32.MKE15Z7" name="wdog" brief="WDOG32 Driver" version="2.0.2" full_name="WDOG32 Driver" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="driver">
+    <component id="platform.drivers.wdog32.MKE15Z7" name="wdog" brief="WDOG32 Driver" version="2.0.3" full_name="WDOG32 Driver" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="driver">
       <dependencies>
         <component_dependency value="platform.drivers.common.MKE15Z7"/>
       </dependencies>
@@ -3000,342 +2874,13 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="fsl_wdog32.h"/>
       </source>
     </component>
-    <component id="middleware.amazon_freertos-kernel.MKE15Z7" name="Amazon FreeRTOS kernel" brief="Amazon FreeRTOS kernel" version="201908.00.0" full_name="Amazon FreeRTOS kernel" devices="MKE15Z256xxx7" user_visible="true" type="OS">
-      <defines>
-        <define name="FSL_RTOS_FREE_RTOS" value=""/>
-        <define name="SDK_OS_FREE_RTOS" value=""/>
-      </defines>
-      <dependencies>
-        <all>
-          <component_dependency value="middleware.amazon_freertos-kernel.extension.MKE15Z7"/>
-          <component_dependency value="middleware.amazon_freertos-kernel.template.MKE15Z7"/>
-        </all>
-      </dependencies>
-      <source path="rtos/amazon-freertos/freertos_kernel" target_path="amazon-freertos/freertos_kernel" type="src">
-        <files mask="event_groups.c"/>
-        <files mask="list.c"/>
-        <files mask="queue.c"/>
-        <files mask="stream_buffer.c"/>
-        <files mask="tasks.c"/>
-        <files mask="timers.c"/>
-      </source>
-      <source path="rtos/amazon-freertos/freertos_kernel/include" target_path="amazon-freertos/freertos_kernel/include" type="c_include">
-        <files mask="FreeRTOS.h"/>
-        <files mask="atomic.h"/>
-        <files mask="deprecated_definitions.h"/>
-        <files mask="event_groups.h"/>
-        <files mask="list.h"/>
-        <files mask="message_buffer.h"/>
-        <files mask="mpu_prototypes.h"/>
-        <files mask="mpu_wrappers.h"/>
-        <files mask="portable.h"/>
-        <files mask="projdefs.h"/>
-        <files mask="queue.h"/>
-        <files mask="semphr.h"/>
-        <files mask="stack_macros.h"/>
-        <files mask="stream_buffer.h"/>
-        <files mask="task.h"/>
-        <files mask="timers.h"/>
-      </source>
-      <source toolchain="mcuxpresso" compiler="compiler_gcc" path="rtos/amazon-freertos/freertos_kernel/portable/GCC/ARM_CM0" target_path="amazon-freertos/freertos_kernel/portable/GCC/ARM_CM0" type="src" device_cores="core0_MKE15Z256xxx7">
-        <files mask="port.c"/>
-      </source>
-      <source toolchain="mcuxpresso" compiler="compiler_gcc" path="rtos/amazon-freertos/freertos_kernel/portable/GCC/ARM_CM0" target_path="amazon-freertos/freertos_kernel/portable/GCC/ARM_CM0" type="c_include" device_cores="core0_MKE15Z256xxx7">
-        <files mask="portmacro.h"/>
-      </source>
-      <source path="rtos/amazon-freertos/freertos_kernel/portable/MemMang" target_path="amazon-freertos/freertos_kernel/portable/MemMang" type="other">
-        <files mask="ReadMe.url"/>
-      </source>
-      <source path="rtos/amazon-freertos/freertos_kernel/portable" target_path="amazon-freertos/freertos_kernel/portable" type="doc">
-        <files mask="readme.txt"/>
-      </source>
-    </component>
-    <component id="middleware.amazon_freertos-kernel.armv8m.MKE15Z7" name="Amazon FreeRTOS port ARMv8M" brief="Amazon FreeRTOS port ARMv8M" version="201908.00.0" full_name="Amazon FreeRTOS port ARMv8M" devices="MKE15Z256xxx7" category="Operating System/Amazon FreeRTOS kernel" user_visible="false" type="other">
-      <dependencies>
-        <component_dependency value="middleware.amazon_freertos-kernel.MKE15Z7"/>
-      </dependencies>
-      <source path="rtos/amazon-freertos/freertos_kernel/portable/ARMv8M" target_path="amazon-freertos/freertos_kernel/portable/ARMv8M" type="doc">
-        <files mask="ReadMe.txt"/>
-      </source>
-      <source path="rtos/amazon-freertos/freertos_kernel/portable/ARMv8M" target_path="amazon-freertos/freertos_kernel/portable/ARMv8M" type="script">
-        <files mask="copy_files.py"/>
-      </source>
-      <source path="rtos/amazon-freertos/freertos_kernel/portable/ARMv8M/non_secure" target_path="amazon-freertos/freertos_kernel/portable/ARMv8M/non_secure" type="doc">
-        <files mask="ReadMe.txt"/>
-      </source>
-      <source path="rtos/amazon-freertos/freertos_kernel/portable/ARMv8M/non_secure" target_path="amazon-freertos/freertos_kernel/portable/ARMv8M/non_secure" type="src">
-        <files mask="port.c"/>
-      </source>
-      <source path="rtos/amazon-freertos/freertos_kernel/portable/ARMv8M/non_secure/portable/GCC/ARM_CM33" target_path="amazon-freertos/freertos_kernel/portable/ARMv8M/non_secure/portable/GCC/ARM_CM33" type="src">
-        <files mask="portasm.c"/>
-      </source>
-      <source path="rtos/amazon-freertos/freertos_kernel/portable/ARMv8M/non_secure/portable/GCC/ARM_CM33" target_path="amazon-freertos/freertos_kernel/portable/ARMv8M/non_secure/portable/GCC/ARM_CM33" type="c_include">
-        <files mask="portmacro.h"/>
-      </source>
-      <source path="rtos/amazon-freertos/freertos_kernel/portable/ARMv8M/non_secure/portable/GCC/ARM_CM33_NTZ" target_path="amazon-freertos/freertos_kernel/portable/ARMv8M/non_secure/portable/GCC/ARM_CM33_NTZ" type="src">
-        <files mask="portasm.c"/>
-      </source>
-      <source path="rtos/amazon-freertos/freertos_kernel/portable/ARMv8M/non_secure/portable/GCC/ARM_CM33_NTZ" target_path="amazon-freertos/freertos_kernel/portable/ARMv8M/non_secure/portable/GCC/ARM_CM33_NTZ" type="c_include">
-        <files mask="portmacro.h"/>
-      </source>
-      <source path="rtos/amazon-freertos/freertos_kernel/portable/ARMv8M/non_secure/portable/IAR/ARM_CM33" target_path="amazon-freertos/freertos_kernel/portable/ARMv8M/non_secure/portable/IAR/ARM_CM33" type="asm_include">
-        <files mask="portasm.s"/>
-      </source>
-      <source path="rtos/amazon-freertos/freertos_kernel/portable/ARMv8M/non_secure/portable/IAR/ARM_CM33" target_path="amazon-freertos/freertos_kernel/portable/ARMv8M/non_secure/portable/IAR/ARM_CM33" type="c_include">
-        <files mask="portmacro.h"/>
-      </source>
-      <source path="rtos/amazon-freertos/freertos_kernel/portable/ARMv8M/non_secure/portable/IAR/ARM_CM33_NTZ" target_path="amazon-freertos/freertos_kernel/portable/ARMv8M/non_secure/portable/IAR/ARM_CM33_NTZ" type="asm_include">
-        <files mask="portasm.s"/>
-      </source>
-      <source path="rtos/amazon-freertos/freertos_kernel/portable/ARMv8M/non_secure/portable/IAR/ARM_CM33_NTZ" target_path="amazon-freertos/freertos_kernel/portable/ARMv8M/non_secure/portable/IAR/ARM_CM33_NTZ" type="c_include">
-        <files mask="portmacro.h"/>
-      </source>
-      <source path="rtos/amazon-freertos/freertos_kernel/portable/ARMv8M/non_secure" target_path="amazon-freertos/freertos_kernel/portable/ARMv8M/non_secure" type="c_include">
-        <files mask="portasm.h"/>
-        <files mask="portmacro.h"/>
-      </source>
-      <source path="rtos/amazon-freertos/freertos_kernel/portable/ARMv8M/secure" target_path="amazon-freertos/freertos_kernel/portable/ARMv8M/secure" type="doc">
-        <files mask="ReadMe.txt"/>
-      </source>
-      <source path="rtos/amazon-freertos/freertos_kernel/portable/ARMv8M/secure/context/portable/GCC/ARM_CM33" target_path="amazon-freertos/freertos_kernel/portable/ARMv8M/secure/context/portable/GCC/ARM_CM33" type="src">
-        <files mask="secure_context_port.c"/>
-      </source>
-      <source path="rtos/amazon-freertos/freertos_kernel/portable/ARMv8M/secure/context/portable/IAR/ARM_CM33" target_path="amazon-freertos/freertos_kernel/portable/ARMv8M/secure/context/portable/IAR/ARM_CM33" type="src">
-        <files mask="secure_context_port.c"/>
-      </source>
-      <source path="rtos/amazon-freertos/freertos_kernel/portable/ARMv8M/secure/context/portable/IAR/ARM_CM33" target_path="amazon-freertos/freertos_kernel/portable/ARMv8M/secure/context/portable/IAR/ARM_CM33" type="asm_include">
-        <files mask="secure_context_port_asm.s"/>
-      </source>
-      <source path="rtos/amazon-freertos/freertos_kernel/portable/ARMv8M/secure/context" target_path="amazon-freertos/freertos_kernel/portable/ARMv8M/secure/context" type="src">
-        <files mask="secure_context.c"/>
-      </source>
-      <source path="rtos/amazon-freertos/freertos_kernel/portable/ARMv8M/secure/context" target_path="amazon-freertos/freertos_kernel/portable/ARMv8M/secure/context" type="c_include">
-        <files mask="secure_context.h"/>
-      </source>
-      <source path="rtos/amazon-freertos/freertos_kernel/portable/ARMv8M/secure/heap" target_path="amazon-freertos/freertos_kernel/portable/ARMv8M/secure/heap" type="src">
-        <files mask="secure_heap.c"/>
-      </source>
-      <source path="rtos/amazon-freertos/freertos_kernel/portable/ARMv8M/secure/heap" target_path="amazon-freertos/freertos_kernel/portable/ARMv8M/secure/heap" type="c_include">
-        <files mask="secure_heap.h"/>
-      </source>
-      <source path="rtos/amazon-freertos/freertos_kernel/portable/ARMv8M/secure/init" target_path="amazon-freertos/freertos_kernel/portable/ARMv8M/secure/init" type="src">
-        <files mask="secure_init.c"/>
-      </source>
-      <source path="rtos/amazon-freertos/freertos_kernel/portable/ARMv8M/secure/init" target_path="amazon-freertos/freertos_kernel/portable/ARMv8M/secure/init" type="c_include">
-        <files mask="secure_init.h"/>
-      </source>
-      <source path="rtos/amazon-freertos/freertos_kernel/portable/ARMv8M/secure/macros" target_path="amazon-freertos/freertos_kernel/portable/ARMv8M/secure/macros" type="c_include">
-        <files mask="secure_port_macros.h"/>
-      </source>
-    </component>
-    <component id="middleware.amazon_freertos-kernel.cm33_nonsecure_port_no_trustzone.MKE15Z7" name="cm33_nonsecure_port_no_trustzone" brief="Amazon FreeRTOS cm33 nonsecure port" version="201908.00.0" full_name="Amazon FreeRTOS cm33 nonsecure port" devices="MKE15Z256xxx7" category="Operating System/Amazon FreeRTOS kernel" user_visible="true" type="middleware">
-      <dependencies>
-        <component_dependency value="middleware.amazon_freertos-kernel.MKE15Z7"/>
-      </dependencies>
-    </component>
-    <component id="middleware.amazon_freertos-kernel.doc.MKE15Z7" name="Amazon FreeRTOS doc" brief="Amazon FreeRTOS doc" version="201908.00.0" full_name="Amazon FreeRTOS doc" devices="MKE15Z256xxx7" category="Operating System/Amazon FreeRTOS kernel" user_visible="false" type="other">
-      <dependencies>
-        <component_dependency value="middleware.amazon_freertos-kernel.MKE15Z7"/>
-      </dependencies>
-      <source path="rtos/amazon-freertos/doc" target_path="amazon-freertos/doc" type="doc">
-        <files mask="AFQ Developer Guide - Board Qualification Errata.pdf"/>
-        <files mask="Amazon FreeRTOS Qualification Developer Guide.pdf"/>
-      </source>
-      <source path="rtos/amazon-freertos/doc" target_path="amazon-freertos/doc" type="other">
-        <files mask="README.md"/>
-        <files mask="guidance.md"/>
-      </source>
-      <source path="rtos/amazon-freertos/doc/config" target_path="amazon-freertos/doc/config" type="other">
-        <files mask="atomic"/>
-        <files mask="ble"/>
-        <files mask="common"/>
-        <files mask="defender"/>
-        <files mask="https"/>
-        <files mask="linear_containers"/>
-        <files mask="logging"/>
-        <files mask="main"/>
-        <files mask="mqtt"/>
-        <files mask="platform"/>
-        <files mask="secure_sockets"/>
-        <files mask="shadow"/>
-        <files mask="static_memory"/>
-        <files mask="taskpool"/>
-        <files mask="wifi"/>
-      </source>
-      <source path="rtos/amazon-freertos/doc/config/html" target_path="amazon-freertos/doc/config/html" type="doc">
-        <files mask="footer.html"/>
-        <files mask="header.html"/>
-        <files mask="style.css"/>
-      </source>
-      <source path="rtos/amazon-freertos/doc/config" target_path="amazon-freertos/doc/config" type="xml">
-        <files mask="layout_library.xml"/>
-        <files mask="layout_main.xml"/>
-      </source>
-      <source path="rtos/amazon-freertos/doc/extra_files/https" target_path="amazon-freertos/doc/extra_files/https" type="doc">
-        <files mask="gettysburg.txt"/>
-      </source>
-      <source path="rtos/amazon-freertos/doc/freertos_port_qual" target_path="amazon-freertos/doc/freertos_port_qual" type="doc">
-        <files mask="aFreeRTOS_Porting_Guide.pdf"/>
-        <files mask="aFreeRTOS_Qualification_Guide.pdf"/>
-      </source>
-      <source path="rtos/amazon-freertos/doc/guide" target_path="amazon-freertos/doc/guide" type="doc">
-        <files mask="building.txt"/>
-        <files mask="developer.txt"/>
-        <files mask="style.txt"/>
-      </source>
-      <source path="rtos/amazon-freertos/doc/lib" target_path="amazon-freertos/doc/lib" type="doc">
-        <files mask="atomic.txt"/>
-        <files mask="ble.txt"/>
-        <files mask="https.txt"/>
-        <files mask="linear_containers.txt"/>
-        <files mask="logging.txt"/>
-        <files mask="mqtt.txt"/>
-        <files mask="platform.txt"/>
-        <files mask="secure_sockets.txt"/>
-        <files mask="shadow.txt"/>
-        <files mask="static_memory.txt"/>
-        <files mask="taskpool.txt"/>
-        <files mask="wifi.txt"/>
-      </source>
-      <source path="rtos/amazon-freertos/doc/plantuml" target_path="amazon-freertos/doc/plantuml" type="other">
-        <files mask="RecyclableJobStatus.pu"/>
-        <files mask="StaticJobStatus.pu"/>
-        <files mask="https_client_async_callback_order.pu"/>
-        <files mask="mqtt_demo.pu"/>
-        <files mask="mqtt_design_typicaloperation.pu"/>
-        <files mask="taskpool_design_typicaloperation.pu"/>
-      </source>
-      <source path="rtos/amazon-freertos/doc/plantuml" target_path="amazon-freertos/doc/plantuml" type="xml">
-        <files mask="https_client_async_workflow.xml"/>
-        <files mask="https_client_sync_workflow.xml"/>
-      </source>
-      <source path="rtos/amazon-freertos/doc/plantuml/images" target_path="amazon-freertos/doc/plantuml/images" type="image">
-        <files mask="BLE-architecture.png"/>
-        <files mask="RecyclableJobStatus.png"/>
-        <files mask="StaticJobStatus.png"/>
-        <files mask="blediagram.png"/>
-        <files mask="https_client_async_callback_order.png"/>
-        <files mask="https_client_async_workflow.png"/>
-        <files mask="https_client_sync_workflow.png"/>
-        <files mask="mqtt_demo.png"/>
-        <files mask="mqtt_design_typicaloperation.png"/>
-        <files mask="taskpool_design_typicaloperation.png"/>
-      </source>
-      <source path="rtos/amazon-freertos/doc/tag" target_path="amazon-freertos/doc/tag" type="other">
-        <files mask="README.md"/>
-      </source>
-      <source path="rtos/amazon-freertos/doc/user_guide" target_path="amazon-freertos/doc/user_guide" type="doc">
-        <files mask="global_config.txt"/>
-      </source>
-    </component>
-    <component id="middleware.amazon_freertos-kernel.extension.MKE15Z7" name="Amazon FreeRTOS NXP extension" brief="Amazon FreeRTOS NXP extension" version="201908.00.0" full_name="Amazon FreeRTOS NXP extension" devices="MKE15Z256xxx7" category="Operating System/Amazon FreeRTOS kernel extensions" user_visible="false" type="other">
-      <source path="rtos/amazon-freertos/freertos_kernel/include" target_path="amazon-freertos/freertos_kernel/include" type="c_include">
-        <files mask="freertos_tasks_c_additions.h"/>
-      </source>
-    </component>
-    <component id="middleware.amazon_freertos-kernel.heap_1.MKE15Z7" name="Amazon FreeRTOS heap 1" brief="Amazon FreeRTOS heap 1" version="201908.00.0" full_name="Amazon FreeRTOS heap 1" devices="MKE15Z256xxx7" category="Operating System/Amazon FreeRTOS kernel" user_visible="false" type="other">
-      <dependencies>
-        <component_dependency value="middleware.amazon_freertos-kernel.MKE15Z7"/>
-      </dependencies>
-      <source path="rtos/amazon-freertos/freertos_kernel/portable/MemMang" target_path="amazon-freertos/freertos_kernel/portable/MemMang" type="src">
-        <files mask="heap_1.c"/>
-      </source>
-    </component>
-    <component id="middleware.amazon_freertos-kernel.heap_2.MKE15Z7" name="Amazon FreeRTOS heap 2" brief="Amazon FreeRTOS heap 2" version="201908.00.0" full_name="Amazon FreeRTOS heap 2" devices="MKE15Z256xxx7" category="Operating System/Amazon FreeRTOS kernel" user_visible="false" type="other">
-      <dependencies>
-        <component_dependency value="middleware.amazon_freertos-kernel.MKE15Z7"/>
-      </dependencies>
-      <source path="rtos/amazon-freertos/freertos_kernel/portable/MemMang" target_path="amazon-freertos/freertos_kernel/portable/MemMang" type="src">
-        <files mask="heap_2.c"/>
-      </source>
-    </component>
-    <component id="middleware.amazon_freertos-kernel.heap_3.MKE15Z7" name="Amazon FreeRTOS heap 3" brief="Amazon FreeRTOS heap 3" version="201908.00.0" full_name="Amazon FreeRTOS heap_3" devices="MKE15Z256xxx7" category="Operating System/Amazon FreeRTOS kernel" user_visible="false" type="other">
-      <dependencies>
-        <component_dependency value="middleware.amazon_freertos-kernel.MKE15Z7"/>
-      </dependencies>
-      <source path="rtos/amazon-freertos/freertos_kernel/portable/MemMang" target_path="amazon-freertos/freertos_kernel/portable/MemMang" type="src">
-        <files mask="heap_3.c"/>
-      </source>
-    </component>
-    <component id="middleware.amazon_freertos-kernel.heap_4.MKE15Z7" name="Amazon FreeRTOS heap 4" brief="Amazon FreeRTOS heap 4" version="201908.00.0" full_name="Amazon FreeRTOS heap 4" devices="MKE15Z256xxx7" category="Operating System/Amazon FreeRTOS kernel" user_visible="false" type="other">
-      <dependencies>
-        <component_dependency value="middleware.amazon_freertos-kernel.MKE15Z7"/>
-      </dependencies>
-      <source path="rtos/amazon-freertos/freertos_kernel/portable/MemMang" target_path="amazon-freertos/freertos_kernel/portable/MemMang" type="src">
-        <files mask="heap_4.c"/>
-      </source>
-    </component>
-    <component id="middleware.amazon_freertos-kernel.heap_5.MKE15Z7" name="Amazon FreeRTOS heap 5" brief="Amazon FreeRTOS heap 5" version="201908.00.0" full_name="Amazon FreeRTOS heap 5" devices="MKE15Z256xxx7" category="Operating System/Amazon FreeRTOS kernel" user_visible="false" type="other">
-      <dependencies>
-        <component_dependency value="middleware.amazon_freertos-kernel.MKE15Z7"/>
-      </dependencies>
-      <source path="rtos/amazon-freertos/freertos_kernel/portable/MemMang" target_path="amazon-freertos/freertos_kernel/portable/MemMang" type="src">
-        <files mask="heap_5.c"/>
-      </source>
-    </component>
-    <component id="middleware.amazon_freertos-kernel.heap_newlib.MKE15Z7" name="FreeRTOS heap newlib" brief="Amazon FreeRTOS heap newlib" version="201908.00.0" full_name="Amazon FreeRTOS heap newlib" devices="MKE15Z256xxx7" category="Operating System/Amazon FreeRTOS kernel extensions" user_visible="false" type="other">
-      <dependencies>
-        <component_dependency value="middleware.amazon_freertos-kernel.MKE15Z7"/>
-      </dependencies>
-      <source path="rtos/amazon-freertos/freertos_kernel/portable/MemMang" target_path="amazon-freertos/freertos_kernel/portable/MemMang" type="src">
-        <files mask="heap_useNewlib.c"/>
-      </source>
-    </component>
-    <component id="middleware.amazon_freertos-kernel.mpu_wrappers.MKE15Z7" name="Amazon FreeRTOS MPU wrappers" brief="Amazon FreeRTOS MPU wrappers" version="201908.00.0" full_name="Amazon FreeRTOS MPU wrappers" devices="MKE15Z256xxx7" category="Operating System/Amazon FreeRTOS kernel" user_visible="false" type="other">
-      <dependencies>
-        <component_dependency value="middleware.amazon_freertos-kernel.MKE15Z7"/>
-      </dependencies>
-      <source path="rtos/amazon-freertos/freertos_kernel/portable/Common" target_path="amazon-freertos/freertos_kernel/portable/Common" type="src">
-        <files mask="mpu_wrappers.c"/>
-      </source>
-    </component>
-    <component id="middleware.amazon_freertos-kernel.root_doc.MKE15Z7" name="Root Amazon FreeRTOS documents." brief="Amazon FreeRTOS root documents" version="201908.00.0" full_name="Amazon FreeRTOS root documents" devices="MKE15Z256xxx7" category="Operating System/Amazon FreeRTOS kernel" user_visible="false" type="other">
-      <dependencies>
-        <component_dependency value="middleware.amazon_freertos-kernel.MKE15Z7"/>
-      </dependencies>
-      <source path="rtos/amazon-freertos" target_path="amazon-freertos" type="other">
-        <files mask="CHANGELOG.md"/>
-        <files mask="CODE_OF_CONDUCT.md"/>
-        <files mask="CONTRIBUTING.md"/>
-        <files mask="checksums.json"/>
-      </source>
-      <source path="rtos/amazon-freertos" target_path="amazon-freertos" type="doc">
-        <files mask="CMakeLists.txt"/>
-        <files mask="ChangeLogKSDK.txt"/>
-        <files mask="directories.txt"/>
-      </source>
-    </component>
-    <component id="middleware.amazon_freertos-kernel.template.MKE15Z7" name="Amazon FreeRTOS configuration template" brief="Template configuration file to be edited by user. Provides also memory allocator (heap_x), change variant if needed." version="201908.00.0" full_name="Amazon FreeRTOS configuration template" devices="MKE15Z256xxx7" category="Operating System/Amazon FreeRTOS kernel" user_visible="false" type="project_template">
-      <source exclude="true" path="rtos/amazon-freertos/freertos_kernel/portable/MemMang" target_path="amazon-freertos/freertos_kernel/portable/MemMang" type="src">
-        <files mask="heap_1.c"/>
-        <files mask="heap_2.c"/>
-        <files mask="heap_3.c"/>
-        <files mask="heap_5.c"/>
-        <files mask="heap_useNewlib.c"/>
-      </source>
-      <source path="rtos/amazon-freertos/freertos_kernel/portable/MemMang" target_path="amazon-freertos/freertos_kernel/portable/MemMang" type="src">
-        <files mask="heap_4.c"/>
-      </source>
-      <source path="rtos/amazon-freertos/template/ARM_CM0" target_path="source" type="c_include" device_cores="core0_MKE15Z256xxx7">
-        <files mask="FreeRTOSConfig.h"/>
-      </source>
-    </component>
-    <component id="middleware.amazon_freertos-kernel.unused.MKE15Z7" name="Amazon FreeRTOS unused" brief="Amazon FreeRTOS unused" version="201908.00.0" full_name="Amazon FreeRTOS unused" devices="MKE15Z256xxx7" category="Operating System/Amazon FreeRTOS kernel" user_visible="false" type="other">
-      <source path="rtos/amazon-freertos" target_path="amazon-freertos" type="other">
-        <files mask="LICENSE"/>
-        <files mask="README.md"/>
-      </source>
-      <source path="rtos/amazon-freertos" target_path="amazon-freertos" type="script">
-        <files mask="PreLoad.cmake"/>
-      </source>
-    </component>
-    <component id="middleware.baremetal.MKE15Z7" name="baremetal" version="1.0.0" full_name="Baremetal" devices="MKE15Z256xxx7" user_visible="true" type="OS">
+    <component id="middleware.baremetal.MKE15Z7" name="baremetal" brief="Middleware baremetal" version="1.0.0" full_name="Baremetal" devices="MKE15Z256xxx7" user_visible="true" type="OS">
       <defines>
         <define name="FSL_RTOS_BM" value=""/>
         <define name="SDK_OS_BAREMETAL" value=""/>
       </defines>
     </component>
-    <component id="middleware.fatfs.MKE15Z7" name="fatfs" brief="FatFs" version="0.13.3" full_name="FAT File System stack" devices="MKE15Z256xxx7" category="File System/FAT File System" user_visible="true" type="middleware">
+    <component id="middleware.fatfs.MKE15Z7" name="fatfs" brief="FatFs" version="0.14" full_name="FAT File System stack" devices="MKE15Z256xxx7" category="File System/FAT File System" user_visible="true" type="middleware">
       <dependencies>
         <all>
           <component_dependency value="middleware.fatfs.template.MKE15Z7"/>
@@ -3353,7 +2898,13 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="ff.h"/>
       </source>
     </component>
-    <component id="middleware.fatfs.ram.MKE15Z7" name="ram" brief="FatFs_RAM" version="0.13.3" full_name="Fatfs RAM layer" devices="MKE15Z256xxx7" category="File System/FAT File System" user_visible="true" type="middleware">
+    <component id="middleware.fatfs.ram.MKE15Z7" name="ram" brief="FatFs_RAM" version="0.14" full_name="Fatfs RAM layer" devices="MKE15Z256xxx7" category="File System/FAT File System" user_visible="true" type="middleware">
+      <dependencies>
+        <all>
+          <component_dependency value="middleware.fatfs.MKE15Z7"/>
+          <component_dependency value="middleware.fatfs.template.MKE15Z7"/>
+        </all>
+      </dependencies>
       <source path="middleware/fatfs/source/fsl_ram_disk" target_path="fatfs/source/fsl_ram_disk" type="src">
         <files mask="fsl_ram_disk.c"/>
       </source>
@@ -3361,12 +2912,12 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="fsl_ram_disk.h"/>
       </source>
     </component>
-    <component id="middleware.fatfs.template.MKE15Z7" name="fatfs" brief="FatFs template" version="0.13.3" full_name="FatFs template configuration" devices="MKE15Z256xxx7" category="File System/FAT File System" user_visible="true" type="project_template">
+    <component id="middleware.fatfs.template.MKE15Z7" name="fatfs" brief="FatFs template" version="0.14" full_name="FatFs template configuration" devices="MKE15Z256xxx7" category="File System/FAT File System" user_visible="true" type="project_template">
       <source path="middleware/fatfs/template" target_path="source" type="c_include">
         <files mask="ffconf.h"/>
       </source>
     </component>
-    <component id="middleware.fatfs.unused_files.MKE15Z7" name="unused_files" brief="fatfs files unused by projects" version="0.13.3" devices="MKE15Z256xxx7" user_visible="false" type="other">
+    <component id="middleware.fatfs.unused_files.MKE15Z7" name="unused_files" brief="fatfs files unused by projects" version="0.14" full_name="fatfs unused" devices="MKE15Z256xxx7" user_visible="false" type="other">
       <source exclude="true" path="middleware/fatfs" target_path="fatfs" type="doc">
         <files mask="ChangeLogKSDK.txt" hidden="true"/>
         <files mask="LICENSE.txt" hidden="true"/>
@@ -3436,6 +2987,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="app3.c" hidden="true"/>
         <files mask="app4.c" hidden="true"/>
         <files mask="app5.c" hidden="true"/>
+        <files mask="app6.c" hidden="true"/>
       </source>
       <source exclude="true" path="middleware/fatfs/documents/res" target_path="fatfs/documents/res" type="image">
         <files mask="f1.png" hidden="true"/>
@@ -3458,8 +3010,8 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
       <source exclude="true" path="middleware/fatfs/documents/res" target_path="fatfs/documents/res" type="archive">
         <files mask="mkfatimg.zip" hidden="true"/>
       </source>
-      <source exclude="true" path="middleware/fatfs/documents/res" target_path="fatfs/documents/res" type="doc">
-        <files mask="mkfs.xls" hidden="true"/>
+      <source exclude="true" path="middleware/fatfs/documents/res" target_path="fatfs/documents/res" type="other">
+        <files mask="mkfs.xlsx" hidden="true"/>
       </source>
       <source exclude="true" path="middleware/fatfs/source" target_path="fatfs/source" type="doc">
         <files mask="00history.txt" hidden="true"/>
@@ -3469,7 +3021,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="ffconf_template.h" hidden="true"/>
       </source>
     </component>
-    <component id="middleware.fmstr.MKE15Z7" name="freemaster" brief="FreeMASTER run-time debugging tool" version="3.0.1" devices="MKE15Z256xxx7" user_visible="true" type="middleware">
+    <component id="middleware.fmstr.MKE15Z7" name="FreeMASTER" brief="Driver code enabling communication between FreeMASTER or FreeMASTER Lite tools and MCU application. Supports Serial, CAN and BDM/JTAG physical interface." version="3.0.2" full_name="FreeMASTER communication driver" devices="MKE15Z256xxx7" user_visible="true" type="middleware">
       <dependencies>
         <all>
           <component_dependency value="middleware.fmstr.template_app.MKE15Z7"/>
@@ -3529,7 +3081,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="freemaster_serial_usb.h"/>
       </source>
     </component>
-    <component id="middleware.fmstr.files.MKE15Z7" name="fmstr_files" version="1.0.0" devices="MKE15Z256xxx7" user_visible="false" type="other">
+    <component id="middleware.fmstr.files.MKE15Z7" name="FreeMASTER driver files" brief="FreeMASTER communication driver source code files" version="1.0.0" full_name="FreeMASTER driver files" devices="MKE15Z256xxx7" user_visible="false" type="other">
       <source path="middleware/freemaster" target_path="freemaster" type="doc">
         <files mask="ChangeLogKSDK.txt"/>
       </source>
@@ -3585,6 +3137,14 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
       <source path="middleware/freemaster/src/drivers/ampxsdk/uart/S32K1x" target_path="freemaster/src/drivers/ampxsdk/uart/S32K1x" type="c_include">
         <files mask="freemaster_serial_lpuart.h"/>
       </source>
+      <source path="middleware/freemaster/src/drivers/dreg/DSC" target_path="freemaster/src/drivers/dreg/DSC" type="src">
+        <files mask="freemaster_56f83xxx_flexcan.c"/>
+        <files mask="freemaster_56f83xxx_sci.c"/>
+      </source>
+      <source path="middleware/freemaster/src/drivers/dreg/DSC" target_path="freemaster/src/drivers/dreg/DSC" type="c_include">
+        <files mask="freemaster_56f83xxx_flexcan.h"/>
+        <files mask="freemaster_56f83xxx_sci.h"/>
+      </source>
       <source path="middleware/freemaster/src/drivers/dreg/Kxx" target_path="freemaster/src/drivers/dreg/Kxx" type="src">
         <files mask="freemaster_kxx_uart.c"/>
       </source>
@@ -3604,6 +3164,18 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
       <source path="middleware/freemaster/src/drivers/dreg/S12Z" target_path="freemaster/src/drivers/dreg/S12Z" type="c_include">
         <files mask="freemaster_s12z_mscan.h"/>
         <files mask="freemaster_s12z_sci.h"/>
+      </source>
+      <source path="middleware/freemaster/src/drivers/dreg/S32G" target_path="freemaster/src/drivers/dreg/S32G" type="src">
+        <files mask="freemaster_s32g2_linflex.c"/>
+      </source>
+      <source path="middleware/freemaster/src/drivers/dreg/S32G" target_path="freemaster/src/drivers/dreg/S32G" type="c_include">
+        <files mask="freemaster_s32g2_linflex.h"/>
+      </source>
+      <source path="middleware/freemaster/src/drivers/dreg/S32R" target_path="freemaster/src/drivers/dreg/S32R" type="src">
+        <files mask="freemaster_s32r4_linflex.c"/>
+      </source>
+      <source path="middleware/freemaster/src/drivers/dreg/S32R" target_path="freemaster/src/drivers/dreg/S32R" type="c_include">
+        <files mask="freemaster_s32r4_linflex.h"/>
       </source>
       <source path="middleware/freemaster/src/drivers/dreg/S32S" target_path="freemaster/src/drivers/dreg/S32S" type="src">
         <files mask="freemaster_s32s247tv_linflex.c"/>
@@ -3637,6 +3209,12 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="freemaster_serial_usart.h"/>
         <files mask="freemaster_serial_usb.h"/>
       </source>
+      <source path="middleware/freemaster/src/drivers" target_path="freemaster/src/drivers" type="doc">
+        <files mask="readme.txt"/>
+      </source>
+      <source path="middleware/freemaster/src/platforms/56f800e" target_path="freemaster/src/platforms/56f800e" type="c_include">
+        <files mask="freemaster_56F800e.h"/>
+      </source>
       <source path="middleware/freemaster/src/platforms/gen32be" target_path="freemaster/src/platforms/gen32be" type="c_include">
         <files mask="freemaster_gen32be.h"/>
       </source>
@@ -3646,18 +3224,373 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
       <source path="middleware/freemaster/src/platforms/s12z" target_path="freemaster/src/platforms/s12z" type="c_include">
         <files mask="freemaster_s12z.h"/>
       </source>
+      <source path="middleware/freemaster/src/support/mcuxsdk_usb" target_path="freemaster/src/support/mcuxsdk_usb" type="src">
+        <files mask="freemaster_usb.c"/>
+        <files mask="freemaster_usb_device_descriptor.c"/>
+      </source>
+      <source path="middleware/freemaster/src/support/mcuxsdk_usb" target_path="freemaster/src/support/mcuxsdk_usb" type="c_include">
+        <files mask="freemaster_usb.h"/>
+        <files mask="freemaster_usb_device_descriptor.h"/>
+        <files mask="usb_device_config.h"/>
+      </source>
+      <source path="middleware/freemaster/src/support/mcuxsdk_usb" target_path="freemaster/src/support/mcuxsdk_usb" type="doc">
+        <files mask="readme.txt"/>
+      </source>
     </component>
-    <component id="middleware.fmstr.platform_gen32le.MKE15Z7" name="platform_gen32le" brief="FreeMASTER gen32le platform support" version="1.0.0" devices="MKE15Z256xxx7" user_visible="false" type="other">
+    <component id="middleware.fmstr.platform_gen32le.MKE15Z7" name="FreeMASTER gen32le platform files" brief="FreeMASTER gen32le platform source code files" version="1.0.0" full_name="FreeMASTER gen32le platform files" devices="MKE15Z256xxx7" user_visible="false" type="other">
       <source path="middleware/freemaster/src/platforms/gen32le" target_path="freemaster/platforms" type="c_include">
         <files mask="freemaster_gen32le.h"/>
       </source>
     </component>
-    <component id="middleware.fmstr.template_app.MKE15Z7" name="freemaster_template_app" brief="FreeMASTER application template" version="1.0.0" devices="MKE15Z256xxx7" user_visible="false" type="project_template">
+    <component id="middleware.fmstr.template_app.MKE15Z7" name="freemaster_template_app" brief="FreeMASTER application configuration file template. Needs to be updated manually to match MCU and board settings." version="1.0.0" full_name="FreeMASTER application template" devices="MKE15Z256xxx7" user_visible="false" type="project_template">
       <source path="middleware/freemaster/src/template" target_path="source" type="c_include">
         <files mask="freemaster_cfg.h"/>
       </source>
     </component>
-    <component id="middleware.issdk.drivers.ads.MKE15Z7" name="ads" brief="ISSDK Auto Detection Service for Kinetis Kits" version="1.7.0" devices="MKE15Z256xxx7" user_visible="false" type="other">
+    <component id="middleware.freertos-aws_iot.libraries.3rdparty.http_parser_unused.MKE15Z7" name="AWS IoT 3rd party http_parser unused" brief="AWS IoT 3rd party http_parser unused files" version="202002.00.0" full_name="AWS IoT 3rd party http_parser unused" devices="MKE15Z256xxx7" category="Operating System/FreeRTOS kernel" user_visible="false" type="other">
+      <source path="rtos/freertos/libraries/3rdparty/http_parser" target_path="freertos/libraries/3rdparty/http_parser" type="other">
+        <files mask=".gitignore"/>
+        <files mask=".mailmap"/>
+        <files mask=".travis.yml"/>
+        <files mask="AUTHORS"/>
+        <files mask="LICENSE-MIT"/>
+        <files mask="Makefile"/>
+        <files mask="README.md"/>
+      </source>
+      <source path="rtos/freertos/libraries/3rdparty/http_parser" target_path="freertos/libraries/3rdparty/http_parser" type="src">
+        <files mask="http_parser.c"/>
+      </source>
+      <source path="rtos/freertos/libraries/3rdparty/http_parser" target_path="freertos/libraries/3rdparty/http_parser" type="c_include">
+        <files mask="http_parser.h"/>
+      </source>
+    </component>
+    <component id="middleware.freertos-kernel.MKE15Z7" name="FreeRTOS kernel" brief="FreeRTOS kernel" version="202002.00.0" full_name="FreeRTOS kernel" devices="MKE15Z256xxx7" user_visible="true" type="OS">
+      <defines>
+        <define name="FSL_RTOS_FREE_RTOS" value=""/>
+        <define name="SDK_OS_FREE_RTOS" value=""/>
+      </defines>
+      <dependencies>
+        <all>
+          <component_dependency value="middleware.freertos-kernel.extension.MKE15Z7"/>
+          <component_dependency value="middleware.freertos-kernel.template.MKE15Z7"/>
+        </all>
+      </dependencies>
+      <source path="rtos/freertos/freertos_kernel" target_path="freertos/freertos_kernel" type="src">
+        <files mask="croutine.c"/>
+        <files mask="event_groups.c"/>
+        <files mask="list.c"/>
+        <files mask="queue.c"/>
+        <files mask="stream_buffer.c"/>
+        <files mask="tasks.c"/>
+        <files mask="timers.c"/>
+      </source>
+      <source path="rtos/freertos/freertos_kernel/include" target_path="freertos/freertos_kernel/include" type="c_include">
+        <files mask="FreeRTOS.h"/>
+        <files mask="StackMacros.h"/>
+        <files mask="atomic.h"/>
+        <files mask="croutine.h"/>
+        <files mask="deprecated_definitions.h"/>
+        <files mask="event_groups.h"/>
+        <files mask="list.h"/>
+        <files mask="message_buffer.h"/>
+        <files mask="mpu_prototypes.h"/>
+        <files mask="mpu_wrappers.h"/>
+        <files mask="portable.h"/>
+        <files mask="projdefs.h"/>
+        <files mask="queue.h"/>
+        <files mask="semphr.h"/>
+        <files mask="stack_macros.h"/>
+        <files mask="stream_buffer.h"/>
+        <files mask="task.h"/>
+        <files mask="timers.h"/>
+      </source>
+      <source toolchain="mcuxpresso" compiler="compiler_gcc" path="rtos/freertos/freertos_kernel/portable/GCC/ARM_CM0" target_path="freertos/freertos_kernel/portable/GCC/ARM_CM0" type="src" device_cores="core0_MKE15Z256xxx7">
+        <files mask="port.c"/>
+      </source>
+      <source toolchain="mcuxpresso" compiler="compiler_gcc" path="rtos/freertos/freertos_kernel/portable/GCC/ARM_CM0" target_path="freertos/freertos_kernel/portable/GCC/ARM_CM0" type="c_include" device_cores="core0_MKE15Z256xxx7">
+        <files mask="portmacro.h"/>
+      </source>
+      <source path="rtos/freertos/freertos_kernel/portable/MemMang" target_path="freertos/freertos_kernel/portable/MemMang" type="other">
+        <files mask="ReadMe.url"/>
+      </source>
+      <source path="rtos/freertos/freertos_kernel/portable" target_path="freertos/freertos_kernel/portable" type="doc">
+        <files mask="readme.txt"/>
+      </source>
+    </component>
+    <component id="middleware.freertos-kernel.armv8m.MKE15Z7" name="FreeRTOS port ARMv8M" brief="FreeRTOS port ARMv8M" version="202002.00.0" full_name="FreeRTOS port ARMv8M" devices="MKE15Z256xxx7" category="Operating System/FreeRTOS kernel" user_visible="false" type="other">
+      <dependencies>
+        <component_dependency value="middleware.freertos-kernel.MKE15Z7"/>
+      </dependencies>
+      <source path="rtos/freertos/freertos_kernel/portable/ARMv8M" target_path="freertos/freertos_kernel/portable/ARMv8M" type="doc">
+        <files mask="ReadMe.txt"/>
+      </source>
+      <source path="rtos/freertos/freertos_kernel/portable/ARMv8M" target_path="freertos/freertos_kernel/portable/ARMv8M" type="script">
+        <files mask="copy_files.py"/>
+      </source>
+      <source path="rtos/freertos/freertos_kernel/portable/ARMv8M/non_secure" target_path="freertos/freertos_kernel/portable/ARMv8M/non_secure" type="doc">
+        <files mask="ReadMe.txt"/>
+      </source>
+      <source path="rtos/freertos/freertos_kernel/portable/ARMv8M/non_secure" target_path="freertos/freertos_kernel/portable/ARMv8M/non_secure" type="src">
+        <files mask="port.c"/>
+      </source>
+      <source path="rtos/freertos/freertos_kernel/portable/ARMv8M/non_secure/portable/GCC/ARM_CM33" target_path="freertos/freertos_kernel/portable/ARMv8M/non_secure/portable/GCC/ARM_CM33" type="src">
+        <files mask="portasm.c"/>
+      </source>
+      <source path="rtos/freertos/freertos_kernel/portable/ARMv8M/non_secure/portable/GCC/ARM_CM33" target_path="freertos/freertos_kernel/portable/ARMv8M/non_secure/portable/GCC/ARM_CM33" type="c_include">
+        <files mask="portmacro.h"/>
+      </source>
+      <source path="rtos/freertos/freertos_kernel/portable/ARMv8M/non_secure/portable/GCC/ARM_CM33_NTZ" target_path="freertos/freertos_kernel/portable/ARMv8M/non_secure/portable/GCC/ARM_CM33_NTZ" type="src">
+        <files mask="portasm.c"/>
+      </source>
+      <source path="rtos/freertos/freertos_kernel/portable/ARMv8M/non_secure/portable/GCC/ARM_CM33_NTZ" target_path="freertos/freertos_kernel/portable/ARMv8M/non_secure/portable/GCC/ARM_CM33_NTZ" type="c_include">
+        <files mask="portmacro.h"/>
+      </source>
+      <source path="rtos/freertos/freertos_kernel/portable/ARMv8M/non_secure/portable/IAR/ARM_CM33" target_path="freertos/freertos_kernel/portable/ARMv8M/non_secure/portable/IAR/ARM_CM33" type="asm_include">
+        <files mask="portasm.s"/>
+      </source>
+      <source path="rtos/freertos/freertos_kernel/portable/ARMv8M/non_secure/portable/IAR/ARM_CM33" target_path="freertos/freertos_kernel/portable/ARMv8M/non_secure/portable/IAR/ARM_CM33" type="c_include">
+        <files mask="portmacro.h"/>
+      </source>
+      <source path="rtos/freertos/freertos_kernel/portable/ARMv8M/non_secure/portable/IAR/ARM_CM33_NTZ" target_path="freertos/freertos_kernel/portable/ARMv8M/non_secure/portable/IAR/ARM_CM33_NTZ" type="asm_include">
+        <files mask="portasm.s"/>
+      </source>
+      <source path="rtos/freertos/freertos_kernel/portable/ARMv8M/non_secure/portable/IAR/ARM_CM33_NTZ" target_path="freertos/freertos_kernel/portable/ARMv8M/non_secure/portable/IAR/ARM_CM33_NTZ" type="c_include">
+        <files mask="portmacro.h"/>
+      </source>
+      <source path="rtos/freertos/freertos_kernel/portable/ARMv8M/non_secure" target_path="freertos/freertos_kernel/portable/ARMv8M/non_secure" type="c_include">
+        <files mask="portasm.h"/>
+      </source>
+      <source path="rtos/freertos/freertos_kernel/portable/ARMv8M/secure" target_path="freertos/freertos_kernel/portable/ARMv8M/secure" type="doc">
+        <files mask="ReadMe.txt"/>
+      </source>
+      <source path="rtos/freertos/freertos_kernel/portable/ARMv8M/secure/context/portable/GCC/ARM_CM33" target_path="freertos/freertos_kernel/portable/ARMv8M/secure/context/portable/GCC/ARM_CM33" type="src">
+        <files mask="secure_context_port.c"/>
+      </source>
+      <source path="rtos/freertos/freertos_kernel/portable/ARMv8M/secure/context/portable/IAR/ARM_CM33" target_path="freertos/freertos_kernel/portable/ARMv8M/secure/context/portable/IAR/ARM_CM33" type="src">
+        <files mask="secure_context_port.c"/>
+      </source>
+      <source path="rtos/freertos/freertos_kernel/portable/ARMv8M/secure/context/portable/IAR/ARM_CM33" target_path="freertos/freertos_kernel/portable/ARMv8M/secure/context/portable/IAR/ARM_CM33" type="asm_include">
+        <files mask="secure_context_port_asm.s"/>
+      </source>
+      <source path="rtos/freertos/freertos_kernel/portable/ARMv8M/secure/context" target_path="freertos/freertos_kernel/portable/ARMv8M/secure/context" type="src">
+        <files mask="secure_context.c"/>
+      </source>
+      <source path="rtos/freertos/freertos_kernel/portable/ARMv8M/secure/context" target_path="freertos/freertos_kernel/portable/ARMv8M/secure/context" type="c_include">
+        <files mask="secure_context.h"/>
+      </source>
+      <source path="rtos/freertos/freertos_kernel/portable/ARMv8M/secure/heap" target_path="freertos/freertos_kernel/portable/ARMv8M/secure/heap" type="src">
+        <files mask="secure_heap.c"/>
+      </source>
+      <source path="rtos/freertos/freertos_kernel/portable/ARMv8M/secure/heap" target_path="freertos/freertos_kernel/portable/ARMv8M/secure/heap" type="c_include">
+        <files mask="secure_heap.h"/>
+      </source>
+      <source path="rtos/freertos/freertos_kernel/portable/ARMv8M/secure/init" target_path="freertos/freertos_kernel/portable/ARMv8M/secure/init" type="src">
+        <files mask="secure_init.c"/>
+      </source>
+      <source path="rtos/freertos/freertos_kernel/portable/ARMv8M/secure/init" target_path="freertos/freertos_kernel/portable/ARMv8M/secure/init" type="c_include">
+        <files mask="secure_init.h"/>
+      </source>
+      <source path="rtos/freertos/freertos_kernel/portable/ARMv8M/secure/macros" target_path="freertos/freertos_kernel/portable/ARMv8M/secure/macros" type="c_include">
+        <files mask="secure_port_macros.h"/>
+      </source>
+    </component>
+    <component id="middleware.freertos-kernel.doc.MKE15Z7" name="FreeRTOS doc" brief="FreeRTOS doc" version="202002.00.0" full_name="FreeRTOS doc" devices="MKE15Z256xxx7" category="Operating System/FreeRTOS kernel" user_visible="false" type="other">
+      <dependencies>
+        <component_dependency value="middleware.freertos-kernel.MKE15Z7"/>
+      </dependencies>
+      <source path="rtos/freertos/doc" target_path="freertos/doc" type="doc">
+        <files mask="AFQ Developer Guide - Board Qualification Errata.pdf"/>
+        <files mask="Amazon FreeRTOS Qualification Developer Guide.pdf"/>
+        <files mask="mainpage.txt"/>
+      </source>
+      <source path="rtos/freertos/doc" target_path="freertos/doc" type="other">
+        <files mask="README.md"/>
+        <files mask="guidance.md"/>
+      </source>
+      <source path="rtos/freertos/doc/config" target_path="freertos/doc/config" type="other">
+        <files mask="ble"/>
+        <files mask="common"/>
+        <files mask="https"/>
+        <files mask="main"/>
+        <files mask="ota"/>
+        <files mask="platform"/>
+        <files mask="posix"/>
+        <files mask="secure_sockets"/>
+        <files mask="wifi"/>
+      </source>
+      <source path="rtos/freertos/doc/config/html" target_path="freertos/doc/config/html" type="doc">
+        <files mask="footer.html"/>
+        <files mask="header.html"/>
+        <files mask="style.css"/>
+      </source>
+      <source path="rtos/freertos/doc/config" target_path="freertos/doc/config" type="xml">
+        <files mask="layout_library.xml"/>
+        <files mask="layout_main.xml"/>
+      </source>
+      <source path="rtos/freertos/doc/extra_files/https" target_path="freertos/doc/extra_files/https" type="doc">
+        <files mask="gettysburg.txt"/>
+      </source>
+      <source path="rtos/freertos/doc/freertos_port_qual" target_path="freertos/doc/freertos_port_qual" type="doc">
+        <files mask="FreeRTOS_Porting_Guide.pdf"/>
+        <files mask="FreeRTOS_Qualification_Guide.pdf"/>
+      </source>
+      <source path="rtos/freertos/doc" target_path="freertos/doc" type="script">
+        <files mask="generate_doc.sh"/>
+      </source>
+      <source path="rtos/freertos/doc/guide" target_path="freertos/doc/guide" type="doc">
+        <files mask="building.txt"/>
+        <files mask="developer.txt"/>
+        <files mask="style.txt"/>
+      </source>
+      <source path="rtos/freertos/doc/lib" target_path="freertos/doc/lib" type="doc">
+        <files mask="ble.txt"/>
+        <files mask="https.txt"/>
+        <files mask="platform.txt"/>
+        <files mask="posix.txt"/>
+        <files mask="secure_sockets.txt"/>
+        <files mask="wifi.txt"/>
+      </source>
+      <source path="rtos/freertos/doc/plantuml" target_path="freertos/doc/plantuml" type="other">
+        <files mask="RecyclableJobStatus.pu"/>
+        <files mask="StaticJobStatus.pu"/>
+        <files mask="https_client_async_callback_order.pu"/>
+        <files mask="taskpool_design_typicaloperation.pu"/>
+      </source>
+      <source path="rtos/freertos/doc/plantuml" target_path="freertos/doc/plantuml" type="xml">
+        <files mask="https_client_async_workflow.xml"/>
+        <files mask="https_client_sync_workflow.xml"/>
+      </source>
+      <source path="rtos/freertos/doc/plantuml/images" target_path="freertos/doc/plantuml/images" type="image">
+        <files mask="BLE-architecture.png"/>
+        <files mask="RecyclableJobStatus.png"/>
+        <files mask="StaticJobStatus.png"/>
+        <files mask="blediagram.png"/>
+        <files mask="https_client_async_callback_order.png"/>
+        <files mask="https_client_async_workflow.png"/>
+        <files mask="https_client_sync_workflow.png"/>
+        <files mask="mqtt_demo.png"/>
+        <files mask="mqtt_design_typicaloperation.png"/>
+        <files mask="shadow_demo.png"/>
+        <files mask="taskpool_design_typicaloperation.png"/>
+      </source>
+      <source path="rtos/freertos/doc/user_guide" target_path="freertos/doc/user_guide" type="doc">
+        <files mask="global_config.txt"/>
+      </source>
+    </component>
+    <component id="middleware.freertos-kernel.extension.MKE15Z7" name="FreeRTOS NXP extension" brief="FreeRTOS NXP extension" version="202002.00.0" full_name="FreeRTOS NXP extension" devices="MKE15Z256xxx7" category="Operating System/FreeRTOS kernel extensions" user_visible="false" type="other">
+      <source path="rtos/freertos/freertos_kernel/include" target_path="freertos/freertos_kernel/include" type="c_include">
+        <files mask="freertos_tasks_c_additions.h"/>
+      </source>
+    </component>
+    <component id="middleware.freertos-kernel.heap_1.MKE15Z7" name="FreeRTOS heap 1" brief="FreeRTOS heap 1" version="202002.00.0" full_name="FreeRTOS heap 1" devices="MKE15Z256xxx7" category="Operating System/FreeRTOS kernel" user_visible="false" type="other">
+      <dependencies>
+        <component_dependency value="middleware.freertos-kernel.MKE15Z7"/>
+      </dependencies>
+      <source path="rtos/freertos/freertos_kernel/portable/MemMang" target_path="freertos/freertos_kernel/portable/MemMang" type="src">
+        <files mask="heap_1.c"/>
+      </source>
+    </component>
+    <component id="middleware.freertos-kernel.heap_2.MKE15Z7" name="FreeRTOS heap 2" brief="FreeRTOS heap 2" version="202002.00.0" full_name="FreeRTOS heap 2" devices="MKE15Z256xxx7" category="Operating System/FreeRTOS kernel" user_visible="false" type="other">
+      <dependencies>
+        <component_dependency value="middleware.freertos-kernel.MKE15Z7"/>
+      </dependencies>
+      <source path="rtos/freertos/freertos_kernel/portable/MemMang" target_path="freertos/freertos_kernel/portable/MemMang" type="src">
+        <files mask="heap_2.c"/>
+      </source>
+    </component>
+    <component id="middleware.freertos-kernel.heap_3.MKE15Z7" name="FreeRTOS heap 3" brief="FreeRTOS heap 3" version="202002.00.0" full_name="FreeRTOS heap_3" devices="MKE15Z256xxx7" category="Operating System/FreeRTOS kernel" user_visible="false" type="other">
+      <dependencies>
+        <component_dependency value="middleware.freertos-kernel.MKE15Z7"/>
+      </dependencies>
+      <source path="rtos/freertos/freertos_kernel/portable/MemMang" target_path="freertos/freertos_kernel/portable/MemMang" type="src">
+        <files mask="heap_3.c"/>
+      </source>
+    </component>
+    <component id="middleware.freertos-kernel.heap_4.MKE15Z7" name="FreeRTOS heap 4" brief="FreeRTOS heap 4" version="202002.00.0" full_name="FreeRTOS heap 4" devices="MKE15Z256xxx7" category="Operating System/FreeRTOS kernel" user_visible="false" type="other">
+      <dependencies>
+        <component_dependency value="middleware.freertos-kernel.MKE15Z7"/>
+      </dependencies>
+      <source path="rtos/freertos/freertos_kernel/portable/MemMang" target_path="freertos/freertos_kernel/portable/MemMang" type="src">
+        <files mask="heap_4.c"/>
+      </source>
+    </component>
+    <component id="middleware.freertos-kernel.heap_5.MKE15Z7" name="FreeRTOS heap 5" brief="FreeRTOS heap 5" version="202002.00.0" full_name="FreeRTOS heap 5" devices="MKE15Z256xxx7" category="Operating System/FreeRTOS kernel" user_visible="false" type="other">
+      <dependencies>
+        <component_dependency value="middleware.freertos-kernel.MKE15Z7"/>
+      </dependencies>
+      <source path="rtos/freertos/freertos_kernel/portable/MemMang" target_path="freertos/freertos_kernel/portable/MemMang" type="src">
+        <files mask="heap_5.c"/>
+      </source>
+    </component>
+    <component id="middleware.freertos-kernel.heap_newlib.MKE15Z7" name="FreeRTOS heap newlib" brief="FreeRTOS heap newlib" version="202002.00.0" full_name="FreeRTOS heap newlib" devices="MKE15Z256xxx7" category="Operating System/FreeRTOS kernel extensions" user_visible="false" type="other">
+      <dependencies>
+        <component_dependency value="middleware.freertos-kernel.MKE15Z7"/>
+      </dependencies>
+      <source path="rtos/freertos/freertos_kernel/portable/MemMang" target_path="freertos/freertos_kernel/portable/MemMang" type="src">
+        <files mask="heap_useNewlib.c"/>
+      </source>
+    </component>
+    <component id="middleware.freertos-kernel.mpu_wrappers.MKE15Z7" name="FreeRTOS MPU wrappers" brief="FreeRTOS MPU wrappers" version="202002.00.0" full_name="FreeRTOS MPU wrappers" devices="MKE15Z256xxx7" category="Operating System/FreeRTOS kernel" user_visible="false" type="other">
+      <dependencies>
+        <component_dependency value="middleware.freertos-kernel.MKE15Z7"/>
+      </dependencies>
+      <source path="rtos/freertos/freertos_kernel/portable/Common" target_path="freertos/freertos_kernel/portable/Common" type="src">
+        <files mask="mpu_wrappers.c"/>
+      </source>
+    </component>
+    <component id="middleware.freertos-kernel.root_doc.MKE15Z7" name="Root FreeRTOS documents." brief="FreeRTOS root documents" version="202002.00.0" full_name="FreeRTOS root documents" devices="MKE15Z256xxx7" category="Operating System/FreeRTOS kernel" user_visible="false" type="other">
+      <dependencies>
+        <component_dependency value="middleware.freertos-kernel.MKE15Z7"/>
+      </dependencies>
+      <source path="rtos/freertos" target_path="freertos" type="other">
+        <files mask="CHANGELOG.md"/>
+      </source>
+      <source path="rtos/freertos" target_path="freertos" type="doc">
+        <files mask="ChangeLogKSDK.txt"/>
+        <files mask="directories.txt"/>
+      </source>
+    </component>
+    <component id="middleware.freertos-kernel.template.MKE15Z7" name="FreeRTOS configuration template" brief="Template configuration file to be edited by user. Provides also memory allocator (heap_x), change variant if needed." version="202002.00.0" full_name="FreeRTOS configuration template" devices="MKE15Z256xxx7" category="Operating System/FreeRTOS kernel" user_visible="false" type="project_template">
+      <source exclude="true" path="rtos/freertos/freertos_kernel/portable/MemMang" target_path="freertos/freertos_kernel/portable/MemMang" type="src">
+        <files mask="heap_1.c"/>
+        <files mask="heap_2.c"/>
+        <files mask="heap_3.c"/>
+        <files mask="heap_5.c"/>
+        <files mask="heap_useNewlib.c"/>
+      </source>
+      <source path="rtos/freertos/freertos_kernel/portable/MemMang" target_path="freertos/freertos_kernel/portable/MemMang" type="src">
+        <files mask="heap_4.c"/>
+      </source>
+      <source path="rtos/freertos/template/ARM_CM0" target_path="source" type="c_include" device_cores="core0_MKE15Z256xxx7">
+        <files mask="FreeRTOSConfig.h"/>
+      </source>
+    </component>
+    <component id="middleware.freertos-kernel.unused.MKE15Z7" name="FreeRTOS unused" brief="FreeRTOS unused" version="202002.00.0" full_name="FreeRTOS unused" devices="MKE15Z256xxx7" category="Operating System/FreeRTOS kernel" user_visible="false" type="other">
+      <source path="rtos/freertos" target_path="freertos" type="other">
+        <files mask="LICENSE"/>
+        <files mask="README.md"/>
+      </source>
+      <source path="rtos/freertos" target_path="freertos" type="script">
+        <files mask="PreLoad.cmake"/>
+      </source>
+      <source path="rtos/freertos/freertos_kernel" target_path="freertos/freertos_kernel" type="doc">
+        <files mask="History.txt"/>
+        <files mask="readme.txt"/>
+      </source>
+      <source path="rtos/freertos/freertos_kernel/License" target_path="freertos/freertos_kernel/License" type="doc">
+        <files mask="license.txt"/>
+      </source>
+      <source path="rtos/freertos/freertos_kernel" target_path="freertos/freertos_kernel" type="other">
+        <files mask="Quick_Start_Guide.url"/>
+      </source>
+      <source path="rtos/freertos/freertos_kernel/include" target_path="freertos/freertos_kernel/include" type="doc">
+        <files mask="stdint.readme"/>
+      </source>
+      <source path="rtos/freertos/freertos_kernel/portable/ARMClang" target_path="freertos/freertos_kernel/portable/ARMClang" type="doc">
+        <files mask="Use-the-GCC-ports.txt"/>
+      </source>
+    </component>
+    <component id="middleware.issdk.drivers.ads.MKE15Z7" name="ads" brief="ISSDK Auto Detection Service for Kinetis Kits" version="1.7.0" full_name="Middleware issdk drivers ads" devices="MKE15Z256xxx7" user_visible="false" type="middleware">
       <source path="middleware/issdk/drivers/ads" target_path="ads" type="c_include">
         <files mask="auto_detection_shield.h"/>
       </source>
@@ -3668,7 +3601,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="auto_detection_service.h"/>
       </source>
     </component>
-    <component id="cmsis.drivers.include.MKE15Z7" name="issdk_cmsis_drivers" brief="CMSIS Core header files" version="1.7.0" devices="MKE15Z256xxx7" user_visible="true" type="other">
+    <component id="cmsis.drivers.include.MKE15Z7" name="issdk_cmsis_drivers" brief="CMSIS Core header files" version="1.7.0" full_name="Middleware issdk drivers cmsis_drivers" devices="MKE15Z256xxx7" user_visible="true" type="middleware">
       <source path="CMSIS/Driver/Include" target_path="cmsis_driver" type="c_include">
         <files mask="Driver_Common.h"/>
         <files mask="Driver_I2C.h"/>
@@ -3676,7 +3609,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="Driver_USART.h"/>
       </source>
     </component>
-    <component id="middleware.issdk.drivers.gpio_kinetis.MKE15Z7" name="gpio_kinetis" brief="ISSDK GPIO Driver for Kinetis" version="1.7.0" devices="MKE15Z256xxx7" user_visible="true" type="other">
+    <component id="middleware.issdk.drivers.gpio_kinetis.MKE15Z7" name="gpio_kinetis" brief="ISSDK GPIO Driver for Kinetis" version="1.7.0" full_name="Middleware issdk drivers gpio_kinetis" devices="MKE15Z256xxx7" user_visible="true" type="middleware">
       <source path="middleware/issdk/drivers/gpio" target_path="gpio_driver" type="c_include">
         <files mask="Driver_GPIO.h"/>
       </source>
@@ -3688,7 +3621,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="gpio_driver.h"/>
       </source>
     </component>
-    <component id="middleware.issdk.drivers.gpio_kinetis_ke15z.MKE15Z7" name="gpio_kinetis_ke15z" brief="ISSDK GPIO Driver for Kinetis FRDM-KE15Z" version="1.7.0" devices="MKE15Z256xxx7" user_visible="true" type="other">
+    <component id="middleware.issdk.drivers.gpio_kinetis_ke15z.MKE15Z7" name="gpio_kinetis_ke15z" brief="ISSDK GPIO Driver for Kinetis FRDM-KE15Z" version="1.7.0" full_name="Middleware issdk drivers gpio_kinetis_ke15z" devices="MKE15Z256xxx7" user_visible="true" type="middleware">
       <source path="middleware/issdk/drivers/gpio" target_path="gpio_driver" type="c_include">
         <files mask="Driver_GPIO.h"/>
       </source>
@@ -3700,7 +3633,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="gpio_driver.h"/>
       </source>
     </component>
-    <component id="middleware.issdk.drivers.host.MKE15Z7" name="issdk_host" brief="ISSDK Host Interface Service" version="1.7.0" devices="MKE15Z256xxx7" user_visible="true" type="other">
+    <component id="middleware.issdk.drivers.host.MKE15Z7" name="issdk_host" brief="ISSDK Host Interface Service" version="1.7.0" full_name="Middleware issdk drivers host" devices="MKE15Z256xxx7" user_visible="true" type="middleware">
       <source path="middleware/issdk/drivers/host" target_path="host" type="src">
         <files mask="comm_if_uart.c"/>
         <files mask="data_format_hdlc.c"/>
@@ -3721,7 +3654,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="host_io_uart.h"/>
       </source>
     </component>
-    <component id="middleware.issdk.drivers.systick_utils.MKE15Z7" name="systick_utils" brief="ISSDK Utils" version="1.7.0" devices="MKE15Z256xxx7" user_visible="true" type="other">
+    <component id="middleware.issdk.drivers.systick_utils.MKE15Z7" name="systick_utils" brief="ISSDK Utils" version="1.7.0" full_name="Middleware issdk drivers systick_utils" devices="MKE15Z256xxx7" user_visible="true" type="middleware">
       <source path="middleware/issdk/drivers/systick" target_path="utilities" type="src">
         <files mask="systick_utils.c"/>
       </source>
@@ -3729,7 +3662,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="systick_utils.h"/>
       </source>
     </component>
-    <component id="middleware.issdk.sensor.allregdefs.MKE15Z7" name="issdk_allregdefs" brief="ISSDK Sensors RegDefs" version="1.7.0" devices="MKE15Z256xxx7" user_visible="true" type="other">
+    <component id="middleware.issdk.sensor.allregdefs.MKE15Z7" name="issdk_allregdefs" brief="ISSDK Sensors RegDefs" version="1.7.0" full_name="Middleware issdk sensor allregdefs" devices="MKE15Z256xxx7" user_visible="true" type="middleware">
       <dependencies>
         <all>
           <component_dependency value="platform.CMSIS_Driver_Include.I2C_CMSISInclude.MKE15Z7"/>
@@ -3752,7 +3685,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="mpl3115.h"/>
       </source>
     </component>
-    <component id="middleware.issdk.sensor.boardkit.MKE15Z7" name="issdk_boardkit" brief="ISSDK Board-Kit files" version="1.7.0" devices="MKE15Z256xxx7" user_visible="false" type="other">
+    <component id="middleware.issdk.sensor.boardkit.MKE15Z7" name="issdk_boardkit" brief="ISSDK Board-Kit files" version="1.7.0" full_name="Middleware issdk sensor boardkit" devices="MKE15Z256xxx7" user_visible="false" type="other">
       <source path="middleware/issdk/boardkit/evk-mimxrt1050" target_path="issdk_boardkit" type="c_include">
         <files mask="RTE_Device.h"/>
         <files mask="board.h"/>
@@ -3960,6 +3893,19 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="frdm_stbc_agmp03_shield.h"/>
         <files mask="issdk_hal.h"/>
       </source>
+      <source path="middleware/issdk/boardkit/lpcxpresso55s16" target_path="issdk_boardkit" type="c_include">
+        <files mask="RTE_Device.h"/>
+        <files mask="lpc55s16.h"/>
+        <files mask="pin_mux.h"/>
+      </source>
+      <source path="middleware/issdk/boardkit/lpcxpresso55s16/frdm-stbc-agm01" target_path="issdk_boardkit" type="c_include">
+        <files mask="frdm_stbc_agm01_shield.h"/>
+        <files mask="issdk_hal.h"/>
+      </source>
+      <source path="middleware/issdk/boardkit/lpcxpresso55s16" target_path="issdk_boardkit" type="src">
+        <files mask="lpc55s16.c"/>
+        <files mask="pin_mux.c"/>
+      </source>
       <source path="middleware/issdk/boardkit/lpcxpresso55s69" target_path="issdk_boardkit" type="c_include">
         <files mask="RTE_Device.h"/>
         <files mask="board.h"/>
@@ -3978,7 +3924,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="issdk_hal.h"/>
       </source>
     </component>
-    <component id="middleware.issdk.sensor.driverexamples.MKE15Z7" name="issdk_driverexamples" brief="ISSDK Sensor Driver Examples files" version="1.7.0" devices="MKE15Z256xxx7" user_visible="false" type="other">
+    <component id="middleware.issdk.sensor.driverexamples.MKE15Z7" name="issdk_driverexamples" brief="ISSDK Sensor Driver Examples files" version="1.7.0" full_name="Middleware issdk sensor driverexamples" devices="MKE15Z256xxx7" user_visible="false" type="other">
       <source path="middleware/issdk/driverexamples/demos" target_path="issdk_driverexamples" type="src">
         <files mask="data_logger_demo.c"/>
         <files mask="demo_11_axis_mult2b.c"/>
@@ -4084,7 +4030,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="mpl3115_oneshot.c"/>
       </source>
     </component>
-    <component id="middleware.issdk.sensor.fxas21002.MKE15Z7" name="issdk_fxas21002" brief="ISSDK FXAS21002 Sensor Driver Files" version="1.7.0" devices="MKE15Z256xxx7" user_visible="true" type="other">
+    <component id="middleware.issdk.sensor.fxas21002.MKE15Z7" name="issdk_fxas21002" brief="ISSDK FXAS21002 Sensor Driver Files" version="1.7.0" full_name="Middleware issdk sensor fxas21002" devices="MKE15Z256xxx7" user_visible="true" type="middleware">
       <dependencies>
         <all>
           <component_dependency value="platform.CMSIS_Driver_Include.I2C_CMSISInclude.MKE15Z7"/>
@@ -4099,7 +4045,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="fxas21002_drv.c"/>
       </source>
     </component>
-    <component id="middleware.issdk.sensor.fxlc95000.MKE15Z7" name="issdk_fxlc95000" brief="ISSDK FXLC95000 Sensor Driver Files" version="1.7.0" devices="MKE15Z256xxx7" user_visible="true" type="other">
+    <component id="middleware.issdk.sensor.fxlc95000.MKE15Z7" name="issdk_fxlc95000" brief="ISSDK FXLC95000 Sensor Driver Files" version="1.7.0" full_name="Middleware issdk sensor fxlc95000" devices="MKE15Z256xxx7" user_visible="true" type="middleware">
       <dependencies>
         <all>
           <component_dependency value="platform.CMSIS_Driver_Include.I2C_CMSISInclude.MKE15Z7"/>
@@ -4114,7 +4060,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="fxlc95000_drv.c"/>
       </source>
     </component>
-    <component id="middleware.issdk.sensor.fxls8471q.MKE15Z7" name="issdk_fxls8471q" brief="ISSDK FXLS8471 Sensor Driver Files" version="1.7.0" devices="MKE15Z256xxx7" user_visible="true" type="other">
+    <component id="middleware.issdk.sensor.fxls8471q.MKE15Z7" name="issdk_fxls8471q" brief="ISSDK FXLS8471 Sensor Driver Files" version="1.7.0" full_name="Middleware issdk sensor fxls8471q" devices="MKE15Z256xxx7" user_visible="true" type="middleware">
       <dependencies>
         <all>
           <component_dependency value="platform.CMSIS_Driver_Include.I2C_CMSISInclude.MKE15Z7"/>
@@ -4129,7 +4075,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="fxls8471q_drv.c"/>
       </source>
     </component>
-    <component id="middleware.issdk.sensor.fxls8962.MKE15Z7" name="issdk_fxls8962" brief="ISSDK FXLS8962 Sensor Driver Files" version="1.7.0" devices="MKE15Z256xxx7" user_visible="true" type="other">
+    <component id="middleware.issdk.sensor.fxls8962.MKE15Z7" name="issdk_fxls8962" brief="ISSDK FXLS8962 Sensor Driver Files" version="1.7.0" full_name="Middleware issdk sensor fxls8962" devices="MKE15Z256xxx7" user_visible="true" type="middleware">
       <dependencies>
         <all>
           <component_dependency value="platform.CMSIS_Driver_Include.I2C_CMSISInclude.MKE15Z7"/>
@@ -4144,7 +4090,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="fxls8962_drv.c"/>
       </source>
     </component>
-    <component id="middleware.issdk.sensor.fxos8700.MKE15Z7" name="issdk_fxos8700" brief="ISSDK FXOS8700 Sensor Driver Files" version="1.7.0" devices="MKE15Z256xxx7" user_visible="true" type="other">
+    <component id="middleware.issdk.sensor.fxos8700.MKE15Z7" name="issdk_fxos8700" brief="ISSDK FXOS8700 Sensor Driver Files" version="1.7.0" full_name="Middleware issdk sensor fxos8700" devices="MKE15Z256xxx7" user_visible="true" type="middleware">
       <dependencies>
         <all>
           <component_dependency value="platform.CMSIS_Driver_Include.I2C_CMSISInclude.MKE15Z7"/>
@@ -4159,7 +4105,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="fxos8700_drv.c"/>
       </source>
     </component>
-    <component id="middleware.issdk.sensor.fxpq3115.MKE15Z7" name="issdk_fxpq3115" brief="ISSDK FXPQ3115 Sensor Driver Files" version="1.7.0" devices="MKE15Z256xxx7" user_visible="true" type="other">
+    <component id="middleware.issdk.sensor.fxpq3115.MKE15Z7" name="issdk_fxpq3115" brief="ISSDK FXPQ3115 Sensor Driver Files" version="1.7.0" full_name="Middleware issdk sensor fxpq3115" devices="MKE15Z256xxx7" user_visible="true" type="middleware">
       <dependencies>
         <all>
           <component_dependency value="platform.CMSIS_Driver_Include.I2C_CMSISInclude.MKE15Z7"/>
@@ -4174,7 +4120,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="fxpq3115_drv.c"/>
       </source>
     </component>
-    <component id="middleware.issdk.sensor.interface.common.MKE15Z7" name="issdk_interfaces" brief="ISSDK Sensor Interface Common" version="1.7.0" devices="MKE15Z256xxx7" user_visible="true" type="other">
+    <component id="middleware.issdk.sensor.interface.common.MKE15Z7" name="issdk_interfaces" brief="ISSDK Sensor Interface Common" version="1.7.0" full_name="Middleware issdk sensor interface common" devices="MKE15Z256xxx7" user_visible="true" type="middleware">
       <dependencies>
         <all>
           <component_dependency value="platform.CMSIS_Driver_Include.I2C_CMSISInclude.MKE15Z7"/>
@@ -4195,7 +4141,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="sensor_io_spi.h"/>
       </source>
     </component>
-    <component id="middleware.issdk.sensor.isl29023.MKE15Z7" name="issdk_isl29023" brief="ISSDK ISL29023 Sensor Driver Files" version="1.7.0" devices="MKE15Z256xxx7" user_visible="false" type="other">
+    <component id="middleware.issdk.sensor.isl29023.MKE15Z7" name="issdk_isl29023" brief="ISSDK ISL29023 Sensor Driver Files" version="1.7.0" full_name="Middleware issdk sensor isl29023" devices="MKE15Z256xxx7" user_visible="false" type="middleware">
       <dependencies>
         <all>
           <component_dependency value="platform.CMSIS_Driver_Include.I2C_CMSISInclude.MKE15Z7"/>
@@ -4210,7 +4156,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="isl29023_drv.c"/>
       </source>
     </component>
-    <component id="middleware.issdk.sensor.mag3110.MKE15Z7" name="issdk_mag3110" brief="ISSDK MAG3110 Sensor Driver Files" version="1.7.0" devices="MKE15Z256xxx7" user_visible="true" type="other">
+    <component id="middleware.issdk.sensor.mag3110.MKE15Z7" name="issdk_mag3110" brief="ISSDK MAG3110 Sensor Driver Files" version="1.7.0" full_name="Middleware issdk sensor mag3110" devices="MKE15Z256xxx7" user_visible="true" type="middleware">
       <dependencies>
         <all>
           <component_dependency value="platform.CMSIS_Driver_Include.I2C_CMSISInclude.MKE15Z7"/>
@@ -4225,7 +4171,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="mag3110_drv.c"/>
       </source>
     </component>
-    <component id="middleware.issdk.sensor.mma845x.MKE15Z7" name="issdk_mma845x" brief="ISSDK MMA845x Sensor Driver Files" version="1.7.0" devices="MKE15Z256xxx7" user_visible="true" type="other">
+    <component id="middleware.issdk.sensor.mma845x.MKE15Z7" name="issdk_mma845x" brief="ISSDK MMA845x Sensor Driver Files" version="1.7.0" full_name="Middleware issdk sensor mma845x" devices="MKE15Z256xxx7" user_visible="true" type="middleware">
       <dependencies>
         <all>
           <component_dependency value="platform.CMSIS_Driver_Include.I2C_CMSISInclude.MKE15Z7"/>
@@ -4240,7 +4186,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="mma845x_drv.c"/>
       </source>
     </component>
-    <component id="middleware.issdk.sensor.mma8491q.MKE15Z7" name="issdk_mma8491q" brief="ISSDK MMA8491 Sensor Driver Files" version="1.7.0" devices="MKE15Z256xxx7" user_visible="true" type="other">
+    <component id="middleware.issdk.sensor.mma8491q.MKE15Z7" name="issdk_mma8491q" brief="ISSDK MMA8491 Sensor Driver Files" version="1.7.0" full_name="Middleware issdk sensor mma8491q" devices="MKE15Z256xxx7" user_visible="true" type="middleware">
       <dependencies>
         <all>
           <component_dependency value="platform.CMSIS_Driver_Include.I2C_CMSISInclude.MKE15Z7"/>
@@ -4255,7 +4201,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="mma8491q_drv.c"/>
       </source>
     </component>
-    <component id="middleware.issdk.sensor.mma865x.MKE15Z7" name="issdk_mma865x" brief="ISSDK MMA865x Sensor Driver Files" version="1.7.0" devices="MKE15Z256xxx7" user_visible="true" type="other">
+    <component id="middleware.issdk.sensor.mma865x.MKE15Z7" name="issdk_mma865x" brief="ISSDK MMA865x Sensor Driver Files" version="1.7.0" full_name="Middleware issdk sensor mma865x" devices="MKE15Z256xxx7" user_visible="true" type="middleware">
       <dependencies>
         <all>
           <component_dependency value="platform.CMSIS_Driver_Include.I2C_CMSISInclude.MKE15Z7"/>
@@ -4270,7 +4216,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="mma865x_drv.c"/>
       </source>
     </component>
-    <component id="middleware.issdk.sensor.mma9553.MKE15Z7" name="issdk_mma9553" brief="ISSDK MMA9553 Sensor Driver Files" version="1.7.0" devices="MKE15Z256xxx7" user_visible="true" type="other">
+    <component id="middleware.issdk.sensor.mma9553.MKE15Z7" name="issdk_mma9553" brief="ISSDK MMA9553 Sensor Driver Files" version="1.7.0" full_name="Middleware issdk sensor mma9553" devices="MKE15Z256xxx7" user_visible="true" type="middleware">
       <dependencies>
         <all>
           <component_dependency value="platform.CMSIS_Driver_Include.I2C_CMSISInclude.MKE15Z7"/>
@@ -4285,7 +4231,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="mma9553_drv.c"/>
       </source>
     </component>
-    <component id="middleware.issdk.sensor.mpl3115.MKE15Z7" name="issdk_mpl3115" brief="ISSDK MPL3115 Sensor Driver Files" version="1.7.0" devices="MKE15Z256xxx7" user_visible="true" type="other">
+    <component id="middleware.issdk.sensor.mpl3115.MKE15Z7" name="issdk_mpl3115" brief="ISSDK MPL3115 Sensor Driver Files" version="1.7.0" full_name="Middleware issdk sensor mpl3115" devices="MKE15Z256xxx7" user_visible="true" type="middleware">
       <dependencies>
         <all>
           <component_dependency value="platform.CMSIS_Driver_Include.I2C_CMSISInclude.MKE15Z7"/>
@@ -4300,7 +4246,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="mpl3115_drv.c"/>
       </source>
     </component>
-    <component id="middleware.issdk.sensor.nps300x.MKE15Z7" name="issdk_nps300x" brief="ISSDK nps300x Sensor Driver Files" version="1.7.0" devices="MKE15Z256xxx7" user_visible="false" type="other">
+    <component id="middleware.issdk.sensor.nps300x.MKE15Z7" name="issdk_nps300x" brief="ISSDK nps300x Sensor Driver Files" version="1.7.0" full_name="Middleware issdk sensor nps300x" devices="MKE15Z256xxx7" user_visible="false" type="middleware">
       <dependencies>
         <all>
           <component_dependency value="platform.CMSIS_Driver_Include.I2C_CMSISInclude.MKE15Z7"/>
@@ -4315,12 +4261,15 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="diff_p_drv.c"/>
       </source>
     </component>
-    <component id="middleware.issdk.sensor.tools.MKE15Z7" name="issdk_tools" brief="ISSDK Serial to MQTT bridge application" version="1.7.0" devices="MKE15Z256xxx7" user_visible="false" type="other">
+    <component id="middleware.issdk.sensor.tools.MKE15Z7" name="issdk_tools" brief="ISSDK Serial to MQTT bridge application" version="1.7.0" full_name="Middleware issdk sensor tools" devices="MKE15Z256xxx7" user_visible="false" type="other">
       <source path="middleware/issdk/tools/Serial_To_MQTT" target_path="issdk_senor" type="script">
         <files mask="CloudBridgeNXPDemo.py"/>
       </source>
     </component>
-    <component id="middleware.motor_control.acim.MKE15Z7" name="mc_acim" brief="Motor control ACIM files" version="1.0.0" devices="MKE15Z256xxx7" user_visible="true" type="other">
+    <component id="middleware.motor_control.acim.MKE15Z7" name="mc_acim" brief="Motor control ACIM files" version="1.0.0" full_name="Middleware motor_control-acim" devices="MKE15Z256xxx7" user_visible="true" type="other">
+      <dependencies>
+        <component_dependency value="middleware.motor_control-acim.ui_control.MKE15Z7"/>
+      </dependencies>
       <source path="middleware/motor_control/acim" target_path="source" type="src">
         <files mask="fm_tsa_acim.c"/>
       </source>
@@ -4373,7 +4322,8 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="state_machine.h"/>
       </source>
     </component>
-    <component id="middleware.motor_control.bldc.MKE15Z7" name="mc_bldc" brief="Motor control BLDC files" version="1.0.0" devices="MKE15Z256xxx7" user_visible="true" type="other">
+    <component id="middleware.motor_control-acim.ui_control.MKE15Z7" name="acim" brief="Middleware motor_control-acim ui_control" version="1.0.0" full_name="Middleware motor_control-acim ui_control" devices="MKE15Z256xxx7" user_visible="true" type="middleware"/>
+    <component id="middleware.motor_control.bldc.MKE15Z7" name="mc_bldc" brief="Motor control BLDC files" version="1.0.0" full_name="Middleware motor_control-bldc" devices="MKE15Z256xxx7" user_visible="true" type="other">
       <source path="middleware/motor_control/bldc" target_path="source" type="src">
         <files mask="fm_tsa_bldc.c"/>
       </source>
@@ -4399,7 +4349,11 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="state_machine.h"/>
       </source>
     </component>
-    <component id="middleware.motor_control.pmsm.MKE15Z7" name="mc_pmsm" brief="Motor control PMSM files" version="1.0.0" devices="MKE15Z256xxx7" user_visible="true" type="other">
+    <component id="middleware.motor_control-bldc.ui_control.MKE15Z7" name="bldc" brief="Middleware motor_control-bldc ui_control" version="1.0.0" full_name="Middleware motor_control-bldc ui_control" devices="MKE15Z256xxx7" user_visible="true" type="middleware"/>
+    <component id="middleware.motor_control.pmsm.MKE15Z7" name="mc_pmsm" brief="Motor control PMSM files" version="1.0.0" full_name="Middleware motor_control-pmsm" devices="MKE15Z256xxx7" user_visible="true" type="other">
+      <dependencies>
+        <component_dependency value="middleware.motor_control-pmsm.ui_control.MKE15Z7"/>
+      </dependencies>
       <source path="middleware/motor_control/pmsm/pmsm_float" target_path="source" type="src">
         <files mask="fm_tsa_pmsm.c"/>
       </source>
@@ -4444,7 +4398,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="state_machine.h"/>
       </source>
     </component>
-    <component id="middleware.motor_control.pmsm_frac.MKE15Z7" name="mc_pmsm" brief="Motor control PMSM files" version="1.0.0" devices="MKE15Z256xxx7" user_visible="true" type="other">
+    <component id="middleware.motor_control.pmsm_frac.MKE15Z7" name="mc_pmsm" brief="Motor control PMSM files" version="1.0.0" full_name="Middleware motor_control-pmsm frac" devices="MKE15Z256xxx7" user_visible="true" type="other">
       <source path="middleware/motor_control/pmsm/pmsm_frac" target_path="source" type="src">
         <files mask="fm_tsa_pmsm.c"/>
       </source>
@@ -4485,8 +4439,9 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="state_machine.h"/>
       </source>
     </component>
-    <component id="middleware.rtcesl.cm0p.MKE15Z7" name="rtcesl" brief="Real Time Control Embedded Software Library for CM0 core" version="1.1.0" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="middleware">
-      <source toolchain="mcuxpresso" path="middleware/rtcesl/CM0_RTCESL_4.5_MCUX/AMCLIB/Include" target_path="rtcesl/amclib" type="c_include">
+    <component id="middleware.motor_control-pmsm.ui_control.MKE15Z7" name="pmsm" brief="Middleware motor_control-pmsm ui_control" version="1.0.0" full_name="Middleware motor_control-pmsm ui_control" devices="MKE15Z256xxx7" user_visible="true" type="middleware"/>
+    <component id="middleware.rtcesl.cm0p.MKE15Z7" name="rtcesl" brief="Real Time Control Embedded Software Library for CM0 core" version="1.1.0" full_name="Middleware rtcesl cm0" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="middleware">
+      <source toolchain="mcuxpresso" path="middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/AMCLIB/Include" target_path="rtcesl/amclib" type="c_include">
         <files mask="AMCLIB_AngleTrackObsrv_F32.h"/>
         <files mask="AMCLIB_CtrlFluxWkng_A32.h"/>
         <files mask="AMCLIB_PMSMBemfObsrvABHw_A32.h"/>
@@ -4497,10 +4452,10 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="amclib.h"/>
         <files mask="amclib_types.h"/>
       </source>
-      <source toolchain="mcuxpresso" path="middleware/rtcesl/CM0_RTCESL_4.5_MCUX/AMCLIB" target_path="libs" type="lib">
+      <source toolchain="mcuxpresso" path="middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/AMCLIB" target_path="libs" type="lib">
         <files mask="libAMCLIB.a"/>
       </source>
-      <source toolchain="mcuxpresso" path="middleware/rtcesl/CM0_RTCESL_4.5_MCUX/GDFLIB/Include" target_path="rtcesl/gdflib" type="c_include">
+      <source toolchain="mcuxpresso" path="middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/GDFLIB/Include" target_path="rtcesl/gdflib" type="c_include">
         <files mask="GDFLIB_FilterExp_F32.h"/>
         <files mask="GDFLIB_FilterIIR1_F32.h"/>
         <files mask="GDFLIB_FilterIIR2_F32.h"/>
@@ -4509,10 +4464,10 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="gdflib.h"/>
         <files mask="gdflib_types.h"/>
       </source>
-      <source toolchain="mcuxpresso" path="middleware/rtcesl/CM0_RTCESL_4.5_MCUX/GDFLIB" target_path="libs" type="lib">
+      <source toolchain="mcuxpresso" path="middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/GDFLIB" target_path="libs" type="lib">
         <files mask="libGDFLIB.a"/>
       </source>
-      <source toolchain="mcuxpresso" path="middleware/rtcesl/CM0_RTCESL_4.5_MCUX/GFLIB/Include" target_path="rtcesl/gflib" type="c_include">
+      <source toolchain="mcuxpresso" path="middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/GFLIB/Include" target_path="rtcesl/gflib" type="c_include">
         <files mask="GFLIB_AtanYXHw_F32.h"/>
         <files mask="GFLIB_AtanYX_F32.h"/>
         <files mask="GFLIB_Atan_F32.h"/>
@@ -4552,10 +4507,10 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="gflib.h"/>
         <files mask="gflib_types.h"/>
       </source>
-      <source toolchain="mcuxpresso" path="middleware/rtcesl/CM0_RTCESL_4.5_MCUX/GFLIB" target_path="libs" type="lib">
+      <source toolchain="mcuxpresso" path="middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/GFLIB" target_path="libs" type="lib">
         <files mask="libGFLIB.a"/>
       </source>
-      <source toolchain="mcuxpresso" path="middleware/rtcesl/CM0_RTCESL_4.5_MCUX/GMCLIB/Include" target_path="rtcesl/gmclib" type="c_include">
+      <source toolchain="mcuxpresso" path="middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/GMCLIB/Include" target_path="rtcesl/gmclib" type="c_include">
         <files mask="GMCLIB_Clark_F16_Asmi.h"/>
         <files mask="GMCLIB_Decoupling_A32.h"/>
         <files mask="GMCLIB_ElimDcBusRipHw_A32.h"/>
@@ -4567,10 +4522,10 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="gmclib.h"/>
         <files mask="gmclib_types.h"/>
       </source>
-      <source toolchain="mcuxpresso" path="middleware/rtcesl/CM0_RTCESL_4.5_MCUX/GMCLIB" target_path="libs" type="lib">
+      <source toolchain="mcuxpresso" path="middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/GMCLIB" target_path="libs" type="lib">
         <files mask="libGMCLIB.a"/>
       </source>
-      <source toolchain="mcuxpresso" path="middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include" target_path="rtcesl/mlib" type="c_include">
+      <source toolchain="mcuxpresso" path="middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include" target_path="rtcesl/mlib" type="c_include">
         <files mask="MLIB_Abs_F16.h"/>
         <files mask="MLIB_Abs_F16_Asmi.h"/>
         <files mask="MLIB_Abs_F32.h"/>
@@ -4694,10 +4649,10 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="mlib.h"/>
         <files mask="mlib_types.h"/>
       </source>
-      <source toolchain="mcuxpresso" path="middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB" target_path="libs" type="lib">
+      <source toolchain="mcuxpresso" path="middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB" target_path="libs" type="lib">
         <files mask="libMLIB.a"/>
       </source>
-      <source path="middleware/rtcesl/CM0_RTCESL_4.5_doc" target_path="rtcesl/doc" type="doc">
+      <source path="middleware/rtcesl/CM0_RTCESL_4.5.1_doc" target_path="rtcesl/doc" type="doc">
         <files mask="CM0AMCLIBUG.pdf" hidden="true"/>
         <files mask="CM0GDFLIBUG.pdf" hidden="true"/>
         <files mask="CM0GFLIBUG.pdf" hidden="true"/>
@@ -4706,7 +4661,148 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="CM0PCLIBUG.pdf" hidden="true"/>
       </source>
     </component>
-    <component id="middleware.touch.MKE15Z7" name="touch" brief="NXP Touch Library" version="1.0.0" devices="MKE15Z256xxx7" user_visible="true" type="other">
+    <component id="middleware.touch.MKE15Z7" name="touch" brief="NXP Touch Library" version="1.0.0" full_name="Middleware touch" devices="MKE15Z256xxx7" user_visible="true" type="other">
+      <source path="middleware/touch/freemaster/src" target_path="touch/freemaster/src" type="src">
+        <files mask="cmdhandler.js" hidden="true"/>
+        <files mask="gui.js" hidden="true"/>
+        <files mask="html_templates.js" hidden="true"/>
+        <files mask="mustache.js" hidden="true"/>
+        <files mask="nt_Gui.html" hidden="true"/>
+        <files mask="nt_control.js" hidden="true"/>
+        <files mask="nt_control_arotary.js" hidden="true"/>
+        <files mask="nt_control_aslider.js" hidden="true"/>
+        <files mask="nt_control_keypad.js" hidden="true"/>
+        <files mask="nt_control_matrix.js" hidden="true"/>
+        <files mask="nt_control_proxi.js" hidden="true"/>
+        <files mask="nt_control_rotary.js" hidden="true"/>
+        <files mask="nt_control_slider.js" hidden="true"/>
+        <files mask="nt_electrode.js" hidden="true"/>
+        <files mask="nt_electrode_afid.js" hidden="true"/>
+        <files mask="nt_electrode_safa.js" hidden="true"/>
+        <files mask="nt_electrode_usafa.js" hidden="true"/>
+        <files mask="nt_module.js" hidden="true"/>
+        <files mask="nt_static_cfg.js" hidden="true"/>
+        <files mask="ntinit.js" hidden="true"/>
+        <files mask="static_cfg_engine.js" hidden="true"/>
+        <files mask="style.css" hidden="true"/>
+        <files mask="test1.xml" hidden="true"/>
+        <files mask="touch.min.css" hidden="true"/>
+        <files mask="touch.scss" hidden="true"/>
+        <files mask="xml_converter.js" hidden="true"/>
+      </source>
+      <source path="middleware/touch/freemaster/src/img" target_path="touch/freemaster/src/img" type="src">
+        <files mask="Blank.png" hidden="true"/>
+        <files mask="SINC-active.png" hidden="true"/>
+        <files mask="SINC.png" hidden="true"/>
+        <files mask="SSC-active.png" hidden="true"/>
+        <files mask="SSC.png" hidden="true"/>
+        <files mask="arotary.png" hidden="true"/>
+        <files mask="aslider.png" hidden="true"/>
+        <files mask="bodyl.png" hidden="true"/>
+        <files mask="bottoml.png" hidden="true"/>
+        <files mask="checboxlines.gif" hidden="true"/>
+        <files mask="clock-active.png" hidden="true"/>
+        <files mask="clock.png" hidden="true"/>
+        <files mask="comparator-active.png" hidden="true"/>
+        <files mask="comparator.png" hidden="true"/>
+        <files mask="control-active.png" hidden="true"/>
+        <files mask="control.png" hidden="true"/>
+        <files mask="cs_clk-active.png" hidden="true"/>
+        <files mask="cs_clk.png" hidden="true"/>
+        <files mask="cs_clk.svg" hidden="true"/>
+        <files mask="cs_controller-active.png" hidden="true"/>
+        <files mask="cs_controller.png" hidden="true"/>
+        <files mask="cs_controller.svg" hidden="true"/>
+        <files mask="cs_counter-active.png" hidden="true"/>
+        <files mask="cs_counter.png" hidden="true"/>
+        <files mask="cs_counter.svg" hidden="true"/>
+        <files mask="cs_fifo-active.png" hidden="true"/>
+        <files mask="cs_fifo.png" hidden="true"/>
+        <files mask="cs_fifo.svg" hidden="true"/>
+        <files mask="cs_int-active.png" hidden="true"/>
+        <files mask="cs_int.png" hidden="true"/>
+        <files mask="cs_int.svg" hidden="true"/>
+        <files mask="cs_oscilator-active.png" hidden="true"/>
+        <files mask="cs_oscilator.png" hidden="true"/>
+        <files mask="cs_oscilator.svg" hidden="true"/>
+        <files mask="cs_register-active.png" hidden="true"/>
+        <files mask="cs_register.png" hidden="true"/>
+        <files mask="cs_register.svg" hidden="true"/>
+        <files mask="cs_switch-active.png" hidden="true"/>
+        <files mask="cs_switch-small-active.png" hidden="true"/>
+        <files mask="cs_switch-small.png" hidden="true"/>
+        <files mask="cs_switch-small.svg" hidden="true"/>
+        <files mask="cs_switch.png" hidden="true"/>
+        <files mask="cs_switch.svg" hidden="true"/>
+        <files mask="detected.svg" hidden="true"/>
+        <files mask="dvolt-active.png" hidden="true"/>
+        <files mask="dvolt.png" hidden="true"/>
+        <files mask="el_release.png" hidden="true"/>
+        <files mask="el_touch.png" hidden="true"/>
+        <files mask="fscs.png" hidden="true"/>
+        <files mask="gui_arrow_down.png" hidden="true"/>
+        <files mask="gui_arrow_left.png" hidden="true"/>
+        <files mask="gui_arrow_move.png" hidden="true"/>
+        <files mask="gui_arrow_move_hidden.png" hidden="true"/>
+        <files mask="gui_arrow_right.png" hidden="true"/>
+        <files mask="gui_arrow_right_hidden.png" hidden="true"/>
+        <files mask="gui_arrow_up.png" hidden="true"/>
+        <files mask="gui_blank.png" hidden="true"/>
+        <files mask="gui_dir_left.png" hidden="true"/>
+        <files mask="gui_dir_right.png" hidden="true"/>
+        <files mask="gui_no.png" hidden="true"/>
+        <files mask="gui_refresh.png" hidden="true"/>
+        <files mask="gui_warning.png" hidden="true"/>
+        <files mask="gui_warning_hidden.png" hidden="true"/>
+        <files mask="gui_yes.png" hidden="true"/>
+        <files mask="gui_yes_hidden.png" hidden="true"/>
+        <files mask="icon-01.svg" hidden="true"/>
+        <files mask="icon-02.svg" hidden="true"/>
+        <files mask="icon-03.svg" hidden="true"/>
+        <files mask="keypad.png" hidden="true"/>
+        <files mask="keypad.svg" hidden="true"/>
+        <files mask="logo.svg" hidden="true"/>
+        <files mask="m-star-active.png" hidden="true"/>
+        <files mask="m-star.png" hidden="true"/>
+        <files mask="matrix.png" hidden="true"/>
+        <files mask="matrix.svg" hidden="true"/>
+        <files mask="menu-item-left-selected.jpg" hidden="true"/>
+        <files mask="menu-item-left.jpg" hidden="true"/>
+        <files mask="menu-item-right-selected.jpg" hidden="true"/>
+        <files mask="menu-item-right.jpg" hidden="true"/>
+        <files mask="movement.svg" hidden="true"/>
+        <files mask="popup-load.svg" hidden="true"/>
+        <files mask="proxi.png" hidden="true"/>
+        <files mask="proxi.svg" hidden="true"/>
+        <files mask="rotary.png" hidden="true"/>
+        <files mask="rotate.svg" hidden="true"/>
+        <files mask="s-star-active.png" hidden="true"/>
+        <files mask="s-star.png" hidden="true"/>
+        <files mask="select-dropdown-grey.ai" hidden="true"/>
+        <files mask="select-dropdown-grey.svg" hidden="true"/>
+        <files mask="slider.png" hidden="true"/>
+        <files mask="slider.svg" hidden="true"/>
+        <files mask="theme-all-cs.svg" hidden="true"/>
+        <files mask="theme-all-csi.svg" hidden="true"/>
+        <files mask="theme-all.png" hidden="true"/>
+        <files mask="theme-all.svg" hidden="true"/>
+        <files mask="topl.png" hidden="true"/>
+        <files mask="triangle.svg" hidden="true"/>
+        <files mask="undetected-full.svg" hidden="true"/>
+        <files mask="undetected.svg" hidden="true"/>
+      </source>
+      <source path="middleware/touch/freemaster/src/js" target_path="touch/freemaster/src/js" type="src">
+        <files mask="animations.js" hidden="true"/>
+        <files mask="jquery-ui.min.js" hidden="true"/>
+        <files mask="jquery.min.js" hidden="true"/>
+      </source>
+      <source path="middleware/touch/freemaster/src/json" target_path="touch/freemaster/src/json" type="src">
+        <files mask="cycle.js" hidden="true"/>
+        <files mask="json.js" hidden="true"/>
+        <files mask="json2.js" hidden="true"/>
+        <files mask="json_parse.js" hidden="true"/>
+        <files mask="json_parse_state.js" hidden="true"/>
+      </source>
       <source path="middleware/touch/include" target_path="touch_sensing/include" type="c_include">
         <files mask="nt.h"/>
         <files mask="nt_control_arotary.h"/>
@@ -4803,159 +4899,8 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="nt_system_prv.h"/>
       </source>
     </component>
-    <component id="middleware.touch.files.MKE15Z7" name="unused_files" version="1.0.0" devices="MKE15Z256xxx7" user_visible="false" type="other">
-      <source path="middleware/touch/freemaster/src" target_path="GUI/src" type="script">
-        <files mask="cmdhandler.js"/>
-        <files mask="gui.js"/>
-        <files mask="html_templates.js"/>
-        <files mask="mustache.js"/>
-        <files mask="nt_control.js"/>
-        <files mask="nt_control_arotary.js"/>
-        <files mask="nt_control_aslider.js"/>
-        <files mask="nt_control_keypad.js"/>
-        <files mask="nt_control_matrix.js"/>
-        <files mask="nt_control_proxi.js"/>
-        <files mask="nt_control_rotary.js"/>
-        <files mask="nt_control_slider.js"/>
-        <files mask="nt_electrode.js"/>
-        <files mask="nt_electrode_afid.js"/>
-        <files mask="nt_electrode_safa.js"/>
-        <files mask="nt_electrode_usafa.js"/>
-        <files mask="nt_module.js"/>
-        <files mask="nt_static_cfg.js"/>
-        <files mask="ntinit.js"/>
-        <files mask="static_cfg_engine.js"/>
-        <files mask="xml_converter.js"/>
-      </source>
-      <source path="middleware/touch/freemaster/src/img" target_path="GUI/src/img" type="image">
-        <files mask="Blank.png"/>
-        <files mask="SINC-active.png"/>
-        <files mask="SINC.png"/>
-        <files mask="SSC-active.png"/>
-        <files mask="SSC.png"/>
-        <files mask="arotary.png"/>
-        <files mask="aslider.png"/>
-        <files mask="bodyl.png"/>
-        <files mask="bottoml.png"/>
-        <files mask="checboxlines.gif"/>
-        <files mask="clock-active.png"/>
-        <files mask="clock.png"/>
-        <files mask="comparator-active.png"/>
-        <files mask="comparator.png"/>
-        <files mask="control-active.png"/>
-        <files mask="control.png"/>
-        <files mask="cs_clk-active.png"/>
-        <files mask="cs_clk.png"/>
-        <files mask="cs_controller-active.png"/>
-        <files mask="cs_controller.png"/>
-        <files mask="cs_counter-active.png"/>
-        <files mask="cs_counter.png"/>
-        <files mask="cs_fifo-active.png"/>
-        <files mask="cs_fifo.png"/>
-        <files mask="cs_int-active.png"/>
-        <files mask="cs_int.png"/>
-        <files mask="cs_oscilator-active.png"/>
-        <files mask="cs_oscilator.png"/>
-        <files mask="cs_register-active.png"/>
-        <files mask="cs_register.png"/>
-        <files mask="cs_switch-active.png"/>
-        <files mask="cs_switch-small-active.png"/>
-        <files mask="cs_switch-small.png"/>
-        <files mask="cs_switch.png"/>
-        <files mask="dvolt-active.png"/>
-        <files mask="dvolt.png"/>
-        <files mask="el_release.png"/>
-        <files mask="el_touch.png"/>
-        <files mask="fscs.png"/>
-        <files mask="gui_arrow_down.png"/>
-        <files mask="gui_arrow_left.png"/>
-        <files mask="gui_arrow_move.png"/>
-        <files mask="gui_arrow_move_hidden.png"/>
-        <files mask="gui_arrow_right.png"/>
-        <files mask="gui_arrow_right_hidden.png"/>
-        <files mask="gui_arrow_up.png"/>
-        <files mask="gui_blank.png"/>
-        <files mask="gui_dir_left.png"/>
-        <files mask="gui_dir_right.png"/>
-        <files mask="gui_no.png"/>
-        <files mask="gui_refresh.png"/>
-        <files mask="gui_warning.png"/>
-        <files mask="gui_warning_hidden.png"/>
-        <files mask="gui_yes.png"/>
-        <files mask="gui_yes_hidden.png"/>
-        <files mask="keypad.png"/>
-        <files mask="m-star-active.png"/>
-        <files mask="m-star.png"/>
-        <files mask="matrix.png"/>
-        <files mask="menu-item-left-selected.jpg"/>
-        <files mask="menu-item-left.jpg"/>
-        <files mask="menu-item-right-selected.jpg"/>
-        <files mask="menu-item-right.jpg"/>
-        <files mask="proxi.png"/>
-        <files mask="rotary.png"/>
-        <files mask="s-star-active.png"/>
-        <files mask="s-star.png"/>
-        <files mask="slider.png"/>
-        <files mask="theme-all.png"/>
-        <files mask="topl.png"/>
-      </source>
-      <source path="middleware/touch/freemaster/src/img" target_path="GUI/src/img" type="other">
-        <files mask="cs_clk.svg"/>
-        <files mask="cs_controller.svg"/>
-        <files mask="cs_counter.svg"/>
-        <files mask="cs_fifo.svg"/>
-        <files mask="cs_int.svg"/>
-        <files mask="cs_oscilator.svg"/>
-        <files mask="cs_register.svg"/>
-        <files mask="cs_switch-small.svg"/>
-        <files mask="cs_switch.svg"/>
-        <files mask="detected.svg"/>
-        <files mask="icon-01.svg"/>
-        <files mask="icon-02.svg"/>
-        <files mask="icon-03.svg"/>
-        <files mask="keypad.svg"/>
-        <files mask="logo.svg"/>
-        <files mask="matrix.svg"/>
-        <files mask="movement.svg"/>
-        <files mask="popup-load.svg"/>
-        <files mask="proxi.svg"/>
-        <files mask="rotate.svg"/>
-        <files mask="select-dropdown-grey.ai"/>
-        <files mask="select-dropdown-grey.svg"/>
-        <files mask="slider.svg"/>
-        <files mask="theme-all-cs.svg"/>
-        <files mask="theme-all-csi.svg"/>
-        <files mask="theme-all.svg"/>
-        <files mask="triangle.svg"/>
-        <files mask="undetected-full.svg"/>
-        <files mask="undetected.svg"/>
-      </source>
-      <source path="middleware/touch/freemaster/src/js" target_path="GUI/src/js" type="script">
-        <files mask="animations.js"/>
-        <files mask="jquery-ui.min.js"/>
-        <files mask="jquery.min.js"/>
-      </source>
-      <source path="middleware/touch/freemaster/src/json" target_path="GUI/src/json" type="script">
-        <files mask="cycle.js"/>
-        <files mask="json.js"/>
-        <files mask="json2.js"/>
-        <files mask="json_parse.js"/>
-        <files mask="json_parse_state.js"/>
-      </source>
-      <source path="middleware/touch/freemaster/src" target_path="GUI/src" type="doc">
-        <files mask="nt_Gui.html"/>
-        <files mask="style.css"/>
-        <files mask="touch.min.css"/>
-      </source>
-      <source path="middleware/touch/freemaster/src" target_path="GUI/src" type="xml">
-        <files mask="test1.xml"/>
-      </source>
-      <source path="middleware/touch/freemaster/src" target_path="GUI/src" type="other">
-        <files mask="touch.scss"/>
-      </source>
-    </component>
-    <component id="platform.utilities.misc_utilities.MKE15Z7" name="misc_utilities" brief="Utilities which is needed for particular toolchain like the SBRK function required to address limitation between HEAP and STACK in GCC toolchain library." version="1.0.0" devices="MKE15Z256xxx7" user_visible="true" type="utilities"/>
-    <component id="platform.utilities.assert.MKE15Z7" name="assert" version="1.0.0" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="utilities">
+    <component id="platform.utilities.misc_utilities.MKE15Z7" name="misc_utilities" brief="Utilities which is needed for particular toolchain like the SBRK function required to address limitation between HEAP and STACK in GCC toolchain library." version="1.0.0" full_name="Utilities miscellaneous" devices="MKE15Z256xxx7" user_visible="true" type="utilities"/>
+    <component id="platform.utilities.assert.MKE15Z7" name="assert" brief="Utility assert" version="1.0.0" full_name="Utility assert" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="utilities">
       <dependencies>
         <component_dependency value="utility.debug_console.MKE15Z7"/>
       </dependencies>
@@ -4963,7 +4908,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="fsl_assert.c"/>
       </source>
     </component>
-    <component id="utility.debug_console.MKE15Z7" name="debug_console" version="1.0.0" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="utilities">
+    <component id="utility.debug_console.MKE15Z7" name="debug_console" brief="Utility debug_console" version="1.0.0" full_name="Utility debug_console" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="utilities">
       <dependencies>
         <all>
           <component_dependency value="component.serial_manager.MKE15Z7"/>
@@ -4984,7 +4929,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="fsl_str.h"/>
       </source>
     </component>
-    <component id="platform.utilities.notifier.MKE15Z7" name="notifier" version="1.0.0" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="utilities">
+    <component id="platform.utilities.notifier.MKE15Z7" name="notifier" brief="Utility notifier" version="1.0.0" full_name="Utility notifier" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="utilities">
       <dependencies>
         <component_dependency value="platform.drivers.common.MKE15Z7"/>
       </dependencies>
@@ -4995,7 +4940,7 @@ FRDMKE15-PA7250 Demonstration Kit (FRDMSTBC-PA7250 Sensor Shield Development Boa
         <files mask="fsl_notifier.h"/>
       </source>
     </component>
-    <component id="utility.shell.MKE15Z7" name="shell" version="1.0.0" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="utilities">
+    <component id="utility.shell.MKE15Z7" name="shell" brief="Utility shell" version="1.0.0" full_name="Utility shell" devices="MKE15Z256xxx7" device_cores="core0_MKE15Z256xxx7" user_visible="true" type="utilities">
       <defines>
         <define name="DEBUG_CONSOLE_RX_ENABLE" value="0"/>
       </defines>

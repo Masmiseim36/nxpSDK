@@ -1,6 +1,6 @@
 /*
  * Copyright 2013 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -27,11 +27,11 @@
 #include "nt_electrodes.h"
 #include "../source/filters/nt_filters_prv.h"
 
-
-/** GPIO module's RAM. This structure contains 
+/** GPIO module's RAM. This structure contains
  */
-struct nt_module_gpio_data {
-    uint32_t pen;          /*!< PEN - enablement of all modules electrodes */    
+struct nt_module_gpio_data
+{
+    uint32_t pen; /*!< PEN - enablement of all modules electrodes */
 };
 
 #ifdef __cplusplus

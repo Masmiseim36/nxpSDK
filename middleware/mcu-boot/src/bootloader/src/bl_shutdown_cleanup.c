@@ -7,20 +7,20 @@
  */
 
 #include "fsl_device_registers.h"
-#include "fsl_rtos_abstraction.h"
-#include "vector_table_info.h"
+#include "utilities/fsl_rtos_abstraction.h"
+#include "utilities/vector_table_info.h"
 #if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
 #if !BL_DEVICE_IS_LPC_SERIES
 #include "fsl_flash.h"
 #else
-#include "fsl_iap.h"
+#include "flashiap_wrapper/fsl_flashiap_wrapper.h"
 #endif
 #endif // #if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
 #include "microseconds.h"
 #include "bootloader_common.h"
 
-#include "bl_shutdown_cleanup.h"
-#include "bl_context.h"
+#include "bootloader/bl_shutdown_cleanup.h"
+#include "bootloader/bl_context.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions

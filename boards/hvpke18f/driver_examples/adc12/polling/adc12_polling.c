@@ -16,12 +16,12 @@
  * Definitions
  ******************************************************************************/
 
-#define DEMO_ADC12_BASE ADC0
-#define DEMO_ADC12_CLOCK_SOURCE kADC12_ClockSourceAlt0
-#define DEMO_ADC12_IRQn ADC0_IRQn
+#define DEMO_ADC12_BASE             ADC0
+#define DEMO_ADC12_CLOCK_SOURCE     kADC12_ClockSourceAlt0
+#define DEMO_ADC12_IRQn             ADC0_IRQn
 #define DEMO_ADC12_IRQ_HANDLER_FUNC ADC0_IRQHandler
 
-#define DEMO_ADC12_USER_CHANNEL 26U /* Internal temperature sensor */
+#define DEMO_ADC12_USER_CHANNEL  26U /* Internal temperature sensor */
 #define DEMO_ADC12_CHANNEL_GROUP 0U
 
 /*******************************************************************************

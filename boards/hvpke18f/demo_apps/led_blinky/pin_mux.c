@@ -14,11 +14,11 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v6.0
+product: Pins v7.0
 processor: MKE18F512xxx16
 package_id: MKE18F512VLL16
 mcu_data: ksdk2_0
-processor_version: 6.0.1
+processor_version: 0.7.2
 board: HVP-KE18F
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
@@ -47,6 +47,7 @@ BOARD_InitPins:
 - options: {callFromInitBoot: 'true', coreID: core0, enableClock: 'true'}
 - pin_list:
   - {pin_num: '23', peripheral: GPIOE, signal: 'GPIO, 9', pin_signal: ACMP2_IN2/DAC0_OUT/PTE9/FTM0_CH7/LPUART2_CTS, direction: OUTPUT}
+  - {pin_num: '92', peripheral: CoreDebug, signal: TRACE_SWO, pin_signal: PTA10/FTM1_CH4/LPUART0_TX/FXIO_D0/JTAG_TDO/noetm_Trace_SWO, pull_select: down, pull_enable: disable}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
@@ -60,6 +61,8 @@ BOARD_InitPins:
 void BOARD_InitPins(void)
 {
     /* Clock Control: Clock enabled */
+    CLOCK_EnableClock(kCLOCK_PortA);
+    /* Clock Control: Clock enabled */
     CLOCK_EnableClock(kCLOCK_PortE);
 
     gpio_pin_config_t LED_RED_config = {
@@ -68,6 +71,21 @@ void BOARD_InitPins(void)
     };
     /* Initialize GPIO functionality on pin PTE9 (pin 23)  */
     GPIO_PinInit(BOARD_INITPINS_LED_RED_GPIO, BOARD_INITPINS_LED_RED_PIN, &LED_RED_config);
+
+    /* PORTA10 (pin 92) is configured as noetm_Trace_SWO */
+    PORT_SetPinMux(PORTA, 10U, kPORT_MuxAlt7);
+
+    PORTA->PCR[10] = ((PORTA->PCR[10] &
+                       /* Mask bits to zero which are setting */
+                       (~(PORT_PCR_PS_MASK | PORT_PCR_PE_MASK | PORT_PCR_ISF_MASK)))
+
+                      /* Pull Select: Internal pulldown resistor is enabled on the corresponding pin, if the
+                       * corresponding PE field is set. */
+                      | PORT_PCR_PS(kPORT_PullDown)
+
+                      /* Pull Enable: Internal pullup or pulldown resistor is not enabled on the corresponding
+                       * pin. */
+                      | PORT_PCR_PE(kPORT_PullDisable));
 
     /* PORTE9 (pin 23) is configured as PTE9 */
     PORT_SetPinMux(BOARD_INITPINS_LED_RED_PORT, BOARD_INITPINS_LED_RED_PIN, kPORT_MuxAsGpio);

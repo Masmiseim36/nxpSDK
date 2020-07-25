@@ -14,12 +14,12 @@
  * Definitions
  ******************************************************************************/
 /* UART instance and clock */
-#define EXAMPLE_MSCAN MSCAN
-#define EXAMPLE_MSCAN_CLK_FREQ CLOCK_GetFreq(kCLOCK_Osc0ErClk)
-#define EXAMPLE_MSCAN_IRQn MSCAN_1_IRQn
+#define EXAMPLE_MSCAN            MSCAN
+#define EXAMPLE_MSCAN_CLK_FREQ   CLOCK_GetFreq(kCLOCK_Osc0ErClk)
+#define EXAMPLE_MSCAN_IRQn       MSCAN_1_IRQn
 #define EXAMPLE_MSCAN_IRQHandler MSCAN_1_IRQHandler
 
-#define NODE_ID1 0x801
+#define NODE_ID1    0x801
 #define MSCAN_IDMR0 (MSCAN_REIDR3_RERTR_MASK | (MSCAN_REIDR1_RSRR_MASK | MSCAN_REIDR1_REIDE_MASK) << 16U)
 #define MSCAN_IDMR1 (MSCAN_REIDR3_RERTR_MASK | (MSCAN_REIDR1_RSRR_MASK | MSCAN_REIDR1_REIDE_MASK) << 16U)
 
@@ -46,11 +46,7 @@ void EXAMPLE_MSCAN_IRQHandler(void)
         MSCAN_ClearRxBufferFullFlag(EXAMPLE_MSCAN);
         rxComplete = true;
     }
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 /*!

@@ -3,9 +3,9 @@
   <vendor>nxp.com</vendor>
   <name>MKE14Z4</name>
   <version>1.0</version>
-  <description>MKE14Z32VLD4,MKE14Z32VLF4,MKE14Z64VLD4,MKE14Z64VLF4</description>
+  <description>MKE14Z32VFP4,MKE14Z32VLD4,MKE14Z32VLF4,MKE14Z64VFP4,MKE14Z64VLD4,MKE14Z64VLF4</description>
   <licenseText>
-Copyright 2016-2018 NXP
+Copyright 2016-2020 NXP
 All rights reserved.
 
 SPDX-License-Identifier: BSD-3-Clause

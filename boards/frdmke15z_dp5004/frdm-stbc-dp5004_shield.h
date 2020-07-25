@@ -23,7 +23,7 @@
     (uint32_t)(x * 1.25 - MPXV5004DP_ZERO_ERROR) /* Pressure in Pascals (Pa). */
 
 /* Arduino Pin A0 (Sensor Analog Output Pin) maps to ADC0 Channel 0 on KE15Z (PTA0). */
-#define MPXVDP5004_ADC12_CHANNEL 0U
+#define MPXVDP5004_ADC12_CHANNEL       0U
 #define MPXVDP5004_ADC12_CHANNEL_GROUP 0U
 
 #endif /* _FRDM_STBC_DP5004_SHIELD_H_ */

@@ -19,16 +19,16 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_ADC12_BASEADDR ADC0
-#define DEMO_ADC12_CLOCK_SOURCE kADC12_ClockSourceAlt0
-#define DEMO_ADC12_USER_CHANNEL 12U
+#define DEMO_ADC12_BASEADDR      ADC0
+#define DEMO_ADC12_CLOCK_SOURCE  kADC12_ClockSourceAlt0
+#define DEMO_ADC12_USER_CHANNEL  12U
 #define DEMO_ADC12_CHANNEL_GROUP 0U
-#define DEMO_DMAMUX_BASEADDR DMAMUX
-#define DEMO_DMA_CHANNEL 0U
-#define DEMO_DMA_ADC_SOURCE 40U
-#define DEMO_DMA_BASEADDR DMA0
-#define ADC12_RESULT_REG_ADDR 0x4003b048U
-#define DEMO_DMA_IRQ_ID DMA0_IRQn
+#define DEMO_DMAMUX_BASEADDR     DMAMUX
+#define DEMO_DMA_CHANNEL         0U
+#define DEMO_DMA_ADC_SOURCE      40U
+#define DEMO_DMA_BASEADDR        DMA0
+#define ADC12_RESULT_REG_ADDR    0x4003b048U
+#define DEMO_DMA_IRQ_ID          DMA0_IRQn
 #define DEMO_ADC12_SAMPLE_COUNT 16U /* The ADC12 sample count. */
 
 /*******************************************************************************

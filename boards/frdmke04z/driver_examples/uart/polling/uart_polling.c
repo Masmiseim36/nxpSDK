@@ -14,7 +14,7 @@
  * Definitions
  ******************************************************************************/
 /* UART instance and clock */
-#define DEMO_UART UART0
+#define DEMO_UART          UART0
 #define DEMO_UART_CLK_FREQ CLOCK_GetFreq(kCLOCK_BusClk)
 
 

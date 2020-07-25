@@ -110,9 +110,6 @@
       <files mask="clock_config.c"/>
       <files mask="pin_mux.c"/>
     </source>
-    <source path="boards/frdmke15z/demo_apps/touch_sensing" target_path="doc" type="doc">
-      <files mask="readme.txt"/>
-    </source>
     <source path="boards/frdmke15z/demo_apps/touch_sensing" target_path="doc" type="doc" toolchain="iar mdk mcuxpresso">
       <files mask="readme.txt"/>
     </source>
@@ -128,10 +125,8 @@
       <files mask="main.c"/>
       <files mask="nt_setup.c"/>
     </source>
-    <source path="middleware/touch/freemaster" target_path="GUI" type="other" exclude="true">
-      <files mask="NXPTouchKE15.pmp"/>
-    </source>
-    <source path="middleware/touch/freemaster" target_path="GUI" type="xml" exclude="true">
+    <source path="middleware/touch/freemaster" target_path="touch/freemaster" type="src" exclude="true">
+      <files mask="NXPTouchKE15.pmpx"/>
       <files mask="frdm_ke15z.xml"/>
     </source>
   </example>

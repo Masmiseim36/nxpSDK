@@ -21,7 +21,7 @@
 #define EXAMPLE_I2C_SLAVE Driver_I2C0
 
 #define I2C_MASTER_SLAVE_ADDR_7BIT (0x7EU)
-#define I2C_DATA_LENGTH (32) /* MAX is 256 */
+#define I2C_DATA_LENGTH            (32) /* MAX is 256 */
 
 /*******************************************************************************
  * Prototypes

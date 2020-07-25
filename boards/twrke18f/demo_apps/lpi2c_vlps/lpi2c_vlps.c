@@ -21,21 +21,21 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_SMC SMC
-#define DMAMUX0 DMAMUX
-#define LPIT0_IRQn LPIT0_Ch0_IRQn
+#define DEMO_SMC         SMC
+#define DMAMUX0          DMAMUX
+#define LPIT0_IRQn       LPIT0_Ch0_IRQn
 #define LPIT0_IRQHandler LPIT0_Ch0_IRQHandler
 
-#define BOARD_ACCEL_I2C_BASEADDR LPI2C0
-#define DEMO_ACCEL_I2C_CLOCK_NAME kCLOCK_Lpi2c0
+#define BOARD_ACCEL_I2C_BASEADDR    LPI2C0
+#define DEMO_ACCEL_I2C_CLOCK_NAME   kCLOCK_Lpi2c0
 #define DEMO_ACCEL_I2C_CLOCK_SOURCE kCLOCK_IpSrcSircAsync
 
 #define DEMO_LPI2C_TX_DMA_REQ_SOURCE kDmaRequestMux0LPI2C0Tx
 #define DEMO_LPI2C_RX_DMA_REQ_SOURCE kDmaRequestMux0LPI2C0Rx
 
 #define DEMO_LPI2C_CLOCK_FREQUNCY CLOCK_GetIpFreq(DEMO_ACCEL_I2C_CLOCK_NAME)
-#define DEMO_LPIT_CLOCK_SOURCE kCLOCK_IpSrcSircAsync
-#define DEMO_LPIT_CLOCK_FREQUNCY CLOCK_GetIpFreq(kCLOCK_Lpit0)
+#define DEMO_LPIT_CLOCK_SOURCE    kCLOCK_IpSrcSircAsync
+#define DEMO_LPIT_CLOCK_FREQUNCY  CLOCK_GetIpFreq(kCLOCK_Lpit0)
 
 /* Accelerometer I2C address*/
 #define ACCEL_I2C_ADDR 0x1DU
@@ -43,20 +43,20 @@
 #define ACCEL_WHO_AM_I 0xC7U
 /* Accelerometer Reset PIN */
 #define ACCEL_RESET_GPIO (GPIOC)
-#define ACCEL_RESET_PIN (15U)
+#define ACCEL_RESET_PIN  (15U)
 
 /* FXOS8700 and MMA8451 have the same register address */
-#define ACCEL_REG_OUT_X_MSB 0x01
-#define ACCEL_REG_WHO_AM_I 0x0D
-#define ACCEL_REG_CTRL1 0x2A
-#define ACCEL_REG_CTRL2 0x2B
+#define ACCEL_REG_OUT_X_MSB    0x01
+#define ACCEL_REG_WHO_AM_I     0x0D
+#define ACCEL_REG_CTRL1        0x2A
+#define ACCEL_REG_CTRL2        0x2B
 #define ACCEL_REG_XYZ_DATA_CFG 0x0E
 
-#define LPI2C_READ 1
-#define LPI2C_WRITE 0
-#define LPI2C_CMD_TX 0
-#define LPI2C_CMD_RX 1
-#define LPI2C_CMD_STOP 2
+#define LPI2C_READ           1
+#define LPI2C_WRITE          0
+#define LPI2C_CMD_TX         0
+#define LPI2C_CMD_RX         1
+#define LPI2C_CMD_STOP       2
 #define LPI2C_CMD_START_SEND 4
 
 /*******************************************************************************
@@ -425,11 +425,7 @@ void LPIT0_IRQHandler(void)
         /* Initiate a transfer */
         APP_ACCEL_ReadData();
     }
-    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-      exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 /*!

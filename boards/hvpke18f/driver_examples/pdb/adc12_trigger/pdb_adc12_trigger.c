@@ -17,18 +17,18 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_PDB_BASE PDB0
-#define DEMO_PDB_IRQ_ID PDB0_IRQn
+#define DEMO_PDB_BASE        PDB0
+#define DEMO_PDB_IRQ_ID      PDB0_IRQn
 #define DEMO_PDB_IRQ_HANDLER PDB0_IRQHandler
 
-#define DEMO_PDB_ADC_TRIGGER_CHANNEL kPDB_ADCTriggerChannel0 /* For ADC0. */
-#define DEMO_PDB_ADC_PRETRIGGER_CHANNEL kPDB_ADCPreTrigger0  /* For ADC0_SC1[0]. */
+#define DEMO_PDB_ADC_TRIGGER_CHANNEL    kPDB_ADCTriggerChannel0 /* For ADC0. */
+#define DEMO_PDB_ADC_PRETRIGGER_CHANNEL kPDB_ADCPreTrigger0     /* For ADC0_SC1[0]. */
 
-#define DEMO_ADC12_BASE ADC0
+#define DEMO_ADC12_BASE          ADC0
 #define DEMO_ADC12_CHANNEL_GROUP 0U
-#define DEMO_ADC12_USER_CHANNEL 26U /* Internal temperature sensor */
-#define DEMO_ADC12_IRQ_ID ADC0_IRQn
-#define DEMO_ADC12_IRQ_HANDLER ADC0_IRQHandler
+#define DEMO_ADC12_USER_CHANNEL  26U /* Internal temperature sensor */
+#define DEMO_ADC12_IRQ_ID        ADC0_IRQn
+#define DEMO_ADC12_IRQ_HANDLER   ADC0_IRQHandler
 
 /*******************************************************************************
  * Prototypes
@@ -73,11 +73,7 @@ void DEMO_PDB_IRQ_HANDLER(void)
     PDB_ClearStatusFlags(DEMO_PDB_BASE, kPDB_DelayEventFlag);
     g_PdbDelayInterruptCounter++;
     g_PdbDelayInterruptFlag = true;
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 /*!
@@ -89,11 +85,7 @@ void DEMO_ADC12_IRQ_HANDLER(void)
     g_Adc12ConvValue = ADC12_GetChannelConversionValue(DEMO_ADC12_BASE, DEMO_ADC12_CHANNEL_GROUP);
     g_Adc12InterruptCounter++;
     g_Adc12InterruptFlag = true;
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 /*!

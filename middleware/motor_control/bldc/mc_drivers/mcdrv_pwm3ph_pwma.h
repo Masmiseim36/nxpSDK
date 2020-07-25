@@ -1,6 +1,6 @@
 /*
- * Copyright 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright (c) 2016, Freescale Semiconductor, Inc.
+ * Copyright 2016-2018 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -54,8 +54,8 @@ extern "C" {
 /*!
  * @brief Initialization function of 3-phase PWM, PWMA structure initialization
  *
- * @param this Pointer to the current object
- * @param init Pointer to initialization structure
+ * @param this   Pointer to the current object
+ * @param init   Pointer to initialization structure
  *
  * @return boot_t true on success
  */
@@ -64,7 +64,7 @@ bool_t MCDRV_eFlexPwm3PhInit(mcdrv_pwm3ph_pwma_t *this, mcdrv_pwm3ph_pwma_init_t
 /*!
  * @brief Function updates FTM value register
  *
- * @param this Pointer to the current object
+ * @param this   Pointer to the current object
  *
  * @return boot_t true on success
  */
@@ -73,7 +73,7 @@ bool_t MCDRV_eFlexPwm3PhSet(mcdrv_pwm3ph_pwma_t *this);
 /*!
  * @brief Function enables PWM outputs
  *
- * @param this Pointer to the current object
+ * @param this   Pointer to the current object
  *
  * @return boot_t true on success
  */
@@ -82,7 +82,7 @@ bool_t MCDRV_eFlexPwm3PhOutEn(mcdrv_pwm3ph_pwma_t *this);
 /*!
  * @brief Function disables PWM outputs
  *
- * @param this Pointer to the current object
+ * @param this   Pointer to the current object
  *
  * @return boot_t true on success
  */
@@ -91,7 +91,7 @@ bool_t MCDRV_eFlexPwm3PhOutDis(mcdrv_pwm3ph_pwma_t *this);
 /*!
  * @brief Function return actual value of over current flag
  *
- * @param this Pointer to the current object
+ * @param this   Pointer to the current object
  *
  * @return boot_t true on success
  */
@@ -100,21 +100,21 @@ bool_t MCDRV_eFlexPwm3PhFltGet(mcdrv_pwm3ph_pwma_t *this);
 /*!
  * @brief Function set duty cycle from input parameter
  *
- * @param this Pointer to the current object
- * @param i16InpDuty New input duty cycle to the pwma module
+ * @param this   		Pointer to the current object
+ * @param i16InpDuty    New input duty cycle to the pwma module
  *
  * @return boot_t true on success
  */
 bool_t MCDRV_eFlexSetPwmOutput(mcdrv_pwm3ph_pwma_t *this, int16_t i16Sector);
 
 /*!
- * @brief Function set pwm sector from input
- *
- * @param this Pointer to the current object
- * @param sector Actual commutation sector
- *
- * @return boot_t true on success
- */
+* @brief Function set pwm sector from input
+*
+* @param this   		Pointer to the current object
+* @param sector   		Actual commutation sector
+*
+* @return boot_t true on success
+*/
 bool_t MCDRV_eFlexSetDutyCycle(mcdrv_pwm3ph_pwma_t *this, int16_t i16InpDuty);
 
 #ifdef __cplusplus
@@ -122,3 +122,4 @@ bool_t MCDRV_eFlexSetDutyCycle(mcdrv_pwm3ph_pwma_t *this, int16_t i16InpDuty);
 #endif
 
 #endif /* _MCDRV_PWMA_PWM3PH_H_ */
+

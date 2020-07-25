@@ -1,13 +1,13 @@
 /*
 ** ###################################################################
 **     Version:             rev. 1.0, 2017-05-19
-**     Build:               b190822
+**     Build:               b200218
 **
 **     Abstract:
 **         Chip specific module features.
 **
 **     Copyright 2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2019 NXP
+**     Copyright 2016-2020 NXP
 **     All rights reserved.
 **
 **     SPDX-License-Identifier: BSD-3-Clause
@@ -86,6 +86,10 @@
 /* @brief Has data register with name CRC */
 #define FSL_FEATURE_CRC_HAS_CRC_REG (0)
 
+/* FGPIO module features */
+
+/* No feature definitions */
+
 /* FTM module features */
 
 /* @brief Number of channels. */
@@ -110,6 +114,10 @@
 #define FSL_FEATURE_FTM_HAS_CHANNEL7_TRIGGER (0)
 /* @brief Has no QDCTRL. */
 #define FSL_FEATURE_FTM_HAS_NO_QDCTRL (1)
+/* @brief If instance has only TPM function. */
+#define FSL_FEATURE_FTM_IS_TPM_ONLY_INSTANCEn(x) \
+    (((x) == FTM0) ? (1) : \
+    (((x) == FTM2) ? (0) : (-1)))
 /* @brief TPM Has no CONF. */
 #define FSL_FEATURE_TPM_HAS_NO_CONF (1)
 /* @brief There is CLKS bit in SC register. */

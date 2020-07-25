@@ -6,7 +6,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "bl_context.h"
+#include "bootloader/bl_context.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 // Variables
@@ -35,7 +35,7 @@ bootloader_context_t g_bootloaderContext = {.memoryInterface = &g_memoryInterfac
 #endif // BL_FEATURE_SUPPORT_DFLASH
                                             
 #else
-                                            .allFlashState = g_flashState,
+                                            .allFlashState = g_flashiapState,
 #endif // !BL_DEVICE_IS_LPC_SERIES
 #endif // #if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
 #if AES_SECURITY_SUPPORTED

@@ -7,11 +7,11 @@
  */
 
 #include "bootloader_common.h"
-#include "bl_context.h"
-#include "memory.h"
-#include "fsl_assert.h"
+#include "bootloader/bl_context.h"
+#include "memory/memory.h"
+#include "utilities/fsl_assert.h"
 #if BL_FEATURE_AES_OTP
-#include "aes_otp.h"
+#include "aes_otp/aes_otp.h"
 #endif
 
 //! @addtogroup memif

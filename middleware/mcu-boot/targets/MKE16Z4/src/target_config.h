@@ -61,9 +61,9 @@ enum _target_version_constants
 
 //! CRC check pinmux configurations
 // Note: This default muxing slot of selected crc check failure pin must be ALT0
-#define CRC_CHECK_FAILURE_PIN_NUMBER 11
-#define CRC_CHECK_FAILURE_PIN_PORT PORTA
-#define CRC_CHECK_FAILURE_PIN_GPIO GPIOA
+#define CRC_CHECK_FAILURE_PIN_NUMBER 1
+#define CRC_CHECK_FAILURE_PIN_PORT PORTD
+#define CRC_CHECK_FAILURE_PIN_GPIO GPIOD
 #define CRC_CHECK_FAILURE_PIN_DEFAULT_MODE 0
 #define CRC_CHECK_FAILURE_PIN_GPIO_MODE 1
 

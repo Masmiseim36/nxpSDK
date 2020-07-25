@@ -34,15 +34,15 @@ clock_setup_t g_sClockSetup;
  ******************************************************************************/
 
 /*!
-* @brief   void MCDRV_Init_M1(void)
-*           - Motor control driver main initialization
-*           - Calls initialization functions of peripherals required for motor
-*             control functionality
-*
-* @param   void
-*
-* @return  none
-*/
+ * @brief   void MCDRV_Init_M1(void)
+ *           - Motor control driver main initialization
+ *           - Calls initialization functions of peripherals required for motor
+ *             control functionality
+ *
+ * @param   void
+ *
+ * @return  none
+ */
 void MCDRV_Init_M1(void)
 {
     /* Init application clock dependent variables */
@@ -65,35 +65,34 @@ void MCDRV_Init_M1(void)
 }
 
 /*!
-* @brief      Core, bus, flash clock setup
-*
-* @param      void
-*
-* @return     none
-*/
+ * @brief      Core, bus, flash clock setup
+ *
+ * @param      void
+ *
+ * @return     none
+ */
 void InitClock(void)
 {
     g_sClockSetup.ui32SystemClock = CLOCK_GetFreq(kCLOCK_CoreSysClk);
-    g_sClockSetup.ui32AsynClock = CLOCK_GetFreq(kCLOCK_ScgSysOscAsyncDiv2Clk);
-    g_sClockSetup.ui16M1PwmFreq = M1_PWM_FREQ; /* 10kHz */
-                                             /* PWM module calculated as follows:
-                                              * PWM_MOD = FTM_CLOCK / PWM_FREQUNCY = 84 MHz / 10 kHz = 8400   */
-    g_sClockSetup.ui16M1PwmModulo = g_sClockSetup.ui32SystemClock / g_sClockSetup.ui16M1PwmFreq;
-    g_sClockSetup.ui16M1PwmDeadTime = (g_sClockSetup.ui32SystemClock / (1000000000U / M1_PWM_DEADTIME) / 4U);   
+    g_sClockSetup.ui32AsynClock   = CLOCK_GetFreq(kCLOCK_ScgSysOscAsyncDiv2Clk);
+    g_sClockSetup.ui16M1PwmFreq   = M1_PWM_FREQ; /* 10kHz */
+                                                 /* PWM module calculated as follows:
+                                                  * PWM_MOD = FTM_CLOCK / PWM_FREQUNCY = 84 MHz / 10 kHz = 8400   */
+    g_sClockSetup.ui16M1PwmModulo     = g_sClockSetup.ui32SystemClock / g_sClockSetup.ui16M1PwmFreq;
+    g_sClockSetup.ui16M1PwmDeadTime   = (g_sClockSetup.ui32SystemClock / (1000000000U / M1_PWM_DEADTIME) / 4U);
     g_sClockSetup.ui16M1SpeedLoopFreq = M1_SPEED_LOOP_FREQ; /* 1kHz */
-    
 }
 
 /*!
-* @brief   void InitFTM0(void)
-*           - Initialization of the FTM0 peripheral for motor M1
-*           - 3-phase center-aligned PWM
-*           - top signals have negative polarity due to MC33937
-*
-* @param   void
-*
-* @return  none
-*/
+ * @brief   void InitFTM0(void)
+ *           - Initialization of the FTM0 peripheral for motor M1
+ *           - 3-phase center-aligned PWM
+ *           - top signals have negative polarity due to MC33937
+ *
+ * @param   void
+ *
+ * @return  none
+ */
 void InitFTM0(void)
 {
     /* enable the clock for FTM0 */
@@ -132,7 +131,7 @@ void InitFTM0(void)
      * DTEN = 1 - dead-time enabled
      * SYNCEN = 1 - PWM update synchronization enabled
      * FAULTEN = 1 - fault control enabled
-    */
+     */
     /* complementary mode */
     FTM0->COMBINE = FTM_COMBINE_COMBINE0_MASK | FTM_COMBINE_COMP0_MASK | FTM_COMBINE_DTEN0_MASK |
                     FTM_COMBINE_SYNCEN0_MASK | FTM_COMBINE_FAULTEN0_MASK | FTM_COMBINE_COMBINE1_MASK |
@@ -192,26 +191,24 @@ void InitFTM0(void)
     /* ---------------------------------------- */
     /* Initialization FTM 3-phase PWM mc driver */
     g_sM1Pwm3ph.pui32PwmBase = (FTM_Type *)(FTM0); /* FTM0 base address */
-    g_sM1Pwm3ph.ui16ChanPhA = M1_PWM_PAIR_PHA; /* PWM phase A top&bottom channel pair number */
-    g_sM1Pwm3ph.ui16ChanPhB = M1_PWM_PAIR_PHB; /* PWM phase B top&bottom channel pair number */
-    g_sM1Pwm3ph.ui16ChanPhC = M1_PWM_PAIR_PHC; /* PWM phase C top&bottom channel pair number */
+    g_sM1Pwm3ph.ui16ChanPhA  = M1_PWM_PAIR_PHA;    /* PWM phase A top&bottom channel pair number */
+    g_sM1Pwm3ph.ui16ChanPhB  = M1_PWM_PAIR_PHB;    /* PWM phase B top&bottom channel pair number */
+    g_sM1Pwm3ph.ui16ChanPhC  = M1_PWM_PAIR_PHC;    /* PWM phase C top&bottom channel pair number */
 
     /* FTM Fault number for over current fault detection */
     g_sM1Pwm3ph.ui16FaultFixNum = M1_FAULT_NUM;
 }
 
-
-
 /*!
-* @brief   void InitSPI(void)
-*           - Initialization of the SPI peripheral for motor M1 3-phase MOSFET
-*             pre-driver
-*           - SPI configuration for MOSFET pre-driver MC33937
-*
-* @param   void
-*
-* @return  none
-*/
+ * @brief   void InitSPI(void)
+ *           - Initialization of the SPI peripheral for motor M1 3-phase MOSFET
+ *             pre-driver
+ *           - SPI configuration for MOSFET pre-driver MC33937
+ *
+ * @param   void
+ *
+ * @return  none
+ */
 void InitSPI(void)
 {
     /* Enable clock for SPI0 */
@@ -220,31 +217,31 @@ void InitSPI(void)
     lpspi_master_config_t masterConfig;
 
     /* Master config */
-    masterConfig.baudRate = 500000;
+    masterConfig.baudRate     = 500000;
     masterConfig.bitsPerFrame = 8;
-    masterConfig.cpol = kLPSPI_ClockPolarityActiveLow;
-    masterConfig.cpha = kLPSPI_ClockPhaseFirstEdge;
-    masterConfig.direction = kLPSPI_MsbFirst;
+    masterConfig.cpol         = kLPSPI_ClockPolarityActiveLow;
+    masterConfig.cpha         = kLPSPI_ClockPhaseFirstEdge;
+    masterConfig.direction    = kLPSPI_MsbFirst;
 
-    masterConfig.pcsToSckDelayInNanoSec = 1000000000 / masterConfig.baudRate;
-    masterConfig.lastSckToPcsDelayInNanoSec = 1000000000 / masterConfig.baudRate;
+    masterConfig.pcsToSckDelayInNanoSec        = 1000000000 / masterConfig.baudRate;
+    masterConfig.lastSckToPcsDelayInNanoSec    = 1000000000 / masterConfig.baudRate;
     masterConfig.betweenTransferDelayInNanoSec = 1000000000 / masterConfig.baudRate;
 
-    masterConfig.whichPcs = kLPSPI_Pcs2;
+    masterConfig.whichPcs           = kLPSPI_Pcs2;
     masterConfig.pcsActiveHighOrLow = kLPSPI_PcsActiveLow;
 
-    masterConfig.pinCfg = kLPSPI_SdiInSdoOut;
+    masterConfig.pinCfg        = kLPSPI_SdiInSdoOut;
     masterConfig.dataOutConfig = kLpspiDataOutRetained;
 
     LPSPI_MasterInit(LPSPI0, &masterConfig, LPSPI_MASTER_CLOCK_FREQ);
 
     /* Initialization of pins required by MC33937 predriver */
     g_sM1Driver3ph.sSpiData.pSpiBase = (LPSPI_Type *)(LPSPI0); /* SPI Base Address */
-    g_sM1Driver3ph.sSpiData.ui32Pcs = (1<<2); /* 1<<PCS number */
+    g_sM1Driver3ph.sSpiData.ui32Pcs  = (1 << 2);               /* 1<<PCS number */
 
     /* Enable PIN & PORT */
-    g_sM1Driver3ph.sSpiData.pGpioEnBase = (GPIO_Type *)(GPIOA); /* GPIOx Base Address */
-    g_sM1Driver3ph.sSpiData.ui32GpioEnPin = 15; /* pin number for driver enabled */
+    g_sM1Driver3ph.sSpiData.pGpioEnBase   = (GPIO_Type *)(GPIOA); /* GPIOx Base Address */
+    g_sM1Driver3ph.sSpiData.ui32GpioEnPin = 15;                   /* pin number for driver enabled */
 
     g_sM1Driver3ph.sSpiData.bResetControl = FALSE;
 
@@ -260,14 +257,14 @@ void InitSPI(void)
 }
 
 /*!
-* @brief   void InitFTM2(void)
-*           - Initialization of the FTM2 peripheral
-*           - performs slow control loop counter
-*
-* @param   void
-*
-* @return  none
-*/
+ * @brief   void InitFTM2(void)
+ *           - Initialization of the FTM2 peripheral
+ *           - performs slow control loop counter
+ *
+ * @param   void
+ *
+ * @return  none
+ */
 void InitFTM2(void)
 {
     /* enable clock to FTM module */
@@ -304,14 +301,14 @@ void InitFTM2(void)
 }
 
 /*!
-* @brief   void InitADC16(void)
-*           - Initialization of the ADC16 peripheral
-*           - Initialization of the A/D converter for current and voltage sensing
-*
-* @param   void
-*
-* @return  none
-*/
+ * @brief   void InitADC16(void)
+ *           - Initialization of the ADC16 peripheral
+ *           - Initialization of the A/D converter for current and voltage sensing
+ *
+ * @param   void
+ *
+ * @return  none
+ */
 void InitADC16(void)
 {
     uint16_t ui16Calib;
@@ -385,7 +382,7 @@ void InitADC16(void)
         ui16Calib = 0xffff;
     ADC2->G = ui16Calib;
 
-     /* Write default values to SC3 register */
+    /* Write default values to SC3 register */
     ADC0->SC3 = 0;
     ADC2->SC3 = 0;
 
@@ -397,9 +394,9 @@ void InitADC16(void)
     PCC->CLKCFG[PCC_ADC2_INDEX] = (PCC_CLKCFG_CGC(0));
 
     PCC->CLKCFG[PCC_ADC0_INDEX] = (PCC_CLKCFG_CGC(1) | PCC_CLKCFG_PCS(6));
-    PCC->CLKCFG[PCC_ADC2_INDEX] = (PCC_CLKCFG_CGC(1) | PCC_CLKCFG_PCS(6));    
-	
-	/* H/W trigger, DMA disabled, default reference pin pair */
+    PCC->CLKCFG[PCC_ADC2_INDEX] = (PCC_CLKCFG_CGC(1) | PCC_CLKCFG_PCS(6));
+
+    /* H/W trigger, DMA disabled, default reference pin pair */
     ADC0->SC2 = (ADC_SC2_ADTRG_MASK);
     ADC2->SC2 = (ADC_SC2_ADTRG_MASK);
 
@@ -408,42 +405,42 @@ void InitADC16(void)
     /**************************************/
     /* offset filter window */
     g_sM1AdcSensor.ui16OffsetFiltWindow = ADC_OFFSET_WINDOW;
-    
+
     /* Phase current measurement */
     /* Sector 1,6 - measured currents Ic & Ib */
     /* ADC0, channel Ic = M1_ADC0_PH_C, , SAMPLE & RESULT = 0 */
     g_sM1AdcSensor.sCurrSec16.pui32AdcBasePhaC = (ADC_Type *)ADC0;
-    g_sM1AdcSensor.sCurrSec16.ui16ChanNumPhaC = M1_ADC0_PH_C;
+    g_sM1AdcSensor.sCurrSec16.ui16ChanNumPhaC  = M1_ADC0_PH_C;
     /* ADC2, channel Ib = M1_ADC1_PH_B, , SAMPLE & RESULT = 0 */
     g_sM1AdcSensor.sCurrSec16.pui32AdcBasePhaB = (ADC_Type *)ADC2;
-    g_sM1AdcSensor.sCurrSec16.ui16ChanNumPhaB = M1_ADC1_PH_B;
+    g_sM1AdcSensor.sCurrSec16.ui16ChanNumPhaB  = M1_ADC1_PH_B;
 
     /* Sector 2,3 - measured currents Ic & Ia*/
     /* ADC0, channel Ic = M1_ADC0_PH_C, SAMPLE & RESULT = 0 */
     g_sM1AdcSensor.sCurrSec23.pui32AdcBasePhaC = (ADC_Type *)ADC0;
-    g_sM1AdcSensor.sCurrSec23.ui16ChanNumPhaC = M1_ADC0_PH_C;
+    g_sM1AdcSensor.sCurrSec23.ui16ChanNumPhaC  = M1_ADC0_PH_C;
     /* ADC1, channel Ia = M1_ADC1_PH_A, SAMPLE & RESULT = 0 */
     g_sM1AdcSensor.sCurrSec23.pui32AdcBasePhaA = (ADC_Type *)ADC2;
-    g_sM1AdcSensor.sCurrSec23.ui16ChanNumPhaA = M1_ADC1_PH_A;
-    
+    g_sM1AdcSensor.sCurrSec23.ui16ChanNumPhaA  = M1_ADC1_PH_A;
+
     /* Sector 4,5 - measured currents Ia & Ib */
     /* ADC0, channel Ib = M1_ADC0_PH_B, SAMPLE & RESULT = 0 */
     g_sM1AdcSensor.sCurrSec45.pui32AdcBasePhaA = (ADC_Type *)ADC0;
-    g_sM1AdcSensor.sCurrSec45.ui16ChanNumPhaA = M1_ADC0_PH_A;
+    g_sM1AdcSensor.sCurrSec45.ui16ChanNumPhaA  = M1_ADC0_PH_A;
     /* ADC1, channel Ia = M1_ADC1_PH_A, SAMPLE & RESULT = 0  */
     g_sM1AdcSensor.sCurrSec45.pui32AdcBasePhaB = (ADC_Type *)ADC2;
-    g_sM1AdcSensor.sCurrSec45.ui16ChanNumPhaB = M1_ADC1_PH_B;
-    
+    g_sM1AdcSensor.sCurrSec45.ui16ChanNumPhaB  = M1_ADC1_PH_B;
+
     /* UDCbus channel measurement */
     /*  channel Udcb = M1_ADC1_UDCB, SAMPLE & RESULT = 1 */
     g_sM1AdcSensor.pui32UdcbAdcBase = (ADC_Type *)ADC2;
-    g_sM1AdcSensor.ui16ChanNumVDcb = M1_ADC1_UDCB;
-    
+    g_sM1AdcSensor.ui16ChanNumVDcb  = M1_ADC1_UDCB;
+
     /* Auxilliary channel measurement */
     /*  channel Aux = M1_ADC1_AUX, SAMPLE & RESULT = 1 */
     g_sM1AdcSensor.pui32AuxAdcBase = (ADC_Type *)ADC0;
-    g_sM1AdcSensor.ui16ChanNumAux = M1_ADC0_AUX;
-    
+    g_sM1AdcSensor.ui16ChanNumAux  = M1_ADC0_AUX;
+
     /* Assign channels and init all pointers */
     MCDRV_Curr3Ph2ShChanAssignInit(&g_sM1AdcSensor);
 
@@ -454,12 +451,12 @@ void InitADC16(void)
 }
 
 /*!
-* @brief      Initialization of the PDB for current and voltage sensing
-*
-* @param      void
-*
-* @return     none
-*/
+ * @brief      Initialization of the PDB for current and voltage sensing
+ *
+ * @param      void
+ *
+ * @return     none
+ */
 void InitPDB(void)
 {
     /* enable clock for PDB module */
@@ -487,7 +484,7 @@ void InitPDB(void)
     /* Set counters modulo */
     PDB0->MOD = 0xffff;
     PDB2->MOD = 0xffff;
-    
+
     /* LDOK needed for update of PDBn->MOD and PDBn_CH0DLYm values */
     PDB0->SC |= PDB_SC_LDOK_MASK;
     PDB2->SC |= PDB_SC_LDOK_MASK;

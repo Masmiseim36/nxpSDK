@@ -19,18 +19,18 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_PDB_BASEADDR PDB0
-#define DEMO_PDB_MODULUS_VALUE 0xFFFFU
-#define DEMO_PDB_DELAY_VALUE 0U
-#define DEMO_PDB_DAC_CHANNEL kPDB_DACTriggerChannel0
+#define DEMO_PDB_BASEADDR           PDB0
+#define DEMO_PDB_MODULUS_VALUE      0xFFFFU
+#define DEMO_PDB_DELAY_VALUE        0U
+#define DEMO_PDB_DAC_CHANNEL        kPDB_DACTriggerChannel0
 #define DEMO_PDB_DAC_INTERVAL_VALUE 0xFFFFU
-#define DEMO_DAC32_BASEADDR DAC0
-#define DEMO_DMAMUX_BASEADDR DMAMUX
-#define DEMO_DMA_CHANNEL 0U
-#define DEMO_DMA_DAC_SOURCE 56U
-#define DEMO_DMA_BASEADDR DMA0
-#define DAC_DATA_REG_ADDR 0x4003f000U
-#define DEMO_DMA_IRQ_ID DMA0_IRQn
+#define DEMO_DAC32_BASEADDR         DAC0
+#define DEMO_DMAMUX_BASEADDR        DMAMUX
+#define DEMO_DMA_CHANNEL            0U
+#define DEMO_DMA_DAC_SOURCE         56U
+#define DEMO_DMA_BASEADDR           DMA0
+#define DAC_DATA_REG_ADDR           0x4003f000U
+#define DEMO_DMA_IRQ_ID             DMA0_IRQn
 #define DEMO_DAC_USED_BUFFER_SIZE 32U
 /*******************************************************************************
  * Prototypes

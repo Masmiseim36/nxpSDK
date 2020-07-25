@@ -48,7 +48,10 @@
 
 #define BL_FLASH_VERIFY_DISABLE (0)
 
-#define BL_ENABLE_CRC_CHECK (1)
+#if !defined(BL_TARGET_RAM)
+#define BL_FEATURE_CRC_CHECK (1)
+#define BL_FEATURE_CRC_ASSERT (1)
+#endif
 
 #define BL_FEATURE_READ_MEMORY (1)
 
@@ -66,7 +69,7 @@
 // After coming out of reset the bootloader will spin in a peripheral detection
 // loop for this amount of time. A zero value means no time out.
 #if DEBUG
-#define BL_DEFAULT_PERIPHERAL_DETECT_TIMEOUT 0
+#define BL_DEFAULT_PERIPHERAL_DETECT_TIMEOUT 5000
 #else
 #define BL_DEFAULT_PERIPHERAL_DETECT_TIMEOUT 5000
 #endif // DEBUG

@@ -1,6 +1,6 @@
 /*
  * Copyright 2013 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -339,9 +339,9 @@ NTElectrode.prototype.OnLinkClicked = function()
 
     // scope variables
     var vars = [ 
-        {"variable":vname_signal, "visible":true, "y_block":0 }, 
-        {"variable":vname_baseline, "visible":true, "y_block":0 },
-        {"variable":vname_status, "visible":true, "y_block":1 },
+        {"variable":vname_signal, "visible":true, "color":3026413, "y_block":0 }, 
+        {"variable":vname_baseline, "visible":true, "color":3026413, "y_block":0 },
+        {"variable":vname_status, "visible":true, "color":3026413, "y_block":1 },
     ]; 
 
     // scope Y-blocks

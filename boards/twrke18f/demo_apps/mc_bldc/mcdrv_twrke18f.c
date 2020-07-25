@@ -64,10 +64,10 @@ void MCDRV_Init_M1(void)
 {
     /* Init application clock dependent variables */
     InitClock();
-    
+
     /* SPI peripheral init for 3-phase MOSFET pre-driver configuration */
     M1_MCDRV_DRV3PH_INIT();
-	
+
     /* Init ADC */
     M1_MCDRV_ADC_PERIPH_INIT();
 
@@ -94,12 +94,12 @@ void MCDRV_Init_M1(void)
 void InitClock(void)
 {
     g_sClockSetup.ui32SystemClock = CLOCK_GetFreq(kCLOCK_CoreSysClk);
-    g_sClockSetup.ui32AsynClock = CLOCK_GetFreq(kCLOCK_ScgSysOscAsyncDiv2Clk);
-    g_sClockSetup.ui16PwmFreq = PWM_FREQ; /* 20 kHz */
+    g_sClockSetup.ui32AsynClock   = CLOCK_GetFreq(kCLOCK_ScgSysOscAsyncDiv2Clk);
+    g_sClockSetup.ui16PwmFreq     = PWM_FREQ; /* 20 kHz */
     /* PWM module calculated as follows:
      * PWM_MOD = CORE_CLOCK / PWM_FREQUNCY = 160 MHz / 20 kHz = 8000 */
-    g_sClockSetup.ui16PwmModulo = g_sClockSetup.ui32SystemClock / g_sClockSetup.ui16PwmFreq;
-    g_sClockSetup.ui16PwmDeadTime = (g_sClockSetup.ui32SystemClock / (1000000000U / PWM_DEADTIME) / 4U);   
+    g_sClockSetup.ui16PwmModulo    = g_sClockSetup.ui32SystemClock / g_sClockSetup.ui16PwmFreq;
+    g_sClockSetup.ui16PwmDeadTime  = (g_sClockSetup.ui32SystemClock / (1000000000U / PWM_DEADTIME) / 4U);
     g_sClockSetup.ui16CtrlLoopFreq = CTRL_LOOP_FREQ; /* 1 kHz */
 }
 
@@ -197,17 +197,16 @@ void InitFTM0(void)
                  FTM_SC_PWMEN4(TRUE) | FTM_SC_PWMEN5(TRUE));
 
     /* Initialization FTM 3-phase PWM MC driver */
-    g_sM1Pwm3ph.pui32PwmBase = (FTM_Type *)(FTM0);    /* FTM0 base address */
-    g_sM1Pwm3ph.ui16ChanPhA = M1_PWM_PAIR_PHA; /* PWM phase A top&bottom channel pair number */
-    g_sM1Pwm3ph.ui16ChanPhB = M1_PWM_PAIR_PHB; /* PWM phase B top&bottom channel pair number */
-    g_sM1Pwm3ph.ui16ChanPhC = M1_PWM_PAIR_PHC; /* PWM phase C top&bottom channel pair number */
+    g_sM1Pwm3ph.pui32PwmBase = (FTM_Type *)(FTM0); /* FTM0 base address */
+    g_sM1Pwm3ph.ui16ChanPhA  = M1_PWM_PAIR_PHA;    /* PWM phase A top&bottom channel pair number */
+    g_sM1Pwm3ph.ui16ChanPhB  = M1_PWM_PAIR_PHB;    /* PWM phase B top&bottom channel pair number */
+    g_sM1Pwm3ph.ui16ChanPhC  = M1_PWM_PAIR_PHC;    /* PWM phase C top&bottom channel pair number */
 
     /* Initialization of PWM modulo */
     g_sM1Pwm3ph.ui16PwmModulo = g_sClockSetup.ui16PwmModulo;
 
     /* Initialization of BLDC commutation table */
     g_sM1Pwm3ph.pcBldcTable = &bldcCommutationTableComp[0];
-    
 }
 
 /*!
@@ -236,10 +235,10 @@ void InitFTM1(void)
     /* Core clock as source clock for FTM */
     /* Pre-scale factor 128 */
     FTM1->SC = FTM_SC_PS(7) | FTM_SC_CLKS(1);
-    
+
     /* calculate frequency of timer used for forced commutation
      * System clock divided by 2^FTM_prescaler */
-    g_sClockSetup.ui32CmtTimerFreq = g_sClockSetup.ui32SystemClock >> (FTM1->SC&FTM_SC_PS_MASK);
+    g_sClockSetup.ui32CmtTimerFreq = g_sClockSetup.ui32SystemClock >> (FTM1->SC & FTM_SC_PS_MASK);
 
     /* Enable Output Compare interrupt, output Compare, Software Output
      * Compare only (ELSnB:ELSnA = 0:0, output pin is not controlled by FTM) */
@@ -252,8 +251,8 @@ void InitFTM1(void)
     NVIC_SetPriority(FTM1_IRQn, 1);
 
     /* initialization FTM time event driver */
-    g_sM1CmtTmr.pui32FtmBase = (FTM_Type *)(FTM1); /* FTM1 base address */
-    g_sM1CmtTmr.ui16ChannelNum = M1_FTM_CMT_CHAN;  /* FTM1 compare channel selection */
+    g_sM1CmtTmr.pui32FtmBase   = (FTM_Type *)(FTM1); /* FTM1 base address */
+    g_sM1CmtTmr.ui16ChannelNum = M1_FTM_CMT_CHAN;    /* FTM1 compare channel selection */
 }
 
 /*!
@@ -313,31 +312,31 @@ void InitSPI(void)
     lpspi_master_config_t masterConfig;
 
     /* Master config */
-    masterConfig.baudRate = 500000;
+    masterConfig.baudRate     = 500000;
     masterConfig.bitsPerFrame = 8;
-    masterConfig.cpol = kLPSPI_ClockPolarityActiveLow;
-    masterConfig.cpha = kLPSPI_ClockPhaseFirstEdge;
-    masterConfig.direction = kLPSPI_MsbFirst;
+    masterConfig.cpol         = kLPSPI_ClockPolarityActiveLow;
+    masterConfig.cpha         = kLPSPI_ClockPhaseFirstEdge;
+    masterConfig.direction    = kLPSPI_MsbFirst;
 
-    masterConfig.pcsToSckDelayInNanoSec = 1000000000 / masterConfig.baudRate;
-    masterConfig.lastSckToPcsDelayInNanoSec = 1000000000 / masterConfig.baudRate;
+    masterConfig.pcsToSckDelayInNanoSec        = 1000000000 / masterConfig.baudRate;
+    masterConfig.lastSckToPcsDelayInNanoSec    = 1000000000 / masterConfig.baudRate;
     masterConfig.betweenTransferDelayInNanoSec = 1000000000 / masterConfig.baudRate;
 
-    masterConfig.whichPcs = kLPSPI_Pcs2;
+    masterConfig.whichPcs           = kLPSPI_Pcs2;
     masterConfig.pcsActiveHighOrLow = kLPSPI_PcsActiveLow;
 
-    masterConfig.pinCfg = kLPSPI_SdiInSdoOut;
+    masterConfig.pinCfg        = kLPSPI_SdiInSdoOut;
     masterConfig.dataOutConfig = kLpspiDataOutRetained;
 
     LPSPI_MasterInit(LPSPI0, &masterConfig, LPSPI_MASTER_CLOCK_FREQ);
 
     /* Initialization of pins required by MC33937 predriver */
     g_sM1Driver3ph.sSpiData.pSpiBase = (LPSPI_Type *)(LPSPI0); /* SPI Base Address */
-    g_sM1Driver3ph.sSpiData.ui32Pcs = (1<<2); /* 1<<PCS number */
+    g_sM1Driver3ph.sSpiData.ui32Pcs  = (1 << 2);               /* 1<<PCS number */
 
     /* Enable PIN & PORT */
-    g_sM1Driver3ph.sSpiData.pGpioEnBase = (GPIO_Type *)(GPIOA); /* GPIOx Base Address */
-    g_sM1Driver3ph.sSpiData.ui32GpioEnPin = 15; /* pin number for driver enabled */
+    g_sM1Driver3ph.sSpiData.pGpioEnBase   = (GPIO_Type *)(GPIOA); /* GPIOx Base Address */
+    g_sM1Driver3ph.sSpiData.ui32GpioEnPin = 15;                   /* pin number for driver enabled */
 
     g_sM1Driver3ph.sSpiData.bResetControl = FALSE;
 
@@ -366,12 +365,8 @@ void InitADC16(void)
     uint16_t ui16Calib;
 
     /* ADC channel number assignment array to be passed to MC ADC driver */
-    static uint16_t ui16AdcArray[12] = {ADC0_PH_A, ADC1_PH_A,
-                                        ADC0_PH_B, ADC1_PH_B,
-                                        ADC0_PH_C, ADC1_PH_C,
-                                        ADC0_UDCB, ADC1_UDCB,
-                                        ADC0_IDCB, ADC1_IDCB,
-                                        ADC0_AUX,  ADC1_AUX};
+    static uint16_t ui16AdcArray[12] = {ADC0_PH_A, ADC1_PH_A, ADC0_PH_B, ADC1_PH_B, ADC0_PH_C, ADC1_PH_C,
+                                        ADC0_UDCB, ADC1_UDCB, ADC0_IDCB, ADC1_IDCB, ADC0_AUX,  ADC1_AUX};
 
     /* Enable clock for ADC0 and ADC1 modules*/
     PCC->CLKCFG[PCC_ADC2_INDEX] = (PCC_CLKCFG_CGC(0));
@@ -457,7 +452,7 @@ void InitADC16(void)
 
     /* Prepare first measurement */
     /* Pass initialization structure to ADC MC driver */
-    g_sM1Adc16Init.ui16AdcArray = (&ui16AdcArray[0]);
+    g_sM1Adc16Init.ui16AdcArray  = (&ui16AdcArray[0]);
     g_sM1Adc16Init.pui32Adc0Base = (ADC_Type *)ADC0;
     g_sM1Adc16Init.pui32Adc1Base = (ADC_Type *)ADC2;
     MCDRV_Adc16Init_twr_ke18(&g_sM1AdcSensor, &g_sM1Adc16Init);

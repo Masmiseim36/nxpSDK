@@ -1,6 +1,6 @@
 /*
- * Copyright 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright (c) 2016, Freescale Semiconductor, Inc.
+ * Copyright 2016-2018 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -56,10 +56,11 @@ bool_t MCDRV_AssignBemfChannel_hvp_kv58(mcdrv_hsadc_t *this);
  *
  * @return boot_t true on success
  */
-bool_t MCDRV_BemfVoltageGet_hvp_kv58(mcdrv_hsadc_t *this);
+bool_t MCDRV_BemfVoltageGet_hvp_kv58(mcdrv_hsadc_t *this); 
 
 #ifdef __cplusplus
 }
 #endif
 
 #endif /* _MCDRV_ADC_HSADC_HVP_KV58_H_ */
+

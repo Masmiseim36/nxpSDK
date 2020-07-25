@@ -15,8 +15,8 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_DAC32_BASEADDR DAC0
-#define DEMO_DAC32_IRQ_ID DAC0_IRQn
+#define DEMO_DAC32_BASEADDR         DAC0
+#define DEMO_DAC32_IRQ_ID           DAC0_IRQn
 #define DEMO_DAC32_IRQ_HANDLER_FUNC DAC0_IRQHandler
 
 /*******************************************************************************

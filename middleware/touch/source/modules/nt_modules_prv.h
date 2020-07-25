@@ -1,6 +1,6 @@
 /*
  * Copyright 2013 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -31,7 +31,7 @@
  *
  * \{
  */
-   
+
 /* Forward declaration */
 struct nt_module;
 struct nt_module_gpio_data;
@@ -45,10 +45,10 @@ struct nt_module_cs_data;
  */
 union nt_module_special_data
 {
-  struct nt_module_gpio_data    * gpio;          /*!< GPIO module run-time data */
-  struct nt_module_gpioint_data * gpioint;       /*!< GPIO interrupt module run-time data */
-  struct nt_module_tsi_data     * tsi;           /*!< TSI module run-time data */
-  struct nt_module_cs_data      * cs;            /*!< CS module run-time data */
+    struct nt_module_gpio_data *gpio;       /*!< GPIO module run-time data */
+    struct nt_module_gpioint_data *gpioint; /*!< GPIO interrupt module run-time data */
+    struct nt_module_tsi_data *tsi;         /*!< TSI module run-time data */
+    struct nt_module_cs_data *cs;           /*!< CS module run-time data */
 };
 
 /**
@@ -56,17 +56,20 @@ union nt_module_special_data
  *  a generic behaviour of the Module. This is the main internal structure for a module in
  *  the NT library. A list of pointers to the electrode RAM data structure is created.
  */
-struct nt_module_data {
-  const struct nt_module        * rom;                  /*!< Pointer to the module parameters defined by the user. */
-  struct nt_electrode_data      ** electrodes;          /*!< Pointer to the list of electrodes. Can't be NULL. */
-  enum nt_module_mode           active_mode;            /*!< Active mode of the module. */
-  uint32_t                      flags;                  /*!< Module's symptoms. */
-  uint32_t                      safety_last_time;       /*!< System time of last safety process function execution */ 
-  uint32_t                      safety_delay_last_time; /*!< System time of last safety delay function execution */ 
-  uint8_t                       safety_last_test;       /*!< Numer of the last executed safety test */
-  uint8_t                       safety_last_adj_test;   /*!< Numer of the last executed adj safety test */
-  uint8_t                       electrodes_cnt;         /*!< Electrode's count. */  
-  union nt_module_special_data  special_data;           /*!< Pointer to the special data (for example run-time data for the GPIO). */
+struct nt_module_data
+{
+    const struct nt_module *rom;           /*!< Pointer to the module parameters defined by the user. */
+    struct nt_electrode_data **electrodes; /*!< Pointer to the list of electrodes. Can't be NULL. */
+    enum nt_module_mode active_mode;       /*!< Active mode of the module. */
+    uint32_t flags;                        /*!< Module's symptoms. */
+    uint32_t safety_last_time;             /*!< System time of last safety process function execution */
+    uint32_t safety_delay_last_time;       /*!< System time of last safety delay function execution */
+    uint8_t safety_last_test;              /*!< Numer of the last executed safety test */
+    uint8_t safety_last_adj_test;          /*!< Numer of the last executed adj safety test */
+    uint8_t electrodes_cnt;                /*!< Electrode's count. */
+    uint8_t electrode_last;                /*!< Last assigned electrode to be measured. */
+    union nt_module_special_data
+        special_data; /*!< Pointer to the special data (for example run-time data for the GPIO). */
 };
 
 /**
@@ -79,17 +82,27 @@ struct nt_module_data {
  */
 struct nt_module_interface
 {
-  int32_t (* init)(struct nt_module_data *module);              /*!< The initialization of the module. */
-  int32_t (* trigger)(struct nt_module_data *module);           /*!< Send a trigger event into the module to perform hardware reading of the touches. */
-  int32_t (* process)(struct nt_module_data *module);           /*!< Process the read data from the trigger event. */
-  int32_t (* recalibrate)(struct nt_module_data *module, void *configuration);       /*!< Force recalibration of the module in the current mode. */
-  int32_t (* electrode_enable)(struct nt_module_data *module, const uint32_t elec_index);       /*!< Enable the module electrode in hardware. */
-  int32_t (* electrode_disable)(struct nt_module_data *module, const uint32_t elec_index);      /*!< Disable the module electrode in hardware. */
-  int32_t (* change_mode)(struct nt_module_data *module, const enum nt_module_mode mode, const struct nt_electrode * electrode); /*!< Change the the mode of the module. */
-  int32_t (* load_configuration)(struct nt_module_data *module, const enum nt_module_mode mode, const void* config); /*!<  Load the configuration for the selected mode. */
-  int32_t (* save_configuration)(struct nt_module_data *module, const enum nt_module_mode mode, void* config); /*!<  Save the configuration of the selected mode. */
-  const char* name;                                             /*!< A name of the variable of this type, used for FreeMASTER support purposes. */
-  const uint32_t params_size;                                   /*!< Structure size */ 
+    int32_t (*init)(struct nt_module_data *module);    /*!< The initialization of the module. */
+    int32_t (*trigger)(struct nt_module_data *module); /*!< Send a trigger event into the module to perform hardware
+                                                          reading of the touches. */
+    int32_t (*process)(struct nt_module_data *module); /*!< Process the read data from the trigger event. */
+    int32_t (*recalibrate)(struct nt_module_data *module,
+                           void *configuration); /*!< Force recalibration of the module in the current mode. */
+    int32_t (*electrode_enable)(struct nt_module_data *module,
+                                const uint32_t elec_index); /*!< Enable the module electrode in hardware. */
+    int32_t (*electrode_disable)(struct nt_module_data *module,
+                                 const uint32_t elec_index); /*!< Disable the module electrode in hardware. */
+    int32_t (*change_mode)(struct nt_module_data *module,
+                           const enum nt_module_mode mode,
+                           const struct nt_electrode *electrode); /*!< Change the the mode of the module. */
+    int32_t (*load_configuration)(struct nt_module_data *module,
+                                  const enum nt_module_mode mode,
+                                  const void *config); /*!<  Load the configuration for the selected mode. */
+    int32_t (*save_configuration)(struct nt_module_data *module,
+                                  const enum nt_module_mode mode,
+                                  void *config); /*!<  Save the configuration of the selected mode. */
+    const char *name;           /*!< A name of the variable of this type, used for FreeMASTER support purposes. */
+    const uint32_t params_size; /*!< Structure size */
 };
 
 /**
@@ -98,7 +111,7 @@ struct nt_module_interface
  * General Private Function definition of the modules.
  *
  * \{
- */ 
+ */
 
 #ifdef __cplusplus
 extern "C" {
@@ -107,7 +120,7 @@ extern "C" {
 /**
  * \brief Get the module data structure pointer.
  * \param module Pointer to the module user parameter structure.
- * \return Pointer to the data module structure that is represented by the handled user parameter structure pointer.        
+ * \return Pointer to the data module structure that is represented by the handled user parameter structure pointer.
  */
 struct nt_module_data *_nt_module_get_data(const struct nt_module *module);
 
@@ -161,8 +174,7 @@ uint32_t _nt_module_count_electrodes(const struct nt_module *module);
  * \param flags The flags to be set.
  * \return void
  */
-static inline void _nt_module_set_flag(struct nt_module_data *module,
-                                      uint32_t flags)
+static inline void _nt_module_set_flag(struct nt_module_data *module, uint32_t flags)
 {
     NT_ASSERT(module != NULL);
     module->flags |= flags;
@@ -174,8 +186,7 @@ static inline void _nt_module_set_flag(struct nt_module_data *module,
  * \param flags The flags to be cleared.
  * \return void
  */
-static inline void _nt_module_clear_flag(struct nt_module_data *module,
-                                        uint32_t flags)
+static inline void _nt_module_clear_flag(struct nt_module_data *module, uint32_t flags)
 {
     module->flags &= (~flags);
 }
@@ -187,8 +198,7 @@ static inline void _nt_module_clear_flag(struct nt_module_data *module,
  * \return Non-zero if any of the tested flags are set. This is bit-wise AND of
  *     the control flags and the flags parameter.
  */
-static inline uint32_t _nt_module_get_flag(struct nt_module_data *module,
-                                          uint32_t flags)
+static inline uint32_t _nt_module_get_flag(struct nt_module_data *module, uint32_t flags)
 {
     return (module->flags & flags);
 }
@@ -209,8 +219,7 @@ static inline uint32_t _nt_module_get_instance(const struct nt_module_data *modu
  * \param mode
  * \return None.
  */
-static inline void _nt_module_set_mode(struct nt_module_data *module,
-                                      uint32_t mode)
+static inline void _nt_module_set_mode(struct nt_module_data *module, uint32_t mode)
 {
     module->active_mode = (enum nt_module_mode)mode;
 }
@@ -232,5 +241,5 @@ static inline uint32_t _nt_module_get_mode(struct nt_module_data *module)
 /** \} end of modules_api_private group */
 /** \} end of gmodules_private group */
 /** \} end of modules_private group */
-                                        
+
 #endif /* NT_MODULES_PRV_H_ */

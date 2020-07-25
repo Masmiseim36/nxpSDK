@@ -1,6 +1,6 @@
 /*
  * Copyright 2013 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -31,16 +31,15 @@
  * \{
  */
 
-   
-   
-/** 
- *Slider flags. 
+/**
+ *Slider flags.
  */
-enum nt_control_slider_flags {
-    NT_SLIDER_INVALID_POSITION_FLAG = 1 << NT_FLAGS_SPECIFIC_SHIFT(0),  /*!< Slider invalid position flag. */
-    NT_SLIDER_DIRECTION_FLAG        = 1 << NT_FLAGS_SPECIFIC_SHIFT(1),  /*!< Slider direction flag. */
-    NT_SLIDER_MOVEMENT_FLAG         = 1 << NT_FLAGS_SPECIFIC_SHIFT(2),  /*!< Slider movement flag.*/
-    NT_SLIDER_TOUCH_FLAG            = 1 << NT_FLAGS_SPECIFIC_SHIFT(3),  /*!< Slider touch flag. */
+enum nt_control_slider_flags
+{
+    NT_SLIDER_INVALID_POSITION_FLAG = 1 << NT_FLAGS_SPECIFIC_SHIFT(0), /*!< Slider invalid position flag. */
+    NT_SLIDER_DIRECTION_FLAG        = 1 << NT_FLAGS_SPECIFIC_SHIFT(1), /*!< Slider direction flag. */
+    NT_SLIDER_MOVEMENT_FLAG         = 1 << NT_FLAGS_SPECIFIC_SHIFT(2), /*!< Slider movement flag.*/
+    NT_SLIDER_TOUCH_FLAG            = 1 << NT_FLAGS_SPECIFIC_SHIFT(3), /*!< Slider touch flag. */
 };
 
 /**
@@ -49,9 +48,10 @@ enum nt_control_slider_flags {
  *  You must allocate this structure and put a pointer into the nt_control_slider_control
  *  structure when it is being registered in the system.
  */
-struct nt_control_slider_data {
-    nt_control_slider_callback  callback;       /*!< Slider Callback handler. */
-    uint8_t                     position;       /*!< Position. */
+struct nt_control_slider_data
+{
+    nt_control_slider_callback callback; /*!< Slider Callback handler. */
+    uint8_t position;                    /*!< Position. */
 };
 
 #ifdef __cplusplus

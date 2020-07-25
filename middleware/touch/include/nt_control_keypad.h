@@ -1,6 +1,6 @@
 /*
  * Copyright 2013 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -22,7 +22,7 @@
  * electrode by several keys. Each key is defined by a set of electrodes that
  * all must be touched, in order to report the "key press" event.
  * The keypad enables to detect so called multi-touch event when more keys were touched
- * simultaneously. The key combinations consist of two or more "key press" events 
+ * simultaneously. The key combinations consist of two or more "key press" events
  * together can be defined by user for the group or single electrode based keypad.
  *
  * The Keypad Control provides the Key status values and is able to generate Key Touch,
@@ -38,37 +38,39 @@
 #include "nt_controls.h"
 #include "nt_types.h"
 
-#define NT_CONTROL_KEYPAD_NAME  "nt_control_keypad_interface"
+#define NT_CONTROL_KEYPAD_NAME "nt_control_keypad_interface"
 
 /** Keypad event types. */
-enum nt_control_keypad_event {
+enum nt_control_keypad_event
+{
     NT_KEYPAD_RELEASE     = 0, /*!< Release event */
     NT_KEYPAD_TOUCH       = 1, /*!< Key-touch event */
     NT_KEYPAD_AUTOREPEAT  = 2, /*!< Auto-repeat event */
-    NT_KEYPAD_MULTI_TOUCH = 3  /*!< Key-multi touch event */        
+    NT_KEYPAD_MULTI_TOUCH = 3  /*!< Key-multi touch event */
 };
 
 /**
  * Keypad event callback function pointer type.
  */
-typedef void (* nt_control_keypad_callback)(const struct nt_control *control,
-                                    enum nt_control_keypad_event event,        
-                                    uint32_t index);
+typedef void (*nt_control_keypad_callback)(const struct nt_control *control,
+                                           enum nt_control_keypad_event event,
+                                           uint32_t index);
 
 /**
  *  The main structure representing the Keypad Control.
  *
- *  An instance of this data type represents the Keypad Control. You must initialize all the members before registering the control in
- *  the system. This structure can be allocated in ROM.
+ *  An instance of this data type represents the Keypad Control. You must initialize all the members before registering
+ * the control in the system. This structure can be allocated in ROM.
  *
  */
-struct nt_control_keypad {
-    uint32_t const   *groups;          /*!< Pointer to the group definitions. An array of integers, where bits in 
-                                            the integer represents electrodes in a group. Enable key groups feature. */
-    uint32_t const   *multi_touch;     /*!< Key combination for multitouch, depending on the key representation by one
-                                            or more electrodes. Enable muti-touch feature. */
-    uint8_t          groups_size;      /*!< Number of groups. */ 
-    uint8_t          multi_touch_size; /*!< Number of multi-touch key combination. */     
+struct nt_control_keypad
+{
+    uint32_t const *groups;      /*!< Pointer to the group definitions. An array of integers, where bits in
+                                      the integer represents electrodes in a group. Enable key groups feature. */
+    uint32_t const *multi_touch; /*!< Key combination for multitouch, depending on the key representation by one
+                                      or more electrodes. Enable muti-touch feature. */
+    uint8_t groups_size;         /*!< Number of groups. */
+    uint8_t multi_touch_size;    /*!< Number of multi-touch key combination. */
 };
 
 /** An interface structure, which contains pointers to the entry points of the Keypad
@@ -117,17 +119,16 @@ extern "C" {
  * \return none
  *
  * Enable or Disable the only one key press is valid at once. The behaviour is following:
- * Once the feature is enabled the first touched key is valid and all other are ignored 
+ * Once the feature is enabled the first touched key is valid and all other are ignored
  * since the active electrode is pressed.
  * Example:
  * \code
- *  
+ *
  *  // switch off the only one key is valid functionality
  *  nt_control_keypad_only_one_key_valid(&my_keypad_control, 0);
  * \endcode
- */  
-void nt_control_keypad_only_one_key_valid(const struct nt_control *control,
-                                       uint32_t enable);
+ */
+void nt_control_keypad_only_one_key_valid(const struct nt_control *control, uint32_t enable);
 
 /**
  * \brief Registers the Keypad event handler function.
@@ -139,29 +140,28 @@ void nt_control_keypad_only_one_key_valid(const struct nt_control *control,
  * If the callback parameter is NULL, the callback is disabled.
  * Example:
  * \code
- *  
+ *
  *  //Create the callback function for keypad
  *  static void my_keypad_cb(const struct nt_control *control,
  *                           enum nt_control_keypad_event event,
  *                           uint32_t index)
  *  {
  *    (void)control;
- *     char* event_names[] = 
+ *     char* event_names[] =
  *     {
  *      "NT_KEYPAD_RELEASE",
  *      "NT_KEYPAD_TOUCH",
  *      "NT_KEYPAD_AUTOREPEAT",
-*      };
+ *      };
  *
  *    printf("New keypad control event %s on key: %d.", event_names[event], index);
  *  }
  *
- *  // register the callback function for keypad 
+ *  // register the callback function for keypad
  *  nt_control_keypad_register_touch_callback(&my_keypad_control, my_keypad_touch_cb);
  * \endcode
  */
-void nt_control_keypad_register_callback(const struct nt_control *control,
-                                       nt_control_keypad_callback callback);
+void nt_control_keypad_register_callback(const struct nt_control *control, nt_control_keypad_callback callback);
 
 /**
  * \brief Set the auto-repeat rate.
@@ -171,13 +171,12 @@ void nt_control_keypad_register_callback(const struct nt_control *control,
  * \return none
  * Example:
  * \code
- *  
+ *
  *  //Set autorepeat rate to 100 ticks and start after 1000 ticks
  *  nt_control_keypad_set_autorepeat_rate(&my_keypad_control, 100, 1000);
  * \endcode
  */
-void nt_control_keypad_set_autorepeat_rate(const struct nt_control *control,
-                                   uint32_t value, uint32_t start_value);
+void nt_control_keypad_set_autorepeat_rate(const struct nt_control *control, uint32_t value, uint32_t start_value);
 
 /**
  * \brief Get the auto-repeat rate.
@@ -205,7 +204,7 @@ uint32_t nt_control_keypad_get_autorepeat_rate(const struct nt_control *control)
  * in the release state.
  * Example:
  * \code
- * uint32_t touched; 
+ * uint32_t touched;
  * // Get the state of first key Keypad control
  * touched = nt_control_keypad_is_button_touched(&my_keypad_control, 0);
  * if(touched)
@@ -214,8 +213,7 @@ uint32_t nt_control_keypad_get_autorepeat_rate(const struct nt_control *control)
  *      printf("The first key of the Keypad control is currently not touched.);
  * \endcode
  */
-uint32_t nt_control_keypad_is_button_touched(const struct nt_control *control,
-                                     uint32_t index);
+uint32_t nt_control_keypad_is_button_touched(const struct nt_control *control, uint32_t index);
 
 /** \} end of keypad_api group */
 /** \} end of keypad group */

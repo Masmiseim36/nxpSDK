@@ -314,11 +314,11 @@ uint32_t CLOCK_GetSysClkFreq(scg_sys_clk_t type)
             break;
     }
 
-    freq /= (sysClkConfig.divCore + 1U); /* divided by the DIVCORE firstly. */
+    freq /= ((uint32_t)sysClkConfig.divCore + 1UL); /* divided by the DIVCORE firstly. */
 
     if (kSCG_SysClkSlow == type)
     {
-        freq /= (sysClkConfig.divSlow + 1U);
+        freq /= ((uint32_t)sysClkConfig.divSlow + 1UL);
     }
     else
     {

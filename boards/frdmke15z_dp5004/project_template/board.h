@@ -41,12 +41,12 @@
 
 /*! @brief The UART to use for debug messages. */
 #define BOARD_USE_UART
-#define BOARD_DEBUG_UART_TYPE kSerialPort_Uart
+#define BOARD_DEBUG_UART_TYPE     kSerialPort_Uart
 #define BOARD_DEBUG_UART_BASEADDR (uint32_t) LPUART1
 #define BOARD_DEBUG_UART_INSTANCE 1U
-#define BOARD_DEBUG_UART_CLKSRC kCLOCK_IpSrcSysOscAsync
-#define BOARD_UART_IRQ LPUART1_IRQn
-#define BOARD_UART_IRQ_HANDLER LPUART1_IRQHandler
+#define BOARD_DEBUG_UART_CLKSRC   kCLOCK_IpSrcSysOscAsync
+#define BOARD_UART_IRQ            LPUART1_IRQn
+#define BOARD_UART_IRQ_HANDLER    LPUART1_IRQHandler
 
 #ifndef BOARD_DEBUG_UART_BAUDRATE
 #define BOARD_DEBUG_UART_BAUDRATE 115200
@@ -57,7 +57,7 @@
 
 /*! @brief The CMP instance/channel used for board. */
 #define BOARD_CMP_BASEADDR CMP0
-#define BOARD_CMP_CHANNEL 7U
+#define BOARD_CMP_CHANNEL  7U
 
 /*! @brief The rtc instance used for board. */
 #define BOARD_RTC_FUNC_BASEADDR RTC
@@ -71,25 +71,25 @@
 #define BOARD_TSI_MUTUAL_RX_ELECTRODE_1 6U
 
 /*! @brief Define the port interrupt number for the board switches */
-#define BOARD_SW2_GPIO GPIOB
-#define BOARD_SW2_PORT PORTB
-#define BOARD_SW2_GPIO_PIN 11U
-#define BOARD_SW2_IRQ PORTBCD_IRQn
+#define BOARD_SW2_GPIO        GPIOB
+#define BOARD_SW2_PORT        PORTB
+#define BOARD_SW2_GPIO_PIN    11U
+#define BOARD_SW2_IRQ         PORTBCD_IRQn
 #define BOARD_SW2_IRQ_HANDLER PORTBCD_IRQHandler
-#define BOARD_SW2_NAME "SW2"
+#define BOARD_SW2_NAME        "SW2"
 
 /* Board RGB LED color mapping */
-#define LOGIC_LED_ON 0U
-#define LOGIC_LED_OFF 1U
-#define BOARD_LED_RED_GPIO GPIOD
-#define BOARD_LED_RED_GPIO_PORT PORTD
-#define BOARD_LED_RED_GPIO_PIN 0U
-#define BOARD_LED_GREEN_GPIO GPIOD
+#define LOGIC_LED_ON              0U
+#define LOGIC_LED_OFF             1U
+#define BOARD_LED_RED_GPIO        GPIOD
+#define BOARD_LED_RED_GPIO_PORT   PORTD
+#define BOARD_LED_RED_GPIO_PIN    0U
+#define BOARD_LED_GREEN_GPIO      GPIOD
 #define BOARD_LED_GREEN_GPIO_PORT PORTD
-#define BOARD_LED_GREEN_GPIO_PIN 16U
-#define BOARD_LED_BLUE_GPIO GPIOD
-#define BOARD_LED_BLUE_GPIO_PORT PORTD
-#define BOARD_LED_BLUE_GPIO_PIN 15U
+#define BOARD_LED_GREEN_GPIO_PIN  16U
+#define BOARD_LED_BLUE_GPIO       GPIOD
+#define BOARD_LED_BLUE_GPIO_PORT  PORTD
+#define BOARD_LED_BLUE_GPIO_PIN   15U
 
 #define LED_RED1_INIT(output)                                                \
     GPIO_WritePinOutput(BOARD_LED_RED_GPIO, BOARD_LED_RED_GPIO_PIN, output); \

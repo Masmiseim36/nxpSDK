@@ -1,6 +1,6 @@
 /*
  * Copyright 2013 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -105,14 +105,14 @@ NTElectrode_afid.prototype.OnLinkClicked = function()
 
     // scope variables
     var vars = [ 
-        {"variable":vname_rawsignal, "visible":true, "y_block":0},
-        {"variable":vname_fast_signal, "visible":true, "y_block":0 }, 
-        {"variable":vname_slow_signal, "visible":true, "y_block":0 }, 
-        {"variable":vname_baseline, "visible":true, "y_block":0 },
-        {"variable":vname_afid_i, "visible":true, "y_block":1 },
-        {"variable":vname_afid_trc, "visible":true, "y_block":2 },
-        {"variable":vname_afid_rrc, "visible":true, "y_block":2 },
-        {"variable":vname_reset_threshold, "visible":true, "y_block":3 }
+        {"variable":vname_rawsignal, "visible":true, "color":3026413, "y_block":0},
+        {"variable":vname_fast_signal, "visible":true, "color":4688896, "y_block":0 }, 
+        {"variable":vname_slow_signal, "visible":true, "color":11098392, "y_block":0 }, 
+        {"variable":vname_baseline, "visible":true, "color":2260467, "y_block":0 },
+        {"variable":vname_afid_i, "visible":true, "color":9055202, "y_block":1 },
+        {"variable":vname_afid_trc, "visible":true, "color":2104737, "y_block":2 },
+        {"variable":vname_afid_rrc, "visible":true, "color":9514086, "y_block":2 },
+        {"variable":vname_reset_threshold, "visible":true, "color":16766720, "y_block":3 }
     ]; 
 
     // scope traces color

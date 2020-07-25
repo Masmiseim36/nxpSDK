@@ -5,14 +5,18 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 #include "bootloader_common.h"
-#include "crc32.h"
-#include "fsl_assert.h"
+#include "crc/crc32.h"
+#include "utilities/fsl_assert.h"
 
 #include "fsl_device_registers.h"
-#include "fsl_rtos_abstraction.h"
+#include "utilities/fsl_rtos_abstraction.h"
 
 #if FSL_FEATURE_SOC_CRC_COUNT && !defined(BL_TARGET_RAM)
+#if !BL_DEVICE_IS_LPC_SERIES
 #include "fsl_crc.h"
+#else // BL_DEVICE_IS_LPC_SERIES
+#include "lpc_crc/fsl_crc.h"
+#endif // !BL_DEVICE_IS_LPC_SERIES
 
 /* Table of base addresses for crc instances. */
 static CRC_Type *const g_crcBase[1] = CRC_BASE_PTRS;

@@ -1,6 +1,6 @@
 /*
  * Copyright 2013 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -30,14 +30,15 @@
  * \{
  */
 
-/** 
- * Rotary flags. 
+/**
+ * Rotary flags.
  */
-enum nt_control_rotary_flags {
-    NT_ROTARY_INVALID_POSITION_FLAG = 1 << NT_FLAGS_SPECIFIC_SHIFT(0),  /*!< Rotary invalid position flag. */
-    NT_ROTARY_DIRECTION_FLAG        = 1 << NT_FLAGS_SPECIFIC_SHIFT(1),  /*!< Rotary direction flag. */
-    NT_ROTARY_MOVEMENT_FLAG         = 1 << NT_FLAGS_SPECIFIC_SHIFT(2),  /*!< Rotary movement flag.*/
-    NT_ROTARY_TOUCH_FLAG            = 1 << NT_FLAGS_SPECIFIC_SHIFT(3),  /*!< Rotary touch flag. */
+enum nt_control_rotary_flags
+{
+    NT_ROTARY_INVALID_POSITION_FLAG = 1 << NT_FLAGS_SPECIFIC_SHIFT(0), /*!< Rotary invalid position flag. */
+    NT_ROTARY_DIRECTION_FLAG        = 1 << NT_FLAGS_SPECIFIC_SHIFT(1), /*!< Rotary direction flag. */
+    NT_ROTARY_MOVEMENT_FLAG         = 1 << NT_FLAGS_SPECIFIC_SHIFT(2), /*!< Rotary movement flag.*/
+    NT_ROTARY_TOUCH_FLAG            = 1 << NT_FLAGS_SPECIFIC_SHIFT(3), /*!< Rotary touch flag. */
 };
 
 /**
@@ -46,9 +47,10 @@ enum nt_control_rotary_flags {
  *  You must allocate this structure and put a pointer into the nt_control_rotary_control
  *  structure when it is being registered in the system.
  */
-struct nt_control_rotary_data {
-    nt_control_rotary_callback callback;    /*!< Callback handler. */
-    uint8_t            position;            /*!< Position. */
+struct nt_control_rotary_data
+{
+    nt_control_rotary_callback callback; /*!< Callback handler. */
+    uint8_t position;                    /*!< Position. */
 };
 
 #ifdef __cplusplus

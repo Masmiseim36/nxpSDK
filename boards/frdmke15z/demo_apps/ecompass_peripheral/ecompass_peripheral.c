@@ -17,14 +17,14 @@
  ******************************************************************************/
 /* LPI2C */
 #define BOARD_ACCEL_I2C_BASEADDR LPI2C0
-#define LPI2C_CLOCK_FREQUENCY CLOCK_GetIpFreq(kCLOCK_Lpi2c0)
-#define I2C_BAUDRATE 100000U
+#define LPI2C_CLOCK_FREQUENCY    CLOCK_GetIpFreq(kCLOCK_Lpi2c0)
+#define I2C_BAUDRATE             100000U
 
 /* Accelerometer Reset PIN */
 #define BOARD_ACCEL_RESET_GPIO GPIOB
-#define BOARD_ACCEL_RESET_PIN 9U
+#define BOARD_ACCEL_RESET_PIN  9U
 #define MAX_ACCEL_AVG_COUNT 25U
-#define HWTIMER_PERIOD 10000U
+#define HWTIMER_PERIOD      10000U
 /* multiplicative conversion constants */
 #define DegToRad 0.017453292
 #define RadToDeg 57.295779

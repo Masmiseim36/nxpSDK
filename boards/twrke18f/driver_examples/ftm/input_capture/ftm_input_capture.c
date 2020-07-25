@@ -21,12 +21,12 @@
 #define BOARD_FTM_INPUT_CAPTURE_CHANNEL kFTM_Chnl_3
 
 /* Interrupt number and interrupt handler for the FTM instance used */
-#define FTM_INTERRUPT_NUMBER FTM2_IRQn
+#define FTM_INTERRUPT_NUMBER      FTM2_IRQn
 #define FTM_INPUT_CAPTURE_HANDLER FTM2_IRQHandler
 
 /* Interrupt to enable and flag to read; depends on the FTM channel pair used */
 #define FTM_CHANNEL_INTERRUPT_ENABLE kFTM_Chnl3InterruptEnable
-#define FTM_CHANNEL_FLAG kFTM_Chnl3Flag
+#define FTM_CHANNEL_FLAG             kFTM_Chnl3Flag
 
 /* Get source clock for FTM driver */
 #define FTM_SOURCE_CLOCK CLOCK_GetFreq(kCLOCK_CoreSysClk)

@@ -11,9 +11,7 @@
  * Definitions
  ******************************************************************************/
 
-static bool_t MCDRV_Driver3PhSendCmd(mcdrv_spi_drv3ph_t *this, 
-                                     uint8_t *pui8TxData, 
-                                     uint8_t *pui8RxData);
+static bool_t MCDRV_Driver3PhSendCmd(mcdrv_spi_drv3ph_t *this, uint8_t *pui8TxData, uint8_t *pui8RxData);
 
 /*******************************************************************************
  * Variables
@@ -351,4 +349,3 @@ bool_t MCDRV_Driver3PhConfig(mcdrv_spi_drv3ph_t *this)
 
     return (s_statusPass);
 }
-

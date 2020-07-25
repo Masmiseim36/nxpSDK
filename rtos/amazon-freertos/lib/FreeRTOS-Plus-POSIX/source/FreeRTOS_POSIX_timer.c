@@ -1,5 +1,5 @@
 /*
- * Amazon FreeRTOS+POSIX V1.0.3
+ * Amazon FreeRTOS+POSIX V1.0.0
  * Copyright (C) 2018 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -84,19 +84,10 @@ void prvTimerCallback( TimerHandle_t xTimerHandle )
     /* Create the timer notification thread if requested. */
     if( pxTimer->xTimerEvent.sigev_notify == SIGEV_THREAD )
     {
-        /* if the user has provided thread attributes, create a thread
-         * with the provided attributes. Otherwise dispatch callback directly */
-        if( pxTimer->xTimerEvent.sigev_notify_attributes == NULL )
-        {
-            ( *pxTimer->xTimerEvent.sigev_notify_function )( pxTimer->xTimerEvent.sigev_value );
-        }
-        else
-        {
-            ( void ) pthread_create( &xTimerNotificationThread,
-                                     pxTimer->xTimerEvent.sigev_notify_attributes,
-                                     ( void * ( * )( void * ) )pxTimer->xTimerEvent.sigev_notify_function,
-                                     pxTimer->xTimerEvent.sigev_value.sival_ptr );
-        }
+        ( void ) pthread_create( &xTimerNotificationThread,
+                                 pxTimer->xTimerEvent.sigev_notify_attributes,
+                                 ( void * ( * )( void * ) )pxTimer->xTimerEvent.sigev_notify_function,
+                                 pxTimer->xTimerEvent.sigev_value.sival_ptr );
     }
 }
 
@@ -162,15 +153,12 @@ int timer_delete( timer_t timerid )
     /* The value of the timer ID, set in timer_create, should not be NULL. */
     configASSERT( pxTimer != NULL );
 
-    /* Stop the FreeRTOS timer. Because the timer is statically allocated, no call
-     * to xTimerDelete is necessary. The timer is stopped so that it's not referenced
-     * anywhere. xTimerStop will not fail when it has unlimited block time. */
-    ( void ) xTimerStop( xTimerHandle, portMAX_DELAY );
-
-    /* Wait until the timer stop command is processed. */
-    while( xTimerIsTimerActive( xTimerHandle ) == pdTRUE )
+    /* Stop and delete the FreeRTOS timer. */
+    if( xTimerIsTimerActive( xTimerHandle ) != pdFALSE )
     {
-        vTaskDelay( 1 );
+        /* These functions will not fail when they have unlimited block time. */
+        ( void ) xTimerStop( xTimerHandle, portMAX_DELAY );
+        ( void ) xTimerDelete( xTimerHandle, portMAX_DELAY );
     }
 
     /* Free the memory in use by the timer. */
@@ -183,9 +171,6 @@ int timer_delete( timer_t timerid )
 
 int timer_getoverrun( timer_t timerid )
 {
-    /* Silence warnings about unused parameters. */
-    ( void ) timerid;
-
     return 0;
 }
 
@@ -245,29 +230,7 @@ int timer_settime( timer_t timerid,
             /* Absolute timeout. */
             if( ( flags & TIMER_ABSTIME ) == TIMER_ABSTIME )
             {
-                struct timespec xCurrentTime = { 0 };
-
-                /* Get current time */
-                if( clock_gettime( CLOCK_REALTIME, &xCurrentTime ) != 0 )
-                {
-                    iStatus = EINVAL;
-                }
-                else
-                {
-                    iStatus = UTILS_AbsoluteTimespecToDeltaTicks( &value->it_value, &xCurrentTime, &xNextTimerExpiration );
-                }
-
-                /* Make sure xNextTimerExpiration is zero in case we got negative time difference */
-                if( iStatus != 0 )
-                {
-                    xNextTimerExpiration = 0;
-
-                    if ( iStatus == ETIMEDOUT )
-                    {
-                        /* Set Status to 0 as absolute time is past is treated as expiry but not an error */
-                        iStatus = 0;
-                    }
-                }
+                ( void ) UTILS_AbsoluteTimespecToTicks( &value->it_value, &xNextTimerExpiration );
             }
             /* Relative timeout. */
             else

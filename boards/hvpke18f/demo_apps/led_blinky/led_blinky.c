@@ -12,7 +12,7 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define BOARD_LED_GPIO BOARD_INITPINS_LED_RED_GPIO
+#define BOARD_LED_GPIO     BOARD_INITPINS_LED_RED_GPIO
 #define BOARD_LED_GPIO_PIN BOARD_INITPINS_LED_RED_PIN
 
 /*******************************************************************************

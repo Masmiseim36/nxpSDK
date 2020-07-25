@@ -24,12 +24,12 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_LPSPI_SLAVE_BASEADDR LPSPI0
-#define EXAMPLE_LPSPI_SLAVE_IRQN LPSPI0_IRQn
-#define EXAMPLE_LPSPI_SLAVE_PCS_FOR_INIT kLPSPI_Pcs3
+#define EXAMPLE_LPSPI_SLAVE_BASEADDR         LPSPI0
+#define EXAMPLE_LPSPI_SLAVE_IRQN             LPSPI0_IRQn
+#define EXAMPLE_LPSPI_SLAVE_PCS_FOR_INIT     kLPSPI_Pcs3
 #define EXAMPLE_LPSPI_SLAVE_PCS_FOR_TRANSFER kLPSPI_SlavePcs3
 
-#define EXAMPLE_LPSPI_SLAVE_CLOCK_NAME (kCLOCK_Lpspi0)
+#define EXAMPLE_LPSPI_SLAVE_CLOCK_NAME   (kCLOCK_Lpspi0)
 #define EXAMPLE_LPSPI_SLAVE_CLOCK_SOURCE (kCLOCK_IpSrcFircAsync)
 #define TRANSFER_SIZE (512U) /*! Transfer dataSize.*/
 
@@ -73,8 +73,8 @@ int main(void)
     int i;
 
     /* Init board hardware. */
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
 
     CLOCK_SetIpSrc(EXAMPLE_LPSPI_SLAVE_CLOCK_NAME, EXAMPLE_LPSPI_SLAVE_CLOCK_SOURCE);

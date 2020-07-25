@@ -15,17 +15,17 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_LPSPI_MASTER_BASEADDR LPSPI0
-#define EXAMPLE_LPSPI_MASTER_CLOCK_NAME kCLOCK_Lpspi0
-#define LPSPI_MASTER_CLK_FREQ (CLOCK_GetIpFreq(EXAMPLE_LPSPI_MASTER_CLOCK_NAME))
-#define EXAMPLE_LPSPI_MASTER_CLOCK_SOURCE (kCLOCK_IpSrcFircAsync)
-#define EXAMPLE_LPSPI_MASTER_PCS_FOR_INIT kLPSPI_Pcs3
+#define EXAMPLE_LPSPI_MASTER_BASEADDR         LPSPI0
+#define EXAMPLE_LPSPI_MASTER_CLOCK_NAME       kCLOCK_Lpspi0
+#define LPSPI_MASTER_CLK_FREQ                 (CLOCK_GetIpFreq(EXAMPLE_LPSPI_MASTER_CLOCK_NAME))
+#define EXAMPLE_LPSPI_MASTER_CLOCK_SOURCE     (kCLOCK_IpSrcFircAsync)
+#define EXAMPLE_LPSPI_MASTER_PCS_FOR_INIT     kLPSPI_Pcs3
 #define EXAMPLE_LPSPI_MASTER_PCS_FOR_TRANSFER kLPSPI_MasterPcs3
-#define EXAMPLE_LPSPI_MASTER_IRQN LPSPI0_IRQn
-#define EXAMPLE_LPSPI_MASTER_IRQHandler LPSPI0_IRQHandler
+#define EXAMPLE_LPSPI_MASTER_IRQN             LPSPI0_IRQn
+#define EXAMPLE_LPSPI_MASTER_IRQHandler       LPSPI0_IRQHandler
 
 #define EXAMPLE_LPSPI_DEALY_COUNT 0xfffff
-#define TRANSFER_SIZE 64U         /*! Transfer dataSize */
+#define TRANSFER_SIZE     64U     /*! Transfer dataSize */
 #define TRANSFER_BAUDRATE 500000U /*! Transfer baudrate - 500k */
 
 /*******************************************************************************
@@ -55,17 +55,16 @@ void EXAMPLE_LPSPI_MASTER_IRQHandler(void)
 {
     if (masterRxCount < TRANSFER_SIZE)
     {
-        /* First, disable the interrupts to avoid potentially triggering another interrupt
+        /* First, disable the interrupt to avoid potentially triggering another interrupt
          * while reading out the RX FIFO as more data may be coming into the RX FIFO. We'll
-         * re-enable the interrupts EXAMPLE_LPSPI_MASTER_BASEADDRd on the LPSPI state after reading out the FIFO.
+         * re-enable the interrupts after reading out the FIFO.
          */
         LPSPI_DisableInterrupts(EXAMPLE_LPSPI_MASTER_BASEADDR, kLPSPI_RxInterruptEnable);
 
         while (LPSPI_GetRxFifoCount(EXAMPLE_LPSPI_MASTER_BASEADDR))
         {
-            /*Read out the data*/
+            /* Read out the data. */
             masterRxData[masterRxCount] = LPSPI_ReadData(EXAMPLE_LPSPI_MASTER_BASEADDR);
-
             masterRxCount++;
 
             if (masterRxCount == TRANSFER_SIZE)
@@ -75,21 +74,20 @@ void EXAMPLE_LPSPI_MASTER_IRQHandler(void)
         }
 
         /* Re-enable the interrupts only if rxCount indicates there is more data to receive,
-         * else we may get a spurious interrupt.
-         * */
+         * otherwise we may get a spurious interrupt. */
         if (masterRxCount < TRANSFER_SIZE)
         {
-            /* Set the TDF and RDF interrupt enables simultaneously to avoid race conditions */
             LPSPI_EnableInterrupts(EXAMPLE_LPSPI_MASTER_BASEADDR, kLPSPI_RxInterruptEnable);
         }
     }
 
-    /*Update rxWatermark. There isn't RX interrupt for the last datas if the RX count is not greater than rxWatermark.*/
+    /* Update rxWatermark. There isn't RX interrupt for the last datas if the RX count is not greater than rxWatermark.
+     */
     if ((TRANSFER_SIZE - masterRxCount) <= g_masterRxWatermark)
     {
         EXAMPLE_LPSPI_MASTER_BASEADDR->FCR =
             (EXAMPLE_LPSPI_MASTER_BASEADDR->FCR & (~LPSPI_FCR_RXWATER_MASK)) |
-            LPSPI_FCR_RXWATER(((TRANSFER_SIZE - masterRxCount) > 1) ? ((TRANSFER_SIZE - masterRxCount) - 1U) : (0U));
+            LPSPI_FCR_RXWATER(((TRANSFER_SIZE - masterRxCount) > 1U) ? ((TRANSFER_SIZE - masterRxCount) - 1U) : (0U));
     }
 
     if (masterTxCount < TRANSFER_SIZE)
@@ -115,11 +113,7 @@ void EXAMPLE_LPSPI_MASTER_IRQHandler(void)
         /* Complete the transfer and disable the interrupts */
         LPSPI_DisableInterrupts(EXAMPLE_LPSPI_MASTER_BASEADDR, kLPSPI_AllInterruptEnable);
     }
-    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-      exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 /*!
@@ -135,8 +129,8 @@ int main(void)
     CLOCK_SetIpSrc(EXAMPLE_LPSPI_MASTER_CLOCK_NAME, EXAMPLE_LPSPI_MASTER_CLOCK_SOURCE);
 
     PRINTF("lpspi_functional_interrupt_board_2_board_master start.\r\n");
-    PRINTF("This example use one board as master and another as slave.\r\n");
-    PRINTF("Master and slave uses interrupt way. Slave should start first. \r\n");
+    PRINTF("This example use one board as master and the other as slave.\r\n");
+    PRINTF("Master and slave use interrupt way. Slave should start first. \r\n");
     PRINTF("Please make sure you make the correct line connection. Basically, the connection is: \r\n");
     PRINTF("LPSPI_master -- LPSPI_slave   \r\n");
     PRINTF("   CLK      --    CLK  \r\n");
@@ -152,28 +146,16 @@ int main(void)
     uint8_t txWatermark;
     lpspi_master_config_t masterConfig;
 
-    /*Master config*/
-    masterConfig.baudRate     = TRANSFER_BAUDRATE;
-    masterConfig.bitsPerFrame = 8;
-    masterConfig.cpol         = kLPSPI_ClockPolarityActiveHigh;
-    masterConfig.cpha         = kLPSPI_ClockPhaseFirstEdge;
-    masterConfig.direction    = kLPSPI_MsbFirst;
-
-    masterConfig.pcsToSckDelayInNanoSec        = 1000000000 / masterConfig.baudRate;
-    masterConfig.lastSckToPcsDelayInNanoSec    = 1000000000 / masterConfig.baudRate;
-    masterConfig.betweenTransferDelayInNanoSec = 1000000000 / masterConfig.baudRate;
-
-    masterConfig.whichPcs           = EXAMPLE_LPSPI_MASTER_PCS_FOR_INIT;
-    masterConfig.pcsActiveHighOrLow = kLPSPI_PcsActiveLow;
-
-    masterConfig.pinCfg        = kLPSPI_SdiInSdoOut;
-    masterConfig.dataOutConfig = kLpspiDataOutRetained;
+    /* Master config. */
+    LPSPI_MasterGetDefaultConfig(&masterConfig);
+    masterConfig.baudRate = TRANSFER_BAUDRATE;
+    masterConfig.whichPcs = EXAMPLE_LPSPI_MASTER_PCS_FOR_INIT;
 
     srcClock_Hz = LPSPI_MASTER_CLK_FREQ;
     LPSPI_MasterInit(EXAMPLE_LPSPI_MASTER_BASEADDR, &masterConfig, srcClock_Hz);
 
     /******************Set up master transfer******************/
-    /*Set up the transfer data*/
+    /* Set up the transfer data. */
     for (i = 0; i < TRANSFER_SIZE; i++)
     {
         masterTxData[i] = i % 256;
@@ -185,10 +167,10 @@ int main(void)
     masterRxCount             = 0;
     whichPcs                  = EXAMPLE_LPSPI_MASTER_PCS_FOR_INIT;
 
-    /*The TX and RX FIFO sizes are always the same*/
+    /* The TX and RX FIFO sizes are always the same. */
     g_masterFifoSize = LPSPI_GetRxFifoSize(EXAMPLE_LPSPI_MASTER_BASEADDR);
 
-    /*Set the RX and TX watermarks to reduce the ISR times.*/
+    /* Set the RX and TX watermarks to reduce the ISR times. */
     if (g_masterFifoSize > 1)
     {
         txWatermark         = 1;
@@ -206,14 +188,14 @@ int main(void)
     EXAMPLE_LPSPI_MASTER_BASEADDR->CFGR1 &= (~LPSPI_CFGR1_NOSTALL_MASK);
     LPSPI_Enable(EXAMPLE_LPSPI_MASTER_BASEADDR, true);
 
-    /*Flush FIFO , clear status , disable all the inerrupts.*/
+    /* Flush FIFO , clear status , disable all the inerrupts. */
     LPSPI_FlushFifo(EXAMPLE_LPSPI_MASTER_BASEADDR, true, true);
     LPSPI_ClearStatusFlags(EXAMPLE_LPSPI_MASTER_BASEADDR, kLPSPI_AllStatusFlag);
     LPSPI_DisableInterrupts(EXAMPLE_LPSPI_MASTER_BASEADDR, kLPSPI_AllInterruptEnable);
 
     EXAMPLE_LPSPI_MASTER_BASEADDR->TCR =
-        (EXAMPLE_LPSPI_MASTER_BASEADDR->TCR &
-         ~(LPSPI_TCR_CONT_MASK | LPSPI_TCR_CONTC_MASK | LPSPI_TCR_RXMSK_MASK | LPSPI_TCR_PCS_MASK)) |
+        (EXAMPLE_LPSPI_MASTER_BASEADDR->TCR & ~(LPSPI_TCR_CONT_MASK | LPSPI_TCR_CONTC_MASK | LPSPI_TCR_RXMSK_MASK |
+                                                LPSPI_TCR_TXMSK_MASK | LPSPI_TCR_PCS_MASK)) |
         LPSPI_TCR_CONT(0) | LPSPI_TCR_CONTC(0) | LPSPI_TCR_RXMSK(0) | LPSPI_TCR_TXMSK(0) | LPSPI_TCR_PCS(whichPcs);
 
     /* Enable the NVIC for LPSPI peripheral. Note that below code is useless if the LPSPI interrupt is in INTMUX ,
@@ -221,11 +203,11 @@ int main(void)
      */
     EnableIRQ(EXAMPLE_LPSPI_MASTER_IRQN);
 
-    /*TCR is also shared the FIFO , so wait for TCR written.*/
+    /* TCR is also shared the FIFO , so wait for TCR written. */
     while (LPSPI_GetTxFifoCount(EXAMPLE_LPSPI_MASTER_BASEADDR) != 0)
     {
     }
-    /*Fill up the TX data in FIFO */
+    /* Fill up the TX data in FIFO. */
     while ((LPSPI_GetTxFifoCount(EXAMPLE_LPSPI_MASTER_BASEADDR) < g_masterFifoSize) &&
            (masterTxCount - masterRxCount < g_masterFifoSize))
     {
@@ -238,7 +220,7 @@ int main(void)
             break;
         }
     }
-    LPSPI_EnableInterrupts(EXAMPLE_LPSPI_MASTER_BASEADDR, kLPSPI_RxInterruptEnable);
+    LPSPI_EnableInterrupts(EXAMPLE_LPSPI_MASTER_BASEADDR, kLPSPI_RxInterruptEnable | kLPSPI_RxInterruptEnable);
 
     /******************Wait for master and slave transfer completed.******************/
     while (!isMasterTransferCompleted)
@@ -256,23 +238,23 @@ int main(void)
     if (errorCount == 0)
     {
         PRINTF("\r\nLPSPI transfer all data matched! \r\n");
-        /* Print out receive buffer */
-        PRINTF("\r\n Master received:\r\n");
-        for (i = 0U; i < TRANSFER_SIZE; i++)
-        {
-            /* Print 16 numbers in a line */
-            if ((i & 0x0FU) == 0U)
-            {
-                PRINTF("\r\n");
-            }
-            PRINTF(" %02X", masterRxData[i]);
-        }
-        PRINTF("\r\n");
     }
     else
     {
         PRINTF("\r\nError occurred in LPSPI transfer ! \r\n");
     }
+    /* Print out receive buffer */
+    PRINTF("\r\n Master received:\r\n");
+    for (i = 0U; i < TRANSFER_SIZE; i++)
+    {
+        /* Print 16 numbers in a line */
+        if ((i & 0x0FU) == 0U)
+        {
+            PRINTF("\r\n");
+        }
+        PRINTF(" %02X", masterRxData[i]);
+    }
+    PRINTF("\r\n");
 
     LPSPI_Deinit(EXAMPLE_LPSPI_MASTER_BASEADDR);
 

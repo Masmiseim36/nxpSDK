@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2017, 2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -18,7 +18,7 @@
  ******************************************************************************/
 #define DEMO_ACMP_BASEADDR CMP0
 
-#define DEMO_ACMP_IRQ_ID CMP0_IRQn
+#define DEMO_ACMP_IRQ_ID           CMP0_IRQn
 #define DEMO_ACMP_IRQ_HANDLER_FUNC CMP0_IRQHandler
 
 /* Select which channels is used to do round robin checker.
@@ -27,10 +27,10 @@
  * robin check result shows that corresponding channel's actual input voltage is lower than DAC output voltage, wakeup
  * event will be generated. The case of pre-state mask bit low is contrary to the case of pre-state mask bit high.
  */
-#define DEMO_ACMP_ROUND_ROBIN_FIXED_CHANNEL 0U
-#define DEMO_ACMP_ROUND_ROBIN_CHANNELS_CHECKER_MASK 0x01U   /* Left-most bit is for channel 7. */
+#define DEMO_ACMP_ROUND_ROBIN_FIXED_CHANNEL           0U
+#define DEMO_ACMP_ROUND_ROBIN_CHANNELS_CHECKER_MASK   0x01U /* Left-most bit is for channel 7. */
 #define DEMO_ACMP_ROUND_ROBIN_CHANNELS_PRE_STATE_MASK 0x01U /* Left-most bit is for channel 7. */
-#define DEMO_ACMP_ROUND_ROBIN_PERIOD_MILLISECONDS 1000U
+#define DEMO_ACMP_ROUND_ROBIN_PERIOD_MILLISECONDS     1000U
 
 /*******************************************************************************
  * Prototypes
@@ -115,11 +115,7 @@ void DEMO_ACMP_IRQ_HANDLER_FUNC(void)
     ACMP_ClearRoundRobinStatusFlags(DEMO_ACMP_BASEADDR, statusFlags);
 
     BOARD_ClearAcmpRoundRobinTrigger();
-    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-      exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 /*!
@@ -131,6 +127,7 @@ int main(void)
     acmp_channel_config_t channelConfigStruct;
     acmp_dac_config_t dacConfigStruct;
     acmp_round_robin_config_t roundRobinConfigStruct;
+    uint8_t ch;
 
     BOARD_InitPins();
     BOARD_BootClockRUN();
@@ -191,15 +188,32 @@ int main(void)
 
     PRINTF(
         "\r\nExample to demonstrate low power wakeup by round robin comparison! \
-           \r\nIn order to wakeup the MCU, please change the analog input voltage to be different from original pre-state setting.\
-           \r\nThe system entered into stop mode.\r\n");
+           \r\nIn order to wakeup the MCU, please change the analog input voltage to be different from original pre-state setting.\r\n");
 
-    BOARD_EnterStopMode();
-
-    /* Wakeup and print information. */
-    PRINTF("\r\n The system exited from stop mode!\r\n");
-
-    while (true)
+    while (1)
     {
+        PRINTF("\r\nPress %c for enter: Stop Mode\r\n", 'S');
+
+        ch = GETCHAR();
+
+        if ((ch >= 'a') && (ch <= 'z'))
+        {
+            ch -= 'a' - 'A';
+        }
+        if (ch == 'S')
+        {
+            PRINTF("\r\nThe system entered into stop mode.\r\n");
+            BOARD_EnterStopMode();
+
+            /* Wakeup and print information. */
+            PRINTF("\r\nThe system exited from stop mode!\r\n");
+            while (true)
+            {
+            }
+        }
+        else
+        {
+            PRINTF("Wrong value!\r\n");
+        }
     }
 }

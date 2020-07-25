@@ -26,7 +26,7 @@ typedef struct _app_ver
     char cBoardID[15];
     char cMotorType[4];
     char cAppVer[5];
-}app_ver_t;
+} app_ver_t;
 
 /* Structure used during clocks and modulo calculations */
 typedef struct _clock_setup
@@ -118,9 +118,9 @@ extern const char bldcCommutationTableComp[16];
 /* Aux channel is assigned to ADC1 only */
 #define M1_ADC0_AUX ADC_NO_CHAN
 #define M1_ADC1_AUX ADC_TEMPERATURE
-   
-/* offset measurement filter window */     
-#define ADC_OFFSET_WINDOW (3)   
+
+/* offset measurement filter window */
+#define ADC_OFFSET_WINDOW (3)
 
 /******************************************************************************
  * MC driver macro definition and check - do not change this part

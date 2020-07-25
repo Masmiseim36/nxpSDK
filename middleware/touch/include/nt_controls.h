@@ -1,6 +1,6 @@
 /*
  * Copyright 2013 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -10,7 +10,7 @@
 
 /**
  * \defgroup controls Controls
- * \ingroup ntapi   
+ * \ingroup ntapi
  *
  * Controls represent the highest level of abstraction in the finger touch evaluation;
  *
@@ -35,32 +35,33 @@ struct nt_control_interface;
  * \{
  */
 
-/** Container, which covers all possible variants of the control parameters. When 
-  * defining the control setup structure, initialize only one member of this union. 
-  * Use the member that corresponds to the control type.
+/** Container, which covers all possible variants of the control parameters. When
+ * defining the control setup structure, initialize only one member of this union.
+ * Use the member that corresponds to the control type.
  */
 union nt_control_params
 {
-  const struct nt_control_arotary     * arotary;        /*!< Pointer to the Analog Rotary control parameters structure */
-  const struct nt_control_aslider     * aslider;        /*!< Pointer to the Analog Slider control parameters structure */
-  const struct nt_control_keypad      * keypad;         /*!< Pointer to the Keypad control parameters structure*/
-  const struct nt_control_proxi       * proxi;          /*!< Pointer to the Proxi control parameters structure */
-  const struct nt_control_matrix      * matrix;         /*!< Pointer to the Matrix control parameters structure */
-  const void                          * general;        /*!< Pointer for general use */
+    const struct nt_control_arotary *arotary; /*!< Pointer to the Analog Rotary control parameters structure */
+    const struct nt_control_aslider *aslider; /*!< Pointer to the Analog Slider control parameters structure */
+    const struct nt_control_keypad *keypad;   /*!< Pointer to the Keypad control parameters structure*/
+    const struct nt_control_proxi *proxi;     /*!< Pointer to the Proxi control parameters structure */
+    const struct nt_control_matrix *matrix;   /*!< Pointer to the Matrix control parameters structure */
+    const void *general;                      /*!< Pointer for general use */
 };
 
 /**
  *  The main structure representing the control instance; this structure is used for all
- *  control implementations. The type of the control is specified by the "interface" member, 
- *  which defines the control behaviour. 
+ *  control implementations. The type of the control is specified by the "interface" member,
+ *  which defines the control behaviour.
  *  Note that the "control_params" must correspond to the control type.
  *
  *  This structure can be allocated in ROM.
  */
-struct nt_control  {
-    const struct nt_control_interface   *interface;             /*!< An instance of the control interface. Cannot be NULL.*/
-    const struct nt_electrode           * const * electrodes;   /*!< List of electrodes. Cannot be NULL. */
-    const union nt_control_params       control_params;         /*!< An instance of the control params. Cannot be NULL.*/
+struct nt_control
+{
+    const struct nt_control_interface *interface; /*!< An instance of the control interface. Cannot be NULL.*/
+    const struct nt_electrode *const *electrodes; /*!< List of electrodes. Cannot be NULL. */
+    const union nt_control_params control_params; /*!< An instance of the control params. Cannot be NULL.*/
 };
 
 /**
@@ -84,7 +85,7 @@ extern "C" {
  * \code
  *  // The NT control my_nt_control_keypad is enabled
  *  nt_control_enable(&my_nt_control_keypad);
- * \endcode 
+ * \endcode
  */
 void nt_control_enable(const struct nt_control *control);
 
@@ -122,8 +123,7 @@ void nt_control_disable(const struct nt_control *control);
  *  }
  * \endcode
  */
-int32_t nt_control_get_touch_button(const struct nt_control *control,
-                                    uint32_t index);
+int32_t nt_control_get_touch_button(const struct nt_control *control, uint32_t index);
 
 /**
  * \brief Get the state of all control electrodes.
@@ -134,11 +134,11 @@ int32_t nt_control_get_touch_button(const struct nt_control *control,
  * \code
  *  uint64_t touched_electrode = 0;
  *  touched_electrode = nt_control_get_electrodes_state(&my_control);
-*  printf("The electrode state is following: 0x%X in my control.", touched_electrode);
+ *  printf("The electrode state is following: 0x%X in my control.", touched_electrode);
  * \endcode
  */
 uint64_t nt_control_get_electrodes_state(struct nt_control *control);
-      
+
 /**
  * \internal
  * \brief Calculate the number of electrodes.
@@ -168,8 +168,7 @@ uint32_t nt_control_count_electrodes(const struct nt_control *control);
  *  // Get the pointer of electrode on index 2 for my_control
  *  nt_electrode *my_electrode = nt_control_get_electrode(&my_control, 2);
  * \endcode*/
-const struct nt_electrode *nt_control_get_electrode(const struct nt_control *control,
-                                                                  uint32_t index);
+const struct nt_electrode *nt_control_get_electrode(const struct nt_control *control, uint32_t index);
 
 #ifdef __cplusplus
 }

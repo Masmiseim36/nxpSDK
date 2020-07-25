@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -676,7 +676,7 @@ void TSI_GetMutualCapModeDefaultConfig(tsi_mutualCap_config_t *userConfig);
  * @details Calibrate the peripheral to fetch the initial counter value of
  *          the enabled channels.
  *          This API is mostly used at initial application setup, it shall be called
- *          after the \ref TSI_Init API, then user can use the calibrated
+ *          after the TSI_Init API, then user can use the calibrated
  *          counter values to setup applications(such as to determine
  *          under which counter value we can confirm a touch event occurrs).
  *
@@ -970,7 +970,6 @@ static inline void TSI_SetSensingMode(TSI_Type *base, tsi_sensing_mode_selection
  * @brief Get the sensing mode of the TSI module.
  *
  * @param    base   TSI peripheral base address.
- * @param    mode   Mode value.
  * @return   Currently selected sensing mode.
  */
 static inline tsi_sensing_mode_selection_t TSI_GetSensingMode(TSI_Type *base)

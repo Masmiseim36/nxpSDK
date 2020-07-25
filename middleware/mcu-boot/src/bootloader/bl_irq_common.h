@@ -6,7 +6,7 @@
  */
 
 #include "bootloader_common.h"
-#include "bl_peripheral_interface.h"
+#include "bootloader/bl_peripheral_interface.h"
 
 //! @addtogroup bl_hw
 //! @{

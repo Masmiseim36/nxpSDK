@@ -20,18 +20,18 @@
  ******************************************************************************/
 /* LPI2C */
 #define BOARD_ACCEL_I2C_BASEADDR LPI2C0
-#define LPI2C_CLOCK_FREQUENCY CLOCK_GetIpFreq(kCLOCK_Lpi2c0)
-#define I2C_BAUDRATE 100000U
+#define LPI2C_CLOCK_FREQUENCY    CLOCK_GetIpFreq(kCLOCK_Lpi2c0)
+#define I2C_BAUDRATE             100000U
 
-#define I2C_RELEASE_SDA_PORT PORTA
-#define I2C_RELEASE_SCL_PORT PORTA
-#define I2C_RELEASE_SDA_GPIO GPIOA
-#define I2C_RELEASE_SDA_PIN 2U
-#define I2C_RELEASE_SCL_GPIO GPIOA
-#define I2C_RELEASE_SCL_PIN 3U
+#define I2C_RELEASE_SDA_PORT  PORTA
+#define I2C_RELEASE_SCL_PORT  PORTA
+#define I2C_RELEASE_SDA_GPIO  GPIOA
+#define I2C_RELEASE_SDA_PIN   2U
+#define I2C_RELEASE_SCL_GPIO  GPIOA
+#define I2C_RELEASE_SCL_PIN   3U
 #define I2C_RELEASE_BUS_COUNT 100U
 #define MAX_ACCEL_AVG_COUNT 25U
-#define HWTIMER_PERIOD 10000U
+#define HWTIMER_PERIOD      10000U
 /* multiplicative conversion constants */
 #define DegToRad 0.017453292
 #define RadToDeg 57.295779

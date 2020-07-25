@@ -161,7 +161,7 @@ extern "C" {
  * PORT_SetPinSelect(kPORT_FTM0CH0, kPORT_FTM0_CH0_PTA0);
  * @endcode
  *
- * @Note： This API doesn't support to select specified ALT for a given port pin.
+ * @note This API doesn't support to select specified ALT for a given port pin.
  * The ALT feature is automatically selected by hardware according to the
  * ALT priority:
  *     Low -----> high:

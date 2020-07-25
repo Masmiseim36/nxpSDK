@@ -14,8 +14,8 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_LPUART LPUART2
-#define DEMO_LPUART_CLKSRC kCLOCK_ScgSysPllAsyncDiv2Clk
+#define DEMO_LPUART          LPUART2
+#define DEMO_LPUART_CLKSRC   kCLOCK_ScgSysPllAsyncDiv2Clk
 #define DEMO_LPUART_CLK_FREQ CLOCK_GetIpFreq(kCLOCK_Lpuart2)
 #define ECHO_BUFFER_LENGTH 8
 

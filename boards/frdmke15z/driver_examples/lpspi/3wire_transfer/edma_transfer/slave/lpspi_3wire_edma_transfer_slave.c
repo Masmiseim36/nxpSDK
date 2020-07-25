@@ -17,18 +17,18 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_LPSPI_SLAVE_BASEADDR LPSPI0
-#define EXAMPLE_LPSPI_SLAVE_IRQN LPSPI0_IRQn
-#define EXAMPLE_LPSPI_SLAVE_PCS_FOR_INIT kLPSPI_Pcs3
+#define EXAMPLE_LPSPI_SLAVE_BASEADDR         LPSPI0
+#define EXAMPLE_LPSPI_SLAVE_IRQN             LPSPI0_IRQn
+#define EXAMPLE_LPSPI_SLAVE_PCS_FOR_INIT     kLPSPI_Pcs3
 #define EXAMPLE_LPSPI_SLAVE_PCS_FOR_TRANSFER kLPSPI_SlavePcs3
 
-#define EXAMPLE_LPSPI_SLAVE_CLOCK_NAME (kCLOCK_Lpspi0)
+#define EXAMPLE_LPSPI_SLAVE_CLOCK_NAME   (kCLOCK_Lpspi0)
 #define EXAMPLE_LPSPI_SLAVE_CLOCK_SOURCE (kCLOCK_IpSrcFircAsync)
 
-#define EXAMPLE_LPSPI_SLAVE_DMA_MUX_BASE DMAMUX
+#define EXAMPLE_LPSPI_SLAVE_DMA_MUX_BASE          DMAMUX
 #define EXAMPLE_LPSPI_SLAVE_DMA_RX_REQUEST_SOURCE kDmaRequestMux0LPSPI0Rx
 #define EXAMPLE_LPSPI_SLAVE_DMA_TX_REQUEST_SOURCE kDmaRequestMux0LPSPI0Tx
-#define EXAMPLE_LPSPI_SLAVE_DMA_BASE DMA0
+#define EXAMPLE_LPSPI_SLAVE_DMA_BASE              DMA0
 #define TRANSFER_SIZE 64U /* Transfer dataSize */
 
 /*******************************************************************************
@@ -106,16 +106,9 @@ int main(void)
     lpspi_transfer_t slaveXfer;
 
     /*Slave config*/
-    slaveConfig.bitsPerFrame = 8 * TRANSFER_SIZE;
-    slaveConfig.cpol         = kLPSPI_ClockPolarityActiveHigh;
-    slaveConfig.cpha         = kLPSPI_ClockPhaseFirstEdge;
-    slaveConfig.direction    = kLPSPI_MsbFirst;
-
-    slaveConfig.whichPcs           = EXAMPLE_LPSPI_SLAVE_PCS_FOR_INIT;
-    slaveConfig.pcsActiveHighOrLow = kLPSPI_PcsActiveLow;
-
-    slaveConfig.pinCfg        = kLPSPI_SdiInSdiOut;
-    slaveConfig.dataOutConfig = kLpspiDataOutRetained;
+    LPSPI_SlaveGetDefaultConfig(&slaveConfig);
+    slaveConfig.whichPcs = EXAMPLE_LPSPI_SLAVE_PCS_FOR_INIT;
+    slaveConfig.pinCfg   = kLPSPI_SdiInSdiOut;
 
     LPSPI_SlaveInit(EXAMPLE_LPSPI_SLAVE_BASEADDR, &slaveConfig);
 

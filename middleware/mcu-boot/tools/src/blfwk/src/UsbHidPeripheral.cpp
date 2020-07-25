@@ -1,9 +1,8 @@
 /*
  * Copyright (c) 2013-2014 Freescale Semiconductor, Inc.
- * Copyright 2019 NXP
  * All rights reserved.
  *
- *
+ * 
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -184,7 +183,11 @@ status_t UsbHidPeripheral::write(const uint8_t *buffer, uint32_t byteCount, uint
         Log::debug2("]\n");
     }
 
+#ifdef LINUX
+    int count = hid_write(m_device, buffer, byteCount);
+#else
     int count = hid_write_timeout(m_device, buffer, byteCount, timeoutMS);
+#endif
     if (count < 0)
     {
         const wchar_t *errorMessage = hid_error(m_device);

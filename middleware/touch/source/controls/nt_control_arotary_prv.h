@@ -1,6 +1,6 @@
 /*
  * Copyright 2013 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -40,10 +40,11 @@
  */
 #define NT_AROTARY_INVALID_POSITION_VALUE 65535U
 
-/** 
- * Analog Rotary flags. 
+/**
+ * Analog Rotary flags.
  */
-enum nt_control_arotary_flags {
+enum nt_control_arotary_flags
+{
     NT_AROTARY_INVALID_POSITION_FLAG = 1 << NT_FLAGS_SPECIFIC_SHIFT(0), /*!< Analog Rotary invalid position flag. */
     NT_AROTARY_DIRECTION_FLAG        = 1 << NT_FLAGS_SPECIFIC_SHIFT(1), /*!< Analog Rotary direction flag. */
     NT_AROTARY_MOVEMENT_FLAG         = 1 << NT_FLAGS_SPECIFIC_SHIFT(2), /*!< Analog Rotary movement flag.*/
@@ -53,10 +54,11 @@ enum nt_control_arotary_flags {
 /**
  *  Analog Rotary help structure to handle temporary values
  */
-struct nt_control_arotary_temp_data {
-    uint32_t    active_el_ix;    /*!< Index of electrode of first active electrode. */
-    uint32_t    first_delta;     /*!< Value of first delta (signal - baseline). */
-    uint32_t    range;           /*!< Value of first delta (signal - baseline). */    
+struct nt_control_arotary_temp_data
+{
+    uint32_t active_el_ix; /*!< Index of electrode of first active electrode. */
+    uint32_t first_delta;  /*!< Value of first delta (signal - baseline). */
+    uint32_t range;        /*!< Value of first delta (signal - baseline). */
 };
 
 /**
@@ -65,11 +67,11 @@ struct nt_control_arotary_temp_data {
  *  You need to allocate this structure and put a pointer into the nt_control
  *  structure when it is being registered in the system.
  */
-struct nt_control_arotary_data {
-    nt_control_arotary_callback callback;    /*!< Analog Rotary callback handler. */
-    uint8_t             position;          /*!< Position. */
+struct nt_control_arotary_data
+{
+    nt_control_arotary_callback callback; /*!< Analog Rotary callback handler. */
+    uint8_t position;                     /*!< Position. */
 };
-
 
 #ifdef __cplusplus
 extern "C" {

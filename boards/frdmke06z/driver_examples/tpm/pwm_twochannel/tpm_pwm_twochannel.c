@@ -16,8 +16,8 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define BOARD_TPM_BASEADDR TPM0
-#define BOARD_FIRST_TPM_CHANNEL 1U
+#define BOARD_TPM_BASEADDR       TPM0
+#define BOARD_FIRST_TPM_CHANNEL  1U
 #define BOARD_SECOND_TPM_CHANNEL 0U
 
 /* Get source clock for TPM driver */

@@ -471,8 +471,6 @@ void CLOCK_SetSimConfig(sim_clock_config_t const *config);
  * changes then the system level clocks may be out of range. This function could
  * be used before ICS mode change, to make sure system level clocks are in allowed
  * range.
- *
- * @param config Pointer to the configure structure.
  */
 static inline void CLOCK_SetSimSafeDivs(void)
 {
@@ -566,10 +564,7 @@ static inline void CLOCK_SetLowPowerEnable(bool enable)
  * This function sets the ICSIRCLK base on parameters.
  * This function also sets whether the \c ICSIRCLK is enabled in stop mode.
  *
- * @param enableMode ICSIRCLK enable mode, OR'ed value of @ref _ICS_irclk_enable_mode.
- * @retval kStatus_ICS_SourceUsed Because the internal reference clock is used as a clock source,
- * the configuration should not be changed. Otherwise, a glitch occurs.
- * @retval kStatus_Success ICSIRCLK configuration finished successfully.
+ * @param enableMode ICSIRCLK enable mode, OR'ed value of #_ics_irclk_enable_mode.
  */
 static inline void CLOCK_SetInternalRefClkConfig(uint8_t enableMode)
 {
@@ -598,9 +593,9 @@ static inline void CLOCK_SetFllExtRefDiv(uint8_t rdiv)
 /*!
  * @brief Sets the OSC0 clock monitor mode.
  *
- * This function sets the OSC0 clock monitor mode. See @ref ics_monitor_mode_t for details.
+ * This function sets the OSC0 clock monitor mode.
  *
- * @param enable, true to enable clock monitor, false to disable clock monitor.
+ * @param enable true to enable clock monitor, false to disable clock monitor.
  */
 static inline void CLOCK_SetOsc0MonitorMode(bool enable)
 {
@@ -697,7 +692,7 @@ status_t CLOCK_SetFeiMode(uint8_t bDiv);
  * from the current mode, this function returns an error.
  *
  * @param   bDiv bus clock divider
- * @param   rdiv  FLL reference clock divider setting, RDIV.
+ * @param   rDiv  FLL reference clock divider setting, RDIV.
  *
  * @retval kStatus_ICS_ModeUnreachable Could not switch to the target mode.
  * @retval kStatus_Success Switched to the target mode successfully.
@@ -724,7 +719,7 @@ status_t CLOCK_SetFbiMode(uint8_t bDiv);
  * from the current mode, this function returns an error.
  *
  * @param   bDiv bus clock divider
- * @param   rdiv  FLL reference clock divider setting, RDIV.
+ * @param   rDiv  FLL reference clock divider setting, RDIV.
  *
  * @retval kStatus_ICS_ModeUnreachable Could not switch to the target mode.
  * @retval kStatus_Success Switched to the target mode successfully.
@@ -775,7 +770,7 @@ status_t CLOCK_BootToFeiMode(uint8_t bDiv);
  * set up the ICS during system boot up.
  *
  * @param   bDiv bus clock divider.
- * @param   rdiv  FLL reference clock divider setting, RDIV.
+ * @param   rDiv  FLL reference clock divider setting, RDIV.
  *
  * @retval kStatus_ICS_ModeUnreachable Could not switch to the target mode.
  * @retval kStatus_Success Switched to the target mode successfully.
@@ -815,7 +810,7 @@ status_t CLOCK_BootToBelpMode(uint8_t bDiv);
  * chooses the correct path.
  *
  * @param  config Pointer to the target ICS mode configuration structure.
- * @return Return kStatus_Success if switched successfully; Otherwise, it returns an error code #_ICS_status.
+ * @return Return kStatus_Success if switched successfully; Otherwise, it returns an error code #_ics_status.
  *
  * @note If the external clock is used in the target mode, ensure that it is
  * enabled. For example, if the OSC0 is used, set up OSC0 correctly before calling this

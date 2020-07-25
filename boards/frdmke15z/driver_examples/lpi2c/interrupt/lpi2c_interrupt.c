@@ -16,18 +16,18 @@
  * Definitions
  ******************************************************************************/
 #define EXAMPLE_LPI2C_MASTER_BASEADDR LPI2C0
-#define EXAMPLE_LPI2C_SLAVE_BASEADDR LPI2C1
+#define EXAMPLE_LPI2C_SLAVE_BASEADDR  LPI2C1
 
 #define LPI2C_MASTER_CLOCK_FREQUENCY CLOCK_GetIpFreq(kCLOCK_Lpi2c0)
-#define LPI2C_SLAVE_CLOCK_FREQUENCY CLOCK_GetIpFreq(kCLOCK_Lpi2c1)
+#define LPI2C_SLAVE_CLOCK_FREQUENCY  CLOCK_GetIpFreq(kCLOCK_Lpi2c1)
 
-#define LPI2C_MASTER_IRQ LPI2C0_IRQn
-#define LPI2C_SLAVE_IRQ LPI2C1_IRQn
+#define LPI2C_MASTER_IRQ        LPI2C0_IRQn
+#define LPI2C_SLAVE_IRQ         LPI2C1_IRQn
 #define LPI2C_MASTER_IRQHandler LPI2C0_IRQHandler
-#define LPI2C_SLAVE_IRQHandler LPI2C1_IRQHandler
+#define LPI2C_SLAVE_IRQHandler  LPI2C1_IRQHandler
 #define LPI2C_MASTER_SLAVE_ADDR_7BIT 0x7EU
-#define LPI2C_BAUDRATE 100000U
-#define LPI2C_DATA_LENGTH 32U
+#define LPI2C_BAUDRATE               100000U
+#define LPI2C_DATA_LENGTH            32U
 
 /*******************************************************************************
  * Prototypes
@@ -100,11 +100,7 @@ void LPI2C_MASTER_IRQHandler(void)
             }
         }
     }
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 void LPI2C_SLAVE_IRQHandler(void)
@@ -156,11 +152,7 @@ void LPI2C_SLAVE_IRQHandler(void)
             }
         }
     }
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 /*!

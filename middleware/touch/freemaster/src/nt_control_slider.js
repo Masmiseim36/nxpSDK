@@ -1,6 +1,6 @@
 /*
  * Copyright 2013 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -122,7 +122,7 @@ NTControl_slider.prototype.OnLinkClicked = function()
 
     // scope variables
     var vars = [ 
-        {"variable":pname, "visible":true, "y_block":0 } 
+        {"variable":pname, "visible":true, "color":3026413, "y_block":0 } 
     ]; 
 
     // up to 7 electrode signals
@@ -135,7 +135,7 @@ NTControl_slider.prototype.OnLinkClicked = function()
         var ename = this._name + "_electrode" + e + "_signal";
         ok = ok && this._electrodes[e].DefineSignalVariable(ename);
         
-        var edef = { "variable":ename, "visible":true, "y_block":1 }; 
+        var edef = { "variable":ename, "visible":true, "color":4688896*e, "y_block":1 }; 
         vars.push(edef);
     }
 

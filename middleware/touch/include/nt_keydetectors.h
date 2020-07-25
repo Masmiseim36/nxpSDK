@@ -1,6 +1,6 @@
 /*
  * Copyright 2013 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -8,7 +8,7 @@
 #ifndef _NT_KEYDETECTOR_H_
 #define _NT_KEYDETECTOR_H_
 
- /**
+/**
  * \defgroup detectors Key Detectors
  * \ingroup ntapi
  *
@@ -35,14 +35,11 @@ struct nt_electrode_data;
 
 union nt_keydetector_params
 {
-  const struct nt_keydetector_afid     * afid;    /*!< AFID keydetectror pointer */ 
-  const struct nt_keydetector_safa     * safa;    /*!< SAFA keydetectror pointer */
-  const struct nt_keydetector_usafa    * usafa;   /*!< USAFA keydetectror pointer */
-  const void                           * general; /*!< Pointer for general use */
+    const struct nt_keydetector_afid *afid;   /*!< AFID keydetectror pointer */
+    const struct nt_keydetector_safa *safa;   /*!< SAFA keydetectror pointer */
+    const struct nt_keydetector_usafa *usafa; /*!< USAFA keydetectror pointer */
+    const void *general;                      /*!< Pointer for general use */
 };
-
-
-
 
 /**
  * The key detector interface structure represents the NXP Touch library Key
@@ -50,22 +47,23 @@ union nt_keydetector_params
  * \ref electrodes application objects.
  *
  */
-struct nt_keydetector_interface {
-  int32_t (* nt_keydetector_init)(struct nt_electrode_data *electrode);        /*!< Key Detector initialization function pointer */
-  void (* nt_keydetector_enable)(struct nt_electrode_data *electrode, uint32_t touch); /*!< Key Detector enable function pointer */
-  void (* nt_keydetector_process)(struct nt_electrode_data *electrode);        /*!< Key Detector process function pointer       */
-  void (* nt_keydetector_measure)(struct nt_electrode_data *electrode, uint32_t signal); /*!< Key Detector measure function pointer */
-  void (* nt_keydetector_reset)(struct nt_electrode_data *electrode);          /*!< Key Detector reset function pointer       */
-  const char* name;                                                            /*!< A name of the variable of this type, used for FreeMASTER support purposes. */
-  const uint32_t params_size;                                                  /*!< Structure size */ 
+struct nt_keydetector_interface
+{
+    int32_t (*nt_keydetector_init)(
+        struct nt_electrode_data *electrode); /*!< Key Detector initialization function pointer */
+    void (*nt_keydetector_enable)(struct nt_electrode_data *electrode,
+                                  uint32_t touch);                       /*!< Key Detector enable function pointer */
+    void (*nt_keydetector_process)(struct nt_electrode_data *electrode); /*!< Key Detector process function pointer */
+    void (*nt_keydetector_measure)(struct nt_electrode_data *electrode,
+                                   uint32_t signal);                   /*!< Key Detector measure function pointer */
+    void (*nt_keydetector_reset)(struct nt_electrode_data *electrode); /*!< Key Detector reset function pointer       */
+    const char *name;           /*!< A name of the variable of this type, used for FreeMASTER support purposes. */
+    const uint32_t params_size; /*!< Structure size */
 };
-
-
 
 #ifdef __cplusplus
 extern "C" {
 #endif
-
 
 #ifdef __cplusplus
 }

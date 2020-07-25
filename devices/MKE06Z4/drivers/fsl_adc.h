@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 NXP
+ * Copyright 2017-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -278,6 +278,7 @@ uint32_t ADC_GetStatusFlags(ADC_Type *base);
  * @param base ADC peripheral base address.
  * @param mask The mask of the pin associated with channel ADx. Valid range is AD0:0x1U ~ AD15:0x8000U.
  *             For example: If enable AD0, AD1 and AD2 pins, mask should be set to 0x7U.
+ * @param enable The "true" means enabled, "false" means not enabled.
  */
 static inline void ADC_EnableAnalogInput(ADC_Type *base, uint32_t mask, bool enable)
 {
@@ -309,8 +310,12 @@ static inline void ADC_SetHardwareTriggerMaskMode(ADC_Type *base, adc_hardware_t
 }
 #endif /* FSL_FEATURE_ADC_HAS_SC5_REG */
 
+/*@}*/
+
 #if defined(__cplusplus)
 }
 #endif
+
+/*@}*/
 
 #endif /* _FSL_ADC_H_ */

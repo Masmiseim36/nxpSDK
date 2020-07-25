@@ -21,12 +21,12 @@
 #define DEMO_ADC12_CHANNEL_GROUP 0U
 
 #define LED1_INIT() LED_RED1_INIT(LOGIC_LED_OFF)
-#define LED1_ON() LED_RED1_ON()
-#define LED1_OFF() LED_RED1_OFF()
+#define LED1_ON()   LED_RED1_ON()
+#define LED1_OFF()  LED_RED1_OFF()
 
 #define LED2_INIT() LED_GREEN1_INIT(LOGIC_LED_OFF)
-#define LED2_ON() LED_GREEN1_ON()
-#define LED2_OFF() LED_GREEN1_OFF()
+#define LED2_ON()   LED_GREEN1_ON()
+#define LED2_OFF()  LED_GREEN1_OFF()
 #define UPPER_VALUE_LIMIT (1U) /*! This value/10 is going to be added to current Temp to set the upper boundary*/
 #define LOWER_VALUE_LIMIT                                                                     \
     (1U) /*! This Value/10 is going to be subtracted from current Temp to set the lower \ \ \ \
@@ -180,11 +180,7 @@ void DEMO_ADC12_IRQHANDLER(void)
     adcValue = ADC12_GetChannelConversionValue(DEMO_ADC12_PERIPHERAL, DEMO_ADC12_CHANNEL_GROUP);
     /* Set conversionCompleted flag. This prevents an wrong conversion in main function */
     conversionCompleted = true;
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 /*!

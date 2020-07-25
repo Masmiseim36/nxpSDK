@@ -12,7 +12,7 @@
 #define RTE_USART1 1
 
 /* UART configuration. */
-#define USART_RX_BUFFER_LEN 64
+#define USART_RX_BUFFER_LEN     64
 #define USART1_RX_BUFFER_ENABLE 1
 
 #endif /* __RTE_DEVICE_H */

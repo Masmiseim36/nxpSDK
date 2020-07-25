@@ -21,7 +21,7 @@
  ******************************************************************************/
 #define EXAMPLE_I2C_MASTER Driver_I2C0
 #define I2C_MASTER_SLAVE_ADDR 0x7EU
-#define I2C_DATA_LENGTH 32U
+#define I2C_DATA_LENGTH       32U
 
 /*******************************************************************************
  * Prototypes

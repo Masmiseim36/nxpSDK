@@ -15,12 +15,12 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_LPSPI_SLAVE_BASEADDR LPSPI0
-#define EXAMPLE_LPSPI_SLAVE_IRQN LPSPI0_IRQn
-#define EXAMPLE_LPSPI_SLAVE_PCS_FOR_INIT kLPSPI_Pcs2
+#define EXAMPLE_LPSPI_SLAVE_BASEADDR         LPSPI0
+#define EXAMPLE_LPSPI_SLAVE_IRQN             LPSPI0_IRQn
+#define EXAMPLE_LPSPI_SLAVE_PCS_FOR_INIT     kLPSPI_Pcs2
 #define EXAMPLE_LPSPI_SLAVE_PCS_FOR_TRANSFER kLPSPI_SlavePcs2
 
-#define EXAMPLE_LPSPI_SLAVE_CLOCK_NAME (kCLOCK_Lpspi0)
+#define EXAMPLE_LPSPI_SLAVE_CLOCK_NAME   (kCLOCK_Lpspi0)
 #define EXAMPLE_LPSPI_SLAVE_CLOCK_SOURCE (kCLOCK_IpSrcFircAsync)
 #define TRANSFER_SIZE 64U /*! Transfer dataSize */
 
@@ -77,16 +77,8 @@ int main(void)
     lpspi_transfer_t slaveXfer;
 
     /*Slave config*/
-    slaveConfig.bitsPerFrame = 8 * TRANSFER_SIZE;
-    slaveConfig.cpol         = kLPSPI_ClockPolarityActiveHigh;
-    slaveConfig.cpha         = kLPSPI_ClockPhaseFirstEdge;
-    slaveConfig.direction    = kLPSPI_MsbFirst;
-
-    slaveConfig.whichPcs           = EXAMPLE_LPSPI_SLAVE_PCS_FOR_INIT;
-    slaveConfig.pcsActiveHighOrLow = kLPSPI_PcsActiveLow;
-
-    slaveConfig.pinCfg        = kLPSPI_SdiInSdoOut;
-    slaveConfig.dataOutConfig = kLpspiDataOutRetained;
+    LPSPI_SlaveGetDefaultConfig(&slaveConfig);
+    slaveConfig.whichPcs = EXAMPLE_LPSPI_SLAVE_PCS_FOR_INIT;
 
     LPSPI_SlaveInit(EXAMPLE_LPSPI_SLAVE_BASEADDR, &slaveConfig);
 

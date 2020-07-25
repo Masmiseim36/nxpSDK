@@ -1,6 +1,6 @@
 /*
  * Copyright 2013 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -41,11 +41,11 @@
  */
 #define NT_ASLIDER_INVALID_POSITION_VALUE 65535U
 
-
-/** 
- * Analogue Slider flags. 
+/**
+ * Analogue Slider flags.
  */
-enum nt_control_aslider_flags {
+enum nt_control_aslider_flags
+{
     NT_ASLIDER_INVALID_POSITION_FLAG = 1 << NT_FLAGS_SPECIFIC_SHIFT(0), /*!< Analog Slider invalid position flag. */
     NT_ASLIDER_DIRECTION_FLAG        = 1 << NT_FLAGS_SPECIFIC_SHIFT(1), /*!< Analog Slider direction flag. */
     NT_ASLIDER_MOVEMENT_FLAG         = 1 << NT_FLAGS_SPECIFIC_SHIFT(2), /*!< Analog Slider movement flag.*/
@@ -58,26 +58,25 @@ enum nt_control_aslider_flags {
  *  You need to allocate this structure and put a pointer into the nt_control_aslider
  *  structure when it is being registered in the system.
  */
-struct nt_control_aslider_data {
-    nt_control_aslider_callback   callback;     /*!< Analog Slider callback handler. */
-    uint8_t                       position;     /*!< Position. */
+struct nt_control_aslider_data
+{
+    nt_control_aslider_callback callback; /*!< Analog Slider callback handler. */
+    uint8_t position;                     /*!< Position. */
 };
-
 
 /**
  *  Analog Slider help structure to handle temporary values
  */
-struct nt_control_aslider_temp_data {
-    uint32_t    active_el_ix;    /*!< Index of electrode of first active electrode. */
-    uint32_t    first_delta;     /*!< Value of first delta (signal - baseline). */
-    uint32_t    range;           /*!< tmp. value of slider range */    
+struct nt_control_aslider_temp_data
+{
+    uint32_t active_el_ix; /*!< Index of electrode of first active electrode. */
+    uint32_t first_delta;  /*!< Value of first delta (signal - baseline). */
+    uint32_t range;        /*!< tmp. value of slider range */
 };
-
 
 #ifdef __cplusplus
 extern "C" {
 #endif
-
 
 #ifdef __cplusplus
 }

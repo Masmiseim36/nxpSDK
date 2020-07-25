@@ -35,8 +35,8 @@
 
 /*! @brief Definition select redirect toolchain printf, scanf to uart or not. */
 #define DEBUGCONSOLE_REDIRECT_TO_TOOLCHAIN 0U /*!< Select toolchain printf and scanf. */
-#define DEBUGCONSOLE_REDIRECT_TO_SDK 1U       /*!< Select SDK version printf, scanf. */
-#define DEBUGCONSOLE_DISABLE 2U               /*!< Disable debugconsole function. */
+#define DEBUGCONSOLE_REDIRECT_TO_SDK       1U /*!< Select SDK version printf, scanf. */
+#define DEBUGCONSOLE_DISABLE               2U /*!< Disable debugconsole function. */
 
 /*! @brief Definition to select sdk or toolchain printf, scanf. */
 #ifndef SDK_DEBUGCONSOLE
@@ -79,14 +79,14 @@
 #define PUTCHAR
 #define GETCHAR
 #elif SDK_DEBUGCONSOLE == DEBUGCONSOLE_REDIRECT_TO_SDK /* Select printf, scanf, putchar, getchar of SDK version. */
-#define PRINTF DbgConsole_Printf
-#define SCANF DbgConsole_Scanf
+#define PRINTF  DbgConsole_Printf
+#define SCANF   DbgConsole_Scanf
 #define PUTCHAR DbgConsole_Putchar
 #define GETCHAR DbgConsole_Getchar
 #elif SDK_DEBUGCONSOLE == \
     DEBUGCONSOLE_REDIRECT_TO_TOOLCHAIN /* Select printf, scanf, putchar, getchar of toolchain. \ */
-#define PRINTF printf
-#define SCANF scanf
+#define PRINTF  printf
+#define SCANF   scanf
 #define PUTCHAR putchar
 #define GETCHAR getchar
 #endif /* SDK_DEBUGCONSOLE */

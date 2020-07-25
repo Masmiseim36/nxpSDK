@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 NXP
+ * Copyright 2017-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -20,8 +20,8 @@
 
 #if (defined(FSL_FEATURE_FLEXCAN_HAS_IMPROVED_TIMING_CONFIG) && FSL_FEATURE_FLEXCAN_HAS_IMPROVED_TIMING_CONFIG)
 #define MAX_SAMP (MSCAN_CANBTR1_SAMP_MASK >> MSCAN_CANBTR1_SAMP_SHIFT)
-#define MAX_SJW (MSCAN_CANBTR0_SJW_MASK >> MSCAN_CANBTR0_SJW_SHIFT)
-#define MAX_BRP (MSCAN_CANBTR0_BRP_MASK >> MSCAN_CANBTR0_BRP_SHIFT)
+#define MAX_SJW  (MSCAN_CANBTR0_SJW_MASK >> MSCAN_CANBTR0_SJW_SHIFT)
+#define MAX_BRP  (MSCAN_CANBTR0_BRP_MASK >> MSCAN_CANBTR0_BRP_SHIFT)
 
 #define MAX_TSEG1 (MSCAN_CANBTR1_TSEG1_MASK >> MSCAN_CANBTR1_TSEG1_SHIFT)
 #define MIN_TSEG1 (3U)
@@ -34,10 +34,10 @@
 #define MSCAN_MAX_TIME_QUANTA (1U + MAX_TSEG1 + 1U + MAX_TSEG2 + 1U)
 #define MSCAN_MIN_TIME_QUANTA (1U + MIN_TSEG1 + 1U + MIN_TSEG2 + 1U)
 
-#define IDEAL_SP_LOW (750U)
-#define IDEAL_SP_MID (800U)
-#define IDEAL_SP_HIGH (875U)
-#define IDEAL_SP_FACTOR (1000U)
+#define IDEAL_SP_LOW     (750U)
+#define IDEAL_SP_MID     (800U)
+#define IDEAL_SP_HIGH    (875U)
+#define IDEAL_SP_FACTOR  (1000U)
 #define MAX_CAN_BAUDRATE (1000000U)
 #endif
 
@@ -234,48 +234,48 @@ static bool MSCAN_GetSegments(uint32_t baudRate, uint32_t tqNum, mscan_timing_co
 {
     uint32_t ideal_sp;
     uint32_t p1;
-    bool fgRet;
+    bool fgRet = false;
 
     /* get ideal sample point. */
-    if (baudRate >= 1000000)
+    if (baudRate >= 1000000U)
+    {
         ideal_sp = IDEAL_SP_LOW;
-    else if (baudRate >= 800000)
+    }
+    else if (baudRate >= 800000U)
+    {
         ideal_sp = IDEAL_SP_MID;
+    }
     else
+    {
         ideal_sp = IDEAL_SP_HIGH;
+    }
 
     /* distribute time quanta. */
     p1 = tqNum * (uint32_t)ideal_sp;
 
     /* Caculate for time segment 1. */
-    pconfig->timeSeg1 = p1 / IDEAL_SP_FACTOR - 1U;
-    if (pconfig->timeSeg1 > MAX_TSEG1)
+    pconfig->timeSeg1 = (uint8_t)(p1 / IDEAL_SP_FACTOR - 1U);
+    if ((pconfig->timeSeg1 <= MAX_TSEG1) && (pconfig->timeSeg1 >= MIN_TSEG1))
     {
-        pconfig->timeSeg1 = MAX_TSEG1;
-    }
-
-    /* Caculate for time sgement 2. */
-    pconfig->timeSeg2 = tqNum - (1U + pconfig->timeSeg1 + 1U);
-
-    /* reference Manual document requirment. */
-    if ((pconfig->timeSeg1 < MIN_TSEG1) || (pconfig->timeSeg2 < MIN_TSEG2))
-    {
-        fgRet = false;
-    }
-    else
-    {
-        assert(pconfig->timeSeg2 <= MAX_TSEG2);
-
-        /* subtract one TQ for sync seg. */
-        /* sjw is 20% of total TQ, rounded to nearest int. */
-        pconfig->sJumpwidth = (tqNum + (5 - 1)) / 5 - 1U;
-
-        if (pconfig->sJumpwidth > MAX_SJW)
+        if (pconfig->timeSeg1 <= ((uint8_t)tqNum - 3U))
         {
-            pconfig->sJumpwidth = MAX_SJW;
-        }
+            /* Caculate for time sgement 2. */
+            pconfig->timeSeg2 = (uint8_t)tqNum - (pconfig->timeSeg1 + 3U);
 
-        fgRet = true;
+            if ((pconfig->timeSeg2 <= MAX_TSEG2) && (pconfig->timeSeg2 >= MIN_TSEG2))
+            {
+                /* subtract one TQ for sync seg. */
+                /* sjw is 20% of total TQ, rounded to nearest int. */
+                pconfig->sJumpwidth = ((uint8_t)tqNum + (5U - 1U)) / 5U - 1U;
+
+                if (pconfig->sJumpwidth > MAX_SJW)
+                {
+                    pconfig->sJumpwidth = MAX_SJW;
+                }
+
+                fgRet = true;
+            }
+        }
     }
     return fgRet;
 }
@@ -294,7 +294,6 @@ static bool MSCAN_CalculateImprovedTimingValues(uint32_t baudRate,
                                                 mscan_timing_config_t *pconfig)
 {
     uint32_t clk;   /* the clock is tqNumb x baudRateFD. */
-    uint32_t clk2;  /* the clock2 is clk2 / Pre-scaler Division Factor. */
     uint32_t tqNum; /* Numbers of TQ. */
     bool fgRet = false;
 
@@ -310,27 +309,23 @@ static bool MSCAN_CalculateImprovedTimingValues(uint32_t baudRate,
             continue; /* tqNum too large, clk has been exceed sourceClock_Hz. */
         }
 
-        for (pconfig->priDiv = 0x00; pconfig->priDiv <= MAX_BRP; (pconfig->priDiv)++)
+        if ((sourceClock_Hz / clk * clk) != sourceClock_Hz)
         {
-            /* Consider some proessor not contain FPU, the parameter need to be exact division. */
-            if ((clk / (pconfig->priDiv + 1U) * (pconfig->priDiv + 1U)) != clk)
-            {
-                continue; /* clk need to be exact division by preDivider + 1. */
-            }
-            clk2 = clk / (pconfig->priDiv + 1U);
-            if (((sourceClock_Hz / clk2) * clk2) != sourceClock_Hz)
-            {
-                continue; /* sourceClock_Hz need to be exact division by preDivider. */
-            }
-            if (MSCAN_GetSegments(baudRate, tqNum, pconfig))
-            {
-                /* Get the best timing configuration. */
-                fgRet = true;
-                break;
-            }
+            continue; /*  Non-supporting: the frequency of clock source is not divisible by target baud rate, the user
+                      should change a divisible baud rate. */
         }
-        if (fgRet)
+
+        pconfig->priDiv = (uint8_t)(sourceClock_Hz / clk - 1U);
+        if (pconfig->priDiv > MAX_BRP)
         {
+            break; /* The frequency of source clock is too large or the baud rate is too small, the pre-divider could
+                      not handle it. */
+        }
+
+        if (MSCAN_GetSegments(baudRate, tqNum, pconfig))
+        {
+            /* Get the best timing configuration. */
+            fgRet = true;
             break;
         }
     }
@@ -1042,10 +1037,6 @@ void MSCAN_DriverIRQHandler(void)
     assert(NULL != s_mscanHandle[0]);
 
     s_mscanIsr(MSCAN, s_mscanHandle[0]);
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 #endif

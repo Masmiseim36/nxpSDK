@@ -16,15 +16,15 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_LPUART LPUART0
-#define DEMO_LPUART_CLKSRC kCLOCK_ScgSysOscClk
-#define DEMO_LPUART_CLK_FREQ CLOCK_GetFreq(kCLOCK_ScgSysOscClk)
-#define LPUART_TX_DMA_CHANNEL 0U
-#define LPUART_RX_DMA_CHANNEL 1U
+#define DEMO_LPUART                    LPUART0
+#define DEMO_LPUART_CLKSRC             kCLOCK_ScgSysOscClk
+#define DEMO_LPUART_CLK_FREQ           CLOCK_GetFreq(kCLOCK_ScgSysOscClk)
+#define LPUART_TX_DMA_CHANNEL          0U
+#define LPUART_RX_DMA_CHANNEL          1U
 #define EXAMPLE_LPUART_DMAMUX_BASEADDR DMAMUX
-#define EXAMPLE_LPUART_DMA_BASEADDR DMA0
-#define LPUART_TX_DMA_REQUEST kDmaRequestMux0LPUART0Tx
-#define LPUART_RX_DMA_REQUEST kDmaRequestMux0LPUART0Rx
+#define EXAMPLE_LPUART_DMA_BASEADDR    DMA0
+#define LPUART_TX_DMA_REQUEST          kDmaRequestMux0LPUART0Tx
+#define LPUART_RX_DMA_REQUEST          kDmaRequestMux0LPUART0Rx
 #define ECHO_BUFFER_LENGTH 8
 
 /*******************************************************************************
@@ -117,7 +117,10 @@ int main(void)
     EDMA_Init(EXAMPLE_LPUART_DMA_BASEADDR, &config);
     EDMA_CreateHandle(&g_lpuartTxEdmaHandle, EXAMPLE_LPUART_DMA_BASEADDR, LPUART_TX_DMA_CHANNEL);
     EDMA_CreateHandle(&g_lpuartRxEdmaHandle, EXAMPLE_LPUART_DMA_BASEADDR, LPUART_RX_DMA_CHANNEL);
-
+#if defined(FSL_FEATURE_EDMA_HAS_CHANNEL_MUX) && FSL_FEATURE_EDMA_HAS_CHANNEL_MUX
+    EDMA_SetChannelMux(EXAMPLE_LPUART_DMA_BASEADDR, LPUART_TX_DMA_CHANNEL, DEMO_LPUART_TX_EDMA_CHANNEL);
+    EDMA_SetChannelMux(EXAMPLE_LPUART_DMA_BASEADDR, LPUART_RX_DMA_CHANNEL, DEMO_LPUART_RX_EDMA_CHANNEL);
+#endif
     /* Create LPUART DMA handle. */
     LPUART_TransferCreateHandleEDMA(DEMO_LPUART, &g_lpuartEdmaHandle, LPUART_UserCallback, NULL, &g_lpuartTxEdmaHandle,
                                     &g_lpuartRxEdmaHandle);

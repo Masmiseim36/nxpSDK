@@ -16,13 +16,13 @@
  * Definitions
  ******************************************************************************/
 
-#define DEMO_ADC12_BASE ADC0
-#define DEMO_ADC12_CLOCK_SOURCE kADC12_ClockSourceAlt0
-#define DEMO_ADC12_IRQn ADC0_IRQn
+#define DEMO_ADC12_BASE             ADC0
+#define DEMO_ADC12_CLOCK_SOURCE     kADC12_ClockSourceAlt0
+#define DEMO_ADC12_IRQn             ADC0_IRQn
 #define DEMO_ADC12_IRQ_HANDLER_FUNC ADC0_IRQHandler
 
 /* Channel 12 is PTC14 on the board. */
-#define DEMO_ADC12_USER_CHANNEL 12U
+#define DEMO_ADC12_USER_CHANNEL  12U
 #define DEMO_ADC12_CHANNEL_GROUP 0U
 
 /*******************************************************************************

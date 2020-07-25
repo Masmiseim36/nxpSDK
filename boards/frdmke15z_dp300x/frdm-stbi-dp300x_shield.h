@@ -25,8 +25,8 @@
 
 // DIFF-P Sensor Information
 #define DIFF_P_I2C_ADDR 0x60
-#define DIFF_P_INT1 D5
-#define DIFF_P_INT2 D2
-#define DIFF_P_CS D10
+#define DIFF_P_INT1     D5
+#define DIFF_P_INT2     D2
+#define DIFF_P_CS       D10
 
 #endif /* _FRDM_STBI_DP300x_SHIELD_H_ */

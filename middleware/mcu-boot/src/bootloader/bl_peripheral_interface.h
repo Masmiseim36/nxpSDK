@@ -7,7 +7,7 @@
 #if !defined(__BL_PERIPHERAL_INTERFACE_H__)
 #define __BL_PERIPHERAL_INTERFACE_H__
 
-#include "bl_context.h"
+#include "bootloader/bl_context.h"
 
 //! @addtogroup peripherals
 //! @{
@@ -70,13 +70,13 @@ extern const peripheral_control_interface_t g_spiControlInterface;
 extern const peripheral_byte_inteface_t g_spiByteInterface;
 //@}
 
-//! @name FLEXCAN Peripheral Interfaces
+//! @name MSCAN Peripheral Interfaces
 //@{
-//! @brief Control interface for the FLEXCAN peripheral driver.
-extern const peripheral_control_interface_t g_flexcanControlInterface;
+//! @brief Control interface for the MSCAN peripheral driver.
+extern const peripheral_control_interface_t g_mscanControlInterface;
 
-//! @brief Byte I/O interface for the FLEXCAN peripheral driver.
-extern const peripheral_byte_inteface_t g_flexcanByteInterface;
+//! @brief Byte I/O interface for the MSCAN peripheral driver.
+extern const peripheral_byte_inteface_t g_mscanByteInterface;
 //@}
 
 //! @name LPSPI Peripheral Interfaces

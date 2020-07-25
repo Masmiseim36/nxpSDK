@@ -15,11 +15,11 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_ACMP_BASEADDR CMP0
+#define DEMO_ACMP_BASEADDR     CMP0
 #define DEMO_ACMP_USER_CHANNEL 0U
-#define LED_INIT() LED_GREEN1_INIT(LOGIC_LED_OFF)
-#define LED_ON() LED_GREEN1_ON()
-#define LED_OFF() LED_GREEN1_OFF()
+#define LED_INIT()             LED_GREEN1_INIT(LOGIC_LED_OFF)
+#define LED_ON()               LED_GREEN1_ON()
+#define LED_OFF()              LED_GREEN1_OFF()
 
 /*******************************************************************************
  * Prototypes

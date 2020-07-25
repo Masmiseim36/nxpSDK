@@ -1,7 +1,9 @@
 /*
 ** ###################################################################
-**     Processors:          MKE14Z32VLD4
+**     Processors:          MKE14Z32VFP4
+**                          MKE14Z32VLD4
 **                          MKE14Z32VLF4
+**                          MKE14Z64VFP4
 **                          MKE14Z64VLD4
 **                          MKE14Z64VLF4
 **
@@ -12,8 +14,8 @@
 **                          MCUXpresso Compiler
 **
 **     Reference manual:    KE1xZP48M48SF0RM, Rev. 1, Sep. 2018
-**     Version:             rev. 2.0, 2018-09-17
-**     Build:               b180925
+**     Version:             rev. 3.0, 2020-01-22
+**     Build:               b200317
 **
 **     Abstract:
 **         Provides a system configuration function and a global variable that
@@ -21,7 +23,7 @@
 **         the oscillator (PLL) that is part of the microcontroller device.
 **
 **     Copyright 2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2018 NXP
+**     Copyright 2016-2020 NXP
 **     All rights reserved.
 **
 **     SPDX-License-Identifier: BSD-3-Clause
@@ -34,14 +36,16 @@
 **         Initial version.
 **     - rev. 2.0 (2018-09-17)
 **         Based on rev1 RM.
+**     - rev. 3.0 (2020-01-22)
+**         Add 40 pins part numbers.
 **
 ** ###################################################################
 */
 
 /*!
  * @file MKE14Z4
- * @version 2.0
- * @date 2018-09-17
+ * @version 3.0
+ * @date 2020-01-22
  * @brief Device specific configuration file for MKE14Z4 (implementation file)
  *
  * Provides a system configuration function and a global variable that contains

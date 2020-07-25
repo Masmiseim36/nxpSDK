@@ -25,8 +25,8 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_LPUART LPUART1
-#define DEMO_LPUART_CLKSRC kCLOCK_ScgSysOscClk
+#define DEMO_LPUART          LPUART1
+#define DEMO_LPUART_CLKSRC   kCLOCK_ScgSysOscClk
 #define DEMO_LPUART_CLK_FREQ CLOCK_GetFreq(kCLOCK_ScgSysOscClk)
 /* Task priorities. */
 #define uart_task_PRIORITY (configMAX_PRIORITIES - 1)
@@ -61,8 +61,8 @@ lpuart_rtos_config_t lpuart_config = {
 int main(void)
 {
     /* Init board hardware. */
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     CLOCK_SetIpSrc(kCLOCK_Lpuart1, kCLOCK_IpSrcSysOscAsync);
     NVIC_SetPriority(LPUART1_IRQn, 2U);
     if (xTaskCreate(uart_task, "Uart_task", configMINIMAL_STACK_SIZE + 100, NULL, uart_task_PRIORITY, NULL) != pdPASS)
@@ -87,13 +87,13 @@ static void uart_task(void *pvParameters)
     lpuart_config.srcclk = DEMO_LPUART_CLK_FREQ;
     lpuart_config.base   = DEMO_LPUART;
 
-    if (0 > LPUART_RTOS_Init(&handle, &t_handle, &lpuart_config))
+    if (kStatus_Success != LPUART_RTOS_Init(&handle, &t_handle, &lpuart_config))
     {
         vTaskSuspend(NULL);
     }
 
     /* Send introduction message. */
-    if (0 > LPUART_RTOS_Send(&handle, (uint8_t *)to_send, strlen(to_send)))
+    if (kStatus_Success != LPUART_RTOS_Send(&handle, (uint8_t *)to_send, strlen(to_send)))
     {
         vTaskSuspend(NULL);
     }

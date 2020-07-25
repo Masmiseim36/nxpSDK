@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016 - 2019, NXP
+ * Copyright 2016 - 2020, NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -584,7 +584,7 @@ typedef enum _scg_lpfll_trim_mode
 {
     kSCG_LpFllTrimNonUpdate = SCG_LPFLLCSR_LPFLLTREN_MASK,
     /*!< LPFLL trim is enabled but the trim value update is not enabled. In this mode, the
-     trim value is fixed to the initialized value, which is defined by the @ref trimValue
+     trim value is fixed to the initialized value, which is defined by the Member variable trimValue
      in the structure @ref scg_lpfll_trim_config_t.*/
 
     kSCG_LpFllTrimUpdate = SCG_LPFLLCSR_LPFLLTREN_MASK | SCG_LPFLLCSR_LPFLLTRUP_MASK

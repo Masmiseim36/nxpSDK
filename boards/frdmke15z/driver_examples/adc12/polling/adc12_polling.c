@@ -31,12 +31,12 @@
  *    iii) Fast IRC async clock;
  *    iiii) System FLL async clock;
  */
-#define DEMO_ADC12_BASE ADC0
-#define DEMO_ADC12_CLOCK_NAME kCLOCK_Adc0
+#define DEMO_ADC12_BASE         ADC0
+#define DEMO_ADC12_CLOCK_NAME   kCLOCK_Adc0
 #define DEMO_ADC12_CLOCK_SOURCE kADC12_ClockSourceAlt0
 
 /* Channel 0 is PTA0 on the board */
-#define DEMO_ADC12_USER_CHANNEL 0U
+#define DEMO_ADC12_USER_CHANNEL  0U
 #define DEMO_ADC12_CHANNEL_GROUP 0U
 
 /*******************************************************************************

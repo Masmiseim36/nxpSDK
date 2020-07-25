@@ -1,6 +1,6 @@
 /*
  * Copyright 2013 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -37,13 +37,13 @@
 /* forward declaration */
 struct nt_control_keypad;
 
-
-/** 
- * Keypad flags. 
+/**
+ * Keypad flags.
  */
-enum nt_control_keypad_flags {
-    NT_KEYPAD_ONLY_ONE_KEY_FLAG  = 1 << NT_FLAGS_SPECIFIC_SHIFT(0), /*!< Keypad only one key is valid flag. */
-    NT_KEYPAD_MULTI_TOUCH_FLAG   = 1 << NT_FLAGS_SPECIFIC_SHIFT(1), /*!< Multifunction keypad - multi touch recognition */
+enum nt_control_keypad_flags
+{
+    NT_KEYPAD_ONLY_ONE_KEY_FLAG = 1 << NT_FLAGS_SPECIFIC_SHIFT(0), /*!< Keypad only one key is valid flag. */
+    NT_KEYPAD_MULTI_TOUCH_FLAG = 1 << NT_FLAGS_SPECIFIC_SHIFT(1), /*!< Multifunction keypad - multi touch recognition */
 };
 
 /**
@@ -52,14 +52,15 @@ enum nt_control_keypad_flags {
  *  You must allocate this structure and put a pointer into the nt_control_keypad
  *  structure when it is being registered in the system.
  */
-struct nt_control_keypad_data {
-    uint64_t                    last_state;              /*!< Last state of keypad electrodes. */
-    uint64_t                    last_key_state;          /*!< Last state of keypad keys. */
-    uint32_t                    start_autorepeat_rate;   /*!< Start Autorepeat rate. */
-    uint32_t                    repeat_time;             /*!< Time of next autorepeat event. */
-    int32_t                     last_electrode;          /*!< Last touched electrode index. */    
-    uint16_t                    autorepeat_rate;         /*!< Autorepeat rate. */    
-    nt_control_keypad_callback  callback;                /*!< Keypad callback handler. */
+struct nt_control_keypad_data
+{
+    uint64_t last_state;                 /*!< Last state of keypad electrodes. */
+    uint64_t last_key_state;             /*!< Last state of keypad keys. */
+    uint32_t start_autorepeat_rate;      /*!< Start Autorepeat rate. */
+    uint32_t repeat_time;                /*!< Time of next autorepeat event. */
+    int32_t last_electrode;              /*!< Last touched electrode index. */
+    uint16_t autorepeat_rate;            /*!< Autorepeat rate. */
+    nt_control_keypad_callback callback; /*!< Keypad callback handler. */
 };
 
 #ifdef __cplusplus

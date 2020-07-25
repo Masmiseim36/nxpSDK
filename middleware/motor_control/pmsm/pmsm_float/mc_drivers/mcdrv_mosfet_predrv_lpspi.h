@@ -262,4 +262,3 @@ bool_t MCDRV_Driver3PhGetSr3(mcdrv_spi_drv3ph_t *this);
 #endif
 
 #endif /* _MCDRV_LPSPI_DRIVER3PH_H_ */
-

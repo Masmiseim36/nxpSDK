@@ -1,6 +1,6 @@
 /*
  * Copyright 2013 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -133,19 +133,19 @@ NTControl_aslider.prototype.OnLinkClicked = function()
 
     // scope variables
     var vars = [ 
-        {"variable":pname, "visible":true, "y_block":0 } 
+        {"variable":pname, "visible":true, "color":3026413, "y_block":0 } 
     ]; 
 
     var fname = this._name + "->flags_direction";
-    var fdef = { "variable":fname, "visible":true, "y_block":2 };
+    var fdef = { "variable":fname, "visible":true, "color":4688896, "y_block":2 };
     vars.push(fdef);
 
     fname = this._name + "->flags_movement";
-    fdef = { "variable":fname, "visible":true, "y_block":2 };
+    fdef = { "variable":fname, "visible":true, "color":11098392, "y_block":2 };
     vars.push(fdef);
 
     fname = this._name + "->flags_touch";
-    fdef = { "variable":fname, "visible":true, "y_block":2 };
+    fdef = { "variable":fname, "visible":true, "color":2260467, "y_block":2 };
     vars.push(fdef);
 
     // up to 4 electrode signals
@@ -158,7 +158,7 @@ NTControl_aslider.prototype.OnLinkClicked = function()
         var ename = this._name + "_electrode" + e + "_signal";
         ok = ok && this._electrodes[e].DefineSignalVariable(ename);
         
-        var edef = { "variable":ename, "visible":true, "y_block":1 }; 
+        var edef = { "variable":ename, "visible":true, "color":9055202*e, "y_block":1 }; 
         vars.push(edef);
     }
 

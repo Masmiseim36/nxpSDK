@@ -16,14 +16,14 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define BOARD_LED_GPIO BOARD_LED_RED1_GPIO
-#define BOARD_LED_GPIO_PIN BOARD_LED_RED1_GPIO_PIN
-#define BOARD_SW_GPIO BOARD_SW3_GPIO
-#define BOARD_SW_PORT BOARD_SW3_PORT
-#define BOARD_SW_GPIO_PIN BOARD_SW3_GPIO_PIN
-#define BOARD_SW_IRQ BOARD_SW3_IRQ
+#define BOARD_LED_GPIO       BOARD_LED_RED1_GPIO
+#define BOARD_LED_GPIO_PIN   BOARD_LED_RED1_GPIO_PIN
+#define BOARD_SW_GPIO        BOARD_SW3_GPIO
+#define BOARD_SW_PORT        BOARD_SW3_PORT
+#define BOARD_SW_GPIO_PIN    BOARD_SW3_GPIO_PIN
+#define BOARD_SW_IRQ         BOARD_SW3_IRQ
 #define BOARD_SW_IRQ_HANDLER BOARD_SW3_IRQ_HANDLER
-#define BOARD_SW_NAME BOARD_SW3_NAME
+#define BOARD_SW_NAME        BOARD_SW3_NAME
 
 /*******************************************************************************
  * Prototypes
@@ -54,11 +54,7 @@ void BOARD_SW_IRQ_HANDLER(void)
 #endif
     /* Change state of button. */
     g_ButtonPress = true;
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 /*!

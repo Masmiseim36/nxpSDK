@@ -19,10 +19,10 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_ADC12_BASEADDR ADC0
+#define DEMO_ADC12_BASEADDR      ADC0
 #define DEMO_ADC12_CHANNEL_GROUP 0U
 
-#define DEMO_ADC12_IRQ_ID ADC0_IRQn
+#define DEMO_ADC12_IRQ_ID           ADC0_IRQn
 #define DEMO_ADC12_IRQ_HANDLER_FUNC ADC0_IRQHandler
 
 /*
@@ -30,17 +30,17 @@
  * LPTMR may use LPO 1KHz or LPO 128KHz clock as prescaler/glitch filter clock, this is chip specific.
  */
 #define LPTMR_COMPARE_VALUE (500 * 128U)
-#define DEMO_LPTMR_BASE LPTMR0
+#define DEMO_LPTMR_BASE     LPTMR0
 
 #define DEMO_ADC12_CLOCK_NAME kCLOCK_Adc0
 
 #define LED1_INIT() LED_RED1_INIT(LOGIC_LED_OFF)
-#define LED1_ON() LED_RED1_ON()
-#define LED1_OFF() LED_RED1_OFF()
+#define LED1_ON()   LED_RED1_ON()
+#define LED1_OFF()  LED_RED1_OFF()
 
 #define LED2_INIT() LED_GREEN1_INIT(LOGIC_LED_OFF)
-#define LED2_ON() LED_GREEN1_ON()
-#define LED2_OFF() LED_GREEN1_OFF()
+#define LED2_ON()   LED_GREEN1_ON()
+#define LED2_OFF()  LED_GREEN1_OFF()
 #define kAdcChannelTemperature (26U) /*! ADC channel of temperature sensor */
 
 #define UPPER_VALUE_LIMIT (1U) /*! This value/10 is going to be added to current Temp to set the upper boundary*/
@@ -270,11 +270,7 @@ void DEMO_ADC12_IRQ_HANDLER_FUNC(void)
     adcValue = ADC12_GetChannelConversionValue(DEMO_ADC12_BASEADDR, DEMO_ADC12_CHANNEL_GROUP);
     /* Set conversionCompleted flag. This prevents an wrong conversion in main function */
     conversionCompleted = true;
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 /*!

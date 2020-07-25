@@ -86,7 +86,7 @@ SemaphoreHandle_t lpi2c_sem;
  * Definitions
  ******************************************************************************/
 /* Task priorities. */
-#define slave_task_PRIORITY (configMAX_PRIORITIES - 2)
+#define slave_task_PRIORITY  (configMAX_PRIORITIES - 2)
 #define master_task_PRIORITY (configMAX_PRIORITIES - 1)
 
 /*******************************************************************************
@@ -104,8 +104,8 @@ int main(void)
     uint32_t i = 0;
 
     /* Init board hardware. */
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
 
     /* Select the clock source for the LPI2C0 module as fast internal RC oscillator */

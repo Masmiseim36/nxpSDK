@@ -16,10 +16,10 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_ADC12_BASEADDR ADC0
+#define DEMO_ADC12_BASEADDR      ADC0
 #define DEMO_ADC12_CHANNEL_GROUP 0U
-#define DEMO_ADC12_USER_CHANNEL 9U
-#define DEMO_DAC32_BASEADDR DAC0
+#define DEMO_ADC12_USER_CHANNEL  9U
+#define DEMO_DAC32_BASEADDR      DAC0
 #define DAC_1_0_VOLTS 1241U
 #define DAC_1_5_VOLTS 1862U
 #define DAC_2_0_VOLTS 2482U

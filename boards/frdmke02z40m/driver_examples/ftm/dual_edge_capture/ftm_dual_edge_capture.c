@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2017, 2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -23,14 +23,14 @@
 #define BOARD_FTM_INPUT_CAPTURE_CHANNEL_PAIR kFTM_Chnl_0
 
 /* Interrupt number and interrupt handler for the FTM instance used */
-#define FTM_INTERRUPT_NUMBER FTM2_IRQn
+#define FTM_INTERRUPT_NUMBER      FTM2_IRQn
 #define FTM_INPUT_CAPTURE_HANDLER FTM2_IRQHandler
 
 /* Interrupt to enable and flag to read; depends on the FTM channel used for dual-edge capture */
-#define FTM_FIRST_CHANNEL_INTERRUPT_ENABLE kFTM_Chnl0InterruptEnable
-#define FTM_FIRST_CHANNEL_FLAG kFTM_Chnl0Flag
+#define FTM_FIRST_CHANNEL_INTERRUPT_ENABLE  kFTM_Chnl0InterruptEnable
+#define FTM_FIRST_CHANNEL_FLAG              kFTM_Chnl0Flag
 #define FTM_SECOND_CHANNEL_INTERRUPT_ENABLE kFTM_Chnl1InterruptEnable
-#define FTM_SECOND_CHANNEL_FLAG kFTM_Chnl1Flag
+#define FTM_SECOND_CHANNEL_FLAG             kFTM_Chnl1Flag
 
 /* Get source clock for FTM driver */
 #define FTM_SOURCE_CLOCK CLOCK_GetFreq(kCLOCK_BusClk)
@@ -92,7 +92,7 @@ int main(void)
     ftm_dual_edge_capture_param_t edgeParam;
     uint32_t capture1Val;
     uint32_t capture2Val;
-    uint32_t pulseWidth;
+    float pulseWidth;
 
     /* Board pin, clock, debug console init */
     BOARD_InitPins();
@@ -158,10 +158,11 @@ int main(void)
      * divided by 1000000 as the output is printed in microseconds
      */
     pulseWidth =
-        (((g_secondChannelOverflowCount - g_firstChannelOverflowCount) * 65536 + capture2Val - capture1Val) + 1) /
-        (FTM_SOURCE_CLOCK / 1000000);
+        (float)(((g_secondChannelOverflowCount - g_firstChannelOverflowCount) * 65536 + capture2Val - capture1Val) +
+                1) /
+        ((float)FTM_SOURCE_CLOCK / 1000000);
 
-    PRINTF("\r\nInput signals pulse width=%d us\r\n", pulseWidth);
+    PRINTF("\r\nInput signals pulse width = %f us\r\n", pulseWidth);
 
     while (1)
     {

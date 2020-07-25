@@ -1,6 +1,6 @@
 /*
  * Copyright 2013 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -26,14 +26,14 @@
 /* Modules */
 #include "nt_modules.h"
 #if defined(CPU_QN908X) || defined(CPU_QN9080C)
-  #include "nt_module_cs.h"
+#include "nt_module_cs.h"
 #else
-  #include "nt_module_tsi.h"
+#include "nt_module_tsi.h"
 #endif
 #include "nt_module_gpioint.h"
 #include "nt_module_gpio.h"
 #if (NT_SAFETY_SUPPORT == 1)
-  #include "nt_safety.h"
+#include "nt_safety.h"
 #endif /* NT_SAFETY_SUPPORT */
 /* Key Detectors */
 #include "nt_keydetector_safa.h"
@@ -58,7 +58,7 @@ extern "C" {
  * \ingroup system_api
  * \{
  */
-  
+
 /**
  * \brief NXP Touch Library initialization.
  * \param system Pointer to the NT system parameters structure.
@@ -71,7 +71,7 @@ extern "C" {
  *
  * This function validates the NXP Touch configuration passed within the
  * nt_system structure. After this call, the system structure becomes the main
- * data provider for the application. There are also created and filled-up internal 
+ * data provider for the application. There are also created and filled-up internal
  * volatile data structures used by the driver. It is the user's responsibility to prepare
  * the configuration of all electrodes, modules, and controls in the system structure
  * before calling this function. The application should not execute any other
@@ -79,14 +79,14 @@ extern "C" {
  * This is an example of the NT library initialization:
    \code
     uint8_t nt_memory_pool[512];
-    
+
     if(nt_init(&my_nt_system_params, nt_memory_pool, sizeof(nt_memory_pool)) == NT_FAILURE)
     {
       printf("Initialization of NT failed. There can be a problem with the memory size
       or invalid parameters in component parameter structures.");
     }
-    // The NT is successfully initialized 
-  
+    // The NT is successfully initialized
+
    \endcode
  */
 int32_t nt_init(const struct nt_system *system, uint8_t *pool, const uint32_t size);
@@ -107,14 +107,14 @@ int32_t nt_init(const struct nt_system *system, uint8_t *pool, const uint32_t si
  * This is an example of running a task of the NT library:
    \code
     uint8_t nt_memory_pool[512];
-    
+
     if(nt_init(&my_nt_system_params, nt_memory_pool, sizeof(nt_memory_pool)) == NT_FAILURE)
     {
       printf("Initialization of NT failed. There can be problem with memory size
       or invalid parameters in component parameter structures.");
     }
     // The NT is successfully initialized
-  
+
     // Main never-ending loop of the application
     while(1)
     {
@@ -142,7 +142,7 @@ int32_t nt_task(void);
  * may only start the hardware sampling with interrupt enabled.
  * This is an example of the NT library triggering:
    \code
-    //For example, there is a callback routine from any periodical source (for example 5 ms)   
+    //For example, there is a callback routine from any periodical source (for example 5 ms)
     static void Timer_5msCallBack(void)
     {
      if(nt_trigger() != NT_SUCCESS)

@@ -1,6 +1,6 @@
 /*
  * Copyright 2013 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -33,21 +33,22 @@
 #include "nt_controls.h"
 #include "nt_types.h"
 
-#define NT_CONTROL_ROTARY_NAME  "nt_control_rotary_interface"
+#define NT_CONTROL_ROTARY_NAME "nt_control_rotary_interface"
 
 /** Rotary event types. */
-enum nt_control_rotary_event {
-    NT_ROTARY_MOVEMENT      = 0,  /*!< Finger movement event */
-    NT_ROTARY_ALL_RELEASE   = 1,  /*!< Release event */
-    NT_ROTARY_INITIAL_TOUCH = 2,  /*!< Initial-touch event */
+enum nt_control_rotary_event
+{
+    NT_ROTARY_MOVEMENT      = 0, /*!< Finger movement event */
+    NT_ROTARY_ALL_RELEASE   = 1, /*!< Release event */
+    NT_ROTARY_INITIAL_TOUCH = 2, /*!< Initial-touch event */
 };
 
 /**
  * Rotary event callback function pointer type.
  */
-typedef void (* nt_control_rotary_callback)(const struct nt_control *control,
-                                            enum nt_control_rotary_event,
-                                            uint32_t position);
+typedef void (*nt_control_rotary_callback)(const struct nt_control *control,
+                                           enum nt_control_rotary_event,
+                                           uint32_t position);
 
 /** The interface structure, which contains pointers to the entry points of the
  *  Rotary algorithms. A pointer to this structure must be assigned to any
@@ -77,7 +78,6 @@ extern const struct nt_control_interface nt_control_rotary_interface;
  * \{
  */
 
-
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -91,17 +91,17 @@ extern "C" {
  * Register the specified callback function as the Rotary events handler.
  * Example:
  * \code
- *  
+ *
  *  //Create the callback function for arotary
  *  static void my_rotary_cb(const struct nt_control *control,
  *                            enum nt_control_arotary_event event,
  *                            uint32_t position)
  *  {
  *    (void)control;
- *    char* event_names[] = 
+ *    char* event_names[] =
  *     {
- *      "NT_ROTARY_MOVEMENT",     
- *      "NT_ROTARY_ALL_RELEASE",  
+ *      "NT_ROTARY_MOVEMENT",
+ *      "NT_ROTARY_ALL_RELEASE",
  *      "NT_ROTARY_INITIAL_TOUCH",
  *      };
  *    printf("New rotary control event %s on position: %d.", event_names[event], position);
@@ -111,8 +111,7 @@ extern "C" {
  *  nt_control_rotary_register_callback(&my_rotary_control, my_rotary_cb);
  * \endcode
  */
-void nt_control_rotary_register_callback(const struct nt_control *control,
-                                         nt_control_rotary_callback callback);
+void nt_control_rotary_register_callback(const struct nt_control *control, nt_control_rotary_callback callback);
 
 /**
  * \brief Get the Rotary 'Position' value.
@@ -123,7 +122,7 @@ void nt_control_rotary_register_callback(const struct nt_control *control,
  * This function retrieves the actual finger position value.
  * Example:
  * \code
- * uint32_t position; 
+ * uint32_t position;
  * // Get position of Rotary control
  * position = nt_control_rotary_get_position(&my_rotary_control);
  * printf("Position of Rotary control is: %d.", position);
@@ -137,7 +136,7 @@ uint32_t nt_control_rotary_get_position(const struct nt_control *control);
  * \return Non-zero value, when the control is currently touched.
  * Example:
  * \code
- * uint32_t touched; 
+ * uint32_t touched;
  * // Get state of the Rotary control
  * touched = nt_control_rotary_is_touched(&my_rotary_control);
  * if(touched)
@@ -154,7 +153,7 @@ uint32_t nt_control_rotary_is_touched(const struct nt_control *control);
  * \return Non-zero value, when the control detects finger movement.
  * Example:
  * \code
- * uint32_t movement; 
+ * uint32_t movement;
  * // Get state of rotary control
  * movement = nt_control_rotary_movement_detected(&my_rotary_control);
  * if(movement)
@@ -172,7 +171,7 @@ uint32_t nt_control_rotary_movement_detected(const struct nt_control *control);
  *         values. Returns zero, when a movement is detected towards zero.
  * Example:
  * \code
- * uint32_t direction; 
+ * uint32_t direction;
  * // Get direction of rotary control
  * direction = nt_control_rotary_get_direction(&my_rotary_control);
  * if(direction)
@@ -190,7 +189,7 @@ uint32_t nt_control_rotary_get_direction(const struct nt_control *control);
  *         otherwise a zero value.
  * Example:
  * \code
- * uint32_t invalid_position; 
+ * uint32_t invalid_position;
  * // Get invalid position of Rotary control
  * invalid_position = nt_control_rotary_get_invalid_position(&my_rotary_control);
  * if(invalid_position)
@@ -201,13 +200,11 @@ uint32_t nt_control_rotary_get_direction(const struct nt_control *control);
  */
 uint32_t nt_control_rotary_get_invalid_position(const struct nt_control *control);
 
-
-
 #ifdef __cplusplus
 }
 #endif
 
 /** \} */ /* end of rotary_api group */
 /** \} */ /* end of rotary group */
-  
+
 #endif

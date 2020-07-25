@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding= "UTF-8" ?>
-<configuration name="MKE18F512xxx16" version="1.6" xsi:schemaLocation="http://mcuxpresso.nxp.com/XSD/mex_configuration_1.6 http://mcuxpresso.nxp.com/XSD/mex_configuration_1.6.xsd" uuid="458e535a-f2d4-4bad-a766-38bc72ea8020" xmlns="http://mcuxpresso.nxp.com/XSD/mex_configuration_1.6" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<configuration name="MKE18F512xxx16" version="1.6" xsi:schemaLocation="http://mcuxpresso.nxp.com/XSD/mex_configuration_1.7 http://mcuxpresso.nxp.com/XSD/mex_configuration_1.7.xsd" uuid="1810b662-87d7-4585-b15b-da94e604d774" xmlns="http://mcuxpresso.nxp.com/XSD/mex_configuration_1.7" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
    <common>
       <processor>MKE18F512xxx16</processor>
       <package>MKE18F512VLL16</package>
@@ -8,7 +8,6 @@
       <cores selected="core0">
          <core name="Cortex-M4F" id="core0" description="M4 core"/>
       </cores>
-      <description>Configuration imported from C:\Users\mcu-sdk-2.0\boards\hvpke18f\demo_apps\led_blinky\iar</description>
    </common>
    <preferences>
       <validate_boot_init_only>true</validate_boot_init_only>
@@ -16,9 +15,9 @@
       <generate_code_modified_registers_only>false</generate_code_modified_registers_only>
    </preferences>
    <tools>
-      <pins name="Pins" version="6.0" enabled="true" update_project_code="true">
+      <pins name="Pins" version="7.0" enabled="true" update_project_code="true">
          <pins_profile>
-            <processor_version>6.0.1</processor_version>
+            <processor_version>0.7.2</processor_version>
          </pins_profile>
          <functions_list>
             <function name="BOARD_InitPins">
@@ -55,9 +54,9 @@
             </function>
          </functions_list>
       </pins>
-      <clocks name="Clocks" version="6.0" enabled="true" update_project_code="true">
+      <clocks name="Clocks" version="7.0" enabled="true" update_project_code="true">
          <clocks_profile>
-            <processor_version>6.0.1</processor_version>
+            <processor_version>0.7.2</processor_version>
          </clocks_profile>
          <clock_configurations>
             <clock_configuration name="BOARD_BootClockVLPR">
@@ -216,7 +215,7 @@
          </dcdx_profile>
          <dcdx_configurations/>
       </dcdx>
-      <periphs name="Peripherals" version="6.0" enabled="false" update_project_code="true">
+      <periphs name="Peripherals" version="7.0" enabled="false" update_project_code="true">
          <peripherals_profile>
             <processor_version>N/A</processor_version>
          </peripherals_profile>

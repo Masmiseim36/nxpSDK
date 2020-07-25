@@ -9,7 +9,7 @@
 #define __SRAM_INIT_H__
 
 #include <stdint.h>
-#include "memory.h"
+#include "memory/memory.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 // Declarations

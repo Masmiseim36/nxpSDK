@@ -1,6 +1,6 @@
 /*
  * Copyright 2013 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -32,7 +32,8 @@
 
 /** System callbacks events.
  */
-enum nt_system_event {                                                                               
+enum nt_system_event
+{
     NT_SYSTEM_EVENT_OVERRUN           = 0, /*!< Data has been overrun                                */
     NT_SYSTEM_EVENT_DATA_READY        = 1, /*!< New data are available                               */
     NT_SYSTEM_EVENT_MODULE_DATA_READY = 2, /*!< New data measured                                    */
@@ -45,13 +46,14 @@ enum nt_system_event {
     NT_SYSTEM_EVENT_CRC_FAILED        = 9, /*!< CRC failure on the system cfg data detected          */
 };
 
-union nt_system_event_context {
-  struct 
-  {
-    struct nt_electrode * electrode;
-  }sig_out_of_limit;
-  
-  struct nt_module_data *module_data;
+union nt_system_event_context
+{
+    struct
+    {
+        struct nt_electrode *electrode;
+    } sig_out_of_limit;
+
+    struct nt_module_data *module_data;
 };
 
 /* forward declaration */
@@ -62,14 +64,14 @@ struct nt_control;
  * \param event  Event type \ref nt_system_event that caused the callback function call.
  * \return      None.
  */
-typedef void (* nt_system_callback)(uint32_t event, union nt_system_event_context * context);
+typedef void (*nt_system_callback)(uint32_t event, union nt_system_event_context *context);
 
 /** Error callback function pointer type.
  * \param file  The name of the file where the error occurs.
  * \param line  The line index in the file where the error occurs.
  * \return      None.
  */
-typedef void (* nt_error_callback)(char *file_name, uint32_t line);
+typedef void (*nt_error_callback)(char *file_name, uint32_t line);
 
 /**
  * The main structure representing the NXP Touch library;
@@ -88,18 +90,18 @@ typedef void (* nt_error_callback)(char *file_name, uint32_t line);
  *
  * This structure can be allocated in ROM.
  */
-struct nt_system {
-    const struct nt_control * const * controls;    /*!< A pointer to the list of controls. Can't be NULL. */
-    const struct nt_module  * const * modules;     /*!< A pointer to the list of modules. Can't be NULL. */
-    char                    * gui_path;            /*!< GUI path to read xml configuration */    
-    uint16_t                time_period;           /*!< Defined time period (triggering period). Can't be 0.*/
-    uint16_t                init_time;             /*!< Initialization time for the system. */
-    uint16_t                safety_period_multiple;/*!< Multiplier of the time period Time period for safety process 
-                                                        function execution. If same as time period the safety process
-                                                        will be executed each NT system period. To avoid safety process 
-                                                        execution set zero */   
-    uint8_t                 safety_crc_hw;         /*!< true if the crc hw module present on chip will be used */
-
+struct nt_system
+{
+    const struct nt_control *const *controls; /*!< A pointer to the list of controls. Can't be NULL. */
+    const struct nt_module *const *modules;   /*!< A pointer to the list of modules. Can't be NULL. */
+    char *gui_path;                           /*!< GUI path to read xml configuration */
+    uint16_t time_period;                     /*!< Defined time period (triggering period). Can't be 0.*/
+    uint16_t init_time;                       /*!< Initialization time for the system. */
+    uint16_t safety_period_multiple;          /*!< Multiplier of the time period Time period for safety process
+                                                   function execution. If same as time period the safety process
+                                                   will be executed each NT system period. To avoid safety process
+                                                   execution set zero */
+    uint8_t safety_crc_hw;                    /*!< true if the crc hw module present on chip will be used */
 };
 
 /**
@@ -112,8 +114,8 @@ struct nt_system {
 
 #ifdef __cplusplus
 extern "C" {
-#endif   
-  
+#endif
+
 /**
  * \brief Register the system callback function.
  * \param callback Pointer to the callback function, which will receive the system event notifications.
@@ -121,7 +123,7 @@ extern "C" {
  * This is an example of installing and using the parameters of the NT library system events handler:
  * \code
  *  static void my_nt_system_callback(uint32_t event);
- *  
+ *
  *  // To catch the system events, install the system handler
  *  nt_system_register_callback(my_nt_system_callback)
  *
@@ -129,11 +131,11 @@ extern "C" {
  *  static void my_nt_system_callback(uint32_t event)
  *  {
  *    if(event == NT_SYSTEM_EVENT_OVERRUN)
- *    {  
+ *    {
  *      printf("\nThe measured data has been overrun. Call more frequently nt_task();");
  *    }
  *    else if(event == NT_SYSTEM_EVENT_DATA_READY)
- *    {  
+ *    {
  *      printf("\nThere is new data in the NT library.);
  *    }
  *  }
@@ -150,7 +152,7 @@ void nt_system_register_callback(nt_system_callback callback);
  * This is an example of installing and using the parameters of the NT library error handler:
  * \code
  *  static void my_nt_error_callback(char *file_name, uint32_t line);
- *  
+ *
  *  // For library debugging only, install the error handler
  *  nt_error_register_callback(my_nt_error_callback)
  *
@@ -180,13 +182,12 @@ uint32_t nt_system_get_time_counter(void);
  * \return Returns the safety period calculated as system time period and safety period multioplier.
  * This is an example of getting the current time of the NT library:
  * \code
- *  // Printing the current NXP Touch library safety period 
+ *  // Printing the current NXP Touch library safety period
  *  printf("The NT library safety period is: &d ms since start.\n", _nt_system_get_safety_period());
  *
  * \endcode
  */
 uint32_t _nt_system_get_safety_period(void);
-
 
 /**
  * \brief Returns the system time counter offset.
@@ -204,20 +205,20 @@ uint32_t nt_system_get_time_offset(uint32_t event_stamp);
  * \brief Returns the free memory size in the NT memory pool
  * \return size of unused memory in the NT memory pool
  *
- * This can be used in debugging of the driver to specify the exact size of the 
+ * This can be used in debugging of the driver to specify the exact size of the
  * NXP Touch memory pool needed.
  * This is an example of initializing the NT library and checking the final size:
  * \code
  *  uint8_t nt_memory_pool[512];
- *  
+ *
  *  if(nt_init(&my_nt_system_params, nt_memory_pool, sizeof(nt_memory_pool)) == NT_FAILURE)
  *  {
  *    printf("Initialization of the NT failed. There may be a problem with the memory size,
  *    or invalid parameters in the complemented parameter structures.");
  *  }
- *  // The NT is successfully initialized 
+ *  // The NT is successfully initialized
  *
- *  printf("The unused memory size is: &d Bytes. The memory pool can be reduced 
+ *  printf("The unused memory size is: &d Bytes. The memory pool can be reduced
  *  by this size.", nt_mem_get_free_size());
  *
  * \endcode

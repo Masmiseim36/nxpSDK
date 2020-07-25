@@ -9,7 +9,6 @@
 #ifndef _MAIN_H_
 #define _MAIN_H_
 
-
 #include "board.h"
 #include "mcdrv.h"
 #include "freemaster.h"
@@ -30,13 +29,16 @@
 /* Macro for correct Cortex CM0 / CM4 end of interrupt */
 #define M1_END_OF_ISR \
     {                 \
-        __DSB(); \
-        __ISB(); \
+        __DSB();      \
+        __ISB();      \
     }
 
 /* CPU load measurement SysTick START / STOP macros */
 #define SYSTICK_START_COUNT() (SysTick->VAL = SysTick->LOAD)
-#define SYSTICK_STOP_COUNT(par1) uint32_t val = SysTick->VAL; uint32_t load = SysTick->LOAD; par1 = load - val
+#define SYSTICK_STOP_COUNT(par1)   \
+    uint32_t val  = SysTick->VAL;  \
+    uint32_t load = SysTick->LOAD; \
+    par1          = load - val
 
 /* RED TWR-LV3PH LED control */
 #define LED_LV3PH_RED_TOGGLE() (GPIOC->PTOR = (1U << 9U))
@@ -46,7 +48,7 @@
 #if defined(__cplusplus)
 extern "C" {
 #endif /* __cplusplus */
-  
+
 /*******************************************************************************
  * API
  ******************************************************************************/

@@ -8,8 +8,8 @@
     <definition extID="component.serial_manager_uart.MKE18F16"/>
     <definition extID="device.MKE18F16_CMSIS.MKE18F16"/>
     <definition extID="device.MKE18F16_startup.MKE18F16"/>
-    <definition extID="middleware.amazon_freertos-kernel.MKE18F16"/>
-    <definition extID="middleware.amazon_freertos-kernel.extension.MKE18F16"/>
+    <definition extID="middleware.freertos-kernel.MKE18F16"/>
+    <definition extID="middleware.freertos-kernel.extension.MKE18F16"/>
     <definition extID="platform.Include_common.MKE18F16"/>
     <definition extID="platform.Include_core_cm4.MKE18F16"/>
     <definition extID="platform.Include_dsp.MKE18F16"/>
@@ -27,7 +27,7 @@
     <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="hvpke18f_freertos_sem_static" name="freertos_sem_static" category="rtos_examples" dependency="platform.drivers.port.MKE18F16 platform.drivers.gpio.MKE18F16 platform.drivers.clock.MKE18F16 middleware.amazon_freertos-kernel.MKE18F16 platform.drivers.common.MKE18F16 device.MKE18F16_CMSIS.MKE18F16 utility.debug_console.MKE18F16 component.lpuart_adapter.MKE18F16 component.serial_manager.MKE18F16 component.lists.MKE18F16 component.serial_manager_uart.MKE18F16 platform.drivers.lpuart.MKE18F16 device.MKE18F16_startup.MKE18F16 platform.drivers.smc.MKE18F16 platform.utilities.assert.MKE18F16 platform.Include_core_cm4.MKE18F16 platform.Include_common.MKE18F16 platform.Include_dsp.MKE18F16 middleware.amazon_freertos-kernel.extension.MKE18F16 platform.utilities.misc_utilities.MKE18F16">
+  <example id="hvpke18f_freertos_sem_static" name="freertos_sem_static" category="rtos_examples" dependency="platform.drivers.port.MKE18F16 platform.drivers.gpio.MKE18F16 platform.drivers.clock.MKE18F16 middleware.freertos-kernel.MKE18F16 platform.drivers.common.MKE18F16 device.MKE18F16_CMSIS.MKE18F16 utility.debug_console.MKE18F16 component.lpuart_adapter.MKE18F16 component.serial_manager.MKE18F16 component.lists.MKE18F16 component.serial_manager_uart.MKE18F16 platform.drivers.lpuart.MKE18F16 device.MKE18F16_startup.MKE18F16 platform.drivers.smc.MKE18F16 platform.utilities.assert.MKE18F16 platform.Include_core_cm4.MKE18F16 platform.Include_common.MKE18F16 platform.Include_dsp.MKE18F16 middleware.freertos-kernel.extension.MKE18F16 platform.utilities.misc_utilities.MKE18F16">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>

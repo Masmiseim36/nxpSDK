@@ -14,12 +14,12 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_LPUART LPUART2
-#define DEMO_LPUART_CLKSRC kCLOCK_ScgSysPllAsyncDiv2Clk
+#define DEMO_LPUART          LPUART2
+#define DEMO_LPUART_CLKSRC   kCLOCK_ScgSysPllAsyncDiv2Clk
 #define DEMO_LPUART_CLK_FREQ CLOCK_GetIpFreq(kCLOCK_Lpuart2)
 
 #define RX_RING_BUFFER_SIZE 20U
-#define ECHO_BUFFER_SIZE 8U
+#define ECHO_BUFFER_SIZE    8U
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/

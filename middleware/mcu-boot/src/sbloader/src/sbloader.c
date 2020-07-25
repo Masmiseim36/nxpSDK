@@ -9,19 +9,19 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <string.h>
-#include "sbloader.h"
-#include "bl_context.h"
-#include "bootloader.h"
-#include "bl_shutdown_cleanup.h"
+#include "sbloader/sbloader.h"
+#include "bootloader/bl_context.h"
+#include "bootloader/bootloader.h"
+#include "bootloader/bl_shutdown_cleanup.h"
 #if BL_FEATURE_ENCRYPTION
 #include "aes_security.h"
 #include "cbc_mac.h"
 #endif // BL_FEATURE_ENCRYPTION
-#include "fsl_assert.h"
-#include "fsl_rtos_abstraction.h"
+#include "utilities/fsl_assert.h"
+#include "utilities/fsl_rtos_abstraction.h"
 
 #ifdef DEBUG
-#include "property.h"
+#include "property/property.h"
 #endif
 
 #if BL_FEATURE_QSPI_MODULE
@@ -32,7 +32,7 @@
 #endif
 
 #if BL_FEATURE_OCOTP_MODULE
-#include "bl_ocotp.h"
+#include "ocotp/fsl_ocotp.h"
 #endif
 
 //! @addtogroup sbloader

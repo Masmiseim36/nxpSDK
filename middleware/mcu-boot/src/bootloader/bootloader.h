@@ -9,13 +9,13 @@
 #define __BOOTLOADER_H__
 
 #include "bootloader_common.h"
-#include "bl_peripheral.h"
-#include "bl_command.h"
-#include "bl_context.h"
-#include "bl_version.h"
-#include "bl_user_entry.h"
-#include "bl_peripheral_interface.h"
-#include "bl_shutdown_cleanup.h"
+#include "bootloader/bl_peripheral.h"
+#include "bootloader/bl_command.h"
+#include "bootloader/bl_context.h"
+#include "bootloader/bl_version.h"
+#include "bootloader/bl_user_entry.h"
+#include "bootloader/bl_peripheral_interface.h"
+#include "bootloader/bl_shutdown_cleanup.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions

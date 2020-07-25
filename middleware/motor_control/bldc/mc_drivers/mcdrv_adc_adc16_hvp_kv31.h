@@ -1,6 +1,6 @@
 /*
- * Copyright 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright (c) 2016, Freescale Semiconductor, Inc.
+ * Copyright 2016-2018 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -39,7 +39,7 @@ bool_t MCDRV_Adc16Init_hvp_kv31(mcdrv_adc16_t *this, mcdrv_adc16_init_t *init);
 
 /*!
  * @brief Function set new channel assignment for next BEMF voltage sensing.
- *        Board HVP-KV31F120M specific function.
+ *        Board HVP-KV31F120M specific function. 
  *
  * @param this   Pointer to the current object
  *
@@ -49,7 +49,7 @@ bool_t MCDRV_AssignBemfChannel_hvp_kv31(mcdrv_adc16_t *this);
 
 /*!
  * @brief Function reads ADC result register containing actual auxiliary sample
- *        Board HVP-KV31F120M specific function.
+ *        Board HVP-KV31F120M specific function. 
  *
  *        Result register value is shifted 3 times right and stored to
  *        auxiliary pointer
@@ -65,3 +65,4 @@ bool_t MCDRV_AuxValGet_hvp_kv31(mcdrv_adc16_t *this);
 #endif
 
 #endif /* _MCDRV_ADC_ADC16_TWR_KV11_H_ */
+

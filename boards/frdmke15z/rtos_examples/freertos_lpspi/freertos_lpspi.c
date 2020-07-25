@@ -25,24 +25,24 @@
  * Definitions
  ******************************************************************************/
 /*Master related*/
-#define EXAMPLE_LPSPI_MASTER_BASEADDR LPSPI0
-#define EXAMPLE_LPSPI_MASTER_IRQN LPSPI0_IRQn
-#define EXAMPLE_LPSPI_MASTER_PCS_FOR_INIT kLPSPI_Pcs3
+#define EXAMPLE_LPSPI_MASTER_BASEADDR         LPSPI0
+#define EXAMPLE_LPSPI_MASTER_IRQN             LPSPI0_IRQn
+#define EXAMPLE_LPSPI_MASTER_PCS_FOR_INIT     kLPSPI_Pcs3
 #define EXAMPLE_LPSPI_MASTER_PCS_FOR_TRANSFER kLPSPI_MasterPcs3
 
-#define EXAMPLE_LPSPI_MASTER_CLOCK_NAME (kCLOCK_Lpspi0)
+#define EXAMPLE_LPSPI_MASTER_CLOCK_NAME   (kCLOCK_Lpspi0)
 #define EXAMPLE_LPSPI_MASTER_CLOCK_SOURCE (kCLOCK_IpSrcFircAsync)
-#define EXAMPLE_LPSPI_MASTER_CLOCK_FREQ (CLOCK_GetIpFreq(EXAMPLE_LPSPI_MASTER_CLOCK_NAME))
+#define EXAMPLE_LPSPI_MASTER_CLOCK_FREQ   (CLOCK_GetIpFreq(EXAMPLE_LPSPI_MASTER_CLOCK_NAME))
 
 /*Slave related*/
-#define EXAMPLE_LPSPI_SLAVE_BASEADDR LPSPI1
-#define EXAMPLE_LPSPI_SLAVE_IRQN LPSPI1_IRQn
-#define EXAMPLE_LPSPI_SLAVE_PCS_FOR_INIT kLPSPI_Pcs3
+#define EXAMPLE_LPSPI_SLAVE_BASEADDR         LPSPI1
+#define EXAMPLE_LPSPI_SLAVE_IRQN             LPSPI1_IRQn
+#define EXAMPLE_LPSPI_SLAVE_PCS_FOR_INIT     kLPSPI_Pcs3
 #define EXAMPLE_LPSPI_SLAVE_PCS_FOR_TRANSFER kLPSPI_SlavePcs3
 
-#define EXAMPLE_LPSPI_SLAVE_CLOCK_NAME (kCLOCK_Lpspi1)
+#define EXAMPLE_LPSPI_SLAVE_CLOCK_NAME   (kCLOCK_Lpspi1)
 #define EXAMPLE_LPSPI_SLAVE_CLOCK_SOURCE (kCLOCK_IpSrcFircAsync)
-#define SINGLE_BOARD 0
+#define SINGLE_BOARD   0
 #define BOARD_TO_BOARD 1
 
 #ifndef EXAMPLE_CONNECT_SPI
@@ -51,13 +51,13 @@
 
 #if (EXAMPLE_CONNECT_SPI == BOARD_TO_BOARD)
 #define isMASTER 0
-#define isSLAVE 1
+#define isSLAVE  1
 #ifndef SPI_MASTER_SLAVE
 #define SPI_MASTER_SLAVE isMASTER
 #endif /* SPI_MASTER_SLAVE */
 #endif /* EXAMPLE_CONNECT_SPI */
 
-#define TRANSFER_SIZE (512U)        /*! Transfer dataSize.*/
+#define TRANSFER_SIZE     (512U)    /*! Transfer dataSize.*/
 #define TRANSFER_BAUDRATE (500000U) /*! Transfer baudrate - 500k */
 
 /*******************************************************************************
@@ -82,7 +82,7 @@ SemaphoreHandle_t lpspi_sem;
  * Definitions
  ******************************************************************************/
 /* Task priorities. */
-#define slave_task_PRIORITY (configMAX_PRIORITIES - 2)
+#define slave_task_PRIORITY  (configMAX_PRIORITIES - 2)
 #define master_task_PRIORITY (configMAX_PRIORITIES - 1)
 
 /*******************************************************************************
@@ -104,8 +104,8 @@ int main(void)
     int i;
 
     /* Init board hardware. */
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
     /*Set clock source for LPSPI and get master clock source*/
     CLOCK_SetIpSrc(EXAMPLE_LPSPI_MASTER_CLOCK_NAME, EXAMPLE_LPSPI_MASTER_CLOCK_SOURCE);

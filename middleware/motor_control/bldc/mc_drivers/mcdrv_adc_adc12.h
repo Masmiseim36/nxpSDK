@@ -1,6 +1,6 @@
 /*
- * Copyright 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright (c) 2016, Freescale Semiconductor, Inc.
+ * Copyright 2016-2018 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -180,3 +180,4 @@ bool_t MCDRV_AssignDCBusChannel(mcdrv_adc12_t *this);
 #endif
 
 #endif /* _MCDRV_ADC_ADC12_H_ */
+

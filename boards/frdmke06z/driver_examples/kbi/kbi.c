@@ -20,10 +20,10 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_KBI KBI0
-#define EXAMPLE_KBI_SIGNAL_INPUT_REF_GPIO kGPIO_PORTH
+#define EXAMPLE_KBI                             KBI0
+#define EXAMPLE_KBI_SIGNAL_INPUT_REF_GPIO       kGPIO_PORTH
 #define EXAMPLE_KBI_SIGNAL_INPUT_REF_GPIO_INDEX 0
-#define EXAMPLE_KBI_PINS (10)
+#define EXAMPLE_KBI_PINS                        (10)
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -44,11 +44,7 @@ void KBI0_IRQHandler(void)
         KBI_ClearInterruptFlag(EXAMPLE_KBI);
         g_keypress = true;
     }
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 int main(void)

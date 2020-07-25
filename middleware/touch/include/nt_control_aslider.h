@@ -1,6 +1,6 @@
 /*
  * Copyright 2013 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -39,21 +39,22 @@
 #include "nt_controls.h"
 #include "nt_types.h"
 
-#define NT_CONTROL_ASLIDER_NAME  "nt_control_aslider_interface"
+#define NT_CONTROL_ASLIDER_NAME "nt_control_aslider_interface"
 
 /** Analog Slider event types. */
-enum nt_control_aslider_event {
-    NT_ASLIDER_MOVEMENT      = 0,  /*!< Finger movement event */
-    NT_ASLIDER_ALL_RELEASE   = 1,  /*!< Release event */
-    NT_ASLIDER_INITIAL_TOUCH = 2,  /*!< Initial-touch event */
+enum nt_control_aslider_event
+{
+    NT_ASLIDER_MOVEMENT      = 0, /*!< Finger movement event */
+    NT_ASLIDER_ALL_RELEASE   = 1, /*!< Release event */
+    NT_ASLIDER_INITIAL_TOUCH = 2, /*!< Initial-touch event */
 };
 
 /**
  * Analog Slider event callback function pointer type.
  */
-typedef void (* nt_control_aslider_callback)(const struct nt_control *control,
-                                             enum nt_control_aslider_event event,
-                                             uint32_t position);
+typedef void (*nt_control_aslider_callback)(const struct nt_control *control,
+                                            enum nt_control_aslider_event event,
+                                            uint32_t position);
 
 /**
  *  The main structure representing the Analog Slider Control.
@@ -62,9 +63,10 @@ typedef void (* nt_control_aslider_callback)(const struct nt_control *control,
  *  responsible to initialize all the members before registering the control in
  *  the system. This structure can be allocated in ROM.
  */
-struct nt_control_aslider {
-    uint8_t                range;  /*!< Maximum range for the ram->position value. */
-    uint8_t                insensitivity;  /*!< Insensitivity for the callbacks invokes when the position is changed. */
+struct nt_control_aslider
+{
+    uint8_t range;         /*!< Maximum range for the ram->position value. */
+    uint8_t insensitivity; /*!< Insensitivity for the callbacks invokes when the position is changed. */
 };
 
 /** An interface structure, which contains pointers to the entry points of the Analog
@@ -116,28 +118,27 @@ extern "C" {
  * If the callback parameter is NULL, the callback is disabled.
  * Example:
  * \code
- *  
+ *
  *  //Create the callback function for aslider
  *  static void my_aslider_cb(const struct nt_control *control,
  *                            enum nt_control_aslider_event event,
  *                            uint32_t position)
  *  {
  *    (void)control;
- *    char* event_names[] = 
+ *    char* event_names[] =
  *     {
- *      "NT_ASLIDER_MOVEMENT",     
- *      "NT_ASLIDER_ALL_RELEASE",  
+ *      "NT_ASLIDER_MOVEMENT",
+ *      "NT_ASLIDER_ALL_RELEASE",
  *      "NT_ASLIDER_INITIAL_TOUCH",
  *      };
       printf("New analog slider control event %s on position: %d.", event_names[event], position);
     }
-  
+
     // register the callback function for aslider movement
     nt_control_aslider_register_callback(&my_aslider_control, my_aslider_cb);
    \endcode
  */
-void nt_control_aslider_register_callback(const struct nt_control *control,
-                                           nt_control_aslider_callback callback);
+void nt_control_aslider_register_callback(const struct nt_control *control, nt_control_aslider_callback callback);
 
 /**
  * \brief Get the Analog Slider 'Position' value.
@@ -148,7 +149,7 @@ void nt_control_aslider_register_callback(const struct nt_control *control,
  * This function retrieves the actual finger position value.
  * Example:
  * \code
- * uint32_t position; 
+ * uint32_t position;
  * // Get position of aslider control
  * position = nt_control_aslider_get_position(&my_aslider_control);
  * printf("Position of analog slider control is: %d.", position);
@@ -162,7 +163,7 @@ uint32_t nt_control_aslider_get_position(const struct nt_control *control);
  * \return Non-zero value, when the control is currently touched.
  * Example:
  * \code
- * uint32_t touched; 
+ * uint32_t touched;
  * // Get state of aslider control
  * touched = nt_control_aslider_is_touched(&my_aslider_control);
  * if(touched)
@@ -179,7 +180,7 @@ uint32_t nt_control_aslider_is_touched(const struct nt_control *control);
  * \return Non-zero value, if the control currently detects finger movement.
  * Example:
  * \code
- * uint32_t movement; 
+ * uint32_t movement;
  * // Get state of aslider control
  * movement = nt_control_aslider_movement_detected(&my_aslider_control);
  * if(movement)
@@ -197,7 +198,7 @@ uint32_t nt_control_aslider_movement_detected(const struct nt_control *control);
  *         values is detected. Returns zero when a movement towards zero is detected.
  * Example:
  * \code
- * uint32_t direction; 
+ * uint32_t direction;
  * // Get direction of aslider control
  * direction = nt_control_aslider_get_direction(&my_aslider_control);
  * if(direction)
@@ -218,7 +219,7 @@ uint32_t nt_control_aslider_get_direction(const struct nt_control *control);
  * touching the electrodes that are not adjacent to each other.
  * Example:
  * \code
- * uint32_t invalid_position; 
+ * uint32_t invalid_position;
  * // Get invalid position of aslider control
  * invalid_position = nt_control_aslider_get_invalid_position(&my_aslider_control);
  * if(invalid_position)

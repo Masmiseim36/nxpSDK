@@ -17,15 +17,15 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_I2C_MASTER_BASE (LPI2C0_BASE)
+#define EXAMPLE_I2C_MASTER_BASE      (LPI2C0_BASE)
 #define LPI2C_MASTER_CLOCK_FREQUENCY CLOCK_GetIpFreq(kCLOCK_Lpi2c0)
-#define WAIT_TIME 10U
+#define WAIT_TIME                    10U
 
 #define EXAMPLE_I2C_MASTER ((LPI2C_Type *)EXAMPLE_I2C_MASTER_BASE)
 
 #define LPI2C_MASTER_SLAVE_ADDR_7BIT 0x7EU
-#define LPI2C_BAUDRATE 100000U
-#define LPI2C_DATA_LENGTH 33U
+#define LPI2C_BAUDRATE               100000U
+#define LPI2C_DATA_LENGTH            33U
 
 /*******************************************************************************
  * Prototypes

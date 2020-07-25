@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
+ * Copyright 2016, Freescale Semiconductor, Inc.
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -83,55 +83,55 @@ bool_t MCDRV_Adc16Init_twr_ke18(mcdrv_adc16_t *this, mcdrv_adc16_init_t *init)
         /* 1 -> result register 1 for ADC0 or ADC2 */
         /* 2 -> result register 2 for ADC2*/
         this->ui16IndexBemf = 0; /* ADC0 and ADC2 */
-        this->ui16IndexAux = 0;  /* ADC0 and ADC2 */
+        this->ui16IndexAux  = 0; /* ADC0 and ADC2 */
         this->ui16IndexUdcb = 1; /* ADC2          */
         this->ui16IndexIdcb = 2; /* ADC2          */
 
         /* BEMF phase A measurement */
         if (init->ui16AdcArray[MCDRV_ADC0_BEMFA] == MCDRV_CHAN_OFF)
         {
-            this->pui32BemfAAdcBase = init->pui32Adc1Base;
+            this->pui32BemfAAdcBase    = init->pui32Adc1Base;
             this->bldcAdc1SectorCfg[2] = init->ui16AdcArray[MCDRV_ADC1_BEMFA];
-            this->bldcAdcSelCfg[2] = init->pui32Adc1Base;
+            this->bldcAdcSelCfg[2]     = init->pui32Adc1Base;
             this->bldcAdc1SectorCfg[5] = init->ui16AdcArray[MCDRV_ADC1_BEMFA];
-            this->bldcAdcSelCfg[5] = init->pui32Adc1Base;
+            this->bldcAdcSelCfg[5]     = init->pui32Adc1Base;
             /* Set ADC_SC1_ADCH bitfield */
         }
         else
         {
-            this->pui32BemfAAdcBase = init->pui32Adc0Base;
+            this->pui32BemfAAdcBase    = init->pui32Adc0Base;
             this->bldcAdc0SectorCfg[2] = init->ui16AdcArray[MCDRV_ADC0_BEMFA];
-            this->bldcAdcSelCfg[2] = init->pui32Adc0Base;
+            this->bldcAdcSelCfg[2]     = init->pui32Adc0Base;
             this->bldcAdc0SectorCfg[5] = init->ui16AdcArray[MCDRV_ADC0_BEMFA];
-            this->bldcAdcSelCfg[5] = init->pui32Adc0Base;
+            this->bldcAdcSelCfg[5]     = init->pui32Adc0Base;
         }
 
         /* BEMF phase B measurement */
         if (init->ui16AdcArray[MCDRV_ADC0_BEMFB] == MCDRV_CHAN_OFF)
         {
-            this->pui32BemfBAdcBase = init->pui32Adc1Base;
+            this->pui32BemfBAdcBase    = init->pui32Adc1Base;
             this->bldcAdc1SectorCfg[1] = init->ui16AdcArray[MCDRV_ADC1_BEMFB];
-            this->bldcAdcSelCfg[1] = init->pui32Adc1Base;
+            this->bldcAdcSelCfg[1]     = init->pui32Adc1Base;
             this->bldcAdc1SectorCfg[4] = init->ui16AdcArray[MCDRV_ADC1_BEMFB];
-            this->bldcAdcSelCfg[4] = init->pui32Adc1Base;
+            this->bldcAdcSelCfg[4]     = init->pui32Adc1Base;
         }
         else
         {
-            this->pui32BemfBAdcBase = init->pui32Adc0Base;
+            this->pui32BemfBAdcBase    = init->pui32Adc0Base;
             this->bldcAdc0SectorCfg[1] = init->ui16AdcArray[MCDRV_ADC0_BEMFB];
-            this->bldcAdcSelCfg[1] = init->pui32Adc0Base;
+            this->bldcAdcSelCfg[1]     = init->pui32Adc0Base;
             this->bldcAdc0SectorCfg[4] = init->ui16AdcArray[MCDRV_ADC0_BEMFB];
-            this->bldcAdcSelCfg[4] = init->pui32Adc0Base;
+            this->bldcAdcSelCfg[4]     = init->pui32Adc0Base;
         }
 
         /* BEMF phase C measurement */
         if (init->ui16AdcArray[MCDRV_ADC0_BEMFC] == MCDRV_CHAN_OFF)
         {
-            this->pui32BemfCAdcBase = init->pui32Adc1Base;
+            this->pui32BemfCAdcBase    = init->pui32Adc1Base;
             this->bldcAdc1SectorCfg[0] = init->ui16AdcArray[MCDRV_ADC1_BEMFC];
-            this->bldcAdcSelCfg[0] = init->pui32Adc1Base;
+            this->bldcAdcSelCfg[0]     = init->pui32Adc1Base;
             this->bldcAdc1SectorCfg[3] = init->ui16AdcArray[MCDRV_ADC1_BEMFC];
-            this->bldcAdcSelCfg[3] = init->pui32Adc1Base;
+            this->bldcAdcSelCfg[3]     = init->pui32Adc1Base;
             /* Set ADC_SC1_ADCH bitfield */
             this->pui32BemfCAdcBase->SC1[this->ui16IndexBemf] =
                 (this->pui32BemfCAdcBase->SC1[this->ui16IndexBemf] & ~(uint16_t)(ADC_SC1_ADCH(ADC_SC1_ADCH_MASK))) |
@@ -139,11 +139,11 @@ bool_t MCDRV_Adc16Init_twr_ke18(mcdrv_adc16_t *this, mcdrv_adc16_init_t *init)
         }
         else
         {
-            this->pui32BemfCAdcBase = init->pui32Adc0Base;
+            this->pui32BemfCAdcBase    = init->pui32Adc0Base;
             this->bldcAdc0SectorCfg[0] = init->ui16AdcArray[MCDRV_ADC0_BEMFC];
-            this->bldcAdcSelCfg[0] = init->pui32Adc0Base;
+            this->bldcAdcSelCfg[0]     = init->pui32Adc0Base;
             this->bldcAdc0SectorCfg[3] = init->ui16AdcArray[MCDRV_ADC0_BEMFC];
-            this->bldcAdcSelCfg[3] = init->pui32Adc0Base;
+            this->bldcAdcSelCfg[3]     = init->pui32Adc0Base;
             /* Set ADC_SC1_ADCH bitfield */
             this->pui32BemfCAdcBase->SC1[this->ui16IndexBemf] =
                 (this->pui32BemfCAdcBase->SC1[this->ui16IndexBemf] & ~(uint16_t)(ADC_SC1_ADCH(ADC_SC1_ADCH_MASK))) |
@@ -293,4 +293,3 @@ bool_t MCDRV_AssignBemfChannel_twr_ke18(mcdrv_adc16_t *this)
 
     return (s_statusPass);
 }
-

@@ -21,12 +21,12 @@
 #define MCRSP_VER "1.3.1" /* motor control package version */
 
 /* Application info */
-typedef struct 
+typedef struct
 {
     char cBoardID[15];
     char cMotorType[4];
     char cAppVer[5];
-}app_ver_t;
+} app_ver_t;
 
 /* Structure used during clocks and modulo calculations */
 typedef struct _clock_setup

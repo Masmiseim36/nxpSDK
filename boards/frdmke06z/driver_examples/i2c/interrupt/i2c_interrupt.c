@@ -17,17 +17,17 @@
  ******************************************************************************/
 /* UART instance and clock */
 #define EXAMPLE_I2C_MASTER_BASEADDR I2C0
-#define EXAMPLE_I2C_SLAVE_BASEADDR I2C1
-#define I2C_MASTER_CLK_SRC kCLOCK_BusClk
-#define I2C_MASTER_CLK_FREQ CLOCK_GetFreq(kCLOCK_BusClk)
-#define I2C_SLAVE_CLK_SRC kCLOCK_BusClk
-#define I2C_SLAVE_CLK_FREQ CLOCK_GetFreq(kCLOCK_BusClk)
-#define I2C_MASTER_IRQ I2C0_IRQn
-#define I2C_SLAVE_IRQ I2C1_IRQn
-#define I2C_MASTER_IRQHandler I2C0_IRQHandler
-#define I2C_SLAVE_IRQHandler I2C1_IRQHandler
+#define EXAMPLE_I2C_SLAVE_BASEADDR  I2C1
+#define I2C_MASTER_CLK_SRC          kCLOCK_BusClk
+#define I2C_MASTER_CLK_FREQ         CLOCK_GetFreq(kCLOCK_BusClk)
+#define I2C_SLAVE_CLK_SRC           kCLOCK_BusClk
+#define I2C_SLAVE_CLK_FREQ          CLOCK_GetFreq(kCLOCK_BusClk)
+#define I2C_MASTER_IRQ              I2C0_IRQn
+#define I2C_SLAVE_IRQ               I2C1_IRQn
+#define I2C_MASTER_IRQHandler       I2C0_IRQHandler
+#define I2C_SLAVE_IRQHandler        I2C1_IRQHandler
 #define I2C_MASTER_SLAVE_ADDR_7BIT 0x7EU
-#define I2C_BAUDRATE 100000U
+#define I2C_BAUDRATE               100000U
 
 #define I2C_DATA_LENGTH 32U
 
@@ -96,11 +96,7 @@ void I2C_MASTER_IRQHandler(void)
             EXAMPLE_I2C_MASTER_BASEADDR->C1 |= I2C_C1_TXAK_MASK;
         }
     }
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 void I2C_SLAVE_IRQHandler(void)
@@ -163,11 +159,7 @@ void I2C_SLAVE_IRQHandler(void)
         g_slave_buff[g_slaveRxIndex] = tmpdata;
         g_slaveRxIndex++;
     }
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 /*!

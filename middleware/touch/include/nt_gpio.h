@@ -1,6 +1,6 @@
 /*
  * Copyright 2013 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -10,14 +10,16 @@
 
 /** Gpio scan states
  */
-enum nt_gpio_scan_states {
+enum nt_gpio_scan_states
+{
     NT_GPIO_MEASURED    = 0,
     NT_GPIO_IN_PROGRESS = 1,
 };
 
 /** Gpio module flags
  */
-enum nt_gpio_flags {
+enum nt_gpio_flags
+{
     NT_GPIO_INTERRUPTED_FLAG = NT_FLAGS_SPECIFIC_SHIFT(0),
 };
 
@@ -25,17 +27,18 @@ enum nt_gpio_flags {
 
 /** Gpio pin name symbols. Each symbol contains a port and a pin number.
  */
-enum nt_gpio_pinname {
-    GPIO_PTA0 = ((0 << NT_GPIO_PORT_SHIFT) | 0),     
-    GPIO_PTA1 = ((0 << NT_GPIO_PORT_SHIFT) | 1),    
-    GPIO_PTA2 = ((0 << NT_GPIO_PORT_SHIFT) | 2),    
-    GPIO_PTA3 = ((0 << NT_GPIO_PORT_SHIFT) | 3),    
-    GPIO_PTA4 = ((0 << NT_GPIO_PORT_SHIFT) | 4),
-    GPIO_PTA5 = ((0 << NT_GPIO_PORT_SHIFT) | 5),
-    GPIO_PTA6 = ((0 << NT_GPIO_PORT_SHIFT) | 6),
-    GPIO_PTA7 = ((0 << NT_GPIO_PORT_SHIFT) | 7),
-    GPIO_PTA8 = ((0 << NT_GPIO_PORT_SHIFT) | 8),
-    GPIO_PTA9 = ((0 << NT_GPIO_PORT_SHIFT) | 9),
+enum nt_gpio_pinname
+{
+    GPIO_PTA0  = ((0 << NT_GPIO_PORT_SHIFT) | 0),
+    GPIO_PTA1  = ((0 << NT_GPIO_PORT_SHIFT) | 1),
+    GPIO_PTA2  = ((0 << NT_GPIO_PORT_SHIFT) | 2),
+    GPIO_PTA3  = ((0 << NT_GPIO_PORT_SHIFT) | 3),
+    GPIO_PTA4  = ((0 << NT_GPIO_PORT_SHIFT) | 4),
+    GPIO_PTA5  = ((0 << NT_GPIO_PORT_SHIFT) | 5),
+    GPIO_PTA6  = ((0 << NT_GPIO_PORT_SHIFT) | 6),
+    GPIO_PTA7  = ((0 << NT_GPIO_PORT_SHIFT) | 7),
+    GPIO_PTA8  = ((0 << NT_GPIO_PORT_SHIFT) | 8),
+    GPIO_PTA9  = ((0 << NT_GPIO_PORT_SHIFT) | 9),
     GPIO_PTA10 = ((0 << NT_GPIO_PORT_SHIFT) | 10),
     GPIO_PTA11 = ((0 << NT_GPIO_PORT_SHIFT) | 11),
     GPIO_PTA12 = ((0 << NT_GPIO_PORT_SHIFT) | 12),
@@ -58,16 +61,16 @@ enum nt_gpio_pinname {
     GPIO_PTA29 = ((0 << NT_GPIO_PORT_SHIFT) | 29),
     GPIO_PTA30 = ((0 << NT_GPIO_PORT_SHIFT) | 30),
     GPIO_PTA31 = ((0 << NT_GPIO_PORT_SHIFT) | 31),
-    GPIO_PTB0 = ((1 << NT_GPIO_PORT_SHIFT) | 0),
-    GPIO_PTB1 = ((1 << NT_GPIO_PORT_SHIFT) | 1),
-    GPIO_PTB2 = ((1 << NT_GPIO_PORT_SHIFT) | 2),
-    GPIO_PTB3 = ((1 << NT_GPIO_PORT_SHIFT) | 3),
-    GPIO_PTB4 = ((1 << NT_GPIO_PORT_SHIFT) | 4),
-    GPIO_PTB5 = ((1 << NT_GPIO_PORT_SHIFT) | 5),
-    GPIO_PTB6 = ((1 << NT_GPIO_PORT_SHIFT) | 6),
-    GPIO_PTB7 = ((1 << NT_GPIO_PORT_SHIFT) | 7),
-    GPIO_PTB8 = ((1 << NT_GPIO_PORT_SHIFT) | 8),
-    GPIO_PTB9 = ((1 << NT_GPIO_PORT_SHIFT) | 9),
+    GPIO_PTB0  = ((1 << NT_GPIO_PORT_SHIFT) | 0),
+    GPIO_PTB1  = ((1 << NT_GPIO_PORT_SHIFT) | 1),
+    GPIO_PTB2  = ((1 << NT_GPIO_PORT_SHIFT) | 2),
+    GPIO_PTB3  = ((1 << NT_GPIO_PORT_SHIFT) | 3),
+    GPIO_PTB4  = ((1 << NT_GPIO_PORT_SHIFT) | 4),
+    GPIO_PTB5  = ((1 << NT_GPIO_PORT_SHIFT) | 5),
+    GPIO_PTB6  = ((1 << NT_GPIO_PORT_SHIFT) | 6),
+    GPIO_PTB7  = ((1 << NT_GPIO_PORT_SHIFT) | 7),
+    GPIO_PTB8  = ((1 << NT_GPIO_PORT_SHIFT) | 8),
+    GPIO_PTB9  = ((1 << NT_GPIO_PORT_SHIFT) | 9),
     GPIO_PTB10 = ((1 << NT_GPIO_PORT_SHIFT) | 10),
     GPIO_PTB11 = ((1 << NT_GPIO_PORT_SHIFT) | 11),
     GPIO_PTB12 = ((1 << NT_GPIO_PORT_SHIFT) | 12),
@@ -90,16 +93,16 @@ enum nt_gpio_pinname {
     GPIO_PTB29 = ((1 << NT_GPIO_PORT_SHIFT) | 29),
     GPIO_PTB30 = ((1 << NT_GPIO_PORT_SHIFT) | 30),
     GPIO_PTB31 = ((1 << NT_GPIO_PORT_SHIFT) | 31),
-    GPIO_PTC0 = ((2 << NT_GPIO_PORT_SHIFT) | 0),
-    GPIO_PTC1 = ((2 << NT_GPIO_PORT_SHIFT) | 1),
-    GPIO_PTC2 = ((2 << NT_GPIO_PORT_SHIFT) | 2),
-    GPIO_PTC3 = ((2 << NT_GPIO_PORT_SHIFT) | 3),
-    GPIO_PTC4 = ((2 << NT_GPIO_PORT_SHIFT) | 4),
-    GPIO_PTC5 = ((2 << NT_GPIO_PORT_SHIFT) | 5),
-    GPIO_PTC6 = ((2 << NT_GPIO_PORT_SHIFT) | 6),
-    GPIO_PTC7 = ((2 << NT_GPIO_PORT_SHIFT) | 7),
-    GPIO_PTC8 = ((2 << NT_GPIO_PORT_SHIFT) | 8),
-    GPIO_PTC9 = ((2 << NT_GPIO_PORT_SHIFT) | 9),
+    GPIO_PTC0  = ((2 << NT_GPIO_PORT_SHIFT) | 0),
+    GPIO_PTC1  = ((2 << NT_GPIO_PORT_SHIFT) | 1),
+    GPIO_PTC2  = ((2 << NT_GPIO_PORT_SHIFT) | 2),
+    GPIO_PTC3  = ((2 << NT_GPIO_PORT_SHIFT) | 3),
+    GPIO_PTC4  = ((2 << NT_GPIO_PORT_SHIFT) | 4),
+    GPIO_PTC5  = ((2 << NT_GPIO_PORT_SHIFT) | 5),
+    GPIO_PTC6  = ((2 << NT_GPIO_PORT_SHIFT) | 6),
+    GPIO_PTC7  = ((2 << NT_GPIO_PORT_SHIFT) | 7),
+    GPIO_PTC8  = ((2 << NT_GPIO_PORT_SHIFT) | 8),
+    GPIO_PTC9  = ((2 << NT_GPIO_PORT_SHIFT) | 9),
     GPIO_PTC10 = ((2 << NT_GPIO_PORT_SHIFT) | 10),
     GPIO_PTC11 = ((2 << NT_GPIO_PORT_SHIFT) | 11),
     GPIO_PTC12 = ((2 << NT_GPIO_PORT_SHIFT) | 12),
@@ -122,16 +125,16 @@ enum nt_gpio_pinname {
     GPIO_PTC29 = ((2 << NT_GPIO_PORT_SHIFT) | 29),
     GPIO_PTC30 = ((2 << NT_GPIO_PORT_SHIFT) | 30),
     GPIO_PTC31 = ((2 << NT_GPIO_PORT_SHIFT) | 31),
-    GPIO_PTD0 = ((3 << NT_GPIO_PORT_SHIFT) | 0),
-    GPIO_PTD1 = ((3 << NT_GPIO_PORT_SHIFT) | 1),
-    GPIO_PTD2 = ((3 << NT_GPIO_PORT_SHIFT) | 2),
-    GPIO_PTD3 = ((3 << NT_GPIO_PORT_SHIFT) | 3),
-    GPIO_PTD4 = ((3 << NT_GPIO_PORT_SHIFT) | 4),
-    GPIO_PTD5 = ((3 << NT_GPIO_PORT_SHIFT) | 5),
-    GPIO_PTD6 = ((3 << NT_GPIO_PORT_SHIFT) | 6),
-    GPIO_PTD7 = ((3 << NT_GPIO_PORT_SHIFT) | 7),
-    GPIO_PTD8 = ((3 << NT_GPIO_PORT_SHIFT) | 8),
-    GPIO_PTD9 = ((3 << NT_GPIO_PORT_SHIFT) | 9),
+    GPIO_PTD0  = ((3 << NT_GPIO_PORT_SHIFT) | 0),
+    GPIO_PTD1  = ((3 << NT_GPIO_PORT_SHIFT) | 1),
+    GPIO_PTD2  = ((3 << NT_GPIO_PORT_SHIFT) | 2),
+    GPIO_PTD3  = ((3 << NT_GPIO_PORT_SHIFT) | 3),
+    GPIO_PTD4  = ((3 << NT_GPIO_PORT_SHIFT) | 4),
+    GPIO_PTD5  = ((3 << NT_GPIO_PORT_SHIFT) | 5),
+    GPIO_PTD6  = ((3 << NT_GPIO_PORT_SHIFT) | 6),
+    GPIO_PTD7  = ((3 << NT_GPIO_PORT_SHIFT) | 7),
+    GPIO_PTD8  = ((3 << NT_GPIO_PORT_SHIFT) | 8),
+    GPIO_PTD9  = ((3 << NT_GPIO_PORT_SHIFT) | 9),
     GPIO_PTD10 = ((3 << NT_GPIO_PORT_SHIFT) | 10),
     GPIO_PTD11 = ((3 << NT_GPIO_PORT_SHIFT) | 11),
     GPIO_PTD12 = ((3 << NT_GPIO_PORT_SHIFT) | 12),
@@ -154,16 +157,16 @@ enum nt_gpio_pinname {
     GPIO_PTD29 = ((3 << NT_GPIO_PORT_SHIFT) | 29),
     GPIO_PTD30 = ((3 << NT_GPIO_PORT_SHIFT) | 30),
     GPIO_PTD31 = ((3 << NT_GPIO_PORT_SHIFT) | 31),
-    GPIO_PTE0 = ((4 << NT_GPIO_PORT_SHIFT) | 0),
-    GPIO_PTE1 = ((4 << NT_GPIO_PORT_SHIFT) | 1),
-    GPIO_PTE2 = ((4 << NT_GPIO_PORT_SHIFT) | 2),
-    GPIO_PTE3 = ((4 << NT_GPIO_PORT_SHIFT) | 3),
-    GPIO_PTE4 = ((4 << NT_GPIO_PORT_SHIFT) | 4),
-    GPIO_PTE5 = ((4 << NT_GPIO_PORT_SHIFT) | 5),
-    GPIO_PTE6 = ((4 << NT_GPIO_PORT_SHIFT) | 6),
-    GPIO_PTE7 = ((4 << NT_GPIO_PORT_SHIFT) | 7),
-    GPIO_PTE8 = ((4 << NT_GPIO_PORT_SHIFT) | 8),
-    GPIO_PTE9 = ((4 << NT_GPIO_PORT_SHIFT) | 9),
+    GPIO_PTE0  = ((4 << NT_GPIO_PORT_SHIFT) | 0),
+    GPIO_PTE1  = ((4 << NT_GPIO_PORT_SHIFT) | 1),
+    GPIO_PTE2  = ((4 << NT_GPIO_PORT_SHIFT) | 2),
+    GPIO_PTE3  = ((4 << NT_GPIO_PORT_SHIFT) | 3),
+    GPIO_PTE4  = ((4 << NT_GPIO_PORT_SHIFT) | 4),
+    GPIO_PTE5  = ((4 << NT_GPIO_PORT_SHIFT) | 5),
+    GPIO_PTE6  = ((4 << NT_GPIO_PORT_SHIFT) | 6),
+    GPIO_PTE7  = ((4 << NT_GPIO_PORT_SHIFT) | 7),
+    GPIO_PTE8  = ((4 << NT_GPIO_PORT_SHIFT) | 8),
+    GPIO_PTE9  = ((4 << NT_GPIO_PORT_SHIFT) | 9),
     GPIO_PTE10 = ((4 << NT_GPIO_PORT_SHIFT) | 10),
     GPIO_PTE11 = ((4 << NT_GPIO_PORT_SHIFT) | 11),
     GPIO_PTE12 = ((4 << NT_GPIO_PORT_SHIFT) | 12),

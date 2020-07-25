@@ -15,7 +15,7 @@
 #include "fsl_lpi2c.h"
 
 /*!
- * @addtogroup lpi2c_freertos_driver LPI2C FreeRTOS driver
+ * @addtogroup lpi2c_freertos_driver LPI2C FreeRTOS Driver
  * @{
  */
 
@@ -25,8 +25,8 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief LPI2C FreeRTOS driver version 2.1.10. */
-#define FSL_LPI2C_FREERTOS_DRIVER_VERSION (MAKE_VERSION(2, 1, 10))
+/*! @brief LPI2C FreeRTOS driver version 2.1.11. */
+#define FSL_LPI2C_FREERTOS_DRIVER_VERSION (MAKE_VERSION(2, 1, 11))
 /*@}*/
 
 /*!

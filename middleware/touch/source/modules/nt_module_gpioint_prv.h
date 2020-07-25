@@ -1,6 +1,6 @@
 /*
  * Copyright 2013 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -27,13 +27,13 @@
 #include "nt_electrodes.h"
 #include "../source/filters/nt_filters_prv.h"
 
-
-/** GPIO interrupt module's RAM. This structure contains 
+/** GPIO interrupt module's RAM. This structure contains
  */
-struct nt_module_gpioint_data {
-    uint32_t pen;          /*!< PEN - enablement of all modules' electrodes */
-    uint8_t  measured_pin; /*!< The currently measured pin */
-    uint8_t  scan_status;  /*!< Module's scanning status - see enum nt_gpio_scan_states */  
+struct nt_module_gpioint_data
+{
+    uint32_t pen;         /*!< PEN - enablement of all modules' electrodes */
+    uint8_t measured_pin; /*!< The currently measured pin */
+    uint8_t scan_status;  /*!< Module's scanning status - see enum nt_gpio_scan_states */
 };
 
 #ifdef __cplusplus

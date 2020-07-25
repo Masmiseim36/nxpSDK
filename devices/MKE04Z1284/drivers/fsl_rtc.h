@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 NXP
+ * Copyright 2017-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -20,7 +20,7 @@
 
 /*! @name Driver version */
 /*@{*/
-#define FSL_RTC_DRIVER_VERSION (MAKE_VERSION(2, 0, 2)) /*!< Version 2.0.2 */
+#define FSL_RTC_DRIVER_VERSION (MAKE_VERSION(2, 0, 3)) /*!< Version 2.0.3 */
 /*@}*/
 
 /*! @brief Structure is used to hold the date and time */
@@ -116,6 +116,7 @@ extern "C" {
  * @note This API should be called at the beginning of the application using the RTC driver.
  *
  * @param base   RTC peripheral base address
+ * @param config Pointer to the user's RTC configuration structure.
  */
 void RTC_Init(RTC_Type *base, const rtc_config_t *config);
 

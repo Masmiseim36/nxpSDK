@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
+ * Copyright 2016, Freescale Semiconductor, Inc.
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -11,9 +11,7 @@
  * Definitions
  ******************************************************************************/
 
-static bool_t MCDRV_Driver3PhSendCmd(mcdrv_spi_drv3ph_t *this, 
-                                     uint8_t *pui8TxData, 
-                                     uint8_t *pui8RxData);
+static bool_t MCDRV_Driver3PhSendCmd(mcdrv_spi_drv3ph_t *this, uint8_t *pui8TxData, uint8_t *pui8RxData);
 
 /*******************************************************************************
  * Variables
@@ -24,50 +22,12 @@ static bool_t s_statusPass;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-
-/*!
- * @brief Initialization function of MC33937 SPI driver
- *
- * @param this   Pointer to the current object
- * @param init   Pointer to initialization structure
- *
- * @return boot_t true on success
- */
-bool_t MCDRV_Driver3PhInit(mcdrv_spi_drv3ph_t *this, mcdrv_spi_drv3ph_init_t *init)
-{
-    s_statusPass = TRUE;
-
-    /* configure GPIO pads for MC33937 signals */
-    this->sSpiData.pSpiBase = init->pSpiBase;      /* SPI Base Address */
-    this->sSpiData.ui32Pcs = (1 << init->ui32Pcs); /* PCS number */
-
-    /* if enabled, set over-current PIN & PORT - INPUT */
-    if (init->bFaultOcEnabled)
-    {
-        this->sSpiData.pGpioOcBase = init->pGpioOcBase;     /* base Address */
-        this->sSpiData.ui32GpioOcPin = init->ui32GpioOcPin; /* pin number for over current */
-    }
-
-    this->sSpiData.pGpioIntBase = init->pGpioIntBase;     /* base Address */
-    this->sSpiData.ui32GpioIntPin = init->ui32GpioIntPin; /* pin number for interrupt detection */
-
-    this->sSpiData.pGpioEnBase = init->pGpioEnBase;     /* base Address */
-    this->sSpiData.ui32GpioEnPin = init->ui32GpioEnPin; /* pin number for driver enabled */
-
-    this->sSpiData.pGpioResetBase = init->pGpioResetBase;     /* base Address */
-    this->sSpiData.ui32GpioResetPin = init->ui32GpioResetPin; /* pin number for driver reset */
-
-    this->sSpiData.bResetControl = init->bResetControl;
-
-    return (s_statusPass);
-}
-
 /*!
  * @brief Function send SPI command to MC33937
  *
- * @param this          Pointer to the current object
- * @param pui8TxData    Pointer to data which be send via SPI
- * @param pui8RxData    Pointer to data which be read via SPI
+ * @param this Pointer to the current object
+ * @param pui8TxData Pointer to data which be send via SPI
+ * @param pui8RxData Pointer to data which be read via SPI
  *
  * @return boot_t true on success
  */
@@ -291,7 +251,7 @@ bool_t MCDRV_Driver3PhGetSr1(mcdrv_spi_drv3ph_t *this)
 /*!
  * @brief Function read MC33937 status register 2
  *
- * @param this          Pointer to the current object
+ * @param this Pointer to the current object
  *
  * @return boot_t true on success
  */
@@ -315,7 +275,7 @@ bool_t MCDRV_Driver3PhGetSr2(mcdrv_spi_drv3ph_t *this)
 /*!
  * @brief Function read MC33937 status register 3
  *
- * @param this          Pointer to the current object
+ * @param this Pointer to the current object
  *
  * @return boot_t true on success
  */
@@ -339,7 +299,7 @@ bool_t MCDRV_Driver3PhGetSr3(mcdrv_spi_drv3ph_t *this)
 /*!
  * @brief Function configure MC33937 pre-driver
  *
- * @param this          Pointer to the current object
+ * @param this Pointer to the current object
  *
  * @return boot_t true on success
  */
@@ -389,4 +349,3 @@ bool_t MCDRV_Driver3PhConfig(mcdrv_spi_drv3ph_t *this)
 
     return (s_statusPass);
 }
-

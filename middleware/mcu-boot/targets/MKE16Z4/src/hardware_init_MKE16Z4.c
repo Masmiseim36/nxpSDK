@@ -11,7 +11,7 @@
 #include "fsl_device_registers.h"
 #include "smc.h"
 #include "target_config.h"
-#if BL_ENABLE_CRC_CHECK
+#if BL_FEATURE_CRC_CHECK
 #include "bootloader/bl_app_crc_check.h"
 #endif
 ////////////////////////////////////////////////////////////////////////////////
@@ -66,7 +66,7 @@ void init_hardware(void)
 
 void deinit_hardware(void)
 {
-#if BL_ENABLE_CRC_CHECK && BL_FEATURE_CRC_ASSERT
+#if BL_FEATURE_CRC_CHECK && BL_FEATURE_CRC_ASSERT
     restore_crc_check_failure_pin();
 #endif
 

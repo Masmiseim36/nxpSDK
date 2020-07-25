@@ -39,6 +39,7 @@
 #define I2C0_SDA_GPIO_PIN_NUM 2  // PIN 2 in the PTA group
 #define I2C0_SDA_FUNC_ALT_MODE 3 // ALT mode for I2C0 SDA functionality for pin 2
 
+#ifdef FREEDOM
 //! SPI pinmux configurations
 #define SPI0_SELECTED_PCS 3
 #define SPI0_PCS_PORT_BASE PORTA
@@ -53,21 +54,22 @@
 #define SPI0_SIN_PORT_BASE PORTE
 #define SPI0_SIN_GPIO_PIN_NUM 1  // PIN 1 in the PTE group
 #define SPI0_SIN_FUNC_ALT_MODE 2 // ALT mode for SPI0 SIN functionality for pin 1
-
+#else
 //! SPI pinmux configurations 2
-//#define SPI0_SELECTED_PCS 1
-//#define SPI0_PCS_PORT_BASE PORTB
-//#define SPI0_PCS_GPIO_PIN_NUM 5  // PIN 5 in the PTB group
-//#define SPI0_PCS_FUNC_ALT_MODE 3 // ALT mode for SPI0 PCS functionality for pin 5
-//#define SPI0_SCK_PORT_BASE PORTB
-//#define SPI0_SCK_GPIO_PIN_NUM 2  // PIN 2 in the PTB group
-//#define SPI0_SCK_FUNC_ALT_MODE 3 // ALT mode for SPI0 SCK functionality for pin 2
-//#define SPI0_SOUT_PORT_BASE PORTB
-//#define SPI0_SOUT_GPIO_PIN_NUM 4  // PIN 4 in the PTB group
-//#define SPI0_SOUT_FUNC_ALT_MODE 3 // ALT mode for SPI0 SOUT functionality for pin 4
-//#define SPI0_SIN_PORT_BASE PORTB
-//#define SPI0_SIN_GPIO_PIN_NUM 3  // PIN 3 in the PTB group
-//#define SPI0_SIN_FUNC_ALT_MODE 3 // ALT mode for SPI0 SIN functionality for pin 3
+#define SPI0_SELECTED_PCS 1
+#define SPI0_PCS_PORT_BASE PORTB
+#define SPI0_PCS_GPIO_PIN_NUM 5  // PIN 5 in the PTB group
+#define SPI0_PCS_FUNC_ALT_MODE 3 // ALT mode for SPI0 PCS functionality for pin 5
+#define SPI0_SCK_PORT_BASE PORTB
+#define SPI0_SCK_GPIO_PIN_NUM 2  // PIN 2 in the PTB group
+#define SPI0_SCK_FUNC_ALT_MODE 3 // ALT mode for SPI0 SCK functionality for pin 2
+#define SPI0_SOUT_PORT_BASE PORTB
+#define SPI0_SOUT_GPIO_PIN_NUM 4  // PIN 4 in the PTB group
+#define SPI0_SOUT_FUNC_ALT_MODE 3 // ALT mode for SPI0 SOUT functionality for pin 4
+#define SPI0_SIN_PORT_BASE PORTB
+#define SPI0_SIN_GPIO_PIN_NUM 3  // PIN 3 in the PTB group
+#define SPI0_SIN_FUNC_ALT_MODE 3 // ALT mode for SPI0 SIN functionality for pin 3
+#endif
 
 //! CAN pinmux configurations
 #define CAN0_RX_PORT_BASE PORTC

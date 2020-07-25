@@ -14,11 +14,11 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_LPUART LPUART2
+#define DEMO_LPUART             LPUART2
 #define BOARD_DEBUG_UART_CLKSRC kCLOCK_ScgSysPllAsyncDiv2Clk
-#define DEMO_LPUART_CLK_FREQ CLOCK_GetIpFreq(kCLOCK_Lpuart2)
-#define DEMO_LPUART_IRQn LPUART2_RX_IRQn
-#define DEMO_LPUART_IRQHandler LPUART2_RX_IRQHandler
+#define DEMO_LPUART_CLK_FREQ    CLOCK_GetIpFreq(kCLOCK_Lpuart2)
+#define DEMO_LPUART_IRQn        LPUART2_RX_IRQn
+#define DEMO_LPUART_IRQHandler  LPUART2_RX_IRQHandler
 
 /*! @brief Ring buffer size (Unit: Byte). */
 #define DEMO_RING_BUFFER_SIZE 16
@@ -70,11 +70,7 @@ void DEMO_LPUART_IRQHandler(void)
             rxIndex %= DEMO_RING_BUFFER_SIZE;
         }
     }
-    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-      exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 /*!

@@ -23,11 +23,11 @@
 
 /* Interrupt number and interrupt handler for the FTM instance used */
 #define FTM_INTERRUPT_NUMBER FTM2_IRQn
-#define FTM_LED_HANDLER FTM2_IRQHandler
+#define FTM_LED_HANDLER      FTM2_IRQHandler
 
 /* Interrupt to enable and flag to read; depends on the FTM channel used */
 #define FTM_CHANNEL_INTERRUPT_ENABLE kFTM_Chnl0InterruptEnable
-#define FTM_CHANNEL_FLAG kFTM_Chnl0Flag
+#define FTM_CHANNEL_FLAG             kFTM_Chnl0Flag
 
 /* Get source clock for FTM driver */
 #define FTM_SOURCE_CLOCK CLOCK_GetFreq(kCLOCK_TimerClk)

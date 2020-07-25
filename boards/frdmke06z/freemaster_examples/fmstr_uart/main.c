@@ -79,10 +79,10 @@ static void init_freemaster_uart(void)
     config.enableTx = false;
     config.enableRx = false;
 
-    UART_Init(BOARD_DEBUG_UART_BASEADDR, &config, BOARD_DEBUG_UART_CLK_FREQ);
+    UART_Init((UART_Type*)BOARD_DEBUG_UART_BASEADDR, &config, CLOCK_GetFreq(BOARD_DEBUG_UART_CLKSRC));
 
     /* Register communication module used by FreeMASTER driver. */
-    FMSTR_SerialSetBaseAddress(BOARD_DEBUG_UART_BASEADDR);
+    FMSTR_SerialSetBaseAddress((UART_Type*)BOARD_DEBUG_UART_BASEADDR);
 
 #if FMSTR_SHORT_INTR || FMSTR_LONG_INTR
     /* Enable UART interrupts. */

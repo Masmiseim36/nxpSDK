@@ -19,15 +19,15 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DMAMUX0 DMAMUX
-#define EXAMPLE_CAN CAN0
-#define EXAMPLE_CAN_CLK_SOURCE (kFLEXCAN_ClkSrc1)
-#define EXAMPLE_CAN_CLK_FREQ CLOCK_GetFreq(kCLOCK_BusClk)
-#define TX_MESSAGE_BUFFER_NUM (8)
-#define EXAMPLE_CAN_DMA DMA0
+#define DMAMUX0                 DMAMUX
+#define EXAMPLE_CAN             CAN0
+#define EXAMPLE_CAN_CLK_SOURCE  (kFLEXCAN_ClkSrc1)
+#define EXAMPLE_CAN_CLK_FREQ    CLOCK_GetFreq(kCLOCK_BusClk)
+#define TX_MESSAGE_BUFFER_NUM   (8)
+#define EXAMPLE_CAN_DMA         DMA0
 #define EXAMPLE_CAN_DMA_CHANNEL 0U
 #define EXAMPLE_CAN_DMA_REQUEST kDmaRequestMux0FlexCAN0
-#define EXAMPLE_CAN_DMAMUX DMAMUX0
+#define EXAMPLE_CAN_DMAMUX      DMAMUX0
 /* Fix MISRA_C-2012 Rule 17.7. */
 #define LOG_INFO (void)PRINTF
 /*******************************************************************************

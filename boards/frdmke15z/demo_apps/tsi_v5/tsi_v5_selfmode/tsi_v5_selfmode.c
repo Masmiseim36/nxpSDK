@@ -18,8 +18,8 @@
  * Definitions
  ******************************************************************************/
 #define LED1_INIT() LED_RED1_INIT(LOGIC_LED_OFF)
-#define LED1_ON() LED_RED1_ON()
-#define LED1_OFF() LED_RED1_OFF()
+#define LED1_ON()   LED_RED1_ON()
+#define LED1_OFF()  LED_RED1_OFF()
 
 /*******************************************************************************
  * Variables

@@ -14,10 +14,10 @@
  * Definitions
  ******************************************************************************/
 /* UART instance and clock */
-#define EXAMPLE_MSCAN MSCAN
+#define EXAMPLE_MSCAN          MSCAN
 #define EXAMPLE_MSCAN_CLK_FREQ CLOCK_GetFreq(kCLOCK_Osc0ErClk)
 
-#define NODE_ID1 0x801
+#define NODE_ID1    0x801
 #define MSCAN_IDMR0 (MSCAN_REIDR3_RERTR_MASK | (MSCAN_REIDR1_RSRR_MASK | MSCAN_REIDR1_REIDE_MASK) << 16U)
 #define MSCAN_IDMR1 (MSCAN_REIDR3_RERTR_MASK | (MSCAN_REIDR1_RSRR_MASK | MSCAN_REIDR1_REIDE_MASK) << 16U)
 /*******************************************************************************

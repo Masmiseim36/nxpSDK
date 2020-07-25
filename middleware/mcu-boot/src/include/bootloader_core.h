@@ -65,27 +65,6 @@ __STATIC_INLINE void NVIC_ClearAllPendingIRQs(void)
     NVIC->ICPR[6] = 0xFFFFFFFF;
     NVIC->ICPR[7] = 0xFFFFFFFF;
 }
-
-#elif(__CORTEX_M == 33u)
-
-__STATIC_INLINE void NVIC_ClearEnabledIRQs(void)
-{
-    register uint32_t i;
-    for (i = 0; i < 16; i++)
-    {
-        NVIC->ICER[i] = 0xFFFFFFFFu;
-    }
-}
-
-__STATIC_INLINE void NVIC_ClearAllPendingIRQs(void)
-{
-    register uint32_t i;
-    for (i = 0; i < 16; i++)
-    {
-        NVIC->ICER[i] = 0xFFFFFFFFu;
-    }
-}
-
 #else
 #error CORTEX_M version not defined
 #endif

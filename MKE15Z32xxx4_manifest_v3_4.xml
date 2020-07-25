@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ksdk:manifest xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="SDK_2.x_MKE15Z32xxx4" name="MKE15Z32xxx4" brief="This is SDK version 2.5.2 manifest file. It describes the content of the MKE15Z32xxx4 and additional settings for tools that support SDK version 2.5.2" format_version="3.4" api_version="2.0.0" configuration="bf659008c6c9c550a710bd0a39f0b297" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd http://nxp.com/mcuxpresso/sdk/sdk_manifest_v3.4.xsd">
-  <!--Timestamp (UTC): 2019-07-25 07:48:00.922513-->
+<ksdk:manifest xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="SDK_2.x_MKE15Z32xxx4" name="MKE15Z32xxx4" brief="This is SDK version 2.5.3 manifest file. It describes the content of the MKE15Z32xxx4 and additional settings for tools that support SDK version 2.5.3" format_version="3.4" api_version="2.0.0" configuration="af02b7ab24a32d5a3d721ef3149e7f57" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd http://nxp.com/mcuxpresso/sdk/sdk_manifest_v3.4.xsd">
+  <!--Timestamp (UTC): 2020-05-20 11:05:09.337754-->
   <defines>
     <define name="CPU_$|package|" value=""/>
     <define name="CPU_$|package|_$|core|" value=""/>
   </defines>
-  <ksdk id="MCUXpresso252" name="MCUXpresso252" version="2.5.2" revision="237 2019-07-04"/>
+  <ksdk id="MCUXpresso253" name="MCUXpresso253" version="2.5.3" revision="350 2020-05-15"/>
   <compilers>
     <compiler id="compiler_gcc" name="gcc" type="gcc"/>
   </compilers>
@@ -93,16 +93,6 @@ ${load}</script>
         </metadata>
       </metadataSet>
       <examples>
-        <example id="frdmke16z_led_demo_freedom_8000" name="led_demo_freedom_8000" brief="The led_demo_freedom_8000 is a led blinky application load at offset 0x8000 of the target flash memory on the Freedom platform. The led demo project is an example demo firmware applications used to demonstrate how the MCU bootloader can load and launch user applications." toolchain="mcuxpresso" category="bootloader_examples/demo_apps" path="boards/frdmke16z/bootloader_examples/demo_apps/led_demo_freedom_8000">
-          <external path="boards/frdmke16z/bootloader_examples/demo_apps/led_demo_freedom_8000" type="xml">
-            <files mask="led_demo_freedom_8000.xml"/>
-          </external>
-        </example>
-        <example id="frdmke16z_freedom_bootloader" name="freedom_bootloader" brief="The freedom_bootloader is a bootloader that executes from target flash memory on the Freedom platform. The bootloader is a configurable flash programming utility that operates over a serial connection on MCU devices. It enables quick and easy programming of MCU devices through the entire product life cycle, including application development, final product manufacturing, and more.Host-side command line and GUI tools are available to communicate with the bootloader. Users can utilize host tools to upload and/or download application code via the bootloader." toolchain="mcuxpresso" category="bootloader_examples" path="boards/frdmke16z/bootloader_examples/freedom_bootloader">
-          <external path="boards/frdmke16z/bootloader_examples/freedom_bootloader" type="xml">
-            <files mask="freedom_bootloader.xml"/>
-          </external>
-        </example>
         <example id="frdmke16z_touch_sensing" name="touch_sensing" toolchain="mcuxpresso" category="demo_apps" path="boards/frdmke16z/demo_apps/touch_sensing">
           <external path="boards/frdmke16z/demo_apps/touch_sensing" type="xml">
             <files mask="touch_sensing.xml"/>
@@ -508,6 +498,16 @@ ${load}</script>
             <files mask="mc_bldc.xml"/>
           </external>
         </example>
+        <example id="frdmke16z_led_demo_freedom_8000" name="led_demo_freedom_8000" brief="The led_demo_freedom_8000 is a led blinky application load at offset 0x8000 of the target flash memory on the Freedom platform. The led demo project is an example demo firmware applications used to demonstrate how the MCU bootloader can load and launch user applications." toolchain="mcuxpresso" category="bootloader_examples/demo_apps" path="boards/frdmke16z/bootloader_examples/demo_apps/led_demo_freedom_8000">
+          <external path="boards/frdmke16z/bootloader_examples/demo_apps/led_demo_freedom_8000" type="xml">
+            <files mask="led_demo_freedom_8000.xml"/>
+          </external>
+        </example>
+        <example id="frdmke16z_freedom_bootloader" name="freedom_bootloader" brief="The freedom_bootloader is a bootloader that executes from target flash memory on the Freedom platform. The bootloader is a configurable flash programming utility that operates over a serial connection on MCU devices. It enables quick and easy programming of MCU devices through the entire product life cycle, including application development, final product manufacturing, and more.Host-side command line and GUI tools are available to communicate with the bootloader. Users can utilize host tools to upload and/or download application code via the bootloader." toolchain="mcuxpresso" category="bootloader_examples" path="boards/frdmke16z/bootloader_examples/freedom_bootloader">
+          <external path="boards/frdmke16z/bootloader_examples/freedom_bootloader" type="xml">
+            <files mask="freedom_bootloader.xml"/>
+          </external>
+        </example>
       </examples>
     </board>
   </boards>
@@ -594,6 +594,7 @@ ${load}</script>
       <total_memory flash_size_kb="32" ram_size_kb="4"/>
       <package id="MKE15Z32VLF4" name="MKE15Z32VLF4"/>
       <package id="MKE15Z32VLD4" name="MKE15Z32VLD4"/>
+      <package id="MKE15Z32VFP4" name="MKE15Z32VFP4"/>
       <evaluation_boards>
         <evaluation_board name="frdmke16z"/>
       </evaluation_boards>
@@ -632,509 +633,6 @@ ${load}</script>
     </device>
   </devices>
   <components>
-    <component id="middleware.mcu-boot.MKE16Z4_startup.MKE16Z4" name="MCUBOOT_MKE16Z4_startup" brief="MCUBOOT MKE16Z4 startup sources" version="1.0.0" devices="MKE16Z64xxx4" user_visible="false" type="middleware">
-      <source toolchain="mcuxpresso" path="middleware/mcu-boot/src/startup" target_path="startup" type="asm_include">
-        <files mask="crt0_gcc.S"/>
-      </source>
-      <source toolchain="mcuxpresso" path="middleware/mcu-boot/targets/MKE16Z4/src/startup/gcc" target_path="startup" type="asm_include">
-        <files mask="startup_MKE16Z4.S"/>
-      </source>
-    </component>
-    <component id="middleware.mcu-boot.MKE16Z4_sources.MKE16Z4" name="MCUBOOT_MKE16Z4_sources" brief="MCUBOOT MKE16Z4 startup sources" version="1.0.0" devices="MKE16Z64xxx4" user_visible="false" type="middleware">
-      <source path="middleware/mcu-boot/targets/MKE16Z4/src" target_path="MKE16Z4" type="c_include">
-        <files mask="bootloader_config.h"/>
-        <files mask="peripherals_pinmux.h"/>
-        <files mask="target_config.h"/>
-      </source>
-      <source path="middleware/mcu-boot/targets/MKE16Z4/src" target_path="MKE16Z4" type="src">
-        <files mask="clock_config_MKE16Z4.c"/>
-        <files mask="hardware_init_MKE16Z4.c"/>
-        <files mask="memory_map_MKE16Z4.c"/>
-        <files mask="peripherals_MKE16Z4.c"/>
-      </source>
-      <source path="middleware/mcu-boot/targets/common/src" target_path="MKE16Z4" type="src">
-        <files mask="pinmux_utility_common.c"/>
-        <files mask="bl_lpspi_irq_config_common.c"/>
-        <files mask="bl_lpi2c_irq_config_common.c"/>
-        <files mask="bl_lpuart_irq_config_common.c"/>
-      </source>
-      <source path="middleware/mcu-boot/src/bootloader/src" target_path="source/bootloader/src" type="src">
-        <files mask="lpuart_peripheral_interface.c"/>
-        <files mask="lpspi_peripheral_interface.c"/>
-        <files mask="lpi2c_peripheral_interface.c"/>
-        <files mask="mscan_peripheral_interface.c"/>
-      </source>
-      <source path="middleware/mcu-boot/src/memory/src" target_path="source/memory/src" type="src">
-        <files mask="sram_init_cm0plus.c"/>
-      </source>
-    </component>
-    <component id="middleware.mcu-boot.drv_microseconds.MKE16Z4" name="MCUBOOT_microseconds_sysclk" brief="MCUBOOT microseconds sysclk" version="1.0.0" devices="MKE16Z64xxx4" user_visible="false" type="middleware">
-      <source path="middleware/mcu-boot/src/drivers/microseconds" target_path="source/drivers/microseconds" type="c_include">
-        <files mask="microseconds.h"/>
-      </source>
-      <source path="middleware/mcu-boot/src/drivers/microseconds/src" target_path="source/drivers/microseconds" type="src">
-        <files mask="microseconds_sysclk.c"/>
-      </source>
-    </component>
-    <component id="middleware.mcu-boot.drv_microseconds_pit.MKE16Z4" name="MCUBOOT_microseconds_pit" brief="MCUBOOT microseconds pit" version="1.0.0" devices="MKE16Z64xxx4" user_visible="false" type="middleware">
-      <source path="middleware/mcu-boot/src/drivers/microseconds" target_path="source/drivers/microseconds" type="c_include">
-        <files mask="microseconds.h"/>
-      </source>
-      <source path="middleware/mcu-boot/src/drivers/microseconds/src" target_path="source/drivers/microseconds" type="src">
-        <files mask="microseconds_pit.c"/>
-      </source>
-    </component>
-    <component id="middleware.mcu-boot.bootsources.MKE16Z4" name="MCUBOOT_common_sources" brief="Bootloader common sources" version="2.7.0" devices="MKE16Z64xxx4" user_visible="false" type="middleware">
-      <source path="middleware/mcu-boot/src/autobaud" target_path="source/autobaud" type="c_include">
-        <files mask="autobaud.h"/>
-      </source>
-      <source path="middleware/mcu-boot/src/autobaud/src" target_path="source/autobaud" type="src">
-        <files mask="autobaud_irq.c"/>
-      </source>
-      <source path="middleware/mcu-boot/src/bootloader" target_path="source/bootloader" type="c_include">
-        <files mask="bl_peripheral_interface.h"/>
-        <files mask="bl_user_entry.h"/>
-        <files mask="bl_version.h"/>
-        <files mask="bootloader.h"/>
-        <files mask="bl_command.h"/>
-        <files mask="bl_context.h"/>
-        <files mask="bl_peripheral.h"/>
-        <files mask="bl_shutdown_cleanup.h"/>
-        <files mask="bl_irq_common.h"/>
-        <files mask="bl_app_crc_check.h"/>
-      </source>
-      <source path="middleware/mcu-boot/src/bootloader/src" target_path="source/bootloader/src" type="src">
-        <files mask="bl_user_entry.c"/>
-        <files mask="bl_main.c"/>
-        <files mask="bl_context.c"/>
-        <files mask="bl_exception_handler.c"/>
-        <files mask="bl_tree_root.c"/>
-        <files mask="bl_command.c"/>
-        <files mask="bl_shutdown_cleanup.c"/>
-        <files mask="bl_app_crc_check.c"/>
-        <files mask="bl_misc.c"/>
-      </source>
-      <source path="middleware/mcu-boot/src/crc" target_path="source/crc" type="c_include">
-        <files mask="crc16.h"/>
-        <files mask="crc32.h"/>
-      </source>
-      <source path="middleware/mcu-boot/src/crc/src" target_path="source/crc" type="src">
-        <files mask="crc16.c"/>
-        <files mask="crc32.c"/>
-      </source>
-      <source path="middleware/mcu-boot/src/include" target_path="source/include" type="c_include">
-        <files mask="bootloader_common.h"/>
-      </source>
-      <source path="middleware/mcu-boot/src/memory" target_path="source/memory" type="c_include">
-        <files mask="memory.h"/>
-      </source>
-      <source path="middleware/mcu-boot/src/memory/src" target_path="source/memory/src" type="c_include">
-        <files mask="sram_init.h"/>
-        <files mask="device_memory.h"/>
-        <files mask="normal_memory.h"/>
-        <files mask="pattern_fill.h"/>
-      </source>
-      <source path="middleware/mcu-boot/src/memory/src" target_path="source/memory/src" type="src">
-        <files mask="memory.c"/>
-        <files mask="device_memory.c"/>
-        <files mask="normal_memory.c"/>
-      </source>
-      <source toolchain="mcuxpresso" path="middleware/mcu-boot/src/memory/src" target_path="source/memory/src" type="asm_include">
-        <files mask="pattern_fill_gcc.S"/>
-      </source>
-      <source path="middleware/mcu-boot/src/startup" target_path="startup" type="c_include">
-        <files mask="ar_asm_macros.h"/>
-      </source>
-      <source path="middleware/mcu-boot/src/packet" target_path="source/packet" type="c_include">
-        <files mask="command_packet.h"/>
-        <files mask="serial_packet.h"/>
-      </source>
-      <source path="middleware/mcu-boot/src/packet/src" target_path="source/packet/src" type="src">
-        <files mask="serial_packet.c"/>
-      </source>
-      <source path="middleware/mcu-boot/src/property" target_path="source/property" type="c_include">
-        <files mask="property.h"/>
-      </source>
-      <source path="middleware/mcu-boot/src/sbloader" target_path="source/sbloader" type="c_include">
-        <files mask="sbloader.h"/>
-        <files mask="sb_file_format.h"/>
-      </source>
-      <source path="middleware/mcu-boot/src/sbloader/src" target_path="source/sbloader/src" type="src">
-        <files mask="sbloader.c"/>
-      </source>
-      <source path="middleware/mcu-boot/src/utilities" target_path="source/utilities" type="c_include">
-        <files mask="fsl_rtos_abstraction.h"/>
-        <files mask="fsl_assert.h"/>
-        <files mask="vector_table_info.h"/>
-      </source>
-      <source path="middleware/mcu-boot/src/utilities/src" target_path="source/utilities/src" type="src">
-        <files mask="fsl_assert.c"/>
-        <files mask="fsl_rtos_abstraction.c"/>
-      </source>
-    </component>
-    <component id="middleware.mcu-boot.bootsources_kinetis.MKE16Z4" name="MCUBOOT_kinetis_sources" brief="Bootloader sources for Kinetis devices" version="2.7.0" devices="MKE16Z64xxx4" user_visible="false" type="middleware">
-      <source path="middleware/mcu-boot/src/drivers/smc" target_path="source/drivers/smc" type="src">
-        <files mask="smc.c"/>
-      </source>
-      <source path="middleware/mcu-boot/src/drivers/smc" target_path="source/drivers/smc" type="c_include">
-        <files mask="smc.h"/>
-      </source>
-      <source path="middleware/mcu-boot/src/memory/src" target_path="source/memory/src" type="c_include">
-        <files mask="flash_memory.h"/>
-      </source>
-      <source path="middleware/mcu-boot/src/memory/src" target_path="source/memory/src" type="src">
-        <files mask="flash_memory.c"/>
-      </source>
-      <source path="middleware/mcu-boot/src/property/src" target_path="source/property/src" type="src">
-        <files mask="property_kinetis.c"/>
-      </source>
-      <source path="middleware/mcu-boot/src/utilities" target_path="source/utilities" type="c_include">
-        <files mask="kinetis_family.h"/>
-      </source>
-      <source path="middleware/mcu-boot/src/bootloader" target_path="source/bootloader" type="c_include">
-        <files mask="bl_reliable_update.h"/>
-      </source>
-      <source path="middleware/mcu-boot/src/bootloader/src" target_path="source/bootloader/src" type="src">
-        <files mask="bl_reliable_update.c"/>
-      </source>
-    </component>
-    <component id="middleware.mcu-boot.CMSIS_cm4_headers.MKE16Z4" name="CMSIS_cm4_headers" brief="CMSIS cm4 headers" version="2.5.0" devices="MKE16Z64xxx4" user_visible="false" type="middleware">
-      <source toolchain="mcuxpresso" path="CMSIS/Include" target_path="CMSIS" type="c_include">
-        <files mask="core_cm4.h"/>
-        <files mask="cmsis_version.h"/>
-        <files mask="cmsis_gcc.h"/>
-        <files mask="cmsis_compiler.h"/>
-      </source>
-    </component>
-    <component id="middleware.mcu-boot.CMSIS_cm4_mpu_headers.MKE16Z4" name="CMSIS_cm4_mpu_headers" brief="CMSIS cm4 mpu headers" version="2.5.0" devices="MKE16Z64xxx4" user_visible="false" type="middleware">
-      <source toolchain="mcuxpresso" path="CMSIS/Include" target_path="CMSIS" type="c_include">
-        <files mask="core_cm4.h"/>
-        <files mask="cmsis_version.h"/>
-        <files mask="cmsis_gcc.h"/>
-        <files mask="cmsis_compiler.h"/>
-        <files mask="mpu_armv7.h"/>
-      </source>
-    </component>
-    <component id="middleware.mcu-boot.CMSIS_cm0p_headers.MKE16Z4" name="CMSIS_cm0p_headers" brief="CMSIS cm0p headers" version="2.5.0" devices="MKE16Z64xxx4" user_visible="false" type="middleware">
-      <source toolchain="mcuxpresso" path="CMSIS/Include" target_path="CMSIS" type="c_include">
-        <files mask="core_cm0plus.h"/>
-        <files mask="cmsis_version.h"/>
-        <files mask="cmsis_gcc.h"/>
-        <files mask="cmsis_compiler.h"/>
-      </source>
-    </component>
-    <component id="middleware.mcu-boot.CMSIS_cm7_headers.MKE16Z4" name="CMSIS_cm7_headers" brief="CMSIS cm7 headers" version="2.5.0" devices="MKE16Z64xxx4" user_visible="false" type="middleware">
-      <source toolchain="mcuxpresso" path="CMSIS/Include" target_path="CMSIS" type="c_include">
-        <files mask="mpu_armv7.h"/>
-        <files mask="core_cm7.h"/>
-        <files mask="cmsis_version.h"/>
-        <files mask="cmsis_gcc.h"/>
-        <files mask="cmsis_compiler.h"/>
-      </source>
-    </component>
-    <component id="middleware.mcu-boot.src_startup.MKE16Z4" name="MCUBOOT_startup_sources" brief="Bootloader startup sources" version="1.0.0" devices="MKE16Z64xxx4" user_visible="false" type="middleware">
-      <source path="middleware/mcu-boot/src/startup" target_path="startup" type="src">
-        <files mask="startup.c"/>
-      </source>
-      <source path="middleware/mcu-boot/src/include" target_path="source/include" type="c_include">
-        <files mask="bootloader_core.h"/>
-      </source>
-    </component>
-    <component id="middleware.mcu-boot.all_files.MKE16Z4" name="all_files" brief="mcu-boot files" version="2.7.0" devices="MKE16Z64xxx4" user_visible="false" type="other">
-      <source exclude="true" path="middleware/mcu-boot/tools/tools/common/blfwk" target_path="middleware/mcu-boot" type="other">
-        <files mask="blfwk.vcxproj"/>
-        <files mask="blfwk.vcxproj.filters"/>
-      </source>
-      <source exclude="true" path="middleware/mcu-boot/tools/tools/common/blfwkdll" target_path="middleware/mcu-boot" type="other">
-        <files mask="blfwk.vcxproj"/>
-        <files mask="blfwk.vcxproj.filters"/>
-        <files mask="blfwk.vcxproj.user"/>
-        <files mask="blfwkdll.vcxproj"/>
-        <files mask="blfwkdll.vcxproj.filters"/>
-        <files mask="blfwkdll.vcxproj.user"/>
-      </source>
-      <source exclude="true" path="middleware/mcu-boot/tools/tools/common/blfwkdll" target_path="middleware/mcu-boot" type="src">
-        <files mask="blfwkdll.cpp"/>
-      </source>
-      <source exclude="true" path="middleware/mcu-boot/tools/tools/common/blfwkdll" target_path="middleware/mcu-boot" type="c_include">
-        <files mask="blfwkdll.h"/>
-      </source>
-      <source exclude="true" path="middleware/mcu-boot/bin/Tools/blhost/win" target_path="middleware/mcu-boot" type="other">
-        <files mask="blhost.exe"/>
-      </source>
-      <source exclude="true" path="middleware/mcu-boot/doc" target_path="middleware/mcu-boot" type="doc">
-        <files mask="blhost User's Guide.pdf"/>
-      </source>
-      <source path="middleware/mcu-boot/tools/src/blfwk" target_path="middleware/mcu-boot" type="c_include">
-        <files mask="SBSourceFile.h"/>
-        <files mask="EndianUtilities.h"/>
-        <files mask="Packetizer.h"/>
-        <files mask="SimPeripheral.h"/>
-        <files mask="DataTarget.h"/>
-        <files mask="StSRecordFile.h"/>
-        <files mask="ExcludesListMatcher.h"/>
-        <files mask="GHSSecInfo.h"/>
-        <files mask="SearchPath.h"/>
-        <files mask="SimPacketizer.h"/>
-        <files mask="SerialPacketizer.h"/>
-        <files mask="Command.h"/>
-        <files mask="SourceFile.h"/>
-        <files mask="Bootloader.h"/>
-        <files mask="smart_ptr.h"/>
-        <files mask="Random.h"/>
-        <files mask="serial.h"/>
-        <files mask="StExecutableImage.h"/>
-        <files mask="ELF.h"/>
-        <files mask="Progress.h"/>
-        <files mask="Value.h"/>
-        <files mask="StELFFile.h"/>
-        <files mask="SDPCommand.h"/>
-        <files mask="utils.h"/>
-        <files mask="rijndael.h"/>
-        <files mask="AESCounter.h"/>
-        <files mask="BusPalPeripheral.h"/>
-        <files mask="Updater.h"/>
-        <files mask="GlobMatcher.h"/>
-        <files mask="ELFSourceFile.h"/>
-        <files mask="hidapi.h"/>
-        <files mask="OptionContext.h"/>
-        <files mask="Logging.h"/>
-        <files mask="Blob.h"/>
-        <files mask="Simulator.h"/>
-        <files mask="SDPUsbHidPacketizer.h"/>
-        <files mask="format_string.h"/>
-        <files mask="SDPUartPacketizer.h"/>
-        <files mask="DataSource.h"/>
-        <files mask="Peripheral.h"/>
-        <files mask="AESKey.h"/>
-        <files mask="UsbHidPacketizer.h"/>
-        <files mask="BusPal.h"/>
-        <files mask="int_size.h"/>
-        <files mask="HexValues.h"/>
-        <files mask="BlfwkErrors.h"/>
-        <files mask="SRecordSourceFile.h"/>
-        <files mask="SimulatorMemory.h"/>
-        <files mask="bootloader_config.h"/>
-        <files mask="DataSourceImager.h"/>
-        <files mask="Crc.h"/>
-        <files mask="StringMatcher.h"/>
-        <files mask="RijndaelCTR.h"/>
-        <files mask="host_types.h"/>
-        <files mask="options.h"/>
-        <files mask="UsbHidPeripheral.h"/>
-        <files mask="UartPeripheral.h"/>
-        <files mask="IntelHexSourceFile.h"/>
-        <files mask="stdafx.h"/>
-        <files mask="json.h"/>
-        <files mask="StIntelHexFile.h"/>
-      </source>
-      <source path="middleware/mcu-boot/tools/src/blfwk/src" target_path="middleware/mcu-boot" type="src">
-        <files mask="utils.cpp"/>
-        <files mask="UsbHidPeripheral.cpp"/>
-        <files mask="format_string.cpp"/>
-        <files mask="IntelHexSourceFile.cpp"/>
-        <files mask="StExecutableImage.cpp"/>
-        <files mask="jsoncpp.cpp"/>
-        <files mask="DataTarget.cpp"/>
-        <files mask="SerialPacketizer.cpp"/>
-        <files mask="UartPeripheral.cpp"/>
-        <files mask="StELFFile.cpp"/>
-        <files mask="Value.cpp"/>
-        <files mask="SearchPath.cpp"/>
-        <files mask="Logging.cpp"/>
-        <files mask="SimPeripheral.cpp"/>
-        <files mask="SimPacketizer.cpp"/>
-        <files mask="Bootloader.cpp"/>
-        <files mask="StIntelHexFile.cpp"/>
-        <files mask="GlobMatcher.cpp"/>
-        <files mask="SBSourceFile.cpp"/>
-        <files mask="DataSourceImager.cpp"/>
-        <files mask="Blob.cpp"/>
-        <files mask="BusPalPeripheral.cpp"/>
-        <files mask="AESKey.cpp"/>
-        <files mask="DataSource.cpp"/>
-        <files mask="Updater.cpp"/>
-        <files mask="SRecordSourceFile.cpp"/>
-        <files mask="StSRecordFile.cpp"/>
-        <files mask="HexValues.cpp"/>
-        <files mask="SourceFile.cpp"/>
-        <files mask="BusPal.cpp"/>
-        <files mask="SimulatorMemory.cpp"/>
-        <files mask="options.cpp"/>
-        <files mask="Command.cpp"/>
-        <files mask="SDPCommand.cpp"/>
-        <files mask="Simulator.cpp"/>
-        <files mask="rijndael.cpp"/>
-        <files mask="ELFSourceFile.cpp"/>
-        <files mask="Crc.cpp"/>
-        <files mask="ExcludesListMatcher.cpp"/>
-        <files mask="AESCounter.cpp"/>
-        <files mask="Random.cpp"/>
-        <files mask="SDPUsbHidPacketizer.cpp"/>
-        <files mask="UsbHidPacketizer.cpp"/>
-        <files mask="RijndaelCTR.cpp"/>
-        <files mask="GHSSecInfo.cpp"/>
-        <files mask="serial.c"/>
-        <files mask="hid-mac.c"/>
-        <files mask="hid-linux.c"/>
-        <files mask="hid-windows.c"/>
-      </source>
-      <source path="middleware/mcu-boot/tools/src/blfwk/doc" target_path="middleware/mcu-boot" type="other">
-        <files mask="blfwk.md"/>
-      </source>
-      <source path="middleware/mcu-boot/tools/src/bootloader" target_path="middleware/mcu-boot" type="c_include">
-        <files mask="bl_peripheral.h"/>
-      </source>
-      <source path="middleware/mcu-boot/tools/src/crc" target_path="middleware/mcu-boot" type="c_include">
-        <files mask="crc32.h"/>
-        <files mask="crc16.h"/>
-      </source>
-      <source path="middleware/mcu-boot/tools/src/crc/src" target_path="middleware/mcu-boot" type="src">
-        <files mask="crc32.c"/>
-        <files mask="crc16.c"/>
-      </source>
-      <source path="middleware/mcu-boot/tools/src/include" target_path="middleware/mcu-boot" type="c_include">
-        <files mask="bootloader_common.h"/>
-        <files mask="bootloader_hid_report_ids.h"/>
-      </source>
-      <source path="middleware/mcu-boot/tools/src/memory" target_path="middleware/mcu-boot" type="c_include">
-        <files mask="memory.h"/>
-      </source>
-      <source path="middleware/mcu-boot/tools/src/packet" target_path="middleware/mcu-boot" type="c_include">
-        <files mask="command_packet.h"/>
-        <files mask="serial_packet.h"/>
-      </source>
-      <source path="middleware/mcu-boot/tools/src/property" target_path="middleware/mcu-boot" type="c_include">
-        <files mask="property.h"/>
-      </source>
-      <source path="middleware/mcu-boot/tools/mk" target_path="middleware/mcu-boot" type="script">
-        <files mask="common.mk"/>
-      </source>
-      <source path="middleware/mcu-boot/src/drivers/smc" target_path="middleware/mcu-boot" type="c_include">
-        <files mask="smc.h"/>
-      </source>
-      <source path="middleware/mcu-boot/src/utilities/src" target_path="middleware/mcu-boot" type="src">
-        <files mask="bootloader_tree_stub.c"/>
-        <files mask="ring_buffer.c"/>
-        <files mask="fsl_assert.c"/>
-        <files mask="fsl_rtos_abstraction.c"/>
-      </source>
-      <source path="middleware/mcu-boot/src/utilities" target_path="middleware/mcu-boot" type="c_include">
-        <files mask="ring_buffer.h"/>
-        <files mask="vector_table_info.h"/>
-        <files mask="fsl_assert.h"/>
-        <files mask="fsl_rtos_abstraction.h"/>
-        <files mask="kinetis_family.h"/>
-      </source>
-      <source path="middleware/mcu-boot/tools/tools/blhost/src" target_path="middleware/mcu-boot" type="src">
-        <files mask="blhost.cpp"/>
-      </source>
-      <source path="middleware/mcu-boot/tools/tools/blhost/src" target_path="middleware/mcu-boot" type="c_include">
-        <files mask="targetver.h"/>
-      </source>
-      <source exclude="true" path="middleware/mcu-boot/tools/tools/blhost/src" target_path="middleware/mcu-boot" type="other">
-        <files mask="blhost.vcxproj"/>
-        <files mask="blhost.vcxproj.filters"/>
-        <files mask="blhost.vcxproj.user"/>
-      </source>
-      <source exclude="true" path="middleware/mcu-boot/tools/tools/blhost" target_path="middleware/mcu-boot" type="other">
-        <files mask="blhost.sln"/>
-      </source>
-    </component>
-    <component id="middleware.mcu-boot.kinetis_files.MKE16Z4" name="mke16z4_files" brief="ke16z files" version="2.7.0" devices="MKE16Z64xxx4" user_visible="false" type="other">
-      <source exclude="true" path="middleware/mcu-boot/apps/led_demo/src" target_path="middleware/mcu-boot" type="src">
-        <files mask="milliseconds_delay.c"/>
-      </source>
-      <source path="middleware/mcu-boot/apps/led_demo/src" target_path="middleware/mcu-boot" type="c_include">
-        <files mask="milliseconds_delay.h"/>
-      </source>
-      <source exclude="true" path="middleware/mcu-boot/bin/Tools/mfgtools-rel" target_path="middleware/mcu-boot" type="other">
-        <files mask="MfgTool2.exe"/>
-        <files mask="MfgToolLib.dll"/>
-      </source>
-      <source exclude="true" path="middleware/mcu-boot/bin/Tools/mfgtools-rel" target_path="middleware/mcu-boot" type="configuration">
-        <files mask="UICfg.ini"/>
-        <files mask="cfg.ini"/>
-      </source>
-      <source exclude="true" path="middleware/mcu-boot/bin/Tools/mfgtools-rel/Profiles/Kinetis Bootloader" target_path="middleware/mcu-boot" type="configuration">
-        <files mask="player.ini"/>
-      </source>
-      <source exclude="true" path="middleware/mcu-boot/bin/Tools/mfgtools-rel/Profiles/Kinetis Bootloader/OS Firmware" target_path="middleware/mcu-boot" type="xml">
-        <files mask="ucl2(for SRecord).xml"/>
-        <files mask="ucl2(for binary).xml"/>
-        <files mask="ucl2.xml"/>
-        <files mask="ucl2(for HEX).xml"/>
-        <files mask="ucl2(for SB).xml"/>
-      </source>
-      <source exclude="true" path="middleware/mcu-boot/bin/Tools/mfgtools-rel/Profiles/Kinetis Bootloader/OS Firmware/files" target_path="middleware/mcu-boot" type="other">
-        <files mask="simple.bd"/>
-        <files mask="simple.hex"/>
-        <files mask="simple.sb"/>
-        <files mask="simple.srec"/>
-      </source>
-      <source exclude="true" path="middleware/mcu-boot/bin/Tools/mfgtools-rel/Profiles/Kinetis Bootloader/OS Firmware/files" target_path="middleware/mcu-boot" type="binary">
-        <files mask="simple.bin"/>
-        <files mask="flashConfig.bin"/>
-        <files mask="demo.bin"/>
-      </source>
-      <source exclude="true" path="middleware/mcu-boot/bin/Tools/mfgtools-rel/Profiles/Kinetis Bootloader/OS Firmware/files" target_path="middleware/mcu-boot" type="doc">
-        <files mask="Readme.txt"/>
-      </source>
-      <source exclude="true" path="middleware/mcu-boot/tools/tools/KinetisFlashTool" target_path="middleware/mcu-boot" type="other">
-        <files mask="KinetisFlashTool.sln"/>
-      </source>
-      <source exclude="true" path="middleware/mcu-boot/tools/tools/KinetisFlashTool/KinetisFlashTool" target_path="middleware/mcu-boot" type="src">
-        <files mask="KinetisFlashTool.cpp"/>
-        <files mask="SerialList.cpp"/>
-        <files mask="Bootloader.cpp"/>
-        <files mask="UpdateDlg.cpp"/>
-        <files mask="FlashDlg.cpp"/>
-        <files mask="utility.cpp"/>
-        <files mask="KinetisFlashToolDlg.cpp"/>
-        <files mask="BootloaderConfigDlg.cpp"/>
-        <files mask="stdafx.cpp"/>
-        <files mask="ConfigDlg.cpp"/>
-        <files mask="HistoryData.cpp"/>
-      </source>
-      <source exclude="true" path="middleware/mcu-boot/tools/tools/KinetisFlashTool/KinetisFlashTool" target_path="middleware/mcu-boot" type="c_include">
-        <files mask="BootloaderConfigText.h"/>
-        <files mask="targetver.h"/>
-        <files mask="ConfigDlg.h"/>
-        <files mask="Bootloader.h"/>
-        <files mask="utility.h"/>
-        <files mask="resource.h"/>
-        <files mask="FlashDlg.h"/>
-        <files mask="KinetisFlashTool.h"/>
-        <files mask="BootloaderConfigDlg.h"/>
-        <files mask="KinetisFlashToolDlg.h"/>
-        <files mask="SerialList.h"/>
-        <files mask="HistoryData.h"/>
-        <files mask="UpdateDlg.h"/>
-        <files mask="stdafx.h"/>
-      </source>
-      <source exclude="true" path="middleware/mcu-boot/tools/tools/KinetisFlashTool/KinetisFlashTool" target_path="middleware/mcu-boot" type="other">
-        <files mask="KinetisFlashTool.rc"/>
-        <files mask="KinetisFlashTool.vcxproj"/>
-        <files mask="KinetisFlashTool.vcxproj.filters"/>
-        <files mask="KinetisFlashTool.vcxproj.user"/>
-      </source>
-      <source exclude="true" path="middleware/mcu-boot/tools/tools/KinetisFlashTool/KinetisFlashTool/res" target_path="middleware/mcu-boot" type="other">
-        <files mask="Freescale.ico"/>
-        <files mask="KinetisFlashTool.rc2"/>
-      </source>
-      <source exclude="true" path="middleware/mcu-boot/bin/Tools/KinetisFlashTool/win" target_path="middleware/mcu-boot" type="other">
-        <files mask="KinetisFlashTool.exe"/>
-        <files mask="blfwkdll.dll"/>
-      </source>
-      <source exclude="true" path="middleware/mcu-boot/doc" target_path="middleware/mcu-boot" type="doc">
-        <files mask="Kinetis MCU Manufacturing Tool User's Guide.pdf"/>
-        <files mask="Kinetis Flash Tool User's Guide.pdf"/>
-        <files mask="Getting Started with the Flashloader for Kinetis.pdf"/>
-        <files mask="KE16Z Bootloader Demo Application User's Guide.pdf"/>
-        <files mask="MCU Bootloader v2.7.0 Reference Manual.pdf"/>
-        <files mask="KE16Z Bootloader Release Notes.pdf"/>
-      </source>
-    </component>
     <component id="RTE_Device.MKE16Z4" name="RTE_Device" version="1.0.0" devices="MKE16Z64xxx4" category="Device/SDK Project Template" user_visible="true" type="project_template">
       <source path="devices/MKE16Z4/template" target_path="board" type="c_include">
         <files mask="RTE_Device.h"/>
@@ -1197,29 +695,29 @@ ${load}</script>
         <files mask="LICENSE.txt"/>
       </source>
       <source path="CMSIS/Include" target_path="src" type="c_include">
-        <files mask="core_cm0.h"/>
-        <files mask="arm_const_structs.h"/>
-        <files mask="core_cm33.h"/>
-        <files mask="arm_math.h"/>
-        <files mask="mpu_armv8.h"/>
         <files mask="arm_common_tables.h"/>
+        <files mask="arm_const_structs.h"/>
+        <files mask="arm_math.h"/>
+        <files mask="cmsis_armcc.h"/>
         <files mask="cmsis_armclang.h"/>
+        <files mask="cmsis_compiler.h"/>
+        <files mask="cmsis_gcc.h"/>
+        <files mask="cmsis_iccarm.h"/>
+        <files mask="cmsis_version.h"/>
+        <files mask="core_armv8mbl.h"/>
+        <files mask="core_armv8mml.h"/>
+        <files mask="core_cm0.h"/>
+        <files mask="core_cm0plus.h"/>
         <files mask="core_cm23.h"/>
+        <files mask="core_cm3.h"/>
+        <files mask="core_cm33.h"/>
+        <files mask="core_cm4.h"/>
         <files mask="core_cm7.h"/>
         <files mask="core_sc000.h"/>
-        <files mask="tz_context.h"/>
-        <files mask="core_cm3.h"/>
-        <files mask="cmsis_armcc.h"/>
-        <files mask="cmsis_version.h"/>
-        <files mask="core_cm0plus.h"/>
-        <files mask="core_cm4.h"/>
-        <files mask="core_armv8mbl.h"/>
-        <files mask="cmsis_gcc.h"/>
         <files mask="core_sc300.h"/>
-        <files mask="cmsis_compiler.h"/>
-        <files mask="cmsis_iccarm.h"/>
-        <files mask="core_armv8mml.h"/>
         <files mask="mpu_armv7.h"/>
+        <files mask="mpu_armv8.h"/>
+        <files mask="tz_context.h"/>
       </source>
     </component>
     <component id="platform.CMSIS_DSP_Lib.MKE16Z4" name="CMSIS_DSP_Lib" version="5.1.1" devices="MKE16Z64xxx4" user_visible="false" type="CMSIS">
@@ -1264,8 +762,8 @@ ${load}</script>
         <files mask="startup_ARMCM7.s"/>
       </source>
       <source path="CMSIS/DSP_Lib/Examples/ARM/arm_convolution_example" target_path="src" type="src">
-        <files mask="math_helper.c"/>
         <files mask="arm_convolution_example_f32.c"/>
+        <files mask="math_helper.c"/>
       </source>
       <source path="CMSIS/DSP_Lib/Examples/ARM/arm_convolution_example" target_path="src" type="c_include">
         <files mask="math_helper.h"/>
@@ -1348,8 +846,8 @@ ${load}</script>
         <files mask="startup_ARMCM7.s"/>
       </source>
       <source path="CMSIS/DSP_Lib/Examples/ARM/arm_fft_bin_example" target_path="src" type="src">
-        <files mask="arm_fft_bin_example_f32.c"/>
         <files mask="arm_fft_bin_data.c"/>
+        <files mask="arm_fft_bin_example_f32.c"/>
       </source>
       <source path="CMSIS/DSP_Lib/Examples/ARM/arm_fft_bin_example" target_path="src" type="configuration">
         <files mask="arm_fft_bin_example.ini"/>
@@ -1390,8 +888,8 @@ ${load}</script>
       </source>
       <source path="CMSIS/DSP_Lib/Examples/ARM/arm_fir_example" target_path="src" type="src">
         <files mask="arm_fir_data.c"/>
-        <files mask="math_helper.c"/>
         <files mask="arm_fir_example_f32.c"/>
+        <files mask="math_helper.c"/>
       </source>
       <source path="CMSIS/DSP_Lib/Examples/ARM/arm_fir_example" target_path="src" type="c_include">
         <files mask="math_helper.h"/>
@@ -1700,186 +1198,186 @@ ${load}</script>
         <files mask="arm_cortexM_math.uvprojx"/>
       </source>
       <source path="CMSIS/DSP_Lib/Source/BasicMathFunctions" target_path="src" type="src">
-        <files mask="arm_offset_q15.c"/>
-        <files mask="arm_dot_prod_q31.c"/>
-        <files mask="arm_negate_f32.c"/>
-        <files mask="arm_scale_q15.c"/>
-        <files mask="arm_scale_q7.c"/>
-        <files mask="arm_offset_f32.c"/>
-        <files mask="arm_scale_q31.c"/>
-        <files mask="arm_negate_q7.c"/>
-        <files mask="arm_dot_prod_f32.c"/>
-        <files mask="arm_sub_q7.c"/>
-        <files mask="arm_abs_q31.c"/>
-        <files mask="arm_mult_q7.c"/>
-        <files mask="arm_add_q7.c"/>
-        <files mask="arm_abs_q15.c"/>
         <files mask="arm_abs_f32.c"/>
-        <files mask="arm_mult_q31.c"/>
-        <files mask="arm_add_q15.c"/>
-        <files mask="arm_shift_q7.c"/>
-        <files mask="arm_sub_q15.c"/>
-        <files mask="arm_dot_prod_q7.c"/>
-        <files mask="arm_add_f32.c"/>
-        <files mask="arm_dot_prod_q15.c"/>
-        <files mask="arm_sub_q31.c"/>
-        <files mask="arm_shift_q15.c"/>
-        <files mask="arm_sub_f32.c"/>
-        <files mask="arm_mult_q15.c"/>
-        <files mask="arm_shift_q31.c"/>
-        <files mask="arm_negate_q15.c"/>
+        <files mask="arm_abs_q15.c"/>
+        <files mask="arm_abs_q31.c"/>
         <files mask="arm_abs_q7.c"/>
-        <files mask="arm_negate_q31.c"/>
-        <files mask="arm_mult_f32.c"/>
-        <files mask="arm_scale_f32.c"/>
+        <files mask="arm_add_f32.c"/>
+        <files mask="arm_add_q15.c"/>
         <files mask="arm_add_q31.c"/>
-        <files mask="arm_offset_q7.c"/>
+        <files mask="arm_add_q7.c"/>
+        <files mask="arm_dot_prod_f32.c"/>
+        <files mask="arm_dot_prod_q15.c"/>
+        <files mask="arm_dot_prod_q31.c"/>
+        <files mask="arm_dot_prod_q7.c"/>
+        <files mask="arm_mult_f32.c"/>
+        <files mask="arm_mult_q15.c"/>
+        <files mask="arm_mult_q31.c"/>
+        <files mask="arm_mult_q7.c"/>
+        <files mask="arm_negate_f32.c"/>
+        <files mask="arm_negate_q15.c"/>
+        <files mask="arm_negate_q31.c"/>
+        <files mask="arm_negate_q7.c"/>
+        <files mask="arm_offset_f32.c"/>
+        <files mask="arm_offset_q15.c"/>
         <files mask="arm_offset_q31.c"/>
+        <files mask="arm_offset_q7.c"/>
+        <files mask="arm_scale_f32.c"/>
+        <files mask="arm_scale_q15.c"/>
+        <files mask="arm_scale_q31.c"/>
+        <files mask="arm_scale_q7.c"/>
+        <files mask="arm_shift_q15.c"/>
+        <files mask="arm_shift_q31.c"/>
+        <files mask="arm_shift_q7.c"/>
+        <files mask="arm_sub_f32.c"/>
+        <files mask="arm_sub_q15.c"/>
+        <files mask="arm_sub_q31.c"/>
+        <files mask="arm_sub_q7.c"/>
       </source>
       <source path="CMSIS/DSP_Lib/Source/CommonTables" target_path="src" type="src">
         <files mask="arm_common_tables.c"/>
         <files mask="arm_const_structs.c"/>
       </source>
       <source path="CMSIS/DSP_Lib/Source/ComplexMathFunctions" target_path="src" type="src">
-        <files mask="arm_cmplx_conj_q15.c"/>
         <files mask="arm_cmplx_conj_f32.c"/>
-        <files mask="arm_cmplx_dot_prod_q31.c"/>
-        <files mask="arm_cmplx_mag_squared_q15.c"/>
-        <files mask="arm_cmplx_dot_prod_q15.c"/>
+        <files mask="arm_cmplx_conj_q15.c"/>
         <files mask="arm_cmplx_conj_q31.c"/>
-        <files mask="arm_cmplx_mag_q31.c"/>
-        <files mask="arm_cmplx_mult_real_q31.c"/>
-        <files mask="arm_cmplx_mult_real_q15.c"/>
-        <files mask="arm_cmplx_mag_f32.c"/>
-        <files mask="arm_cmplx_mag_squared_f32.c"/>
-        <files mask="arm_cmplx_mult_cmplx_q15.c"/>
-        <files mask="arm_cmplx_mult_cmplx_f32.c"/>
-        <files mask="arm_cmplx_mag_squared_q31.c"/>
-        <files mask="arm_cmplx_mult_real_f32.c"/>
-        <files mask="arm_cmplx_mult_cmplx_q31.c"/>
-        <files mask="arm_cmplx_mag_q15.c"/>
         <files mask="arm_cmplx_dot_prod_f32.c"/>
+        <files mask="arm_cmplx_dot_prod_q15.c"/>
+        <files mask="arm_cmplx_dot_prod_q31.c"/>
+        <files mask="arm_cmplx_mag_f32.c"/>
+        <files mask="arm_cmplx_mag_q15.c"/>
+        <files mask="arm_cmplx_mag_q31.c"/>
+        <files mask="arm_cmplx_mag_squared_f32.c"/>
+        <files mask="arm_cmplx_mag_squared_q15.c"/>
+        <files mask="arm_cmplx_mag_squared_q31.c"/>
+        <files mask="arm_cmplx_mult_cmplx_f32.c"/>
+        <files mask="arm_cmplx_mult_cmplx_q15.c"/>
+        <files mask="arm_cmplx_mult_cmplx_q31.c"/>
+        <files mask="arm_cmplx_mult_real_f32.c"/>
+        <files mask="arm_cmplx_mult_real_q15.c"/>
+        <files mask="arm_cmplx_mult_real_q31.c"/>
       </source>
       <source path="CMSIS/DSP_Lib/Source/ControllerFunctions" target_path="src" type="src">
         <files mask="arm_pid_init_f32.c"/>
-        <files mask="arm_pid_reset_q31.c"/>
-        <files mask="arm_pid_reset_f32.c"/>
-        <files mask="arm_sin_cos_q31.c"/>
         <files mask="arm_pid_init_q15.c"/>
         <files mask="arm_pid_init_q31.c"/>
+        <files mask="arm_pid_reset_f32.c"/>
         <files mask="arm_pid_reset_q15.c"/>
+        <files mask="arm_pid_reset_q31.c"/>
         <files mask="arm_sin_cos_f32.c"/>
+        <files mask="arm_sin_cos_q31.c"/>
       </source>
       <source path="CMSIS/DSP_Lib/Source/FastMathFunctions" target_path="src" type="src">
-        <files mask="arm_cos_q31.c"/>
-        <files mask="arm_sqrt_q31.c"/>
-        <files mask="arm_sin_q31.c"/>
-        <files mask="arm_cos_q15.c"/>
-        <files mask="arm_sin_q15.c"/>
         <files mask="arm_cos_f32.c"/>
+        <files mask="arm_cos_q15.c"/>
+        <files mask="arm_cos_q31.c"/>
         <files mask="arm_sin_f32.c"/>
+        <files mask="arm_sin_q15.c"/>
+        <files mask="arm_sin_q31.c"/>
         <files mask="arm_sqrt_q15.c"/>
+        <files mask="arm_sqrt_q31.c"/>
       </source>
       <source path="CMSIS/DSP_Lib/Source/FilteringFunctions" target_path="src" type="src">
-        <files mask="arm_conv_fast_q15.c"/>
-        <files mask="arm_correlate_fast_q15.c"/>
-        <files mask="arm_biquad_cascade_df2T_init_f32.c"/>
-        <files mask="arm_conv_q31.c"/>
-        <files mask="arm_fir_decimate_fast_q15.c"/>
-        <files mask="arm_correlate_opt_q7.c"/>
-        <files mask="arm_biquad_cascade_df1_f32.c"/>
-        <files mask="arm_conv_fast_q31.c"/>
-        <files mask="arm_fir_fast_q31.c"/>
-        <files mask="arm_conv_partial_f32.c"/>
-        <files mask="arm_fir_fast_q15.c"/>
-        <files mask="arm_lms_norm_init_q15.c"/>
-        <files mask="arm_lms_norm_f32.c"/>
-        <files mask="arm_conv_partial_opt_q7.c"/>
-        <files mask="arm_fir_init_q7.c"/>
-        <files mask="arm_fir_lattice_f32.c"/>
-        <files mask="arm_fir_f32.c"/>
-        <files mask="arm_correlate_fast_q31.c"/>
-        <files mask="arm_conv_partial_opt_q15.c"/>
-        <files mask="arm_fir_decimate_init_q15.c"/>
-        <files mask="arm_conv_fast_opt_q15.c"/>
-        <files mask="arm_fir_init_f32.c"/>
-        <files mask="arm_biquad_cascade_df1_fast_q15.c"/>
-        <files mask="arm_conv_q7.c"/>
-        <files mask="arm_fir_init_q15.c"/>
-        <files mask="arm_correlate_opt_q15.c"/>
-        <files mask="arm_lms_norm_init_q31.c"/>
-        <files mask="arm_conv_partial_q15.c"/>
-        <files mask="arm_biquad_cascade_df1_fast_q31.c"/>
-        <files mask="arm_lms_norm_q31.c"/>
-        <files mask="arm_lms_init_q31.c"/>
-        <files mask="arm_fir_decimate_q31.c"/>
-        <files mask="arm_lms_init_q15.c"/>
-        <files mask="arm_conv_q15.c"/>
-        <files mask="arm_conv_partial_fast_opt_q15.c"/>
-        <files mask="arm_fir_sparse_init_f32.c"/>
-        <files mask="arm_iir_lattice_init_f32.c"/>
-        <files mask="arm_fir_init_q31.c"/>
-        <files mask="arm_fir_sparse_q15.c"/>
-        <files mask="arm_fir_lattice_init_q31.c"/>
-        <files mask="arm_lms_f32.c"/>
-        <files mask="arm_fir_q31.c"/>
         <files mask="arm_biquad_cascade_df1_32x64_init_q31.c"/>
-        <files mask="arm_iir_lattice_q15.c"/>
         <files mask="arm_biquad_cascade_df1_32x64_q31.c"/>
-        <files mask="arm_biquad_cascade_df2T_f64.c"/>
-        <files mask="arm_fir_decimate_init_f32.c"/>
-        <files mask="arm_lms_q15.c"/>
-        <files mask="arm_fir_interpolate_q31.c"/>
-        <files mask="arm_conv_partial_fast_q15.c"/>
-        <files mask="arm_fir_sparse_q7.c"/>
-        <files mask="arm_biquad_cascade_df1_q31.c"/>
-        <files mask="arm_conv_opt_q15.c"/>
-        <files mask="arm_biquad_cascade_stereo_df2T_f32.c"/>
-        <files mask="arm_fir_lattice_q31.c"/>
-        <files mask="arm_fir_interpolate_q15.c"/>
-        <files mask="arm_fir_interpolate_init_q15.c"/>
-        <files mask="arm_conv_partial_q7.c"/>
-        <files mask="arm_iir_lattice_init_q15.c"/>
-        <files mask="arm_lms_norm_init_f32.c"/>
-        <files mask="arm_fir_decimate_fast_q31.c"/>
-        <files mask="arm_correlate_q15.c"/>
-        <files mask="arm_fir_decimate_init_q31.c"/>
-        <files mask="arm_lms_q31.c"/>
-        <files mask="arm_fir_sparse_f32.c"/>
-        <files mask="arm_fir_interpolate_init_f32.c"/>
-        <files mask="arm_fir_sparse_init_q15.c"/>
-        <files mask="arm_conv_opt_q7.c"/>
-        <files mask="arm_fir_sparse_init_q7.c"/>
-        <files mask="arm_correlate_q31.c"/>
-        <files mask="arm_biquad_cascade_stereo_df2T_init_f32.c"/>
-        <files mask="arm_iir_lattice_init_q31.c"/>
-        <files mask="arm_conv_partial_fast_q31.c"/>
-        <files mask="arm_fir_q7.c"/>
-        <files mask="arm_conv_partial_q31.c"/>
-        <files mask="arm_fir_decimate_f32.c"/>
-        <files mask="arm_fir_interpolate_init_q31.c"/>
-        <files mask="arm_fir_decimate_q15.c"/>
-        <files mask="arm_biquad_cascade_df2T_f32.c"/>
-        <files mask="arm_fir_interpolate_f32.c"/>
-        <files mask="arm_fir_sparse_init_q31.c"/>
-        <files mask="arm_lms_init_f32.c"/>
+        <files mask="arm_biquad_cascade_df1_f32.c"/>
+        <files mask="arm_biquad_cascade_df1_fast_q15.c"/>
+        <files mask="arm_biquad_cascade_df1_fast_q31.c"/>
         <files mask="arm_biquad_cascade_df1_init_f32.c"/>
-        <files mask="arm_fir_lattice_init_f32.c"/>
-        <files mask="arm_correlate_q7.c"/>
-        <files mask="arm_conv_f32.c"/>
-        <files mask="arm_biquad_cascade_df2T_init_f64.c"/>
-        <files mask="arm_fir_lattice_q15.c"/>
-        <files mask="arm_fir_q15.c"/>
-        <files mask="arm_fir_lattice_init_q15.c"/>
-        <files mask="arm_correlate_fast_opt_q15.c"/>
-        <files mask="arm_correlate_f32.c"/>
         <files mask="arm_biquad_cascade_df1_init_q15.c"/>
-        <files mask="arm_fir_sparse_q31.c"/>
-        <files mask="arm_iir_lattice_f32.c"/>
         <files mask="arm_biquad_cascade_df1_init_q31.c"/>
-        <files mask="arm_lms_norm_q15.c"/>
         <files mask="arm_biquad_cascade_df1_q15.c"/>
+        <files mask="arm_biquad_cascade_df1_q31.c"/>
+        <files mask="arm_biquad_cascade_df2T_f32.c"/>
+        <files mask="arm_biquad_cascade_df2T_f64.c"/>
+        <files mask="arm_biquad_cascade_df2T_init_f32.c"/>
+        <files mask="arm_biquad_cascade_df2T_init_f64.c"/>
+        <files mask="arm_biquad_cascade_stereo_df2T_f32.c"/>
+        <files mask="arm_biquad_cascade_stereo_df2T_init_f32.c"/>
+        <files mask="arm_conv_f32.c"/>
+        <files mask="arm_conv_fast_opt_q15.c"/>
+        <files mask="arm_conv_fast_q15.c"/>
+        <files mask="arm_conv_fast_q31.c"/>
+        <files mask="arm_conv_opt_q15.c"/>
+        <files mask="arm_conv_opt_q7.c"/>
+        <files mask="arm_conv_partial_f32.c"/>
+        <files mask="arm_conv_partial_fast_opt_q15.c"/>
+        <files mask="arm_conv_partial_fast_q15.c"/>
+        <files mask="arm_conv_partial_fast_q31.c"/>
+        <files mask="arm_conv_partial_opt_q15.c"/>
+        <files mask="arm_conv_partial_opt_q7.c"/>
+        <files mask="arm_conv_partial_q15.c"/>
+        <files mask="arm_conv_partial_q31.c"/>
+        <files mask="arm_conv_partial_q7.c"/>
+        <files mask="arm_conv_q15.c"/>
+        <files mask="arm_conv_q31.c"/>
+        <files mask="arm_conv_q7.c"/>
+        <files mask="arm_correlate_f32.c"/>
+        <files mask="arm_correlate_fast_opt_q15.c"/>
+        <files mask="arm_correlate_fast_q15.c"/>
+        <files mask="arm_correlate_fast_q31.c"/>
+        <files mask="arm_correlate_opt_q15.c"/>
+        <files mask="arm_correlate_opt_q7.c"/>
+        <files mask="arm_correlate_q15.c"/>
+        <files mask="arm_correlate_q31.c"/>
+        <files mask="arm_correlate_q7.c"/>
+        <files mask="arm_fir_decimate_f32.c"/>
+        <files mask="arm_fir_decimate_fast_q15.c"/>
+        <files mask="arm_fir_decimate_fast_q31.c"/>
+        <files mask="arm_fir_decimate_init_f32.c"/>
+        <files mask="arm_fir_decimate_init_q15.c"/>
+        <files mask="arm_fir_decimate_init_q31.c"/>
+        <files mask="arm_fir_decimate_q15.c"/>
+        <files mask="arm_fir_decimate_q31.c"/>
+        <files mask="arm_fir_f32.c"/>
+        <files mask="arm_fir_fast_q15.c"/>
+        <files mask="arm_fir_fast_q31.c"/>
+        <files mask="arm_fir_init_f32.c"/>
+        <files mask="arm_fir_init_q15.c"/>
+        <files mask="arm_fir_init_q31.c"/>
+        <files mask="arm_fir_init_q7.c"/>
+        <files mask="arm_fir_interpolate_f32.c"/>
+        <files mask="arm_fir_interpolate_init_f32.c"/>
+        <files mask="arm_fir_interpolate_init_q15.c"/>
+        <files mask="arm_fir_interpolate_init_q31.c"/>
+        <files mask="arm_fir_interpolate_q15.c"/>
+        <files mask="arm_fir_interpolate_q31.c"/>
+        <files mask="arm_fir_lattice_f32.c"/>
+        <files mask="arm_fir_lattice_init_f32.c"/>
+        <files mask="arm_fir_lattice_init_q15.c"/>
+        <files mask="arm_fir_lattice_init_q31.c"/>
+        <files mask="arm_fir_lattice_q15.c"/>
+        <files mask="arm_fir_lattice_q31.c"/>
+        <files mask="arm_fir_q15.c"/>
+        <files mask="arm_fir_q31.c"/>
+        <files mask="arm_fir_q7.c"/>
+        <files mask="arm_fir_sparse_f32.c"/>
+        <files mask="arm_fir_sparse_init_f32.c"/>
+        <files mask="arm_fir_sparse_init_q15.c"/>
+        <files mask="arm_fir_sparse_init_q31.c"/>
+        <files mask="arm_fir_sparse_init_q7.c"/>
+        <files mask="arm_fir_sparse_q15.c"/>
+        <files mask="arm_fir_sparse_q31.c"/>
+        <files mask="arm_fir_sparse_q7.c"/>
+        <files mask="arm_iir_lattice_f32.c"/>
+        <files mask="arm_iir_lattice_init_f32.c"/>
+        <files mask="arm_iir_lattice_init_q15.c"/>
+        <files mask="arm_iir_lattice_init_q31.c"/>
+        <files mask="arm_iir_lattice_q15.c"/>
         <files mask="arm_iir_lattice_q31.c"/>
+        <files mask="arm_lms_f32.c"/>
+        <files mask="arm_lms_init_f32.c"/>
+        <files mask="arm_lms_init_q15.c"/>
+        <files mask="arm_lms_init_q31.c"/>
+        <files mask="arm_lms_norm_f32.c"/>
+        <files mask="arm_lms_norm_init_f32.c"/>
+        <files mask="arm_lms_norm_init_q15.c"/>
+        <files mask="arm_lms_norm_init_q31.c"/>
+        <files mask="arm_lms_norm_q15.c"/>
+        <files mask="arm_lms_norm_q31.c"/>
+        <files mask="arm_lms_q15.c"/>
+        <files mask="arm_lms_q31.c"/>
       </source>
       <source path="CMSIS/DSP_Lib/Source/GCC" target_path="src" type="script">
         <files mask="arm_cortexM_math_Build.bat"/>
@@ -1889,113 +1387,113 @@ ${load}</script>
         <files mask="arm_cortexM_math.uvprojx"/>
       </source>
       <source path="CMSIS/DSP_Lib/Source/MatrixFunctions" target_path="src" type="src">
-        <files mask="arm_mat_inverse_f32.c"/>
-        <files mask="arm_mat_mult_f32.c"/>
-        <files mask="arm_mat_mult_fast_q31.c"/>
-        <files mask="arm_mat_mult_fast_q15.c"/>
-        <files mask="arm_mat_scale_q31.c"/>
-        <files mask="arm_mat_trans_f32.c"/>
-        <files mask="arm_mat_init_q15.c"/>
-        <files mask="arm_mat_cmplx_mult_q31.c"/>
-        <files mask="arm_mat_mult_q31.c"/>
         <files mask="arm_mat_add_f32.c"/>
-        <files mask="arm_mat_sub_q15.c"/>
-        <files mask="arm_mat_init_f32.c"/>
+        <files mask="arm_mat_add_q15.c"/>
+        <files mask="arm_mat_add_q31.c"/>
         <files mask="arm_mat_cmplx_mult_f32.c"/>
+        <files mask="arm_mat_cmplx_mult_q15.c"/>
+        <files mask="arm_mat_cmplx_mult_q31.c"/>
+        <files mask="arm_mat_init_f32.c"/>
+        <files mask="arm_mat_init_q15.c"/>
+        <files mask="arm_mat_init_q31.c"/>
+        <files mask="arm_mat_inverse_f32.c"/>
+        <files mask="arm_mat_inverse_f64.c"/>
+        <files mask="arm_mat_mult_f32.c"/>
+        <files mask="arm_mat_mult_fast_q15.c"/>
+        <files mask="arm_mat_mult_fast_q31.c"/>
+        <files mask="arm_mat_mult_q15.c"/>
+        <files mask="arm_mat_mult_q31.c"/>
         <files mask="arm_mat_scale_f32.c"/>
+        <files mask="arm_mat_scale_q15.c"/>
+        <files mask="arm_mat_scale_q31.c"/>
+        <files mask="arm_mat_sub_f32.c"/>
+        <files mask="arm_mat_sub_q15.c"/>
+        <files mask="arm_mat_sub_q31.c"/>
+        <files mask="arm_mat_trans_f32.c"/>
         <files mask="arm_mat_trans_q15.c"/>
         <files mask="arm_mat_trans_q31.c"/>
-        <files mask="arm_mat_sub_q31.c"/>
-        <files mask="arm_mat_scale_q15.c"/>
-        <files mask="arm_mat_add_q31.c"/>
-        <files mask="arm_mat_init_q31.c"/>
-        <files mask="arm_mat_cmplx_mult_q15.c"/>
-        <files mask="arm_mat_inverse_f64.c"/>
-        <files mask="arm_mat_add_q15.c"/>
-        <files mask="arm_mat_sub_f32.c"/>
-        <files mask="arm_mat_mult_q15.c"/>
       </source>
       <source path="CMSIS/DSP_Lib/Source/StatisticsFunctions" target_path="src" type="src">
-        <files mask="arm_max_q15.c"/>
-        <files mask="arm_std_q31.c"/>
-        <files mask="arm_mean_q7.c"/>
-        <files mask="arm_mean_f32.c"/>
-        <files mask="arm_mean_q31.c"/>
-        <files mask="arm_min_q31.c"/>
-        <files mask="arm_rms_q15.c"/>
-        <files mask="arm_rms_f32.c"/>
-        <files mask="arm_max_q7.c"/>
-        <files mask="arm_var_f32.c"/>
-        <files mask="arm_power_q31.c"/>
-        <files mask="arm_min_q7.c"/>
-        <files mask="arm_max_q31.c"/>
-        <files mask="arm_power_f32.c"/>
         <files mask="arm_max_f32.c"/>
-        <files mask="arm_power_q7.c"/>
-        <files mask="arm_power_q15.c"/>
-        <files mask="arm_var_q15.c"/>
-        <files mask="arm_std_f32.c"/>
-        <files mask="arm_min_q15.c"/>
-        <files mask="arm_std_q15.c"/>
-        <files mask="arm_min_f32.c"/>
+        <files mask="arm_max_q15.c"/>
+        <files mask="arm_max_q31.c"/>
+        <files mask="arm_max_q7.c"/>
+        <files mask="arm_mean_f32.c"/>
         <files mask="arm_mean_q15.c"/>
+        <files mask="arm_mean_q31.c"/>
+        <files mask="arm_mean_q7.c"/>
+        <files mask="arm_min_f32.c"/>
+        <files mask="arm_min_q15.c"/>
+        <files mask="arm_min_q31.c"/>
+        <files mask="arm_min_q7.c"/>
+        <files mask="arm_power_f32.c"/>
+        <files mask="arm_power_q15.c"/>
+        <files mask="arm_power_q31.c"/>
+        <files mask="arm_power_q7.c"/>
+        <files mask="arm_rms_f32.c"/>
+        <files mask="arm_rms_q15.c"/>
         <files mask="arm_rms_q31.c"/>
+        <files mask="arm_std_f32.c"/>
+        <files mask="arm_std_q15.c"/>
+        <files mask="arm_std_q31.c"/>
+        <files mask="arm_var_f32.c"/>
+        <files mask="arm_var_q15.c"/>
         <files mask="arm_var_q31.c"/>
       </source>
       <source path="CMSIS/DSP_Lib/Source/SupportFunctions" target_path="src" type="src">
-        <files mask="arm_q15_to_float.c"/>
-        <files mask="arm_fill_q31.c"/>
-        <files mask="arm_float_to_q15.c"/>
-        <files mask="arm_copy_q7.c"/>
-        <files mask="arm_q31_to_q7.c"/>
-        <files mask="arm_copy_q31.c"/>
-        <files mask="arm_fill_f32.c"/>
-        <files mask="arm_q15_to_q31.c"/>
-        <files mask="arm_q31_to_q15.c"/>
         <files mask="arm_copy_f32.c"/>
-        <files mask="arm_q7_to_float.c"/>
         <files mask="arm_copy_q15.c"/>
+        <files mask="arm_copy_q31.c"/>
+        <files mask="arm_copy_q7.c"/>
+        <files mask="arm_fill_f32.c"/>
         <files mask="arm_fill_q15.c"/>
+        <files mask="arm_fill_q31.c"/>
+        <files mask="arm_fill_q7.c"/>
+        <files mask="arm_float_to_q15.c"/>
+        <files mask="arm_float_to_q31.c"/>
         <files mask="arm_float_to_q7.c"/>
-        <files mask="arm_q7_to_q15.c"/>
-        <files mask="arm_q7_to_q31.c"/>
+        <files mask="arm_q15_to_float.c"/>
+        <files mask="arm_q15_to_q31.c"/>
         <files mask="arm_q15_to_q7.c"/>
         <files mask="arm_q31_to_float.c"/>
-        <files mask="arm_fill_q7.c"/>
-        <files mask="arm_float_to_q31.c"/>
+        <files mask="arm_q31_to_q15.c"/>
+        <files mask="arm_q31_to_q7.c"/>
+        <files mask="arm_q7_to_float.c"/>
+        <files mask="arm_q7_to_q15.c"/>
+        <files mask="arm_q7_to_q31.c"/>
       </source>
       <source path="CMSIS/DSP_Lib/Source/TransformFunctions" target_path="src" type="src">
-        <files mask="arm_cfft_radix2_q31.c"/>
-        <files mask="arm_dct4_q31.c"/>
-        <files mask="arm_cfft_radix4_init_q31.c"/>
-        <files mask="arm_cfft_radix2_q15.c"/>
-        <files mask="arm_cfft_radix2_init_q31.c"/>
-        <files mask="arm_cfft_radix8_f32.c"/>
-        <files mask="arm_cfft_radix4_init_f32.c"/>
-        <files mask="arm_rfft_f32.c"/>
+        <files mask="arm_bitreversal.c"/>
+        <files mask="arm_cfft_f32.c"/>
+        <files mask="arm_cfft_q15.c"/>
+        <files mask="arm_cfft_q31.c"/>
+        <files mask="arm_cfft_radix2_f32.c"/>
         <files mask="arm_cfft_radix2_init_f32.c"/>
+        <files mask="arm_cfft_radix2_init_q15.c"/>
+        <files mask="arm_cfft_radix2_init_q31.c"/>
+        <files mask="arm_cfft_radix2_q15.c"/>
+        <files mask="arm_cfft_radix2_q31.c"/>
+        <files mask="arm_cfft_radix4_f32.c"/>
+        <files mask="arm_cfft_radix4_init_f32.c"/>
+        <files mask="arm_cfft_radix4_init_q15.c"/>
+        <files mask="arm_cfft_radix4_init_q31.c"/>
+        <files mask="arm_cfft_radix4_q15.c"/>
+        <files mask="arm_cfft_radix4_q31.c"/>
+        <files mask="arm_cfft_radix8_f32.c"/>
+        <files mask="arm_dct4_f32.c"/>
+        <files mask="arm_dct4_init_f32.c"/>
+        <files mask="arm_dct4_init_q15.c"/>
+        <files mask="arm_dct4_init_q31.c"/>
+        <files mask="arm_dct4_q15.c"/>
+        <files mask="arm_dct4_q31.c"/>
+        <files mask="arm_rfft_f32.c"/>
         <files mask="arm_rfft_fast_f32.c"/>
         <files mask="arm_rfft_fast_init_f32.c"/>
-        <files mask="arm_rfft_q31.c"/>
-        <files mask="arm_rfft_init_q31.c"/>
-        <files mask="arm_rfft_init_q15.c"/>
-        <files mask="arm_rfft_q15.c"/>
-        <files mask="arm_cfft_q15.c"/>
         <files mask="arm_rfft_init_f32.c"/>
-        <files mask="arm_cfft_q31.c"/>
-        <files mask="arm_cfft_radix4_q15.c"/>
-        <files mask="arm_dct4_init_f32.c"/>
-        <files mask="arm_cfft_radix4_f32.c"/>
-        <files mask="arm_cfft_f32.c"/>
-        <files mask="arm_dct4_init_q31.c"/>
-        <files mask="arm_dct4_init_q15.c"/>
-        <files mask="arm_cfft_radix4_init_q15.c"/>
-        <files mask="arm_cfft_radix4_q31.c"/>
-        <files mask="arm_cfft_radix2_f32.c"/>
-        <files mask="arm_bitreversal.c"/>
-        <files mask="arm_dct4_q15.c"/>
-        <files mask="arm_cfft_radix2_init_q15.c"/>
-        <files mask="arm_dct4_f32.c"/>
+        <files mask="arm_rfft_init_q15.c"/>
+        <files mask="arm_rfft_init_q31.c"/>
+        <files mask="arm_rfft_q15.c"/>
+        <files mask="arm_rfft_q31.c"/>
       </source>
       <source path="CMSIS/DSP_Lib/Source/TransformFunctions" target_path="src" type="asm_include">
         <files mask="arm_bitreversal2.S"/>
@@ -2003,18 +1501,18 @@ ${load}</script>
     </component>
     <component id="platform.CMSIS_Driver" name="CMSIS_Driver" version="5.1.1" user_visible="true" type="CMSIS">
       <source path="CMSIS/Driver/DriverTemplates" target_path="src" type="src">
-        <files mask="Driver_Flash.c"/>
-        <files mask="Driver_SPI.c"/>
-        <files mask="Driver_SAI.c"/>
-        <files mask="Driver_ETH_PHY.c"/>
-        <files mask="Driver_USBH.c"/>
-        <files mask="Driver_ETH_MAC.c"/>
         <files mask="Driver_CAN.c"/>
-        <files mask="Driver_USBD.c"/>
-        <files mask="Driver_MCI.c"/>
-        <files mask="Driver_Storage.c"/>
+        <files mask="Driver_ETH_MAC.c"/>
+        <files mask="Driver_ETH_PHY.c"/>
+        <files mask="Driver_Flash.c"/>
         <files mask="Driver_I2C.c"/>
+        <files mask="Driver_MCI.c"/>
+        <files mask="Driver_SAI.c"/>
+        <files mask="Driver_SPI.c"/>
+        <files mask="Driver_Storage.c"/>
         <files mask="Driver_USART.c"/>
+        <files mask="Driver_USBD.c"/>
+        <files mask="Driver_USBH.c"/>
       </source>
     </component>
     <component id="platform.CMSIS_Driver_Include.Common_CMSISInclude.MKE16Z4" name="Common" version="5.1.1" devices="MKE16Z64xxx4" user_visible="false" type="CMSIS_driver">
@@ -2675,161 +2173,161 @@ ${load}</script>
     </component>
     <component id="middleware.touch.files.MKE16Z4" name="unused_files" version="1.0.0" devices="MKE16Z64xxx4" user_visible="false" type="other">
       <source path="middleware/touch/freemaster" target_path="GUI" type="other">
-        <files mask="NXPTouchQN9080xcdk.pmp"/>
-        <files mask="NXPTouchKE16.pmp"/>
         <files mask="NXPTouchKE15.pmp"/>
+        <files mask="NXPTouchKE16.pmp"/>
+        <files mask="NXPTouchQN9080xcdk.pmp"/>
       </source>
       <source path="middleware/touch/freemaster" target_path="GUI" type="xml">
-        <files mask="frdm_ke16z.xml"/>
-        <files mask="frdm_ke15z.xml"/>
         <files mask="ek_qn9080xcdk.xml"/>
+        <files mask="frdm_ke15z.xml"/>
+        <files mask="frdm_ke16z.xml"/>
       </source>
       <source path="middleware/touch/freemaster/src" target_path="GUI/src" type="doc">
-        <files mask="touch.min.css"/>
         <files mask="style.css"/>
+        <files mask="touch.min.css"/>
         <files mask="nt_Gui.html"/>
       </source>
       <source path="middleware/touch/freemaster/src" target_path="GUI/src" type="other">
         <files mask="touch.scss"/>
       </source>
       <source path="middleware/touch/freemaster/src" target_path="GUI/src" type="script">
-        <files mask="nt_module.js"/>
-        <files mask="nt_control_proxi.js"/>
-        <files mask="static_cfg_engine.js"/>
-        <files mask="nt_control_rotary.js"/>
-        <files mask="nt_control_keypad.js"/>
-        <files mask="nt_electrode_safa.js"/>
-        <files mask="nt_control.js"/>
-        <files mask="nt_electrode.js"/>
-        <files mask="nt_electrode_usafa.js"/>
-        <files mask="ntinit.js"/>
-        <files mask="nt_electrode_afid.js"/>
-        <files mask="nt_control_matrix.js"/>
-        <files mask="xml_converter.js"/>
-        <files mask="html_templates.js"/>
-        <files mask="nt_static_cfg.js"/>
-        <files mask="nt_control_aslider.js"/>
-        <files mask="mustache.js"/>
         <files mask="cmdhandler.js"/>
         <files mask="gui.js"/>
-        <files mask="nt_control_slider.js"/>
+        <files mask="html_templates.js"/>
+        <files mask="mustache.js"/>
+        <files mask="ntinit.js"/>
+        <files mask="nt_control.js"/>
         <files mask="nt_control_arotary.js"/>
+        <files mask="nt_control_aslider.js"/>
+        <files mask="nt_control_keypad.js"/>
+        <files mask="nt_control_matrix.js"/>
+        <files mask="nt_control_proxi.js"/>
+        <files mask="nt_control_rotary.js"/>
+        <files mask="nt_control_slider.js"/>
+        <files mask="nt_electrode.js"/>
+        <files mask="nt_electrode_afid.js"/>
+        <files mask="nt_electrode_safa.js"/>
+        <files mask="nt_electrode_usafa.js"/>
+        <files mask="nt_module.js"/>
+        <files mask="nt_static_cfg.js"/>
+        <files mask="static_cfg_engine.js"/>
+        <files mask="xml_converter.js"/>
       </source>
       <source path="middleware/touch/freemaster/src" target_path="GUI/src" type="xml">
         <files mask="test1.xml"/>
       </source>
       <source path="middleware/touch/freemaster/src/img" target_path="GUI/src/img" type="image">
         <files mask="checboxlines.gif"/>
-        <files mask="menu-item-right.jpg"/>
-        <files mask="menu-item-right-selected.jpg"/>
         <files mask="menu-item-left-selected.jpg"/>
         <files mask="menu-item-left.jpg"/>
-        <files mask="cs_counter-active.png"/>
-        <files mask="cs_fifo-active.png"/>
-        <files mask="s-star-active.png"/>
-        <files mask="matrix.png"/>
-        <files mask="clock.png"/>
-        <files mask="rotary.png"/>
-        <files mask="keypad.png"/>
-        <files mask="cs_clk-active.png"/>
-        <files mask="gui_refresh.png"/>
-        <files mask="gui_arrow_right.png"/>
-        <files mask="theme-all.png"/>
-        <files mask="proxi.png"/>
-        <files mask="topl.png"/>
-        <files mask="fscs.png"/>
-        <files mask="bottoml.png"/>
-        <files mask="cs_int-active.png"/>
-        <files mask="gui_arrow_right_hidden.png"/>
-        <files mask="cs_switch.png"/>
-        <files mask="gui_dir_left.png"/>
-        <files mask="m-star.png"/>
-        <files mask="gui_arrow_left.png"/>
-        <files mask="gui_arrow_move_hidden.png"/>
-        <files mask="comparator.png"/>
-        <files mask="SINC-active.png"/>
-        <files mask="gui_yes_hidden.png"/>
-        <files mask="cs_controller.png"/>
-        <files mask="clock-active.png"/>
-        <files mask="cs_int.png"/>
-        <files mask="dvolt-active.png"/>
-        <files mask="aslider.png"/>
-        <files mask="gui_dir_right.png"/>
-        <files mask="gui_arrow_down.png"/>
-        <files mask="cs_switch-small-active.png"/>
-        <files mask="gui_warning.png"/>
-        <files mask="dvolt.png"/>
-        <files mask="cs_counter.png"/>
-        <files mask="cs_fifo.png"/>
-        <files mask="el_release.png"/>
-        <files mask="cs_register-active.png"/>
-        <files mask="SINC.png"/>
-        <files mask="comparator-active.png"/>
-        <files mask="bodyl.png"/>
-        <files mask="cs_oscilator.png"/>
-        <files mask="cs_register.png"/>
-        <files mask="cs_oscilator-active.png"/>
-        <files mask="gui_arrow_move.png"/>
+        <files mask="menu-item-right-selected.jpg"/>
+        <files mask="menu-item-right.jpg"/>
         <files mask="arotary.png"/>
-        <files mask="cs_controller-active.png"/>
-        <files mask="gui_yes.png"/>
-        <files mask="cs_switch-active.png"/>
-        <files mask="el_touch.png"/>
+        <files mask="aslider.png"/>
         <files mask="Blank.png"/>
-        <files mask="cs_switch-small.png"/>
-        <files mask="SSC-active.png"/>
-        <files mask="gui_blank.png"/>
-        <files mask="slider.png"/>
-        <files mask="m-star-active.png"/>
+        <files mask="bodyl.png"/>
+        <files mask="bottoml.png"/>
+        <files mask="clock-active.png"/>
+        <files mask="clock.png"/>
+        <files mask="comparator-active.png"/>
+        <files mask="comparator.png"/>
         <files mask="control-active.png"/>
-        <files mask="SSC.png"/>
-        <files mask="cs_clk.png"/>
-        <files mask="gui_warning_hidden.png"/>
-        <files mask="gui_arrow_up.png"/>
         <files mask="control.png"/>
-        <files mask="s-star.png"/>
+        <files mask="cs_clk-active.png"/>
+        <files mask="cs_clk.png"/>
+        <files mask="cs_controller-active.png"/>
+        <files mask="cs_controller.png"/>
+        <files mask="cs_counter-active.png"/>
+        <files mask="cs_counter.png"/>
+        <files mask="cs_fifo-active.png"/>
+        <files mask="cs_fifo.png"/>
+        <files mask="cs_int-active.png"/>
+        <files mask="cs_int.png"/>
+        <files mask="cs_oscilator-active.png"/>
+        <files mask="cs_oscilator.png"/>
+        <files mask="cs_register-active.png"/>
+        <files mask="cs_register.png"/>
+        <files mask="cs_switch-active.png"/>
+        <files mask="cs_switch-small-active.png"/>
+        <files mask="cs_switch-small.png"/>
+        <files mask="cs_switch.png"/>
+        <files mask="dvolt-active.png"/>
+        <files mask="dvolt.png"/>
+        <files mask="el_release.png"/>
+        <files mask="el_touch.png"/>
+        <files mask="fscs.png"/>
+        <files mask="gui_arrow_down.png"/>
+        <files mask="gui_arrow_left.png"/>
+        <files mask="gui_arrow_move.png"/>
+        <files mask="gui_arrow_move_hidden.png"/>
+        <files mask="gui_arrow_right.png"/>
+        <files mask="gui_arrow_right_hidden.png"/>
+        <files mask="gui_arrow_up.png"/>
+        <files mask="gui_blank.png"/>
+        <files mask="gui_dir_left.png"/>
+        <files mask="gui_dir_right.png"/>
         <files mask="gui_no.png"/>
+        <files mask="gui_refresh.png"/>
+        <files mask="gui_warning.png"/>
+        <files mask="gui_warning_hidden.png"/>
+        <files mask="gui_yes.png"/>
+        <files mask="gui_yes_hidden.png"/>
+        <files mask="keypad.png"/>
+        <files mask="m-star-active.png"/>
+        <files mask="m-star.png"/>
+        <files mask="matrix.png"/>
+        <files mask="proxi.png"/>
+        <files mask="rotary.png"/>
+        <files mask="s-star-active.png"/>
+        <files mask="s-star.png"/>
+        <files mask="SINC-active.png"/>
+        <files mask="SINC.png"/>
+        <files mask="slider.png"/>
+        <files mask="SSC-active.png"/>
+        <files mask="SSC.png"/>
+        <files mask="theme-all.png"/>
+        <files mask="topl.png"/>
       </source>
       <source path="middleware/touch/freemaster/src/img" target_path="GUI/src/img" type="other">
         <files mask="select-dropdown-grey.ai"/>
-        <files mask="theme-all-cs.svg"/>
-        <files mask="icon-03.svg"/>
-        <files mask="icon-02.svg"/>
-        <files mask="detected.svg"/>
-        <files mask="cs_switch-small.svg"/>
-        <files mask="select-dropdown-grey.svg"/>
-        <files mask="theme-all-csi.svg"/>
-        <files mask="undetected.svg"/>
-        <files mask="cs_counter.svg"/>
-        <files mask="keypad.svg"/>
-        <files mask="slider.svg"/>
-        <files mask="triangle.svg"/>
-        <files mask="movement.svg"/>
-        <files mask="proxi.svg"/>
-        <files mask="icon-01.svg"/>
-        <files mask="cs_fifo.svg"/>
-        <files mask="popup-load.svg"/>
-        <files mask="cs_oscilator.svg"/>
-        <files mask="theme-all.svg"/>
-        <files mask="matrix.svg"/>
-        <files mask="cs_register.svg"/>
-        <files mask="cs_switch.svg"/>
-        <files mask="logo.svg"/>
-        <files mask="rotate.svg"/>
-        <files mask="cs_int.svg"/>
         <files mask="cs_clk.svg"/>
         <files mask="cs_controller.svg"/>
+        <files mask="cs_counter.svg"/>
+        <files mask="cs_fifo.svg"/>
+        <files mask="cs_int.svg"/>
+        <files mask="cs_oscilator.svg"/>
+        <files mask="cs_register.svg"/>
+        <files mask="cs_switch-small.svg"/>
+        <files mask="cs_switch.svg"/>
+        <files mask="detected.svg"/>
+        <files mask="icon-01.svg"/>
+        <files mask="icon-02.svg"/>
+        <files mask="icon-03.svg"/>
+        <files mask="keypad.svg"/>
+        <files mask="logo.svg"/>
+        <files mask="matrix.svg"/>
+        <files mask="movement.svg"/>
+        <files mask="popup-load.svg"/>
+        <files mask="proxi.svg"/>
+        <files mask="rotate.svg"/>
+        <files mask="select-dropdown-grey.svg"/>
+        <files mask="slider.svg"/>
+        <files mask="theme-all-cs.svg"/>
+        <files mask="theme-all-csi.svg"/>
+        <files mask="theme-all.svg"/>
+        <files mask="triangle.svg"/>
         <files mask="undetected-full.svg"/>
+        <files mask="undetected.svg"/>
       </source>
       <source path="middleware/touch/freemaster/src/js" target_path="GUI/src/js" type="script">
+        <files mask="animations.js"/>
         <files mask="jquery-ui.min.js"/>
         <files mask="jquery.min.js"/>
-        <files mask="animations.js"/>
       </source>
       <source path="middleware/touch/freemaster/src/json" target_path="GUI/src/json" type="script">
         <files mask="cycle.js"/>
-        <files mask="json2.js"/>
         <files mask="json.js"/>
+        <files mask="json2.js"/>
         <files mask="json_parse.js"/>
         <files mask="json_parse_state.js"/>
       </source>
@@ -3047,12 +2545,12 @@ ${load}</script>
         <files mask="libMLIB.a"/>
       </source>
       <source path="middleware/rtcesl/CM0_RTCESL_4.5_doc" target_path="rtcesl/doc" type="doc">
-        <files mask="CM0GDFLIBUG.pdf"/>
         <files mask="CM0AMCLIBUG.pdf"/>
+        <files mask="CM0GDFLIBUG.pdf"/>
         <files mask="CM0GFLIBUG.pdf"/>
-        <files mask="CM0PCLIBUG.pdf"/>
         <files mask="CM0GMCLIBUG.pdf"/>
         <files mask="CM0MLIBUG.pdf"/>
+        <files mask="CM0PCLIBUG.pdf"/>
       </source>
     </component>
     <component id="middleware.motor_control.pmsm.MKE16Z4" name="mc_pmsm" brief="Motor control PMSM files" version="1.1.0" devices="MKE16Z64xxx4" user_visible="true" type="middleware">
@@ -3128,26 +2626,26 @@ ${load}</script>
     <component id="middleware.motor_control.files.MKE16Z4" name="mc_files" version="1.0.0" devices="MKE16Z64xxx4" user_visible="false" type="other">
       <source path="middleware/motor_control/freemaster/freemaster_drv" target_path="src" type="c_include">
         <files mask="freemaster.h"/>
+        <files mask="freemaster_defcfg.h"/>
+        <files mask="freemaster_Kxx.h"/>
         <files mask="freemaster_private.h"/>
+        <files mask="freemaster_protocol.h"/>
         <files mask="freemaster_rec.h"/>
         <files mask="freemaster_tsa.h"/>
-        <files mask="freemaster_defcfg.h"/>
-        <files mask="freemaster_protocol.h"/>
-        <files mask="freemaster_Kxx.h"/>
       </source>
       <source path="middleware/motor_control/freemaster/freemaster_drv" target_path="src" type="src">
-        <files mask="freemaster_scope.c"/>
-        <files mask="freemaster_rec.c"/>
-        <files mask="freemaster_tsa.c"/>
-        <files mask="freemaster_protocol.c"/>
-        <files mask="freemaster_sfio.c"/>
+        <files mask="freemaster_appcmd.c"/>
+        <files mask="freemaster_bdm.c"/>
         <files mask="freemaster_can.c"/>
         <files mask="freemaster_Kxx.c"/>
-        <files mask="freemaster_bdm.c"/>
-        <files mask="freemaster_serial.c"/>
-        <files mask="freemaster_pipes.c"/>
         <files mask="freemaster_lin.c"/>
-        <files mask="freemaster_appcmd.c"/>
+        <files mask="freemaster_pipes.c"/>
+        <files mask="freemaster_protocol.c"/>
+        <files mask="freemaster_rec.c"/>
+        <files mask="freemaster_scope.c"/>
+        <files mask="freemaster_serial.c"/>
+        <files mask="freemaster_sfio.c"/>
+        <files mask="freemaster_tsa.c"/>
       </source>
       <source path="middleware/motor_control/bldc/state_machine" target_path="src" type="src">
         <files mask="state_machine.c"/>
@@ -3168,36 +2666,36 @@ ${load}</script>
         <files mask="bldc_control.c"/>
       </source>
       <source path="middleware/motor_control/bldc/mc_drivers" target_path="src" type="src">
-        <files mask="mcdrv_adc_adc16_frdm_ke16.c"/>
-        <files mask="mcdrv_adc_adc16_twr_kv11.c"/>
-        <files mask="mcdrv_adc_adc16_twr_ke18.c"/>
-        <files mask="mcdrv_adc_adc16_hvp_kv31.c"/>
-        <files mask="mcdrv_adc_hsadc_hvp_kv58.c"/>
-        <files mask="mcdrv_mosfet_predrv_spi.c"/>
-        <files mask="mcdrv_mosfet_predrv_lpspi.c"/>
-        <files mask="mcdrv_pwm3ph_pwma.c"/>
         <files mask="mcdrv_adc_adc12.c"/>
-        <files mask="mcdrv_pwm3ph_ftm.c"/>
-        <files mask="mcdrv_ftm_cmt.c"/>
-        <files mask="mcdrv_adc_hsadc.c"/>
-        <files mask="mcdrv_adc_adc16_hvp_ke18.c"/>
         <files mask="mcdrv_adc_adc16.c"/>
+        <files mask="mcdrv_adc_adc16_frdm_ke16.c"/>
+        <files mask="mcdrv_adc_adc16_hvp_ke18.c"/>
+        <files mask="mcdrv_adc_adc16_hvp_kv31.c"/>
+        <files mask="mcdrv_adc_adc16_twr_ke18.c"/>
+        <files mask="mcdrv_adc_adc16_twr_kv11.c"/>
+        <files mask="mcdrv_adc_hsadc.c"/>
+        <files mask="mcdrv_adc_hsadc_hvp_kv58.c"/>
+        <files mask="mcdrv_ftm_cmt.c"/>
+        <files mask="mcdrv_mosfet_predrv_lpspi.c"/>
+        <files mask="mcdrv_mosfet_predrv_spi.c"/>
+        <files mask="mcdrv_pwm3ph_ftm.c"/>
+        <files mask="mcdrv_pwm3ph_pwma.c"/>
       </source>
       <source path="middleware/motor_control/bldc/mc_drivers" target_path="src" type="c_include">
-        <files mask="mcdrv_adc_adc16_hvp_ke18.h"/>
         <files mask="mcdrv_adc_adc12.h"/>
         <files mask="mcdrv_adc_adc16.h"/>
-        <files mask="mcdrv_ftm_cmt.h"/>
+        <files mask="mcdrv_adc_adc16_frdm_ke16.h"/>
+        <files mask="mcdrv_adc_adc16_hvp_ke18.h"/>
+        <files mask="mcdrv_adc_adc16_hvp_kv31.h"/>
+        <files mask="mcdrv_adc_adc16_twr_ke18.h"/>
         <files mask="mcdrv_adc_adc16_twr_kv11.h"/>
         <files mask="mcdrv_adc_hsadc.h"/>
-        <files mask="mcdrv_pwm3ph_pwma.h"/>
-        <files mask="mcdrv_adc_adc16_hvp_kv31.h"/>
         <files mask="mcdrv_adc_hsadc_hvp_kv58.h"/>
+        <files mask="mcdrv_ftm_cmt.h"/>
         <files mask="mcdrv_mosfet_predrv_lpspi.h"/>
-        <files mask="mcdrv_adc_adc16_twr_ke18.h"/>
-        <files mask="mcdrv_pwm3ph_ftm.h"/>
-        <files mask="mcdrv_adc_adc16_frdm_ke16.h"/>
         <files mask="mcdrv_mosfet_predrv_spi.h"/>
+        <files mask="mcdrv_pwm3ph_ftm.h"/>
+        <files mask="mcdrv_pwm3ph_pwma.h"/>
       </source>
       <source path="middleware/motor_control/pmsm/state_machine" target_path="src" type="c_include">
         <files mask="state_machine.h"/>
@@ -3218,26 +2716,26 @@ ${load}</script>
         <files mask="pmsm_control.c"/>
       </source>
       <source path="middleware/motor_control/pmsm/mc_drivers" target_path="src" type="src">
-        <files mask="mcdrv_adc_imxrt.c"/>
-        <files mask="mcdrv_mosfet_predrv_spi.c"/>
-        <files mask="mcdrv_mosfet_predrv_lpspi.c"/>
-        <files mask="mcdrv_pwm3ph_pwma.c"/>
-        <files mask="mcdrv_adc_single_adc16.c"/>
         <files mask="mcdrv_adc_adc12.c"/>
-        <files mask="mcdrv_pwm3ph_ftm.c"/>
-        <files mask="mcdrv_adc_hsadc.c"/>
         <files mask="mcdrv_adc_adc16.c"/>
+        <files mask="mcdrv_adc_hsadc.c"/>
+        <files mask="mcdrv_adc_imxrt.c"/>
+        <files mask="mcdrv_adc_single_adc16.c"/>
+        <files mask="mcdrv_mosfet_predrv_lpspi.c"/>
+        <files mask="mcdrv_mosfet_predrv_spi.c"/>
+        <files mask="mcdrv_pwm3ph_ftm.c"/>
+        <files mask="mcdrv_pwm3ph_pwma.c"/>
       </source>
       <source path="middleware/motor_control/pmsm/mc_drivers" target_path="src" type="c_include">
         <files mask="mcdrv_adc_adc12.h"/>
         <files mask="mcdrv_adc_adc16.h"/>
-        <files mask="mcdrv_adc_single_adc16.h"/>
         <files mask="mcdrv_adc_hsadc.h"/>
-        <files mask="mcdrv_pwm3ph_pwma.h"/>
-        <files mask="mcdrv_mosfet_predrv_lpspi.h"/>
-        <files mask="mcdrv_pwm3ph_ftm.h"/>
         <files mask="mcdrv_adc_imxrt.h"/>
+        <files mask="mcdrv_adc_single_adc16.h"/>
+        <files mask="mcdrv_mosfet_predrv_lpspi.h"/>
         <files mask="mcdrv_mosfet_predrv_spi.h"/>
+        <files mask="mcdrv_pwm3ph_ftm.h"/>
+        <files mask="mcdrv_pwm3ph_pwma.h"/>
       </source>
       <source path="middleware/motor_control/freemaster" target_path="src" type="doc">
         <files mask="readme.txt"/>
@@ -3249,29 +2747,29 @@ ${load}</script>
         <files mask="FreeMASTER-SW-License.txt"/>
       </source>
       <source path="middleware/motor_control/freemaster/fm_control" target_path="src" type="image">
-        <files mask="logo.png"/>
         <files mask="limitation.png"/>
+        <files mask="logo.png"/>
       </source>
       <source path="middleware/motor_control/freemaster/fm_control" target_path="src" type="script">
-        <files mask="jqxdraw.js"/>
-        <files mask="jqxwindow.js"/>
-        <files mask="jqxbuttons.js"/>
-        <files mask="jqxswitchbutton.js"/>
-        <files mask="jqxcore.js"/>
-        <files mask="jqxlistmenu.js"/>
-        <files mask="jqxradiobutton.js"/>
         <files mask="Control_page.js"/>
         <files mask="control_page_config.js"/>
-        <files mask="jquery-1.11.1.min.js"/>
-        <files mask="jqxscrollbar.js"/>
         <files mask="control_page_scripts.js"/>
+        <files mask="jquery-1.11.1.min.js"/>
+        <files mask="jqxbuttons.js"/>
+        <files mask="jqxcore.js"/>
+        <files mask="jqxdraw.js"/>
+        <files mask="jqxgauge.js"/>
+        <files mask="jqxlistmenu.js"/>
+        <files mask="jqxmenu.js"/>
         <files mask="jqxnotification.js"/>
         <files mask="jqxpanel.js"/>
-        <files mask="jqxgauge.js"/>
+        <files mask="jqxradiobutton.js"/>
+        <files mask="jqxscrollbar.js"/>
         <files mask="jqxslider.js"/>
-        <files mask="Start_page.js"/>
+        <files mask="jqxswitchbutton.js"/>
         <files mask="jqxtooltip.js"/>
-        <files mask="jqxmenu.js"/>
+        <files mask="jqxwindow.js"/>
+        <files mask="Start_page.js"/>
       </source>
       <source path="middleware/motor_control/freemaster/fm_control" target_path="src" type="doc">
         <files mask="FM_control_M1.html"/>
@@ -3279,21 +2777,524 @@ ${load}</script>
       </source>
       <source path="middleware/motor_control/freemaster/fm_control/styles" target_path="src" type="doc">
         <files mask="jqx.energyblue.txt"/>
-        <files mask="jqx.energyblue.css"/>
         <files mask="jqx.base.css"/>
+        <files mask="jqx.energyblue.css"/>
       </source>
       <source path="middleware/motor_control/freemaster/fm_control/styles" target_path="src" type="other">
         <files mask="jqx.energyblue"/>
       </source>
     </component>
+    <component id="middleware.mcu-boot.MKE16Z4_startup.MKE16Z4" name="MCUBOOT_MKE16Z4_startup" brief="MCUBOOT MKE16Z4 startup sources" version="1.0.0" devices="MKE16Z64xxx4" user_visible="false" type="middleware">
+      <source toolchain="mcuxpresso" path="middleware/mcu-boot/src/startup" target_path="startup" type="asm_include">
+        <files mask="crt0_gcc.S"/>
+      </source>
+      <source toolchain="mcuxpresso" path="middleware/mcu-boot/targets/MKE16Z4/src/startup/gcc" target_path="startup" type="asm_include">
+        <files mask="startup_MKE16Z4.S"/>
+      </source>
+    </component>
+    <component id="middleware.mcu-boot.MKE16Z4_sources.MKE16Z4" name="MCUBOOT_MKE16Z4_sources" brief="MCUBOOT MKE16Z4 startup sources" version="1.0.0" devices="MKE16Z64xxx4" user_visible="false" type="middleware">
+      <source path="middleware/mcu-boot/targets/MKE16Z4/src" target_path="MKE16Z4" type="c_include">
+        <files mask="bootloader_config.h"/>
+        <files mask="peripherals_pinmux.h"/>
+        <files mask="target_config.h"/>
+      </source>
+      <source path="middleware/mcu-boot/targets/MKE16Z4/src" target_path="MKE16Z4" type="src">
+        <files mask="clock_config_MKE16Z4.c"/>
+        <files mask="hardware_init_MKE16Z4.c"/>
+        <files mask="memory_map_MKE16Z4.c"/>
+        <files mask="peripherals_MKE16Z4.c"/>
+      </source>
+      <source path="middleware/mcu-boot/targets/common/src" target_path="MKE16Z4" type="src">
+        <files mask="pinmux_utility_common.c"/>
+        <files mask="bl_lpspi_irq_config_common.c"/>
+        <files mask="bl_lpi2c_irq_config_common.c"/>
+        <files mask="bl_lpuart_irq_config_common.c"/>
+      </source>
+      <source path="middleware/mcu-boot/src/bootloader/src" target_path="source/bootloader/src" type="src">
+        <files mask="lpuart_peripheral_interface.c"/>
+        <files mask="lpspi_peripheral_interface.c"/>
+        <files mask="lpi2c_peripheral_interface.c"/>
+        <files mask="mscan_peripheral_interface.c"/>
+      </source>
+      <source path="middleware/mcu-boot/src/memory/src" target_path="source/memory/src" type="src">
+        <files mask="sram_init_cm0plus.c"/>
+      </source>
+    </component>
+    <component id="middleware.mcu-boot.drv_microseconds.MKE16Z4" name="MCUBOOT_microseconds_sysclk" brief="MCUBOOT microseconds sysclk" version="1.0.0" devices="MKE16Z64xxx4" user_visible="false" type="middleware">
+      <source path="middleware/mcu-boot/src/drivers/microseconds" target_path="source/drivers/microseconds" type="c_include">
+        <files mask="microseconds.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/drivers/microseconds/src" target_path="source/drivers/microseconds" type="src">
+        <files mask="microseconds_sysclk.c"/>
+      </source>
+    </component>
+    <component id="middleware.mcu-boot.drv_microseconds_pit.MKE16Z4" name="MCUBOOT_microseconds_pit" brief="MCUBOOT microseconds pit" version="1.0.0" devices="MKE16Z64xxx4" user_visible="false" type="middleware">
+      <source path="middleware/mcu-boot/src/drivers/microseconds" target_path="source/drivers/microseconds" type="c_include">
+        <files mask="microseconds.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/drivers/microseconds/src" target_path="source/drivers/microseconds" type="src">
+        <files mask="microseconds_pit.c"/>
+      </source>
+    </component>
+    <component id="middleware.mcu-boot.bootsources.MKE16Z4" name="MCUBOOT_common_sources" brief="Bootloader common sources" version="2.7.0" devices="MKE16Z64xxx4" user_visible="false" type="middleware">
+      <source path="middleware/mcu-boot/src/autobaud" target_path="source/autobaud" type="c_include">
+        <files mask="autobaud.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/autobaud/src" target_path="source/autobaud" type="src">
+        <files mask="autobaud_irq.c"/>
+      </source>
+      <source path="middleware/mcu-boot/src/bootloader" target_path="source/bootloader" type="c_include">
+        <files mask="bl_peripheral_interface.h"/>
+        <files mask="bl_user_entry.h"/>
+        <files mask="bl_version.h"/>
+        <files mask="bootloader.h"/>
+        <files mask="bl_command.h"/>
+        <files mask="bl_context.h"/>
+        <files mask="bl_peripheral.h"/>
+        <files mask="bl_shutdown_cleanup.h"/>
+        <files mask="bl_irq_common.h"/>
+        <files mask="bl_app_crc_check.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/bootloader/src" target_path="source/bootloader/src" type="src">
+        <files mask="bl_user_entry.c"/>
+        <files mask="bl_main.c"/>
+        <files mask="bl_context.c"/>
+        <files mask="bl_exception_handler.c"/>
+        <files mask="bl_tree_root.c"/>
+        <files mask="bl_command.c"/>
+        <files mask="bl_shutdown_cleanup.c"/>
+        <files mask="bl_app_crc_check.c"/>
+        <files mask="bl_misc.c"/>
+      </source>
+      <source path="middleware/mcu-boot/src/crc" target_path="source/crc" type="c_include">
+        <files mask="crc16.h"/>
+        <files mask="crc32.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/crc/src" target_path="source/crc" type="src">
+        <files mask="crc16.c"/>
+        <files mask="crc32.c"/>
+      </source>
+      <source path="middleware/mcu-boot/src/include" target_path="source/include" type="c_include">
+        <files mask="bootloader_common.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/memory" target_path="source/memory" type="c_include">
+        <files mask="memory.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/memory/src" target_path="source/memory/src" type="c_include">
+        <files mask="sram_init.h"/>
+        <files mask="device_memory.h"/>
+        <files mask="normal_memory.h"/>
+        <files mask="pattern_fill.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/memory/src" target_path="source/memory/src" type="src">
+        <files mask="memory.c"/>
+        <files mask="device_memory.c"/>
+        <files mask="normal_memory.c"/>
+      </source>
+      <source toolchain="mcuxpresso" path="middleware/mcu-boot/src/memory/src" target_path="source/memory/src" type="asm_include">
+        <files mask="pattern_fill_gcc.S"/>
+      </source>
+      <source path="middleware/mcu-boot/src/startup" target_path="startup" type="c_include">
+        <files mask="ar_asm_macros.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/packet" target_path="source/packet" type="c_include">
+        <files mask="command_packet.h"/>
+        <files mask="serial_packet.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/packet/src" target_path="source/packet/src" type="src">
+        <files mask="serial_packet.c"/>
+      </source>
+      <source path="middleware/mcu-boot/src/property" target_path="source/property" type="c_include">
+        <files mask="property.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/sbloader" target_path="source/sbloader" type="c_include">
+        <files mask="sbloader.h"/>
+        <files mask="sb_file_format.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/sbloader/src" target_path="source/sbloader/src" type="src">
+        <files mask="sbloader.c"/>
+      </source>
+      <source path="middleware/mcu-boot/src/utilities" target_path="source/utilities" type="c_include">
+        <files mask="fsl_rtos_abstraction.h"/>
+        <files mask="fsl_assert.h"/>
+        <files mask="vector_table_info.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/utilities/src" target_path="source/utilities/src" type="src">
+        <files mask="fsl_assert.c"/>
+        <files mask="fsl_rtos_abstraction.c"/>
+      </source>
+    </component>
+    <component id="middleware.mcu-boot.bootsources_kinetis.MKE16Z4" name="MCUBOOT_kinetis_sources" brief="Bootloader sources for Kinetis devices" version="2.7.0" devices="MKE16Z64xxx4" user_visible="false" type="middleware">
+      <source path="middleware/mcu-boot/src/drivers/smc" target_path="source/drivers/smc" type="src">
+        <files mask="smc.c"/>
+      </source>
+      <source path="middleware/mcu-boot/src/drivers/smc" target_path="source/drivers/smc" type="c_include">
+        <files mask="smc.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/memory/src" target_path="source/memory/src" type="c_include">
+        <files mask="flash_memory.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/memory/src" target_path="source/memory/src" type="src">
+        <files mask="flash_memory.c"/>
+      </source>
+      <source path="middleware/mcu-boot/src/property/src" target_path="source/property/src" type="src">
+        <files mask="property_kinetis.c"/>
+      </source>
+      <source path="middleware/mcu-boot/src/utilities" target_path="source/utilities" type="c_include">
+        <files mask="kinetis_family.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/bootloader" target_path="source/bootloader" type="c_include">
+        <files mask="bl_reliable_update.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/bootloader/src" target_path="source/bootloader/src" type="src">
+        <files mask="bl_reliable_update.c"/>
+      </source>
+    </component>
+    <component id="middleware.mcu-boot.CMSIS_cm4_headers.MKE16Z4" name="CMSIS_cm4_headers" brief="CMSIS cm4 headers" version="2.5.0" devices="MKE16Z64xxx4" user_visible="false" type="middleware">
+      <source toolchain="mcuxpresso" path="CMSIS/Include" target_path="CMSIS" type="c_include">
+        <files mask="core_cm4.h"/>
+        <files mask="cmsis_version.h"/>
+        <files mask="cmsis_gcc.h"/>
+        <files mask="cmsis_compiler.h"/>
+      </source>
+    </component>
+    <component id="middleware.mcu-boot.CMSIS_cm4_mpu_headers.MKE16Z4" name="CMSIS_cm4_mpu_headers" brief="CMSIS cm4 mpu headers" version="2.5.0" devices="MKE16Z64xxx4" user_visible="false" type="middleware">
+      <source toolchain="mcuxpresso" path="CMSIS/Include" target_path="CMSIS" type="c_include">
+        <files mask="core_cm4.h"/>
+        <files mask="cmsis_version.h"/>
+        <files mask="cmsis_gcc.h"/>
+        <files mask="cmsis_compiler.h"/>
+        <files mask="mpu_armv7.h"/>
+      </source>
+    </component>
+    <component id="middleware.mcu-boot.CMSIS_cm0p_headers.MKE16Z4" name="CMSIS_cm0p_headers" brief="CMSIS cm0p headers" version="2.5.0" devices="MKE16Z64xxx4" user_visible="false" type="middleware">
+      <source toolchain="mcuxpresso" path="CMSIS/Include" target_path="CMSIS" type="c_include">
+        <files mask="core_cm0plus.h"/>
+        <files mask="cmsis_version.h"/>
+        <files mask="cmsis_gcc.h"/>
+        <files mask="cmsis_compiler.h"/>
+      </source>
+    </component>
+    <component id="middleware.mcu-boot.CMSIS_cm7_headers.MKE16Z4" name="CMSIS_cm7_headers" brief="CMSIS cm7 headers" version="2.5.0" devices="MKE16Z64xxx4" user_visible="false" type="middleware">
+      <source toolchain="mcuxpresso" path="CMSIS/Include" target_path="CMSIS" type="c_include">
+        <files mask="mpu_armv7.h"/>
+        <files mask="core_cm7.h"/>
+        <files mask="cmsis_version.h"/>
+        <files mask="cmsis_gcc.h"/>
+        <files mask="cmsis_compiler.h"/>
+      </source>
+    </component>
+    <component id="middleware.mcu-boot.src_startup.MKE16Z4" name="MCUBOOT_startup_sources" brief="Bootloader startup sources" version="1.0.0" devices="MKE16Z64xxx4" user_visible="false" type="middleware">
+      <source path="middleware/mcu-boot/src/startup" target_path="startup" type="src">
+        <files mask="startup.c"/>
+      </source>
+      <source path="middleware/mcu-boot/src/include" target_path="source/include" type="c_include">
+        <files mask="bootloader_core.h"/>
+      </source>
+    </component>
+    <component id="middleware.mcu-boot.all_files.MKE16Z4" name="all_files" brief="mcu-boot files" version="2.7.0" devices="MKE16Z64xxx4" user_visible="false" type="other">
+      <source exclude="true" path="middleware/mcu-boot/tools/tools/common/blfwk" target_path="middleware/mcu-boot" type="other">
+        <files mask="blfwk.vcxproj"/>
+        <files mask="blfwk.vcxproj.filters"/>
+      </source>
+      <source exclude="true" path="middleware/mcu-boot/tools/tools/common/blfwkdll" target_path="middleware/mcu-boot" type="other">
+        <files mask="blfwk.vcxproj"/>
+        <files mask="blfwk.vcxproj.filters"/>
+        <files mask="blfwk.vcxproj.user"/>
+        <files mask="blfwkdll.vcxproj"/>
+        <files mask="blfwkdll.vcxproj.filters"/>
+        <files mask="blfwkdll.vcxproj.user"/>
+      </source>
+      <source exclude="true" path="middleware/mcu-boot/tools/tools/common/blfwkdll" target_path="middleware/mcu-boot" type="src">
+        <files mask="blfwkdll.cpp"/>
+      </source>
+      <source exclude="true" path="middleware/mcu-boot/tools/tools/common/blfwkdll" target_path="middleware/mcu-boot" type="c_include">
+        <files mask="blfwkdll.h"/>
+      </source>
+      <source exclude="true" path="middleware/mcu-boot/bin/Tools/blhost/win" target_path="middleware/mcu-boot" type="other">
+        <files mask="blhost.exe"/>
+      </source>
+      <source exclude="true" path="middleware/mcu-boot/doc" target_path="middleware/mcu-boot" type="doc">
+        <files mask="blhost User's Guide.pdf"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/src/blfwk" target_path="middleware/mcu-boot" type="c_include">
+        <files mask="AESCounter.h"/>
+        <files mask="AESKey.h"/>
+        <files mask="BlfwkErrors.h"/>
+        <files mask="Blob.h"/>
+        <files mask="Bootloader.h"/>
+        <files mask="bootloader_config.h"/>
+        <files mask="BusPal.h"/>
+        <files mask="BusPalPeripheral.h"/>
+        <files mask="Command.h"/>
+        <files mask="Crc.h"/>
+        <files mask="DataSource.h"/>
+        <files mask="DataSourceImager.h"/>
+        <files mask="DataTarget.h"/>
+        <files mask="ELF.h"/>
+        <files mask="ELFSourceFile.h"/>
+        <files mask="EndianUtilities.h"/>
+        <files mask="ExcludesListMatcher.h"/>
+        <files mask="format_string.h"/>
+        <files mask="GHSSecInfo.h"/>
+        <files mask="GlobMatcher.h"/>
+        <files mask="HexValues.h"/>
+        <files mask="hidapi.h"/>
+        <files mask="host_types.h"/>
+        <files mask="IntelHexSourceFile.h"/>
+        <files mask="int_size.h"/>
+        <files mask="json.h"/>
+        <files mask="Logging.h"/>
+        <files mask="OptionContext.h"/>
+        <files mask="options.h"/>
+        <files mask="Packetizer.h"/>
+        <files mask="Peripheral.h"/>
+        <files mask="Progress.h"/>
+        <files mask="Random.h"/>
+        <files mask="rijndael.h"/>
+        <files mask="RijndaelCTR.h"/>
+        <files mask="SBSourceFile.h"/>
+        <files mask="SDPCommand.h"/>
+        <files mask="SDPUartPacketizer.h"/>
+        <files mask="SDPUsbHidPacketizer.h"/>
+        <files mask="SearchPath.h"/>
+        <files mask="serial.h"/>
+        <files mask="SerialPacketizer.h"/>
+        <files mask="SimPacketizer.h"/>
+        <files mask="SimPeripheral.h"/>
+        <files mask="Simulator.h"/>
+        <files mask="SimulatorMemory.h"/>
+        <files mask="smart_ptr.h"/>
+        <files mask="SourceFile.h"/>
+        <files mask="SRecordSourceFile.h"/>
+        <files mask="stdafx.h"/>
+        <files mask="StELFFile.h"/>
+        <files mask="StExecutableImage.h"/>
+        <files mask="StIntelHexFile.h"/>
+        <files mask="StringMatcher.h"/>
+        <files mask="StSRecordFile.h"/>
+        <files mask="UartPeripheral.h"/>
+        <files mask="Updater.h"/>
+        <files mask="UsbHidPacketizer.h"/>
+        <files mask="UsbHidPeripheral.h"/>
+        <files mask="utils.h"/>
+        <files mask="Value.h"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/src/blfwk/src" target_path="middleware/mcu-boot" type="src">
+        <files mask="AESCounter.cpp"/>
+        <files mask="AESKey.cpp"/>
+        <files mask="Blob.cpp"/>
+        <files mask="Bootloader.cpp"/>
+        <files mask="BusPal.cpp"/>
+        <files mask="BusPalPeripheral.cpp"/>
+        <files mask="Command.cpp"/>
+        <files mask="Crc.cpp"/>
+        <files mask="DataSource.cpp"/>
+        <files mask="DataSourceImager.cpp"/>
+        <files mask="DataTarget.cpp"/>
+        <files mask="ELFSourceFile.cpp"/>
+        <files mask="ExcludesListMatcher.cpp"/>
+        <files mask="format_string.cpp"/>
+        <files mask="GHSSecInfo.cpp"/>
+        <files mask="GlobMatcher.cpp"/>
+        <files mask="HexValues.cpp"/>
+        <files mask="IntelHexSourceFile.cpp"/>
+        <files mask="jsoncpp.cpp"/>
+        <files mask="Logging.cpp"/>
+        <files mask="options.cpp"/>
+        <files mask="Random.cpp"/>
+        <files mask="rijndael.cpp"/>
+        <files mask="RijndaelCTR.cpp"/>
+        <files mask="SBSourceFile.cpp"/>
+        <files mask="SDPCommand.cpp"/>
+        <files mask="SDPUsbHidPacketizer.cpp"/>
+        <files mask="SearchPath.cpp"/>
+        <files mask="SerialPacketizer.cpp"/>
+        <files mask="SimPacketizer.cpp"/>
+        <files mask="SimPeripheral.cpp"/>
+        <files mask="Simulator.cpp"/>
+        <files mask="SimulatorMemory.cpp"/>
+        <files mask="SourceFile.cpp"/>
+        <files mask="SRecordSourceFile.cpp"/>
+        <files mask="StELFFile.cpp"/>
+        <files mask="StExecutableImage.cpp"/>
+        <files mask="StIntelHexFile.cpp"/>
+        <files mask="StSRecordFile.cpp"/>
+        <files mask="UartPeripheral.cpp"/>
+        <files mask="Updater.cpp"/>
+        <files mask="UsbHidPacketizer.cpp"/>
+        <files mask="UsbHidPeripheral.cpp"/>
+        <files mask="utils.cpp"/>
+        <files mask="Value.cpp"/>
+        <files mask="hid-linux.c"/>
+        <files mask="hid-mac.c"/>
+        <files mask="hid-windows.c"/>
+        <files mask="serial.c"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/src/blfwk/doc" target_path="middleware/mcu-boot" type="other">
+        <files mask="blfwk.md"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/src/bootloader" target_path="middleware/mcu-boot" type="c_include">
+        <files mask="bl_peripheral.h"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/src/crc" target_path="middleware/mcu-boot" type="c_include">
+        <files mask="crc16.h"/>
+        <files mask="crc32.h"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/src/crc/src" target_path="middleware/mcu-boot" type="src">
+        <files mask="crc16.c"/>
+        <files mask="crc32.c"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/src/include" target_path="middleware/mcu-boot" type="c_include">
+        <files mask="bootloader_common.h"/>
+        <files mask="bootloader_hid_report_ids.h"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/src/memory" target_path="middleware/mcu-boot" type="c_include">
+        <files mask="memory.h"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/src/packet" target_path="middleware/mcu-boot" type="c_include">
+        <files mask="command_packet.h"/>
+        <files mask="serial_packet.h"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/src/property" target_path="middleware/mcu-boot" type="c_include">
+        <files mask="property.h"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/mk" target_path="middleware/mcu-boot" type="script">
+        <files mask="common.mk"/>
+      </source>
+      <source path="middleware/mcu-boot/src/drivers/smc" target_path="middleware/mcu-boot" type="c_include">
+        <files mask="smc.h"/>
+      </source>
+      <source path="middleware/mcu-boot/src/utilities/src" target_path="middleware/mcu-boot" type="src">
+        <files mask="bootloader_tree_stub.c"/>
+        <files mask="fsl_assert.c"/>
+        <files mask="fsl_rtos_abstraction.c"/>
+        <files mask="ring_buffer.c"/>
+      </source>
+      <source path="middleware/mcu-boot/src/utilities" target_path="middleware/mcu-boot" type="c_include">
+        <files mask="fsl_assert.h"/>
+        <files mask="fsl_rtos_abstraction.h"/>
+        <files mask="kinetis_family.h"/>
+        <files mask="ring_buffer.h"/>
+        <files mask="vector_table_info.h"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/tools/blhost/src" target_path="middleware/mcu-boot" type="src">
+        <files mask="blhost.cpp"/>
+      </source>
+      <source path="middleware/mcu-boot/tools/tools/blhost/src" target_path="middleware/mcu-boot" type="c_include">
+        <files mask="targetver.h"/>
+      </source>
+      <source exclude="true" path="middleware/mcu-boot/tools/tools/blhost/src" target_path="middleware/mcu-boot" type="other">
+        <files mask="blhost.vcxproj"/>
+        <files mask="blhost.vcxproj.filters"/>
+        <files mask="blhost.vcxproj.user"/>
+      </source>
+      <source exclude="true" path="middleware/mcu-boot/tools/tools/blhost" target_path="middleware/mcu-boot" type="other">
+        <files mask="blhost.sln"/>
+      </source>
+    </component>
+    <component id="middleware.mcu-boot.kinetis_files.MKE16Z4" name="mke16z4_files" brief="ke16z files" version="2.7.0" devices="MKE16Z64xxx4" user_visible="false" type="other">
+      <source exclude="true" path="middleware/mcu-boot/apps/led_demo/src" target_path="middleware/mcu-boot" type="src">
+        <files mask="milliseconds_delay.c"/>
+      </source>
+      <source path="middleware/mcu-boot/apps/led_demo/src" target_path="middleware/mcu-boot" type="c_include">
+        <files mask="milliseconds_delay.h"/>
+      </source>
+      <source exclude="true" path="middleware/mcu-boot/bin/Tools/mfgtools-rel" target_path="middleware/mcu-boot" type="other">
+        <files mask="MfgTool2.exe"/>
+        <files mask="MfgToolLib.dll"/>
+      </source>
+      <source exclude="true" path="middleware/mcu-boot/bin/Tools/mfgtools-rel" target_path="middleware/mcu-boot" type="configuration">
+        <files mask="UICfg.ini"/>
+        <files mask="cfg.ini"/>
+      </source>
+      <source exclude="true" path="middleware/mcu-boot/bin/Tools/mfgtools-rel/Profiles/Kinetis Bootloader" target_path="middleware/mcu-boot" type="configuration">
+        <files mask="player.ini"/>
+      </source>
+      <source exclude="true" path="middleware/mcu-boot/bin/Tools/mfgtools-rel/Profiles/Kinetis Bootloader/OS Firmware" target_path="middleware/mcu-boot" type="xml">
+        <files mask="ucl2(for binary).xml"/>
+        <files mask="ucl2(for HEX).xml"/>
+        <files mask="ucl2(for SB).xml"/>
+        <files mask="ucl2(for SRecord).xml"/>
+        <files mask="ucl2.xml"/>
+      </source>
+      <source exclude="true" path="middleware/mcu-boot/bin/Tools/mfgtools-rel/Profiles/Kinetis Bootloader/OS Firmware/files" target_path="middleware/mcu-boot" type="other">
+        <files mask="simple.bd"/>
+        <files mask="simple.hex"/>
+        <files mask="simple.sb"/>
+        <files mask="simple.srec"/>
+      </source>
+      <source exclude="true" path="middleware/mcu-boot/bin/Tools/mfgtools-rel/Profiles/Kinetis Bootloader/OS Firmware/files" target_path="middleware/mcu-boot" type="binary">
+        <files mask="demo.bin"/>
+        <files mask="flashConfig.bin"/>
+        <files mask="simple.bin"/>
+      </source>
+      <source exclude="true" path="middleware/mcu-boot/bin/Tools/mfgtools-rel/Profiles/Kinetis Bootloader/OS Firmware/files" target_path="middleware/mcu-boot" type="doc">
+        <files mask="Readme.txt"/>
+      </source>
+      <source exclude="true" path="middleware/mcu-boot/tools/tools/KinetisFlashTool" target_path="middleware/mcu-boot" type="other">
+        <files mask="KinetisFlashTool.sln"/>
+      </source>
+      <source exclude="true" path="middleware/mcu-boot/tools/tools/KinetisFlashTool/KinetisFlashTool" target_path="middleware/mcu-boot" type="src">
+        <files mask="Bootloader.cpp"/>
+        <files mask="BootloaderConfigDlg.cpp"/>
+        <files mask="ConfigDlg.cpp"/>
+        <files mask="FlashDlg.cpp"/>
+        <files mask="HistoryData.cpp"/>
+        <files mask="KinetisFlashTool.cpp"/>
+        <files mask="KinetisFlashToolDlg.cpp"/>
+        <files mask="SerialList.cpp"/>
+        <files mask="stdafx.cpp"/>
+        <files mask="UpdateDlg.cpp"/>
+        <files mask="utility.cpp"/>
+      </source>
+      <source exclude="true" path="middleware/mcu-boot/tools/tools/KinetisFlashTool/KinetisFlashTool" target_path="middleware/mcu-boot" type="c_include">
+        <files mask="Bootloader.h"/>
+        <files mask="BootloaderConfigDlg.h"/>
+        <files mask="BootloaderConfigText.h"/>
+        <files mask="ConfigDlg.h"/>
+        <files mask="FlashDlg.h"/>
+        <files mask="HistoryData.h"/>
+        <files mask="KinetisFlashTool.h"/>
+        <files mask="KinetisFlashToolDlg.h"/>
+        <files mask="resource.h"/>
+        <files mask="SerialList.h"/>
+        <files mask="stdafx.h"/>
+        <files mask="targetver.h"/>
+        <files mask="UpdateDlg.h"/>
+        <files mask="utility.h"/>
+      </source>
+      <source exclude="true" path="middleware/mcu-boot/tools/tools/KinetisFlashTool/KinetisFlashTool" target_path="middleware/mcu-boot" type="other">
+        <files mask="KinetisFlashTool.rc"/>
+        <files mask="KinetisFlashTool.vcxproj"/>
+        <files mask="KinetisFlashTool.vcxproj.filters"/>
+        <files mask="KinetisFlashTool.vcxproj.user"/>
+      </source>
+      <source exclude="true" path="middleware/mcu-boot/tools/tools/KinetisFlashTool/KinetisFlashTool/res" target_path="middleware/mcu-boot" type="other">
+        <files mask="Freescale.ico"/>
+        <files mask="KinetisFlashTool.rc2"/>
+      </source>
+      <source exclude="true" path="middleware/mcu-boot/bin/Tools/KinetisFlashTool/win" target_path="middleware/mcu-boot" type="other">
+        <files mask="KinetisFlashTool.exe"/>
+        <files mask="blfwkdll.dll"/>
+      </source>
+      <source exclude="true" path="middleware/mcu-boot/doc" target_path="middleware/mcu-boot" type="doc">
+        <files mask="Kinetis MCU Manufacturing Tool User's Guide.pdf"/>
+        <files mask="Kinetis Flash Tool User's Guide.pdf"/>
+        <files mask="Getting Started with the Flashloader for Kinetis.pdf"/>
+        <files mask="KE16Z Bootloader Demo Application User's Guide.pdf"/>
+        <files mask="MCU Bootloader v2.7.0 Reference Manual.pdf"/>
+        <files mask="KE16Z Bootloader Release Notes.pdf"/>
+      </source>
+    </component>
     <component id="project_template.MKE16Z4.MKE16Z4" name="MKE16Z4" version="1.0.0" devices="MKE16Z64xxx4" dependency="component.lpuart_adapter.MKE16Z4 component.serial_manager.MKE16Z4 component.serial_manager_uart.MKE16Z4 device.MKE16Z4_CMSIS.MKE16Z4 device.MKE16Z4_startup.MKE16Z4 platform.Include_common.MKE16Z4 platform.Include_core_cm0plus.MKE16Z4 platform.drivers.adc12.MKE16Z4 platform.drivers.clock.MKE16Z4 platform.drivers.common.MKE16Z4 platform.drivers.gpio.MKE16Z4 platform.drivers.lpi2c.MKE16Z4 platform.drivers.lpuart.MKE16Z4 platform.drivers.port.MKE16Z4 platform.drivers.smc.MKE16Z4 utility.debug_console.MKE16Z4" category="Board Support/SDK Project Template" user_visible="true" type="project_template">
-      <source path="devices/MKE16Z4/project_template" target_path="src" type="c_include">
+      <source path="devices/MKE16Z4/project_template" target_path="board" type="c_include">
         <files mask="board.h"/>
         <files mask="clock_config.h"/>
         <files mask="pin_mux.h"/>
         <files mask="peripherals.h"/>
       </source>
-      <source path="devices/MKE16Z4/project_template" target_path="src" type="src">
+      <source path="devices/MKE16Z4/project_template" target_path="board" type="src">
         <files mask="board.c"/>
         <files mask="clock_config.c"/>
         <files mask="pin_mux.c"/>
@@ -3301,13 +3302,13 @@ ${load}</script>
       </source>
     </component>
     <component id="project_template.frdmke16z.MKE16Z4" name="frdmke16z" version="1.0.0" devices="MKE16Z64xxx4" dependency="component.lpuart_adapter.MKE16Z4 component.serial_manager.MKE16Z4 component.serial_manager_uart.MKE16Z4 device.MKE16Z4_CMSIS.MKE16Z4 device.MKE16Z4_startup.MKE16Z4 platform.Include_common.MKE16Z4 platform.Include_core_cm0plus.MKE16Z4 platform.drivers.adc12.MKE16Z4 platform.drivers.clock.MKE16Z4 platform.drivers.common.MKE16Z4 platform.drivers.gpio.MKE16Z4 platform.drivers.lpi2c.MKE16Z4 platform.drivers.lpuart.MKE16Z4 platform.drivers.port.MKE16Z4 platform.drivers.smc.MKE16Z4 utility.debug_console.MKE16Z4" category="Board Support/SDK Project Template" user_visible="true" type="project_template">
-      <source path="boards/frdmke16z/project_template" target_path="src" type="c_include">
+      <source path="boards/frdmke16z/project_template" target_path="board" type="c_include">
         <files mask="board.h"/>
         <files mask="clock_config.h"/>
         <files mask="pin_mux.h"/>
         <files mask="peripherals.h"/>
       </source>
-      <source path="boards/frdmke16z/project_template" target_path="src" type="src">
+      <source path="boards/frdmke16z/project_template" target_path="board" type="src">
         <files mask="board.c"/>
         <files mask="clock_config.c"/>
         <files mask="pin_mux.c"/>
@@ -3399,29 +3400,29 @@ ${load}</script>
         <files mask="LICENSE.txt"/>
       </source>
       <source path="CMSIS/Include" target_path="src" type="c_include">
-        <files mask="core_cm0.h"/>
-        <files mask="arm_const_structs.h"/>
-        <files mask="core_cm33.h"/>
-        <files mask="arm_math.h"/>
-        <files mask="mpu_armv8.h"/>
         <files mask="arm_common_tables.h"/>
+        <files mask="arm_const_structs.h"/>
+        <files mask="arm_math.h"/>
+        <files mask="cmsis_armcc.h"/>
         <files mask="cmsis_armclang.h"/>
+        <files mask="cmsis_compiler.h"/>
+        <files mask="cmsis_gcc.h"/>
+        <files mask="cmsis_iccarm.h"/>
+        <files mask="cmsis_version.h"/>
+        <files mask="core_armv8mbl.h"/>
+        <files mask="core_armv8mml.h"/>
+        <files mask="core_cm0.h"/>
+        <files mask="core_cm0plus.h"/>
         <files mask="core_cm23.h"/>
+        <files mask="core_cm3.h"/>
+        <files mask="core_cm33.h"/>
+        <files mask="core_cm4.h"/>
         <files mask="core_cm7.h"/>
         <files mask="core_sc000.h"/>
-        <files mask="tz_context.h"/>
-        <files mask="core_cm3.h"/>
-        <files mask="cmsis_armcc.h"/>
-        <files mask="cmsis_version.h"/>
-        <files mask="core_cm0plus.h"/>
-        <files mask="core_cm4.h"/>
-        <files mask="core_armv8mbl.h"/>
-        <files mask="cmsis_gcc.h"/>
         <files mask="core_sc300.h"/>
-        <files mask="cmsis_compiler.h"/>
-        <files mask="cmsis_iccarm.h"/>
-        <files mask="core_armv8mml.h"/>
         <files mask="mpu_armv7.h"/>
+        <files mask="mpu_armv8.h"/>
+        <files mask="tz_context.h"/>
       </source>
     </component>
     <component id="platform.CMSIS_DSP_Lib.MKE15Z4" name="CMSIS_DSP_Lib" version="5.1.1" devices="MKE15Z32xxx4" user_visible="false" type="CMSIS">
@@ -3466,8 +3467,8 @@ ${load}</script>
         <files mask="startup_ARMCM7.s"/>
       </source>
       <source path="CMSIS/DSP_Lib/Examples/ARM/arm_convolution_example" target_path="src" type="src">
-        <files mask="math_helper.c"/>
         <files mask="arm_convolution_example_f32.c"/>
+        <files mask="math_helper.c"/>
       </source>
       <source path="CMSIS/DSP_Lib/Examples/ARM/arm_convolution_example" target_path="src" type="c_include">
         <files mask="math_helper.h"/>
@@ -3550,8 +3551,8 @@ ${load}</script>
         <files mask="startup_ARMCM7.s"/>
       </source>
       <source path="CMSIS/DSP_Lib/Examples/ARM/arm_fft_bin_example" target_path="src" type="src">
-        <files mask="arm_fft_bin_example_f32.c"/>
         <files mask="arm_fft_bin_data.c"/>
+        <files mask="arm_fft_bin_example_f32.c"/>
       </source>
       <source path="CMSIS/DSP_Lib/Examples/ARM/arm_fft_bin_example" target_path="src" type="configuration">
         <files mask="arm_fft_bin_example.ini"/>
@@ -3592,8 +3593,8 @@ ${load}</script>
       </source>
       <source path="CMSIS/DSP_Lib/Examples/ARM/arm_fir_example" target_path="src" type="src">
         <files mask="arm_fir_data.c"/>
-        <files mask="math_helper.c"/>
         <files mask="arm_fir_example_f32.c"/>
+        <files mask="math_helper.c"/>
       </source>
       <source path="CMSIS/DSP_Lib/Examples/ARM/arm_fir_example" target_path="src" type="c_include">
         <files mask="math_helper.h"/>
@@ -3902,186 +3903,186 @@ ${load}</script>
         <files mask="arm_cortexM_math.uvprojx"/>
       </source>
       <source path="CMSIS/DSP_Lib/Source/BasicMathFunctions" target_path="src" type="src">
-        <files mask="arm_offset_q15.c"/>
-        <files mask="arm_dot_prod_q31.c"/>
-        <files mask="arm_negate_f32.c"/>
-        <files mask="arm_scale_q15.c"/>
-        <files mask="arm_scale_q7.c"/>
-        <files mask="arm_offset_f32.c"/>
-        <files mask="arm_scale_q31.c"/>
-        <files mask="arm_negate_q7.c"/>
-        <files mask="arm_dot_prod_f32.c"/>
-        <files mask="arm_sub_q7.c"/>
-        <files mask="arm_abs_q31.c"/>
-        <files mask="arm_mult_q7.c"/>
-        <files mask="arm_add_q7.c"/>
-        <files mask="arm_abs_q15.c"/>
         <files mask="arm_abs_f32.c"/>
-        <files mask="arm_mult_q31.c"/>
-        <files mask="arm_add_q15.c"/>
-        <files mask="arm_shift_q7.c"/>
-        <files mask="arm_sub_q15.c"/>
-        <files mask="arm_dot_prod_q7.c"/>
-        <files mask="arm_add_f32.c"/>
-        <files mask="arm_dot_prod_q15.c"/>
-        <files mask="arm_sub_q31.c"/>
-        <files mask="arm_shift_q15.c"/>
-        <files mask="arm_sub_f32.c"/>
-        <files mask="arm_mult_q15.c"/>
-        <files mask="arm_shift_q31.c"/>
-        <files mask="arm_negate_q15.c"/>
+        <files mask="arm_abs_q15.c"/>
+        <files mask="arm_abs_q31.c"/>
         <files mask="arm_abs_q7.c"/>
-        <files mask="arm_negate_q31.c"/>
-        <files mask="arm_mult_f32.c"/>
-        <files mask="arm_scale_f32.c"/>
+        <files mask="arm_add_f32.c"/>
+        <files mask="arm_add_q15.c"/>
         <files mask="arm_add_q31.c"/>
-        <files mask="arm_offset_q7.c"/>
+        <files mask="arm_add_q7.c"/>
+        <files mask="arm_dot_prod_f32.c"/>
+        <files mask="arm_dot_prod_q15.c"/>
+        <files mask="arm_dot_prod_q31.c"/>
+        <files mask="arm_dot_prod_q7.c"/>
+        <files mask="arm_mult_f32.c"/>
+        <files mask="arm_mult_q15.c"/>
+        <files mask="arm_mult_q31.c"/>
+        <files mask="arm_mult_q7.c"/>
+        <files mask="arm_negate_f32.c"/>
+        <files mask="arm_negate_q15.c"/>
+        <files mask="arm_negate_q31.c"/>
+        <files mask="arm_negate_q7.c"/>
+        <files mask="arm_offset_f32.c"/>
+        <files mask="arm_offset_q15.c"/>
         <files mask="arm_offset_q31.c"/>
+        <files mask="arm_offset_q7.c"/>
+        <files mask="arm_scale_f32.c"/>
+        <files mask="arm_scale_q15.c"/>
+        <files mask="arm_scale_q31.c"/>
+        <files mask="arm_scale_q7.c"/>
+        <files mask="arm_shift_q15.c"/>
+        <files mask="arm_shift_q31.c"/>
+        <files mask="arm_shift_q7.c"/>
+        <files mask="arm_sub_f32.c"/>
+        <files mask="arm_sub_q15.c"/>
+        <files mask="arm_sub_q31.c"/>
+        <files mask="arm_sub_q7.c"/>
       </source>
       <source path="CMSIS/DSP_Lib/Source/CommonTables" target_path="src" type="src">
         <files mask="arm_common_tables.c"/>
         <files mask="arm_const_structs.c"/>
       </source>
       <source path="CMSIS/DSP_Lib/Source/ComplexMathFunctions" target_path="src" type="src">
-        <files mask="arm_cmplx_conj_q15.c"/>
         <files mask="arm_cmplx_conj_f32.c"/>
-        <files mask="arm_cmplx_dot_prod_q31.c"/>
-        <files mask="arm_cmplx_mag_squared_q15.c"/>
-        <files mask="arm_cmplx_dot_prod_q15.c"/>
+        <files mask="arm_cmplx_conj_q15.c"/>
         <files mask="arm_cmplx_conj_q31.c"/>
-        <files mask="arm_cmplx_mag_q31.c"/>
-        <files mask="arm_cmplx_mult_real_q31.c"/>
-        <files mask="arm_cmplx_mult_real_q15.c"/>
-        <files mask="arm_cmplx_mag_f32.c"/>
-        <files mask="arm_cmplx_mag_squared_f32.c"/>
-        <files mask="arm_cmplx_mult_cmplx_q15.c"/>
-        <files mask="arm_cmplx_mult_cmplx_f32.c"/>
-        <files mask="arm_cmplx_mag_squared_q31.c"/>
-        <files mask="arm_cmplx_mult_real_f32.c"/>
-        <files mask="arm_cmplx_mult_cmplx_q31.c"/>
-        <files mask="arm_cmplx_mag_q15.c"/>
         <files mask="arm_cmplx_dot_prod_f32.c"/>
+        <files mask="arm_cmplx_dot_prod_q15.c"/>
+        <files mask="arm_cmplx_dot_prod_q31.c"/>
+        <files mask="arm_cmplx_mag_f32.c"/>
+        <files mask="arm_cmplx_mag_q15.c"/>
+        <files mask="arm_cmplx_mag_q31.c"/>
+        <files mask="arm_cmplx_mag_squared_f32.c"/>
+        <files mask="arm_cmplx_mag_squared_q15.c"/>
+        <files mask="arm_cmplx_mag_squared_q31.c"/>
+        <files mask="arm_cmplx_mult_cmplx_f32.c"/>
+        <files mask="arm_cmplx_mult_cmplx_q15.c"/>
+        <files mask="arm_cmplx_mult_cmplx_q31.c"/>
+        <files mask="arm_cmplx_mult_real_f32.c"/>
+        <files mask="arm_cmplx_mult_real_q15.c"/>
+        <files mask="arm_cmplx_mult_real_q31.c"/>
       </source>
       <source path="CMSIS/DSP_Lib/Source/ControllerFunctions" target_path="src" type="src">
         <files mask="arm_pid_init_f32.c"/>
-        <files mask="arm_pid_reset_q31.c"/>
-        <files mask="arm_pid_reset_f32.c"/>
-        <files mask="arm_sin_cos_q31.c"/>
         <files mask="arm_pid_init_q15.c"/>
         <files mask="arm_pid_init_q31.c"/>
+        <files mask="arm_pid_reset_f32.c"/>
         <files mask="arm_pid_reset_q15.c"/>
+        <files mask="arm_pid_reset_q31.c"/>
         <files mask="arm_sin_cos_f32.c"/>
+        <files mask="arm_sin_cos_q31.c"/>
       </source>
       <source path="CMSIS/DSP_Lib/Source/FastMathFunctions" target_path="src" type="src">
-        <files mask="arm_cos_q31.c"/>
-        <files mask="arm_sqrt_q31.c"/>
-        <files mask="arm_sin_q31.c"/>
-        <files mask="arm_cos_q15.c"/>
-        <files mask="arm_sin_q15.c"/>
         <files mask="arm_cos_f32.c"/>
+        <files mask="arm_cos_q15.c"/>
+        <files mask="arm_cos_q31.c"/>
         <files mask="arm_sin_f32.c"/>
+        <files mask="arm_sin_q15.c"/>
+        <files mask="arm_sin_q31.c"/>
         <files mask="arm_sqrt_q15.c"/>
+        <files mask="arm_sqrt_q31.c"/>
       </source>
       <source path="CMSIS/DSP_Lib/Source/FilteringFunctions" target_path="src" type="src">
-        <files mask="arm_conv_fast_q15.c"/>
-        <files mask="arm_correlate_fast_q15.c"/>
-        <files mask="arm_biquad_cascade_df2T_init_f32.c"/>
-        <files mask="arm_conv_q31.c"/>
-        <files mask="arm_fir_decimate_fast_q15.c"/>
-        <files mask="arm_correlate_opt_q7.c"/>
-        <files mask="arm_biquad_cascade_df1_f32.c"/>
-        <files mask="arm_conv_fast_q31.c"/>
-        <files mask="arm_fir_fast_q31.c"/>
-        <files mask="arm_conv_partial_f32.c"/>
-        <files mask="arm_fir_fast_q15.c"/>
-        <files mask="arm_lms_norm_init_q15.c"/>
-        <files mask="arm_lms_norm_f32.c"/>
-        <files mask="arm_conv_partial_opt_q7.c"/>
-        <files mask="arm_fir_init_q7.c"/>
-        <files mask="arm_fir_lattice_f32.c"/>
-        <files mask="arm_fir_f32.c"/>
-        <files mask="arm_correlate_fast_q31.c"/>
-        <files mask="arm_conv_partial_opt_q15.c"/>
-        <files mask="arm_fir_decimate_init_q15.c"/>
-        <files mask="arm_conv_fast_opt_q15.c"/>
-        <files mask="arm_fir_init_f32.c"/>
-        <files mask="arm_biquad_cascade_df1_fast_q15.c"/>
-        <files mask="arm_conv_q7.c"/>
-        <files mask="arm_fir_init_q15.c"/>
-        <files mask="arm_correlate_opt_q15.c"/>
-        <files mask="arm_lms_norm_init_q31.c"/>
-        <files mask="arm_conv_partial_q15.c"/>
-        <files mask="arm_biquad_cascade_df1_fast_q31.c"/>
-        <files mask="arm_lms_norm_q31.c"/>
-        <files mask="arm_lms_init_q31.c"/>
-        <files mask="arm_fir_decimate_q31.c"/>
-        <files mask="arm_lms_init_q15.c"/>
-        <files mask="arm_conv_q15.c"/>
-        <files mask="arm_conv_partial_fast_opt_q15.c"/>
-        <files mask="arm_fir_sparse_init_f32.c"/>
-        <files mask="arm_iir_lattice_init_f32.c"/>
-        <files mask="arm_fir_init_q31.c"/>
-        <files mask="arm_fir_sparse_q15.c"/>
-        <files mask="arm_fir_lattice_init_q31.c"/>
-        <files mask="arm_lms_f32.c"/>
-        <files mask="arm_fir_q31.c"/>
         <files mask="arm_biquad_cascade_df1_32x64_init_q31.c"/>
-        <files mask="arm_iir_lattice_q15.c"/>
         <files mask="arm_biquad_cascade_df1_32x64_q31.c"/>
-        <files mask="arm_biquad_cascade_df2T_f64.c"/>
-        <files mask="arm_fir_decimate_init_f32.c"/>
-        <files mask="arm_lms_q15.c"/>
-        <files mask="arm_fir_interpolate_q31.c"/>
-        <files mask="arm_conv_partial_fast_q15.c"/>
-        <files mask="arm_fir_sparse_q7.c"/>
-        <files mask="arm_biquad_cascade_df1_q31.c"/>
-        <files mask="arm_conv_opt_q15.c"/>
-        <files mask="arm_biquad_cascade_stereo_df2T_f32.c"/>
-        <files mask="arm_fir_lattice_q31.c"/>
-        <files mask="arm_fir_interpolate_q15.c"/>
-        <files mask="arm_fir_interpolate_init_q15.c"/>
-        <files mask="arm_conv_partial_q7.c"/>
-        <files mask="arm_iir_lattice_init_q15.c"/>
-        <files mask="arm_lms_norm_init_f32.c"/>
-        <files mask="arm_fir_decimate_fast_q31.c"/>
-        <files mask="arm_correlate_q15.c"/>
-        <files mask="arm_fir_decimate_init_q31.c"/>
-        <files mask="arm_lms_q31.c"/>
-        <files mask="arm_fir_sparse_f32.c"/>
-        <files mask="arm_fir_interpolate_init_f32.c"/>
-        <files mask="arm_fir_sparse_init_q15.c"/>
-        <files mask="arm_conv_opt_q7.c"/>
-        <files mask="arm_fir_sparse_init_q7.c"/>
-        <files mask="arm_correlate_q31.c"/>
-        <files mask="arm_biquad_cascade_stereo_df2T_init_f32.c"/>
-        <files mask="arm_iir_lattice_init_q31.c"/>
-        <files mask="arm_conv_partial_fast_q31.c"/>
-        <files mask="arm_fir_q7.c"/>
-        <files mask="arm_conv_partial_q31.c"/>
-        <files mask="arm_fir_decimate_f32.c"/>
-        <files mask="arm_fir_interpolate_init_q31.c"/>
-        <files mask="arm_fir_decimate_q15.c"/>
-        <files mask="arm_biquad_cascade_df2T_f32.c"/>
-        <files mask="arm_fir_interpolate_f32.c"/>
-        <files mask="arm_fir_sparse_init_q31.c"/>
-        <files mask="arm_lms_init_f32.c"/>
+        <files mask="arm_biquad_cascade_df1_f32.c"/>
+        <files mask="arm_biquad_cascade_df1_fast_q15.c"/>
+        <files mask="arm_biquad_cascade_df1_fast_q31.c"/>
         <files mask="arm_biquad_cascade_df1_init_f32.c"/>
-        <files mask="arm_fir_lattice_init_f32.c"/>
-        <files mask="arm_correlate_q7.c"/>
-        <files mask="arm_conv_f32.c"/>
-        <files mask="arm_biquad_cascade_df2T_init_f64.c"/>
-        <files mask="arm_fir_lattice_q15.c"/>
-        <files mask="arm_fir_q15.c"/>
-        <files mask="arm_fir_lattice_init_q15.c"/>
-        <files mask="arm_correlate_fast_opt_q15.c"/>
-        <files mask="arm_correlate_f32.c"/>
         <files mask="arm_biquad_cascade_df1_init_q15.c"/>
-        <files mask="arm_fir_sparse_q31.c"/>
-        <files mask="arm_iir_lattice_f32.c"/>
         <files mask="arm_biquad_cascade_df1_init_q31.c"/>
-        <files mask="arm_lms_norm_q15.c"/>
         <files mask="arm_biquad_cascade_df1_q15.c"/>
+        <files mask="arm_biquad_cascade_df1_q31.c"/>
+        <files mask="arm_biquad_cascade_df2T_f32.c"/>
+        <files mask="arm_biquad_cascade_df2T_f64.c"/>
+        <files mask="arm_biquad_cascade_df2T_init_f32.c"/>
+        <files mask="arm_biquad_cascade_df2T_init_f64.c"/>
+        <files mask="arm_biquad_cascade_stereo_df2T_f32.c"/>
+        <files mask="arm_biquad_cascade_stereo_df2T_init_f32.c"/>
+        <files mask="arm_conv_f32.c"/>
+        <files mask="arm_conv_fast_opt_q15.c"/>
+        <files mask="arm_conv_fast_q15.c"/>
+        <files mask="arm_conv_fast_q31.c"/>
+        <files mask="arm_conv_opt_q15.c"/>
+        <files mask="arm_conv_opt_q7.c"/>
+        <files mask="arm_conv_partial_f32.c"/>
+        <files mask="arm_conv_partial_fast_opt_q15.c"/>
+        <files mask="arm_conv_partial_fast_q15.c"/>
+        <files mask="arm_conv_partial_fast_q31.c"/>
+        <files mask="arm_conv_partial_opt_q15.c"/>
+        <files mask="arm_conv_partial_opt_q7.c"/>
+        <files mask="arm_conv_partial_q15.c"/>
+        <files mask="arm_conv_partial_q31.c"/>
+        <files mask="arm_conv_partial_q7.c"/>
+        <files mask="arm_conv_q15.c"/>
+        <files mask="arm_conv_q31.c"/>
+        <files mask="arm_conv_q7.c"/>
+        <files mask="arm_correlate_f32.c"/>
+        <files mask="arm_correlate_fast_opt_q15.c"/>
+        <files mask="arm_correlate_fast_q15.c"/>
+        <files mask="arm_correlate_fast_q31.c"/>
+        <files mask="arm_correlate_opt_q15.c"/>
+        <files mask="arm_correlate_opt_q7.c"/>
+        <files mask="arm_correlate_q15.c"/>
+        <files mask="arm_correlate_q31.c"/>
+        <files mask="arm_correlate_q7.c"/>
+        <files mask="arm_fir_decimate_f32.c"/>
+        <files mask="arm_fir_decimate_fast_q15.c"/>
+        <files mask="arm_fir_decimate_fast_q31.c"/>
+        <files mask="arm_fir_decimate_init_f32.c"/>
+        <files mask="arm_fir_decimate_init_q15.c"/>
+        <files mask="arm_fir_decimate_init_q31.c"/>
+        <files mask="arm_fir_decimate_q15.c"/>
+        <files mask="arm_fir_decimate_q31.c"/>
+        <files mask="arm_fir_f32.c"/>
+        <files mask="arm_fir_fast_q15.c"/>
+        <files mask="arm_fir_fast_q31.c"/>
+        <files mask="arm_fir_init_f32.c"/>
+        <files mask="arm_fir_init_q15.c"/>
+        <files mask="arm_fir_init_q31.c"/>
+        <files mask="arm_fir_init_q7.c"/>
+        <files mask="arm_fir_interpolate_f32.c"/>
+        <files mask="arm_fir_interpolate_init_f32.c"/>
+        <files mask="arm_fir_interpolate_init_q15.c"/>
+        <files mask="arm_fir_interpolate_init_q31.c"/>
+        <files mask="arm_fir_interpolate_q15.c"/>
+        <files mask="arm_fir_interpolate_q31.c"/>
+        <files mask="arm_fir_lattice_f32.c"/>
+        <files mask="arm_fir_lattice_init_f32.c"/>
+        <files mask="arm_fir_lattice_init_q15.c"/>
+        <files mask="arm_fir_lattice_init_q31.c"/>
+        <files mask="arm_fir_lattice_q15.c"/>
+        <files mask="arm_fir_lattice_q31.c"/>
+        <files mask="arm_fir_q15.c"/>
+        <files mask="arm_fir_q31.c"/>
+        <files mask="arm_fir_q7.c"/>
+        <files mask="arm_fir_sparse_f32.c"/>
+        <files mask="arm_fir_sparse_init_f32.c"/>
+        <files mask="arm_fir_sparse_init_q15.c"/>
+        <files mask="arm_fir_sparse_init_q31.c"/>
+        <files mask="arm_fir_sparse_init_q7.c"/>
+        <files mask="arm_fir_sparse_q15.c"/>
+        <files mask="arm_fir_sparse_q31.c"/>
+        <files mask="arm_fir_sparse_q7.c"/>
+        <files mask="arm_iir_lattice_f32.c"/>
+        <files mask="arm_iir_lattice_init_f32.c"/>
+        <files mask="arm_iir_lattice_init_q15.c"/>
+        <files mask="arm_iir_lattice_init_q31.c"/>
+        <files mask="arm_iir_lattice_q15.c"/>
         <files mask="arm_iir_lattice_q31.c"/>
+        <files mask="arm_lms_f32.c"/>
+        <files mask="arm_lms_init_f32.c"/>
+        <files mask="arm_lms_init_q15.c"/>
+        <files mask="arm_lms_init_q31.c"/>
+        <files mask="arm_lms_norm_f32.c"/>
+        <files mask="arm_lms_norm_init_f32.c"/>
+        <files mask="arm_lms_norm_init_q15.c"/>
+        <files mask="arm_lms_norm_init_q31.c"/>
+        <files mask="arm_lms_norm_q15.c"/>
+        <files mask="arm_lms_norm_q31.c"/>
+        <files mask="arm_lms_q15.c"/>
+        <files mask="arm_lms_q31.c"/>
       </source>
       <source path="CMSIS/DSP_Lib/Source/GCC" target_path="src" type="script">
         <files mask="arm_cortexM_math_Build.bat"/>
@@ -4091,113 +4092,113 @@ ${load}</script>
         <files mask="arm_cortexM_math.uvprojx"/>
       </source>
       <source path="CMSIS/DSP_Lib/Source/MatrixFunctions" target_path="src" type="src">
-        <files mask="arm_mat_inverse_f32.c"/>
-        <files mask="arm_mat_mult_f32.c"/>
-        <files mask="arm_mat_mult_fast_q31.c"/>
-        <files mask="arm_mat_mult_fast_q15.c"/>
-        <files mask="arm_mat_scale_q31.c"/>
-        <files mask="arm_mat_trans_f32.c"/>
-        <files mask="arm_mat_init_q15.c"/>
-        <files mask="arm_mat_cmplx_mult_q31.c"/>
-        <files mask="arm_mat_mult_q31.c"/>
         <files mask="arm_mat_add_f32.c"/>
-        <files mask="arm_mat_sub_q15.c"/>
-        <files mask="arm_mat_init_f32.c"/>
+        <files mask="arm_mat_add_q15.c"/>
+        <files mask="arm_mat_add_q31.c"/>
         <files mask="arm_mat_cmplx_mult_f32.c"/>
+        <files mask="arm_mat_cmplx_mult_q15.c"/>
+        <files mask="arm_mat_cmplx_mult_q31.c"/>
+        <files mask="arm_mat_init_f32.c"/>
+        <files mask="arm_mat_init_q15.c"/>
+        <files mask="arm_mat_init_q31.c"/>
+        <files mask="arm_mat_inverse_f32.c"/>
+        <files mask="arm_mat_inverse_f64.c"/>
+        <files mask="arm_mat_mult_f32.c"/>
+        <files mask="arm_mat_mult_fast_q15.c"/>
+        <files mask="arm_mat_mult_fast_q31.c"/>
+        <files mask="arm_mat_mult_q15.c"/>
+        <files mask="arm_mat_mult_q31.c"/>
         <files mask="arm_mat_scale_f32.c"/>
+        <files mask="arm_mat_scale_q15.c"/>
+        <files mask="arm_mat_scale_q31.c"/>
+        <files mask="arm_mat_sub_f32.c"/>
+        <files mask="arm_mat_sub_q15.c"/>
+        <files mask="arm_mat_sub_q31.c"/>
+        <files mask="arm_mat_trans_f32.c"/>
         <files mask="arm_mat_trans_q15.c"/>
         <files mask="arm_mat_trans_q31.c"/>
-        <files mask="arm_mat_sub_q31.c"/>
-        <files mask="arm_mat_scale_q15.c"/>
-        <files mask="arm_mat_add_q31.c"/>
-        <files mask="arm_mat_init_q31.c"/>
-        <files mask="arm_mat_cmplx_mult_q15.c"/>
-        <files mask="arm_mat_inverse_f64.c"/>
-        <files mask="arm_mat_add_q15.c"/>
-        <files mask="arm_mat_sub_f32.c"/>
-        <files mask="arm_mat_mult_q15.c"/>
       </source>
       <source path="CMSIS/DSP_Lib/Source/StatisticsFunctions" target_path="src" type="src">
-        <files mask="arm_max_q15.c"/>
-        <files mask="arm_std_q31.c"/>
-        <files mask="arm_mean_q7.c"/>
-        <files mask="arm_mean_f32.c"/>
-        <files mask="arm_mean_q31.c"/>
-        <files mask="arm_min_q31.c"/>
-        <files mask="arm_rms_q15.c"/>
-        <files mask="arm_rms_f32.c"/>
-        <files mask="arm_max_q7.c"/>
-        <files mask="arm_var_f32.c"/>
-        <files mask="arm_power_q31.c"/>
-        <files mask="arm_min_q7.c"/>
-        <files mask="arm_max_q31.c"/>
-        <files mask="arm_power_f32.c"/>
         <files mask="arm_max_f32.c"/>
-        <files mask="arm_power_q7.c"/>
-        <files mask="arm_power_q15.c"/>
-        <files mask="arm_var_q15.c"/>
-        <files mask="arm_std_f32.c"/>
-        <files mask="arm_min_q15.c"/>
-        <files mask="arm_std_q15.c"/>
-        <files mask="arm_min_f32.c"/>
+        <files mask="arm_max_q15.c"/>
+        <files mask="arm_max_q31.c"/>
+        <files mask="arm_max_q7.c"/>
+        <files mask="arm_mean_f32.c"/>
         <files mask="arm_mean_q15.c"/>
+        <files mask="arm_mean_q31.c"/>
+        <files mask="arm_mean_q7.c"/>
+        <files mask="arm_min_f32.c"/>
+        <files mask="arm_min_q15.c"/>
+        <files mask="arm_min_q31.c"/>
+        <files mask="arm_min_q7.c"/>
+        <files mask="arm_power_f32.c"/>
+        <files mask="arm_power_q15.c"/>
+        <files mask="arm_power_q31.c"/>
+        <files mask="arm_power_q7.c"/>
+        <files mask="arm_rms_f32.c"/>
+        <files mask="arm_rms_q15.c"/>
         <files mask="arm_rms_q31.c"/>
+        <files mask="arm_std_f32.c"/>
+        <files mask="arm_std_q15.c"/>
+        <files mask="arm_std_q31.c"/>
+        <files mask="arm_var_f32.c"/>
+        <files mask="arm_var_q15.c"/>
         <files mask="arm_var_q31.c"/>
       </source>
       <source path="CMSIS/DSP_Lib/Source/SupportFunctions" target_path="src" type="src">
-        <files mask="arm_q15_to_float.c"/>
-        <files mask="arm_fill_q31.c"/>
-        <files mask="arm_float_to_q15.c"/>
-        <files mask="arm_copy_q7.c"/>
-        <files mask="arm_q31_to_q7.c"/>
-        <files mask="arm_copy_q31.c"/>
-        <files mask="arm_fill_f32.c"/>
-        <files mask="arm_q15_to_q31.c"/>
-        <files mask="arm_q31_to_q15.c"/>
         <files mask="arm_copy_f32.c"/>
-        <files mask="arm_q7_to_float.c"/>
         <files mask="arm_copy_q15.c"/>
+        <files mask="arm_copy_q31.c"/>
+        <files mask="arm_copy_q7.c"/>
+        <files mask="arm_fill_f32.c"/>
         <files mask="arm_fill_q15.c"/>
+        <files mask="arm_fill_q31.c"/>
+        <files mask="arm_fill_q7.c"/>
+        <files mask="arm_float_to_q15.c"/>
+        <files mask="arm_float_to_q31.c"/>
         <files mask="arm_float_to_q7.c"/>
-        <files mask="arm_q7_to_q15.c"/>
-        <files mask="arm_q7_to_q31.c"/>
+        <files mask="arm_q15_to_float.c"/>
+        <files mask="arm_q15_to_q31.c"/>
         <files mask="arm_q15_to_q7.c"/>
         <files mask="arm_q31_to_float.c"/>
-        <files mask="arm_fill_q7.c"/>
-        <files mask="arm_float_to_q31.c"/>
+        <files mask="arm_q31_to_q15.c"/>
+        <files mask="arm_q31_to_q7.c"/>
+        <files mask="arm_q7_to_float.c"/>
+        <files mask="arm_q7_to_q15.c"/>
+        <files mask="arm_q7_to_q31.c"/>
       </source>
       <source path="CMSIS/DSP_Lib/Source/TransformFunctions" target_path="src" type="src">
-        <files mask="arm_cfft_radix2_q31.c"/>
-        <files mask="arm_dct4_q31.c"/>
-        <files mask="arm_cfft_radix4_init_q31.c"/>
-        <files mask="arm_cfft_radix2_q15.c"/>
-        <files mask="arm_cfft_radix2_init_q31.c"/>
-        <files mask="arm_cfft_radix8_f32.c"/>
-        <files mask="arm_cfft_radix4_init_f32.c"/>
-        <files mask="arm_rfft_f32.c"/>
+        <files mask="arm_bitreversal.c"/>
+        <files mask="arm_cfft_f32.c"/>
+        <files mask="arm_cfft_q15.c"/>
+        <files mask="arm_cfft_q31.c"/>
+        <files mask="arm_cfft_radix2_f32.c"/>
         <files mask="arm_cfft_radix2_init_f32.c"/>
+        <files mask="arm_cfft_radix2_init_q15.c"/>
+        <files mask="arm_cfft_radix2_init_q31.c"/>
+        <files mask="arm_cfft_radix2_q15.c"/>
+        <files mask="arm_cfft_radix2_q31.c"/>
+        <files mask="arm_cfft_radix4_f32.c"/>
+        <files mask="arm_cfft_radix4_init_f32.c"/>
+        <files mask="arm_cfft_radix4_init_q15.c"/>
+        <files mask="arm_cfft_radix4_init_q31.c"/>
+        <files mask="arm_cfft_radix4_q15.c"/>
+        <files mask="arm_cfft_radix4_q31.c"/>
+        <files mask="arm_cfft_radix8_f32.c"/>
+        <files mask="arm_dct4_f32.c"/>
+        <files mask="arm_dct4_init_f32.c"/>
+        <files mask="arm_dct4_init_q15.c"/>
+        <files mask="arm_dct4_init_q31.c"/>
+        <files mask="arm_dct4_q15.c"/>
+        <files mask="arm_dct4_q31.c"/>
+        <files mask="arm_rfft_f32.c"/>
         <files mask="arm_rfft_fast_f32.c"/>
         <files mask="arm_rfft_fast_init_f32.c"/>
-        <files mask="arm_rfft_q31.c"/>
-        <files mask="arm_rfft_init_q31.c"/>
-        <files mask="arm_rfft_init_q15.c"/>
-        <files mask="arm_rfft_q15.c"/>
-        <files mask="arm_cfft_q15.c"/>
         <files mask="arm_rfft_init_f32.c"/>
-        <files mask="arm_cfft_q31.c"/>
-        <files mask="arm_cfft_radix4_q15.c"/>
-        <files mask="arm_dct4_init_f32.c"/>
-        <files mask="arm_cfft_radix4_f32.c"/>
-        <files mask="arm_cfft_f32.c"/>
-        <files mask="arm_dct4_init_q31.c"/>
-        <files mask="arm_dct4_init_q15.c"/>
-        <files mask="arm_cfft_radix4_init_q15.c"/>
-        <files mask="arm_cfft_radix4_q31.c"/>
-        <files mask="arm_cfft_radix2_f32.c"/>
-        <files mask="arm_bitreversal.c"/>
-        <files mask="arm_dct4_q15.c"/>
-        <files mask="arm_cfft_radix2_init_q15.c"/>
-        <files mask="arm_dct4_f32.c"/>
+        <files mask="arm_rfft_init_q15.c"/>
+        <files mask="arm_rfft_init_q31.c"/>
+        <files mask="arm_rfft_q15.c"/>
+        <files mask="arm_rfft_q31.c"/>
       </source>
       <source path="CMSIS/DSP_Lib/Source/TransformFunctions" target_path="src" type="asm_include">
         <files mask="arm_bitreversal2.S"/>
@@ -4731,13 +4732,13 @@ ${load}</script>
       </source>
     </component>
     <component id="project_template.MKE15Z4.MKE15Z4" name="MKE15Z4" version="1.0.0" devices="MKE15Z32xxx4" dependency="component.lpuart_adapter.MKE15Z4 component.serial_manager.MKE15Z4 component.serial_manager_uart.MKE15Z4 device.MKE15Z4_CMSIS.MKE15Z4 device.MKE15Z4_startup.MKE15Z4 platform.Include_common.MKE15Z4 platform.Include_core_cm0plus.MKE15Z4 platform.drivers.adc12.MKE15Z4 platform.drivers.clock.MKE15Z4 platform.drivers.common.MKE15Z4 platform.drivers.gpio.MKE15Z4 platform.drivers.lpi2c.MKE15Z4 platform.drivers.lpuart.MKE15Z4 platform.drivers.port.MKE15Z4 platform.drivers.smc.MKE15Z4 utility.debug_console.MKE15Z4" category="Board Support/SDK Project Template" user_visible="true" type="project_template">
-      <source path="devices/MKE15Z4/project_template" target_path="src" type="c_include">
+      <source path="devices/MKE15Z4/project_template" target_path="board" type="c_include">
         <files mask="board.h"/>
         <files mask="clock_config.h"/>
         <files mask="pin_mux.h"/>
         <files mask="peripherals.h"/>
       </source>
-      <source path="devices/MKE15Z4/project_template" target_path="src" type="src">
+      <source path="devices/MKE15Z4/project_template" target_path="board" type="src">
         <files mask="board.c"/>
         <files mask="clock_config.c"/>
         <files mask="pin_mux.c"/>

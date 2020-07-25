@@ -1,6 +1,6 @@
- /*
+/*
  * Copyright 2013 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -41,9 +41,10 @@ struct nt_control_interface;
 
 /** Controls flags which can be set / cleared.
  */
-enum nt_control_flags {
-    NT_CONTROL_NEW_DATA_FLAG  = 1 << NT_FLAGS_SYSTEM_SHIFT(0),  /*!< Indication flag that the control has new data. */
-    NT_CONTROL_EN_FLAG        = 1 << NT_FLAGS_SYSTEM_SHIFT(1),  /*!< Control Enable flag. */
+enum nt_control_flags
+{
+    NT_CONTROL_NEW_DATA_FLAG = 1 << NT_FLAGS_SYSTEM_SHIFT(0), /*!< Indication flag that the control has new data. */
+    NT_CONTROL_EN_FLAG       = 1 << NT_FLAGS_SYSTEM_SHIFT(1), /*!< Control Enable flag. */
 };
 
 /**
@@ -53,14 +54,14 @@ enum nt_control_flags {
  */
 union nt_control_special_data
 {
-  struct nt_control_arotary_data           * arotary;  /*!< Pointer to the Analog Rotary control special data. */
-  struct nt_control_aslider_data           * aslider;  /*!< Pointer to the Analog Slider control special data. */
-  struct nt_control_keypad_data            * keypad;  /*!< Pointer to the Keypad control special data. */
-  struct nt_control_rotary_data            * rotary;  /*!< Pointer to the Rotary control special data. */
-  struct nt_control_slider_data            * slider;  /*!< Pointer to the Slider control special data. */
-  struct nt_control_proxi_data             * proxi;  /*!< Pointer to the Slider control special data. */
-  struct nt_control_matrix_data            * matrix;  /*!< Pointer to the Matrix control special data. */
-  void                                     * general; /*!< Just one point of view on this union for a general sanity check. */ 
+    struct nt_control_arotary_data *arotary; /*!< Pointer to the Analog Rotary control special data. */
+    struct nt_control_aslider_data *aslider; /*!< Pointer to the Analog Slider control special data. */
+    struct nt_control_keypad_data *keypad;   /*!< Pointer to the Keypad control special data. */
+    struct nt_control_rotary_data *rotary;   /*!< Pointer to the Rotary control special data. */
+    struct nt_control_slider_data *slider;   /*!< Pointer to the Slider control special data. */
+    struct nt_control_proxi_data *proxi;     /*!< Pointer to the Slider control special data. */
+    struct nt_control_matrix_data *matrix;   /*!< Pointer to the Matrix control special data. */
+    void *general;                           /*!< Just one point of view on this union for a general sanity check. */
 };
 
 /**
@@ -68,12 +69,13 @@ union nt_control_special_data
  *  a generic behaviour of the Control. You must allocate this structure and put a pointer
  *  into the nt_control structure when the control is being registered in the system.
  */
-struct nt_control_data {
-  const struct nt_control           *rom;               /*!< The pointer to user control parameter structure. */
-  union nt_control_special_data     data;               /*!< The pointer to the control data structure. */
-  struct nt_electrode_data          **electrodes;       /*!< List of electrodes. Can't be NULL. */
-  uint32_t                          flags;              /*!< Flags. */
-  uint8_t                           electrodes_size;    /*!< Number of electrodes. */
+struct nt_control_data
+{
+    const struct nt_control *rom;          /*!< The pointer to user control parameter structure. */
+    union nt_control_special_data data;    /*!< The pointer to the control data structure. */
+    struct nt_electrode_data **electrodes; /*!< List of electrodes. Can't be NULL. */
+    uint32_t flags;                        /*!< Flags. */
+    uint8_t electrodes_size;               /*!< Number of electrodes. */
 };
 
 /**
@@ -83,11 +85,12 @@ struct nt_control_data {
  *  implementation. Each control type defines one static constant structure of this type to
  *  register its own initialization and processing functions.
  */
-struct nt_control_interface {
-  int32_t (* init)(struct nt_control_data *control);    /*!< The address of init function. */
-  int32_t (* process)(struct nt_control_data *control); /*!< The address of process function. */
-  const char* name;                                     /*!< The name of the variable of this type, used for FreeMASTER support purposes. */
-  const uint32_t params_size;                           /*!< Structure size */ 
+struct nt_control_interface
+{
+    int32_t (*init)(struct nt_control_data *control);    /*!< The address of init function. */
+    int32_t (*process)(struct nt_control_data *control); /*!< The address of process function. */
+    const char *name;           /*!< The name of the variable of this type, used for FreeMASTER support purposes. */
+    const uint32_t params_size; /*!< Structure size */
 };
 
 /**
@@ -102,11 +105,10 @@ struct nt_control_interface {
 extern "C" {
 #endif
 
-
 /**
  * \brief Get control data structure pointer.
  * \param control Pointer to the control user parameter structure.
- * \return Pointer to the data control structure that is represented by the handled user parameter structure pointer.        
+ * \return Pointer to the data control structure that is represented by the handled user parameter structure pointer.
  */
 struct nt_control_data *_nt_control_get_data(const struct nt_control *control);
 
@@ -115,7 +117,7 @@ struct nt_control_data *_nt_control_get_data(const struct nt_control *control);
  * \param control Pointer to the control.
  * \return Pointer to create the control data structure. In case of a fail it returns NULL.
  *
- * The function creates and initializes the control data structure, including the 
+ * The function creates and initializes the control data structure, including the
  * special data of the selected control (keypad, rotary, and so on).
  */
 struct nt_control_data *_nt_control_init(const struct nt_control *control);
@@ -129,7 +131,6 @@ struct nt_control_data *_nt_control_init(const struct nt_control *control);
  * array should not be NULL.
  */
 int32_t _nt_control_check_data(const struct nt_control_data *control);
-
 
 /**
  * \brief Get the state of all control electrodes.
@@ -158,8 +159,7 @@ uint32_t _nt_control_get_electrodes_digital_state(struct nt_control_data *contro
  *
  * This function sets the specified flag in all electrode objects.
  */
-void _nt_control_set_flag_all_elec(struct nt_control_data *control,
-                                  uint32_t flags);
+void _nt_control_set_flag_all_elec(struct nt_control_data *control, uint32_t flags);
 
 /**
  * \internal
@@ -213,12 +213,10 @@ uint32_t _nt_control_get_touch_count(uint32_t current_state);
  * \return Returns NT_SUCCESS if the input electrodes are neighbours, otherwise it returns NT_INVALID_RESULT.
  */
 int32_t _nt_control_check_neighbours_electrodes(struct nt_control_data *control,
-                                                uint32_t first, 
-                                                uint32_t second, 
+                                                uint32_t first,
+                                                uint32_t second,
                                                 uint32_t overrun);
- 
- 
- 
+
 /**
  * \internal
  * \brief The function checks, whether the electrode is on the edge of the electrode list.
@@ -226,16 +224,14 @@ int32_t _nt_control_check_neighbours_electrodes(struct nt_control_data *control,
  * \param electrode_ix Index of the electrode.
  * \return Returns NT_SUCCESS if the electrode is on the edge of the list, otherwise it returns NT_INVALID_RESULT.
  */
-int32_t _nt_control_check_edge_electrodes(struct nt_control_data *control,
-                                                uint32_t electrode_ix);
+int32_t _nt_control_check_edge_electrodes(struct nt_control_data *control, uint32_t electrode_ix);
 /**
  * \internal
  * \brief Set control flag.
  * \param control Pointer to the control data.
  * \param flags The flags to be set.
  */
-static inline void _nt_control_set_flag(struct nt_control_data *control,
-                                       uint32_t flags)
+static inline void _nt_control_set_flag(struct nt_control_data *control, uint32_t flags)
 {
     control->flags |= flags;
 }
@@ -246,8 +242,7 @@ static inline void _nt_control_set_flag(struct nt_control_data *control,
  * \param control Pointer to the control data.
  * \param flags The flags to be cleared.
  */
-static inline void _nt_control_clear_flag(struct nt_control_data *control,
-                                         uint32_t flags)
+static inline void _nt_control_clear_flag(struct nt_control_data *control, uint32_t flags)
 {
     control->flags &= ~flags;
 }
@@ -260,8 +255,7 @@ static inline void _nt_control_clear_flag(struct nt_control_data *control,
  * \return non-zero if any of the tested flags are set. This is bit-wise AND of
  *     the control flags and the flags parameter.
  */
-static inline uint32_t _nt_control_get_flag(const struct nt_control_data *control,
-                                           uint32_t flags)
+static inline uint32_t _nt_control_get_flag(const struct nt_control_data *control, uint32_t flags)
 {
     NT_ASSERT(control != NULL);
     return (control->flags & flags);
@@ -278,7 +272,8 @@ static inline uint32_t _nt_control_get_flag(const struct nt_control_data *contro
  */
 static inline int32_t _nt_control_overrun(struct nt_control_data *control)
 {
-    if (_nt_control_get_flag(control, NT_CONTROL_NEW_DATA_FLAG)) {
+    if (_nt_control_get_flag(control, NT_CONTROL_NEW_DATA_FLAG))
+    {
         return NT_FAILURE; /* overrun, data has not been processed */
     }
     _nt_control_clear_flag(control, NT_CONTROL_NEW_DATA_FLAG);
@@ -293,11 +288,14 @@ static inline int32_t _nt_control_overrun(struct nt_control_data *control)
  * \return Pointer to electrode instance retrieved from the control's electrode list.
  */
 static inline const struct nt_electrode *_nt_control_get_electrode(const struct nt_control_data *control,
-                                                                  uint32_t index)
+                                                                   uint32_t index)
 {
-    if (control->electrodes_size > index) {
+    if (control->electrodes_size > index)
+    {
         return control->rom->electrodes[index];
-    } else {
+    }
+    else
+    {
         return NULL;
     }
 }

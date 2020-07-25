@@ -1,6 +1,6 @@
 /*
  * Copyright 2013 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -26,7 +26,7 @@
 #include "fsl_device_registers.h"
 #include "../source/system/nt_system_prv.h"
 #if (FSL_FEATURE_TSI_VERSION == 2)
-#include "fsl_tsi_v2.h" 
+#include "fsl_tsi_v2.h"
 #elif (FSL_FEATURE_TSI_VERSION == 4)
 #include "fsl_tsi_v4.h"
 #elif (FSL_FEATURE_TSI_VERSION == 5)
@@ -54,130 +54,132 @@
  * \param usrData - user data (type is void*), the user data are specified by function \ref NT_TSI_DRV_SetCallBackFunc
  * \return - none
  */
-typedef void (*tsi_callback_t)(uint32_t instance, void* usrData);
+typedef void (*tsi_callback_t)(uint32_t instance, void *usrData);
 
 /** Error codes for the TSI driver. */
 typedef enum _tsi_status
 {
-  kStatus_TSI_Success = 0,
-  kStatus_TSI_Busy,                     /*!< TSI still in progress */
-  kStatus_TSI_Overflow,                 /*!< TSI counter out of range */
-  kStatus_TSI_Overrun,                  /*!< TSI measurement overrun  */
-  kStatus_TSI_LowPower,                 /*!< TSI is in low-power mode */
-  kStatus_TSI_Recalibration,            /*!< TSI is under recalibration process */
-  kStatus_TSI_InvalidChannel,           /*!< Invalid TSI channel */
-  kStatus_TSI_InvalidMode,              /*!< Invalid TSI mode */
-  kStatus_TSI_Initialized,              /*!< The driver is initialized and ready to measure */
-  kStatus_TSI_Error,                    /*!< The general driver error */
-  kStatus_TSI_SelfUntouchRecalibError,  /*!< The recalibration self-cap untouched calibration error */   
-  kStatus_TSI_SelfSensitivRecalibError, /*!< The recalibration self-cap sensitivity calibration error */ 
-  kStatus_TSI_MutUntouchRecalibError,   /*!< The recalibration mutual-cap untouched calibration error */   
-  kStatus_TSI_MutSensitivRecalibError   /*!< The recalibration mutual-cap sensitivity calibration error */
+    kStatus_TSI_Success = 0,
+    kStatus_TSI_Busy,                     /*!< TSI still in progress */
+    kStatus_TSI_Overflow,                 /*!< TSI counter out of range */
+    kStatus_TSI_Overrun,                  /*!< TSI measurement overrun  */
+    kStatus_TSI_LowPower,                 /*!< TSI is in low-power mode */
+    kStatus_TSI_Recalibration,            /*!< TSI is under recalibration process */
+    kStatus_TSI_InvalidChannel,           /*!< Invalid TSI channel */
+    kStatus_TSI_InvalidMode,              /*!< Invalid TSI mode */
+    kStatus_TSI_Initialized,              /*!< The driver is initialized and ready to measure */
+    kStatus_TSI_Error,                    /*!< The general driver error */
+    kStatus_TSI_SelfUntouchRecalibError,  /*!< The recalibration self-cap untouched calibration error */
+    kStatus_TSI_SelfSensitivRecalibError, /*!< The recalibration self-cap sensitivity calibration error */
+    kStatus_TSI_MutUntouchRecalibError,   /*!< The recalibration mutual-cap untouched calibration error */
+    kStatus_TSI_MutSensitivRecalibError,  /*!< The recalibration mutual-cap sensitivity calibration error */
+    kStatus_TSI_CofigurationIsReadOnly    /*!< The recalibration error not possible to write new cofiguration */
 } tsi_status_t;
 
 /**
-* User configuration structure for the TSI driver.
-*
-* Use an instance of this structure with NT_TSI_DRV_Init(). This enables you to configure the
-* most common settings of the TSI peripheral with a single function call. Settings include:
-*
-*/
-typedef struct _nt_tsi_user_config {
-    tsi_config_t                        *config;        /*!< A pointer to the hardware configuration. Can't be NULL. */
-    tsi_callback_t                      pCallBackFunc;  /*!< A pointer to the callback function at the end of the measurement. */
-    void                                * usrData;      /*!< The user data of the callback function. */
+ * User configuration structure for the TSI driver.
+ *
+ * Use an instance of this structure with NT_TSI_DRV_Init(). This enables you to configure the
+ * most common settings of the TSI peripheral with a single function call. Settings include:
+ *
+ */
+typedef struct _nt_tsi_user_config
+{
+    tsi_config_t *config;         /*!< A pointer to the hardware configuration. Can't be NULL. */
+    tsi_callback_t pCallBackFunc; /*!< A pointer to the callback function at the end of the measurement. */
+    void *usrData;                /*!< The user data of the callback function. */
 } nt_tsi_user_config_t;
 
 #if (FSL_FEATURE_TSI_VERSION == 5)
 /**
-* User recalibration configuration structure for the TSI_v5 driver.
-*
-* Use an instance of this structure with a second parameter of the NT_TSI_DRV_Recalibrate function to transmit recalibration 
-* parameters. The structure consists of the minimum and maximum counter and the delta (sensitivity) values for both 
-* the mutual-capacitance and self-capacitance modes. 
-*/
-typedef struct nt_tsi_recalib_config {
-    uint32_t SelfRangeMin     ;       /*!< minimum counter value for self-cap mode */
-    uint32_t SelfRangeMax     ;       /*!< maximum counter value for self-cap mode */
-    uint32_t SelfRangeDeltaMin;       /*!< minimum delta value for self-cap mode */
-    uint32_t SelfRangeDeltaMax;       /*!< maximum delta value for self-cap mode */
-    uint32_t MutRangeMin      ;       /*!< minimum counter value for mutual-cap mode */
-    uint32_t MutRangeMax      ;       /*!< maximum counter value for mutual-cap mode */
-    uint32_t MutRangeDeltaMin ;       /*!< minimum delta value for mutual-cap mode */
-    uint32_t MutRangeDeltaMax ;       /*!< maximum delta value for mutual-cap mode */
+ * User recalibration configuration structure for the TSI_v5 driver.
+ *
+ * Use an instance of this structure with a second parameter of the NT_TSI_DRV_Recalibrate function to transmit
+ * recalibration parameters. The structure consists of the minimum and maximum counter and the delta (sensitivity)
+ * values for both the mutual-capacitance and self-capacitance modes.
+ */
+typedef struct nt_tsi_recalib_config
+{
+    uint32_t SelfRangeMin;      /*!< minimum counter value for self-cap mode */
+    uint32_t SelfRangeMax;      /*!< maximum counter value for self-cap mode */
+    uint32_t SelfRangeDeltaMin; /*!< minimum delta value for self-cap mode */
+    uint32_t SelfRangeDeltaMax; /*!< maximum delta value for self-cap mode */
+    uint32_t MutRangeMin;       /*!< minimum counter value for mutual-cap mode */
+    uint32_t MutRangeMax;       /*!< maximum counter value for mutual-cap mode */
+    uint32_t MutRangeDeltaMin;  /*!< minimum delta value for mutual-cap mode */
+    uint32_t MutRangeDeltaMax;  /*!< maximum delta value for mutual-cap mode */
 } nt_tsi_recalib_config_t;
 #endif
 
 /**
-* Driver operation mode definition.
-*
-* The operation name definition used for the TSI driver.
-*
-*/
+ * Driver operation mode definition.
+ *
+ * The operation name definition used for the TSI driver.
+ *
+ */
 typedef enum _nt_tsi_modes
 {
-  tsi_OpModeNormal = 0,        /*!< The normal mode of TSI. */
-  tsi_OpModeProximity,         /*!< The proximity-sensing mode of TSI. */
-  tsi_OpModeLowPower,          /*!< The low-power mode of TSI. */
-  tsi_OpModeNoise,             /*!< The noise mode of TSI. This mode is not valid with TSI HW, valid only for the TSIL HW. */
-  tsi_OpModeCnt,               /*!< The count of TSI modes - for internal use. */
-  tsi_OpModeNoChange           /*!< The special value of operation mode that allows calling for example the \ref NT_TSI_DRV_DisableLowPower function without changing the operation mode. */
-}nt_tsi_modes_t;
+    tsi_OpModeNormal = 0, /*!< The normal mode of TSI. */
+    tsi_OpModeProximity,  /*!< The proximity-sensing mode of TSI. */
+    tsi_OpModeLowPower,   /*!< The low-power mode of TSI. */
+    tsi_OpModeNoise,      /*!< The noise mode of TSI. This mode is not valid with TSI HW, valid only for the TSIL HW. */
+    tsi_OpModeCnt,        /*!< The count of TSI modes - for internal use. */
+    tsi_OpModeNoChange    /*!< The special value of operation mode that allows calling for example the \ref
+                             NT_TSI_DRV_DisableLowPower function without changing the operation mode. */
+} nt_tsi_modes_t;
 
 /**
-* Driver operation status definition.
-*
-* The operation status definition used for the TSI driver.
-*
-*/
+ * Driver operation status definition.
+ *
+ * The operation status definition used for the TSI driver.
+ *
+ */
 typedef enum _nt_tsi_op_status
 {
-  tsi_OpStatusNormal = 0,        /*!< The normal mode of TSI. */
-  tsi_OpStatusSuspend,           /*!< TSI mesurement suspended */
-}nt_tsi_op_status_t;
-
+    tsi_OpStatusNormal = 0, /*!< The normal mode of TSI. */
+    tsi_OpStatusSuspend,    /*!< TSI mesurement suspended */
+} nt_tsi_op_status_t;
 
 /**
-* Driver operation mode data hold structure.
-*
-* This is the operation mode data hold structure. The structure is keeping all data needed
-* for the driver to be able to switch the operation modes and properly set up the HW peripheral.
-*
-*/
+ * Driver operation mode data hold structure.
+ *
+ * This is the operation mode data hold structure. The structure is keeping all data needed
+ * for the driver to be able to switch the operation modes and properly set up the HW peripheral.
+ *
+ */
 typedef struct _nt_tsi_operation_mode
 {
-  uint64_t                              enabledElectrodes;  /*!< The backup of enabled electrodes for the operation mode */
-  tsi_config_t                          config;             /*!< Hardware configuration */
-}nt_tsi_operation_mode_t;
+    uint64_t enabledElectrodes; /*!< The backup of enabled electrodes for the operation mode */
+    tsi_config_t config;        /*!< Hardware configuration */
+} nt_tsi_operation_mode_t;
 
 /**
-* Driver data storage place.
-*
-* It must be created by the application code and the pointer is handled by the \ref NT_TSI_DRV_Init function
-* to the driver. The driver keeps all context data for itself running. The settings include:
-*
-*/
-typedef struct _nt_tsi_state {
-  tsi_status_t                          status;             /*!< Current status of the driver. */
-  nt_tsi_op_status_t                    opSatus;            /*!< Suspended or Normal operation */
-  tsi_callback_t                        pCallBackFunc;      /*!< Pointer to the callback function at the end of the measurement. */
-  void                                  *usrData;           /*!< User data pointer handled by the callback function. */
-  nt_mutex_t                            lock;               /*!< Used by the whole driver to secure the context data integrity. */
-  nt_mutex_t                            lockChangeMode;     /*!< Used by the change mode function to secure the context data integrity. */ 
-  nt_tsi_modes_t                        opMode;             /*!< Storage of current operation mode. */
-  nt_tsi_operation_mode_t               opModesData[tsi_OpModeCnt]; /*!< Data storage of individual operational modes. */
-  uint16_t                              counters[TF_TSI_TOTAL_CHANNEL_COUNT]; /*!< The mirror of the last state of the counter registers. */
-}nt_tsi_state_t;
-
+ * Driver data storage place.
+ *
+ * It must be created by the application code and the pointer is handled by the \ref NT_TSI_DRV_Init function
+ * to the driver. The driver keeps all context data for itself running. The settings include:
+ *
+ */
+typedef struct _nt_tsi_state
+{
+    tsi_status_t status;          /*!< Current status of the driver. */
+    nt_tsi_op_status_t opSatus;   /*!< Suspended or Normal operation */
+    tsi_callback_t pCallBackFunc; /*!< Pointer to the callback function at the end of the measurement. */
+    void *usrData;                /*!< User data pointer handled by the callback function. */
+    nt_mutex_t lock;              /*!< Used by the whole driver to secure the context data integrity. */
+    nt_mutex_t lockChangeMode;    /*!< Used by the change mode function to secure the context data integrity. */
+    nt_tsi_modes_t opMode;        /*!< Storage of current operation mode. */
+    nt_tsi_operation_mode_t opModesData[tsi_OpModeCnt]; /*!< Data storage of individual operational modes. */
+} nt_tsi_state_t;
 
 /** Table of the base addresses for TSI instances. */
-extern TSI_Type * const g_tsiBase[];
+extern TSI_Type *const g_tsiBase[];
 
 /** Table to save the TSI IRQ enumeration numbers defined in the CMSIS header file. */
 extern const IRQn_Type g_tsiIrqId[FSL_FEATURE_SOC_TSI_COUNT];
 
 /** Table to save the pointers to the context data. */
-extern nt_tsi_state_t * g_tsiStatePtr[FSL_FEATURE_SOC_TSI_COUNT];
+extern nt_tsi_state_t *g_tsiStatePtr[FSL_FEATURE_SOC_TSI_COUNT];
 
 /*******************************************************************************
  * API
@@ -229,14 +231,14 @@ extern "C" {
 *  into the function.
 * \return An error code or kStatus_TSI_Success.
 */
-tsi_status_t NT_TSI_DRV_Init(uint32_t instance, nt_tsi_state_t * tsiState, const nt_tsi_user_config_t * tsiUserConfig);
+tsi_status_t NT_TSI_DRV_Init(uint32_t instance, nt_tsi_state_t *tsiState, const nt_tsi_user_config_t *tsiUserConfig);
 
 /**
 * \brief Initializes TSI v5 in both modes (self cap, mutual).
 *
 *
  \code
-   NT_TSI_DRV_InitSpecific(0, &myTsiDriveruserConfig) 
+   NT_TSI_DRV_InitSpecific(0, &myTsiDriveruserConfig)
   \endcode
 * \param base The TSI module instance.
 * \param config The user configuration structure of the tsi_config_t type. The user
@@ -299,7 +301,8 @@ uint64_t NT_TSI_DRV_GetEnabledElectrodes(uint32_t instance);
 * \brief Starts the measure cycle of the enabled electrodes.
 *
 * The function is non-blocking. Therefore, the results can be obtained after the driver completes the measure cycle.
-*         The end of the measure cycle can be checked by pooling the \ref NT_TSI_DRV_GetStatus function or waiting for the registered callback function by using
+*         The end of the measure cycle can be checked by pooling the \ref NT_TSI_DRV_GetStatus function or waiting for
+the registered callback function by using
 *         \ref NT_TSI_DRV_SetCallBackFunc or \ref NT_TSI_DRV_Init.
 *
   \code
@@ -319,30 +322,6 @@ uint64_t NT_TSI_DRV_GetEnabledElectrodes(uint32_t instance);
 * \return An error code or kStatus_TSI_Success.
 */
 tsi_status_t NT_TSI_DRV_Measure(uint32_t instance);
-
-/**
-* \brief Returns the last measured value.
-*
-* This function returns the last measured value in the previous measure cycle.
-*           The data is buffered inside the driver.
-*
-  \code
-    // Get the counter value from the TSI instance 0 and 5th channel
-
-    uint32_t result;
-
-    if(NT_TSI_DRV_GetCounter(0, 5, &result) != kStatus_TSI_Success)
-    {
-        // Error, the TSI 5'th electrode is not read
-    }
-
-  \endcode
-* \param instance The TSI module instance.
-* \param channel The TSI electrode index.
-* \param counter The pointer to the 16-bit value where the channel counter value is stored.
-* \return An error code or kStatus_TSI_Success.
-*/
-tsi_status_t NT_TSI_DRV_GetCounter(uint32_t instance, const uint32_t channel, uint16_t * counter);
 
 /**
 * \brief Returns the current status of the driver.
@@ -422,35 +401,35 @@ tsi_status_t NT_TSI_DRV_DisableLowPower(uint32_t instance, const nt_tsi_modes_t 
 * \brief Automatically measures one electrode.
 *
 * This function executes one measurement of the specified electrode (self or mutual capacitance)
-*           The electrode to be measured is specified by the number in the second function parameter.
-*           The result (counter value) is returned by this function.           
+* The electrode to be measured is specified by the pointer in the second function parameter.
+* The result (counter value) is returned by this function.
 *
   \code
     uint32_t result;
 
-    // Measure one electrode at one time 
-    result= NT_TSI_DRV_MeasureOneElect(0, 0);
+    // Measure one electrode at one time
+    result= NT_TSI_DRV_MeasureOneElect(0, &El_1);
 
 
   \endcode
 * \param instance   The TSI module instance.
-* \param electrode  The electrode number to be measured. 
-* \return           The measured electrode counter value. 
+* \param electrode  The pointer to electrode to be measured.
+* \return           The measured electrode counter value.
 */
 
-int32_t NT_TSI_DRV_MeasureOneElect(uint32_t instance, uint32_t electrode);
+uint16_t NT_TSI_DRV_MeasureOneElect(uint32_t instance, struct nt_electrode *electrode);
 
 /**
 * \brief Automatically measures all used TSI electrodes.
 *
 * This function executes one measurement of all used electrodes.
-*           The results (counter values) are stored in te array pointed to by 
-*           the pointer in the function parameters.           
+* The results (counter values) are stored in te array pointed to by
+* the pointer in the function parameters.
 *
   \code
-     uint16_t curr_counters[TF_TSI_TOTAL_CHANNEL_COUNT]; 
+     uint16_t curr_counters[TF_TSI_TOTAL_CHANNEL_COUNT];
 
-    // Measure all electrodes at one time 
+    // Measure all electrodes at one time
     if(NT_TSI_DRV_MeasureAllElect(0, &curr_counters) != kStatus_TSI_Success)
     {
         // Error, the TSI driver cannot measure the electrodes in this mode
@@ -458,7 +437,7 @@ int32_t NT_TSI_DRV_MeasureOneElect(uint32_t instance, uint32_t electrode);
 
   \endcode
 * \param instance   The TSI module instance.
-* \param counters  The pointer to the array where all used TSI counters are stored. 
+* \param counters  The pointer to the array where all used TSI counters are stored.
 * \return An error code or kStatus_TSI_Success.
 */
 
@@ -466,39 +445,46 @@ tsi_status_t NT_TSI_DRV_MeasureAllElect(uint32_t instance, uint16_t (*counters)[
 /**
 * \brief Automatically measures selected TSI electrodes.
 *
-* This function executes one measurement of more selected electrodes.
-*           The results (counter values) are stored in te array pointed to by 
-*           the pointer in the function parameters.           
+* This function executes one measurement of more selected electrodes by pointer array.
+* The results (counter values) are stored in te array pointed to by
+* the pointer in the function parameters.
 *
   \code
-     uint16_t curr_counters[TF_TSI_TOTAL_CHANNEL_COUNT]; 
-     uint64_t enabledElectrodes = 0x01FFFFFFU;
+     uint16_t curr_counters[TF_TSI_TOTAL_CHANNEL_COUNT];
+     struct nt_kernel * system = _nt_system_get();
+     struct nt_electrode **electrodes = (struct nt_electrode **)system->rom->modules[0]->electrodes;
 
-    // Measure all electrodes at one time 
-    if(result = NT_TSI_DRV_MeasureMoreElect(instance, &curr_counters, enabledElectrodes);) != kStatus_TSI_Success)
+    // Measure all electrodes at one time
+    if(result = NT_TSI_DRV_MeasureMoreElect(0, &curr_counters, electrodes, 1);) != kStatus_TSI_Success)
     {
         // Error, the TSI driver cannot measure the electrodes in this mode
     }
 
   \endcode
-* \param instance           The TSI module instance.
-* \param counters           The pointer to the array where all used TSI counters are stored. 
-* \param measuredElectrodes The electrodes to be measured. 
+* \param instance      The TSI module instance.
+* \param counters      The pointer to the array where all used TSI counters are stored.
+* \param electrodes    The pointer array to enabled electrodes to be measured.
+* \param elNumber      The number of enabled electrodes to be measured.
 * \return An error code or kStatus_TSI_Success.
 */
-tsi_status_t NT_TSI_DRV_MeasureMoreElect(uint32_t instance, uint16_t (*counters)[], uint64_t measuredElectrodes);
+tsi_status_t NT_TSI_DRV_MeasureMoreElect(uint32_t instance,
+                                         uint16_t (*counters)[],
+                                         struct nt_electrode **electrodes,
+                                         uint8_t elNumber);
 
 /**
 * \brief Automatically recalibrates all important TSI settings.
 *
 *  The function sets the TSI register to the default configuration and adjusts the configuration to reach
 *  the selected counter and sensitivity ranges (defined by user). Firstly, the self-capacitance TSI channels
-*  are adjusted, and then the mutual-capacitance TSI channels are adjusted. When any channel type is adjusted, the function firstly 
+*  are adjusted, and then the mutual-capacitance TSI channels are adjusted. When any channel type is adjusted, the
+function firstly
 *  measures all TSI channels (self or mutual) and calculates the average counter value. If the average counter value is
-*  outside the selected range, the function adjusts the TSI parameter to get inside the range. The function repeats 
-*  the previous steps until the average counter value is within the selected range. If all combinations are reached, 
-*  the function returns an error. Then the function calibrates the sensitivity in a similar way, but the user must touch 
-*  the self-cap or mutual-cap electrodes before each calibration cycle. The function waits for one or more touch event from the user,
+*  outside the selected range, the function adjusts the TSI parameter to get inside the range. The function repeats
+*  the previous steps until the average counter value is within the selected range. If all combinations are reached,
+*  the function returns an error. Then the function calibrates the sensitivity in a similar way, but the user must touch
+*  the self-cap or mutual-cap electrodes before each calibration cycle. The function makes one or more touch events by
+gpio method,
 *  depending on how many tuning cycles are required to reach the selected sensitivity ranges.
 *
 * \warning In some cases, the function does not finish the calibration (returns an error).
@@ -507,7 +493,7 @@ tsi_status_t NT_TSI_DRV_MeasureMoreElect(uint32_t instance, uint16_t (*counters)
     // define auto-calibration constant in nt_setup.c file
     tsi_status_t recalib_status
     struct nt_module tsi_module
-    struct nt_tsi_recalib_config recalib_config = { 
+    struct nt_tsi_recalib_config recalib_config = {
     .SelfRangeMin     = 50000,
     .SelfRangeMax     = 60000,
     .SelfRangeDeltaMin= 400,
@@ -515,10 +501,10 @@ tsi_status_t NT_TSI_DRV_MeasureMoreElect(uint32_t instance, uint16_t (*counters)
     .MutRangeMin      = 12000,
     .MutRangeMax      = 16000,
     .MutRangeDeltaMin = 300,
-    .MutRangeDeltaMax = 600, 
+    .MutRangeDeltaMax = 600,
     };
 
-    // assign auto-calibration structure to tsi module in nt_setup.c file 
+    // assign auto-calibration structure to tsi module in nt_setup.c file
     const struct nt_module tsi_module =
     {
         ...
@@ -529,8 +515,8 @@ tsi_status_t NT_TSI_DRV_MeasureMoreElect(uint32_t instance, uint16_t (*counters)
     recalib_status = (tsi_status_t) nt_module_recalibrate(&tsi_module);
 
     if (recalib_status != kStatus_TSI_Success)
-    {   
-        // Error, TSI calibration  was not successful (recalib_config parameters are too strict)  
+    {
+        // Error, TSI calibration  was not successful (recalib_config parameters are too strict)
     }
 
   \endcode
@@ -569,7 +555,7 @@ tsi_status_t NT_TSI_DRV_Recalibrate(uint32_t instance, void *configuration);
 * \param usrData        The user data pointer.
 * \return An error code or kStatus_TSI_Success.
 */
-tsi_status_t NT_TSI_DRV_SetCallBackFunc(uint32_t instance, const tsi_callback_t pFuncCallBack, void * usrData);
+tsi_status_t NT_TSI_DRV_SetCallBackFunc(uint32_t instance, const tsi_callback_t pFuncCallBack, void *usrData);
 
 /**
 * \brief Changes the current working operation mode.
@@ -632,14 +618,16 @@ nt_tsi_modes_t NT_TSI_DRV_GetMode(uint32_t instance);
 * \param operationMode  The pointer to the storage place of the configuration that should be loaded.
 * \return An error code or kStatus_TSI_Success.
 */
-tsi_status_t NT_TSI_DRV_LoadConfiguration(uint32_t instance, const nt_tsi_modes_t mode, const nt_tsi_operation_mode_t * operationMode);
+tsi_status_t NT_TSI_DRV_LoadConfiguration(uint32_t instance,
+                                          const nt_tsi_modes_t mode,
+                                          const nt_tsi_operation_mode_t *operationMode);
 
 /**
 * \brief Saves the TSI driver configuration for a specific mode.
 *
 * This function saves the configuration of a specific mode.
 *           This can be used when the calibrated data should be stored in any backup memory
-*           to load after the start of the MCU to avoid running the recalibration that takes 
+*           to load after the start of the MCU to avoid running the recalibration that takes
 *           more time.
 *
   \code
@@ -658,14 +646,16 @@ tsi_status_t NT_TSI_DRV_LoadConfiguration(uint32_t instance, const nt_tsi_modes_
 * \param operationMode  The pointer to the storage place of the configuration that should be saved.
 * \return An error code or kStatus_TSI_Success.
 */
-tsi_status_t NT_TSI_DRV_SaveConfiguration(uint32_t instance, const nt_tsi_modes_t mode, nt_tsi_operation_mode_t * operationMode);
+tsi_status_t NT_TSI_DRV_SaveConfiguration(uint32_t instance,
+                                          const nt_tsi_modes_t mode,
+                                          nt_tsi_operation_mode_t *operationMode);
 
 /**
 * \brief Temporary block of TSI measurement
 *
 *
  \code
-   NT_TSI_DRV_Suspend(0) 
+   NT_TSI_DRV_Suspend(0)
   \endcode
 * \param instance       The TSI module instance.
 * \return An error code or kStatus_TSI_Success.
@@ -677,7 +667,7 @@ tsi_status_t NT_TSI_DRV_Suspend(uint32_t instance);
 *
 *
  \code
-   NT_TSI_DRV_Resume(0) 
+   NT_TSI_DRV_Resume(0)
   \endcode
 * \param instance       The TSI module instance.
 * \return An error code or kStatus_TSI_Success.
@@ -688,7 +678,7 @@ tsi_status_t NT_TSI_DRV_Resume(uint32_t instance);
 }
 #endif
 
-/** \} */ /* end of tsi_drivers_api group */ 
+/** \} */ /* end of tsi_drivers_api group */
 /** \} */ /* end of tsi_drivers group */
 
 #endif

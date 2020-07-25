@@ -1,6 +1,6 @@
 /*
  * Copyright 2013 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -147,7 +147,7 @@ NTControl_proxi.prototype.OnLinkClicked = function()
 
     // scope variables
     var vars = [ 
-        {"variable":pname, "visible":true, "y_block":0 } 
+        {"variable":pname, "visible":true, "color":3026413, "y_block":0 } 
     ]; 
 
     // up to 4 electrode signals
@@ -160,13 +160,13 @@ NTControl_proxi.prototype.OnLinkClicked = function()
         var ename = "current proximity ["+ e +"]";
         ok = ok && this.DefineElVariable(ename, e);
 
-        var edef = { "variable":ename, "visible":true, "y_block":0 }; 
+        var edef = { "variable":ename, "visible":true, "color":4688896, "y_block":0 }; 
         vars.push(edef);
     }
 
     var fname = "flags [0]";
     var ok = ok &&  this.DefineFlagsVariable(fname,0);
-    var fdef = { "variable":fname, "visible":true, "y_block":1 };
+    var fdef = { "variable":fname, "visible":true, "color":11098392, "y_block":1 };
     vars.push(fdef);
 
     for(var e=1; e<el_count; e++)
@@ -174,7 +174,7 @@ NTControl_proxi.prototype.OnLinkClicked = function()
         var ename = "flags ["+ e +"]";
         ok = ok && this.DefineFlagsVariable(ename, e);
 
-        var edef = { "variable":ename, "visible":true, "y_block":1 }; 
+        var edef = { "variable":ename, "visible":true, "color":2260467, "y_block":1 }; 
         vars.push(edef);
     }
 

@@ -22,21 +22,21 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_I2C_MASTER_BASE (LPI2C0_BASE)
+#define EXAMPLE_I2C_MASTER_BASE      (LPI2C0_BASE)
 #define LPI2C_MASTER_CLOCK_FREQUENCY CLOCK_GetIpFreq(kCLOCK_Lpi2c0)
 
 #define LPI2CMASTER_TRANSMIT_EDMA_REQUEST_SOURCE kDmaRequestMux0LPI2C0Tx
-#define LPI2CMASTER_RECEIVE_EDMA_REQUEST_SOURCE kDmaRequestMux0LPI2C0Rx
-#define EXAMPLE_LPI2C_MASTER_DMA_MUX (DMAMUX)
-#define EXAMPLE_LPI2C_MASTER_DMA (DMA0)
-#define LPI2C_TRANSMIT_DMA_CHANNEL 0U
-#define LPI2C_RECEIVE_DMA_CHANNEL 1U
+#define LPI2CMASTER_RECEIVE_EDMA_REQUEST_SOURCE  kDmaRequestMux0LPI2C0Rx
+#define EXAMPLE_LPI2C_MASTER_DMA_MUX             (DMAMUX)
+#define EXAMPLE_LPI2C_MASTER_DMA                 (DMA0)
+#define LPI2C_TRANSMIT_DMA_CHANNEL               0U
+#define LPI2C_RECEIVE_DMA_CHANNEL                1U
 
 #define EXAMPLE_I2C_MASTER ((LPI2C_Type *)EXAMPLE_I2C_MASTER_BASE)
 
 #define I2C_MASTER_SLAVE_ADDR_7BIT 0x7EU
-#define I2C_BAUDRATE 100000U
-#define I2C_DATA_LENGTH 33U
+#define I2C_BAUDRATE               100000U
+#define I2C_DATA_LENGTH            33U
 
 /*******************************************************************************
  * Prototypes
@@ -145,7 +145,10 @@ int main(void)
     /* Create the EDMA channel handles */
     EDMA_CreateHandle(&g_edmaTxHandle, EXAMPLE_LPI2C_MASTER_DMA, LPI2C_TRANSMIT_DMA_CHANNEL);
     EDMA_CreateHandle(&g_edmaRxHandle, EXAMPLE_LPI2C_MASTER_DMA, LPI2C_RECEIVE_DMA_CHANNEL);
-
+#if defined(FSL_FEATURE_EDMA_HAS_CHANNEL_MUX) && FSL_FEATURE_EDMA_HAS_CHANNEL_MUX
+    EDMA_SetChannelMux(EXAMPLE_LPI2C_MASTER_DMA, LPI2C_TRANSMIT_DMA_CHANNEL, DEMO_LPI2C_TRANSMIT_EDMA_CHANNEL);
+    EDMA_SetChannelMux(EXAMPLE_LPI2C_MASTER_DMA, LPI2C_RECEIVE_DMA_CHANNEL, DEMO_LPI2C_RECEIVE_EDMA_CHANNEL);
+#endif
     /* Create the LPI2C master DMA driver handle */
     LPI2C_MasterCreateEDMAHandle(EXAMPLE_I2C_MASTER, &g_m_edma_handle, &g_edmaRxHandle, &g_edmaTxHandle,
                                  lpi2c_master_callback, NULL);
@@ -188,9 +191,6 @@ int main(void)
 
     /* Receive non-blocking data from slave */
     reVal = LPI2C_MasterTransferEDMA(EXAMPLE_I2C_MASTER, &g_m_edma_handle, &masterXfer);
-
-    /*  Reset master completion flag to false. */
-    g_MasterCompletionFlag = false;
 
     if (reVal != kStatus_Success)
     {

@@ -1,21 +1,20 @@
 /*
  * Copyright (c) 2014-2015 Freescale Semiconductor, Inc.
- * Copyright 2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "bl_app_crc_check.h"
+#include "utilities/fsl_assert.h"
 #include <string.h>
-#include "bl_context.h"
 #include "bootloader_common.h"
-#include "crc32.h"
-#include "memory.h"
-#include "property.h"
+#include "property/property.h"
+#include "memory/memory.h"
+#include "bootloader/bl_context.h"
+#include "crc/crc32.h"
+#include "bootloader/bl_app_crc_check.h"
+#include "utilities/vector_table_info.h"
 #include "target_config.h"
-#include "fsl_assert.h"
-#include "vector_table_info.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 // Declarations
@@ -31,23 +30,21 @@ static void assert_pin_to_indicate_crc_check_failure(void)
     // Initialize pin for GPIO
     CRC_CHECK_FAILURE_PIN_PORT->PCR[CRC_CHECK_FAILURE_PIN_NUMBER] = PORT_PCR_MUX(CRC_CHECK_FAILURE_PIN_GPIO_MODE);
     // Set pin as output
-    CRC_CHECK_FAILURE_PIN_GPIO->PDDR |= (1 << CRC_CHECK_FAILURE_PIN_NUMBER);
-    // Toggle pin (the inverse of default logic state) for crc check failure
-    CRC_CHECK_FAILURE_PIN_GPIO->PTOR = 1 << CRC_CHECK_FAILURE_PIN_NUMBER;
+    CRC_CHECK_FAILURE_PIN_GPIO->PDDR |= ( 1 << CRC_CHECK_FAILURE_PIN_NUMBER);
+    // Write to 1 PCOR, cleared to logic 0 for crc check failure
+    CRC_CHECK_FAILURE_PIN_GPIO->PCOR |= (1 << CRC_CHECK_FAILURE_PIN_NUMBER);
 }
 
 // See bl_app_crc_check.h for documentation on this function.
 void restore_crc_check_failure_pin(void)
 {
     // Restore crc check failure pin to default state
-    if ((CRC_CHECK_FAILURE_PIN_PORT->PCR[CRC_CHECK_FAILURE_PIN_NUMBER] & PORT_PCR_MUX_MASK) ==
-        PORT_PCR_MUX(CRC_CHECK_FAILURE_PIN_GPIO_MODE))
+    if ((CRC_CHECK_FAILURE_PIN_PORT->PCR[CRC_CHECK_FAILURE_PIN_NUMBER] & PORT_PCR_MUX_MASK) == PORT_PCR_MUX(CRC_CHECK_FAILURE_PIN_GPIO_MODE))
     {
         // Restore pin as input
         CRC_CHECK_FAILURE_PIN_GPIO->PDDR &= ~(1 << CRC_CHECK_FAILURE_PIN_NUMBER);
         // Restore pin as default muxing slot mode
-        CRC_CHECK_FAILURE_PIN_PORT->PCR[CRC_CHECK_FAILURE_PIN_NUMBER] =
-            PORT_PCR_MUX(CRC_CHECK_FAILURE_PIN_DEFAULT_MODE);
+        CRC_CHECK_FAILURE_PIN_PORT->PCR[CRC_CHECK_FAILURE_PIN_NUMBER] = PORT_PCR_MUX(CRC_CHECK_FAILURE_PIN_DEFAULT_MODE);
     }
 }
 #endif
@@ -169,8 +166,6 @@ bool is_application_crc_check_pass(void)
     bool isCrcCheckPassed = true;
 
     property_store_t *propertyStore = g_bootloaderContext.propertyInterface->store;
-    g_bootloaderContext.propertyInterface->init();
-
     if (kStatus_AppCrcCheckInvalid != propertyStore->crcCheckStatus)
     {
         isCrcCheckPassed = false;

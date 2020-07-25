@@ -1,6 +1,6 @@
 /*
  * Copyright 2013 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -36,15 +36,15 @@ NTElectrode_usafa.prototype.OnLinkClicked = function()
         this.DefineDeadBandHighVariable(vname_deadband_h);
 
     // scope variables
-    var vars = [ 
-        {"variable":vname_measured_iir, "visible":true, "y_block":0 }, 
-        {"variable":vname_predicted, "visible":true, "y_block":0 }, 
-        {"variable":vname_baseline, "visible":true, "y_block":0 },
-        {"variable":vname_deadband_h, "visible":true, "y_block":0 },
-        {"variable":vname_noise, "visible":true, "y_block":1 },
-        {"variable":vname_evnt_cnt, "visible":true, "y_block":2 },
-        {"variable":vname_deadband, "visible":true, "y_block":2 },
-    ]; 
+   var vars = [ 
+       {"variable":vname_measured_iir, "visible":true, "color":3026413, "y_block":0 }, 
+       {"variable":vname_predicted, "visible":true, "color":4688896, "y_block":0 }, 
+       {"variable":vname_baseline, "visible":true, "color":11098392, "y_block":0 },
+       {"variable":vname_deadband_h, "visible":true, "color":2260467, "y_block":0 },
+       {"variable":vname_noise, "visible":true, "color":9055202, "y_block":1 },
+       {"variable":vname_evnt_cnt, "visible":true, "color":2104737, "y_block":2 },
+       {"variable":vname_deadband, "visible":true, "color":9514086, "y_block":2 },
+   ];  
 
     // scope Y-blocks
     var yblocks = [

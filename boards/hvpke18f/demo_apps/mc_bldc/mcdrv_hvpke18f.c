@@ -48,20 +48,20 @@ clock_setup_t g_sClockSetup;
  ******************************************************************************/
 
 /*!
-* @brief   void MCDRV_Init_M1(void)
-*           - Motor control driver main initialization
-*           - Calls initialization functions of peripherals required for motor
-*             control functionality
-*
-* @param   void
-*
-* @return  none
-*/
+ * @brief   void MCDRV_Init_M1(void)
+ *           - Motor control driver main initialization
+ *           - Calls initialization functions of peripherals required for motor
+ *             control functionality
+ *
+ * @param   void
+ *
+ * @return  none
+ */
 void MCDRV_Init_M1(void)
 {
     /* Init application clock dependent variables */
     InitClock();
-  
+
     /* Init ADC */
     M1_MCDRV_ADC_PERIPH_INIT();
 
@@ -79,25 +79,23 @@ void MCDRV_Init_M1(void)
 }
 
 /*!
-* @brief      Core, bus, flash clock setup
-*
-* @param      void
-*
-* @return     none
-*/
+ * @brief      Core, bus, flash clock setup
+ *
+ * @param      void
+ *
+ * @return     none
+ */
 void InitClock(void)
 {
-
     g_sClockSetup.ui32SystemClock = CLOCK_GetFreq(kCLOCK_CoreSysClk);
     g_sClockSetup.ui32BusClock    = CLOCK_GetFreq(kCLOCK_BusClk);
-    g_sClockSetup.ui32AsynClock   = CLOCK_GetFreq(kCLOCK_ScgSysPllAsyncDiv2Clk);    
-    g_sClockSetup.ui16PwmFreq = PWM_FREQ; /* 20kHz */
+    g_sClockSetup.ui32AsynClock   = CLOCK_GetFreq(kCLOCK_ScgSysPllAsyncDiv2Clk);
+    g_sClockSetup.ui16PwmFreq     = PWM_FREQ; /* 20kHz */
     /* PWM module calculated as follows:
      * PWM_MOD = CORE_CLOCK / PWM_FREQUNCY = 160 MHz / 20 kHz = 8000 */
-    g_sClockSetup.ui16PwmModulo = g_sClockSetup.ui32SystemClock / g_sClockSetup.ui16PwmFreq;
-    g_sClockSetup.ui16PwmDeadTime = (g_sClockSetup.ui32SystemClock / (1000000000U / M1_PWM_DEADTIME) / 4U);    
+    g_sClockSetup.ui16PwmModulo    = g_sClockSetup.ui32SystemClock / g_sClockSetup.ui16PwmFreq;
+    g_sClockSetup.ui16PwmDeadTime  = (g_sClockSetup.ui32SystemClock / (1000000000U / M1_PWM_DEADTIME) / 4U);
     g_sClockSetup.ui16CtrlLoopFreq = CTRL_LOOP_FREQ; /* 1 kHz */
-
 }
 
 /*!
@@ -147,7 +145,7 @@ void InitFTM0(void)
      * COMP = 1 - complementary PWM set
      * DTEN = 1 - deadtime enabled
      * SYNCEN = 1 - PWM update synchronization enabled
-    */
+     */
     /* complementary mode */
     FTM0->COMBINE = FTM_COMBINE_COMBINE0_MASK | FTM_COMBINE_COMP0_MASK | FTM_COMBINE_DTEN0_MASK |
                     FTM_COMBINE_SYNCEN0_MASK | FTM_COMBINE_COMBINE1_MASK | FTM_COMBINE_COMP1_MASK |
@@ -180,7 +178,7 @@ void InitFTM0(void)
     FTM0->CONTROLS[4].CnSC = FTM_CnSC_ELSB_MASK;
     FTM0->CONTROLS[5].CnSC = FTM_CnSC_ELSB_MASK;
 
-     /* Enable loading updated values */
+    /* Enable loading updated values */
     FTM0->PWMLOAD |= FTM_PWMLOAD_LDOK_MASK;
 
     /* Enable generation of trigger when FTM counter is equal to CNTIN register */
@@ -188,12 +186,12 @@ void InitFTM0(void)
 
     /* No ISR, counting up, bus clock, divide by 1 */
     FTM0->SC = FTM_SC_CLKS(1);
-	
+
     /* Fault 0 polarity setting - for FNB41560 is polarity active low */
-    FTM0->FLTPOL |= FTM_FLTPOL_FLT0POL_MASK;	
-	
+    FTM0->FLTPOL |= FTM_FLTPOL_FLT0POL_MASK;
+
     /* Enable Fault 0 - connected to FNB41560 over current comparator output */
-    FTM0->FLTCTRL |= FTM_FLTCTRL_FAULT0EN_MASK;	
+    FTM0->FLTCTRL |= FTM_FLTCTRL_FAULT0EN_MASK;
 
     /* following lines configure:
      - enhanced PWM synchronization, FTM counter reset on SW sync
@@ -216,29 +214,28 @@ void InitFTM0(void)
                  FTM_SC_PWMEN4(TRUE) | FTM_SC_PWMEN5(TRUE));
 
     /* Initialization FTM 3-phase PWM mc driver */
-    g_sM1Pwm3ph.pui32PwmBase = (FTM_Type *)(FTM0);    /* FTM0 base address */
-    g_sM1Pwm3ph.ui16ChanPhA = M1_PWM_PAIR_PHA; /* PWM phase A top&bottom channel pair number */
-    g_sM1Pwm3ph.ui16ChanPhB = M1_PWM_PAIR_PHB; /* PWM phase B top&bottom channel pair number */
-    g_sM1Pwm3ph.ui16ChanPhC = M1_PWM_PAIR_PHC; /* PWM phase C top&bottom channel pair number */
+    g_sM1Pwm3ph.pui32PwmBase = (FTM_Type *)(FTM0); /* FTM0 base address */
+    g_sM1Pwm3ph.ui16ChanPhA  = M1_PWM_PAIR_PHA;    /* PWM phase A top&bottom channel pair number */
+    g_sM1Pwm3ph.ui16ChanPhB  = M1_PWM_PAIR_PHB;    /* PWM phase B top&bottom channel pair number */
+    g_sM1Pwm3ph.ui16ChanPhC  = M1_PWM_PAIR_PHC;    /* PWM phase C top&bottom channel pair number */
 
     /* Initialization of PWM modulo */
     g_sM1Pwm3ph.ui16PwmModulo = g_sClockSetup.ui16PwmModulo;
 
     /* Initialization of BLDC commutation table */
     g_sM1Pwm3ph.pcBldcTable = &bldcCommutationTableComp[0];
-    
+
     /* FTM Fault number for over current fault detection */
-    g_sM1Pwm3ph.ui16FaultFixNum = M1_FAULT_NUM;    
-    
+    g_sM1Pwm3ph.ui16FaultFixNum = M1_FAULT_NUM;
 }
 
 /*!
-* @brief      Initialization of the FTM1 for forced commutation control
-*
-* @param      void
-*
-* @return     none
-*/
+ * @brief      Initialization of the FTM1 for forced commutation control
+ *
+ * @param      void
+ *
+ * @return     none
+ */
 void InitFTM1(void)
 {
     /* Enable clock to FTM1 module (Sys CLK - 160 MHz) */
@@ -261,7 +258,7 @@ void InitFTM1(void)
 
     /* calculate frequency of timer used for forced commutation
      * System clock divided by 2^FTM_prescaler */
-    g_sClockSetup.ui32CmtTimerFreq = g_sClockSetup.ui32SystemClock >> (FTM1->SC&FTM_SC_PS_MASK);
+    g_sClockSetup.ui32CmtTimerFreq = g_sClockSetup.ui32SystemClock >> (FTM1->SC & FTM_SC_PS_MASK);
 
     /* Enable Output Compare interrupt, output Compare, Software Output
      * Compare only (ELSnB:ELSnA = 0:0, output pin is not controlled by FTM) */
@@ -274,19 +271,19 @@ void InitFTM1(void)
     NVIC_SetPriority(FTM1_IRQn, 1);
 
     /* initialization FTM time event driver */
-    g_sM1CmtTmr.pui32FtmBase = (FTM_Type *)(FTM1); /* FTM1 base address */
-    g_sM1CmtTmr.ui16ChannelNum = M1_FTM_CMT_CHAN;  /* FTM1 compare channel selection */
+    g_sM1CmtTmr.pui32FtmBase   = (FTM_Type *)(FTM1); /* FTM1 base address */
+    g_sM1CmtTmr.ui16ChannelNum = M1_FTM_CMT_CHAN;    /* FTM1 compare channel selection */
 }
 
 /*!
-* @brief   void InitFTM2(void)
-*           - Initialization of the FTM2 peripheral
-*           - Performs slow control loop counter
-*
-* @param   void
-*
-* @return  none
-*/
+ * @brief   void InitFTM2(void)
+ *           - Initialization of the FTM2 peripheral
+ *           - Performs slow control loop counter
+ *
+ * @param   void
+ *
+ * @return  none
+ */
 void InitFTM2(void)
 {
     /* Enable clock to FTM module */
@@ -337,17 +334,12 @@ void InitADC16(void)
     uint16_t ui16Calib;
 
     /* ADC channel number assignment array to be passed to MC ADC driver */
-    static uint16_t ui16AdcArray[12] = {ADC0_PH_A, ADC1_PH_A,
-                                        ADC0_PH_B, ADC1_PH_B,
-                                        ADC0_PH_C, ADC1_PH_C,
-                                        ADC0_UDCB, ADC1_UDCB,
-                                        ADC0_IDCB, ADC1_IDCB,
-                                        ADC0_AUX,  ADC1_AUX};
+    static uint16_t ui16AdcArray[12] = {ADC0_PH_A, ADC1_PH_A, ADC0_PH_B, ADC1_PH_B, ADC0_PH_C, ADC1_PH_C,
+                                        ADC0_UDCB, ADC1_UDCB, ADC0_IDCB, ADC1_IDCB, ADC0_AUX,  ADC1_AUX};
 
     /* enable clock for ADC0 and ADC1 modules*/
     PCC->CLKCFG[PCC_ADC2_INDEX] = (PCC_CLKCFG_CGC(0));
     PCC->CLKCFG[PCC_ADC1_INDEX] = (PCC_CLKCFG_CGC(0));
-
 
     PCC->CLKCFG[PCC_ADC2_INDEX] = (PCC_CLKCFG_CGC(TRUE) | PCC_CLKCFG_PCS(2));
     PCC->CLKCFG[PCC_ADC1_INDEX] = (PCC_CLKCFG_CGC(TRUE) | PCC_CLKCFG_PCS(2));
@@ -376,7 +368,9 @@ void InitADC16(void)
     ADC1->SC3 |= (ADC_SC3_CAL_MASK);
 
     /* wait until the calibration complets */
-    while (!(ADC1->SC1[0] & ADC_SC1_COCO_MASK ) ){}
+    while (!(ADC1->SC1[0] & ADC_SC1_COCO_MASK))
+    {
+    }
     ui16Calib = ADC1->UG;
     ui16Calib += ADC1->CLP0;
     ui16Calib += ADC1->CLP1;
@@ -384,7 +378,8 @@ void InitADC16(void)
     ui16Calib += ADC1->CLP3;
     ui16Calib += ADC1->CLPS;
     /* set the plus side gain register */
-    if (ui16Calib >= 0x800) ui16Calib=0xffff;
+    if (ui16Calib >= 0x800)
+        ui16Calib = 0xffff;
 
     ADC1->G = ui16Calib;
 
@@ -392,7 +387,9 @@ void InitADC16(void)
     ADC2->SC3 |= (ADC_SC3_CAL_MASK);
 
     /* wait until the calibration complets */
-    while (!(ADC2->SC1[0] & ADC_SC1_COCO_MASK ) ){}
+    while (!(ADC2->SC1[0] & ADC_SC1_COCO_MASK))
+    {
+    }
     ui16Calib = ADC2->UG;
     ui16Calib += ADC2->CLP0;
     ui16Calib += ADC2->CLP1;
@@ -400,7 +397,8 @@ void InitADC16(void)
     ui16Calib += ADC2->CLP3;
     ui16Calib += ADC2->CLPS;
     /* set the plus side gain register */
-    if (ui16Calib >= 0x800) ui16Calib=0xffff;
+    if (ui16Calib >= 0x800)
+        ui16Calib = 0xffff;
     ADC2->G = ui16Calib;
 
     /* ------- ADC self calibration procedure end ----- */
@@ -414,8 +412,8 @@ void InitADC16(void)
     ADC2->CFG1 = (ADC_CFG1_MODE(1) | ADC_CFG1_ADIV(0));
 
     /* H/W trigger, DMA disabled, default reference pin pair */
-    ADC1->SC2 =(ADC_SC2_ADTRG_MASK);
-    ADC2->SC2 =(ADC_SC2_ADTRG_MASK);
+    ADC1->SC2 = (ADC_SC2_ADTRG_MASK);
+    ADC2->SC2 = (ADC_SC2_ADTRG_MASK);
 
     /* average disabled, single conversion mode */
     ADC1->SC3 = 0;
@@ -423,9 +421,9 @@ void InitADC16(void)
 
     /* prepare first meaurement */
     /* pass initialization structure to ADC MC driver */
-    g_sM1Adc16Init.ui16AdcArray = (&ui16AdcArray[0]);
-    g_sM1Adc16Init.pui32Adc0Base = (ADC_Type *) ADC1;
-    g_sM1Adc16Init.pui32Adc1Base = (ADC_Type *) ADC2;
+    g_sM1Adc16Init.ui16AdcArray  = (&ui16AdcArray[0]);
+    g_sM1Adc16Init.pui32Adc0Base = (ADC_Type *)ADC1;
+    g_sM1Adc16Init.pui32Adc1Base = (ADC_Type *)ADC2;
     MCDRV_Adc16Init(&g_sM1AdcSensor, &g_sM1Adc16Init);
 
     /* enable ADC1 irq */
@@ -435,17 +433,17 @@ void InitADC16(void)
 }
 
 /*!
-* @brief      Initialization of the PDB for current and voltage sensing
-*
-* @param      void
-*
-* @return     none
-*/
+ * @brief      Initialization of the PDB for current and voltage sensing
+ *
+ * @param      void
+ *
+ * @return     none
+ */
 void InitPDB(void)
 {
     /* enable clock for PDB module */
-    PCC->CLKCFG[PCC_PDB1_INDEX] = PCC_CLKCFG_CGC(TRUE);                         /* Sys Clock - 160MHz */
-    PCC->CLKCFG[PCC_PDB2_INDEX] = PCC_CLKCFG_CGC(TRUE);                         /* Sys Clock - 160MHz */
+    PCC->CLKCFG[PCC_PDB1_INDEX] = PCC_CLKCFG_CGC(TRUE); /* Sys Clock - 160MHz */
+    PCC->CLKCFG[PCC_PDB2_INDEX] = PCC_CLKCFG_CGC(TRUE); /* Sys Clock - 160MHz */
     /* PBD1 CH0: enable pre-trigger 0, back2back on pre-tritgger 1 */
     /* enable channel 0, pretrigger 0 - ADC0_RA */
     PDB1->CH[0].C1 = (PDB_C1_EN(3) | PDB_C1_TOS(3) | PDB_C1_BB(2));
@@ -458,26 +456,24 @@ void InitPDB(void)
     PDB2->CH[0].C1 = (PDB_C1_EN(3) | PDB_C1_TOS(3) | PDB_C1_BB(2));
 
     /* CH0&1: pre-trigger 0 delay = middle of pwm period */
-    PDB1->CH[0].DLY[0] = (g_sClockSetup.ui16PwmModulo / 2);                      /* Set delay */
-    PDB2->CH[0].DLY[0] = ((g_sClockSetup.ui16PwmModulo / 2));                    /* Set delay */
+    PDB1->CH[0].DLY[0] = (g_sClockSetup.ui16PwmModulo / 2);   /* Set delay */
+    PDB2->CH[0].DLY[0] = ((g_sClockSetup.ui16PwmModulo / 2)); /* Set delay */
 
     /* set counters modulo */
     PDB1->MOD = 0xffff;
     PDB2->MOD = 0xffff;
 
     /* PDB trigger */
-//    TRGMUX0->TRGCFG[TRGMUX_PDB1_INDEX] = TRGMUX_TRGCFG_SEL0(0x0b);              /* FTM0 init triggers PDB1 */
-//    TRGMUX0->TRGCFG[TRGMUX_PDB2_INDEX] = TRGMUX_TRGCFG_SEL0(0x0b);              /* FTM0 init triggers PDB2 */
-//
+    //    TRGMUX0->TRGCFG[TRGMUX_PDB1_INDEX] = TRGMUX_TRGCFG_SEL0(0x0b);              /* FTM0 init triggers PDB1 */
+    //    TRGMUX0->TRGCFG[TRGMUX_PDB2_INDEX] = TRGMUX_TRGCFG_SEL0(0x0b);              /* FTM0 init triggers PDB2 */
+    //
     /* LDOK immediately updates internal registers, enable PDB0 */
     /* internal registers are update upon trigger and LDOK, enable interrupt,
        no prescaler, trig. src 8 (FTM0-EXTTRIG), enable PDB, multiplication
        factor is 1, set LDOK */
-    PDB1->SC = (PDB_SC_PDBEN_MASK | PDB_SC_LDMOD(2) | PDB_SC_TRGSEL(0) |
-               PDB_SC_PDBEIE_MASK | PDB_SC_LDOK_MASK);
+    PDB1->SC = (PDB_SC_PDBEN_MASK | PDB_SC_LDMOD(2) | PDB_SC_TRGSEL(0) | PDB_SC_PDBEIE_MASK | PDB_SC_LDOK_MASK);
 
-    PDB2->SC = (PDB_SC_PDBEN_MASK | PDB_SC_LDMOD(2) | PDB_SC_TRGSEL(0) |
-               PDB_SC_PDBEIE_MASK | PDB_SC_LDOK_MASK);
+    PDB2->SC = (PDB_SC_PDBEN_MASK | PDB_SC_LDMOD(2) | PDB_SC_TRGSEL(0) | PDB_SC_PDBEIE_MASK | PDB_SC_LDOK_MASK);
 
     /* enable PDB isr */
     NVIC_EnableIRQ(PDB1_IRQn);
@@ -489,27 +485,28 @@ void InitPDB(void)
 }
 
 /*!
-*@brief      Set Inrush relay on HVP
-*
-*@param      none
-*
-*@return     none
-*/
+ *@brief      Set Inrush relay on HVP
+ *
+ *@param      none
+ *
+ *@return     none
+ */
 void InitRelay(void)
 {
     volatile register uint32_t ui32DelayMs = 0;
 
     /* setup SysTick */
     SysTick->LOAD = 0xFFFFFF;
-    SysTick->VAL = SysTick->LOAD;
+    SysTick->VAL  = SysTick->LOAD;
     SysTick->CTRL |= SysTick_CTRL_CLKSOURCE_Msk;
     SysTick->CTRL |= SysTick_CTRL_ENABLE_Msk;
 
     /* wait 1000 milliseconds to turn on the relay */
-    while(ui32DelayMs++ < 1000)
+    while (ui32DelayMs++ < 1000)
     {
-        while(((SysTick->LOAD - SysTick->VAL) * 1000) <
-                SystemCoreClock){};
+        while (((SysTick->LOAD - SysTick->VAL) * 1000) < SystemCoreClock)
+        {
+        };
         SysTick->VAL = SysTick->LOAD;
     }
 

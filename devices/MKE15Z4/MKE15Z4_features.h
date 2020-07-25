@@ -1,13 +1,13 @@
 /*
 ** ###################################################################
-**     Version:             rev. 1.0, 2018-05-09
-**     Build:               b181106
+**     Version:             rev. 2.0, 2020-01-22
+**     Build:               b200326
 **
 **     Abstract:
 **         Chip specific module features.
 **
 **     Copyright 2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2018 NXP
+**     Copyright 2016-2020 NXP
 **     All rights reserved.
 **
 **     SPDX-License-Identifier: BSD-3-Clause
@@ -18,6 +18,8 @@
 **     Revisions:
 **     - rev. 1.0 (2018-05-09)
 **         Initial version.
+**     - rev. 2.0 (2020-01-22)
+**         Add 40 pins part numbers.
 **
 ** ###################################################################
 */
@@ -128,7 +130,7 @@
 
 /* FLASH module features */
 
-#if defined(CPU_MKE15Z32VLD4) || defined(CPU_MKE15Z32VLF4)
+#if defined(CPU_MKE15Z32VFP4) || defined(CPU_MKE15Z32VLD4) || defined(CPU_MKE15Z32VLF4)
     /* @brief Is of type FTFA. */
     #define FSL_FEATURE_FLASH_IS_FTFA (1)
     /* @brief Is of type FTFE. */
@@ -317,7 +319,7 @@
     #define FSL_FEATURE_FLASH_FLEX_NVM_EEPROM_SIZE_FOR_EEESIZE_1110 (0xFFFF)
     /* @brief Emulated eeprom size code 1111 mapping to emulated eeprom size in bytes (0xFFFF = reserved). */
     #define FSL_FEATURE_FLASH_FLEX_NVM_EEPROM_SIZE_FOR_EEESIZE_1111 (0xFFFF)
-#elif defined(CPU_MKE15Z64VLD4) || defined(CPU_MKE15Z64VLF4)
+#elif defined(CPU_MKE15Z64VFP4) || defined(CPU_MKE15Z64VLD4) || defined(CPU_MKE15Z64VLF4)
     /* @brief Is of type FTFA. */
     #define FSL_FEATURE_FLASH_IS_FTFA (1)
     /* @brief Is of type FTFE. */
@@ -506,7 +508,7 @@
     #define FSL_FEATURE_FLASH_FLEX_NVM_EEPROM_SIZE_FOR_EEESIZE_1110 (0xFFFF)
     /* @brief Emulated eeprom size code 1111 mapping to emulated eeprom size in bytes (0xFFFF = reserved). */
     #define FSL_FEATURE_FLASH_FLEX_NVM_EEPROM_SIZE_FOR_EEESIZE_1111 (0xFFFF)
-#endif /* defined(CPU_MKE15Z32VLD4) || defined(CPU_MKE15Z32VLF4) */
+#endif /* defined(CPU_MKE15Z32VFP4) || defined(CPU_MKE15Z32VLD4) || defined(CPU_MKE15Z32VLF4) */
 
 /* FTM module features */
 

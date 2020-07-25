@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
+ * Copyright 2016, Freescale Semiconductor, Inc.
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -50,4 +50,3 @@ bool_t MCDRV_AssignBemfChannel_twr_ke18(mcdrv_adc16_t *this);
 #endif
 
 #endif /* _MCDRV_ADC_ADC16_TWR_KE18_H_ */
-

@@ -19,22 +19,22 @@ static const IRQn_Type lpuart_irq_ids[FSL_FEATURE_SOC_LPUART_COUNT] = {
 #ifdef PKE18F15_SERIES
     LPUART0_RxTx_IRQn,
 #endif
-#if defined(KW36Z4_SERIES) || defined (KW38A4_SERIES)
+#ifdef KW36Z4_SERIES   
     LPUART0_LPUART1_IRQn,
 #else
     LPUART0_IRQn,
 #endif
-#if (FSL_FEATURE_SOC_LPUART_COUNT > 1u)
+#if (FSL_FEATURE_SOC_LPUART_COUNT > 1)
 #ifdef PKE18F15_SERIES
     LPUART1_RxTx_IRQn,
 #endif
-#if defined(KW36Z4_SERIES) || defined (KW38A4_SERIES)
-    LPUART0_LPUART1_IRQn,
+#ifdef KW36Z4_SERIES   
+    LPUART0_LPUART1_IRQn,    
 #else
     LPUART1_IRQn,
 #endif
 #endif // #if (LPUART_INSTANCE_COUNT > 1)
-#if (FSL_FEATURE_SOC_LPUART_COUNT > 2u)
+#if (FSL_FEATURE_SOC_LPUART_COUNT > 2)
 #ifdef PKE18F15_SERIES
     LPUART2_RxTx_IRQn,
 #else
@@ -42,10 +42,10 @@ static const IRQn_Type lpuart_irq_ids[FSL_FEATURE_SOC_LPUART_COUNT] = {
 #endif
 #endif // #if (LPUART_INSTANCE_COUNT > 2)
 
-#if (FSL_FEATURE_SOC_LPUART_COUNT > 3u)
+#if (FSL_FEATURE_SOC_LPUART_COUNT > 3)
     LPUART3_IRQn,
 #endif // #if (LPUART_INSTANCE_COUNT > 3)
-#if (FSL_FEATURE_SOC_LPUART_COUNT > 4u)
+#if (FSL_FEATURE_SOC_LPUART_COUNT > 4)
     LPUART4_IRQn,
 #endif // #if (LPUART_INSTANCE_COUNT > 4)
 };
@@ -54,18 +54,18 @@ void LPUART_SetSystemIRQ(uint32_t instance, PeripheralSystemIRQSetting set)
 {
     switch (instance)
     {
-        case 0u:
+        case 0:
 #if (FSL_FEATURE_SOC_LPUART_COUNT > 1)
-        case 1u:
+        case 1:
 #endif // #if (LPUART_INSTANCE_COUNT > 1)
 #if (FSL_FEATURE_SOC_LPUART_COUNT > 2)
-        case 2u:
+        case 2:
 #endif // #if (LPUART_INSTANCE_COUNT > 2)
 #if (FSL_FEATURE_SOC_LPUART_COUNT > 3)
-        case 3u:
+        case 3:
 #endif // #if (LPUART_INSTANCE_COUNT > 3)
 #if (FSL_FEATURE_SOC_LPUART_COUNT > 4)
-        case 4u:
+        case 4:
 #endif // #if (LPUART_INSTANCE_COUNT > 4)
             if (set == kPeripheralEnableIRQ)
             {
@@ -75,9 +75,6 @@ void LPUART_SetSystemIRQ(uint32_t instance, PeripheralSystemIRQSetting set)
             {
                 NVIC_DisableIRQ(lpuart_irq_ids[instance]);
             }
-            break;
-         default:
-            // doing nothing
             break;
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 - 2019 NXP
+ * Copyright 2017 - 2020 NXP
  * All rights reserved.
  *
  *
@@ -103,13 +103,13 @@ enum _flash_driver_version_constants
  */
 /*! @brief Flash driver status group. */
 #if defined(kStatusGroup_FlashDriver)
-#define kStatusGroupGeneric kStatusGroup_Generic
+#define kStatusGroupGeneric     kStatusGroup_Generic
 #define kStatusGroupFlashDriver kStatusGroup_FlashDriver
 #elif defined(kStatusGroup_FLASH)
-#define kStatusGroupGeneric kStatusGroup_Generic
+#define kStatusGroupGeneric     kStatusGroup_Generic
 #define kStatusGroupFlashDriver kStatusGroup_FLASH
 #else
-#define kStatusGroupGeneric 0
+#define kStatusGroupGeneric     0
 #define kStatusGroupFlashDriver 1
 #endif
 
@@ -194,7 +194,7 @@ enum _flash_driver_api_keys
 /*@}*/
 
 /*!
- * @brief Enumeration for supported flash margin levels.
+ * @brief Enumeration for supported flash user margin levels.
  */
 typedef enum _flash_user_margin_value
 {
@@ -203,12 +203,18 @@ typedef enum _flash_user_margin_value
     kFLASH_UserMarginValue0      = 0x0002U, /*!< Apply the 'User' margin to the normal read-0 level.*/
 } flash_user_margin_value_t;
 
+/*!
+ * @brief Enumeration for supported factory margin levels.
+ */
 typedef enum _flash_factory_margin_value
 {
     kFLASH_FactoryMarginValue1 = 0x0003U, /*!< Apply the 'Factory' margin to the normal read-1 level.*/
     kFLASH_FactoryMarginValue0 = 0x0004U, /*!< Apply the 'Factory' margin to the normal read-0 level.*/
 } flash_factory_margin_value_t;
 
+/*!
+ * @brief Enumeration for supported flash margin levels.
+ */
 typedef enum _flash_margin_value
 {
     kFLASH_MarginValueNormal,  /*!< Use the 'normal' read level for 1s.*/
@@ -451,6 +457,7 @@ status_t FLASH_Init(flash_config_t *config);
  */
 status_t FLASH_SetCallback(flash_config_t *config, flash_callback_t callback);
 
+#if defined(FLASH_DRIVER_IS_FLASH_RESIDENT) && FLASH_DRIVER_IS_FLASH_RESIDENT
 /*!
  * @brief Prepares flash execute-in-RAM functions.
  *
@@ -459,9 +466,8 @@ status_t FLASH_SetCallback(flash_config_t *config, flash_callback_t callback);
  * @retval #kStatus_FLASH_Success API was executed successfully.
  * @retval #kStatus_FLASH_InvalidArgument An invalid argument is provided.
  */
-#if FLASH_DRIVER_IS_FLASH_RESIDENT
 status_t FLASH_PrepareExecuteInRamFunctions(flash_config_t *config);
-#endif
+#endif /* FLASH_DRIVER_IS_FLASH_RESIDENT */
 
 /*@}*/
 
@@ -513,6 +519,7 @@ status_t FLASH_EraseAll(flash_config_t *config, uint32_t key);
  */
 status_t FLASH_Erase(flash_config_t *config, uint32_t start, uint32_t lengthInBytes, uint32_t key);
 
+#if defined(FLASH_SSD_IS_EEPROM_ENABLED) && FLASH_SSD_IS_EEPROM_ENABLED
 /*!
  * @brief Erases the eeprom sectors encompassed by parameters passed into function.
  *
@@ -536,10 +543,10 @@ status_t FLASH_Erase(flash_config_t *config, uint32_t start, uint32_t lengthInBy
  * @retval #kStatus_FLASH_ProtectionViolation The program/erase operation is requested to execute on protected areas.
  * @retval #kStatus_FLASH_CommandFailure Run-time error during the command execution.
  */
-#if FLASH_SSD_IS_EEPROM_ENABLED
 status_t FLASH_EraseEEprom(flash_config_t *config, uint32_t start, uint32_t lengthInBytes, uint32_t key);
-#endif
+#endif /* FLASH_SSD_IS_EEPROM_ENABLED */
 
+#if defined(FSL_FEATURE_FLASH_HAS_UNSECURE_FLASH_CMD) && FSL_FEATURE_FLASH_HAS_UNSECURE_FLASH_CMD
 /*!
  * @brief Erases the entire flash, including protected sectors.
  *
@@ -556,9 +563,8 @@ status_t FLASH_EraseEEprom(flash_config_t *config, uint32_t start, uint32_t leng
  * @retval #kStatus_FLASH_EepromSingleBitFault EEPROM single bit fault error code.
  * @retval #kStatus_FLASH_EepromDoubleBitFault EEPROM double bit fault error code.
  */
-#if defined(FSL_FEATURE_FLASH_HAS_UNSECURE_FLASH_CMD) && FSL_FEATURE_FLASH_HAS_UNSECURE_FLASH_CMD
 status_t FLASH_EraseAllUnsecure(flash_config_t *config, uint32_t key);
-#endif
+#endif /* FSL_FEATURE_FLASH_HAS_UNSECURE_FLASH_CMD */
 
 /*@}*/
 
@@ -614,6 +620,7 @@ status_t FLASH_Program(flash_config_t *config, uint32_t start, uint32_t *src, ui
  */
 status_t FLASH_ProgramOnce(flash_config_t *config, uint32_t index, uint32_t *src, uint32_t lengthInBytes);
 
+#if defined(FLASH_SSD_IS_EEPROM_ENABLED) && FLASH_SSD_IS_EEPROM_ENABLED
 /*!
  * @brief Programs the EEPROM with data at locations passed in through parameters.
  *
@@ -635,9 +642,8 @@ status_t FLASH_ProgramOnce(flash_config_t *config, uint32_t index, uint32_t *src
  * @retval #kStatus_FLASH_EepromSingleBitFault EEPROM single bit fault error code.
  * @retval #kStatus_FLASH_EepromDoubleBitFault EEPROM double bit fault error code.
  */
-#if FLASH_SSD_IS_EEPROM_ENABLED
 status_t FLASH_EepromWrite(flash_config_t *config, uint32_t start, uint8_t *src, uint32_t lengthInBytes);
-#endif
+#endif /* FLASH_SSD_IS_EEPROM_ENABLED */
 
 /*@}*/
 
@@ -856,6 +862,7 @@ status_t FLASH_PflashSetProtection(flash_config_t *config, pflash_protection_sta
  */
 status_t FLASH_PflashGetProtection(flash_config_t *config, pflash_protection_status_t *protectStatus);
 
+#if defined(FLASH_SSD_IS_EEPROM_ENABLED) && FLASH_SSD_IS_EEPROM_ENABLED
 /*!
  * @brief Sets the EEPROM protection to the intended protection status.
  *
@@ -867,10 +874,10 @@ status_t FLASH_PflashGetProtection(flash_config_t *config, pflash_protection_sta
  * @retval #kStatus_FLASH_CommandNotSupported Flash API is not supported.
  * @retval #kStatus_FLASH_CommandFailure Run-time error during command execution.
  */
-#if FLASH_SSD_IS_EEPROM_ENABLED
 status_t FLASH_EepromSetProtection(flash_config_t *config, uint8_t protectStatus);
-#endif
+#endif /* FLASH_SSD_IS_EEPROM_ENABLED */
 
+#if defined(FLASH_SSD_IS_EEPROM_ENABLED) && FLASH_SSD_IS_EEPROM_ENABLED
 /*!
  * @brief Gets the EEPROM protection status.
  *
@@ -881,9 +888,8 @@ status_t FLASH_EepromSetProtection(flash_config_t *config, uint8_t protectStatus
  * @retval #kStatus_FLASH_InvalidArgument An invalid argument is provided.
  * @retval #kStatus_FLASH_CommandNotSupported Flash API is not supported.
  */
-#if FLASH_SSD_IS_EEPROM_ENABLED
 status_t FLASH_EepromGetProtection(flash_config_t *config, uint8_t *protectStatus);
-#endif
+#endif /* FLASH_SSD_IS_EEPROM_ENABLED */
 
 /*@}*/
 

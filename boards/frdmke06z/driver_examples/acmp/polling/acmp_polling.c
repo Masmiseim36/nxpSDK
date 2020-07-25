@@ -16,13 +16,13 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_ACMP_BASEADDR ACMP0
+#define DEMO_ACMP_BASEADDR       ACMP0
 #define DEMO_ACMP_POSITIVE_INPUT kACMP_InternalDACOutput
 #define DEMO_ACMP_NEGATIVE_INPUT kACMP_ExternalReference0
 
 #define LED_INIT() LED_RED1_INIT(LOGIC_LED_OFF)
-#define LED_OFF() LED_RED1_OFF()
-#define LED_ON() LED_RED1_ON()
+#define LED_OFF()  LED_RED1_OFF()
+#define LED_ON()   LED_RED1_ON()
 
 /*******************************************************************************
  * Prototypes

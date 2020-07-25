@@ -15,14 +15,14 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_ACMP_BASEADDR CMP1
-#define DEMO_ACMP_USER_CHANNEL 5U
-#define DEMO_ACMP_IRQ_ID CMP1_IRQn
+#define DEMO_ACMP_BASEADDR         CMP1
+#define DEMO_ACMP_USER_CHANNEL     5U
+#define DEMO_ACMP_IRQ_ID           CMP1_IRQn
 #define DEMO_ACMP_IRQ_HANDLER_FUNC CMP1_IRQHandler
 
 #define LED_INIT() LED_GREEN1_INIT(LOGIC_LED_OFF)
-#define LED_ON() LED_GREEN1_ON()
-#define LED_OFF() LED_GREEN1_OFF()
+#define LED_ON()   LED_GREEN1_ON()
+#define LED_OFF()  LED_GREEN1_OFF()
 
 /*******************************************************************************
  * Prototypes
@@ -58,11 +58,7 @@ void DEMO_ACMP_IRQ_HANDLER_FUNC(void)
     {
         /* Unknown interrupt. */
     }
-    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-      exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 /*!

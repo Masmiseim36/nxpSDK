@@ -1,12 +1,12 @@
 /*
- * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
+ * Copyright 2016, Freescale Semiconductor, Inc.
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-#ifndef _MCDRV_LPSPI_DRIVER3PH_H_
-#define _MCDRV_LPSPI_DRIVER3PH_H_
+#ifndef _MCDRV_MOSFET_PREDRV_LSPI_H_
+#define _MCDRV_MOSFET_PREDRV_LSPI_H_
 
 #include "mlib.h"
 #include "mlib_types.h"
@@ -103,47 +103,22 @@ typedef struct _mc33937dspi
 {
     LPSPI_Type *pSpiBase; /* LPSPI base address */
 
-    GPIO_Type *pGpioEnBase;          /* PORT status register for driver enabled */
+    GPIO_Type *pGpioEnBase; /* PORT status register for driver enabled */
     uint32_t ui32GpioEnPin; /* pin number for driver enabled */
 
-    GPIO_Type *pGpioOcBase;          /* PORT status register for over-current detection */
+    GPIO_Type *pGpioOcBase; /* PORT status register for over-current detection */
     uint32_t ui32GpioOcPin; /* pin number for over-current detection */
 
-    GPIO_Type *pGpioIntBase;          /* PORT status register for interrupt detection */
+    GPIO_Type *pGpioIntBase; /* PORT status register for interrupt detection */
     uint32_t ui32GpioIntPin; /* pin number for interrupt detection */
 
-    GPIO_Type *pGpioResetBase;          /* PORT status register for reset */
+    GPIO_Type *pGpioResetBase; /* PORT status register for reset */
     uint32_t ui32GpioResetPin; /* pin number for reset, driver */
 
     uint32_t ui32Pcs; /* chip select pin */
 
     bool_t bResetControl; /* reset pin shared with MCU reset pin */
 } mc33937dspi_t;
-
-typedef struct _mcdrv_spi_drv3ph_init
-{
-    LPSPI_Type *pSpiBase; /* LPSPI base address */
-
-    GPIO_Type *pGpioOcBase;          /* GPIO status register for over-current detection */
-    PORT_Type *pPortOcBase;          /* PORT status register for driver enabled */
-    uint32_t ui32GpioOcPin; /* pin number for over-current detection */
-
-    GPIO_Type *pGpioIntBase;          /* GPIO status register for interrupt detection */
-    PORT_Type *pPortIntBase;          /* PORT status register for driver enabled */
-    uint32_t ui32GpioIntPin; /* pin number for interrupt detection */
-
-    GPIO_Type *pGpioResetBase;          /* GPIO status register for reset */
-    PORT_Type *pPortResetBase;          /* PORT status register for driver enabled */
-    uint32_t ui32GpioResetPin; /* pin number for reset, driver */
-
-    GPIO_Type *pGpioEnBase;          /* GPIO status register for driver enabled */
-    PORT_Type *pPortEnBase;          /* PORT status register for driver enabled */
-    uint32_t ui32GpioEnPin; /* pin number for driver enabled */
-
-    uint32_t ui32Pcs;       /* PCS pin */
-    bool_t bFaultOcEnabled; /* over-current fault detection enabled on GPIO pin */
-    bool_t bResetControl;   /* reset pin shared with MCU reset pin */
-} mcdrv_spi_drv3ph_init_t;
 
 typedef struct _mcdrv_spi_drv3ph
 {
@@ -213,21 +188,12 @@ bool_t MCDRV_Driver3PhSetDeadtime(mcdrv_spi_drv3ph_t *this);
 /*!
  * @brief Function configure MC33937 pre-driver
  *
- * @param this          Pointer to the current object
+ * @param this Pointer to the current object
  *
  * @return boot_t true on success
  */
 bool_t MCDRV_Driver3PhConfig(mcdrv_spi_drv3ph_t *this);
 
-/*!
- * @brief Initialization function of MC33937 SPI driver
- *
- * @param this   Pointer to the current object
- * @param init   Pointer to initialization structure
- *
- * @return boot_t true on success
- */
-bool_t MCDRV_Driver3PhInit(mcdrv_spi_drv3ph_t *this, mcdrv_spi_drv3ph_init_t *init);
 /*!
  * @brief Function read MC33937 over current pin
  *
@@ -276,7 +242,7 @@ bool_t MCDRV_Driver3PhGetSr1(mcdrv_spi_drv3ph_t *this);
 /*!
  * @brief Function read MC33937 status register 2
  *
- * @param this          Pointer to the current object
+ * @param this Pointer to the current object
  *
  * @return boot_t true on success
  */
@@ -285,7 +251,7 @@ bool_t MCDRV_Driver3PhGetSr2(mcdrv_spi_drv3ph_t *this);
 /*!
  * @brief Function read MC33937 status register 3
  *
- * @param this          Pointer to the current object
+ * @param this Pointer to the current object
  *
  * @return boot_t true on success
  */
@@ -295,5 +261,4 @@ bool_t MCDRV_Driver3PhGetSr3(mcdrv_spi_drv3ph_t *this);
 }
 #endif
 
-#endif /* _MCDRV_LPSPI_DRIVER3PH_H_ */
-
+#endif /* _MCDRV_MOSFET_PREDRV_LSPI_H_ */

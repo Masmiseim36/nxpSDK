@@ -1,6 +1,5 @@
 /*
  * Copyright (c) 2013-2014 Freescale Semiconductor, Inc.
- * Copyright 2019 NXP
  * All rights reserved.
  *
  * 
@@ -70,45 +69,7 @@ bool UartPeripheral::init(const char *port, long speed)
         case 115200:
             speed = B115200;
             break;
-        case 230400:
-            speed = B230400;
-            break;
-        case 460800:
-            speed = B460800;
-        case 500000:
-            speed = B500000;
-            break;
-        case 576000:
-            speed = B576000;
-            break;
-        case 921600:
-            speed = B921600;
-            break;
-        case 1000000:
-            speed = B1000000;
-            break;
-        case 1152000:
-            speed = B1152000;
-            break;
-        case 1500000:
-            speed = B1500000;
-            break;
-        case 2000000:
-            speed = B2000000;
-            break;
-        case 2500000:
-            speed = B2500000;
-            break;
-        case 3000000:
-            speed = B3000000;
-            break;
-        case 3500000:
-            speed = B3500000;
-            break;
-        case 4000000:
-            speed = B4000000;
-            break;
-        default:
+            default:
             Log::warning("Warning: unsupported standard baud rate(%d), set to default(57600)\n", speed);
             speed = B57600;
             break;

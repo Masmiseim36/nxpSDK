@@ -18,7 +18,7 @@
 
 /* Interrupt number for the PWT instance used */
 #define PWT_INTERRUPT_NUMBER PWT_LPTMR0_IRQn
-#define PWT_EXAMPLE_HANDLER PWT_LPTMR0_IRQHandler
+#define PWT_EXAMPLE_HANDLER  PWT_LPTMR0_IRQHandler
 
 /* Get source clock for PWT driver */
 #define PWT_SOURCE_CLOCK CLOCK_GetFreq(kCLOCK_BusClk)

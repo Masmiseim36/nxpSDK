@@ -17,15 +17,15 @@
  * Definitions
  ******************************************************************************/
 /* Version info */
-#define MCRSP_VER       "2.0.0"        /* motor control package version */
+#define MCRSP_VER "2.0.0" /* motor control package version */
 
 /* Application info */
-typedef struct 
+typedef struct
 {
-    char    cBoardID[15];
-    char    cMotorType[4];
-    char    cAppVer[5];
-}app_ver_t;
+    char cBoardID[15];
+    char cMotorType[4];
+    char cAppVer[5];
+} app_ver_t;
 
 /* Structure used during clocks and modulo calculations */
 typedef struct _clock_setup
@@ -34,7 +34,7 @@ typedef struct _clock_setup
     uint32_t ui32BusClock;
     uint32_t ui32AsynClock;
     uint16_t ui16PwmFreq;
-    uint16_t ui16PwmDeadTime;    
+    uint16_t ui16PwmDeadTime;
     uint16_t ui16PwmModulo;
     uint32_t ui32CmtTimerFreq;
     uint16_t ui16CtrlLoopFreq;
@@ -66,9 +66,9 @@ typedef struct _clock_setup
 /******************************************************************************
  * Clock & PWM definition
  ******************************************************************************/
-#define PWM_FREQ (20000)        /* PWM frequency - 20kHz */
-#define CTRL_LOOP_FREQ (1000)   /* Control loop frequency */
-#define M1_PWM_DEADTIME (1500)  /* Output PWM deadtime value in nanoseconds */
+#define PWM_FREQ (20000)       /* PWM frequency - 20kHz */
+#define CTRL_LOOP_FREQ (1000)  /* Control loop frequency */
+#define M1_PWM_DEADTIME (1500) /* Output PWM deadtime value in nanoseconds */
 
 /* Assignment of FTM channels to motor phases
  * 0 - FTM channels 0&1
@@ -100,8 +100,8 @@ extern const char bldcCommutationTableComp[16];
  *   --------------------------------------------------------------------------
  *   BEMF_A (PTB11)    |                  | ADC2_SE8 (0x08)
  *   BEMF_B (PTB8)     |                  | ADC2_SE11 (0x0B)
- *   BEMF_C (PTA6)     | ADC0_SE2  (0x02) | 
- *   U_dcb (PTE7)      |                  | ADC2_SE2 (0x02) 
+ *   BEMF_C (PTA6)     | ADC0_SE2  (0x02) |
+ *   U_dcb (PTE7)      |                  | ADC2_SE2 (0x02)
  *   I_dcb (PTB10)     |                  | ADC2_SE9 (0x09)
  */
 /* BEMF phase A assigned to ADC0 only */
@@ -157,7 +157,7 @@ extern const char bldcCommutationTableComp[16];
 #define M1_MCDRV_PWM_PERIPH_INIT() (InitFTM0())
 #define M1_MCDRV_PWM3PH_SET_PWM_OUTPUT(par1, par2) (MCDRV_FtmSetPwmOutput(par1, par2))
 #define M1_MCDRV_PWM3PH_SET_DUTY(par1, par2) (MCDRV_FtmSetDutyCycle(par1, par2))
-#define MC_MCDRV_PWM3PH_FLT_GET(par) (MCDRV_FtmPwm3PhFltGet(par))    
+#define MC_MCDRV_PWM3PH_FLT_GET(par) (MCDRV_FtmPwm3PhFltGet(par))
 #else
 #error MCDRV: Unsupported PWM periphery!
 #endif
@@ -229,7 +229,6 @@ void InitPDB(void);
 void InitADC16(void);
 void InitRelay(void);
 void InitClock(void);
-
 
 #ifdef __cplusplus
 }

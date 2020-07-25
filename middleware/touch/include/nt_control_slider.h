@@ -1,6 +1,6 @@
 /*
  * Copyright 2013 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -34,25 +34,24 @@
 #include "nt_controls.h"
 #include "nt_types.h"
 
-#define NT_CONTROL_SLIDER_NAME  "nt_control_slider_interface"
+#define NT_CONTROL_SLIDER_NAME "nt_control_slider_interface"
 
 /** Slider event types. */
-enum nt_control_slider_event {
-    NT_SLIDER_MOVEMENT      = 0,  /*!< Finger movement event. */
-    NT_SLIDER_ALL_RELEASE   = 1,  /*!< Release event. */
-    NT_SLIDER_INITIAL_TOUCH = 2,  /*!< Initial-touch event. */
+enum nt_control_slider_event
+{
+    NT_SLIDER_MOVEMENT      = 0, /*!< Finger movement event. */
+    NT_SLIDER_ALL_RELEASE   = 1, /*!< Release event. */
+    NT_SLIDER_INITIAL_TOUCH = 2, /*!< Initial-touch event. */
 };
-
-
 
 /* forward declarations */
 
 /**
  * Slider event callback function pointer type.
  */
-typedef void (* nt_control_slider_callback)(const struct nt_control *control,
-                                            enum nt_control_slider_event,
-                                            uint32_t position);
+typedef void (*nt_control_slider_callback)(const struct nt_control *control,
+                                           enum nt_control_slider_event,
+                                           uint32_t position);
 
 /** An interface structure, which contains pointers to the entry points of
  *  Slider algorithms. A pointer to this structure must be assigned to any
@@ -95,17 +94,17 @@ extern "C" {
  * Register the specified callback function as the Slider events handler.
  * Example:
  * \code
- *  
+ *
  *  //Create the callback function for aslider
  *  static void my_slider_cb(const struct nt_control *control,
  *                            enum nt_control_aslider_event event,
  *                            uint32_t position)
  *  {
  *    (void)control;
- *    char* event_names[] = 
+ *    char* event_names[] =
  *     {
- *      "NT_SLIDER_MOVEMENT",     
- *      "NT_SLIDER_ALL_RELEASE",  
+ *      "NT_SLIDER_MOVEMENT",
+ *      "NT_SLIDER_ALL_RELEASE",
  *      "NT_SLIDER_INITIAL_TOUCH",
  *      };
  *    printf("New slider control event %s on position: %d.", event_names[event], position);
@@ -115,8 +114,7 @@ extern "C" {
  *  nt_control_slider_register_callback(&my_slider_control, my_slider_cb);
  * \endcode
  */
-void nt_control_slider_register_callback(const struct nt_control *control,
-                                         nt_control_slider_callback callback);
+void nt_control_slider_register_callback(const struct nt_control *control, nt_control_slider_callback callback);
 /**
  * \brief Get the Slider 'Position' value.
  * \param control Pointer to the control.
@@ -126,7 +124,7 @@ void nt_control_slider_register_callback(const struct nt_control *control,
  * This function retrieves the actual finger position value.
  * Example:
  * \code
- * uint32_t position; 
+ * uint32_t position;
  * // Get position of Slider control
  * position = nt_control_slider_get_position(&my_slider_control);
  * printf("Position of Slider control is: %d.", position);
@@ -140,7 +138,7 @@ uint32_t nt_control_slider_get_position(const struct nt_control *control);
  * \return Non-zero value, when the control is currently touched.
  * Example:
  * \code
- * uint32_t touched; 
+ * uint32_t touched;
  * // Get state of Slider control
  * touched = nt_control_slider_is_touched(&my_slider_control);
  * if(touched)
@@ -157,7 +155,7 @@ uint32_t nt_control_slider_is_touched(const struct nt_control *control);
  * \return Non-zero value, when the control detects finger movement.
  * Example:
  * \code
- * uint32_t movement; 
+ * uint32_t movement;
  * // Get state of Slider control
  * movement = nt_control_slider_movement_detected(&my_slider_control);
  * if(movement)
@@ -175,7 +173,7 @@ uint32_t nt_control_slider_movement_detected(const struct nt_control *control);
  *         values. Returns zero, when a movement towards zero is detected.
  * Example:
  * \code
- * uint32_t direction; 
+ * uint32_t direction;
  * // Get direction of Slider control
  * direction = nt_control_slider_get_direction(&my_slider_control);
  * if(direction)
@@ -193,7 +191,7 @@ uint32_t nt_control_slider_get_direction(const struct nt_control *control);
  *         otherwise zero.
  * Example:
  * \code
- * uint32_t invalid_position; 
+ * uint32_t invalid_position;
  * // Get invalid position of Slider control
  * invalid_position = nt_control_slider_get_invalid_position(&my_slider_control);
  * if(invalid_position)
@@ -203,7 +201,6 @@ uint32_t nt_control_slider_get_direction(const struct nt_control *control);
  * \endcode
  */
 uint32_t nt_control_slider_get_invalid_position(const struct nt_control *control);
-
 
 /** \} end of slider_api group */
 /** \} end of slider group */

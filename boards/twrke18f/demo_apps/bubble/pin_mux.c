@@ -14,11 +14,11 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v6.0
+product: Pins v7.0
 processor: MKE18F512xxx16
 package_id: MKE18F512VLL16
 mcu_data: ksdk2_0
-processor_version: 6.0.1
+processor_version: 0.7.2
 board: TWR-KE18F
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
@@ -49,6 +49,7 @@ BOARD_InitPins:
   - {pin_num: '53', peripheral: LPUART0, signal: TX, pin_signal: ADC0_SE5/ADC1_SE15/PTB1/LPUART0_TX/LPSPI0_SOUT/TCLK0}
   - {pin_num: '22', peripheral: FTM0, signal: 'CH, 0', pin_signal: ACMP2_IN1/PTD15/FTM0_CH0}
   - {pin_num: '21', peripheral: FTM0, signal: 'CH, 1', pin_signal: ACMP2_IN0/PTD16/FTM0_CH1}
+  - {pin_num: '92', peripheral: CoreDebug, signal: TRACE_SWO, pin_signal: PTA10/FTM1_CH4/LPUART0_TX/FXIO_D0/JTAG_TDO/noetm_Trace_SWO, pull_select: down, pull_enable: disable}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
@@ -62,9 +63,26 @@ BOARD_InitPins:
 void BOARD_InitPins(void)
 {
     /* Clock Control: Clock enabled */
+    CLOCK_EnableClock(kCLOCK_PortA);
+    /* Clock Control: Clock enabled */
     CLOCK_EnableClock(kCLOCK_PortB);
     /* Clock Control: Clock enabled */
     CLOCK_EnableClock(kCLOCK_PortD);
+
+    /* PORTA10 (pin 92) is configured as noetm_Trace_SWO */
+    PORT_SetPinMux(PORTA, 10U, kPORT_MuxAlt7);
+
+    PORTA->PCR[10] = ((PORTA->PCR[10] &
+                       /* Mask bits to zero which are setting */
+                       (~(PORT_PCR_PS_MASK | PORT_PCR_PE_MASK | PORT_PCR_ISF_MASK)))
+
+                      /* Pull Select: Internal pulldown resistor is enabled on the corresponding pin, if the
+                       * corresponding PE field is set. */
+                      | PORT_PCR_PS(kPORT_PullDown)
+
+                      /* Pull Enable: Internal pullup or pulldown resistor is not enabled on the corresponding
+                       * pin. */
+                      | PORT_PCR_PE(kPORT_PullDisable));
 
     /* PORTB0 (pin 54) is configured as LPUART0_RX */
     PORT_SetPinMux(BOARD_DEBUG_UART_RX_PORT, BOARD_DEBUG_UART_RX_PIN, kPORT_MuxAlt2);

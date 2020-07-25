@@ -1,13 +1,13 @@
 /*
 ** ###################################################################
 **     Version:             rev. 1.0, 2017-05-19
-**     Build:               b190822
+**     Build:               b200218
 **
 **     Abstract:
 **         Chip specific module features.
 **
 **     Copyright 2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2019 NXP
+**     Copyright 2016-2020 NXP
 **     All rights reserved.
 **
 **     SPDX-License-Identifier: BSD-3-Clause
@@ -84,6 +84,10 @@
 /* @brief Has data register with name CRC */
 #define FSL_FEATURE_CRC_HAS_CRC_REG (0)
 
+/* FGPIO module features */
+
+/* No feature definitions */
+
 /* FTM module features */
 
 /* @brief Number of channels. */
@@ -108,6 +112,11 @@
 #define FSL_FEATURE_FTM_HAS_CHANNEL7_TRIGGER (0)
 /* @brief Has no QDCTRL. */
 #define FSL_FEATURE_FTM_HAS_NO_QDCTRL (1)
+/* @brief If instance has only TPM function. */
+#define FSL_FEATURE_FTM_IS_TPM_ONLY_INSTANCEn(x) \
+    (((x) == FTM0) ? (1) : \
+    (((x) == FTM1) ? (1) : \
+    (((x) == FTM2) ? (0) : (-1))))
 /* @brief TPM Has no CONF. */
 #define FSL_FEATURE_TPM_HAS_NO_CONF (1)
 /* @brief There is CLKS bit in SC register. */
@@ -124,83 +133,83 @@
 /* FTMRH module features */
 
 /* @brief Is of type FTMRE. */
-#define FSL_FEATURE_FLASH_IS_FTMRE (0)
+#define FSL_FEATURE_FLASH_IS_FTMRE (0U)
 /* @brief Is of type FTMRH. */
-#define FSL_FEATURE_FLASH_IS_FTMRH (1)
+#define FSL_FEATURE_FLASH_IS_FTMRH (1U)
 /* @brief Has EEPROM region protection (register FEPROT). */
-#define FSL_FEATURE_FLASH_HAS_EEROM_REGION_PROTECTION (0)
+#define FSL_FEATURE_FLASH_HAS_EEROM_REGION_PROTECTION (0U)
 /* @brief Has flash cache control in FMC module. */
-#define FSL_FEATURE_FLASH_HAS_FMC_FLASH_CACHE_CONTROLS (0)
+#define FSL_FEATURE_FLASH_HAS_FMC_FLASH_CACHE_CONTROLS (0U)
 /* @brief Has flash cache control in MCM module. */
-#define FSL_FEATURE_FLASH_HAS_MCM_FLASH_CACHE_CONTROLS (1)
+#define FSL_FEATURE_FLASH_HAS_MCM_FLASH_CACHE_CONTROLS (1U)
 /* @brief P-Flash higher region start address. */
-#define FSL_FEATURE_FLASH_PFLASH_HIGH_START_ADDRESS (0x00007FFF)
+#define FSL_FEATURE_FLASH_PFLASH_HIGH_START_ADDRESS (0x00007FFFUL)
 /* @brief P-Flash start address. */
-#define FSL_FEATURE_FLASH_PFLASH_START_ADDRESS (0x00000000)
+#define FSL_FEATURE_FLASH_PFLASH_START_ADDRESS (0x00000000UL)
 /* @brief P-Flash block count. */
-#define FSL_FEATURE_FLASH_PFLASH_BLOCK_COUNT (1)
+#define FSL_FEATURE_FLASH_PFLASH_BLOCK_COUNT (1U)
 /* @brief P-Flash block size. */
-#define FSL_FEATURE_FLASH_PFLASH_BLOCK_SIZE (65536)
+#define FSL_FEATURE_FLASH_PFLASH_BLOCK_SIZE (65536UL)
 /* @brief P-Flash sector size. */
-#define FSL_FEATURE_FLASH_PFLASH_BLOCK_SECTOR_SIZE (512)
+#define FSL_FEATURE_FLASH_PFLASH_BLOCK_SECTOR_SIZE (512UL)
 /* @brief P-Flash write unit size. */
-#define FSL_FEATURE_FLASH_PFLASH_BLOCK_WRITE_UNIT_SIZE (8)
+#define FSL_FEATURE_FLASH_PFLASH_BLOCK_WRITE_UNIT_SIZE (8U)
 /* @brief P-Flash data path width. */
-#define FSL_FEATURE_FLASH_PFLASH_BLOCK_DATA_PATH_WIDTH (16)
+#define FSL_FEATURE_FLASH_PFLASH_BLOCK_DATA_PATH_WIDTH (16U)
 /* @brief Has EEPROM memory. */
-#define FSL_FEATURE_FLASH_HAS_EEPROM (1)
+#define FSL_FEATURE_FLASH_HAS_EEPROM (1U)
 /* @brief EEPROM start address. */
-#define FSL_FEATURE_FLASH_EEPROM_START_ADDRESS (0x10000000)
+#define FSL_FEATURE_FLASH_EEPROM_START_ADDRESS (0x10000000UL)
 /* @brief EEPROM block count. */
-#define FSL_FEATURE_FLASH_EEPROM_BLOCK_COUNT (1)
+#define FSL_FEATURE_FLASH_EEPROM_BLOCK_COUNT (1U)
 /* @brief EEPROM block size . */
-#define FSL_FEATURE_FLASH_EEPROM_BLOCK_SIZE (256)
+#define FSL_FEATURE_FLASH_EEPROM_BLOCK_SIZE (256UL)
 /* @brief EEPROM sector size. */
-#define FSL_FEATURE_FLASH_EEPROM_BLOCK_SECTOR_SIZE (2)
+#define FSL_FEATURE_FLASH_EEPROM_BLOCK_SECTOR_SIZE (2U)
 /* @brief EEPROM write unit size. */
-#define FSL_FEATURE_FLASH_EEPROM_BLOCK_WRITE_UNIT_SIZE (8)
+#define FSL_FEATURE_FLASH_EEPROM_BLOCK_WRITE_UNIT_SIZE (8U)
 /* @brief EEPROM data path width. */
-#define FSL_FEATURE_FLASH_EEPROM_BLOCK_DATA_PATH_WIDTH (8)
+#define FSL_FEATURE_FLASH_EEPROM_BLOCK_DATA_PATH_WIDTH (8U)
 /* @brief Has 0x01 Erase Verify All Blocks command. */
-#define FSL_FEATURE_FLASH_HAS_ERASE_VERIFY_ALL_BLOCKS_CMD (1)
+#define FSL_FEATURE_FLASH_HAS_ERASE_VERIFY_ALL_BLOCKS_CMD (1U)
 /* @brief Has 0x02 Erase Verify Block command. */
-#define FSL_FEATURE_FLASH_HAS_ERASE_VERIFY_BLOCK_CMD (1)
+#define FSL_FEATURE_FLASH_HAS_ERASE_VERIFY_BLOCK_CMD (1U)
 /* @brief Has 0x03 Erase Verify Flash Section command. */
-#define FSL_FEATURE_FLASH_HAS_ERASE_VERIFY_FLASH_SECTION_CMD (1)
+#define FSL_FEATURE_FLASH_HAS_ERASE_VERIFY_FLASH_SECTION_CMD (1U)
 /* @brief Has 0x04 Read Once command. */
-#define FSL_FEATURE_FLASH_HAS_READ_ONCE_CMD (1)
+#define FSL_FEATURE_FLASH_HAS_READ_ONCE_CMD (1U)
 /* @brief Has 0x06 Program Flash command. */
-#define FSL_FEATURE_FLASH_HAS_PROGRAM_FLASH_CMD (1)
+#define FSL_FEATURE_FLASH_HAS_PROGRAM_FLASH_CMD (1U)
 /* @brief Has 0x07 Program Once command. */
-#define FSL_FEATURE_FLASH_HAS_PROGRAM_ONCE_CMD (1)
+#define FSL_FEATURE_FLASH_HAS_PROGRAM_ONCE_CMD (1U)
 /* @brief Has 0x08 Erase All Blocks command. */
-#define FSL_FEATURE_FLASH_HAS_ERASE_ALL_BLOCKS_CMD (1)
+#define FSL_FEATURE_FLASH_HAS_ERASE_ALL_BLOCKS_CMD (1U)
 /* @brief Has 0x09 Erase Flash Block command. */
-#define FSL_FEATURE_FLASH_HAS_ERASE_FLASH_BLOCK_CMD (1)
+#define FSL_FEATURE_FLASH_HAS_ERASE_FLASH_BLOCK_CMD (1U)
 /* @brief Has 0x0A Erase Flash Sector command. */
-#define FSL_FEATURE_FLASH_HAS_ERASE_FLASH_SECTOR_CMD (1)
+#define FSL_FEATURE_FLASH_HAS_ERASE_FLASH_SECTOR_CMD (1U)
 /* @brief Has 0x0B Unsecure Flash command. */
-#define FSL_FEATURE_FLASH_HAS_UNSECURE_FLASH_CMD (1)
+#define FSL_FEATURE_FLASH_HAS_UNSECURE_FLASH_CMD (1U)
 /* @brief Has 0x0C Verify Backdoor Access Key command. */
-#define FSL_FEATURE_FLASH_HAS_VERIFY_BACKDOOR_ACCESS_KEY_CMD (1)
+#define FSL_FEATURE_FLASH_HAS_VERIFY_BACKDOOR_ACCESS_KEY_CMD (1U)
 /* @brief Has 0x0D Set User Margin Level command. */
-#define FSL_FEATURE_FLASH_HAS_SET_USER_MARGIN_LEVEL_CMD (1)
+#define FSL_FEATURE_FLASH_HAS_SET_USER_MARGIN_LEVEL_CMD (1U)
 /* @brief Has 0x0E Set Factory Margin Level command. */
-#define FSL_FEATURE_FLASH_HAS_SET_FACTORY_MARGIN_LEVEL_CMD (1)
+#define FSL_FEATURE_FLASH_HAS_SET_FACTORY_MARGIN_LEVEL_CMD (1U)
 /* @brief Has 0x0F Configure NVM command. */
-#define FSL_FEATURE_FLASH_HAS_CONFIGURE_NVM_CMD (1)
+#define FSL_FEATURE_FLASH_HAS_CONFIGURE_NVM_CMD (1U)
 /* @brief Has 0x10 Erase Verify EEPROM Section command. */
-#define FSL_FEATURE_FLASH_HAS_ERASE_VERIFY_EEPROM_SECTION_CMD (1)
+#define FSL_FEATURE_FLASH_HAS_ERASE_VERIFY_EEPROM_SECTION_CMD (1U)
 /* @brief Has 0x11 Program EEPROM command. */
-#define FSL_FEATURE_FLASH_HAS_PROGRAM_EEPROM_CMD (1)
+#define FSL_FEATURE_FLASH_HAS_PROGRAM_EEPROM_CMD (1U)
 /* @brief Has 0x12 Erase EEPROM Sector command. */
-#define FSL_FEATURE_FLASH_HAS_ERASE_EEPROM_SECTOR_CMD (1)
+#define FSL_FEATURE_FLASH_HAS_ERASE_EEPROM_SECTOR_CMD (1U)
 /* @brief P-Flash Erase sector command address alignment. */
-#define FSL_FEATURE_FLASH_PFLASH_SECTOR_CMD_ADDRESS_ALIGMENT (4)
+#define FSL_FEATURE_FLASH_PFLASH_SECTOR_CMD_ADDRESS_ALIGMENT (4U)
 /* @brief P-Flash Rrogram/Verify section command address alignment. */
-#define FSL_FEATURE_FLASH_PFLASH_SECTION_CMD_ADDRESS_ALIGMENT (4)
+#define FSL_FEATURE_FLASH_PFLASH_SECTION_CMD_ADDRESS_ALIGMENT (4U)
 /* @brief P-Flash Program flash command address alignment. */
-#define FSL_FEATURE_FLASH_PFLASH_PROGRAM_CMD_ADDRESS_ALIGMENT (4)
+#define FSL_FEATURE_FLASH_PFLASH_PROGRAM_CMD_ADDRESS_ALIGMENT (4U)
 
 /* GPIO module features */
 
@@ -213,7 +222,8 @@
 #define FSL_FEATURE_I2C_HAS_SMBUS (1)
 /* @brief Maximum supported baud rate in kilobit per second. */
 #define FSL_FEATURE_I2C_MAX_BAUD_KBPS (400)
-/* @brief Is affected by errata with ID 6070 (repeat start cannot be generated if the F[MULT] bit field is set to a non-zero value). */
+/* @brief Is affected by errata with ID 6070 (repeat start cannot be generated if the F[MULT] bit field is set to a
+ * non-zero value). */
 #define FSL_FEATURE_I2C_HAS_ERRATA_6070 (0)
 /* @brief Has DMA support (register bit C1[DMAEN]). */
 #define FSL_FEATURE_I2C_HAS_DMA_SUPPORT (0)
@@ -273,7 +283,8 @@
 
 /* @brief Has receive FIFO overflow detection (bit field CFIFO[RXOFE]). */
 #define FSL_FEATURE_UART_HAS_IRQ_EXTENDED_FUNCTIONS (1)
-/* @brief Has low power features (can be enabled in wait mode via register bit C1[DOZEEN] or CTRL[DOZEEN] if the registers are 32-bit wide). */
+/* @brief Has low power features (can be enabled in wait mode via register bit C1[DOZEEN] or CTRL[DOZEEN] if the
+ * registers are 32-bit wide). */
 #define FSL_FEATURE_UART_HAS_LOW_POWER_UART_SUPPORT (0)
 /* @brief Has extended data register ED (or extra flags in the DATA register if the registers are 32-bit wide). */
 #define FSL_FEATURE_UART_HAS_EXTENDED_DATA_REGISTER_FLAGS (0)
@@ -289,7 +300,8 @@
 #define FSL_FEATURE_UART_HAS_10BIT_DATA_SUPPORT (0)
 /* @brief Baud rate fine adjustment is available. */
 #define FSL_FEATURE_UART_HAS_BAUD_RATE_FINE_ADJUST_SUPPORT (0)
-/* @brief Baud rate oversampling is available (has bit fields C4[OSR], C5[BOTHEDGE], C5[RESYNCDIS] or BAUD[OSR], BAUD[BOTHEDGE], BAUD[RESYNCDIS] if the registers are 32-bit wide). */
+/* @brief Baud rate oversampling is available (has bit fields C4[OSR], C5[BOTHEDGE], C5[RESYNCDIS] or BAUD[OSR],
+ * BAUD[BOTHEDGE], BAUD[RESYNCDIS] if the registers are 32-bit wide). */
 #define FSL_FEATURE_UART_HAS_BAUD_RATE_OVER_SAMPLING_SUPPORT (0)
 /* @brief Baud rate oversampling is available. */
 #define FSL_FEATURE_UART_HAS_RX_RESYNC_SUPPORT (1)
@@ -305,11 +317,13 @@
 #define FSL_FEATURE_UART_MAX_DATA_WIDTH_WITH_PARITY (8)
 /* @brief Supports two match addresses to filter incoming frames. */
 #define FSL_FEATURE_UART_HAS_ADDRESS_MATCHING (0)
-/* @brief Has transmitter/receiver DMA enable bits C5[TDMAE]/C5[RDMAE] (or BAUD[TDMAE]/BAUD[RDMAE] if the registers are 32-bit wide). */
+/* @brief Has transmitter/receiver DMA enable bits C5[TDMAE]/C5[RDMAE] (or BAUD[TDMAE]/BAUD[RDMAE] if the registers are
+ * 32-bit wide). */
 #define FSL_FEATURE_UART_HAS_DMA_ENABLE (0)
 /* @brief Has transmitter/receiver DMA select bits C4[TDMAS]/C4[RDMAS], resp. C5[TDMAS]/C5[RDMAS] if IS_SCI = 0. */
 #define FSL_FEATURE_UART_HAS_DMA_SELECT (0)
-/* @brief Data character bit order selection is supported (bit field S2[MSBF] or STAT[MSBF] if the registers are 32-bit wide). */
+/* @brief Data character bit order selection is supported (bit field S2[MSBF] or STAT[MSBF] if the registers are 32-bit
+ * wide). */
 #define FSL_FEATURE_UART_HAS_BIT_ORDER_SELECT (0)
 /* @brief Has smart card (ISO7816 protocol) support and no improved smart card support. */
 #define FSL_FEATURE_UART_HAS_SMART_CARD_SUPPORT (0)

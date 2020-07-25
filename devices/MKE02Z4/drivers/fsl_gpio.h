@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019, NXP
+ * Copyright 2017-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -21,8 +21,8 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief GPIO driver version 2.0.1. */
-#define FSL_GPIO_DRIVER_VERSION (MAKE_VERSION(2, 0, 1))
+/*! @brief GPIO driver version 2.1.0. */
+#define FSL_GPIO_DRIVER_VERSION (MAKE_VERSION(2, 1, 0))
 /*@}*/
 
 /*! @brief PORT definition */
@@ -190,6 +190,8 @@ uint32_t GPIO_PinRead(gpio_port_num_t port, uint8_t pin);
 
 /*@}*/
 
+/*@}*/
+
 /*!
  * @addtogroup fgpio_driver
  * @{
@@ -332,6 +334,8 @@ uint32_t FGPIO_PinRead(gpio_port_num_t port, uint8_t pin);
 /*@}*/
 
 #endif /* FSL_FEATURE_SOC_FGPIO_COUNT */
+
+/*@}*/
 
 #if defined(__cplusplus)
 }

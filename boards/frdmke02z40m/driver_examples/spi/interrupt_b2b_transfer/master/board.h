@@ -21,12 +21,12 @@
 
 /*! @brief The UART to use for debug messages. */
 #define BOARD_USE_UART
-#define BOARD_DEBUG_UART_TYPE kSerialPort_Uart
+#define BOARD_DEBUG_UART_TYPE     kSerialPort_Uart
 #define BOARD_DEBUG_UART_BASEADDR (uint32_t) UART1
 #define BOARD_DEBUG_UART_INSTANCE 1U
-#define BOARD_DEBUG_UART_CLKSRC kCLOCK_BusClk
-#define BOARD_UART_IRQ UART1_IRQn
-#define BOARD_UART_IRQ_HANDLER UART1_IRQHandler
+#define BOARD_DEBUG_UART_CLKSRC   kCLOCK_BusClk
+#define BOARD_UART_IRQ            UART1_IRQn
+#define BOARD_UART_IRQ_HANDLER    UART1_IRQHandler
 
 #ifndef BOARD_DEBUG_UART_BAUDRATE
 #define BOARD_DEBUG_UART_BAUDRATE 115200
@@ -53,7 +53,7 @@
 #define BOARD_TSI_MUTUAL_RX_ELECTRODE_1 6U
 
 /* Board RGB LED color mapping */
-#define LOGIC_LED_ON 0U
+#define LOGIC_LED_ON  0U
 #define LOGIC_LED_OFF 1U
 
 #define BOARD_LED_RED_GPIO_PORT kGPIO_PORTH

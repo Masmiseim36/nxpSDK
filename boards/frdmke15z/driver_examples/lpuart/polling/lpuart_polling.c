@@ -14,8 +14,8 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_LPUART LPUART1
-#define DEMO_LPUART_CLKSRC kCLOCK_ScgSysOscClk
+#define DEMO_LPUART          LPUART1
+#define DEMO_LPUART_CLKSRC   kCLOCK_ScgSysOscClk
 #define DEMO_LPUART_CLK_FREQ CLOCK_GetFreq(kCLOCK_ScgSysOscClk)
 
 /*******************************************************************************

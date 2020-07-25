@@ -19,22 +19,22 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_LPSPI_MASTER_BASEADDR LPSPI0
-#define EXAMPLE_LPSPI_MASTER_CLOCK_NAME kCLOCK_Lpspi0
-#define LPSPI_MASTER_CLK_FREQ (CLOCK_GetIpFreq(EXAMPLE_LPSPI_MASTER_CLOCK_NAME))
-#define EXAMPLE_LPSPI_MASTER_CLOCK_SOURCE (kCLOCK_IpSrcFircAsync)
-#define EXAMPLE_LPSPI_MASTER_PCS_FOR_INIT kLPSPI_Pcs3
+#define EXAMPLE_LPSPI_MASTER_BASEADDR         LPSPI0
+#define EXAMPLE_LPSPI_MASTER_CLOCK_NAME       kCLOCK_Lpspi0
+#define LPSPI_MASTER_CLK_FREQ                 (CLOCK_GetIpFreq(EXAMPLE_LPSPI_MASTER_CLOCK_NAME))
+#define EXAMPLE_LPSPI_MASTER_CLOCK_SOURCE     (kCLOCK_IpSrcFircAsync)
+#define EXAMPLE_LPSPI_MASTER_PCS_FOR_INIT     kLPSPI_Pcs3
 #define EXAMPLE_LPSPI_MASTER_PCS_FOR_TRANSFER kLPSPI_MasterPcs3
 
-#define EXAMPLE_LPSPI_MASTER_DMA_MUX_BASE DMAMUX
+#define EXAMPLE_LPSPI_MASTER_DMA_MUX_BASE          DMAMUX
 #define EXAMPLE_LPSPI_MASTER_DMA_RX_REQUEST_SOURCE kDmaRequestMux0LPSPI0Rx
 #define EXAMPLE_LPSPI_MASTER_DMA_TX_REQUEST_SOURCE kDmaRequestMux0LPSPI0Tx
-#define EXAMPLE_LPSPI_MASTER_DMA_BASE DMA0
-#define EXAMPLE_LPSPI_MASTER_DMA_RX_CHANNEL 0U
-#define EXAMPLE_LPSPI_MASTER_DMA_TX_CHANNEL 1U
+#define EXAMPLE_LPSPI_MASTER_DMA_BASE              DMA0
+#define EXAMPLE_LPSPI_MASTER_DMA_RX_CHANNEL        0U
+#define EXAMPLE_LPSPI_MASTER_DMA_TX_CHANNEL        1U
 
 #define EXAMPLE_LPSPI_DEALY_COUNT 0xfffff
-#define TRANSFER_SIZE 64U         /* Transfer dataSize */
+#define TRANSFER_SIZE     64U     /* Transfer dataSize */
 #define TRANSFER_BAUDRATE 500000U /* Transfer baudrate - 500k */
 
 /*******************************************************************************
@@ -131,21 +131,9 @@ int main(void)
     EDMA_Init(EXAMPLE_LPSPI_MASTER_DMA_BASE, &userConfig);
 
     /*Master config*/
-    masterConfig.baudRate     = TRANSFER_BAUDRATE;
-    masterConfig.bitsPerFrame = 8 * TRANSFER_SIZE;
-    masterConfig.cpol         = kLPSPI_ClockPolarityActiveHigh;
-    masterConfig.cpha         = kLPSPI_ClockPhaseFirstEdge;
-    masterConfig.direction    = kLPSPI_MsbFirst;
-
-    masterConfig.pcsToSckDelayInNanoSec        = 1000000000 / masterConfig.baudRate;
-    masterConfig.lastSckToPcsDelayInNanoSec    = 1000000000 / masterConfig.baudRate;
-    masterConfig.betweenTransferDelayInNanoSec = 1000000000 / masterConfig.baudRate;
-
-    masterConfig.whichPcs           = EXAMPLE_LPSPI_MASTER_PCS_FOR_INIT;
-    masterConfig.pcsActiveHighOrLow = kLPSPI_PcsActiveLow;
-
-    masterConfig.pinCfg        = kLPSPI_SdiInSdoOut;
-    masterConfig.dataOutConfig = kLpspiDataOutRetained;
+    LPSPI_MasterGetDefaultConfig(&masterConfig);
+    masterConfig.baudRate = TRANSFER_BAUDRATE;
+    masterConfig.whichPcs = EXAMPLE_LPSPI_MASTER_PCS_FOR_INIT;
 
     srcClock_Hz = LPSPI_MASTER_CLK_FREQ;
     LPSPI_MasterInit(EXAMPLE_LPSPI_MASTER_BASEADDR, &masterConfig, srcClock_Hz);
@@ -158,7 +146,12 @@ int main(void)
                       EXAMPLE_LPSPI_MASTER_DMA_RX_CHANNEL);
     EDMA_CreateHandle(&(lpspiEdmaMasterTxDataToTxRegHandle), EXAMPLE_LPSPI_MASTER_DMA_BASE,
                       EXAMPLE_LPSPI_MASTER_DMA_TX_CHANNEL);
-
+#if defined(FSL_FEATURE_EDMA_HAS_CHANNEL_MUX) && FSL_FEATURE_EDMA_HAS_CHANNEL_MUX
+    EDMA_SetChannelMux(EXAMPLE_LPSPI_MASTER_DMA_BASE, EXAMPLE_LPSPI_MASTER_DMA_TX_CHANNEL,
+                       DEMO_LPSPI_TRANSMIT_EDMA_CHANNEL);
+    EDMA_SetChannelMux(EXAMPLE_LPSPI_MASTER_DMA_BASE, EXAMPLE_LPSPI_MASTER_DMA_RX_CHANNEL,
+                       DEMO_LPSPI_RECEIVE_EDMA_CHANNEL);
+#endif
     LPSPI_MasterTransferCreateHandleEDMA(EXAMPLE_LPSPI_MASTER_BASEADDR, &g_m_edma_handle, LPSPI_MasterUserCallback,
                                          NULL, &lpspiEdmaMasterRxRegToRxDataHandle,
                                          &lpspiEdmaMasterTxDataToTxRegHandle);

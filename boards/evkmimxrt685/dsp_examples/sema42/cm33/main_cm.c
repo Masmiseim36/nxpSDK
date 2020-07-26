@@ -18,9 +18,9 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define APP_MU MUA
-#define APP_SEMA42 SEMA42
-#define APP_BOARD_HAS_LED 1
+#define APP_MU               MUA
+#define APP_SEMA42           SEMA42
+#define APP_BOARD_HAS_LED    1
 #define USE_STATIC_DOMAIN_ID 0
 /* Flag indicates Core Boot Up*/
 #define BOOT_FLAG 0x01U
@@ -82,8 +82,8 @@ int main(void)
 {
     uint8_t domainId;
     /* Init board hardware.*/
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
     /* Clear SEMA42 reset */
     RESET_PeripheralReset(kSEMA_RST_SHIFT_RSTn);

@@ -1,16 +1,16 @@
 /*
- * Copyright 2016-2018 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
+#include "bl_flexspi.h"
 #include "bootloader_common.h"
+#include "flexspi_nor_flash.h"
+#include "fsl_assert.h"
 #include "fsl_device_registers.h"
-#include "flexspi/fsl_flexspi.h"
-#include "flexspi_nor/flexspi_nor_flash.h"
 #include "fusemap.h"
-#include "utilities/fsl_assert.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions

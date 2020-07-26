@@ -18,14 +18,14 @@
  * Definitions
  ******************************************************************************/
 /*Master related*/
-#define TRANSFER_SIZE 256U        /*! Transfer dataSize */
+#define TRANSFER_SIZE     256U    /*! Transfer dataSize */
 #define TRANSFER_BAUDRATE 200000U /*! Transfer baudrate - 200k */
 
 #define MASTER_FLEXIO_SPI_BASEADDR (FLEXIO1)
-#define FLEXIO_SPI_SOUT_PIN 1U
-#define FLEXIO_SPI_SIN_PIN 0U
-#define FLEXIO_SPI_CLK_PIN 3U
-#define FLEXIO_SPI_PCS_PIN 2U
+#define FLEXIO_SPI_SOUT_PIN        1U
+#define FLEXIO_SPI_SIN_PIN         0U
+#define FLEXIO_SPI_CLK_PIN         3U
+#define FLEXIO_SPI_PCS_PIN         2U
 
 #define MASTER_FLEXIO_SPI_IRQ FLEXIO1_IRQn
 
@@ -39,26 +39,26 @@
     (CLOCK_GetFreq(kCLOCK_Usb1PllClk) / (MASTER_FLEXIO_SPI_CLOCK_PRE_DIVIDER + 1U) / \
      (MASTER_FLEXIO_SPI_CLOCK_DIVIDER + 1U))
 
-#define EXAMPLE_FLEXIO_SPI_DMAMUX_BASEADDR DMAMUX
+#define EXAMPLE_FLEXIO_SPI_DMAMUX_BASEADDR    DMAMUX
 #define EXAMPLE_FLEXIO_SPI_DMA_LPSPI_BASEADDR DMA0
-#define FLEXIO_SPI_TX_DMA_LPSPI_CHANNEL (0U)
-#define FLEXIO_SPI_RX_DMA_LPSPI_CHANNEL (1U)
-#define FLEXIO_TX_SHIFTER_INDEX 0U
-#define FLEXIO_RX_SHIFTER_INDEX 2U
-#define EXAMPLE_TX_DMA_SOURCE (kDmaRequestMuxFlexIO1Request0Request1)
-#define EXAMPLE_RX_DMA_SOURCE (kDmaRequestMuxFlexIO1Request2Request3)
+#define FLEXIO_SPI_TX_DMA_LPSPI_CHANNEL       (0U)
+#define FLEXIO_SPI_RX_DMA_LPSPI_CHANNEL       (1U)
+#define FLEXIO_TX_SHIFTER_INDEX               0U
+#define FLEXIO_RX_SHIFTER_INDEX               2U
+#define EXAMPLE_TX_DMA_SOURCE                 (kDmaRequestMuxFlexIO1Request0Request1)
+#define EXAMPLE_RX_DMA_SOURCE                 (kDmaRequestMuxFlexIO1Request2Request3)
 
 /*Slave related*/
-#define SLAVE_LPSPI_BASEADDR (LPSPI1)
+#define SLAVE_LPSPI_BASEADDR   (LPSPI1)
 #define SLAVE_LPSPI_IRQ_HANDLE (LPSPI1_DriverIRQHandler)
-#define SLAVE_LPSPI_IRQN (LPSPI1_IRQn)
+#define SLAVE_LPSPI_IRQN       (LPSPI1_IRQn)
 
 /* Select USB1 PLL PFD0 (720 MHz) as lpspi clock source */
 #define SLAVE_LPSPI_CLOCK_SELECT (1U)
 /* Clock divider for lpspi clock source */
 #define SLAVE_LPSPI_CLOCK_DIVIDER (7U)
 
-#define SLAVE_LPSPI_PCS_FOR_INIT (kLPSPI_Pcs0)
+#define SLAVE_LPSPI_PCS_FOR_INIT     (kLPSPI_Pcs0)
 #define SLAVE_LPSPI_PCS_FOR_TRANSFER (kLPSPI_SlavePcs0)
 
 
@@ -99,10 +99,6 @@ void FLEXIO_SPI_MasterUserCallback(FLEXIO_SPI_Type *base,
                                    status_t status,
                                    void *userData)
 {
-    if (status == kStatus_Success)
-    {
-        __NOP();
-    }
     isMasterTransferCompleted = true;
 }
 

@@ -23,7 +23,7 @@ limitations under the License.
 
 namespace EigenForTFLite {
 #ifndef TFLITE_MCU
-class ThreadPoolDevice;
+struct ThreadPoolDevice;
 #endif
 }
 

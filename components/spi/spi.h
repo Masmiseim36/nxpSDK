@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 NXP
+ * Copyright 2018-2019 NXP
  * All rights reserved.
  *
  *
@@ -17,7 +17,10 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+/*! @brief spi master handle size.*/
 #define HAL_SPI_MASTER_HANDLE_SIZE (68U)
+
+/*! @brief spi slave handle size.*/
 #define HAL_SPI_SLAVE_HANDLE_SIZE (68U)
 
 /*! @brief Return status for the spi driver.*/
@@ -83,8 +86,47 @@ typedef struct _hal_spi_transfer
     uint32_t flags;  /*!< spi control flag.*/
 } hal_spi_transfer_t;
 
+/*! @brief spi master handle.*/
 typedef void *hal_spi_master_handle_t;
+
+/*! @brief spi slave handle.*/
 typedef void *hal_spi_slave_handle_t;
+
+/*!
+ * @brief Defines the SPI master handle
+ *
+ * This macro is used to define the SPI master handle.
+ * Then use "(hal_spi_master_handle_t)name" to get the SPI master handle.
+ *
+ * The macro should be global and could be optional. You could also define SPI master handle by yourself.
+ *
+ * This is an example,
+ * @code
+ *   HAL_SPI_MASTER_HANDLE_DEFINE(spiMasterHandle);
+ * @endcode
+ *
+ * @param name The name string of the SPI master handle.
+ */
+#define HAL_SPI_MASTER_HANDLE_DEFINE(name) \
+    uint32_t name[(HAL_SPI_MASTER_HANDLE_SIZE + sizeof(uint32_t) - 1U) / sizeof(uint32_t)]
+
+/*!
+ * @brief Defines the SPI slave handle
+ *
+ * This macro is used to define the SPI slave handle.
+ * Then use "(hal_spi_slave_handle_t)name" to get the SPI slave handle.
+ *
+ * The macro should be global and could be optional. You could also define SPI slave handle by yourself.
+ *
+ * This is an example,
+ * @code
+ *   HAL_SPI_SLAVE_HANDLE_DEFINE(spiSlaveHandle);
+ * @endcode
+ *
+ * @param name The name string of the SPI slave handle.
+ */
+#define HAL_SPI_SLAVE_HANDLE_DEFINE(name) \
+    uint32_t name[(HAL_SPI_SLAVE_HANDLE_SIZE + sizeof(uint32_t) - 1U) / sizeof(uint32_t)]
 
 /*! @brief spi master callback for finished transmit */
 typedef void (*hal_spi_master_transfer_callback_t)(hal_spi_master_handle_t handle,
@@ -115,23 +157,26 @@ extern "C" {
  * structure. The parameter handle is a pointer to point to a memory space of size #HAL_SPI_MASTER_HANDLE_SIZE
  * allocated by the caller.
  *
- * Example
+ * Example below shows how to use this API to configure the SPI master.
  * @code
- *   static uint32_t s_masterHandleBuffer[((HAL_SPI_MASTER_HANDLE_SIZE + sizeof(uint32_t) - 1) / sizeof(uitn32_t))];
- *   static hal_spi_master_handle_t s_masterHandle = (hal_spi_master_handle_t)&s_masterHandleBuffer[0];
+ *   HAL_SPI_MASTER_HANDLE_DEFINE(masterHandle);
  *   hal_spi_master_config_t userConfig;
- *   userConfig.polarity = kHAL_SpiClockPolarityActiveHigh;
- *   userConfig.phase = kHAL_SpiClockPhaseFirstEdge;
- *   userConfig.direction = kHAL_SpiMsbFirst;
- *   userConfig.baudRate_Bps = 500000U;
- *   userConfig.enableMaster = true;
- *   userConfig.srcClock_Hz = 48000000;
- *   userConfig.instance = 0;
- *   HAL_SpiMasterInit(s_masterHandle, &userConfig);
+ *   userConfig.polarity      = kHAL_SpiClockPolarityActiveHigh;
+ *   userConfig.phase         = kHAL_SpiClockPhaseFirstEdge;
+ *   userConfig.direction     = kHAL_SpiMsbFirst;
+ *   userConfig.baudRate_Bps  = 500000U;
+ *   userConfig.enableMaster  = true;
+ *   userConfig.srcClock_Hz   = 48000000;
+ *   userConfig.instance      = 0;
+ *   HAL_SpiMasterInit((hal_spi_master_handle_t)masterHandle, &userConfig);
  * @endcode
  *
  * @param handle Pointer to point to a memory space of size #HAL_SPI_MASTER_HANDLE_SIZE allocated by the caller.
- * The handle should be 4 byte aligned, because unaligned access does not support on some devices.
+ * The handle should be 4 byte aligned, because unaligned access doesn't be supported on some devices.
+ * You can define the handle in the following two ways:
+ * #HAL_SPI_MASTER_HANDLE_DEFINE(handle);
+ * or
+ * uint32_t handle[((HAL_SPI_MASTER_HANDLE_SIZE + sizeof(uint32_t) - 1U) / sizeof(uint32_t))];
  * @param config pointer to master configuration structure
  * @retval kStatus_HAL_SpiError An error occurred.
  * @retval kStatus_HAL_SpiSuccess spi master initialization succeed
@@ -147,21 +192,24 @@ hal_spi_status_t HAL_SpiMasterInit(hal_spi_master_handle_t handle, const hal_spi
  * allocated by the caller.
  * After calling this API, the slave is ready to transfer.
  *
- * Example
+ * Example below shows how to use this API to configure the SPI slave.
  * @code
- *   static uint32_t s_slaveHandleBuffer[((HAL_SPI_SLAVE_HANDLE_SIZE + sizeof(uint32_t) - 1) / sizeof(uitn32_t))];
- *   static hal_spi_slave_handle_t s_slaveHandle = (hal_spi_slave_handle_t)&s_slaveHandleBuffer[0];
+ *   HAL_SPI_MASTER_HANDLE_DEFINE(slaveHandle);
  *   hal_spi_slave_config_t userConfig;
- *   userConfig.polarity = kHAL_SpiClockPolarityActiveHigh;
- *   userConfig.phase = kHAL_SpiClockPhaseFirstEdge;
- *   userConfig.direction = kHAL_SpiMsbFirst;
- *   userConfig.instance = 0;
- *   userConfig.enableSlave = true;
- *   HAL_SpiSlaveInit(s_slaveHandle, &userConfig);
+ *   userConfig.polarity      = kHAL_SpiClockPolarityActiveHigh;
+ *   userConfig.phase         = kHAL_SpiClockPhaseFirstEdge;
+ *   userConfig.direction     = kHAL_SpiMsbFirst;
+ *   userConfig.instance      = 0;
+ *   userConfig.enableSlave   = true;
+ *   HAL_SpiSlaveInit((hal_spi_slave_handle_t)slaveHandle, &userConfig);
  * @endcode
  *
  * @param handle Pointer to point to a memory space of size #HAL_SPI_SLAVE_HANDLE_SIZE allocated by the caller.
- * The handle should be 4 byte aligned, because unaligned access does not support on some devices.
+ * The handle should be 4 byte aligned, because unaligned access doesn't be supported on some devices.
+ * You can define the handle in the following two ways:
+ * #HAL_SPI_MASTER_HANDLE_DEFINE(handle);
+ * or
+ * uint32_t handle[((HAL_SPI_SLAVE_HANDLE_SIZE + sizeof(uint32_t) - 1U) / sizeof(uint32_t))];
  * @param config pointer to slave configuration structure
  * @retval kStatus_HAL_SpiError An error occurred.
  * @retval kStatus_HAL_SpiSuccess spi slave initialization succeed

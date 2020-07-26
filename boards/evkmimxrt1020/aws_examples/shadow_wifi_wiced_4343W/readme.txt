@@ -5,9 +5,9 @@ The simple Shadow lightbulb example to illustrate how client application and thi
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.40.2
-- GCC ARM Embedded  8.3.1
-- MCUXpresso  11.1.0
+- IAR embedded Workbench  8.50.1
+- GCC ARM Embedded  9.2.1
+- MCUXpresso  11.2.0
 
 Hardware requirements
 =====================
@@ -39,7 +39,7 @@ Before running the demo it is need to configure AWS IoT Console and update some 
         #define clientcredentialIOT_THING_NAME "MyExample"
 
     In the next step you will get the "device certificate" and the "primary key". The device certificate and private key needs to be opened in text editor and its content copied into the "aws_clientcredential_keys.h".
-    Or you can use the CertificateConfigurator.html (mcu-sdk-2.0\rtos\amazon-freertos\tools\certificate_configuration) to generate the "aws_clientcredential_keys.h".
+    Or you can use the CertificateConfigurator.html (mcu-sdk-2.0\rtos\freertos\tools\certificate_configuration) to generate the "aws_clientcredential_keys.h".
 
     Example:
         #define keyCLIENT_CERTIFICATE_PEM "Paste client certificate here."
@@ -85,10 +85,10 @@ The log below shows the output of the demo in the terminal window. The log can b
 1 246 [Tmr Svc] Device credential provisioning succeeded.
 2 249 [iot_thread] [INFO ][INIT][249] SDK successfully initialized.
 
- AsyncInterrupt is not supported 
+ AsyncInterrupt is not supported
 WLAN MAC Address : A0:C9:A0:3D:EE:8F
 WLAN Firmware    : wl0: Feb 12 2018 04:08:14 version 7.79.2 (r683798 CY) FWID 01-27b63357
-WLAN CLM         : API: 12.2 Data: 9.10.39 Compiler: 1.29.4 ClmImport: 1.36.3 Creation: 2018-02-12 04:00:50 
+WLAN CLM         : API: 12.2 Data: 9.10.39 Compiler: 1.29.4 ClmImport: 1.36.3 Creation: 2018-02-12 04:00:50
 3 4942 [iot_thread] [INFO ][DEMO][4942] Successfully initialized the demo. Network type for the demo: 1
 4 4942 [iot_thread] [INFO ][MQTT][4942] MQTT library successfully initialized.
 5 4942 [iot_thread] [INFO ][Shadow][4942] Shadow library successfully initialized.

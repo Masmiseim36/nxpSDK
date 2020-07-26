@@ -114,8 +114,13 @@ typedef struct
 *   FrameHeight - Size in pixel of a single frame of the bitmap resource.
 *   FrameDelay  - Delay in milliseconds for animated bitmap resources. If == 0,
 *     no animation will take place.
-*   NoOfFrames  - Number of frames, this bitmap resources consists of. At least
-*     one frame has to exists.
+*   NoOfFrames  - Number of real frames, this bitmap resources consists of. At
+*     least one frame has to exists.
+*   Mapping        - A table with indices to map between virtual frames numbers
+*     and the numbers of really existing frames. This is the case if the bitmap
+*     contains dupplicates of frames. The number of entries within the table
+*     corresponds to the number of virtual frames. The table has to be finished
+*     by 0xFFFF.
 *   Frames      - Pointer to an array containing the attributes of the included
 *     frames.
 *   Pixel1,
@@ -136,18 +141,19 @@ typedef struct
 *******************************************************************************/
 typedef struct XBmpRes
 {
-  unsigned int        MagicNo;
-  int                 Format;
-  int                 FrameWidth;
-  int                 FrameHeight;
-  int                 FrameDelay;
-  int                 NoOfFrames;
-  const XBmpFrameRes* Frames;
-  const void*         Pixel1;
-  const void*         Pixel2;
-  const unsigned int* Clut;
-  int                 Compressed;
-  const char*         Name;
+  unsigned int          MagicNo;
+  int                   Format;
+  int                   FrameWidth;
+  int                   FrameHeight;
+  int                   FrameDelay;
+  int                   NoOfFrames;
+  const unsigned short* Mapping;
+  const XBmpFrameRes*   Frames;
+  const void*           Pixel1;
+  const void*           Pixel2;
+  const unsigned int*   Clut;
+  int                   Compressed;
+  const char*           Name;
 } XBmpRes;
 
 
@@ -236,7 +242,14 @@ typedef struct XBmpRes
     aPixel2 )                                                                  \
   { aOpqX, aOpqY, aOpqWidth, aOpqHeight, aPixel1, aPixel2 }
 
+
+#define EW_BITMAP_MAPPING( aName, aLangId )                                    \
+  };                                                                           \
+  EW_BITMAP_PIXEL_PRAGMA static const unsigned short _fm_##aName##aLangId[] =  \
+  {
+  
 #define EW_BITMAP_PIXEL( aName, aLangId )                                      \
+    0xFFFF                                                                     \
   };                                                                           \
   extern const unsigned int _cp_##aName##aLangId[];                            \
   extern const unsigned int _cl_##aName##aLangId[];                            \
@@ -248,6 +261,7 @@ typedef struct XBmpRes
     _fh_##aName##aLangId,                                                      \
     _fd_##aName##aLangId,                                                      \
     sizeof( _f_##aName##aLangId ) / sizeof( _f_##aName##aLangId[0] ),          \
+    _fm_##aName##aLangId,                                                      \
     _f_##aName##aLangId,                                                       \
     _cp_##aName##aLangId,                                                      \
     _cp_##aName##aLangId,                                                      \
@@ -260,6 +274,7 @@ typedef struct XBmpRes
   {
 
 #define EW_BITMAP_PIXEL_R90( aName, aLangId )                                  \
+    0xFFFF                                                                     \
   };                                                                           \
   extern const unsigned int _cp_##aName##aLangId[];                            \
   extern const unsigned int _cl_##aName##aLangId[];                            \
@@ -271,6 +286,7 @@ typedef struct XBmpRes
     _fh_##aName##aLangId,                                                      \
     _fd_##aName##aLangId,                                                      \
     sizeof( _f_##aName##aLangId ) / sizeof( _f_##aName##aLangId[0] ),          \
+    _fm_##aName##aLangId,                                                      \
     _f_##aName##aLangId,                                                       \
     _cp_##aName##aLangId,                                                      \
     _cp_##aName##aLangId,                                                      \
@@ -283,6 +299,7 @@ typedef struct XBmpRes
   {
 
 #define EW_BITMAP_PIXEL_R180( aName, aLangId )                                 \
+    0xFFFF                                                                     \
   };                                                                           \
   extern const unsigned int _cp_##aName##aLangId[];                            \
   extern const unsigned int _cl_##aName##aLangId[];                            \
@@ -294,6 +311,7 @@ typedef struct XBmpRes
     _fh_##aName##aLangId,                                                      \
     _fd_##aName##aLangId,                                                      \
     sizeof( _f_##aName##aLangId ) / sizeof( _f_##aName##aLangId[0] ),          \
+    _fm_##aName##aLangId,                                                      \
     _f_##aName##aLangId,                                                       \
     _cp_##aName##aLangId,                                                      \
     _cp_##aName##aLangId,                                                      \
@@ -306,6 +324,7 @@ typedef struct XBmpRes
   {
 
 #define EW_BITMAP_PIXEL_R270( aName, aLangId )                                 \
+    0xFFFF                                                                     \
   };                                                                           \
   extern const unsigned int _cp_##aName##aLangId[];                            \
   extern const unsigned int _cl_##aName##aLangId[];                            \
@@ -317,6 +336,7 @@ typedef struct XBmpRes
     _fh_##aName##aLangId,                                                      \
     _fd_##aName##aLangId,                                                      \
     sizeof( _f_##aName##aLangId ) / sizeof( _f_##aName##aLangId[0] ),          \
+    _fm_##aName##aLangId,                                                      \
     _f_##aName##aLangId,                                                       \
     _cp_##aName##aLangId,                                                      \
     _cp_##aName##aLangId,                                                      \
@@ -329,6 +349,7 @@ typedef struct XBmpRes
   {
 
 #define EW_BITMAP_PIXEL_U8( aName, aLangId )                                   \
+    0xFFFF                                                                     \
   };                                                                           \
   extern const unsigned char _p1_##aName##aLangId[];                           \
   extern const unsigned int  _cl_##aName##aLangId[];                           \
@@ -340,6 +361,7 @@ typedef struct XBmpRes
     _fh_##aName##aLangId,                                                      \
     _fd_##aName##aLangId,                                                      \
     sizeof( _f_##aName##aLangId ) / sizeof( _f_##aName##aLangId[0] ),          \
+    _fm_##aName##aLangId,                                                      \
     _f_##aName##aLangId,                                                       \
     _p1_##aName##aLangId,                                                      \
     0,                                                                         \
@@ -352,6 +374,7 @@ typedef struct XBmpRes
   {
 
 #define EW_BITMAP_PIXEL_U8_R90( aName, aLangId )                               \
+    0xFFFF                                                                     \
   };                                                                           \
   extern const unsigned char _p1_##aName##aLangId[];                           \
   extern const unsigned int  _cl_##aName##aLangId[];                           \
@@ -363,6 +386,7 @@ typedef struct XBmpRes
     _fh_##aName##aLangId,                                                      \
     _fd_##aName##aLangId,                                                      \
     sizeof( _f_##aName##aLangId ) / sizeof( _f_##aName##aLangId[0] ),          \
+    _fm_##aName##aLangId,                                                      \
     _f_##aName##aLangId,                                                       \
     _p1_##aName##aLangId,                                                      \
     0,                                                                         \
@@ -375,6 +399,7 @@ typedef struct XBmpRes
   {
 
 #define EW_BITMAP_PIXEL_U8_R180( aName, aLangId )                              \
+    0xFFFF                                                                     \
   };                                                                           \
   extern const unsigned char _p1_##aName##aLangId[];                           \
   extern const unsigned int  _cl_##aName##aLangId[];                           \
@@ -386,6 +411,7 @@ typedef struct XBmpRes
     _fh_##aName##aLangId,                                                      \
     _fd_##aName##aLangId,                                                      \
     sizeof( _f_##aName##aLangId ) / sizeof( _f_##aName##aLangId[0] ),          \
+    _fm_##aName##aLangId,                                                      \
     _f_##aName##aLangId,                                                       \
     _p1_##aName##aLangId,                                                      \
     0,                                                                         \
@@ -398,6 +424,7 @@ typedef struct XBmpRes
   {
 
 #define EW_BITMAP_PIXEL_U8_R270( aName, aLangId )                              \
+    0xFFFF                                                                     \
   };                                                                           \
   extern const unsigned char _p1_##aName##aLangId[];                           \
   extern const unsigned int  _cl_##aName##aLangId[];                           \
@@ -409,6 +436,7 @@ typedef struct XBmpRes
     _fh_##aName##aLangId,                                                      \
     _fd_##aName##aLangId,                                                      \
     sizeof( _f_##aName##aLangId ) / sizeof( _f_##aName##aLangId[0] ),          \
+    _fm_##aName##aLangId,                                                      \
     _f_##aName##aLangId,                                                       \
     _p1_##aName##aLangId,                                                      \
     0,                                                                         \
@@ -421,6 +449,7 @@ typedef struct XBmpRes
   {
 
 #define EW_BITMAP_PIXEL_U16( aName, aLangId )                                  \
+    0xFFFF                                                                     \
   };                                                                           \
   extern const unsigned short _p1_##aName##aLangId[];                          \
   static const XBmpRes _##aName##aLangId =                                     \
@@ -431,6 +460,7 @@ typedef struct XBmpRes
     _fh_##aName##aLangId,                                                      \
     _fd_##aName##aLangId,                                                      \
     sizeof( _f_##aName##aLangId ) / sizeof( _f_##aName##aLangId[0] ),          \
+    _fm_##aName##aLangId,                                                      \
     _f_##aName##aLangId,                                                       \
     _p1_##aName##aLangId,                                                      \
     0,                                                                         \
@@ -443,6 +473,7 @@ typedef struct XBmpRes
   {
 
 #define EW_BITMAP_PIXEL_U16_R90( aName, aLangId )                              \
+    0xFFFF                                                                     \
   };                                                                           \
   extern const unsigned short _p1_##aName##aLangId[];                          \
   static const XBmpRes _##aName##aLangId =                                     \
@@ -453,6 +484,7 @@ typedef struct XBmpRes
     _fh_##aName##aLangId,                                                      \
     _fd_##aName##aLangId,                                                      \
     sizeof( _f_##aName##aLangId ) / sizeof( _f_##aName##aLangId[0] ),          \
+    _fm_##aName##aLangId,                                                      \
     _f_##aName##aLangId,                                                       \
     _p1_##aName##aLangId,                                                      \
     0,                                                                         \
@@ -465,6 +497,7 @@ typedef struct XBmpRes
   {
 
 #define EW_BITMAP_PIXEL_U16_R180( aName, aLangId )                             \
+    0xFFFF                                                                     \
   };                                                                           \
   extern const unsigned short _p1_##aName##aLangId[];                          \
   static const XBmpRes _##aName##aLangId =                                     \
@@ -475,6 +508,7 @@ typedef struct XBmpRes
     _fh_##aName##aLangId,                                                      \
     _fd_##aName##aLangId,                                                      \
     sizeof( _f_##aName##aLangId ) / sizeof( _f_##aName##aLangId[0] ),          \
+    _fm_##aName##aLangId,                                                      \
     _f_##aName##aLangId,                                                       \
     _p1_##aName##aLangId,                                                      \
     0,                                                                         \
@@ -487,6 +521,7 @@ typedef struct XBmpRes
   {
 
 #define EW_BITMAP_PIXEL_U16_R270( aName, aLangId )                             \
+    0xFFFF                                                                     \
   };                                                                           \
   extern const unsigned short _p1_##aName##aLangId[];                          \
   static const XBmpRes _##aName##aLangId =                                     \
@@ -497,6 +532,7 @@ typedef struct XBmpRes
     _fh_##aName##aLangId,                                                      \
     _fd_##aName##aLangId,                                                      \
     sizeof( _f_##aName##aLangId ) / sizeof( _f_##aName##aLangId[0] ),          \
+    _fm_##aName##aLangId,                                                      \
     _f_##aName##aLangId,                                                       \
     _p1_##aName##aLangId,                                                      \
     0,                                                                         \
@@ -509,6 +545,7 @@ typedef struct XBmpRes
   {
 
 #define EW_BITMAP_PIXEL_U32( aName, aLangId )                                  \
+    0xFFFF                                                                     \
   };                                                                           \
   extern const unsigned int _p1_##aName##aLangId[];                            \
   static const XBmpRes _##aName##aLangId =                                     \
@@ -519,6 +556,7 @@ typedef struct XBmpRes
     _fh_##aName##aLangId,                                                      \
     _fd_##aName##aLangId,                                                      \
     sizeof( _f_##aName##aLangId ) / sizeof( _f_##aName##aLangId[0] ),          \
+    _fm_##aName##aLangId,                                                      \
     _f_##aName##aLangId,                                                       \
     _p1_##aName##aLangId,                                                      \
     0,                                                                         \
@@ -531,6 +569,7 @@ typedef struct XBmpRes
   {
 
 #define EW_BITMAP_PIXEL_U32_R90( aName, aLangId )                              \
+    0xFFFF                                                                     \
   };                                                                           \
   extern const unsigned int _p1_##aName##aLangId[];                            \
   static const XBmpRes _##aName##aLangId =                                     \
@@ -541,6 +580,7 @@ typedef struct XBmpRes
     _fh_##aName##aLangId,                                                      \
     _fd_##aName##aLangId,                                                      \
     sizeof( _f_##aName##aLangId ) / sizeof( _f_##aName##aLangId[0] ),          \
+    _fm_##aName##aLangId,                                                      \
     _f_##aName##aLangId,                                                       \
     _p1_##aName##aLangId,                                                      \
     0,                                                                         \
@@ -553,6 +593,7 @@ typedef struct XBmpRes
   {
 
 #define EW_BITMAP_PIXEL_U32_R180( aName, aLangId )                             \
+    0xFFFF                                                                     \
   };                                                                           \
   extern const unsigned int _p1_##aName##aLangId[];                            \
   static const XBmpRes _##aName##aLangId =                                     \
@@ -563,6 +604,7 @@ typedef struct XBmpRes
     _fh_##aName##aLangId,                                                      \
     _fd_##aName##aLangId,                                                      \
     sizeof( _f_##aName##aLangId ) / sizeof( _f_##aName##aLangId[0] ),          \
+    _fm_##aName##aLangId,                                                      \
     _f_##aName##aLangId,                                                       \
     _p1_##aName##aLangId,                                                      \
     0,                                                                         \
@@ -575,6 +617,7 @@ typedef struct XBmpRes
   {
 
 #define EW_BITMAP_PIXEL_U32_R270( aName, aLangId )                             \
+    0xFFFF                                                                     \
   };                                                                           \
   extern const unsigned int _p1_##aName##aLangId[];                            \
   static const XBmpRes _##aName##aLangId =                                     \
@@ -585,6 +628,7 @@ typedef struct XBmpRes
     _fh_##aName##aLangId,                                                      \
     _fd_##aName##aLangId,                                                      \
     sizeof( _f_##aName##aLangId ) / sizeof( _f_##aName##aLangId[0] ),          \
+    _fm_##aName##aLangId,                                                      \
     _f_##aName##aLangId,                                                       \
     _p1_##aName##aLangId,                                                      \
     0,                                                                         \
@@ -597,6 +641,7 @@ typedef struct XBmpRes
   {
 
 #define EW_BITMAP_PIXEL1_U8( aName, aLangId )                                  \
+    0xFFFF                                                                     \
   };                                                                           \
   extern const unsigned char _p1_##aName##aLangId[];                           \
   extern const unsigned char _p2_##aName##aLangId[];                           \
@@ -608,6 +653,7 @@ typedef struct XBmpRes
     _fh_##aName##aLangId,                                                      \
     _fd_##aName##aLangId,                                                      \
     sizeof( _f_##aName##aLangId ) / sizeof( _f_##aName##aLangId[0] ),          \
+    _fm_##aName##aLangId,                                                      \
     _f_##aName##aLangId,                                                       \
     _p1_##aName##aLangId,                                                      \
     _p2_##aName##aLangId,                                                      \
@@ -620,6 +666,7 @@ typedef struct XBmpRes
   {
 
 #define EW_BITMAP_PIXEL1_U8_R90( aName, aLangId )                              \
+    0xFFFF                                                                     \
   };                                                                           \
   extern const unsigned char _p1_##aName##aLangId[];                           \
   extern const unsigned char _p2_##aName##aLangId[];                           \
@@ -631,6 +678,7 @@ typedef struct XBmpRes
     _fh_##aName##aLangId,                                                      \
     _fd_##aName##aLangId,                                                      \
     sizeof( _f_##aName##aLangId ) / sizeof( _f_##aName##aLangId[0] ),          \
+    _fm_##aName##aLangId,                                                      \
     _f_##aName##aLangId,                                                       \
     _p1_##aName##aLangId,                                                      \
     _p2_##aName##aLangId,                                                      \
@@ -643,6 +691,7 @@ typedef struct XBmpRes
   {
 
 #define EW_BITMAP_PIXEL1_U8_R180( aName, aLangId )                             \
+    0xFFFF                                                                     \
   };                                                                           \
   extern const unsigned char _p1_##aName##aLangId[];                           \
   extern const unsigned char _p2_##aName##aLangId[];                           \
@@ -654,6 +703,7 @@ typedef struct XBmpRes
     _fh_##aName##aLangId,                                                      \
     _fd_##aName##aLangId,                                                      \
     sizeof( _f_##aName##aLangId ) / sizeof( _f_##aName##aLangId[0] ),          \
+    _fm_##aName##aLangId,                                                      \
     _f_##aName##aLangId,                                                       \
     _p1_##aName##aLangId,                                                      \
     _p2_##aName##aLangId,                                                      \
@@ -666,6 +716,7 @@ typedef struct XBmpRes
   {
 
 #define EW_BITMAP_PIXEL1_U8_R270( aName, aLangId )                             \
+    0xFFFF                                                                     \
   };                                                                           \
   extern const unsigned char _p1_##aName##aLangId[];                           \
   extern const unsigned char _p2_##aName##aLangId[];                           \
@@ -677,6 +728,7 @@ typedef struct XBmpRes
     _fh_##aName##aLangId,                                                      \
     _fd_##aName##aLangId,                                                      \
     sizeof( _f_##aName##aLangId ) / sizeof( _f_##aName##aLangId[0] ),          \
+    _fm_##aName##aLangId,                                                      \
     _f_##aName##aLangId,                                                       \
     _p1_##aName##aLangId,                                                      \
     _p2_##aName##aLangId,                                                      \
@@ -689,6 +741,7 @@ typedef struct XBmpRes
   {
 
 #define EW_BITMAP_PIXEL1_U16( aName, aLangId )                                 \
+    0xFFFF                                                                     \
   };                                                                           \
   extern const unsigned short _p1_##aName##aLangId[];                          \
   extern const unsigned char  _p2_##aName##aLangId[];                          \
@@ -700,6 +753,7 @@ typedef struct XBmpRes
     _fh_##aName##aLangId,                                                      \
     _fd_##aName##aLangId,                                                      \
     sizeof( _f_##aName##aLangId ) / sizeof( _f_##aName##aLangId[0] ),          \
+    _fm_##aName##aLangId,                                                      \
     _f_##aName##aLangId,                                                       \
     _p1_##aName##aLangId,                                                      \
     _p2_##aName##aLangId,                                                      \
@@ -712,6 +766,7 @@ typedef struct XBmpRes
   {
 
 #define EW_BITMAP_PIXEL1_U16_R90( aName, aLangId )                             \
+    0xFFFF                                                                     \
   };                                                                           \
   extern const unsigned short _p1_##aName##aLangId[];                          \
   extern const unsigned char  _p2_##aName##aLangId[];                          \
@@ -723,6 +778,7 @@ typedef struct XBmpRes
     _fh_##aName##aLangId,                                                      \
     _fd_##aName##aLangId,                                                      \
     sizeof( _f_##aName##aLangId ) / sizeof( _f_##aName##aLangId[0] ),          \
+    _fm_##aName##aLangId,                                                      \
     _f_##aName##aLangId,                                                       \
     _p1_##aName##aLangId,                                                      \
     _p2_##aName##aLangId,                                                      \
@@ -735,6 +791,7 @@ typedef struct XBmpRes
   {
 
 #define EW_BITMAP_PIXEL1_U16_R180( aName, aLangId )                            \
+    0xFFFF                                                                     \
   };                                                                           \
   extern const unsigned short _p1_##aName##aLangId[];                          \
   extern const unsigned char  _p2_##aName##aLangId[];                          \
@@ -746,6 +803,7 @@ typedef struct XBmpRes
     _fh_##aName##aLangId,                                                      \
     _fd_##aName##aLangId,                                                      \
     sizeof( _f_##aName##aLangId ) / sizeof( _f_##aName##aLangId[0] ),          \
+    _fm_##aName##aLangId,                                                      \
     _f_##aName##aLangId,                                                       \
     _p1_##aName##aLangId,                                                      \
     _p2_##aName##aLangId,                                                      \
@@ -758,6 +816,7 @@ typedef struct XBmpRes
   {
 
 #define EW_BITMAP_PIXEL1_U16_R270( aName, aLangId )                            \
+    0xFFFF                                                                     \
   };                                                                           \
   extern const unsigned short _p1_##aName##aLangId[];                          \
   extern const unsigned char  _p2_##aName##aLangId[];                          \
@@ -769,6 +828,7 @@ typedef struct XBmpRes
     _fh_##aName##aLangId,                                                      \
     _fd_##aName##aLangId,                                                      \
     sizeof( _f_##aName##aLangId ) / sizeof( _f_##aName##aLangId[0] ),          \
+    _fm_##aName##aLangId,                                                      \
     _f_##aName##aLangId,                                                       \
     _p1_##aName##aLangId,                                                      \
     _p2_##aName##aLangId,                                                      \
@@ -781,6 +841,7 @@ typedef struct XBmpRes
   {
 
 #define EW_BITMAP_PIXEL1_U32( aName, aLangId )                                 \
+    0xFFFF                                                                     \
   };                                                                           \
   extern const unsigned int  _p1_##aName##aLangId[];                           \
   extern const unsigned char _p2_##aName##aLangId[];                           \
@@ -792,6 +853,7 @@ typedef struct XBmpRes
     _fh_##aName##aLangId,                                                      \
     _fd_##aName##aLangId,                                                      \
     sizeof( _f_##aName##aLangId ) / sizeof( _f_##aName##aLangId[0] ),          \
+    _fm_##aName##aLangId,                                                      \
     _f_##aName##aLangId,                                                       \
     _p1_##aName##aLangId,                                                      \
     _p2_##aName##aLangId,                                                      \
@@ -804,6 +866,7 @@ typedef struct XBmpRes
   {
 
 #define EW_BITMAP_PIXEL1_U32_R90( aName, aLangId )                             \
+    0xFFFF                                                                     \
   };                                                                           \
   extern const unsigned int  _p1_##aName##aLangId[];                           \
   extern const unsigned char _p2_##aName##aLangId[];                           \
@@ -815,6 +878,7 @@ typedef struct XBmpRes
     _fh_##aName##aLangId,                                                      \
     _fd_##aName##aLangId,                                                      \
     sizeof( _f_##aName##aLangId ) / sizeof( _f_##aName##aLangId[0] ),          \
+    _fm_##aName##aLangId,                                                      \
     _f_##aName##aLangId,                                                       \
     _p1_##aName##aLangId,                                                      \
     _p2_##aName##aLangId,                                                      \
@@ -827,6 +891,7 @@ typedef struct XBmpRes
   {
 
 #define EW_BITMAP_PIXEL1_U32_R180( aName, aLangId )                            \
+    0xFFFF                                                                     \
   };                                                                           \
   extern const unsigned int  _p1_##aName##aLangId[];                           \
   extern const unsigned char _p2_##aName##aLangId[];                           \
@@ -838,6 +903,7 @@ typedef struct XBmpRes
     _fh_##aName##aLangId,                                                      \
     _fd_##aName##aLangId,                                                      \
     sizeof( _f_##aName##aLangId ) / sizeof( _f_##aName##aLangId[0] ),          \
+    _fm_##aName##aLangId,                                                      \
     _f_##aName##aLangId,                                                       \
     _p1_##aName##aLangId,                                                      \
     _p2_##aName##aLangId,                                                      \
@@ -850,6 +916,7 @@ typedef struct XBmpRes
   {
 
 #define EW_BITMAP_PIXEL1_U32_R270( aName, aLangId )                            \
+    0xFFFF                                                                     \
   };                                                                           \
   extern const unsigned int  _p1_##aName##aLangId[];                           \
   extern const unsigned char _p2_##aName##aLangId[];                           \
@@ -861,6 +928,7 @@ typedef struct XBmpRes
     _fh_##aName##aLangId,                                                      \
     _fd_##aName##aLangId,                                                      \
     sizeof( _f_##aName##aLangId ) / sizeof( _f_##aName##aLangId[0] ),          \
+    _fm_##aName##aLangId,                                                      \
     _f_##aName##aLangId,                                                       \
     _p1_##aName##aLangId,                                                      \
     _p2_##aName##aLangId,                                                      \

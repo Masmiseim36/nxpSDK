@@ -1,0 +1,19 @@
+/*!
+@page middleware_log Middleware Change Log
+
+@section host_usdhc Host USDHC driver for MCUXpresso SDK
+The current driver version is 2.3.0.
+
+  - 2.3.0
+    - Improvements
+      - Merged the host controller driver from polling/freertos/interrupt to non_blocking/blocking.
+      - Added SDMMC OSA layer to support muxtex access/event/delay.
+
+  - 2.2.14
+    - Bug Fixes
+      - Fixed uninitialized value Coverity issue.
+
+  - 2.0.0
+    - Initial version
+
+*/

@@ -1,17 +1,17 @@
 /*
- * Copyright 2016-2018 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
+#include "bl_semc.h"
 #include "bootloader_common.h"
+#include "fsl_assert.h"
 #include "fsl_device_registers.h"
-#include "semc/fsl_semc.h"
-#include "semc_nor/semc_nor_flash.h"
-#include "memory/src/semc_nor_memory.h"
 #include "fusemap.h"
-#include "utilities/fsl_assert.h"
+#include "semc_nor_flash.h"
+#include "semc_nor_memory.h"
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
 ////////////////////////////////////////////////////////////////////////////////
@@ -20,85 +20,82 @@
 // 1 - RT1050 A1
 #define SEMC_NOR_FUSE_MAP_VERSION (0)
 
-
 /* Fuse: Clock frequency */
 enum
 {
-   kFuseSemcNor_ClkFreq_33MHz  = 0U,
-   kFuseSemcNor_ClkFreq_66MHz  = 1U,
-   kFuseSemcNor_ClkFreq_108MHz  = 2U,
-   kFuseSemcNor_ClkFreq_133MHz  = 3U,
-   //kFuseSemcNor_ClkFreq_Max  = 4-7U,
+    kFuseSemcNor_ClkFreq_33MHz = 0U,
+    kFuseSemcNor_ClkFreq_66MHz = 1U,
+    kFuseSemcNor_ClkFreq_108MHz = 2U,
+    kFuseSemcNor_ClkFreq_133MHz = 3U,
+    // kFuseSemcNor_ClkFreq_Max  = 4-7U,
 };
 
 /* Fuse: AC Timing mode */
 enum
 {
-   kFuseSemcNor_AcTiming_Default = 0U,
-   kFuseSemcNor_AcTiming_Fuse = 1U,
+    kFuseSemcNor_AcTiming_Default = 0U,
+    kFuseSemcNor_AcTiming_Fuse = 1U,
 };
 
 /* Fuse: AC default Timing speed */
 enum
 {
-   kFuseSemcNor_AcTimingSpeed_Safe = 0U,
-   kFuseSemcNor_AcTimingSpeed_Fast = 1U,
+    kFuseSemcNor_AcTimingSpeed_Safe = 0U,
+    kFuseSemcNor_AcTimingSpeed_Fast = 1U,
 };
 
 /* Fuse: Data Port Size */
 enum
 {
-   kFuseSemcNor_DataPortSize_16bit  = 0U,
-   kFuseSemcNor_DataPortSize_8bit  = 1U,
+    kFuseSemcNor_DataPortSize_16bit = 0U,
+    kFuseSemcNor_DataPortSize_8bit = 1U,
 };
 
 /* Fuse: DQS mode */
 enum
 {
-   kFuseSemcNor_DqsPadMode_Disabled  = 0U,
-   kFuseSemcNor_DqsPadMode_Enabled = 1U,
+    kFuseSemcNor_DqsPadMode_Disabled = 0U,
+    kFuseSemcNor_DqsPadMode_Enabled = 1U,
 };
 
 /* Fuse: Pcs selection */
 enum
 {
-   kFuseSemcNor_PcsSelection_CSX0  = 0U,
-   kFuseSemcNor_PcsSelection_CSX1  = 1U,
-   kFuseSemcNor_PcsSelection_CSX2  = 2U,
-   kFuseSemcNor_PcsSelection_CSX3  = 3U,
-   //kFuseSemcNor_PcsSelection_A8 = 4-6U,
-   kFuseSemcNor_PcsSelection_RDY  = 7U,
+    kFuseSemcNor_PcsSelection_CSX0 = 0U,
+    kFuseSemcNor_PcsSelection_CSX1 = 1U,
+    kFuseSemcNor_PcsSelection_CSX2 = 2U,
+    kFuseSemcNor_PcsSelection_CSX3 = 3U,
+    // kFuseSemcNor_PcsSelection_A8 = 4-6U,
+    kFuseSemcNor_PcsSelection_RDY = 7U,
 };
 
 /* Fuse: Address Port Size */
 enum
 {
-   kFuseSemcNor_AddressPortSize_25bit  = 4U,
-   kFuseSemcNor_AddressPortSize_26bit  = 5U,
-   kFuseSemcNor_AddressPortSize_27bit  = 6U,
-   kFuseSemcNor_AddressPortSize_28bit  = 7U,
-   //kFuseSemcNor_AddressPortSize_24bit  = 0-3U,
+    kFuseSemcNor_AddressPortSize_25bit = 4U,
+    kFuseSemcNor_AddressPortSize_26bit = 5U,
+    kFuseSemcNor_AddressPortSize_27bit = 6U,
+    kFuseSemcNor_AddressPortSize_28bit = 7U,
+    // kFuseSemcNor_AddressPortSize_24bit  = 0-3U,
 };
 
 /* Fuse: ADV# Polarity */
 enum
 {
-   kFuseSemcNor_AdvPolarity_Low  = 0U,
-   kFuseSemcNor_AdvPolarity_High = 1U,
+    kFuseSemcNor_AdvPolarity_Low = 0U,
+    kFuseSemcNor_AdvPolarity_High = 1U,
 };
 
 /* Fuse: RDY Polarity */
 enum
 {
-   kFuseSemcNor_RdyPolarity_High  = 0U,
-   kFuseSemcNor_RdyPolarity_Low = 1U,
+    kFuseSemcNor_RdyPolarity_High = 0U,
+    kFuseSemcNor_RdyPolarity_Low = 1U,
 };
 
 ////////////////////////////////////////////////////////////////////////////////
 // Variables
 ////////////////////////////////////////////////////////////////////////////////
-
-
 
 ////////////////////////////////////////////////////////////////////////////////
 // Code
@@ -111,7 +108,7 @@ void semc_nor_get_config_data_from_fuse(semc_nor_config_t *config)
 
     // Read fuse to get clk freq
     fuseValue = ROM_OCOTP_SEMC_NOR_CLK_FREQ_VALUE();
-    switch(fuseValue)
+    switch (fuseValue)
     {
         case kFuseSemcNor_ClkFreq_33MHz:
             pNorConfig->memConfig.asyncClkFreq = kSemcClkFreq_33MHz;
@@ -132,7 +129,7 @@ void semc_nor_get_config_data_from_fuse(semc_nor_config_t *config)
 
     // Get AC Timing
     fuseValue = ROM_OCOTP_SEMC_NOR_AC_TIMING_VALUE();
-    switch(fuseValue)
+    switch (fuseValue)
     {
         case kFuseSemcNor_AcTiming_Fuse:
             pNorConfig->acTimingMode = kSemcNorAcTimingMode_UserDefined;
@@ -159,7 +156,7 @@ void semc_nor_get_config_data_from_fuse(semc_nor_config_t *config)
     {
         // Get Default AC Timing Speed
         fuseValue = ROM_OCOTP_SEMC_NOR_AC_TIMING_SPEED_VALUE();
-        switch(fuseValue)
+        switch (fuseValue)
         {
             case kFuseSemcNor_AcTimingSpeed_Fast:
                 pNorConfig->acTimingMode = kSemcNorAcTimingMode_DefaultFast;
@@ -174,7 +171,7 @@ void semc_nor_get_config_data_from_fuse(semc_nor_config_t *config)
 
     // Get Data Port Size
     fuseValue = ROM_OCOTP_SEMC_NOR_DATA_PORT_SIZE_VALUE();
-    switch(fuseValue)
+    switch (fuseValue)
     {
         case kFuseSemcNor_DataPortSize_16bit:
             pNorConfig->memConfig.norMemConfig.dataPortWidth = 16;
@@ -188,7 +185,7 @@ void semc_nor_get_config_data_from_fuse(semc_nor_config_t *config)
 #if (SEMC_NOR_FUSE_MAP_VERSION == 0)
     // Get DQS pad mode
     fuseValue = ROM_OCOTP_SEMC_NOR_DQS_PAD_MODE_VALUE();
-    switch(fuseValue)
+    switch (fuseValue)
     {
         case kFuseSemcNor_DqsPadMode_Enabled:
             pNorConfig->memConfig.readStrobeMode = kSemcDqsMode_LoopbackFromDqsPad;
@@ -201,7 +198,7 @@ void semc_nor_get_config_data_from_fuse(semc_nor_config_t *config)
 
     // Get PCS selection
     fuseValue = ROM_OCOTP_SEMC_NOR_PCS_SELECTION_VALUE();
-    switch(fuseValue)
+    switch (fuseValue)
     {
         case kFuseSemcNor_PcsSelection_CSX0:
             pNorConfig->memConfig.norMemConfig.cePortOutputSelection = kSemcCeOutputSelection_MUX_CSX0;
@@ -218,7 +215,7 @@ void semc_nor_get_config_data_from_fuse(semc_nor_config_t *config)
         case kFuseSemcNor_PcsSelection_RDY:
             pNorConfig->memConfig.norMemConfig.cePortOutputSelection = kSemcCeOutputSelection_MUX_RDY;
             break;
-        //case kFuseSemcNor_PcsSelection_A8:
+        // case kFuseSemcNor_PcsSelection_A8:
         default:
             pNorConfig->memConfig.norMemConfig.cePortOutputSelection = kSemcCeOutputSelection_MUX_A8;
             break;
@@ -226,7 +223,7 @@ void semc_nor_get_config_data_from_fuse(semc_nor_config_t *config)
 
     // Get Address Port Size
     fuseValue = ROM_OCOTP_SEMC_NOR_ADDRESS_PORT_SIZE_VALUE();
-    switch(fuseValue)
+    switch (fuseValue)
     {
         case kFuseSemcNor_AddressPortSize_25bit:
             pNorConfig->memConfig.norMemConfig.addressPortWidth = 25;
@@ -240,7 +237,7 @@ void semc_nor_get_config_data_from_fuse(semc_nor_config_t *config)
         case kFuseSemcNor_AddressPortSize_28bit:
             pNorConfig->memConfig.norMemConfig.addressPortWidth = 28;
             break;
-        //case kFuseSemcNor_AddressPortSize_24bit:
+        // case kFuseSemcNor_AddressPortSize_24bit:
         default:
             pNorConfig->memConfig.norMemConfig.addressPortWidth = kSemcMiscProperty_NOR_BaseFlashAddressPortWidth;
             break;
@@ -249,7 +246,7 @@ void semc_nor_get_config_data_from_fuse(semc_nor_config_t *config)
 
     // Get ADV# Polarity
     fuseValue = ROM_OCOTP_SEMC_NOR_ADV_POLARITY_VALUE();
-    switch(fuseValue)
+    switch (fuseValue)
     {
         case kFuseSemcNor_AdvPolarity_High:
             pNorConfig->memConfig.norMemConfig.advPortPolarity = kSemcPortPloarity_HighActive;
@@ -262,7 +259,7 @@ void semc_nor_get_config_data_from_fuse(semc_nor_config_t *config)
 
     // Get RDY Polarity
     fuseValue = ROM_OCOTP_SEMC_NOR_RDY_POLARITY_VALUE();
-    switch(fuseValue)
+    switch (fuseValue)
     {
         case kFuseSemcNor_RdyPolarity_Low:
             pNorConfig->memConfig.norMemConfig.rdyPortPolarity = kSemcPortPloarity_LowActive;

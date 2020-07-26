@@ -1,20 +1,16 @@
 /*
-* Copyright 2017-2018 NXP
-* All rights reserved.
-*
-* SPDX-License-Identifier: BSD-3-Clause
-*/
+ * Copyright 2017-2020 NXP
+ * All rights reserved.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
 #if !defined(__SDMMC_INIT_H__)
 #define __SDMMC_INIT_H__
 
+#include "fsl_gpio.h"
 #include "fsl_iomuxc.h"
-#if FSL_FEATURE_SOC_GPIO_COUNT
-#include "gpio/fsl_gpio.h"
-#elif FSL_FEATURE_SOC_IGPIO_COUNT
-#include "igpio/fsl_gpio.h"
-#endif
 #if FSL_FEATURE_SOC_PORT_COUNT
-#include "port/fsl_port.h"
+#include "fsl_port.h"
 #endif
 #include "bootloader_common.h"
 
@@ -214,7 +210,9 @@ enum
     {                                                                                    \
         IOMUXC_SetPinMux(BOARD_SD_RESET_B_GPIO_IOMUXC, false);                           \
         gpio_pin_config_t sw_config = {                                                  \
-            kGPIO_DigitalOutput, 0, kGPIO_NoIntmode,                                     \
+            kGPIO_DigitalOutput,                                                         \
+            0,                                                                           \
+            kGPIO_NoIntmode,                                                             \
         };                                                                               \
         GPIO_PinInit(BOARD_SD_RESET_B_GPIO_BASE, BOARD_SD_RESET_B_GPIO_PIN, &sw_config); \
     }
@@ -331,7 +329,9 @@ enum
     {                                                                                       \
         IOMUXC_SetPinMux(BOARD_MMC_RESET_B_GPIO_IOMUXC, false);                             \
         gpio_pin_config_t sw_config = {                                                     \
-            kGPIO_DigitalOutput, 0, kGPIO_NoIntmode,                                        \
+            kGPIO_DigitalOutput,                                                            \
+            0,                                                                              \
+            kGPIO_NoIntmode,                                                                \
         };                                                                                  \
         GPIO_PinInit(BOARD_MMC_RESET_B_GPIO_BASE, BOARD_MMC_RESET_B_GPIO_PIN, &sw_config);  \
         GPIO_WritePinOutput(BOARD_MMC_RESET_B_GPIO_BASE, BOARD_MMC_RESET_B_GPIO_PIN, true); \

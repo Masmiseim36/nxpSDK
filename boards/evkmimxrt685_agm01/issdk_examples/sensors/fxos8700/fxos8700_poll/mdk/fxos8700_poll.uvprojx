@@ -128,7 +128,7 @@
             <UseTargetDll>1</UseTargetDll>
             <UseExternalTool>0</UseExternalTool>
             <RunIndependent>0</RunIndependent>
-            <UpdateFlashBeforeDebugging>0</UpdateFlashBeforeDebugging>
+            <UpdateFlashBeforeDebugging>1</UpdateFlashBeforeDebugging>
             <Capability>1</Capability>
             <DriverSelection>4101</DriverSelection>
           </Flash1>
@@ -332,7 +332,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, ARM_MATH_CM33, PRINTF_ADVANCED_ENABLE=1, SERIAL_PORT_TYPE_UART=1</Define>
+              <Define>DEBUG, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
               <IncludePath>../../../../..;..;../../../../../../evkmimxrt685;../../../../../../../CMSIS/Include;../../../../../../../devices;../../../../../../../devices/MIMXRT685S/drivers;../../../../../../../devices/MIMXRT685S/cmsis_drivers;../../../../../../../middleware/issdk/drivers/systick;../../../../../../../middleware/issdk/drivers/gpio;../../../../../../../middleware/issdk/drivers/gpio/i.mx/i.mxrt600;../../../../../../../middleware/issdk/sensors;../../../../../../../devices/MIMXRT685S;../../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../../../components/uart;../../../../../../evkmimxrt685/flash_config;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../CMSIS/Driver/Include;../../../../../../../devices/MIMXRT685S/utilities</IncludePath>
             </VariousControls>
@@ -370,7 +370,7 @@
             <IncludeLibsPath/>
             <Misc>../../../../../../../devices/MIMXRT685S/arm/keil_lib_power.lib --remove --keep=*(.flash_conf)</Misc>
             <LinkerInputFile/>
-            <DisabledWarnings>6314</DisabledWarnings>
+            <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
         </TargetArmAds>
       </TargetOption>
@@ -909,9 +909,9 @@
           <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_MIMXRT685S_cm33.s</FileName>
+              <FileName>startup_MIMXRT685S_cm33.S</FileName>
               <FileType>2</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT685S/arm/startup_MIMXRT685S_cm33.s</FilePath>
+              <FilePath>../../../../../../../devices/MIMXRT685S/arm/startup_MIMXRT685S_cm33.S</FilePath>
             </File>
           </Files>
         </Group>
@@ -922,6 +922,11 @@
               <FileName>core_cm33.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../CMSIS/Include/core_cm33.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv8.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
             </File>
             <File>
               <FileName>tz_context.h</FileName>
@@ -962,31 +967,6 @@
               <FileName>cmsis_version.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv81mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/core_armv81mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mbl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
             </File>
             <File>
               <FileName>arm_common_tables.h</FileName>
@@ -1361,7 +1341,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, ARM_MATH_CM33, PRINTF_ADVANCED_ENABLE=1, SERIAL_PORT_TYPE_UART=1</Define>
+              <Define>DEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
               <IncludePath>../../../../..;..;../../../../../../evkmimxrt685;../../../../../../../CMSIS/Include;../../../../../../../devices;../../../../../../../devices/MIMXRT685S/drivers;../../../../../../../devices/MIMXRT685S/cmsis_drivers;../../../../../../../middleware/issdk/drivers/systick;../../../../../../../middleware/issdk/drivers/gpio;../../../../../../../middleware/issdk/drivers/gpio/i.mx/i.mxrt600;../../../../../../../middleware/issdk/sensors;../../../../../../../devices/MIMXRT685S;../../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../../../components/uart;../../../../../../evkmimxrt685/flash_config;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../CMSIS/Driver/Include;../../../../../../../devices/MIMXRT685S/utilities</IncludePath>
             </VariousControls>
@@ -1399,7 +1379,7 @@
             <IncludeLibsPath/>
             <Misc>../../../../../../../devices/MIMXRT685S/arm/keil_lib_power.lib --remove --keep=*(CodeQuickAccess) --keep=*(.flash_conf)</Misc>
             <LinkerInputFile/>
-            <DisabledWarnings>6314</DisabledWarnings>
+            <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
         </TargetArmAds>
       </TargetOption>
@@ -1938,9 +1918,9 @@
           <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_MIMXRT685S_cm33.s</FileName>
+              <FileName>startup_MIMXRT685S_cm33.S</FileName>
               <FileType>2</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT685S/arm/startup_MIMXRT685S_cm33.s</FilePath>
+              <FilePath>../../../../../../../devices/MIMXRT685S/arm/startup_MIMXRT685S_cm33.S</FilePath>
             </File>
           </Files>
         </Group>
@@ -1951,6 +1931,11 @@
               <FileName>core_cm33.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../CMSIS/Include/core_cm33.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv8.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
             </File>
             <File>
               <FileName>tz_context.h</FileName>
@@ -1991,31 +1976,6 @@
               <FileName>cmsis_version.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv81mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/core_armv81mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mbl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
             </File>
             <File>
               <FileName>arm_common_tables.h</FileName>
@@ -2186,7 +2146,7 @@
             <UseTargetDll>1</UseTargetDll>
             <UseExternalTool>0</UseExternalTool>
             <RunIndependent>0</RunIndependent>
-            <UpdateFlashBeforeDebugging>0</UpdateFlashBeforeDebugging>
+            <UpdateFlashBeforeDebugging>1</UpdateFlashBeforeDebugging>
             <Capability>1</Capability>
             <DriverSelection>4101</DriverSelection>
           </Flash1>
@@ -2390,7 +2350,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, ARM_MATH_CM33, PRINTF_ADVANCED_ENABLE=1, SERIAL_PORT_TYPE_UART=1</Define>
+              <Define>NDEBUG, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
               <IncludePath>../../../../..;..;../../../../../../evkmimxrt685;../../../../../../../CMSIS/Include;../../../../../../../devices;../../../../../../../devices/MIMXRT685S/drivers;../../../../../../../devices/MIMXRT685S/cmsis_drivers;../../../../../../../middleware/issdk/drivers/systick;../../../../../../../middleware/issdk/drivers/gpio;../../../../../../../middleware/issdk/drivers/gpio/i.mx/i.mxrt600;../../../../../../../middleware/issdk/sensors;../../../../../../../devices/MIMXRT685S;../../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../../../components/uart;../../../../../../evkmimxrt685/flash_config;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../CMSIS/Driver/Include;../../../../../../../devices/MIMXRT685S/utilities</IncludePath>
             </VariousControls>
@@ -2428,7 +2388,7 @@
             <IncludeLibsPath/>
             <Misc>../../../../../../../devices/MIMXRT685S/arm/keil_lib_power.lib --remove --keep=*(.flash_conf)</Misc>
             <LinkerInputFile/>
-            <DisabledWarnings>6314</DisabledWarnings>
+            <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
         </TargetArmAds>
       </TargetOption>
@@ -2967,9 +2927,9 @@
           <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_MIMXRT685S_cm33.s</FileName>
+              <FileName>startup_MIMXRT685S_cm33.S</FileName>
               <FileType>2</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT685S/arm/startup_MIMXRT685S_cm33.s</FilePath>
+              <FilePath>../../../../../../../devices/MIMXRT685S/arm/startup_MIMXRT685S_cm33.S</FilePath>
             </File>
           </Files>
         </Group>
@@ -2980,6 +2940,11 @@
               <FileName>core_cm33.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../CMSIS/Include/core_cm33.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv8.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
             </File>
             <File>
               <FileName>tz_context.h</FileName>
@@ -3020,31 +2985,6 @@
               <FileName>cmsis_version.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv81mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/core_armv81mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mbl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
             </File>
             <File>
               <FileName>arm_common_tables.h</FileName>
@@ -3419,7 +3359,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, ARM_MATH_CM33, PRINTF_ADVANCED_ENABLE=1, SERIAL_PORT_TYPE_UART=1</Define>
+              <Define>NDEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
               <IncludePath>../../../../..;..;../../../../../../evkmimxrt685;../../../../../../../CMSIS/Include;../../../../../../../devices;../../../../../../../devices/MIMXRT685S/drivers;../../../../../../../devices/MIMXRT685S/cmsis_drivers;../../../../../../../middleware/issdk/drivers/systick;../../../../../../../middleware/issdk/drivers/gpio;../../../../../../../middleware/issdk/drivers/gpio/i.mx/i.mxrt600;../../../../../../../middleware/issdk/sensors;../../../../../../../devices/MIMXRT685S;../../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../../../components/uart;../../../../../../evkmimxrt685/flash_config;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../CMSIS/Driver/Include;../../../../../../../devices/MIMXRT685S/utilities</IncludePath>
             </VariousControls>
@@ -3457,7 +3397,7 @@
             <IncludeLibsPath/>
             <Misc>../../../../../../../devices/MIMXRT685S/arm/keil_lib_power.lib --remove --keep=*(CodeQuickAccess) --keep=*(.flash_conf)</Misc>
             <LinkerInputFile/>
-            <DisabledWarnings>6314</DisabledWarnings>
+            <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
         </TargetArmAds>
       </TargetOption>
@@ -3996,9 +3936,9 @@
           <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_MIMXRT685S_cm33.s</FileName>
+              <FileName>startup_MIMXRT685S_cm33.S</FileName>
               <FileType>2</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT685S/arm/startup_MIMXRT685S_cm33.s</FilePath>
+              <FilePath>../../../../../../../devices/MIMXRT685S/arm/startup_MIMXRT685S_cm33.S</FilePath>
             </File>
           </Files>
         </Group>
@@ -4009,6 +3949,11 @@
               <FileName>core_cm33.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../CMSIS/Include/core_cm33.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv8.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
             </File>
             <File>
               <FileName>tz_context.h</FileName>
@@ -4049,31 +3994,6 @@
               <FileName>cmsis_version.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv81mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/core_armv81mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mbl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
             </File>
             <File>
               <FileName>arm_common_tables.h</FileName>

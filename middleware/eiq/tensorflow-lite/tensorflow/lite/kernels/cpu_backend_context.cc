@@ -13,27 +13,60 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================*/
 
+/* File modified by NXP. Changes are described in file
+   /middleware/eiq/tensorflow-lite/readme.txt in section "Release notes" */
+
 #include "tensorflow/lite/kernels/cpu_backend_context.h"
 
 #include "public/gemmlowp.h"
 #ifndef TFLITE_MCU
 #include "tensorflow/lite/experimental/ruy/context.h"
 #endif
+#include "tensorflow/lite/kernels/op_macros.h"
 
 namespace tflite {
 
+CpuBackendContext* CpuBackendContext::GetFromContext(TfLiteContext* context) {
+  auto* external_context = static_cast<ExternalCpuBackendContext*>(
+      context->GetExternalContext(context, kTfLiteCpuBackendContext));
+
+  if (external_context == nullptr) {
+    TF_LITE_FATAL(
+        "ExternalCpuBackendContext isn't properly initialized during TFLite "
+        "interpreter initialization.");
+  }
+
+  auto* cpu_backend_context = static_cast<CpuBackendContext*>(
+      external_context->internal_backend_context());
+  if (cpu_backend_context == nullptr) {
+    // We do the lazy initialization here for the TfLiteInternalBackendContext
+    // that's wrapped inside ExternalCpuBackendContext.
+    cpu_backend_context = new CpuBackendContext();
+    if (context->recommended_num_threads != -1) {
+      cpu_backend_context->SetMaxNumThreads(context->recommended_num_threads);
+    }
+    external_context->set_internal_backend_context(
+        std::unique_ptr<TfLiteInternalBackendContext>(cpu_backend_context));
+  }
+
+  return cpu_backend_context;
+}
+
 CpuBackendContext::CpuBackendContext()
-    : gemmlowp_context_(new gemmlowp::GemmContext)
-#ifdef TFLITE_WITH_RUY
-      ,ruy_context_(new ruy::Context)
+    : TfLiteInternalBackendContext(),
+#ifdef TFLITE_WITH_RUY_GEMV
+      ruy_context_(new ruy::Context),
 #endif
-      {
-  set_max_num_threads(1);
+      gemmlowp_context_(new gemmlowp::GemmContext) {
+  SetMaxNumThreads(1);
+#ifdef TFLITE_WITH_RUY_GEMV
+  ruy_context_->cache_policy = ruy::kCacheLHSOnGemV;
+#endif
 }
 
 CpuBackendContext::~CpuBackendContext() {}
 
-void CpuBackendContext::set_max_num_threads(int max_num_threads) {
+void CpuBackendContext::SetMaxNumThreads(int max_num_threads) {
 #ifndef TFLITE_MCU
   max_num_threads_ = max_num_threads;
 #endif

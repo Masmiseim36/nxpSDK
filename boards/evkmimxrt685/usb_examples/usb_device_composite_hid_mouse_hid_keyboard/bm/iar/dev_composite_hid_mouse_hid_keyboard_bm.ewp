@@ -202,7 +202,7 @@
         </option>
         <option>
           <name>TrustZone</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>TrustZoneModes</name>
@@ -224,7 +224,6 @@
           <state>DEBUG</state>
           <state>CPU_MIMXRT685SFVKB_cm33</state>
           <state>BOOT_HEADER_ENABLE=1</state>
-          <state>ARM_MATH_CM33</state>
           <state>USB_STACK_BM</state>
           <state>CPU_MIMXRT685SFVKB=1</state>
           <state>USB_STACK_USE_DEDICATED_RAM=1</state>
@@ -1251,7 +1250,7 @@
         </option>
         <option>
           <name>TrustZone</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>TrustZoneModes</name>
@@ -1273,7 +1272,6 @@
           <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>CPU_MIMXRT685SFVKB_cm33</state>
-          <state>ARM_MATH_CM33</state>
           <state>USB_STACK_BM</state>
           <state>CPU_MIMXRT685SFVKB=1</state>
           <state>USB_STACK_USE_DEDICATED_RAM=1</state>
@@ -2300,7 +2298,7 @@
         </option>
         <option>
           <name>TrustZone</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>TrustZoneModes</name>
@@ -2322,7 +2320,6 @@
           <state>NDEBUG</state>
           <state>CPU_MIMXRT685SFVKB_cm33</state>
           <state>BOOT_HEADER_ENABLE=1</state>
-          <state>ARM_MATH_CM33</state>
           <state>USB_STACK_BM</state>
           <state>CPU_MIMXRT685SFVKB=1</state>
           <state>USB_STACK_USE_DEDICATED_RAM=1</state>
@@ -3349,7 +3346,7 @@
         </option>
         <option>
           <name>TrustZone</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>TrustZoneModes</name>
@@ -3371,7 +3368,6 @@
           <state>CPU_MIMXRT685SFVKB_cm33</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>NDEBUG</state>
-          <state>ARM_MATH_CM33</state>
           <state>USB_STACK_BM</state>
           <state>CPU_MIMXRT685SFVKB=1</state>
           <state>USB_STACK_USE_DEDICATED_RAM=1</state>
@@ -4269,22 +4265,19 @@
           </file>
         </group>
         <file>
+          <name>$PROJ_DIR$/../usb_device_ch9.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../usb_device_ch9.h</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$/../../../../../../middleware/usb/device/usb_device_dci.c</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../../middleware/usb/device/usb_device_dci.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../usb_device_ch9.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../usb_device_ch9.h</name>
-        </file>
-      </group>
-      <group>
-        <name>include</name>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/usb/device/usb_device.h</name>
+          <name>$PROJ_DIR$/../../../../../../middleware/usb/device/usb_device_dci.h</name>
         </file>
       </group>
       <group>
@@ -4305,6 +4298,24 @@
           </file>
         </group>
       </group>
+      <group>
+        <name>include</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/usb/device/usb_device.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/usb/device/usb_device.h</name>
+        </file>
+      </group>
+    </group>
+    <group>
+      <name>phy</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/usb/phy/usb_phy.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/usb/phy/usb_phy.h</name>
+      </file>
     </group>
     <group>
       <name>include</name>
@@ -4316,15 +4327,6 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/usb/include/usb_spec.h</name>
-      </file>
-    </group>
-    <group>
-      <name>phy</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/usb/phy/usb_phy.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/usb/phy/usb_phy.h</name>
       </file>
     </group>
   </group>
@@ -4502,6 +4504,9 @@
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_cm33.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/mpu_armv8.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/tz_context.h</name>
     </file>
     <file>
@@ -4524,21 +4529,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_version.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_armv81mml.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_armv8mbl.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_armv8mml.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/mpu_armv7.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/mpu_armv8.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/arm_common_tables.h</name>

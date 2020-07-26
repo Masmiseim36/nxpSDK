@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP
+ * Copyright 2019-2020 NXP
  * All rights reserved.
  *
  *
@@ -22,8 +22,8 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief Driver version 2.0.0. */
-#define FSL_OTFAD_DRIVER_VERSION (MAKE_VERSION(2U, 0U, 0U))
+/*! @brief Driver version 2.1.1. */
+#define FSL_OTFAD_DRIVER_VERSION (MAKE_VERSION(2U, 1U, 1U))
 /*@}*/
 
 /*! @brief Status codes for the OTFAD driver. */
@@ -59,30 +59,35 @@ enum
 /*! @brief OTFAD encryption configuration structure */
 typedef struct _otfad_encryption_config
 {
-    bool valid;           /* The context is valid or not */
-    bool AESdecryption;   /* AES decryption enable */
-    uint8_t readOnly;     /* read write attribute for the entire set of context registers */
-    uint8_t contextIndex; /* OTFAD context index */
-    uint32_t startAddr;   /* Start address*/
-    uint32_t endAddr;     /* End address */
-    uint32_t key[4];      /* Encryption key */
-    uint32_t counter[2];  /* Encryption counter */
+    bool valid;           /*!< The context is valid or not */
+    bool AESdecryption;   /*!< AES decryption enable */
+    uint8_t readOnly;     /*!< read write attribute for the entire set of context registers */
+    uint8_t contextIndex; /*!< OTFAD context index */
+    uint32_t startAddr;   /*!< Start address*/
+    uint32_t endAddr;     /*!< End address */
+    uint32_t key[4];      /*!< Encryption key */
+    uint32_t counter[2];  /*!< Encryption counter */
 } otfad_encryption_config_t;
 
 /*! @brief OTFAD configuration structure */
 typedef struct _otfad_config
 {
-    bool enableIntRequest;          /* Interrupt request enable */
-    uint8_t forceError;             /* Forces the OTFAD¡¯s key blob error flag (SR[KBERR]) to be asserted */
-    uint8_t forceSVM;               /* Force entry into SVM after a write */
-    uint8_t forceLDM;               /* Force entry into LDM after a write  */
-    uint8_t keyBlobScramble;        /* Key blob KEK scrambling */
-    uint8_t keyBlobProcess;         /* Key blob processing */
-    uint8_t restrictedRegAccess;    /* Restricted register access enable */
-    uint8_t CRCIndex;               /* Select which context has its CRC enabled */
-    uint8_t startKeyBlobProcessing; /* key blob processing is initiated */
-    bool enableOTFAD;               /* OTFAD has decryption enabled */
-    void *flexspiBaseAddr;          /*! Driver Base address. */
+#if defined(FSL_FEATURE_OTFAD_HAS_HAS_IRQ_ENABLE) && (FSL_FEATURE_OTFAD_HAS_HAS_IRQ_ENABLE > 0)
+    bool enableIntRequest; /*!< Interrupt request enable */
+#endif                     /* FSL_FEATURE_OTFAD_HAS_HAS_IRQ_ENABLE */
+#if defined(FSL_FEATURE_OTFAD_HAS_FORCE_ERR) && (FSL_FEATURE_OTFAD_HAS_FORCE_ERR > 0)
+    bool forceError; /*!< Forces the OTFAD's key blob error flag (SR[KBERR]) to be asserted */
+#endif               /* FSL_FEATURE_OTFAD_HAS_FORCE_ERR */
+    bool forceSVM;   /*!< Force entry into SVM after a write */
+    bool forceLDM;   /*!< Force entry into LDM after a write  */
+#if defined(FSL_FEATURE_OTFAD_HAS_KEYBLOB_PROCESSING) && (FSL_FEATURE_OTFAD_HAS_KEYBLOB_PROCESSING > 0)
+    bool keyBlobScramble;        /*!< Key blob KEK scrambling */
+    bool keyBlobProcess;         /*!< Key blob processing */
+    bool startKeyBlobProcessing; /*!< key blob processing is initiated */
+#endif                           /* FSL_FEATURE_OTFAD_HAS_KEYBLOB_PROCESSING */
+    bool restrictedRegAccess;    /*!< Restricted register access enable */
+    bool enableOTFAD;            /*!< OTFAD has decryption enabled */
+    void *flexspiBaseAddr;       /*! Driver Base address. */
 } otfad_config_t;
 
 /*******************************************************************************
@@ -111,13 +116,22 @@ void OTFAD_GetDefaultConfig(otfad_config_t *config);
  * @param base OTFAD base address.
  * @param config OTFAD configuration.
  */
+
+#if defined(DOXYGEN_OUTPUT) && DOXYGEN_OUTPUT
+void OTFAD_Init(OTFAD_Type *base, const otfad_config_t *config);
+#else
 AT_QUICKACCESS_SECTION_CODE(void OTFAD_Init(OTFAD_Type *base, const otfad_config_t *config));
+#endif
 
 /*!
  * @brief Deinitializes the OTFAD.
  *
  */
+#if defined(DOXYGEN_OUTPUT) && DOXYGEN_OUTPUT
+void OTFAD_Deinit(OTFAD_Type *base);
+#else
 AT_QUICKACCESS_SECTION_CODE(void OTFAD_Deinit(OTFAD_Type *base));
+#endif
 
 /* @} */
 
@@ -144,6 +158,8 @@ static inline uint32_t OTFAD_GetStatus(OTFAD_Type *base)
 {
     return base->SR;
 }
+
+/* @} */
 
 /*!
  * @name functional
@@ -181,6 +197,8 @@ status_t OTFAD_GetEncryptionConfig(OTFAD_Type *base, otfad_encryption_config_t *
  * @return  status, such as kStatus_Success or kStatus_OTFAD_ResRegAccessMode.
  */
 status_t OTFAD_HitDetermination(OTFAD_Type *base, uint32_t address, uint8_t *contextIndex);
+
+/* @} */
 
 #if defined(__cplusplus)
 }

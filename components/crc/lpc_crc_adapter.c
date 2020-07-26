@@ -15,6 +15,7 @@
  ******************************************************************************/
 uint32_t HAL_CrcCompute(hal_crc_config_t *crcConfig, uint8_t *dataIn, uint32_t length)
 {
+    CRC_Type *const s_CrcList[] = CRC_BASE_PTRS;
     crc_config_t config;
 
     config.seed          = crcConfig->crcSeed;
@@ -32,11 +33,11 @@ uint32_t HAL_CrcCompute(hal_crc_config_t *crcConfig, uint8_t *dataIn, uint32_t l
         config.polynomial = kCRC_Polynomial_CRC_32;
     }
 
-    CRC_Init(CRC_ENGINE, &config);
-    CRC_WriteData(CRC_ENGINE, dataIn, length);
+    CRC_Init(s_CrcList[0], &config);
+    CRC_WriteData(s_CrcList[0], dataIn, length);
     if (crcConfig->crcSize == 2)
-        return CRC_Get16bitResult(CRC_ENGINE);
+        return CRC_Get16bitResult(s_CrcList[0]);
     else if (crcConfig->crcSize == 4)
-        return CRC_Get32bitResult(CRC_ENGINE);
+        return CRC_Get32bitResult(s_CrcList[0]);
     return 0;
 }

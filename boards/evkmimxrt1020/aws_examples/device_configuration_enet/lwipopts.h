@@ -62,6 +62,23 @@
 #define LWIP_SOCKET 0
 
 #endif
+
+/* ---------- Core locking ---------- */
+
+#define LWIP_TCPIP_CORE_LOCKING 1
+
+void sys_lock_tcpip_core(void);
+#define LOCK_TCPIP_CORE() sys_lock_tcpip_core()
+
+void sys_unlock_tcpip_core(void);
+#define UNLOCK_TCPIP_CORE() sys_unlock_tcpip_core()
+
+void sys_check_core_locking(void);
+#define LWIP_ASSERT_CORE_LOCKED() sys_check_core_locking()
+
+void sys_mark_tcpip_thread(void);
+#define LWIP_MARK_TCPIP_THREAD() sys_mark_tcpip_thread()
+
 /* ---------- Memory options ---------- */
 /**
  * MEM_ALIGNMENT: should be set to the alignment of the CPU
@@ -89,7 +106,7 @@
 /* MEMP_NUM_UDP_PCB: the number of UDP protocol control blocks. One
    per active UDP "connection". */
 #ifndef MEMP_NUM_UDP_PCB
-#define MEMP_NUM_UDP_PCB 7
+#define MEMP_NUM_UDP_PCB 8 // 1 PCB is reserved for mDNS 
 #endif
 /* MEMP_NUM_TCP_PCB: the number of simulatenously active TCP
    connections. */
@@ -109,7 +126,7 @@
 /* MEMP_NUM_SYS_TIMEOUT: the number of simulateously active
    timeouts. */
 #ifndef MEMP_NUM_SYS_TIMEOUT
-#define MEMP_NUM_SYS_TIMEOUT 10
+#define MEMP_NUM_SYS_TIMEOUT 11 //increased by 1 because of mDNS
 #endif
 
 /* ---------- Pbuf options ---------- */
@@ -201,6 +218,14 @@
 #endif
 #ifndef LWIP_PROVIDE_ERRNO
 #define LWIP_PROVIDE_ERRNO 1
+#endif
+
+/* ---------- mDNS options ---------- */
+#ifndef LWIP_MDNS_RESPONDER
+#define LWIP_MDNS_RESPONDER 1
+#endif
+#ifndef LWIP_NUM_NETIF_CLIENT_DATA
+#define LWIP_NUM_NETIF_CLIENT_DATA 1
 #endif
 
 /*

@@ -19,12 +19,14 @@
 #include "audio/xa_vorbis_dec_api.h"
 #include "audio/xa-renderer-api.h"
 #include "audio/xa-audio-decoder-api.h"
+#include "nxp/client_proxy/client_proxy_api.h"
 
 #include "fsl_common.h"
 #if (defined(FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET) && FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET)
 #include "fsl_memory.h"
 #endif
 
+#include "dsp_config.h"
 #include "srtm_utils.h"
 #include "srtm_config_audio.h"
 
@@ -32,15 +34,16 @@
  * Definitions
  ******************************************************************************/
 #define AUDIO_FRMWK_BUF_SIZE (64 * 1024)
-#define AUDIO_COMP_BUF_SIZE (256 * 1024)
+#define AUDIO_COMP_BUF_SIZE  (256 * 1024)
 
 #define VORBIS_DEC_RAW_VORBIS_LAST_PKT_GRANULE_POS -1
-#define VORBIS_DEC_OGG_MAX_PAGE_SIZE 12
-#define VORBIS_DEC_RUNTIME_MEM 0
+#define VORBIS_DEC_OGG_MAX_PAGE_SIZE               12
+#define VORBIS_DEC_RUNTIME_MEM                     0
 
-#define MP3_DEC_PCM_WIDTH 16
-#define AAC_DEC_PCM_WIDTH 16
-#define RENDERER_FRAME_SIZE (4 * 1024)
+#define MP3_DEC_PCM_WIDTH          16
+#define AAC_DEC_PCM_WIDTH          16
+#define RENDERER_FRAME_SIZE        (4 * 1024)
+#define CLIENT_PROXY_FRAME_SIZE_US (10000)
 
 /* Stack size for DSP data processing thread. */
 #define STACK_SIZE (4 * 1024)
@@ -92,18 +95,38 @@ static XAF_ERR_CODE srtm_mp3_setup(void *p_decoder)
 
 static XAF_ERR_CODE renderer_setup(void *p_renderer, xaf_format_t *format)
 {
-    int param[8];
+    int param[12];
 
-    param[0] = XA_RENDERER_CONFIG_PARAM_PCM_WIDTH;
-    param[1] = format->pcm_width;
-    param[2] = XA_RENDERER_CONFIG_PARAM_CHANNELS;
-    param[3] = format->channels;
-    param[4] = XA_RENDERER_CONFIG_PARAM_SAMPLE_RATE;
-    param[5] = format->sample_rate;
-    param[6] = XA_RENDERER_CONFIG_PARAM_FRAME_SIZE;
-    param[7] = RENDERER_FRAME_SIZE;
+    param[0]  = XA_RENDERER_CONFIG_PARAM_PCM_WIDTH;
+    param[1]  = format->pcm_width;
+    param[2]  = XA_RENDERER_CONFIG_PARAM_CHANNELS;
+    param[3]  = format->channels;
+    param[4]  = XA_RENDERER_CONFIG_PARAM_SAMPLE_RATE;
+    param[5]  = format->sample_rate;
+    param[6]  = XA_RENDERER_CONFIG_PARAM_FRAME_SIZE;
+    param[7]  = RENDERER_FRAME_SIZE;
+    param[8]  = XA_RENDERER_CONFIG_PARAM_AUDIO_BUFFER_1;
+    param[9]  = (int)DSP_AUDIO_BUFFER_1_PING;
+    param[10] = XA_RENDERER_CONFIG_PARAM_AUDIO_BUFFER_2;
+    param[11] = (int)DSP_AUDIO_BUFFER_1_PONG;
 
-    return xaf_comp_set_config(p_renderer, 4, &param[0]);
+    return xaf_comp_set_config(p_renderer, 6, &param[0]);
+}
+
+static int client_proxy_setup(void *p_comp, xaf_format_t *format)
+{
+    int param[10];
+
+    param[0] = XA_CLIENT_PROXY_CONFIG_PARAM_CHANNELS;
+    param[1] = format->channels;
+    param[2] = XA_CLIENT_PROXY_CONFIG_PARAM_SAMPLE_RATE;
+    param[3] = format->sample_rate;
+    param[4] = XA_CLIENT_PROXY_CONFIG_PARAM_PCM_WIDTH;
+    param[5] = format->pcm_width;
+    param[6] = XA_CLIENT_PROXY_CONFIG_PARAM_INPUT_FRAME_SIZE_US;
+    param[7] = CLIENT_PROXY_FRAME_SIZE_US;
+
+    return xaf_comp_set_config(p_comp, 4, &param[0]);
 }
 
 static XAF_ERR_CODE get_dec_config(void *p_comp, xaf_format_t *comp_format)
@@ -131,8 +154,8 @@ static XAF_ERR_CODE get_dec_config(void *p_comp, xaf_format_t *comp_format)
  ******************************************************************************/
 int srtm_file_dec_create(dsp_handle_t *dsp, srtm_audio_component_t type)
 {
-    xaf_comp_status dec_status;
-    int dec_info[4];
+    xaf_comp_status comp_status;
+    int comp_info[4];
     void *dec_inbuf[2];
     uint32_t read_length;
     XAF_ERR_CODE ret;
@@ -186,7 +209,12 @@ int srtm_file_dec_create(dsp_handle_t *dsp, srtm_audio_component_t type)
         goto error_cleanup;
     }
 
-    comp_setup(dsp->comp_codec);
+    ret = comp_setup(dsp->comp_codec);
+    if (ret != XAF_NO_ERROR)
+    {
+        DSP_PRINTF("comp_setup failure: %d\r\n", ret);
+        goto error_cleanup;
+    }
 
     DSP_PRINTF("[DSP Codec] Decoder created\r\n");
 
@@ -218,22 +246,22 @@ int srtm_file_dec_create(dsp_handle_t *dsp, srtm_audio_component_t type)
             break;
         }
 
-        ret = xaf_comp_get_status(dsp->audio_device, dsp->comp_codec, &dec_status, &dec_info[0]);
+        ret = xaf_comp_get_status(dsp->audio_device, dsp->comp_codec, &comp_status, &comp_info[0]);
         if (ret != XAF_NO_ERROR)
         {
             DSP_PRINTF("xaf_comp_get_status failure: %d\r\n", ret);
             goto error_cleanup;
         }
 
-        if (dec_status == XAF_INIT_DONE || dec_status == XAF_EXEC_DONE)
+        if (comp_status == XAF_INIT_DONE || comp_status == XAF_EXEC_DONE)
         {
             break;
         }
     }
 
-    if (dec_status != XAF_INIT_DONE)
+    if (comp_status != XAF_INIT_DONE)
     {
-        DSP_PRINTF("ERROR: Failed to initialize decoder component\r\n");
+        DSP_PRINTF("ERROR: Failed to initialize decoder component: %d\r\n", comp_status);
         goto error_cleanup;
     }
 
@@ -256,23 +284,65 @@ int srtm_file_dec_create(dsp_handle_t *dsp, srtm_audio_component_t type)
 
     DSP_PRINTF("[DSP Codec] Renderer component created\r\n");
 
-    ret = xaf_connect(dsp->comp_codec, 1, dsp->comp_renderer, 0, 4);
-
-    DSP_PRINTF("[DSP Codec] Connected XA_DECODER -> XA_RENDERER\r\n");
-
-    ret = xaf_comp_process(dsp->comp_codec, dsp->comp_renderer, NULL, 0, XAF_START_FLAG);
+    /* Start renderer component */
+    ret = xaf_comp_process(dsp->audio_device, dsp->comp_renderer, NULL, 0, XAF_START_FLAG);
     if (ret != XAF_NO_ERROR)
     {
         DSP_PRINTF("xaf_comp_process XAF_START_FLAG renderer failure: %d\r\n", ret);
         goto error_cleanup;
     }
 
-    ret = xaf_comp_get_status(dsp->audio_device, dsp->comp_renderer, &dec_status, &dec_info[0]);
+    ret = xaf_comp_get_status(dsp->audio_device, dsp->comp_renderer, &comp_status, &comp_info[0]);
     if (ret != XAF_NO_ERROR)
     {
         DSP_PRINTF("xaf_comp_get_status XA_RENDERER failure: %d\r\n", ret);
-        return -1;
+        goto error_cleanup;
     }
+
+    /* Create and setup client proxy component */
+    ret = xaf_comp_create(dsp->audio_device, &dsp->comp_client_proxy, "post-proc/client_proxy", 0, 0, NULL,
+                          XAF_POST_PROC);
+    if (ret != XAF_NO_ERROR)
+    {
+        DSP_PRINTF("xaf_comp_create client_proxy failure: %d\r\n", ret);
+        goto error_cleanup;
+    }
+
+    client_proxy_setup(dsp->comp_client_proxy, &dec_format);
+
+    /* Start client proxy component */
+    ret = xaf_comp_process(dsp->audio_device, dsp->comp_client_proxy, NULL, 0, XAF_START_FLAG);
+    if (ret != XAF_NO_ERROR)
+    {
+        DSP_PRINTF("xaf_comp_process XAF_START_FLAG CLIENT_PROXY failure: %d\r\n", ret);
+        goto error_cleanup;
+    }
+
+    ret = xaf_comp_get_status(dsp->audio_device, dsp->comp_client_proxy, &comp_status, &comp_info[0]);
+    if (ret != XAF_NO_ERROR)
+    {
+        DSP_PRINTF("xaf_comp_get_status CLIENT_PROXY failure: %d\r\n", ret);
+        goto error_cleanup;
+    }
+
+    /* Connect all the non-input components */
+    ret = xaf_connect(dsp->comp_codec, 1, dsp->comp_client_proxy, 0, 4);
+    if (ret != XAF_NO_ERROR)
+    {
+        DSP_PRINTF("xaf_connect DECODER -> CLIENT_PROXY failure: %d\r\n", ret);
+        goto error_cleanup;
+    }
+
+    DSP_PRINTF("connected DECODER -> CLIENT_PROXY\n\r");
+
+    ret = xaf_connect(dsp->comp_client_proxy, 1, dsp->comp_renderer, 0, 4);
+    if (ret != XAF_NO_ERROR)
+    {
+        DSP_PRINTF("xaf_connect CLIENT_PROXY -> RENDERER_0 failure: %d\r\n", ret);
+        goto error_cleanup;
+    }
+
+    DSP_PRINTF("connected CLIENT_PROXY -> XA_RENDERER_0\n\r");
 
     /* Delete previous cleanup thread if valid */
     if (xos_thread_get_state(&dsp->cleanup_thread) != XOS_THREAD_STATE_INVALID)
@@ -315,7 +385,8 @@ error_cleanup:
         DSP_PRINTF("[DSP Codec] Audio device closed\r\n\r\n");
     }
 
-    return ret;
+    /* Return error to DSP app so it can be returned to ARM core */
+    return -1;
 }
 
 int srtm_file_dec_close(void *arg, int wake_value)
@@ -347,6 +418,13 @@ int srtm_file_dec_close(void *arg, int wake_value)
         return -1;
     }
 
+    ret = xaf_comp_delete(dsp->comp_client_proxy);
+    if (ret != XAF_NO_ERROR)
+    {
+        DSP_PRINTF("xaf_comp_delete failure: %d\r\n", ret);
+        return -1;
+    }
+
     ret = xaf_adev_close(dsp->audio_device, XAF_ADEV_NORMAL_CLOSE);
     if (ret != XAF_NO_ERROR)
     {
@@ -360,4 +438,14 @@ int srtm_file_dec_close(void *arg, int wake_value)
     DSP_SendFileEnd(dsp);
 
     return 0;
+}
+
+int client_proxy_filter(dsp_handle_t *dsp, int filterNum)
+{
+    int param[2];
+
+    param[0] = XA_CLIENT_PROXY_CONFIG_PARAM_EAP;
+    param[1] = filterNum;
+
+    return xaf_comp_set_config(dsp->comp_client_proxy, 1, &param[0]);
 }

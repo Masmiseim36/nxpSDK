@@ -8,7 +8,11 @@
 
 #include "fsl_device_registers.h"
 #include "fsl_gpio.h"
+#if (defined(FSL_FEATURE_SYSCON_HAS_PINT_SEL_REGISTER) && (FSL_FEATURE_SYSCON_HAS_PINT_SEL_REGISTER > 0U))
+#include "fsl_syscon.h"
+#else
 #include "fsl_inputmux.h"
+#endif
 #include "fsl_pint.h"
 #include "gpio.h"
 
@@ -16,7 +20,11 @@
  * Definitions
  ******************************************************************************/
 
-#define HAL_INPUTMUX_GpioPortPinToPintsel(port, pin) ((pin) + (port << 5) + (PINTSEL_PMUX_ID << PMUX_SHIFT))
+#if (defined(FSL_FEATURE_SYSCON_HAS_PINT_SEL_REGISTER) && (FSL_FEATURE_SYSCON_HAS_PINT_SEL_REGISTER > 0U))
+#define HAL_INPUTMUX_GpioPortPinToPintsel(port, pin) ((pin) + ((port) << 5) + (PINTSEL_ID << SYSCON_SHIFT))
+#else
+#define HAL_INPUTMUX_GpioPortPinToPintsel(port, pin) ((pin) + ((port) << 5) + (PINTSEL_PMUX_ID << PMUX_SHIFT))
+#endif
 
 /*! @brief The pin config struct of gpio adapter. */
 typedef struct _hal_gpio_pin
@@ -45,12 +53,12 @@ typedef struct _hal_gpio_state
     hal_gpio_pin_t pin;
 } hal_gpio_state_t;
 
-#define HAL_GPIO_INPUTMUX_PIN_FLAG(port, pin) (((port) << 5) + (pin))
-#define HAL_GPIO_INPUTMUX_GET_PIN(flag) ((flag)&0x1FU)
-#define HAL_GPIO_INPUTMUX_GET_PORT(flag) ((flag) >> 5)
+#define HAL_GPIO_INPUTMUX_PIN_FLAG(port, pin) (((port) << 5U) + (pin))
+#define HAL_GPIO_INPUTMUX_GET_PIN(flag)       ((flag)&0x1FU)
+#define HAL_GPIO_INPUTMUX_GET_PORT(flag)      ((flag) >> 5U)
 
-#define HAL_GPIO_PORT_INIT_SET_FLAG(port) (s_GpioPortInitializedFlag |= (1 << port))
-#define HAL_GPIO_PORT_INIT_GET_FLAG(port) (s_GpioPortInitializedFlag & (1 << port) ? 1 : 0)
+#define HAL_GPIO_PORT_INIT_SET_FLAG(port) (s_GpioPortInitializedFlag |= (1U << (port)))
+#define HAL_GPIO_PORT_INIT_GET_FLAG(port) (s_GpioPortInitializedFlag & (1U << (port)) ? 1U : 0U)
 
 /*******************************************************************************
  * Prototypes
@@ -78,7 +86,7 @@ static GPIO_Type *const s_GpioList[] = GPIO_BASE_PTRS;
 
 static void HAL_GpioInterruptCallback(pint_pin_int_t pintr, uint32_t pmatch_status)
 {
-    if (s_GpioInputMux[pintr >> 3] & (1U << (pintr & 0x07U)))
+    if (0U != (s_GpioInputMux[(uint8_t)pintr >> 3U] & (1U << ((uint8_t)pintr & 0x07U))))
     {
         HAL_GpioInterruptHandle(HAL_GPIO_INPUTMUX_GET_PORT(s_GpioInputMuxPin[pintr]),
                                 HAL_GPIO_INPUTMUX_GET_PIN(s_GpioInputMuxPin[pintr]));
@@ -89,7 +97,7 @@ static void HAL_GpioInterruptHandle(uint8_t port, uint8_t pin)
 {
     hal_gpio_state_t *head = s_GpioHead;
 
-    while (head)
+    while (NULL != head)
     {
         if ((pin == head->pin.pin) && (port == head->pin.port))
         {
@@ -104,7 +112,7 @@ static void HAL_GpioInterruptHandle(uint8_t port, uint8_t pin)
 
 static hal_gpio_status_t HAL_GpioConflictSearch(hal_gpio_state_t *head, uint8_t port, uint8_t pin)
 {
-    while (head)
+    while (NULL != head)
     {
         if ((head->pin.port == port) && (head->pin.pin == pin))
         {
@@ -128,7 +136,7 @@ static hal_gpio_status_t HAL_GpioAddItem(hal_gpio_state_t **head, hal_gpio_state
     }
     else
     {
-        while (p->next)
+        while (NULL != p->next)
         {
             if (p == node)
             {
@@ -152,7 +160,7 @@ static hal_gpio_status_t HAL_GpioRemoveItem(hal_gpio_state_t **head, hal_gpio_st
     uint32_t regPrimask;
 
     regPrimask = DisableGlobalIRQ();
-    while (p)
+    while (NULL != p)
     {
         if (p == node)
         {
@@ -182,16 +190,12 @@ hal_gpio_status_t HAL_GpioInit(hal_gpio_handle_t gpioHandle, hal_gpio_pin_config
     hal_gpio_status_t status        = kStatus_HAL_GpioSuccess;
     gpio_pin_config_t gpioPinconfig = {
         kGPIO_DigitalInput,
-        0,
+        0U,
     };
 
     assert(gpioHandle);
     assert(pinConfig);
-
-    if (HAL_GPIO_HANDLE_SIZE < sizeof(hal_gpio_state_t))
-    {
-        return kStatus_HAL_GpioError;
-    }
+    assert(HAL_GPIO_HANDLE_SIZE >= sizeof(hal_gpio_state_t));
 
     gpioState = (hal_gpio_state_t *)gpioHandle;
 
@@ -209,7 +213,7 @@ hal_gpio_status_t HAL_GpioInit(hal_gpio_handle_t gpioHandle, hal_gpio_pin_config
 
     gpioState->pin.pin                  = pinConfig->pin;
     gpioState->pin.port                 = pinConfig->port;
-    gpioState->pin.pinSet.direction     = pinConfig->direction;
+    gpioState->pin.pinSet.direction     = (uint8_t)pinConfig->direction;
     gpioState->pin.pint.pintInitialized = 0U;
 
     if (kHAL_GpioDirectionOut == pinConfig->direction)
@@ -220,7 +224,7 @@ hal_gpio_status_t HAL_GpioInit(hal_gpio_handle_t gpioHandle, hal_gpio_pin_config
     {
         gpioPinconfig.pinDirection = kGPIO_DigitalInput;
     }
-    if (0 == HAL_GPIO_PORT_INIT_GET_FLAG(pinConfig->port))
+    if (0U == HAL_GPIO_PORT_INIT_GET_FLAG(pinConfig->port))
     {
         HAL_GPIO_PORT_INIT_SET_FLAG(pinConfig->port);
         GPIO_PortInit(s_GpioList[0], pinConfig->port);
@@ -234,20 +238,20 @@ hal_gpio_status_t HAL_GpioInit(hal_gpio_handle_t gpioHandle, hal_gpio_pin_config
 hal_gpio_status_t HAL_GpioDeinit(hal_gpio_handle_t gpioHandle)
 {
     hal_gpio_state_t *gpioStateHandle;
-    int i;
-    int k;
+    uint32_t i;
+    uint32_t k;
 
     assert(gpioHandle);
 
     gpioStateHandle = (hal_gpio_state_t *)gpioHandle;
 
-    if (0 != gpioStateHandle->pin.pint.pintInitialized)
+    if (0U != gpioStateHandle->pin.pint.pintInitialized)
     {
         /* Disable the pin's PINT callback */
         PINT_DisableCallbackByIndex(PINT, (pint_pin_int_t)gpioStateHandle->pin.pint.pintIndex);
     }
 
-    for (k = 0; k < FSL_FEATURE_PINT_NUMBER_OF_CONNECTED_OUTPUTS; k++)
+    for (k = 0U; k < FSL_FEATURE_PINT_NUMBER_OF_CONNECTED_OUTPUTS; k++)
     {
         if (HAL_GPIO_INPUTMUX_PIN_FLAG(gpioStateHandle->pin.port, gpioStateHandle->pin.pin) == s_GpioInputMuxPin[k])
         {
@@ -258,9 +262,9 @@ hal_gpio_status_t HAL_GpioDeinit(hal_gpio_handle_t gpioHandle)
         }
     }
 
-    for (i = 0; i < FSL_FEATURE_PINT_NUMBER_OF_CONNECTED_OUTPUTS; i++)
+    for (i = 0U; i < FSL_FEATURE_PINT_NUMBER_OF_CONNECTED_OUTPUTS; i++)
     {
-        if (s_GpioInputMux[i >> 3] & (1U << (i & 0x07U)))
+        if (0U != (s_GpioInputMux[i >> 3] & (1U << (i & 0x07U))))
         {
             break;
         }
@@ -268,15 +272,15 @@ hal_gpio_status_t HAL_GpioDeinit(hal_gpio_handle_t gpioHandle)
 
     if (i >= FSL_FEATURE_PINT_NUMBER_OF_CONNECTED_OUTPUTS)
     {
-        if (s_GpioPintInitialized)
+        if (0U != s_GpioPintInitialized)
         {
-            s_GpioPintInitialized = 0;
+            s_GpioPintInitialized = 0U;
             /* Deinitialize PINT */
             PINT_Deinit(PINT);
         }
     }
 
-    HAL_GpioRemoveItem(&s_GpioHead, gpioStateHandle);
+    (void)HAL_GpioRemoveItem(&s_GpioHead, gpioStateHandle);
     return kStatus_HAL_GpioSuccess;
 }
 
@@ -288,7 +292,7 @@ hal_gpio_status_t HAL_GpioGetInput(hal_gpio_handle_t gpioHandle, uint8_t *pinSta
 
     gpioStateHandle = (hal_gpio_state_t *)gpioHandle;
 
-    *pinState = ((GPIO_PinRead(s_GpioList[0], gpioStateHandle->pin.port, gpioStateHandle->pin.pin)) ? 1 : 0);
+    *pinState = ((0U != GPIO_PinRead(s_GpioList[0], gpioStateHandle->pin.port, gpioStateHandle->pin.pin)) ? 1U : 0U);
     return kStatus_HAL_GpioSuccess;
 }
 
@@ -300,7 +304,7 @@ hal_gpio_status_t HAL_GpioSetOutput(hal_gpio_handle_t gpioHandle, uint8_t pinSta
 
     gpioStateHandle = (hal_gpio_state_t *)gpioHandle;
 
-    GPIO_PinWrite(s_GpioList[0], gpioStateHandle->pin.port, gpioStateHandle->pin.pin, (pinState) ? 1 : 0);
+    GPIO_PinWrite(s_GpioList[0], gpioStateHandle->pin.port, gpioStateHandle->pin.pin, (0U != pinState) ? 1U : 0U);
     return kStatus_HAL_GpioSuccess;
 }
 
@@ -373,45 +377,51 @@ hal_gpio_status_t HAL_GpioSetTriggerMode(hal_gpio_handle_t gpioHandle, hal_gpio_
             break;
     }
 
-    gpioStateHandle->pin.pinSet.trigger = (uint16_t)gpioTrigger;
+    gpioStateHandle->pin.pinSet.trigger = (uint8_t)gpioTrigger;
 
     /* Enable callbacks for PINT */
-    if (!s_GpioPintInitialized)
+    if (0U == s_GpioPintInitialized)
     {
-        s_GpioPintInitialized = 1;
+        s_GpioPintInitialized = 1U;
         /* Initialize PINT */
         PINT_Init(PINT);
     }
 
     /* initialize port interrupt */
-    if (0 == gpioStateHandle->pin.pint.pintInitialized)
+    if (0U == gpioStateHandle->pin.pint.pintInitialized)
     {
-        for (int inputMuxIndex = 0; inputMuxIndex < FSL_FEATURE_PINT_NUMBER_OF_CONNECTED_OUTPUTS; inputMuxIndex++)
+        for (uint32_t inputMuxIndex = 0; inputMuxIndex < FSL_FEATURE_PINT_NUMBER_OF_CONNECTED_OUTPUTS; inputMuxIndex++)
         {
-            if (0 == (s_GpioInputMux[inputMuxIndex >> 3] & (1U << (inputMuxIndex & 0x07U))))
+            if (0U == (s_GpioInputMux[inputMuxIndex >> 3] & (1U << (inputMuxIndex & 0x07U))))
             {
                 s_GpioInputMux[inputMuxIndex >> 3] |= 1U << (inputMuxIndex & 0x07U);
-                gpioStateHandle->pin.pint.pintIndex       = inputMuxIndex;
+                gpioStateHandle->pin.pint.pintIndex       = (uint8_t)inputMuxIndex;
                 gpioStateHandle->pin.pint.pintInitialized = 1U;
                 break;
             }
         }
     }
-    if (0 != gpioStateHandle->pin.pint.pintInitialized)
+    if (0U != gpioStateHandle->pin.pint.pintInitialized)
     {
         NVIC_SetPriority(s_PintIRQ[gpioStateHandle->pin.pint.pintIndex], HAL_GPIO_ISR_PRIORITY);
         s_GpioInputMuxPin[gpioStateHandle->pin.pint.pintIndex] =
             HAL_GPIO_INPUTMUX_PIN_FLAG(gpioStateHandle->pin.port, gpioStateHandle->pin.pin);
         /* Connect trigger sources to PINT */
+#if (defined(FSL_FEATURE_SYSCON_HAS_PINT_SEL_REGISTER) && (FSL_FEATURE_SYSCON_HAS_PINT_SEL_REGISTER > 0U))
+        SYSCON_AttachSignal(SYSCON, (uint32_t)gpioStateHandle->pin.pint.pintIndex,
+                            (syscon_connection_t)HAL_INPUTMUX_GpioPortPinToPintsel((uint32_t)gpioStateHandle->pin.port,
+                                                                                   (uint32_t)gpioStateHandle->pin.pin));
+#else
         INPUTMUX_Init(INPUTMUX);
-        INPUTMUX_AttachSignal(INPUTMUX, gpioStateHandle->pin.pint.pintIndex,
-                              (inputmux_connection_t)HAL_INPUTMUX_GpioPortPinToPintsel(gpioStateHandle->pin.port,
-                                                                                       gpioStateHandle->pin.pin));
+        INPUTMUX_AttachSignal(INPUTMUX, (uint32_t)gpioStateHandle->pin.pint.pintIndex,
+                              (inputmux_connection_t)HAL_INPUTMUX_GpioPortPinToPintsel((uint32_t)gpioStateHandle->pin.port,
+                                                                                       (uint32_t)gpioStateHandle->pin.pin));
+        /* Turnoff clock to inputmux to save power. Clock is only needed to make changes */
+        INPUTMUX_Deinit(INPUTMUX);
+#endif
         /* Setup Pin Interrupt 0 for rising edge */
         PINT_PinInterruptConfig(PINT, (pint_pin_int_t)gpioStateHandle->pin.pint.pintIndex, triggerType,
                                 HAL_GpioInterruptCallback);
-        /* Turnoff clock to inputmux to save power. Clock is only needed to make changes */
-        INPUTMUX_Deinit(INPUTMUX);
         /* Enable the pin's PINT call back */
         PINT_EnableCallbackByIndex(PINT, (pint_pin_int_t)gpioStateHandle->pin.pint.pintIndex);
     }
@@ -437,7 +447,7 @@ hal_gpio_status_t HAL_GpioWakeUpSetting(hal_gpio_handle_t gpioHandle, uint8_t en
         return kStatus_HAL_GpioError;
     }
 
-    if (enable)
+    if (0U != enable)
     {
         EnableDeepSleepIRQ(s_PintIRQ[gpioStateHandle->pin.pint.pintIndex]);
     }

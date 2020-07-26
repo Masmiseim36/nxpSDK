@@ -1,5 +1,5 @@
 /*
- * Amazon FreeRTOS V1.0.0
+ * FreeRTOS V1.0.0
  * Copyright (C) 2017 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  * Copyright (c) 2013 - 2014, Freescale Semiconductor, Inc.
  * Copyright 2016-2019 NXP
@@ -35,7 +35,7 @@
 #include "ksdk_mbedtls.h"
 #include "pin_mux.h"
 
-/* Amazon FreeRTOS Demo Includes */
+/* FreeRTOS Demo Includes */
 #include "FreeRTOS.h"
 #include "task.h"
 #include "iot_logging_task.h"
@@ -62,25 +62,25 @@
  * Definitions
  ******************************************************************************/
 #define INIT_SUCCESS 0
-#define INIT_FAIL 1
+#define INIT_FAIL    1
 
-#define LOGGING_TASK_PRIORITY (tskIDLE_PRIORITY + 1)
+#define LOGGING_TASK_PRIORITY   (tskIDLE_PRIORITY + 1)
 #define LOGGING_TASK_STACK_SIZE (200)
-#define LOGGING_QUEUE_LENGTH (16)
+#define LOGGING_QUEUE_LENGTH    (16)
 
 /* Accelerometer driver specific defines */
 #if defined(BOARD_ACCEL_FXOS)
-#define XYZ_DATA_CFG XYZ_DATA_CFG_REG
-#define ACCEL_INIT(handle, config) FXOS_Init(handle, config)
-#define ACCEL_READ_REG(handle, reg, val) FXOS_ReadReg(handle, reg, val, 1)
+#define XYZ_DATA_CFG                          XYZ_DATA_CFG_REG
+#define ACCEL_INIT(handle, config)            FXOS_Init(handle, config)
+#define ACCEL_READ_REG(handle, reg, val)      FXOS_ReadReg(handle, reg, val, 1)
 #define ACCELL_READ_SENSOR_DATA(handle, data) FXOS_ReadSensorData(handle, data)
-#define ACCEL_GET_RESOLUTION() FXOS_GetResolutionBits()
+#define ACCEL_GET_RESOLUTION()                FXOS_GetResolutionBits()
 #elif defined(BOARD_ACCEL_MMA)
-#define XYZ_DATA_CFG kMMA8652_XYZ_DATA_CFG
-#define ACCEL_INIT(handle, config) MMA_Init(handle, config)
-#define ACCEL_READ_REG(handle, reg, val) MMA_ReadReg(handle, reg, val)
+#define XYZ_DATA_CFG                          kMMA8652_XYZ_DATA_CFG
+#define ACCEL_INIT(handle, config)            MMA_Init(handle, config)
+#define ACCEL_READ_REG(handle, reg, val)      MMA_ReadReg(handle, reg, val)
 #define ACCELL_READ_SENSOR_DATA(handle, data) MMA_ReadSensorData(handle, data)
-#define ACCEL_GET_RESOLUTION() MMA_GetResolutionBits()
+#define ACCEL_GET_RESOLUTION()                MMA_GetResolutionBits()
 #endif
 
 /* Accelerometer and magnetometer */
@@ -273,7 +273,7 @@ status_t init_mag_accel(uint8_t *accelDataScale, uint8_t *accelResolution)
 }
 #endif
 
-void vApplicationDaemonTaskStartupHook(void)
+void main_task(void *pvParameters)
 {
     /* A simple example to demonstrate key and certificate provisioning in
      * microcontroller flash using PKCS#11 interface. This should be replaced
@@ -292,12 +292,14 @@ void vApplicationDaemonTaskStartupHook(void)
             vStartLedDemoTask();
         }
     }
+
+    vTaskDelete(NULL);
 }
 
 int main(void)
 {
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
 
     /* Define the init structure for the OSPI reset pin*/
@@ -313,16 +315,6 @@ int main(void)
     /* Make sure casper ram buffer has power up */
     POWER_DisablePD(kPDRUNCFG_APD_CASPER_SRAM);
     POWER_DisablePD(kPDRUNCFG_PPD_CASPER_SRAM);
-
-    /* Make sure USDHC ram buffer has power up */
-    POWER_DisablePD(kPDRUNCFG_APD_USDHC0_SRAM);
-    POWER_DisablePD(kPDRUNCFG_PPD_USDHC0_SRAM);
-    POWER_ApplyPD();
-
-    /* SDIO0 */
-    RESET_ClearPeripheralReset(kSDIO0_RST_SHIFT_RSTn);
-    CLOCK_AttachClk(kAUX0_PLL_to_SDIO0_CLK);
-    CLOCK_SetClkDiv(kCLOCK_DivSdio0Clk, 1);
 
     BOARD_InitLEDs();
 
@@ -341,6 +333,13 @@ int main(void)
             ;
     }
 #endif
+
+    if (xTaskCreate(main_task, "main_task", configMINIMAL_STACK_SIZE * 8, NULL, tskIDLE_PRIORITY + 1, NULL) != pdPASS)
+    {
+        PRINTF("Main task creation failed!.\r\n");
+        while (1)
+            ;
+    }
 
     xLoggingTaskInitialize(LOGGING_TASK_STACK_SIZE, LOGGING_TASK_PRIORITY, LOGGING_QUEUE_LENGTH);
 

@@ -34,6 +34,55 @@ struct _gr_event {
     void       *data;           ///< Event data, nbytes
 };
 
+/**
+* Reference counted strings are normal character pointers,
+* but have a reference ID associated, mark them with their
+* own type for API clarity.
+*/
+typedef char * gr_str_t;
+
+typedef union _gre_data_union {
+	void	   *ptr;			///< May be allocated memory to be deallocated according to a specified policy 
+	gr_str_t    cptr;			///< May be allocated memory to be deallocated according to a specified policy 
+	int64_t     i64;	
+	uint64_t    u64;
+	double		f64;
+	gr_float_t  f32;
+	int32_t     i32;
+	uint32_t    u32;
+	int16_t     i16;
+	uint16_t    u16;
+	int8_t      i8;
+	uint8_t     u8;
+} gr_data_union_t;
+
+typedef enum DATA_FORMAT_TYPE_INDEX {
+	GR_DATA_FORMAT_UNKNOWN=-1,
+	GR_DATA_FORMAT_INVALID,
+	GR_DATA_FORMAT_1s0,
+	GR_DATA_FORMAT_1s1,
+	GR_DATA_FORMAT_2s1,
+	GR_DATA_FORMAT_4s1,	
+	GR_DATA_FORMAT_8s1,	 
+	GR_DATA_FORMAT_1u1,
+	GR_DATA_FORMAT_2u1,
+	GR_DATA_FORMAT_4u1,	
+	GR_DATA_FORMAT_8u1,
+	GR_DATA_FORMAT_4f1,
+	GR_DATA_FORMAT_MAX
+} gr_data_format_t;
+
+typedef struct _gre_wrapped_data_t {
+	gr_data_union_t 	v;			///< The data storage
+	gr_data_format_t	fmt;		///< The data format
+	int					policy;		///< (Internal Use Only)
+} gr_wrapped_data_t;
+
 typedef void (*gr_event_listener_t)(gr_application_t *app, gr_event_t *event, void *arg);
+
+typedef struct _sb_ccallback {
+    const char *name;
+    void (*c_callback)(gr_action_context_t *);
+} sb_ccallback_t;
 
 #endif /* GR_GRE_TYPE_H */

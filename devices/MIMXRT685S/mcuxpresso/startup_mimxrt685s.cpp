@@ -1,7 +1,7 @@
 //*****************************************************************************
 // MIMXRT685S_cm33 startup code for use with MCUXpresso IDE
 //
-// Version : 020120
+// Version : 140420
 //*****************************************************************************
 //
 // Copyright 2016-2020 NXP
@@ -256,7 +256,11 @@ void (* const g_pfnVectors[])(void) = {
     BusFault_Handler,                  // The bus fault handler
     UsageFault_Handler,                // The usage fault handler
     SecureFault_Handler,               // The secure fault handler
+#if (__ARM_FEATURE_CMSE & 0x2)
+    (void (*)())0x180000,                // Reserved
+#else
     (void (*)())((unsigned)_image_size), // Image length
+#endif
     __imghdr_imagetype,                // Image type
     0,                                 // Reserved
     SVC_Handler,                       // SVCall handler

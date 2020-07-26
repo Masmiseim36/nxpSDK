@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -14,28 +14,37 @@
 #include "clock_config.h"
 #include "fsl_codec_common.h"
 #include "fsl_codec_adapter.h"
+#include "fsl_dmamux.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 /* SAI instance and clock */
 #define DEMO_CODEC_WM8960
-#define DEMO_SAI SAI1
-#define DEMO_SAI_CHANNEL (0)
-#define DEMO_SAI_BITWIDTH (kSAI_WordWidth16bits)
-#define DEMO_SAI_IRQ SAI1_IRQn
-#define SAI_UserIRQHandler SAI1_IRQHandler
+#define DEMO_CODEC_VOLUME     0x18U
+#define DEMO_SAI              SAI1
+#define DEMO_SAI_CHANNEL      (0)
+#define DEMO_SAI_IRQ          SAI1_IRQn
+#define DEMO_SAITxIRQHandler  SAI1_IRQHandler
+#define DEMO_SAI_TX_SYNC_MODE kSAI_ModeAsync
+#define DEMO_SAI_RX_SYNC_MODE kSAI_ModeSync
+#define DEMO_SAI_MCLK_OUTPUT  true
+#define DEMO_SAI_MASTER_SLAVE kSAI_Master
+#define SAI_UserIRQHandler    SAI1_IRQHandler
+
+/* demo audio master clock */
+#define DEMO_AUDIO_MASTER_CLOCK DEMO_SAI_CLK_FREQ
 
 /* IRQ */
 #define DEMO_SAI_TX_IRQ SAI1_IRQn
 #define DEMO_SAI_RX_IRQ SAI1_IRQn
 
 /* DMA */
-#define EXAMPLE_DMA DMA0
-#define EXAMPLE_DMAMUX DMAMUX
-#define EXAMPLE_TX_CHANNEL (0U)
-#define EXAMPLE_RX_CHANNEL (1U)
-#define EXAMPLE_SAI_TX_SOURCE kDmaRequestMuxSai1Tx
-#define EXAMPLE_SAI_RX_SOURCE kDmaRequestMuxSai1Rx
+#define DEMO_DMA             DMA0
+#define DEMO_DMAMUX          DMAMUX
+#define DEMO_TX_EDMA_CHANNEL (0U)
+#define DEMO_RX_EDMA_CHANNEL (1U)
+#define DEMO_SAI_TX_SOURCE   kDmaRequestMuxSai1Tx
+#define DEMO_SAI_RX_SOURCE   kDmaRequestMuxSai1Rx
 
 /* Select Audio/Video PLL (786.48 MHz) as sai1 clock source */
 #define DEMO_SAI1_CLOCK_SOURCE_SELECT (2U)
@@ -58,6 +67,10 @@
 /* Get frequency of lpi2c clock */
 #define DEMO_I2C_CLK_FREQ ((CLOCK_GetFreq(kCLOCK_Usb1PllClk) / 8) / (DEMO_LPI2C_CLOCK_SOURCE_DIVIDER + 1U))
 
+#define BOARD_MASTER_CLOCK_CONFIG()
+#define BOARD_CONFIGCODEC_FOR_RECORD_PLAYBACK()
+#define BOARD_CONFIGCODEC_FOR_PLAYBACK()
+
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -67,6 +80,7 @@ static void rxCallback(I2S_Type *base, sai_edma_handle_t *handle, status_t statu
 #include "ff.h"
 #include "diskio.h"
 #include "fsl_sd.h"
+#include "sdmmc_config.h"
 /*!
  * @brief wait card insert function.
  */
@@ -95,37 +109,11 @@ volatile uint32_t emptyBlock   = BUFFER_NUM;
 AT_NONCACHEABLE_SECTION(FATFS g_fileSystem); /* File system object */
 AT_NONCACHEABLE_SECTION(FIL g_fileObject);   /* File object */
 AT_NONCACHEABLE_SECTION(BYTE work[FF_MAX_SS]);
-/*! @brief SDMMC host detect card configuration */
-static const sdmmchost_detect_card_t s_sdCardDetect = {
-#ifndef BOARD_SD_DETECT_TYPE
-    .cdType = kSDMMCHOST_DetectCardByGpioCD,
-#else
-    .cdType = BOARD_SD_DETECT_TYPE,
-#endif
-    .cdTimeOut_ms = (~0U),
-};
+
 extern sd_card_t g_sd; /* sd card descriptor */
-/*! @brief SDMMC card power control configuration */
-#if defined DEMO_SDCARD_POWER_CTRL_FUNCTION_EXIST
-static const sdmmchost_pwr_card_t s_sdCardPwrCtrl = {
-    .powerOn          = BOARD_PowerOnSDCARD,
-    .powerOnDelay_ms  = 500U,
-    .powerOff         = BOARD_PowerOffSDCARD,
-    .powerOffDelay_ms = 0U,
-};
+
 #endif
-#endif
-#if (defined(FSL_FEATURE_SAI_HAS_MCR) && (FSL_FEATURE_SAI_HAS_MCR)) || \
-    (defined(FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER) && (FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER))
-sai_master_clock_t mclkConfig = {
-#if defined(FSL_FEATURE_SAI_HAS_MCR) && (FSL_FEATURE_SAI_HAS_MCR)
-    .mclkOutputEnable = true,
-#if !(defined(FSL_FEATURE_SAI_HAS_NO_MCR_MICS) && (FSL_FEATURE_SAI_HAS_NO_MCR_MICS))
-    .mclkSource = kSAI_MclkSourceSysclk,
-#endif
-#endif
-};
-#endif
+
 sai_transceiver_t config;
 codec_handle_t codecHandle;
 
@@ -167,16 +155,6 @@ void BOARD_EnableSaiMclkOutput(bool enable)
     }
 }
 
-static void BOARD_USDHCClockConfiguration(void)
-{
-    CLOCK_InitSysPll(&sysPllConfig_BOARD_BootClockRUN);
-    /*configure system pll PFD0 fractional divider to 24, output clock is 528MHZ * 18 / 24 = 396 MHZ*/
-    CLOCK_InitSysPfd(kCLOCK_Pfd0, 24U);
-    /* Configure USDHC clock source and divider */
-    CLOCK_SetDiv(kCLOCK_Usdhc1Div, 0U);
-    CLOCK_SetMux(kCLOCK_Usdhc1Mux, 1U);
-}
-
 static void txCallback(I2S_Type *base, sai_edma_handle_t *handle, status_t status, void *userData)
 {
     sendCount++;
@@ -206,14 +184,8 @@ static void rxCallback(I2S_Type *base, sai_edma_handle_t *handle, status_t statu
 #if defined DEMO_SDCARD
 static status_t sdcardWaitCardInsert(void)
 {
-    /* Save host information. */
-    g_sd.host.base           = SD_HOST_BASEADDR;
-    g_sd.host.sourceClock_Hz = SD_HOST_CLK_FREQ;
-    /* card detect type */
-    g_sd.usrParam.cd = &s_sdCardDetect;
-#if defined DEMO_SDCARD_POWER_CTRL_FUNCTION_EXIST
-    g_sd.usrParam.pwr = &s_sdCardPwrCtrl;
-#endif
+    BOARD_SD_Config(&g_sd, NULL, BOARD_SDMMC_SD_HOST_IRQ_PRIORITY, NULL);
+
     /* SD host init function */
     if (SD_HostInit(&g_sd) != kStatus_Success)
     {
@@ -221,13 +193,13 @@ static status_t sdcardWaitCardInsert(void)
         return kStatus_Fail;
     }
     /* power off card */
-    SD_PowerOffCard(g_sd.host.base, g_sd.usrParam.pwr);
+    SD_SetCardPower(&g_sd, false);
     /* wait card insert */
-    if (SD_WaitCardDetectStatus(SD_HOST_BASEADDR, &s_sdCardDetect, true) == kStatus_Success)
+    if (SD_PollingCardInsert(&g_sd, kSD_Inserted) == kStatus_Success)
     {
         PRINTF("\r\nCard inserted.\r\n");
         /* power on the card */
-        SD_PowerOnCard(g_sd.host.base, g_sd.usrParam.pwr);
+        SD_SetCardPower(&g_sd, true);
     }
     else
     {
@@ -269,7 +241,7 @@ int SD_FatFsInit()
 
 #if FF_USE_MKFS
     PRINTF("\r\nMake file system......The time may be long if the card capacity is big.\r\n");
-    if (f_mkfs(driverNumberBuffer, FM_ANY, 0U, work, sizeof work))
+    if (f_mkfs(driverNumberBuffer, 0, work, sizeof work))
     {
         PRINTF("Make file system failed.\r\n");
         return -1;
@@ -308,7 +280,6 @@ int main(void)
     BOARD_InitPins();
     BOARD_InitBootClocks();
     CLOCK_InitAudioPll(&audioPllConfig);
-    BOARD_USDHCClockConfiguration();
     BOARD_InitDebugConsole();
 
     /*Clock setting for LPI2C*/
@@ -323,6 +294,13 @@ int main(void)
     /*Enable MCLK clock*/
     BOARD_EnableSaiMclkOutput(true);
 
+    /* Init DMAMUX */
+    DMAMUX_Init(DEMO_DMAMUX);
+    DMAMUX_SetSource(DEMO_DMAMUX, DEMO_TX_EDMA_CHANNEL, (uint8_t)DEMO_SAI_TX_SOURCE);
+    DMAMUX_EnableChannel(DEMO_DMAMUX, DEMO_TX_EDMA_CHANNEL);
+    DMAMUX_SetSource(DEMO_DMAMUX, DEMO_RX_EDMA_CHANNEL, (uint8_t)DEMO_SAI_RX_SOURCE);
+    DMAMUX_EnableChannel(DEMO_DMAMUX, DEMO_RX_EDMA_CHANNEL);
+
     PRINTF("SAI Demo started!\n\r");
 
     /* Create EDMA handle */
@@ -333,15 +311,13 @@ int main(void)
      * dmaConfig.enableDebugMode = false;
      */
     EDMA_GetDefaultConfig(&dmaConfig);
-    EDMA_Init(EXAMPLE_DMA, &dmaConfig);
-    EDMA_CreateHandle(&dmaTxHandle, EXAMPLE_DMA, EXAMPLE_TX_CHANNEL);
-    EDMA_CreateHandle(&dmaRxHandle, EXAMPLE_DMA, EXAMPLE_RX_CHANNEL);
-
-    DMAMUX_Init(EXAMPLE_DMAMUX);
-    DMAMUX_SetSource(EXAMPLE_DMAMUX, EXAMPLE_TX_CHANNEL, (uint8_t)EXAMPLE_SAI_TX_SOURCE);
-    DMAMUX_EnableChannel(EXAMPLE_DMAMUX, EXAMPLE_TX_CHANNEL);
-    DMAMUX_SetSource(EXAMPLE_DMAMUX, EXAMPLE_RX_CHANNEL, (uint8_t)EXAMPLE_SAI_RX_SOURCE);
-    DMAMUX_EnableChannel(EXAMPLE_DMAMUX, EXAMPLE_RX_CHANNEL);
+    EDMA_Init(DEMO_DMA, &dmaConfig);
+    EDMA_CreateHandle(&dmaTxHandle, DEMO_DMA, DEMO_TX_EDMA_CHANNEL);
+    EDMA_CreateHandle(&dmaRxHandle, DEMO_DMA, DEMO_RX_EDMA_CHANNEL);
+#if defined(FSL_FEATURE_EDMA_HAS_CHANNEL_MUX) && FSL_FEATURE_EDMA_HAS_CHANNEL_MUX
+    EDMA_SetChannelMux(DEMO_DMA, DEMO_TX_EDMA_CHANNEL, DEMO_SAI_TX_EDMA_CHANNEL);
+    EDMA_SetChannelMux(DEMO_DMA, DEMO_RX_EDMA_CHANNEL, DEMO_SAI_RX_EDMA_CHANNEL);
+#endif
 
     /* SAI init */
     SAI_Init(DEMO_SAI);
@@ -350,9 +326,11 @@ int main(void)
     SAI_TransferRxCreateHandleEDMA(DEMO_SAI, &rxHandle, rxCallback, NULL, &dmaRxHandle);
 
     /* I2S mode configurations */
-    SAI_GetClassicI2SConfig(&config, DEMO_AUDIO_BIT_WIDTH, kSAI_Stereo, kSAI_Channel0Mask);
+    SAI_GetClassicI2SConfig(&config, DEMO_AUDIO_BIT_WIDTH, kSAI_Stereo, 1U << DEMO_SAI_CHANNEL);
+    config.syncMode    = DEMO_SAI_TX_SYNC_MODE;
+    config.masterSlave = DEMO_SAI_MASTER_SLAVE;
     SAI_TransferTxSetConfigEDMA(DEMO_SAI, &txHandle, &config);
-    config.syncMode = kSAI_ModeSync;
+    config.syncMode = DEMO_SAI_RX_SYNC_MODE;
     SAI_TransferRxSetConfigEDMA(DEMO_SAI, &rxHandle, &config);
 
     /* set bit clock divider */
@@ -361,18 +339,13 @@ int main(void)
     SAI_RxSetBitClockRate(DEMO_SAI, DEMO_AUDIO_MASTER_CLOCK, DEMO_AUDIO_SAMPLE_RATE, DEMO_AUDIO_BIT_WIDTH,
                           DEMO_AUDIO_DATA_CHANNEL);
 
-/* master clock configurations */
-#if (defined(FSL_FEATURE_SAI_HAS_MCR) && (FSL_FEATURE_SAI_HAS_MCR)) || \
-    (defined(FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER) && (FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER))
-#if defined(FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER) && (FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER)
-    mclkConfig.mclkHz          = DEMO_AUDIO_MASTER_CLOCK;
-    mclkConfig.mclkSourceClkHz = DEMO_SAI_CLK_FREQ;
-#endif
-    SAI_SetMasterClockConfig(DEMO_SAI, &mclkConfig);
-#endif
+    /* master clock configurations */
+    BOARD_MASTER_CLOCK_CONFIG();
 
     /* Use default setting to init codec */
     CODEC_Init(&codecHandle, &boardCodecConfig);
+    CODEC_SetVolume(&codecHandle, kCODEC_PlayChannelHeadphoneLeft | kCODEC_PlayChannelHeadphoneRight,
+                    DEMO_CODEC_VOLUME);
 
     /* Enable interrupt to handle FIFO error */
     SAI_TxEnableInterrupts(DEMO_SAI, kSAI_FIFOErrorInterruptEnable);
@@ -417,9 +390,13 @@ int main(void)
                 /* Set the audio input source to AUX */
                 DA7212_ChangeInput((da7212_handle_t *)((uint32_t)(codecHandle.codecDevHandle)), kDA7212_Input_AUX);
 #endif
+                BOARD_CONFIGCODEC_FOR_RECORD_PLAYBACK();
+                CODEC_Init(&codecHandle, &boardCodecConfig);
                 RecordPlayback(DEMO_SAI, 30);
                 break;
             case '2':
+                BOARD_CONFIGCODEC_FOR_PLAYBACK();
+                CODEC_Init(&codecHandle, &boardCodecConfig);
                 PlaybackSine(DEMO_SAI, 250, 5);
                 break;
 #if defined DEMO_SDCARD
@@ -453,22 +430,14 @@ void SAI_UserTxIRQHandler(void)
     /* Clear the FEF flag */
     SAI_TxClearStatusFlags(DEMO_SAI, kSAI_FIFOErrorFlag);
     SAI_TxSoftwareReset(DEMO_SAI, kSAI_ResetTypeFIFO);
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 void SAI_UserRxIRQHandler(void)
 {
     SAI_RxClearStatusFlags(DEMO_SAI, kSAI_FIFOErrorFlag);
     SAI_RxSoftwareReset(DEMO_SAI, kSAI_ResetTypeFIFO);
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 void SAI_UserIRQHandler(void)

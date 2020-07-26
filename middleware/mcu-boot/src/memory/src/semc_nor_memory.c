@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2018 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -7,18 +7,18 @@
 
 #include "fsl_device_registers.h"
 #include "bootloader_common.h"
-#include "bootloader/bootloader.h"
-#include "memory/memory.h"
+#include "bootloader.h"
+#include "memory.h"
 #include "normal_memory.h"
 #include "semc_nor_memory.h"
-#include "semc_nor/semc_nor_flash.h"
-#include "bootloader/bl_context.h"
-#include "microseconds/microseconds.h"
-#include "utilities/fsl_rtos_abstraction.h"
-#include "utilities/fsl_assert.h"
+#include "semc_nor_flash.h"
+#include "bl_context.h"
+#include "microseconds.h"
+#include "fsl_rtos_abstraction.h"
+#include "fsl_assert.h"
 #include <string.h>
 #if BL_FEATURE_GEN_KEYBLOB
-#include "bootloader/bl_keyblob.h"
+#include "bl_keyblob.h"
 #endif // BL_FEATURE_GEN_KEYBLOB
 
 #if BL_FEATURE_SEMC_NOR_MODULE
@@ -165,12 +165,14 @@ status_t check_update_keyblob_info(void *config)
             // Check key blob address range
             if ((keyblob_size + keyblob_offset) > image_max_size)
             {
+                status = kStatusMemoryRangeInvalid;
                 break;
             }
 
             // Invalid key blob address, key blob must be page size aligned.
             if (keyblob_addr & (page_size - 1))
             {
+                status = kStatusMemoryAlignmentError;
                 break;
             }
 
@@ -376,8 +378,7 @@ status_t semc_nor_mem_write(uint32_t address, uint32_t length, const uint8_t *bu
     while (length)
     {
         // Set start address when storing first byte into program buffer
-        if ((!s_semcNorContext.cachedBytesInProgBuf) &&
-            (!s_semcNorContext.progStartAddress))
+        if ((!s_semcNorContext.cachedBytesInProgBuf) && (!s_semcNorContext.progStartAddress))
         {
             // Check address alignment
             uint32_t alignmentBaseByte = s_semcNorContext.norConfig.memConfig.norMemConfig.dataPortWidth / 8;

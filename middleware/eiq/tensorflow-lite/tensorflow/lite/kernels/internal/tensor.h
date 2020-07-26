@@ -21,6 +21,7 @@ limitations under the License.
 
 #include <complex>
 #include <vector>
+
 #include "tensorflow/lite/c/c_api_internal.h"
 #include "tensorflow/lite/kernels/internal/tensor_ctypes.h"
 #include "tensorflow/lite/kernels/internal/types.h"
@@ -28,21 +29,7 @@ limitations under the License.
 
 namespace tflite {
 
-template <>
-inline std::complex<float>* GetTensorData(TfLiteTensor* tensor) {
-  return tensor != nullptr
-             ? reinterpret_cast<std::complex<float>*>(tensor->data.c64)
-             : nullptr;
-}
-
-template <>
-inline const std::complex<float>* GetTensorData(const TfLiteTensor* tensor) {
-  return tensor != nullptr
-             ? reinterpret_cast<const std::complex<float>*>(tensor->data.c64)
-             : nullptr;
-}
-
-inline RuntimeShape GetTensorShape(std::vector<int32_t> data) {
+inline RuntimeShape GetTensorShape(::std::vector<int32_t> data) {
   return RuntimeShape(data.size(), data.data());
 }
 
@@ -86,9 +73,9 @@ class VectorOfTensors {
   const RuntimeShape* const* shapes() const { return all_shape_ptr_.data(); }
 
  private:
-  std::vector<T*> all_data_;
-  std::vector<RuntimeShape> all_shape_;
-  std::vector<RuntimeShape*> all_shape_ptr_;
+  ::std::vector<T*> all_data_;
+  ::std::vector<RuntimeShape> all_shape_;
+  ::std::vector<RuntimeShape*> all_shape_ptr_;
 };
 
 // A list of quantized tensors in a format that can be used by kernels like
@@ -110,8 +97,8 @@ class VectorOfQuantizedTensors : public VectorOfTensors<uint8> {
   const int32* zero_point() const { return zero_point_.data(); }
 
  private:
-  std::vector<int32> zero_point_;
-  std::vector<float> scale_;
+  ::std::vector<int32> zero_point_;
+  ::std::vector<float> scale_;
 };
 
 // Writes randomly accessed values from `input` sequentially into `output`.

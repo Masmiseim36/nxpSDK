@@ -46,7 +46,7 @@ void USB_DeviceIsrEnable(void);
 void USB_DeviceTaskFn(void *deviceHandle);
 #endif
 
-static void APP_WeightScaleSendData(uint32_t handle, weightscale_measurement_struct_t *measurementData);
+static void APP_WeightScaleSendData(void *handle, weightscale_measurement_struct_t *measurementData);
 static usb_status_t USB_DeviceWeightScaleSetConfigure(usb_device_handle handle, uint8_t configure);
 static usb_status_t USB_DeviceWeightScaleClassRequest(usb_device_handle handle,
                                                       usb_setup_struct_t *setup,
@@ -315,7 +315,7 @@ void USB_DeviceTaskFn(void *deviceHandle)
  *
  * @return None.
  */
-void AGENT_MedicalCallback(uint32_t handle, uint8_t eventType, uint8_t *data)
+void AGENT_MedicalCallback(void *handle, uint8_t eventType, uint8_t *data)
 {
     switch (eventType)
     {
@@ -371,7 +371,7 @@ void AGENT_MedicalCallback(uint32_t handle, uint8_t eventType, uint8_t *data)
  * @param handle           the handle points to agent handle.
  * @param measurement      measurement data to send.
  */
-static void APP_WeightScaleSendData(uint32_t handle, weightscale_measurement_struct_t *measurementData)
+static void APP_WeightScaleSendData(void *handle, weightscale_measurement_struct_t *measurementData)
 {
     /* second offset */
     static uint8_t secondOffset = 0U;
@@ -516,7 +516,7 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
             g_shimAgent.numberTransferBulkIn  = 0U;
 #endif
             appEvent = APP_EVENT_UNDEFINED;
-            AGENT_SetAgentState((uint32_t)handle, AGENT_STATE_DISCONNECTED);
+            AGENT_SetAgentState((void *)handle, AGENT_STATE_DISCONNECTED);
         }
         break;
         case kUSB_DeviceEventSetConfiguration:
@@ -531,7 +531,7 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
                 g_shimAgent.currentConfig = *temp8;
                 USB_DeviceWeightScaleSetConfigure(handle, (*temp8));
                 /* send the first NULL data to establish a connection between the device and host */
-                USB_ShimAgentSendData((uint32_t)handle, AGENT_SEND_DATA_QOS, NULL, 0U);
+                USB_ShimAgentSendData((void *)handle, AGENT_SEND_DATA_QOS, NULL, 0U);
                 /* prepare for the first receiving */
                 USB_DeviceRecvRequest(handle, g_shimAgent.bulkOutData.epNumber, g_shimAgent.recvDataBuffer,
                                       g_shimAgent.bulkOutData.epMaxPacketSize);
@@ -645,7 +645,7 @@ static usb_status_t USB_DeviceWeightScaleInterruptInCallback(usb_device_handle h
     }
     else
     {
-        error = USB_ShimAgentSendComplete((uint32_t)handle, USB_PHDC_EVENT_INTERRUPT_IN_SEND_COMPLETE, message);
+        error = USB_ShimAgentSendComplete((void *)handle, USB_PHDC_EVENT_INTERRUPT_IN_SEND_COMPLETE, message);
     }
     return error;
 }
@@ -671,7 +671,7 @@ static usb_status_t USB_DeviceWeightScaleBulkInCallback(usb_device_handle handle
     }
     else
     {
-        error = USB_ShimAgentSendComplete((uint32_t)handle, USB_PHDC_EVENT_BULK_IN_SEND_COMPLETE, message);
+        error = USB_ShimAgentSendComplete((void *)handle, USB_PHDC_EVENT_BULK_IN_SEND_COMPLETE, message);
     }
     return error;
 }
@@ -690,7 +690,7 @@ static usb_status_t USB_DeviceWeightScaleBulkOutCallback(usb_device_handle handl
                                                          usb_device_endpoint_callback_message_struct_t *message,
                                                          void *callbackParam)
 {
-    return USB_ShimAgentRecvComplete((uint32_t)handle, message);
+    return USB_ShimAgentRecvComplete((void *)handle, message);
 }
 
 /*!
@@ -969,16 +969,18 @@ static void USB_DeviceApplicationInit(void)
     else
     {
         usb_echo("USB device PHDC weighscale demo\r\n");
-        AGENT_Init((uint32_t)g_shimAgent.deviceHandle);
+        AGENT_Init((void *)g_shimAgent.deviceHandle);
     }
 
     /* Install isr, set priority, and enable IRQ. */
     USB_DeviceIsrEnable();
 
+    /*Add one delay here to make the DP pull down long enough to allow host to detect the previous disconnection.*/
+    SDK_DelayAtLeastUs(5000, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
     USB_DeviceRun(g_shimAgent.deviceHandle);
 }
 
-static void USB_DeviceApplicationTask(uint32_t handle)
+static void USB_DeviceApplicationTask(void *handle)
 {
     switch (appEvent)
     {
@@ -1040,7 +1042,7 @@ void main(void)
 #if USB_DEVICE_CONFIG_USE_TASK
         USB_DeviceTaskFn(g_shimAgent.deviceHandle);
 #endif
-        USB_DeviceApplicationTask((uint32_t)g_shimAgent.deviceHandle);
+        USB_DeviceApplicationTask((void *)g_shimAgent.deviceHandle);
     }
 }
 /* EOF */

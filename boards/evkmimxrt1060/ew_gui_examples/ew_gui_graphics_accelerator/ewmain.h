@@ -65,6 +65,67 @@
 *
 *******************************************************************************/
 
+#ifndef EWMAIN_H
+#define EWMAIN_H
+
+#if defined __ICCARM__
+  #define TOOLCHAIN_STRING "IAR Embedded Workbench"
+  #define COMPILER_VERSION_STRING EW_STRINGIZE(__VER__)
+#elif defined __CC_ARM || (__ARMCC_VERSION >= 6000000)
+  #define TOOLCHAIN_STRING "Keil MDK"
+  #define COMPILER_VERSION_STRING EW_STRINGIZE(__ARMCC_VERSION)
+#elif defined __GNUC__
+  #define TOOLCHAIN_STRING "GCC"
+  #define COMPILER_VERSION_STRING EW_STRINGIZE(__GNUC__) "." \
+    EW_STRINGIZE(__GNUC_MINOR__) "." EW_STRINGIZE(__GNUC_PATCHLEVEL__)
+#else
+  #define TOOLCHAIN_STRING "unknown"
+#endif
+
+#ifdef EW_DONT_USE_PATH_FUNCTIONS
+  #define VECTOR_GRAPHICS_SUPPORT_STRING "disabled"
+#else
+  #define VECTOR_GRAPHICS_SUPPORT_STRING "enabled"
+#endif
+
+#ifdef EW_DONT_USE_WARP_FUNCTIONS
+  #define WARP_FUNCTION_SUPPORT_STRING "disabled"
+#else
+  #define WARP_FUNCTION_SUPPORT_STRING "enabled"
+#endif
+
+#ifdef EW_DONT_USE_INDEX8_SURFACES
+  #define INDEX8_SURFACE_SUPPORT_STRING "disabled"
+#else
+  #define INDEX8_SURFACE_SUPPORT_STRING "enabled"
+#endif
+
+#ifdef EW_DONT_USE_RGB565_SURFACES
+  #define RGB565_SURFACE_SUPPORT_STRING "disabled"
+#else
+  #define RGB565_SURFACE_SUPPORT_STRING "enabled"
+#endif
+
+#ifdef EW_DONT_USE_BIDI_FUNCTIONS
+  #define BIDI_TEXT_SUPPORT_STRING "disabled"
+#else
+  #define BIDI_TEXT_SUPPORT_STRING "enabled"
+#endif
+
+#if EW_USE_GRAPHICS_ACCELERATOR == 1
+  #define GRAPHICS_ACCELERATOR_STRING "PXP"
+#else
+  #define GRAPHICS_ACCELERATOR_STRING "none"
+#endif
+
+#if ( EW_USE_FREE_RTOS == 1 )
+  #define OPERATING_SYSTEM_STRING "FreeRTOS"
+#else
+  #define OPERATING_SYSTEM_STRING "none"
+#endif
+
+  #define EXTERNAL_FLASH_STRING "Hyper Flash"
+
 
 /*******************************************************************************
 * FUNCTION:
@@ -150,5 +211,6 @@ int EwProcess( void );
 *******************************************************************************/
 void EwPrintSystemInfo( void );
 
+#endif
 
 /* msy, mli */

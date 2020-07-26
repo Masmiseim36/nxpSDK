@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "board.h"
+#include "app.h"
 #include "fsl_nor_flash.h"
 #include "fsl_common.h"
 #include "fsl_debug_console.h"
@@ -19,18 +20,10 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_FLEXSPI FLEXSPI
-#define FLASH_SIZE 0x2000 /* 64Mb/KByte */
-#define EXAMPLE_FLEXSPI_AMBA_BASE FlexSPI_AMBA_BASE
-#define FLASH_PAGE_SIZE 256
-#define NOR_FLASH_START_ADDRESS 0U
-#define EXAMPLE_FLEXSPI_CLOCK kCLOCK_FlexSpi
-
 
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-
 
 /*******************************************************************************
  * variables
@@ -40,6 +33,8 @@ uint8_t mem_writeBuffer[FLASH_PAGE_SIZE];
 uint8_t mem_readBuffer[FLASH_PAGE_SIZE] = {0};
 extern nor_config_t norConfig;
 nor_handle_t norHandle = {NULL};
+
+extern status_t Nor_Flash_Initialization(nor_config_t *config, nor_handle_t *handle);
 
 /*******************************************************************************
  * Code
@@ -62,6 +57,7 @@ flexspi_mem_config_t mem_Config = {
     .devicePort      = kFLEXSPI_PortA1,
     .deviceType      = kSerialNorCfgOption_DeviceType_ReadSFDP_SDR,
     .quadMode        = kSerialNorQuadMode_NotConfig,
+    .transferMode    = kSerialNorTransferMode_SDR,
     .enhanceMode     = kSerialNorEnhanceMode_Disabled,
     .commandPads     = kFLEXSPI_1PAD,
     .queryPads       = kFLEXSPI_1PAD,
@@ -100,38 +96,17 @@ int main(void)
     BOARD_BootClockRUN();
     BOARD_InitDebugConsole();
 
-    const clock_usb_pll_config_t g_ccmConfigUsbPll = {.loopDivider = 0U};
-
-    CLOCK_InitUsb1Pll(&g_ccmConfigUsbPll);
-    CLOCK_InitUsb1Pfd(kCLOCK_Pfd0, 24);   /* Set PLL3 PFD0 clock 360MHZ. */
-    CLOCK_SetMux(kCLOCK_FlexspiMux, 0x3); /* Choose PLL3 PFD0 clock as flexspi source clock. */
-    CLOCK_SetDiv(kCLOCK_FlexspiDiv, 2);   /* flexspi clock 120M. */
-
-    /* Initialize FLEXSPI */
-    flexspi_config_t config;
-    /* Get FLEXSPI default settings and configure the flexspi. */
-    FLEXSPI_GetDefaultConfig(&config);
-
-    /*Set AHB buffer size for reading data through AHB bus. */
-    config.ahbConfig.enableAHBPrefetch    = true;
-    config.ahbConfig.enableAHBBufferable  = true;
-    config.ahbConfig.enableReadAddressOpt = true;
-    config.ahbConfig.enableAHBCachable    = true;
-    config.rxSampleClock                  = kFLEXSPI_ReadSampleClkLoopbackFromDqsPad;
-    FLEXSPI_Init(EXAMPLE_FLEXSPI, &config);
-
-    PRINTF("\r\n***NOR Flash Component Demo Start!***\r\n");
-
-    PRINTF("\r\n***NOR Flash Initialization Start!***\r\n");
-    status = Nor_Flash_Init(&norConfig, &norHandle);
+    status = Nor_Flash_Initialization(&norConfig, &norHandle);
     if (status != kStatus_Success)
     {
         PRINTF("\r\n***NOR Flash Initialization Failed!***\r\n");
         ErrorTrap();
     }
-    PRINTF("\r\n***NOR Flash Initialization Success!***\r\n");
 
-    /* Erase chip */
+    PRINTF("\r\n***NOR Flash Component Demo Start!***\r\n");
+
+#if !(defined(XIP_EXTERNAL_FLASH))
+    /* Erase whole chip */
     PRINTF("\r\n***NOR Flash Erase Chip Start!***\r\n");
     status = Nor_Flash_Erase_Chip(&norHandle);
     if (status != kStatus_Success)
@@ -139,10 +114,23 @@ int main(void)
         PRINTF("\r\n***NOR Flash Erase Chip Failed!***\r\n");
         ErrorTrap();
     }
+#endif
 
-    for (uint32_t pageIndex = 0; pageIndex < norHandle.bytesInPageSize; pageIndex++)
+    for (uint32_t pageIndex = 0; pageIndex < (norHandle.bytesInSectorSize / norHandle.bytesInPageSize); pageIndex++)
     {
         uint32_t address = NOR_FLASH_START_ADDRESS + norHandle.bytesInPageSize * pageIndex;
+
+        /* Erase Sector */
+        status = Nor_Flash_Erase_Sector(&norHandle, address);
+        if (status != kStatus_Success)
+        {
+            PRINTF("\r\n***NOR Flash Erase Sector Failed!***\r\n");
+            ErrorTrap();
+        }
+
+#if defined(CACHE_MAINTAIN) && CACHE_MAINTAIN
+        DCACHE_InvalidateByRange(EXAMPLE_FLEXSPI_AMBA_BASE + address, norHandle.bytesInPageSize);
+#endif
 
         status = Nor_Flash_Read(&norHandle, address, mem_readBuffer, norHandle.bytesInPageSize);
         if (status != kStatus_Success)
@@ -176,6 +164,10 @@ int main(void)
             ErrorTrap();
         }
 
+#if defined(CACHE_MAINTAIN) && CACHE_MAINTAIN
+        DCACHE_InvalidateByRange(EXAMPLE_FLEXSPI_AMBA_BASE + address, norHandle.bytesInPageSize);
+#endif
+
         /* Read page data and check if the data read is equal to the data programed. */
         status = Nor_Flash_Read(&norHandle, address, mem_readBuffer, norHandle.bytesInPageSize);
         if (status != kStatus_Success)
@@ -192,13 +184,17 @@ int main(void)
 
         PRINTF("\r\n***NOR Flash Page %d Read/Write Success!***\r\n", pageIndex);
 
-        /* Erase Block */
-        status = Nor_Flash_Erase_Block(&norHandle, address, norHandle.bytesInPageSize);
+        /* Erase Sector */
+        status = Nor_Flash_Erase_Sector(&norHandle, address);
         if (status != kStatus_Success)
         {
-            PRINTF("\r\n***NOR Flash Erase Block Failed!***\r\n");
+            PRINTF("\r\n***NOR Flash Erase Sector Failed!***\r\n");
             ErrorTrap();
         }
+
+#if defined(CACHE_MAINTAIN) && CACHE_MAINTAIN
+        DCACHE_InvalidateByRange(EXAMPLE_FLEXSPI_AMBA_BASE + address, norHandle.bytesInPageSize);
+#endif
 
         status = Nor_Flash_Read(&norHandle, address, mem_readBuffer, norHandle.bytesInPageSize);
         if (status != kStatus_Success)

@@ -1,14 +1,14 @@
 /*
  * Copyright 2014-2015 Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  *
  */
-#include "property/property.h"
 #include "bootloader_common.h"
-#include "memory/memory.h"
+#include "memory.h"
+#include "property.h"
 
 const external_memory_property_interface_t g_externalMemPropertyInterfaceMap[] = {
 #if BL_FEATURE_FLEXSPI_NOR_MODULE

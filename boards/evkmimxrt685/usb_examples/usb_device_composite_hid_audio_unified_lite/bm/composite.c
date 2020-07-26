@@ -49,16 +49,16 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define BOARD_I2S_DEMO_I2C_BASEADDR (I2C4)
+#define BOARD_I2S_DEMO_I2C_BASEADDR     (I2C4)
 #define DEMO_I2C_MASTER_CLOCK_FREQUENCY CLOCK_GetMclkClkFreq()
-#define DEMO_I2S_TX (I2S3)
-#define DEMO_I2S_RX (I2S1)
-#define DEMO_I2S_TX_MODE (kI2S_MasterSlaveNormalSlave)
-#define DEMO_I2S_RX_MODE (kI2S_MasterSlaveNormalMaster)
-#define DEMO_DMA (DMA0)
-#define DEMO_I2S_TX_CHANNEL (7)
-#define DEMO_I2S_RX_CHANNEL (2)
-#define DEMO_I2S_CLOCK_DIVIDER 16
+#define DEMO_I2S_TX                     (I2S3)
+#define DEMO_I2S_RX                     (I2S1)
+#define DEMO_I2S_TX_MODE                (kI2S_MasterSlaveNormalSlave)
+#define DEMO_I2S_RX_MODE                (kI2S_MasterSlaveNormalMaster)
+#define DEMO_DMA                        (DMA0)
+#define DEMO_I2S_TX_CHANNEL             (7)
+#define DEMO_I2S_RX_CHANNEL             (2)
+#define DEMO_I2S_CLOCK_DIVIDER          16
 
 /*******************************************************************************
  * Prototypes
@@ -84,6 +84,7 @@ extern usb_status_t USB_DeviceAudioSpeakerSetInterface(usb_device_handle handle,
                                                        uint8_t interface,
                                                        uint8_t alternateSetting);
 extern void USB_AudioSpeakerResetTask(void);
+extern usb_status_t USB_DeviceAudioProcessTerminalRequest(uint32_t audioCommand, uint32_t *length, uint8_t **buffer, uint8_t entityOrEndpoint);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
@@ -121,11 +122,11 @@ wm8904_config_t wm8904Config = {
 codec_config_t boardCodecConfig = {.codecDevType = kCODEC_WM8904, .codecDevConfig = &wm8904Config};
 
 #if defined(USB_DEVICE_AUDIO_USE_SYNC_MODE) && (USB_DEVICE_AUDIO_USE_SYNC_MODE > 0U)
-static uint32_t eventCounterL = 0;
+static uint32_t eventCounterU = 0;
 static uint32_t captureRegisterNumber;
 static sctimer_config_t sctimerInfo;
 #endif
-#define BOARD_SW1_NAME "SW1"
+#define BOARD_SW1_NAME         "SW1"
 #define DEMO_PINT_PIN_INT0_SRC kINPUTMUX_GpioPort1Pin1ToPintsel /* SW1 */
 /* Composite device structure. */
 USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
@@ -343,10 +344,10 @@ void SCTIMER_SOF_TOGGLE_HANDLER()
     uint32_t usedSpace      = 0;
     static int32_t pllCount = 0, pllDiff = 0;
     static int32_t err, abs_err;
-    if (SCTIMER_GetStatusFlags(SCT0) & (1 << eventCounterL))
+    if (SCTIMER_GetStatusFlags(SCT0) & (1 << eventCounterU))
     {
         /* Clear interrupt flag.*/
-        SCTIMER_ClearStatusFlags(SCT0, (1 << eventCounterL));
+        SCTIMER_ClearStatusFlags(SCT0, (1 << eventCounterU));
     }
 
     if (g_composite.audioUnified.speakerIntervalCount != 100)
@@ -421,7 +422,7 @@ void SCTIMER_SOF_TOGGLE_HANDLER()
 
 void SCTIMER_CaptureInit(void)
 {
-    INPUTMUX->SCT0_IN_SEL[eventCounterL] = 0xFU; /* 0xFU for USB1.*/
+    INPUTMUX->SCT0_IN_SEL[eventCounterU] = 0xFU; /* 0xFU for USB1.*/
     SCTIMER_GetDefaultConfig(&sctimerInfo);
 
     /* Switch to 16-bit mode */
@@ -431,7 +432,7 @@ void SCTIMER_CaptureInit(void)
     /* Initialize SCTimer module */
     SCTIMER_Init(SCT0, &sctimerInfo);
 
-    if (SCTIMER_SetupCaptureAction(SCT0, kSCTIMER_Counter_L, &captureRegisterNumber, eventCounterL) == kStatus_Fail)
+    if (SCTIMER_SetupCaptureAction(SCT0, kSCTIMER_Counter_U, &captureRegisterNumber, eventCounterU) == kStatus_Fail)
     {
         usb_echo("SCT Setup Capture failed!\r\n");
     }
@@ -439,16 +440,16 @@ void SCTIMER_CaptureInit(void)
     SCT0->EV[0].CTRL  = (0x01 << 10) | (0x2 << 12);
 
     /* Enable interrupt flag for event associated with out 4, we use the interrupt to update dutycycle */
-    SCTIMER_EnableInterrupts(SCT0, (1 << eventCounterL));
+    SCTIMER_EnableInterrupts(SCT0, (1 << eventCounterU));
 
     /* Receive notification when event is triggered */
-    SCTIMER_SetCallback(SCT0, SCTIMER_SOF_TOGGLE_HANDLER, eventCounterL);
+    SCTIMER_SetCallback(SCT0, SCTIMER_SOF_TOGGLE_HANDLER, eventCounterU);
 
     /* Enable at the NVIC */
     EnableIRQ(SCT0_IRQn);
 
     /* Start the L counter */
-    SCTIMER_StartTimer(SCT0, kSCTIMER_Counter_L);
+    SCTIMER_StartTimer(SCT0, kSCTIMER_Counter_U);
 }
 #endif
 void USB_IRQHandler(void)
@@ -772,6 +773,127 @@ usb_status_t USB_DeviceProcessClassRequest(usb_device_handle handle,
                                            uint8_t **buffer)
 {
     usb_status_t error = kStatus_USB_InvalidRequest;
+#if (USB_DEVICE_CONFIG_AUDIO_CLASS_2_0)
+    /* Handle the audio class specific request. */
+    uint8_t entityId      = (uint8_t)(setup->wIndex >> 0x08);
+    uint32_t audioCommand = 0;
+    if ((((setup->bmRequestType & USB_REQUEST_TYPE_RECIPIENT_MASK) != USB_REQUEST_TYPE_RECIPIENT_INTERFACE)) ||
+        ((((setup->bmRequestType & USB_REQUEST_TYPE_RECIPIENT_MASK) == USB_REQUEST_TYPE_RECIPIENT_INTERFACE)) &&
+         (USB_AUDIO_CONTROL_INTERFACE_INDEX == (setup->wIndex & 0xFFU))))
+    {
+        switch (entityId)
+        {
+            case USB_AUDIO_RECORDER_CONTROL_OUTPUT_TERMINAL_ID:
+            case USB_AUDIO_SPEAKER_CONTROL_OUTPUT_TERMINAL_ID:
+                break;
+            case USB_AUDIO_RECORDER_CONTROL_INPUT_TERMINAL_ID:
+            case USB_AUDIO_SPEAKER_CONTROL_INPUT_TERMINAL_ID:
+                break;
+            case USB_AUDIO_CONTROL_CLOCK_SOURCE_ID:
+                if (((setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) == USB_REQUEST_TYPE_DIR_IN))
+                {
+                    switch (setup->wValue >> 8)
+                    {
+                        case USB_DEVICE_AUDIO_CS_SAM_FREQ_CONTROL:
+                            if (setup->bRequest == USB_DEVICE_AUDIO_REQUEST_CUR)
+                            {
+                                audioCommand = USB_DEVICE_AUDIO_GET_CUR_SAM_FREQ_CONTROL;
+                            }
+                            else if (setup->bRequest == USB_DEVICE_AUDIO_REQUEST_RANGE)
+                            {
+                                audioCommand = USB_DEVICE_AUDIO_GET_RANGE_SAM_FREQ_CONTROL;
+                            }
+                            else
+                            {
+                            }
+                            break;
+                        case USB_DEVICE_AUDIO_CS_CLOCK_VALID_CONTROL:
+                            audioCommand = USB_DEVICE_AUDIO_GET_CUR_CLOCK_VALID_CONTROL;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                else if (((setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) == USB_REQUEST_TYPE_DIR_OUT))
+                {
+                    switch (setup->wValue >> 8)
+                    {
+                        case USB_DEVICE_AUDIO_CS_SAM_FREQ_CONTROL:
+                            audioCommand = USB_DEVICE_AUDIO_SET_CUR_SAM_FREQ_CONTROL;
+                            break;
+                        case USB_DEVICE_AUDIO_CS_CLOCK_VALID_CONTROL:
+                            audioCommand = USB_DEVICE_AUDIO_SET_CUR_CLOCK_VALID_CONTROL;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                else
+                {
+                }
+                break;
+            case USB_AUDIO_RECORDER_CONTROL_FEATURE_UNIT_ID:
+            case USB_AUDIO_SPEAKER_CONTROL_FEATURE_UNIT_ID:
+                if (((setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) == USB_REQUEST_TYPE_DIR_IN))
+                {
+                    switch (setup->wValue >> 8)
+                    {
+                        case USB_DEVICE_AUDIO_FU_MUTE_CONTROL:
+                            audioCommand = USB_DEVICE_AUDIO_GET_CUR_MUTE_CONTROL_AUDIO20;
+                            break;
+                        case USB_DEVICE_AUDIO_FU_VOLUME_CONTROL:
+                            if (setup->bRequest == USB_DEVICE_AUDIO_REQUEST_CUR)
+                            {
+                                audioCommand = USB_DEVICE_AUDIO_GET_CUR_VOLUME_CONTROL_AUDIO20;
+                            }
+                            else if (setup->bRequest == USB_DEVICE_AUDIO_REQUEST_RANGE)
+                            {
+                                audioCommand = USB_DEVICE_AUDIO_GET_RANGE_VOLUME_CONTROL_AUDIO20;
+                            }
+                            else
+                            {
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                else if (((setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) == USB_REQUEST_TYPE_DIR_OUT))
+                {
+                    switch (setup->wValue >> 8)
+                    {
+                        case USB_DEVICE_AUDIO_FU_MUTE_CONTROL:
+                            audioCommand = USB_DEVICE_AUDIO_SET_CUR_MUTE_CONTROL_AUDIO20;
+                            break;
+                        case USB_DEVICE_AUDIO_FU_VOLUME_CONTROL:
+                            if (setup->bRequest == USB_DEVICE_AUDIO_REQUEST_CUR)
+                            {
+                                audioCommand = USB_DEVICE_AUDIO_SET_CUR_VOLUME_CONTROL_AUDIO20;
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                break;
+            default:
+            break;
+        }
+        error = USB_DeviceAudioProcessTerminalRequest(audioCommand, length, buffer, entityId);
+    }
+    else
+    {
+        if (USB_HID_KEYBOARD_INTERFACE_INDEX == (setup->wIndex & 0xFFU))
+        {
+            return USB_DeviceHidKeyboardClassRequest(handle, setup, buffer, length);
+        }
+        else
+        {
+            return error;
+        }
+    }
+
+#else
 
     if ((setup->bmRequestType & USB_REQUEST_TYPE_RECIPIENT_MASK) != USB_REQUEST_TYPE_RECIPIENT_INTERFACE)
     {
@@ -791,7 +913,7 @@ usb_status_t USB_DeviceProcessClassRequest(usb_device_handle handle,
         {
         }
     }
-
+#endif
     return error;
 }
 
@@ -831,6 +953,8 @@ void APPInit(void)
 
     USB_DeviceIsrEnable();
 
+    /*Add one delay here to make the DP pull down long enough to allow host to detect the previous disconnection.*/
+    SDK_DelayAtLeastUs(5000, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
     USB_DeviceRun(g_composite.deviceHandle);
 }
 
@@ -846,7 +970,7 @@ void main(void)
 
     CLOCK_EnableClock(kCLOCK_InputMux);
 
-    /* attach main clock to I3C */
+    /* attach main clock to I3C (500MHz / 20 = 25MHz). */
     CLOCK_AttachClk(kMAIN_CLK_to_I3C_CLK);
     CLOCK_SetClkDiv(kCLOCK_DivI3cClk, 20);
 

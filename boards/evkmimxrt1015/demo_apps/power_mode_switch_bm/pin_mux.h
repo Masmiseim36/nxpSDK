@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP
+ * Copyright 2019-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -51,6 +51,11 @@ void BOARD_InitBootPins(void);
 /* GPIO_AD_B0_06 (number 72), LPUART1_TXD */
 #define BOARD_UART1_TXD_PERIPHERAL                                       LPUART1   /*!< Device name: LPUART1 */
 #define BOARD_UART1_TXD_SIGNAL                                                TX   /*!< LPUART1 signal: TX */
+
+/* GPIO_EMC_09 (number 1), USER_BUTTON */
+#define BOARD_USER_BUTTON_GPIO                                             GPIO2   /*!< GPIO device name: GPIO2 */
+#define BOARD_USER_BUTTON_PORT                                             GPIO2   /*!< PORT device name: GPIO2 */
+#define BOARD_USER_BUTTON_PIN                                                 9U   /*!< GPIO2 pin index: 9 */
 
 
 /*!

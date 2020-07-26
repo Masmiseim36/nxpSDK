@@ -15,8 +15,8 @@
 #include "semphr.h"
 #include "event_groups.h"
 /*******************************************************************************
-* Definitions
-******************************************************************************/
+ * Definitions
+ ******************************************************************************/
 #if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)
 #define CONTROLLER_ID kUSB_ControllerEhci0
 #endif
@@ -54,8 +54,8 @@ typedef struct _usb_device_composite_struct
 extern void audio_generator_task(void);
 
 /*******************************************************************************
-* API
-******************************************************************************/
+ * API
+ ******************************************************************************/
 /*!
  * @brief Audio class specific callback function.
  *

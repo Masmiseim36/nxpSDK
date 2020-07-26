@@ -26,7 +26,7 @@
 #define GR_MAJOR_VERSION 				6
 #endif
 #if !defined(GR_MINOR_VERSION)
-#define GR_MINOR_VERSION 				0
+#define GR_MINOR_VERSION 				2
 #endif
 #if !defined(GR_SERVICE_VERSION)
 #define GR_SERVICE_VERSION 				0
@@ -183,35 +183,63 @@ DLLExport void gre_app_log(gr_application_t *app, int level, const char *format,
 DLLExport void gre_app_vlog(gr_application_t *app, int level, const char *format, va_list arglist);
 
 /**
- * Set a data variable
- * @param app The application handle
- * @param key The data key variable to set
- * @param fmt The format describing the data argument: 1s0 (string) | 4u1 (uint32_t) | 4s1 (int32_t) ...
- * @param data A pointer to the data to set that can be passed to free() upon overwrite
+ * Set the data variable with a copy of the user provided data.   
+ * String data will be copied internally and can be released or changed after this call returns.
+ * If an entry does not already exist for the provided key, then a new entry will be created using they format and data provided.
+ * 
+ * @param app	The application handle
+ * @param key	The data key variable to set
+ * @param fmt	The format describing the data argument: GR_DATA_FORMAT_(1s0|1u1|1s1|2u1|...)
+ * @param data	A pointer to the data to set, this is not a transfer of memory ownership
  * @return -1 on error, 0 on success
  */
-DLLExport int gr_application_set_data(gr_application_t *app, const char *key, const char *fmt, void *data);
+DLLExport int gr_application_set_data(gr_application_t *app, const char *key, gr_data_format_t fmt, gr_data_union_t *data);
 
 /**
- * Set a data variable that is statically allocated for the life of the program 
- * Data stored in ROM/flash should use this API. 
- * @param app The application handle
- * @param key The data key variable to set
- * @param fmt The format describing the data argument: 1s0 (string) | 4u1 (uint32_t) | 4s1 (int32_t) ...
- * @param data A pointer to the data to set 
+ * Combines the fqn and variable to create a key in the form of "fqn.variable"
+ * Set the data variable with a copy of the user provided data.   
+ * String data will be copied internally and can be released or changed after this call returns.
+ * If an entry does not already exist for the provided key, then a new entry will be created using they format and data provided.
+ * 
+ * @param app			The application handle
+ * @param fqn			The fully qualified name name of the object, should be NULL for app level variables
+ * @param variable		The name of the variable to set
+ * @param fmt			The format describing the data argument: GR_DATA_FORMAT_(1s0|1u1|1s1|2u1|...)
+ * @param data			A pointer to the data to set, this is not a transfer of memory ownership
  * @return -1 on error, 0 on success
  */
-DLLExport int gr_application_set_data_static(gr_application_t *app, const char *key, const char *fmt, void *data);
+DLLExport int gr_application_set_data_variable(gr_application_t *app, const char *fqn, const char *variable, gr_data_format_t fmt, gr_data_union_t *data);
 
 /**
  * Get a data variable
- * @param app The application handle
- * @param key The data key to get
- * @param data Location to store the returned data, this is a pointer into the database and should not be released
- * @param format Location to store the returned data format, this is a pointer into the database and should not be released
+ * @param app		The application handle
+ * @param key		The data key to get
+ * @param fmt		The format describing the data argument: GR_DATA_FORMAT_(1s0|1u1|1s1|2u1|...)
+ * 					Can be GR_DATA_FORMAT_UNKNOWN and the original format will be used.
+ * @param data		Location to store the returned data, this holds is a copy of the requested data. Must be released with gr_application_release_data().
  * @return -1 on error, 0 on success
  */
-DLLExport int gr_application_get_data(gr_application_t *app, const char *key, void **data, char **format);
+DLLExport int gr_application_get_data(gr_application_t *app, const char *key, gr_data_format_t fmt, gr_wrapped_data_t *data);
+
+/**
+ * Combines the fqn and variable to create a key in the form of "fqn.variable"
+ * Get a data variable
+ * @param app		The application handle
+ * @param fqn		The fully qualified name name of the object, should be NULL for app level variables
+ * @param variable	The name of the variable to get
+ * @param fmt		The format describing the data argument: GR_DATA_FORMAT_(1s0|1u1|1s1|2u1|...)
+ * 					Can be GR_DATA_FORMAT_UNKNOWN and the original format will be used.
+ * @param data		Location to store the returned data, this holds is a copy of the requested data. Must be released with gr_application_release_data().
+ * @return -1 on error, 0 on success
+ */
+DLLExport int gr_application_get_data_variable(gr_application_t *app, const char *fqn, const char *variable, gr_data_format_t fmt, gr_wrapped_data_t *data);
+
+/**
+ * Release the data retrieved from gr_applicaiton_get_data or gr_application_get_data_variable.
+ * @param app		The application handle
+ * @param data		The data to release
+ */
+DLLExport void gr_application_release_data(gr_application_t *app, gr_wrapped_data_t *data);
 
 /**
  * Add an event listener
@@ -260,7 +288,7 @@ DLLExport int gr_application_send_event(gr_application_t *app,
  * @param action_context The action context to get the application pointer from
  * @return The Storyboard application handle from the action context
  */
-DLLExport gr_application_t *gr_context_get_application(gr_action_context_t *app);  
+DLLExport gr_application_t *gr_context_get_application(gr_action_context_t *action_context);  
 
 /**
  * Estimate the maximum length a fully qualified name contained in an action context 

@@ -15,10 +15,10 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define APP_FLEXRAM FLEXRAM
-#define APP_FLEXRAM_IRQ FLEXRAM_IRQn
+#define APP_FLEXRAM                  FLEXRAM
+#define APP_FLEXRAM_IRQ              FLEXRAM_IRQn
 #define APP_FLEXRAM_OCRAM_START_ADDR 0x20200000
-#define APP_FLEXRAM_OCRAM_END_ADDR 0x20210000
+#define APP_FLEXRAM_OCRAM_END_ADDR   0x20210000
 #define APP_FLEXRAM_OCRAM_MAGIC_ADDR 0x202000a8
 
 #define APP_FLEXRAM_IRQ_HANDLER FLEXRAM_IRQHandler

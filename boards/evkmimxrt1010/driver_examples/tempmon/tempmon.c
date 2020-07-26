@@ -14,17 +14,17 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_TEMPMON TEMPMON
-#define DEMO_TEMP_LOW_HIGH_IRQn TEMP_LOW_HIGH_IRQn
-#define DEMO_TEMP_PANIC_IRQn TEMP_PANIC_IRQn
+#define DEMO_TEMPMON                  TEMPMON
+#define DEMO_TEMP_LOW_HIGH_IRQn       TEMP_LOW_HIGH_IRQn
+#define DEMO_TEMP_PANIC_IRQn          TEMP_PANIC_IRQn
 #define DEMO_TEMP_LOW_HIGH_IRQHandler TEMP_LOW_HIGH_IRQHandler
-#define DEMO_TEMP_PANIC_IRQHandler TEMP_PANIC_IRQHandler
+#define DEMO_TEMP_PANIC_IRQHandler    TEMP_PANIC_IRQHandler
 
 #define DEMO_HIGHALARMTEMP 42U
-#define DEMO_LOWALARMTEMP 40U
+#define DEMO_LOWALARMTEMP  40U
 
 #define DEMO_CLOCK_SOURCE kCLOCK_CoreClk
-#define DEMO_CLOCK_DIV kCLOCK_AhbDiv
+#define DEMO_CLOCK_DIV    kCLOCK_AhbDiv
 
 /*******************************************************************************
  * Prototypes
@@ -45,12 +45,7 @@ volatile bool temperatureReach = false;
 void DEMO_TEMP_LOW_HIGH_IRQHandler(void)
 {
     temperatureReach = true;
-
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 /*!
@@ -81,7 +76,7 @@ int main(void)
     /* Get temperature */
     temperature = TEMPMON_GetCurrentTemperature(DEMO_TEMPMON);
 
-    PRINTF("The chip initial temperature is %.1f ¡æ. \r\n", temperature);
+    PRINTF("The chip initial temperature is %.1f degrees celsius. \r\n", temperature);
 
     while (1)
     {
@@ -92,7 +87,7 @@ int main(void)
         {
             temperatureReach = false;
 
-            PRINTF("The chip temperature has reached high temperature that is %.1f ¡æ. \r\n", temperature);
+            PRINTF("The chip temperature has reached high temperature that is %.1f degrees celsius. \r\n", temperature);
             PRINTF("The chip throttling back core frequency to waiting a desired cool down temperature . \r\n");
 
             /* Set the core frequency into 62.5MHz. */
@@ -109,7 +104,7 @@ int main(void)
         {
             temperatureReach = false;
 
-            PRINTF("The chip temperature has reached low temperature that is %.1f ¡æ. \r\n", temperature);
+            PRINTF("The chip temperature has reached low temperature that is %.1f degrees celsius. \r\n", temperature);
             PRINTF("The chip will return to the normal process . \r\n");
 
             /* Set the core frequency into 500MHz. */

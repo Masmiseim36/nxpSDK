@@ -38,46 +38,6 @@
       <locationURI>PARENT-1-PROJECT_LOC/main_hifi4.c</locationURI>
     </link>
     <link>
-      <name>MIMXRT685S</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>MIMXRT685S/MIMXRT685S_dsp.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/MIMXRT685S_dsp.h</locationURI>
-    </link>
-    <link>
-      <name>MIMXRT685S</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>MIMXRT685S/MIMXRT685S_dsp_features.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/MIMXRT685S_dsp_features.h</locationURI>
-    </link>
-    <link>
-      <name>MIMXRT685S</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>MIMXRT685S/system_MIMXRT685S_dsp.c</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/system_MIMXRT685S_dsp.c</locationURI>
-    </link>
-    <link>
-      <name>MIMXRT685S</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>MIMXRT685S/system_MIMXRT685S_dsp.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/system_MIMXRT685S_dsp.h</locationURI>
-    </link>
-    <link>
       <name>CMSIS</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>

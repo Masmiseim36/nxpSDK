@@ -18,7 +18,7 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define APP_MU MUB
+#define APP_MU      MUB
 #define APP_MU_IRQn 6
 /* Flag indicates Core Boot Up*/
 #define BOOT_FLAG 0x01U
@@ -122,7 +122,7 @@ int main(void)
     xos_start_main("main", 7, 0);
     /* Init board hardware.*/
     INPUTMUX_Init(INPUTMUX);
-    BOARD_InitPins();
+    BOARD_InitBootPins();
     XOS_INIT();
 
     /* Initialize LED */

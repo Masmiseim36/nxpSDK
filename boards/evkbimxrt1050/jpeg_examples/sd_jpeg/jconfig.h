@@ -27,7 +27,7 @@
 #include "ff.h"
 
 /* File operation map to FATFS. */
-#define FILE FIL
+#define FILE       FIL
 #define fflush(fp) f_sync(fp)
 #undef ferror
 #define ferror(fp) 0
@@ -65,7 +65,7 @@ static __INLINE size_t write_file(FIL *file, uint8_t *buf, uint32_t sizeofbuf)
 
 /* Macros for the memory allocation. */
 #define JMALLOC malloc
-#define JFREE free
+#define JFREE   free
 
 /*
  * These symbols indicate the properties of your machine or compiler.

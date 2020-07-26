@@ -3,6 +3,7 @@
   <externalDefinitions>
     <definition extID="com.nxp.mcuxpresso"/>
     <definition extID="middleware.eiq.tensorflow_lite.MIMXRT1062"/>
+    <definition extID="middleware.eiq.tensorflow_lite.third_party.absl.MIMXRT1062"/>
     <definition extID="middleware.eiq.tensorflow_lite.third_party.eigen.MIMXRT1062"/>
     <definition extID="middleware.eiq.tensorflow_lite.third_party.farmhash.MIMXRT1062"/>
     <definition extID="middleware.eiq.tensorflow_lite.third_party.fft2d.MIMXRT1062"/>
@@ -10,7 +11,7 @@
     <definition extID="middleware.eiq.tensorflow_lite.third_party.gemmlowp.MIMXRT1062"/>
     <definition extID="platform.utilities.misc_utilities.MIMXRT1062"/>
   </externalDefinitions>
-  <example id="evkmimxrt1060_tensorflow_lite_lib" name="tensorflow_lite_lib" category="eiq_examples" dependency="middleware.eiq.tensorflow_lite.MIMXRT1062 middleware.eiq.tensorflow_lite.third_party.eigen.MIMXRT1062 middleware.eiq.tensorflow_lite.third_party.farmhash.MIMXRT1062 middleware.eiq.tensorflow_lite.third_party.fft2d.MIMXRT1062 middleware.eiq.tensorflow_lite.third_party.flatbuffers.MIMXRT1062 middleware.eiq.tensorflow_lite.third_party.gemmlowp.MIMXRT1062 platform.utilities.misc_utilities.MIMXRT1062">
+  <example id="evkmimxrt1060_tensorflow_lite_lib" name="tensorflow_lite_lib" category="eiq_examples" dependency="middleware.eiq.tensorflow_lite.MIMXRT1062 middleware.eiq.tensorflow_lite.third_party.eigen.MIMXRT1062 middleware.eiq.tensorflow_lite.third_party.farmhash.MIMXRT1062 middleware.eiq.tensorflow_lite.third_party.fft2d.MIMXRT1062 middleware.eiq.tensorflow_lite.third_party.flatbuffers.MIMXRT1062 middleware.eiq.tensorflow_lite.third_party.gemmlowp.MIMXRT1062 middleware.eiq.tensorflow_lite.third_party.absl.MIMXRT1062 platform.utilities.misc_utilities.MIMXRT1062">
     <projects>
       <project type="com.crt.advproject.projecttype.lib" nature="org.eclipse.cdt.core.ccnature"/>
     </projects>
@@ -77,12 +78,13 @@
           <value>-fno-common</value>
         </option>
         <option id="gnu.cpp.compiler.option.other.other" type="string">
-          <value>-fpermissive  -Wno-comment  -Wno-format  -Wno-parentheses  -Wno-sign-compare  -Wno-switch  -Wno-unused-local-typedefs  -Wno-unused-variable  -Wno-unused-but-set-variable  -c  -ffunction-sections  -fdata-sections  -ffreestanding  -fno-builtin  -fno-rtti  -fno-exceptions</value>
+          <value>-fpermissive  -Wno-comment  -Wno-format  -Wno-parentheses  -Wno-sign-compare  -Wno-switch  -Wno-unused-local-typedefs  -Wno-unused-variable  -Wno-unused-but-set-variable  -Wno-unused-function  -c  -ffunction-sections  -fdata-sections  -ffreestanding  -fno-builtin  -fno-rtti  -fno-exceptions</value>
         </option>
       </toolchainSetting>
     </toolchainSettings>
     <include_paths>
       <include_path path="tensorflow-lite"/>
+      <include_path path="tensorflow-lite/third_party"/>
       <include_path path="tensorflow-lite/third_party/eigen"/>
       <include_path path="tensorflow-lite/third_party/farmhash"/>
       <include_path path="tensorflow-lite/third_party/flatbuffers"/>

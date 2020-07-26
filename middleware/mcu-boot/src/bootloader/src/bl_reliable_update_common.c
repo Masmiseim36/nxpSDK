@@ -1,18 +1,18 @@
 /*
- * Copyright 2019 NXP
+ * Copyright 2019 -2020 NXP
  * All rights reserved.
  *
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-#include "bootloader/bl_context.h"
-#include "bootloader/bl_reliable_update.h"
-#include "bootloader/bootloader.h"
+#include "bl_context.h"
+#include "bl_reliable_update.h"
+#include "bootloader.h"
 #include "bootloader_common.h"
-#include "crc/crc32.h"
-#include "memory/memory.h"
-#include "property/property.h"
-#include "utilities/fsl_assert.h"
+#include "crc32.h"
+#include "fsl_assert.h"
+#include "memory.h"
+#include "property.h"
 
 #define BL_FEATURE_RELIABLE_UPDATE (1)
 
@@ -107,6 +107,7 @@ typedef struct
 {
     bootloader_meta_t boot_meta;
     swap_meta_t swap_meta;
+    bool isSwapMetaValid;
 } ota_boot_ctx_t;
 
 typedef void (*application_entry_t)(void);
@@ -140,6 +141,7 @@ static ota_boot_ctx_t s_boot_ctx;
 status_t load_boot_meta(bootloader_meta_t *boot_meta);
 status_t do_swap_if_needed(void);
 status_t load_swap_meta(swap_meta_t *swap_meta);
+status_t update_default_swap_meta(void);
 status_t boot_meta_check(const bootloader_meta_t *boot_meta);
 status_t swap_meta_check(const swap_meta_t *swap_meta);
 status_t update_swap_meta(swap_meta_t *swap_meta);
@@ -168,6 +170,9 @@ static status_t software_reliable_update(uint32_t backupApplicationBase);
 
 //! @brief Copy source application to destination application region and return result
 static bool get_result_after_copying_application(uint32_t src, uint32_t dst, uint32_t len);
+
+//! @brief Read data from the provided address
+extern status_t flash_read(uint32_t address, uint8_t *buffer, size_t length);
 
 ////////////////////////////////////////////////////////////////////////////////
 // Code
@@ -221,7 +226,7 @@ status_t get_active_partition(uint32_t *partition_id)
     return status;
 }
 
-status_t flash_read(uint32_t address, uint8_t *buffer, size_t length)
+__WEAK status_t flash_read(uint32_t address, uint8_t *buffer, size_t length)
 {
     if ((buffer == NULL) || (length < 1))
     {
@@ -356,7 +361,7 @@ status_t boot_image_check(image_header_t *hdr, int32_t partition_id)
         }
         else
         {
-            status = kStatus_Fail;
+            status = kStatus_ReliableUpdateIntegrityCheckFailed;
         }
     }
 
@@ -396,18 +401,13 @@ status_t flash_copy(uint32_t dst, uint32_t start, uint32_t length)
 status_t load_boot_meta(bootloader_meta_t *boot_meta)
 {
     bootloader_meta_t boot_metas[2];
+    memset(&boot_metas, 0, sizeof(boot_metas));
 
     status_t status = kStatus_Fail;
     for (uint32_t i = 0; i < 2; i++)
     {
         uint32_t meta_addr = BL_FEATURE_BOOT_META_START + i * BL_FEATURE_FLASH_SECTOR_SIZE;
-        status = flash_read(meta_addr, (uint8_t *)&boot_metas[i], sizeof(bootloader_meta_t));
-        BREAK_IF(status != kStatus_Success);
-    }
-
-    if (status != kStatus_Success)
-    {
-        return status;
+        flash_read(meta_addr, (uint8_t *)&boot_metas[i], sizeof(bootloader_meta_t));
     }
 
     uint32_t active_idx = 0;
@@ -415,9 +415,21 @@ status_t load_boot_meta(bootloader_meta_t *boot_meta)
     {
         // No valid boot_meta, use the default meta, and program it to the NVM
         memcpy(&boot_metas[0], &k_boot_meta, sizeof(k_boot_meta));
-        mem_erase(BL_FEATURE_BOOT_META_START, BL_FEATURE_FLASH_SECTOR_SIZE, 0);
-        mem_write(BL_FEATURE_BOOT_META_START, sizeof(boot_metas[0]), (uint8_t *)&boot_metas[0], 0);
-        mem_flush();
+        status = mem_erase(BL_FEATURE_BOOT_META_START, BL_FEATURE_FLASH_SECTOR_SIZE, 0);
+        if (status != kStatus_Success)
+        {
+            return status;
+        }
+        status = mem_write(BL_FEATURE_BOOT_META_START, sizeof(boot_metas[0]), (uint8_t *)&boot_metas[0], 0);
+        if (status != kStatus_Success)
+        {
+            return status;
+        }
+        status = mem_flush();
+        if (status != kStatus_Success)
+        {
+            return status;
+        }
     }
     else if ((kStatus_Success == boot_meta_check(&boot_metas[0])) &&
              (kStatus_Success != boot_meta_check(&boot_metas[1])))
@@ -429,7 +441,8 @@ status_t load_boot_meta(bootloader_meta_t *boot_meta)
     {
         active_idx = 1;
     }
-    else if ((kStatus_Success == boot_meta_check(&boot_metas[0])) && (kStatus_Success == boot_meta_check(&boot_metas[1])))
+    else if ((kStatus_Success == boot_meta_check(&boot_metas[0])) &&
+             (kStatus_Success == boot_meta_check(&boot_metas[1])))
     {
         active_idx = (boot_metas[0].meta_version > boot_metas[1].meta_version) ? 0 : 1;
     }
@@ -490,9 +503,23 @@ status_t update_boot_meta(const bootloader_meta_t *boot_meta)
     return status;
 }
 
+status_t update_default_swap_meta(void)
+{
+    swap_meta_t *swap_meta = (swap_meta_t *)&s_boot_ctx.swap_meta;
+    memset(swap_meta, 0, sizeof(*swap_meta));
+    swap_meta->meta_version = 0;
+    swap_meta->tag = SWAP_META_TAG;
+
+    return kStatus_Success;
+}
+
 status_t load_swap_meta(swap_meta_t *swap_meta)
 {
+    status_t status = kStatus_Fail;
     swap_meta_t swap_metas[2];
+
+    memset(&swap_metas, 0, sizeof(swap_metas));
+
     for (uint32_t i = 0; i < 2; i++)
     {
         uint32_t meta_addr = BL_FEATURE_SWAP_META_START + i * BL_FEATURE_FLASH_SECTOR_SIZE;
@@ -502,13 +529,7 @@ status_t load_swap_meta(swap_meta_t *swap_meta)
     uint32_t active_idx = 0;
     if ((kStatus_Success != swap_meta_check(&swap_metas[0])) && (kStatus_Success != swap_meta_check(&swap_metas[1])))
     {
-        // No valid swap_meta, use the default meta, and program it to the NVM
-        memset(&swap_metas[0], 0, sizeof(swap_metas[0]));
-        swap_metas[0].meta_version = 0;
-        swap_metas[0].tag = SWAP_META_TAG;
-        mem_erase(BL_FEATURE_SWAP_META_START, BL_FEATURE_FLASH_SECTOR_SIZE, 0);
-        mem_write(BL_FEATURE_SWAP_META_START, sizeof(swap_metas[0]), (uint8_t *)&swap_metas[0], 0);
-        mem_flush();
+        return status;
     }
     else if ((kStatus_Success == swap_meta_check(&swap_metas[0])) &&
              (kStatus_Success != swap_meta_check(&swap_metas[1])))
@@ -535,6 +556,7 @@ status_t update_swap_meta(swap_meta_t *swap_meta)
 {
     status_t status = kStatus_Fail;
     swap_meta_t swap_metas[2];
+    bool need_new_ver = true;
     for (uint32_t i = 0; i < 2; i++)
     {
         uint32_t meta_addr = BL_FEATURE_SWAP_META_START + i * BL_FEATURE_FLASH_SECTOR_SIZE;
@@ -545,6 +567,7 @@ status_t update_swap_meta(swap_meta_t *swap_meta)
     if ((kStatus_Success != swap_meta_check(&swap_metas[0])) && (kStatus_Success != swap_meta_check(&swap_metas[1])))
     {
         update_idx = 0;
+        need_new_ver = false;
     }
     else if ((kStatus_Success == swap_meta_check(&swap_metas[0])) &&
              (kStatus_Success != swap_meta_check(&swap_metas[1])))
@@ -564,7 +587,10 @@ status_t update_swap_meta(swap_meta_t *swap_meta)
 
     uint32_t meta_addr = BL_FEATURE_SWAP_META_START + update_idx * BL_FEATURE_FLASH_SECTOR_SIZE;
 
-    swap_meta->meta_version++;
+    if (need_new_ver)
+    {
+        swap_meta->meta_version++;
+    }
     do
     {
         status = mem_erase(meta_addr, BL_FEATURE_FLASH_SECTOR_SIZE, 0);
@@ -591,9 +617,13 @@ status_t boot_go(void)
     status_t status = kStatus_Fail;
     image_header_t boot_header;
     get_image_header(kPartition_Primary, &boot_header);
-    if (boot_image_check(&boot_header, kPartition_Primary) == kStatus_Success)
+    status = boot_image_check(&boot_header, kPartition_Primary);
+    // Note: To improve the out-of-box experience, the integrity check will be ignored if the image is downloaded at the
+    // first time.
+    if ((status == kStatus_Success) ||
+        ((status == kStatus_ReliableUpdateIntegrityCheckFailed) && (s_boot_ctx.swap_meta.meta_version < 1)))
     {
-        if (s_boot_ctx.swap_meta.swap_type == kSwapType_None)
+        if ((s_boot_ctx.swap_meta.swap_type == kSwapType_None) && (!s_boot_ctx.isSwapMetaValid))
         {
             s_boot_ctx.swap_meta.image_info[0].size = boot_header.image_size + boot_header.header_size;
             update_swap_meta(&s_boot_ctx.swap_meta);
@@ -632,8 +662,10 @@ void show_swap_meta_info(const swap_meta_t *swap_meta)
                                                  "kSwapType_Permenant", "kSwapType_Fail",         "kSwapType_Fatal" };
 
     const char *swap_stage_str[] = {
-        "kSwapStage_NotStarted", "kSwapStage_DiffCopy", "kSwapStage_A_to_B_Scratch",
-        "kSwapStage_B_to_A",     "kSwapStage_Done",
+        "kSwapStage_NotStarted",
+        "kSwapStage_A_to_B_Scratch",
+        "kSwapStage_B_to_A",
+        "kSwapStage_Done",
     };
 
     debug_printf("Swap Meta summary:\r\n---------------------------\r\n");
@@ -647,34 +679,49 @@ void show_swap_meta_info(const swap_meta_t *swap_meta)
                  swap_stage_str[swap_meta->swap_progress.swap_status], swap_meta->swap_progress.remaining_size);
     debug_printf("Image Info:image[0].size=0x%x, image[1].size=0x%x\r\n", swap_meta->image_info[0].size,
                  swap_meta->image_info[1].size);
+    debug_printf("Swap Meta version:%d\r\n", swap_meta->meta_version);
 }
 
 void bootloader_reliable_update_as_requested(reliable_update_option_t option, uint32_t address)
 {
     debug_printf("Running %s...\r\n", __func__);
-    load_boot_meta(&s_boot_ctx.boot_meta);
+    status_t status = load_boot_meta(&s_boot_ctx.boot_meta);
+    if (status != kStatus_Success)
+    {
+        debug_printf("Boot meta is invalid\r\n");
+    }
     show_boot_meta_info(&s_boot_ctx.boot_meta);
-    load_swap_meta(&s_boot_ctx.swap_meta);
+    status = load_swap_meta(&s_boot_ctx.swap_meta);
+    if (status != kStatus_Success)
+    {
+        debug_printf("SWAP meta is invalid\r\n");
+        s_boot_ctx.isSwapMetaValid = false;
+        status = update_default_swap_meta();
+    }
+    else
+    {
+        s_boot_ctx.isSwapMetaValid = true;
+    }
     show_swap_meta_info(&s_boot_ctx.swap_meta);
-    status_t status = kStatus_Fail;
+    status = kStatus_Fail;
     if (option == kReliableUpdateOption_Normal)
     {
         /*
         OTA bootloader
-        • Load the bootloader meta
-        ○ Set the first meta to default value if there is no meta data present
-        • Load the swap meta
-        ○ 1. Meta is invalid (tag not match) - Only check the primary boot image
-        • Meta indicates the swapType == readyForTest
-        ○ 2.1 Meta indicates the swap has not started
-        ○ 2.2 Meta indicates the swap is in progress
-        ○ 2.3 Meta indicates the swap has done
-        • Meta indicates the swapType == Test
-        ○ 3.1 Meta indicates the revert has not started
-        ○ 3.2 Meta indicates the revert is in progress
-        ○ 3.3 Meta indicates the revert has done
-        •  Meta indicates the swapType == Permanent
-        ○ 4.1 Boot the primary image
+        - Load the bootloader meta
+         1. Set the first meta to default value if there is no meta data present
+        - Load the swap meta
+         1. Meta is invalid (tag not match) - Only check the primary boot image
+        - Meta indicates the swapType == readyForTest
+          2.1 Meta indicates the swap has not started
+          2.2 Meta indicates the swap is in progress
+          2.3 Meta indicates the swap has done
+        - Meta indicates the swapType == Test
+          3.1 Meta indicates the revert has not started
+          3.2 Meta indicates the revert is in progress
+          3.3 Meta indicates the revert has done
+        - Meta indicates the swapType == Permanent
+          4.1 Boot the primary image
         */
 
         // Set the imageStart to invalid value first because the OTA bootloader will refresh the start address later

@@ -49,7 +49,7 @@ void GPIO3_Combined_16_31_IRQHandler (void)
     imxsdk_gpio_handle_interrupt(GPIO3, GPIO3_NUM);
 }
 
-#ifndef CPU_MIMXRT1021DAG5A
+#if !defined(CPU_MIMXRT1021DAG5A) && !defined(CPU_MIMXRT1024DAG5A)
 void GPIO4_Combined_0_15_IRQHandler (void)
 {
     imxsdk_gpio_handle_interrupt(GPIO4, GPIO4_NUM);

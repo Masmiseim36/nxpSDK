@@ -81,7 +81,7 @@ static A_STATUS driver_thread_operation(A_VOID *pCxt)
         uint32_t param;
     } stackU;
 
-#define PARAM (stackU.param)
+#define PARAM       (stackU.param)
 #define PTR_REG_MOD ((ATH_REGQUERY *)(pQuery))
     switch (PTR_REG_MOD->operation)
     {
@@ -240,7 +240,7 @@ static uint32_t ath_ioctl_handler_ext(A_VOID *qca_ptr, ATH_IOCTL_PARAM_STRUCT_PT
 
 #ifdef KINETIS_PLATFORM
 
-#define LED_ON GPIO_IOCTL_WRITE_LOG0
+#define LED_ON  GPIO_IOCTL_WRITE_LOG0
 #define LED_OFF GPIO_IOCTL_WRITE_LOG1
 
 #define LED_STATE_ERROR \
@@ -257,7 +257,7 @@ static uint32_t ath_ioctl_handler_ext(A_VOID *qca_ptr, ATH_IOCTL_PARAM_STRUCT_PT
 
 #else
 
-#define LED_ON GPIO_IOCTL_WRITE_LOG1
+#define LED_ON  GPIO_IOCTL_WRITE_LOG1
 #define LED_OFF GPIO_IOCTL_WRITE_LOG0
 
 #define LED_STATE_ERROR \
@@ -361,9 +361,9 @@ void gpio_process_register_value(uint8_t *datap, uint32_t len)
 }
 
 #define QUEUE_IDX_INC(a) ((a) = ((a) + 1) % MAX_PROFILE_SIZE)
-#define kf_profile_head profile_head
+#define kf_profile_head  profile_head
 #define kf_profile_trail profile_trail
-#define kf_profiles profiles
+#define kf_profiles      profiles
 
 void clear_kf_profile(void)
 {

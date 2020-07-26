@@ -35,7 +35,7 @@
             PRINTF("%d\n", __LINE__); \
     } while (0)
 
-#define CU_ASSERT(a) nghttp_ASSERT(a)
+#define CU_ASSERT(a)       nghttp_ASSERT(a)
 #define CU_ASSERT_FATAL(a) nghttp_ASSERT(a)
 
 #if 1

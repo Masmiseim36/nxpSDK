@@ -44,8 +44,8 @@ typedef struct _pha_bc
     uint16_t ui16OffsetPhaC;             /* phase C offset result */
     ADC_Type *pAdcBasePhaB;              /* pointer to Phase B base address */
     ADC_Type *pAdcBasePhaC;              /* pointer to Phase C base address */
-    uint16_t *pui16HCPhaB;            /* pointer to phase B HC register */
-    uint16_t *pui16HCPhaC;            /* pointer to phase C HC register */
+    uint16_t *pui16HCPhaB;               /* pointer to phase B HC register */
+    uint16_t *pui16HCPhaC;               /* pointer to phase C HC register */
 } pha_bc_t;
 
 typedef struct _pha_ac
@@ -62,8 +62,8 @@ typedef struct _pha_ac
     uint16_t ui16OffsetPhaC;             /* phase C offset result */
     ADC_Type *pAdcBasePhaA;              /* pointer to phase A base address */
     ADC_Type *pAdcBasePhaC;              /* pointer to phase C base address */
-    uint16_t *pui16HCPhaA;            /* pointer to phase A HC register */
-    uint16_t *pui16HCPhaC;            /* pointer to phase C HC register */
+    uint16_t *pui16HCPhaA;               /* pointer to phase A HC register */
+    uint16_t *pui16HCPhaC;               /* pointer to phase C HC register */
 } pha_ac_t;
 
 typedef struct _pha_ab
@@ -80,32 +80,32 @@ typedef struct _pha_ab
     uint16_t ui16OffsetPhaB;             /* phase B offset result */
     ADC_Type *pAdcBasePhaA;              /* pointer to phase A base address */
     ADC_Type *pAdcBasePhaB;              /* pointer to phase B base address */
-    uint16_t *pui16HCPhaA;            /* pointer to phase A HC register */
-    uint16_t *pui16HCPhaB;            /* pointer to phase B HC register */
+    uint16_t *pui16HCPhaA;               /* pointer to phase A HC register */
+    uint16_t *pui16HCPhaB;               /* pointer to phase B HC register */
 } pha_ab_t;
 
 typedef struct _mcdrv_adc
 {
-    GMCLIB_3COOR_T_F16 *psIABC;          /* pointer to the 3-phase currents */
-    pha_bc_t sCurrSec16;                 /* ADC setting for SVM sectors 1&6 */
-    pha_ac_t sCurrSec23;                 /* ADC setting for SVM sectors 2&3 */
-    pha_ab_t sCurrSec45;                 /* ADC setting for SVM sectors 4&5 */
-   
-    ADC_Type *pui32UdcbAdcBase;          /* pointer to ADC where Udcb channel is assigned */
-    ADC_Type *pui32AuxAdcBase;           /* pointer to ADC where auxiliary channel is assigned */
-    uint16_t *pui16SVMSector;            /* pointer to the SVM sector */
-    frac16_t *pui16AuxChan;              /* pointer to auxiliary ADC channel number */
-    frac16_t *pf16UDcBus;                /* pointer to DC Bus voltage variable */
-       
-    uint16_t ui16ChanNumVDcb;            /* DCB voltage channel number */
-    uint16_t ui16RsltRegVDcb;            /* DCB voltage result register */
-    uint16_t *pui16HCVDcb;            /* pointer to VDcb HC register */
-       
-    uint16_t ui16ChanNumAux;             /* Auxiliary channel number */
-    uint16_t ui16RsltRegAux;             /* Auxiliary result register */
-    uint16_t *pui16HCAux;             /* pointer to auxiliary signal HC register */
+    GMCLIB_3COOR_T_F16 *psIABC; /* pointer to the 3-phase currents */
+    pha_bc_t sCurrSec16;        /* ADC setting for SVM sectors 1&6 */
+    pha_ac_t sCurrSec23;        /* ADC setting for SVM sectors 2&3 */
+    pha_ab_t sCurrSec45;        /* ADC setting for SVM sectors 4&5 */
 
-    uint16_t ui16OffsetFiltWindow;       /* ADC Offset filter window */
+    ADC_Type *pui32UdcbAdcBase; /* pointer to ADC where Udcb channel is assigned */
+    ADC_Type *pui32AuxAdcBase;  /* pointer to ADC where auxiliary channel is assigned */
+    uint16_t *pui16SVMSector;   /* pointer to the SVM sector */
+    frac16_t *pui16AuxChan;     /* pointer to auxiliary ADC channel number */
+    frac16_t *pf16UDcBus;       /* pointer to DC Bus voltage variable */
+
+    uint16_t ui16ChanNumVDcb; /* DCB voltage channel number */
+    uint16_t ui16RsltRegVDcb; /* DCB voltage result register */
+    uint16_t *pui16HCVDcb;    /* pointer to VDcb HC register */
+
+    uint16_t ui16ChanNumAux; /* Auxiliary channel number */
+    uint16_t ui16RsltRegAux; /* Auxiliary result register */
+    uint16_t *pui16HCAux;    /* pointer to auxiliary signal HC register */
+
+    uint16_t ui16OffsetFiltWindow; /* ADC Offset filter window */
 } mcdrv_adc_t;
 
 /*******************************************************************************
@@ -193,4 +193,3 @@ bool_t MCDRV_AuxValGet(mcdrv_adc_t *this);
 #endif
 
 #endif /* _MCDRV_ADC_IMXRT1052_H_ */
-

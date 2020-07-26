@@ -15,8 +15,8 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_ADC_BASE ADC1
-#define DEMO_ADC_USER_CHANNEL 0U
+#define DEMO_ADC_BASE          ADC1
+#define DEMO_ADC_USER_CHANNEL  0U
 #define DEMO_ADC_CHANNEL_GROUP 0U
 
 /*******************************************************************************

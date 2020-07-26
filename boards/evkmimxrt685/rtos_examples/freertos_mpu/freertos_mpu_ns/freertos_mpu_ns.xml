@@ -8,11 +8,11 @@
     <definition extID="component.usart_adapter.MIMXRT685S"/>
     <definition extID="device.MIMXRT685S_CMSIS.MIMXRT685S"/>
     <definition extID="device.MIMXRT685S_startup.MIMXRT685S"/>
-    <definition extID="middleware.amazon_freertos-kernel.MIMXRT685S"/>
-    <definition extID="middleware.amazon_freertos-kernel.cm33_secure_port.MIMXRT685S"/>
-    <definition extID="middleware.amazon_freertos-kernel.extension.MIMXRT685S"/>
-    <definition extID="middleware.amazon_freertos-kernel.heap_4.MIMXRT685S"/>
-    <definition extID="middleware.amazon_freertos-kernel.mpu_wrappers.MIMXRT685S"/>
+    <definition extID="middleware.freertos-kernel.MIMXRT685S"/>
+    <definition extID="middleware.freertos-kernel.cm33_secure_port.MIMXRT685S"/>
+    <definition extID="middleware.freertos-kernel.extension.MIMXRT685S"/>
+    <definition extID="middleware.freertos-kernel.heap_4.MIMXRT685S"/>
+    <definition extID="middleware.freertos-kernel.mpu_wrappers.MIMXRT685S"/>
     <definition extID="platform.Include_common.MIMXRT685S"/>
     <definition extID="platform.Include_core_cm33.MIMXRT685S"/>
     <definition extID="platform.Include_dsp.MIMXRT685S"/>
@@ -36,10 +36,12 @@
     <definition extID="mdk"/>
     <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
+    <definition extID="com.nxp.mcuxpresso.core.debug.support.segger.debug"/>
+    <definition extID="com.nxp.mcuxpresso.core.debug.support.segger.release"/>
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkmimxrt685_freertos_mpu_ns" name="freertos_mpu_ns" category="rtos_examples" dependency="platform.drivers.clock.MIMXRT685S middleware.amazon_freertos-kernel.cm33_secure_port.MIMXRT685S middleware.amazon_freertos-kernel.heap_4.MIMXRT685S platform.drivers.common.MIMXRT685S platform.drivers.power.MIMXRT685S device.MIMXRT685S_CMSIS.MIMXRT685S utility.debug_console.MIMXRT685S platform.utilities.assert.MIMXRT685S component.usart_adapter.MIMXRT685S platform.drivers.flash_config.MIMXRT685S platform.drivers.flexspi.MIMXRT685S platform.drivers.cache_cache64.MIMXRT685S component.serial_manager.MIMXRT685S component.lists.MIMXRT685S component.serial_manager_uart.MIMXRT685S platform.drivers.flexcomm_usart.MIMXRT685S device.MIMXRT685S_startup.MIMXRT685S platform.drivers.flexcomm.MIMXRT685S platform.drivers.lpc_iopctl.MIMXRT685S platform.drivers.lpc_gpio.MIMXRT685S platform.drivers.reset.MIMXRT685S middleware.amazon_freertos-kernel.MIMXRT685S middleware.amazon_freertos-kernel.extension.MIMXRT685S middleware.amazon_freertos-kernel.mpu_wrappers.MIMXRT685S platform.Include_core_cm33.MIMXRT685S platform.Include_common.MIMXRT685S platform.Include_dsp.MIMXRT685S platform.utilities.misc_utilities.MIMXRT685S" device_core="cm33_MIMXRT685S" linked_projects="evkmimxrt685_freertos_mpu_s">
+  <example id="evkmimxrt685_freertos_mpu_ns" name="freertos_mpu_ns" category="rtos_examples" dependency="platform.drivers.clock.MIMXRT685S middleware.freertos-kernel.cm33_secure_port.MIMXRT685S middleware.freertos-kernel.heap_4.MIMXRT685S platform.drivers.common.MIMXRT685S platform.drivers.power.MIMXRT685S device.MIMXRT685S_CMSIS.MIMXRT685S utility.debug_console.MIMXRT685S platform.utilities.assert.MIMXRT685S component.usart_adapter.MIMXRT685S platform.drivers.flash_config.MIMXRT685S platform.drivers.flexspi.MIMXRT685S platform.drivers.cache_cache64.MIMXRT685S component.serial_manager.MIMXRT685S component.lists.MIMXRT685S component.serial_manager_uart.MIMXRT685S platform.drivers.flexcomm_usart.MIMXRT685S device.MIMXRT685S_startup.MIMXRT685S platform.drivers.flexcomm.MIMXRT685S platform.drivers.lpc_iopctl.MIMXRT685S platform.drivers.lpc_gpio.MIMXRT685S platform.drivers.reset.MIMXRT685S middleware.freertos-kernel.MIMXRT685S middleware.freertos-kernel.extension.MIMXRT685S middleware.freertos-kernel.mpu_wrappers.MIMXRT685S platform.Include_core_cm33.MIMXRT685S platform.Include_common.MIMXRT685S platform.Include_dsp.MIMXRT685S platform.utilities.misc_utilities.MIMXRT685S" device_core="cm33_MIMXRT685S" linked_projects="evkmimxrt685_freertos_mpu_s">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -62,7 +64,6 @@
         <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
           <value>CPU_MIMXRT685SFVKB_cm33</value>
           <value>BOOT_HEADER_ENABLE=1</value>
-          <value>ARM_MATH_CM33</value>
           <value>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</value>
           <value>SERIAL_PORT_TYPE_UART=1</value>
           <value>FSL_RTOS_FREE_RTOS</value>
@@ -106,6 +107,24 @@
       </toolchainSetting>
     </toolchainSettings>
     <debug_configurations>
+      <debug_configuration id_refs="com.nxp.mcuxpresso.core.debug.support.segger.debug">
+        <scripts>
+          <script type="segger_script">
+            <source path="boards/evkmimxrt685/rtos_examples/freertos_mpu/freertos_mpu_ns" type="script" target_path="script">
+              <files mask="evkmimxrt685.JLinkScript"/>
+            </source>
+          </script>
+        </scripts>
+      </debug_configuration>
+      <debug_configuration id_refs="com.nxp.mcuxpresso.core.debug.support.segger.release">
+        <scripts>
+          <script type="segger_script">
+            <source path="boards/evkmimxrt685/rtos_examples/freertos_mpu/freertos_mpu_ns" type="script" target_path="script">
+              <files mask="evkmimxrt685.JLinkScript"/>
+            </source>
+          </script>
+        </scripts>
+      </debug_configuration>
       <debug_configuration id_refs="com.crt.advproject.config.exe.debug com.crt.advproject.config.exe.release">
         <drivers>
           <driver id_refs="QSPI_FLASH_MIMXRT685S">
@@ -116,10 +135,10 @@
         </drivers>
       </debug_configuration>
     </debug_configurations>
-    <source path="boards/evkmimxrt685/rtos_examples/freertos_mpu/freertos_mpu_ns/armgcc" target_path="src" type="linker" toolchain="armgcc">
+    <source path="boards/evkmimxrt685/rtos_examples/freertos_mpu/freertos_mpu_ns/armgcc" target_path="evkmimxrt685/rtos_examples/freertos_mpu/freertos_mpu_ns/linkscripts" type="linker" toolchain="armgcc">
       <files mask="MIMXRT685Sxxxx_cm33_ram_ns.ld"/>
     </source>
-    <source path="boards/evkmimxrt685/rtos_examples/freertos_mpu/freertos_mpu_ns/iar" target_path="src" type="linker" toolchain="iar">
+    <source path="boards/evkmimxrt685/rtos_examples/freertos_mpu/freertos_mpu_ns/iar" target_path="evkmimxrt685/rtos_examples/freertos_mpu/freertos_mpu_ns/linkscripts" type="linker" toolchain="iar">
       <files mask="MIMXRT685Sxxxx_cm33_ram_ns.icf"/>
     </source>
     <source path="boards/evkmimxrt685/rtos_examples/freertos_mpu/freertos_mpu_ns/linkscripts" target_path="linkscripts" type="src" toolchain="mcuxpresso">
@@ -127,11 +146,11 @@
       <files mask="main_data_section.ldt"/>
       <files mask="main_text_section.ldt"/>
     </source>
-    <source path="boards/evkmimxrt685/rtos_examples/freertos_mpu/freertos_mpu_ns/mdk" target_path="src" type="configuration" toolchain="mdk">
-      <files mask="evkmimxrt685_ram.ini"/>
-    </source>
-    <source path="boards/evkmimxrt685/rtos_examples/freertos_mpu/freertos_mpu_ns/mdk" target_path="src" type="linker" toolchain="mdk">
+    <source path="boards/evkmimxrt685/rtos_examples/freertos_mpu/freertos_mpu_ns/mdk" target_path="evkmimxrt685/rtos_examples/freertos_mpu/freertos_mpu_ns/linkscripts" type="linker" toolchain="mdk">
       <files mask="MIMXRT685Sxxxx_cm33_ram_ns.scf"/>
+    </source>
+    <source path="boards/evkmimxrt685/rtos_examples/freertos_mpu/freertos_mpu_ns/mdk" target_path="evkmimxrt685" type="configuration" toolchain="mdk">
+      <files mask="evkmimxrt685_flash.ini"/>
     </source>
     <source path="boards/evkmimxrt685/rtos_examples/freertos_mpu/freertos_mpu_ns" target_path="board" type="c_include">
       <files mask="board.h"/>
@@ -156,11 +175,11 @@
     <source path="boards/evkmimxrt685/rtos_examples/freertos_mpu/freertos_mpu_s" target_path="nsc_functions" type="c_include">
       <files mask="nsc_functions.h"/>
     </source>
-    <source path="rtos/amazon-freertos/freertos_kernel/portable/GCC/ARM_CM33/secure" target_path="amazon-freertos/secure_context" type="c_include" toolchain="armgcc mcuxpresso mdk">
+    <source path="rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33/secure" target_path="freertos/secure_context" type="c_include" toolchain="armgcc mcuxpresso mdk">
       <files mask="secure_context.h"/>
       <files mask="secure_init.h"/>
     </source>
-    <source path="rtos/amazon-freertos/freertos_kernel/portable/IAR/ARM_CM33/secure" target_path="amazon-freertos/secure_context" type="c_include" toolchain="iar">
+    <source path="rtos/freertos/freertos_kernel/portable/IAR/ARM_CM33/secure" target_path="freertos/secure_context" type="c_include" toolchain="iar">
       <files mask="secure_context.h"/>
       <files mask="secure_init.h"/>
     </source>

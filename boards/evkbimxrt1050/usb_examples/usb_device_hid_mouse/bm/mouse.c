@@ -17,6 +17,9 @@
 #if (defined(USB_DEVICE_CONFIG_CHARGER_DETECT) && (USB_DEVICE_CONFIG_CHARGER_DETECT > 0U)) && \
     (defined(FSL_FEATURE_SOC_USBHSDCD_COUNT) && (FSL_FEATURE_SOC_USBHSDCD_COUNT > 0U))
 #include "usb_hsdcd.h"
+#elif (defined(USB_DEVICE_CONFIG_CHARGER_DETECT) && (USB_DEVICE_CONFIG_CHARGER_DETECT > 0U)) && \
+    (defined(FSL_FEATURE_SOC_USB_ANALOG_COUNT) && (FSL_FEATURE_SOC_USB_ANALOG_COUNT > 0U))
+#include "usb_phydcd.h"
 #endif
 #include "mouse.h"
 
@@ -24,10 +27,7 @@
 #include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
-#if (defined(USB_DEVICE_CONFIG_CHARGER_DETECT) && (USB_DEVICE_CONFIG_CHARGER_DETECT > 0U)) && \
-    (defined(FSL_FEATURE_SOC_USB_ANALOG_COUNT) && (FSL_FEATURE_SOC_USB_ANALOG_COUNT > 0U))
-#include "usb_phydcd.h"
-#endif
+
 #include <stdio.h>
 #include <stdlib.h>
 #if (defined(FSL_FEATURE_SOC_SYSMPU_COUNT) && (FSL_FEATURE_SOC_SYSMPU_COUNT > 0U))
@@ -58,6 +58,11 @@ void USB_DeviceHsPhyChirpIssueWorkaround(void);
 void USB_DeviceDisconnected(void);
 #endif
 #if (defined(USB_DEVICE_CONFIG_CHARGER_DETECT) && (USB_DEVICE_CONFIG_CHARGER_DETECT > 0U)) && \
+    (defined(FSL_FEATURE_SOC_USBHSDCD_COUNT) && (FSL_FEATURE_SOC_USBHSDCD_COUNT > 0U))   
+#ifndef USBHSDCD_IRQS
+extern void HW_TimerControl(uint8_t enable);
+#endif
+#elif (defined(USB_DEVICE_CONFIG_CHARGER_DETECT) && (USB_DEVICE_CONFIG_CHARGER_DETECT > 0U)) && \
     (defined(FSL_FEATURE_SOC_USB_ANALOG_COUNT) && (FSL_FEATURE_SOC_USB_ANALOG_COUNT > 0U))
 extern void HW_TimerControl(uint8_t enable);
 #endif
@@ -320,6 +325,8 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
 
 #if (defined(USB_DEVICE_CONFIG_LPCIP3511FS) && (USB_DEVICE_CONFIG_LPCIP3511FS > 0U))
 #else
+            /*Add one delay here to make the DP pull down long enough to allow host to detect the previous disconnection.*/
+            SDK_DelayAtLeastUs(5000, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
             USB_DeviceRun(g_UsbDeviceHidMouse.deviceHandle);
 #endif
 #endif
@@ -547,10 +554,14 @@ static void USB_DeviceApplicationInit(void)
       DCD is enabled. Instead, USB_DeviceRun should be called after the DCD is finished immediately*/
 #if (defined(USB_DEVICE_CONFIG_LPCIP3511FS) && (USB_DEVICE_CONFIG_LPCIP3511FS > 0U))
     /* Start USB device HID mouse */
+    /*Add one delay here to make the DP pull down long enough to allow host to detect the previous disconnection.*/
+    SDK_DelayAtLeastUs(5000, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
     USB_DeviceRun(g_UsbDeviceHidMouse.deviceHandle);
 #endif
 #else
     /* Start USB device HID mouse */
+    /*Add one delay here to make the DP pull down long enough to allow host to detect the previous disconnection.*/
+    SDK_DelayAtLeastUs(5000, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
     USB_DeviceRun(g_UsbDeviceHidMouse.deviceHandle);
 #endif
 }
@@ -576,6 +587,11 @@ void USB_DeviceAppTask(void *parameter)
             /*USB_DeviceRun(g_UsbDeviceHidMouse.deviceHandle);*/
             usb_echo("USB device attached.\r\n");
 #if (defined(USB_DEVICE_CONFIG_CHARGER_DETECT) && (USB_DEVICE_CONFIG_CHARGER_DETECT > 0U)) && \
+    (defined(FSL_FEATURE_SOC_USBHSDCD_COUNT) && (FSL_FEATURE_SOC_USBHSDCD_COUNT > 0U)) 
+#ifndef USBHSDCD_IRQS
+            HW_TimerControl(1U);
+#endif
+#elif (defined(USB_DEVICE_CONFIG_CHARGER_DETECT) && (USB_DEVICE_CONFIG_CHARGER_DETECT > 0U)) && \
     (defined(FSL_FEATURE_SOC_USB_ANALOG_COUNT) && (FSL_FEATURE_SOC_USB_ANALOG_COUNT > 0U))
             HW_TimerControl(1U);
 #endif
@@ -588,6 +604,11 @@ void USB_DeviceAppTask(void *parameter)
             USB_DeviceStop(g_UsbDeviceHidMouse.deviceHandle);
 #endif
 #if (defined(USB_DEVICE_CONFIG_CHARGER_DETECT) && (USB_DEVICE_CONFIG_CHARGER_DETECT > 0U)) && \
+    (defined(FSL_FEATURE_SOC_USBHSDCD_COUNT) && (FSL_FEATURE_SOC_USBHSDCD_COUNT > 0U)) 
+#ifndef USBHSDCD_IRQS
+            HW_TimerControl(0U);
+#endif
+#elif (defined(USB_DEVICE_CONFIG_CHARGER_DETECT) && (USB_DEVICE_CONFIG_CHARGER_DETECT > 0U)) && \
     (defined(FSL_FEATURE_SOC_USB_ANALOG_COUNT) && (FSL_FEATURE_SOC_USB_ANALOG_COUNT > 0U))
             HW_TimerControl(0U);
 #endif

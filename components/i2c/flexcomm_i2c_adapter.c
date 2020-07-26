@@ -49,44 +49,44 @@ static I2C_Type *const s_i2cBases[] = I2C_BASE_PTRS;
  * Code
  ******************************************************************************/
 
-hal_i2c_status_t HAL_I2cGetStatus(status_t status)
+static hal_i2c_status_t HAL_I2cGetStatus(status_t status)
 {
     hal_i2c_status_t returnStatus;
     switch (status)
     {
         case kStatus_Success:
         {
-            returnStatus = kStatus_HAL_I2cSuccess;
+            returnStatus = kStatus_HAL_I2cSuccess; /* Successfully */
             break;
         }
         case kStatus_I2C_Busy:
         {
-            returnStatus = kStatus_HAL_I2cBusy;
+            returnStatus = kStatus_HAL_I2cBusy;  /* HAL I2C is busy with current transfer */
             break;
         }
         case kStatus_I2C_Idle:
         {
-            returnStatus = kStatus_HAL_I2cIdle;
+            returnStatus = kStatus_HAL_I2cIdle;  /* HAL I2C transmitter is idle */
             break;
         }
         case kStatus_I2C_Nak:
         {
-            returnStatus = kStatus_HAL_I2cNak;
+            returnStatus = kStatus_HAL_I2cNak; /* NAK received during transfer */
             break;
         }
         case kStatus_I2C_ArbitrationLost:
         {
-            returnStatus = kStatus_HAL_I2cArbitrationLost;
+            returnStatus = kStatus_HAL_I2cArbitrationLost; /* Arbitration lost during transfer */
             break;
         }
         case kStatus_I2C_Timeout:
         {
-            returnStatus = kStatus_HAL_I2cTimeout;
+            returnStatus = kStatus_HAL_I2cTimeout; /* Timeout */
             break;
         }
         default:
         {
-            returnStatus = kStatus_HAL_I2cError;
+            returnStatus = kStatus_HAL_I2cError; /* Error occurs on HAL I2C */
             break;
         }
     }
@@ -100,9 +100,9 @@ static void HAL_I2cMasterCallback(I2C_Type *base, i2c_master_handle_t *handle, s
 
     i2cMasterHandle = (hal_i2c_master_t *)callbackParam;
 
-    if (i2cMasterHandle->callback)
+    if (NULL != i2cMasterHandle->callback)
     {
-        i2cMasterHandle->callback(i2cMasterHandle, HAL_I2cGetStatus(status), i2cMasterHandle->callbackParam);
+        i2cMasterHandle->callback(i2cMasterHandle, HAL_I2cGetStatus(status), i2cMasterHandle->callbackParam); /* Enter I2c master callback */
     }
 }
 
@@ -113,30 +113,34 @@ static void HAL_I2cSlaveCallback(I2C_Type *base, volatile i2c_slave_transfer_t *
 
     i2cSlaveHandle = (hal_i2c_slave_t *)callbackParam;
 
-    if (i2cSlaveHandle->callback)
+    if (NULL != i2cSlaveHandle->callback)
     {
         i2cSlaveHandle->transfer.event = (hal_i2c_slave_transfer_event_t)xfer->event;
-        if (kI2C_SlaveTransmitEvent == xfer->event)
+        if (kI2C_SlaveTransmitEvent == xfer->event) 
         {
+            /*slave-transmitter role*/
             i2cSlaveHandle->transfer.data     = (uint8_t *)xfer->txData;
             i2cSlaveHandle->transfer.dataSize = xfer->txSize;
         }
         else
         {
+            /*slave-receiver role*/
             i2cSlaveHandle->transfer.data     = xfer->rxData;
             i2cSlaveHandle->transfer.dataSize = xfer->rxSize;
         }
 
         i2cSlaveHandle->transfer.completionStatus = HAL_I2cGetStatus(xfer->completionStatus);
         i2cSlaveHandle->transfer.transferredCount = xfer->transferredCount;
-        i2cSlaveHandle->callback(i2cSlaveHandle, &i2cSlaveHandle->transfer, i2cSlaveHandle->callbackParam);
+        i2cSlaveHandle->callback(i2cSlaveHandle, &i2cSlaveHandle->transfer, i2cSlaveHandle->callbackParam); /* Enter I2c slave callback */
         if (kI2C_SlaveTransmitEvent == xfer->event)
         {
+            /*slave-transmitter role*/
             xfer->txData = i2cSlaveHandle->transfer.data;
             xfer->txSize = i2cSlaveHandle->transfer.dataSize;
         }
         else
         {
+            /*slave-receiver role*/
             xfer->rxData = i2cSlaveHandle->transfer.data;
             xfer->rxSize = i2cSlaveHandle->transfer.dataSize;
         }
@@ -151,18 +155,16 @@ hal_i2c_status_t HAL_I2cMasterInit(hal_i2c_master_handle_t handle, const hal_i2c
     assert(handle);
     assert(config);
 
-    if (HAL_I2C_MASTER_HANDLE_SIZE < sizeof(hal_i2c_master_t))
-    {
-        return kStatus_HAL_I2cError;
-    }
+    assert(HAL_I2C_MASTER_HANDLE_SIZE >= sizeof(hal_i2c_master_t));
 
     i2cMasterHandle = (hal_i2c_master_t *)handle;
 
-    I2C_MasterGetDefaultConfig(&i2cConfig);
+    I2C_MasterGetDefaultConfig(&i2cConfig); /* Get a default configuration of master */
     i2cConfig.enableMaster    = config->enableMaster;
     i2cConfig.baudRate_Bps    = config->baudRate_Bps;
     i2cMasterHandle->instance = config->instance;
 
+    /* I2C Master initization*/
     I2C_MasterInit(s_i2cBases[i2cMasterHandle->instance], &i2cConfig, config->srcClock_Hz);
 
     return kStatus_HAL_I2cSuccess;
@@ -176,19 +178,17 @@ hal_i2c_status_t HAL_I2cSlaveInit(hal_i2c_slave_handle_t handle, const hal_i2c_s
     assert(handle);
     assert(config);
 
-    if (HAL_I2C_SLAVE_HANDLE_SIZE < sizeof(hal_i2c_slave_t))
-    {
-        return kStatus_HAL_I2cError;
-    }
+    assert(HAL_I2C_SLAVE_HANDLE_SIZE >= sizeof(hal_i2c_slave_t));
 
     i2cSlaveHandle = (hal_i2c_slave_t *)handle;
 
-    I2C_SlaveGetDefaultConfig(&i2cConfig);
+    I2C_SlaveGetDefaultConfig(&i2cConfig); /* To get a default configuration of slave*/
     i2cConfig.enableSlave      = config->enableSlave;
-    i2cConfig.address0.address = config->slaveAddress;
+    i2cConfig.address0.address = (uint8_t)config->slaveAddress;
     i2cSlaveHandle->instance   = config->instance;
 
-    I2C_SlaveInit(s_i2cBases[i2cSlaveHandle->instance], &i2cConfig, config->srcClock_Hz);
+    /* I2C Slave initization*/
+    (void)I2C_SlaveInit(s_i2cBases[i2cSlaveHandle->instance], &i2cConfig, config->srcClock_Hz);
 
     return kStatus_HAL_I2cSuccess;
 }
@@ -201,7 +201,7 @@ hal_i2c_status_t HAL_I2cMasterDeinit(hal_i2c_master_handle_t handle)
 
     i2cMasterHandle = (hal_i2c_master_t *)handle;
 
-    I2C_MasterDeinit(s_i2cBases[i2cMasterHandle->instance]);
+    I2C_MasterDeinit(s_i2cBases[i2cMasterHandle->instance]); /*Deinitializes the I2C master peripheral*/
 
     return kStatus_HAL_I2cSuccess;
 }
@@ -214,7 +214,7 @@ hal_i2c_status_t HAL_I2cSlaveDeinit(hal_i2c_slave_handle_t handle)
 
     i2cSlaveHandle = (hal_i2c_slave_t *)handle;
 
-    I2C_SlaveDeinit(s_i2cBases[i2cSlaveHandle->instance]);
+    I2C_SlaveDeinit(s_i2cBases[i2cSlaveHandle->instance]); /*Deinitializes the I2C slave peripheral*/
 
     return kStatus_HAL_I2cSuccess;
 }
@@ -230,6 +230,7 @@ hal_i2c_status_t HAL_I2cMasterWriteBlocking(hal_i2c_master_handle_t handle,
 
     i2cMasterHandle = (hal_i2c_master_t *)handle;
 
+    /*Performs a polling send transfer on the I2C bus*/
     return HAL_I2cGetStatus(I2C_MasterWriteBlocking(s_i2cBases[i2cMasterHandle->instance], txBuff, txSize, flags));
 }
 
@@ -255,6 +256,7 @@ hal_i2c_status_t HAL_I2cSlaveWriteBlocking(hal_i2c_slave_handle_t handle, const 
 
     i2cSlaveHandle = (hal_i2c_slave_t *)handle;
 
+    /*Performs a polling receive transfer on the I2C bus.*/
     return HAL_I2cGetStatus(I2C_SlaveWriteBlocking(s_i2cBases[i2cSlaveHandle->instance], txBuff, txSize));
 }
 

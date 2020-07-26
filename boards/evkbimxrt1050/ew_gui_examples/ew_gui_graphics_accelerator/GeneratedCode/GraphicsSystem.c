@@ -7,18 +7,22 @@
 *
 ********************************************************************************
 *
+* This software is delivered "as is" and shows the usage of other software 
+* components. It is provided as an example software which is intended to be 
+* modified and extended according to particular requirements.
+* 
+* TARA Systems hereby disclaims all warranties and conditions with regard to the
+* software, including all implied warranties and conditions of merchantability 
+* and non-infringement of any third party IPR or other rights which may result 
+* from the use or the inability to use the software.
+*
 * This file was generated automatically by Embedded Wizard Studio.
 *
 * Please do not make any modifications of this file! The modifications are lost
 * when the file is generated again by Embedded Wizard Studio!
 *
-* The template of this heading text can be found in the file 'head.ewt' in the
-* directory 'Platforms' of your Embedded Wizard installation directory. If you
-* wish to adapt this text, please copy the template file 'head.ewt' into your
-* project directory and edit the copy only. Please avoid any modifications of
-* the original template file!
-*
-* Version  : 9.20
+* Version  : 9.30
+* Date     : 14.02.2020  8:00:50
 * Profile  : iMX_RT
 * Platform : NXP.iMX_RT.RGB565
 *
@@ -33,6 +37,9 @@ void GraphicsSystemDeviceClass__Init( GraphicsSystemDeviceClass _this, XObject a
 {
   /* At first initialize the super class ... */
   TemplatesDeviceClass__Init( &_this->_Super, aLink, aArg );
+
+  /* Allow the Immediate Garbage Collection to evalute the members of this class. */
+  _this->_GCT = EW_CLASS_GCT( GraphicsSystemDeviceClass );
 
   /* Setup the VMT pointer */
   _this->_VMT = EW_CLASS( GraphicsSystemDeviceClass );
@@ -54,11 +61,11 @@ void GraphicsSystemDeviceClass__ReInit( GraphicsSystemDeviceClass _this )
 /* Finalizer method for the class 'GraphicsSystem::DeviceClass' */
 void GraphicsSystemDeviceClass__Done( GraphicsSystemDeviceClass _this )
 {
-  /* Finalize this class */
-  _this->_VMT = EW_CLASS( GraphicsSystemDeviceClass );
-
   /* Call the user defined destructor of the class */
   GraphicsSystemDeviceClass_Done( _this );
+
+  /* Finalize this class */
+  _this->_Super._VMT = EW_CLASS( TemplatesDeviceClass );
 
   /* Don't forget to deinitialize the super class ... */
   TemplatesDeviceClass__Done( &_this->_Super );
@@ -70,9 +77,9 @@ void GraphicsSystemDeviceClass_OnSetAcceleratorActive( GraphicsSystemDeviceClass
 {
   _this->AcceleratorActive = value;
   {
-    extern void NxpRtUsePXP( int aActive );
+    extern void GfxUseGraphicsAccelerator( int aActive );
 
-    NxpRtUsePXP( value );
+    GfxUseGraphicsAccelerator( value );
   }
   EwNotifyRefObservers( EwNewRef( _this, GraphicsSystemDeviceClass_OnGetAcceleratorActive, 
     GraphicsSystemDeviceClass_OnSetAcceleratorActive ), 0 );
@@ -89,11 +96,8 @@ XInt32 GraphicsSystemDeviceClass_GetCpuLoad( GraphicsSystemDeviceClass _this )
 
   result = 0;
   {
-    #if EW_CPU_LOAD_MEASURING == 1
-      extern int EwBspGetCpuLoad( void );
-
-      result = EwBspGetCpuLoad();
-    #endif
+    extern int EwBspClockGetCpuLoad( void );
+    result = EwBspClockGetCpuLoad();
   }
   return result;
 }
@@ -102,15 +106,27 @@ XInt32 GraphicsSystemDeviceClass_GetCpuLoad( GraphicsSystemDeviceClass _this )
 void GraphicsSystemDeviceClass_Init( GraphicsSystemDeviceClass _this, XHandle aArg )
 {
   /* Dummy expressions to avoid the 'C' warning 'unused argument'. */
+  EW_UNUSED_ARG( _this );
   EW_UNUSED_ARG( aArg );
 
-  GraphicsSystemDeviceClass_OnSetAcceleratorActive( _this, 1 );
+  {
+    extern void GfxUseGraphicsAccelerator( int aActive );
+
+    GfxUseGraphicsAccelerator( 1 );
+  }
 }
 
 /* 'C' function for method : 'GraphicsSystem::DeviceClass.Done()' */
 void GraphicsSystemDeviceClass_Done( GraphicsSystemDeviceClass _this )
 {
-  GraphicsSystemDeviceClass_OnSetAcceleratorActive( _this, 1 );
+  /* Dummy expressions to avoid the 'C' warning 'unused argument'. */
+  EW_UNUSED_ARG( _this );
+
+  {
+    extern void GfxUseGraphicsAccelerator( int aActive );
+
+    GfxUseGraphicsAccelerator( 1 );
+  }
 }
 
 /* Default onget method for the property 'AcceleratorActive' */
@@ -125,7 +141,7 @@ EW_END_OF_CLASS_VARIANTS( GraphicsSystemDeviceClass )
 
 /* Virtual Method Table (VMT) for the class : 'GraphicsSystem::DeviceClass' */
 EW_DEFINE_CLASS( GraphicsSystemDeviceClass, TemplatesDeviceClass, _None, _None, 
-                 _None, _None, _None, "GraphicsSystem::DeviceClass" )
+                 _None, _None, _None, _None, "GraphicsSystem::DeviceClass" )
 EW_END_OF_CLASS( GraphicsSystemDeviceClass )
 
 /* User defined auto object: 'GraphicsSystem::Device' */

@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 - 2017 NXP
+ * Copyright 2016 - 2017, 2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -57,7 +57,11 @@ SDK_ALIGN(uint8_t TxDataBuff[ENET_TXBD_NUM][SDK_SIZEALIGN(ENET_TXBUFF_SIZE, APP_
  *
  * @return none.
  */
-void ENETIF_Callback(ENET_Type *base, enet_handle_t *handle, enet_event_t event, void *param)
+#if FSL_FEATURE_ENET_QUEUE > 1
+void ENETIF_Callback(ENET_Type *base, enet_handle_t *handle, uint32_t ringId, enet_event_t event, enet_frame_info_t *frameInfo, void *param)
+#else
+void ENETIF_Callback(ENET_Type *base, enet_handle_t *handle, enet_event_t event,enet_frame_info_t *frameInfo, void *param)
+#endif
 {
     switch (event)
     {
@@ -80,7 +84,7 @@ uint32_t ENETIF_GetSpeed(void)
     phy_speed_t speed;
     phy_duplex_t duplex;
     uint32_t count = 0;
-    speed = kPHY_Speed100M;
+    speed          = kPHY_Speed100M;
     while ((count < ENET_PHY_TIMEOUT) && (!link))
     {
         PHY_GetLinkStatus(BOARD_ENET_BASEADDR, BOARD_ENET0_PHY_ADDRESS, &link);
@@ -137,7 +141,7 @@ enet_err_t ENETIF_Output(pbuf_t *packetBuffer)
         return ENET_ERROR;
     }
     /* Send a frame out. */
-    if (kStatus_Success == ENET_SendFrame(BOARD_ENET_BASEADDR, &g_handle, packetBuffer->payload, packetBuffer->length))
+    if (kStatus_Success == ENET_SendFrame(BOARD_ENET_BASEADDR, &g_handle, packetBuffer->payload, packetBuffer->length, 0, false, NULL))
     {
         return ENET_OK;
     }
@@ -160,7 +164,7 @@ void ENETIF_Input(enet_handle_t *handle, void *param)
     do
     {
         /* Get the Frame size */
-        status = ENET_GetRxFrameSize(handle, &length);
+        status = ENET_GetRxFrameSize(handle, &length, 0);
 
         /* Call ENET_ReadFrame when there is a received frame. */
         if (length != 0)
@@ -171,11 +175,11 @@ void ENETIF_Input(enet_handle_t *handle, void *param)
             if (packetBuffer.payload == NULL)
             {
                 /* No packet buffer available, ignore this packet. */
-                ENET_ReadFrame(BOARD_ENET_BASEADDR, handle, NULL, length);
+                ENET_ReadFrame(BOARD_ENET_BASEADDR, handle, NULL, length, 0, NULL);
                 return;
             }
             packetBuffer.length = (uint16_t)length;
-            ENET_ReadFrame(BOARD_ENET_BASEADDR, handle, packetBuffer.payload, packetBuffer.length);
+            ENET_ReadFrame(BOARD_ENET_BASEADDR, handle, packetBuffer.payload, packetBuffer.length, 0, NULL);
 
             /* points to packet payload, which starts with an Ethernet header */
             ethhdr = (enet_header_t *)packetBuffer.payload;
@@ -199,9 +203,9 @@ void ENETIF_Input(enet_handle_t *handle, void *param)
             if (status != kStatus_Success)
             {
                 /* Get the error information of the received g_frame. */
-                ENET_GetRxErrBeforeReadFrame(handle, &eErrStatic);
+                ENET_GetRxErrBeforeReadFrame(handle, &eErrStatic, 0);
                 /* update the receive buffer. */
-                ENET_ReadFrame(BOARD_ENET_BASEADDR, handle, NULL, 0);
+                ENET_ReadFrame(BOARD_ENET_BASEADDR, handle, NULL, 0, 0, NULL);
             }
         }
     } while (kStatus_ENET_RxFrameEmpty != status);
@@ -231,7 +235,7 @@ enet_err_t ENETIF_Init(void)
     g_hwaddr[5] = configMAC_ADDR5;
 
     /* prepare the buffer configuration. */
-    enet_buffer_config_t buffCfg = {
+    enet_buffer_config_t buffCfg[] = {{
         ENET_RXBD_NUM,
         ENET_TXBD_NUM,
         SDK_SIZEALIGN(ENET_RXBUFF_SIZE, APP_ENET_BUFF_ALIGNMENT),
@@ -240,9 +244,18 @@ enet_err_t ENETIF_Init(void)
         &TxBuffDescrip[0],
         &RxDataBuff[0][0],
         &TxDataBuff[0][0],
-    };
+        true,
+        true,
+        NULL,
+    }};
 
     ENET_GetDefaultConfig(&config);
+#if FSL_FEATURE_ENET_QUEUE > 1
+    config.miiMode = kENET_RmiiMode;
+#else
+
+#endif
+
     PHY_Init(BOARD_ENET_BASEADDR, BOARD_ENET0_PHY_ADDRESS, BOARD_PHY_SYS_CLOCK);
 
     while ((count < ENET_PHY_TIMEOUT) && (!link))
@@ -254,7 +267,7 @@ enet_err_t ENETIF_Init(void)
             /* Get the actual PHY link speed. */
             PHY_GetLinkSpeedDuplex(BOARD_ENET_BASEADDR, BOARD_ENET0_PHY_ADDRESS, &speed, &duplex);
             /* Change the MII speed and duplex for actual link status. */
-            config.miiSpeed = (enet_mii_speed_t)speed;
+            config.miiSpeed  = (enet_mii_speed_t)speed;
             config.miiDuplex = (enet_mii_duplex_t)duplex;
             config.interrupt = kENET_RxFrameInterrupt | kENET_TxFrameInterrupt;
         }
@@ -266,7 +279,7 @@ enet_err_t ENETIF_Init(void)
         usb_echo("\r\nPHY Link down, please check the cable connection.\r\n");
     }
 
-    ENET_Init(BOARD_ENET_BASEADDR, &g_handle, &config, &buffCfg, g_hwaddr, BOARD_PHY_SYS_CLOCK);
+    ENET_Init(BOARD_ENET_BASEADDR, &g_handle, &config, &buffCfg[0], &g_hwaddr[0], BOARD_PHY_SYS_CLOCK);
     ENET_SetCallback(&g_handle, ENETIF_Callback, NULL);
 
     ENET_ActiveRead(BOARD_ENET_BASEADDR);

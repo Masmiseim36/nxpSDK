@@ -9,16 +9,20 @@
 #define __USB_AUDIO_H__ 1
 
 /*******************************************************************************
-* Definitions
-******************************************************************************/
+ * Definitions
+ ******************************************************************************/
 #define AUDIO_RECORDER_DATA_WHOLE_BUFFER_LENGTH (16 * 2)
-#define AUDIO_SPEAKER_DATA_WHOLE_BUFFER_LENGTH (16 * 2)
-#define AUDIO_BUFFER_UPPER_LIMIT(x) (((x)*5) / 8)
-#define AUDIO_BUFFER_LOWER_LIMIT(x) (((x)*3) / 8)
+#define AUDIO_SPEAKER_DATA_WHOLE_BUFFER_LENGTH  (16 * 2)
+#define AUDIO_BUFFER_UPPER_LIMIT(x)             (((x)*5) / 8)
+#define AUDIO_BUFFER_LOWER_LIMIT(x)             (((x)*3) / 8)
+#if defined(USB_DEVICE_CONFIG_AUDIO_CLASS_2_0) && (USB_DEVICE_CONFIG_AUDIO_CLASS_2_0 > 0U)
+#define AUDIO_CALCULATE_Ff_INTERVAL (256) /* suggest: 1024U, 512U, 256U */
+#else
 #define AUDIO_CALCULATE_Ff_INTERVAL (1024)
-#define TSAMFREQ2BYTES(f) (f & 0xFFU), ((f >> 8U) & 0xFFU), ((f >> 16U) & 0xFFU)
-#define TSAMFREQ2BYTESHS(f) (f & 0xFFU), ((f >> 8U) & 0xFFU), ((f >> 16U) & 0xFFU), ((f >> 24U) & 0xFFU)
-#define AUDIO_ADJUST_MIN_STEP (0x10)
+#endif
+#define TSAMFREQ2BYTES(f)                       (f & 0xFFU), ((f >> 8U) & 0xFFU), ((f >> 16U) & 0xFFU)
+#define TSAMFREQ2BYTESHS(f)                     (f & 0xFFU), ((f >> 8U) & 0xFFU), ((f >> 16U) & 0xFFU), ((f >> 24U) & 0xFFU)
+#define AUDIO_ADJUST_MIN_STEP                   (0x01)
 #if defined(USB_DEVICE_AUDIO_USE_SYNC_MODE) && (USB_DEVICE_AUDIO_USE_SYNC_MODE > 0U)
 /**********************************************************************
 Audio PLL contants
@@ -30,13 +34,13 @@ Audio PLL contants
       so AUDIO_PLL_FRACTIONAL_CHANGE_STEP = (24000000 * 100 (stands for counter interval) * 18) / (27000 * 26 * 15
 *4000) + 1
 **********************************************************************/
-#define AUDIO_PLL_USB1_SOF_INTERVAL_COUNT (614400)  /* The USB1_SOF_TOGGLE's frequency is 4kHz. */
+#define AUDIO_PLL_USB1_SOF_INTERVAL_COUNT  (614400) /* The USB1_SOF_TOGGLE's frequency is 4kHz. */
 #define AUDIO_PLL_USB1_SOF_INTERVAL_COUNT1 (491520) /* The USB1_SOF_TOGGLE's frequency is 4kHz. */
-#define AUDIO_PLL_FRACTIONAL_CHANGE_STEP (2)
+#define AUDIO_PLL_FRACTIONAL_CHANGE_STEP   (2)
 #endif
 
-#define MUTE_CODEC_TASK (1UL << 0U)
-#define UNMUTE_CODEC_TASK (1UL << 1U)
+#define MUTE_CODEC_TASK    (1UL << 0U)
+#define UNMUTE_CODEC_TASK  (1UL << 1U)
 #define VOLUME_CHANGE_TASK (1UL << 2U)
 
 typedef struct _usb_audio_composite_struct
@@ -70,6 +74,16 @@ typedef struct _usb_audio_composite_struct
     uint8_t minSamplingFrequency[3];
     uint8_t maxSamplingFrequency[3];
     uint8_t resSamplingFrequency[3];
+#if (USB_DEVICE_CONFIG_AUDIO_CLASS_2_0)
+    uint8_t curMute20;
+    uint8_t curClockValid;
+    uint8_t curVolume20[2];
+    uint32_t curRecorderSampleFrequency;
+    uint32_t curSpeakerSampleFrequency;
+    usb_device_control_range_layout3_struct_t freqRecorderControlRange;
+    usb_device_control_range_layout3_struct_t freqSpeakerControlRange;
+    usb_device_control_range_layout2_struct_t volumeControlRange;
+#endif
     uint8_t currentConfiguration;
     uint8_t currentInterfaceAlternateSetting[USB_AUDIO_COMPOSITE_INTERFACE_COUNT];
     uint8_t speed;

@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  *
@@ -22,11 +22,14 @@
 #include "enet_ethernetif.h"
 
 #include "board.h"
+#include "fsl_phy.h"
 
 #include "pin_mux.h"
 #include "clock_config.h"
 #include "fsl_gpio.h"
 #include "fsl_iomuxc.h"
+#include "fsl_phyksz8081.h"
+#include "fsl_enet_mdio.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -57,8 +60,14 @@
 /* Address of PHY interface. */
 #define EXAMPLE_PHY_ADDRESS BOARD_ENET0_PHY_ADDRESS
 
-/* System clock name. */
-#define EXAMPLE_CLOCK_NAME kCLOCK_CoreSysClk
+/* MDIO operations. */
+#define EXAMPLE_MDIO_OPS enet_ops
+
+/* PHY operations. */
+#define EXAMPLE_PHY_OPS phyksz8081_ops
+
+/* ENET clock frequency. */
+#define EXAMPLE_CLOCK_FREQ CLOCK_GetFreq(kCLOCK_IpgClk)
 
 #ifndef EXAMPLE_NETIF_INIT_FN
 /*! @brief Network interface initialization function. */
@@ -80,6 +89,8 @@
 /*******************************************************************************
  * Variables
  ******************************************************************************/
+static mdio_handle_t mdioHandle = {.ops = &EXAMPLE_MDIO_OPS};
+static phy_handle_t phyHandle   = {.phyAddr = EXAMPLE_PHY_ADDRESS, .mdioHandle = &mdioHandle, .ops = &EXAMPLE_PHY_OPS};
 
 /*******************************************************************************
  * Code
@@ -133,7 +144,7 @@ static void lwiperf_report(void *arg,
                            u16_t local_port,
                            const ip_addr_t *remote_addr,
                            u16_t remote_port,
-                           u32_t bytes_transferred,
+                           u64_t bytes_transferred,
                            u32_t ms_duration,
                            u32_t bandwidth_kbitpsec)
 {
@@ -148,10 +159,10 @@ static void lwiperf_report(void *arg,
             PRINTF(" Port %d \r\n", local_port);
             PRINTF(" Remote address : %u.%u.%u.%u ", ((u8_t *)remote_addr)[0], ((u8_t *)remote_addr)[1],
                    ((u8_t *)remote_addr)[2], ((u8_t *)remote_addr)[3]);
-            PRINTF(" Port %d \r\n", remote_port);
-            PRINTF(" Bytes Transferred %d \r\n", bytes_transferred);
-            PRINTF(" Duration (ms) %d \r\n", ms_duration);
-            PRINTF(" Bandwidth (kbitpsec) %d \r\n", bandwidth_kbitpsec);
+            PRINTF(" Port %u \r\n", remote_port);
+            PRINTF(" Bytes Transferred %llu \r\n", bytes_transferred);
+            PRINTF(" Duration (ms) %u \r\n", ms_duration);
+            PRINTF(" Bandwidth (kbitpsec) %u \r\n", bandwidth_kbitpsec);
         }
     }
     else
@@ -291,8 +302,7 @@ int main(void)
 #endif /* FSL_FEATURE_SOC_LPC_ENET_COUNT */
     ip4_addr_t netif_ipaddr, netif_netmask, netif_gw;
     ethernetif_config_t enet_config = {
-        .phyAddress = EXAMPLE_PHY_ADDRESS,
-        .clockName  = EXAMPLE_CLOCK_NAME,
+        .phyHandle  = &phyHandle,
         .macAddress = configMAC_ADDR,
 #if defined(FSL_FEATURE_SOC_LPC_ENET_COUNT) && (FSL_FEATURE_SOC_LPC_ENET_COUNT > 0)
         .non_dma_memory = non_dma_memory,
@@ -302,8 +312,8 @@ int main(void)
     gpio_pin_config_t gpio_config = {kGPIO_DigitalOutput, 0, kGPIO_NoIntmode};
 
     BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
     BOARD_InitModuleClock();
 
@@ -316,6 +326,8 @@ int main(void)
     GPIO_WritePinOutput(GPIO1, 9, 0);
     delay();
     GPIO_WritePinOutput(GPIO1, 9, 1);
+
+    mdioHandle.resource.csrClock_Hz = EXAMPLE_CLOCK_FREQ;
 
     time_init();
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP
+ * Copyright 2019-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -13,22 +13,22 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v6.0
+product: Pins v7.0
 processor: MIMXRT1011xxxxx
 package_id: MIMXRT1011DAE5A
 mcu_data: ksdk2_0
-processor_version: 0.0.4
+processor_version: 0.7.7
 board: MIMXRT1010-EVK
 pin_labels:
 - {pin_num: '3', pin_signal: GPIO_09, label: LPUART1_RXD, identifier: LPUART1_RXD}
 - {pin_num: '2', pin_signal: GPIO_10, label: LPUART1_XD, identifier: LPUART1_XD;LPUART1_TXD}
 - {pin_num: '11', pin_signal: GPIO_02, label: I2C1_SCL, identifier: I2C1_SCL}
 - {pin_num: '12', pin_signal: GPIO_01, label: I2C1_SDA, identifier: I2C1_SDA}
-- {pin_num: '4', pin_signal: GPIO_08, label: SAI1_MCLK, identifier: SAI1_MCLK}
+- {pin_num: '10', pin_signal: GPIO_03, label: SAI1_RXD0, identifier: SAI1_RXD0}
+- {pin_num: '9', pin_signal: GPIO_04, label: SAI1_TXD0, identifier: SAI1_TXD0}
 - {pin_num: '6', pin_signal: GPIO_06, label: SAI1_TX_BCLK, identifier: SAI1_TX_BCLK}
 - {pin_num: '5', pin_signal: GPIO_07, label: SAI1_TX_SYNC, identifier: SAI1_TX_SYNC}
-- {pin_num: '9', pin_signal: GPIO_04, label: SAI1_TXD0, identifier: SAI1_TXD0}
-- {pin_num: '10', pin_signal: GPIO_03, label: SAI1_RXD0, identifier: SAI1_RXD0}
+- {pin_num: '4', pin_signal: GPIO_08, label: SAI1_MCLK, identifier: SAI1_MCLK}
 power_domains: {NVCC_GPIO: '3.3'}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
@@ -70,6 +70,7 @@ BOARD_InitPins:
     pull_keeper_select: Keeper, pull_keeper_enable: Enable, pull_up_down_config: Pull_Up_22K_Ohm, hysteresis_enable: Disable}
   - {pin_num: '12', peripheral: LPI2C1, signal: SDA, pin_signal: GPIO_01, slew_rate: Slow, software_input_on: Enable, open_drain: Enable, speed: MHZ_150, drive_strength: R0_4,
     pull_keeper_select: Keeper, pull_keeper_enable: Enable, pull_up_down_config: Pull_Up_22K_Ohm, hysteresis_enable: Disable}
+  - {pin_num: '48', peripheral: ARM, signal: arm_trace_swo, pin_signal: GPIO_AD_09, slew_rate: Fast}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 
@@ -108,6 +109,9 @@ void BOARD_InitPins(void) {
       0U);                                    /* Software Input On Field: Input Path is determined by functionality */
   IOMUXC_SetPinMux(
       IOMUXC_GPIO_10_LPUART1_TXD,             /* GPIO_10 is configured as LPUART1_TXD */
+      0U);                                    /* Software Input On Field: Input Path is determined by functionality */
+  IOMUXC_SetPinMux(
+      IOMUXC_GPIO_AD_09_ARM_TRACE_SWO,        /* GPIO_AD_09 is configured as ARM_TRACE_SWO */
       0U);                                    /* Software Input On Field: Input Path is determined by functionality */
   IOMUXC_SetPinConfig(
       IOMUXC_GPIO_01_LPI2C1_SDA,              /* GPIO_01 PAD functional properties : */
@@ -198,6 +202,16 @@ void BOARD_InitPins(void) {
                                                  Pull / Keep Enable Field: Pull/Keeper Enabled
                                                  Pull / Keep Select Field: Keeper
                                                  Pull Up / Down Config. Field: 100K Ohm Pull Down
+                                                 Hyst. Enable Field: Hysteresis Disabled */
+  IOMUXC_SetPinConfig(
+      IOMUXC_GPIO_AD_09_ARM_TRACE_SWO,        /* GPIO_AD_09 PAD functional properties : */
+      0x90B1U);                               /* Slew Rate Field: Fast Slew Rate
+                                                 Drive Strength Field: R0/6
+                                                 Speed Field: fast(150MHz)
+                                                 Open Drain Enable Field: Open Drain Disabled
+                                                 Pull / Keep Enable Field: Pull/Keeper Enabled
+                                                 Pull / Keep Select Field: Keeper
+                                                 Pull Up / Down Config. Field: 100K Ohm Pull Up
                                                  Hyst. Enable Field: Hysteresis Disabled */
 }
 

@@ -15,8 +15,8 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_CAN CAN1
-#define EXAMPLE_FLEXCAN_IRQn CAN1_IRQn
+#define EXAMPLE_CAN                CAN1
+#define EXAMPLE_FLEXCAN_IRQn       CAN1_IRQn
 #define EXAMPLE_FLEXCAN_IRQHandler CAN1_IRQHandler
 
 /* Considering that the first valid MB must be used as Reserved TX MB for ERR005829,
@@ -37,9 +37,9 @@
    baud rate * 10) is an integer. Remember users must ensure the calculated
    prescaler an integer thus to get precise baud rate. */
 #define SET_CAN_QUANTUM 0
-#define PSEG1 3
-#define PSEG2 2
-#define PROPSEG 1
+#define PSEG1           3
+#define PSEG2           2
+#define PROPSEG         1
 
 /* Select 60M clock divided by USB1 PLL (480 MHz) as master flexcan clock source */
 #define FLEXCAN_CLOCK_SOURCE_SELECT (0U)
@@ -85,11 +85,7 @@ void EXAMPLE_FLEXCAN_IRQHandler(void)
 #endif
         rxComplete = true;
     }
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 /*!

@@ -16,9 +16,10 @@
 #include <xtensa/xos.h>
 #include "xaf-api.h"
 
+#include "fsl_gpio.h"
+
 #include "board_hifi4.h"
 #include "fsl_common.h"
-#include "fsl_gpio.h"
 #include "fsl_inputmux.h"
 #include "fsl_dma.h"
 #include "pin_mux.h"
@@ -27,16 +28,16 @@
  * Definitions
  ******************************************************************************/
 #define BOARD_XTAL_SYS_CLK_HZ 24000000U /*!< Board xtal_sys frequency in Hz */
-#define BOARD_XTAL32K_CLK_HZ 32768U     /*!< Board xtal32K frequency in Hz */
+#define BOARD_XTAL32K_CLK_HZ  32768U    /*!< Board xtal32K frequency in Hz */
 #define INIT_DEBUG_CONSOLE 0
 
-#define APP_RPMSG_READY_EVENT_DATA (1)
+#define APP_RPMSG_READY_EVENT_DATA    (1)
 #define APP_RPMSG_EP_READY_EVENT_DATA (2)
 
 #define NOTIF_EVT_RPMSG_RECEIVED_DATA (1 << 0)
-#define NOTIF_EVT (NOTIF_EVT_RPMSG_RECEIVED_DATA)
+#define NOTIF_EVT                     (NOTIF_EVT_RPMSG_RECEIVED_DATA)
 #define DSP_THREAD_STACK_SIZE (8 * 1024)
-#define DSP_THREAD_PRIORITY (XOS_MAX_PRIORITY - 3)
+#define DSP_THREAD_PRIORITY   (XOS_MAX_PRIORITY - 3)
 
 #define AUDIO_BUFFER_SIZE (32 * 1024)
 
@@ -45,11 +46,12 @@
  ******************************************************************************/
 /* SRTM prototypes */
 int srtm_decoder(dsp_handle_t *dsp, unsigned int *pCmdParams, unsigned int dec_name);
-int srtm_opus_enc(dsp_handle_t *dsp, unsigned int *pCmdParams);
+int srtm_encoder(dsp_handle_t *dsp, unsigned int *pCmdParams, unsigned int enc_name);
 int srtm_src(dsp_handle_t *dsp, unsigned int *pCmdParams);
 int srtm_pcm_gain(dsp_handle_t *dsp, unsigned int *pCmdParams);
 int srtm_file_dec_create(dsp_handle_t *dsp, srtm_audio_component_t type);
 int srtm_capturer_gain_renderer_init(unsigned int *pCmdParams, bool i2s);
+int client_proxy_filter(dsp_handle_t *dsp, int filterOn);
 
 /*******************************************************************************
  * Variables
@@ -57,7 +59,7 @@ int srtm_capturer_gain_renderer_init(unsigned int *pCmdParams, bool i2s);
 extern int NonCacheable_start, NonCacheable_end;
 extern int NonCacheable_init_start, NonCacheable_init_end;
 
-static dsp_handle_t dsp;
+dsp_handle_t dsp;
 static uint8_t dsp_thread_stack[DSP_THREAD_STACK_SIZE];
 
 int readBufferSize, writeBufferSize;
@@ -103,6 +105,7 @@ static void DSP_XAF_Init(dsp_handle_t *dsp)
     uint8_t *version[3];
 
     xos_mutex_create(&dsp->audioMutex, XOS_MUTEX_WAIT_PRIORITY, 0);
+    xos_mutex_create(&dsp->rpmsgMutex, XOS_MUTEX_WAIT_PRIORITY, 0);
     dsp->audioBuffer = ringbuf_create(AUDIO_BUFFER_SIZE);
     if (!dsp->audioBuffer)
     {
@@ -159,6 +162,10 @@ static int handleMSG_GENERAL(dsp_handle_t *dsp, srtm_message *msg)
             msg->param[6] = ((1) << 16 | (12));
             // 7 OPUS Codec version high 16 bits major, lower 16 bits minor
             msg->param[7] = ((1) << 16 | (8));
+            // 8 SBC Decoder version high 16 bits major, lower 16 bits minor
+            msg->param[8] = ((1) << 16 | (4));
+            // 9 SBC Encoder version high 16 bits major, lower 16 bits minor
+            msg->param[9] = ((1) << 16 | (5));
             break;
 
         /* Unknown message. */
@@ -229,7 +236,45 @@ static int handleMSG_AUDIO(dsp_handle_t *dsp, srtm_message *msg)
                 msg->error     = SRTM_Status_InvalidParameter;
                 break;
             }
-            msg->error = srtm_opus_enc(dsp, &msg->param[0]);
+            msg->error = srtm_encoder(dsp, &msg->param[0], SRTM_Command_OPUS_ENC);
+            break;
+
+        case SRTM_Command_SBC_DEC:
+            /* Param 0 SBC input buffer address*/
+            /* Param 1 SBC input buffer size*/
+            /* Param 2 PCM output buffer address*/
+            /* Param 3 PCM output buffer size*/
+            /* Param 4 decode output location */
+            /* Param 5 return parameter, actual read size */
+            /* Param 6 return parameter, actual write size */
+            DSP_PRINTF("SBC input buffer addr 0x%X, buffer size %d, output buffer addr 0x%X, output buffer size %d\n",
+                       msg->param[0], msg->param[1], msg->param[2], msg->param[3]);
+            if ((msg->param[0] == 0) || (msg->param[1] == 0) || (msg->param[2] == 0) || (msg->param[3] == 0))
+            {
+                msg->head.type = SRTM_MessageTypeNotification;
+                msg->error     = SRTM_Status_InvalidParameter;
+                break;
+            }
+            msg->error = srtm_decoder(dsp, &msg->param[0], SRTM_Command_SBC_DEC);
+            break;
+
+        case SRTM_Command_SBC_ENC:
+            /* Param 0 PCM input buffer address*/
+            /* Param 1 PCM input buffer size*/
+            /* Param 2 SBC output buffer address*/
+            /* Param 3 SBC output buffer size*/
+            /* Param 4 return parameter, actual read size */
+            /* Param 5 return parameter, actual write size */
+            DSP_PRINTF(
+                "PCM input buffer addr 0x%X, buffer size %d, SBC output buffer addr 0x%X, output buffer size %d\n",
+                msg->param[0], msg->param[1], msg->param[2], msg->param[3]);
+            if ((msg->param[0] == 0) || (msg->param[1] == 0) || (msg->param[2] == 0) || (msg->param[3] == 0))
+            {
+                msg->head.type = SRTM_MessageTypeNotification;
+                msg->error     = SRTM_Status_InvalidParameter;
+                break;
+            }
+            msg->error = srtm_encoder(dsp, &msg->param[0], SRTM_Command_SBC_ENC);
             break;
 
         case SRTM_Command_AAC:
@@ -404,6 +449,23 @@ static int handleMSG_AUDIO(dsp_handle_t *dsp, srtm_message *msg)
             dsp->ipc_waiting = false;
             break;
 
+        case SRTM_Command_FileStop:
+            /* File must be already playing */
+            if (!dsp->file_playing)
+            {
+                msg->error = SRTM_Status_InvalidState;
+            }
+            else
+            {
+                DSP_PRINTF("File playback stop\r\n");
+                xos_event_set(&dsp->pipeline_event, DSP_EVENT_STOP);
+            }
+            break;
+
+        case SRTM_Command_FilterCfg:
+            msg->error = client_proxy_filter(dsp, msg->param[0]);
+            break;
+
         /* Unknown message. */
         default:
             msg->head.type = SRTM_MessageTypeNotification;
@@ -445,7 +507,9 @@ static int DSP_MSG_Process(dsp_handle_t *dsp, srtm_message *msg)
         msg->head.type = SRTM_MessageTypeResponse;
 
         /* Send response */
+        xos_mutex_lock(&dsp->rpmsgMutex);
         rpmsg_lite_send(dsp->rpmsg, dsp->ept, MCU_EPT_ADDR, (char *)msg, sizeof(srtm_message), RL_DONT_BLOCK);
+        xos_mutex_unlock(&dsp->rpmsgMutex);
     }
 
     return 0;
@@ -511,7 +575,7 @@ int main(void)
                                0);
 
     XOS_Init();
-    BOARD_InitPins();
+    BOARD_InitBootPins();
 #if INIT_DEBUG_CONSOLE || APP_DSP_ONLY
     BOARD_InitDebugConsole();
 #endif

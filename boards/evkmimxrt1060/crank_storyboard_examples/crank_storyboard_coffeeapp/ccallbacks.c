@@ -1,19 +1,17 @@
 #include <stdlib.h>
+#include <string.h>
+#include "ccallbacks.h"
+#if defined(GRE_FEATURE_VFS_RESOURCES)
 #include <gre/sdk/sbresource_vfs.h>
-#include <gre/gre.h>
-#include <ccallbacks.h>
+#endif
 
 void setDynamicValue(gr_application_t *app, char *keyName, int value){
-	int *data = NULL;
-	char *format = NULL;
+	gr_data_union_t data;
 
- 
-	data = calloc(1, sizeof(int)); 
- 	if (gr_application_get_data(app, keyName, (void **) &data, &format) == -1) {
-		return;
-	}
-    	*data = value;
-	gr_application_set_data(app, keyName, format, (void *) data);
+	memset(&data, 0, sizeof(data));
+	data.i32 = value;
+
+	gr_application_set_data(app, keyName, GR_DATA_FORMAT_4s1, &data);
 }
 
 void cbResetSizes(gr_action_context_t *action_context) {
@@ -215,4 +213,8 @@ void cbResetBrewing(gr_action_context_t *action_context) {
     value = 83; 
     setDynamicValue(app, "brewing_layer.cup_fill_control.y", value);
     setDynamicValue(app, "brewing_layer.cup_fill_control.y1", value);
+}
+DLLExport sb_ccallback_t *
+sb_get_ccallback_list() {
+    return clist;
 }

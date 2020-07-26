@@ -10,8 +10,8 @@
 #define _USB_MSC_UFI_H_ 1
 
 /*******************************************************************************
-* Definitions
-******************************************************************************/
+ * Definitions
+ ******************************************************************************/
 /*Sense Key of REQUEST SENSE command, refer to ufi spec chapter 5*/
 /*! @brief Indicates that there is no specific sense key information to be reported*/
 #define USB_DEVICE_MSC_UFI_NO_SENSE 0x00U

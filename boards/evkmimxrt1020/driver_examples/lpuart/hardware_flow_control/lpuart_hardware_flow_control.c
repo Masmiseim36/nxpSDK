@@ -14,10 +14,10 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_LPUART LPUART2
+#define DEMO_LPUART          LPUART2
 #define DEMO_LPUART_CLK_FREQ BOARD_DebugConsoleSrcFreq()
-#define DELAY_TIME 100000U
-#define TRANSFER_SIZE 256U        /*! Transfer dataSize */
+#define DELAY_TIME           100000U
+#define TRANSFER_SIZE     256U    /*! Transfer dataSize */
 #define TRANSFER_BAUDRATE 115200U /*! Transfer baudrate - 115200 */
 
 /*******************************************************************************

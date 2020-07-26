@@ -24,25 +24,25 @@
 *
 * @return  None
 */
-void WatchdogEnable(RTWDOG_Type *WDOGx, uint32_t timeout)   
+void WatchdogEnable(void)   
 {   
   uint32_t prescaler = 0;
   uint16_t window = 0;
 
   __asm("cpsid i");
     
-    RTWDOG->CNT = RTWDOG_UPDATE_KEY; /* Unlock sequence */ 
-    RTWDOG->TOVAL = (uint16_t)timeout; /* Set timeout */
+    USED_WDOG->CNT = RTWDOG_UPDATE_KEY; /* Unlock sequence */ 
+    USED_WDOG->TOVAL = (uint16_t)WATCHDOG_TIMEOUT_VALUE; /* Set timeout */
     
     /* Enable rtwdog, LPO clock, interrupt disabled, update enabled, 32b refresh, window mode, prescaler 255 enabled/disabled */
-    RTWDOG->CS = RTWDOG_CS_EN_MASK | RTWDOG_CS_CLK(1) | RTWDOG_CS_INT(0) | 
+    USED_WDOG->CS = RTWDOG_CS_EN_MASK | RTWDOG_CS_CLK(1) | RTWDOG_CS_INT(0) | 
                  RTWDOG_CS_UPDATE(1) | RTWDOG_CS_CMD32EN_MASK |
                  (window == 0 ? RTWDOG_CS_WIN(0) : RTWDOG_CS_WIN(1)) |
                  (prescaler == 0 ? RTWDOG_CS_PRES(0) : RTWDOG_CS_PRES(1));
                  
     if (window > 0)
     {
-        RTWDOG->WIN = (uint16_t)window;
+        USED_WDOG->WIN = (uint16_t)window;
     }
 
     __asm("cpsie i");
@@ -55,14 +55,14 @@ void WatchdogEnable(RTWDOG_Type *WDOGx, uint32_t timeout)
  *
  * @return  None
  */
-void WatchdogDisable(RTWDOG_Type *WDOGx)
+void WatchdogDisable(void)
 {  
     __asm("cpsid i");
     
-    WDOGx->CNT = RTWDOG_UPDATE_KEY; /* Unlock sequence */    
-    WDOGx->TOVAL = (uint16_t)0xFFFF; /* Write any nonzero value */
+    USED_WDOG->CNT = RTWDOG_UPDATE_KEY; /* Unlock sequence */    
+    USED_WDOG->TOVAL = (uint16_t)0xFFFF; /* Write any nonzero value */
     /* Clear the EN bit to disable watchdog */
-    WDOGx->CS = (uint32_t) ((WDOGx->CS) & ~RTWDOG_CS_EN_MASK);
+    USED_WDOG->CS = (uint32_t) ((USED_WDOG->CS) & ~RTWDOG_CS_EN_MASK);
     
     __asm("cpsie i");
 }   

@@ -18,9 +18,9 @@
  ******************************************************************************/
 #define DEMO_POWERQUAD POWERQUAD
 #define MATH_EXAMPLE_LEN 32
-#define MATH_PI 3.1415926535898
-#define FLOAT_2_Q31(x) ((int32_t)((x)*2147483648.0f))
-#define FLOAT_2_Q15(x) (int16_t) __SSAT(((int32_t)((x)*32768.0f)), 16)
+#define MATH_PI          3.1415926535898
+#define FLOAT_2_Q31(x)   ((int32_t)((x)*2147483648.0f))
+#define FLOAT_2_Q15(x)   (int16_t) __SSAT(((int32_t)((x)*32768.0f)), 16)
 #define EXAMPLE_ASSERT_TRUE(x)            \
     if (!(x))                             \
     {                                     \

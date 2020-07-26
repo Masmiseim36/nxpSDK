@@ -19,11 +19,11 @@
  * Definitions
  ******************************************************************************/
 /* Master related */
-#define DRIVER_MASTER_SPI Driver_SPI1
-#define EXAMPLE_LPSPI_MASTER_IRQN (LPSPI1_IRQn)
-#define EXAMPLE_LPSPI_DEALY_COUNT 0xfffffU
+#define DRIVER_MASTER_SPI                     Driver_SPI1
+#define EXAMPLE_LPSPI_MASTER_IRQN             (LPSPI1_IRQn)
+#define EXAMPLE_LPSPI_DEALY_COUNT             0xfffffU
 #define EXAMPLE_LPSPI_MASTER_DMA_MUX_BASEADDR DMAMUX
-#define EXAMPLE_LPSPI_MASTER_DMA_BASEADDR DMA0
+#define EXAMPLE_LPSPI_MASTER_DMA_BASEADDR     DMA0
 
 /* Select USB1 PLL PFD0 (720 MHz) as lpspi clock source */
 #define EXAMPLE_LPSPI_CLOCK_SOURCE_SELECT (1U)
@@ -31,7 +31,7 @@
 #define EXAMPLE_LPSPI_CLOCK_SOURCE_DIVIDER (7U)
 
 #define EXAMPLE_LPSPI_CLOCK_FREQ (CLOCK_GetFreq(kCLOCK_Usb1PllPfd0Clk) / (EXAMPLE_LPSPI_CLOCK_SOURCE_DIVIDER + 1U))
-#define TRANSFER_SIZE 64U         /* Transfer dataSize */
+#define TRANSFER_SIZE     64U     /* Transfer dataSize */
 #define TRANSFER_BAUDRATE 500000U /* Transfer baudrate - 500k */
 
 /*******************************************************************************

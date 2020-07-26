@@ -220,11 +220,10 @@
         <debug>1</debug>
         <option>
           <name>CCDefines</name>
-          <state>DEMO_CODE_START_NS=0x000C0000</state>
+          <state>DEMO_CODE_START_NS=786432</state>
           <state>DEBUG</state>
           <state>CPU_MIMXRT685SFVKB_cm33</state>
           <state>BOOT_HEADER_ENABLE=1</state>
-          <state>ARM_MATH_CM33</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
@@ -355,8 +354,8 @@
           <state>$PROJ_DIR$/../../../..</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../devices</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/portable/IAR/ARM_CM33/secure</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/portable/IAR/ARM_CM33/non_secure</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM33/secure</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM33/non_secure</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str</state>
@@ -1261,12 +1260,11 @@
         <debug>1</debug>
         <option>
           <name>CCDefines</name>
-          <state>DEMO_CODE_START_NS=0x08100000</state>
+          <state>DEMO_CODE_START_NS=135266304</state>
           <state>DEBUG</state>
           <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>CPU_MIMXRT685SFVKB_cm33</state>
-          <state>ARM_MATH_CM33</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
@@ -1397,8 +1395,8 @@
           <state>$PROJ_DIR$/../../../..</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../devices</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/portable/IAR/ARM_CM33/secure</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/portable/IAR/ARM_CM33/non_secure</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM33/secure</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM33/non_secure</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str</state>
@@ -2303,11 +2301,10 @@
         <debug>0</debug>
         <option>
           <name>CCDefines</name>
-          <state>DEMO_CODE_START_NS=0x000C0000</state>
+          <state>DEMO_CODE_START_NS=786432</state>
           <state>NDEBUG</state>
           <state>CPU_MIMXRT685SFVKB_cm33</state>
           <state>BOOT_HEADER_ENABLE=1</state>
-          <state>ARM_MATH_CM33</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
@@ -2438,8 +2435,8 @@
           <state>$PROJ_DIR$/../../../..</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../devices</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/portable/IAR/ARM_CM33/secure</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/portable/IAR/ARM_CM33/non_secure</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM33/secure</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM33/non_secure</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str</state>
@@ -3344,12 +3341,11 @@
         <debug>0</debug>
         <option>
           <name>CCDefines</name>
-          <state>DEMO_CODE_START_NS=0x08100000</state>
+          <state>DEMO_CODE_START_NS=135266304</state>
           <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
           <state>CPU_MIMXRT685SFVKB_cm33</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>NDEBUG</state>
-          <state>ARM_MATH_CM33</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
@@ -3480,8 +3476,8 @@
           <state>$PROJ_DIR$/../../../..</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../devices</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/portable/IAR/ARM_CM33/secure</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/portable/IAR/ARM_CM33/non_secure</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM33/secure</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM33/non_secure</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str</state>
@@ -4175,7 +4171,7 @@
       <name>$PROJ_DIR$/../main_s_asm.s</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../freertos_mpu_ns/FreeRTOSConfig.h</name>
+      <name>$PROJ_DIR$/../FreeRTOSConfig.h</name>
     </file>
   </group>
   <group>
@@ -4281,7 +4277,7 @@
     </file>
   </group>
   <group>
-    <name>amazon-freertos</name>
+    <name>freertos</name>
     <group>
       <name>freertos_kernel</name>
       <group>
@@ -4293,31 +4289,31 @@
             <group>
               <name>secure</name>
               <file>
-                <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/portable/IAR/ARM_CM33/secure/secure_context.c</name>
+                <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM33/secure/secure_context.c</name>
               </file>
               <file>
-                <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/portable/IAR/ARM_CM33/secure/secure_context.h</name>
+                <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM33/secure/secure_context.h</name>
               </file>
               <file>
-                <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/portable/IAR/ARM_CM33/secure/secure_context_port.c</name>
+                <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM33/secure/secure_context_port.c</name>
               </file>
               <file>
-                <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/portable/IAR/ARM_CM33/secure/secure_context_port_asm.s</name>
+                <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM33/secure/secure_context_port_asm.s</name>
               </file>
               <file>
-                <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/portable/IAR/ARM_CM33/secure/secure_heap.c</name>
+                <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM33/secure/secure_heap.c</name>
               </file>
               <file>
-                <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/portable/IAR/ARM_CM33/secure/secure_heap.h</name>
+                <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM33/secure/secure_heap.h</name>
               </file>
               <file>
-                <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/portable/IAR/ARM_CM33/secure/secure_init.c</name>
+                <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM33/secure/secure_init.c</name>
               </file>
               <file>
-                <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/portable/IAR/ARM_CM33/secure/secure_init.h</name>
+                <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM33/secure/secure_init.h</name>
               </file>
               <file>
-                <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/portable/IAR/ARM_CM33/secure/secure_port_macros.h</name>
+                <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM33/secure/secure_port_macros.h</name>
               </file>
             </group>
           </group>
@@ -4424,6 +4420,9 @@
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_cm33.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/mpu_armv8.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/tz_context.h</name>
     </file>
     <file>
@@ -4446,21 +4445,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_version.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_armv81mml.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_armv8mbl.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_armv8mml.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/mpu_armv7.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/mpu_armv8.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/arm_common_tables.h</name>

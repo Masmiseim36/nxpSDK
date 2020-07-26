@@ -18,16 +18,16 @@
 * project directory and edit the copy only. Please avoid any modifications of
 * the original template file!
 *
-* Version  : 9.20
+* Version  : 9.30
 * Profile  : WebGL
 * Platform : Tara.WebGL.RGBA8888
 *
 *******************************************************************************/
 
 var EmWiApp;if(!EmWiApp)throw new Error("The application file '_project.js' isn't yet loaded!"
-);if(EmWiApp.tn)throw new Error("The file file 'SimulationIcon.js' included twice!"
+);if(EmWiApp.ur)throw new Error("The file file 'SimulationIcon.js' included twice!"
 );
-EmWiApp.tn=[61,11,0,16,0x0020,2,"\
+EmWiApp.ur=[61,11,0,16,0x0020,2,"\
 \u0020\u8000\u8000\u0000\u0000\u801B\u0000\u0000\uF25A\u8000\u7FC4\u003C\u0045\u803B\u0000\u0000\
 \u0000\u0000\u0000\u0000\u0000\u0000\u0000\u142E"
 ,"\

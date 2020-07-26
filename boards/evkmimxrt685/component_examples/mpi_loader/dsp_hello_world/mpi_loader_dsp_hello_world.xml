@@ -35,6 +35,8 @@
     <definition extID="mdk"/>
     <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
+    <definition extID="com.nxp.mcuxpresso.core.debug.support.segger.debug"/>
+    <definition extID="com.nxp.mcuxpresso.core.debug.support.segger.release"/>
   </externalDefinitions>
   <example id="evkmimxrt685_mpi_loader_dsp_hello_world" name="mpi_loader_dsp_hello_world" category="component_examples" dependency="platform.drivers.dsp.MIMXRT685S platform.drivers.inputmux.MIMXRT685S driver.pca9420.MIMXRT685S platform.drivers.flexcomm_i2c.MIMXRT685S driver.mpi_loader.MIMXRT685S platform.drivers.clock.MIMXRT685S platform.drivers.common.MIMXRT685S device.MIMXRT685S_CMSIS.MIMXRT685S utility.debug_console.MIMXRT685S platform.utilities.assert.MIMXRT685S component.usart_adapter.MIMXRT685S platform.drivers.power.MIMXRT685S platform.drivers.flexspi.MIMXRT685S platform.drivers.cache_cache64.MIMXRT685S component.serial_manager.MIMXRT685S component.lists.MIMXRT685S component.serial_manager_uart.MIMXRT685S platform.drivers.flexcomm_usart.MIMXRT685S device.MIMXRT685S_startup.MIMXRT685S platform.drivers.flexcomm.MIMXRT685S platform.drivers.lpc_iopctl.MIMXRT685S platform.drivers.lpc_gpio.MIMXRT685S platform.drivers.reset.MIMXRT685S platform.Include_core_cm33.MIMXRT685S platform.Include_common.MIMXRT685S platform.Include_dsp.MIMXRT685S platform.drivers.inputmux_connections.MIMXRT685S platform.utilities.misc_utilities.MIMXRT685S" device_core="cm33_MIMXRT685S">
     <projects>
@@ -59,7 +61,7 @@
         </option>
         <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
           <value>CPU_MIMXRT685SFVKB_cm33</value>
-          <value>ARM_MATH_CM33</value>
+          <value>BOOT_HEADER_ENABLE=1</value>
           <value>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</value>
           <value>SDK_I2C_BASED_COMPONENT_USED=1</value>
           <value>SERIAL_PORT_TYPE_UART=1</value>
@@ -78,17 +80,37 @@
         </option>
       </toolchainSetting>
     </toolchainSettings>
-    <source path="boards/evkmimxrt685/component_examples/mpi_loader/dsp_hello_world/armgcc" target_path="src" type="linker" toolchain="armgcc">
+    <debug_configurations>
+      <debug_configuration id_refs="com.nxp.mcuxpresso.core.debug.support.segger.debug">
+        <scripts>
+          <script type="segger_script">
+            <source path="boards/evkmimxrt685/component_examples/mpi_loader/dsp_hello_world" type="script" target_path="script">
+              <files mask="evkmimxrt685.JLinkScript"/>
+            </source>
+          </script>
+        </scripts>
+      </debug_configuration>
+      <debug_configuration id_refs="com.nxp.mcuxpresso.core.debug.support.segger.release">
+        <scripts>
+          <script type="segger_script">
+            <source path="boards/evkmimxrt685/component_examples/mpi_loader/dsp_hello_world" type="script" target_path="script">
+              <files mask="evkmimxrt685.JLinkScript"/>
+            </source>
+          </script>
+        </scripts>
+      </debug_configuration>
+    </debug_configurations>
+    <source path="boards/evkmimxrt685/component_examples/mpi_loader/dsp_hello_world/armgcc" target_path="evkmimxrt685/component_examples/mpi_loader/dsp_hello_world/armgcc" type="linker" toolchain="armgcc">
       <files mask="MIMXRT685Sxxxx_cm33_ram.ld"/>
     </source>
-    <source path="boards/evkmimxrt685/component_examples/mpi_loader/dsp_hello_world/iar" target_path="src" type="linker" toolchain="iar">
+    <source path="boards/evkmimxrt685/component_examples/mpi_loader/dsp_hello_world/iar" target_path="evkmimxrt685/component_examples/mpi_loader/dsp_hello_world/iar" type="linker" toolchain="iar">
       <files mask="MIMXRT685Sxxxx_cm33_ram.icf"/>
     </source>
-    <source path="boards/evkmimxrt685/component_examples/mpi_loader/dsp_hello_world/mdk" target_path="src" type="configuration" toolchain="mdk">
-      <files mask="evkmimxrt685_ram.ini"/>
-    </source>
-    <source path="boards/evkmimxrt685/component_examples/mpi_loader/dsp_hello_world/mdk" target_path="src" type="linker" toolchain="mdk">
+    <source path="boards/evkmimxrt685/component_examples/mpi_loader/dsp_hello_world/mdk" target_path="evkmimxrt685/component_examples/mpi_loader/dsp_hello_world/mdk" type="linker" toolchain="mdk">
       <files mask="MIMXRT685Sxxxx_cm33_ram.scf"/>
+    </source>
+    <source path="boards/evkmimxrt685/component_examples/mpi_loader/dsp_hello_world/mdk" target_path="evkmimxrt685" type="configuration" toolchain="mdk">
+      <files mask="evkmimxrt685_flash.ini"/>
     </source>
     <source path="boards/evkmimxrt685/component_examples/mpi_loader/dsp_hello_world" target_path="board" type="c_include">
       <files mask="board.h"/>

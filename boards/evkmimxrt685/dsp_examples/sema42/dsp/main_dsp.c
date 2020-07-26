@@ -17,10 +17,10 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define APP_MU MUB
-#define APP_SEMA42 SEMA42
-#define LED_OFF LED_RED_OFF
-#define APP_BOARD_HAS_LED 1
+#define APP_MU               MUB
+#define APP_SEMA42           SEMA42
+#define LED_OFF              LED_RED_OFF
+#define APP_BOARD_HAS_LED    1
 #define USE_STATIC_DOMAIN_ID 0
 /* Flag indicates Core Boot Up*/
 #define BOOT_FLAG 0x01U
@@ -75,7 +75,7 @@ int main(void)
 {
     uint8_t domainId;
 
-    BOARD_InitPins();
+    BOARD_InitBootPins();
 
     /* MUB init */
     MU_Init(APP_MU);

@@ -65,12 +65,8 @@
 *
 *******************************************************************************/
 
-#include "tlsf.h"
-
-#include "ewrte.h"
-#include "ewgfx.h"
-#include "ewextgfx.h"
-#include "ewgfxdefs.h"
+#include "ewconfig.h"
+#include "ewmain.h"
 #include "Core.h"
 #include "Graphics.h"
 
@@ -81,38 +77,20 @@
 
 #include "DeviceDriver.h"
 
-/* set SDRAM_BASE_ADDR to 0x81000000 instead of 0x80000000 to reserve space for
-   program execution in SDRAM (MIMXRT1052xxx6A_sdram_txt.icf) */
-#define SDRAM_BASE_ADDR 0x81000000
-#define SDRAM_SIZE_BYTES (16 * 1024 * 1024)
 
-/* define physical dimension of the LCD framebuffer */
-#define FRAME_BUFFER_WIDTH    480
-#define FRAME_BUFFER_HEIGHT   272
-
-/* calculated addresses for framebuffer(s) and memory manager */
-#define FRAME_BUFFER_ADDR     (void*)(SDRAM_BASE_ADDR)
-#define FRAME_BUFFER_SIZE     FRAME_BUFFER_WIDTH * FRAME_BUFFER_HEIGHT * FRAME_BUFFER_DEPTH
-
-#ifdef EW_USE_DOUBLE_BUFFER
-  #define DOUBLE_BUFFER_ADDR  (void*)((unsigned char*)FRAME_BUFFER_ADDR + FRAME_BUFFER_SIZE)
-  #define DOUBLE_BUFFER_SIZE  FRAME_BUFFER_SIZE
-#else
-  #define DOUBLE_BUFFER_ADDR  (void*)(0)
-  #define DOUBLE_BUFFER_SIZE  0
-  #define NUMBER_OF_FIELDS    3
+/* memory pool */
+#ifdef MEMORY_POOL_SECTION
+  MEMORY_POOL_SECTION static unsigned long
+    EwMemory[ MEMORY_POOL_SIZE / sizeof( unsigned long )];
+  #define MEMORY_POOL_ADDR EwMemory
 #endif
 
-#define MEMORY_POOL_ADDR      (void*)((unsigned char*)FRAME_BUFFER_ADDR + FRAME_BUFFER_SIZE + DOUBLE_BUFFER_SIZE)
-#define MEMORY_POOL_SIZE      SDRAM_SIZE_BYTES - FRAME_BUFFER_SIZE - DOUBLE_BUFFER_SIZE
-
-
-/* During start of application, the RTC is set to default time,
-   if the current RTC time is before minimum time. */
-#define RTC_MINIMUM_TIME 978307200      /* 01/01/2001 */
-#define RTC_DEFAULT_TIME 1551441600     /* 01/03/2019 */
-
-#undef USE_TERMINAL_INPUT
+/* optional second memory pool */
+#ifdef EXTRA_POOL_SECTION
+  EXTRA_POOL_SECTION static unsigned long
+    EwExtraMemory[ EXTRA_POOL_SIZE / sizeof( unsigned long )];
+  #define EXTRA_POOL_ADDR EwExtraMemory
+#endif
 
 #define CHECK_HANDLE( handle ) \
   if ( !handle )               \
@@ -127,9 +105,9 @@
 static void EwUpdate( XViewport* aViewport, CoreRoot aApplication );
 static XEnum EwGetKeyCommand( void );
 
-tlsf_t               MemPool;
-static CoreRoot      RootObject;
-static XViewport *   Viewport;
+static CoreRoot     RootObject;
+static XViewport*   Viewport;
+static XDisplayInfo DisplayInfo;
 
 
 /*******************************************************************************
@@ -152,32 +130,33 @@ static XViewport *   Viewport;
 *******************************************************************************/
 int EwInit( void )
 {
-  /* configure system tick counter */
-  EwBspConfigSystemTick();
-
-  /* configure realtime clock */
-  EwPrint( "Initialize Realtime Clock...                 " );
-  EwBspConfigRealTimeClock();
+  /* initalize system clocks */
+  EwBspClockInit();
 
   /* set RTC, if current RTC time is before the minimum time */
-  if ( EwBspGetTime() < RTC_MINIMUM_TIME )
-    EwBspSetTime( RTC_DEFAULT_TIME );
-  EwPrint( "[OK]\n" );
+  if ( EwBspClockGetTime() < RTC_MINIMUM_TIME )
+    EwBspClockSetTime( RTC_DEFAULT_TIME );
 
   /* initialize display */
   EwPrint( "Initialize Display...                        " );
-  EwBspConfigDisplay( FRAME_BUFFER_WIDTH, FRAME_BUFFER_HEIGHT, FRAME_BUFFER_ADDR );
+  EwBspDisplayInit( &DisplayInfo );
   EwPrint( "[OK]\n" );
 
   /* initialize touchscreen */
   EwPrint( "Initialize Touch Driver...                   " );
-  EwBspConfigTouch( FRAME_BUFFER_WIDTH, FRAME_BUFFER_HEIGHT );
+  EwBspTouchInit( DisplayInfo.DisplayWidth, DisplayInfo.DisplayHeight );
   EwPrint( "[OK]\n" );
 
-  /* initialize tlsf memory manager */
+  /* initialize heap manager */
   EwPrint( "Initialize Memory Manager...                 " );
-  MemPool = tlsf_create_with_pool( MEMORY_POOL_ADDR, MEMORY_POOL_SIZE );
-  CHECK_HANDLE( MemPool );
+  EwInitHeap( 0 );
+  EwAddHeapMemoryPool( (void*)MEMORY_POOL_ADDR, MEMORY_POOL_SIZE );
+
+  #if EXTRA_POOL_SIZE > 0
+    EwAddHeapMemoryPool( (void*)EXTRA_POOL_ADDR, EXTRA_POOL_SIZE );
+  #endif
+
+  EwPrint( "[OK]\n" );
 
   /* initialize the Graphics Engine and Runtime Environment */
   EwPrint( "Initialize Graphics Engine...                " );
@@ -193,8 +172,8 @@ int EwInit( void )
 
   /* create Embedded Wizard viewport object to provide uniform access to the framebuffer */
   EwPrint( "Create Embedded Wizard Viewport...           " );
-  Viewport = EwInitViewport( EwScreenSize, EwNewRect( 0, 0, FRAME_BUFFER_WIDTH, FRAME_BUFFER_HEIGHT ),
-    0, 255, FRAME_BUFFER_ADDR, DOUBLE_BUFFER_ADDR, 0, 0 );
+  Viewport = EwInitViewport( EwScreenSize, EwNewRect( 0, 0, DisplayInfo.BufferWidth, DisplayInfo.BufferHeight ),
+    0, 255, DisplayInfo.FrameBuffer, DisplayInfo.DoubleBuffer, 0, 0 );
   CHECK_HANDLE( Viewport );
 
   /* initialize your device driver(s) that provide data for your GUI */
@@ -236,8 +215,14 @@ void EwDone( void )
   EwDoneGraphicsEngine();
   EwPrint( "[OK]\n" );
 
-  /* deinitialize tlsf memory manager */
-  tlsf_destroy( MemPool );
+  /* deinitialize heap manager */
+  EwDoneHeap();
+
+  /* deinitialize touch */
+  EwBspTouchDone();
+
+  /* deinitialize display */
+  EwBspDisplayDone();
 }
 
 
@@ -268,13 +253,16 @@ void EwDone( void )
 *******************************************************************************/
 int EwProcess( void )
 {
-  int           timers  = 0;
-  int           signals = 0;
-  int           events  = 0;
-  int           devices = 0;
-  XEnum         cmd     = CoreKeyCodeNoKey;
-  static int    touched = 0;
-  static XPoint touchPos;
+  int          timers  = 0;
+  int          signals = 0;
+  int          events  = 0;
+  int          devices = 0;
+  XEnum        cmd     = CoreKeyCodeNoKey;
+  int          noOfTouch;
+  XTouchEvent* touchEvent;
+  int          touch;
+  int          finger;
+  XPoint       touchPos;
 
   /* process data of your device driver(s) and update the GUI
      application by setting properties or by triggering events */
@@ -293,26 +281,30 @@ int EwProcess( void )
     events |= CoreRoot__DriveKeyboardHitting( RootObject, cmd, 0, 0 );
   }
 
-  /* receive touch inputs and provide the application with them */
-  if ( EwBspGetTouchPosition( &touchPos ))
-  {
-    /* begin of touch cycle */
-    if ( touched == 0 )
-      CoreRoot__DriveCursorHitting( RootObject, 1, 0, touchPos );
+  /* receive (multi-) touch inputs and provide it to the application */
+  noOfTouch = EwBspTouchGetEvents( &touchEvent );
 
-    /* movement during touch cycle */
-    else if ( touched == 1 )
-      CoreRoot__DriveCursorMovement( RootObject, touchPos );
-
-    touched = 1;
-    events  = 1;
-  }
-  /* end of touch cycle */
-  else if ( touched == 1 )
+  if ( noOfTouch > 0 )
   {
-    CoreRoot__DriveCursorHitting( RootObject, 0, 0, touchPos );
-    touched = 0;
-    events  = 1;
+    for ( touch = 0; touch < noOfTouch; touch++ )
+    {
+      /* get data out of the touch event */
+      finger     = touchEvent[ touch ].Finger;
+      touchPos.X = touchEvent[ touch ].XPos;
+      touchPos.Y = touchEvent[ touch ].YPos;
+
+      /* begin of touch cycle */
+      if ( touchEvent[ touch ].State == EW_BSP_TOUCH_DOWN )
+        events |= CoreRoot__DriveMultiTouchHitting(  RootObject, 1, finger, touchPos );
+
+      /* movement during touch cycle */
+      else if ( touchEvent[ touch ].State == EW_BSP_TOUCH_MOVE )
+        events |= CoreRoot__DriveMultiTouchMovement( RootObject, finger, touchPos );
+
+      /* end of touch cycle */
+      else if ( touchEvent[ touch ].State == EW_BSP_TOUCH_UP )
+        events |= CoreRoot__DriveMultiTouchHitting(  RootObject, 0, finger, touchPos );
+    }
   }
 
   /* process expired timers */
@@ -327,16 +319,26 @@ int EwProcess( void )
     if ( CoreRoot__DoesNeedUpdate( RootObject ))
       EwUpdate( Viewport, RootObject );
 
+    /* just for debugging purposes: check the memory structure */
+    EwVerifyHeap();
+
     /* after each processed message start the garbage collection */
     EwReclaimMemory();
 
-    /* print current memory statistic to serial interface - uncomment if needed */
-    //  EwPrintProfilerStatistic( 0 );
+    /* print current memory statistic to console interface */
+    #ifdef EW_PRINT_MEMORY_USAGE
+      EwPrintProfilerStatistic( 0 );
+    #endif
+
+    /* evaluate memory pools and print report */
+    #ifdef EW_DUMP_HEAP
+      EwDumpHeap( 0 );
+    #endif
   }
   else
   {
     /* otherwise sleep/suspend the UI application until a certain event occurs or a timer expires... */
-    EwBspWaitForSystemEvent( EwNextTimerExpiration());
+    EwBspEventWait( EwNextTimerExpiration());
   }
 
   return 1;
@@ -364,70 +366,48 @@ static void EwUpdate( XViewport* aViewport, CoreRoot aApplication )
   GraphicsCanvas canvas     = EwNewObject( GraphicsCanvas, 0 );
   XRect          updateRect = {{ 0, 0 }, { 0, 0 }};
 
-#if EW_USE_DOUBLE_BUFFER
+  if ( !canvas )
+    return;
 
-  bitmap = EwBeginUpdate( aViewport );
-
-  /* let's redraw the dirty area of the screen. Cover the returned bitmap
-     objects within a canvas, so Mosaic can draw to it. */
-  if ( bitmap && canvas )
+  if ( DisplayInfo.UpdateMode == EW_BSP_DISPLAY_UPDATE_NORMAL )
   {
-    GraphicsCanvas__AttachBitmap( canvas, (XUInt32)bitmap );
-    updateRect = CoreRoot__UpdateGE20( aApplication, canvas );
-    GraphicsCanvas__DetachBitmap( canvas );
+    bitmap = EwBeginUpdate( aViewport );
+
+    /* redraw the dirty area of the screen */
+    if ( bitmap  )
+    {
+      GraphicsCanvas__AttachBitmap( canvas, (XUInt32)bitmap );
+      updateRect = CoreRoot__UpdateGE20( aApplication, canvas );
+      GraphicsCanvas__DetachBitmap( canvas );
+      EwEndUpdate( aViewport, updateRect );
+    }
   }
-
-  /* complete the update */
-  if ( bitmap )
-    EwEndUpdate( aViewport, updateRect );
-
-#else
-
-  int field = 0;
-
-  /* start screen update */
-  int regions = CoreRoot__BeginUpdate( aApplication );
-
-  /* iterate through all fields (horizontal stripes) of the display */
-  while ( regions && ( field < NUMBER_OF_FIELDS ))
+  else
   {
-    /* determine rectangular area of current field */
-    #if EW_SURFACE_ROTATION == 0
-      updateRect = EwNewRect( 0, field * FRAME_BUFFER_HEIGHT / NUMBER_OF_FIELDS,
-        FRAME_BUFFER_WIDTH, ( field + 1 ) * FRAME_BUFFER_HEIGHT / NUMBER_OF_FIELDS );
-    #endif
+    int regions = CoreRoot__BeginUpdate( aApplication );
 
-    #if EW_SURFACE_ROTATION == 90
-      updateRect = EwNewRect( field * FRAME_BUFFER_HEIGHT / NUMBER_OF_FIELDS, 0,
-        ( field + 1 ) * FRAME_BUFFER_HEIGHT / NUMBER_OF_FIELDS, FRAME_BUFFER_WIDTH );
-    #endif
+    while ( regions-- )
+    {
+      /* get rectangular area of the update region for scratch-pad buffer */
+      if ( DisplayInfo.UpdateMode == EW_BSP_DISPLAY_UPDATE_SCRATCHPAD )
+        updateRect = CoreRoot__GetUpdateRegion( aApplication, regions );
 
-    #if EW_SURFACE_ROTATION == 180
-      updateRect = EwNewRect( 0, FRAME_BUFFER_HEIGHT - ( field + 1 ) * FRAME_BUFFER_HEIGHT / NUMBER_OF_FIELDS,
-        FRAME_BUFFER_WIDTH, FRAME_BUFFER_HEIGHT - field * FRAME_BUFFER_HEIGHT / NUMBER_OF_FIELDS );
-    #endif
+      /* iterate through all update areas */
+      while ( EwBspDisplayGetUpdateArea( &updateRect ))
+      {
+        /* update the current subarea */
+        bitmap = EwBeginUpdateArea( aViewport, updateRect );
+        GraphicsCanvas__AttachBitmap( canvas, (XUInt32)bitmap );
+        CoreRoot__UpdateCanvas( aApplication, canvas, updateRect.Point1 );
+        GraphicsCanvas__DetachBitmap( canvas );
+        EwEndUpdate( aViewport, updateRect );
+      }
 
-    #if EW_SURFACE_ROTATION == 270
-      updateRect = EwNewRect( FRAME_BUFFER_HEIGHT - ( field + 1 ) * FRAME_BUFFER_HEIGHT / NUMBER_OF_FIELDS,
-        0, FRAME_BUFFER_HEIGHT - field * FRAME_BUFFER_HEIGHT / NUMBER_OF_FIELDS, FRAME_BUFFER_WIDTH );
-    #endif
-
-    /* next field */
-    field++;
-
-    /* sync on start line of next field to ensure save drawing operation */
-    EwBspSyncOnDisplayLine(( field % NUMBER_OF_FIELDS ) * FRAME_BUFFER_HEIGHT / NUMBER_OF_FIELDS );
-
-    /* draw area into current field */
-    bitmap = EwBeginUpdateArea( aViewport, updateRect );
-    GraphicsCanvas__AttachBitmap( canvas, (XUInt32)bitmap );
-    CoreRoot__UpdateCanvas( aApplication, canvas, updateRect.Point1 );
-    GraphicsCanvas__DetachBitmap( canvas );
-    EwEndUpdate( aViewport, updateRect );
+      if ( DisplayInfo.UpdateMode != EW_BSP_DISPLAY_UPDATE_SCRATCHPAD )
+        break;
+    }
+    CoreRoot__EndUpdate( aApplication );
   }
-  CoreRoot__EndUpdate( aApplication );
-
-#endif
 }
 
 
@@ -450,8 +430,8 @@ static void EwUpdate( XViewport* aViewport, CoreRoot aApplication )
 *******************************************************************************/
 static XEnum EwGetKeyCommand( void )
 {
-  #ifdef USE_TERMINAL_INPUT
-    switch ( EwBspGetCharacter())
+  #if EW_USE_TERMINAL_INPUT == 1
+    switch ( EwBspConsoleGetCharacter())
     {
       case 0x65 : EwPrint("Key 'Exit' pressed\n");  return CoreKeyCodeExit;
       case 0x38 : EwPrint("Key 'Up' pressed\n");    return CoreKeyCodeUp;
@@ -484,99 +464,30 @@ static XEnum EwGetKeyCommand( void )
 *******************************************************************************/
 void EwPrintSystemInfo( void )
 {
-  #define PLATFORM_STRING "IMXRT1064-EVK"
-
-  #if ( EW_FRAME_BUFFER_COLOR_FORMAT == EW_FRAME_BUFFER_COLOR_FORMAT_RGBA8888 )
-    #define EW_FRAME_BUFFER_COLOR_FORMAT_STRING "RGBA8888"
-  #elif ( EW_FRAME_BUFFER_COLOR_FORMAT == EW_FRAME_BUFFER_COLOR_FORMAT_RGB888 )
-    #define EW_FRAME_BUFFER_COLOR_FORMAT_STRING "RGB888"
-  #elif ( EW_FRAME_BUFFER_COLOR_FORMAT == EW_FRAME_BUFFER_COLOR_FORMAT_RGBA4444 )
-    #define EW_FRAME_BUFFER_COLOR_FORMAT_STRING "RGBA4444"
-  #elif ( EW_FRAME_BUFFER_COLOR_FORMAT == EW_FRAME_BUFFER_COLOR_FORMAT_RGB565 )
-    #define EW_FRAME_BUFFER_COLOR_FORMAT_STRING "RGB565"
-  #elif ( EW_FRAME_BUFFER_COLOR_FORMAT == EW_FRAME_BUFFER_COLOR_FORMAT_Index8 )
-    #define EW_FRAME_BUFFER_COLOR_FORMAT_STRING "Index8"
-  #elif ( EW_FRAME_BUFFER_COLOR_FORMAT == EW_FRAME_BUFFER_COLOR_FORMAT_LumA44 )
-    #define EW_FRAME_BUFFER_COLOR_FORMAT_STRING "LumA44"
-  #endif
-
-  #define EW_STRINGIZE( aArg )      EW_STRINGIZE_ARG( aArg )
-  #define EW_STRINGIZE_ARG( aArg )  #aArg
-
-  #if defined __ICCARM__
-    #define TOOLCHAIN_STRING "IAR Embedded Workbench"
-    #define COMPILER_VERSION_STRING EW_STRINGIZE(__VER__)
-  #elif defined __CC_ARM || (__ARMCC_VERSION >= 6000000)
-    #define TOOLCHAIN_STRING "Keil MDK"
-    #define COMPILER_VERSION_STRING EW_STRINGIZE(__ARMCC_VERSION)
-  #elif defined __GNUC__
-    #define TOOLCHAIN_STRING "GCC"
-    #define COMPILER_VERSION_STRING EW_STRINGIZE(__GNUC__) "." \
-      EW_STRINGIZE(__GNUC_MINOR__) "." EW_STRINGIZE(__GNUC_PATCHLEVEL__)
-  #else
-    #define TOOLCHAIN_STRING "unknown"
-  #endif
-
-  #ifdef EW_DONT_USE_PATH_FUNCTIONS
-    #define VECTOR_GRAPHICS_SUPPORT_STRING "disabled"
-  #else
-    #define VECTOR_GRAPHICS_SUPPORT_STRING "enabled"
-  #endif
-
-  #ifdef EW_DONT_USE_WARP_FUNCTIONS
-    #define WARP_FUNCTION_SUPPORT_STRING "disabled"
-  #else
-    #define WARP_FUNCTION_SUPPORT_STRING "enabled"
-  #endif
-
-  #ifdef EW_DONT_USE_INDEX8_SURFACES
-    #define INDEX8_SURFACE_SUPPORT_STRING "disabled"
-  #else
-    #define INDEX8_SURFACE_SUPPORT_STRING "enabled"
-  #endif
-
-  #ifdef EW_DONT_USE_RGB565_SURFACES
-    #define RGB565_SURFACE_SUPPORT_STRING "disabled"
-  #else
-    #define RGB565_SURFACE_SUPPORT_STRING "enabled"
-  #endif
-
-  #ifdef EW_DONT_USE_BIDI_FUNCTIONS
-    #define BIDI_TEXT_SUPPORT_STRING "disabled"
-  #else
-    #define BIDI_TEXT_SUPPORT_STRING "enabled"
-  #endif
-
-  #if ( EW_USE_PXP_GRAPHICS_ACCELERATOR == 1 )
-    #define GRAPHICS_ACCELERATOR_STRING "PXP"
-  #else
-    #define GRAPHICS_ACCELERATOR_STRING "none"
-  #endif
-
-  #if ( EW_USE_FREE_RTOS == 1 )
-    #define OPERATING_SYSTEM_STRING "FreeRTOS"
-  #else
-    #define OPERATING_SYSTEM_STRING "none"
-  #endif
-
-  #define EXTERNAL_FLASH_STRING "none"
-
-
   EwPrint( "---------------------------------------------\n" );
   EwPrint( "Target system                                %s      \n", PLATFORM_STRING );
   EwPrint( "Color format                                 %s      \n", EW_FRAME_BUFFER_COLOR_FORMAT_STRING );
+  #if MEMORY_POOL_SIZE > 0
   EwPrint( "MemoryPool address                           0x%08X  \n", MEMORY_POOL_ADDR );
   EwPrint( "MemoryPool size                              %u bytes\n", MEMORY_POOL_SIZE );
-  #if ( EW_USE_SCRATCHPAD_BUFFER == 1 )
-  EwPrint( "Scratch-pad buffer address                   0x%08X  \n", SCRATCHPAD_BUFFER_ADDR );
-  EwPrint( "Scratch-pad buffer size                      %u pixel\n", SCRATCHPAD_BUFFER_SIZE * FRAME_BUFFER_DEPTH );
+  #endif
+  #if EXTRA_POOL_SIZE > 0
+  EwPrint( "ExtraPool address                            0x%08X  \n", EXTRA_POOL_ADDR );
+  EwPrint( "ExtraPool size                               %u bytes\n", EXTRA_POOL_SIZE );
+  #endif
+  #if EW_USE_SCRATCHPAD_BUFFER == 1
+  EwPrint( "Scratch-pad buffer address                   0x%08X  \n", DisplayInfo.FrameBuffer );
+  EwPrint( "Scratch-pad buffer size                      %u pixel\n", DisplayInfo.BufferWidth * DisplayInfo.BufferHeight );
   #else
-  EwPrint( "Framebuffer address                          0x%08X  \n", FRAME_BUFFER_ADDR );
+  EwPrint( "Framebuffer address                          0x%08X  \n", DisplayInfo.FrameBuffer );
   #endif
-  #if ( EW_USE_DOUBLE_BUFFER == 1 )
-  EwPrint( "Doublebuffer address                         0x%08X  \n", DOUBLE_BUFFER_ADDR );
+  #if EW_USE_DOUBLE_BUFFER == 1
+  EwPrint( "Doublebuffer address                         0x%08X  \n", DisplayInfo.DoubleBuffer );
   #endif
-  EwPrint( "Framebuffer size                             %u x %u \n", FRAME_BUFFER_WIDTH, FRAME_BUFFER_HEIGHT );
+  #if EW_USE_OFFSCREEN_BUFFER == 1
+  EwPrint( "Off-screen buffer                            used    \n" );
+  #endif
+  EwPrint( "Framebuffer size                             %u x %u \n", DisplayInfo.BufferWidth, DisplayInfo.BufferHeight );
   EwPrint( "EwScreeenSize                                %d x %d \n", EwScreenSize.X, EwScreenSize.Y );
   EwPrint( "Graphics accelerator                         %s      \n", GRAPHICS_ACCELERATOR_STRING );
   EwPrint( "Vector graphics support                      %s      \n", VECTOR_GRAPHICS_SUPPORT_STRING );

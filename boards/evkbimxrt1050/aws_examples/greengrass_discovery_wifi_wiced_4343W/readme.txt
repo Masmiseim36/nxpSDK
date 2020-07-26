@@ -28,9 +28,9 @@ Before running the demo it is needed to configure AWS IoT Console, AWS Greengras
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.40.2
-- GCC ARM Embedded  8.3.1
-- MCUXpresso  11.1.0
+- IAR embedded Workbench  8.50.1
+- GCC ARM Embedded  9.2.1
+- MCUXpresso  11.2.0
 
 Hardware requirements
 =====================
@@ -54,7 +54,7 @@ Prepare the Demo
         static const char clientcredentialMQTT_BROKER_ENDPOINT[] = "abcdefgh123456.iot.us-west-2.amazonaws.com";
         #define clientcredentialIOT_THING_NAME "HelloWorldDevice"
 
-    The device certificate and private key needs to be opened in text editor and its content copied into the "aws_clientcredential_keys.h" or you can use the CertificateConfigurator.html (mcu-sdk-2.0\rtos\amazon-freertos\tools\certificate_configuration) to generate the "aws_clientcredential_keys.h".
+    The device certificate and private key needs to be opened in text editor and its content copied into the "aws_clientcredential_keys.h" or you can use the CertificateConfigurator.html (mcu-sdk-2.0\rtos\freertos\tools\certificate_configuration) to generate the "aws_clientcredential_keys.h".
 
     keyCLIENT_CERTIFICATE_PEM is stored in <device id>.cert.pem file and keyCLIENT_PRIVATE_KEY_PEM is stored in <device id>.private.key file.
 
@@ -95,7 +95,7 @@ Prepare the Demo
 Running the demo
 ================
 
-Demo is by default set to send message "Hello #0 from Amazon FreeRTOS to Greengrass Core." 3 times (can be changed with ggdDEMO_MAX_MQTT_MESSAGES).
+Demo is by default set to send message "Hello #0 from FreeRTOS to Greengrass Core." 3 times (can be changed with ggdDEMO_MAX_MQTT_MESSAGES).
 
 You can check connection log in Greengrass device on path: /greengrass/ggc/var/log/system/connection_manager.log
 
@@ -105,10 +105,10 @@ You can check connection log in Greengrass device on path: /greengrass/ggc/var/l
 1 249 [Tmr Svc] Device credential provisioning succeeded.
 2 252 [iot_thread] [INFO ][INIT][252] SDK successfully initialized.
 
- AsyncInterrupt is not supported 
+ AsyncInterrupt is not supported
 WLAN MAC Address : A0:C9:A0:3D:EE:8F
 WLAN Firmware    : wl0: Feb 12 2018 04:08:14 version 7.79.2 (r683798 CY) FWID 01-27b63357
-WLAN CLM         : API: 12.2 Data: 9.10.39 Compiler: 1.29.4 ClmImport: 1.36.3 Creation: 2018-02-12 04:00:50 
+WLAN CLM         : API: 12.2 Data: 9.10.39 Compiler: 1.29.4 ClmImport: 1.36.3 Creation: 2018-02-12 04:00:50
 3 4953 [iot_thread] [INFO ][DEMO][4953] Successfully initialized the demo. Network type for the demo: 1
 4 4953 [iot_thread] Attempting automated selection of Greengrass device
 5 9194 [iot_thread] About to close socket.

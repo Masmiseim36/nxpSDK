@@ -63,18 +63,16 @@ extern uint8_t g_detachRequest;
 usb_device_dfu_app_struct_t g_UsbDeviceDfu;
 
 /* DFU configuration */
-usb_device_class_config_struct_t g_UsbDeviceDfuConfig[USB_DFU_INTERFACE_COUNT] = {
-    {
-        USB_DeviceDfuDemoCallback, /* DFU demo class callback pointer */
-        (class_handle_t)NULL,      /* The DFU class handle, This field is set by USB_DeviceClassInit */
-        &g_UsbDeviceDfuDemoConfig, /* The DFU demo configuration, including class code, subcode, and protocol, class
-                                      type */
-    }
-};
+usb_device_class_config_struct_t g_UsbDeviceDfuConfig[USB_DFU_INTERFACE_COUNT] = {{
+    USB_DeviceDfuDemoCallback, /* DFU demo class callback pointer */
+    (class_handle_t)NULL,      /* The DFU class handle, This field is set by USB_DeviceClassInit */
+    &g_UsbDeviceDfuDemoConfig, /* The DFU demo configuration, including class code, subcode, and protocol, class
+                                  type */
+}};
 /* DFU configuration list */
 usb_device_class_config_list_struct_t g_UsbDeviceDfuConfigList = {
-    g_UsbDeviceDfuConfig,        /* Class configurations */
-    USB_DeviceCallback,            /* Device callback pointer */
+    g_UsbDeviceDfuConfig,    /* Class configurations */
+    USB_DeviceCallback,      /* Device callback pointer */
     USB_DFU_INTERFACE_COUNT, /* Class count */
 };
 /*******************************************************************************
@@ -151,18 +149,17 @@ void USB_DeviceTaskFn(void *deviceHandle)
 static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *param)
 {
     usb_status_t error = kStatus_USB_Error;
-    uint16_t *temp16 = (uint16_t *)param;
-    uint8_t *temp8 = (uint8_t *)param;
-
+    uint16_t *temp16   = (uint16_t *)param;
+    uint8_t *temp8     = (uint8_t *)param;
 
     switch (event)
     {
         case kUSB_DeviceEventBusReset:
         {
             /* USB bus reset signal detected */
-            g_UsbDeviceDfu.attach = 0U;
+            g_UsbDeviceDfu.attach               = 0U;
             g_UsbDeviceDfu.currentConfiguration = 0U;
-            error = kStatus_USB_Success;
+            error                               = kStatus_USB_Success;
             USB_DeviceDfuBusReset();
 #if (defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)) || \
     (defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))
@@ -177,15 +174,15 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
         case kUSB_DeviceEventSetConfiguration:
             if (0U == (*temp8))
             {
-                g_UsbDeviceDfu.attach = 0U;
+                g_UsbDeviceDfu.attach               = 0U;
                 g_UsbDeviceDfu.currentConfiguration = 0U;
             }
             else if (USB_DFU_CONFIGURE_INDEX == (*temp8))
             {
                 /* Set device configuration request */
-                g_UsbDeviceDfu.attach = 1U;
+                g_UsbDeviceDfu.attach               = 1U;
                 g_UsbDeviceDfu.currentConfiguration = *temp8;
-                error = kStatus_USB_Success;
+                error                               = kStatus_USB_Success;
             }
             else
             {
@@ -196,12 +193,12 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
             if (g_UsbDeviceDfu.attach)
             {
                 /* Set device interface request */
-                uint8_t interface = (uint8_t)((*temp16 & 0xFF00U) >> 0x08U);
+                uint8_t interface        = (uint8_t)((*temp16 & 0xFF00U) >> 0x08U);
                 uint8_t alternateSetting = (uint8_t)(*temp16 & 0x00FFU);
                 if (interface < USB_DFU_INTERFACE_COUNT)
                 {
                     g_UsbDeviceDfu.currentInterfaceAlternateSetting[interface] = alternateSetting;
-                    error = kStatus_USB_Success;
+                    error                                                      = kStatus_USB_Success;
                 }
             }
             break;
@@ -210,7 +207,7 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
             {
                 /* Get current configuration request */
                 *temp8 = g_UsbDeviceDfu.currentConfiguration;
-                error = kStatus_USB_Success;
+                error  = kStatus_USB_Success;
             }
             break;
         case kUSB_DeviceEventGetInterface:
@@ -221,7 +218,7 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
                 if (interface < USB_DFU_INTERFACE_COUNT)
                 {
                     *temp16 = (*temp16 & 0xFF00U) | g_UsbDeviceDfu.currentInterfaceAlternateSetting[interface];
-                    error = kStatus_USB_Success;
+                    error   = kStatus_USB_Success;
                 }
                 else
                 {
@@ -252,9 +249,9 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
             }
             break;
         case kUSB_DeviceEventVendorRequest:
-            {
-                USB_DeviceGetVerdorDescriptor(handle, param);
-            }
+        {
+            USB_DeviceGetVerdorDescriptor(handle, param);
+        }
         break;
         default:
             break;
@@ -277,7 +274,7 @@ static void USB_DeviceApplicationInit(void)
 #endif /* FSL_FEATURE_SOC_SYSMPU_COUNT */
 
     /* Set dfu device to default state */
-    g_UsbDeviceDfu.speed = USB_SPEED_FULL;
+    g_UsbDeviceDfu.speed  = USB_SPEED_FULL;
     g_UsbDeviceDfu.attach = 0U;
 
     g_UsbDeviceDfu.deviceHandle = NULL;
@@ -298,6 +295,8 @@ static void USB_DeviceApplicationInit(void)
     USB_DeviceIsrEnable();
 
     /* Start the device function */
+    /*Add one delay here to make the DP pull down long enough to allow host to detect the previous disconnection.*/
+    SDK_DelayAtLeastUs(5000, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
     USB_DeviceRun(g_UsbDeviceDfu.deviceHandle);
 }
 /*!
@@ -313,12 +312,11 @@ int main(void)
 void main(void)
 #endif
 {
-	
     BOARD_ConfigMPU();
     BOARD_InitPins();
     BOARD_BootClockRUN();
     BOARD_InitDebugConsole();
-    
+
     USB_DeviceApplicationInit();
     while (1U)
     {

@@ -17,7 +17,7 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define APP_MU MUA
+#define APP_MU            MUA
 #define APP_MU_IRQHandler MU_A_IRQHandler
 /* Flag indicates Core Boot Up*/
 #define BOOT_FLAG 0x01U
@@ -53,7 +53,7 @@ static void FillMsgSend(void)
     uint32_t i;
     for (i = 0U; i < MSG_LENGTH; i++)
     {
-        g_msgSend[i] = i + 1;
+        g_msgSend[i] = i;
     }
 }
 
@@ -117,11 +117,7 @@ void APP_MU_IRQHandler(void)
             MU_DisableInterrupts(APP_MU, kMU_Rx0FullInterruptEnable);
         }
     }
-    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-      exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 /*!
@@ -130,8 +126,8 @@ void APP_MU_IRQHandler(void)
 int main(void)
 {
     /* Init board hardware.*/
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
     /* Clear MUA reset */
     RESET_PeripheralReset(kMU_RST_SHIFT_RSTn);

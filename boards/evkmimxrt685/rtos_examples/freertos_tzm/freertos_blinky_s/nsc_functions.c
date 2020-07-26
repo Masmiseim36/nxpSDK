@@ -1,5 +1,5 @@
 /*
- * Amazon FreeRTOS Pre-Release V1.0.0
+ * FreeRTOS Pre-Release V1.0.0
  * Copyright (C) 2017 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -40,9 +40,9 @@ static uint32_t ulSecureCounter = 0;
 /**
  * @brief LED port and pins.
  */
-#define LED_PORT 0U
+#define LED_PORT      0U
 #define GREEN_LED_PIN 14U
-#define BLUE_LED_PIN 26U
+#define BLUE_LED_PIN  26U
 
 /**
  * @brief typedef for non-secure callback.

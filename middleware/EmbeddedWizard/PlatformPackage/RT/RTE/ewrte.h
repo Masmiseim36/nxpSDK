@@ -28,13 +28,17 @@
 #define EWRTE_H
 
 
+/* Include platform specific configuration file */
+#include <ewconfig.h>
+
+
 #ifdef __cplusplus
   extern "C"
   {
 #endif
 
 /* The current version of the Runtime Environment. */
-#define EW_RTE_VERSION 0x00090014
+#define EW_RTE_VERSION 0x0009001E
 
 
 /* Assigning zero (0) to the EW_PRINT_MEMORY_USAGE macro should turn it off
@@ -102,6 +106,45 @@
     defined _ILP64 || defined _LLP64
   #error "The 64-bit model of your compiler is not supported. Use LP64 model."
 #endif
+
+
+/******************************************************************************
+* CONFIG MACRO:
+*   EW_MAX_STRING_CACHE_SIZE
+*
+* DESCRIPTION:
+*   The following macro exists for configuration purpose of the size of the
+*   string cache. As soon as cache has reached the specified size, the cache is
+*   cleaned. The macro should be configured in the ewconfig.h file or in the
+*   Make file.
+*
+******************************************************************************/
+
+/* If not explicitly specified, assume following default value for the maximum
+   string constant cache size (in bytes) */
+#ifndef EW_MAX_STRING_CACHE_SIZE
+  #define EW_MAX_STRING_CACHE_SIZE  0x00008000
+#endif
+
+/* Validate the maximum string cache size */
+#if (( EW_MAX_STRING_CACHE_SIZE < 0x00000000 ) ||                             \
+     ( EW_MAX_STRING_CACHE_SIZE > 0x00100000 ))
+  #error "The maximum string constant cache size out of range."
+#endif
+
+
+/******************************************************************************
+* CONFIG VARIABLE:
+*   EwMaxStringCacheSize
+*
+* DESCRIPTION:
+*   The following variable exists for configuration purpose of the size of the
+*   string cache. As soon as cache has reached the specified size, the cache is
+*   cleaned. The variable should be modified just before the application is
+*   initialized.
+*
+******************************************************************************/
+extern int EwMaxStringCacheSize; /* = EW_MAX_STRING_CACHE_SIZE macro */
 
 
 /*******************************************************************************
@@ -250,7 +293,7 @@
 *  target system.
 *
 * ELEMENTS:
-*   _VMT   - Pointer to the virtual method table (VMT) associated to the object.
+*   _VMT   - Pointer to a virtual method table (VMT) associated to the object.
 *     The _VMT contains a list of methods supported by the object and an 
 *     additional description of the class the objects belongs to: 
 *     class name, objects size in bytes and a reference to the next base class 
@@ -265,6 +308,10 @@
 *     important to recognize relationships between aggregated objects and will 
 *     be used by the Garbage Collector. If this object has not been aggregated
 *     in an other object _Link is NULL.
+*   _GCT   - Pointer to a table associated to the object and used during the
+*     mark phase of the Garbage Collection. The table is really a VMT. See the
+*     definition of the structure _vmt_XObject and its field _GCInfo for more
+*     details.
 *
 *******************************************************************************/
 struct _vmt_XObject;
@@ -275,6 +322,7 @@ struct _obj_XObject
     const struct _vmt_XObject* VMT;
     struct _obj_XObject*       Mark;
     struct _obj_XObject*       Link;
+    const struct _vmt_XObject* GCT;
   } _;
 };
 typedef struct _obj_XObject* XObject;
@@ -311,16 +359,18 @@ typedef unsigned long        XHandle;
 *     optimization purpose the data fields are grouped together starting with
 *     all members containing ordinary pointers to other objects. Then follow
 *     members where slots are stored. Then follow all data members containing
-*     property references followed finally by embedded objects. The array thus
-*     consist of 5 entries:
+*     property references followed then by embedded objects. Finally members
+*     containing references to strings are found. The array thus consist of 6
+*     entries:
 *       #0 : Offset to the first variable/array/property containing a pointer
 *            to another object.
 *       #1 : Offset to the first variable/array/property containing a slot.
 *       #2 : Offset to the first variable/array/property containing a property
 *            reference.
 *       #3 : Offset to first embedded object.
-*       #4 : Offset to the first data field not containing any references to
-*            other objects.
+*       #4 : Offset to first string.
+*       #5 : Offset to the first data field not containing any references to
+*            other objects nor strings.
 *   _Init - Pointer to the _Init() method. The _Init() method will be invoked
 *     to initialize a new object instance. (see below for details).
 *   _ReInit - Pointer to the _ReInit() method. The _ReInit() method will be
@@ -339,7 +389,7 @@ struct _vmt_XObject
   const struct _vmt_XObject*   _Ancestor;
   const struct _XClassVariant* _SubVariants;
   int                          _Size;
-  int                          _GCInfo[5];
+  int                          _GCInfo[6];
   void                       (*_Init  )( XObject _this, XObject aLink, XHandle aArg );
   void                       (*_ReInit)( XObject _this );
   void                       (*_Done  )( XObject _this );
@@ -476,6 +526,7 @@ typedef struct _XClassVariant XClassVariant;
 #define _XObject _.XObject
 #define _Link    _.Link
 #define _Mark    _.Mark
+#define _GCT     _XObject._.GCT
 
 
 /*******************************************************************************
@@ -532,7 +583,7 @@ typedef struct _XClassVariant XClassVariant;
     const struct _vmt_##aSuperClass* _Ancestor;                                \
     const struct _XClassVariant*     _SubVariants;                             \
     int                              _Size;                                    \
-    int                              _GCInfo[5];                               \
+    int                              _GCInfo[6];                               \
     void (*_Init  )( aClass _this, XObject aLink, XHandle aArg );              \
     void (*_ReInit)( aClass _this );                                           \
     void (*_Done  )( aClass _this )
@@ -587,14 +638,14 @@ typedef struct _XClassVariant XClassVariant;
 *     aSuperClass will get the name XObject (the root class of all Embedded 
 *     Wizard objects).
 *   aGCInfo0 ..
-*   aGCInfo4    - Names of data members enclosing fields where references to
+*   aGCInfo5    - Names of data members enclosing fields where references to
 *     other objects are stored. This information is used by Garbage Collector
 *     to evaluate dependencies between objects.
 *   aName       - The name of the class in the Chora notation with :: signs.
 *
 *******************************************************************************/
 #define EW_DEFINE_CLASS( aClass, aSuperClass, aGCInfo0, aGCInfo1, aGCInfo2,    \
-                         aGCInfo3, aGCInfo4, aName )                           \
+                         aGCInfo3, aGCInfo4, aGCInfo5, aName )                 \
   const int    __vthis_##aClass = sizeof( struct _obj_##aSuperClass );         \
   const struct _vmt_##aClass __vmt_##aClass =                                  \
   {                                                                            \
@@ -605,7 +656,7 @@ typedef struct _XClassVariant XClassVariant;
     sizeof( struct _obj_##aClass ),                                            \
     { (int)&((aClass)0)->aGCInfo0, (int)&((aClass)0)->aGCInfo1,                \
       (int)&((aClass)0)->aGCInfo2, (int)&((aClass)0)->aGCInfo3,                \
-      (int)&((aClass)0)->aGCInfo4 },                                           \
+      (int)&((aClass)0)->aGCInfo4, (int)&((aClass)0)->aGCInfo5 },              \
     aClass##__Init,                                                            \
     aClass##__ReInit,                                                          \
     aClass##__Done,
@@ -659,6 +710,7 @@ typedef struct _XClassVariant XClassVariant;
     union                                                                      \
     {                                                                          \
       const struct _vmt_##aClass* VMT;                                         \
+      struct _obj_XObject         XObject;                                     \
       struct _obj_##aSuperClass   Super;                                       \
     } _;                                                                       \
 
@@ -714,7 +766,7 @@ typedef struct _XClassVariant XClassVariant;
     const struct _vmt_##aSuperClass*  _Ancestor;                               \
     const XClassVariant*              _SubVariants;                            \
     int                               _Size;                                   \
-    int                               _GCInfo[5];                              \
+    int                               _GCInfo[6];                              \
     void (*_Init  )( aOriginClass _this, XObject aLink, XHandle aArg );        \
     void (*_ReInit)( aOriginClass _this );                                     \
     void (*_Done  )( aOriginClass _this )
@@ -756,7 +808,7 @@ typedef struct _XClassVariant XClassVariant;
 *   aOriginClass - The name of the origin class. This is the class, the variant
 *     is derived from (not the immediate base class).
 *   aGCInfo0 ..
-*   aGCInfo4     - Names of data members enclosing fields where references to
+*   aGCInfo5     - Names of data members enclosing fields where references to
 *     other objects are stored. This information is used by Garbage Collector
 *     to evaluate dependencies between objects.
 *   aName        - The name of the class variant in the Chora notation with :: 
@@ -764,7 +816,8 @@ typedef struct _XClassVariant XClassVariant;
 *
 *******************************************************************************/
 #define EW_DEFINE_VCLASS( aClass, aSuperClass, aOriginClass, aGCInfo0,         \
-                          aGCInfo1, aGCInfo2, aGCInfo3, aGCInfo4, aName )      \
+                          aGCInfo1, aGCInfo2, aGCInfo3, aGCInfo4, aGCInfo5,    \
+                          aName )                                              \
   const struct _vmt_##aClass __vmt_##aClass =                                  \
   {                                                                            \
     0x56434C41,                                                                \
@@ -774,7 +827,7 @@ typedef struct _XClassVariant XClassVariant;
     sizeof( struct _obj_##aClass ),                                            \
     { (int)&((aClass)0)->aGCInfo0, (int)&((aClass)0)->aGCInfo1,                \
       (int)&((aClass)0)->aGCInfo2, (int)&((aClass)0)->aGCInfo3,                \
-      (int)&((aClass)0)->aGCInfo4 },                                           \
+      (int)&((aClass)0)->aGCInfo4, (int)&((aClass)0)->aGCInfo5 },              \
     aClass##__Init,                                                            \
     aClass##__ReInit,                                                          \
     aClass##__Done,
@@ -866,7 +919,7 @@ typedef struct _XClassVariant XClassVariant;
     const struct _vmt_##aClass*       _Ancestor;                               \
     const XClassVariant*              _SubVariants;                            \
     int                               _Size;                                   \
-    int                               _GCInfo[5];                              \
+    int                               _GCInfo[6];                              \
     void (*_Init  )( aClass _this, XObject aLink, XHandle aArg );              \
     void (*_ReInit)( aClass _this );                                           \
     void (*_Done  )( aClass _this )
@@ -881,6 +934,8 @@ typedef struct _XClassVariant XClassVariant;
 * MACRO:
 *   EW_CLASS
 *   EW_VCLASS
+*   EW_CLASS_GCT
+*   EW_VCLASS_GCT
 *   Super1
 *   Super2
 *   Super3
@@ -898,6 +953,11 @@ typedef struct _XClassVariant XClassVariant;
 *   method table (VMT), so EW_CLASS has to return a pointer to the requiered 
 *   global VMT data structure. In the same manner the macro EW_VCLASS returns
 *   the pointer to the global VMT data structure of a class variant.
+*
+*   The macros EW_CLASS_GCT and EW_VCLASS_GCT return similarly to EW_CLASS and
+*   EW_VCLASS a pointer to the VMT of the respective class or class variant.
+*   They are used exclusively to obtain the right version of VMT to be used
+*   during Garbage Collection mark phase.
 *
 *   The macros Super1 .. Super24 simplify the access to inherited data fields
 *   of an object. Inherited data fields can be accessed in the context of the
@@ -920,32 +980,34 @@ typedef struct _XClassVariant XClassVariant;
 *     to the global VMT of aClass).
 *
 *******************************************************************************/
-#define EW_CLASS( aClass )     (&__vmt_##aClass)
-#define EW_VCLASS( aClass )    (&__vmt_##aClass)
-#define Super1                 _Super
-#define Super2                 Super1._Super
-#define Super3                 Super2._Super
-#define Super4                 Super3._Super
-#define Super5                 Super4._Super
-#define Super6                 Super5._Super
-#define Super7                 Super6._Super
-#define Super8                 Super7._Super
-#define Super9                 Super8._Super
-#define Super10                Super9._Super
-#define Super11                Super10._Super
-#define Super12                Super11._Super
-#define Super13                Super12._Super
-#define Super14                Super13._Super
-#define Super15                Super14._Super
-#define Super16                Super15._Super
-#define Super17                Super16._Super
-#define Super18                Super17._Super
-#define Super19                Super18._Super
-#define Super20                Super19._Super
-#define Super21                Super20._Super
-#define Super22                Super21._Super
-#define Super23                Super22._Super
-#define Super24                Super23._Super
+#define EW_CLASS( aClass )      (&__vmt_##aClass)
+#define EW_VCLASS( aClass )     (&__vmt_##aClass)
+#define EW_CLASS_GCT( aClass )  ((const struct _vmt_XObject*)EW_CLASS( aClass ))
+#define EW_VCLASS_GCT( aClass ) ((const struct _vmt_XObject*)EW_VCLASS( aClass ))
+#define Super1                  _Super
+#define Super2                  Super1._Super
+#define Super3                  Super2._Super
+#define Super4                  Super3._Super
+#define Super5                  Super4._Super
+#define Super6                  Super5._Super
+#define Super7                  Super6._Super
+#define Super8                  Super7._Super
+#define Super9                  Super8._Super
+#define Super10                 Super9._Super
+#define Super11                 Super10._Super
+#define Super12                 Super11._Super
+#define Super13                 Super12._Super
+#define Super14                 Super13._Super
+#define Super15                 Super14._Super
+#define Super16                 Super15._Super
+#define Super17                 Super16._Super
+#define Super18                 Super17._Super
+#define Super19                 Super18._Super
+#define Super20                 Super19._Super
+#define Super21                 Super20._Super
+#define Super22                 Super21._Super
+#define Super23                 Super22._Super
+#define Super24                 Super23._Super
 
 
 /*******************************************************************************
@@ -1072,6 +1134,58 @@ void XObject__ReInit
 void XObject__Done
 ( 
   XObject                       _this 
+);
+
+
+/*******************************************************************************
+* FUNCTION:
+*   EwConfigRuntimeEnvironment
+*
+* DESCRIPTION:
+*   The pseudo function EwConfigRuntimeEnvironment() setups configuration 
+*   variables of the Runtime Environment according to macros found in the file
+*   'ewconfig.h' file or in the Make file.
+*
+*   This function has to be executed before using the functions from the Runtime
+*   Environment.
+*
+* ARGUMENTS:
+*   None
+*
+* RETURN VALUE:
+*   None
+*
+*******************************************************************************/
+#define EwConfigRuntimeEnvironment()                                           \
+  do                                                                           \
+  {                                                                            \
+    EwMaxStringCacheSize = EW_MAX_STRING_CACHE_SIZE;                           \
+  }                                                                            \
+  while ( 0 )
+
+
+/*******************************************************************************
+* FUNCTION:
+*   EwSetStackBaseAddress
+*
+* DESCRIPTION:
+*   The function EwSetStackBaseAddress() remembers the given value as start
+*   address of the CPU stack used by Embedded Wizard application. Knowing this
+*   the Garbage Collector can be started while the application is executed and
+*   can evaluate stack contents in order to mark objects/strings stored on it
+*   actually.
+*
+* ARGUMENTS:
+*   aStackBaseAddress - Base address of the CPU stack used by Embedded Wizard
+*     application.
+*
+* RETURN VALUE:
+*   None
+*
+*******************************************************************************/
+void EwSetStackBaseAddress
+(
+  void*                        aStackBaseAddress
 );
 
 
@@ -1391,12 +1505,76 @@ void EwUnlockObject
 *   None
 *
 * RETURN VALUE:
-*   None
+*   The function returns != 0 if at least one Chora object or string has been 
+*   released.
 *
 *******************************************************************************/
-void EwReclaimMemory
+int EwReclaimMemory
 ( 
   void 
+);
+
+
+/*******************************************************************************
+* FUNCTION:
+*   EwImmediateReclaimMemory
+*
+* DESCRIPTION:
+*   The function EwImmediateReclaimMemory() implements a second version of the
+*   above EwReclaimMemory() function. While EwReclaimMemory() function can be
+*   used when the GUI application is not executing any code only, this second
+*   version may be called even during the execution of the GUI application.
+*
+*   This is so-called immediate grabage collection.
+*
+*   In order to not oversee any Chora objects nor strings stored actually in
+*   local variables of the just interrupted GUI application, the function
+*   EwImmediateReclaimMemory() evaluates the contents of the CPU stack as well
+*   as the values of CPU register. As such the function needs to know the base
+*   address of the CPU stack. This has to be provided at the start of the GUI 
+*   application via an invocation of the function EwSetStackBaseAddress().
+*
+* ARGUMENTS:
+*   aErrorCode - Error code identifying the orginal memory alloc operation 
+*     which is failed causing the application to start the immediate garbage
+*     collection. The number is used only to print a debug message.
+*
+* RETURN VALUE:
+*   The function returns != 0 if at least one Chora object or string has been 
+*   released.
+*
+*******************************************************************************/
+int EwImmediateReclaimMemory
+(
+  int                          aErrorCode
+);
+
+
+/*******************************************************************************
+* FUNCTION:
+*   EwTestImmediateReclaimMemory
+*
+* DESCRIPTION:
+*   The function EwTestImmediateReclaimMemory() implements a simple routine to
+*   verify the function of immediate garbage collection. The implementation
+*   creates few string objects and stores some of them in local variables. Then
+*   the garbage collection is started via EwImmediateReclaimMemory(). After the
+*   operation the function verifies whether the objects referenced by local
+*   variable still exist and the object not referenced anymore are released.
+*
+* ARGUMENTS:
+*   None
+*
+* RETURN VALUE:
+*   If the test is working the function returns 1. If some of needed objects
+*   have been unexpectedly released, the function return 0 (bad error). If
+*   some unused objects have not been released the function returns 2 (this
+*   may occur).
+*
+*******************************************************************************/
+int EwTestImmediateReclaimMemory
+(
+  void
 );
 
 
@@ -1472,9 +1650,28 @@ void EwFree
 );
 
 
-/* The variable EwThis is obsolete; It is for the compatibility to the older
-   Embedded Wizard versions only. */
-#define EwThis  _this
+/*******************************************************************************
+* FUNCTION:
+*   EwIsMemory
+*
+* DESCRIPTION:
+*   The function EwIsMemory() should be implemented together with the both
+*   above functions EwAlloc() and EwFree(). EwIsMemory() will be called by
+*   the EWRTE in order to test whether the given pointer does address within 
+*   the memory area used by the heap (used for EwAlloc() operations).
+*
+* ARGUMENTS:
+*   aPtr - Address to test.
+*
+* RETURN VALUE:
+*   EwIsMemory() has to return != 0 if the given pointer aPtr addresses within 
+*   the memory area used by the heap manager. Otherwise 0 should be returned.
+*
+*******************************************************************************/
+int EwIsMemory
+(
+  void*                        aPtr
+);
 
 
 /******************************************************************************
@@ -6140,126 +6337,11 @@ XString EwShareString
 );
 
 
-/*******************************************************************************
-* FUNCTION:
-*   EwRetainString
-*
-* DESCRIPTION:
-*   The function EwRetainString() assigns the string aString to the variable 
-*   aDest. Before the string is assigned its usage counter is increased. If 
-*   there was already a string stored in the aDest variable, its usage counter
-*   is decreased - the 'old' string is released.
-*
-*   EwRetainString() function is a part of the automatic garbage collection.
-*   Each string manages an own usage counter - in this manner a single string
-*   can be shared between many objects. As long as the usage counter of the
-*   string is greater than 0, the string may not be discarded by the Garbage 
-*   Collector. 
-*
-*   Each time an object's variable is initialized with the pointer to a string
-*   the string's usage counter is increased. If the string is no more needed
-*   the counter is decreased and the affected variable is set to zero.
-*
-* ARGUMENTS:
-*   aDest   - Pointer to the variable, where the address of the string should
-*     be assigned to.
-*   aString - Pointer to the string to be stored within the aDest variable.
-*
-* RETURN VALUE:
-*   None
-*
-*******************************************************************************/
-void EwRetainString
-(
-  XString*          aDest,
-  XString           aString
-);
-
-
-/*******************************************************************************
-* FUNCTION:
-*   EwReleaseString
-*
-* DESCRIPTION:
-*   The function EwReleaseString() should decrease the usage counter of the
-*   string referred by aDest. Afterwards aDest will be set to zero to avoid any
-*   furthure accesses to the released string.
-*
-*   EwReleaseString() function is a part of the automatic garbage collection.
-*   Each string manages an own usage counter - in this manner a single string
-*   can be shared between many objects. As long as the usage counter of the
-*   string is greater than 0, the string may not be discarded by the Garbage 
-*   Collector. 
-*
-*   Each time an object's variable is initialized with the pointer to a string
-*   the string's usage counter is increased. If the string is no more needed
-*   the counter is decreased and the affected variable is set to zero.
-*
-*   To increase the usage counter the function EwRetainString() is used. If
-*   the aDest Variable is already zero, the function returns immediately.
-*   
-* ARGUMENTS:
-*   aDest - Pointer to the variable, where the address of the string is stored.
-*
-* RETURN VALUE:
-*   None
-*
-*******************************************************************************/
-void EwReleaseString
-(
-  XString*          aDest
-);
-
-
-/*******************************************************************************
-* FUNCTION:
-*   EwReleaseStrings
-*
-* DESCRIPTION:
-*   The function EwReleaseStrings() is usefull to release all strings they are
-*   stored in the array of strings. 
-*
-* ARGUMENTS:
-*   aStrings - Pointer to the array with strings.
-*   aCount   - Number of entries within the array.
-*
-* RETURN VALUE:
-*   None
-*
-*******************************************************************************/
-void EwReleaseStrings
-(
-  register XString* aStrings,
-  int               aCount 
-);
-
-#define EwReleaseStrings( aStrings )                                                  \
-  EwReleaseStrings((XString*)( aStrings ), sizeof( aStrings ) / sizeof( XString ))
-
-
-/*******************************************************************************
-* FUNCTION:
-*   EwClearStringCache
-*
-* DESCRIPTION:
-*   The function EwClearStringCache() forces the cache to discard all string 
-*   constants, which are already loaded but currently not in use. This function
-*   is very usefull for a safe shutdown of the Runtime Environment.
-*
-*   It is important to clear the cache before the Runtime Environment will be
-*   shut down.
-*
-* ARGUMENTS:
-*   None
-*
-* RETURN VALUE:
-*   None
-*
-*******************************************************************************/
-void EwClearStringCache
-(
-  void
-);
+/* Following functions are obsolete with Embedded Wizard 9.30. To avoid compiler
+   errors with customer own implementation empty defines of them are provided. */
+#define EwRetainString( aDest, aString ) ( *(aDest) = EwShareString( aString ))
+#define EwReleaseString( aString )  
+#define EwReleaseStrings( aStrings )
 
 
 /*******************************************************************************
@@ -6848,6 +6930,62 @@ XInt32 EwStringToAnsi
   char*             aDest,
   XInt32            aCount,
   char              aDefChar
+);
+
+
+/*******************************************************************************
+* FUNCTION:
+*   EwGetUtf8StringLength
+*
+* DESCRIPTION:
+*   The function EwGetUtf8StringLength() analyzes the characters in the given
+*   16 bit wide char string aString and estimates the length in bytes for a
+*   corresponding UTF8 string. This value can be used to reserve memory before
+*   using the function EwStringToUtf8().
+*
+* ARGUMENTS:
+*   aString  - The source 16 bit wide char string to convert.
+*
+* RETURN VALUE:
+*   Returns the number of bytes to store the corresponding string in UTF8 
+*   format without the zero terminator sign.
+*
+*******************************************************************************/
+XInt32 EwGetUtf8StringLength
+(
+  XString           aString
+);
+
+
+/*******************************************************************************
+* FUNCTION:
+*   EwStringToUtf8
+*
+* DESCRIPTION:
+*   The function EwStringToUtf8() converts the characters from the given 16 bit
+*   wide char string aString to an 8 bit UTF8 string and stores it in the memory
+*   area aDest. The resulted string is terminated by the zero 0x00.
+*
+*   The function returns the number of bytes written in aDest incl. the last 
+*   zero terminator 0x00.
+*
+* ARGUMENTS:
+*   aString  - The source 16 bit wide char string to convert.
+*   aDest    - Pointer to the destination memory, where the converted 8 bit 
+*     UTF8 string should be stored in. This memory area has to be at least
+*     aCount bytes large.
+*   aCount   - The number of bytes within aDest available for the operation.
+*
+* RETURN VALUE:
+*   Returns the number of bytes written into the aDest memory area incl. the 
+*   zero terminator sign.
+*
+*******************************************************************************/
+XInt32 EwStringToUtf8
+( 
+  XString           aString, 
+  unsigned char*    aDest,
+  XInt32            aCount
 );
 
 
@@ -7926,6 +8064,30 @@ void EwPanic
 
 /*******************************************************************************
 * FUNCTION:
+*   EwSaveRegister
+*
+* DESCRIPTION:
+*   The function EwSaveRegister() has the job to copy all general purpose CPU
+*   register to the memory area specified in the parameter aMemory.
+*
+* ARGUMENTS:
+*   aBuffer - Pointer to a memory area where to save the register contents.
+*     The capacity of the memory area is limited to 32 registers. This means
+*     on a 32-bit CPU it is 128 bytes large. On a 64-bit CPU it is 256 bytes
+*     large.
+*
+* RETURN VALUE:
+*   None
+*
+*******************************************************************************/
+void EwSaveRegister
+( 
+  void*             aBuffer
+);
+
+
+/*******************************************************************************
+* FUNCTION:
 *   EwGetTicks
 *
 * DESCRIPTION:
@@ -8205,6 +8367,238 @@ int EwStrCmp
 int EwStrLen
 ( 
   const char*       aStr
+);
+
+
+/*******************************************************************************
+* FUNCTION:
+*   EwInitHeap
+*
+* DESCRIPTION:
+*   The function EwInitHeap() initializes the heap manager. Thereupon memory
+*   pools can be added by using the function EwAddHeapMemoryPool(). If there
+*   was heap manager initialized previously, the associated information is
+*   discarded with this invocation.
+*
+* ARGUMENTS:
+*   aLargeObjectSize - Determines the size of objects considered as large and
+*     long-lasting. Such objects are allocated from the end of the list of free
+*     memory blocks. All other objects are allocated from the begin of the list.
+*     This reduces the probability for heap fragmentation. If this parameter is
+*     <= 0 a default value for the threshold setting is assumed.
+*
+* RETURN VALUE:
+*   Returns != 0 if successful.
+*
+*******************************************************************************/
+int EwInitHeap
+(
+  int                          aLargeObjectSize
+);
+
+
+/*******************************************************************************
+* FUNCTION:
+*   EwDoneHeap
+*
+* DESCRIPTION:
+*   The function EwDoneHeap() deinitializes the heap manager.
+*
+* ARGUMENTS:
+*   None
+*
+* RETURN VALUE:
+*   None
+*
+*******************************************************************************/
+void EwDoneHeap
+(
+  void
+);
+
+
+/*******************************************************************************
+* FUNCTION:
+*   EwAddHeapMemoryPool
+*
+* DESCRIPTION:
+*   The function EwAddHeapMemoryPool() adds to the heap manager a new memory 
+*   area. From now the memory is used by subsequent EwAllocHeapBlock() function
+*   invocations. Once added the memory area can't be removed again without 
+*   reinitialization of the entire heap manager (see EwInitHeap()).
+*
+* ARGUMENTS:
+*   aAddress - The start address of the memory area.
+*   aSize    - The size of the memory area in bytes.
+*
+* RETURN VALUE:
+*   None
+*
+*******************************************************************************/
+void EwAddHeapMemoryPool
+(
+  void*                        aAddress,
+  long                         aSize
+);
+
+
+/*******************************************************************************
+* FUNCTION:
+*   EwGetHeapInfo
+*
+* DESCRIPTION:
+*   The function EwGetHeapInfo() returns few information reflecting the actuall
+*   state of the heap manager. As such it is useful for debugging purpose and
+*   tests. The functions copies the values into variables referred by the
+*   function parameters. If a parameter is 0 (zero), the value is ignored.
+*
+* ARGUMENTS:
+*   aNoOfMemoryPools   - Receives the number of managed memory pools. Memory
+*     pools are added to the heap by using the function EwAddHeapMemoryPool().
+*   aTotalSize         - Receives the size in bytes of the entire memory (used
+*     and free).
+*   aFreeSize          - Receives the size in bytes of the free memory.
+*   aNoOfUsedBlocks    - Receives the number of allocated memory blocks.
+*   aNoOfFreeBlocks    - Receives the number of free blocks.
+*   aSmallestFreeBlock - Receives the size in bytes of the smallest free block.
+*   aLargestFreeBlock  - Receives the size in bytes of the largest free block.
+*   aSmallAllocCounter - Receives the total number of performed alloc operations
+*     with small blocks.
+*   aLargeAllocCounter - Receives the total number of performed alloc operations
+*     with large blocks.
+*   aFreeCounter       - Receives the total number of performed free operations.
+*
+* RETURN VALUE:
+*   None
+*
+*******************************************************************************/
+void EwGetHeapInfo
+(
+  long*                        aNoOfMemoryPools,
+  long*                        aTotalSize,
+  long*                        aFreeSize,
+  long*                        aNoOfUsedBlocks,
+  long*                        aNoOfFreeBlocks,
+  long*                        aSmallestFreeBlock,
+  long*                        aLargestFreeBlock,
+  unsigned long*               aSmallAllocCounter,
+  unsigned long*               aLargeAllocCounter,
+  unsigned long*               aFreeCounter
+);
+
+
+/*******************************************************************************
+* FUNCTION:
+*   EwDumpHeap
+*
+* DESCRIPTION:
+*   The function EwDumpHeap() exists for debugging purpose. It evaluates the
+*   contents of all memory pools managed actually be the heap manager and
+*   prints the associated information as well as the existing blocks.
+*
+* ARGUMENTS:
+*   aDetailed - If != 0, the functions prints a list of all memory blocks.
+*     If == 0, only heap overview is printed.
+*
+* RETURN VALUE:
+*   None
+*
+*******************************************************************************/
+void EwDumpHeap
+(
+  int                          aDetailed
+);
+
+
+/*******************************************************************************
+* FUNCTION:
+*   EwVerifyHeap
+*
+* DESCRIPTION:
+*   The function EwVerifyHeap() exists for debugging purpose. It evaluates the
+*   contents of all memory pools managed actually be the heap manager with the
+*   aim to verify whether the heap is coherent. In case the verification were
+*   successful, the function returns != 0. Otherwise an adequate messages is
+*   reported and the function returns 0.
+*
+* ARGUMENTS:
+*   None
+*
+* RETURN VALUE:
+*   Returns != 0 if the heap is coherent. In case of an error, the value 0 is
+*   returned.
+*
+*******************************************************************************/
+int EwVerifyHeap
+(
+  void
+);
+
+
+/*******************************************************************************
+* FUNCTION:
+*   EwAllocHeapBlock
+*
+* DESCRIPTION:
+*   The function EwAllocHeapBlock() tries to allocate memory block with the 
+*   given number of bytes. Once not needed anymore, the memory should be 
+*   released by using the function EwFreeHeapBlock().
+*
+* ARGUMENTS:
+*   aSize - Size of the memory to allocate in bytes.
+*
+* RETURN VALUE:
+*   Returns a pointer to the allocated memory or 0 (zero) if there is not 
+*   enough free memory on the heap.
+*
+*******************************************************************************/
+void* EwAllocHeapBlock
+(
+  int                          aSize
+);
+
+
+/*******************************************************************************
+* FUNCTION:
+*   EwFreeHeapBlock
+*
+* DESCRIPTION:
+*   The function EwFreeHeapBlock() releases the memory allocated by a preceding 
+*   call to the method EwAllocHeapBlock().
+*
+* ARGUMENTS:
+*   aMemory - Pointer to the memory block to release.
+*
+* RETURN VALUE:
+*   None
+*
+*******************************************************************************/
+void EwFreeHeapBlock
+(
+  void*                        aMemory
+);
+
+
+/*******************************************************************************
+* FUNCTION:
+*   EwIsHeapPtr
+*
+* DESCRIPTION:
+*   The function EwIsHeapPtr() verifies whether the given pointer aPtr refers a
+*   memory area controlled by the heap manager (see EwAllocHeapBlock(), 
+*   EwFreeHeapBlock()).
+*
+* ARGUMENTS:
+*   aPtr - Address to test.
+*
+* RETURN VALUE:
+*   EwIsHeapPtr() returns != 0 if the given pointer aPtr refers a memory area 
+*   used by the heap manager. Otherwise 0 is returned.
+*
+*******************************************************************************/
+int EwIsHeapPtr
+(
+  void*                        aMemory
 );
 
 

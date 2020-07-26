@@ -36,16 +36,11 @@
 #include "pin_mux.h"
 #include <stdbool.h>
 #include "fsl_power.h"
-/*******************************************************************************
- * Variables
- ******************************************************************************/
-/* Composite device structure. */
-usb_device_composite_struct_t g_composite;
-USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t s_SetupOutBuffer[8];
-
+#include "sdmmc_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -68,6 +63,15 @@ extern void USB_DeviceMscWriteTask(void);
     (defined(USB_DEVICE_MSC_USE_WRITE_TASK) && (USB_DEVICE_MSC_USE_WRITE_TASK > 0))
 extern usb_msc_buffer_struct_t *currentTrasfer;
 #endif
+
+/*******************************************************************************
+ * Variables
+ ******************************************************************************/
+extern sd_card_t g_sd;
+/* Composite device structure. */
+usb_device_composite_struct_t g_composite;
+USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t s_SetupOutBuffer[8];
+
 /*******************************************************************************
  * Code
  ******************************************************************************/
@@ -399,6 +403,8 @@ void APPInit(void)
 
     USB_DeviceIsrEnable();
 
+    /*Add one delay here to make the DP pull down long enough to allow host to detect the previous disconnection.*/
+    SDK_DelayAtLeastUs(5000, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
     USB_DeviceRun(g_composite.deviceHandle);
 }
 
@@ -425,13 +431,7 @@ void main(void)
     BOARD_InitDebugConsole();
 
     /*Make sure USDHC ram buffer has power up*/
-    POWER_DisablePD(kPDRUNCFG_APD_USDHC0_SRAM);
-    POWER_DisablePD(kPDRUNCFG_PPD_USDHC0_SRAM);
-    POWER_ApplyPD();
-    /* SDIO0 */
-    CLOCK_AttachClk(kAUX0_PLL_to_SDIO0_CLK);
-    CLOCK_SetClkDiv(kCLOCK_DivSdio0Clk, 1);
-    RESET_ClearPeripheralReset(kSDIO0_RST_SHIFT_RSTn);
+    BOARD_SD_Config(&g_sd, NULL, (USB_DEVICE_INTERRUPT_PRIORITY - 1U), NULL);
 
     APPInit();
 

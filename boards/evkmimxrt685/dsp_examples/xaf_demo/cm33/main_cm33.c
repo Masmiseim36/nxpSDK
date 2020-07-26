@@ -22,7 +22,7 @@
 #include "dsp_support.h"
 #include "dsp_ipc.h"
 #include "cmd.h"
-
+#include "sdmmc_config.h"
 #include "fsl_wm8904.h"
 #include "fsl_codec_common.h"
 #include "fsl_codec_adapter.h"
@@ -72,38 +72,6 @@ wm8904_config_t g_wm8904Config = {
 };
 codec_config_t g_boardCodecConfig = {.codecDevType = kCODEC_WM8904, .codecDevConfig = &g_wm8904Config};
 static app_handle_t app;
-
-/*! @brief SDMMC host detect card configuration */
-static const sdmmchost_detect_card_t s_sdCardDetect = {
-#ifndef BOARD_SD_DETECT_TYPE
-    .cdType = kSDMMCHOST_DetectCardByGpioCD,
-#else
-    .cdType = BOARD_SD_DETECT_TYPE,
-#endif
-    .cdTimeOut_ms = (~0U),
-    .cardInserted = APP_SDCARD_DetectCallBack,
-    .cardRemoved  = APP_SDCARD_DetectCallBack,
-    .userData     = &app,
-};
-
-/*! @brief SDMMC card power control configuration */
-#if defined SDCARD_POWER_CTRL_FUNCTION_EXIST
-static const sdmmchost_pwr_card_t s_sdCardPwrCtrl = {
-    .powerOn          = BOARD_PowerOnSDCARD,
-    .powerOnDelay_ms  = 500U,
-    .powerOff         = BOARD_PowerOffSDCARD,
-    .powerOffDelay_ms = 0U,
-};
-#endif
-
-/*! @brief SDMMC card power control configuration */
-#if defined SDCARD_SWITCH_VOLTAGE_FUNCTION_EXIST
-static const sdmmchost_card_switch_voltage_func_t s_sdCardVoltageSwitch = {
-    .cardSignalLine1V8 = BOARD_USDHC_Switch_VoltageTo1V8,
-    .cardSignalLine3V3 = BOARD_USDHC_Switch_VoltageTo3V3,
-};
-#endif
-
 /*******************************************************************************
  * Code
  ******************************************************************************/
@@ -121,24 +89,6 @@ int updateAudio_PLL()
 }
 
 
-void BOARD_USDHC_Switch_VoltageTo1V8(void)
-{
-    bool result = PCA9420_SwitchMode(&pca9420Handle, kPCA9420_Mode1);
-    if (!result)
-    {
-        assert(false);
-    }
-}
-
-void BOARD_USDHC_Switch_VoltageTo3V3(void)
-{
-    bool result = PCA9420_SwitchMode(&pca9420Handle, kPCA9420_Mode0);
-    if (!result)
-    {
-        assert(false);
-    }
-}
-
 int BOARD_CODEC_Init(void)
 {
     PRINTF("Configure WM8904 codec\r\n");
@@ -151,7 +101,7 @@ int BOARD_CODEC_Init(void)
 
     /* Initial volume kept low for hearing safety. */
     /* Adjust it to your needs, 0x0006 for -51 dB, 0x0039 for 0 dB etc. */
-    CODEC_SetVolume(&g_codecHandle, kCODEC_PlayChannelHeadphoneLeft | kCODEC_PlayChannelHeadphoneRight, 0x0020);
+    CODEC_SetVolume(&g_codecHandle, kCODEC_PlayChannelHeadphoneLeft | kCODEC_PlayChannelHeadphoneRight, 0x0025);
 
     return 0;
 }
@@ -170,16 +120,6 @@ void APP_SDCARD_Task(void *param)
     app_handle_t *app = (app_handle_t *)param;
 
     app->sdcardSem = xSemaphoreCreateBinary();
-
-    g_sd.host.base           = SD_HOST_BASEADDR;
-    g_sd.host.sourceClock_Hz = SD_HOST_CLK_FREQ;
-    g_sd.usrParam.cd         = &s_sdCardDetect;
-#if defined SDCARD_POWER_CTRL_FUNCTION_EXIST
-    g_sd.usrParam.pwr = &s_sdCardPwrCtrl;
-#endif
-#if defined SDCARD_SWITCH_VOLTAGE_FUNCTION_EXIST
-    g_sd.usrParam.cardVoltage = &s_sdCardVoltageSwitch;
-#endif
 
     PRINTF("[APP_SDCARD_Task] start\r\n");
 
@@ -202,12 +142,12 @@ void APP_SDCARD_Task(void *param)
         {
             app->sdcardInsertedPrev = app->sdcardInserted;
 
-            SD_PowerOffCard(g_sd.host.base, g_sd.usrParam.pwr);
+            SD_SetCardPower(&g_sd, false);
 
             if (app->sdcardInserted)
             {
                 /* power on the card */
-                SD_PowerOnCard(g_sd.host.base, g_sd.usrParam.pwr);
+                SD_SetCardPower(&g_sd, true);
                 /* Init card. */
                 if (SD_CardInit(&g_sd))
                 {
@@ -282,8 +222,8 @@ int main(void)
 {
     int ret;
 
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
 
     CLOCK_EnableClock(kCLOCK_InputMux);
@@ -291,7 +231,7 @@ int main(void)
     /* Clear MUA reset before run DSP core */
     RESET_PeripheralReset(kMU_RST_SHIFT_RSTn);
 
-    /* Attach main clock to I3C */
+    /* attach main clock to I3C (500MHz / 20 = 25MHz). */
     CLOCK_AttachClk(kMAIN_CLK_to_I3C_CLK);
     CLOCK_SetClkDiv(kCLOCK_DivI3cClk, 20);
 
@@ -301,29 +241,20 @@ int main(void)
 
     /* attach AUDIO PLL clock to MCLK */
     CLOCK_AttachClk(kAUDIO_PLL_to_MCLK_CLK);
+
     CLOCK_SetClkDiv(kCLOCK_DivMclkClk, 1);
     SYSCTL1->MCLKPINDIR = SYSCTL1_MCLKPINDIR_MCLKPINDIR_MASK;
 
     g_wm8904Config.i2cConfig.codecI2CSourceClock = CLOCK_GetI3cClkFreq();
     g_wm8904Config.mclk_HZ                       = CLOCK_GetMclkClkFreq();
 
-    /*Make sure USDHC ram buffer has power up*/
-    POWER_DisablePD(kPDRUNCFG_APD_USDHC0_SRAM);
-    POWER_DisablePD(kPDRUNCFG_PPD_USDHC0_SRAM);
-    POWER_DisablePD(kPDRUNCFG_PD_LPOSC);
-    POWER_ApplyPD();
-
-    /* SDIO0 */
-    /* usdhc depend on 32K clock also */
-    CLOCK_AttachClk(kLPOSC_DIV32_to_32KHZWAKE_CLK);
-    CLOCK_AttachClk(kAUX0_PLL_to_SDIO0_CLK);
-    CLOCK_SetClkDiv(kCLOCK_DivSdio0Clk, 1);
-
     PRINTF("\r\n");
     PRINTF("******************************\r\n");
     PRINTF("DSP audio framework demo start\r\n");
     PRINTF("******************************\r\n");
     PRINTF("\r\n");
+
+    BOARD_SD_Config(&g_sd, APP_SDCARD_DetectCallBack, BOARD_SDMMC_SD_HOST_IRQ_PRIORITY, &app);
 
     ret = BOARD_CODEC_Init();
     if (ret)

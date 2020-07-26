@@ -32,7 +32,7 @@ Created on 14:2 9-8-2019
 
 */
 #define MAKE_TFA9XXX_HEADER_VERSION(major, minor, bugfix) (((major) << 16) | ((minor) << 8) | (bugfix))
-#define FSL_TFA9XXX_HEADER_VERSION (MAKE_TFA9XXX_HEADER_VERSION(8, 1, 2))
+#define FSL_TFA9XXX_HEADER_VERSION                        (MAKE_TFA9XXX_HEADER_VERSION(8, 1, 2))
 
 #ifndef __tfa_config_h__
 #define __tfa_config_h__

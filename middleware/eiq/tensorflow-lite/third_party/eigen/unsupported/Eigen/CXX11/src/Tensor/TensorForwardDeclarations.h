@@ -20,17 +20,21 @@ namespace Eigen {
 // map_allocator.
 template<typename T> struct MakePointer {
   typedef T* Type;
-  typedef T& RefType;
-  typedef T ScalarType;
+  typedef const T* ConstType;
 };
 
-// The PointerType class is a container of the device specefic pointer
-// used for referring to a Pointer on TensorEvaluator class. While the TensorExpression
+template <typename T>
+EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE T* constCast(const T* data) {
+  return const_cast<T*>(data);
+}
+
+// The StorageMemory class is a container of the device specific pointer
+// used for refering to a Pointer on TensorEvaluator class. While the TensorExpression
 // is a device-agnostic type and need MakePointer class for type conversion,
-// the TensorEvaluator calls can be specialized for a device, hence it is possible
+// the TensorEvaluator class can be specialized for a device, hence it is possible
 // to construct different types of temproray storage memory in TensorEvaluator
-// for different devices by specializing the following PointerType class.
-template<typename T, typename Device> struct PointerType : MakePointer<T>{};
+// for different devices by specializing the following StorageMemory class.
+template<typename T, typename device> struct StorageMemory: MakePointer <T> {};
 
 namespace internal{
 template<typename A, typename B> struct Pointer_type_promotion {
@@ -39,24 +43,10 @@ template<typename A, typename B> struct Pointer_type_promotion {
 template<typename A> struct Pointer_type_promotion<A, A> {
   static const bool val = true;
 };
-template<typename A, typename B> struct TypeConversion;
-#ifndef __SYCL_DEVICE_ONLY__
-template<typename A, typename B> struct TypeConversion{
+template<typename A, typename B> struct TypeConversion {
   typedef A* type;
 };
-#endif
 }
-
-#if defined(EIGEN_USE_SYCL)
-namespace TensorSycl {
-namespace internal{
-template <typename HostExpr, typename FunctorExpr, typename Tuple_of_Acc, typename Dims, typename Op, typename Index> class ReductionFunctor;
-template<typename CoeffReturnType ,typename OutAccessor, typename HostExpr, typename FunctorExpr, typename Op, typename Dims, typename Index, typename TupleType>
-class FullReductionKernelFunctor;
-}
-}
-#endif
-
 
 
 template<typename PlainObjectType, int Options_ = Unaligned, template <class> class MakePointer_ = MakePointer> class TensorMap;
@@ -104,6 +94,7 @@ template<typename XprType, template <class> class MakePointer_ = MakePointer> cl
 template<typename XprType> class TensorForcedEvalOp;
 
 template<typename ExpressionType, typename DeviceType> class TensorDevice;
+template<typename ExpressionType, typename DeviceType, typename DoneCallback> class TensorAsyncDevice;
 template<typename Derived, typename Device> struct TensorEvaluator;
 
 struct NoOpOutputKernel;
@@ -112,6 +103,31 @@ struct DefaultDevice;
 struct ThreadPoolDevice;
 struct GpuDevice;
 struct SyclDevice;
+
+#ifdef EIGEN_USE_SYCL
+
+template <typename T> struct MakeSYCLPointer {
+  typedef Eigen::TensorSycl::internal::RangeAccess<cl::sycl::access::mode::read_write, T> Type;
+};
+
+template <typename T>
+EIGEN_STRONG_INLINE const Eigen::TensorSycl::internal::RangeAccess<cl::sycl::access::mode::read_write, T>&
+constCast(const Eigen::TensorSycl::internal::RangeAccess<cl::sycl::access::mode::read_write, T>& data) {
+  return data;
+}
+
+template <typename T>
+struct StorageMemory<T, SyclDevice> : MakeSYCLPointer<T> {};
+template <typename T>
+struct StorageMemory<T, const SyclDevice> : StorageMemory<T, SyclDevice> {};
+
+namespace TensorSycl {
+namespace internal{
+template <typename Evaluator, typename Op> class GenericNondeterministicReducer;
+}
+}
+#endif
+
 
 enum FFTResultType {
   RealPart = 0,
@@ -138,19 +154,35 @@ struct IsVectorizable<GpuDevice, Expression> {
                             TensorEvaluator<Expression, GpuDevice>::IsAligned;
 };
 
+// Tiled evaluation strategy.
+enum TiledEvaluation {
+  Off = 0,    // tiled evaluation is not supported
+  On = 1,     // still work in progress (see TensorBlockV2.h)
+};
+
 template <typename Device, typename Expression>
 struct IsTileable {
   // Check that block evaluation is supported and it's a preferred option (at
   // least one sub-expression has much faster block evaluation, e.g.
   // broadcasting).
-  static const bool value = TensorEvaluator<Expression, Device>::BlockAccess &&
-                            TensorEvaluator<Expression, Device>::PreferBlockAccess;
+  static const bool BlockAccessV2 =
+      TensorEvaluator<Expression, Device>::BlockAccessV2 &&
+      TensorEvaluator<Expression, Device>::PreferBlockAccess;
+
+  static const TiledEvaluation value =
+      BlockAccessV2 ? TiledEvaluation::On : TiledEvaluation::Off;
 };
 
 template <typename Expression, typename Device,
-          bool Vectorizable = IsVectorizable<Device, Expression>::value,
-          bool Tileable = IsTileable<Device, Expression>::value>
+          bool Vectorizable      = IsVectorizable<Device, Expression>::value,
+          TiledEvaluation Tiling = IsTileable<Device, Expression>::value>
 class TensorExecutor;
+
+template <typename Expression, typename Device, typename DoneCallback,
+          bool Vectorizable = IsVectorizable<Device, Expression>::value,
+          TiledEvaluation Tiling = IsTileable<Device, Expression>::value>
+class TensorAsyncExecutor;
+
 
 }  // end namespace internal
 

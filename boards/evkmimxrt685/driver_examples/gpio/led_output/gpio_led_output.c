@@ -16,9 +16,9 @@
  * Definitions
  ******************************************************************************/
 #define APP_BOARD_TEST_LED_PORT BOARD_LED_BLUE_GPIO_PORT
-#define APP_BOARD_TEST_LED_PIN BOARD_LED_BLUE_GPIO_PIN
-#define APP_SW_PORT BOARD_SW2_GPIO_PORT
-#define APP_SW_PIN BOARD_SW2_GPIO_PIN
+#define APP_BOARD_TEST_LED_PIN  BOARD_LED_BLUE_GPIO_PIN
+#define APP_SW_PORT             BOARD_SW2_GPIO_PORT
+#define APP_SW_PIN              BOARD_SW2_GPIO_PIN
 
 /*******************************************************************************
  * Prototypes

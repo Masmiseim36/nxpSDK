@@ -10,7 +10,9 @@
     <definition extID="device.MIMXRT1052_CMSIS.MIMXRT1052"/>
     <definition extID="device.MIMXRT1052_startup.MIMXRT1052"/>
     <definition extID="middleware.baremetal.MIMXRT1052"/>
-    <definition extID="middleware.usb.device.MIMXRT1052"/>
+    <definition extID="middleware.usb.common_header.MIMXRT1052"/>
+    <definition extID="middleware.usb.device.common_header.MIMXRT1052"/>
+    <definition extID="middleware.usb.device.controller.driver.MIMXRT1052"/>
     <definition extID="middleware.usb.device_controller_ehci.MIMXRT1052"/>
     <definition extID="middleware.usb.phy.MIMXRT1052"/>
     <definition extID="platform.Include_common.MIMXRT1052"/>
@@ -23,7 +25,6 @@
     <definition extID="platform.drivers.iomuxc.MIMXRT1052"/>
     <definition extID="platform.drivers.lpuart.MIMXRT1052"/>
     <definition extID="platform.drivers.xip_board.MIMXRT1052"/>
-    <definition extID="platform.drivers.xip_board_dcd.MIMXRT1052"/>
     <definition extID="platform.drivers.xip_device.MIMXRT1052"/>
     <definition extID="platform.utilities.assert.MIMXRT1052"/>
     <definition extID="platform.utilities.misc_utilities.MIMXRT1052"/>
@@ -35,7 +36,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkbimxrt1050_dev_audio_generator_bm" name="dev_audio_generator_bm" category="usb_examples" dependency="middleware.usb.device_controller_ehci.MIMXRT1052 middleware.usb.phy.MIMXRT1052 platform.drivers.cache_armv7_m7.MIMXRT1052 middleware.usb.device.MIMXRT1052 platform.drivers.clock.MIMXRT1052 platform.drivers.common.MIMXRT1052 device.MIMXRT1052_CMSIS.MIMXRT1052 device.MIMXRT1052_startup.MIMXRT1052 platform.drivers.lpuart.MIMXRT1052 platform.drivers.iomuxc.MIMXRT1052 platform.utilities.assert.MIMXRT1052 platform.drivers.igpio.MIMXRT1052 platform.drivers.xip_device.MIMXRT1052 platform.drivers.xip_board.MIMXRT1052 platform.drivers.xip_board_dcd.MIMXRT1052 utility.debug_console.MIMXRT1052 component.lpuart_adapter.MIMXRT1052 component.serial_manager.MIMXRT1052 component.lists.MIMXRT1052 component.serial_manager_uart.MIMXRT1052 component.osa.MIMXRT1052 platform.Include_core_cm7.MIMXRT1052 platform.Include_common.MIMXRT1052 platform.Include_dsp.MIMXRT1052 platform.utilities.misc_utilities.MIMXRT1052 middleware.baremetal.MIMXRT1052">
+  <example id="evkbimxrt1050_dev_audio_generator_bm" name="dev_audio_generator_bm" category="usb_examples" dependency="middleware.usb.device_controller_ehci.MIMXRT1052 middleware.usb.phy.MIMXRT1052 platform.drivers.cache_armv7_m7.MIMXRT1052 platform.drivers.clock.MIMXRT1052 platform.drivers.common.MIMXRT1052 device.MIMXRT1052_CMSIS.MIMXRT1052 device.MIMXRT1052_startup.MIMXRT1052 platform.drivers.lpuart.MIMXRT1052 platform.drivers.iomuxc.MIMXRT1052 platform.utilities.assert.MIMXRT1052 platform.drivers.igpio.MIMXRT1052 platform.drivers.xip_device.MIMXRT1052 platform.drivers.xip_board.MIMXRT1052 utility.debug_console.MIMXRT1052 component.lpuart_adapter.MIMXRT1052 component.serial_manager.MIMXRT1052 component.lists.MIMXRT1052 component.serial_manager_uart.MIMXRT1052 middleware.usb.device.controller.driver.MIMXRT1052 component.osa.MIMXRT1052 middleware.usb.common_header.MIMXRT1052 platform.Include_core_cm7.MIMXRT1052 platform.Include_common.MIMXRT1052 platform.Include_dsp.MIMXRT1052 middleware.usb.device.common_header.MIMXRT1052 platform.utilities.misc_utilities.MIMXRT1052 middleware.baremetal.MIMXRT1052">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -119,11 +120,13 @@
     <source path="boards/evkbimxrt1050/usb_examples/usb_device_audio_generator/bm" target_path="board" type="c_include">
       <files mask="board.h"/>
       <files mask="clock_config.h"/>
+      <files mask="dcd.h"/>
       <files mask="pin_mux.h"/>
     </source>
     <source path="boards/evkbimxrt1050/usb_examples/usb_device_audio_generator/bm" target_path="board" type="src">
       <files mask="board.c"/>
       <files mask="clock_config.c"/>
+      <files mask="dcd.c"/>
       <files mask="pin_mux.c"/>
     </source>
     <source path="boards/evkbimxrt1050/usb_examples/usb_device_audio_generator/bm" target_path="doc" type="doc" toolchain="iar mdk mcuxpresso">

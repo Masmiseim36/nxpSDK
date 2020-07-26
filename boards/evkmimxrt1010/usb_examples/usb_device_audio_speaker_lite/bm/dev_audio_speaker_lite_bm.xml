@@ -6,6 +6,7 @@
     <definition extID="component.lists.MIMXRT1011"/>
     <definition extID="component.lpi2c_adapter.MIMXRT1011"/>
     <definition extID="component.lpuart_adapter.MIMXRT1011"/>
+    <definition extID="component.osa.MIMXRT1011"/>
     <definition extID="component.serial_manager.MIMXRT1011"/>
     <definition extID="component.serial_manager_uart.MIMXRT1011"/>
     <definition extID="component.wm8960_adapter.MIMXRT1011"/>
@@ -14,7 +15,9 @@
     <definition extID="driver.codec.MIMXRT1011"/>
     <definition extID="driver.wm8960.MIMXRT1011"/>
     <definition extID="middleware.baremetal.MIMXRT1011"/>
-    <definition extID="middleware.usb.device.MIMXRT1011"/>
+    <definition extID="middleware.usb.common_header.MIMXRT1011"/>
+    <definition extID="middleware.usb.device.common_header.MIMXRT1011"/>
+    <definition extID="middleware.usb.device.controller.driver.MIMXRT1011"/>
     <definition extID="middleware.usb.device_controller_ehci.MIMXRT1011"/>
     <definition extID="middleware.usb.phy.MIMXRT1011"/>
     <definition extID="platform.Include_common.MIMXRT1011"/>
@@ -34,6 +37,7 @@
     <definition extID="platform.drivers.xip_board.MIMXRT1011"/>
     <definition extID="platform.drivers.xip_device.MIMXRT1011"/>
     <definition extID="platform.utilities.assert.MIMXRT1011"/>
+    <definition extID="platform.utilities.misc_utilities.MIMXRT1011"/>
     <definition extID="utility.debug_console.MIMXRT1011"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
@@ -42,7 +46,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkmimxrt1010_dev_audio_speaker_lite_bm" name="dev_audio_speaker_lite_bm" category="usb_examples" dependency="middleware.usb.device_controller_ehci.MIMXRT1011 middleware.usb.phy.MIMXRT1011 platform.drivers.cache_armv7_m7.MIMXRT1011 driver.wm8960.MIMXRT1011 driver.codec.MIMXRT1011 component.wm8960_adapter.MIMXRT1011 component.lpi2c_adapter.MIMXRT1011 platform.drivers.lpi2c.MIMXRT1011 platform.drivers.sai.MIMXRT1011 platform.drivers.sai_edma.MIMXRT1011 platform.drivers.dmamux.MIMXRT1011 platform.drivers.edma.MIMXRT1011 middleware.usb.device.MIMXRT1011 platform.drivers.clock.MIMXRT1011 platform.drivers.common.MIMXRT1011 device.MIMXRT1011_CMSIS.MIMXRT1011 device.MIMXRT1011_startup.MIMXRT1011 platform.drivers.lpuart.MIMXRT1011 platform.drivers.iomuxc.MIMXRT1011 platform.utilities.assert.MIMXRT1011 platform.drivers.igpio.MIMXRT1011 platform.drivers.xip_device.MIMXRT1011 platform.drivers.xip_board.MIMXRT1011 utility.debug_console.MIMXRT1011 component.lpuart_adapter.MIMXRT1011 component.serial_manager.MIMXRT1011 component.serial_manager_uart.MIMXRT1011 component.lists.MIMXRT1011 platform.Include_core_cm7.MIMXRT1011 platform.Include_common.MIMXRT1011 platform.Include_dsp.MIMXRT1011 component.codec_i2c.MIMXRT1011 middleware.baremetal.MIMXRT1011">
+  <example id="evkmimxrt1010_dev_audio_speaker_lite_bm" name="dev_audio_speaker_lite_bm" category="usb_examples" dependency="middleware.usb.device_controller_ehci.MIMXRT1011 middleware.usb.phy.MIMXRT1011 platform.drivers.cache_armv7_m7.MIMXRT1011 driver.wm8960.MIMXRT1011 driver.codec.MIMXRT1011 platform.drivers.common.MIMXRT1011 component.wm8960_adapter.MIMXRT1011 component.codec_i2c.MIMXRT1011 component.lpi2c_adapter.MIMXRT1011 platform.drivers.lpi2c.MIMXRT1011 platform.drivers.sai.MIMXRT1011 platform.drivers.sai_edma.MIMXRT1011 platform.drivers.dmamux.MIMXRT1011 platform.drivers.edma.MIMXRT1011 platform.drivers.clock.MIMXRT1011 device.MIMXRT1011_CMSIS.MIMXRT1011 device.MIMXRT1011_startup.MIMXRT1011 platform.drivers.lpuart.MIMXRT1011 platform.drivers.iomuxc.MIMXRT1011 platform.utilities.assert.MIMXRT1011 platform.drivers.igpio.MIMXRT1011 platform.drivers.xip_device.MIMXRT1011 platform.drivers.xip_board.MIMXRT1011 utility.debug_console.MIMXRT1011 component.lpuart_adapter.MIMXRT1011 component.serial_manager.MIMXRT1011 component.lists.MIMXRT1011 component.serial_manager_uart.MIMXRT1011 middleware.usb.device.controller.driver.MIMXRT1011 component.osa.MIMXRT1011 middleware.usb.common_header.MIMXRT1011 platform.Include_core_cm7.MIMXRT1011 platform.Include_common.MIMXRT1011 platform.Include_dsp.MIMXRT1011 middleware.usb.device.common_header.MIMXRT1011 platform.utilities.misc_utilities.MIMXRT1011 middleware.baremetal.MIMXRT1011">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -76,6 +80,9 @@
           <value>SDK_I2C_BASED_COMPONENT_USED=1</value>
           <value>BOARD_USE_CODEC=1</value>
           <value>CODEC_WM8960_ENABLE</value>
+          <value>FSL_OSA_BM_TASK_ENABLE=0</value>
+          <value>FSL_OSA_BM_TIMER_CONFIG=0</value>
+          <value>SERIAL_PORT_TYPE_UART=1</value>
         </option>
         <option id="gnu.c.compiler.option.optimization.flags" type="string">
           <value>-fno-common</value>
@@ -109,17 +116,17 @@
         </drivers>
       </debug_configuration>
     </debug_configurations>
-    <source path="boards/evkmimxrt1010/usb_examples/usb_device_audio_speaker_lite/bm/armgcc" target_path="src" type="linker" toolchain="armgcc">
+    <source path="boards/evkmimxrt1010/usb_examples/usb_device_audio_speaker_lite/bm/armgcc" target_path="MIMXRT1011/gcc" type="linker" toolchain="armgcc">
       <files mask="MIMXRT1011xxxxx_ram.ld"/>
     </source>
-    <source path="boards/evkmimxrt1010/usb_examples/usb_device_audio_speaker_lite/bm/iar" target_path="src" type="linker" toolchain="iar">
+    <source path="boards/evkmimxrt1010/usb_examples/usb_device_audio_speaker_lite/bm/iar" target_path="MIMXRT1011/iar" type="linker" toolchain="iar">
       <files mask="MIMXRT1011xxxxx_ram.icf"/>
     </source>
-    <source path="boards/evkmimxrt1010/usb_examples/usb_device_audio_speaker_lite/bm/mdk" target_path="src" type="configuration" toolchain="mdk">
-      <files mask="evkmimxrt1010_ram.ini"/>
-    </source>
-    <source path="boards/evkmimxrt1010/usb_examples/usb_device_audio_speaker_lite/bm/mdk" target_path="src" type="linker" toolchain="mdk">
+    <source path="boards/evkmimxrt1010/usb_examples/usb_device_audio_speaker_lite/bm/mdk" target_path="MIMXRT1011/arm" type="linker" toolchain="mdk">
       <files mask="MIMXRT1011xxxxx_ram.scf"/>
+    </source>
+    <source path="boards/evkmimxrt1010/usb_examples/usb_device_audio_speaker_lite/bm/mdk" target_path="evkmimxrt1010" type="configuration" toolchain="mdk">
+      <files mask="evkmimxrt1010_ram.ini"/>
     </source>
     <source path="boards/evkmimxrt1010/usb_examples/usb_device_audio_speaker_lite/bm" target_path="board" type="c_include">
       <files mask="board.h"/>
@@ -134,6 +141,12 @@
     <source path="boards/evkmimxrt1010/usb_examples/usb_device_audio_speaker_lite/bm" target_path="doc" type="doc" toolchain="iar mdk mcuxpresso">
       <files mask="readme.txt"/>
     </source>
+    <source path="boards/evkmimxrt1010/usb_examples/usb_device_audio_speaker_lite/bm" target_path="evkmimxrt1010/usb_examples/usb_device_audio_speaker_lite/bm" type="binary" exclude="true">
+      <files mask="dev_audio_speaker_lite_bm.bin"/>
+    </source>
+    <source path="boards/evkmimxrt1010/usb_examples/usb_device_audio_speaker_lite/bm" target_path="evkmimxrt1010/usb_examples/usb_device_audio_speaker_lite/bm" type="doc" exclude="true">
+      <files mask="readme.pdf"/>
+    </source>
     <source path="boards/evkmimxrt1010/usb_examples/usb_device_audio_speaker_lite/bm" target_path="source" type="c_include">
       <files mask="audio_speaker.h"/>
       <files mask="usb_device_audio.h"/>
@@ -146,12 +159,6 @@
       <files mask="usb_device_audio.c"/>
       <files mask="usb_device_ch9.c"/>
       <files mask="usb_device_descriptor.c"/>
-    </source>
-    <source path="boards/evkmimxrt1010/usb_examples/usb_device_audio_speaker_lite/bm" target_path="src" type="binary" exclude="true">
-      <files mask="dev_audio_speaker_lite_bm.bin"/>
-    </source>
-    <source path="boards/evkmimxrt1010/usb_examples/usb_device_audio_speaker_lite/bm" target_path="src" type="doc" exclude="true">
-      <files mask="readme.pdf"/>
     </source>
   </example>
 </ksdk:examples>

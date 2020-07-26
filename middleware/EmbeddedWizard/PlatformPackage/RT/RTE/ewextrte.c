@@ -27,8 +27,10 @@
 * SUBROUTINES:
 *   EwAlloc
 *   EwFree
+*   EwIsMemory
 *   EwPanic
 *   EwConsoleOutput
+*   EwSaveRegister
 *   EwGetTicks
 *   EwGetTime
 *   EwGetPerfCounter
@@ -60,28 +62,13 @@
 #include <string.h>
 #include <stdarg.h>
 #include <stdlib.h>
+#include <setjmp.h>
 
-#include "tlsf.h"
-#include "ew_bsp_serial.h"
+#include "ew_bsp_console.h"
+#include "ew_bsp_clock.h"
 
 /* Flag to identify whether the random generator has been initialized */
 static int RandInitialized = 0;
-
-/* Extern variable to count the number of milliseconds. It is assumed that the
-   extern EmWiSystemTicks variable is incremented every millisecond by a timer
-   driven interrupt service routine.
-   Please ensure, that your main.c contains the declaration of this variable and
-   a timer driven routine, that increments it every millisecond. */
-extern int EmWiSystemTicks;
-
-/* Extern variable to refer to an initialized memory pool, that is managed by
-   the tlsf memory manager.
-   Please ensure, that your main.c contains the declaration of this variable and
-   a proper initialization of the memory manager. */
-extern tlsf_t MemPool;
-
-/* Extern function EwBspGetTime() to read realtime clock */
-extern unsigned long EwBspGetTime( void );
 
 
 /*******************************************************************************
@@ -107,7 +94,7 @@ extern unsigned long EwBspGetTime( void );
 *******************************************************************************/
 void* EwAlloc( int aSize )
 {
-  void* mem = tlsf_malloc( MemPool, aSize );
+  void* mem = EwAllocHeapBlock( aSize );
   return mem;
 }
 
@@ -131,7 +118,31 @@ void* EwAlloc( int aSize )
 *******************************************************************************/
 void EwFree( void* aMemory )
 {
-  tlsf_free( MemPool, aMemory );
+  EwFreeHeapBlock( aMemory );
+}
+
+
+/*******************************************************************************
+* FUNCTION:
+*   EwIsMemory
+*
+* DESCRIPTION:
+*   The function EwIsMemory() should be implemented together with the both
+*   above functions EwAlloc() and EwFree(). EwIsMemory() will be called by
+*   the EWRTE in order to test whether the given pointer does address within
+*   the memory area used by the heap (used for EwAlloc() operations).
+*
+* ARGUMENTS:
+*   aPtr - Address to test.
+*
+* RETURN VALUE:
+*   EwIsMemory() has to return != 0 if the given pointer aPtr addresses within
+*   the memory area used by the heap manager. Otherwise 0 should be returned.
+*
+*******************************************************************************/
+int EwIsMemory( void* aPtr )
+{
+  return EwIsHeapPtr( aPtr );
 }
 
 
@@ -190,10 +201,36 @@ void EwConsoleOutput( const char* aMessage )
   {
     /* add carriage return in case of newline */
     if ( *aMessage == '\n' )
-      EwBspPutCharacter( '\r' );
+      EwBspConsolePutCharacter( '\r' );
 
-    EwBspPutCharacter( *aMessage++ );
+    EwBspConsolePutCharacter( *aMessage++ );
   }
+}
+
+
+/*******************************************************************************
+* FUNCTION:
+*   EwSaveRegister
+*
+* DESCRIPTION:
+*   The function EwSaveRegister() has the job to copy all general purpose CPU
+*   register to the memory area specified in the parameter aMemory.
+*
+* ARGUMENTS:
+*   aBuffer - Pointer to a memory area where to save the register contents.
+*     The capacity of the memory area is limited to 32 registers. This means
+*     on a 32-bit CPU it is 128 bytes large. On a 64-bit CPU it is 256 bytes
+*     large.
+*
+* RETURN VALUE:
+*   None
+*
+*******************************************************************************/
+void EwSaveRegister( void* aBuffer )
+{
+  /* The clib function setjmp() copies all relevant CPU register to a memory
+     area. This is exactly what we need. */
+  setjmp( *(jmp_buf*)aBuffer );
 }
 
 
@@ -215,9 +252,7 @@ void EwConsoleOutput( const char* aMessage )
 *******************************************************************************/
 unsigned long EwGetTicks( void )
 {
-  /* It is assumed that the extern EmWiSystemTicks variable is incremented every
-     millisecond by a timer driven interrupt service routine. */
-  return EmWiSystemTicks;
+  return EwBspClockGetTicks();
 }
 
 
@@ -241,7 +276,7 @@ unsigned long EwGetTicks( void )
 *******************************************************************************/
 unsigned long EwGetTime( void )
 {
-  return EwBspGetTime();
+  return EwBspClockGetTime();
 }
 
 

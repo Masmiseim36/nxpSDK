@@ -2,7 +2,12 @@
 @page middleware_log Middleware Change Log
 
 @section sdmmc SDMMC
-  The current driver version is 2.2.12.
+  The current driver version is 2.2.13.
+
+  - 2.2.13
+    - Improvements
+      - Use the boot mode value instead of boot mode mask value as the parameter of MMC_SetBootConfig to improve user experience.
+      - Removed dynamic voltage switch feature for mmc, according to JEDEC standard, the voltage should be fixed after power up.
 
   - 2.2.12
     - Improvement:
@@ -164,6 +169,8 @@
 The current driver version is 2.2.13.
 
   - 2.2.13
+    - Improvements:
+      - Removed the sdio card interrupt from sdio host initialization, since the card interrupt enablement should be determined by application.
     - Bug Fixes
       - Fixed Out-of-bounds write Coverity issue.
 

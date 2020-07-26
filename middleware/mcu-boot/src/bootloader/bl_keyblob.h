@@ -12,7 +12,7 @@
 #include "fsl_device_registers.h"
 
 #if defined(CAAM)
-#include "bootloader/bl_keyblob_caam.h"
+#include "bl_keyblob_caam.h"
 #endif
 
 //! @name Error codes

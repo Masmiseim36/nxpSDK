@@ -84,10 +84,10 @@ extern ARM_DRIVER_SPI Driver_SPI12;
 extern ARM_DRIVER_SPI Driver_SPI13;
 #endif /* SPI13 */
 
-#define SPI_FLAG_UNINIT (0)
-#define SPI_FLAG_INIT (1 << 0)
-#define SPI_FLAG_POWER (1 << 1)
+#define SPI_FLAG_UNINIT     (0)
+#define SPI_FLAG_INIT       (1 << 0)
+#define SPI_FLAG_POWER      (1 << 1)
 #define SPI_FLAG_CONFIGURED (1 << 2)
-#define SPI_FLAG_MASTER (1 << 3)
+#define SPI_FLAG_MASTER     (1 << 3)
 
 #endif

@@ -5,11 +5,11 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
+#include "bl_context.h"
 #include "bootloader_common.h"
-#include "bootloader/bl_context.h"
-#include "memory/memory.h"
 #include "fsl_device_registers.h"
-#include "memory/src/sram_init.h"
+#include "memory.h"
+#include "sram_init.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 // Code

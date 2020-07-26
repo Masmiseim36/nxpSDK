@@ -166,15 +166,18 @@ void EwBmpClose
 *   Graphics Engine can create and initialize video surfaces.
 *
 * ARGUMENTS:
-*   aHandle      - Handle to the bitmap resource to determine its attributes.
-*   aFormat      - Pointer to a variable, where the pixel format of the bitmap
+*   aHandle         - Handle to the bitmap resource to determine its attributes.
+*   aFormat         - Pointer to a variable, where the pixel format of the bitmap
 *     resource will returned (See EW_PIXEL_FORMAT_XXX).
-*   aNoOfFrames  - Pointer to a variable, where the number of frames included
+*   aNoOfFrames     - Pointer to a variable, where the number of frames included
 *     within this bitmap resource will returned.
+*   aNoOfVirtFrames - Pointer to a variable, where the number of all frames incl.
+*     duplicates will be returned. This value can be greater than aNoOfFrames if
+*     some of the frames do repeat in the bitmap.
 *   aFrameWidth,
-*   aFrameHeight - Pointers to variables, where the size in pixel of a single
+*   aFrameHeight    - Pointers to variables, where the size in pixel of a single
 *     frame will be returned.
-*   aFrameDelay  - Pointer to a variable, where the delay in milliseconds for
+*   aFrameDelay     - Pointer to a variable, where the delay in milliseconds for
 *     animated bitmap resources will be returned.
 *
 * RETURN VALUE:
@@ -186,6 +189,7 @@ int EwBmpGetMetrics
   unsigned long     aHandle,
   int*              aFormat,
   int*              aNoOfFrames,
+  int*              aNoOfVirtFrames,
   int*              aFrameWidth,
   int*              aFrameHeight,
   int*              aFrameDelay
@@ -319,6 +323,34 @@ int EwBmpLoadClut
 (
   unsigned long     aHandle,
   XSurfaceMemory*   aMemory
+);
+
+
+/*******************************************************************************
+* FUNCTION:
+*   EwBmpLoadMappingTable
+*
+* DESCRIPTION:
+*   The function EwBmpLoadMappingTable() will be called by the Graphics Engine
+*   in order to load a table used to map between virtual and real frame numbers.
+*   If a bitmap contains repetitions of a frame, the corresponding frames are
+*   stored only once (as real frame). The numbers of original frames need to be
+*   mapped to the numbers of the real (existing) frames.
+*
+* ARGUMENTS:
+*   aHandle  - Handle to the bitmap resource to load the table.
+*   aMapping - Pointer to memory where to copy the table. The memory area has
+*     to be large enough.
+*
+* RETURN VALUE:
+*   If sucessful, the function returns the number of virtual frames (the number
+*   of copied entries).
+*
+*******************************************************************************/
+int EwBmpLoadMappingTable
+(
+  unsigned long     aHandle,
+  unsigned short*   aMapping
 );
 
 

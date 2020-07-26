@@ -1,17 +1,17 @@
 /*
- * Copyright 2016-2018 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
 ////////////////////////////////////////////////////////////////////////////////
 // Includes
 ////////////////////////////////////////////////////////////////////////////////
+#include "bl_dcp.h"
+#include "bl_keyblob.h"
+#include "bl_trng.h"
 #include "fsl_device_registers.h"
-#include "dcp/fsl_dcp.h"
-#include "trng/fsl_trng.h"
-#include "bootloader/bl_keyblob.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions

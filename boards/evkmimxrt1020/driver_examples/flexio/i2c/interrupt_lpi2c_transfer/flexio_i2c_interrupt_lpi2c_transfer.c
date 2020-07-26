@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -21,7 +21,7 @@
  ******************************************************************************/
 #define BOARD_LPI2C_SLAVE_BASE LPI2C1
 #define BOARD_LPI2C_SLAVE_IRQn LPI2C1_IRQn
-#define BOARD_FLEXIO_BASE FLEXIO1
+#define BOARD_FLEXIO_BASE      FLEXIO1
 
 /* Select USB1 PLL (480 MHz) as slave lpi2c clock source */
 #define LPI2C_CLOCK_SELECT (0U)
@@ -47,7 +47,7 @@
 /* I2C Slave Address */
 #define I2C_MASTER_SLAVE_ADDR_7BIT (0x7EU)
 /* The length of data */
-#define I2C_DATA_LENGTH (13) /* MAX is 256 */
+#define I2C_DATA_LENGTH (32U)
 
 /*******************************************************************************
  * Prototypes
@@ -169,6 +169,7 @@ int main(void)
     i2cDev.shifterIndex[1] = 1U;
     i2cDev.timerIndex[0]   = 0U;
     i2cDev.timerIndex[1]   = 1U;
+    i2cDev.timerIndex[2]   = 2U;
 
     /*
      * masterConfig.enableMaster = true;

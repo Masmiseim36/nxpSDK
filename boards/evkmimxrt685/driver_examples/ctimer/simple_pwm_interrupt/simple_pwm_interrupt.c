@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -19,8 +19,8 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define CTIMER CTIMER0                 /* Timer 0 */
-#define CTIMER_MAT_OUT kCTIMER_Match_0 /* Match output 0 */
+#define CTIMER          CTIMER0         /* Timer 0 */
+#define CTIMER_MAT_OUT  kCTIMER_Match_0 /* Match output 0 */
 #define CTIMER_CLK_FREQ CLOCK_GetCtimerClkFreq(0)
 
 /*******************************************************************************
@@ -44,31 +44,17 @@ static ctimer_callback_t ctimer_callback[] = {pwm_match_callback};
 status_t CTIMER_GetPwmPeriodValue(uint32_t pwmFreqHz, uint8_t dutyCyclePercent, uint32_t timerClock_Hz)
 {
     /* Calculate PWM period match value */
-    g_pwmPeriod = (timerClock_Hz / pwmFreqHz) - 1;
+    g_pwmPeriod = (timerClock_Hz / pwmFreqHz) - 1U;
 
     /* Calculate pulse width match value */
-    if (dutyCyclePercent == 0)
-    {
-        g_pulsePeriod = g_pwmPeriod + 1;
-    }
-    else
-    {
-        g_pulsePeriod = (g_pwmPeriod * (100 - dutyCyclePercent)) / 100;
-    }
+    g_pulsePeriod = (g_pwmPeriod + 1U) * (100 - dutyCyclePercent) / 100;
+
     return kStatus_Success;
 }
 status_t CTIMER_UpdatePwmPulsePeriodValue(uint8_t dutyCyclePercent)
 {
     /* Calculate pulse width match value */
-    /* For 0% dutycyle, make pulse period greater than period so the event will never occur */
-    if (dutyCyclePercent == 0)
-    {
-        g_pulsePeriod = g_pwmPeriod + 1;
-    }
-    else
-    {
-        g_pulsePeriod = (g_pwmPeriod * (100 - dutyCyclePercent)) / 100;
-    }
+    g_pulsePeriod = (g_pwmPeriod + 1U) * (100 - dutyCyclePercent) / 100;
 
     return kStatus_Success;
 }

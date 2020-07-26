@@ -7,18 +7,22 @@
 *
 ********************************************************************************
 *
+* This software is delivered "as is" and shows the usage of other software 
+* components. It is provided as an example software which is intended to be 
+* modified and extended according to particular requirements.
+* 
+* TARA Systems hereby disclaims all warranties and conditions with regard to the
+* software, including all implied warranties and conditions of merchantability 
+* and non-infringement of any third party IPR or other rights which may result 
+* from the use or the inability to use the software.
+*
 * This file was generated automatically by Embedded Wizard Studio.
 *
 * Please do not make any modifications of this file! The modifications are lost
 * when the file is generated again by Embedded Wizard Studio!
 *
-* The template of this heading text can be found in the file 'head.ewt' in the
-* directory 'Platforms' of your Embedded Wizard installation directory. If you
-* wish to adapt this text, please copy the template file 'head.ewt' into your
-* project directory and edit the copy only. Please avoid any modifications of
-* the original template file!
-*
-* Version  : 9.20
+* Version  : 9.30
+* Date     : 14.02.2020  8:00:50
 * Profile  : iMX_RT
 * Platform : NXP.iMX_RT.RGB565
 *
@@ -32,21 +36,24 @@
 /* Compressed strings for the language 'Default'. */
 static const unsigned int _StringsDefault0[] =
 {
-  0x00000058, /* ratio 95.45 % */
-  0xB8005500, 0x00000452, 0x00D0002A, 0x04000328, 0xE4003800, 0x70F37800, 0x74004461,
-  0x0869E400, 0x230004E0, 0x6800C317, 0x800A7163, 0x58F40034, 0xE510E8F4, 0x00528E1C,
-  0x80020C14, 0x0027C708, 0x0260009C, 0x17000B20, 0x0C1A8306, 0x00000008, 0x00000000
+  0x00000056, /* ratio 97.67 % */
+  0xB8005300, 0x000A8452, 0x00CA0034, 0x0E000100, 0xDE003900, 0x10F84C34, 0x79001D00,
+  0x01380216, 0x30C548C0, 0x9C50DA00, 0x000D2002, 0x3239143D, 0xA3473934, 0x00450014,
+  0x44400104, 0x4E0013E3, 0x90013000, 0x000B8005, 0x08028340, 0x00000008, 0x00000000
 };
 
 /* Constant values used in this 'C' module only. */
 static const XPoint _Const0000 = { 0, 0 };
-static const XStringRes _Const0001 = { _StringsDefault0, 0x0003 };
+static const XStringRes _Const0001 = { _StringsDefault0, 0x0002 };
 
 /* Initializer for the class 'Resources::Bitmap' */
 void ResourcesBitmap__Init( ResourcesBitmap _this, XObject aLink, XHandle aArg )
 {
   /* At first initialize the super class ... */
   CoreResource__Init( &_this->_Super, aLink, aArg );
+
+  /* Allow the Immediate Garbage Collection to evalute the members of this class. */
+  _this->_GCT = EW_CLASS_GCT( ResourcesBitmap );
 
   /* Setup the VMT pointer */
   _this->_VMT = EW_CLASS( ResourcesBitmap );
@@ -68,11 +75,11 @@ void ResourcesBitmap__ReInit( ResourcesBitmap _this )
 /* Finalizer method for the class 'Resources::Bitmap' */
 void ResourcesBitmap__Done( ResourcesBitmap _this )
 {
-  /* Finalize this class */
-  _this->_VMT = EW_CLASS( ResourcesBitmap );
-
   /* Call the user defined destructor of the class */
   ResourcesBitmap_Done( _this );
+
+  /* Finalize this class */
+  _this->_Super._VMT = EW_CLASS( CoreResource );
 
   /* Don't forget to deinitialize the super class ... */
   CoreResource__Done( &_this->_Super );
@@ -118,7 +125,7 @@ void ResourcesBitmap_Init( ResourcesBitmap _this, XHandle aArg )
        in the following variables. */
     if ( bmp )
     {
-      noOfFrames = bmp->NoOfFrames;
+      noOfFrames = bmp->NoOfVirtFrames;
       frameSize  = bmp->FrameSize;
       frameDelay = bmp->FrameDelay;
     }
@@ -171,7 +178,7 @@ EW_END_OF_CLASS_VARIANTS( ResourcesBitmap )
 
 /* Virtual Method Table (VMT) for the class : 'Resources::Bitmap' */
 EW_DEFINE_CLASS( ResourcesBitmap, CoreResource, _None, _None, _None, _None, _None, 
-                 "Resources::Bitmap" )
+                 _None, "Resources::Bitmap" )
   ResourcesBitmap_OnSetFrameSize,
   ResourcesBitmap_Update,
 EW_END_OF_CLASS( ResourcesBitmap )
@@ -181,6 +188,9 @@ void ResourcesFont__Init( ResourcesFont _this, XObject aLink, XHandle aArg )
 {
   /* At first initialize the super class ... */
   CoreResource__Init( &_this->_Super, aLink, aArg );
+
+  /* Allow the Immediate Garbage Collection to evalute the members of this class. */
+  _this->_GCT = EW_CLASS_GCT( ResourcesFont );
 
   /* Setup the VMT pointer */
   _this->_VMT = EW_CLASS( ResourcesFont );
@@ -199,11 +209,11 @@ void ResourcesFont__ReInit( ResourcesFont _this )
 /* Finalizer method for the class 'Resources::Font' */
 void ResourcesFont__Done( ResourcesFont _this )
 {
-  /* Finalize this class */
-  _this->_VMT = EW_CLASS( ResourcesFont );
-
   /* Call the user defined destructor of the class */
   ResourcesFont_Done( _this );
+
+  /* Finalize this class */
+  _this->_Super._VMT = EW_CLASS( CoreResource );
 
   /* Don't forget to deinitialize the super class ... */
   CoreResource__Done( &_this->_Super );
@@ -363,7 +373,7 @@ EW_END_OF_CLASS_VARIANTS( ResourcesFont )
 
 /* Virtual Method Table (VMT) for the class : 'Resources::Font' */
 EW_DEFINE_CLASS( ResourcesFont, CoreResource, _None, _None, _None, _None, _None, 
-                 "Resources::Font" )
+                 _None, "Resources::Font" )
 EW_END_OF_CLASS( ResourcesFont )
 
 /* Embedded Wizard */

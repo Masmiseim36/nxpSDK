@@ -8,16 +8,16 @@
 #ifndef __SEMC_NAND_FLASH_H__
 #define __SEMC_NAND_FLASH_H__
 
-#include "fsl_common.h"
+#include "bl_semc.h"
 #include "bootloader_common.h"
-#include "semc/fsl_semc.h"
-#include "nand_ecc/nand_ecc.h"
+#include "fsl_common.h"
+#include "nand_ecc.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
 ////////////////////////////////////////////////////////////////////////////////
 
-#define NAND_MEM_BLANK_VALUE  (0xFFU)
+#define NAND_MEM_BLANK_VALUE (0xFFU)
 
 enum
 {
@@ -35,26 +35,26 @@ enum
 //! @brief Status for SEMC Parallel NAND driver
 enum _semc_nand_status
 {
-    kStatus_SemcNAND_DeviceTimeout    = MAKE_STATUS(kStatusGroup_SemcNAND, 0),
-    kStatus_SemcNAND_InvalidMemoryAddress    = MAKE_STATUS(kStatusGroup_SemcNAND, 1),
-    kStatus_SemcNAND_NotEqualToOnePageSize    = MAKE_STATUS(kStatusGroup_SemcNAND, 2),
-    kStatus_SemcNAND_MoreThanOnePageSize    = MAKE_STATUS(kStatusGroup_SemcNAND, 3),
-    kStatus_SemcNAND_EccCheckFail    = MAKE_STATUS(kStatusGroup_SemcNAND, 4),
-    kStatus_SemcNAND_InvalidOnfiParameter    = MAKE_STATUS(kStatusGroup_SemcNAND, 5),
-    kStatus_SemcNAND_CannotEnableDeviceEcc    = MAKE_STATUS(kStatusGroup_SemcNAND, 6),
-    kStatus_SemcNAND_SwitchTimingModeFailure    = MAKE_STATUS(kStatusGroup_SemcNAND, 7),
-    kStatus_SemcNAND_ProgramVerifyFailure    = MAKE_STATUS(kStatusGroup_SemcNAND, 8),
-    kStatus_SemcNAND_EraseVerifyFailure    = MAKE_STATUS(kStatusGroup_SemcNAND, 9),
-    kStatus_SemcNAND_InvalidReadbackBuffer    = MAKE_STATUS(kStatusGroup_SemcNAND, 10),
-    kStatus_SemcNAND_CannotDisableDeviceEcc    = MAKE_STATUS(kStatusGroup_SemcNAND, 11),
+    kStatus_SemcNAND_DeviceTimeout = MAKE_STATUS(kStatusGroup_SemcNAND, 0),
+    kStatus_SemcNAND_InvalidMemoryAddress = MAKE_STATUS(kStatusGroup_SemcNAND, 1),
+    kStatus_SemcNAND_NotEqualToOnePageSize = MAKE_STATUS(kStatusGroup_SemcNAND, 2),
+    kStatus_SemcNAND_MoreThanOnePageSize = MAKE_STATUS(kStatusGroup_SemcNAND, 3),
+    kStatus_SemcNAND_EccCheckFail = MAKE_STATUS(kStatusGroup_SemcNAND, 4),
+    kStatus_SemcNAND_InvalidOnfiParameter = MAKE_STATUS(kStatusGroup_SemcNAND, 5),
+    kStatus_SemcNAND_CannotEnableDeviceEcc = MAKE_STATUS(kStatusGroup_SemcNAND, 6),
+    kStatus_SemcNAND_SwitchTimingModeFailure = MAKE_STATUS(kStatusGroup_SemcNAND, 7),
+    kStatus_SemcNAND_ProgramVerifyFailure = MAKE_STATUS(kStatusGroup_SemcNAND, 8),
+    kStatus_SemcNAND_EraseVerifyFailure = MAKE_STATUS(kStatusGroup_SemcNAND, 9),
+    kStatus_SemcNAND_InvalidReadbackBuffer = MAKE_STATUS(kStatusGroup_SemcNAND, 10),
+    kStatus_SemcNAND_CannotDisableDeviceEcc = MAKE_STATUS(kStatusGroup_SemcNAND, 11),
 
-    kStatus_SemcNAND_InvalidCfgTag    = MAKE_STATUS(kStatusGroup_SemcNAND, 0x10),
-    kStatus_SemcNAND_FailToUpdateFcb    = MAKE_STATUS(kStatusGroup_SemcNAND, 0x11),
-    kStatus_SemcNAND_FailToUpdateDbbt    = MAKE_STATUS(kStatusGroup_SemcNAND, 0x12),
-    kStatus_SemcNAND_DisallowOverwriteBcb    = MAKE_STATUS(kStatusGroup_SemcNAND, 0x13),
-    kStatus_SemcNAND_OnlySupportOnfiDevice    = MAKE_STATUS(kStatusGroup_SemcNAND, 0x14),
-    kStatus_SemcNAND_MoreThanMaxImageCopy    = MAKE_STATUS(kStatusGroup_SemcNAND, 0x15),
-    kStatus_SemcNAND_DisorderedImageCopies    = MAKE_STATUS(kStatusGroup_SemcNAND, 0x16),
+    kStatus_SemcNAND_InvalidCfgTag = MAKE_STATUS(kStatusGroup_SemcNAND, 0x10),
+    kStatus_SemcNAND_FailToUpdateFcb = MAKE_STATUS(kStatusGroup_SemcNAND, 0x11),
+    kStatus_SemcNAND_FailToUpdateDbbt = MAKE_STATUS(kStatusGroup_SemcNAND, 0x12),
+    kStatus_SemcNAND_DisallowOverwriteBcb = MAKE_STATUS(kStatusGroup_SemcNAND, 0x13),
+    kStatus_SemcNAND_OnlySupportOnfiDevice = MAKE_STATUS(kStatusGroup_SemcNAND, 0x14),
+    kStatus_SemcNAND_MoreThanMaxImageCopy = MAKE_STATUS(kStatusGroup_SemcNAND, 0x15),
+    kStatus_SemcNAND_DisorderedImageCopies = MAKE_STATUS(kStatusGroup_SemcNAND, 0x16),
 };
 
 //! @brief SEMC Parallel NAND Flash vendor type
@@ -136,8 +136,8 @@ enum _semc_nand_sw_ecc_algorithm
 //! @brief SEMC Parallel NAND Flash Ready check option
 typedef enum _semc_nand_ready_check_option
 {
-    kSemcNandReadyCheckOption_SR = 0U,    // Via Status Register
-    kSemcNandReadyCheckOption_RB = 1U,    // Via R/B# signal
+    kSemcNandReadyCheckOption_SR = 0U, // Via Status Register
+    kSemcNandReadyCheckOption_RB = 1U, // Via R/B# signal
 } semc_nand_ready_check_option_t;
 
 //! @brief SEMC Parallel NAND Flash Status Command Type
@@ -175,58 +175,57 @@ typedef struct __nand_ac_timing_parameter
 //! @brief SEMC Parallel NAND Config block structure
 typedef struct __semc_nand_config
 {
-    semc_mem_config_t memConfig;             //!< [0x000-0x04f]
-    uint8_t vendorType;                      //!< [0x050-0x050]
+    semc_mem_config_t memConfig; //!< [0x000-0x04f]
+    uint8_t vendorType;          //!< [0x050-0x050]
     uint8_t cellTechnology;
     uint8_t onfiVersion;
     uint8_t acTimingTableIndex;
-    uint8_t enableEccCheck;                  //!< [0x054-0x054]
+    uint8_t enableEccCheck; //!< [0x054-0x054]
     uint8_t eccCheckType;
     uint8_t deviceEccStatus;
     uint8_t swEccAlgorithm;
-    uint32_t swEccBlockBytes;                //!< [0x058-0x05b]
-    uint8_t readyCheckOption;                //!< [0x05c-0x05c]
-    uint8_t statusCommandType;               //!< [0x05d-0x05d]
-    uint16_t readyCheckTimeoutInMs;          //!< [0x05e-0x05f]
-    uint16_t readyCheckIntervalInUs;         //!< [0x060-0x061]
-    uint8_t reserved0[30];                   //!< [0x062-0x07f]
-    uint8_t userOnfiAcTimingModeCode;        //!< [0x080-0x080]
-    uint8_t reserved1[31];                   //!< [0x081-0x09f]
-    uint32_t bytesInPageDataArea;            //!< [0x0a0-0x0a3]
+    uint32_t swEccBlockBytes;         //!< [0x058-0x05b]
+    uint8_t readyCheckOption;         //!< [0x05c-0x05c]
+    uint8_t statusCommandType;        //!< [0x05d-0x05d]
+    uint16_t readyCheckTimeoutInMs;   //!< [0x05e-0x05f]
+    uint16_t readyCheckIntervalInUs;  //!< [0x060-0x061]
+    uint8_t reserved0[30];            //!< [0x062-0x07f]
+    uint8_t userOnfiAcTimingModeCode; //!< [0x080-0x080]
+    uint8_t reserved1[31];            //!< [0x081-0x09f]
+    uint32_t bytesInPageDataArea;     //!< [0x0a0-0x0a3]
     uint32_t bytesInPageSpareArea;
     uint32_t pagesInBlock;
-    uint32_t blocksInPlane;                  //!< [0x0ac-0x0af]
-    uint32_t planesInDevice;                 //!< [0x0b0-0x0b3]
-    uint32_t reserved2[11];                  //!< [0x0b4-0x0df]
-    uint8_t enableReadbackVerify;            //!< [0x0e0-0x0e0]
-    uint8_t reserved3[3];                    //!< [0x0e1-0x0e3]
-    uint32_t readbackPageBufferAddress;      //!< [0x0e4-0x0e7]
-    uint8_t reserved4[24];                   //!< [0x0e8-0x0ff]
+    uint32_t blocksInPlane;             //!< [0x0ac-0x0af]
+    uint32_t planesInDevice;            //!< [0x0b0-0x0b3]
+    uint32_t reserved2[11];             //!< [0x0b4-0x0df]
+    uint8_t enableReadbackVerify;       //!< [0x0e0-0x0e0]
+    uint8_t reserved3[3];               //!< [0x0e1-0x0e3]
+    uint32_t readbackPageBufferAddress; //!< [0x0e4-0x0e7]
+    uint8_t reserved4[24];              //!< [0x0e8-0x0ff]
 } semc_nand_config_t;
 
 //! Parallel NAND Configuration Option
 typedef struct _parallel_nand_config_option
 {
-    union
-    {
+    union {
         struct
         {
-            uint32_t onfiVersion : 3;       //!< ONFI version
-            uint32_t edoMode : 1;           //!< EDO mode, 0 - disable, 1 - enable
-            uint32_t onfiTimingMode : 3;    //!< ONFI timing mode
+            uint32_t onfiVersion : 3;    //!< ONFI version
+            uint32_t edoMode : 1;        //!< EDO mode, 0 - disable, 1 - enable
+            uint32_t onfiTimingMode : 3; //!< ONFI timing mode
             uint32_t reserved0 : 1;
 
-            uint32_t ioPortDiv8 : 2;        //!< IO port size, Minimum 1
+            uint32_t ioPortDiv8 : 2; //!< IO port size, Minimum 1
             uint32_t reserved1 : 2;
-            uint32_t pcsSelection : 3;      //!< PCS selection
+            uint32_t pcsSelection : 3; //!< PCS selection
             uint32_t reserved2 : 1;
 
-            uint32_t eccType : 1;           //!< ECC type, 0 - SW, 1 - HW
-            uint32_t eccStatus : 1;         //!< ECC status (device)
+            uint32_t eccType : 1;   //!< ECC type, 0 - SW, 1 - HW
+            uint32_t eccStatus : 1; //!< ECC status (device)
             uint32_t reserved3 : 6;
 
             uint32_t reserved4 : 4;
-            uint32_t tag : 4;               //!< Tag
+            uint32_t tag : 4; //!< Tag
         } B;
         uint32_t U;
     } option;
@@ -237,38 +236,36 @@ typedef struct _parallel_nand_config_option
 ////////////////////////////////////////////////////////////////////////////////
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
-//!@brief Initialize Parallel NAND devices via SEMC
-status_t semc_nand_flash_init(semc_nand_config_t *config);
+    //!@brief Initialize Parallel NAND devices via SEMC
+    status_t semc_nand_flash_init(semc_nand_config_t *config);
 
-//!@brief Read page data from Parallel NAND via SEMC
-status_t semc_nand_flash_read_page(semc_nand_config_t *config,
-                                   uint32_t pageIndex,
-                                   uint8_t *buffer,
-                                   uint32_t length);
+    //!@brief Read page data from Parallel NAND via SEMC
+    status_t semc_nand_flash_read_page(semc_nand_config_t *config,
+                                       uint32_t pageIndex,
+                                       uint8_t *buffer,
+                                       uint32_t length);
 
-//!@brief Program page data to Parallel NAND via SEMC
-status_t semc_nand_flash_page_program(semc_nand_config_t *config,
-                                      uint32_t pageIndex,
-                                      uint8_t *src,
-                                      uint32_t length);
+    //!@brief Program page data to Parallel NAND via SEMC
+    status_t semc_nand_flash_page_program(semc_nand_config_t *config,
+                                          uint32_t pageIndex,
+                                          uint8_t *src,
+                                          uint32_t length);
 
-//!@brief Erase blocks of the Parallel NAND devices
-status_t semc_nand_flash_erase_block(semc_nand_config_t *config,
-                                     uint32_t blockIndex);
+    //!@brief Erase blocks of the Parallel NAND devices
+    status_t semc_nand_flash_erase_block(semc_nand_config_t *config, uint32_t blockIndex);
 
-//!@brief Verify erase on Parallel NAND device
-status_t semc_nand_flash_verify_erase(semc_nand_config_t *config,
-                                      uint32_t pageIndex,
-                                      uint32_t pageCount);
+    //!@brief Verify erase on Parallel NAND device
+    status_t semc_nand_flash_verify_erase(semc_nand_config_t *config, uint32_t pageIndex, uint32_t pageCount);
 
-//!@brief Verify program on Parallel NAND device
-status_t semc_nand_flash_verify_page_program(semc_nand_config_t *config,
-                                             uint32_t pageIndex,
-                                             const uint8_t *src,
-                                             uint32_t lengthInBytes);
+    //!@brief Verify program on Parallel NAND device
+    status_t semc_nand_flash_verify_page_program(semc_nand_config_t *config,
+                                                 uint32_t pageIndex,
+                                                 const uint8_t *src,
+                                                 uint32_t lengthInBytes);
 
 #ifdef __cplusplus
 }

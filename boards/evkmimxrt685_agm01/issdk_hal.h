@@ -16,7 +16,7 @@
 #ifndef __ISSDK_HAL_H__
 #define __ISSDK_HAL_H__
 
-#include "evkmimxrt685.h"          //Include appropriate MCU board header file
+#include "evkmimxrt685.h"           //Include appropriate MCU board header file
 #include "frdm_stbc_agm01_shield.h" //Include appropriate sensor shield board header file
 
 #include "fsl_i2c_cmsis.h"
@@ -27,9 +27,9 @@
 // By default, we use I2C_S2 defined in the evkmimxrt685.h file.
 // Other options: I2C_S1.
 // S1 is on A5:4.  S2 is on D15:14.
-#define I2C_S_SCL_PIN I2C_S1_SCL_PIN
-#define I2C_S_SDA_PIN I2C_S1_SDA_PIN
-#define I2C_S_DRIVER I2C_S1_DRIVER
+#define I2C_S_SCL_PIN      I2C_S1_SCL_PIN
+#define I2C_S_SDA_PIN      I2C_S1_SDA_PIN
+#define I2C_S_DRIVER       I2C_S1_DRIVER
 #define I2C_S_SIGNAL_EVENT I2C_S1_SIGNAL_EVENT
 #define I2C_S_DEVICE_INDEX I2C_S1_DEVICE_INDEX
 

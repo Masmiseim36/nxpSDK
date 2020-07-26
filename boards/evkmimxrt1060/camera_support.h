@@ -16,17 +16,17 @@
  * Definitions
  ******************************************************************************/
 
-#define DEMO_CAMERA_OV7725 0
+#define DEMO_CAMERA_OV7725  0
 #define DEMO_CAMERA_MT9M114 1
 
 #ifndef DEMO_CAMERA
 #define DEMO_CAMERA DEMO_CAMERA_MT9M114
 #endif
 
-#define DEMO_CAMERA_HEIGHT 272
-#define DEMO_CAMERA_WIDTH 480
+#define DEMO_CAMERA_HEIGHT        272
+#define DEMO_CAMERA_WIDTH         480
 #define DEMO_CAMERA_CONTROL_FLAGS (kCAMERA_HrefActiveHigh | kCAMERA_DataLatchOnRisingEdge)
-#define DEMO_CAMERA_BUFFER_ALIGN 64 /* Buffer should be 64 byte aligned. */
+#define DEMO_CAMERA_BUFFER_ALIGN  64 /* Buffer should be 64 byte aligned. */
 
 extern camera_device_handle_t cameraDevice;
 extern camera_receiver_handle_t cameraReceiver;

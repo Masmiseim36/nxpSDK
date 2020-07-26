@@ -34,13 +34,14 @@
 #include "pin_mux.h"
 #include <stdbool.h>
 #include "fsl_power.h"
+#include "sdmmc_config.h"
 /*******************************************************************************
-* Definitions
-******************************************************************************/
+ * Definitions
+ ******************************************************************************/
 
 /*******************************************************************************
-* Prototypes
-******************************************************************************/
+ * Prototypes
+ ******************************************************************************/
 void BOARD_InitHardware(void);
 void USB_DeviceClockInit(void);
 void USB_DeviceIsrEnable(void);
@@ -69,8 +70,9 @@ extern void USB_DeviceMscInitQueue(void);
 extern void USB_DeviceMscWriteTask(void);
 #endif
 /*******************************************************************************
-* Variables
-******************************************************************************/
+ * Variables
+ ******************************************************************************/
+extern sd_card_t g_sd;
 /* Composite device structure. */
 usb_device_composite_struct_t g_composite;
 extern usb_device_class_struct_t g_UsbDeviceCdcVcomConfig;
@@ -81,22 +83,27 @@ extern usb_device_class_struct_t g_mscDiskClass;
 extern usb_msc_buffer_struct_t *currentTrasfer;
 #endif
 /* USB device class information */
-usb_device_class_config_struct_t g_CompositeClassConfig[2] = {
-    {
-        USB_DeviceCdcVcomCallback, (class_handle_t)NULL, &g_UsbDeviceCdcVcomConfig,
-    },
-    {
-        USB_DeviceMscCallback, (class_handle_t)NULL, &g_mscDiskClass,
-    }};
+usb_device_class_config_struct_t g_CompositeClassConfig[2] = {{
+                                                                  USB_DeviceCdcVcomCallback,
+                                                                  (class_handle_t)NULL,
+                                                                  &g_UsbDeviceCdcVcomConfig,
+                                                              },
+                                                              {
+                                                                  USB_DeviceMscCallback,
+                                                                  (class_handle_t)NULL,
+                                                                  &g_mscDiskClass,
+                                                              }};
 
 /* USB device class configuration information */
 usb_device_class_config_list_struct_t g_UsbDeviceCompositeConfigList = {
-    g_CompositeClassConfig, USB_DeviceCallback, 2,
+    g_CompositeClassConfig,
+    USB_DeviceCallback,
+    2,
 };
 
 /*******************************************************************************
-* Code
-******************************************************************************/
+ * Code
+ ******************************************************************************/
 
 void USB_IRQHandler(void)
 {
@@ -179,16 +186,16 @@ void USB_DeviceTaskFn(void *deviceHandle)
 usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *param)
 {
     usb_status_t error = kStatus_USB_Error;
-    uint16_t *temp16 = (uint16_t *)param;
-    uint8_t *temp8 = (uint8_t *)param;
+    uint16_t *temp16   = (uint16_t *)param;
+    uint8_t *temp8     = (uint8_t *)param;
 
     switch (event)
     {
         case kUSB_DeviceEventBusReset:
         {
-            g_composite.attach = 0;
+            g_composite.attach               = 0;
             g_composite.currentConfiguration = 0U;
-            error = kStatus_USB_Success;
+            error                            = kStatus_USB_Success;
 #if (defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)) || \
     (defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))
             /* Get USB speed to configure the device, including max packet size and interval of the endpoints. */
@@ -208,7 +215,7 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
         case kUSB_DeviceEventSetConfiguration:
             if (0U == (*temp8))
             {
-                g_composite.attach = 0U;
+                g_composite.attach               = 0U;
                 g_composite.currentConfiguration = 0U;
             }
             else if (USB_COMPOSITE_CONFIGURE_INDEX == (*temp8))
@@ -217,22 +224,22 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
                 USB_DeviceCdcVcomSetConfigure(g_composite.cdcVcom.cdcAcmHandle, *temp8);
                 USB_DeviceMscDiskSetConfigure(g_composite.mscDisk.mscHandle, *temp8);
                 g_composite.currentConfiguration = *temp8;
-                error = kStatus_USB_Success;
+                error                            = kStatus_USB_Success;
             }
             else
             {
-                error = kStatus_USB_InvalidRequest; 
+                error = kStatus_USB_InvalidRequest;
             }
             break;
         case kUSB_DeviceEventSetInterface:
             if (g_composite.attach)
             {
-                uint8_t interface = (uint8_t)((*temp16 & 0xFF00U) >> 0x08U);
+                uint8_t interface        = (uint8_t)((*temp16 & 0xFF00U) >> 0x08U);
                 uint8_t alternateSetting = (uint8_t)(*temp16 & 0x00FFU);
                 if (interface < USB_INTERFACE_COUNT)
                 {
                     g_composite.currentInterfaceAlternateSetting[interface] = alternateSetting;
-                    error = kStatus_USB_Success;
+                    error                                                   = kStatus_USB_Success;
                 }
             }
             break;
@@ -240,7 +247,7 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
             if (param)
             {
                 *temp8 = g_composite.currentConfiguration;
-                error = kStatus_USB_Success;
+                error  = kStatus_USB_Success;
             }
             break;
         case kUSB_DeviceEventGetInterface:
@@ -250,7 +257,7 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
                 if (interface < USB_INTERFACE_COUNT)
                 {
                     *temp16 = (*temp16 & 0xFF00U) | g_composite.currentInterfaceAlternateSetting[interface];
-                    error = kStatus_USB_Success;
+                    error   = kStatus_USB_Success;
                 }
                 else
                 {
@@ -308,11 +315,11 @@ void APPInit(void)
     SYSMPU_Enable(SYSMPU, 0);
 #endif /* FSL_FEATURE_SOC_SYSMPU_COUNT */
 
-    g_composite.speed = USB_SPEED_FULL;
-    g_composite.attach = 0;
+    g_composite.speed                = USB_SPEED_FULL;
+    g_composite.attach               = 0;
     g_composite.cdcVcom.cdcAcmHandle = (class_handle_t)NULL;
-    g_composite.mscDisk.mscHandle = (class_handle_t)NULL;
-    g_composite.deviceHandle = NULL;
+    g_composite.mscDisk.mscHandle    = (class_handle_t)NULL;
+    g_composite.deviceHandle         = NULL;
     usb_echo("Please insert SD card\r\n");
 
     if (kStatus_USB_Success != USB_DeviceMscCardInit())
@@ -330,7 +337,7 @@ void APPInit(void)
     {
         usb_echo("USB device composite demo\r\n");
         g_composite.cdcVcom.cdcAcmHandle = g_UsbDeviceCompositeConfigList.config[0].classHandle;
-        g_composite.mscDisk.mscHandle = g_UsbDeviceCompositeConfigList.config[1].classHandle;
+        g_composite.mscDisk.mscHandle    = g_UsbDeviceCompositeConfigList.config[1].classHandle;
 
         USB_DeviceCdcVcomInit(&g_composite);
         USB_DeviceMscDiskInit(&g_composite);
@@ -338,6 +345,8 @@ void APPInit(void)
 
     USB_DeviceIsrEnable();
 
+    /*Add one delay here to make the DP pull down long enough to allow host to detect the previous disconnection.*/
+    SDK_DelayAtLeastUs(5000, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
     USB_DeviceRun(g_composite.deviceHandle);
 }
 
@@ -368,13 +377,7 @@ void main(void)
     BOARD_InitDebugConsole();
 
     /*Make sure USDHC ram buffer has power up*/
-    POWER_DisablePD(kPDRUNCFG_APD_USDHC0_SRAM);
-    POWER_DisablePD(kPDRUNCFG_PPD_USDHC0_SRAM);
-    POWER_ApplyPD();
-    /* SDIO0 */
-    CLOCK_AttachClk(kAUX0_PLL_to_SDIO0_CLK);
-    CLOCK_SetClkDiv(kCLOCK_DivSdio0Clk, 1);
-    RESET_ClearPeripheralReset(kSDIO0_RST_SHIFT_RSTn);
+    BOARD_SD_Config(&g_sd, NULL, (USB_DEVICE_INTERRUPT_PRIORITY - 1U), NULL);
 
     APPInit();
 

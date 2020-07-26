@@ -46,7 +46,7 @@ dma_handle_t g_DMA_Handle; /*!< The DMA RX Handles. */
 
 /*! @brief Static table of descriptors */
 #if defined(__ICCARM__)
-#pragma data_alignment = 16U
+#pragma data_alignment              = 16U
 dma_descriptor_t g_pingpong_desc[2] = {0};
 #elif defined(__CC_ARM) || (defined(__ARMCC_VERSION))
 __attribute__((aligned(16U))) dma_descriptor_t g_pingpong_desc[2] = {0};
@@ -65,24 +65,24 @@ SDK_ALIGN(dma_descriptor_t s_dmaDescriptorPingpong[2], 16);
 static dmic_transfer_t s_receiveXfer[2U] = {
     /* transfer configurations for channel0 */
     {
-        .data = s_buffer,
-        .dataWidth = sizeof(uint16_t),
-        .dataSize = BUFFER_SIZE,
+        .data                   = s_buffer,
+        .dataWidth              = sizeof(uint16_t),
+        .dataSize               = BUFFER_SIZE,
         .dataAddrInterleaveSize = kDMA_AddressInterleave1xWidth,
-        .linkTransfer = &s_receiveXfer[1],
+        .linkTransfer           = &s_receiveXfer[1],
     },
 
     {
-        .data = &s_buffer[BUFFER_SIZE],
-        .dataWidth = sizeof(uint16_t),
-        .dataSize = BUFFER_SIZE,
+        .data                   = &s_buffer[BUFFER_SIZE],
+        .dataWidth              = sizeof(uint16_t),
+        .dataSize               = BUFFER_SIZE,
         .dataAddrInterleaveSize = kDMA_AddressInterleave1xWidth,
-        .linkTransfer = &s_receiveXfer[0],
+        .linkTransfer           = &s_receiveXfer[0],
     },
 };
 /*******************************************************************************
-* Code
-******************************************************************************/
+ * Code
+ ******************************************************************************/
 /*!
  * @brief Audio wav data prepare function.
  *
@@ -115,7 +115,7 @@ void dmic_Callback(DMIC_Type *base, dmic_dma_handle_t *handle, status_t status, 
     if (first_int == 0U)
     {
         audioPosition = 0U;
-        first_int = 1U;
+        first_int     = 1U;
     }
 }
 
@@ -131,15 +131,15 @@ void Board_DMIC_DMA_Init(void)
 
     memset(&dmic_channel_cfg, 0U, sizeof(dmic_channel_config_t));
 
-    dmic_channel_cfg.divhfclk = kDMIC_PdmDiv1;
-    dmic_channel_cfg.osr = DEMO_DMIC_OSR;
-    dmic_channel_cfg.gainshft = 3U;
-    dmic_channel_cfg.preac2coef = kDMIC_CompValueZero;
-    dmic_channel_cfg.preac4coef = kDMIC_CompValueZero;
-    dmic_channel_cfg.dc_cut_level = kDMIC_DcCut155;
+    dmic_channel_cfg.divhfclk            = kDMIC_PdmDiv1;
+    dmic_channel_cfg.osr                 = DEMO_DMIC_OSR;
+    dmic_channel_cfg.gainshft            = 3U;
+    dmic_channel_cfg.preac2coef          = kDMIC_CompValueZero;
+    dmic_channel_cfg.preac4coef          = kDMIC_CompValueZero;
+    dmic_channel_cfg.dc_cut_level        = kDMIC_DcCut155;
     dmic_channel_cfg.post_dc_gain_reduce = 1U;
-    dmic_channel_cfg.saturate16bit = 1U;
-    dmic_channel_cfg.sample_rate = kDMIC_PhyFullSpeed;
+    dmic_channel_cfg.saturate16bit       = 1U;
+    dmic_channel_cfg.sample_rate         = kDMIC_PhyFullSpeed;
     DMIC_Init(DMIC0);
 #if !(defined(FSL_FEATURE_DMIC_HAS_NO_IOCFG) && FSL_FEATURE_DMIC_HAS_NO_IOCFG)
     DMIC_SetIOCFG(DMIC0, kDMIC_PdmDual);

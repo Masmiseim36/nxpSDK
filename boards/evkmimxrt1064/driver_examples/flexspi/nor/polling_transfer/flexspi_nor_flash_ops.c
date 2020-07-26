@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  *
@@ -315,6 +315,16 @@ void flexspi_nor_flash_init(FLEXSPI_Type *base)
 {
     flexspi_config_t config;
 
+#if defined(__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
+    bool DCacheEnableFlag = false;
+    /* Disable D cache. */
+    if (SCB_CCR_DC_Msk == (SCB_CCR_DC_Msk & SCB->CCR))
+    {
+        SCB_DisableDCache();
+        DCacheEnableFlag = true;
+    }
+#endif /* __DCACHE_PRESENT */
+
     flexspi_clock_init();
 
     /*Get FLEXSPI default settings and configure the flexspi. */
@@ -336,4 +346,12 @@ void flexspi_nor_flash_init(FLEXSPI_Type *base)
 
     /* Do software reset. */
     FLEXSPI_SoftwareReset(base);
+
+#if defined(__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
+    if (DCacheEnableFlag)
+    {
+        /* Enable D cache. */
+        SCB_EnableDCache();
+    }
+#endif /* __DCACHE_PRESENT */
 }

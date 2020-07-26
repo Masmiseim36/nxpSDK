@@ -7,13 +7,13 @@
 **     Compiler:            GNU C Compiler
 **     Reference manual:    MIMXRT685 User manual Rev. 0.95 11 November 2019
 **     Version:             rev. 1.0, 2018-06-19
-**     Build:               b191128
+**     Build:               b200512
 **
 **     Abstract:
 **         Linker file for the GNU C Compiler
 **
 **     Copyright 2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2019 NXP
+**     Copyright 2016-2020 NXP
 **     All rights reserved.
 **
 **     SPDX-License-Identifier: BSD-3-Clause
@@ -37,7 +37,7 @@ STACK_SIZE = DEFINED(__stack_size__) ? __stack_size__ : 0x0400;
 /* The SRAM region [0x20000-0x80000] is reserved for Non-cached shared memory between M33 and DSP. */
 MEMORY
 {
-  m_flash_config        (RX)  : ORIGIN = 0x1007F400, LENGTH = 0x00000200
+  m_flash               (RX)  : ORIGIN = 0x18000000, LENGTH = 0x00041000
   m_interrupts          (RX)  : ORIGIN = 0x10080000, LENGTH = 0x00000130
   m_text                (RX)  : ORIGIN = 0x10080130, LENGTH = 0x0003FCD0
   m_veneer_table        (RX)  : ORIGIN = 0x100BFE00, LENGTH = 0x00000200
@@ -50,20 +50,22 @@ SECTIONS
 {
   .flash_config :
   {
-    . = ALIGN(4);
+    FILL(0x00)
     __FLASH_BASE = .;
+    . = 0x400 ;
     KEEP(* (.flash_conf))     /* flash config section */
-    . = ALIGN(4);
-  } > m_flash_config
+    . = 0x1000 ;
+  } > m_flash
 
   /* The startup code goes first into internal ram */
   .interrupts :
   {
     . = ALIGN(4);
     __VECTOR_TABLE = .;
+    __Vectors = .;
     KEEP(*(.isr_vector))     /* Startup code */
     . = ALIGN(4);
-  } > m_interrupts
+  } > m_interrupts AT> m_flash
 
   /* The program code and other data goes into internal ram */
   .text :
@@ -79,29 +81,20 @@ SECTIONS
     KEEP (*(.init))
     KEEP (*(.fini))
     . = ALIGN(4);
-  } > m_text
+  } > m_text AT> m_flash
 
-  /* section for veneer table */
-  .gnu.sgstubs :
-  {
-     . = ALIGN(32);
-     _start_sg = .;
-    *(.gnu.sgstubs*)
-     . = ALIGN(32);
-     _end_sg = .;
-  } > m_veneer_table
 
   .ARM.extab :
   {
     *(.ARM.extab* .gnu.linkonce.armextab.*)
-  } > m_text
+  } > m_text AT> m_flash
 
   .ARM :
   {
     __exidx_start = .;
     *(.ARM.exidx*)
     __exidx_end = .;
-  } > m_text
+  } > m_text AT> m_flash
 
  .ctors :
   {
@@ -125,7 +118,7 @@ SECTIONS
     KEEP (*(SORT(.ctors.*)))
     KEEP (*(.ctors))
     __CTOR_END__ = .;
-  } > m_text
+  } > m_text AT> m_flash
 
   .dtors :
   {
@@ -136,14 +129,14 @@ SECTIONS
     KEEP (*(SORT(.dtors.*)))
     KEEP (*(.dtors))
     __DTOR_END__ = .;
-  } > m_text
+  } > m_text AT> m_flash
 
   .preinit_array :
   {
     PROVIDE_HIDDEN (__preinit_array_start = .);
     KEEP (*(.preinit_array*))
     PROVIDE_HIDDEN (__preinit_array_end = .);
-  } > m_text
+  } > m_text AT> m_flash
 
   .init_array :
   {
@@ -151,7 +144,7 @@ SECTIONS
     KEEP (*(SORT(.init_array.*)))
     KEEP (*(.init_array*))
     PROVIDE_HIDDEN (__init_array_end = .);
-  } > m_text
+  } > m_text AT> m_flash
 
   .fini_array :
   {
@@ -159,7 +152,7 @@ SECTIONS
     KEEP (*(SORT(.fini_array.*)))
     KEEP (*(.fini_array*))
     PROVIDE_HIDDEN (__fini_array_end = .);
-  } > m_text
+  } > m_text AT> m_flash
 
   __etext = .;    /* define a global symbol at end of code */
   __DATA_ROM = .; /* Symbol is used by startup for data initialization */
@@ -167,21 +160,33 @@ SECTIONS
   __VECTOR_RAM = ORIGIN(m_interrupts);
   __RAM_VECTOR_TABLE_SIZE_BYTES = 0x0;
 
-  .data : AT(__DATA_ROM)
+  .data :
   {
     . = ALIGN(4);
     __DATA_RAM = .;
     __data_start__ = .;      /* create a global symbol at data start */
+    *(CodeQuickAccess)       /* CodeQuickAccess sections */
+    *(DataQuickAccess)       /* DataQuickAccess sections */
     *(.data)                 /* .data sections */
     *(.data*)                /* .data* sections */
     KEEP(*(.jcr*))
     . = ALIGN(4);
     __data_end__ = .;        /* define a global symbol at data end */
-  } > m_data
+  } > m_data AT> m_flash
+
+  /* section for veneer table */
+  .gnu.sgstubs : AT(ORIGIN(m_flash) + 0x1000 + ORIGIN(m_veneer_table) - ORIGIN(m_interrupts))
+  {
+     . = ALIGN(32);
+     _start_sg = .;
+    *(.gnu.sgstubs*)
+     . = ALIGN(32);
+     _end_sg = .;
+  } > m_veneer_table
 
   __DATA_END = __DATA_ROM + (__data_end__ - __data_start__);
-  text_end = ORIGIN(m_text) + LENGTH(m_text);
-  ASSERT(__DATA_END <= text_end, "region m_text overflowed with text and data")
+  _image_size = __DATA_END - __VECTOR_TABLE;
+  ASSERT(_image_size <= LENGTH(m_flash), "region m_flash overflowed with text and data")
 
   /* Uninitialized data section */
   .bss :

@@ -7,18 +7,22 @@
 *
 ********************************************************************************
 *
+* This software is delivered "as is" and shows the usage of other software 
+* components. It is provided as an example software which is intended to be 
+* modified and extended according to particular requirements.
+* 
+* TARA Systems hereby disclaims all warranties and conditions with regard to the
+* software, including all implied warranties and conditions of merchantability 
+* and non-infringement of any third party IPR or other rights which may result 
+* from the use or the inability to use the software.
+*
 * This file was generated automatically by Embedded Wizard Studio.
 *
 * Please do not make any modifications of this file! The modifications are lost
 * when the file is generated again by Embedded Wizard Studio!
 *
-* The template of this heading text can be found in the file 'head.ewt' in the
-* directory 'Platforms' of your Embedded Wizard installation directory. If you
-* wish to adapt this text, please copy the template file 'head.ewt' into your
-* project directory and edit the copy only. Please avoid any modifications of
-* the original template file!
-*
-* Version  : 9.20
+* Version  : 9.30
+* Date     : 14.02.2020  8:00:50
 * Profile  : iMX_RT
 * Platform : NXP.iMX_RT.RGB565
 *
@@ -48,8 +52,8 @@
 /* Compressed strings for the language 'Default'. */
 static const unsigned int _StringsDefault0[] =
 {
-  0x0000000E, /* ratio 142.86 % */
-  0xB8000B00, 0x80000452, 0x2A0CFE7F, 0x00101004, 0x00000000
+  0x0000000C, /* ratio 166.67 % */
+  0xB8000900, 0x3F9FE452, 0x06130800, 0x00000004, 0x00000000
 };
 
 /* Constant values used in this 'C' module only. */
@@ -57,13 +61,16 @@ static const XColor _Const0000 = { 0xFF, 0xFF, 0xFF, 0xFF };
 static const XPoint _Const0001 = { 1, 1 };
 static const XPoint _Const0002 = { 0, 0 };
 static const XRect _Const0003 = {{ 0, 0 }, { 0, 0 }};
-static const XStringRes _Const0004 = { _StringsDefault0, 0x0003 };
+static const XStringRes _Const0004 = { _StringsDefault0, 0x0002 };
 
 /* Initializer for the class 'Views::Line' */
 void ViewsLine__Init( ViewsLine _this, XObject aLink, XHandle aArg )
 {
   /* At first initialize the super class ... */
   CoreLineView__Init( &_this->_Super, aLink, aArg );
+
+  /* Allow the Immediate Garbage Collection to evalute the members of this class. */
+  _this->_GCT = EW_CLASS_GCT( ViewsLine );
 
   /* Setup the VMT pointer */
   _this->_VMT = EW_CLASS( ViewsLine );
@@ -86,7 +93,7 @@ void ViewsLine__ReInit( ViewsLine _this )
 void ViewsLine__Done( ViewsLine _this )
 {
   /* Finalize this class */
-  _this->_VMT = EW_CLASS( ViewsLine );
+  _this->_Super._VMT = EW_CLASS( CoreLineView );
 
   /* Don't forget to deinitialize the super class ... */
   CoreLineView__Done( &_this->_Super );
@@ -316,7 +323,7 @@ EW_END_OF_CLASS_VARIANTS( ViewsLine )
 
 /* Virtual Method Table (VMT) for the class : 'Views::Line' */
 EW_DEFINE_CLASS( ViewsLine, CoreLineView, whiteBitmap, Width2, Width2, Width2, Width2, 
-                 "Views::Line" )
+                 Width2, "Views::Line" )
   CoreLineView_initLayoutContext,
   CoreView_GetRoot,
   ViewsLine_Draw,
@@ -333,6 +340,9 @@ void ViewsRectangle__Init( ViewsRectangle _this, XObject aLink, XHandle aArg )
 {
   /* At first initialize the super class ... */
   CoreRectView__Init( &_this->_Super, aLink, aArg );
+
+  /* Allow the Immediate Garbage Collection to evalute the members of this class. */
+  _this->_GCT = EW_CLASS_GCT( ViewsRectangle );
 
   /* Setup the VMT pointer */
   _this->_VMT = EW_CLASS( ViewsRectangle );
@@ -355,7 +365,7 @@ void ViewsRectangle__ReInit( ViewsRectangle _this )
 void ViewsRectangle__Done( ViewsRectangle _this )
 {
   /* Finalize this class */
-  _this->_VMT = EW_CLASS( ViewsRectangle );
+  _this->_Super._VMT = EW_CLASS( CoreRectView );
 
   /* Don't forget to deinitialize the super class ... */
   CoreRectView__Done( &_this->_Super );
@@ -434,7 +444,7 @@ EW_END_OF_CLASS_VARIANTS( ViewsRectangle )
 
 /* Virtual Method Table (VMT) for the class : 'Views::Rectangle' */
 EW_DEFINE_CLASS( ViewsRectangle, CoreRectView, _None, _None, _None, _None, _None, 
-                 "Views::Rectangle" )
+                 _None, "Views::Rectangle" )
   CoreRectView_initLayoutContext,
   CoreView_GetRoot,
   ViewsRectangle_Draw,
@@ -452,6 +462,9 @@ void ViewsFrame__Init( ViewsFrame _this, XObject aLink, XHandle aArg )
 {
   /* At first initialize the super class ... */
   CoreRectView__Init( &_this->_Super, aLink, aArg );
+
+  /* Allow the Immediate Garbage Collection to evalute the members of this class. */
+  _this->_GCT = EW_CLASS_GCT( ViewsFrame );
 
   /* Setup the VMT pointer */
   _this->_VMT = EW_CLASS( ViewsFrame );
@@ -479,7 +492,7 @@ void ViewsFrame__ReInit( ViewsFrame _this )
 void ViewsFrame__Done( ViewsFrame _this )
 {
   /* Finalize this class */
-  _this->_VMT = EW_CLASS( ViewsFrame );
+  _this->_Super._VMT = EW_CLASS( CoreRectView );
 
   /* Don't forget to deinitialize the super class ... */
   CoreRectView__Done( &_this->_Super );
@@ -802,7 +815,7 @@ EW_END_OF_CLASS_VARIANTS( ViewsFrame )
 
 /* Virtual Method Table (VMT) for the class : 'Views::Frame' */
 EW_DEFINE_CLASS( ViewsFrame, CoreRectView, timer, OnFinished, animFrameNumber, animFrameNumber, 
-                 animFrameNumber, "Views::Frame" )
+                 animFrameNumber, animFrameNumber, "Views::Frame" )
   CoreRectView_initLayoutContext,
   CoreView_GetRoot,
   ViewsFrame_Draw,
@@ -820,6 +833,9 @@ void ViewsImage__Init( ViewsImage _this, XObject aLink, XHandle aArg )
 {
   /* At first initialize the super class ... */
   CoreRectView__Init( &_this->_Super, aLink, aArg );
+
+  /* Allow the Immediate Garbage Collection to evalute the members of this class. */
+  _this->_GCT = EW_CLASS_GCT( ViewsImage );
 
   /* Setup the VMT pointer */
   _this->_VMT = EW_CLASS( ViewsImage );
@@ -847,7 +863,7 @@ void ViewsImage__ReInit( ViewsImage _this )
 void ViewsImage__Done( ViewsImage _this )
 {
   /* Finalize this class */
-  _this->_VMT = EW_CLASS( ViewsImage );
+  _this->_Super._VMT = EW_CLASS( CoreRectView );
 
   /* Don't forget to deinitialize the super class ... */
   CoreRectView__Done( &_this->_Super );
@@ -1282,7 +1298,7 @@ EW_END_OF_CLASS_VARIANTS( ViewsImage )
 
 /* Virtual Method Table (VMT) for the class : 'Views::Image' */
 EW_DEFINE_CLASS( ViewsImage, CoreRectView, timer, OnFinished, startTime, startTime, 
-                 startTime, "Views::Image" )
+                 startTime, startTime, "Views::Image" )
   CoreRectView_initLayoutContext,
   CoreView_GetRoot,
   ViewsImage_Draw,
@@ -1300,6 +1316,9 @@ void ViewsText__Init( ViewsText _this, XObject aLink, XHandle aArg )
 {
   /* At first initialize the super class ... */
   CoreRectView__Init( &_this->_Super, aLink, aArg );
+
+  /* Allow the Immediate Garbage Collection to evalute the members of this class. */
+  _this->_GCT = EW_CLASS_GCT( ViewsText );
 
   /* Setup the VMT pointer */
   _this->_VMT = EW_CLASS( ViewsText );
@@ -1324,15 +1343,11 @@ void ViewsText__ReInit( ViewsText _this )
 /* Finalizer method for the class 'Views::Text' */
 void ViewsText__Done( ViewsText _this )
 {
-  /* Finalize this class */
-  _this->_VMT = EW_CLASS( ViewsText );
-
   /* Call the user defined destructor of the class */
   ViewsText_Done( _this );
 
-  /* Release all used strings */
-  EwReleaseString( &_this->flowString );
-  EwReleaseString( &_this->String );
+  /* Finalize this class */
+  _this->_Super._VMT = EW_CLASS( CoreRectView );
 
   /* Don't forget to deinitialize the super class ... */
   CoreRectView__Done( &_this->_Super );
@@ -1541,7 +1556,7 @@ void ViewsText_OnSetBounds( ViewsText _this, XRect value )
   if (((( resized && ( _this->WrapWidth == 0 )) && _this->WrapText ) && _this->reparsed ) 
       && !(( _this->Super2.viewState & CoreViewStateUpdatingLayout ) == CoreViewStateUpdatingLayout ))
   {
-    EwReleaseString( &_this->flowString );
+    _this->flowString = 0;
     _this->reparsed = 0;
     EwPostSignal( EwNewSlot( _this, ViewsText_preReparseSlot ), ((XObject)_this ));
   }
@@ -1550,7 +1565,7 @@ void ViewsText_OnSetBounds( ViewsText _this, XRect value )
       EwGetRectSize( value ))) && !(( _this->Super2.viewState & CoreViewStateUpdatingLayout ) 
       == CoreViewStateUpdatingLayout ))
   {
-    EwReleaseString( &_this->flowString );
+    _this->flowString = 0;
     _this->reparsed = 0;
     EwPostSignal( EwNewSlot( _this, ViewsText_preReparseSlot ), ((XObject)_this ));
   }
@@ -1652,8 +1667,6 @@ void ViewsText_reparseSlot( ViewsText _this, XObject sender )
   }
 
   if ( _this->bidiContext != 0 )
-    ;
-
   {
     ViewsText_freeBidi( _this, _this->bidiContext );
     _this->bidiContext = 0;
@@ -1668,7 +1681,7 @@ void ViewsText_reparseSlot( ViewsText _this, XObject sender )
     if ( _this->EnableBidiText )
       _this->bidiContext = ViewsText_createBidi( _this, length );
 
-    EwRetainString( &_this->flowString, ResourcesFont_ParseFlowString( _this->Font, 
+    _this->flowString = EwShareString( ResourcesFont_ParseFlowString( _this->Font, 
     _this->String, 0, maxWidth, length, _this->bidiContext ));
 
     if (( _this->bidiContext != 0 ) && !ViewsText_IsBidiText( _this ))
@@ -1678,11 +1691,12 @@ void ViewsText_reparseSlot( ViewsText _this, XObject sender )
     }
   }
   else
-    EwReleaseString( &_this->flowString );
+    _this->flowString = 0;
 
   _this->textSize = _Const0002;
 
-  if (( _this->Ellipsis && ( EwCompString( _this->flowString, 0 ) != 0 )) && !_this->AutoSize )
+  if ((( _this->Ellipsis && ( EwCompString( _this->flowString, 0 ) != 0 )) && !_this->AutoSize ) 
+      && ( _this->Font != 0 ))
   {
     XSet align = _this->Alignment;
     ResourcesFont font = _this->Font;
@@ -1923,7 +1937,7 @@ void ViewsText_reparseSlot( ViewsText _this, XObject sender )
 
     _this->textSize = EwNewPoint( ResourcesFont_GetFlowTextAdvance( font, res ), 
     ( EwGetStringChar( res, 0 ) * rh ) - leading );
-    EwRetainString( &_this->flowString, res );
+    _this->flowString = EwShareString( res );
   }
 
   if ( _this->AutoSize && ( EwCompString( _this->flowString, 0 ) != 0 ))
@@ -1956,7 +1970,7 @@ void ViewsText_OnSetEnableBidiText( ViewsText _this, XBool value )
     return;
 
   _this->EnableBidiText = value;
-  EwReleaseString( &_this->flowString );
+  _this->flowString = 0;
   _this->reparsed = 0;
   EwPostSignal( EwNewSlot( _this, ViewsText_preReparseSlot ), ((XObject)_this ));
 }
@@ -1969,7 +1983,7 @@ void ViewsText_OnSetEllipsis( ViewsText _this, XBool value )
     return;
 
   _this->Ellipsis = value;
-  EwReleaseString( &_this->flowString );
+  _this->flowString = 0;
   _this->reparsed = 0;
   EwPostSignal( EwNewSlot( _this, ViewsText_preReparseSlot ), ((XObject)_this ));
 }
@@ -1984,7 +1998,7 @@ void ViewsText_OnSetWrapText( ViewsText _this, XBool value )
 
   if ( _this->reparsed )
   {
-    EwReleaseString( &_this->flowString );
+    _this->flowString = 0;
     _this->reparsed = 0;
     EwPostSignal( EwNewSlot( _this, ViewsText_preReparseSlot ), ((XObject)_this ));
   }
@@ -2025,7 +2039,7 @@ void ViewsText_OnSetAlignment( ViewsText _this, XSet value )
 
   if ( _this->Ellipsis )
   {
-    EwReleaseString( &_this->flowString );
+    _this->flowString = 0;
     _this->reparsed = 0;
     EwPostSignal( EwNewSlot( _this, ViewsText_preReparseSlot ), ((XObject)_this ));
   }
@@ -2040,8 +2054,8 @@ void ViewsText_OnSetString( ViewsText _this, XString value )
   if ( !EwCompString( value, _this->String ))
     return;
 
-  EwRetainString( &_this->String, value );
-  EwReleaseString( &_this->flowString );
+  _this->String = EwShareString( value );
+  _this->flowString = 0;
   _this->reparsed = 0;
   EwPostSignal( EwNewSlot( _this, ViewsText_preReparseSlot ), ((XObject)_this ));
 }
@@ -2053,7 +2067,7 @@ void ViewsText_OnSetFont( ViewsText _this, ResourcesFont value )
     return;
 
   _this->Font = value;
-  EwReleaseString( &_this->flowString );
+  _this->flowString = 0;
   _this->reparsed = 0;
   EwPostSignal( EwNewSlot( _this, ViewsText_preReparseSlot ), ((XObject)_this ));
 }
@@ -2252,8 +2266,8 @@ EW_DEFINE_CLASS_VARIANTS( ViewsText )
 EW_END_OF_CLASS_VARIANTS( ViewsText )
 
 /* Virtual Method Table (VMT) for the class : 'Views::Text' */
-EW_DEFINE_CLASS( ViewsText, CoreRectView, Font, OnUpdate, bidiContext, bidiContext, 
-                 bidiContext, "Views::Text" )
+EW_DEFINE_CLASS( ViewsText, CoreRectView, Font, OnUpdate, flowString, flowString, 
+                 flowString, bidiContext, "Views::Text" )
   CoreRectView_initLayoutContext,
   CoreView_GetRoot,
   ViewsText_Draw,
@@ -2271,6 +2285,9 @@ void ViewsFillPath__Init( ViewsFillPath _this, XObject aLink, XHandle aArg )
 {
   /* At first initialize the super class ... */
   CoreRectView__Init( &_this->_Super, aLink, aArg );
+
+  /* Allow the Immediate Garbage Collection to evalute the members of this class. */
+  _this->_GCT = EW_CLASS_GCT( ViewsFillPath );
 
   /* Setup the VMT pointer */
   _this->_VMT = EW_CLASS( ViewsFillPath );
@@ -2294,11 +2311,11 @@ void ViewsFillPath__ReInit( ViewsFillPath _this )
 /* Finalizer method for the class 'Views::FillPath' */
 void ViewsFillPath__Done( ViewsFillPath _this )
 {
-  /* Finalize this class */
-  _this->_VMT = EW_CLASS( ViewsFillPath );
-
   /* Call the user defined destructor of the class */
   ViewsFillPath_Done( _this );
+
+  /* Finalize this class */
+  _this->_Super._VMT = EW_CLASS( CoreRectView );
 
   /* Don't forget to deinitialize the super class ... */
   CoreRectView__Done( &_this->_Super );
@@ -2507,7 +2524,7 @@ EW_END_OF_CLASS_VARIANTS( ViewsFillPath )
 
 /* Virtual Method Table (VMT) for the class : 'Views::FillPath' */
 EW_DEFINE_CLASS( ViewsFillPath, CoreRectView, Path, buffer, buffer, buffer, buffer, 
-                 "Views::FillPath" )
+                 buffer, "Views::FillPath" )
   CoreRectView_initLayoutContext,
   CoreView_GetRoot,
   ViewsFillPath_Draw,
@@ -2525,6 +2542,9 @@ void ViewsStrokePath__Init( ViewsStrokePath _this, XObject aLink, XHandle aArg )
 {
   /* At first initialize the super class ... */
   CoreRectView__Init( &_this->_Super, aLink, aArg );
+
+  /* Allow the Immediate Garbage Collection to evalute the members of this class. */
+  _this->_GCT = EW_CLASS_GCT( ViewsStrokePath );
 
   /* Setup the VMT pointer */
   _this->_VMT = EW_CLASS( ViewsStrokePath );
@@ -2552,11 +2572,11 @@ void ViewsStrokePath__ReInit( ViewsStrokePath _this )
 /* Finalizer method for the class 'Views::StrokePath' */
 void ViewsStrokePath__Done( ViewsStrokePath _this )
 {
-  /* Finalize this class */
-  _this->_VMT = EW_CLASS( ViewsStrokePath );
-
   /* Call the user defined destructor of the class */
   ViewsStrokePath_Done( _this );
+
+  /* Finalize this class */
+  _this->_Super._VMT = EW_CLASS( CoreRectView );
 
   /* Don't forget to deinitialize the super class ... */
   CoreRectView__Done( &_this->_Super );
@@ -2859,7 +2879,7 @@ EW_END_OF_CLASS_VARIANTS( ViewsStrokePath )
 
 /* Virtual Method Table (VMT) for the class : 'Views::StrokePath' */
 EW_DEFINE_CLASS( ViewsStrokePath, CoreRectView, Path, buffer, buffer, buffer, buffer, 
-                 "Views::StrokePath" )
+                 buffer, "Views::StrokePath" )
   CoreRectView_initLayoutContext,
   CoreView_GetRoot,
   ViewsStrokePath_Draw,

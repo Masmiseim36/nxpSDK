@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>exApp_EapLib</name>
+	<comment></comment>
+	<projects>
+		<project>XtensaInfo</project>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>com.tensilica.xide.cdt.xtensamanagedbuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>org.eclipse.cdt.managedbuilder.core.ScannerConfigBuilder</name>
+			<triggers>full,incremental,</triggers>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>org.eclipse.cdt.core.cnature</nature>
+		<nature>org.eclipse.cdt.core.ccnature</nature>
+		<nature>org.eclipse.cdt.managedbuilder.core.managedBuildNature</nature>
+		<nature>org.eclipse.cdt.managedbuilder.core.ScannerConfigNature</nature>
+		<nature>com.tensilica.xide.cdt.XtensaCProjectNature</nature>
+		<nature>com.tensilica.xide.cdt.XideManagedProjectNature</nature>
+		<nature>com.tensilica.xide.cdt.XtensaCProjectExeNature</nature>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>INC/EAP_Parameter_VoiceEnhancer.h</name>
+			<type>1</type>
+			<locationURI>PROJECT_LOC/INC/EAP_Parameter_VoiceEnhancer.h</locationURI>
+		</link>
+	</linkedResources>
+</projectDescription>

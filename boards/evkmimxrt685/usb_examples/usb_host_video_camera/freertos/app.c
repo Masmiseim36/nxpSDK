@@ -22,6 +22,7 @@
 #error Please enable USB_HOST_CONFIG_KHCI, USB_HOST_CONFIG_EHCI, USB_HOST_CONFIG_OHCI, or USB_HOST_CONFIG_IP3516HS in file usb_host_config.
 #endif
 
+#include "sdmmc_config.h"
 #include "clock_config.h"
 #include "fsl_pca9420.h"
 #include "fsl_power.h"
@@ -39,6 +40,7 @@ USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) uint8_t ucHeap[configTOTAL_HEAP_
 #endif
 usb_host_handle g_HostHandle;
 extern usb_host_video_camera_instance_t g_Video;
+extern sd_card_t g_sd;
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -221,6 +223,8 @@ static void USB_HostApplicationInit(void)
 {
     usb_status_t status = kStatus_USB_Success;
 
+    BOARD_SD_Config(&g_sd, NULL, (USB_HOST_INTERRUPT_PRIORITY - 1U), NULL);
+
     USB_HostClockInit();
 
 #if ((defined FSL_FEATURE_SOC_SYSMPU_COUNT) && (FSL_FEATURE_SOC_SYSMPU_COUNT))
@@ -274,7 +278,6 @@ int main(void)
     CLOCK_AttachClk(kSFRO_to_FLEXCOMM15);
     BOARD_PMIC_I2C_Init();
     PCA9420_GetDefaultConfig(&pca9420Config);
-    pca9420Config.powerGoodEnable = kPCA9420_PGoodDisabled;
     pca9420Config.I2C_SendFunc    = BOARD_PMIC_I2C_Send;
     pca9420Config.I2C_ReceiveFunc = BOARD_PMIC_I2C_Receive;
     PCA9420_Init(&pca9420Handle, &pca9420Config);

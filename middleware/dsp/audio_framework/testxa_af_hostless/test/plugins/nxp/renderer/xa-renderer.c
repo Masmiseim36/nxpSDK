@@ -34,7 +34,12 @@
 /*******************************************************************************
  * Includes
  ******************************************************************************/
+#ifdef HAVE_FREERTOS
+#include "FreeRTOS.h"
+#include "task.h"
+#else
 #include <xtensa/xos.h>
+#endif
 
 #include "audio/xa-renderer-api.h"
 #include "xf-debug.h"
@@ -86,10 +91,10 @@ typedef struct XARenderer
     void                       *input;
 
     /* ...output buffer pointer */
-    void                   *output;
+    void                       *output;
 
     /* ...pointer to DMA FIFO buffer */
-    UWORD8                     *fifo_head;
+    UWORD8                     *fifo_head[2];
 
     /* ...number of bytes consumed */
     UWORD32                     consumed;
@@ -147,9 +152,13 @@ typedef struct XARenderer
     /* ...execution complete flag */
     UWORD32     exec_done;
 
+#ifdef HAVE_FREERTOS
+    TaskHandle_t                irq_thread;
+#else
     XosThread                   irq_thread;
     XosSem                      irq_sem;
     UWORD8                      irq_stack[1024];
+#endif
 
 } XARenderer;
 
@@ -169,15 +178,6 @@ typedef struct XARenderer
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-
-/* Transfer ping pong buffer for audio data */
-#ifdef CPU_MIMXRT595SFFOA_dsp
-SDK_ALIGN(
-#else
-AT_NONCACHEABLE_SECTION_ALIGN(
-#endif
-    static uint8_t g_i2sTxBuffer[MAX_FRAME_SIZE * 2 * MAX_RENDERERS], 4
-);
 
 /* DMA descriptors for data tranfers */
 #ifdef CPU_MIMXRT595SFFOA_dsp
@@ -252,9 +252,13 @@ static void xa_hw_renderer_stop(XARenderer *d)
     DMA_DisableChannelInterrupts(DMA_RENDERER, dma_channel_map[d->i2s_device]);
     DMA_AbortTransfer(&d->i2sTxDmaHandle);
 
-    /* Wait until all transmitted data get out of FIFO */
-    while ((i2s_device_map[d->i2s_device]->FIFOSTAT & I2S_FIFOSTAT_TXEMPTY_MASK) == 0U)
+    /* Wait until all transmitted data get out of FIFO, if running in master
+     * mode */
+    if (d->i2s_master == 1)
     {
+        while ((i2s_device_map[d->i2s_device]->FIFOSTAT & I2S_FIFOSTAT_TXEMPTY_MASK) == 0U)
+        {
+        }
     }
 
     /* ...disable I2S DMA after FIFO data is flushed */
@@ -267,17 +271,19 @@ static void xa_hw_renderer_stop(XARenderer *d)
 /* ...close hardware renderer */
 static void xa_hw_renderer_close(XARenderer *d)
 {
-    int32_t exitcode;
-
     xa_hw_renderer_stop(d);
 
     g_renderIndexMap[d->renderIndex] = 0;
 
+#ifdef HAVE_FREERTOS
+    vTaskDelete(d->irq_thread);
+#else
     xos_sem_delete(&d->irq_sem);
 
     xos_thread_abort(&d->irq_thread, 0);
-    xos_thread_join(&d->irq_thread, &exitcode);
+    xos_thread_join(&d->irq_thread, NULL);
     xos_thread_delete(&d->irq_thread);
+#endif
 }
 
 /* ...pause renderer operation */
@@ -296,13 +302,25 @@ static inline void xa_hw_renderer_resume(XARenderer *d)
     DMA_EnableChannel(DMA_RENDERER, dma_channel_map[d->i2s_device]);
 }
 
-static int TxRenderCallback(void *arg, int wake_value)
+#ifdef HAVE_FREERTOS
+void TxRenderCallback(void *arg)
+#else
+int TxRenderCallback(void *arg, int wake_value)
+#endif
 {
     XARenderer *d = (XARenderer*) arg;
 
     while (1)
     {
+#ifdef HAVE_FREERTOS
+        xTaskNotifyWait(pdFALSE, 0xffffff, NULL, portMAX_DELAY);
+#else
         xos_sem_get(&d->irq_sem);
+#endif
+
+        /* ...zero out buffer just completed */
+        memset(d->fifo_head[(d->rendered - 1) % 2], 0, d->frame_size);
+
         d->cdata->cb(d->cdata, 0);
     }
 }
@@ -311,6 +329,9 @@ static int TxRenderCallback(void *arg, int wake_value)
 static void TxRenderCallbackISR(struct _dma_handle *handle, void *userData, bool transferDone, uint32_t intmode)
 {
     XARenderer *d = (XARenderer*) userData;
+#ifdef HAVE_FREERTOS
+    BaseType_t woken = pdFALSE;
+#endif
 
     if (transferDone)
     {
@@ -326,11 +347,8 @@ static void TxRenderCallbackISR(struct _dma_handle *handle, void *userData, bool
         {
             /* ...underrun condition */
 
-            /* ...stop DMA on underrun to avoid transmitting old data. */
-            xa_hw_renderer_stop(d);
-
-            /* ...reset rendered value to match submitted. */
-            d->rendered = d->submitted;
+            /* ...reset submitted value to match rendered. */
+            d->submitted = d->rendered + 1;
 
             d->state ^= XA_RENDERER_FLAG_RUNNING | XA_RENDERER_FLAG_IDLE;
         }
@@ -338,7 +356,12 @@ static void TxRenderCallbackISR(struct _dma_handle *handle, void *userData, bool
         /* ...notify user input buffer consumption only if in running state */
         if (d->submit_flag == RENDERER_SUBMIT_RUNNING)
         {
+#ifdef HAVE_FREERTOS
+            xTaskNotifyFromISR(d->irq_thread, 0, eNoAction, &woken);
+            portYIELD_FROM_ISR(woken);
+#else
             xos_sem_put(&d->irq_sem);
+#endif
         }
 
         if (d->submit_flag == RENDERER_SUBMIT_INIT)
@@ -355,13 +378,14 @@ static void evk_hw_renderer_init(void* ptr)
     i2s_config_t s_TxConfig;
     dma_channel_config_t transferConfig;
     XARenderer *d = (XARenderer*) ptr;
-    uint32_t num_descriptors, tx_size, buf_index, next_desc;
+    uint32_t num_descriptors, tx_size, buf_index, next_desc, fifo_index;
     bool mono, enable_int;
 
     I2S_TxGetDefaultConfig(&s_TxConfig);
 
     s_TxConfig.dataLength = d->pcm_width;
-    /* Codec requires 32 bit frameLength even for mono channel */
+    /* Set 32 bit frameLength even for mono channel.
+     * Use may vary with different hardware codecs. */
     s_TxConfig.frameLength = d->channels == 1 ? d->pcm_width * 2 : d->pcm_width * d->channels;
     s_TxConfig.mode = d->i2s_mode;
     s_TxConfig.sckPol = d->i2s_sck_polarity;
@@ -420,7 +444,7 @@ static void evk_hw_renderer_init(void* ptr)
     enable_int = (num_descriptors == 1);
 
     DMA_PrepareChannelTransfer(&transferConfig,
-                               &d->fifo_head[0],
+                               d->fifo_head[0],
                                (void *)&i2s_device_map[d->i2s_device]->FIFOWR,
                                DMA_CHANNEL_XFER(true, false, enable_int, false, 4U, kDMA_AddressInterleave1xWidth, kDMA_AddressInterleave0xWidth, tx_size),
                                kDMA_MemoryToPeripheral,
@@ -439,17 +463,19 @@ static void evk_hw_renderer_init(void* ptr)
         {
             buf_index = 0;
             next_desc = 0;
+            fifo_index = 0;
         }
         else
         {
-            buf_index = tx_size * (i + 1);
+            buf_index = tx_size * ((i + 1) % num_descriptors);
             next_desc = i + 1;
+            fifo_index = (i < (num_descriptors - 1)) ? 0 : 1;
         }
 
         DMA_SetupDescriptor(&d->dmaDescriptor[i],
                             DMA_CHANNEL_XFER(true, false, enable_int, false, 4U, kDMA_AddressInterleave1xWidth,
                             kDMA_AddressInterleave0xWidth, tx_size),
-                            &d->fifo_head[buf_index],
+                            d->fifo_head[fifo_index] + buf_index,
                             (void *)&i2s_device_map[d->i2s_device]->FIFOWR,
                             &d->dmaDescriptor[next_desc]);
     }
@@ -483,11 +509,17 @@ static XA_ERRORCODE xa_hw_renderer_init(XARenderer *d)
         return XA_RENDERER_CONFIG_FATAL_HW;
     }
 
-    d->fifo_head = &g_i2sTxBuffer[MAX_FRAME_SIZE * i];
+    memset(d->fifo_head[0], 0, d->frame_size);
+    memset(d->fifo_head[1], 0, d->frame_size);
+
     d->dmaDescriptor = &s_dmaDescriptorPingpongI2S[MAX_RENDERERS * i];
 
+#ifdef HAVE_FREERTOS
+    xTaskCreate(TxRenderCallback, "TxRenderCallback", 1024, d, configMAX_PRIORITIES - 1, &d->irq_thread);
+#else
     xos_sem_create(&d->irq_sem, 0, 0);
     xos_thread_create(&d->irq_thread, NULL, TxRenderCallback, d, "TxRendererCallback", d->irq_stack, sizeof(d->irq_stack), XOS_MAX_PRIORITY - 1, 0, 0);
+#endif
 
     /* Initialize hardware */
     evk_hw_renderer_init(d);
@@ -500,7 +532,6 @@ static UWORD32 xa_hw_renderer_submit(XARenderer *d, void *b, UWORD32 n)
 {
     UWORD32 bytes_write;
     UWORD32 buffer_available;
-    UWORD32 offset;
 
     /* ...reset optional output-bytes produced */
     d->bytes_produced = 0;
@@ -509,8 +540,14 @@ static UWORD32 xa_hw_renderer_submit(XARenderer *d, void *b, UWORD32 n)
     bytes_write = (n > buffer_available ? buffer_available : n);
     if (bytes_write > 0)
     {
-        offset = (d->submitted % 2) * d->frame_size;
-        memcpy((char*) d->fifo_head + offset, b, bytes_write);
+        memcpy(d->fifo_head[d->submitted % 2], b, bytes_write);
+
+        /* ...write to optional output port buffer */
+        if (d->output)
+        {
+            memcpy(d->output, b, bytes_write);
+            d->bytes_produced = bytes_write;
+        }
 
         buffer_available -= d->frame_size;
 
@@ -834,6 +871,18 @@ static XA_ERRORCODE xa_renderer_set_config_param(XARenderer *d, WORD32 i_idx, pV
         /* ...apply setting */
         d->i2s_ws_polarity = i_value;
 
+        return XA_NO_ERROR;
+
+    case XA_RENDERER_CONFIG_PARAM_AUDIO_BUFFER_1:
+        /* ...command is valid only in configuration state */
+        XF_CHK_ERR((d->state & XA_RENDERER_FLAG_POSTINIT_DONE) == 0, XA_RENDERER_CONFIG_FATAL_STATE);
+        d->fifo_head[0] = (UWORD8*) *(UWORD32*)pv_value;
+        return XA_NO_ERROR;
+
+    case XA_RENDERER_CONFIG_PARAM_AUDIO_BUFFER_2:
+        /* ...command is valid only in configuration state */
+        XF_CHK_ERR((d->state & XA_RENDERER_FLAG_POSTINIT_DONE) == 0, XA_RENDERER_CONFIG_FATAL_STATE);
+        d->fifo_head[1] = (UWORD8*) *(UWORD32*)pv_value;
         return XA_NO_ERROR;
 
     default:

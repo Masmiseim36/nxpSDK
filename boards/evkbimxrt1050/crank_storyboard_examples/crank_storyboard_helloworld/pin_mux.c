@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP.
+ * Copyright 2019-2020 NXP.
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -13,11 +13,11 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v6.0
+product: Pins v7.0
 processor: MIMXRT1052xxxxB
 package_id: MIMXRT1052DVL6B
 mcu_data: ksdk2_0
-processor_version: 6.0.1
+processor_version: 6.0.0
 board: IMXRT1050-EVKB
 pin_labels:
 - {pin_num: M11, pin_signal: GPIO_AD_B0_02, label: 'USB_OTG1_PWR/J24[2]', identifier: USB_OTG_PWR;USB_OTG1_PWR}

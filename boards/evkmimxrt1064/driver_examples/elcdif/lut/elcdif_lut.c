@@ -20,22 +20,22 @@
 #define APP_ELCDIF LCDIF
 
 #define APP_IMG_HEIGHT 272
-#define APP_IMG_WIDTH 480
-#define APP_HSW 41
-#define APP_HFP 4
-#define APP_HBP 8
-#define APP_VSW 10
-#define APP_VFP 4
-#define APP_VBP 2
+#define APP_IMG_WIDTH  480
+#define APP_HSW        41
+#define APP_HFP        4
+#define APP_HBP        8
+#define APP_VSW        10
+#define APP_VFP        4
+#define APP_VBP        2
 #define APP_POL_FLAGS \
     (kELCDIF_DataEnableActiveHigh | kELCDIF_VsyncActiveLow | kELCDIF_HsyncActiveLow | kELCDIF_DriveDataOnRisingClkEdge)
 #define APP_DATA_BUS 16
 
 /* Display. */
-#define LCD_DISP_GPIO GPIO1
+#define LCD_DISP_GPIO     GPIO1
 #define LCD_DISP_GPIO_PIN 2
 /* Back light. */
-#define LCD_BL_GPIO GPIO2
+#define LCD_BL_GPIO     GPIO2
 #define LCD_BL_GPIO_PIN 31
 
 /* Frame buffer data alignment, for better performance, the LCDIF frame buffer should be 64B align. */
@@ -77,7 +77,7 @@ void BOARD_EnableLcdInterrupt(void)
 /* Initialize the LCD_DISP. */
 void BOARD_InitLcd(void)
 {
-    volatile uint32_t i = 0x100U;
+    volatile uint32_t i = 0x1000U;
 
     gpio_pin_config_t config = {
         kGPIO_DigitalOutput,
@@ -150,11 +150,7 @@ void APP_LCDIF_IRQHandler(void)
     {
         s_curFrame++;
     }
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 void APP_ELCDIF_Init(void)

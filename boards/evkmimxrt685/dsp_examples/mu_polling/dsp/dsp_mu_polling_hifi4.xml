@@ -7,7 +7,6 @@
     <definition extID="component.serial_manager_uart.MIMXRT685S"/>
     <definition extID="component.usart_adapter.MIMXRT685S"/>
     <definition extID="device.MIMXRT685S_CMSIS.MIMXRT685S"/>
-    <definition extID="device.MIMXRT685S_DSP.MIMXRT685S"/>
     <definition extID="platform.Include_dsp.MIMXRT685S"/>
     <definition extID="platform.drivers.clock.MIMXRT685S"/>
     <definition extID="platform.drivers.common.MIMXRT685S"/>
@@ -25,7 +24,7 @@
     <definition extID="mcuxpresso"/>
     <definition extID="armgcc"/>
   </externalDefinitions>
-  <example id="evkmimxrt685_dsp_mu_polling_hifi4" name="dsp_mu_polling_hifi4" category="dsp_examples" dependency="component.usart_adapter.MIMXRT685S component.serial_manager_uart.MIMXRT685S platform.drivers.flexcomm_usart.MIMXRT685S platform.drivers.lpc_gpio.MIMXRT685S platform.drivers.mu.MIMXRT685S component.serial_manager.MIMXRT685S platform.drivers.common.MIMXRT685S component.lists.MIMXRT685S utility.debug_console.MIMXRT685S platform.drivers.lpc_iopctl.MIMXRT685S platform.drivers.clock.MIMXRT685S platform.drivers.reset.MIMXRT685S device.MIMXRT685S_DSP.MIMXRT685S platform.Include_dsp.MIMXRT685S platform.drivers.flexcomm.MIMXRT685S platform.utilities.misc_utilities.MIMXRT685S device.MIMXRT685S_CMSIS.MIMXRT685S" device_core="hifi4_MIMXRT685S">
+  <example id="evkmimxrt685_dsp_mu_polling_hifi4" name="dsp_mu_polling_hifi4" category="dsp_examples" dependency="component.usart_adapter.MIMXRT685S component.serial_manager_uart.MIMXRT685S platform.drivers.flexcomm_usart.MIMXRT685S platform.drivers.lpc_gpio.MIMXRT685S platform.drivers.mu.MIMXRT685S component.serial_manager.MIMXRT685S platform.drivers.common.MIMXRT685S component.lists.MIMXRT685S utility.debug_console.MIMXRT685S platform.drivers.lpc_iopctl.MIMXRT685S platform.drivers.clock.MIMXRT685S platform.drivers.reset.MIMXRT685S device.MIMXRT685S_CMSIS.MIMXRT685S platform.Include_dsp.MIMXRT685S platform.drivers.flexcomm.MIMXRT685S platform.utilities.misc_utilities.MIMXRT685S" device_core="hifi4_MIMXRT685S">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>

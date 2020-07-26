@@ -37,7 +37,7 @@ typedef struct _queue
     uint32_t maxSize;
     uint32_t curSize;
     osa_mutex_handle_t mutex;
-    uint32_t mutexBuffer[(OSA_MUTEX_HANDLE_SIZE + 3)/4];
+    uint32_t mutexBuffer[(OSA_MUTEX_HANDLE_SIZE + 3) / 4];
     vnic_enet_transfer_t *qArray;
 } queue_t;
 

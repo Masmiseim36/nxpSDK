@@ -52,7 +52,7 @@ sbvfs_get_resource_roots(int *nroots) {
 }
 
 sb_ccallback_t * sbvfs_get_ccallback_list() {
-	return clist;
+	return (sb_ccallback_t *) sb_ccallback_list;
 }
 #endif
 

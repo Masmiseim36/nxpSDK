@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP
+ * Copyright 2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -17,7 +17,7 @@ product: Pins v7.0
 processor: MIMXRT685S
 package_id: MIMXRT685SFVKB
 mcu_data: ksdk2_0
-processor_version: 0.0.2
+processor_version: 0.0.6
 pin_labels:
 - {pin_num: B1, pin_signal: PIO1_9/FC5_SSEL3/SCT0_GPI7/UTICK_CAP1/CTIMER1_MAT3/ADC0_12, label: WL_REG_ON, identifier: BOARD_INITPINS_WL_REG_ON;WL_REG_ON}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
@@ -59,12 +59,12 @@ BOARD_InitPins:
     pupdsel: pullDown, ibena: enabled, slew_rate: normal, drive: full, amena: disabled, odena: disabled, iiena: disabled}
   - {pin_num: K16, peripheral: SYSCON, signal: MCLK, pin_signal: PIO1_10/MCLK/FREQME_GPIO_CLK/CTIMER_INP10/CLKOUT, pupdena: disabled, pupdsel: pullDown, ibena: disabled,
     slew_rate: normal, drive: full, amena: disabled, odena: disabled, iiena: disabled}
-  - {pin_num: N17, peripheral: I3C, signal: SCL, pin_signal: PIO2_29/I3C0_SCL/SCT0_OUT0/CLKOUT, pupdena: enabled, pupdsel: pullUp, ibena: enabled, slew_rate: normal,
+  - {pin_num: N17, peripheral: I3C, signal: SCL, pin_signal: PIO2_29/I3C0_SCL/SCT0_OUT0/CLKOUT, pupdena: enabled, pupdsel: pullUp, ibena: enabled, slew_rate: slow,
     drive: normal, amena: disabled, odena: disabled, iiena: disabled}
-  - {pin_num: P16, peripheral: I3C, signal: SDA, pin_signal: PIO2_30/I3C0_SDA/SCT0_OUT3/CLKIN/CMP0_OUT, pupdena: enabled, pupdsel: pullUp, ibena: enabled, slew_rate: normal,
+  - {pin_num: P16, peripheral: I3C, signal: SDA, pin_signal: PIO2_30/I3C0_SDA/SCT0_OUT3/CLKIN/CMP0_OUT, pupdena: enabled, pupdsel: pullUp, ibena: enabled, slew_rate: slow,
     drive: normal, amena: disabled, odena: disabled, iiena: disabled}
   - {pin_num: B6, peripheral: I3C, signal: PUR, pin_signal: PIO2_31/I3C0_PUR/SCT0_OUT7/UTICK_CAP3/CTIMER_INP15/SWO/CMP0_B, pupdena: disabled, pupdsel: pullDown, ibena: enabled,
-    slew_rate: normal, drive: normal, amena: disabled, odena: disabled, iiena: disabled}
+    slew_rate: slow, drive: normal, amena: disabled, odena: disabled, iiena: disabled}
   - {pin_num: G15, peripheral: GPIO, signal: 'PIO1, 1', pin_signal: PIO1_1/FC4_SSEL2/SCT0_GPI2/SCT0_OUT8/CTIMER1_MAT0, pupdena: disabled, pupdsel: pullDown, ibena: enabled,
     slew_rate: normal, drive: normal, amena: disabled, odena: disabled, iiena: disabled}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
@@ -257,8 +257,8 @@ void BOARD_InitPins(void)
                                          IOPCTL_PIO_PULLUP_EN |
                                          /* Enables input buffer function */
                                          IOPCTL_PIO_INBUF_EN |
-                                         /* Normal mode */
-                                         IOPCTL_PIO_SLEW_RATE_NORMAL |
+                                         /* Slow mode */
+                                         IOPCTL_PIO_SLEW_RATE_SLOW |
                                          /* Normal drive */
                                          IOPCTL_PIO_FULLDRIVE_DI |
                                          /* Analog mux is disabled */
@@ -278,8 +278,8 @@ void BOARD_InitPins(void)
                                          IOPCTL_PIO_PULLUP_EN |
                                          /* Enables input buffer function */
                                          IOPCTL_PIO_INBUF_EN |
-                                         /* Normal mode */
-                                         IOPCTL_PIO_SLEW_RATE_NORMAL |
+                                         /* Slow mode */
+                                         IOPCTL_PIO_SLEW_RATE_SLOW |
                                          /* Normal drive */
                                          IOPCTL_PIO_FULLDRIVE_DI |
                                          /* Analog mux is disabled */
@@ -299,8 +299,8 @@ void BOARD_InitPins(void)
                                          IOPCTL_PIO_PULLDOWN_EN |
                                          /* Enables input buffer function */
                                          IOPCTL_PIO_INBUF_EN |
-                                         /* Normal mode */
-                                         IOPCTL_PIO_SLEW_RATE_NORMAL |
+                                         /* Slow mode */
+                                         IOPCTL_PIO_SLEW_RATE_SLOW |
                                          /* Normal drive */
                                          IOPCTL_PIO_FULLDRIVE_DI |
                                          /* Analog mux is disabled */

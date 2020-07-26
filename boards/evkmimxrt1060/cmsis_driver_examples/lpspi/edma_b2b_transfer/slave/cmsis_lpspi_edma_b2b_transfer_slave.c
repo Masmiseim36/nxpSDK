@@ -19,10 +19,10 @@
  * Definitions
  ******************************************************************************/
 /* Master related */
-#define DRIVER_SLAVE_SPI Driver_SPI1
-#define EXAMPLE_LPSPI_SLAVE_IRQN (LPSPI1_IRQn)
+#define DRIVER_SLAVE_SPI                     Driver_SPI1
+#define EXAMPLE_LPSPI_SLAVE_IRQN             (LPSPI1_IRQn)
 #define EXAMPLE_LPSPI_SLAVE_DMA_MUX_BASEADDR DMAMUX
-#define EXAMPLE_LPSPI_SLAVE_DMA_BASEADDR DMA0
+#define EXAMPLE_LPSPI_SLAVE_DMA_BASEADDR     DMA0
 
 /* Select USB1 PLL PFD0 (720 MHz) as lpspi clock source */
 #define EXAMPLE_LPSPI_CLOCK_SOURCE_SELECT (1U)

@@ -7,13 +7,13 @@
 
 #define THIS_IS_LOCAL_MODULE_FOR_G_REDUNDANT_OFFSET // This shall be defined before inclusions
 
-#include "bootloader/bl_nor_encrypt.h"
+#include "bl_nor_encrypt.h"
 #include "bootloader_config.h"
 #include <stdint.h>
 #include <stdbool.h>
-#include "dcp/fsl_dcp.h"
-#include "trng/fsl_trng.h"
-#include "crc/crc32.h"
+#include "bl_dcp.h"
+#include "bl_trng.h"
+#include "crc32.h"
 
 /*******************************************************************************************************************************
  * Type & constant definitions

@@ -10,7 +10,9 @@
     <definition extID="device.MIMXRT1021_CMSIS.MIMXRT1021"/>
     <definition extID="device.MIMXRT1021_startup.MIMXRT1021"/>
     <definition extID="middleware.baremetal.MIMXRT1021"/>
-    <definition extID="middleware.usb.device.MIMXRT1021"/>
+    <definition extID="middleware.usb.common_header.MIMXRT1021"/>
+    <definition extID="middleware.usb.device.common_header.MIMXRT1021"/>
+    <definition extID="middleware.usb.device.controller.driver.MIMXRT1021"/>
     <definition extID="middleware.usb.device_controller_ehci.MIMXRT1021"/>
     <definition extID="middleware.usb.phy.MIMXRT1021"/>
     <definition extID="platform.Include_common.MIMXRT1021"/>
@@ -23,7 +25,6 @@
     <definition extID="platform.drivers.iomuxc.MIMXRT1021"/>
     <definition extID="platform.drivers.lpuart.MIMXRT1021"/>
     <definition extID="platform.drivers.xip_board.MIMXRT1021"/>
-    <definition extID="platform.drivers.xip_board_dcd.MIMXRT1021"/>
     <definition extID="platform.drivers.xip_device.MIMXRT1021"/>
     <definition extID="platform.utilities.assert.MIMXRT1021"/>
     <definition extID="platform.utilities.misc_utilities.MIMXRT1021"/>
@@ -35,7 +36,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkmimxrt1020_dev_composite_cdc_vcom_cdc_vcom_bm" name="dev_composite_cdc_vcom_cdc_vcom_bm" category="usb_examples" dependency="middleware.usb.device_controller_ehci.MIMXRT1021 middleware.usb.phy.MIMXRT1021 platform.drivers.cache_armv7_m7.MIMXRT1021 middleware.usb.device.MIMXRT1021 platform.drivers.clock.MIMXRT1021 platform.drivers.common.MIMXRT1021 device.MIMXRT1021_CMSIS.MIMXRT1021 device.MIMXRT1021_startup.MIMXRT1021 platform.drivers.lpuart.MIMXRT1021 platform.drivers.iomuxc.MIMXRT1021 platform.utilities.assert.MIMXRT1021 platform.drivers.igpio.MIMXRT1021 platform.drivers.xip_device.MIMXRT1021 platform.drivers.xip_board.MIMXRT1021 platform.drivers.xip_board_dcd.MIMXRT1021 utility.debug_console.MIMXRT1021 component.lpuart_adapter.MIMXRT1021 component.serial_manager.MIMXRT1021 component.lists.MIMXRT1021 component.serial_manager_uart.MIMXRT1021 component.osa.MIMXRT1021 platform.Include_core_cm7.MIMXRT1021 platform.Include_common.MIMXRT1021 platform.Include_dsp.MIMXRT1021 platform.utilities.misc_utilities.MIMXRT1021 middleware.baremetal.MIMXRT1021">
+  <example id="evkmimxrt1020_dev_composite_cdc_vcom_cdc_vcom_bm" name="dev_composite_cdc_vcom_cdc_vcom_bm" category="usb_examples" dependency="middleware.usb.device_controller_ehci.MIMXRT1021 middleware.usb.phy.MIMXRT1021 platform.drivers.cache_armv7_m7.MIMXRT1021 platform.drivers.clock.MIMXRT1021 platform.drivers.common.MIMXRT1021 device.MIMXRT1021_CMSIS.MIMXRT1021 device.MIMXRT1021_startup.MIMXRT1021 platform.drivers.lpuart.MIMXRT1021 platform.drivers.iomuxc.MIMXRT1021 platform.utilities.assert.MIMXRT1021 platform.drivers.igpio.MIMXRT1021 platform.drivers.xip_device.MIMXRT1021 platform.drivers.xip_board.MIMXRT1021 utility.debug_console.MIMXRT1021 component.lpuart_adapter.MIMXRT1021 component.serial_manager.MIMXRT1021 component.lists.MIMXRT1021 component.serial_manager_uart.MIMXRT1021 middleware.usb.device.controller.driver.MIMXRT1021 component.osa.MIMXRT1021 middleware.usb.common_header.MIMXRT1021 platform.Include_core_cm7.MIMXRT1021 platform.Include_common.MIMXRT1021 platform.Include_dsp.MIMXRT1021 middleware.usb.device.common_header.MIMXRT1021 platform.utilities.misc_utilities.MIMXRT1021 middleware.baremetal.MIMXRT1021">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -116,11 +117,13 @@
     <source path="boards/evkmimxrt1020/usb_examples/usb_device_composite_cdc_vcom_cdc_vcom/bm" target_path="board" type="c_include">
       <files mask="board.h"/>
       <files mask="clock_config.h"/>
+      <files mask="dcd.h"/>
       <files mask="pin_mux.h"/>
     </source>
     <source path="boards/evkmimxrt1020/usb_examples/usb_device_composite_cdc_vcom_cdc_vcom/bm" target_path="board" type="src">
       <files mask="board.c"/>
       <files mask="clock_config.c"/>
+      <files mask="dcd.c"/>
       <files mask="pin_mux.c"/>
     </source>
     <source path="boards/evkmimxrt1020/usb_examples/usb_device_composite_cdc_vcom_cdc_vcom/bm" target_path="doc" type="doc" toolchain="iar mdk mcuxpresso">

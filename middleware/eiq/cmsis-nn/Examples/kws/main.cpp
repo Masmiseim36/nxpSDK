@@ -71,7 +71,6 @@
 #define DEMO_I2C_CLK_FREQ ((CLOCK_GetFreq(kCLOCK_Usb1PllClk) / 8) / (DEMO_LPI2C_CLOCK_SOURCE_DIVIDER + 1U))
 
 #define OVER_SAMPLE_RATE (384U)
-/* Size of single the buffer. */
 #define BUFFER_SIZE (1024U)
 /* 16Khz * 2 bytes */
 #define AUDIO_NUM (16U * 2)
@@ -106,8 +105,7 @@ volatile bool dataReady = false;
 sai_transfer_t xferRx = {0};
 sai_transfer_t xferTx = {0};
 
-uint8_t codecHandleBuffer[CODEC_HANDLE_SIZE] = {0U};
-codec_handle_t *codecHandle = (codec_handle_t *)codecHandleBuffer;
+codec_handle_t codecHandle;
 wm8960_config_t wm8960Config;
 codec_config_t boardCodecConfig;
 
@@ -375,7 +373,7 @@ int main(void)
 #endif
 
   /* Use default setting to init codec */
-  CODEC_Init(codecHandle, &boardCodecConfig);
+  CODEC_Init(&codecHandle, &boardCodecConfig);
 
   PRINTF("\r\nMicrophone data processing:\r\n");
 

@@ -18,17 +18,17 @@
 * project directory and edit the copy only. Please avoid any modifications of
 * the original template file!
 *
-* Version  : 9.20
+* Version  : 9.30
 * Profile  : WebGL
 * Platform : Tara.WebGL.RGBA8888
 *
 *******************************************************************************/
 
 var EmWiApp;if(!EmWiApp)throw new Error("The application file '_project.js' isn't yet loaded!"
-);if(EmWiApp.hN)throw new Error("The unit file 'Application.js' included twice!"
-);EmWiApp.hN=(function(){var B=EmWiApp;var E={};
+);if(EmWiApp.ia)throw new Error("The unit file 'Application.js' included twice!"
+);EmWiApp.ia=(function(){var B=EmWiApp;var E={};
 
 
-E._Init=function(){};E.Dy=function(D){};return E;})();
+E._Init=function(){};E.DC=function(D){};return E;})();
 
 /* Embedded Wizard */

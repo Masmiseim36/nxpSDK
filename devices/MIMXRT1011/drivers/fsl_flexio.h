@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -21,14 +21,14 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief FlexIO driver version 2.0.2. */
-#define FSL_FLEXIO_DRIVER_VERSION (MAKE_VERSION(2, 0, 2))
+/*! @brief FlexIO driver version 2.0.3. */
+#define FSL_FLEXIO_DRIVER_VERSION (MAKE_VERSION(2, 0, 3))
 /*@}*/
 
 /*! @brief Calculate FlexIO timer trigger.*/
-#define FLEXIO_TIMER_TRIGGER_SEL_PININPUT(x) ((uint32_t)(x) << 1U)
+#define FLEXIO_TIMER_TRIGGER_SEL_PININPUT(x)   ((uint32_t)(x) << 1U)
 #define FLEXIO_TIMER_TRIGGER_SEL_SHIFTnSTAT(x) (((uint32_t)(x) << 2U) | 0x1U)
-#define FLEXIO_TIMER_TRIGGER_SEL_TIMn(x) (((uint32_t)(x) << 2U) | 0x3U)
+#define FLEXIO_TIMER_TRIGGER_SEL_TIMn(x)       (((uint32_t)(x) << 2U) | 0x3U)
 
 /*! @brief Define time of timer trigger polarity.*/
 typedef enum _flexio_timer_trigger_polarity
@@ -406,7 +406,7 @@ static inline uint32_t FLEXIO_ReadPinInput(FLEXIO_Type *base)
  */
 static inline uint8_t FLEXIO_GetShifterState(FLEXIO_Type *base)
 {
-    return ((base->SHIFTSTATE) & FLEXIO_SHIFTSTATE_STATE_MASK);
+    return ((uint8_t)(base->SHIFTSTATE) & FLEXIO_SHIFTSTATE_STATE_MASK);
 }
 #endif /*FSL_FEATURE_FLEXIO_HAS_STATE_MODE*/
 

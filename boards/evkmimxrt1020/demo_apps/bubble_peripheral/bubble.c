@@ -19,9 +19,9 @@
  * Definitions
  ******************************************************************************/
 
-#define EXAMPLE_LED_GPIO BOARD_USER_LED_GPIO
+#define EXAMPLE_LED_GPIO     BOARD_USER_LED_GPIO
 #define EXAMPLE_LED_GPIO_PIN BOARD_USER_LED_GPIO_PIN
-#define EXAMPLE_DELAY_COUNT 8000000
+#define EXAMPLE_DELAY_COUNT  8000000
 
 /* Upper bound and lower bound angle values */
 #define ANGLE_UPPER_BOUND 85U

@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP
+ * Copyright 2019-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -7,10 +7,15 @@
 
 #include "littlevgl_support.h"
 #include "lvgl.h"
+#if defined(FSL_RTOS_FREE_RTOS)
 #include "FreeRTOS.h"
 #include "semphr.h"
+#endif
 
 #include "fsl_elcdif.h"
+#if LV_USE_GPU
+#include "fsl_pxp.h"
+#endif
 #include "fsl_lpi2c.h"
 #include "fsl_gpio.h"
 #include "fsl_ft5406_rt.h"
@@ -29,7 +34,7 @@
 #define TOUCH_LPI2C_CLOCK_SOURCE_DIVIDER (5U)
 
 #define TOUCH_I2C_CLOCK_FREQ ((CLOCK_GetFreq(kCLOCK_Usb1PllClk) / 8) / (TOUCH_LPI2C_CLOCK_SOURCE_DIVIDER + 1U))
-#define TOUCH_I2C_BAUDRATE 100000U
+#define TOUCH_I2C_BAUDRATE   100000U
 
 /* Macros for panel. */
 #define LCD_HSW 41
@@ -43,7 +48,7 @@
 #define LCD_LCDIF_DATA_BUS kELCDIF_DataBus16Bit
 
 /* Back light. */
-#define LCD_BL_GPIO GPIO2
+#define LCD_BL_GPIO     GPIO2
 #define LCD_BL_GPIO_PIN 31
 
 /*******************************************************************************
@@ -55,19 +60,36 @@ static void DEMO_InitLcdClock(void);
 
 static void DEMO_InitLcdBackLight(void);
 
-static void DEMO_FlushDisplay(int32_t x1, int32_t y1, int32_t x2, int32_t y2, const lv_color_t *color_p);
+static void DEMO_FlushDisplay(lv_disp_drv_t *disp_drv, const lv_area_t *area, lv_color_t *color_p);
 
 static void DEMO_InitTouch(void);
 
-static bool DEMO_ReadTouch(lv_indev_data_t *data);
+static bool DEMO_ReadTouch(lv_indev_drv_t *drv, lv_indev_data_t *data);
+
+#if LV_USE_GPU
+static void DEMO_InitPxp(void);
+
+static void DEMO_GPU_Fill(
+    lv_disp_drv_t *disp_drv, lv_color_t *dest_buf, lv_coord_t dest_width, const lv_area_t *fill_area, lv_color_t color);
+#endif
 
 /*******************************************************************************
  * Variables
  ******************************************************************************/
 static volatile bool s_framePending;
+#if defined(FSL_RTOS_FREE_RTOS)
 static SemaphoreHandle_t s_frameSema;
+#endif
 static ft5406_rt_handle_t touchHandle;
 AT_NONCACHEABLE_SECTION_ALIGN(static uint8_t s_frameBuffer[2][LCD_WIDTH * LCD_HEIGHT * LCD_FB_BYTE_PER_PIXEL], 64);
+
+#if LV_USE_GPU
+#if defined(FSL_RTOS_FREE_RTOS)
+static SemaphoreHandle_t s_pxpIdle;
+#else
+static volatile bool s_pxpIdle;
+#endif
+#endif
 
 /*******************************************************************************
  * Code
@@ -75,19 +97,22 @@ AT_NONCACHEABLE_SECTION_ALIGN(static uint8_t s_frameBuffer[2][LCD_WIDTH * LCD_HE
 
 void lv_port_pre_init(void)
 {
-    /*
-     * Pass in the frame buffer address to LittlevGL manually, the LV_VDB_ADR
-     * and LV_VDB2_ADR should be defined to LV_VDB_ADR_INV in lv_conf.h
-     */
-    lv_vdb_set_adr(s_frameBuffer[0], s_frameBuffer[1]);
 }
 
 void lv_port_disp_init(void)
 {
+    static lv_disp_buf_t disp_buf;
+
+    lv_disp_buf_init(&disp_buf, s_frameBuffer[0], s_frameBuffer[1], LCD_WIDTH * LCD_HEIGHT);
+
     /*-------------------------
      * Initialize your display
      * -----------------------*/
     DEMO_InitLcd();
+
+#if LV_USE_GPU
+    DEMO_InitPxp();
+#endif
 
     /*-----------------------------------
      * Register the display in LittlevGL
@@ -98,8 +123,19 @@ void lv_port_disp_init(void)
 
     /*Set up the functions to access to your display*/
 
-    /*Used in buffered mode (LV_VDB_SIZE != 0  in lv_conf.h)*/
-    disp_drv.disp_flush = DEMO_FlushDisplay;
+    /*Set the resolution of the display*/
+    disp_drv.hor_res = LCD_WIDTH;
+    disp_drv.ver_res = LCD_HEIGHT;
+
+    /*Used to copy the buffer's content to the display*/
+    disp_drv.flush_cb = DEMO_FlushDisplay;
+
+#if LV_USE_GPU
+    disp_drv.gpu_fill_cb = DEMO_GPU_Fill;
+#endif
+
+    /*Set a display buffer*/
+    disp_drv.buffer = &disp_buf;
 
     /*Finally register the driver*/
     lv_disp_drv_register(&disp_drv);
@@ -107,7 +143,9 @@ void lv_port_disp_init(void)
 
 void LCDIF_IRQHandler(void)
 {
+#if defined(FSL_RTOS_FREE_RTOS)
     BaseType_t taskAwake = pdFALSE;
+#endif
 
     uint32_t intStatus = ELCDIF_GetInterruptStatus(LCDIF);
 
@@ -119,17 +157,14 @@ void LCDIF_IRQHandler(void)
         {
             s_framePending = false;
 
+#if defined(FSL_RTOS_FREE_RTOS)
             xSemaphoreGiveFromISR(s_frameSema, &taskAwake);
 
             portYIELD_FROM_ISR(taskAwake);
+#endif
         }
     }
-
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 static void DEMO_InitLcdClock(void)
@@ -202,16 +237,20 @@ static void DEMO_InitLcd(void)
     /* Clear frame buffer. */
     memset((void *)s_frameBuffer, 0, sizeof(s_frameBuffer));
 
+#if defined(FSL_RTOS_FREE_RTOS)
     s_frameSema = xSemaphoreCreateBinary();
     if (NULL == s_frameSema)
     {
         PRINTF("Frame semaphore create failed\r\n");
         assert(0);
     }
+#endif
 
     /* No frame pending. */
     s_framePending = false;
+#if defined(FSL_RTOS_FREE_RTOS)
     NVIC_SetPriority(LCDIF_IRQn, configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY + 1);
+#endif
 
     DEMO_InitLcdClock();
 
@@ -224,23 +263,133 @@ static void DEMO_InitLcd(void)
     DEMO_InitLcdBackLight();
 }
 
-static void DEMO_FlushDisplay(int32_t x1, int32_t y1, int32_t x2, int32_t y2, const lv_color_t *color_p)
+#if LV_USE_GPU
+static void DEMO_InitPxp(void)
+{
+#if defined(FSL_RTOS_FREE_RTOS)
+    s_pxpIdle = xSemaphoreCreateBinary();
+    if (NULL == s_pxpIdle)
+    {
+        PRINTF("PXP semaphore create failed\r\n");
+        assert(0);
+    }
+
+    NVIC_SetPriority(PXP_IRQn, configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY + 1);
+#endif
+
+    PXP_Init(PXP);
+
+    /* Disable CSC1, it is enabled by default. */
+    PXP_EnableCsc1(PXP, false);
+
+    PXP_EnableInterrupts(PXP, kPXP_CompleteInterruptEnable);
+
+    NVIC_EnableIRQ(PXP_IRQn);
+}
+
+void PXP_IRQHandler(void)
+{
+#if defined(FSL_RTOS_FREE_RTOS)
+    BaseType_t taskAwake = pdFALSE;
+#endif
+
+    if (kPXP_CompleteFlag & PXP_GetStatusFlags(PXP))
+    {
+        PXP_ClearStatusFlags(PXP, kPXP_CompleteFlag);
+
+#if defined(FSL_RTOS_FREE_RTOS)
+        xSemaphoreGiveFromISR(s_pxpIdle, &taskAwake);
+
+        portYIELD_FROM_ISR(taskAwake);
+#else
+        s_pxpIdle = true;
+#endif
+    }
+}
+
+static uint32_t DEMO_LVGLColorToXRGB8888(lv_color_t color)
+{
+    return ((uint32_t)color.ch.blue << 3U) | ((uint32_t)color.ch.green << (8U + 2U)) |
+           ((uint32_t)color.ch.red << (16U + 3U));
+}
+
+static void DEMO_GPU_Fill(
+    lv_disp_drv_t *disp_drv, lv_color_t *dest_buf, lv_coord_t dest_width, const lv_area_t *fill_area, lv_color_t color)
+{
+    /*
+     * To fill an area with const color, the process surface and alpha surface
+     * are disabled, the output buffer buffer is configured to the fill area,
+     * and the background color is set as the color to fill.
+     */
+
+    pxp_output_buffer_config_t outputConfig = {
+        .pixelFormat    = kPXP_OutputPixelFormatRGB565,
+        .interlacedMode = kPXP_OutputProgressive,
+        .buffer0Addr    = (uint32_t)(dest_buf + dest_width * fill_area->y1 + fill_area->x1),
+        .buffer1Addr    = NULL,
+        .pitchBytes     = dest_width * sizeof(lv_color_t),
+        .width          = fill_area->x2 - fill_area->x1 + 1,
+        .height         = fill_area->y2 - fill_area->y1 + 1,
+    };
+
+    PXP_SetOutputBufferConfig(PXP, &outputConfig);
+
+    /* Disable AS. */
+    PXP_SetAlphaSurfacePosition(PXP, 0xFFFFU, 0xFFFFU, 0U, 0U);
+
+    /* Disable PS. */
+    PXP_SetProcessSurfacePosition(PXP, 0xFFFFU, 0xFFFFU, 0U, 0U);
+
+    PXP_SetProcessSurfaceBackGroundColor(PXP, DEMO_LVGLColorToXRGB8888(color));
+
+#if !defined(FSL_RTOS_FREE_RTOS)
+    s_pxpIdle = false;
+#endif
+
+    PXP_Start(PXP);
+
+#if defined(FSL_RTOS_FREE_RTOS)
+    if (xSemaphoreTake(s_pxpIdle, portMAX_DELAY) != pdTRUE)
+    {
+        PRINTF("PXP semaphore wait failed\r\n");
+        while (1)
+            ;
+    }
+#else
+    while (false == s_pxpIdle)
+    {
+    }
+#endif
+}
+#endif
+
+static void DEMO_FlushDisplay(lv_disp_drv_t *disp_drv, const lv_area_t *area, lv_color_t *color_p)
 {
     ELCDIF_SetNextBufferAddr(LCDIF, (uint32_t)color_p);
 
     s_framePending = true;
 
+#if defined(FSL_RTOS_FREE_RTOS)
     if (xSemaphoreTake(s_frameSema, portMAX_DELAY) == pdTRUE)
     {
         /* IMPORTANT!!!
          * Inform the graphics library that you are ready with the flushing*/
-        lv_flush_ready();
+        lv_disp_flush_ready(disp_drv);
     }
     else
     {
         PRINTF("Display flush failed\r\n");
         assert(0);
     }
+#else
+    while (s_framePending)
+    {
+    }
+
+    /* IMPORTANT!!!
+     * Inform the graphics library that you are ready with the flushing*/
+    lv_disp_flush_ready(disp_drv);
+#endif
 }
 
 void lv_port_indev_init(void)
@@ -256,8 +405,8 @@ void lv_port_indev_init(void)
 
     /*Register a touchpad input device*/
     lv_indev_drv_init(&indev_drv);
-    indev_drv.type = LV_INDEV_TYPE_POINTER;
-    indev_drv.read = DEMO_ReadTouch;
+    indev_drv.type    = LV_INDEV_TYPE_POINTER;
+    indev_drv.read_cb = DEMO_ReadTouch;
     lv_indev_drv_register(&indev_drv);
 }
 
@@ -300,7 +449,7 @@ static void DEMO_InitTouch(void)
 }
 
 /* Will be called by the library to read the touchpad */
-static bool DEMO_ReadTouch(lv_indev_data_t *data)
+static bool DEMO_ReadTouch(lv_indev_drv_t *drv, lv_indev_data_t *data)
 {
     touch_event_t touch_event;
     static int touch_x = 0;

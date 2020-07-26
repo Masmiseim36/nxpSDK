@@ -78,16 +78,6 @@
       <locationURI>PARENT-1-PROJECT_LOC/srtm_config_nn.h</locationURI>
     </link>
     <link>
-      <name>source</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>source/srtm_config_tfulite.h</name>
-      <type>1</type>
-      <locationURI>PARENT-1-PROJECT_LOC/srtm_config_tfulite.h</locationURI>
-    </link>
-    <link>
       <name>resources</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
@@ -126,6 +116,46 @@
       <name>resources/hihat_48k.mp3.h</name>
       <type>1</type>
       <locationURI>PARENT-1-PROJECT_LOC/hihat_48k.mp3.h</locationURI>
+    </link>
+    <link>
+      <name>resources</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>resources/hihat_trim.pcm.h</name>
+      <type>1</type>
+      <locationURI>PARENT-1-PROJECT_LOC/hihat_trim.pcm.h</locationURI>
+    </link>
+    <link>
+      <name>resources</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>resources/hihat_trim.sbc.h</name>
+      <type>1</type>
+      <locationURI>PARENT-1-PROJECT_LOC/hihat_trim.sbc.h</locationURI>
+    </link>
+    <link>
+      <name>resources</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>resources/sbc_test_02_trim.sbc.h</name>
+      <type>1</type>
+      <locationURI>PARENT-1-PROJECT_LOC/sbc_test_02_trim.sbc.h</locationURI>
+    </link>
+    <link>
+      <name>resources</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>resources/sbc_test_02_trim.out.h</name>
+      <type>1</type>
+      <locationURI>PARENT-1-PROJECT_LOC/sbc_test_02_trim.out.h</locationURI>
     </link>
     <link>
       <name>resources</name>
@@ -303,9 +333,9 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>source/srtm_opus_enc.c</name>
+      <name>source/srtm_encoder.c</name>
       <type>1</type>
-      <locationURI>PARENT-1-PROJECT_LOC/srtm_opus_enc.c</locationURI>
+      <locationURI>PARENT-1-PROJECT_LOC/srtm_encoder.c</locationURI>
     </link>
     <link>
       <name>source</name>
@@ -1933,6 +1963,26 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
+      <name>dsp/audio_framework/testxa_af_hostless/test/include/audio/xa_sbc_dec_api.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/testxa_af_hostless/test/include/audio/xa_sbc_dec_api.h</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/testxa_af_hostless/test/include/audio</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/testxa_af_hostless/test/include/audio/xa_sbc_enc_api.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/testxa_af_hostless/test/include/audio/xa_sbc_enc_api.h</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/testxa_af_hostless/test/include/audio</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
       <name>dsp/audio_framework/testxa_af_hostless/test/include/audio/xa_src_pp_api.h</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/testxa_af_hostless/test/include/audio/xa_src_pp_api.h</locationURI>
@@ -2088,6 +2138,26 @@
       <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/capturer/xa-capturer-i2s.c</locationURI>
     </link>
     <link>
+      <name>dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/client_proxy</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/client_proxy/client_proxy.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/client_proxy/client_proxy.c</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/client_proxy</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/client_proxy/client_proxy_api.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/client_proxy/client_proxy_api.h</locationURI>
+    </link>
+    <link>
       <name>dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/opus</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
@@ -2106,6 +2176,26 @@
       <name>dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/renderer/xa-renderer.c</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/renderer/xa-renderer.c</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/sbc_dec</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/sbc_dec/xa-sbc-decoder.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/sbc_dec/xa-sbc-decoder.c</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/sbc_enc</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/sbc_enc/xa-sbc-encoder.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/sbc_enc/xa-sbc-encoder.c</locationURI>
     </link>
     <link>
       <name>dsp/audio_framework/testxa_af_hostless/test/plugins</name>
@@ -2136,6 +2226,126 @@
       <name>utilities/fsl_shell.h</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/utilities/fsl_shell.h</locationURI>
+    </link>
+    <link>
+      <name>EAP/RT600_HIFI4_example/COMMON/PlatformTypes</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>EAP/RT600_HIFI4_example/COMMON/PlatformTypes/LVC_Types.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/EAP/RT600_HIFI4_example/COMMON/PlatformTypes/LVC_Types.h</locationURI>
+    </link>
+    <link>
+      <name>EAP/RT600_HIFI4_example/INC</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>EAP/RT600_HIFI4_example/INC/EAP_Parameter_AllEffectOff.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/EAP/RT600_HIFI4_example/INC/EAP_Parameter_AllEffectOff.h</locationURI>
+    </link>
+    <link>
+      <name>EAP/RT600_HIFI4_example/INC</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>EAP/RT600_HIFI4_example/INC/EAP_Parameter_AutoVolumeLeveler.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/EAP/RT600_HIFI4_example/INC/EAP_Parameter_AutoVolumeLeveler.h</locationURI>
+    </link>
+    <link>
+      <name>EAP/RT600_HIFI4_example/INC</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>EAP/RT600_HIFI4_example/INC/EAP_Parameter_ConcertSound.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/EAP/RT600_HIFI4_example/INC/EAP_Parameter_ConcertSound.h</locationURI>
+    </link>
+    <link>
+      <name>EAP/RT600_HIFI4_example/INC</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>EAP/RT600_HIFI4_example/INC/EAP_Parameter_Custom.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/EAP/RT600_HIFI4_example/INC/EAP_Parameter_Custom.h</locationURI>
+    </link>
+    <link>
+      <name>EAP/RT600_HIFI4_example/INC</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>EAP/RT600_HIFI4_example/INC/EAP_Parameter_LoudnessMaximiser.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/EAP/RT600_HIFI4_example/INC/EAP_Parameter_LoudnessMaximiser.h</locationURI>
+    </link>
+    <link>
+      <name>EAP/RT600_HIFI4_example/INC</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>EAP/RT600_HIFI4_example/INC/EAP_Parameter_MusicEnhancer.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/EAP/RT600_HIFI4_example/INC/EAP_Parameter_MusicEnhancer.h</locationURI>
+    </link>
+    <link>
+      <name>EAP/RT600_HIFI4_example/INC</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>EAP/RT600_HIFI4_example/INC/EAP_Parameter_TestAllOn.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/EAP/RT600_HIFI4_example/INC/EAP_Parameter_TestAllOn.h</locationURI>
+    </link>
+    <link>
+      <name>EAP/RT600_HIFI4_example/INC</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>EAP/RT600_HIFI4_example/INC/EAP_Parameter_ToneGenerator.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/EAP/RT600_HIFI4_example/INC/EAP_Parameter_ToneGenerator.h</locationURI>
+    </link>
+    <link>
+      <name>EAP/RT600_HIFI4_example/INC</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>EAP/RT600_HIFI4_example/INC/EAP_Parameter_VoiceEnhancer.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/EAP/RT600_HIFI4_example/INC/EAP_Parameter_VoiceEnhancer.h</locationURI>
+    </link>
+    <link>
+      <name>EAP/RT600_HIFI4_example/INC</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>EAP/RT600_HIFI4_example/INC/TEST_PARAM.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/EAP/RT600_HIFI4_example/INC/TEST_PARAM.h</locationURI>
+    </link>
+    <link>
+      <name>EAP/RT600_HIFI4_example/LIB</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>EAP/RT600_HIFI4_example/LIB/LVM.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/EAP/RT600_HIFI4_example/LIB/LVM.h</locationURI>
     </link>
     <link>
       <name>drivers</name>
@@ -2178,6 +2388,26 @@
       <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/drivers/fsl_reset.h</locationURI>
     </link>
     <link>
+      <name>drivers</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>drivers/fsl_flexcomm.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/drivers/fsl_flexcomm.c</locationURI>
+    </link>
+    <link>
+      <name>drivers</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>drivers/fsl_flexcomm.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/drivers/fsl_flexcomm.h</locationURI>
+    </link>
+    <link>
       <name>MIMXRT685S</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
@@ -2216,26 +2446,6 @@
       <name>MIMXRT685S/system_MIMXRT685S_dsp.h</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/system_MIMXRT685S_dsp.h</locationURI>
-    </link>
-    <link>
-      <name>drivers</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>drivers/fsl_flexcomm.c</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/drivers/fsl_flexcomm.c</locationURI>
-    </link>
-    <link>
-      <name>drivers</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>drivers/fsl_flexcomm.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/drivers/fsl_flexcomm.h</locationURI>
     </link>
     <link>
       <name>CMSIS</name>

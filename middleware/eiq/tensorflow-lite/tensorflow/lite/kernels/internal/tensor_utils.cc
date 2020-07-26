@@ -12,17 +12,18 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================*/
+
+/* File modified by NXP. Changes are described in file
+   /middleware/eiq/tensorflow-lite/readme.txt in section "Release notes" */
+
 #include "tensorflow/lite/kernels/internal/tensor_utils.h"
-#include "tensorflow/lite/kernels/internal/common.h"
 
-#ifndef USE_NEON
-#if defined(__ARM_NEON__) || defined(__ARM_NEON)
-#define USE_NEON
-#endif  //  defined(__ARM_NEON__) || defined(__ARM_NEON)
-#endif  //  USE_NEON
+#include "tensorflow/lite/kernels/internal/optimized/neon_check.h"
 
-#ifdef USE_NEON
+#if defined(__SSE4_1__)
+#include "tensorflow/lite/kernels/internal/optimized/sse_tensor_utils.h"
+#elif defined(USE_NEON)
 #include "tensorflow/lite/kernels/internal/optimized/neon_tensor_utils.h"
 #else
 #include "tensorflow/lite/kernels/internal/reference/portable_tensor_utils.h"
-#endif  // USE_NEON
+#endif  // __SSE4_1__ or USE_NEON

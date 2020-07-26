@@ -19,14 +19,14 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define LPSPI_TRANSFER_SIZE 64U         /*! Transfer dataSize */
+#define LPSPI_TRANSFER_SIZE     64U     /*! Transfer dataSize */
 #define LPSPI_TRANSFER_BAUDRATE 500000U /*! Transfer baudrate - 500k */
 
 #define BOARD_EEPROM_LPSPI_BASEADDR (LPSPI1)
-#define BOARD_LPSPI_IRQN LPSPI1_IRQn
-#define BOARD_LPSPI_IRQHandler LPSPI1_IRQHandler
+#define BOARD_LPSPI_IRQN            LPSPI1_IRQn
+#define BOARD_LPSPI_IRQHandler      LPSPI1_IRQHandler
 
-#define BOARD_LPSPI_PCS_FOR_INIT (kLPSPI_Pcs0)
+#define BOARD_LPSPI_PCS_FOR_INIT     (kLPSPI_Pcs0)
 #define BOARD_LPSPI_PCS_FOR_TRANSFER (kLPSPI_MasterPcs0)
 
 /* Select USB1 PLL PFD0 (720 MHz) as lpspi clock source */

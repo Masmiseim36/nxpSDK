@@ -17,27 +17,27 @@
  * Definitions
  ******************************************************************************/
 /*Master related*/
-#define TRANSFER_SIZE 256U        /*! Transfer dataSize */
+#define TRANSFER_SIZE     256U    /*! Transfer dataSize */
 #define TRANSFER_BAUDRATE 450000U /*! Transfer baudrate - 450k */
 
 #define MASTER_LPSPI_BASEADDR (LPSPI1)
-#define MASTER_LPSPI_IRQN (LPSPI1_IRQn)
+#define MASTER_LPSPI_IRQN     (LPSPI1_IRQn)
 
-#define MASTER_LPSPI_PCS_FOR_INIT (kLPSPI_Pcs0)
+#define MASTER_LPSPI_PCS_FOR_INIT     (kLPSPI_Pcs0)
 #define MASTER_LPSPI_PCS_FOR_TRANSFER (kLPSPI_MasterPcs0)
 
 /* Select USB1 PLL PFD0 (720 MHz) as lpspi clock source */
 #define MASTER_LPSPI_CLOCK_SELECT (1U)
 /* Clock divider for lpspi clock source */
-#define MASTER_LPSPI_CLOCK_DIVIDER (7U)
+#define MASTER_LPSPI_CLOCK_DIVIDER   (7U)
 #define MASTER_LPSPI_CLOCK_FREQUENCY (CLOCK_GetFreq(kCLOCK_Usb1PllPfd0Clk) / (MASTER_LPSPI_CLOCK_DIVIDER + 1U))
 
 /*Slave related*/
 #define SLAVE_FLEXIO_SPI_BASEADDR (FLEXIO3)
-#define FLEXIO_SPI_SOUT_PIN 3U
-#define FLEXIO_SPI_SIN_PIN 6U
-#define FLEXIO_SPI_CLK_PIN 2U
-#define FLEXIO_SPI_PCS_PIN 7U
+#define FLEXIO_SPI_SOUT_PIN       3U
+#define FLEXIO_SPI_SIN_PIN        6U
+#define FLEXIO_SPI_CLK_PIN        2U
+#define FLEXIO_SPI_PCS_PIN        7U
 
 #define SLAVE_FLEXIO_SPI_IRQ FLEXIO3_IRQn
 /* Select USB1 PLL (480 MHz) as flexio clock source */

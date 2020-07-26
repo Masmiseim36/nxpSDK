@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 NXP
+ * Copyright 2018-2020 NXP
  * All rights reserved.
  *
  *
@@ -18,6 +18,7 @@
 #include "fsl_gpt.h"
 #include "fsl_lpuart.h"
 #include "specific.h"
+#include "peripherals.h"
 
 #include "pin_mux.h"
 #include "clock_config.h"
@@ -26,14 +27,14 @@
  ******************************************************************************/
 #define CPU_NAME "iMXRT1011"
 
-#define APP_WAKEUP_BUTTON_GPIO GPIO1
-#define APP_WAKEUP_BUTTON_GPIO_PIN 0
-#define APP_WAKEUP_BUTTON_IRQ GPIO1_Combined_0_15_IRQn
+#define APP_WAKEUP_BUTTON_GPIO        GPIO1
+#define APP_WAKEUP_BUTTON_GPIO_PIN    0
+#define APP_WAKEUP_BUTTON_IRQ         GPIO1_Combined_0_15_IRQn
 #define APP_WAKEUP_BUTTON_IRQ_HANDLER GPIO1_Combined_0_15_IRQHandler
-#define APP_WAKEUP_BUTTON_NAME BOARD_USER_BUTTON_NAME
+#define APP_WAKEUP_BUTTON_NAME        BOARD_USER_BUTTON_NAME
 
-#define APP_WAKEUP_GPT_BASE GPT2
-#define APP_WAKEUP_GPT_IRQn GPT2_IRQn
+#define APP_WAKEUP_GPT_BASE         GPT2
+#define APP_WAKEUP_GPT_IRQn         GPT2_IRQn
 #define APP_WAKEUP_GPT_IRQn_HANDLER GPT2_IRQHandler
 
 /*******************************************************************************
@@ -287,6 +288,7 @@ static void APP_SetWakeupConfig(lpm_power_mode_t targetMode)
 
         /* Enable GPT Output Compare1 interrupt */
         GPT_EnableInterrupts(APP_WAKEUP_GPT_BASE, kGPT_OutputCompare1InterruptEnable);
+        NVIC_ClearPendingIRQ(APP_WAKEUP_GPT_IRQn);
         NVIC_SetPriority(APP_WAKEUP_GPT_IRQn, configMAX_SYSCALL_INTERRUPT_PRIORITY + 2);
         EnableIRQ(APP_WAKEUP_GPT_IRQn);
 
@@ -300,6 +302,7 @@ static void APP_SetWakeupConfig(lpm_power_mode_t targetMode)
         GPIO_ClearPinsInterruptFlags(APP_WAKEUP_BUTTON_GPIO, 1U << APP_WAKEUP_BUTTON_GPIO_PIN);
         /* Enable GPIO pin interrupt */
         GPIO_EnableInterrupts(APP_WAKEUP_BUTTON_GPIO, 1U << APP_WAKEUP_BUTTON_GPIO_PIN);
+        NVIC_ClearPendingIRQ(APP_WAKEUP_BUTTON_IRQ);
         NVIC_SetPriority(APP_WAKEUP_BUTTON_IRQ, configMAX_SYSCALL_INTERRUPT_PRIORITY + 2);
         /* Enable the Interrupt */
         EnableIRQ(APP_WAKEUP_BUTTON_IRQ);
@@ -338,26 +341,6 @@ static void PowerModeSwitchTask(void *pvParameters)
 {
     uint8_t ch;
     uint32_t freq;
-    gpt_config_t gptConfig;
-    /* Define the init structure for the input switch pin */
-    gpio_pin_config_t swConfig = {
-        kGPIO_DigitalInput,
-        0,
-        kGPIO_IntRisingEdge,
-    };
-
-    /* Init GPT for wakeup as FreeRTOS tell us */
-    GPT_GetDefaultConfig(&gptConfig);
-    gptConfig.clockSource = kGPT_ClockSource_LowFreq; /* 32K RTC OSC */
-    // gptConfig.enableMode = false;                     /* Keep counter when stop */
-    gptConfig.enableMode      = true; /* Don't keep counter when stop */
-    gptConfig.enableRunInDoze = true;
-    /* Initialize GPT module */
-    GPT_Init(APP_WAKEUP_GPT_BASE, &gptConfig);
-    GPT_SetClockDivider(APP_WAKEUP_GPT_BASE, 1);
-
-    /* Init input switch GPIO. */
-    GPIO_PinInit(APP_WAKEUP_BUTTON_GPIO, APP_WAKEUP_BUTTON_GPIO_PIN, &swConfig);
 
     while (1)
     {
@@ -484,13 +467,20 @@ int main(void)
     /* Init board hardware. */
     BOARD_ConfigMPU();
     BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootClocks();
+
+    /* When wakeup from suspend, peripheral's doze & stop requests won't be cleared, need to clear them manually */
+    IOMUXC_GPR->GPR4  = 0x00000000;
+    IOMUXC_GPR->GPR7  = 0x00000000;
+    IOMUXC_GPR->GPR8  = 0x00000000;
+    IOMUXC_GPR->GPR12 = 0x00000000;
 
     /* Configure UART divider to default */
     CLOCK_SetMux(kCLOCK_UartMux, 1); /* Set UART source to OSC 24M */
     CLOCK_SetDiv(kCLOCK_UartDiv, 0); /* Set UART divider to 1 */
 
     BOARD_InitDebugConsole();
+    BOARD_InitBootPeripherals();
 
     PRINTF("\r\nCPU wakeup source 0x%x...\r\n", SRC->SRSR);
 

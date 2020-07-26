@@ -1,17 +1,17 @@
 /*
-* Copyright 2017-2018 NXP
-* All rights reserved.
-*
-* SPDX-License-Identifier: BSD-3-Clause
-*/
+ * Copyright 2017-2020 NXP
+ * All rights reserved.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
 
+#include "bl_semc.h"
 #include "bootloader_common.h"
+#include "fsl_assert.h"
 #include "fsl_device_registers.h"
-#include "semc/fsl_semc.h"
-#include "semc_nor/semc_nor_flash.h"
-#include "memory/src/semc_nor_memory.h"
 #include "fusemap.h"
-#include "utilities/fsl_assert.h"
+#include "semc_nor_flash.h"
+#include "semc_nor_memory.h"
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
 ////////////////////////////////////////////////////////////////////////////////

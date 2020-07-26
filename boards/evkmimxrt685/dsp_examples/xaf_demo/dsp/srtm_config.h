@@ -14,7 +14,6 @@
 
 #include "srtm_config_audio.h"
 #include "srtm_config_nn.h"
-#include "srtm_config_tfulite.h"
 
 /*!
  * @addtogroup srtm
@@ -151,7 +150,6 @@ typedef enum _srtm_message_category
     SRTM_MessageCategory_GENERAL = 0x00U,
     SRTM_MessageCategory_AUDIO,
     SRTM_MessageCategory_NN,
-    SRTM_MessageCategory_TFULITE,
 } srtm_message_category_t;
 
 /**

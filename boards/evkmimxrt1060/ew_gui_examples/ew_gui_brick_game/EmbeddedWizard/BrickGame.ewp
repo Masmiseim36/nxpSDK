@@ -1,4 +1,4 @@
-$version 6.60
+$version 9.30
 
 // This unit is a part of the Embedded Wizard class library 'Mosaic20'
 $rect <40,70,240,110>
@@ -125,8 +125,8 @@ profile iMX_RT : NXP.iMX_RT.RGB565
   attr ScreenSize = <480,272>;
   attr Optimization = High;
   attr ApplicationClass = Application::Application;
-  attr FormatOfBitmapResources = Compressed;
-  attr FormatOfStringConstants = Compressed;
+  attr ModeOfBitmapResources = Compressed;
+  attr ModeOfStringConstants = Compressed;
   attr OutputDirectory = ..\GeneratedCode;
   attr CleanOutputDirectories = true;
 

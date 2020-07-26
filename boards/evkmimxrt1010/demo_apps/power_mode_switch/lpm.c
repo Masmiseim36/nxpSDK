@@ -30,7 +30,7 @@
  * configTICK_RATE_HZ.
  */
 #define LPM_SYSTICK_COUNTER_FREQ (32768)
-#define LPM_COUNT_PER_TICK (LPM_SYSTICK_COUNTER_FREQ / configTICK_RATE_HZ)
+#define LPM_COUNT_PER_TICK       (LPM_SYSTICK_COUNTER_FREQ / configTICK_RATE_HZ)
 
 struct _lpm_power_mode_listener
 {

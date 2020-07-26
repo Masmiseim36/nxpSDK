@@ -11,10 +11,10 @@
 #define __RTE_DEVICE_H
 
 /*Driver name mapping*/
-#define RTE_I2C4 1
+#define RTE_I2C4        1
 #define RTE_I2C4_DMA_EN 1
 
 /*I2C configuration*/
 #define RTE_I2C4_Master_DMA_BASE DMA0
-#define RTE_I2C4_Master_DMA_CH 9
+#define RTE_I2C4_Master_DMA_CH   9
 #endif /* __RTE_DEVICE_H */

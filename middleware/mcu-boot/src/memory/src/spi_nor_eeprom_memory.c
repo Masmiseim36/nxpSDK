@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015 Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -8,19 +8,19 @@
 
 #include "fsl_device_registers.h"
 #include "bootloader_common.h"
-#include "bootloader/bootloader.h"
-#include "memory/memory.h"
+#include "bootloader.h"
+#include "memory.h"
 #include "spi_nor_eeprom_memory.h"
-#include "crc/crc32.h"
-#include "lpspi/fsl_lpspi.h"
-#include "bootloader/bl_context.h"
-#include "utilities/fsl_rtos_abstraction.h"
-#include "utilities/fsl_assert.h"
+#include "crc32.h"
+#include "fsl_lpspi.h"
+#include "bl_context.h"
+#include "fsl_rtos_abstraction.h"
+#include "fsl_assert.h"
 #include "fusemap.h"
 #include <string.h>
 
 #if BL_FEATURE_GEN_KEYBLOB
-#include "bootloader/bl_keyblob.h"
+#include "bl_keyblob.h"
 #endif // BL_FEATURE_GEN_KEYBLOB
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -179,12 +179,14 @@ status_t check_update_keyblob_info(void *config)
             // Check key blob address range
             if ((keyblob_size + keyblob_offset) > image_max_size)
             {
+                status = kStatusMemoryRangeInvalid;
                 break;
             }
 
             // Invalid key blob address, key blob must be page size aligned.
             if (keyblob_addr & (page_size - 1))
             {
+                status = kStatusMemoryAlignmentError;
                 break;
             }
 

@@ -80,8 +80,7 @@ TfLiteStatus ResizeOutputTensor(TfLiteContext* context,
 
   // Determines the size of the output tensor.
   TfLiteIntArray* input_size = op_context->input->dims;
-  std::unique_ptr<TfLiteIntArray, void (*)(TfLiteIntArray*)> output_size(
-      TfLiteIntArrayCopy(input_size), TfLiteIntArrayFree);
+  TfLiteIntArray* output_size = TfLiteIntArrayCopy(input_size);
   const int32* paddings_data = GetTensorData<int32>(op_context->paddings);
 
   for (int idx = 0; idx < op_context->dims; ++idx) {
@@ -95,7 +94,7 @@ TfLiteStatus ResizeOutputTensor(TfLiteContext* context,
         (input_size->data[idx] + before_padding + after_padding);
   }
 
-  return context->ResizeTensor(context, op_context->output, output_size.release());
+  return context->ResizeTensor(context, op_context->output, output_size);
 }
 
 TfLiteStatus Prepare(TfLiteContext* context, TfLiteNode* node) {

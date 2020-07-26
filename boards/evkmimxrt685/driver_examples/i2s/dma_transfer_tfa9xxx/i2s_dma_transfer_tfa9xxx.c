@@ -29,17 +29,15 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-
-#define DEMO_I2C (I2C4)
 #define DEMO_I2S_MASTER_CLOCK_FREQUENCY CLOCK_GetMclkClkFreq()
-#define DEMO_AUDIO_BIT_WIDTH (16)
-#define DEMO_AUDIO_SAMPLE_RATE (48000)
-#define DEMO_AUDIO_PROTOCOL kCODEC_BusI2S
-#define DEMO_I2S_TX (I2S1)
-#define DEMO_DMA (DMA0)
-#define DEMO_I2S_TX_CHANNEL (3)
-#define DEMO_I2S_CLOCK_DIVIDER 16
-#define DEMO_I2S_TX_MODE kI2S_MasterSlaveNormalMaster
+#define DEMO_AUDIO_BIT_WIDTH            (16)
+#define DEMO_AUDIO_SAMPLE_RATE          (48000)
+#define DEMO_AUDIO_PROTOCOL             kCODEC_BusI2S
+#define DEMO_I2S_TX                     (I2S1)
+#define DEMO_DMA                        (DMA0)
+#define DEMO_I2S_TX_CHANNEL             (3)
+#define DEMO_I2S_CLOCK_DIVIDER          16
+#define DEMO_I2S_TX_MODE                kI2S_MasterSlaveNormalMaster
 
 /*******************************************************************************
  * Prototypes
@@ -83,8 +81,8 @@ extern codec_config_t boardCodecConfigRight;
 codec_handle_t codecHandleLeft;
 codec_handle_t codecHandleRight;
 
-//global volatile counter used for sleep/wait
- volatile uint32_t g_systickCounter;
+// global volatile counter used for sleep/wait
+volatile uint32_t g_systickCounter;
 /*******************************************************************************
  * Code
  ******************************************************************************/
@@ -100,7 +98,7 @@ void SysTick_Handler(void)
 void SysTick_DelayTicks(uint32_t n)
 {
     g_systickCounter = n;
-    while(g_systickCounter != 0U)
+    while (g_systickCounter != 0U)
     {
     }
 }
@@ -115,7 +113,7 @@ int main(void)
 
     CLOCK_EnableClock(kCLOCK_InputMux);
 
-    /* attach main clock to I3C */
+    /* attach main clock to I3C (500MHz / 20 = 25MHz). */
     CLOCK_AttachClk(kMAIN_CLK_to_I3C_CLK);
     CLOCK_SetClkDiv(kCLOCK_DivI3cClk, 20);
 
@@ -139,7 +137,7 @@ int main(void)
 
     // System Tick Configuration, generate 1ms interrupt
     SysTick_Config(SystemCoreClock / 1000U);
-    
+
     PRINTF("Configure TFA9XXX amplifier\r\n");
 
     /* protocol: i2s
@@ -162,7 +160,7 @@ int main(void)
     {
         CODEC_SetVolume(&codecHandleRight, kCODEC_PlayChannelLeft0 | kCODEC_PlayChannelRight0, 100);
     }
-    
+
     PRINTF("Configure I2S\r\n");
 
     /*
@@ -195,7 +193,7 @@ int main(void)
     DMA_CreateHandle(&s_DmaTxHandle, DEMO_DMA, DEMO_I2S_TX_CHANNEL);
 
     StartSoundPlayback();
-    
+
     while (1)
     {
     }

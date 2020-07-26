@@ -401,8 +401,8 @@ int main(void)
     status_t status;
 
     BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
 
     const clock_usb_pll_config_t g_ccmConfigUsbPll = {.loopDivider = 0U};

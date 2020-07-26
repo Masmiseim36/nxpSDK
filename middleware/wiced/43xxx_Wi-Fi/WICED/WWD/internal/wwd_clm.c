@@ -117,7 +117,7 @@ wwd_result_t wwd_process_clm_data(void)
     data_offset = offsetof(wl_dload_data_t, data);
     size2alloc = data_offset + MAX_CHUNK_LEN;
 
-    if ((chunk_buf = (unsigned char *)malloc(size2alloc)) != NULL) {
+    if ((chunk_buf = (unsigned char *)WWD_MALLOC(size2alloc)) != NULL) {
         memset(chunk_buf, 0, size2alloc);
 
         do {
@@ -149,7 +149,7 @@ wwd_result_t wwd_process_clm_data(void)
             datalen = datalen - chunk_len;
         } while ((datalen > 0) && (ret == WWD_SUCCESS));
 
-        free(chunk_buf);
+        WWD_FREE(chunk_buf);
         if ( ret != WWD_SUCCESS )
         {
             wwd_result_t ret_clmload_status;

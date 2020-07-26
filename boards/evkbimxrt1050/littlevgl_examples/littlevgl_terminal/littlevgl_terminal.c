@@ -12,7 +12,7 @@
 #include "fsl_debug_console.h"
 #include "littlevgl_support.h"
 #include "board.h"
-#include "lv_examples/terminal/terminal.h"
+#include "lv_examples/lv_apps/terminal/terminal.h"
 
 #include "pin_mux.h"
 /*******************************************************************************

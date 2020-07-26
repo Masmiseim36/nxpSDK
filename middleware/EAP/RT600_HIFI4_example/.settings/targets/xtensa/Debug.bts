@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<BuildTarget tool="xtensa" version="1.0">
+    <BuildSettings>
+        <BaseSettings path="project">
+            <PreprocessorOptions>
+                <KeyValueListMapOptions>
+                    <KeyValueListMapEntry>
+                        <key>Defines</key>
+                        <value flag="-D" inheritance="append">
+                            <ListEntry key="LVCS_MS_COEFFS_SMALL" value="1"/>
+                            <ListEntry key="ALGORITHM_VC" value="1"/>
+                            <ListEntry key="ALGORITHM_CS" value="1"/>
+                            <ListEntry key="ALGORITHM_DBE" value="1"/>
+                            <ListEntry key="ALGORITHM_EQNB" value="1"/>
+                            <ListEntry key="ALGORITHM_LM" value="1"/>
+                            <ListEntry key="ALGORITHM_TE" value="1"/>
+                            <ListEntry key="ALGORITHM_TG" value="1"/>
+                            <ListEntry key="ALGORITHM_AVL" value="1"/>
+                            <ListEntry key="ALGORITHM_PSA" value="1"/>
+                        </value>
+                    </KeyValueListMapEntry>
+                </KeyValueListMapOptions>
+            </PreprocessorOptions>
+            <CompilerOptions>
+                <FlagValueMapOptions>
+                    <FlagValueMapEntry>
+                        <key>Debug</key>
+                        <value level="-3" flag="-g" use="true"/>
+                    </FlagValueMapEntry>
+                </FlagValueMapOptions>
+            </CompilerOptions>
+            <AssemblerOptions>
+                <SingleFlagMapOptions>
+                    <SingleFlagMapEntry>
+                        <key>AssemblerIncludeDebug</key>
+                        <value flag="--gdwarf-2" use="true"/>
+                    </SingleFlagMapEntry>
+                </SingleFlagMapOptions>
+            </AssemblerOptions>
+            <LinkerOptions>
+                <BooleanMapOptions>
+                    <BooleanMapEntry>
+                        <key>CreateMinsize</key>
+                        <value selected="true"/>
+                    </BooleanMapEntry>
+                </BooleanMapOptions>
+                <StringListMapOptions>
+                    <StringListMapEntry>
+                        <key>LibrarySearchPath</key>
+                        <value flag="-L" inheritance="prepend">
+                            <ListEntry>C:\_ddm\AUDIO\fapMaster\CSEX_02_ARMC_01\EX_APP\APP_HIFI4_INTEGRATION\LIB</ListEntry>
+                        </value>
+                    </StringListMapEntry>
+                    <StringListMapEntry>
+                        <key>Libraries</key>
+                        <value flag="-l" inheritance="prepend">
+                            <ListEntry>EAP_Lib</ListEntry>
+                        </value>
+                    </StringListMapEntry>
+                </StringListMapOptions>
+                <LinkerSupport custom="false" key="-mlsp=" value="sim"/>
+            </LinkerOptions>
+        </BaseSettings>
+    </BuildSettings>
+</BuildTarget>

@@ -1,14 +1,14 @@
 Overview
 ========
-This example shows how to use SDK drivers to use the Frequency Measure feature of SYSCON module on LPC devices.
+This example shows how to use SDK drivers to use the Frequency Measure feature of SYSCON module.
 It shows how to measure a target frequency using a (faster) reference frequency. The example uses the internal main clock as the reference frequency to measure the frequencies of the RTC, watchdog oscillator, and internal RC oscillator.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.40.2
-- Keil MDK  5.29
-- GCC ARM Embedded  8.3.1
-- MCUXpresso  11.1.1
+- IAR embedded Workbench  8.50.1
+- Keil MDK  5.30
+- GCC ARM Embedded  9.2.1
+- MCUXpresso  11.2.0
 
 Hardware requirements
 =====================

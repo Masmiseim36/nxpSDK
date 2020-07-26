@@ -1,5 +1,5 @@
 /*
- * Amazon FreeRTOS V1.0.0
+ * FreeRTOS V1.0.0
  * Copyright (C) 2017 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  * Copyright (c) 2013 - 2014, Freescale Semiconductor, Inc.
  * Copyright 2016-2019 NXP
@@ -35,7 +35,7 @@
 #include "ksdk_mbedtls.h"
 #include "pin_mux.h"
 
-/* Amazon FreeRTOS Demo Includes */
+/* FreeRTOS Demo Includes */
 #include "FreeRTOS.h"
 #include "task.h"
 #include "iot_logging_task.h"
@@ -50,12 +50,12 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define LOGGING_TASK_PRIORITY (tskIDLE_PRIORITY + 1)
-#define LOGGING_TASK_STACK_SIZE (200)
-#define LOGGING_QUEUE_LENGTH (16)
+#define LOGGING_TASK_PRIORITY   (tskIDLE_PRIORITY + 1)
+#define LOGGING_TASK_STACK_SIZE (240)
+#define LOGGING_QUEUE_LENGTH    (16)
 
 #define DEMO_TASK_STACK_SIZE (configMINIMAL_STACK_SIZE * 22)
-#define DEMO_TASK_PRIORITY (tskIDLE_PRIORITY + 1)
+#define DEMO_TASK_PRIORITY   (tskIDLE_PRIORITY + 1)
 
 /*******************************************************************************
  * Prototypes
@@ -74,16 +74,6 @@ extern int vStartGreenGrassDiscoveryTask(bool awsIotMqttMode,
 /*******************************************************************************
  * Code
  ******************************************************************************/
-static void BOARD_USDHCClockConfiguration(void)
-{
-    CLOCK_InitSysPll(&sysPllConfig_BOARD_BootClockRUN);
-    /*configure system pll PFD2 fractional divider to 24*/
-    CLOCK_InitSysPfd(kCLOCK_Pfd2, 24U);
-    /* Configure USDHC clock source and divider */
-    CLOCK_SetDiv(kCLOCK_Usdhc1Div, 0U);
-    CLOCK_SetMux(kCLOCK_Usdhc1Mux, 0U);
-}
-
 void print_string(const char *string)
 {
     PRINTF(string);
@@ -110,9 +100,8 @@ void vApplicationDaemonTaskStartupHook(void)
 int main(void)
 {
     BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_USDHCClockConfiguration();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
 
     SCB_DisableDCache();

@@ -13,10 +13,10 @@
 #include "fsl_inputmux.h"
 #include "fsl_pint.h"
 #include "fsl_usart.h"
+#include "pmic_support.h"
 
 #include "pin_mux.h"
 #include "clock_config.h"
-#include "pmic_support.h"
 #include "fsl_pca9420.h"
 /*******************************************************************************
  * Definitions
@@ -37,11 +37,11 @@
 #define POWER_DOWN_PLL_BEFORE_DEEP_SLEEP \
     0 /* By default, we keep the application as simple as possible to make good OOBE. */
 
-#define APP_USART_RX_ERROR kUSART_RxError
-#define APP_USER_WAKEUP_KEY_NAME "SW1"
-#define APP_USER_WAKEUP_KEY_GPIO BOARD_SW1_GPIO
-#define APP_USER_WAKEUP_KEY_PORT BOARD_SW1_GPIO_PORT
-#define APP_USER_WAKEUP_KEY_PIN BOARD_SW1_GPIO_PIN
+#define APP_USART_RX_ERROR               kUSART_RxError
+#define APP_USER_WAKEUP_KEY_NAME         "SW1"
+#define APP_USER_WAKEUP_KEY_GPIO         BOARD_SW1_GPIO
+#define APP_USER_WAKEUP_KEY_PORT         BOARD_SW1_GPIO_PORT
+#define APP_USER_WAKEUP_KEY_PIN          BOARD_SW1_GPIO_PIN
 #define APP_USER_WAKEUP_KEY_INPUTMUX_SEL kINPUTMUX_GpioPort1Pin1ToPintsel
 /*!< Power down all unnecessary blocks and enable RBB during deep sleep. */
 #define APP_DEEPSLEEP_RUNCFG0 (SYSCTL0_PDSLEEPCFG0_RBB_PD_MASK)
@@ -52,7 +52,7 @@
                          (SYSCTL0_PDSLEEPCFG1_FLEXSPI_SRAM_APD_MASK | SYSCTL0_PDSLEEPCFG1_FLEXSPI_SRAM_PPD_MASK), \
                          APP_DEEPSLEEP_RAM_APD, APP_DEEPSLEEP_RAM_PPD}))
 
-#define APP_EXCLUDE_FROM_DEEP_POWERDOWN (((const uint32_t[]){0, 0, 0, 0}))
+#define APP_EXCLUDE_FROM_DEEP_POWERDOWN      (((const uint32_t[]){0, 0, 0, 0}))
 #define APP_EXCLUDE_FROM_FULL_DEEP_POWERDOWN (((const uint32_t[]){0, 0, 0, 0}))
 const char *gWakeupInfoStr[] = {"Sleep [Press the user key to wakeup]", "Deep Sleep [Press the user key to wakeup]",
 #if (defined(FSL_FEATURE_SYSCON_HAS_POWERDOWN_MODE) && FSL_FEATURE_SYSCON_HAS_POWERDOWN_MODE)
@@ -81,7 +81,7 @@ static void pint_intr_callback(pint_pin_int_t pintr, uint32_t pmatch_status);
 /*PLL status*/
 extern const clock_sys_pll_config_t g_sysPllConfig_BOARD_BootClockRUN;
 extern const clock_audio_pll_config_t g_audioPllConfig_BOARD_BootClockRUN;
-AT_QUICKACCESS_SECTION_CODE(void BOARD_SetFlexspiClock(uint32_t flexspiClockSrc, uint32_t divider));
+AT_QUICKACCESS_SECTION_CODE(void BOARD_SetFlexspiClock(uint32_t src, uint32_t divider));
 
 
 void BOARD_ConfigPMICModes(pca9420_modecfg_t *cfg, uint32_t num)
@@ -154,7 +154,7 @@ int main(void)
     /* BE CAUTIOUS TO SET CORRECT VOLTAGE RANGE ACCORDING TO YOUR BOARD/APPLICATION. PAD SUPPLY BEYOND THE RANGE DO
        HARM TO THE SILICON. */
     power_pad_vrange_t vrange = {.Vdde0Range = kPadVol_171_198,
-                                 .Vdde1Range = kPadVol_171_198,
+                                 .Vdde1Range = kPadVol_171_360,
                                  /* SD0 voltage is switchable, but in power_manager demo, it's fixed 3.3V. */
                                  .Vdde2Range = kPadVol_300_360};
 
@@ -170,6 +170,12 @@ int main(void)
     }
     BOARD_ConfigPMICModes(pca9420ModeCfg, ARRAY_SIZE(pca9420ModeCfg));
     PCA9420_WriteModeConfigs(&pca9420Handle, kPCA9420_Mode0, &pca9420ModeCfg[0], ARRAY_SIZE(pca9420ModeCfg));
+
+    /* Configure PMIC Vddcore value according to main clock. DSP not used in this demo. */
+    BOARD_SetPmicVoltageForFreq(kPartTemp_N20C_P70C, CLOCK_GetMainClkFreq(), 0U);
+
+    /* Indicate to power library that PMIC is used. */
+    POWER_UpdatePmicRecoveryTime(1);
 
     POWER_SetPadVolRange(&vrange);
 
@@ -197,6 +203,7 @@ int main(void)
                 POWER_EnterSleep();
                 break;
             case kPmu_Deep_Sleep: /* Enter deep sleep mode. */
+                BOARD_SetPmicVoltageBeforeDeepSleep();
 #if POWER_DOWN_PLL_BEFORE_DEEP_SLEEP
                 /* Disable Pll before enter deep sleep mode */
                 BOARD_DisablePll();
@@ -206,6 +213,7 @@ int main(void)
                 /* Restore Pll before enter deep sleep mode */
                 BOARD_RestorePll();
 #endif
+                BOARD_RestorePmicVoltageAfterDeepSleep();
                 break;
             case kPmu_Deep_PowerDown: /* Enter deep power down mode. */
                 PRINTF(

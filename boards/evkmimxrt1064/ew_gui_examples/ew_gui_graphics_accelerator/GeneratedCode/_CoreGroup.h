@@ -7,18 +7,22 @@
 *
 ********************************************************************************
 *
+* This software is delivered "as is" and shows the usage of other software 
+* components. It is provided as an example software which is intended to be 
+* modified and extended according to particular requirements.
+* 
+* TARA Systems hereby disclaims all warranties and conditions with regard to the
+* software, including all implied warranties and conditions of merchantability 
+* and non-infringement of any third party IPR or other rights which may result 
+* from the use or the inability to use the software.
+*
 * This file was generated automatically by Embedded Wizard Studio.
 *
 * Please do not make any modifications of this file! The modifications are lost
 * when the file is generated again by Embedded Wizard Studio!
 *
-* The template of this heading text can be found in the file 'head.ewt' in the
-* directory 'Platforms' of your Embedded Wizard installation directory. If you
-* wish to adapt this text, please copy the template file 'head.ewt' into your
-* project directory and edit the copy only. Please avoid any modifications of
-* the original template file!
-*
-* Version  : 9.20
+* Version  : 9.30
+* Date     : 14.02.2020  8:00:50
 * Profile  : iMX_RT
 * Platform : NXP.iMX_RT.RGB565
 *
@@ -33,12 +37,12 @@
 #endif
 
 #include "ewrte.h"
-#if EW_RTE_VERSION != 0x00090014
+#if EW_RTE_VERSION != 0x0009001E
   #error Wrong version of Embedded Wizard Runtime Environment.
 #endif
 
 #include "ewgfx.h"
-#if EW_GFX_VERSION != 0x00090014
+#if EW_GFX_VERSION != 0x0009001E
   #error Wrong version of Embedded Wizard Graphics Engine.
 #endif
 
@@ -225,13 +229,6 @@ EW_DEFINE_METHODS( CoreGroup, CoreRectView )
   EW_METHOD( UpdateLayout,      void )( CoreGroup _this, XPoint aSize )
   EW_METHOD( UpdateViewState,   void )( CoreGroup _this, XSet aState )
   EW_METHOD( InvalidateArea,    void )( CoreGroup _this, XRect aArea )
-  EW_METHOD( RestackBehind,     void )( CoreGroup _this, CoreView aView, CoreView 
-    aSibling )
-  EW_METHOD( RestackTop,        void )( CoreGroup _this, CoreView aView )
-  EW_METHOD( Restack,           void )( CoreGroup _this, CoreView aView, XInt32 
-    aOrder )
-  EW_METHOD( Add,               void )( CoreGroup _this, CoreView aView, XInt32 
-    aOrder )
 EW_END_OF_METHODS( CoreGroup )
 
 /* The method Draw() is invoked automatically if parts of the view should be redrawn 
@@ -464,40 +461,17 @@ void CoreGroup_Init( CoreGroup _this, XHandle aArg );
    has been invoked with aView == 'null'. */
 CoreView CoreGroup_FindSiblingView( CoreGroup _this, CoreView aView, XSet aFilter );
 
-/* The method RestackBehind() arranges the view aView behind the view aSibling. 
-   If no sibling is specified (aSibling == 'null'), the view is arranged in front 
-   of all other views of the component. This method modifies the Z-order of the 
-   view.
-   Please note, changing the Z-order of views within a component containing a Core::Outline 
-   view can cause this outline to update its automatic row or column formation. */
-void CoreGroup_RestackBehind( CoreGroup _this, CoreView aView, CoreView aSibling );
-
-/* Wrapper function for the virtual method : 'Core::Group.RestackBehind()' */
-void CoreGroup__RestackBehind( void* _this, CoreView aView, CoreView aSibling );
-
 /* The method RestackTop() elevates the view aView to the top of its component. 
-   After this operation the view is not covered by its sibling views anymore. This 
-   method modifies the Z-order of the view.
+   After this operation the view is usually not covered by any sibling views. This 
+   method modifies the Z-order of the view. The effective stacking position of the 
+   view can additionally be affected by the value of the view's property @StackingPriority. 
+   Concrete, the view can't be be arranged in front of any sibling view configured 
+   with higher @StackingPriority value. In such case calling the method RestackTop() 
+   will arrange the view just behind the sibling view with next higher @StackingPriority 
+   value.
    Please note, changing the Z-order of views within a component containing a Core::Outline 
    view can cause this outline to update its automatic row or column formation. */
 void CoreGroup_RestackTop( CoreGroup _this, CoreView aView );
-
-/* Wrapper function for the virtual method : 'Core::Group.RestackTop()' */
-void CoreGroup__RestackTop( void* _this, CoreView aView );
-
-/* The method Restack() changes the Z-order of views in the component. Depending 
-   on the parameter aOrder the method will elevate or lower the given view aView. 
-   If aOrder is negative, the view will be lowered to the background. If aOrder 
-   is positive, the view will be elevated to the foreground. If aOrder == 0, no 
-   modification will take place.
-   The absolute value of aOrder determines the number of sibling views the view 
-   has to skip over in order to reach its new Z-order.
-   Please note, changing the Z-order of views within a component containing a Core::Outline 
-   view can cause this outline to update its automatic row or column formation. */
-void CoreGroup_Restack( CoreGroup _this, CoreView aView, XInt32 aOrder );
-
-/* Wrapper function for the virtual method : 'Core::Group.Restack()' */
-void CoreGroup__Restack( void* _this, CoreView aView, XInt32 aOrder );
 
 /* The method Remove() removes the given view aView from the component. After this 
    operation the view doesn't belong anymore to the component - the view is not 
@@ -510,18 +484,20 @@ void CoreGroup__Restack( void* _this, CoreView aView, XInt32 aOrder );
 void CoreGroup_Remove( CoreGroup _this, CoreView aView );
 
 /* The method Add() inserts the given view aView into this component and places 
-   it at a Z-order position resulting from the parameter aOrder. The parameter determines 
-   the number of sibling views the view has to skip over starting with the top most 
-   view. If aOrder == 0, the newly added view will obtain the top most position. 
-   If the value is negative, the view will be lowered to the background accordingly 
-   to the absolute value of aOrder. After this operation the view belongs to the 
-   component - the view can appear on the screen and it can receive events.
+   it at a Z-order position resulting primarily from the parameter aOrder. The parameter 
+   determines the number of sibling views the view has to skip over starting with 
+   the top most view. If aOrder == 0, the newly added view will obtain the top most 
+   position. If the value is negative, the view will be lowered to the background 
+   accordingly to the absolute value of aOrder. After this operation the view belongs 
+   to the component - the view can appear on the screen and it can receive events.
+   The effective stacking position of the view can additionally be affected by the 
+   value of the view's property @StackingPriority. Concrete, the view is prevented 
+   from being arranged in front of any sibling view configured with a higher @StackingPriority 
+   value. Similarly the view can't be arranged behind any sibling view having lower 
+   @StackingPriority value.
    Please note, adding of views to a component containing a Core::Outline view can 
    cause this outline to update its automatic row or column formation. */
 void CoreGroup_Add( CoreGroup _this, CoreView aView, XInt32 aOrder );
-
-/* Wrapper function for the virtual method : 'Core::Group.Add()' */
-void CoreGroup__Add( void* _this, CoreView aView, XInt32 aOrder );
 
 #ifdef __cplusplus
   }

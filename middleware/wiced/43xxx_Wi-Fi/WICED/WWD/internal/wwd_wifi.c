@@ -1491,7 +1491,7 @@ wwd_result_t wwd_wifi_deauth_all_associated_client_stas( wwd_dot11_reason_code_t
     }
 
     size = ( sizeof(uint32_t) + (max_clients * sizeof(wiced_mac_t)));
-    buffer = calloc( 1, size );
+    buffer = WWD_CALLOC( 1, size );
 
     if ( buffer == NULL )
     {
@@ -1507,7 +1507,7 @@ wwd_result_t wwd_wifi_deauth_all_associated_client_stas( wwd_dot11_reason_code_t
     if ( result != WWD_SUCCESS )
     {
         WPRINT_APP_INFO(( "Failed to get client list\n" ));
-        free( buffer );
+        WWD_FREE( buffer );
         return result;
     }
 
@@ -1530,7 +1530,7 @@ wwd_result_t wwd_wifi_deauth_all_associated_client_stas( wwd_dot11_reason_code_t
         ++current;
     }
 
-    free( buffer );
+    WWD_FREE( buffer );
 
     return WWD_SUCCESS;
 }
@@ -5875,7 +5875,7 @@ wwd_result_t wwd_join_mesh( const wiced_ssid_t* ssid, wwd_interface_t interface 
     uint16_t join_params_size;
 
     join_params_size = WL_JOIN_PARAMS_FIXED_SIZE + WL_NUMCHANNELS * sizeof(chanspec_t);
-    if ((join_params = malloc(join_params_size)) == NULL) {
+    if ((join_params = WWD_MALLOC(join_params_size)) == NULL) {
             WPRINT_APP_INFO(("Error allocating %u bytes for assoc params\n", (unsigned int)join_params_size));
             return WWD_MALLOC_FAILURE;
     }
@@ -5927,7 +5927,7 @@ wwd_result_t wwd_join_mesh( const wiced_ssid_t* ssid, wwd_interface_t interface 
     return WWD_SUCCESS;
 
 error:
-    free(join_params);
+    WWD_FREE(join_params);
     return WWD_WLAN_ERROR;
 }
 

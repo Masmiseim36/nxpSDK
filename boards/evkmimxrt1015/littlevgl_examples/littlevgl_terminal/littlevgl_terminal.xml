@@ -10,9 +10,9 @@
     <definition extID="device.MIMXRT1015_startup.MIMXRT1015"/>
     <definition extID="driver.ft6x06.MIMXRT1015"/>
     <definition extID="driver.ili9341.MIMXRT1015"/>
-    <definition extID="middleware.amazon_freertos-kernel.MIMXRT1015"/>
-    <definition extID="middleware.amazon_freertos-kernel.extension.MIMXRT1015"/>
-    <definition extID="middleware.amazon_freertos-kernel.heap_4.MIMXRT1015"/>
+    <definition extID="middleware.freertos-kernel.MIMXRT1015"/>
+    <definition extID="middleware.freertos-kernel.extension.MIMXRT1015"/>
+    <definition extID="middleware.freertos-kernel.heap_4.MIMXRT1015"/>
     <definition extID="middleware.littlevgl.MIMXRT1015"/>
     <definition extID="platform.CMSIS_Driver_Include.Common_CMSISInclude.MIMXRT1015"/>
     <definition extID="platform.CMSIS_Driver_Include.I2C_CMSISInclude.MIMXRT1015"/>
@@ -46,7 +46,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkmimxrt1015_littlevgl_terminal" name="littlevgl_terminal" category="littlevgl_examples" dependency="driver.ili9341.MIMXRT1015 driver.ft6x06.MIMXRT1015 platform.drivers.clock.MIMXRT1015 platform.drivers.lpuart.MIMXRT1015 platform.drivers.cache_armv7_m7.MIMXRT1015 platform.drivers.edma.MIMXRT1015 platform.drivers.dmamux.MIMXRT1015 platform.drivers.lpi2c.MIMXRT1015 platform.drivers.lpi2c_edma.MIMXRT1015 platform.drivers.lpspi_edma.MIMXRT1015 platform.drivers.lpspi_cmsis.MIMXRT1015 platform.drivers.lpi2c_cmsis.MIMXRT1015 middleware.amazon_freertos-kernel.heap_4.MIMXRT1015 platform.drivers.common.MIMXRT1015 middleware.littlevgl.MIMXRT1015 device.MIMXRT1015_CMSIS.MIMXRT1015 utility.debug_console.MIMXRT1015 component.lpuart_adapter.MIMXRT1015 component.serial_manager.MIMXRT1015 component.lists.MIMXRT1015 component.serial_manager_uart.MIMXRT1015 device.MIMXRT1015_startup.MIMXRT1015 platform.drivers.iomuxc.MIMXRT1015 platform.utilities.assert.MIMXRT1015 platform.drivers.igpio.MIMXRT1015 platform.drivers.xip_device.MIMXRT1015 platform.drivers.xip_board.MIMXRT1015 platform.Include_core_cm7.MIMXRT1015 platform.Include_common.MIMXRT1015 platform.Include_dsp.MIMXRT1015 platform.CMSIS_Driver_Include.I2C_CMSISInclude.MIMXRT1015 platform.CMSIS_Driver_Include.Common_CMSISInclude.MIMXRT1015 platform.drivers.lpspi.MIMXRT1015 platform.CMSIS_Driver_Include.SPI_CMSISInclude.MIMXRT1015 middleware.amazon_freertos-kernel.MIMXRT1015 middleware.amazon_freertos-kernel.extension.MIMXRT1015 platform.utilities.misc_utilities.MIMXRT1015">
+  <example id="evkmimxrt1015_littlevgl_terminal" name="littlevgl_terminal" category="littlevgl_examples" dependency="driver.ili9341.MIMXRT1015 driver.ft6x06.MIMXRT1015 platform.drivers.clock.MIMXRT1015 platform.drivers.lpuart.MIMXRT1015 platform.drivers.cache_armv7_m7.MIMXRT1015 platform.drivers.edma.MIMXRT1015 platform.drivers.dmamux.MIMXRT1015 platform.drivers.lpi2c.MIMXRT1015 platform.drivers.lpi2c_edma.MIMXRT1015 platform.drivers.lpspi_edma.MIMXRT1015 platform.drivers.lpspi_cmsis.MIMXRT1015 platform.drivers.lpi2c_cmsis.MIMXRT1015 middleware.freertos-kernel.heap_4.MIMXRT1015 platform.drivers.common.MIMXRT1015 middleware.littlevgl.MIMXRT1015 device.MIMXRT1015_CMSIS.MIMXRT1015 utility.debug_console.MIMXRT1015 component.lpuart_adapter.MIMXRT1015 component.serial_manager.MIMXRT1015 component.lists.MIMXRT1015 component.serial_manager_uart.MIMXRT1015 device.MIMXRT1015_startup.MIMXRT1015 platform.drivers.iomuxc.MIMXRT1015 platform.utilities.assert.MIMXRT1015 platform.drivers.igpio.MIMXRT1015 platform.drivers.xip_device.MIMXRT1015 platform.drivers.xip_board.MIMXRT1015 platform.Include_core_cm7.MIMXRT1015 platform.Include_common.MIMXRT1015 platform.Include_dsp.MIMXRT1015 platform.CMSIS_Driver_Include.I2C_CMSISInclude.MIMXRT1015 platform.CMSIS_Driver_Include.Common_CMSISInclude.MIMXRT1015 platform.drivers.lpspi.MIMXRT1015 platform.CMSIS_Driver_Include.SPI_CMSISInclude.MIMXRT1015 middleware.freertos-kernel.MIMXRT1015 middleware.freertos-kernel.extension.MIMXRT1015 platform.utilities.misc_utilities.MIMXRT1015">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -109,6 +109,10 @@
         </drivers>
       </debug_configuration>
     </debug_configurations>
+    <include_paths>
+      <include_path path="littlevgl"/>
+      <include_path path="littlevgl/lvgl"/>
+    </include_paths>
     <source path="boards/evkmimxrt1015/littlevgl_examples/littlevgl_terminal/mdk" target_path="evkmimxrt1015" type="configuration" toolchain="mdk">
       <files mask="evkmimxrt1015_ram.ini"/>
     </source>
@@ -140,10 +144,10 @@
     <source path="boards/evkmimxrt1015/littlevgl_examples" target_path="board" type="src">
       <files mask="littlevgl_support.c"/>
     </source>
-    <source path="middleware/littlevgl/lv_examples/terminal" target_path="littlevgl/lv_examples/terminal" type="c_include">
+    <source path="middleware/littlevgl/lv_examples/lv_apps/terminal" target_path="littlevgl/lv_examples/lv_apps/terminal" type="c_include">
       <files mask="terminal.h"/>
     </source>
-    <source path="middleware/littlevgl/lv_examples/terminal" target_path="littlevgl/lv_examples/terminal" type="src">
+    <source path="middleware/littlevgl/lv_examples/lv_apps/terminal" target_path="littlevgl/lv_examples/lv_apps/terminal" type="src">
       <files mask="terminal.c"/>
     </source>
   </example>

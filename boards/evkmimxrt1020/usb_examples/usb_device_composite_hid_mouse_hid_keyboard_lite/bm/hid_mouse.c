@@ -126,10 +126,10 @@ usb_status_t USB_DeviceHidMouseSetConfigure(usb_device_handle handle, uint8_t co
 
     if (USB_COMPOSITE_CONFIGURE_INDEX == configure)
     {
-        epCallback.callbackFn = USB_DeviceHidMouseInterruptIn;
+        epCallback.callbackFn    = USB_DeviceHidMouseInterruptIn;
         epCallback.callbackParam = handle;
 
-        epInitStruct.zlt = 0U;
+        epInitStruct.zlt          = 0U;
         epInitStruct.transferType = USB_ENDPOINT_INTERRUPT;
         epInitStruct.endpointAddress =
             USB_HID_MOUSE_ENDPOINT_IN | (USB_IN << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT);
@@ -172,7 +172,7 @@ usb_status_t USB_DeviceHidMouseClassRequest(usb_device_handle handle,
         case USB_DEVICE_HID_REQUEST_SET_REPORT:
             break;
         case USB_DEVICE_HID_REQUEST_SET_IDLE:
-            error = kStatus_USB_Success;
+            error                        = kStatus_USB_Success;
             s_UsbDeviceHidMouse.idleRate = 125U;
             break;
         case USB_DEVICE_HID_REQUEST_SET_PROTOCOL:
@@ -202,7 +202,7 @@ usb_status_t USB_DeviceHidMouseEndpointStall(usb_device_handle handle, uint8_t e
 /* Initialize the HID mouse */
 usb_status_t USB_DeviceHidMouseInit(usb_device_composite_struct_t *deviceComposite)
 {
-    s_UsbDeviceComposite = deviceComposite;
+    s_UsbDeviceComposite       = deviceComposite;
     s_UsbDeviceHidMouse.buffer = s_MouseBuffer;
     return kStatus_USB_Success;
 }

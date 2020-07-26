@@ -109,22 +109,22 @@ static usb_status_t USB_DeviceCcidFreeHandle(usb_device_ccid_struct_t *handle)
 static usb_status_t USB_DeviceCcidRemoveTransfer(usb_device_ccid_transfer_struct_t **transfer_queue,
                                                  usb_device_ccid_transfer_struct_t **transfer)
 {
-    USB_OSA_SR_ALLOC();
+    OSA_SR_ALLOC();
 
     if ((NULL == transfer_queue) || (NULL == transfer))
     {
         return kStatus_USB_InvalidParameter;
     }
 
-    USB_OSA_ENTER_CRITICAL();
+    OSA_ENTER_CRITICAL();
     *transfer = *transfer_queue;
     if (*transfer_queue)
     {
         *transfer_queue = (*transfer_queue)->next;
-        USB_OSA_EXIT_CRITICAL();
+        OSA_EXIT_CRITICAL();
         return kStatus_USB_Success;
     }
-    USB_OSA_EXIT_CRITICAL();
+    OSA_EXIT_CRITICAL();
     return kStatus_USB_Busy;
 }
 
@@ -144,7 +144,7 @@ static usb_status_t USB_DeviceCcidAddTransfer(usb_device_ccid_transfer_struct_t 
 {
     usb_device_ccid_transfer_struct_t *p;
     usb_device_ccid_transfer_struct_t *q;
-    USB_OSA_SR_ALLOC();
+    OSA_SR_ALLOC();
 
     if (NULL == transfer_queue)
     {
@@ -153,13 +153,13 @@ static usb_status_t USB_DeviceCcidAddTransfer(usb_device_ccid_transfer_struct_t 
     p = *transfer_queue;
     q = *transfer_queue;
 
-    USB_OSA_ENTER_CRITICAL();
+    OSA_ENTER_CRITICAL();
     while (p)
     {
         q = p;
         if (p == transfer)
         {
-            USB_OSA_EXIT_CRITICAL();
+            OSA_EXIT_CRITICAL();
             return kStatus_USB_Error;
         }
         p = p->next;
@@ -173,7 +173,7 @@ static usb_status_t USB_DeviceCcidAddTransfer(usb_device_ccid_transfer_struct_t 
     {
         *transfer_queue = transfer;
     }
-    USB_OSA_EXIT_CRITICAL();
+    OSA_EXIT_CRITICAL();
     return kStatus_USB_Success;
 }
 
@@ -197,7 +197,7 @@ static usb_status_t USB_DeviceCcidInterruptIn(usb_device_handle deviceHandle,
     usb_device_ccid_struct_t *ccidHandle = (usb_device_ccid_struct_t *)callbackParam;
     usb_device_ccid_notification_struct_t notification;
     usb_status_t error = kStatus_USB_Error;
-    USB_OSA_SR_ALLOC();
+    OSA_SR_ALLOC();
 
     if (((NULL == deviceHandle) || (NULL == callbackParam) || (NULL == event)) || (NULL == event->buffer))
     {
@@ -235,7 +235,7 @@ static usb_status_t USB_DeviceCcidInterruptIn(usb_device_handle deviceHandle,
     else
     {
     }
-    USB_OSA_ENTER_CRITICAL();
+    OSA_ENTER_CRITICAL();
     if ((ccidHandle->configuration) && (ccidHandle->endpointInterruptIn))
     {
         /* If there is a blocking slot changed notification, send it to the host */
@@ -265,7 +265,7 @@ static usb_status_t USB_DeviceCcidInterruptIn(usb_device_handle deviceHandle,
             ccidHandle->interruptInBusy = 0U;
         }
     }
-    USB_OSA_EXIT_CRITICAL();
+    OSA_EXIT_CRITICAL();
     return kStatus_USB_Success;
 }
 
@@ -627,7 +627,7 @@ usb_status_t USB_DeviceCcidEvent(void *handle, uint32_t event, void *param)
     usb_status_t error = kStatus_USB_Error;
     uint16_t interfaceAlternate;
     uint8_t alternate;
-    USB_OSA_SR_ALLOC();
+    OSA_SR_ALLOC();
 
     if ((!param) || (!handle))
     {
@@ -660,7 +660,7 @@ usb_status_t USB_DeviceCcidEvent(void *handle, uint32_t event, void *param)
             {
                 error = USB_DeviceCcidEndpointsDeinit(ccidHandle);
             }
-            USB_OSA_ENTER_CRITICAL();
+            OSA_ENTER_CRITICAL();
             /* Save new configuration. */
             ccidHandle->configuration = *temp8;
             /* Clear the alternate setting value. */
@@ -725,7 +725,7 @@ usb_status_t USB_DeviceCcidEvent(void *handle, uint32_t event, void *param)
                     }
                 }
             }
-            USB_OSA_EXIT_CRITICAL();
+            OSA_EXIT_CRITICAL();
             break;
         case kUSB_DeviceClassEventSetInterface:
             if (!ccidHandle->configStruct)
@@ -993,7 +993,7 @@ usb_status_t USB_DeviceCcidNotifySlotChange(class_handle_t handle, uint8_t slot,
     usb_device_ccid_struct_t *ccidHandle;
     usb_device_ccid_notify_slot_chnage_notification_t *ccidNotify;
     usb_status_t error = kStatus_USB_Error;
-    USB_OSA_SR_ALLOC();
+    OSA_SR_ALLOC();
 
     ccidHandle = (usb_device_ccid_struct_t *)handle;
 
@@ -1007,7 +1007,7 @@ usb_status_t USB_DeviceCcidNotifySlotChange(class_handle_t handle, uint8_t slot,
         return kStatus_USB_InvalidParameter;
     }
 
-    USB_OSA_ENTER_CRITICAL();
+    OSA_ENTER_CRITICAL();
     ccidNotify = (usb_device_ccid_notify_slot_chnage_notification_t *)&ccidHandle->slotsChangeBuffer[0];
 
     ccidNotify->bMessageType = USB_DEVICE_CCID_RDR_TO_PC_NOTIFYSLOTCHANGE;
@@ -1038,7 +1038,7 @@ usb_status_t USB_DeviceCcidNotifySlotChange(class_handle_t handle, uint8_t slot,
             ccidHandle->slotsChanged = 1U;
         }
     }
-    USB_OSA_EXIT_CRITICAL();
+    OSA_EXIT_CRITICAL();
     return error;
 }
 
@@ -1063,7 +1063,7 @@ usb_status_t USB_DeviceCcidNotifyHardwareError(class_handle_t handle,
 {
     usb_device_ccid_struct_t *ccidHandle;
     usb_status_t error = kStatus_USB_Error;
-    USB_OSA_SR_ALLOC();
+    OSA_SR_ALLOC();
 
     ccidHandle = (usb_device_ccid_struct_t *)handle;
 
@@ -1082,7 +1082,7 @@ usb_status_t USB_DeviceCcidNotifyHardwareError(class_handle_t handle,
     ccidHandle->hardwareError.bSlot              = slot;
     ccidHandle->hardwareError.bSeq               = ccidHandle->slotsSequenceNumber[slot];
 
-    USB_OSA_ENTER_CRITICAL();
+    OSA_ENTER_CRITICAL();
     if ((ccidHandle->configuration) && (ccidHandle->endpointInterruptIn))
     {
         if (!ccidHandle->interruptInBusy)
@@ -1095,7 +1095,7 @@ usb_status_t USB_DeviceCcidNotifyHardwareError(class_handle_t handle,
             }
         }
     }
-    USB_OSA_EXIT_CRITICAL();
+    OSA_EXIT_CRITICAL();
     return error;
 }
 #endif

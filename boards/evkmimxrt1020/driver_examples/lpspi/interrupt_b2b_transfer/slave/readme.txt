@@ -10,10 +10,10 @@ This example uses the transactional API in LPSPI driver.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.40.2
-- Keil MDK  5.29
-- GCC ARM Embedded  8.3.1
-- MCUXpresso  11.1.0
+- IAR embedded Workbench  8.50.1
+- Keil MDK  5.30
+- GCC ARM Embedded  9.2.1
+- MCUXpresso  11.2.0
 
 Hardware requirements
 =====================
@@ -23,7 +23,7 @@ Hardware requirements
 
 Board settings
 ==============
-Remove R293 
+
 SPI one board:
 Transfer data from one board instance to another board's instance.
 SPI1 pins are connected with SPI1 pins of another board

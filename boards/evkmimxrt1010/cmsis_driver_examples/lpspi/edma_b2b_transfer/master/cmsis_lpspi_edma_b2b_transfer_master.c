@@ -19,11 +19,11 @@
  * Definitions
  ******************************************************************************/
 /* Master related */
-#define DRIVER_MASTER_SPI Driver_SPI1
-#define EXAMPLE_LPSPI_MASTER_IRQN (LPSPI1_IRQn)
-#define EXAMPLE_LPSPI_DEALY_COUNT 0xfffffU
+#define DRIVER_MASTER_SPI                     Driver_SPI1
+#define EXAMPLE_LPSPI_MASTER_IRQN             (LPSPI1_IRQn)
+#define EXAMPLE_LPSPI_DEALY_COUNT             0xfffffU
 #define EXAMPLE_LPSPI_MASTER_DMA_MUX_BASEADDR DMAMUX
-#define EXAMPLE_LPSPI_MASTER_DMA_BASEADDR DMA0
+#define EXAMPLE_LPSPI_MASTER_DMA_BASEADDR     DMA0
 
 /* Select USB1 PLL PFD0 (720 MHz) as lpspi clock source */
 #define EXAMPLE_LPSPI_CLOCK_SOURCE_SELECT (1U)
@@ -31,7 +31,7 @@
 #define EXAMPLE_LPSPI_CLOCK_SOURCE_DIVIDER (7U)
 
 #define EXAMPLE_LPSPI_CLOCK_FREQ (CLOCK_GetFreq(kCLOCK_Usb1PllPfd0Clk) / (EXAMPLE_LPSPI_CLOCK_SOURCE_DIVIDER + 1U))
-#define TRANSFER_SIZE 64U         /* Transfer dataSize */
+#define TRANSFER_SIZE     64U     /* Transfer dataSize */
 #define TRANSFER_BAUDRATE 500000U /* Transfer baudrate - 500k */
 
 /*******************************************************************************
@@ -46,9 +46,10 @@ void LPSPI_MasterSignalEvent_t(uint32_t event);
 AT_NONCACHEABLE_SECTION_INIT(uint8_t masterRxData[TRANSFER_SIZE]) = {0};
 AT_NONCACHEABLE_SECTION_INIT(uint8_t masterTxData[TRANSFER_SIZE]) = {0};
 
-volatile bool isTransferCompleted = false;
-volatile bool isMasterOnTransmit  = false;
-volatile bool isMasterOnReceive   = false;
+volatile bool isTransferCompleted  = false;
+volatile bool isMasterOnTransmit   = false;
+volatile bool isMasterOnReceive    = false;
+volatile uint32_t g_systickCounter = 20U;
 /*******************************************************************************
  * Code
  ******************************************************************************/
@@ -57,6 +58,14 @@ uint32_t LPSPI1_GetFreq(void)
 {
     return EXAMPLE_LPSPI_CLOCK_FREQ;
 }
+void SysTick_Handler(void)
+{
+    if (g_systickCounter != 0U)
+    {
+        g_systickCounter--;
+    }
+}
+
 void LPSPI_MasterSignalEvent_t(uint32_t event)
 {
     if (true == isMasterOnReceive)
@@ -147,9 +156,16 @@ int main(void)
         }
 
         /* Delay to wait slave is ready */
-        for (i = 0U; i < EXAMPLE_LPSPI_DEALY_COUNT; i++)
+        if (SysTick_Config(SystemCoreClock / 1000U))
         {
-            __NOP();
+            while (1)
+            {
+            }
+        }
+        /* Delay 20 ms */
+        g_systickCounter = 20U;
+        while (g_systickCounter != 0U)
+        {
         }
 
         isTransferCompleted = false;

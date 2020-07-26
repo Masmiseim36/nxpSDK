@@ -34,16 +34,11 @@
 #include "fsl_sd.h"
 
 #include "pin_mux.h"
-/*******************************************************************************
- * Variables
- ******************************************************************************/
-/* Composite device structure. */
-usb_device_composite_struct_t g_composite;
-USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t s_SetupOutBuffer[8];
-
+#include "sdmmc_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -66,18 +61,18 @@ extern void USB_DeviceMscWriteTask(void);
     (defined(USB_DEVICE_MSC_USE_WRITE_TASK) && (USB_DEVICE_MSC_USE_WRITE_TASK > 0))
 extern usb_msc_buffer_struct_t *currentTrasfer;
 #endif
+
+/*******************************************************************************
+ * Variables
+ ******************************************************************************/
+extern sd_card_t g_sd;
+/* Composite device structure. */
+usb_device_composite_struct_t g_composite;
+USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t s_SetupOutBuffer[8];
+
 /*******************************************************************************
  * Code
  ******************************************************************************/
-static void BOARD_USDHCClockConfiguration(void)
-{
-    /*configure system pll PFD2 fractional divider to 18*/
-    CLOCK_InitSysPfd(kCLOCK_Pfd0, 0x12U);
-    /* Configure USDHC clock source and divider */
-    CLOCK_SetDiv(kCLOCK_Usdhc1Div, 0U);
-    CLOCK_SetMux(kCLOCK_Usdhc1Mux, 1U);
-}
-
 
 void USB_OTG1_IRQHandler(void)
 {
@@ -376,6 +371,8 @@ void APPInit(void)
 
     USB_DeviceIsrEnable();
 
+    /*Add one delay here to make the DP pull down long enough to allow host to detect the previous disconnection.*/
+    SDK_DelayAtLeastUs(5000, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
     USB_DeviceRun(g_composite.deviceHandle);
 }
 
@@ -400,7 +397,7 @@ void main(void)
     BOARD_ConfigMPU();
     BOARD_InitPins();
     BOARD_BootClockRUN();
-    BOARD_USDHCClockConfiguration();
+    BOARD_SD_Config(&g_sd, NULL, (USB_DEVICE_INTERRUPT_PRIORITY - 1U), NULL);
     BOARD_InitDebugConsole();
 
     APPInit();

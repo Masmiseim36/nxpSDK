@@ -17,8 +17,10 @@ limitations under the License.
    /middleware/eiq/tensorflow-lite/readme.txt in section "Release notes" */
 
 #include <limits>
+
 #include "tensorflow/lite/c/builtin_op_data.h"
 #include "tensorflow/lite/c/c_api_internal.h"
+#include "tensorflow/lite/kernels/internal/optimized/cpu_check.h"
 #include "tensorflow/lite/kernels/internal/optimized/optimized_ops.h"
 #include "tensorflow/lite/kernels/internal/quantization_util.h"
 #include "tensorflow/lite/kernels/internal/reference/integer_ops/add.h"
@@ -278,7 +280,7 @@ void EvalQuantized(TfLiteContext* context, TfLiteNode* node,
                    TfLiteSubParams* params, const OpData* data,
                    const TfLiteTensor* input1, const TfLiteTensor* input2,
                    TfLiteTensor* output) {
-  tflite::ArithmeticParams op_params;
+  tflite::ArithmeticParams op_params = {.float_activation_min = 0.0f};
   op_params.left_shift = data->left_shift;
   op_params.input1_offset = data->input1_offset;
   op_params.input1_multiplier = data->input1_multiplier;

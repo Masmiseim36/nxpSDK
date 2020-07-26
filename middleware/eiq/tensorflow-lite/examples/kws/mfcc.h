@@ -19,7 +19,11 @@
 #ifndef __MFCC_H__
 #define __MFCC_H__
 
-#include "arm_math.h"
+extern "C" {
+  #include "arm_math.h"
+}
+
+
 #include "string.h"
 
 #define SAMP_FREQ 16000

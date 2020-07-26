@@ -6,8 +6,8 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "bootloader/bl_context.h"
-#include "memory/memory.h"
+#include "bl_context.h"
+#include "memory.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 // Variables
@@ -19,12 +19,12 @@
 //! flash and RAM for the chip we're running on.
 //! @note Do not change the index of Flash, SRAM, or QSPI (see memory.h).
 memory_map_entry_t g_memoryMap[] = {
-    // ITCM SRAM(128KB)
-    { 0x00000000, 0x0001ffff, kMemoryIsExecutable | kMemoryType_RAM, &g_normalMemoryInterface },
-    // DTCM SRAM(128KB)
-    { 0x20000000, 0x2001ffff, kMemoryIsExecutable | kMemoryType_RAM, &g_normalMemoryInterface },
-    // OCRAM (128KB)
-    { 0x20200000, 0x2021ffff, kMemoryIsExecutable | kMemoryType_RAM, &g_normalMemoryInterface },
+    // ITCM SRAM(32KB)
+    { 0x00000000, 0x00007fff, kMemoryIsExecutable | kMemoryType_RAM, &g_normalMemoryInterface },
+    // DTCM SRAM(32KB)
+    { 0x20000000, 0x20007fff, kMemoryIsExecutable | kMemoryType_RAM, &g_normalMemoryInterface },
+    // OCRAM (64KB)
+    { 0x20200000, 0x2020ffff, kMemoryIsExecutable | kMemoryType_RAM, &g_normalMemoryInterface },
 #if BL_FEATURE_FLEXSPI_NOR_MODULE
     // FlexSPI1 AMBA memory
     { 0x60000000, 0x7f7fffff, kMemoryNotExecutable | kMemoryType_FLASH, &g_flexspiMemoryInterface },

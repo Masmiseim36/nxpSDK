@@ -14,7 +14,7 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_LPUART LPUART2
+#define DEMO_LPUART          LPUART2
 #define DEMO_LPUART_CLK_FREQ BOARD_DebugConsoleSrcFreq()
 #define ECHO_BUFFER_LENGTH 8
 

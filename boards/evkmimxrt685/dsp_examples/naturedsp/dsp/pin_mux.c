@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP
+ * Copyright 2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -17,7 +17,7 @@ product: Pins v7.0
 processor: MIMXRT685S
 package_id: MIMXRT685SFVKB
 mcu_data: ksdk2_0
-processor_version: 0.0.2
+processor_version: 0.0.6
 pin_labels:
 - {pin_num: B1, pin_signal: PIO1_9/FC5_SSEL3/SCT0_GPI7/UTICK_CAP1/CTIMER1_MAT3/ADC0_12, label: WL_REG_ON, identifier: BOARD_INITPINS_WL_REG_ON;WL_REG_ON}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
@@ -55,7 +55,7 @@ BOARD_InitPins:
     drive: normal, amena: disabled, odena: disabled, iiena: disabled}
   - {pin_num: U2, peripheral: DMIC0, signal: 'DATA, 0_1', pin_signal: PIO2_20/PDM_DATA01, pupdena: disabled, pupdsel: pullDown, ibena: enabled, slew_rate: normal,
     drive: normal, amena: disabled, odena: disabled, iiena: disabled}
-  - {pin_num: R3, peripheral: DMIC0, signal: 'DATA, 2_3', pin_signal: PIO2_21/PDM_DATA23/CTIMER_INP14/FLEXSPI0B_SS0_N, pupdena: disabled, pupdsel: pullDown, ibena: enabled,
+  - {pin_num: R3, peripheral: DMIC0, signal: 'DATA, 2_3', pin_signal: PIO2_21/PDM_DATA23/CTIMER_INP14/FLEXSPI0B_SS1_N, pupdena: disabled, pupdsel: pullDown, ibena: enabled,
     slew_rate: normal, drive: normal, amena: disabled, odena: disabled, iiena: disabled}
   - {pin_num: P3, peripheral: DMIC0, signal: 'DATA, 4_5', pin_signal: PIO2_22/PDM_DATA45/FLEXSPI0B_DATA6, pupdena: disabled, pupdsel: pullDown, ibena: enabled, slew_rate: normal,
     drive: normal, amena: disabled, odena: disabled, iiena: disabled}

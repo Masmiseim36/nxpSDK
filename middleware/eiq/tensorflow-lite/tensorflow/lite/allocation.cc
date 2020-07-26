@@ -25,6 +25,7 @@ limitations under the License.
 #include <cassert>
 #include <cstdarg>
 #include <cstdint>
+#include <cstdio>
 #include <cstring>
 #include <utility>
 
@@ -36,7 +37,7 @@ namespace tflite {
 #ifndef TFLITE_MCU
 FileCopyAllocation::FileCopyAllocation(const char* filename,
                                        ErrorReporter* error_reporter)
-    : Allocation(error_reporter) {
+    : Allocation(error_reporter, Allocation::Type::kFileCopy) {
   // Obtain the file size, using an alternative method that is does not
   // require fstat for more compatibility.
   std::unique_ptr<FILE, decltype(&fclose)> file(fopen(filename, "rb"), fclose);
@@ -47,10 +48,18 @@ FileCopyAllocation::FileCopyAllocation(const char* filename,
   // TODO(ahentz): Why did you think using fseek here was better for finding
   // the size?
   struct stat sb;
-  if (fstat(fileno(file.get()), &sb) != 0) {
+
+// support usage of msvc's posix-like fileno symbol
+#ifdef _WIN32
+#define FILENO(_x) _fileno(_x)
+#else
+#define FILENO(_x) fileno(_x)
+#endif
+  if (fstat(FILENO(file.get()), &sb) != 0) {
     error_reporter_->Report("Failed to get file size of '%s'.", filename);
     return;
   }
+#undef FILENO
   buffer_size_bytes_ = sb.st_size;
   std::unique_ptr<char[]> buffer(new char[buffer_size_bytes_]);
   if (!buffer) {
@@ -81,7 +90,7 @@ bool FileCopyAllocation::valid() const { return copied_buffer_ != nullptr; }
 
 MemoryAllocation::MemoryAllocation(const void* ptr, size_t num_bytes,
                                    ErrorReporter* error_reporter)
-    : Allocation(error_reporter) {
+    : Allocation(error_reporter, Allocation::Type::kMemory) {
   buffer_ = ptr;
   buffer_size_bytes_ = num_bytes;
 }

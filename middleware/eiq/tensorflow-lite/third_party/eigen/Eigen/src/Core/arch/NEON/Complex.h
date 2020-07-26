@@ -8,9 +8,6 @@
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-// File modified by NXP. Changes are described in file
-// /middleware/eiq/tensorflow-lite/readme.txt in section "Release notes"
-
 #ifndef EIGEN_COMPLEX_NEON_H
 #define EIGEN_COMPLEX_NEON_H
 
@@ -310,7 +307,7 @@ ptranspose(PacketBlock<Packet2cf,2>& kernel) {
   static uint64x2_t p2ul_CONJ_XOR = {0x0, 0x8000000000000000};
 #else
   const uint64_t  p2ul_conj_XOR_DATA[] = { 0x0, 0x8000000000000000 };
-  static uint64x2_t p2ul_CONJ_XOR;// = vld1q_u64( p2ul_conj_XOR_DATA ); - Removed by script
+  static uint64x2_t p2ul_CONJ_XOR = vld1q_u64( p2ul_conj_XOR_DATA );
 #endif
 
 struct Packet1cd

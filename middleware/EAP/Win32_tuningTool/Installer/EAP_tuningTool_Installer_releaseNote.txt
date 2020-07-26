@@ -1,0 +1,63 @@
+EAP_tuningTool_Installer_releaseNote
+
+/************************************************************************************/
+RELEASE: 1.2.0 
+DATE: 2020_04_29
+Update: - Add Equalizer view 
+	- minor limitation & GUI protection update
+/************************************************************************************/
+
+/************************************************************************************/
+RELEASE: 1.1.0 
+DATE: 2020_04_10
+DO or INCLUDE:
+	- an installer
+    	- a EAP simulator for windows (bit exact with RT600 EAP library)
+    	- an audio player with dedicated function to compare A/B files
+    	- bubble info as documentation
+    	- many preset parameters
+             AllEffectOff (only volume and balance is applied)
+             VoiceEnhancer 
+             MusicEnhancer 
+             AutoVolumeLeveler
+             ConcertSound
+             LoudnessMaximiser
+             Custom
+	     AllTestOn (reserve for performance (MIPS/Memory) & bit exactness test only, audio output is not relevant)
+    	- Load/Save workspace
+	- Load parameters.txt file
+        - Export parameters.txt file to a C code header file
+
+DO NOT or NOT INCLUDE:
+	- Not graphical interface to tune parameters
+        - Not able to Load parameter form a C code header file
+        - Not able to Load/Import parameter from a hardware platform
+/************************************************************************************/
+
+
+/************************************************************************************/
+RELEASE: 1.0.0 
+DATE: 2020_04_07
+DO or INCLUDE:
+	- an installer
+    	- a EAP simulator for windows (bit exact with RT600 EAP library)
+    	- an audio player with dedicated function to compare A/B files
+    	- bubble info as documentation
+    	- many preset parameters
+             AllEffectOff (only volume and balance is applied)
+             VoiceEnhancer 
+             MusicEnhancer 
+             AutoVolumeLeveler
+             ConcertSound
+             LoudnessMaximiser
+             Custom
+	     AllTestOn (reserve for performance (MIPS/Memory) & bit exactness test only, audio output is not relevant)
+    	- Load/Save workspace
+	- Load parameters.txt file
+
+DO NOT or NOT INCLUDE:
+	- No tuning parameter update
+        - Not able to Load/Import parameter form a C code header file
+        - Not able to Load/Import parameter from a hardware platform
+/************************************************************************************/
+

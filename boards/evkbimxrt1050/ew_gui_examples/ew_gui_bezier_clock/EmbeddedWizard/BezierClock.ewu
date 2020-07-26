@@ -1,4 +1,4 @@
-$version 6.60
+$version 9.30
 
 // This is a GUI component.
 $rect <20,290,220,330>

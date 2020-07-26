@@ -13,8 +13,8 @@
 #include "usb_device_descriptor.h"
 
 /*******************************************************************************
-* Variables
-******************************************************************************/
+ * Variables
+ ******************************************************************************/
 uint8_t g_currentConfigure = 0;
 uint8_t g_interface[USB_CDC_VCOM_INTERFACE_COUNT];
 
@@ -26,7 +26,8 @@ uint8_t g_UsbDeviceDescriptor[] = {
     /* DEVICE Descriptor Type */
     USB_DESCRIPTOR_TYPE_DEVICE,
     /* USB Specification Release Number in Binary-Coded Decimal (i.e., 2.10 is 210H). */
-    USB_SHORT_GET_LOW(USB_DEVICE_SPECIFIC_BCD_VERSION), USB_SHORT_GET_HIGH(USB_DEVICE_SPECIFIC_BCD_VERSION),
+    USB_SHORT_GET_LOW(USB_DEVICE_SPECIFIC_BCD_VERSION),
+    USB_SHORT_GET_HIGH(USB_DEVICE_SPECIFIC_BCD_VERSION),
     /* Class code (assigned by the USB-IF). */
     USB_DEVICE_CLASS,
     /* Subclass code (assigned by the USB-IF). */
@@ -35,12 +36,14 @@ uint8_t g_UsbDeviceDescriptor[] = {
     USB_DEVICE_PROTOCOL,
     /* Maximum packet size for endpoint zero (only 8, 16, 32, or 64 are valid) */
     USB_CONTROL_MAX_PACKET_SIZE,
-    /* Vendor ID (assigned by the USB-IF) */
-    0xC9U, 0x1FU,
-    /* Product ID (assigned by the manufacturer) */
-    0x9F, 0x00,
+    USB_SHORT_GET_LOW(USB_DEVICE_VID),
+    USB_SHORT_GET_HIGH(USB_DEVICE_VID), /* Vendor ID (assigned by the USB-IF) */
+    USB_SHORT_GET_LOW(USB_DEVICE_PID),
+    USB_SHORT_GET_HIGH(USB_DEVICE_PID), /* Product ID (assigned by the manufacturer) */
+
     /* Device release number in binary-coded decimal */
-    USB_SHORT_GET_LOW(USB_DEVICE_DEMO_BCD_VERSION), USB_SHORT_GET_HIGH(USB_DEVICE_DEMO_BCD_VERSION),
+    USB_SHORT_GET_LOW(USB_DEVICE_DEMO_BCD_VERSION),
+    USB_SHORT_GET_HIGH(USB_DEVICE_DEMO_BCD_VERSION),
     /* Index of string descriptor describing manufacturer */
     0x01,
     /* Index of string descriptor describing product */
@@ -187,7 +190,10 @@ uint8_t g_UsbDeviceQualifierDescriptor[] = {
 /* Define string descriptor */
 USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
 uint8_t g_UsbDeviceString0[] = {
-    2U + 2U, USB_DESCRIPTOR_TYPE_STRING, 0x09U, 0x04U,
+    2U + 2U,
+    USB_DESCRIPTOR_TYPE_STRING,
+    0x09U,
+    0x04U,
 };
 
 USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
@@ -282,16 +288,21 @@ uint8_t *g_UsbDeviceStringDescriptorArray[USB_DEVICE_STRING_COUNT] = {
     g_UsbDeviceString0, g_UsbDeviceString1, g_UsbDeviceString2, g_UsbDeviceString3, g_UsbDeviceString4};
 
 usb_language_t g_UsbDeviceLanguage[USB_DEVICE_LANGUAGE_COUNT] = {{
-    g_UsbDeviceStringDescriptorArray, g_UsbDeviceStringDescriptorLength, (uint16_t)0x0409,
+    g_UsbDeviceStringDescriptorArray,
+    g_UsbDeviceStringDescriptorLength,
+    (uint16_t)0x0409,
 }};
 
 usb_language_list_t g_UsbDeviceLanguageList = {
-    g_UsbDeviceString0, sizeof(g_UsbDeviceString0), g_UsbDeviceLanguage, USB_DEVICE_LANGUAGE_COUNT,
+    g_UsbDeviceString0,
+    sizeof(g_UsbDeviceString0),
+    g_UsbDeviceLanguage,
+    USB_DEVICE_LANGUAGE_COUNT,
 };
 
 /*******************************************************************************
-* Code
-******************************************************************************/
+ * Code
+ ******************************************************************************/
 /*!
  * @brief Get the descriptor.
  *
@@ -310,9 +321,9 @@ usb_status_t USB_DeviceGetDescriptor(usb_device_handle handle,
                                      uint32_t *length,
                                      uint8_t **buffer)
 {
-    uint8_t descriptorType = (uint8_t)((setup->wValue & 0xFF00U) >> 8U);
+    uint8_t descriptorType  = (uint8_t)((setup->wValue & 0xFF00U) >> 8U);
     uint8_t descriptorIndex = (uint8_t)((setup->wValue & 0x00FFU));
-    usb_status_t ret = kStatus_USB_Success;
+    usb_status_t ret        = kStatus_USB_Success;
     if (USB_REQUEST_STANDARD_GET_DESCRIPTOR != setup->bRequest)
     {
         return kStatus_USB_InvalidRequest;
@@ -328,7 +339,7 @@ usb_status_t USB_DeviceGetDescriptor(usb_device_handle handle,
             }
             else
             {
-                uint8_t langId = 0;
+                uint8_t langId    = 0;
                 uint8_t langIndex = USB_DEVICE_STRING_COUNT;
 
                 for (; langId < USB_DEVICE_LANGUAGE_COUNT; langId++)
@@ -477,7 +488,7 @@ usb_status_t USB_DeviceSetSpeed(usb_device_handle handle, uint8_t speed)
         {
             if ((USB_CDC_VCOM_CIC_INTERRUPT_IN_ENDPOINT == (ptr1->endpoint.bEndpointAddress & 0x0FU)) &&
                 ((ptr1->endpoint.bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_MASK) ==
-                     USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_IN))
+                 USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_IN))
             {
                 if (USB_SPEED_HIGH == speed)
                 {
@@ -494,7 +505,7 @@ usb_status_t USB_DeviceSetSpeed(usb_device_handle handle, uint8_t speed)
             }
             else if ((USB_CDC_VCOM_DIC_BULK_IN_ENDPOINT == (ptr1->endpoint.bEndpointAddress & 0x0FU)) &&
                      ((ptr1->endpoint.bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_MASK) ==
-                     USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_IN))
+                      USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_IN))
             {
                 if (USB_SPEED_HIGH == speed)
                 {
@@ -507,7 +518,7 @@ usb_status_t USB_DeviceSetSpeed(usb_device_handle handle, uint8_t speed)
             }
             else if ((USB_CDC_VCOM_DIC_BULK_OUT_ENDPOINT == (ptr1->endpoint.bEndpointAddress & 0x0FU)) &&
                      ((ptr1->endpoint.bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_MASK) ==
-                     USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_OUT))
+                      USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_OUT))
             {
                 if (USB_SPEED_HIGH == speed)
                 {
@@ -519,8 +530,8 @@ usb_status_t USB_DeviceSetSpeed(usb_device_handle handle, uint8_t speed)
                 }
             }
             else if ((USB_MSC_DISK_BULK_IN_ENDPOINT == (ptr1->endpoint.bEndpointAddress & 0x0FU)) &&
-                  ((ptr1->endpoint.bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_MASK) ==
-                     USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_IN))
+                     ((ptr1->endpoint.bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_MASK) ==
+                      USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_IN))
             {
                 if (USB_SPEED_HIGH == speed)
                 {
@@ -533,7 +544,7 @@ usb_status_t USB_DeviceSetSpeed(usb_device_handle handle, uint8_t speed)
             }
             else if ((USB_MSC_DISK_BULK_OUT_ENDPOINT == (ptr1->endpoint.bEndpointAddress & 0x0FU)) &&
                      ((ptr1->endpoint.bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_MASK) ==
-                     USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_OUT))
+                      USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_OUT))
             {
                 if (USB_SPEED_HIGH == speed)
                 {

@@ -19,13 +19,14 @@
 #include "audio/xa-pcm-gain-api.h"
 #include "audio/xa-capturer-api.h"
 
+#include "dsp_config.h"
 #include "srtm_utils.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 #define AUDIO_FRMWK_BUF_SIZE (128 * 1024)
-#define AUDIO_COMP_BUF_SIZE (512 * 1024)
+#define AUDIO_COMP_BUF_SIZE  (512 * 1024)
 
 enum
 {
@@ -69,8 +70,12 @@ static int renderer_setup(void *p_renderer, xaf_format_t *format, bool i2s)
     param[13] = 0;
     param[14] = XA_RENDERER_CONFIG_PARAM_I2S_WS_POLARITY;
     param[15] = 0;
+    param[16] = XA_RENDERER_CONFIG_PARAM_AUDIO_BUFFER_1;
+    param[17] = (int)DSP_AUDIO_BUFFER_1_PING;
+    param[18] = XA_RENDERER_CONFIG_PARAM_AUDIO_BUFFER_2;
+    param[19] = (int)DSP_AUDIO_BUFFER_1_PONG;
 
-    return xaf_comp_set_config(p_renderer, 8, &param[0]);
+    return xaf_comp_set_config(p_renderer, 10, &param[0]);
 }
 
 static int pcm_gain_setup(void *p_comp, xaf_format_t *format, bool i2s)
@@ -107,7 +112,7 @@ static int capturer_setup(void *p_capturer, xaf_format_t *format, bool i2s)
 
     if (i2s)
     {
-        num_params = 8;
+        num_params = 10;
 
         param[8]  = XA_CAPTURER_CONFIG_PARAM_I2S_MASTER_SLAVE;
         param[9]  = 0;
@@ -117,6 +122,10 @@ static int capturer_setup(void *p_capturer, xaf_format_t *format, bool i2s)
         param[13] = 0;
         param[14] = XA_CAPTURER_CONFIG_PARAM_I2S_WS_POLARITY;
         param[15] = 0;
+        param[16] = XA_CAPTURER_CONFIG_PARAM_AUDIO_BUFFER_1;
+        param[17] = (int)DSP_AUDIO_BUFFER_2_PING;
+        param[18] = XA_CAPTURER_CONFIG_PARAM_AUDIO_BUFFER_2;
+        param[19] = (int)DSP_AUDIO_BUFFER_2_PONG;
     }
 
     return xaf_comp_set_config(p_capturer, num_params, &param[0]);

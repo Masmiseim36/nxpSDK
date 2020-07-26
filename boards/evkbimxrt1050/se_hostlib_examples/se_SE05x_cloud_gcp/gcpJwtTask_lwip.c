@@ -3,7 +3,7 @@
 * @author NXP Semiconductors
 * @version 1.0
 * @par License
-* Copyright 2017,2018 NXP
+* Copyright 2017,2018,2020 NXP
 *
 * This software is owned or controlled by NXP and may only be used
 * strictly in accordance with the applicable license terms.  By expressly
@@ -14,7 +14,7 @@
 * may not retain, install, activate or otherwise use the software.
 *
 * @par Description
-* gcp jwt task for lwip
+* gcp jwt task for lwip. From PC Windows testing
 */
 
 #include "gcpJWTDemo.h"
@@ -46,27 +46,6 @@
 #include "sm_printf.h"
 #endif
 
-#if AX_EMBEDDED
-#include <FreeRTOS.h>
-#include "board.h"
-#include "clock_config.h"
-#include "fsl_debug_console.h"
-#include "fsl_device_registers.h"
-#include "ksdk_mbedtls.h"
-#include "pin_mux.h"
-#include "task.h"
-#ifdef IMX_RT
-#include "fsl_dcp.h"
-#include "fsl_iomuxc.h"
-#include "fsl_trng.h"
-#include "pin_mux.h"
-#endif
-
-#ifdef CPU_LPC54018
-#include "fsl_power.h"
-#endif
-
-#endif
 
 #if SSS_HAVE_ALT_SSS
 #include <fsl_sss_api.h>
@@ -81,46 +60,19 @@ sscp_context_t sscp;
 extern ex_sss_cloud_ctx_t *pex_sss_demo_tls_ctx;
 void gcp_jwt_task_lwip(void *ctx)
 {
-	ex_sss_boot_ctx_t *pCtx = (ex_sss_boot_ctx_t*)ctx;
+    ex_sss_boot_ctx_t *pCtx = (ex_sss_boot_ctx_t*)ctx;
     mbedtls_pk_context pk;
     int ret;
 
-#if ((SSS_HAVE_A71CH || SSS_HAVE_SE050_EAR_CH) && AX_EMBEDDED)
-    U8 AxUID[A71CH_MODULE_UNIQUE_ID_LEN];
-#endif
-
-#if SSS_HAVE_ALT_SSS || SSS_HAVE_ALT_A71CH
+#if (SSS_HAVE_ALT)
 
     sss_status_t status;
-
-#if (SSS_HAVE_A71CH || SSS_HAVE_SE050_EAR_CH)
-    uint16_t connectStatus;
-    SmCommState_t commState;
-    U8 Atr[64];
-    U16 AtrLen = sizeof(Atr);
-
-    U16 AxUIDLen = A71CH_MODULE_UNIQUE_ID_LEN;
-
-    /*keyJITR_DEVICE_CERTIFICATE_AUTHORITY_PEM Not used variable to avoid warning set it to NULL*/
-    keyJITR_DEVICE_CERTIFICATE_AUTHORITY_PEM = NULL;
-
     LOG_I("GCP JWT NXP Secure Element example\n\n");
 
-#if AX_EMBEDDED
-    connectStatus = SM_Connect(&commState, Atr, &AtrLen);
-    ENSURE_OR_GO_EXIT(connectStatus == SW_OK);
-#else
-    //connectStatus = SM_RjctConnect("COM15", &commState, Atr, &AtrLen);
-#endif
-#endif
-
-#if (SSS_HAVE_A71CH || SSS_HAVE_SE050_EAR_CH)
-    A71_GetUniqueID(AxUID, &AxUIDLen);
-#endif
-
     /*keyJITR_DEVICE_CERTIFICATE_AUTHORITY_PEM Not used variable to avoid warning set it to NULL*/
     keyJITR_DEVICE_CERTIFICATE_AUTHORITY_PEM = NULL;
 
+    /* For creating the GCP token */
     mbedtls_pk_init(&pk);
 
     status = sss_key_object_init(&(pex_sss_demo_tls_ctx->obj), &(pCtx->ks));
@@ -142,14 +94,8 @@ void gcp_jwt_task_lwip(void *ctx)
         goto exit;
     }
 
-#if AX_EMBEDDED
-    LED_RED_OFF();
-    LED_GREEN_OFF();
-    LED_BLUE_ON();
 
-    LED_BLUE_OFF();
-#endif
-#endif
+#endif //SSS_HAVE_ALT
 
     gcpPubSub((void *) &pk);
 

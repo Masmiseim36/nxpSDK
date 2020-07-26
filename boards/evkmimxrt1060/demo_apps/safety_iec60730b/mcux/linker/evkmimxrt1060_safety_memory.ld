@@ -54,7 +54,7 @@ SRAM_OC_end          = 0x20240000;
 /******************     SYMBOLS     *******************************************/
 /******************************************************************************/   
 m_ram_test_backup    = SRAM_DTC_end - ram_test_backup_size;
-m_wd_test_backup     = m_ram_test_backup - 0x10;
+m_wd_test_backup     = m_ram_test_backup - 0x20;
 m_pc_test_flag       = m_wd_test_backup - 0x4;
 m_safety_error_code  = m_pc_test_flag - 0x4;
 m_stack_test_p_4     = m_safety_error_code - 0x4;

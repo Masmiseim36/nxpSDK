@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP
+ * Copyright 2019-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -13,11 +13,11 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v6.0
+product: Pins v7.0
 processor: MIMXRT1011xxxxx
 package_id: MIMXRT1011DAE5A
 mcu_data: ksdk2_0
-processor_version: 0.0.4
+processor_version: 0.7.7
 board: MIMXRT1010-EVK
 pin_labels:
 - {pin_num: '3', pin_signal: GPIO_09, label: LPUART1_RXD, identifier: UART1_RXD;LPUART1_RXD}
@@ -50,6 +50,7 @@ BOARD_InitPins:
   - {pin_num: '11', peripheral: LPI2C1, signal: SCL, pin_signal: GPIO_02, software_input_on: Enable, open_drain: Enable, drive_strength: R0_6, pull_up_down_config: Pull_Up_22K_Ohm}
   - {pin_num: '12', peripheral: LPI2C1, signal: SDA, pin_signal: GPIO_01, software_input_on: Enable, open_drain: Enable, drive_strength: R0_6, pull_up_down_config: Pull_Up_22K_Ohm}
   - {pin_num: '1', peripheral: GPIO1, signal: 'gpiomux_io, 11', pin_signal: GPIO_11}
+  - {pin_num: '48', peripheral: ARM, signal: arm_trace_swo, pin_signal: GPIO_AD_09, slew_rate: Fast}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 
@@ -76,6 +77,9 @@ void BOARD_InitPins(void) {
       0U);                                    /* Software Input On Field: Input Path is determined by functionality */
   IOMUXC_SetPinMux(
       IOMUXC_GPIO_11_GPIOMUX_IO11,            /* GPIO_11 is configured as GPIOMUX_IO11 */
+      0U);                                    /* Software Input On Field: Input Path is determined by functionality */
+  IOMUXC_SetPinMux(
+      IOMUXC_GPIO_AD_09_ARM_TRACE_SWO,        /* GPIO_AD_09 is configured as ARM_TRACE_SWO */
       0U);                                    /* Software Input On Field: Input Path is determined by functionality */
   IOMUXC_SetPinConfig(
       IOMUXC_GPIO_01_LPI2C1_SDA,              /* GPIO_01 PAD functional properties : */
@@ -116,6 +120,16 @@ void BOARD_InitPins(void) {
                                                  Pull / Keep Enable Field: Pull/Keeper Enabled
                                                  Pull / Keep Select Field: Keeper
                                                  Pull Up / Down Config. Field: 100K Ohm Pull Down
+                                                 Hyst. Enable Field: Hysteresis Disabled */
+  IOMUXC_SetPinConfig(
+      IOMUXC_GPIO_AD_09_ARM_TRACE_SWO,        /* GPIO_AD_09 PAD functional properties : */
+      0x90B1U);                               /* Slew Rate Field: Fast Slew Rate
+                                                 Drive Strength Field: R0/6
+                                                 Speed Field: fast(150MHz)
+                                                 Open Drain Enable Field: Open Drain Disabled
+                                                 Pull / Keep Enable Field: Pull/Keeper Enabled
+                                                 Pull / Keep Select Field: Keeper
+                                                 Pull Up / Down Config. Field: 100K Ohm Pull Up
                                                  Hyst. Enable Field: Hysteresis Disabled */
 }
 

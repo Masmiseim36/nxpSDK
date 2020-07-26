@@ -18,16 +18,12 @@
 *
 * DESCRIPTION:
 *   This header file contains Graphics Engine configuration parameters and the
-*   adaptation for the NxpRt graphics subsystem.
+*   adaptation for the target specific graphics subsystem.
 *
 *******************************************************************************/
 
 #ifndef EWEXTGFX_H
 #define EWEXTGFX_H
-
-//#ifdef __UVISION_VERSION
-//#include "RTE_Components.h"
-//#endif
 
 
 #ifdef __cplusplus
@@ -35,88 +31,20 @@
   {
 #endif
 
-/* Defines for different framebuffer color formats */
-#define EW_FRAME_BUFFER_COLOR_FORMAT_Index8   1
-#define EW_FRAME_BUFFER_COLOR_FORMAT_LumA44   2
-#define EW_FRAME_BUFFER_COLOR_FORMAT_RGB565   3
-#define EW_FRAME_BUFFER_COLOR_FORMAT_RGB888   4
-#define EW_FRAME_BUFFER_COLOR_FORMAT_RGBA4444 5
-#define EW_FRAME_BUFFER_COLOR_FORMAT_RGBA8888 6
-
-
 /*
-   The color format of the framebuffer has to correspond to color format of the
-   Graphics Engine - otherwise the Graphics Engine cannot draw directly into
-   this framebuffer, because the Graphics engine is prepared and optimized for
-   one dedicated color format.
-
-   The color format of the LCD / framebuffer can be defined within the makefile
-   by setting the macro EW_FRAME_BUFFER_COLOR_FORMAT.
-
-   According your makefile settings, the resulting color depth is determined.
+  EW_USE_GRAPHICS_ACCELERATOR - Flag to switch on/off the usage of the graphics
+  accelerator within the target.
+  Per default, the usage of the graphics accelerator is enabled. To switch off
+  the graphics accelerator, please set the macro EW_USE_GRAPHICS_ACCELERATOR to
+  0 within your makefile. This can be achieved by using the compiler flag
+  -DEW_USE_GRAPHICS_ACCELERATOR=0
 */
-#if ( EW_FRAME_BUFFER_COLOR_FORMAT == EW_FRAME_BUFFER_COLOR_FORMAT_RGB565 )
-  #define FRAME_BUFFER_DEPTH    2
-#else
-  #error The given EW_FRAME_BUFFER_COLOR_FORMAT is not supported! Use RGB565 within your makefile!
+#ifndef EW_USE_GRAPHICS_ACCELERATOR
+  #define EW_USE_GRAPHICS_ACCELERATOR 1
 #endif
 
-
-/*
-  EW_USE_DOUBLE_BUFFER - Flag to switch on/off the usage of an additional
-  framebuffer, so that the screen is operated in double-buffering mode.
-  Per default, the usage of double-buffering is disabled. To activate the
-  double-buffering mode, please set the macro EW_USE_DOUBLE_BUFFER to 1
-  within your makefile. This can be achieved by using the compiler flag
-  -DEW_USE_DOUBLE_BUFFER=1
-  If double-buffering is activated, the exchange between front-buffer and
-  back-buffer has to be done at V-sync. This has to be implemented in the
-  extern function EwBspSetFramebufferAddress().
-*/
-#ifndef EW_USE_DOUBLE_BUFFER
-  #define EW_USE_DOUBLE_BUFFER 0
-#endif
-
-#if EW_USE_DOUBLE_BUFFER == 0
-  #undef EW_USE_DOUBLE_BUFFER
-#endif
-
-
-/*
-  EW_USE_SCRATCHPAD_BUFFER - Flag to switch on/off the usage of a small
-  scratch-pad buffer used for the graphics composition instead of a framebuffer.
-  As a result the screen of the display is updated in partial mode.
-  This mode is used to reduce the memory footprint to a minimum, but it may cause
-  some tearing or flickering effects. This mode is useful in combination with
-  displays containing its own graphics memory (GRAM).
-  Per default, the usage of scratch-pad buffer is disabled. To activate the
-  scratch-pad buffer mode, please set the macro EW_USE_SCRATCHPAD_BUFFER to 1
-  within your makefile. This can be achieved by using the compiler flag
-  -DEW_USE_SCRATCHPAD_BUFFER=1
-*/
-#ifndef EW_USE_SCRATCHPAD_BUFFER
-  #define EW_USE_SCRATCHPAD_BUFFER 0
-#endif
-
-#if EW_USE_SCRATCHPAD_BUFFER == 0
-  #undef EW_USE_SCRATCHPAD_BUFFER
-#endif
-
-
-/*
-  EW_USE_PXP_GRAPHICS_ACCELERATOR - Flag to switch on/off the usage of the
-  graphics accelerator within the NxpRt target (PXP).
-  Per default, the usage of the PXP is enabled. To switch off the usage of
-  the PXP, please set the macro EW_USE_PXP_GRAPHICS_ACCELERATOR to 0 within
-  your makefile. This can be achieved by using the compiler flag
-  -DEW_USE_PXP_GRAPHICS_ACCELERATOR=0
-*/
-#ifndef EW_USE_PXP_GRAPHICS_ACCELERATOR
-  #define EW_USE_PXP_GRAPHICS_ACCELERATOR 1
-#endif
-
-#if EW_USE_PXP_GRAPHICS_ACCELERATOR == 0
-  #undef EW_USE_PXP_GRAPHICS_ACCELERATOR
+#if EW_USE_GRAPHICS_ACCELERATOR == 0
+  #undef EW_USE_GRAPHICS_ACCELERATOR
 #endif
 
 
@@ -138,10 +66,6 @@
 #ifndef EW_COLOR_CHANNEL_BIT_OFFSET_ALPHA
   #define EW_COLOR_CHANNEL_BIT_OFFSET_ALPHA  24
 #endif
-
-
-/* NxpRt Pixelpipeline does not operate with premultiplied colors */
-#define EW_PREMULTIPLY_COLOR_CHANNELS         0
 
 
 /* The RGB565 Platform Package uses a screen color format when drawing into the
@@ -166,12 +90,16 @@
 #endif
 
 
+/* PXP does not operate with premultiplied colors */
+#define EW_PREMULTIPLY_COLOR_CHANNELS         0
+
+
 /*******************************************************************************
 * FUNCTION:
-*   NxpRtInitGfx
+*   GfxInitGfx
 *
 * DESCRIPTION:
-*   The function NxpRtInitGfx is called from the Graphics Engine during the
+*   The function GfxInitGfx is called from the Graphics Engine during the
 *   initialization in order to make target specific configurations of the
 *   Graphics Engine
 *
@@ -182,7 +110,7 @@
 *   If successful, returns != 0.
 *
 *******************************************************************************/
-int NxpRtInitGfx
+int GfxInitGfx
 (
   void*             aArgs
 );
@@ -190,12 +118,12 @@ int NxpRtInitGfx
 
 /*******************************************************************************
 * FUNCTION:
-*   NxpRtInitViewport
+*   GfxInitViewport
 *
 * DESCRIPTION:
-*   The function NxpRtInitViewport is called from the Graphics Engine,
+*   The function GfxInitViewport is called from the Graphics Engine,
 *   to create a new viewport on the target. The function uses the given
-*   buffers passed in the arguments aDisplay1, aDisplay2 and aDisplay3.
+*   buffers passed in the arguments aDisplay1 and aDisplay2.
 *
 * ARGUMENTS:
 *   aWidth,
@@ -206,15 +134,15 @@ int NxpRtInitGfx
 *   aExtentHeight - Size of the physical or virtual framebuffer in pixel.
 *   aOrient       - not used.
 *   aOpacity      - not used.
-*   aDisplay1     - Address of the framebuffer / front-buffer.
+*   aDisplay1     - Address of the framebuffer / scratch-pad buffer.
 *   aDisplay2     - Address of the back-buffer in case of double-buffering.
-*   aDisplay3     - Address of the scratch-pad buffer.
+*   aDisplay3     - not used.
 *
 * RETURN VALUE:
 *   Handle of the surface descriptor (viewport).
 *
 *******************************************************************************/
-unsigned long NxpRtInitViewport
+unsigned long GfxInitViewport
 (
   int               aWidth,
   int               aHeight,
@@ -232,11 +160,11 @@ unsigned long NxpRtInitViewport
 
 /*******************************************************************************
 * FUNCTION:
-*   NxpRtDoneViewport
+*   GfxDoneViewport
 *
 * DESCRIPTION:
-*   The function NxpRtDoneViewport is called from the Graphics Engine, to
-*   release a previously created viewport on the NxpRt target.
+*   The function GfxDoneViewport is called from the Graphics Engine, to
+*   release a previously created viewport on the target.
 *
 * ARGUMENTS:
 *   aHandle - Handle of the surface descriptor (viewport).
@@ -245,7 +173,7 @@ unsigned long NxpRtInitViewport
 *   None
 *
 *******************************************************************************/
-void NxpRtDoneViewport
+void GfxDoneViewport
 (
   unsigned long     aHandle
 );
@@ -253,10 +181,10 @@ void NxpRtDoneViewport
 
 /*******************************************************************************
 * FUNCTION:
-*   NxpRtBeginUpdate
+*   GfxBeginUpdate
 *
 * DESCRIPTION:
-*   The function NxpRtBeginUpdate is called from the Graphics Engine, to
+*   The function GfxBeginUpdate is called from the Graphics Engine, to
 *   initiate the screen update cycle.
 *
 * ARGUMENTS:
@@ -266,7 +194,7 @@ void NxpRtDoneViewport
 *   Handle of the destination surface, used for all drawing operations.
 *
 *******************************************************************************/
-unsigned long NxpRtBeginUpdate
+unsigned long GfxBeginUpdate
 (
   unsigned long     aHandle
 );
@@ -274,10 +202,10 @@ unsigned long NxpRtBeginUpdate
 
 /*******************************************************************************
 * FUNCTION:
-*   NxpRtBeginUpdateArea
+*   GfxBeginUpdateArea
 *
 * DESCRIPTION:
-*   The function NxpRtBeginUpdateArea is called from the Graphics Engine, to
+*   The function GfxBeginUpdateArea is called from the Graphics Engine, to
 *   initiate a partial screen update cycle.
 *
 * ARGUMENTS:
@@ -292,7 +220,7 @@ unsigned long NxpRtBeginUpdate
 *   Handle of the destination surface, used for all drawing operations.
 *
 *******************************************************************************/
-unsigned long NxpRtBeginUpdateArea
+unsigned long GfxBeginUpdateArea
 (
   unsigned long     aHandle,
   int               aX,
@@ -304,10 +232,10 @@ unsigned long NxpRtBeginUpdateArea
 
 /*******************************************************************************
 * FUNCTION:
-*   NxpRtEndUpdate
+*   GfxEndUpdate
 *
 * DESCRIPTION:
-*   The function NxpRtEndUpdate is called from the Graphics Engine, to
+*   The function GfxEndUpdate is called from the Graphics Engine, to
 *   finalize the screen update cycle.
 *
 * ARGUMENTS:
@@ -322,7 +250,7 @@ unsigned long NxpRtBeginUpdateArea
 *   None
 *
 *******************************************************************************/
-void NxpRtEndUpdate
+void GfxEndUpdate
 (
   unsigned long     aHandle,
   int               aX,
@@ -333,20 +261,20 @@ void NxpRtEndUpdate
 
 
 /* Redirect the following operations to the functions within this module */
-#define EwGfxInit            NxpRtInitGfx
-#define EwGfxInitViewport    NxpRtInitViewport
-#define EwGfxDoneViewport    NxpRtDoneViewport
-#define EwGfxBeginUpdate     NxpRtBeginUpdate
-#define EwGfxBeginUpdateArea NxpRtBeginUpdateArea
-#define EwGfxEndUpdate       NxpRtEndUpdate
+#define EwGfxInit            GfxInitGfx
+#define EwGfxInitViewport    GfxInitViewport
+#define EwGfxDoneViewport    GfxDoneViewport
+#define EwGfxBeginUpdate     GfxBeginUpdate
+#define EwGfxBeginUpdateArea GfxBeginUpdateArea
+#define EwGfxEndUpdate       GfxEndUpdate
 
 
 /*******************************************************************************
 * FUNCTION:
-*   NxpRtCreateSurface
+*   GfxCreateSurface
 *
 * DESCRIPTION:
-*   The function NxpRtCreateSurface() reserves pixel memory for a new surface
+*   The function GfxCreateSurface() reserves pixel memory for a new surface
 *   with the given size and color format. The function returns a handle to the
 *   new surface.
 *
@@ -363,7 +291,7 @@ void NxpRtEndUpdate
 *   If the creation is failed, the function should return 0.
 *
 *******************************************************************************/
-unsigned long NxpRtCreateSurface
+unsigned long GfxCreateSurface
 (
   int               aFormat,
   int               aWidth,
@@ -373,10 +301,10 @@ unsigned long NxpRtCreateSurface
 
 /*******************************************************************************
 * FUNCTION:
-*   NxpRtCreateConstSurface
+*   GfxCreateConstSurface
 *
 * DESCRIPTION:
-*   The function NxpRtCreateConstSurface() creates a surface structure
+*   The function GfxCreateConstSurface() creates a surface structure
 *   that refers to a constant pixel memory. The function returns a handle to the
 *   new surface.
 *
@@ -391,7 +319,7 @@ unsigned long NxpRtCreateSurface
 *   If the creation is failed, the function should return 0.
 *
 *******************************************************************************/
-unsigned long NxpRtCreateConstSurface
+unsigned long GfxCreateConstSurface
 (
   int               aFormat,
   int               aWidth,
@@ -402,11 +330,11 @@ unsigned long NxpRtCreateConstSurface
 
 /*******************************************************************************
 * FUNCTION:
-*   NxpRtDestroySurface
+*   GfxDestroySurface
 *
 * DESCRIPTION:
-*   The function NxpRtDestroySurface() frees the resources of the given surface.
-*   This function is a counterpart to NxpRtCreateSurface().
+*   The function GfxDestroySurface() frees the resources of the given surface.
+*   This function is a counterpart to GfxCreateSurface().
 *
 * ARGUMENTS:
 *   aHandle - Handle to the surface to free.
@@ -415,7 +343,7 @@ unsigned long NxpRtCreateConstSurface
 *   None
 *
 *******************************************************************************/
-void NxpRtDestroySurface
+void GfxDestroySurface
 (
   unsigned long     aHandle
 );
@@ -423,18 +351,14 @@ void NxpRtDestroySurface
 
 /*******************************************************************************
 * FUNCTION:
-*   NxpRtLockSurface
+*   GfxLockSurface
 *
 * DESCRIPTION:
-*   The function LockSurface() provides a direct access to the pixel memory of
+*   The function GfxLockSurface() provides a direct access to the pixel memory of
 *   the given surface. The function returns a lock object containing pointers to
 *   memory, where the caller can read/write the surface pixel values. Additional
 *   pitch values also returned in the object allow the caller to calculate the
 *   desired pixel addresses.
-*
-*   When finished the access cycle, the function UnlockSurface() should be used
-*   in order to release the lock, update the affected surface, flush CPU caches,
-*   etc.
 *
 * ARGUMENTS:
 *   aHandle     - Handle to the surface to obtain the direct memory access.
@@ -476,7 +400,7 @@ void NxpRtDestroySurface
 *   case).
 *
 *******************************************************************************/
-unsigned long NxpRtLockSurface
+unsigned long GfxLockSurface
 (
   unsigned long     aHandle,
   int               aX,
@@ -495,13 +419,13 @@ unsigned long NxpRtLockSurface
 
 /*******************************************************************************
 * FUNCTION:
-*   NxpRtUnlockSurface
+*   GfxUnlockSurface
 *
 * DESCRIPTION:
-*   The function NxpRtUnlockSurface() has the job to unlock the given surface and
+*   The function GfxUnlockSurface() has the job to unlock the given surface and
 *   if necessary free any temporary used resources.
-*   This function is a counterpart to NxpRtLockSurface().
-**
+*   This function is a counterpart to GfxLockSurface().
+*
 * ARGUMENTS:
 *   aSurfaceHandle - Handle to the surface to release the direct memory access.
 *   aLockHandle    - value returned by the corresponding LockSurface() call.
@@ -526,7 +450,7 @@ unsigned long NxpRtLockSurface
 *   None
 *
 *******************************************************************************/
-void NxpRtUnlockSurface
+void GfxUnlockSurface
 (
   unsigned long     aSurfaceHandle,
   unsigned long     aLockHandle,
@@ -542,29 +466,29 @@ void NxpRtUnlockSurface
 
 
 /* Macros to redirect the Graphics Engine operations to the above functions. */
-#define EwGfxCreateNativeSurface      NxpRtCreateSurface
-#define EwGfxCreateConstNativeSurface NxpRtCreateConstSurface
-#define EwGfxDestroyNativeSurface     NxpRtDestroySurface
-#define EwGfxLockNativeSurface        NxpRtLockSurface
-#define EwGfxUnlockNativeSurface      NxpRtUnlockSurface
+#define EwGfxCreateNativeSurface      GfxCreateSurface
+#define EwGfxCreateConstNativeSurface GfxCreateConstSurface
+#define EwGfxDestroyNativeSurface     GfxDestroySurface
+#define EwGfxLockNativeSurface        GfxLockSurface
+#define EwGfxUnlockNativeSurface      GfxUnlockSurface
 
-#define EwGfxCreateRGB565Surface      NxpRtCreateSurface
-#define EwGfxCreateConstRGB565Surface NxpRtCreateConstSurface
-#define EwGfxDestroyRGB565Surface     NxpRtDestroySurface
-#define EwGfxLockRGB565Surface        NxpRtLockSurface
-#define EwGfxUnlockRGB565Surface      NxpRtUnlockSurface
+#define EwGfxCreateRGB565Surface      GfxCreateSurface
+#define EwGfxCreateConstRGB565Surface GfxCreateConstSurface
+#define EwGfxDestroyRGB565Surface     GfxDestroySurface
+#define EwGfxLockRGB565Surface        GfxLockSurface
+#define EwGfxUnlockRGB565Surface      GfxUnlockSurface
 
-#define EwGfxLockScreenSurface        NxpRtLockSurface
-#define EwGfxUnlockScreenSurface      NxpRtUnlockSurface
+#define EwGfxLockScreenSurface        GfxLockSurface
+#define EwGfxUnlockScreenSurface      GfxUnlockSurface
 
 
 /*******************************************************************************
-* PROTOTYPE:
-*   NxpRtFillDriver
+* FUNCTION:
+*   GfxFillDriver
 *
 * DESCRIPTION:
-*   The following function performs the 'fill rectangular area' operation by
-*   using solid or gradient color values.
+*   The function GfxFillDriver is called from the Graphics Engine, when a
+*   rectangular area should be filled by using the graphics hardware.
 *
 * ARGUMENTS:
 *   aDstHandle  - Handle to the destination surface (native/screen color format).
@@ -578,13 +502,12 @@ void NxpRtUnlockSurface
 *   aColors     - Array with 4 RGBA8888 color values. The four color values do
 *     correspond to the four corners of the area: top-left, top-right, bottom-
 *     right and bottom-left.
-*     If all colors are equal, the solid variant of the operation is assumed.
 *
 * RETURN VALUE:
 *   None
 *
 *******************************************************************************/
-void NxpRtFillDriver
+void GfxFillDriver
 (
   unsigned long     aDstHandle,
   int               aDstX,
@@ -597,149 +520,149 @@ void NxpRtFillDriver
 
 
 /* Macros to redirect the Graphics Engine operations to the above functions. */
-#ifdef EW_USE_PXP_GRAPHICS_ACCELERATOR
-  #define EwGfxScreenFillSolid        NxpRtFillDriver
-#endif
-
-
-/*******************************************************************************
-* PROTOTYPE:
-*   NxpRtCopyDriver
-*
-* DESCRIPTION:
-*   The following function performs the 'copy rectangular area' operation from a
-*   source surface to a native surface.
-*
-* ARGUMENTS:
-*   aDstHandle  - Handle to the destination surface (native/screen color format).
-*      See the function CreateSurface().
-*   aSrcHandle  - Handle to the source surface (native/index8/alpha8/rgb565 color
-*      format). See the function CreateSurface().
-*   aDstX,
-*   aDstY       - Origin of the area to fill with the copied source surface
-*     pixel (relative to the top-left corner of the destination surface).
-*   aWidth,
-*   aHeight     - Size of the area to fill with the copied source surface pixel.
-*   aSrcX,
-*   aSrcY       - Origin of the area to copy from the source surface.
-*   aBlend      - != 0 if the operation should be performed with alpha blending.
-*   aColors     - Array with 4 color values. These four values do correspond
-*     to the four corners of the area: top-left, top-right, bottom-right and
-*     bottom-left.
-*     In case of an alpha8 source surface if all colors are equal, the solid
-*     variant of the operation is assumed.
-*     In case of native and index8 source surfaces if all colors are equal but
-*     their alpha value < 255, the solid variant of the operation is assumed.
-*     In case of native and index8 source surfaces if all colors are equal and
-*     their alpha value == 255, the variant withouto any modulation is assumed.
-*
-* RETURN VALUE:
-*   None
-*
-*******************************************************************************/
-void NxpRtCopyDriver
-(
-  unsigned long     aDstHandle,
-  unsigned long     aSrcHandle,
-  int               aDstX,
-  int               aDstY,
-  int               aSrcX,
-  int               aSrcY,
-  int               aWidth,
-  int               aHeight,
-  int               aBlend,
-  unsigned long*    aColors
-);
-
-
-/* Macros to redirect the Graphics Engine operations to the above function. */
-#ifdef EW_USE_PXP_GRAPHICS_ACCELERATOR
-  #define EwGfxCopyNative                 NxpRtCopyDriver
-  #define EwGfxCopyRGB565                 NxpRtCopyDriver
-  #define EwGfxScreenCopyNative           NxpRtCopyDriver
-  #define EwGfxScreenCopyNativeSolid      NxpRtCopyDriver
-  #define EwGfxScreenCopyRGB565           NxpRtCopyDriver
-  #define EwGfxScreenCopyRGB565Solid      NxpRtCopyDriver
-#endif
-
-
-/*******************************************************************************
-* PROTOTYPE:
-*   NxpRtBlendDriver
-*
-* DESCRIPTION:
-*   The following function performs the 'blend rectangular area' operation from a
-*   native or alpha8 surface to a native surface.
-*
-* ARGUMENTS:
-*   aDstHandle  - Handle to the destination surface (native/screen color format).
-*      See the function CreateSurface().
-*   aSrcHandle  - Handle to the source surface (native/index8/alpha8/rgb565 color
-*      format). See the function CreateSurface().
-*   aDstX,
-*   aDstY       - Origin of the area to fill with the copied source surface
-*     pixel (relative to the top-left corner of the destination surface).
-*   aWidth,
-*   aHeight     - Size of the area to fill with the copied source surface pixel.
-*   aSrcX,
-*   aSrcY       - Origin of the area to copy from the source surface.
-*   aBlend      - != 0 if the operation should be performed with alpha blending.
-*   aColors     - Array with 4 color values. These four values do correspond
-*     to the four corners of the area: top-left, top-right, bottom-right and
-*     bottom-left.
-*     In case of an alpha8 source surface if all colors are equal, the solid
-*     variant of the operation is assumed.
-*     In case of native and index8 source surfaces if all colors are equal but
-*     their alpha value < 255, the solid variant of the operation is assumed.
-*     In case of native and index8 source surfaces if all colors are equal and
-*     their alpha value == 255, the variant withouto any modulation is assumed.
-*
-* RETURN VALUE:
-*   None
-*
-*******************************************************************************/
-void NxpRtBlendDriver
-(
-  unsigned long     aDstHandle,
-  unsigned long     aSrcHandle,
-  int               aDstX,
-  int               aDstY,
-  int               aSrcX,
-  int               aSrcY,
-  int               aWidth,
-  int               aHeight,
-  int               aBlend,
-  unsigned long*    aColors
-);
-
-
-/* Macros to redirect the Graphics Engine operations to the above function. */
-#ifdef EW_USE_PXP_GRAPHICS_ACCELERATOR
-  #define EwGfxScreenCopyNativeBlend      NxpRtBlendDriver
-  #define EwGfxScreenCopyNativeSolidBlend NxpRtBlendDriver
-  #define EwGfxScreenCopyRGB565SolidBlend NxpRtBlendDriver
+#ifdef EW_USE_GRAPHICS_ACCELERATOR
+  #define EwGfxScreenFillSolid        GfxFillDriver
 #endif
 
 
 /*******************************************************************************
 * FUNCTION:
-*   NxpRtUsePXP
+*   GfxCopyDriver
 *
 * DESCRIPTION:
-*   The function NxpRtUsePXP can be used to switch on/off the usage of the
-*   PXP dynamically during runtime. If the PXP is deactivated, the software
-*   pixel driver of the Graphics Engine is used to execute the different
-*   drawing operations.
+*   The function GfxCopyDriver is called from the Graphics Engine, when a
+*   rectangular bitmap area should be copied by using the graphics hardware.
 *
 * ARGUMENTS:
-*   aActive     - Flag to control the usage of the PXP.
+*   aDstHandle  - Handle to the destination surface (native/screen color format).
+*      See the function CreateSurface().
+*   aSrcHandle  - Handle to the source surface (native/index8/alpha8/rgb565 color
+*      format). See the function CreateSurface().
+*   aDstX,
+*   aDstY       - Origin of the area to fill with the copied source surface
+*     pixel (relative to the top-left corner of the destination surface).
+*   aWidth,
+*   aHeight     - Size of the area to fill with the copied source surface pixel.
+*   aSrcX,
+*   aSrcY       - Origin of the area to copy from the source surface.
+*   aBlend      - != 0 if the operation should be performed with alpha blending.
+*   aColors     - Array with 4 color values. These four values do correspond
+*     to the four corners of the area: top-left, top-right, bottom-right and
+*     bottom-left.
+*     In case of an alpha8 source surface if all colors are equal, the solid
+*     variant of the operation is assumed.
+*     In case of native and index8 source surfaces if all colors are equal but
+*     their alpha value < 255, the solid variant of the operation is assumed.
+*     In case of native and index8 source surfaces if all colors are equal and
+*     their alpha value == 255, the variant without any modulation is assumed.
 *
 * RETURN VALUE:
 *   None
 *
 *******************************************************************************/
-#ifdef EW_USE_PXP_GRAPHICS_ACCELERATOR
-  void NxpRtUsePXP
+void GfxCopyDriver
+(
+  unsigned long     aDstHandle,
+  unsigned long     aSrcHandle,
+  int               aDstX,
+  int               aDstY,
+  int               aSrcX,
+  int               aSrcY,
+  int               aWidth,
+  int               aHeight,
+  int               aBlend,
+  unsigned long*    aColors
+);
+
+
+/* Macros to redirect the Graphics Engine operations to the above function. */
+#ifdef EW_USE_GRAPHICS_ACCELERATOR
+  #define EwGfxCopyNative                 GfxCopyDriver
+  #define EwGfxCopyRGB565                 GfxCopyDriver
+  #define EwGfxScreenCopyNative           GfxCopyDriver
+  #define EwGfxScreenCopyNativeSolid      GfxCopyDriver
+  #define EwGfxScreenCopyRGB565           GfxCopyDriver
+  #define EwGfxScreenCopyRGB565Solid      GfxCopyDriver
+#endif
+
+
+/*******************************************************************************
+* FUNCTION:
+*   GfxBlendDriver
+*
+* DESCRIPTION:
+*   The function GfxBlendDriver is called from the Graphics Engine, when a
+*   rectangular bitmap area should be blended by using the graphics hardware.
+*
+* ARGUMENTS:
+*   aDstHandle  - Handle to the destination surface (native/screen color format).
+*      See the function CreateSurface().
+*   aSrcHandle  - Handle to the source surface (native/index8/alpha8/rgb565 color
+*      format). See the function CreateSurface().
+*   aDstX,
+*   aDstY       - Origin of the area to fill with the copied source surface
+*     pixel (relative to the top-left corner of the destination surface).
+*   aWidth,
+*   aHeight     - Size of the area to fill with the copied source surface pixel.
+*   aSrcX,
+*   aSrcY       - Origin of the area to copy from the source surface.
+*   aBlend      - != 0 if the operation should be performed with alpha blending.
+*   aColors     - Array with 4 color values. These four values do correspond
+*     to the four corners of the area: top-left, top-right, bottom-right and
+*     bottom-left.
+*     In case of an alpha8 source surface if all colors are equal, the solid
+*     variant of the operation is assumed.
+*     In case of native and index8 source surfaces if all colors are equal but
+*     their alpha value < 255, the solid variant of the operation is assumed.
+*     In case of native and index8 source surfaces if all colors are equal and
+*     their alpha value == 255, the variant withouto any modulation is assumed.
+*
+* RETURN VALUE:
+*   None
+*
+*******************************************************************************/
+void GfxBlendDriver
+(
+  unsigned long     aDstHandle,
+  unsigned long     aSrcHandle,
+  int               aDstX,
+  int               aDstY,
+  int               aSrcX,
+  int               aSrcY,
+  int               aWidth,
+  int               aHeight,
+  int               aBlend,
+  unsigned long*    aColors
+);
+
+
+/* Macros to redirect the Graphics Engine operations to the above function. */
+#ifdef EW_USE_GRAPHICS_ACCELERATOR
+  #define EwGfxScreenCopyNativeBlend      GfxBlendDriver
+  #define EwGfxScreenCopyNativeSolidBlend GfxBlendDriver
+  #define EwGfxScreenCopyRGB565SolidBlend GfxBlendDriver
+#endif
+
+
+/*******************************************************************************
+* FUNCTION:
+*   GfxUseGraphicsAccelerator
+*
+* DESCRIPTION:
+*   The function GfxUseGraphicsAccelerator can be used to switch on/off the usage
+*   of the graphics accelerator dynamically during runtime. If it is deactivated,
+*   the software pixel driver of the Graphics Engine are used to execute the
+*   different drawing operations.
+*
+* ARGUMENTS:
+*   aActive     - Flag to control the usage of the graphics accelerator.
+*
+* RETURN VALUE:
+*   None
+*
+*******************************************************************************/
+#ifdef EW_USE_GRAPHICS_ACCELERATOR
+  void GfxUseGraphicsAccelerator
   (
     int               aActive
   );
@@ -748,21 +671,21 @@ void NxpRtBlendDriver
 
 /*******************************************************************************
 * FUNCTION:
-*   NxpRtIsPXPUsed
+*   GfxIsGraphicsAcceleratorUsed
 *
 * DESCRIPTION:
-*   The function NxpRtIsPXPUsed returns a non zero value, if the PXP is
-*   activated.
+*   The function GfxIsGraphicsAcceleratorUsed returns a non zero value, if the
+*   graphics accelerator hardware is activated.
 *
 * ARGUMENTS:
 *   None
 *
 * RETURN VALUE:
-*   A non zero value, if the PXP is activated.
+*   A non zero value, if the graphics accelerator hardware is activated.
 *
 *******************************************************************************/
-#ifdef EW_USE_PXP_GRAPHICS_ACCELERATOR
-  int NxpRtIsPXPUsed
+#ifdef EW_USE_GRAPHICS_ACCELERATOR
+  int GfxIsGraphicsAcceleratorUsed
   (
     void
   );

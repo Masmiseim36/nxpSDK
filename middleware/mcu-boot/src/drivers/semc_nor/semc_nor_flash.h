@@ -8,15 +8,15 @@
 #ifndef __SEMC_NOR_FLASH_H__
 #define __SEMC_NOR_FLASH_H__
 
-#include "fsl_common.h"
 #include "bootloader_common.h"
-#include "semc/fsl_semc.h"
+#include "fsl_common.h"
+#include "bl_semc.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
 ////////////////////////////////////////////////////////////////////////////////
 
-#define NOR_MEM_BLANK_VALUE  (0xFFU)
+#define NOR_MEM_BLANK_VALUE (0xFFU)
 
 enum
 {
@@ -34,19 +34,19 @@ enum
 //! @brief Status for SEMC Parallel NOR driver
 enum _semc_nor_status
 {
-    kStatus_SemcNOR_DeviceTimeout     = MAKE_STATUS(kStatusGroup_SemcNOR, 0),
-    kStatus_SemcNOR_InvalidMemoryAddress    = MAKE_STATUS(kStatusGroup_SemcNOR, 1),
-    kStatus_SemcNOR_unmatchedCommandSet    = MAKE_STATUS(kStatusGroup_SemcNOR, 2),
-    kStatus_SemcNOR_AddressAlignmentError    = MAKE_STATUS(kStatusGroup_SemcNOR, 3),
-    kStatus_SemcNOR_InvalidCfiSignature    = MAKE_STATUS(kStatusGroup_SemcNOR, 4),
-    kStatus_SemcNOR_CommandErrorNoOpToSuspend    = MAKE_STATUS(kStatusGroup_SemcNOR, 5),
-    kStatus_SemcNOR_CommandErrorNoInfoAvailable    = MAKE_STATUS(kStatusGroup_SemcNOR, 6),
-    kStatus_SemcNOR_BlockEraseCommandFailure    = MAKE_STATUS(kStatusGroup_SemcNOR, 7),
-    kStatus_SemcNOR_BufferProgramCommandFailure    = MAKE_STATUS(kStatusGroup_SemcNOR, 8),
-    kStatus_SemcNOR_ProgramVerifyFailure    = MAKE_STATUS(kStatusGroup_SemcNOR, 9),
-    kStatus_SemcNOR_EraseVerifyFailure    = MAKE_STATUS(kStatusGroup_SemcNOR, 10),
+    kStatus_SemcNOR_DeviceTimeout = MAKE_STATUS(kStatusGroup_SemcNOR, 0),
+    kStatus_SemcNOR_InvalidMemoryAddress = MAKE_STATUS(kStatusGroup_SemcNOR, 1),
+    kStatus_SemcNOR_unmatchedCommandSet = MAKE_STATUS(kStatusGroup_SemcNOR, 2),
+    kStatus_SemcNOR_AddressAlignmentError = MAKE_STATUS(kStatusGroup_SemcNOR, 3),
+    kStatus_SemcNOR_InvalidCfiSignature = MAKE_STATUS(kStatusGroup_SemcNOR, 4),
+    kStatus_SemcNOR_CommandErrorNoOpToSuspend = MAKE_STATUS(kStatusGroup_SemcNOR, 5),
+    kStatus_SemcNOR_CommandErrorNoInfoAvailable = MAKE_STATUS(kStatusGroup_SemcNOR, 6),
+    kStatus_SemcNOR_BlockEraseCommandFailure = MAKE_STATUS(kStatusGroup_SemcNOR, 7),
+    kStatus_SemcNOR_BufferProgramCommandFailure = MAKE_STATUS(kStatusGroup_SemcNOR, 8),
+    kStatus_SemcNOR_ProgramVerifyFailure = MAKE_STATUS(kStatusGroup_SemcNOR, 9),
+    kStatus_SemcNOR_EraseVerifyFailure = MAKE_STATUS(kStatusGroup_SemcNOR, 10),
 
-    kStatus_SemcNOR_InvalidCfgTag    = MAKE_STATUS(kStatusGroup_SemcNOR, 0x10),
+    kStatus_SemcNOR_InvalidCfgTag = MAKE_STATUS(kStatusGroup_SemcNOR, 0x10),
 };
 
 //!@brief SEMC Parallel NOR Flash vendor type
@@ -166,47 +166,46 @@ typedef struct __nor_ac_timing_parameter
 //! @brief SEMC Parallel NOR Config block structure
 typedef struct __semc_nor_config
 {
-    semc_mem_config_t memConfig;      //!< [0x000-0x04f]
-    uint8_t vendorType;               //!< [0x050-0x050]
-    uint8_t acTimingMode;             //!< [0x051-0x051]
-    uint8_t deviceCommandSet;         //!< [0x052-0x052]
-    uint8_t reserved0[77];            //!< [0x053-0x09f]
-    uint32_t pageSizeInBytes;         //!< [0x0a0-0x0a3]
-    uint32_t blockSizeInBytes;        //!< [0x0a4-0x0a7]
-    uint32_t blockCount;              //!< [0x0a8-0x0ab]
-    uint32_t reserved1[13];           //!< [0x0ac-0x0df]
-    uint8_t enableReadbackVerify;     //!< [0x0e0-0x0e0]
-    uint8_t reserved2[31];            //!< [0x0e1-0x0ff]
+    semc_mem_config_t memConfig;  //!< [0x000-0x04f]
+    uint8_t vendorType;           //!< [0x050-0x050]
+    uint8_t acTimingMode;         //!< [0x051-0x051]
+    uint8_t deviceCommandSet;     //!< [0x052-0x052]
+    uint8_t reserved0[77];        //!< [0x053-0x09f]
+    uint32_t pageSizeInBytes;     //!< [0x0a0-0x0a3]
+    uint32_t blockSizeInBytes;    //!< [0x0a4-0x0a7]
+    uint32_t blockCount;          //!< [0x0a8-0x0ab]
+    uint32_t reserved1[13];       //!< [0x0ac-0x0df]
+    uint8_t enableReadbackVerify; //!< [0x0e0-0x0e0]
+    uint8_t reserved2[31];        //!< [0x0e1-0x0ff]
 } semc_nor_config_t;
 
 //!@brief Parallel NOR AC cycle option
 typedef enum _nor_ac_cycle_set_option
 {
-    kNorAcCycleSetOption_Min          = 0x00U,
-    kNorAcCycleSetOption_Max          = 0x01U,
+    kNorAcCycleSetOption_Min = 0x00U,
+    kNorAcCycleSetOption_Max = 0x01U,
 } nor_ac_cycle_set_option_t;
 
 //! Parallel NOR Configuration Option
 typedef struct _parallel_nor_config_option
 {
-    union
-    {
+    union {
         struct
         {
-            uint32_t commandSet : 2;        //!< Cmd Set, 0 - EPSCD, 1 - SFMCD, others - reserved
-            uint32_t acTimingMode : 2;      //!< AC timing mode
+            uint32_t commandSet : 2;   //!< Cmd Set, 0 - EPSCD, 1 - SFMCD, others - reserved
+            uint32_t acTimingMode : 2; //!< AC timing mode
             uint32_t reserved0 : 4;
 
-            uint32_t dataIoPortDiv8 : 2;    //!< IO port size, Minimum 1
-            uint32_t advPortPolarity : 1;   //!< ADV# polarity, 0 - low, 1 - high
+            uint32_t dataIoPortDiv8 : 2;  //!< IO port size, Minimum 1
+            uint32_t advPortPolarity : 1; //!< ADV# polarity, 0 - low, 1 - high
             uint32_t reserved1 : 1;
-            uint32_t pcsSelection : 3;      //!< PCS selection
+            uint32_t pcsSelection : 3; //!< PCS selection
             uint32_t reserved2 : 1;
 
             uint32_t reserved3 : 8;
 
             uint32_t reserved4 : 4;
-            uint32_t tag : 4;               //!< Tag
+            uint32_t tag : 4; //!< Tag
         } B;
         uint32_t U;
     } option;
@@ -218,32 +217,35 @@ typedef struct _parallel_nor_config_option
 ////////////////////////////////////////////////////////////////////////////////
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
-//!@brief Initialize Parallel NOR devices via SEMC
-status_t semc_nor_flash_init(semc_nor_config_t *config);
+    //!@brief Initialize Parallel NOR devices via SEMC
+    status_t semc_nor_flash_init(semc_nor_config_t *config);
 
-//!@brief Program page data to Parallel NOR via SEMC
-status_t semc_nor_flash_page_program(semc_nor_config_t *config,
+    //!@brief Program page data to Parallel NOR via SEMC
+    status_t semc_nor_flash_page_program(semc_nor_config_t *config,
                                          uint32_t dstAddr,
                                          const uint8_t *src,
                                          uint32_t length);
 
-//!@brief Erase all the Parallel NOR devices connected on SEMC
-status_t semc_nor_flash_erase_all(semc_nor_config_t *config);
+    //!@brief Erase all the Parallel NOR devices connected on SEMC
+    status_t semc_nor_flash_erase_all(semc_nor_config_t *config);
 
-//!@brief Erase one sector specified by address
-status_t semc_nor_flash_erase_block(semc_nor_config_t *config, uint32_t blockIndex);
+    //!@brief Erase one sector specified by address
+    status_t semc_nor_flash_erase_block(semc_nor_config_t *config, uint32_t blockIndex);
 
-/* Verify erase on Parallel NOR Flash device*/
-status_t semc_nor_flash_verify_erase(uint32_t startAddr, uint32_t lengthInBytes);
+    /* Verify erase on Parallel NOR Flash device*/
+    status_t semc_nor_flash_verify_erase(uint32_t startAddr, uint32_t lengthInBytes);
 
-/* Verify program on Parallel NOR Flash device*/
-status_t semc_nor_flash_verify_program(uint32_t startAddr, const uint8_t * src, uint32_t lengthInBytes);
+    /* Verify program on Parallel NOR Flash device*/
+    status_t semc_nor_flash_verify_program(uint32_t startAddr, const uint8_t *src, uint32_t lengthInBytes);
 
-/* Calculate min/max AC timing cycle for SEMC according to AC time*/
-uint8_t semc_nor_get_specific_ac_cycles(semc_nor_config_t *config, nor_ac_cycle_set_option_t acSetOption, uint32_t requiredTime_ns);
+    /* Calculate min/max AC timing cycle for SEMC according to AC time*/
+    uint8_t semc_nor_get_specific_ac_cycles(semc_nor_config_t *config,
+                                            nor_ac_cycle_set_option_t acSetOption,
+                                            uint32_t requiredTime_ns);
 
 #ifdef __cplusplus
 }

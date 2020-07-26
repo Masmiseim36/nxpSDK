@@ -10,6 +10,7 @@
 #include "fsl_debug_console.h"
 #include "board.h"
 #include "fsl_sd.h"
+#include "sdmmc_config.h"
 #include "pin_mux.h"
 #include "clock_config.h"
 #include "fsl_common.h"
@@ -59,55 +60,15 @@ sd_card_t g_sd;
  * At the same time buffer address/size should be aligned to the cache line size if cache is supported.
  */
 /*! @brief Data written to the card */
-SDK_ALIGN(uint8_t g_dataWrite[SDK_SIZEALIGN(DATA_BUFFER_SIZE, SDMMC_DATA_BUFFER_ALIGN_CACHE)],
-          MAX(SDMMC_DATA_BUFFER_ALIGN_CACHE, SDMMCHOST_DMA_BUFFER_ADDR_ALIGN));
+SDK_ALIGN(uint8_t g_dataWrite[DATA_BUFFER_SIZE], BOARD_SDMMC_DATA_BUFFER_ALIGN_SIZE);
 /*! @brief Data read from the card */
-SDK_ALIGN(uint8_t g_dataRead[SDK_SIZEALIGN(DATA_BUFFER_SIZE, SDMMC_DATA_BUFFER_ALIGN_CACHE)],
-          MAX(SDMMC_DATA_BUFFER_ALIGN_CACHE, SDMMCHOST_DMA_BUFFER_ADDR_ALIGN));
+SDK_ALIGN(uint8_t g_dataRead[DATA_BUFFER_SIZE], BOARD_SDMMC_DATA_BUFFER_ALIGN_SIZE);
 
-/*! @brief SDMMC host detect card configuration */
-static const sdmmchost_detect_card_t s_sdCardDetect = {
-#ifndef BOARD_SD_DETECT_TYPE
-    .cdType = kSDMMCHOST_DetectCardByGpioCD,
-#else
-    .cdType = BOARD_SD_DETECT_TYPE,
-#endif
-    .cdTimeOut_ms = (~0U),
-    .cardInserted = SDCARD_DetectCallBack,
-    .cardRemoved  = SDCARD_DetectCallBack,
-};
-
-/*! @brief SDMMC card power control configuration */
-#if defined DEMO_SDCARD_POWER_CTRL_FUNCTION_EXIST
-static const sdmmchost_pwr_card_t s_sdCardPwrCtrl = {
-    .powerOn          = BOARD_PowerOnSDCARD,
-    .powerOnDelay_ms  = 500U,
-    .powerOff         = BOARD_PowerOffSDCARD,
-    .powerOffDelay_ms = 0U,
-};
-#endif
-/*! @brief SDMMC card power control configuration */
-#if defined DEMO_SDCARD_SWITCH_VOLTAGE_FUNCTION_EXIST
-static const sdmmchost_card_switch_voltage_func_t s_sdCardVoltageSwitch = {
-    .cardSignalLine1V8 = BOARD_USDHC_Switch_VoltageTo1V8,
-    .cardSignalLine3V3 = BOARD_USDHC_Switch_VoltageTo3V3,
-};
-#endif
 /*! @brief SD card detect flag  */
 static volatile bool s_cardInserted = false;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-static void BOARD_USDHCClockConfiguration(void)
-{
-    CLOCK_InitSysPll(&sysPllConfig_BOARD_BootClockRUN);
-    /*configure system pll PFD0 fractional divider to 24, output clock is 528MHZ * 18 / 24 = 396 MHZ*/
-    CLOCK_InitSysPfd(kCLOCK_Pfd0, 24U);
-    /* Configure USDHC clock source and divider */
-    CLOCK_SetDiv(kCLOCK_Usdhc1Div, 0U);
-    CLOCK_SetMux(kCLOCK_Usdhc1Mux, 1U);
-}
-
 
 /*******************************************************************************
  * Code
@@ -207,19 +168,9 @@ int main(void)
     BOARD_ConfigMPU();
     BOARD_InitPins();
     BOARD_BootClockRUN();
-    BOARD_USDHCClockConfiguration();
     BOARD_InitDebugConsole();
+    BOARD_SD_Config(card, SDCARD_DetectCallBack, BOARD_SDMMC_SD_HOST_IRQ_PRIORITY, NULL);
 
-    card->host.base           = SD_HOST_BASEADDR;
-    card->host.sourceClock_Hz = SD_HOST_CLK_FREQ;
-    /* card detect type */
-    card->usrParam.cd = &s_sdCardDetect;
-#if defined DEMO_SDCARD_POWER_CTRL_FUNCTION_EXIST
-    card->usrParam.pwr = &s_sdCardPwrCtrl;
-#endif
-#if defined DEMO_SDCARD_SWITCH_VOLTAGE_FUNCTION_EXIST
-    card->usrParam.cardVoltage = &s_sdCardVoltageSwitch;
-#endif
     PRINTF("\r\nSDCARD interrupt example.\r\n");
 
     /* SD host init function */
@@ -233,17 +184,15 @@ int main(void)
     {
         PRINTF("\r\nPlease insert a card into board.\r\n");
         /* power off card */
-        SD_PowerOffCard(card->host.base, card->usrParam.pwr);
+        SD_SetCardPower(card, false);
         /* wait card insert */
         while (!s_cardInserted)
         {
         }
         /* power on the card */
-        SD_PowerOnCard(card->host.base, card->usrParam.pwr);
+        SD_SetCardPower(card, true);
 
         PRINTF("\r\nCard inserted.\r\n");
-        /* reset host once card re-plug in */
-        SD_HostReset(&(card->host));
         /* Init card. */
         if (SD_CardInit(card))
         {
@@ -265,6 +214,7 @@ int main(void)
                 /* access card fail, due to card remove. */
                 if (SD_IsCardPresent(card) == false)
                 {
+                    SD_HostDoReset(card);
                     PRINTF("\r\nCard removed\r\n");
                     PRINTF(
                         "\r\nInput 'q' to quit read/write/erase process.\
@@ -309,29 +259,29 @@ static void CardInformationLog(sd_card_t *card)
 
     PRINTF("\r\nCard size %d * %d bytes\r\n", card->blockCount, card->blockSize);
     PRINTF("\r\nWorking condition:\r\n");
-    if (card->operationVoltage == kCARD_OperationVoltage330V)
+    if (card->operationVoltage == kSDMMC_OperationVoltage330V)
     {
         PRINTF("\r\n  Voltage : 3.3V\r\n");
     }
-    else if (card->operationVoltage == kCARD_OperationVoltage180V)
+    else if (card->operationVoltage == kSDMMC_OperationVoltage180V)
     {
         PRINTF("\r\n  Voltage : 1.8V\r\n");
     }
 
     if (card->currentTiming == kSD_TimingSDR12DefaultMode)
     {
-        if (card->operationVoltage == kCARD_OperationVoltage330V)
+        if (card->operationVoltage == kSDMMC_OperationVoltage330V)
         {
             PRINTF("\r\n  Timing mode: Default mode\r\n");
         }
-        else if (card->operationVoltage == kCARD_OperationVoltage180V)
+        else if (card->operationVoltage == kSDMMC_OperationVoltage180V)
         {
             PRINTF("\r\n  Timing mode: SDR12 mode\r\n");
         }
     }
     else if (card->currentTiming == kSD_TimingSDR25HighSpeedMode)
     {
-        if (card->operationVoltage == kCARD_OperationVoltage180V)
+        if (card->operationVoltage == kSDMMC_OperationVoltage180V)
         {
             PRINTF("\r\n  Timing mode: SDR25\r\n");
         }

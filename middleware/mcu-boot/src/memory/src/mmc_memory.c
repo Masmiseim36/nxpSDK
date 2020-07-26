@@ -1,22 +1,22 @@
 /*
  * Copyright (c) 2015 Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-#include "mmc_memory.h"
-#include "bootloader/bootloader.h"
+#include "bl_card.h"
+#include "bl_host.h"
+#include "bootloader.h"
 #include "bootloader_common.h"
-#include "fsl_card.h"
 #include "fsl_clock.h"
 #include "fsl_device_registers.h"
-#include "fsl_host.h"
-#include "memory/memory.h"
-#include "property/property.h"
+#include "memory.h"
+#include "mmc_memory.h"
+#include "property.h"
 
 #if BL_FEATURE_GEN_KEYBLOB
-#include "bootloader/bl_keyblob.h"
+#include "bl_keyblob.h"
 #endif // BL_FEATURE_GEN_KEYBLOB
 
 #if BL_FEATURE_MMC_MODULE
@@ -46,8 +46,7 @@ enum
 /*! @brief Configuration structure used for MMC memory. */
 typedef struct _mmc_config
 {
-    union
-    {
+    union {
         struct
         {
             uint32_t boot_config_enable : 1;
@@ -69,8 +68,7 @@ typedef struct _mmc_config
         uint32_t U;
     } word0;
 
-    union
-    {
+    union {
         struct
         {
             uint32_t rsv_perm_config_enable : 2;
@@ -279,12 +277,14 @@ status_t check_update_keyblob_info(void *config)
             // Check key blob address range
             if ((keyblob_size + keyblob_offset) > image_max_size)
             {
+                status = kStatusMemoryRangeInvalid;
                 break;
             }
 
             // Invalid key blob address, key blob must be page size aligned.
             if (keyblob_addr & (block_size - 1))
             {
+                status = kStatusMemoryAlignmentError;
                 break;
             }
 

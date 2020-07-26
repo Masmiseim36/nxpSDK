@@ -16,11 +16,11 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_USART USART0
-#define DEMO_USART_CLK_SRC kCLOCK_Flexcomm0
-#define DEMO_USART_CLK_FREQ CLOCK_GetFlexCommClkFreq(0U)
-#define USART_RX_DMA_CHANNEL 0
-#define USART_TX_DMA_CHANNEL 1
+#define DEMO_USART                USART0
+#define DEMO_USART_CLK_SRC        kCLOCK_Flexcomm0
+#define DEMO_USART_CLK_FREQ       CLOCK_GetFlexCommClkFreq(0U)
+#define USART_RX_DMA_CHANNEL      0
+#define USART_TX_DMA_CHANNEL      1
 #define EXAMPLE_UART_DMA_BASEADDR DMA0
 
 #define ECHO_BUFFER_LENGTH 8

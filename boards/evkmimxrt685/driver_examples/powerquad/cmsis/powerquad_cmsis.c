@@ -17,24 +17,24 @@
  * Definitions
  ******************************************************************************/
 #define DEMO_POWERQUAD POWERQUAD
-#define MATH_PI 3.1415926535898
+#define MATH_PI        3.1415926535898
 #define FLOAT_2_Q31(x) ((int32_t)((x)*2147483648.0f))
 #define FLOAT_2_Q15(x) (int16_t) __SSAT(((int32_t)((x)*32768.0f)), 16)
 
 #define RFFT_INPUT_LEN 128
 #define CFFT_INPUT_LEN 128
 #define IFFT_INPUT_LEN 128
-#define DCT_INPUT_LEN 128
+#define DCT_INPUT_LEN  128
 
 #define FIR_INPUT_LEN 16
-#define FIR_TAP_LEN 12
+#define FIR_TAP_LEN   12
 
-#define CONV_A_LEN 5
-#define CONV_B_LEN 5
+#define CONV_A_LEN      5
+#define CONV_B_LEN      5
 #define CONV_RESULT_LEN (CONV_A_LEN + CONV_B_LEN - 1)
 
-#define CORR_A_LEN 5
-#define CORR_B_LEN 5
+#define CORR_A_LEN      5
+#define CORR_B_LEN      5
 #define CORR_RESULT_LEN (CORR_A_LEN + CORR_B_LEN - 1)
 
 #define EXAMPLE_ASSERT_TRUE(x)            \

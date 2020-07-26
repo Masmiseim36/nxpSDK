@@ -42,10 +42,10 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define OVER_SAMPLE_RATE (256U)
-#define BOARD_DEMO_SAI SAI1
-#define DEMO_SAI_IRQ_TX SAI1_IRQn
-#define DEMO_SAI_IRQ_RX SAI1_IRQn
+#define OVER_SAMPLE_RATE   (256U)
+#define BOARD_DEMO_SAI     SAI1
+#define DEMO_SAI_IRQ_TX    SAI1_IRQn
+#define DEMO_SAI_IRQ_RX    SAI1_IRQn
 #define SAI_UserIRQHandler SAI1_IRQHandler
 
 /* Select Audio/Video PLL (786.48 MHz) as sai1 clock source */
@@ -69,19 +69,23 @@
 #define BOARD_DEMO_I2C_FREQ ((CLOCK_GetFreq(kCLOCK_Usb1PllClk) / 8) / (DEMO_LPI2C_CLOCK_SOURCE_DIVIDER + 1U))
 
 /* DMA */
-#define EXAMPLE_DMAMUX DMAMUX
-#define EXAMPLE_DMA DMA0
-#define EXAMPLE_TX_CHANNEL (0U)
-#define EXAMPLE_RX_CHANNEL (1U)
+#define EXAMPLE_DMAMUX        DMAMUX
+#define EXAMPLE_DMA           DMA0
+#define EXAMPLE_TX_CHANNEL    (0U)
+#define EXAMPLE_RX_CHANNEL    (1U)
 #define EXAMPLE_SAI_TX_SOURCE kDmaRequestMuxSai1Tx
 #define EXAMPLE_SAI_RX_SOURCE kDmaRequestMuxSai1Rx
 
-#define BOARD_SW_GPIO BOARD_USER_BUTTON_GPIO
-#define BOARD_SW_GPIO_PIN BOARD_USER_BUTTON_GPIO_PIN
-#define BOARD_SW_IRQ BOARD_USER_BUTTON_IRQ
+#define BOARD_SW_GPIO        BOARD_USER_BUTTON_GPIO
+#define BOARD_SW_GPIO_PIN    BOARD_USER_BUTTON_GPIO_PIN
+#define BOARD_SW_IRQ         BOARD_USER_BUTTON_IRQ
 #define BOARD_SW_IRQ_HANDLER BOARD_USER_BUTTON_IRQ_HANDLER
-#define BOARD_SW_NAME BOARD_USER_BUTTON_NAME
+#define BOARD_SW_NAME        BOARD_USER_BUTTON_NAME
 
+/* demo audio data channel */
+#define DEMO_AUDIO_DATA_CHANNEL (2U)
+/* demo audio bit width */
+#define DEMO_AUDIO_BIT_WIDTH kSAI_WordWidth16bits
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -106,13 +110,14 @@ extern usb_status_t USB_DeviceAudioSpeakerSetInterface(usb_device_handle handle,
                                                        uint8_t interface,
                                                        uint8_t alternateSetting);
 extern void USB_AudioSpeakerResetTask(void);
+extern usb_status_t USB_DeviceAudioProcessTerminalRequest(uint32_t audioCommand, uint32_t *length, uint8_t **buffer, uint8_t entityOrEndpoint);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
 extern usb_device_composite_struct_t g_composite;
 extern uint8_t audioPlayDataBuff[AUDIO_SPEAKER_DATA_WHOLE_BUFFER_LENGTH * FS_ISO_OUT_ENDP_PACKET_SIZE];
 extern uint8_t audioRecDataBuff[AUDIO_RECORDER_DATA_WHOLE_BUFFER_LENGTH * FS_ISO_IN_ENDP_PACKET_SIZE];
-extern sai_transfer_format_t audioFormat;
+
 volatile bool g_ButtonPress = false;
 uint32_t masterClockHz;
 codec_handle_t codecHandle;
@@ -130,11 +135,10 @@ wm8960_config_t wm8960Config = {
     .master_slave     = false,
 };
 codec_config_t boardCodecConfig = {.codecDevType = kCODEC_WM8960, .codecDevConfig = &wm8960Config};
-sai_transceiver_t config;
-sai_edma_handle_t txHandle = {0};
-edma_handle_t dmaTxHandle  = {0};
-sai_edma_handle_t rxHandle = {0};
-edma_handle_t dmaRxHandle  = {0};
+sai_edma_handle_t txHandle      = {0};
+edma_handle_t dmaTxHandle       = {0};
+sai_edma_handle_t rxHandle      = {0};
+edma_handle_t dmaRxHandle       = {0};
 USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
 static uint8_t audioPlayDMATempBuff[FS_ISO_OUT_ENDP_PACKET_SIZE];
 USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
@@ -183,11 +187,7 @@ void BOARD_SW_IRQ_HANDLER(void)
     GPIO_PortClearInterruptFlags(BOARD_SW_GPIO, 1U << BOARD_SW_GPIO_PIN);
     /* Change state of button. */
     g_ButtonPress = true;
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 void BOARD_USB_AUDIO_KEYBOARD_Init(void)
@@ -220,33 +220,6 @@ void BOARD_Codec_Init()
 void BOARD_SetCodecMuteUnmute(bool mute)
 {
     CODEC_SetMute(&codecHandle, kCODEC_PlayChannelHeadphoneLeft | kCODEC_PlayChannelHeadphoneRight, mute);
-}
-
-void SAI_USB_Audio_TxInit(I2S_Type *SAIBase)
-{
-    /* SAI init */
-    SAI_Init(BOARD_DEMO_SAI);
-}
-
-void SAI_USB_Audio_RxInit(I2S_Type *SAIBase)
-{
-}
-
-void WM8960_Config_Audio_Formats(uint32_t samplingRate)
-{
-#if (defined FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER && FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER) || \
-    (defined FSL_FEATURE_PCC_HAS_SAI_DIVIDER && FSL_FEATURE_PCC_HAS_SAI_DIVIDER)
-    masterClockHz = OVER_SAMPLE_RATE * format.sampleRate_Hz;
-#else
-    masterClockHz = DEMO_SAI_CLK_FREQ;
-#endif
-}
-
-void BOARD_USB_Audio_TxRxInit(uint32_t samplingRate)
-{
-    SAI_USB_Audio_TxInit(BOARD_DEMO_SAI);
-    SAI_USB_Audio_RxInit(BOARD_DEMO_SAI);
-    WM8960_Config_Audio_Formats(samplingRate);
 }
 
 static void txCallback(I2S_Type *base, sai_edma_handle_t *handle, status_t status, void *userData)
@@ -301,7 +274,28 @@ static void rxCallback(I2S_Type *base, sai_edma_handle_t *handle, status_t statu
     }
     SAI_TransferReceiveEDMA(base, handle, &xfer);
 }
+void BOARD_USB_Audio_TxRxInit(uint32_t samplingRate)
+{
+    sai_transceiver_t config;
+    SAI_Init(BOARD_DEMO_SAI);
+    SAI_TransferTxCreateHandleEDMA(BOARD_DEMO_SAI, &txHandle, txCallback, NULL, &dmaTxHandle);
+    SAI_TransferRxCreateHandleEDMA(BOARD_DEMO_SAI, &rxHandle, rxCallback, NULL, &dmaRxHandle);
+    /* I2S mode configurations */
+    SAI_GetClassicI2SConfig(&config, DEMO_AUDIO_BIT_WIDTH, kSAI_Stereo, kSAI_Channel0Mask);
+    SAI_TransferTxSetConfigEDMA(BOARD_DEMO_SAI, &txHandle, &config);
+    config.syncMode = kSAI_ModeSync;
+    SAI_TransferRxSetConfigEDMA(BOARD_DEMO_SAI, &rxHandle, &config);
 
+#if (defined FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER && FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER) || \
+    (defined FSL_FEATURE_PCC_HAS_SAI_DIVIDER && FSL_FEATURE_PCC_HAS_SAI_DIVIDER)
+    masterClockHz = OVER_SAMPLE_RATE * sampleRate_Hz;
+#else
+    masterClockHz = DEMO_SAI_CLK_FREQ;
+#endif
+    /* set bit clock divider */
+    SAI_TxSetBitClockRate(BOARD_DEMO_SAI, masterClockHz, samplingRate, DEMO_AUDIO_BIT_WIDTH, DEMO_AUDIO_DATA_CHANNEL);
+    SAI_RxSetBitClockRate(BOARD_DEMO_SAI, masterClockHz, samplingRate, DEMO_AUDIO_BIT_WIDTH, DEMO_AUDIO_DATA_CHANNEL);
+}
 void BOARD_DMA_EDMA_Config()
 {
     edma_config_t dmaConfig = {0};
@@ -315,24 +309,6 @@ void BOARD_DMA_EDMA_Config()
     DMAMUX_EnableChannel(EXAMPLE_DMAMUX, EXAMPLE_TX_CHANNEL);
     DMAMUX_SetSource(EXAMPLE_DMAMUX, EXAMPLE_RX_CHANNEL, (uint8_t)EXAMPLE_SAI_RX_SOURCE);
     DMAMUX_EnableChannel(EXAMPLE_DMAMUX, EXAMPLE_RX_CHANNEL);
-}
-
-void BOARD_Create_Audio_DMA_EDMA_Handle()
-{
-    SAI_TransferTxCreateHandleEDMA(BOARD_DEMO_SAI, &txHandle, txCallback, NULL, &dmaTxHandle);
-    SAI_TransferRxCreateHandleEDMA(BOARD_DEMO_SAI, &rxHandle, rxCallback, NULL, &dmaRxHandle);
-}
-
-void BOARD_DMA_EDMA_Set_AudioFormat(uint32_t samplingRate)
-{
-    /* I2S mode configurations */
-    SAI_GetClassicI2SConfig(&config, kSAI_WordWidth16bits, kSAI_Stereo, kSAI_Channel0Mask);
-    SAI_TransferTxSetConfigEDMA(BOARD_DEMO_SAI, &txHandle, &config);
-    config.syncMode = kSAI_ModeSync;
-    SAI_TransferRxSetConfigEDMA(BOARD_DEMO_SAI, &rxHandle, &config);
-    /* set bit clock divider */
-    SAI_TxSetBitClockRate(BOARD_DEMO_SAI, masterClockHz, samplingRate, kSAI_WordWidth16bits, 2);
-    SAI_RxSetBitClockRate(BOARD_DEMO_SAI, masterClockHz, samplingRate, kSAI_WordWidth16bits, 2);
 }
 
 void BOARD_DMA_EDMA_Enable_Audio_Interrupts()
@@ -364,12 +340,9 @@ void Init_Board_Audio(void)
 
     BOARD_USB_AUDIO_KEYBOARD_Init();
 
+    BOARD_DMA_EDMA_Config();
     BOARD_USB_Audio_TxRxInit(AUDIO_SAMPLING_RATE);
     BOARD_Codec_Init();
-
-    BOARD_DMA_EDMA_Config();
-    BOARD_Create_Audio_DMA_EDMA_Handle();
-    BOARD_DMA_EDMA_Set_AudioFormat(AUDIO_SAMPLING_RATE);
     BOARD_DMA_EDMA_Enable_Audio_Interrupts();
     BOARD_DMA_EDMA_Start();
 }
@@ -694,6 +667,127 @@ usb_status_t USB_DeviceProcessClassRequest(usb_device_handle handle,
                                            uint8_t **buffer)
 {
     usb_status_t error = kStatus_USB_InvalidRequest;
+#if (USB_DEVICE_CONFIG_AUDIO_CLASS_2_0)
+    /* Handle the audio class specific request. */
+    uint8_t entityId      = (uint8_t)(setup->wIndex >> 0x08);
+    uint32_t audioCommand = 0;
+    if ((((setup->bmRequestType & USB_REQUEST_TYPE_RECIPIENT_MASK) != USB_REQUEST_TYPE_RECIPIENT_INTERFACE)) ||
+        ((((setup->bmRequestType & USB_REQUEST_TYPE_RECIPIENT_MASK) == USB_REQUEST_TYPE_RECIPIENT_INTERFACE)) &&
+         (USB_AUDIO_CONTROL_INTERFACE_INDEX == (setup->wIndex & 0xFFU))))
+    {
+        switch (entityId)
+        {
+            case USB_AUDIO_RECORDER_CONTROL_OUTPUT_TERMINAL_ID:
+            case USB_AUDIO_SPEAKER_CONTROL_OUTPUT_TERMINAL_ID:
+                break;
+            case USB_AUDIO_RECORDER_CONTROL_INPUT_TERMINAL_ID:
+            case USB_AUDIO_SPEAKER_CONTROL_INPUT_TERMINAL_ID:
+                break;
+            case USB_AUDIO_CONTROL_CLOCK_SOURCE_ID:
+                if (((setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) == USB_REQUEST_TYPE_DIR_IN))
+                {
+                    switch (setup->wValue >> 8)
+                    {
+                        case USB_DEVICE_AUDIO_CS_SAM_FREQ_CONTROL:
+                            if (setup->bRequest == USB_DEVICE_AUDIO_REQUEST_CUR)
+                            {
+                                audioCommand = USB_DEVICE_AUDIO_GET_CUR_SAM_FREQ_CONTROL;
+                            }
+                            else if (setup->bRequest == USB_DEVICE_AUDIO_REQUEST_RANGE)
+                            {
+                                audioCommand = USB_DEVICE_AUDIO_GET_RANGE_SAM_FREQ_CONTROL;
+                            }
+                            else
+                            {
+                            }
+                            break;
+                        case USB_DEVICE_AUDIO_CS_CLOCK_VALID_CONTROL:
+                            audioCommand = USB_DEVICE_AUDIO_GET_CUR_CLOCK_VALID_CONTROL;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                else if (((setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) == USB_REQUEST_TYPE_DIR_OUT))
+                {
+                    switch (setup->wValue >> 8)
+                    {
+                        case USB_DEVICE_AUDIO_CS_SAM_FREQ_CONTROL:
+                            audioCommand = USB_DEVICE_AUDIO_SET_CUR_SAM_FREQ_CONTROL;
+                            break;
+                        case USB_DEVICE_AUDIO_CS_CLOCK_VALID_CONTROL:
+                            audioCommand = USB_DEVICE_AUDIO_SET_CUR_CLOCK_VALID_CONTROL;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                else
+                {
+                }
+                break;
+            case USB_AUDIO_RECORDER_CONTROL_FEATURE_UNIT_ID:
+            case USB_AUDIO_SPEAKER_CONTROL_FEATURE_UNIT_ID:
+                if (((setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) == USB_REQUEST_TYPE_DIR_IN))
+                {
+                    switch (setup->wValue >> 8)
+                    {
+                        case USB_DEVICE_AUDIO_FU_MUTE_CONTROL:
+                            audioCommand = USB_DEVICE_AUDIO_GET_CUR_MUTE_CONTROL_AUDIO20;
+                            break;
+                        case USB_DEVICE_AUDIO_FU_VOLUME_CONTROL:
+                            if (setup->bRequest == USB_DEVICE_AUDIO_REQUEST_CUR)
+                            {
+                                audioCommand = USB_DEVICE_AUDIO_GET_CUR_VOLUME_CONTROL_AUDIO20;
+                            }
+                            else if (setup->bRequest == USB_DEVICE_AUDIO_REQUEST_RANGE)
+                            {
+                                audioCommand = USB_DEVICE_AUDIO_GET_RANGE_VOLUME_CONTROL_AUDIO20;
+                            }
+                            else
+                            {
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                else if (((setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) == USB_REQUEST_TYPE_DIR_OUT))
+                {
+                    switch (setup->wValue >> 8)
+                    {
+                        case USB_DEVICE_AUDIO_FU_MUTE_CONTROL:
+                            audioCommand = USB_DEVICE_AUDIO_SET_CUR_MUTE_CONTROL_AUDIO20;
+                            break;
+                        case USB_DEVICE_AUDIO_FU_VOLUME_CONTROL:
+                            if (setup->bRequest == USB_DEVICE_AUDIO_REQUEST_CUR)
+                            {
+                                audioCommand = USB_DEVICE_AUDIO_SET_CUR_VOLUME_CONTROL_AUDIO20;
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                break;
+            default:
+            break;
+        }
+        error = USB_DeviceAudioProcessTerminalRequest(audioCommand, length, buffer, entityId);
+    }
+    else
+    {
+        if (USB_HID_KEYBOARD_INTERFACE_INDEX == (setup->wIndex & 0xFFU))
+        {
+            return USB_DeviceHidKeyboardClassRequest(handle, setup, buffer, length);
+        }
+        else
+        {
+            return error;
+        }
+    }
+
+#else
 
     if ((setup->bmRequestType & USB_REQUEST_TYPE_RECIPIENT_MASK) != USB_REQUEST_TYPE_RECIPIENT_INTERFACE)
     {
@@ -713,7 +807,7 @@ usb_status_t USB_DeviceProcessClassRequest(usb_device_handle handle,
         {
         }
     }
-
+#endif
     return error;
 }
 
@@ -753,6 +847,8 @@ void APPInit(void)
 
     USB_DeviceIsrEnable();
 
+    /*Add one delay here to make the DP pull down long enough to allow host to detect the previous disconnection.*/
+    SDK_DelayAtLeastUs(5000, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
     USB_DeviceRun(g_composite.deviceHandle);
 }
 

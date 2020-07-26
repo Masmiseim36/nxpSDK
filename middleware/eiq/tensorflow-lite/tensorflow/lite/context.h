@@ -13,12 +13,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================*/
 // Compatibility shim for moved header location.
-
-/* File modified by NXP. Changes are described in file
-   /middleware/eiq/tensorflow-lite/readme.txt in section "Release notes" */
-
 #ifndef TENSORFLOW_LITE_CONTEXT_H_
 #define TENSORFLOW_LITE_CONTEXT_H_
 
 #include "tensorflow/lite/c/c_api_internal.h"
+
 #endif  // TENSORFLOW_LITE_CONTEXT_H_

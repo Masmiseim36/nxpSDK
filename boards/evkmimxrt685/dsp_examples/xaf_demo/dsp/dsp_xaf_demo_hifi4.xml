@@ -7,10 +7,10 @@
     <definition extID="component.serial_manager_uart.MIMXRT685S"/>
     <definition extID="component.usart_adapter.MIMXRT685S"/>
     <definition extID="device.MIMXRT685S_CMSIS.MIMXRT685S"/>
-    <definition extID="device.MIMXRT685S_DSP.MIMXRT685S"/>
     <definition extID="middleware.dsp_audio_streamer.hifi4_dec.MIMXRT685S"/>
     <definition extID="middleware.dsp_audio_streamer.libxa_af_hostless.MIMXRT685S"/>
     <definition extID="middleware.dsp_audio_streamer.testxa_af_hostless.MIMXRT685S"/>
+    <definition extID="middleware.eap.MIMXRT685S"/>
     <definition extID="middleware.multicore.rpmsg_lite.MIMXRT685S"/>
     <definition extID="middleware.multicore.rpmsg_lite.bm.MIMXRT685S"/>
     <definition extID="middleware.multicore.rpmsg_lite.evkmimxrt685_hifi4_bm.MIMXRT685S"/>
@@ -46,7 +46,7 @@
     <definition extID="mcuxpresso"/>
     <definition extID="armgcc"/>
   </externalDefinitions>
-  <example id="evkmimxrt685_dsp_xaf_demo_hifi4" name="dsp_xaf_demo_hifi4" category="dsp_examples" dependency="platform.drivers.flexcomm_i2c.MIMXRT685S platform.drivers.flexcomm_i2c_dma.MIMXRT685S platform.drivers.flexcomm_i2s.MIMXRT685S platform.drivers.flexcomm_i2s_dma.MIMXRT685S platform.drivers.inputmux.MIMXRT685S platform.drivers.mu.MIMXRT685S platform.drivers.sema42.MIMXRT685S platform.drivers.flexcomm_spi.MIMXRT685S platform.drivers.flexcomm_spi_dma.MIMXRT685S component.usart_adapter.MIMXRT685S component.serial_manager_uart.MIMXRT685S platform.drivers.flexcomm_usart.MIMXRT685S platform.drivers.ctimer.MIMXRT685S platform.drivers.lpc_dma.MIMXRT685S middleware.multicore.rpmsg_lite.evkmimxrt685_hifi4_bm.MIMXRT685S middleware.dsp_audio_streamer.hifi4_dec.MIMXRT685S platform.drivers.pint.MIMXRT685S platform.drivers.dmic.MIMXRT685S platform.drivers.dmic_dma.MIMXRT685S platform.drivers.lpc_gpio.MIMXRT685S component.serial_manager.MIMXRT685S platform.drivers.common.MIMXRT685S component.lists.MIMXRT685S platform.drivers.flexcomm_usart_dma.MIMXRT685S utility.debug_console.MIMXRT685S platform.drivers.lpc_iopctl.MIMXRT685S middleware.multicore.rpmsg_lite.bm.MIMXRT685S middleware.multicore.rpmsg_lite.MIMXRT685S middleware.dsp_audio_streamer.libxa_af_hostless.MIMXRT685S middleware.dsp_audio_streamer.testxa_af_hostless.MIMXRT685S utility.shell.MIMXRT685S platform.drivers.clock.MIMXRT685S platform.drivers.reset.MIMXRT685S device.MIMXRT685S_DSP.MIMXRT685S platform.drivers.flexcomm.MIMXRT685S platform.Include_dsp.MIMXRT685S platform.utilities.misc_utilities.MIMXRT685S device.MIMXRT685S_CMSIS.MIMXRT685S" device_core="hifi4_MIMXRT685S">
+  <example id="evkmimxrt685_dsp_xaf_demo_hifi4" name="dsp_xaf_demo_hifi4" category="dsp_examples" dependency="platform.drivers.flexcomm_i2c.MIMXRT685S platform.drivers.flexcomm_i2c_dma.MIMXRT685S platform.drivers.flexcomm_i2s.MIMXRT685S platform.drivers.flexcomm_i2s_dma.MIMXRT685S platform.drivers.inputmux.MIMXRT685S platform.drivers.mu.MIMXRT685S platform.drivers.sema42.MIMXRT685S platform.drivers.flexcomm_spi.MIMXRT685S platform.drivers.flexcomm_spi_dma.MIMXRT685S component.usart_adapter.MIMXRT685S component.serial_manager_uart.MIMXRT685S platform.drivers.flexcomm_usart.MIMXRT685S platform.drivers.ctimer.MIMXRT685S platform.drivers.lpc_dma.MIMXRT685S middleware.multicore.rpmsg_lite.evkmimxrt685_hifi4_bm.MIMXRT685S middleware.dsp_audio_streamer.hifi4_dec.MIMXRT685S platform.drivers.pint.MIMXRT685S platform.drivers.dmic.MIMXRT685S platform.drivers.dmic_dma.MIMXRT685S platform.drivers.lpc_gpio.MIMXRT685S component.serial_manager.MIMXRT685S platform.drivers.common.MIMXRT685S component.lists.MIMXRT685S platform.drivers.flexcomm_usart_dma.MIMXRT685S utility.debug_console.MIMXRT685S platform.drivers.lpc_iopctl.MIMXRT685S middleware.multicore.rpmsg_lite.bm.MIMXRT685S middleware.multicore.rpmsg_lite.MIMXRT685S middleware.dsp_audio_streamer.libxa_af_hostless.MIMXRT685S middleware.dsp_audio_streamer.testxa_af_hostless.MIMXRT685S utility.shell.MIMXRT685S middleware.eap.MIMXRT685S platform.drivers.clock.MIMXRT685S platform.drivers.reset.MIMXRT685S platform.drivers.flexcomm.MIMXRT685S device.MIMXRT685S_CMSIS.MIMXRT685S platform.Include_dsp.MIMXRT685S platform.utilities.misc_utilities.MIMXRT685S" device_core="hifi4_MIMXRT685S">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -74,14 +74,26 @@
           <value>XA_VORBIS_DECODER=1</value>
           <value>XA_OPUS_ENCODER=1</value>
           <value>XA_OPUS_DECODER=1</value>
+          <value>XA_SBC_ENCODER=1</value>
+          <value>XA_SBC_DECODER=1</value>
           <value>XA_PCM_GAIN=1</value>
           <value>XA_SRC_PP_FX=1</value>
           <value>XA_RENDERER=1</value>
           <value>XA_CAPTURER=1</value>
+          <value>XA_CLIENT_PROXY=1</value>
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>XOS_CLOCK_FREQ=594000000</value>
           <value>APP_DSP_ONLY=0</value>
           <value>I2S_SUPPORT_44100_HZ=0</value>
+          <value>ALGORITHM_VC=1</value>
+          <value>ALGORITHM_CS=1</value>
+          <value>ALGORITHM_DBE=1</value>
+          <value>ALGORITHM_EQNB=1</value>
+          <value>ALGORITHM_LM=1</value>
+          <value>ALGORITHM_TE=1</value>
+          <value>ALGORITHM_TG=1</value>
+          <value>ALGORITHM_AVL=1</value>
+          <value>ALGORITHM_PSA=1</value>
           <value>SERIAL_PORT_TYPE_UART=1</value>
           <value>HAVE_XOS</value>
           <value>HIFI_ONLY_XAF</value>
@@ -124,9 +136,13 @@
       <files mask="hihat.ogg.h"/>
       <files mask="hihat_48k.mp3.h"/>
       <files mask="hihat_dec_out.pcm.h"/>
+      <files mask="hihat_trim.pcm.h"/>
+      <files mask="hihat_trim.sbc.h"/>
       <files mask="hihat_vorbis_dec_out_trim.pcm.h"/>
       <files mask="i9_trim_pcm.h"/>
       <files mask="i9_vor.h"/>
+      <files mask="sbc_test_02_trim.out.h"/>
+      <files mask="sbc_test_02_trim.sbc.h"/>
       <files mask="sine.pcm.h"/>
       <files mask="testvector04-48000-2ch-ogg-opus_trim.out.h"/>
       <files mask="testvector04-48000-2ch_trim.out.h"/>
@@ -143,15 +159,14 @@
       <files mask="srtm_config.h"/>
       <files mask="srtm_config_audio.h"/>
       <files mask="srtm_config_nn.h"/>
-      <files mask="srtm_config_tfulite.h"/>
       <files mask="srtm_utils.h"/>
     </source>
     <source path="boards/evkmimxrt685/dsp_examples/xaf_demo/dsp" target_path="source" type="src">
       <files mask="ringbuffer.c"/>
       <files mask="srtm_capturer_pcm_gain_renderer.c"/>
       <files mask="srtm_decoder.c"/>
+      <files mask="srtm_encoder.c"/>
       <files mask="srtm_file_dec.c"/>
-      <files mask="srtm_opus_enc.c"/>
       <files mask="srtm_pcm_gain.c"/>
       <files mask="srtm_src.c"/>
       <files mask="srtm_utils.c"/>

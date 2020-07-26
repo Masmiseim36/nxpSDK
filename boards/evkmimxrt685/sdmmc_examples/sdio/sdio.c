@@ -10,7 +10,7 @@
 #include "fsl_sdio.h"
 #include "fsl_debug_console.h"
 #include "board.h"
-
+#include "sdmmc_config.h"
 #include "pin_mux.h"
 #include "clock_config.h"
 #include "fsl_common.h"
@@ -47,21 +47,9 @@ static const uint32_t g_funcTupleList[2U] = {
  * At the same time buffer address/size should be aligned to the cache line size if cache is supported.
  */
 /*! @brief Data written to the card */
-SDK_ALIGN(uint8_t g_dataRead[SDK_SIZEALIGN(DATA_BUFFER_SIZE, SDMMC_DATA_BUFFER_ALIGN_CACHE)],
-          MAX(SDMMC_DATA_BUFFER_ALIGN_CACHE, SDMMCHOST_DMA_BUFFER_ADDR_ALIGN));
+SDK_ALIGN(uint8_t g_dataRead[DATA_BUFFER_SIZE], BOARD_SDMMC_DATA_BUFFER_ALIGN_SIZE);
 /*! @brief Data read from the card */
-SDK_ALIGN(uint8_t g_dataBlockRead[SDK_SIZEALIGN(DATA_BUFFER_SIZE, SDMMC_DATA_BUFFER_ALIGN_CACHE)],
-          MAX(SDMMC_DATA_BUFFER_ALIGN_CACHE, SDMMCHOST_DMA_BUFFER_ADDR_ALIGN));
-/*! @brief SDMMC host detect card configuration */
-static const sdmmchost_detect_card_t s_sdioCardDetect = {
-#ifndef BOARD_SD_DETECT_TYPE
-    .cdType = kSDMMCHOST_DetectCardByGpioCD,
-#else
-    .cdType = BOARD_SD_DETECT_TYPE,
-#endif
-    .cdTimeOut_ms = (~0U),
-};
-
+SDK_ALIGN(uint8_t g_dataBlockRead[DATA_BUFFER_SIZE], BOARD_SDMMC_DATA_BUFFER_ALIGN_SIZE);
 /*******************************************************************************
  * Code
  ******************************************************************************/
@@ -87,13 +75,9 @@ int main(void)
     CLOCK_AttachClk(kLPOSC_DIV32_to_32KHZWAKE_CLK);
     CLOCK_AttachClk(kAUX0_PLL_to_SDIO0_CLK);
     CLOCK_SetClkDiv(kCLOCK_DivSdio0Clk, 1);
+    BOARD_SDIO_Config(card, NULL, BOARD_SDMMC_SDIO_HOST_IRQ_PRIORITY, NULL);
 
     PRINTF("SDIO card simple example.\r\n");
-
-    card->host.base           = SD_HOST_BASEADDR;
-    card->host.sourceClock_Hz = SD_HOST_CLK_FREQ;
-    /* card detect type */
-    card->usrParam.cd = &s_sdioCardDetect;
 
     /* SD host init function */
     if (SDIO_HostInit(card) != kStatus_Success)
@@ -104,15 +88,15 @@ int main(void)
 
     PRINTF("\r\nPlease insert a card into board.\r\n");
     /* power off card */
-    SDIO_PowerOffCard(card->host.base, card->usrParam.pwr);
+    SDIO_SetCardPower(card, false);
 
-    if (SDIO_WaitCardDetectStatus(SD_HOST_BASEADDR, &s_sdioCardDetect, true) == kStatus_Success)
+    if (SDIO_PollingCardInsert(card, kSD_Inserted) == kStatus_Success)
     {
         PRINTF("\r\nCard inserted.\r\n");
         /* reset host once card re-plug in */
-        SDIO_HostReset(&(card->host));
+        SDIO_HostDoReset(card);
         /* power on the card */
-        SDIO_PowerOnCard(card->host.base, card->usrParam.pwr);
+        SDIO_SetCardPower(card, true);
     }
     else
     {

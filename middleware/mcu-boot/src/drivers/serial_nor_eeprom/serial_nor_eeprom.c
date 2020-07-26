@@ -6,24 +6,26 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include <string.h>
-#include <stdlib.h>
 #include <stdbool.h>
+#include <stdlib.h>
+#include <string.h>
 #include "bootloader_common.h"
-#include "lpspi/fsl_lpspi.h"
-#include "serial_nor_eeprom/serial_nor_eeprom.h"
+#include "fsl_lpspi.h"
+#include "serial_nor_eeprom.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
 ////////////////////////////////////////////////////////////////////////////////
-
 
 ////////////////////////////////////////////////////////////////////////////////
 // Prototypes
 ////////////////////////////////////////////////////////////////////////////////
 
 //! @brief Write a single command byte to serial NOR/EEPROM.
-static status_t serial_nor_eeprom_common_sequence(uint8_t command, uint32_t address, uint8_t *buffer, uint32_t lengthInBytes);
+static status_t serial_nor_eeprom_common_sequence(uint8_t command,
+                                                  uint32_t address,
+                                                  uint8_t *buffer,
+                                                  uint32_t lengthInBytes);
 //! @brief Enable writes to serial NOR/EEPROM.
 static status_t serial_nor_eeprom_enable_write(void);
 //! @brief Check to see whether serial NOR/EEPROM device is busy.
@@ -71,8 +73,7 @@ status_t serial_nor_eeprom_init(serial_nor_eeprom_config_t *config, data_transfe
     // Check memory size
     uint32_t maxMemorySize = 1ul << (config->addressLengthInBits - 3);
     uint32_t minMemorySize = 2048u;
-    if ((config->memorySizeInBytes > maxMemorySize)
-        || (config->memorySizeInBytes < minMemorySize))
+    if ((config->memorySizeInBytes > maxMemorySize) || (config->memorySizeInBytes < minMemorySize))
     {
         return kStatus_SerialNorEepromSizeInvalid;
     }
@@ -195,7 +196,8 @@ status_t serial_nor_eeprom_erase(uint32_t address, uint32_t lengthInBytes)
                 return kStatus_SerialNorEepromCommandInvalid;
             }
             // Wait until the operation is completed
-            while(serial_nor_eeprom_is_busy());
+            while (serial_nor_eeprom_is_busy())
+                ;
         }
         else
         {
@@ -252,7 +254,8 @@ status_t serial_nor_eeprom_erase_all(void)
             return kStatus_SerialNorEepromCommandInvalid;
         }
         // Wait until the operation is completed
-        while(serial_nor_eeprom_is_busy());
+        while (serial_nor_eeprom_is_busy())
+            ;
     }
 
     return status;
@@ -326,7 +329,8 @@ status_t serial_nor_eeprom_write(uint32_t address, uint8_t *buffer, uint32_t len
                 return kStatus_SerialNorEepromCommandInvalid;
             }
             // Wait until the operation is completed
-            while(serial_nor_eeprom_is_busy());
+            while (serial_nor_eeprom_is_busy())
+                ;
         }
         else
         {
@@ -345,7 +349,10 @@ status_t serial_nor_eeprom_write(uint32_t address, uint8_t *buffer, uint32_t len
 //          buffer         Pointer to the data buffer where to store the read/write data
 //          lengthInBytes  number of bytes to be read/write
 // ***************************************************************************
-static status_t serial_nor_eeprom_common_sequence(uint8_t command, uint32_t address, uint8_t *buffer, uint32_t lengthInBytes)
+static status_t serial_nor_eeprom_common_sequence(uint8_t command,
+                                                  uint32_t address,
+                                                  uint8_t *buffer,
+                                                  uint32_t lengthInBytes)
 {
     status_t status = kStatus_Success;
     uint8_t addressLength = s_serialNorEepromContext.memoryConfig.addressLengthInBits;
@@ -379,7 +386,7 @@ static status_t serial_nor_eeprom_common_sequence(uint8_t command, uint32_t addr
         {
             uint32_t addressBytes = ((addressLength - 1) / 8) + 1;
             // Note: address bits should be MSB
-            for(uint8_t i = 0; i < addressBytes; i++)
+            for (uint8_t i = 0; i < addressBytes; i++)
             {
                 uint8_t addressValue = (uint8_t)((address >> (8 * (addressBytes - 1 - i))) & 0x000000FF);
                 commandAddressBuffer[dataBytesInBuffer + i] = addressValue;
@@ -388,13 +395,15 @@ static status_t serial_nor_eeprom_common_sequence(uint8_t command, uint32_t addr
 
             break;
         }
-        default: break;
+        default:
+            break;
     }
 
     // Write the command and address to Serial NOR/EEPROM device
     if (dataBytesInBuffer != 0)
     {
-        status = s_serialNorEepromContext.data_transfer_callback(commandAddressBuffer, dataBytesInBuffer, kBusTransferOption_DataOut);
+        status = s_serialNorEepromContext.data_transfer_callback(commandAddressBuffer, dataBytesInBuffer,
+                                                                 kBusTransferOption_DataOut);
         if (status != kStatus_Success)
         {
             return status;
@@ -419,7 +428,8 @@ static status_t serial_nor_eeprom_common_sequence(uint8_t command, uint32_t addr
                 option = kBusTransferOption_DataOut;
                 break;
             }
-            default: break;
+            default:
+                break;
         }
         status = s_serialNorEepromContext.data_transfer_callback(buffer, lengthInBytes, option);
         if (status != kStatus_Success)
@@ -453,8 +463,7 @@ static status_t serial_nor_eeprom_enable_write(void)
         do
         {
             status = serial_nor_eeprom_common_sequence(readStatusCommand, 0, &statusRegister, 1);
-        }
-        while (status != kStatus_Success);
+        } while (status != kStatus_Success);
         if (statusRegister & kSerialNorEepromStatus_WriteEnableLatch)
         {
             break;
@@ -463,26 +472,24 @@ static status_t serial_nor_eeprom_enable_write(void)
         {
             serial_nor_eeprom_common_sequence(writeEnableCommand, 0, 0, 0);
         }
-    }
-    while (!(statusRegister & kSerialNorEepromStatus_WriteEnableLatch));
+    } while (!(statusRegister & kSerialNorEepromStatus_WriteEnableLatch));
 
     return kStatus_Success;
 }
 
 static bool serial_nor_eeprom_is_busy(void)
 {
-     status_t status;
-     uint8_t statusRegister;
+    status_t status;
+    uint8_t statusRegister;
 
-     uint8_t readStatusCommand = s_serialNorEepromContext.memoryConfig.commandSet.readStatusCommand;
+    uint8_t readStatusCommand = s_serialNorEepromContext.memoryConfig.commandSet.readStatusCommand;
 
-     do
-     {
-         status = serial_nor_eeprom_common_sequence(readStatusCommand, 0, &statusRegister, 1);
-     }
-     while (status != kStatus_Success);
+    do
+    {
+        status = serial_nor_eeprom_common_sequence(readStatusCommand, 0, &statusRegister, 1);
+    } while (status != kStatus_Success);
 
-     return (statusRegister & kSerialNorEepromStatus_WriteInProgress);
+    return (statusRegister & kSerialNorEepromStatus_WriteInProgress);
 }
 
 static status_t serial_nor_eeprom_check_range(uint32_t address, uint32_t lengthInBytes)
@@ -498,8 +505,8 @@ static status_t serial_nor_eeprom_check_range(uint32_t address, uint32_t lengthI
 
 static void serial_nor_eeprom_convert_command(uint8_t *command, uint32_t address)
 {
-    if ((s_serialNorEepromContext.memoryConfig.addressLengthInBits == kSerialNorEepromProperty_uniqueAddressLength)
-        && (address >= kSerialNorEepromProperty_uniqueMemorySize256B))
+    if ((s_serialNorEepromContext.memoryConfig.addressLengthInBits == kSerialNorEepromProperty_uniqueAddressLength) &&
+        (address >= kSerialNorEepromProperty_uniqueMemorySize256B))
     {
         *command |= kSerialNorEepromProperty_9thAddressBitMask;
     }

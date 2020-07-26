@@ -48,7 +48,7 @@
 *
 *     The denomination 'Screen' refers to the format of the frame buffer in the
 *     particular target system (e.g. 32 bit RGBA8888). Screen bitmaps can serve
-*     esclusively as the destination for a drawing operation.
+*     exclusively as the destination for a drawing operation.
 *
 *     In contrast to the Native bitmap format, Index8 and Alpha8 can serve as
 *     source only. It is not possible to draw to an Index8 or Alpha8 bitmap.
@@ -137,10 +137,15 @@
 #define EWGFX_H
 
 
+/* Include platform specific configuration file */
+#include <ewconfig.h>
+#include "ewgfxdriver.h"
+#include "ewextgfx.h"
+#include "ewgfxdefs.h"
+
 /* Include platform dependent bitmap and font resource provider declarations */
 #include "ewextbmp.h"
 #include "ewextfnt.h"
-#include "ewgfxdriver.h"
 #include "ewgfxcore.h"
 
 
@@ -150,11 +155,11 @@
 #endif
 
 /* The current version of the Graphics Engine. */
-#define EW_GFX_VERSION 0x00090014
+#define EW_GFX_VERSION 0x0009001E
 
 
 /******************************************************************************
-* TYPE:
+* STATUS VARIABLE:
 *   EwFullScreenUpdate
 *   EwFullOffScreenBufferUpdate
 *   EwPreserveFramebufferContent
@@ -169,6 +174,36 @@
 extern int EwFullScreenUpdate;
 extern int EwFullOffScreenBufferUpdate;
 extern int EwPreserveFramebufferContent;
+
+
+/******************************************************************************
+* CONFIG VARIABLE:
+*   EwMaxSurfaceCacheSize
+*   EwMaxGlyphSurfaceWidth
+*   EwMaxGlyphSurfaceHeight
+*   EwMaxIssueTasks
+*   EwLazyLoadBitmaps
+*   EwLazyLoadBitmapsIfAnimatedOnly
+*   EwDiscardBitmaps
+*   EwDiscardBitmapsIfAnimatedOnly
+*   EwDiscardBitmapsIfNotUsedInCurrentUpdate
+*
+* DESCRIPTION:
+*   The following variables exist for configuration purpose for diverse caches
+*   used by the Graphics Engine. Modifying the variables is possible only just
+*   before the Graphics Engine is initialized.
+*
+******************************************************************************/
+extern int EwMaxSurfaceCacheSize;   /* = EW_MAX_SURFACE_CACHE_SIZE macro */
+extern int EwMaxGlyphSurfaceWidth;  /* = EW_MAX_GLYPH_SURFACE_WIDTH macro */
+extern int EwMaxGlyphSurfaceHeight; /* = EW_MAX_GLYPH_SURFACE_HEIGHT macro */
+extern int EwMaxIssueTasks;         /* = EW_MAX_ISSUE_TASKS macro */
+extern int EwLazyLoadBitmaps;       /* = EW_LAZY_LOAD_BITMAPS */
+extern int EwDiscardBitmaps;        /* = EW_DISCARD_BITMAPS */
+extern int EwLazyLoadBitmapsIfAnimatedOnly; /* = EW_LAZY_LOAD_BITMAPS_IF_ANIMATED_ONLY */
+extern int EwDiscardBitmapsIfAnimatedOnly;  /* = EW_DISCARD_BITMAPS_IF_ANIMATED_ONLY */
+extern int EwDiscardBitmapsIfNotUsedInCurrentUpdate; /* = EW_DISCARD_BITMAPS_IF_NOT_USED_IN_CURRENT_UPDATE */
+extern int EwDiscardBitmapsIfNotUsedInRecentUpdates; /* = EW_DISCARD_BITMAPS_IF_NOT_USED_IN_RECENT_UPDATES */
 
 
 /*******************************************************************************
@@ -226,6 +261,32 @@ extern int EwPreserveFramebufferContent;
 #define EW_PATH_JOIN_ROUND         0x00020000
 
 
+/*******************************************************************************
+* MACRO:
+*   EW_SVG_PARSER_XXX
+*
+* DESCRIPTION:
+*   The following enumerations define the possible status values after parsing
+*   an SVG string.
+*
+* ELEMENTS:
+*   EW_SVG_PARSER_SUCCESS          - SVG string could be processed successfully.
+*   EW_SVG_PARSER_EMPTY_STRING     - No SVG string content to parse.
+*   EW_SVG_PARSER_SYNTAX_ERROR     - Parsing has been aborted due to a syntax
+*     error in the SVG string.
+*   EW_SVG_PARSER_INVALID_ARGUMENT - Parsing has been aborted due to a found
+*     invalid argument in the SVG string (one parameter or combination of the
+*     parameters is not correct).
+*   EW_SVG_PARSER_OUT_OF_MEMORY    - The SVG string is too complex.
+*
+*******************************************************************************/
+#define EW_SVG_PARSER_SUCCESS           0
+#define EW_SVG_PARSER_EMPTY_STRING      1
+#define EW_SVG_PARSER_SYNTAX_ERROR      2
+#define EW_SVG_PARSER_INVALID_ARGUMENT  3
+#define EW_SVG_PARSER_OUT_OF_MEMORY     4
+
+
 /******************************************************************************
 * TYPE:
 *   XBitmapFrame
@@ -260,28 +321,39 @@ typedef struct
 *   as the public and abstract representation of a surface.
 *
 * ELEMENTS:
-*   Format       - Pixel format of the bitmap. (See EW_PIXEL_FORMAT_XXX).
-*   FrameSize    - Size of a single frame within the bitmap.
-*   FrameDelay   - Delay in milliseconds for animated bitmaps. If no animation
+*   Format         - Pixel format of the bitmap. (See EW_PIXEL_FORMAT_XXX).
+*   FrameSize      - Size of a single frame within the bitmap.
+*   FrameDelay     - Delay in milliseconds for animated bitmaps. If no animation
 *     is specified for the bitmap, the value == 0.
-*   NoOfFrames   - Number of frames, this bitmap resources consists of.
-*   Frames       - Pointer to an array containing the attributes of all frames.
-*     At least one frame is available.
-*   NoOfSurfaces - Number of low-level surfaces to store the pixel data of the
-*     bitmap frames.
-*   Surfaces     - Pointer to an array containing references to low-level
+*   NoOfFrames     - Number of frames, this bitmap resources consists of.
+*   NoOfVirtFrames - Total number of frames, including all duplicates.
+*   Mapping        - If not NULL refers to a list with indices to map between
+*     virtual frames numbers and the numbers of really existing frames.
+*   Resource       - Pointer to the original resource containing the pixel data
+*     if the bitmap has been loaded from a resource.
+*   Frames         - Pointer to an array containing the attributes of all
+*     frames. At least one frame is available. Please note, it is possible for
+*     a bitmap to appear as containing more frames than existing in this array.
+*     In such case the existing frames are shared by several 'virtual' frames.
+*     This is used mainly in animation or short video sequences.
+*   NoOfSurfaces   - Number of low-level surfaces to store the pixel data of
+*     the bitmap frames.
+*   Surfaces       - Pointer to an array containing references to low-level
 *     surfaces with the bitmap pixel data.
 *
 ******************************************************************************/
 typedef struct
 {
-  XInt32              Format;
-  XPoint              FrameSize;
-  XInt32              FrameDelay;
-  XInt32              NoOfFrames;
-  XBitmapFrame*       Frames;
-  XInt32              NoOfSurfaces;
-  struct XSurface**   Surfaces;
+  XInt32                Format;
+  XPoint                FrameSize;
+  XInt32                FrameDelay;
+  XInt32                NoOfFrames;
+  XInt32                NoOfVirtFrames;
+  XUInt16*              Mapping;
+  const struct XBmpRes* Resource;
+  XBitmapFrame*         Frames;
+  XInt32                NoOfSurfaces;
+  struct XSurface**     Surfaces;
 } XBitmap;
 
 
@@ -705,6 +777,41 @@ typedef struct
   XPathMatrix*      MatrixStack;
   XSubPath*         SubPaths[1];
 } XPath;
+
+
+/*******************************************************************************
+* FUNCTION:
+*   EwConfigGraphicsEngine
+*
+* DESCRIPTION:
+*   The pseudo function EwConfigGraphicsEngine() setups configuration variables
+*   of the Graphics Engine according to macros found in 'ewconfig.h' file or in
+*   the Make file.
+*
+*   This function has to be executed before EwInitGraphicsEngine().
+*
+* ARGUMENTS:
+*   None
+*
+* RETURN VALUE:
+*   None
+*
+*******************************************************************************/
+#define EwConfigGraphicsEngine()                                               \
+  do                                                                           \
+  {                                                                            \
+    EwMaxSurfaceCacheSize                     = EW_MAX_SURFACE_CACHE_SIZE;     \
+    EwMaxGlyphSurfaceWidth                    = EW_MAX_GLYPH_SURFACE_WIDTH;    \
+    EwMaxGlyphSurfaceHeight                   = EW_MAX_GLYPH_SURFACE_HEIGHT;   \
+    EwMaxIssueTasks                           = EW_MAX_ISSUE_TASKS;            \
+    EwLazyLoadBitmaps                         = EW_LAZY_LOAD_BITMAPS;          \
+    EwLazyLoadBitmapsIfAnimatedOnly           = EW_LAZY_LOAD_BITMAPS_IF_ANIMATED_ONLY; \
+    EwDiscardBitmaps                          = EW_DISCARD_BITMAPS;            \
+    EwDiscardBitmapsIfAnimatedOnly            = EW_DISCARD_BITMAPS_IF_ANIMATED_ONLY; \
+    EwDiscardBitmapsIfNotUsedInCurrentUpdate  = EW_DISCARD_BITMAPS_IF_NOT_USED_IN_CURRENT_UPDATE; \
+    EwDiscardBitmapsIfNotUsedInRecentUpdates  = EW_DISCARD_BITMAPS_IF_NOT_USED_IN_RECENT_UPDATES; \
+  }                                                                            \
+  while ( 0 )
 
 
 /*******************************************************************************
@@ -1399,6 +1506,97 @@ XPath* EwCreatePath
 
 /*******************************************************************************
 * FUNCTION:
+*   EwCreatePathFromSVGString
+*
+* DESCRIPTION:
+*   The function EwCreatePathFromSVGString() creates a new path according to
+*   SVG path instructions found in the passed aSVGString parameter.
+*
+* ARGUMENTS:
+*   aSVGString - String containing the SVG instructions.
+*   aScaleX,
+*   aScaleY    - Scaling factor to apply on the original SVG coordinates. The
+*     values affect also how smooth curves are composed from line segments.
+*     The larger a curve the more segments are used.
+*   aDeltaX,
+*   aDeltaY    - Additional offset to add to the original SVG coordinates.
+*     This results in a translation of the SVG path.
+*   aAngle     - Additional angle to apply a rotation transformation on the
+*     original SVG coordinates. The angle is expressed in degree and measured
+*     clockwise relative to the positive X-axis. The rotation is performed
+*     around the origin position (X:0, Y:0) of the original SVG coordinates.
+*
+* RETURN VALUE:
+*   If successful, the function returns a pointer to the newly created path.
+*   Otherwise the function returns 0. If the specified SVG string contains
+*   errors, the function stops and returns the already prepared path without
+*   evaluating further SVG data. The success of the operation or error status
+*   can be queried by the functions EwGetSVGParserStatus() and
+*   EwGetSVGParserErrorPos().
+*
+*******************************************************************************/
+XPath* EwCreatePathFromSVGString
+(
+  XString           aSVGString,
+  XFloat            aScaleX,
+  XFloat            aScaleY,
+  XFloat            aDeltaX,
+  XFloat            aDeltaY,
+  XFloat            aAngle
+);
+
+
+/*******************************************************************************
+* FUNCTION:
+*   EwGetSVGParserStatus
+*
+* DESCRIPTION:
+*   The function EwGetSVGParserStatus() returns the status resulting from the
+*   preceding invocation of the function EwCreatePathFromSVGString(). Possible
+*   values are defined in the macros EW_SVG_PARSER_XXX.
+*
+* ARGUMENTS:
+*   None
+*
+* RETURN VALUE:
+*   Returns EW_SVG_PARSER_SUCCESS if the parsed SVG string did not contain any
+*   errors. Otherwise another value defined in EW_SVG_PARSER_XXX is returned.
+*   In such case use the function EwGetSVGParserErrorPos() to get the position
+*   within the parsed SVG string, which has raised the error status.
+*
+*******************************************************************************/
+int EwGetSVGParserStatus
+(
+  void
+);
+
+
+/*******************************************************************************
+* FUNCTION:
+*   EwGetSVGParserErrorPos
+*
+* DESCRIPTION:
+*   The function EwGetSVGParserErrorPos() returns the position within the SVG
+*   string at which the function EwCreatePathFromSVGString() has encountered an
+*   error. To query the error status use the function EwGetSVGParserStatus().
+*
+* ARGUMENTS:
+*   None
+*
+* RETURN VALUE:
+*   Returns the position (in characters) within the SVG string starting with 0
+*   for the first character. In the case there is no error recorded, a value -1
+*   is returned.
+*
+*******************************************************************************/
+XInt32 EwGetSVGParserErrorPos
+(
+  void
+);
+
+
+/*******************************************************************************
+* FUNCTION:
 *   EwFreePath
 *
 * DESCRIPTION:
@@ -2036,6 +2234,56 @@ XBool EwIsSubPathClosed
 (
   XPath*            aPath,
   XInt32            aSubPathNo
+);
+
+
+/*******************************************************************************
+* FUNCTION:
+*   EwGetSubPathBounds
+*
+* DESCRIPTION:
+*   The function EwGetSubPathBounds() returns the rectangular area enclosing
+*   all nodes of the affected sub-path. The position and the size of the area
+*   are rounded to the near integer value.
+*
+* ARGUMENTS:
+*   aPath       - Pointer to the path containing the affected sub-path.
+*   aSubPathNo  - Number identifying the sub-path within aPath to query the
+*     information. The first sub-path has the number 0. The second 1, and so
+*     far.
+*
+* RETURN VALUE:
+*   Returns the area. If the specified sub-path does not exist, the function
+*   returns an empty rectangle.
+*
+*******************************************************************************/
+XRect EwGetSubPathBounds
+(
+  XPath*            aPath,
+  XInt32            aSubPathNo
+);
+
+
+/*******************************************************************************
+* FUNCTION:
+*   EwGetPathBounds
+*
+* DESCRIPTION:
+*   The function EwGetPathBounds() returns the rectangular area enclosing all
+*   nodes of all sub-paths of the given path. The position and the size of the
+*   area are rounded to the near integer value.
+*
+* ARGUMENTS:
+*   aPath - Pointer to the path to query the information.
+*
+* RETURN VALUE:
+*   Returns the area. If the specified path does not contain any edges, the
+*   function returns an empty rectangle.
+*
+*******************************************************************************/
+XRect EwGetPathBounds
+(
+  XPath*            aPath
 );
 
 
@@ -2905,7 +3153,7 @@ XInt32 EwGetTextColumnAtPosition
 * RETURN VALUE:
 *   Returns the position in pixel of the found glyph relative to the left edge
 *   of the text row as if it would be rasterized by EwDrawText(). If aColumn
-*   is < 0, the function returns -1; If aColumn addresses a character not 
+*   is < 0, the function returns -1; If aColumn addresses a character not
 *   existing in the string, the function returns the total length of the string.
 *
 *******************************************************************************/
@@ -3148,13 +3396,13 @@ void EwDrawBitmapFrame
 *
 *   The automatic line wrap is performed primarily between words. Additionally
 *   the zero-width-space-sign) and soft-hyphen are possible candidates for the
-*   wrap position. These can be specified as special characters '^' or '\x00A0' 
+*   wrap position. These can be specified as special characters '^' or '\x00A0'
 *   (for the zero-width-space) and '~' or '\x00AD' (for soft-hyphen).
 *
 *   The both special characters '^' and '~' are usually ignored and they are not
 *   displayed until the line wrap took place at its position. Then the '~' sign
 *   is converted into the hyphen '-'. The zero-width-space in contrast breaks a
-*   row only and remains invisible. These both special characters provide a 
+*   row only and remains invisible. These both special characters provide a
 *   flexibel way to output multi-line text.
 *
 *   Beside the automatic text wrap, an explicit linefeed is possible when the
@@ -3201,8 +3449,7 @@ void EwDrawBitmapFrame
 *
 *   Please note, the returned string is controlled by the Embedded Wizard
 *   Runtime Environment EWRTE. If not used anymore, the string is released
-*   automatically. If you plan to store the string in a 'C' variable, use the
-*   function EwRetainString() to lock the string (see ewrte.h).
+*   automatically.
 *
 *******************************************************************************/
 XString EwParseFlowString
@@ -3222,13 +3469,13 @@ XString EwParseFlowString
 * DESCRIPTION:
 *   The function EwGetFlowTextAdvance() calculates the advance of the widest
 *   text row in the multi-line text block aFlowString by using the font aFont.
-*   The value is calculated by the sum of advance values of all glyphs needed to 
+*   The value is calculated by the sum of advance values of all glyphs needed to
 *   display the respective text row and then by selecting the result of the row
 *   which is the widest one.
 *
 * ARGUMENTS:
 *   aFont       - Font to use for the text calculation.
-*   aFlowString - Text to process as already parsed flow string (see the 
+*   aFlowString - Text to process as already parsed flow string (see the
 *     function EwParseFlowString())
 *
 * RETURN VALUE:
@@ -3555,7 +3802,7 @@ void EwSetAttrColor
 *   aAttrSet        - Pointer to the set containing fonts, bitmaps and colors
 *     for the attributed string.
 *   aString         - Source string containing the text and the attributes.
-*   aWidth          - Width of the rectangular area used for the text 
+*   aWidth          - Width of the rectangular area used for the text
 *     formatting and line wrapping.
 *   aEnableBidiText - If != 0, the Unicode Bidi Algorithm is applied on every
 *     paragraph content.
@@ -3678,7 +3925,7 @@ XPoint EwGetAttrTextSize
 *   EwIsAttrTextRTL
 *
 * DESCRIPTION:
-*   The function EwIsAttrTextRTL() returns the basic paragraph direction 
+*   The function EwIsAttrTextRTL() returns the basic paragraph direction
 *   resulting from the very first processed paragraph in the attributed string.
 *
 * ARGUMENTS:
@@ -3748,8 +3995,7 @@ XInt32 EwGetNoOfAttrLinks
 *
 *   Please note, the returned string is controlled by the Embedded Wizard
 *   Runtime Environment EWRTE. If not used anymore, the string is released
-*   automatically. If you plan to store the string in a 'C' variable, use the
-*   function EwRetainString() to lock the string (see ewrte.h).
+*   automatically.
 *
 *******************************************************************************/
 XString EwGetAttrLinkName
@@ -3962,7 +4208,7 @@ XBool EwBidiIsNeeded
 *   aBidi - The Bidi-Context to query the paragraph direction.
 *
 * RETURN VALUE:
-*   Returns != 0 if the context describes text with RTL paragraph direction. 
+*   Returns != 0 if the context describes text with RTL paragraph direction.
 *   Otherwise return 0.
 *
 *******************************************************************************/
@@ -3982,11 +4228,11 @@ XBool EwBidiIsRTL
 *
 * ARGUMENTS:
 *   aBidi  - The Bidi-Context to query the embedding level.
-*   aIndex - Index identifying the character. The characters are counted 
+*   aIndex - Index identifying the character. The characters are counted
 *     starting with 0.
 *
 * RETURN VALUE:
-*   Returns a number in range 0 .. 127 identifying the embedding level of the 
+*   Returns a number in range 0 .. 127 identifying the embedding level of the
 *   respective character as it is stored in the Bidi context. If the index
 *   addresses a non existing character, the paragraph level is returned. If
 *   the context is not valid, 0 is returned.
@@ -4009,7 +4255,7 @@ XInt32 EwBidiGetCharLevel
 *   type. Finally the function determines the paragraph's base direction and
 *   stores it also in the context.
 *
-*   Please note, before invoking this function you should create a new Bidi 
+*   Please note, before invoking this function you should create a new Bidi
 *   context with enough capacity so all string characters can be stored in it.
 *   If the passed context is invalid or too small, the function fails.
 *
@@ -4020,8 +4266,8 @@ XInt32 EwBidiGetCharLevel
 *     parameter is negative, the function processes all characters found in the
 *     string.
 *   aBaseDirection - Determines the default paragraph level. If this parameter
-*     is 0, the paragraph level is set to 0 (LTR). If this parameter > 0, the 
-*     paragraph level is set 1 (RTL). If this parameter is < 0, the paragraph 
+*     is 0, the paragraph level is set to 0 (LTR). If this parameter > 0, the
+*     paragraph level is set 1 (RTL). If this parameter is < 0, the paragraph
 *     level is determined automatically depending on the first strong character
 *     in the string.
 *
@@ -4035,7 +4281,7 @@ XBool EwBidiInit
 (
   XHandle           aBidi,
   XChar*            aString,
-  XInt32            aCount, 
+  XInt32            aCount,
   XInt32            aBaseDirection
 );
 
@@ -4071,7 +4317,7 @@ void EwBidiProcess
 *   EwBidiApplyShaping
 *
 * DESCRIPTION:
-*   The function EwBidiApplyShaping() performs the part of the Bidi-Algorithm 
+*   The function EwBidiApplyShaping() performs the part of the Bidi-Algorithm
 *   needed to handle the special case of Arabic glyphs and mandatory ligatures.
 *   The function evaluates the characters in the string aString and adapts all
 *   found Arabic glyphs accordingly.
@@ -4109,7 +4355,7 @@ void EwBidiApplyShaping
 *   EwBidiMirrorGlyphs
 *
 * DESCRIPTION:
-*   The function EwBidiMirrorGlyphs() performs the part of the Bidi-Algorithm 
+*   The function EwBidiMirrorGlyphs() performs the part of the Bidi-Algorithm
 *   responsable for the mirroring of glyphs within level-runs with reversed
 *   writing direction. For every character within aString which is signed as
 *   RTL the function verifies whether there is mirror version of the sign and
@@ -4136,8 +4382,8 @@ void EwBidiMirrorGlyphs
 *   EwBidiCompleteRow
 *
 * DESCRIPTION:
-*   The function EwBidiCompleteRow() performs the part of the Bidi-Algorithm 
-*   after text wrap has been applied on a row. Accordingly it runs the final 
+*   The function EwBidiCompleteRow() performs the part of the Bidi-Algorithm
+*   after text wrap has been applied on a row. Accordingly it runs the final
 *   rules of the Bidi-Algorithm on a single text row only.
 *
 * ARGUMENTS:
@@ -4174,7 +4420,7 @@ void EwBidiCompleteRow
 *     the row to process.
 *   aRowEnd   - The number of the data entry in aBidi addressing the end of
 *     the row to process.
-*   aChars    - Pointer addressing the first character of the affected text 
+*   aChars    - Pointer addressing the first character of the affected text
 *     row to reorder its content.
 *
 * RETURN VALUE:
@@ -4260,7 +4506,7 @@ XInt32 EwBidiReorderIndex
 *
 * DESCRIPTION:
 *   The function EwBidiReverseReorderIndex() estimates the original index of a
-*   given text entity before applying the Bidi reorder algorithm. In other 
+*   given text entity before applying the Bidi reorder algorithm. In other
 *   words, it returns the position of the character within the original text
 *   row corresponding to the given display position in the reordered row.
 *
@@ -4291,7 +4537,7 @@ XInt32 EwBidiReverseReorderIndex
 *   EwBidiGetTypesAndLevels
 *
 * DESCRIPTION:
-*   The function EwBidiGetTypesAndLevels() exists for test purpose only. The 
+*   The function EwBidiGetTypesAndLevels() exists for test purpose only. The
 *   function copies all estimates Bidi types and levels from aBidi context to
 *   the corresponding entries in the both arrays aTypes and aLevels. Note, the
 *   arrays have to be large enough!
@@ -4308,7 +4554,7 @@ XInt32 EwBidiReverseReorderIndex
 void EwBidiGetTypesAndLevels
 (
   XHandle           aBidi,
-  unsigned char*    aTypes, 
+  unsigned char*    aTypes,
   unsigned char*    aLevels
 );
 

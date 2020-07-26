@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP
+ * Copyright 2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -54,8 +54,8 @@ BOARD_InitPins:
     amena: disabled, odena: enabled, iiena: disabled}
   - {pin_num: E16, peripheral: FLEXCOMM15, signal: SCL, pin_signal: PMIC_I2C_SCL, pupdena: enabled, pupdsel: pullUp, ibena: enabled, slew_rate: normal, drive: normal,
     amena: disabled, odena: enabled, iiena: disabled}
-  - {pin_num: L16, peripheral: SWD, signal: SWO, pin_signal: PIO2_24/SWO/GPIO_INT_BMAT, pupdena: disabled, pupdsel: pullDown, ibena: disabled, slew_rate: normal,
-    drive: normal, amena: disabled, odena: disabled, iiena: disabled}
+  - {pin_num: L16, peripheral: SWD, signal: SWO, pin_signal: PIO2_24/SWO/GPIO_INT_BMAT, pupdena: enabled, pupdsel: pullUp, ibena: disabled, slew_rate: normal, drive: normal,
+    amena: disabled, odena: disabled, iiena: disabled}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
@@ -187,10 +187,10 @@ void BOARD_InitPins(void)
 
     const uint32_t port2_pin24_config = (/* Pin is configured as SWO */
                                          IOPCTL_PIO_FUNC1 |
-                                         /* Disable pull-up / pull-down function */
-                                         IOPCTL_PIO_PUPD_DI |
-                                         /* Enable pull-down function */
-                                         IOPCTL_PIO_PULLDOWN_EN |
+                                         /* Enable pull-up / pull-down function */
+                                         IOPCTL_PIO_PUPD_EN |
+                                         /* Enable pull-up function */
+                                         IOPCTL_PIO_PULLUP_EN |
                                          /* Disable input buffer function */
                                          IOPCTL_PIO_INBUF_DI |
                                          /* Normal mode */

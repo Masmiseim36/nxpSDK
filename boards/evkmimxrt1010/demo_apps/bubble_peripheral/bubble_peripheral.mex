@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding= "UTF-8" ?>
-<configuration name="" version="1.6" xsi:schemaLocation="http://mcuxpresso.nxp.com/XSD/mex_configuration_1.6 http://mcuxpresso.nxp.com/XSD/mex_configuration_1.6.xsd" uuid="5c1f72fb-005c-46d6-9c06-9ce83c2615ef" xmlns="http://mcuxpresso.nxp.com/XSD/mex_configuration_1.6" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<configuration name="MIMXRT1011xxxxx" version="1.6" xsi:schemaLocation="http://mcuxpresso.nxp.com/XSD/mex_configuration_1.7 http://mcuxpresso.nxp.com/XSD/mex_configuration_1.7.xsd" uuid="7f4cd25d-ca44-4e19-984d-1efc97179ad3" xmlns="http://mcuxpresso.nxp.com/XSD/mex_configuration_1.7" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
    <common>
       <processor>MIMXRT1011xxxxx</processor>
       <package>MIMXRT1011DAE5A</package>
@@ -8,7 +8,6 @@
       <cores selected="core0">
          <core name="Cortex-M7F" id="core0" description="M7 core"/>
       </cores>
-      <description></description>
    </common>
    <preferences>
       <validate_boot_init_only>true</validate_boot_init_only>
@@ -16,9 +15,9 @@
       <generate_code_modified_registers_only>false</generate_code_modified_registers_only>
    </preferences>
    <tools>
-      <pins name="Pins" version="6.0" enabled="true" update_project_code="true">
+      <pins name="Pins" version="7.0" enabled="true" update_project_code="true">
          <pins_profile>
-            <processor_version>0.0.1</processor_version>
+            <processor_version>0.7.7</processor_version>
             <power_domains/>
             <pin_labels>
                <pin_label pin_num="3" pin_signal="GPIO_09" label="LPUART1_RXD" identifier="UART1_RXD;LPUART1_RXD"/>
@@ -26,8 +25,8 @@
                <pin_label pin_num="68" pin_signal="GPIO_SD_07" label="LPUART1_RXD" identifier="UART1_RXD"/>
                <pin_label pin_num="53" pin_signal="VDD_SOC_IN_2" label="I2C1_SCL/U10[17]/J18[6]/U26[4]" identifier="I2C1_SCL;I2C1_SC"/>
                <pin_label pin_num="21" pin_signal="ONOFF" label="GPIO SD_B1_01" identifier="USER_LED"/>
-               <pin_label pin_num="72" pin_signal="GPIO_SD_04" label="LPUART1_TXD" identifier="UART1_TXD"/>
                <pin_label pin_num="52" pin_signal="GPIO_AD_06" label="I2C1_SDA/U10[18]/J18[5]/J19[9]/U26[6]" identifier="I2C1_SDA;I2C1_SD"/>
+               <pin_label pin_num="72" pin_signal="GPIO_SD_04" label="LPUART1_TXD" identifier="UART1_TXD"/>
             </pin_labels>
          </pins_profile>
          <functions_list>
@@ -40,6 +39,11 @@
                </options>
                <dependencies>
                   <dependency resourceType="Peripheral" resourceId="LPUART1" description="Peripheral LPUART1 is not initialized" problem_level="1" source="Pins:BOARD_InitPins">
+                     <feature name="initialized" evaluation="equal">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="Peripheral" resourceId="ARM" description="Peripheral ARM is not initialized" problem_level="1" source="Pins:BOARD_InitPins">
                      <feature name="initialized" evaluation="equal">
                         <data>true</data>
                      </feature>
@@ -95,6 +99,11 @@
                         <pin_feature name="pull_keeper_enable" value="Enable"/>
                         <pin_feature name="pull_up_down_config" value="Pull_Down_100K_Ohm"/>
                         <pin_feature name="hysteresis_enable" value="Disable"/>
+                     </pin_features>
+                  </pin>
+                  <pin peripheral="ARM" signal="arm_trace_swo" pin_num="48" pin_signal="GPIO_AD_09">
+                     <pin_features>
+                        <pin_feature name="slew_rate" value="Fast"/>
                      </pin_features>
                   </pin>
                </pins>
@@ -154,9 +163,9 @@
             </function>
          </functions_list>
       </pins>
-      <clocks name="Clocks" version="6.0" enabled="true" update_project_code="true">
+      <clocks name="Clocks" version="7.0" enabled="true" update_project_code="true">
          <clocks_profile>
-            <processor_version>0.0.1</processor_version>
+            <processor_version>0.7.7</processor_version>
          </clocks_profile>
          <clock_configurations>
             <clock_configuration name="BOARD_BootClockRUN">
@@ -242,7 +251,7 @@
                   <clock_output id="SAI3_MCLK1.outFreq" value="1080/17 MHz" locked="false" accuracy=""/>
                   <clock_output id="SAI3_MCLK3.outFreq" value="30 MHz" locked="false" accuracy=""/>
                   <clock_output id="SPDIF0_CLK_ROOT.outFreq" value="30 MHz" locked="false" accuracy=""/>
-                  <clock_output id="TRACE_CLK_ROOT.outFreq" value="352/3 MHz" locked="false" accuracy=""/>
+                  <clock_output id="TRACE_CLK_ROOT.outFreq" value="132 MHz" locked="false" accuracy=""/>
                   <clock_output id="UART_CLK_ROOT.outFreq" value="80 MHz" locked="false" accuracy=""/>
                </clock_outputs>
                <clock_settings>
@@ -255,7 +264,8 @@
                   <setting id="CCM.PRE_PERIPH_CLK_SEL.sel" value="CCM_ANALOG.ENET_500M_REF_CLK" locked="false"/>
                   <setting id="CCM.SAI1_CLK_SEL.sel" value="CCM_ANALOG.PLL3_PFD2_CLK" locked="false"/>
                   <setting id="CCM.SAI3_CLK_SEL.sel" value="CCM_ANALOG.PLL3_PFD2_CLK" locked="false"/>
-                  <setting id="CCM.TRACE_PODF.scale" value="3" locked="true"/>
+                  <setting id="CCM.TRACE_CLK_SEL.sel" value="CCM_ANALOG.PLL2_MAIN_CLK" locked="false"/>
+                  <setting id="CCM.TRACE_PODF.scale" value="4" locked="true"/>
                   <setting id="CCM_ANALOG.PLL2.denom" value="1" locked="false"/>
                   <setting id="CCM_ANALOG.PLL2.div" value="22" locked="false"/>
                   <setting id="CCM_ANALOG.PLL2.num" value="0" locked="false"/>
@@ -263,13 +273,20 @@
                   <setting id="CCM_ANALOG.PLL2_PFD0_BYPASS.sel" value="CCM_ANALOG.PLL2_PFD0" locked="false"/>
                   <setting id="CCM_ANALOG.PLL2_PFD1_BYPASS.sel" value="CCM_ANALOG.PLL2_PFD1" locked="false"/>
                   <setting id="CCM_ANALOG.PLL2_PFD2_BYPASS.sel" value="CCM_ANALOG.PLL2_PFD2" locked="false"/>
+                  <setting id="CCM_ANALOG.PLL2_PFD2_DIV.scale" value="18" locked="true"/>
+                  <setting id="CCM_ANALOG.PLL2_PFD2_MUL.scale" value="18" locked="true"/>
                   <setting id="CCM_ANALOG.PLL2_PFD3_BYPASS.sel" value="CCM_ANALOG.PLL2_PFD3" locked="false"/>
-                  <setting id="CCM_ANALOG.PLL2_PFD3_DIV.scale" value="20" locked="false"/>
+                  <setting id="CCM_ANALOG.PLL2_PFD3_DIV.scale" value="18" locked="true"/>
+                  <setting id="CCM_ANALOG.PLL2_PFD3_MUL.scale" value="18" locked="true"/>
                   <setting id="CCM_ANALOG.PLL3_BYPASS.sel" value="CCM_ANALOG.PLL3" locked="false"/>
                   <setting id="CCM_ANALOG.PLL3_PFD0_BYPASS.sel" value="CCM_ANALOG.PLL3_PFD0" locked="false"/>
+                  <setting id="CCM_ANALOG.PLL3_PFD0_DIV.scale" value="22" locked="true"/>
+                  <setting id="CCM_ANALOG.PLL3_PFD0_MUL.scale" value="18" locked="true"/>
                   <setting id="CCM_ANALOG.PLL3_PFD1_BYPASS.sel" value="CCM_ANALOG.PLL3_PFD1" locked="false"/>
                   <setting id="CCM_ANALOG.PLL3_PFD2_BYPASS.sel" value="CCM_ANALOG.PLL3_PFD2" locked="false"/>
                   <setting id="CCM_ANALOG.PLL3_PFD3_BYPASS.sel" value="CCM_ANALOG.PLL3_PFD3" locked="false"/>
+                  <setting id="CCM_ANALOG.PLL3_PFD3_DIV.scale" value="18" locked="true"/>
+                  <setting id="CCM_ANALOG.PLL3_PFD3_MUL.scale" value="18" locked="true"/>
                   <setting id="CCM_ANALOG.PLL6_BYPASS.sel" value="CCM_ANALOG.PLL6" locked="false"/>
                   <setting id="CCM_ANALOG_PLL_USB1_POWER_CFG" value="Yes" locked="false"/>
                </clock_settings>
@@ -283,60 +300,17 @@
          </dcdx_profile>
          <dcdx_configurations/>
       </dcdx>
-      <periphs name="Peripherals" version="6.0" enabled="true" update_project_code="true">
-         <dependencies>
-            <dependency resourceType="SWComponent" resourceId="platform.drivers.lpi2c" description="platform.drivers.lpi2c not found in the toolchain/IDE project." problem_level="2" source="Peripherals">
-               <feature name="enabled" evaluation="equal">
-                  <data type="Boolean">true</data>
-               </feature>
-            </dependency>
-            <dependency resourceType="SWComponent" resourceId="platform.drivers.lpi2c" description="Unsupported version of the platform.drivers.lpi2c in the toolchain/IDE project. Required: ${required_value}, actual: ${actual_value}." problem_level="1" source="Peripherals">
-               <feature name="version" evaluation="equivalent">
-                  <data type="Version">2.1.5</data>
-               </feature>
-            </dependency>
-            <dependency resourceType="SWComponent" resourceId="platform.drivers.gpt" description="platform.drivers.gpt not found in the toolchain/IDE project." problem_level="2" source="Peripherals">
-               <feature name="enabled" evaluation="equal">
-                  <data type="Boolean">true</data>
-               </feature>
-            </dependency>
-            <dependency resourceType="SWComponent" resourceId="platform.drivers.gpt" description="Unsupported version of the platform.drivers.gpt in the toolchain/IDE project. Required: ${required_value}, actual: ${actual_value}." problem_level="1" source="Peripherals">
-               <feature name="version" evaluation="equivalent">
-                  <data type="Version">2.0.0</data>
-               </feature>
-            </dependency>
-         </dependencies>
+      <periphs name="Peripherals" version="7.0" enabled="true" update_project_code="true">
          <peripherals_profile>
-            <processor_version>0.0.1</processor_version>
+            <processor_version>0.7.7</processor_version>
          </peripherals_profile>
          <functional_groups>
-            <functional_group name="BOARD_InitPeripherals" uuid="271551df-7af8-4807-bbd4-13e329bf3119" called_from_default_init="true" id_prefix="" core="core0">
+            <functional_group name="BOARD_InitPeripherals" uuid="8720d8af-127d-470e-a0d0-4ccc7a50ee96" called_from_default_init="true" id_prefix="" core="core0">
                <description></description>
                <options/>
-               <dependencies>
-                  <dependency resourceType="ClockOutput" resourceId="LPI2C_CLK_ROOT" description="LPI2C_CLK_ROOT is inactive." problem_level="2" source="Peripherals:BOARD_InitPeripherals">
-                     <feature name="frequency" evaluation="greaterThan">
-                        <data type="Frequency" unit="Hz">0</data>
-                     </feature>
-                  </dependency>
-                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="LPI2C1.lpi2c_scl" description="Signal serial clock of the peripheral LPI2C1 is not routed." problem_level="1" source="Peripherals:BOARD_InitPeripherals">
-                     <feature name="routed" evaluation="">
-                        <data type="Boolean">true</data>
-                     </feature>
-                  </dependency>
-                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="LPI2C1.lpi2c_sda" description="Signal serial data of the peripheral LPI2C1 is not routed." problem_level="1" source="Peripherals:BOARD_InitPeripherals">
-                     <feature name="routed" evaluation="">
-                        <data type="Boolean">true</data>
-                     </feature>
-                  </dependency>
-                  <dependency resourceType="ClockOutput" resourceId="IPG_CLK_ROOT" description="IPG_CLK_ROOT is inactive." problem_level="2" source="Peripherals:BOARD_InitPeripherals">
-                     <feature name="frequency" evaluation="greaterThan">
-                        <data type="Frequency" unit="Hz">0</data>
-                     </feature>
-                  </dependency>
-               </dependencies>
+               <dependencies/>
                <instances>
-                  <instance name="ACCEL_I2C" type="lpi2c" type_id="lpi2c_db68d4f4f06a22e25ab51fe9bd6db4d2" mode="master" peripheral="LPI2C1" enabled="true">
+                  <instance name="ACCEL_I2C" uuid="416f60cc-7720-4d97-8566-481232441334" type="lpi2c" type_id="lpi2c_db68d4f4f06a22e25ab51fe9bd6db4d2" mode="master" peripheral="LPI2C1" enabled="true" comment="" custom_name_enabled="true">
                      <config_set name="main" quick_selection="qs_interrupt">
                         <setting name="clockSource" value="Lpi2cClock"/>
                         <setting name="clockSourceFreq" value="BOARD_BootClockRUN"/>
@@ -383,7 +357,7 @@
                         </struct>
                      </config_set>
                   </instance>
-                  <instance name="TIMER" type="gpt" type_id="gpt_e92a0cbd07e389b82a1d19b05eb9fdda" mode="general" peripheral="GPT1" enabled="true">
+                  <instance name="TIMER" uuid="4ed14116-60a5-443c-be69-311cc1b7c05f" type="gpt" type_id="gpt_e92a0cbd07e389b82a1d19b05eb9fdda" mode="general" peripheral="GPT1" enabled="true" comment="" custom_name_enabled="true">
                      <config_set name="fsl_gpt">
                         <struct name="gpt_config">
                            <setting name="clockSource" value="kGPT_ClockSource_Periph"/>
@@ -431,10 +405,10 @@
             </functional_group>
          </functional_groups>
          <components>
-            <component name="system" type_id="system_54b53072540eeeb8f8e9343e71f28176">
+            <component name="system" uuid="3858a336-453c-4657-881e-81c4e5e0e0ea" type_id="system_54b53072540eeeb8f8e9343e71f28176">
                <config_set_global name="global_system_definitions"/>
             </component>
-            <component name="msg" type_id="msg_6e2baaf3b97dbeef01c0043275f9a0e7">
+            <component name="msg" uuid="738d2f25-6c98-4921-9c56-66c86eed117b" type_id="msg_6e2baaf3b97dbeef01c0043275f9a0e7">
                <config_set_global name="global_messages"/>
             </component>
          </components>

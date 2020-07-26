@@ -1,5 +1,15 @@
+/*
+ * Copyright 2016, Crank Software Inc. All Rights Reserved.
+ * 
+ * For more information email info@cranksoftware.com.
+ */
+/** \File: greal_timer.c
+ *
+ */
+
 #include <gre/sdk/greal.h>
 #include <errno.h>
+
 //RJD:  This is only needed until the pthread library has been recompiled against the 2013 or higher version of 
 // of Visual Studio.  When this is removed, fix the condition on line 94 as well. 
 #if GR_OS(win32)

@@ -18,26 +18,26 @@
  * Definitions
  ******************************************************************************/
 #define MCDRV_QD (1)
-     
+
 typedef struct _mcdrv_qd_enc_t
 {
-    AMCLIB_TRACK_OBSRV_T_FLT        sTo;                                        /* tracking observer structure */
-    ENC_Type                       *pui32QdBase;                                /* pointer to QD module base address*/  
-    float_t                        *pfltSpdMeEst;                               /* pointer to measured mechanical speed  */    
-    frac16_t                       *pf16PosElEst;                               /* pointer to measured electrical position */
-    acc32_t                         a32PosErr;                                  /* position error to tracking observer  */    
-    acc32_t                         a32PosMeGain;                               /* encoder pulses to mechanical position scale gain */ 
-    float_t                         fltSpdMeEst;                                /* estimated speed calculated using tracking observer */            
-    frac16_t                        f16PosMe;                                   /* mechanical position calculated using encoder edges */
-    frac16_t                        f16PosMeEst;                                /* estimated position calculated using tracking observer */        
-    uint16_t                        ui16Pp;                                     /* number of motor pole pairs */
-    bool_t                          bDirection;                                 /* encoder direction */  
-    float_t                         fltSpdEncMin;                               /* encoder minimal speed resolution */
-    frac16_t                        f16PosErr;                                  /* poisition error to tracking observer  */   
-    frac16_t                        f16PosMeGain;                               /* encoder pulses to mechanical position scale gain */ 
-    int16_t                         i16PosMeGainSh;                             /* encoder pulses to mechanical position scale shift */ 
-    acc32_t                         a32PosMeReal;                               /* real position (revolution counter + mechanical position) */
-    uint32_t                        ui32RevCounter;                             /* revolution counter measured by periphery */
+    AMCLIB_TRACK_OBSRV_T_FLT sTo; /* tracking observer structure */
+    ENC_Type *pui32QdBase;        /* pointer to QD module base address*/
+    float_t *pfltSpdMeEst;        /* pointer to measured mechanical speed  */
+    frac16_t *pf16PosElEst;       /* pointer to measured electrical position */
+    acc32_t a32PosErr;            /* position error to tracking observer  */
+    acc32_t a32PosMeGain;         /* encoder pulses to mechanical position scale gain */
+    float_t fltSpdMeEst;          /* estimated speed calculated using tracking observer */
+    frac16_t f16PosMe;            /* mechanical position calculated using encoder edges */
+    frac16_t f16PosMeEst;         /* estimated position calculated using tracking observer */
+    uint16_t ui16Pp;              /* number of motor pole pairs */
+    bool_t bDirection;            /* encoder direction */
+    float_t fltSpdEncMin;         /* encoder minimal speed resolution */
+    frac16_t f16PosErr;           /* poisition error to tracking observer  */
+    frac16_t f16PosMeGain;        /* encoder pulses to mechanical position scale gain */
+    int16_t i16PosMeGainSh;       /* encoder pulses to mechanical position scale shift */
+    acc32_t a32PosMeReal;         /* real position (revolution counter + mechanical position) */
+    uint32_t ui32RevCounter;      /* revolution counter measured by periphery */
 } mcdrv_qd_enc_t;
 
 /*******************************************************************************
@@ -47,7 +47,6 @@ typedef struct _mcdrv_qd_enc_t
 #ifdef __cplusplus
 extern "C" {
 #endif
-
 
 /*!
  * @brief Function returns actual position and speed
@@ -92,4 +91,3 @@ bool_t MCDRV_QdEncSetDirection(mcdrv_qd_enc_t *this);
 #endif
 
 #endif /* _MCDRV_ENC_QD_H_ */
-

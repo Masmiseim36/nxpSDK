@@ -22,12 +22,12 @@
 /* Use RGB565 or XRGB8888 */
 #define USE_RGB565 0
 
-#define APP_IMG_WIDTH DEMO_PANEL_WIDTH
-#define APP_IMG_HEIGHT DEMO_PANEL_HEIGHT
+#define APP_IMG_WIDTH  DEMO_BUFFER_WIDTH
+#define APP_IMG_HEIGHT DEMO_BUFFER_HEIGHT
 
-#define APP_PS_WIDTH (APP_IMG_WIDTH / 2U)
+#define APP_PS_WIDTH  (APP_IMG_WIDTH / 2U)
 #define APP_PS_HEIGHT (APP_IMG_HEIGHT / 2U)
-#define APP_AS_WIDTH (APP_IMG_WIDTH / 2U)
+#define APP_AS_WIDTH  (APP_IMG_WIDTH / 2U)
 #define APP_AS_HEIGHT (APP_IMG_HEIGHT / 2U)
 
 #define APP_PS_ULC_X ((APP_IMG_WIDTH / 2) - (APP_PS_SIZE / 2))
@@ -38,24 +38,24 @@
 #if USE_RGB565
 
 typedef uint16_t pixel_t;
-#define APP_BPP 2U /* Use 16-bit RGB565 format. */
-#define APP_RED 0xF100U
-#define APP_BLUE 0x001FU
-#define APP_PXP_PS_FORMAT kPXP_PsPixelFormatRGB565
-#define APP_PXP_AS_FORMAT kPXP_AsPixelFormatRGB565
+#define APP_BPP            2U /* Use 16-bit RGB565 format. */
+#define APP_RED            0xF100U
+#define APP_BLUE           0x001FU
+#define APP_PXP_PS_FORMAT  kPXP_PsPixelFormatRGB565
+#define APP_PXP_AS_FORMAT  kPXP_AsPixelFormatRGB565
 #define APP_PXP_OUT_FORMAT kPXP_OutputPixelFormatRGB565
-#define APP_DC_FORMAT kVIDEO_PixelFormatRGB565
+#define APP_DC_FORMAT      kVIDEO_PixelFormatRGB565
 
 #else
 
 typedef uint32_t pixel_t;
-#define APP_BPP 4U /* Use 32-bit XRGB888 format. */
-#define APP_RED 0x00FF0000U
-#define APP_BLUE 0x000000FFU
-#define APP_PXP_PS_FORMAT kPXP_PsPixelFormatRGB888
-#define APP_PXP_AS_FORMAT kPXP_AsPixelFormatRGB888
+#define APP_BPP            4U /* Use 32-bit XRGB888 format. */
+#define APP_RED            0x00FF0000U
+#define APP_BLUE           0x000000FFU
+#define APP_PXP_PS_FORMAT  kPXP_PsPixelFormatRGB888
+#define APP_PXP_AS_FORMAT  kPXP_AsPixelFormatRGB888
 #define APP_PXP_OUT_FORMAT kPXP_OutputPixelFormatRGB888
-#define APP_DC_FORMAT kVIDEO_PixelFormatXRGB8888
+#define APP_DC_FORMAT      kVIDEO_PixelFormatXRGB8888
 
 #endif
 
@@ -130,6 +130,8 @@ static void APP_InitLcdif(void)
     fbInfo.pixelFormat = APP_DC_FORMAT;
     fbInfo.width       = APP_IMG_WIDTH;
     fbInfo.height      = APP_IMG_HEIGHT;
+    fbInfo.startX      = DEMO_BUFFER_START_X;
+    fbInfo.startY      = DEMO_BUFFER_START_Y;
     fbInfo.strideBytes = APP_IMG_WIDTH * APP_BPP;
     g_dc.ops->setLayerConfig(&g_dc, 0, &fbInfo);
 

@@ -70,8 +70,8 @@ typedef struct _ieee11073_timer_struct
 /*! @brief agent structure */
 typedef struct _agent_struct
 {
-    void *agentHandle;    /*!< the agent handle */
-    uint8_t agentState;   /*!< the agent state */
+    void *agentHandle;  /*!< the agent handle */
+    uint8_t agentState; /*!< the agent state */
 #if IEEE_MAX_TIMER_OBJECTS
     ieee11073_timer_struct_t agentTimer[2U]; /*!< timer to implement timeout functionalities */
 #endif

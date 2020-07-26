@@ -19,8 +19,10 @@ limitations under the License.
 #ifndef TENSORFLOW_LITE_SIMPLE_MEMORY_ARENA_H_
 #define TENSORFLOW_LITE_SIMPLE_MEMORY_ARENA_H_
 
+#include <cstdint>
 #include <list>
 #include <memory>
+
 #include "tensorflow/lite/c/c_api_internal.h"
 
 namespace tflite {
@@ -52,7 +54,6 @@ class SimpleMemoryArena {
         arena_alignment_(arena_alignment),
         high_water_mark_(0),
         underlying_buffer_size_(0),
-        underlying_buffer_aligned_ptr_(0),
         allocs_() {}
 
   TfLiteStatus Allocate(TfLiteContext* context, size_t alignment, size_t size,
@@ -72,10 +73,20 @@ class SimpleMemoryArena {
   TfLiteStatus ResolveAlloc(TfLiteContext* context, const ArenaAlloc& alloc,
                             char** output_ptr);
 
-  TfLiteStatus Clear();
+  // This clears allocation details but does not release the underlying buffer.
+  // New allocations should be committed & resolved before using this arena
+  // again.
+  TfLiteStatus ClearPlan();
 
-  int64_t BasePointer() const {
-    return reinterpret_cast<int64_t>(underlying_buffer_aligned_ptr_);
+  // This releases the underlying buffer but does not clear the allocation plan.
+  // Since all associated pointers are invalidated, the arena cannot be used
+  // again until Commit() is called & tensor allocations are resolved.
+  TfLiteStatus ReleaseBuffer();
+
+  size_t GetBufferSize() { return underlying_buffer_size_; }
+
+  std::intptr_t BasePointer() const {
+    return reinterpret_cast<std::intptr_t>(underlying_buffer_aligned_ptr_);
   }
 
  private:

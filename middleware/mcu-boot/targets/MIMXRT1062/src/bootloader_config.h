@@ -1,9 +1,9 @@
 /*
-* Copyright 2017-2019 NXP
-* All rights reserved.
-*
-* SPDX-License-Identifier: BSD-3-Clause
-*/
+ * Copyright 2017-2019 NXP
+ * All rights reserved.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
 #ifndef __BOOTLOADER_CONFIG_H__
 #define __BOOTLOADER_CONFIG_H__
 
@@ -20,7 +20,6 @@
 
 #define BL_FEATURE_ROM_UART_PORT (1)
 
-
 // UART ports
 #if !defined(BL_CONFIG_LPUART_1)
 #define BL_CONFIG_LPUART_1 (BL_FEATURE_ROM_UART_PORT)
@@ -30,7 +29,7 @@
 #ifndef _DEBUG
 #define BL_CONFIG_LPUART (BL_CONFIG_LPUART_1)
 #else
-#define DEBUG_UART  LPUART1
+#define PRINT_UART LPUART1
 #define BL_TARGET_LPUART (0)
 #endif
 
@@ -82,7 +81,7 @@
 
 #if defined(BL_TARGET_RAM)
 #define BL_FEATURE_HAS_FLEXSPI_NOR_ROMAPI (0)
-#else 
+#else
 #define BL_FEATURE_HAS_FLEXSPI_NOR_ROMAPI (1)
 #endif
 
@@ -208,9 +207,7 @@
 #define BL_FEATURE_FLASH_SECTOR_SIZE (0x1000u)
 #define BL_BACKUP_APP_START (0x60080000u)
 
-#define BL_MAX_APP_SIZE     (0x40000u)
-
-
+#define BL_MAX_APP_SIZE (0x40000u)
 
 #define BL_FEATURE_FLASH_START 0x60000000u
 #define BL_FEATURE_FLASH_SIZE 0x800000u

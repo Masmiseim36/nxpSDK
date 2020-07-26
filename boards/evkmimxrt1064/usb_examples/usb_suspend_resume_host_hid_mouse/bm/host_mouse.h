@@ -77,12 +77,12 @@ typedef struct _usb_host_mouse_instance
  ******************************************************************************/
 
 /*!
-* @brief host mouse task function.
-*
-* This function implements the host mouse action, it is used to create task.
-*
-* @param param   the host mouse instance pointer.
-*/
+ * @brief host mouse task function.
+ *
+ * This function implements the host mouse action, it is used to create task.
+ *
+ * @param param   the host mouse instance pointer.
+ */
 extern void USB_HostHidMouseTask(void *param);
 
 /*!

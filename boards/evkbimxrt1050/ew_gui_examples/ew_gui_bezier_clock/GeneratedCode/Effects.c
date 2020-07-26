@@ -7,18 +7,22 @@
 *
 ********************************************************************************
 *
+* This software is delivered "as is" and shows the usage of other software 
+* components. It is provided as an example software which is intended to be 
+* modified and extended according to particular requirements.
+* 
+* TARA Systems hereby disclaims all warranties and conditions with regard to the
+* software, including all implied warranties and conditions of merchantability 
+* and non-infringement of any third party IPR or other rights which may result 
+* from the use or the inability to use the software.
+*
 * This file was generated automatically by Embedded Wizard Studio.
 *
 * Please do not make any modifications of this file! The modifications are lost
 * when the file is generated again by Embedded Wizard Studio!
 *
-* The template of this heading text can be found in the file 'head.ewt' in the
-* directory 'Platforms' of your Embedded Wizard installation directory. If you
-* wish to adapt this text, please copy the template file 'head.ewt' into your
-* project directory and edit the copy only. Please avoid any modifications of
-* the original template file!
-*
-* Version  : 9.20
+* Version  : 9.30
+* Date     : 14.02.2020  8:00:50
 * Profile  : iMX_RT
 * Platform : NXP.iMX_RT.RGB565
 *
@@ -47,24 +51,23 @@
 /* Compressed strings for the language 'Default'. */
 static const unsigned int _StringsDefault0[] =
 {
-  0x000001A6, /* ratio 54.03 % */
-  0xB8008700, 0x00000452, 0x00E4002A, 0x0D2003C8, 0xCE003700, 0x80010000, 0x1337800E,
-  0x03280213, 0x0045CDA0, 0x0C663676, 0x000CD193, 0x2A446492, 0x215268A4, 0x49148F46,
-  0x7248B452, 0x0035800E, 0x03BC6458, 0x00434D00, 0x74667A63, 0xD0263368, 0x9CEA008A,
-  0xE986C004, 0x950A8CC2, 0x10E88442, 0x298344A2, 0x283C1606, 0xA5CB2394, 0x04AE3929,
-  0x47231290, 0x204F109B, 0x644628A5, 0x33568C53, 0x5338C45A, 0x4BB95128, 0xE834E26D,
-  0x8441AB43, 0x8D56190A, 0x582E9788, 0x1E4B23B2, 0x71385B16, 0x73379ADD, 0xD47BB4EE,
-  0x46BBC527, 0x4A545A83, 0x865369B2, 0x1C3EA314, 0x002AF83D, 0x76FF04B5, 0x65528C55,
-  0xDF1CB6C6, 0x7458968E, 0x1C855369, 0x6A46835B, 0xC8522658, 0x0F0A0D7B, 0x00000008,
-  0x00000000
+  0x0000019E, /* ratio 53.14 % */
+  0xB8008500, 0x000A8452, 0x00F20039, 0x0DC00348, 0x40003380, 0xE003A000, 0x0083C44D,
+  0x536800CA, 0x8C9D8011, 0x345CC317, 0x19244003, 0x92250890, 0xA3916844, 0x29129144,
+  0x60039C8A, 0x1716000D, 0xB34000EF, 0x9D98C010, 0x7CD21917, 0x802273E9, 0xB001253A,
+  0x22F09A51, 0x1D0EA442, 0x11087432, 0x03140000, 0xA8D5020B, 0x8D49E932, 0xB49C0129,
+  0xC3A691A8, 0x8A254613, 0x22D4B901, 0x2D148BD5, 0x142A04C6, 0x369A526E, 0x6AC8F6AD,
+  0xA9C2A110, 0xF5CAED0F, 0x48E4362A, 0x1B0560C2, 0xE6B33B9E, 0x8B749CCD, 0x975894F2,
+  0x488A4FE8, 0xAA5D2E45, 0x86D3E250, 0x055701A0, 0xD6EF8260, 0x5E5126C3, 0x2DB1AB5C,
+  0x93438868, 0x31A8452E, 0x83A36775, 0x9C6D1A61, 0x80EFAAD7, 0x00000000
 };
 
 /* Constant values used in this 'C' module only. */
 static const XPoint _Const0000 = { 100, 100 };
-static const XStringRes _Const0001 = { _StringsDefault0, 0x0003 };
-static const XStringRes _Const0002 = { _StringsDefault0, 0x0046 };
-static const XStringRes _Const0003 = { _StringsDefault0, 0x006F };
-static const XStringRes _Const0004 = { _StringsDefault0, 0x00AD };
+static const XStringRes _Const0001 = { _StringsDefault0, 0x0002 };
+static const XStringRes _Const0002 = { _StringsDefault0, 0x0044 };
+static const XStringRes _Const0003 = { _StringsDefault0, 0x006C };
+static const XStringRes _Const0004 = { _StringsDefault0, 0x00A9 };
 
 #ifndef EW_DONT_CHECK_INDEX
   /* This function is used to check the indices when accessing an array.
@@ -93,6 +96,9 @@ void EffectsEffect__Init( EffectsEffect _this, XObject aLink, XHandle aArg )
   /* At first initialize the super class ... */
   XObject__Init( &_this->_Super, aLink, aArg );
 
+  /* Allow the Immediate Garbage Collection to evalute the members of this class. */
+  _this->_GCT = EW_CLASS_GCT( EffectsEffect );
+
   /* Setup the VMT pointer */
   _this->_VMT = EW_CLASS( EffectsEffect );
 
@@ -118,7 +124,7 @@ void EffectsEffect__ReInit( EffectsEffect _this )
 void EffectsEffect__Done( EffectsEffect _this )
 {
   /* Finalize this class */
-  _this->_VMT = EW_CLASS( EffectsEffect );
+  _this->_Super._VMT = EW_CLASS( XObject );
 
   /* Don't forget to deinitialize the super class ... */
   XObject__Done( &_this->_Super );
@@ -1022,7 +1028,7 @@ EW_END_OF_CLASS_VARIANTS( EffectsEffect )
 
 /* Virtual Method Table (VMT) for the class : 'Effects::Effect' */
 EW_DEFINE_CLASS( EffectsEffect, XObject, timingList, privateOnFinished, direction, 
-                 direction, direction, "Effects::Effect" )
+                 direction, direction, direction, "Effects::Effect" )
   EffectsEffect_Animate,
 EW_END_OF_CLASS( EffectsEffect )
 
@@ -1031,6 +1037,9 @@ void EffectsInt32Effect__Init( EffectsInt32Effect _this, XObject aLink, XHandle 
 {
   /* At first initialize the super class ... */
   EffectsEffect__Init( &_this->_Super, aLink, aArg );
+
+  /* Allow the Immediate Garbage Collection to evalute the members of this class. */
+  _this->_GCT = EW_CLASS_GCT( EffectsInt32Effect );
 
   /* Setup the VMT pointer */
   _this->_VMT = EW_CLASS( EffectsInt32Effect );
@@ -1050,7 +1059,7 @@ void EffectsInt32Effect__ReInit( EffectsInt32Effect _this )
 void EffectsInt32Effect__Done( EffectsInt32Effect _this )
 {
   /* Finalize this class */
-  _this->_VMT = EW_CLASS( EffectsInt32Effect );
+  _this->_Super._VMT = EW_CLASS( EffectsEffect );
 
   /* Don't forget to deinitialize the super class ... */
   EffectsEffect__Done( &_this->_Super );
@@ -1072,7 +1081,7 @@ EW_END_OF_CLASS_VARIANTS( EffectsInt32Effect )
 
 /* Virtual Method Table (VMT) for the class : 'Effects::Int32Effect' */
 EW_DEFINE_CLASS( EffectsInt32Effect, EffectsEffect, Outlet, Outlet, Outlet, Value, 
-                 Value, "Effects::Int32Effect" )
+                 Value, Value, "Effects::Int32Effect" )
   EffectsInt32Effect_Animate,
 EW_END_OF_CLASS( EffectsInt32Effect )
 
@@ -1081,6 +1090,9 @@ void EffectsPointEffect__Init( EffectsPointEffect _this, XObject aLink, XHandle 
 {
   /* At first initialize the super class ... */
   EffectsEffect__Init( &_this->_Super, aLink, aArg );
+
+  /* Allow the Immediate Garbage Collection to evalute the members of this class. */
+  _this->_GCT = EW_CLASS_GCT( EffectsPointEffect );
 
   /* Setup the VMT pointer */
   _this->_VMT = EW_CLASS( EffectsPointEffect );
@@ -1100,7 +1112,7 @@ void EffectsPointEffect__ReInit( EffectsPointEffect _this )
 void EffectsPointEffect__Done( EffectsPointEffect _this )
 {
   /* Finalize this class */
-  _this->_VMT = EW_CLASS( EffectsPointEffect );
+  _this->_Super._VMT = EW_CLASS( EffectsEffect );
 
   /* Don't forget to deinitialize the super class ... */
   EffectsEffect__Done( &_this->_Super );
@@ -1126,7 +1138,7 @@ EW_END_OF_CLASS_VARIANTS( EffectsPointEffect )
 
 /* Virtual Method Table (VMT) for the class : 'Effects::PointEffect' */
 EW_DEFINE_CLASS( EffectsPointEffect, EffectsEffect, Outlet, Outlet, Outlet, Value, 
-                 Value, "Effects::PointEffect" )
+                 Value, Value, "Effects::PointEffect" )
   EffectsPointEffect_Animate,
 EW_END_OF_CLASS( EffectsPointEffect )
 
@@ -1135,6 +1147,9 @@ void EffectsFloatEffect__Init( EffectsFloatEffect _this, XObject aLink, XHandle 
 {
   /* At first initialize the super class ... */
   EffectsEffect__Init( &_this->_Super, aLink, aArg );
+
+  /* Allow the Immediate Garbage Collection to evalute the members of this class. */
+  _this->_GCT = EW_CLASS_GCT( EffectsFloatEffect );
 
   /* Setup the VMT pointer */
   _this->_VMT = EW_CLASS( EffectsFloatEffect );
@@ -1154,7 +1169,7 @@ void EffectsFloatEffect__ReInit( EffectsFloatEffect _this )
 void EffectsFloatEffect__Done( EffectsFloatEffect _this )
 {
   /* Finalize this class */
-  _this->_VMT = EW_CLASS( EffectsFloatEffect );
+  _this->_Super._VMT = EW_CLASS( EffectsEffect );
 
   /* Don't forget to deinitialize the super class ... */
   EffectsEffect__Done( &_this->_Super );
@@ -1175,7 +1190,7 @@ EW_END_OF_CLASS_VARIANTS( EffectsFloatEffect )
 
 /* Virtual Method Table (VMT) for the class : 'Effects::FloatEffect' */
 EW_DEFINE_CLASS( EffectsFloatEffect, EffectsEffect, Outlet, Outlet, Outlet, Value, 
-                 Value, "Effects::FloatEffect" )
+                 Value, Value, "Effects::FloatEffect" )
   EffectsFloatEffect_Animate,
 EW_END_OF_CLASS( EffectsFloatEffect )
 
@@ -1184,6 +1199,9 @@ void EffectsFader__Init( EffectsFader _this, XObject aLink, XHandle aArg )
 {
   /* At first initialize the super class ... */
   XObject__Init( &_this->_Super, aLink, aArg );
+
+  /* Allow the Immediate Garbage Collection to evalute the members of this class. */
+  _this->_GCT = EW_CLASS_GCT( EffectsFader );
 
   /* Setup the VMT pointer */
   _this->_VMT = EW_CLASS( EffectsFader );
@@ -1207,7 +1225,7 @@ void EffectsFader__ReInit( EffectsFader _this )
 void EffectsFader__Done( EffectsFader _this )
 {
   /* Finalize this class */
-  _this->_VMT = EW_CLASS( EffectsFader );
+  _this->_Super._VMT = EW_CLASS( XObject );
 
   /* Don't forget to deinitialize the super class ... */
   XObject__Done( &_this->_Super );
@@ -1298,7 +1316,7 @@ EW_END_OF_CLASS_VARIANTS( EffectsFader )
 
 /* Virtual Method Table (VMT) for the class : 'Effects::Fader' */
 EW_DEFINE_CLASS( EffectsFader, XObject, task, onCancel, Visible, Visible, Visible, 
-                 "Effects::Fader" )
+                 Visible, "Effects::Fader" )
   EffectsFader_IsFinished,
   EffectsFader_OnEnd,
   EffectsFader_OnStart,
@@ -1309,6 +1327,9 @@ void EffectsVisibilityFader__Init( EffectsVisibilityFader _this, XObject aLink, 
 {
   /* At first initialize the super class ... */
   EffectsFader__Init( &_this->_Super, aLink, aArg );
+
+  /* Allow the Immediate Garbage Collection to evalute the members of this class. */
+  _this->_GCT = EW_CLASS_GCT( EffectsVisibilityFader );
 
   /* Setup the VMT pointer */
   _this->_VMT = EW_CLASS( EffectsVisibilityFader );
@@ -1328,7 +1349,7 @@ void EffectsVisibilityFader__ReInit( EffectsVisibilityFader _this )
 void EffectsVisibilityFader__Done( EffectsVisibilityFader _this )
 {
   /* Finalize this class */
-  _this->_VMT = EW_CLASS( EffectsVisibilityFader );
+  _this->_Super._VMT = EW_CLASS( EffectsFader );
 
   /* Don't forget to deinitialize the super class ... */
   EffectsFader__Done( &_this->_Super );
@@ -1434,7 +1455,7 @@ EW_END_OF_CLASS_VARIANTS( EffectsVisibilityFader )
 
 /* Virtual Method Table (VMT) for the class : 'Effects::VisibilityFader' */
 EW_DEFINE_CLASS( EffectsVisibilityFader, EffectsFader, _None, _None, _None, _None, 
-                 _None, "Effects::VisibilityFader" )
+                 _None, _None, "Effects::VisibilityFader" )
   EffectsVisibilityFader_IsFinished,
   EffectsVisibilityFader_OnEnd,
   EffectsVisibilityFader_OnStart,
@@ -1445,6 +1466,9 @@ void EffectsPositionFader__Init( EffectsPositionFader _this, XObject aLink, XHan
 {
   /* At first initialize the super class ... */
   EffectsFader__Init( &_this->_Super, aLink, aArg );
+
+  /* Allow the Immediate Garbage Collection to evalute the members of this class. */
+  _this->_GCT = EW_CLASS_GCT( EffectsPositionFader );
 
   /* ... then construct all embedded objects */
   EffectsInt32Effect__Init( &_this->OpacityEffect, &_this->_XObject, 0 );
@@ -1469,7 +1493,7 @@ void EffectsPositionFader__ReInit( EffectsPositionFader _this )
 void EffectsPositionFader__Done( EffectsPositionFader _this )
 {
   /* Finalize this class */
-  _this->_VMT = EW_CLASS( EffectsPositionFader );
+  _this->_Super._VMT = EW_CLASS( EffectsFader );
 
   /* Finalize all embedded objects */
   EffectsInt32Effect__Done( &_this->OpacityEffect );
@@ -1678,7 +1702,7 @@ EW_END_OF_CLASS_VARIANTS( EffectsPositionFader )
 
 /* Virtual Method Table (VMT) for the class : 'Effects::PositionFader' */
 EW_DEFINE_CLASS( EffectsPositionFader, EffectsFader, OpacityEffect, OpacityEffect, 
-                 OpacityEffect, OpacityEffect, Buffered, "Effects::PositionFader" )
+                 OpacityEffect, OpacityEffect, Buffered, Buffered, "Effects::PositionFader" )
   EffectsPositionFader_IsFinished,
   EffectsPositionFader_OnEnd,
   EffectsPositionFader_OnStart,
@@ -1689,6 +1713,9 @@ void EffectsTransition__Init( EffectsTransition _this, XObject aLink, XHandle aA
 {
   /* At first initialize the super class ... */
   XObject__Init( &_this->_Super, aLink, aArg );
+
+  /* Allow the Immediate Garbage Collection to evalute the members of this class. */
+  _this->_GCT = EW_CLASS_GCT( EffectsTransition );
 
   /* Setup the VMT pointer */
   _this->_VMT = EW_CLASS( EffectsTransition );
@@ -1705,7 +1732,7 @@ void EffectsTransition__ReInit( EffectsTransition _this )
 void EffectsTransition__Done( EffectsTransition _this )
 {
   /* Finalize this class */
-  _this->_VMT = EW_CLASS( EffectsTransition );
+  _this->_Super._VMT = EW_CLASS( XObject );
 
   /* Don't forget to deinitialize the super class ... */
   XObject__Done( &_this->_Super );
@@ -1795,7 +1822,7 @@ EW_END_OF_CLASS_VARIANTS( EffectsTransition )
 
 /* Virtual Method Table (VMT) for the class : 'Effects::Transition' */
 EW_DEFINE_CLASS( EffectsTransition, XObject, _None, _None, _None, _None, _None, 
-                 "Effects::Transition" )
+                 _None, "Effects::Transition" )
   EffectsTransition_CreatePresentFader,
   EffectsTransition_CreateDismissFader,
   EffectsTransition_CreateRestoreFader,
@@ -1807,6 +1834,9 @@ void EffectsShowHideTransition__Init( EffectsShowHideTransition _this, XObject a
 {
   /* At first initialize the super class ... */
   EffectsTransition__Init( &_this->_Super, aLink, aArg );
+
+  /* Allow the Immediate Garbage Collection to evalute the members of this class. */
+  _this->_GCT = EW_CLASS_GCT( EffectsShowHideTransition );
 
   /* Setup the VMT pointer */
   _this->_VMT = EW_CLASS( EffectsShowHideTransition );
@@ -1827,7 +1857,7 @@ void EffectsShowHideTransition__ReInit( EffectsShowHideTransition _this )
 void EffectsShowHideTransition__Done( EffectsShowHideTransition _this )
 {
   /* Finalize this class */
-  _this->_VMT = EW_CLASS( EffectsShowHideTransition );
+  _this->_Super._VMT = EW_CLASS( EffectsTransition );
 
   /* Don't forget to deinitialize the super class ... */
   EffectsTransition__Done( &_this->_Super );
@@ -1940,7 +1970,7 @@ EW_END_OF_CLASS_VARIANTS( EffectsShowHideTransition )
 
 /* Virtual Method Table (VMT) for the class : 'Effects::ShowHideTransition' */
 EW_DEFINE_CLASS( EffectsShowHideTransition, EffectsTransition, _None, _None, _None, 
-                 _None, _None, "Effects::ShowHideTransition" )
+                 _None, _None, _None, "Effects::ShowHideTransition" )
   EffectsShowHideTransition_CreatePresentFader,
   EffectsShowHideTransition_CreateDismissFader,
   EffectsShowHideTransition_CreateRestoreFader,
@@ -1952,6 +1982,9 @@ void EffectsSlideTransition__Init( EffectsSlideTransition _this, XObject aLink, 
 {
   /* At first initialize the super class ... */
   EffectsTransition__Init( &_this->_Super, aLink, aArg );
+
+  /* Allow the Immediate Garbage Collection to evalute the members of this class. */
+  _this->_GCT = EW_CLASS_GCT( EffectsSlideTransition );
 
   /* Setup the VMT pointer */
   _this->_VMT = EW_CLASS( EffectsSlideTransition );
@@ -1979,7 +2012,7 @@ void EffectsSlideTransition__ReInit( EffectsSlideTransition _this )
 void EffectsSlideTransition__Done( EffectsSlideTransition _this )
 {
   /* Finalize this class */
-  _this->_VMT = EW_CLASS( EffectsSlideTransition );
+  _this->_Super._VMT = EW_CLASS( EffectsTransition );
 
   /* Don't forget to deinitialize the super class ... */
   EffectsTransition__Done( &_this->_Super );
@@ -2232,7 +2265,7 @@ EW_END_OF_CLASS_VARIANTS( EffectsSlideTransition )
 
 /* Virtual Method Table (VMT) for the class : 'Effects::SlideTransition' */
 EW_DEFINE_CLASS( EffectsSlideTransition, EffectsTransition, _None, _None, _None, 
-                 _None, _None, "Effects::SlideTransition" )
+                 _None, _None, _None, "Effects::SlideTransition" )
   EffectsSlideTransition_CreatePresentFader,
   EffectsSlideTransition_CreateDismissFader,
   EffectsSlideTransition_CreateRestoreFader,
@@ -2244,6 +2277,9 @@ void EffectsEffectTimerClass__Init( EffectsEffectTimerClass _this, XObject aLink
 {
   /* At first initialize the super class ... */
   CoreTimer__Init( &_this->_Super, aLink, aArg );
+
+  /* Allow the Immediate Garbage Collection to evalute the members of this class. */
+  _this->_GCT = EW_CLASS_GCT( EffectsEffectTimerClass );
 
   /* Setup the VMT pointer */
   _this->_VMT = EW_CLASS( EffectsEffectTimerClass );
@@ -2260,7 +2296,7 @@ void EffectsEffectTimerClass__ReInit( EffectsEffectTimerClass _this )
 void EffectsEffectTimerClass__Done( EffectsEffectTimerClass _this )
 {
   /* Finalize this class */
-  _this->_VMT = EW_CLASS( EffectsEffectTimerClass );
+  _this->_Super._VMT = EW_CLASS( CoreTimer );
 
   /* Don't forget to deinitialize the super class ... */
   CoreTimer__Done( &_this->_Super );
@@ -2282,7 +2318,7 @@ EW_END_OF_CLASS_VARIANTS( EffectsEffectTimerClass )
 
 /* Virtual Method Table (VMT) for the class : 'Effects::EffectTimerClass' */
 EW_DEFINE_CLASS( EffectsEffectTimerClass, CoreTimer, _None, _None, _None, _None, 
-                 _None, "Effects::EffectTimerClass" )
+                 _None, _None, "Effects::EffectTimerClass" )
   EffectsEffectTimerClass_Trigger,
 EW_END_OF_CLASS( EffectsEffectTimerClass )
 
@@ -2306,6 +2342,9 @@ void EffectsTimingList__Init( EffectsTimingList _this, XObject aLink, XHandle aA
   /* At first initialize the super class ... */
   XObject__Init( &_this->_Super, aLink, aArg );
 
+  /* Allow the Immediate Garbage Collection to evalute the members of this class. */
+  _this->_GCT = EW_CLASS_GCT( EffectsTimingList );
+
   /* Setup the VMT pointer */
   _this->_VMT = EW_CLASS( EffectsTimingList );
 }
@@ -2321,7 +2360,7 @@ void EffectsTimingList__ReInit( EffectsTimingList _this )
 void EffectsTimingList__Done( EffectsTimingList _this )
 {
   /* Finalize this class */
-  _this->_VMT = EW_CLASS( EffectsTimingList );
+  _this->_Super._VMT = EW_CLASS( XObject );
 
   /* Don't forget to deinitialize the super class ... */
   XObject__Done( &_this->_Super );
@@ -2333,7 +2372,7 @@ EW_END_OF_CLASS_VARIANTS( EffectsTimingList )
 
 /* Virtual Method Table (VMT) for the class : 'Effects::TimingList' */
 EW_DEFINE_CLASS( EffectsTimingList, XObject, _None, _None, _None, _None, _None, 
-                 "Effects::TimingList" )
+                 _None, "Effects::TimingList" )
 EW_END_OF_CLASS( EffectsTimingList )
 
 /* Initializer for the class 'Effects::FaderTask' */
@@ -2341,6 +2380,9 @@ void EffectsFaderTask__Init( EffectsFaderTask _this, XObject aLink, XHandle aArg
 {
   /* At first initialize the super class ... */
   CoreTask__Init( &_this->_Super, aLink, aArg );
+
+  /* Allow the Immediate Garbage Collection to evalute the members of this class. */
+  _this->_GCT = EW_CLASS_GCT( EffectsFaderTask );
 
   /* Setup the VMT pointer */
   _this->_VMT = EW_CLASS( EffectsFaderTask );
@@ -2357,7 +2399,7 @@ void EffectsFaderTask__ReInit( EffectsFaderTask _this )
 void EffectsFaderTask__Done( EffectsFaderTask _this )
 {
   /* Finalize this class */
-  _this->_VMT = EW_CLASS( EffectsFaderTask );
+  _this->_Super._VMT = EW_CLASS( CoreTask );
 
   /* Don't forget to deinitialize the super class ... */
   CoreTask__Done( &_this->_Super );
@@ -2562,7 +2604,8 @@ EW_DEFINE_CLASS_VARIANTS( EffectsFaderTask )
 EW_END_OF_CLASS_VARIANTS( EffectsFaderTask )
 
 /* Virtual Method Table (VMT) for the class : 'Effects::FaderTask' */
-EW_DEFINE_CLASS( EffectsFaderTask, CoreTask, last, _None, _None, _None, _None, "Effects::FaderTask" )
+EW_DEFINE_CLASS( EffectsFaderTask, CoreTask, last, _None, _None, _None, _None, _None, 
+                 "Effects::FaderTask" )
   EffectsFaderTask_OnComplete,
   EffectsFaderTask_OnCancel,
   EffectsFaderTask_OnStart,

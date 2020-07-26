@@ -12,6 +12,13 @@
  ******************************************************************************/
 SDK_ALIGN(uint32_t g_sdmmc[SDK_SIZEALIGN(SDMMC_GLOBAL_BUFFER_SIZE, SDMMC_DATA_BUFFER_ALIGN_CACHE)],
           MAX(SDMMC_DATA_BUFFER_ALIGN_CACHE, SDMMCHOST_DMA_BUFFER_ADDR_ALIGN));
+#ifdef SDMMC_ENABLE_SOFTWARE_TUNING
+/* sdmmc tuning block */
+static uint32_t SDMMC_TuningBlockPattern4Bit[16U] = {
+    0xFF0FFF00, 0xFFCCC3CC, 0xC33CCCFF, 0xFEFFFEEF, 0xFFDFFFDD, 0xFFFBFFFB, 0xBFFF7FFF, 0x77F7BDEF,
+    0xFFF0FFF0, 0x0FFCCC3C, 0xCC33CCCF, 0xFFEFFFEE, 0xFFFDFFFD, 0xDFFFBFFF, 0xBBFFF7FF, 0xF77F7BDE,
+};
+#endif
 /*******************************************************************************
  * Code
  ******************************************************************************/
@@ -323,6 +330,7 @@ status_t SDMMC_SwitchToVoltage(SDMMCHOST_TYPE *base,
     }
 }
 
+#ifndef SDMMC_ENABLE_SOFTWARE_TUNING
 status_t SDMMC_ExecuteTuning(SDMMCHOST_TYPE *base,
                              SDMMCHOST_TRANSFER_FUNCTION transfer,
                              uint32_t tuningCmd,
@@ -385,9 +393,100 @@ status_t SDMMC_ExecuteTuning(SDMMCHOST_TYPE *base,
         return kStatus_SDMMC_TuningFail;
     }
 
-#if !SDMMC_ENABLE_SOFTWARE_TUNING
     SDMMCHOST_AUTO_TUNING_ENABLE(base, true);
-#endif
 
     return kStatus_Success;
 }
+#else
+
+status_t SDMMC_CheckTuningResult(uint32_t *buffer, uint32_t size)
+{
+    uint32_t i = 0U;
+
+    for (i = 0U; i < size / sizeof(uint32_t); i++)
+    {
+        if (SDMMC_TuningBlockPattern4Bit[i] != SWAP_WORD_BYTE_SEQUENCE(buffer[i]))
+        {
+#if SDMMC_ENABLE_LOG_PRINT
+            SDMMC_LOG("tuning unmatch target: %x, read :%x\r\n", SDMMC_TuningBlockPattern4Bit[i],
+                      SWAP_WORD_BYTE_SEQUENCE(buffer[i]));
+#endif
+            return kStatus_SDMMC_TuningFail;
+        }
+    }
+
+    return kStatus_Success;
+}
+
+status_t SDMMC_ExecuteManualTuning(SDMMCHOST_TYPE *base, uint32_t tuningCmd, uint32_t blockSize)
+{
+    uint32_t buffer[32U]         = {0U};
+    uint32_t tuningDelayCell     = 0U;
+    uint32_t validDelayCellStart = 0U;
+    bool validWindowFound        = false;
+    uint32_t validWindowCounter  = 0U;
+    status_t ret                 = kStatus_Success;
+
+    SDMMCHOST_EXECUTE_MANUAL_TUNING_ENABLE(base, true);
+
+    while (true)
+    {
+        SDMMCHOST_ADJUST_TUNING_DELAY(base, tuningDelayCell);
+
+        SDMMCHOST_ReceiveTuningBlock(base, tuningCmd, buffer, blockSize);
+
+        if (kStatus_Success == SDMMC_CheckTuningResult(buffer, blockSize))
+        {
+            if (validWindowFound == false)
+            {
+                validDelayCellStart = tuningDelayCell;
+                validWindowFound    = true;
+            }
+
+            if ((validWindowCounter + validDelayCellStart) != tuningDelayCell)
+            {
+                validWindowFound   = false;
+                validWindowCounter = 0U;
+            }
+
+            validWindowCounter++;
+
+#if SDMMC_ENABLE_LOG_PRINT
+            SDMMC_LOG("tuning pass point: %d\r\n", tuningDelayCell);
+#endif
+        }
+        else
+        {
+            if ((validWindowFound) && (validWindowCounter > 2U))
+            {
+                break;
+            }
+        }
+
+        if (++tuningDelayCell >= SDMMCHOST_MAX_TUNING_DELAY_CELL)
+        {
+            break;
+        }
+
+        memset(buffer, 0U, sizeof(buffer));
+
+        SDMMCHOST_Delay(2U);
+    }
+    memset(buffer, 0U, sizeof(buffer));
+
+    SDMMCHOST_Delay(2U);
+
+    /* select middle position of the window */
+    SDMMCHOST_ADJUST_TUNING_DELAY(base, validDelayCellStart + validWindowCounter / 2U);
+    /* send tuning block with the average delay cell */
+    SDMMCHOST_ReceiveTuningBlock(base, tuningCmd, buffer, blockSize);
+    ret = SDMMC_CheckTuningResult(buffer, blockSize);
+    /* abort tuning */
+    SDMMCHOST_EXECUTE_MANUAL_TUNING_ENABLE(base, false);
+
+    /* enable auto tuning */
+    SDMMCHOST_AUTO_TUNING_ENABLE(base, true);
+
+    return ret;
+}
+#endif

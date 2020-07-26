@@ -117,7 +117,7 @@ struct GemmParams {
   //
   // Either none or both of multiplier_exponent_perchannel and
   // multiplier_fixedpoint_perchannel must be nullptr.
-  const int* multiplier_exponent_perchannel = nullptr;
+  const int32* multiplier_exponent_perchannel = nullptr;
   // The bias vector data, if not null.
   const AccumScalar* bias = nullptr;
   // min clamp bound of destination values.
@@ -158,20 +158,12 @@ void ValidateGemmParams(
     TFLITE_DCHECK(!params.multiplier_exponent_perchannel);
   } else if (quantization_flavor ==
              QuantizationFlavor::kIntegerWithUniformMultiplier) {
-    // For now require a bias vector. Ruy does not care, but for gemmlowp
-    // it's a separate instantiation of the whole GEMM, so we save a lot of
-    // binary size by requiring a bias vector, and that's what we've been
-    // doing all along in our usage of gemmlowp, so somehow that must
-    // be OK with all existing users.
-    TFLITE_DCHECK(params.bias);
     TFLITE_DCHECK(params.multiplier_fixedpoint);
     // Nothing to check about multiplier_exponent
     TFLITE_DCHECK(!params.multiplier_fixedpoint_perchannel);
     TFLITE_DCHECK(!params.multiplier_exponent_perchannel);
   } else if (quantization_flavor ==
              QuantizationFlavor::kIntegerWithPerRowMultiplier) {
-    // See above comment about requiring bias.
-    TFLITE_DCHECK(params.bias);
     TFLITE_DCHECK(!params.multiplier_fixedpoint);
     TFLITE_DCHECK(!params.multiplier_exponent);
     TFLITE_DCHECK(params.multiplier_fixedpoint_perchannel);

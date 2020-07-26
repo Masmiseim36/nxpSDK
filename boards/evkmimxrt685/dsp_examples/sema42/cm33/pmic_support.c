@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP
+ * Copyright 2019-2020 NXP
  * All rights reserved.
  *
  *
@@ -32,13 +32,11 @@ static const pca9420_sw1_out_t pca9420VoltLevel[5] = {
     kPCA9420_Sw1OutVolt1V150, kPCA9420_Sw1OutVolt1V000, kPCA9420_Sw1OutVolt0V900,
     kPCA9420_Sw1OutVolt0V800, kPCA9420_Sw1OutVolt0V700,
 };
+static bool pmicVoltChangedForDeepSleep;
 
 /* Frequency levels defined in power library. */
 extern const uint32_t powerMainFreqLevel[2][4];
 extern const uint32_t powerDspFreqLevel[2][4];
-/* Functions defined in power library. */
-extern void POWER_DisableLVD(void);
-extern void POWER_RestoreLVD(void);
 
 /*******************************************************************************
  * Code
@@ -67,7 +65,6 @@ void BOARD_InitPmic(void)
     PCA9420_GetDefaultConfig(&pca9420Config);
     pca9420Config.I2C_SendFunc    = BOARD_PMIC_I2C_Send;
     pca9420Config.I2C_ReceiveFunc = BOARD_PMIC_I2C_Receive;
-    pca9420Config.powerGoodEnable = kPCA9420_PGoodDisabled;
     PCA9420_Init(&pca9420Handle, &pca9420Config);
 }
 
@@ -106,6 +103,9 @@ void BOARD_SetPmicVoltageForFreq(power_part_temp_range temp_range, uint32_t main
         {
             PMIC_DECREASE_LVD_LEVEL_IF_HIGHER_THAN(lvdVolt, kLvdFallingTripVol_885);
         }
+        else
+        {
+        }
     }
 
     /* Configure vddcore voltage value */
@@ -115,5 +115,39 @@ void BOARD_SetPmicVoltageForFreq(power_part_temp_range temp_range, uint32_t main
     if (volt >= kPCA9420_Sw1OutVolt0V800)
     {
         POWER_RestoreLVD();
+    }
+}
+
+void BOARD_SetPmicVoltageBeforeDeepSleep(void)
+{
+    PCA9420_GetCurrentMode(&pca9420Handle, &pca9420CurrMode);
+    PCA9420_ReadModeConfigs(&pca9420Handle, pca9420CurrMode, &pca9420CurrModeCfg, 1);
+
+    if (pca9420CurrModeCfg.sw1OutVolt == kPCA9420_Sw1OutVolt0V700)
+    {
+        pmicVoltChangedForDeepSleep = true;
+        /* On resume from deep sleep with external PMIC, LVD is always used even if we have already disabled it.
+         * Here we need to set up a safe threshold to avoid LVD reset and interrupt. */
+        POWER_SetLvdFallingTripVoltage(kLvdFallingTripVol_720);
+        pca9420CurrModeCfg.sw1OutVolt = kPCA9420_Sw1OutVolt0V750;
+        PCA9420_WriteModeConfigs(&pca9420Handle, pca9420CurrMode, &pca9420CurrModeCfg, 1);
+    }
+    else
+    {
+    }
+}
+
+void BOARD_RestorePmicVoltageAfterDeepSleep(void)
+{
+    if (pmicVoltChangedForDeepSleep)
+    {
+        PCA9420_GetCurrentMode(&pca9420Handle, &pca9420CurrMode);
+        PCA9420_ReadModeConfigs(&pca9420Handle, pca9420CurrMode, &pca9420CurrModeCfg, 1);
+        pca9420CurrModeCfg.sw1OutVolt = kPCA9420_Sw1OutVolt0V700;
+        PCA9420_WriteModeConfigs(&pca9420Handle, pca9420CurrMode, &pca9420CurrModeCfg, 1);
+        pmicVoltChangedForDeepSleep = false;
+    }
+    else
+    {
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 NXP
+ * Copyright 2017-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -18,17 +18,25 @@
  * Definitions
  ******************************************************************************/
 /* The QTMR instance/channel used for board */
-#define BOARD_QTMR_BASEADDR TMR3
+#define BOARD_QTMR_BASEADDR              TMR3
 #define BOARD_QTMR_INPUT_CAPTURE_CHANNEL kQTMR_Channel_0
-#define BOARD_QTMR_PWM_CHANNEL kQTMR_Channel_1
-#define QTMR_CounterInputPin kQTMR_Counter0InputPin
+#define BOARD_QTMR_PWM_CHANNEL           kQTMR_Channel_1
+#define QTMR_CounterInputPin             kQTMR_Counter0InputPin
 
 /* Interrupt number and interrupt handler for the QTMR instance used */
-#define QTMR_IRQ_ID TMR3_IRQn
+#define QTMR_IRQ_ID      TMR3_IRQn
 #define QTMR_IRQ_HANDLER TMR3_IRQHandler
 
-/* Get source clock for QTMR driver */
-#define QTMR_SOURCE_CLOCK CLOCK_GetFreq(kCLOCK_IpgClk)
+/* QTMR Clock source divider for Ipg clock source, the value of two macros below should be aligned. */
+#define QTMR_PRIMARY_SOURCE       (kQTMR_ClockDivide_4)
+#define QTMR_CLOCK_SOURCE_DIVIDER (4U)
+/* The frequency of the source clock after divided. */
+#define QTMR_SOURCE_CLOCK (CLOCK_GetFreq(kCLOCK_IpgClk) / QTMR_CLOCK_SOURCE_DIVIDER)
+/* The frequency of the PWM signal QTMR generated. */
+#define QTMR_PWM_OUTPUT_FREQUENCY (50000U)
+/* The dutycycle of the PTM signal QTMR generated. */
+#define QTMR_DUTYCYCLE_PERCENT (50U)
+
 
 /*******************************************************************************
  * Prototypes
@@ -84,8 +92,8 @@ int main(void)
      */
     QTMR_GetDefaultConfig(&qtmrConfig);
 
-    /* Init the first channel to use the IP Bus clock div by 8 */
-    qtmrConfig.primarySource = kQTMR_ClockDivide_8;
+    /* Initial the input channel. */
+    qtmrConfig.primarySource = QTMR_PRIMARY_SOURCE;
     QTMR_Init(BOARD_QTMR_BASEADDR, BOARD_QTMR_INPUT_CAPTURE_CHANNEL, &qtmrConfig);
 
     /* Setup the input capture */
@@ -101,7 +109,7 @@ int main(void)
     /* Start the input channel to count on rising edge of the primary source clock */
     QTMR_StartTimer(BOARD_QTMR_BASEADDR, BOARD_QTMR_INPUT_CAPTURE_CHANNEL, kQTMR_PriSrcRiseEdge);
 
-    counterClock = QTMR_SOURCE_CLOCK / 8000;
+    counterClock = QTMR_SOURCE_CLOCK / 1000U;
 
     /* Check whether occur interupt and wait the capture frequency stable */
     while (count < 5 || timeCapt == 0)
@@ -113,17 +121,19 @@ int main(void)
         count++;
         timeCapt = BOARD_QTMR_BASEADDR->CHANNEL[BOARD_QTMR_INPUT_CAPTURE_CHANNEL].CAPT;
     }
-    PRINTF("\r\nCaptured Period time=%d us\n", (timeCapt * 1000) / counterClock);
+    PRINTF("\r\nCaptured Period time=%d us\n", (timeCapt * 1000U) / counterClock);
 
     PRINTF("\r\n****Output PWM example.****\n");
     PRINTF("\r\n*********Make sure to connect an oscilloscope.*********\n");
     PRINTF("\r\n****A 50% duty cycle PWM wave is observed on an oscilloscope.****\n");
 
-    qtmrConfig.primarySource = kQTMR_ClockDivide_8;
+    /* Initial the output channel. */
+    qtmrConfig.primarySource = QTMR_PRIMARY_SOURCE;
     QTMR_Init(BOARD_QTMR_BASEADDR, BOARD_QTMR_PWM_CHANNEL, &qtmrConfig);
 
     /* Generate a 50Khz PWM signal with 50% dutycycle */
-    QTMR_SetupPwm(BOARD_QTMR_BASEADDR, BOARD_QTMR_PWM_CHANNEL, 50000, 50, false, QTMR_SOURCE_CLOCK / 8);
+    QTMR_SetupPwm(BOARD_QTMR_BASEADDR, BOARD_QTMR_PWM_CHANNEL, QTMR_PWM_OUTPUT_FREQUENCY, QTMR_DUTYCYCLE_PERCENT, false,
+                  QTMR_SOURCE_CLOCK);
 
     /* Start the counter */
     QTMR_StartTimer(BOARD_QTMR_BASEADDR, BOARD_QTMR_PWM_CHANNEL, kQTMR_PriSrcRiseEdge);

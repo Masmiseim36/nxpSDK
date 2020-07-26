@@ -1,9 +1,9 @@
 /*
-* Copyright 2017-2018 NXP
-* All rights reserved.
-*
-* SPDX-License-Identifier: BSD-3-Clause
-*/
+ * Copyright 2017-2018 NXP
+ * All rights reserved.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
 
 #ifndef __FUSEMAP_H__
 #define __FUSEMAP_H__

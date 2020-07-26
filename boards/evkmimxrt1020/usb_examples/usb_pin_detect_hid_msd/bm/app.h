@@ -28,6 +28,9 @@
 #define CONTROLLER_ID kUSB_ControllerIp3516Hs0
 #endif /* USB_HOST_CONFIG_IP3516HS */
 
+/*common isr handler wrapper for usb*/
+extern void USB_Comom_IRQHandler(void);
+
 #if defined(__GIC_PRIO_BITS)
 #define USB_HOST_INTERRUPT_PRIORITY (25U)
 #elif defined(__NVIC_PRIO_BITS) && (__NVIC_PRIO_BITS >= 3)

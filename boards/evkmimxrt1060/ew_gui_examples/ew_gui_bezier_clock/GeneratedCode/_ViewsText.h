@@ -7,18 +7,22 @@
 *
 ********************************************************************************
 *
+* This software is delivered "as is" and shows the usage of other software 
+* components. It is provided as an example software which is intended to be 
+* modified and extended according to particular requirements.
+* 
+* TARA Systems hereby disclaims all warranties and conditions with regard to the
+* software, including all implied warranties and conditions of merchantability 
+* and non-infringement of any third party IPR or other rights which may result 
+* from the use or the inability to use the software.
+*
 * This file was generated automatically by Embedded Wizard Studio.
 *
 * Please do not make any modifications of this file! The modifications are lost
 * when the file is generated again by Embedded Wizard Studio!
 *
-* The template of this heading text can be found in the file 'head.ewt' in the
-* directory 'Platforms' of your Embedded Wizard installation directory. If you
-* wish to adapt this text, please copy the template file 'head.ewt' into your
-* project directory and edit the copy only. Please avoid any modifications of
-* the original template file!
-*
-* Version  : 9.20
+* Version  : 9.30
+* Date     : 14.02.2020  8:00:50
 * Profile  : iMX_RT
 * Platform : NXP.iMX_RT.RGB565
 *
@@ -33,12 +37,12 @@
 #endif
 
 #include "ewrte.h"
-#if EW_RTE_VERSION != 0x00090014
+#if EW_RTE_VERSION != 0x0009001E
   #error Wrong version of Embedded Wizard Runtime Environment.
 #endif
 
 #include "ewgfx.h"
-#if EW_GFX_VERSION != 0x00090014
+#if EW_GFX_VERSION != 0x0009001E
   #error Wrong version of Embedded Wizard Graphics Engine.
 #endif
 
@@ -129,9 +133,10 @@
 EW_DEFINE_FIELDS( ViewsText, CoreRectView )
   EW_PROPERTY( Font,            ResourcesFont )
   EW_PROPERTY( OnUpdate,        XSlot )
+  EW_VARIABLE( flowString,      XString )
+  EW_PROPERTY( String,          XString )
   EW_VARIABLE( bidiContext,     XHandle )
   EW_VARIABLE( textSize,        XPoint )
-  EW_VARIABLE( flowString,      XString )
   EW_PROPERTY( Padding,         XInt32 )
   EW_PROPERTY( RowDistance,     XInt32 )
   EW_PROPERTY( ColorBL,         XColor )
@@ -141,7 +146,6 @@ EW_DEFINE_FIELDS( ViewsText, CoreRectView )
   EW_PROPERTY( WrapWidth,       XInt32 )
   EW_PROPERTY( ScrollOffset,    XPoint )
   EW_PROPERTY( Alignment,       XSet )
-  EW_PROPERTY( String,          XString )
   EW_PROPERTY( Opacity,         XInt32 )
   EW_PROPERTY( Orientation,     XEnum )
   EW_PROPERTY( WrapText,        XBool )

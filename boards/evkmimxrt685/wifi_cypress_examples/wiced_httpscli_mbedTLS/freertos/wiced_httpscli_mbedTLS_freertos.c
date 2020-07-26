@@ -33,7 +33,7 @@
  ******************************************************************************/
 #define AP_SSID "nxp"
 #define AP_PASS "NXP0123456789"
-#define AP_SEC WICED_SECURITY_WPA2_MIXED_PSK
+#define AP_SEC  WICED_SECURITY_WPA2_MIXED_PSK
 
 /*******************************************************************************
  * Prototypes
@@ -131,23 +131,13 @@ static void httpsclient_task(void *arg)
  */
 int main(void)
 {
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
 
     /* Make sure casper ram buffer has power up */
     POWER_DisablePD(kPDRUNCFG_APD_CASPER_SRAM);
     POWER_DisablePD(kPDRUNCFG_PPD_CASPER_SRAM);
-
-    /*Make sure USDHC ram buffer has power up*/
-    POWER_DisablePD(kPDRUNCFG_APD_USDHC0_SRAM);
-    POWER_DisablePD(kPDRUNCFG_PPD_USDHC0_SRAM);
-    POWER_ApplyPD();
-
-    /* SDIO0 */
-    RESET_ClearPeripheralReset(kSDIO0_RST_SHIFT_RSTn);
-    CLOCK_AttachClk(kAUX0_PLL_to_SDIO0_CLK);
-    CLOCK_SetClkDiv(kCLOCK_DivSdio0Clk, 1);
     CRYPTO_InitHardware();
 
     tcpip_init(NULL, NULL);

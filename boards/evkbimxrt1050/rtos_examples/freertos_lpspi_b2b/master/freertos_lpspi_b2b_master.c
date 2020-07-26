@@ -29,9 +29,9 @@
  ******************************************************************************/
 /* Master related */
 #define EXAMPLE_LPSPI_MASTER_BASEADDR (LPSPI3)
-#define EXAMPLE_LPSPI_MASTER_IRQN LPSPI3_IRQn
+#define EXAMPLE_LPSPI_MASTER_IRQN     LPSPI3_IRQn
 
-#define EXAMPLE_LPSPI_MASTER_PCS_FOR_INIT (kLPSPI_Pcs0)
+#define EXAMPLE_LPSPI_MASTER_PCS_FOR_INIT     (kLPSPI_Pcs0)
 #define EXAMPLE_LPSPI_MASTER_PCS_FOR_TRANSFER (kLPSPI_MasterPcs0)
 
 /* Select USB1 PLL PFD0 (720 MHz) as lpspi clock source */
@@ -40,7 +40,7 @@
 #define EXAMPLE_LPSPI_CLOCK_SOURCE_DIVIDER (7U)
 
 #define LPSPI_MASTER_CLK_FREQ (CLOCK_GetFreq(kCLOCK_Usb1PllPfd0Clk) / (EXAMPLE_LPSPI_CLOCK_SOURCE_DIVIDER + 1U))
-#define TRANSFER_SIZE (512U)        /*! Transfer dataSize.*/
+#define TRANSFER_SIZE     (512U)    /*! Transfer dataSize.*/
 #define TRANSFER_BAUDRATE (500000U) /*! Transfer baudrate - 500k */
 
 /*******************************************************************************
@@ -82,8 +82,8 @@ int main(void)
 
     /* Init board hardware. */
     BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
 
     /*Set clock source for LPSPI*/

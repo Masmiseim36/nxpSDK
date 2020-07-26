@@ -25,11 +25,11 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define BOARD_SW_GPIO BOARD_USER_BUTTON_GPIO
-#define BOARD_SW_GPIO_PIN BOARD_USER_BUTTON_GPIO_PIN
-#define BOARD_SW_IRQ BOARD_USER_BUTTON_IRQ
+#define BOARD_SW_GPIO        BOARD_USER_BUTTON_GPIO
+#define BOARD_SW_GPIO_PIN    BOARD_USER_BUTTON_GPIO_PIN
+#define BOARD_SW_IRQ         BOARD_USER_BUTTON_IRQ
 #define BOARD_SW_IRQ_HANDLER BOARD_USER_BUTTON_IRQ_HANDLER
-#define BOARD_SW_NAME BOARD_USER_BUTTON_NAME
+#define BOARD_SW_NAME        BOARD_USER_BUTTON_NAME
 /* Task priorities. */
 /* clang-format off */
 #define tickless_task_PRIORITY   ( configMAX_PRIORITIES - 2 )
@@ -108,8 +108,8 @@ int main(void)
     gpt_config_t gptConfig;
 #endif
     BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
 
 #if configUSE_TICKLESS_IDLE

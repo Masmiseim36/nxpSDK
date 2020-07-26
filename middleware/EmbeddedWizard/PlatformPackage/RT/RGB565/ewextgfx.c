@@ -17,55 +17,67 @@
 ********************************************************************************
 *
 * DESCRIPTION:
-*   This header file contains Graphics Engine configuration parameters and the
-*   adaptation for the NxpRt graphics subsystem.
+*   This module implements the interface between the Graphics Engine and the
+*   target specific graphics subsystem.
+*   All graphics operations that can be accelerated by a graphics hardware are
+*   delegated to the corresponding hardware functionality.
+*   This module is responsible to manage the framebuffer(s) and to support the
+*   synchronization between CPU, display controller and graphics accelerator.
 *
 *******************************************************************************/
 
 #include "fsl_cache.h"
-#include "ewgfxdriver.h"
-#include "ewextgfx.h"
-#include "ewgfxdefs.h"
-#include "ewextpxl_RGB565.h"
 #include "ewrte.h"
+#include "ewgfx.h"
+#include "ewextpxl_RGB565.h"
 
 #include "ew_bsp_display.h"
 
-#ifdef EW_USE_PXP_GRAPHICS_ACCELERATOR
+#ifdef EW_USE_GRAPHICS_ACCELERATOR
 
   #include "ew_bsp_graphics.h"
 
-  /* flag to switch on/off PXP graphics accelerator during runtime */
-  static unsigned char UsePXP = 1;
+  /* flag to switch on/off the graphics accelerator usage during runtime */
+  static unsigned char UseGraphicsAccelerator = 1;
 
-  /* variables to store the source and destination surface accessed by PXP */
-  static unsigned long DstSurfaceUsedByPXP = 0;
-  static unsigned long SrcSurfaceUsedByPXP = 0;
+  /* variables to store the source and destination surface accessed by hardware */
+  static unsigned long DstSurfaceUsedByHardware = 0;
+  static unsigned long SrcSurfaceUsedByHardware = 0;
+
+  static void GfxFlushGraphics( void );
+  static void GfxSelectSurfaces( unsigned long aDstSurfaceHandle, unsigned long aSrcSurfaceHandle );
 
 #endif
 
+/* The color format of the framebuffer has to correspond to color format of the
+   Graphics Engine, because the Graphics engine is prepared and optimized for
+   one dedicated color format. */
+#if ( EW_FRAME_BUFFER_COLOR_FORMAT != EW_FRAME_BUFFER_COLOR_FORMAT_RGB565 )
+  #error The given EW_FRAME_BUFFER_COLOR_FORMAT is not supported! Use RGB565 within your makefile!
+#endif
+
 /* Error messages */
-#define Err01 "Invalid address of framebuffer (front-buffer)!"
+#define Err01 "Invalid framebuffer address!"
 #define Err02 "Size of framebuffer device (display size) does not match with given application size!"
 #define Err03 "Could not allocate memory!"
-#define Err04 "Invalid address of back-buffer!"
-#define Err05 "Requested operation with graphics accelerator PXP failed!"
+#define Err04 "Invalid double-buffer address!"
+#define Err05 "Requested operation with graphics accelerator failed!"
 #define Err06 "Full screen update cannot be done within scratch-pad buffer!"
 #define Err07 "Partial screen update cannot be combined with double buffering!"
-#define Err08 "Invalid address of scratch-pad buffer!"
 
 /* Flags to indicate the current status of a surface */
 #define EW_SURFACE_PREALLOCATED           0x01
 #define EW_SURFACE_MODIFIED_BY_CPU        0x02
-#define EW_SURFACE_MODIFIED_BY_PXP        0x04
+#define EW_SURFACE_MODIFIED_BY_GA         0x04
 
 /* Size of a single cache line within CPU cache */
-#define CACHE_LINE_SIZE                   32
+#define EW_CACHE_LINE_SIZE                32
 
-/* Descriptor of a NxpRt surface. This type is used for framebuffers and all
+
+/* Descriptor of a target specific surface. This type is used for framebuffers and
    internal surfaces (bitmaps). The pixel memory of the surface may be preallocated
-   for framebuffers. In all other cases, the pixel memory is allocated and freed
-   dynamically. */
+   for framebuffers or direct access bitmaps. In all other cases, the pixel memory
+   is allocated and freed dynamically. */
 typedef struct
 {
   int   Width;
@@ -73,20 +85,20 @@ typedef struct
   int   Flags;
   int   BytesPerPixel;
   int   Format;
+  int   AllocSize;
   void* Pixel;
   int   OrigHeight;
   void* OrigPixel;
-} XNxpRtSurface;
+} XGfxSurface;
 
 
-/* Descriptor of an NxpRt viewport. Due to the different modes that are supported,
-   an additional off-screen canvas and/or double-buffering will be used. */
+/* Descriptor of the target specific viewport. It contains pointers to the different
+   surfaces (framebuffers) that are used for the display update. */
 typedef struct
 {
-  XNxpRtSurface* FrameBuffer;
-  XNxpRtSurface* DoubleBuffer;
-  XNxpRtSurface* ScratchPadBuffer;
-} XNxpRtViewport;
+  XGfxSurface* FrameBuffer;
+  XGfxSurface* DoubleBuffer;
+} XGfxViewport;
 
 
 /* Memory usage profiler */
@@ -96,20 +108,23 @@ extern int EwObjectsMemory;
 extern int EwStringsMemory;
 extern int EwMemoryPeak;
 
-/* extern variables to control Graphics Engine */
-extern int EwPreserveFramebufferContent;
-extern int EwMaxSurfaceCacheSize;
-extern int EwMaxGlyphSurfaceWidth;
-extern int EwMaxGlyphSurfaceHeight;
-extern int EwMaxIssueTasks;
+/* Helper function to track the maximum memory pressure */
+static void TrackMemoryUsage( void )
+{
+  if ( EwResourcesMemory > EwResourcesMemoryPeak )
+    EwResourcesMemoryPeak = EwResourcesMemory;
+
+  if (( EwObjectsMemory + EwStringsMemory + EwResourcesMemory ) > EwMemoryPeak )
+    EwMemoryPeak = EwObjectsMemory + EwStringsMemory + EwResourcesMemory;
+}
 
 
 /*******************************************************************************
 * FUNCTION:
-*   NxpRtInitGfx
+*   GfxInitGfx
 *
 * DESCRIPTION:
-*   The function NxpRtInitGfx is called from the Graphics Engine during the
+*   The function GfxInitGfx is called from the Graphics Engine during the
 *   initialization in order to make target specific configurations of the
 *   Graphics Engine
 *
@@ -120,13 +135,23 @@ extern int EwMaxIssueTasks;
 *   If successful, returns != 0.
 *
 *******************************************************************************/
-int NxpRtInitGfx( void* aArgs )
+int GfxInitGfx( void* aArgs )
 {
-  /* configure bitmap and glyph cache according makefile settings */
-  EwMaxSurfaceCacheSize   = EW_MAX_SURFACE_CACHE_SIZE;
-  EwMaxGlyphSurfaceWidth  = EW_MAX_GLYPH_SURFACE_WIDTH;
-  EwMaxGlyphSurfaceHeight = EW_MAX_GLYPH_SURFACE_HEIGHT;
-  EwMaxIssueTasks         = EW_MAX_ISSUE_TASKS;
+  EW_UNUSED_ARG( aArgs );
+
+  /* configure caches, queues and memory allocation strategies of Graphics Engine
+     and Runtime Environment according to makefile settings */
+  EwMaxSurfaceCacheSize                     = EW_MAX_SURFACE_CACHE_SIZE;
+  EwMaxGlyphSurfaceWidth                    = EW_MAX_GLYPH_SURFACE_WIDTH;
+  EwMaxGlyphSurfaceHeight                   = EW_MAX_GLYPH_SURFACE_HEIGHT;
+  EwMaxIssueTasks                           = EW_MAX_ISSUE_TASKS;
+  EwLazyLoadBitmaps                         = EW_LAZY_LOAD_BITMAPS;
+  EwLazyLoadBitmapsIfAnimatedOnly           = EW_LAZY_LOAD_BITMAPS_IF_ANIMATED_ONLY;
+  EwDiscardBitmaps                          = EW_DISCARD_BITMAPS;
+  EwDiscardBitmapsIfAnimatedOnly            = EW_DISCARD_BITMAPS_IF_ANIMATED_ONLY;
+  EwDiscardBitmapsIfNotUsedInCurrentUpdate  = EW_DISCARD_BITMAPS_IF_NOT_USED_IN_CURRENT_UPDATE;
+  EwDiscardBitmapsIfNotUsedInRecentUpdates  = EW_DISCARD_BITMAPS_IF_NOT_USED_IN_RECENT_UPDATES;
+  EwMaxStringCacheSize                      = EW_MAX_STRING_CACHE_SIZE;
 
   /* In case of pure double-buffering mode, the Mosaic class library has to
      combine the dirty rectangles of two consecutive screen updates.
@@ -144,12 +169,12 @@ int NxpRtInitGfx( void* aArgs )
 
 /*******************************************************************************
 * FUNCTION:
-*   NxpRtInitViewport
+*   GfxInitViewport
 *
 * DESCRIPTION:
-*   The function NxpRtInitViewport is called from the Graphics Engine,
+*   The function GfxInitViewport is called from the Graphics Engine,
 *   to create a new viewport on the target. The function uses the given
-*   buffers passed in the arguments aDisplay1, aDisplay2 and aDisplay3.
+*   buffers passed in the arguments aDisplay1 and aDisplay2.
 *
 * ARGUMENTS:
 *   aWidth,
@@ -160,44 +185,41 @@ int NxpRtInitGfx( void* aArgs )
 *   aExtentHeight - Size of the physical or virtual framebuffer in pixel.
 *   aOrient       - not used.
 *   aOpacity      - not used.
-*   aDisplay1     - Address of the framebuffer / front-buffer.
+*   aDisplay1     - Address of the framebuffer / scratch-pad buffer.
 *   aDisplay2     - Address of the back-buffer in case of double-buffering.
-*   aDisplay3     - Address of the scratch-pad buffer.
+*   aDisplay3     - not used.
 *
 * RETURN VALUE:
 *   Handle of the surface descriptor (viewport).
 *
 *******************************************************************************/
-unsigned long NxpRtInitViewport( int aWidth, int aHeight, int aExtentX,
+unsigned long GfxInitViewport( int aWidth, int aHeight, int aExtentX,
   int aExtentY, int aExtentWidth, int aExtentHeight, int aOrient, int aOpacity,
   void* aDisplay1, void* aDisplay2, void* aDisplay3 )
 {
-  /* compare metrics of display with metrics of application */
-  if (( aWidth > aExtentWidth ) || ( aHeight != aExtentHeight ))
-  {
-    EW_ERROR( Err02 );
-    return 0;
-  }
+  EW_UNUSED_ARG( aExtentX );
+  EW_UNUSED_ARG( aExtentY );
+  EW_UNUSED_ARG( aOrient );
+  EW_UNUSED_ARG( aOpacity );
+  EW_UNUSED_ARG( aDisplay3 );
 
-  #if EW_USE_SCRATCHPAD_BUFFER
+  #if !EW_USE_SCRATCHPAD_BUFFER
 
-    /* verify that the given scratch-pad buffer address is valid */
-    if ( !aDisplay3 )
+    /* compare metrics of display with metrics of application */
+    if (( aWidth > aExtentWidth ) || ( aHeight != aExtentHeight ))
     {
-      EW_ERROR( Err08 );
-      return 0;
-    }
-
-  #else
-
-    /* verify that the given framebuffer address is valid */
-    if ( !aDisplay1 )
-    {
-      EW_ERROR( Err01 );
+      EW_ERROR( Err02 );
       return 0;
     }
 
   #endif
+
+  /* verify that the given framebuffer or scratch-pad buffer address is valid */
+  if ( !aDisplay1 )
+  {
+    EW_ERROR( Err01 );
+    return 0;
+  }
 
   /* verify that the given back-buffer address matchs the choosen configuration */
   #if EW_USE_DOUBLE_BUFFER
@@ -211,7 +233,7 @@ unsigned long NxpRtInitViewport( int aWidth, int aHeight, int aExtentX,
   #endif
 
   /* allocate memory for the descriptor structure */
-  XNxpRtViewport* viewport = (XNxpRtViewport*)EwAlloc( sizeof( XNxpRtViewport ));
+  XGfxViewport* viewport = (XGfxViewport*)EwAlloc( sizeof( XGfxViewport ));
   if ( !viewport )
   {
     EW_ERROR( Err03 );
@@ -219,97 +241,62 @@ unsigned long NxpRtInitViewport( int aWidth, int aHeight, int aExtentX,
   }
   viewport->FrameBuffer      = 0;
   viewport->DoubleBuffer     = 0;
-  viewport->ScratchPadBuffer = 0;
 
-  #if EW_USE_SCRATCHPAD_BUFFER
+  /* allocate memory for the framebuffer descriptor */
+  viewport->FrameBuffer = (XGfxSurface*)EwAlloc( sizeof( XGfxSurface ));
+  if ( !viewport->FrameBuffer )
+  {
+    EW_ERROR( Err03 );
+    return 0;
+  }
 
-    /* allocate memory for the scratch-pad buffer descriptor */
-    viewport->ScratchPadBuffer = (XNxpRtSurface*)EwAlloc( sizeof( XNxpRtSurface ));
-    if ( !viewport->ScratchPadBuffer )
+  /* initialize the framebuffer descriptor */
+  viewport->FrameBuffer->Width         = aExtentWidth;
+  viewport->FrameBuffer->Height        = aExtentHeight;
+  viewport->FrameBuffer->Flags         = EW_SURFACE_PREALLOCATED;
+  viewport->FrameBuffer->BytesPerPixel = sizeof( short );
+  viewport->FrameBuffer->Format        = EW_PIXEL_FORMAT_SCREEN;
+  viewport->FrameBuffer->AllocSize     = 0;
+  viewport->FrameBuffer->Pixel         = aDisplay1;
+  viewport->FrameBuffer->OrigHeight    = aExtentHeight;
+  viewport->FrameBuffer->OrigPixel     = aDisplay1;
+
+  #if EW_USE_DOUBLE_BUFFER
+
+    /* allocate memory for the double-buffer descriptor */
+    viewport->DoubleBuffer = (XGfxSurface*)EwAlloc( sizeof( XGfxSurface ));
+    if ( !viewport->DoubleBuffer )
     {
       EW_ERROR( Err03 );
       return 0;
     }
 
-    /* initialize the scratch-pad buffer descriptor */
-    viewport->ScratchPadBuffer->Width         = 0;
-    viewport->ScratchPadBuffer->Height        = 0;
-    viewport->ScratchPadBuffer->Flags         = EW_SURFACE_PREALLOCATED;
-    viewport->ScratchPadBuffer->BytesPerPixel = FRAME_BUFFER_DEPTH;
-    viewport->ScratchPadBuffer->Format        = EW_PIXEL_FORMAT_SCREEN;
-    viewport->ScratchPadBuffer->Pixel         = aDisplay3;
-    viewport->ScratchPadBuffer->OrigHeight    = 0;
-    viewport->ScratchPadBuffer->OrigPixel     = aDisplay3;
-
-    #if EW_USE_DOUBLE_BUFFER
-
-      /* allocate memory for the double-buffer descriptor */
-      viewport->DoubleBuffer = (XNxpRtSurface*)EwAlloc( sizeof( XNxpRtSurface ));
-      if ( !viewport->DoubleBuffer )
-      {
-        EW_ERROR( Err03 );
-        return 0;
-      }
-
-      /* initialize the double-buffer descriptor */
-      viewport->DoubleBuffer->Width         = 0;
-      viewport->DoubleBuffer->Height        = 0;
-      viewport->DoubleBuffer->Flags         = EW_SURFACE_PREALLOCATED;
-      viewport->DoubleBuffer->BytesPerPixel = FRAME_BUFFER_DEPTH;
-      viewport->DoubleBuffer->Format        = EW_PIXEL_FORMAT_SCREEN;
-      viewport->DoubleBuffer->Pixel         = aDisplay2;
-      viewport->DoubleBuffer->OrigHeight    = 0;
-      viewport->DoubleBuffer->OrigPixel     = aDisplay2;
-
-    #endif
-
-  #else
-
-    /* allocate memory for the framebuffer descriptor */
-    viewport->FrameBuffer = (XNxpRtSurface*)EwAlloc( sizeof( XNxpRtSurface ));
-    if ( !viewport->FrameBuffer )
-    {
-      EW_ERROR( Err03 );
-      return 0;
-    }
-
-    /* initialize the framebuffer descriptor */
-    viewport->FrameBuffer->Width         = aExtentWidth;
-    viewport->FrameBuffer->Height        = aExtentHeight;
-    viewport->FrameBuffer->Flags         = EW_SURFACE_PREALLOCATED;
-    viewport->FrameBuffer->BytesPerPixel = FRAME_BUFFER_DEPTH;
-    viewport->FrameBuffer->Format        = EW_PIXEL_FORMAT_SCREEN;
-    viewport->FrameBuffer->Pixel         = aDisplay1;
-    viewport->FrameBuffer->OrigHeight    = aExtentHeight;
-    viewport->FrameBuffer->OrigPixel     = aDisplay1;
-
-    #if EW_USE_DOUBLE_BUFFER
-
-      /* allocate memory for the double-buffer descriptor */
-      viewport->DoubleBuffer = (XNxpRtSurface*)EwAlloc( sizeof( XNxpRtSurface ));
-      if ( !viewport->DoubleBuffer )
-      {
-        EW_ERROR( Err03 );
-        return 0;
-      }
-
-      /* initialize the double-buffer descriptor */
-      viewport->DoubleBuffer->Width         = aExtentWidth;
-      viewport->DoubleBuffer->Height        = aExtentHeight;
-      viewport->DoubleBuffer->Flags         = EW_SURFACE_PREALLOCATED;
-      viewport->DoubleBuffer->BytesPerPixel = FRAME_BUFFER_DEPTH;
-      viewport->DoubleBuffer->Format        = EW_PIXEL_FORMAT_SCREEN;
-      viewport->DoubleBuffer->Pixel         = aDisplay2;
-      viewport->DoubleBuffer->OrigHeight    = aExtentHeight;
-      viewport->DoubleBuffer->OrigPixel     = aDisplay2;
-
-    #endif
+    /* initialize the double-buffer descriptor */
+    viewport->DoubleBuffer->Width         = aExtentWidth;
+    viewport->DoubleBuffer->Height        = aExtentHeight;
+    viewport->DoubleBuffer->Flags         = EW_SURFACE_PREALLOCATED;
+    viewport->DoubleBuffer->BytesPerPixel = sizeof( short );
+    viewport->DoubleBuffer->Format        = EW_PIXEL_FORMAT_SCREEN;
+    viewport->DoubleBuffer->AllocSize     = 0;
+    viewport->DoubleBuffer->Pixel         = aDisplay2;
+    viewport->DoubleBuffer->OrigHeight    = aExtentHeight;
+    viewport->DoubleBuffer->OrigPixel     = aDisplay2;
 
   #endif
 
-  #ifdef EW_USE_PXP_GRAPHICS_ACCELERATOR
+  #if EW_USE_SCRATCHPAD_BUFFER
 
-    /* initialize the PXP graphics accelerator */
+    /* modify the framebuffer descriptor in case of scratch-pad usage:
+       width and height of scratch-pad will be provided for each update */
+    viewport->FrameBuffer->Width         = 0;
+    viewport->FrameBuffer->Height        = 0;
+    viewport->FrameBuffer->OrigHeight    = 0;
+
+  #endif
+
+  #ifdef EW_USE_GRAPHICS_ACCELERATOR
+
+    /* initialize the graphics accelerator */
     if ( !EwBspGraphicsInit())
     {
       EW_ERROR( Err05 );
@@ -318,23 +305,15 @@ unsigned long NxpRtInitViewport( int aWidth, int aHeight, int aExtentX,
 
   #endif
 
-  EwResourcesMemory += sizeof( XNxpRtViewport );
-  EwResourcesMemory += sizeof( XNxpRtSurface );
+  EwResourcesMemory += sizeof( XGfxViewport );
+  EwResourcesMemory += sizeof( XGfxSurface );
 
   #if EW_USE_DOUBLE_BUFFER
-    EwResourcesMemory += sizeof( XNxpRtSurface );
+    EwResourcesMemory += sizeof( XGfxSurface );
   #endif
 
-  /* Also track the max. memory pressure */
-  if ( EwResourcesMemory > EwResourcesMemoryPeak )
-    EwResourcesMemoryPeak = EwResourcesMemory;
-
-  if (( EwObjectsMemory + EwStringsMemory + EwResourcesMemory ) > EwMemoryPeak )
-    EwMemoryPeak = EwObjectsMemory + EwStringsMemory + EwResourcesMemory;
-
-  /* ensure that current framebuffer is shown */
-  if ( viewport->FrameBuffer )
-    EwBspSetFramebufferAddress( (unsigned long)viewport->FrameBuffer->Pixel );
+  /* track maximum memory pressure */
+  TrackMemoryUsage();
 
   return (unsigned long)viewport;
 }
@@ -342,11 +321,11 @@ unsigned long NxpRtInitViewport( int aWidth, int aHeight, int aExtentX,
 
 /*******************************************************************************
 * FUNCTION:
-*   NxpRtDoneViewport
+*   GfxDoneViewport
 *
 * DESCRIPTION:
-*   The function NxpRtDoneViewport is called from the Graphics Engine, to
-*   release a previously created viewport on the NxpRt target.
+*   The function GfxDoneViewport is called from the Graphics Engine, to
+*   release a previously created viewport on the target.
 *
 * ARGUMENTS:
 *   aHandle - Handle of the surface descriptor (viewport).
@@ -355,9 +334,19 @@ unsigned long NxpRtInitViewport( int aWidth, int aHeight, int aExtentX,
 *   None
 *
 *******************************************************************************/
-void NxpRtDoneViewport( unsigned long aHandle )
+void GfxDoneViewport( unsigned long aHandle )
 {
-  XNxpRtViewport* viewport = (XNxpRtViewport*)aHandle;
+  XGfxViewport* viewport = (XGfxViewport*)aHandle;
+
+  #ifdef EW_USE_GRAPHICS_ACCELERATOR
+
+    /* ensure that any hardware accelerated drawing operation is finished */
+    GfxFlushGraphics();
+
+    /* deinitialize the graphics accelerator */
+    EwBspGraphicsDone();
+
+  #endif
 
   /* destroy the double-buffer descriptor */
   if ( viewport->DoubleBuffer )
@@ -367,35 +356,24 @@ void NxpRtDoneViewport( unsigned long aHandle )
   if ( viewport->FrameBuffer )
     EwFree( viewport->FrameBuffer );
 
-  /* destroy the scratch-pad buffer descriptor */
-  if ( viewport->ScratchPadBuffer )
-    EwFree( viewport->ScratchPadBuffer );
-
   /* destroy the viewport */
   EwFree( viewport );
 
-  #ifdef EW_USE_PXP_GRAPHICS_ACCELERATOR
-
-    /* deinitialize the PXP graphics accelerator */
-    EwBspGraphicsDone();
-
-  #endif
-
-  EwResourcesMemory -= sizeof( XNxpRtViewport );
-  EwResourcesMemory -= sizeof( XNxpRtSurface );
+  EwResourcesMemory -= sizeof( XGfxViewport );
+  EwResourcesMemory -= sizeof( XGfxSurface );
 
   #if EW_USE_DOUBLE_BUFFER
-    EwResourcesMemory -= sizeof( XNxpRtSurface );
+    EwResourcesMemory -= sizeof( XGfxSurface );
   #endif
 }
 
 
 /*******************************************************************************
 * FUNCTION:
-*   NxpRtBeginUpdate
+*   GfxBeginUpdate
 *
 * DESCRIPTION:
-*   The function NxpRtBeginUpdate is called from the Graphics Engine, to
+*   The function GfxBeginUpdate is called from the Graphics Engine, to
 *   initiate the screen update cycle.
 *
 * ARGUMENTS:
@@ -405,18 +383,17 @@ void NxpRtDoneViewport( unsigned long aHandle )
 *   Handle of the destination surface, used for all drawing operations.
 *
 *******************************************************************************/
-unsigned long NxpRtBeginUpdate( unsigned long aHandle )
+unsigned long GfxBeginUpdate( unsigned long aHandle )
 {
-  #ifdef EW_USE_PXP_GRAPHICS_ACCELERATOR
+  #ifdef EW_USE_GRAPHICS_ACCELERATOR
 
     /* ensure that any hardware accelerated drawing operation is finished */
-    EwBspGraphicsWaitForCompletion();
-
-    /* clear the dst and src handles */
-    DstSurfaceUsedByPXP = 0;
-    SrcSurfaceUsedByPXP = 0;
+    GfxFlushGraphics();
 
   #endif
+
+  /* ensure that display controller is finished with previous buffer */
+  EwBspDisplayWaitForCompletion();
 
   #if EW_USE_SCRATCHPAD_BUFFER
 
@@ -425,16 +402,12 @@ unsigned long NxpRtBeginUpdate( unsigned long aHandle )
 
   #elif EW_USE_DOUBLE_BUFFER
 
-    XNxpRtViewport* viewport = (XNxpRtViewport*)aHandle;
-
-    /* ensure that the LCD controller is already reading the front-buffer */
-    EwBspDisplayWaitForCompletion();
-
+    XGfxViewport* viewport = (XGfxViewport*)aHandle;
     return (unsigned long)viewport->DoubleBuffer;
 
   #else
 
-    XNxpRtViewport* viewport = (XNxpRtViewport*)aHandle;
+    XGfxViewport* viewport = (XGfxViewport*)aHandle;
     return (unsigned long)viewport->FrameBuffer;
 
   #endif
@@ -443,10 +416,10 @@ unsigned long NxpRtBeginUpdate( unsigned long aHandle )
 
 /*******************************************************************************
 * FUNCTION:
-*   NxpRtBeginUpdateArea
+*   GfxBeginUpdateArea
 *
 * DESCRIPTION:
-*   The function NxpRtBeginUpdateArea is called from the Graphics Engine, to
+*   The function GfxBeginUpdateArea is called from the Graphics Engine, to
 *   initiate a partial screen update cycle.
 *
 * ARGUMENTS:
@@ -461,25 +434,24 @@ unsigned long NxpRtBeginUpdate( unsigned long aHandle )
 *   Handle of the destination surface, used for all drawing operations.
 *
 *******************************************************************************/
-unsigned long NxpRtBeginUpdateArea( unsigned long aHandle, int aX, int aY,
+unsigned long GfxBeginUpdateArea( unsigned long aHandle, int aX, int aY,
   int aWidth, int aHeight )
 {
-  #ifdef EW_USE_PXP_GRAPHICS_ACCELERATOR
+  #ifdef EW_USE_GRAPHICS_ACCELERATOR
 
     /* ensure that any hardware accelerated drawing operation is finished */
-    EwBspGraphicsWaitForCompletion();
-
-    /* clear the dst and src handles */
-    DstSurfaceUsedByPXP = 0;
-    SrcSurfaceUsedByPXP = 0;
+    GfxFlushGraphics();
 
   #endif
+
+  /* ensure that display controller is finished with previous buffer */
+  EwBspDisplayWaitForCompletion();
 
   #if EW_USE_SCRATCHPAD_BUFFER
 
     #if EW_USE_DOUBLE_BUFFER
     {
-      XNxpRtViewport* viewport = (XNxpRtViewport*)aHandle;
+      XGfxViewport* viewport = (XGfxViewport*)aHandle;
 
       /* adapt size of double-scratch-pad buffer */
       viewport->DoubleBuffer->Width = aWidth;
@@ -490,14 +462,14 @@ unsigned long NxpRtBeginUpdateArea( unsigned long aHandle, int aX, int aY,
     }
     #else
     {
-      XNxpRtViewport* viewport = (XNxpRtViewport*)aHandle;
+      XGfxViewport* viewport = (XGfxViewport*)aHandle;
 
       /* adapt size of scratch-pad buffer */
-      viewport->ScratchPadBuffer->Width = aWidth;
-      viewport->ScratchPadBuffer->Height = aHeight;
+      viewport->FrameBuffer->Width = aWidth;
+      viewport->FrameBuffer->Height = aHeight;
 
       /* return handle of scratch-pad buffer */
-      return (unsigned long)viewport->ScratchPadBuffer;
+      return (unsigned long)viewport->FrameBuffer;
     }
     #endif
 
@@ -510,7 +482,7 @@ unsigned long NxpRtBeginUpdateArea( unsigned long aHandle, int aX, int aY,
 
     #else
 
-      XNxpRtViewport* viewport = (XNxpRtViewport*)aHandle;
+      XGfxViewport* viewport = (XGfxViewport*)aHandle;
 
       /* adapt size and start address of framebuffer */
       viewport->FrameBuffer->Height = aHeight;
@@ -527,10 +499,10 @@ unsigned long NxpRtBeginUpdateArea( unsigned long aHandle, int aX, int aY,
 
 /*******************************************************************************
 * FUNCTION:
-*   NxpRtEndUpdate
+*   GfxEndUpdate
 *
 * DESCRIPTION:
-*   The function NxpRtBeginUpdate is called from the Graphics Engine, to
+*   The function GfxEndUpdate is called from the Graphics Engine, to
 *   finalize the screen update cycle.
 *
 * ARGUMENTS:
@@ -545,105 +517,56 @@ unsigned long NxpRtBeginUpdateArea( unsigned long aHandle, int aX, int aY,
 *   None
 *
 *******************************************************************************/
-void NxpRtEndUpdate( unsigned long aHandle, int aX, int aY, int aWidth,
-  int aHeight )
+void GfxEndUpdate( unsigned long aHandle, int aX, int aY, int aWidth, int aHeight )
 {
-  XNxpRtViewport* viewport = (XNxpRtViewport*)aHandle;
+  XGfxViewport* viewport = (XGfxViewport*)aHandle;
 
   /* nothing to do */
   if (( aWidth <= 0 ) || ( aHeight <= 0 ))
     return;
 
-  #ifdef EW_USE_PXP_GRAPHICS_ACCELERATOR
+  #ifdef EW_USE_GRAPHICS_ACCELERATOR
 
     /* ensure that any hardware accelerated drawing operation is finished */
-    EwBspGraphicsWaitForCompletion();
-
-    /* clear the dst and src handles */
-    DstSurfaceUsedByPXP = 0;
-    SrcSurfaceUsedByPXP = 0;
+    GfxFlushGraphics();
 
   #endif
 
-  #if EW_USE_SCRATCHPAD_BUFFER
-
-    #if EW_USE_DOUBLE_BUFFER
-    {
-      /* exchange scratch-pad and back-buffer objects */
-      XNxpRtSurface* tmp = viewport->DoubleBuffer;
-      viewport->DoubleBuffer = viewport->ScratchPadBuffer;
-      viewport->ScratchPadBuffer = tmp;
-    }
-    #endif
-
-    /* check if the scratch-pad buffer was previously modified by CPU */
-    if ( viewport->ScratchPadBuffer->Flags & EW_SURFACE_MODIFIED_BY_CPU )
-    {
-      /* writeback the cache for the address range of the pixel data */
-      L1CACHE_CleanDCacheByRange((uint32_t)viewport->ScratchPadBuffer->Pixel,
-        viewport->ScratchPadBuffer->Width * viewport->ScratchPadBuffer->Height * viewport->ScratchPadBuffer->BytesPerPixel );
-
-      /* clear the flag */
-      viewport->ScratchPadBuffer->Flags &= ~EW_SURFACE_MODIFIED_BY_CPU;
-    }
-
-    /* transfer scratch-pad content into display memory */
-    EwBspUpdateDisplay( aX, aY, aWidth, aHeight, viewport->ScratchPadBuffer->Pixel );
-
-  #else
-
-    #if EW_USE_DOUBLE_BUFFER
-    {
-      /* exchange front- and back-buffer objects */
-      XNxpRtSurface* tmp = viewport->DoubleBuffer;
-      viewport->DoubleBuffer = viewport->FrameBuffer;
-      viewport->FrameBuffer = tmp;
-
-      /* check if the framebuffer was previously modified by CPU */
-      if ( viewport->FrameBuffer->Flags & EW_SURFACE_MODIFIED_BY_CPU )
-      {
-        /* writeback the cache for the address range of the pixel data */
-        L1CACHE_CleanDCacheByRange((uint32_t)viewport->FrameBuffer->Pixel,
-          viewport->FrameBuffer->Width * viewport->FrameBuffer->Height * viewport->FrameBuffer->BytesPerPixel );
-
-        /* clear the flag */
-        viewport->FrameBuffer->Flags &= ~EW_SURFACE_MODIFIED_BY_CPU;
-      }
-
-      /* make the new front-buffer visible */
-      EwBspSetFramebufferAddress( (unsigned long)viewport->FrameBuffer->Pixel );
-
-    }
-    #else
-    {
-      /* check if the framebuffer was previously modified by CPU */
-      if ( viewport->FrameBuffer->Flags & EW_SURFACE_MODIFIED_BY_CPU )
-      {
-        /* writeback the cache for the address range of the pixel data */
-        L1CACHE_CleanDCacheByRange((uint32_t)viewport->FrameBuffer->Pixel,
-          viewport->FrameBuffer->Width * viewport->FrameBuffer->Height * viewport->FrameBuffer->BytesPerPixel );
-
-        /* clear the flag */
-        viewport->FrameBuffer->Flags &= ~EW_SURFACE_MODIFIED_BY_CPU;
-      }
-
-      /* restore address and size of framebuffer */
-      viewport->FrameBuffer->Height = viewport->FrameBuffer->OrigHeight;
-      viewport->FrameBuffer->Pixel  = viewport->FrameBuffer->OrigPixel;
-    }
-    #endif
-
+  #if EW_USE_DOUBLE_BUFFER
+  {
+    /* exchange front- and back-buffer objects */
+    XGfxSurface* tmp = viewport->DoubleBuffer;
+    viewport->DoubleBuffer = viewport->FrameBuffer;
+    viewport->FrameBuffer = tmp;
+  }
   #endif
 
+  /* check if the framebuffer was previously modified by CPU */
+  if ( viewport->FrameBuffer->Flags & EW_SURFACE_MODIFIED_BY_CPU )
+  {
+    /* writeback the cache for the address range of the pixel data */
+    L1CACHE_CleanDCacheByRange((uint32_t)viewport->FrameBuffer->Pixel,
+      viewport->FrameBuffer->Width * viewport->FrameBuffer->Height * viewport->FrameBuffer->BytesPerPixel );
+
+    /* clear the flag */
+    viewport->FrameBuffer->Flags &= ~EW_SURFACE_MODIFIED_BY_CPU;
+  }
+
+  /* restore framebuffer parameter (patched for synchronous single-buffer) */
+  viewport->FrameBuffer->Height = viewport->FrameBuffer->OrigHeight;
+  viewport->FrameBuffer->Pixel  = viewport->FrameBuffer->OrigPixel;
+
+  /* inform display driver that buffer content is now updated */
+  EwBspDisplayCommitBuffer( viewport->FrameBuffer->Pixel, aX, aY, aWidth, aHeight );
 }
 
 
 /*******************************************************************************
 * FUNCTION:
-*   NxpRtCreateSurface
+*   GfxCreateSurface
 *
 * DESCRIPTION:
-*   The function NxpRtCreateSurface() reserves pixel memory for a new surface
+*   The function GfxCreateSurface() reserves pixel memory for a new surface
 *   with the given size and color format. The function returns a handle to the
 *   new surface.
 *
@@ -660,13 +583,13 @@ void NxpRtEndUpdate( unsigned long aHandle, int aX, int aY, int aWidth,
 *   If the creation is failed, the function should return 0.
 *
 *******************************************************************************/
-unsigned long NxpRtCreateSurface( int aFormat, int aWidth, int aHeight )
+unsigned long GfxCreateSurface( int aFormat, int aWidth, int aHeight )
 {
-  XNxpRtSurface* surface       = 0;
-  int            bytesPerPixel = 0;
-  int            bitmapSize    = 0;
+  XGfxSurface* surface       = 0;
+  int          bytesPerPixel = 0;
+  int          bitmapSize    = 0;
 
-  /* Important: Due to the fact that pixel data can be accessed by CPU and PXP,
+  /* Important: Due to the fact that pixel data can be accessed by CPU and GA,
      it has to be ensured that the pixel data will never be in the same CPU cache
      line than any other data => pixel memory has to be aligned. */
 
@@ -677,10 +600,10 @@ unsigned long NxpRtCreateSurface( int aFormat, int aWidth, int aHeight )
     bytesPerPixel = sizeof( short );
   else if ( aFormat == EW_PIXEL_FORMAT_SCREEN )
     bytesPerPixel = sizeof( short );
-  bitmapSize = aWidth * aHeight * bytesPerPixel + 2 * CACHE_LINE_SIZE;
+  bitmapSize = aWidth * aHeight * bytesPerPixel + 2 * EW_CACHE_LINE_SIZE;
 
   /* try to allocate the memory for the entire surface */
-  surface = (XNxpRtSurface*)EwAllocVideo( sizeof( XNxpRtSurface ) + bitmapSize );
+  surface = (XGfxSurface*)EwAllocVideo( sizeof( XGfxSurface ) + bitmapSize );
 
   /* fill all members of the surface descriptor */
   if ( surface )
@@ -690,17 +613,13 @@ unsigned long NxpRtCreateSurface( int aFormat, int aWidth, int aHeight )
     surface->Flags         = 0;
     surface->BytesPerPixel = bytesPerPixel;
     surface->Format        = aFormat;
+    surface->AllocSize     = bitmapSize;
     surface->Pixel         = (void*)(((unsigned long)( surface + 1 )
-                             + CACHE_LINE_SIZE - 1 ) & ~( CACHE_LINE_SIZE - 1 ));
+                           + EW_CACHE_LINE_SIZE - 1 ) & ~( EW_CACHE_LINE_SIZE - 1 ));
 
-    EwResourcesMemory += sizeof( XNxpRtSurface ) +  bitmapSize;
-
-    /* also track the max. memory pressure */
-    if ( EwResourcesMemory > EwResourcesMemoryPeak )
-      EwResourcesMemoryPeak = EwResourcesMemory;
-
-    if (( EwObjectsMemory + EwStringsMemory + EwResourcesMemory ) > EwMemoryPeak )
-      EwMemoryPeak = EwObjectsMemory + EwStringsMemory + EwResourcesMemory;
+    /* adjust memory usage */
+    EwResourcesMemory += sizeof( XGfxSurface ) + surface->AllocSize;
+    TrackMemoryUsage();
   }
   return (unsigned long)surface;
 }
@@ -708,10 +627,10 @@ unsigned long NxpRtCreateSurface( int aFormat, int aWidth, int aHeight )
 
 /*******************************************************************************
 * FUNCTION:
-*   NxpRtCreateConstSurface
+*   GfxCreateConstSurface
 *
 * DESCRIPTION:
-*   The function NxpRtCreateConstSurface() creates a surface structure
+*   The function GfxCreateConstSurface() creates a surface structure
 *   that refers to a constant pixel memory. The function returns a handle to the
 *   new surface.
 *
@@ -726,11 +645,11 @@ unsigned long NxpRtCreateSurface( int aFormat, int aWidth, int aHeight )
 *   If the creation is failed, the function should return 0.
 *
 *******************************************************************************/
-unsigned long NxpRtCreateConstSurface( int aFormat, int aWidth, int aHeight,
+unsigned long GfxCreateConstSurface( int aFormat, int aWidth, int aHeight,
   XSurfaceMemory* aMemory )
 {
-  XNxpRtSurface* surface       = 0;
-  int            bytesPerPixel = 0;
+  XGfxSurface* surface       = 0;
+  int          bytesPerPixel = 0;
 
   /* determine expected size of one pixel */
   if ( aFormat == EW_PIXEL_FORMAT_NATIVE )
@@ -746,7 +665,7 @@ unsigned long NxpRtCreateConstSurface( int aFormat, int aWidth, int aHeight,
   if ( bytesPerPixel > 0 )
   {
     /* allocate memory only for the administration structure */
-    surface = (XNxpRtSurface*)EwAllocVideo( sizeof( XNxpRtSurface ));
+    surface = (XGfxSurface*)EwAllocVideo( sizeof( XGfxSurface ));
 
     if ( surface )
     {
@@ -755,16 +674,12 @@ unsigned long NxpRtCreateConstSurface( int aFormat, int aWidth, int aHeight,
       surface->Flags         = EW_SURFACE_PREALLOCATED;
       surface->BytesPerPixel = bytesPerPixel;
       surface->Format        = aFormat;
+      surface->AllocSize     = 0;
       surface->Pixel         = (void*)( aMemory->Pixel1 );
 
-      EwResourcesMemory += sizeof( XNxpRtSurface );
-
-      /* also track the max. memory pressure */
-      if ( EwResourcesMemory > EwResourcesMemoryPeak )
-        EwResourcesMemoryPeak = EwResourcesMemory;
-
-      if (( EwObjectsMemory + EwStringsMemory + EwResourcesMemory ) > EwMemoryPeak )
-        EwMemoryPeak = EwObjectsMemory + EwStringsMemory + EwResourcesMemory;
+      /* adjust memory usage */
+      EwResourcesMemory += sizeof( XGfxSurface );
+      TrackMemoryUsage();
     }
   }
 
@@ -774,11 +689,11 @@ unsigned long NxpRtCreateConstSurface( int aFormat, int aWidth, int aHeight,
 
 /*******************************************************************************
 * FUNCTION:
-*   NxpRtDestroySurface
+*   GfxDestroySurface
 *
 * DESCRIPTION:
-*   The function NxpRtDestroySurface() frees the resources of the given surface.
-*   This function is a counterpart to NxpRtCreateSurface().
+*   The function GfxDestroySurface() frees the resources of the given surface.
+*   This function is a counterpart to GfxCreateSurface().
 *
 * ARGUMENTS:
 *   aHandle - Handle to the surface to free.
@@ -787,27 +702,22 @@ unsigned long NxpRtCreateConstSurface( int aFormat, int aWidth, int aHeight,
 *   None
 *
 *******************************************************************************/
-void NxpRtDestroySurface( unsigned long aHandle )
+void GfxDestroySurface( unsigned long aHandle )
 {
-  XNxpRtSurface* surface = (XNxpRtSurface*)aHandle;
+  XGfxSurface* surface = (XGfxSurface*)aHandle;
 
-  #ifdef EW_USE_PXP_GRAPHICS_ACCELERATOR
+  #ifdef EW_USE_GRAPHICS_ACCELERATOR
 
-    /* check if the PXP is currently accessing the given surface */
-    if (( aHandle == DstSurfaceUsedByPXP ) || ( aHandle == SrcSurfaceUsedByPXP ))
+    /* check if the hardware is currently accessing the given surface */
+    if (( aHandle == DstSurfaceUsedByHardware ) || ( aHandle == SrcSurfaceUsedByHardware ))
     {
       /* wait until hardware accelerated drawing operation is finished */
-      EwBspGraphicsWaitForCompletion();
-
-      /* clear the dst and src handles */
-      DstSurfaceUsedByPXP = 0;
-      SrcSurfaceUsedByPXP = 0;
+      GfxFlushGraphics();
     }
 
   #endif
 
-  EwResourcesMemory -= sizeof( XNxpRtSurface ) + (( surface->Flags & EW_SURFACE_PREALLOCATED ) ?
-    0 : ( surface->Width * surface->Height * surface->BytesPerPixel + 2 * CACHE_LINE_SIZE ));
+  EwResourcesMemory -= sizeof( XGfxSurface ) + surface->AllocSize;
 
   EwFreeVideo((void*)aHandle );
 }
@@ -815,18 +725,14 @@ void NxpRtDestroySurface( unsigned long aHandle )
 
 /*******************************************************************************
 * FUNCTION:
-*   NxpRtLockSurface
+*   GfxLockSurface
 *
 * DESCRIPTION:
-*   The function LockSurface() provides a direct access to the pixel memory of
+*   The function GfxLockSurface() provides a direct access to the pixel memory of
 *   the given surface. The function returns a lock object containing pointers to
 *   memory, where the caller can read/write the surface pixel values. Additional
 *   pitch values also returned in the object allow the caller to calculate the
 *   desired pixel addresses.
-*
-*   When finished the access cycle, the function UnlockSurface() should be used
-*   in order to release the lock, update the affected surface, flush CPU caches,
-*   etc.
 *
 * ARGUMENTS:
 *   aHandle     - Handle to the surface to obtain the direct memory access.
@@ -868,34 +774,38 @@ void NxpRtDestroySurface( unsigned long aHandle )
 *   case).
 *
 *******************************************************************************/
-unsigned long NxpRtLockSurface( unsigned long aHandle, int aX, int aY,
+unsigned long GfxLockSurface( unsigned long aHandle, int aX, int aY,
   int aWidth, int aHeight, int aIndex, int aCount, int aReadPixel, int aWritePixel,
   int aReadClut, int aWriteClut, XSurfaceMemory* aMemory )
 {
-  XNxpRtSurface* surface = (XNxpRtSurface*)aHandle;
+  XGfxSurface* surface = (XGfxSurface*)aHandle;
 
-#ifdef EW_USE_PXP_GRAPHICS_ACCELERATOR
+  EW_UNUSED_ARG( aWidth );
+  EW_UNUSED_ARG( aHeight );
+  EW_UNUSED_ARG( aIndex );
+  EW_UNUSED_ARG( aCount );
+  EW_UNUSED_ARG( aReadPixel );
+  EW_UNUSED_ARG( aReadClut );
+  EW_UNUSED_ARG( aWriteClut );
 
-  /* check if the PXP is currently accessing the given surface */
-  if (( aHandle == DstSurfaceUsedByPXP ) || ( aWritePixel && ( aHandle == SrcSurfaceUsedByPXP )))
+#ifdef EW_USE_GRAPHICS_ACCELERATOR
+
+  /* check if the hardware is currently accessing the given surface */
+  if (( aHandle == DstSurfaceUsedByHardware ) || ( aWritePixel && ( aHandle == SrcSurfaceUsedByHardware )))
   {
     /* wait until hardware accelerated drawing operation is finished */
-    EwBspGraphicsWaitForCompletion();
-
-    /* clear the dst and src handles */
-    DstSurfaceUsedByPXP = 0;
-    SrcSurfaceUsedByPXP = 0;
+    GfxFlushGraphics();
   }
 
-  /* check if the given surface was previously modified by PXP */
-  if ( surface->Flags & EW_SURFACE_MODIFIED_BY_PXP )
+  /* check if the given surface was previously modified by hardware graphics accelerator */
+  if ( surface->Flags & EW_SURFACE_MODIFIED_BY_GA )
   {
     /* invalidate the cache for the address range of the pixel data */
     L1CACHE_InvalidateDCacheByRange((uint32_t)surface->Pixel,
       surface->Width * surface->Height * surface->BytesPerPixel );
 
     /* clear the flag */
-    surface->Flags &= ~EW_SURFACE_MODIFIED_BY_PXP;
+    surface->Flags &= ~EW_SURFACE_MODIFIED_BY_GA;
   }
 
 #endif
@@ -919,13 +829,13 @@ unsigned long NxpRtLockSurface( unsigned long aHandle, int aX, int aY,
 
 /*******************************************************************************
 * FUNCTION:
-*   NxpRtUnlockSurface
+*   GfxUnlockSurface
 *
 * DESCRIPTION:
-*   The function NxpRtUnlockSurface() has the job to unlock the given surface and
+*   The function GfxUnlockSurface() has the job to unlock the given surface and
 *   if necessary free any temporary used resources.
-*   This function is a counterpart to NxpRtLockSurface().
-**
+*   This function is a counterpart to GfxLockSurface().
+*
 * ARGUMENTS:
 *   aSurfaceHandle - Handle to the surface to release the direct memory access.
 *   aLockHandle    - value returned by the corresponding LockSurface() call.
@@ -950,20 +860,42 @@ unsigned long NxpRtLockSurface( unsigned long aHandle, int aX, int aY,
 *   None
 *
 *******************************************************************************/
-void NxpRtUnlockSurface( unsigned long aSurfaceHandle, unsigned long aLockHandle,
+void GfxUnlockSurface( unsigned long aSurfaceHandle, unsigned long aLockHandle,
   int aX, int aY, int aWidth, int aHeight, int aIndex, int aCount, int aWritePixel,
   int aWriteClut )
 {
+  EW_UNUSED_ARG( aSurfaceHandle );
+  EW_UNUSED_ARG( aLockHandle );
+  EW_UNUSED_ARG( aX );
+  EW_UNUSED_ARG( aY );
+  EW_UNUSED_ARG( aWidth );
+  EW_UNUSED_ARG( aHeight );
+  EW_UNUSED_ARG( aIndex );
+  EW_UNUSED_ARG( aCount );
+  EW_UNUSED_ARG( aWritePixel );
+  EW_UNUSED_ARG( aWriteClut );
 }
 
 
-#ifdef EW_USE_PXP_GRAPHICS_ACCELERATOR
+#ifdef EW_USE_GRAPHICS_ACCELERATOR
 
-/* helper function to prepare access to surfaces by PXP */
-static void NxpRtSelectSurfaces( unsigned long aDstSurfaceHandle, unsigned long aSrcSurfaceHandle )
+/* helper function to finalize any hardware accelerated drawing operation */
+static void GfxFlushGraphics( void )
 {
-  XNxpRtSurface* dstSurface = (XNxpRtSurface*)aDstSurfaceHandle;
-  XNxpRtSurface* srcSurface = (XNxpRtSurface*)aSrcSurfaceHandle;
+  /* wait until hardware accelerated drawing operation is finished */
+  EwBspGraphicsWaitForCompletion();
+
+  /* now clear the dst and src handles */
+  DstSurfaceUsedByHardware = 0;
+  SrcSurfaceUsedByHardware = 0;
+}
+
+
+/* helper function to prepare access to surfaces by hardware */
+static void GfxSelectSurfaces( unsigned long aDstSurfaceHandle, unsigned long aSrcSurfaceHandle )
+{
+  XGfxSurface* dstSurface = (XGfxSurface*)aDstSurfaceHandle;
+  XGfxSurface* srcSurface = (XGfxSurface*)aSrcSurfaceHandle;
 
   if ( dstSurface )
   {
@@ -978,8 +910,8 @@ static void NxpRtSelectSurfaces( unsigned long aDstSurfaceHandle, unsigned long 
       dstSurface->Flags &= ~EW_SURFACE_MODIFIED_BY_CPU;
     }
 
-    /* sign the surface now as modified by PXP */
-    dstSurface->Flags |= EW_SURFACE_MODIFIED_BY_PXP;
+    /* sign the surface now as modified by hardware graphics accelerator */
+    dstSurface->Flags |= EW_SURFACE_MODIFIED_BY_GA;
   }
 
   if ( srcSurface )
@@ -997,18 +929,18 @@ static void NxpRtSelectSurfaces( unsigned long aDstSurfaceHandle, unsigned long 
   }
 
   /* finally, store the affected source and destination handles */
-  DstSurfaceUsedByPXP = aDstSurfaceHandle;
-  SrcSurfaceUsedByPXP = aSrcSurfaceHandle;
+  DstSurfaceUsedByHardware = aDstSurfaceHandle;
+  SrcSurfaceUsedByHardware = aSrcSurfaceHandle;
 }
 
 
 /*******************************************************************************
 * FUNCTION:
-*   NxpRtFillDriver
+*   GfxFillDriver
 *
 * DESCRIPTION:
-*   The function NxpRtFillDriver is called from the Graphics Engine, when a
-*   rectangular area should be filled by using the PXP functionality.
+*   The function GfxFillDriver is called from the Graphics Engine, when a
+*   rectangular area should be filled by using the graphics hardware.
 *
 * ARGUMENTS:
 *   aDstHandle  - Handle to the destination surface (native/screen color format).
@@ -1027,34 +959,36 @@ static void NxpRtSelectSurfaces( unsigned long aDstSurfaceHandle, unsigned long 
 *   None
 *
 *******************************************************************************/
-void NxpRtFillDriver( unsigned long aDstHandle, int aDstX, int aDstY,
+void GfxFillDriver( unsigned long aDstHandle, int aDstX, int aDstY,
   int aWidth, int aHeight, int aBlend, unsigned long* aColors )
 {
-  XNxpRtSurface* dstSurface = (XNxpRtSurface*)aDstHandle;
-  void*          dst;
-  int            dstPitch;
+  XGfxSurface* dstSurface = (XGfxSurface*)aDstHandle;
+  void*        dst;
+  int          dstPitch;
 
-#ifndef EW_DONT_USE_PXP_SOFTWARE_REPLACEMENT
-  /* make a software emulation of the drawing function if the PXP is switched off */
-  if ( UsePXP == 0 )
+#ifndef EW_DONT_USE_GFX_EMULATION
+
+  /* make a software emulation of the drawing function */
+  if ( UseGraphicsAccelerator == 0 )
   {
     XSurfaceMemory dstMem;
     XGradient      gradient;
     XFillWorker    worker = EwScreenFillRowSolid;
 
     /* obtain direct access to the destination buffer */
-    NxpRtLockSurface( aDstHandle, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, &dstMem );
+    GfxLockSurface( aDstHandle, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, &dstMem );
 
     /* let the Graphics Engine make the drawing operation */
     EwInitColorGradient( aWidth, aHeight, (unsigned int*)aColors, &gradient );
     EwEmulateFill( &dstMem, aDstX, aDstY, aWidth, aHeight, &gradient, aWidth, aHeight, worker );
 
     /* unlock destination buffer */
-    NxpRtUnlockSurface( aDstHandle, 0, 0, 0, 0, 0, 0, 0, 1, 0 );
+    GfxUnlockSurface( aDstHandle, 0, 0, 0, 0, 0, 0, 0, 1, 0 );
   }
 
-  /* otherwise use the PXP hardware... */
+  /* otherwise use the hardware... */
   else
+
 #endif
   {
     uint32_t dstColorFormat = kPXP_OutputPixelFormatRGB565;
@@ -1064,7 +998,7 @@ void NxpRtFillDriver( unsigned long aDstHandle, int aDstX, int aDstY,
                    |   EW_BLUE ( aColors[0]);
 
     /* obtain direct access to the destination buffer */
-    NxpRtSelectSurfaces( aDstHandle, 0 );
+    GfxSelectSurfaces( aDstHandle, 0 );
 
     /* get the start address in the destination and the offset */
     dst      = (void*)((unsigned char*)dstSurface->Pixel + (( aDstY * dstSurface->Width ) + aDstX ) * dstSurface->BytesPerPixel );
@@ -1077,12 +1011,12 @@ void NxpRtFillDriver( unsigned long aDstHandle, int aDstX, int aDstY,
 
 
 /*******************************************************************************
-* PROTOTYPE:
-*   NxpRtCopyDriver
+* FUNCTION:
+*   GfxCopyDriver
 *
 * DESCRIPTION:
-*   The following function performs the 'copy rectangular area' operation from a
-*   native or alpha8 surface to a native surface.
+*   The function GfxCopyDriver is called from the Graphics Engine, when a
+*   rectangular bitmap area should be copied by using the graphics hardware.
 *
 * ARGUMENTS:
 *   aDstHandle  - Handle to the destination surface (native/screen color format).
@@ -1111,22 +1045,23 @@ void NxpRtFillDriver( unsigned long aDstHandle, int aDstX, int aDstY,
 *   None
 *
 *******************************************************************************/
-void NxpRtCopyDriver( unsigned long aDstHandle, unsigned long aSrcHandle,
+void GfxCopyDriver( unsigned long aDstHandle, unsigned long aSrcHandle,
   int aDstX, int aDstY, int aSrcX, int aSrcY, int aWidth, int aHeight,
   int aBlend, unsigned long* aColors )
 {
-  XNxpRtSurface* dstSurface = (XNxpRtSurface*)aDstHandle;
-  XNxpRtSurface* srcSurface = (XNxpRtSurface*)aSrcHandle;
-  void*          dst;
-  int            dstPitch;
-  void*          src;
-  int            srcPitch;
-  int            dstFormat = ((XNxpRtSurface*)aDstHandle)->Format;
-  int            srcFormat = ((XNxpRtSurface*)aSrcHandle)->Format;
+  XGfxSurface* dstSurface = (XGfxSurface*)aDstHandle;
+  XGfxSurface* srcSurface = (XGfxSurface*)aSrcHandle;
+  void*        dst;
+  int          dstPitch;
+  void*        src;
+  int          srcPitch;
+  int          dstFormat = dstSurface->Format;
+  int          srcFormat = srcSurface->Format;
 
-#ifndef EW_DONT_USE_PXP_SOFTWARE_REPLACEMENT
-  /* make a software emulation of the drawing function if the PXP is switched off */
-  if ( UsePXP == 0 )
+#ifndef EW_DONT_USE_GFX_EMULATION
+
+  /* make a software emulation of the drawing function */
+  if ( UseGraphicsAccelerator == 0 )
   {
     XSurfaceMemory dstMem;
     XSurfaceMemory srcMem;
@@ -1135,8 +1070,8 @@ void NxpRtCopyDriver( unsigned long aDstHandle, unsigned long aSrcHandle,
     XCopyWorker    worker = 0;
 
     /* obtain direct access to the destination and source buffer */
-    NxpRtLockSurface( aDstHandle, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, &dstMem );
-    NxpRtLockSurface( aSrcHandle, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, &srcMem );
+    GfxLockSurface( aDstHandle, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, &dstMem );
+    GfxLockSurface( aSrcHandle, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, &srcMem );
 
     /* select the necessary drawing function */
     if ( srcFormat == EW_PIXEL_FORMAT_NATIVE )
@@ -1159,12 +1094,13 @@ void NxpRtCopyDriver( unsigned long aDstHandle, unsigned long aSrcHandle,
     EwEmulateCopy( &dstMem, &srcMem, aDstX, aDstY, aWidth, aHeight, aSrcX, aSrcY, &gradient, aWidth, aHeight, worker );
 
     /* unlock destination and source buffer */
-    NxpRtUnlockSurface( aDstHandle, 0, 0, 0, 0, 0, 0, 0, 1, 0 );
-    NxpRtUnlockSurface( aSrcHandle, 0, 0, 0, 0, 0, 0, 0, 0, 0 );
+    GfxUnlockSurface( aDstHandle, 0, 0, 0, 0, 0, 0, 0, 1, 0 );
+    GfxUnlockSurface( aSrcHandle, 0, 0, 0, 0, 0, 0, 0, 0, 0 );
   }
 
-  /* otherwise use the PXP hardware... */
+  /* otherwise use the hardware... */
   else
+
 #endif
   {
     uint32_t dstColorFormat = kPXP_OutputPixelFormatARGB8888;
@@ -1175,7 +1111,7 @@ void NxpRtCopyDriver( unsigned long aDstHandle, unsigned long aSrcHandle,
                             |   EW_BLUE ( aColors[0]);
 
     /* obtain direct access to the destination and source buffer */
-    NxpRtSelectSurfaces( aDstHandle, aSrcHandle );
+    GfxSelectSurfaces( aDstHandle, aSrcHandle );
 
     /* get the start address in the source and destination and their offsets */
     dst      = (void*)((unsigned char*)dstSurface->Pixel + (( aDstY * dstSurface->Width ) + aDstX ) * dstSurface->BytesPerPixel );
@@ -1198,12 +1134,12 @@ void NxpRtCopyDriver( unsigned long aDstHandle, unsigned long aSrcHandle,
 
 
 /*******************************************************************************
-* PROTOTYPE:
-*   NxpRtBlendDriver
+* FUNCTION:
+*   GfxBlendDriver
 *
 * DESCRIPTION:
-*   The following function performs the 'blend rectangular area' operation from a
-*   native or alpha8 surface to a native surface.
+*   The function GfxBlendDriver is called from the Graphics Engine, when a
+*   rectangular bitmap area should be blended by using the graphics hardware.
 *
 * ARGUMENTS:
 *   aDstHandle  - Handle to the destination surface (native/screen color format).
@@ -1232,21 +1168,22 @@ void NxpRtCopyDriver( unsigned long aDstHandle, unsigned long aSrcHandle,
 *   None
 *
 *******************************************************************************/
-void NxpRtBlendDriver( unsigned long aDstHandle, unsigned long aSrcHandle,
+void GfxBlendDriver( unsigned long aDstHandle, unsigned long aSrcHandle,
   int aDstX, int aDstY, int aSrcX, int aSrcY, int aWidth, int aHeight,
   int aBlend, unsigned long* aColors )
 {
-  XNxpRtSurface* dstSurface = (XNxpRtSurface*)aDstHandle;
-  XNxpRtSurface* srcSurface = (XNxpRtSurface*)aSrcHandle;
-  void*          dst;
-  int            dstPitch;
-  void*          src;
-  int            srcPitch;
-  int            srcFormat = ((XNxpRtSurface*)aSrcHandle)->Format;
+  XGfxSurface* dstSurface = (XGfxSurface*)aDstHandle;
+  XGfxSurface* srcSurface = (XGfxSurface*)aSrcHandle;
+  void*        dst;
+  int          dstPitch;
+  void*        src;
+  int          srcPitch;
+  int          srcFormat = srcSurface->Format;
 
-#ifndef EW_DONT_USE_PXP_SOFTWARE_REPLACEMENT
-  /* make a software emulation of the drawing function if the PXP is switched off */
-  if ( UsePXP == 0 )
+#ifndef EW_DONT_USE_GFX_EMULATION
+
+  /* make a software emulation of the drawing function */
+  if ( UseGraphicsAccelerator == 0 )
   {
     XSurfaceMemory dstMem;
     XSurfaceMemory srcMem;
@@ -1255,8 +1192,8 @@ void NxpRtBlendDriver( unsigned long aDstHandle, unsigned long aSrcHandle,
     XCopyWorker    worker = 0;
 
     /* obtain direct access to the destination and source buffer */
-    NxpRtLockSurface( aDstHandle, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, &dstMem );
-    NxpRtLockSurface( aSrcHandle, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, &srcMem );
+    GfxLockSurface( aDstHandle, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, &dstMem );
+    GfxLockSurface( aSrcHandle, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, &srcMem );
 
     /* select the necessary drawing function */
     if ( srcFormat == EW_PIXEL_FORMAT_NATIVE )
@@ -1269,12 +1206,13 @@ void NxpRtBlendDriver( unsigned long aDstHandle, unsigned long aSrcHandle,
     EwEmulateCopy( &dstMem, &srcMem, aDstX, aDstY, aWidth, aHeight, aSrcX, aSrcY, &gradient, aWidth, aHeight, worker );
 
     /* unlock destination and source buffer */
-    NxpRtUnlockSurface( aDstHandle, 0, 0, 0, 0, 0, 0, 0, 1, 0 );
-    NxpRtUnlockSurface( aSrcHandle, 0, 0, 0, 0, 0, 0, 0, 0, 0 );
+    GfxUnlockSurface( aDstHandle, 0, 0, 0, 0, 0, 0, 0, 1, 0 );
+    GfxUnlockSurface( aSrcHandle, 0, 0, 0, 0, 0, 0, 0, 0, 0 );
   }
 
-  /* otherwise use the PXP hardware... */
+  /* otherwise use the hardware... */
   else
+
 #endif
   {
     uint32_t dstColorFormat = kPXP_OutputPixelFormatRGB565;
@@ -1285,7 +1223,7 @@ void NxpRtBlendDriver( unsigned long aDstHandle, unsigned long aSrcHandle,
                             |   EW_BLUE ( aColors[0]);
 
     /* obtain direct access to the destination and source buffer */
-    NxpRtSelectSurfaces( aDstHandle, aSrcHandle );
+    GfxSelectSurfaces( aDstHandle, aSrcHandle );
 
     /* get the start address in the source and destination and their offsets */
     dst      = (void*)((unsigned char*)dstSurface->Pixel + (( aDstY * dstSurface->Width ) + aDstX ) * dstSurface->BytesPerPixel );
@@ -1305,58 +1243,66 @@ void NxpRtBlendDriver( unsigned long aDstHandle, unsigned long aSrcHandle,
 
 /*******************************************************************************
 * FUNCTION:
-*   NxpRtUsePXP
+*   GfxUseGraphicsAccelerator
 *
 * DESCRIPTION:
-*   The function NxpRtUsePXP can be used to switch on/off the usage of the
-*   PXP dynamically during runtime. If the PXP is deactivated, the software
-*   pixel driver of the Graphics Engine is used to execute the different
-*   drawing operations.
+*   The function GfxUseGraphicsAccelerator can be used to switch on/off the usage
+*   of the graphics accelerator dynamically during runtime. If it is deactivated,
+*   the software pixel driver of the Graphics Engine are used to execute the
+*   different drawing operations.
 *
 * ARGUMENTS:
-*   aActive     - Flag to control the usage of the PXP.
+*   aActive     - Flag to control the usage of the graphics accelerator.
 *
 * RETURN VALUE:
 *   None
 *
 *******************************************************************************/
-void NxpRtUsePXP( int aActive )
+void GfxUseGraphicsAccelerator( int aActive )
 {
-#ifndef EW_DONT_USE_PXP_SOFTWARE_REPLACEMENT
-  /* just store the flag */
-  UsePXP = aActive;
+  /* check for any changes */
+  if ( aActive == UseGraphicsAccelerator )
+    return;
 
-  /* and put a message to the terminal */
-  if ( aActive )
-    EwPrint( "PXP is now active...\n" );
-  else
-    EwPrint( "PXP is now disabled!\n" );
-#else
-    EwPrint( "PXP is always active.\n" );
-#endif
+  #ifndef EW_DONT_USE_GFX_EMULATION
+
+    /* just store the flag */
+    UseGraphicsAccelerator = aActive;
+
+    /* and put a message to the terminal */
+    if ( aActive )
+      EwPrint( "Graphics Accelerator is now active...\n" );
+    else
+      EwPrint( "Graphics Accelerator is now disabled!\n" );
+
+  #else
+
+    EwPrint( "Graphics Accelerator is always active.\n" );
+
+  #endif
 }
 
 
 /*******************************************************************************
 * FUNCTION:
-*   NxpRtIsPXPUsed
+*   GfxIsGraphicsAcceleratorUsed
 *
 * DESCRIPTION:
-*   The function NxpRtIsPXPUsed returns a non zero value, if the PXP is
-*   activated.
+*   The function GfxIsGraphicsAcceleratorUsed returns a non zero value, if the
+*   graphics accelerator hardware is activated.
 *
 * ARGUMENTS:
 *   None
 *
 * RETURN VALUE:
-*   A non zero value, if the PXP is activated.
+*   A non zero value, if the graphics accelerator hardware is activated.
 *
 *******************************************************************************/
-int NxpRtIsPXPUsed( void )
+int GfxIsGraphicsAcceleratorUsed( void )
 {
-  return UsePXP;
+  return UseGraphicsAccelerator;
 }
 
-#endif /* EW_USE_PXP_GRAPHICS_ACCELERATOR */
+#endif /* EW_USE_GRAPHICS_ACCELERATOR */
 
 /* msy */

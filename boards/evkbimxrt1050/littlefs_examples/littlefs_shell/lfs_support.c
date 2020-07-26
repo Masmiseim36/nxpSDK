@@ -312,11 +312,13 @@ static const struct lfs_config lfsc_default = {
     .sync  = lfs_hyperflash_sync,
 
     // block device configuration
-    .read_size   = 16,
-    .prog_size   = FLASH_PAGE_SIZE,
-    .block_size  = FLASH_SECTOR_SIZE,
-    .block_count = LFS_SECTORS,
-    .lookahead   = 128,
+    .read_size      = 16,
+    .prog_size      = FLASH_PAGE_SIZE,
+    .block_size     = FLASH_SECTOR_SIZE,
+    .block_count    = LFS_SECTORS,
+    .block_cycles   = 100,
+    .cache_size     = FLASH_PAGE_SIZE,
+    .lookahead_size = 16,
 };
 
 int lfs_get_default_config(struct lfs_config *lfsc)

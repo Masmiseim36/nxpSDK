@@ -424,7 +424,7 @@ wwd_result_t wwd_wifi_read_wlan_log_unsafe( uint32_t wlan_shared_address, char* 
     if ( c->buf == NULL )
     {
         c->bufsize = ltoh32( c->log.buf_size );
-        c->buf = malloc( c->bufsize );
+        c->buf = WWD_MALLOC( c->bufsize );
         if ( c->buf == NULL )
         {
             result = WWD_WLAN_ERROR;

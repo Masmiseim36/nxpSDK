@@ -8,8 +8,8 @@
 #define GR_PTHREAD_H
 #include <time.h> 
 
-#if !(defined(GRE_TARGET_TOOLCHAIN_mcuxpresso))
-//Synchronization
+#if !defined(GRE_TARGET_TOOLCHAIN_mcuxpresso) && !defined(GRE_TARGET_TOOLCHAIN_sw4stm32)
+
 struct _private_mutex;
 struct _private_mutex_attr;
 typedef struct _private_mutex * pthread_mutex_t;
@@ -46,7 +46,6 @@ int pthread_cond_wait(pthread_cond_t *_cond, pthread_mutex_t *_mutex);
 int pthread_cond_broadcast(pthread_cond_t *_cond);
 int pthread_cond_signal(pthread_cond_t *_cond);
 
-// Threading
 #ifndef PTHREAD_CREATE_JOINABLE
 #define PTHREAD_CREATE_JOINABLE	0x00
 #endif

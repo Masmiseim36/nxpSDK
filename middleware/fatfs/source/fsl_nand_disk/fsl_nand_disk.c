@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 NXP
+ * Copyright 2018-2020 NXP
  * All rights reserved.
  *
  *
@@ -43,18 +43,18 @@ extern nand_config_t nandConfig;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-DRESULT nand_disk_write(uint8_t physicalDrive, const uint8_t *buffer, uint32_t sector, uint8_t count)
+DRESULT nand_disk_write(BYTE pdrv, const BYTE* buff, LBA_t sector, UINT count)
 {
     assert(count == 1U);
 
     dhara_error_t err;
 
-    if (physicalDrive != NANDDISK)
+    if (pdrv != NANDDISK)
     {
         return RES_PARERR;
     }
 
-    if (dhara_map_write(&map, sector, buffer, &err) < 0)
+    if (dhara_map_write(&map, sector, buff, &err) < 0)
     {
         return RES_ERROR;
     }
@@ -62,18 +62,18 @@ DRESULT nand_disk_write(uint8_t physicalDrive, const uint8_t *buffer, uint32_t s
     return RES_OK;
 }
 
-DRESULT nand_disk_read(uint8_t physicalDrive, uint8_t *buffer, uint32_t sector, uint8_t count)
+DRESULT nand_disk_read(BYTE pdrv, BYTE* buff, LBA_t sector, UINT count)
 {
     assert(count == 1U);
 
     dhara_error_t err;
 
-    if (physicalDrive != NANDDISK)
+    if (pdrv != NANDDISK)
     {
         return RES_PARERR;
     }
 
-    if (dhara_map_read(&map, sector, buffer, &err) < 0)
+    if (dhara_map_read(&map, sector, buff, &err) < 0)
     {
         return RES_ERROR;
     }
@@ -81,23 +81,23 @@ DRESULT nand_disk_read(uint8_t physicalDrive, uint8_t *buffer, uint32_t sector, 
     return RES_OK;
 }
 
-DRESULT nand_disk_ioctl(uint8_t physicalDrive, uint8_t command, void *buffer)
+DRESULT nand_disk_ioctl(BYTE pdrv, BYTE cmd, void* buff)
 {
     DRESULT result = RES_OK;
     DWORD sector;
     dhara_error_t err;
 
-    if (physicalDrive != NANDDISK)
+    if (pdrv != NANDDISK)
     {
         return RES_PARERR;
     }
 
-    switch (command)
+    switch (cmd)
     {
         case GET_SECTOR_COUNT:
-            if (buffer)
+            if (buff)
             {
-                *(uint32_t *)buffer = dhara_map_capacity(&map);
+                *(uint32_t *)buff = dhara_map_capacity(&map);
             }
             else
             {
@@ -105,9 +105,9 @@ DRESULT nand_disk_ioctl(uint8_t physicalDrive, uint8_t command, void *buffer)
             }
             break;
         case GET_SECTOR_SIZE:
-            if (buffer)
+            if (buff)
             {
-                *(uint32_t *)buffer = 1 << EXAMPLE_DHARA_NAND_LOG2_PAGE_SIZE;
+                *(uint32_t *)buff = 1 << EXAMPLE_DHARA_NAND_LOG2_PAGE_SIZE;
             }
             else
             {
@@ -115,9 +115,9 @@ DRESULT nand_disk_ioctl(uint8_t physicalDrive, uint8_t command, void *buffer)
             }
             break;
         case GET_BLOCK_SIZE:
-            if (buffer)
+            if (buff)
             {
-                *(uint32_t *)buffer = 1 << EXAMPLE_DHARA_NAND_LOG2_PAGE_PER_BLOCK;
+                *(uint32_t *)buff = 1 << EXAMPLE_DHARA_NAND_LOG2_PAGE_PER_BLOCK;
             }
             else
             {
@@ -135,7 +135,7 @@ DRESULT nand_disk_ioctl(uint8_t physicalDrive, uint8_t command, void *buffer)
             }
             break;
         case CTRL_TRIM:
-            for(sector = ((DWORD *)buffer)[0]; sector <= ((DWORD *)buffer)[1]; sector++)
+            for(sector = ((DWORD *)buff)[0]; sector <= ((DWORD *)buff)[1]; sector++)
             {
                 if(dhara_map_trim(&map, sector, &err) < 0)
                 {
@@ -153,9 +153,9 @@ DRESULT nand_disk_ioctl(uint8_t physicalDrive, uint8_t command, void *buffer)
     return result;
 }
 
-DSTATUS nand_disk_status(uint8_t physicalDrive)
+DSTATUS nand_disk_status(BYTE pdrv)
 {
-    if (physicalDrive != NANDDISK)
+    if (pdrv != NANDDISK)
     {
         return STA_NOINIT;
     }
@@ -163,11 +163,11 @@ DSTATUS nand_disk_status(uint8_t physicalDrive)
     return 0;
 }
 
-DSTATUS nand_disk_initialize(uint8_t physicalDrive)
+DSTATUS nand_disk_initialize(BYTE pdrv)
 {
     status_t status;
 
-    if (physicalDrive != NANDDISK)
+    if (pdrv != NANDDISK)
     {
         return STA_NOINIT;
     }

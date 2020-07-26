@@ -53,7 +53,7 @@ WMI_NOA_INFO_STRUCT p2p_noa;
 uint16_t ap_channel_hint;
 QCOM_SSID ssid_str_concurrent = {0};
 #define AUTOIP_BASE_ADDR 0xA9FE0100
-#define AUTOIP_MAX_ADDR 0xA9FEFEFF
+#define AUTOIP_MAX_ADDR  0xA9FEFEFF
 
 /* Set defaults for Base & range on AUtoIP address pool */
 unsigned long dBASE_AUTO_IP_ADDRESS = AUTOIP_BASE_ADDR; /* 169.254.1.0 */
@@ -75,8 +75,8 @@ uint8_t p2p_connection_default = 0, p2p_persistent_done = 0, p2p_cancel_enable =
                                        1 - Allow IOE Device to connect(Issue connect)
                                     */
 char p2p_wps_pin[WPS_PIN_LEN + 1] = {0};
-uint8_t p2p_intent = 0;
-bool autogo_newpp  = false;
+uint8_t p2p_intent                = 0;
+bool autogo_newpp                 = false;
 WMI_PERSISTENT_MAC_LIST p2p_pers_data[MAX_LIST_COUNT];
 uint8_t invitation_index = 0, p2p_join_mac_addr[ATH_MAC_LEN] = {0}, p2p_join_session_active = 0;
 WMI_P2P_FW_CONNECT_CMD_STRUCT p2p_join_profile;
@@ -102,8 +102,8 @@ WLAN_AUTH_MODE wpa_ver;
 wepkey_t key[MAX_NUM_WEP_KEYS];
 uint32_t wep_keyindex;
 char wpsPin[MAX_WPS_PIN_SIZE + 1] = {0};
-QCOM_PASSPHRASE wpa_passphrase = {0};
-volatile uint8_t wifi_state    = 0;
+QCOM_PASSPHRASE wpa_passphrase    = {0};
+volatile uint8_t wifi_state       = 0;
 int32_t block_on_dhcp(int32_t argc, char *argv[]);
 int active_device = 0;
 /************ Function Prototypes *********************************************/
@@ -1884,8 +1884,8 @@ static int32_t connect_handler(int32_t index, int32_t argc, char *argv[])
 // t_ipconfig((void*)handle,IPCFG_STATIC, &ip_addr, &mask, &gateway);
 #else
 
-#define AP_IPADDR IPADDR(192, 168, 1, 1)
-#define AP_IPMASK IPADDR(255, 255, 255, 0)
+#define AP_IPADDR    IPADDR(192, 168, 1, 1)
+#define AP_IPMASK    IPADDR(255, 255, 255, 0)
 #define AP_IPGATEWAY IPADDR(192, 168, 1, 1)
 
         uint32_t error;
@@ -3909,7 +3909,7 @@ static int32_t p2p_handler(int32_t index, int32_t argc, char_ptr argv[])
 #if 1
                 if (p2p_join_profile.wps_method == WPS_PIN_DISPLAY || p2p_join_profile.wps_method == WPS_PIN_KEYPAD)
                 {
-                    strncpy(p2p_wps_pin, argv[i + 2], sizeof(p2p_wps_pin) - 1);  
+                    strncpy(p2p_wps_pin, argv[i + 2], sizeof(p2p_wps_pin) - 1);
                     memcpy(stack_p2p.p2p_info.wps_pin, p2p_wps_pin, sizeof(stack_p2p.p2p_info.wps_pin));
                     wmi_save_key_info(&stack_p2p.p2p_info);
                 }
@@ -4286,7 +4286,6 @@ static int32_t p2p_handler(int32_t index, int32_t argc, char_ptr argv[])
             {
                 if (strlen(argv[i + 2]) == 8)
                 {
-                    
                     strncpy(p2p_wps_pin, argv[i + 2], sizeof(p2p_wps_pin) - 1);
                     memcpy(stack_p2p.p2p_info.wps_pin, p2p_wps_pin, sizeof(stack_p2p.p2p_info.wps_pin));
                     wmi_save_key_info(&stack_p2p.p2p_info);
@@ -8248,10 +8247,10 @@ int32_t ota_format(int32_t argc, char *argv[])
 /*       OTA_FTP */
 /*                                                                                                                           */
 /*****************************************************************************************************************************/
-#define OTA_FTP_DATA_PORT 1068
-#define OTA_FTP_BUF_SIZE MAX_OTA_AREA_READ_SIZE
+#define OTA_FTP_DATA_PORT                1068
+#define OTA_FTP_BUF_SIZE                 MAX_OTA_AREA_READ_SIZE
 #define OTA_FTP_INCOMING_CONNECT_TIMEOUT (20 * 1000)
-#define OTA_FTP_WAIT_TIME (50)
+#define OTA_FTP_WAIT_TIME                (50)
 
 /*
  * OTA FTP Status codes
@@ -8706,7 +8705,7 @@ int32_t ota_ftp_program_ota(uint32_t *size)
     /*Accept incoming connection*/
     OTA_FTP_D_PRINTF("Accept incoming data connection" NL);
     addr_len                = sizeof(foreign_addr);
-    ota_ftp_sess->peer_sock = qcom_accept(ota_ftp_sess->data_sock, (void*)&foreign_addr, &addr_len);
+    ota_ftp_sess->peer_sock = qcom_accept(ota_ftp_sess->data_sock, (void *)&foreign_addr, &addr_len);
 
     if (ota_ftp_sess->peer_sock == (uint32_t)A_ERROR)
     {

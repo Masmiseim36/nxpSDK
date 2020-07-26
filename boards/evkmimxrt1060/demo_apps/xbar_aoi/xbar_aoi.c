@@ -1,13 +1,17 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2017, 2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "fsl_debug_console.h"
+#if defined(FSL_FEATURE_SOC_ACMP_COUNT) && FSL_FEATURE_SOC_ACMP_COUNT
+#include "fsl_acmp.h"
+#else
 #include "fsl_cmp.h"
+#endif
 #include "fsl_pit.h"
 #include "fsl_aoi.h"
 #include "fsl_xbara.h"
@@ -26,22 +30,22 @@
 #define DEMO_AOI_BASEADDR AOI1
 
 #define DEMO_XBARA_IRQ_HANDLER_FUNC XBAR1_IRQ_0_1_IRQHandler
-#define DEMO_XBARA_IRQ_ID XBAR1_IRQ_0_1_IRQn
+#define DEMO_XBARA_IRQ_ID           XBAR1_IRQ_0_1_IRQn
 
 #define DEMO_CMP_MINUS_CHANNEL 0U
-#define DEMO_CMP_PLUS_CHANNEL 7U
-#define DEMO_PIT_CHANNEL kPIT_Chnl_0
+#define DEMO_CMP_PLUS_CHANNEL  7U
+#define DEMO_PIT_CHANNEL       kPIT_Chnl_0
 
 #define BUS_CLK_FREQ CLOCK_GetFreq(kCLOCK_OscClk)
 
-#define DEMO_XBARB_INPUT_CMP_SIGNAL kXBARB2_InputAcmp1Out
+#define DEMO_XBARB_INPUT_CMP_SIGNAL    kXBARB2_InputAcmp1Out
 #define DEMO_XBARB_OUTPUT_AOI_SIGNAL_1 kXBARB2_OutputAoi1In00
 
-#define DEMO_XBARB_INPUT_PIT_SIGNAL kXBARB2_InputPitTrigger0
+#define DEMO_XBARB_INPUT_PIT_SIGNAL    kXBARB2_InputPitTrigger0
 #define DEMO_XBARB_OUTPUT_AOI_SIGNAL_2 kXBARB2_OutputAoi1In01
 
 #define DEMO_XBARA_INPUT_AOI_SIGNAL kXBARA1_InputAoi1Out0
-#define DEMO_XBARA_OUTPUT_SIGNAL kXBARA1_OutputDmaChMuxReq30
+#define DEMO_XBARA_OUTPUT_SIGNAL    kXBARA1_OutputDmaChMuxReq30
 
 
 /*******************************************************************************
@@ -82,6 +86,39 @@ volatile bool g_xbaraInterrupt = false;
 
 static void CMP_Configuration(void)
 {
+#if defined(FSL_FEATURE_SOC_ACMP_COUNT) && FSL_FEATURE_SOC_ACMP_COUNT
+    acmp_config_t acmpConfig;
+    acmp_channel_config_t channelConfigStruct;
+    acmp_discrete_mode_config_t acmpDiscreteconfig;
+    acmp_dac_config_t dacConfigStruct;
+
+    ACMP_GetDefaultConfig(&acmpConfig);
+    acmpConfig.enablePinOut = true;
+    ACMP_Init(DEMO_CMP_BASEADDR, &acmpConfig);
+
+    /* Configure positive inputs are coming from 3v domain. */
+    ACMP_GetDefaultDiscreteModeConfig(&acmpDiscreteconfig);
+    acmpDiscreteconfig.enablePositiveChannelDiscreteMode = true;
+    ACMP_SetDiscreteModeConfig(DEMO_CMP_BASEADDR, &acmpDiscreteconfig);
+
+    /* Configure channel. Select the negative port input from DAC and positive port input from plus mux input. */
+    channelConfigStruct.minusMuxInput = DEMO_CMP_MINUS_CHANNEL;
+    channelConfigStruct.plusMuxInput  = DEMO_CMP_PLUS_CHANNEL;
+    ACMP_SetChannelConfig(DEMO_CMP_BASEADDR, &channelConfigStruct);
+
+    /* Configure DAC. */
+#if defined(DEMO_CMP_USE_ALT_VREF) && DEMO_CMP_USE_ALT_VREF
+    dacConfigStruct.referenceVoltageSource = kACMP_VrefSourceVin2;
+#else
+    dacConfigStruct.referenceVoltageSource = kACMP_VrefSourceVin1;
+#endif                                    /* DEMO_ACMP_USE_ALT_VREF */
+    dacConfigStruct.DACValue     = 0x7FU; /* Half of referene voltage. */
+    dacConfigStruct.enableOutput = false;
+    dacConfigStruct.workMode     = kACMP_DACWorkLowSpeedMode;
+    ACMP_SetDACConfig(DEMO_CMP_BASEADDR, &dacConfigStruct);
+
+    ACMP_Enable(DEMO_CMP_BASEADDR, true);
+#else
     cmp_config_t cmpConfig;
     cmp_dac_config_t cmpdacConfig;
 
@@ -93,6 +130,7 @@ static void CMP_Configuration(void)
     /* Set input plus is CMP_channel1, input minus is CMP_DAC out */
     CMP_SetInputChannels(DEMO_CMP_BASEADDR, DEMO_CMP_MINUS_CHANNEL, DEMO_CMP_PLUS_CHANNEL);
     CMP_SetDACConfig(DEMO_CMP_BASEADDR, &cmpdacConfig);
+#endif
 }
 
 static void PIT_Configuration(void)
@@ -165,11 +203,7 @@ void DEMO_XBARA_IRQ_HANDLER_FUNC(void)
     /* Clear interrupt flag */
     XBARA_ClearStatusFlags(DEMO_XBARA_BASEADDR, kXBARA_EdgeDetectionOut0);
     g_xbaraInterrupt = true;
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 int main(void)

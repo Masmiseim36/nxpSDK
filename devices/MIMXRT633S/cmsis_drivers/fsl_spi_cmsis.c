@@ -28,7 +28,7 @@
 #if (RTE_SPI0 || RTE_SPI1 || RTE_SPI2 || RTE_SPI3 || RTE_SPI4 || RTE_SPI5 || RTE_SPI6 || RTE_SPI7 || RTE_SPI8 || \
      RTE_SPI9 || RTE_SPI10 || RTE_SPI11 || RTE_SPI12 || RTE_SPI13)
 
-#define ARM_SPI_DRV_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(2, 1) /* driver version */
+#define ARM_SPI_DRV_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(2, 3) /* driver version */
 
 /*! @brief IDs of clock for each FLEXCOMM module */
 static const clock_ip_name_t s_flexcommClocks[] = FLEXCOMM_CLOCKS;
@@ -558,11 +558,12 @@ static int32_t SPI_DMASend(const void *data, uint32_t num, cmsis_spi_dma_driver_
 {
     int32_t ret;
     status_t status;
-    spi_transfer_t xfer = {0};
+    spi_transfer_t xfer        = {0};
+    spi_config_t *spi_config_p = (spi_config_t *)SPI_GetConfig(spi->resource->base);
 
     xfer.rxData   = NULL;
     xfer.txData   = (uint8_t *)data;
-    xfer.dataSize = num;
+    xfer.dataSize = num * ((spi_config_p->dataWidth + 8U) / 8U);
     if (spi->flags & SPI_FLAG_MASTER)
     {
         xfer.configFlags |= kSPI_FrameAssert;
@@ -600,11 +601,12 @@ static int32_t SPI_DMAReceive(void *data, uint32_t num, cmsis_spi_dma_driver_sta
 {
     int32_t ret;
     status_t status;
-    spi_transfer_t xfer = {0};
+    spi_transfer_t xfer        = {0};
+    spi_config_t *spi_config_p = (spi_config_t *)SPI_GetConfig(spi->resource->base);
 
     xfer.txData   = NULL;
     xfer.rxData   = (uint8_t *)data;
-    xfer.dataSize = num;
+    xfer.dataSize = num * ((spi_config_p->dataWidth + 8U) / 8U);
     if (spi->flags & SPI_FLAG_MASTER)
     {
         xfer.configFlags |= kSPI_FrameAssert;
@@ -642,11 +644,12 @@ static int32_t SPI_DMATransfer(const void *data_out, void *data_in, uint32_t num
 {
     int32_t ret;
     status_t status;
-    spi_transfer_t xfer = {0};
+    spi_transfer_t xfer        = {0};
+    spi_config_t *spi_config_p = (spi_config_t *)SPI_GetConfig(spi->resource->base);
 
     xfer.txData   = (uint8_t *)data_out;
     xfer.rxData   = (uint8_t *)data_in;
-    xfer.dataSize = num;
+    xfer.dataSize = num * ((spi_config_p->dataWidth + 8U) / 8U);
     if (spi->flags & SPI_FLAG_MASTER)
     {
         xfer.configFlags |= kSPI_FrameAssert;
@@ -683,6 +686,7 @@ static uint32_t SPI_DMAGetCount(cmsis_spi_dma_driver_state_t *spi)
 {
     uint32_t cnt;
     size_t bytes;
+    spi_config_t *spi_config_p = (spi_config_t *)SPI_GetConfig(spi->resource->base);
 
     bytes = DMA_GetRemainingBytes(spi->dmaResource->rxdmaBase, spi->dmaResource->rxdmaChannel);
 
@@ -694,6 +698,7 @@ static uint32_t SPI_DMAGetCount(cmsis_spi_dma_driver_state_t *spi)
     {
         cnt = spi->handle->slaveHandle.transferSize - bytes;
     }
+    cnt /= ((spi_config_p->dataWidth + 8U) / 8U);
 
     return cnt;
 }
@@ -989,9 +994,8 @@ static int32_t SPI_InterruptSend(const void *data, uint32_t num, cmsis_spi_inter
     status_t status;
     spi_transfer_t xfer = {0};
 
-    xfer.rxData   = NULL;
-    xfer.txData   = (uint8_t *)data;
-    xfer.dataSize = num;
+    xfer.rxData = NULL;
+    xfer.txData = (uint8_t *)data;
     if (spi->flags & SPI_FLAG_MASTER)
     {
         xfer.configFlags |= kSPI_FrameAssert;
@@ -999,11 +1003,13 @@ static int32_t SPI_InterruptSend(const void *data, uint32_t num, cmsis_spi_inter
 
     if (spi->flags & SPI_FLAG_MASTER)
     {
-        status = SPI_MasterTransferNonBlocking(spi->resource->base, &spi->handle->masterHandle, &xfer);
+        xfer.dataSize = num * ((spi->handle->masterHandle.dataWidth + 8U) / 8U);
+        status        = SPI_MasterTransferNonBlocking(spi->resource->base, &spi->handle->masterHandle, &xfer);
     }
     else
     {
-        status = SPI_SlaveTransferNonBlocking(spi->resource->base, &spi->handle->slaveHandle, &xfer);
+        xfer.dataSize = num * ((spi->handle->slaveHandle.dataWidth + 8U) / 8U);
+        status        = SPI_SlaveTransferNonBlocking(spi->resource->base, &spi->handle->slaveHandle, &xfer);
     }
 
     switch (status)
@@ -1031,9 +1037,8 @@ static int32_t SPI_InterruptReceive(void *data, uint32_t num, cmsis_spi_interrup
     status_t status;
     spi_transfer_t xfer = {0};
 
-    xfer.txData   = NULL;
-    xfer.rxData   = (uint8_t *)data;
-    xfer.dataSize = num;
+    xfer.txData = NULL;
+    xfer.rxData = (uint8_t *)data;
     if (spi->flags & SPI_FLAG_MASTER)
     {
         xfer.configFlags |= kSPI_FrameAssert;
@@ -1041,11 +1046,13 @@ static int32_t SPI_InterruptReceive(void *data, uint32_t num, cmsis_spi_interrup
 
     if (spi->flags & SPI_FLAG_MASTER)
     {
-        status = SPI_MasterTransferNonBlocking(spi->resource->base, &spi->handle->masterHandle, &xfer);
+        xfer.dataSize = num * ((spi->handle->masterHandle.dataWidth + 8U) / 8U);
+        status        = SPI_MasterTransferNonBlocking(spi->resource->base, &spi->handle->masterHandle, &xfer);
     }
     else
     {
-        status = SPI_SlaveTransferNonBlocking(spi->resource->base, &spi->handle->slaveHandle, &xfer);
+        xfer.dataSize = num * ((spi->handle->slaveHandle.dataWidth + 8U) / 8U);
+        status        = SPI_SlaveTransferNonBlocking(spi->resource->base, &spi->handle->slaveHandle, &xfer);
     }
 
     switch (status)
@@ -1076,9 +1083,8 @@ static int32_t SPI_InterruptTransfer(const void *data_out,
     status_t status;
     spi_transfer_t xfer = {0};
 
-    xfer.txData   = (uint8_t *)data_out;
-    xfer.rxData   = (uint8_t *)data_in;
-    xfer.dataSize = num;
+    xfer.txData = (uint8_t *)data_out;
+    xfer.rxData = (uint8_t *)data_in;
     if (spi->flags & SPI_FLAG_MASTER)
     {
         xfer.configFlags |= kSPI_FrameAssert;
@@ -1086,11 +1092,13 @@ static int32_t SPI_InterruptTransfer(const void *data_out,
 
     if (spi->flags & SPI_FLAG_MASTER)
     {
-        status = SPI_MasterTransferNonBlocking(spi->resource->base, &spi->handle->masterHandle, &xfer);
+        xfer.dataSize = num * ((spi->handle->masterHandle.dataWidth + 8U) / 8U);
+        status        = SPI_MasterTransferNonBlocking(spi->resource->base, &spi->handle->masterHandle, &xfer);
     }
     else
     {
-        status = SPI_SlaveTransferNonBlocking(spi->resource->base, &spi->handle->slaveHandle, &xfer);
+        xfer.dataSize = num * ((spi->handle->slaveHandle.dataWidth + 8U) / 8U);
+        status        = SPI_SlaveTransferNonBlocking(spi->resource->base, &spi->handle->slaveHandle, &xfer);
     }
 
     switch (status)
@@ -1113,14 +1121,19 @@ static int32_t SPI_InterruptTransfer(const void *data_out,
 }
 static uint32_t SPI_InterruptGetCount(cmsis_spi_interrupt_driver_state_t *spi)
 {
+    uint32_t cnt;
     if (spi->flags & SPI_FLAG_MASTER)
     {
-        return spi->handle->masterHandle.totalByteCount - spi->handle->masterHandle.rxRemainingBytes;
+        cnt = spi->handle->masterHandle.totalByteCount - spi->handle->masterHandle.rxRemainingBytes;
+        cnt /= ((spi->handle->masterHandle.dataWidth + 8U) / 8U);
     }
     else
     {
-        return spi->handle->slaveHandle.toReceiveCount - spi->handle->slaveHandle.rxRemainingBytes;
+        cnt = spi->handle->slaveHandle.toReceiveCount - spi->handle->slaveHandle.rxRemainingBytes;
+        cnt /= ((spi->handle->slaveHandle.dataWidth + 8U) / 8U);
     }
+
+    return cnt;
 }
 
 static int32_t SPI_InterruptControl(uint32_t control, uint32_t arg, cmsis_spi_interrupt_driver_state_t *spi)

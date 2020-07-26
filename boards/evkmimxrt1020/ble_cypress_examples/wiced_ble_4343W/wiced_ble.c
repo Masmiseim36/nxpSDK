@@ -27,7 +27,7 @@
  ******************************************************************************/
 #define AP_SSID "nxp"
 #define AP_PASS "NXP0123456789"
-#define AP_SEC WICED_SECURITY_WPA2_MIXED_PSK
+#define AP_SEC  WICED_SECURITY_WPA2_MIXED_PSK
 
 /*******************************************************************************
  * Prototypes
@@ -44,16 +44,6 @@ extern void add_wlan_interface(void);
 /*******************************************************************************
  * Code
  ******************************************************************************/
-static void BOARD_USDHCClockConfiguration(void)
-{
-    CLOCK_InitSysPll(&sysPllConfig_BOARD_BootClockRUN);
-    /*configure system pll PFD0 fractional divider to 24, output clock is 528MHZ * 18 / 24 = 396 MHZ*/
-    CLOCK_InitSysPfd(kCLOCK_Pfd0, 24U);
-    /* Configure USDHC clock source and divider */
-    CLOCK_SetDiv(kCLOCK_Usdhc1Div, 0U);
-    CLOCK_SetMux(kCLOCK_Usdhc1Mux, 1U);
-}
-
 
 static void BOARD_InitNetwork()
 {
@@ -147,9 +137,8 @@ int main(void)
     platform_nvm_t nvm_cfg;
 
     BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_USDHCClockConfiguration();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
 
     PRINTF("\r\n************************************************\r\n");

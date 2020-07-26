@@ -1,7 +1,7 @@
-Crank Storyboard Lite v6.0
+Crank Storyboard Lite v6.2
 -----------------------------
 
-Welcome to the Storyboard Lite 6.0 package.  
+Welcome to the Storyboard Lite 6.2 package.  
 This package is meant for use with the specified board and provides the libraries required to create a Storyboard engine task within FreeRTOS that is capable of 
 running a Storyboard application.
 

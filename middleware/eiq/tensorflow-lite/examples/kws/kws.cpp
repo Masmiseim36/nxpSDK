@@ -113,11 +113,10 @@ limitations under the License.
  * Variables
  ******************************************************************************/
 volatile bool dataReady = false;
-sai_transfer_t xferRx;
-sai_transfer_t xferTx;
+sai_transfer_t xferRx = {0};
+sai_transfer_t xferTx = {0};
 
-uint8_t codecHandleBuffer[CODEC_HANDLE_SIZE];
-codec_handle_t *codecHandle = reinterpret_cast<codec_handle_t*>(codecHandleBuffer);
+codec_handle_t codecHandle;
 wm8960_config_t wm8960Config;
 codec_config_t boardCodecConfig;
 
@@ -136,8 +135,8 @@ AT_NONCACHEABLE_SECTION_ALIGN(uint8_t audioBuff[BUFFER_TOTAL_SIZE], 4);
 AT_NONCACHEABLE_SECTION_ALIGN_INIT(uint8_t audioBuff[BUFFER_TOTAL_SIZE], 4);
 #endif
 
-sai_handle_t txHandle;
-sai_handle_t rxHandle;
+sai_handle_t txHandle = {0};
+sai_handle_t rxHandle = {0};
 
 extern codec_config_t boardCodecConfig;
 
@@ -159,11 +158,11 @@ void audio_init()
 
   wm8960Config.i2cConfig.codecI2CInstance = BOARD_CODEC_I2C_INSTANCE;
   wm8960Config.i2cConfig.codecI2CSourceClock = BOARD_CODEC_I2C_CLOCK_FREQ;
-  wm8960Config.route = kWM8960_RoutePlaybackandRecord;
+  wm8960Config.route            = kWM8960_RoutePlaybackandRecord;
   wm8960Config.rightInputSource = kWM8960_InputDifferentialMicInput2;
-  wm8960Config.playSource = kWM8960_PlaySourceDAC;
-  wm8960Config.slaveAddress = WM8960_I2C_ADDR;
-  wm8960Config.bus = kWM8960_BusI2S;
+  wm8960Config.playSource       = kWM8960_PlaySourceDAC;
+  wm8960Config.slaveAddress     = WM8960_I2C_ADDR;
+  wm8960Config.bus              = kWM8960_BusI2S;
   wm8960Config.format.mclk_HZ = 6144000U;
   wm8960Config.format.sampleRate = kWM8960_AudioSampleRate16KHz;
   wm8960Config.format.bitWidth = kWM8960_AudioBitWidth16bit;
@@ -436,8 +435,6 @@ int main(void)
   CLOCK_InitAudioPll(&audioPllConfig);
   BOARD_InitDebugConsole();
 
-  BOARD_InitDebugConsole();
-
   InitTimer();
 
   std::unique_ptr<tflite::FlatBufferModel> model;
@@ -497,7 +494,7 @@ int main(void)
 #endif
 
   /* Use default setting to init codec */
-  CODEC_Init(codecHandle, &boardCodecConfig);
+  CODEC_Init(&codecHandle, &boardCodecConfig);
 
   LOG(INFO) << "\r\nMicrophone data processing:\r\n" << std::endl;
 

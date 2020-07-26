@@ -19,16 +19,16 @@
 #define DEMO_XBARB_BASEADDR XBARB
 
 #define DEMO_XBARA_IRQ_HANDLER_FUNC XBAR1_IRQ_0_1_IRQHandler
-#define DEMO_XBARA_IRQ_ID XBAR1_IRQ_0_1_IRQn
+#define DEMO_XBARA_IRQ_ID           XBAR1_IRQ_0_1_IRQn
 
-#define DEMO_XBARB_INPUT_CMP_SIGNAL kXBARB2_InputAcmp1Out
+#define DEMO_XBARB_INPUT_CMP_SIGNAL    kXBARB2_InputAcmp1Out
 #define DEMO_XBARB_OUTPUT_AOI_SIGNAL_1 kXBARB2_OutputAoi1In00
 
-#define DEMO_XBARB_INPUT_PIT_SIGNAL kXBARB2_InputPitTrigger0
+#define DEMO_XBARB_INPUT_PIT_SIGNAL    kXBARB2_InputPitTrigger0
 #define DEMO_XBARB_OUTPUT_AOI_SIGNAL_2 kXBARB2_OutputAoi1In01
 
 #define DEMO_XBARA_INPUT_AOI_SIGNAL kXBARA1_InputAoi1Out0
-#define DEMO_XBARA_OUTPUT_SIGNAL kXBARA1_OutputDmaChMuxReq30
+#define DEMO_XBARA_OUTPUT_SIGNAL    kXBARA1_OutputDmaChMuxReq30
 
 
 /*******************************************************************************
@@ -76,11 +76,7 @@ void DEMO_XBARA_IRQ_HANDLER_FUNC(void)
     /* Clear interrupt flag */
     XBARA_ClearStatusFlags(DEMO_XBARA_BASEADDR, kXBARA_EdgeDetectionOut0);
     g_xbaraInterrupt = true;
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 int main(void)

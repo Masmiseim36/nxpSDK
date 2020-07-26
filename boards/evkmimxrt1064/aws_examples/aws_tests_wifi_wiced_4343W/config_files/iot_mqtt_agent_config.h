@@ -1,5 +1,5 @@
 /*
-Amazon FreeRTOS
+FreeRTOS
 Copyright (C) 2017 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -87,7 +87,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 /** @{ */
 #define mqttconfigMQTT_TASK_STACK_DEPTH (2048)
-#define mqttconfigMQTT_TASK_PRIORITY (tskIDLE_PRIORITY)
+#define mqttconfigMQTT_TASK_PRIORITY    (tskIDLE_PRIORITY)
 /** @} */
 
 /**

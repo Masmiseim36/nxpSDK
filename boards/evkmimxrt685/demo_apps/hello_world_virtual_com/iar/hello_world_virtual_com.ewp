@@ -202,7 +202,7 @@
         </option>
         <option>
           <name>TrustZone</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>TrustZoneModes</name>
@@ -223,7 +223,6 @@
           <state>DEBUG</state>
           <state>CPU_MIMXRT685SFVKB_cm33</state>
           <state>BOOT_HEADER_ENABLE=1</state>
-          <state>ARM_MATH_CM33</state>
           <state>USB_STACK_USE_DEDICATED_RAM=1</state>
           <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
           <state>SERIAL_PORT_TYPE_USBCDC=1</state>
@@ -233,7 +232,7 @@
           <state>SCANF_ADVANCED_ENABLE=0</state>
           <state>USB_STACK_BM</state>
           <state>BOARD_USE_VIRTUALCOM=1</state>
-          <state>SERIAL_PORT_TYPE_USBCDC=1</state>
+          <state>USB_DEVICE_CONFIG_CDC_ACM=1</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
@@ -367,8 +366,8 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/drivers</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager/usb_cdc_adapter</state>
-          <state>$PROJ_DIR$/../../../component_examples/config</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/phy</state>
+          <state>$PROJ_DIR$/../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/device</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S</state>
@@ -376,7 +375,8 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../flash_config</state>
-          <state>$PROJ_DIR$/../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../middleware/usb/output/source/device/class</state>
+          <state>$PROJ_DIR$/../../../../../middleware/usb/output/source/device</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities</state>
         </option>
         <option>
@@ -1253,7 +1253,7 @@
         </option>
         <option>
           <name>TrustZone</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>TrustZoneModes</name>
@@ -1275,7 +1275,6 @@
           <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>CPU_MIMXRT685SFVKB_cm33</state>
-          <state>ARM_MATH_CM33</state>
           <state>USB_STACK_USE_DEDICATED_RAM=1</state>
           <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
           <state>SERIAL_PORT_TYPE_USBCDC=1</state>
@@ -1285,7 +1284,7 @@
           <state>SCANF_ADVANCED_ENABLE=0</state>
           <state>USB_STACK_BM</state>
           <state>BOARD_USE_VIRTUALCOM=1</state>
-          <state>SERIAL_PORT_TYPE_USBCDC=1</state>
+          <state>USB_DEVICE_CONFIG_CDC_ACM=1</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
@@ -1419,8 +1418,8 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/drivers</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager/usb_cdc_adapter</state>
-          <state>$PROJ_DIR$/../../../component_examples/config</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/phy</state>
+          <state>$PROJ_DIR$/../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/device</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S</state>
@@ -1428,7 +1427,8 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../flash_config</state>
-          <state>$PROJ_DIR$/../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../middleware/usb/output/source/device/class</state>
+          <state>$PROJ_DIR$/../../../../../middleware/usb/output/source/device</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities</state>
         </option>
         <option>
@@ -2305,7 +2305,7 @@
         </option>
         <option>
           <name>TrustZone</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>TrustZoneModes</name>
@@ -2326,7 +2326,6 @@
           <state>NDEBUG</state>
           <state>CPU_MIMXRT685SFVKB_cm33</state>
           <state>BOOT_HEADER_ENABLE=1</state>
-          <state>ARM_MATH_CM33</state>
           <state>USB_STACK_USE_DEDICATED_RAM=1</state>
           <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
           <state>SERIAL_PORT_TYPE_USBCDC=1</state>
@@ -2336,7 +2335,7 @@
           <state>SCANF_ADVANCED_ENABLE=0</state>
           <state>USB_STACK_BM</state>
           <state>BOARD_USE_VIRTUALCOM=1</state>
-          <state>SERIAL_PORT_TYPE_USBCDC=1</state>
+          <state>USB_DEVICE_CONFIG_CDC_ACM=1</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
@@ -2470,8 +2469,8 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/drivers</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager/usb_cdc_adapter</state>
-          <state>$PROJ_DIR$/../../../component_examples/config</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/phy</state>
+          <state>$PROJ_DIR$/../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/device</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S</state>
@@ -2479,7 +2478,8 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../flash_config</state>
-          <state>$PROJ_DIR$/../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../middleware/usb/output/source/device/class</state>
+          <state>$PROJ_DIR$/../../../../../middleware/usb/output/source/device</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities</state>
         </option>
         <option>
@@ -3356,7 +3356,7 @@
         </option>
         <option>
           <name>TrustZone</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>TrustZoneModes</name>
@@ -3378,7 +3378,6 @@
           <state>CPU_MIMXRT685SFVKB_cm33</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>NDEBUG</state>
-          <state>ARM_MATH_CM33</state>
           <state>USB_STACK_USE_DEDICATED_RAM=1</state>
           <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
           <state>SERIAL_PORT_TYPE_USBCDC=1</state>
@@ -3388,7 +3387,7 @@
           <state>SCANF_ADVANCED_ENABLE=0</state>
           <state>USB_STACK_BM</state>
           <state>BOARD_USE_VIRTUALCOM=1</state>
-          <state>SERIAL_PORT_TYPE_USBCDC=1</state>
+          <state>USB_DEVICE_CONFIG_CDC_ACM=1</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
@@ -3522,8 +3521,8 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/drivers</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager/usb_cdc_adapter</state>
-          <state>$PROJ_DIR$/../../../component_examples/config</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/phy</state>
+          <state>$PROJ_DIR$/../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/device</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S</state>
@@ -3531,7 +3530,8 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../flash_config</state>
-          <state>$PROJ_DIR$/../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../middleware/usb/output/source/device/class</state>
+          <state>$PROJ_DIR$/../../../../../middleware/usb/output/source/device</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities</state>
         </option>
         <option>
@@ -4267,25 +4267,7 @@
           <name>$PROJ_DIR$/../../../../../components/serial_manager/usb_cdc_adapter/usb_device_descriptor.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../components/serial_manager/usb_cdc_adapter/usb_device_cdc_acm.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../components/serial_manager/usb_cdc_adapter/usb_device_cdc_acm.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../components/serial_manager/usb_cdc_adapter/usb_device_class.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../components/serial_manager/usb_cdc_adapter/usb_device_class.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../components/serial_manager/usb_cdc_adapter/usb_device_ch9.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../components/serial_manager/usb_cdc_adapter/usb_device_ch9.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../component_examples/config/usb_device_config.h</name>
+          <name>$PROJ_DIR$/../usb_device_config.h</name>
         </file>
       </group>
       <file>
@@ -4305,15 +4287,6 @@
       </file>
     </group>
     <group>
-      <name>uart</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/uart/uart.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/uart/usart_adapter.c</name>
-      </file>
-    </group>
-    <group>
       <name>osa</name>
       <file>
         <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction.h</name>
@@ -4326,6 +4299,15 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction_config.h</name>
+      </file>
+    </group>
+    <group>
+      <name>uart</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/uart/uart.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/uart/usart_adapter.c</name>
       </file>
     </group>
   </group>
@@ -4403,7 +4385,22 @@
     <group>
       <name>device</name>
       <group>
+        <name>include</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/usb/device/usb_device.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/usb/device/usb_device.h</name>
+        </file>
+      </group>
+      <group>
         <name>source</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/usb/device/usb_device_dci.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/usb/device/usb_device_dci.h</name>
+        </file>
         <group>
           <name>lpcip3511</name>
           <file>
@@ -4414,16 +4411,31 @@
           </file>
         </group>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/usb/device/usb_device_dci.c</name>
+          <name>$PROJ_DIR$/../../../../../middleware/usb/output/source/device/usb_device_ch9.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/usb/output/source/device/usb_device_ch9.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/usb/device/usb_device_dci.h</name>
         </file>
       </group>
       <group>
-        <name>include</name>
+        <name>class</name>
+        <group>
+          <name>cdc</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/usb/output/source/device/class/usb_device_cdc_acm.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/usb/output/source/device/class/usb_device_cdc_acm.h</name>
+          </file>
+        </group>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/usb/device/usb_device.h</name>
+          <name>$PROJ_DIR$/../../../../../middleware/usb/output/source/device/class/usb_device_class.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/usb/output/source/device/class/usb_device_class.h</name>
         </file>
       </group>
     </group>
@@ -4500,6 +4512,9 @@
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_cm33.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv8.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/tz_context.h</name>
     </file>
     <file>
@@ -4522,21 +4537,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_version.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv81mml.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mbl.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mml.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv7.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv8.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_common_tables.h</name>

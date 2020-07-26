@@ -16,15 +16,15 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_XBARA_USER_CHANNEL_INPUT kXBARA1_InputPitTrigger0
+#define DEMO_XBARA_USER_CHANNEL_INPUT  kXBARA1_InputPitTrigger0
 #define DEMO_XBARA_USER_CHANNEL_OUTPUT kXBARA1_OutputDmaChMuxReq30
-#define BUS_CLK_FREQ CLOCK_GetFreq(kCLOCK_OscClk)
-#define DEMO_XBARA_BASEADDR XBARA1
-#define DEMO_PIT_BASEADDR PIT
-#define DEMO_XBARA_IRQn XBAR1_IRQ_0_1_IRQn
-#define DEMO_XBARA_IRQHandler XBAR1_IRQ_0_1_IRQHandler
-#define PIT_CHANNEL kPIT_Chnl_0
-#define PIT_PERIOD 1000000U
+#define BUS_CLK_FREQ                   CLOCK_GetFreq(kCLOCK_OscClk)
+#define DEMO_XBARA_BASEADDR            XBARA1
+#define DEMO_PIT_BASEADDR              PIT
+#define DEMO_XBARA_IRQn                XBAR1_IRQ_0_1_IRQn
+#define DEMO_XBARA_IRQHandler          XBAR1_IRQ_0_1_IRQHandler
+#define PIT_CHANNEL                    kPIT_Chnl_0
+#define PIT_PERIOD                     1000000U
 
 
 /*******************************************************************************
@@ -48,11 +48,7 @@ void DEMO_XBARA_IRQHandler(void)
         XBARA_ClearStatusFlags(DEMO_XBARA_BASEADDR, kXBARA_EdgeDetectionOut0);
         xbaraIsrFlag = true;
     }
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 /*!

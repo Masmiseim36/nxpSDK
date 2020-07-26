@@ -14,10 +14,10 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_KPP_ACTIVE_COLUMROWS (0x3D)
-#define EXAMPLE_KPP_MATRX_NUM (4)
+#define EXAMPLE_KPP_ACTIVE_COLUMROWS  (0x3D)
+#define EXAMPLE_KPP_MATRX_NUM         (4)
 #define EXAMPLE_KPP_COLROW_START_INDX (2)
-#define EXAMPLE_KPP KPP
+#define EXAMPLE_KPP                   KPP
 #define EXAMPLE_KPP_KEYPRESS_LONG_NUM (0xFFF)
 /*******************************************************************************
  * Prototypes
@@ -65,11 +65,7 @@ void KPP_IRQHandler(void)
         KPP_SetSynchronizeChain(EXAMPLE_KPP, kKPP_SetKeyReleasesSyncChain);
         g_keyrelease = true;
     }
-    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-      exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 int main(void)

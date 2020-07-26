@@ -59,26 +59,26 @@
 /* define MACROS required by common code. */
 #define ATH_STRCMP(_a, _b) strcmp((char const *)(_a), (const char *)(_b))
 
-#define DEMOCFG_ENABLE_SERIAL_SHELL 1   /* enable shell task for serial console */
-#define DEMOCFG_ENABLE_SWITCH_TASK 0    /* enable button sensing task (otherwise keys are polled) */
-#define DEMOCFG_ENABLE_AUTO_LOGGING 0   /* enable logging to serial console (or USB drive) */
+#define DEMOCFG_ENABLE_SERIAL_SHELL   1 /* enable shell task for serial console */
+#define DEMOCFG_ENABLE_SWITCH_TASK    0 /* enable button sensing task (otherwise keys are polled) */
+#define DEMOCFG_ENABLE_AUTO_LOGGING   0 /* enable logging to serial console (or USB drive) */
 #define DEMOCFG_ENABLE_USB_FILESYSTEM 0 /* enable USB mass storage */
 // E.Y. hide #define DEMOCFG_ENABLE_RTCS            1   /* enable RTCS operation */
-#define DEMOCFG_ENABLE_RTCS 0          /* enable RTCS operation */
-#define DEMOCFG_ENABLE_FTP_SERVER 0    /* enable ftp server */
+#define DEMOCFG_ENABLE_RTCS          0 /* enable RTCS operation */
+#define DEMOCFG_ENABLE_FTP_SERVER    0 /* enable ftp server */
 #define DEMOCFG_ENABLE_TELNET_SERVER 0 /* enable telnet server */
-#define DEMOCFG_ENABLE_KLOG 0          /* enable kernel logging */
-#define DEMOCFG_USE_POOLS 0            /* enable external memory pools for USB and RTCS */
-#define DEMOCFG_USE_WIFI 1             /* USE WIFI Interface */
-#define DEMOCFG_USE_SENSOR 0           /*enable sensor functions*/
+#define DEMOCFG_ENABLE_KLOG          0 /* enable kernel logging */
+#define DEMOCFG_USE_POOLS            0 /* enable external memory pools for USB and RTCS */
+#define DEMOCFG_USE_WIFI             1 /* USE WIFI Interface */
+#define DEMOCFG_USE_SENSOR           0 /*enable sensor functions*/
 /* default addresses for external memory pools and klog */
 #if BSP_M52259EVB
 #define DEMOCFG_RTCS_POOL_ADDR (uint32_t)(BSP_EXTERNAL_MRAM_RAM_BASE)
 #define DEMOCFG_RTCS_POOL_SIZE 0x0000A000
-#define DEMOCFG_MFS_POOL_ADDR (uint32_t)(DEMOCFG_RTCS_POOL_ADDR + DEMOCFG_RTCS_POOL_SIZE)
-#define DEMOCFG_MFS_POOL_SIZE 0x00002000
-#define DEMOCFG_KLOG_ADDR (uint32_t)(DEMOCFG_MFS_POOL_ADDR + DEMOCFG_MFS_POOL_SIZE)
-#define DEMOCFG_KLOG_SIZE 4000
+#define DEMOCFG_MFS_POOL_ADDR  (uint32_t)(DEMOCFG_RTCS_POOL_ADDR + DEMOCFG_RTCS_POOL_SIZE)
+#define DEMOCFG_MFS_POOL_SIZE  0x00002000
+#define DEMOCFG_KLOG_ADDR      (uint32_t)(DEMOCFG_MFS_POOL_ADDR + DEMOCFG_MFS_POOL_SIZE)
+#define DEMOCFG_KLOG_SIZE      4000
 #elif DEMOCFG_USE_POOLS
 #warning External pools will not be used on this board.
 #endif
@@ -114,11 +114,11 @@ extern void HVAC_initialize_networking(void);
 // 2. "wpa"
 // 3. "wpa2"
 // 4. "none"
-#define DEMOCFG_SECURITY "none"
+#define DEMOCFG_SECURITY   "none"
 #define DEMOCFG_PASSPHRASE NULL
-#define DEMOCFG_WEP_KEY "abcde"
+#define DEMOCFG_WEP_KEY    "abcde"
 // Possible values 1,2,3,4
-#define DEMOCFG_WEP_KEY_INDEX 1
+#define DEMOCFG_WEP_KEY_INDEX  1
 #define DEMOCFG_DEFAULT_DEVICE 0 /*ATHEROS_WIFI_DEFAULT_ENET_DEVICE vivi*/
 #endif
 
@@ -284,41 +284,41 @@ typedef struct
     ATH_NETPARAMS netparams;
 } wps_context_t;
 
-#define ATH_REG_OP_READ (1)
+#define ATH_REG_OP_READ  (1)
 #define ATH_REG_OP_WRITE (2)
-#define ATH_REG_OP_RMW (3)
-#define MAX_ACK_RETRY (20) // Max number of times ACK issent to Peer with stats
+#define ATH_REG_OP_RMW   (3)
+#define MAX_ACK_RETRY    (20) // Max number of times ACK issent to Peer with stats
 
-#define MIN_WEP_KEY_SIZE 10
-#define MAX_WEP_KEY_SIZE 26
+#define MIN_WEP_KEY_SIZE    10
+#define MAX_WEP_KEY_SIZE    26
 #define MAX_PASSPHRASE_SIZE 64
-#define MAX_NUM_WEP_KEYS 4
-#define MAX_WPS_PIN_SIZE 32
+#define MAX_NUM_WEP_KEYS    4
+#define MAX_WPS_PIN_SIZE    32
 
-#define DRIVER_UP (0)
+#define DRIVER_UP   (0)
 #define DRIVER_DOWN (1)
 #define READ_STATUS (2)
 
 /* Security modes */
 #define SEC_MODE_OPEN (0)
-#define SEC_MODE_WEP (1)
-#define SEC_MODE_WPA (2)
+#define SEC_MODE_WEP  (1)
+#define SEC_MODE_WPA  (2)
 
 #define getByte(n, data) ((int)((data >> (8 * n)) & 0xFF))
 
-#define IS_DRIVER_READY is_driver_initialized()
-#define HANDLE_IOCTL(inout_param) handle_ioctl(inout_param)
-#define ATH_COMMIT(device) ath_commit(device)
-#define ATH_SET_MODE(device, mode) ath_set_mode(device, mode)
-#define ATH_SET_ESSID(device, essid) ath_set_essid(device, essid)
-#define ATH_SET_SEC_TYPE(device, sectype) ath_set_sec_type(device, sectype)
+#define IS_DRIVER_READY                        is_driver_initialized()
+#define HANDLE_IOCTL(inout_param)              handle_ioctl(inout_param)
+#define ATH_COMMIT(device)                     ath_commit(device)
+#define ATH_SET_MODE(device, mode)             ath_set_mode(device, mode)
+#define ATH_SET_ESSID(device, essid)           ath_set_essid(device, essid)
+#define ATH_SET_SEC_TYPE(device, sectype)      ath_set_sec_type(device, sectype)
 #define ATH_SET_PASSPHRASE(device, passphrase) ath_set_passphrase(device, passphrase)
-#define ATH_GET_ESSID(device, essid) ath_get_essid(device, essid)
-#define ATH_NET_CONNECT(pNetparams) NetConnect(pNetparams)
+#define ATH_GET_ESSID(device, essid)           ath_get_essid(device, essid)
+#define ATH_NET_CONNECT(pNetparams)            NetConnect(pNetparams)
 //#define SET_POWER_MODE(pwr_mode)      set_power_mode(pwr_mode)
 #define TURN_LED_ON
 #define TURN_LED_OFF
-#define TEST_FLASH test_flash()
+#define TEST_FLASH                test_flash()
 #define ATH_MEM_QUERY(argc, argv) ath_mem_query(argc, argv)
 #define ATH_REG_QUERY(argc, argv) ath_reg_query(argc, argv)
 

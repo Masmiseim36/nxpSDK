@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP
+ * Copyright 2019-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -13,11 +13,11 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v6.0
+product: Pins v7.0
 processor: MIMXRT1011xxxxx
 package_id: MIMXRT1011DAE5A
 mcu_data: ksdk2_0
-processor_version: 0.0.4
+processor_version: 0.7.7
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 
@@ -26,10 +26,10 @@ processor_version: 0.0.4
 #include "pin_mux.h"
 
 /* FUNCTION ************************************************************************************************************
- * 
+ *
  * Function Name : BOARD_InitBootPins
  * Description   : Calls initialization functions.
- * 
+ *
  * END ****************************************************************************************************************/
 void BOARD_InitBootPins(void) {
     BOARD_InitPins();
@@ -96,16 +96,16 @@ void LPSPI1_InitPins(void) {
 
   IOMUXC_SetPinMux(
       IOMUXC_GPIO_AD_03_LPSPI1_SDI,           /* GPIO_AD_03 is configured as LPSPI1_SDI */
-      1U);                                    /* Software Input On Field: Input Path is determined by functionality */
+      0U);                                    /* Software Input On Field: Input Path is determined by functionality */
   IOMUXC_SetPinMux(
       IOMUXC_GPIO_AD_04_LPSPI1_SDO,           /* GPIO_AD_04 is configured as LPSPI1_SDO */
-      1U);                                    /* Software Input On Field: Input Path is determined by functionality */
+      0U);                                    /* Software Input On Field: Input Path is determined by functionality */
   IOMUXC_SetPinMux(
       IOMUXC_GPIO_AD_05_LPSPI1_PCS0,          /* GPIO_AD_05 is configured as LPSPI1_PCS0 */
-      1U);                                    /* Software Input On Field: Input Path is determined by functionality */
+      0U);                                    /* Software Input On Field: Input Path is determined by functionality */
   IOMUXC_SetPinMux(
       IOMUXC_GPIO_AD_06_LPSPI1_SCK,           /* GPIO_AD_06 is configured as LPSPI1_SCK */
-      1U);                                    /* Software Input On Field: Input Path is determined by functionality */
+      0U);                                    /* Software Input On Field: Input Path is determined by functionality */
   IOMUXC_SetPinConfig(
       IOMUXC_GPIO_AD_03_LPSPI1_SDI,           /* GPIO_AD_03 PAD functional properties : */
       0x10B0U);                               /* Slew Rate Field: Slow Slew Rate
@@ -188,26 +188,26 @@ void LPI2C1_InitPins(void) {
 
   IOMUXC_SetPinMux(
       IOMUXC_GPIO_01_LPI2C1_SDA,              /* GPIO_01 is configured as LPI2C1_SDA */
-      1U);                                    /* Software Input On Field: Input Path is determined by functionality */
+      0U);                                    /* Software Input On Field: Input Path is determined by functionality */
   IOMUXC_SetPinMux(
       IOMUXC_GPIO_02_LPI2C1_SCL,              /* GPIO_02 is configured as LPI2C1_SCL */
-      1U);                                    /* Software Input On Field: Input Path is determined by functionality */
+      0U);                                    /* Software Input On Field: Input Path is determined by functionality */
   IOMUXC_SetPinConfig(
       IOMUXC_GPIO_01_LPI2C1_SDA,              /* GPIO_01 PAD functional properties : */
-      0xD8B0U);                               /* Slew Rate Field: Slow Slew Rate
+      0xD0B0U);                               /* Slew Rate Field: Slow Slew Rate
                                                  Drive Strength Field: R0/6
                                                  Speed Field: fast(150MHz)
-                                                 Open Drain Enable Field: Open Drain Enabled
+                                                 Open Drain Enable Field: Open Drain Disabled
                                                  Pull / Keep Enable Field: Pull/Keeper Enabled
                                                  Pull / Keep Select Field: Keeper
                                                  Pull Up / Down Config. Field: 22K Ohm Pull Up
                                                  Hyst. Enable Field: Hysteresis Disabled */
   IOMUXC_SetPinConfig(
       IOMUXC_GPIO_02_LPI2C1_SCL,              /* GPIO_02 PAD functional properties : */
-      0xD8B0U);                               /* Slew Rate Field: Slow Slew Rate
+      0xD0B0U);                               /* Slew Rate Field: Slow Slew Rate
                                                  Drive Strength Field: R0/6
                                                  Speed Field: fast(150MHz)
-                                                 Open Drain Enable Field: Open Drain Enabled
+                                                 Open Drain Enable Field: Open Drain Disabled
                                                  Pull / Keep Enable Field: Pull/Keeper Enabled
                                                  Pull / Keep Select Field: Keeper
                                                  Pull Up / Down Config. Field: 22K Ohm Pull Up

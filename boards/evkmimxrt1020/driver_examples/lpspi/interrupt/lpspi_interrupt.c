@@ -20,19 +20,19 @@
  * Definitions
  ******************************************************************************/
 /* Master related */
-#define EXAMPLE_LPSPI_MASTER_BASEADDR (LPSPI3)
-#define EXAMPLE_LPSPI_MASTER_IRQN (LPSPI3_IRQn)
+#define EXAMPLE_LPSPI_MASTER_BASEADDR   (LPSPI3)
+#define EXAMPLE_LPSPI_MASTER_IRQN       (LPSPI3_IRQn)
 #define EXAMPLE_LPSPI_MASTER_IRQHandler (LPSPI3_IRQHandler)
 
-#define EXAMPLE_LPSPI_MASTER_PCS_FOR_INIT (kLPSPI_Pcs0)
+#define EXAMPLE_LPSPI_MASTER_PCS_FOR_INIT     (kLPSPI_Pcs0)
 #define EXAMPLE_LPSPI_MASTER_PCS_FOR_TRANSFER (kLPSPI_MasterPcs0)
 
 /* Slave related */
-#define EXAMPLE_LPSPI_SLAVE_BASEADDR (LPSPI1)
-#define EXAMPLE_LPSPI_SLAVE_IRQN (LPSPI1_IRQn)
+#define EXAMPLE_LPSPI_SLAVE_BASEADDR   (LPSPI1)
+#define EXAMPLE_LPSPI_SLAVE_IRQN       (LPSPI1_IRQn)
 #define EXAMPLE_LPSPI_SLAVE_IRQHandler (LPSPI1_IRQHandler)
 
-#define EXAMPLE_LPSPI_SLAVE_PCS_FOR_INIT (kLPSPI_Pcs0)
+#define EXAMPLE_LPSPI_SLAVE_PCS_FOR_INIT     (kLPSPI_Pcs0)
 #define EXAMPLE_LPSPI_SLAVE_PCS_FOR_TRANSFER (kLPSPI_SlavePcs0)
 
 /* Select USB1 PLL PFD0 (720 MHz) as lpspi clock source */
@@ -43,17 +43,14 @@
 #define EXAMPLE_LPSPI_CLOCK_FREQ (CLOCK_GetFreq(kCLOCK_Usb1PllPfd0Clk) / (EXAMPLE_LPSPI_CLOCK_SOURCE_DIVIDER + 1U))
 
 #define EXAMPLE_LPSPI_MASTER_CLOCK_FREQ EXAMPLE_LPSPI_CLOCK_FREQ
-#define EXAMPLE_LPSPI_SLAVE_CLOCK_FREQ EXAMPLE_LPSPI_CLOCK_FREQ
+#define EXAMPLE_LPSPI_SLAVE_CLOCK_FREQ  EXAMPLE_LPSPI_CLOCK_FREQ
 
-#define TRANSFER_SIZE (512U)        /*! Transfer dataSize .*/
+#define TRANSFER_SIZE     (512U)    /*! Transfer dataSize .*/
 #define TRANSFER_BAUDRATE (500000U) /*! Transfer baudrate - 500k */
 
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-/* LPSPI user callback */
-void LPSPI_SlaveUserCallback(LPSPI_Type *base, lpspi_slave_handle_t *handle, status_t status, void *userData);
-void LPSPI_MasterUserCallback(LPSPI_Type *base, lpspi_master_handle_t *handle, status_t status, void *userData);
 
 /*******************************************************************************
  * Variables
@@ -65,12 +62,12 @@ uint8_t slaveTxData[TRANSFER_SIZE]  = {0};
 
 volatile uint32_t slaveTxCount;
 volatile uint32_t slaveRxCount;
-uint8_t g_slaveRxWatermark;
+volatile uint8_t g_slaveRxWatermark;
 uint8_t g_slaveFifoSize;
 
 volatile uint32_t masterTxCount;
 volatile uint32_t masterRxCount;
-uint8_t g_masterRxWatermark;
+volatile uint8_t g_masterRxWatermark;
 uint8_t g_masterFifoSize;
 
 volatile bool isSlaveTransferCompleted  = false;
@@ -79,31 +76,6 @@ volatile bool isMasterTransferCompleted = false;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-void LPSPI_SlaveUserCallback(LPSPI_Type *base, lpspi_slave_handle_t *handle, status_t status, void *userData)
-{
-    if (status == kStatus_Success)
-    {
-        PRINTF("This is LPSPI slave transfer completed callback. \r\n");
-        PRINTF("It's a successful transfer. \r\n\r\n");
-    }
-    else if (status == kStatus_LPSPI_Error)
-    {
-        PRINTF("This is LPSPI slave transfer completed callback. \r\n");
-        PRINTF("Error occurred in this transfer. \r\n\r\n");
-    }
-    else
-    {
-        __NOP();
-    }
-
-    isSlaveTransferCompleted = true;
-}
-
-void LPSPI_MasterUserCallback(LPSPI_Type *base, lpspi_master_handle_t *handle, status_t status, void *userData)
-{
-    isMasterTransferCompleted = true;
-}
-
 void EXAMPLE_LPSPI_SLAVE_IRQHandler(void)
 {
     if (slaveRxCount < TRANSFER_SIZE)
@@ -140,11 +112,7 @@ void EXAMPLE_LPSPI_SLAVE_IRQHandler(void)
         /* Disable interrupt requests */
         LPSPI_DisableInterrupts(EXAMPLE_LPSPI_SLAVE_BASEADDR, kLPSPI_RxInterruptEnable);
     }
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 void EXAMPLE_LPSPI_MASTER_IRQHandler(void)
@@ -211,11 +179,7 @@ void EXAMPLE_LPSPI_MASTER_IRQHandler(void)
         /* Complete the transfer and disable the interrupts */
         LPSPI_DisableInterrupts(EXAMPLE_LPSPI_MASTER_BASEADDR, kLPSPI_AllInterruptEnable);
     }
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 /*!
@@ -264,35 +228,15 @@ int main(void)
     }
 
     /*Master config*/
-    masterConfig.baudRate     = TRANSFER_BAUDRATE;
-    masterConfig.bitsPerFrame = 8;
-    masterConfig.cpol         = kLPSPI_ClockPolarityActiveHigh;
-    masterConfig.cpha         = kLPSPI_ClockPhaseFirstEdge;
-    masterConfig.direction    = kLPSPI_MsbFirst;
-
-    masterConfig.pcsToSckDelayInNanoSec        = 1000000000 / masterConfig.baudRate;
-    masterConfig.lastSckToPcsDelayInNanoSec    = 1000000000 / masterConfig.baudRate;
-    masterConfig.betweenTransferDelayInNanoSec = 1000000000 / masterConfig.baudRate;
-
-    masterConfig.whichPcs           = EXAMPLE_LPSPI_MASTER_PCS_FOR_INIT;
-    masterConfig.pcsActiveHighOrLow = kLPSPI_PcsActiveLow;
-
-    masterConfig.pinCfg        = kLPSPI_SdiInSdoOut;
-    masterConfig.dataOutConfig = kLpspiDataOutRetained;
+    LPSPI_MasterGetDefaultConfig(&masterConfig);
+    masterConfig.baudRate = TRANSFER_BAUDRATE;
+    masterConfig.whichPcs = EXAMPLE_LPSPI_MASTER_PCS_FOR_INIT;
 
     LPSPI_MasterInit(EXAMPLE_LPSPI_MASTER_BASEADDR, &masterConfig, EXAMPLE_LPSPI_MASTER_CLOCK_FREQ);
 
     /*Slave config*/
-    slaveConfig.bitsPerFrame = masterConfig.bitsPerFrame;
-    slaveConfig.cpol         = masterConfig.cpol;
-    slaveConfig.cpha         = masterConfig.cpha;
-    slaveConfig.direction    = masterConfig.direction;
-
-    slaveConfig.whichPcs           = EXAMPLE_LPSPI_SLAVE_PCS_FOR_INIT;
-    slaveConfig.pcsActiveHighOrLow = masterConfig.pcsActiveHighOrLow;
-
-    slaveConfig.pinCfg        = kLPSPI_SdiInSdoOut;
-    slaveConfig.dataOutConfig = kLpspiDataOutRetained;
+    LPSPI_SlaveGetDefaultConfig(&slaveConfig);
+    slaveConfig.whichPcs = EXAMPLE_LPSPI_SLAVE_PCS_FOR_INIT;
 
     LPSPI_SlaveInit(EXAMPLE_LPSPI_SLAVE_BASEADDR, &slaveConfig);
 

@@ -58,8 +58,8 @@ char *SW_GetName(void);
  * @retval kStatus_USB_NotSupported         The application don't support the configuration.
  */
 usb_status_t USB_HostEvent(usb_device_handle deviceHandle,
-                                  usb_host_configuration_handle configurationHandle,
-                                  uint32_t eventCode);
+                           usb_host_configuration_handle configurationHandle,
+                           uint32_t eventCode);
 
 /*!
  * @brief application initialization.
@@ -250,8 +250,8 @@ void USB_HostTaskFn(void *param)
  */
 
 usb_status_t USB_HostEvent(usb_device_handle deviceHandle,
-                                  usb_host_configuration_handle configurationHandle,
-                                  uint32_t eventCode)
+                           usb_host_configuration_handle configurationHandle,
+                           uint32_t eventCode)
 {
     usb_status_t status = kStatus_USB_Success;
 

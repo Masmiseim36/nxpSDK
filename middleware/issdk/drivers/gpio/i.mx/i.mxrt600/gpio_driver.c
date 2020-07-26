@@ -125,35 +125,6 @@ void imxsdk_gpio_toggle_pin(pinID_t aPinId)
 	}
 }
 
-#ifndef CPU_MIMXRT685SFVKB_cm33
-/***********************************************************************
- *
- * Function Name : imxsdk_gpio_handle_interrupt
- * Description   : handle the gpio interrupt in a pin.
- *
- ***************************************************************************/
-void imxsdk_gpio_handle_interrupt(GPIO_Type *apBase, port_number_t gpioPortNumber)
-{
-    uint32_t isfr = GPIO_GetPinsInterruptFlags(apBase);
-
-    /* Parse through all the pending interrupt for a PORT */
-    for (uint8_t i = 0; i < GPIO_NUMBER_OF_PIN; i++)
-    {
-        if (isfr & (1 << i))
-        {
-            gpio_isr_handler_t handle = isrObj[gpioPortNumber][i].isrHandle;
-            if (handle == NULL)
-            {
-                continue;
-            }
-            /* Call user defined handler */
-            handle(isrObj[gpioPortNumber][i].pUserData);
-            GPIO_PinClearInterruptFlag(apBase, (1 << i), gpioPortNumber, );
-        }
-    }
-}
-#endif
-
 GENERIC_DRIVER_GPIO Driver_GPIO_KSDK = {
     imxsdk_gpio_get_version, imxsdk_gpio_pin_init,  imxsdk_gpio_set_pin,
     imxsdk_gpio_clr_pin, imxsdk_gpio_toggle_pin

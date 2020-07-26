@@ -17,15 +17,17 @@
 #include "jpeglib.h"
 #include "display_support.h"
 #include "board.h"
-
+#include "sdmmc_config.h"
 #include "pin_mux.h"
 #include "fsl_gpio.h"
 #include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define APP_FB_HEIGHT DEMO_PANEL_HEIGHT
-#define APP_FB_WIDTH DEMO_PANEL_WIDTH
+#define APP_FB_HEIGHT  DEMO_BUFFER_HEIGHT
+#define APP_FB_WIDTH   DEMO_BUFFER_WIDTH
+#define APP_FB_START_X DEMO_BUFFER_START_X
+#define APP_FB_START_Y DEMO_BUFFER_START_Y
 
 /*
  * For better performance, by default, three frame buffers are used in this demo.
@@ -44,10 +46,10 @@
 #endif
 
 #if APP_USE_XRGB8888
-#define APP_FB_BPP 4 /* LCD frame buffer byte per pixel, XRGB888 format, 32-bit. */
+#define APP_FB_BPP    4 /* LCD frame buffer byte per pixel, XRGB888 format, 32-bit. */
 #define APP_FB_FORMAT kVIDEO_PixelFormatXRGB8888
 #else
-#define APP_FB_BPP 3 /* LCD frame buffer byte per pixel, RGB888 format, 24-bit. */
+#define APP_FB_BPP    3 /* LCD frame buffer byte per pixel, RGB888 format, 24-bit. */
 #define APP_FB_FORMAT kVIDEO_PixelFormatRGB888
 #endif
 
@@ -130,38 +132,9 @@ SDK_ALIGN(static uint8_t g_frameBuffer[APP_FB_NUM][APP_FB_SIZE_BYTE], APP_FB_ALI
 
 AT_NONCACHEABLE_SECTION(static FATFS g_fileSystem); /* File system object */
 AT_NONCACHEABLE_SECTION(static FIL jpgFil);
-
-static const sdmmchost_detect_card_t s_sdCardDetect = {
-#ifndef BOARD_SD_DETECT_TYPE
-    .cdType = kSDMMCHOST_DetectCardByGpioCD,
-#else
-    .cdType = BOARD_SD_DETECT_TYPE,
-#endif
-    .cdTimeOut_ms = (~0U),
-};
-/*! @brief SDMMC card power control configuration */
-#if defined DEMO_SDCARD_POWER_CTRL_FUNCTION_EXIST
-static const sdmmchost_pwr_card_t s_sdCardPwrCtrl = {
-    .powerOn          = BOARD_PowerOnSDCARD,
-    .powerOnDelay_ms  = 500U,
-    .powerOff         = BOARD_PowerOffSDCARD,
-    .powerOffDelay_ms = 0U,
-};
-#endif
-
 /*******************************************************************************
  * Code
  ******************************************************************************/
-static void BOARD_USDHCClockConfiguration(void)
-{
-    CLOCK_InitSysPll(&sysPllConfig_BOARD_BootClockRUN);
-    /*configure system pll PFD0 fractional divider to 24, output clock is 528MHZ * 18 / 24 = 396 MHZ*/
-    CLOCK_InitSysPfd(kCLOCK_Pfd0, 24U);
-    /* Configure USDHC clock source and divider */
-    CLOCK_SetDiv(kCLOCK_Usdhc1Div, 0U);
-    CLOCK_SetMux(kCLOCK_Usdhc1Mux, 0U);
-}
-
 
 
 /* Get the empty frame buffer from the s_fbList. */
@@ -358,6 +331,8 @@ void APP_InitDisplay(void)
     fbInfo.pixelFormat = APP_FB_FORMAT;
     fbInfo.width       = APP_FB_WIDTH;
     fbInfo.height      = APP_FB_HEIGHT;
+    fbInfo.startX      = APP_FB_START_X;
+    fbInfo.startY      = APP_FB_START_Y;
     fbInfo.strideBytes = APP_FB_STRIDE_BYTE;
     if (kStatus_Success != g_dc.ops->setLayerConfig(&g_dc, 0, &fbInfo))
     {
@@ -410,7 +385,6 @@ int main(void)
     BOARD_ConfigMPU();
     BOARD_InitPins();
     BOARD_BootClockRUN();
-    BOARD_USDHCClockConfiguration();
     BOARD_InitDebugConsole();
 
     PRINTF("SD JPEG demo start:\r\n");
@@ -466,14 +440,8 @@ int main(void)
 
 static status_t sdcardWaitCardInsert(void)
 {
-    /* Save host information. */
-    g_sd.host.base           = SD_HOST_BASEADDR;
-    g_sd.host.sourceClock_Hz = SD_HOST_CLK_FREQ;
-    /* card detect type */
-    g_sd.usrParam.cd = &s_sdCardDetect;
-#if defined DEMO_SDCARD_POWER_CTRL_FUNCTION_EXIST
-    g_sd.usrParam.pwr = &s_sdCardPwrCtrl;
-#endif
+    BOARD_SD_Config(&g_sd, NULL, BOARD_SDMMC_SD_HOST_IRQ_PRIORITY, NULL);
+
     /* SD host init function */
     if (SD_HostInit(&g_sd) != kStatus_Success)
     {
@@ -481,13 +449,13 @@ static status_t sdcardWaitCardInsert(void)
         return kStatus_Fail;
     }
     /* power off card */
-    SD_PowerOffCard(g_sd.host.base, g_sd.usrParam.pwr);
+    SD_SetCardPower(&g_sd, false);
     /* wait card insert */
-    if (SD_WaitCardDetectStatus(SD_HOST_BASEADDR, &s_sdCardDetect, true) == kStatus_Success)
+    if (SD_PollingCardInsert(&g_sd, kSD_Inserted) == kStatus_Success)
     {
         PRINTF("\r\nCard inserted.\r\n");
         /* power on the card */
-        SD_PowerOnCard(g_sd.host.base, g_sd.usrParam.pwr);
+        SD_SetCardPower(&g_sd, true);
     }
     else
     {

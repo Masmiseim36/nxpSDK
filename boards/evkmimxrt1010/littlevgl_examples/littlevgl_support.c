@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP
+ * Copyright 2019-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -7,8 +7,10 @@
 
 #include "littlevgl_support.h"
 #include "lvgl.h"
+#if defined(FSL_RTOS_FREE_RTOS)
 #include "FreeRTOS.h"
 #include "semphr.h"
+#endif
 
 #include "fsl_lpspi.h"
 #include "fsl_lpi2c.h"
@@ -24,14 +26,14 @@
  ******************************************************************************/
 #define LPSPI1_Freq CLOCK_GetFreq(kCLOCK_SysPllClk) / LPSPI_CLOCK_SOURCE_DIVIDER
 #define LPI2C1_Freq CLOCK_GetFreq(kCLOCK_OscClk) / LPI2C_CLOCK_SOURCE_DIVIDER
-#define Data_Size 1000 /*Buffer Size*/
+#define Data_Size   1000 /*Buffer Size*/
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
 static void DEMO_InitLcd(void);
 static void DEMO_InitTouch(void);
-static bool DEMO_ReadTouch(lv_indev_data_t *data);
-static void my_disp_flush(int32_t x1, int32_t y1, int32_t x2, int32_t y2, const lv_color_t *color_p);
+static bool DEMO_ReadTouch(lv_indev_drv_t *drv, lv_indev_data_t *data);
+static void my_disp_flush(lv_disp_drv_t *disp_drv, const lv_area_t *area, lv_color_t *color_p);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
@@ -40,17 +42,12 @@ static uint8_t data_buffer[Data_Size];
 static volatile uint32_t spi_event;
 static volatile bool spi_event_received;
 static ft6x06_handle_t touch_handle;
-static uint8_t s_frameBuffer[2][Display_Buffer_HEIGHT * LCD_WIDTH * LCD_FB_BYTE_PER_PIXEL];
+SDK_ALIGN(static uint8_t s_frameBuffer[2][LCD_VIRTUAL_BUF_SIZE * LCD_FB_BYTE_PER_PIXEL], 4);
 /*******************************************************************************
  * Code
  ******************************************************************************/
 void lv_port_pre_init(void)
 {
-    /*
-     * Pass in the frame buffer address to LittlevGL manually, the LV_VDB_ADR
-     * and LV_VDB2_ADR should be defined to LV_VDB_ADR_INV in lv_conf.h
-     */
-    lv_vdb_set_adr(s_frameBuffer[0], s_frameBuffer[1]);
 }
 
 /* Get LPSPI1_CLK_Freq (88MHz).  */
@@ -77,7 +74,9 @@ static uint32_t SPI_WaitEvent(void)
 
     while (!spi_event_received)
     {
+#if defined(FSL_RTOS_FREE_RTOS)
         vTaskDelay(1);
+#endif
     }
     event              = spi_event;
     spi_event_received = false;
@@ -115,6 +114,7 @@ static void DEMO_InitLcd(void)
     gpio_pin_config_t dc_config = {
         kGPIO_DigitalOutput,
         1,
+        kGPIO_NoIntmode,
     };
 
     /* Init data/command GPIO output . */
@@ -132,6 +132,10 @@ static void DEMO_InitLcd(void)
 
 void lv_port_disp_init(void)
 {
+    static lv_disp_buf_t disp_buf;
+
+    lv_disp_buf_init(&disp_buf, s_frameBuffer[0], s_frameBuffer[1], LCD_VIRTUAL_BUF_SIZE);
+
     /*-------------------------
      * Initialize your display
      * -----------------------*/
@@ -144,15 +148,27 @@ void lv_port_disp_init(void)
     lv_disp_drv_t disp_drv;      /*Descriptor of a display driver*/
     lv_disp_drv_init(&disp_drv); /*Basic initialization*/
 
-    /*Used in buffered mode (LV_VDB_SIZE != 0  in lv_conf.h)*/
-    disp_drv.disp_flush = my_disp_flush;
+    /*Set the resolution of the display*/
+    disp_drv.hor_res = LCD_WIDTH;
+    disp_drv.ver_res = LCD_HEIGHT;
+
+    /*Used to copy the buffer's content to the display*/
+    disp_drv.flush_cb = my_disp_flush;
+
+    /*Set a display buffer*/
+    disp_drv.buffer = &disp_buf;
 
     /*Finally register the driver*/
     lv_disp_drv_register(&disp_drv);
 }
 
-static void my_disp_flush(int32_t x1, int32_t y1, int32_t x2, int32_t y2, const lv_color_t *color_p)
+static void my_disp_flush(lv_disp_drv_t *disp_drv, const lv_area_t *area, lv_color_t *color_p)
 {
+    lv_coord_t x1 = area->x1;
+    lv_coord_t y1 = area->y1;
+    lv_coord_t x2 = area->x2;
+    lv_coord_t y2 = area->y2;
+
     uint8_t data[4];
     uint16_t *pdata                  = (uint16_t *)color_p;
     uint32_t send_size               = (x2 - x1 + 1) * (y2 - y1 + 1) * 2;
@@ -197,7 +213,7 @@ static void my_disp_flush(int32_t x1, int32_t y1, int32_t x2, int32_t y2, const 
         APP_pfWriteM8_A1(data_buffer, send_last_size);
     }
 
-    lv_flush_ready();
+    lv_disp_flush_ready(disp_drv);
 }
 
 void lv_port_indev_init(void)
@@ -213,8 +229,8 @@ void lv_port_indev_init(void)
 
     /*Register a touchpad input device*/
     lv_indev_drv_init(&indev_drv);
-    indev_drv.type = LV_INDEV_TYPE_POINTER;
-    indev_drv.read = DEMO_ReadTouch;
+    indev_drv.type    = LV_INDEV_TYPE_POINTER;
+    indev_drv.read_cb = DEMO_ReadTouch;
     lv_indev_drv_register(&indev_drv);
 }
 
@@ -252,7 +268,7 @@ static void DEMO_InitTouch(void)
 }
 
 /* Will be called by the library to read the touchpad */
-static bool DEMO_ReadTouch(lv_indev_data_t *data)
+static bool DEMO_ReadTouch(lv_indev_drv_t *drv, lv_indev_data_t *data)
 {
     touch_event_t touch_event;
     static int touch_x = 0;

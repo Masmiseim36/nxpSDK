@@ -38,13 +38,6 @@ typedef struct _sb_image_blocks {
 	int *data_size;				///< The size of the image block 
 } sb_image_block_t;				///<  Structure that defines a pre allocated image block for use with the sbvfs library
 
-#define SB_CCALLBACK_STRUCT_DEFINED 1
-typedef struct _sb_ccallback {
-	const char *name;							///< The name of the callback funtion
-	void (*c_callback)(gr_action_context_t *);	///< The pointer to the function to execute
-} sb_ccallback_t;								///< Structure that defines a c callback lookup
-
-
 typedef struct {
 	int16_t advance;		///< Advance in pixels
 	int16_t left;			///< Bearing X (freetype doc)
@@ -145,15 +138,6 @@ sb_image_block_t * sbvfs_image_block_lookup(const char *name);
  * @return A pointer to an variable length array of C callback list structures.  The array ends with an entry of NULL, NULL. 
  */
 sb_ccallback_t * sbvfs_get_ccallback_list();
-
-/**
- * Look up the function pointer for a c callback based on its name
- * @param name The name of the function to call (ie "pressHandler")
- * @return The callback structure that contains the name of the function and a function pointer to that function 
- */
-sb_ccallback_t * sbvfs_ccallback_lookup(const char *name);
-
-
 
 /**
  * SIMULATED FILE IO API

@@ -86,9 +86,9 @@ extern ARM_DRIVER_USART Driver_USART13;
 #endif /* USART13 */
 
 /* USART Driver state flags */
-#define USART_FLAG_UNINIT (0)
-#define USART_FLAG_INIT (1 << 0)
-#define USART_FLAG_POWER (1 << 1)
+#define USART_FLAG_UNINIT     (0)
+#define USART_FLAG_INIT       (1 << 0)
+#define USART_FLAG_POWER      (1 << 1)
 #define USART_FLAG_CONFIGURED (1 << 2)
 
 #endif /* _FSL_USART_CMSIS_H_ */

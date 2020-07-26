@@ -223,7 +223,6 @@
           <state>DEBUG</state>
           <state>CPU_MIMXRT685SFVKB_cm33</state>
           <state>BOOT_HEADER_ENABLE=1</state>
-          <state>ARM_MATH_CM33</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
@@ -821,8 +820,8 @@
         </option>
         <option>
           <name>IlinkAdditionalLibs</name>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/iar/iar_lib_power.a</state>
           <state>$PROJ_DIR$/../../hello_world_s/iar/debug/hello_world_s_import_lib.o</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/iar/iar_lib_power.a</state>
         </option>
         <option>
           <name>IlinkOverrideProgramEntryLabel</name>
@@ -1261,7 +1260,6 @@
           <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>CPU_MIMXRT685SFVKB_cm33</state>
-          <state>ARM_MATH_CM33</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
@@ -1859,8 +1857,8 @@
         </option>
         <option>
           <name>IlinkAdditionalLibs</name>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/iar/iar_lib_power.a</state>
           <state>$PROJ_DIR$/../../hello_world_s/iar/flash_debug/hello_world_s_import_lib.o</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/iar/iar_lib_power.a</state>
         </option>
         <option>
           <name>IlinkOverrideProgramEntryLabel</name>
@@ -2298,7 +2296,6 @@
           <state>NDEBUG</state>
           <state>CPU_MIMXRT685SFVKB_cm33</state>
           <state>BOOT_HEADER_ENABLE=1</state>
-          <state>ARM_MATH_CM33</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
@@ -2896,8 +2893,8 @@
         </option>
         <option>
           <name>IlinkAdditionalLibs</name>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/iar/iar_lib_power.a</state>
           <state>$PROJ_DIR$/../../hello_world_s/iar/release/hello_world_s_import_lib.o</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/iar/iar_lib_power.a</state>
         </option>
         <option>
           <name>IlinkOverrideProgramEntryLabel</name>
@@ -3336,7 +3333,6 @@
           <state>CPU_MIMXRT685SFVKB_cm33</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>NDEBUG</state>
-          <state>ARM_MATH_CM33</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
@@ -3933,8 +3929,8 @@
         </option>
         <option>
           <name>IlinkAdditionalLibs</name>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/iar/iar_lib_power.a</state>
           <state>$PROJ_DIR$/../../hello_world_s/iar/flash_release/hello_world_s_import_lib.o</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/iar/iar_lib_power.a</state>
         </option>
         <option>
           <name>IlinkOverrideProgramEntryLabel</name>
@@ -4348,6 +4344,9 @@
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_cm33.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/mpu_armv8.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/tz_context.h</name>
     </file>
     <file>
@@ -4370,21 +4369,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_version.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_armv81mml.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_armv8mbl.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_armv8mml.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/mpu_armv7.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/mpu_armv8.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/arm_common_tables.h</name>

@@ -29,8 +29,8 @@
  ******************************************************************************/
 #define EXAMPLE_I2C_MASTER_BASE (LPI2C1_BASE)
 #define EXAMPLE_I2C_MASTER_IRQN (LPI2C1_IRQn)
-#define EXAMPLE_I2C_SLAVE_BASE (LPI2C2_BASE)
-#define EXAMPLE_I2C_SLAVE_IRQN (LPI2C2_IRQn)
+#define EXAMPLE_I2C_SLAVE_BASE  (LPI2C2_BASE)
+#define EXAMPLE_I2C_SLAVE_IRQN  (LPI2C2_IRQn)
 
 /* Select USB1 PLL (480 MHz) as master lpi2c clock source */
 #define LPI2C_CLOCK_SOURCE_SELECT (0U)
@@ -88,7 +88,7 @@ SemaphoreHandle_t lpi2c_sem;
  * Definitions
  ******************************************************************************/
 /* Task priorities. */
-#define slave_task_PRIORITY (configMAX_PRIORITIES - 2)
+#define slave_task_PRIORITY  (configMAX_PRIORITIES - 2)
 #define master_task_PRIORITY (configMAX_PRIORITIES - 1)
 
 /*******************************************************************************
@@ -107,8 +107,8 @@ int main(void)
 
     /* Init board hardware. */
     BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
 
     /*Clock setting for LPI2C*/

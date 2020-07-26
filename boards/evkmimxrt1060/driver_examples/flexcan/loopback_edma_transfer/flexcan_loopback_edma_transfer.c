@@ -19,7 +19,7 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_CAN CAN3
+#define EXAMPLE_CAN            CAN3
 #define EXAMPLE_CAN_CLK_SOURCE (kFLEXCAN_ClkSrc1)
 
 /* Considering that the first valid MB must be used as Reserved TX MB for ERR005829,
@@ -36,11 +36,11 @@
 /* Clock divider for master flexcan clock source */
 #define FLEXCAN_CLOCK_SOURCE_DIVIDER (2U)
 /* Get frequency of flexcan clock */
-#define EXAMPLE_CAN_CLK_FREQ ((CLOCK_GetFreq(kCLOCK_Usb1PllClk) / 8) / (FLEXCAN_CLOCK_SOURCE_DIVIDER + 1U))
-#define EXAMPLE_CAN_DMA DMA0
+#define EXAMPLE_CAN_CLK_FREQ    ((CLOCK_GetFreq(kCLOCK_Usb1PllClk) / 8) / (FLEXCAN_CLOCK_SOURCE_DIVIDER + 1U))
+#define EXAMPLE_CAN_DMA         DMA0
 #define EXAMPLE_CAN_DMA_CHANNEL 0
 #define EXAMPLE_CAN_DMA_REQUEST kDmaRequestMuxCAN3
-#define EXAMPLE_CAN_DMAMUX DMAMUX
+#define EXAMPLE_CAN_DMAMUX      DMAMUX
 /* Fix MISRA_C-2012 Rule 17.7. */
 #define LOG_INFO (void)PRINTF
 /*******************************************************************************

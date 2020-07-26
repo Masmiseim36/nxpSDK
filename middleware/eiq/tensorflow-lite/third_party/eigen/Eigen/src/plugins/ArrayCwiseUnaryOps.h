@@ -536,13 +536,11 @@ typedef CwiseUnaryOp<internal::scalar_lgamma_op<Scalar>, const Derived> LgammaRe
 typedef CwiseUnaryOp<internal::scalar_digamma_op<Scalar>, const Derived> DigammaReturnType;
 typedef CwiseUnaryOp<internal::scalar_erf_op<Scalar>, const Derived> ErfReturnType;
 typedef CwiseUnaryOp<internal::scalar_erfc_op<Scalar>, const Derived> ErfcReturnType;
+typedef CwiseUnaryOp<internal::scalar_ndtri_op<Scalar>, const Derived> NdtriReturnType;
 
 /** \cpp11 \returns an expression of the coefficient-wise ln(|gamma(*this)|).
   *
   * \specialfunctions_module
-  *
-  * Example: \include Cwise_lgamma.cpp
-  * Output: \verbinclude Cwise_lgamma.out
   *
   * \note This function supports only float and double scalar types in c++11 mode. To support other scalar types,
   * or float/double in non c++11 mode, the user has to provide implementations of lgamma(T) for any scalar
@@ -579,9 +577,6 @@ digamma() const
   *
   * \specialfunctions_module
   *
-  * Example: \include Cwise_erf.cpp
-  * Output: \verbinclude Cwise_erf.out
-  *
   * \note This function supports only float and double scalar types in c++11 mode. To support other scalar types,
   * or float/double in non c++11 mode, the user has to provide implementations of erf(T) for any scalar
   * type T to be supported.
@@ -600,9 +595,6 @@ erf() const
   *
   * \specialfunctions_module
   *
-  * Example: \include Cwise_erfc.cpp
-  * Output: \verbinclude Cwise_erfc.out
-  *
   * \note This function supports only float and double scalar types in c++11 mode. To support other scalar types,
   * or float/double in non c++11 mode, the user has to provide implementations of erfc(T) for any scalar
   * type T to be supported.
@@ -614,4 +606,24 @@ inline const ErfcReturnType
 erfc() const
 {
   return ErfcReturnType(derived());
+}
+
+/** \returns an expression of the coefficient-wise inverse of the CDF of the Normal distribution function
+  * function of *this.
+  *
+  * \specialfunctions_module
+  * 
+  * In other words, considering `x = ndtri(y)`, it returns the argument, x, for which the area under the
+  * Gaussian probability density function (integrated from minus infinity to x) is equal to y.
+  *
+  * \note This function supports only float and double scalar types. To support other scalar types,
+  * the user has to provide implementations of ndtri(T) for any scalar type T to be supported.
+  *
+  * \sa <a href="group__CoeffwiseMathFunctions.html#cwisetable_ndtri">Math functions</a>
+  */
+EIGEN_DEVICE_FUNC
+inline const NdtriReturnType
+ndtri() const
+{
+  return NdtriReturnType(derived());
 }

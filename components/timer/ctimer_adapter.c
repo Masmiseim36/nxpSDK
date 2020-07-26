@@ -49,16 +49,18 @@ static void HAL_TimerInterruptHandle(uint8_t instance)
     }
 }
 
+void ctimer0_match0_callback(uint32_t flags);
 void ctimer0_match0_callback(uint32_t flags)
 {
     HAL_TimerInterruptHandle(0);
 }
 
+void ctimer1_match0_callback(uint32_t flags);
 void ctimer1_match0_callback(uint32_t flags)
 {
     HAL_TimerInterruptHandle(1);
 }
-ctimer_callback_t ctimer_callback_table[] = {ctimer0_match0_callback, ctimer1_match0_callback};
+static ctimer_callback_t ctimer_callback_table[] = {ctimer0_match0_callback, ctimer1_match0_callback};
 
 static hal_timer_status_t HAL_CTimerConfigTimeout(hal_timer_handle_t halTimerHandle, uint32_t timeout)
 {
@@ -77,9 +79,11 @@ static hal_timer_status_t HAL_CTimerConfigTimeout(hal_timer_handle_t halTimerHan
     mCtimerMatchConfig.outControl         = kCTIMER_Output_NoAction;
     mCtimerMatchConfig.outPinInitState    = false;
     mCtimerMatchConfig.enableInterrupt    = true;
-    mCtimerMatchConfig.matchValue         = USEC_TO_COUNT(halTimerState->timeout, halTimerState->timerClock_Hz);
-    if ((mCtimerMatchConfig.matchValue < 1) || (mCtimerMatchConfig.matchValue > 0xFFFFFFF0))
+    mCtimerMatchConfig.matchValue         = (uint32_t)USEC_TO_COUNT(halTimerState->timeout, halTimerState->timerClock_Hz);
+    if ((mCtimerMatchConfig.matchValue < 1U) || (mCtimerMatchConfig.matchValue > 0xFFFFFFF0U))
+    {
         return kStatus_HAL_TimerOutOfRanger;
+    }
     /* Configure channel to Software compare; output pin not used */
     CTIMER_RegisterCallBack(s_CtimerBase[halTimerState->instance], &ctimer_callback_table[halTimerState->instance],
                             kCTIMER_SingleCallback);
@@ -104,7 +108,7 @@ hal_timer_status_t HAL_TimerInit(hal_timer_handle_t halTimerHandle, hal_timer_co
     CTIMER_GetDefaultConfig(&config);
     halTimerState->timeout                 = halTimerConfig->timeout;
     halTimerState->instance                = halTimerConfig->instance;
-    halTimerState->timerClock_Hz           = halTimerConfig->srcClock_Hz / (config.prescale + 1);
+    halTimerState->timerClock_Hz           = (uint32_t)halTimerConfig->srcClock_Hz / (uint32_t)(config.prescale + 1U);
     s_timerHandle[halTimerState->instance] = halTimerHandle;
     return HAL_CTimerConfigTimeout(halTimerHandle, halTimerState->timeout);
 }
@@ -151,14 +155,14 @@ uint32_t HAL_TimerGetMaxTimeout(hal_timer_handle_t halTimerHandle)
     {
         return 1000;
     }
-    return COUNT_TO_USEC(0xFFFFFFFF - reserveCount, halTimerState->timerClock_Hz);
+    return (uint32_t)COUNT_TO_USEC((0xFFFFFFFFUL - reserveCount), halTimerState->timerClock_Hz);
 }
 /* return micro us */
 uint32_t HAL_TimerGetCurrentTimerCount(hal_timer_handle_t halTimerHandle)
 {
     assert(halTimerHandle);
     hal_timer_handle_struct_t *halTimerState = halTimerHandle;
-    return COUNT_TO_USEC(s_CtimerBase[halTimerState->instance]->TC, halTimerState->timerClock_Hz);
+    return (uint32_t)COUNT_TO_USEC(s_CtimerBase[halTimerState->instance]->TC, halTimerState->timerClock_Hz);
 }
 
 hal_timer_status_t HAL_TimerUpdateTimeout(hal_timer_handle_t halTimerHandle, uint32_t timeout)

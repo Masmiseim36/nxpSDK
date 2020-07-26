@@ -53,14 +53,16 @@ __attribute__((cmse_nonsecure_entry)) void DbgConsole_Printf_NSE(char const *s)
     if ((string_length == MAX_STRING_LENGTH) && (s[string_length] != '\0'))
     {
         PRINTF("Input data error: String too long or invalid string termination!\r\n");
-        while(1);
+        while (1)
+            ;
     }
 
     /* Check whether string is located in non-secure memory */
     if (cmse_check_address_range((void *)s, string_length, CMSE_NONSECURE | CMSE_MPU_READ) == NULL)
     {
         PRINTF("Input data error: String is not located in normal world!\r\n");
-        while(1);
+        while (1)
+            ;
     }
     // PRINTF("Sent from normal world:\r\n");
     PRINTF(s);
@@ -81,21 +83,24 @@ __attribute__((cmse_nonsecure_entry)) uint32_t StringCompare_NSE(volatile callba
     if (cmse_check_pointed_object((int *)callback_NS, CMSE_NONSECURE) == NULL)
     {
         PRINTF("Input data error: The callback is not located in normal world!\r\n");
-        while(1);
+        while (1)
+            ;
     }
     /* Check whether string is properly terminated */
     string_length = strnlen(s1, MAX_STRING_LENGTH);
     if ((string_length == MAX_STRING_LENGTH) && (s1[string_length] != '\0'))
     {
         PRINTF("Input data error: First string too long or invalid string termination!\r\n");
-        while(1);
+        while (1)
+            ;
     }
     /* Check whether string is properly terminated */
     string_length = strnlen(s2, MAX_STRING_LENGTH);
     if ((string_length == MAX_STRING_LENGTH) && (s2[string_length] != '\0'))
     {
         PRINTF("Input data error: Second string too long or invalid string termination!\r\n");
-        while(1);
+        while (1)
+            ;
     }
     PRINTF("Comparing two string as a callback to normal world\r\n");
     PRINTF("String 1: ");

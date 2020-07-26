@@ -40,6 +40,7 @@ typedef struct _dsp_handle_t
     void *audio_device;
     void *comp_codec;
     void *comp_renderer;
+    void *comp_client_proxy;
     void *comp;
     XosThread dec_thread;
     XosThread buffer_thread;
@@ -58,6 +59,7 @@ typedef struct _dsp_handle_t
     /* File playback ring buffer variables */
     ringbuf_t *audioBuffer;
     XosMutex audioMutex;
+    XosMutex rpmsgMutex;
 
     /* File playback state management variables */
     volatile bool eof;

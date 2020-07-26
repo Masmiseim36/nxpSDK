@@ -1,0 +1,38 @@
+libEAP_releaseNote
+/************************************************************************************/
+RELEASE: 1.0.1 
+DATE: 2020_04_29
+Update: - Update the dump PSA file to retrieve (center frequency, current peak, history peak)
+        - Move PSA block in the audio chain to match the real output signal
+/************************************************************************************/
+
+/************************************************************************************/
+RELEASE: 1.0.0 
+DATE: 2020_04_07
+COMPILATION SYMBOL: -DLVCS_MS_COEFFS_SMALL=1 -DALGORITHM_CS=1 -DALGORITHM_DBE=1 -DALGORITHM_EQNB=1 -DALGORITHM_LM=1 -DALGORITHM_TE=1 -DALGORITHM_TG=1 -DALGORITHM_AVL=1 -DALGORITHM_PSA=1 -DALGORITHM_VC=1  
+DO or INCLUDE:
+	- essential audio library for nxp_rt600_RI2019_newlib platform + LVC_Types.h + LVM.h
+        - Algorithm compiled: 
+            - Volume and balance control (VC)
+            - Concert sound (CS)
+            - Digital Bass enhancement (DBE)
+            - Treble effect (TE)
+            - Equalizer (EQNB)
+            - Loudness maximizer (LM)
+            - Auto Volume Level (AVL)
+            - Power spectrum analyzer (PSA)
+            - Tone generator (TG)
+	- Compilation option: -O3 -DLVCS_MS_COEFFS_SMALL=1 -DALGORITHM_CS=1 -DALGORITHM_DBE=1 -DALGORITHM_EQNB=1 -DALGORITHM_LM=1 -DALGORITHM_TE=1 -DALGORITHM_TG=1 -DALGORITHM_AVL=1 -DALGORITHM_PSA=1 -DALGORITHM_VC=1
+	- Input data type:
+ 	   - 16 bit data input
+	   - mono or stereo
+	   - Sampling rate (Hz): 8000, 11025, 12000, 16000, 22050, 24000, 32000, 44100 or 48000
+
+DO NOT or NOT INCLUDE:
+        - pure bass (PB) because concurrent with DBE
+        - cinema sound (CI) because concurrent with CS
+        - richsound (RS) because obsolete
+        - gentleMixer (GM) because obsolete
+
+/************************************************************************************/
+

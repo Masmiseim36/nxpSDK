@@ -61,8 +61,7 @@ TfLiteStatus Prepare(TfLiteContext* context, TfLiteNode* node) {
 
   // Resize output. rank R will become rank R + 1
   const TfLiteIntArray* input_shape = input0->dims;
-  std::unique_ptr<TfLiteIntArray, void (*)(TfLiteIntArray*)> output_shape(
-      TfLiteIntArrayCreate(dimension_size), TfLiteIntArrayFree);
+  TfLiteIntArray* output_shape = TfLiteIntArrayCreate(dimension_size);
   int i = 0;
   for (int index = 0; index < dimension_size; ++index) {
     if (index == data->axis) {
@@ -84,7 +83,7 @@ TfLiteStatus Prepare(TfLiteContext* context, TfLiteNode* node) {
     TF_LITE_ENSURE_EQ(context, input->params.scale, output->params.scale);
   }
 
-  return context->ResizeTensor(context, output, output_shape.release());
+  return context->ResizeTensor(context, output, output_shape);
 }
 
 template <typename T>

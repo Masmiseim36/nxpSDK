@@ -144,8 +144,6 @@ SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DCPU_MIMXRT685SFVKB_cm33")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DBOOT_HEADER_ENABLE=1")
 
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DARM_MATH_CM33")
-
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DSDK_I2C_BASED_COMPONENT_USED=1")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DBOARD_USE_CODEC=1")
@@ -192,8 +190,6 @@ SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DCPU_MIMXRT685SFVKB_cm33")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DBOOT_HEADER_ENABLE=1")
 
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DARM_MATH_CM33")
-
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DSDK_I2C_BASED_COMPONENT_USED=1")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DBOARD_USE_CODEC=1")
@@ -239,8 +235,6 @@ SET(CMAKE_C_FLAGS_FLASH_DEBUG "${CMAKE_C_FLAGS_FLASH_DEBUG} -DFSL_SDK_DRIVER_QUI
 SET(CMAKE_C_FLAGS_FLASH_DEBUG "${CMAKE_C_FLAGS_FLASH_DEBUG} -DCPU_MIMXRT685SFVKB_cm33")
 
 SET(CMAKE_C_FLAGS_FLASH_DEBUG "${CMAKE_C_FLAGS_FLASH_DEBUG} -DBOOT_HEADER_ENABLE=1")
-
-SET(CMAKE_C_FLAGS_FLASH_DEBUG "${CMAKE_C_FLAGS_FLASH_DEBUG} -DARM_MATH_CM33")
 
 SET(CMAKE_C_FLAGS_FLASH_DEBUG "${CMAKE_C_FLAGS_FLASH_DEBUG} -DSDK_I2C_BASED_COMPONENT_USED=1")
 
@@ -289,8 +283,6 @@ SET(CMAKE_C_FLAGS_FLASH_RELEASE "${CMAKE_C_FLAGS_FLASH_RELEASE} -DFSL_SDK_DRIVER
 SET(CMAKE_C_FLAGS_FLASH_RELEASE "${CMAKE_C_FLAGS_FLASH_RELEASE} -DCPU_MIMXRT685SFVKB_cm33")
 
 SET(CMAKE_C_FLAGS_FLASH_RELEASE "${CMAKE_C_FLAGS_FLASH_RELEASE} -DBOOT_HEADER_ENABLE=1")
-
-SET(CMAKE_C_FLAGS_FLASH_RELEASE "${CMAKE_C_FLAGS_FLASH_RELEASE} -DARM_MATH_CM33")
 
 SET(CMAKE_C_FLAGS_FLASH_RELEASE "${CMAKE_C_FLAGS_FLASH_RELEASE} -DSDK_I2C_BASED_COMPONENT_USED=1")
 
@@ -702,9 +694,9 @@ include_directories(${ProjDirPath}/../../../../../../components/codec/tfa9xxx)
 
 include_directories(${ProjDirPath}/../../../../../../components/codec/tfa9xxx/vas_tfa_drv)
 
-include_directories(${ProjDirPath}/../../../../../../components/codec/port/tfa9xxx)
-
 include_directories(${ProjDirPath}/../../../../../../components/codec)
+
+include_directories(${ProjDirPath}/../../../../../../components/codec/port/tfa9xxx)
 
 include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT685S)
 
@@ -768,10 +760,10 @@ add_executable(i2s_dma_transfer_tfa9xxx.elf
 "${ProjDirPath}/../../../../../../components/codec/tfa9xxx/vas_tfa_drv/tfa9xxx_parameters.h"
 "${ProjDirPath}/../../../../../../components/codec/tfa9xxx/vas_tfa_drv/tfa_container_crc32.c"
 "${ProjDirPath}/../../../../../../components/codec/tfa9xxx/vas_tfa_drv/tfa_haptic_fw_defs.h"
-"${ProjDirPath}/../../../../../../components/codec/port/tfa9xxx/fsl_codec_adapter.c"
-"${ProjDirPath}/../../../../../../components/codec/port/tfa9xxx/fsl_codec_adapter.h"
 "${ProjDirPath}/../../../../../../components/codec/fsl_codec_common.c"
 "${ProjDirPath}/../../../../../../components/codec/fsl_codec_common.h"
+"${ProjDirPath}/../../../../../../components/codec/port/tfa9xxx/fsl_codec_adapter.c"
+"${ProjDirPath}/../../../../../../components/codec/port/tfa9xxx/fsl_codec_adapter.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_clock.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_clock.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_power.c"
@@ -813,6 +805,7 @@ add_executable(i2s_dma_transfer_tfa9xxx.elf
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_reset.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_reset.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/core_cm33.h"
+"${ProjDirPath}/../../../../../../CMSIS/Include/mpu_armv8.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/tz_context.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_armcc.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_armclang.h"
@@ -821,11 +814,6 @@ add_executable(i2s_dma_transfer_tfa9xxx.elf
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_gcc.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_iccarm.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_version.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/core_armv81mml.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/core_armv8mbl.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/core_armv8mml.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/mpu_armv7.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/mpu_armv8.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/arm_common_tables.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/arm_const_structs.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/arm_math.h"

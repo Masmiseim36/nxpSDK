@@ -13,7 +13,6 @@
 
 #include "fsl_tfa9xxx.h"
 #include "stdarg.h"
-#include "fsl_debug_console.h"
 #include "fsl_codec_i2c.h"
 /*******************************************************************************
  * Definitions

@@ -37,9 +37,9 @@
    baud rate * 10) is an integer. Remember users must ensure the calculated
    prescaler an integer thus to get precise baud rate. */
 #define SET_CAN_QUANTUM 0
-#define PSEG1 3
-#define PSEG2 2
-#define PROPSEG 1
+#define PSEG1           3
+#define PSEG2           2
+#define PROPSEG         1
 
 /* Select 60M clock divided by USB1 PLL (480 MHz) as master flexcan clock source */
 #define FLEXCAN_CLOCK_SOURCE_SELECT (0U)

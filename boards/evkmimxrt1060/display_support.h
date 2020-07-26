@@ -13,7 +13,7 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_PANEL_WIDTH 480
+#define DEMO_PANEL_WIDTH  480
 #define DEMO_PANEL_HEIGHT 272U
 
 /* Definitions for the frame buffer. */
@@ -21,10 +21,14 @@
 /* Frame buffer data alignment, for better performance, the LCDIF frame buffer should be 64B align. */
 #define FRAME_BUFFER_ALIGN 64
 
-#define DEMO_BUFFER_WIDTH (DEMO_PANEL_WIDTH)
+#define DEMO_BUFFER_WIDTH  (DEMO_PANEL_WIDTH)
 #define DEMO_BUFFER_HEIGHT (DEMO_PANEL_HEIGHT)
 
-#define DEMO_BUFFER_PIXEL_FORMAT kVIDEO_PixelFormatRGB565
+/* Where the frame buffer is shown in the screen. */
+#define DEMO_BUFFER_START_X 0U
+#define DEMO_BUFFER_START_Y 0U
+
+#define DEMO_BUFFER_PIXEL_FORMAT   kVIDEO_PixelFormatRGB565
 #define DEMO_BUFFER_BYTE_PER_PIXEL 2
 
 #define DEMO_BUFFER_STRIDE_BYTE (DEMO_BUFFER_WIDTH * DEMO_BUFFER_BYTE_PER_PIXEL)

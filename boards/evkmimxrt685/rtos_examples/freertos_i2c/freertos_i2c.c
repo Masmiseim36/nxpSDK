@@ -28,20 +28,20 @@
  * Definitions
  ******************************************************************************/
 #define EXAMPLE_I2C_MASTER_IRQ FLEXCOMM4_IRQn
-#define EXAMPLE_I2C_SLAVE_IRQ FLEXCOMM2_IRQn
+#define EXAMPLE_I2C_SLAVE_IRQ  FLEXCOMM2_IRQn
 
 #define EXAMPLE_I2C_MASTER_BASE (I2C4_BASE)
-#define EXAMPLE_I2C_SLAVE_BASE (I2C2_BASE)
+#define EXAMPLE_I2C_SLAVE_BASE  (I2C2_BASE)
 
 #define I2C_MASTER_CLOCK_FREQUENCY (12000000)
-#define I2C_SLAVE_CLOCK_FREQUENCY (12000000)
+#define I2C_SLAVE_CLOCK_FREQUENCY  (12000000)
 
 #define EXAMPLE_I2C_MASTER ((I2C_Type *)EXAMPLE_I2C_MASTER_BASE)
-#define EXAMPLE_I2C_SLAVE ((I2C_Type *)EXAMPLE_I2C_SLAVE_BASE)
+#define EXAMPLE_I2C_SLAVE  ((I2C_Type *)EXAMPLE_I2C_SLAVE_BASE)
 
 #define I2C_MASTER_SLAVE_ADDR_7BIT (0x7EU)
-#define I2C_BAUDRATE (100000) /* 100K */
-#define I2C_DATA_LENGTH (32)  /* MAX is 256 */
+#define I2C_BAUDRATE               (100000) /* 100K */
+#define I2C_DATA_LENGTH            (32)     /* MAX is 256 */
 
 /*******************************************************************************
  * Prototypes
@@ -63,7 +63,7 @@ SemaphoreHandle_t i2c_sem;
  * Definitions
  ******************************************************************************/
 /* Task priorities. */
-#define slave_task_PRIORITY (configMAX_PRIORITIES - 1)
+#define slave_task_PRIORITY  (configMAX_PRIORITIES - 1)
 #define master_task_PRIORITY (configMAX_PRIORITIES - 2)
 
 #define I2C_NVIC_PRIO 2
@@ -85,8 +85,8 @@ int main(void)
     CLOCK_AttachClk(kSFRO_to_FLEXCOMM4);
     CLOCK_AttachClk(kSFRO_to_FLEXCOMM2);
 
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
     PRINTF("\r\n==FreeRTOS I2C example start.==\r\n");
     PRINTF("This example use one i2c instance as master and another as slave on one board.\r\n");

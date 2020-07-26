@@ -75,7 +75,6 @@
         <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
           <value>CPU_MIMXRT685SFVKB_cm33</value>
           <value>BOOT_HEADER_ENABLE=1</value>
-          <value>ARM_MATH_CM33</value>
           <value>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</value>
           <value>PRINTF_ADVANCED_ENABLE=1</value>
           <value>SERIAL_PORT_TYPE_UART=1</value>
@@ -113,9 +112,6 @@
     </source>
     <source path="boards/evkmimxrt685_agm01/issdk_examples/sensors/fxas21002/fxas21002_poll/mdk" target_path="MIMXRT685S/arm" type="linker" toolchain="mdk">
       <files mask="MIMXRT685Sxxxx_cm33_ram.scf"/>
-    </source>
-    <source path="boards/evkmimxrt685_agm01/issdk_examples/sensors/fxas21002/fxas21002_poll/mdk" target_path="src" type="configuration" toolchain="mdk">
-      <files mask="evkmimxrt685_ram.ini"/>
     </source>
     <source path="boards/evkmimxrt685_agm01/issdk_examples/sensors/fxas21002/fxas21002_poll" target_path="board" type="c_include">
       <files mask="board.h"/>

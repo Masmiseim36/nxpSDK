@@ -34,15 +34,15 @@
 
 #if defined(MIMXRT595S_cm33_SERIES)
 #define MPI_TZM_PRESET_SIZE MPI_TZM_PRESET_SIZE_RT5XX
-#define MPI_ADDRESS_MASK (0xEFFFFFFFU) /* Bit28 is secure address indicator */
-#define MPI_MEMCPY memcpy
-#define MPI_MEMCLR memset
+#define MPI_ADDRESS_MASK    (0xEFFFFFFFU) /* Bit28 is secure address indicator */
+#define MPI_MEMCPY          memcpy
+#define MPI_MEMCLR          memset
 
 #elif defined(MIMXRT685S_cm33_SERIES)
 #define MPI_TZM_PRESET_SIZE MPI_TZM_PRESET_SIZE_RT6XX
-#define MPI_ADDRESS_MASK (0xEFFFFFFFU) /* Bit28 is secure address indicator */
-#define MPI_MEMCPY MPI_WordCopy
-#define MPI_MEMCLR MPI_WordSet
+#define MPI_ADDRESS_MASK    (0xEFFFFFFFU) /* Bit28 is secure address indicator */
+#define MPI_MEMCPY          MPI_WordCopy
+#define MPI_MEMCLR          MPI_WordSet
 
 #else
 #error "Device not supported by Multicore Packed Image Loader!"
@@ -51,19 +51,19 @@
 /*********************************
  * Image type fields definition. *
  *********************************/
-#define MPI_TYPE_IMAGE_BASE_SHIFT (0U)
-#define MPI_TYPE_IMAGE_BASE_MASK (0xFFU << (MPI_TYPE_IMAGE_BASE_SHIFT))
-#define MPI_TYPE_IMAGE_BASE_PLAIN_SIGNED (1U << (MPI_TYPE_IMAGE_BASE_SHIFT))
-#define MPI_TYPE_IMAGE_BASE_PLAIN_UNSIGNED (2U << (MPI_TYPE_IMAGE_BASE_SHIFT))
-#define MPI_TYPE_IMAGE_BASE_ENCRYPTED_SIGNED (3U << (MPI_TYPE_IMAGE_BASE_SHIFT))
-#define MPI_TYPE_IMAGE_BASE_XIP_PLAIN_SIGNED (4U << (MPI_TYPE_IMAGE_BASE_SHIFT))
+#define MPI_TYPE_IMAGE_BASE_SHIFT              (0U)
+#define MPI_TYPE_IMAGE_BASE_MASK               (0xFFU << (MPI_TYPE_IMAGE_BASE_SHIFT))
+#define MPI_TYPE_IMAGE_BASE_PLAIN_SIGNED       (1U << (MPI_TYPE_IMAGE_BASE_SHIFT))
+#define MPI_TYPE_IMAGE_BASE_PLAIN_UNSIGNED     (2U << (MPI_TYPE_IMAGE_BASE_SHIFT))
+#define MPI_TYPE_IMAGE_BASE_ENCRYPTED_SIGNED   (3U << (MPI_TYPE_IMAGE_BASE_SHIFT))
+#define MPI_TYPE_IMAGE_BASE_XIP_PLAIN_SIGNED   (4U << (MPI_TYPE_IMAGE_BASE_SHIFT))
 #define MPI_TYPE_IMAGE_BASE_XIP_PLAIN_UNSIGNED (5U << (MPI_TYPE_IMAGE_BASE_SHIFT))
 
 #define MPI_TYPE_MULTICORE_PACKED_SHIFT (11U)
-#define MPI_TYPE_MULTICORE_PACKED_MASK (1U << (MPI_TYPE_MULTICORE_PACKED_SHIFT))
+#define MPI_TYPE_MULTICORE_PACKED_MASK  (1U << (MPI_TYPE_MULTICORE_PACKED_SHIFT))
 
 #define MPI_TYPE_TZM_SHIFT (13U)
-#define MPI_TYPE_TZM_MASK (3U << (MPI_TYPE_TZM_SHIFT))
+#define MPI_TYPE_TZM_MASK  (3U << (MPI_TYPE_TZM_SHIFT))
 /* Trustzone enabled secure image. */
 #define MPI_TYPE_TZM_SECURE (0U << MPI_TYPE_TZM_SHIFT)
 /* Trustzone enabled secure image with preset values. */
@@ -74,9 +74,9 @@
 /********************************
  * Relocation table definition. *
  ********************************/
-#define MPI_RELOC_MARKER (0x4C54424CU)
-#define MPI_RELOC_FLAG_LTI_LOAD (1U << 0)
-#define MPI_RELOC_FLAG_LTI_INIT (1U << 1)
+#define MPI_RELOC_MARKER           (0x4C54424CU)
+#define MPI_RELOC_FLAG_LTI_LOAD    (1U << 0)
+#define MPI_RELOC_FLAG_LTI_INIT    (1U << 1)
 #define MPI_RELOC_FLAG_LTI_OVERLAP (1U << 2)
 
 typedef struct

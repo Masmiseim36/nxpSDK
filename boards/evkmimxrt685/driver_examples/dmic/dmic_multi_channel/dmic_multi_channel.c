@@ -26,20 +26,20 @@
  ******************************************************************************/
 
 #define DEMO_I2S_MASTER_CLOCK_FREQUENCY CLOCK_GetMclkClkFreq()
-#define DEMO_I2S_TX (I2S4)
-#define DEMO_I2S_SAMPLE_RATE 48000
-#define I2S_CLOCK_DIVIDER (24576000 / DEMO_I2S_SAMPLE_RATE / 32 / 8)
+#define DEMO_I2S_TX                     (I2S4)
+#define DEMO_I2S_SAMPLE_RATE            48000
+#define I2S_CLOCK_DIVIDER               (24576000 / DEMO_I2S_SAMPLE_RATE / 32 / 8)
 #define DEMO_SDCARD_SWITCH_VOLTAGE_FUNCTION_EXIST
 #define DEMO_SDCARD_POWER_CTRL_FUNCTION_EXIST
-#define DEMO_DMA_MEMCPY_LEFT_CHANNEL 0U
+#define DEMO_DMA_MEMCPY_LEFT_CHANNEL  0U
 #define DEMO_DMA_MEMCPY_RIGHT_CHANNEL 1U
 
-#define DEMO_DMA_CHANNEL_TRIGGER_INPUT_A kINPUTMUX_Dma0TrigOutAToDma0
-#define DEMO_DMA_CHANNEL_TRIGGER_OUTPUT_A kINPUTMUX_Dma0OtrigChannel16ToTriginChannels
+#define DEMO_DMA_CHANNEL_TRIGGER_INPUT_A   kINPUTMUX_Dma0TrigOutAToDma0
+#define DEMO_DMA_CHANNEL_TRIGGER_OUTPUT_A  kINPUTMUX_Dma0OtrigChannel16ToTriginChannels
 #define DEMO_DMA_CHANNEL_OUT_TRIGGER_INDEX 0
 
-#define DEMO_DMA (DMA0)
-#define DEMO_DMA1 (DMA1)
+#define DEMO_DMA            (DMA0)
+#define DEMO_DMA1           (DMA1)
 #define DEMO_I2S_TX_CHANNEL (9)
 
 #define DEMO_DMIC_DMA_RX_CHANNEL_0 16U
@@ -50,26 +50,26 @@
 #define DEMO_DMIC_DMA_RX_CHANNEL_5 21U
 #define DEMO_DMIC_DMA_RX_CHANNEL_6 22U
 #define DEMO_DMIC_DMA_RX_CHANNEL_7 23U
-#define DEMO_DMIC_NUMS (4U)
+#define DEMO_DMIC_NUMS             (4U)
 
 #define DEMO_DMA_MEMCPY_CHANNEL_0 0
 
-#define DEMO_DMIC_CHANNEL_0 kDMIC_Channel0
-#define DEMO_DMIC_CHANNEL_1 kDMIC_Channel1
-#define DEMO_DMIC_CHANNEL_2 kDMIC_Channel2
-#define DEMO_DMIC_CHANNEL_3 kDMIC_Channel3
-#define DEMO_DMIC_CHANNEL_4 kDMIC_Channel4
-#define DEMO_DMIC_CHANNEL_5 kDMIC_Channel5
-#define DEMO_DMIC_CHANNEL_6 kDMIC_Channel6
-#define DEMO_DMIC_CHANNEL_7 kDMIC_Channel7
-#define DEMO_CODEC_I2C_BASEADDR I2C2
-#define DEMO_CODEC_I2C_INSTANCE 2U
+#define DEMO_DMIC_CHANNEL_0       kDMIC_Channel0
+#define DEMO_DMIC_CHANNEL_1       kDMIC_Channel1
+#define DEMO_DMIC_CHANNEL_2       kDMIC_Channel2
+#define DEMO_DMIC_CHANNEL_3       kDMIC_Channel3
+#define DEMO_DMIC_CHANNEL_4       kDMIC_Channel4
+#define DEMO_DMIC_CHANNEL_5       kDMIC_Channel5
+#define DEMO_DMIC_CHANNEL_6       kDMIC_Channel6
+#define DEMO_DMIC_CHANNEL_7       kDMIC_Channel7
+#define DEMO_CODEC_I2C_BASEADDR   I2C2
+#define DEMO_CODEC_I2C_INSTANCE   2U
 #define DEMO_CODEC_I2C_CLOCK_FREQ CLOCK_GetFlexCommClkFreq(2U)
-#define FIFO_DEPTH (15U)
+#define FIFO_DEPTH           (15U)
 #define PLAYBACK_BUFFER_SIZE (1024)
-#define PLAYBACK_BUFFER_NUM (2U)
-#define RECORD_BUFFER_SIZE (64)
-#define RECORD_BUFFER_NUM (DEMO_DMIC_NUMS * PLAYBACK_BUFFER_NUM)
+#define PLAYBACK_BUFFER_NUM  (2U)
+#define RECORD_BUFFER_SIZE   (64)
+#define RECORD_BUFFER_NUM    (DEMO_DMIC_NUMS * PLAYBACK_BUFFER_NUM)
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/

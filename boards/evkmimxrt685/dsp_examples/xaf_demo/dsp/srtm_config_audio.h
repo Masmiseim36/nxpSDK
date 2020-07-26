@@ -1,3 +1,11 @@
+/*
+ * Copyright 2019-2020 NXP
+ * All rights reserved.
+ *
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
+
 #ifndef __SRTM_CONFIG_AUDIO_H__
 #define __SRTM_CONFIG_AUDIO_H__
 
@@ -19,6 +27,8 @@ typedef enum _srtm_rt600_audio_command
     SRTM_Command_VORBIS,    /*!< VORBIS decoder */
     SRTM_Command_OPUS_DEC,  /*!< OPUS decoder */
     SRTM_Command_OPUS_ENC,  /*!< OPUS encoder */
+    SRTM_Command_SBC_DEC,   /*!< SBC decoder */
+    SRTM_Command_SBC_ENC,   /*!< SBC encoder */
     SRTM_Command_MIX,       /*!< Mix of two channels */
     SRTM_Command_SRC,       /*!< Sampling rate converter */
     SRTM_Command_GAIN,      /*!< PCM Gain control */
@@ -27,6 +37,8 @@ typedef enum _srtm_rt600_audio_command
     SRTM_Command_FileStart, /*!< Start streaming decode from a remote file */
     SRTM_Command_FileData,  /*!< Data frame from remote file playback */
     SRTM_Command_FileEnd,   /*!< Streaming decode from remote file complete */
+    SRTM_Command_FileStop,  /*!< Stop playback */
+    SRTM_Command_FilterCfg, /*!< Configure EAP EQNB filter */
     SRTM_Command_AUDIO_MAX, /*!< Request message */
 } srtm_audio_command_t;
 

@@ -80,7 +80,7 @@ typedef struct _usb_shim_agent_struct
     usb_shim_rx_data_struct_t bulkOutData;     /*!< Receive data information */
     usb_shim_tx_data_struct_t bulkInData;      /*!< Send data information */
     usb_shim_tx_data_struct_t interruptInData; /*!< Send data information */
-    uint8_t *recvDataBuffer;                    /*!< Receive data buffer */
+    uint8_t *recvDataBuffer;                   /*!< Receive data buffer */
     uint8_t *classBuffer;                      /*!< class specific transfer buffer */
 } usb_shim_agent_struct_t;
 

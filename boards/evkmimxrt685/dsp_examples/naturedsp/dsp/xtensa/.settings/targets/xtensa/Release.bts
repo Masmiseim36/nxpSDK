@@ -32,7 +32,7 @@
               <ListEntry key="SDK_DEBUGCONSOLE" value="1"/>
               <ListEntry key="XOS_CLOCK_FREQ" value="594000000"/>
               <ListEntry key="APP_DSP_ONLY" value="0"/>
-              <ListEntry key="SERIAL_PORT_TYPE_UART=1" value=""/>
+              <ListEntry key="SERIAL_PORT_TYPE_UART" value="1"/>
               <ListEntry key="CPU_MIMXRT685SFVKB_dsp" value=""/>
             </value>
           </KeyValueListMapEntry>

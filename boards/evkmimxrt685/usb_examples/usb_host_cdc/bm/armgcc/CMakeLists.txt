@@ -146,8 +146,6 @@ SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DCPU_MIMXRT685SFVKB_cm33")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DBOOT_HEADER_ENABLE=1")
 
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DARM_MATH_CM33")
-
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DDEBUG_CONSOLE_RX_ENABLE=0")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING")
@@ -207,8 +205,6 @@ SET(CMAKE_C_FLAGS_FLASH_RELEASE "${CMAKE_C_FLAGS_FLASH_RELEASE} -DFSL_SDK_DRIVER
 SET(CMAKE_C_FLAGS_FLASH_RELEASE "${CMAKE_C_FLAGS_FLASH_RELEASE} -DCPU_MIMXRT685SFVKB_cm33")
 
 SET(CMAKE_C_FLAGS_FLASH_RELEASE "${CMAKE_C_FLAGS_FLASH_RELEASE} -DBOOT_HEADER_ENABLE=1")
-
-SET(CMAKE_C_FLAGS_FLASH_RELEASE "${CMAKE_C_FLAGS_FLASH_RELEASE} -DARM_MATH_CM33")
 
 SET(CMAKE_C_FLAGS_FLASH_RELEASE "${CMAKE_C_FLAGS_FLASH_RELEASE} -DDEBUG_CONSOLE_RX_ENABLE=0")
 
@@ -270,8 +266,6 @@ SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DCPU_MIMXRT685SFVKB_cm33")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DBOOT_HEADER_ENABLE=1")
 
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DARM_MATH_CM33")
-
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DDEBUG_CONSOLE_RX_ENABLE=0")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING")
@@ -331,8 +325,6 @@ SET(CMAKE_C_FLAGS_FLASH_DEBUG "${CMAKE_C_FLAGS_FLASH_DEBUG} -DFSL_SDK_DRIVER_QUI
 SET(CMAKE_C_FLAGS_FLASH_DEBUG "${CMAKE_C_FLAGS_FLASH_DEBUG} -DCPU_MIMXRT685SFVKB_cm33")
 
 SET(CMAKE_C_FLAGS_FLASH_DEBUG "${CMAKE_C_FLAGS_FLASH_DEBUG} -DBOOT_HEADER_ENABLE=1")
-
-SET(CMAKE_C_FLAGS_FLASH_DEBUG "${CMAKE_C_FLAGS_FLASH_DEBUG} -DARM_MATH_CM33")
 
 SET(CMAKE_C_FLAGS_FLASH_DEBUG "${CMAKE_C_FLAGS_FLASH_DEBUG} -DDEBUG_CONSOLE_RX_ENABLE=0")
 
@@ -810,22 +802,8 @@ add_executable(host_cdc_bm.elf
 "${ProjDirPath}/../pin_mux.h"
 "${ProjDirPath}/../../../../../../middleware/usb/host/usb_host_ip3516hs.c"
 "${ProjDirPath}/../../../../../../middleware/usb/host/usb_host_ip3516hs.h"
-"${ProjDirPath}/../../../../../../middleware/usb/include/usb.h"
-"${ProjDirPath}/../../../../../../middleware/usb/include/usb_misc.h"
-"${ProjDirPath}/../../../../../../middleware/usb/include/usb_spec.h"
 "${ProjDirPath}/../../../../../../middleware/usb/phy/usb_phy.c"
 "${ProjDirPath}/../../../../../../middleware/usb/phy/usb_phy.h"
-"${ProjDirPath}/../../../../../../middleware/usb/host/usb_host.h"
-"${ProjDirPath}/../../../../../../middleware/usb/host/usb_host_devices.c"
-"${ProjDirPath}/../../../../../../middleware/usb/host/usb_host_devices.h"
-"${ProjDirPath}/../../../../../../middleware/usb/host/usb_host_framework.c"
-"${ProjDirPath}/../../../../../../middleware/usb/host/usb_host_framework.h"
-"${ProjDirPath}/../../../../../../middleware/usb/host/usb_host_hci.c"
-"${ProjDirPath}/../../../../../../middleware/usb/host/usb_host_hci.h"
-"${ProjDirPath}/../../../../../../middleware/usb/host/class/usb_host_hub.c"
-"${ProjDirPath}/../../../../../../middleware/usb/host/class/usb_host_hub.h"
-"${ProjDirPath}/../../../../../../middleware/usb/host/class/usb_host_hub_app.c"
-"${ProjDirPath}/../../../../../../middleware/usb/host/class/usb_host_hub_app.h"
 "${ProjDirPath}/../../../../../../middleware/usb/host/class/usb_host_cdc.c"
 "${ProjDirPath}/../../../../../../middleware/usb/host/class/usb_host_cdc.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_clock.c"
@@ -870,11 +848,26 @@ add_executable(host_cdc_bm.elf
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_gpio.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_reset.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_reset.h"
+"${ProjDirPath}/../../../../../../middleware/usb/host/class/usb_host_hub.c"
+"${ProjDirPath}/../../../../../../middleware/usb/host/class/usb_host_hub.h"
+"${ProjDirPath}/../../../../../../middleware/usb/host/class/usb_host_hub_app.c"
+"${ProjDirPath}/../../../../../../middleware/usb/host/class/usb_host_hub_app.h"
+"${ProjDirPath}/../../../../../../middleware/usb/host/usb_host.h"
+"${ProjDirPath}/../../../../../../middleware/usb/host/usb_host_devices.c"
+"${ProjDirPath}/../../../../../../middleware/usb/host/usb_host_devices.h"
+"${ProjDirPath}/../../../../../../middleware/usb/host/usb_host_framework.c"
+"${ProjDirPath}/../../../../../../middleware/usb/host/usb_host_framework.h"
+"${ProjDirPath}/../../../../../../middleware/usb/host/usb_host_hci.c"
+"${ProjDirPath}/../../../../../../middleware/usb/host/usb_host_hci.h"
 "${ProjDirPath}/../../../../../../components/osa/fsl_os_abstraction.h"
 "${ProjDirPath}/../../../../../../components/osa/fsl_os_abstraction_bm.c"
 "${ProjDirPath}/../../../../../../components/osa/fsl_os_abstraction_bm.h"
 "${ProjDirPath}/../../../../../../components/osa/fsl_os_abstraction_config.h"
+"${ProjDirPath}/../../../../../../middleware/usb/include/usb.h"
+"${ProjDirPath}/../../../../../../middleware/usb/include/usb_misc.h"
+"${ProjDirPath}/../../../../../../middleware/usb/include/usb_spec.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/core_cm33.h"
+"${ProjDirPath}/../../../../../../CMSIS/Include/mpu_armv8.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/tz_context.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_armcc.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_armclang.h"
@@ -883,14 +876,13 @@ add_executable(host_cdc_bm.elf
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_gcc.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_iccarm.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_version.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/core_armv81mml.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/core_armv8mbl.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/core_armv8mml.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/mpu_armv7.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/mpu_armv8.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/arm_common_tables.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/arm_const_structs.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/arm_math.h"
+"${ProjDirPath}/../../../../../../middleware/usb/host/usb_host.h"
+"${ProjDirPath}/../../../../../../middleware/usb/host/usb_host_devices.h"
+"${ProjDirPath}/../../../../../../middleware/usb/host/usb_host_framework.h"
+"${ProjDirPath}/../../../../../../middleware/usb/host/usb_host_hci.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities/fsl_sbrk.c"
 )
 

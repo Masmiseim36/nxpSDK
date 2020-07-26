@@ -61,11 +61,11 @@ typedef struct _usb_device_endpoint_struct
 } usb_device_endpoint_struct_t;
 
 /*!
-* @brief Obtains the endpoint group.
-*
-* Structure representing endpoints and the number of endpoints that the user wants.
-*
-*/
+ * @brief Obtains the endpoint group.
+ *
+ * Structure representing endpoints and the number of endpoints that the user wants.
+ *
+ */
 typedef struct _usb_device_endpoint_list
 {
     uint8_t count;                          /*!< How many endpoints in current interface*/

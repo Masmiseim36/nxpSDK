@@ -2,7 +2,6 @@
 <ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
   <externalDefinitions>
     <definition extID="com.nxp.mcuxpresso"/>
-    <definition extID="device.MIMXRT685S_DSP.MIMXRT685S"/>
     <definition extID="platform.Include_dsp.MIMXRT685S"/>
     <definition extID="platform.utilities.misc_utilities.MIMXRT685S"/>
     <definition extID="hifi4_MIMXRT685S"/>
@@ -11,7 +10,7 @@
     <definition extID="mcuxpresso"/>
     <definition extID="armgcc"/>
   </externalDefinitions>
-  <example id="evkmimxrt685_dsp_hello_world_hifi4" name="dsp_hello_world_hifi4" category="dsp_examples" dependency="device.MIMXRT685S_DSP.MIMXRT685S platform.Include_dsp.MIMXRT685S platform.utilities.misc_utilities.MIMXRT685S" device_core="hifi4_MIMXRT685S">
+  <example id="evkmimxrt685_dsp_hello_world_hifi4" name="dsp_hello_world_hifi4" category="dsp_examples" dependency="platform.Include_dsp.MIMXRT685S platform.utilities.misc_utilities.MIMXRT685S" device_core="hifi4_MIMXRT685S">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>

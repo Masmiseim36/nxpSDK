@@ -26,31 +26,31 @@
 #define DEMO_ELCDIF LCDIF
 
 #define DEMO_LCD_HEIGHT 272
-#define DEMO_LCD_WIDTH 480
-#define DEMO_HSW 41
-#define DEMO_HFP 4
-#define DEMO_HBP 8
-#define DEMO_VSW 10
-#define DEMO_VFP 4
-#define DEMO_VBP 2
+#define DEMO_LCD_WIDTH  480
+#define DEMO_HSW        41
+#define DEMO_HFP        4
+#define DEMO_HBP        8
+#define DEMO_VSW        10
+#define DEMO_VFP        4
+#define DEMO_VBP        2
 #define DEMO_LCD_POL_FLAGS \
     (kELCDIF_DataEnableActiveHigh | kELCDIF_VsyncActiveLow | kELCDIF_HsyncActiveLow | kELCDIF_DriveDataOnRisingClkEdge)
 
 #define DEMO_LCDIF_DATA_BUS_WIDTH 16
 
 /* Display. */
-#define LCD_DISP_GPIO GPIO1
+#define LCD_DISP_GPIO     GPIO1
 #define LCD_DISP_GPIO_PIN 2
 /* Back light. */
-#define LCD_BL_GPIO GPIO2
+#define LCD_BL_GPIO     GPIO2
 #define LCD_BL_GPIO_PIN 31
 
 /* Camera definition. */
-#define DEMO_CSI CSI
+#define DEMO_CSI           CSI
 #define DEMO_CAMERA_HEIGHT 272
-#define DEMO_CAMERA_WIDTH 480
+#define DEMO_CAMERA_WIDTH  480
 
-#define DEMO_CAMERA_OV7725 0
+#define DEMO_CAMERA_OV7725  0
 #define DEMO_CAMERA_MT9M114 1
 
 #define DEMO_CAMERA_TYPE DEMO_CAMERA_MT9M114
@@ -61,12 +61,12 @@
 
 #define DEMO_CSI_DMA_BUFFER_LINE 4
 
-#define DEMO_WINDOW_ULX (DEMO_CAMERA_WIDTH / 4)
-#define DEMO_WINDOW_ULY (DEMO_CAMERA_HEIGHT / 4)
-#define DEMO_WINDOW_LRX (DEMO_CAMERA_WIDTH * 3 / 4 - 1)
-#define DEMO_WINDOW_LRY (DEMO_CAMERA_HEIGHT * 3 / 4 - 1)
+#define DEMO_WINDOW_ULX    (DEMO_CAMERA_WIDTH / 4)
+#define DEMO_WINDOW_ULY    (DEMO_CAMERA_HEIGHT / 4)
+#define DEMO_WINDOW_LRX    (DEMO_CAMERA_WIDTH * 3 / 4 - 1)
+#define DEMO_WINDOW_LRY    (DEMO_CAMERA_HEIGHT * 3 / 4 - 1)
 #define DEMO_WINDOW_HEIGHT (DEMO_WINDOW_LRY - DEMO_WINDOW_ULY + 1)
-#define DEMO_WINDOW_WIDTH (DEMO_WINDOW_LRX - DEMO_WINDOW_ULX + 1)
+#define DEMO_WINDOW_WIDTH  (DEMO_WINDOW_LRX - DEMO_WINDOW_ULX + 1)
 
 /*******************************************************************************
  * Prototypes
@@ -198,9 +198,9 @@ static void i2c_release_bus_delay(void)
 }
 
 #define CAMERA_I2C_SCL_GPIO GPIO1
-#define CAMERA_I2C_SCL_PIN 16
+#define CAMERA_I2C_SCL_PIN  16
 #define CAMERA_I2C_SDA_GPIO GPIO1
-#define CAMERA_I2C_SDA_PIN 17
+#define CAMERA_I2C_SDA_PIN  17
 
 void BOARD_I2C_ReleaseBus(void)
 {

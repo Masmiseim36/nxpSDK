@@ -34,8 +34,8 @@
     }
 
 #define CRYPTO_TEST_OUT_ARRAY_LEN 0x100
-#define CRYPTO_SHA1_OUT_LEN 20
-#define CRYPTO_SHA256_OUT_LEN 32
+#define CRYPTO_SHA1_OUT_LEN       20
+#define CRYPTO_SHA256_OUT_LEN     32
 
 /*******************************************************************************
  * Prototypes

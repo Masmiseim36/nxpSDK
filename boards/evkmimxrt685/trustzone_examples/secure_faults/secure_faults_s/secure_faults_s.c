@@ -22,8 +22,8 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+#define AHB_LAYERS_COUNT 18U
 #define NON_SECURE_START DEMO_CODE_START_NS
-#define AHB_LAYERS_COUNT 12U
 
 /* typedef for non-secure callback functions */
 typedef void (*funcptr_ns)(void) __attribute__((cmse_nonsecure_call));

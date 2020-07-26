@@ -16,11 +16,11 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_SW_GPIO BOARD_USER_BUTTON_GPIO
-#define EXAMPLE_SW_GPIO_PIN BOARD_USER_BUTTON_GPIO_PIN
-#define EXAMPLE_SW_IRQ BOARD_USER_BUTTON_IRQ
+#define EXAMPLE_SW_GPIO         BOARD_USER_BUTTON_GPIO
+#define EXAMPLE_SW_GPIO_PIN     BOARD_USER_BUTTON_GPIO_PIN
+#define EXAMPLE_SW_IRQ          BOARD_USER_BUTTON_IRQ
 #define EXAMPLE_GPIO_IRQHandler BOARD_USER_BUTTON_IRQ_HANDLER
-#define EXAMPLE_SW_NAME BOARD_USER_BUTTON_NAME
+#define EXAMPLE_SW_NAME         BOARD_USER_BUTTON_NAME
 
 /*******************************************************************************
  * Prototypes
@@ -48,11 +48,7 @@ void EXAMPLE_GPIO_IRQHandler(void)
     GPIO_PortClearInterruptFlags(EXAMPLE_SW_GPIO, 1U << EXAMPLE_SW_GPIO_PIN);
     /* Change state of switch. */
     g_InputSignal = true;
-    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-      exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 /*!

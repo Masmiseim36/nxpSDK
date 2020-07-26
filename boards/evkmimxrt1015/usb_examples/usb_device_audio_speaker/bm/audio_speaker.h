@@ -31,10 +31,22 @@
 #define AUDIO_SPEAKER_DATA_WHOLE_BUFFER_LENGTH (16 * 2)
 #define AUDIO_BUFFER_UPPER_LIMIT(x) (((x)*5) / 8)
 #define AUDIO_BUFFER_LOWER_LIMIT(x) (((x)*3) / 8)
+
+#if defined(USB_DEVICE_CONFIG_AUDIO_CLASS_2_0) && (USB_DEVICE_CONFIG_AUDIO_CLASS_2_0 > 0U)
+#define AUDIO_CALCULATE_Ff_INTERVAL (256) /* suggest: 1024U, 512U, 256U */
+#else
 #define AUDIO_CALCULATE_Ff_INTERVAL (1024)
+#endif
 #define TSAMFREQ2BYTES(f) (f & 0xFFU), ((f >> 8U) & 0xFFU), ((f >> 16U) & 0xFFU)
 #define TSAMFREQ2BYTESHS(f) (f & 0xFFU), ((f >> 8U) & 0xFFU), ((f >> 16U) & 0xFFU), ((f >> 24U) & 0xFFU)
 #define AUDIO_ADJUST_MIN_STEP (0x01)
+
+#if defined(USB_AUDIO_UAC5_1) && (USB_AUDIO_UAC5_1 > 0U)
+#define AUDIO_PLAY_TRANSFER_SIZE (FS_ISO_OUT_ENDP_PACKET_SIZE / 3)
+#else
+#define AUDIO_PLAY_TRANSFER_SIZE FS_ISO_OUT_ENDP_PACKET_SIZE
+#endif
+
 #if defined(USB_DEVICE_AUDIO_USE_SYNC_MODE) && (USB_DEVICE_AUDIO_USE_SYNC_MODE > 0U)
 /**********************************************************************
 Audio PLL contants
@@ -90,7 +102,7 @@ typedef struct _usb_audio_speaker_struct
     uint8_t minSamplingFrequency[3]; /* need to consider the endians */
     uint8_t maxSamplingFrequency[3]; /* need to consider the endians */
     uint8_t resSamplingFrequency[3]; /* need to consider the endians */
-#if USBCFG_AUDIO_CLASS_2_0
+#if (USB_DEVICE_CONFIG_AUDIO_CLASS_2_0)
     uint8_t curMute20;
     uint8_t curClockValid;
     uint8_t curVolume20[2];

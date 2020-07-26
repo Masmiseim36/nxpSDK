@@ -15,8 +15,8 @@
  * Definitions
  ******************************************************************************/
 #define OVER_SAMPLE_RATE (384U)
-#define BUFFER_SIZE (512)
-#define BUFFER_NUM (4)
+#define BUFFER_SIZE      (512)
+#define BUFFER_NUM       (4)
 #if defined BOARD_HAS_SDCARD && (BOARD_HAS_SDCARD != 0)
 #define DEMO_SDCARD (1U)
 #endif

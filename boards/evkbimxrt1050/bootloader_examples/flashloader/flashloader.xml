@@ -24,9 +24,11 @@
     <definition extID="middleware.mcu-boot.mem_semc_nor.MIMXRT1052"/>
     <definition extID="middleware.mcu-boot.mem_spi_nand.MIMXRT1052"/>
     <definition extID="middleware.mcu-boot.mem_spi_nor_eeprom.MIMXRT1052"/>
-    <definition extID="middleware.mcu-boot.src_bm_usb.MIMXRT1052"/>
+    <definition extID="middleware.mcu-boot.src_bm_usb_hid.MIMXRT1052"/>
     <definition extID="middleware.mcu-boot.src_startup.MIMXRT1052"/>
-    <definition extID="middleware.usb.device.MIMXRT1052"/>
+    <definition extID="middleware.usb.common_header.MIMXRT1052"/>
+    <definition extID="middleware.usb.device.common_header.MIMXRT1052"/>
+    <definition extID="middleware.usb.device.controller.driver.MIMXRT1052"/>
     <definition extID="middleware.usb.device_controller_ehci.MIMXRT1052"/>
     <definition extID="middleware.usb.phy.MIMXRT1052"/>
     <definition extID="platform.Include_common.MIMXRT1052"/>
@@ -34,12 +36,16 @@
     <definition extID="platform.Include_dsp.MIMXRT1052"/>
     <definition extID="platform.drivers.clock.MIMXRT1052"/>
     <definition extID="platform.drivers.common.MIMXRT1052"/>
+    <definition extID="platform.drivers.igpio.MIMXRT1052"/>
+    <definition extID="platform.drivers.iomuxc.MIMXRT1052"/>
+    <definition extID="platform.drivers.lpspi.MIMXRT1052"/>
+    <definition extID="platform.drivers.lpuart.MIMXRT1052"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
     <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="evkbimxrt1050_flashloader" name="flashloader" category="bootloader_examples" dependency="device.MIMXRT1052_CMSIS.MIMXRT1052 platform.drivers.clock.MIMXRT1052 middleware.mcu-boot.MIMXRT1052_startup.MIMXRT1052 middleware.mcu-boot.src_bm_usb.MIMXRT1052 middleware.mcu-boot.bootsources.MIMXRT1052 middleware.mcu-boot.bootsources_imxrt.MIMXRT1052 middleware.mcu-boot.MIMXRT1052_sources.MIMXRT1052 middleware.usb.device_controller_ehci.MIMXRT1052 middleware.usb.device.MIMXRT1052 middleware.mcu-boot.src_startup.MIMXRT1052 middleware.mcu-boot.drv_microseconds_pit.MIMXRT1052 middleware.mcu-boot.mem_flexspi_nor.MIMXRT1052 middleware.mcu-boot.drv_flexspi_nand.MIMXRT1052 middleware.mcu-boot.mem_spi_nand.MIMXRT1052 middleware.mcu-boot.mem_spi_nor_eeprom.MIMXRT1052 middleware.mcu-boot.mem_semc_nor.MIMXRT1052 middleware.mcu-boot.mem_semc_nand.MIMXRT1052 middleware.mcu-boot.mem_sdmmc.MIMXRT1052 middleware.mcu-boot.drv_ocotp.MIMXRT1052 platform.Include_core_cm7.MIMXRT1052 platform.Include_common.MIMXRT1052 platform.Include_dsp.MIMXRT1052 platform.drivers.common.MIMXRT1052 middleware.usb.phy.MIMXRT1052 component.osa.MIMXRT1052 component.lists.MIMXRT1052 middleware.mcu-boot.drv_flexspi_nor.MIMXRT1052 middleware.mcu-boot.drv_serial_nor_eeprom.MIMXRT1052 middleware.mcu-boot.drv_semc_nor.MIMXRT1052 middleware.mcu-boot.drv_semc_nand.MIMXRT1052 middleware.mcu-boot.drv_sdmmc.MIMXRT1052 middleware.baremetal.MIMXRT1052">
+  <example id="evkbimxrt1050_flashloader" name="flashloader" category="bootloader_examples" dependency="device.MIMXRT1052_CMSIS.MIMXRT1052 platform.drivers.clock.MIMXRT1052 platform.drivers.igpio.MIMXRT1052 platform.drivers.lpuart.MIMXRT1052 platform.drivers.iomuxc.MIMXRT1052 middleware.mcu-boot.MIMXRT1052_startup.MIMXRT1052 middleware.mcu-boot.src_bm_usb_hid.MIMXRT1052 middleware.mcu-boot.bootsources.MIMXRT1052 middleware.mcu-boot.bootsources_imxrt.MIMXRT1052 middleware.mcu-boot.MIMXRT1052_sources.MIMXRT1052 middleware.usb.device.controller.driver.MIMXRT1052 component.osa.MIMXRT1052 middleware.usb.device_controller_ehci.MIMXRT1052 middleware.mcu-boot.src_startup.MIMXRT1052 middleware.mcu-boot.drv_microseconds_pit.MIMXRT1052 middleware.mcu-boot.mem_flexspi_nor.MIMXRT1052 middleware.mcu-boot.drv_flexspi_nand.MIMXRT1052 middleware.mcu-boot.mem_spi_nand.MIMXRT1052 middleware.mcu-boot.mem_spi_nor_eeprom.MIMXRT1052 middleware.mcu-boot.mem_semc_nor.MIMXRT1052 middleware.mcu-boot.mem_semc_nand.MIMXRT1052 middleware.mcu-boot.mem_sdmmc.MIMXRT1052 middleware.mcu-boot.drv_ocotp.MIMXRT1052 platform.Include_core_cm7.MIMXRT1052 platform.Include_common.MIMXRT1052 platform.Include_dsp.MIMXRT1052 platform.drivers.common.MIMXRT1052 component.lists.MIMXRT1052 middleware.usb.phy.MIMXRT1052 middleware.usb.common_header.MIMXRT1052 middleware.usb.device.common_header.MIMXRT1052 middleware.mcu-boot.drv_flexspi_nor.MIMXRT1052 middleware.mcu-boot.drv_serial_nor_eeprom.MIMXRT1052 platform.drivers.lpspi.MIMXRT1052 middleware.mcu-boot.drv_semc_nor.MIMXRT1052 middleware.mcu-boot.drv_semc_nand.MIMXRT1052 middleware.mcu-boot.drv_sdmmc.MIMXRT1052 middleware.baremetal.MIMXRT1052">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -93,7 +99,6 @@
         <option id="gnu.c.link.option.other" type="stringList">
           <value>--gc-sections</value>
           <value>-Map=${BuildArtifactFileBaseName}.map</value>
-          <value>--defsym=__ram_vector_table__=1</value>
         </option>
         <option id="com.crt.advproject.gas.hdrlib" type="enum">
           <value>com.crt.advproject.gas.hdrlib.newlibnano</value>
@@ -124,22 +129,23 @@
     <source path="boards/evkbimxrt1050/bootloader_examples/flashloader/mcux" target_path="middleware/mcu-boot" type="linker" toolchain="mcuxpresso">
       <files mask="MIMXRT1052_ram_flashloader.ld"/>
     </source>
+    <source path="boards/evkbimxrt1050/bootloader_examples/flashloader/mdk" target_path="mcu-boot/boards/evkbimxrt1050/flashloader" type="configuration" toolchain="mdk">
+      <files mask="Debug_RAM.ini"/>
+    </source>
     <source path="boards/evkbimxrt1050/bootloader_examples/flashloader/mdk" target_path="middleware/mcu-boot" type="linker" toolchain="mdk">
       <files mask="MIMXRT1052_ram_flashloader.scf"/>
+    </source>
+    <source path="boards/evkbimxrt1050/bootloader_examples/flashloader" target_path="board" type="c_include">
+      <files mask="pin_mux.h"/>
+    </source>
+    <source path="boards/evkbimxrt1050/bootloader_examples/flashloader" target_path="board" type="src">
+      <files mask="pin_mux.c"/>
     </source>
     <source path="boards/evkbimxrt1050/bootloader_examples/flashloader" target_path="usb/device/class/hid" type="c_include">
       <files mask="usb_device_hid.h"/>
     </source>
     <source path="boards/evkbimxrt1050/bootloader_examples/flashloader" target_path="usb/device/class/hid" type="src">
       <files mask="usb_device_hid.c"/>
-    </source>
-    <source path="boards/evkbimxrt1050/bootloader_examples/flashloader" target_path="usb/device/class/msc" type="c_include">
-      <files mask="usb_device_msc.h"/>
-      <files mask="usb_device_msc_ufi.h"/>
-    </source>
-    <source path="boards/evkbimxrt1050/bootloader_examples/flashloader" target_path="usb/device/class/msc" type="src">
-      <files mask="usb_device_msc.c"/>
-      <files mask="usb_device_msc_ufi.c"/>
     </source>
     <source path="boards/evkbimxrt1050/bootloader_examples/flashloader" target_path="usb/device/class" type="c_include">
       <files mask="usb_device_class.h"/>

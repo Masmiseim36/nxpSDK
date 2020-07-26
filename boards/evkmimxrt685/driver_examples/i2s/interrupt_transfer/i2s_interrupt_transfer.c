@@ -21,31 +21,16 @@
 #include "pin_mux.h"
 #include <stdbool.h>
 #include "fsl_codec_adapter.h"
-/*${variable:start}*/
-wm8904_config_t wm8904Config = {
-    .i2cConfig          = {.codecI2CInstance = BOARD_CODEC_I2C_INSTANCE},
-    .recordSource       = kWM8904_RecordSourceLineInput,
-    .recordChannelLeft  = kWM8904_RecordChannelLeft2,
-    .recordChannelRight = kWM8904_RecordChannelRight2,
-    .playSource         = kWM8904_PlaySourceDAC,
-    .slaveAddress       = WM8904_I2C_ADDRESS,
-    .protocol           = kWM8904_ProtocolI2S,
-    .format             = {.sampleRate = kWM8904_SampleRate48kHz, .bitWidth = kWM8904_BitWidth16},
-    .master             = true,
-};
-codec_config_t boardCodecConfig = {.codecDevType = kCODEC_WM8904, .codecDevConfig = &wm8904Config};
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-
-#define DEMO_I2C (I2C4)
 #define DEMO_I2S_MASTER_CLOCK_FREQUENCY CLOCK_GetMclkClkFreq()
-#define DEMO_AUDIO_BIT_WIDTH (16)
-#define DEMO_AUDIO_SAMPLE_RATE (48000)
-#define DEMO_AUDIO_PROTOCOL kCODEC_BusI2S
-#define DEMO_I2S_TX (I2S3)
-#define DEMO_I2S_CLOCK_DIVIDER 16
-#define DEMO_I2S_TX_MODE kI2S_MasterSlaveNormalSlave
+#define DEMO_AUDIO_BIT_WIDTH            (16)
+#define DEMO_AUDIO_SAMPLE_RATE          (48000)
+#define DEMO_AUDIO_PROTOCOL             kCODEC_BusI2S
+#define DEMO_I2S_TX                     (I2S3)
+#define DEMO_I2S_CLOCK_DIVIDER          16
+#define DEMO_I2S_TX_MODE                kI2S_MasterSlaveNormalSlave
 
 
 /*******************************************************************************
@@ -59,6 +44,18 @@ static void TxCallback(I2S_Type *base, i2s_handle_t *handle, status_t completion
 /*******************************************************************************
  * Variables
  ******************************************************************************/
+wm8904_config_t wm8904Config = {
+    .i2cConfig          = {.codecI2CInstance = BOARD_CODEC_I2C_INSTANCE},
+    .recordSource       = kWM8904_RecordSourceLineInput,
+    .recordChannelLeft  = kWM8904_RecordChannelLeft2,
+    .recordChannelRight = kWM8904_RecordChannelRight2,
+    .playSource         = kWM8904_PlaySourceDAC,
+    .slaveAddress       = WM8904_I2C_ADDRESS,
+    .protocol           = kWM8904_ProtocolI2S,
+    .format             = {.sampleRate = kWM8904_SampleRate48kHz, .bitWidth = kWM8904_BitWidth16},
+    .master             = true,
+};
+codec_config_t boardCodecConfig = {.codecDevType = kCODEC_WM8904, .codecDevConfig = &wm8904Config};
 
 static i2s_config_t s_TxConfig;
 static i2s_handle_t s_TxHandle;

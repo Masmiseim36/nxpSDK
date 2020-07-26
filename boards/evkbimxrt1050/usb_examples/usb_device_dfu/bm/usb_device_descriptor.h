@@ -18,7 +18,10 @@
 #define USB_DEVICE_SPECIFIC_BCD_VERSION_DFU (0x0100U)
 #define USB_DEVICE_DEMO_BCD_VERSION (0x0101U)
 #define USB_DEVICE_OS_DESCRIPTOR_BCD_VERSION (0x0100U)
-   
+
+#define USB_DEVICE_VID (0x1FC9U)
+#define USB_DEVICE_PID (0x00A1U)
+
 #define USB_DEVICE_CLASS (0x00U)
 #define USB_DEVICE_SUBCLASS (0x00U)
 #define USB_DEVICE_PROTOCOL (0x00U)
@@ -77,6 +80,5 @@ extern usb_status_t USB_DeviceGetStringDescriptor(usb_device_handle handle,
 extern usb_status_t USB_DeviceSetSpeed(usb_device_handle handle, uint8_t speed);
 /* Get device vendor descriptor request */
 extern usb_status_t USB_DeviceGetVerdorDescriptor(usb_device_handle handle, void *param);
-
 
 #endif /* __USB_DEVICE_DESCRIPTOR_H__ */

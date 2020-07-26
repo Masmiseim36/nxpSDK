@@ -156,12 +156,6 @@ class SideMap {
     stride_ = kOrder == SideMapOrder::WidthMajor ? depth_ : width_;
   }
   
-  /* This is quick fix for IAR.*/
-  SideMap(uint8_t* data, int width, int depth)
-      : data_(reinterpret_cast<Scalar*>(data)), width_(width), depth_(depth) {
-    stride_ = kOrder == SideMapOrder::WidthMajor ? depth_ : width_;
-  }
-
   SideMap(const SideMap& other)
       : data_(other.data_),
         width_(other.width_),
@@ -284,9 +278,8 @@ class PackingRegisterBlockBase {
         for (int w = 0; w < kCellWidth; w++) {
           std::int32_t sum = 0;
           for (int d = 0; d < kCellDepth; d++) {
-            const std::uint8_t src_val = src_cell_map(w, d);
             const std::int16_t kernel_val_unwrapped =
-                src_val - kZeroPointInputValue;
+                src_cell_map(w, d) - kZeroPointInputValue;
             const std::uint8_t kernel_val_uint8 = kernel_val_unwrapped;
             dst_ptr[OffsetIntoCell<CellFormat>(w, d)] = kernel_val_uint8;
             sum += kernel_val_unwrapped;
@@ -299,7 +292,7 @@ class PackingRegisterBlockBase {
     dst->seek_forward_n_cells(kCells * kRegisterSize / kCellDepth);
   }
 };
-    
+
 template <typename SrcMapType, typename PackedSideBlock>
 class PackingRegisterBlock
     : public PackingRegisterBlockBase<SrcMapType, PackedSideBlock> {};
@@ -441,5 +434,15 @@ void PackRhs(PackedSideBlock* dst, const MatrixMapType& src) {
 }
 
 }  // namespace gemmlowp
+
+#ifdef GEMMLOWP_NEON
+#include "pack_neon.h"
+#elif defined(GEMMLOWP_SSE4)
+#include "pack_sse.h"
+#elif defined(GEMMLOWP_AVX2)
+#include "pack_avx.h"
+#elif defined(GEMMLOWP_MSA)
+#include "pack_msa.h"
+#endif
 
 #endif  // GEMMLOWP_INTERNAL_PACK_H_

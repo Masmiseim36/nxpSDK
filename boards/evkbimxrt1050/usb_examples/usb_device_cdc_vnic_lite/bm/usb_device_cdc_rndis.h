@@ -14,8 +14,8 @@
  */
 
 /*******************************************************************************
-* Definitions
-******************************************************************************/
+ * Definitions
+ ******************************************************************************/
 #define USB_DEVICE_CONFIG_CDC_RNDIS_MAX_INSTANCE (1U) /*!< The maximum number of USB CDC RNDIS device instance*/
                                                       /*!
                                                        * @name RNDIS Control Message Type
@@ -167,8 +167,8 @@
  */
 #define NDIS_MEDIUM_NATIVE802_11 (0x00000009U)
 /*! Various types of NdisWirelessXxx media
-  * Note  This media type is not available for use beginning with Windows Vista.
-  */
+ * Note  This media type is not available for use beginning with Windows Vista.
+ */
 #define NDIS_MEDIUM_WIRELESS_WAN (0x0000000AU)
 /*! Infrared (IrDA)*/
 #define NDIS_MEDIUM_IRDA (0x0000000BU)
@@ -525,21 +525,21 @@ typedef struct _rndis_packet_msg_struct
 typedef enum _rndis_state_enum
 {
     /*! Following bus-level initialization, the device is said to be in the RNDIS-uninitialized state.
-    * If the device receives a REMOTE_NDIS_HALT_MSG, a bus-level disconnects, or a hard-reset
-    * at any time, it forces the device to the RNDIS-uninitialized state.
-    */
+     * If the device receives a REMOTE_NDIS_HALT_MSG, a bus-level disconnects, or a hard-reset
+     * at any time, it forces the device to the RNDIS-uninitialized state.
+     */
     RNDIS_UNINITIALIZED = 0,
     /*! After the device receives a REMOTE_NDIS_INITIALIZE_MSG and responds with
-    * a REMOTE_NDIS_INITIALIZE_CMPLT with a status of RNDIS_STATUS_SUCCESS, the
-    * device enters the RNDIS-initialized state.
-    * If the device is in the RNDIS-data-initialized state when it receives a REMOTE_NDIS_SET_MSG
-    * specifying a zero filter value for OID_GEN_CURRENT_PACKET_FILTER, this event forces
-    * the device back to the RNDIS-initialized state.
-    */
+     * a REMOTE_NDIS_INITIALIZE_CMPLT with a status of RNDIS_STATUS_SUCCESS, the
+     * device enters the RNDIS-initialized state.
+     * If the device is in the RNDIS-data-initialized state when it receives a REMOTE_NDIS_SET_MSG
+     * specifying a zero filter value for OID_GEN_CURRENT_PACKET_FILTER, this event forces
+     * the device back to the RNDIS-initialized state.
+     */
     RNDIS_INITIALIZED,
     /*! If the device receives a REMOTE_NDIS_SET_MSG that specifies a non-zero filter value
-    * for OID_GEN_CURRENT_PACKET_FILTER, the device enters the RNDIS-data-initialized state.
-    */
+     * for OID_GEN_CURRENT_PACKET_FILTER, the device enters the RNDIS-data-initialized state.
+     */
     RNDIS_DATA_INITIALIZED,
 } rndis_state_enum_t;
 
@@ -561,12 +561,12 @@ typedef struct _usb_device_cdc_rndis_struct
     uint32_t numRecvFramesAlignmentError; /*!< The number of the frames received that has alignment error. */
     uint32_t numFramesTxOneCollision;     /*!< The number of the frames sent that has one collision. */
     uint32_t numFramesTxManyCollision;    /*!< The number of the frames sent that has many collision. */
-    osa_mutex_handle_t statusMutex;     /*!< The mutex to guarantee the consistent access to the device state. */
-    uint32_t mutexBuffer[(OSA_MUTEX_HANDLE_SIZE + 3)/4]; /*!< The mutex buffer. */
+    osa_mutex_handle_t statusMutex;       /*!< The mutex to guarantee the consistent access to the device state. */
+    uint32_t mutexBuffer[(OSA_MUTEX_HANDLE_SIZE + 3) / 4]; /*!< The mutex buffer. */
     /*! The callback function provided by application for the RNDIS request. */
     usb_status_t (*rndisCallback)(struct _usb_device_cdc_rndis_struct *handle, uint32_t event, void *param);
     bool isBusy;
-    uint8_t rndisDeviceState;             /*!< The RNDIS device state. */
+    uint8_t rndisDeviceState; /*!< The RNDIS device state. */
 } usb_device_cdc_rndis_struct_t;
 
 /*! @brief Define structure for CDC RNDIS device. */
@@ -597,8 +597,8 @@ typedef enum _rndis_event_enum
 } rndis_event_enum_t;
 
 /*******************************************************************************
-* API
-******************************************************************************/
+ * API
+ ******************************************************************************/
 
 #if defined(__cplusplus)
 extern "C" {
@@ -675,31 +675,31 @@ extern usb_status_t USB_DeviceCdcRndisMessageGet(usb_device_cdc_rndis_struct_t *
                                                  uint32_t *len);
 
 /*!
-* @brief Soft reset the RNDIS device.
-*
-* This function is called to soft reset the RNDIS device.
-*
-* @param handle This is a pointer to the USB CDC RNDIS device handle.
-* @param message This is an out parameter. It is a pointer to the address of the RNDIS response buffer.
-* @param len This is an out parameter. It is a pointer to the variable of data size for the RNDIS response.
-* @return A USB error code or kStatus_USB_Success.
-* @retval kStatus_USB_Success Prepares for the response to the host successfully.
-* @retval kStatus_USB_InvalidHandle The RNDIS device handle is invalid.
-*/
+ * @brief Soft reset the RNDIS device.
+ *
+ * This function is called to soft reset the RNDIS device.
+ *
+ * @param handle This is a pointer to the USB CDC RNDIS device handle.
+ * @param message This is an out parameter. It is a pointer to the address of the RNDIS response buffer.
+ * @param len This is an out parameter. It is a pointer to the variable of data size for the RNDIS response.
+ * @return A USB error code or kStatus_USB_Success.
+ * @retval kStatus_USB_Success Prepares for the response to the host successfully.
+ * @retval kStatus_USB_InvalidHandle The RNDIS device handle is invalid.
+ */
 extern usb_status_t USB_DeviceCdcRndisResetCommand(usb_device_cdc_rndis_struct_t *handle,
                                                    uint8_t **message,
                                                    uint32_t *len);
 
 /*!
-* @brief Halts the RNDIS device.
-*
-* This function is called to halt the RNDIS device.
-*
-* @param handle This is a pointer to the USB CDC RNDIS device handle.
-* @return A USB error code or kStatus_USB_Success.
-* @retval kStatus_USB_Success Halt the RNDIS device successfully.
-* @retval kStatus_USB_InvalidHandle The RNDIS device handle is invalid.
-*/
+ * @brief Halts the RNDIS device.
+ *
+ * This function is called to halt the RNDIS device.
+ *
+ * @param handle This is a pointer to the USB CDC RNDIS device handle.
+ * @return A USB error code or kStatus_USB_Success.
+ * @retval kStatus_USB_Success Halt the RNDIS device successfully.
+ * @retval kStatus_USB_InvalidHandle The RNDIS device handle is invalid.
+ */
 extern usb_status_t USB_DeviceCdcRndisHaltCommand(usb_device_cdc_rndis_struct_t *handle);
 /*@}*/
 

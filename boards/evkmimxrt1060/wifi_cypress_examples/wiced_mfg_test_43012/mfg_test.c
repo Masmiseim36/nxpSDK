@@ -33,9 +33,9 @@
 /*! @brief Ring buffer size (Unit: Byte). */
 #define DEMO_RING_BUFFER_SIZE 2048
 #define BOARD_DEBUG_CONSOLE_INSTANCE 3U
-#define DEMO_SERIAL_PORT LPUART1
+#define DEMO_SERIAL_PORT          LPUART1
 #define DEMO_SERIAL_PORT_CLK_FREQ BOARD_DebugConsoleSrcFreq()
-#define DEMO_SERIAL_PORT_IRQn BOARD_UART_IRQ
+#define DEMO_SERIAL_PORT_IRQn     BOARD_UART_IRQ
 /*! @brief Task stack size. */
 #define WIFICARD_TASK_STACK_SIZE (6144 / sizeof(portSTACK_TYPE))
 /*! @brief Task stack priority. */
@@ -129,15 +129,6 @@ int serial_port_init(void)
 
     return 0;
 }
-static void BOARD_USDHCClockConfiguration(void)
-{
-    /*configure system pll PFD2 fractional divider to 18*/
-    CLOCK_InitSysPfd(kCLOCK_Pfd2, 0x12U);
-    /* Configure USDHC clock source and divider */
-    CLOCK_SetDiv(kCLOCK_Usdhc1Div, 0U);
-    CLOCK_SetMux(kCLOCK_Usdhc1Mux, 1U);
-}
-
 
 static void APP_WifiTask(void *parameter)
 {
@@ -175,9 +166,8 @@ int main(void)
 {
     /* Init board hardware. */
     BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_USDHCClockConfiguration();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
 
     uint32_t uartClkSrcFreq = BOARD_DebugConsoleSrcFreq();
     DbgConsole_Init(BOARD_DEBUG_CONSOLE_INSTANCE, BOARD_DEBUG_UART_BAUDRATE, BOARD_DEBUG_UART_TYPE, uartClkSrcFreq);

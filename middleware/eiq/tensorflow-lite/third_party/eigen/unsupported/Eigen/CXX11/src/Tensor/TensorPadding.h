@@ -92,19 +92,32 @@ struct TensorEvaluator<const TensorPaddingOp<PaddingDimensions, ArgType>, Device
   typedef typename XprType::CoeffReturnType CoeffReturnType;
   typedef typename PacketType<CoeffReturnType, Device>::type PacketReturnType;
   static const int PacketSize = PacketType<CoeffReturnType, Device>::size;
+  typedef StorageMemory<CoeffReturnType, Device> Storage;
+  typedef typename Storage::Type EvaluatorPointerType;
 
   enum {
-    IsAligned = true,
-    PacketAccess = TensorEvaluator<ArgType, Device>::PacketAccess,
-    BlockAccess = false,
-    PreferBlockAccess = false,
-    Layout = TensorEvaluator<ArgType, Device>::Layout,
-    CoordAccess = true,
-    RawAccess = false
+    IsAligned         = true,
+    PacketAccess      = TensorEvaluator<ArgType, Device>::PacketAccess,
+    BlockAccessV2     = TensorEvaluator<ArgType, Device>::RawAccess,
+    PreferBlockAccess = true,
+    Layout            = TensorEvaluator<ArgType, Device>::Layout,
+    CoordAccess       = true,
+    RawAccess         = false
   };
 
+  typedef typename internal::remove_const<Scalar>::type ScalarNoConst;
+
+  //===- Tensor block evaluation strategy (see TensorBlock.h) -------------===//
+  typedef internal::TensorBlockDescriptor<NumDims, Index> TensorBlockDesc;
+  typedef internal::TensorBlockScratchAllocator<Device> TensorBlockScratch;
+
+  typedef typename internal::TensorMaterializedBlock<ScalarNoConst, NumDims,
+                                                     Layout, Index>
+      TensorBlockV2;
+  //===--------------------------------------------------------------------===//
+
   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE TensorEvaluator(const XprType& op, const Device& device)
-      : m_impl(op.expression(), device), m_padding(op.padding()), m_paddingValue(op.padding_value())
+      : m_impl(op.expression(), device), m_padding(op.padding()), m_paddingValue(op.padding_value()), m_device(device)
   {
     // The padding op doesn't change the rank of the tensor. Directly padding a scalar would lead
     // to a vector, which doesn't make sense. Instead one should reshape the scalar into a vector
@@ -138,10 +151,19 @@ struct TensorEvaluator<const TensorPaddingOp<PaddingDimensions, ArgType>, Device
 
   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE const Dimensions& dimensions() const { return m_dimensions; }
 
-  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE bool evalSubExprsIfNeeded(Scalar*) {
+  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE bool evalSubExprsIfNeeded(EvaluatorPointerType) {
     m_impl.evalSubExprsIfNeeded(NULL);
     return true;
   }
+
+#ifdef EIGEN_USE_THREADS
+  template <typename EvalSubExprsCallback>
+  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE void evalSubExprsIfNeededAsync(
+      EvaluatorPointerType, EvalSubExprsCallback done) {
+    m_impl.evalSubExprsIfNeededAsync(nullptr, [done](bool) { done(true); });
+  }
+#endif  // EIGEN_USE_THREADS
+
   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE void cleanup() {
     m_impl.cleanup();
   }
@@ -151,6 +173,7 @@ struct TensorEvaluator<const TensorPaddingOp<PaddingDimensions, ArgType>, Device
     eigen_assert(index < dimensions().TotalSize());
     Index inputIndex = 0;
     if (static_cast<int>(Layout) == static_cast<int>(ColMajor)) {
+      EIGEN_UNROLL_LOOP
       for (int i = NumDims - 1; i > 0; --i) {
         const Index idx = index / m_outputStrides[i];
         if (isPaddingAtIndexForDim(idx, i)) {
@@ -164,6 +187,7 @@ struct TensorEvaluator<const TensorPaddingOp<PaddingDimensions, ArgType>, Device
       }
       inputIndex += (index - m_padding[0].first);
     } else {
+      EIGEN_UNROLL_LOOP
       for (int i = 0; i < NumDims - 1; ++i) {
         const Index idx = index / m_outputStrides[i+1];
         if (isPaddingAtIndexForDim(idx, i)) {
@@ -192,25 +216,247 @@ struct TensorEvaluator<const TensorPaddingOp<PaddingDimensions, ArgType>, Device
   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE TensorOpCost costPerCoeff(bool vectorized) const {
     TensorOpCost cost = m_impl.costPerCoeff(vectorized);
     if (static_cast<int>(Layout) == static_cast<int>(ColMajor)) {
+      EIGEN_UNROLL_LOOP
       for (int i = 0; i < NumDims; ++i)
         updateCostPerDimension(cost, i, i == 0);
     } else {
+      EIGEN_UNROLL_LOOP
       for (int i = NumDims - 1; i >= 0; --i)
         updateCostPerDimension(cost, i, i == NumDims - 1);
     }
     return cost;
   }
 
-  EIGEN_DEVICE_FUNC EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE typename Eigen::internal::traits<XprType>::PointerType data() const { return NULL; }
+  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE void getResourceRequirements(
+      std::vector<internal::TensorOpResourceRequirements>* resources) const {
+    Eigen::Index block_total_size_max = numext::maxi<Eigen::Index>(
+        1, m_device.lastLevelCacheSize() / sizeof(Scalar));
+    resources->push_back(internal::TensorOpResourceRequirements(
+        internal::kSkewedInnerDims, block_total_size_max));
 
-  /// used by sycl
-  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE const PaddingDimensions& padding() const { return m_padding; }
-  /// used by sycl
-  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE const Scalar& padding_value() const { return m_paddingValue; }
-  /// used by sycl
-  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE const TensorEvaluator<ArgType, Device>& impl() const{return m_impl;}
+    m_impl.getResourceRequirements(resources);
+  }
+
+  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE TensorBlockV2
+  blockV2(TensorBlockDesc& desc, TensorBlockScratch& scratch,
+          bool /*root_of_expr_ast*/ = false) const {
+    // If one of the dimensions is zero, return empty block view.
+    if (desc.size() == 0) {
+      return TensorBlockV2(internal::TensorBlockKind::kView, NULL,
+                           desc.dimensions());
+    }
+
+    static const bool IsColMajor = Layout == static_cast<int>(ColMajor);
+
+    Index offset = desc.offset();
+
+    // Compute offsets in the output tensor corresponding to the desc.offset().
+    DSizes<Index, NumDims> output_offsets;
+    for (int i = NumDims - 1; i > 0; --i) {
+      const int dim = IsColMajor ? i : NumDims - i - 1;
+      const int stride_dim = IsColMajor ? dim : dim + 1;
+      output_offsets[dim] = offset / m_outputStrides[stride_dim];
+      offset -= output_offsets[dim] * m_outputStrides[stride_dim];
+    }
+    output_offsets[IsColMajor ? 0 : NumDims - 1] = offset;
+
+    // Offsets in the input corresponding to output offsets.
+    DSizes<Index, NumDims> input_offsets = output_offsets;
+    for (int i = 0; i < NumDims; ++i) {
+      const int dim = IsColMajor ? i : NumDims - i - 1;
+      input_offsets[dim] = input_offsets[dim] - m_padding[dim].first;
+    }
+
+    // Compute offset in the input buffer (at this point it might be illegal and
+    // point outside of the input buffer, because we don't check for negative
+    // offsets, it will be autocorrected in the block iteration loop below).
+    Index input_offset = 0;
+    for (int i = 0; i < NumDims; ++i) {
+      const int dim = IsColMajor ? i : NumDims - i - 1;
+      input_offset += input_offsets[dim] * m_inputStrides[dim];
+    }
+
+    // Destination buffer and scratch buffer both indexed from 0 and have the
+    // same dimensions as the requested block (for destination buffer this
+    // property is guaranteed by `desc.destination()`).
+    Index output_offset = 0;
+    const DSizes<Index, NumDims> output_strides =
+        internal::strides<Layout>(desc.dimensions());
+
+    // NOTE(ezhulenev): We initialize bock iteration state for `NumDims - 1`
+    // dimensions, skipping innermost dimension. In theory it should be possible
+    // to squeeze matching innermost dimensions, however in practice that did
+    // not show any improvements in benchmarks. Also in practice first outer
+    // dimension usually has padding, and will prevent squeezing.
+
+    // Initialize output block iterator state. Dimension in this array are
+    // always in inner_most -> outer_most order (col major layout).
+    array<BlockIteratorState, NumDims - 1> it;
+    for (int i = 0; i < NumDims - 1; ++i) {
+      const int dim = IsColMajor ? i + 1 : NumDims - i - 2;
+      it[i].count = 0;
+      it[i].size = desc.dimension(dim);
+
+      it[i].input_stride = m_inputStrides[dim];
+      it[i].input_span = it[i].input_stride * (it[i].size - 1);
+
+      it[i].output_stride = output_strides[dim];
+      it[i].output_span = it[i].output_stride * (it[i].size - 1);
+    }
+
+    const int inner_dim_idx = IsColMajor ? 0 : NumDims - 1;
+
+    // Total output size.
+    const Index output_size = desc.size();
+
+    // We will fill inner dimension of this size in the output. It might be
+    // larger than the inner dimension in the input, so we might have to pad
+    // before/after we copy values from the input inner dimension.
+    const Index output_inner_dim_size = desc.dimension(inner_dim_idx);
+
+    // How many values to fill with padding BEFORE reading from the input inner
+    // dimension.
+    const Index output_inner_pad_before_size =
+        input_offsets[inner_dim_idx] < 0
+            ? numext::mini(numext::abs(input_offsets[inner_dim_idx]),
+                           output_inner_dim_size)
+            : 0;
+
+    // How many values we can actually copy from the input inner dimension.
+    const Index output_inner_copy_size = numext::mini(
+        // Want to copy from input.
+        (output_inner_dim_size - output_inner_pad_before_size),
+        // Can copy from input.
+        numext::maxi(
+            static_cast<Index>(m_impl.dimensions()[inner_dim_idx]) -
+                (input_offsets[inner_dim_idx] + output_inner_pad_before_size),
+            Index(0)));
+
+    eigen_assert(output_inner_copy_size >= 0);
+
+    // How many values to fill with padding AFTER reading from the input inner
+    // dimension.
+    const Index output_inner_pad_after_size =
+        (output_inner_dim_size - output_inner_copy_size -
+         output_inner_pad_before_size);
+
+    // Sanity check, sum of all sizes must be equal to the output size.
+    eigen_assert(output_inner_dim_size ==
+                 (output_inner_pad_before_size + output_inner_copy_size +
+                  output_inner_pad_after_size));
+
+    // Keep track of current coordinates and padding in the output.
+    DSizes<Index, NumDims> output_coord = output_offsets;
+    DSizes<Index, NumDims> output_padded;
+    for (int i = 0; i < NumDims; ++i) {
+      const int dim = IsColMajor ? i : NumDims - i - 1;
+      output_padded[dim] = isPaddingAtIndexForDim(output_coord[dim], dim);
+    }
+
+    typedef internal::StridedLinearBufferCopy<ScalarNoConst, Index> LinCopy;
+
+    // Prepare storage for the materialized padding result.
+    const typename TensorBlockV2::Storage block_storage =
+        TensorBlockV2::prepareStorage(desc, scratch);
+
+    // Iterate copying data from `m_impl.data()` to the output buffer.
+    for (Index size = 0; size < output_size; size += output_inner_dim_size) {
+      // Detect if we are in the padded region (exclude innermost dimension).
+      bool is_padded = false;
+      for (int j = 1; j < NumDims; ++j) {
+        const int dim = IsColMajor ? j : NumDims - j - 1;
+        is_padded = output_padded[dim];
+        if (is_padded) break;
+      }
+
+      if (is_padded) {
+        // Fill with padding value.
+        LinCopy::template Run<LinCopy::Kind::FillLinear>(
+            typename LinCopy::Dst(output_offset, 1, block_storage.data()),
+            typename LinCopy::Src(0, 0, &m_paddingValue),
+            output_inner_dim_size);
+
+      } else {
+        {  // Fill with padding before copying from input inner dimension.
+          const Index out = output_offset;
+
+          LinCopy::template Run<LinCopy::Kind::FillLinear>(
+              typename LinCopy::Dst(out, 1, block_storage.data()),
+              typename LinCopy::Src(0, 0, &m_paddingValue),
+              output_inner_pad_before_size);
+        }
+
+        {  // Copy data from input inner dimension.
+          const Index out = output_offset + output_inner_pad_before_size;
+          const Index in = input_offset + output_inner_pad_before_size;
+
+          eigen_assert(output_inner_copy_size == 0 || m_impl.data() != NULL);
+
+          LinCopy::template Run<LinCopy::Kind::Linear>(
+              typename LinCopy::Dst(out, 1, block_storage.data()),
+              typename LinCopy::Src(in, 1, m_impl.data()),
+              output_inner_copy_size);
+        }
+
+        {  // Fill with padding after copying from input inner dimension.
+          const Index out = output_offset + output_inner_pad_before_size +
+                            output_inner_copy_size;
+
+          LinCopy::template Run<LinCopy::Kind::FillLinear>(
+              typename LinCopy::Dst(out, 1, block_storage.data()),
+              typename LinCopy::Src(0, 0, &m_paddingValue),
+              output_inner_pad_after_size);
+        }
+      }
+
+      for (int j = 0; j < NumDims - 1; ++j) {
+        const int dim = IsColMajor ? j + 1 : NumDims - j - 2;
+
+        if (++it[j].count < it[j].size) {
+          input_offset += it[j].input_stride;
+          output_offset += it[j].output_stride;
+          output_coord[dim] += 1;
+          output_padded[dim] = isPaddingAtIndexForDim(output_coord[dim], dim);
+          break;
+        }
+        it[j].count = 0;
+        input_offset -= it[j].input_span;
+        output_offset -= it[j].output_span;
+        output_coord[dim] -= it[j].size - 1;
+        output_padded[dim] = isPaddingAtIndexForDim(output_coord[dim], dim);
+      }
+    }
+
+    return block_storage.AsTensorMaterializedBlock();
+  }
+
+  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE EvaluatorPointerType data() const { return NULL; }
+
+#ifdef EIGEN_USE_SYCL
+  // binding placeholder accessors to a command group handler for SYCL
+  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE void bind(cl::sycl::handler &cgh) const {
+    m_impl.bind(cgh);
+  }
+#endif
 
  private:
+  struct BlockIteratorState {
+    BlockIteratorState()
+        : count(0),
+          size(0),
+          input_stride(0),
+          input_span(0),
+          output_stride(0),
+          output_span(0) {}
+
+    Index count;
+    Index size;
+    Index input_stride;
+    Index input_span;
+    Index output_stride;
+    Index output_span;
+  };
+
   EIGEN_DEVICE_FUNC EIGEN_ALWAYS_INLINE bool isPaddingAtIndexForDim(
       Index index, int dim_index) const {
 #if defined(EIGEN_HAS_INDEX_LIST)
@@ -272,6 +518,7 @@ struct TensorEvaluator<const TensorPaddingOp<PaddingDimensions, ArgType>, Device
 
     const Index initialIndex = index;
     Index inputIndex = 0;
+    EIGEN_UNROLL_LOOP
     for (int i = NumDims - 1; i > 0; --i) {
       const Index firstIdx = index;
       const Index lastIdx = index + PacketSize - 1;
@@ -329,7 +576,7 @@ struct TensorEvaluator<const TensorPaddingOp<PaddingDimensions, ArgType>, Device
 
     const Index initialIndex = index;
     Index inputIndex = 0;
-
+    EIGEN_UNROLL_LOOP
     for (int i = 0; i < NumDims - 1; ++i) {
       const Index firstIdx = index;
       const Index lastIdx = index + PacketSize - 1;
@@ -383,6 +630,7 @@ struct TensorEvaluator<const TensorPaddingOp<PaddingDimensions, ArgType>, Device
   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE PacketReturnType packetWithPossibleZero(Index index) const
   {
     EIGEN_ALIGN_MAX typename internal::remove_const<CoeffReturnType>::type values[PacketSize];
+    EIGEN_UNROLL_LOOP
     for (int i = 0; i < PacketSize; ++i) {
       values[i] = coeff(index+i);
     }
@@ -397,6 +645,8 @@ struct TensorEvaluator<const TensorPaddingOp<PaddingDimensions, ArgType>, Device
   PaddingDimensions m_padding;
 
   Scalar m_paddingValue;
+
+  const Device EIGEN_DEVICE_REF m_device;
 };
 
 

@@ -47,25 +47,25 @@ static EventGroupHandle_t event_group = NULL;
 int main(void)
 {
     BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
     event_group = xEventGroupCreate();
-    if (xTaskCreate(write_task_1, "WRITE_TASK_1", configMINIMAL_STACK_SIZE + 38, NULL, tskIDLE_PRIORITY + 1, NULL) !=
+    if (xTaskCreate(write_task_1, "WRITE_TASK_1", configMINIMAL_STACK_SIZE + 100, NULL, tskIDLE_PRIORITY + 1, NULL) !=
         pdPASS)
     {
         PRINTF("Task creation failed!.\r\n");
         while (1)
             ;
     }
-    if (xTaskCreate(write_task_2, "WRITE_TASK_2", configMINIMAL_STACK_SIZE + 38, NULL, tskIDLE_PRIORITY + 1, NULL) !=
+    if (xTaskCreate(write_task_2, "WRITE_TASK_2", configMINIMAL_STACK_SIZE + 100, NULL, tskIDLE_PRIORITY + 1, NULL) !=
         pdPASS)
     {
         PRINTF("Task creation failed!.\r\n");
         while (1)
             ;
     }
-    if (xTaskCreate(read_task, "READ_TASK", configMINIMAL_STACK_SIZE + 38, NULL, tskIDLE_PRIORITY + 2, NULL) != pdPASS)
+    if (xTaskCreate(read_task, "READ_TASK", configMINIMAL_STACK_SIZE + 100, NULL, tskIDLE_PRIORITY + 2, NULL) != pdPASS)
     {
         PRINTF("Task creation failed!.\r\n");
         while (1)

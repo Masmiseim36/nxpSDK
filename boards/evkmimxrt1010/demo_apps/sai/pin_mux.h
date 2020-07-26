@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP
+ * Copyright 2019-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -79,6 +79,10 @@ void BOARD_InitBootPins(void);
 /* GPIO_01 (number 12), I2C1_SDA */
 #define BOARD_I2C1_SDA_PERIPHERAL                                         LPI2C1   /*!< Device name: LPI2C1 */
 #define BOARD_I2C1_SDA_SIGNAL                                                SDA   /*!< LPI2C1 signal: SDA */
+
+/* GPIO_AD_09 (number 48), ADC12_4/JTAG_TDO/J55[6]/J26[4] */
+#define BOARD_ADC12_4_PERIPHERAL                                             ARM   /*!< Device name: ARM */
+#define BOARD_ADC12_4_SIGNAL                                       arm_trace_swo   /*!< ARM signal: arm_trace_swo */
 
 
 /*!

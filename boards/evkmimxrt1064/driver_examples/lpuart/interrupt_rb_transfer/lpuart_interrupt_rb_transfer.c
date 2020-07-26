@@ -14,11 +14,11 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_LPUART LPUART1
+#define DEMO_LPUART          LPUART1
 #define DEMO_LPUART_CLK_FREQ BOARD_DebugConsoleSrcFreq()
 
 #define RX_RING_BUFFER_SIZE 20U
-#define ECHO_BUFFER_SIZE 8U
+#define ECHO_BUFFER_SIZE    8U
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/

@@ -44,6 +44,7 @@
 #include "semphr.h"
 #include "task.h"
 #include "wwd_FreeRTOS_systick.h"
+#include <string.h>
 
 #ifdef __cplusplus
 extern "C"
@@ -61,6 +62,24 @@ extern void xPortSysTickHandler( void );
 #define PENDSV_irq  xPortPendSVHandler
 #define SYSTICK_irq xPortSysTickHandler
 
+
+#ifndef WWD_MALLOC
+#define WWD_MALLOC   pvPortMalloc
+#endif
+
+#ifndef WWD_CALLOC
+static inline void* wwd_calloc(size_t nmemb, size_t size)
+{
+    uint32_t bytes_size = size * nmemb;
+    void *addr = pvPortMalloc(bytes_size);
+    return (NULL == addr) ? NULL : memset(addr, 0, bytes_size);
+}
+#define WWD_CALLOC  wwd_calloc
+#endif
+
+#ifndef WWD_FREE
+#define WWD_FREE    vPortFree
+#endif
 
 #define RTOS_HIGHER_PRIORTIY_THAN(x)     (x < RTOS_HIGHEST_PRIORITY ? x+1 : RTOS_HIGHEST_PRIORITY)
 #define RTOS_LOWER_PRIORTIY_THAN(x)      (x > RTOS_LOWEST_PRIORITY ? x-1 : RTOS_LOWEST_PRIORITY)

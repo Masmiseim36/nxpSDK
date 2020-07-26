@@ -11,7 +11,7 @@
 //! \brief   Fast ARM assembler implementation of boot fill command.
 //!
 ////////////////////////////////////////////////////////////////////////////////
-#include "../../startup/ar_asm_macros.h"
+#include "ar_asm_macros.h"
 
             _CODE_SECTION(.text)
             

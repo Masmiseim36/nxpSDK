@@ -83,27 +83,30 @@
 *   of pending tasks.
 *
 * ELEMENTS:
-*   EW_TASK_ALPHABLEND     - If set, determines, that the drawing operation
+*   EW_TASK_ALPHABLEND      - If set, determines, that the drawing operation
 *     should apply the alpha blending algorithm for all drawn pixel. If not set,
 *     the drawn pixel simply overwrite the previous content of the surface.
-*   EW_TASK_SOLID          - If set, determines, that the drawn pixel should
+*   EW_TASK_SOLID           - If set, determines, that the drawn pixel should
 *     be modulated by a solid color or opacity value.
-*   EW_TASK_GRADIENT       - If set, determines, that the drawn pixel should
-*     be modulated by a color or opacity gradient.
-*   EW_TASK_HIGH_QUALITY   - If set, the drawing operation should be performed
+*   EW_TASK_GRADIENT        - If set, determines, that the drawn pixel should
+*     be modulated by a color or opacity complex gradient.
+*   EW_TASK_LINEAR_GRADIENT - If set, determines, that the drawn pixel should
+*     be modulated by a color or opacity linear (vertical or horizontal) 
+*     gradient.
+*   EW_TASK_HIGH_QUALITY    - If set, the drawing operation should be performed
 *     with the best possible quality. This flag is just a hint. Its meaning 
 *     depends on the capability of the underlying graphics subsystem.
-*   EW_TASK_ENTIRE_AREA    - If set, determines that the task will affect the
+*   EW_TASK_ENTIRE_AREA     - If set, determines that the task will affect the
 *     entire area of the surface specified in the task variables X1,Y1 .. X2,Y2.
 *     If not set, some of the pixel within the area may remain unchanged (e.g.
 *     when drawing a text).
-*   EW_TASK_OVERLAP        - If set, determines an optional task, which can be
+*   EW_TASK_OVERLAP         - If set, determines an optional task, which can be
 *     simply ignored if no elimination took place for the underlying sibling
 *     tasks. This flag is used exclusively for bitmaps composed of a full opaque
 *     and a semi-transparent area. When drawing such a bitmap, the opaque area
 *     can be handled separately in order to optimize the operation, otherwise
 *     the entire bitmap needs to be handled as a semi-transparent bitmap.
-*   EW_TASK_EMULATION      - If set, the drawing operation should be performed
+*   EW_TASK_EMULATION       - If set, the drawing operation should be performed
 *     by the software emulation. If not set, the underlying graphics subsystem
 *     should perform the operation.
 *
@@ -111,13 +114,12 @@
 #define EW_TASK_ALPHABLEND          0x0001
 #define EW_TASK_SOLID               0x0002
 #define EW_TASK_GRADIENT            0x0004
+#define EW_TASK_LINEAR_GRADIENT     0x0006
 #define EW_TASK_HIGH_QUALITY        0x0008
 #define EW_TASK_ENTIRE_AREA         0x0100
 #define EW_TASK_OVERLAP             0x0200
 #define EW_TASK_EMULATION           0x8000
 #define EW_TASK_MODE_MASK           0x000F
-#define EW_TASK_SOLID_ALPHABLEND    ( EW_TASK_ALPHABLEND | EW_TASK_SOLID )
-#define EW_TASK_GRADIENT_ALPHABLEND ( EW_TASK_ALPHABLEND | EW_TASK_GRADIENT )
 
 
 /*******************************************************************************
@@ -202,6 +204,8 @@
 *   Pending - Counter for completely composed but still waiting issues for this
 *     surface. As long as the counter > 0, there are incomplete drawing tasks
 *     with this surface as the destination.
+*   Owner   - The owner in context of which the surface is stored. Usually this
+*     is a XBitmap.
 *   Tag1,
 *   Tag2    - Unique identification for the surface. Useful to find surfaces
 *     within the cache with the objective to reuse them.
@@ -213,6 +217,8 @@
 *     value is != 0, the surface will remain in the surface cache (if there
 *     is enough space in the cache). If this value is == 0, the surface is
 *     discarded automatically at the moment when it is freed.
+*   Stamp   - Identifies the screen update, this surface has been used last 
+*     time.
 *   Tasks   - Issue currently in the drawing composition. The issue stores the
 *     drawing operations as a list of tasks.
 *   Handle  - Reference to the real surface or to its video memory. This value
@@ -226,6 +232,7 @@ typedef struct XSurface
   int               Owned;
   int               Used;
   int               Pending;
+  void*             Owner;
   unsigned long     Tag1;
   unsigned long     Tag2;
   short             Format;
@@ -234,6 +241,7 @@ typedef struct XSurface
   char              Reserved[2];
   int               MemSize;
   int               DoCache;
+  int               Stamp;
   struct XIssue*    Tasks;
   unsigned long     Handle;
 } XSurface;
@@ -377,6 +385,9 @@ typedef struct
 *   UpperHeap - Pointers to the respective heap. The area between these both
 *     pointers is still free.
 *   UpperEnd  - Upper end of the issue heap.
+*   Usage     - Memory usage of the issue. The value is used for profiling only.
+*   Peak      - Tracks the maxim. memory usage for the biggest task. The value
+*     is used for profiling only.
 *
 *******************************************************************************/
 typedef struct XIssue
@@ -389,6 +400,8 @@ typedef struct XIssue
   char*             LowerHeap;
   char*             UpperHeap;
   char*             UpperEnd;
+  int               Usage;
+  int               Peak;
 } XIssue;
 
 
@@ -518,6 +531,7 @@ void EwDoneGfxCore
 *   aFormat - Pixel format of the desired surface. (See EW_PIXEL_FORMAT_XXX).
 *   aWidth,
 *   aHeight - Size of the surface in pixel.
+*   aOwner  - The owner in context of which the surface will be stored.
 *   aTag1,
 *   aTag2   - Unique identification for the surface.
 *
@@ -531,6 +545,7 @@ XSurface* EwCreateSurface
   int               aFormat,
   int               aWidth,
   int               aHeight,
+  void*             aOwner,
   unsigned long     aTag1,
   unsigned long     aTag2
 );
@@ -564,6 +579,7 @@ XSurface* EwCreateSurface
 *   aFormat - Pixel format of the desired surface. (See EW_PIXEL_FORMAT_XXX).
 *   aWidth,
 *   aHeight - Size of the surface in pixel.
+*   aOwner  - The owner in context of which the surface will be stored.
 *   aTag1,
 *   aTag2   - Unique identification for the surface.
 *   aMemory - Structure to pass the ROM address information.
@@ -578,6 +594,7 @@ XSurface* EwCreateConstSurface
   int               aFormat,
   int               aWidth,
   int               aHeight,
+  void*             aOwner,
   unsigned long     aTag1,
   unsigned long     aTag2,
   XSurfaceMemory*   aMemory
@@ -600,6 +617,8 @@ XSurface* EwCreateConstSurface
 *   aFormat - Pixel format of the desired surface. (See EW_PIXEL_FORMAT_XXX).
 *   aWidth,
 *   aHeight - Size of the surface in pixel.
+*   aOwner  - The owner in context of which the surface will be stored after
+*     it has been found.
 *   aTag1,
 *   aTag2   - Unique identification for the surface.
 *
@@ -613,6 +632,7 @@ XSurface* EwFindSurface
   int               aFormat,
   int               aWidth,
   int               aHeight,
+  void*             aOwner,
   unsigned long     aTag1,
   unsigned long     aTag2
 );
@@ -810,6 +830,28 @@ XGlyph* EwFindGlyph
 *
 *******************************************************************************/
 void EwFreeGlyph
+(
+  XGlyph*           aGlyph
+);
+
+
+/*******************************************************************************
+* FUNCTION:
+*   EwDiscardGlyph
+*
+* DESCRIPTION:
+*   The function EwDiscardGlyph() forces the affected glyph to be removed from
+*   the glyph cache if the glyph is not iun use actually. Should the glyph be
+*   used, nothing happens.
+*
+* ARGUMENTS:
+*   aGlyph - Glyph to eventually discard.
+*
+* RETURN VALUE:
+*   None
+*
+*******************************************************************************/
+void EwDiscardGlyph
 (
   XGlyph*           aGlyph
 );

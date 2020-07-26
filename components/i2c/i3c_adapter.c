@@ -37,7 +37,11 @@ typedef struct _hal_i2c_slave
     uint8_t instance;
 } hal_i3c_slave_t;
 #endif
+#ifdef HAL_I2C_MASTER_HANDLE_SIZE
+#undef HAL_I2C_MASTER_HANDLE_SIZE
+#endif
 
+#define HAL_I2C_MASTER_HANDLE_SIZE (400U)
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -53,7 +57,7 @@ static I3C_Type *const s_i3cBases[] = I3C_BASE_PTRS;
  * Code
  ******************************************************************************/
 
-hal_i2c_status_t HAL_I2cGetStatus(status_t status)
+static hal_i2c_status_t HAL_I2cGetStatus(status_t status)
 {
     hal_i2c_status_t returnStatus;
     switch (status)
@@ -135,15 +139,12 @@ hal_i2c_status_t HAL_I2cMasterInit(hal_i2c_master_handle_t handle, const hal_i2c
     assert(handle);
     assert(config);
 
-    if (HAL_I2C_MASTER_HANDLE_SIZE < sizeof(hal_i3c_master_t))
-    {
-        return kStatus_HAL_I2cError;
-    }
+    assert(HAL_I2C_MASTER_HANDLE_SIZE >= sizeof(hal_i3c_master_t));
 
     i3cMasterHandle = (hal_i3c_master_t *)handle;
 
     I3C_MasterGetDefaultConfig(&i3cConfig);
-    i3cConfig.enableMaster        = (config->enableMaster > 0) ? kI3C_MasterOn : kI3C_MasterOff;
+    i3cConfig.enableMaster        = (config->enableMaster ? kI3C_MasterOn : kI3C_MasterOff);
     i3cConfig.baudRate_Hz.i2cBaud = config->baudRate_Bps;
     i3cMasterHandle->instance     = config->instance;
 

@@ -202,7 +202,7 @@
         </option>
         <option>
           <name>TrustZone</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>TrustZoneModes</name>
@@ -224,12 +224,13 @@
           <state>DEBUG</state>
           <state>CPU_MIMXRT685SFVKB_cm33</state>
           <state>BOOT_HEADER_ENABLE=1</state>
-          <state>ARM_MATH_CM33</state>
           <state>XA_MP3_DECODER=1</state>
           <state>XA_AAC_DECODER=1</state>
           <state>XA_VORBIS_DECODER=1</state>
           <state>XA_OPUS_ENCODER=1</state>
           <state>XA_OPUS_DECODER=1</state>
+          <state>XA_SBC_ENCODER=1</state>
+          <state>XA_SBC_DECODER=0</state>
           <state>XA_PCM_GAIN=1</state>
           <state>XA_SRC_PP_FX=1</state>
           <state>XA_RENDERER=1</state>
@@ -240,6 +241,7 @@
           <state>BOARD_USE_CODEC=1</state>
           <state>CODEC_WM8904_ENABLE</state>
           <state>DEBUG_CONSOLE_RX_ENABLE=0</state>
+          <state>SD_ENABLED</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>FSL_RTOS_FREE_RTOS</state>
         </option>
@@ -366,23 +368,25 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../..</state>
           <state>$PROJ_DIR$/../../..</state>
           <state>$PROJ_DIR$/../../../../../src/dsp_examples/xaf_demo/resources</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../devices</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/include</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/wm8904</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec/port/wm8904</state>
           <state>$PROJ_DIR$/../../../../../../components/codec</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec/port/wm8904</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/i2c</state>
           <state>$PROJ_DIR$/../../../../../../components/i2c</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/port</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/sd</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/common</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/host/usdhc</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source/fsl_sd_disk</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt600_m33</state>
@@ -394,8 +398,8 @@
           <state>$PROJ_DIR$/../../../../flash_config</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/inc</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/src</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/osa</state>
+          <state>$PROJ_DIR$/../../../../../../components/osa</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1275,7 +1279,7 @@
         </option>
         <option>
           <name>TrustZone</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>TrustZoneModes</name>
@@ -1298,12 +1302,13 @@
           <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>CPU_MIMXRT685SFVKB_cm33</state>
-          <state>ARM_MATH_CM33</state>
           <state>XA_MP3_DECODER=1</state>
           <state>XA_AAC_DECODER=1</state>
           <state>XA_VORBIS_DECODER=1</state>
           <state>XA_OPUS_ENCODER=1</state>
           <state>XA_OPUS_DECODER=1</state>
+          <state>XA_SBC_ENCODER=1</state>
+          <state>XA_SBC_DECODER=0</state>
           <state>XA_PCM_GAIN=1</state>
           <state>XA_SRC_PP_FX=1</state>
           <state>XA_RENDERER=1</state>
@@ -1314,6 +1319,7 @@
           <state>BOARD_USE_CODEC=1</state>
           <state>CODEC_WM8904_ENABLE</state>
           <state>DEBUG_CONSOLE_RX_ENABLE=0</state>
+          <state>SD_ENABLED</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>FSL_RTOS_FREE_RTOS</state>
         </option>
@@ -1440,23 +1446,25 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../..</state>
           <state>$PROJ_DIR$/../../..</state>
           <state>$PROJ_DIR$/../../../../../src/dsp_examples/xaf_demo/resources</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../devices</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/include</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/wm8904</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec/port/wm8904</state>
           <state>$PROJ_DIR$/../../../../../../components/codec</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec/port/wm8904</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/i2c</state>
           <state>$PROJ_DIR$/../../../../../../components/i2c</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/port</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/sd</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/common</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/host/usdhc</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source/fsl_sd_disk</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt600_m33</state>
@@ -1468,8 +1476,8 @@
           <state>$PROJ_DIR$/../../../../flash_config</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/inc</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/src</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/osa</state>
+          <state>$PROJ_DIR$/../../../../../../components/osa</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -2349,7 +2357,7 @@
         </option>
         <option>
           <name>TrustZone</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>TrustZoneModes</name>
@@ -2371,12 +2379,13 @@
           <state>XA_VORBIS_DECODER=0</state>
           <state>XA_OPUS_ENCODER=0</state>
           <state>XA_OPUS_DECODER=0</state>
+          <state>XA_SBC_ENCODER=0</state>
           <state>NDEBUG</state>
           <state>CPU_MIMXRT685SFVKB_cm33</state>
           <state>BOOT_HEADER_ENABLE=1</state>
-          <state>ARM_MATH_CM33</state>
           <state>XA_MP3_DECODER=1</state>
           <state>XA_AAC_DECODER=1</state>
+          <state>XA_SBC_DECODER=0</state>
           <state>XA_PCM_GAIN=1</state>
           <state>XA_SRC_PP_FX=1</state>
           <state>XA_RENDERER=1</state>
@@ -2387,6 +2396,7 @@
           <state>BOARD_USE_CODEC=1</state>
           <state>CODEC_WM8904_ENABLE</state>
           <state>DEBUG_CONSOLE_RX_ENABLE=0</state>
+          <state>SD_ENABLED</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>FSL_RTOS_FREE_RTOS</state>
         </option>
@@ -2513,23 +2523,25 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../..</state>
           <state>$PROJ_DIR$/../../..</state>
           <state>$PROJ_DIR$/../../../../../src/dsp_examples/xaf_demo/resources</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../devices</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/include</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/wm8904</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec/port/wm8904</state>
           <state>$PROJ_DIR$/../../../../../../components/codec</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec/port/wm8904</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/i2c</state>
           <state>$PROJ_DIR$/../../../../../../components/i2c</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/port</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/sd</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/common</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/host/usdhc</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source/fsl_sd_disk</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt600_m33</state>
@@ -2541,8 +2553,8 @@
           <state>$PROJ_DIR$/../../../../flash_config</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/inc</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/src</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/osa</state>
+          <state>$PROJ_DIR$/../../../../../../components/osa</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -3428,7 +3440,7 @@
         </option>
         <option>
           <name>TrustZone</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>TrustZoneModes</name>
@@ -3451,12 +3463,13 @@
           <state>CPU_MIMXRT685SFVKB_cm33</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>NDEBUG</state>
-          <state>ARM_MATH_CM33</state>
           <state>XA_MP3_DECODER=1</state>
           <state>XA_AAC_DECODER=1</state>
           <state>XA_VORBIS_DECODER=1</state>
           <state>XA_OPUS_ENCODER=1</state>
           <state>XA_OPUS_DECODER=1</state>
+          <state>XA_SBC_ENCODER=1</state>
+          <state>XA_SBC_DECODER=0</state>
           <state>XA_PCM_GAIN=1</state>
           <state>XA_SRC_PP_FX=1</state>
           <state>XA_RENDERER=1</state>
@@ -3467,6 +3480,7 @@
           <state>BOARD_USE_CODEC=1</state>
           <state>CODEC_WM8904_ENABLE</state>
           <state>DEBUG_CONSOLE_RX_ENABLE=0</state>
+          <state>SD_ENABLED</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>FSL_RTOS_FREE_RTOS</state>
         </option>
@@ -3593,23 +3607,25 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../..</state>
           <state>$PROJ_DIR$/../../..</state>
           <state>$PROJ_DIR$/../../../../../src/dsp_examples/xaf_demo/resources</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../devices</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/include</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/wm8904</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec/port/wm8904</state>
           <state>$PROJ_DIR$/../../../../../../components/codec</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec/port/wm8904</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/i2c</state>
           <state>$PROJ_DIR$/../../../../../../components/i2c</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/port</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/sd</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/common</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/host/usdhc</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source/fsl_sd_disk</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt600_m33</state>
@@ -3621,8 +3637,8 @@
           <state>$PROJ_DIR$/../../../../flash_config</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/inc</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/src</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/osa</state>
+          <state>$PROJ_DIR$/../../../../../../components/osa</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -4336,9 +4352,6 @@
       <name>$PROJ_DIR$/../srtm_config_nn.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../srtm_config_tfulite.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../rpmsg_config.h</name>
     </file>
     <file>
@@ -4363,6 +4376,12 @@
       <name>$PROJ_DIR$/../hihat.ogg.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../hihat_trim.pcm.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../hihat_trim.sbc.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../hihat_vorbis_dec_out_trim.pcm.h</name>
     </file>
     <file>
@@ -4370,6 +4389,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../i9_vor.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../sbc_test_02_trim.sbc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../sbc_test_02_trim.out.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../testvector04-48000-2ch-ogg-opus_trim.out.h</name>
@@ -4423,6 +4448,12 @@
       <name>$PROJ_DIR$/../pmic_support.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../sdmmc_config.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../sdmmc_config.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../board.c</name>
     </file>
     <file>
@@ -4439,6 +4470,18 @@
     <name>doc</name>
     <file>
       <name>$PROJ_DIR$/../readme.txt</name>
+    </file>
+  </group>
+  <group>
+    <name>.</name>
+    <file>
+      <name>$PROJ_DIR$/../../dsp/binary/dsp_text_release.bin</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../dsp/binary/dsp_data_release.bin</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../dsp/binary/dsp_ncache_release.bin</name>
     </file>
   </group>
   <group>
@@ -4549,16 +4592,16 @@
       <name>$PROJ_DIR$/../../../../../../components/codec/wm8904/fsl_wm8904.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../components/codec/port/wm8904/fsl_codec_adapter.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../components/codec/port/wm8904/fsl_codec_adapter.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../components/codec/fsl_codec_common.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../components/codec/fsl_codec_common.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/codec/port/wm8904/fsl_codec_adapter.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/codec/port/wm8904/fsl_codec_adapter.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../components/codec/i2c/fsl_codec_i2c.c</name>
@@ -4631,7 +4674,7 @@
     </file>
   </group>
   <group>
-    <name>amazon-freertos</name>
+    <name>freertos</name>
     <group>
       <name>freertos_kernel</name>
       <group>
@@ -4643,16 +4686,16 @@
             <group>
               <name>non_secure</name>
               <file>
-                <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/portable/IAR/ARM_CM33_NTZ/non_secure/port.c</name>
+                <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM33_NTZ/non_secure/port.c</name>
               </file>
               <file>
-                <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/portable/IAR/ARM_CM33_NTZ/non_secure/portasm.h</name>
+                <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM33_NTZ/non_secure/portasm.h</name>
               </file>
               <file>
-                <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/portable/IAR/ARM_CM33_NTZ/non_secure/portasm.s</name>
+                <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM33_NTZ/non_secure/portasm.s</name>
               </file>
               <file>
-                <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/portable/IAR/ARM_CM33_NTZ/non_secure/portmacro.h</name>
+                <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM33_NTZ/non_secure/portmacro.h</name>
               </file>
             </group>
           </group>
@@ -4660,87 +4703,96 @@
         <group>
           <name>MemMang</name>
           <file>
-            <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/portable/MemMang/ReadMe.url</name>
+            <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/MemMang/ReadMe.url</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/portable/MemMang/heap_4.c</name>
+            <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/MemMang/heap_4.c</name>
           </file>
         </group>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/portable/readme.txt</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/readme.txt</name>
         </file>
       </group>
       <file>
-        <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/event_groups.c</name>
+        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/croutine.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/event_groups.c</name>
       </file>
       <group>
         <name>include</name>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/include/FreeRTOS.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/FreeRTOS.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/include/atomic.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/include/deprecated_definitions.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/atomic.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/include/event_groups.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/croutine.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/include/list.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/deprecated_definitions.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/include/message_buffer.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/event_groups.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/include/mpu_prototypes.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/list.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/include/mpu_wrappers.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/message_buffer.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/include/portable.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/mpu_prototypes.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/include/projdefs.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/mpu_wrappers.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/include/queue.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/portable.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/include/semphr.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/projdefs.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/include/stack_macros.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/queue.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/include/stream_buffer.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/semphr.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/include/task.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/stack_macros.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/include/timers.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/stream_buffer.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/include/freertos_tasks_c_additions.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/task.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/timers.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/freertos_tasks_c_additions.h</name>
         </file>
       </group>
       <file>
-        <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/list.c</name>
+        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/list.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/queue.c</name>
+        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/queue.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/stream_buffer.c</name>
+        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/stream_buffer.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/tasks.c</name>
+        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/tasks.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/timers.c</name>
+        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/timers.c</name>
       </file>
     </group>
   </group>
@@ -4818,54 +4870,75 @@
         <name>$PROJ_DIR$/../../../../../../components/lists/generic_list.h</name>
       </file>
     </group>
+    <group>
+      <name>osa</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_config.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_free_rtos.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_free_rtos.h</name>
+      </file>
+    </group>
   </group>
   <group>
     <name>sdmmc</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../middleware/sdmmc/ChangeLogKSDK.txt</name>
+      <name>$PROJ_DIR$/../../../../../../middleware/sdmmc/sd/ChangeLogKSDK.txt</name>
     </file>
-    <group>
-      <name>port</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/sdmmc/port/fsl_sdmmc_event.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/sdmmc/port/usdhc/freertos/fsl_sdmmc_event.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/sdmmc/port/usdhc/freertos/fsl_sdmmc_host.c</name>
-      </file>
-    </group>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../middleware/sdmmc/ChangeLogKSDK.txt</name>
-    </file>
-    <group>
-      <name>inc</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/sdmmc/inc/fsl_sd.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/sdmmc/inc/fsl_sdmmc_common.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/sdmmc/inc/fsl_sdmmc_host.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/sdmmc/inc/fsl_sdmmc_spec.h</name>
-      </file>
-    </group>
     <group>
       <name>src</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/sdmmc/src/fsl_sd.c</name>
+        <name>$PROJ_DIR$/../../../../../../middleware/sdmmc/sd/fsl_sd.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/sdmmc/src/fsl_sdmmc_common.c</name>
+        <name>$PROJ_DIR$/../../../../../../middleware/sdmmc/common/fsl_sdmmc_common.c</name>
       </file>
     </group>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../middleware/sdmmc/ChangeLogKSDK.txt</name>
-    </file>
+    <group>
+      <name>inc</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/sdmmc/sd/fsl_sd.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/sdmmc/common/fsl_sdmmc_common.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/sdmmc/common/fsl_sdmmc_spec.h</name>
+      </file>
+    </group>
+    <group>
+      <name>host</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/sdmmc/host/usdhc/non_blocking/fsl_sdmmc_host.c</name>
+      </file>
+    </group>
+    <group>
+      <name>osa</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/sdmmc/osa/fsl_sdmmc_osa.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/sdmmc/osa/fsl_sdmmc_osa.h</name>
+      </file>
+    </group>
   </group>
   <group>
     <name>fatfs</name>
@@ -4948,6 +5021,9 @@
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_cm33.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/mpu_armv8.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/tz_context.h</name>
     </file>
     <file>
@@ -4970,21 +5046,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_version.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_armv81mml.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_armv8mbl.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_armv8mml.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/mpu_armv7.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/mpu_armv8.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/arm_common_tables.h</name>

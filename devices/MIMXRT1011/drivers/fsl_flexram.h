@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 NXP
+ * Copyright 2017-2020 NXP
  * All rights reserved.
  *
  *
@@ -10,6 +10,7 @@
 #define _FSL_FLEXRAM_H_
 
 #include "fsl_common.h"
+#include "fsl_flexram_allocate.h"
 
 /*!
  * @addtogroup flexram
@@ -22,45 +23,45 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief Driver version 2.0.5. */
-#define FSL_FLEXRAM_DRIVER_VERSION (MAKE_VERSION(2U, 0U, 5U))
+/*! @brief Driver version 2.0.7. */
+#define FSL_FLEXRAM_DRIVER_VERSION (MAKE_VERSION(2U, 0U, 7U))
 /*@}*/
 
-/*! @brief flexram write read sel */
-enum _flexram_wr_rd_sel
+/*! @brief Flexram write/read selection. */
+enum
 {
     kFLEXRAM_Read  = 0U, /*!< read */
     kFLEXRAM_Write = 1U, /*!< write */
 };
 
 /*! @brief Interrupt status flag mask */
-enum _flexram_interrupt_status
+enum
 {
-    kFLEXRAM_OCRAMAccessError = FLEXRAM_INT_STATUS_OCRAM_ERR_STATUS_MASK, /*!< ocram access unallocated address */
-    kFLEXRAM_DTCMAccessError  = FLEXRAM_INT_STATUS_DTCM_ERR_STATUS_MASK,  /*!< dtcm access unallocated address */
-    kFLEXRAM_ITCMAccessError  = FLEXRAM_INT_STATUS_ITCM_ERR_STATUS_MASK,  /*!< itcm access unallocated address */
+    kFLEXRAM_OCRAMAccessError = FLEXRAM_INT_STATUS_OCRAM_ERR_STATUS_MASK, /*!< OCRAM accesses unallocated address */
+    kFLEXRAM_DTCMAccessError  = FLEXRAM_INT_STATUS_DTCM_ERR_STATUS_MASK,  /*!< DTCM accesses unallocated address */
+    kFLEXRAM_ITCMAccessError  = FLEXRAM_INT_STATUS_ITCM_ERR_STATUS_MASK,  /*!< ITCM accesses unallocated address */
 
 #if defined(FSL_FEATURE_FLEXRAM_HAS_MAGIC_ADDR) && FSL_FEATURE_FLEXRAM_HAS_MAGIC_ADDR
-    kFLEXRAM_OCRAMMagicAddrMatch = FLEXRAM_INT_STATUS_OCRAM_MAM_STATUS_MASK, /*!< ocram maigc address match */
-    kFLEXRAM_DTCMMagicAddrMatch  = FLEXRAM_INT_STATUS_DTCM_MAM_STATUS_MASK,  /*!< dtcm maigc address match */
-    kFLEXRAM_ITCMMagicAddrMatch  = FLEXRAM_INT_STATUS_ITCM_MAM_STATUS_MASK,  /*!< itcm maigc address match */
+    kFLEXRAM_OCRAMMagicAddrMatch = FLEXRAM_INT_STATUS_OCRAM_MAM_STATUS_MASK, /*!< OCRAM magic address match */
+    kFLEXRAM_DTCMMagicAddrMatch  = FLEXRAM_INT_STATUS_DTCM_MAM_STATUS_MASK,  /*!< DTCM magic address match */
+    kFLEXRAM_ITCMMagicAddrMatch  = FLEXRAM_INT_STATUS_ITCM_MAM_STATUS_MASK,  /*!< ITCM magic address match */
 
     kFLEXRAM_InterruptStatusAll = FLEXRAM_INT_STATUS_OCRAM_ERR_STATUS_MASK | FLEXRAM_INT_STATUS_DTCM_ERR_STATUS_MASK |
                                   FLEXRAM_INT_STATUS_ITCM_ERR_STATUS_MASK | FLEXRAM_INT_STATUS_OCRAM_MAM_STATUS_MASK |
-                                  FLEXRAM_INT_STATUS_DTCM_MAM_STATUS_MASK |
-                                  FLEXRAM_INT_STATUS_ITCM_MAM_STATUS_MASK, /*!< all the interrupt status mask */
+                                  FLEXRAM_INT_STATUS_DTCM_MAM_STATUS_MASK | FLEXRAM_INT_STATUS_ITCM_MAM_STATUS_MASK,
+/*!< all the interrupt status mask */
 #else
     kFLEXRAM_InterruptStatusAll = FLEXRAM_INT_STATUS_OCRAM_ERR_STATUS_MASK | FLEXRAM_INT_STATUS_DTCM_ERR_STATUS_MASK |
                                   FLEXRAM_INT_STATUS_ITCM_ERR_STATUS_MASK, /*!< all the interrupt status mask */
 #endif /* FSL_FEATURE_FLEXRAM_HAS_MAGIC_ADDR */
 };
 
-/*! @brief FLEXRAM TCM access mode
- * Fast access mode expected to be finished in 1-cycle
- * Wait access mode expected to be finished in 2-cycle
+/*! @brief FLEXRAM TCM access mode.
+ * Fast access mode expected to be finished in 1-cycle;
+ * Wait access mode expected to be finished in 2-cycle.
  * Wait access mode is a feature of the flexram and it should be used when
- * the cpu clock too fast to finish tcm access in 1-cycle.
- * Normally, fast mode is the default mode, the efficiency of the tcm access will better.
+ * the CPU clock is too fast to finish TCM access in 1-cycle.
+ * Normally, fast mode is the default mode, the efficiency of the TCM access will better.
  */
 typedef enum _flexram_tcm_access_mode
 {
@@ -68,39 +69,15 @@ typedef enum _flexram_tcm_access_mode
     kFLEXRAM_TCMAccessWaitMode = 1U, /*!< wait access mode */
 } flexram_tcm_access_mode_t;
 
-/*! @brief FLEXRAM bank type */
-enum _flexram_bank_type
+/*! @brief FLEXRAM TCM support size */
+enum
 {
-    kFLEXRAM_BankNotUsed = 0U, /*!< bank is not used */
-    kFLEXRAM_BankOCRAM   = 1U, /*!< bank is OCRAM */
-    kFLEXRAM_BankDTCM    = 2U, /*!< bank is DTCM */
-    kFLEXRAM_BankITCM    = 3U, /*!< bank is ITCM */
+    kFLEXRAM_TCMSize32KB  = 32 * 1024U,  /*!< TCM total size be 32KB */
+    kFLEXRAM_TCMSize64KB  = 64 * 1024U,  /*!< TCM total size be 64KB */
+    kFLEXRAM_TCMSize128KB = 128 * 1024U, /*!< TCM total size be 128KB */
+    kFLEXRAM_TCMSize256KB = 256 * 1024U, /*!< TCM total size be 256KB */
+    kFLEXRAM_TCMSize512KB = 512 * 1024U, /*!< TCM total size be 512KB */
 };
-
-/*! @brief FLEXRAM tcm support size */
-enum _flexram_tcm_size
-{
-    kFLEXRAM_TCMSize32KB  = 32 * 1024U,  /*!< TCM total size 32KB */
-    kFLEXRAM_TCMSize64KB  = 64 * 1024U,  /*!< TCM total size 64KB */
-    kFLEXRAM_TCMSize128KB = 128 * 1024U, /*!< TCM total size 128KB */
-    kFLEXRAM_TCMSize256KB = 256 * 1024U, /*!< TCM total size 256KB */
-    kFLEXRAM_TCMSize512KB = 512 * 1024U, /*!< TCM total size 512KB */
-};
-
-/*! @brief FLEXRAM bank allocate source */
-typedef enum _flexram_bank_allocate_src
-{
-    kFLEXRAM_BankAllocateThroughHardwareFuse = 0U, /*!< allocate ram through hardware fuse value */
-    kFLEXRAM_BankAllocateThroughBankCfg      = 1U, /*!< allocate ram through FLEXRAM_BANK_CFG */
-} flexram_bank_allocate_src_t;
-
-/*! @brief FLEXRAM allocate ocram, itcm, dtcm size */
-typedef struct _flexram_allocate_ram
-{
-    const uint8_t ocramBankNum; /*!< ocram banknumber which the SOC support */
-    const uint8_t dtcmBankNum;  /*!< dtcm bank number to allocate, the number should be power of 2 */
-    const uint8_t itcmBankNum;  /*!< itcm bank number to allocate, the number should be power of 2 */
-} flexram_allocate_ram_t;
 
 /*******************************************************************************
  * APIs
@@ -111,7 +88,7 @@ extern "C" {
 #endif
 
 /*!
- * @name Initialization and deinitialization
+ * @name Initialization and de-initialization
  * @{
  */
 
@@ -123,7 +100,7 @@ extern "C" {
 void FLEXRAM_Init(FLEXRAM_Type *base);
 
 /*!
- * @brief Deinitializes the FLEXRAM.
+ * @brief De-initializes the FLEXRAM.
  *
  */
 void FLEXRAN_Deinit(FLEXRAM_Type *base);
@@ -135,20 +112,20 @@ void FLEXRAN_Deinit(FLEXRAM_Type *base);
  * @{
  */
 /*!
- * @brief FLEXRAM module get interrupt status.
+ * @brief FLEXRAM module gets interrupt status.
  *
  * @param base FLEXRAM base address.
  */
 static inline uint32_t FLEXRAM_GetInterruptStatus(FLEXRAM_Type *base)
 {
-    return base->INT_STATUS & kFLEXRAM_InterruptStatusAll;
+    return base->INT_STATUS & (uint32_t)kFLEXRAM_InterruptStatusAll;
 }
 
 /*!
- * @brief FLEXRAM module clear interrupt status.
+ * @brief FLEXRAM module clears interrupt status.
  *
  * @param base FLEXRAM base address.
- * @param status status to clear.
+ * @param status Status to be cleared.
  */
 static inline void FLEXRAM_ClearInterruptStatus(FLEXRAM_Type *base, uint32_t status)
 {
@@ -156,10 +133,10 @@ static inline void FLEXRAM_ClearInterruptStatus(FLEXRAM_Type *base, uint32_t sta
 }
 
 /*!
- * @brief FLEXRAM module enable interrupt status.
+ * @brief FLEXRAM module enables interrupt status.
  *
  * @param base FLEXRAM base address.
- * @param status status to enable.
+ * @param status Status to be enabled.
  */
 static inline void FLEXRAM_EnableInterruptStatus(FLEXRAM_Type *base, uint32_t status)
 {
@@ -170,7 +147,7 @@ static inline void FLEXRAM_EnableInterruptStatus(FLEXRAM_Type *base, uint32_t st
  * @brief FLEXRAM module disable interrupt status.
  *
  * @param base FLEXRAM base address.
- * @param status status to disable.
+ * @param status Status to be disabled.
  */
 static inline void FLEXRAM_DisableInterruptStatus(FLEXRAM_Type *base, uint32_t status)
 {
@@ -185,10 +162,10 @@ static inline void FLEXRAM_DisableInterruptStatus(FLEXRAM_Type *base, uint32_t s
  */
 
 /*!
- * @brief FLEXRAM module enable interrupt.
+ * @brief FLEXRAM module enables interrupt.
  *
  * @param base FLEXRAM base address.
- * @param status status interrupt to enable.
+ * @param status Status interrupt to be enabled.
  */
 static inline void FLEXRAM_EnableInterruptSignal(FLEXRAM_Type *base, uint32_t status)
 {
@@ -196,10 +173,10 @@ static inline void FLEXRAM_EnableInterruptSignal(FLEXRAM_Type *base, uint32_t st
 }
 
 /*!
- * @brief FLEXRAM module disable interrupt.
+ * @brief FLEXRAM module disables interrupt.
  *
  * @param base FLEXRAM base address.
- * @param status status interrupt to disable.
+ * @param status Status interrupt to be disabled.
  */
 static inline void FLEXRAM_DisableInterruptSignal(FLEXRAM_Type *base, uint32_t status)
 {
@@ -208,39 +185,34 @@ static inline void FLEXRAM_DisableInterruptSignal(FLEXRAM_Type *base, uint32_t s
 /* @} */
 
 /*!
- * @name functional
- * @{
- */
-
-/*!
- * @brief FLEXRAM module set TCM read access mode
+ * @brief FLEXRAM module sets TCM read access mode
  *
  * @param base  FLEXRAM base address.
- * @param mode  access mode.
+ * @param mode  Access mode.
  */
 static inline void FLEXRAM_SetTCMReadAccessMode(FLEXRAM_Type *base, flexram_tcm_access_mode_t mode)
 {
     base->TCM_CTRL &= ~FLEXRAM_TCM_CTRL_TCM_RWAIT_EN_MASK;
-    base->TCM_CTRL |= mode;
+    base->TCM_CTRL |= (uint32_t)mode;
 }
 
 /*!
  * @brief FLEXRAM module set TCM write access mode
  *
  * @param base  FLEXRAM base address.
- * @param mode  access mode.
+ * @param mode  Access mode.
  */
 static inline void FLEXRAM_SetTCMWriteAccessMode(FLEXRAM_Type *base, flexram_tcm_access_mode_t mode)
 {
     base->TCM_CTRL &= ~FLEXRAM_TCM_CTRL_TCM_WWAIT_EN_MASK;
-    base->TCM_CTRL |= mode;
+    base->TCM_CTRL |= (uint32_t)mode;
 }
 
 /*!
  * @brief FLEXRAM module force ram clock on
  *
  * @param base  FLEXRAM base address.
- * @param enable enable or disable clock force on.
+ * @param enable Enable or disable clock force on.
  */
 static inline void FLEXRAM_EnableForceRamClockOn(FLEXRAM_Type *base, bool enable)
 {
@@ -254,73 +226,44 @@ static inline void FLEXRAM_EnableForceRamClockOn(FLEXRAM_Type *base, bool enable
     }
 }
 
-/*!
- * @brief FLEXRAM allocate on-chip ram for OCRAM,ITCM,DTCM
- * This function is independent of FLEXRAM_Init, it can be called directly if ram re-allocate
- * is needed.
- * @param config allocate configuration.
- * @retval kStatus_InvalidArgument the argument is invalid
- * 		   kStatus_Success allocate success
- */
-status_t FLEXRAM_AllocateRam(flexram_allocate_ram_t *config);
-
-/*!
- * @brief FLEXRAM set allocate on-chip ram source
- * @param src bank config source select value.
- */
-static inline void FLEXRAM_SetAllocateRamSrc(flexram_bank_allocate_src_t src)
-{
-    IOMUXC_GPR->GPR16 &= ~IOMUXC_GPR_GPR16_FLEXRAM_BANK_CFG_SEL_MASK;
-    IOMUXC_GPR->GPR16 |= IOMUXC_GPR_GPR16_FLEXRAM_BANK_CFG_SEL(src);
-}
-
-/*!
- * @brief FLEXRAM configure TCM size
- * This function  is used to set the TCM to the target size. If a odd bank number is used,
- * a new banknumber will be used which is bigger than target value, application can set tcm
- * size to the biggest bank number always, then boundary access error can be captured by flexram only.
- * When access to the TCM memory boundary ,hardfault will raised by core.
- * @param itcmBankNum itcm bank number to allocate
- * @param dtcmBankNum dtcm bank number to allocate
- *
- */
-void FLEXRAM_SetTCMSize(uint8_t itcmBankNum, uint8_t dtcmBankNum);
-
 #if defined(FSL_FEATURE_FLEXRAM_HAS_MAGIC_ADDR) && FSL_FEATURE_FLEXRAM_HAS_MAGIC_ADDR
 /*!
- * @brief FLEXRAM OCRAM magic addr configuration
- * When read/write access hit magic address, it will generate interrupt
- * @param magicAddr magic address, the actual address bits [18:3] is corresponding to the register field [16:1].
- * @param rwsel read write select, 0 read access , 1 write access
+ * @brief FLEXRAM OCRAM magic addr configuration.
+ * When read/write access hit magic address, it will generate interrupt.
+ * @param base  FLEXRAM base address.
+ * @param magicAddr Magic address, the actual address bits [18:3] is corresponding to the register field [16:1].
+ * @param rwSel Read/write selection. 0 for read access while 1 for write access.
  */
 static inline void FLEXRAM_SetOCRAMMagicAddr(FLEXRAM_Type *base, uint16_t magicAddr, uint32_t rwSel)
 {
-    base->OCRAM_MAGIC_ADDR =
-        FLEXRAM_OCRAM_MAGIC_ADDR_OCRAM_WR_RD_SEL(rwSel) | FLEXRAM_OCRAM_MAGIC_ADDR_OCRAM_MAGIC_ADDR(magicAddr >> 3);
+    base->OCRAM_MAGIC_ADDR = FLEXRAM_OCRAM_MAGIC_ADDR_OCRAM_WR_RD_SEL(rwSel) |
+                             FLEXRAM_OCRAM_MAGIC_ADDR_OCRAM_MAGIC_ADDR((uint32_t)magicAddr >> 3);
 }
 
 /*!
- * @brief FLEXRAM DTCM magic addr configuration
- * When read/write access hit magic address, it will generate interrupt
- * @param magicAddr magic address, the actual address bits [18:3] is corresponding to the register field [16:1].
- * @param rwsel read write select, 0 read access , 1 write access
+ * @brief FLEXRAM DTCM magic addr configuration.
+ * When read/write access hits magic address, it will generate interrupt.
+ * @param base  FLEXRAM base address.
+ * @param magicAddr Magic address, the actual address bits [18:3] is corresponding to the register field [16:1].
+ * @param rwSel Read/write selection. 0 for read access while 1 write access.
  */
 static inline void FLEXRAM_SetDTCMMagicAddr(FLEXRAM_Type *base, uint16_t magicAddr, uint32_t rwSel)
 {
-    base->DTCM_MAGIC_ADDR =
-        FLEXRAM_DTCM_MAGIC_ADDR_DTCM_WR_RD_SEL(rwSel) | FLEXRAM_DTCM_MAGIC_ADDR_DTCM_MAGIC_ADDR(magicAddr >> 3);
+    base->DTCM_MAGIC_ADDR = FLEXRAM_DTCM_MAGIC_ADDR_DTCM_WR_RD_SEL(rwSel) |
+                            FLEXRAM_DTCM_MAGIC_ADDR_DTCM_MAGIC_ADDR((uint32_t)magicAddr >> 3);
 }
 
 /*!
- * @brief FLEXRAM ITCM magic addr configuration
- * When read/write access hit magic address, it will generate interrupt
- * @param magicAddr magic address, the actual address bits [18:3] is corresponding to the register field [16:1].
- * @param rwsel read write select, 0 read access , 1 write access
+ * @brief FLEXRAM ITCM magic addr configuration.
+ * When read/write access hits magic address, it will generate interrupt.
+ * @param base  FLEXRAM base address.
+ * @param magicAddr Magic address, the actual address bits [18:3] is corresponding to the register field [16:1].
+ * @param rwSel Read/write selection. 0 for read access while 1 for write access.
  */
 static inline void FLEXRAM_SetITCMMagicAddr(FLEXRAM_Type *base, uint16_t magicAddr, uint32_t rwSel)
 {
-    base->ITCM_MAGIC_ADDR =
-        FLEXRAM_ITCM_MAGIC_ADDR_ITCM_WR_RD_SEL(rwSel) | FLEXRAM_ITCM_MAGIC_ADDR_ITCM_MAGIC_ADDR(magicAddr >> 3);
+    base->ITCM_MAGIC_ADDR = FLEXRAM_ITCM_MAGIC_ADDR_ITCM_WR_RD_SEL(rwSel) |
+                            FLEXRAM_ITCM_MAGIC_ADDR_ITCM_MAGIC_ADDR((uint32_t)magicAddr >> 3);
 }
 #endif /* FSL_FEATURE_FLEXRAM_HAS_MAGIC_ADDR */
 

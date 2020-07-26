@@ -262,8 +262,8 @@ THE SOFTWARE.
 
 #include "aws_test_framework.h"
 
-#define UNITY_OUTPUT_CHAR(a) TEST_CacheResult(a)
-#define UNITY_OUTPUT_FLUSH() TEST_SubmitResultBuffer()
+#define UNITY_OUTPUT_CHAR(a)    TEST_CacheResult(a)
+#define UNITY_OUTPUT_FLUSH()    TEST_SubmitResultBuffer()
 #define UNITY_OUTPUT_COMPLETE() TEST_NotifyTestFinished()
 
 #endif /* UNITY_CONFIG_H */

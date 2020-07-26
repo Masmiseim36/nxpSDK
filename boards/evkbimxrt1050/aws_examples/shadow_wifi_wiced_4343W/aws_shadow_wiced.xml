@@ -4,39 +4,44 @@
     <definition extID="com.nxp.mcuxpresso"/>
     <definition extID="component.lists.MIMXRT1052"/>
     <definition extID="component.lpuart_adapter.MIMXRT1052"/>
+    <definition extID="component.osa_free_rtos.MIMXRT1052"/>
     <definition extID="component.serial_manager.MIMXRT1052"/>
     <definition extID="component.serial_manager_uart.MIMXRT1052"/>
     <definition extID="device.MIMXRT1052_CMSIS.MIMXRT1052"/>
     <definition extID="device.MIMXRT1052_startup.MIMXRT1052"/>
-    <definition extID="middleware.amazon_freertos-aws_iot.MIMXRT1052"/>
-    <definition extID="middleware.amazon_freertos-aws_iot.demos.MIMXRT1052"/>
-    <definition extID="middleware.amazon_freertos-aws_iot.demos.dev_mode_key_provisioning.MIMXRT1052"/>
-    <definition extID="middleware.amazon_freertos-aws_iot.demos_shadow.MIMXRT1052"/>
-    <definition extID="middleware.amazon_freertos-aws_iot.libraries.3rdparty.jsmn.MIMXRT1052"/>
-    <definition extID="middleware.amazon_freertos-aws_iot.libraries.3rdparty.pkcs11.MIMXRT1052"/>
-    <definition extID="middleware.amazon_freertos-aws_iot.libraries.abstractions.pkcs11.MIMXRT1052"/>
-    <definition extID="middleware.amazon_freertos-aws_iot.libraries.abstractions.platform.MIMXRT1052"/>
-    <definition extID="middleware.amazon_freertos-aws_iot.libraries.abstractions.secure_sockets.MIMXRT1052"/>
-    <definition extID="middleware.amazon_freertos-aws_iot.libraries.abstractions.wifi.MIMXRT1052"/>
-    <definition extID="middleware.amazon_freertos-aws_iot.libraries.freertos_plus.standard.crypto.MIMXRT1052"/>
-    <definition extID="middleware.amazon_freertos-aws_iot.libraries.freertos_plus.standard.pkcs11.MIMXRT1052"/>
-    <definition extID="middleware.amazon_freertos-aws_iot.libraries.freertos_plus.standard.tls.MIMXRT1052"/>
-    <definition extID="middleware.amazon_freertos-aws_iot.libraries.freertos_plus.standard.utils.MIMXRT1052"/>
-    <definition extID="middleware.amazon_freertos-aws_iot.vendor.nxp.mflash.rt1050.MIMXRT1052"/>
-    <definition extID="middleware.amazon_freertos-aws_iot.vendor.nxp.pkcs11.MIMXRT1052"/>
-    <definition extID="middleware.amazon_freertos-aws_iot.vendor.nxp.secure_sockets.lwip.MIMXRT1052"/>
-    <definition extID="middleware.amazon_freertos-aws_iot.vendor.nxp.wifi.wiced.MIMXRT1052"/>
-    <definition extID="middleware.amazon_freertos-kernel.MIMXRT1052"/>
-    <definition extID="middleware.amazon_freertos-kernel.extension.MIMXRT1052"/>
-    <definition extID="middleware.amazon_freertos-kernel.heap_4.MIMXRT1052"/>
+    <definition extID="middleware.freertos-aws_iot.MIMXRT1052"/>
+    <definition extID="middleware.freertos-aws_iot.demos.MIMXRT1052"/>
+    <definition extID="middleware.freertos-aws_iot.demos.dev_mode_key_provisioning.MIMXRT1052"/>
+    <definition extID="middleware.freertos-aws_iot.demos_shadow.MIMXRT1052"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.3rdparty.jsmn.MIMXRT1052"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.3rdparty.pkcs11.MIMXRT1052"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.abstractions.pkcs11.MIMXRT1052"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.abstractions.platform.MIMXRT1052"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.abstractions.secure_sockets.MIMXRT1052"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.abstractions.wifi.MIMXRT1052"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.freertos_plus.standard.crypto.MIMXRT1052"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.freertos_plus.standard.pkcs11.MIMXRT1052"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.freertos_plus.standard.tls.MIMXRT1052"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.freertos_plus.standard.utils.MIMXRT1052"/>
+    <definition extID="middleware.freertos-aws_iot.vendor.nxp.pkcs11.MIMXRT1052"/>
+    <definition extID="middleware.freertos-aws_iot.vendor.nxp.secure_sockets.lwip.MIMXRT1052"/>
+    <definition extID="middleware.freertos-aws_iot.vendor.nxp.wifi.wiced.MIMXRT1052"/>
+    <definition extID="middleware.freertos-kernel.MIMXRT1052"/>
+    <definition extID="middleware.freertos-kernel.extension.MIMXRT1052"/>
+    <definition extID="middleware.freertos-kernel.heap_4.MIMXRT1052"/>
     <definition extID="middleware.lwip.MIMXRT1052"/>
     <definition extID="middleware.mbedtls.MIMXRT1052"/>
+    <definition extID="middleware.mbedtls.port.ksdk.MIMXRT1052"/>
+    <definition extID="middleware.nxp.mflash.rt1050.MIMXRT1052"/>
+    <definition extID="middleware.nxp.mflash_file.MIMXRT1052"/>
     <definition extID="middleware.sdmmc.common.MIMXRT1052"/>
+    <definition extID="middleware.sdmmc.host.usdhc.MIMXRT1052"/>
+    <definition extID="middleware.sdmmc.host.usdhc.freertos.MIMXRT1052"/>
+    <definition extID="middleware.sdmmc.osa.freertos.MIMXRT1052"/>
     <definition extID="middleware.sdmmc.sdio.MIMXRT1052"/>
-    <definition extID="middleware.sdmmc.usdhcadaptor.freertos.MIMXRT1052"/>
     <definition extID="middleware.wifi_wiced.4343W.MIMXRT1052"/>
+    <definition extID="middleware.wifi_wiced.MIMXRT1052"/>
     <definition extID="middleware.wifi_wiced.MURATA_TYPE1DX.MIMXRT1052"/>
-    <definition extID="middleware.wifi_wiced.common.MIMXRT1052"/>
     <definition extID="platform.Include_common.MIMXRT1052"/>
     <definition extID="platform.Include_core_cm7.MIMXRT1052"/>
     <definition extID="platform.Include_dsp.MIMXRT1052"/>
@@ -51,7 +56,6 @@
     <definition extID="platform.drivers.trng.MIMXRT1052"/>
     <definition extID="platform.drivers.usdhc.MIMXRT1052"/>
     <definition extID="platform.drivers.xip_board.MIMXRT1052"/>
-    <definition extID="platform.drivers.xip_board_dcd.MIMXRT1052"/>
     <definition extID="platform.drivers.xip_device.MIMXRT1052"/>
     <definition extID="platform.utilities.assert.MIMXRT1052"/>
     <definition extID="platform.utilities.misc_utilities.MIMXRT1052"/>
@@ -63,7 +67,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkbimxrt1050_aws_shadow_wiced" name="aws_shadow_wiced" category="aws_examples" dependency="platform.drivers.trng.MIMXRT1052 platform.drivers.dcp.MIMXRT1052 platform.drivers.cache_armv7_m7.MIMXRT1052 platform.drivers.flexspi.MIMXRT1052 middleware.amazon_freertos-aws_iot.vendor.nxp.mflash.rt1050.MIMXRT1052 middleware.amazon_freertos-aws_iot.vendor.nxp.wifi.wiced.MIMXRT1052 middleware.amazon_freertos-aws_iot.vendor.nxp.secure_sockets.lwip.MIMXRT1052 middleware.amazon_freertos-aws_iot.demos.MIMXRT1052 middleware.lwip.MIMXRT1052 middleware.wifi_wiced.MURATA_TYPE1DX.MIMXRT1052 middleware.sdmmc.sdio.MIMXRT1052 middleware.sdmmc.usdhcadaptor.freertos.MIMXRT1052 platform.drivers.usdhc.MIMXRT1052 middleware.amazon_freertos-aws_iot.demos_shadow.MIMXRT1052 middleware.amazon_freertos-aws_iot.demos.dev_mode_key_provisioning.MIMXRT1052 middleware.amazon_freertos-aws_iot.libraries.abstractions.wifi.MIMXRT1052 middleware.amazon_freertos-kernel.MIMXRT1052 middleware.amazon_freertos-kernel.heap_4.MIMXRT1052 middleware.amazon_freertos-aws_iot.libraries.abstractions.platform.MIMXRT1052 middleware.amazon_freertos-aws_iot.MIMXRT1052 middleware.amazon_freertos-aws_iot.libraries.abstractions.secure_sockets.MIMXRT1052 middleware.amazon_freertos-aws_iot.libraries.freertos_plus.standard.crypto.MIMXRT1052 middleware.amazon_freertos-aws_iot.libraries.freertos_plus.standard.pkcs11.MIMXRT1052 middleware.amazon_freertos-aws_iot.libraries.freertos_plus.standard.utils.MIMXRT1052 middleware.amazon_freertos-aws_iot.libraries.freertos_plus.standard.tls.MIMXRT1052 middleware.amazon_freertos-aws_iot.libraries.abstractions.pkcs11.MIMXRT1052 middleware.amazon_freertos-aws_iot.libraries.3rdparty.pkcs11.MIMXRT1052 middleware.amazon_freertos-aws_iot.libraries.3rdparty.jsmn.MIMXRT1052 middleware.amazon_freertos-aws_iot.vendor.nxp.pkcs11.MIMXRT1052 middleware.mbedtls.MIMXRT1052 platform.drivers.clock.MIMXRT1052 platform.drivers.common.MIMXRT1052 device.MIMXRT1052_CMSIS.MIMXRT1052 utility.debug_console.MIMXRT1052 component.lpuart_adapter.MIMXRT1052 component.serial_manager.MIMXRT1052 component.lists.MIMXRT1052 component.serial_manager_uart.MIMXRT1052 platform.drivers.lpuart.MIMXRT1052 device.MIMXRT1052_startup.MIMXRT1052 platform.drivers.iomuxc.MIMXRT1052 platform.utilities.assert.MIMXRT1052 platform.drivers.igpio.MIMXRT1052 platform.drivers.xip_device.MIMXRT1052 platform.drivers.xip_board.MIMXRT1052 platform.drivers.xip_board_dcd.MIMXRT1052 platform.Include_core_cm7.MIMXRT1052 platform.Include_common.MIMXRT1052 platform.Include_dsp.MIMXRT1052 middleware.wifi_wiced.4343W.MIMXRT1052 middleware.wifi_wiced.common.MIMXRT1052 middleware.amazon_freertos-kernel.extension.MIMXRT1052 middleware.sdmmc.common.MIMXRT1052 platform.utilities.misc_utilities.MIMXRT1052">
+  <example id="evkbimxrt1050_aws_shadow_wiced" name="aws_shadow_wiced" category="aws_examples" dependency="platform.drivers.trng.MIMXRT1052 platform.drivers.dcp.MIMXRT1052 platform.drivers.cache_armv7_m7.MIMXRT1052 platform.drivers.flexspi.MIMXRT1052 middleware.nxp.mflash.rt1050.MIMXRT1052 middleware.freertos-aws_iot.vendor.nxp.wifi.wiced.MIMXRT1052 middleware.freertos-aws_iot.vendor.nxp.secure_sockets.lwip.MIMXRT1052 middleware.freertos-aws_iot.demos.MIMXRT1052 middleware.lwip.MIMXRT1052 utility.debug_console.MIMXRT1052 middleware.wifi_wiced.MURATA_TYPE1DX.MIMXRT1052 middleware.sdmmc.sdio.MIMXRT1052 middleware.sdmmc.common.MIMXRT1052 middleware.sdmmc.host.usdhc.MIMXRT1052 middleware.sdmmc.host.usdhc.freertos.MIMXRT1052 middleware.freertos-aws_iot.demos_shadow.MIMXRT1052 middleware.freertos-aws_iot.demos.dev_mode_key_provisioning.MIMXRT1052 middleware.freertos-aws_iot.libraries.abstractions.wifi.MIMXRT1052 middleware.freertos-kernel.MIMXRT1052 middleware.freertos-kernel.heap_4.MIMXRT1052 middleware.freertos-aws_iot.libraries.abstractions.platform.MIMXRT1052 middleware.freertos-aws_iot.MIMXRT1052 middleware.freertos-aws_iot.libraries.abstractions.secure_sockets.MIMXRT1052 middleware.freertos-aws_iot.libraries.freertos_plus.standard.crypto.MIMXRT1052 middleware.freertos-aws_iot.libraries.freertos_plus.standard.pkcs11.MIMXRT1052 middleware.freertos-aws_iot.libraries.freertos_plus.standard.utils.MIMXRT1052 middleware.freertos-aws_iot.libraries.freertos_plus.standard.tls.MIMXRT1052 middleware.freertos-aws_iot.libraries.abstractions.pkcs11.MIMXRT1052 middleware.freertos-aws_iot.libraries.3rdparty.pkcs11.MIMXRT1052 middleware.freertos-aws_iot.libraries.3rdparty.jsmn.MIMXRT1052 middleware.freertos-aws_iot.vendor.nxp.pkcs11.MIMXRT1052 middleware.mbedtls.MIMXRT1052 middleware.mbedtls.port.ksdk.MIMXRT1052 platform.drivers.clock.MIMXRT1052 platform.drivers.common.MIMXRT1052 device.MIMXRT1052_CMSIS.MIMXRT1052 component.lpuart_adapter.MIMXRT1052 component.serial_manager.MIMXRT1052 component.lists.MIMXRT1052 component.serial_manager_uart.MIMXRT1052 platform.drivers.lpuart.MIMXRT1052 device.MIMXRT1052_startup.MIMXRT1052 platform.drivers.iomuxc.MIMXRT1052 platform.utilities.assert.MIMXRT1052 platform.drivers.igpio.MIMXRT1052 platform.drivers.xip_device.MIMXRT1052 platform.drivers.xip_board.MIMXRT1052 platform.Include_core_cm7.MIMXRT1052 platform.Include_common.MIMXRT1052 platform.Include_dsp.MIMXRT1052 middleware.wifi_wiced.4343W.MIMXRT1052 middleware.wifi_wiced.MIMXRT1052 middleware.freertos-kernel.extension.MIMXRT1052 middleware.sdmmc.osa.freertos.MIMXRT1052 component.osa_free_rtos.MIMXRT1052 platform.drivers.usdhc.MIMXRT1052 platform.utilities.misc_utilities.MIMXRT1052 middleware.nxp.mflash_file.MIMXRT1052">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -95,6 +99,7 @@
           <value>HIGH_SPEED_SDIO_CLOCK</value>
           <value>USE_RTOS=1</value>
           <value>MBEDTLS_CONFIG_FILE='"aws_mbedtls_config.h"'</value>
+          <value>SDIO_ENABLED</value>
           <value>FSL_RTOS_FREE_RTOS</value>
           <value>SERIAL_PORT_TYPE_UART=1</value>
           <value>WIFI_WICED</value>
@@ -133,15 +138,15 @@
       </debug_configuration>
     </debug_configurations>
     <include_paths>
-      <include_path path="amazon-freertos/libraries/abstractions/platform/freertos/include"/>
-      <include_path path="amazon-freertos/libraries/abstractions/platform/include"/>
-      <include_path path="amazon-freertos/libraries/c_sdk/standard/mqtt/src"/>
+      <include_path path="freertos/libraries/abstractions/platform/freertos/include"/>
+      <include_path path="freertos/libraries/abstractions/platform/include"/>
+      <include_path path="freertos/libraries/c_sdk/standard/mqtt/src"/>
       <include_path path="lwip/port"/>
       <include_path path="lwip/src"/>
       <include_path path="lwip/src/include"/>
       <include_path path="mbedtls/include"/>
     </include_paths>
-    <source path="boards/evkbimxrt1050/aws_examples/shadow_wifi_wiced_4343W/config_files" target_path="amazon-freertos/config_files" type="c_include">
+    <source path="boards/evkbimxrt1050/aws_examples/shadow_wifi_wiced_4343W/config_files" target_path="freertos/config_files" type="c_include">
       <files mask="FreeRTOSConfig.h"/>
       <files mask="FreeRTOSIPConfig.h"/>
       <files mask="aws_bufferpool_config.h"/>
@@ -161,7 +166,7 @@
     <source path="boards/evkbimxrt1050/aws_examples/shadow_wifi_wiced_4343W/iar" target_path="evkbimxrt1050" type="other" toolchain="iar">
       <files mask="evkbimxrt1050.mac"/>
     </source>
-    <source path="boards/evkbimxrt1050/aws_examples/shadow_wifi_wiced_4343W/linkscripts" target_path="linkscripts" type="src" toolchain="mcuxpresso">
+    <source path="boards/evkbimxrt1050/aws_examples/shadow_wifi_wiced_4343W/mcux/linkscripts" target_path="linkscripts" type="src" toolchain="mcuxpresso">
       <files mask="bss.ldt"/>
       <files mask="data.ldt"/>
       <files mask="main_text.ldt"/>
@@ -169,12 +174,16 @@
     <source path="boards/evkbimxrt1050/aws_examples/shadow_wifi_wiced_4343W" target_path="board" type="c_include">
       <files mask="board.h"/>
       <files mask="clock_config.h"/>
+      <files mask="dcd.h"/>
       <files mask="pin_mux.h"/>
+      <files mask="sdmmc_config.h"/>
     </source>
     <source path="boards/evkbimxrt1050/aws_examples/shadow_wifi_wiced_4343W" target_path="board" type="src">
       <files mask="board.c"/>
       <files mask="clock_config.c"/>
+      <files mask="dcd.c"/>
       <files mask="pin_mux.c"/>
+      <files mask="sdmmc_config.c"/>
     </source>
     <source path="boards/evkbimxrt1050/aws_examples/shadow_wifi_wiced_4343W" target_path="doc" type="doc" toolchain="iar mdk mcuxpresso armgcc">
       <files mask="readme.txt"/>

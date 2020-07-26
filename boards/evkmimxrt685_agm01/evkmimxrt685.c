@@ -49,7 +49,7 @@ gpioHandleiMXSDK_t D1 = {
  */
 status_t SMC_SetPowerModeVlpr(void *arg)
 {
-   POWER_EnterSleep();
+    POWER_EnterSleep();
 
     return kStatus_Success;
 }

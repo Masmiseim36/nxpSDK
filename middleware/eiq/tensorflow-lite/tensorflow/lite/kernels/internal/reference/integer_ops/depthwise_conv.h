@@ -12,10 +12,14 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================*/
+
+/* File modified by NXP. Changes are described in file
+   /middleware/eiq/tensorflow-lite/readme.txt in section "Release notes" */
+
+
 #ifndef TENSORFLOW_LITE_KERNELS_INTERNAL_REFERENCE_INTEGER_OPS_DEPTHWISE_CONV_H_
 #define TENSORFLOW_LITE_KERNELS_INTERNAL_REFERENCE_INTEGER_OPS_DEPTHWISE_CONV_H_
 
-#include "profiling/instrumentation.h"
 #include "tensorflow/lite/kernels/internal/common.h"
 
 namespace tflite {
@@ -28,7 +32,7 @@ inline void DepthwiseConvPerChannel(
     const int32* bias_data, const RuntimeShape& output_shape,
     int8* output_data) {
   // Get parameters.
-  gemmlowp::ScopedProfilingLabel label("DepthwiseConvInt8");
+  // TODO(b/141565753): Re-introduce ScopedProfilingLabel on Micro.
   const int stride_width = params.stride_width;
   const int stride_height = params.stride_height;
   const int dilation_width_factor = params.dilation_width_factor;
@@ -109,8 +113,8 @@ inline void DepthwiseConvPerChannel(
                 acc, output_multiplier[output_channel],
                 output_shift[output_channel]);
             acc += output_offset;
-            acc = std::max(acc, output_activation_min);
-            acc = std::min(acc, output_activation_max);
+            acc = ::std::max(acc, output_activation_min);
+            acc = ::std::min(acc, output_activation_max);
             output_data[Offset(output_shape, batch, out_y, out_x,
                                output_channel)] = static_cast<int8_t>(acc);
           }

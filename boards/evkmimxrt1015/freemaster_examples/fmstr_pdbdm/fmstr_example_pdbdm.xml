@@ -26,6 +26,7 @@
     <definition extID="iar"/>
     <definition extID="mdk"/>
     <definition extID="armgcc"/>
+    <definition extID="mcuxpresso"/>
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>

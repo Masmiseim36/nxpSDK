@@ -42,8 +42,7 @@ sss_status_t ex_sss_entry(ex_sss_boot_ctx_t *pCtx)
 
     uint16_t mem = 0;
     smStatus_t sm_status;
-    sm_status = Se05x_API_GetFreeMemory(
-        &pSession->s_ctx, kSE05x_MemoryType_TRANSIENT_DESELECT, &mem);
+    sm_status = Se05x_API_GetFreeMemory(&pSession->s_ctx, kSE05x_MemoryType_PERSISTENT, &mem);
     if (sm_status != SM_OK) {
         LOG_E("Se05x_API_GetFreeMemory Failed");
         status = kStatus_SSS_Fail;

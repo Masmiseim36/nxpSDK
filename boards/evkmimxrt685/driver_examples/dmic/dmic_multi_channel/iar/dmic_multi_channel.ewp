@@ -202,7 +202,7 @@
         </option>
         <option>
           <name>TrustZone</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>TrustZoneModes</name>
@@ -223,7 +223,7 @@
           <state>DEBUG</state>
           <state>CPU_MIMXRT685SFVKB_cm33</state>
           <state>BOOT_HEADER_ENABLE=1</state>
-          <state>ARM_MATH_CM33</state>
+          <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>CODEC_CS42888_ENABLE</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
@@ -357,7 +357,6 @@
           <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../devices</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../components/pca9420</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/i2c</state>
           <state>$PROJ_DIR$/../../../../../../components/i2c</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/cs42888</state>
@@ -1246,7 +1245,7 @@
         </option>
         <option>
           <name>TrustZone</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>TrustZoneModes</name>
@@ -1267,7 +1266,7 @@
           <state>NDEBUG</state>
           <state>CPU_MIMXRT685SFVKB_cm33</state>
           <state>BOOT_HEADER_ENABLE=1</state>
-          <state>ARM_MATH_CM33</state>
+          <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>CODEC_CS42888_ENABLE</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
@@ -1401,7 +1400,6 @@
           <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../devices</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../components/pca9420</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/i2c</state>
           <state>$PROJ_DIR$/../../../../../../components/i2c</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/cs42888</state>
@@ -2228,15 +2226,6 @@
     </file>
   </group>
   <group>
-    <name>pmic_driver</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../components/pca9420/fsl_pca9420.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../components/pca9420/fsl_pca9420.h</name>
-    </file>
-  </group>
-  <group>
     <name>codec</name>
     <file>
       <name>$PROJ_DIR$/../../../../../../components/codec/i2c/fsl_codec_i2c.c</name>
@@ -2371,6 +2360,9 @@
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_cm33.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/mpu_armv8.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/tz_context.h</name>
     </file>
     <file>
@@ -2393,21 +2385,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_version.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_armv81mml.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_armv8mbl.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_armv8mml.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/mpu_armv7.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/mpu_armv8.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/arm_common_tables.h</name>

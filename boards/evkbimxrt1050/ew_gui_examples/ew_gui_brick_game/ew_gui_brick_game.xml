@@ -10,7 +10,6 @@
     <definition extID="device.MIMXRT1052_startup.MIMXRT1052"/>
     <definition extID="driver.ft5406_rt.MIMXRT1052"/>
     <definition extID="middleware.embedded_wizard.MIMXRT1052"/>
-    <definition extID="middleware.embedded_wizard.brick_game.MIMXRT1052"/>
     <definition extID="platform.Include_common.MIMXRT1052"/>
     <definition extID="platform.Include_core_cm7.MIMXRT1052"/>
     <definition extID="platform.Include_dsp.MIMXRT1052"/>
@@ -25,7 +24,6 @@
     <definition extID="platform.drivers.pxp.MIMXRT1052"/>
     <definition extID="platform.drivers.snvs_hp.MIMXRT1052"/>
     <definition extID="platform.drivers.xip_board.MIMXRT1052"/>
-    <definition extID="platform.drivers.xip_board_dcd.MIMXRT1052"/>
     <definition extID="platform.drivers.xip_device.MIMXRT1052"/>
     <definition extID="platform.utilities.assert.MIMXRT1052"/>
     <definition extID="platform.utilities.misc_utilities.MIMXRT1052"/>
@@ -37,7 +35,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkbimxrt1050_ew_gui_brick_game" name="ew_gui_brick_game" category="ew_gui_examples" dependency="platform.drivers.cache_armv7_m7.MIMXRT1052 platform.drivers.elcdif.MIMXRT1052 platform.drivers.snvs_hp.MIMXRT1052 platform.drivers.pxp.MIMXRT1052 platform.drivers.lpi2c.MIMXRT1052 driver.ft5406_rt.MIMXRT1052 middleware.embedded_wizard.brick_game.MIMXRT1052 platform.drivers.common.MIMXRT1052 platform.drivers.clock.MIMXRT1052 middleware.embedded_wizard.MIMXRT1052 device.MIMXRT1052_CMSIS.MIMXRT1052 utility.debug_console.MIMXRT1052 component.lpuart_adapter.MIMXRT1052 component.serial_manager.MIMXRT1052 component.lists.MIMXRT1052 component.serial_manager_uart.MIMXRT1052 platform.drivers.lpuart.MIMXRT1052 device.MIMXRT1052_startup.MIMXRT1052 platform.drivers.iomuxc.MIMXRT1052 platform.utilities.assert.MIMXRT1052 platform.drivers.igpio.MIMXRT1052 platform.drivers.xip_device.MIMXRT1052 platform.drivers.xip_board.MIMXRT1052 platform.drivers.xip_board_dcd.MIMXRT1052 platform.Include_core_cm7.MIMXRT1052 platform.Include_common.MIMXRT1052 platform.Include_dsp.MIMXRT1052 platform.utilities.misc_utilities.MIMXRT1052">
+  <example id="evkbimxrt1050_ew_gui_brick_game" name="ew_gui_brick_game" category="ew_gui_examples" dependency="platform.drivers.cache_armv7_m7.MIMXRT1052 platform.drivers.elcdif.MIMXRT1052 platform.drivers.snvs_hp.MIMXRT1052 platform.drivers.pxp.MIMXRT1052 platform.drivers.lpi2c.MIMXRT1052 driver.ft5406_rt.MIMXRT1052 platform.drivers.common.MIMXRT1052 platform.drivers.clock.MIMXRT1052 middleware.embedded_wizard.MIMXRT1052 device.MIMXRT1052_CMSIS.MIMXRT1052 utility.debug_console.MIMXRT1052 component.lpuart_adapter.MIMXRT1052 component.serial_manager.MIMXRT1052 component.lists.MIMXRT1052 component.serial_manager_uart.MIMXRT1052 platform.drivers.lpuart.MIMXRT1052 device.MIMXRT1052_startup.MIMXRT1052 platform.drivers.iomuxc.MIMXRT1052 platform.utilities.assert.MIMXRT1052 platform.drivers.igpio.MIMXRT1052 platform.drivers.xip_device.MIMXRT1052 platform.drivers.xip_board.MIMXRT1052 platform.Include_core_cm7.MIMXRT1052 platform.Include_common.MIMXRT1052 platform.Include_dsp.MIMXRT1052 platform.utilities.misc_utilities.MIMXRT1052">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -70,9 +68,6 @@
           <value>XIP_BOOT_HEADER_ENABLE=1</value>
           <value>SKIP_SYSCLK_INIT</value>
           <value>XIP_BOOT_HEADER_DCD_ENABLE=1</value>
-          <value>EW_MAX_SURFACE_CACHE_SIZE=0x200000</value>
-          <value>EW_MAX_GLYPH_SURFACE_WIDTH=256</value>
-          <value>EW_MAX_GLYPH_SURFACE_HEIGHT=256</value>
           <value>EW_USE_DOUBLE_BUFFER=1</value>
           <value>EW_CPU_LOAD_MEASURING=1</value>
           <value>EW_FRAME_BUFFER_COLOR_FORMAT=EW_FRAME_BUFFER_COLOR_FORMAT_RGB565</value>
@@ -112,6 +107,119 @@
         </drivers>
       </debug_configuration>
     </debug_configurations>
+    <source path="boards/evkbimxrt1050/ew_gui_examples/ew_gui_brick_game/EmbeddedWizard/Res" target_path="EmbeddedWizard/Project/Res" type="image" exclude="true">
+      <files mask="Ball.png"/>
+      <files mask="Bricks.png"/>
+      <files mask="Landscape.png"/>
+      <files mask="LcdNumbers.png"/>
+      <files mask="Paddle.png"/>
+      <files mask="Stars.png"/>
+    </source>
+    <source path="boards/evkbimxrt1050/ew_gui_examples/ew_gui_brick_game/EmbeddedWizard" target_path="EmbeddedWizard/Project" type="other" exclude="true">
+      <files mask="Application.ewu"/>
+      <files mask="BrickGame.ews"/>
+      <files mask="BrickGame.ewu"/>
+    </source>
+    <source path="boards/evkbimxrt1050/ew_gui_examples/ew_gui_brick_game/EmbeddedWizard" target_path="EmbeddedWizard/Project" type="project" exclude="true">
+      <files mask="BrickGame.ewp"/>
+    </source>
+    <source path="boards/evkbimxrt1050/ew_gui_examples/ew_gui_brick_game/GeneratedCode" target_path="EmbeddedWizard/GeneratedCode" type="c_include">
+      <files mask="Application.h"/>
+      <files mask="BrickGame.h"/>
+      <files mask="Core.h"/>
+      <files mask="Effects.h"/>
+      <files mask="Graphics.h"/>
+      <files mask="Resources.h"/>
+      <files mask="Templates.h"/>
+      <files mask="Views.h"/>
+      <files mask="_ApplicationApplication.h"/>
+      <files mask="_BrickGameBall.h"/>
+      <files mask="_BrickGameBallPosition.h"/>
+      <files mask="_BrickGameBrickGame.h"/>
+      <files mask="_BrickGameBrickRow.h"/>
+      <files mask="_BrickGameBricks.h"/>
+      <files mask="_BrickGameDataClass.h"/>
+      <files mask="_BrickGameDescrFont.h"/>
+      <files mask="_BrickGameLandscape.h"/>
+      <files mask="_BrickGameLcdDisplay.h"/>
+      <files mask="_BrickGameLcdNumbers.h"/>
+      <files mask="_BrickGamePaddle.h"/>
+      <files mask="_BrickGameStars.h"/>
+      <files mask="_CoreCursorEvent.h"/>
+      <files mask="_CoreCursorGrabEvent.h"/>
+      <files mask="_CoreCursorHit.h"/>
+      <files mask="_CoreDialogContext.h"/>
+      <files mask="_CoreDragEvent.h"/>
+      <files mask="_CoreEvent.h"/>
+      <files mask="_CoreGroup.h"/>
+      <files mask="_CoreKeyEvent.h"/>
+      <files mask="_CoreKeyPressHandler.h"/>
+      <files mask="_CoreLayoutContext.h"/>
+      <files mask="_CoreLayoutQuadContext.h"/>
+      <files mask="_CoreModalContext.h"/>
+      <files mask="_CoreOutline.h"/>
+      <files mask="_CoreQuadView.h"/>
+      <files mask="_CoreRectView.h"/>
+      <files mask="_CoreResource.h"/>
+      <files mask="_CoreRoot.h"/>
+      <files mask="_CoreSimpleTouchHandler.h"/>
+      <files mask="_CoreTask.h"/>
+      <files mask="_CoreTaskQueue.h"/>
+      <files mask="_CoreTimer.h"/>
+      <files mask="_CoreView.h"/>
+      <files mask="_EffectsEffectTimerClass.h"/>
+      <files mask="_GraphicsCanvas.h"/>
+      <files mask="_ResourcesBitmap.h"/>
+      <files mask="_ResourcesFont.h"/>
+      <files mask="_TemplatesDeviceClass.h"/>
+      <files mask="_ViewsImage.h"/>
+      <files mask="_ViewsRectangle.h"/>
+      <files mask="_ViewsText.h"/>
+      <files mask="ewlocale.h"/>
+    </source>
+    <source path="boards/evkbimxrt1050/ew_gui_examples/ew_gui_brick_game/GeneratedCode" target_path="EmbeddedWizard/GeneratedCode" type="src">
+      <files mask="Application.c"/>
+      <files mask="BrickGame.c"/>
+      <files mask="Core.c"/>
+      <files mask="Effects.c"/>
+      <files mask="Graphics.c"/>
+      <files mask="Resources.c"/>
+      <files mask="Templates.c"/>
+      <files mask="Views.c"/>
+    </source>
+    <source path="boards/evkbimxrt1050/ew_gui_examples/ew_gui_brick_game/Simulation/code" target_path="EmbeddedWizard/Simulation/code" type="script" exclude="true">
+      <files mask="Application.js"/>
+      <files mask="BrickGame.js"/>
+      <files mask="Core.js"/>
+      <files mask="Effects.js"/>
+      <files mask="Graphics.js"/>
+      <files mask="Resources.js"/>
+      <files mask="Templates.js"/>
+      <files mask="Views.js"/>
+      <files mask="_project.js"/>
+    </source>
+    <source path="boards/evkbimxrt1050/ew_gui_examples/ew_gui_brick_game/Simulation/code" target_path="EmbeddedWizard/Simulation/code" type="src" exclude="true">
+      <files mask="Simulation.js"/>
+    </source>
+    <source path="boards/evkbimxrt1050/ew_gui_examples/ew_gui_brick_game/Simulation/res" target_path="EmbeddedWizard/Simulation/res" type="image" exclude="true">
+      <files mask="BrickGameBall.png"/>
+      <files mask="BrickGameBricks.png"/>
+      <files mask="BrickGameLandscape.png"/>
+      <files mask="BrickGameLcdNumbers.png"/>
+      <files mask="BrickGamePaddle.png"/>
+      <files mask="BrickGameStars.png"/>
+      <files mask="SimulationBackground.png"/>
+      <files mask="embedded-wizard-logo.png"/>
+    </source>
+    <source path="boards/evkbimxrt1050/ew_gui_examples/ew_gui_brick_game/Simulation/res" target_path="EmbeddedWizard/Simulation/res" type="script" exclude="true">
+      <files mask="BrickGameDescrFont.js"/>
+      <files mask="SimulationFont.js"/>
+      <files mask="SimulationIcon.js"/>
+    </source>
+    <source path="boards/evkbimxrt1050/ew_gui_examples/ew_gui_brick_game/Simulation" target_path="EmbeddedWizard/Simulation" type="src" exclude="true">
+      <files mask="emwi_compr_9_30.js"/>
+      <files mask="index.html"/>
+    </source>
     <source path="boards/evkbimxrt1050/ew_gui_examples/ew_gui_brick_game/iar" target_path="evkbimxrt1050" type="other" toolchain="iar">
       <files mask="evkbimxrt1050.mac"/>
     </source>
@@ -121,11 +229,15 @@
     <source path="boards/evkbimxrt1050/ew_gui_examples/ew_gui_brick_game" target_path="board" type="c_include">
       <files mask="board.h"/>
       <files mask="clock_config.h"/>
+      <files mask="dcd.h"/>
+      <files mask="ewconfig.h"/>
+      <files mask="ewdef.h"/>
       <files mask="pin_mux.h"/>
     </source>
     <source path="boards/evkbimxrt1050/ew_gui_examples/ew_gui_brick_game" target_path="board" type="src">
       <files mask="board.c"/>
       <files mask="clock_config.c"/>
+      <files mask="dcd.c"/>
       <files mask="pin_mux.c"/>
     </source>
     <source path="boards/evkbimxrt1050/ew_gui_examples/ew_gui_brick_game" target_path="doc" type="doc" toolchain="iar mdk mcuxpresso armgcc">

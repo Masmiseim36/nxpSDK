@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 NXP
+ * Copyright 2016,2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -202,6 +202,9 @@
 #define USB_HOST_OHCI_GTD_DI_NO_INTERRUPT (7U)
 
 #define USB_HOST_OHCI_ITD_BP0_MASK (0xFFFFF000U)
+#define USB_HOST_OHCI_ITD_TRANSFER_SIZE_MASK (0x00000FFFU)
+#define USB_HOST_OHCI_ITD_CONDITION_CODE_MASK (0x0000F000U)
+#define USB_HOST_OHCI_ITD_CONDITION_CODE_SHIFT (12U)
 /*!
  * @addtogroup usb_host_controller_ohci
  * @{
@@ -352,9 +355,9 @@ typedef struct _usb_host_ohci_td_struct
 #define USB_HOST_OHCI_TRANSFER_TIMEOUT_GAP (5000U / USB_HOST_OHCI_TRANSFER_SCAN_INTERVAL)
 
 /*! @brief USB host OHCI lock */
-#define USB_HostOhciLock() USB_OsaMutexLock(usbHostState->mutex)
+#define USB_HostOhciLock() OSA_MutexLock(usbHostState->mutex,USB_OSA_WAIT_TIMEOUT)
 /*! @brief USB host OHCI unlock */
-#define USB_HostOhciUnlock() USB_OsaMutexUnlock(usbHostState->mutex)
+#define USB_HostOhciUnlock() OSA_MutexUnlock(usbHostState->mutex)
 
 /*! @brief OHCI Host Controller Operational Registers */
 typedef struct _usb_host_ohci_hcor_struct
@@ -442,8 +445,10 @@ typedef struct _usb_host_ohci_state_struct
 #if ((defined(USB_HOST_CONFIG_LOW_POWER_MODE)) && (USB_HOST_CONFIG_LOW_POWER_MODE > 0U))
     uint64_t matchTick;
 #endif
-    usb_osa_event_handle ohciEvent; /*!< OHCI event*/
-    usb_osa_mutex_handle mutex;     /*!< OHCI layer mutex*/
+    osa_event_handle_t ohciEvent; /*!< OHCI event*/
+    uint32_t taskEventHandleBuffer[(OSA_EVENT_HANDLE_SIZE + 3)/4]; /*!< task event handle buffer*/
+    osa_mutex_handle_t mutex;     /*!< OHCI layer mutex*/
+    uint32_t mutexBuffer[(OSA_MUTEX_HANDLE_SIZE + 3)/4];
     usb_host_ohci_pipe_struct_t pipePool[USB_HOST_CONFIG_OHCI_MAX_ED];
     uint8_t controllerId;           /*!< Controller id */
     uint8_t portNumber;             /*!< Port count */

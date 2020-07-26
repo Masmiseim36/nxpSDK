@@ -261,14 +261,14 @@ int main(void)
     }
 
     /*
-     * config.misc.interruptRequest    = 0x00U;
-     * config.misc.forceError          = 0x00U;
-     * config.misc.forceSVM            = 0x00U;
-     * config.misc.forceLDM            = 0x00U;
-     * config.misc.keyBlobScramble     = 0x00U;
-     * config.misc.keyBlobProcess      = 0x00U;
-     * config.misc.restrictedRegAccess = 0x00U;
-     * config.startKeyBlobProcessing = 0x00U;
+     * config.misc.interruptRequest    = false;
+     * config.misc.forceError          = false;
+     * config.misc.forceSVM            = false;
+     * config.misc.forceLDM            = false;
+     * config.misc.keyBlobScramble     = false;
+     * config.misc.keyBlobProcess      = false;
+     * config.misc.restrictedRegAccess = false;
+     * config.startKeyBlobProcessing = false;
      * config.enableOTFAD = false;
      */
     OTFAD_GetDefaultConfig(&config);

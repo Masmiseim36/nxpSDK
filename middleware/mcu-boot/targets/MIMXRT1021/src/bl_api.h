@@ -1,17 +1,17 @@
 /*
-* Copyright 2017-2019 NXP
-* All rights reserved.
-*
-* SPDX-License-Identifier: BSD-3-Clause
-*/
+ * Copyright 2017-2020 NXP
+ * All rights reserved.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
 
 #ifndef __BL_API_H__
 #define __BL_API_H__
 
-#include "fsl_device_registers.h"
-#include "flexspi/fsl_flexspi.h"
-#include "flexspi_nor/flexspi_nor_flash.h"
 #include <string.h>
+#include "bl_flexspi.h"
+#include "flexspi_nor_flash.h"
+#include "fsl_device_registers.h"
 
 /*******************************************************************************
  * Definitions
@@ -28,7 +28,7 @@ typedef struct
     status_t (*xfer)(uint32_t instance, flexspi_xfer_t *xfer);
     uint32_t reserved2;
     uint32_t reserved3;
-}flexspi_nor_driver_interface_t;
+} flexspi_nor_driver_interface_t;
 
 enum
 {
@@ -39,9 +39,9 @@ typedef struct
 {
     void (*runBootloader)(void *arg); //!< Function to start the bootloader executing
     const uint32_t version;           //!< Bootloader version number
-    const char * copyright;           //!< Bootloader Copyright
+    const char *copyright;            //!< Bootloader Copyright
     const uint32_t reserved0;
-    const flexspi_nor_driver_interface_t* flexSpiNorDriver;  //!< FlexSPI NOR Flash API
-}bootloader_api_entry_t;
+    const flexspi_nor_driver_interface_t *flexSpiNorDriver; //!< FlexSPI NOR Flash API
+} bootloader_api_entry_t;
 
 #endif //__BL_API_H__

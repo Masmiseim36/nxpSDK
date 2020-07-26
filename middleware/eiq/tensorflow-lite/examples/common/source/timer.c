@@ -9,6 +9,11 @@
 #include "stdbool.h"
 #include "timer.h"
 
+#if defined(__ICCARM__) || defined(__ARMCC_VERSION)
+#include <time.h>
+#else
+#include <sys/time.h>
+#endif
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -43,3 +48,31 @@ int GetTimeInUS(void) {
   us += msTicks * 1000;
   return us;
 }
+
+#if defined(__ARMCC_VERSION)
+
+clock_t clock ()
+{
+  return ((uint64_t)GetTimeInUS() * CLOCKS_PER_SEC) / 1000000;
+}
+
+#elif defined(__ICCARM__)
+
+int timespec_get(struct timespec* ts, int base)
+{
+  int us = GetTimeInUS();
+  ts->tv_sec = us / 1000000;
+  ts->tv_nsec = (us % 1000000) * 1000;
+  return TIME_UTC ;
+}
+
+#else
+
+int gettimeofday (struct timeval *__restrict __p,void *__restrict __tz){
+  int us = GetTimeInUS();
+  __p->tv_sec = us / 1000000;
+  __p->tv_usec = us % 1000000;
+  return 0;
+}
+
+#endif

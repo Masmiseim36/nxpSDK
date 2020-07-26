@@ -87,7 +87,6 @@ class EigenThreadPoolWrapper : public Eigen::ThreadPoolInterface {
   std::unique_ptr<Eigen::ThreadPool> pool_;
 };
 
-
 // Utility class for lazily creating an Eigen thread pool/device only when used.
 class LazyEigenThreadPoolHolder {
  public:

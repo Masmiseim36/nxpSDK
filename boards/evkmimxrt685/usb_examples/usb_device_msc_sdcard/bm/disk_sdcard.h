@@ -26,7 +26,8 @@
 USB_DEVICE_CONFIG_USE_TASK macro should also be enable.*/
 #define USB_DEVICE_MSC_USE_WRITE_TASK (0U)
 #define USB_DEVICE_MSC_BUFFER_NUMBER (3U)
-/* application define logical unit number, if LOGICAL_UNIT_SUPPORTED > USB_DEVICE_MSC_MAX_LUN, update USB_DEVICE_MSC_MAX_LUN in class driver usb_device_msc.h*/
+/* application define logical unit number, if LOGICAL_UNIT_SUPPORTED > USB_DEVICE_MSC_MAX_LUN, update
+ * USB_DEVICE_MSC_MAX_LUN in class driver usb_device_msc.h*/
 #define LOGICAL_UNIT_SUPPORTED (1U)
 
 /* USB MSC config*/
@@ -34,7 +35,7 @@ USB_DEVICE_CONFIG_USE_TASK macro should also be enable.*/
 /*the block size should be multiple of 512, the least value is 512*/
 
 #define USB_DEVICE_MSC_WRITE_BUFF_SIZE (512 * 8U)
-#define USB_DEVICE_MSC_READ_BUFF_SIZE (512 * 8U)
+#define USB_DEVICE_MSC_READ_BUFF_SIZE  (512 * 8U)
 
 
 #define USB_DEVICE_SDCARD_BLOCK_SIZE_POWER (9U)

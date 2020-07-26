@@ -6,16 +6,16 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "bootloader/bl_context.h"
+#include "bl_context.h"
 #include "bootloader_common.h"
+#include "fsl_assert.h"
 #include "fsl_device_registers.h"
-#include "lpuart/fsl_lpuart.h"
-#include "utilities/fsl_assert.h"
+#include "fsl_lpuart.h"
 #if BL_ENABLE_CRC_CHECK
-#include "bootloader/bl_app_crc_check.h"
+#include "bl_app_crc_check.h"
 #endif
-#include "flexspi/fsl_flexspi.h"
-#include "flexspi_nor/flexspi_nor_flash.h"
+#include "bl_flexspi.h"
+#include "flexspi_nor_flash.h"
 #include "fusemap.h"
 #include "peripherals_pinmux.h"
 ////////////////////////////////////////////////////////////////////////////////
@@ -513,9 +513,7 @@ void dummy_byte_callback(uint8_t byte)
     (void)byte;
 }
 
-void debug_init(void)
-{
-}
+void debug_init(void) {}
 
 #if __ICCARM__
 
@@ -526,9 +524,7 @@ size_t __write(int handle, const unsigned char *buf, size_t size)
 
 #endif // __ICCARM__
 
-void update_available_peripherals()
-{
-}
+void update_available_peripherals() {}
 
 void init_hardware(void)
 {

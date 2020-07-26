@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 NXP
+ * Copyright 2018-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -22,11 +22,20 @@
  ******************************************************************************/
 /* SAI instance and clock */
 #define DEMO_CODEC_WM8960
-#define DEMO_SAI SAI1
-#define DEMO_SAI_IRQ SAI1_IRQn
-#define SAI_TxIRQHandler SAI1_IRQHandler
-#define DEMO_SAI_BIT_WIDTH (kSAI_WordWidth16bits)
-#define DEMO_SAI_SAMPLE_RATE (kSAI_SampleRate16KHz)
+#define DEMO_SAI              SAI1
+#define DEMO_SAI_CHANNEL      (0)
+#define DEMO_SAI_IRQ          SAI1_IRQn
+#define DEMO_SAITxIRQHandler  SAI1_IRQHandler
+#define DEMO_SAI_TX_SYNC_MODE kSAI_ModeAsync
+#define DEMO_SAI_RX_SYNC_MODE kSAI_ModeSync
+#define DEMO_SAI_MCLK_OUTPUT  true
+#define DEMO_SAI_MASTER_SLAVE kSAI_Master
+
+#define DEMO_AUDIO_DATA_CHANNEL (2U)
+#define DEMO_AUDIO_BIT_WIDTH    kSAI_WordWidth16bits
+#define DEMO_AUDIO_SAMPLE_RATE  (kSAI_SampleRate16KHz)
+#define DEMO_AUDIO_MASTER_CLOCK DEMO_SAI_CLK_FREQ
+
 /* Select Audio/Video PLL (786.48 MHz) as sai1 clock source */
 #define DEMO_SAI1_CLOCK_SOURCE_SELECT (2U)
 /* Clock pre divider for sai1 clock source */
@@ -47,37 +56,23 @@
 #define DEMO_LPI2C_CLOCK_SOURCE_DIVIDER (5U)
 /* Get frequency of lpi2c clock */
 #define DEMO_I2C_CLK_FREQ ((CLOCK_GetFreq(kCLOCK_Usb1PllClk) / 8) / (DEMO_LPI2C_CLOCK_SOURCE_DIVIDER + 1U))
-#define DEMO_SAI_CHANNEL (0U)
 
 /* DMA */
-#define DMAMUX0 DMAMUX
-#define EXAMPLE_DMA DMA0
-#define EXAMPLE_DMA_CHANNEL (0U)
-#define EXAMPLE_SAI_TX_SOURCE kDmaRequestMuxSai1Tx
+#define DMAMUX0            DMAMUX
+#define DEMO_DMA           DMA0
+#define DEMO_EDMA_CHANNEL  (0U)
+#define DEMO_SAI_TX_SOURCE kDmaRequestMuxSai1Tx
 
-#define OVER_SAMPLE_RATE (384U)
+#define BOARD_MASTER_CLOCK_CONFIG()
+#define BOARD_SAI_RXCONFIG(config, mode)
 #define BUFFER_SIZE (1600U)
-#define BUFFER_NUM (2)
-#define PLAY_COUNT (100)
-/* demo audio sample rate */
-#define DEMO_AUDIO_SAMPLE_RATE (kSAI_SampleRate16KHz)
-/* demo audio master clock */
-#if (defined FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER && FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER) || \
-    (defined FSL_FEATURE_PCC_HAS_SAI_DIVIDER && FSL_FEATURE_PCC_HAS_SAI_DIVIDER)
-#define DEMO_AUDIO_MASTER_CLOCK OVER_SAMPLE_RATE *DEMO_AUDIO_SAMPLE_RATE
-#else
-#define DEMO_AUDIO_MASTER_CLOCK DEMO_SAI_CLK_FREQ
-#endif
-/* demo audio data channel */
-#define DEMO_AUDIO_DATA_CHANNEL (2U)
-/* demo audio bit width */
-#define DEMO_AUDIO_BIT_WIDTH kSAI_WordWidth16bits
-/* demo audio protocol */
-#define DEMO_AUDIO_PROTOCOL kCODEC_BusI2S
+#define BUFFER_NUM  (2)
+#define PLAY_COUNT  (100)
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
 void EDMA_TX_Callback(edma_handle_t *handle, void *param, bool transferDone, uint32_t tcds);
+extern void BOARD_SAI_RXConfig(sai_transceiver_t *config, sai_sync_mode_t sync);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
@@ -103,7 +98,7 @@ const clock_audio_pll_config_t audioPllConfig = {
     .numerator   = 77,  /* 30 bit numerator of fractional loop divider. */
     .denominator = 100, /* 30 bit denominator of fractional loop divider */
 };
-edma_handle_t dmaHandle = {0};
+edma_handle_t g_dmaHandle = {0};
 extern codec_config_t boardCodecConfig;
 AT_NONCACHEABLE_SECTION_ALIGN(static uint8_t buffer[BUFFER_NUM * BUFFER_SIZE], 4);
 volatile bool isFinished      = false;
@@ -113,17 +108,7 @@ AT_NONCACHEABLE_SECTION_ALIGN(static edma_tcd_t s_emdaTcd, 32);
 static volatile bool s_Transfer_Done = false;
 static volatile uint32_t s_playIndex = 0U;
 static volatile uint32_t s_playCount = 0U;
-#if (defined(FSL_FEATURE_SAI_HAS_MCR) && (FSL_FEATURE_SAI_HAS_MCR)) || \
-    (defined(FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER) && (FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER))
-sai_master_clock_t mclkConfig = {
-#if defined(FSL_FEATURE_SAI_HAS_MCR) && (FSL_FEATURE_SAI_HAS_MCR)
-    .mclkOutputEnable = true,
-#if !(defined(FSL_FEATURE_SAI_HAS_NO_MCR_MICS) && (FSL_FEATURE_SAI_HAS_NO_MCR_MICS))
-    .mclkSource = kSAI_MclkSourceSysclk,
-#endif
-#endif
-};
-#endif
+
 codec_handle_t codecHandle;
 
 /*******************************************************************************
@@ -195,6 +180,11 @@ int main(void)
     /*Enable MCLK clock*/
     BOARD_EnableSaiMclkOutput(true);
 
+    /* Init DMAMUX */
+    DMAMUX_Init(DMAMUX0);
+    DMAMUX_SetSource(DMAMUX0, DEMO_EDMA_CHANNEL, DEMO_SAI_TX_SOURCE);
+    DMAMUX_EnableChannel(DMAMUX0, DEMO_EDMA_CHANNEL);
+
     PRINTF("SAI EDMA Half Interrupt example started!\n\r");
 
     memcpy(buffer, music, BUFFER_NUM * BUFFER_SIZE);
@@ -208,50 +198,44 @@ int main(void)
      * dmaConfig.enableDebugMode = false;
      */
     EDMA_GetDefaultConfig(&dmaConfig);
-    EDMA_Init(EXAMPLE_DMA, &dmaConfig);
-    EDMA_CreateHandle(&dmaHandle, EXAMPLE_DMA, EXAMPLE_DMA_CHANNEL);
-    EDMA_SetCallback(&dmaHandle, EDMA_TX_Callback, NULL);
-    EDMA_ResetChannel(EXAMPLE_DMA, dmaHandle.channel);
-
-#if defined(FSL_FEATURE_SOC_DMAMUX_COUNT) && FSL_FEATURE_SOC_DMAMUX_COUNT
-    DMAMUX_Init(DMAMUX0);
-    DMAMUX_SetSource(DMAMUX0, EXAMPLE_DMA_CHANNEL, EXAMPLE_SAI_TX_SOURCE);
-    DMAMUX_EnableChannel(DMAMUX0, EXAMPLE_DMA_CHANNEL);
+    EDMA_Init(DEMO_DMA, &dmaConfig);
+    EDMA_CreateHandle(&g_dmaHandle, DEMO_DMA, DEMO_EDMA_CHANNEL);
+    EDMA_SetCallback(&g_dmaHandle, EDMA_TX_Callback, NULL);
+    EDMA_ResetChannel(DEMO_DMA, g_dmaHandle.channel);
+#if defined(FSL_FEATURE_EDMA_HAS_CHANNEL_MUX) && FSL_FEATURE_EDMA_HAS_CHANNEL_MUX
+    EDMA_SetChannelMux(DEMO_DMA, DEMO_EDMA_CHANNEL, DEMO_SAI_EDMA_CHANNEL);
 #endif
 
     /* SAI init */
     SAI_Init(DEMO_SAI);
 
     /* I2S mode configurations */
-    SAI_GetClassicI2SConfig(&config, DEMO_AUDIO_BIT_WIDTH, kSAI_Stereo, kSAI_Channel0Mask);
+    SAI_GetClassicI2SConfig(&config, DEMO_AUDIO_BIT_WIDTH, kSAI_Stereo, 1U << DEMO_SAI_CHANNEL);
+    config.syncMode    = DEMO_SAI_TX_SYNC_MODE;
+    config.masterSlave = DEMO_SAI_MASTER_SLAVE;
     SAI_TxSetConfig(DEMO_SAI, &config);
-
     /* set bit clock divider */
     SAI_TxSetBitClockRate(DEMO_SAI, DEMO_AUDIO_MASTER_CLOCK, DEMO_AUDIO_SAMPLE_RATE, DEMO_AUDIO_BIT_WIDTH,
                           DEMO_AUDIO_DATA_CHANNEL);
 
+    /* sai rx configurations */
+    BOARD_SAI_RXCONFIG(&config, DEMO_SAI_RX_SYNC_MODE);
     /* master clock configurations */
-#if (defined(FSL_FEATURE_SAI_HAS_MCR) && (FSL_FEATURE_SAI_HAS_MCR)) || \
-    (defined(FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER) && (FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER))
-#if defined(FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER) && (FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER)
-    mclkConfig.mclkHz          = DEMO_AUDIO_MASTER_CLOCK;
-    mclkConfig.mclkSourceClkHz = DEMO_SAI_CLK_FREQ;
-#endif
-    SAI_SetMasterClockConfig(DEMO_SAI, &mclkConfig);
-#endif
+    BOARD_MASTER_CLOCK_CONFIG();
 
     /* Use default setting to init codec */
     CODEC_Init(&codecHandle, &boardCodecConfig);
 
     /* Configure and submit transfer structure 1 */
-    EDMA_PrepareTransfer(&transferConfig, buffer, sizeof(buffer[0]), (void *)destAddr, DEMO_AUDIO_BIT_WIDTH / 8U,
+    EDMA_PrepareTransfer(&transferConfig, buffer, DEMO_AUDIO_BIT_WIDTH / 8U, (void *)destAddr,
+                         DEMO_AUDIO_BIT_WIDTH / 8U,
                          (FSL_FEATURE_SAI_FIFO_COUNT - config.fifo.fifoWatermark) * (DEMO_AUDIO_BIT_WIDTH / 8U),
                          BUFFER_SIZE * BUFFER_NUM, kEDMA_MemoryToPeripheral);
 
     EDMA_TcdSetTransferConfig(&s_emdaTcd, &transferConfig, &s_emdaTcd);
     EDMA_TcdEnableInterrupts(&s_emdaTcd, kEDMA_MajorInterruptEnable | kEDMA_HalfInterruptEnable);
-    EDMA_InstallTCD(EXAMPLE_DMA, dmaHandle.channel, &s_emdaTcd);
-    EDMA_StartTransfer(&dmaHandle);
+    EDMA_InstallTCD(DEMO_DMA, g_dmaHandle.channel, &s_emdaTcd);
+    EDMA_StartTransfer(&g_dmaHandle);
     /* Enable DMA enable bit */
     SAI_TxEnableDMA(DEMO_SAI, kSAI_FIFORequestDMAEnable, true);
     /* Enable SAI Tx clock */
@@ -271,3 +255,15 @@ int main(void)
     {
     }
 }
+
+#if defined(DEMO_SAITxIRQHandler)
+void DEMO_SAITxIRQHandler(void)
+{
+    /* Clear the FIFO error flag */
+    SAI_TxClearStatusFlags(DEMO_SAI, kSAI_FIFOErrorFlag);
+
+    /* Reset FIFO */
+    SAI_TxSoftwareReset(DEMO_SAI, kSAI_ResetTypeFIFO);
+    SDK_ISR_EXIT_BARRIER;
+}
+#endif

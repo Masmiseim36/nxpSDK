@@ -1,4 +1,4 @@
-$version 6.60
+$version 9.30
 
 // Controller class, containing all data set values and all current values of the \
 // washing machine.

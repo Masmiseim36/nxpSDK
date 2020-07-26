@@ -16,19 +16,20 @@
 
 #include <gre/sdk/pixel_formats.h>
 #include <gre/sdk/render_common.h>
+
 /**
  * Describes several attributes for a framebuffer.
  */
 typedef struct {
-	uint16_t           				width;          //< Width of the display in pixels.
-	uint16_t           				height;         //< Height of the display in pixels.
-	gr_render_format_t 				render_format;  //< Rendering format for the framebuffer. (render_format is 4 byte aligned)
-	uint32_t						flags;			//< For layer options
-	uint16_t           				stride;         //< Number of bytes per row of pixels. (0 means implied)
-	uint8_t							num_buffers;	//< Number of buffers the layer has
-	uint8_t							buffer_draw_index;	//< Index of buffer with most recent content
-	gr_render_rect_t				dirty_rect;		//< Rect to dirty, if applicable
-	void * 							buffer[2];		//< Array of addresses for the layer. Need a minimum of 1
+	uint16_t           				width;          ///< Width of the display in pixels.
+	uint16_t           				height;         ///< Height of the display in pixels.
+	gr_render_format_t 				render_format;  ///< Rendering format for the framebuffer. (render_format is 4 byte aligned)
+	uint32_t						flags;			///< For layer options
+	uint16_t           				stride;         ///< Number of bytes per row of pixels. (0 means implied)
+	uint8_t							num_buffers;	///< Number of buffers the layer has
+	uint8_t							buffer_draw_index;	///< Index of buffer with most recent content
+	gr_render_rect_t				dirty_rect;		///< Rect to dirty, if applicable
+	void * 							buffer[2];		///< Array of addresses for the layer. Need a minimum of 1
 } gr_generic_display_layer_info_t;
 
 /**
@@ -36,10 +37,10 @@ typedef struct {
  * that uses a custom BSP image.
  */
 typedef struct {
-	uint16_t							flags;		//< Flags
-	uint8_t								reserved;	//< reserved
-	uint8_t								num_layers;	//< Size of the layer info structure
-	gr_generic_display_layer_info_t *	layer_info;	//< Per layer information.  Need a minimum of 1
+	uint16_t							flags;		///< Flags
+	uint8_t								reserved;	///< reserved
+	uint8_t								num_layers;	///< Size of the layer info structure
+	gr_generic_display_layer_info_t *	layer_info;	///< Per layer information.  Need a minimum of 1
 } gr_generic_display_info_t;
 
 
@@ -60,7 +61,7 @@ int gr_generic_display_init(gr_generic_display_info_t *info);
  * Function that would be implemented in BSP code
  * that handles any framebuffer changes.
  *
- * @param info[in] Information about a framebuffer update. May be used
+ * @param[in] info Information about a framebuffer update. May be used
  *                 to perform platform-specific behavior related to displays.
  *
  * @retval 0 upon success.

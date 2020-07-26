@@ -1,6 +1,6 @@
 /*
  * Copyright 2014-2015 Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -12,7 +12,7 @@
 
 #include "fsl_common.h"
 #include "bootloader_common.h"
-#include "flexspi/fsl_flexspi.h"
+#include "bl_flexspi.h"
 
 /*  */
 #define NOR_CMD_INDEX_READ CMD_INDEX_READ               //!< 0
@@ -94,6 +94,7 @@ enum
     kSerialNorEnhanceMode_0_8_8_Mode = 2,
     kSerialNorEnhanceMode_DataOrderSwapped = 3,
     kSerialNorEnhanceMode_2ndPinMux = 4,
+    kSerialNorEnhanceMode_InternalLoopback = 5,
 };
 
 enum

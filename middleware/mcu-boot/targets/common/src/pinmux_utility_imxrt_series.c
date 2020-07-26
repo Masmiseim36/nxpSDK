@@ -1,6 +1,6 @@
 /*
  * Copyright 2014-2015 Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -10,13 +10,11 @@
 // Variables
 ////////////////////////////////////////////////////////////////////////////////
 #include "bootloader_common.h"
-#include "bootloader/bl_context.h"
+#include "bl_context.h"
 #include "fsl_device_registers.h"
-#if FSL_FEATURE_SOC_IOMUXC_COUNT
-#include "fsl_iomuxc.h"
-#endif // #if FSL_FEATURE_SOC_IOMUXC_COUNT
-#include "igpio/fsl_gpio.h"
+#include "fsl_gpio.h"
 #include "peripherals_pinmux.h"
+#include "pin_mux.h"
 
 #if (BL_CONFIG_LPUART || BL_CONFIG_SCUART || BL_CONFIG_UART)
 
@@ -39,53 +37,6 @@ static pin_irq_callback_t s_pin_irq_func[BL_ENABLED_MAX_UART_INSTANCE + 1] = { 0
 ////////////////////////////////////////////////////////////////////////////////
 // Code
 ////////////////////////////////////////////////////////////////////////////////
-static inline void IOMUXC_RestoreDefault(uint32_t muxRegister,
-                                         uint32_t muxMode,
-                                         uint32_t inputRegister,
-                                         uint32_t inputDaisy,
-                                         uint32_t configRegister,
-                                         uint32_t configDefaultValue)
-{
-    *((volatile uint32_t *)muxRegister) = 0 /*Mux default value*/;
-    if (inputRegister)
-    {
-        *((volatile uint32_t *)inputRegister) = 0 /*Daisy defualt value*/;
-    }
-    if (configRegister)
-    {
-        *((volatile uint32_t *)configRegister) = configDefaultValue;
-    }
-}
-
-static inline void IOMUXC_SetUartAutoBaudPinMode(uint32_t muxRegister,
-                                                 uint32_t muxMode,
-                                                 uint32_t inputRegister,
-                                                 uint32_t inputDaisy,
-                                                 uint32_t configRegister,
-                                                 GPIO_Type *gpioBase,
-                                                 uint32_t pin)
-{
-    // Configure the UART RX pin to GPIO mode
-    IOMUXC_SetPinMux(muxRegister, muxMode, inputRegister, inputDaisy, configRegister,
-                     0 /*kIOMUXC_InputPathDeteminedByMux*/);
-#if BL_FEATURE_UART_RX_PULLUP
-    // Pull-up resistor enabled.
-    *((volatile uint32_t *)configRegister) |= IOMUXC_SW_PAD_CTL_PAD_PKE(1) | IOMUXC_SW_PAD_CTL_PAD_PUS(2);
-#else
-    // Pull-up resistor disabled.
-    *((volatile uint32_t *)configRegister) &= ~IOMUXC_SW_PAD_CTL_PAD_PKE(1);
-#endif // BL_FEATURE_UART_RX_PULLUP
-    // Configure UART RX pin to digital input mode.
-    gpioBase->GDIR &= (uint32_t) ~(1 << pin);
-}
-
-static inline void IOMUXC_SetUartPinMode(
-    uint32_t muxRegister, uint32_t muxMode, uint32_t inputRegister, uint32_t inputDaisy, uint32_t configRegister)
-{
-    IOMUXC_SetPinMux(muxRegister, muxMode, inputRegister, inputDaisy, configRegister,
-                     0 /*kIOMUXC_InputPathDeteminedByMux*/);
-    *(volatile uint32_t *)configRegister = LPUART1_PAD_CTRL;
-};
 
 /*!
  * @brief Configure pinmux for uart module.
@@ -100,16 +51,13 @@ void uart_pinmux_config(uint32_t instance, pinmux_type_t pinmux)
     switch (pinmux)
     {
         case kPinmuxType_Default:
-            IOMUXC_RestoreDefault(UART1_TX_IOMUXC_MUX_FUNC, UART1_TX_IOMUXC_PAD_DEFAULT);
-            IOMUXC_RestoreDefault(UART1_TX_IOMUXC_MUX_FUNC, UART1_TX_IOMUXC_PAD_DEFAULT);
+            UART1_RestoreDefault();
             break;
         case kPinmuxType_PollForActivity:
-            IOMUXC_SetUartAutoBaudPinMode(UART1_RX_IOMUXC_MUX_GPIO, UART1_RX_GPIO_BASE, UART1_RX_GPIO_PIN_NUM);
+            UART1_PollForActivity();
             break;
         case kPinmuxType_Peripheral:
-            // Enable pins for UART1.
-            IOMUXC_SetUartPinMode(UART1_RX_IOMUXC_MUX_FUNC);
-            IOMUXC_SetUartPinMode(UART1_TX_IOMUXC_MUX_FUNC);
+            UART1_InitPins();
             break;
         default:
             break;

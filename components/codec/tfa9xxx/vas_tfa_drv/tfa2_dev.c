@@ -569,9 +569,9 @@ int tfa2_dev_set_configured(struct tfa2_device *tfa)
  *
  */
 // TODO  determine max poll tims
-#define TFA_STATE_INIT_CF_POLL 100
-#define TFA_STATE_POWERDOWN_POLL 2000
-#define TFA_STATE_OPERATING_POLL 50
+#define TFA_STATE_INIT_CF_POLL          100
+#define TFA_STATE_POWERDOWN_POLL        2000
+#define TFA_STATE_OPERATING_POLL        50
 #define TFA_STATE_POWERDOWN_HAPTIC_POLL 50
 
 int tfa2_dev_set_state(struct tfa2_device *tfa, enum tfa_state state)
@@ -1037,10 +1037,10 @@ int tfa2_dev_dsp_patch(struct tfa2_device *tfa, int patchLength, const uint8_t *
     return rc;
 }
 /****************************** DSP RPC ************************************/
-#define TFA98XX_WAITRESULT_NTRIES 40
+#define TFA98XX_WAITRESULT_NTRIES      40
 #define TFA98XX_WAITRESULT_NTRIES_LONG 2000
 /** Value used by tfa_dsp_msg_status() to determine busy-wait time for DSP message acknowledgement*/
-#define CF_RPC_RETRY_NUM 16 /*  wait loop count */
+#define CF_RPC_RETRY_NUM      16 /*  wait loop count */
 #define CF_STATUS_I2C_CMD_ACK 0x01
 
 /* dsp RPC message for I2C */

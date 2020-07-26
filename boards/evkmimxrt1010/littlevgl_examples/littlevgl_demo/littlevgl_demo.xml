@@ -2,7 +2,6 @@
 <ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
   <externalDefinitions>
     <definition extID="com.nxp.mcuxpresso"/>
-    <definition extID="RTE_Device.MIMXRT1011"/>
     <definition extID="component.lists.MIMXRT1011"/>
     <definition extID="component.lpuart_adapter.MIMXRT1011"/>
     <definition extID="component.serial_manager.MIMXRT1011"/>
@@ -11,8 +10,9 @@
     <definition extID="device.MIMXRT1011_startup.MIMXRT1011"/>
     <definition extID="driver.ft6x06.MIMXRT1011"/>
     <definition extID="driver.ili9341.MIMXRT1011"/>
-    <definition extID="middleware.amazon_freertos.freertos.MIMXRT1011"/>
-    <definition extID="middleware.amazon_freertos.freertos.heap_4.MIMXRT1011"/>
+    <definition extID="middleware.freertos-kernel.MIMXRT1011"/>
+    <definition extID="middleware.freertos-kernel.extension.MIMXRT1011"/>
+    <definition extID="middleware.freertos-kernel.heap_4.MIMXRT1011"/>
     <definition extID="middleware.littlevgl.MIMXRT1011"/>
     <definition extID="platform.CMSIS_Driver_Include.Common_CMSISInclude.MIMXRT1011"/>
     <definition extID="platform.CMSIS_Driver_Include.I2C_CMSISInclude.MIMXRT1011"/>
@@ -37,6 +37,7 @@
     <definition extID="platform.drivers.xip_board.MIMXRT1011"/>
     <definition extID="platform.drivers.xip_device.MIMXRT1011"/>
     <definition extID="platform.utilities.assert.MIMXRT1011"/>
+    <definition extID="platform.utilities.misc_utilities.MIMXRT1011"/>
     <definition extID="utility.debug_console.MIMXRT1011"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
@@ -45,7 +46,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkmimxrt1010_littlevgl_demo" name="littlevgl_demo" category="littlevgl_examples" dependency="driver.ili9341.MIMXRT1011 driver.ft6x06.MIMXRT1011 platform.drivers.clock.MIMXRT1011 platform.drivers.lpuart.MIMXRT1011 platform.drivers.cache_armv7_m7.MIMXRT1011 platform.drivers.edma.MIMXRT1011 platform.drivers.dmamux.MIMXRT1011 platform.drivers.lpi2c.MIMXRT1011 platform.drivers.lpi2c_edma.MIMXRT1011 platform.drivers.lpspi_edma.MIMXRT1011 platform.drivers.lpspi_cmsis.MIMXRT1011 platform.drivers.lpi2c_cmsis.MIMXRT1011 middleware.amazon_freertos.freertos.MIMXRT1011 middleware.amazon_freertos.freertos.heap_4.MIMXRT1011 platform.drivers.common.MIMXRT1011 middleware.littlevgl.MIMXRT1011 device.MIMXRT1011_CMSIS.MIMXRT1011 utility.debug_console.MIMXRT1011 component.lpuart_adapter.MIMXRT1011 component.serial_manager.MIMXRT1011 component.serial_manager_uart.MIMXRT1011 component.lists.MIMXRT1011 device.MIMXRT1011_startup.MIMXRT1011 platform.drivers.iomuxc.MIMXRT1011 platform.utilities.assert.MIMXRT1011 platform.drivers.igpio.MIMXRT1011 platform.drivers.xip_device.MIMXRT1011 platform.drivers.xip_board.MIMXRT1011 platform.Include_core_cm7.MIMXRT1011 platform.Include_common.MIMXRT1011 platform.Include_dsp.MIMXRT1011 platform.CMSIS_Driver_Include.I2C_CMSISInclude.MIMXRT1011 platform.CMSIS_Driver_Include.Common_CMSISInclude.MIMXRT1011 platform.drivers.lpspi.MIMXRT1011 platform.CMSIS_Driver_Include.SPI_CMSISInclude.MIMXRT1011 RTE_Device.MIMXRT1011">
+  <example id="evkmimxrt1010_littlevgl_demo" name="littlevgl_demo" category="littlevgl_examples" dependency="driver.ili9341.MIMXRT1011 driver.ft6x06.MIMXRT1011 platform.drivers.clock.MIMXRT1011 platform.drivers.lpuart.MIMXRT1011 platform.drivers.cache_armv7_m7.MIMXRT1011 platform.drivers.edma.MIMXRT1011 platform.drivers.dmamux.MIMXRT1011 platform.drivers.lpi2c.MIMXRT1011 platform.drivers.lpi2c_edma.MIMXRT1011 platform.drivers.lpspi_edma.MIMXRT1011 platform.drivers.lpspi_cmsis.MIMXRT1011 platform.drivers.lpi2c_cmsis.MIMXRT1011 middleware.freertos-kernel.heap_4.MIMXRT1011 platform.drivers.common.MIMXRT1011 middleware.littlevgl.MIMXRT1011 device.MIMXRT1011_CMSIS.MIMXRT1011 utility.debug_console.MIMXRT1011 component.lpuart_adapter.MIMXRT1011 component.serial_manager.MIMXRT1011 component.lists.MIMXRT1011 component.serial_manager_uart.MIMXRT1011 device.MIMXRT1011_startup.MIMXRT1011 platform.drivers.iomuxc.MIMXRT1011 platform.utilities.assert.MIMXRT1011 platform.drivers.igpio.MIMXRT1011 platform.drivers.xip_device.MIMXRT1011 platform.drivers.xip_board.MIMXRT1011 platform.Include_core_cm7.MIMXRT1011 platform.Include_common.MIMXRT1011 platform.Include_dsp.MIMXRT1011 platform.CMSIS_Driver_Include.I2C_CMSISInclude.MIMXRT1011 platform.CMSIS_Driver_Include.Common_CMSISInclude.MIMXRT1011 platform.drivers.lpspi.MIMXRT1011 platform.CMSIS_Driver_Include.SPI_CMSISInclude.MIMXRT1011 middleware.freertos-kernel.MIMXRT1011 middleware.freertos-kernel.extension.MIMXRT1011 platform.utilities.misc_utilities.MIMXRT1011">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -73,6 +74,7 @@
           <value>XIP_EXTERNAL_FLASH=1</value>
           <value>XIP_BOOT_HEADER_ENABLE=1</value>
           <value>LV_CONF_INCLUDE_SIMPLE=1</value>
+          <value>SERIAL_PORT_TYPE_UART=1</value>
           <value>FSL_RTOS_FREE_RTOS</value>
         </option>
         <option id="gnu.c.compiler.option.optimization.flags" type="string">
@@ -107,7 +109,11 @@
         </drivers>
       </debug_configuration>
     </debug_configurations>
-    <source path="boards/evkmimxrt1010/littlevgl_examples/littlevgl_demo/mdk" target_path="src" type="configuration" toolchain="mdk">
+    <include_paths>
+      <include_path path="littlevgl"/>
+      <include_path path="littlevgl/lvgl"/>
+    </include_paths>
+    <source path="boards/evkmimxrt1010/littlevgl_examples/littlevgl_demo/mdk" target_path="evkmimxrt1010" type="configuration" toolchain="mdk">
       <files mask="evkmimxrt1010_ram.ini"/>
     </source>
     <source path="boards/evkmimxrt1010/littlevgl_examples/littlevgl_demo" target_path="board" type="c_include">
@@ -138,15 +144,15 @@
     <source path="boards/evkmimxrt1010/littlevgl_examples" target_path="board" type="src">
       <files mask="littlevgl_support.c"/>
     </source>
-    <source path="middleware/littlevgl/lv_examples/demo" target_path="littlevgl/lv_examples/demo" type="c_include">
+    <source path="middleware/littlevgl/lv_examples/lv_apps/demo" target_path="littlevgl/lv_examples/lv_apps/demo" type="c_include">
       <files mask="demo.h"/>
     </source>
-    <source path="middleware/littlevgl/lv_examples/demo" target_path="littlevgl/lv_examples/demo" type="src">
+    <source path="middleware/littlevgl/lv_examples/lv_apps/demo" target_path="littlevgl/lv_examples/lv_apps/demo" type="image" exclude="true">
+      <files mask="bubble_pattern.png"/>
+    </source>
+    <source path="middleware/littlevgl/lv_examples/lv_apps/demo" target_path="littlevgl/lv_examples/lv_apps/demo" type="src">
       <files mask="demo.c"/>
       <files mask="img_bubble_pattern.c"/>
-    </source>
-    <source path="middleware/littlevgl/lv_examples/demo" target_path="src" type="image" exclude="true">
-      <files mask="bubble_pattern.png"/>
     </source>
   </example>
 </ksdk:examples>

@@ -12,10 +12,6 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================*/
-
-/* File modified by NXP. Changes are described in file
-   /middleware/eiq/tensorflow-lite/readme.txt in section "Release notes" */
-
 #include <string.h>
 #include <vector>
 #include "tensorflow/lite/c/builtin_op_data.h"
@@ -70,8 +66,7 @@ TfLiteStatus ResizeOutputTensor(TfLiteContext* context,
   TF_LITE_ENSURE_EQ(context, NumDimensions(op_context->paddings),
                     kSpatialDimensionNum);
 
-  std::unique_ptr<TfLiteIntArray, void (*)(TfLiteIntArray*)> output_size(
-      TfLiteIntArrayCopy(input_size), TfLiteIntArrayFree);
+  TfLiteIntArray* output_size = TfLiteIntArrayCopy(input_size);
 
   // Ensures the input height and width (with padding) is a multiple of block
   // shape height and width.
@@ -89,7 +84,7 @@ TfLiteStatus ResizeOutputTensor(TfLiteContext* context,
   output_size->data[0] = output_batch_size;
   output_size->data[3] = output_channel_size;
 
-  return context->ResizeTensor(context, op_context->output, output_size.release());
+  return context->ResizeTensor(context, op_context->output, output_size);
 }
 
 TfLiteStatus Prepare(TfLiteContext* context, TfLiteNode* node) {

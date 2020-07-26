@@ -15,6 +15,11 @@ be executed with the MCUXpresso's built-in web browser. The simulation is
 located in the folder 'ew_gui_examples\<example_name>\Simulation'. The
 simulation uses the JS/WebGL Embedded Wizard Platform Package.
 
+This examples runs bare metal, but Embedded Wizard is also possible
+to use with FreeRTOS. Our official Build Environments, that can be downloaded 
+as described above, includes examples and demos that illustrate the integration 
+of FreeRTOS and can be used for your reference.
+
 
 In order create your own GUI application powered by the latest version of
 Embedded Wizard that is suitable for the i.MX RT1060 Evaluation Kit, please
@@ -26,10 +31,10 @@ https://www.embedded-wizard.de/platforms/nxp/imx-rt
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.40.2
-- GCC ARM Embedded  8.3.1
-- Keil MDK  5.29
-- MCUXpresso  11.1.0
+- IAR embedded Workbench  8.50.1
+- GCC ARM Embedded  9.2.1
+- Keil MDK  5.30
+- MCUXpresso  11.2.0
 
 Hardware requirements
 =====================
@@ -70,7 +75,7 @@ Create Embedded Wizard Viewport...           [OK]
 Target system                                IMXRT1060-EVK
 Color format                                 RGB565
 MemoryPool address                           0x8107F800
-MemoryPool size                              16254976 bytes
+MemoryPool size                              14157824 bytes
 Framebuffer address                          0x81000000
 Doublebuffer address                         0x8103FC00
 Framebuffer size                             480 x 272
@@ -86,8 +91,8 @@ External flash device                        QSPI Flash
 Toolchain                                    <Toolchain name>
 C-Compiler version                           <C-Compiler version>
 Build date and time                          <MMM DD YYYY, HH:MM:SS>
-Runtime Environment (RTE) version            9.20
-Graphics Engine (GFX) version                9.20
+Runtime Environment (RTE) version            9.30
+Graphics Engine (GFX) version                9.30
 Max surface cache size                       2097152 bytes
 Glyph cache size                             256 x 256
 Max issue tasks                              100

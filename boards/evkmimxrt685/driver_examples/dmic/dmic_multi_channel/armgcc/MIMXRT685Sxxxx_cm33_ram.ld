@@ -7,13 +7,13 @@
 **     Compiler:            GNU C Compiler
 **     Reference manual:    MIMXRT685 User manual Rev. 0.95 11 November 2019
 **     Version:             rev. 1.0, 2018-06-19
-**     Build:               b191128
+**     Build:               b200414
 **
 **     Abstract:
 **         Linker file for the GNU C Compiler
 **
 **     Copyright 2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2019 NXP
+**     Copyright 2016-2020 NXP
 **     All rights reserved.
 **
 **     SPDX-License-Identifier: BSD-3-Clause
@@ -60,6 +60,7 @@ SECTIONS
   {
     . = ALIGN(4);
     __VECTOR_TABLE = .;
+    __Vectors = .;
     KEEP(*(.isr_vector))     /* Startup code */
     . = ALIGN(4);
   } > m_interrupts
@@ -161,6 +162,8 @@ SECTIONS
     . = ALIGN(4);
     __DATA_RAM = .;
     __data_start__ = .;      /* create a global symbol at data start */
+    *(CodeQuickAccess)       /* CodeQuickAccess sections */
+    *(DataQuickAccess)       /* DataQuickAccess sections */
     *(.data)                 /* .data sections */
     *(.data*)                /* .data* sections */
     KEEP(*(.jcr*))
@@ -171,6 +174,7 @@ SECTIONS
   __DATA_END = __DATA_ROM + (__data_end__ - __data_start__);
   text_end = ORIGIN(m_text) + LENGTH(m_text);
   ASSERT(__DATA_END <= text_end, "region m_text overflowed with text and data")
+  _image_size = __DATA_END - __VECTOR_TABLE;
 
   /* Uninitialized data section */
   .bss :

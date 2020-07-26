@@ -24,10 +24,10 @@
 #endif
 
 #define AUDIO_FRMWK_BUF_SIZE (64 * 1024)
-#define AUDIO_COMP_BUF_SIZE (256 * 1024)
-#define NUM_COMP_IN_GRAPH 1
+#define AUDIO_COMP_BUF_SIZE  (256 * 1024)
+#define NUM_COMP_IN_GRAPH    1
 #define MAX_SRC_FRAME_ADJUST 2
-#define MAX_INPUT_CHUNK_LEN 512
+#define MAX_INPUT_CHUNK_LEN  512
 
 /* Stack size for DSP data processing thread. */
 #define STACK_SIZE (4 * 1024)

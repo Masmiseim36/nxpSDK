@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP
+ * Copyright 2019-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -56,6 +56,10 @@ void BOARD_InitBootPins(void);
 #define BOARD_AUD_INT_PERIPHERAL                                           GPIO1   /*!< Device name: GPIO1 */
 #define BOARD_AUD_INT_SIGNAL                                          gpiomux_io   /*!< GPIO1 signal: gpiomux_io */
 #define BOARD_AUD_INT_CHANNEL                                                 0U   /*!< GPIO1 gpiomux_io channel: 00 */
+
+/* GPIO_AD_09 (number 48), ADC12_4/JTAG_TDO/J55[6]/J26[4] */
+#define BOARD_ADC12_4_PERIPHERAL                                             ARM   /*!< Device name: ARM */
+#define BOARD_ADC12_4_SIGNAL                                       arm_trace_swo   /*!< ARM signal: arm_trace_swo */
 
 
 /*!

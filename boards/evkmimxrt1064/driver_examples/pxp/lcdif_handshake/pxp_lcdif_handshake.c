@@ -19,24 +19,24 @@
  * Definitions
  ******************************************************************************/
 #define APP_ELCDIF LCDIF
-#define APP_PXP PXP
+#define APP_PXP    PXP
 
 #define APP_IMG_HEIGHT 272
-#define APP_IMG_WIDTH 480
-#define APP_HSW 41
-#define APP_HFP 4
-#define APP_HBP 8
-#define APP_VSW 10
-#define APP_VFP 4
-#define APP_VBP 2
+#define APP_IMG_WIDTH  480
+#define APP_HSW        41
+#define APP_HFP        4
+#define APP_HBP        8
+#define APP_VSW        10
+#define APP_VFP        4
+#define APP_VBP        2
 #define APP_POL_FLAGS \
     (kELCDIF_DataEnableActiveHigh | kELCDIF_VsyncActiveLow | kELCDIF_HsyncActiveLow | kELCDIF_DriveDataOnRisingClkEdge)
 
 /* Display. */
-#define LCD_DISP_GPIO GPIO1
+#define LCD_DISP_GPIO     GPIO1
 #define LCD_DISP_GPIO_PIN 2
 /* Back light. */
-#define LCD_BL_GPIO GPIO2
+#define LCD_BL_GPIO     GPIO2
 #define LCD_BL_GPIO_PIN 31
 
 #define APP_LCDIF_DATA_BUS kELCDIF_DataBus16Bit
@@ -48,9 +48,9 @@
 #define FRAME_BUFFER_ALIGN 64
 
 /* PS input buffer is square. */
-#define APP_PS_WIDTH (APP_IMG_WIDTH / 2U)
+#define APP_PS_WIDTH  (APP_IMG_WIDTH / 2U)
 #define APP_PS_HEIGHT (APP_IMG_HEIGHT / 2U)
-#define APP_AS_WIDTH (APP_IMG_WIDTH / 2U)
+#define APP_AS_WIDTH  (APP_IMG_WIDTH / 2U)
 #define APP_AS_HEIGHT (APP_IMG_HEIGHT / 2U)
 
 #define APP_PS_ULC_X ((APP_IMG_WIDTH / 2) - (APP_PS_SIZE / 2))
@@ -61,28 +61,28 @@
 #if (defined(USE_RGB565) && USE_RGB565)
 
 typedef uint16_t pixel_t;
-#define APP_BPP 2U /* Use 16-bit RGB565 format. */
-#define APP_RED 0xF100U
-#define APP_GREEN 0x07E0U
-#define APP_BLUE 0x001FU
-#define APP_PXP_PS_FORMAT kPXP_PsPixelFormatRGB565
-#define APP_PXP_AS_FORMAT kPXP_AsPixelFormatRGB565
+#define APP_BPP            2U /* Use 16-bit RGB565 format. */
+#define APP_RED            0xF100U
+#define APP_GREEN          0x07E0U
+#define APP_BLUE           0x001FU
+#define APP_PXP_PS_FORMAT  kPXP_PsPixelFormatRGB565
+#define APP_PXP_AS_FORMAT  kPXP_AsPixelFormatRGB565
 #define APP_PXP_OUT_FORMAT kPXP_OutputPixelFormatRGB565
-#define APP_DC_FORMAT kVIDEO_PixelFormatRGB565
-#define APP_LCDIF_FORMAT kELCDIF_PixelFormatRGB565
+#define APP_DC_FORMAT      kVIDEO_PixelFormatRGB565
+#define APP_LCDIF_FORMAT   kELCDIF_PixelFormatRGB565
 
 #else
 
 typedef uint32_t pixel_t;
-#define APP_BPP 4U /* Use 32-bit XRGB888 format. */
-#define APP_RED 0x00FF0000U
-#define APP_GREEN 0x0000FF00U
-#define APP_BLUE 0x000000FFU
-#define APP_PXP_PS_FORMAT kPXP_PsPixelFormatRGB888
-#define APP_PXP_AS_FORMAT kPXP_AsPixelFormatRGB888
+#define APP_BPP            4U /* Use 32-bit XRGB888 format. */
+#define APP_RED            0x00FF0000U
+#define APP_GREEN          0x0000FF00U
+#define APP_BLUE           0x000000FFU
+#define APP_PXP_PS_FORMAT  kPXP_PsPixelFormatRGB888
+#define APP_PXP_AS_FORMAT  kPXP_AsPixelFormatRGB888
 #define APP_PXP_OUT_FORMAT kPXP_OutputPixelFormatRGB888
-#define APP_DC_FORMAT kVIDEO_PixelFormatXRGB8888
-#define APP_LCDIF_FORMAT kELCDIF_PixelFormatXRGB8888
+#define APP_DC_FORMAT      kVIDEO_PixelFormatXRGB8888
+#define APP_LCDIF_FORMAT   kELCDIF_PixelFormatXRGB8888
 
 #endif
 
@@ -116,7 +116,7 @@ AT_NONCACHEABLE_SECTION_ALIGN(static pixel_t s_asBufferPxp[APP_AS_HEIGHT][APP_AS
 /* Initialize the LCD_DISP. */
 void BOARD_InitLcd(void)
 {
-    volatile uint32_t i = 0x100U;
+    volatile uint32_t i = 0x1000U;
 
     gpio_pin_config_t config = {
         kGPIO_DigitalOutput,

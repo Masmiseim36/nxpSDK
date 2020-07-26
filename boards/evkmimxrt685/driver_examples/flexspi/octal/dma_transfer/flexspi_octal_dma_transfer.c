@@ -58,8 +58,8 @@ flexspi_device_config_t deviceconfig = {
     .dataValidTime        = 2,
     .columnspace          = 0,
     .enableWordAddress    = 0,
-    .AWRSeqIndex          = 0,
-    .AWRSeqNumber         = 0,
+    .AWRSeqIndex          = NOR_CMD_LUT_SEQ_IDX_WRITE,
+    .AWRSeqNumber         = 1,
     .ARDSeqIndex          = NOR_CMD_LUT_SEQ_IDX_READ,
     .ARDSeqNumber         = 1,
     .AHBWriteWaitUnit     = kFLEXSPI_AhbWriteWaitUnit2AhbCycle,
@@ -117,6 +117,10 @@ const uint32_t customLUT[CUSTOM_LUT_LENGTH] = {
         FLEXSPI_LUT_SEQ(kFLEXSPI_Command_SDR, kFLEXSPI_1PAD, 0x72, kFLEXSPI_Command_RADDR_SDR, kFLEXSPI_1PAD, 0x20),
     [4 * NOR_CMD_LUT_SEQ_IDX_ENTEROPI + 1] =
         FLEXSPI_LUT_SEQ(kFLEXSPI_Command_WRITE_SDR, kFLEXSPI_1PAD, 0x04, kFLEXSPI_Command_STOP, kFLEXSPI_1PAD, 0),
+
+    /*  Dummy write, do nothing when AHB write command is triggered. */
+    [4 * NOR_CMD_LUT_SEQ_IDX_WRITE] =
+        FLEXSPI_LUT_SEQ(kFLEXSPI_Command_STOP, kFLEXSPI_1PAD, 0x0, kFLEXSPI_Command_STOP, kFLEXSPI_1PAD, 0x0),
 
     /*  Read status register using Octal DDR read */
     [4 * NOR_CMD_LUT_SEQ_IDX_READSTATUS_OPI] =

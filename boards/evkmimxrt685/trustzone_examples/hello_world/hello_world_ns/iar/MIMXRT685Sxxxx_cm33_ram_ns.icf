@@ -7,13 +7,13 @@
 **     Compiler:            IAR ANSI C/C++ Compiler for ARM
 **     Reference manual:    MIMXRT685 User manual Rev. 0.95 11 November 2019
 **     Version:             rev. 1.0, 2018-06-19
-**     Build:               b191128
+**     Build:               b200413
 **
 **     Abstract:
 **         Linker file for the IAR ANSI C/C++ Compiler for ARM
 **
 **     Copyright 2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2019 NXP
+**     Copyright 2016-2020 NXP
 **     All rights reserved.
 **
 **     SPDX-License-Identifier: BSD-3-Clause
@@ -68,6 +68,7 @@ define region CSTACK_region           = mem:[from m_data_end-__size_cstack__ + 1
 
 define block CSTACK    with alignment = 8, size = __size_cstack__   { };
 define block HEAP      with alignment = 8, size = __size_heap__     { };
+define block RO        { readonly };
 define block RW        { readwrite };
 define block ZI        { zi };
 
@@ -75,12 +76,13 @@ define block ZI        { zi };
 define region USB_BDT_region = mem:[from m_usb_sram_start to m_usb_sram_start + usb_bdt_size - 1];
 define region USB_SRAM_region = mem:[from m_usb_sram_start + usb_bdt_size to m_usb_sram_end];
 
-initialize by copy { readwrite, section .textrw };
+initialize by copy { readwrite, section .textrw, section CodeQuickAccess, section DataQuickAccess};
 
 do not initialize  { section .noinit, section m_usb_bdt, section m_usb_global  };
 
 place at address mem: m_interrupts_start    { readonly section .intvec };
-place in TEXT_region                        { readonly };
+place in TEXT_region                        { block RO };
+place in DATA_region                        { section CodeQuickAccess, section DataQuickAccess };
 place in DATA_region                        { block RW };
 place in DATA_region                        { block ZI };
 place in DATA_region                        { last block HEAP };

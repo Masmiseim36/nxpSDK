@@ -12,6 +12,9 @@
 #ifndef GR_RENDER_COMMON_H
 #define GR_RENDER_COMMON_H
 
+// round n up to the nearest multiple of alignment. Alignment must be a power of 2.
+#define GET_ALIGNED_VALUE(n, alignment) (n + alignment - 1) & ~(alignment - 1)
+
 typedef uint32_t	gr_render_color_t;
 
 typedef struct _gr_render_point {
@@ -60,11 +63,11 @@ typedef enum {
 typedef struct {
 	gr_render_font_t		*font;
 	gr_render_text_type_t	type;
-	int						flags;
-	int						size;
-	int 					letter_spacing;
-	int						word_spacing;
-	int						line_height;
+	unsigned				flags;
+	unsigned				size;
+	int						letter_spacing;
+	int		 				word_spacing;
+	unsigned				line_height;
 	gr_render_color_t 		text_color;
 	gr_render_color_t 		outline_color;
 } gr_text_style_t;

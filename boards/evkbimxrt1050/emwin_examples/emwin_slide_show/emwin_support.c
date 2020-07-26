@@ -22,7 +22,7 @@ uint32_t s_vram_buffer[VRAM_SIZE * GUI_BUFFERS];
 
 /* Memory address definitions */
 #define GUI_MEMORY_ADDR ((uint32_t)s_gui_memory)
-#define VRAM_ADDR (SDK_SIZEALIGN(s_vram_buffer, FRAME_BUFFER_ALIGN))
+#define VRAM_ADDR       (SDK_SIZEALIGN(s_vram_buffer, FRAME_BUFFER_ALIGN))
 
 static volatile int32_t s_LCDpendingBuffer = -1;
 
@@ -53,11 +53,7 @@ void APP_LCDIF_IRQHandler(void)
             s_LCDpendingBuffer = -1;
         }
     }
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 void LCDIF_IRQHandler(void)

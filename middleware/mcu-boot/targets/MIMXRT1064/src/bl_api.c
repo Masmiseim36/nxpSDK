@@ -1,9 +1,9 @@
 /*
-* Copyright 2017-2018 NXP
-* All rights reserved.
-*
-* SPDX-License-Identifier: BSD-3-Clause
-*/
+ * Copyright 2017-2020 NXP
+ * All rights reserved.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
 #include "bl_api.h"
 
 /*******************************************************************************
@@ -13,7 +13,7 @@
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-#define g_bootloaderTree  ((bootloader_api_entry_t *)*(uint32_t *)0x0020001c)
+#define g_bootloaderTree ((bootloader_api_entry_t *)*(uint32_t *)0x0020001c)
 
 /*******************************************************************************
  * Codes
@@ -102,22 +102,33 @@ status_t flexspi_nor_get_config(uint32_t instance, flexspi_nor_config_t *config,
 {
     status_t status = g_bootloaderTree->flexSpiNorDriver->get_config(instance, config, option);
 
-    if ((status == kStatus_Success) && option->option0.B.option_size)
+    if (status == kStatus_Success)
     {
-        // A workaround to support drive strength configuration using Flash APIs
-        if (option->option1.B.drive_strength)
+        if (config->memConfig.readSampleClkSrc == kFlexSPIReadSampleClk_LoopbackInternally)
         {
-            flexspi_update_padsetting(&config->memConfig, option->option1.B.drive_strength);
+            if (option->option0.B.misc_mode != kSerialNorEnhanceMode_InternalLoopback)
+            {
+                config->memConfig.readSampleClkSrc = kFlexSPIReadSampleClk_LoopbackFromDqsPad;
+            }
         }
 
-        // A workaround to support parallel mode using Flash APIs
-        if (option->option1.B.flash_connection == kSerialNorConnection_Parallel)
+        if (option->option0.B.option_size)
         {
-            config->memConfig.controllerMiscOption |= FLEXSPI_BITMASK(kFlexSpiMiscOffset_ParallelEnable);
-            config->pageSize *= 2;
-            config->sectorSize *= 2;
-            config->blockSize *= 2;
-            config->memConfig.sflashB1Size = config->memConfig.sflashA1Size;
+            // A workaround to support drive strength configuration using Flash APIs
+            if (option->option1.B.drive_strength)
+            {
+                flexspi_update_padsetting(&config->memConfig, option->option1.B.drive_strength);
+            }
+
+            // A workaround to support parallel mode using Flash APIs
+            if (option->option1.B.flash_connection == kSerialNorConnection_Parallel)
+            {
+                config->memConfig.controllerMiscOption |= FLEXSPI_BITMASK(kFlexSpiMiscOffset_ParallelEnable);
+                config->pageSize *= 2;
+                config->sectorSize *= 2;
+                config->blockSize *= 2;
+                config->memConfig.sflashB1Size = config->memConfig.sflashA1Size;
+            }
         }
     }
 
@@ -134,4 +145,21 @@ status_t flexspi_nor_flash_read(
 {
     return g_bootloaderTree->flexSpiNorDriver->read(instance, config, dst, start, bytes);
 }
+
+void flexspi_clear_cache(uint32_t instance)
+{
+    g_bootloaderTree->flexSpiNorDriver->clear_cache(instance);
+}
+
+status_t flexspi_command_xfer(uint32_t instance, flexspi_xfer_t *xfer)
+{
+    return g_bootloaderTree->flexSpiNorDriver->xfer(instance, xfer);
+}
+
+//!@brief Configure FlexSPI Lookup table
+status_t flexspi_update_lut(uint32_t instance, uint32_t seqIndex, const uint32_t *lutBase, uint32_t numberOfSeq)
+{
+    return g_bootloaderTree->flexSpiNorDriver->update_lut(instance, seqIndex, lutBase, numberOfSeq);
+}
+
 #endif // BL_FEATURE_HAS_FLEXSPI_NOR_ROMAPI

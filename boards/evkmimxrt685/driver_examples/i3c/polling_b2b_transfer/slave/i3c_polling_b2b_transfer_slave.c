@@ -17,11 +17,11 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_SLAVE I3C
-#define I3C_SLAVE_CLOCK_FREQUENCY CLOCK_GetLpOscFreq()
-#define I3C_TIME_OUT_INDEX 100000000
+#define EXAMPLE_SLAVE              I3C
+#define I3C_SLAVE_CLOCK_FREQUENCY  CLOCK_GetLpOscFreq()
+#define I3C_TIME_OUT_INDEX         100000000
 #define I3C_MASTER_SLAVE_ADDR_7BIT 0x1EU
-#define I3C_DATA_LENGTH 34U
+#define I3C_DATA_LENGTH            34U
 
 /*******************************************************************************
  * Prototypes

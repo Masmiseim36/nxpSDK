@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 - 2017 NXP
+ * Copyright 2016-2017,2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -677,7 +677,7 @@ void APPInit(void)
         LOG_I("Secure Element : A71CL");
 #elif defined(SSS_HAVE_SE05X) && (SSS_HAVE_SE05X == 1)
         LOG_I("Secure Element : SE050");
-#elif defined(SSS_HAVE_SE050_EAR_CH) && (SSS_HAVE_SE050_EAR_CH == 1)
+#elif defined(SSS_HAVE_A71CH_SIM) && (SSS_HAVE_A71CH_SIM == 1)
         LOG_I("NXP Internal : SE050_CH");
 #elif defined(SSS_HAVE_SE050_L) && (SSS_HAVE_SE050_L == 1)
         LOG_I("Secure Element : SE050_L");
@@ -862,6 +862,7 @@ void main(void)
 #endif
     sm_initSleep();
 
+    LOG_D("W1");
     APPInit();
 
     while (1) {

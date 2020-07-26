@@ -1,8 +1,8 @@
 
 /*
- * Copyright 2018, Cypress Semiconductor Corporation or a subsidiary of 
+ * Copyright 2018, Cypress Semiconductor Corporation or a subsidiary of
  * Cypress Semiconductor Corporation. All Rights Reserved.
- * 
+ *
  * This software, associated documentation and materials ("Software"),
  * is owned by Cypress Semiconductor Corporation
  * or one of its subsidiaries ("Cypress") and is protected by and subject to
@@ -64,7 +64,7 @@
 #include "fsl_sdmmc_host.h"
 #include "fsl_sdmmc_spec.h"
 #include "fsl_usdhc.h"
-
+#include "sdmmc_config.h"
 
 /******************************************************
  *                      Macros
@@ -106,8 +106,6 @@ typedef struct
 /******************************************************
  *               Static Function Declarations
  ******************************************************/
-static void BOARD_PowerOffSDIOCARD(void);
-static void BOARD_PowerOnSDIOCARD(void);
 static sdio_block_size_t find_optimal_block_size( uint32_t data_size );
 /*!
 * @brief call back function for SD card detect.
@@ -121,7 +119,7 @@ static void SDIOCARD_DetectCallBack(bool isInserted, void *userData);
 /******************************************************
  *               Function Declarations
  ******************************************************/
-void  host_platform_sdio_irq_callback(USDHC_Type *base);
+void  host_platform_sdio_irq_callback(void *userData);
 
 /******************************************************
  *             Variables
@@ -130,81 +128,17 @@ void  host_platform_sdio_irq_callback(USDHC_Type *base);
  * @brief Card descriptor.
  * */
 sdio_card_t g_sdio;
-sdmmchost_card_int_t g_sdcard_int = {
-    .userData = SD_HOST_BASEADDR,
-    .cardInterrupt = (sdmmchost_card_int_callback_t)host_platform_sdio_irq_callback,
-};
 sdio_bus_width_t g_buswidth = kSDIO_DataBus1Bit;
 /*!
  * @brief SD card detect flag
  * */
 static bool s_wificardInserted = false;
-
-/*!
- * @brief SDMMC host detect card configuration
- * */
-sdmmchost_detect_card_t s_sdioCardDetect =
-{
-		#ifndef BOARD_SD_DETECT_TYPE
-			.cdType = kSDMMCHOST_DetectCardByGpioCD,
-		#else
-			.cdType = BOARD_SD_DETECT_TYPE,
-		#endif
-			.cdTimeOut_ms = (~0U),
-			.cardInserted = SDIOCARD_DetectCallBack,
-			.cardRemoved = SDIOCARD_DetectCallBack,
-};
-
-/*!
- * @brief SDMMC card power control configuration // ToDo : check for usage of this function
- * */
-#if defined DEMO_SDCARD_POWER_CTRL_FUNCTION_EXIST
-static const sdmmchost_pwr_card_t s_sdCardPwrCtrl =
-{
-    .powerOn = BOARD_PowerOnSDIOCARD,
-	.powerOnDelay_ms = 500U,
-	.powerOff = BOARD_PowerOffSDIOCARD,
-	.powerOffDelay_ms = 0U,
-};
-#endif
-
 /******************************************************
  *             Function definitions
  ******************************************************/
-
-static void BOARD_PowerOnSDIOCARD(void)
-{
-    BOARD_USDHC_SDCARD_POWER_CONTROL(true);
-}
-
 static void SDIOCARD_DetectCallBack(bool isInserted, void *userData)
 {
 	s_wificardInserted = isInserted;
-}
-
-static void BOARD_USDHCClockConfiguration(void)
-{
-#if 0 //!!FIXME
-    /*configure system pll PFD2 fractional divider to 18*/
-    CLOCK_InitSysPfd(kCLOCK_Pfd0, 0x12U);
-    /* Configure USDHC clock source and divider */
-    CLOCK_SetDiv(kCLOCK_Usdhc1Div, 0U);
-    CLOCK_SetMux(kCLOCK_Usdhc1Mux, 1U);
-#endif    
-}
-
-static void BOARD_PowerOffSDIOCARD(void)
-{
-    /*
-        Do nothing here.
-
-        SD card will not be detected correctly if the card VDD is power off,
-       the reason is caused by card VDD supply to the card detect circuit, this issue is exist on EVK board rev A1 and A2.
-
-        If power off function is not implemented after soft reset and prior to SD Host initialization without remove/insert card,
-       a UHS-I card may not reach its highest speed mode during the second card initialization.
-       Application can avoid this issue by toggling the SD_VDD (GPIO) before the SD host initialization.
-    */
 }
 
 #ifndef WICED_DISABLE_MCU_POWERSAVE
@@ -221,10 +155,10 @@ wwd_result_t host_enable_oob_interrupt( void )
 wwd_result_t host_platform_unmask_sdio_interrupt(void)
 {
 	//Clear the CardInterrupt status bit
-	USDHC_ClearInterruptStatusFlags(g_sdio.host.base,kUSDHC_CardInterruptFlag);
+	USDHC_ClearInterruptStatusFlags(g_sdio.host->hostController.base,kUSDHC_CardInterruptFlag);
 
 	//Enable the CardInterrupt Signal
-	USDHC_EnableInterruptSignal(g_sdio.host.base,kUSDHC_CardInterruptFlag);
+	USDHC_EnableInterruptSignal(g_sdio.host->hostController.base,kUSDHC_CardInterruptFlag);
 
     return WWD_SUCCESS;
 }
@@ -238,30 +172,11 @@ uint8_t host_platform_get_oob_interrupt_pin( void )
 
 wwd_result_t host_platform_bus_init( void )
 {
-	status_t err = kStatus_Success;
+    status_t err = kStatus_Success;
 
-	// Configure USDHC Peripheral clock
-	BOARD_USDHCClockConfiguration();
+    WPRINT_WWD_DEBUG(("Source Clk: %d\n",g_sdio.host->hostController.sourceClock_Hz ));
 
-	// Initialize the SDIO Card Info
-	g_sdio.host.base = SD_HOST_BASEADDR;
-	g_sdio.host.sourceClock_Hz = SD_HOST_CLK_FREQ;
-	g_sdio.usrParam.cd = &s_sdioCardDetect;
-	g_sdio.usrParam.cardInt = &g_sdcard_int;
-
-	#if defined DEMO_SDCARD_POWER_CTRL_FUNCTION_EXIST
-	g_sdio.usrParam.pwr = &s_sdCardPwrCtrl;
-
-	#endif
-
-	WPRINT_WWD_DEBUG(("Source Clk: %d\n",g_sdio.host.sourceClock_Hz ));
-
-
-	#if defined(__CORTEX_M)
-    NVIC_SetPriority(SD_HOST_IRQ, 5U);
-	#else
-    GIC_SetPriority(SD_HOST_IRQ, 25U);
-	#endif
+    BOARD_SDIO_Config(&g_sdio, SDIOCARD_DetectCallBack, 5U, host_platform_sdio_irq_callback);
 
     /* SDIO host init function */
     err = SDIO_HostInit(&g_sdio);
@@ -272,24 +187,22 @@ wwd_result_t host_platform_bus_init( void )
     }
 
     /* power off card */
-    SDIO_PowerOffCard(g_sdio.host.base, g_sdio.usrParam.pwr);
+    SDIO_SetCardPower(&g_sdio, false);
     /* card detect */
-    err = SDIO_WaitCardDetectStatus(g_sdio.host.base, g_sdio.usrParam.cd, true);
-    if (err != kStatus_Success)
+    if (SDIO_PollingCardInsert(&g_sdio, kSD_Inserted) != kStatus_Success)
     {
-		WPRINT_WWD_INFO(("\n SDIO card detect failed \n"));
-		return (wwd_result_t)err;
+        WPRINT_WWD_INFO(("\n SDIO card detect failed \n"));
+        return (wwd_result_t)err;
     }
     /* power on card */
-    SDIO_PowerOnCard(g_sdio.host.base, g_sdio.usrParam.pwr);
+    SDIO_SetCardPower(&g_sdio, true);
 
     /* initialize bus clock */
-    g_sdio.busClock_Hz = SDMMCHOST_SET_CARD_CLOCK (g_sdio.host.base, g_sdio.host.sourceClock_Hz, SDMMC_CLOCK_400KHZ);
-       
+    g_sdio.busClock_Hz = SDMMCHOST_SetCardClock(g_sdio.host, SDMMC_CLOCK_400KHZ);
+
     /* get host capability */
-    GET_SDMMCHOST_CAPABILITY(g_sdio.host.base, &(g_sdio.host.capability));
-    WPRINT_WWD_DEBUG(("Bus Clock Max %d block length %d\n",g_sdio.busClock_Hz,g_sdio.host.capability.maxBlockLength));
-    
+    WPRINT_WWD_DEBUG(("Bus Clock Max %d block length %d\n",g_sdio.busClock_Hz,SDMMCHOST_SUPPORT_MAX_BLOCK_LENGTH));
+
     return WWD_SUCCESS;
 }
 
@@ -380,9 +293,9 @@ wwd_result_t host_platform_sdio_transfer( wwd_bus_transfer_direction_t direction
 {
 	wwd_result_t result = WWD_SUCCESS;
 
-	SDMMCHOST_TRANSFER content = {0U};
-	SDMMCHOST_COMMAND xcommand = {0U};
-	SDMMCHOST_DATA xdata = {0};
+	sdmmchost_transfer_t content = {0U};
+	sdmmchost_cmd_t xcommand = {0U};
+	sdmmchost_data_t xdata = {0};
 
 	xcommand.index = command;
 	xcommand.argument = argument;
@@ -423,7 +336,7 @@ wwd_result_t host_platform_sdio_transfer( wwd_bus_transfer_direction_t direction
 	content.command = &xcommand;
 	content.data = (pdata == 0 ) ? NULL : &xdata;
 
-	if (kStatus_Success != g_sdio.host.transfer(g_sdio.host.base, &content))
+	if (kStatus_Success != SDMMCHOST_TransferFunction(g_sdio.host, &content))
 	{
 	     return (wwd_result_t)kStatus_SDMMC_TransferFailed;
 	}
@@ -472,11 +385,11 @@ wwd_result_t host_platform_enable_high_speed_sdio( void )
 
 	if ( g_buswidth == kSDIO_DataBus4Bit)
 	{
-		SDMMCHOST_SET_CARD_BUS_WIDTH(g_sdio.host.base, kSDMMCHOST_DATABUSWIDTH4BIT);
+		SDMMCHOST_SetCardBusWidth(g_sdio.host, kSDMMC_BusWdith4Bit);
 	}
 	else
 	{
-		SDMMCHOST_SET_CARD_BUS_WIDTH(g_sdio.host.base, kSDMMCHOST_DATABUSWIDTH1BIT);
+		SDMMCHOST_SetCardBusWidth(g_sdio.host, kSDMMC_BusWdith1Bit);
 	}
     return (wwd_result_t)result;
 }
@@ -505,13 +418,13 @@ static sdio_block_size_t find_optimal_block_size( uint32_t data_size )
 
 wwd_result_t host_platform_bus_enable_interrupt( void )
 {
-	USDHC_EnableInterruptStatus(g_sdio.host.base, kUSDHC_CardInterruptFlag);
+	USDHC_EnableInterruptStatus(g_sdio.host->hostController.base, kUSDHC_CardInterruptFlag);
     return  WWD_SUCCESS;
 }
 
 wwd_result_t host_platform_bus_disable_interrupt( void )
 {
-	USDHC_DisableInterruptStatus(g_sdio.host.base, kUSDHC_CardInterruptFlag);
+	USDHC_DisableInterruptStatus(g_sdio.host->hostController.base, kUSDHC_CardInterruptFlag);
     return  WWD_SUCCESS;
 }
 
@@ -523,9 +436,9 @@ void host_platform_bus_buffer_freed( wwd_buffer_dir_t direction )
 /******************************************************
  *             IRQ Handler Definitions
  ******************************************************/
-void  host_platform_sdio_irq_callback(USDHC_Type *base)
+void  host_platform_sdio_irq_callback(void *userData)
 {
     wwd_thread_notify_irq();
-    USDHC_DisableInterruptSignal(base, USDHC_INT_SIGNAL_EN_CINTIEN_MASK);
-    USDHC_ClearInterruptStatusFlags(base, USDHC_INT_STATUS_CINT_MASK);
+    USDHC_DisableInterruptSignal(g_sdio.host->hostController.base, USDHC_INT_SIGNAL_EN_CINTIEN_MASK);
+    USDHC_ClearInterruptStatusFlags(g_sdio.host->hostController.base, USDHC_INT_STATUS_CINT_MASK);
 }

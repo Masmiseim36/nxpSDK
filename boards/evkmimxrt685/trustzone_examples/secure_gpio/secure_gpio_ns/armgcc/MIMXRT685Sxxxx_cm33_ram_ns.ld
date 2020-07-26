@@ -7,13 +7,13 @@
 **     Compiler:            GNU C Compiler
 **     Reference manual:    MIMXRT685 User manual Rev. 0.95 11 November 2019
 **     Version:             rev. 1.0, 2018-06-19
-**     Build:               b191128
+**     Build:               b200512
 **
 **     Abstract:
 **         Linker file for the GNU C Compiler
 **
 **     Copyright 2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2019 NXP
+**     Copyright 2016-2020 NXP
 **     All rights reserved.
 **
 **     SPDX-License-Identifier: BSD-3-Clause
@@ -37,6 +37,7 @@ STACK_SIZE = DEFINED(__stack_size__) ? __stack_size__ : 0x0400;
 /* The SRAM region [0x20000-0x80000] is reserved for Non-cached shared memory between M33 and DSP. */
 MEMORY
 {
+  m_flash_image         (RX)  : ORIGIN = 0x08041000, LENGTH = 0x00080000
   m_interrupts          (RX)  : ORIGIN = 0x000C0000, LENGTH = 0x00000130
   m_text                (RX)  : ORIGIN = 0x000C0130, LENGTH = 0x0007FED0
   m_data                (RW)  : ORIGIN = 0x20180000, LENGTH = 0x00080000
@@ -51,9 +52,10 @@ SECTIONS
   {
     . = ALIGN(4);
     __VECTOR_TABLE = .;
+    __Vectors = .;
     KEEP(*(.isr_vector))     /* Startup code */
     . = ALIGN(4);
-  } > m_interrupts
+  } > m_interrupts AT> m_flash_image
 
   /* The program code and other data goes into internal ram */
   .text :
@@ -69,19 +71,19 @@ SECTIONS
     KEEP (*(.init))
     KEEP (*(.fini))
     . = ALIGN(4);
-  } > m_text
+  } > m_text AT> m_flash_image
 
   .ARM.extab :
   {
     *(.ARM.extab* .gnu.linkonce.armextab.*)
-  } > m_text
+  } > m_text AT> m_flash_image
 
   .ARM :
   {
     __exidx_start = .;
     *(.ARM.exidx*)
     __exidx_end = .;
-  } > m_text
+  } > m_text AT> m_flash_image
 
  .ctors :
   {
@@ -105,7 +107,7 @@ SECTIONS
     KEEP (*(SORT(.ctors.*)))
     KEEP (*(.ctors))
     __CTOR_END__ = .;
-  } > m_text
+  } > m_text AT> m_flash_image
 
   .dtors :
   {
@@ -116,14 +118,14 @@ SECTIONS
     KEEP (*(SORT(.dtors.*)))
     KEEP (*(.dtors))
     __DTOR_END__ = .;
-  } > m_text
+  } > m_text AT> m_flash_image
 
   .preinit_array :
   {
     PROVIDE_HIDDEN (__preinit_array_start = .);
     KEEP (*(.preinit_array*))
     PROVIDE_HIDDEN (__preinit_array_end = .);
-  } > m_text
+  } > m_text AT> m_flash_image
 
   .init_array :
   {
@@ -131,7 +133,7 @@ SECTIONS
     KEEP (*(SORT(.init_array.*)))
     KEEP (*(.init_array*))
     PROVIDE_HIDDEN (__init_array_end = .);
-  } > m_text
+  } > m_text AT> m_flash_image
 
   .fini_array :
   {
@@ -139,7 +141,7 @@ SECTIONS
     KEEP (*(SORT(.fini_array.*)))
     KEEP (*(.fini_array*))
     PROVIDE_HIDDEN (__fini_array_end = .);
-  } > m_text
+  } > m_text AT> m_flash_image
 
   __etext = .;    /* define a global symbol at end of code */
   __DATA_ROM = .; /* Symbol is used by startup for data initialization */
@@ -147,21 +149,23 @@ SECTIONS
   __VECTOR_RAM = ORIGIN(m_interrupts);
   __RAM_VECTOR_TABLE_SIZE_BYTES = 0x0;
 
-  .data : AT(__DATA_ROM)
+  .data :
   {
     . = ALIGN(4);
     __DATA_RAM = .;
     __data_start__ = .;      /* create a global symbol at data start */
+    *(CodeQuickAccess)       /* CodeQuickAccess sections */
+    *(DataQuickAccess)       /* DataQuickAccess sections */
     *(.data)                 /* .data sections */
     *(.data*)                /* .data* sections */
     KEEP(*(.jcr*))
     . = ALIGN(4);
     __data_end__ = .;        /* define a global symbol at data end */
-  } > m_data
+  } > m_data AT> m_flash_image
 
   __DATA_END = __DATA_ROM + (__data_end__ - __data_start__);
-  text_end = ORIGIN(m_text) + LENGTH(m_text);
-  ASSERT(__DATA_END <= text_end, "region m_text overflowed with text and data")
+  _image_size = __DATA_END - __VECTOR_TABLE;
+  ASSERT(_image_size <= LENGTH(m_flash_image), "region m_flash_image overflowed with text and data")
 
   /* Uninitialized data section */
   .bss :

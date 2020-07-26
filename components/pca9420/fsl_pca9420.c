@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 NXP
+ * Copyright 2018-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -83,17 +83,18 @@ void PCA9420_Init(pca9420_handle_t *handle, const pca9420_config_t *config)
     /* Set Slave Address. */
     handle->slaveAddress = config->slaveAddress;
 
-    topCtl[0] = ((uint8_t)config->vinCurrentLimit) | ((uint8_t)config->powerUpCfg) | ((uint8_t)config->startPowerDown) |
-                ((uint8_t)config->wdogChargeCtrl) | ((uint8_t)config->powerGoodEnable);
-    topCtl[1] = ((uint8_t)config->asysPreWarnThreshold) | ((uint8_t)config->asysInputSource) |
-                ((uint8_t)config->vinOvpThreshold) | ((uint8_t)config->vinUvloThreshold);
-    topCtl[2] = ((uint8_t)config->asysUvloThreshold) | ((uint8_t)config->chargeTermDisable) |
-                ((uint8_t)config->thermalShutdownThreshold) | ((uint8_t)config->tempWarnThreshold);
+    topCtl[0] = ((uint32_t)config->vinCurrentLimit) | ((uint32_t)config->powerUpCfg) |
+                ((uint32_t)config->startPowerDown) | ((uint32_t)config->wdogChargeCtrl) |
+                ((uint32_t)config->powerGoodEnable);
+    topCtl[1] = ((uint32_t)config->asysPreWarnThreshold) | ((uint32_t)config->asysInputSource) |
+                ((uint32_t)config->vinOvpThreshold) | ((uint32_t)config->vinUvloThreshold);
+    topCtl[2] = ((uint32_t)config->asysUvloThreshold) | ((uint32_t)config->chargeTermDisable) |
+                ((uint32_t)config->thermalShutdownThreshold) | ((uint32_t)config->tempWarnThreshold);
     topCtl[3] = ((uint8_t)config->onPinTimer);
-    regCtl    = (config->disableSw1Bleed ? (uint8_t)kPCA9420_RegCtlSw1Bleed : 0) |
-             (config->disableSw2Bleed ? (uint8_t)kPCA9420_RegCtlSw2Bleed : 0) |
-             (config->disableLdo1Bleed ? (uint8_t)kPCA9420_RegCtlLdo1Bleed : 0) |
-             (config->disableLdo2Bleed ? (uint8_t)kPCA9420_RegCtlLdo2Bleed : 0);
+    regCtl    = (config->disableSw1Bleed ? (uint32_t)kPCA9420_RegCtlSw1Bleed : 0) |
+             (config->disableSw2Bleed ? (uint32_t)kPCA9420_RegCtlSw2Bleed : 0) |
+             (config->disableLdo1Bleed ? (uint32_t)kPCA9420_RegCtlLdo1Bleed : 0) |
+             (config->disableLdo2Bleed ? (uint32_t)kPCA9420_RegCtlLdo2Bleed : 0);
 
     result = PCA9420_WriteRegs(handle, PCA9420_TOP_CNTL0, topCtl, sizeof(topCtl));
     result = result ? PCA9420_WriteRegs(handle, PCA9420_ACT_DISCHARGE_CNTL_1, &regCtl, 1) : result;
@@ -201,7 +202,7 @@ void PCA9420_WriteModeConfigs(pca9420_handle_t *handle,
     uint32_t i;
     bool result;
 
-    assert(num >= 1 && num <= 4);
+    assert((num >= 1) && (num <= 4));
 
     switch (modeBase)
     {
@@ -224,15 +225,15 @@ void PCA9420_WriteModeConfigs(pca9420_handle_t *handle,
 
     for (i = 0; i < num; i++)
     {
-        modeCfg[i * 4] = ((uint8_t)(configs[i].shipModeEnable)) | ((uint8_t)(configs[i].modeSel)) |
-                         ((uint8_t)(configs[i].sw1OutVolt));
-        modeCfg[i * 4 + 1] = ((uint8_t)(configs[i].onCfg)) | ((uint8_t)(configs[i].sw2OutVolt));
-        modeCfg[i * 4 + 2] = ((uint8_t)(configs[i].ldo1OutVolt)) |
-                             (configs[i].enableSw1Out ? (uint8_t)kPCA9420_RegulatorSwitch1 : 0) |
-                             (configs[i].enableSw2Out ? (uint8_t)kPCA9420_RegulatorSwitch2 : 0) |
-                             (configs[i].enableLdo1Out ? (uint8_t)kPCA9420_RegulatorLdo1 : 0) |
-                             (configs[i].enableLdo2Out ? (uint8_t)kPCA9420_RegulatorLdo2 : 0);
-        modeCfg[i * 4 + 3] = ((uint8_t)(configs[i].wdogTimerCfg)) | ((uint8_t)(configs[i].ldo2OutVolt));
+        modeCfg[i * 4] = ((uint32_t)(configs[i].shipModeEnable)) | ((uint32_t)(configs[i].modeSel)) |
+                         ((uint32_t)(configs[i].sw1OutVolt));
+        modeCfg[i * 4 + 1] = ((uint32_t)(configs[i].onCfg)) | ((uint32_t)(configs[i].sw2OutVolt));
+        modeCfg[i * 4 + 2] = ((uint32_t)(configs[i].ldo1OutVolt)) |
+                             (configs[i].enableSw1Out ? (uint32_t)kPCA9420_RegulatorSwitch1 : 0) |
+                             (configs[i].enableSw2Out ? (uint32_t)kPCA9420_RegulatorSwitch2 : 0) |
+                             (configs[i].enableLdo1Out ? (uint32_t)kPCA9420_RegulatorLdo1 : 0) |
+                             (configs[i].enableLdo2Out ? (uint32_t)kPCA9420_RegulatorLdo2 : 0);
+        modeCfg[i * 4 + 3] = ((uint32_t)(configs[i].wdogTimerCfg)) | ((uint32_t)(configs[i].ldo2OutVolt));
     }
 
     result = PCA9420_WriteRegs(handle, modeCfgRegBase, modeCfg, 4 * num);
@@ -252,7 +253,7 @@ void PCA9420_ReadModeConfigs(pca9420_handle_t *handle,
     uint32_t i;
     bool result;
 
-    assert(num >= 1 && num <= 4);
+    assert((num >= 1) && (num <= 4));
 
     switch (modeBase)
     {
@@ -401,22 +402,22 @@ void PCA9420_FeedWatchDog(pca9420_handle_t *handle)
     PCA9420_WriteRegs(handle, PCA9420_TOP_CNTL4, &regValue, 1);
 }
 
-bool PCA9420_WriteRegs(pca9420_handle_t *handle, uint8_t reg, uint8_t *val, uint32_t size)
+bool PCA9420_WriteRegs(pca9420_handle_t *handle, uint8_t regBase, uint8_t *val, uint32_t size)
 {
     assert(handle);
     assert(handle->I2C_SendFunc);
     assert(val);
 
-    return (kStatus_Success == handle->I2C_SendFunc(handle->slaveAddress, reg, 1U, val, size)) ? true : false;
+    return (kStatus_Success == handle->I2C_SendFunc(handle->slaveAddress, regBase, 1U, val, size)) ? true : false;
 }
 
-bool PCA9420_ReadRegs(pca9420_handle_t *handle, uint8_t reg, uint8_t *val, uint32_t size)
+bool PCA9420_ReadRegs(pca9420_handle_t *handle, uint8_t regBase, uint8_t *val, uint32_t size)
 {
     assert(handle);
     assert(handle->I2C_ReceiveFunc);
     assert(val);
 
-    return (kStatus_Success == handle->I2C_ReceiveFunc(handle->slaveAddress, reg, 1U, val, size)) ? true : false;
+    return (kStatus_Success == handle->I2C_ReceiveFunc(handle->slaveAddress, regBase, 1U, val, size)) ? true : false;
 }
 
 bool PCA9420_ModifyReg(pca9420_handle_t *handle, uint8_t reg, uint8_t mask, uint8_t val)

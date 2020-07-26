@@ -2,7 +2,7 @@
 @page middleware_log Middleware Change Log
 
 @section tensorflow_lite eIQ TensorFlow Lite library
-  Current version is 1.1.0
+  Current version is 1.2.0
   
   - 1.0.0
     - Initial version of the eIQ TensorFlow Lite library
@@ -42,5 +42,22 @@
                                     - Real time camera image inference
     - Added examples:
       - tensorflow_lite_adt         - Anomaly detection example
+
+  - 1.2.0
+    - Updated eIQ TensorFlow Lite library to version based
+      on the TensorFlow Lite library version 2.1.0 available
+      at https://github.com/tensorflow/tensorflow/tree/r2.1/tensorflow/lite.
+    - Updated third party library source codes:
+      - Eigen (https://gitlab.com/libeigen/eigen/-/archive/4e696901f873a2347f76d931cf2f701e31e15d05/eigen-4e696901f873a2347f76d931cf2f701e31e15d05.tar.gz)
+      - Farmhash (http://mirror.tensorflow.org/github.com/google/farmhash/archive/816a4ae622e964763ca0862d9dbd19324a1eaf45.tar.gz)
+      - FFT2D (http://mirror.tensorflow.org/www.kurims.kyoto-u.ac.jp/~ooura/fft.tgz)
+      - FlatBuffers (http://mirror.tensorflow.org/github.com/google/flatbuffers/archive/v1.11.0.tar.gz)
+      - Gemmlowp (https://github.com/google/gemmlowp/commit/12fed0cd7cfcd9e169bf1925bc3a7a58725fdcc3)
+    - Added third party library source codes:
+      - Abseil (https://github.com/abseil/abseil-cpp/commit/43ef2148c0936ebf7cb4be6b19927a9d9d145b8f)
+    - Supported evaluation boards: evkmimxrt1060, evkbimxrt1050
+
+    - Added examples:
+      - tensorflow_lite_benchmark   - A benchmark tool to benchmark tensorflow lite models
 
 */

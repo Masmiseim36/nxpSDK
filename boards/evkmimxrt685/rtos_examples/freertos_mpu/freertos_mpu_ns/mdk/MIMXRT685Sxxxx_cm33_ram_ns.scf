@@ -43,6 +43,7 @@
 
 /* The SRAM region [0x0-0x20000] is reserved for ROM code and app-specific use cases. */
 /* The SRAM region [0x20000-0x80000] is reserved for Non-cached shared memory between M33 and DSP. */
+#define  m_flash_image_start           0x08041000
 
 #define  m_interrupts_start            0x000C0000
 #define  m_interrupts_size             0x00000200
@@ -65,29 +66,36 @@
 #define  m_usb_sram_start              0x40140000
 #define  m_usb_sram_size               0x00004000
 
-LR_m_interrupts m_interrupts_start m_interrupts_size+m_text_size {
-  VECTOR_ROM m_interrupts_start FIXED m_interrupts_size { ; load address = execution address
+LR_m_interrupts m_flash_image_start m_interrupts_size+m_text_size {
+  VECTOR_ROM m_interrupts_start m_interrupts_size {
     * (.isr_vector,+FIRST)
   }
-
-  ER_priv_func priv_func_start FIXED priv_func_size { ; load address = execution address
-    * (InRoot$$Sections)
-    *(privileged_functions)
+  VECTOR_RAM +0 FILL 0x0 priv_func_start-ImageLimit(VECTOR_ROM){
   }
 
-  ER_sys_calls sys_calls_start FIXED sys_calls_size { ; load address = execution address
+  ER_priv_func priv_func_start priv_func_size {
+    *(privileged_functions)
+  }
+  EMPTY_RAM_1 +0 FILL 0x0 sys_calls_start-ImageLimit(ER_priv_func){
+  }
+
+  ER_sys_calls sys_calls_start sys_calls_size {
     *(freertos_system_calls)
   }
 
-  ER_m_text m_text_start FIXED m_text_size { ; load address = execution address
+  EMPTY_RAM_2 +0 FILL 0x0 m_text_start-ImageLimit(ER_sys_calls) {
+  }
+
+  ER_m_text m_text_start m_text_size {
     .ANY (+RO)
   }
-  VECTOR_RAM m_interrupts_start EMPTY 0 {
-  }
+
   RW_priv_data priv_data_start priv_data_size { ; privileged data
     *(privileged_data)
   }
-  RW_m_data m_data_start m_data_size-Stack_Size-Heap_Size { ; RW data
+  RW_m_data m_data_start ALIGN 4 m_data_size-Stack_Size-Heap_Size { ; RW data
+    * (CodeQuickAccess)
+    * (DataQuickAccess)
     .ANY (+RW +ZI)
   }
 
@@ -97,10 +105,16 @@ LR_m_interrupts m_interrupts_start m_interrupts_size+m_text_size {
   }
 
   ER_m_usb_bdt m_usb_sram_start UNINIT usb_bdt_size {
-    * (m_usb_bdt)
+    * (*m_usb_bdt)
   }
 
   ER_m_usb_ram (m_usb_sram_start + usb_bdt_size) UNINIT (m_usb_sram_size - usb_bdt_size) {
-    * (m_usb_global)
+    * (*m_usb_global)
+  }
+}
+
+LR_m_boot +0 {
+  ER_m_boot +0 { ; load address = execution address
+    * (InRoot$$Sections)
   }
 }

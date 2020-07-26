@@ -30,23 +30,23 @@
  * Properties of the external UART used by a user for HCI commands sent from a PC.
  * Debug console is redirected to another UART in hardware_init.c.
  */
-#define EXTERNAL_UART ((LPUART_Type *)BOARD_DEBUG_UART_BASEADDR)
-#define EXTERNAL_UART_BAUDRATE BOARD_DEBUG_UART_BAUDRATE
-#define EXTERNAL_UART_CLK_FREQ BOARD_DEBUG_UART_CLK_FREQ
-#define EXTERNAL_UART_IRQ BOARD_UART_IRQ
+#define EXTERNAL_UART             ((LPUART_Type *)BOARD_DEBUG_UART_BASEADDR)
+#define EXTERNAL_UART_BAUDRATE    BOARD_DEBUG_UART_BAUDRATE
+#define EXTERNAL_UART_CLK_FREQ    BOARD_DEBUG_UART_CLK_FREQ
+#define EXTERNAL_UART_IRQ         BOARD_UART_IRQ
 #define EXTERNAL_UART_IRQ_HANDLER BOARD_UART_IRQ_HANDLER
 
 /*
  * Properties of the UART which is an internal HCI interface to a Bluetooth chip.
  */
-#define INTERNAL_UART BOARD_BT_UART_BASEADDR
-#define INTERNAL_UART_BAUDRATE BOARD_DEBUG_UART_BAUDRATE
-#define INTERNAL_UART_CLK_FREQ BOARD_BT_UART_CLK_FREQ
-#define INTERNAL_UART_IRQ BOARD_BT_UART_IRQ
+#define INTERNAL_UART             BOARD_BT_UART_BASEADDR
+#define INTERNAL_UART_BAUDRATE    BOARD_DEBUG_UART_BAUDRATE
+#define INTERNAL_UART_CLK_FREQ    BOARD_BT_UART_CLK_FREQ
+#define INTERNAL_UART_IRQ         BOARD_BT_UART_IRQ
 #define INTERNAL_UART_IRQ_HANDLER BOARD_BT_UART_IRQ_HANDLER
 
-#define UART_IRQ_PRIO (configMAX_PRIORITIES - 1)
-#define PASS_TASK_PRIO (UART_IRQ_PRIO - 1)
+#define UART_IRQ_PRIO        (configMAX_PRIORITIES - 1)
+#define PASS_TASK_PRIO       (UART_IRQ_PRIO - 1)
 #define PASS_TASK_STACK_SIZE 1024U
 
 #define QUEUE_SIZE 512U
@@ -150,12 +150,7 @@ static inline void uart_irq_handler(LPUART_Type *uart, QueueHandle_t queue)
 void EXTERNAL_UART_IRQ_HANDLER(void)
 {
     uart_irq_handler(EXTERNAL_UART, internal_uart_tx_queue);
-
-    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-      exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 /*!
@@ -164,12 +159,7 @@ void EXTERNAL_UART_IRQ_HANDLER(void)
 void INTERNAL_UART_IRQ_HANDLER(void)
 {
     uart_irq_handler(INTERNAL_UART, external_uart_tx_queue);
-
-    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-      exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 /*!
@@ -249,8 +239,8 @@ int main(void)
     static pass_task_args_t pass_to_external_args;
 
     BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
 
     uint32_t uartClkSrcFreq = BOARD_DebugConsoleSrcFreq();
     DbgConsole_Init(BOARD_DEBUG_CONSOLE_INSTANCE, BOARD_DEBUG_UART_BAUDRATE, BOARD_DEBUG_UART_TYPE, uartClkSrcFreq);

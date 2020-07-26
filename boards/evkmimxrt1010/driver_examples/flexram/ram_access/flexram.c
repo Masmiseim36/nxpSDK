@@ -15,13 +15,13 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define APP_FLEXRAM FLEXRAM
-#define APP_FLEXRAM_IRQ FLEXRAM_IRQn
+#define APP_FLEXRAM                  FLEXRAM
+#define APP_FLEXRAM_IRQ              FLEXRAM_IRQn
 #define APP_FLEXRAM_OCRAM_START_ADDR 0x20200000
 #define APP_FLEXRAM_OCRAM_MAGIC_ADDR 0x202000a8
-#define APP_FLEXRAM_IRQ_HANDLER FLEXRAM_IRQHandler
-#define APP_DSB() __DSB()
-#define APP_ISB() __ISB()
+#define APP_FLEXRAM_IRQ_HANDLER      FLEXRAM_IRQHandler
+#define APP_DSB()                    __DSB()
+#define APP_ISB()                    __ISB()
 
 
 /*******************************************************************************
@@ -49,12 +49,7 @@ void APP_FLEXRAM_IRQ_HANDLER(void)
         FLEXRAM_ClearInterruptStatus(APP_FLEXRAM, kFLEXRAM_OCRAMAccessError);
         s_flexram_ocram_access_error_match = true;
     }
-
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 /*!

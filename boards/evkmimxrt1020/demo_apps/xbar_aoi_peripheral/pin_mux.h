@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP
+ * Copyright 2019-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -56,6 +56,10 @@ void BOARD_InitBootPins(void);
 #define BOARD_ENET_TXD0_PERIPHERAL                                          CMP1   /*!< Device name: CMP1 */
 #define BOARD_ENET_TXD0_SIGNAL                                                IN   /*!< CMP1 signal: IN */
 #define BOARD_ENET_TXD0_CHANNEL                                               0U   /*!< CMP1 IN channel: 0 */
+
+/* GPIO_AD_B0_11 (number 97), ENET_CRS_DV/U11[18]/J19[3] */
+#define BOARD_ENET_CRS_DV_PERIPHERAL                                         ARM   /*!< Device name: ARM */
+#define BOARD_ENET_CRS_DV_SIGNAL                                   arm_trace_swo   /*!< ARM signal: arm_trace_swo */
 
 
 /*!

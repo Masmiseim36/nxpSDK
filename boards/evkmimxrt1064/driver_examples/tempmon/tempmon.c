@@ -14,17 +14,17 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_TEMPMON TEMPMON
-#define DEMO_TEMP_LOW_HIGH_IRQn TEMP_LOW_HIGH_IRQn
-#define DEMO_TEMP_PANIC_IRQn TEMP_PANIC_IRQn
+#define DEMO_TEMPMON                  TEMPMON
+#define DEMO_TEMP_LOW_HIGH_IRQn       TEMP_LOW_HIGH_IRQn
+#define DEMO_TEMP_PANIC_IRQn          TEMP_PANIC_IRQn
 #define DEMO_TEMP_LOW_HIGH_IRQHandler TEMP_LOW_HIGH_IRQHandler
-#define DEMO_TEMP_PANIC_IRQHandler TEMP_PANIC_IRQHandler
+#define DEMO_TEMP_PANIC_IRQHandler    TEMP_PANIC_IRQHandler
 
 #define DEMO_HIGHALARMTEMP 42U
-#define DEMO_LOWALARMTEMP 40U
+#define DEMO_LOWALARMTEMP  40U
 
 #define DEMO_CLOCK_SOURCE kCLOCK_AhbClk
-#define DEMO_CLOCK_DIV kCLOCK_AhbDiv
+#define DEMO_CLOCK_DIV    kCLOCK_AhbDiv
 
 /*******************************************************************************
  * Prototypes
@@ -45,12 +45,7 @@ volatile bool temperatureReach = false;
 void DEMO_TEMP_LOW_HIGH_IRQHandler(void)
 {
     temperatureReach = true;
-
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 /*!

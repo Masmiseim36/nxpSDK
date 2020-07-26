@@ -1,12 +1,12 @@
 Overview
 ========
-The example demonstrates example GUI developed with Crank Storyboard Engine.
+This sample demonstrates the Storyboard engine in its low memory configuration while still providing a high-performance UI.
 
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.40.2
-- MCUXpresso  11.1.0
+- IAR embedded Workbench  8.50.1
+- MCUXpresso  11.2.0
 
 Hardware requirements
 =====================

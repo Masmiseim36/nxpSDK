@@ -5,10 +5,10 @@ This example demonstrates how to perform OTA firmware update of the board using 
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.40.2
-- Keil MDK  5.29
-- GCC ARM Embedded  8.3.1
-- MCUXpresso  11.1.0
+- IAR embedded Workbench  8.50.1
+- Keil MDK  5.30
+- GCC ARM Embedded  9.2.1
+- MCUXpresso  11.2.0
 
 Hardware requirements
 =====================
@@ -40,7 +40,7 @@ Before running the demo it is mecessary to configure AWS IoT Console and update 
         #define clientcredentialIOT_THING_NAME "MyExample"
 
     In the next step you will get the "device certificate" and the "primary key". The device certificate and private key needs to be opened in text editor and its content copied into the "aws_clientcredential_keys.h".
-    Or you can use the CertificateConfigurator.html (mcu-sdk-2.0\rtos\amazon-freertos\tools\certificate_configuration) to generate the "aws_clientcredential_keys.h".
+    Or you can use the CertificateConfigurator.html (mcu-sdk-2.0\rtos\freertos\tools\certificate_configuration) to generate the "aws_clientcredential_keys.h".
 
     Example:
         #define keyCLIENT_CERTIFICATE_PEM "Paste client certificate here."
@@ -57,19 +57,22 @@ Before running the demo it is mecessary to configure AWS IoT Console and update 
 
     In the same way update the private key array.
 
-3.  Open example's project and build it.
+3.  In case your board connects to the Internet using WiFi, it is necessary to configure also WiFi parameters in "aws_clientcredential.h",
+    namely "clientcredentialWIFI_SSID" and "clientcredentialWIFI_PASSWORD".
+    Otherwise connect board's RJ45 to a network with Internet access.
+    Either way the example expects IP configuration to be assigned by DHCP server.
+
+4.  Open example's project and build it.
     Known issue: MDK linker issues warning about unused boot_hdr sections. This does not affect the functionality of the example.
 
-4.  Connect a USB cable between the PC host and the OpenSDA USB port on the target board.
+5.  Connect a USB cable between the PC host and the OpenSDA USB port on the target board.
 
-5.  Open a serial terminal on PC for OpenSDA serial device with these settings:
+6.  Open a serial terminal on PC for OpenSDA serial device with these settings:
     - 115200 baud rate
     - 8 data bits
     - No parity
     - One stop bit
     - No flow control
-
-6.  Connect the board's RJ45 to network with Internet access (IP address to the board is assigned by the DHCP server). Make sure the connection on port 8883 is not blocked.
 
 7.  Download the program to the target board.
 

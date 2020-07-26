@@ -71,7 +71,7 @@ static void USART_RTOS_Callback(USART_Type *base, usart_handle_t *state, status_
  * param handle The RTOS USART handle, the pointer to allocated space for RTOS context.
  * param t_handle The pointer to allocated space where to store transactional layer internal state.
  * param cfg The pointer to the parameters required to configure the USART after initialization.
- * return 0 succeed, others fail.
+ * return kStatus_Success, others fail.
  */
 int USART_RTOS_Init(usart_rtos_handle_t *handle, usart_handle_t *t_handle, const struct rtos_usart_config *cfg)
 {
@@ -142,7 +142,7 @@ int USART_RTOS_Init(usart_rtos_handle_t *handle, usart_handle_t *t_handle, const
     USART_TransferCreateHandle(handle->base, handle->t_state, USART_RTOS_Callback, handle);
     USART_TransferStartRingBuffer(handle->base, handle->t_state, cfg->buffer, cfg->buffer_size);
 
-    return 0;
+    return kStatus_Success;
 }
 
 /*FUNCTION**********************************************************************
@@ -177,7 +177,7 @@ int USART_RTOS_Deinit(usart_rtos_handle_t *handle)
     handle->base    = NULL;
     handle->t_state = NULL;
 
-    return 0;
+    return kStatus_Success;
 }
 
 /*FUNCTION**********************************************************************
@@ -208,7 +208,7 @@ int USART_RTOS_Send(usart_rtos_handle_t *handle, const uint8_t *buffer, uint32_t
     }
     if (0 == length)
     {
-        return 0;
+        return kStatus_Success;
     }
     if (NULL == buffer)
     {
@@ -277,7 +277,7 @@ int USART_RTOS_Receive(usart_rtos_handle_t *handle, uint8_t *buffer, uint32_t le
         {
             *received = n;
         }
-        return 0;
+        return kStatus_Success;
     }
     if (NULL == buffer)
     {

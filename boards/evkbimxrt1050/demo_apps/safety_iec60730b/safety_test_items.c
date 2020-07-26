@@ -6,19 +6,9 @@
  */
 
 #include "safety_config.h"
-#include "iec60730b.h"
-#include "safety_cm7_imxrt.h"
-
-#ifndef NULL
-#ifdef __cplusplus
-#define NULL (0)
-#else
-#define NULL ((void *) 0)
-#endif
-#endif
 
 #if defined(__IAR_SYSTEMS_ICC__)
-#pragma location =  ".safety_ram"
+    #pragma location =  ".safety_ram"
 #endif
 
 #define MUX_ADDR(arg1) MUX_ADDR_(arg1) /* wrapper */
@@ -31,7 +21,7 @@
 *                           STRUCTURE FOR DIO Initialization and TEST          *
 *                                                                              *
 *******************************************************************************/
-fs_dio_test_rt_t dio_safety_test_item_0 =
+dio_test_rt_t dio_safety_test_item_0 =
 {
   .gpio   = GPIO1_BASE,
   .pinNum = 20,
@@ -40,7 +30,7 @@ fs_dio_test_rt_t dio_safety_test_item_0 =
   .padAddr = PAD_ADDR(IOMUXC_GPIO_AD_B1_04_GPIO1_IO20),
 };
 
-fs_dio_test_rt_t dio_safety_test_item_1 =
+dio_test_rt_t dio_safety_test_item_1 =
 {
   .gpio   = GPIO1_BASE,
   .pinNum = 21,
@@ -50,4 +40,4 @@ fs_dio_test_rt_t dio_safety_test_item_1 =
 };
  
 /* NULL terminated array of pointers to dio_test_t items for safety DIO test */
-fs_dio_test_rt_t *dio_safety_test_items[] = { &dio_safety_test_item_0, &dio_safety_test_item_1, NULL };
+dio_test_rt_t *dio_safety_test_items[] = { &dio_safety_test_item_0, &dio_safety_test_item_1, NULL };

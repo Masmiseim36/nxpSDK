@@ -184,10 +184,6 @@ include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilitie
 
 add_executable(dsp_hello_world_hifi4.elf 
 "${ProjDirPath}/../main_hifi4.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT685S/MIMXRT685S_dsp.h"
-"${ProjDirPath}/../../../../../../devices/MIMXRT685S/MIMXRT685S_dsp_features.h"
-"${ProjDirPath}/../../../../../../devices/MIMXRT685S/system_MIMXRT685S_dsp.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT685S/system_MIMXRT685S_dsp.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/arm_common_tables.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/arm_const_structs.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/arm_math.h"

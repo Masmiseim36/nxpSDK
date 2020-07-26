@@ -25,7 +25,7 @@
 #define APP_MU_IRQ_PRIORITY (3U)
 
 /* The MU instance used for CM33 and DSP core communication */
-#define APP_MU MUA
+#define APP_MU      MUA
 #define APP_MU_IRQn MU_A_IRQn
 
 static int32_t isr_counter     = 0;

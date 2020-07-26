@@ -8,8 +8,9 @@
     <definition extID="component.serial_manager_uart.MIMXRT1011"/>
     <definition extID="device.MIMXRT1011_CMSIS.MIMXRT1011"/>
     <definition extID="device.MIMXRT1011_startup.MIMXRT1011"/>
-    <definition extID="middleware.amazon_freertos.freertos.MIMXRT1011"/>
-    <definition extID="middleware.amazon_freertos.freertos.heap_4.MIMXRT1011"/>
+    <definition extID="middleware.freertos-kernel.MIMXRT1011"/>
+    <definition extID="middleware.freertos-kernel.extension.MIMXRT1011"/>
+    <definition extID="middleware.freertos-kernel.heap_4.MIMXRT1011"/>
     <definition extID="middleware.wifi_qca.MIMXRT1011"/>
     <definition extID="middleware.wifi_qca.evkmimxrt1010.freertos.shields.MIMXRT1011"/>
     <definition extID="middleware.wifi_qca.evkmimxrt1010.freertos.shields.silex2401.MIMXRT1011"/>
@@ -30,6 +31,7 @@
     <definition extID="platform.drivers.xip_board.MIMXRT1011"/>
     <definition extID="platform.drivers.xip_device.MIMXRT1011"/>
     <definition extID="platform.utilities.assert.MIMXRT1011"/>
+    <definition extID="platform.utilities.misc_utilities.MIMXRT1011"/>
     <definition extID="utility.debug_console.MIMXRT1011"/>
     <definition extID="utility.shell.MIMXRT1011"/>
     <definition extID="iar"/>
@@ -39,7 +41,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkmimxrt1010_qca_throughput" name="qca_throughput" category="wifi_qca_examples" dependency="middleware.wifi_qca.evkmimxrt1010.freertos.shields.silex2401.MIMXRT1011 middleware.amazon_freertos.freertos.heap_4.MIMXRT1011 middleware.wifi_qca.MIMXRT1011 utility.shell.MIMXRT1011 middleware.amazon_freertos.freertos.MIMXRT1011 platform.drivers.clock.MIMXRT1011 platform.drivers.common.MIMXRT1011 device.MIMXRT1011_CMSIS.MIMXRT1011 utility.debug_console.MIMXRT1011 component.lpuart_adapter.MIMXRT1011 component.serial_manager.MIMXRT1011 component.serial_manager_uart.MIMXRT1011 platform.drivers.lpuart.MIMXRT1011 component.lists.MIMXRT1011 device.MIMXRT1011_startup.MIMXRT1011 platform.drivers.iomuxc.MIMXRT1011 platform.utilities.assert.MIMXRT1011 platform.drivers.igpio.MIMXRT1011 platform.drivers.xip_device.MIMXRT1011 platform.drivers.xip_board.MIMXRT1011 middleware.wifi_qca.evkmimxrt1010.freertos.shields.MIMXRT1011 middleware.wifi_qca.freertos.MIMXRT1011 middleware.wifi_qca.freertos.drivers.lpspi_edma.MIMXRT1011 platform.drivers.lpspi.MIMXRT1011 platform.Include_core_cm7.MIMXRT1011 platform.Include_common.MIMXRT1011 platform.Include_dsp.MIMXRT1011 platform.drivers.lpspi_edma.MIMXRT1011 platform.drivers.edma.MIMXRT1011 platform.drivers.dmamux.MIMXRT1011">
+  <example id="evkmimxrt1010_qca_throughput" name="qca_throughput" category="wifi_qca_examples" dependency="middleware.wifi_qca.evkmimxrt1010.freertos.shields.silex2401.MIMXRT1011 middleware.freertos-kernel.heap_4.MIMXRT1011 middleware.wifi_qca.MIMXRT1011 utility.shell.MIMXRT1011 platform.drivers.clock.MIMXRT1011 platform.drivers.common.MIMXRT1011 device.MIMXRT1011_CMSIS.MIMXRT1011 utility.debug_console.MIMXRT1011 component.lpuart_adapter.MIMXRT1011 component.serial_manager.MIMXRT1011 component.lists.MIMXRT1011 component.serial_manager_uart.MIMXRT1011 platform.drivers.lpuart.MIMXRT1011 device.MIMXRT1011_startup.MIMXRT1011 platform.drivers.iomuxc.MIMXRT1011 platform.utilities.assert.MIMXRT1011 platform.drivers.igpio.MIMXRT1011 platform.drivers.xip_device.MIMXRT1011 platform.drivers.xip_board.MIMXRT1011 middleware.wifi_qca.evkmimxrt1010.freertos.shields.MIMXRT1011 middleware.wifi_qca.freertos.MIMXRT1011 middleware.freertos-kernel.MIMXRT1011 middleware.freertos-kernel.extension.MIMXRT1011 middleware.wifi_qca.freertos.drivers.lpspi_edma.MIMXRT1011 platform.drivers.lpspi.MIMXRT1011 platform.Include_core_cm7.MIMXRT1011 platform.Include_common.MIMXRT1011 platform.Include_dsp.MIMXRT1011 platform.drivers.lpspi_edma.MIMXRT1011 platform.drivers.edma.MIMXRT1011 platform.drivers.dmamux.MIMXRT1011 platform.utilities.misc_utilities.MIMXRT1011">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -73,7 +75,9 @@
           <value>SHELL_NON_BLOCKING_MODE=0</value>
           <value>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING=1</value>
           <value>A_LITTLE_ENDIAN</value>
+          <value>SDK_DEBUGCONSOLE_UART</value>
           <value>DEBUG_CONSOLE_RX_ENABLE=0</value>
+          <value>SERIAL_PORT_TYPE_UART=1</value>
           <value>FSL_RTOS_FREE_RTOS</value>
         </option>
         <option id="gnu.c.compiler.option.optimization.flags" type="string">
@@ -90,6 +94,10 @@
         </option>
         <option id="com.crt.advproject.link.memory.heapAndStack" type="string">
           <value>&amp;Heap:Default;Default;0x200&amp;Stack:Default;Default;0x100</value>
+        </option>
+        <option id="com.crt.advproject.link.memory.sections" type="stringList">
+          <value>isd=*(NonCacheable.init);region=SRAM_DTC;type=.data</value>
+          <value>isd=*(NonCacheable);region=SRAM_DTC;type=.bss</value>
         </option>
         <option id="com.crt.advproject.gcc.exe.release.option.optimization.level" type="enum">
           <value>gnu.c.optimization.level.size</value>
@@ -131,7 +139,7 @@
     <source path="boards/evkmimxrt1010/wifi_qca_examples/qca_throughput/driver_plugin" target_path="source/driver_plugin" type="src">
       <files mask="atheros_wifi_mediactl_ext.c"/>
     </source>
-    <source path="boards/evkmimxrt1010/wifi_qca_examples/qca_throughput/mdk" target_path="src" type="configuration" toolchain="mdk">
+    <source path="boards/evkmimxrt1010/wifi_qca_examples/qca_throughput/mdk" target_path="evkmimxrt1010" type="configuration" toolchain="mdk">
       <files mask="evkmimxrt1010_ram.ini"/>
     </source>
     <source path="boards/evkmimxrt1010/wifi_qca_examples/qca_throughput" target_path="board" type="c_include">

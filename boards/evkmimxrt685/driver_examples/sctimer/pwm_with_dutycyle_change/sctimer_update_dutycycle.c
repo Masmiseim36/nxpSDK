@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -123,8 +123,8 @@ int main(void)
     /* Enable at the NVIC */
     EnableIRQ(SCT0_IRQn);
 
-    /* Start the timer */
-    SCTIMER_StartTimer(SCT0, kSCTIMER_Counter_L);
+    /* Start the 32-bit unify timer */
+    SCTIMER_StartTimer(SCT0, kSCTIMER_Counter_U);
 
     /* Code below updates the PWM dutycycle for Out */
     while (1)

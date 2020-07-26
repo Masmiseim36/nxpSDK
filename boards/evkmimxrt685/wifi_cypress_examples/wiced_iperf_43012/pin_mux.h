@@ -39,6 +39,7 @@ void BOARD_InitBootPins(void);
 #define IOPCTL_PIO_INBUF_EN 0x40u         /*!<@brief Enables input buffer function */
 #define IOPCTL_PIO_INV_DI 0x00u           /*!<@brief Input function is not inverted */
 #define IOPCTL_PIO_PSEDRAIN_DI 0x00u      /*!<@brief Pseudo Output Drain is disabled */
+#define IOPCTL_PIO_PSEDRAIN_EN 0x0400u    /*!<@brief Pseudo Output Drain is enabled */
 #define IOPCTL_PIO_PULLDOWN_EN 0x00u      /*!<@brief Enable pull-down function */
 #define IOPCTL_PIO_PULLUP_EN 0x20u        /*!<@brief Enable pull-up function */
 #define IOPCTL_PIO_PUPD_DI 0x00u          /*!<@brief Disable pull-up / pull-down function */

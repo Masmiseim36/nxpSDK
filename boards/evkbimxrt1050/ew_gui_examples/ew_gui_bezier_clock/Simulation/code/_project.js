@@ -18,21 +18,21 @@
 * project directory and edit the copy only. Please avoid any modifications of
 * the original template file!
 *
-* Version  : 9.20
+* Version  : 9.30
 * Profile  : WebGL
 * Platform : Tara.WebGL.RGBA8888
 *
 *******************************************************************************/
 
-var EmWiCompr_9_10;var EmWiApp;if(!EmWiCompr_9_10)throw new Error("The Embedded Wizard runtime environment file 'emwi_compr_9_10.js' isn't yet loaded!"
+var EmWiCompr_9_30;var EmWiApp;if(!EmWiCompr_9_30)throw new Error("The Embedded Wizard runtime environment file 'emwi_compr_9_30.js' isn't yet loaded!"
 );if(EmWiApp)throw new Error("The application file '_project.js' included twice!"
-);EmWiApp=(function(){var B={__proto__:EmWiCompr_9_10};
+);EmWiApp=(function(){var B={__proto__:EmWiCompr_9_30};
 B.Default=0;
-B.sN=[750,500];B.l_=function(){return B.tj.Ga;};B.rk="";B.kt=0;B.s$=0;B.g9=[];B._Init=
-function(){B.Core._Init();B.tg._Init();B.Graphics._Init();B.te._Init();B.tf._Init(
-);B.th._Init();B.ti._Init();B.hN._Init();B.BezierClock._Init();B.tj._Init();this.
-__proto__._Init.apply(this,arguments);};B.sK=function(D){B.Core.Dy(D);B.tg.Dy(D);
-B.Graphics.Dy(D);B.te.Dy(D);B.tf.Dy(D);B.th.Dy(D);B.ti.Dy(D);B.hN.Dy(D);B.BezierClock.
-Dy(D);B.tj.Dy(D);};return B;})();
+B.tS=[750,500];B.m7=function(){return B.un.GR;};B.sy="";B.lg=0;B.ue=0;B.hs=[];B._Init=
+function(){B.Core._Init();B.uk._Init();B.Graphics._Init();B.ui._Init();B.uj._Init(
+);B.ul._Init();B.um._Init();B.ia._Init();B.BezierClock._Init();B.un._Init();this.
+__proto__._Init.apply(this,arguments);};B.tQ=function(D){B.Core.DC(D);B.uk.DC(D);
+B.Graphics.DC(D);B.ui.DC(D);B.uj.DC(D);B.ul.DC(D);B.um.DC(D);B.ia.DC(D);B.BezierClock.
+DC(D);B.un.DC(D);};return B;})();
 
 /* Embedded Wizard */

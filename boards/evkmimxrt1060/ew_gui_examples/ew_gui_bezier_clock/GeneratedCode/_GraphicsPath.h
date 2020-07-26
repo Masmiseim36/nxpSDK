@@ -7,18 +7,22 @@
 *
 ********************************************************************************
 *
+* This software is delivered "as is" and shows the usage of other software 
+* components. It is provided as an example software which is intended to be 
+* modified and extended according to particular requirements.
+* 
+* TARA Systems hereby disclaims all warranties and conditions with regard to the
+* software, including all implied warranties and conditions of merchantability 
+* and non-infringement of any third party IPR or other rights which may result 
+* from the use or the inability to use the software.
+*
 * This file was generated automatically by Embedded Wizard Studio.
 *
 * Please do not make any modifications of this file! The modifications are lost
 * when the file is generated again by Embedded Wizard Studio!
 *
-* The template of this heading text can be found in the file 'head.ewt' in the
-* directory 'Platforms' of your Embedded Wizard installation directory. If you
-* wish to adapt this text, please copy the template file 'head.ewt' into your
-* project directory and edit the copy only. Please avoid any modifications of
-* the original template file!
-*
-* Version  : 9.20
+* Version  : 9.30
+* Date     : 14.02.2020  8:00:50
 * Profile  : iMX_RT
 * Platform : NXP.iMX_RT.RGB565
 *
@@ -33,12 +37,12 @@
 #endif
 
 #include "ewrte.h"
-#if EW_RTE_VERSION != 0x00090014
+#if EW_RTE_VERSION != 0x0009001E
   #error Wrong version of Embedded Wizard Runtime Environment.
 #endif
 
 #include "ewgfx.h"
-#if EW_GFX_VERSION != 0x00090014
+#if EW_GFX_VERSION != 0x0009001E
   #error Wrong version of Embedded Wizard Graphics Engine.
 #endif
 
@@ -63,6 +67,8 @@
    - With the method @Begin() the start position for a sub-path can be determined 
    or existing sub-path data can be cleared again. In turn, with the method @Close() 
    a sub-path can be closed so its end and start positions appear connected together.
+   - Alternatively path data can be loaded from an SVG string by using the method 
+   @CreateFromSVGString().
    - With the methods @AddLine(), @AddBezier2(), @AddBezier3() and @AddArc() new 
    line segments or even complex curves are added to the sub-path. With the method 
    @AddCopy() a duplicate of another existing sub-path can be added.
@@ -72,7 +78,9 @@
    delete old nodes before new nodes are appended.
    - The methods @InitMatrix(), @Translate(), @Scale(), @Rotate(), @PushMatrix() 
    and @PopMatrix() manage a 2D transformation matrix used to convert the original 
-   coordinates of the lines and curves when adding them to the path. */
+   coordinates of the lines and curves when adding them to the path.
+   - The methods @GetSubPathBounds() and @GetPathBounds() return the area enlosing 
+   all edges of a particular sub-path or of all sub-paths. */
 EW_DEFINE_FIELDS( GraphicsPath, XObject )
   EW_VARIABLE( path,            XHandle )
 EW_END_OF_FIELDS( GraphicsPath )

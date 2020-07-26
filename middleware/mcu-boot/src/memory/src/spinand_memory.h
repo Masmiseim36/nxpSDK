@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2014-2015 Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -8,8 +8,8 @@
 #if !defined(__SPINAND_MEMORY_H__)
 #define __SPINAND_MEMORY_H__
 
-#include "flexspi_nand/flexspi_nand_flash.h"
-#include "memory/memory.h"
+#include "flexspi_nand_flash.h"
+#include "memory.h"
 
 #if BL_FEATURE_SPINAND_MODULE
 ////////////////////////////////////////////////////////////////////////////////

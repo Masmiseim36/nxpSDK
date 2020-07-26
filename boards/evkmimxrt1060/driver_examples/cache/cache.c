@@ -19,7 +19,7 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define MEM_DMATRANSFER_LEN 10U * FSL_FEATURE_L1DCACHE_LINESIZE_BYTE
+#define MEM_DMATRANSFER_LEN         10U * FSL_FEATURE_L1DCACHE_LINESIZE_BYTE
 #define DMA0_DMA16_DriverIRQHandler DMA_CH_0_16_DriverIRQHandler
 
 /* DMA Timtout. */

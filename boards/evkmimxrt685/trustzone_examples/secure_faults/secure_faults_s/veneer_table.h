@@ -13,11 +13,11 @@ typedef int (*callbackptr)(char const *s1, char const *s2);
 
 /* NOTE: These defines are not related to veneer table. But since they are needed
  *       in both secure and non-secure project, they are placed here */
-#define FAULT_NONE 0
-#define FAULT_INV_S_TO_NS_TRANS 1
-#define FAULT_INV_S_ENTRY 2
-#define FAULT_INV_NS_DATA_ACCESS 3
-#define FAULT_INV_INPUT_PARAMS 4
+#define FAULT_NONE                0
+#define FAULT_INV_S_TO_NS_TRANS   1
+#define FAULT_INV_S_ENTRY         2
+#define FAULT_INV_NS_DATA_ACCESS  3
+#define FAULT_INV_INPUT_PARAMS    4
 #define FAULT_INV_NS_DATA2_ACCESS 5
 
 /*******************************************************************************

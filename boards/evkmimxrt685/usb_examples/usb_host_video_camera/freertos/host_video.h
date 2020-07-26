@@ -21,7 +21,8 @@
     (100U) /*!< the approximate mjep picture compression radio of device camera, 50 means 50% */
 
 /*! @brief host app run status */
-typedef enum _usb_host_vidio_run_state {
+typedef enum _usb_host_vidio_run_state
+{
     kUSB_HostVideoRunIdle = 0,                /*!< idle */
     kUSB_HostVideoRunSetControlInterface,     /*!< execute set control interface code */
     kUSB_HostVideoRunSetControlInterfaceDone, /*!< set control interface done */
@@ -78,12 +79,12 @@ typedef struct _usb_host_video_camera_instance
  ******************************************************************************/
 
 /*!
-* @brief host video task function.
-*
-* This function implements the host video action, it is used to create task.
-*
-* @param param   the host video instance pointer.
-*/
+ * @brief host video task function.
+ *
+ * This function implements the host video action, it is used to create task.
+ *
+ * @param param   the host video instance pointer.
+ */
 extern void USB_HostVideoTask(void *param);
 
 /*!
@@ -103,11 +104,11 @@ extern usb_status_t USB_HostVideoEvent(usb_device_handle deviceHandle,
                                        uint32_t eventCode);
 
 /*!
-* @brief host video sdcard initialization function.
-*
-* This function implements the sdcard detect and initialization
-*
-*/
+ * @brief host video sdcard initialization function.
+ *
+ * This function implements the sdcard detect and initialization
+ *
+ */
 extern usb_status_t USB_HostVideoAppSDcardInit(void);
 
 #endif /* _HOST_VIDEO_H_ */

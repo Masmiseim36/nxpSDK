@@ -15,13 +15,13 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_DMA_CHANNEL1 1
-#define DEMO_DMA_CHANNEL0 0
-#define DEMO_DMA_CHANNEL2 2
-#define DEMO_DMA_CHANNEL_TRIGGER_INPUT kINPUTMUX_Dma0TrigOutAToDma0
+#define DEMO_DMA_CHANNEL1                1
+#define DEMO_DMA_CHANNEL0                0
+#define DEMO_DMA_CHANNEL2                2
+#define DEMO_DMA_CHANNEL_TRIGGER_INPUT   kINPUTMUX_Dma0TrigOutAToDma0
 #define DEMO_DMA_CHANNEL_TRIGGER_OUTPUT0 kINPUTMUX_Dma0OtrigChannel0ToTriginChannels
 #define DEMO_DMA_CHANNEL_TRIGGER_OUTPUT1 kINPUTMUX_Dma0OtrigChannel1ToTriginChannels
-#define BUFF_LENGTH 4U
+#define BUFF_LENGTH        4U
 #define DMA_DESCRIPTOR_NUM 3U
 #define DEST_BUFFER_LENGTH 16U
 /*******************************************************************************

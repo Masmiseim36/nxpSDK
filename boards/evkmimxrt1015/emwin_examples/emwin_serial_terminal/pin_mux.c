@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP
+ * Copyright 2019-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -13,11 +13,11 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v5.0
+product: Pins v7.0
 processor: MIMXRT1015xxxxx
 package_id: MIMXRT1015DAF5A
 mcu_data: ksdk2_0
-processor_version: 5.0.0
+processor_version: 0.7.9
 board: MIMXRT1015-EVK
 pin_labels:
 - {pin_num: '65', pin_signal: GPIO_AD_B0_10, label: 'LPSPI1_SCK/U27[6]/J19[6]', identifier: SPI_SCL;SPI_CLK}
@@ -35,10 +35,10 @@ power_domains: {NVCC_GPIO: '3.3'}
 #include "pin_mux.h"
 
 /* FUNCTION ************************************************************************************************************
- * 
+ *
  * Function Name : BOARD_InitBootPins
  * Description   : Calls initialization functions.
- * 
+ *
  * END ****************************************************************************************************************/
 void BOARD_InitBootPins(void) {
     BOARD_InitPins();
@@ -112,16 +112,16 @@ void LPSPI1_InitPins(void) {
 
   IOMUXC_SetPinMux(
       IOMUXC_GPIO_AD_B0_10_LPSPI1_SCK,        /* GPIO_AD_B0_10 is configured as LPSPI1_SCK */
-      1U);                                    /* Software Input On Field: Input Path is determined by functionality */
+      0U);                                    /* Software Input On Field: Input Path is determined by functionality */
   IOMUXC_SetPinMux(
       IOMUXC_GPIO_AD_B0_11_LPSPI1_PCS0,       /* GPIO_AD_B0_11 is configured as LPSPI1_PCS0 */
-      1U);                                    /* Software Input On Field: Input Path is determined by functionality */
+      0U);                                    /* Software Input On Field: Input Path is determined by functionality */
   IOMUXC_SetPinMux(
       IOMUXC_GPIO_AD_B0_12_LPSPI1_SDO,        /* GPIO_AD_B0_12 is configured as LPSPI1_SDO */
-      1U);                                    /* Software Input On Field: Input Path is determined by functionality */
+      0U);                                    /* Software Input On Field: Input Path is determined by functionality */
   IOMUXC_SetPinMux(
       IOMUXC_GPIO_AD_B0_13_LPSPI1_SDI,        /* GPIO_AD_B0_13 is configured as LPSPI1_SDI */
-      1U);                                    /* Software Input On Field: Input Path is determined by functionality */
+      0U);                                    /* Software Input On Field: Input Path is determined by functionality */
   IOMUXC_SetPinConfig(
       IOMUXC_GPIO_AD_B0_10_LPSPI1_SCK,        /* GPIO_AD_B0_10 PAD functional properties : */
       0x10B0U);                               /* Slew Rate Field: Slow Slew Rate
@@ -184,8 +184,8 @@ void LPSPI1_DeinitPins(void)
 LPI2C1_InitPins:
 - options: {callFromInitBoot: 'false', coreID: core0, enableClock: 'true'}
 - pin_list:
-  - {pin_num: '53', peripheral: LPI2C1, signal: SCL, pin_signal: GPIO_AD_B1_14}
-  - {pin_num: '52', peripheral: LPI2C1, signal: SDA, pin_signal: GPIO_AD_B1_15}
+  - {pin_num: '53', peripheral: LPI2C1, signal: SCL, pin_signal: GPIO_AD_B1_14, software_input_on: Enable}
+  - {pin_num: '52', peripheral: LPI2C1, signal: SDA, pin_signal: GPIO_AD_B1_15, software_input_on: Enable}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 
@@ -198,33 +198,12 @@ LPI2C1_InitPins:
 void LPI2C1_InitPins(void) {
   CLOCK_EnableClock(kCLOCK_Iomuxc);           /* iomuxc clock (iomuxc_clk_enable): 0x03U */
 
-
   IOMUXC_SetPinMux(
       IOMUXC_GPIO_AD_B1_14_LPI2C1_SCL,        /* GPIO_AD_B1_14 is configured as LPI2C1_SCL */
       1U);                                    /* Software Input On Field: Force input path of pad GPIO_AD_B1_14 */
   IOMUXC_SetPinMux(
       IOMUXC_GPIO_AD_B1_15_LPI2C1_SDA,        /* GPIO_AD_B1_15 is configured as LPI2C1_SDA */
       1U);                                    /* Software Input On Field: Force input path of pad GPIO_AD_B1_15 */
-  IOMUXC_SetPinConfig(
-      IOMUXC_GPIO_AD_B1_14_LPI2C1_SCL,        /* GPIO_AD_B1_14 PAD functional properties : */
-      0xD8B0U);                               /* Slew Rate Field: Slow Slew Rate
-                                                 Drive Strength Field: R0/6
-                                                 Speed Field: medium(100MHz)
-                                                 Open Drain Enable Field: Open Drain Enabled
-                                                 Pull / Keep Enable Field: Pull/Keeper Enabled
-                                                 Pull / Keep Select Field: Keeper
-                                                 Pull Up / Down Config. Field: 22K Ohm Pull Up
-                                                 Hyst. Enable Field: Hysteresis Disabled */
-  IOMUXC_SetPinConfig(
-      IOMUXC_GPIO_AD_B1_15_LPI2C1_SDA,        /* GPIO_AD_B1_15 PAD functional properties : */
-      0xD8B0U);                               /* Slew Rate Field: Slow Slew Rate
-                                                 Drive Strength Field: R0/6
-                                                 Speed Field: medium(100MHz)
-                                                 Open Drain Enable Field: Open Drain Enabled
-                                                 Pull / Keep Enable Field: Pull/Keeper Enabled
-                                                 Pull / Keep Select Field: Keeper
-                                                 Pull Up / Down Config. Field: 22K Ohm Pull Up
-                                                 Hyst. Enable Field: Hysteresis Disabled */
 }
 
 void LPI2C1_DeinitPins(void)
@@ -236,7 +215,6 @@ void LPI2C1_DeinitPins(void)
       IOMUXC_GPIO_AD_B1_15_GPIO1_IO31,        /* GPIO_AD_B1_15 is configured as GPIO1_IO31 */
       0U);                                    /* Software Input On Field: Input Path is determined by functionality */
 }
-
 /***********************************************************************************************************************
  * EOF
  **********************************************************************************************************************/

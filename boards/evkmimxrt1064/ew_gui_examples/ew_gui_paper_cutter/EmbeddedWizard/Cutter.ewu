@@ -1,4 +1,4 @@
-$version 6.60
+$version 9.30
 
 // Color constant according UI design.
 $rect <1090,70,1290,110>

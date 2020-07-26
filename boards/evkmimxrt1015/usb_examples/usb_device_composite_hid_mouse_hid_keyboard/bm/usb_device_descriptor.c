@@ -163,14 +163,13 @@ uint8_t g_UsbDeviceHidKeyboardReportDescriptor[] = {
     0x05U, 0x01U, /* Usage Page (Generic Desktop)*/
     0x09U, 0x06U, /* Usage (Keyboard) */
     0xA1U, 0x01U, /* Collection (Application) */
-    0x75U, 0x01U, /* Report Size (1U) */
-    0x95U, 0x08U, /* Report Count (8U) */
     0x05U, 0x07U, /* Usage Page (Key Codes) */
-    0x19U, 0xE0U, /* Usage Minimum (224U) */
-    0x29U, 0xE7U, /* Usage Maximum (231U) */
-
-    0x15U, 0x00U, /* Logical Minimum (0U) */
-    0x25U, 0x01U, /* Logical Maximum (1U) */
+    0x19U, 0xE0U, /* Usage Minimum (224) */
+    0x29U, 0xE7U, /* Usage Maximum (231) */
+    0x15U, 0x00U, /* Logical Minimum (0) */
+    0x25U, 0x01U, /* Logical Maximum (1) */
+    0x75U, 0x01U, /* Report Size (1) */
+    0x95U, 0x08U, /* Report Count (8) */
     0x81U, 0x02U, /* Input(Data, Variable, Absolute) Modifier byte */
 
     0x95U, 0x01U, /* Report Count (1U) */
@@ -211,10 +210,10 @@ uint8_t g_UsbDeviceDescriptor[] = {
     USB_DEVICE_PROTOCOL,                                 /* Protocol code (assigned by the USB-IF). */
     USB_CONTROL_MAX_PACKET_SIZE,                         /* Maximum packet size for endpoint zero
                                                             (only 8, 16, 32, or 64 are valid) */
-    0xC9U,
-    0x1FU, /* Vendor ID (assigned by the USB-IF) */
-    0xA0U,
-    0x00U, /* Product ID (assigned by the manufacturer) */
+    USB_SHORT_GET_LOW(USB_DEVICE_VID),
+    USB_SHORT_GET_HIGH(USB_DEVICE_VID), /* Vendor ID (assigned by the USB-IF) */
+    USB_SHORT_GET_LOW(USB_DEVICE_PID),
+    USB_SHORT_GET_HIGH(USB_DEVICE_PID), /* Product ID (assigned by the manufacturer) */
     USB_SHORT_GET_LOW(USB_DEVICE_DEMO_BCD_VERSION),
     USB_SHORT_GET_HIGH(USB_DEVICE_DEMO_BCD_VERSION), /* Device release number in binary-coded decimal */
     0x01U,                                           /* Index of string descriptor describing manufacturer */

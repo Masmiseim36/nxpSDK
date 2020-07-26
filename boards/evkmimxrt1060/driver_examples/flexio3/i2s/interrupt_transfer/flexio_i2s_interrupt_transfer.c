@@ -21,9 +21,9 @@
  ******************************************************************************/
 /* SAI and I2C instance and clock */
 #define DEMO_CODEC_WM8960
-#define DEMO_I2C LPI2C1
+#define DEMO_I2C         LPI2C1
 #define DEMO_FLEXIO_BASE FLEXIO3
-#define DEMO_SAI SAI1
+#define DEMO_SAI         SAI1
 /* Select Audio PLL (786.43 MHz) as sai1 clock source */
 #define DEMO_SAI1_CLOCK_SOURCE_SELECT (2U)
 /* Clock pre divider for sai1 clock source */
@@ -51,14 +51,14 @@
 #define DEMO_FLEXIO_CLK_FREQ \
     (CLOCK_GetFreq(kCLOCK_AudioPllClk) / (DEMO_FLEXIO_CLKSRC_PRE_DIV + 1U) / (DEMO_FLEXIO_CLKSRC_DIV + 1U))
 
-#define BCLK_PIN (4U)
+#define BCLK_PIN       (4U)
 #define FRAME_SYNC_PIN (5U)
-#define TX_DATA_PIN (6U)
-#define RX_DATA_PIN (7U)
+#define TX_DATA_PIN    (6U)
+#define RX_DATA_PIN    (7U)
 #define OVER_SAMPLE_RATE (384)
-#define BUFFER_SIZE (256)
-#define BUFFER_NUM (4)
-#define PLAY_COUNT (5000 * 2U)
+#define BUFFER_SIZE      (256)
+#define BUFFER_NUM       (4)
+#define PLAY_COUNT       (5000 * 2U)
 #define ZERO_BUFFER_SIZE (BUFFER_SIZE * 2)
 /* demo audio sample rate */
 #define DEMO_AUDIO_SAMPLE_RATE (kFLEXIO_I2S_SampleRate16KHz)

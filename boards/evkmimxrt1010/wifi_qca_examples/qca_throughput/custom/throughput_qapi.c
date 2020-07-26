@@ -53,7 +53,7 @@ typedef struct
 } CERT_HEADER_T;
 
 SSL_INST ssl_inst[MAX_SSL_INST];
-uint8_t *ssl_cert_data_buf = NULL;
+uint8_t *ssl_cert_data_buf     = NULL;
 uint16_t ssl_cert_data_buf_len = 0;
 
 uint8_t const *ssl_default_cert       = (uint8_t *)sharkSslRSACertKingfisher;
@@ -79,8 +79,8 @@ unsigned char v6EnableFlag = 0;
  *     Definitions.
  *************************************************************************/
 
-#define CFG_COMPLETED_STR "IOT Throughput Test Completed" NL
-#define CFG_REPORT_STR "."
+#define CFG_COMPLETED_STR  "IOT Throughput Test Completed" NL
+#define CFG_REPORT_STR     "."
 #define PRINT_SHELL_PROMPT /* PRINTF("shell> "); */
 
 /*************************** Function Declarations **************************/
@@ -997,6 +997,7 @@ int32_t rx_command_parser(int32_t argc, char_ptr argv[])
     bool print_usage = 0, shorthelp = FALSE;
     int32_t return_code = A_OK;
     THROUGHPUT_CXT tCxt;
+    uint32_t tmp_addr = 0;
 
     memset(&tCxt, 0, sizeof(THROUGHPUT_CXT));
 
@@ -1067,8 +1068,10 @@ int32_t rx_command_parser(int32_t argc, char_ptr argv[])
                     // Multicast address is provided
                     if (!v6EnableFlag)
                     {
-                        ath_inet_aton(argv[3], (uint32_t *)&tCxt.params.rx_params.group.imr_multiaddr);
-                        ath_inet_aton(argv[4], (uint32_t *)&tCxt.params.rx_params.group.imr_interface);
+                        ath_inet_aton(argv[3], (uint32_t *)&tmp_addr);
+                        tCxt.params.rx_params.group.imr_multiaddr = tmp_addr;
+                        ath_inet_aton(argv[4], (uint32_t *)&tmp_addr);
+                        tCxt.params.rx_params.group.imr_interface = tmp_addr;
                     }
                     else
                     {
@@ -3411,8 +3414,7 @@ static void ath_udp_rx(THROUGHPUT_CXT *p_tCxt)
                                 host_ip *ip = NULL;
                                 ip          = (host_ip *)(&p_tCxt->buffer[0]);
                                 memset(ip_str, 0, sizeof(ip_str));
-                                PRINTF("Src IP of RX Pkt %s " NL,
-                                       inet_ntoa((uint32_t)(ip->ip_dest), (char *)ip_str));
+                                PRINTF("Src IP of RX Pkt %s " NL, inet_ntoa((uint32_t)(ip->ip_dest), (char *)ip_str));
                             }
                             else
                             {
@@ -4001,6 +4003,7 @@ int32_t wait_for_response(THROUGHPUT_CXT *p_tCxt, SOCKADDR_T foreign_addr, SOCKA
     SOCKADDR_T local_addr;
     SOCKADDR_T addr;
     socklen_t addr_len;
+    uint32_t addr_len_raw;
     stat_packet_t *stat_packet;
     SOCKADDR_6_T local_addr6;
     SOCKADDR_6_T addr6;
@@ -4022,14 +4025,15 @@ int32_t wait_for_response(THROUGHPUT_CXT *p_tCxt, SOCKADDR_T foreign_addr, SOCKA
         p_tCxt->sock_local = p_tCxt->sock_peer;
         if (p_tCxt->params.tx_params.ip_hdr_inc == 1)
         {
-            addr_len = 0;
+            addr_len_raw = 0;
             /* Set IP_HDRINCL socket option if need to receive the packet with IP header */
-            if (qcom_setsockopt(p_tCxt->sock_peer, ATH_IPPROTO_IP, IP_HDRINCL, (uint8_t *)&addr_len, sizeof(int)) !=
-                A_OK)
+            if (qcom_setsockopt(p_tCxt->sock_peer, ATH_IPPROTO_IP, IP_HDRINCL, (uint8_t *)&addr_len_raw,
+                                sizeof(addr_len_raw)) != A_OK)
             {
                 PRINTF("SetsockOPT error:IP_HDRINCL" NL);
                 goto ERROR_2;
             }
+            addr_len = (socklen_t)addr_len_raw;
         }
     }
     else

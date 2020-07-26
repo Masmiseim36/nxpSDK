@@ -28,8 +28,8 @@ extern "C" {
 /*******************************************************************************
  * API
  ******************************************************************************/
-void WatchdogEnable(RTWDOG_Type *WDOGx, uint32_t timeout);
-void WatchdogDisable(RTWDOG_Type *WDOGx);
+void WatchdogEnable(void);
+void WatchdogDisable(void);
 void GPT1_Init(uint32_t clkSource, uint32_t compare, uint32_t prescaler);
 void GPT2_Init(uint32_t clkSource, uint32_t compare, uint32_t prescaler);
 void QTMR1_Init(uint32_t compare);

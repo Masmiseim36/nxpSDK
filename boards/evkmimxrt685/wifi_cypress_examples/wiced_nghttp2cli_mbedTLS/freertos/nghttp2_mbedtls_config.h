@@ -56,7 +56,7 @@
 #define MBEDTLS_FREESCALE_LTC_AES_GCM /* Enable use of LTC AES GCM.*/
 #endif
 #if defined(FSL_FEATURE_LTC_HAS_PKHA) && FSL_FEATURE_LTC_HAS_PKHA
-#define MBEDTLS_FREESCALE_LTC_PKHA /* Enable use of LTC PKHA.*/
+#define MBEDTLS_FREESCALE_LTC_PKHA   /* Enable use of LTC PKHA.*/
 #define FREESCALE_PKHA_INT_MAX_BYTES 256
 #endif
 #endif
@@ -83,7 +83,7 @@
 #define MBEDTLS_FREESCALE_CAU3_SHA1   /* Enable use of CAU3 SHA1.*/
 #define MBEDTLS_FREESCALE_CAU3_SHA256 /* Enable use of CAU3 SHA256.*/
 #define MBEDTLS_FREESCALE_CAU3_PKHA   /* Enable use of CAU3 PKHA.*/
-#define FREESCALE_PKHA_INT_MAX_BYTES 512
+#define FREESCALE_PKHA_INT_MAX_BYTES  512
 
 #define MBEDTLS_FREESCALE_CAU3_CIPHER_CMAC
 #endif
@@ -102,7 +102,7 @@
 #define MBEDTLS_FREESCALE_CAAM_SHA1   /* Enable use of CAAM SHA1.*/
 #define MBEDTLS_FREESCALE_CAAM_SHA256 /* Enable use of CAAM SHA256.*/
 
-#define MBEDTLS_FREESCALE_CAAM_PKHA /* Enable use of CAAM PKHA.*/
+#define MBEDTLS_FREESCALE_CAAM_PKHA  /* Enable use of CAAM PKHA.*/
 #define FREESCALE_PKHA_INT_MAX_BYTES 512
 #endif
 
@@ -147,9 +147,9 @@
 #if defined(FSL_FEATURE_SOC_AES_COUNT) && (FSL_FEATURE_SOC_AES_COUNT > 0)
 #include "fsl_aes.h"
 
-#define AES_INSTANCE AES0             /* AES base register.*/
-#define MBEDTLS_FREESCALE_LPC_AES     /* Enable use of LPC AES.*/
-#define MBEDTLS_FREESCALE_LPC_AES_GCM /* Enable use of LPC AES GCM.*/
+#define AES_INSTANCE                  AES0 /* AES base register.*/
+#define MBEDTLS_FREESCALE_LPC_AES          /* Enable use of LPC AES.*/
+#define MBEDTLS_FREESCALE_LPC_AES_GCM      /* Enable use of LPC AES GCM.*/
 
 #endif
 
@@ -157,9 +157,9 @@
 #if defined(FSL_FEATURE_SOC_SHA_COUNT) && (FSL_FEATURE_SOC_SHA_COUNT > 0)
 #include "fsl_sha.h"
 
-#define SHA_INSTANCE SHA0            /* AES base register.*/
-#define MBEDTLS_FREESCALE_LPC_SHA1   /* Enable use of LPC SHA.*/
-#define MBEDTLS_FREESCALE_LPC_SHA256 /* Enable use of LPC SHA256.*/
+#define SHA_INSTANCE                 SHA0 /* AES base register.*/
+#define MBEDTLS_FREESCALE_LPC_SHA1        /* Enable use of LPC SHA.*/
+#define MBEDTLS_FREESCALE_LPC_SHA256      /* Enable use of LPC SHA256.*/
 
 #endif
 
@@ -167,9 +167,9 @@
 #if defined(FSL_FEATURE_SOC_CASPER_COUNT) && (FSL_FEATURE_SOC_CASPER_COUNT > 0)
 #include "fsl_casper.h"
 
-#define CASPER_INSTANCE CASPER        /* CASPER base register.*/
-#define MBEDTLS_FREESCALE_CASPER_PKHA /* Enable use of CASPER PKHA.*/
-#define FREESCALE_PKHA_INT_MAX_BYTES (512)
+#define CASPER_INSTANCE               CASPER /* CASPER base register.*/
+#define MBEDTLS_FREESCALE_CASPER_PKHA        /* Enable use of CASPER PKHA.*/
+#define FREESCALE_PKHA_INT_MAX_BYTES  (512)
 
 #define MBEDTLS_ECP_MUL_COMB_ALT /* Alternate implementation of ecp_mul_comb() */
 #define MBEDTLS_ECP_MULADD_ALT   /* Alternate implementation of mbedtls_ecp_muladd() */
@@ -348,10 +348,10 @@ void *pvPortCalloc(size_t num, size_t size); /*Calloc for HEAP3.*/
 #define MBEDTLS_ECP_FIXED_POINT_OPTIM 0 /* To reduce peak memory usage */
 #define MBEDTLS_AES_ROM_TABLES
 #define MBEDTLS_SSL_MAX_CONTENT_LEN (1024 * 16) /* Reduce SSL frame buffer. */
-#define MBEDTLS_MPI_WINDOW_SIZE 1
-#define MBEDTLS_ECP_WINDOW_SIZE 2
-#define MBEDTLS_MPI_MAX_SIZE 512 /* Maximum number of bytes for usable MPIs. */
-#define MBEDTLS_ECP_MAX_BITS 384 /* Maximum bit size of groups */
+#define MBEDTLS_MPI_WINDOW_SIZE     1
+#define MBEDTLS_ECP_WINDOW_SIZE     2
+#define MBEDTLS_MPI_MAX_SIZE        512 /* Maximum number of bytes for usable MPIs. */
+#define MBEDTLS_ECP_MAX_BITS        384 /* Maximum bit size of groups */
 
 /**************************** KSDK end ****************************************/
 
@@ -2225,9 +2225,8 @@ void *pvPortCalloc(size_t num, size_t size); /*Calloc for HEAP3.*/
 #define MBEDTLS_CTR_DRBG_C
 #elif defined(MBEDTLS_AES_ALT_NO_256)
 /* This macros will add support for CTR_DRBG using AES-128 for crypto engines
- * without AES-256 capability. Please note, that selftest will not pass when
- * this option is enabled, since AES-256 is required by the specification of CTR_DRBG. */
-#define MBEDTLS_CTR_DRBG_KEYSIZE 16 /**< The key size used by the cipher. */
+ * without AES-256 capability.  */
+#define MBEDTLS_CTR_DRBG_USE_128_BIT_KEY
 #define MBEDTLS_CTR_DRBG_C
 #endif
 

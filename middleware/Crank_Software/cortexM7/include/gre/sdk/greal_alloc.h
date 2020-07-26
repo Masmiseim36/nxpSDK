@@ -5,7 +5,6 @@
  */
 
 /**
-* \file greal_alloc.h
 *  This file contains the description for an abstraction layer
 *  to standard POSIX malloc/free
 */

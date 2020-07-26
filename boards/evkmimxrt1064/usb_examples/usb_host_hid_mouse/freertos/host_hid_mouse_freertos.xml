@@ -9,13 +9,14 @@
     <definition extID="component.serial_manager_uart.MIMXRT1064"/>
     <definition extID="device.MIMXRT1064_CMSIS.MIMXRT1064"/>
     <definition extID="device.MIMXRT1064_startup.MIMXRT1064"/>
-    <definition extID="middleware.amazon_freertos-kernel.MIMXRT1064"/>
-    <definition extID="middleware.amazon_freertos-kernel.extension.MIMXRT1064"/>
-    <definition extID="middleware.amazon_freertos-kernel.heap_4.MIMXRT1064"/>
-    <definition extID="middleware.usb.host.MIMXRT1064"/>
+    <definition extID="middleware.freertos-kernel.MIMXRT1064"/>
+    <definition extID="middleware.freertos-kernel.extension.MIMXRT1064"/>
+    <definition extID="middleware.freertos-kernel.heap_4.MIMXRT1064"/>
+    <definition extID="middleware.usb.common_header.MIMXRT1064"/>
+    <definition extID="middleware.usb.host.common_header.MIMXRT1064"/>
+    <definition extID="middleware.usb.host.stack.MIMXRT1064"/>
     <definition extID="middleware.usb.host_controller_ehci.MIMXRT1064"/>
     <definition extID="middleware.usb.host_hid.MIMXRT1064"/>
-    <definition extID="middleware.usb.host_hub.MIMXRT1064"/>
     <definition extID="middleware.usb.phy.MIMXRT1064"/>
     <definition extID="platform.Include_common.MIMXRT1064"/>
     <definition extID="platform.Include_core_cm7.MIMXRT1064"/>
@@ -27,7 +28,6 @@
     <definition extID="platform.drivers.iomuxc.MIMXRT1064"/>
     <definition extID="platform.drivers.lpuart.MIMXRT1064"/>
     <definition extID="platform.drivers.xip_board.MIMXRT1064"/>
-    <definition extID="platform.drivers.xip_board_dcd.MIMXRT1064"/>
     <definition extID="platform.drivers.xip_device.MIMXRT1064"/>
     <definition extID="platform.utilities.assert.MIMXRT1064"/>
     <definition extID="platform.utilities.misc_utilities.MIMXRT1064"/>
@@ -39,7 +39,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkmimxrt1064_host_hid_mouse_freertos" name="host_hid_mouse_freertos" category="usb_examples" dependency="middleware.usb.host_controller_ehci.MIMXRT1064 middleware.usb.phy.MIMXRT1064 platform.drivers.cache_armv7_m7.MIMXRT1064 middleware.usb.host.MIMXRT1064 middleware.amazon_freertos-kernel.heap_4.MIMXRT1064 middleware.amazon_freertos-kernel.MIMXRT1064 middleware.usb.host_hid.MIMXRT1064 middleware.usb.host_hub.MIMXRT1064 platform.drivers.clock.MIMXRT1064 platform.drivers.common.MIMXRT1064 device.MIMXRT1064_CMSIS.MIMXRT1064 device.MIMXRT1064_startup.MIMXRT1064 platform.drivers.lpuart.MIMXRT1064 platform.drivers.iomuxc.MIMXRT1064 platform.utilities.assert.MIMXRT1064 platform.drivers.igpio.MIMXRT1064 platform.drivers.xip_device.MIMXRT1064 platform.drivers.xip_board.MIMXRT1064 platform.drivers.xip_board_dcd.MIMXRT1064 utility.debug_console.MIMXRT1064 component.lpuart_adapter.MIMXRT1064 component.serial_manager.MIMXRT1064 component.lists.MIMXRT1064 component.serial_manager_uart.MIMXRT1064 component.osa.MIMXRT1064 platform.Include_core_cm7.MIMXRT1064 platform.Include_common.MIMXRT1064 platform.Include_dsp.MIMXRT1064 middleware.amazon_freertos-kernel.extension.MIMXRT1064 platform.utilities.misc_utilities.MIMXRT1064">
+  <example id="evkmimxrt1064_host_hid_mouse_freertos" name="host_hid_mouse_freertos" category="usb_examples" dependency="middleware.usb.host_controller_ehci.MIMXRT1064 middleware.usb.phy.MIMXRT1064 platform.drivers.cache_armv7_m7.MIMXRT1064 middleware.freertos-kernel.heap_4.MIMXRT1064 middleware.freertos-kernel.MIMXRT1064 middleware.usb.host_hid.MIMXRT1064 platform.drivers.clock.MIMXRT1064 platform.drivers.common.MIMXRT1064 device.MIMXRT1064_CMSIS.MIMXRT1064 device.MIMXRT1064_startup.MIMXRT1064 platform.drivers.lpuart.MIMXRT1064 platform.drivers.iomuxc.MIMXRT1064 platform.utilities.assert.MIMXRT1064 platform.drivers.igpio.MIMXRT1064 platform.drivers.xip_device.MIMXRT1064 platform.drivers.xip_board.MIMXRT1064 utility.debug_console.MIMXRT1064 component.lpuart_adapter.MIMXRT1064 component.serial_manager.MIMXRT1064 component.lists.MIMXRT1064 component.serial_manager_uart.MIMXRT1064 middleware.usb.host.stack.MIMXRT1064 component.osa.MIMXRT1064 middleware.usb.common_header.MIMXRT1064 platform.Include_core_cm7.MIMXRT1064 platform.Include_common.MIMXRT1064 platform.Include_dsp.MIMXRT1064 middleware.usb.host.common_header.MIMXRT1064 middleware.freertos-kernel.extension.MIMXRT1064 platform.utilities.misc_utilities.MIMXRT1064">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -126,11 +126,13 @@
     <source path="boards/evkmimxrt1064/usb_examples/usb_host_hid_mouse/freertos" target_path="board" type="c_include">
       <files mask="board.h"/>
       <files mask="clock_config.h"/>
+      <files mask="dcd.h"/>
       <files mask="pin_mux.h"/>
     </source>
     <source path="boards/evkmimxrt1064/usb_examples/usb_host_hid_mouse/freertos" target_path="board" type="src">
       <files mask="board.c"/>
       <files mask="clock_config.c"/>
+      <files mask="dcd.c"/>
       <files mask="pin_mux.c"/>
     </source>
     <source path="boards/evkmimxrt1064/usb_examples/usb_host_hid_mouse/freertos" target_path="doc" type="doc" toolchain="iar mdk mcuxpresso">

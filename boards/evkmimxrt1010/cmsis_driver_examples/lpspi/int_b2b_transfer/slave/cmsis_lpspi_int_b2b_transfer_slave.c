@@ -19,7 +19,7 @@
  * Definitions
  ******************************************************************************/
 /* Master related */
-#define DRIVER_SLAVE_SPI Driver_SPI1
+#define DRIVER_SLAVE_SPI         Driver_SPI1
 #define EXAMPLE_LPSPI_SLAVE_IRQN (LPSPI1_IRQn)
 
 /* Select USB1 PLL PFD0 (720 MHz) as lpspi clock source */

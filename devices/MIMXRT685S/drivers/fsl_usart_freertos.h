@@ -26,8 +26,8 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief USART FreeRTOS driver version 2.1.1. */
-#define FSL_USART_FREERTOS_DRIVER_VERSION (MAKE_VERSION(2, 1, 1))
+/*! @brief USART FreeRTOS driver version 2.2.0. */
+#define FSL_USART_FREERTOS_DRIVER_VERSION (MAKE_VERSION(2, 2, 0))
 /*@}*/
 
 /*! @brief FLEX USART configuration structure */
@@ -50,8 +50,8 @@ typedef struct _usart_rtos_handle
     usart_transfer_t rxTransfer;   /*!< RX transfer structure */
     SemaphoreHandle_t rxSemaphore; /*!< RX semaphore for resource sharing */
     SemaphoreHandle_t txSemaphore; /*!< TX semaphore for resource sharing */
-#define RTOS_USART_COMPLETE 0x1
-#define RTOS_USART_RING_BUFFER_OVERRUN 0x2
+#define RTOS_USART_COMPLETE                0x1
+#define RTOS_USART_RING_BUFFER_OVERRUN     0x2
 #define RTOS_USART_HARDWARE_BUFFER_OVERRUN 0x4
     EventGroupHandle_t rxEvent; /*!< RX completion event */
     EventGroupHandle_t txEvent; /*!< TX completion event */

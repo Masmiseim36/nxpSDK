@@ -78,13 +78,13 @@ TfLiteStatus Prepare(TfLiteContext* context, TfLiteNode* node) {
     TF_LITE_ENSURE_EQ(context, NumDimensions(value), 1);
   }
 
-  TfLiteTensor* output = GetOutput(context, node, 0);
-  TF_LITE_ENSURE_EQ(context, value->type, output->type);
-
   TfLiteTensor* hits = GetOutput(context, node, 1);
   TF_LITE_ENSURE_EQ(context, hits->type, kTfLiteUInt8);
   TfLiteIntArray* hitSize = TfLiteIntArrayCreate(1);
   hitSize->data[0] = SizeOfDimension(lookup, 0);
+
+  TfLiteTensor* output = GetOutput(context, node, 0);
+  TF_LITE_ENSURE_EQ(context, value->type, output->type);
 
   TfLiteStatus status = kTfLiteOk;
   if (output->type != kTfLiteString) {

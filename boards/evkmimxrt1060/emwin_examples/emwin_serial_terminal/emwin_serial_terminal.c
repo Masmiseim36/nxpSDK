@@ -40,7 +40,7 @@ void BOARD_EnableLcdInterrupt(void);
 /* Initialize the LCD_DISP. */
 void BOARD_InitLcd(void)
 {
-    volatile uint32_t i = 0x100U;
+    volatile uint32_t i = 0x1000U;
 
     gpio_pin_config_t config = {
         kGPIO_DigitalOutput,
@@ -119,10 +119,8 @@ int main(void)
 
     /* Board pin, clock, debug console init */
     BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_InitI2C1Pins();
-    BOARD_InitSemcPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitLcdifPixelClock();
     BOARD_InitDebugConsole();
     BOARD_InitLcd();

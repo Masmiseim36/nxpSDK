@@ -2,7 +2,7 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -40,9 +40,6 @@ static void hello_task(void *pvParameters);
 void sbengine_main_task(void *argument);
 void sbengine_input_task(void *argument);
 
-/*******************************************************************************
- * Code
- ******************************************************************************/
 /*******************************************************************************
  * Code
  ******************************************************************************/
@@ -101,7 +98,7 @@ int main(void)
 }
 
 /*!
- * @brief Task responsible for printing of "Hello world." message.
+ * @brief Task responsible for printing an information banner.
  */
 static void hello_task(void *pvParameters)
 {

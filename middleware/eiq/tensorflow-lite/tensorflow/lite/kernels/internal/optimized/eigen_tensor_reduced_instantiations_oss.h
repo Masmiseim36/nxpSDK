@@ -75,10 +75,6 @@ typedef unsigned __int64 uint64_t;
 #include <time.h>
 #endif
 
-// #if defined(EIGEN_USE_LIBXSMM)
-// #include "libxsmm.h"
-// #endif
-
 #ifdef EIGEN_USE_THREADS
 #ifndef TFLITE_MCU
 #include "unsupported/Eigen/CXX11/ThreadPool"
@@ -104,7 +100,6 @@ typedef unsigned __int64 uint64_t;
 #include "unsupported/Eigen/CXX11/src/Tensor/TensorDeviceThreadPool.h"
 #endif
 #include "unsupported/Eigen/CXX11/src/Tensor/TensorDeviceGpu.h"
-#include "unsupported/Eigen/CXX11/src/Tensor/TensorDeviceSycl.h"
 #include "unsupported/Eigen/CXX11/src/Tensor/TensorIndexList.h"
 #include "unsupported/Eigen/CXX11/src/Tensor/TensorDimensionList.h"
 #include "unsupported/Eigen/CXX11/src/Tensor/TensorDimensions.h"
@@ -116,6 +111,7 @@ typedef unsigned __int64 uint64_t;
 #include "unsupported/Eigen/CXX11/src/Tensor/TensorGlobalFunctions.h"
 #include "unsupported/Eigen/CXX11/src/Tensor/TensorBase.h"
 #include "unsupported/Eigen/CXX11/src/Tensor/TensorBlock.h"
+#include "unsupported/Eigen/CXX11/src/Tensor/TensorBlockV2.h"
 #include "unsupported/Eigen/CXX11/src/Tensor/TensorEvaluator.h"
 #include "unsupported/Eigen/CXX11/src/Tensor/TensorExpr.h"
 #include "unsupported/Eigen/CXX11/src/Tensor/TensorReduction.h"
@@ -161,7 +157,6 @@ typedef unsigned __int64 uint64_t;
 #include "unsupported/Eigen/CXX11/src/Tensor/TensorAssign.h"
 #include "unsupported/Eigen/CXX11/src/Tensor/TensorScan.h"
 #include "unsupported/Eigen/CXX11/src/Tensor/TensorTrace.h"
-#include "unsupported/Eigen/CXX11/src/Tensor/TensorSycl.h"
 #include "unsupported/Eigen/CXX11/src/Tensor/TensorExecutor.h"
 #include "unsupported/Eigen/CXX11/src/Tensor/TensorDevice.h"
 #include "unsupported/Eigen/CXX11/src/Tensor/TensorStorage.h"

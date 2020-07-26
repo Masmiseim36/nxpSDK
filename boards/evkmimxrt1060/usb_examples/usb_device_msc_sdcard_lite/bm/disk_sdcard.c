@@ -33,6 +33,7 @@
 #include "fsl_sd.h"
 
 #include "pin_mux.h"
+#include "sdmmc_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -51,6 +52,7 @@ void USB_DeviceTaskFn(void *deviceHandle);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
+extern sd_card_t g_sd;
 USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
 usb_device_inquiry_data_fromat_struct_t g_InquiryInfo = {
     (USB_DEVICE_MSC_UFI_PERIPHERAL_QUALIFIER << USB_DEVICE_MSC_UFI_PERIPHERAL_QUALIFIER_SHIFT) |
@@ -104,14 +106,6 @@ USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t s_SetupOutBuffer[
 /*******************************************************************************
  * Code
  ******************************************************************************/
-static void BOARD_USDHCClockConfiguration(void)
-{
-    /*configure system pll PFD2 fractional divider to 18*/
-    CLOCK_InitSysPfd(kCLOCK_Pfd0, 0x12U);
-    /* Configure USDHC clock source and divider */
-    CLOCK_SetDiv(kCLOCK_Usdhc1Div, 0U);
-    CLOCK_SetMux(kCLOCK_Usdhc1Mux, 1U);
-}
 
 void USB_OTG1_IRQHandler(void)
 {
@@ -176,15 +170,6 @@ uint8_t USB_DeviceMscCardInit(void)
 {
     usb_status_t error = kStatus_USB_Success;
     usbDeviceMscCard   = &g_sd;
-
-#if defined(__GIC_PRIO_BITS)
-    GIC_SetPriority(SD_HOST_IRQ, (USB_DEVICE_INTERRUPT_PRIORITY - 1U));
-#else
-    NVIC_SetPriority(SD_HOST_IRQ, (USB_DEVICE_INTERRUPT_PRIORITY - 1U));
-#endif
-    usbDeviceMscCard->host.base           = SD_HOST_BASEADDR;
-    usbDeviceMscCard->host.sourceClock_Hz = SD_HOST_CLK_FREQ;
-
     /* Init card. */
     if (SD_Init(usbDeviceMscCard))
     {
@@ -1314,6 +1299,8 @@ void USB_DeviceApplicationInit(void)
 
     USB_DeviceIsrEnable();
 
+    /*Add one delay here to make the DP pull down long enough to allow host to detect the previous disconnection.*/
+    SDK_DelayAtLeastUs(5000, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
     USB_DeviceRun(g_msc.deviceHandle);
 }
 
@@ -1327,7 +1314,7 @@ void main(void)
 
     BOARD_InitPins();
     BOARD_BootClockRUN();
-    BOARD_USDHCClockConfiguration();
+    BOARD_SD_Config(&g_sd, NULL, (USB_DEVICE_INTERRUPT_PRIORITY - 1U), NULL);
     BOARD_InitDebugConsole();
 
     USB_DeviceApplicationInit();

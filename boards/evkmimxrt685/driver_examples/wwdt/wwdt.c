@@ -22,13 +22,13 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define WWDT WWDT0
-#define APP_LED_INIT LED_RED_INIT(LOGIC_LED_ON)
-#define APP_LED_ON LED_RED_ON()
-#define APP_LED_TOGGLE LED_RED_TOGGLE()
-#define APP_WDT_IRQn WDT0_IRQn
+#define WWDT                WWDT0
+#define APP_LED_INIT        LED_RED_INIT(LOGIC_LED_ON)
+#define APP_LED_ON          LED_RED_ON()
+#define APP_LED_TOGGLE      LED_RED_TOGGLE()
+#define APP_WDT_IRQn        WDT0_IRQn
 #define APP_WDT_IRQ_HANDLER WDT0_IRQHandler
-#define WDT_CLK_FREQ CLOCK_GetWdtClkFreq(1U)
+#define WDT_CLK_FREQ        CLOCK_GetWdtClkFreq(1U)
 
 /*******************************************************************************
  * Prototypes
@@ -51,11 +51,7 @@ void APP_WDT_IRQ_HANDLER(void)
     /* The chip will reset before this happens */
     if (wdtStatus & kWWDT_TimeoutFlag)
     {
-        /* Stop WDT */
-        WWDT_Disable(WWDT);
         WWDT_ClearStatusFlags(WWDT, kWWDT_TimeoutFlag);
-        /* Needs restart */
-        WWDT_Enable(WWDT);
     }
 
     /* Handle warning interrupt */
@@ -69,11 +65,7 @@ void APP_WDT_IRQ_HANDLER(void)
          * check the period between warning interrupt and timeout.
          */
     }
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 void delayWwdtWindow(void)

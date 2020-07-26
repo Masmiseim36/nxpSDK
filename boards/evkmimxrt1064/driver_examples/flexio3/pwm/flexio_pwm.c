@@ -17,9 +17,9 @@
  * Definitions
  ******************************************************************************/
 #define DEMO_TIME_DELAY_FOR_DUTY_CYCLE_UPDATE (2000000U)
-#define DEMO_FLEXIO_BASEADDR FLEXIO3
-#define DEMO_FLEXIO_OUTPUTPIN (2U) /* Select FXIO3_D2 as PWM output */
-#define DEMO_FLEXIO_TIMER_CH (0U)  /* Flexio timer0 used */
+#define DEMO_FLEXIO_BASEADDR                  FLEXIO3
+#define DEMO_FLEXIO_OUTPUTPIN                 (2U) /* Select FXIO3_D2 as PWM output */
+#define DEMO_FLEXIO_TIMER_CH                  (0U) /* Flexio timer0 used */
 
 /* Select USB1 PLL (480 MHz) as flexio clock source */
 #define FLEXIO_CLOCK_SELECT (3U)

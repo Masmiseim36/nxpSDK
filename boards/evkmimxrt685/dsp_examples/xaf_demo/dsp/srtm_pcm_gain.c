@@ -27,8 +27,8 @@
  * Definitions
  ******************************************************************************/
 #define AUDIO_FRMWK_BUF_SIZE (256 * 256)
-#define AUDIO_COMP_BUF_SIZE (128 * 1024)
-#define NUM_COMP_IN_GRAPH 1
+#define AUDIO_COMP_BUF_SIZE  (128 * 1024)
+#define NUM_COMP_IN_GRAPH    1
 
 /* Stack size for DSP data processing thread. */
 #define STACK_SIZE (4 * 1024)

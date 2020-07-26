@@ -12,6 +12,7 @@
  ******************************************************************************/
 #include "lwip/tcpip.h"
 #include "lwip/apps/lwiperf.h"
+#include "lwip/netifapi.h"
 #include "board.h"
 #include "wwd.h"
 #include "wwd_wiced.h"
@@ -46,7 +47,7 @@
 #define WIFI_AP_CHANNEL 1
 #endif
 
-#define WIFI_AP_IP_ADDR "192.168.1.1"
+#define WIFI_AP_IP_ADDR  "192.168.1.1"
 #define WIFI_AP_NET_MASK "255.255.0.0"
 
 /* IPerf related parameters */
@@ -82,16 +83,6 @@ bool wifi_ap_mode = true;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-static void BOARD_USDHCClockConfiguration(void)
-{
-    CLOCK_InitSysPll(&sysPllConfig_BOARD_BootClockRUN);
-    /*configure system pll PFD2 fractional divider to 24*/
-    CLOCK_InitSysPfd(kCLOCK_Pfd2, 24U);
-    /* Configure USDHC clock source and divider */
-    CLOCK_SetDiv(kCLOCK_Usdhc1Div, 0U);
-    CLOCK_SetMux(kCLOCK_Usdhc1Mux, 0U);
-}
-
 
 static struct netif wiced_if;
 
@@ -142,14 +133,14 @@ static int BOARD_InitNetwork()
         }
 
         /* Configure network interface */
-        if (NULL == netif_add(&wiced_if, &ap_ipaddr, &ap_netmask, &ap_ipaddr, (void *)WWD_AP_INTERFACE, wlanif_init,
-                              tcpip_input))
+        if (ERR_OK != netifapi_netif_add(&wiced_if, &ap_ipaddr, &ap_netmask, &ap_ipaddr, (void *)WWD_AP_INTERFACE,
+                                         wlanif_init, tcpip_input))
         {
             PRINTF("Failed to start network interface\r\n");
             return -1;
         }
-        netif_set_default(&wiced_if);
-        netif_set_up(&wiced_if);
+        netifapi_netif_set_default(&wiced_if);
+        netifapi_netif_set_up(&wiced_if);
 
         PRINTF("Network ready IP: %u.%u.%u.%u\r\n", (unsigned char)((htonl(wiced_if.ip_addr.addr) >> 24) & 0xff),
                (unsigned char)((htonl(wiced_if.ip_addr.addr) >> 16) & 0xff),
@@ -214,7 +205,7 @@ static void lwiperf_report(void *arg,
                            u16_t local_port,
                            const ip_addr_t *remote_addr,
                            u16_t remote_port,
-                           u32_t bytes_transferred,
+                           u64_t bytes_transferred,
                            u32_t ms_duration,
                            u32_t bandwidth_kbitpsec)
 {
@@ -230,7 +221,7 @@ static void lwiperf_report(void *arg,
             PRINTF(" Remote address : %u.%u.%u.%u ", ((u8_t *)remote_addr)[0], ((u8_t *)remote_addr)[1],
                    ((u8_t *)remote_addr)[2], ((u8_t *)remote_addr)[3]);
             PRINTF(" Port %d \r\n", remote_port);
-            PRINTF(" Bytes Transferred %d \r\n", bytes_transferred);
+            PRINTF(" Bytes Transferred %llu \r\n", bytes_transferred);
             PRINTF(" Duration (ms) %d \r\n", ms_duration);
             PRINTF(" Bandwidth (kbitpsec) %d \r\n", bandwidth_kbitpsec);
         }
@@ -476,9 +467,8 @@ int main(void)
     TimerHandle_t timer;
 
     BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_USDHCClockConfiguration();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
 
     tcpip_init(NULL, NULL);

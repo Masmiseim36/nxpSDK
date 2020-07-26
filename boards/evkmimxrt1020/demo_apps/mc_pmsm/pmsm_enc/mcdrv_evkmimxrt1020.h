@@ -18,15 +18,15 @@
  * Definitions
  ******************************************************************************/
 /* Version info */
-#define MCRSP_VER       "2.0.0"        /* motor control package version */
+#define MCRSP_VER "2.0.0" /* motor control package version */
 
 /* Application info */
 typedef struct _app_ver
 {
-    char    cBoardID[15];
-    char    cMotorType[4];
-    char    cAppVer[5];
-}app_ver_t;
+    char cBoardID[15];
+    char cMotorType[4];
+    char cAppVer[5];
+} app_ver_t;
 
 /* Structure used during clocks and modulo calculations */
 typedef struct _clock_setup
@@ -38,7 +38,7 @@ typedef struct _clock_setup
     uint16_t ui16M1SpeedLoopModulo;
     uint16_t ui16M1PwmFreq;
     uint16_t ui16M1PwmModulo;
-    uint16_t ui16M1PwmDeadTime;    
+    uint16_t ui16M1PwmDeadTime;
 } clock_setup_t;
 
 /******************************************************************************
@@ -47,10 +47,10 @@ typedef struct _clock_setup
 #define M1_PWM_FREQ (10000)         /* PWM frequency - 10kHz */
 #define M1_FOC_FREQ_VS_PWM_FREQ (1) /* FOC calculation is called every n-th PWM reload */
 #define M1_SPEED_LOOP_FREQ (1000)   /* Speed loop frequency */
-#define M1_PWM_DEADTIME (500)      /* Output PWM deadtime value in nanoseconds */
+#define M1_PWM_DEADTIME (500)       /* Output PWM deadtime value in nanoseconds */
 
-#define M1_FAST_LOOP_TS ((float_t)1.0/(float_t)(M1_PWM_FREQ / M1_FOC_FREQ_VS_PWM_FREQ))
-#define M1_SLOW_LOOP_TS ((float_t)1.0/(float_t)(M1_SLOW_LOOP_FREQ))
+#define M1_FAST_LOOP_TS ((float_t)1.0 / (float_t)(M1_PWM_FREQ / M1_FOC_FREQ_VS_PWM_FREQ))
+#define M1_SLOW_LOOP_TS ((float_t)1.0 / (float_t)(M1_SLOW_LOOP_FREQ))
 #define M1_TIME_ONESEC_COUNT (M1_PWM_FREQ / M1_FOC_FREQ_VS_PWM_FREQ)
 
 /* Assignment of eFlexPWM channels to motor 1 phases
@@ -66,8 +66,8 @@ typedef struct _clock_setup
 #define M1_FAULT_NUM (0)
 
 /* Braking resistor macros */
-#define M1_BRAKE_SET() 
-#define M1_BRAKE_CLEAR()  
+#define M1_BRAKE_SET()
+#define M1_BRAKE_CLEAR()
 
 /******************************************************************************
  * ADC measurement definition for motor 1
@@ -78,10 +78,10 @@ typedef struct _clock_setup
  * Motor 1
  * Quantity     | Module A (ADC1)       | Module B (ADC2)
  * --------------------------------------------------------------------------
- * M1_I_A       | ADC1_CH11             | ADC2_CH11  
- * M1_I_B       | ADC1_CH12             | ADC2_CH12  
- * M1_I_C       | ADC1_CH13             | ADC2_CH13  
- * M1_U_DCB     | ADC1_CH10             | ADC2_CH10 
+ * M1_I_A       | ADC1_CH11             | ADC2_CH11
+ * M1_I_B       | ADC1_CH12             | ADC2_CH12
+ * M1_I_C       | ADC1_CH13             | ADC2_CH13
+ * M1_U_DCB     | ADC1_CH10             | ADC2_CH10
  *
  */
 
@@ -98,7 +98,7 @@ typedef struct _clock_setup
 #define M1_ADC1_UDCB (10)
 #define M1_ADC2_UDCB (10)
 
-/* offset measurement filter window */     
+/* offset measurement filter window */
 #define ADC_OFFSET_WINDOW (3)
 /******************************************************************************
  * MC driver macro definition and check - do not change this part
@@ -121,7 +121,7 @@ typedef struct _clock_setup
  * Define motor 1 slow control loop timer
  ******************************************************************************/
 #define M1_MCDRV_TMR_SLOWLOOP_INIT() InitTMR1()
-    
+
 /******************************************************************************
  * Define 3-ph PWM control functions for motor 1
  ******************************************************************************/
@@ -139,12 +139,12 @@ typedef struct _clock_setup
 #define M1_MCDRV_QD_GET(par) (MCDRV_QdEncGet(par))
 #define M1_MCDRV_QD_SET_DIRECTION(par) (MCDRV_QdEncSetDirection(par))
 #define M1_MCDRV_QD_CLEAR(par) (MCDRV_QdEncClear(par))
-    
+
 /******************************************************************************
- * Define motor 1 CMP2 for overcurrent detection                               
+ * Define motor 1 CMP2 for overcurrent detection
  ******************************************************************************/
 #define M1_MCDRV_CMP2_INIT() InitCMP2()
-    
+
 /******************************************************************************
  * Global variable definitions
  ******************************************************************************/

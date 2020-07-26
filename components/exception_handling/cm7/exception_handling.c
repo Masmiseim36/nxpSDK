@@ -74,17 +74,17 @@ __ASM void COPY_TO_STACK(void)
 _loop_check
     mov r4, #4
     adds r1, r1, #4
-    ldr r3, [r1] 
+    ldr r3, [r1]
     and r2, r3, #0xffffffe0
     cmp r2, #0xffffffe0
     bne _loop_check
     b _handle_lr
 _lr_case
     mov r4, #0
-    mov r3, lr 
+    mov r3, lr
 _handle_lr
     adds r1, r1, r4
-    msr msp, r1 
+    msr msp, r1
     tst r3, #4
     ite eq
         mrseq r0, msp
@@ -462,7 +462,7 @@ void EXCEPTION_CopyToStack(void)
     /* Push SP (when faulted) and IPSR to MSP and save MSP contain the exception Stack Struct to
      * g_exceptionStackStruct*/
     COPY_TO_STACK();
-} 
+}
 
 /*!
  * @brief Exception data print function.

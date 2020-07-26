@@ -26,7 +26,7 @@
 
 /* Platform thread stack size and priority. */
 #define IOT_THREAD_DEFAULT_STACK_SIZE 900
-#define IOT_THREAD_DEFAULT_PRIORITY 5
+#define IOT_THREAD_DEFAULT_PRIORITY   5
 
 /* Include the common configuration file for FreeRTOS. */
 #include "iot_config_common.h"

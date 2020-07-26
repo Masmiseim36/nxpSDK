@@ -10,7 +10,7 @@
 
 #include "tfa2_dev.h"
 
-#define TFA2_HAPTIC_FP_INT(value, shift) ((value) >> (shift))
+#define TFA2_HAPTIC_FP_INT(value, shift)  ((value) >> (shift))
 #define TFA2_HAPTIC_FP_FRAC(value, shift) ((((value) & ((1 << (shift)) - 1)) * 1000) >> (shift))
 
 int tfa2_dev_start_hapticboost(struct tfa2_device *tfa);

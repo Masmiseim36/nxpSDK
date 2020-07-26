@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 NXP
+ * Copyright 2018-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -13,11 +13,11 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v4.1
+product: Pins v7.0
 processor: MIMXRT1021xxxxx
 package_id: MIMXRT1021DAG5A
 mcu_data: ksdk2_0
-processor_version: 0.0.0
+processor_version: 0.7.10
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 
@@ -80,7 +80,7 @@ BOARD_InitPins:
  *
  * END ****************************************************************************************************************/
 void BOARD_InitPins(void) {
-  CLOCK_EnableClock(kCLOCK_Iomuxc);           /* iomuxc clock (iomuxc_clk_enable): 0x03u */
+  CLOCK_EnableClock(kCLOCK_Iomuxc);           /* iomuxc clock (iomuxc_clk_enable): 0x03U */
 
   IOMUXC_SetPinMux(
       IOMUXC_GPIO_AD_B0_04_GPIO1_IO04,        /* GPIO_AD_B0_04 is configured as GPIO1_IO04 */
@@ -129,7 +129,7 @@ void BOARD_InitPins(void) {
       0U);                                    /* Software Input On Field: Input Path is determined by functionality */
   IOMUXC_SetPinConfig(
       IOMUXC_GPIO_AD_B0_04_GPIO1_IO04,        /* GPIO_AD_B0_04 PAD functional properties : */
-      0xB0A9u);                               /* Slew Rate Field: Fast Slew Rate
+      0xB0A9U);                               /* Slew Rate Field: Fast Slew Rate
                                                  Drive Strength Field: R0/5
                                                  Speed Field: medium(100MHz)
                                                  Open Drain Enable Field: Open Drain Disabled
@@ -139,7 +139,7 @@ void BOARD_InitPins(void) {
                                                  Hyst. Enable Field: Hysteresis Disabled */
   IOMUXC_SetPinConfig(
       IOMUXC_GPIO_AD_B0_05_GPIO1_IO05,        /* GPIO_AD_B0_05 PAD functional properties : */
-      0x10B0u);                               /* Slew Rate Field: Slow Slew Rate
+      0x10B0U);                               /* Slew Rate Field: Slow Slew Rate
                                                  Drive Strength Field: R0/6
                                                  Speed Field: medium(100MHz)
                                                  Open Drain Enable Field: Open Drain Disabled
@@ -149,7 +149,7 @@ void BOARD_InitPins(void) {
                                                  Hyst. Enable Field: Hysteresis Disabled */
   IOMUXC_SetPinConfig(
       IOMUXC_GPIO_AD_B0_06_LPUART1_TX,        /* GPIO_AD_B0_06 PAD functional properties : */
-      0x10B0u);                               /* Slew Rate Field: Slow Slew Rate
+      0x10B0U);                               /* Slew Rate Field: Slow Slew Rate
                                                  Drive Strength Field: R0/6
                                                  Speed Field: medium(100MHz)
                                                  Open Drain Enable Field: Open Drain Disabled
@@ -159,7 +159,7 @@ void BOARD_InitPins(void) {
                                                  Hyst. Enable Field: Hysteresis Disabled */
   IOMUXC_SetPinConfig(
       IOMUXC_GPIO_AD_B0_07_LPUART1_RX,        /* GPIO_AD_B0_07 PAD functional properties : */
-      0x10B0u);                               /* Slew Rate Field: Slow Slew Rate
+      0x10B0U);                               /* Slew Rate Field: Slow Slew Rate
                                                  Drive Strength Field: R0/6
                                                  Speed Field: medium(100MHz)
                                                  Open Drain Enable Field: Open Drain Disabled
@@ -169,7 +169,7 @@ void BOARD_InitPins(void) {
                                                  Hyst. Enable Field: Hysteresis Disabled */
   IOMUXC_SetPinConfig(
       IOMUXC_GPIO_AD_B0_08_ENET_REF_CLK1,     /* GPIO_AD_B0_08 PAD functional properties : */
-      0xB0E9u);                               /* Slew Rate Field: Fast Slew Rate
+      0xB0E9U);                               /* Slew Rate Field: Fast Slew Rate
                                                  Drive Strength Field: R0/5
                                                  Speed Field: max(200MHz)
                                                  Open Drain Enable Field: Open Drain Disabled
@@ -179,7 +179,7 @@ void BOARD_InitPins(void) {
                                                  Hyst. Enable Field: Hysteresis Disabled */
   IOMUXC_SetPinConfig(
       IOMUXC_GPIO_AD_B0_09_ENET_RDATA01,      /* GPIO_AD_B0_09 PAD functional properties : */
-      0xB0E9u);                               /* Slew Rate Field: Fast Slew Rate
+      0xB0E9U);                               /* Slew Rate Field: Fast Slew Rate
                                                  Drive Strength Field: R0/5
                                                  Speed Field: max(200MHz)
                                                  Open Drain Enable Field: Open Drain Disabled
@@ -189,7 +189,7 @@ void BOARD_InitPins(void) {
                                                  Hyst. Enable Field: Hysteresis Disabled */
   IOMUXC_SetPinConfig(
       IOMUXC_GPIO_AD_B0_10_ENET_RDATA00,      /* GPIO_AD_B0_10 PAD functional properties : */
-      0xB0E9u);                               /* Slew Rate Field: Fast Slew Rate
+      0xB0E9U);                               /* Slew Rate Field: Fast Slew Rate
                                                  Drive Strength Field: R0/5
                                                  Speed Field: max(200MHz)
                                                  Open Drain Enable Field: Open Drain Disabled
@@ -199,7 +199,7 @@ void BOARD_InitPins(void) {
                                                  Hyst. Enable Field: Hysteresis Disabled */
   IOMUXC_SetPinConfig(
       IOMUXC_GPIO_AD_B0_11_ENET_RX_EN,        /* GPIO_AD_B0_11 PAD functional properties : */
-      0xB0E9u);                               /* Slew Rate Field: Fast Slew Rate
+      0xB0E9U);                               /* Slew Rate Field: Fast Slew Rate
                                                  Drive Strength Field: R0/5
                                                  Speed Field: max(200MHz)
                                                  Open Drain Enable Field: Open Drain Disabled
@@ -209,7 +209,7 @@ void BOARD_InitPins(void) {
                                                  Hyst. Enable Field: Hysteresis Disabled */
   IOMUXC_SetPinConfig(
       IOMUXC_GPIO_AD_B0_12_ENET_RX_ER,        /* GPIO_AD_B0_12 PAD functional properties : */
-      0xB0E9u);                               /* Slew Rate Field: Fast Slew Rate
+      0xB0E9U);                               /* Slew Rate Field: Fast Slew Rate
                                                  Drive Strength Field: R0/5
                                                  Speed Field: max(200MHz)
                                                  Open Drain Enable Field: Open Drain Disabled
@@ -219,7 +219,7 @@ void BOARD_InitPins(void) {
                                                  Hyst. Enable Field: Hysteresis Disabled */
   IOMUXC_SetPinConfig(
       IOMUXC_GPIO_AD_B0_13_ENET_TX_EN,        /* GPIO_AD_B0_13 PAD functional properties : */
-      0xB0E9u);                               /* Slew Rate Field: Fast Slew Rate
+      0xB0E9U);                               /* Slew Rate Field: Fast Slew Rate
                                                  Drive Strength Field: R0/5
                                                  Speed Field: max(200MHz)
                                                  Open Drain Enable Field: Open Drain Disabled
@@ -229,7 +229,7 @@ void BOARD_InitPins(void) {
                                                  Hyst. Enable Field: Hysteresis Disabled */
   IOMUXC_SetPinConfig(
       IOMUXC_GPIO_AD_B0_14_ENET_TDATA00,      /* GPIO_AD_B0_14 PAD functional properties : */
-      0xB0E9u);                               /* Slew Rate Field: Fast Slew Rate
+      0xB0E9U);                               /* Slew Rate Field: Fast Slew Rate
                                                  Drive Strength Field: R0/5
                                                  Speed Field: max(200MHz)
                                                  Open Drain Enable Field: Open Drain Disabled
@@ -239,7 +239,7 @@ void BOARD_InitPins(void) {
                                                  Hyst. Enable Field: Hysteresis Disabled */
   IOMUXC_SetPinConfig(
       IOMUXC_GPIO_AD_B0_15_ENET_TDATA01,      /* GPIO_AD_B0_15 PAD functional properties : */
-      0xB0E9u);                               /* Slew Rate Field: Fast Slew Rate
+      0xB0E9U);                               /* Slew Rate Field: Fast Slew Rate
                                                  Drive Strength Field: R0/5
                                                  Speed Field: max(200MHz)
                                                  Open Drain Enable Field: Open Drain Disabled
@@ -249,7 +249,7 @@ void BOARD_InitPins(void) {
                                                  Hyst. Enable Field: Hysteresis Disabled */
   IOMUXC_SetPinConfig(
       IOMUXC_GPIO_AD_B1_06_GPIO1_IO22,        /* GPIO_AD_B1_06 PAD functional properties : */
-      0xB0A9u);                               /* Slew Rate Field: Fast Slew Rate
+      0xB0A9U);                               /* Slew Rate Field: Fast Slew Rate
                                                  Drive Strength Field: R0/5
                                                  Speed Field: medium(100MHz)
                                                  Open Drain Enable Field: Open Drain Disabled
@@ -259,7 +259,7 @@ void BOARD_InitPins(void) {
                                                  Hyst. Enable Field: Hysteresis Disabled */
   IOMUXC_SetPinConfig(
       IOMUXC_GPIO_EMC_40_ENET_MDIO,           /* GPIO_EMC_40 PAD functional properties : */
-      0xB0E9u);                               /* Slew Rate Field: Fast Slew Rate
+      0xB0E9U);                               /* Slew Rate Field: Fast Slew Rate
                                                  Drive Strength Field: R0/5
                                                  Speed Field: max(200MHz)
                                                  Open Drain Enable Field: Open Drain Disabled
@@ -269,7 +269,7 @@ void BOARD_InitPins(void) {
                                                  Hyst. Enable Field: Hysteresis Disabled */
   IOMUXC_SetPinConfig(
       IOMUXC_GPIO_EMC_41_ENET_MDC,            /* GPIO_EMC_41 PAD functional properties : */
-      0xB0E9u);                               /* Slew Rate Field: Fast Slew Rate
+      0xB0E9U);                               /* Slew Rate Field: Fast Slew Rate
                                                  Drive Strength Field: R0/5
                                                  Speed Field: max(200MHz)
                                                  Open Drain Enable Field: Open Drain Disabled
@@ -299,7 +299,7 @@ BOARD_I2C_ConfigurePins:
  *
  * END ****************************************************************************************************************/
 void BOARD_I2C_ConfigurePins(void) {
-  CLOCK_EnableClock(kCLOCK_Iomuxc);           /* iomuxc clock (iomuxc_clk_enable): 0x03u */
+  CLOCK_EnableClock(kCLOCK_Iomuxc);           /* iomuxc clock (iomuxc_clk_enable): 0x03U */
 
   IOMUXC_SetPinMux(
       IOMUXC_GPIO_SD_B1_02_LPI2C4_SCL,        /* GPIO_SD_B1_02 is configured as LPI2C4_SCL */
@@ -309,7 +309,7 @@ void BOARD_I2C_ConfigurePins(void) {
       1U);                                    /* Software Input On Field: Force input path of pad GPIO_SD_B1_03 */
   IOMUXC_SetPinConfig(
       IOMUXC_GPIO_SD_B1_02_LPI2C4_SCL,        /* GPIO_SD_B1_02 PAD functional properties : */
-      0xD8B0u);                               /* Slew Rate Field: Slow Slew Rate
+      0xD8B0U);                               /* Slew Rate Field: Slow Slew Rate
                                                  Drive Strength Field: R0/6
                                                  Speed Field: medium(100MHz)
                                                  Open Drain Enable Field: Open Drain Enabled
@@ -319,7 +319,7 @@ void BOARD_I2C_ConfigurePins(void) {
                                                  Hyst. Enable Field: Hysteresis Disabled */
   IOMUXC_SetPinConfig(
       IOMUXC_GPIO_SD_B1_03_LPI2C4_SDA,        /* GPIO_SD_B1_03 PAD functional properties : */
-      0xD8B0u);                               /* Slew Rate Field: Slow Slew Rate
+      0xD8B0U);                               /* Slew Rate Field: Slow Slew Rate
                                                  Drive Strength Field: R0/6
                                                  Speed Field: medium(100MHz)
                                                  Open Drain Enable Field: Open Drain Enabled

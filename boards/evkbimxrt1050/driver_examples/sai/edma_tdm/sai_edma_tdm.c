@@ -18,6 +18,7 @@
 #include "fsl_cs42888.h"
 #include "fsl_sd_disk.h"
 #include "fsl_codec_common.h"
+#include "sdmmc_config.h"
 #include "fsl_common.h"
 #include "pin_mux.h"
 #include "clock_config.h"
@@ -28,8 +29,8 @@
  * Definitions
  ******************************************************************************/
 /* SAI instance and clock */
-#define DEMO_SAI SAI1
-#define DEMO_SAI_IRQ SAI1_IRQn
+#define DEMO_SAI         SAI1
+#define DEMO_SAI_IRQ     SAI1_IRQn
 #define SAI_TxIRQHandler SAI1_IRQHandler
 
 /* Select Audio/Video PLL (786.48 MHz) as sai1 clock source */
@@ -54,16 +55,16 @@
 #define DEMO_I2C_CLK_FREQ ((CLOCK_GetFreq(kCLOCK_Usb1PllClk) / 8) / (DEMO_LPI2C_CLOCK_SOURCE_DIVIDER + 1U))
 
 /* DMA */
-#define DMAMUX0 DMAMUX
-#define EXAMPLE_DMA DMA0
-#define EXAMPLE_CHANNEL (0U)
+#define DMAMUX0               DMAMUX
+#define EXAMPLE_DMA           DMA0
+#define EXAMPLE_CHANNEL       (0U)
 #define EXAMPLE_SAI_TX_SOURCE kDmaRequestMuxSai1Tx
 
-#define DEMO_CODEC_RESET_GPIO GPIO1
+#define DEMO_CODEC_RESET_GPIO     GPIO1
 #define DEMO_CODEC_RESET_GPIO_PIN 19
 #define OVER_SAMPLE_RATE (384U)
-#define BUFFER_SIZE (2048U)
-#define BUFFER_NUM (4U)
+#define BUFFER_SIZE      (2048U)
+#define BUFFER_NUM       (4U)
 
 /* demo audio sample rate */
 #define DEMO_AUDIO_SAMPLE_RATE (kSAI_SampleRate48KHz)
@@ -78,8 +79,8 @@
 #define DEMO_AUDIO_DATA_CHANNEL (8U)
 /* demo audio bitwidth */
 #define DEMO_AUDIO_BIT_WIDTH kSAI_WordWidth32bits
-#define DEMO_FRMAE_SYNC_LEN kSAI_FrameSyncLenOneBitClk
-#define DEMO_SAI_CHANNEL kSAI_Channel0Mask
+#define DEMO_FRMAE_SYNC_LEN  kSAI_FrameSyncLenOneBitClk
+#define DEMO_SAI_CHANNEL     kSAI_Channel0Mask
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -137,34 +138,6 @@ sai_master_clock_t mclkConfig = {
 #endif
 /*! @brief Card descriptor. */
 extern sd_card_t g_sd;
-/*! @brief SDMMC host detect card configuration */
-static const sdmmchost_detect_card_t s_sdCardDetect = {
-#ifndef BOARD_SD_DETECT_TYPE
-    .cdType = kSDMMCHOST_DetectCardByGpioCD,
-#else
-    .cdType = BOARD_SD_DETECT_TYPE,
-#endif
-    .cdTimeOut_ms = (~0U),
-    .cardInserted = SDCARD_DetectCallBack,
-    .cardRemoved  = SDCARD_DetectCallBack,
-};
-
-/*! @brief SDMMC card power control configuration */
-#if defined DEMO_SDCARD_POWER_CTRL_FUNCTION_EXIST
-static const sdmmchost_pwr_card_t s_sdCardPwrCtrl = {
-    .powerOn          = BOARD_PowerOnSDCARD,
-    .powerOnDelay_ms  = 500U,
-    .powerOff         = BOARD_PowerOffSDCARD,
-    .powerOffDelay_ms = 0U,
-};
-#endif
-/*! @brief SDMMC card power control configuration */
-#if defined DEMO_SDCARD_SWITCH_VOLTAGE_FUNCTION_EXIST
-static const sdmmchost_card_switch_voltage_func_t s_sdCardVoltageSwitch = {
-    .cardSignalLine1V8 = BOARD_USDHC_Switch_VoltageTo1V8,
-    .cardSignalLine3V3 = BOARD_USDHC_Switch_VoltageTo3V3,
-};
-#endif
 static uint32_t volatile s_writeIndex = 0U;
 static uint32_t volatile s_readIndex  = 0U;
 static uint32_t volatile s_emptyBlock = BUFFER_NUM;
@@ -402,27 +375,14 @@ void SAI_ErrorIRQHandler(void)
 
     /* Reset FIFO */
     SAI_TxSoftwareReset(DEMO_SAI, kSAI_ResetTypeFIFO);
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 #endif
 
 static status_t sdcardWaitCardInsert(void)
 {
-    /* Save host information. */
-    g_sd.host.base           = SD_HOST_BASEADDR;
-    g_sd.host.sourceClock_Hz = SD_HOST_CLK_FREQ;
-    /* card detect type */
-    g_sd.usrParam.cd = &s_sdCardDetect;
-#if defined DEMO_SDCARD_POWER_CTRL_FUNCTION_EXIST
-    g_sd.usrParam.pwr = &s_sdCardPwrCtrl;
-#endif
-#if defined DEMO_SDCARD_SWITCH_VOLTAGE_FUNCTION_EXIST
-    g_sd.usrParam.cardVoltage = &s_sdCardVoltageSwitch;
-#endif
+    BOARD_SD_Config(&g_sd, NULL, BOARD_SDMMC_SD_HOST_IRQ_PRIORITY, NULL);
+
     /* SD host init function */
     if (SD_HostInit(&g_sd) != kStatus_Success)
     {
@@ -430,18 +390,18 @@ static status_t sdcardWaitCardInsert(void)
         return kStatus_Fail;
     }
     /* power off card */
-    SD_PowerOffCard(g_sd.host.base, g_sd.usrParam.pwr);
+    SD_SetCardPower(&g_sd, false);
 
     PRINTF(
         "\r\nPlease insert a SDCARD into board, make sure the sdcard is format to FAT32 format and put the 8_TDM.wav "
         "file into the sdcard.\r\n");
 
     /* wait card insert */
-    if (SD_WaitCardDetectStatus(SD_HOST_BASEADDR, &s_sdCardDetect, true) == kStatus_Success)
+    if (SD_PollingCardInsert(&g_sd, kSD_Inserted) == kStatus_Success)
     {
         PRINTF("\r\nCard inserted.\r\n");
         /* power on the card */
-        SD_PowerOnCard(g_sd.host.base, g_sd.usrParam.pwr);
+        SD_SetCardPower(&g_sd, true);
     }
     else
     {

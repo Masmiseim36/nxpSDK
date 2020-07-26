@@ -1,9 +1,9 @@
 /*
-* Copyright 2017-2018 NXP
-* All rights reserved.
-*
-* SPDX-License-Identifier: BSD-3-Clause
-*/
+ * Copyright 2017-2018 NXP
+ * All rights reserved.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
 
 #ifndef __USB_DEVICE_CONFIG_H__
 #define __USB_DEVICE_CONFIG_H__ 1

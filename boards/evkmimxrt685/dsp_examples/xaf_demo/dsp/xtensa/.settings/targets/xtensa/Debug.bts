@@ -14,6 +14,9 @@
               <ListEntry>${xt_project_loc}/../../../../../../devices</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT685S/drivers</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT685S</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/EAP/RT600_HIFI4_example/COMMON/PlatformTypes</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/EAP/RT600_HIFI4_example/INC</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/EAP/RT600_HIFI4_example/LIB</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../components/uart</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../components/serial_manager</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt600_hifi4</ListEntry>
@@ -36,6 +39,7 @@
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/include/audio</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/test_inp</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/client_proxy</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT685S/utilities</ListEntry>
             </value>
           </StringListMapEntry>
@@ -51,15 +55,27 @@
               <ListEntry key="XA_VORBIS_DECODER" value="1"/>
               <ListEntry key="XA_OPUS_ENCODER" value="1"/>
               <ListEntry key="XA_OPUS_DECODER" value="1"/>
+              <ListEntry key="XA_SBC_ENCODER" value="1"/>
+              <ListEntry key="XA_SBC_DECODER" value="1"/>
               <ListEntry key="XA_PCM_GAIN" value="1"/>
               <ListEntry key="XA_SRC_PP_FX" value="1"/>
               <ListEntry key="XA_RENDERER" value="1"/>
               <ListEntry key="XA_CAPTURER" value="1"/>
+              <ListEntry key="XA_CLIENT_PROXY" value="1"/>
               <ListEntry key="SDK_DEBUGCONSOLE" value="1"/>
               <ListEntry key="XOS_CLOCK_FREQ" value="594000000"/>
               <ListEntry key="APP_DSP_ONLY" value="0"/>
               <ListEntry key="I2S_SUPPORT_44100_HZ" value="0"/>
-              <ListEntry key="SERIAL_PORT_TYPE_UART=1" value=""/>
+              <ListEntry key="ALGORITHM_VC" value="1"/>
+              <ListEntry key="ALGORITHM_CS" value="1"/>
+              <ListEntry key="ALGORITHM_DBE" value="1"/>
+              <ListEntry key="ALGORITHM_EQNB" value="1"/>
+              <ListEntry key="ALGORITHM_LM" value="1"/>
+              <ListEntry key="ALGORITHM_TE" value="1"/>
+              <ListEntry key="ALGORITHM_TG" value="1"/>
+              <ListEntry key="ALGORITHM_AVL" value="1"/>
+              <ListEntry key="ALGORITHM_PSA" value="1"/>
+              <ListEntry key="SERIAL_PORT_TYPE_UART" value="1"/>
               <ListEntry key="HAVE_XOS" value=""/>
               <ListEntry key="HIFI_ONLY_XAF" value=""/>
               <ListEntry key="FIO_LOCAL_FS" value=""/>
@@ -118,8 +134,11 @@
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/cadence/aac_dec/lib/xa_aac_dec.a&#13;
 ${xt_project_loc}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/cadence/mp3_dec/lib/xa_mp3_dec.a&#13;
 ${xt_project_loc}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/cadence/opus/lib/xa_opus_codec.a&#13;
+${xt_project_loc}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/cadence/sbc_dec/lib/xa_sbc_dec.a&#13;
+${xt_project_loc}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/cadence/sbc_enc/lib/xa_sbc_enc.a&#13;
 ${xt_project_loc}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/cadence/src-pp/lib/xa_src_pp.a&#13;
 ${xt_project_loc}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/cadence/vorbis_dec/lib/xa_vorbis_dec.a&#13;
+${xt_project_loc}/../../../../../../middleware/EAP/RT600_HIFI4_example/LIB/libEAP_Lib.a&#13;
 -g&#13;
 </ListEntry>
             </value>

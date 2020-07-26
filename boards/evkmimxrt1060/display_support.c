@@ -23,7 +23,7 @@
     (kELCDIF_DataEnableActiveHigh | kELCDIF_VsyncActiveLow | kELCDIF_HsyncActiveLow | kELCDIF_DriveDataOnRisingClkEdge)
 
 /* Back light. */
-#define LCD_BL_GPIO GPIO2
+#define LCD_BL_GPIO     GPIO2
 #define LCD_BL_GPIO_PIN 31
 
 /*******************************************************************************

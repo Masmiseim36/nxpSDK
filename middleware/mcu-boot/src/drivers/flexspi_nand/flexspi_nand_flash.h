@@ -1,6 +1,6 @@
 /*
  * Copyright 2014-2015 Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -10,9 +10,9 @@
 #ifndef __FLEXSPI_NAND_FLASH_H__
 #define __FLEXSPI_NAND_FLASH_H__
 
-#include "fsl_common.h"
+#include "bl_flexspi.h"
 #include "bootloader_common.h"
-#include "flexspi/fsl_flexspi.h"
+#include "fsl_common.h"
 
 /**********************************************************************************************************************
  * Definitions
@@ -146,8 +146,7 @@ enum
 
 typedef struct
 {
-    union
-    {
+    union {
         struct
         {
             uint32_t max_freq : 4;        //!< Device specific definitions, see System Boot Chapter for more details
@@ -162,8 +161,7 @@ typedef struct
         uint32_t U;
     } option0;
 
-    union
-    {
+    union {
         struct
         {
             uint32_t manufacturer_id : 8; //!< Manufacturer ID
@@ -176,82 +174,85 @@ typedef struct
 } serial_nand_config_option_t;
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
-/**********************************************************************************************************************
- * API
- *********************************************************************************************************************/
+    /**********************************************************************************************************************
+     * API
+     *********************************************************************************************************************/
 
-/*
- * !@brief Initialize Serial NAND connected via FlexSPI
- *
- * This function intializes the Serial NAND deices with specified config parameters
- *
- * @param instance FlexSPI instance
- * @param config Serial NAND configuration paramters via FlexSPI
- */
-status_t flexspi_nand_init(uint32_t instance, flexspi_nand_config_t *config);
+    /*
+     * !@brief Initialize Serial NAND connected via FlexSPI
+     *
+     * This function intializes the Serial NAND deices with specified config parameters
+     *
+     * @param instance FlexSPI instance
+     * @param config Serial NAND configuration paramters via FlexSPI
+     */
+    status_t flexspi_nand_init(uint32_t instance, flexspi_nand_config_t *config);
 
-/*
- * !@brief Read content from specified page via FlexSPI
- *
- * This function reads content from specified page
- *
- * @param instance FlexSPI instance
- * @param config Serial NAND configuration paramters via FlexSPI
- * @param pageId Specified page Index
- * @param buffer destination buffer for page read
- * @param length specified length of data to be read
- */
-status_t flexspi_nand_read_page(
-    uint32_t instance, flexspi_nand_config_t *config, uint32_t pageId, uint32_t *buffer, uint32_t length);
+    /*
+     * !@brief Read content from specified page via FlexSPI
+     *
+     * This function reads content from specified page
+     *
+     * @param instance FlexSPI instance
+     * @param config Serial NAND configuration paramters via FlexSPI
+     * @param pageId Specified page Index
+     * @param buffer destination buffer for page read
+     * @param length specified length of data to be read
+     */
+    status_t flexspi_nand_read_page(
+        uint32_t instance, flexspi_nand_config_t *config, uint32_t pageId, uint32_t *buffer, uint32_t length);
 
-/*
- * !@brief Erase a block from Serial NAND via FlexSPI
- *
- * This function erase specified block from Serial NAND
- *
- * @param instance FlexSPI instance
- * @param config Serial NAND configuration paramters via FlexSPI
- * @param blockId Specified block Index
- */
-//!@brief Erase a Serial NAND Block via FlexSPI
-status_t flexspi_nand_erase_block(uint32_t instance, flexspi_nand_config_t *config, uint32_t blockId);
+    /*
+     * !@brief Erase a block from Serial NAND via FlexSPI
+     *
+     * This function erase specified block from Serial NAND
+     *
+     * @param instance FlexSPI instance
+     * @param config Serial NAND configuration paramters via FlexSPI
+     * @param blockId Specified block Index
+     */
+    //!@brief Erase a Serial NAND Block via FlexSPI
+    status_t flexspi_nand_erase_block(uint32_t instance, flexspi_nand_config_t *config, uint32_t blockId);
 
-/*
- * !@brief Erase several pages from Serial NAND via FlexSPI
- *
- * This function erase specified block from Serial NAND
- *
- * @param instance FlexSPI instance
- * @param config Serial NAND configuration paramters via FlexSPI
- * @param pageStart Specified the first page to be erased
- * @param pages Total page counts to be erased.
- */
-status_t flexspi_nand_erase(uint32_t instance, flexspi_nand_config_t *config, uint32_t pageStart, uint32_t pages);
+    /*
+     * !@brief Erase several pages from Serial NAND via FlexSPI
+     *
+     * This function erase specified block from Serial NAND
+     *
+     * @param instance FlexSPI instance
+     * @param config Serial NAND configuration paramters via FlexSPI
+     * @param pageStart Specified the first page to be erased
+     * @param pages Total page counts to be erased.
+     */
+    status_t flexspi_nand_erase(uint32_t instance, flexspi_nand_config_t *config, uint32_t pageStart, uint32_t pages);
 
-/*
- * !@brief Program data to specified page via FlexSPI
- *
- * This function program content to specified page
- *
- * @param instance FlexSPI instance
- * @param config Serial NAND configuration paramters via FlexSPI
- * @param pageId Specified page Index
- * @param src Start pointer for data to be programmed.
- * @param length specified length of data to be programmed
- */
-//!@brief Program data to specified Serial NAND page via FlexSPI
-status_t flexspi_nand_program_page(
-    uint32_t instance, flexspi_nand_config_t *config, uint32_t pageId, uint32_t *src, uint32_t length);
+    /*
+     * !@brief Program data to specified page via FlexSPI
+     *
+     * This function program content to specified page
+     *
+     * @param instance FlexSPI instance
+     * @param config Serial NAND configuration paramters via FlexSPI
+     * @param pageId Specified page Index
+     * @param src Start pointer for data to be programmed.
+     * @param length specified length of data to be programmed
+     */
+    //!@brief Program data to specified Serial NAND page via FlexSPI
+    status_t flexspi_nand_program_page(
+        uint32_t instance, flexspi_nand_config_t *config, uint32_t pageId, uint32_t *src, uint32_t length);
 
-//
-status_t flexspi_nand_get_fcb_search_cfg(uint32_t *searchCount, uint32_t *searchStride);
+    //
+    status_t flexspi_nand_get_fcb_search_cfg(uint32_t *searchCount, uint32_t *searchStride);
 
-status_t flexspi_nand_get_default_cfg_blk(flexspi_nand_config_t *config);
+    status_t flexspi_nand_get_default_cfg_blk(flexspi_nand_config_t *config);
 
-status_t flexspi_nand_get_config(uint32_t instance, flexspi_nand_config_t *config, serial_nand_config_option_t *option);
+    status_t flexspi_nand_get_config(uint32_t instance,
+                                     flexspi_nand_config_t *config,
+                                     serial_nand_config_option_t *option);
 
 #ifdef __cplusplus
 }

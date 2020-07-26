@@ -431,8 +431,8 @@ int main(void)
     status_t status;
 
     BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
 
     // Set flexspi root clock to 166MHZ.

@@ -1,12 +1,12 @@
 /*
-* Copyright 2017-2018 NXP
-* All rights reserved.
-*
-* SPDX-License-Identifier: BSD-3-Clause
-*/
+ * Copyright 2017-2020 NXP
+ * All rights reserved.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
 
-#include "bootloader/bl_context.h"
-#include "memory/memory.h"
+#include "bl_context.h"
+#include "memory.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 // Variables
@@ -32,8 +32,6 @@ memory_map_entry_t g_memoryMap[] = {
     // SEMC memory
     { 0x90000000, 0x1000000, kMemoryNotExecutable | kMemoryType_FLASH, &g_semcNorMemoryInterface },
 #endif // #if BL_FEATURE_SEMC_NOR_MODULE
-    // AIPS peripherals
-    { 0x40000000, 0x403fffff, kMemoryNotExecutable | kMemoryType_Device, &g_deviceMemoryInterface },
     // Terminator
     { 0 }
 };

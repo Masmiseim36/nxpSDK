@@ -10,10 +10,10 @@ the virtual serial port on board.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.40.2
-- Keil MDK  5.29
-- GCC ARM Embedded  8.3.1
-- MCUXpresso  11.1.1
+- IAR embedded Workbench  8.50.1
+- Keil MDK  5.30
+- GCC ARM Embedded  9.2.1
+- MCUXpresso  11.2.0
 
 Hardware requirements
 =====================
@@ -23,7 +23,7 @@ Hardware requirements
 
 Board settings
 ==============
-Make sure J37, J38 and J39 are shorted.
+Make sure J15 and J30 are shorted.
 
 Prepare the Demo
 ================
@@ -43,7 +43,7 @@ The following message shows in the terminal if the example runs successfully.
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 I2C example -- Read Accelerometer Value
-Found an MMA8652 on board , the device address is 0x1d.
+Found an FXOS8700 on board , the device address is 0x1e.
 The accel values:
 status_reg = 0xff , x =   -88 , y =   -84 , z =  2084 
 status_reg = 0xff , x =   -84 , y =   -88 , z =  2096 

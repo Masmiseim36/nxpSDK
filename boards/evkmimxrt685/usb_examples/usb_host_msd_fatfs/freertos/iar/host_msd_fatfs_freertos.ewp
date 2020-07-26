@@ -202,7 +202,7 @@
         </option>
         <option>
           <name>TrustZone</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>TrustZoneModes</name>
@@ -224,7 +224,6 @@
           <state>DEBUG</state>
           <state>CPU_MIMXRT685SFVKB_cm33</state>
           <state>BOOT_HEADER_ENABLE=1</state>
-          <state>ARM_MATH_CM33</state>
           <state>USB_STACK_FREERTOS</state>
           <state>PRINTF_ADVANCED_ENABLE=1</state>
           <state>CPU_MIMXRT685SFVKB=1</state>
@@ -358,7 +357,7 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
@@ -367,11 +366,11 @@
           <state>$PROJ_DIR$/../../../../../../platform/drivers</state>
           <state>$PROJ_DIR$/../../../../../../platform/drivers/common</state>
           <state>$PROJ_DIR$/../../../..</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/include</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host</state>
-          <state>$PROJ_DIR$/../../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source/fsl_usb_disk</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str</state>
@@ -380,7 +379,7 @@
           <state>$PROJ_DIR$/../../../../flash_config</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
+          <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host/class</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities</state>
         </option>
@@ -1262,7 +1261,7 @@
         </option>
         <option>
           <name>TrustZone</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>TrustZoneModes</name>
@@ -1284,7 +1283,6 @@
           <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>CPU_MIMXRT685SFVKB_cm33</state>
-          <state>ARM_MATH_CM33</state>
           <state>USB_STACK_FREERTOS</state>
           <state>PRINTF_ADVANCED_ENABLE=1</state>
           <state>CPU_MIMXRT685SFVKB=1</state>
@@ -1418,7 +1416,7 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
@@ -1427,11 +1425,11 @@
           <state>$PROJ_DIR$/../../../../../../platform/drivers</state>
           <state>$PROJ_DIR$/../../../../../../platform/drivers/common</state>
           <state>$PROJ_DIR$/../../../..</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/include</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host</state>
-          <state>$PROJ_DIR$/../../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source/fsl_usb_disk</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str</state>
@@ -1440,7 +1438,7 @@
           <state>$PROJ_DIR$/../../../../flash_config</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
+          <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host/class</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities</state>
         </option>
@@ -2322,7 +2320,7 @@
         </option>
         <option>
           <name>TrustZone</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>TrustZoneModes</name>
@@ -2344,7 +2342,6 @@
           <state>NDEBUG</state>
           <state>CPU_MIMXRT685SFVKB_cm33</state>
           <state>BOOT_HEADER_ENABLE=1</state>
-          <state>ARM_MATH_CM33</state>
           <state>USB_STACK_FREERTOS</state>
           <state>PRINTF_ADVANCED_ENABLE=1</state>
           <state>CPU_MIMXRT685SFVKB=1</state>
@@ -2478,7 +2475,7 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
@@ -2487,11 +2484,11 @@
           <state>$PROJ_DIR$/../../../../../../platform/drivers</state>
           <state>$PROJ_DIR$/../../../../../../platform/drivers/common</state>
           <state>$PROJ_DIR$/../../../..</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/include</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host</state>
-          <state>$PROJ_DIR$/../../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source/fsl_usb_disk</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str</state>
@@ -2500,7 +2497,7 @@
           <state>$PROJ_DIR$/../../../../flash_config</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
+          <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host/class</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities</state>
         </option>
@@ -3382,7 +3379,7 @@
         </option>
         <option>
           <name>TrustZone</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>TrustZoneModes</name>
@@ -3404,7 +3401,6 @@
           <state>CPU_MIMXRT685SFVKB_cm33</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>NDEBUG</state>
-          <state>ARM_MATH_CM33</state>
           <state>USB_STACK_FREERTOS</state>
           <state>PRINTF_ADVANCED_ENABLE=1</state>
           <state>CPU_MIMXRT685SFVKB=1</state>
@@ -3538,7 +3534,7 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
@@ -3547,11 +3543,11 @@
           <state>$PROJ_DIR$/../../../../../../platform/drivers</state>
           <state>$PROJ_DIR$/../../../../../../platform/drivers/common</state>
           <state>$PROJ_DIR$/../../../..</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/include</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host</state>
-          <state>$PROJ_DIR$/../../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source/fsl_usb_disk</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str</state>
@@ -3560,7 +3556,7 @@
           <state>$PROJ_DIR$/../../../../flash_config</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
+          <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host/class</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities</state>
         </option>
@@ -4301,27 +4297,6 @@
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/usb/host/usb_host_ip3516hs.h</name>
       </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/usb/host/usb_host.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/usb/host/usb_host_devices.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/usb/host/usb_host_devices.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/usb/host/usb_host_framework.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/usb/host/usb_host_framework.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/usb/host/usb_host_hci.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/usb/host/usb_host_hci.h</name>
-      </file>
       <group>
         <name>class</name>
         <file>
@@ -4346,6 +4321,48 @@
           <name>$PROJ_DIR$/../../../../../../middleware/usb/host/class/usb_host_msd_ufi.c</name>
         </file>
       </group>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/usb/host/usb_host.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/usb/host/usb_host_devices.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/usb/host/usb_host_devices.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/usb/host/usb_host_framework.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/usb/host/usb_host_framework.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/usb/host/usb_host_hci.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/usb/host/usb_host_hci.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/usb/host/usb_host.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/usb/host/usb_host_devices.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/usb/host/usb_host_framework.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/usb/host/usb_host_hci.h</name>
+      </file>
+    </group>
+    <group>
+      <name>phy</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/usb/phy/usb_phy.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/usb/phy/usb_phy.h</name>
+      </file>
     </group>
     <group>
       <name>include</name>
@@ -4359,72 +4376,9 @@
         <name>$PROJ_DIR$/../../../../../../middleware/usb/include/usb_spec.h</name>
       </file>
     </group>
-    <group>
-      <name>phy</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/usb/phy/usb_phy.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/usb/phy/usb_phy.h</name>
-      </file>
-    </group>
   </group>
   <group>
-    <name>component</name>
-    <group>
-      <name>osa</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_config.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_free_rtos.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_free_rtos.h</name>
-      </file>
-    </group>
-    <group>
-      <name>uart</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/uart/uart.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/uart/usart_adapter.c</name>
-      </file>
-    </group>
-    <group>
-      <name>serial_manager</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/serial_manager.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/serial_manager.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/serial_port_internal.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/serial_port_uart.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/serial_port_uart.h</name>
-      </file>
-    </group>
-    <group>
-      <name>lists</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/lists/generic_list.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/lists/generic_list.h</name>
-      </file>
-    </group>
-  </group>
-  <group>
-    <name>amazon-freertos</name>
+    <name>freertos</name>
     <group>
       <name>freertos_kernel</name>
       <group>
@@ -4432,14 +4386,14 @@
         <group>
           <name>MemMang</name>
           <file>
-            <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/portable/MemMang/heap_4.c</name>
+            <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/MemMang/heap_4.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/portable/MemMang/ReadMe.url</name>
+            <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/MemMang/ReadMe.url</name>
           </file>
         </group>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/portable/readme.txt</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/readme.txt</name>
         </file>
         <group>
           <name>IAR</name>
@@ -4448,92 +4402,101 @@
             <group>
               <name>non_secure</name>
               <file>
-                <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/portable/IAR/ARM_CM33_NTZ/non_secure/port.c</name>
+                <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM33_NTZ/non_secure/port.c</name>
               </file>
               <file>
-                <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/portable/IAR/ARM_CM33_NTZ/non_secure/portasm.h</name>
+                <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM33_NTZ/non_secure/portasm.h</name>
               </file>
               <file>
-                <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/portable/IAR/ARM_CM33_NTZ/non_secure/portasm.s</name>
+                <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM33_NTZ/non_secure/portasm.s</name>
               </file>
               <file>
-                <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/portable/IAR/ARM_CM33_NTZ/non_secure/portmacro.h</name>
+                <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM33_NTZ/non_secure/portmacro.h</name>
               </file>
             </group>
           </group>
         </group>
       </group>
       <file>
-        <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/event_groups.c</name>
+        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/croutine.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/event_groups.c</name>
       </file>
       <group>
         <name>include</name>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/include/FreeRTOS.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/FreeRTOS.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/include/atomic.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/include/deprecated_definitions.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/atomic.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/include/event_groups.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/croutine.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/include/list.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/deprecated_definitions.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/include/message_buffer.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/event_groups.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/include/mpu_prototypes.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/list.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/include/mpu_wrappers.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/message_buffer.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/include/portable.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/mpu_prototypes.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/include/projdefs.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/mpu_wrappers.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/include/queue.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/portable.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/include/semphr.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/projdefs.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/include/stack_macros.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/queue.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/include/stream_buffer.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/semphr.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/include/task.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/stack_macros.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/include/timers.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/stream_buffer.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/include/freertos_tasks_c_additions.h</name>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/task.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/timers.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/freertos_tasks_c_additions.h</name>
         </file>
       </group>
       <file>
-        <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/list.c</name>
+        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/list.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/queue.c</name>
+        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/queue.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/stream_buffer.c</name>
+        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/stream_buffer.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/tasks.c</name>
+        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/tasks.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../rtos/amazon-freertos/freertos_kernel/timers.c</name>
+        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/timers.c</name>
       </file>
     </group>
   </group>
@@ -4670,6 +4633,60 @@
     </file>
   </group>
   <group>
+    <name>component</name>
+    <group>
+      <name>uart</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/uart/uart.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/uart/usart_adapter.c</name>
+      </file>
+    </group>
+    <group>
+      <name>serial_manager</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/serial_manager.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/serial_manager.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/serial_port_internal.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/serial_port_uart.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/serial_port_uart.h</name>
+      </file>
+    </group>
+    <group>
+      <name>lists</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/lists/generic_list.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/lists/generic_list.h</name>
+      </file>
+    </group>
+    <group>
+      <name>osa</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_config.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_free_rtos.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_free_rtos.h</name>
+      </file>
+    </group>
+  </group>
+  <group>
     <name>flash_config</name>
     <file>
       <name>$PROJ_DIR$/../../../../flash_config/flash_config.c</name>
@@ -4688,6 +4705,9 @@
     <name>CMSIS</name>
     <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_cm33.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/mpu_armv8.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/tz_context.h</name>
@@ -4712,21 +4732,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_version.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_armv81mml.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_armv8mbl.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_armv8mml.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/mpu_armv7.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/mpu_armv8.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/arm_common_tables.h</name>

@@ -8,13 +8,13 @@
 **     Compiler:            Keil ARM C/C++ Compiler
 **     Reference manual:    MIMXRT685 User manual Rev. 0.95 11 November 2019
 **     Version:             rev. 1.0, 2018-06-19
-**     Build:               b191128
+**     Build:               b200512
 **
 **     Abstract:
 **         Linker file for the Keil ARM C/C++ Compiler
 **
 **     Copyright 2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2019 NXP
+**     Copyright 2016-2020 NXP
 **     All rights reserved.
 **
 **     SPDX-License-Identifier: BSD-3-Clause
@@ -43,7 +43,6 @@
 
 /* The SRAM region [0x0-0x20000] is reserved for ROM code and app-specific use cases. */
 /* The SRAM region [0x20000-0x80000] is reserved for Non-cached shared memory between M33 and DSP. */
-
 #if (defined(__ram_vector_table__))
   #define __ram_vector_table_size__    0x00000200
 #else
@@ -74,6 +73,7 @@ LR_m_interrupts m_interrupts_start m_interrupts_size+m_text_size {
     * (InRoot$$Sections)
     .ANY (+RO)
   }
+
 #if (defined(__ram_vector_table__))
   VECTOR_RAM m_interrupts_ram_start EMPTY m_interrupts_ram_size {
   }
@@ -81,6 +81,7 @@ LR_m_interrupts m_interrupts_start m_interrupts_size+m_text_size {
   VECTOR_RAM m_interrupts_start EMPTY 0 {
   }
 #endif
+
   RW_m_data m_data_start ALIGN 4 m_data_size-Stack_Size-Heap_Size { ; RW data
     * (CodeQuickAccess)
     * (DataQuickAccess)
@@ -100,3 +101,4 @@ LR_m_interrupts m_interrupts_start m_interrupts_size+m_text_size {
     * (*m_usb_global)
   }
 }
+

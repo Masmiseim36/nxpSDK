@@ -24,18 +24,18 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_SPI_MASTER SPI5
+#define EXAMPLE_SPI_MASTER     SPI5
 #define EXAMPLE_SPI_MASTER_IRQ FLEXCOMM5_IRQn
 
-#define EXAMPLE_SPI_SLAVE SPI4
+#define EXAMPLE_SPI_SLAVE     SPI4
 #define EXAMPLE_SPI_SLAVE_IRQ FLEXCOMM4_IRQn
 
-#define TRANSFER_MASTER_PCS 0
-#define TRANSFER_SLAVE_PCS 1
-#define EXAMPLE_SPI_SSEL kSPI_Ssel0
+#define TRANSFER_MASTER_PCS     0
+#define TRANSFER_SLAVE_PCS      1
+#define EXAMPLE_SPI_SSEL        kSPI_Ssel0
 #define EXAMPLE_MASTER_SPI_SPOL kSPI_SpolActiveAllLow
-#define EXAMPLE_SLAVE_SPI_SPOL kSPI_SpolActiveAllLow
-#define TRANSFER_SIZE (32)          /*! Transfer size */
+#define EXAMPLE_SLAVE_SPI_SPOL  kSPI_SpolActiveAllLow
+#define TRANSFER_SIZE     (32)      /*! Transfer size */
 #define TRANSFER_BAUDRATE (500000U) /*! Transfer baudrate - 500k */
 #ifndef TRANSFER_MASTER_PCS
 #define TRANSFER_MASTER_PCS 0
@@ -63,9 +63,9 @@ uint8_t slaveSendBuffer[TRANSFER_SIZE]     = {0};
  * Definitions
  ******************************************************************************/
 /* Task priorities. */
-#define slave_task_PRIORITY (configMAX_PRIORITIES - 2)
+#define slave_task_PRIORITY  (configMAX_PRIORITIES - 2)
 #define master_task_PRIORITY (configMAX_PRIORITIES - 1)
-#define SPI_NVIC_PRIO 2
+#define SPI_NVIC_PRIO        2
 
 /*******************************************************************************
  * Prototypes
@@ -92,8 +92,8 @@ int main(void)
     /* attach clock to SPI4 */
     CLOCK_AttachClk(kSFRO_to_FLEXCOMM4);
 
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
 
     PRINTF("FreeRTOS SPI example start.\r\n");

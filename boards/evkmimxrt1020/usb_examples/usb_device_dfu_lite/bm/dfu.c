@@ -173,7 +173,7 @@ static inline usb_status_t USB_DeviceDfuQueueInit(dfu_queue_t *q)
     (q)->tail    = 0;
     (q)->maxSize = DFU_EVENT_QUEUE_MAX;
     (q)->curSize = 0;
-    (q)->mutex = (osa_mutex_handle_t)(&(q)->mutexBuffer[0]);
+    (q)->mutex   = (osa_mutex_handle_t)(&(q)->mutexBuffer[0]);
     if (KOSA_StatusSuccess != OSA_MutexCreate(((q)->mutex)))
     {
         usb_echo("queue mutex create error!");
@@ -519,7 +519,7 @@ static usb_status_t USB_DeviceDfuUpLoadReqest(uint32_t *length, uint8_t **data)
         else
         {
             usb_echo("\nUploading firmware ...\n");
-            s_UsbDeviceDfuDemo.dfuStatus->bState       = kState_DfuUpLoadIdle;
+            s_UsbDeviceDfuDemo.dfuStatus->bState      = kState_DfuUpLoadIdle;
             s_UsbDeviceDfuDemo.dfuCurrentUploadLenght = 0U;
 
             uploadLength = *((uint32_t *)length);
@@ -880,7 +880,7 @@ void USB_DeviceDfuBusReset(void)
         case kState_DfuError:
             if (s_UsbDeviceDfuDemo.dfuIsDownloadingFinished)
             {
-                s_UsbDeviceDfuDemo.dfuStatus->bState         = kState_AppIdle;
+                s_UsbDeviceDfuDemo.dfuStatus->bState        = kState_AppIdle;
                 s_UsbDeviceDfuDemo.dfuIsDownloadingFinished = 0U;
                 /* switch to APP mode */
                 /*NVIC_SystemReset();*/
@@ -891,7 +891,7 @@ void USB_DeviceDfuBusReset(void)
                 {
                     /* The firmware is downloading to the device but the bus reset occurs, change
                        the state to Error */
-                    s_UsbDeviceDfuDemo.dfuStatus->bState       = kState_DfuError;
+                    s_UsbDeviceDfuDemo.dfuStatus->bState      = kState_DfuError;
                     s_UsbDeviceDfuDemo.dfuFirmwareBlockStatus = USB_DFU_BLOCK_TRANSFER_UNDEFINED;
                 }
                 else
@@ -926,7 +926,7 @@ void USB_DeviceDfuDemoInit(void)
 
     USB_DeviceDfuSetState(kState_DfuIdle);
 
-    s_UsbDeviceDfuDemo.dfuStatus->iString           = 0U;
+    s_UsbDeviceDfuDemo.dfuStatus->iString          = 0U;
     s_UsbDeviceDfuDemo.dfuFirmwareBlockStatus      = USB_DFU_BLOCK_TRANSFER_UNDEFINED;
     s_UsbDeviceDfuDemo.dfuManifestationPhaseStatus = USB_DFU_MANIFEST_UNDEFINED;
     s_UsbDeviceDfuDemo.dfuFirmwareAddress          = USB_DFU_APP_ADDRESS;
@@ -1124,8 +1124,11 @@ static usb_status_t USB_DeviceStateAppIdle(usb_dfu_struct_t *dfu_dev, usb_device
                 USB_DeviceStop(g_UsbDeviceDfu.deviceHandle);
                 for (int i = 0; i < 5000; i++)
                 {
-                    __ASM("nop");
+                    __NOP();
                 }
+                /*Add one delay here to make the DP pull down long enough to allow host to detect the previous
+                 * disconnection.*/
+                SDK_DelayAtLeastUs(5000, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
                 USB_DeviceRun(g_UsbDeviceDfu.deviceHandle);
 #else
                 g_detachRequest = 1U;

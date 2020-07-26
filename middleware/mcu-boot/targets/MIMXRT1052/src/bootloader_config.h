@@ -1,7 +1,7 @@
 /*
  * Copyright 2016-2019 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 #ifndef __BOOTLOADER_CONFIG_H__

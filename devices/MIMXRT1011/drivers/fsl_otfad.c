@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP
+ * Copyright 2019-2020 NXP
  * All rights reserved.
  *
  *
@@ -38,16 +38,23 @@ void OTFAD_GetDefaultConfig(otfad_config_t *config)
     assert(config != NULL);
 
     /* Including OTFAD operate mode, IRQ eable, key blob and restricted register access */
-    config->enableIntRequest    = false;
-    config->forceError          = 0x00U;
-    config->forceSVM            = 0x00U;
-    config->forceLDM            = 0x00U;
-    config->keyBlobScramble     = 0x00U;
-    config->keyBlobProcess      = 0x00U;
-    config->restrictedRegAccess = 0x00U;
+#if defined(FSL_FEATURE_OTFAD_HAS_HAS_IRQ_ENABLE) && (FSL_FEATURE_OTFAD_HAS_HAS_IRQ_ENABLE > 0)
+    config->enableIntRequest = false;
+#endif /* FSL_FEATURE_OTFAD_HAS_HAS_IRQ_ENABLE */
+#if defined(FSL_FEATURE_OTFAD_HAS_FORCE_ERR) && (FSL_FEATURE_OTFAD_HAS_FORCE_ERR > 0)
+    config->forceError = false;
+#endif /* FSL_FEATURE_OTFAD_HAS_FORCE_ERR */
+    config->forceSVM = false;
+    config->forceLDM = false;
 
+    config->restrictedRegAccess = false;
+
+#if defined(FSL_FEATURE_OTFAD_HAS_KEYBLOB_PROCESSING) && (FSL_FEATURE_OTFAD_HAS_KEYBLOB_PROCESSING > 0)
     /* Start key blob processing */
-    config->startKeyBlobProcessing = 0x00U;
+    config->startKeyBlobProcessing = false;
+    config->keyBlobProcess         = false;
+    config->keyBlobScramble        = false;
+#endif /* FSL_FEATURE_OTFAD_HAS_KEYBLOB_PROCESSING */
 
     /* Global OTFAD enable */
     config->enableOTFAD = false;
@@ -68,12 +75,19 @@ AT_QUICKACCESS_SECTION_CODE(void OTFAD_Init(OTFAD_Type *base, const otfad_config
     uint32_t temp = 0U;
 
     /* Set OTFAD operate mode, IRQ eable, key blob and restricted register access */
-    temp = OTFAD_CR_IRQE(config->enableIntRequest) | OTFAD_CR_FERR(config->forceError) |
-           OTFAD_CR_FLDM(config->forceLDM) |
+    temp = OTFAD_CR_FLDM(config->forceLDM) |
+#if defined(FSL_FEATURE_OTFAD_HAS_HAS_IRQ_ENABLE) && (FSL_FEATURE_OTFAD_HAS_HAS_IRQ_ENABLE > 0)
+           OTFAD_CR_IRQE(config->enableIntRequest) |
+#endif /* FSL_FEATURE_OTFAD_HAS_HAS_IRQ_ENABLE */
+#if defined(FSL_FEATURE_OTFAD_HAS_FORCE_ERR) && (FSL_FEATURE_OTFAD_HAS_FORCE_ERR > 0)
+           OTFAD_CR_FERR(config->forceError) |
+#endif /* FSL_FEATURE_OTFAD_HAS_FORCE_ERR */
 #if defined(FSL_FEATURE_OTFAD_HAS_SVM_MODE) && FSL_FEATURE_OTFAD_HAS_SVM_MODE
            OTFAD_CR_FSVM(config->forceSVM) |
-#endif
+#endif /* FSL_FEATURE_OTFAD_HAS_SVM_MODE */
+#if defined(FSL_FEATURE_OTFAD_HAS_KEYBLOB_PROCESSING) && (FSL_FEATURE_OTFAD_HAS_KEYBLOB_PROCESSING > 0)
            OTFAD_CR_KBSE(config->keyBlobScramble) | OTFAD_CR_KBPE(config->keyBlobProcess) |
+#endif /* FSL_FEATURE_OTFAD_HAS_KEYBLOB_PROCESSING */
            OTFAD_CR_RRAE(config->restrictedRegAccess);
 
     /* Enable global OTFAD operation */
@@ -85,14 +99,17 @@ AT_QUICKACCESS_SECTION_CODE(void OTFAD_Init(OTFAD_Type *base, const otfad_config
     {
     }
 
+#if defined(FSL_FEATURE_OTFAD_HAS_KEYBLOB_PROCESSING) && (FSL_FEATURE_OTFAD_HAS_KEYBLOB_PROCESSING > 0)
     /* Start key blob processing, and software set SKBP only once after a hard reset */
     if (config->startKeyBlobProcessing == 0x01U)
     {
         temp |= OTFAD_CR_SKBP(config->startKeyBlobProcessing);
     }
+#endif /* FSL_FEATURE_OTFAD_HAS_KEYBLOB_PROCESSING */
 
     base->CR |= temp;
 
+#if defined(FSL_FEATURE_OTFAD_HAS_KEYBLOB_PROCESSING) && (FSL_FEATURE_OTFAD_HAS_KEYBLOB_PROCESSING > 0)
     /* Check key blob precessing done if enabled */
     if (config->keyBlobProcess == 0x01U)
     {
@@ -101,6 +118,7 @@ AT_QUICKACCESS_SECTION_CODE(void OTFAD_Init(OTFAD_Type *base, const otfad_config
             ; /* Intentional empty */
         }
     }
+#endif /* FSL_FEATURE_OTFAD_HAS_KEYBLOB_PROCESSING */
 }
 
 /*!

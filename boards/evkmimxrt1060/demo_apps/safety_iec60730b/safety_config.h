@@ -9,10 +9,9 @@
 #define _SAFETY_CONFIG_H_
    
 #include "MIMXRT1062.h" 
-
+#include "IEC60730_B_CM4_CM7.h"
 #include "project_setup_evkmimxrt1060.h"
 #include "safety_cm7_imxrt.h"
-#include "iec60730b.h"
 
 #include "clock_config.h"
 #include "pin_mux.h"
@@ -29,13 +28,9 @@
 #define ADC_TEST_ENABLED   0
 #define CLOCK_TEST_ENABLED 1
 #define DIO_TEST_ENABLED   1
-#define FLASH_TEST_ENABLED 0 /* Should be OFF in RAM configuration */
+#define FLASH_TEST_ENABLED 0
 #define PC_TEST_ENABLED    1
-#define WATCHDOG_ENABLED   0 /* Should be OFF in RAM configuration */  
-   
-#if (defined(_MIMXRT1021_H_) || defined(_MIMXRT1052_H_) || defined(_MIMXRT1062_H_))
-    #define _IMXRT_
-#endif
+#define WATCHDOG_ENABLED   0
 
 /********* Clock *********/
 #define GPT_SRC_32K 4U /* Value from ref. manual */
@@ -61,8 +56,15 @@
 /*********  Clock END *********/
 
 /********* Watchdog *********/
+#define WDOG_REF_TIMER_BASE   GPT1
+#define RESET_DETECT_REGISTER &(SRC->SRSR)
+#define RESET_DETECT_MASK     SRC_SRSR_WDOG3_RST_B_MASK
+#define REFRESH_INDEX         FS_IMXRT
+#define CLEAR_FLAG            1
+#define REG_WIDE              FS_WDOG_SRS_WIDE_32b
+
 #define Watchdog_refresh    RTWDOG->CNT = RTWDOG_REFRESH_KEY
-#define WDOG_USED           RTWDOG
+#define USED_WDOG           RTWDOG
 
 #define ENDLESS_LOOP_ENABLE    1      /* Set 1 or 0 */
 #define WATCHDOG_RESETS_LIMIT  1000
@@ -90,7 +92,7 @@
 #define FLASH_TEST_START_ADDRESS  0x60002410
 #define FLASH_TEST_END_ADDRESS    0x60005000
 
-#if defined(__GNUC__) || defined(__ARMCC_VERSION)
+#if defined(__GNUC__) || (defined(__GNUC__) && ( __ARMCC_VERSION >= 6010050)) /* MCUXpresso + KEIL */
 	#define CRC_VALUE_ADDR   0x60002400 /* must fit with the setup from linker configuration file */
 #endif
 /********* Flashtest END *********/
@@ -98,7 +100,7 @@
 /********* RAM *********/
 #define RAM_TEST_BLOCK_SIZE       0x4        /* size of block for runtime testing */
 
-#if defined(__IAR_SYSTEMS_ICC__) || defined(__ARMCC_VERSION)
+#if defined(__IAR_SYSTEMS_ICC__) || (defined(__GNUC__) && ( __ARMCC_VERSION >= 6010050)) /* IAR + KEIL */
     #define RAM_TEST_BACKUP_SIZE      0x20       /* must fit with the setup from linker configuration file */
     #define STACK_TEST_BLOCK_SIZE     0x10       /* must fit with the setup from linker configuration file */
 #endif
@@ -155,5 +157,12 @@
 #define FS_CFG_AIO_CHANNELS_INIT {0xFU, 0x19U, 0}  /* ADC Channels for V_refl, V_refh, bandgap */
 /********* ADC END *********/
 
-#endif /* _SAFETY_CONFIG_H_ */
+/* Define i.MX device (to differentiate from other devices in the vector table etc.) */
+#define _IMX_ 1U
 
+/* NULL definition */
+#ifndef NULL
+    #define NULL 0
+#endif
+
+#endif /* _SAFETY_CONFIG_H_ */

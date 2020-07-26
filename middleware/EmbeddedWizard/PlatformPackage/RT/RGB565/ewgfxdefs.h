@@ -116,6 +116,74 @@
 #endif
 
 
+/* If not explicitly specified, assume following default mode:
+
+   EW_LAZY_LOAD_BITMAPS = 1 determines that surfaces are created only when
+   they are accessed for the first time. This defers the creation and loading
+   of the respective bitmaps. This corresponds to the default behavior of
+   Embedded Wizard >= 9.30.
+
+   If EW_LAZY_LOAD_BITMAPS = 0, the surfaces are created immediately just in
+   the moment when the superior bitmap is created or loaded as resource. This
+   corresponds to the default behavior of Embedded Wizard <= 9.20.
+
+   EW_LAZY_LOAD_BITMAPS_IF_ANIMATED_ONLY : Configuring this macro with the value
+   1 limits the lazy map operation to surfaces belonging to multi-frame animated
+   bitmaps. Other surfaces are loaded immediately memory similarly to version
+   <= 9.20. Using this macro implies that EW_DISCARD_BITMAPS_IF_ANIMATED_ONLY
+   is also defined with the value 1. */
+#ifndef EW_LAZY_LOAD_BITMAPS
+  #define EW_LAZY_LOAD_BITMAPS 1
+#endif
+
+#ifndef EW_LAZY_LOAD_BITMAPS_IF_ANIMATED_ONLY
+  #define EW_LAZY_LOAD_BITMAPS_IF_ANIMATED_ONLY 0
+#endif
+
+
+/* If not explicitly specified, assume following default mode:
+
+   EW_DISCARD_BITMAPS = 1 determines, that the system can discard surfaces if
+   the surface cache overflows, the surfaces are not involved in any drawing
+   operation and the content of the affected surface can be restored again.
+   This corresponds to the default behavior of Embedded Wizard >= 9.30.
+   
+   If EW_DISCARD_BITMAPS = 0, the surfaces remain in memory as long as they
+   are owned by a bitmap. This corresponds to the default behavior of Embedded
+   Wizard <= 9.20.
+
+   If the Graphics Engine is configured to automatically discard surfaces (the
+   macro EW_DISCARD_BITMAPS == 1), following macros can additionally be used
+   to configure the expected discard behavior more precisely:
+
+   EW_DISCARD_BITMAPS_IF_ANIMATED_ONLY : Configuring this macro with the value
+   1 limits the discard operation to surfaces belonging to multi-frame animated
+   bitmaps. Other surfaces are retained in memory similarly to version <= 9.20.
+
+   EW_DISCARD_BITMAPS_IF_NOT_USED_IN_CURRENT_UPDATE : Configuring this macro
+   with the value 1 limits the discard operation to surfaces which have NOT been
+   used in the actual screen update cycle.
+
+   EW_DISCARD_BITMAPS_IF_NOT_USED_IN_RECENT_UPDATES : Configuring this macro
+   with the value 1 limits the discard operation to surfaces which have NOT been
+   used in the actual and in the preceding screen update cycles. */
+#ifndef EW_DISCARD_BITMAPS
+  #define EW_DISCARD_BITMAPS 1
+#endif
+
+#ifndef EW_DISCARD_BITMAPS_IF_ANIMATED_ONLY
+  #define EW_DISCARD_BITMAPS_IF_ANIMATED_ONLY 0
+#endif
+
+#ifndef EW_DISCARD_BITMAPS_IF_NOT_USED_IN_CURRENT_UPDATE
+  #define EW_DISCARD_BITMAPS_IF_NOT_USED_IN_CURRENT_UPDATE 0
+#endif
+
+#ifndef EW_DISCARD_BITMAPS_IF_NOT_USED_IN_RECENT_UPDATES
+  #define EW_DISCARD_BITMAPS_IF_NOT_USED_IN_RECENT_UPDATES 0
+#endif
+
+
 /* If not explicitly specified, assume following default values for the maximum
    glyph surface size (in pixel). Glyph surface is an alpha8 surface, where all
    rasterized glyphs are stored. It is a kind of cache. */

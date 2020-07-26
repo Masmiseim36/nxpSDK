@@ -205,7 +205,7 @@ int main(void)
     PRINTF("\rtime,wx,wy,wz,ax,ay,az,Bx,By,Bz\r");
   }
   
-  for (int t = 0; t < 1000; t++)
+  while (true)
   {
     for (int j = 0; j < PATCH_SIZE; j++)
     {
@@ -246,7 +246,8 @@ int main(void)
 
         if (sample_num++ > SAMPLE_NUM)
         {
-          return 0;
+          PRINTF("\r\nAll samples are collected.\r\n");
+          while (true);
         }
       }
 
@@ -257,5 +258,4 @@ int main(void)
     }
   }
 
-  return 0;
 }

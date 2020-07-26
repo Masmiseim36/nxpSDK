@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -16,8 +16,8 @@
  * Definitions
  ******************************************************************************/
 
-#define SCTIMER_CLK_FREQ CLOCK_GetFreq(kCLOCK_BusClk)
-#define DEMO_FIRST_SCTIMER_OUT kSCTIMER_Out_0
+#define SCTIMER_CLK_FREQ        CLOCK_GetFreq(kCLOCK_BusClk)
+#define DEMO_FIRST_SCTIMER_OUT  kSCTIMER_Out_0
 #define DEMO_SECOND_SCTIMER_OUT kSCTIMER_Out_3
 
 /*******************************************************************************
@@ -77,14 +77,14 @@ int main(void)
     }
 
     /* Schedule an event to look for a rising edge on input 1 in this state */
-    if (SCTIMER_CreateAndScheduleEvent(SCT0, kSCTIMER_InputRiseEvent, 0, kSCTIMER_Input_1, kSCTIMER_Counter_L,
+    if (SCTIMER_CreateAndScheduleEvent(SCT0, kSCTIMER_InputRiseEvent, 0, kSCTIMER_Input_1, kSCTIMER_Counter_U,
                                        &eventNumberInput) == kStatus_Fail)
     {
         return -1;
     }
 
     /* Transition to next state when a rising edge is detected on input 1 */
-    SCTIMER_SetupNextStateAction(SCT0, stateNumber + 1, eventNumberInput);
+    SCTIMER_SetupNextStateActionwithLdMethod(SCT0, stateNumber + 1, eventNumberInput, true);
 
     /* Go to next state; State 1 */
     SCTIMER_IncreaseState(SCT0);
@@ -109,7 +109,7 @@ int main(void)
     SCTIMER_ScheduleEvent(SCT0, eventFirstNumberOutput + 1);
 
     /* Schedule an event to look for a rising edge on input 1 in this state */
-    if (SCTIMER_CreateAndScheduleEvent(SCT0, kSCTIMER_InputRiseEvent, 0, kSCTIMER_Input_1, kSCTIMER_Counter_L,
+    if (SCTIMER_CreateAndScheduleEvent(SCT0, kSCTIMER_InputRiseEvent, 0, kSCTIMER_Input_1, kSCTIMER_Counter_U,
                                        &eventNumberInput) == kStatus_Fail)
     {
         return -1;
@@ -117,10 +117,10 @@ int main(void)
 
     /* Transition back to State 0 when a rising edge is detected on input 1 */
     /* State 0 has only 1 PWM active, there will be no PWM from Out 2 */
-    SCTIMER_SetupNextStateAction(SCT0, stateNumber, eventNumberInput);
+    SCTIMER_SetupNextStateActionwithLdMethod(SCT0, stateNumber, eventNumberInput, true);
 
-    /* Start the timer, use counter L as we are operating counter in 32-bit mode */
-    SCTIMER_StartTimer(SCT0, kSCTIMER_Counter_L);
+    /* Start the 32-bit unify timer */
+    SCTIMER_StartTimer(SCT0, kSCTIMER_Counter_U);
 
     while (1)
     {

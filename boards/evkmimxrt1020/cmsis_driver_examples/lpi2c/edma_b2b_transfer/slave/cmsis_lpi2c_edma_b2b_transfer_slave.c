@@ -28,7 +28,7 @@
 #define LPI2C_CLOCK_FREQUENCY ((CLOCK_GetFreq(kCLOCK_Usb1PllClk) / 8) / (LPI2C_CLOCK_SOURCE_DIVIDER + 1U))
 
 #define I2C_MASTER_SLAVE_ADDR_7BIT (0x7EU)
-#define I2C_DATA_LENGTH (32) /* MAX is 256 */
+#define I2C_DATA_LENGTH            (32) /* MAX is 256 */
 
 /*******************************************************************************
  * Prototypes

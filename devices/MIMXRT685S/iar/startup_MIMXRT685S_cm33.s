@@ -7,7 +7,7 @@
 ; *----------------------------------------------------------------------------
 ; *
 ; Copyright 1997-2016 Freescale Semiconductor, Inc.
-; Copyright 2016-2019 NXP
+; Copyright 2016-2020 NXP
 ; All rights reserved.
 ;
 ; SPDX-License-Identifier: BSD-3-Clause
@@ -31,6 +31,7 @@
 
         ;; Forward declaration of sections.
         SECTION CSTACK:DATA:NOROOT(3)
+        SECTION RO:CODE:NOROOT(2)
 
         SECTION .intvec:CODE:NOROOT(2)
 
@@ -58,7 +59,11 @@ __vector_table
         DCD     UsageFault_Handler
 __vector_table_0x1c
         DCD     SecureFault_Handler
-        DCD     0x180000  ;Image length
+#if (__ARM_FEATURE_CMSE & 0x2)
+        DCD     0x180000 ;Image length
+#else
+        DCD     sfe(RO) - __vector_table ;Image length
+#endif
         DCD     0
         DCD     0
         DCD     SVC_Handler

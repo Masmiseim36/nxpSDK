@@ -23,12 +23,12 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define APP_PXP PXP
-#define EXAMPLE_GPT GPT2
+#define APP_PXP                PXP
+#define EXAMPLE_GPT            GPT2
 #define EXAMPLE_GPT_TICK_TO_MS 25
 
 #define INDICATOR_SIZE_X 60
-#define ALARM_PERIOD 500
+#define ALARM_PERIOD     500
 
 /*******************************************************************************
  * Prototypes
@@ -42,7 +42,7 @@ void BOARD_EnableLcdInterrupt(void);
 /* Initialize the LCD_DISP. */
 void BOARD_InitLcd(void)
 {
-    volatile uint32_t i = 0x100U;
+    volatile uint32_t i = 0x1000U;
 
     gpio_pin_config_t config = {
         kGPIO_DigitalOutput,
@@ -620,10 +620,8 @@ GUI_MEMDEV_Handle CreateMemdevContainer(const GUI_BITMAP *pBitmap, GUI_COLOR *pC
 int main(void)
 {
     BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_InitI2C1Pins();
-    BOARD_InitSemcPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitLcdifPixelClock();
     BOARD_InitDebugConsole();
     BOARD_InitLcd();

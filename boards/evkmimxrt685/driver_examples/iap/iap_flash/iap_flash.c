@@ -18,15 +18,15 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_NOR_INSTANCE 0U              /* FLEXSPI */
+#define EXAMPLE_NOR_INSTANCE       0U        /* FLEXSPI */
 #define NOR_FLASH_OP_START_ADDRESS 0x200000U /* Operation on 2MB offset */
-#define NOR_FLASH_OP_SIZE 0x2000U            /* Test 8KB region */
+#define NOR_FLASH_OP_SIZE          0x2000U   /* Test 8KB region */
 
 /* Predefined flash option */
-#define EXAMPLE_NOR_FLASH_MXIC_OSPI 0xC1500051U /* Macronix OctalSPI flash */
+#define EXAMPLE_NOR_FLASH_MXIC_OSPI      0xC1500051U /* Macronix OctalSPI flash */
 #define EXAMPLE_NOR_FLASH_MXIC_OSPI_OPT1 0x20000008U
 
-#define EXAMPLE_NOR_FLASH EXAMPLE_NOR_FLASH_MXIC_OSPI /* MXIC flash on EVK board */
+#define EXAMPLE_NOR_FLASH         EXAMPLE_NOR_FLASH_MXIC_OSPI /* MXIC flash on EVK board */
 #define EXAMPLE_NOR_FLASH_OPTION1 EXAMPLE_NOR_FLASH_MXIC_OSPI_OPT1
 
 #define FLASH_NEED_RESET 1

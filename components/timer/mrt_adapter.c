@@ -42,21 +42,19 @@ static void HAL_TimerInterruptHandle(uint8_t instance)
 {
     hal_timer_handle_struct_t *halTimerState = (hal_timer_handle_struct_t *)s_timerHandle[instance];
     /* Clear interrupt flag.*/
-    MRT_ClearStatusFlags(s_MrtBase[halTimerState->instance], kMRT_Channel_0, kMRT_TimerInterruptFlag);
+    MRT_ClearStatusFlags(s_MrtBase[halTimerState->instance], kMRT_Channel_0,(uint32_t) kMRT_TimerInterruptFlag);
 
     if (halTimerState->callback != NULL)
     {
         halTimerState->callback(halTimerState->callbackParam);
     }
 }
+
+void MRT0_IRQHandler(void);
 void MRT0_IRQHandler(void)
 {
     HAL_TimerInterruptHandle(0);
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 /************************************************************************************
 *************************************************************************************
@@ -88,13 +86,13 @@ hal_timer_status_t HAL_TimerInit(hal_timer_handle_t halTimerHandle, hal_timer_co
     MRT_SetupChannelMode(s_MrtBase[halTimerState->instance], kMRT_Channel_0, kMRT_RepeatMode);
 
     /* Enable timer interrupts for channel 0 */
-    MRT_EnableInterrupts(s_MrtBase[halTimerState->instance], kMRT_Channel_0, kMRT_TimerInterruptEnable);
+    MRT_EnableInterrupts(s_MrtBase[halTimerState->instance], kMRT_Channel_0, (uint32_t)kMRT_TimerInterruptEnable);
 
     halTimerState->timerClock_Hz           = halTimerConfig->srcClock_Hz;
     s_timerHandle[halTimerState->instance] = halTimerHandle;
     /* Enable at the irq */
     NVIC_SetPriority((IRQn_Type)instanceIrq[halTimerState->instance], HAL_TIMER_ISR_PRIORITY);
-    EnableIRQ(instanceIrq[halTimerState->instance]);
+    (void)EnableIRQ(instanceIrq[halTimerState->instance]);
     return kStatus_HAL_TimerSuccess;
 }
 
@@ -111,7 +109,7 @@ void HAL_TimerEnable(hal_timer_handle_t halTimerHandle)
     assert(halTimerHandle);
     hal_timer_handle_struct_t *halTimerState = halTimerHandle;
     MRT_StartTimer(s_MrtBase[halTimerState->instance], kMRT_Channel_0,
-                   USEC_TO_COUNT(halTimerState->timeout, halTimerState->timerClock_Hz));
+                   (uint32_t)USEC_TO_COUNT(halTimerState->timeout, halTimerState->timerClock_Hz));
 }
 
 /*************************************************************************************/
@@ -122,7 +120,7 @@ void HAL_TimerDisable(hal_timer_handle_t halTimerHandle)
     /* Stop channel 0 */
     MRT_StopTimer(s_MrtBase[halTimerState->instance], kMRT_Channel_0);
     /* Clear interrupt flag.*/
-    MRT_ClearStatusFlags(s_MrtBase[halTimerState->instance], kMRT_Channel_0, kMRT_TimerInterruptFlag);
+    MRT_ClearStatusFlags(s_MrtBase[halTimerState->instance], kMRT_Channel_0, (uint32_t)kMRT_TimerInterruptFlag);
 }
 
 /*************************************************************************************/
@@ -144,14 +142,14 @@ uint32_t HAL_TimerGetMaxTimeout(hal_timer_handle_t halTimerHandle)
     {
         return 1000;
     }
-    return COUNT_TO_USEC(0xFFFF - reserveCount, halTimerState->timerClock_Hz);
+    return (uint32_t)COUNT_TO_USEC((0xFFFFUL - reserveCount), halTimerState->timerClock_Hz);
 }
 /* return micro us */
 uint32_t HAL_TimerGetCurrentTimerCount(hal_timer_handle_t halTimerHandle)
 {
     assert(halTimerHandle);
     hal_timer_handle_struct_t *halTimerState = halTimerHandle;
-    return COUNT_TO_USEC(MRT_GetCurrentTimerCount(s_MrtBase[halTimerState->instance], kMRT_Channel_0),
+    return (uint32_t)COUNT_TO_USEC(MRT_GetCurrentTimerCount(s_MrtBase[halTimerState->instance], kMRT_Channel_0),
                          halTimerState->timerClock_Hz);
 }
 
@@ -161,9 +159,11 @@ hal_timer_status_t HAL_TimerUpdateTimeout(hal_timer_handle_t halTimerHandle, uin
     assert(halTimerHandle);
     hal_timer_handle_struct_t *halTimerState = halTimerHandle;
     halTimerState->timeout                   = timeout;
-    tickCount                                = USEC_TO_COUNT(halTimerState->timeout, halTimerState->timerClock_Hz);
-    if ((tickCount < 1) || (tickCount > 0xfff0))
+    tickCount                                = (uint32_t)USEC_TO_COUNT(halTimerState->timeout, halTimerState->timerClock_Hz);
+    if ((tickCount < 1U) || (tickCount > 0xfff0U))
+    {
         return kStatus_HAL_TimerOutOfRanger;
+    }
     MRT_StopTimer(s_MrtBase[halTimerState->instance], kMRT_Channel_0);
     return kStatus_HAL_TimerSuccess;
 }

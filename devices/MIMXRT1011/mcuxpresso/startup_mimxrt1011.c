@@ -1,10 +1,10 @@
 //*****************************************************************************
 // MIMXRT1011 startup code for use with MCUXpresso IDE
 //
-// Version : 120419
+// Version : 310320
 //*****************************************************************************
 //
-// Copyright 2016-2019 NXP
+// Copyright 2016-2020 NXP
 // All rights reserved.
 //
 // SPDX-License-Identifier: BSD-3-Clause
@@ -63,7 +63,11 @@ extern void SystemInit(void);
      void ResetISR(void);
 WEAK void NMI_Handler(void);
 WEAK void HardFault_Handler(void);
+WEAK void MemManage_Handler(void);
+WEAK void BusFault_Handler(void);
+WEAK void UsageFault_Handler(void);
 WEAK void SVC_Handler(void);
+WEAK void DebugMon_Handler(void);
 WEAK void PendSV_Handler(void);
 WEAK void SysTick_Handler(void);
 WEAK void IntDefaultHandler(void);
@@ -263,6 +267,9 @@ extern void _vStackTop(void);
 // The vector table.
 // This relies on the linker script to place at correct location in memory.
 //*****************************************************************************
+
+
+
 extern void (* const g_pfnVectors[])(void);
 extern void * __Vectors __attribute__ ((alias ("g_pfnVectors")));
 
@@ -273,15 +280,15 @@ void (* const g_pfnVectors[])(void) = {
     ResetISR,                          // The reset handler
     NMI_Handler,                       // The NMI handler
     HardFault_Handler,                 // The hard fault handler
-    0,                                 // Reserved
-    0,                                 // Reserved
-    0,                                 // Reserved
+    MemManage_Handler,                 // The MPU fault handler
+    BusFault_Handler,                  // The bus fault handler
+    UsageFault_Handler,                // The usage fault handler
     0,                                 // Reserved
     0,                                 // Reserved
     0,                                 // Reserved
     0,                                 // Reserved
     SVC_Handler,                       // SVCall handler
-    0,                                 // Reserved
+    DebugMon_Handler,                  // Debug monitor handler
     0,                                 // Reserved
     PendSV_Handler,                    // The PendSV handler
     SysTick_Handler,                   // The SysTick handler
@@ -367,6 +374,7 @@ void (* const g_pfnVectors[])(void) = {
     ADC_ETC_IRQ2_IRQHandler,          // 93: ADCETC IRQ2 interrupt
     ADC_ETC_IRQ3_IRQHandler,          // 94: ADCETC IRQ3 interrupt
     ADC_ETC_ERROR_IRQ_IRQHandler,     // 95: ADCETC Error IRQ interrupt
+
 
 }; /* End of g_pfnVectors */
 
@@ -512,7 +520,23 @@ WEAK_AV void HardFault_Handler(void)
 { while(1) {}
 }
 
+WEAK_AV void MemManage_Handler(void)
+{ while(1) {}
+}
+
+WEAK_AV void BusFault_Handler(void)
+{ while(1) {}
+}
+
+WEAK_AV void UsageFault_Handler(void)
+{ while(1) {}
+}
+
 WEAK_AV void SVC_Handler(void)
+{ while(1) {}
+}
+
+WEAK_AV void DebugMon_Handler(void)
 { while(1) {}
 }
 

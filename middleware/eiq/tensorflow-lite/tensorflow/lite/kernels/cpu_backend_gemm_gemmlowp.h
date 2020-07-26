@@ -19,18 +19,19 @@ limitations under the License.
 #ifndef TENSORFLOW_LITE_KERNELS_CPU_BACKEND_GEMM_GEMMLOWP_H_
 #define TENSORFLOW_LITE_KERNELS_CPU_BACKEND_GEMM_GEMMLOWP_H_
 
-#include <cstdint>
-#include <type_traits>
-
-#include "public/gemmlowp.h"
-
-#include "tensorflow/lite/kernels/cpu_backend_context.h"
-#include "tensorflow/lite/kernels/cpu_backend_gemm_params.h"
-
 #ifdef TFLITE_WITH_RUY
 #include "tensorflow/lite/experimental/ruy/ruy.h"
 #include "tensorflow/lite/kernels/cpu_backend_gemm_ruy.h"
 #endif
+
+#ifndef TFLITE_WITH_RUY
+
+#include <cstdint>
+#include <type_traits>
+
+#include "public/gemmlowp.h"
+#include "tensorflow/lite/kernels/cpu_backend_context.h"
+#include "tensorflow/lite/kernels/cpu_backend_gemm_params.h"
 
 namespace tflite {
 namespace cpu_backend_gemm {
@@ -97,9 +98,6 @@ struct GemmImplUsingGemmlowp<
 
     using ColVectorMap =
         gemmlowp::VectorMap<const int32, gemmlowp::VectorShape::Col>;
-    ColVectorMap bias_vector(params.bias, lhs_params.rows);
-    gemmlowp::OutputStageBiasAddition<ColVectorMap> bias_addition_stage;
-    bias_addition_stage.bias_vector = bias_vector;
     gemmlowp::OutputStageScaleInt32ByFixedPointAndExponent scale_stage;
     scale_stage.result_offset_after_shift = dst_params.zero_point;
     scale_stage.result_fixedpoint_multiplier = params.multiplier_fixedpoint;
@@ -110,12 +108,25 @@ struct GemmImplUsingGemmlowp<
     clamp_stage.min = params.clamp_min;
     clamp_stage.max = params.clamp_max;
     SaturatingCastStageType saturating_cast_stage;
-    auto output_pipeline = std::make_tuple(bias_addition_stage, scale_stage,
-                                           clamp_stage, saturating_cast_stage);
     using BitDepthParams = typename GemmlowpBitDepthParams<SrcScalar>::Type;
-    gemmlowp::GemmWithOutputPipeline<SrcScalar, DstScalar, BitDepthParams>(
-        context->gemmlowp_context(), gemmlowp_lhs, gemmlowp_rhs, &gemmlowp_dst,
-        -lhs_params.zero_point, -rhs_params.zero_point, output_pipeline);
+    if (params.bias) {
+      ColVectorMap bias_vector(params.bias, lhs_params.rows);
+      gemmlowp::OutputStageBiasAddition<ColVectorMap> bias_addition_stage;
+      bias_addition_stage.bias_vector = bias_vector;
+      auto output_pipeline = std::make_tuple(
+          bias_addition_stage, scale_stage, clamp_stage, saturating_cast_stage);
+      gemmlowp::GemmWithOutputPipeline<SrcScalar, DstScalar, BitDepthParams>(
+          context->gemmlowp_context(), gemmlowp_lhs, gemmlowp_rhs,
+          &gemmlowp_dst, -lhs_params.zero_point, -rhs_params.zero_point,
+          output_pipeline);
+    } else {
+      auto output_pipeline =
+          std::make_tuple(scale_stage, clamp_stage, saturating_cast_stage);
+      gemmlowp::GemmWithOutputPipeline<SrcScalar, DstScalar, BitDepthParams>(
+          context->gemmlowp_context(), gemmlowp_lhs, gemmlowp_rhs,
+          &gemmlowp_dst, -lhs_params.zero_point, -rhs_params.zero_point,
+          output_pipeline);
+    }
   }
 };
 
@@ -137,7 +148,7 @@ struct GemmImplUsingGemmlowp<LhsScalar, RhsScalar, AccumScalar, DstScalar,
       CpuBackendContext* context) {
     // gemmlowp support for this per-channel path is limited to NEON.
     // We fall back to ruy outside of NEON.
-#ifdef GEMMLOWP_NEON
+#if defined(GEMMLOWP_NEON) || defined(GEMMLOWP_DSP)
     gemmlowp::MatrixMap<const SrcScalar, gemmlowp::MapOrder::RowMajor>
         gemmlowp_lhs(lhs_data, lhs_params.rows, lhs_params.cols);
     gemmlowp::MatrixMap<const SrcScalar, gemmlowp::MapOrder::ColMajor>
@@ -182,5 +193,7 @@ struct GemmImplUsingGemmlowp<LhsScalar, RhsScalar, AccumScalar, DstScalar,
 }  // namespace detail
 }  // namespace cpu_backend_gemm
 }  // namespace tflite
+
+#endif  // not TFLITE_WITH_RUY
 
 #endif  // TENSORFLOW_LITE_KERNELS_CPU_BACKEND_GEMM_GEMMLOWP_H_

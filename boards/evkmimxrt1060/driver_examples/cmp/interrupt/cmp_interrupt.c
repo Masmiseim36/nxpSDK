@@ -16,13 +16,13 @@
  * Definitions
  ******************************************************************************/
 #define LED_INIT() USER_LED_INIT(LOGIC_LED_OFF)
-#define LED_ON() USER_LED_ON()
-#define LED_OFF() USER_LED_OFF()
+#define LED_ON()   USER_LED_ON()
+#define LED_OFF()  USER_LED_OFF()
 
-#define DEMO_CMP_BASE CMP1
-#define DEMO_CMP_USER_CHANNEL 0U
-#define DEMO_CMP_DAC_CHANNEL 7U
-#define DEMO_CMP_IRQ_ID ACMP1_IRQn
+#define DEMO_CMP_BASE             CMP1
+#define DEMO_CMP_USER_CHANNEL     0U
+#define DEMO_CMP_DAC_CHANNEL      7U
+#define DEMO_CMP_IRQ_ID           ACMP1_IRQn
 #define DEMO_CMP_IRQ_HANDLER_FUNC ACMP1_IRQHandler
 
 /*******************************************************************************
@@ -56,11 +56,7 @@ void DEMO_CMP_IRQ_HANDLER_FUNC(void)
     else
     {
     }
-    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-      exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 /*!

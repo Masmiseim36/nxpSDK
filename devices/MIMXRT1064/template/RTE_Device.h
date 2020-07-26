@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 - 2017 , NXP
+ * Copyright 2016 - 2020 , NXP
  * All rights reserved.
  *
  *
@@ -216,6 +216,13 @@
 #define RTE_SPI4_DMA_RX_PERI_SEL (uint8_t) kDmaRequestMuxLPSPI4Rx
 #define RTE_SPI4_DMA_RX_DMAMUX_BASE DMAMUX
 #define RTE_SPI4_DMA_RX_DMA_BASE DMA0
+
+
+/* ENET configuration. */
+#define RTE_ENET 1
+#define RTE_ENET_PHY_ADDRESS 2
+#define RTE_ENET_MII 0
+#define RTE_ENET_RMII 1
 
 
 #endif /* __RTE_DEVICE_H */

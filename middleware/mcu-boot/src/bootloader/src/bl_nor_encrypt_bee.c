@@ -1,15 +1,15 @@
 /*
- * Copyright 2017-2019 NXP
+ * Copyright 2017-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-#include "bootloader/bl_nor_encrypt.h"
-#include "bootloader/bootloader.h"
-#include "dcp/fsl_dcp.h"
+#include "bl_dcp.h"
+#include "bl_nor_encrypt.h"
+#include "bl_trng.h"
+#include "bootloader.h"
 #include "fsl_common.h"
 #include "fusemap.h"
-#include "trng/fsl_trng.h"
 
 /*******************************************************************************
  * Definitions

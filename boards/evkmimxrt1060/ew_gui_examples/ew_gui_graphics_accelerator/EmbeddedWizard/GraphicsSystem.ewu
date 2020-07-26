@@ -1,4 +1,4 @@
-$version 6.60
+$version 9.30
 
 $rect <10,10,210,50>
 $output false
@@ -13,9 +13,9 @@ class DeviceClass : Templates::DeviceClass
     $if !$prototyper
       native ( value )
       {
-        extern void NxpRtUsePXP( int aActive );
+        extern void GfxUseGraphicsAccelerator( int aActive );
 
-        NxpRtUsePXP( value );
+        GfxUseGraphicsAccelerator( value );
       }
     $endif
 
@@ -43,11 +43,8 @@ class DeviceClass : Templates::DeviceClass
 
       native ( result )
       {
-        #if EW_CPU_LOAD_MEASURING == 1
-          extern int EwBspGetCpuLoad( void );
-
-          result = EwBspGetCpuLoad();
-        #endif
+        extern int EwBspClockGetCpuLoad( void );
+        result = EwBspClockGetCpuLoad();
       }
 
       return result;
@@ -70,7 +67,14 @@ class DeviceClass : Templates::DeviceClass
   method void Init()
   {
     /* ensure to activate graphics accelerator when demo is started */
-    AcceleratorActive = true;
+    $if !$prototyper
+      native
+      {
+        extern void GfxUseGraphicsAccelerator( int aActive );
+
+        GfxUseGraphicsAccelerator( 1 );
+      }
+    $endif
 
   }
 
@@ -78,7 +82,14 @@ class DeviceClass : Templates::DeviceClass
   method void Done()
   {
     /* ensure to activate graphics accelerator when demo is closed */
-    AcceleratorActive = true;
+    $if !$prototyper
+      native
+      {
+        extern void GfxUseGraphicsAccelerator( int aActive );
+
+        GfxUseGraphicsAccelerator( 1 );
+      }
+    $endif
 
   }
 }

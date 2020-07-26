@@ -14,12 +14,12 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_USART USART0
-#define DEMO_USART_CLK_SRC kCLOCK_Flexcomm0
+#define DEMO_USART          USART0
+#define DEMO_USART_CLK_SRC  kCLOCK_Flexcomm0
 #define DEMO_USART_CLK_FREQ CLOCK_GetFlexCommClkFreq(0U)
 
 #define RX_RING_BUFFER_SIZE 20U
-#define ECHO_BUFFER_SIZE 8U
+#define ECHO_BUFFER_SIZE    8U
 
 /*******************************************************************************
  * Prototypes

@@ -17,6 +17,7 @@
 #include "audio/xa_aac_dec_api.h"
 #include "audio/xa_mp3_dec_api.h"
 #include "audio/xa-opus-decoder-api.h"
+#include "audio/xa_sbc_dec_api.h"
 #include "audio/xa_vorbis_dec_api.h"
 #include "audio/xa-renderer-api.h"
 #include "audio/xa-audio-decoder-api.h"
@@ -26,6 +27,7 @@
 #include "fsl_memory.h"
 #endif
 
+#include "dsp_config.h"
 #include "srtm_config.h"
 #include "srtm_utils.h"
 #include "srtm_config_audio.h"
@@ -34,23 +36,23 @@
  * Definitions
  ******************************************************************************/
 #define AUDIO_FRMWK_BUF_SIZE (64 * 1024)
-#define AUDIO_COMP_BUF_SIZE (256 * 1024)
+#define AUDIO_COMP_BUF_SIZE  (256 * 1024)
 
 #define AAC_DEC_PCM_WIDTH 16
 
 #define MP3_DEC_PCM_WIDTH 16
 
-#define OPUS_DEC_NUM_CH 2
-#define OPUS_DEC_SAMPLE_RATE 48000
-#define OPUS_DEC_LOST_FLAG 0
-#define OPUS_DEC_NB_STREAMS 1
-#define OPUS_DEC_NB_COUPLED 1
-#define OPUS_DEC_CHANNEL_MAPPING 0
+#define OPUS_DEC_NUM_CH             2
+#define OPUS_DEC_SAMPLE_RATE        48000
+#define OPUS_DEC_LOST_FLAG          0
+#define OPUS_DEC_NB_STREAMS         1
+#define OPUS_DEC_NB_COUPLED         1
+#define OPUS_DEC_CHANNEL_MAPPING    0
 #define OPUS_DEC_NO_RANGE_DEC_STATE 0
 
 #define VORBIS_DEC_RAW_VORBIS_LAST_PKT_GRANULE_POS -1
-#define VORBIS_DEC_OGG_MAX_PAGE_SIZE 12
-#define VORBIS_DEC_RUNTIME_MEM 0
+#define VORBIS_DEC_OGG_MAX_PAGE_SIZE               12
+#define VORBIS_DEC_RUNTIME_MEM                     0
 
 #define RENDERER_FRAME_SIZE (4 * 1024)
 
@@ -82,18 +84,22 @@ static XAF_ERR_CODE get_dec_config(void *p_comp, xaf_format_t *comp_format)
 
 static XAF_ERR_CODE renderer_setup(void *p_renderer, xaf_format_t *format)
 {
-    int param[8];
+    int param[12];
 
-    param[0] = XA_RENDERER_CONFIG_PARAM_PCM_WIDTH;
-    param[1] = format->pcm_width;
-    param[2] = XA_RENDERER_CONFIG_PARAM_CHANNELS;
-    param[3] = format->channels;
-    param[4] = XA_RENDERER_CONFIG_PARAM_SAMPLE_RATE;
-    param[5] = format->sample_rate;
-    param[6] = XA_RENDERER_CONFIG_PARAM_FRAME_SIZE;
-    param[7] = RENDERER_FRAME_SIZE;
+    param[0]  = XA_RENDERER_CONFIG_PARAM_PCM_WIDTH;
+    param[1]  = format->pcm_width;
+    param[2]  = XA_RENDERER_CONFIG_PARAM_CHANNELS;
+    param[3]  = format->channels;
+    param[4]  = XA_RENDERER_CONFIG_PARAM_SAMPLE_RATE;
+    param[5]  = format->sample_rate;
+    param[6]  = XA_RENDERER_CONFIG_PARAM_FRAME_SIZE;
+    param[7]  = RENDERER_FRAME_SIZE;
+    param[8]  = XA_RENDERER_CONFIG_PARAM_AUDIO_BUFFER_1;
+    param[9]  = (int)DSP_AUDIO_BUFFER_1_PING;
+    param[10] = XA_RENDERER_CONFIG_PARAM_AUDIO_BUFFER_2;
+    param[11] = (int)DSP_AUDIO_BUFFER_1_PONG;
 
-    return xaf_comp_set_config(p_renderer, 4, &param[0]);
+    return xaf_comp_set_config(p_renderer, 6, &param[0]);
 }
 
 /*******************************************************************************
@@ -101,7 +107,7 @@ static XAF_ERR_CODE renderer_setup(void *p_renderer, xaf_format_t *format)
  ******************************************************************************/
 int srtm_decoder(dsp_handle_t *dsp, unsigned int *pCmdParams, unsigned int dec_name)
 {
-    XAF_ERR_CODE ret;
+    int ret;
     void *p_adev     = NULL;
     void *p_decoder  = NULL;
     void *p_renderer = NULL;
@@ -111,7 +117,7 @@ int srtm_decoder(dsp_handle_t *dsp, unsigned int *pCmdParams, unsigned int dec_n
     int dec_info[4];
     void *dec_inbuf[1];
     uint32_t read_length;
-    int i;
+    int32_t exitcode;
 
     int param[14];
     int param_num;
@@ -179,6 +185,15 @@ int srtm_decoder(dsp_handle_t *dsp, unsigned int *pCmdParams, unsigned int dec_n
             param[13] = OPUS_DEC_NO_RANGE_DEC_STATE;
             param_num = 7;
             dec_id    = "audio-decoder/opus";
+            break;
+        case SRTM_Command_SBC_DEC:
+            /* Workaround: SBC decoder has not config params to set,
+             * but XAF requires set config to be called in order to get through
+             * XA_API_CMD_INIT / XA_CMD_TYPE_INIT_API_POST_CONFIG_PARAMS phase */
+            param[0]  = XA_SBC_DEC_CONFIG_PARAM_NUM_CHANNELS;
+            param[1]  = 2;
+            param_num = 1;
+            dec_id    = "audio-decoder/sbc";
             break;
         case SRTM_Command_VORBIS:
             param[0]  = XA_VORBISDEC_CONFIG_PARAM_RAW_VORBIS_FILE_MODE;
@@ -344,10 +359,25 @@ int srtm_decoder(dsp_handle_t *dsp, unsigned int *pCmdParams, unsigned int dec_n
     }
 
     /* Wait for processing thread to complete before exiting. */
-    ret = xos_thread_join(&dec_thread, &i);
+    ret = xos_thread_join(&dec_thread, &exitcode);
     if (ret != XOS_OK)
     {
         DSP_PRINTF("xos_thread_join failure: %d\r\n", ret);
+        ret = xos_thread_delete(&dec_thread);
+        if (ret != XOS_OK)
+        {
+            DSP_PRINTF("xos_thread_delete failure: %d\r\n", ret);
+        }
+        goto error_cleanup;
+    }
+    if (exitcode != 0)
+    {
+        DSP_PRINTF("DSP_ProcessThread exit code: %d\r\n", exitcode);
+        ret = xos_thread_delete(&dec_thread);
+        if (ret != XOS_OK)
+        {
+            DSP_PRINTF("xos_thread_delete failure: %d\r\n", ret);
+        }
         goto error_cleanup;
     }
     ret = xos_thread_delete(&dec_thread);
@@ -364,6 +394,7 @@ int srtm_decoder(dsp_handle_t *dsp, unsigned int *pCmdParams, unsigned int dec_n
         DSP_PRINTF("xaf_comp_delete failure: %d\r\n", ret);
         goto error_cleanup;
     }
+    p_decoder = NULL;
 
     if (output_renderer)
     {
@@ -373,6 +404,7 @@ int srtm_decoder(dsp_handle_t *dsp, unsigned int *pCmdParams, unsigned int dec_n
             DSP_PRINTF("xaf_comp_delete failure: %d\r\n", ret);
             goto error_cleanup;
         }
+        p_renderer = NULL;
     }
 
     ret = xaf_adev_close(p_adev, XAF_ADEV_NORMAL_CLOSE);
@@ -381,6 +413,7 @@ int srtm_decoder(dsp_handle_t *dsp, unsigned int *pCmdParams, unsigned int dec_n
         DSP_PRINTF("xaf_adev_close failure: %d\r\n", ret);
         goto error_cleanup;
     }
+    p_adev = NULL;
 
     DSP_PRINTF("[DSP Codec] Audio device closed\r\n\r\n");
 
@@ -388,7 +421,7 @@ int srtm_decoder(dsp_handle_t *dsp, unsigned int *pCmdParams, unsigned int dec_n
     *input_size  = dsp->buffer_in.index;
     *output_size = dsp->buffer_out.index;
 
-    return ret;
+    return 0;
 
 error_cleanup:
     if (p_adev != NULL)
@@ -407,5 +440,5 @@ error_cleanup:
     *input_size  = dsp->buffer_in.index;
     *output_size = dsp->buffer_out.index;
 
-    return ret;
+    return -1;
 }

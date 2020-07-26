@@ -7,18 +7,22 @@
 *
 ********************************************************************************
 *
+* This software is delivered "as is" and shows the usage of other software 
+* components. It is provided as an example software which is intended to be 
+* modified and extended according to particular requirements.
+* 
+* TARA Systems hereby disclaims all warranties and conditions with regard to the
+* software, including all implied warranties and conditions of merchantability 
+* and non-infringement of any third party IPR or other rights which may result 
+* from the use or the inability to use the software.
+*
 * This file was generated automatically by Embedded Wizard Studio.
 *
 * Please do not make any modifications of this file! The modifications are lost
 * when the file is generated again by Embedded Wizard Studio!
 *
-* The template of this heading text can be found in the file 'head.ewt' in the
-* directory 'Platforms' of your Embedded Wizard installation directory. If you
-* wish to adapt this text, please copy the template file 'head.ewt' into your
-* project directory and edit the copy only. Please avoid any modifications of
-* the original template file!
-*
-* Version  : 9.20
+* Version  : 9.30
+* Date     : 14.02.2020  8:00:50
 * Profile  : iMX_RT
 * Platform : NXP.iMX_RT.RGB565
 *
@@ -33,6 +37,9 @@ void EffectsEffectTimerClass__Init( EffectsEffectTimerClass _this, XObject aLink
 {
   /* At first initialize the super class ... */
   CoreTimer__Init( &_this->_Super, aLink, aArg );
+
+  /* Allow the Immediate Garbage Collection to evalute the members of this class. */
+  _this->_GCT = EW_CLASS_GCT( EffectsEffectTimerClass );
 
   /* Setup the VMT pointer */
   _this->_VMT = EW_CLASS( EffectsEffectTimerClass );
@@ -49,7 +56,7 @@ void EffectsEffectTimerClass__ReInit( EffectsEffectTimerClass _this )
 void EffectsEffectTimerClass__Done( EffectsEffectTimerClass _this )
 {
   /* Finalize this class */
-  _this->_VMT = EW_CLASS( EffectsEffectTimerClass );
+  _this->_Super._VMT = EW_CLASS( CoreTimer );
 
   /* Don't forget to deinitialize the super class ... */
   CoreTimer__Done( &_this->_Super );
@@ -71,7 +78,7 @@ EW_END_OF_CLASS_VARIANTS( EffectsEffectTimerClass )
 
 /* Virtual Method Table (VMT) for the class : 'Effects::EffectTimerClass' */
 EW_DEFINE_CLASS( EffectsEffectTimerClass, CoreTimer, _None, _None, _None, _None, 
-                 _None, "Effects::EffectTimerClass" )
+                 _None, _None, "Effects::EffectTimerClass" )
   EffectsEffectTimerClass_Trigger,
 EW_END_OF_CLASS( EffectsEffectTimerClass )
 

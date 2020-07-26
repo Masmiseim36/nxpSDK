@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 - 2017 NXP
+ * Copyright 2016 - 2017, 2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -177,7 +177,7 @@ usb_status_t USB_DeviceCdcRndisInit(usb_device_cdc_rndis_config_struct_t *config
     cdcRndisHandle->rndisCallback           = config->rndisCallback;
     cdcRndisHandle->rndisCommand            = &s_rndisCommand[0];
     cdcRndisHandle->responseData            = (uint8_t *)&s_responseData[0];
-    cdcRndisHandle->statusMutex             = (osa_mutex_handle_t) &(cdcRndisHandle->mutexBuffer[0]);
+    cdcRndisHandle->statusMutex             = (osa_mutex_handle_t) & (cdcRndisHandle->mutexBuffer[0]);
     if (KOSA_StatusSuccess != OSA_MutexCreate((cdcRndisHandle->statusMutex)))
     {
         usb_echo("mutex create error!");
@@ -533,8 +533,8 @@ usb_status_t USB_DeviceCdcRndisQueryCommand(usb_device_cdc_rndis_struct_t *handl
 {
     rndis_query_msg_struct_t *rndisQueryMsg;
     rndis_query_cmplt_struct_t *rndisQueryCmplt;
-    uint32_t infoBufLen = 0;
-    uint8_t *infoBuf    = NULL;
+    uint32_t infoBufLen = 0U;
+    void *infoBuf       = NULL;
     usb_device_cdc_rndis_request_param_struct_t reqParam;
 
     if (!handle)
@@ -556,7 +556,8 @@ usb_status_t USB_DeviceCdcRndisQueryCommand(usb_device_cdc_rndis_struct_t *handl
     /* preparing for Byte 20-23 : InformationBufferOffset*/
     rndisQueryCmplt->informationBufferOffset = USB_LONG_TO_LITTLE_ENDIAN(0x00000010);
 
-    infoBuf = (uint8_t *)(&(rndisQueryCmplt->requestID)) + rndisQueryCmplt->informationBufferOffset;
+    /*for misra 18.1*/
+    infoBuf = (void *)(handle->responseData + sizeof(rndis_query_cmplt_struct_t));
 
     switch (rndisQueryMsg->oid)
     {

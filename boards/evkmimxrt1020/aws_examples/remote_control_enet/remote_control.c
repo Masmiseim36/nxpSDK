@@ -1,5 +1,5 @@
 /*
- * Amazon FreeRTOS Shadow Demo V1.2.0
+ * FreeRTOS Shadow Demo V1.2.0
  * Copyright (C) 2017 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  * Copyright 2017-2019 NXP
  *

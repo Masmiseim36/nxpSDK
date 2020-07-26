@@ -136,15 +136,75 @@ class TensorBase<Derived, ReadOnlyAccessors>
     }
 
     EIGEN_DEVICE_FUNC
-    EIGEN_STRONG_INLINE const TensorCwiseUnaryOp<internal::scalar_i0e_op<Scalar>, const Derived>
-    i0e() const {
-      return unaryExpr(internal::scalar_i0e_op<Scalar>());
+    EIGEN_STRONG_INLINE const TensorCwiseUnaryOp<internal::scalar_bessel_i0_op<Scalar>, const Derived>
+    bessel_i0() const {
+      return unaryExpr(internal::scalar_bessel_i0_op<Scalar>());
     }
 
     EIGEN_DEVICE_FUNC
-    EIGEN_STRONG_INLINE const TensorCwiseUnaryOp<internal::scalar_i1e_op<Scalar>, const Derived>
-    i1e() const {
-      return unaryExpr(internal::scalar_i1e_op<Scalar>());
+    EIGEN_STRONG_INLINE const TensorCwiseUnaryOp<internal::scalar_bessel_i0e_op<Scalar>, const Derived>
+    bessel_i0e() const {
+      return unaryExpr(internal::scalar_bessel_i0e_op<Scalar>());
+    }
+
+    EIGEN_DEVICE_FUNC
+    EIGEN_STRONG_INLINE const TensorCwiseUnaryOp<internal::scalar_bessel_i1_op<Scalar>, const Derived>
+    bessel_i1() const {
+      return unaryExpr(internal::scalar_bessel_i1_op<Scalar>());
+    }
+
+    EIGEN_DEVICE_FUNC
+    EIGEN_STRONG_INLINE const TensorCwiseUnaryOp<internal::scalar_bessel_i1e_op<Scalar>, const Derived>
+    bessel_i1e() const {
+      return unaryExpr(internal::scalar_bessel_i1e_op<Scalar>());
+    }
+
+    EIGEN_DEVICE_FUNC
+    EIGEN_STRONG_INLINE const TensorCwiseUnaryOp<internal::scalar_bessel_j0_op<Scalar>, const Derived>
+    bessel_j0() const {
+      return unaryExpr(internal::scalar_bessel_j0_op<Scalar>());
+    }
+
+    EIGEN_DEVICE_FUNC
+    EIGEN_STRONG_INLINE const TensorCwiseUnaryOp<internal::scalar_bessel_y0_op<Scalar>, const Derived>
+    bessel_y0() const {
+      return unaryExpr(internal::scalar_bessel_y0_op<Scalar>());
+    }
+
+    EIGEN_DEVICE_FUNC
+    EIGEN_STRONG_INLINE const TensorCwiseUnaryOp<internal::scalar_bessel_j1_op<Scalar>, const Derived>
+    bessel_j1() const {
+      return unaryExpr(internal::scalar_bessel_j1_op<Scalar>());
+    }
+
+    EIGEN_DEVICE_FUNC
+    EIGEN_STRONG_INLINE const TensorCwiseUnaryOp<internal::scalar_bessel_y1_op<Scalar>, const Derived>
+    bessel_y1() const {
+      return unaryExpr(internal::scalar_bessel_y1_op<Scalar>());
+    }
+
+    EIGEN_DEVICE_FUNC
+    EIGEN_STRONG_INLINE const TensorCwiseUnaryOp<internal::scalar_bessel_k0_op<Scalar>, const Derived>
+    bessel_k0() const {
+      return unaryExpr(internal::scalar_bessel_k0_op<Scalar>());
+    }
+
+    EIGEN_DEVICE_FUNC
+    EIGEN_STRONG_INLINE const TensorCwiseUnaryOp<internal::scalar_bessel_k0e_op<Scalar>, const Derived>
+    bessel_k0e() const {
+      return unaryExpr(internal::scalar_bessel_k0e_op<Scalar>());
+    }
+
+    EIGEN_DEVICE_FUNC
+    EIGEN_STRONG_INLINE const TensorCwiseUnaryOp<internal::scalar_bessel_k1_op<Scalar>, const Derived>
+    bessel_k1() const {
+      return unaryExpr(internal::scalar_bessel_k1_op<Scalar>());
+    }
+
+    EIGEN_DEVICE_FUNC
+    EIGEN_STRONG_INLINE const TensorCwiseUnaryOp<internal::scalar_bessel_k1e_op<Scalar>, const Derived>
+    bessel_k1e() const {
+      return unaryExpr(internal::scalar_bessel_k1e_op<Scalar>());
     }
 
     // igamma(a = this, x = other)
@@ -199,6 +259,12 @@ class TensorBase<Derived, ReadOnlyAccessors>
     EIGEN_STRONG_INLINE const TensorCwiseUnaryOp<internal::scalar_erfc_op<Scalar>, const Derived>
     erfc() const {
       return unaryExpr(internal::scalar_erfc_op<Scalar>());
+    }
+
+    EIGEN_DEVICE_FUNC
+    EIGEN_STRONG_INLINE const TensorCwiseUnaryOp<internal::scalar_ndtri_op<Scalar>, const Derived>
+    ndtri() const {
+      return unaryExpr(internal::scalar_ndtri_op<Scalar>());
     }
 
     EIGEN_DEVICE_FUNC
@@ -1061,6 +1127,12 @@ class TensorBase : public TensorBase<Derived, ReadOnlyAccessors> {
     template <typename DeviceType>
     TensorDevice<Derived, DeviceType> device(const DeviceType& dev) {
       return TensorDevice<Derived, DeviceType>(dev, derived());
+    }
+
+    // Select the async device on which to evaluate the expression.
+    template <typename DeviceType, typename DoneCallback>
+    TensorAsyncDevice<Derived, DeviceType, DoneCallback> device(const DeviceType& dev, DoneCallback done) {
+      return TensorAsyncDevice<Derived, DeviceType, DoneCallback>(dev, derived(), std::move(done));
     }
 
  protected:

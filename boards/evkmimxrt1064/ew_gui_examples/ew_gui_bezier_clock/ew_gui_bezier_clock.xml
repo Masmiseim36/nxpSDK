@@ -10,7 +10,6 @@
     <definition extID="device.MIMXRT1064_startup.MIMXRT1064"/>
     <definition extID="driver.ft5406_rt.MIMXRT1064"/>
     <definition extID="middleware.embedded_wizard.MIMXRT1064"/>
-    <definition extID="middleware.embedded_wizard.bezier_clock.MIMXRT1064"/>
     <definition extID="platform.Include_common.MIMXRT1064"/>
     <definition extID="platform.Include_core_cm7.MIMXRT1064"/>
     <definition extID="platform.Include_dsp.MIMXRT1064"/>
@@ -25,7 +24,6 @@
     <definition extID="platform.drivers.pxp.MIMXRT1064"/>
     <definition extID="platform.drivers.snvs_hp.MIMXRT1064"/>
     <definition extID="platform.drivers.xip_board.MIMXRT1064"/>
-    <definition extID="platform.drivers.xip_board_dcd.MIMXRT1064"/>
     <definition extID="platform.drivers.xip_device.MIMXRT1064"/>
     <definition extID="platform.utilities.assert.MIMXRT1064"/>
     <definition extID="platform.utilities.misc_utilities.MIMXRT1064"/>
@@ -37,7 +35,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkmimxrt1064_ew_gui_bezier_clock" name="ew_gui_bezier_clock" category="ew_gui_examples" dependency="platform.drivers.cache_armv7_m7.MIMXRT1064 platform.drivers.elcdif.MIMXRT1064 platform.drivers.snvs_hp.MIMXRT1064 platform.drivers.pxp.MIMXRT1064 platform.drivers.lpi2c.MIMXRT1064 driver.ft5406_rt.MIMXRT1064 middleware.embedded_wizard.bezier_clock.MIMXRT1064 platform.drivers.common.MIMXRT1064 platform.drivers.clock.MIMXRT1064 middleware.embedded_wizard.MIMXRT1064 device.MIMXRT1064_CMSIS.MIMXRT1064 utility.debug_console.MIMXRT1064 component.lpuart_adapter.MIMXRT1064 component.serial_manager.MIMXRT1064 component.lists.MIMXRT1064 component.serial_manager_uart.MIMXRT1064 platform.drivers.lpuart.MIMXRT1064 device.MIMXRT1064_startup.MIMXRT1064 platform.drivers.iomuxc.MIMXRT1064 platform.utilities.assert.MIMXRT1064 platform.drivers.igpio.MIMXRT1064 platform.drivers.xip_device.MIMXRT1064 platform.drivers.xip_board.MIMXRT1064 platform.drivers.xip_board_dcd.MIMXRT1064 platform.Include_core_cm7.MIMXRT1064 platform.Include_common.MIMXRT1064 platform.Include_dsp.MIMXRT1064 platform.utilities.misc_utilities.MIMXRT1064">
+  <example id="evkmimxrt1064_ew_gui_bezier_clock" name="ew_gui_bezier_clock" category="ew_gui_examples" dependency="platform.drivers.cache_armv7_m7.MIMXRT1064 platform.drivers.elcdif.MIMXRT1064 platform.drivers.snvs_hp.MIMXRT1064 platform.drivers.pxp.MIMXRT1064 platform.drivers.lpi2c.MIMXRT1064 driver.ft5406_rt.MIMXRT1064 platform.drivers.common.MIMXRT1064 platform.drivers.clock.MIMXRT1064 middleware.embedded_wizard.MIMXRT1064 device.MIMXRT1064_CMSIS.MIMXRT1064 utility.debug_console.MIMXRT1064 component.lpuart_adapter.MIMXRT1064 component.serial_manager.MIMXRT1064 component.lists.MIMXRT1064 component.serial_manager_uart.MIMXRT1064 platform.drivers.lpuart.MIMXRT1064 device.MIMXRT1064_startup.MIMXRT1064 platform.drivers.iomuxc.MIMXRT1064 platform.utilities.assert.MIMXRT1064 platform.drivers.igpio.MIMXRT1064 platform.drivers.xip_device.MIMXRT1064 platform.drivers.xip_board.MIMXRT1064 platform.Include_core_cm7.MIMXRT1064 platform.Include_common.MIMXRT1064 platform.Include_dsp.MIMXRT1064 platform.utilities.misc_utilities.MIMXRT1064">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -70,9 +68,6 @@
           <value>XIP_BOOT_HEADER_ENABLE=1</value>
           <value>SKIP_SYSCLK_INIT</value>
           <value>XIP_BOOT_HEADER_DCD_ENABLE=1</value>
-          <value>EW_MAX_SURFACE_CACHE_SIZE=0x200000</value>
-          <value>EW_MAX_GLYPH_SURFACE_WIDTH=256</value>
-          <value>EW_MAX_GLYPH_SURFACE_HEIGHT=256</value>
           <value>EW_USE_DOUBLE_BUFFER=1</value>
           <value>EW_CPU_LOAD_MEASURING=1</value>
           <value>EW_FRAME_BUFFER_COLOR_FORMAT=EW_FRAME_BUFFER_COLOR_FORMAT_RGB565</value>
@@ -112,6 +107,162 @@
         </drivers>
       </debug_configuration>
     </debug_configurations>
+    <source path="boards/evkmimxrt1064/ew_gui_examples/ew_gui_bezier_clock/EmbeddedWizard/Res" target_path="EmbeddedWizard/Project/Res" type="image" exclude="true">
+      <files mask="BackgroundPreview.png"/>
+      <files mask="Blue.png"/>
+      <files mask="Dark.png"/>
+      <files mask="Orange.png"/>
+    </source>
+    <source path="boards/evkmimxrt1064/ew_gui_examples/ew_gui_bezier_clock/EmbeddedWizard" target_path="EmbeddedWizard/Project" type="other" exclude="true">
+      <files mask="Application.ewu"/>
+      <files mask="BezierClock.ews"/>
+      <files mask="BezierClock.ewu"/>
+    </source>
+    <source path="boards/evkmimxrt1064/ew_gui_examples/ew_gui_bezier_clock/EmbeddedWizard" target_path="EmbeddedWizard/Project" type="project" exclude="true">
+      <files mask="BezierClock.ewp"/>
+    </source>
+    <source path="boards/evkmimxrt1064/ew_gui_examples/ew_gui_bezier_clock/GeneratedCode" target_path="EmbeddedWizard/GeneratedCode" type="c_include">
+      <files mask="Application.h"/>
+      <files mask="BezierClock.h"/>
+      <files mask="Core.h"/>
+      <files mask="Effects.h"/>
+      <files mask="Graphics.h"/>
+      <files mask="Resources.h"/>
+      <files mask="Templates.h"/>
+      <files mask="Views.h"/>
+      <files mask="WidgetSet.h"/>
+      <files mask="_ApplicationApplication.h"/>
+      <files mask="_BezierClockBackground.h"/>
+      <files mask="_BezierClockBackgroundPreview.h"/>
+      <files mask="_BezierClockBezierClock.h"/>
+      <files mask="_BezierClockBlue.h"/>
+      <files mask="_BezierClockBubble.h"/>
+      <files mask="_BezierClockClockScreen.h"/>
+      <files mask="_BezierClockDark.h"/>
+      <files mask="_BezierClockDatePicker.h"/>
+      <files mask="_BezierClockDeviceClass.h"/>
+      <files mask="_BezierClockDigit.h"/>
+      <files mask="_BezierClockFontL.h"/>
+      <files mask="_BezierClockFontXXL.h"/>
+      <files mask="_BezierClockOrange.h"/>
+      <files mask="_BezierClockSettingsScreen.h"/>
+      <files mask="_BezierClockStyleScreen.h"/>
+      <files mask="_BezierClockTimePicker.h"/>
+      <files mask="_BezierClockTimerScreen.h"/>
+      <files mask="_BezierClockTimerWheel.h"/>
+      <files mask="_CoreCursorEvent.h"/>
+      <files mask="_CoreCursorGrabEvent.h"/>
+      <files mask="_CoreCursorHit.h"/>
+      <files mask="_CoreDialogContext.h"/>
+      <files mask="_CoreDragEvent.h"/>
+      <files mask="_CoreEvent.h"/>
+      <files mask="_CoreGroup.h"/>
+      <files mask="_CoreKeyEvent.h"/>
+      <files mask="_CoreKeyPressHandler.h"/>
+      <files mask="_CoreLayoutContext.h"/>
+      <files mask="_CoreLayoutLineContext.h"/>
+      <files mask="_CoreLayoutQuadContext.h"/>
+      <files mask="_CoreLineView.h"/>
+      <files mask="_CoreModalContext.h"/>
+      <files mask="_CoreOutline.h"/>
+      <files mask="_CorePropertyObserver.h"/>
+      <files mask="_CoreQuadView.h"/>
+      <files mask="_CoreRectView.h"/>
+      <files mask="_CoreResource.h"/>
+      <files mask="_CoreRoot.h"/>
+      <files mask="_CoreRotateTouchHandler.h"/>
+      <files mask="_CoreSimpleTouchHandler.h"/>
+      <files mask="_CoreSlideTouchHandler.h"/>
+      <files mask="_CoreTask.h"/>
+      <files mask="_CoreTaskQueue.h"/>
+      <files mask="_CoreTime.h"/>
+      <files mask="_CoreTimer.h"/>
+      <files mask="_CoreVerticalList.h"/>
+      <files mask="_CoreView.h"/>
+      <files mask="_EffectsEffect.h"/>
+      <files mask="_EffectsEffectTimerClass.h"/>
+      <files mask="_EffectsFader.h"/>
+      <files mask="_EffectsFaderTask.h"/>
+      <files mask="_EffectsFloatEffect.h"/>
+      <files mask="_EffectsInt32Effect.h"/>
+      <files mask="_EffectsPointEffect.h"/>
+      <files mask="_EffectsPositionFader.h"/>
+      <files mask="_EffectsShowHideTransition.h"/>
+      <files mask="_EffectsSlideTransition.h"/>
+      <files mask="_EffectsTimingList.h"/>
+      <files mask="_EffectsTransition.h"/>
+      <files mask="_EffectsVisibilityFader.h"/>
+      <files mask="_GraphicsArcPath.h"/>
+      <files mask="_GraphicsCanvas.h"/>
+      <files mask="_GraphicsPath.h"/>
+      <files mask="_ResourcesBitmap.h"/>
+      <files mask="_ResourcesFont.h"/>
+      <files mask="_ResourcesNavigationIconsMedium.h"/>
+      <files mask="_ResourcesWhiteBitmap.h"/>
+      <files mask="_ResourcesWhiteBitmapStripe.h"/>
+      <files mask="_TemplatesPickerControl.h"/>
+      <files mask="_TemplatesRotaryKnob.h"/>
+      <files mask="_ViewsFillPath.h"/>
+      <files mask="_ViewsFrame.h"/>
+      <files mask="_ViewsImage.h"/>
+      <files mask="_ViewsLine.h"/>
+      <files mask="_ViewsRectangle.h"/>
+      <files mask="_ViewsStrokePath.h"/>
+      <files mask="_ViewsText.h"/>
+      <files mask="_WidgetSetPushButton.h"/>
+      <files mask="_WidgetSetPushButtonConfig.h"/>
+      <files mask="_WidgetSetRadioButton.h"/>
+      <files mask="_WidgetSetRadioButtonConfig.h"/>
+      <files mask="_WidgetSetWidgetConfig.h"/>
+      <files mask="ewlocale.h"/>
+    </source>
+    <source path="boards/evkmimxrt1064/ew_gui_examples/ew_gui_bezier_clock/GeneratedCode" target_path="EmbeddedWizard/GeneratedCode" type="src">
+      <files mask="Application.c"/>
+      <files mask="BezierClock.c"/>
+      <files mask="Core.c"/>
+      <files mask="Effects.c"/>
+      <files mask="Graphics.c"/>
+      <files mask="Resources.c"/>
+      <files mask="Templates.c"/>
+      <files mask="Views.c"/>
+      <files mask="WidgetSet.c"/>
+    </source>
+    <source path="boards/evkmimxrt1064/ew_gui_examples/ew_gui_bezier_clock/Simulation/code" target_path="EmbeddedWizard/Simulation/code" type="script" exclude="true">
+      <files mask="Application.js"/>
+      <files mask="BezierClock.js"/>
+      <files mask="Core.js"/>
+      <files mask="Effects.js"/>
+      <files mask="Graphics.js"/>
+      <files mask="Resources.js"/>
+      <files mask="Templates.js"/>
+      <files mask="Views.js"/>
+      <files mask="WidgetSet.js"/>
+      <files mask="_project.js"/>
+    </source>
+    <source path="boards/evkmimxrt1064/ew_gui_examples/ew_gui_bezier_clock/Simulation/code" target_path="EmbeddedWizard/Simulation/code" type="src" exclude="true">
+      <files mask="Simulation.js"/>
+    </source>
+    <source path="boards/evkmimxrt1064/ew_gui_examples/ew_gui_bezier_clock/Simulation/res" target_path="EmbeddedWizard/Simulation/res" type="image" exclude="true">
+      <files mask="BezierClockBackgroundPreview.png"/>
+      <files mask="BezierClockBlue.png"/>
+      <files mask="BezierClockDark.png"/>
+      <files mask="BezierClockOrange.png"/>
+      <files mask="ResourcesNavigationIconsMedium.png"/>
+      <files mask="ResourcesWhiteBitmap.png"/>
+      <files mask="ResourcesWhiteBitmapStripe.png"/>
+      <files mask="SimulationBackground.png"/>
+      <files mask="embedded-wizard-logo.png"/>
+    </source>
+    <source path="boards/evkmimxrt1064/ew_gui_examples/ew_gui_bezier_clock/Simulation/res" target_path="EmbeddedWizard/Simulation/res" type="script" exclude="true">
+      <files mask="BezierClockFontL.js"/>
+      <files mask="BezierClockFontXXL.js"/>
+      <files mask="SimulationFont.js"/>
+      <files mask="SimulationIcon.js"/>
+    </source>
+    <source path="boards/evkmimxrt1064/ew_gui_examples/ew_gui_bezier_clock/Simulation" target_path="EmbeddedWizard/Simulation" type="src" exclude="true">
+      <files mask="emwi_compr_9_30.js"/>
+      <files mask="index.html"/>
+    </source>
     <source path="boards/evkmimxrt1064/ew_gui_examples/ew_gui_bezier_clock/iar" target_path="evkmimxrt1064" type="other" toolchain="iar">
       <files mask="evkmimxrt1064.mac"/>
     </source>
@@ -121,11 +272,15 @@
     <source path="boards/evkmimxrt1064/ew_gui_examples/ew_gui_bezier_clock" target_path="board" type="c_include">
       <files mask="board.h"/>
       <files mask="clock_config.h"/>
+      <files mask="dcd.h"/>
+      <files mask="ewconfig.h"/>
+      <files mask="ewdef.h"/>
       <files mask="pin_mux.h"/>
     </source>
     <source path="boards/evkmimxrt1064/ew_gui_examples/ew_gui_bezier_clock" target_path="board" type="src">
       <files mask="board.c"/>
       <files mask="clock_config.c"/>
+      <files mask="dcd.c"/>
       <files mask="pin_mux.c"/>
     </source>
     <source path="boards/evkmimxrt1064/ew_gui_examples/ew_gui_bezier_clock" target_path="doc" type="doc" toolchain="iar mdk mcuxpresso armgcc">

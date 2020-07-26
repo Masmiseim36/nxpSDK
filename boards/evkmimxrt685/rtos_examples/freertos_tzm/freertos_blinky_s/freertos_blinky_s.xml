@@ -8,7 +8,7 @@
     <definition extID="component.usart_adapter.MIMXRT685S"/>
     <definition extID="device.MIMXRT685S_CMSIS.MIMXRT685S"/>
     <definition extID="device.MIMXRT685S_startup.MIMXRT685S"/>
-    <definition extID="middleware.amazon_freertos-kernel.secure_context.MIMXRT685S"/>
+    <definition extID="middleware.freertos-kernel.secure_context.MIMXRT685S"/>
     <definition extID="platform.Include_common.MIMXRT685S"/>
     <definition extID="platform.Include_core_cm33.MIMXRT685S"/>
     <definition extID="platform.Include_dsp.MIMXRT685S"/>
@@ -32,16 +32,19 @@
     <definition extID="mdk"/>
     <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
+    <definition extID="com.nxp.mcuxpresso.core.debug.support.segger.debug"/>
+    <definition extID="com.nxp.mcuxpresso.core.debug.support.segger.release"/>
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkmimxrt685_freertos_blinky_s" name="freertos_blinky_s" category="rtos_examples" dependency="platform.drivers.clock.MIMXRT685S middleware.amazon_freertos-kernel.secure_context.MIMXRT685S platform.drivers.common.MIMXRT685S platform.drivers.power.MIMXRT685S device.MIMXRT685S_CMSIS.MIMXRT685S utility.debug_console.MIMXRT685S platform.utilities.assert.MIMXRT685S component.usart_adapter.MIMXRT685S platform.drivers.flash_config.MIMXRT685S platform.drivers.flexspi.MIMXRT685S platform.drivers.cache_cache64.MIMXRT685S component.serial_manager.MIMXRT685S component.lists.MIMXRT685S component.serial_manager_uart.MIMXRT685S platform.drivers.flexcomm_usart.MIMXRT685S device.MIMXRT685S_startup.MIMXRT685S platform.drivers.flexcomm.MIMXRT685S platform.drivers.lpc_iopctl.MIMXRT685S platform.drivers.lpc_gpio.MIMXRT685S platform.drivers.reset.MIMXRT685S platform.Include_core_cm33.MIMXRT685S platform.Include_common.MIMXRT685S platform.Include_dsp.MIMXRT685S platform.utilities.misc_utilities.MIMXRT685S" device_core="cm33_MIMXRT685S" linked_projects="evkmimxrt685_freertos_blinky_ns">
+  <example id="evkmimxrt685_freertos_blinky_s" name="freertos_blinky_s" category="rtos_examples" dependency="platform.drivers.clock.MIMXRT685S middleware.freertos-kernel.secure_context.MIMXRT685S platform.drivers.common.MIMXRT685S platform.drivers.power.MIMXRT685S device.MIMXRT685S_CMSIS.MIMXRT685S utility.debug_console.MIMXRT685S platform.utilities.assert.MIMXRT685S component.usart_adapter.MIMXRT685S platform.drivers.flash_config.MIMXRT685S platform.drivers.flexspi.MIMXRT685S platform.drivers.cache_cache64.MIMXRT685S component.serial_manager.MIMXRT685S component.lists.MIMXRT685S component.serial_manager_uart.MIMXRT685S platform.drivers.flexcomm_usart.MIMXRT685S device.MIMXRT685S_startup.MIMXRT685S platform.drivers.flexcomm.MIMXRT685S platform.drivers.lpc_iopctl.MIMXRT685S platform.drivers.lpc_gpio.MIMXRT685S platform.drivers.reset.MIMXRT685S platform.Include_core_cm33.MIMXRT685S platform.Include_common.MIMXRT685S platform.Include_dsp.MIMXRT685S platform.utilities.misc_utilities.MIMXRT685S" device_core="cm33_MIMXRT685S" linked_projects="evkmimxrt685_freertos_blinky_ns">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
     <memory>
-      <memoryBlock addr="18000000" size="00100000" access="RO" type="ExtFlash" id="QSPI_FLASH_MIMXRT685S" name="QSPI_FLASH"/>
+      <memoryBlock addr="18000000" size="000FFE00" access="RO" type="ExtFlash" id="QSPI_FLASH_MIMXRT685S" name="QSPI_FLASH"/>
       <memoryBlock addr="30140000" size="00040000" access="RW" type="RAM" id="SRAM_MIMXRT685S" name="SRAM"/>
+      <memoryBlock addr="180FFE00" size="00000200" access="RO" type="ExtFlash" id="SG_veneer_table_MIMXRT685S" name="SG_veneer_table"/>
       <memoryBlock addr="50140000" size="00004000" access="RW" type="RAM" id="USB_RAM_MIMXRT685S" name="USB_RAM"/>
     </memory>
     <toolchainSettings>
@@ -56,10 +59,9 @@
           <value>com.crt.advproject.misc.dialect.gnu99</value>
         </option>
         <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
-          <value>DEMO_CODE_START_NS=0x08100000</value>
+          <value>DEMO_CODE_START_NS=135266304</value>
           <value>CPU_MIMXRT685SFVKB_cm33</value>
           <value>BOOT_HEADER_ENABLE=1</value>
-          <value>ARM_MATH_CM33</value>
           <value>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</value>
           <value>SERIAL_PORT_TYPE_UART=1</value>
         </option>
@@ -106,6 +108,24 @@
       </toolchainSetting>
     </toolchainSettings>
     <debug_configurations>
+      <debug_configuration id_refs="com.nxp.mcuxpresso.core.debug.support.segger.debug">
+        <scripts>
+          <script type="segger_script">
+            <source path="boards/evkmimxrt685/rtos_examples/freertos_tzm/freertos_blinky_s" type="script" target_path="script">
+              <files mask="evkmimxrt685.JLinkScript"/>
+            </source>
+          </script>
+        </scripts>
+      </debug_configuration>
+      <debug_configuration id_refs="com.nxp.mcuxpresso.core.debug.support.segger.release">
+        <scripts>
+          <script type="segger_script">
+            <source path="boards/evkmimxrt685/rtos_examples/freertos_tzm/freertos_blinky_s" type="script" target_path="script">
+              <files mask="evkmimxrt685.JLinkScript"/>
+            </source>
+          </script>
+        </scripts>
+      </debug_configuration>
       <debug_configuration id_refs="com.crt.advproject.config.exe.debug com.crt.advproject.config.exe.release">
         <drivers>
           <driver id_refs="QSPI_FLASH_MIMXRT685S">
@@ -116,21 +136,21 @@
         </drivers>
       </debug_configuration>
     </debug_configurations>
-    <source path="boards/evkmimxrt685/rtos_examples/freertos_tzm/freertos_blinky_ns" target_path="source" type="c_include">
-      <files mask="FreeRTOSConfig.h"/>
-    </source>
-    <source path="boards/evkmimxrt685/rtos_examples/freertos_tzm/freertos_blinky_s/armgcc" target_path="src" type="linker" toolchain="armgcc">
+    <source path="boards/evkmimxrt685/rtos_examples/freertos_tzm/freertos_blinky_s/armgcc" target_path="MIMXRT685S/gcc" type="linker" toolchain="armgcc">
       <files mask="MIMXRT685Sxxxx_cm33_ram_s.ld"/>
     </source>
-    <source path="boards/evkmimxrt685/rtos_examples/freertos_tzm/freertos_blinky_s/iar" target_path="src" type="linker" toolchain="iar">
+    <source path="boards/evkmimxrt685/rtos_examples/freertos_tzm/freertos_blinky_s/iar" target_path="MIMXRT685S/iar" type="linker" toolchain="iar">
       <files mask="MIMXRT685Sxxxx_cm33_ram_s.icf"/>
     </source>
-    <source path="boards/evkmimxrt685/rtos_examples/freertos_tzm/freertos_blinky_s/mdk" target_path="src" type="configuration" toolchain="mdk">
-      <files mask="secure_ramdebug.ini"/>
-      <files mask="secure_ramrelease.ini"/>
-    </source>
-    <source path="boards/evkmimxrt685/rtos_examples/freertos_tzm/freertos_blinky_s/mdk" target_path="src" type="linker" toolchain="mdk">
+    <source path="boards/evkmimxrt685/rtos_examples/freertos_tzm/freertos_blinky_s/mdk" target_path="MIMXRT685S/arm" type="linker" toolchain="mdk">
       <files mask="MIMXRT685Sxxxx_cm33_ram_s.scf"/>
+    </source>
+    <source path="boards/evkmimxrt685/rtos_examples/freertos_tzm/freertos_blinky_s/mdk" target_path="evkmimxrt685/rtos_examples/freertos_tzm/freertos_blinky_s" type="configuration" toolchain="mdk">
+      <files mask="debug_download.ini"/>
+      <files mask="release_download.ini"/>
+    </source>
+    <source path="boards/evkmimxrt685/rtos_examples/freertos_tzm/freertos_blinky_s/mdk" target_path="evkmimxrt685" type="configuration" toolchain="mdk">
+      <files mask="evkmimxrt685_flash.ini"/>
     </source>
     <source path="boards/evkmimxrt685/rtos_examples/freertos_tzm/freertos_blinky_s" target_path="board" type="c_include">
       <files mask="board.h"/>
@@ -155,6 +175,9 @@
     </source>
     <source path="boards/evkmimxrt685/rtos_examples/freertos_tzm/freertos_blinky_s" target_path="source" type="asm_include" toolchain="iar">
       <files mask="main_s_asm.s"/>
+    </source>
+    <source path="boards/evkmimxrt685/rtos_examples/freertos_tzm/freertos_blinky_s" target_path="source" type="c_include">
+      <files mask="FreeRTOSConfig.h"/>
     </source>
     <source path="boards/evkmimxrt685/rtos_examples/freertos_tzm/freertos_blinky_s" target_path="source" type="src">
       <files mask="main_s.c"/>

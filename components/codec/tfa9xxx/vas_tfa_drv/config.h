@@ -9,7 +9,6 @@
 #define __CONFIG_IMX_INC__
 
 #include "tfa2_dsp_fw.h"
-#include "fsl_debug_console.h"
 
 #ifndef EPERM
 #define EPERM 1 /* Not super-user */
@@ -50,14 +49,15 @@
 
 /* this is the I2C RPC buffer size */
 #define TFADSP_COMMAND_BUFFER_MAX_WORDS 250
-#define TFADSP_COMMAND_BUFFER_MAX_SIZE (TFADSP_COMMAND_BUFFER_MAX_WORDS * sizeof(int))
+#define TFADSP_COMMAND_BUFFER_MAX_SIZE  (TFADSP_COMMAND_BUFFER_MAX_WORDS * sizeof(int))
 
 #define kmalloc(ptr, flags) TFA9XXX_GetDSPMessageBuffer()
-#define kfree(ptr) (void)0
+#define kfree(ptr)          (void)0
 
 void TFA9XXX_NOP(const char *format, ...);
 //#define TFA9XXX_DEBUG
 #ifdef TFA9XXX_DEBUG
+#include "fsl_debug_console.h"
 #if defined(SDK_DEBUGCONSOLE) && (SDK_DEBUGCONSOLE < 1)
 #define TFA9XXX_Printf printf
 #else
@@ -77,7 +77,7 @@ void TFA9XXX_NOP(const char *format, ...);
             TFA9XXX_Printf(__VA_ARGS__);    \
     } while (0)
 
-#define le16toh(x) (x)
+#define le16toh(x)                (x)
 #define msleep_interruptible(val) TFA9XXX_WaitMS(val)
 
 static inline uint16_t get_unaligned_le16(const void *p)

@@ -14,8 +14,8 @@
  * Definitions
  ******************************************************************************/
 
-#define LCD_WIDTH 480
-#define LCD_HEIGHT 272
+#define LCD_WIDTH             480
+#define LCD_HEIGHT            272
 #define LCD_FB_BYTE_PER_PIXEL 2
 
 /*******************************************************************************

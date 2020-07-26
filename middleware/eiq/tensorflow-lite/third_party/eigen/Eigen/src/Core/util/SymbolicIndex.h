@@ -104,6 +104,7 @@ public:
   QuotientExpr<Derived,ValueExpr<> > operator/(Index a) const
   { return QuotientExpr<Derived,ValueExpr<> >(derived(),a); }
 
+#if !defined(__ICCARM__)
   friend AddExpr<Derived,ValueExpr<> > operator+(Index a, const BaseExpr& b)
   { return AddExpr<Derived,ValueExpr<> >(b.derived(), a); }
   friend AddExpr<NegateExpr<Derived>,ValueExpr<> > operator-(Index a, const BaseExpr& b)
@@ -112,6 +113,7 @@ public:
   { return ProductExpr<ValueExpr<>,Derived>(a,b.derived()); }
   friend QuotientExpr<ValueExpr<>,Derived> operator/(Index a, const BaseExpr& b)
   { return QuotientExpr<ValueExpr<>,Derived>(a,b.derived()); }
+#endif
 
   template<int N>
   AddExpr<Derived,ValueExpr<internal::FixedInt<N> > > operator+(internal::FixedInt<N>) const
@@ -126,6 +128,7 @@ public:
   QuotientExpr<Derived,ValueExpr<internal::FixedInt<N> > > operator/(internal::FixedInt<N>) const
   { return QuotientExpr<Derived,ValueExpr<internal::FixedInt<N> > >(derived(),ValueExpr<internal::FixedInt<N> >()); }
 
+#if !defined(__ICCARM__)
   template<int N>
   friend AddExpr<Derived,ValueExpr<internal::FixedInt<N> > > operator+(internal::FixedInt<N>, const BaseExpr& b)
   { return AddExpr<Derived,ValueExpr<internal::FixedInt<N> > >(b.derived(), ValueExpr<internal::FixedInt<N> >()); }
@@ -138,6 +141,7 @@ public:
   template<int N>
   friend QuotientExpr<ValueExpr<internal::FixedInt<N> >,Derived> operator/(internal::FixedInt<N>, const BaseExpr& b)
   { return QuotientExpr<ValueExpr<internal::FixedInt<N> > ,Derived>(ValueExpr<internal::FixedInt<N> >(),b.derived()); }
+#endif
 
 #if (!EIGEN_HAS_CXX14)
   template<int N>
@@ -153,6 +157,7 @@ public:
   QuotientExpr<Derived,ValueExpr<internal::FixedInt<N> > > operator/(internal::FixedInt<N> (*)()) const
   { return QuotientExpr<Derived,ValueExpr<internal::FixedInt<N> > >(derived(),ValueExpr<internal::FixedInt<N> >()); }
 
+#if !defined(__ICCARM__)
   template<int N>
   friend AddExpr<Derived,ValueExpr<internal::FixedInt<N> > > operator+(internal::FixedInt<N> (*)(), const BaseExpr& b)
   { return AddExpr<Derived,ValueExpr<internal::FixedInt<N> > >(b.derived(), ValueExpr<internal::FixedInt<N> >()); }
@@ -165,6 +170,7 @@ public:
   template<int N>
   friend QuotientExpr<ValueExpr<internal::FixedInt<N> >,Derived> operator/(internal::FixedInt<N> (*)(), const BaseExpr& b)
   { return QuotientExpr<ValueExpr<internal::FixedInt<N> > ,Derived>(ValueExpr<internal::FixedInt<N> >(),b.derived()); }
+#endif
 #endif
 
 

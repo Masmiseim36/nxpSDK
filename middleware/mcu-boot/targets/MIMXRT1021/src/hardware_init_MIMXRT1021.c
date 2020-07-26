@@ -1,33 +1,33 @@
 /*
  * Copyright 2014-2015 Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  *
  */
 
-#include "bootloader/bl_context.h"
+#include "bl_context.h"
 #if BL_FEATURE_RELIABLE_UPDATE
-#include "bootloader/bl_reliable_update.h"
+#include "bl_reliable_update.h"
 #endif
 #include "bootloader_common.h"
+#include "fsl_assert.h"
 #include "fsl_device_registers.h"
-#include "lpuart/fsl_lpuart.h"
-#include "utilities/fsl_assert.h"
+#include "fsl_lpuart.h"
 #if BL_ENABLE_CRC_CHECK
-#include "bootloader/bl_app_crc_check.h"
+#include "bl_app_crc_check.h"
 #endif
 #if BL_FEATURE_FLEXSPI_NOR_MODULE || BL_FEATURE_SPINAND_MODULE
-#include "flexspi/fsl_flexspi.h"
-#include "flexspi_nor/flexspi_nor_flash.h"
+#include "bl_flexspi.h"
+#include "flexspi_nor_flash.h"
 #endif // #if BL_FEATURE_FLEXSPI_NOR_MODULE || BL_FEATURE_SPINAND_MODULE
 #if BL_FEATURE_SPI_NOR_EEPROM_MODULE
-#include "memory/src/spi_nor_eeprom_memory.h"
 #include "microseconds.h"
+#include "spi_nor_eeprom_memory.h"
 #endif // BL_FEATURE_SPI_NOR_EEPROM_MODULE
 #if BL_FEATURE_SEMC_NAND_MODULE || BL_FEATURE_SEMC_NOR_MODULE
-#include "semc/fsl_semc.h"
+#include "bl_semc.h"
 #endif // #if BL_FEATURE_SEMC_NAND_MODULE || BL_FEATURE_SEMC_NOR_MODULE
 #include "bl_api.h"
 #include "fusemap.h"
@@ -40,6 +40,180 @@
 #define FREQ_480MHz (480000000U)
 #define FREQ_528MHz (528000000U)
 #define FREQ_24MHz (24000000U)
+
+/*************************************
+ *  IVT Data
+ *************************************/
+typedef struct _ivt_
+{
+    /** @ref hdr with tag #HAB_TAG_IVT, length and HAB version fields
+     *  (see @ref data)
+     */
+    uint32_t hdr;
+    /** Absolute address of the first instruction to execute from the
+     *  image
+     */
+    uint32_t entry;
+    /** Reserved in this version of HAB: should be NULL. */
+    uint32_t reserved1;
+    /** Absolute address of the image DCD: may be NULL. */
+    uint32_t dcd;
+    /** Absolute address of the Boot Data: may be NULL, but not interpreted
+     *  any further by HAB
+     */
+    uint32_t boot_data;
+    /** Absolute address of the IVT.*/
+    uint32_t self;
+    /** Absolute address of the image CSF.*/
+    uint32_t csf;
+    /** Reserved in this version of HAB: should be zero. */
+    uint32_t reserved2;
+} ivt;
+
+#define IVT_MAJOR_VERSION 0x4
+#define IVT_MAJOR_VERSION_SHIFT 0x4
+#define IVT_MAJOR_VERSION_MASK 0xF
+#define IVT_MINOR_VERSION 0x1
+#define IVT_MINOR_VERSION_SHIFT 0x0
+#define IVT_MINOR_VERSION_MASK 0xF
+
+#define IVT_VERSION(major, minor)                                    \
+    ((((major)&IVT_MAJOR_VERSION_MASK) << IVT_MAJOR_VERSION_SHIFT) | \
+     (((minor)&IVT_MINOR_VERSION_MASK) << IVT_MINOR_VERSION_SHIFT))
+
+/* IVT header */
+#define IVT_TAG_HEADER 0xD1 /**< Image Vector Table */
+#define IVT_SIZE 0x2000
+#define IVT_PAR IVT_VERSION(IVT_MAJOR_VERSION, IVT_MINOR_VERSION)
+#define IVT_HEADER (IVT_TAG_HEADER | (IVT_SIZE << 8) | (IVT_PAR << 24))
+
+/* Set resume entry */
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
+extern uint32_t __Vectors[];
+extern uint32_t Image$$RW_m_config_text$$Base[];
+#define IMAGE_ENTRY_ADDRESS ((uint32_t)__Vectors)
+#define FLASH_BASE ((uint32_t)Image$$RW_m_config_text$$Base)
+#elif defined(__ICCARM__)
+extern uint32_t __VECTOR_TABLE[];
+extern uint32_t m_boot_hdr_conf_start[];
+#define IMAGE_ENTRY_ADDRESS ((uint32_t)__VECTOR_TABLE)
+#define FLASH_BASE ((uint32_t)m_boot_hdr_conf_start)
+#elif defined(__GNUC__)
+extern uint32_t __VECTOR_TABLE[];
+extern uint32_t __FLASH_BASE[];
+#define IMAGE_ENTRY_ADDRESS ((uint32_t)__VECTOR_TABLE)
+#define FLASH_BASE ((uint32_t)__FLASH_BASE)
+#endif
+
+#define DCD_ADDRESS dcd_data
+#define BOOT_DATA_ADDRESS &boot_data
+#define CSF_ADDRESS 0
+#define IVT_RSVD (uint32_t)(0x00000000)
+
+/*************************************
+ *  Boot Data
+ *************************************/
+typedef struct _boot_data_
+{
+    uint32_t start;       /* boot start location */
+    uint32_t size;        /* size */
+    uint32_t plugin;      /* plugin flag - 1 if downloaded application is plugin */
+    uint32_t placeholder; /* placehoder to make even 0x10 size */
+} BOOT_DATA_T;
+
+#define FLASH_SIZE BL_FEATURE_FLASH_SIZE
+#define PLUGIN_FLAG (uint32_t)0
+
+/* External Variables */
+const BOOT_DATA_T boot_data;
+
+#if defined(XIP_BOOT_HEADER_ENABLE) && (XIP_BOOT_HEADER_ENABLE == 1)
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION) || defined(__GNUC__)
+__attribute__((section(".boot_hdr.ivt")))
+#elif defined(__ICCARM__)
+#pragma location = ".boot_hdr.ivt"
+#endif
+/*************************************
+ *  IVT Data
+ *************************************/
+const ivt image_vector_table = {
+    IVT_HEADER,                    /* IVT Header */
+    IMAGE_ENTRY_ADDRESS,           /* Image Entry Function */
+    IVT_RSVD,                      /* Reserved = 0 */
+    (uint32_t)0,                   /* Address where DCD information is stored */
+    (uint32_t)BOOT_DATA_ADDRESS,   /* Address where BOOT Data Structure is stored */
+    (uint32_t)&image_vector_table, /* Pointer to IVT Self (absolute address */
+    (uint32_t)CSF_ADDRESS,         /* Address where CSF file is stored */
+    IVT_RSVD                       /* Reserved = 0 */
+};
+
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION) || defined(__GNUC__)
+__attribute__((section(".boot_hdr.boot_data")))
+#elif defined(__ICCARM__)
+#pragma location = ".boot_hdr.boot_data"
+#endif
+/*************************************
+ *  Boot Data
+ *************************************/
+const BOOT_DATA_T boot_data = {
+    FLASH_BASE,  /* boot start location */
+    FLASH_SIZE,  /* size */
+    PLUGIN_FLAG, /* Plugin flag*/
+    0xFFFFFFFF   /* empty - extra data word */
+};
+
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION) || defined(__GNUC__)
+__attribute__((section(".boot_hdr.conf")))
+#elif defined(__ICCARM__)
+#pragma location = ".boot_hdr.conf"
+#endif
+const flexspi_nor_config_t qspiflash_config = {
+    .memConfig =
+        {
+            .tag              = FLEXSPI_CFG_BLK_TAG,
+            .version          = FLEXSPI_CFG_BLK_VERSION,
+            .readSampleClkSrc = kFlexSPIReadSampleClk_LoopbackFromDqsPad,
+            .csHoldTime       = 3u,
+            .csSetupTime      = 3u,
+            // Enable DDR mode, Wordaddassable, Safe configuration, Differential clock
+            .sflashPadType = kSerialFlash_4Pads,
+            .serialClkFreq = kFlexSpiSerialClk_133MHz,
+            .sflashA1Size  = 8u * 1024u * 1024u,
+            .deviceType = kFlexSpiDeviceType_SerialNOR,
+            .controllerMiscOption = FLEXSPI_BITMASK(kFlexSpiMiscOffset_SafeConfigFreqEnable),
+            .lookupTable =
+                {
+                    // Read LUTs
+                    [4 * NOR_CMD_LUT_SEQ_IDX_READ] = FLEXSPI_LUT_SEQ(CMD_SDR, FLEXSPI_1PAD, 0xEB, RADDR_SDR, FLEXSPI_4PAD, 0x18),
+                    [4 * NOR_CMD_LUT_SEQ_IDX_READ + 1] = FLEXSPI_LUT_SEQ(DUMMY_SDR, FLEXSPI_4PAD, 0x06, READ_SDR, FLEXSPI_4PAD, 0x04),
+
+                    // Read Status LUTs
+                    [4 * NOR_CMD_LUT_SEQ_IDX_READSTATUS] = FLEXSPI_LUT_SEQ(CMD_SDR, FLEXSPI_1PAD, 0x05, READ_SDR, FLEXSPI_1PAD, 0x04),
+
+                    // Write Enable LUTs
+                    [4 * NOR_CMD_LUT_SEQ_IDX_WRITEENABLE] = FLEXSPI_LUT_SEQ(CMD_SDR, FLEXSPI_1PAD, 0x06, STOP, FLEXSPI_1PAD, 0x00),
+
+                    // Erase Sector LUTs
+                    [4 * NOR_CMD_LUT_SEQ_IDX_ERASESECTOR] = FLEXSPI_LUT_SEQ(CMD_SDR, FLEXSPI_1PAD, 0x20, RADDR_SDR, FLEXSPI_1PAD, 0x18),
+
+                    // Page Program LUTs
+                    [4 * NOR_CMD_LUT_SEQ_IDX_PAGEPROGRAM] = FLEXSPI_LUT_SEQ(CMD_SDR, FLEXSPI_1PAD, 0x02, RADDR_SDR, FLEXSPI_1PAD, 0x18),
+                    [4 * NOR_CMD_LUT_SEQ_IDX_PAGEPROGRAM + 1] = FLEXSPI_LUT_SEQ(WRITE_SDR, FLEXSPI_1PAD, 0x04, STOP, FLEXSPI_1PAD, 0x00),
+
+                    // Chip Erase LUTs
+                    [4 * NOR_CMD_LUT_SEQ_IDX_CHIPERASE] = FLEXSPI_LUT_SEQ(CMD_SDR, FLEXSPI_1PAD, 0x60, STOP, FLEXSPI_1PAD, 0x00),
+
+                    // Block Erase LUTs
+                    [4 * NOR_CMD_LUT_SEQ_IDX_ERASEBLOCK] = FLEXSPI_LUT_SEQ(CMD_SDR, FLEXSPI_1PAD, 0xD8, RADDR_SDR, FLEXSPI_1PAD, 0x18),
+                },
+        },
+    .pageSize           = 256u,
+    .sectorSize         = 4u * 1024u,
+    .blockSize          = 64u * 1024u,
+    .isUniformBlockSize = false,
+    .ipcmdSerialClkFreq = kFlexSpiSerialClk_30MHz,
+};
+#endif
 
 /*******************************************************************************
  * Prototype

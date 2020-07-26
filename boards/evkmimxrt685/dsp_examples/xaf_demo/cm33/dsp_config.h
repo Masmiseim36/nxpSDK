@@ -12,12 +12,19 @@
 #define MCU_EPT_ADDR (40)
 
 /* Address of RAM, where the image for dsp should be copied */
-#define DSP_BOOT_ADDRESS (uint32_t *)0x24000000
-#define DSP_SRAM_ADDRESS (uint32_t *)0x00200000
+#define DSP_BOOT_ADDRESS   (uint32_t *)0x24000000
+#define DSP_SRAM_ADDRESS   (uint32_t *)0x00200000
 #define DSP_NCACHE_ADDRESS (uint32_t *)0x20040000
 
 /* Inter processor communication common RAM */
 #define RPMSG_LITE_SHMEM_BASE (void *)0x20020000
 #define RPMSG_LITE_SHMEM_SIZE (0x20000)
+
+/* DSP-private uncached audio memory buffers */
+/* Each buffer is 32k in size in a separate SRAM partition */
+#define DSP_AUDIO_BUFFER_1_PING (0x20000000)
+#define DSP_AUDIO_BUFFER_1_PONG (0x20008000)
+#define DSP_AUDIO_BUFFER_2_PING (0x20010000)
+#define DSP_AUDIO_BUFFER_2_PONG (0x20018000)
 
 #endif

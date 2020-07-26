@@ -120,7 +120,7 @@ inline void ConvPerChannel(
   gemm_params.clamp_min = output_activation_min;
   gemm_params.clamp_max = output_activation_max;
   gemm_params.multiplier_fixedpoint_perchannel = output_multiplier;
-  gemm_params.multiplier_exponent_perchannel = (int*)output_shift;
+  gemm_params.multiplier_exponent_perchannel = (int32*)output_shift;
   cpu_backend_gemm::Gemm(lhs_params, filter_data, rhs_params, gemm_input_data,
                          dst_params, output_data, gemm_params,
                          cpu_backend_context);

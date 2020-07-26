@@ -28,7 +28,7 @@
 #define iotcPROJECT_ID "YOUR_PROJECT_ID"
 #define iotcDEVICE_PATH \
     "projects/YOUR_PROJECT_ID/locations/YOUR_REGION/registries/YOUR_REGISTRY_ID/devices/YOUR_DEVICE_ID"
-#define iotcPUBLISH_TOPIC "/devices/YOUR_DEVICE_ID/state"
+#define iotcPUBLISH_TOPIC   "/devices/YOUR_DEVICE_ID/state"
 #define iotcPUBLISH_MESSAGE "Hello From Your IoTC client!"
 
 #endif /* GOOGLE_IOT_CONFIG_H */

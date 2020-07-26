@@ -7,18 +7,22 @@
 *
 ********************************************************************************
 *
+* This software is delivered "as is" and shows the usage of other software 
+* components. It is provided as an example software which is intended to be 
+* modified and extended according to particular requirements.
+* 
+* TARA Systems hereby disclaims all warranties and conditions with regard to the
+* software, including all implied warranties and conditions of merchantability 
+* and non-infringement of any third party IPR or other rights which may result 
+* from the use or the inability to use the software.
+*
 * This file was generated automatically by Embedded Wizard Studio.
 *
 * Please do not make any modifications of this file! The modifications are lost
 * when the file is generated again by Embedded Wizard Studio!
 *
-* The template of this heading text can be found in the file 'head.ewt' in the
-* directory 'Platforms' of your Embedded Wizard installation directory. If you
-* wish to adapt this text, please copy the template file 'head.ewt' into your
-* project directory and edit the copy only. Please avoid any modifications of
-* the original template file!
-*
-* Version  : 9.20
+* Version  : 9.30
+* Date     : 14.02.2020  8:00:50
 * Profile  : iMX_RT
 * Platform : NXP.iMX_RT.RGB565
 *
@@ -62,6 +66,9 @@ void WidgetSetRadioButtonConfig__Init( WidgetSetRadioButtonConfig _this, XObject
 {
   /* At first initialize the super class ... */
   WidgetSetWidgetConfig__Init( &_this->_Super, aLink, aArg );
+
+  /* Allow the Immediate Garbage Collection to evalute the members of this class. */
+  _this->_GCT = EW_CLASS_GCT( WidgetSetRadioButtonConfig );
 
   /* Setup the VMT pointer */
   _this->_VMT = EW_CLASS( WidgetSetRadioButtonConfig );
@@ -118,7 +125,7 @@ void WidgetSetRadioButtonConfig__ReInit( WidgetSetRadioButtonConfig _this )
 void WidgetSetRadioButtonConfig__Done( WidgetSetRadioButtonConfig _this )
 {
   /* Finalize this class */
-  _this->_VMT = EW_CLASS( WidgetSetRadioButtonConfig );
+  _this->_Super._VMT = EW_CLASS( WidgetSetWidgetConfig );
 
   /* Don't forget to deinitialize the super class ... */
   WidgetSetWidgetConfig__Done( &_this->_Super );
@@ -252,7 +259,7 @@ EW_END_OF_CLASS_VARIANTS( WidgetSetRadioButtonConfig )
 /* Virtual Method Table (VMT) for the class : 'WidgetSet::RadioButtonConfig' */
 EW_DEFINE_CLASS( WidgetSetRadioButtonConfig, WidgetSetWidgetConfig, LabelOnFont, 
                  PressedFeedbackDuration, PressedFeedbackDuration, PressedFeedbackDuration, 
-                 PressedFeedbackDuration, "WidgetSet::RadioButtonConfig" )
+                 PressedFeedbackDuration, PressedFeedbackDuration, "WidgetSet::RadioButtonConfig" )
 EW_END_OF_CLASS( WidgetSetRadioButtonConfig )
 
 /* Initializer for the class 'WidgetSet::PushButtonConfig' */
@@ -260,6 +267,9 @@ void WidgetSetPushButtonConfig__Init( WidgetSetPushButtonConfig _this, XObject a
 {
   /* At first initialize the super class ... */
   WidgetSetWidgetConfig__Init( &_this->_Super, aLink, aArg );
+
+  /* Allow the Immediate Garbage Collection to evalute the members of this class. */
+  _this->_GCT = EW_CLASS_GCT( WidgetSetPushButtonConfig );
 
   /* Setup the VMT pointer */
   _this->_VMT = EW_CLASS( WidgetSetPushButtonConfig );
@@ -300,7 +310,7 @@ void WidgetSetPushButtonConfig__ReInit( WidgetSetPushButtonConfig _this )
 void WidgetSetPushButtonConfig__Done( WidgetSetPushButtonConfig _this )
 {
   /* Finalize this class */
-  _this->_VMT = EW_CLASS( WidgetSetPushButtonConfig );
+  _this->_Super._VMT = EW_CLASS( WidgetSetWidgetConfig );
 
   /* Don't forget to deinitialize the super class ... */
   WidgetSetWidgetConfig__Done( &_this->_Super );
@@ -368,7 +378,7 @@ EW_END_OF_CLASS_VARIANTS( WidgetSetPushButtonConfig )
 /* Virtual Method Table (VMT) for the class : 'WidgetSet::PushButtonConfig' */
 EW_DEFINE_CLASS( WidgetSetPushButtonConfig, WidgetSetWidgetConfig, LabelFont, PressedFeedbackDuration, 
                  PressedFeedbackDuration, PressedFeedbackDuration, PressedFeedbackDuration, 
-                 "WidgetSet::PushButtonConfig" )
+                 PressedFeedbackDuration, "WidgetSet::PushButtonConfig" )
 EW_END_OF_CLASS( WidgetSetPushButtonConfig )
 
 /* Initializer for the class 'WidgetSet::WidgetConfig' */
@@ -376,6 +386,9 @@ void WidgetSetWidgetConfig__Init( WidgetSetWidgetConfig _this, XObject aLink, XH
 {
   /* At first initialize the super class ... */
   XObject__Init( &_this->_Super, aLink, aArg );
+
+  /* Allow the Immediate Garbage Collection to evalute the members of this class. */
+  _this->_GCT = EW_CLASS_GCT( WidgetSetWidgetConfig );
 
   /* Setup the VMT pointer */
   _this->_VMT = EW_CLASS( WidgetSetWidgetConfig );
@@ -392,7 +405,7 @@ void WidgetSetWidgetConfig__ReInit( WidgetSetWidgetConfig _this )
 void WidgetSetWidgetConfig__Done( WidgetSetWidgetConfig _this )
 {
   /* Finalize this class */
-  _this->_VMT = EW_CLASS( WidgetSetWidgetConfig );
+  _this->_Super._VMT = EW_CLASS( XObject );
 
   /* Don't forget to deinitialize the super class ... */
   XObject__Done( &_this->_Super );
@@ -413,7 +426,7 @@ EW_END_OF_CLASS_VARIANTS( WidgetSetWidgetConfig )
 
 /* Virtual Method Table (VMT) for the class : 'WidgetSet::WidgetConfig' */
 EW_DEFINE_CLASS( WidgetSetWidgetConfig, XObject, _None, _None, _None, _None, _None, 
-                 "WidgetSet::WidgetConfig" )
+                 _None, "WidgetSet::WidgetConfig" )
 EW_END_OF_CLASS( WidgetSetWidgetConfig )
 
 /* Initializer for the class 'WidgetSet::RadioButton' */
@@ -421,6 +434,9 @@ void WidgetSetRadioButton__Init( WidgetSetRadioButton _this, XObject aLink, XHan
 {
   /* At first initialize the super class ... */
   CoreGroup__Init( &_this->_Super, aLink, aArg );
+
+  /* Allow the Immediate Garbage Collection to evalute the members of this class. */
+  _this->_GCT = EW_CLASS_GCT( WidgetSetRadioButton );
 
   /* ... then construct all embedded objects */
   CoreTimer__Init( &_this->FlashTimer, &_this->_XObject, 0 );
@@ -478,16 +494,12 @@ void WidgetSetRadioButton__ReInit( WidgetSetRadioButton _this )
 void WidgetSetRadioButton__Done( WidgetSetRadioButton _this )
 {
   /* Finalize this class */
-  _this->_VMT = EW_CLASS( WidgetSetRadioButton );
+  _this->_Super._VMT = EW_CLASS( CoreGroup );
 
   /* Finalize all embedded objects */
   CoreTimer__Done( &_this->FlashTimer );
   CoreKeyPressHandler__Done( &_this->KeyHandler );
   CoreSimpleTouchHandler__Done( &_this->TouchHandler );
-
-  /* Release all used strings */
-  EwReleaseString( &_this->LabelOn );
-  EwReleaseString( &_this->LabelOff );
 
   /* Don't forget to deinitialize the super class ... */
   CoreGroup__Done( &_this->_Super );
@@ -1249,7 +1261,7 @@ EW_END_OF_CLASS_VARIANTS( WidgetSetRadioButton )
 
 /* Virtual Method Table (VMT) for the class : 'WidgetSet::RadioButton' */
 EW_DEFINE_CLASS( WidgetSetRadioButton, CoreGroup, textView, OnLeave, Outlet, FlashTimer, 
-                 onPressKeyTime, "WidgetSet::RadioButton" )
+                 LabelOn, onPressKeyTime, "WidgetSet::RadioButton" )
   CoreRectView_initLayoutContext,
   CoreView_GetRoot,
   CoreGroup_Draw,
@@ -1271,9 +1283,7 @@ EW_DEFINE_CLASS( WidgetSetRadioButton, CoreGroup, textView, OnLeave, Outlet, Fla
   WidgetSetRadioButton_UpdateViewState,
   CoreGroup_InvalidateArea,
   CoreGroup_FindSiblingView,
-  CoreGroup_RestackBehind,
   CoreGroup_RestackTop,
-  CoreGroup_Restack,
   CoreGroup_Remove,
   CoreGroup_Add,
 EW_END_OF_CLASS( WidgetSetRadioButton )
@@ -1283,6 +1293,9 @@ void WidgetSetPushButton__Init( WidgetSetPushButton _this, XObject aLink, XHandl
 {
   /* At first initialize the super class ... */
   CoreGroup__Init( &_this->_Super, aLink, aArg );
+
+  /* Allow the Immediate Garbage Collection to evalute the members of this class. */
+  _this->_GCT = EW_CLASS_GCT( WidgetSetPushButton );
 
   /* ... then construct all embedded objects */
   CoreTimer__Init( &_this->FlashTimer, &_this->_XObject, 0 );
@@ -1336,15 +1349,12 @@ void WidgetSetPushButton__ReInit( WidgetSetPushButton _this )
 void WidgetSetPushButton__Done( WidgetSetPushButton _this )
 {
   /* Finalize this class */
-  _this->_VMT = EW_CLASS( WidgetSetPushButton );
+  _this->_Super._VMT = EW_CLASS( CoreGroup );
 
   /* Finalize all embedded objects */
   CoreTimer__Done( &_this->FlashTimer );
   CoreKeyPressHandler__Done( &_this->KeyHandler );
   CoreSimpleTouchHandler__Done( &_this->TouchHandler );
-
-  /* Release all used strings */
-  EwReleaseString( &_this->Label );
 
   /* Don't forget to deinitialize the super class ... */
   CoreGroup__Done( &_this->_Super );
@@ -1846,7 +1856,7 @@ void WidgetSetPushButton_OnSetLabel( WidgetSetPushButton _this, XString value )
   if ( !EwCompString( _this->Label, value ))
     return;
 
-  EwRetainString( &_this->Label, value );
+  _this->Label = EwShareString( value );
   CoreGroup_InvalidateViewState((CoreGroup)_this );
 }
 
@@ -1876,7 +1886,7 @@ EW_END_OF_CLASS_VARIANTS( WidgetSetPushButton )
 
 /* Virtual Method Table (VMT) for the class : 'WidgetSet::PushButton' */
 EW_DEFINE_CLASS( WidgetSetPushButton, CoreGroup, textView, OnLeave, FlashTimer, 
-                 FlashTimer, onPressKeyTime, "WidgetSet::PushButton" )
+                 FlashTimer, Label, onPressKeyTime, "WidgetSet::PushButton" )
   CoreRectView_initLayoutContext,
   CoreView_GetRoot,
   CoreGroup_Draw,
@@ -1898,9 +1908,7 @@ EW_DEFINE_CLASS( WidgetSetPushButton, CoreGroup, textView, OnLeave, FlashTimer,
   WidgetSetPushButton_UpdateViewState,
   CoreGroup_InvalidateArea,
   CoreGroup_FindSiblingView,
-  CoreGroup_RestackBehind,
   CoreGroup_RestackTop,
-  CoreGroup_Restack,
   CoreGroup_Remove,
   CoreGroup_Add,
 EW_END_OF_CLASS( WidgetSetPushButton )

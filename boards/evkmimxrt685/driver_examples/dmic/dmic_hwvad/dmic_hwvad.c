@@ -20,7 +20,7 @@
  * Definitions
  ******************************************************************************/
 #define BOARD_LED_GPIO_PORT BOARD_LED_GREEN_GPIO_PORT
-#define BOARD_LED_GPIO_PIN BOARD_LED_GREEN_GPIO_PIN
+#define BOARD_LED_GPIO_PIN  BOARD_LED_GREEN_GPIO_PIN
 #define FIFO_DEPTH 15U
 
 /*******************************************************************************

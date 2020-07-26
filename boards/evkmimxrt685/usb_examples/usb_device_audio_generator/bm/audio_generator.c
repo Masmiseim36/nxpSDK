@@ -66,7 +66,7 @@ extern void SCTIMER_CaptureInit(void);
  * Variables
  ******************************************************************************/
 #if defined(USB_DEVICE_AUDIO_USE_SYNC_MODE) && (USB_DEVICE_AUDIO_USE_SYNC_MODE > 0U)
-static uint32_t eventCounterL = 0;
+static uint32_t eventCounterU = 0;
 static uint32_t captureRegisterNumber;
 static sctimer_config_t sctimerInfo;
 #endif
@@ -109,6 +109,19 @@ usb_audio_generator_struct_t s_audioGenerator = {
     {0x00U, 0x00U, 0x01U}, /* minSamplingFrequency */
     {0x00U, 0x00U, 0x01U}, /* maxSamplingFrequency */
     {0x00U, 0x00U, 0x01U}, /* resSamplingFrequency */
+#if (USB_DEVICE_CONFIG_AUDIO_CLASS_2_0)
+    0U,                    /* curMute20 */
+    1U,                    /* curClockValid */ 
+    {0x00U, 0x1FU},        /* curVolume20 */
+#if defined(AUDIO_DATA_SOURCE_DMIC) && (AUDIO_DATA_SOURCE_DMIC > 0U)
+    16000U,                /* curSampleFrequency, This should be changed to 16000 if sampling rate is 16k */
+    {1U, 16000U, 16000U, 0U},   /* freqControlRange */
+#else
+    8000U,                /* curSampleFrequency, This should be changed to 8000 if sampling rate is 8k */
+    {1U, 8000U, 8000U, 0U},   /* freqControlRange */
+#endif
+    {1U, 0x8001U, 0x7FFFU, 1U}, /* volumeControlRange */ 
+#endif
     0,                     /* currentConfiguration */
     {0, 0},                /* currentInterfaceAlternateSetting */
     USB_SPEED_FULL,        /* speed */
@@ -149,10 +162,10 @@ void SCTIMER_SOF_TOGGLE_HANDLER()
     uint32_t currentSctCap = 0, pllCountPeriod = 0, pll_change = 0;
     static int32_t pllCount = 0, pllDiff = 0;
     static int32_t err, abs_err;
-    if (SCTIMER_GetStatusFlags(SCT0) & (1 << eventCounterL))
+    if (SCTIMER_GetStatusFlags(SCT0) & (1 << eventCounterU))
     {
         /* Clear interrupt flag.*/
-        SCTIMER_ClearStatusFlags(SCT0, (1 << eventCounterL));
+        SCTIMER_ClearStatusFlags(SCT0, (1 << eventCounterU));
     }
 
     if (s_audioGenerator.generatorIntervalCount != 100)
@@ -200,7 +213,7 @@ void SCTIMER_SOF_TOGGLE_HANDLER()
 
 void SCTIMER_CaptureInit(void)
 {
-    INPUTMUX->SCT0_IN_SEL[eventCounterL] = 0xFU; /* 0xFU for USB1.*/
+    INPUTMUX->SCT0_IN_SEL[eventCounterU] = 0xFU; /* 0xFU for USB1.*/
     SCTIMER_GetDefaultConfig(&sctimerInfo);
 
     /* Switch to 16-bit mode */
@@ -210,7 +223,7 @@ void SCTIMER_CaptureInit(void)
     /* Initialize SCTimer module */
     SCTIMER_Init(SCT0, &sctimerInfo);
 
-    if (SCTIMER_SetupCaptureAction(SCT0, kSCTIMER_Counter_L, &captureRegisterNumber, eventCounterL) == kStatus_Fail)
+    if (SCTIMER_SetupCaptureAction(SCT0, kSCTIMER_Counter_U, &captureRegisterNumber, eventCounterU) == kStatus_Fail)
     {
         usb_echo("SCT Setup Capture failed!\r\n");
     }
@@ -218,16 +231,16 @@ void SCTIMER_CaptureInit(void)
     SCT0->EV[0].CTRL  = (0x01 << 10) | (0x2 << 12);
 
     /* Enable interrupt flag for event associated with out 4, we use the interrupt to update dutycycle */
-    SCTIMER_EnableInterrupts(SCT0, (1 << eventCounterL));
+    SCTIMER_EnableInterrupts(SCT0, (1 << eventCounterU));
 
     /* Receive notification when event is triggered */
-    SCTIMER_SetCallback(SCT0, SCTIMER_SOF_TOGGLE_HANDLER, eventCounterL);
+    SCTIMER_SetCallback(SCT0, SCTIMER_SOF_TOGGLE_HANDLER, eventCounterU);
 
     /* Enable at the NVIC */
     EnableIRQ(SCT0_IRQn);
 
     /* Start the L counter */
-    SCTIMER_StartTimer(SCT0, kSCTIMER_Counter_L);
+    SCTIMER_StartTimer(SCT0, kSCTIMER_Counter_U);
 }
 #endif
 
@@ -420,7 +433,33 @@ usb_status_t USB_DeviceAudioRequest(class_handle_t handle, uint32_t event, void 
             request->buffer = s_audioGenerator.resSamplingFrequency;
             request->length = sizeof(s_audioGenerator.resSamplingFrequency);
             break;
-
+#if (USB_DEVICE_CONFIG_AUDIO_CLASS_2_0)
+        case USB_DEVICE_AUDIO_GET_CUR_SAM_FREQ_CONTROL:
+            request->buffer = (uint8_t *)&s_audioGenerator.curSampleFrequency;
+            request->length = sizeof(s_audioGenerator.curSampleFrequency);
+            break;
+        case USB_DEVICE_AUDIO_GET_RANGE_SAM_FREQ_CONTROL:
+            request->buffer = (uint8_t *)&s_audioGenerator.freqControlRange;
+            request->length = sizeof(s_audioGenerator.freqControlRange);
+            break;
+        case USB_DEVICE_AUDIO_GET_CUR_CLOCK_VALID_CONTROL:
+            request->buffer = &s_audioGenerator.curClockValid;
+            request->length = sizeof(s_audioGenerator.curClockValid);
+            break;
+        case USB_DEVICE_AUDIO_GET_CUR_MUTE_CONTROL_AUDIO20:
+            request->buffer = (uint8_t *)&s_audioGenerator.curMute20;
+            request->length = sizeof(s_audioGenerator.curMute20);
+            break;
+        case USB_DEVICE_AUDIO_GET_CUR_VOLUME_CONTROL_AUDIO20:
+            request->buffer = (uint8_t *)&s_audioGenerator.curVolume20;
+            request->length = sizeof(s_audioGenerator.curVolume20);
+            break;
+        case USB_DEVICE_AUDIO_GET_RANGE_VOLUME_CONTROL_AUDIO20:
+            request->buffer = (uint8_t *)&s_audioGenerator.volumeControlRange;
+            request->length = sizeof(s_audioGenerator.volumeControlRange);
+            break;
+#endif
+            
         case USB_DEVICE_AUDIO_SET_CUR_VOLUME_CONTROL:
             if (request->isSetup == 1U)
             {
@@ -585,6 +624,24 @@ usb_status_t USB_DeviceAudioRequest(class_handle_t handle, uint32_t event, void 
                 request->buffer = s_audioGenerator.resSamplingFrequency;
             }
             break;
+#if (USB_DEVICE_CONFIG_AUDIO_CLASS_2_0)
+        case USB_DEVICE_AUDIO_SET_CUR_SAM_FREQ_CONTROL:
+            if (request->isSetup == 1U)
+            {
+                request->buffer = (uint8_t *)&s_audioGenerator.curSampleFrequency;
+            }
+            break;
+        case USB_DEVICE_AUDIO_SET_CUR_CLOCK_VALID_CONTROL:
+            if (request->isSetup == 1U)
+            {
+                request->buffer = &s_audioGenerator.curClockValid;
+            }
+            break;
+        case USB_DEVICE_AUDIO_SET_CUR_MUTE_CONTROL_AUDIO20:
+            break;
+        case USB_DEVICE_AUDIO_SET_CUR_VOLUME_CONTROL_AUDIO20:
+            break;
+#endif
         default:
             error = kStatus_USB_InvalidRequest;
             break;
@@ -798,6 +855,8 @@ void APPInit(void)
 
     USB_DeviceIsrEnable();
 
+    /*Add one delay here to make the DP pull down long enough to allow host to detect the previous disconnection.*/
+    SDK_DelayAtLeastUs(5000, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
     USB_DeviceRun(s_audioGenerator.deviceHandle);
 }
 
@@ -820,7 +879,7 @@ void main(void)
 
     CLOCK_EnableClock(kCLOCK_InputMux);
 
-    /* attach main clock to I3C */
+    /* attach main clock to I3C (500MHz / 20 = 25MHz). */
     CLOCK_AttachClk(kMAIN_CLK_to_I3C_CLK);
     CLOCK_SetClkDiv(kCLOCK_DivI3cClk, 20);
 

@@ -1,26 +1,26 @@
 /*
  * Copyright (c) 2014-2015 Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "spinand_memory.h"
-#include "bootloader/bootloader.h"
+#include "bootloader.h"
 #include "bootloader_common.h"
 #include "fsl_device_registers.h"
-#include "memory/memory.h"
+#include "memory.h"
 #if BL_FEATURE_SPINAND_MODULE_PERIPHERAL_FLEXSPI
-#include "flexspi_nand/flexspi_nand_flash.h"
+#include "flexspi_nand_flash.h"
 #endif // BL_FEATURE_SPINAND_MODULE_PERIPHERAL_FLEXSPI
 #include <string.h>
-#include "bootloader/bl_context.h"
-#include "crc/crc32.h"
-#include "utilities/fsl_assert.h"
-#include "utilities/fsl_rtos_abstraction.h"
+#include "bl_context.h"
+#include "crc32.h"
+#include "fsl_assert.h"
+#include "fsl_rtos_abstraction.h"
 #if BL_FEATURE_GEN_KEYBLOB
-#include "bootloader/bl_keyblob.h"
+#include "bl_keyblob.h"
 #endif // BL_FEATURE_GEN_KEYBLOB
 
 #if BL_FEATURE_SPINAND_MODULE
@@ -317,14 +317,14 @@ status_t check_update_keyblob_info(void *config)
             // Check key blob address range
             if ((keyblob_size + keyblob_offset) / page_size > image_max_page_size)
             {
-                status = kStatus_InvalidArgument;
+                status = kStatusMemoryRangeInvalid;
                 break;
             }
 
             // Invalid key blob address, key blob must be page size aligned.
             if (keyblob_addr & (page_size - 1))
             {
-                status = kStatus_InvalidArgument;
+                status = kStatusMemoryAlignmentError;
                 break;
             }
 

@@ -58,6 +58,32 @@ Platform Specific Release Notes (Version History of GFX and RTE):
   The following section contains additonal platform specific changes, related to
   Graphics Engine (GFX) or Runtime Environment (RTE):
 
+* Version 9.30
+  - The Runtime Environment contains now an own optimized memory manager that
+    is tailored for GUI applications on resource constraint embedded systems.
+    The Embedded Wizard Heap Manager can now be used instead of TLSF.
+  - The Runtime Environment supports now immediate garbage collection.
+    By default this feature is disabled for compatibility reasons.
+  - The Graphics Engine supports now lazy loading of bitmaps and discarding
+    of bitmaps. These new features can be configured by using the new macros:
+    - EW_LAZY_LOAD_BITMAPS
+    - EW_LAZY_LOAD_BITMAPS_IF_ANIMATED_ONLY
+    - EW_DISCARD_BITMAPS
+    - EW_DISCARD_BITMAPS_IF_ANIMATED_ONLY
+    - EW_DISCARD_BITMAPS_IF_NOT_USED_IN_RECENT_UPDATES
+  - The meaning of the macro EW_MAX_SURFACE_CACHE_SIZE has changed due to lazy
+    loading and discarding of bitmap resources. Now, EW_MAX_SURFACE_CACHE_SIZE
+    defines the threshhold, when bitmaps are discarded from memory.
+  - The Graphics Engine target specific files ewextgfx.c/h have been reworked:
+    - Unified renaming (Gfx...)
+    - The handshake with the display driver is redesigned and the new functions
+      EwBspDisplayCommitBuffer() and EwBspDisplayWaitForCompletion() are used.
+    - Destroying of surfaces will take care about current usage by hardware
+      and flush outstanding operations.
+  - The Runtime Environment target specific file ewextrte.c has been reworked:
+    - The new Embedded Wizard Heap Manager is used to allocated/free memory.
+    - EwGetTicks is now calling the function EwBspClockGetTicks().
+
 * Version 9.20
   - The Graphics Engines for color format RGBA8888, RGB888 and RGB565 have
     been enhanced to support the new bitmap resource formats RGB565 and Index8.
@@ -133,30 +159,30 @@ Test and Verification Notes:
 ----------------------------
 This Platform Package Release was tested on the following environments:
 
-Version          : 9.20
+Version          : 9.30
 Platform Package : iMX_RT - RGBA8888 / RGB888 / RGB565 / Index8 / LumA44
 Chipset          : i.MXRT1052
 Hardware         : IMXRT1050-EVK (Version B)
 Operating System : None / FreeRTOS
-Software Tree    : MCUXpresso SDK V2.4.2
-Compiler/Toolset : GCC / IAR / Keil
-Test Result      : o.k. - 21/01/19 - msy/mli
+Software Tree    : MCUXpresso SDK V2.6.1
+Compiler/Toolset : GCC / IAR / Keil / MCUXpresso
+Test Result      : o.k. - 11/11/19 - msy/mli
 
-Version          : 9.20
+Version          : 9.30
 Platform Package : iMX_RT - RGBA8888 / RGB888 / RGB565 / Index8 / LumA44
 Chipset          : i.MXRT1062
 Hardware         : IMXRT1060-EVK
 Operating System : None / FreeRTOS
-Software Tree    : MCUXpresso SDK V2.4.0
-Compiler/Toolset : GCC / IAR / Keil
-Test Result      : o.k. - 21/01/19 - msy/mli
+Software Tree    : MCUXpresso SDK V2.6.2
+Compiler/Toolset : GCC / IAR / Keil / MCUXpresso
+Test Result      : o.k. - 11/11/19 - msy/mli
 
-Version          : 9.20
+Version          : 9.30
 Platform Package : iMX_RT - RGBA8888 / RGB888 / RGB565 / Index8 / LumA44
 Chipset          : i.MXRT1064
 Hardware         : IMXRT1064-EVK
 Operating System : FreeRTOS
-Software Tree    : MCUXpresso SDK V2.4.0
-Compiler/Toolset : GCC / IAR / Keil
-Test Result      : o.k. - 21/01/19 - msy/mli
+Software Tree    : MCUXpresso SDK V2.6.1
+Compiler/Toolset : GCC / IAR / Keil / MCUXpresso
+Test Result      : o.k. - 11/11/19 - msy/mli
 

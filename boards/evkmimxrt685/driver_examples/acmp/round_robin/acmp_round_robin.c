@@ -19,7 +19,7 @@
  ******************************************************************************/
 #define DEMO_ACMP_BASEADDR CMP
 
-#define DEMO_ACMP_IRQ_ID ACMP_IRQn
+#define DEMO_ACMP_IRQ_ID           ACMP_IRQn
 #define DEMO_ACMP_IRQ_HANDLER_FUNC ACMP_IRQHandler
 
 /* Select which channels is used to do round robin checker.
@@ -28,10 +28,10 @@
  * robin check result shows that corresponding channel's actual input voltage is lower than DAC output voltage, wakeup
  * event will be generated. The case of pre-state mask bit low is contrary to the case of pre-state mask bit high.
  */
-#define DEMO_ACMP_ROUND_ROBIN_CHANNELS_CHECKER_MASK 0x01U   /* ACMP CHAN-A. */
+#define DEMO_ACMP_ROUND_ROBIN_CHANNELS_CHECKER_MASK   0x01U /* ACMP CHAN-A. */
 #define DEMO_ACMP_ROUND_ROBIN_CHANNELS_PRE_STATE_MASK 0x01U /* ACMP CHAN-A. */
-#define DEMO_ACMP_ROUND_ROBIN_PERIOD_MILLISECONDS 1000U
-#define DEMO_ACMP_ROUND_ROBIN_FIXED_CHANNEL 0x07U /* DAC output */
+#define DEMO_ACMP_ROUND_ROBIN_PERIOD_MILLISECONDS     1000U
+#define DEMO_ACMP_ROUND_ROBIN_FIXED_CHANNEL           0x07U /* DAC output */
 
 /*!< Power down all unnecessary blocks and enable RBB during deep sleep. */
 #define EXAMPLE_DEEPSLEEP_RUNCFG0 (SYSCTL0_PDRUNCFG0_ACMP_PD_MASK | SYSCTL0_PDSLEEPCFG0_RBB_PD_MASK)
@@ -107,11 +107,7 @@ void DEMO_ACMP_IRQ_HANDLER_FUNC(void)
     ACMP_ClearRoundRobinStatusFlags(DEMO_ACMP_BASEADDR, statusFlags);
 
     BOARD_ClearAcmpRoundRobinTrigger();
-    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-      exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 /*!

@@ -16,7 +16,6 @@
  ******************************************************************************/
 
 
-
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -37,9 +36,13 @@ int main(void)
     BOARD_BootClockRUN();
     BOARD_InitDebugConsole();
 
-    PRINTF("The Hardfault Handling demo is used to demonstrate the functionality of the exception handling component. \r\n");
-    PRINTF("This main function is used to generate a hardfault event. The program enters hardfault when you input the character \"1\"."
-           " Then you can see the \"Stack frame\" information in the terminal. \r\n");
+    PRINTF(
+        "The Hardfault Handling demo is used to demonstrate the functionality of the exception handling component. "
+        "\r\n");
+    PRINTF(
+        "This main function is used to generate a hardfault event. The program enters hardfault when you input the "
+        "character \"1\"."
+        " Then you can see the \"Stack frame\" information in the terminal. \r\n");
 
     while (1)
     {

@@ -102,7 +102,7 @@ usb_status_t USB_DeviceHidMouseAction(uint32_t moveAction)
         x--;
     }
 
-   if (g_UsbDeviceHidMouse.attach != 0)
+    if (g_UsbDeviceHidMouse.attach != 0)
     {
         /* Send mouse report to the host */
         return USB_DeviceHidSend(g_UsbDeviceHidMouse.hidHandle, USB_HID_MOUSE_ENDPOINT_IN, g_UsbDeviceHidMouse.buffer,
@@ -146,17 +146,17 @@ static usb_status_t USB_DeviceHidMouseCallback(class_handle_t handle, uint32_t e
 static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *param)
 {
     usb_status_t error = kStatus_USB_Error;
-    uint16_t *temp16 = (uint16_t *)param;
-    uint8_t *temp8 = (uint8_t *)param;
+    uint16_t *temp16   = (uint16_t *)param;
+    uint8_t *temp8     = (uint8_t *)param;
 
     switch (event)
     {
         case kUSB_DeviceEventBusReset:
         {
             /* USB bus reset signal detected */
-            g_UsbDeviceHidMouse.attach = 0U;
+            g_UsbDeviceHidMouse.attach               = 0U;
             g_UsbDeviceHidMouse.currentConfiguration = 0U;
-            error = kStatus_USB_Success;
+            error                                    = kStatus_USB_Success;
 #if (defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)) || \
     (defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))
             /* Get USB speed to configure the device, including max packet size and interval of the endpoints. */
@@ -171,6 +171,8 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
         case kUSB_DeviceEventAttach:
         {
             usb_echo("USB device attached.\r\n");
+            /*Add one delay here to make the DP pull down long enough to allow host to detect the previous disconnection.*/
+            SDK_DelayAtLeastUs(5000, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
             USB_DeviceRun(g_UsbDeviceHidMouse.deviceHandle);
         }
         break;
@@ -183,15 +185,15 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
         break;
 #endif
         case kUSB_DeviceEventSetConfiguration:
-            if (0U ==(*temp8))
+            if (0U == (*temp8))
             {
-                g_UsbDeviceHidMouse.attach = 0;
+                g_UsbDeviceHidMouse.attach               = 0;
                 g_UsbDeviceHidMouse.currentConfiguration = 0U;
             }
-            else if (USB_HID_MOUSE_CONFIGURE_INDEX == (*temp8)) 
+            else if (USB_HID_MOUSE_CONFIGURE_INDEX == (*temp8))
             {
                 /* Set device configuration request */
-                g_UsbDeviceHidMouse.attach = 1U;
+                g_UsbDeviceHidMouse.attach               = 1U;
                 g_UsbDeviceHidMouse.currentConfiguration = *temp8;
             }
             else
@@ -203,7 +205,7 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
             if (g_UsbDeviceHidMouse.attach)
             {
                 /* Set device interface request */
-                uint8_t interface = (uint8_t)((*temp16 & 0xFF00U) >> 0x08U);
+                uint8_t interface        = (uint8_t)((*temp16 & 0xFF00U) >> 0x08U);
                 uint8_t alternateSetting = (uint8_t)(*temp16 & 0x00FFU);
                 if (interface < USB_HID_MOUSE_INTERFACE_COUNT)
                 {
@@ -216,7 +218,7 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
             {
                 /* Get current configuration request */
                 *temp8 = g_UsbDeviceHidMouse.currentConfiguration;
-                error = kStatus_USB_Success;
+                error  = kStatus_USB_Success;
             }
             break;
         case kUSB_DeviceEventGetInterface:
@@ -227,7 +229,7 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
                 if (interface < USB_HID_MOUSE_INTERFACE_COUNT)
                 {
                     *temp16 = (*temp16 & 0xFF00U) | g_UsbDeviceHidMouse.currentInterfaceAlternateSetting[interface];
-                    error = kStatus_USB_Success;
+                    error   = kStatus_USB_Success;
                 }
                 else
                 {

@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP
+ * Copyright 2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -60,10 +60,10 @@ BOARD_InitPins:
   - {pin_num: C9, peripheral: FLEXCOMM3, signal: RXD_SDA_MOSI_DATA, pin_signal: PIO0_23/FC3_RXD_SDA_MOSI_DATA/CTIMER3_MAT2/TRACEDATA(1)/SEC_PIO0_23, pupdsel: pullDown,
     ibena: enabled, slew_rate: normal, drive: full, amena: disabled, odena: disabled, iiena: disabled}
   - {pin_num: B6, peripheral: I3C, signal: PUR, pin_signal: PIO2_31/I3C0_PUR/SCT0_OUT7/UTICK_CAP3/CTIMER_INP15/SWO/CMP0_B, pupdena: disabled, pupdsel: pullDown, ibena: disabled,
-    slew_rate: normal, drive: normal, amena: disabled, odena: disabled, iiena: disabled}
-  - {pin_num: N17, peripheral: I3C, signal: SCL, pin_signal: PIO2_29/I3C0_SCL/SCT0_OUT0/CLKOUT, pupdena: enabled, pupdsel: pullUp, ibena: enabled, slew_rate: normal,
+    slew_rate: slow, drive: normal, amena: disabled, odena: disabled, iiena: disabled}
+  - {pin_num: N17, peripheral: I3C, signal: SCL, pin_signal: PIO2_29/I3C0_SCL/SCT0_OUT0/CLKOUT, pupdena: enabled, pupdsel: pullUp, ibena: enabled, slew_rate: slow,
     drive: normal, amena: disabled, odena: disabled, iiena: disabled}
-  - {pin_num: P16, peripheral: I3C, signal: SDA, pin_signal: PIO2_30/I3C0_SDA/SCT0_OUT3/CLKIN/CMP0_OUT, pupdena: enabled, pupdsel: pullUp, ibena: enabled, slew_rate: normal,
+  - {pin_num: P16, peripheral: I3C, signal: SDA, pin_signal: PIO2_30/I3C0_SDA/SCT0_OUT3/CLKIN/CMP0_OUT, pupdena: enabled, pupdsel: pullUp, ibena: enabled, slew_rate: slow,
     drive: normal, amena: disabled, odena: disabled, iiena: disabled}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
@@ -234,8 +234,8 @@ void BOARD_InitPins(void)
                                          IOPCTL_PIO_PULLUP_EN |
                                          /* Enables input buffer function */
                                          IOPCTL_PIO_INBUF_EN |
-                                         /* Normal mode */
-                                         IOPCTL_PIO_SLEW_RATE_NORMAL |
+                                         /* Slow mode */
+                                         IOPCTL_PIO_SLEW_RATE_SLOW |
                                          /* Normal drive */
                                          IOPCTL_PIO_FULLDRIVE_DI |
                                          /* Analog mux is disabled */
@@ -255,8 +255,8 @@ void BOARD_InitPins(void)
                                          IOPCTL_PIO_PULLUP_EN |
                                          /* Enables input buffer function */
                                          IOPCTL_PIO_INBUF_EN |
-                                         /* Normal mode */
-                                         IOPCTL_PIO_SLEW_RATE_NORMAL |
+                                         /* Slow mode */
+                                         IOPCTL_PIO_SLEW_RATE_SLOW |
                                          /* Normal drive */
                                          IOPCTL_PIO_FULLDRIVE_DI |
                                          /* Analog mux is disabled */
@@ -276,8 +276,8 @@ void BOARD_InitPins(void)
                                          IOPCTL_PIO_PULLDOWN_EN |
                                          /* Disable input buffer function */
                                          IOPCTL_PIO_INBUF_DI |
-                                         /* Normal mode */
-                                         IOPCTL_PIO_SLEW_RATE_NORMAL |
+                                         /* Slow mode */
+                                         IOPCTL_PIO_SLEW_RATE_SLOW |
                                          /* Normal drive */
                                          IOPCTL_PIO_FULLDRIVE_DI |
                                          /* Analog mux is disabled */

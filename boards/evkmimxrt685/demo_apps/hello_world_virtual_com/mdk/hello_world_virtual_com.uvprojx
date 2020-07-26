@@ -128,7 +128,7 @@
             <UseTargetDll>1</UseTargetDll>
             <UseExternalTool>0</UseExternalTool>
             <RunIndependent>0</RunIndependent>
-            <UpdateFlashBeforeDebugging>0</UpdateFlashBeforeDebugging>
+            <UpdateFlashBeforeDebugging>1</UpdateFlashBeforeDebugging>
             <Capability>1</Capability>
             <DriverSelection>4101</DriverSelection>
           </Flash1>
@@ -332,9 +332,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-mno-unaligned-access  -fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, ARM_MATH_CM33, USB_STACK_USE_DEDICATED_RAM=1, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, SERIAL_PORT_TYPE_USBCDC=1, PRINTF_FLOAT_ENABLE=0, SCANF_FLOAT_ENABLE=0, PRINTF_ADVANCED_ENABLE=0, SCANF_ADVANCED_ENABLE=0, USB_STACK_BM, BOARD_USE_VIRTUALCOM=1, SERIAL_PORT_TYPE_USBCDC=1, SERIAL_PORT_TYPE_UART=1</Define>
+              <Define>DEBUG, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, USB_STACK_USE_DEDICATED_RAM=1, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, SERIAL_PORT_TYPE_USBCDC=1, PRINTF_FLOAT_ENABLE=0, SCANF_FLOAT_ENABLE=0, PRINTF_ADVANCED_ENABLE=0, SCANF_ADVANCED_ENABLE=0, USB_STACK_BM, BOARD_USE_VIRTUALCOM=1, USB_DEVICE_CONFIG_CDC_ACM=1, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../..;../../../../../CMSIS/Include;../../../../../devices;../../../../../components/serial_manager;../../../../../devices/MIMXRT685S/drivers;../../../../../components/lists;../../../../../components/serial_manager/usb_cdc_adapter;../../../component_examples/config;../../../../../middleware/usb/phy;../../../../../middleware/usb/device;../../../../../middleware/usb/include;../../../../../devices/MIMXRT685S;../../../../../devices/MIMXRT685S/utilities/str;../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../components/uart;../../../flash_config;../../../../../components/osa;../../../../../devices/MIMXRT685S/utilities</IncludePath>
+              <IncludePath>..;../../..;../../../../../CMSIS/Include;../../../../../devices;../../../../../components/serial_manager;../../../../../devices/MIMXRT685S/drivers;../../../../../components/lists;../../../../../components/serial_manager/usb_cdc_adapter;../../../../../middleware/usb/phy;../../../../../components/osa;../../../../../middleware/usb/device;../../../../../middleware/usb/include;../../../../../devices/MIMXRT685S;../../../../../devices/MIMXRT685S/utilities/str;../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../components/uart;../../../flash_config;../../../../../middleware/usb/output/source/device/class;../../../../../middleware/usb/output/source/device;../../../../../devices/MIMXRT685S/utilities</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -370,7 +370,7 @@
             <IncludeLibsPath/>
             <Misc>../../../../../devices/MIMXRT685S/arm/keil_lib_power.lib --remove --keep=*(.flash_conf)</Misc>
             <LinkerInputFile/>
-            <DisabledWarnings>6314</DisabledWarnings>
+            <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
         </TargetArmAds>
       </TargetOption>
@@ -599,39 +599,9 @@
               <FilePath>../../../../../components/serial_manager/usb_cdc_adapter/usb_device_descriptor.h</FilePath>
             </File>
             <File>
-              <FileName>usb_device_cdc_acm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/serial_manager/usb_cdc_adapter/usb_device_cdc_acm.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device_cdc_acm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/usb_cdc_adapter/usb_device_cdc_acm.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device_class.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/serial_manager/usb_cdc_adapter/usb_device_class.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device_class.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/usb_cdc_adapter/usb_device_class.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device_ch9.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/serial_manager/usb_cdc_adapter/usb_device_ch9.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device_ch9.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/usb_cdc_adapter/usb_device_ch9.h</FilePath>
-            </File>
-            <File>
               <FileName>usb_device_config.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../component_examples/config/usb_device_config.h</FilePath>
+              <FilePath>../usb_device_config.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -651,43 +621,13 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-device-source-lpcip3511</GroupName>
-          <Files>
-            <File>
-              <FileName>usb_device_lpcip3511.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/usb/device/usb_device_lpcip3511.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device_lpcip3511.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/usb/device/usb_device_lpcip3511.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>usb-include</GroupName>
-          <Files>
-            <File>
-              <FileName>usb.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/usb/include/usb.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_misc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/usb/include/usb_misc.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_spec.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/usb/include/usb_spec.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>usb-device-include</GroupName>
           <Files>
+            <File>
+              <FileName>usb_device.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/usb/device/usb_device.h</FilePath>
+            </File>
             <File>
               <FileName>usb_device.h</FileName>
               <FileType>5</FileType>
@@ -707,6 +647,61 @@
               <FileName>usb_device_dci.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/usb/device/usb_device_dci.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device_ch9.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/usb/output/source/device/usb_device_ch9.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device_ch9.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/usb/output/source/device/usb_device_ch9.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device_dci.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/usb/device/usb_device_dci.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/osa</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_bm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_bm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>usb-device-source-lpcip3511</GroupName>
+          <Files>
+            <File>
+              <FileName>usb_device_lpcip3511.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/usb/device/usb_device_lpcip3511.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device_lpcip3511.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/usb/device/usb_device_lpcip3511.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -809,9 +804,9 @@
           <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_MIMXRT685S_cm33.s</FileName>
+              <FileName>startup_MIMXRT685S_cm33.S</FileName>
               <FileType>2</FileType>
-              <FilePath>../../../../../devices/MIMXRT685S/arm/startup_MIMXRT685S_cm33.s</FilePath>
+              <FilePath>../../../../../devices/MIMXRT685S/arm/startup_MIMXRT685S_cm33.S</FilePath>
             </File>
           </Files>
         </Group>
@@ -822,6 +817,11 @@
               <FileName>core_cm33.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/core_cm33.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv8.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
             </File>
             <File>
               <FileName>tz_context.h</FileName>
@@ -864,31 +864,6 @@
               <FilePath>../../../../../CMSIS/Include/cmsis_version.h</FilePath>
             </File>
             <File>
-              <FileName>core_armv81mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_armv81mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mbl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
-            </File>
-            <File>
               <FileName>arm_common_tables.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
@@ -906,27 +881,52 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/osa</GroupName>
+          <GroupName>usb-device-class-cdc</GroupName>
           <Files>
             <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_bm.c</FileName>
+              <FileName>usb_device_cdc_acm.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
+              <FilePath>../../../../../middleware/usb/output/source/device/class/usb_device_cdc_acm.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_os_abstraction_bm.h</FileName>
+              <FileName>usb_device_cdc_acm.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
+              <FilePath>../../../../../middleware/usb/output/source/device/class/usb_device_cdc_acm.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>usb-device-class</GroupName>
+          <Files>
+            <File>
+              <FileName>usb_device_class.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/usb/output/source/device/class/usb_device_class.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_os_abstraction_config.h</FileName>
+              <FileName>usb_device_class.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
+              <FilePath>../../../../../middleware/usb/output/source/device/class/usb_device_class.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>usb-include</GroupName>
+          <Files>
+            <File>
+              <FileName>usb.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/usb/include/usb.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_misc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/usb/include/usb_misc.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_spec.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/usb/include/usb_spec.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1261,9 +1261,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-mno-unaligned-access  -fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, ARM_MATH_CM33, USB_STACK_USE_DEDICATED_RAM=1, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, SERIAL_PORT_TYPE_USBCDC=1, PRINTF_FLOAT_ENABLE=0, SCANF_FLOAT_ENABLE=0, PRINTF_ADVANCED_ENABLE=0, SCANF_ADVANCED_ENABLE=0, USB_STACK_BM, BOARD_USE_VIRTUALCOM=1, SERIAL_PORT_TYPE_USBCDC=1, SERIAL_PORT_TYPE_UART=1</Define>
+              <Define>DEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, USB_STACK_USE_DEDICATED_RAM=1, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, SERIAL_PORT_TYPE_USBCDC=1, PRINTF_FLOAT_ENABLE=0, SCANF_FLOAT_ENABLE=0, PRINTF_ADVANCED_ENABLE=0, SCANF_ADVANCED_ENABLE=0, USB_STACK_BM, BOARD_USE_VIRTUALCOM=1, USB_DEVICE_CONFIG_CDC_ACM=1, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../..;../../../../../CMSIS/Include;../../../../../devices;../../../../../components/serial_manager;../../../../../devices/MIMXRT685S/drivers;../../../../../components/lists;../../../../../components/serial_manager/usb_cdc_adapter;../../../component_examples/config;../../../../../middleware/usb/phy;../../../../../middleware/usb/device;../../../../../middleware/usb/include;../../../../../devices/MIMXRT685S;../../../../../devices/MIMXRT685S/utilities/str;../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../components/uart;../../../flash_config;../../../../../components/osa;../../../../../devices/MIMXRT685S/utilities</IncludePath>
+              <IncludePath>..;../../..;../../../../../CMSIS/Include;../../../../../devices;../../../../../components/serial_manager;../../../../../devices/MIMXRT685S/drivers;../../../../../components/lists;../../../../../components/serial_manager/usb_cdc_adapter;../../../../../middleware/usb/phy;../../../../../components/osa;../../../../../middleware/usb/device;../../../../../middleware/usb/include;../../../../../devices/MIMXRT685S;../../../../../devices/MIMXRT685S/utilities/str;../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../components/uart;../../../flash_config;../../../../../middleware/usb/output/source/device/class;../../../../../middleware/usb/output/source/device;../../../../../devices/MIMXRT685S/utilities</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1299,7 +1299,7 @@
             <IncludeLibsPath/>
             <Misc>../../../../../devices/MIMXRT685S/arm/keil_lib_power.lib --remove --keep=*(CodeQuickAccess) --keep=*(.flash_conf)</Misc>
             <LinkerInputFile/>
-            <DisabledWarnings>6314</DisabledWarnings>
+            <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
         </TargetArmAds>
       </TargetOption>
@@ -1528,39 +1528,9 @@
               <FilePath>../../../../../components/serial_manager/usb_cdc_adapter/usb_device_descriptor.h</FilePath>
             </File>
             <File>
-              <FileName>usb_device_cdc_acm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/serial_manager/usb_cdc_adapter/usb_device_cdc_acm.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device_cdc_acm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/usb_cdc_adapter/usb_device_cdc_acm.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device_class.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/serial_manager/usb_cdc_adapter/usb_device_class.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device_class.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/usb_cdc_adapter/usb_device_class.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device_ch9.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/serial_manager/usb_cdc_adapter/usb_device_ch9.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device_ch9.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/usb_cdc_adapter/usb_device_ch9.h</FilePath>
-            </File>
-            <File>
               <FileName>usb_device_config.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../component_examples/config/usb_device_config.h</FilePath>
+              <FilePath>../usb_device_config.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1580,43 +1550,13 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-device-source-lpcip3511</GroupName>
-          <Files>
-            <File>
-              <FileName>usb_device_lpcip3511.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/usb/device/usb_device_lpcip3511.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device_lpcip3511.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/usb/device/usb_device_lpcip3511.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>usb-include</GroupName>
-          <Files>
-            <File>
-              <FileName>usb.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/usb/include/usb.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_misc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/usb/include/usb_misc.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_spec.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/usb/include/usb_spec.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>usb-device-include</GroupName>
           <Files>
+            <File>
+              <FileName>usb_device.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/usb/device/usb_device.h</FilePath>
+            </File>
             <File>
               <FileName>usb_device.h</FileName>
               <FileType>5</FileType>
@@ -1636,6 +1576,61 @@
               <FileName>usb_device_dci.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/usb/device/usb_device_dci.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device_ch9.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/usb/output/source/device/usb_device_ch9.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device_ch9.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/usb/output/source/device/usb_device_ch9.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device_dci.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/usb/device/usb_device_dci.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/osa</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_bm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_bm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>usb-device-source-lpcip3511</GroupName>
+          <Files>
+            <File>
+              <FileName>usb_device_lpcip3511.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/usb/device/usb_device_lpcip3511.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device_lpcip3511.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/usb/device/usb_device_lpcip3511.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1738,9 +1733,9 @@
           <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_MIMXRT685S_cm33.s</FileName>
+              <FileName>startup_MIMXRT685S_cm33.S</FileName>
               <FileType>2</FileType>
-              <FilePath>../../../../../devices/MIMXRT685S/arm/startup_MIMXRT685S_cm33.s</FilePath>
+              <FilePath>../../../../../devices/MIMXRT685S/arm/startup_MIMXRT685S_cm33.S</FilePath>
             </File>
           </Files>
         </Group>
@@ -1751,6 +1746,11 @@
               <FileName>core_cm33.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/core_cm33.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv8.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
             </File>
             <File>
               <FileName>tz_context.h</FileName>
@@ -1793,31 +1793,6 @@
               <FilePath>../../../../../CMSIS/Include/cmsis_version.h</FilePath>
             </File>
             <File>
-              <FileName>core_armv81mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_armv81mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mbl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
-            </File>
-            <File>
               <FileName>arm_common_tables.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
@@ -1835,27 +1810,52 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/osa</GroupName>
+          <GroupName>usb-device-class-cdc</GroupName>
           <Files>
             <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_bm.c</FileName>
+              <FileName>usb_device_cdc_acm.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
+              <FilePath>../../../../../middleware/usb/output/source/device/class/usb_device_cdc_acm.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_os_abstraction_bm.h</FileName>
+              <FileName>usb_device_cdc_acm.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
+              <FilePath>../../../../../middleware/usb/output/source/device/class/usb_device_cdc_acm.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>usb-device-class</GroupName>
+          <Files>
+            <File>
+              <FileName>usb_device_class.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/usb/output/source/device/class/usb_device_class.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_os_abstraction_config.h</FileName>
+              <FileName>usb_device_class.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
+              <FilePath>../../../../../middleware/usb/output/source/device/class/usb_device_class.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>usb-include</GroupName>
+          <Files>
+            <File>
+              <FileName>usb.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/usb/include/usb.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_misc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/usb/include/usb_misc.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_spec.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/usb/include/usb_spec.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1986,7 +1986,7 @@
             <UseTargetDll>1</UseTargetDll>
             <UseExternalTool>0</UseExternalTool>
             <RunIndependent>0</RunIndependent>
-            <UpdateFlashBeforeDebugging>0</UpdateFlashBeforeDebugging>
+            <UpdateFlashBeforeDebugging>1</UpdateFlashBeforeDebugging>
             <Capability>1</Capability>
             <DriverSelection>4101</DriverSelection>
           </Flash1>
@@ -2190,9 +2190,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-mno-unaligned-access  -fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, ARM_MATH_CM33, USB_STACK_USE_DEDICATED_RAM=1, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, SERIAL_PORT_TYPE_USBCDC=1, PRINTF_FLOAT_ENABLE=0, SCANF_FLOAT_ENABLE=0, PRINTF_ADVANCED_ENABLE=0, SCANF_ADVANCED_ENABLE=0, USB_STACK_BM, BOARD_USE_VIRTUALCOM=1, SERIAL_PORT_TYPE_USBCDC=1, SERIAL_PORT_TYPE_UART=1</Define>
+              <Define>NDEBUG, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, USB_STACK_USE_DEDICATED_RAM=1, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, SERIAL_PORT_TYPE_USBCDC=1, PRINTF_FLOAT_ENABLE=0, SCANF_FLOAT_ENABLE=0, PRINTF_ADVANCED_ENABLE=0, SCANF_ADVANCED_ENABLE=0, USB_STACK_BM, BOARD_USE_VIRTUALCOM=1, USB_DEVICE_CONFIG_CDC_ACM=1, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../..;../../../../../CMSIS/Include;../../../../../devices;../../../../../components/serial_manager;../../../../../devices/MIMXRT685S/drivers;../../../../../components/lists;../../../../../components/serial_manager/usb_cdc_adapter;../../../component_examples/config;../../../../../middleware/usb/phy;../../../../../middleware/usb/device;../../../../../middleware/usb/include;../../../../../devices/MIMXRT685S;../../../../../devices/MIMXRT685S/utilities/str;../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../components/uart;../../../flash_config;../../../../../components/osa;../../../../../devices/MIMXRT685S/utilities</IncludePath>
+              <IncludePath>..;../../..;../../../../../CMSIS/Include;../../../../../devices;../../../../../components/serial_manager;../../../../../devices/MIMXRT685S/drivers;../../../../../components/lists;../../../../../components/serial_manager/usb_cdc_adapter;../../../../../middleware/usb/phy;../../../../../components/osa;../../../../../middleware/usb/device;../../../../../middleware/usb/include;../../../../../devices/MIMXRT685S;../../../../../devices/MIMXRT685S/utilities/str;../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../components/uart;../../../flash_config;../../../../../middleware/usb/output/source/device/class;../../../../../middleware/usb/output/source/device;../../../../../devices/MIMXRT685S/utilities</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2228,7 +2228,7 @@
             <IncludeLibsPath/>
             <Misc>../../../../../devices/MIMXRT685S/arm/keil_lib_power.lib --remove --keep=*(.flash_conf)</Misc>
             <LinkerInputFile/>
-            <DisabledWarnings>6314</DisabledWarnings>
+            <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
         </TargetArmAds>
       </TargetOption>
@@ -2457,39 +2457,9 @@
               <FilePath>../../../../../components/serial_manager/usb_cdc_adapter/usb_device_descriptor.h</FilePath>
             </File>
             <File>
-              <FileName>usb_device_cdc_acm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/serial_manager/usb_cdc_adapter/usb_device_cdc_acm.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device_cdc_acm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/usb_cdc_adapter/usb_device_cdc_acm.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device_class.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/serial_manager/usb_cdc_adapter/usb_device_class.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device_class.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/usb_cdc_adapter/usb_device_class.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device_ch9.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/serial_manager/usb_cdc_adapter/usb_device_ch9.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device_ch9.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/usb_cdc_adapter/usb_device_ch9.h</FilePath>
-            </File>
-            <File>
               <FileName>usb_device_config.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../component_examples/config/usb_device_config.h</FilePath>
+              <FilePath>../usb_device_config.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2509,43 +2479,13 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-device-source-lpcip3511</GroupName>
-          <Files>
-            <File>
-              <FileName>usb_device_lpcip3511.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/usb/device/usb_device_lpcip3511.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device_lpcip3511.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/usb/device/usb_device_lpcip3511.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>usb-include</GroupName>
-          <Files>
-            <File>
-              <FileName>usb.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/usb/include/usb.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_misc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/usb/include/usb_misc.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_spec.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/usb/include/usb_spec.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>usb-device-include</GroupName>
           <Files>
+            <File>
+              <FileName>usb_device.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/usb/device/usb_device.h</FilePath>
+            </File>
             <File>
               <FileName>usb_device.h</FileName>
               <FileType>5</FileType>
@@ -2565,6 +2505,61 @@
               <FileName>usb_device_dci.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/usb/device/usb_device_dci.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device_ch9.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/usb/output/source/device/usb_device_ch9.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device_ch9.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/usb/output/source/device/usb_device_ch9.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device_dci.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/usb/device/usb_device_dci.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/osa</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_bm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_bm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>usb-device-source-lpcip3511</GroupName>
+          <Files>
+            <File>
+              <FileName>usb_device_lpcip3511.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/usb/device/usb_device_lpcip3511.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device_lpcip3511.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/usb/device/usb_device_lpcip3511.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2667,9 +2662,9 @@
           <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_MIMXRT685S_cm33.s</FileName>
+              <FileName>startup_MIMXRT685S_cm33.S</FileName>
               <FileType>2</FileType>
-              <FilePath>../../../../../devices/MIMXRT685S/arm/startup_MIMXRT685S_cm33.s</FilePath>
+              <FilePath>../../../../../devices/MIMXRT685S/arm/startup_MIMXRT685S_cm33.S</FilePath>
             </File>
           </Files>
         </Group>
@@ -2680,6 +2675,11 @@
               <FileName>core_cm33.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/core_cm33.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv8.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
             </File>
             <File>
               <FileName>tz_context.h</FileName>
@@ -2722,31 +2722,6 @@
               <FilePath>../../../../../CMSIS/Include/cmsis_version.h</FilePath>
             </File>
             <File>
-              <FileName>core_armv81mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_armv81mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mbl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
-            </File>
-            <File>
               <FileName>arm_common_tables.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
@@ -2764,27 +2739,52 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/osa</GroupName>
+          <GroupName>usb-device-class-cdc</GroupName>
           <Files>
             <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_bm.c</FileName>
+              <FileName>usb_device_cdc_acm.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
+              <FilePath>../../../../../middleware/usb/output/source/device/class/usb_device_cdc_acm.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_os_abstraction_bm.h</FileName>
+              <FileName>usb_device_cdc_acm.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
+              <FilePath>../../../../../middleware/usb/output/source/device/class/usb_device_cdc_acm.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>usb-device-class</GroupName>
+          <Files>
+            <File>
+              <FileName>usb_device_class.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/usb/output/source/device/class/usb_device_class.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_os_abstraction_config.h</FileName>
+              <FileName>usb_device_class.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
+              <FilePath>../../../../../middleware/usb/output/source/device/class/usb_device_class.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>usb-include</GroupName>
+          <Files>
+            <File>
+              <FileName>usb.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/usb/include/usb.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_misc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/usb/include/usb_misc.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_spec.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/usb/include/usb_spec.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3119,9 +3119,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-mno-unaligned-access  -fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, ARM_MATH_CM33, USB_STACK_USE_DEDICATED_RAM=1, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, SERIAL_PORT_TYPE_USBCDC=1, PRINTF_FLOAT_ENABLE=0, SCANF_FLOAT_ENABLE=0, PRINTF_ADVANCED_ENABLE=0, SCANF_ADVANCED_ENABLE=0, USB_STACK_BM, BOARD_USE_VIRTUALCOM=1, SERIAL_PORT_TYPE_USBCDC=1, SERIAL_PORT_TYPE_UART=1</Define>
+              <Define>NDEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, USB_STACK_USE_DEDICATED_RAM=1, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, SERIAL_PORT_TYPE_USBCDC=1, PRINTF_FLOAT_ENABLE=0, SCANF_FLOAT_ENABLE=0, PRINTF_ADVANCED_ENABLE=0, SCANF_ADVANCED_ENABLE=0, USB_STACK_BM, BOARD_USE_VIRTUALCOM=1, USB_DEVICE_CONFIG_CDC_ACM=1, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../..;../../../../../CMSIS/Include;../../../../../devices;../../../../../components/serial_manager;../../../../../devices/MIMXRT685S/drivers;../../../../../components/lists;../../../../../components/serial_manager/usb_cdc_adapter;../../../component_examples/config;../../../../../middleware/usb/phy;../../../../../middleware/usb/device;../../../../../middleware/usb/include;../../../../../devices/MIMXRT685S;../../../../../devices/MIMXRT685S/utilities/str;../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../components/uart;../../../flash_config;../../../../../components/osa;../../../../../devices/MIMXRT685S/utilities</IncludePath>
+              <IncludePath>..;../../..;../../../../../CMSIS/Include;../../../../../devices;../../../../../components/serial_manager;../../../../../devices/MIMXRT685S/drivers;../../../../../components/lists;../../../../../components/serial_manager/usb_cdc_adapter;../../../../../middleware/usb/phy;../../../../../components/osa;../../../../../middleware/usb/device;../../../../../middleware/usb/include;../../../../../devices/MIMXRT685S;../../../../../devices/MIMXRT685S/utilities/str;../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../components/uart;../../../flash_config;../../../../../middleware/usb/output/source/device/class;../../../../../middleware/usb/output/source/device;../../../../../devices/MIMXRT685S/utilities</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3157,7 +3157,7 @@
             <IncludeLibsPath/>
             <Misc>../../../../../devices/MIMXRT685S/arm/keil_lib_power.lib --remove --keep=*(CodeQuickAccess) --keep=*(.flash_conf)</Misc>
             <LinkerInputFile/>
-            <DisabledWarnings>6314</DisabledWarnings>
+            <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
         </TargetArmAds>
       </TargetOption>
@@ -3386,39 +3386,9 @@
               <FilePath>../../../../../components/serial_manager/usb_cdc_adapter/usb_device_descriptor.h</FilePath>
             </File>
             <File>
-              <FileName>usb_device_cdc_acm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/serial_manager/usb_cdc_adapter/usb_device_cdc_acm.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device_cdc_acm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/usb_cdc_adapter/usb_device_cdc_acm.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device_class.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/serial_manager/usb_cdc_adapter/usb_device_class.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device_class.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/usb_cdc_adapter/usb_device_class.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device_ch9.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/serial_manager/usb_cdc_adapter/usb_device_ch9.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device_ch9.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/usb_cdc_adapter/usb_device_ch9.h</FilePath>
-            </File>
-            <File>
               <FileName>usb_device_config.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../component_examples/config/usb_device_config.h</FilePath>
+              <FilePath>../usb_device_config.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3438,43 +3408,13 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-device-source-lpcip3511</GroupName>
-          <Files>
-            <File>
-              <FileName>usb_device_lpcip3511.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/usb/device/usb_device_lpcip3511.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device_lpcip3511.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/usb/device/usb_device_lpcip3511.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>usb-include</GroupName>
-          <Files>
-            <File>
-              <FileName>usb.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/usb/include/usb.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_misc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/usb/include/usb_misc.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_spec.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/usb/include/usb_spec.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>usb-device-include</GroupName>
           <Files>
+            <File>
+              <FileName>usb_device.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/usb/device/usb_device.h</FilePath>
+            </File>
             <File>
               <FileName>usb_device.h</FileName>
               <FileType>5</FileType>
@@ -3494,6 +3434,61 @@
               <FileName>usb_device_dci.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/usb/device/usb_device_dci.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device_ch9.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/usb/output/source/device/usb_device_ch9.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device_ch9.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/usb/output/source/device/usb_device_ch9.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device_dci.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/usb/device/usb_device_dci.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/osa</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_bm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_bm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>usb-device-source-lpcip3511</GroupName>
+          <Files>
+            <File>
+              <FileName>usb_device_lpcip3511.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/usb/device/usb_device_lpcip3511.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device_lpcip3511.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/usb/device/usb_device_lpcip3511.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3596,9 +3591,9 @@
           <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_MIMXRT685S_cm33.s</FileName>
+              <FileName>startup_MIMXRT685S_cm33.S</FileName>
               <FileType>2</FileType>
-              <FilePath>../../../../../devices/MIMXRT685S/arm/startup_MIMXRT685S_cm33.s</FilePath>
+              <FilePath>../../../../../devices/MIMXRT685S/arm/startup_MIMXRT685S_cm33.S</FilePath>
             </File>
           </Files>
         </Group>
@@ -3609,6 +3604,11 @@
               <FileName>core_cm33.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/core_cm33.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv8.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
             </File>
             <File>
               <FileName>tz_context.h</FileName>
@@ -3651,31 +3651,6 @@
               <FilePath>../../../../../CMSIS/Include/cmsis_version.h</FilePath>
             </File>
             <File>
-              <FileName>core_armv81mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_armv81mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mbl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
-            </File>
-            <File>
               <FileName>arm_common_tables.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
@@ -3693,27 +3668,52 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/osa</GroupName>
+          <GroupName>usb-device-class-cdc</GroupName>
           <Files>
             <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_bm.c</FileName>
+              <FileName>usb_device_cdc_acm.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
+              <FilePath>../../../../../middleware/usb/output/source/device/class/usb_device_cdc_acm.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_os_abstraction_bm.h</FileName>
+              <FileName>usb_device_cdc_acm.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
+              <FilePath>../../../../../middleware/usb/output/source/device/class/usb_device_cdc_acm.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>usb-device-class</GroupName>
+          <Files>
+            <File>
+              <FileName>usb_device_class.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/usb/output/source/device/class/usb_device_class.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_os_abstraction_config.h</FileName>
+              <FileName>usb_device_class.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
+              <FilePath>../../../../../middleware/usb/output/source/device/class/usb_device_class.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>usb-include</GroupName>
+          <Files>
+            <File>
+              <FileName>usb.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/usb/include/usb.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_misc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/usb/include/usb_misc.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_spec.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/usb/include/usb_spec.h</FilePath>
             </File>
           </Files>
         </Group>

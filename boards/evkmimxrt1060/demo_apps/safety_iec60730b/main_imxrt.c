@@ -22,7 +22,10 @@ void safety_dio_runtime(void);
 extern const uint32_t c_stackTestFirstAddress;  /* Defined in safety_cm7_imxrt.c */  
 extern const uint32_t c_stackTestSecondAddress; /* Defined in safety_cm7_imxrt.c */
 
-#if defined(__IAR_SYSTEMS_ICC__)
+/* Test variable */
+volatile uint32_t counter = 0;
+
+#if defined(__IAR_SYSTEMS_ICC__) /* IAR */
     #pragma section =  ".safety_ram"
     #pragma section =  ".safety_ram_crc"
 
@@ -37,38 +40,11 @@ extern const uint32_t c_stackTestSecondAddress; /* Defined in safety_cm7_imxrt.c
     /* DCP flash test */
     uint32_t g_contextSwitchingBuffer[52] @ ".safety_ram_crc"; 
     volatile uint32_t g_timeToFailure @ ".safety_ram_crc";
-    fs_flash_dcp_state_t g_sFlashDCPState @ ".safety_ram_crc";
+    flash_dcp_state_t g_sFlashDCPState @ ".safety_ram_crc";
     ram_test_t g_sSafetyRamCRCTest @ ".safety_ram_crc";
-    fs_flash_dcp_channels_t g_dcpSafetyChannel @ ".safety_ram_crc";
-#endif
+    dcp_channels_t g_dcpSafetyChannel @ ".safety_ram_crc";
 
-#if defined(__GNUC__)
-    #include <cr_section_macros.h>
-
-    uint32_t crcPostbuild; /* Checksum result calculated by srec_cat.exe in post-build phase */
-
-    extern uint32_t __BOOT_STACK_ADDRESS; /* from Linker command file */
-    uint32_t stack_pointer_addr = (uint32_t)&__BOOT_STACK_ADDRESS;
-
-    extern uint32_t _safety_ram; /* from Linker command file */
-    uint32_t safetyRamSectionStart = (uint32_t)&_safety_ram;
-
-    extern uint32_t _end_safety_ram; /* from Linker command file */
-    uint32_t safetyRamSectionEnd = (uint32_t)&_end_safety_ram;
-
-    wd_test_t g_sSafetyWdTest __attribute__((section(".safety_ram")));
-    safety_common_t g_sSafetyCommon __attribute__((section(".safety_ram")));
-    clock_test_t g_sSafetyClockTest __attribute__((section(".safety_ram")));
-    ram_test_t g_sSafetyRamTest __attribute__((section(".safety_ram")));
-    ram_test_t g_sSafetyRamStackTest __attribute__((section(".safety_ram")));
-    flash_runtime_test_parameters_t g_sFlashCrc __attribute__((section(".safety_ram")));
-    flash_configuration_parameters_t g_sFlashConfig __attribute__((section(".safety_ram")));
-    uint32_t g_contextSwitchingBuffer[52] __attribute__((section(".safety_ram")));
-    fs_flash_dcp_state_t g_sFlashDCPState __attribute__((section(".safety_ram")));
-    fs_flash_dcp_channels_t g_dcpSafetyChannel __attribute__((section(".safety_ram")));
-#endif
-
-#if defined(__ARMCC_VERSION)
+#elif (defined(__GNUC__) && ( __ARMCC_VERSION >= 6010050)) /* KEIL */
     #include "linker_config.h"
 
     uint32_t stack_pointer_addr = (uint32_t)__BOOT_STACK_ADDRESS;
@@ -82,9 +58,46 @@ extern const uint32_t c_stackTestSecondAddress; /* Defined in safety_cm7_imxrt.c
     ram_test_t g_sSafetyRamStackTest __attribute__((section(".safety_ram")));
     flash_runtime_test_parameters_t g_sFlashCrc __attribute__((section(".safety_ram")));
     flash_configuration_parameters_t g_sFlashConfig __attribute__((section(".safety_ram")));
-    uint32_t g_contextSwitchingBuffer[52] __attribute__((section(".safety_ram")));
-    fs_flash_dcp_state_t g_sFlashDCPState __attribute__((section(".safety_ram")));
-    fs_flash_dcp_channels_t g_dcpSafetyChannel __attribute__((section(".safety_ram")));
+
+    /* DCP flash test */
+    uint32_t g_contextSwitchingBuffer[52] __attribute__((section(".safety_ram_crc")));
+    volatile unsigned long g_timeToFailure __attribute__((section(".safety_ram_crc")));
+    flash_dcp_state_t g_sFlashDCPState __attribute__((section(".safety_ram_crc")));
+    ram_test_t g_sSafetyRamCRCTest __attribute__((section(".safety_ram_crc")));
+    dcp_channels_t g_dcpSafetyChannel __attribute__((section(".safety_ram_crc")));
+
+#else /* MCUXpresso */
+    #include <cr_section_macros.h>
+
+    uint32_t crcPostbuild; /* Checksum result calculated by srec_cat.exe in post-build phase */
+
+    extern uint32_t __BOOT_STACK_ADDRESS; /* from Linker command file */
+    uint32_t stack_pointer_addr = (uint32_t)&__BOOT_STACK_ADDRESS;
+
+    extern uint32_t _safety_ram; /* from Linker command file */
+    uint32_t pui32SafetyRamSectionStart = (uint32_t)&_safety_ram;
+    extern uint32_t _end_safety_ram; /* from Linker command file */
+    uint32_t pui32SafetyRamSectionEnd = (uint32_t)&_end_safety_ram;
+
+    extern uint32_t _safety_ram_crc; /* from Linker command file */
+    uint32_t pui32SafetyRamCRCSectionStart = (uint32_t)&_safety_ram_crc;
+    extern uint32_t _end_safety_ram_crc; /* from Linker command file */
+    uint32_t pui32SafetyRamCRCSectionEnd = (uint32_t)&_end_safety_ram_crc;
+
+    wd_test_t g_sSafetyWdTest __attribute__((section(".safety_ram")));
+    safety_common_t g_sSafetyCommon __attribute__((section(".safety_ram")));
+    clock_test_t g_sSafetyClockTest __attribute__((section(".safety_ram")));
+    ram_test_t g_sSafetyRamTest __attribute__((section(".safety_ram")));
+    ram_test_t g_sSafetyRamStackTest __attribute__((section(".safety_ram")));
+    flash_runtime_test_parameters_t g_sFlashCrc __attribute__((section(".safety_ram")));
+    flash_configuration_parameters_t g_sFlashConfig __attribute__((section(".safety_ram")));
+
+    /* DCP flash test */
+    uint32_t g_contextSwitchingBuffer[52] __attribute__((section(".safety_ram_crc")));
+    volatile unsigned long g_timeToFailure __attribute__((section(".safety_ram_crc")));
+    flash_dcp_state_t g_sFlashDCPState __attribute__((section(".safety_ram_crc")));
+    ram_test_t g_sSafetyRamCRCTest __attribute__((section(".safety_ram_crc")));
+    dcp_channels_t g_dcpSafetyChannel __attribute__((section(".safety_ram_crc")));
 #endif
 
 /*******************************************************************************
@@ -97,16 +110,10 @@ int32_t main(void)
 {
     __asm("CPSID i"); /* Disable interrupts */
     
-    g_sSafetyCommon.safetyErrors = 0; /* Clear the variable that records safety error codes */
-    g_sSafetyCommon.fastIsrSafetySwitch = 0;  
-    
-#if defined(__GNUC__)
-    crcPostbuild =*((uint32_t *)CRC_VALUE_ADDR);
-    uint32_t *safetyRamStart = (uint32_t *)safetyRamSectionStart;
-    uint32_t *safetyRamEnd = (uint32_t *)safetyRamSectionEnd;
-#endif
+    g_sSafetyCommon.ui32SafetyErrors = 0; /* Clear the variable that records safety error codes */
+    g_sSafetyCommon.ui32FastIsrSafetySwitch = 0;  
 
-#if defined(__IAR_SYSTEMS_ICC__)
+#if defined(__IAR_SYSTEMS_ICC__) /* IAR */
     uint32_t *safetyRamStart = __section_begin(".safety_ram");
     uint32_t *safetyRamEnd = __section_end(".safety_ram"); 
     
@@ -120,13 +127,17 @@ int32_t main(void)
     uint32_t *safetyRamCRCEnd = __section_end(".safety_ram_crc");
     SafetyRamTestInit(&g_sSafetyRamCRCTest, safetyRamCRCStart, safetyRamCRCEnd);    
     /****** DCP related initialization ******/
-#endif
-    
-#if	defined(__ARMCC_VERSION)
+
+#elif (defined(__GNUC__) && ( __ARMCC_VERSION >= 6010050)) /* KEIL */
     crcPostbuild = *((uint32_t *)CRC_VALUE_ADDR);
     uint32_t *safetyRamStart = (uint32_t *)m_safety_ram_start;
-    uint32_t *safetyRamEnd 	 = (uint32_t *)m_safety_ram_end;	
-#endif	
+    uint32_t *safetyRamEnd   = (uint32_t *)m_safety_ram_end; 
+
+#else /* MCUXpresso */
+    crcPostbuild =*((uint32_t *)CRC_VALUE_ADDR);
+    uint32_t *safetyRamStart = (uint32_t *)pui32SafetyRamSectionStart;
+    uint32_t *safetyRamEnd = (uint32_t *)pui32SafetyRamSectionEnd;
+#endif
 
     /* Memory protection unit initialization */    
     MPUSetup();
@@ -134,31 +145,31 @@ int32_t main(void)
 #if WATCHDOG_ENABLED
   Watchdog_refresh; /********************************************************/
 #endif
-    
+
     /* Clock initialization */
     ClockInit();
-  
+
     /* Pin initialization */
     BOARD_InitBootPins();
-    
+
     /* Watchdog test */
     SafetyWatchdogTest(&g_sSafetyWdTest); 
-    
+
 #if WATCHDOG_ENABLED
   Watchdog_refresh; /********************************************************/
 #endif
 
 #if DIO_TEST_ENABLED
     /* Digital I/O test */    
-    for (uint16_t i = 0; dio_safety_test_items[i] != 0; i++)
+    for (unsigned short i = 0; dio_safety_test_items[i] != 0; i++)
     {
-        SafetyDigitalOutputTest(&g_sSafetyCommon, dio_safety_test_items[i]);
-        SafetyDigitalInputOutput_ShortSupplyTest(&g_sSafetyCommon, dio_safety_test_items[i], DIO_SHORT_TO_GND_TEST);
-        SafetyDigitalInputOutput_ShortSupplyTest(&g_sSafetyCommon, dio_safety_test_items[i], DIO_SHORT_TO_VDD_TEST);
+        SafetyDigitalOutputTestRT(&g_sSafetyCommon, dio_safety_test_items[i]);
+        SafetyDigitalInputOutput_ShortSupplyTestRT(&g_sSafetyCommon, dio_safety_test_items[i], DIO_SHORT_TO_GND_TEST);
+        SafetyDigitalInputOutput_ShortSupplyTestRT(&g_sSafetyCommon, dio_safety_test_items[i], DIO_SHORT_TO_VDD_TEST);
     }
     
-    SafetyDigitalInputOutput_ShortAdjTest(&g_sSafetyCommon, dio_safety_test_items[0], dio_safety_test_items[1], LOGICAL_ONE); 
-    SafetyDigitalInputOutput_ShortAdjTest(&g_sSafetyCommon, dio_safety_test_items[0], dio_safety_test_items[1], LOGICAL_ZERO);  
+    SafetyDigitalInputOutput_ShortAdjTestRT(&g_sSafetyCommon, dio_safety_test_items[0], dio_safety_test_items[1], LOGICAL_ONE); 
+    SafetyDigitalInputOutput_ShortAdjTestRT(&g_sSafetyCommon, dio_safety_test_items[0], dio_safety_test_items[1], LOGICAL_ZERO);
 #endif /* DIO_TEST_ENABLED */
 
     SerialInit(APPLICATION_SERIAL_BASE, SERIAL_BAUD_RATE, SERIAL_CLOCK);
@@ -227,12 +238,12 @@ int32_t main(void)
     SafetyStackTestInit(); 
     
     /* Stack overflow and underflow test */
-    SafetyStackTest(&g_sSafetyCommon); 
+    SafetyStackTest(&g_sSafetyCommon);
     
 #if WATCHDOG_ENABLED
   Watchdog_refresh; /********************************************************/
 #endif 
-   
+
 #if CLOCK_TEST_ENABLED
     /* Clock test initialization */
     SafetyClockTestInit(&g_sSafetyCommon, &g_sSafetyClockTest);
@@ -244,37 +255,37 @@ int32_t main(void)
 #if WATCHDOG_ENABLED
   Watchdog_refresh; /********************************************************/
 #endif
-  
+
     __asm("CPSIE i"); /* Enable interrupts */
-  
+
     while (1)
-    {     
+    {
         /* Interruptable CPU registers test */
         SafetyCpuBackgroundTest(&g_sSafetyCommon);
-        
+
         /* safety test of CPU CONTROL register, it cannot be placed in interrupt, thus interrupts must be disabled for a while */
         /* - see IEC60730 library documentation for CPU errors handling ! */
         __asm("CPSID i");
         #if __FPU_PRESENT
-            g_sSafetyCommon.CPU_control_test_result = FS_CM4_CM7_CPU_ControlFpu();
+            g_sSafetyCommon.IEC60730B_cpu_control_test_result = IEC60730B_CM4_CM7_CPU_ControlTest_fpu();
         #else
-            g_sSafetyCommon.CPU_control_test_result = FS_CM4_CM7_CPU_Control();
+            g_sSafetyCommon.IEC60730B_cpu_control_test_result = IEC60730B_CM4_CM7_CPU_ControlTest();
         #endif
         __asm("CPSIE i");
-        if(g_sSafetyCommon.CPU_control_test_result == FS_CPU_CONTROL_FAIL)
+        if(g_sSafetyCommon.IEC60730B_cpu_control_test_result == IEC60730B_ST_CPU_CONTROL_FAIL)
         {
-            g_sSafetyCommon.safetyErrors |= CPU_CONTROL_ERROR;
+            g_sSafetyCommon.ui32SafetyErrors |= CPU_CONTROL_ERROR;
             SafetyErrorHandling(&g_sSafetyCommon);
         }
 
         /* safety test of CPU SP_PROCESS register, it cannot be placed in interrupt, thus interrupts must be disabled for a while */
         /* - see IEC60730 library documentation for CPU errors handling ! */
         __asm("CPSID i");
-        g_sSafetyCommon.CPU_sp_process_test_result = FS_CM4_CM7_CPU_SPprocess();
+        g_sSafetyCommon.IEC60730B_cpu_sp_process_test_result = IEC60730B_CM4_CM7_CPU_SPprocessTest();
         __asm("CPSIE i");
-        if(g_sSafetyCommon.CPU_sp_process_test_result == FS_CPU_SP_PROCESS_FAIL)
+        if(g_sSafetyCommon.IEC60730B_cpu_sp_process_test_result == IEC60730B_ST_CPU_SP_PROCESS_FAIL)
         {
-            g_sSafetyCommon.safetyErrors |= CPU_SP_PROCESS_ERROR;
+            g_sSafetyCommon.ui32SafetyErrors |= CPU_SP_PROCESS_ERROR;
             SafetyErrorHandling(&g_sSafetyCommon);
         }
 
@@ -314,9 +325,9 @@ void safety_dio_runtime(void)
 
     if (dio_safety_test_items[dio_cnt_number] != NULL)
     {
-        SafetyDigitalOutputTest(&g_sSafetyCommon, dio_safety_test_items[dio_cnt_number]);
-        SafetyDigitalInputOutput_ShortSupplyTest(&g_sSafetyCommon, dio_safety_test_items[dio_cnt_number], DIO_SHORT_TO_GND_TEST);
-        SafetyDigitalInputOutput_ShortSupplyTest(&g_sSafetyCommon, dio_safety_test_items[dio_cnt_number], DIO_SHORT_TO_VDD_TEST);
+        SafetyDigitalOutputTestRT(&g_sSafetyCommon, dio_safety_test_items[dio_cnt_number]);
+        SafetyDigitalInputOutput_ShortSupplyTestRT(&g_sSafetyCommon, dio_safety_test_items[dio_cnt_number], DIO_SHORT_TO_GND_TEST);
+        SafetyDigitalInputOutput_ShortSupplyTestRT(&g_sSafetyCommon, dio_safety_test_items[dio_cnt_number], DIO_SHORT_TO_VDD_TEST);
 
         dio_cnt_number++;
     }
@@ -334,8 +345,10 @@ void safety_dio_runtime(void)
  * @return None
  */
 void SYSTICK_Isr(void)
-{   
-#if (defined(NDEBUG) && defined(__IAR_SYSTEMS_ICC__))
+{
+    counter++;
+
+#if (defined(__IAR_SYSTEMS_ICC__) && FLASH_TEST_ENABLED)
         /* Check if SAFETY_RAM_CRC was tested in the time limit */
         g_timeToFailure++;
         if (g_timeToFailure > RAM_CHECK_TIME_THRESHOLD)
@@ -343,13 +356,13 @@ void SYSTICK_Isr(void)
             /* Error */
             while (1) {}
         }
-        
+
         /* Check if all DCP channels are inactive */
         if ((DCP->STAT & 0xF0000) == 0)
         {
             /* Test safety_ram_crc */
             SafetyRamRuntimeTest(&g_sSafetyCommon, &g_sSafetyRamCRCTest);
-            
+
             /* Reset time to failure */
             g_timeToFailure = 0;
         }
@@ -362,7 +375,7 @@ void SYSTICK_Isr(void)
 
     /* Safety tests which cannot be interrupted */
     SafetyIsrFunction(&g_sSafetyCommon, &g_sSafetyRamTest, &g_sSafetyRamStackTest);
-    
+
     /* Refreshing the watchdog. For short period of interrupts, choose higher refresh ratio parameter */
     SafetyWatchdogRuntimeRefresh(&g_sSafetyWdTest);
 }

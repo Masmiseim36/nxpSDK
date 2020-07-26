@@ -1,20 +1,20 @@
 /*
-* Copyright 2017-2018 NXP
-* All rights reserved.
-*
-* SPDX-License-Identifier: BSD-3-Clause
-*/
+ * Copyright 2017-2020 NXP
+ * All rights reserved.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
 
 #ifndef __BL_API_H__
 #define __BL_API_H__
 
-#include "fsl_device_registers.h"
+#include <string.h>
+#include "bl_flexspi.h"
+#include "flexspi_nor_flash.h"
 #include "fsl_clock.h"
-#include "flexspi/fsl_flexspi.h"
-#include "flexspi_nor/flexspi_nor_flash.h"
+#include "fsl_device_registers.h"
 #include "fsl_rtwdog.h"
 #include "fsl_wdog.h"
-#include <string.h>
 
 /*******************************************************************************
  * Definitions
@@ -151,10 +151,7 @@ enum
     kFlexSpiNorDriver_Version_1_5 = MAKE_VERSION(1, 5, 0),
 };
 
-
-
-typedef union
-{
+typedef union {
     struct
     {
         uint32_t imageIndex : 4;

@@ -401,7 +401,6 @@ typedef struct {
  */
 #define GR_EVENT_TABLE_DRAG_START		"gre.table.drag_start"
 #define GR_EVENT_TABLE_DRAG_STOP		"gre.table.drag_stop"
-#define GR_EVENT_TABLE_DRAG_CANCEL		"gre.table.drag_cancel"
 #define GR_EVENT_TABLE_SCROLL_TRIGGER	"gre.table.scroll_trigger"
 #define GR_EVENT_TABLE_SCROLL_START		"gre.table.scroll_start"
 #define GR_EVENT_TABLE_SCROLL_STOP		"gre.table.scroll_stop"
@@ -413,7 +412,6 @@ typedef struct {
  */
 #define GR_EVENT_DRAG_START				"gre.drag.start"
 #define GR_EVENT_DRAG_STOP				"gre.drag.stop"
-#define GR_EVENT_DRAG_CANCEL			"gre.drag.cancel"
 #define GR_EVENT_SCROLL_TRIGGER			"gre.scroll.trigger"
 #define GR_EVENT_SCROLL_START			"gre.scroll.start"
 #define GR_EVENT_SCROLL_STOP			"gre.scroll.stop"

@@ -120,8 +120,12 @@ int SNTP_Init(void)
 {
     time_t now = 0;
     PRINTF("Initializing SNTP \n");
+
+    LOCK_TCPIP_CORE();
     sntp_setoperatingmode(SNTP_OPMODE_POLL);
     sntp_init();
+    UNLOCK_TCPIP_CORE();
+
     sntp_get_current_timestamp();
     PRINTF("SNTP initialization complete \n");
     now = time(NULL);

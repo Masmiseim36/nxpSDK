@@ -159,7 +159,7 @@ static uint32_t USB_DeviceDfuCalculateCRC(uint32_t crc, uint8_t *data, uint32_t 
  */
 static void USB_DfuEnterCritical(uint8_t *sr)
 {
-#if  defined(__DSC__)
+#if defined(__DSC__)
     DisableDscGlobalIRQ();
 #else
     *sr = DisableGlobalIRQ();
@@ -174,7 +174,7 @@ static void USB_DfuEnterCritical(uint8_t *sr)
  */
 static void USB_DfuExitCritical(uint8_t sr)
 {
-#if  defined(__DSC__)
+#if defined(__DSC__)
     EnableDscGlobalIRQ();
 #else
     EnableGlobalIRQ(sr);
@@ -194,7 +194,7 @@ static inline usb_status_t USB_DeviceDfuQueueInit(dfu_queue_t *q)
     (q)->tail    = 0;
     (q)->maxSize = DFU_EVENT_QUEUE_MAX;
     (q)->curSize = 0;
-    (q)->mutex = (osa_mutex_handle_t)(&(q)->mutexBuffer[0]);
+    (q)->mutex   = (osa_mutex_handle_t)(&(q)->mutexBuffer[0]);
     if (KOSA_StatusSuccess != OSA_MutexCreate(((q)->mutex)))
     {
         usb_echo("queue mutex create error!");
@@ -1175,12 +1175,11 @@ static usb_status_t USB_DeviceStateAppIdle(usb_dfu_struct_t *dfu_dev, usb_device
                 USB_DeviceStop(g_UsbDeviceDfu.deviceHandle);
                 for (i = 0; i < 5000; i++)
                 {
-#if defined(__DSC__)
-                    asm(NOP);
-#else
-                    __ASM("nop");
-#endif
+                    __NOP();
                 }
+                /*Add one delay here to make the DP pull down long enough to allow host to detect the previous
+                 * disconnection.*/
+                SDK_DelayAtLeastUs(5000, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
                 USB_DeviceRun(g_UsbDeviceDfu.deviceHandle);
 #else
                 g_detachRequest = 1U;

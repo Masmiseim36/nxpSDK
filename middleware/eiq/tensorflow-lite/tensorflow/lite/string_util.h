@@ -13,6 +13,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================*/
 
+/* File modified by NXP. Changes are described in file
+   /middleware/eiq/tensorflow-lite/readme.txt in section "Release notes" */
+
 // Util methods to read and write String tensors.
 // String tensors are considered to be char tensor with protocol.
 //   [0, 3] 4 bytes: N, num of strings in the tensor in little endian.
@@ -43,7 +46,7 @@ limitations under the License.
 #include <vector>
 
 #include "tensorflow/lite/c/c_api_internal.h"
-#include "tensorflow/lite/string.h"
+#include "tensorflow/lite/string_type.h"
 
 namespace tflite {
 
@@ -68,7 +71,7 @@ class DynamicBuffer {
 
   // Join a list of string with separator, and add as a single string to the
   // buffer.
-  void AddJoinedString(const std::vector<StringRef>& strings, char separator);
+  void AddJoinedString(const ::std::vector<StringRef>& strings, char separator);
 
   // Fill content into a buffer and returns the number of bytes stored.
   // The function allocates space for the buffer but does NOT take ownership.
@@ -85,18 +88,18 @@ class DynamicBuffer {
 
  private:
   // Data buffer to store contents of strings, not including headers.
-  std::vector<char> data_;
+  ::std::vector<char> data_;
   // Offset of the starting index of each string in data buffer.
-  std::vector<int32_t> offset_;
+  ::std::vector<int32_t> offset_;
 };
 
 // Return num of strings in a String tensor.
-int GetStringCount(const char* raw_buffer);
+int GetStringCount(const void* raw_buffer);
 int GetStringCount(const TfLiteTensor* tensor);
 
 // Get String pointer and length of index-th string in tensor.
 // NOTE: This will not create a copy of string data.
-StringRef GetString(const char* raw_buffer, int string_index);
+StringRef GetString(const void* raw_buffer, int string_index);
 StringRef GetString(const TfLiteTensor* tensor, int string_index);
 }  // namespace tflite
 

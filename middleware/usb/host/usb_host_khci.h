@@ -16,7 +16,7 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define USB_KHCI_MAX_SPEED_DETECTION_COUNT 3U
+#define USB_KHCI_MAX_SPEED_DETECTION_COUNT 3
 
 /* usb khci atom transaction error results */
 #define USB_KHCI_ATOM_TR_PID_ERROR (-1)
@@ -33,15 +33,15 @@
 #define USB_KHCI_ATOM_TR_INVALID (-8192)
 
 /* KHCI event bits */
-#define USB_KHCI_EVENT_ATTACH 0x01U
-#define USB_KHCI_EVENT_RESET 0x02U
-#define USB_KHCI_EVENT_TOK_DONE 0x04U
-#define USB_KHCI_EVENT_SOF_TOK 0x08U
-#define USB_KHCI_EVENT_DETACH 0x10U
-#define USB_KHCI_EVENT_MSG 0x20U
-#define USB_KHCI_EVENT_ISO_MSG 0x40U
-#define USB_KHCI_EVENT_RESUME 0x80U
-#define USB_KHCI_EVENT_MASK 0xffU
+#define USB_KHCI_EVENT_ATTACH 0x01
+#define USB_KHCI_EVENT_RESET 0x02
+#define USB_KHCI_EVENT_TOK_DONE 0x04
+#define USB_KHCI_EVENT_SOF_TOK 0x08
+#define USB_KHCI_EVENT_DETACH 0x10
+#define USB_KHCI_EVENT_MSG 0x20
+#define USB_KHCI_EVENT_ISO_MSG 0x40
+#define USB_KHCI_EVENT_RESUME 0x80
+#define USB_KHCI_EVENT_MASK 0xff
 
 typedef enum _transfer_status
 {
@@ -114,16 +114,16 @@ typedef enum bus_suspend_request_state
 #define USB_TIMEOUT_NODATA (5000)
 #define USB_TIMEOUT_TOHOST (5000)
 #define USB_TIMEOUT_TODEVICE (5000)
-#define USB_TIMEOUT_OTHER (10000U)
+#define USB_TIMEOUT_OTHER (10000)
 #define USB_TIMEOUT_DEFAULT (500)
 
-#define NAK_RETRY_TIME (1U)
-#define RETRY_TIME (3U)
+#define NAK_RETRY_TIME (1)
+#define RETRY_TIME (3)
 
 /* Define USB buffer descriptor operator MACRO definitions; This part is not included in header files  */
-#define USB_KHCI_BDT_BASE ((&bdt[0]))
+#define USB_KHCI_BDT_BASE ((uint32_t *)(&bdt[0]))
 #define USB_KHCI_BD_PTR(ep, rxtx, odd) \
-    ((((uint32_t)USB_KHCI_BDT_BASE) & 0xfffffe00U) | (((ep)&0x0fu) << 5) | (((rxtx)&1u) << 4) | (((odd)&1u) << 3))
+    ((((uint32_t)USB_KHCI_BDT_BASE) & 0xfffffe00U) | ((ep & 0x0fu) << 5) | ((rxtx & 1u) << 4) | ((odd & 1u) << 3))
 
 #define USB_KHCI_BD_CTRL(ep, rxtx, odd) (*((uint32_t *)USB_KHCI_BD_PTR(ep, rxtx, odd)))
 #define USB_KHCI_BD_CTRL_RX(ep, odd) (*((uint32_t *)USB_KHCI_BD_PTR(ep, 0, odd)))
@@ -145,8 +145,8 @@ typedef enum bus_suspend_request_state
 #define USB_KHCI_BD_STALL 0x04u
 #define USB_KHCI_BD_PID(n) ((n & 0x0fu) << 2)
 
-#define USB_HostKhciLock() (void)OSA_MutexLock(usbHostPointer->khciMutex, USB_OSA_WAIT_TIMEOUT)
-#define USB_HostKhciUnlock() (void)OSA_MutexUnlock(usbHostPointer->khciMutex)
+#define USB_HostKhciLock() OSA_MutexLock(usbHostPointer->khciMutex, USB_OSA_WAIT_TIMEOUT)
+#define USB_HostKhciUnlock() OSA_MutexUnlock(usbHostPointer->khciMutex)
 
 typedef struct _khci_xfer_sts
 {
@@ -170,7 +170,7 @@ typedef struct _khci_xfer_sts
    target followed by the response from the host. The actual time required is a function of the maximum packet size on
    the bus. Set the KHCICFG_THSLD_DELAY to 0x65 to meet the worst case.*/
 
-#define KHCICFG_THSLD_DELAY 0x65U
+#define KHCICFG_THSLD_DELAY 0x65
 
 /*! @brief KHCI controller driver instance structure */
 typedef struct _usb_khci_host_state_struct
@@ -179,9 +179,9 @@ typedef struct _usb_khci_host_state_struct
     void *hostHandle;                           /*!< Related host handle*/
     usb_host_pipe_t *pipeDescriptorBasePointer; /*!< Pipe descriptor bas pointer*/
     osa_event_handle_t khciEventPointer;
-    uint32_t taskEventHandleBuffer[(OSA_EVENT_HANDLE_SIZE + 3) / 4]; /*!< KHCI task event handle buffer*/
-    osa_mutex_handle_t khciMutex;                                    /*!< KHCI mutex*/
-    uint32_t mutexBuffer[(OSA_MUTEX_HANDLE_SIZE + 3) / 4];           /*!< The mutex buffer. */
+    uint32_t taskEventHandleBuffer[(OSA_EVENT_HANDLE_SIZE + 3)/4];      /*!< KHCI task event handle buffer*/
+    osa_mutex_handle_t khciMutex;             /*!< KHCI mutex*/
+    uint32_t mutexBuffer[(OSA_MUTEX_HANDLE_SIZE + 3)/4]; /*!< The mutex buffer. */
     usb_host_transfer_t
         *periodicListPointer; /*!< KHCI periodic list pointer, which link is an interrupt and an ISO transfer request*/
     usb_host_transfer_t *asyncListPointer; /*!< KHCI async list pointer, which link controls and bulk transfer request*/

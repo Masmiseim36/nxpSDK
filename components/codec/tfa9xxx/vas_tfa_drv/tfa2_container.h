@@ -10,8 +10,8 @@
 
 #define TFA_MAX_CNT_LENGTH (256 * 1024)
 #define MEMTRACK_MAX_WORDS 150
-#define LSMODEL_MAX_WORDS 150
-#define TFA98XX_MAXTAG (150)
+#define LSMODEL_MAX_WORDS  150
+#define TFA98XX_MAXTAG     (150)
 #define FW_VAR_API_VERSION (521)
 
 #include "tfa2_dev.h"

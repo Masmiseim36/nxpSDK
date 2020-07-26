@@ -96,12 +96,12 @@ extern host_phdc_manager_instance_t g_phdcManagerInstance;
 extern "C" {
 #endif
 /*!
-* @brief host phdc manager task function.
-*
-* This function implements the host phdc manager action, it is used to create task.
-*
-* @param param   the host phdc manager instance pointer.
-*/
+ * @brief host phdc manager task function.
+ *
+ * This function implements the host phdc manager action, it is used to create task.
+ *
+ * @param param   the host phdc manager instance pointer.
+ */
 extern void HOST_PhdcManagerTask(void *param);
 
 /*!

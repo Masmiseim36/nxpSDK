@@ -23,8 +23,8 @@ limitations under the License.
 
 // Also update tensorflow/tensorflow.bzl and
 // tensorflow/tools/pip_package/setup.py
-#define TF_MAJOR_VERSION 1
-#define TF_MINOR_VERSION 14
+#define TF_MAJOR_VERSION 2
+#define TF_MINOR_VERSION 1
 #define TF_PATCH_VERSION 0
 
 // TF_VERSION_SUFFIX is non-empty for pre-releases (e.g. "-alpha", "-alpha.1",
@@ -111,7 +111,7 @@ limitations under the License.
 
 #define TF_GRAPH_DEF_VERSION_MIN_PRODUCER 0
 #define TF_GRAPH_DEF_VERSION_MIN_CONSUMER 0
-#define TF_GRAPH_DEF_VERSION 38  // Updated: 2019/5/17
+#define TF_GRAPH_DEF_VERSION 175  // Updated: 2019/10/1
 
 // Checkpoint compatibility versions (the versions field in SavedSliceMeta).
 //
@@ -136,9 +136,9 @@ extern const char* tf_compiler_version();
 extern const char* tf_git_version();
 #if !defined(__ICCARM__)
 // Value of the _GLIBCXX_USE_CXX11_ABI flag, or 0 if it's not set.
-extern const int tf_cxx11_abi_flag();
+extern int tf_cxx11_abi_flag();
 // Returns 1 if build is monolithic, or 0 otherwise.
-extern const int tf_monolithic_build();
+extern int tf_monolithic_build();
 #endif
 
 #endif  // TENSORFLOW_CORE_PUBLIC_VERSION_H_

@@ -21,7 +21,7 @@
 **     Copyright (c) 2015 Freescale Semiconductor, Inc.
 **     Copyright 2016-2018 NXP
 **     All rights reserved.
-**     
+**
 **     SPDX-License-Identifier: BSD-3-Clause
 **
 **     http:                 www.nxp.com
@@ -83,7 +83,7 @@ void SystemInit(void)
     SCB->CPACR |= ((3UL << 10 * 2) | (3UL << 11 * 2)); /* set CP10, CP11 Full Access */
 #endif                                                 /* ((__FPU_PRESENT == 1) && (__FPU_USED == 1)) */
 
-/* Watchdog disable */
+    /* Watchdog disable */
 
 #if (DISABLE_WDOG)
     if (RTWDOG->CS & RTWDOG_CS_EN_MASK)
@@ -97,6 +97,4 @@ void SystemInit(void)
    -- SystemCoreClockUpdate()
    ---------------------------------------------------------------------------- */
 
-void SystemCoreClockUpdate(void)
-{
-}
+void SystemCoreClockUpdate(void) {}

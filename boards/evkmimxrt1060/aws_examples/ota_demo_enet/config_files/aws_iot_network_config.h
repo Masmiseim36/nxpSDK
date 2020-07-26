@@ -1,5 +1,5 @@
 /*
- * Amazon FreeRTOS
+ * FreeRTOS
  * Copyright (C) 2017 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -40,7 +40,7 @@
  * in "aws_iot_network.h"
  */
 
-#define configSUPPORTED_NETWORKS    (AWSIOT_NETWORK_TYPE_ETH)//( AWSIOT_NETWORK_TYPE_WIFI )
+#define configSUPPORTED_NETWORKS    ( AWSIOT_NETWORK_TYPE_ETH )
 
 /**
  * @brief Configuration flag which is used to enable one or more network interfaces for a board.
@@ -52,6 +52,6 @@
  *
  */
 
-#define configENABLED_NETWORKS      (AWSIOT_NETWORK_TYPE_ETH)//( AWSIOT_NETWORK_TYPE_WIFI )
+#define configENABLED_NETWORKS      ( AWSIOT_NETWORK_TYPE_ETH )
 
 #endif /* CONFIG_FILES_AWS_IOT_NETWORK_CONFIG_H_ */

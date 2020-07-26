@@ -10,7 +10,7 @@
 #define _MCDRV_H_
 
 #include "mcdrv_evkbimxrt1050.h"
-   
+
 /* macro used for TSA table */
 #define PMSM_SNSLESS_ENC
 

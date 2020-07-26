@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 NXP
+ * Copyright 2018-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -23,65 +23,65 @@
 #define PCA9420_DEFAULT_I2C_ADDR 0x61U
 
 /*! @brief Define the Register Memory Map of PCA9420. */
-#define PCA9420_DEV_INFO (0x00U)
-#define PCA9420_TOP_INT (0x01U)
-#define PCA9420_SUB_INT0 (0x02U)
+#define PCA9420_DEV_INFO      (0x00U)
+#define PCA9420_TOP_INT       (0x01U)
+#define PCA9420_SUB_INT0      (0x02U)
 #define PCA9420_SUB_INT0_MASK (0x03U)
-#define PCA9420_SUB_INT1 (0x04U)
+#define PCA9420_SUB_INT1      (0x04U)
 #define PCA9420_SUB_INT1_MASK (0x05U)
-#define PCA9420_SUB_INT2 (0x06U)
+#define PCA9420_SUB_INT2      (0x06U)
 #define PCA9420_SUB_INT2_MASK (0x07U)
-#define PCA9420_TOP_CNTL0 (0x09U)
-#define PCA9420_TOP_CNTL1 (0x0AU)
-#define PCA9420_TOP_CNTL2 (0x0BU)
-#define PCA9420_TOP_CNTL3 (0x0CU)
-#define PCA9420_TOP_CNTL4 (0x0DU)
+#define PCA9420_TOP_CNTL0     (0x09U)
+#define PCA9420_TOP_CNTL1     (0x0AU)
+#define PCA9420_TOP_CNTL2     (0x0BU)
+#define PCA9420_TOP_CNTL3     (0x0CU)
+#define PCA9420_TOP_CNTL4     (0x0DU)
 
-#define PCA9420_CHG_CNTL0 (0x10U)
-#define PCA9420_CHG_CNTL1 (0x11U)
-#define PCA9420_CHG_CNTL2 (0x12U)
-#define PCA9420_CHG_CNTL3 (0x13U)
-#define PCA9420_CHG_CNTL4 (0x14U)
-#define PCA9420_CHG_CNTL5 (0x15U)
-#define PCA9420_CHG_CNTL6 (0x16U)
-#define PCA9420_CHG_CNTL7 (0x17U)
+#define PCA9420_CHG_CNTL0    (0x10U)
+#define PCA9420_CHG_CNTL1    (0x11U)
+#define PCA9420_CHG_CNTL2    (0x12U)
+#define PCA9420_CHG_CNTL3    (0x13U)
+#define PCA9420_CHG_CNTL4    (0x14U)
+#define PCA9420_CHG_CNTL5    (0x15U)
+#define PCA9420_CHG_CNTL6    (0x16U)
+#define PCA9420_CHG_CNTL7    (0x17U)
 #define PCA9420_CHG_STATUS_0 (0x18U)
 #define PCA9420_CHG_STATUS_1 (0x19U)
 #define PCA9420_CHG_STATUS_2 (0x1AU)
 #define PCA9420_CHG_STATUS_3 (0x1BU)
 
-#define PCA9420_REG_STATUS (0x20U)
+#define PCA9420_REG_STATUS           (0x20U)
 #define PCA9420_ACT_DISCHARGE_CNTL_1 (0x21U)
-#define PCA9420_MODECFG_0_0 (0x22U)
-#define PCA9420_MODECFG_0_1 (0x23U)
-#define PCA9420_MODECFG_0_2 (0x24U)
-#define PCA9420_MODECFG_0_3 (0x25U)
-#define PCA9420_MODECFG_1_0 (0x26U)
-#define PCA9420_MODECFG_1_1 (0x27U)
-#define PCA9420_MODECFG_1_2 (0x28U)
-#define PCA9420_MODECFG_1_3 (0x29U)
-#define PCA9420_MODECFG_2_0 (0x2AU)
-#define PCA9420_MODECFG_2_1 (0x2BU)
-#define PCA9420_MODECFG_2_2 (0x2CU)
-#define PCA9420_MODECFG_2_3 (0x2DU)
-#define PCA9420_MODECFG_3_0 (0x2EU)
-#define PCA9420_MODECFG_3_1 (0x2FU)
-#define PCA9420_MODECFG_3_2 (0x30U)
-#define PCA9420_MODECFG_3_3 (0x31U)
+#define PCA9420_MODECFG_0_0          (0x22U)
+#define PCA9420_MODECFG_0_1          (0x23U)
+#define PCA9420_MODECFG_0_2          (0x24U)
+#define PCA9420_MODECFG_0_3          (0x25U)
+#define PCA9420_MODECFG_1_0          (0x26U)
+#define PCA9420_MODECFG_1_1          (0x27U)
+#define PCA9420_MODECFG_1_2          (0x28U)
+#define PCA9420_MODECFG_1_3          (0x29U)
+#define PCA9420_MODECFG_2_0          (0x2AU)
+#define PCA9420_MODECFG_2_1          (0x2BU)
+#define PCA9420_MODECFG_2_2          (0x2CU)
+#define PCA9420_MODECFG_2_3          (0x2DU)
+#define PCA9420_MODECFG_3_0          (0x2EU)
+#define PCA9420_MODECFG_3_1          (0x2FU)
+#define PCA9420_MODECFG_3_2          (0x30U)
+#define PCA9420_MODECFG_3_3          (0x31U)
 
 /*! @brief Define the Register Masks of PCA9420. */
-#define PCA9420_TOP_CNTL3_MODE_I2C_MASK (0x18U)
+#define PCA9420_TOP_CNTL3_MODE_I2C_MASK  (0x18U)
 #define PCA9420_TOP_CNTL3_MODE_I2C_SHIFT (0x03U)
 
-#define PCA9420_MODECFG_0_SHIP_EN_MASK (0x80U)
+#define PCA9420_MODECFG_0_SHIP_EN_MASK       (0x80U)
 #define PCA9420_MODECFG_0_MODE_CTRL_SEL_MASK (0x40U)
-#define PCA9420_MODECFG_0_SW1_OUT_MASK (0x3FU)
-#define PCA9420_MODECFG_1_ON_CFG_MASK (0x40U)
-#define PCA9420_MODECFG_1_SW2_OUT_MASK (0x3FU)
-#define PCA9420_MODECFG_2_LDO1_OUT_MASK (0xF0U)
-#define PCA9420_MODECFG_2_LDO1_OUT_SHIFT (0x04U)
-#define PCA9420_MODECFG_3_WD_TIMER_MASK (0xC0U)
-#define PCA9420_MODECFG_3_LDO2_OUT_MASK (0x3FU)
+#define PCA9420_MODECFG_0_SW1_OUT_MASK       (0x3FU)
+#define PCA9420_MODECFG_1_ON_CFG_MASK        (0x40U)
+#define PCA9420_MODECFG_1_SW2_OUT_MASK       (0x3FU)
+#define PCA9420_MODECFG_2_LDO1_OUT_MASK      (0xF0U)
+#define PCA9420_MODECFG_2_LDO1_OUT_SHIFT     (0x04U)
+#define PCA9420_MODECFG_3_WD_TIMER_MASK      (0xC0U)
+#define PCA9420_MODECFG_3_LDO2_OUT_MASK      (0x3FU)
 
 /*! @brief PCA9420 mode definition. */
 typedef enum _pca9420_mode
@@ -787,7 +787,7 @@ bool PCA9420_WriteRegs(pca9420_handle_t *handle, uint8_t regBase, uint8_t *val, 
  * @param size array length in bytes to read.
  * @return true if success or false if error.
  */
-bool PCA9420_ReadRegs(pca9420_handle_t *handle, uint8_t reg, uint8_t *val, uint32_t size);
+bool PCA9420_ReadRegs(pca9420_handle_t *handle, uint8_t regBase, uint8_t *val, uint32_t size);
 
 /*!
  * @brief Modify some bits in the register in PCA9420.

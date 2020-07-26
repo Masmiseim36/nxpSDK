@@ -16,13 +16,13 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_ADC_BASE ADC1
-#define DEMO_ADC_USER_CHANNEL 16U
+#define DEMO_ADC_BASE          ADC1
+#define DEMO_ADC_USER_CHANNEL  16U
 #define DEMO_ADC_CHANNEL_GROUP 0U
 
-#define DEMO_ADC_ETC_BASE ADC_ETC
-#define DEMO_ADC_ETC_CHAIN_LENGTH 0U
-#define DEMO_ADC_ETC_CHANNEL 10U
+#define DEMO_ADC_ETC_BASE             ADC_ETC
+#define DEMO_ADC_ETC_CHAIN_LENGTH     0U
+#define DEMO_ADC_ETC_CHANNEL          10U
 #define EXAMPLE_ADC_ETC_DONE0_Handler ADC_ETC_IRQ0_IRQHandler
 
 /*******************************************************************************

@@ -335,6 +335,8 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
 #if (defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U)) || \
     (defined(USB_DEVICE_CONFIG_LPCIP3511FS) && (USB_DEVICE_CONFIG_LPCIP3511FS > 0U))
 #else
+            /*Add one delay here to make the DP pull down long enough to allow host to detect the previous disconnection.*/
+            SDK_DelayAtLeastUs(5000, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
             USB_DeviceRun(g_UsbDeviceHidMouse.deviceHandle);
 #endif
         }
@@ -546,6 +548,8 @@ static void USB_DeviceApplicationInit(void)
     USB_DeviceIsrEnable();
 
     /* Start USB device HID mouse */
+    /*Add one delay here to make the DP pull down long enough to allow host to detect the previous disconnection.*/
+    SDK_DelayAtLeastUs(5000, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
     USB_DeviceRun(g_UsbDeviceHidMouse.deviceHandle);
 }
 

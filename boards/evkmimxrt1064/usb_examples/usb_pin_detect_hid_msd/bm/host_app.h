@@ -17,18 +17,6 @@
  * Definitions
  ******************************************************************************/
 
-#if ((defined USB_HOST_CONFIG_KHCI) && (USB_HOST_CONFIG_KHCI))
-#define CONTROLLER_ID kUSB_ControllerKhci0
-#endif /* USB_HOST_CONFIG_KHCI */
-#if ((defined USB_HOST_CONFIG_EHCI) && (USB_HOST_CONFIG_EHCI))
-#define CONTROLLER_ID kUSB_ControllerEhci0
-#endif /* USB_HOST_CONFIG_EHCI */
-#if ((defined USB_HOST_CONFIG_OHCI) && (USB_HOST_CONFIG_OHCI))
-#define CONTROLLER_ID kUSB_ControllerOhci0
-#endif /* USB_HOST_CONFIG_OHCI */
-#if ((defined USB_HOST_CONFIG_IP3516HS) && (USB_HOST_CONFIG_IP3516HS))
-#define CONTROLLER_ID kUSB_ControllerIp3516Hs0
-#endif /* USB_HOST_CONFIG_IP3516HS */
 
 #if defined(__GIC_PRIO_BITS)
 #define USB_HOST_INTERRUPT_PRIORITY (25U)

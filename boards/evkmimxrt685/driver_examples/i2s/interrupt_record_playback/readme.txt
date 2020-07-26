@@ -6,10 +6,10 @@ and another I2S interface to playback the buffer to output - digital loopback.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.40.2
-- Keil MDK  5.29
-- GCC ARM Embedded  8.3.1
-- MCUXpresso  11.1.1
+- IAR embedded Workbench  8.50.1
+- Keil MDK  5.30
+- GCC ARM Embedded  9.2.1
+- MCUXpresso  11.2.0
 
 Hardware requirements
 =====================
@@ -22,9 +22,6 @@ Hardware requirements
 
 Board settings
 ==============
-Note: The I3C Pin configuration in pin_mux.c is verified for default 1.8V, for 3.3V, 
-need to manually configure slew rate to slow mode for I3C-SCL/SDA. 
-
 To make example work, connections needed to be as follows:
   JP7-1        <-->        JP7-2
   JP8-1        <-->        JP8-2

@@ -15,14 +15,14 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_FLEXSPI BOARD_FLEXSPI_PSRAM
-#define EXAMPLE_FLEXSPI_AMBA_BASE FlexSPI_AMBA_BASE
-#define HYPERRAM_CMD_LUT_SEQ_IDX_READDATA 0
+#define EXAMPLE_FLEXSPI                    BOARD_FLEXSPI_PSRAM
+#define EXAMPLE_FLEXSPI_AMBA_BASE          FlexSPI_AMBA_BASE
+#define HYPERRAM_CMD_LUT_SEQ_IDX_READDATA  0
 #define HYPERRAM_CMD_LUT_SEQ_IDX_WRITEDATA 1
-#define HYPERRAM_CMD_LUT_SEQ_IDX_READREG 2
-#define HYPERRAM_CMD_LUT_SEQ_IDX_WRITEREG 3
-#define HYPERRAM_CMD_LUT_SEQ_IDX_RESET 4
-#define DRAM_SIZE 0x800000U
+#define HYPERRAM_CMD_LUT_SEQ_IDX_READREG   2
+#define HYPERRAM_CMD_LUT_SEQ_IDX_WRITEREG  3
+#define HYPERRAM_CMD_LUT_SEQ_IDX_RESET     4
+#define DRAM_SIZE                          0x800000U
 
 /*******************************************************************************
  * Prototypes

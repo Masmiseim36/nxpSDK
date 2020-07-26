@@ -15,7 +15,7 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_SPI_SLAVE SPI5
+#define EXAMPLE_SPI_SLAVE     SPI5
 #define EXAMPLE_SPI_SLAVE_IRQ FLEXCOMM5_IRQn
 
 #define EXAMPLE_SPI_SSEL 0

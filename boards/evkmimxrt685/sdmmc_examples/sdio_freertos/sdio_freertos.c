@@ -15,6 +15,7 @@
 #include "board.h"
 #include "pin_mux.h"
 #include "clock_config.h"
+#include "sdmmc_config.h"
 #include "fsl_power.h"
 /*******************************************************************************
  * Definitions
@@ -116,28 +117,9 @@ static const uint32_t g_funcTupleList[2U] = {
  * At the same time buffer address/size should be aligned to the cache line size if cache is supported.
  */
 /*! @brief Data written to the card */
-SDK_ALIGN(uint8_t g_dataRead[SDK_SIZEALIGN(DATA_BUFFER_SIZE, SDMMC_DATA_BUFFER_ALIGN_CACHE)],
-          MAX(SDMMC_DATA_BUFFER_ALIGN_CACHE, SDMMCHOST_DMA_BUFFER_ADDR_ALIGN));
+SDK_ALIGN(uint8_t g_dataRead[DATA_BUFFER_SIZE], BOARD_SDMMC_DATA_BUFFER_ALIGN_SIZE);
 /*! @brief Data read from the card */
-SDK_ALIGN(uint8_t g_dataBlockRead[SDK_SIZEALIGN(DATA_BUFFER_SIZE, SDMMC_DATA_BUFFER_ALIGN_CACHE)],
-          MAX(SDMMC_DATA_BUFFER_ALIGN_CACHE, SDMMCHOST_DMA_BUFFER_ADDR_ALIGN));
-
-/*! @brief SDMMC host detect card configuration */
-static const sdmmchost_detect_card_t s_sdioCardDetect = {
-#ifndef BOARD_SD_DETECT_TYPE
-    .cdType = kSDMMCHOST_DetectCardByGpioCD,
-#else
-    .cdType = BOARD_SD_DETECT_TYPE,
-#endif
-    .cdTimeOut_ms = (~0U),
-    .cardInserted = SDIO_DetectCallBack,
-    .cardRemoved  = SDIO_DetectCallBack,
-};
-
-static const sdmmchost_card_int_t s_sdioCardInt = {
-    .userData      = NULL,
-    .cardInterrupt = SDIO_CardInterruptCallBack,
-};
+SDK_ALIGN(uint8_t g_dataBlockRead[DATA_BUFFER_SIZE], BOARD_SDMMC_DATA_BUFFER_ALIGN_SIZE);
 /*! @brief SDIO card detect flag  */
 static volatile bool s_cardInserted     = false;
 static volatile bool s_cardInsertStatus = false;
@@ -157,7 +139,7 @@ static void SDIO_DetectCallBack(bool isInserted, void *userData)
 
 static void SDIO_CardInterruptCallBack(void *userData)
 {
-    SDMMCHOST_DISABLE_SDIO_INT(SD_HOST_BASEADDR);
+    SDMMCHOST_EnableCardInt(g_sdio.host, false);
     xSemaphoreGiveFromISR(s_CardInterruptSemaphore, NULL);
 }
 
@@ -231,7 +213,7 @@ static void CardInterruptTask(void *pvParameters)
 
         PRINTF("\r\nSDIO interrupt is received\r\n");
         SDIO_HandlePendingIOInterrupt(&g_sdio);
-        SDMMCHOST_ENABLE_SDIO_INT(SD_HOST_BASEADDR);
+        SDMMCHOST_EnableCardInt(g_sdio.host, true);
         /* release card access semphore */
         xSemaphoreGive(s_CardAccessSemaphore);
     }
@@ -245,10 +227,7 @@ static void CardDetectTask(void *pvParameters)
     s_CardDetectSemaphore    = xSemaphoreCreateBinary();
     s_CardInterruptSemaphore = xSemaphoreCreateBinary();
 
-    g_sdio.host.base           = SD_HOST_BASEADDR;
-    g_sdio.host.sourceClock_Hz = SD_HOST_CLK_FREQ;
-    g_sdio.usrParam.cd         = &s_sdioCardDetect;
-    g_sdio.usrParam.cardInt    = &s_sdioCardInt;
+    BOARD_SDIO_Config(&g_sdio, SDIO_DetectCallBack, BOARD_SDMMC_SDIO_HOST_IRQ_PRIORITY, SDIO_CardInterruptCallBack);
 
     /* SD host init function */
     if (SDIO_HostInit(&g_sdio) == kStatus_Success)
@@ -266,12 +245,12 @@ static void CardDetectTask(void *pvParameters)
             {
                 s_cardInserted = s_cardInsertStatus;
                 /* power off card */
-                SDIO_PowerOffCard(g_sdio.host.base, NULL);
+                SDIO_SetCardPower(&g_sdio, false);
                 if (s_cardInserted)
                 {
                     PRINTF("\r\nCard inserted.\r\n");
                     /* power on the card */
-                    SDIO_PowerOnCard(g_sdio.host.base, NULL);
+                    SDIO_SetCardPower(&g_sdio, true);
                     /* Init card. */
                     if (SDIO_CardInit(&g_sdio))
                     {

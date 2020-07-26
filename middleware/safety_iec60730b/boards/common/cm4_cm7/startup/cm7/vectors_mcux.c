@@ -274,7 +274,7 @@ const vector_entry  __vector_table[] =
     VECTOR_255
 };
 
-#if (!defined(_IMXRT_) && !defined(_MIMX8MN6_CM7_H_))
+#if (!defined(_IMX_))
 const unsigned long __memcfg_table[] __attribute__((section(".memcfg"))) =
 {
    CONFIG_1,

@@ -141,6 +141,7 @@ OP(const Scalar& s, const Derived& d) { \
 }
 
 
+#if !defined(__ICCARM__)
 
 /** \returns an expression of the coefficient-wise \< operator of *this and \a other
   *
@@ -206,6 +207,7 @@ EIGEN_MAKE_CWISE_COMP_OP(operator==, EQ)
   */
 EIGEN_MAKE_CWISE_COMP_OP(operator!=, NEQ)
 
+#endif
 
 #undef EIGEN_MAKE_CWISE_COMP_OP
 #undef EIGEN_MAKE_CWISE_COMP_R_OP

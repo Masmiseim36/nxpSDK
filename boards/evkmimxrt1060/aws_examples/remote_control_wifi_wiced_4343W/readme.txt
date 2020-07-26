@@ -7,9 +7,9 @@ Please take look into section "Board settings" if there are some board limitatio
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.40.2
-- GCC ARM Embedded  8.3.1
-- MCUXpresso  11.1.0
+- IAR embedded Workbench  8.50.1
+- GCC ARM Embedded  9.2.1
+- MCUXpresso  11.2.0
 
 Hardware requirements
 =====================
@@ -43,7 +43,7 @@ Before running the demo it is need to configure AWS IoT Console and update some 
         #define clientcredentialIOT_THING_NAME "MyExample"
 
     In the next step you will get the "device certificate" and the "primary key". The device certificate and private key needs to be opened in text editor and its content copied into the "aws_clientcredential_keys.h".
-    Or you can use the CertificateConfigurator.html (mcu-sdk-2.0\rtos\amazon-freertos\tools\certificate_configuration) to generate the "aws_clientcredential_keys.h".
+    Or you can use the CertificateConfigurator.html (mcu-sdk-2.0\rtos\freertos\tools\certificate_configuration) to generate the "aws_clientcredential_keys.h".
 
     Example:
         #define keyCLIENT_CERTIFICATE_PEM "Paste client certificate here."
@@ -170,10 +170,10 @@ Every mentioned action takes approximately 1-3 seconds.
 1 239 [Tmr Svc] Device credential provisioning succeeded.
 2 240 [Tmr Svc] Starting WiFi...
 
- AsyncInterrupt is not supported 
+ AsyncInterrupt is not supported
 WLAN MAC Address : A0:C9:A0:3D:EE:8F
 WLAN Firmware    : wl0: Feb 12 2018 04:08:14 version 7.79.2 (r683798 CY) FWID 01-27b63357
-WLAN CLM         : API: 12.2 Data: 9.10.39 Compiler: 1.29.4 ClmImport: 1.36.3 Creation: 2018-02-12 04:00:50 
+WLAN CLM         : API: 12.2 Data: 9.10.39 Compiler: 1.29.4 ClmImport: 1.36.3 Creation: 2018-02-12 04:00:50
 3 1177 [Tmr Svc] WiFi module initialized.
 4 4942 [Tmr Svc] WiFi connected to AP Guest.
 5 4942 [Tmr Svc] IP Address acquired 192.168.2.100

@@ -25,11 +25,11 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_USART USART0
+#define DEMO_USART      USART0
 #define DEMO_USART_IRQn BOARD_UART_IRQ
 /* Task priorities. */
 #define uart_task_PRIORITY (configMAX_PRIORITIES - 1)
-#define USART_NVIC_PRIO 5
+#define USART_NVIC_PRIO    5
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -60,8 +60,8 @@ struct rtos_usart_config usart_config = {
 int main(void)
 {
     /* Init board hardware. */
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
     if (xTaskCreate(uart_task, "Uart_task", configMINIMAL_STACK_SIZE + 100, NULL, uart_task_PRIORITY, NULL) != pdPASS)
     {
@@ -86,13 +86,13 @@ static void uart_task(void *pvParameters)
 
     NVIC_SetPriority(DEMO_USART_IRQn, USART_NVIC_PRIO);
 
-    if (0 > USART_RTOS_Init(&handle, &t_handle, &usart_config))
+    if (kStatus_Success != USART_RTOS_Init(&handle, &t_handle, &usart_config))
     {
         vTaskSuspend(NULL);
     }
 
     /* Send introduction message. */
-    if (0 > USART_RTOS_Send(&handle, (uint8_t *)to_send, strlen(to_send)))
+    if (kStatus_Success != USART_RTOS_Send(&handle, (uint8_t *)to_send, strlen(to_send)))
     {
         vTaskSuspend(NULL);
     }

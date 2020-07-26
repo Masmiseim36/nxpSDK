@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  *
@@ -19,6 +19,7 @@
 #include "lwip/prot/dhcp.h"
 #include "netif/ethernet.h"
 #include "enet_ethernetif.h"
+#include "fsl_phy.h"
 #include "ksdk_mbedtls.h"
 
 #include "fsl_debug_console.h"
@@ -27,6 +28,8 @@
 #include "clock_config.h"
 #include "fsl_gpio.h"
 #include "fsl_iomuxc.h"
+#include "fsl_phyksz8081.h"
+#include "fsl_enet_mdio.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -40,9 +43,14 @@
 /* Address of PHY interface. */
 #define EXAMPLE_PHY_ADDRESS BOARD_ENET0_PHY_ADDRESS
 
-/* System clock name. */
-#define EXAMPLE_CLOCK_NAME kCLOCK_CoreSysClk
+/* MDIO operations. */
+#define EXAMPLE_MDIO_OPS enet_ops
 
+/* PHY operations. */
+#define EXAMPLE_PHY_OPS phyksz8081_ops
+
+/* ENET clock frequency. */
+#define EXAMPLE_CLOCK_FREQ CLOCK_GetFreq(kCLOCK_IpgClk)
 
 #ifndef EXAMPLE_NETIF_INIT_FN
 /*! @brief Network interface initialization function. */
@@ -56,6 +64,9 @@
 /*******************************************************************************
  * Variables
  ******************************************************************************/
+
+static mdio_handle_t mdioHandle = {.ops = &EXAMPLE_MDIO_OPS};
+static phy_handle_t phyHandle   = {.phyAddr = EXAMPLE_PHY_ADDRESS, .mdioHandle = &mdioHandle, .ops = &EXAMPLE_PHY_OPS};
 
 /*******************************************************************************
  * Code
@@ -98,10 +109,11 @@ static void httpsclient_task(void *arg)
     static struct netif netif;
     ip4_addr_t netif_ipaddr, netif_netmask, netif_gw;
     ethernetif_config_t enet_config = {
-        .phyAddress = EXAMPLE_PHY_ADDRESS,
-        .clockName  = EXAMPLE_CLOCK_NAME,
+        .phyHandle  = &phyHandle,
         .macAddress = configMAC_ADDR,
     };
+
+    mdioHandle.resource.csrClock_Hz = EXAMPLE_CLOCK_FREQ;
 
     IP4_ADDR(&netif_ipaddr, 0, 0, 0, 0);
     IP4_ADDR(&netif_netmask, 0, 0, 0, 0);
@@ -145,8 +157,8 @@ int main(void)
     gpio_pin_config_t gpio_config = {kGPIO_DigitalOutput, 0, kGPIO_NoIntmode};
 
     BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
     BOARD_InitModuleClock();
 
@@ -163,6 +175,8 @@ int main(void)
     delay();
     GPIO_WritePinOutput(GPIO1, 9, 1);
     CRYPTO_InitHardware();
+
+    mdioHandle.resource.csrClock_Hz = EXAMPLE_CLOCK_FREQ;
 
     if (xTaskCreate(httpsclient_task, "httpsclient_task", 6000, NULL, configMAX_PRIORITIES - 4 /*3*/, NULL) != pdPASS)
     {

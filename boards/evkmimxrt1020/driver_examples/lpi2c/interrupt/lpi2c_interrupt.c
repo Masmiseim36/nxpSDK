@@ -16,7 +16,7 @@
  * Definitions
  ******************************************************************************/
 #define EXAMPLE_LPI2C_MASTER_BASEADDR LPI2C1
-#define EXAMPLE_LPI2C_SLAVE_BASEADDR LPI2C2
+#define EXAMPLE_LPI2C_SLAVE_BASEADDR  LPI2C2
 
 /* Select USB1 PLL (480 MHz) as master lpi2c clock source */
 #define LPI2C_CLOCK_SOURCE_SELECT (0U)
@@ -26,16 +26,16 @@
 #define LPI2C_CLOCK_FREQUENCY ((CLOCK_GetFreq(kCLOCK_Usb1PllClk) / 8) / (LPI2C_CLOCK_SOURCE_DIVIDER + 1U))
 
 #define LPI2C_MASTER_CLOCK_FREQUENCY LPI2C_CLOCK_FREQUENCY
-#define LPI2C_SLAVE_CLOCK_FREQUENCY LPI2C_CLOCK_FREQUENCY
+#define LPI2C_SLAVE_CLOCK_FREQUENCY  LPI2C_CLOCK_FREQUENCY
 
 #define LPI2C_MASTER_IRQ LPI2C1_IRQn
-#define LPI2C_SLAVE_IRQ LPI2C2_IRQn
+#define LPI2C_SLAVE_IRQ  LPI2C2_IRQn
 
 #define LPI2C_MASTER_IRQHandler LPI2C1_IRQHandler
-#define LPI2C_SLAVE_IRQHandler LPI2C2_IRQHandler
+#define LPI2C_SLAVE_IRQHandler  LPI2C2_IRQHandler
 #define LPI2C_MASTER_SLAVE_ADDR_7BIT 0x7EU
-#define LPI2C_BAUDRATE 100000U
-#define LPI2C_DATA_LENGTH 32U
+#define LPI2C_BAUDRATE               100000U
+#define LPI2C_DATA_LENGTH            32U
 
 /*******************************************************************************
  * Prototypes
@@ -108,11 +108,7 @@ void LPI2C_MASTER_IRQHandler(void)
             }
         }
     }
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 void LPI2C_SLAVE_IRQHandler(void)
@@ -164,11 +160,7 @@ void LPI2C_SLAVE_IRQHandler(void)
             }
         }
     }
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 /*!

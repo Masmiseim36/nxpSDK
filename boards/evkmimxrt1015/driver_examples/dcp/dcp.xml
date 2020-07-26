@@ -56,6 +56,7 @@
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>XIP_EXTERNAL_FLASH=1</value>
           <value>XIP_BOOT_HEADER_ENABLE=1</value>
+          <value>DCP_USE_DCACHE=1</value>
           <value>SERIAL_PORT_TYPE_UART=1</value>
         </option>
         <option id="gnu.c.compiler.option.optimization.flags" type="string">

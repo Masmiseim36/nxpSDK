@@ -1,12 +1,12 @@
 Overview
 ========
-The example demonstrates example GUI developed with Crank Storyboard Engine.
+This sample is a simple application that can be used to verify that the board can boot and render graphics to the screen.
 
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.40.2
-- MCUXpresso  11.1.0
+- IAR embedded Workbench  8.50.1
+- MCUXpresso  11.2.0
 
 Hardware requirements
 =====================

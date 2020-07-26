@@ -98,8 +98,8 @@ void TestAesEcb(void)
 #warning Please update cipherAes128 variables to match expected AES ciphertext for your OTP key.
 #endif
 
-    uint8_t cipher[16];
-    uint8_t output[16];
+    AT_NONCACHEABLE_SECTION_INIT(static uint8_t cipher[16]);
+    AT_NONCACHEABLE_SECTION_INIT(static uint8_t output[16]);
     status_t status;
 
     dcp_handle_t m_handle;
@@ -140,8 +140,8 @@ void TestAesCbc(void)
 #warning Please update cipherAes128 variables to match expected AES ciphertext for your OTP key.
 #endif
 
-    uint8_t cipher[16];
-    uint8_t output[16];
+    AT_NONCACHEABLE_SECTION_INIT(static uint8_t cipher[16]);
+    AT_NONCACHEABLE_SECTION_INIT(static uint8_t output[16]);
     status_t status;
 
     dcp_handle_t m_handle;
@@ -177,8 +177,8 @@ void TestSha1(void)
     static const uint8_t message[] = "abcdbcdecdefdefgefghfghighijhijkijkljklmklmnlmnomnopnopq";
 
     /* Expected SHA-1 for the message. */
-    static const unsigned char sha1[] = {0x84, 0x98, 0x3e, 0x44, 0x1c, 0x3b, 0xd2, 0x6e, 0xba, 0xae,
-                                         0x4a, 0xa1, 0xf9, 0x51, 0x29, 0xe5, 0xe5, 0x46, 0x70, 0xf1};
+    static const uint8_t sha1[] = {0x84, 0x98, 0x3e, 0x44, 0x1c, 0x3b, 0xd2, 0x6e, 0xba, 0xae,
+                                   0x4a, 0xa1, 0xf9, 0x51, 0x29, 0xe5, 0xe5, 0x46, 0x70, 0xf1};
 
     dcp_handle_t m_handle;
 
@@ -243,16 +243,7 @@ void TestCrc32(void)
     status_t status;
     size_t outLength;
     unsigned int length;
-    unsigned char output[4];
-
-    static const uint8_t message[] = "abcdbcdecdefdefgefghfghighijhijk";
-
-    /* Expected CRC-32 for the message.
-     * CRC-32 params:
-     * width=32 poly=0x04c11db7 init=0xffffffff refin=false refout=false xorout=0x00000000
-     * http://reveng.sourceforge.net/crc-catalogue/
-     */
-    static const unsigned char crc32[] = {0x7f, 0x04, 0x6a, 0xdd};
+    AT_NONCACHEABLE_SECTION_INIT(static uint8_t output[4]);
 
     dcp_handle_t m_handle;
 
@@ -260,15 +251,68 @@ void TestCrc32(void)
     m_handle.keySlot    = kDCP_KeySlot0;
     m_handle.swapConfig = kDCP_NoSwap;
 
-    length    = sizeof(message) - 1;
+    /************************ Test Messages **************************/
+    static const uint8_t message_32[]                              = "abcdbcdecdefdefgefghfghighijhijk";
+    static const uint8_t __attribute__((aligned(4))) message_256[] = {
+        0x2D, 0x09, 0x73, 0xA7, 0xAA, 0x69, 0xC4, 0xFF, 0xF6, 0xC8, 0x9C, 0x0D, 0xCE, 0x82, 0x19, 0x85,
+        0xB4, 0x2B, 0x8B, 0x20, 0x84, 0x07, 0xCA, 0x66, 0x9E, 0xCF, 0xA5, 0x0B, 0x19, 0x70, 0x04, 0x65,
+        0x33, 0xB1, 0x49, 0xE0, 0xAA, 0x77, 0xE9, 0x17, 0x7F, 0x11, 0xF7, 0x57, 0xE2, 0x40, 0x23, 0x5D,
+        0x81, 0x17, 0x1F, 0x90, 0x3B, 0xE4, 0xAB, 0x7D, 0x63, 0x4D, 0xE1, 0x57, 0x3E, 0x2D, 0x35, 0x0F, /* 64 bytes */
+
+        0x09, 0xA4, 0x33, 0x29, 0x60, 0xB5, 0xF4, 0x08, 0xBB, 0xA1, 0xB1, 0x18, 0xB2, 0x83, 0x3C, 0xDC,
+        0xC8, 0xF5, 0x0B, 0x28, 0x71, 0xA9, 0x62, 0x44, 0x8E, 0x1E, 0x58, 0xE1, 0xA9, 0x4E, 0xD8, 0x15,
+        0x44, 0xF9, 0xFF, 0x1B, 0xED, 0x3C, 0xA1, 0x65, 0xF6, 0xDC, 0x45, 0x64, 0xCF, 0x85, 0x07, 0xF2,
+        0x83, 0x74, 0x54, 0xD3, 0xD4, 0xA0, 0xDA, 0xEC, 0x4D, 0x88, 0x9D, 0x9B, 0x25, 0xFA, 0x6D, 0xD0, /* 128 bytes */
+
+        0x41, 0xBA, 0x93, 0xA7, 0x60, 0x46, 0x8F, 0xD3, 0x06, 0x8A, 0x98, 0xBD, 0xFB, 0x8B, 0x64, 0xA0,
+        0x33, 0x23, 0x5A, 0x65, 0x9C, 0x57, 0x14, 0x28, 0xE2, 0x52, 0xCE, 0x6F, 0x5A, 0x4D, 0xE2, 0x63,
+        0x5E, 0x1C, 0xE9, 0xF6, 0xE7, 0x3E, 0x80, 0x25, 0x85, 0xAB, 0xED, 0xFE, 0xBB, 0x98, 0x83, 0xFB,
+        0xCF, 0x43, 0x71, 0x4F, 0xF3, 0x94, 0x76, 0x08, 0x72, 0x5E, 0xEB, 0x11, 0xF3, 0xDE, 0xF1, 0x3C, /* 192 bytes */
+
+        0x95, 0xCF, 0x1B, 0x8F, 0x7D, 0xF8, 0x59, 0x2C, 0x4F, 0xCB, 0xB1, 0xBB, 0xCF, 0x74, 0x47, 0x42,
+        0x1E, 0x69, 0x80, 0x26, 0xAA, 0x56, 0xEE, 0x91, 0xE9, 0x43, 0xB8, 0x7F, 0xF9, 0x01, 0xCB, 0x0C,
+        0x1D, 0xF2, 0xFD, 0xAD, 0xC2, 0xB0, 0xC2, 0x00, 0x53, 0x09, 0x37, 0x07, 0xD0, 0x2E, 0x43, 0xC9,
+        0xED, 0x08, 0x3C, 0x38, 0xE8, 0x1B, 0xC3, 0xBD, 0x7C, 0x59, 0xAA, 0xCA, 0xEA, 0x06, 0x34, 0x76, /* 256 bytes */
+        0x00, 0x00, 0x00, 0x00};
+    /* Expected CRC-32 for the message.
+     * CRC-32 params:
+     * width=32 poly=0x04c11db7 init=0xffffffff refin=false refout=false xorout=0x00000000
+     * http://reveng.sourceforge.net/crc-catalogue/
+     */
+    static const unsigned char crc32_32[]  = {0x7f, 0x04, 0x6a, 0xdd};
+    static const unsigned char crc32_256[] = {0xce, 0xda, 0x1d, 0x36};
+    static const unsigned char crc32_260[] = {0x07, 0xe3, 0xde, 0x8e};
+
+    /************************ CRC-32 - Test Message 32 **************************/
+    length    = sizeof(message_32) - 1;
     outLength = sizeof(output);
     memset(&output, 0, outLength);
 
-    /************************ CRC-32 **************************/
-    status = DCP_HASH(DCP, &m_handle, kDCP_Crc32, message, length, output, &outLength);
+    status = DCP_HASH(DCP, &m_handle, kDCP_Crc32, message_32, length, output, &outLength);
     TEST_ASSERT(kStatus_Success == status);
     TEST_ASSERT(outLength == 4u);
-    TEST_ASSERT(memcmp(output, crc32, outLength) == 0);
+    TEST_ASSERT(memcmp(output, crc32_32, outLength) == 0);
+
+    /************************ CRC-32 - Test Message 256 *************************/
+
+    length    = 256;
+    outLength = sizeof(output);
+    memset(&output, 0, outLength);
+
+    status = DCP_HASH(DCP, &m_handle, kDCP_Crc32, message_256, length, output, &outLength);
+    TEST_ASSERT(kStatus_Success == status);
+    TEST_ASSERT(outLength == 4u);
+    TEST_ASSERT(memcmp(output, crc32_256, outLength) == 0);
+
+    /************************ CRC-32 - Test Message 260 *************************/
+    length    = 260;
+    outLength = sizeof(output);
+    memset(&output, 0, outLength);
+
+    status = DCP_HASH(DCP, &m_handle, kDCP_Crc32, message_256, length, output, &outLength);
+    TEST_ASSERT(kStatus_Success == status);
+    TEST_ASSERT(outLength == 4u);
+    TEST_ASSERT(memcmp(output, crc32_260, outLength) == 0);
 
     PRINTF("CRC-32 Test pass\r\n");
 }
@@ -288,6 +332,11 @@ int main(void)
 
     /* Data cache must be temporarily disabled to be able to use sdram */
     SCB_DisableDCache();
+
+    /* Note: When DCACHE is enabled input and output buffers should be in non-cached memory
+     * or handled properly (DCACHE Clean and Invalidate).
+     * Disable DCHACHE by calling SCB_DisableDCache();
+     */
 
     PRINTF("DCP Driver Example\r\n\r\n");
 

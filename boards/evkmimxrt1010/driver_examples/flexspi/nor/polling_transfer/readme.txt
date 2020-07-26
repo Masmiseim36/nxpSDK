@@ -8,10 +8,10 @@ Example will first erase the sector and program a page into the flash, at last c
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.3
-- Keil MDK  5.27
-- GCC ARM Embedded  8.2.1
-- MCUXpresso  11.0.1
+- IAR embedded Workbench  8.50.1
+- Keil MDK  5.30
+- GCC ARM Embedded  9.2.1
+- MCUXpresso  11.2.0
 
 Hardware requirements
 =====================
@@ -41,7 +41,7 @@ When the example runs successfully, you can see the similar information from the
 For flexspi_nor targets, the result is:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 FLEXSPI example started!
-Vendor ID: 0x17
+Vendor ID: 0x1f
 Erasing Serial NOR over FlexSPI...
 Erase data - successfully.
 Program data - successfully.

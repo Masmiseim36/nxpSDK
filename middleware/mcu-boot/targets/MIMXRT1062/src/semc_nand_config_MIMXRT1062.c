@@ -1,16 +1,16 @@
 /*
-* Copyright 2017-2018 NXP
-* All rights reserved.
-*
-* SPDX-License-Identifier: BSD-3-Clause
-*/
+ * Copyright 2017-2020 NXP
+ * All rights reserved.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
 
+#include "bl_semc.h"
 #include "bootloader_common.h"
+#include "fsl_assert.h"
 #include "fsl_device_registers.h"
-#include "semc/fsl_semc.h"
-#include "semc_nand/semc_nand_flash.h"
 #include "fusemap.h"
-#include "utilities/fsl_assert.h"
+#include "semc_nand_flash.h"
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
 ////////////////////////////////////////////////////////////////////////////////
@@ -34,7 +34,7 @@ enum
 #if (SEMC_NAND_FUSE_MAP_VERSION == 0)
     kFuseSemcNand_EccType_Sw = 0U,
     kFuseSemcNand_EccType_Hw = 1U,
-#elif(SEMC_NAND_FUSE_MAP_VERSION == 1)
+#elif (SEMC_NAND_FUSE_MAP_VERSION == 1)
     kFuseSemcNand_EccType_Hw = 0U,
     kFuseSemcNand_EccType_Sw = 1U,
 #endif
@@ -77,7 +77,7 @@ enum
 #if (SEMC_NAND_FUSE_MAP_VERSION == 0)
     kFuseSemcNand_RdyPolarity_High = 0U,
     kFuseSemcNand_RdyPolarity_Low = 1U,
-#elif(SEMC_NAND_FUSE_MAP_VERSION == 1)
+#elif (SEMC_NAND_FUSE_MAP_VERSION == 1)
     kFuseSemcNand_RdyPolarity_Low = 0U,
     kFuseSemcNand_RdyPolarity_High = 1U,
 #endif
@@ -89,7 +89,7 @@ enum
 #if (SEMC_NAND_FUSE_MAP_VERSION == 0)
     kFuseSemcNand_ReadyCheckType_RB = 0U,
     kFuseSemcNand_ReadyCheckType_SR = 1U,
-#elif(SEMC_NAND_FUSE_MAP_VERSION == 1)
+#elif (SEMC_NAND_FUSE_MAP_VERSION == 1)
     kFuseSemcNand_ReadyCheckType_SR = 0U,
     kFuseSemcNand_ReadyCheckType_RB = 1U,
 #endif

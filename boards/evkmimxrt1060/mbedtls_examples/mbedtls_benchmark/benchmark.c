@@ -39,7 +39,11 @@
 #include "fsl_debug_console.h"
 #include "fsl_clock.h"
 #include "board.h"
+#if defined(MBEDTLS_NXP_SSSAPI)
+#include "sssapi_mbedtls.h"
+#else
 #include "ksdk_mbedtls.h"
+#endif
 
 #define mbedtls_printf PRINTF
 #define mbedtls_snprintf snprintf
@@ -377,6 +381,10 @@ static int bench_print_features(void)
     text = "DCP HW accelerated";
 #elif defined(MBEDTLS_FREESCALE_HASHCRYPT_SHA256)
     text = "HASHCRYPT HW accelerated";
+#elif defined(MBEDTLS_NXP_SENTINEL200)
+    text = "S200 HW accelerated";
+#elif defined(MBEDTLS_NXP_SENTINEL300)
+    text = "S300 HW accelerated";
 #else
     text = "Software implementation";
 #endif
@@ -393,6 +401,10 @@ static int bench_print_features(void)
     text = "DCP HW accelerated";
 #elif defined(MBEDTLS_FREESCALE_HASHCRYPT_AES)
     text = "HASHCRYPT HW accelerated";
+#elif defined(MBEDTLS_NXP_SENTINEL200)
+    text = "SW AES, S200 HW accelerated CCM and CMAC";
+#elif defined(MBEDTLS_NXP_SENTINEL300)
+    text = "SW AES, S300 HW accelerated CCM and CMAC";
 #else
     text = "Software implementation";
 #endif
@@ -428,7 +440,15 @@ static int bench_print_features(void)
 #else
     text = "Software implementation";
 #endif
-    mbedtls_printf("  Asymmetric encryption: %s\r\n\n", text);
+    mbedtls_printf("  Asymmetric encryption: %s\r\n", text);
+#if defined(MBEDTLS_NXP_SENTINEL200)
+    text = "S200 HW accelerated ECDSA and ECDH";
+#elif defined(MBEDTLS_NXP_SENTINEL300)
+    text = "S300 HW accelerated ECDSA and ECDH";
+#else
+    text = "Software implementation";
+#endif
+    mbedtls_printf("  ECC: %s\r\n\n", text);
     return 0;
 }
 
@@ -445,8 +465,8 @@ int main( int argc, char *argv[] )
 #if defined(FREESCALE_KSDK_BM)
     /* HW init */
     BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
 
     /* Data cache must be temporarily disabled to be able to use sdram */

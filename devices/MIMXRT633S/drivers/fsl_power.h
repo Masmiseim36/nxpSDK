@@ -19,8 +19,8 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief power driver version 2.2.0. */
-#define FSL_POWER_DRIVER_VERSION (MAKE_VERSION(2, 2, 0))
+/*! @brief power driver version 2.2.1. */
+#define FSL_POWER_DRIVER_VERSION (MAKE_VERSION(2, 2, 1))
 /*@}*/
 
 #define MAKE_PD_BITS(reg, slot) (((reg) << 8) | (slot))
@@ -301,7 +301,7 @@ extern "C" {
 static inline void POWER_EnablePD(pd_bit_t en)
 {
     /* PDRUNCFGSET */
-    SYSCTL0_PDRCFGSET_REG(en >> 8UL) = (1UL << (en & 0xFFU));
+    SYSCTL0_PDRCFGSET_REG(((uint32_t)en) >> 8UL) = (1UL << (((uint32_t)en) & 0xFFU));
 }
 
 /*!
@@ -312,7 +312,7 @@ static inline void POWER_EnablePD(pd_bit_t en)
 static inline void POWER_DisablePD(pd_bit_t en)
 {
     /* PDRUNCFGCLR */
-    SYSCTL0_PDRCFGCLR_REG(en >> 8UL) = (1UL << (en & 0xFFU));
+    SYSCTL0_PDRCFGCLR_REG(((uint32_t)en) >> 8UL) = (1UL << (((uint32_t)en) & 0xFFU));
 }
 
 /*!
@@ -385,7 +385,9 @@ void POWER_SetAnalogBuffer(bool enable);
  */
 static inline uint32_t POWER_GetPmicMode(pmic_mode_reg_t reg)
 {
-    return ((SYSCTL0_TUPLE_REG(reg) & (SYSCTL0_PDSLEEPCFG0_PMIC_MODE0_MASK | SYSCTL0_PDSLEEPCFG0_PMIC_MODE1_MASK)) >>
+    uint32_t mode = (uint32_t)reg;
+
+    return ((SYSCTL0_TUPLE_REG(mode) & (SYSCTL0_PDSLEEPCFG0_PMIC_MODE0_MASK | SYSCTL0_PDSLEEPCFG0_PMIC_MODE1_MASK)) >>
             SYSCTL0_PDSLEEPCFG0_PMIC_MODE0_SHIFT);
 }
 
@@ -396,9 +398,11 @@ static inline uint32_t POWER_GetPmicMode(pmic_mode_reg_t reg)
  */
 static inline body_bias_mode_t POWER_GetBodyBiasMode(pmic_mode_reg_t reg)
 {
-    return (body_bias_mode_t)(
-        (SYSCTL0_TUPLE_REG(reg) & (SYSCTL0_PDSLEEPCFG0_RBB_PD_MASK | SYSCTL0_PDSLEEPCFG0_FBB_PD_MASK)) >>
-        SYSCTL0_PDSLEEPCFG0_RBB_PD_SHIFT);
+    uint32_t mode   = (uint32_t)reg;
+    uint32_t bbMode = (SYSCTL0_TUPLE_REG(mode) & (SYSCTL0_PDSLEEPCFG0_RBB_PD_MASK | SYSCTL0_PDSLEEPCFG0_FBB_PD_MASK)) >>
+                      SYSCTL0_PDSLEEPCFG0_RBB_PD_SHIFT;
+
+    return (body_bias_mode_t)bbMode;
 }
 
 /*!
@@ -442,6 +446,19 @@ void POWER_SetLvdFallingTripVoltage(power_lvd_falling_trip_vol_val_t volt);
  * @return  Current LVD voltage.
  */
 power_lvd_falling_trip_vol_val_t POWER_GetLvdFallingTripVoltage(void);
+
+/**
+ * @brief   Disable low voltage detection, no reset or interrupt is triggered when vddcore voltage drops below
+ * threshold.
+ * NOTE: This API is for internal use only. Application should not touch it.
+ */
+void POWER_DisableLVD(void);
+
+/**
+ * @brief   Restore low voltage detection setting.
+ * NOTE: This API is for internal use only. Application should not touch it.
+ */
+void POWER_RestoreLVD(void);
 
 /**
  * @brief   Set PMIC_MODE pins configure value.

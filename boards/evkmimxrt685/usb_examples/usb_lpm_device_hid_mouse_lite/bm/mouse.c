@@ -43,11 +43,11 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define APP_USER_WAKEUP_KEY_GPIO BOARD_SW1_GPIO
-#define APP_USER_WAKEUP_KEY_PORT BOARD_SW1_GPIO_PORT
-#define APP_USER_WAKEUP_KEY_PIN BOARD_SW1_GPIO_PIN
+#define APP_USER_WAKEUP_KEY_GPIO         BOARD_SW1_GPIO
+#define APP_USER_WAKEUP_KEY_PORT         BOARD_SW1_GPIO_PORT
+#define APP_USER_WAKEUP_KEY_PIN          BOARD_SW1_GPIO_PIN
 #define APP_USER_WAKEUP_KEY_INPUTMUX_SEL kINPUTMUX_GpioPort1Pin1ToPintsel
-#define APP_DEEPSLEEP_RUNCFG0 (SYSCTL0_PDSLEEPCFG0_RBB_PD_MASK)
+#define APP_DEEPSLEEP_RUNCFG0            (SYSCTL0_PDSLEEPCFG0_RBB_PD_MASK)
 #define APP_DEEPSLEEP_RUNCFG1                                                              \
     (SYSCTL0_PDSLEEPCFG1_FLEXSPI_SRAM_APD_MASK | SYSCTL0_PDSLEEPCFG1_USBHS_SRAM_PPD_MASK | \
      SYSCTL0_PDSLEEPCFG1_USBHS_SRAM_APD_MASK)
@@ -439,6 +439,8 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
         case kUSB_DeviceEventAttach:
         {
             usb_echo("USB device attached.\r\n");
+            /*Add one delay here to make the DP pull down long enough to allow host to detect the previous disconnection.*/
+            SDK_DelayAtLeastUs(5000, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
             USB_DeviceRun(g_UsbDeviceHidMouse.deviceHandle);
         }
         break;
@@ -645,6 +647,8 @@ static void USB_DeviceApplicationInit(void)
     USB_DeviceIsrEnable();
 
     /* Start USB device HID mouse */
+    /*Add one delay here to make the DP pull down long enough to allow host to detect the previous disconnection.*/
+    SDK_DelayAtLeastUs(5000, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
     USB_DeviceRun(g_UsbDeviceHidMouse.deviceHandle);
 }
 

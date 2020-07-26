@@ -30,13 +30,16 @@
 
 /* CPU load measurement SysTick START / STOP macros */
 #define SYSTICK_START_COUNT() (SysTick->VAL = SysTick->LOAD)
-#define SYSTICK_STOP_COUNT(par1) uint32_t val = SysTick->VAL; uint32_t load = SysTick->LOAD; par1 = load - val
-   
+#define SYSTICK_STOP_COUNT(par1)   \
+    uint32_t val  = SysTick->VAL;  \
+    uint32_t load = SysTick->LOAD; \
+    par1          = load - val
+
 /* Three instruction added after interrupt flag clearing as required */
 #define M1_END_OF_ISR \
     {                 \
-        __DSB(); \
-        __ISB(); \
+        __DSB();      \
+        __ISB();      \
     }
 
 #if defined(__cplusplus)
@@ -46,7 +49,7 @@ extern "C" {
 /*******************************************************************************
  * API
  ******************************************************************************/
-  
+
 /* Init SDK HW */
 void BOARD_Init(void);
 /* ADC COCO interrupt */
@@ -59,7 +62,7 @@ void GPIO5_Combined_0_15_IRQHandler(void);
 void DemoSpeedStimulator(void);
 /* Demo Position Stimulator */
 void DemoPositionStimulator(void);
-    
+
 void BOARD_InitUART(uint32_t u32BaudRate);
 void BOARD_InitSysTick(void);
 void BOARD_InitGPIO(void);

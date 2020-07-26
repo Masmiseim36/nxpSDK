@@ -17,12 +17,12 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_I2C_SLAVE_BASE I2C4
+#define EXAMPLE_I2C_SLAVE_BASE    I2C4
 #define I2C_SLAVE_CLOCK_FREQUENCY CLOCK_GetFlexCommClkFreq(4U)
 #define EXAMPLE_I2C_SLAVE ((I2C_Type *)EXAMPLE_I2C_SLAVE_BASE)
 
 #define I2C_MASTER_SLAVE_ADDR_7BIT 0x7EU
-#define I2C_DATA_LENGTH 34U
+#define I2C_DATA_LENGTH            34U
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/

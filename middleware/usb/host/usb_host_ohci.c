@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 NXP
+ * Copyright 2016,2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -17,6 +17,9 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+
+/* reset recovery time (ms) */
+#define USB_HOST_OHCI_PORT_RESET_RECOVERY_DELAY (11U)
 
 /*******************************************************************************
  * Prototypes
@@ -57,30 +60,30 @@ static usb_host_ohci_state_struct_t s_UsbHostOhciState[USB_HOST_CONFIG_OHCI];
  ******************************************************************************/
 static void USB_HostOhciDisableIsr(usb_host_ohci_state_struct_t *usbHostState)
 {
-    USB_OSA_SR_ALLOC();
+    OSA_SR_ALLOC();
 
     /* Enter critical */
-    USB_OSA_ENTER_CRITICAL();
+    OSA_ENTER_CRITICAL();
     if (!usbHostState->isrLevel)
     {
         NVIC_DisableIRQ((IRQn_Type)usbHostState->isrNumber);
     }
     usbHostState->isrLevel++;
-    USB_OSA_EXIT_CRITICAL();
+    OSA_EXIT_CRITICAL();
 }
 
 static void USB_HostOhciEnableIsr(usb_host_ohci_state_struct_t *usbHostState)
 {
-    USB_OSA_SR_ALLOC();
+    OSA_SR_ALLOC();
 
     /* Enter critical */
-    USB_OSA_ENTER_CRITICAL();
+    OSA_ENTER_CRITICAL();
     usbHostState->isrLevel--;
     if (!usbHostState->isrLevel)
     {
         NVIC_EnableIRQ((IRQn_Type)usbHostState->isrNumber);
     }
-    USB_OSA_EXIT_CRITICAL();
+    OSA_EXIT_CRITICAL();
 }
 
 static void USB_HostOhciDelay(usb_host_ohci_state_struct_t *usbHostState, uint32_t ms)
@@ -128,7 +131,7 @@ static usb_status_t USB_HostOhciControlBus(usb_host_ohci_state_struct_t *usbHost
             if (usbHostState->usbRegBase->HcRhPortStatus[0] & USB_HOST_OHCI_RHPORTSTATUS_CCS_MASK)
             {
                 usb_host_instance_t *hostPointer = (usb_host_instance_t *)usbHostState->hostHandle;
-                portStatus = usbHostState->usbRegBase->HcRhPortStatus[0];
+                portStatus                       = usbHostState->usbRegBase->HcRhPortStatus[0];
 
                 portStatus &= ~USB_HOST_OHCI_RHPORTSTATUS_WIC;
                 portStatus |= USB_HOST_OHCI_RHPORTSTATUS_PSS_MASK;
@@ -140,7 +143,7 @@ static usb_status_t USB_HostOhciControlBus(usb_host_ohci_state_struct_t *usbHost
                               USB_HOST_OHCI_CONTROL_RWC_MASK | USB_HOST_OHCI_CONTROL_RWE_MASK;
                 usbHostState->usbRegBase->HcControl = portStatus;
 
-                usbHostState->matchTick = hostPointer->hwTick;
+                usbHostState->matchTick        = hostPointer->hwTick;
                 usbHostState->busSuspendStatus = kBus_OhciStartSuspend;
 
                 while ((hostPointer->hwTick - usbHostState->matchTick) <= 3)
@@ -166,7 +169,7 @@ static usb_status_t USB_HostOhciControlBus(usb_host_ohci_state_struct_t *usbHost
                 portStatus &= ~(USB_HOST_OHCI_RHPORTSTATUS_WIC);
                 portStatus |= USB_HOST_OHCI_RHPORTSTATUS_POCI_MASK;
                 usbHostState->usbRegBase->HcRhPortStatus[0] = portStatus;
-                usbHostState->busSuspendStatus = kBus_OhciStartResume;
+                usbHostState->busSuspendStatus              = kBus_OhciStartResume;
             }
             else
             {
@@ -177,13 +180,13 @@ static usb_status_t USB_HostOhciControlBus(usb_host_ohci_state_struct_t *usbHost
                                 USB_HOST_OHCI_CONTROL_RWC_MASK);
                 portStatus |= USB_HOST_OHCI_CONTROL_HCFS(USB_HOST_OHCI_CONTROL_HCFS_OPERATIONAL);
                 usbHostState->usbRegBase->HcControl = portStatus;
-                portStatus = usbHostState->usbRegBase->HcRhPortStatus[0];
+                portStatus                          = usbHostState->usbRegBase->HcRhPortStatus[0];
                 portStatus &= ~(USB_HOST_OHCI_RHPORTSTATUS_WIC);
                 portStatus |= USB_HOST_OHCI_RHPORTSTATUS_PES_MASK;
                 usbHostState->usbRegBase->HcRhPortStatus[0] = portStatus;
-                hostPointer->suspendedDevice = NULL;
-                usbHostState->busSuspendStatus = kBus_OhciIdle;
-                status = kStatus_USB_Error;
+                hostPointer->suspendedDevice                = NULL;
+                usbHostState->busSuspendStatus              = kBus_OhciIdle;
+                status                                      = kStatus_USB_Error;
             }
             break;
 #endif
@@ -251,19 +254,19 @@ static uint32_t USB_HostOhciBusTime(uint8_t speed, uint8_t pipeType, uint8_t dir
 static usb_status_t USB_HostOhciGetPipe(usb_host_ohci_pipe_struct_t **pipeQueue, usb_host_ohci_pipe_struct_t **pipe)
 {
     usb_status_t error = kStatus_USB_Busy;
-    USB_OSA_SR_ALLOC();
+    OSA_SR_ALLOC();
 
     /* get a pipe instance */
     /* Enter critical */
-    USB_OSA_ENTER_CRITICAL();
+    OSA_ENTER_CRITICAL();
     if (NULL != (*pipeQueue))
     {
-        *pipe = *pipeQueue;
+        *pipe      = *pipeQueue;
         *pipeQueue = (usb_host_ohci_pipe_struct_t *)((*pipe)->pipeCommon.next);
-        error = kStatus_USB_Success;
+        error      = kStatus_USB_Success;
     }
     /* Exit critical */
-    USB_OSA_EXIT_CRITICAL();
+    OSA_EXIT_CRITICAL();
     return error;
 }
 
@@ -272,18 +275,18 @@ static usb_status_t USB_HostOhciRemovePipe(usb_host_ohci_pipe_struct_t **pipeQue
     usb_host_ohci_pipe_struct_t *p = *pipeQueue;
     usb_host_ohci_pipe_struct_t *pre;
 
-    USB_OSA_SR_ALLOC();
+    OSA_SR_ALLOC();
 
     /* get a pipe instance */
     /* Enter critical */
-    USB_OSA_ENTER_CRITICAL();
+    OSA_ENTER_CRITICAL();
     pre = NULL;
     while (NULL != p)
     {
         if (p != pipe)
         {
             pre = p;
-            p = (usb_host_ohci_pipe_struct_t *)p->pipeCommon.next;
+            p   = (usb_host_ohci_pipe_struct_t *)p->pipeCommon.next;
         }
         else
         {
@@ -298,7 +301,7 @@ static usb_status_t USB_HostOhciRemovePipe(usb_host_ohci_pipe_struct_t **pipeQue
             break;
         }
     }
-    USB_OSA_EXIT_CRITICAL();
+    OSA_EXIT_CRITICAL();
     return kStatus_USB_Success;
 }
 
@@ -306,11 +309,11 @@ static usb_status_t USB_HostOhciInsertPipe(usb_host_ohci_pipe_struct_t **pipeQue
 {
     usb_host_ohci_pipe_struct_t *p = *pipeQueue;
 
-    USB_OSA_SR_ALLOC();
+    OSA_SR_ALLOC();
 
     /* get a pipe instance */
     /* Enter critical */
-    USB_OSA_ENTER_CRITICAL();
+    OSA_ENTER_CRITICAL();
     while (NULL != p)
     {
         if (p != pipe)
@@ -325,9 +328,9 @@ static usb_status_t USB_HostOhciInsertPipe(usb_host_ohci_pipe_struct_t **pipeQue
     if (NULL == p)
     {
         pipe->pipeCommon.next = (usb_host_pipe_t *)(*pipeQueue);
-        *pipeQueue = pipe;
+        *pipeQueue            = pipe;
     }
-    USB_OSA_EXIT_CRITICAL();
+    OSA_EXIT_CRITICAL();
     return kStatus_USB_Success;
 }
 
@@ -337,14 +340,14 @@ static usb_status_t USB_HostOhciGetGtd(usb_host_ohci_state_struct_t *usbHostStat
 {
     usb_host_ohci_general_transfer_descritpor_struct_t *p = NULL;
     uint32_t *tmp;
-    USB_OSA_SR_ALLOC();
+    OSA_SR_ALLOC();
 
     /* get a td */
     /* Enter critical */
-    USB_OSA_ENTER_CRITICAL();
+    OSA_ENTER_CRITICAL();
     if (count > usbHostState->gtdCount)
     {
-        USB_OSA_EXIT_CRITICAL();
+        OSA_EXIT_CRITICAL();
         return kStatus_USB_Busy;
     }
     *gtd = NULL;
@@ -361,7 +364,7 @@ static usb_status_t USB_HostOhciGetGtd(usb_host_ohci_state_struct_t *usbHostStat
         p = usbHostState->gtdList;
 
         usbHostState->gtdList = (usb_host_ohci_general_transfer_descritpor_struct_t *)usbHostState->gtdList->nextGtd;
-        tmp = (uint32_t *)(p);
+        tmp                   = (uint32_t *)(p);
         usbHostState->gtdCount--;
         for (int i = 0; i < (sizeof(usb_host_ohci_general_transfer_descritpor_struct_t) / sizeof(uint32_t)); i++)
         {
@@ -371,12 +374,12 @@ static usb_status_t USB_HostOhciGetGtd(usb_host_ohci_state_struct_t *usbHostStat
     }
     if (NULL == p)
     {
-        USB_OSA_EXIT_CRITICAL();
+        OSA_EXIT_CRITICAL();
         return kStatus_USB_Busy;
     }
     p->NextTD = 0U;
     /* Exit critical */
-    USB_OSA_EXIT_CRITICAL();
+    OSA_EXIT_CRITICAL();
     return kStatus_USB_Success;
 }
 
@@ -384,7 +387,7 @@ static usb_status_t USB_HostOhciFreeGtd(usb_host_ohci_state_struct_t *usbHostSta
                                         usb_host_ohci_general_transfer_descritpor_struct_t *gtd)
 {
     usb_host_ohci_general_transfer_descritpor_struct_t *p;
-    USB_OSA_SR_ALLOC();
+    OSA_SR_ALLOC();
 
     if (!gtd)
     {
@@ -393,22 +396,22 @@ static usb_status_t USB_HostOhciFreeGtd(usb_host_ohci_state_struct_t *usbHostSta
 
     /* free a td */
     /* Enter critical */
-    USB_OSA_ENTER_CRITICAL();
+    OSA_ENTER_CRITICAL();
     p = usbHostState->gtdList;
     while (p)
     {
         if (p == gtd)
         {
-            USB_OSA_EXIT_CRITICAL();
+            OSA_EXIT_CRITICAL();
             return kStatus_USB_Success;
         }
         p = (usb_host_ohci_general_transfer_descritpor_struct_t *)p->nextGtd;
     }
-    gtd->nextGtd = usbHostState->gtdList;
+    gtd->nextGtd          = usbHostState->gtdList;
     usbHostState->gtdList = gtd;
     usbHostState->gtdCount++;
     /* Exit critical */
-    USB_OSA_EXIT_CRITICAL();
+    OSA_EXIT_CRITICAL();
     return kStatus_USB_Success;
 }
 
@@ -419,14 +422,14 @@ static usb_status_t USB_HostOhciGetItd(usb_host_ohci_state_struct_t *usbHostStat
 {
     usb_host_ohci_isochronous_transfer_descritpor_struct_t *p = NULL;
     uint32_t *tmp;
-    USB_OSA_SR_ALLOC();
+    OSA_SR_ALLOC();
 
     /* free a td */
     /* Enter critical */
-    USB_OSA_ENTER_CRITICAL();
+    OSA_ENTER_CRITICAL();
     if (count > usbHostState->itdCount)
     {
-        USB_OSA_EXIT_CRITICAL();
+        OSA_EXIT_CRITICAL();
         return kStatus_USB_Busy;
     }
     *itd = NULL;
@@ -440,9 +443,9 @@ static usb_status_t USB_HostOhciGetItd(usb_host_ohci_state_struct_t *usbHostStat
         {
             p->NextTD = (uint32_t)usbHostState->itdList;
         }
-        p = usbHostState->itdList;
+        p                     = usbHostState->itdList;
         usbHostState->itdList = (usb_host_ohci_isochronous_transfer_descritpor_struct_t *)usbHostState->itdList->NextTD;
-        tmp = (uint32_t *)(p);
+        tmp                   = (uint32_t *)(p);
         usbHostState->itdCount--;
         for (int i = 0; i < (sizeof(usb_host_ohci_isochronous_transfer_descritpor_struct_t) / sizeof(uint32_t)); i++)
         {
@@ -452,12 +455,12 @@ static usb_status_t USB_HostOhciGetItd(usb_host_ohci_state_struct_t *usbHostStat
     }
     if (NULL == p)
     {
-        USB_OSA_EXIT_CRITICAL();
+        OSA_EXIT_CRITICAL();
         return kStatus_USB_Busy;
     }
     p->NextTD = 0U;
     /* Exit critical */
-    USB_OSA_EXIT_CRITICAL();
+    OSA_EXIT_CRITICAL();
     return kStatus_USB_Success;
 }
 
@@ -466,7 +469,7 @@ static usb_status_t USB_HostOhciFreeItd(usb_host_ohci_state_struct_t *usbHostSta
 {
     usb_host_ohci_isochronous_transfer_descritpor_struct_t *p;
     usb_host_ohci_isochronous_transfer_descritpor_struct_t *pre;
-    USB_OSA_SR_ALLOC();
+    OSA_SR_ALLOC();
 
     if (!itd)
     {
@@ -475,17 +478,17 @@ static usb_status_t USB_HostOhciFreeItd(usb_host_ohci_state_struct_t *usbHostSta
     /* free a td */
     /* Enter critical */
     pre = NULL;
-    USB_OSA_ENTER_CRITICAL();
+    OSA_ENTER_CRITICAL();
     p = usbHostState->itdList;
     while (p)
     {
         if (p == itd)
         {
-            USB_OSA_EXIT_CRITICAL();
+            OSA_EXIT_CRITICAL();
             return kStatus_USB_Success;
         }
         pre = p;
-        p = (usb_host_ohci_isochronous_transfer_descritpor_struct_t *)p->NextTD;
+        p   = (usb_host_ohci_isochronous_transfer_descritpor_struct_t *)p->NextTD;
     }
     if (NULL == pre)
     {
@@ -498,7 +501,7 @@ static usb_status_t USB_HostOhciFreeItd(usb_host_ohci_state_struct_t *usbHostSta
     itd->NextTD = 0U;
     usbHostState->itdCount++;
     /* Exit critical */
-    USB_OSA_EXIT_CRITICAL();
+    OSA_EXIT_CRITICAL();
     return kStatus_USB_Success;
 }
 #endif
@@ -548,7 +551,7 @@ static usb_status_t USB_HostOhciPortChange(usb_host_ohci_state_struct_t *usbHost
             if (kBus_OhciIdle != usbHostState->busSuspendStatus)
             {
                 usb_host_instance_t *hostPointer = (usb_host_instance_t *)usbHostState->hostHandle;
-                portStatus = usbHostState->usbRegBase->HcRhPortStatus[i];
+                portStatus                       = usbHostState->usbRegBase->HcRhPortStatus[i];
                 portStatus &= ~USB_HOST_OHCI_RHPORTSTATUS_WIC;
                 usbHostState->usbRegBase->HcRhPortStatus[i] = portStatus | USB_HOST_OHCI_RHPORTSTATUS_PSSC_MASK;
                 while ((usbHostState->usbRegBase->HcRhPortStatus[i] & USB_HOST_OHCI_RHPORTSTATUS_PSS_MASK))
@@ -559,12 +562,12 @@ static usb_status_t USB_HostOhciPortChange(usb_host_ohci_state_struct_t *usbHost
                                 USB_HOST_OHCI_CONTROL_RWC_MASK);
                 portStatus |= USB_HOST_OHCI_CONTROL_HCFS(USB_HOST_OHCI_CONTROL_HCFS_OPERATIONAL);
                 usbHostState->usbRegBase->HcControl = portStatus;
-                portStatus = usbHostState->usbRegBase->HcRhPortStatus[i];
+                portStatus                          = usbHostState->usbRegBase->HcRhPortStatus[i];
                 portStatus &= ~(USB_HOST_OHCI_RHPORTSTATUS_WIC);
                 portStatus |= USB_HOST_OHCI_RHPORTSTATUS_PES_MASK;
                 usbHostState->usbRegBase->HcRhPortStatus[i] = portStatus;
-                hostPointer->suspendedDevice = NULL;
-                usbHostState->busSuspendStatus = kBus_OhciIdle;
+                hostPointer->suspendedDevice                = NULL;
+                usbHostState->busSuspendStatus              = kBus_OhciIdle;
             }
 #endif
             uint32_t sofStart =
@@ -600,7 +603,7 @@ static usb_status_t USB_HostOhciPortChange(usb_host_ohci_state_struct_t *usbHost
                     if (portStatus & USB_HOST_OHCI_RHPORTSTATUS_PSSC_MASK)
                     {
                         usb_host_instance_t *hostPointer = (usb_host_instance_t *)usbHostState->hostHandle;
-                        usbHostState->busSuspendStatus = kBus_OhciStartResume;
+                        usbHostState->busSuspendStatus   = kBus_OhciStartResume;
                         /* call host callback function, function is initialized in USB_HostInit */
                         hostPointer->deviceCallback(hostPointer->suspendedDevice, NULL,
                                                     kUSB_HostEventDetectResume); /* call host callback function */
@@ -614,14 +617,14 @@ static usb_status_t USB_HostOhciPortChange(usb_host_ohci_state_struct_t *usbHost
                                         USB_HOST_OHCI_CONTROL_RWC_MASK);
                         portStatus |= USB_HOST_OHCI_CONTROL_HCFS(USB_HOST_OHCI_CONTROL_HCFS_OPERATIONAL);
                         usbHostState->usbRegBase->HcControl = portStatus;
-                        portStatus = usbHostState->usbRegBase->HcRhPortStatus[i];
+                        portStatus                          = usbHostState->usbRegBase->HcRhPortStatus[i];
                         portStatus &= ~(USB_HOST_OHCI_RHPORTSTATUS_WIC);
                         portStatus |= USB_HOST_OHCI_RHPORTSTATUS_PES_MASK;
                         usbHostState->usbRegBase->HcRhPortStatus[i] = portStatus;
                         /* call host callback function, function is initialized in USB_HostInit */
                         hostPointer->deviceCallback(hostPointer->suspendedDevice, NULL,
                                                     kUSB_HostEventResumed); /* call host callback function */
-                        hostPointer->suspendedDevice = NULL;
+                        hostPointer->suspendedDevice   = NULL;
                         usbHostState->busSuspendStatus = kBus_OhciIdle;
                     }
                 }
@@ -661,8 +664,10 @@ static usb_status_t USB_HostOhciPortChange(usb_host_ohci_state_struct_t *usbHost
             usbHostState->portState[i].portSpeed =
                 (usbHostState->usbRegBase->HcRhPortStatus[i] & USB_HOST_OHCI_RHPORTSTATUS_LSDA_MASK) ? USB_SPEED_LOW :
                                                                                                        USB_SPEED_FULL;
+            /* do bus recovery delay */
+            USB_HostOhciDelay(usbHostState, USB_HOST_OHCI_PORT_RESET_RECOVERY_DELAY);
             usbHostState->portState[i].portStatus = kUSB_DeviceOhciPortPhyAttached;
-            USB_OsaEventSet(usbHostState->ohciEvent, USB_HOST_OHCI_EVENT_ATTACH);
+            OSA_EventSet(usbHostState->ohciEvent, USB_HOST_OHCI_EVENT_ATTACH);
         }
         else
         {
@@ -674,7 +679,7 @@ static usb_status_t USB_HostOhciPortChange(usb_host_ohci_state_struct_t *usbHost
             usbHostState->busSuspendStatus = kBus_OhciIdle;
 #endif
             usbHostState->portState[i].portStatus = kUSB_DeviceOhciPortPhyDetached;
-            USB_OsaEventSet(usbHostState->ohciEvent, USB_HOST_OHCI_EVENT_DETACH);
+            OSA_EventSet(usbHostState->ohciEvent, USB_HOST_OHCI_EVENT_DETACH);
         }
     }
     return kStatus_USB_Success;
@@ -763,7 +768,7 @@ static usb_status_t USB_HostOhciAddToPeriodicList(usb_host_ohci_state_struct_t *
                 }
             }
             pre = ed;
-            ed = (usb_host_ohci_endpoint_descritpor_struct_t *)ed->NextED;
+            ed  = (usb_host_ohci_endpoint_descritpor_struct_t *)ed->NextED;
         }
         pipe->ed->NextED = (uint32_t)ed;
         if (NULL != pre)
@@ -791,7 +796,7 @@ static usb_status_t USB_HostOhciOpenControlBulkPipe(usb_host_ohci_state_struct_t
     }
 
     gtd->stateUnion.stateBitField.CC = USB_HOST_OHCI_CC_NOT_ACCESSED;
-    gtd->stateUnion.stateBitField.R = 1U;
+    gtd->stateUnion.stateBitField.R  = 1U;
 
     pipe->ed->TailP = (uint32_t)gtd;
     pipe->ed->HeadP = (uint32_t)gtd;
@@ -819,17 +824,17 @@ static usb_status_t USB_HostOhciOpenIsoPipe(usb_host_ohci_state_struct_t *usbHos
     usb_host_ohci_isochronous_transfer_descritpor_struct_t *itd;
 #endif
     usb_status_t error;
-    USB_OSA_SR_ALLOC();
+    OSA_SR_ALLOC();
 
     pipe->busTime = USB_HostOhciBusTime(((usb_host_device_instance_t *)pipe->pipeCommon.deviceHandle)->speed,
                                         pipe->pipeCommon.pipeType, pipe->pipeCommon.direction,
                                         pipe->pipeCommon.maxPacketSize * pipe->pipeCommon.numberPerUframe);
 
-    USB_OSA_ENTER_CRITICAL();
+    OSA_ENTER_CRITICAL();
     error = USB_HostOhciFindStartFrame(usbHostState, pipe);
     if (kStatus_USB_Success != error)
     {
-        USB_OSA_EXIT_CRITICAL();
+        OSA_EXIT_CRITICAL();
         return error;
     }
 
@@ -837,7 +842,7 @@ static usb_status_t USB_HostOhciOpenIsoPipe(usb_host_ohci_state_struct_t *usbHos
     error = USB_HostOhciGetItd(usbHostState, &itd, 1);
     if (kStatus_USB_Success != error)
     {
-        USB_OSA_EXIT_CRITICAL();
+        OSA_EXIT_CRITICAL();
         return error;
     }
     itd->stateUnion.stateBitField.CC = USB_HOST_OHCI_CC_NOT_ACCESSED;
@@ -855,7 +860,7 @@ static usb_status_t USB_HostOhciOpenIsoPipe(usb_host_ohci_state_struct_t *usbHos
 
     usbHostState->usbRegBase->HcControl |= USB_HOST_OHCI_CONTROL_PLE_MASK | USB_HOST_OHCI_CONTROL_IE_MASK;
 
-    USB_OSA_EXIT_CRITICAL();
+    OSA_EXIT_CRITICAL();
     return kStatus_USB_Success;
 }
 #endif
@@ -865,34 +870,34 @@ static usb_status_t USB_HostOhciOpenInterruptPipe(usb_host_ohci_state_struct_t *
 {
     usb_host_ohci_general_transfer_descritpor_struct_t *gtd;
     usb_status_t error;
-    USB_OSA_SR_ALLOC();
+    OSA_SR_ALLOC();
 
     pipe->busTime = USB_HostOhciBusTime(((usb_host_device_instance_t *)pipe->pipeCommon.deviceHandle)->speed,
                                         pipe->pipeCommon.pipeType, pipe->pipeCommon.direction,
                                         pipe->pipeCommon.maxPacketSize * pipe->pipeCommon.numberPerUframe);
 
-    USB_OSA_ENTER_CRITICAL();
+    OSA_ENTER_CRITICAL();
     error = USB_HostOhciFindStartFrame(usbHostState, pipe);
     if (kStatus_USB_Success != error)
     {
-        USB_OSA_EXIT_CRITICAL();
+        OSA_EXIT_CRITICAL();
         return error;
     }
 
     error = USB_HostOhciGetGtd(usbHostState, &gtd, 1);
     if (kStatus_USB_Success != error)
     {
-        USB_OSA_EXIT_CRITICAL();
+        OSA_EXIT_CRITICAL();
         return error;
     }
     gtd->stateUnion.stateBitField.CC = USB_HOST_OHCI_CC_NOT_ACCESSED;
-    gtd->stateUnion.stateBitField.R = 1U;
+    gtd->stateUnion.stateBitField.R  = 1U;
 
     pipe->ed->TailP = (uint32_t)gtd;
     pipe->ed->HeadP = (uint32_t)gtd;
 
     USB_HostOhciAddToPeriodicList(usbHostState, pipe);
-    USB_OSA_EXIT_CRITICAL();
+    OSA_EXIT_CRITICAL();
 
     usbHostState->usbRegBase->HcControl |= USB_HOST_OHCI_CONTROL_PLE_MASK;
 
@@ -910,6 +915,9 @@ static void USB_HostOhciTdDoneHandle(usb_host_ohci_state_struct_t *usbHostState,
     usb_host_ohci_pipe_struct_t *p;
     uint32_t startFrame;
     uint32_t currentFrame;
+#if (defined(USB_HOST_CONFIG_OHCI_MAX_ITD) && (USB_HOST_CONFIG_OHCI_MAX_ITD > 0U))
+    uint32_t conditionCode;
+#endif
 
     pipe->isDone = 0U;
     if (NULL == currentTr)
@@ -917,22 +925,22 @@ static void USB_HostOhciTdDoneHandle(usb_host_ohci_state_struct_t *usbHostState,
 #if (defined(USB_HOST_CONFIG_OHCI_MAX_ITD) && (USB_HOST_CONFIG_OHCI_MAX_ITD > 0U))
         if (itd)
         {
-            itd->stateUnion.state = 0U;
+            itd->stateUnion.state            = 0U;
             itd->stateUnion.stateBitField.CC = USB_HOST_OHCI_CC_NOT_ACCESSED;
-            itd->NextTD = 0U;
-            itd->BE = 0U;
-            itd->BP0 = 0U;
+            itd->NextTD                      = 0U;
+            itd->BE                          = 0U;
+            itd->BP0                         = 0U;
             USB_HostOhciFreeItd(usbHostState, itd);
         }
         else
 #endif
         {
-            gtd->stateUnion.state = 0U;
+            gtd->stateUnion.state            = 0U;
             gtd->stateUnion.stateBitField.CC = USB_HOST_OHCI_CC_NOT_ACCESSED;
-            gtd->stateUnion.stateBitField.R = 1U;
-            gtd->CBP = 0U;
-            gtd->NextTD = 0U;
-            gtd->BE = 0U;
+            gtd->stateUnion.stateBitField.R  = 1U;
+            gtd->CBP                         = 0U;
+            gtd->NextTD                      = 0U;
+            gtd->BE                          = 0U;
         }
         return;
     }
@@ -944,7 +952,7 @@ static void USB_HostOhciTdDoneHandle(usb_host_ohci_state_struct_t *usbHostState,
             currentTr->union2.frame = kStatus_USB_TransferFailed;
         }
 
-        if (pipe->ed->HeadP & USB_HOST_OHCI_ED_HEADP_HALT_MASK)
+        if (USB_HOST_OHCI_CC_STALL == gtd->stateUnion.stateBitField.CC)
         {
             currentTr->union2.frame = kStatus_USB_TransferStall;
         }
@@ -975,6 +983,34 @@ static void USB_HostOhciTdDoneHandle(usb_host_ohci_state_struct_t *usbHostState,
             itdQ = itdP;
             itdP = (usb_host_ohci_isochronous_transfer_descritpor_struct_t *)itdP->nextItd;
         }
+        currentTr->transferSofar = 0;
+        for (int i = 0; i <= itd->stateUnion.stateBitField.FC; i++)
+        {
+            currentTr->transferSofar += (itd->OffsetPSW[i] & (USB_HOST_OHCI_ITD_TRANSFER_SIZE_MASK));
+            conditionCode = ((itd->OffsetPSW[i] & (USB_HOST_OHCI_ITD_CONDITION_CODE_MASK)) >>
+                             USB_HOST_OHCI_ITD_CONDITION_CODE_SHIFT);
+            if (conditionCode)
+            {
+                if (conditionCode != USB_HOST_OHCI_CC_DATA_UNDERRUN)
+                {
+                    if (kStatus_USB_Success == currentTr->union2.frame)
+                    {
+                        if (conditionCode == USB_HOST_OHCI_CC_DATA_OVERRUN)
+                        {
+                            currentTr->union2.frame = kStatus_USB_DataOverRun;
+                        }
+                        else
+                        {
+                            currentTr->union2.frame = kStatus_USB_Error;
+                        }
+                    }
+                }
+            }
+        }
+        if (currentTr->direction == USB_OUT)
+        {
+            currentTr->transferSofar = currentTr->transferLength - currentTr->transferSofar;
+        }
         USB_HostOhciFreeItd(usbHostState, itd);
     }
     else
@@ -994,8 +1030,8 @@ static void USB_HostOhciTdDoneHandle(usb_host_ohci_state_struct_t *usbHostState,
                 }
                 else
                 {
-                    uint32_t tail = pipe->ed->TailP & USB_HOST_OHCI_ED_TAILP_MASK;
-                    uint32_t head = pipe->ed->HeadP & USB_HOST_OHCI_ED_HEADP_MASK;
+                    uint32_t tail              = pipe->ed->TailP & USB_HOST_OHCI_ED_TAILP_MASK;
+                    uint32_t head              = pipe->ed->HeadP & USB_HOST_OHCI_ED_HEADP_MASK;
                     currentTr->union1.unitHead = (uint32_t)gtdP->nextGtd;
                     if (head != tail)
                     {
@@ -1034,8 +1070,8 @@ static void USB_HostOhciTdDoneHandle(usb_host_ohci_state_struct_t *usbHostState,
     if (NULL == (void *)(currentTr->union1.unitHead))
     {
         uint8_t trIsFound = 0;
-        trPre = NULL;
-        trPos = pipe->ed->trListHead;
+        trPre             = NULL;
+        trPos             = pipe->ed->trListHead;
 
         while (trPos)
         {
@@ -1089,8 +1125,8 @@ static void USB_HostOhciTdDoneHandle(usb_host_ohci_state_struct_t *usbHostState,
                                     (p->pipeCommon.pipeType == USB_ENDPOINT_BULK)))
                 {
                     p->ed->stateUnion.stateBitField.K = 1U;
-                    startFrame = s_UsbHostOhciHcca[usbHostState->controllerId].HccaFrameNumber;
-                    currentFrame = startFrame;
+                    startFrame                        = s_UsbHostOhciHcca[usbHostState->controllerId].HccaFrameNumber;
+                    currentFrame                      = startFrame;
 
                     while (currentFrame == startFrame)
                     {
@@ -1177,8 +1213,8 @@ static usb_status_t USB_HostOhciCancelPipe(usb_host_ohci_state_struct_t *usbHost
     uint32_t currentFrame;
 
     pipe->ed->stateUnion.stateBitField.K = 1U;
-    startFrame = s_UsbHostOhciHcca[usbHostState->controllerId].HccaFrameNumber;
-    currentFrame = startFrame;
+    startFrame                           = s_UsbHostOhciHcca[usbHostState->controllerId].HccaFrameNumber;
+    currentFrame                         = startFrame;
 
     while (currentFrame == startFrame)
     {
@@ -1191,20 +1227,20 @@ static usb_status_t USB_HostOhciCancelPipe(usb_host_ohci_state_struct_t *usbHost
     pipe->ed->HeadP &= ~USB_HOST_OHCI_ED_HEADP_MASK;
     pipe->ed->HeadP |= pipe->ed->TailP;
     /* Fetch the td from token done list */
-    gtd = (usb_host_ohci_general_transfer_descritpor_struct_t *)((uint32_t)usbHostState->tdDoneListHead);
+    gtd    = (usb_host_ohci_general_transfer_descritpor_struct_t *)((uint32_t)usbHostState->tdDoneListHead);
     gtdPre = NULL;
     while (gtd)
     {
         if (((uint32_t)gtd) < ((uint32_t)&s_UsbHostOhciTd[usbHostState->controllerId].gtd[0]))
         {
-            itd = (usb_host_ohci_isochronous_transfer_descritpor_struct_t *)gtd;
-            trCurrent = itd->tr;
+            itd         = (usb_host_ohci_isochronous_transfer_descritpor_struct_t *)gtd;
+            trCurrent   = itd->tr;
             currentPipe = itd->pipe;
         }
         else
         {
-            itd = NULL;
-            trCurrent = gtd->tr;
+            itd         = NULL;
+            trCurrent   = gtd->tr;
             currentPipe = gtd->pipe;
         }
         if (pipe == currentPipe)
@@ -1226,10 +1262,10 @@ static usb_status_t USB_HostOhciCancelPipe(usb_host_ohci_state_struct_t *usbHost
             }
         }
         gtdPre = gtd;
-        gtd = (usb_host_ohci_general_transfer_descritpor_struct_t *)gtd->NextTD;
+        gtd    = (usb_host_ohci_general_transfer_descritpor_struct_t *)gtd->NextTD;
     }
 
-    trPre = NULL;
+    trPre     = NULL;
     trCurrent = pipe->ed->trListHead;
 
     while (NULL != trCurrent)
@@ -1239,18 +1275,21 @@ static usb_status_t USB_HostOhciCancelPipe(usb_host_ohci_state_struct_t *usbHost
         {
             if (trCurrent->union1.unitHead)
             {
-                while (trCurrent->union1.unitHead)
+                gtd = (usb_host_ohci_general_transfer_descritpor_struct_t *)trCurrent->union1.unitHead;
+                while (gtd)
                 {
-                    gtd = (usb_host_ohci_general_transfer_descritpor_struct_t *)trCurrent->union1.unitHead;
                     if (USB_ENDPOINT_ISOCHRONOUS == pipe->pipeCommon.pipeType)
                     {
-                        itd = (usb_host_ohci_isochronous_transfer_descritpor_struct_t *)gtd;
+                        itd    = (usb_host_ohci_isochronous_transfer_descritpor_struct_t *)gtd;
+                        gtdPos = (usb_host_ohci_general_transfer_descritpor_struct_t *)itd->nextItd;
                     }
                     else
                     {
-                        itd = NULL;
+                        itd    = NULL;
+                        gtdPos = (usb_host_ohci_general_transfer_descritpor_struct_t *)gtd->nextGtd;
                     }
                     USB_HostOhciTdDoneHandle(usbHostState, pipe, trCurrent, gtd, itd);
+                    gtd = gtdPos;
                 }
             }
             else
@@ -1261,14 +1300,15 @@ static usb_status_t USB_HostOhciCancelPipe(usb_host_ohci_state_struct_t *usbHost
                                       kStatus_USB_TransferCancel); /* transfer callback */
 
                 pipe->isBusy = 0U;
-            }
-            if (NULL == trPre)
-            {
-                pipe->ed->trListHead = trPos;
-            }
-            else
-            {
-                trPre->next = trPos;
+
+                if (NULL == trPre)
+                {
+                    pipe->ed->trListHead = trPos;
+                }
+                else
+                {
+                    trPre->next = trPos;
+                }
             }
         }
         else
@@ -1299,7 +1339,7 @@ static usb_status_t USB_HostOhciRemoveFromPeriodicList(usb_host_ohci_state_struc
     for (i = pipe->startFrame; i < USB_HOST_OHCI_HCCA_SIZE; i += pipe->pipeCommon.interval)
     {
         pre = NULL;
-        ed = (usb_host_ohci_endpoint_descritpor_struct_t *)s_UsbHostOhciHcca[usbHostState->controllerId]
+        ed  = (usb_host_ohci_endpoint_descritpor_struct_t *)s_UsbHostOhciHcca[usbHostState->controllerId]
                  .HccaInterrruptTable[i];
 
         while (NULL != ed)
@@ -1317,7 +1357,7 @@ static usb_status_t USB_HostOhciRemoveFromPeriodicList(usb_host_ohci_state_struc
                 break;
             }
             pre = ed;
-            ed = (usb_host_ohci_endpoint_descritpor_struct_t *)ed->NextED;
+            ed  = (usb_host_ohci_endpoint_descritpor_struct_t *)ed->NextED;
         }
     }
     return kStatus_USB_Success;
@@ -1350,7 +1390,7 @@ static usb_status_t USB_HostOhciCloseControlBulkPipe(usb_host_ohci_state_struct_
     while ((edHead) && (edHead != pipe->ed))
     {
         preEdHead = edHead;
-        edHead = (usb_host_ohci_endpoint_descritpor_struct_t *)edHead->NextED;
+        edHead    = (usb_host_ohci_endpoint_descritpor_struct_t *)edHead->NextED;
     }
 
     if ((NULL != preEdHead) && (NULL != edHead))
@@ -1396,16 +1436,16 @@ static void USB_HostOhciFillGtd(usb_host_ohci_pipe_struct_t *pipe,
                                 uint8_t dataToggle,
                                 uint8_t ioc)
 {
-    gtd->CBP = (uint32_t)buffer;
-    gtd->BE = (length) ? (gtd->CBP + length - 1U) : 0U;
-    gtd->pipe = pipe;
-    gtd->tr = tr;
-    gtd->stateUnion.stateBitField.R = 1U;
+    gtd->CBP                         = (uint32_t)buffer;
+    gtd->BE                          = (length) ? (gtd->CBP + length - 1U) : 0U;
+    gtd->pipe                        = pipe;
+    gtd->tr                          = tr;
+    gtd->stateUnion.stateBitField.R  = 1U;
     gtd->stateUnion.stateBitField.DP = dirPid;
     gtd->stateUnion.stateBitField.DI = ioc ? 0 : USB_HOST_OHCI_GTD_DI_NO_INTERRUPT;
-    gtd->stateUnion.stateBitField.T = dataToggle;
+    gtd->stateUnion.stateBitField.T  = dataToggle;
     gtd->stateUnion.stateBitField.CC = USB_HOST_OHCI_CC_NOT_ACCESSED;
-    gtd->length = length;
+    gtd->length                      = length;
 }
 
 static usb_status_t USB_HostOhciLinkGtdControlTr(usb_host_ohci_state_struct_t *usbHostState,
@@ -1414,21 +1454,21 @@ static usb_status_t USB_HostOhciLinkGtdControlTr(usb_host_ohci_state_struct_t *u
 {
     usb_host_ohci_general_transfer_descritpor_struct_t *head;
     usb_host_ohci_general_transfer_descritpor_struct_t *p = NULL;
-    usb_status_t error = kStatus_USB_Error;
-    uint8_t dirPid = USB_HOST_OHCI_GTD_DP_SETUP;
-    uint8_t statePid = 0U;
+    usb_status_t error                                    = kStatus_USB_Error;
+    uint8_t dirPid                                        = USB_HOST_OHCI_GTD_DP_SETUP;
+    uint8_t statePid                                      = 0U;
 
-    USB_OSA_SR_ALLOC();
+    OSA_SR_ALLOC();
 
-    USB_OSA_ENTER_CRITICAL();
+    OSA_ENTER_CRITICAL();
     if ((pipe->isBusy) && (kStatus_UsbHostOhci_Idle == tr->setupStatus))
     {
-        USB_OSA_EXIT_CRITICAL();
+        OSA_EXIT_CRITICAL();
         return kStatus_USB_Success;
     }
     pipe->isBusy = 1;
     pipe->isDone = 0U;
-    USB_OSA_EXIT_CRITICAL();
+    OSA_EXIT_CRITICAL();
 
     switch (tr->setupStatus)
     {
@@ -1436,14 +1476,14 @@ static usb_status_t USB_HostOhciLinkGtdControlTr(usb_host_ohci_state_struct_t *u
             error = USB_HostOhciGetGtd(usbHostState, &p, 1);
             if (kStatus_USB_Success != error)
             {
-                USB_OSA_ENTER_CRITICAL();
+                OSA_ENTER_CRITICAL();
                 pipe->isBusy = 0;
-                USB_OSA_EXIT_CRITICAL();
+                OSA_EXIT_CRITICAL();
                 return error;
             }
-            head = (usb_host_ohci_general_transfer_descritpor_struct_t *)pipe->ed->TailP;
-            head->NextTD = (uint32_t)p;
-            p = head;
+            head                = (usb_host_ohci_general_transfer_descritpor_struct_t *)pipe->ed->TailP;
+            head->NextTD        = (uint32_t)p;
+            p                   = head;
             tr->union1.unitHead = (uint32_t)p;
             USB_HostOhciFillGtd(pipe, tr, p, (uint8_t *)tr->setupPacket, 8U, USB_HOST_OHCI_GTD_DP_SETUP, 0x02U, 0U);
             if (tr->transferLength)
@@ -1459,17 +1499,17 @@ static usb_status_t USB_HostOhciLinkGtdControlTr(usb_host_ohci_state_struct_t *u
             error = USB_HostOhciGetGtd(usbHostState, &p, 1);
             if (kStatus_USB_Success != error)
             {
-                USB_OSA_ENTER_CRITICAL();
+                OSA_ENTER_CRITICAL();
                 pipe->isBusy = 0;
-                USB_OSA_EXIT_CRITICAL();
+                OSA_EXIT_CRITICAL();
                 return error;
             }
 
-            head = (usb_host_ohci_general_transfer_descritpor_struct_t *)pipe->ed->TailP;
-            head->NextTD = (uint32_t)p;
-            p = head;
+            head                = (usb_host_ohci_general_transfer_descritpor_struct_t *)pipe->ed->TailP;
+            head->NextTD        = (uint32_t)p;
+            p                   = head;
             tr->union1.unitHead = (uint32_t)p;
-            dirPid = (tr->direction == USB_OUT) ? USB_HOST_OHCI_GTD_DP_OUT : USB_HOST_OHCI_GTD_DP_IN;
+            dirPid              = (tr->direction == USB_OUT) ? USB_HOST_OHCI_GTD_DP_OUT : USB_HOST_OHCI_GTD_DP_IN;
             USB_HostOhciFillGtd(pipe, tr, p, (uint8_t *)tr->transferBuffer, tr->transferLength, dirPid, 0x03U, 1U);
             tr->setupStatus = kStatus_UsbHostOhci_Data;
             break;
@@ -1477,16 +1517,16 @@ static usb_status_t USB_HostOhciLinkGtdControlTr(usb_host_ohci_state_struct_t *u
             error = USB_HostOhciGetGtd(usbHostState, &p, 1);
             if (kStatus_USB_Success != error)
             {
-                USB_OSA_ENTER_CRITICAL();
+                OSA_ENTER_CRITICAL();
                 pipe->isBusy = 0;
-                USB_OSA_EXIT_CRITICAL();
+                OSA_EXIT_CRITICAL();
                 return error;
             }
-            head = (usb_host_ohci_general_transfer_descritpor_struct_t *)pipe->ed->TailP;
-            head->NextTD = (uint32_t)p;
-            p = head;
+            head                = (usb_host_ohci_general_transfer_descritpor_struct_t *)pipe->ed->TailP;
+            head->NextTD        = (uint32_t)p;
+            p                   = head;
             tr->union1.unitHead = (uint32_t)p;
-            if (tr->transferLength)
+            if (tr->setupPacket->wLength > 0u)
             {
                 statePid = (tr->direction == USB_OUT) ? USB_HOST_OHCI_GTD_DP_IN : USB_HOST_OHCI_GTD_DP_OUT;
             }
@@ -1501,9 +1541,9 @@ static usb_status_t USB_HostOhciLinkGtdControlTr(usb_host_ohci_state_struct_t *u
             tr->setupStatus = kStatus_UsbHostOhci_Idle;
             break;
         default:
-            USB_OSA_ENTER_CRITICAL();
+            OSA_ENTER_CRITICAL();
             pipe->isBusy = 0;
-            USB_OSA_EXIT_CRITICAL();
+            OSA_EXIT_CRITICAL();
             tr->setupStatus = kStatus_UsbHostOhci_Idle;
             break;
     }
@@ -1516,13 +1556,13 @@ static usb_status_t USB_HostOhciLinkGtdControlTr(usb_host_ohci_state_struct_t *u
     if (p)
     {
         p->stateUnion.stateBitField.DI = 0U;
-        p->nextGtd = NULL;
-        p = (usb_host_ohci_general_transfer_descritpor_struct_t *)p->NextTD;
+        p->nextGtd                     = NULL;
+        p                              = (usb_host_ohci_general_transfer_descritpor_struct_t *)p->NextTD;
         p->stateUnion.stateBitField.CC = USB_HOST_OHCI_CC_NOT_ACCESSED;
-        p->stateUnion.stateBitField.R = 1U;
-        p->pipe = pipe;
-        tr->transferPipe = (usb_host_pipe_t *)pipe;
-        pipe->ed->TailP = (uint32_t)p;
+        p->stateUnion.stateBitField.R  = 1U;
+        p->pipe                        = pipe;
+        tr->transferPipe               = (usb_host_pipe_t *)pipe;
+        pipe->ed->TailP                = (uint32_t)p;
 
         usbHostState->usbRegBase->HcCommandStatus |= USB_HOST_OHCI_COMMAND_STATUS_CLF_MASK;
     }
@@ -1536,23 +1576,23 @@ static usb_status_t USB_HostOhciLinkGtdTr(usb_host_ohci_state_struct_t *usbHostS
     usb_host_ohci_general_transfer_descritpor_struct_t *head;
     usb_host_ohci_general_transfer_descritpor_struct_t *p;
     uint32_t remainingLength = tr->transferLength;
-    uint32_t tdCount = 0U;
-    uint32_t tdLength = 0U;
-    uint32_t bufferAddress = (uint32_t)tr->transferBuffer;
+    uint32_t tdCount         = 0U;
+    uint32_t tdLength        = 0U;
+    uint32_t bufferAddress   = (uint32_t)tr->transferBuffer;
     usb_status_t error;
     uint8_t dirPid = USB_HOST_OHCI_GTD_DP_OUT;
 
-    USB_OSA_SR_ALLOC();
+    OSA_SR_ALLOC();
 
-    USB_OSA_ENTER_CRITICAL();
+    OSA_ENTER_CRITICAL();
     if (pipe->isBusy)
     {
-        USB_OSA_EXIT_CRITICAL();
+        OSA_EXIT_CRITICAL();
         return kStatus_USB_Success;
     }
     pipe->isBusy = 1;
     pipe->isDone = 0U;
-    USB_OSA_EXIT_CRITICAL();
+    OSA_EXIT_CRITICAL();
 
     while (remainingLength)
     {
@@ -1578,20 +1618,20 @@ static usb_status_t USB_HostOhciLinkGtdTr(usb_host_ohci_state_struct_t *usbHostS
     error = USB_HostOhciGetGtd(usbHostState, &p, tdCount);
     if (kStatus_USB_Success != error)
     {
-        USB_OSA_ENTER_CRITICAL();
+        OSA_ENTER_CRITICAL();
         pipe->isBusy = 0;
-        USB_OSA_EXIT_CRITICAL();
+        OSA_EXIT_CRITICAL();
         return error;
     }
 
-    head = (usb_host_ohci_general_transfer_descritpor_struct_t *)pipe->ed->TailP;
-    head->NextTD = (uint32_t)p;
-    p = head;
+    head                = (usb_host_ohci_general_transfer_descritpor_struct_t *)pipe->ed->TailP;
+    head->NextTD        = (uint32_t)p;
+    p                   = head;
     tr->union1.unitHead = (uint32_t)p;
-    dirPid = (tr->direction == USB_OUT) ? USB_HOST_OHCI_GTD_DP_OUT : USB_HOST_OHCI_GTD_DP_IN;
+    dirPid              = (tr->direction == USB_OUT) ? USB_HOST_OHCI_GTD_DP_OUT : USB_HOST_OHCI_GTD_DP_IN;
 
     remainingLength = tr->transferLength;
-    bufferAddress = (uint32_t)tr->transferBuffer;
+    bufferAddress   = (uint32_t)tr->transferBuffer;
 
     while (remainingLength)
     {
@@ -1609,7 +1649,7 @@ static usb_status_t USB_HostOhciLinkGtdTr(usb_host_ohci_state_struct_t *usbHostS
         {
             USB_HostOhciFillGtd(pipe, tr, p, (uint8_t *)bufferAddress, tdLength, dirPid, 0x00U, 0U);
             p->nextGtd = (usb_host_ohci_general_transfer_descritpor_struct_t *)p->NextTD;
-            p = (usb_host_ohci_general_transfer_descritpor_struct_t *)p->NextTD;
+            p          = (usb_host_ohci_general_transfer_descritpor_struct_t *)p->NextTD;
         }
         else
         {
@@ -1623,13 +1663,13 @@ static usb_status_t USB_HostOhciLinkGtdTr(usb_host_ohci_state_struct_t *usbHostS
         USB_HostOhciFillGtd(pipe, tr, p, NULL, 0U, dirPid, 0x00U, 1U);
     }
     p->stateUnion.stateBitField.DI = 0U;
-    p->nextGtd = NULL;
-    p = (usb_host_ohci_general_transfer_descritpor_struct_t *)p->NextTD;
+    p->nextGtd                     = NULL;
+    p                              = (usb_host_ohci_general_transfer_descritpor_struct_t *)p->NextTD;
     p->stateUnion.stateBitField.CC = USB_HOST_OHCI_CC_NOT_ACCESSED;
-    p->stateUnion.stateBitField.R = 1U;
-    p->pipe = pipe;
-    tr->transferPipe = (usb_host_pipe_t *)pipe;
-    pipe->ed->TailP = (uint32_t)p;
+    p->stateUnion.stateBitField.R  = 1U;
+    p->pipe                        = pipe;
+    tr->transferPipe               = (usb_host_pipe_t *)pipe;
+    pipe->ed->TailP                = (uint32_t)p;
 
     if (USB_ENDPOINT_BULK == pipe->pipeCommon.pipeType)
     {
@@ -1649,14 +1689,14 @@ static void USB_HostOhciFillItd(usb_host_ohci_pipe_struct_t *pipe,
                                 uint32_t length,
                                 uint32_t startFrame)
 {
-    itd->BP0 = ((uint32_t)buffer) & USB_HOST_OHCI_ITD_BP0_MASK;
-    itd->BE = (length) ? (((uint32_t)buffer) + length - 1U) : 0U;
+    itd->BP0                         = ((uint32_t)buffer) & USB_HOST_OHCI_ITD_BP0_MASK;
+    itd->BE                          = (length) ? (((uint32_t)buffer) + length - 1U) : 0U;
     itd->stateUnion.stateBitField.SF = startFrame & USB_HOST_OHCI_FMNUMBER_FN_MASK;
     itd->stateUnion.stateBitField.DI = 0U;
     itd->stateUnion.stateBitField.FC = (length - 1) / pipe->pipeCommon.maxPacketSize;
     itd->stateUnion.stateBitField.CC = USB_HOST_OHCI_CC_NOT_ACCESSED;
-    itd->pipe = pipe;
-    itd->tr = tr;
+    itd->pipe                        = pipe;
+    itd->tr                          = tr;
     for (int i = 0; i < 8; i++)
     {
         itd->OffsetPSW[i] =
@@ -1676,9 +1716,9 @@ static usb_status_t USB_HostOhciLinkItdTr(usb_host_ohci_state_struct_t *usbHostS
     usb_host_ohci_isochronous_transfer_descritpor_struct_t *head;
     usb_host_ohci_isochronous_transfer_descritpor_struct_t *p;
     uint32_t remainingLength = tr->transferLength;
-    uint32_t tdCount = 0U;
-    uint32_t tdLength = 0U;
-    uint32_t bufferAddress = (uint32_t)tr->transferBuffer;
+    uint32_t tdCount         = 0U;
+    uint32_t tdLength        = 0U;
+    uint32_t bufferAddress   = (uint32_t)tr->transferBuffer;
     uint32_t startFrame;
     uint32_t currentFrame;
     usb_status_t error;
@@ -1708,16 +1748,16 @@ static usb_status_t USB_HostOhciLinkItdTr(usb_host_ohci_state_struct_t *usbHostS
     }
 
 #if (defined(FSL_FEATURE_USBFSH_VERSION) && (FSL_FEATURE_USBFSH_VERSION >= 200U))
-    head = (usb_host_ohci_isochronous_transfer_descritpor_struct_t *)pipe->ed->TailP;
+    head         = (usb_host_ohci_isochronous_transfer_descritpor_struct_t *)pipe->ed->TailP;
     head->NextTD = (uint32_t)p;
-    p = head;
+    p            = head;
 #else
     head = p;
 #endif
     tr->union1.unitHead = (uint32_t)p;
 
     currentFrame = s_UsbHostOhciHcca[usbHostState->controllerId].HccaFrameNumber;
-    startFrame = currentFrame;
+    startFrame   = currentFrame;
 
     while (remainingLength)
     {
@@ -1731,16 +1771,16 @@ static usb_status_t USB_HostOhciLinkItdTr(usb_host_ohci_state_struct_t *usbHostS
         if (remainingLength)
         {
             p->nextItd = (usb_host_ohci_isochronous_transfer_descritpor_struct_t *)p->NextTD;
-            p = p->nextItd;
+            p          = p->nextItd;
             startFrame += tansaction * pipe->pipeCommon.interval;
         }
         bufferAddress += tdLength;
     }
-    p->nextItd = NULL;
-    p = (usb_host_ohci_isochronous_transfer_descritpor_struct_t *)p->NextTD;
+    p->nextItd                     = NULL;
+    p                              = (usb_host_ohci_isochronous_transfer_descritpor_struct_t *)p->NextTD;
     p->stateUnion.stateBitField.CC = USB_HOST_OHCI_CC_NOT_ACCESSED;
-    p->pipe = pipe;
-    tr->transferPipe = (usb_host_pipe_t *)pipe;
+    p->pipe                        = pipe;
+    tr->transferPipe               = (usb_host_pipe_t *)pipe;
     pipe->ed->HeadP &= ~USB_HOST_OHCI_ED_HEADP_MASK;
     pipe->ed->HeadP |= (uint32_t)head;
     pipe->ed->TailP = (uint32_t)p;
@@ -1767,15 +1807,15 @@ static usb_status_t USB_HostOhciTokenDone(usb_host_ohci_state_struct_t *usbHostS
     {
         if (((uint32_t)gtd) < ((uint32_t)&s_UsbHostOhciTd[usbHostState->controllerId].gtd[0]))
         {
-            itd = (usb_host_ohci_isochronous_transfer_descritpor_struct_t *)gtd;
+            itd       = (usb_host_ohci_isochronous_transfer_descritpor_struct_t *)gtd;
             trCurrent = itd->tr;
-            pipe = itd->pipe;
+            pipe      = itd->pipe;
         }
         else
         {
-            itd = NULL;
+            itd       = NULL;
             trCurrent = gtd->tr;
-            pipe = gtd->pipe;
+            pipe      = gtd->pipe;
         }
 
         gtdPos = (usb_host_ohci_general_transfer_descritpor_struct_t *)gtd->NextTD;
@@ -1858,8 +1898,8 @@ static usb_status_t USB_HostOhciSof(usb_host_ohci_state_struct_t *usbHostState)
             }
             else
             {
-                pipe->isDone = 1;
-                pipe->currentTr = pipe->ed->trListHead;
+                pipe->isDone              = 1;
+                pipe->currentTr           = pipe->ed->trListHead;
                 pipe->startWriteBackCount = usbHostState->writeBackCount;
             }
         }
@@ -1897,10 +1937,10 @@ static usb_status_t UBS_HostOhciControllerInit(usb_host_ohci_state_struct_t *usb
     usb_host_ohci_isochronous_transfer_descritpor_struct_t *itd;
 #endif
     int i;
-    USB_OSA_SR_ALLOC();
+    OSA_SR_ALLOC();
 
     /* Enter critical */
-    USB_OSA_ENTER_CRITICAL();
+    OSA_ENTER_CRITICAL();
 
     for (i = 0; i < (sizeof(s_UsbHostOhciTd[usbHostState->controllerId].ed) /
                      sizeof(usb_host_ohci_endpoint_descritpor_struct_t));
@@ -1915,38 +1955,38 @@ static usb_status_t UBS_HostOhciControllerInit(usb_host_ohci_state_struct_t *usb
     }
 
     usbHostState->pipeListInUsing = NULL;
-    usbHostState->pipeList = &usbHostState->pipePool[0];
-    pipe = usbHostState->pipeList;
-    pipe->ed = &s_UsbHostOhciTd[usbHostState->controllerId].ed[3];
+    usbHostState->pipeList        = &usbHostState->pipePool[0];
+    pipe                          = usbHostState->pipeList;
+    pipe->ed                      = &s_UsbHostOhciTd[usbHostState->controllerId].ed[3];
     for (i = 1; i < USB_HOST_CONFIG_OHCI_MAX_ED; i++)
     {
         pipe->pipeCommon.next = (usb_host_pipe_t *)&usbHostState->pipePool[i];
-        pipe = (usb_host_ohci_pipe_struct_t *)pipe->pipeCommon.next;
-        pipe->ed = &s_UsbHostOhciTd[usbHostState->controllerId].ed[3 + i];
+        pipe                  = (usb_host_ohci_pipe_struct_t *)pipe->pipeCommon.next;
+        pipe->ed              = &s_UsbHostOhciTd[usbHostState->controllerId].ed[3 + i];
     }
     pipe->pipeCommon.next = NULL;
 
 #if (defined(USB_HOST_CONFIG_OHCI_MAX_GTD) && (USB_HOST_CONFIG_OHCI_MAX_GTD > 0U))
     usbHostState->gtdList = &s_UsbHostOhciTd[usbHostState->controllerId].gtd[0];
-    gtd = usbHostState->gtdList;
+    gtd                   = usbHostState->gtdList;
     for (i = 1; i < USB_HOST_CONFIG_OHCI_MAX_GTD; i++)
     {
         gtd->nextGtd = &s_UsbHostOhciTd[usbHostState->controllerId].gtd[i];
-        gtd = gtd->nextGtd;
+        gtd          = gtd->nextGtd;
     }
-    gtd->nextGtd = NULL;
+    gtd->nextGtd           = NULL;
     usbHostState->gtdCount = USB_HOST_CONFIG_OHCI_MAX_GTD;
 #endif
 
 #if (defined(USB_HOST_CONFIG_OHCI_MAX_ITD) && (USB_HOST_CONFIG_OHCI_MAX_ITD > 0U))
     usbHostState->itdList = &s_UsbHostOhciTd[usbHostState->controllerId].itd[0];
-    itd = usbHostState->itdList;
+    itd                   = usbHostState->itdList;
     for (i = 1; i < USB_HOST_CONFIG_OHCI_MAX_ITD; i++)
     {
         itd->NextTD = (uint32_t)&s_UsbHostOhciTd[usbHostState->controllerId].itd[i];
-        itd = (usb_host_ohci_isochronous_transfer_descritpor_struct_t *)itd->NextTD;
+        itd         = (usb_host_ohci_isochronous_transfer_descritpor_struct_t *)itd->NextTD;
     }
-    itd->NextTD = (uint32_t)NULL;
+    itd->NextTD            = (uint32_t)NULL;
     usbHostState->itdCount = USB_HOST_CONFIG_OHCI_MAX_ITD;
 #endif
     usbHostState->tdDoneListTail = NULL;
@@ -1954,7 +1994,7 @@ static usb_status_t UBS_HostOhciControllerInit(usb_host_ohci_state_struct_t *usb
     usbHostState->writeBackCount = 0U;
 
     /* Exit critical */
-    USB_OSA_EXIT_CRITICAL();
+    OSA_EXIT_CRITICAL();
 
     usbHostState->usbRegBase->HcControl = 0U;
     usbHostState->usbRegBase->HcControl &= ~USB_HOST_OHCI_CONTROL_HCFS_MASK;
@@ -2033,9 +2073,9 @@ usb_status_t USB_HostOhciCreate(uint8_t controllerId,
                                 usb_host_controller_handle *controllerHandle)
 {
     usb_host_ohci_state_struct_t *usbHostState;
-    usb_status_t status = kStatus_USB_Success;
+    usb_status_t status       = kStatus_USB_Success;
     uint32_t usb_base_addrs[] = USBFSH_BASE_ADDRS;
-    uint8_t usb_irq[] = USBFSH_IRQS;
+    uint8_t usb_irq[]         = USBFSH_IRQS;
 
     if (((controllerId - kUSB_ControllerOhci0) >= (uint8_t)USB_HOST_CONFIG_OHCI) ||
         ((controllerId - kUSB_ControllerOhci0) >= (sizeof(usb_base_addrs) / sizeof(uint32_t))))
@@ -2044,23 +2084,24 @@ usb_status_t USB_HostOhciCreate(uint8_t controllerId,
     }
     usbHostState = &s_UsbHostOhciState[controllerId - kUSB_ControllerOhci0];
     /* Allocate the USB Host Pipe Descriptors */
-    usbHostState->hostHandle = hostHandle;
+    usbHostState->hostHandle   = hostHandle;
     usbHostState->controllerId = controllerId - kUSB_ControllerOhci0;
 
     usbHostState->usbRegBase = (usb_host_ohci_hcor_struct_t *)usb_base_addrs[usbHostState->controllerId];
-    usbHostState->isrNumber = (IRQn_Type)usb_irq[usbHostState->controllerId];
-
-    USB_OsaEventCreate(&usbHostState->ohciEvent, 1U);
-    if (NULL == usbHostState->ohciEvent)
+    usbHostState->isrNumber  = (IRQn_Type)usb_irq[usbHostState->controllerId];
+    usbHostState->ohciEvent  = (osa_event_handle_t)&usbHostState->taskEventHandleBuffer[0];
+    if (KOSA_StatusSuccess != OSA_EventCreate(usbHostState->ohciEvent, 1U))
     {
+        usbHostState->ohciEvent = NULL;
 #ifdef HOST_ECHO
         usb_echo(" event create failed in USB_HostOhciCreate\n");
 #endif
         return kStatus_USB_AllocFail;
     } /* Endif */
-
-    if (kStatus_USB_OSA_Success != USB_OsaMutexCreate(&usbHostState->mutex))
+    usbHostState->mutex = (osa_mutex_handle_t)(&usbHostState->mutexBuffer[0]);
+    if (KOSA_StatusSuccess != OSA_MutexCreate(usbHostState->mutex))
     {
+        usbHostState->mutex = NULL;
         USB_HostOhciDestory(usbHostState);
 #ifdef HOST_ECHO
         usb_echo("USB_HostOhciCreate: create host mutex fail\r\n");
@@ -2080,7 +2121,7 @@ usb_status_t USB_HostOhciCreate(uint8_t controllerId,
         return kStatus_USB_Error;
     }
 
-    usbHostState->portState = (usb_host_ohci_port_state_struct_t *)USB_OsaMemoryAllocate(
+    usbHostState->portState = (usb_host_ohci_port_state_struct_t *)OSA_MemoryAllocate(
         sizeof(usb_host_ohci_port_state_struct_t) * usbHostState->portNumber); /* malloc host ohci port state */
     if (NULL == usbHostState->portState)
     {
@@ -2118,19 +2159,19 @@ usb_status_t USB_HostOhciDestory(usb_host_controller_handle controllerHandle)
 
     if (NULL != usbHostState->portState)
     {
-        (void)USB_OsaMemoryFree(usbHostState->portState);
+        (void)OSA_MemoryFree(usbHostState->portState);
         usbHostState->portState = NULL;
     }
 
     if (NULL != usbHostState->mutex)
     {
-        (void)USB_OsaMutexDestroy(usbHostState->mutex);
+        (void)OSA_MutexDestroy(usbHostState->mutex);
         usbHostState->mutex = NULL;
     }
 
     if (NULL != usbHostState->ohciEvent)
     {
-        (void)USB_OsaEventDestroy(usbHostState->ohciEvent);
+        (void)OSA_EventDestroy(usbHostState->ohciEvent);
         usbHostState->ohciEvent = NULL;
     }
 
@@ -2156,34 +2197,34 @@ usb_status_t USB_HostOhciOpenPipe(usb_host_controller_handle controllerHandle,
     }
 
     /* initialize pipe informations */
-    pipe->pipeCommon.deviceHandle = pipeInit->devInstance;
-    pipe->pipeCommon.endpointAddress = pipeInit->endpointAddress;
-    pipe->pipeCommon.direction = pipeInit->direction;
-    pipe->pipeCommon.interval = pipeInit->interval;
-    pipe->pipeCommon.maxPacketSize = pipeInit->maxPacketSize;
-    pipe->pipeCommon.pipeType = pipeInit->pipeType;
-    pipe->pipeCommon.numberPerUframe = 1U;
-    pipe->pipeCommon.nakCount = pipeInit->nakCount;
-    pipe->pipeCommon.nextdata01 = 0U;
-    pipe->pipeCommon.currentCount = 0U;
-    pipe->pipeCommon.open = 1U;
+    pipe->pipeCommon.deviceHandle         = pipeInit->devInstance;
+    pipe->pipeCommon.endpointAddress      = pipeInit->endpointAddress;
+    pipe->pipeCommon.direction            = pipeInit->direction;
+    pipe->pipeCommon.interval             = pipeInit->interval;
+    pipe->pipeCommon.maxPacketSize        = pipeInit->maxPacketSize;
+    pipe->pipeCommon.pipeType             = pipeInit->pipeType;
+    pipe->pipeCommon.numberPerUframe      = 1U;
+    pipe->pipeCommon.nakCount             = pipeInit->nakCount;
+    pipe->pipeCommon.nextdata01           = 0U;
+    pipe->pipeCommon.currentCount         = 0U;
+    pipe->pipeCommon.open                 = 1U;
     pipe->ed->stateUnion.stateBitField.EN = pipeInit->endpointAddress;
-    pipe->ed->stateUnion.stateBitField.D = (USB_OUT == pipeInit->direction) ? 1U : 2U;
+    pipe->ed->stateUnion.stateBitField.D  = (USB_OUT == pipeInit->direction) ? 1U : 2U;
     pipe->ed->stateUnion.stateBitField.FA = ((usb_host_device_instance_t *)pipeInit->devInstance)->setAddress;
     pipe->ed->stateUnion.stateBitField.S =
         (USB_SPEED_FULL == ((usb_host_device_instance_t *)pipeInit->devInstance)->speed) ? 0U : 1U;
-    pipe->ed->stateUnion.stateBitField.F = 0U;
+    pipe->ed->stateUnion.stateBitField.F   = 0U;
     pipe->ed->stateUnion.stateBitField.MPS = pipeInit->maxPacketSize;
-    pipe->ed->stateUnion.stateBitField.K = 0U;
-    pipe->ed->TailP = 0U;
-    pipe->ed->HeadP = 0U;
-    pipe->ed->pipe = pipe;
-    pipe->ed->NextED = 0U;
-    pipe->ed->trListHead = NULL;
-    pipe->ed->trListTail = NULL;
-    pipe->ed->dealTr = NULL;
-    pipe->cutOffTime = USB_HOST_OHCI_TRANSFER_TIMEOUT_GAP;
-    pipe->isCanceling = 0U;
+    pipe->ed->stateUnion.stateBitField.K   = 0U;
+    pipe->ed->TailP                        = 0U;
+    pipe->ed->HeadP                        = 0U;
+    pipe->ed->pipe                         = pipe;
+    pipe->ed->NextED                       = 0U;
+    pipe->ed->trListHead                   = NULL;
+    pipe->ed->trListTail                   = NULL;
+    pipe->ed->dealTr                       = NULL;
+    pipe->cutOffTime                       = USB_HOST_OHCI_TRANSFER_TIMEOUT_GAP;
+    pipe->isCanceling                      = 0U;
 
     if (USB_ENDPOINT_ISOCHRONOUS == pipe->pipeCommon.pipeType)
     {
@@ -2197,7 +2238,7 @@ usb_status_t USB_HostOhciOpenPipe(usb_host_controller_handle controllerHandle,
             pipe->pipeCommon.interval = USB_HOST_OHCI_HCCA_SIZE;
         }
 #else
-        pipe->pipeCommon.interval = 1U;
+        pipe->pipeCommon.interval            = 1U;
 #endif
     }
     else if (USB_ENDPOINT_INTERRUPT == pipe->pipeCommon.pipeType)
@@ -2229,7 +2270,7 @@ usb_status_t USB_HostOhciOpenPipe(usb_host_controller_handle controllerHandle,
     {
         case USB_ENDPOINT_CONTROL:
             pipe->ed->stateUnion.stateBitField.D = 0;
-            status = USB_HostOhciOpenControlBulkPipe(usbHostState, pipe);
+            status                               = USB_HostOhciOpenControlBulkPipe(usbHostState, pipe);
             break;
         case USB_ENDPOINT_BULK:
             status = USB_HostOhciOpenControlBulkPipe(usbHostState, pipe);
@@ -2252,7 +2293,7 @@ usb_status_t USB_HostOhciOpenPipe(usb_host_controller_handle controllerHandle,
     if (status != kStatus_USB_Success)
     {
         pipe->ed->stateUnion.stateBitField.K = 1U;
-        pipe->pipeCommon.open = 0U;
+        pipe->pipeCommon.open                = 0U;
         /* release the pipe */
         USB_HostOhciInsertPipe(&usbHostState->pipeList, pipe);
         return status;
@@ -2267,7 +2308,7 @@ usb_status_t USB_HostOhciOpenPipe(usb_host_controller_handle controllerHandle,
 usb_status_t USB_HostOhciClosePipe(usb_host_controller_handle controllerHandle, usb_host_pipe_handle pipeHandle)
 {
     usb_host_ohci_state_struct_t *usbHostState = (usb_host_ohci_state_struct_t *)controllerHandle;
-    usb_host_ohci_pipe_struct_t *pipe = (usb_host_ohci_pipe_struct_t *)pipeHandle;
+    usb_host_ohci_pipe_struct_t *pipe          = (usb_host_ohci_pipe_struct_t *)pipeHandle;
 
     switch (pipe->pipeCommon.pipeType)
     {
@@ -2298,13 +2339,13 @@ usb_status_t USB_HostOhciWritePipe(usb_host_controller_handle controllerHandle,
                                    usb_host_transfer_t *transfer)
 {
     usb_host_ohci_state_struct_t *usbHostState = (usb_host_ohci_state_struct_t *)controllerHandle;
-    usb_host_ohci_pipe_struct_t *pipe = (usb_host_ohci_pipe_struct_t *)pipeHandle;
-    usb_status_t status = kStatus_USB_Error;
-    transfer->setupStatus = kStatus_UsbHostOhci_Idle;
-    transfer->union2.frame = 0U;
-    USB_OSA_SR_ALLOC();
+    usb_host_ohci_pipe_struct_t *pipe          = (usb_host_ohci_pipe_struct_t *)pipeHandle;
+    usb_status_t status                        = kStatus_USB_Error;
+    transfer->setupStatus                      = kStatus_UsbHostOhci_Idle;
+    transfer->union2.frame                     = 0U;
+    OSA_SR_ALLOC();
 
-    USB_OSA_ENTER_CRITICAL();
+    OSA_ENTER_CRITICAL();
     if (pipe->ed->trListHead)
     {
         pipe->ed->trListTail->next = transfer;
@@ -2314,8 +2355,8 @@ usb_status_t USB_HostOhciWritePipe(usb_host_controller_handle controllerHandle,
         pipe->ed->trListHead = transfer;
     }
     pipe->ed->trListTail = transfer;
-    transfer->next = NULL;
-    USB_OSA_EXIT_CRITICAL();
+    transfer->next       = NULL;
+    OSA_EXIT_CRITICAL();
 
     switch (pipe->pipeCommon.pipeType)
     {
@@ -2346,7 +2387,7 @@ usb_status_t USB_HostOhciWritePipe(usb_host_controller_handle controllerHandle,
             if (transfer->transferLength)
             {
                 status = kStatus_USB_Success;
-                USB_OSA_ENTER_CRITICAL();
+                OSA_ENTER_CRITICAL();
                 if (NULL == pipe->ed->dealTr)
                 {
                     if (NULL != pipe->ed->trListHead)
@@ -2358,7 +2399,7 @@ usb_status_t USB_HostOhciWritePipe(usb_host_controller_handle controllerHandle,
                         pipe->ed->dealTr = transfer;
                     }
                 }
-                USB_OSA_EXIT_CRITICAL();
+                OSA_EXIT_CRITICAL();
             }
             else
             {
@@ -2372,9 +2413,9 @@ usb_status_t USB_HostOhciWritePipe(usb_host_controller_handle controllerHandle,
 
     if (kStatus_USB_Success != status)
     {
-        usb_host_transfer_t* trP = pipe->ed->trListHead;
-        usb_host_transfer_t* trQ = NULL;
-        USB_OSA_ENTER_CRITICAL();
+        usb_host_transfer_t *trP = pipe->ed->trListHead;
+        usb_host_transfer_t *trQ = NULL;
+        OSA_ENTER_CRITICAL();
 
         while (trP)
         {
@@ -2396,7 +2437,7 @@ usb_status_t USB_HostOhciWritePipe(usb_host_controller_handle controllerHandle,
             trQ = trP;
             trP = trP->next;
         }
-        USB_OSA_EXIT_CRITICAL();
+        OSA_EXIT_CRITICAL();
     }
     return status;
 }
@@ -2441,21 +2482,21 @@ usb_status_t USB_HostOhciIoctl(usb_host_controller_handle controllerHandle, uint
             break;
 
         case kUSB_HostUpdateControlEndpointAddress:
-            pipe = (usb_host_ohci_pipe_struct_t *)ioctlParam;
+            pipe                                 = (usb_host_ohci_pipe_struct_t *)ioctlParam;
             pipe->ed->stateUnion.stateBitField.K = 1U;
             /* update address */
             USB_HostHelperGetPeripheralInformation(pipe->pipeCommon.deviceHandle, kUSB_HostGetDeviceAddress,
                                                    &deviceAddress);
             pipe->ed->stateUnion.stateBitField.FA = deviceAddress;
-            pipe->ed->stateUnion.stateBitField.K = 0U;
+            pipe->ed->stateUnion.stateBitField.K  = 0U;
             USB_HostOhciDelay(usbHostState, 2U);
             break;
 
         case kUSB_HostUpdateControlPacketSize:
-            pipe = (usb_host_ohci_pipe_struct_t *)ioctlParam;
-            pipe->ed->stateUnion.stateBitField.K = 1U;
+            pipe                                   = (usb_host_ohci_pipe_struct_t *)ioctlParam;
+            pipe->ed->stateUnion.stateBitField.K   = 1U;
             pipe->ed->stateUnion.stateBitField.MPS = pipe->pipeCommon.maxPacketSize;
-            pipe->ed->stateUnion.stateBitField.K = 0U;
+            pipe->ed->stateUnion.stateBitField.K   = 0U;
             break;
 
         case kUSB_HostPortAttachDisable:
@@ -2465,6 +2506,7 @@ usb_status_t USB_HostOhciIoctl(usb_host_controller_handle controllerHandle, uint
             break;
 
         default:
+            status = kStatus_USB_NotSupported;
             break;
     }
     return status;
@@ -2482,7 +2524,7 @@ void USB_HostOhciTaskFunction(void *hostHandle)
     usbHostState = (usb_host_ohci_state_struct_t *)((usb_host_instance_t *)hostHandle)->controllerHandle;
 
     /* wait all event */
-    if (kStatus_USB_OSA_Success == USB_OsaEventWait(usbHostState->ohciEvent, 0xFFU, 0, 0, &bitSet))
+    if (KOSA_StatusSuccess == OSA_EventWait(usbHostState->ohciEvent, 0xFFU, 0, USB_OSA_WAIT_TIMEOUT, &bitSet))
     {
         if (bitSet & USB_HOST_OHCI_EVENT_PORT_CHANGE)
         {
@@ -2530,7 +2572,7 @@ void USB_HostOhciIsrFunction(void *hostHandle)
 {
     usb_host_ohci_state_struct_t *usbHostState;
     static uint32_t interruptStatus = 0U;
-    static uint32_t sofCount = 0U;
+    static uint32_t sofCount        = 0U;
 
     if (hostHandle == NULL)
     {
@@ -2545,7 +2587,7 @@ void USB_HostOhciIsrFunction(void *hostHandle)
     if (interruptStatus & USB_HOST_OHCI_INTERRUPT_STATUS_WDH_MASK) /* Write back done head */
     {
         USB_HostOhciLinkTdToDoneList(usbHostState);
-        USB_OsaEventSet(usbHostState->ohciEvent, USB_HOST_OHCI_EVENT_TOKEN_DONE);
+        OSA_EventSet(usbHostState->ohciEvent, USB_HOST_OHCI_EVENT_TOKEN_DONE);
     }
 
     if (interruptStatus & USB_HOST_OHCI_INTERRUPT_STATUS_SF_MASK) /* SOF interrupt */
@@ -2577,13 +2619,13 @@ void USB_HostOhciIsrFunction(void *hostHandle)
         if (sofCount >= USB_HOST_OHCI_TRANSFER_SCAN_INTERVAL)
         {
             sofCount = 0U;
-            USB_OsaEventSet(usbHostState->ohciEvent, USB_HOST_OHCI_EVENT_SOF);
+            OSA_EventSet(usbHostState->ohciEvent, USB_HOST_OHCI_EVENT_SOF);
         }
     }
 
     if (interruptStatus & USB_HOST_OHCI_INTERRUPT_STATUS_RHSC_MASK) /* port change detect interrupt */
     {
-        USB_OsaEventSet(usbHostState->ohciEvent, USB_HOST_OHCI_EVENT_PORT_CHANGE);
+        OSA_EventSet(usbHostState->ohciEvent, USB_HOST_OHCI_EVENT_PORT_CHANGE);
     }
 
     usbHostState->usbRegBase->HcInterruptStatus = interruptStatus; /* clear interrupt */

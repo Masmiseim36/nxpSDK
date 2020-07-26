@@ -1,5 +1,5 @@
 /*
- * Amazon FreeRTOS Pre-Release V1.0.0
+ * FreeRTOS Pre-Release V1.0.0
  * Copyright (C) 2017 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -45,9 +45,9 @@
 /**
  * @brief LED port and pins.
  */
-#define LED_PORT BOARD_LED_BLUE_GPIO_PORT
+#define LED_PORT      BOARD_LED_BLUE_GPIO_PORT
 #define GREEN_LED_PIN BOARD_LED_GREEN_GPIO_PIN
-#define BLUE_LED_PIN BOARD_LED_BLUE_GPIO_PIN
+#define BLUE_LED_PIN  BOARD_LED_BLUE_GPIO_PIN
 
 /**
  * @brief typedef for non-secure Reset Handler.
@@ -129,8 +129,8 @@ int main(void)
     /* attach main clock divide to FLEXCOMM0 (debug console) */
     CLOCK_AttachClk(BOARD_DEBUG_UART_CLK_ATTACH);
 
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
 
     /* Boot the non-secure code. */

@@ -17,7 +17,7 @@
         .section .dspcode , "ax" @progbits @preinit_array
         .global dsp_text_image_start
         .type dsp_text_image_start, %object
-        .align 4
+        .align 2
 dsp_text_image_start:
         .incbin "dsp_text_release.bin"
         .global dsp_text_image_end
@@ -25,7 +25,7 @@ dsp_text_image_start:
 dsp_text_image_end:
         .global dsp_data_image_start
         .type dsp_data_image_start, %object
-        .align 4
+        .align 2
 dsp_data_image_start:
         .incbin "dsp_data_release.bin"
         .global dsp_data_image_end
@@ -33,12 +33,12 @@ dsp_data_image_start:
 dsp_data_image_end:
         .global dsp_text_image_size
         .type dsp_text_image_size, %object
-        .align 4
+        .align 2
 dsp_text_image_size:
         .int  dsp_text_image_end - dsp_text_image_start
         .global dsp_data_image_size
         .type dsp_data_image_size, %object
-        .align 4
+        .align 2
 dsp_data_image_size:
         .int  dsp_data_image_end - dsp_data_image_start
         .end

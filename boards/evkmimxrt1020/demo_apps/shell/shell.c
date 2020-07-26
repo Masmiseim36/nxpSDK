@@ -20,10 +20,10 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define LED_NUMBERS 1U
+#define LED_NUMBERS  1U
 #define LED_1_INIT() USER_LED_INIT(LOGIC_LED_OFF)
-#define LED_1_ON() USER_LED_ON()
-#define LED_1_OFF() USER_LED_OFF()
+#define LED_1_ON()   USER_LED_ON()
+#define LED_1_OFF()  USER_LED_OFF()
 #define SHELL_Printf PRINTF
 /*******************************************************************************
  * Prototypes

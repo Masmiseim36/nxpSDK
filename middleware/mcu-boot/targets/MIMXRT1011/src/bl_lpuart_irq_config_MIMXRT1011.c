@@ -1,20 +1,20 @@
 /*
-* Copyright 2016-2017 NXP
-*
-* All rights reserved.
-*
-* SPDX-License-Identifier: BSD-3-Clause
-*/
+ * Copyright 2016-2017 NXP
+ *
+ * All rights reserved.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
 
-#include "bootloader/bl_context.h"
+#include "autobaud.h"
+#include "bl_context.h"
+#include "bl_irq_common.h"
 #include "bootloader_common.h"
 #include "bootloader_config.h"
-#include "bootloader/bl_irq_common.h"
-#include "autobaud/autobaud.h"
-#include "packet/serial_packet.h"
+#include "fsl_assert.h"
 #include "fsl_device_registers.h"
-#include "lpuart/fsl_lpuart.h"
-#include "utilities/fsl_assert.h"
+#include "fsl_lpuart.h"
+#include "serial_packet.h"
 
 void LPUART_SetSystemIRQ(uint32_t instance, PeripheralSystemIRQSetting set)
 {

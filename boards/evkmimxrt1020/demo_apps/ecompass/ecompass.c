@@ -15,12 +15,12 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define I2C_BAUDRATE (100000U)
-#define EXAMPLE_LED_GPIO BOARD_USER_LED_GPIO
+#define I2C_BAUDRATE         (100000U)
+#define EXAMPLE_LED_GPIO     BOARD_USER_LED_GPIO
 #define EXAMPLE_LED_GPIO_PIN BOARD_USER_LED_GPIO_PIN
-#define EXAMPLE_DELAY_COUNT 8000000
+#define EXAMPLE_DELAY_COUNT  8000000
 #define MAX_ACCEL_AVG_COUNT 25U
-#define HWTIMER_PERIOD 10000U
+#define HWTIMER_PERIOD      10000U
 /* multiplicative conversion constants */
 #define DegToRad 0.017453292
 #define RadToDeg 57.295779

@@ -107,9 +107,9 @@
 
 /*! @brief if 1, enable the low power; if 0, disbale the low power. */
 #define USB_HOST_CONFIG_LOW_POWER_MODE (1U)
-      
+
 /*! @brief if 1, enable the LPM_L1; if 0, disbale the LPM_L1. */
-#define USB_HOST_CONFIG_LPM_L1  (1U)
+#define USB_HOST_CONFIG_LPM_L1 (1U)
 
 /* KHCI configuration */
 #if ((defined USB_HOST_CONFIG_KHCI) && (USB_HOST_CONFIG_KHCI))

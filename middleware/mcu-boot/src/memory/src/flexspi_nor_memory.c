@@ -7,18 +7,19 @@
  *
  */
 
-#include "flexspi_nor_memory.h"
 #include <string.h>
-#include "bootloader/bl_context.h"
-#include "bootloader/bootloader.h"
+
+#include "bl_context.h"
+#include "bootloader.h"
 #include "bootloader_common.h"
-#include "flexspi_nor/flexspi_nor_flash.h"
+#include "flexspi_nor_flash.h"
+#include "flexspi_nor_memory.h"
+#include "fsl_assert.h"
 #include "fsl_device_registers.h"
-#include "memory/memory.h"
-#include "microseconds/microseconds.h"
+#include "fsl_rtos_abstraction.h"
+#include "memory.h"
+#include "microseconds.h"
 #include "normal_memory.h"
-#include "utilities/fsl_assert.h"
-#include "utilities/fsl_rtos_abstraction.h"
 
 #if BL_FEATURE_FLEXSPI_NOR_MODULE
 
@@ -31,17 +32,27 @@
 #endif
 
 #if BL_FEATURE_FLEXSPI_ENCRYPT_PROGRAMMING
-#include "bootloader/bl_nor_encrypt.h"
+#include "bl_nor_encrypt.h"
 #endif
 #if BL_FEATURE_GEN_KEYBLOB
-#include "bootloader/bl_keyblob.h"
+#include "bl_keyblob.h"
 #endif // BL_FEATURE_GEN_KEYBLOB
 
 #define FLASH_AMBA_BASE BL_FLEXSPI_AMBA_BASE
 
+#ifdef BL_FLASH_CFG_BLOCK_OFFSET
+#define FLASH_CFG_BLOCK_BASE (BL_FLEXSPI_AMBA_BASE + BL_FLASH_CFG_BLOCK_OFFSET)
+#else
+#define FLASH_CFG_BLOCK_BASE (BL_FLEXSPI_AMBA_BASE)
+#endif
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
 ////////////////////////////////////////////////////////////////////////////////
+
+#ifndef BL_TARGET_FLASH
+#define lock_acquire()
+#define lock_release()
+#endif
 
 #ifndef BL_FLEXSPI_NOR_CFG_OPT0
 // Assume the FLASH device is an QSPI FLASH which supports JESD216 or later revision, works at 120/133MHz
@@ -77,7 +88,7 @@ typedef struct _flexspi_nor_mem_context
     uint32_t nextStartAddress;        //!< A variable is used to indicate if recent two writes
                                       //!< are continuous
     uint32_t buffer[kFlexSpiNorMemory_MaxPageSize / sizeof(uint32_t)]; //!< A buffer which is used to buffer a full
-                                                   //!< page of data
+                                                                       //!< page of data
 #if BL_FEATURE_GEN_KEYBLOB
     bool has_keyblob;
     uint32_t keyblob_offset;
@@ -234,12 +245,14 @@ status_t check_update_keyblob_info(void *config)
             // Check key blob address range
             if ((keyblob_size + keyblob_offset) > image_max_size)
             {
+                status = kStatusMemoryRangeInvalid;
                 break;
             }
 
             // Invalid key blob address, key blob must be page size aligned.
             if (keyblob_addr & (page_size - 1))
             {
+                status = kStatusMemoryAlignmentError;
                 break;
             }
 
@@ -272,6 +285,7 @@ status_t check_update_keyblob_info(void *config)
 status_t flexspi_nor_mem_init(void)
 {
 #if defined(BL_TARGET_FLASH) && (BL_TARGET_FLASH)
+#ifndef BL_FLLEXSPI_NOR_CFG_BLOCK
     serial_nor_config_option_t option;
     option.option0.U = BL_FLEXSPI_NOR_CFG_OPT0;
     option.option1.U = BL_FLEXSPI_NOR_CFG_OPT1;
@@ -280,6 +294,16 @@ status_t flexspi_nor_mem_init(void)
     {
         return flexspi_nor_mem_config((uint32_t *)&option);
     }
+#else
+    extern const flexspi_nor_config_t flexspi_config;
+    if (flexspi_config.memConfig.tag == FLEXSPI_CFG_BLK_TAG)
+    {
+        flexspi_nor_config_t configBlock;
+        memcpy(&configBlock, &flexspi_config, sizeof(flexspi_config));
+        return flexspi_nor_mem_config((uint32_t *)&configBlock);
+    }
+#endif
+
     return kStatus_Fail;
 #else
     /*
@@ -441,14 +465,14 @@ status_t flexspi_nor_mem_config(uint32_t *config)
                 }
 
                 // Update flexspi nor config block if it is not present
-                if (is_flexspi_nor_mem_erased(FLASH_AMBA_BASE, sizeof(flexspi_nor_config_t)))
+                if (is_flexspi_nor_mem_erased(FLASH_CFG_BLOCK_BASE, sizeof(flexspi_nor_config_t)))
                 {
                     bool needSwapConfigBlock = s_flexspiNorConfigBlock.isDataOrderSwapped;
                     // Swap before write
                     if (needSwapConfigBlock)
                     {
                         uint8_t *configBlock = (uint8_t *)&s_flexspiNorConfigBlock;
-                        uint8_t *temp_buf_8 = (uint8_t*)&temp_buf;
+                        uint8_t *temp_buf_8 = (uint8_t *)&temp_buf;
                         for (uint32_t i = 0; i < sizeof(s_flexspiNorConfigBlock); i += 2)
                         {
                             temp_buf_8[i] = configBlock[i + 1];
@@ -456,7 +480,7 @@ status_t flexspi_nor_mem_config(uint32_t *config)
                         }
                         config_buffer = (uint8_t *)temp_buf;
                     }
-                    status = flexspi_nor_mem_write(FLASH_AMBA_BASE, sizeof(flexspi_nor_config_t),
+                    status = flexspi_nor_mem_write(FLASH_CFG_BLOCK_BASE, sizeof(flexspi_nor_config_t),
                                                    (const uint8_t *)config_buffer);
                     if (status != kStatus_Success)
                     {
@@ -464,7 +488,7 @@ status_t flexspi_nor_mem_config(uint32_t *config)
                         // is
                         // wrong
                         // because erase always executes at 30MHz while the read can work at the specified frequency
-                        flexspi_nor_memory_erase(FLASH_AMBA_BASE, sizeof(s_flexspiNorConfigBlock));
+                        flexspi_nor_memory_erase(FLASH_CFG_BLOCK_BASE, sizeof(s_flexspiNorConfigBlock));
                         hasError = true;
                         break;
                     }
@@ -472,11 +496,11 @@ status_t flexspi_nor_mem_config(uint32_t *config)
                     if (status != kStatus_Success)
                     {
                         // Erase the error config block
-                        flexspi_nor_mem_erase(FLASH_AMBA_BASE, s_flexspiNorConfigBlock.sectorSize);
+                        flexspi_nor_mem_erase(FLASH_CFG_BLOCK_BASE, s_flexspiNorConfigBlock.sectorSize);
                         hasError = true;
                         break;
                     }
-                } // if (is_flexspi_nor_mem_erased(FLASH_AMBA_BASE, sizeof(flexspi_nor_config_t)))
+                } // if (is_flexspi_nor_mem_erased(FLASH_CFG_BLOCK_BASE, sizeof(flexspi_nor_config_t)))
                 else
                 {
                     status = kStatusMemoryCumulativeWrite;
@@ -488,7 +512,7 @@ status_t flexspi_nor_mem_config(uint32_t *config)
             // Restore Flash configuration
             if (isParallelMode)
             {
-                if (config_buffer != (uint8_t*)&s_flexspiNorConfigBlock)
+                if (config_buffer != (uint8_t *)&s_flexspiNorConfigBlock)
                 {
                     memcpy(&s_flexspiNorConfigBlock, (void *)config_buffer, sizeof(s_flexspiNorConfigBlock));
                 }
@@ -524,7 +548,7 @@ status_t flexspi_nor_mem_config(uint32_t *config)
                     if (is_flexspi_nor_mem_erased(FLASH_AMBA_BASE + BL_PROT_REGION_BLOCK_OFFSET(i), 512))
                     {
                         status = flexspi_nor_mem_write(FLASH_AMBA_BASE + BL_PROT_REGION_BLOCK_OFFSET(i), bytes,
-                                              (uint8_t *)start);
+                                                       (uint8_t *)start);
                         if (status != kStatus_Success)
                         {
                             break;
@@ -617,7 +641,7 @@ status_t flexspi_nor_mem_write(uint32_t address, uint32_t length, const uint8_t 
         }
 
         // Copy data to internal buffer
-        uint8_t *p_buffer_8 = (uint8_t*)s_flexspiNorContext.buffer;
+        uint8_t *p_buffer_8 = (uint8_t *)s_flexspiNorContext.buffer;
         memcpy(&p_buffer_8[s_flexspiNorContext.offset], buffer, writeLength);
         s_flexspiNorContext.offset += writeLength;
         address += writeLength;
@@ -733,7 +757,7 @@ status_t flexspi_nor_mem_flush(void)
     if (s_flexspiNorContext.isAddingToBuffer)
     {
         s_flexspiNorContext.isAddingToBuffer = false;
-        uint8_t *p_buffer_8 = (uint8_t*)s_flexspiNorContext.buffer;
+        uint8_t *p_buffer_8 = (uint8_t *)s_flexspiNorContext.buffer;
         // Fill unused region with 0xFFs.
         if (s_flexspiNorContext.offset != s_flexspiNorConfigBlock.pageSize)
         {
@@ -770,16 +794,18 @@ status_t flexspi_nor_mem_flush(void)
         {
             return status;
         }
+#if (__CORTEX_M == 7)
         if (SCB->CCR & SCB_CCR_DC_Msk)
         {
             SCB_InvalidateDCache_by_Addr((uint32_t *)s_flexspiNorContext.writeAddress,
                                          s_flexspiNorConfigBlock.pageSize);
         }
+#endif
         property_store_t *propertyStore = g_bootloaderContext.propertyInterface->store;
         if (propertyStore->verifyWrites == true)
         {
             // Verify whether the data has been programmed to Serial NOR flash successfully.
-            if (!flexspi_nor_memory_check(s_flexspiNorContext.writeAddress, (uint8_t*)s_flexspiNorContext.buffer,
+            if (!flexspi_nor_memory_check(s_flexspiNorContext.writeAddress, (uint8_t *)s_flexspiNorContext.buffer,
                                           s_flexspiNorConfigBlock.pageSize))
             {
                 return kStatus_FlexSPINOR_CommandFailure;
@@ -814,10 +840,13 @@ status_t flexspi_nor_mem_erase(uint32_t address, uint32_t length)
     bl_nor_encrypt_region_refresh(alignedAddress, sectorSize);
 #endif
 
+#if (__CORTEX_M == 7)
     if (SCB->CCR & SCB_CCR_DC_Msk)
     {
         SCB_InvalidateDCache_by_Addr((uint32_t *)alignedAddress, sectorSize);
     }
+#endif
+
 #if FLEXSPI_NOR_ERASE_VERIFY
     property_store_t *propertyStore = g_bootloaderContext.propertyInterface->store;
     if (propertyStore->verifyWrites == true)
@@ -860,15 +889,15 @@ status_t flexspi_nor_mem_erase_all(void)
     }
 
 // Decompose the the flash erase all into two region erases.
-#ifdef BL_TARGET_FLASH
+#if (defined(BL_TARGET_FLASH) && (BL_TARGET_FLASH > 0))
     reserved_region_t *reservedRegion =
         &g_bootloaderContext.propertyInterface->store->reservedRegions[kProperty_FlashReservedRegionIndex];
 
     uint32_t alignedStart = ALIGN_UP(reservedRegion->endAddress, sectorSize);
-    uint32_t eraseSize = (uint32_t)((uint64_t)startAddress +  lengthInBytes - alignedStart);
+    uint32_t eraseSize = (uint32_t)((uint64_t)startAddress + lengthInBytes - alignedStart);
     startAddress = alignedStart;
     lengthInBytes = eraseSize;
-    status =  flexspi_nor_mem_erase(startAddress, lengthInBytes);
+    status = flexspi_nor_mem_erase(startAddress, lengthInBytes);
 #else
     status = flexspi_nor_memory_erase_all();
 #if FLEXSPI_NOR_ERASE_VERIFY
@@ -886,8 +915,6 @@ status_t flexspi_nor_mem_erase_all(void)
     {
         return status;
     }
-
-
 
 #if BL_FEATURE_FLEXSPI_ENCRYPT_PROGRAMMING
     bl_nor_encrypt_region_refresh(startAddress, lengthInBytes);
@@ -1046,13 +1073,20 @@ static status_t flexspi_nor_memory_page_program(uint32_t address, const uint32_t
 
 static status_t flexspi_nor_memory_erase_all(void)
 {
-    return flexspi_nor_flash_erase_all(FLEXSPI_NOR_INSTANCE, &s_flexspiNorConfigBlock);
+    lock_acquire();
+    status_t status = flexspi_nor_flash_erase_all(FLEXSPI_NOR_INSTANCE, &s_flexspiNorConfigBlock);
+    lock_release();
+
+    return status;
 }
 
 static status_t flexspi_nor_memory_erase(uint32_t address, uint32_t length)
 {
-    return flexspi_nor_flash_erase(FLEXSPI_NOR_INSTANCE, &s_flexspiNorConfigBlock, flexspi_get_phy_address(address),
-                                   length);
+    uint32_t phyAddr = flexspi_get_phy_address(address);
+    lock_acquire();
+    status_t status = flexspi_nor_flash_erase(FLEXSPI_NOR_INSTANCE, &s_flexspiNorConfigBlock, phyAddr, length);
+    lock_release();
+    return status;
 }
 
 static void flexspi_nor_memory_clear_cache(void)

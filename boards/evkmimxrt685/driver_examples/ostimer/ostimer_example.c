@@ -61,16 +61,16 @@ void EXAMPLE_OstimerCallback(void)
     /* User code. */
 }
 
-/* Set the match value with unit of ms. OStimer will trigger a match interrupt after the a certain time. */
-static void EXAMPLE_SetMatchInterruptTime(OSTIMER_Type *base, uint32_t ms, uint32_t freq, ostimer_callback_t cb)
+/* Set the match value with unit of millisecond. OStimer will trigger a match interrupt after the a certain time. */
+static status_t EXAMPLE_SetMatchInterruptTime(OSTIMER_Type *base, uint32_t ms, uint32_t freq, ostimer_callback_t cb)
 {
     uint64_t timerTicks = OSTIMER_GetCurrentTimerValue(base);
 
-    /* Translate the ms to ostimer count value. */
+    /* Translate the millisecond to ostimer count value. */
     timerTicks += MSEC_TO_COUNT(ms, freq);
 
     /* Set the match value with unit of ticks. */
-    OSTIMER_SetMatchValue(base, timerTicks, cb);
+    return OSTIMER_SetMatchValue(base, timerTicks, cb);
 }
 
 /*!
@@ -91,32 +91,46 @@ int main(void)
     /* Intialize the OS timer, setting clock configuration. */
     OSTIMER_Init(EXAMPLE_OSTIMER);
 
+    matchFlag = false;
+
     /* Set the OS timer match value. */
-    EXAMPLE_SetMatchInterruptTime(EXAMPLE_OSTIMER, 5000U, EXAMPLE_OSTIMER_FREQ, EXAMPLE_OstimerCallback);
-
-    /* Enter deep sleep mode. */
-    EXAMPLE_EnterDeepSleep();
-
-    /* Wait until OS timer interrupt occurred. */
-    while (!matchFlag)
+    if (kStatus_Success ==
+        EXAMPLE_SetMatchInterruptTime(EXAMPLE_OSTIMER, 5000U, EXAMPLE_OSTIMER_FREQ, EXAMPLE_OstimerCallback))
     {
-    }
+        /* Enter deep sleep mode. */
+        EXAMPLE_EnterDeepSleep();
 
-    /* Wakeup from deep sleep mode. */
-    PRINTF("Board wakeup from deep sleep mode.\r\n\r\n");
+        /* Wait until OS timer interrupt occurrs. */
+        while (!matchFlag)
+        {
+        }
+
+        /* Wakeup from deep sleep mode. */
+        PRINTF("Board wakeup from deep sleep mode.\r\n\r\n");
+    }
+    else
+    {
+        PRINTF("SetMatchInterruptTime failed: set time has already expired! \r\n");
+    }
 
     while (1)
     {
         matchFlag = false;
 
         /* Set the match value to trigger the match interrupt. */
-        EXAMPLE_SetMatchInterruptTime(EXAMPLE_OSTIMER, 2000U, EXAMPLE_OSTIMER_FREQ, EXAMPLE_OstimerCallback);
-
-        /* Wait for the match value reached. */
-        while (!matchFlag)
+        if (kStatus_Success ==
+            EXAMPLE_SetMatchInterruptTime(EXAMPLE_OSTIMER, 2000U, EXAMPLE_OSTIMER_FREQ, EXAMPLE_OstimerCallback))
         {
-        }
+            /* Wait for the match value to be reached. */
+            while (!matchFlag)
+            {
+            }
 
-        PRINTF("OS timer match value reached\r\n");
+            PRINTF("OS timer match value reached\r\n");
+        }
+        else
+        {
+            PRINTF("SetMatchInterruptTime failed: set time has already expired! \r\n");
+        }
     }
 }

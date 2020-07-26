@@ -1,4 +1,4 @@
-$version 6.60
+$version 9.30
 
 // This is the root component of the entire GUI application.
 $rect <20,20,220,60>
@@ -33,23 +33,23 @@ class Accelerator : Core::Group
   }
 
   // This is the Application class of the GraphicsAccelerator example.
-  // 
+  //
   // The intention of this example is to demonstrate the graphics performance. For \
   // this purpose, a set of basic drawing operations are executed permanently and \
   // continuously: As a result, an endless stream of drawing instructions is produced...
   // In case that the graphics hardware provides a graphics accelerator, it can be \
   // switched on/off to demonstrate the advantage of a graphics accelerator.
-  // 
+  //
   // The entire processing of this drawing operations is implemented within the class \
   // @GraphicsFactory.
-  // 
+  //
   // The Accelerator class, just uses and configures this @GraphicsFactory. On the \
   // right and bottom area, a couple of control elements and text items are placed \
   // in order to receive user inputs and to display the current measurements and \
   // states.
   // The user can choose the current graphics operation and switch on/off the usage \
   // of the graphics acclerator (if available).
-  // 
+  //
   // To run the application within the Prototyper, press 'F5'.
   note legend Note1
   {
@@ -379,12 +379,12 @@ resource Resources::Font FontSmall
 }
 
 // This is the unit 'Accelerator' of the GraphicsAccelerator example.
-// 
+//
 // The unit contains the class 'Accelerator' that implements the appearance and the \
 // behavior of the entire UI application.
 // The class 'GraphicsFactory' is used by the application in order to generate drawing \
 // instructions / animations in an endless manner.
-// 
+//
 // Furthermore, the unit contains all the necessary resources for the sample: Three \
 // different font resources and a couple of bitmap resource.
 note legend Note1
@@ -715,12 +715,12 @@ class GraphicsFactory : Core::Group
   // by using their individual settings.
   // This approach makes it very easy to implement such a graphics factory, instead \
   // of using many different Views objects.
-  // 
+  //
   // As soon as the component is drawn, a signal is sent to TriggerNextRedraw() which \
   // forces an update of the entire component. This slot method is triggered by using \
   // 'idelsignal' in order to ensure that the invalidation happens after the next \
   // screen update.
-  // 
+  //
   // The class 'GraphicsFactory' does not depend on a certain size - all graphics \
   // objects are arranged depending on the current size of the component. The 'GraphicsFactory' \
   // can be configured by using the properties 'NoOfItems' and 'TypeOfItems'.

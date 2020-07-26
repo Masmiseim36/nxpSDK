@@ -15,8 +15,8 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_CAN CAN2
-#define EXAMPLE_FLEXCAN_IRQn CAN2_IRQn
+#define EXAMPLE_CAN                CAN2
+#define EXAMPLE_FLEXCAN_IRQn       CAN2_IRQn
 #define EXAMPLE_FLEXCAN_IRQHandler CAN2_IRQHandler
 
 /* Considering that the first valid MB must be used as Reserved TX MB for ERR005829,
@@ -75,11 +75,7 @@ void EXAMPLE_FLEXCAN_IRQHandler(void)
 #endif
         rxComplete = true;
     }
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 /*!

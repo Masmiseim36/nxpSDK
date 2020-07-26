@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP
+ * Copyright 2019-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -13,11 +13,11 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v6.0
+product: Pins v7.0
 processor: MIMXRT1011xxxxx
 package_id: MIMXRT1011DAE5A
 mcu_data: ksdk2_0
-processor_version: 0.0.4
+processor_version: 0.0.0
 board: MIMXRT1010-EVK
 pin_labels:
 - {pin_num: '3', pin_signal: GPIO_09, label: LPUART1_RXD, identifier: LPUART1_RXD}
@@ -28,6 +28,7 @@ power_domains: {NVCC_GPIO: '3.3'}
 
 #include "fsl_common.h"
 #include "fsl_iomuxc.h"
+#include "fsl_gpio.h"
 #include "pin_mux.h"
 
 /* FUNCTION ************************************************************************************************************
@@ -45,12 +46,13 @@ void BOARD_InitBootPins(void) {
 BOARD_InitPins:
 - options: {callFromInitBoot: 'true', prefix: BOARD_, coreID: core0, enableClock: 'true'}
 - pin_list:
-  - {pin_num: '3', peripheral: LPUART1, signal: RXD, pin_signal: GPIO_09, slew_rate: Slow, software_input_on: Disable, open_drain: Disable, speed: MHZ_150, drive_strength: R0_4,
+  - {pin_num: '3', peripheral: LPUART1, signal: RXD, pin_signal: GPIO_09, slew_rate: Slow, software_input_on: Disable, open_drain: Disable, drive_strength: R0_4,
     pull_keeper_select: Keeper, pull_keeper_enable: Enable, pull_up_down_config: Pull_Down_100K_Ohm, hysteresis_enable: Disable}
-  - {pin_num: '2', peripheral: LPUART1, signal: TXD, pin_signal: GPIO_10, slew_rate: Slow, software_input_on: Disable, open_drain: Disable, speed: MHZ_150, drive_strength: R0_4,
+  - {pin_num: '2', peripheral: LPUART1, signal: TXD, pin_signal: GPIO_10, slew_rate: Slow, software_input_on: Disable, open_drain: Disable, drive_strength: R0_4,
     pull_keeper_select: Keeper, pull_keeper_enable: Enable, pull_up_down_config: Pull_Down_100K_Ohm, hysteresis_enable: Disable}
-  - {pin_num: '13', peripheral: GPIO1, signal: 'gpiomux_io, 00', pin_signal: GPIO_00, slew_rate: Slow, software_input_on: Disable, open_drain: Disable, speed: MHZ_100,
-    drive_strength: R0_4, pull_keeper_select: Pull, pull_keeper_enable: Enable, pull_up_down_config: Pull_Up_100K_Ohm, hysteresis_enable: Enable}
+  - {pin_num: '13', peripheral: GPIO1, signal: 'gpiomux_io, 00', pin_signal: GPIO_00, direction: INPUT, gpio_interrupt: kGPIO_IntRisingEdge, slew_rate: Slow, software_input_on: Disable,
+    open_drain: Disable, speed: MHZ_100, drive_strength: R0_4, pull_keeper_select: Pull, pull_keeper_enable: Enable, pull_up_down_config: Pull_Up_100K_Ohm, hysteresis_enable: Enable}
+  - {pin_num: '48', peripheral: ARM, signal: arm_trace_swo, pin_signal: GPIO_AD_09, slew_rate: Fast, software_input_on: Disable}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 
@@ -63,6 +65,17 @@ BOARD_InitPins:
 void BOARD_InitPins(void) {
   CLOCK_EnableClock(kCLOCK_Iomuxc);           /* iomuxc clock (iomuxc_clk_enable): 0x03U */
 
+  /* GPIO configuration of AUD_INT on GPIO_00 (pin 13) */
+  gpio_pin_config_t AUD_INT_config = {
+      .direction = kGPIO_DigitalInput,
+      .outputLogic = 0U,
+      .interruptMode = kGPIO_IntRisingEdge
+  };
+  /* Initialize GPIO functionality on GPIO_00 (pin 13) */
+  GPIO_PinInit(GPIO1, 0U, &AUD_INT_config);
+  /* Enable GPIO pin interrupt on GPIO_00 (pin 13) */
+  GPIO_PortEnableInterrupts(GPIO1, 1U << 0U);
+
   IOMUXC_SetPinMux(
       IOMUXC_GPIO_00_GPIOMUX_IO00,            /* GPIO_00 is configured as GPIOMUX_IO00 */
       0U);                                    /* Software Input On Field: Input Path is determined by functionality */
@@ -71,6 +84,9 @@ void BOARD_InitPins(void) {
       0U);                                    /* Software Input On Field: Input Path is determined by functionality */
   IOMUXC_SetPinMux(
       IOMUXC_GPIO_10_LPUART1_TXD,             /* GPIO_10 is configured as LPUART1_TXD */
+      0U);                                    /* Software Input On Field: Input Path is determined by functionality */
+  IOMUXC_SetPinMux(
+      IOMUXC_GPIO_AD_09_ARM_TRACE_SWO,        /* GPIO_AD_09 is configured as ARM_TRACE_SWO */
       0U);                                    /* Software Input On Field: Input Path is determined by functionality */
   IOMUXC_SetPinConfig(
       IOMUXC_GPIO_00_GPIOMUX_IO00,            /* GPIO_00 PAD functional properties : */
@@ -101,6 +117,16 @@ void BOARD_InitPins(void) {
                                                  Pull / Keep Enable Field: Pull/Keeper Enabled
                                                  Pull / Keep Select Field: Keeper
                                                  Pull Up / Down Config. Field: 100K Ohm Pull Down
+                                                 Hyst. Enable Field: Hysteresis Disabled */
+  IOMUXC_SetPinConfig(
+      IOMUXC_GPIO_AD_09_ARM_TRACE_SWO,        /* GPIO_AD_09 PAD functional properties : */
+      0x90B1U);                               /* Slew Rate Field: Fast Slew Rate
+                                                 Drive Strength Field: R0/6
+                                                 Speed Field: fast(150MHz)
+                                                 Open Drain Enable Field: Open Drain Disabled
+                                                 Pull / Keep Enable Field: Pull/Keeper Enabled
+                                                 Pull / Keep Select Field: Keeper
+                                                 Pull Up / Down Config. Field: 100K Ohm Pull Up
                                                  Hyst. Enable Field: Hysteresis Disabled */
 }
 

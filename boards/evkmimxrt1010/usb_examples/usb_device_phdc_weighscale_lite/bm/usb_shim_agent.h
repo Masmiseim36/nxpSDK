@@ -105,7 +105,7 @@ extern "C" {
  *
  * @return A USB error code or kStatus_USB_Success.
  */
-extern usb_status_t USB_ShimAgentRecvComplete(uint32_t handle, void *param);
+extern usb_status_t USB_ShimAgentRecvComplete(void *handle, void *param);
 
 /*!
  * @brief USB shim agent send data callback function.
@@ -119,7 +119,7 @@ extern usb_status_t USB_ShimAgentRecvComplete(uint32_t handle, void *param);
  *
  * @return A USB error code or kStatus_USB_Success.
  */
-extern usb_status_t USB_ShimAgentSendComplete(uint32_t handle, uint32_t event, void *param);
+extern usb_status_t USB_ShimAgentSendComplete(void *handle, uint32_t event, void *param);
 
 /*!
  * @brief USB shim agent send data function.
@@ -133,7 +133,7 @@ extern usb_status_t USB_ShimAgentSendComplete(uint32_t handle, uint32_t event, v
  *
  * @return A USB error code or kStatus_USB_Success.
  */
-extern usb_status_t USB_ShimAgentSendData(uint32_t handle, uint8_t qos, uint8_t *appBuffer, uint32_t size);
+extern usb_status_t USB_ShimAgentSendData(void *handle, uint8_t qos, uint8_t *appBuffer, uint32_t size);
 
 /*!
  * @brief agent callback.
@@ -146,7 +146,7 @@ extern usb_status_t USB_ShimAgentSendData(uint32_t handle, uint8_t qos, uint8_t 
  * @param data          the callback data.
  * @param size          the callback data size.
  */
-extern void AGENT_Callback(uint32_t handle, uint8_t request, uint8_t *data, uint32_t size);
+extern void AGENT_Callback(void *handle, uint8_t request, uint8_t *data, uint32_t size);
 
 #if defined(__cplusplus)
 }

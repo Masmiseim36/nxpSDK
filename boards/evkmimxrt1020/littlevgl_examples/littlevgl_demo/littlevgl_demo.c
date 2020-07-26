@@ -11,7 +11,7 @@
 #include "fsl_debug_console.h"
 #include "littlevgl_support.h"
 #include "board.h"
-#include "lv_examples/demo/demo.h"
+#include "lv_examples/lv_apps/demo/demo.h"
 
 #include "pin_mux.h"
 #include "clock_config.h"
@@ -19,7 +19,7 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define LPSPI_MASTER_DMA_BASEADDR DMA0
+#define LPSPI_MASTER_DMA_BASEADDR     DMA0
 #define LPSPI_MASTER_DMA_MUX_BASEADDR DMAMUX
 
 

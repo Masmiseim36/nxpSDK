@@ -1,0 +1,510 @@
+<!DOCTYPE HTML SYSTEM>
+<html>
+<head>
+    <title>Wi-Fi web configuration</title>
+     <meta charset="UTF-8">
+    <style type="text/css">
+    <!--
+    @import"webconfig.css";
+    -->
+    </style>
+
+
+</head>
+
+<body onload="scan();">
+
+    <div id="page_main" style="text-align: center;">
+
+        <div id="page_header" class="gradient header_banner">
+            <div class="header_container">
+                <div class="logo">
+                    <a href="http://www.nxp.com" title="NXP"><img src="NXP_logo.png" alt="NXP Semiconductor" width="150px" height="54px"></a>
+                </div>
+                <div class="header_text">
+					Wi-Fi web configuration
+                </div>
+            </div>
+        </div>
+
+        <div class="page_body">
+            <div class="menu">
+                <div id="board_info">
+                    <span id="boardName">Board</span><br>
+                    <span id="boardIP">IP</span><br>
+                </div>
+            	<ul id="lnv">
+                    <li>
+                        Current Wi-Fi Mode:
+                        <div class="statusIndicator" id="statusAP">AP</div>
+                        <div class="statusIndicator" id="statusCLI">Client</div></li>
+                    <li><button type="button" name="main_b" class="menu_button" onclick="scan()">Scan Wi-fi Networks</button></li>
+					<li><button type="button" name="main_b" class="menu_button" onclick="open_clear_board_dialogue()">Clear Board settings</button></li>
+            	</ul>
+            </div>
+
+            <div id="p_content" class="page_content">
+               <h2>Welcome!</h2>
+                    <p>
+                       This is example of a HTTP based Wi-Fi credential configuration web service. 
+                   </p>
+                   
+                <div id='section_networks'>
+
+                    <h3> Available Wi-Fi Networks - Click to Join:</h3>
+                    <div id="wifi_list">
+                       <div id='wif_no_networks'>No Networks Availabel</div>
+                    </div>
+
+                </div>
+
+                <h4>Description</h3>
+                   <p>
+                       By default, the board creates an Access Point and starts a server which provides this web interface.
+                   </p>
+                   <p> 
+                        This interface shows you nearby available Wi-Fi networks. Clicking on the one you would like to connect to allows you to enter the credentials. The board will then switch to client mode and attempt to connect to it. 
+                    </p>
+                    <p>
+                        If connection is successful, the credentials are stored in board flash memory so that next time the board starts up, it connects directly to the configured Wi-Fi network.
+                    </p>
+
+
+            </div>
+        </div>
+
+        <div class="footer">
+            NXP Semiconductors
+        </div>
+
+        <div id="loader_page" style="display:none;">
+            <h2> Scanning....</h2>
+            <div class="loader">
+            </div>
+        </div>
+
+
+
+        <div id="ap_password_page" style="display:none;" onclick="close_connect_dialogue();">
+            <div id="ap_password_dialogue">
+                <h2>Enter Credentials</h2>
+               
+                <div>
+                    <label for=post_ssid>SSID:</label>
+                    <input id="post_ssid" value="SSID" type="text" name="post_ssid" readonly>
+                </div>
+                <div id="password_input_field">
+                    <label for=post_passphrase>Password:</label>
+                    <input id="post_password" value="Password" type="text" name="post_passphrase" maxlength="63">
+                </div>
+                <span id="post_errors"></span><br>
+                 <button value="" onclick="validateForm()">Connect</button>
+            </div>
+        </div>
+
+        <div id="clear_confirm" style="display:none;" onclick="close_clear_confirm_dialogue();">
+            <div id="clear_confirm_dialogue">
+                <h2>Clearing settings... Are you sure?</h2>
+                <p>This will clear the saved Wi-Fi credentials from the board flash and reset the board back to AP mode. You will have to manually reconnect to the board access point.</p>
+               
+                <button class="menu_button warning" type="submit" value="" onclick="clear_config()">Clear</button>
+                <button class="menu_button" type="submit" value="" onclick="close_clear_confirm_dialogue()">Cancel</button>
+                
+            </div>
+        </div>
+
+
+
+        <div id="mode_switch_loader" style="display:none;">
+            <div id="mode_switch_dialogue">
+                <h2>Attempting connection to <span id="mode_switch_network_name"></span> Network</h2>
+                <p>You will get disconnected from the current Wi-Fi Access-point while the board switches as a client to your selected network.</p>
+                 <p>Please connect your device to that network to continue.</p>
+               
+                <div class="loader">
+                </div>
+                
+            </div>
+        </div>
+
+
+        <div id="error_banner" style="display:none;" onclick="close_error_dialogue();">
+            <div id="error_banner_dialogue">
+                <h2 id="error_title">An Error has occurred</h2>
+                <p id="error_msg"> </p>
+                
+            </div>
+        </div>
+
+        <div id="success_banner" style="display:none;" onclick="close_success_dialogue();">
+            <div id="success_banner_dialogue">
+                <h2 id="success_title">Success!</h2>
+                <p id="success_msg"> </p>
+                
+            </div>
+        </div>
+
+        <div id="clientJoin_banner" style="display:none;" onclick="close_cJoin_dialogue();">
+            <div id="clientJoin_banner_dialogue">
+                <h2>First reset back to AP mode</h2>
+                <p> You are currently in Client mode. Please, first reset the board back to AP mode and try again.</p>
+                <p>Note that this will also clear the saved SSID.</p>
+                <button type="button" name="main_b" class="menu_button warning" onclick="clear_config();">Reset to AP mode</button></li>
+                <button type="button" name="main_b" class="menu_button" onclick="close_cJoin_dialogue();">Cancel</button></li>
+
+            </div>
+        </div>
+
+
+
+    </div>
+
+
+    <script type="text/javascript">
+        var g_state = "ap";
+    
+        function populateWifiNetworks(networks) {
+            var objectWN = document.getElementById("wifi_list");
+            if (null == networks){
+                open_error_dialogue("Something went wrong during the scan. Please try again or check the logs.", "Scan failed")
+                return;
+            }
+
+
+            if(0 === networks.length) {
+                objectWN.innerHTML  = "<div id='wifi_no_networks'>No Networks Available</div>";
+                return;
+            }
+
+            networks.sort((a, b)=>{
+                var upperA = a.ssid.toUpperCase();
+                var upperB = b.ssid.toUpperCase();
+                return (upperA < upperB) ? -1 : (upperA > upperB) ? 1 : 0;
+
+            })
+
+            
+            var open;
+
+            var net_html = "";
+            networks.forEach((net)=>{
+                var otherClasses = '';
+
+                if (net.security.trim() == "" || net.security.trim() == "Open"){
+                    open = true;
+                    net.security = "Open";
+                } else {
+                    open = false;
+                    net.security = net.security.trim();
+                }
+
+                if (net.ssid == "") {
+                    net.ssid = "[Hidden SSID]";
+                    otherClasses += 'hidden_network ';
+                }
+
+                var enterprise = /ENT/i.test(net.security);
+
+                
+                if(enterprise) {
+                    otherClasses += 'enterprise_network ';
+                }
+
+                net_html += `<div class="wifi_network ${otherClasses}" onclick='connect_net("${net.ssid}", ${open}, ${enterprise})'>
+                             <span class="wifi_network_value wifi_network_ssid">${net.ssid} (${net.security})</span>
+                             <br>
+                              <span  class="wifi_network_label">BSSID:</span>  <span class="wifi_network_value">${net.bssid}</span>
+                            <br>
+                            <span  class="wifi_network_label">Channel:</span>  <span class="wifi_network_value">${net.channel}</span> 
+                            <br>
+                            <span class="wifi_network_label">Signal Strength:</span> <span class="wifi_network_value">${net.signal}</span>
+                            <br>
+                        </div>`;
+
+            });
+            objectWN.innerHTML = net_html;
+
+        }
+
+        function populateBoardInfo(data){
+            document.getElementById("boardName").innerHTML = data["name"];
+            document.getElementById("boardIP").innerHTML = data["ip"];
+
+            if(data["con"]){
+                document.getElementById("statusAP").classList.remove("active")
+                document.getElementById("statusCLI").classList.add("active")
+                g_state = "client";
+            } else {
+                document.getElementById("statusCLI").classList.remove("active")
+                document.getElementById("statusAP").classList.add("active")
+                g_state = "ap";
+            }
+            
+        }
+
+        function connect_net(ssid, open, ent){
+            if (ssid == "[Hidden SSID]"){
+                open_success_dialogue("Connecting to hidden SSIDs is not supported.", "Connecting to Hidden SSID");
+                return;
+            }
+
+            if(ent){
+                open_success_dialogue("Connecting to Enterprise networks is not supported.", "Connecting to Enterprise Wi-Fi");
+                return;
+            }
+
+            if (g_state == "client") {
+                open_cJoin_dialogue();
+                return;
+            }
+
+
+            document.getElementById("post_ssid").value = ssid;
+            document.getElementById("post_password").value = "";
+            document.getElementById("post_errors").innerHTML = "";
+            document.getElementById("ap_password_page").style.display = "block";
+
+            if(open){
+                document.getElementById("password_input_field").style.display = "none";
+            } else {
+                document.getElementById("password_input_field").style.display = "block";
+            }
+
+            document.getElementById('ap_password_dialogue').onclick = function(event){
+                event.stopPropagation(); 
+            }
+        }
+
+        function close_connect_dialogue(){
+            document.getElementById("ap_password_page").style.display = "none"; 
+
+        }
+
+        function validateForm() {
+            if(document.getElementById("post_ssid").value.length == 0) {
+                document.getElementById("post_errors").innerHTML = "SSID can't be blank.";
+                return false;
+            }
+
+            // If we have an open access point, dont check password
+            if(document.getElementById("password_input_field").style.display == "block") {
+                if(document.getElementById("post_password").value.length == 0) {
+                    document.getElementById("post_errors").innerHTML = "Password can't be blank.";
+                    return false;
+                }
+
+                if(document.getElementById("post_password").value.length < 8) {
+                    document.getElementById("post_errors").innerHTML = "Password must be at least 8 characters.";
+                    return false;
+                }
+                if(document.getElementById("post_password").value.length > 63) {
+                    document.getElementById("post_errors").innerHTML = "Password can't have more than 63 characters.";
+                    return false;
+                }
+
+            }
+
+           
+            close_connect_dialogue();
+            
+            attemptConnect();
+
+            return true;
+        }
+
+        function attemptConnect(){
+
+            open_mode_switch_dialogue();
+
+
+            var http = new XMLHttpRequest();
+            http.open("POST", "post.cgi", true);
+            http.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+            var ssid =  document.getElementById("post_ssid").value; 
+            var password =  document.getElementById("post_password").value; 
+            var params = `post_ssid=${ssid}&post_passphrase=${password}`
+            
+
+            var connectionTimeout = setTimeout(()=>{
+                open_error_dialogue(`Attempt to Join '${ssid}' timed out. The connection was likely interrupted during the network switch and the response was lost. This is not necessarily an error and the board probably successfully switched to the new AP. You may need to manually switch your device to the '${ssid}' AP in order to continue. Check the console for further instructions and the new board IP address.`, "Join request timed out")
+            }, 60000);
+            http.onload = function() {
+                if (http.readyState == 4)
+                {
+                    if (http.status == 200)
+                    {
+                        clearTimeout(connectionTimeout);
+                        console.log(http.responseText);
+                        try{
+                            var data = JSON.parse(http.responseText);
+                            if(data.status == "success"){
+                                open_success_dialogue(`Now join the <b>${ssid}</b> network and browse to the IP: <a href="http://${data.new_ip}">${data.new_ip}</a>.`,"Successfully connected")
+
+                            } else {
+                                open_error_dialogue(`Error connecting to ${ssid}. Please check the password and try again.`, "Wrong Password")
+                            }
+                        } catch (e) {
+                            open_error_dialogue("Error while parsing JSON:" + e, "An Error has occurred");
+
+                        }
+                    }
+                }
+            }
+            http.send(params);
+        }
+
+        /* Make request to server */
+        function scan()
+        {
+
+            document.getElementById("loader_page").style.display = "block"; 
+            var http = new XMLHttpRequest();;
+
+            var requestTimeout = setTimeout(()=>{
+                open_error_dialogue("Scan has timed out. Try again later.", "Scan timed out");
+            }, 30000);
+
+            http.onreadystatechange = function() { 
+                if (http.readyState == 4)
+                {
+                    if (http.status == 200)
+                    {
+                        setTimeout(()=>{document.getElementById("loader_page").style.display = "none";},300);
+                        clearTimeout(requestTimeout);
+                        close_error_dialogue();
+                        try {
+                            var data = JSON.parse(http.responseText);
+                            populateBoardInfo(data["info"]);
+                            populateWifiNetworks(data["networks"]);
+                        } catch (e) {
+                            open_error_dialogue("Error while parsing JSON:" + e, "An Error has occurred");
+                        }
+                        
+                        
+                    }
+                    data_received = 0;
+                }
+            };
+
+                
+            http.open('GET', 'get.cgi', true);
+            http.send(null);
+        }
+
+
+        function open_mode_switch_dialogue(){
+            document.getElementById("mode_switch_loader").style.display = "block";
+            document.getElementById("mode_switch_network_name").innerHTML = document.getElementById("post_ssid").value;
+        }
+
+        function close_mode_switch_dialogue(){
+            document.getElementById("mode_switch_loader").style.display = "none";
+        }
+
+        function open_clear_board_dialogue() {
+            document.getElementById("clear_confirm").style.display = "block";
+
+            document.getElementById('clear_confirm_dialogue').onclick = function(event){
+                event.stopPropagation(); 
+            }
+        }
+
+        function close_clear_confirm_dialogue() {
+            document.getElementById("clear_confirm").style.display = "none";
+
+        }
+
+
+        function open_success_dialogue(msg, title){
+            // Close all other dialogues
+            document.getElementById("loader_page").style.display = "none";
+            close_mode_switch_dialogue();
+            close_clear_confirm_dialogue();
+            close_error_dialogue();
+            close_cJoin_dialogue();
+
+            document.getElementById("success_banner").style.display = "block";
+            document.getElementById("success_msg").innerHTML = msg;
+            document.getElementById("success_title").innerHTML = title;
+        }
+
+        function close_success_dialogue(){
+            document.getElementById("success_banner").style.display = "none";
+        }
+
+        function open_error_dialogue(msg, title){
+            // Close all other dialogues
+            document.getElementById("loader_page").style.display = "none";
+            close_mode_switch_dialogue();
+            close_clear_confirm_dialogue();
+            close_success_dialogue();
+            close_cJoin_dialogue();
+
+            document.getElementById("error_banner").style.display = "block";
+            document.getElementById("error_msg").innerHTML = msg;
+            document.getElementById("error_title").innerHTML = title;
+        }
+
+        function close_error_dialogue(){
+            document.getElementById("error_banner").style.display = "none";
+        }
+
+
+        function open_cJoin_dialogue(){
+            document.getElementById('clientJoin_banner_dialogue').onclick = function(event){
+                event.stopPropagation(); 
+            }
+            document.getElementById("clientJoin_banner").style.display = "block";
+
+
+        }
+
+        function close_cJoin_dialogue(){
+
+            document.getElementById("clientJoin_banner").style.display = "none";
+
+
+        }
+
+
+        function clear_config(){
+            var http = new XMLHttpRequest();
+            http.open("GET", "reset.cgi", true);
+            http.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+            http.send(null);
+
+            var connectionTimeout = setTimeout(()=>{
+                open_error_dialogue("Attempt to reset timed out. The request was probably interrupted during the network switch. Try switching your device network back to the board AP. Check the console for further instructions.", "Request timed out")
+            }, 5000);
+            http.onload = function() {
+                clearTimeout(connectionTimeout);
+                console.log(http.responseText)
+                
+                    
+
+                try{
+                    var data = JSON.parse(http.responseText);
+                    if(data.status == "success"){
+                        open_success_dialogue(`Successfully cleared the flash memory and reset to an AP. Please connect you device back to the AP and browse to the IP: <a href="http://${data.new_ip}">${data.new_ip}</a>.`, "Success");
+
+                    } else {
+                        open_error_dialogue("Failed to clear the flash memory. Check the console for more info.", "An Error has occurred");
+                    }
+                } catch (e) {
+                    open_error_dialogue("Error while parsing JSON:" + e, "An Error has occurred");
+
+                }
+            }
+
+        }
+
+        //populateBoardInfo({"name":"Board", "con": true, "ip": "192.168.0.1","ap":"AP"})
+
+        
+        //populateWifiNetworks([{"ssid":"Test","bssid":"34:34:34:34:34","signal":"-10dBm","channel":11,"security":"WPA2"},{"ssid":"","bssid":"34:34:34:34:34","signal":"-10dBm","channel":11,"security":"WPA2"},{"ssid":"","bssid":"34:34:34:34:34","signal":"-10dBm","channel":11,"security":"WPA2"},{"ssid":"A","bssid":"34:34:34:34:34","signal":"-10dBm","channel":11,"security":"WPA2"},{"ssid":"B","bssid":"34:34:34:34:34","signal":"-10dBm","channel":11,"security":"WPA2_ENT"}]);
+
+
+    </script>
+
+</body>
+</html>		

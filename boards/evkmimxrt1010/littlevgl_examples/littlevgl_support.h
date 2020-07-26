@@ -12,19 +12,19 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define LCD_WIDTH 320
-#define LCD_HEIGHT 240
+#define LCD_WIDTH             320
+#define LCD_HEIGHT            240
 #define LCD_FB_BYTE_PER_PIXEL 2
+/* The virtual buffer for DBI panel, it should be ~1/10 screen size. */
+#define LCD_VIRTUAL_BUF_SIZE (LCD_WIDTH * LCD_HEIGHT / 10)
 
-#define BOARD_LCD_SPI Driver_SPI1
+#define BOARD_LCD_SPI          Driver_SPI1
 #define BOARD_LCD_SPI_BAUDRATE 80000000U /*! Transfer baudrate */
 
-#define BOARD_LCD_DC_GPIO GPIO1   /*! LCD data/command port */
-#define BOARD_LCD_DC_GPIO_PIN 03U /*! LCD data/command pin */
+#define BOARD_LCD_DC_GPIO     GPIO1 /*! LCD data/command port */
+#define BOARD_LCD_DC_GPIO_PIN 03U   /*! LCD data/command pin */
 
-#define Display_Buffer_HEIGHT 25 /*The RAM of the MCU can't support the whole screen. Select a height of 25 here.*/
-
-#define BOARD_TOUCH_I2C Driver_I2C1
+#define BOARD_TOUCH_I2C     Driver_I2C1
 #define BOARD_TOUCH_I2C_IRQ LPI2C1_IRQn
 
 /* Select PLL2_MAIN_CLK (528 MHz) as master lpspi clock source */

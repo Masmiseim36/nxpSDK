@@ -7,7 +7,7 @@
  * --------------------------------------------------------------------------*/
 /*
  * Copyright 1997-2016 Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -33,7 +33,11 @@ __Vectors:
     .long   BusFault_Handler                                /* Bus Fault Handler*/
     .long   UsageFault_Handler                              /* Usage Fault Handler*/
     .long   SecureFault_Handler                             /* Secure Fault Handler*/
+#if (__ARM_FEATURE_CMSE & 0x2)
     .long   0x180000                                        /* Image length*/
+#else
+    .long   Load$$LR$$LR_m_interrupts$$Length               /* Image length*/
+#endif
     .long   0                                               /* Reserved*/
     .long   0                                               /* Reserved*/
     .long   SVC_Handler                                     /* SVCall Handler*/

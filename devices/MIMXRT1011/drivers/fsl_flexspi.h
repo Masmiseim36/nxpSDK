@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -24,8 +24,8 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief FLEXSPI driver version 2.1.2. */
-#define FSL_FLEXSPI_DRIVER_VERSION (MAKE_VERSION(2, 1, 2))
+/*! @brief FLEXSPI driver version 2.2.2. */
+#define FSL_FLEXSPI_DRIVER_VERSION (MAKE_VERSION(2, 2, 2))
 /*@}*/
 
 #define FSL_FEATURE_FLEXSPI_AHB_BUFFER_COUNT FSL_FEATURE_FLEXSPI_AHB_BUFFER_COUNTn(0)
@@ -36,7 +36,7 @@
      FLEXSPI_LUT_NUM_PADS1(pad1) | FLEXSPI_LUT_OPCODE1(cmd1))
 
 /*! @brief Status structure of FLEXSPI.*/
-enum _flexspi_status
+enum
 {
     kStatus_FLEXSPI_Busy                     = MAKE_STATUS(kStatusGroup_FLEXSPI, 0), /*!< FLEXSPI is busy */
     kStatus_FLEXSPI_SequenceExecutionTimeout = MAKE_STATUS(kStatusGroup_FLEXSPI, 1), /*!< Sequence execution timeout
@@ -47,8 +47,8 @@ enum _flexspi_status
                                                                                     occurred during FLEXSPI transfer. */
 };
 
-/*! @brief CMD definition of FLEXSPI, use to form LUT instruction. */
-enum _flexspi_command
+/*! @brief CMD definition of FLEXSPI, use to form LUT instruction, _flexspi_command. */
+enum
 {
     kFLEXSPI_Command_STOP           = 0x00U, /*!< Stop execution, deassert CS. */
     kFLEXSPI_Command_SDR            = 0x01U, /*!< Transmit Command code to Flash, using SDR mode. */
@@ -204,6 +204,7 @@ typedef enum _flexspi_arb_command_source
     kFLEXSPI_SuspendedCommand = 0x3U,
 } flexspi_arb_command_source_t;
 
+/*! @brief Command type. */
 typedef enum _flexspi_command_type
 {
     kFLEXSPI_Command, /*!< FlexSPI operation: Only command, both TX and Rx buffer are ignored. */
@@ -387,7 +388,7 @@ void FLEXSPI_SetFlashConfig(FLEXSPI_Type *base, flexspi_device_config_t *config,
 static inline void FLEXSPI_SoftwareReset(FLEXSPI_Type *base)
 {
     base->MCR0 |= FLEXSPI_MCR0_SWRESET_MASK;
-    while (base->MCR0 & FLEXSPI_MCR0_SWRESET_MASK)
+    while (0U != (base->MCR0 & FLEXSPI_MCR0_SWRESET_MASK))
     {
     }
 }
@@ -535,11 +536,11 @@ static inline void FLEXSPI_ResetFifos(FLEXSPI_Type *base, bool txFifo, bool rxFi
  */
 static inline void FLEXSPI_GetFifoCounts(FLEXSPI_Type *base, size_t *txCount, size_t *rxCount)
 {
-    if (txCount)
+    if (NULL != txCount)
     {
         *txCount = (((base->IPTXFSTS) & FLEXSPI_IPTXFSTS_FILL_MASK) >> FLEXSPI_IPTXFSTS_FILL_SHIFT) * 8U;
     }
-    if (rxCount)
+    if (NULL != rxCount)
     {
         *rxCount = (((base->IPRXFSTS) & FLEXSPI_IPRXFSTS_FILL_MASK) >> FLEXSPI_IPRXFSTS_FILL_SHIFT) * 8U;
     }
@@ -566,7 +567,7 @@ static inline uint32_t FLEXSPI_GetInterruptStatusFlags(FLEXSPI_Type *base)
  * @brief Get the FLEXSPI interrupt status flags.
  *
  * @param base FLEXSPI peripheral base address.
- * @param interrupt status flag.
+ * @param mask FLEXSPI interrupt source.
  */
 static inline void FLEXSPI_ClearInterruptStatusFlags(FLEXSPI_Type *base, uint32_t mask)
 {
@@ -582,14 +583,14 @@ static inline void FLEXSPI_ClearInterruptStatusFlags(FLEXSPI_Type *base, uint32_
  */
 static inline void FLEXSPI_GetDataLearningPhase(FLEXSPI_Type *base, uint8_t *portAPhase, uint8_t *portBPhase)
 {
-    if (portAPhase)
+    if (portAPhase != NULL)
     {
-        *portAPhase = (base->STS0 & FLEXSPI_STS0_DATALEARNPHASEA_MASK) >> FLEXSPI_STS0_DATALEARNPHASEA_SHIFT;
+        *portAPhase = (uint8_t)((base->STS0 & FLEXSPI_STS0_DATALEARNPHASEA_MASK) >> FLEXSPI_STS0_DATALEARNPHASEA_SHIFT);
     }
 
-    if (portBPhase)
+    if (portBPhase != NULL)
     {
-        *portBPhase = (base->STS0 & FLEXSPI_STS0_DATALEARNPHASEB_MASK) >> FLEXSPI_STS0_DATALEARNPHASEB_SHIFT;
+        *portBPhase = (uint8_t)((base->STS0 & FLEXSPI_STS0_DATALEARNPHASEB_MASK) >> FLEXSPI_STS0_DATALEARNPHASEB_SHIFT);
     }
 }
 #endif
@@ -601,7 +602,8 @@ static inline void FLEXSPI_GetDataLearningPhase(FLEXSPI_Type *base, uint8_t *por
  */
 static inline flexspi_arb_command_source_t FLEXSPI_GetArbitratorCommandSource(FLEXSPI_Type *base)
 {
-    return (flexspi_arb_command_source_t)((base->STS0 & FLEXSPI_STS0_ARBCMDSRC_MASK) >> FLEXSPI_STS0_ARBCMDSRC_SHIFT);
+    return (flexspi_arb_command_source_t)(
+        (uint32_t)((base->STS0 & FLEXSPI_STS0_ARBCMDSRC_MASK) >> FLEXSPI_STS0_ARBCMDSRC_SHIFT));
 }
 
 /*! @brief Gets the error code when IP command error detected.
@@ -612,8 +614,9 @@ static inline flexspi_arb_command_source_t FLEXSPI_GetArbitratorCommandSource(FL
  */
 static inline flexspi_ip_error_code_t FLEXSPI_GetIPCommandErrorCode(FLEXSPI_Type *base, uint8_t *index)
 {
-    *index = (base->STS1 & FLEXSPI_STS1_IPCMDERRID_MASK) >> FLEXSPI_STS1_IPCMDERRID_SHIFT;
-    return (flexspi_ip_error_code_t)((base->STS1 & FLEXSPI_STS1_IPCMDERRCODE_MASK) >> FLEXSPI_STS1_IPCMDERRCODE_SHIFT);
+    *index = (uint8_t)((base->STS1 & FLEXSPI_STS1_IPCMDERRID_MASK) >> FLEXSPI_STS1_IPCMDERRID_SHIFT);
+    return (flexspi_ip_error_code_t)(
+        (uint32_t)((base->STS1 & FLEXSPI_STS1_IPCMDERRCODE_MASK) >> FLEXSPI_STS1_IPCMDERRCODE_SHIFT));
 }
 
 /*! @brief Gets the error code when AHB command error detected.
@@ -624,9 +627,9 @@ static inline flexspi_ip_error_code_t FLEXSPI_GetIPCommandErrorCode(FLEXSPI_Type
  */
 static inline flexspi_ahb_error_code_t FLEXSPI_GetAHBCommandErrorCode(FLEXSPI_Type *base, uint8_t *index)
 {
-    *index = (base->STS1 & FLEXSPI_STS1_AHBCMDERRID_MASK) >> FLEXSPI_STS1_AHBCMDERRID_SHIFT;
-    return (flexspi_ahb_error_code_t)((base->STS1 & FLEXSPI_STS1_AHBCMDERRCODE_MASK) >>
-                                      FLEXSPI_STS1_AHBCMDERRCODE_SHIFT);
+    *index = (uint8_t)(base->STS1 & FLEXSPI_STS1_AHBCMDERRID_MASK) >> FLEXSPI_STS1_AHBCMDERRID_SHIFT;
+    return (flexspi_ahb_error_code_t)(
+        (uint32_t)((base->STS1 & FLEXSPI_STS1_AHBCMDERRCODE_MASK) >> FLEXSPI_STS1_AHBCMDERRCODE_SHIFT));
 }
 
 /*! @brief Returns whether the bus is idle.
@@ -637,7 +640,7 @@ static inline flexspi_ahb_error_code_t FLEXSPI_GetAHBCommandErrorCode(FLEXSPI_Ty
  */
 static inline bool FLEXSPI_GetBusIdleStatus(FLEXSPI_Type *base)
 {
-    return (base->STS0 & FLEXSPI_STS0_ARBIDLE_MASK) && (base->STS0 & FLEXSPI_STS0_SEQIDLE_MASK);
+    return (0U != (base->STS0 & FLEXSPI_STS0_ARBIDLE_MASK)) && (0U != (base->STS0 & FLEXSPI_STS0_SEQIDLE_MASK));
 }
 /*@}*/
 

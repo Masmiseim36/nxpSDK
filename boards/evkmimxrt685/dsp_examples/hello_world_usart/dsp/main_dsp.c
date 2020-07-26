@@ -32,7 +32,7 @@ int main(void)
     char ch;
 
     /* Init board hardware. */
-    BOARD_InitPins();
+    BOARD_InitBootPins();
     BOARD_InitDebugConsole();
 
     PRINTF("\r\nHello World running on DSP core '%s'\r\n", XCHAL_CORE_ID);

@@ -1,4 +1,4 @@
-$version 6.60
+$version 9.30
 
 // This is the root component of the entire GUI application.
 $rect <20,50,220,90>

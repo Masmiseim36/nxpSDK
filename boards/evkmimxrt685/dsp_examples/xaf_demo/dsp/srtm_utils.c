@@ -18,6 +18,8 @@
 
 #include "xaf-api.h"
 
+#include "fsl_gpio.h"
+
 #define AUDIO_BUFFER_FILL_THRESHOLD (16 * 1024)
 
 /*******************************************************************************
@@ -137,7 +139,9 @@ static void DSP_RequestData(dsp_handle_t *dsp)
 
     dsp->ipc_waiting = true;
 
+    xos_mutex_lock(&dsp->rpmsgMutex);
     rpmsg_lite_send(dsp->rpmsg, dsp->ept, MCU_EPT_ADDR, (char *)&msg, sizeof(srtm_message), RL_DONT_BLOCK);
+    xos_mutex_unlock(&dsp->rpmsgMutex);
 }
 
 void DSP_SendFileEnd(dsp_handle_t *dsp)
@@ -151,7 +155,9 @@ void DSP_SendFileEnd(dsp_handle_t *dsp)
     msg.head.category = SRTM_MessageCategory_AUDIO;
     msg.head.command  = SRTM_Command_FileEnd;
 
+    xos_mutex_lock(&dsp->rpmsgMutex);
     rpmsg_lite_send(dsp->rpmsg, dsp->ept, MCU_EPT_ADDR, (char *)&msg, sizeof(srtm_message), RL_DONT_BLOCK);
+    xos_mutex_unlock(&dsp->rpmsgMutex);
 }
 
 int DSP_BufferThread(void *arg, int wake_value)

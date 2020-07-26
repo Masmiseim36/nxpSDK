@@ -18,16 +18,16 @@
 * project directory and edit the copy only. Please avoid any modifications of
 * the original template file!
 *
-* Version  : 9.20
+* Version  : 9.30
 * Profile  : WebGL
 * Platform : Tara.WebGL.RGBA8888
 *
 *******************************************************************************/
 
 var EmWiApp;if(!EmWiApp)throw new Error("The application file '_project.js' isn't yet loaded!"
-);if(EmWiApp.tl)throw new Error("The file file 'BezierClockFontXXL.js' included twice!"
+);if(EmWiApp.up)throw new Error("The file file 'BezierClockFontXXL.js' included twice!"
 );
-EmWiApp.tl=[32,8,0,16,0x0001,96,"\
+EmWiApp.up=[32,8,0,16,0x0001,96,"\
 \u0001\u8001\u7FE9\u000D\u0017\u800F\u0000\u0000\u0020\u8000\u8000\u0000\u0000\u8008\u0000\u031B\
 \u0021\u8002\u7FE9\u0003\u0017\u8007\u0000\u031B\u0022\u8002\u7FE7\u0006\u0007\u8009\u0000\u03A8\
 \u0023\u8001\u7FE9\u0013\u0017\u8013\u0000\u040F\u0024\u8001\u7FE5\u0010\u001E\u8012\u0000\u0822\

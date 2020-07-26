@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding= "UTF-8" ?>
-<configuration name="MIMXRT1011xxxxx" version="1.6" xsi:schemaLocation="http://mcuxpresso.nxp.com/XSD/mex_configuration_1.6 http://mcuxpresso.nxp.com/XSD/mex_configuration_1.6.xsd" uuid="036eb81b-84bf-4067-a74b-c0a2730fee5c" xmlns="http://mcuxpresso.nxp.com/XSD/mex_configuration_1.6" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<configuration name="MIMXRT1011xxxxx" version="1.6" xsi:schemaLocation="http://mcuxpresso.nxp.com/XSD/mex_configuration_1.7 http://mcuxpresso.nxp.com/XSD/mex_configuration_1.7.xsd" uuid="d2089c14-3397-4a5e-89da-4e1508fdf64c" xmlns="http://mcuxpresso.nxp.com/XSD/mex_configuration_1.7" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
    <common>
       <processor>MIMXRT1011xxxxx</processor>
       <package>MIMXRT1011DAE5A</package>
@@ -8,7 +8,6 @@
       <cores selected="core0">
          <core name="Cortex-M7F" id="core0" description="M7 core"/>
       </cores>
-      <description></description>
    </common>
    <preferences>
       <validate_boot_init_only>true</validate_boot_init_only>
@@ -16,9 +15,9 @@
       <generate_code_modified_registers_only>false</generate_code_modified_registers_only>
    </preferences>
    <tools>
-      <pins name="Pins" version="6.0" enabled="true" update_project_code="true">
+      <pins name="Pins" version="7.0" enabled="true" update_project_code="true">
          <pins_profile>
-            <processor_version>0.0.1</processor_version>
+            <processor_version>0.7.7</processor_version>
             <power_domains>
                <power_domain name="NVCC_GPIO" value="3.3"/>
             </power_domains>
@@ -38,6 +37,11 @@
                </options>
                <dependencies>
                   <dependency resourceType="Peripheral" resourceId="LPUART1" description="Peripheral LPUART1 is not initialized" problem_level="1" source="Pins:BOARD_InitPins">
+                     <feature name="initialized" evaluation="equal">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="Peripheral" resourceId="ARM" description="Peripheral ARM is not initialized" problem_level="1" source="Pins:BOARD_InitPins">
                      <feature name="initialized" evaluation="equal">
                         <data>true</data>
                      </feature>
@@ -82,13 +86,18 @@
                         <pin_feature name="hysteresis_enable" value="Disable"/>
                      </pin_features>
                   </pin>
+                  <pin peripheral="ARM" signal="arm_trace_swo" pin_num="48" pin_signal="GPIO_AD_09">
+                     <pin_features>
+                        <pin_feature name="slew_rate" value="Fast"/>
+                     </pin_features>
+                  </pin>
                </pins>
             </function>
          </functions_list>
       </pins>
-      <clocks name="Clocks" version="6.0" enabled="true" update_project_code="true">
+      <clocks name="Clocks" version="7.0" enabled="true" update_project_code="true">
          <clocks_profile>
-            <processor_version>0.0.1</processor_version>
+            <processor_version>0.7.7</processor_version>
          </clocks_profile>
          <clock_configurations>
             <clock_configuration name="BOARD_BootClockRUN">
@@ -174,7 +183,7 @@
                   <clock_output id="SAI3_MCLK1.outFreq" value="1080/17 MHz" locked="false" accuracy=""/>
                   <clock_output id="SAI3_MCLK3.outFreq" value="30 MHz" locked="false" accuracy=""/>
                   <clock_output id="SPDIF0_CLK_ROOT.outFreq" value="30 MHz" locked="false" accuracy=""/>
-                  <clock_output id="TRACE_CLK_ROOT.outFreq" value="352/3 MHz" locked="false" accuracy=""/>
+                  <clock_output id="TRACE_CLK_ROOT.outFreq" value="132 MHz" locked="false" accuracy=""/>
                   <clock_output id="UART_CLK_ROOT.outFreq" value="80 MHz" locked="false" accuracy=""/>
                </clock_outputs>
                <clock_settings>
@@ -187,7 +196,8 @@
                   <setting id="CCM.PRE_PERIPH_CLK_SEL.sel" value="CCM_ANALOG.ENET_500M_REF_CLK" locked="false"/>
                   <setting id="CCM.SAI1_CLK_SEL.sel" value="CCM_ANALOG.PLL3_PFD2_CLK" locked="false"/>
                   <setting id="CCM.SAI3_CLK_SEL.sel" value="CCM_ANALOG.PLL3_PFD2_CLK" locked="false"/>
-                  <setting id="CCM.TRACE_PODF.scale" value="3" locked="true"/>
+                  <setting id="CCM.TRACE_CLK_SEL.sel" value="CCM_ANALOG.PLL2_MAIN_CLK" locked="false"/>
+                  <setting id="CCM.TRACE_PODF.scale" value="4" locked="true"/>
                   <setting id="CCM_ANALOG.PLL2.denom" value="1" locked="false"/>
                   <setting id="CCM_ANALOG.PLL2.div" value="22" locked="false"/>
                   <setting id="CCM_ANALOG.PLL2.num" value="0" locked="false"/>
@@ -222,126 +232,12 @@
          </dcdx_profile>
          <dcdx_configurations/>
       </dcdx>
-      <periphs name="Peripherals" version="6.0" enabled="true" update_project_code="true">
+      <periphs name="Peripherals" version="7.0" enabled="false" update_project_code="true">
          <peripherals_profile>
-            <processor_version>0.0.1</processor_version>
+            <processor_version>N/A</processor_version>
          </peripherals_profile>
-         <functional_groups>
-            <functional_group name="BOARD_InitPeripherals" uuid="5e519eed-bd94-4950-84de-0f29de85bcea" called_from_default_init="true" id_prefix="" core="core0">
-               <description></description>
-               <options/>
-               <dependencies/>
-               <instances>
-                  <instance name="COMBO_SENSOR" type="lpi2c" type_id="lpi2c_db68d4f4f06a22e25ab51fe9bd6db4d2" mode="master" peripheral="LPI2C1" enabled="false">
-                     <config_set name="main" quick_selection="qs_interrupt">
-                        <setting name="clockSource" value="Lpi2cClock"/>
-                        <setting name="clockSourceFreq" value="BOARD_BootClockRUN"/>
-                        <struct name="interrupt">
-                           <setting name="IRQn" value="LPI2C1_IRQn"/>
-                           <setting name="enable_priority" value="false"/>
-                           <setting name="priority" value="0"/>
-                           <setting name="enable_custom_name" value="false"/>
-                        </struct>
-                     </config_set>
-                     <config_set name="master" quick_selection="qs_master_transfer">
-                        <setting name="mode" value="transfer"/>
-                        <struct name="config">
-                           <setting name="enableMaster" value="true"/>
-                           <setting name="enableDoze" value="true"/>
-                           <setting name="debugEnable" value="false"/>
-                           <setting name="ignoreAck" value="false"/>
-                           <setting name="pinConfig" value="kLPI2C_2PinOpenDrain"/>
-                           <setting name="baudRate_Hz" value="100000"/>
-                           <setting name="busIdleTimeout_ns" value="0"/>
-                           <setting name="pinLowTimeout_ns" value="0"/>
-                           <setting name="sdaGlitchFilterWidth_ns" value="0"/>
-                           <setting name="sclGlitchFilterWidth_ns" value="0"/>
-                           <struct name="hostRequest">
-                              <setting name="enable" value="false"/>
-                              <setting name="source" value="kLPI2C_HostRequestExternalPin"/>
-                              <setting name="polarity" value="kLPI2C_HostRequestPinActiveHigh"/>
-                           </struct>
-                        </struct>
-                        <struct name="transfer">
-                           <setting name="blocking" value="false"/>
-                           <set name="flags">
-                              <selected/>
-                           </set>
-                           <setting name="slaveAddress" value="0"/>
-                           <setting name="direction" value="kLPI2C_Write"/>
-                           <setting name="subaddress" value="0"/>
-                           <setting name="subaddressSize" value="1"/>
-                           <setting name="dataSize" value="1"/>
-                           <struct name="callback">
-                              <setting name="name" value=""/>
-                              <setting name="userData" value=""/>
-                           </struct>
-                        </struct>
-                     </config_set>
-                  </instance>
-                  <instance name="DEBUG_UART" type="lpuart" type_id="lpuart_bebe3e12b6ec22bbd14199038f2bf459" mode="polling" peripheral="LPUART1" enabled="false">
-                     <config_set name="lpuartConfig_t" quick_selection="QuickSelection1">
-                        <struct name="lpuartConfig">
-                           <setting name="clockSource" value="LpuartClock"/>
-                           <setting name="lpuartSrcClkFreq" value="BOARD_BootClockRUN"/>
-                           <setting name="baudRate_Bps" value="115200"/>
-                           <setting name="parityMode" value="kLPUART_ParityDisabled"/>
-                           <setting name="dataBitsCount" value="kLPUART_EightDataBits"/>
-                           <setting name="isMsb" value="false"/>
-                           <setting name="stopBitCount" value="kLPUART_OneStopBit"/>
-                           <setting name="txFifoWatermark" value="0"/>
-                           <setting name="rxFifoWatermark" value="1"/>
-                           <setting name="enableRxRTS" value="false"/>
-                           <setting name="enableTxCTS" value="false"/>
-                           <setting name="txCtsSource" value="kLPUART_CtsSourcePin"/>
-                           <setting name="txCtsConfig" value="kLPUART_CtsSampleAtStart"/>
-                           <setting name="rxIdleType" value="kLPUART_IdleTypeStartBit"/>
-                           <setting name="rxIdleConfig" value="kLPUART_IdleCharacter1"/>
-                           <setting name="enableTx" value="true"/>
-                           <setting name="enableRx" value="true"/>
-                        </struct>
-                     </config_set>
-                  </instance>
-                  <instance name="USER_LED" type="igpio" type_id="igpio_b1c1fa279aa7069dca167502b8589cb7" mode="GPIO" peripheral="GPIO1" enabled="false">
-                     <config_set name="fsl_gpio">
-                        <setting name="enable_irq_comb_0_15" value="false"/>
-                        <struct name="gpio_interrupt_comb_0_15">
-                           <setting name="IRQn" value="GPIO1_Combined_0_15_IRQn"/>
-                           <setting name="enable_priority" value="false"/>
-                           <setting name="priority" value="0"/>
-                           <setting name="enable_custom_name" value="false"/>
-                        </struct>
-                        <setting name="enable_irq_comb_16_31" value="false"/>
-                        <struct name="gpio_interrupt_comb_16_31">
-                           <setting name="IRQn" value="GPIO1_Combined_16_31_IRQn"/>
-                           <setting name="enable_priority" value="false"/>
-                           <setting name="priority" value="0"/>
-                           <setting name="enable_custom_name" value="false"/>
-                        </struct>
-                     </config_set>
-                  </instance>
-                  <instance name="USER_BUTTON" type="igpio" type_id="igpio_b1c1fa279aa7069dca167502b8589cb7" mode="GPIO" peripheral="GPIO2" enabled="false">
-                     <config_set name="fsl_gpio">
-                        <setting name="enable_irq_comb_0_15" value="false"/>
-                        <struct name="gpio_interrupt_comb_0_15">
-                           <setting name="IRQn" value="GPIO2_Combined_0_15_IRQn"/>
-                           <setting name="enable_priority" value="false"/>
-                           <setting name="priority" value="0"/>
-                           <setting name="enable_custom_name" value="false"/>
-                        </struct>
-                     </config_set>
-                  </instance>
-               </instances>
-            </functional_group>
-         </functional_groups>
-         <components>
-            <component name="system" type_id="system_54b53072540eeeb8f8e9343e71f28176">
-               <config_set_global name="global_system_definitions"/>
-            </component>
-            <component name="msg" type_id="msg_6e2baaf3b97dbeef01c0043275f9a0e7">
-               <config_set_global name="global_messages"/>
-            </component>
-         </components>
+         <functional_groups/>
+         <components/>
       </periphs>
       <tee name="TEE" version="1.0" enabled="false" update_project_code="true">
          <tee_profile>

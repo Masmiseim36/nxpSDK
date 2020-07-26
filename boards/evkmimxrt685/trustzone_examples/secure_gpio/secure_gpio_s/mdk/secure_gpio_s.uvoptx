@@ -70,7 +70,7 @@
       <OPTFL>
         <tvExp>0</tvExp>
         <tvExpOptDlg>0</tvExpOptDlg>
-        <IsCurrentTarget>0</IsCurrentTarget>
+        <IsCurrentTarget>1</IsCurrentTarget>
       </OPTFL>
       <CpuCode>8</CpuCode>
       <DebugOpt>
@@ -84,7 +84,7 @@
         <sRfunc>1</sRfunc>
         <sRbox>1</sRbox>
         <tLdApp>1</tLdApp>
-        <tGomain>0</tGomain>
+        <tGomain>1</tGomain>
         <tRbreak>1</tRbreak>
         <tRwatch>1</tRwatch>
         <tRmem>1</tRmem>
@@ -108,14 +108,14 @@
         <tDllPa/>
         <tDlgDll/>
         <tDlgPa/>
-        <tIfile>secure_ramdebug.ini</tIfile>
+        <tIfile>evkmimxrt685_flash.ini</tIfile>
         <pMon>BIN\CMSIS_AGDI_V8M.DLL</pMon>
       </DebugOpt>
       <TargetDriverDllRegistry>
         <SetRegEntry>
           <Number>0</Number>
           <Key>JL2CM3</Key>
-          <Name>-U600109545 -O78 -S2 -ZTIFSpeedSel5000 -A0 -C0 -JU1 -JI127.0.0.1 -JP0 -RST0 -N00("ARM CoreSight SW-DP") -D00(6BA02477) -L00(0) -TO18 -TC10000000 -TP21 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -TB1 -TFE0 -FO7 -FD2C000 -FC800 -FN2 -FF0MIMXRT6XX_EVK_FLEXSPI -FS08000000 -FL08000000 -FP0($$Device:MIMXRT685SFVKB$arm\MIMXRT6XX_EVK_FLEXSPI.FLM) -FF1MIMXRT6XX_EVK_FLEXSPI_S -FS118000000 -FL18000000 -FP1($$Device:MIMXRT685SFVKB$arm\MIMXRT6XX_EVK_FLEXSPI_S.FLM)</Name>
+          <Name>-U600109545 -O78 -S2 -ZTIFSpeedSel5000 -A0 -C0 -JU1 -JI127.0.0.1 -JP0 -RST0 -N00("ARM CoreSight SW-DP") -D00(6BA02477) -L00(0) -TO18 -TC10000000 -TP21 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -TB1 -TFE0 -FO7 -FD10010000 -FC800 -FN2 -FF0MIMXRT6XX_EVK_FLEXSPI -FS08000000 -FL08000000 -FP0($$Device:MIMXRT685SFVKB$arm\MIMXRT6XX_EVK_FLEXSPI.FLM) -FF1MIMXRT6XX_EVK_FLEXSPI_S -FS118000000 -FL18000000 -FP1($$Device:MIMXRT685SFVKB$arm\MIMXRT6XX_EVK_FLEXSPI_S.FLM)</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -125,7 +125,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>CMSIS_AGDI_V8M</Key>
-          <Name>-X"" -O206 -S9 -C0 -P00 -N00("") -D00(00000000) -L00(0) -TO18 -TC10000000 -TP20 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO7 -FD2C000 -FC1000 -FN2 -FF0MIMXRT6XX_EVK_FLEXSPI.FLM -FS08000000 -FL08000000 -FP0($$Device:MIMXRT685SFVKB$arm\MIMXRT6XX_EVK_FLEXSPI.FLM) -FF1MIMXRT6XX_EVK_FLEXSPI_S.FLM -FS118000000 -FL18000000 -FP1($$Device:MIMXRT685SFVKB$arm\MIMXRT6XX_EVK_FLEXSPI_S.FLM)</Name>
+          <Name>-X"" -O206 -S9 -C0 -P00 -N00("") -D00(00000000) -L00(0) -TO18 -TC10000000 -TP20 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO7 -FD10010000 -FC1000 -FN2 -FF0MIMXRT6XX_EVK_FLEXSPI.FLM -FS08000000 -FL08000000 -FP0($$Device:MIMXRT685SFVKB$arm\MIMXRT6XX_EVK_FLEXSPI.FLM) -FF1MIMXRT6XX_EVK_FLEXSPI_S.FLM -FS118000000 -FL18000000 -FP1($$Device:MIMXRT685SFVKB$arm\MIMXRT6XX_EVK_FLEXSPI_S.FLM)</Name>
         </SetRegEntry>
       </TargetDriverDllRegistry>
       <Breakpoint/>
@@ -134,7 +134,7 @@
       </Tracepoint>
       <DebugFlag>
         <trace>0</trace>
-        <periodic>0</periodic>
+        <periodic>1</periodic>
         <aLwin>0</aLwin>
         <aCover>0</aCover>
         <aSer1>0</aSer1>
@@ -234,7 +234,7 @@
       <OPTFL>
         <tvExp>0</tvExp>
         <tvExpOptDlg>0</tvExpOptDlg>
-        <IsCurrentTarget>0</IsCurrentTarget>
+        <IsCurrentTarget>1</IsCurrentTarget>
       </OPTFL>
       <CpuCode>8</CpuCode>
       <DebugOpt>
@@ -248,7 +248,7 @@
         <sRfunc>1</sRfunc>
         <sRbox>1</sRbox>
         <tLdApp>1</tLdApp>
-        <tGomain>0</tGomain>
+        <tGomain>1</tGomain>
         <tRbreak>1</tRbreak>
         <tRwatch>1</tRwatch>
         <tRmem>1</tRmem>
@@ -279,7 +279,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>JL2CM3</Key>
-          <Name>-U600109545 -O78 -S2 -ZTIFSpeedSel5000 -A0 -C0 -JU1 -JI127.0.0.1 -JP0 -RST0 -N00("ARM CoreSight SW-DP") -D00(6BA02477) -L00(0) -TO18 -TC10000000 -TP21 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -TB1 -TFE0 -FO7 -FD2C000 -FC800 -FN2 -FF0MIMXRT6XX_EVK_FLEXSPI -FS08000000 -FL08000000 -FP0($$Device:MIMXRT685SFVKB$arm\MIMXRT6XX_EVK_FLEXSPI.FLM) -FF1MIMXRT6XX_EVK_FLEXSPI_S -FS118000000 -FL18000000 -FP1($$Device:MIMXRT685SFVKB$arm\MIMXRT6XX_EVK_FLEXSPI_S.FLM)</Name>
+          <Name>-U600109545 -O78 -S2 -ZTIFSpeedSel5000 -A0 -C0 -JU1 -JI127.0.0.1 -JP0 -RST0 -N00("ARM CoreSight SW-DP") -D00(6BA02477) -L00(0) -TO18 -TC10000000 -TP21 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -TB1 -TFE0 -FO7 -FD10010000 -FC800 -FN2 -FF0MIMXRT6XX_EVK_FLEXSPI -FS08000000 -FL08000000 -FP0($$Device:MIMXRT685SFVKB$arm\MIMXRT6XX_EVK_FLEXSPI.FLM) -FF1MIMXRT6XX_EVK_FLEXSPI_S -FS118000000 -FL18000000 -FP1($$Device:MIMXRT685SFVKB$arm\MIMXRT6XX_EVK_FLEXSPI_S.FLM)</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -289,7 +289,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>CMSIS_AGDI_V8M</Key>
-          <Name>-X"" -O206 -S9 -C0 -P00 -N00("") -D00(00000000) -L00(0) -TO18 -TC10000000 -TP20 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO7 -FD2C000 -FC1000 -FN2 -FF0MIMXRT6XX_EVK_FLEXSPI.FLM -FS08000000 -FL08000000 -FP0($$Device:MIMXRT685SFVKB$arm\MIMXRT6XX_EVK_FLEXSPI.FLM) -FF1MIMXRT6XX_EVK_FLEXSPI_S.FLM -FS118000000 -FL18000000 -FP1($$Device:MIMXRT685SFVKB$arm\MIMXRT6XX_EVK_FLEXSPI_S.FLM)</Name>
+          <Name>-X"" -O206 -S9 -C0 -P00 -N00("") -D00(00000000) -L00(0) -TO18 -TC10000000 -TP20 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO7 -FD10010000 -FC1000 -FN2 -FF0MIMXRT6XX_EVK_FLEXSPI.FLM -FS08000000 -FL08000000 -FP0($$Device:MIMXRT685SFVKB$arm\MIMXRT6XX_EVK_FLEXSPI.FLM) -FF1MIMXRT6XX_EVK_FLEXSPI_S.FLM -FS118000000 -FL18000000 -FP1($$Device:MIMXRT685SFVKB$arm\MIMXRT6XX_EVK_FLEXSPI_S.FLM)</Name>
         </SetRegEntry>
       </TargetDriverDllRegistry>
       <Breakpoint/>
@@ -298,7 +298,7 @@
       </Tracepoint>
       <DebugFlag>
         <trace>0</trace>
-        <periodic>0</periodic>
+        <periodic>1</periodic>
         <aLwin>0</aLwin>
         <aCover>0</aCover>
         <aSer1>0</aSer1>
@@ -398,7 +398,7 @@
       <OPTFL>
         <tvExp>0</tvExp>
         <tvExpOptDlg>0</tvExpOptDlg>
-        <IsCurrentTarget>1</IsCurrentTarget>
+        <IsCurrentTarget>0</IsCurrentTarget>
       </OPTFL>
       <CpuCode>8</CpuCode>
       <DebugOpt>
@@ -436,14 +436,14 @@
         <tDllPa/>
         <tDlgDll/>
         <tDlgPa/>
-        <tIfile>secure_ramrelease.ini</tIfile>
+        <tIfile>evkmimxrt685_flash.ini</tIfile>
         <pMon>BIN\CMSIS_AGDI_V8M.DLL</pMon>
       </DebugOpt>
       <TargetDriverDllRegistry>
         <SetRegEntry>
           <Number>0</Number>
           <Key>JL2CM3</Key>
-          <Name>-U600109545 -O78 -S2 -ZTIFSpeedSel5000 -A0 -C0 -JU1 -JI127.0.0.1 -JP0 -RST0 -N00("ARM CoreSight SW-DP") -D00(6BA02477) -L00(0) -TO18 -TC10000000 -TP21 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -TB1 -TFE0 -FO7 -FD2C000 -FC1000 -FN2 -FF0MIMXRT6XX_EVK_FLEXSPI -FS08000000 -FL08000000 -FP0($$Device:MIMXRT685SFVKB$arm\MIMXRT6XX_EVK_FLEXSPI.FLM) -FF1MIMXRT6XX_EVK_FLEXSPI_S -FS118000000 -FL18000000 -FP1($$Device:MIMXRT685SFVKB$arm\MIMXRT6XX_EVK_FLEXSPI_S.FLM)</Name>
+          <Name>-U600109545 -O78 -S2 -ZTIFSpeedSel5000 -A0 -C0 -JU1 -JI127.0.0.1 -JP0 -RST0 -N00("ARM CoreSight SW-DP") -D00(6BA02477) -L00(0) -TO18 -TC10000000 -TP21 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -TB1 -TFE0 -FO7 -FD10010000 -FC1000 -FN2 -FF0MIMXRT6XX_EVK_FLEXSPI -FS08000000 -FL08000000 -FP0($$Device:MIMXRT685SFVKB$arm\MIMXRT6XX_EVK_FLEXSPI.FLM) -FF1MIMXRT6XX_EVK_FLEXSPI_S -FS118000000 -FL18000000 -FP1($$Device:MIMXRT685SFVKB$arm\MIMXRT6XX_EVK_FLEXSPI_S.FLM)</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -453,7 +453,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>CMSIS_AGDI_V8M</Key>
-          <Name>-X"" -O206 -S9 -C0 -P00 -N00("") -D00(00000000) -L00(0) -TO18 -TC10000000 -TP20 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO7 -FD2C000 -FC1000 -FN2 -FF0MIMXRT6XX_EVK_FLEXSPI.FLM -FS08000000 -FL08000000 -FP0($$Device:MIMXRT685SFVKB$arm\MIMXRT6XX_EVK_FLEXSPI.FLM) -FF1MIMXRT6XX_EVK_FLEXSPI_S.FLM -FS118000000 -FL18000000 -FP1($$Device:MIMXRT685SFVKB$arm\MIMXRT6XX_EVK_FLEXSPI_S.FLM)</Name>
+          <Name>-X"" -O206 -S9 -C0 -P00 -N00("") -D00(00000000) -L00(0) -TO18 -TC10000000 -TP20 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO7 -FD10010000 -FC1000 -FN2 -FF0MIMXRT6XX_EVK_FLEXSPI.FLM -FS08000000 -FL08000000 -FP0($$Device:MIMXRT685SFVKB$arm\MIMXRT6XX_EVK_FLEXSPI.FLM) -FF1MIMXRT6XX_EVK_FLEXSPI_S.FLM -FS118000000 -FL18000000 -FP1($$Device:MIMXRT685SFVKB$arm\MIMXRT6XX_EVK_FLEXSPI_S.FLM)</Name>
         </SetRegEntry>
       </TargetDriverDllRegistry>
       <Breakpoint/>
@@ -462,7 +462,7 @@
       </Tracepoint>
       <DebugFlag>
         <trace>0</trace>
-        <periodic>0</periodic>
+        <periodic>1</periodic>
         <aLwin>0</aLwin>
         <aCover>0</aCover>
         <aSer1>0</aSer1>
@@ -562,7 +562,7 @@
       <OPTFL>
         <tvExp>0</tvExp>
         <tvExpOptDlg>0</tvExpOptDlg>
-        <IsCurrentTarget>1</IsCurrentTarget>
+        <IsCurrentTarget>0</IsCurrentTarget>
       </OPTFL>
       <CpuCode>8</CpuCode>
       <DebugOpt>
@@ -607,7 +607,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>JL2CM3</Key>
-          <Name>-U600109545 -O78 -S2 -ZTIFSpeedSel5000 -A0 -C0 -JU1 -JI127.0.0.1 -JP0 -RST0 -N00("ARM CoreSight SW-DP") -D00(6BA02477) -L00(0) -TO18 -TC10000000 -TP21 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -TB1 -TFE0 -FO7 -FD2C000 -FC1000 -FN2 -FF0MIMXRT6XX_EVK_FLEXSPI -FS08000000 -FL08000000 -FP0($$Device:MIMXRT685SFVKB$arm\MIMXRT6XX_EVK_FLEXSPI.FLM) -FF1MIMXRT6XX_EVK_FLEXSPI_S -FS118000000 -FL18000000 -FP1($$Device:MIMXRT685SFVKB$arm\MIMXRT6XX_EVK_FLEXSPI_S.FLM)</Name>
+          <Name>-U600109545 -O78 -S2 -ZTIFSpeedSel5000 -A0 -C0 -JU1 -JI127.0.0.1 -JP0 -RST0 -N00("ARM CoreSight SW-DP") -D00(6BA02477) -L00(0) -TO18 -TC10000000 -TP21 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -TB1 -TFE0 -FO7 -FD10010000 -FC1000 -FN2 -FF0MIMXRT6XX_EVK_FLEXSPI -FS08000000 -FL08000000 -FP0($$Device:MIMXRT685SFVKB$arm\MIMXRT6XX_EVK_FLEXSPI.FLM) -FF1MIMXRT6XX_EVK_FLEXSPI_S -FS118000000 -FL18000000 -FP1($$Device:MIMXRT685SFVKB$arm\MIMXRT6XX_EVK_FLEXSPI_S.FLM)</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -617,7 +617,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>CMSIS_AGDI_V8M</Key>
-          <Name>-X"" -O206 -S9 -C0 -P00 -N00("") -D00(00000000) -L00(0) -TO18 -TC10000000 -TP20 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO7 -FD2C000 -FC1000 -FN2 -FF0MIMXRT6XX_EVK_FLEXSPI.FLM -FS08000000 -FL08000000 -FP0($$Device:MIMXRT685SFVKB$arm\MIMXRT6XX_EVK_FLEXSPI.FLM) -FF1MIMXRT6XX_EVK_FLEXSPI_S.FLM -FS118000000 -FL18000000 -FP1($$Device:MIMXRT685SFVKB$arm\MIMXRT6XX_EVK_FLEXSPI_S.FLM)</Name>
+          <Name>-X"" -O206 -S9 -C0 -P00 -N00("") -D00(00000000) -L00(0) -TO18 -TC10000000 -TP20 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO7 -FD10010000 -FC1000 -FN2 -FF0MIMXRT6XX_EVK_FLEXSPI.FLM -FS08000000 -FL08000000 -FP0($$Device:MIMXRT685SFVKB$arm\MIMXRT6XX_EVK_FLEXSPI.FLM) -FF1MIMXRT6XX_EVK_FLEXSPI_S.FLM -FS118000000 -FL18000000 -FP1($$Device:MIMXRT685SFVKB$arm\MIMXRT6XX_EVK_FLEXSPI_S.FLM)</Name>
         </SetRegEntry>
       </TargetDriverDllRegistry>
       <Breakpoint/>
@@ -626,7 +626,7 @@
       </Tracepoint>
       <DebugFlag>
         <trace>0</trace>
-        <periodic>0</periodic>
+        <periodic>1</periodic>
         <aLwin>0</aLwin>
         <aCover>0</aCover>
         <aSer1>0</aSer1>

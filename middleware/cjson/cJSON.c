@@ -41,7 +41,6 @@
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
-#include <float.h>
 #include <limits.h>
 #include <ctype.h>
 
@@ -82,7 +81,7 @@ CJSON_PUBLIC(char *) cJSON_GetStringValue(cJSON *item) {
 }
 
 /* This is a safeguard to prevent copy-pasters from using incompatible C and header files */
-#if (CJSON_VERSION_MAJOR != 1) || (CJSON_VERSION_MINOR != 7) || (CJSON_VERSION_PATCH != 4)
+#if (CJSON_VERSION_MAJOR != 1) || (CJSON_VERSION_MINOR != 7) || (CJSON_VERSION_PATCH != 7)
     #error cJSON.h and cJSON.c have different versions. Make sure that both have the same.
 #endif
 
@@ -475,18 +474,18 @@ static void update_offset(printbuffer * const buffer)
 static cJSON_bool print_number(const cJSON * const item, printbuffer * const output_buffer)
 {
     unsigned char *output_pointer = NULL;
-    double d = item->valuedouble;
+    int value = item->valueint;
     int length = 0;
     size_t i = 0;
     unsigned char number_buffer[26]; /* temporary buffer to print the number into */
     unsigned char decimal_point = get_decimal_point();
-    double test;
 
     if (output_buffer == NULL)
     {
         return false;
     }
 
+#if 0
     /* This checks for NaN and Infinity */
     if ((d * 0) != 0)
     {
@@ -504,6 +503,9 @@ static cJSON_bool print_number(const cJSON * const item, printbuffer * const out
             length = sprintf((char*)number_buffer, "%1.17g", d);
         }
     }
+#else
+    length = sprintf((char*)number_buffer, "%d", value);
+#endif
 
     /* sprintf failed or buffer overrun occured */
     if ((length < 0) || (length > (int)(sizeof(number_buffer) - 1)))
@@ -1114,10 +1116,10 @@ static unsigned char *print(const cJSON * const item, cJSON_bool format, const i
     if (hooks->reallocate != NULL)
     {
         printed = (unsigned char*) hooks->reallocate(buffer->buffer, buffer->offset + 1);
-        buffer->buffer = NULL;
         if (printed == NULL) {
             goto fail;
         }
+        buffer->buffer = NULL;
     }
     else /* otherwise copy the JSON over to a new buffer */
     {

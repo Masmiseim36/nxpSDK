@@ -15,9 +15,9 @@
  ******************************************************************************/
 /* Audio ping/pong buffers for streaming DSP handling.
  * Assign each buffer to distinct shared RAM partition to maximize performance. */
-#define AUDIO_SHARED_BUFFER_1 0x20060000
+#define AUDIO_SHARED_BUFFER_1      0x20060000
 #define AUDIO_SHARED_BUFFER_1_SIZE (64 * 1024)
-#define AUDIO_SHARED_BUFFER_2 0x20070000
+#define AUDIO_SHARED_BUFFER_2      0x20070000
 #define AUDIO_SHARED_BUFFER_2_SIZE (64 * 1024)
 
 /*${macro:start}*/

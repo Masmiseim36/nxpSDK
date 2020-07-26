@@ -14,8 +14,8 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_USART USART0
-#define DEMO_USART_CLK_SRC kCLOCK_Flexcomm0
+#define DEMO_USART          USART0
+#define DEMO_USART_CLK_SRC  kCLOCK_Flexcomm0
 #define DEMO_USART_CLK_FREQ CLOCK_GetFlexCommClkFreq(0U)
 #define ECHO_BUFFER_LENGTH 8
 

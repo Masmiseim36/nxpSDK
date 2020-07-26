@@ -227,6 +227,8 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
 
         case kUSB_DeviceEventAttach:
             usb_echo("USB device attached.\r\n");
+            /*Add one delay here to make the DP pull down long enough to allow host to detect the previous disconnection.*/
+            SDK_DelayAtLeastUs(5000, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
             USB_DeviceRun(g_DevicePrinterApp.deviceHandle);
             break;
 
@@ -383,6 +385,8 @@ static void USB_DeviceApplicationInit(void)
     USB_DeviceIsrEnable();
 
     /* Start USB printer demo */
+    /*Add one delay here to make the DP pull down long enough to allow host to detect the previous disconnection.*/
+    SDK_DelayAtLeastUs(5000, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
     USB_DeviceRun(g_DevicePrinterApp.deviceHandle);
 }
 

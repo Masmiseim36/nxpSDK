@@ -21,12 +21,12 @@
  * Definitions
  ******************************************************************************/
 
-#define DMAREQ_DMIC0 16U
-#define DMAREQ_DMIC1 17U
-#define APP_DMAREQ_CHANNEL DMAREQ_DMIC0
-#define APP_DMIC_CHANNEL kDMIC_Channel0
+#define DMAREQ_DMIC0            16U
+#define DMAREQ_DMIC1            17U
+#define APP_DMAREQ_CHANNEL      DMAREQ_DMIC0
+#define APP_DMIC_CHANNEL        kDMIC_Channel0
 #define APP_DMIC_CHANNEL_ENABLE DMIC_CHANEN_EN_CH0(1)
-#define FIFO_DEPTH 15U
+#define FIFO_DEPTH    15U
 #define BUFFER_LENGTH 32U
 #if defined(FSL_FEATURE_DMIC_CHANNEL_HAS_SIGNEXTEND) && (FSL_FEATURE_DMIC_CHANNEL_HAS_SIGNEXTEND)
 #define DEMO_DMIC_DATA_WIDTH uint32_t

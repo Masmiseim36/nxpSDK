@@ -15,7 +15,7 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define APP_FLEXRAM FLEXRAM
+#define APP_FLEXRAM     FLEXRAM
 #define APP_FLEXRAM_IRQ FLEXRAM_IRQn
 
 #define APP_FLEXRAM_IRQ_HANDLER FLEXRAM_IRQHandler
@@ -30,10 +30,10 @@
 #define APP_FLEXRAM_ITCM_MAGIC_ADDR 0xA0
 
 /* OCRAM relocate definition */
-#define APP_OCRAM_SIZE (512 * 1024U)
+#define APP_OCRAM_SIZE              (512 * 1024U)
 #define APP_OCRAM_ALLOCATE_BANK_NUM 4
-#define APP_ITCM_ALLOCATE_BANK_NUM 8
-#define APP_DTCM_ALLOCATE_BANK_NUM 4
+#define APP_ITCM_ALLOCATE_BANK_NUM  8
+#define APP_DTCM_ALLOCATE_BANK_NUM  4
 
 #define APP_DSB() __DSB()
 #define APP_ISB() __ISB()

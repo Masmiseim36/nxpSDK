@@ -13,11 +13,6 @@
 #include <vector>
 #include "EmulateArray.h"
 
-// Emulate the cxx11 functionality that we need if the compiler doesn't support it.
-// Visual studio 2015 doesn't advertise itself as cxx11 compliant, although it
-// supports enough of the standard for our needs
-#if __cplusplus > 199711L || EIGEN_COMP_MSVC >= 1900
-
 #include "CXX11Workarounds.h"
 
 namespace Eigen {
@@ -536,11 +531,5 @@ InstType instantiate_by_c_array(ArrType* arr)
 } // end namespace internal
 
 } // end namespace Eigen
-
-#else // Non C++11, fallback to emulation mode
-
-#include "EmulateCXX11Meta.h"
-
-#endif
 
 #endif // EIGEN_CXX11META_H

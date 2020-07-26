@@ -42,16 +42,16 @@ enum
     kFlexSpiSerialClk_200MHz = 9,
 };
 
-#define ROM_API_HAS_FLEXSPI_NOR_INIT            (1)
-#define ROM_API_HAS_FELXSPI_NOR_PROGRAM         (1)
-#define ROM_API_HAS_FLEXSPI_NOR_ERASE           (1)
-#define ROM_API_HAS_FLEXSPI_NOR_ERASE_SECTOR    (1)
-#define ROM_API_HAS_FLEXSPI_NOR_ERASE_BLOCK     (1)
-#define ROM_API_HAS_FLEXSPI_NOR_ERASE_ALL       (0)
-#define ROM_API_HAS_FLEXSPI_NOR_READ            (0)
-#define ROM_API_HAS_FLEXSPI_NOR_GET_CFG         (0)
-#define ROM_API_HAS_FLEXSPI_CLEAR_CACHE         (1)
-#define ROM_API_HAS_FLEXSPI_XFER                (1)
+#define ROM_API_HAS_FLEXSPI_NOR_INIT (1)
+#define ROM_API_HAS_FELXSPI_NOR_PROGRAM (1)
+#define ROM_API_HAS_FLEXSPI_NOR_ERASE (1)
+#define ROM_API_HAS_FLEXSPI_NOR_ERASE_SECTOR (1)
+#define ROM_API_HAS_FLEXSPI_NOR_ERASE_BLOCK (1)
+#define ROM_API_HAS_FLEXSPI_NOR_ERASE_ALL (0)
+#define ROM_API_HAS_FLEXSPI_NOR_READ (0)
+#define ROM_API_HAS_FLEXSPI_NOR_GET_CFG (0)
+#define ROM_API_HAS_FLEXSPI_CLEAR_CACHE (1)
+#define ROM_API_HAS_FLEXSPI_XFER (1)
 
 #endif // __TARGET_CONFIG_H__
 ////////////////////////////////////////////////////////////////////////////////

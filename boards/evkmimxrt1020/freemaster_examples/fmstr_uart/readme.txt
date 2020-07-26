@@ -1,7 +1,7 @@
 Hardware requirements
 =====================
 - Mini/micro USB cable
-- MIMXRT1015-EVK board
+- MIMXRT1020-EVK board
 - Personal Computer
 - FreeMASTER 2.5 or later installed on PC
 

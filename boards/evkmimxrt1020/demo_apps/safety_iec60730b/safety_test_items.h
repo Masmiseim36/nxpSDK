@@ -9,6 +9,6 @@
 #define _SAFETY_TEST_ITEMS_H_
 
 /* NULL terminated array of pointers to dio_test_t items for safety DIO test */
-extern fs_dio_test_rt_t *dio_safety_test_items[];
+extern dio_test_rt_t *dio_safety_test_items[];
 
 #endif /* _SAFETY_TEST_ITEMS_H_ */

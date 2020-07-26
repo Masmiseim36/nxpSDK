@@ -1,0 +1,404 @@
+.gradient
+{
+	background: rgb(0,0,0); /* Old browsers */
+}
+
+.menu_button, #ap_password_page button
+{
+	text-decoration: none;
+	font-size: 18;
+	color: rgb(0,0,0);
+	text-shadow: 0px 1px 1px rgba(255,255,255,0.3), 
+	             0px 0px 0px rgba(0,0,0,0.7);
+	border-radius: 2px;
+	border-style: none;
+	box-shadow: 3px 3px 10px #888888;
+	margin : 2px;
+	padding: 3px;
+	width: 193px;
+	line-height:50px;
+	background: rgb(249, 181, 0);
+	transition: color 0.1s, background 0.1s;
+	cursor: pointer;
+
+}
+
+
+
+
+.menu_button:hover, #ap_password_page button:hover
+{
+	text-decoration: none;
+	color: rgba(248,248,248,0.9);
+	text-shadow: 0px 1px 1px rgba(0,0,0,0.3), 
+	             0px 0px 0px rgba(255,255,255,1);
+	z-index: 50;
+	background: rgb(217, 165, 27);
+}
+
+#ap_password_page button {
+	background: #c9d200;
+}
+
+#ap_password_page button:hover {
+	background: #739833;
+}
+
+
+#clear_confirm button.warning, #clientJoin_banner button.warning {
+	background: #d72c2c;
+}
+#clear_confirm button.warning:hover, #clientJoin_banner button.warning:hover {
+	background: #b31414;
+}
+
+.menu_button:focus, #ap_password_page button:focus
+{
+	outline: 0;
+}
+
+.header_banner
+{
+	margin: auto;
+	box-shadow: 0px 3px 8px #888888;
+	padding-top: 8px;
+	padding-bottom: 8px;
+	height: 50px;
+}
+
+.header_container
+{
+	margin:auto;
+	width:840px;
+	height: 100%;
+}
+
+.logo
+{
+	margin: auto; 
+	width: 217px;
+	height: 100%;
+	text-align: center;
+	float: left;
+}
+
+.header_text
+{
+	margin-left: 217px;
+	font-size: 38px;
+	text-align: left;
+	padding-left: 12px;
+	font-weight: bolder;
+	font-style: normal;
+	color: rgba(240,240,240,1);
+	line-height: 50px;
+}
+
+.page_body
+{
+	margin: auto;
+	margin-top: 2px;
+	width:100%;
+	max-width: 840px
+}
+
+.page_content
+{
+	width: 65%; 
+	text-align: left; 
+	min-height: 50%;  
+	padding: 8px; 
+	margin: 2px; 
+	margin-left:30%; 
+	border-left: 1px solid #C3CFD1;
+}
+
+.menu
+{
+	float: left;
+	width: 30%; 
+/*	height: 100%; */
+	padding: 8px; 
+	margin: 2px;
+}
+
+.footer
+{
+	margin: auto;
+	line-height: 23px;
+	border: 1px solid #C3CFD1;
+	font-size: .9em;
+	width: 840px;
+}
+
+.rtc_data
+{
+	font-size: 50;
+	font-weight: bolder;
+	text-align: center;
+}
+
+body {
+	background-color: #FFF;
+	font-family: Verdana Neue, Helvetica, Arial, sans-serif;
+	font-weight: normal;
+	color: #666;
+	margin: 0px;
+}
+
+h1 {
+	line-height: 28px;
+	margin: 0px;
+	padding: 0px;
+	text-indent: 0px;
+	color: #E66A08;
+}
+
+h2 {
+	color: #EA802C;
+	margin-top: 0px;
+}
+
+p
+{
+	text-align: justify;
+}
+
+#lnv {
+	padding: 0px 0px 1px 1px;
+	margin: 0px;
+	list-style: none;
+	float : left;
+	width : 199px;
+	display: block;
+}
+
+#lnv li { /* all list items */
+	position : relative;
+	float : left;
+	line-height : 30px;
+	margin: 1px;
+	padding: 0px;
+	width: 197px;
+}
+
+#section_networks{
+	padding: 20px;
+	padding-top: 20px;
+
+	background: #c4e5ff;
+
+	padding-top: 1px;
+
+	border: #ccc 1px solid;
+
+	border-radius: 5px;
+
+}
+
+#section_networks .wifi_network, #wifi_no_networks  {
+	border: 1px solid #acacac;
+
+	padding: 10px;
+
+	background: #f4f4f4;
+
+	border-radius: 5px;
+	margin-bottom: 5px;
+	line-height: 22px;
+	cursor: pointer;
+	transition: transform .2s, background .2s, color .2s;
+
+}
+
+#section_networks .wifi_network:hover {
+	background: #c9d200;
+	box-shadow: 0px 5px 20px #0000006e;
+	transform: scale(1.05);
+}
+
+#section_networks .wifi_network.hidden_network {
+	color: #8a8a8a;
+	background: #cecece;
+}
+
+#section_networks .wifi_network.hidden_network:hover {
+	background: #a0a0a0;
+	color: #545454;
+}
+
+#section_networks .wifi_network.enterprise_network {
+	color: #8a8a8a;
+	background: #cecece;
+}
+
+#section_networks .wifi_network.enterprise_network:hover {
+	background: #a0a0a0;
+	color: #545454;
+}
+
+
+#section_networks .wifi_network span {
+	
+}
+
+#section_networks .wifi_network h3 {
+	margin: 5px;
+	text-align: center;
+	color: gray;
+}
+
+.wifi_network_label {
+	/*float:left;*/
+}
+
+.wifi_network_value {
+	float:right;
+}
+
+.wifi_network_ssid {
+	font-weight: bold;
+	float:left;
+}
+
+#wif_no_networks{
+	text-align: center;
+	font-weight: bold;
+	cursor: default;
+}
+
+#loader_page{
+	background: #000000a6;
+
+	position: fixed;
+
+	top: 0;
+	padding-top: 150px;
+
+	width: 100%;
+
+	height: 100%;
+
+	z-index: 100;
+}
+
+#loader_page h2 {
+	font-size: 45px;
+	color:#7bb1db;
+	text-shadow: 1px 1px 10px #000000b8
+}
+
+.loader {
+  margin: auto;
+  border: 15px solid #fff;
+  border-top: 15px solid #7bb1db;
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+#board_info{
+	text-align: left;
+	margin-bottom:20px;
+	line-height: 22px;
+	overflow-wrap: break-word;
+}
+#boardName {
+	font-weight: bold;
+}
+
+
+#ap_password_page, #clear_confirm, #mode_switch_loader, #error_banner, #success_banner, #clientJoin_banner {
+	background: #000000a6;
+
+	position: fixed;
+
+	top: 0;
+	padding-top: 150px;
+
+	width: 100%;
+
+	height: 100%;
+
+	z-index: 100;
+}
+
+#ap_password_dialogue, #clear_confirm_dialogue, #mode_switch_dialogue, #error_banner_dialogue, #success_banner_dialogue, #clientJoin_banner_dialogue {
+	margin: auto;
+	padding:20px;
+	border-radius: 10px;
+	background: #fff;
+	width: 450px;
+	
+
+}
+
+#ap_password_page input{
+	font-size: 23px;
+	margin-bottom:5px;
+	padding:2px;
+}
+
+#ap_password_page label{
+	font-size: 23px;
+	margin-bottom:5px;
+	padding:2px;
+	display: inline-block;
+	width: 112px;
+	text-align: right;
+}
+
+#post_errors{
+	color: #df2020;
+	font-size: 22px;
+	font-weight: bold;
+}
+
+.statusIndicator {
+	width: 90px;
+	height: 90px;
+
+	background: #e3e3e3;
+	margin: 4px;
+	float: left;
+	border-radius: 5px;
+
+	color: white;
+	font-weight: bold;
+	font-size: 23px;
+	line-height: 85px;
+	text-align: center;
+}
+
+.statusIndicator.active {
+	animation: indicatorFade 2s linear infinite alternate;
+}
+
+@keyframes indicatorFade {
+  0% { background: #c9d200; }
+  100% { background: #e7f010; }
+}
+
+#mode_switch_dialogue {
+	width: 550px;
+}
+
+#mode_switch_dialogue h2 span {
+	text-decoration: underline;
+}
+
+#error_banner_dialogue h2 {
+	color: #EA2C2C;
+	font-size: 30px;
+}
+
+#success_banner_dialogue h2 {
+	color: #C9D200;
+	font-size: 30px;
+}

@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  *
@@ -21,6 +21,7 @@
 #include "enet_ethernetif.h"
 
 #include "board.h"
+#include "fsl_phy.h"
 
 #include "ksdk_mbedtls.h"
 #include "httpd_mbedtls.h"
@@ -41,6 +42,8 @@
 #include "lwip/tcpip.h"
 #include "lwip/dhcp.h"
 #include "lwip/prot/dhcp.h"
+#include "fsl_phyksz8081.h"
+#include "fsl_enet_mdio.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -71,11 +74,14 @@
 /* Address of PHY interface. */
 #define EXAMPLE_PHY_ADDRESS BOARD_ENET0_PHY_ADDRESS
 
-#define TRNG0 TRNG
+/* MDIO operations. */
+#define EXAMPLE_MDIO_OPS enet_ops
 
-/* System clock name. */
-#define EXAMPLE_CLOCK_NAME kCLOCK_CoreSysClk
+/* PHY operations. */
+#define EXAMPLE_PHY_OPS phyksz8081_ops
 
+/* ENET clock frequency. */
+#define EXAMPLE_CLOCK_FREQ CLOCK_GetFreq(kCLOCK_IpgClk)
 
 #ifndef EXAMPLE_NETIF_INIT_FN
 /*! @brief Network interface initialization function. */
@@ -89,6 +95,9 @@
 /*******************************************************************************
  * Variables
  ******************************************************************************/
+
+static mdio_handle_t mdioHandle = {.ops = &EXAMPLE_MDIO_OPS};
+static phy_handle_t phyHandle   = {.phyAddr = EXAMPLE_PHY_ADDRESS, .mdioHandle = &mdioHandle, .ops = &EXAMPLE_PHY_OPS};
 
 const char *pers = "ssl_server";
 mbedtls_entropy_context entropy;
@@ -151,8 +160,7 @@ int main(void)
     mem_range_t non_dma_memory[] = NON_DMA_MEMORY_ARRAY;
 #endif /* FSL_FEATURE_SOC_LPC_ENET_COUNT */
     ethernetif_config_t enet_config = {
-        .phyAddress = EXAMPLE_PHY_ADDRESS,
-        .clockName  = EXAMPLE_CLOCK_NAME,
+        .phyHandle  = &phyHandle,
         .macAddress = configMAC_ADDR,
 #if defined(FSL_FEATURE_SOC_LPC_ENET_COUNT) && (FSL_FEATURE_SOC_LPC_ENET_COUNT > 0)
         .non_dma_memory = non_dma_memory,
@@ -162,8 +170,8 @@ int main(void)
     gpio_pin_config_t gpio_config = {kGPIO_DigitalOutput, 0, kGPIO_NoIntmode};
 
     BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
     BOARD_InitModuleClock();
 
@@ -179,6 +187,8 @@ int main(void)
     GPIO_WritePinOutput(GPIO1, 9, 0);
     delay();
     GPIO_WritePinOutput(GPIO1, 9, 1);
+
+    mdioHandle.resource.csrClock_Hz = EXAMPLE_CLOCK_FREQ;
 
     time_init();
 

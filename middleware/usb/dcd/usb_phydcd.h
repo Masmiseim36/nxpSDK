@@ -19,7 +19,7 @@
  * Definitions
  ******************************************************************************/
 /******************* Macro definitions ***************/
-   
+
 #include "usb_charger_detect.h"
 
 /*! @brief USB DCD error code */
@@ -41,21 +41,21 @@ typedef enum _usb_phydcd_status
  * @return A USB error code or kStatus_USB_Success.
  */
 typedef usb_phydcd_status_t (*usb_phydcd_callback_t)(void *handle, uint32_t callbackEvent, void *eventParam);
-typedef void *  usb_phydcd_handle;
+typedef void *usb_phydcd_handle;
 /*! @brief dcd configuration structure */
 typedef struct _usb_phydcd_config_struct
 {
-    usb_phydcd_callback_t dcdCallback;            /*!< callbacl function for dcd detection*/
-    void *dcdCallbackParam;                       /*!< callbacl function parameter for dcd detection */
+    usb_phydcd_callback_t dcdCallback; /*!< callbacl function for dcd detection*/
+    void *dcdCallbackParam;            /*!< callbacl function parameter for dcd detection */
 } usb_phydcd_config_struct_t;
 
 /*! @brief Available common EVENT types in device callback */
 typedef enum _usb_phydcd_control
 {
-    kUSB_DevicePHYDcdRun = 1U,    /*!< USB dcd dectect start */
-    kUSB_DevicePHYDcdStop,        /*!< USB dcd module stop */
-    kUSB_DevicePHYDcdEnable,      /*!< Enable USB dcd dectect module */
-    kUSB_DevicePHYDcdDisable,     /*!< Disable USB dcd module moudle */
+    kUSB_DevicePHYDcdRun = 1U, /*!< USB dcd dectect start */
+    kUSB_DevicePHYDcdStop,     /*!< USB dcd module stop */
+    kUSB_DevicePHYDcdEnable,   /*!< Enable USB dcd dectect module */
+    kUSB_DevicePHYDcdDisable,  /*!< Disable USB dcd module moudle */
 } usb_phydcd_control_t;
 
 /*!
@@ -89,12 +89,12 @@ usb_phydcd_status_t USB_PHYDCD_Init(uint8_t index, usb_phydcd_config_struct_t *c
  *
  * This function Deinitializes the USB dcd module specified by the dcd handle.
  *
- * @param[in] handle      The dcd peripheral handle pointer.
+ * @param[in] dcdHandle      The dcd peripheral handle pointer.
  *
  * @return A dcd error code or kStatus_phydcd_Success.
  */
 
-usb_phydcd_status_t USB_PHYDCD_Deinit(usb_phydcd_handle handle);
+usb_phydcd_status_t USB_PHYDCD_Deinit(usb_phydcd_handle dcdHandle);
 
 /*!
  * @brief Control the status of the selected item.
@@ -107,7 +107,7 @@ usb_phydcd_status_t USB_PHYDCD_Deinit(usb_phydcd_handle handle);
  *
  * @retval kStatus_phydcd_Success              control the status successfully.
  * @retval kStatus_phydcd_Error                control the status failed .
- *                                          
+ *
  */
 usb_phydcd_status_t USB_PHYDCD_Control(usb_phydcd_handle handle, usb_phydcd_control_t type, void *param);
 /*!
@@ -119,7 +119,7 @@ usb_phydcd_status_t USB_PHYDCD_Control(usb_phydcd_handle handle, usb_phydcd_cont
  *
  * @retval kStatus_phydcd_Success              control the status successfully.
  * @retval kStatus_phydcd_Error                control the status failed .
- *                                          
+ *
  */
 usb_phydcd_status_t USB_PHYDCD_TimerIsrFunction(usb_phydcd_handle handle);
 /*! @} */
@@ -131,4 +131,3 @@ usb_phydcd_status_t USB_PHYDCD_TimerIsrFunction(usb_phydcd_handle handle);
 /*! @} */
 
 #endif /* __USB_DEVICE_HSDCD_H__ */
-

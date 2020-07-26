@@ -5,10 +5,10 @@ It could be compared with the project powerquad_benckmark_fft to show the PowerQ
 
 Toolchain supported
 ===================
-- MCUXpresso  11.1.1
-- IAR embedded Workbench  8.40.2
-- Keil MDK  5.29
-- GCC ARM Embedded  8.3.1
+- MCUXpresso  11.2.0
+- IAR embedded Workbench  8.50.1
+- Keil MDK  5.30
+- GCC ARM Embedded  9.2.1
 
 Hardware requirements
 =====================

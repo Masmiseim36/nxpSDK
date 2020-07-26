@@ -1,9 +1,9 @@
 /*
-* Copyright 2017-2019 NXP
-* All rights reserved.
-*
-* SPDX-License-Identifier: BSD-3-Clause
-*/
+ * Copyright 2017-2019 NXP
+ * All rights reserved.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
 #include "bl_api.h"
 
 /*******************************************************************************
@@ -13,10 +13,12 @@
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-#define g_bootloaderTree  ((bootloader_api_entry_t *)*(uint32_t *)0x0020001c)
+#define g_bootloaderTree ((bootloader_api_entry_t *)*(uint32_t *)0x0020001c)
 
-#define api_flexspi_nor_erase_sector  ((status_t(*)(uint32_t instance, flexspi_nor_config_t *config, uint32_t address))0x0021055d)
-#define api_flexspi_nor_erase_block  ((status_t(*)(uint32_t instance, flexspi_nor_config_t *config, uint32_t address))0x002104a9)
+#define api_flexspi_nor_erase_sector \
+    ((status_t(*)(uint32_t instance, flexspi_nor_config_t * config, uint32_t address))0x0021055d)
+#define api_flexspi_nor_erase_block \
+    ((status_t(*)(uint32_t instance, flexspi_nor_config_t * config, uint32_t address))0x002104a9)
 
 /*******************************************************************************
  * Codes

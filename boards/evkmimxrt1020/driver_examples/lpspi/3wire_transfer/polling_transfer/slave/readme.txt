@@ -10,10 +10,10 @@ The file 'lpspi_3wire_polling_transfer_slave.c' includes the LPSPI slave code.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.40.2
-- Keil MDK  5.29
-- GCC ARM Embedded  8.3.1
-- MCUXpresso  11.1.0
+- IAR embedded Workbench  8.50.1
+- Keil MDK  5.30
+- GCC ARM Embedded  9.2.1
+- MCUXpresso  11.2.0
 
 Hardware requirements
 =====================
@@ -23,7 +23,7 @@ Hardware requirements
 
 Board settings
 ==============
-Remove R293 
+
 SPI one board:
 Transfer data from one board instance to another board's instance.
 SPI1 pins are connected with SPI1 pins of another board
@@ -47,6 +47,8 @@ Prepare the Demo
     - No flow control
 3.  Download the program to the target board.
 4.  Reset the SoC and run the project.
+
+Note: It's better to use short dupont lines for ideal connection, error may occur if using long lines.
 
 Running the demo
 ================

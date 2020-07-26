@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP
+ * Copyright 2019-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -56,6 +56,10 @@ void BOARD_InitBootPins(void);
 /* GPIO_AD_B0_12 (coord K14), UART1_TXD */
 #define BOARD_UART1_TXD_PERIPHERAL                                       LPUART1   /*!< Device name: LPUART1 */
 #define BOARD_UART1_TXD_SIGNAL                                                TX   /*!< LPUART1 signal: TX */
+
+/* GPIO_AD_B0_10 (coord G13), JTAG_TDO/J21[13]/INT1_COMBO/ENET_INT/J22[6]/U32[11] */
+#define BOARD_INT1_COMBO_PERIPHERAL                                          ARM   /*!< Device name: ARM */
+#define BOARD_INT1_COMBO_SIGNAL                                    arm_trace_swo   /*!< ARM signal: arm_trace_swo */
 
 
 /*!

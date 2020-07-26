@@ -17,23 +17,17 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-
-/*! @brief Enables/disables the Audio Class 2.0 */
-#if USB_DEVICE_CONFIG_AUDIO
-#define USBCFG_AUDIO_CLASS_2_0 0
-#endif
-
 /*!
  * @name USB Audio class codes
  * @{
  */
 
 /*! @brief Audio device class code */
-#define USB_DEVICE_CONFIG_AUDIO_CLASS_CODE (0x01)
+#define USB_DEVICE_CONFIG_AUDIO_CLASS_CODE (0x01U)
 
 /*! @brief Audio device subclass code */
-#define USB_DEVICE_AUDIO_STREAM_SUBCLASS (0x02)
-#define USB_DEVICE_AUDIO_CONTROL_SUBCLASS (0x01)
+#define USB_DEVICE_AUDIO_STREAM_SUBCLASS (0x02U)
+#define USB_DEVICE_AUDIO_CONTROL_SUBCLASS (0x01U)
 
 /*! @brief Audio device class-specific descriptor type */
 #define USB_DESCRIPTOR_TYPE_AUDIO_CS_INTERFACE (0x24)
@@ -133,7 +127,7 @@
 #define USB_DEVICE_AUDIO_SET_MAX_SAMPLING_FREQ_CONTROL (0x030C)
 #define USB_DEVICE_AUDIO_SET_RES_SAMPLING_FREQ_CONTROL (0x040C)
 
-#if USBCFG_AUDIO_CLASS_2_0
+#if (USB_DEVICE_CONFIG_AUDIO_CLASS_2_0)
 /*! @brief Audio 2.0 device class-specific SET/GET SAMPLING FREQ CONTROL COMMAND  */
 #define USB_DEVICE_AUDIO_SET_CUR_SAM_FREQ_CONTROL (0x0501)
 #define USB_DEVICE_AUDIO_SET_CUR_CLOCK_VALID_CONTROL (0x0502)
@@ -147,19 +141,19 @@
 #define USB_DEVICE_AUDIO_SET_CUR_VOLUME_CONTROL_AUDIO20 (0x0504)
 #endif
 
-#if USBCFG_AUDIO_CLASS_2_0
+#if (USB_DEVICE_CONFIG_AUDIO_CLASS_2_0)
 #define USB_DESCRIPTOR_SUBTYPE_AUDIO_CONTROL_CLOCK_SOURCE_UNIT (0x0A)
 #define USB_DESCRIPTOR_SUBTYPE_AUDIO_CONTROL_CLOCK_SELECTOR_UNIT (0x0B)
 #define USB_DESCRIPTOR_SUBTYPE_AUDIO_CONTROL_CLOCK_MULTIPLIER_UNIT (0x0C)
 #define USB_DESCRIPTOR_SUBTYPE_AUDIO_CONTROL_SAMPLE_RATE_CONVERTER_UNIT (0x0D)
 
-#define USB_DEVICE_AUDIO_CS_CONTROL_UNDEFINED (0x00)
-#define USB_DEVICE_AUDIO_CS_SAM_FREQ_CONTROL (0x01)
-#define USB_DEVICE_AUDIO_CS_CLOCK_VALID_CONTROL (0x02)
-#define USB_DEVICE_AUDIO_REQUEST_CUR (0x01)
-#define USB_DEVICE_AUDIO_REQUEST_RANGE (0x02)
-#define USB_DEVICE_AUDIO_FU_MUTE_CONTROL (0x01)
-#define USB_DEVICE_AUDIO_FU_VOLUME_CONTROL (0x02)
+#define USB_DEVICE_AUDIO_CS_CONTROL_UNDEFINED (0x00U)
+#define USB_DEVICE_AUDIO_CS_SAM_FREQ_CONTROL (0x01U)
+#define USB_DEVICE_AUDIO_CS_CLOCK_VALID_CONTROL (0x02U)
+#define USB_DEVICE_AUDIO_REQUEST_CUR (0x01U)
+#define USB_DEVICE_AUDIO_REQUEST_RANGE (0x02U)
+#define USB_DEVICE_AUDIO_FU_MUTE_CONTROL (0x01U)
+#define USB_DEVICE_AUDIO_FU_VOLUME_CONTROL (0x02U)
 
 #endif
 
@@ -260,7 +254,7 @@ typedef struct _usb_device_audio_struct
     uint8_t streamOutPipeBusy;                             /*!< Stream OUT pipe busy flag */
 } usb_device_audio_struct_t;
 
-#if USBCFG_AUDIO_CLASS_2_0
+#if (USB_DEVICE_CONFIG_AUDIO_CLASS_2_0)
 STRUCT_PACKED
 struct _usb_device_control_range_layout3_struct
 {
@@ -362,7 +356,7 @@ extern usb_status_t USB_DeviceAudioEvent(void *handle, uint32_t event, void *par
  * @retval kStatus_USB_InvalidHandle The audio device handle or the audio class handle is invalid.
  * @retval kStatus_USB_ControllerNotFound The controller interface is invalid.
  *
- * @note The function can only be called in the same context. 
+ * @note The function can only be called in the same context.
  */
 extern usb_status_t USB_DeviceAudioSend(class_handle_t handle, uint8_t ep, uint8_t *buffer, uint32_t length);
 
@@ -383,7 +377,7 @@ extern usb_status_t USB_DeviceAudioSend(class_handle_t handle, uint8_t ep, uint8
  * @retval kStatus_USB_InvalidHandle The audio device handle or the audio class handle is invalid.
  * @retval kStatus_USB_ControllerNotFound The controller interface is invalid.
  *
- * @note The function can only be called in the same context. 
+ * @note The function can only be called in the same context.
  */
 extern usb_status_t USB_DeviceAudioRecv(class_handle_t handle, uint8_t ep, uint8_t *buffer, uint32_t length);
 

@@ -45,7 +45,7 @@ AT_NONCACHEABLE_SECTION_ALIGN(
     static uint16_t s_cameraBuffer[APP_CAMERA_FRAME_BUFFER_COUNT][DEMO_CAMERA_HEIGHT][DEMO_CAMERA_WIDTH],
     DEMO_CAMERA_BUFFER_ALIGN);
 AT_NONCACHEABLE_SECTION_ALIGN(
-    static uint16_t s_lcdBuffer[APP_LCD_FRAME_BUFFER_COUNT][DEMO_PANEL_HEIGHT][DEMO_PANEL_WIDTH], FRAME_BUFFER_ALIGN);
+    static uint16_t s_lcdBuffer[APP_LCD_FRAME_BUFFER_COUNT][DEMO_BUFFER_HEIGHT][DEMO_BUFFER_WIDTH], FRAME_BUFFER_ALIGN);
 
 static volatile uint8_t s_lcdActiveFbIdx = 0;
 
@@ -146,9 +146,11 @@ static void APP_InitDisplay(void)
 
     g_dc.ops->getLayerDefaultConfig(&g_dc, 0, &fbInfo);
     fbInfo.pixelFormat = kVIDEO_PixelFormatRGB565;
-    fbInfo.width       = DEMO_PANEL_WIDTH;
-    fbInfo.height      = DEMO_PANEL_HEIGHT;
-    fbInfo.strideBytes = DEMO_PANEL_WIDTH * APP_LCD_BPP;
+    fbInfo.width       = DEMO_BUFFER_WIDTH;
+    fbInfo.height      = DEMO_BUFFER_HEIGHT;
+    fbInfo.startX      = DEMO_BUFFER_START_X;
+    fbInfo.startY      = DEMO_BUFFER_START_Y;
+    fbInfo.strideBytes = DEMO_BUFFER_WIDTH * APP_LCD_BPP;
     g_dc.ops->setLayerConfig(&g_dc, 0, &fbInfo);
 
     g_dc.ops->setCallback(&g_dc, 0, APP_BufferSwitchOffCallback, NULL);
@@ -208,9 +210,9 @@ void APP_CSI_CCIR656(void)
         .pixelFormat    = kPXP_OutputPixelFormatRGB565,
         .interlacedMode = kPXP_OutputProgressive,
         .buffer1Addr    = 0U,
-        .pitchBytes     = DEMO_PANEL_WIDTH * APP_LCD_BPP,
-        .width          = DEMO_PANEL_WIDTH,
-        .height         = DEMO_PANEL_HEIGHT,
+        .pitchBytes     = DEMO_BUFFER_WIDTH * APP_LCD_BPP,
+        .width          = DEMO_BUFFER_WIDTH,
+        .height         = DEMO_BUFFER_HEIGHT,
     };
 
     CAMERA_RECEIVER_Start(&cameraReceiver);

@@ -22,7 +22,7 @@ limitations under the License.
 #include <cstring>
 #include <limits>
 #include <vector>
-#include <algorithm>
+#include <memory>
 
 namespace {
 
@@ -145,11 +145,18 @@ TfLiteStatus SimpleMemoryArena::ResolveAlloc(TfLiteContext* context,
   return kTfLiteOk;
 }
 
-TfLiteStatus SimpleMemoryArena::Clear() {
+TfLiteStatus SimpleMemoryArena::ClearPlan() {
   committed_ = false;
   high_water_mark_ = 0;
   allocs_.clear();
   return kTfLiteOk;
 }
 
+TfLiteStatus SimpleMemoryArena::ReleaseBuffer() {
+  committed_ = false;
+  underlying_buffer_size_ = 0;
+  underlying_buffer_aligned_ptr_ = nullptr; 
+  underlying_buffer_.reset( static_cast<char*>(nullptr));
+  return kTfLiteOk;
+}
 }  // namespace tflite

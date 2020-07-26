@@ -28,7 +28,8 @@
     
 *******************************************************************************/
 /* relative path to param files folder realted to FM project pmp file */
-var paramFilePath = './../../../../../middleware/motor_control/freemaster/pmsm_float_enc/mcat/param_files/';
+/* var paramFilePath = './../../../../../middleware/motor_control/freemaster/pmsm_float_enc/mcat/param_files/'; */
+var paramFilePath = './pmsm_float_enc/mcat/param_files/';
 
 /***************************************************************************//*!
 * @brief   The function reads motor type variable from FM

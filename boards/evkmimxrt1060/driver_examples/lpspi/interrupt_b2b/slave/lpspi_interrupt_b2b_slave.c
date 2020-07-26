@@ -19,20 +19,17 @@
  * Definitions
  ******************************************************************************/
 /* Slave related */
-#define EXAMPLE_LPSPI_SLAVE_BASEADDR (LPSPI1)
-#define EXAMPLE_LPSPI_SLAVE_IRQN (LPSPI1_IRQn)
+#define EXAMPLE_LPSPI_SLAVE_BASEADDR   (LPSPI1)
+#define EXAMPLE_LPSPI_SLAVE_IRQN       (LPSPI1_IRQn)
 #define EXAMPLE_LPSPI_SLAVE_IRQHandler LPSPI1_IRQHandler
 
-#define EXAMPLE_LPSPI_SLAVE_PCS_FOR_INIT (kLPSPI_Pcs0)
+#define EXAMPLE_LPSPI_SLAVE_PCS_FOR_INIT     (kLPSPI_Pcs0)
 #define EXAMPLE_LPSPI_SLAVE_PCS_FOR_TRANSFER (kLPSPI_SlavePcs0)
 
 /* Select USB1 PLL PFD0 (720 MHz) as lpspi clock source */
 #define EXAMPLE_LPSPI_CLOCK_SOURCE_SELECT (1U)
 /* Clock divider for master lpspi clock source */
 #define EXAMPLE_LPSPI_CLOCK_SOURCE_DIVIDER (7U)
-
-#define LPSPI_MASTER_CLK_FREQ (CLOCK_GetFreq(kCLOCK_Usb1PllPfd0Clk) / (EXAMPLE_LPSPI_CLOCK_SOURCE_DIVIDER + 1U))
-
 #define TRANSFER_SIZE 64U /*! Transfer dataSize */
 
 /*******************************************************************************
@@ -61,43 +58,62 @@ void EXAMPLE_LPSPI_SLAVE_IRQHandler(void)
 {
     if (slaveRxCount < TRANSFER_SIZE)
     {
+        /* First, disable the interrupt to avoid potentially triggering another interrupt
+         * while reading out the RX FIFO as more data may be coming into the RX FIFO. We'll
+         * re-enable the interrupts after reading out the FIFO.
+         */
+        LPSPI_DisableInterrupts(EXAMPLE_LPSPI_SLAVE_BASEADDR, kLPSPI_RxInterruptEnable);
         while (LPSPI_GetRxFifoCount(EXAMPLE_LPSPI_SLAVE_BASEADDR))
         {
             slaveRxData[slaveRxCount] = LPSPI_ReadData(EXAMPLE_LPSPI_SLAVE_BASEADDR);
             slaveRxCount++;
 
-            if (slaveTxCount < TRANSFER_SIZE)
-            {
-                LPSPI_WriteData(EXAMPLE_LPSPI_SLAVE_BASEADDR, slaveTxData[slaveTxCount]);
-                slaveTxCount++;
-            }
             if (slaveRxCount == TRANSFER_SIZE)
+            {
+                break;
+            }
+        }
+        /* Re-enable the interrupts only if rxCount indicates there is more data to receive,
+         * otherwise we may get a spurious interrupt. */
+        if (slaveRxCount < TRANSFER_SIZE)
+        {
+            LPSPI_EnableInterrupts(EXAMPLE_LPSPI_SLAVE_BASEADDR, kLPSPI_RxInterruptEnable);
+        }
+    }
+
+    /* Update rxWatermark. There isn't RX interrupt for the last datas if the RX count is not greater than rxWatermark.
+     */
+    if ((TRANSFER_SIZE - slaveRxCount) <= g_slaveRxWatermark)
+    {
+        EXAMPLE_LPSPI_SLAVE_BASEADDR->FCR =
+            (EXAMPLE_LPSPI_SLAVE_BASEADDR->FCR & (~LPSPI_FCR_RXWATER_MASK)) |
+            LPSPI_FCR_RXWATER(((TRANSFER_SIZE - slaveRxCount) > 1U) ? ((TRANSFER_SIZE - slaveRxCount) - 1U) : (0U));
+    }
+
+    if (slaveTxCount < TRANSFER_SIZE)
+    {
+        while ((LPSPI_GetTxFifoCount(EXAMPLE_LPSPI_SLAVE_BASEADDR) < g_slaveFifoSize) &&
+               (slaveTxCount - slaveRxCount < g_slaveFifoSize))
+        {
+            /*Write the word to TX register*/
+            LPSPI_WriteData(EXAMPLE_LPSPI_SLAVE_BASEADDR, slaveTxData[slaveTxCount]);
+            ++slaveTxCount;
+
+            if (slaveTxCount == TRANSFER_SIZE)
             {
                 break;
             }
         }
     }
 
-    /*Update rxWatermark. There isn't RX interrupt for the last datas if the RX count is not greater than rxWatermark.*/
-    if ((TRANSFER_SIZE - slaveRxCount) <= g_slaveRxWatermark)
-    {
-        EXAMPLE_LPSPI_SLAVE_BASEADDR->FCR =
-            (EXAMPLE_LPSPI_SLAVE_BASEADDR->FCR & (~LPSPI_FCR_RXWATER_MASK)) |
-            LPSPI_FCR_RXWATER(((TRANSFER_SIZE - slaveRxCount) > 1) ? ((TRANSFER_SIZE - slaveRxCount) - 1U) : (0U));
-    }
-
-    /* Check if remaining receive byte count matches user request */
+    /* Check if we're done with this transfer.*/
     if ((slaveRxCount == TRANSFER_SIZE) && (slaveTxCount == TRANSFER_SIZE))
     {
         isSlaveTransferCompleted = true;
         /* Disable interrupt requests */
-        LPSPI_DisableInterrupts(EXAMPLE_LPSPI_SLAVE_BASEADDR, kLPSPI_RxInterruptEnable);
+        LPSPI_DisableInterrupts(EXAMPLE_LPSPI_SLAVE_BASEADDR, kLPSPI_AllInterruptEnable);
     }
-    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-      exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 /*!
@@ -124,16 +140,8 @@ int main(void)
     uint8_t txWatermark;
 
     /*Slave config*/
-    slaveConfig.bitsPerFrame = 8;
-    slaveConfig.cpol         = kLPSPI_ClockPolarityActiveHigh;
-    slaveConfig.cpha         = kLPSPI_ClockPhaseFirstEdge;
-    slaveConfig.direction    = kLPSPI_MsbFirst;
-
-    slaveConfig.whichPcs           = EXAMPLE_LPSPI_SLAVE_PCS_FOR_INIT;
-    slaveConfig.pcsActiveHighOrLow = kLPSPI_PcsActiveLow;
-
-    slaveConfig.pinCfg        = kLPSPI_SdiInSdoOut;
-    slaveConfig.dataOutConfig = kLpspiDataOutRetained;
+    LPSPI_SlaveGetDefaultConfig(&slaveConfig);
+    slaveConfig.whichPcs = EXAMPLE_LPSPI_SLAVE_PCS_FOR_INIT;
 
     LPSPI_SlaveInit(EXAMPLE_LPSPI_SLAVE_BASEADDR, &slaveConfig);
 
@@ -176,8 +184,8 @@ int main(void)
     LPSPI_DisableInterrupts(EXAMPLE_LPSPI_SLAVE_BASEADDR, kLPSPI_AllInterruptEnable);
 
     EXAMPLE_LPSPI_SLAVE_BASEADDR->TCR =
-        (EXAMPLE_LPSPI_SLAVE_BASEADDR->TCR &
-         ~(LPSPI_TCR_CONT_MASK | LPSPI_TCR_CONTC_MASK | LPSPI_TCR_RXMSK_MASK | LPSPI_TCR_PCS_MASK)) |
+        (EXAMPLE_LPSPI_SLAVE_BASEADDR->TCR & ~(LPSPI_TCR_CONT_MASK | LPSPI_TCR_CONTC_MASK | LPSPI_TCR_RXMSK_MASK |
+                                               LPSPI_TCR_TXMSK_MASK | LPSPI_TCR_PCS_MASK)) |
         LPSPI_TCR_CONT(0) | LPSPI_TCR_CONTC(0) | LPSPI_TCR_RXMSK(0) | LPSPI_TCR_TXMSK(0) | LPSPI_TCR_PCS(whichPcs);
 
     /* Enable the NVIC for LPSPI peripheral. Note that below code is useless if the LPSPI interrupt is in INTMUX ,
@@ -189,6 +197,7 @@ int main(void)
     while (LPSPI_GetTxFifoCount(EXAMPLE_LPSPI_SLAVE_BASEADDR) != 0)
     {
     }
+
     /*Fill up the TX data in FIFO */
     while (LPSPI_GetTxFifoCount(EXAMPLE_LPSPI_SLAVE_BASEADDR) < g_slaveFifoSize)
     {
@@ -220,23 +229,23 @@ int main(void)
     if (errorCount == 0)
     {
         PRINTF("\r\nLPSPI transfer all data matched! \r\n");
-        /* Print out receive buffer */
-        PRINTF("\r\n Slave received:\r\n");
-        for (i = 0U; i < TRANSFER_SIZE; i++)
-        {
-            /* Print 16 numbers in a line */
-            if ((i & 0x0FU) == 0U)
-            {
-                PRINTF("\r\n");
-            }
-            PRINTF(" %02X", slaveRxData[i]);
-        }
-        PRINTF("\r\n");
     }
     else
     {
         PRINTF("\r\nError occurred in LPSPI transfer ! \r\n");
     }
+    /* Print out receive buffer */
+    PRINTF("\r\n Slave received:\r\n");
+    for (i = 0U; i < TRANSFER_SIZE; i++)
+    {
+        /* Print 16 numbers in a line */
+        if ((i & 0x0FU) == 0U)
+        {
+            PRINTF("\r\n");
+        }
+        PRINTF(" %02X", slaveRxData[i]);
+    }
+    PRINTF("\r\n");
 
     LPSPI_Deinit(EXAMPLE_LPSPI_SLAVE_BASEADDR);
 

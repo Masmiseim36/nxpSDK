@@ -27,16 +27,16 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define BOARD_SW_GPIO BOARD_SW1_GPIO
-#define BOARD_SW_GPIO_PIN BOARD_SW1_GPIO_PIN
+#define BOARD_SW_GPIO          BOARD_SW1_GPIO
+#define BOARD_SW_GPIO_PIN      BOARD_SW1_GPIO_PIN
 #define BOARD_PINT_PIN_INT_SRC kINPUTMUX_GpioPort1Pin1ToPintsel
-#define BOARD_SW_IRQ GPIO_INTA_IRQn
-#define BOARD_SW_IRQ_HANDLER GPIO_INTA_IRQHandler
-#define BOARD_SW_NAME "SW1"
+#define BOARD_SW_IRQ           GPIO_INTA_IRQn
+#define BOARD_SW_IRQ_HANDLER   GPIO_INTA_IRQHandler
+#define BOARD_SW_NAME          "SW1"
 
 /* @brief FreeRTOS tickless timer configuration. */
-#define TICKLESS_RTC_BASE_PTR RTC  /*!< Tickless timer base address. */
-#define TICKLESS_RTC_IRQn RTC_IRQn /*!< Tickless timer IRQ number. */
+#define TICKLESS_RTC_BASE_PTR RTC      /*!< Tickless timer base address. */
+#define TICKLESS_RTC_IRQn     RTC_IRQn /*!< Tickless timer IRQ number. */
 
 /* Task priorities. */
 /* clang-format off */
@@ -75,11 +75,7 @@ SemaphoreHandle_t xSWSemaphore = NULL;
 void RTC_IRQHandler(void)
 {
     vPortRtcIsr();
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 /*!
@@ -120,8 +116,8 @@ int main(void)
     EnableIRQ(RTC_IRQn);
 #endif
 
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
 
     /* Print a note to terminal. */

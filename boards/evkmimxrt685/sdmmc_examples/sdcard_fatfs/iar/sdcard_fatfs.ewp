@@ -202,7 +202,7 @@
         </option>
         <option>
           <name>TrustZone</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>TrustZoneModes</name>
@@ -223,8 +223,8 @@
           <state>DEBUG</state>
           <state>CPU_MIMXRT685SFVKB_cm33</state>
           <state>BOOT_HEADER_ENABLE=1</state>
-          <state>ARM_MATH_CM33</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
+          <state>SD_ENABLED</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
@@ -358,7 +358,9 @@
           <state>$PROJ_DIR$/../../../../../middleware/fatfs/source/fsl_sd_disk</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/drivers</state>
           <state>$PROJ_DIR$/../../../../../components/pca9420</state>
-          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/port</state>
+          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/sd</state>
+          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
+          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities/debug_console</state>
@@ -366,8 +368,8 @@
           <state>$PROJ_DIR$/../../../flash_config</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/inc</state>
-          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/src</state>
+          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/osa</state>
+          <state>$PROJ_DIR$/../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities</state>
         </option>
         <option>
@@ -1246,7 +1248,7 @@
         </option>
         <option>
           <name>TrustZone</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>TrustZoneModes</name>
@@ -1268,8 +1270,8 @@
           <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>CPU_MIMXRT685SFVKB_cm33</state>
-          <state>ARM_MATH_CM33</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
+          <state>SD_ENABLED</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
@@ -1403,7 +1405,9 @@
           <state>$PROJ_DIR$/../../../../../middleware/fatfs/source/fsl_sd_disk</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/drivers</state>
           <state>$PROJ_DIR$/../../../../../components/pca9420</state>
-          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/port</state>
+          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/sd</state>
+          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
+          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities/debug_console</state>
@@ -1411,8 +1415,8 @@
           <state>$PROJ_DIR$/../../../flash_config</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/inc</state>
-          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/src</state>
+          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/osa</state>
+          <state>$PROJ_DIR$/../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities</state>
         </option>
         <option>
@@ -2291,7 +2295,7 @@
         </option>
         <option>
           <name>TrustZone</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>TrustZoneModes</name>
@@ -2312,8 +2316,8 @@
           <state>NDEBUG</state>
           <state>CPU_MIMXRT685SFVKB_cm33</state>
           <state>BOOT_HEADER_ENABLE=1</state>
-          <state>ARM_MATH_CM33</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
+          <state>SD_ENABLED</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
@@ -2447,7 +2451,9 @@
           <state>$PROJ_DIR$/../../../../../middleware/fatfs/source/fsl_sd_disk</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/drivers</state>
           <state>$PROJ_DIR$/../../../../../components/pca9420</state>
-          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/port</state>
+          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/sd</state>
+          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
+          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities/debug_console</state>
@@ -2455,8 +2461,8 @@
           <state>$PROJ_DIR$/../../../flash_config</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/inc</state>
-          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/src</state>
+          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/osa</state>
+          <state>$PROJ_DIR$/../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities</state>
         </option>
         <option>
@@ -3335,7 +3341,7 @@
         </option>
         <option>
           <name>TrustZone</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>TrustZoneModes</name>
@@ -3357,8 +3363,8 @@
           <state>CPU_MIMXRT685SFVKB_cm33</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>NDEBUG</state>
-          <state>ARM_MATH_CM33</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
+          <state>SD_ENABLED</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
@@ -3492,7 +3498,9 @@
           <state>$PROJ_DIR$/../../../../../middleware/fatfs/source/fsl_sd_disk</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/drivers</state>
           <state>$PROJ_DIR$/../../../../../components/pca9420</state>
-          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/port</state>
+          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/sd</state>
+          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
+          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities/debug_console</state>
@@ -3500,8 +3508,8 @@
           <state>$PROJ_DIR$/../../../flash_config</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/inc</state>
-          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/src</state>
+          <state>$PROJ_DIR$/../../../../../middleware/sdmmc/osa</state>
+          <state>$PROJ_DIR$/../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities</state>
         </option>
         <option>
@@ -4196,6 +4204,12 @@
       <name>$PROJ_DIR$/../pin_mux.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../sdmmc_config.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../sdmmc_config.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../board.c</name>
     </file>
     <file>
@@ -4331,50 +4345,56 @@
   <group>
     <name>sdmmc</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../middleware/sdmmc/ChangeLogKSDK.txt</name>
+      <name>$PROJ_DIR$/../../../../../middleware/sdmmc/sd/ChangeLogKSDK.txt</name>
     </file>
-    <group>
-      <name>port</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/sdmmc/port/fsl_sdmmc_event.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/sdmmc/port/usdhc/interrupt/fsl_sdmmc_event.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/sdmmc/port/usdhc/interrupt/fsl_sdmmc_host.c</name>
-      </file>
-    </group>
-    <file>
-      <name>$PROJ_DIR$/../../../../../middleware/sdmmc/ChangeLogKSDK.txt</name>
-    </file>
-    <group>
-      <name>inc</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/sdmmc/inc/fsl_sd.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/sdmmc/inc/fsl_sdmmc_common.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/sdmmc/inc/fsl_sdmmc_host.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/sdmmc/inc/fsl_sdmmc_spec.h</name>
-      </file>
-    </group>
     <group>
       <name>src</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/sdmmc/src/fsl_sd.c</name>
+        <name>$PROJ_DIR$/../../../../../middleware/sdmmc/sd/fsl_sd.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/sdmmc/src/fsl_sdmmc_common.c</name>
+        <name>$PROJ_DIR$/../../../../../middleware/sdmmc/common/fsl_sdmmc_common.c</name>
       </file>
     </group>
-    <file>
-      <name>$PROJ_DIR$/../../../../../middleware/sdmmc/ChangeLogKSDK.txt</name>
-    </file>
+    <group>
+      <name>inc</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/sdmmc/sd/fsl_sd.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/sdmmc/common/fsl_sdmmc_common.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/sdmmc/common/fsl_sdmmc_spec.h</name>
+      </file>
+    </group>
+    <group>
+      <name>host</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc/non_blocking/fsl_sdmmc_host.c</name>
+      </file>
+    </group>
+    <group>
+      <name>osa</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/sdmmc/osa/fsl_sdmmc_osa.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/sdmmc/osa/fsl_sdmmc_osa.h</name>
+      </file>
+    </group>
   </group>
   <group>
     <name>device</name>
@@ -4453,6 +4473,21 @@
         <name>$PROJ_DIR$/../../../../../components/lists/generic_list.h</name>
       </file>
     </group>
+    <group>
+      <name>osa</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction_bm.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction_bm.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction_config.h</name>
+      </file>
+    </group>
   </group>
   <group>
     <name>flash_config</name>
@@ -4473,6 +4508,9 @@
     <name>CMSIS</name>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_cm33.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv8.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/tz_context.h</name>
@@ -4497,21 +4535,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_version.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv81mml.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mbl.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mml.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv7.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv8.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_common_tables.h</name>

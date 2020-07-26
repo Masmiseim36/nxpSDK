@@ -202,7 +202,7 @@
         </option>
         <option>
           <name>TrustZone</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>TrustZoneModes</name>
@@ -223,7 +223,6 @@
           <state>DEBUG</state>
           <state>CPU_MIMXRT685SFVKB_cm33</state>
           <state>BOOT_HEADER_ENABLE=1</state>
-          <state>ARM_MATH_CM33</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>BOARD_USE_CODEC=1</state>
           <state>CODEC_TFA9XXX_ENABLE</state>
@@ -362,8 +361,8 @@
           <state>$PROJ_DIR$/../../../../../../components/i2c</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/tfa9xxx</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/tfa9xxx/vas_tfa_drv</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec/port/tfa9xxx</state>
           <state>$PROJ_DIR$/../../../../../../components/codec</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec/port/tfa9xxx</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/debug_console</state>
@@ -1248,7 +1247,7 @@
         </option>
         <option>
           <name>TrustZone</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>TrustZoneModes</name>
@@ -1270,7 +1269,6 @@
           <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>CPU_MIMXRT685SFVKB_cm33</state>
-          <state>ARM_MATH_CM33</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>BOARD_USE_CODEC=1</state>
           <state>CODEC_TFA9XXX_ENABLE</state>
@@ -1409,8 +1407,8 @@
           <state>$PROJ_DIR$/../../../../../../components/i2c</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/tfa9xxx</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/tfa9xxx/vas_tfa_drv</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec/port/tfa9xxx</state>
           <state>$PROJ_DIR$/../../../../../../components/codec</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec/port/tfa9xxx</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/debug_console</state>
@@ -2295,7 +2293,7 @@
         </option>
         <option>
           <name>TrustZone</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>TrustZoneModes</name>
@@ -2316,7 +2314,6 @@
           <state>NDEBUG</state>
           <state>CPU_MIMXRT685SFVKB_cm33</state>
           <state>BOOT_HEADER_ENABLE=1</state>
-          <state>ARM_MATH_CM33</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>BOARD_USE_CODEC=1</state>
           <state>CODEC_TFA9XXX_ENABLE</state>
@@ -2455,8 +2452,8 @@
           <state>$PROJ_DIR$/../../../../../../components/i2c</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/tfa9xxx</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/tfa9xxx/vas_tfa_drv</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec/port/tfa9xxx</state>
           <state>$PROJ_DIR$/../../../../../../components/codec</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec/port/tfa9xxx</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/debug_console</state>
@@ -3341,7 +3338,7 @@
         </option>
         <option>
           <name>TrustZone</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>TrustZoneModes</name>
@@ -3363,7 +3360,6 @@
           <state>CPU_MIMXRT685SFVKB_cm33</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>NDEBUG</state>
-          <state>ARM_MATH_CM33</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>BOARD_USE_CODEC=1</state>
           <state>CODEC_TFA9XXX_ENABLE</state>
@@ -3502,8 +3498,8 @@
           <state>$PROJ_DIR$/../../../../../../components/i2c</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/tfa9xxx</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/tfa9xxx/vas_tfa_drv</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec/port/tfa9xxx</state>
           <state>$PROJ_DIR$/../../../../../../components/codec</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec/port/tfa9xxx</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/debug_console</state>
@@ -4393,16 +4389,16 @@
       </group>
     </group>
     <file>
-      <name>$PROJ_DIR$/../../../../../../components/codec/port/tfa9xxx/fsl_codec_adapter.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../components/codec/port/tfa9xxx/fsl_codec_adapter.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../components/codec/fsl_codec_common.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../components/codec/fsl_codec_common.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/codec/port/tfa9xxx/fsl_codec_adapter.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/codec/port/tfa9xxx/fsl_codec_adapter.h</name>
     </file>
   </group>
   <group>
@@ -4513,6 +4509,9 @@
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_cm33.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/mpu_armv8.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/tz_context.h</name>
     </file>
     <file>
@@ -4535,21 +4534,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_version.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_armv81mml.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_armv8mbl.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_armv8mml.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/mpu_armv7.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/mpu_armv8.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/arm_common_tables.h</name>

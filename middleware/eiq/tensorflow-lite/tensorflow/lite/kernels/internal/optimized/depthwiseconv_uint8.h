@@ -12,14 +12,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================*/
+
+/* File modified by NXP. Changes are described in file
+   /middleware/eiq/tensorflow-lite/readme.txt in section "Release notes" */
+
 #ifndef TENSORFLOW_LITE_KERNELS_INTERNAL_OPTIMIZED_DEPTHWISECONV_UINT8_H_
 #define TENSORFLOW_LITE_KERNELS_INTERNAL_OPTIMIZED_DEPTHWISECONV_UINT8_H_
 
 #include <type_traits>
 
 #include "profiling/instrumentation.h"
-#include "tensorflow/lite/kernels/cpu_backend_context.h"
-#include "tensorflow/lite/kernels/internal/common.h"
+#include "tensorflow/lite/kernels/internal/optimized/cpu_check.h"
 #include "tensorflow/lite/kernels/internal/optimized/depthwiseconv_uint8_3x3_filter.h"
 #include "tensorflow/lite/kernels/internal/reference/depthwiseconv_uint8.h"
 #include "tensorflow/lite/kernels/internal/types.h"
@@ -1527,9 +1530,9 @@ void QuantizedDepthwiseConvAccumRow(int stride, int dilation_factor,
     // The kernel will have to iterate on the segment of the
     // output row that starts at out_x_loop_start and out_x_loop_end.
     const int out_x_loop_start =
-        std::max(out_x_buffer_start, out_x_loop_start_unclampled);
+        ::std::max(out_x_buffer_start, out_x_loop_start_unclampled);
     const int out_x_loop_end =
-        std::min(out_x_buffer_end, out_x_loop_end_unclampled);
+        ::std::min(out_x_buffer_end, out_x_loop_end_unclampled);
 
     int32* acc_buffer_ptr =
         acc_buffer + (out_x_loop_start - out_x_buffer_start) * output_depth;
@@ -1557,10 +1560,10 @@ inline void QuantizedDepthwiseConvAccumRowGeneric(
   gemmlowp::ScopedProfilingLabel label("DepthwiseConvAccumRowGeneric (slow)");
   const uint8* filter_base_ptr = filter_data;
   for (int filter_x = 0; filter_x < filter_width; ++filter_x) {
-    const int out_x_loop_start = std::max(
+    const int out_x_loop_start = ::std::max(
         out_x_buffer_start,
         (pad_width - dilation_factor * filter_x + stride - 1) / stride);
-    const int out_x_loop_end = std::min(
+    const int out_x_loop_end = ::std::min(
         out_x_buffer_end,
         (pad_width + input_width - dilation_factor * filter_x + stride - 1) /
             stride);
@@ -1693,14 +1696,26 @@ inline void DepthwiseConvGeneral(
   const int32 multiplier_power_of_two = shift_left ? (1 << output_shift) : 1;
 #endif
 
-  static const int kAccBufferMaxSize = 2048;
-  int32 acc_buffer[kAccBufferMaxSize];
-  TFLITE_DCHECK_GE(kAccBufferMaxSize, output_depth);
-  const int kOutputPixelsInAccBuffer = kAccBufferMaxSize / output_depth;
-  const int kAccBufferActualSize = kOutputPixelsInAccBuffer * output_depth;
+  // The default Accbuffer size is 2048, will allocate a bigger memory if it's
+  // not enough.
+  // TODO(b/136089667): If output_depth > 2048 happens a lot, we should just use
+  // a scratch tensor.
+  static const int kStackAccBufferSize = 2048;
+  int acc_buffer_size = kStackAccBufferSize;
+  int32 stack_acc_buffer[kStackAccBufferSize];
+  int32* acc_buffer = stack_acc_buffer;
+  ::std::unique_ptr<int32[]> heap_acc_buffer;
+  if (kStackAccBufferSize < output_depth) {
+    heap_acc_buffer.reset(new int32[output_depth]);
+    acc_buffer = heap_acc_buffer.get();
+    acc_buffer_size = output_depth;
+  }
+  const int kOutputPixelsInAccBuffer = acc_buffer_size / output_depth;
+  const int acc_buffer_size_actually_used =
+      kOutputPixelsInAccBuffer * output_depth;
   TFLITE_DCHECK_LE(kOutputPixelsInAccBuffer * output_depth,
-                   kAccBufferActualSize);
-  TFLITE_DCHECK_LE(kAccBufferActualSize, kAccBufferMaxSize);
+                   acc_buffer_size_actually_used);
+  TFLITE_DCHECK_LE(acc_buffer_size_actually_used, acc_buffer_size);
   TFLITE_DCHECK_GE(kOutputPixelsInAccBuffer, 1);
   TFLITE_DCHECK(thread_dim == 0 || thread_dim == 1);
 
@@ -1801,15 +1816,15 @@ inline void DepthwiseConvGeneral(
     for (int out_y = row_start; out_y < row_end; ++out_y) {
       const int in_y_origin = (out_y * stride_height) - pad_height;
       const int filter_y_start =
-          std::max(0, (-in_y_origin + dilation_height_factor - 1) /
+          ::std::max(0, (-in_y_origin + dilation_height_factor - 1) /
                           dilation_height_factor);
       const int filter_y_end =
-          std::min(filter_height,
+          ::std::min(filter_height,
                    (input_height - in_y_origin + dilation_height_factor - 1) /
                        dilation_height_factor);
       for (int out_x_buffer_start = 0; out_x_buffer_start < output_width;
            out_x_buffer_start += kOutputPixelsInAccBuffer) {
-        const int out_x_buffer_end = std::min(
+        const int out_x_buffer_end = ::std::min(
             output_width, out_x_buffer_start + kOutputPixelsInAccBuffer);
         // We call a 'pixel' a group of activation that share all but the
         // 'depth'/'channel' coordinate. num_output_pixels is the number of
@@ -1968,8 +1983,8 @@ inline void DepthwiseConvGeneral(
           acc = MultiplyByQuantizedMultiplier(acc, output_multiplier,
                                               output_shift);
           acc += output_offset;
-          acc = std::max(acc, output_activation_min);
-          acc = std::min(acc, output_activation_max);
+          acc = ::std::max(acc, output_activation_min);
+          acc = ::std::min(acc, output_activation_max);
           *output_ptr++ = static_cast<uint8>(acc);
         }
       }
@@ -1986,8 +2001,8 @@ inline void DepthwiseConvWithRounding(
     const uint8* input_data, const RuntimeShape& filter_shape,
     const uint8* filter_data, const RuntimeShape& bias_shape,
     const int32* bias_data, const RuntimeShape& output_shape,
-    uint8* output_data, CpuBackendContext* cpu_backend_context,
-    int thread_start, int thread_end, int thread_dim) {
+    uint8* output_data, const CpuFlags& cpu_flags, int thread_start,
+    int thread_end, int thread_dim) {
   gemmlowp::ScopedProfilingLabel label("DepthwiseConv/8bit");
   const int depth_multiplier = params.depth_multiplier;
   const int32 output_activation_min = params.quantized_activation_min;
@@ -2008,13 +2023,9 @@ inline void DepthwiseConvWithRounding(
 // Enable for arm64 except for the Nvidia Linux 4 Tegra (L4T) running on
 // Jetson TX-2. This compiler does not support the offsetof() macro.
 #if defined(__aarch64__) && !defined(GOOGLE_L4T)
+#if defined(__ANDROID__) && defined(__clang__)
   // Dispatch to dot-product 3x3 kernels when supported.
-
-  ruy::Context* ruy_context = cpu_backend_context->ruy_context();
-  const bool has_dot_product_instructions =
-      ruy_context != nullptr && (ruy_context->GetRuntimeEnabledPaths() &
-                                 ruy::Path::kNeonDotprod) != ruy::Path::kNone;
-  if (has_dot_product_instructions) {
+  if (cpu_flags.neon_dotprod) {
     using optimized_ops::depthwise_conv::DotProduct3x3KernelType;
     DotProduct3x3KernelType kernel_type =
         optimized_ops::depthwise_conv::CategorizeDotProductKernel(
@@ -2025,11 +2036,13 @@ inline void DepthwiseConvWithRounding(
       optimized_ops::depthwise_conv::DepthwiseConvDotProduct3x3<
           DepthwiseConvImplementation::kUseNeon3x3DotProduct>(
           params, input_shape, input_data, filter_shape, filter_data,
-          bias_shape, bias_data, output_shape, output_data);
+          bias_shape, bias_data, output_shape, output_data, thread_start,
+          thread_end, thread_dim);
       return;
     }
   }
 
+#endif
   // Dispatch to non-dot-product 3x3 kernels when supported.
 
   const int stride_width = params.stride_width;
@@ -2066,20 +2079,13 @@ inline void DepthwiseConvImpl(
     const uint8* input_data, const RuntimeShape& filter_shape,
     const uint8* filter_data, const RuntimeShape& bias_shape,
     const int32* bias_data, const RuntimeShape& output_shape,
-    uint8* output_data, CpuBackendContext* cpu_backend_context,
-    int thread_start, int thread_end, int thread_dim) {
-  return DepthwiseConvWithRounding<DepthwiseConvOutputRounding::kAwayFromZero>(
+    uint8* output_data, const CpuFlags& cpu_flags, int thread_start,
+    int thread_end, int thread_dim) {
+  return DepthwiseConvWithRounding<DepthwiseConvOutputRounding::kUpward>(
       params, input_shape, input_data, filter_shape, filter_data, bias_shape,
-      bias_data, output_shape, output_data, cpu_backend_context, thread_start,
-      thread_end, thread_dim);
+      bias_data, output_shape, output_data, cpu_flags, thread_start, thread_end,
+      thread_dim);
 }
-
-void DepthwiseConv(const DepthwiseParams& params,
-                   const RuntimeShape& input_shape, const uint8* input_data,
-                   const RuntimeShape& filter_shape, const uint8* filter_data,
-                   const RuntimeShape& bias_shape, const int32* bias_data,
-                   const RuntimeShape& output_shape, uint8* output_data,
-                   CpuBackendContext* cpu_backend_context);
 
 }  // namespace optimized_ops
 }  // namespace tflite

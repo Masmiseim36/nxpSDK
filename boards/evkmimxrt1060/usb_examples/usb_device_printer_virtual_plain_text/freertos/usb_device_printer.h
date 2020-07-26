@@ -19,7 +19,7 @@
  ******************************************************************************/
 
 /*! @brief The class code of the printer class */
-#define USB_DEVICE_CONFIG_PRINTER_CLASS_CODE (0x07)
+#define USB_DEVICE_CONFIG_PRINTER_CLASS_CODE (0x07U)
 
 /*! @brief class-specific request GET_DEVICE_ID */
 #define USB_DEVICE_PRINTER_GET_DEVICE_ID (0x00U)
@@ -63,17 +63,17 @@ typedef struct _usb_device_printer_struct
     usb_device_handle deviceHandle;                 /*!< The device handle */
     usb_device_class_config_struct_t *classConfig;  /*!< The configuration of the class. */
     usb_device_interface_struct_t *interfaceHandle; /*!< Current interface handle */
-    uint8_t *bulkInPipeDataBuffer;             /*!< IN pipe data buffer backup when stall */
-    uint32_t bulkInPipeDataLen;                /*!< IN pipe data length backup when stall  */
-    uint8_t *bulkOutPipeDataBuffer;             /*!< OUT pipe data buffer backup when stall */
-    uint32_t bulkOutPipeDataLen;                /*!< OUT pipe data length backup when stall  */
+    uint8_t *bulkInPipeDataBuffer;                  /*!< IN pipe data buffer backup when stall */
+    uint32_t bulkInPipeDataLen;                     /*!< IN pipe data length backup when stall  */
+    uint8_t *bulkOutPipeDataBuffer;                 /*!< OUT pipe data buffer backup when stall */
+    uint32_t bulkOutPipeDataLen;                    /*!< OUT pipe data length backup when stall  */
     uint8_t configuration;                          /*!< Current configuration */
     uint8_t interfaceNumber;                        /*!< Interface number in the device descriptor */
     uint8_t alternate;                              /*!< Interface alternate value */
     uint8_t bulkInBusy;                             /*!< BULK IN pipe busy flag */
     uint8_t bulkOutBusy;                            /*!< BULK OUT pipe busy flag */
-    uint8_t bulkInPipeStall;                    /*!< bulk IN pipe stall flag */
-    uint8_t bulkOutPipeStall;                   /*!< bulk OUT pipe stall flag */
+    uint8_t bulkInPipeStall;                        /*!< bulk IN pipe stall flag */
+    uint8_t bulkOutPipeStall;                       /*!< bulk OUT pipe stall flag */
 } usb_device_printer_struct_t;
 
 /*******************************************************************************
@@ -145,7 +145,7 @@ extern usb_status_t USB_DevicePrinterEvent(void *handle, uint32_t event, void *p
  *
  * @return A USB error code or kStatus_USB_Success.
  *
- * @note The function can only be called in the same context. 
+ * @note The function can only be called in the same context.
  *
  * @note The return value indicates whether the sending request is successful or not.
  * Currently, only one transfer request can be supported for one specific endpoint.
@@ -169,7 +169,7 @@ extern usb_status_t USB_DevicePrinterSend(class_handle_t handle, uint8_t ep, uin
  *
  * @return A USB error code or kStatus_USB_Success.
  *
- * @note The function can only be called in the same context. 
+ * @note The function can only be called in the same context.
  *
  * @note The return value indicates whether the sending request is successful or not.
  * Currently, only one transfer request can be supported for one specific endpoint.

@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -16,8 +16,8 @@
  * Definitions
  ******************************************************************************/
 
-#define SCTIMER_CLK_FREQ CLOCK_GetFreq(kCLOCK_BusClk)
-#define DEMO_FIRST_SCTIMER_OUT kSCTIMER_Out_0
+#define SCTIMER_CLK_FREQ        CLOCK_GetFreq(kCLOCK_BusClk)
+#define DEMO_FIRST_SCTIMER_OUT  kSCTIMER_Out_0
 #define DEMO_SECOND_SCTIMER_OUT kSCTIMER_Out_3
 
 /*******************************************************************************
@@ -76,8 +76,8 @@ int main(void)
         return -1;
     }
 
-    /* Start the timer */
-    SCTIMER_StartTimer(SCT0, kSCTIMER_Counter_L);
+    /* Start the 32-bit unify timer */
+    SCTIMER_StartTimer(SCT0, kSCTIMER_Counter_U);
 
     while (1)
     {

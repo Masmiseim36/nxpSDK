@@ -7,18 +7,22 @@
 *
 ********************************************************************************
 *
+* This software is delivered "as is" and shows the usage of other software 
+* components. It is provided as an example software which is intended to be 
+* modified and extended according to particular requirements.
+* 
+* TARA Systems hereby disclaims all warranties and conditions with regard to the
+* software, including all implied warranties and conditions of merchantability 
+* and non-infringement of any third party IPR or other rights which may result 
+* from the use or the inability to use the software.
+*
 * This file was generated automatically by Embedded Wizard Studio.
 *
 * Please do not make any modifications of this file! The modifications are lost
 * when the file is generated again by Embedded Wizard Studio!
 *
-* The template of this heading text can be found in the file 'head.ewt' in the
-* directory 'Platforms' of your Embedded Wizard installation directory. If you
-* wish to adapt this text, please copy the template file 'head.ewt' into your
-* project directory and edit the copy only. Please avoid any modifications of
-* the original template file!
-*
-* Version  : 9.20
+* Version  : 9.30
+* Date     : 14.02.2020  8:00:50
 * Profile  : iMX_RT
 * Platform : NXP.iMX_RT.RGB565
 *
@@ -34,38 +38,40 @@
 /* Compressed strings for the language 'Default'. */
 static const unsigned int _StringsDefault0[] =
 {
-  0x00000322, /* ratio 49.38 % */
-  0xB8007D00, 0x80000452, 0x00C20021, 0xC4000370, 0x006F0042, 0x400869D0, 0x0032800E,
-  0x034800E6, 0x8A45CF40, 0x8000F118, 0x46CD8003, 0x4E4E6300, 0xA2879934, 0x151389C2,
-  0x91F344A6, 0x1533C50C, 0x40048E13, 0x8D4A6393, 0xC432310E, 0x462191C9, 0x02546287,
-  0xA493A368, 0x06358346, 0x04E00416, 0x0A9CCDE2, 0x9944F649, 0xA243E411, 0x48028F0F,
-  0xD32271CA, 0xAA252EAC, 0x26B3C995, 0x1D1189C5, 0x940ADC4E, 0x768642AB, 0x283D3E74,
-  0xB69520D5, 0x05DE5362, 0x5D615790, 0x9A15758E, 0xA15188B4, 0x8B0E96CD, 0xF8A8E52A,
-  0x368C47A4, 0x4A51DE1D, 0x8742A1D3, 0xDDA22D38, 0xD0EBD3FA, 0x92294693, 0xA7767B55,
-  0x0D049341, 0x9169D15E, 0xADA510A4, 0x9000A249, 0x92446282, 0xE5AB4518, 0x43A19118,
-  0x7F55869A, 0xA97BEA14, 0x299889D2, 0x51F3ACDA, 0x34EB55AE, 0x4AEE32C5, 0xC944E4DD,
-  0x6CE73D38, 0x78231CAC, 0xDA399B8A, 0xE2DCDE0C, 0xB33893F1, 0xD3AEC4E7, 0x001A0038,
-  0x01B00060, 0x92450720, 0x9184891C, 0xE4182E49, 0x4C006C5C, 0x1F495761, 0x739656DD,
-  0x9BD6ED68, 0x247DBF43, 0xD95677DC, 0x48575C87, 0x8510F72D, 0x1D083DCE, 0x08919900,
-  0xC1627500, 0x146016F5, 0x7751A76D, 0xD6957DC3, 0xF58D9F76, 0x9D9A79D1, 0x567CDEB4,
-  0x4716D7B9, 0xE2B859F1, 0xA7E1F686, 0x39FE7F1F, 0x02002004, 0x81A05832, 0x00040606,
-  0x00000000
+  0x00000318, /* ratio 49.49 % */
+  0xB8007B00, 0x80086452, 0x00DC0030, 0xC0109100, 0x1674001B, 0xA0039002, 0x0039800C,
+  0x53D000D2, 0x3C45A251, 0x6000E000, 0x98C01193, 0xE6491192, 0x62308891, 0xD1278444,
+  0xF1232474, 0x2183C4CC, 0x78D4C801, 0x8B432312, 0x546A6D0A, 0x18A19168, 0xE0DA0094,
+  0x00118914, 0x8B031A00, 0xF3587138, 0x3B914226, 0xD8F45E4D, 0xA2C36850, 0x8C6A8E00,
+  0x4B2AF4A8, 0xEA616888, 0xE231299C, 0xB3118643, 0x508AD4FA, 0x4D9C1DA1, 0x4A890801,
+  0x93D82D65, 0x45DC0175, 0x5CE35738, 0x5A292484, 0x25734844, 0x3548A1C3, 0xD1C92E22,
+  0x77864D22, 0x8864CA90, 0x8A4DA190, 0xE4F6B366, 0x5124B41A, 0x96D16289, 0x4D74E9CD,
+  0x29382BD4, 0x363BDC8A, 0x280052E9, 0xF890A400, 0xD045A450, 0x543E3568, 0x612650C8,
+  0xF2811DD4, 0xA23B5DB6, 0xEB348965, 0x954B8474, 0x8AB04CBA, 0x19274AB7, 0xCE4DB211,
+  0xB7231737, 0x66625DE8, 0x2F7F348D, 0xA4BC58A7, 0xAD37EBCD, 0x14FE24E3, 0x36000C00,
+  0x2890E400, 0x8B482352, 0xD4E0B924, 0x414D5148, 0xD1168117, 0xB96DDAA6, 0x6F50C6ED,
+  0x1DD7011D, 0xB719F455, 0x35C95195, 0x687320F4, 0x65C00739, 0x1D20021F, 0xE5B56E58,
+  0x61D94497, 0x5D705DB4, 0x675D959D, 0x1E547561, 0x17A52566, 0xADEC551F, 0x117BD1A5,
+  0x7D21689A, 0xDF97DD50, 0x07F50C7E, 0x0A047FC0, 0x0180E038, 0x00000001, 0x00000000
 };
 
 /* Constant values used in this 'C' module only. */
 static const XPoint _Const0000 = { 0, 0 };
-static const XStringRes _Const0001 = { _StringsDefault0, 0x0003 };
+static const XStringRes _Const0001 = { _StringsDefault0, 0x0002 };
 static const XRect _Const0002 = {{ 0, 0 }, { 0, 0 }};
-static const XStringRes _Const0003 = { _StringsDefault0, 0x0041 };
-static const XStringRes _Const0004 = { _StringsDefault0, 0x0076 };
-static const XStringRes _Const0005 = { _StringsDefault0, 0x00B9 };
-static const XStringRes _Const0006 = { _StringsDefault0, 0x0125 };
+static const XStringRes _Const0003 = { _StringsDefault0, 0x003F };
+static const XStringRes _Const0004 = { _StringsDefault0, 0x0073 };
+static const XStringRes _Const0005 = { _StringsDefault0, 0x00B5 };
+static const XStringRes _Const0006 = { _StringsDefault0, 0x0120 };
 
 /* Initializer for the class 'Graphics::Canvas' */
 void GraphicsCanvas__Init( GraphicsCanvas _this, XObject aLink, XHandle aArg )
 {
   /* At first initialize the super class ... */
   ResourcesBitmap__Init( &_this->_Super, aLink, aArg );
+
+  /* Allow the Immediate Garbage Collection to evalute the members of this class. */
+  _this->_GCT = EW_CLASS_GCT( GraphicsCanvas );
 
   /* Setup the VMT pointer */
   _this->_VMT = EW_CLASS( GraphicsCanvas );
@@ -84,11 +90,11 @@ void GraphicsCanvas__ReInit( GraphicsCanvas _this )
 /* Finalizer method for the class 'Graphics::Canvas' */
 void GraphicsCanvas__Done( GraphicsCanvas _this )
 {
-  /* Finalize this class */
-  _this->_VMT = EW_CLASS( GraphicsCanvas );
-
   /* Call the user defined destructor of the class */
   GraphicsCanvas_Done( _this );
+
+  /* Finalize this class */
+  _this->_Super._VMT = EW_CLASS( ResourcesBitmap );
 
   /* Don't forget to deinitialize the super class ... */
   ResourcesBitmap__Done( &_this->_Super );
@@ -228,7 +234,7 @@ GraphicsCanvas GraphicsCanvas_AttachBitmap( GraphicsCanvas _this, XHandle aBitma
   {
     XBitmap* bmp = (XBitmap*)aBitmap;
 
-    noOfFrames = bmp->NoOfFrames;
+    noOfFrames = bmp->NoOfVirtFrames;
     frameSize  = bmp->FrameSize;
     frameDelay = bmp->FrameDelay;
   }
@@ -631,7 +637,7 @@ EW_END_OF_CLASS_VARIANTS( GraphicsCanvas )
 
 /* Virtual Method Table (VMT) for the class : 'Graphics::Canvas' */
 EW_DEFINE_CLASS( GraphicsCanvas, ResourcesBitmap, OnDraw, OnDraw, InvalidArea, InvalidArea, 
-                 InvalidArea, "Graphics::Canvas" )
+                 InvalidArea, InvalidArea, "Graphics::Canvas" )
   GraphicsCanvas_OnSetFrameSize,
   GraphicsCanvas_Update,
 EW_END_OF_CLASS( GraphicsCanvas )

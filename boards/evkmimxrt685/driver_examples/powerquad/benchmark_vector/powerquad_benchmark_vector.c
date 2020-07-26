@@ -24,37 +24,37 @@
  ******************************************************************************/
 #define DEMO_POWERQUAD POWERQUAD
 #define MATRIX_TEST_LOOP 10000
-#define MATH_TEST_LOOP 100000
-#define FIR_TEST_LOOP 100000
-#define FFT_TEST_LOOP 10000
+#define MATH_TEST_LOOP   100000
+#define FIR_TEST_LOOP    100000
+#define FFT_TEST_LOOP    10000
 #define VECTOR_TEST_LOOP 10000
 #define BIQUAD_TEST_LOOP 10000
 
 #define RFFT_INPUT_LEN 512
 #define CFFT_INPUT_LEN 512
 #define IFFT_INPUT_LEN 512
-#define DCT_INPUT_LEN 512
+#define DCT_INPUT_LEN  512
 
 #define VECTOR_INPUT_LEN 128
 
-#define BIQUAD_CASCADE_STAGE 16
+#define BIQUAD_CASCADE_STAGE    16
 #define BIQUAD_CASCADE_DATA_LEN 128
 
-#define MATRIX_ROW 16
-#define MATRIX_COL 16
-#define MATRIX_LEN (MATRIX_COL * MATRIX_ROW)
+#define MATRIX_ROW     16
+#define MATRIX_COL     16
+#define MATRIX_LEN     (MATRIX_COL * MATRIX_ROW)
 #define FLOAT_2_Q31(x) ((int32_t)((x)*2147483648.0f))
 #define FLOAT_2_Q15(x) (int16_t) __SSAT(((int32_t)((x)*32768.0f)), 16)
 
 #define FIR_INPUT_LEN 16
-#define FIR_TAP_LEN 12
+#define FIR_TAP_LEN   12
 
-#define CONV_A_LEN 5
-#define CONV_B_LEN 5
+#define CONV_A_LEN      5
+#define CONV_B_LEN      5
 #define CONV_RESULT_LEN (CONV_A_LEN + CONV_B_LEN - 1)
 
-#define CORR_A_LEN 5
-#define CORR_B_LEN 5
+#define CORR_A_LEN      5
+#define CORR_B_LEN      5
 #define CORR_RESULT_LEN (CORR_A_LEN + CORR_B_LEN - 1)
 
 #define MATH_PI 3.1415926535898

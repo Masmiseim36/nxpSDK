@@ -14,8 +14,8 @@
  * Definitions
  ******************************************************************************/
 
-#define FLEXSPI_INST FLEXSPI
-#define HAS_WAKEUP_PIN (1)
+#define FLEXSPI_INST                 FLEXSPI
+#define HAS_WAKEUP_PIN               (1)
 #define CCM_CLPCR_BYPASS_LPM_HS_BITS (CCM_CLPCR_BYPASS_LPM_HS0_MASK | CCM_CLPCR_BYPASS_LPM_HS1_MASK)
 
 /*******************************************************************************

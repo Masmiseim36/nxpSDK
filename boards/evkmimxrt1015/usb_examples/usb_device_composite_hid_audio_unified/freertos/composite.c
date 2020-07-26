@@ -43,10 +43,10 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define OVER_SAMPLE_RATE (256U)
-#define BOARD_DEMO_SAI SAI1
-#define DEMO_SAI_IRQ_TX SAI1_IRQn
-#define DEMO_SAI_IRQ_RX SAI1_IRQn
+#define OVER_SAMPLE_RATE   (256U)
+#define BOARD_DEMO_SAI     SAI1
+#define DEMO_SAI_IRQ_TX    SAI1_IRQn
+#define DEMO_SAI_IRQ_RX    SAI1_IRQn
 #define SAI_UserIRQHandler SAI1_IRQHandler
 
 /* Select Audio/Video PLL (786.48 MHz) as sai1 clock source */
@@ -70,18 +70,18 @@
 #define BOARD_DEMO_I2C_FREQ ((CLOCK_GetFreq(kCLOCK_Usb1PllClk) / 8) / (DEMO_LPI2C_CLOCK_SOURCE_DIVIDER + 1U))
 
 /* DMA */
-#define EXAMPLE_DMAMUX DMAMUX
-#define EXAMPLE_DMA DMA0
-#define EXAMPLE_TX_CHANNEL (0U)
-#define EXAMPLE_RX_CHANNEL (1U)
+#define EXAMPLE_DMAMUX        DMAMUX
+#define EXAMPLE_DMA           DMA0
+#define EXAMPLE_TX_CHANNEL    (0U)
+#define EXAMPLE_RX_CHANNEL    (1U)
 #define EXAMPLE_SAI_TX_SOURCE kDmaRequestMuxSai1Tx
 #define EXAMPLE_SAI_RX_SOURCE kDmaRequestMuxSai1Rx
 
-#define BOARD_SW_GPIO BOARD_USER_BUTTON_GPIO
-#define BOARD_SW_GPIO_PIN BOARD_USER_BUTTON_GPIO_PIN
-#define BOARD_SW_IRQ BOARD_USER_BUTTON_IRQ
+#define BOARD_SW_GPIO        BOARD_USER_BUTTON_GPIO
+#define BOARD_SW_GPIO_PIN    BOARD_USER_BUTTON_GPIO_PIN
+#define BOARD_SW_IRQ         BOARD_USER_BUTTON_IRQ
 #define BOARD_SW_IRQ_HANDLER BOARD_USER_BUTTON_IRQ_HANDLER
-#define BOARD_SW_NAME BOARD_USER_BUTTON_NAME
+#define BOARD_SW_NAME        BOARD_USER_BUTTON_NAME
 
 /* demo audio data channel */
 #define DEMO_AUDIO_DATA_CHANNEL (2U)
@@ -206,11 +206,7 @@ void BOARD_SW_IRQ_HANDLER(void)
     GPIO_PortClearInterruptFlags(BOARD_SW_GPIO, 1U << BOARD_SW_GPIO_PIN);
     /* Change state of button. */
     g_ButtonPress = true;
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 void BOARD_USB_AUDIO_KEYBOARD_Init(void)
@@ -459,7 +455,7 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
     {
         case kUSB_DeviceEventBusReset:
         {
-            for(count = 0U; count < USB_DEVICE_INTERFACE_COUNT; count++)
+            for (count = 0U; count < USB_DEVICE_INTERFACE_COUNT; count++)
             {
                 g_composite.currentInterfaceAlternateSetting[count] = 0U;
             }
@@ -628,6 +624,8 @@ void APPInit(void)
 
     USB_DeviceIsrEnable();
 
+    /*Add one delay here to make the DP pull down long enough to allow host to detect the previous disconnection.*/
+    SDK_DelayAtLeastUs(5000, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
     USB_DeviceRun(g_composite.deviceHandle);
 }
 

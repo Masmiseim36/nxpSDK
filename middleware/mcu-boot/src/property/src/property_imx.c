@@ -1,21 +1,22 @@
 /*
- * Copyright 2016-2019 NXP.
+ * Copyright 2016-2020 NXP.
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include <string.h>
-#include "bootloader/bl_context.h"
-#include "bootloader/bl_peripheral.h"
-#include "bootloader/bl_version.h"
+
+#include "bl_context.h"
+#include "bl_peripheral.h"
+#include "bl_version.h"
 #include "bootloader_common.h"
+#include "command_packet.h"
+#include "fsl_assert.h"
 #include "fsl_device_registers.h"
-#include "memory/memory.h"
-#include "packet/command_packet.h"
-#include "packet/serial_packet.h"
-#include "property/property.h"
-#include "utilities/fsl_assert.h"
+#include "memory.h"
+#include "property.h"
+#include "serial_packet.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 // Declarations
@@ -30,8 +31,12 @@
 #ifndef __ROM_START
 #define __ROM_START ((uint32_t)__section_begin(".intvec"))
 #endif
+#if defined(BL_FEATURE_FLASH_SECTOR_SIZE)
+#define __ROM_END (ALIGN_UP(((uint32_t)__section_end("ApplicationFlash")), BL_FEATURE_FLASH_SECTOR_SIZE) - 1U)
+#else
 #define __ROM_END ((uint32_t)__section_end("ApplicationFlash"))
-#elif(defined(__CC_ARM)) || (__ARMCC_VERSION)// MDK
+#endif
+#elif (defined(__CC_ARM)) || (__ARMCC_VERSION) // MDK
 extern uint32_t Image$$VECTOR_ROM$$Base[];
 extern uint32_t Image$$ER_m_text$$Limit[];
 extern char Image$$RW_m_data$$Base[];
@@ -41,8 +46,12 @@ extern uint32_t Image$$ARM_LIB_STACK$$ZI$$Limit[];
 #ifndef __ROM_START
 #define __ROM_START ((uint32_t)Image$$VECTOR_ROM$$Base)
 #endif
+#if defined(BL_FEATURE_FLASH_SECTOR_SIZE)
+#define __ROM_END (ALIGN_UP(((uint32_t)Image$$ER_m_text$$Limit), BL_FEATURE_FLASH_SECTOR_SIZE) - 1U)
+#else
 #define __ROM_END ((uint32_t)Image$$ER_m_text$$Limit)
-#elif(defined(__GNUC__)) // GCC
+#endif
+#elif (defined(__GNUC__)) // GCC
 extern uint32_t __DATA_RAM[];
 extern uint32_t __VECTOR_TABLE[];
 extern char __DATA_END[];
@@ -52,7 +61,11 @@ extern uint32_t __STACK_TOP[];
 #ifndef __ROM_START
 #define __ROM_START ((uint32_t)__VECTOR_TABLE)
 #endif
+#if defined(BL_FEATURE_FLASH_SECTOR_SIZE)
+#define __ROM_END (ALIGN_UP(((uint32_t)__DATA_END), BL_FEATURE_FLASH_SECTOR_SIZE) - 1U)
+#else
 #define __ROM_END ((uint32_t)__DATA_END)
+#endif
 #else
 #error Unknown toolchain!
 #endif // __ICCARM__
@@ -327,7 +340,7 @@ status_t bootloader_property_set_uint32(uint8_t tag, uint32_t value)
     switch (tag)
     {
         case kPropertyTag_VerifyWrites:
-            propertyStore->verifyWrites = (value > 0) ? true: false;
+            propertyStore->verifyWrites = (value > 0) ? true : false;
             break;
         case kPropertyTag_BootloaderVersion:
         case kPropertyTag_AvailablePeripherals:

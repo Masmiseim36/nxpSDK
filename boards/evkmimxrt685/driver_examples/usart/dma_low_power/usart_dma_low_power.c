@@ -19,13 +19,13 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_USART USART0
+#define EXAMPLE_USART          USART0
 #define EXAMPLE_USART_CLK_FREQ CLK_RTC_32K_CLK
-#define USART_RX_DMA_CHANNEL 0
-#define USART_TX_DMA_CHANNEL 1
+#define USART_RX_DMA_CHANNEL   0
+#define USART_TX_DMA_CHANNEL   1
 
 #define EXAMPLE_UART_DMA_BASEADDR DMA0
-#define EXAMPLE_UART_DMA_IRQn DMA0_IRQn
+#define EXAMPLE_UART_DMA_IRQn     DMA0_IRQn
 
 #define EXAMPLE_UART_BAUDRATE (9600U)
 

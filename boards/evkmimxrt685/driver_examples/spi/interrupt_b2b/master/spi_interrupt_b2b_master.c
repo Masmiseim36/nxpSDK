@@ -15,11 +15,11 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_SPI_MASTER SPI5
-#define EXAMPLE_SPI_MASTER_IRQ FLEXCOMM5_IRQn
-#define EXAMPLE_SPI_MASTER_CLK_SRC kCLOCK_Flexcomm5
+#define EXAMPLE_SPI_MASTER          SPI5
+#define EXAMPLE_SPI_MASTER_IRQ      FLEXCOMM5_IRQn
+#define EXAMPLE_SPI_MASTER_CLK_SRC  kCLOCK_Flexcomm5
 #define EXAMPLE_SPI_MASTER_CLK_FREQ CLOCK_GetFlexCommClkFreq(5U)
-#define SPI_MASTER_IRQHandler FLEXCOMM5_IRQHandler
+#define SPI_MASTER_IRQHandler       FLEXCOMM5_IRQHandler
 
 #define EXAMPLE_SPI_SSEL 0
 #define EXAMPLE_SPI_SPOL kSPI_SpolActiveAllLow
@@ -69,11 +69,7 @@ void SPI_MASTER_IRQHandler(void)
         masterFinished = true;
         SPI_DisableInterrupts(EXAMPLE_SPI_MASTER, kSPI_RxLvlIrq);
     }
-    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-      exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 int main(void)

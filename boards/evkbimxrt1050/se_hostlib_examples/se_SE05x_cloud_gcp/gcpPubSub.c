@@ -1,6 +1,6 @@
 /*
 * Copyright 2010-2015 Amazon.com, Inc. or its affiliates. All Rights Reserved.
-* Copyright 2017 NXP. Not a Contribution
+* Copyright 2017,2020 NXP. Not a Contribution
 *
 * Licensed under the Apache License, Version 2.0 (the "License").
 * You may not use this file except in compliance with the License.

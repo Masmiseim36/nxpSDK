@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -23,9 +23,19 @@
  ******************************************************************************/
 /* SAI instance and clock */
 #define DEMO_CODEC_WM8960
-#define DEMO_SAI SAI1
-#define DEMO_SAI_IRQ SAI1_IRQn
-#define SAI_TxIRQHandler SAI1_IRQHandler
+#define DEMO_SAI              SAI1
+#define DEMO_SAI_CHANNEL      (0)
+#define DEMO_SAI_IRQ          SAI1_IRQn
+#define DEMO_SAITxIRQHandler  SAI1_IRQHandler
+#define DEMO_SAI_TX_SYNC_MODE kSAI_ModeAsync
+#define DEMO_SAI_RX_SYNC_MODE kSAI_ModeSync
+#define DEMO_SAI_MCLK_OUTPUT  true
+#define DEMO_SAI_MASTER_SLAVE kSAI_Master
+
+#define DEMO_AUDIO_DATA_CHANNEL (2U)
+#define DEMO_AUDIO_BIT_WIDTH    kSAI_WordWidth16bits
+#define DEMO_AUDIO_SAMPLE_RATE  (kSAI_SampleRate16KHz)
+#define DEMO_AUDIO_MASTER_CLOCK DEMO_SAI_CLK_FREQ
 
 /* Select Audio/Video PLL (786.48 MHz) as sai1 clock source */
 #define DEMO_SAI1_CLOCK_SOURCE_SELECT (2U)
@@ -49,54 +59,32 @@
 #define DEMO_I2C_CLK_FREQ ((CLOCK_GetFreq(kCLOCK_Usb1PllClk) / 8) / (DEMO_LPI2C_CLOCK_SOURCE_DIVIDER + 1U))
 
 /* DMA */
-#define DMAMUX0 DMAMUX
-#define EXAMPLE_DMA DMA0
-#define EXAMPLE_CHANNEL (0U)
-#define EXAMPLE_SAI_TX_SOURCE kDmaRequestMuxSai1Tx
+#define DMAMUX0            DMAMUX
+#define DEMO_DMA           DMA0
+#define DEMO_EDMA_CHANNEL  (0U)
+#define DEMO_SAI_TX_SOURCE kDmaRequestMuxSai1Tx
 
-#define OVER_SAMPLE_RATE (384U)
+#define BOARD_MASTER_CLOCK_CONFIG()
+#define BOARD_SAI_RXCONFIG(config, mode)
 #define BUFFER_SIZE (1600U)
-#define BUFFER_NUM (2U)
-
-/* demo audio sample rate */
-#define DEMO_AUDIO_SAMPLE_RATE (kSAI_SampleRate16KHz)
-/* demo audio master clock */
-#if (defined FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER && FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER) || \
-    (defined FSL_FEATURE_PCC_HAS_SAI_DIVIDER && FSL_FEATURE_PCC_HAS_SAI_DIVIDER)
-#define DEMO_AUDIO_MASTER_CLOCK OVER_SAMPLE_RATE *DEMO_AUDIO_SAMPLE_RATE
-#else
-#define DEMO_AUDIO_MASTER_CLOCK DEMO_SAI_CLK_FREQ
-#endif
-/* demo audio data channel */
-#define DEMO_AUDIO_DATA_CHANNEL (2U)
-/* demo audio bitwidth */
-#define DEMO_AUDIO_BIT_WIDTH kSAI_WordWidth16bits
+#define BUFFER_NUM  (2U)
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
 static void callback(I2S_Type *base, sai_edma_handle_t *handle, status_t status, void *userData);
+extern void BOARD_SAI_RXConfig(sai_transceiver_t *config, sai_sync_mode_t sync);
 
 /*******************************************************************************
  * Variables
  ******************************************************************************/
 AT_NONCACHEABLE_SECTION_INIT(sai_edma_handle_t txHandle) = {0};
-edma_handle_t dmaHandle                                  = {0};
+edma_handle_t g_dmaHandle                                = {0};
 extern codec_config_t boardCodecConfig;
 AT_NONCACHEABLE_SECTION_ALIGN(static uint8_t buffer[BUFFER_NUM * BUFFER_SIZE], 4);
 volatile bool isFinished      = false;
 volatile uint32_t finishIndex = 0U;
 volatile uint32_t emptyBlock  = BUFFER_NUM;
-#if (defined(FSL_FEATURE_SAI_HAS_MCR) && (FSL_FEATURE_SAI_HAS_MCR)) || \
-    (defined(FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER) && (FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER))
-sai_master_clock_t mclkConfig = {
-#if defined(FSL_FEATURE_SAI_HAS_MCR) && (FSL_FEATURE_SAI_HAS_MCR)
-    .mclkOutputEnable = true,
-#if !(defined(FSL_FEATURE_SAI_HAS_NO_MCR_MICS) && (FSL_FEATURE_SAI_HAS_NO_MCR_MICS))
-    .mclkSource = kSAI_MclkSourceSysclk,
-#endif
-#endif
-};
-#endif
+
 codec_handle_t codecHandle;
 /*******************************************************************************
  * Code
@@ -181,6 +169,11 @@ int main(void)
     /*Enable MCLK clock*/
     BOARD_EnableSaiMclkOutput(true);
 
+    /* Init DMAMUX */
+    DMAMUX_Init(DMAMUX0);
+    DMAMUX_SetSource(DMAMUX0, DEMO_EDMA_CHANNEL, DEMO_SAI_TX_SOURCE);
+    DMAMUX_EnableChannel(DMAMUX0, DEMO_EDMA_CHANNEL);
+
     PRINTF("SAI example started!\n\r");
 
     /* Create EDMA handle */
@@ -191,37 +184,30 @@ int main(void)
      * dmaConfig.enableDebugMode = false;
      */
     EDMA_GetDefaultConfig(&dmaConfig);
-    EDMA_Init(EXAMPLE_DMA, &dmaConfig);
-    EDMA_CreateHandle(&dmaHandle, EXAMPLE_DMA, EXAMPLE_CHANNEL);
-
-#if defined(FSL_FEATURE_SOC_DMAMUX_COUNT) && FSL_FEATURE_SOC_DMAMUX_COUNT
-    DMAMUX_Init(DMAMUX0);
-    DMAMUX_SetSource(DMAMUX0, EXAMPLE_CHANNEL, EXAMPLE_SAI_TX_SOURCE);
-    DMAMUX_EnableChannel(DMAMUX0, EXAMPLE_CHANNEL);
+    EDMA_Init(DEMO_DMA, &dmaConfig);
+    EDMA_CreateHandle(&g_dmaHandle, DEMO_DMA, DEMO_EDMA_CHANNEL);
+#if defined(FSL_FEATURE_EDMA_HAS_CHANNEL_MUX) && FSL_FEATURE_EDMA_HAS_CHANNEL_MUX
+    EDMA_SetChannelMux(DEMO_DMA, DEMO_EDMA_CHANNEL, DEMO_SAI_EDMA_CHANNEL);
 #endif
 
     /* SAI init */
     SAI_Init(DEMO_SAI);
 
-    SAI_TransferTxCreateHandleEDMA(DEMO_SAI, &txHandle, callback, NULL, &dmaHandle);
+    SAI_TransferTxCreateHandleEDMA(DEMO_SAI, &txHandle, callback, NULL, &g_dmaHandle);
 
     /* I2S mode configurations */
-    SAI_GetClassicI2SConfig(&config, DEMO_AUDIO_BIT_WIDTH, kSAI_Stereo, kSAI_Channel0Mask);
+    SAI_GetClassicI2SConfig(&config, DEMO_AUDIO_BIT_WIDTH, kSAI_Stereo, 1U << DEMO_SAI_CHANNEL);
+    config.syncMode    = DEMO_SAI_TX_SYNC_MODE;
+    config.masterSlave = DEMO_SAI_MASTER_SLAVE;
     SAI_TransferTxSetConfigEDMA(DEMO_SAI, &txHandle, &config);
-
     /* set bit clock divider */
     SAI_TxSetBitClockRate(DEMO_SAI, DEMO_AUDIO_MASTER_CLOCK, DEMO_AUDIO_SAMPLE_RATE, DEMO_AUDIO_BIT_WIDTH,
                           DEMO_AUDIO_DATA_CHANNEL);
 
-/* master clock configurations */
-#if (defined(FSL_FEATURE_SAI_HAS_MCR) && (FSL_FEATURE_SAI_HAS_MCR)) || \
-    (defined(FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER) && (FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER))
-#if defined(FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER) && (FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER)
-    mclkConfig.mclkHz          = DEMO_AUDIO_MASTER_CLOCK;
-    mclkConfig.mclkSourceClkHz = DEMO_SAI_CLK_FREQ;
-#endif
-    SAI_SetMasterClockConfig(DEMO_SAI, &mclkConfig);
-#endif
+    /* sai rx configurations */
+    BOARD_SAI_RXCONFIG(&config, DEMO_SAI_RX_SYNC_MODE);
+    /* master clock configurations */
+    BOARD_MASTER_CLOCK_CONFIG();
 
     /* Use default setting to init codec */
     CODEC_Init(&codecHandle, &boardCodecConfig);
@@ -265,18 +251,14 @@ int main(void)
     }
 }
 
-#if defined(SAI_ErrorIRQHandler)
-void SAI_ErrorIRQHandler(void)
+#if defined(DEMO_SAITxIRQHandler)
+void DEMO_SAITxIRQHandler(void)
 {
     /* Clear the FIFO error flag */
     SAI_TxClearStatusFlags(DEMO_SAI, kSAI_FIFOErrorFlag);
 
     /* Reset FIFO */
     SAI_TxSoftwareReset(DEMO_SAI, kSAI_ResetTypeFIFO);
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 #endif

@@ -10,8 +10,8 @@
 #define _USB_DEVICE_CONFIG_H_
 
 /*******************************************************************************
-* Definitions
-******************************************************************************/
+ * Definitions
+ ******************************************************************************/
 /*!
  * @addtogroup usb_device_configuration
  * @{
@@ -73,6 +73,11 @@
 #define USB_DEVICE_CONFIG_DFU (0U)
 
 /* @} */
+
+/*! @brief Whether device supports USB Audio class 2.0. 1U supported, 0U not supported */
+#if USB_DEVICE_CONFIG_AUDIO
+#define USB_DEVICE_CONFIG_AUDIO_CLASS_2_0 (1U)
+#endif
 
 /*! @brief Whether device is self power. 1U supported, 0U not supported */
 #define USB_DEVICE_CONFIG_SELF_POWER (1U)

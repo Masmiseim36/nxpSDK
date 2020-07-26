@@ -59,12 +59,12 @@ typedef struct _usb_host_hid_generic_instance
  ******************************************************************************/
 
 /*!
-* @brief host hid generic task function.
-*
-* This function implements the host hid generic action, it is used to create task.
-*
-* @param param   the host hid generic instance pointer.
-*/
+ * @brief host hid generic task function.
+ *
+ * This function implements the host hid generic action, it is used to create task.
+ *
+ * @param param   the host hid generic instance pointer.
+ */
 extern void USB_HostHidGenericTask(void *param);
 
 /*!

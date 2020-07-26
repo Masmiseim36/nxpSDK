@@ -39,7 +39,7 @@
  * and the Message Buffers are limited corresponding to each payload configuration:
  */
 #define DWORD_IN_MB (16)
-#define DLC (15)
+#define DLC         (15)
 #define BYTES_IN_MB kFLEXCAN_64BperMB
 
 #define EXAMPLE_CAN_CLK_SOURCE (kFLEXCAN_ClkSrc1)

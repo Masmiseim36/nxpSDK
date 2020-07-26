@@ -78,6 +78,7 @@ extern XA_ERRORCODE xa_hotword_decoder(xa_codec_handle_t, WORD32, WORD32, pVOID)
 extern XA_ERRORCODE xa_aac_decoder(xa_codec_handle_t, WORD32, WORD32, pVOID);
 extern XA_ERRORCODE xa_mixer(xa_codec_handle_t, WORD32, WORD32, pVOID);
 extern XA_ERRORCODE xa_pcm_gain(xa_codec_handle_t, WORD32, WORD32, pVOID);
+extern XA_ERRORCODE xa_client_proxy(xa_codec_handle_t, WORD32, WORD32, pVOID);
 extern XA_ERRORCODE xa_mp3_encoder(xa_codec_handle_t, WORD32, WORD32, pVOID);
 extern XA_ERRORCODE xa_amr_wb_decoder(xa_codec_handle_t, WORD32, WORD32, pVOID);
 extern XA_ERRORCODE xa_src_pp_fx(xa_codec_handle_t, WORD32, WORD32, pVOID);
@@ -91,6 +92,8 @@ extern XA_ERRORCODE xa_pcm_split(xa_codec_handle_t, WORD32, WORD32, pVOID);
 extern XA_ERRORCODE xa_pcm_mix(xa_codec_handle_t, WORD32, WORD32, pVOID);
 extern XA_ERRORCODE xa_opus_encoder(xa_codec_handle_t, WORD32, WORD32, pVOID);
 extern XA_ERRORCODE xa_opus_decoder(xa_codec_handle_t, WORD32, WORD32, pVOID);
+extern XA_ERRORCODE xa_sbc_encoder(xa_codec_handle_t, WORD32, WORD32, pVOID);
+extern XA_ERRORCODE xa_sbc_decoder(xa_codec_handle_t, WORD32, WORD32, pVOID);
 
 /* ...component class factories */
 extern void * xa_audio_codec_factory(UWORD32 core, xa_codec_func_t process, xaf_comp_type comp_type);
@@ -133,6 +136,9 @@ static const xf_component_id_t xf_component_id[] =
 #if XA_PCM_GAIN
     { "post-proc/pcm_gain",      xa_audio_codec_factory,     xa_pcm_gain },
 #endif
+#if XA_CLIENT_PROXY
+    { "post-proc/client_proxy",      xa_audio_codec_factory,     xa_client_proxy },
+#endif
 #if XA_MP3_ENCODER
     { "audio-encoder/mp3",       xa_audio_codec_factory,     xa_mp3_encoder },
 #endif
@@ -172,6 +178,12 @@ static const xf_component_id_t xf_component_id[] =
 #endif
 #if XA_OPUS_DECODER
     { "audio-decoder/opus",       xa_audio_codec_factory,     xa_opus_decoder},
+#endif
+#if XA_SBC_ENCODER
+    { "audio-encoder/sbc",       xa_audio_codec_factory,     xa_sbc_encoder},
+#endif
+#if XA_SBC_DECODER
+    { "audio-decoder/sbc",       xa_audio_codec_factory,     xa_sbc_decoder},
 #endif
 };
 

@@ -828,7 +828,9 @@ BaseType_t TLS_Connect( void * pvContext )
             pex_sss_demo_tls_ctx->pHost_ks = &pex_sss_demo_boot_ctx->host_ks;
             xResult = sss_mbedtls_associate_ecdhctx(pxCtx->xMbedSslCtx.handshake, &pex_sss_demo_tls_ctx->obj, pex_sss_demo_tls_ctx->pHost_ks);
 #endif  /*SSS_HAVE_ALT_SSS*/
-
+#if SSS_HAVE_ALT_A71CH
+            xResult = ax_mbedtls_associate_ecdhctx(clientcredentialCLIENT_PRIVATE_KEY_PEM[0], pxCtx->xMbedSslCtx.handshake );
+#endif /* SSS_HAVE_ALT_A71CH */
     }
 
 

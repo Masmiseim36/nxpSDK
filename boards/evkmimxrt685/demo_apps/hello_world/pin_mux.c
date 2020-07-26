@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP
+ * Copyright 2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -18,6 +18,7 @@ processor: MIMXRT685S
 package_id: MIMXRT685SFVKB
 mcu_data: ksdk2_0
 processor_version: 0.0.3
+board: MIMXRT685-EVK
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
@@ -47,8 +48,8 @@ BOARD_InitPins:
     pupdsel: pullDown, ibena: enabled, slew_rate: normal, drive: normal, amena: disabled, odena: disabled, iiena: disabled}
   - {pin_num: G2, peripheral: FLEXCOMM0, signal: TXD_SCL_MISO_WS, pin_signal: PIO0_1/FC0_TXD_SCL_MISO_WS/CTIMER0_MAT1/I2S_BRIDGE_WS_IN/SEC_PIO0_1, pupdena: disabled,
     pupdsel: pullDown, ibena: disabled, slew_rate: normal, drive: normal, amena: disabled, odena: disabled, iiena: disabled}
-  - {pin_num: L16, peripheral: SWD, signal: SWO, pin_signal: PIO2_24/SWO/GPIO_INT_BMAT, pupdena: disabled, pupdsel: pullDown, ibena: disabled, slew_rate: normal,
-    drive: normal, amena: disabled, odena: disabled, iiena: disabled}
+  - {pin_num: L16, peripheral: SWD, signal: SWO, pin_signal: PIO2_24/SWO/GPIO_INT_BMAT, pupdena: enabled, pupdsel: pullUp, ibena: disabled, slew_rate: normal, drive: normal,
+    amena: disabled, odena: disabled, iiena: disabled}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
@@ -107,10 +108,10 @@ void BOARD_InitPins(void)
 
     const uint32_t port2_pin24_config = (/* Pin is configured as SWO */
                                          IOPCTL_PIO_FUNC1 |
-                                         /* Disable pull-up / pull-down function */
-                                         IOPCTL_PIO_PUPD_DI |
-                                         /* Enable pull-down function */
-                                         IOPCTL_PIO_PULLDOWN_EN |
+                                         /* Enable pull-up / pull-down function */
+                                         IOPCTL_PIO_PUPD_EN |
+                                         /* Enable pull-up function */
+                                         IOPCTL_PIO_PULLUP_EN |
                                          /* Disable input buffer function */
                                          IOPCTL_PIO_INBUF_DI |
                                          /* Normal mode */

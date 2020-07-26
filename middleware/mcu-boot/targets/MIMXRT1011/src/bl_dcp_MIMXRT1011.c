@@ -4,10 +4,10 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-#include "fsl_device_registers.h"
 #include <stdint.h>
-#include "dcp/fsl_dcp.h"
 #include <string.h>
+#include "bl_dcp.h"
+#include "fsl_device_registers.h"
 
 #define DCP_CTRL0_INTRRUPT_SHIFT 0
 #define DCP_CTRL0_INTRRUPT_MASK (1 << DCP_CTRL0_INTRRUPT_SHIFT)

@@ -19,6 +19,7 @@
 #include "lwip/dhcp.h"
 #include "lwip/prot/dhcp.h"
 #include "netif/ethernet.h"
+#include "lwip/netifapi.h"
 
 /*******************************************************************************
  * Definitions
@@ -81,14 +82,14 @@ void add_wlan_interface(void)
     IP4_ADDR(&fsl_netif0_netmask, 0, 0, 0, 0);
     IP4_ADDR(&fsl_netif0_gw, 0, 0, 0, 0);
 
-    netif_add(&fsl_netif0, &fsl_netif0_ipaddr, &fsl_netif0_netmask, &fsl_netif0_gw, (void *)WWD_STA_INTERFACE,
+    netifapi_netif_add(&fsl_netif0, &fsl_netif0_ipaddr, &fsl_netif0_netmask, &fsl_netif0_gw, (void *)WWD_STA_INTERFACE,
               wlanif_init, tcpip_input);
 
-    netif_set_default(&fsl_netif0);
-    netif_set_up(&fsl_netif0);
+    netifapi_netif_set_default(&fsl_netif0);
+    netifapi_netif_set_up(&fsl_netif0);
 
     PRINTF("Getting IP address from DHCP server\r\n");
-    dhcp_start(&fsl_netif0);
+    netifapi_dhcp_start(&fsl_netif0);
     pdhcp = (struct dhcp *)netif_get_client_data(&fsl_netif0, LWIP_NETIF_CLIENT_DATA_INDEX_DHCP);
     while (pdhcp->state != DHCP_STATE_BOUND)
     {

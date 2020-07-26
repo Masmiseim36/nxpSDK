@@ -13,11 +13,11 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v7.0
+product: Pins v6.0
 processor: MIMXRT1021xxxxx
 package_id: MIMXRT1021DAG5A
 mcu_data: ksdk2_0
-processor_version: 0.7.8
+processor_version: 6.0.1
 board: MIMXRT1020-EVK
 power_domains: {NVCC_GPIO: '3.3'}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
@@ -44,9 +44,9 @@ BOARD_InitPins:
 - pin_list:
   - {pin_num: '101', peripheral: LPUART1, signal: RX, pin_signal: GPIO_AD_B0_07, hysteresis_enable: Disable}
   - {pin_num: '105', peripheral: LPUART1, signal: TX, pin_signal: GPIO_AD_B0_06, hysteresis_enable: Disable}
-  - {pin_num: '97', peripheral: LPSPI1, signal: PCS0, pin_signal: GPIO_AD_B0_11, hysteresis_enable: Disable}
-  - {pin_num: '98', peripheral: LPSPI1, signal: SCK, pin_signal: GPIO_AD_B0_10, hysteresis_enable: Disable}
-  - {pin_num: '96', peripheral: LPSPI1, signal: SDO, pin_signal: GPIO_AD_B0_12, software_input_on: Enable, hysteresis_enable: Disable}
+  - {pin_num: '97', peripheral: LPSPI1, signal: PCS0, pin_signal: GPIO_AD_B0_11}
+  - {pin_num: '98', peripheral: LPSPI1, signal: SCK, pin_signal: GPIO_AD_B0_10}
+  - {pin_num: '96', peripheral: LPSPI1, signal: SDO, pin_signal: GPIO_AD_B0_12, software_input_on: Enable}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 

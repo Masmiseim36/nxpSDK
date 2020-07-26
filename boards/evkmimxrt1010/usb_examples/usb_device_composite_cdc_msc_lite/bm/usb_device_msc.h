@@ -11,8 +11,8 @@
 
 #include "usb_device_msc_ufi.h"
 /*******************************************************************************
-* Definitions
-******************************************************************************/
+ * Definitions
+ ******************************************************************************/
 #define USB_DEVICE_CONFIG_MSC_MAX_INSTANCE (1U)
 /*! @brief prevent media removal flag */
 #define USB_DEVICE_CONFIG_MSC_SUPPORT_DISK_LOCKING_MECHANISM (0U)
@@ -190,12 +190,12 @@ typedef struct _usb_device_msc_struct
     uint8_t alternate;         /*!< Current alternate setting of the interface */
     uint8_t configuration;     /*!< Current configuration */
     uint8_t interfaceNumber;   /*!< The interface number of the class */
-    uint8_t inEndpointCswCancelFlag;/*!< the state when calcel function happens, and need send the csw after cancel*/
+    uint8_t inEndpointCswCancelFlag; /*!< the state when calcel function happens, and need send the csw after cancel*/
 } usb_device_msc_struct_t;
 
 /*******************************************************************************
-* API
-******************************************************************************/
+ * API
+ ******************************************************************************/
 #ifdef __cplusplus
 extern "C" {
 #endif

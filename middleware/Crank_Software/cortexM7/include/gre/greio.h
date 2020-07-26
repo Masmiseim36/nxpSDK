@@ -71,12 +71,25 @@ typedef struct _gre_io_error {
 	int32_t		sys_code;			//system errno
 } gre_io_error_t;
 
+/*
+ * GREIO Implementations must not have the following symbols defined when configured for GREIO_MULTI
+ * gre_io_open
+ * gre_io_close
+ * gre_io_send
+ * gre_io_receive
+ * gre_io_grow_buffer
+ * gre_io_max_message
+ * gre_io_get_error_codes
+ * gre_io_get_error_message
+ */
+#if !defined(GREIO_MULTI) || !GREIO_MULTI
+
 /**
  * Open an IO connection using a named connection.
  *
  * @param io_name The name of the io-channel to use
  * @param flag The mode you want to open the queue in
- * @return handle to greio channel
+ * @return handle to greio channel or NULL on failure.
  */
 gre_io_t *gre_io_open(const char *io_name, int flag, ...);
 
@@ -86,7 +99,7 @@ gre_io_t *gre_io_open(const char *io_name, int flag, ...);
  * with an error on their action.
  * @param handle A valid handle created with gre_io_open()
  */
-void      gre_io_close(gre_io_t *handle);
+void gre_io_close(gre_io_t *handle);
 
 /**
  * Send a serialized buffer to the handle.
@@ -104,9 +117,46 @@ int gre_io_send(gre_io_t *handle, gre_io_serialized_data_t *buffer);
  * @param buffer A pointer to a serialized buffer pointer.  If the
  *  buffer is NULL then a new buffer is allocated otherwise the buffer
  *  provided is used to store the received event.
- * @return The size of the message received or -1 on failure.
+ * @return The size of the message received or -1 on failure
  */
 int gre_io_receive(gre_io_t *handle, gre_io_serialized_data_t **buffer);
+
+/**
+ * Set the max message size that may be sent over an IO channel to match the size specified by the provided serialized buffer.
+ * This is not available on all greio implementations and will fail by returning -1 if it is not supported.
+ *
+ * @param handle A valid handle created with gre_io_open()
+ * @param buffer A data buffer
+ * @return -1 on failure anything else is success
+ */
+int gre_io_grow_buffer(gre_io_t *handle, gre_io_serialized_data_t *buffer);
+
+/**
+ * Get the maximum size of a message that may be sent over IO channel.
+ *
+ * @param handle A valid handle created with gre_io_open()
+ * @return -1 on error, success the size in bytes
+ */
+int gre_io_max_message(gre_io_t *handle);
+
+/**
+ * Get the error codes if greio experiences an error.
+ *
+ * @param handle A valid handle created with gre_io_open()
+ * @param errorcodes A valid gre_io_error_t structure to be filled out
+*/
+void gre_io_get_error_codes(gre_io_t *handle, gre_io_error_t *errorcodes);
+
+/**
+ * Get the error message for an error code returned by a call to gre_io_get_error_codes.
+ *
+ * @param errorcodes A valid gre_io_error_t structure containing the errors returned 
+ *  from a call to gre_io_get_error_codes
+ * @return The error message
+*/
+const char * gre_io_get_error_message(gre_io_error_t *errorcodes);
+
+#endif /* !GREIO_MULTI */
 
 /**
  * This creates a data buffer to hold the serialized event data required
@@ -206,40 +256,6 @@ int gre_io_add_mdata(gre_io_serialized_data_t **mbuffer,
 int gre_io_send_mdata(gre_io_t *handle, gre_io_serialized_data_t *md_buffer);
 
 /**
- * Grow serialized buffer.
- *
- * @param handle A valid handle created with gre_io_open()
- * @param buffer A data buffer
- * @return -1 on failure anything else is success
- */
-int gre_io_grow_buffer(gre_io_t *handle, gre_io_serialized_data_t *buffer);
-
-/**
- * Get the maximum size of a message sent over IO channel
- *
- * @param handle A valid handle created with gre_io_open()
- * @return -1 on error, success the size in bytes
- */
-int gre_io_max_message(gre_io_t *handle);
-
-/**
- * Get the error codes if greio experiences an error.
- *
- * @param handle A valid handle created with gre_io_open()
- * @param errorcodes A valid gre_io_error_t structure to be filled out
-*/
-void gre_io_get_error_codes(gre_io_t *handle, gre_io_error_t *errorcodes);
-
-/**
- * Get the error message for an error code returned by a call to gre_io_get_error_codes
- *
- * @param errorcodes A valid gre_io_error_t structure containing the errors returned 
- *  from a call to gre_io_get_error_codes
- * @return The error message
-*/
-const char * gre_io_get_error_message(gre_io_error_t *errorcodes);
-
-/**
  * Event Data Conversion Routines.
  */
 
@@ -280,7 +296,6 @@ char * greio_string_to_event_data(char *data_string, void **event_data, int *eve
  * @return An allocated string parsable via greio_string_to_event_data or NULL on failure
  */
 char * greio_event_data_to_string(char *event_format, void *event_data, int event_data_nbytes);
-
 
 #ifdef __cplusplus
 }

@@ -43,3 +43,4 @@ typedef struct _gr_atlas_entry_data {
 } gr_atlas_entry_data_t; 
 
 #endif /* IMAGE_ATLAS_STRUCTURES_H */
+

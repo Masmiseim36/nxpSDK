@@ -1,4 +1,4 @@
-$version 6.60
+$version 9.30
 
 $rect <490,50,690,90>
 $output false
@@ -18,9 +18,10 @@ $output false
 resource Resources::Bitmap Bricks
 {
   attr bitmapfile FileName = .\Res\Bricks.png;
-  attr alphafile AlphaName;
   attr framesize FrameSize = <60,24>;
   attr framedelay FrameDelay;
+  attr bitmapformat Format = Native;
+  attr bitmapdithering Dithering = Auto;
 }
 
 // Resources
@@ -1047,9 +1048,10 @@ $output false
 resource Resources::Bitmap Paddle
 {
   attr bitmapfile FileName = .\Res\Paddle.png;
-  attr alphafile AlphaName;
   attr framesize FrameSize;
   attr framedelay FrameDelay;
+  attr bitmapformat Format = Native;
+  attr bitmapdithering Dithering = Auto;
 }
 
 $rect <490,210,690,250>
@@ -1057,9 +1059,10 @@ $output false
 resource Resources::Bitmap Ball
 {
   attr bitmapfile FileName = .\Res\Ball.png;
-  attr alphafile AlphaName;
   attr framesize FrameSize;
   attr framedelay FrameDelay;
+  attr bitmapformat Format = Native;
+  attr bitmapdithering Dithering = Auto;
 }
 
 $rect <40,290,240,330>
@@ -1194,9 +1197,10 @@ $output false
 resource Resources::Bitmap Landscape
 {
   attr bitmapfile FileName = .\Res\Landscape.png;
-  attr alphafile AlphaName;
   attr framesize FrameSize;
   attr framedelay FrameDelay;
+  attr bitmapformat Format = Native;
+  attr bitmapdithering Dithering = Auto;
 }
 
 $rect <490,290,690,330>
@@ -1204,9 +1208,10 @@ $output false
 resource Resources::Bitmap Stars
 {
   attr bitmapfile FileName = .\Res\Stars.png;
-  attr alphafile AlphaName;
   attr framesize FrameSize;
   attr framedelay FrameDelay;
+  attr bitmapformat Format = RGB565;
+  attr bitmapdithering Dithering = Auto;
 }
 
 // The class 'LcdDisplay' implements a digital display for showing system values.
@@ -1498,10 +1503,11 @@ $rect <490,90,690,130>
 $output false
 resource Resources::Bitmap LcdNumbers
 {
-  attr bitmapfile FileName;
-  attr alphafile AlphaName = .\Res\LcdNumbers.png;
+  attr bitmapfile FileName = .\Res\LcdNumbers.png;
   attr framesize FrameSize = <17,24>;
   attr framedelay FrameDelay;
+  attr bitmapformat Format = Alpha8;
+  attr bitmapdithering Dithering = Auto;
 }
 
 // Data storage

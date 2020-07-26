@@ -228,11 +228,11 @@ static void USB_DeviceApplicationInit(void)
 #endif /* FSL_FEATURE_SOC_SYSMPU_COUNT */
 
     /* Set HID mouse to default state */
-    g_UsbDeviceHidMouse.speed = USB_SPEED_FULL;
-    g_UsbDeviceHidMouse.attach = 0U;
-    g_UsbDeviceHidMouse.hidHandle = (class_handle_t)NULL;
+    g_UsbDeviceHidMouse.speed        = USB_SPEED_FULL;
+    g_UsbDeviceHidMouse.attach       = 0U;
+    g_UsbDeviceHidMouse.hidHandle    = (class_handle_t)NULL;
     g_UsbDeviceHidMouse.deviceHandle = NULL;
-    g_UsbDeviceHidMouse.buffer = s_MouseBuffer;
+    g_UsbDeviceHidMouse.buffer       = s_MouseBuffer;
 
     /* Initialize the usb stack and class drivers */
     if (kStatus_USB_Success !=
@@ -250,6 +250,8 @@ static void USB_DeviceApplicationInit(void)
     USB_DeviceIsrEnable();
 
     /* Start USB device HID mouse */
+    /*Add one delay here to make the DP pull down long enough to allow host to detect the previous disconnection.*/
+    SDK_DelayAtLeastUs(5000, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
     USB_DeviceRun(g_UsbDeviceHidMouse.deviceHandle);
 }
 

@@ -30,13 +30,18 @@ static host_semaphore_type_t num_scan_results_semaphore;
 static wiced_scan_result_t result_buff[CIRCULAR_RESULT_BUFF_SIZE];
 static uint16_t result_buff_write_pos = 0;
 static uint16_t result_buff_read_pos = 0;
-
+#ifdef SAVE_SSIDS
+static char scanned_ssids[320] = {'\0'};
+#endif
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
 void print_records();
 wwd_result_t test_scan();
 void print_record(wiced_scan_result_t *record, int record_number);
+#ifdef SAVE_SSIDS
+char* get_saved_ssids();
+#endif
 
 /*******************************************************************************
  * Code
@@ -86,11 +91,11 @@ wwd_result_t test_scan()
 {
     wwd_result_t result;
     static wiced_scan_result_t *result_ptr = (wiced_scan_result_t *)&result_buff;
-    PRINTF("Scanning available networks...\n");
+    PRINTF("Scanning available networks...\r\n");
 
     if (host_rtos_init_binary_semaphore(&num_scan_results_semaphore) != WWD_SUCCESS)
     {
-        PRINTF("Error initializing scan complete semaphore\n");
+        PRINTF("Error initializing scan complete semaphore\r\n");
     }
 
     memset(bssid_list, 0, sizeof(bssid_list));
@@ -116,35 +121,46 @@ void print_record(wiced_scan_result_t *record, int record_number)
     int k;
 
     /* Print SSID */
-    PRINTF("\n#%03d SSID          : ", record_number);
+    PRINTF("\r\n#%03d SSID          : ", record_number);
     for (k = 0; k < (int)record->SSID.length; k++)
     {
         PRINTF("%c", (char)record->SSID.value[k]);
+
     }
-    PRINTF("\n");
+#ifdef SAVE_SSIDS
+    if((strlen(scanned_ssids) + record->SSID.length) >= sizeof(scanned_ssids)-1){
+            PRINTF("[!] Cannot save another ssid!\r\n");
+            __BKPT(0);
+    } else {
+        strcat(scanned_ssids, record->SSID.value);
+        scanned_ssids[strlen(scanned_ssids)] = ';';
+        scanned_ssids[strlen(scanned_ssids)+1] = '\0';
+    }    
+#endif
+    PRINTF("\r\n");
 
     wiced_assert("error",
                  (record->bss_type == WICED_BSS_TYPE_INFRASTRUCTURE) || (record->bss_type == WICED_BSS_TYPE_ADHOC));
 
     /* Print other network characteristics */
-    PRINTF("     BSSID         : %02X:%02X:%02X:%02X:%02X:%02X\n", (unsigned int)record->BSSID.octet[0],
+    PRINTF("     BSSID         : %02X:%02X:%02X:%02X:%02X:%02X\r\n", (unsigned int)record->BSSID.octet[0],
            (unsigned int)record->BSSID.octet[1], (unsigned int)record->BSSID.octet[2],
            (unsigned int)record->BSSID.octet[3], (unsigned int)record->BSSID.octet[4],
            (unsigned int)record->BSSID.octet[5]);
     PRINTF("     RSSI          : %ddBm", (int)record->signal_strength);
     if (record->flags & WICED_SCAN_RESULT_FLAG_RSSI_OFF_CHANNEL)
     {
-        PRINTF(" (off-channel)\n");
+        PRINTF(" (off-channel)\r\n");
     }
     else
     {
-        PRINTF("\n");
+        PRINTF("\r\n");
     }
-    PRINTF("     Max Data Rate : %d Mbits/s\n", record->max_data_rate / 1000);
-    PRINTF("     Network Type  : %s\n", (record->bss_type == WICED_BSS_TYPE_INFRASTRUCTURE) ?
+    PRINTF("     Max Data Rate : %d Mbits/s\r\n", record->max_data_rate / 1000);
+    PRINTF("     Network Type  : %s\r\n", (record->bss_type == WICED_BSS_TYPE_INFRASTRUCTURE) ?
                                             "Infrastructure" :
                                             (record->bss_type == WICED_BSS_TYPE_ADHOC) ? "Ad hoc" : "Unknown");
-    PRINTF("     Security      : %s\n",
+    PRINTF("     Security      : %s\r\n",
            (record->security == WICED_SECURITY_OPEN) ? "Open" : (record->security == WICED_SECURITY_WEP_PSK) ?
                                                        "WEP" :
                                                        (record->security == WICED_SECURITY_WPA_TKIP_PSK) ?
@@ -154,8 +170,8 @@ void print_record(wiced_scan_result_t *record, int record_number)
                                                        (record->security == WICED_SECURITY_WPA2_MIXED_PSK) ?
                                                        "WPA2 Mixed" :
                                                        "Unknown");
-    PRINTF("     Radio Band    : %s\n", (record->band == WICED_802_11_BAND_5GHZ) ? "5GHz" : "2.4GHz");
-    PRINTF("     Channel       : %d\n", (int)record->channel);
+    PRINTF("     Radio Band    : %s\r\n", (record->band == WICED_802_11_BAND_5GHZ) ? "5GHz" : "2.4GHz");
+    PRINTF("     Channel       : %d\r\n", (int)record->channel);
     result_buff_read_pos++;
     if (result_buff_read_pos >= (uint16_t)CIRCULAR_RESULT_BUFF_SIZE)
     {
@@ -164,6 +180,12 @@ void print_record(wiced_scan_result_t *record, int record_number)
     record_number++;
 }
 
+#ifdef SAVE_SSIDS
+char* get_saved_ssids(){
+  return scanned_ssids;
+}
+#endif
+
 void print_records()
 {
     int ii;
@@ -171,4 +193,6 @@ void print_records()
     {
         print_record(&result_buff[ii], ii + 1);
     }
+    
 }
+

@@ -18,6 +18,10 @@
 #include "fsl_common.h"
 #include "fsl_codec_i2c.h"
 
+/*!
+ * @addtogroup tfa9xxx
+ * @{
+ */
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -33,12 +37,12 @@
 #endif
 
 /*! @brief TFA9XXX_ I2C baudrate */
-#define TFA9XXX_I2C_BAUDRATE (400000U)
-#define TFA9XXX_DEV_NUM 2 /* The total number of TFA device */
-#define TFA9XXX_I2C_ADDR_0 0x34
-#define TFA9XXX_I2C_ADDR_1 0x35
-#define TFA9XXX_I2C_ADDR_2 0x36
-#define TFA9XXX_I2C_ADDR_3 0x37
+#define TFA9XXX_I2C_BAUDRATE        (400000U)
+#define TFA9XXX_DEV_NUM             2 /* The total number of TFA device */
+#define TFA9XXX_I2C_ADDR_0          0x34
+#define TFA9XXX_I2C_ADDR_1          0x35
+#define TFA9XXX_I2C_ADDR_2          0x36
+#define TFA9XXX_I2C_ADDR_3          0x37
 #define BOARD_I2C_TRANSFER_SIZE_MAX 255U
 
 /*!
@@ -62,6 +66,7 @@ enum _tfa9xxx_audio_bit_width
     kTFA9XXX_AudioBitWidth16bit = 16U, /*!< audio bit width 16 */
 };
 
+/*! @brief play channel */
 enum _tfa98xxx_play_channel
 {
     kTFA9XXX_PlayChannelLeft0  = 1U, /*!< codec play channel left 0 */
@@ -75,6 +80,7 @@ typedef struct _tfa9xxx_audio_format
     enum _tfa9xxx_audio_bit_width bitWidth; /*!< bit width */
 } tfa9xxx_audio_format_t;
 
+/*! @brief tfa9xxx device */
 typedef struct tfa2_device tfa9xxx_device_t;
 
 /*! @brief Initialize structure of TFA9XXX */
@@ -102,6 +108,9 @@ typedef struct _tfa9xxx_handle
 /*******************************************************************************
  * API
  ******************************************************************************/
+#if defined(__cplusplus)
+extern "C" {
+#endif
 
 /*!
  * @brief Initialize the TFA, put the TFA to operating state, allocate memory side.
@@ -140,7 +149,7 @@ status_t TFA9XXX_SetMute(tfa9xxx_handle_t *handle, bool isMute);
  * @param mclk The mclk.
  * @param sampleRate The sample rate.
  * @param bitWidth The bit width.
- * @return Returns @ref kStatus_TFA98XX_Ok if success, otherwise returns error code.
+ * @return Returns @ref kStatus_Success if success, otherwise returns error code.
  */
 status_t TFA9XXX_ConfigDataFormat(tfa9xxx_handle_t *handle, uint32_t mclk, uint32_t sampleRate, uint32_t bitWidth);
 
@@ -164,7 +173,7 @@ status_t TFA9XXX_SetVolume(tfa9xxx_handle_t *handle, uint32_t volume);
  * This function has dependency on internal structure, it has to be called after TFA9XXX_CreatePlatform();
  *
  * @param handle TFA9XXX handle structure.
- * @param _codec_play_channel play channel, available values are kCODEC_PlayChannelSpeakerLeft,
+ * @param playChannel _codec_play_channel play channel, available values are kCODEC_PlayChannelSpeakerLeft,
  * kCODEC_PlayChannelSpeakerRight, kCODEC_PlayChannelSpeakerLeft | kCODEC_PlayChannelSpeakerRight.
  * @return status_t Returns kStatus_Success if success, otherwise returns error code.
  */
@@ -259,4 +268,9 @@ status_t TFA9XXX_GetStatus(tfa9xxx_handle_t *handle);
  */
 status_t TFA9XXX_ConvertErrorCode(int32_t rc);
 
+#if defined(__cplusplus)
+}
+#endif
+
+/*! @} */
 #endif /* FSL_TFA9XXX_H_ */

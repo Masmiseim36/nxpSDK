@@ -33,10 +33,10 @@
 /*! @brief Ring buffer size (Unit: Byte). */
 #define DEMO_RING_BUFFER_SIZE 2048
 #define BOARD_DEBUG_CONSOLE_INSTANCE 4U
-#define DEMO_SERIAL_PORT USART0
-#define DEMO_SERIAL_PORT_CLK_SRC kCLOCK_Flexcomm0
+#define DEMO_SERIAL_PORT          USART0
+#define DEMO_SERIAL_PORT_CLK_SRC  kCLOCK_Flexcomm0
 #define DEMO_SERIAL_PORT_CLK_FREQ CLOCK_GetFlexCommClkFreq(0U)
-#define DEMO_SERIAL_PORT_IRQn FLEXCOMM0_IRQn
+#define DEMO_SERIAL_PORT_IRQn     FLEXCOMM0_IRQn
 /*! @brief Task stack size. */
 #define WIFICARD_TASK_STACK_SIZE (6144 / sizeof(portSTACK_TYPE))
 /*! @brief Task stack priority. */
@@ -166,8 +166,8 @@ static void APP_WifiTask(void *parameter)
 int main(void)
 {
     /* Init board hardware. */
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
 
     /* FLEXCOMM4 - DebugConsole */
     RESET_ClearPeripheralReset(kFC4_RST_SHIFT_RSTn);
@@ -177,16 +177,6 @@ int main(void)
     CLOCK_AttachClk(kFRG_to_FLEXCOMM4);
     DbgConsole_Init(BOARD_DEBUG_CONSOLE_INSTANCE, BOARD_DEBUG_UART_BAUDRATE, BOARD_DEBUG_UART_TYPE,
                     CLOCK_GetFlexCommClkFreq(BOARD_DEBUG_CONSOLE_INSTANCE));
-
-    /*Make sure USDHC ram buffer has power up*/
-    POWER_DisablePD(kPDRUNCFG_APD_USDHC0_SRAM);
-    POWER_DisablePD(kPDRUNCFG_PPD_USDHC0_SRAM);
-    POWER_ApplyPD();
-
-    /* SDIO0 */
-    RESET_ClearPeripheralReset(kSDIO0_RST_SHIFT_RSTn);
-    CLOCK_AttachClk(kAUX0_PLL_to_SDIO0_CLK);
-    CLOCK_SetClkDiv(kCLOCK_DivSdio0Clk, 1);
 
     /* FLEXCOMM0 */
     RESET_ClearPeripheralReset(kFC0_RST_SHIFT_RSTn);

@@ -241,7 +241,6 @@
  *        - if 0, host video class driver is disable.
  *        - if greater than 0, host video class driver is enable.
  */
-#define USB_HOST_CONFIG_VIDEO (1U)      
- 
+#define USB_HOST_CONFIG_VIDEO (1U)
 
 #endif /* _USB_HOST_CONFIG_H_ */

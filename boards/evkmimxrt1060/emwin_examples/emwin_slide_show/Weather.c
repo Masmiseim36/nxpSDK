@@ -29,7 +29,7 @@ Purpose     : Weather forecast demo
  */
 #define ID_WINDOW_0 (GUI_ID_USER + 0x00)
 
-#define TEMP_OFFSET 20
+#define TEMP_OFFSET   20
 #define TEMP_MULTIPLY 3
 
 /*********************************************************************

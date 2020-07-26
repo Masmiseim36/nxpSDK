@@ -10,6 +10,11 @@
 #define _FSL_CODEC_ADAPTER_H_
 
 #include "fsl_tfa9xxx.h"
+
+/*!
+ * @addtogroup tfa9xxx_adapter
+ * @{
+ */
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -59,7 +64,7 @@ status_t HAL_CODEC_SetFormat(void *handle, uint32_t mclk, uint32_t sampleRate, u
  * @brief set audio codec module volume.
  *
  * @param handle codec handle.
- * @param channel audio codec play channel, can be a value or combine value of _codec_play_channel.
+ * @param playChannel audio codec play channel, can be a value or combine value of _codec_play_channel.
  * @param volume volume value, support 0 ~ 100, 0 is mute, 100 is the maximum volume value.
  * @return kStatus_Success is success, else configure failed.
  */
@@ -69,7 +74,7 @@ status_t HAL_CODEC_SetVolume(void *handle, uint32_t playChannel, uint32_t volume
  * @brief set audio codec module mute.
  *
  * @param handle codec handle.
- * @param channel audio codec play channel, can be a value or combine value of _codec_play_channel.
+ * @param playChannel audio codec play channel, can be a value or combine value of _codec_play_channel.
  * @param isMute true is mute, false is unmute.
  * @return kStatus_Success is success, else configure failed.
  */
@@ -89,7 +94,7 @@ status_t HAL_CODEC_SetPower(void *handle, uint32_t module, bool powerOn);
  * @brief codec set record source.
  *
  * @param handle codec handle.
- * @param source audio codec record source, can be a value or combine value of _codec_record_source.
+ * @param recordSource audio codec record source, can be a value or combine value of _codec_record_source.
  *
  * @return kStatus_Success is success, else configure failed.
  */
@@ -136,5 +141,6 @@ status_t HAL_CODEC_ModuleControl(void *handle, uint32_t cmd, uint32_t data);
 #if defined(__cplusplus)
 }
 #endif
+/*! @} */
 
 #endif /* _FSL_CODEC_ADAPTER_H_ */

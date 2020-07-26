@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -18,17 +18,25 @@
 #include "clock_config.h"
 #include "fsl_gpio.h"
 #include "fsl_iomuxc.h"
+#include "fsl_enet_mdio.h"
+#include "fsl_phyksz8081.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_ENET ENET
-#define EXAMPLE_PHY 0x02U
-#define CORE_CLK_FREQ CLOCK_GetFreq(kCLOCK_IpgClk)
-#define ENET_RXBD_NUM (4)
-#define ENET_TXBD_NUM (4)
-#define ENET_RXBUFF_SIZE (ENET_FRAME_MAX_FRAMELEN)
-#define ENET_TXBUFF_SIZE (ENET_FRAME_MAX_FRAMELEN)
-#define ENET_DATA_LENGTH (1000)
+#define EXAMPLE_ENET          ENET
+#define EXAMPLE_PHY_ADDRESS   0x02U
+
+/* MDIO operations. */
+#define EXAMPLE_MDIO_OPS enet_ops
+/* PHY operations. */
+#define EXAMPLE_PHY_OPS phyksz8081_ops
+/* ENET clock frequency. */
+#define EXAMPLE_CLOCK_FREQ CLOCK_GetFreq(kCLOCK_IpgClk)
+#define ENET_RXBD_NUM          (4)
+#define ENET_TXBD_NUM          (4)
+#define ENET_RXBUFF_SIZE       (ENET_FRAME_MAX_FRAMELEN)
+#define ENET_TXBUFF_SIZE       (ENET_FRAME_MAX_FRAMELEN)
+#define ENET_DATA_LENGTH       (1000)
 #define ENET_TRANSMIT_DATA_NUM (20)
 #ifndef APP_ENET_BUFF_ALIGNMENT
 #define APP_ENET_BUFF_ALIGNMENT ENET_BUFF_ALIGNMENT
@@ -56,11 +64,15 @@ SDK_ALIGN(uint8_t g_txDataBuff[ENET_TXBD_NUM][SDK_SIZEALIGN(ENET_TXBUFF_SIZE, AP
           APP_ENET_BUFF_ALIGNMENT);
 
 enet_handle_t g_handle;
-uint8_t g_frame[ENET_DATA_LENGTH];
+uint8_t g_frame[ENET_DATA_LENGTH + 14];
 uint32_t g_testTxNum = 0;
 
 /*! @brief The MAC address for ENET device. */
 uint8_t g_macAddr[6] = {0xd4, 0xbe, 0xd9, 0x45, 0x22, 0x60};
+
+/*! @brief Enet PHY and MDIO interface handler. */
+static mdio_handle_t mdioHandle = {.ops = &EXAMPLE_MDIO_OPS};
+static phy_handle_t phyHandle   = {.phyAddr = EXAMPLE_PHY_ADDRESS, .mdioHandle = &mdioHandle, .ops = &EXAMPLE_PHY_OPS};
 
 /*******************************************************************************
  * Code
@@ -70,15 +82,6 @@ void BOARD_InitModuleClock(void)
     const clock_enet_pll_config_t config = {
         .enableClkOutput = true, .enableClkOutput500M = false, .enableClkOutput25M = true, .loopDivider = 1};
     CLOCK_InitEnetPll(&config);
-}
-
-void delay(void)
-{
-    volatile uint32_t i = 0;
-    for (i = 0; i < 1000000; ++i)
-    {
-        __asm("NOP"); /* delay */
-    }
 }
 
 
@@ -109,8 +112,7 @@ int main(void)
 {
     enet_config_t config;
     uint32_t length = 0;
-    uint32_t sysClock;
-    bool link = false;
+    bool link       = false;
     phy_speed_t speed;
     phy_duplex_t duplex;
     uint32_t txnumber = 0;
@@ -133,7 +135,7 @@ int main(void)
     /* pull up the ENET_INT before RESET. */
     GPIO_WritePinOutput(GPIO1, 22, 1);
     GPIO_WritePinOutput(GPIO1, 4, 0);
-    delay();
+    SDK_DelayAtLeastUs(1000000, CLOCK_GetFreq(kCLOCK_CpuClk));
     GPIO_WritePinOutput(GPIO1, 4, 1);
 
     PRINTF("\r\n ENET example start.\r\n");
@@ -148,6 +150,9 @@ int main(void)
         &g_txBuffDescrip[0],
         &g_rxDataBuff[0][0],
         &g_txDataBuff[0][0],
+        true,
+        true,
+        NULL,
     }};
 
     /* Get default configuration. */
@@ -159,26 +164,38 @@ int main(void)
      */
     ENET_GetDefaultConfig(&config);
 
+    /* The miiMode should be set according to the different PHY interfaces. */
+#ifdef EXAMPLE_PHY_INTERFACE_RGMII
+    config.miiMode = kENET_RgmiiMode;
+#else
+    config.miiMode = kENET_RmiiMode;
+#endif
+
+    phy_config_t phyConfig;
+    phyConfig.phyAddr               = EXAMPLE_PHY_ADDRESS;
+    phyConfig.autoNeg               = true;
+    mdioHandle.resource.base        = EXAMPLE_ENET;
+    mdioHandle.resource.csrClock_Hz = EXAMPLE_CLOCK_FREQ;
+
     /* Set SMI to get PHY link status. */
-    sysClock = CORE_CLK_FREQ;
-    status   = PHY_Init(EXAMPLE_ENET, EXAMPLE_PHY, sysClock);
+    status = PHY_Init(&phyHandle, &phyConfig);
     while (status != kStatus_Success)
     {
         PRINTF("\r\nPHY Auto-negotiation failed. Please check the cable connection and link partner setting.\r\n");
-        status = PHY_Init(EXAMPLE_ENET, EXAMPLE_PHY, sysClock);
+        status = PHY_Init(&phyHandle, &phyConfig);
     }
 
-    PHY_GetLinkStatus(EXAMPLE_ENET, EXAMPLE_PHY, &link);
+    PHY_GetLinkStatus(&phyHandle, &link);
     if (link)
     {
         /* Get the actual PHY link speed. */
-        PHY_GetLinkSpeedDuplex(EXAMPLE_ENET, EXAMPLE_PHY, &speed, &duplex);
+        PHY_GetLinkSpeedDuplex(&phyHandle, &speed, &duplex);
         /* Change the MII speed and duplex for actual link status. */
         config.miiSpeed  = (enet_mii_speed_t)speed;
         config.miiDuplex = (enet_mii_duplex_t)duplex;
     }
 
-    ENET_Init(EXAMPLE_ENET, &g_handle, &config, &buffConfig[0], &g_macAddr[0], sysClock);
+    ENET_Init(EXAMPLE_ENET, &g_handle, &config, &buffConfig[0], &g_macAddr[0], EXAMPLE_CLOCK_FREQ);
     ENET_ActiveRead(EXAMPLE_ENET);
 
     /* Build broadcast for sending. */
@@ -187,13 +204,13 @@ int main(void)
     while (1)
     {
         /* Get the Frame size */
-        status = ENET_GetRxFrameSize(&g_handle, &length);
+        status = ENET_GetRxFrameSize(&g_handle, &length, 0);
         /* Call ENET_ReadFrame when there is a received frame. */
         if (length != 0)
         {
             /* Received valid frame. Deliver the rx buffer with the size equal to length. */
             uint8_t *data = (uint8_t *)malloc(length);
-            status        = ENET_ReadFrame(EXAMPLE_ENET, &g_handle, data, length);
+            status        = ENET_ReadFrame(EXAMPLE_ENET, &g_handle, data, length, 0, NULL);
             if (status == kStatus_Success)
             {
                 PRINTF(" A frame received. the length %d ", length);
@@ -207,21 +224,22 @@ int main(void)
         {
             /* Update the received buffer when error happened. */
             /* Get the error information of the received g_frame. */
-            ENET_GetRxErrBeforeReadFrame(&g_handle, &eErrStatic);
+            ENET_GetRxErrBeforeReadFrame(&g_handle, &eErrStatic, 0);
             /* update the receive buffer. */
-            ENET_ReadFrame(EXAMPLE_ENET, &g_handle, NULL, 0);
+            ENET_ReadFrame(EXAMPLE_ENET, &g_handle, NULL, 0, 0, NULL);
         }
 
         if (g_testTxNum < ENET_TRANSMIT_DATA_NUM)
         {
             /* Send a multicast frame when the PHY is link up. */
-            if (kStatus_Success == PHY_GetLinkStatus(EXAMPLE_ENET, EXAMPLE_PHY, &link))
+            if (kStatus_Success == PHY_GetLinkStatus(&phyHandle, &link))
             {
                 if (link)
                 {
                     g_testTxNum++;
                     txnumber++;
-                    if (kStatus_Success == ENET_SendFrame(EXAMPLE_ENET, &g_handle, &g_frame[0], ENET_DATA_LENGTH))
+                    if (kStatus_Success ==
+                        ENET_SendFrame(EXAMPLE_ENET, &g_handle, &g_frame[0], ENET_DATA_LENGTH, 0, false, NULL))
                     {
                         PRINTF("The %d frame transmitted success!\r\n", txnumber);
                     }

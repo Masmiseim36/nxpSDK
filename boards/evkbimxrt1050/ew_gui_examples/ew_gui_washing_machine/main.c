@@ -1,5 +1,16 @@
 /*******************************************************************************
 *
+* E M B E D D E D   W I Z A R D   S I M U L A T I O N
+*
+* In this example a simulation of the user interface is integrated as well. It can
+* be executed with the MCUXpresso's built-in web browser. The simulation is
+* located in the folder 'ew_gui_examples\<example_name>\Simulation'. The
+* simulation uses the JS/WebGL Embedded Wizard Platform Package.
+*
+*******************************************************************************/
+
+/*******************************************************************************
+*
 * E M B E D D E D   W I Z A R D   P R O J E C T
 *
 *                                                Copyright (c) TARA Systems GmbH
@@ -40,7 +51,7 @@
 #include "ewmain.h"
 #include "ewrte.h"
 #include "ew_bsp_system.h"
-#include "ew_bsp_serial.h"
+#include "ew_bsp_console.h"
 
 #if EW_USE_FREE_RTOS == 1
 
@@ -75,10 +86,10 @@
 int main( void )
 {
   /* initialize system */
-  EwBspConfigSystem();
+  EwBspSystemInit();
 
-  /* initialize serial interface for debug messages */
-  EwBspConfigSerial();
+  /* initialize console interface for debug messages */
+  EwBspConsoleInit();
 
   /* initialize Embedded Wizard application */
   if ( EwInit() == 0 )
@@ -92,6 +103,9 @@ int main( void )
 
   /* de-initialize Embedded Wizard application */
   EwDone();
+
+  /* terminate the system */
+  EwBspSystemDone();
 
   return 0;
 }
@@ -118,10 +132,10 @@ int main( void )
 int main( void )
 {
   /* initialize system */
-  EwBspConfigSystem();
+  EwBspSystemInit();
 
-  /* initialize serial interface for debug messages */
-  EwBspConfigSerial();
+  /* initialize console interface for debug messages */
+  EwBspConsoleInit();
 
   /* create thread that drives the Embedded Wizard GUI application... */
   EwPrint( "Create UI thread...                          " );

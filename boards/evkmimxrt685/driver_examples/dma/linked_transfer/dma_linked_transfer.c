@@ -16,8 +16,8 @@
  * Definitions
  ******************************************************************************/
 
-#define BUFF_LENGTH 4U
-#define DMA_DESCRIPTOR_NUM 2U
+#define BUFF_LENGTH             4U
+#define DMA_DESCRIPTOR_NUM      2U
 #define DMA_LINK_TRANSFER_COUNT 10
 /*******************************************************************************
  * Prototypes

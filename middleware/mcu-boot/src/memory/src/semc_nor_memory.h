@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2018 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -8,17 +8,17 @@
 #ifndef __SEMC_NOR_MEMORY_H__
 #define __SEMC_NOR_MEMORY_H__
 
-#include <stdint.h>
 #include <stdbool.h>
+#include <stdint.h>
+#include "bl_semc.h"
 #include "fsl_common.h"
-#include "semc/fsl_semc.h"
-#include "semc_nor/semc_nor_flash.h"
+#include "semc_nor_flash.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 // Declarations
 ////////////////////////////////////////////////////////////////////////////////
 
-#define SEMC_NOR_MAX_SIZE    (16U*1024*1024)
+#define SEMC_NOR_MAX_SIZE (16U * 1024 * 1024)
 #define SEMC_NOR_BUFFER_PROG_CACHE_SIZE (512U)
 
 typedef enum _semc_nor_property
@@ -37,33 +37,34 @@ typedef enum _semc_nor_property
 ////////////////////////////////////////////////////////////////////////////////
 
 #if defined(__cplusplus)
-extern "C" {
+extern "C"
+{
 #endif
 
-//! @name SEMC NOR memory
-//@{
+    //! @name SEMC NOR memory
+    //@{
 
-//! @brief Initialize SEMC NOR memory
-status_t semc_nor_mem_init(void);
+    //! @brief Initialize SEMC NOR memory
+    status_t semc_nor_mem_init(void);
 
-//! @brief Read SEMC NOR memory.
-status_t semc_nor_mem_read(uint32_t address, uint32_t length, uint8_t *buffer);
+    //! @brief Read SEMC NOR memory.
+    status_t semc_nor_mem_read(uint32_t address, uint32_t length, uint8_t *buffer);
 
-//! @brief Write SEMC NOR memory.
-status_t semc_nor_mem_write(uint32_t address, uint32_t length, const uint8_t *buffer);
+    //! @brief Write SEMC NOR memory.
+    status_t semc_nor_mem_write(uint32_t address, uint32_t length, const uint8_t *buffer);
 
-//! @brief Fill SEMC NOR memory with a word pattern.
-status_t semc_nor_mem_fill(uint32_t address, uint32_t length, uint32_t pattern);
+    //! @brief Fill SEMC NOR memory with a word pattern.
+    status_t semc_nor_mem_fill(uint32_t address, uint32_t length, uint32_t pattern);
 
-//! @brief Flush cached data into SEMC NOR memory.
-status_t semc_nor_mem_flush(void);
+    //! @brief Flush cached data into SEMC NOR memory.
+    status_t semc_nor_mem_flush(void);
 
-//! @brief Erase SEMC NOR memory
-status_t semc_nor_mem_erase(uint32_t address, uint32_t length);
+    //! @brief Erase SEMC NOR memory
+    status_t semc_nor_mem_erase(uint32_t address, uint32_t length);
 
-status_t semc_nor_get_default_config_block(semc_nor_config_t *config);
+    status_t semc_nor_get_default_config_block(semc_nor_config_t *config);
 
-//@}
+    //@}
 
 #if defined(__cplusplus)
 }

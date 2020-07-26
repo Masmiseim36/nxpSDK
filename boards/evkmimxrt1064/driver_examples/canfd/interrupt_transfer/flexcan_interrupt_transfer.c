@@ -39,7 +39,7 @@
  * and the Message Buffers are limited corresponding to each payload configuration:
  */
 #define DWORD_IN_MB (16)
-#define DLC (15)
+#define DLC         (15)
 #define BYTES_IN_MB kFLEXCAN_64BperMB
 
 /* To get most precise baud rate under some circumstances, users need to set
@@ -50,12 +50,12 @@
    baud rate * 10) is an integer. Remember users must ensure the calculated
    prescaler an integer thus to get precise baud rate. */
 #define SET_CAN_QUANTUM 0
-#define PSEG1 3
-#define PSEG2 2
-#define PROPSEG 1
-#define FPSEG1 3
-#define FPSEG2 3
-#define FPROPSEG 1
+#define PSEG1           3
+#define PSEG2           2
+#define PROPSEG         1
+#define FPSEG1          3
+#define FPSEG2          3
+#define FPROPSEG        1
 
 #define EXAMPLE_CAN_CLK_SOURCE (kFLEXCAN_ClkSrc1)
 /* Select 60M clock divided by USB1 PLL (480 MHz) as master flexcan clock source */

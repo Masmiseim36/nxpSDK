@@ -1,0 +1,7 @@
+/*!
+@page middleware_log Middleware Change Log
+
+@section google_iot Google Cloud IoT Core Device SDK for Embedded C
+  The currently supported version is 1.0.1
+
+*/

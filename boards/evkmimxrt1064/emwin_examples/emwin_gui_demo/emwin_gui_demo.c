@@ -46,10 +46,10 @@
 #define GUI_SCALE_FACTOR_Y GUI_SCALE_FACTOR
 #endif
 
-#define GUI_SCALE(a) ((int)((a) * (GUI_SCALE_FACTOR)))
-#define GUI_SCALE_X(x) ((int)((x) * (GUI_SCALE_FACTOR_X)))
-#define GUI_SCALE_Y(y) ((int)((y) * (GUI_SCALE_FACTOR_Y)))
-#define GUI_SCALE_COORDS(x, y) GUI_SCALE_X(x), GUI_SCALE_Y(y)
+#define GUI_SCALE(a)                   ((int)((a) * (GUI_SCALE_FACTOR)))
+#define GUI_SCALE_X(x)                 ((int)((x) * (GUI_SCALE_FACTOR_X)))
+#define GUI_SCALE_Y(y)                 ((int)((y) * (GUI_SCALE_FACTOR_Y)))
+#define GUI_SCALE_COORDS(x, y)         GUI_SCALE_X(x), GUI_SCALE_Y(y)
 #define GUI_SCALE_RECT(x0, y0, xs, ys) GUI_SCALE_X(x0), GUI_SCALE_Y(y0), GUI_SCALE_X(xs), GUI_SCALE_Y(ys)
 
 #define GUI_ID_DRAWAREA (GUI_ID_USER + 0)
@@ -68,7 +68,7 @@ void BOARD_EnableLcdInterrupt(void);
 /* Initialize the LCD_DISP. */
 void BOARD_InitLcd(void)
 {
-    volatile uint32_t i = 0x100U;
+    volatile uint32_t i = 0x1000U;
 
     gpio_pin_config_t config = {
         kGPIO_DigitalOutput,
@@ -299,10 +299,8 @@ static void cbPageWin2(WM_MESSAGE *pMsg)
 int main(void)
 {
     BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_InitI2C1Pins();
-    BOARD_InitSemcPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitLcdifPixelClock();
     BOARD_InitDebugConsole();
     BOARD_InitLcd();

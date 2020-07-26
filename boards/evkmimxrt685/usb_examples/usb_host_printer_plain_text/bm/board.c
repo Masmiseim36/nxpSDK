@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 NXP
+ * Copyright 2018-2020 NXP
  * All rights reserved.
  *
  *
@@ -25,9 +25,15 @@
  * Definitions
  ******************************************************************************/
 #define BOARD_FLEXSPI_DLL_LOCK_RETRY (10)
+#if (__ARM_FEATURE_CMSE & 0x2) && defined(__ARMCC_VERSION)
+/* For the Trustzone examples built with ARM Compiler, the RAM targets will also run in flash(XIP) to do initialization
+ * copy. */
+#define BOARD_IS_XIP_FLEXSPI() (true)
+#else
 #define BOARD_IS_XIP_FLEXSPI()                                                                                  \
     ((((uint32_t)BOARD_InitDebugConsole >= 0x08000000U) && ((uint32_t)BOARD_InitDebugConsole < 0x10000000U)) || \
      (((uint32_t)BOARD_InitDebugConsole >= 0x18000000U) && ((uint32_t)BOARD_InitDebugConsole < 0x20000000U)))
+#endif
 /*******************************************************************************
  * Variables
  ******************************************************************************/
@@ -260,7 +266,7 @@ status_t BOARD_InitPsRam(void)
 
     /* Set LC code to 0x04(LC=7, maximum frequency 200M) - MR0. */
     mr0Val[0] = mr0mr1[0] & 0x00FFU;
-    mr0Val[0] = (mr0Val[0] & ~0x3C) | (4 << 2U);
+    mr0Val[0] = (mr0Val[0] & ~0x3CU) | (4U << 2U);
     status    = flexspi_hyper_ram_write_mcr(BOARD_FLEXSPI_PSRAM, 0x0, mr0Val);
     if (status != kStatus_Success)
     {
@@ -269,7 +275,7 @@ status_t BOARD_InitPsRam(void)
 
     /* Set WLC code to 0x01(WLC=7, maximum frequency 200M) - MR4. */
     mr4Val[0] = mr4mr8[0] & 0x00FFU;
-    mr4Val[0] = (mr4Val[0] & ~0xE0) | (1 << 5U);
+    mr4Val[0] = (mr4Val[0] & ~0xE0U) | (1U << 5U);
     status    = flexspi_hyper_ram_write_mcr(BOARD_FLEXSPI_PSRAM, 0x4, mr4Val);
     if (status != kStatus_Success)
     {
@@ -310,14 +316,14 @@ void BOARD_InitXip(FLEXSPI_Type *base)
         lastStatus = base->STS2;
         retry      = BOARD_FLEXSPI_DLL_LOCK_RETRY;
         /* Flash on port A */
-        if ((base->FLSHCR0[0] & FLEXSPI_FLSHCR0_FLSHSZ_MASK) > 0 ||
-            (base->FLSHCR0[1] & FLEXSPI_FLSHCR0_FLSHSZ_MASK) > 0)
+        if (((base->FLSHCR0[0] & FLEXSPI_FLSHCR0_FLSHSZ_MASK) > 0) ||
+            ((base->FLSHCR0[1] & FLEXSPI_FLSHCR0_FLSHSZ_MASK) > 0))
         {
             mask |= FLEXSPI_STS2_AREFLOCK_MASK | FLEXSPI_STS2_ASLVLOCK_MASK;
         }
         /* Flash on port B */
-        if ((base->FLSHCR0[2] & FLEXSPI_FLSHCR0_FLSHSZ_MASK) > 0 ||
-            (base->FLSHCR0[3] & FLEXSPI_FLSHCR0_FLSHSZ_MASK) > 0)
+        if (((base->FLSHCR0[2] & FLEXSPI_FLSHCR0_FLSHSZ_MASK) > 0) ||
+            ((base->FLSHCR0[3] & FLEXSPI_FLSHCR0_FLSHSZ_MASK) > 0))
         {
             mask |= FLEXSPI_STS2_BREFLOCK_MASK | FLEXSPI_STS2_BSLVLOCK_MASK;
         }
@@ -353,8 +359,8 @@ void BOARD_InitXip(FLEXSPI_Type *base)
 /* BOARD_SetFlexspiClock run in RAM used to configure FlexSPI clock source and divider when XIP. */
 void BOARD_SetFlexspiClock(uint32_t src, uint32_t divider)
 {
-    if (CLKCTL0->FLEXSPIFCLKSEL != CLKCTL0_FLEXSPIFCLKSEL_SEL(src) ||
-        (CLKCTL0->FLEXSPIFCLKDIV & CLKCTL0_FLEXSPIFCLKDIV_DIV_MASK) != (divider - 1))
+    if ((CLKCTL0->FLEXSPIFCLKSEL != CLKCTL0_FLEXSPIFCLKSEL_SEL(src)) ||
+        ((CLKCTL0->FLEXSPIFCLKDIV & CLKCTL0_FLEXSPIFCLKDIV_DIV_MASK) != (divider - 1)))
     {
         if (BOARD_IS_XIP_FLEXSPI())
         {

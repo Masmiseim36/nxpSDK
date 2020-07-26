@@ -12,12 +12,15 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================*/
+
+/* File modified by NXP. Changes are described in file
+   /middleware/eiq/tensorflow-lite/readme.txt in section "Release notes" */
+
 #ifndef TENSORFLOW_LITE_KERNELS_INTERNAL_OPTIMIZED_DEPTHWISECONV_FLOAT_H_
 #define TENSORFLOW_LITE_KERNELS_INTERNAL_OPTIMIZED_DEPTHWISECONV_FLOAT_H_
 
 #include "profiling/instrumentation.h"
-#include "tensorflow/lite/kernels/cpu_backend_context.h"
-#include "tensorflow/lite/kernels/internal/common.h"
+#include "tensorflow/lite/kernels/internal/optimized/cpu_check.h"
 #include "tensorflow/lite/kernels/internal/types.h"
 
 namespace tflite {
@@ -818,9 +821,9 @@ void FloatDepthwiseConvAccumRow(int stride, int dilation_factor,
     // The kernel will have to iterate on the segment of the
     // output row that starts at out_x_loop_start and out_x_loop_end.
     const int out_x_loop_start =
-        std::max(out_x_buffer_start, out_x_loop_start_unclampled);
+        ::std::max(out_x_buffer_start, out_x_loop_start_unclampled);
     const int out_x_loop_end =
-        std::min(out_x_buffer_end, out_x_loop_end_unclampled);
+        ::std::min(out_x_buffer_end, out_x_loop_end_unclampled);
 
     float* acc_buffer_ptr =
         acc_buffer + (out_x_loop_start - out_x_buffer_start) * output_depth;
@@ -849,10 +852,10 @@ inline void FloatDepthwiseConvAccumRowGeneric(
   gemmlowp::ScopedProfilingLabel label("DepthwiseConvAccumRowGeneric (slow)");
   const float* filter_base_ptr = filter_data;
   for (int filter_x = 0; filter_x < filter_width; ++filter_x) {
-    const int out_x_loop_start = std::max(
+    const int out_x_loop_start = ::std::max(
         out_x_buffer_start,
         (pad_width - dilation_factor * filter_x + stride - 1) / stride);
-    const int out_x_loop_end = std::min(
+    const int out_x_loop_end = ::std::min(
         out_x_buffer_end,
         (pad_width + input_width - dilation_factor * filter_x + stride - 1) /
             stride);
@@ -897,7 +900,7 @@ inline void DepthwiseConvInitAccBuffer(int num_output_pixels, int output_depth,
 // For example, assume thread_start = 2, thread_end = 6, and thread_dim = 1, it
 // means that it will calculate DepthwiseConv for output_data[:, 2:5, :, :].
 //
-// The cpu_backend_context may be supplied as a nullptr by some callers. This
+// The cpu_flags is currently unused. This
 // parameter is included so that the signature matches that required by a
 // templated function. Other versions, such as quantized, need this parameter.
 inline void DepthwiseConvImpl(
@@ -905,8 +908,8 @@ inline void DepthwiseConvImpl(
     const float* input_data, const RuntimeShape& filter_shape,
     const float* filter_data, const RuntimeShape& bias_shape,
     const float* bias_data, const RuntimeShape& output_shape,
-    float* output_data, CpuBackendContext* cpu_backend_context,
-    int thread_start, int thread_end, int thread_dim) {
+    float* output_data, const CpuFlags& /* cpu_flags */, int thread_start,
+    int thread_end, int thread_dim) {
   gemmlowp::ScopedProfilingLabel label("DepthwiseConv/float/DepthwiseConvImpl");
 
   const int stride_width = params.stride_width;
@@ -1036,15 +1039,15 @@ inline void DepthwiseConvImpl(
     for (int out_y = row_start; out_y < row_end; ++out_y) {
       const int in_y_origin = (out_y * stride_height) - pad_height;
       const int filter_y_start =
-          std::max(0, (-in_y_origin + dilation_height_factor - 1) /
+          ::std::max(0, (-in_y_origin + dilation_height_factor - 1) /
                           dilation_height_factor);
       const int filter_y_end =
-          std::min(filter_height,
+          ::std::min(filter_height,
                    (input_height - in_y_origin + dilation_height_factor - 1) /
                        dilation_height_factor);
       for (int out_x_buffer_start = 0; out_x_buffer_start < output_width;
            out_x_buffer_start += kOutputPixelsInAccBuffer) {
-        const int out_x_buffer_end = std::min(
+        const int out_x_buffer_end = ::std::min(
             output_width, out_x_buffer_start + kOutputPixelsInAccBuffer);
         // We call a 'pixel' a group of activation that share all but the
         // 'depth'/'channel' coordinate. num_output_pixels is the number of
@@ -1100,8 +1103,8 @@ inline void DepthwiseConvImpl(
         // Handle leftover values, one by one. This is very slow.
         for (; i < num_output_values; i++) {
           float acc = acc_buffer[i];
-          acc = std::max(output_activation_min,
-                         std::min(output_activation_max, acc));
+          acc = ::std::max(output_activation_min,
+                         ::std::min(output_activation_max, acc));
 
           *output_ptr++ = acc;
         }
@@ -1111,18 +1114,6 @@ inline void DepthwiseConvImpl(
   }
 }
 
-inline void DepthwiseConv(
-    const DepthwiseParams& params, const RuntimeShape& input_shape,
-    const float* input_data, const RuntimeShape& filter_shape,
-    const float* filter_data, const RuntimeShape& bias_shape,
-    const float* bias_data, const RuntimeShape& output_shape,
-    float* output_data, CpuBackendContext* cpu_backend_context) {
-  DepthwiseConvImpl(params, input_shape, input_data, filter_shape, filter_data,
-                    bias_shape, bias_data, output_shape, output_data,
-                    cpu_backend_context,
-                    /*thread_start=*/0,
-                    /*thread_end=*/output_shape.Dims(1), /*thread_dim=*/1);
-}
 
 }  // namespace optimized_ops
 }  // namespace tflite

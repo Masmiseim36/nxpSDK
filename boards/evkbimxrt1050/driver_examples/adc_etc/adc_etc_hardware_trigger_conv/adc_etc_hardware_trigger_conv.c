@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 NXP
+ * Copyright 2017-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -18,23 +18,25 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_ADC_BASE ADC1
-#define DEMO_ADC_USER_CHANNEL 16U
+#define DEMO_ADC_BASE           ADC1
+#define DEMO_ADC_USER_CHANNEL   16U
 #define DEMO_ADC_CHANNEL_GROUP0 0U
 #define DEMO_ADC_CHANNEL_GROUP1 1U
 
-#define DEMO_ADC_ETC_BASE ADC_ETC
-#define DEMO_ADC_ETC_CHAIN_LENGTH 1U /* Chain length is 2. */
-#define DEMO_ADC_ETC_CHANNEL0 15U
-#define DEMO_ADC_ETC_CHANNEL1 0U
+#define DEMO_ADC_ETC_BASE             ADC_ETC
+#define DEMO_ADC_ETC_CHAIN_LENGTH     1U /* Chain length is 2. */
+#define DEMO_ADC_ETC_CHANNEL0         15U
+#define DEMO_ADC_ETC_CHANNEL1         0U
 #define EXAMPLE_ADC_ETC_DONE0_Handler ADC_ETC_IRQ0_IRQHandler
 #define EXAMPLE_ADC_ETC_DONE1_Handler ADC_ETC_IRQ1_IRQHandler
 
-#define DEMO_XBARA_BASE XBARA1
-#define DEMO_XBARA_INPUT_PITCH0 kXBARA1_InputPitTrigger0
+#define DEMO_XBARA_BASE           XBARA1
+#define DEMO_XBARA_INPUT_PITCH0   kXBARA1_InputPitTrigger0
 #define DEMO_XBARA_OUTPUT_ADC_ETC kXBARA1_OutputAdcEtcXbar0Trig0
 
 #define PIT_SOURCE_CLOCK CLOCK_GetFreq(kCLOCK_OscClk)
+#define ADC_ETC_DONE0_FLAG (0x1U)
+#define ADC_ETC_DONE1_FLAG (0x2U)
 
 /*******************************************************************************
  * Prototypes
@@ -47,13 +49,15 @@ void PIT_Configuration(void);
  ******************************************************************************/
 volatile uint32_t g_AdcConversionValue0;
 volatile uint32_t g_AdcConversionValue1;
-const uint32_t g_Adc_12bitFullRange = 4096U;
+const uint32_t g_Adc_12bitFullRange      = 4096U;
+volatile uint8_t g_AdcConversionDoneFlag = 0U;
 
 /*******************************************************************************
  * Code
  ******************************************************************************/
 void EXAMPLE_ADC_ETC_DONE0_Handler(void)
 {
+    g_AdcConversionDoneFlag |= ADC_ETC_DONE0_FLAG;
     ADC_ETC_ClearInterruptStatusFlags(DEMO_ADC_ETC_BASE, kADC_ETC_Trg0TriggerSource, kADC_ETC_Done0StatusFlagMask);
     g_AdcConversionValue0 = ADC_ETC_GetADCConversionValue(DEMO_ADC_ETC_BASE, 0U, 0U); /* Get trigger0 chain0 result. */
     __DSB();
@@ -61,6 +65,7 @@ void EXAMPLE_ADC_ETC_DONE0_Handler(void)
 
 void EXAMPLE_ADC_ETC_DONE1_Handler(void)
 {
+    g_AdcConversionDoneFlag |= ADC_ETC_DONE1_FLAG;
     ADC_ETC_ClearInterruptStatusFlags(DEMO_ADC_ETC_BASE, kADC_ETC_Trg0TriggerSource, kADC_ETC_Done1StatusFlagMask);
     g_AdcConversionValue1 = ADC_ETC_GetADCConversionValue(DEMO_ADC_ETC_BASE, 0U, 1U); /* Get trigger0 chain1 result. */
     __DSB();
@@ -141,6 +146,10 @@ int main(void)
     while (1)
     {
         GETCHAR();
+        while (g_AdcConversionDoneFlag != (ADC_ETC_DONE1_FLAG | ADC_ETC_DONE0_FLAG))
+        {
+        }
+        g_AdcConversionDoneFlag = 0U;
         PRINTF("ADC conversion value is %d and %d\r\n", g_AdcConversionValue0, g_AdcConversionValue1);
     }
 }

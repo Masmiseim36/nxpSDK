@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 NXP
+ * Copyright 2018-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -13,11 +13,11 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v5.0
+product: Pins v7.0
 processor: MIMXRT1021xxxxx
 package_id: MIMXRT1021DAG5A
 mcu_data: ksdk2_0
-processor_version: 5.0.2
+processor_version: 0.7.10
 board: MIMXRT1020-EVK
 pin_labels:
 - {pin_num: '106', pin_signal: GPIO_AD_B0_05, label: BT_REG_ON, identifier: WL_REG_ON;BT_REG_ON}

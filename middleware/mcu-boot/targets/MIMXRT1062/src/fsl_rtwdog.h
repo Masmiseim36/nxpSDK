@@ -1,9 +1,9 @@
 /*
-* Copyright 2017-2018 NXP
-* All rights reserved.
-*
-* SPDX-License-Identifier: BSD-3-Clause
-*/
+ * Copyright 2017-2018 NXP
+ * All rights reserved.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
 #ifndef _FSL_RTWDOG_H_
 #define _FSL_RTWDOG_H_
 
@@ -108,264 +108,244 @@ enum _rtwdog_status_flags_t
  *******************************************************************************/
 
 #if defined(__cplusplus)
-extern "C" {
+extern "C"
+{
 #endif /* __cplusplus */
 
-/*!
- * @name RTWDOG Initialization and De-initialization
- * @{
- */
+    /*!
+     * @name RTWDOG Initialization and De-initialization
+     * @{
+     */
 
-/*!
- * @brief Initializes the RTWDOG configuration structure.
- *
- * This function initializes the RTWDOG configuration structure to default values. The default
- * values are:
- * @code
- *   rtwdogConfig->enableRtwdog = true;
- *   rtwdogConfig->clockSource = kRTWDOG_ClockSource1;
- *   rtwdogConfig->prescaler = kRTWDOG_ClockPrescalerDivide1;
- *   rtwdogConfig->workMode.enableWait = true;
- *   rtwdogConfig->workMode.enableStop = false;
- *   rtwdogConfig->workMode.enableDebug = false;
- *   rtwdogConfig->testMode = kRTWDOG_TestModeDisabled;
- *   rtwdogConfig->enableUpdate = true;
- *   rtwdogConfig->enableInterrupt = false;
- *   rtwdogConfig->enableWindowMode = false;
- *   rtwdogConfig->windowValue = 0U;
- *   rtwdogConfig->timeoutValue = 0xFFFFU;
- * @endcode
- *
- * @param config Pointer to the RTWDOG configuration structure.
- * @see rtwdog_config_t
- */
-void RTWDOG_GetDefaultConfig(rtwdog_config_t *config);
+    /*!
+     * @brief Initializes the RTWDOG configuration structure.
+     *
+     * This function initializes the RTWDOG configuration structure to default values. The default
+     * values are:
+     * @code
+     *   rtwdogConfig->enableRtwdog = true;
+     *   rtwdogConfig->clockSource = kRTWDOG_ClockSource1;
+     *   rtwdogConfig->prescaler = kRTWDOG_ClockPrescalerDivide1;
+     *   rtwdogConfig->workMode.enableWait = true;
+     *   rtwdogConfig->workMode.enableStop = false;
+     *   rtwdogConfig->workMode.enableDebug = false;
+     *   rtwdogConfig->testMode = kRTWDOG_TestModeDisabled;
+     *   rtwdogConfig->enableUpdate = true;
+     *   rtwdogConfig->enableInterrupt = false;
+     *   rtwdogConfig->enableWindowMode = false;
+     *   rtwdogConfig->windowValue = 0U;
+     *   rtwdogConfig->timeoutValue = 0xFFFFU;
+     * @endcode
+     *
+     * @param config Pointer to the RTWDOG configuration structure.
+     * @see rtwdog_config_t
+     */
+    void RTWDOG_GetDefaultConfig(rtwdog_config_t *config);
 
-/*!
- * @brief Initializes the RTWDOG module.
- *
- * This function initializes the RTWDOG.
- * To reconfigure the RTWDOG without forcing a reset first, enableUpdate must be set to true
- * in the configuration.
- *
- * Example:
- * @code
- *   rtwdog_config_t config;
- *   RTWDOG_GetDefaultConfig(&config);
- *   config.timeoutValue = 0x7ffU;
- *   config.enableUpdate = true;
- *   RTWDOG_Init(wdog_base,&config);
- * @endcode
- *
- * @param base   RTWDOG peripheral base address.
- * @param config The configuration of the RTWDOG.
- */
-void RTWDOG_Init(RTWDOG_Type *base, const rtwdog_config_t *config);
+    /*!
+     * @brief Initializes the RTWDOG module.
+     *
+     * This function initializes the RTWDOG.
+     * To reconfigure the RTWDOG without forcing a reset first, enableUpdate must be set to true
+     * in the configuration.
+     *
+     * Example:
+     * @code
+     *   rtwdog_config_t config;
+     *   RTWDOG_GetDefaultConfig(&config);
+     *   config.timeoutValue = 0x7ffU;
+     *   config.enableUpdate = true;
+     *   RTWDOG_Init(wdog_base,&config);
+     * @endcode
+     *
+     * @param base   RTWDOG peripheral base address.
+     * @param config The configuration of the RTWDOG.
+     */
+    void RTWDOG_Init(RTWDOG_Type *base, const rtwdog_config_t *config);
 
-/*!
- * @brief De-initializes the RTWDOG module.
- *
- * This function shuts down the RTWDOG.
- * Ensure that the WDOG_CS.UPDATE is 1, which means that the register update is enabled.
- *
- * @param base   RTWDOG peripheral base address.
- */
-void RTWDOG_Deinit(RTWDOG_Type *base);
+    /*!
+     * @brief De-initializes the RTWDOG module.
+     *
+     * This function shuts down the RTWDOG.
+     * Ensure that the WDOG_CS.UPDATE is 1, which means that the register update is enabled.
+     *
+     * @param base   RTWDOG peripheral base address.
+     */
+    void RTWDOG_Deinit(RTWDOG_Type *base);
 
-/* @} */
+    /* @} */
 
-/*!
- * @name RTWDOG functional Operation
- * @{
- */
+    /*!
+     * @name RTWDOG functional Operation
+     * @{
+     */
 
-/*!
- * @brief Enables the RTWDOG module.
- *
- * This function writes a value into the WDOG_CS register to enable the RTWDOG.
- * The WDOG_CS register is a write-once register. Ensure that the WCT window is still open and
- * this register has not been written in this WCT while the function is called.
- *
- * @param base RTWDOG peripheral base address.
- */
-static inline void RTWDOG_Enable(RTWDOG_Type *base)
-{
-    base->CS |= RTWDOG_CS_EN_MASK;
-}
+    /*!
+     * @brief Enables the RTWDOG module.
+     *
+     * This function writes a value into the WDOG_CS register to enable the RTWDOG.
+     * The WDOG_CS register is a write-once register. Ensure that the WCT window is still open and
+     * this register has not been written in this WCT while the function is called.
+     *
+     * @param base RTWDOG peripheral base address.
+     */
+    static inline void RTWDOG_Enable(RTWDOG_Type *base) { base->CS |= RTWDOG_CS_EN_MASK; }
 
-/*!
- * @brief Disables the RTWDOG module.
- *
- * This function writes a value into the WDOG_CS register to disable the RTWDOG.
- * The WDOG_CS register is a write-once register. Ensure that the WCT window is still open and
- * this register has not been written in this WCT while the function is called.
- *
- * @param base RTWDOG peripheral base address
- */
-static inline void RTWDOG_Disable(RTWDOG_Type *base)
-{
-    base->CS &= ~RTWDOG_CS_EN_MASK;
-}
+    /*!
+     * @brief Disables the RTWDOG module.
+     *
+     * This function writes a value into the WDOG_CS register to disable the RTWDOG.
+     * The WDOG_CS register is a write-once register. Ensure that the WCT window is still open and
+     * this register has not been written in this WCT while the function is called.
+     *
+     * @param base RTWDOG peripheral base address
+     */
+    static inline void RTWDOG_Disable(RTWDOG_Type *base) { base->CS &= ~RTWDOG_CS_EN_MASK; }
 
-/*!
- * @brief Enables the RTWDOG interrupt.
- *
- * This function writes a value into the WDOG_CS register to enable the RTWDOG interrupt.
- * The WDOG_CS register is a write-once register. Ensure that the WCT window is still open and
- * this register has not been written in this WCT while the function is called.
- *
- * @param base RTWDOG peripheral base address.
- * @param mask The interrupts to enable.
- *        The parameter can be a combination of the following source if defined:
- *        @arg kRTWDOG_InterruptEnable
- */
-static inline void RTWDOG_EnableInterrupts(RTWDOG_Type *base, uint32_t mask)
-{
-    base->CS |= mask;
-}
+    /*!
+     * @brief Enables the RTWDOG interrupt.
+     *
+     * This function writes a value into the WDOG_CS register to enable the RTWDOG interrupt.
+     * The WDOG_CS register is a write-once register. Ensure that the WCT window is still open and
+     * this register has not been written in this WCT while the function is called.
+     *
+     * @param base RTWDOG peripheral base address.
+     * @param mask The interrupts to enable.
+     *        The parameter can be a combination of the following source if defined:
+     *        @arg kRTWDOG_InterruptEnable
+     */
+    static inline void RTWDOG_EnableInterrupts(RTWDOG_Type *base, uint32_t mask) { base->CS |= mask; }
 
-/*!
- * @brief Disables the RTWDOG interrupt.
- *
- * This function writes a value into the WDOG_CS register to disable the RTWDOG interrupt.
- * The WDOG_CS register is a write-once register. Ensure that the WCT window is still open and
- * this register has not been written in this WCT while the function is called.
- *
- * @param base RTWDOG peripheral base address.
- * @param mask The interrupts to disabled.
- *        The parameter can be a combination of the following source if defined:
- *        @arg kRTWDOG_InterruptEnable
- */
-static inline void RTWDOG_DisableInterrupts(RTWDOG_Type *base, uint32_t mask)
-{
-    base->CS &= ~mask;
-}
+    /*!
+     * @brief Disables the RTWDOG interrupt.
+     *
+     * This function writes a value into the WDOG_CS register to disable the RTWDOG interrupt.
+     * The WDOG_CS register is a write-once register. Ensure that the WCT window is still open and
+     * this register has not been written in this WCT while the function is called.
+     *
+     * @param base RTWDOG peripheral base address.
+     * @param mask The interrupts to disabled.
+     *        The parameter can be a combination of the following source if defined:
+     *        @arg kRTWDOG_InterruptEnable
+     */
+    static inline void RTWDOG_DisableInterrupts(RTWDOG_Type *base, uint32_t mask) { base->CS &= ~mask; }
 
-/*!
- * @brief Gets the RTWDOG all status flags.
- *
- * This function gets all status flags.
- *
- * Example to get the running flag:
- * @code
- *   uint32_t status;
- *   status = RTWDOG_GetStatusFlags(wdog_base) & kRTWDOG_RunningFlag;
- * @endcode
- * @param base        RTWDOG peripheral base address
- * @return            State of the status flag: asserted (true) or not-asserted (false). @see _rtwdog_status_flags_t
- *                    - true: related status flag has been set.
- *                    - false: related status flag is not set.
- */
-static inline uint32_t RTWDOG_GetStatusFlags(RTWDOG_Type *base)
-{
-    return (base->CS & (RTWDOG_CS_EN_MASK | RTWDOG_CS_FLG_MASK));
-}
-
-/*!
- * @brief Clears the RTWDOG flag.
- *
- * This function clears the RTWDOG status flag.
- *
- * Example to clear an interrupt flag:
- * @code
- *   RTWDOG_ClearStatusFlags(wdog_base,kRTWDOG_InterruptFlag);
- * @endcode
- * @param base        RTWDOG peripheral base address.
- * @param mask        The status flags to clear.
- *                    The parameter can be any combination of the following values:
- *                    @arg kRTWDOG_InterruptFlag
- */
-void RTWDOG_ClearStatusFlags(RTWDOG_Type *base, uint32_t mask);
-
-/*!
- * @brief Sets the RTWDOG timeout value.
- *
- * This function writes a timeout value into the WDOG_TOVAL register.
- * The WDOG_TOVAL register is a write-once register. Ensure that the WCT window is still open and
- * this register has not been written in this WCT while the function is called.
- *
- * @param base RTWDOG peripheral base address
- * @param timeoutCount RTWDOG timeout value, count of RTWDOG clock ticks.
- */
-static inline void RTWDOG_SetTimeoutValue(RTWDOG_Type *base, uint16_t timeoutCount)
-{
-    base->TOVAL = timeoutCount;
-}
-
-/*!
- * @brief Sets the RTWDOG window value.
- *
- * This function writes a window value into the WDOG_WIN register.
- * The WDOG_WIN register is a write-once register. Ensure that the WCT window is still open and
- * this register has not been written in this WCT while the function is called.
- *
- * @param base RTWDOG peripheral base address.
- * @param windowValue RTWDOG window value.
- */
-static inline void RTWDOG_SetWindowValue(RTWDOG_Type *base, uint16_t windowValue)
-{
-    base->WIN = windowValue;
-}
-
-/*!
- * @brief Unlocks the RTWDOG register written.
- *
- * This function unlocks the RTWDOG register written.
- *
- * Before starting the unlock sequence and following the configuration, disable the global interrupts.
- * Otherwise, an interrupt could effectively invalidate the unlock sequence and the WCT may expire.
- * After the configuration finishes, re-enable the global interrupts.
- *
- * @param base RTWDOG peripheral base address
- */
-static inline void RTWDOG_Unlock(RTWDOG_Type *base)
-{
-    if ((base->CS) & RTWDOG_CS_CMD32EN_MASK)
+    /*!
+     * @brief Gets the RTWDOG all status flags.
+     *
+     * This function gets all status flags.
+     *
+     * Example to get the running flag:
+     * @code
+     *   uint32_t status;
+     *   status = RTWDOG_GetStatusFlags(wdog_base) & kRTWDOG_RunningFlag;
+     * @endcode
+     * @param base        RTWDOG peripheral base address
+     * @return            State of the status flag: asserted (true) or not-asserted (false). @see _rtwdog_status_flags_t
+     *                    - true: related status flag has been set.
+     *                    - false: related status flag is not set.
+     */
+    static inline uint32_t RTWDOG_GetStatusFlags(RTWDOG_Type *base)
     {
-        base->CNT = RTWDOG_UPDATE_KEY;
+        return (base->CS & (RTWDOG_CS_EN_MASK | RTWDOG_CS_FLG_MASK));
     }
-    else
-    {
-        base->CNT = WDOG_FIRST_WORD_OF_UNLOCK;
-        base->CNT = WDOG_SECOND_WORD_OF_UNLOCK;
-    }
-}
 
-/*!
- * @brief Refreshes the RTWDOG timer.
- *
- * This function feeds the RTWDOG.
- * This function should be called before the Watchdog timer is in timeout. Otherwise, a reset is asserted.
- *
- * @param base RTWDOG peripheral base address
- */
-static inline void RTWDOG_Refresh(RTWDOG_Type *base)
-{
-    if ((base->CS) & RTWDOG_CS_CMD32EN_MASK)
-    {
-        base->CNT = RTWDOG_REFRESH_KEY;
-    }
-    else
-    {
-        base->CNT = WDOG_FIRST_WORD_OF_REFRESH;
-        base->CNT = WDOG_SECOND_WORD_OF_REFRESH;
-    }
-}
+    /*!
+     * @brief Clears the RTWDOG flag.
+     *
+     * This function clears the RTWDOG status flag.
+     *
+     * Example to clear an interrupt flag:
+     * @code
+     *   RTWDOG_ClearStatusFlags(wdog_base,kRTWDOG_InterruptFlag);
+     * @endcode
+     * @param base        RTWDOG peripheral base address.
+     * @param mask        The status flags to clear.
+     *                    The parameter can be any combination of the following values:
+     *                    @arg kRTWDOG_InterruptFlag
+     */
+    void RTWDOG_ClearStatusFlags(RTWDOG_Type *base, uint32_t mask);
 
-/*!
- * @brief Gets the RTWDOG counter value.
- *
- * This function gets the RTWDOG counter value.
- *
- * @param base RTWDOG peripheral base address.
- * @return     Current RTWDOG counter value.
- */
-static inline uint16_t RTWDOG_GetCounterValue(RTWDOG_Type *base)
-{
-    return base->CNT;
-}
+    /*!
+     * @brief Sets the RTWDOG timeout value.
+     *
+     * This function writes a timeout value into the WDOG_TOVAL register.
+     * The WDOG_TOVAL register is a write-once register. Ensure that the WCT window is still open and
+     * this register has not been written in this WCT while the function is called.
+     *
+     * @param base RTWDOG peripheral base address
+     * @param timeoutCount RTWDOG timeout value, count of RTWDOG clock ticks.
+     */
+    static inline void RTWDOG_SetTimeoutValue(RTWDOG_Type *base, uint16_t timeoutCount) { base->TOVAL = timeoutCount; }
 
-/*@}*/
+    /*!
+     * @brief Sets the RTWDOG window value.
+     *
+     * This function writes a window value into the WDOG_WIN register.
+     * The WDOG_WIN register is a write-once register. Ensure that the WCT window is still open and
+     * this register has not been written in this WCT while the function is called.
+     *
+     * @param base RTWDOG peripheral base address.
+     * @param windowValue RTWDOG window value.
+     */
+    static inline void RTWDOG_SetWindowValue(RTWDOG_Type *base, uint16_t windowValue) { base->WIN = windowValue; }
+
+    /*!
+     * @brief Unlocks the RTWDOG register written.
+     *
+     * This function unlocks the RTWDOG register written.
+     *
+     * Before starting the unlock sequence and following the configuration, disable the global interrupts.
+     * Otherwise, an interrupt could effectively invalidate the unlock sequence and the WCT may expire.
+     * After the configuration finishes, re-enable the global interrupts.
+     *
+     * @param base RTWDOG peripheral base address
+     */
+    static inline void RTWDOG_Unlock(RTWDOG_Type *base)
+    {
+        if ((base->CS) & RTWDOG_CS_CMD32EN_MASK)
+        {
+            base->CNT = RTWDOG_UPDATE_KEY;
+        }
+        else
+        {
+            base->CNT = WDOG_FIRST_WORD_OF_UNLOCK;
+            base->CNT = WDOG_SECOND_WORD_OF_UNLOCK;
+        }
+    }
+
+    /*!
+     * @brief Refreshes the RTWDOG timer.
+     *
+     * This function feeds the RTWDOG.
+     * This function should be called before the Watchdog timer is in timeout. Otherwise, a reset is asserted.
+     *
+     * @param base RTWDOG peripheral base address
+     */
+    static inline void RTWDOG_Refresh(RTWDOG_Type *base)
+    {
+        if ((base->CS) & RTWDOG_CS_CMD32EN_MASK)
+        {
+            base->CNT = RTWDOG_REFRESH_KEY;
+        }
+        else
+        {
+            base->CNT = WDOG_FIRST_WORD_OF_REFRESH;
+            base->CNT = WDOG_SECOND_WORD_OF_REFRESH;
+        }
+    }
+
+    /*!
+     * @brief Gets the RTWDOG counter value.
+     *
+     * This function gets the RTWDOG counter value.
+     *
+     * @param base RTWDOG peripheral base address.
+     * @return     Current RTWDOG counter value.
+     */
+    static inline uint16_t RTWDOG_GetCounterValue(RTWDOG_Type *base) { return base->CNT; }
+
+    /*@}*/
 
 #if defined(__cplusplus)
 }

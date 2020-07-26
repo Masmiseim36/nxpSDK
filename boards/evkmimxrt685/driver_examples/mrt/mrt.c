@@ -15,10 +15,10 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define APP_LED_INIT (LED_RED_INIT(LOGIC_LED_OFF));
-#define APP_LED_ON (LED_RED_ON());
+#define APP_LED_INIT   (LED_RED_INIT(LOGIC_LED_OFF));
+#define APP_LED_ON     (LED_RED_ON());
 #define APP_LED_TOGGLE (LED_RED_TOGGLE());
-#define MRT_CLK_FREQ CLOCK_GetFreq(kCLOCK_BusClk)
+#define MRT_CLK_FREQ   CLOCK_GetFreq(kCLOCK_BusClk)
 
 /*******************************************************************************
  * Prototypes
@@ -51,12 +51,7 @@ void MRT0_IRQHandler(void)
     {
         mrtIsrFlag = true;
     }
-
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 /*!

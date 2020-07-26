@@ -27,14 +27,14 @@
 #define LPI2C_CLOCK_FREQUENCY ((CLOCK_GetFreq(kCLOCK_Usb1PllClk) / 8) / (LPI2C_CLOCK_SOURCE_DIVIDER + 1U))
 
 #define LPI2C_MASTER_CLOCK_FREQUENCY LPI2C_CLOCK_FREQUENCY
-#define WAIT_TIME 10U
+#define WAIT_TIME                    10U
 
 
 #define EXAMPLE_I2C_MASTER ((LPI2C_Type *)EXAMPLE_I2C_MASTER_BASE)
 
 #define LPI2C_MASTER_SLAVE_ADDR_7BIT 0x7EU
-#define LPI2C_BAUDRATE 100000U
-#define LPI2C_DATA_LENGTH 33U
+#define LPI2C_BAUDRATE               100000U
+#define LPI2C_DATA_LENGTH            33U
 
 /*******************************************************************************
  * Prototypes
@@ -119,8 +119,9 @@ int main(void)
             LPI2C_MasterGetFifoCounts(EXAMPLE_I2C_MASTER, NULL, &txCount);
         }
         /* Check communicate with slave successful or not */
-        while (LPI2C_MasterGetStatusFlags(EXAMPLE_I2C_MASTER) & kLPI2C_MasterNackDetectFlag)
+        if (LPI2C_MasterGetStatusFlags(EXAMPLE_I2C_MASTER) & kLPI2C_MasterNackDetectFlag)
         {
+            return kStatus_LPI2C_Nak;
         }
 
         /* subAddress = 0x01, data = g_master_txBuff - write to slave.

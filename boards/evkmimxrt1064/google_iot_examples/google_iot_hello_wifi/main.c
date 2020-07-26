@@ -87,7 +87,7 @@
  * Definitions
  ******************************************************************************/
 #define INIT_SUCCESS 0
-#define INIT_FAIL -1
+#define INIT_FAIL    -1
 
 /*******************************************************************************
  * Prototypes
@@ -150,16 +150,6 @@ int initNetwork()
 
     return INIT_SUCCESS;
 }
-static void BOARD_USDHCClockConfiguration(void)
-{
-    CLOCK_InitSysPll(&sysPllConfig_BOARD_BootClockRUN);
-    /*configure system pll PFD2 fractional divider to 24*/
-    CLOCK_InitSysPfd(kCLOCK_Pfd2, 24U);
-    /* Configure USDHC clock source and divider */
-    CLOCK_SetDiv(kCLOCK_Usdhc1Div, 0U);
-    CLOCK_SetMux(kCLOCK_Usdhc1Mux, 0U);
-}
-
 
 /**
  * The FreeRTOS task for Embedded C Client. Initializes the client
@@ -259,9 +249,8 @@ void vApplicationDaemonTaskStartupHook(void)
 int main(int argc, char *argv[])
 {
     BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_USDHCClockConfiguration();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
 
     CRYPTO_InitHardware();

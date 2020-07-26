@@ -76,6 +76,7 @@
 #include "example_utils.h"
 #include "google_iot_config.h"
 
+#include "fsl_phy.h"
 /* lwIP Includes */
 #include "lwip/tcpip.h"
 #include "lwip/dhcp.h"
@@ -87,6 +88,8 @@
 #include "clock_config.h"
 #include "fsl_gpio.h"
 #include "fsl_iomuxc.h"
+#include "fsl_phyksz8081.h"
+#include "fsl_enet_mdio.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -96,7 +99,7 @@
 #endif /* EXAMPLE_NETIF_INIT_FN */
 
 #define INIT_SUCCESS 0
-#define INIT_FAIL 1
+#define INIT_FAIL    1
 
 /* MAC address configuration. */
 #define configMAC_ADDR                     \
@@ -107,9 +110,14 @@
 /* Address of PHY interface. */
 #define EXAMPLE_PHY_ADDRESS BOARD_ENET0_PHY_ADDRESS
 
-/* System clock name. */
-#define EXAMPLE_CLOCK_NAME kCLOCK_CoreSysClk
+/* PHY operations. */
+#define EXAMPLE_PHY_OPS phyksz8081_ops
 
+/* MDIO operations. */
+#define EXAMPLE_MDIO_OPS enet_ops
+
+/* ENET clock frequency. */
+#define EXAMPLE_CLOCK_FREQ CLOCK_GetFreq(kCLOCK_IpgClk)
 
 /*******************************************************************************
  * Prototypes
@@ -121,6 +129,9 @@ void createTasks(void);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
+static mdio_handle_t mdioHandle = {.ops = &EXAMPLE_MDIO_OPS};
+static phy_handle_t phyHandle   = {.phyAddr = EXAMPLE_PHY_ADDRESS, .mdioHandle = &mdioHandle, .ops = &EXAMPLE_PHY_OPS};
+
 struct netif netif;
 #if defined(FSL_FEATURE_SOC_LPC_ENET_COUNT) && (FSL_FEATURE_SOC_LPC_ENET_COUNT > 0)
 mem_range_t non_dma_memory[] = NON_DMA_MEMORY_ARRAY;
@@ -135,13 +146,14 @@ int initNetwork(void)
 {
     ip4_addr_t netif_ipaddr, netif_netmask, netif_gw;
     ethernetif_config_t enet_config = {
-        .phyAddress = EXAMPLE_PHY_ADDRESS,
-        .clockName  = EXAMPLE_CLOCK_NAME,
+        .phyHandle  = &phyHandle,
         .macAddress = configMAC_ADDR,
 #if defined(FSL_FEATURE_SOC_LPC_ENET_COUNT) && (FSL_FEATURE_SOC_LPC_ENET_COUNT > 0)
         .non_dma_memory = non_dma_memory,
 #endif /* FSL_FEATURE_SOC_LPC_ENET_COUNT */
     };
+
+    mdioHandle.resource.csrClock_Hz = EXAMPLE_CLOCK_FREQ;
 
     IP4_ADDR(&netif_ipaddr, 0, 0, 0, 0);
     IP4_ADDR(&netif_netmask, 0, 0, 0, 0);
@@ -290,8 +302,8 @@ int main(int argc, char *argv[])
     gpio_pin_config_t gpio_config = {kGPIO_DigitalOutput, 0, kGPIO_NoIntmode};
 
     BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
     BOARD_InitModuleClock();
 

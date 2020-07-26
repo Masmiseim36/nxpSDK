@@ -1,30 +1,32 @@
 Overview
 ========
 The qca_iperf example provides basic commands to measure performance using qca_wifi stack.
-Results will be shown on your iperf server.
-
+Results will be shown on your iperf server. In the case of 'R' mode, server shows the amount of sent data,
+check the terminal output in this case for the total amount of payload in bytes received over UDP,
+which marks the device's throughput.
 
 Known Issues
 If the iperf3 server shows you that you have 0-bit/s bandwidth, it may be caused due to the version you are using.
-This client works with Iperf v3.6. In case of any more issues, see https://github.com/esnet/iperf/labels/bug. 
-
+This client works with Iperf v3.7. In case of any more issues, see https://github.com/esnet/iperf/labels/bug. 
 
 'R' mode might not work correctly for QCA WiFi.
 
-
+Rx UDP mode ('R') has limited bandwidth by UDP_RX_BANDWIDTH macro as sending UDP packets too fast may cause
+the control TCP socket to lost data and test failure.
+Set the macro to a little bit higher than the device can receive or "0" for no limit.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.40.2
-- GCC ARM Embedded  8.3.1
-- MCUXpresso  11.1.0
+- IAR embedded Workbench  8.50.1
+- GCC ARM Embedded  9.2.1
+- MCUXpresso  11.2.0
 
 Hardware requirements
 =====================
 - 2x Micro USB cable
 - evkbimxrt1050 board
 - Personal Computer
-- Murata 1DX or 1LV M.2 module
+- Murata 1DX M.2 module
 - Murata uSD M.2 Adapter
 - 1 plug to receptable header cable
 

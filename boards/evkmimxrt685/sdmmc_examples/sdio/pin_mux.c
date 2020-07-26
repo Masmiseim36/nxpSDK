@@ -67,6 +67,10 @@ BOARD_InitPins:
     slew_rate: normal, drive: normal, amena: disabled, odena: disabled, iiena: disabled}
   - {pin_num: T13, peripheral: GPIO, signal: 'PIO2, 4', pin_signal: PIO2_4/SD0_WR_PRT/SCT0_OUT2/SD0_DS, pupdena: disabled, pupdsel: pullDown, ibena: disabled, slew_rate: normal,
     drive: normal, amena: disabled, odena: disabled, iiena: disabled}
+  - {pin_num: E16, peripheral: FLEXCOMM15, signal: SCL, pin_signal: PMIC_I2C_SCL, pupdena: enabled, pupdsel: pullUp, ibena: enabled, slew_rate: normal, drive: normal,
+    amena: disabled, odena: enabled, iiena: disabled}
+  - {pin_num: F16, peripheral: FLEXCOMM15, signal: SDA, pin_signal: PMIC_I2C_SDA, pupdena: enabled, pupdsel: pullUp, ibena: enabled, slew_rate: normal, drive: normal,
+    amena: disabled, odena: enabled, iiena: disabled}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
@@ -80,6 +84,48 @@ BOARD_InitPins:
 /* Function assigned for the Cortex-M33 */
 void BOARD_InitPins(void)
 {
+
+    const uint32_t fc15_i2c_scl_config = (/* Pin is configured as I2C_SCL */
+                                          IOPCTL_PIO_FUNC0 |
+                                          /* Enable pull-up / pull-down function */
+                                          IOPCTL_PIO_PUPD_EN |
+                                          /* Enable pull-up function */
+                                          IOPCTL_PIO_PULLUP_EN |
+                                          /* Enables input buffer function */
+                                          IOPCTL_PIO_INBUF_EN |
+                                          /* Normal mode */
+                                          IOPCTL_PIO_SLEW_RATE_NORMAL |
+                                          /* Normal drive */
+                                          IOPCTL_PIO_FULLDRIVE_DI |
+                                          /* Analog mux is disabled */
+                                          IOPCTL_PIO_ANAMUX_DI |
+                                          /* Pseudo Output Drain is enabled */
+                                          IOPCTL_PIO_PSEDRAIN_EN |
+                                          /* Input function is not inverted */
+                                          IOPCTL_PIO_INV_DI);
+    /* FC15_SCL PIN (coords: E16) is configured as I2C SCL */
+    IOPCTL->FC15_I2C_SCL = fc15_i2c_scl_config;
+
+    const uint32_t fc15_i2c_sda_config = (/* Pin is configured as I2C_SDA */
+                                          IOPCTL_PIO_FUNC0 |
+                                          /* Enable pull-up / pull-down function */
+                                          IOPCTL_PIO_PUPD_EN |
+                                          /* Enable pull-up function */
+                                          IOPCTL_PIO_PULLUP_EN |
+                                          /* Enables input buffer function */
+                                          IOPCTL_PIO_INBUF_EN |
+                                          /* Normal mode */
+                                          IOPCTL_PIO_SLEW_RATE_NORMAL |
+                                          /* Normal drive */
+                                          IOPCTL_PIO_FULLDRIVE_DI |
+                                          /* Analog mux is disabled */
+                                          IOPCTL_PIO_ANAMUX_DI |
+                                          /* Pseudo Output Drain is enabled */
+                                          IOPCTL_PIO_PSEDRAIN_EN |
+                                          /* Input function is not inverted */
+                                          IOPCTL_PIO_INV_DI);
+    /* FC15_SDA PIN (coords: F16) is configured as I2C SDA */
+    IOPCTL->FC15_I2C_SDA = fc15_i2c_sda_config;
 
     const uint32_t port0_pin1_config = (/* Pin is configured as FC0_TXD_SCL_MISO_WS */
                                         IOPCTL_PIO_FUNC1 |

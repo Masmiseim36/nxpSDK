@@ -18,10 +18,10 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_INT_IRQn (PIN_INT0_IRQn)
-#define EXAMPLE_SENSOR_INT_GPIO GPIO
-#define EXAMPLE_SENSOR_INT_PORT 1
-#define EXAMPLE_SENSOR_INT_PIN 5
+#define EXAMPLE_INT_IRQn                (PIN_INT0_IRQn)
+#define EXAMPLE_SENSOR_INT_GPIO         GPIO
+#define EXAMPLE_SENSOR_INT_PORT         1
+#define EXAMPLE_SENSOR_INT_PIN          5
 #define EXAMPLE_SENSOR_INT_INPUTMUX_SEL kINPUTMUX_GpioPort1Pin5ToPintsel
 
 /*!< Power down all unnecessary blocks and enable RBB during deep sleep*/
@@ -33,28 +33,28 @@
                          (SYSCTL0_PDSLEEPCFG1_FLEXSPI_SRAM_APD_MASK | SYSCTL0_PDSLEEPCFG1_FLEXSPI_SRAM_PPD_MASK), \
                          EXAMPLE_DEEPSLEEP_RAM_APD, EXAMPLE_DEEPSLEEP_RAM_PPD}))
 /* FXOS8700 and MMA8451 have the same register address */
-#define ACCEL_REG_OUT_X_MSB 0x01
-#define ACCEL_REG_F_SETUP 0x09
-#define ACCEL_REG_TRIG_CFG 0x0A
-#define ACCEL_REG_INT_SOURCE 0x0C
-#define ACCEL_REG_WHO_AM_I 0x0D
+#define ACCEL_REG_OUT_X_MSB    0x01
+#define ACCEL_REG_F_SETUP      0x09
+#define ACCEL_REG_TRIG_CFG     0x0A
+#define ACCEL_REG_INT_SOURCE   0x0C
+#define ACCEL_REG_WHO_AM_I     0x0D
 #define ACCEL_REG_XYZ_DATA_CFG 0x0E
-#define ACCEL_REG_PULSE_CFG 0x21
-#define ACCEL_REG_PULSE_SRC 0x22
-#define ACCEL_REG_PULSE_THSX 0x23
-#define ACCEL_REG_PULSE_THSY 0x24
-#define ACCEL_REG_PULSE_THSZ 0x25
-#define ACCEL_REG_PULSE_TMLT 0x26
-#define ACCEL_REG_PULSE_LTCY 0x27
-#define ACCEL_REG_CTRL1 0x2A
-#define ACCEL_REG_CTRL2 0x2B
-#define ACCEL_REG_CTRL3 0x2C
-#define ACCEL_REG_CTRL4 0x2D
-#define ACCEL_REG_CTRL5 0x2E
+#define ACCEL_REG_PULSE_CFG    0x21
+#define ACCEL_REG_PULSE_SRC    0x22
+#define ACCEL_REG_PULSE_THSX   0x23
+#define ACCEL_REG_PULSE_THSY   0x24
+#define ACCEL_REG_PULSE_THSZ   0x25
+#define ACCEL_REG_PULSE_TMLT   0x26
+#define ACCEL_REG_PULSE_LTCY   0x27
+#define ACCEL_REG_CTRL1        0x2A
+#define ACCEL_REG_CTRL2        0x2B
+#define ACCEL_REG_CTRL3        0x2C
+#define ACCEL_REG_CTRL4        0x2D
+#define ACCEL_REG_CTRL5        0x2E
 
 #define FXOS8700_WHOAMI 0xC7U
-#define MMA8451_WHOAMI 0x1AU
-#define MMA8652_WHOAMI 0x4AU
+#define MMA8451_WHOAMI  0x1AU
+#define MMA8652_WHOAMI  0x4AU
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/

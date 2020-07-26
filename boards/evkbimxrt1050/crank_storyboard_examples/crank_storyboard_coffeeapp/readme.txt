@@ -1,12 +1,12 @@
 Overview
 ========
-The example demonstrates example GUI developed with Crank Storyboard Engine.
+This sample demonstrates the Storyboard engine in its low memory configuration while still providing a high-performance UI.
 
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.40.2
-- MCUXpresso  11.1.0
+- IAR embedded Workbench  8.50.1
+- MCUXpresso  11.2.0
 
 Hardware requirements
 =====================
@@ -36,7 +36,7 @@ Running the demo
 Following text is displayed in the console:
 ***********************************************
 * Crank Software Storyboard Demo
-* Storyboard Runtime version :6.0.0 build 0
+* Storyboard Runtime version :6.2.0 build 0
 * Target platform : IMXRT1050-EVKB
 * Target OS : FreeRTOS V10.2.1
 * Target Filesystem : SBVFS

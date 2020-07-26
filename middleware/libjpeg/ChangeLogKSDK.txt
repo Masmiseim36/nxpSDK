@@ -4,15 +4,14 @@
 @section LibJpeg LigJpeg for KSDK
 Current version is LigJpeg 9b.
 
- - 9b_rev1
-   - New Feature:
-     - The configuration file libjpeg/inc/jmorecfg.h could include user defined
-       header file to override pixel format configuration.
+  - 9b_rev1
+    - New Feature:
+      - The configuration file libjpeg/inc/jmorecfg.h could include user defined header file to override pixel format configuration.
 
- - 9b_rev0
-  - Initial version. Changes when integrate with SDK:
-    - In libjpeg/inc/jinclude.h line 88-96, map JFREAD and JFWRITE to FATFS f_read and f_write
-    - In libjpeg/inc/jmorecfg.h line 397-406, change RGB color offset.
-    - In libjpeg/src/jerror.c line 79-81, don't call function exit.
+  - 9b_rev0
+    - Initial version. Changes when integrate with SDK:
+      - In libjpeg/inc/jinclude.h line 88-96, map JFREAD and JFWRITE to FATFS f_read and f_write
+      - In libjpeg/inc/jmorecfg.h line 397-406, change RGB color offset.
+      - In libjpeg/src/jerror.c line 79-81, don't call function exit.
 
 */

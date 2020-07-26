@@ -463,44 +463,11 @@ std::string PosixPath(const char *path);
 
 // This function ensure a directory exists, by recursively
 // creating dirs for any parts of the path that don't exist yet.
-inline void EnsureDirExists(const std::string &filepath) {
-  auto parent = StripFileName(filepath);
-  if (parent.length()) EnsureDirExists(parent);
-    // clang-format off
-
-  #ifdef _WIN32
-    (void)_mkdir(filepath.c_str());
-  #elif defined(__ICCARM__) || defined(__ARMCC_VERSION)
-    // Do nothing
-  #else
-    mkdir(filepath.c_str(), S_IRWXU|S_IRGRP|S_IXGRP);
-  #endif
-  // clang-format on
-}
+void EnsureDirExists(const std::string &filepath);
 
 // Obtains the absolute path from any other path.
 // Returns the input path if the absolute path couldn't be resolved.
-inline std::string AbsolutePath(const std::string &filepath) {
-  // clang-format off
-
-  #ifdef FLATBUFFERS_NO_ABSOLUTE_PATH_RESOLUTION
-    return filepath;
-  #else
-    #ifdef _WIN32
-      char abs_path[MAX_PATH];
-      return GetFullPathNameA(filepath.c_str(), MAX_PATH, abs_path, nullptr)
-    #elif defined(__ICCARM__) || defined(__ARMCC_VERSION) || !defined(PATH_MAX)
-      char abs_path[] = {0};
-      return true
-    #else
-      char abs_path[PATH_MAX];
-      return realpath(filepath.c_str(), abs_path)
-    #endif
-      ? abs_path
-      : filepath;
-  #endif // FLATBUFFERS_NO_ABSOLUTE_PATH_RESOLUTION
-  // clang-format on
-}
+std::string AbsolutePath(const std::string &filepath);
 
 // To and from UTF-8 unicode conversion functions
 

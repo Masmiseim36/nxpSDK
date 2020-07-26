@@ -16,6 +16,7 @@
 #include "semphr.h"
 #include "task.h"
 #include "board.h"
+#include "sdmmc_config.h"
 
 #include "pin_mux.h"
 #include "clock_config.h"
@@ -82,35 +83,6 @@ static FIL g_fileObject;   /* File object */
 static uint32_t s_taskSleepTicks = portMAX_DELAY;
 static const uint8_t s_buffer1[] = {'T', 'A', 'S', 'K', '1', '\r', '\n'};
 static const uint8_t s_buffer2[] = {'T', 'A', 'S', 'K', '2', '\r', '\n'};
-/*! @brief SDMMC host detect card configuration */
-static const sdmmchost_detect_card_t s_sdCardDetect = {
-#ifndef BOARD_SD_DETECT_TYPE
-    .cdType = kSDMMCHOST_DetectCardByGpioCD,
-#else
-    .cdType = BOARD_SD_DETECT_TYPE,
-#endif
-    .cdTimeOut_ms = (~0U),
-    .cardInserted = SDCARD_DetectCallBack,
-    .cardRemoved  = SDCARD_DetectCallBack,
-};
-
-/*! @brief SDMMC card power control configuration */
-#if defined DEMO_SDCARD_POWER_CTRL_FUNCTION_EXIST
-static const sdmmchost_pwr_card_t s_sdCardPwrCtrl = {
-    .powerOn          = BOARD_PowerOnSDCARD,
-    .powerOnDelay_ms  = 500U,
-    .powerOff         = BOARD_PowerOffSDCARD,
-    .powerOffDelay_ms = 0U,
-};
-#endif
-
-/*! @brief SDMMC card power control configuration */
-#if defined DEMO_SDCARD_SWITCH_VOLTAGE_FUNCTION_EXIST
-static const sdmmchost_card_switch_voltage_func_t s_sdCardVoltageSwitch = {
-    .cardSignalLine1V8 = BOARD_USDHC_Switch_VoltageTo1V8,
-    .cardSignalLine3V3 = BOARD_USDHC_Switch_VoltageTo3V3,
-};
-#endif
 /*! @brief SD card detect flag  */
 static volatile bool s_cardInserted     = false;
 static volatile bool s_cardInsertStatus = false;
@@ -120,44 +92,6 @@ static SemaphoreHandle_t s_CardDetectSemaphore = NULL;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-#if defined DEMO_SDCARD_SWITCH_VOLTAGE_FUNCTION_EXIST
-const sdmmchost_card_switch_voltage_func_t g_sdCardVoltageSwitch = {
-    .cardSignalLine1V8 = BOARD_USDHC_Switch_VoltageTo1V8,
-    .cardSignalLine3V3 = BOARD_USDHC_Switch_VoltageTo3V3,
-};
-#endif
-
-static void BOARD_USDHCClockConfiguration(void)
-{
-    CLOCK_InitSysPll(&sysPllConfig_BOARD_BootClockRUN);
-    /*configure system pll PFD0 fractional divider to 24, output clock is 528MHZ * 18 / 24 = 396 MHZ*/
-    CLOCK_InitSysPfd(kCLOCK_Pfd0, 24U);
-    /* Configure USDHC clock source and divider */
-    CLOCK_SetDiv(kCLOCK_Usdhc1Div, 0U);
-    CLOCK_SetMux(kCLOCK_Usdhc1Mux, 1U);
-}
-
-void BOARD_PowerOffSDCARD(void)
-{
-    /*
-        Do nothing here.
-
-        SD card will not be detected correctly if the card VDD is power off,
-       the reason is caused by card VDD supply to the card detect circuit, this issue is exist on EVK board rev A1 and
-       A2.
-
-        If power off function is not implemented after soft reset and prior to SD Host initialization without
-       remove/insert card,
-       a UHS-I card may not reach its highest speed mode during the second card initialization.
-       Application can avoid this issue by toggling the SD_VDD (GPIO) before the SD host initialization.
-    */
-}
-
-void BOARD_PowerOnSDCARD(void)
-{
-    BOARD_USDHC_SDCARD_POWER_CONTROL(true);
-}
-
 static void SDCARD_DetectCallBack(bool isInserted, void *userData)
 {
     s_cardInsertStatus = isInserted;
@@ -169,15 +103,8 @@ static void CardDetectTask(void *pvParameters)
     s_fileAccessSemaphore = xSemaphoreCreateBinary();
     s_CardDetectSemaphore = xSemaphoreCreateBinary();
 
-    g_sd.host.base           = SD_HOST_BASEADDR;
-    g_sd.host.sourceClock_Hz = SD_HOST_CLK_FREQ;
-    g_sd.usrParam.cd         = &s_sdCardDetect;
-#if defined DEMO_SDCARD_POWER_CTRL_FUNCTION_EXIST
-    g_sd.usrParam.pwr = &s_sdCardPwrCtrl;
-#endif
-#if defined DEMO_SDCARD_SWITCH_VOLTAGE_FUNCTION_EXIST
-    g_sd.usrParam.cardVoltage = &s_sdCardVoltageSwitch;
-#endif
+    BOARD_SD_Config(&g_sd, SDCARD_DetectCallBack, BOARD_SDMMC_SD_HOST_IRQ_PRIORITY, NULL);
+
     /* SD host init function */
     if (SD_HostInit(&g_sd) == kStatus_Success)
     {
@@ -191,13 +118,13 @@ static void CardDetectTask(void *pvParameters)
                     s_cardInserted = s_cardInsertStatus;
 
                     /* power off card */
-                    SD_PowerOffCard(g_sd.host.base, g_sd.usrParam.pwr);
+                    SD_SetCardPower(&g_sd, false);
 
                     if (s_cardInserted)
                     {
                         PRINTF("\r\nCard inserted.\r\n");
                         /* power on the card */
-                        SD_PowerOnCard(g_sd.host.base, g_sd.usrParam.pwr);
+                        SD_SetCardPower(&g_sd, true);
                         /* make file system */
                         if (DEMO_MakeFileSystem() != kStatus_Success)
                         {
@@ -231,9 +158,7 @@ int main(void)
     BOARD_ConfigMPU();
     BOARD_InitPins();
     BOARD_BootClockRUN();
-    BOARD_USDHCClockConfiguration();
     BOARD_InitDebugConsole();
-    NVIC_SetPriority(BOARD_SD_HOST_IRQ, 5U);
 
     PRINTF("\r\nSDCARD fatfs freertos example.\r\n");
 
@@ -287,7 +212,7 @@ static status_t DEMO_MakeFileSystem(void)
 
 #if FF_USE_MKFS
     PRINTF("\r\nMake file system......The time may be long if the card capacity is big.\r\n");
-    if (f_mkfs(driverNumberBuffer, FM_ANY, 0U, work, sizeof work))
+    if (f_mkfs(driverNumberBuffer, 0, work, sizeof work))
     {
         PRINTF("Make file system failed.\r\n");
         return kStatus_Fail;

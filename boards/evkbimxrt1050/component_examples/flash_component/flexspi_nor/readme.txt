@@ -5,10 +5,10 @@ external flash device.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.40.2
-- Keil MDK  5.29
-- GCC ARM Embedded  8.3.1
-- MCUXpresso  11.1.0
+- IAR embedded Workbench  8.50.1
+- Keil MDK  5.30
+- GCC ARM Embedded  9.2.1
+- MCUXpresso  11.2.0
 
 Hardware requirements
 =====================
@@ -39,23 +39,31 @@ The log below shows the output of the hello world demo in the terminal window:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ***NOR Flash Component Demo Start!***
 
-***NOR Flash Initialization Start!***
-
-***NOR Flash Initialization Success!***
-
-***NOR Flash Erase Chip Start!***
-
 
 ***NOR Flash Page 0 Read/Write Success!***
 
 
 ***NOR Flash Page 1 Read/Write Success!***
-.....
-.....
-***NOR Flash Page 254 Read/Write Success!***
 
 
-***NOR Flash Page 255 Read/Write Success!***
+***NOR Flash Page 2 Read/Write Success!***
+
+
+***NOR Flash Page 3 Read/Write Success!***
+
+.....
+
+
+***NOR Flash Page 12 Read/Write Success!***
+
+
+***NOR Flash Page 13 Read/Write Success!***
+
+
+***NOR Flash Page 14 Read/Write Success!***
+
+
+***NOR Flash Page 15 Read/Write Success!***
 
 ***NOR Flash All Pages Read/Write Success!***
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

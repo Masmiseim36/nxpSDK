@@ -1,31 +1,31 @@
 /*
- * Copyright 2017-2019 NXP
+ * Copyright 2017-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "bootloader/bl_context.h"
+#include "bl_context.h"
 #if BL_FEATURE_RELIABLE_UPDATE
-#include "bootloader/bl_reliable_update.h"
+#include "bl_reliable_update.h"
 #endif
 #include "bootloader_common.h"
+#include "fsl_assert.h"
 #include "fsl_device_registers.h"
-#include "lpuart/fsl_lpuart.h"
-#include "utilities/fsl_assert.h"
+#include "fsl_lpuart.h"
 #if BL_ENABLE_CRC_CHECK
-#include "bootloader/bl_app_crc_check.h"
+#include "bl_app_crc_check.h"
 #endif
 #if BL_FEATURE_FLEXSPI_NOR_MODULE || BL_FEATURE_SPINAND_MODULE
-#include "flexspi/fsl_flexspi.h"
-#include "flexspi_nor/flexspi_nor_flash.h"
+#include "bl_flexspi.h"
+#include "flexspi_nor_flash.h"
 #endif // #if BL_FEATURE_FLEXSPI_NOR_MODULE || BL_FEATURE_SPINAND_MODULE
 #if BL_FEATURE_SPI_NOR_EEPROM_MODULE
-#include "memory/src/spi_nor_eeprom_memory.h"
 #include "microseconds.h"
+#include "spi_nor_eeprom_memory.h"
 #endif // BL_FEATURE_SPI_NOR_EEPROM_MODULE
 #if BL_FEATURE_SEMC_NAND_MODULE || BL_FEATURE_SEMC_NOR_MODULE
-#include "semc/fsl_semc.h"
+#include "bl_semc.h"
 #endif // #if BL_FEATURE_SEMC_NAND_MODULE || BL_FEATURE_SEMC_NOR_MODULE
 #include "bl_api.h"
 #include "fusemap.h"
@@ -1023,7 +1023,7 @@ void init_hardware(void)
     IOMUXC_GPR->GPR31 = 0;
     IOMUXC_GPR->GPR32 = 0;
 
-#ifdef _DEBUG
+#if defined(_DEBUG) && defined(DEBUG_UART)
     IOMUXC->SW_MUX_CTL_PAD[kIOMUXC_SW_MUX_CTL_PAD_GPIO_AD_B0_12] = 2;
     IOMUXC->SW_MUX_CTL_PAD[kIOMUXC_SW_MUX_CTL_PAD_GPIO_AD_B0_13] = 2;
     IOMUXC->SW_PAD_CTL_PAD[kIOMUXC_SW_MUX_CTL_PAD_GPIO_AD_B0_12] = 0x10f1;
@@ -1034,10 +1034,17 @@ void init_hardware(void)
     lpuartConfig.enableRx = true;
     lpuartConfig.enableTx = true;
 
-    LPUART_Init(DEBUG_UART, &lpuartConfig, 20000000u);
+    LPUART_Init(PRINT_UART, &lpuartConfig, 20000000u);
 
 #endif
 }
+
+#if defined(_DEBUG) && defined(DEBUG_UART)
+void debug_uart_print(const uint8_t *buffer, uint32_t lengthInBytes)
+{
+    LPUART_WriteBlocking(PRINT_UART, buffer, lengthInBytes);
+}
+#endif
 
 void deinit_hardware(void)
 {
@@ -1452,6 +1459,16 @@ status_t update_image_state(uint32_t state)
         api_update_swap_meta(&swap_meta);
         return kStatus_Success;
     }
+    else if (state == kSwapType_Rollback)
+    {
+        swap_meta.copy_status = kCopyStatus_Done;
+        swap_meta.swap_type = kSwapType_Test;
+        swap_meta.confirm_info = 0;
+        swap_meta.swap_progress.swap_offset = 0;
+        swap_meta.swap_progress.swap_status = kSwapStage_Done;
+        status = api_update_swap_meta(&swap_meta);
+        return status;
+    }
     else
     {
         return kStatus_InvalidArgument;
@@ -1494,6 +1511,16 @@ status_t update_image_state_user_api(uint32_t state, flash_driver_interface_t *f
         swap_meta.swap_progress.swap_status = kSwapStage_NotStarted;
         swap_meta.confirm_info = kImageConfirm_Okay;
         swap_meta.swap_type = kSwapType_Permanent;
+        status = app_api_update_swap_meta(&swap_meta, flashIf);
+        return status;
+    }
+    else if (state == kSwapType_Rollback)
+    {
+        swap_meta.copy_status = kCopyStatus_Done;
+        swap_meta.swap_type = kSwapType_Test;
+        swap_meta.confirm_info = 0;
+        swap_meta.swap_progress.swap_offset = 0;
+        swap_meta.swap_progress.swap_status = kSwapStage_Done;
         status = app_api_update_swap_meta(&swap_meta, flashIf);
         return status;
     }

@@ -7,18 +7,22 @@
 *
 ********************************************************************************
 *
+* This software is delivered "as is" and shows the usage of other software 
+* components. It is provided as an example software which is intended to be 
+* modified and extended according to particular requirements.
+* 
+* TARA Systems hereby disclaims all warranties and conditions with regard to the
+* software, including all implied warranties and conditions of merchantability 
+* and non-infringement of any third party IPR or other rights which may result 
+* from the use or the inability to use the software.
+*
 * This file was generated automatically by Embedded Wizard Studio.
 *
 * Please do not make any modifications of this file! The modifications are lost
 * when the file is generated again by Embedded Wizard Studio!
 *
-* The template of this heading text can be found in the file 'head.ewt' in the
-* directory 'Platforms' of your Embedded Wizard installation directory. If you
-* wish to adapt this text, please copy the template file 'head.ewt' into your
-* project directory and edit the copy only. Please avoid any modifications of
-* the original template file!
-*
-* Version  : 9.20
+* Version  : 9.30
+* Date     : 14.02.2020  8:00:50
 * Profile  : iMX_RT
 * Platform : NXP.iMX_RT.RGB565
 *
@@ -39,6 +43,9 @@ void ApplicationApplication__Init( ApplicationApplication _this, XObject aLink, 
   /* At first initialize the super class ... */
   CoreRoot__Init( &_this->_Super, aLink, aArg );
 
+  /* Allow the Immediate Garbage Collection to evalute the members of this class. */
+  _this->_GCT = EW_CLASS_GCT( ApplicationApplication );
+
   /* ... then construct all embedded objects */
   AcceleratorAccelerator__Init( &_this->Accelerator, &_this->_XObject, 0 );
 
@@ -54,7 +61,7 @@ void ApplicationApplication__Init( ApplicationApplication _this, XObject aLink, 
   _this->Accelerator.NoOfRGB565BmpOpacity = 10;
   _this->Accelerator.NoOfNativeBmpOpacity = 10;
   _this->Accelerator.NoOfAlpha8Bmp = 0;
-  CoreGroup__Add( _this, ((CoreView)&_this->Accelerator ), 0 );
+  CoreGroup_Add((CoreGroup)_this, ((CoreView)&_this->Accelerator ), 0 );
 }
 
 /* Re-Initializer for the class 'Application::Application' */
@@ -71,7 +78,7 @@ void ApplicationApplication__ReInit( ApplicationApplication _this )
 void ApplicationApplication__Done( ApplicationApplication _this )
 {
   /* Finalize this class */
-  _this->_VMT = EW_CLASS( ApplicationApplication );
+  _this->_Super._VMT = EW_CLASS( CoreRoot );
 
   /* Finalize all embedded objects */
   AcceleratorAccelerator__Done( &_this->Accelerator );
@@ -86,7 +93,7 @@ EW_END_OF_CLASS_VARIANTS( ApplicationApplication )
 
 /* Virtual Method Table (VMT) for the class : 'Application::Application' */
 EW_DEFINE_CLASS( ApplicationApplication, CoreRoot, Accelerator, Accelerator, Accelerator, 
-                 Accelerator, _None, "Application::Application" )
+                 Accelerator, _None, _None, "Application::Application" )
   CoreRectView_initLayoutContext,
   CoreRoot_GetRoot,
   CoreRoot_Draw,
@@ -103,10 +110,6 @@ EW_DEFINE_CLASS( ApplicationApplication, CoreRoot, Accelerator, Accelerator, Acc
   CoreGroup_UpdateLayout,
   CoreGroup_UpdateViewState,
   CoreRoot_InvalidateArea,
-  CoreRoot_RestackBehind,
-  CoreRoot_RestackTop,
-  CoreRoot_Restack,
-  CoreRoot_Add,
 EW_END_OF_CLASS( ApplicationApplication )
 
 /* Embedded Wizard */

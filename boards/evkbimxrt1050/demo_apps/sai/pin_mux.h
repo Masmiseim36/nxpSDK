@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP
+ * Copyright 2019-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -121,6 +121,10 @@ void BOARD_InitBootPins(void);
 #define BOARD_SD_CD_SW_GPIO                                                GPIO2   /*!< GPIO device name: GPIO2 */
 #define BOARD_SD_CD_SW_PORT                                                GPIO2   /*!< PORT device name: GPIO2 */
 #define BOARD_SD_CD_SW_PIN                                                   28U   /*!< GPIO2 pin index: 28 */
+
+/* GPIO_B0_13 (coord D10), LCDIF_D9/BT_CFG[9] */
+#define BOARD_LCDIF_D9_PERIPHERAL                                            ARM   /*!< Device name: ARM */
+#define BOARD_LCDIF_D9_SIGNAL                                      arm_trace_swo   /*!< ARM signal: arm_trace_swo */
 
 
 /*!

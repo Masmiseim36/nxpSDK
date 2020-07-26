@@ -29,7 +29,7 @@
             <value flag="-D">
               <ListEntry key="NDEBUG" value=""/>
               <ListEntry key="SDK_DEBUGCONSOLE" value="1"/>
-              <ListEntry key="SERIAL_PORT_TYPE_UART=1" value=""/>
+              <ListEntry key="SERIAL_PORT_TYPE_UART" value="1"/>
               <ListEntry key="DEBUG_CONSOLE_RX_ENABLE" value="0"/>
               <ListEntry key="CPU_MIMXRT685SFVKB_dsp" value=""/>
             </value>

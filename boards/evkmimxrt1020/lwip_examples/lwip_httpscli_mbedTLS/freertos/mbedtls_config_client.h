@@ -8,9 +8,8 @@
  *  memory footprint.
  *
  *  Copyright (C) 2006-2015, ARM Limited, All Rights Reserved
- *  Copyright 2016-2017 NXP, Not a Contribution.
+ *  Copyright 2016-2020 NXP, Not a Contribution.
  *  SPDX-License-Identifier: Apache-2.0
- *  Copyright 2017 NXP. Not a Contribution
  *
  *  Licensed under the Apache License, Version 2.0 (the "License"); you may
  *  not use this file except in compliance with the License.
@@ -2226,9 +2225,8 @@ void *pvPortCalloc(size_t num, size_t size); /*Calloc for HEAP3.*/
 #define MBEDTLS_CTR_DRBG_C
 #elif defined(MBEDTLS_AES_ALT_NO_256)
 /* This macros will add support for CTR_DRBG using AES-128 for crypto engines
- * without AES-256 capability. Please note, that selftest will not pass when
- * this option is enabled, since AES-256 is required by the specification of CTR_DRBG. */
-#define MBEDTLS_CTR_DRBG_KEYSIZE            16 /**< The key size used by the cipher. */
+ * without AES-256 capability.  */
+#define MBEDTLS_CTR_DRBG_USE_128_BIT_KEY
 #define MBEDTLS_CTR_DRBG_C
 #endif
 

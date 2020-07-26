@@ -34,7 +34,12 @@
 /*******************************************************************************
  * Includes
  ******************************************************************************/
+#ifdef HAVE_FREERTOS
+#include "FreeRTOS.h"
+#include "task.h"
+#else
 #include <xtensa/xos.h>
+#endif
 
 #include "audio/xa-capturer-api.h"
 #include "xf-debug.h"
@@ -82,7 +87,7 @@ typedef struct XACapturer
     void                       *output;
 
     /* ...pointer to DMA FIFO buffer */
-    UWORD8                     *fifo_head;
+    UWORD8                     *fifo_head[2];
 
     /* ...number of samples produced */
     UWORD32                     produced;
@@ -123,9 +128,13 @@ typedef struct XACapturer
     UWORD32                     captureIndex;
     WORD32                      rxBufIndex;
 
+#ifdef HAVE_FREERTOS
+    TaskHandle_t                irq_thread;
+#else
     XosThread                   irq_thread;
     XosSem                      irq_sem;
     UWORD8                      irq_stack[1024];
+#endif
 
 } XACapturer;
 
@@ -141,15 +150,6 @@ typedef struct XACapturer
 /*******************************************************************************
 * Variables
 ******************************************************************************/
-/* Receive ping pong buffer for audio data */
-#ifdef CPU_MIMXRT595SFFOA_dsp
-SDK_ALIGN(
-#else
-AT_NONCACHEABLE_SECTION_ALIGN(
-#endif
-    static uint8_t g_rxBufferI2S[MAX_FRAME_SIZE * 2 * MAX_CAPTURERS], 4
-);
-
 /* DMA descriptors for data tranfers */
 #ifdef CPU_MIMXRT595SFFOA_dsp
 SDK_ALIGN(
@@ -203,13 +203,22 @@ static uint32_t dma_calc_num_descriptors(XACapturer *d)
     return num_descriptors;
 }
 
-static int RxCaptureCallback(void *arg, int wake_value)
+#ifdef HAVE_FREERTOS
+void RxCaptureCallback(void *arg)
+#else
+int RxCaptureCallback(void *arg, int wake_value)
+#endif
 {
     XACapturer *d = (XACapturer*) arg;
 
     while (1)
     {
+#ifdef HAVE_FREERTOS
+        xTaskNotifyWait(pdFALSE, 0xffffff, NULL, portMAX_DELAY);
+#else
         xos_sem_get(&d->irq_sem);
+#endif
+
         d->cdata->cb(d->cdata, 0);
     }
 }
@@ -217,6 +226,9 @@ static int RxCaptureCallback(void *arg, int wake_value)
 static void RxCaptureCallbackISR(struct _dma_handle *handle, void *userData, bool transferDone, uint32_t intmode)
 {
     XACapturer *d = (XACapturer*) userData;
+#ifdef HAVE_FREERTOS
+    BaseType_t woken = pdFALSE;
+#endif
 
     if (transferDone)
     {
@@ -227,7 +239,13 @@ static void RxCaptureCallbackISR(struct _dma_handle *handle, void *userData, boo
         if (d->over_flow_flag == 0)
         {
             d->over_flow_flag = 1;
+
+#ifdef HAVE_FREERTOS
+            xTaskNotifyFromISR(d->irq_thread, 0, eNoAction, &woken);
+            portYIELD_FROM_ISR(woken);
+#else
             xos_sem_put(&d->irq_sem);
+#endif
         }
         else
         {
@@ -257,7 +275,7 @@ static void evk_i2s_config(void* ptr)
 {
     i2s_config_t rxConfig;
     dma_channel_config_t transferConfig;
-    uint32_t num_descriptors, tx_size, buf_index, next_desc;
+    uint32_t num_descriptors, tx_size, buf_index, next_desc, fifo_index;
     bool mono, enable_int;
 
     XACapturer *d = (XACapturer*) ptr;
@@ -320,7 +338,7 @@ static void evk_i2s_config(void* ptr)
 
     DMA_PrepareChannelTransfer(&transferConfig,
                                (void *)&i2s_device_map[d->i2s_device]->FIFORD,
-                               &d->fifo_head[0],
+                               d->fifo_head[0],
                                DMA_CHANNEL_XFER(true, false, enable_int, false, 4U, kDMA_AddressInterleave0xWidth, kDMA_AddressInterleave1xWidth, tx_size),
                                kDMA_PeripheralToMemory,
                                NULL,
@@ -338,18 +356,20 @@ static void evk_i2s_config(void* ptr)
         {
             buf_index = 0;
             next_desc = 0;
+            fifo_index = 0;
         }
         else
         {
-            buf_index = tx_size * (i + 1);
+            buf_index = tx_size * ((i + 1) % num_descriptors);
             next_desc = i + 1;
+            fifo_index = (i < (num_descriptors - 1)) ? 0 : 1;
         }
 
         DMA_SetupDescriptor(&d->dmaDescriptor[i],
                             DMA_CHANNEL_XFER(true, false, enable_int, false, 4U, kDMA_AddressInterleave0xWidth,
                             kDMA_AddressInterleave1xWidth, tx_size),
                             (void *)&i2s_device_map[d->i2s_device]->FIFORD,
-                            &d->fifo_head[buf_index],
+                            d->fifo_head[fifo_index] + buf_index,
                             &d->dmaDescriptor[next_desc]);
     }
 }
@@ -378,11 +398,14 @@ static XA_ERRORCODE evk_hw_capturer_init(void* ptr)
         return XA_CAPTURER_CONFIG_FATAL_HW;
     }
 
-    d->fifo_head = &g_rxBufferI2S[MAX_FRAME_SIZE * i];
     d->dmaDescriptor = &s_dmaDescriptorPingpongI2S[MAX_CAPTURERS * i];
 
+#ifdef HAVE_FREERTOS
+    xTaskCreate(RxCaptureCallback, "RxCaptureCallback", 1024, d, configMAX_PRIORITIES - 1, &d->irq_thread);
+#else
     xos_sem_create(&d->irq_sem, 0, 0);
     xos_thread_create(&d->irq_thread, NULL, RxCaptureCallback, d, "RxCaptureCallback", d->irq_stack, sizeof(d->irq_stack), XOS_MAX_PRIORITY - 1, 0, 0);
+#endif
 
     evk_i2s_config(ptr);
 
@@ -394,8 +417,6 @@ static XA_ERRORCODE evk_hw_capturer_init(void* ptr)
  ******************************************************************************/
 static inline void xa_hw_capturer_close(XACapturer *d)
 {
-    int32_t exitcode;
-
     DMA_DisableChannelInterrupts(DMA_CAPTURER, dma_channel_map[d->i2s_device]);
     DMA_AbortTransfer(&d->i2sRxDmaHandle);
 
@@ -407,11 +428,15 @@ static inline void xa_hw_capturer_close(XACapturer *d)
 
     g_captureIndexMap[d->captureIndex] = 0;
 
+#ifdef HAVE_FREERTOS
+    vTaskDelete(d->irq_thread);
+#else
     xos_sem_delete(&d->irq_sem);
 
     xos_thread_abort(&d->irq_thread, 0);
-    xos_thread_join(&d->irq_thread, &exitcode);
+    xos_thread_join(&d->irq_thread, NULL);
     xos_thread_delete(&d->irq_thread);
+#endif
 }
 
 /* ...submit data (in samples) into internal capturer ring-buffer */
@@ -707,6 +732,16 @@ static XA_ERRORCODE xa_capturer_set_config_param(XACapturer *d, WORD32 i_idx, pV
         d->i2s_ws_polarity = i_value;
         return XA_NO_ERROR;
 
+    case XA_CAPTURER_CONFIG_PARAM_AUDIO_BUFFER_1:
+        XF_CHK_ERR((d->state & XA_CAPTURER_FLAG_POSTINIT_DONE) == 0, XA_CAPTURER_CONFIG_FATAL_STATE);
+        d->fifo_head[0] = (UWORD8*) *(UWORD32*)pv_value;
+        return XA_NO_ERROR;
+
+    case XA_CAPTURER_CONFIG_PARAM_AUDIO_BUFFER_2:
+        XF_CHK_ERR((d->state & XA_CAPTURER_FLAG_POSTINIT_DONE) == 0, XA_CAPTURER_CONFIG_FATAL_STATE);
+        d->fifo_head[1] = (UWORD8*) *(UWORD32*)pv_value;
+        return XA_NO_ERROR;
+
     default:
         /* ...unrecognized parameter */
         return XF_CHK_ERR(0, XA_API_FATAL_INVALID_CMD_TYPE);
@@ -777,7 +812,7 @@ static UWORD32 xa_hw_capturer_read_FIFO(XACapturer *d)
     d->over_flow_flag = 0;
 
     /* Copy data from DMA buffer to XAF output buffer */
-    memcpy(d->output, &d->fifo_head[d->rxBufIndex * d->frame_size], d->frame_size);
+    memcpy(d->output, d->fifo_head[d->rxBufIndex], d->frame_size);
 
     /* Flip ping pong buffer for the next DMA transfer */
     d->rxBufIndex = (d->rxBufIndex + 1) % 2;

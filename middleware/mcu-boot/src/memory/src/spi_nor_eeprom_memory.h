@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015 Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -9,8 +9,8 @@
 #ifndef __SPI_NOR_EEPROM_MEMORY_H__
 #define __SPI_NOR_EEPROM_MEMORY_H__
 
-#include "memory/memory.h"
-#include "serial_nor_eeprom/serial_nor_eeprom.h"
+#include "memory.h"
+#include "serial_nor_eeprom.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 // Declarations

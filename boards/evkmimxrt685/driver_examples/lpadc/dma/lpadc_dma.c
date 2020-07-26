@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 NXP
+ * Copyright 2018-2020 NXP
  * All rights reserved.
  *
  *
@@ -17,20 +17,19 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_LPADC_BASE ADC0
-#define DEMO_LPADC_USER_CHANNEL 0U
-#define DEMO_LPADC_USER_CMDID 1U /* The available command number are 1-15 */
+#define DEMO_LPADC_BASE             ADC0
+#define DEMO_LPADC_USER_CHANNEL     0U
+#define DEMO_LPADC_USER_CMDID       1U /* The available command number are 1-15 */
 #define DEMO_LPADC_RESFIFO_REG_ADDR (uint32_t)(&(ADC0->RESFIFO))
+#define DEMO_RESULT_FIFO_READY_FLAG  kLPADC_ResultFIFOReadyFlag
 
-#define DEMO_DMA_BASE DMA0
-#define DEMO_DMA_ADC_CHANNEL 0U
-#define DEMO_DMA_TRANSFER_TYPE kDMA_MemoryToMemory
+#define DEMO_DMA_BASE             DMA0
+#define DEMO_DMA_ADC_CHANNEL      0U
+#define DEMO_DMA_TRANSFER_TYPE    kDMA_MemoryToMemory
 #define DEMO_DMA_HARDWARE_TRIGGER true
-#define DEMO_DMA_ADC_CONNECTION kINPUTMUX_AdcToDma0
+#define DEMO_DMA_ADC_CONNECTION   kINPUTMUX_AdcToDma0
 
 #define DEMO_INPUTMUX_BASE INPUTMUX
-/* Resfifo data shift in 12-bit mode. */
-#define DEMO_LPADC_RESFIFO_SHIFT 3U
 #define DMA_DESCRIPTOR_NUM 2U
 
 /*******************************************************************************
@@ -58,7 +57,13 @@ const uint32_t g_XferConfig =
                      kDMA_AddressInterleave0xWidth, /* Dma destination address no interleave  */
                      sizeof(uint32_t)               /* Dma transfer byte. */
     );
-const uint32_t g_Lpadc12bitFullRange = 4096U;
+#if (defined(DEMO_LPADC_USE_HIGH_RESOLUTION) && DEMO_LPADC_USE_HIGH_RESOLUTION)
+const uint32_t g_LpadcFullRange   = 65536U;
+const uint32_t g_LpadcResultShift = 0U;
+#else
+const uint32_t g_LpadcFullRange   = 4096U;
+const uint32_t g_LpadcResultShift = 3U;
+#endif /* DEMO_LPADC_USE_HIGH_RESOLUTION */
 
 /*******************************************************************************
  * Code
@@ -94,7 +99,7 @@ int main(void)
     DMA_Configuration();
     ADC_Configuration();
 
-    PRINTF("ADC Full Range: %d\r\n", g_Lpadc12bitFullRange);
+    PRINTF("ADC Full Range: %d\r\n", g_LpadcFullRange);
 #if defined(FSL_FEATURE_LPADC_HAS_CMDL_CSCALE) && FSL_FEATURE_LPADC_HAS_CMDL_CSCALE
     if (kLPADC_SampleFullScale == g_LpadcCommandConfigStruct.sampleScaleMode)
     {
@@ -113,18 +118,22 @@ int main(void)
         GETCHAR();
 
         g_DmaTransferDoneFlag = false;
-        LPADC_DoSoftwareTrigger(DEMO_LPADC_BASE, 1U); /* Trigger the ADC and start the conversion. */
-#if !(defined(DEMO_DMA_HARDWARE_TRIGGER) && DEMO_DMA_HARDWARE_TRIGGER)
-        SDK_DelayAtLeastUs(100U, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY); /* Wait ADC transfer done. */
+
+        LPADC_DoSoftwareTrigger(DEMO_LPADC_BASE, 1UL); /* Trigger the ADC and start the conversion. */
+
+        /* Wait for the number of valid datawords in the result FIFO is greater than the watermark level. */
+        while ((LPADC_GetStatusFlags(DEMO_LPADC_BASE) & DEMO_RESULT_FIFO_READY_FLAG) == 0UL)
+        {
+        }
         DMA_StartTransfer(&g_DmaHandleStruct); /* Enable the DMA every time for each transfer. */
-#endif                                         /* DEMO_DMA_HARDWARE_TRIGGER */
+
         /* Wait for the converter & transfer to be done. */
         while (false == g_DmaTransferDoneFlag)
         {
         }
         PRINTF("Adc conversion word : 0x%X\r\n", g_AdcConvResult[0]);
         PRINTF("ADC conversion value: %d\r\n",
-               ((uint16_t)(g_AdcConvResult[0] & ADC_RESFIFO_D_MASK) >> DEMO_LPADC_RESFIFO_SHIFT));
+               ((uint16_t)(g_AdcConvResult[0] & ADC_RESFIFO_D_MASK) >> g_LpadcResultShift));
     }
 }
 
@@ -147,14 +156,11 @@ static void ADC_Configuration(void)
 #if defined(FSL_FEATURE_LPADC_HAS_CTRL_CALOFS) && FSL_FEATURE_LPADC_HAS_CTRL_CALOFS
 #if defined(FSL_FEATURE_LPADC_HAS_OFSTRIM) && FSL_FEATURE_LPADC_HAS_OFSTRIM
     /* Request offset calibration. */
-    if (true == DEMO_LPADC_DO_OFFSET_CALIBRATION)
-    {
-        LPADC_DoOffsetCalibration(DEMO_LPADC_BASE);
-    }
-    else
-    {
-        LPADC_SetOffsetValue(DEMO_LPADC_BASE, DEMO_LPADC_OFFSET_VALUE_A, DEMO_LPADC_OFFSET_VALUE_B);
-    }
+#if defined(DEMO_LPADC_DO_OFFSET_CALIBRATION) && DEMO_LPADC_DO_OFFSET_CALIBRATION
+    LPADC_DoOffsetCalibration(DEMO_LPADC_BASE);
+#else
+    LPADC_SetOffsetValue(DEMO_LPADC_BASE, DEMO_LPADC_OFFSET_VALUE_A, DEMO_LPADC_OFFSET_VALUE_B);
+#endif /* DEMO_LPADC_DO_OFFSET_CALIBRATION */
 #endif /* FSL_FEATURE_LPADC_HAS_OFSTRIM */
     /* Request gain calibration. */
     LPADC_DoAutoCalibration(DEMO_LPADC_BASE);
@@ -163,6 +169,9 @@ static void ADC_Configuration(void)
     /* Set conversion CMD configuration. */
     LPADC_GetDefaultConvCommandConfig(&g_LpadcCommandConfigStruct);
     g_LpadcCommandConfigStruct.channelNumber = DEMO_LPADC_USER_CHANNEL;
+#if defined(DEMO_LPADC_USE_HIGH_RESOLUTION) && DEMO_LPADC_USE_HIGH_RESOLUTION
+    g_LpadcCommandConfigStruct.conversionResolutionMode = kLPADC_ConversionResolutionHigh;
+#endif /* DEMO_LPADC_USE_HIGH_RESOLUTION */
     LPADC_SetConvCommandConfig(DEMO_LPADC_BASE, DEMO_LPADC_USER_CMDID, &g_LpadcCommandConfigStruct);
 
     /* Set trigger configuration. */
@@ -184,8 +193,6 @@ static void DMA_Configuration(void)
     dma_channel_config_t dmaChannelConfigStruct;
 
 #if defined(DEMO_DMA_HARDWARE_TRIGGER) && DEMO_DMA_HARDWARE_TRIGGER
-    dma_channel_trigger_t dmaChannelTriggerStruct;
-
     /* Configure INPUTMUX. */
     INPUTMUX_Init(DEMO_INPUTMUX_BASE);
     INPUTMUX_AttachSignal(DEMO_INPUTMUX_BASE, DEMO_DMA_ADC_CHANNEL, DEMO_DMA_ADC_CONNECTION);
@@ -197,23 +204,13 @@ static void DMA_Configuration(void)
     DMA_CreateHandle(&g_DmaHandleStruct, DEMO_DMA_BASE, DEMO_DMA_ADC_CHANNEL);
     DMA_SetCallback(&g_DmaHandleStruct, DEMO_DMA_Callback, NULL);
 
-#if defined(DEMO_DMA_HARDWARE_TRIGGER) && DEMO_DMA_HARDWARE_TRIGGER
-    dmaChannelTriggerStruct.burst = kDMA_EdgeBurstTransfer1;
-    dmaChannelTriggerStruct.type  = kDMA_RisingEdgeTrigger;
-    dmaChannelTriggerStruct.wrap  = kDMA_NoWrap;
-#endif /* DEMO_DMA_HARDWARE_TRIGGER */
-
     /* Prepare and submit the transfer. */
-    DMA_PrepareChannelTransfer(&dmaChannelConfigStruct,             /* DMA channel transfer configuration structure. */
-                               (void *)DEMO_LPADC_RESFIFO_REG_ADDR, /* DMA transfer source address. */
-                               (void *)g_AdcConvResult,             /* DMA transfer destination address. */
-                               g_XferConfig,                        /* Xfer configuration */
-                               DEMO_DMA_TRANSFER_TYPE,              /* DMA transfer type. */
-#if defined(DEMO_DMA_HARDWARE_TRIGGER) && DEMO_DMA_HARDWARE_TRIGGER
-                               &dmaChannelTriggerStruct, /* DMA channel trigger configurations. */
-#else
-                               NULL, /* DMA channel trigger configurations. */
-#endif                                                               /* DEMO_DMA_HARDWARE_TRIGGER */
+    DMA_PrepareChannelTransfer(&dmaChannelConfigStruct,              /* DMA channel transfer configuration structure. */
+                               (void *)DEMO_LPADC_RESFIFO_REG_ADDR,  /* DMA transfer source address. */
+                               (void *)g_AdcConvResult,              /* DMA transfer destination address. */
+                               g_XferConfig,                         /* Xfer configuration */
+                               DEMO_DMA_TRANSFER_TYPE,               /* DMA transfer type. */
+                               NULL,                                 /* DMA channel trigger configurations. */
                                (dma_descriptor_t *)&(s_dma_table[0]) /* Address of next descriptor. */
     );
     DMA_SubmitChannelTransfer(&g_DmaHandleStruct, &dmaChannelConfigStruct);

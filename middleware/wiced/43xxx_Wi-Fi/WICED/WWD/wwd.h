@@ -46,7 +46,7 @@
 /******************************************************
  *               Function Declarations
  ******************************************************/
-extern void  host_platform_sdio_irq_callback(USDHC_Type *base);
+extern void  host_platform_sdio_irq_callback(void *userData);
 /******************************************************
  *               Variable Definitions
  ******************************************************/

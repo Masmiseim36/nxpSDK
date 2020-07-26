@@ -248,14 +248,14 @@ const unsigned char wavData[] = {
 #if defined(__cpluscplus)
 extern const uint16_t wavSize = sizeof(wavData) / sizeof(wavData[0]);
 #else
-const uint16_t wavSize = sizeof(wavData) / sizeof(wavData[0]);
+const uint16_t wavSize        = sizeof(wavData) / sizeof(wavData[0]);
 #endif
 
 USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) uint8_t s_wavBuff[AUDIO_ENDPOINT_MAX_PACKET_SIZE];
 uint32_t audioPosition = 0U;
 /*******************************************************************************
-* Code
-******************************************************************************/
+ * Code
+ ******************************************************************************/
 /*!
  * @brief Audio wav data prepare function.
  *
@@ -271,7 +271,7 @@ void USB_AudioRecorderGetBuffer(uint8_t *buffer, uint32_t size)
         {
             audioPosition = 0U;
         }
-        *(buffer + k)= wavData[audioPosition];
+        *(buffer + k) = wavData[audioPosition];
         audioPosition++;
     }
 }

@@ -17,11 +17,11 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_ACMP_IRQ_ID ACMP_IRQn
+#define DEMO_ACMP_IRQ_ID           ACMP_IRQn
 #define DEMO_ACMP_IRQ_HANDLER_FUNC ACMP_IRQHandler
-#define DEMO_ACMP_BASEADDR CMP
-#define DEMO_ACMP_MINUS_INPUT 1U
-#define DEMO_ACMP_PLUS_INPUT 7U /*  Internal 8bit DAC output. */
+#define DEMO_ACMP_BASEADDR         CMP
+#define DEMO_ACMP_MINUS_INPUT      1U
+#define DEMO_ACMP_PLUS_INPUT       7U /*  Internal 8bit DAC output. */
 
 /*******************************************************************************
  * Prototypes
@@ -54,11 +54,7 @@ void DEMO_ACMP_IRQ_HANDLER_FUNC(void)
     {
         /* Unknown interrupt. */
     }
-    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-      exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 /*!

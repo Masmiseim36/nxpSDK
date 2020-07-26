@@ -15,6 +15,7 @@
 #include "task.h"
 
 #include <gre/gre.h>
+#include <gre/sdk/generic_display.h>
 
 /*
  * Static plugin configuration
@@ -51,11 +52,9 @@ sbvfs_get_resource_roots(int *nroots) {
 	return (sbvfs_resource_t **)roots;
 }
 
-sb_ccallback_t *
-sbvfs_get_ccallback_list() {
-  return (sb_ccallback_t *) sb_ccallback_list;
+sb_ccallback_t * sbvfs_get_ccallback_list() {
+	return (sb_ccallback_t *) sb_ccallback_list;
 }
-
 #endif
 
 static void

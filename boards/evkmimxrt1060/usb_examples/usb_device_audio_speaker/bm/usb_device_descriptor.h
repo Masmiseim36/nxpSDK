@@ -16,10 +16,28 @@
 /*! @brief Whether USB Audio use syn mode or not. */
 #define USB_DEVICE_AUDIO_USE_SYNC_MODE (0U)
 
+/*! @brief Whether UAC 5.1 is enabled or not. */
+#define USB_AUDIO_UAC5_1 (0)
+
+#if defined(USB_AUDIO_UAC5_1) && (USB_AUDIO_UAC5_1 > 0U)
+#define USB_AUDIO_UAC5_1_CHANNEL_PAIR_SEL \
+    (0x01) /* 0x01: front left, front right; 0x02: rear left, rear right; 0x03: front center, subwoofer */
+#endif
+
+#define USB_DEVICE_VID (0x1FC9U)
+#define USB_DEVICE_PID (0x0098U)
+
 #define USB_DEVICE_SPECIFIC_BCD_VERSION (0x0200U)
 #define USB_DEVICE_DEMO_BCD_VERSION (0x0101U)
 
 #define USB_DEVICE_MAX_POWER (0x32U)
+
+/*! @brief Workaround for USB audio 2.0 supported by Windows OS. Please set 1 when meets the following conditions:
+    1. device is full speed running audio 2.0
+    2. usb host is Windows OS that supports USB audio 2.0, like Win 10
+    3. use feedback endpoint
+*/
+#define USB_DEVICE_WORKAROUND_AUDIO_20_WINDOWS (0U)
 
 /* usb descriptor length */
 #define USB_DESCRIPTOR_LENGTH_CONFIGURATION_ALL (sizeof(g_UsbDeviceConfigurationDescriptor))
@@ -58,8 +76,8 @@
 #if defined(USB_DEVICE_AUDIO_USE_SYNC_MODE) && (USB_DEVICE_AUDIO_USE_SYNC_MODE > 0U)
 #else
 /*If multiple data endpoints are to be serviced by the same feedback endpoint, the data endpoints must have ascending
-ordered¨Cbut not necessarily consecutive¨Cendpoint numbers. The first data endpoint and the feedback endpoint must have
-the same endpoint number (and opposite direction). for more information, please refer to Universal Serial Bus
+ordered-but not necessarily consecutive–endpoint numbers. The first data endpoint and the feedback endpoint must have
+the same endpoint number (and opposite direction). For more information, please refer to Universal Serial Bus
 Specification, Revision 2.0 chapter 9.6.6*/
 #define USB_AUDIO_SPEAKER_FEEDBACK_ENDPOINT (2)
 #endif
@@ -70,7 +88,11 @@ Specification, Revision 2.0 chapter 9.6.6*/
 #define USB_AUDIO_SPEAKER_STREAM_INTERFACE_COUNT (1)
 
 /* Audio data format */
+#if defined(USB_AUDIO_UAC5_1) && (USB_AUDIO_UAC5_1 > 0U)
+#define AUDIO_FORMAT_CHANNELS (0x06)
+#else
 #define AUDIO_FORMAT_CHANNELS (0x02)
+#endif
 #define AUDIO_FORMAT_BITS (16)
 #define AUDIO_FORMAT_SIZE (0x02)
 
@@ -85,9 +107,13 @@ Specification, Revision 2.0 chapter 9.6.6*/
 #define FS_ISO_OUT_ENDP_PACKET_SIZE (AUDIO_SAMPLING_RATE_KHZ * AUDIO_FORMAT_CHANNELS * AUDIO_FORMAT_SIZE)
 #if defined(USB_DEVICE_AUDIO_USE_SYNC_MODE) && (USB_DEVICE_AUDIO_USE_SYNC_MODE > 0U)
 #else
-#if USBCFG_AUDIO_CLASS_2_0
+#if (USB_DEVICE_CONFIG_AUDIO_CLASS_2_0)
 #define HS_ISO_FEEDBACK_ENDP_PACKET_SIZE (4)
+#if defined(USB_DEVICE_WORKAROUND_AUDIO_20_WINDOWS) && (USB_DEVICE_WORKAROUND_AUDIO_20_WINDOWS > 0)
+#define FS_ISO_FEEDBACK_ENDP_PACKET_SIZE (4)
+#else
 #define FS_ISO_FEEDBACK_ENDP_PACKET_SIZE (3)
+#endif
 #else
 #define HS_ISO_FEEDBACK_ENDP_PACKET_SIZE (3)
 #define FS_ISO_FEEDBACK_ENDP_PACKET_SIZE (3)
@@ -112,15 +138,26 @@ Specification, Revision 2.0 chapter 9.6.6*/
 #define USB_AUDIO_CLASS (0x01)
 #define USB_SUBCLASS_AUDIOCONTROL (0x01)
 #define USB_SUBCLASS_AUDIOSTREAM (0x02)
+#if (USB_DEVICE_CONFIG_AUDIO_CLASS_2_0)
+#define USB_AUDIO_PROTOCOL (0x20)
+#else
 #define USB_AUDIO_PROTOCOL (0x00)
+#endif
 
 #define USB_AUDIO_FORMAT_TYPE_I (0x01)
 #define USB_AUDIO_STREAM_ENDPOINT_DESCRIPTOR (0x25)
 #define USB_AUDIO_EP_GENERAL_DESCRIPTOR_SUBTYPE (0x01)
 
+#if (USB_DEVICE_CONFIG_AUDIO_CLASS_2_0)
+#define USB_AUDIO_CONTROL_CLOCK_SOURCE_UNIT_ID (0x10)
+#define USB_AUDIO_SPEAKER_CONTROL_OUTPUT_TERMINAL_ID (0x40)
+#define USB_AUDIO_SPEAKER_CONTROL_FEATURE_UNIT_ID (0x30)
+#define USB_AUDIO_SPEAKER_CONTROL_INPUT_TERMINAL_ID (0x20)
+#else
 #define USB_AUDIO_SPEAKER_CONTROL_INPUT_TERMINAL_ID (0x01)
 #define USB_AUDIO_SPEAKER_CONTROL_FEATURE_UNIT_ID (0x02)
 #define USB_AUDIO_SPEAKER_CONTROL_OUTPUT_TERMINAL_ID (0x03)
+#endif
 
 /*******************************************************************************
  * API

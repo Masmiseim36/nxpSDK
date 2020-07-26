@@ -116,8 +116,16 @@ var pmsm_evk_imxrt1020 = {
     title   :   "PMSM  Control using evk-imxrt1020",
 }
 
+var pmsm_evk_imxrt1010 = {
+    title   :   "PMSM  Control using evk-imxrt1010",
+}
+
 var pmsm_evk_lpc55s69 = {
     title   :   "PMSM  Control using evk-lpc55s69",
+}
+
+var pmsm_frdm_k32l = {
+    title   :   "PMSM  Control using FRDM-K32L4A",
 }
 
 
@@ -196,11 +204,17 @@ function AppIdenInit()
 	case "pmsm_evk-imxrt1020":
         document.getElementById("title").innerHTML = pmsm_evk_imxrt1020.title;
         break;
+	case "pmsm_evk-imxrt1010":
+        document.getElementById("title").innerHTML = pmsm_evk_imxrt1010.title;
+        break;
 	case "pmsm_evk-imxrt1060":
         document.getElementById("title").innerHTML = pmsm_evk_imxrt1060.title;
         break;
 	case "pmsm_evk-lpc55s69":
         document.getElementById("title").innerHTML = pmsm_evk_lpc55s69.title;
+        break;	
+	case "pmsm_frdm-k32l":
+        document.getElementById("title").innerHTML = pmsm_frdm_k32l.title;
         break;	
     default:
         document.getElementById("title").innerHTML = "PMSM Motor Control";

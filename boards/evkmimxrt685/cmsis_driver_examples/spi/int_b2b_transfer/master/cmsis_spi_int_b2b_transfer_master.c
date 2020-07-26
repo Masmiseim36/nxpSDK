@@ -16,7 +16,7 @@
  ******************************************************************************/
 #define DRIVER_MASTER_SPI Driver_SPI5
 
-#define TRANSFER_SIZE 64U         /* Transfer dataSize */
+#define TRANSFER_SIZE     64U     /* Transfer dataSize */
 #define TRANSFER_BAUDRATE 500000U /* Transfer baudrate - 500k */
 
 /*******************************************************************************

@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP
+ * Copyright 2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -46,6 +46,7 @@ void BOARD_InitBootPins(void);
 #define IOPCTL_PIO_PUPD_DI 0x00u          /*!<@brief Disable pull-up / pull-down function */
 #define IOPCTL_PIO_PUPD_EN 0x10u          /*!<@brief Enable pull-up / pull-down function */
 #define IOPCTL_PIO_SLEW_RATE_NORMAL 0x00u /*!<@brief Normal mode */
+#define IOPCTL_PIO_SLEW_RATE_SLOW 0x80u   /*!<@brief Slow mode */
 
 /*!
  * @brief Configures pin routing and optionally pin electrical features.

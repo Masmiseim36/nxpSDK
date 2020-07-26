@@ -1,7 +1,7 @@
 /*
- * Copyright 2018, Cypress Semiconductor Corporation or a subsidiary of 
+ * Copyright 2018, Cypress Semiconductor Corporation or a subsidiary of
  * Cypress Semiconductor Corporation. All Rights Reserved.
- * 
+ *
  * This software, associated documentation and materials ("Software"),
  * is owned by Cypress Semiconductor Corporation
  * or one of its subsidiaries ("Cypress") and is protected by and subject to
@@ -43,7 +43,7 @@
 
 //IMXRT platform headers
 #include "fsl_gpio.h"
-#include "board.h"
+#include "fsl_sdio.h"
 #include "fsl_device_registers.h"
 #include "pin_mux.h"
 
@@ -91,14 +91,14 @@
 /******************************************************
  *               Variable Definitions
  ******************************************************/
-
+extern sdio_card_t g_sdio;
 /******************************************************
  *               Function Definitions
  ******************************************************/
 
 static void host_platform_wifi_pwr_pin_init(void)
 {
-    BOARD_USDHC_SDCARD_POWER_CONTROL_INIT();
+    /* nothing to do */
 }
 
 static void host_platform_wl_reg_on_set_low(void)
@@ -127,7 +127,7 @@ wwd_result_t host_platform_init( void )
 
     // Ensure WL_REG_ON is low
     host_platform_wl_reg_on_set_low();
-    
+
     // Initialize GPIO pins for wifi power control
     host_platform_wifi_pwr_pin_init();
 
@@ -148,13 +148,13 @@ void host_platform_reset_wifi( wiced_bool_t reset_asserted )
 {
     if ( reset_asserted == WICED_TRUE )
     {
-        BOARD_USDHC_SDCARD_POWER_CONTROL(0);
+        SDIO_SetCardPower(&g_sdio, false);
         host_platform_wl_reg_on_set_low();
         host_rtos_delay_milliseconds( (uint32_t) 100 );
     }
     else
     {
-        BOARD_USDHC_SDCARD_POWER_CONTROL(1);
+        SDIO_SetCardPower(&g_sdio, true);
         host_platform_wl_reg_on_set_high();
         host_rtos_delay_milliseconds( (uint32_t) 100 );
     }

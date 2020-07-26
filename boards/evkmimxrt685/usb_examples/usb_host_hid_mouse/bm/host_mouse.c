@@ -257,7 +257,8 @@ void USB_HostHidMouseTask(void *param)
                 mouseInstance->runState    = kUSB_HostHidRunIdle;
                 USB_HostHidDeinit(mouseInstance->deviceHandle,
                                   mouseInstance->classHandle); /* hid class de-initialization */
-                mouseInstance->classHandle = NULL;
+                mouseInstance->deviceHandle = NULL;
+                mouseInstance->classHandle  = NULL;
                 usb_echo("mouse detached\r\n");
                 break;
 

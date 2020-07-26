@@ -5,10 +5,9 @@
  */
 
 /**
-* \file greal.h
-*	This file contains macros for OS abstraction layer selection,
-*	as well as branching to the required <blank?_greal.h specific header
-*	required for the currently selected OS/HW
+* This file contains macros for OS abstraction layer selection,
+* as well as branching to the required OS level <OS>_greal.h specific header
+* required for the currently selected OS/HW
 */
 
 #ifndef GR_GREAL_H
@@ -22,11 +21,13 @@
 #define GR_TOOLCHAIN(tc) ((defined GRE_TARGET_TOOLCHAIN_##tc) && GRE_TARGET_TOOLCHAIN_##tc)
 #define GR_FEATURE(tc) ((defined GRE_FEATURE_##tc) && GRE_FEATURE_##tc)
 
-
 /**
  * Prototypes
  */
-// System level metric gathering related functions
+
+/** 
+ * System level metric gathering related functions
+ */ 
 
 /**
  * Setups up any system resources that are needed to acquire metrics 
@@ -39,14 +40,14 @@ void *greal_setup_metrics(void);
 /**
  * Frees up any ssytem resources that were needed to gather system metrics
  * 
- * @param A pointer to the system  metrics that were created through the call to greal_setup_metrics
+ * @param data A pointer to the system  metrics that were created through the call to greal_setup_metrics
  */ 
 void greal_teardown_metrics(void *data); 
 
 /**
  * Reports the currently used amount of memory by the Storyboard engine. 
  * 
- * @parma data A pointer to data that may be needed to obtain the information that is being requested 
+ * @param data A pointer to data that may be needed to obtain the information that is being requested 
  * from the system
  * @return The number of bytes of memory used by the Storyboard engine, or 0 if that information
  * is unavailable. 
@@ -58,7 +59,7 @@ long greal_get_process_memory_usage(void *data);
  * This number can be diffence than process memory usage based on decisions 
  * made by the system allocator, such as when to reclaim unused pages.  
  *
- * @parma data A pointer to data that may be needed to obtain the information that is being requested 
+ * @param data A pointer to data that may be needed to obtain the information that is being requested 
  * from the system. 
  * @return The number of bytes of heap allocated to the Storyboard engine or 0 if the 
  * information is unavailable. 
@@ -69,7 +70,7 @@ long greal_get_heap_memory_usage(void *data);
  * Reported the amount of time in MS used by the Storyboard engine.  This time is the total amount of 
  * time spent by the Storyboard engine since it began running. 
  * 
- * @parma data A pointer to data that may be needed to obtain the information that is being requested 
+ * @param data A pointer to data that may be needed to obtain the information that is being requested 
  * from the system. 
  * @return The total amount of time in MS used by the Storyboard application since its launch or 0 if the information is
  * unavailable.  
@@ -104,6 +105,8 @@ long greal_get_sbengine_cpu_time(void *data);
 #include <vxworks_greal.h>
 #elif GR_OS(integrity)
 #include <integrity_greal.h>
+#elif GR_OS(itron)
+#include <itron_greal.h>
 #else
 #include <gre/sdk/generic_greal.h>
 #endif

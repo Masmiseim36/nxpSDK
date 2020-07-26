@@ -9,8 +9,8 @@
 #define _USB_CDC_VCOM_H_ 1
 
 /*******************************************************************************
-* Definitions
-******************************************************************************/
+ * Definitions
+ ******************************************************************************/
 #if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0)
 #define CONTROLLER_ID kUSB_ControllerEhci0
 #define DATA_BUFF_SIZE HS_CDC_VCOM_BULK_OUT_PACKET_SIZE
@@ -53,9 +53,9 @@ typedef struct _usb_cdc_vcom_struct
     uint8_t attach;            /* A flag to indicate whether a usb device is attached. 1: attached, 0: not attached */
     uint8_t speed;             /* Speed of USB device. USB_SPEED_FULL/USB_SPEED_LOW/USB_SPEED_HIGH.                 */
     uint8_t startTransactions; /* A flag to indicate whether a CDC device is ready to transmit and receive data.    */
-    uint8_t currentConfiguration; /* Current configuration value. */
-    uint8_t currentInterfaceAlternateSetting
-        [USB_CDC_VCOM_INTERFACE_COUNT]; /* Current alternate setting value for each interface. */
+    uint8_t currentConfiguration;                                           /* Current configuration value. */
+    uint8_t currentInterfaceAlternateSetting[USB_CDC_VCOM_INTERFACE_COUNT]; /* Current alternate setting value for each
+                                                                               interface. */
     uint8_t hasSentState; /*!< 1: The device has primed the state in interrupt pipe, 0: Not primed the state. */
 } usb_cdc_vcom_struct_t;
 

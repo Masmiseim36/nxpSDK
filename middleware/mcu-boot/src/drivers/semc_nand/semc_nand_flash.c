@@ -8,10 +8,10 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include "semc/fsl_semc.h"
+#include "bl_semc.h"
 #include "semc_nand_flash.h"
-#include "crc/crc16.h"
-#include "microseconds/microseconds.h"
+#include "crc16.h"
+#include "microseconds.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
@@ -758,8 +758,8 @@ static status_t semc_nand_make_use_of_onfi_parameter(semc_nand_config_t *config)
     config->planesInDevice = s_nandOnfiParameterConfig.LUNsPerDevice;
 
     // Set new SEMC NAND info
-    // Note: We should never set io port according to ONFI parameter table, x8 is supported 
-    //   by all device, and some device support x16 as well. so we cannot set port mode to x16 
+    // Note: We should never set io port according to ONFI parameter table, x8 is supported
+    //   by all device, and some device support x16 as well. so we cannot set port mode to x16
     //   if device support it. port mode is always assigned by FUSE setting.
     // config->memConfig.nandMemConfig.ioPortWidth = (s_nandOnfiParameterConfig.supportedFeatures.x16bitDataBusWidth ==
     // 1) ? 16: 8;
@@ -1862,7 +1862,7 @@ status_t semc_nand_flash_read_page(semc_nand_config_t *config, uint32_t pageInde
     }
 
     // Calculate the slave address for ipg command
-    // Note NA2.0: the below ipgCmdAddr must be byte address no matter it is x8 
+    // Note NA2.0: the below ipgCmdAddr must be byte address no matter it is x8
     //  or x16 device, see Note NA1.1 for reason
     ipgCmdAddr = semc_ipg_command_convert_nand_address(&config->memConfig, ipgCmdAddr);
     s_nandOperationInfo.rowAddressToGetSR = ipgCmdAddr;
@@ -1979,8 +1979,8 @@ status_t semc_nand_flash_page_program(semc_nand_config_t *config, uint32_t pageI
     }
 
     // Calculate the slave address for ipg command
-    // Note NA2.1: the below ipgCmdAddr must be byte address no matter it is x8 
-    //  or x16 device, see Note NA1.1 for reason		
+    // Note NA2.1: the below ipgCmdAddr must be byte address no matter it is x8
+    //  or x16 device, see Note NA1.1 for reason
     ipgCmdAddr = semc_ipg_command_convert_nand_address(&config->memConfig, ipgCmdAddr);
     s_nandOperationInfo.rowAddressToGetSR = ipgCmdAddr;
     if (config->memConfig.accessCommandType == kSemcAccessCommandType_AXI32CMD)
@@ -2102,7 +2102,7 @@ status_t semc_nand_flash_erase_block(semc_nand_config_t *config, uint32_t blockI
     }
 
     // Calculate the slave address for ipg command
-    // Note NA2.2: the below ipgCmdAddr must be byte address no matter it is x8 
+    // Note NA2.2: the below ipgCmdAddr must be byte address no matter it is x8
     //  or x16 device, see Note NA1.1 for reason
     ipgCmdAddr = semc_ipg_command_convert_nand_address(&config->memConfig, ipgCmdAddr);
     s_nandOperationInfo.rowAddressToGetSR = ipgCmdAddr;

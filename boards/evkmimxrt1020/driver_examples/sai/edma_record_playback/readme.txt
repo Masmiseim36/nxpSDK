@@ -6,10 +6,10 @@ In this example, one sai instance record the audio data from input and playbacks
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.40.2
-- Keil MDK  5.29
-- GCC ARM Embedded  8.3.1
-- MCUXpresso  11.1.0
+- IAR embedded Workbench  8.50.1
+- Keil MDK  5.30
+- GCC ARM Embedded  9.2.1
+- MCUXpresso  11.2.0
 
 Hardware requirements
 =====================
@@ -32,7 +32,7 @@ Prepare the Demo
     - One stop bit
     - No flow control
 3.  Download the program to the target board.
-4. Insert the headphones into the headphone jack on EVK-MIMXRT1020 board (J12).
+4. Insert the headphones into the headphone jack on EVK-MIMXRT1020 board (J11).
 5. Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
 
 Running the demo

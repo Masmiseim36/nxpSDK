@@ -8,23 +8,27 @@
     <definition extID="component.serial_manager_uart.MIMXRT1052"/>
     <definition extID="device.MIMXRT1052_CMSIS.MIMXRT1052"/>
     <definition extID="device.MIMXRT1052_startup.MIMXRT1052"/>
-    <definition extID="middleware.amazon_freertos-aws_iot.demo_se.MIMXRT1052"/>
-    <definition extID="middleware.amazon_freertos-aws_iot.libraries.3rdparty.jsmn.MIMXRT1052"/>
-    <definition extID="middleware.amazon_freertos-aws_iot.libraries.3rdparty.pkcs11.MIMXRT1052"/>
-    <definition extID="middleware.amazon_freertos-aws_iot.libraries.abstractions.platform.MIMXRT1052"/>
-    <definition extID="middleware.amazon_freertos-aws_iot.libraries.abstractions.secure_sockets.MIMXRT1052"/>
-    <definition extID="middleware.amazon_freertos-aws_iot.libraries.freertos_plus.standard.crypto.MIMXRT1052"/>
-    <definition extID="middleware.amazon_freertos-aws_iot.libraries.freertos_plus.standard.pkcs11.MIMXRT1052"/>
-    <definition extID="middleware.amazon_freertos-aws_iot.libraries.freertos_plus.standard.tls.MIMXRT1052"/>
-    <definition extID="middleware.amazon_freertos-aws_iot.libraries.freertos_plus.standard.utils.MIMXRT1052"/>
-    <definition extID="middleware.amazon_freertos-aws_iot.vendor.nxp.secure_sockets.lwip.MIMXRT1052"/>
-    <definition extID="middleware.amazon_freertos-kernel.MIMXRT1052"/>
-    <definition extID="middleware.amazon_freertos-kernel.extension.MIMXRT1052"/>
-    <definition extID="middleware.amazon_freertos-kernel.heap_4.MIMXRT1052"/>
+    <definition extID="driver.mdio-common.MIMXRT1052"/>
+    <definition extID="driver.mdio-enet.MIMXRT1052"/>
+    <definition extID="driver.phy-common.MIMXRT1052"/>
+    <definition extID="driver.phy-device-ksz8081.MIMXRT1052"/>
+    <definition extID="middleware.freertos-aws_iot.demo_se.MIMXRT1052"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.3rdparty.jsmn.MIMXRT1052"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.3rdparty.pkcs11.MIMXRT1052"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.abstractions.platform.MIMXRT1052"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.abstractions.secure_sockets.MIMXRT1052"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.freertos_plus.standard.crypto.MIMXRT1052"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.freertos_plus.standard.pkcs11.MIMXRT1052"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.freertos_plus.standard.tls.MIMXRT1052"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.freertos_plus.standard.utils.MIMXRT1052"/>
+    <definition extID="middleware.freertos-aws_iot.vendor.nxp.secure_sockets.lwip.MIMXRT1052"/>
+    <definition extID="middleware.freertos-kernel.MIMXRT1052"/>
+    <definition extID="middleware.freertos-kernel.extension.MIMXRT1052"/>
+    <definition extID="middleware.freertos-kernel.heap_4.MIMXRT1052"/>
     <definition extID="middleware.lwip.MIMXRT1052"/>
-    <definition extID="middleware.lwip.enet_ethernetif.MIMXRT1052"/>
     <definition extID="middleware.lwip.enet_ethernetif_kinetis.MIMXRT1052"/>
     <definition extID="middleware.mbedtls.MIMXRT1052"/>
+    <definition extID="middleware.mbedtls.port.ksdk.MIMXRT1052"/>
     <definition extID="middleware.se_hostlib.cloud_enet.MIMXRT1052"/>
     <definition extID="middleware.se_hostlib.commonCloudDemos.MIMXRT1052"/>
     <definition extID="middleware.se_hostlib.commonSe050.MIMXRT1052"/>
@@ -54,7 +58,6 @@
     <definition extID="platform.drivers.pit.MIMXRT1052"/>
     <definition extID="platform.drivers.trng.MIMXRT1052"/>
     <definition extID="platform.drivers.xip_board.MIMXRT1052"/>
-    <definition extID="platform.drivers.xip_board_dcd.MIMXRT1052"/>
     <definition extID="platform.drivers.xip_device.MIMXRT1052"/>
     <definition extID="platform.utilities.assert.MIMXRT1052"/>
     <definition extID="platform.utilities.misc_utilities.MIMXRT1052"/>
@@ -66,7 +69,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkbimxrt1050_se_SE05x_cloud_gcp" name="se_SE05x_cloud_gcp" category="se_hostlib_examples" dependency="platform.drivers.trng.MIMXRT1052 platform.drivers.lpi2c_freertos.MIMXRT1052 platform.drivers.dcp.MIMXRT1052 platform.drivers.pit.MIMXRT1052 platform.drivers.cache_armv7_m7.MIMXRT1052 platform.drivers.flexspi.MIMXRT1052 middleware.se_hostlib.cloud_enet.MIMXRT1052 middleware.lwip.MIMXRT1052 middleware.lwip.enet_ethernetif_kinetis.MIMXRT1052 platform.drivers.common.MIMXRT1052 platform.drivers.clock.MIMXRT1052 device.MIMXRT1052_CMSIS.MIMXRT1052 utility.debug_console.MIMXRT1052 component.lpuart_adapter.MIMXRT1052 component.serial_manager.MIMXRT1052 component.lists.MIMXRT1052 component.serial_manager_uart.MIMXRT1052 platform.drivers.lpuart.MIMXRT1052 device.MIMXRT1052_startup.MIMXRT1052 platform.drivers.iomuxc.MIMXRT1052 platform.utilities.assert.MIMXRT1052 platform.drivers.igpio.MIMXRT1052 platform.drivers.xip_device.MIMXRT1052 platform.drivers.xip_board.MIMXRT1052 platform.drivers.xip_board_dcd.MIMXRT1052 platform.Include_core_cm7.MIMXRT1052 platform.Include_common.MIMXRT1052 platform.Include_dsp.MIMXRT1052 platform.drivers.lpi2c.MIMXRT1052 middleware.amazon_freertos-kernel.MIMXRT1052 middleware.amazon_freertos-kernel.extension.MIMXRT1052 platform.drivers.enet.MIMXRT1052 middleware.amazon_freertos-aws_iot.vendor.nxp.secure_sockets.lwip.MIMXRT1052 middleware.amazon_freertos-aws_iot.libraries.abstractions.secure_sockets.MIMXRT1052 middleware.lwip.enet_ethernetif.MIMXRT1052 middleware.se_hostlib.commonSe050.MIMXRT1052 middleware.se_hostlib.commonSe050_ksdk.MIMXRT1052 middleware.se_hostlib.commonSe050smCom.MIMXRT1052 middleware.se_hostlib.commonSe050infra.MIMXRT1052 middleware.se_hostlib.commonSe050_sss_ex.MIMXRT1052 middleware.se_hostlib.commonSe050_CurrentApplet.MIMXRT1052 middleware.se_hostlib.commonSe050_Scp03.MIMXRT1052 middleware.se_hostlib.commonCloudDemos.MIMXRT1052 middleware.mbedtls.MIMXRT1052 middleware.amazon_freertos-kernel.heap_4.MIMXRT1052 middleware.amazon_freertos-aws_iot.libraries.abstractions.platform.MIMXRT1052 middleware.amazon_freertos-aws_iot.libraries.freertos_plus.standard.tls.MIMXRT1052 middleware.amazon_freertos-aws_iot.libraries.freertos_plus.standard.pkcs11.MIMXRT1052 middleware.amazon_freertos-aws_iot.libraries.freertos_plus.standard.crypto.MIMXRT1052 middleware.amazon_freertos-aws_iot.libraries.freertos_plus.standard.utils.MIMXRT1052 middleware.amazon_freertos-aws_iot.demo_se.MIMXRT1052 middleware.amazon_freertos-aws_iot.libraries.3rdparty.pkcs11.MIMXRT1052 middleware.amazon_freertos-aws_iot.libraries.3rdparty.jsmn.MIMXRT1052 middleware.se_hostlib.mbedtls_sss.MIMXRT1052 middleware.se_hostlib.mbedtls_alt_demo_common.MIMXRT1052 platform.utilities.misc_utilities.MIMXRT1052 middleware.se_hostlib.commonSe050CloudDemos.MIMXRT1052">
+  <example id="evkbimxrt1050_se_SE05x_cloud_gcp" name="se_SE05x_cloud_gcp" category="se_hostlib_examples" dependency="driver.mdio-enet.MIMXRT1052 driver.phy-device-ksz8081.MIMXRT1052 platform.drivers.trng.MIMXRT1052 platform.drivers.lpi2c_freertos.MIMXRT1052 platform.drivers.dcp.MIMXRT1052 platform.drivers.pit.MIMXRT1052 platform.drivers.cache_armv7_m7.MIMXRT1052 platform.drivers.flexspi.MIMXRT1052 middleware.se_hostlib.cloud_enet.MIMXRT1052 middleware.lwip.MIMXRT1052 utility.debug_console.MIMXRT1052 middleware.lwip.enet_ethernetif_kinetis.MIMXRT1052 middleware.se_hostlib.commonSe050CloudDemos.MIMXRT1052 platform.drivers.common.MIMXRT1052 platform.drivers.clock.MIMXRT1052 middleware.mbedtls.MIMXRT1052 middleware.mbedtls.port.ksdk.MIMXRT1052 device.MIMXRT1052_CMSIS.MIMXRT1052 component.lpuart_adapter.MIMXRT1052 component.serial_manager.MIMXRT1052 component.lists.MIMXRT1052 component.serial_manager_uart.MIMXRT1052 platform.drivers.lpuart.MIMXRT1052 device.MIMXRT1052_startup.MIMXRT1052 platform.drivers.iomuxc.MIMXRT1052 platform.utilities.assert.MIMXRT1052 platform.drivers.igpio.MIMXRT1052 platform.drivers.xip_device.MIMXRT1052 platform.drivers.xip_board.MIMXRT1052 driver.mdio-common.MIMXRT1052 platform.Include_core_cm7.MIMXRT1052 platform.Include_common.MIMXRT1052 platform.Include_dsp.MIMXRT1052 platform.drivers.enet.MIMXRT1052 driver.phy-common.MIMXRT1052 platform.drivers.lpi2c.MIMXRT1052 middleware.freertos-kernel.MIMXRT1052 middleware.freertos-kernel.extension.MIMXRT1052 middleware.freertos-aws_iot.vendor.nxp.secure_sockets.lwip.MIMXRT1052 middleware.freertos-aws_iot.libraries.abstractions.secure_sockets.MIMXRT1052 middleware.se_hostlib.commonSe050.MIMXRT1052 middleware.se_hostlib.commonSe050_ksdk.MIMXRT1052 middleware.se_hostlib.commonSe050smCom.MIMXRT1052 middleware.se_hostlib.commonSe050infra.MIMXRT1052 middleware.se_hostlib.commonSe050_sss_ex.MIMXRT1052 middleware.se_hostlib.commonSe050_CurrentApplet.MIMXRT1052 middleware.se_hostlib.commonSe050_Scp03.MIMXRT1052 middleware.se_hostlib.commonCloudDemos.MIMXRT1052 middleware.freertos-kernel.heap_4.MIMXRT1052 middleware.freertos-aws_iot.libraries.abstractions.platform.MIMXRT1052 middleware.freertos-aws_iot.libraries.freertos_plus.standard.tls.MIMXRT1052 middleware.freertos-aws_iot.libraries.freertos_plus.standard.pkcs11.MIMXRT1052 middleware.freertos-aws_iot.libraries.freertos_plus.standard.crypto.MIMXRT1052 middleware.freertos-aws_iot.libraries.freertos_plus.standard.utils.MIMXRT1052 middleware.freertos-aws_iot.demo_se.MIMXRT1052 middleware.freertos-aws_iot.libraries.3rdparty.pkcs11.MIMXRT1052 middleware.freertos-aws_iot.libraries.3rdparty.jsmn.MIMXRT1052 middleware.se_hostlib.mbedtls_sss.MIMXRT1052 middleware.se_hostlib.mbedtls_alt_demo_common.MIMXRT1052 platform.utilities.misc_utilities.MIMXRT1052">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -102,11 +105,12 @@
           <value>FREEDOM</value>
           <value>LPC_ENET</value>
           <value>GCP_IOT</value>
+          <value>SSS_HAVE_GCP</value>
           <value>PRINTF_ADVANCED_ENABLE=1</value>
           <value>SERIAL_PORT_TYPE_UART=1</value>
           <value>FSL_RTOS_FREE_RTOS</value>
           <value>T1oI2C</value>
-          <value>T1oI2C_UM1225_SE050</value>
+          <value>T1oI2C_UM11225</value>
           <value>SSS_USE_FTR_FILE</value>
           <value>NO_SECURE_CHANNEL_SUPPORT</value>
           <value>MBEDTLS</value>
@@ -159,8 +163,8 @@
       </debug_configuration>
     </debug_configurations>
     <include_paths>
-      <include_path path="amazon-freertos/libraries/abstractions/platform/freertos/include"/>
-      <include_path path="amazon-freertos/libraries/abstractions/platform/include"/>
+      <include_path path="freertos/libraries/abstractions/platform/freertos/include"/>
+      <include_path path="freertos/libraries/abstractions/platform/include"/>
       <include_path path="lwip/port"/>
       <include_path path="lwip/src"/>
       <include_path path="lwip/src/include"/>
@@ -179,10 +183,12 @@
     <source path="boards/evkbimxrt1050/se_hostlib_examples/se_SE05x_cloud_gcp" target_path="board" type="c_include">
       <files mask="board.h"/>
       <files mask="clock_config.h"/>
+      <files mask="dcd.h"/>
     </source>
     <source path="boards/evkbimxrt1050/se_hostlib_examples/se_SE05x_cloud_gcp" target_path="board" type="src">
       <files mask="board.c"/>
       <files mask="clock_config.c"/>
+      <files mask="dcd.c"/>
     </source>
     <source path="boards/evkbimxrt1050/se_hostlib_examples/se_SE05x_cloud_gcp" target_path="doc" type="doc" exclude="true">
       <files mask="readme.rst"/>
@@ -204,12 +210,6 @@
       <files mask="gcpJwtTask_lwip.c"/>
       <files mask="gcpNTPGetEpoch_lwip.c"/>
       <files mask="gcpPubSub.c"/>
-    </source>
-    <source path="middleware/se_hostlib/demos/ksdk/common/boards/evkbimxrt1050/se_hostlib_examples/cloud_demo" target_path="se_hostlib/demos/ksdk/common/boards/evkbimxrt1050/se_hostlib_examples/cloud_demo" type="c_include">
-      <files mask="fsl_phy.h"/>
-    </source>
-    <source path="middleware/se_hostlib/demos/ksdk/common/boards/evkbimxrt1050/se_hostlib_examples/cloud_demo" target_path="se_hostlib/demos/ksdk/common/boards/evkbimxrt1050/se_hostlib_examples/cloud_demo" type="src">
-      <files mask="fsl_phy.c"/>
     </source>
   </example>
 </ksdk:examples>

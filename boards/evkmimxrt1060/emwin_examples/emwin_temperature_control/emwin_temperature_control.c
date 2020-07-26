@@ -11,8 +11,12 @@
 #include "board.h"
 #include "emwin_support.h"
 
+#ifndef APPWIZARD
 #include "DIALOG.h"
 #include "Resource.h"
+#else
+#include "GUI.h"
+#endif
 
 #include <stdio.h>
 
@@ -23,11 +27,13 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+
+#ifndef APPWIZARD
 //
 // Widget IDs
 //
 #define ID_WINDOW_0 (GUI_ID_USER + 0x00)
-#define ID_KNOB_0 (GUI_ID_USER + 0x01)
+#define ID_KNOB_0   (GUI_ID_USER + 0x01)
 #define ID_WINDOW_1 (GUI_ID_USER + 0x02)
 
 #define ID_BUTTON_0 (GUI_ID_USER + 0x11)
@@ -48,22 +54,22 @@
 #define KNOB_X0 307
 #define KNOB_Y0 92
 
-#define KNOB_OFFSET 450
-#define FAN_CONTROL_0_X0 KNOB_X0 + 20
-#define FAN_CONTROL_0_Y0 KNOB_Y0 + 255
+#define KNOB_OFFSET        450
+#define FAN_CONTROL_0_X0   KNOB_X0 + 20
+#define FAN_CONTROL_0_Y0   KNOB_Y0 + 255
 #define FAN_CONTROL_SIZE_X 50
 #define FAN_CONTROL_SIZE_Y 22
-#define FAN_CONTROL_1_X0 FAN_CONTROL_0_X0 + FAN_CONTROL_SIZE_X + 1
-#define FAN_CONTROL_1_Y0 FAN_CONTROL_0_Y0
+#define FAN_CONTROL_1_X0   FAN_CONTROL_0_X0 + FAN_CONTROL_SIZE_X + 1
+#define FAN_CONTROL_1_Y0   FAN_CONTROL_0_Y0
 
 //
 // Colors
 //
-#define DARK_BLUE GUI_MAKE_COLOR(0x613600)
+#define DARK_BLUE  GUI_MAKE_COLOR(0x613600)
 #define LIGHT_BLUE GUI_MAKE_COLOR(0xaa7d67)
-#define BLUE GUI_MAKE_COLOR(0x855a41)
-#define LEMON GUI_MAKE_COLOR(0x00d6d3)
-#define LIGHTGRAY GUI_MAKE_COLOR(0xEEEEEE)
+#define BLUE       GUI_MAKE_COLOR(0x855a41)
+#define LEMON      GUI_MAKE_COLOR(0x00d6d3)
+#define LIGHTGRAY  GUI_MAKE_COLOR(0xEEEEEE)
 
 #define MAX_TEMPERATURE 30
 #define MIN_TEMPERATURE 2
@@ -203,6 +209,7 @@ static const GUI_COLOR _aGradient[] = {
     0x00297BD6, 0x00297BD7, 0x00297BD7, 0x00297BD8
 #endif
 };
+#endif
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -215,7 +222,7 @@ void BOARD_EnableLcdInterrupt(void);
 /* Initialize the LCD_DISP. */
 void BOARD_InitLcd(void)
 {
-    volatile uint32_t i = 0x100U;
+    volatile uint32_t i = 0x1000U;
 
     gpio_pin_config_t config = {
         kGPIO_DigitalOutput,
@@ -295,6 +302,7 @@ void BOARD_InitGPT(void)
 
 
 
+#ifndef APPWIZARD
 /*********************************************************************
  *
  *       _GetSelectedRoom
@@ -821,6 +829,7 @@ static void _cbDialog(WM_MESSAGE *pMsg)
             break;
     }
 }
+#endif // APPWIZARD
 
 /*!
  * @brief Main function
@@ -828,14 +837,14 @@ static void _cbDialog(WM_MESSAGE *pMsg)
 int main(void)
 {
     BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_InitI2C1Pins();
-    BOARD_InitSemcPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitLcdifPixelClock();
     BOARD_InitDebugConsole();
     BOARD_InitLcd();
     BOARD_InitGPT();
+
+#ifndef APPWIZARD
 
     GUI_Init();
     WM_MULTIBUF_Enable(1);
@@ -857,4 +866,10 @@ int main(void)
             GUI_Delay(5);
         }
     }
+#else
+
+    MainTask();
+    return 0;
+
+#endif // APPWIZARD
 }

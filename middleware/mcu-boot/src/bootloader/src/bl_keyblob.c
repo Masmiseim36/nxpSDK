@@ -10,8 +10,8 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include "fsl_common.h"
-#include "bootloader/bl_keyblob.h"
-#include "bootloader/bootloader.h"
+#include "bl_keyblob.h"
+#include "bootloader.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions

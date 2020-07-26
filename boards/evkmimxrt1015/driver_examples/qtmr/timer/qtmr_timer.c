@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 NXP
+ * Copyright 2017-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -19,17 +19,20 @@
  * Definitions
  ******************************************************************************/
 /* The QTMR instance/channel used for board */
-#define BOARD_QTMR_BASEADDR TMR1
-#define BOARD_FIRST_QTMR_CHANNEL kQTMR_Channel_0
+#define BOARD_QTMR_BASEADDR       TMR1
+#define BOARD_FIRST_QTMR_CHANNEL  kQTMR_Channel_0
 #define BOARD_SECOND_QTMR_CHANNEL kQTMR_Channel_1
-#define QTMR_ClockCounterOutput kQTMR_ClockCounter0Output
+#define QTMR_ClockCounterOutput   kQTMR_ClockCounter0Output
 
 /* Interrupt number and interrupt handler for the QTMR instance used */
-#define QTMR_IRQ_ID TMR1_IRQn
+#define QTMR_IRQ_ID      TMR1_IRQn
 #define QTMR_IRQ_HANDLER TMR1_IRQHandler
 
-/* Get source clock for QTMR driver */
-#define QTMR_SOURCE_CLOCK CLOCK_GetFreq(kCLOCK_IpgClk)
+/* QTMR Clock source divider for Ipg clock source, the value of two macros below should be aligned. */
+#define QTMR_PRIMARY_SOURCE       (kQTMR_ClockDivide_128)
+#define QTMR_CLOCK_SOURCE_DIVIDER (128U)
+/* The frequency of the source clock after divided. */
+#define QTMR_SOURCE_CLOCK (CLOCK_GetFreq(kCLOCK_IpgClk) / QTMR_CLOCK_SOURCE_DIVIDER)
 
 /*******************************************************************************
  * Prototypes
@@ -50,11 +53,7 @@ void QTMR_IRQ_HANDLER(void)
     QTMR_ClearStatusFlags(BOARD_QTMR_BASEADDR, BOARD_SECOND_QTMR_CHANNEL, kQTMR_CompareFlag);
 
     qtmrIsrFlag = true;
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 /*!
@@ -83,14 +82,13 @@ int main(void)
      * qtmrConfig.secondarySource = kQTMR_Counter0InputPin;
      */
     QTMR_GetDefaultConfig(&qtmrConfig);
-    /* Use IP bus clock div by 128 */
-    qtmrConfig.primarySource = kQTMR_ClockDivide_128;
+    qtmrConfig.primarySource = QTMR_PRIMARY_SOURCE;
 
     PRINTF("\r\n****Timer use-case, 50 millisecond tick.****\n");
     QTMR_Init(BOARD_QTMR_BASEADDR, BOARD_SECOND_QTMR_CHANNEL, &qtmrConfig);
 
     /* Set timer period to be 50 millisecond */
-    QTMR_SetTimerPeriod(BOARD_QTMR_BASEADDR, BOARD_SECOND_QTMR_CHANNEL, MSEC_TO_COUNT(50U, (QTMR_SOURCE_CLOCK / 128)));
+    QTMR_SetTimerPeriod(BOARD_QTMR_BASEADDR, BOARD_SECOND_QTMR_CHANNEL, MSEC_TO_COUNT(50U, QTMR_SOURCE_CLOCK));
 
     /* Enable at the NVIC */
     EnableIRQ(QTMR_IRQ_ID);
@@ -114,8 +112,7 @@ int main(void)
 
     PRINTF("\r\n****Chain Timer use-case, 10 second tick.****\n");
 
-    /* Init the first channel to use the IP Bus clock div by 128 */
-    qtmrConfig.primarySource = kQTMR_ClockDivide_128;
+    qtmrConfig.primarySource = QTMR_PRIMARY_SOURCE;
     QTMR_Init(BOARD_QTMR_BASEADDR, BOARD_FIRST_QTMR_CHANNEL, &qtmrConfig);
 
     /* Init the second channel to use output of the first channel as we are chaining the first channel and the second
@@ -124,7 +121,7 @@ int main(void)
     QTMR_Init(BOARD_QTMR_BASEADDR, BOARD_SECOND_QTMR_CHANNEL, &qtmrConfig);
 
     /* Set the first channel period to be 1 millisecond */
-    QTMR_SetTimerPeriod(BOARD_QTMR_BASEADDR, BOARD_FIRST_QTMR_CHANNEL, MSEC_TO_COUNT(1U, (QTMR_SOURCE_CLOCK / 128)));
+    QTMR_SetTimerPeriod(BOARD_QTMR_BASEADDR, BOARD_FIRST_QTMR_CHANNEL, MSEC_TO_COUNT(1U, QTMR_SOURCE_CLOCK));
 
     /* Set the second channel count which increases every millisecond, set compare event for 10 second */
     QTMR_SetTimerPeriod(BOARD_QTMR_BASEADDR, BOARD_SECOND_QTMR_CHANNEL, 10000);
@@ -158,8 +155,7 @@ int main(void)
      */
     PRINTF("\r\n****Timer use-case, about 65.5s Over flow Test.****\n");
 
-    /* Init the first channel to use the IP Bus clock div by 128 */
-    qtmrConfig.primarySource = kQTMR_ClockDivide_128;
+    qtmrConfig.primarySource = QTMR_PRIMARY_SOURCE;
     QTMR_Init(BOARD_QTMR_BASEADDR, BOARD_FIRST_QTMR_CHANNEL, &qtmrConfig);
 
     /* Init the second channel to use output of the first channel as we are chaining the first channel and the second
@@ -168,7 +164,7 @@ int main(void)
     QTMR_Init(BOARD_QTMR_BASEADDR, BOARD_SECOND_QTMR_CHANNEL, &qtmrConfig);
 
     /* Set the first channel period to be 1 millisecond */
-    QTMR_SetTimerPeriod(BOARD_QTMR_BASEADDR, BOARD_FIRST_QTMR_CHANNEL, MSEC_TO_COUNT(1U, (QTMR_SOURCE_CLOCK / 128)));
+    QTMR_SetTimerPeriod(BOARD_QTMR_BASEADDR, BOARD_FIRST_QTMR_CHANNEL, MSEC_TO_COUNT(1U, QTMR_SOURCE_CLOCK));
 
     /* Set the second channel count which increases every millisecond, set compare event for 65.5 second */
     QTMR_SetTimerPeriod(BOARD_QTMR_BASEADDR, BOARD_SECOND_QTMR_CHANNEL, 0xFFFF);

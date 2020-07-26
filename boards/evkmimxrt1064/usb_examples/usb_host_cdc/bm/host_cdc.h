@@ -138,12 +138,12 @@ extern void USB_HostCdcRefreshBuffer(void);
 void USB_HostCdcInitBuffer(void);
 
 /*!
-* @brief host cdc task function.
-*
-* This function implements the host mouse action, it is used to create task.
-*
-* @param param   the host cdc instance pointer.
-*/
+ * @brief host cdc task function.
+ *
+ * This function implements the host mouse action, it is used to create task.
+ *
+ * @param param   the host cdc instance pointer.
+ */
 extern void USB_HostCdcTask(void *param);
 
 /*!

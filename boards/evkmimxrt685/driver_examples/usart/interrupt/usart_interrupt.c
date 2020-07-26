@@ -14,11 +14,11 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_USART USART0
-#define DEMO_USART_CLK_SRC kCLOCK_Flexcomm0
-#define DEMO_USART_CLK_FREQ CLOCK_GetFlexCommClkFreq(0U)
+#define DEMO_USART            USART0
+#define DEMO_USART_CLK_SRC    kCLOCK_Flexcomm0
+#define DEMO_USART_CLK_FREQ   CLOCK_GetFlexCommClkFreq(0U)
 #define DEMO_USART_IRQHandler FLEXCOMM0_IRQHandler
-#define DEMO_USART_IRQn FLEXCOMM0_IRQn
+#define DEMO_USART_IRQn       FLEXCOMM0_IRQn
 
 /*! @brief Ring buffer size (Unit: Byte). */
 #define DEMO_RING_BUFFER_SIZE 16
@@ -67,11 +67,7 @@ void DEMO_USART_IRQHandler(void)
             rxIndex %= DEMO_RING_BUFFER_SIZE;
         }
     }
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 /*!

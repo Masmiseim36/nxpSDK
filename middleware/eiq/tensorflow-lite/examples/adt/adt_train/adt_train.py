@@ -209,7 +209,7 @@ if __name__ == '__main__':
     
     parser.add_argument(
       '--train_keras_model',
-      type=bool,
+      type=lambda x: True if x in ('1', 'yes', 'y') else False,
       # pylint: disable=line-too-long
       default=True,
       # pylint: enable=line-too-long
@@ -265,7 +265,7 @@ if __name__ == '__main__':
     
     parser.add_argument(
       '--vizualize',
-      type=bool,
+      type=lambda x: True if x in ('1', 'yes', 'y') else False,
       # pylint: disable=line-too-long
       default=False,
       # pylint: enable=line-too-long

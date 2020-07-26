@@ -19,8 +19,8 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define CTIMER CTIMER2                 /* Timer 2 */
-#define CTIMER_MAT_OUT kCTIMER_Match_0 /* Match output 0 */
+#define CTIMER          CTIMER2         /* Timer 2 */
+#define CTIMER_MAT_OUT  kCTIMER_Match_0 /* Match output 0 */
 #define CTIMER_CLK_FREQ CLOCK_GetCtimerClkFreq(2)
 
 /*******************************************************************************

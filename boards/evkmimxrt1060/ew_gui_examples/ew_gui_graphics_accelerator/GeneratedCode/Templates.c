@@ -7,18 +7,22 @@
 *
 ********************************************************************************
 *
+* This software is delivered "as is" and shows the usage of other software 
+* components. It is provided as an example software which is intended to be 
+* modified and extended according to particular requirements.
+* 
+* TARA Systems hereby disclaims all warranties and conditions with regard to the
+* software, including all implied warranties and conditions of merchantability 
+* and non-infringement of any third party IPR or other rights which may result 
+* from the use or the inability to use the software.
+*
 * This file was generated automatically by Embedded Wizard Studio.
 *
 * Please do not make any modifications of this file! The modifications are lost
 * when the file is generated again by Embedded Wizard Studio!
 *
-* The template of this heading text can be found in the file 'head.ewt' in the
-* directory 'Platforms' of your Embedded Wizard installation directory. If you
-* wish to adapt this text, please copy the template file 'head.ewt' into your
-* project directory and edit the copy only. Please avoid any modifications of
-* the original template file!
-*
-* Version  : 9.20
+* Version  : 9.30
+* Date     : 14.02.2020  8:00:50
 * Profile  : iMX_RT
 * Platform : NXP.iMX_RT.RGB565
 *
@@ -33,6 +37,9 @@ void TemplatesDeviceClass__Init( TemplatesDeviceClass _this, XObject aLink, XHan
 {
   /* At first initialize the super class ... */
   XObject__Init( &_this->_Super, aLink, aArg );
+
+  /* Allow the Immediate Garbage Collection to evalute the members of this class. */
+  _this->_GCT = EW_CLASS_GCT( TemplatesDeviceClass );
 
   /* Setup the VMT pointer */
   _this->_VMT = EW_CLASS( TemplatesDeviceClass );
@@ -49,7 +56,7 @@ void TemplatesDeviceClass__ReInit( TemplatesDeviceClass _this )
 void TemplatesDeviceClass__Done( TemplatesDeviceClass _this )
 {
   /* Finalize this class */
-  _this->_VMT = EW_CLASS( TemplatesDeviceClass );
+  _this->_Super._VMT = EW_CLASS( XObject );
 
   /* Don't forget to deinitialize the super class ... */
   XObject__Done( &_this->_Super );
@@ -61,7 +68,7 @@ EW_END_OF_CLASS_VARIANTS( TemplatesDeviceClass )
 
 /* Virtual Method Table (VMT) for the class : 'Templates::DeviceClass' */
 EW_DEFINE_CLASS( TemplatesDeviceClass, XObject, _None, _None, _None, _None, _None, 
-                 "Templates::DeviceClass" )
+                 _None, "Templates::DeviceClass" )
 EW_END_OF_CLASS( TemplatesDeviceClass )
 
 /* Embedded Wizard */

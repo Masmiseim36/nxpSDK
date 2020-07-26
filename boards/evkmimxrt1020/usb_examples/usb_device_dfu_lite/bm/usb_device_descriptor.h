@@ -19,6 +19,9 @@
 #define USB_DEVICE_DEMO_BCD_VERSION (0x0101U)
 #define USB_DEVICE_OS_DESCRIPTOR_BCD_VERSION (0x0100U)
 
+#define USB_DEVICE_VID (0x1FC9U)
+#define USB_DEVICE_PID (0x00A1U)
+
 #define USB_DEVICE_CLASS (0x00U)
 #define USB_DEVICE_SUBCLASS (0x00U)
 #define USB_DEVICE_PROTOCOL (0x00U)
@@ -47,7 +50,6 @@
 
 #define USB_DEVICE_STRING_COUNT (4U)
 
-
 #define USB_DEVICE_LANGUAGE_COUNT (1U)
 
 #define USB_DFU_CONFIGURE_INDEX (1U)
@@ -63,12 +65,10 @@
  * API
  ******************************************************************************/
 
-
 extern usb_status_t USB_DeviceSetSpeed(uint8_t speed);
 extern usb_status_t USB_DeviceGetVerdorDescriptor(usb_device_handle handle,
-                                     usb_setup_struct_t *setup,
-                                     uint32_t *length,
-                                     uint8_t **buffer);
-
+                                                  usb_setup_struct_t *setup,
+                                                  uint32_t *length,
+                                                  uint8_t **buffer);
 
 #endif /* __USB_DEVICE_DESCRIPTOR_H__ */

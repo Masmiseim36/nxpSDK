@@ -5,13 +5,9 @@
  */
 
 /**
-* \file dirent.h
-*
-*    Declaration of POSIX directory browsing functions and types for Win32.
-*
-*    Author:  Kevlin Henney (kevlin@acm.org, kevlin@curbralan.com)
-*    History: Created March 1997. Updated June 2003.
-*    Rights:  See end of file.
+* Declaration of POSIX directory browsing functions and types for FreeRTOS.
+* Author:  Kevlin Henney (kevlin@acm.org, kevlin@curbralan.com)
+* History: Created March 1997. Updated June 2003.
 */
 
 #ifndef GR_DIRENT_H

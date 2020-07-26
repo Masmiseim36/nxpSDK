@@ -24,7 +24,6 @@
  * Prototypes
  ******************************************************************************/
 
-
 /*******************************************************************************
  * Variables
  ******************************************************************************/
@@ -47,7 +46,6 @@ dfu_timer_object_t s_dfuTimerObjectArray[DFU_MAX_TIMER_OBJECTS];
  */
 void DFU_TimerInit(void)
 {
-
     /* Clear timer object array */
     (void)memset(s_dfuTimerObjectArray, 0U, sizeof(s_dfuTimerObjectArray));
     DFU_TimerHWInit();
@@ -89,7 +87,7 @@ uint8_t DFU_AddTimerQueue(dfu_timer_object_t *timerObject)
         if (isQueueFull)
         {
             /* Timer queue is full */
-           index = DFU_MAX_TIMER_OBJECTS;
+            index = DFU_MAX_TIMER_OBJECTS;
         }
         else
         {
@@ -131,10 +129,8 @@ void DFU_RemoveTimerQueue(uint8_t timerId)
                 break;
             }
         }
-
     }
 }
-
 
 /*!
  * @brief timer interrupt service function.

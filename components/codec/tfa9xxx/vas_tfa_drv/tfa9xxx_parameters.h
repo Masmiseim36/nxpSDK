@@ -32,7 +32,7 @@ typedef struct tfa_msg
  *
  */
 #define TFA_MAX_PROFILES (64)
-#define TFA_MAX_MSGS (10)
+#define TFA_MAX_MSGS     (10)
 
 // the pack pragma is required to make that the size in memory
 // matches the actual variable lenghts
@@ -164,7 +164,7 @@ typedef struct nxpTfaFilter
  * biquad params for calculation
  */
 
-#define TFA_BQ_EQ_INDEX 0
+#define TFA_BQ_EQ_INDEX         0
 #define TFA_BQ_ANTI_ALIAS_INDEX 10
 #define TFA_BQ_INTEGRATOR_INDEX 13
 
@@ -259,10 +259,10 @@ typedef union nxpTfaContBiquad
     nxpTfaContIntegrator_t in;
 } nxpTfaContBiquad_t;
 
-#define TFA_BQ_EQ_INDEX 0
+#define TFA_BQ_EQ_INDEX         0
 #define TFA_BQ_ANTI_ALIAS_INDEX 10
 #define TFA_BQ_INTEGRATOR_INDEX 13
-#define TFA98XX_MAX_EQ 10
+#define TFA98XX_MAX_EQ          10
 
 typedef struct nxpTfaEqualizer
 {
@@ -290,7 +290,7 @@ typedef enum nxpTfaHeaderType
 /*
  * equalizer file
  */
-#define NXPTFA_EQ_VERSION '1'
+#define NXPTFA_EQ_VERSION    '1'
 #define NXPTFA_EQ_SUBVERSION "00"
 typedef struct nxpTfaEqualizerFile
 {
@@ -302,7 +302,7 @@ typedef struct nxpTfaEqualizerFile
 /*
  * patch file
  */
-#define NXPTFA_PA_VERSION '1'
+#define NXPTFA_PA_VERSION    '1'
 #define NXPTFA_PA_SUBVERSION "00"
 typedef struct nxpTfaPatchFile
 {
@@ -314,7 +314,7 @@ typedef struct nxpTfaPatchFile
  * generic message file
  *   -  the payload of this file includes the opcode and is send straight to the DSP
  */
-#define NXPTFA_MG_VERSION '3'
+#define NXPTFA_MG_VERSION    '3'
 #define NXPTFA_MG_SUBVERSION "00"
 typedef struct tfa_msg_file
 {
@@ -331,8 +331,8 @@ typedef struct tfa_msg_file
 /*
  * config file V1 sub 1
  */
-#define NXPTFA_CO_VERSION '1'
-#define NXPTFA_CO3_VERSION '3'
+#define NXPTFA_CO_VERSION     '1'
+#define NXPTFA_CO3_VERSION    '3'
 #define NXPTFA_CO_SUBVERSION1 "01"
 typedef struct nxpTfaConfigS1File
 {
@@ -373,7 +373,7 @@ typedef struct nxpTfaConfigFile
 /*
  * preset file
  */
-#define NXPTFA_PR_VERSION '1'
+#define NXPTFA_PR_VERSION    '1'
 #define NXPTFA_PR_SUBVERSION "00"
 typedef struct nxpTfaPresetFile
 {
@@ -384,7 +384,7 @@ typedef struct nxpTfaPresetFile
 /*
  * drc file
  */
-#define NXPTFA_DR_VERSION '1'
+#define NXPTFA_DR_VERSION    '1'
 #define NXPTFA_DR_SUBVERSION "00"
 typedef struct nxpTfaDrcFile
 {
@@ -396,7 +396,7 @@ typedef struct nxpTfaDrcFile
  * drc file
  * for tfa 2 there is also a xml-version
  */
-#define NXPTFA_DR3_VERSION '3'
+#define NXPTFA_DR3_VERSION    '3'
 #define NXPTFA_DR3_SUBVERSION "00"
 typedef struct nxpTfaDrcFile2
 {
@@ -424,7 +424,7 @@ struct nxpTfaSpkHeader
 /*
  * speaker file
  */
-#define NXPTFA_SP_VERSION '1'
+#define NXPTFA_SP_VERSION    '1'
 #define NXPTFA_SP_SUBVERSION "00"
 typedef struct nxpTfaSpeakerFile
 {
@@ -463,7 +463,7 @@ typedef struct nxpTfaLiveData
     int scalefactor;
 } nxpTfaLiveData_t;
 
-#define NXPTFA_SP3_VERSION '3'
+#define NXPTFA_SP3_VERSION    '3'
 #define NXPTFA_SP3_SUBVERSION "00"
 struct nxpTfaSpeakerFileMax2
 {
@@ -640,8 +640,8 @@ typedef struct nxpTfaFeatures
  *   - the size field is 32bits long (generic=16)
  *   - all char types are in ASCII
  */
-#define NXPTFA_PM_VERSION '1'
-#define NXPTFA_PM3_VERSION '3'
+#define NXPTFA_PM_VERSION    '1'
+#define NXPTFA_PM3_VERSION   '3'
 #define NXPTFA_PM_SUBVERSION '1'
 typedef struct nxpTfaContainer
 {

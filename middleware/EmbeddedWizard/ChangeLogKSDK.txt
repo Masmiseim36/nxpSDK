@@ -2,7 +2,10 @@
 @page middleware_log Middleware Change Log
 
 @section embedded_wizard Embedded Wizard GUI library
-  The currently supported version is 9.20.
+  The currently supported version is 9.30.
+
+  9.30_rev0
+    - Remove conditional include of RTE_Components.h in ewdef.h
 
   9.20_rev0
     - Fix build warnings in tlsf.c, DeviceDriver.h, remove conditional include in ewextgfx.h

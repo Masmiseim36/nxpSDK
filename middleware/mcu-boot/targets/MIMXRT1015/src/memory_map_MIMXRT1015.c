@@ -1,14 +1,14 @@
 /*
  * Copyright 2014-2015 Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  *
  */
 
-#include "bootloader/bl_context.h"
-#include "memory/memory.h"
+#include "bl_context.h"
+#include "memory.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 // Variables
@@ -35,9 +35,7 @@ memory_map_entry_t g_memoryMap[] = {
     { 0x90000000, 0x1000000, kMemoryNotExecutable | kMemoryType_FLASH, &g_semcNorMemoryInterface },
 #endif    // #if BL_FEATURE_SEMC_NOR_MODULE
           // AIPS0 peripherals
-          //    { 0x40000000, 0x4007ffff, kMemoryNotExecutable | kMemoryType_Device, &g_deviceMemoryInterface },
           // AIPS1 peripherals
-          //    { 0x40080000, 0x400fffff, kMemoryNotExecutable | kMemoryType_Device, &g_deviceMemoryInterface },
     { 0 } // Terminator
 };
 

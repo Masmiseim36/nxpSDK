@@ -7,37 +7,40 @@
 
 #include "safety_cm7_imxrt.h"
 
-#if defined(__ARMCC_VERSION)/* For ARM(KEIL) compiler */
-#include "linker_config.h"
+#if (defined(__GNUC__) && ( __ARMCC_VERSION >= 6010050)) /* KEIL */
+    #include "linker_config.h"
 #endif
 
-#if defined(__IAR_SYSTEMS_ICC__)
-#pragma section =  ".safety_ram"
-#pragma section =  ".checksum"
-#pragma location = ".checksum"
+#if defined(__IAR_SYSTEMS_ICC__) /* IAR */
+    #pragma section =  ".safety_ram"
+    #pragma section =  ".checksum"
+    #pragma location = ".checksum"
 #endif
 
 /*******************************************************************************
 * Variables
 ******************************************************************************/
-#if defined(__IAR_SYSTEMS_ICC__)
-    extern const uint32_t __checksum;  /* calculated by Linker */
-    const uint32_t        c_checksumStart @ "checksum_start_mark";
-    const uint32_t        c_checksumEnd   @ "checksum_end_mark";
-#endif
-
-#if defined(__GNUC__)
+#if (defined(__GNUC__) && ( __ARMCC_VERSION >= 6010050)) /* KEIL */
     extern uint32_t crcPostbuild; /* defined in main_imxrt.c */
-    extern uint32_t stack_test_block_size; /* from Linker command file */
-    #define STACK_TEST_BLOCK_SIZE (uint32_t)&stack_test_block_size
-    extern uint32_t ram_test_backup_size; /* from Linker command file */
-    #define RAM_TEST_BACKUP_SIZE (uint32_t)&ram_test_backup_size
-#endif
+    const uint32_t c_wdBackupAddress = (uint32_t)m_wd_test_backup;
+    #define WATCHDOG_TEST_VARIABLES ((WD_Test_Str *) c_wdBackupAddress)
 
-#if defined(__GNUC__) || defined(__IAR_SYSTEMS_ICC__)
+    const uint32_t programCounterTestFlag = (uint32_t)m_pc_test_flag;
+    #define PC_TEST_FLAG ((uint32_t *) programCounterTestFlag)
+
+    const uint32_t safetyErrorCodeAddress = (uint32_t)m_safety_error_code;
+    #define SAFETY_ERROR_CODE ((uint32_t *) safetyErrorCodeAddress)
+
+    const uint32_t c_backupAddress = (uint32_t)m_ram_test_backup;
+
+    /* put values from extern symbols to const variables */
+    const uint32_t c_stackTestFirstAddress = (uint32_t)m_stack_test_p_2;
+    const uint32_t c_stackTestSecondAddress = (uint32_t)m_stack_test_p_3;
+
+#else /* IAR + MCUXpresso */
     extern uint32_t m_wd_test_backup;   /* from Linker command file */
     const uint32_t c_wdBackupAddress = (uint32_t)&m_wd_test_backup;
-    #define WATCHDOG_TEST_VARIABLES ((fs_wdog_test *) c_wdBackupAddress)
+    #define WATCHDOG_TEST_VARIABLES ((WD_Test_Str *) c_wdBackupAddress)
 
     extern uint32_t m_pc_test_flag;   /* from Linker command file */
     const uint32_t programCounterTestFlag = (uint32_t)&m_pc_test_flag;
@@ -56,28 +59,23 @@
     /* put values from extern symbols to const variables */
     const uint32_t c_stackTestFirstAddress = (uint32_t)&m_stack_test_p_2;
     const uint32_t c_stackTestSecondAddress = (uint32_t)&m_stack_test_p_3;
-#endif
 
-#if defined(__ARMCC_VERSION)/* For ARM(KEIL) compiler */
-    extern uint32_t crcPostbuild; /* defined in main_imxrt.c */
-    const uint32_t c_wdBackupAddress = (uint32_t)m_wd_test_backup;
-    #define WATCHDOG_TEST_VARIABLES ((fs_wdog_test  *)  c_wdBackupAddress)
+    #if defined(__IAR_SYSTEMS_ICC__) /* IAR */
+        extern const uint32_t __checksum;  /* calculated by Linker */
+        const uint32_t        c_checksumStart @ "checksum_start_mark";
+        const uint32_t        c_checksumEnd   @ "checksum_end_mark";
 
-    const uint32_t programCounterTestFlag = (uint32_t)m_pc_test_flag;
-    #define PC_TEST_FLAG ((uint32_t  *)  programCounterTestFlag)
-
-    const uint32_t safetyErrorCodeAddress = (uint32_t)m_safety_error_code;
-    #define SAFETY_ERROR_CODE ((uint32_t *) safetyErrorCodeAddress)
-
-    const uint32_t c_backupAddress = (uint32_t)m_ram_test_backup;
-
-    /* put values from extern symbols to const variables */
-    const uint32_t c_stackTestFirstAddress = (uint32_t)m_stack_test_p_2;
-    const uint32_t c_stackTestSecondAddress = (uint32_t)m_stack_test_p_3;
+    #else /* MCUXpresso */
+        extern uint32_t crcPostbuild; /* defined in main_imxrt.c */
+        extern uint32_t stack_test_block_size; /* from Linker command file */
+        #define STACK_TEST_BLOCK_SIZE (uint32_t)&stack_test_block_size
+        extern uint32_t ram_test_backup_size; /* from Linker command file */
+        #define RAM_TEST_BACKUP_SIZE (uint32_t)&ram_test_backup_size
+    #endif
 #endif
 
 /* DCP channel enum */
-extern fs_flash_dcp_channels_t g_dcpSafetyChannel;
+extern dcp_channels_t g_dcpSafetyChannel;
 
 /*******************************************************************************
 * Code
@@ -99,37 +97,37 @@ extern fs_flash_dcp_channels_t g_dcpSafetyChannel;
 void SafetyWatchdogTest(wd_test_t *psSafetyWdTest)
 {
 #if WATCHDOG_ENABLED
-    uint32_t counterLimitHigh;
-    uint32_t counterLimitLow;
-    uint32_t runTestCondition;
-    uint32_t checkTestCondition;
+    uint32_t ui32CounterLimitHigh;
+    uint32_t ui32CounterLimitLow;
+    uint32_t ui32RunTestCondition;
+    uint32_t ui32CheckTestCondition;
   
     /* calculate counter limit values */
-    psSafetyWdTest->wdTestTemp1 = (uint64_t)WATCHDOG_TIMEOUT_VALUE * (uint64_t)WD_REF_TIMER_CLOCK_FREQUENCY;
-    psSafetyWdTest->wdTestExpected = psSafetyWdTest->wdTestTemp1 / (uint32_t)WATCHDOG_CLOCK;
-    psSafetyWdTest->wdTestTolerance = (psSafetyWdTest->wdTestExpected * (uint32_t)WD_TEST_TOLERANCE) /(uint32_t)100 ;
-    psSafetyWdTest->wdTestLimitHigh = psSafetyWdTest->wdTestExpected + psSafetyWdTest->wdTestTolerance;
-    psSafetyWdTest->wdTestLimitLow = psSafetyWdTest->wdTestExpected - psSafetyWdTest->wdTestTolerance;    
-    counterLimitHigh = psSafetyWdTest->wdTestLimitHigh;
-    counterLimitLow = psSafetyWdTest->wdTestLimitLow;
+    psSafetyWdTest->ui64WdTestTemp1 = (uint64_t)WATCHDOG_TIMEOUT_VALUE * (uint64_t)WD_REF_TIMER_CLOCK_FREQUENCY;
+    psSafetyWdTest->ui32WdTestExpected = psSafetyWdTest->ui64WdTestTemp1 / (uint32_t)WATCHDOG_CLOCK;
+    psSafetyWdTest->ui32WdTestTolerance = (psSafetyWdTest->ui32WdTestExpected * (uint32_t)WD_TEST_TOLERANCE) /(uint32_t)100 ;
+    psSafetyWdTest->ui32WdTestLimitHigh = psSafetyWdTest->ui32WdTestExpected + psSafetyWdTest->ui32WdTestTolerance;
+    psSafetyWdTest->ui32WdTestLimitLow = psSafetyWdTest->ui32WdTestExpected - psSafetyWdTest->ui32WdTestTolerance;    
+    ui32CounterLimitHigh = psSafetyWdTest->ui32WdTestLimitHigh;
+    ui32CounterLimitLow = psSafetyWdTest->ui32WdTestLimitLow;
     
-    runTestCondition = WD_RUN_TEST_CONDITION;
-    checkTestCondition = WD_CHECK_TEST_CONDITION;
+    ui32RunTestCondition = WD_RUN_TEST_CONDITION;
+    ui32CheckTestCondition = WD_CHECK_TEST_CONDITION;
 
     /* Init timer */
     GPT1_Init(WD_GPT1_SRC, WD_GPT1_CMP, WD_GPT1_DIV);
     
-    if (SRC->SRSR & runTestCondition) /* If non WD reset */
+    if (SRC->SRSR & ui32RunTestCondition) /* If non WD reset */
     {   
         /* Clear tested flags */
-        SRC->SRSR = runTestCondition;
+        SRC->SRSR = ui32RunTestCondition;
 
-        FS_WDOG_Setup_RT(WATCHDOG_TEST_VARIABLES, (uint32_t *) GPT1);
+        IEC60730B_CM4_CM7_watchdog_test_setup_RT(WATCHDOG_TEST_VARIABLES);
     }
 
-    if (SRC->SRSR & checkTestCondition)   /* If WD reset */
+    if (SRC->SRSR & ui32CheckTestCondition)   /* If WD reset */
     {
-        FS_WDOG_Check_RT(counterLimitHigh, counterLimitLow, WATCHDOG_RESETS_LIMIT, ENDLESS_LOOP_ENABLE, WATCHDOG_TEST_VARIABLES);
+        IEC60730B_CM4_CM7_watchdog_test_check_RT(ui32CounterLimitHigh, ui32CounterLimitLow, WATCHDOG_RESETS_LIMIT, ENDLESS_LOOP_ENABLE, WATCHDOG_TEST_VARIABLES);
 
         /* Clear WDOG3 flag */
         SRC->SRSR = SRC_SRSR_WDOG3_RST_B_MASK;
@@ -137,9 +135,9 @@ void SafetyWatchdogTest(wd_test_t *psSafetyWdTest)
     
 #endif /* WATCHDOG_ENABLED */
     
-    psSafetyWdTest->watchdogResets = WATCHDOG_TEST_VARIABLES->resets;
-    psSafetyWdTest->watchdogTimeoutCheck = WATCHDOG_TEST_VARIABLES->counter;
-    psSafetyWdTest->watchdogRefreshRatio = 0;
+    psSafetyWdTest->ui32WatchdogResets = WATCHDOG_TEST_VARIABLES->resets;
+    psSafetyWdTest->ui32WatchdogTimeoutCheck = WATCHDOG_TEST_VARIABLES->counter;
+    psSafetyWdTest->ui16WatchdogRefreshRatio = 0;
 }
 
 /*!
@@ -153,13 +151,13 @@ void SafetyWatchdogTest(wd_test_t *psSafetyWdTest)
 */
 void SafetyWatchdogRuntimeRefresh(wd_test_t *psSafetyWdTest)
 {
-    psSafetyWdTest->watchdogRefreshRatio++;
-    if (psSafetyWdTest->watchdogRefreshRatio == WATCHDOG_REFRESH_RATIO)
+    psSafetyWdTest->ui16WatchdogRefreshRatio++;
+    if (psSafetyWdTest->ui16WatchdogRefreshRatio == WATCHDOG_REFRESH_RATIO)
     {
 #if WATCHDOG_ENABLED
         Watchdog_refresh; /* refreshing the watchdog */
 #endif
-        psSafetyWdTest->watchdogRefreshRatio = 0;
+        psSafetyWdTest->ui16WatchdogRefreshRatio = 0;
     }
 }
 
@@ -178,14 +176,14 @@ void SafetyWatchdogRuntimeRefresh(wd_test_t *psSafetyWdTest)
 */
 void SafetyClockTestInit(safety_common_t *psSafetyCommon, clock_test_t *psSafetyClockTest)
 {
-    psSafetyCommon->refClkFreq = CLOCK_GPT1_FREQ;
-    psSafetyClockTest->clockTestExpected = psSafetyCommon->refClkFreq / (uint32_t)ISR_FREQUENCY;
-    psSafetyClockTest->clockTestTolerance = (psSafetyClockTest->clockTestExpected * (uint32_t)CLOCK_TEST_TOLERANCE) /(uint32_t)100;
-    psSafetyClockTest->clockTestLimitHigh = psSafetyClockTest->clockTestExpected + psSafetyClockTest->clockTestTolerance;
-    psSafetyClockTest->clockTestLimitLow  = psSafetyClockTest->clockTestExpected - psSafetyClockTest->clockTestTolerance;
-    psSafetyClockTest->clockTestStart = 0; /* clock test result will be processed after the first interrupt occurs */
+    psSafetyCommon->ui32McgirclkFreq = CLOCK_GPT1_FREQ;
+    psSafetyClockTest->ui32ClockTestExpected = psSafetyCommon->ui32McgirclkFreq / (uint32_t)ISR_FREQUENCY;
+    psSafetyClockTest->ui32ClockTestTolerance = (psSafetyClockTest->ui32ClockTestExpected * (uint32_t)CLOCK_TEST_TOLERANCE) /(uint32_t)100;
+    psSafetyClockTest->ui32ClockTestLimitHigh = psSafetyClockTest->ui32ClockTestExpected + psSafetyClockTest->ui32ClockTestTolerance;
+    psSafetyClockTest->ui32ClockTestLimitLow  = psSafetyClockTest->ui32ClockTestExpected - psSafetyClockTest->ui32ClockTestTolerance;
+    psSafetyClockTest->ui16ClockTestStart = 0; /* clock test result will be processed after the first interrupt occurs */
 
-    FS_CLK_Init((uint32_t *)&psSafetyClockTest->clockTestContext);
+    IEC60730B_CM4_CM7_CLK_SYNC_Init((unsigned long *)&psSafetyClockTest->ui32ClockTestContext);
     
     /* Initialization of timer */
     GPT1_Init(CLOCK_GPT1_SRC, CLOCK_GPT1_CMP, CLOCK_GPT1_DIV); 
@@ -203,12 +201,10 @@ void SafetyClockTestInit(safety_common_t *psSafetyCommon, clock_test_t *psSafety
 */
 void SafetyClockTestIsr(clock_test_t *psSafetyClockTest)
 {
-    FS_CLK_GPT((uint32_t *)GPT1, (uint32_t *)&psSafetyClockTest->clockTestContext);
+    IEC60730B_CM4_CM7_CLK_SYNC_GPT_Isr((unsigned long *)GPT1, (unsigned long *)&psSafetyClockTest->ui32ClockTestContext);
 
-    if(psSafetyClockTest->clockTestStart != 2)
-    {
-        psSafetyClockTest->clockTestStart += 1;  /* to prevent checking of result before execution */
-    }
+    if(psSafetyClockTest->ui16ClockTestStart != 2)
+    psSafetyClockTest->ui16ClockTestStart += 1;  /* to prevent checking of result before execution */
 }
 
 /*!
@@ -216,7 +212,7 @@ void SafetyClockTestIsr(clock_test_t *psSafetyClockTest)
 *
 *          This function can be called from any place of application.
 *          It calls the IEC60730B_CM4_CM7_CLK_Check function from the IEC60730 library
-*          In case of incorrect clock test result, it updates the safetyErrors variable accordingly.
+*          In case of incorrect clock test result, it updates the ui32SafetyErrors variable accordingly.
 *          A node of program flow check is placed here.
 *
 * @param   psSafetyCommon          - The pointer of the Common Safety structure
@@ -227,12 +223,12 @@ void SafetyClockTestIsr(clock_test_t *psSafetyClockTest)
 */
 void SafetyClockTestCheck(safety_common_t *psSafetyCommon, clock_test_t *psSafetyClockTest)
 {
-    if (psSafetyClockTest->clockTestStart == 2)  /* condition is valid after the first Systick interrupt */
+    if (psSafetyClockTest->ui16ClockTestStart == 2)  /* condition is valid after the first Systick interrupt */
     {
-        psSafetyCommon->CLOCK_test_result = FS_CLK_Check(psSafetyClockTest->clockTestContext, psSafetyClockTest->clockTestLimitLow, psSafetyClockTest->clockTestLimitHigh);
-        if(psSafetyCommon->CLOCK_test_result == FS_CLK_FAIL)
+        psSafetyCommon->IEC60730B_clock_test_result = IEC60730B_CM4_CM7_CLK_Check(psSafetyClockTest->ui32ClockTestContext, psSafetyClockTest->ui32ClockTestLimitLow, psSafetyClockTest->ui32ClockTestLimitHigh);
+        if(psSafetyCommon->IEC60730B_clock_test_result == IEC60730B_ST_CLK_FAIL)
         {
-            psSafetyCommon->safetyErrors |= CLOCK_TEST_ERROR;
+            psSafetyCommon->ui32SafetyErrors |= CLOCK_TEST_ERROR;
             SafetyErrorHandling(psSafetyCommon);
         }
     }
@@ -245,23 +241,23 @@ void SafetyClockTestCheck(safety_common_t *psSafetyCommon, clock_test_t *psSafet
 *
 * @return  None
 */
-void InitPackets(fs_flash_dcp_state_t *psFlashDCPState)
+void InitPackets(flash_dcp_state_t *psFlashDCPState)
 {
     for(uint8_t size = 0; size < 8; size++)
     {
-        psFlashDCPState->CH0Packet[size] = 0;
+        psFlashDCPState->ui32Iec60730bCH0Packet[size] = 0;
     }
     for(uint8_t size = 0; size < 8; size++)
     {
-        psFlashDCPState->CH1Packet[size] = 0;
+        psFlashDCPState->ui32Iec60730bCH1Packet[size] = 0;
     }
     for(uint8_t size = 0; size < 8; size++)
     {
-        psFlashDCPState->CH2Packet[size] = 0;
+        psFlashDCPState->ui32Iec60730bCH2Packet[size] = 0;
     }
     for(uint8_t size = 0; size < 8; size++)
     {
-        psFlashDCPState->CH3Packet[size] = 0;
+        psFlashDCPState->ui32Iec60730bCH3Packet[size] = 0;
     }
 }
 
@@ -276,36 +272,35 @@ void InitPackets(fs_flash_dcp_state_t *psFlashDCPState)
 *
 * @return  None
 */
-void SafetyFlashTestInit(flash_runtime_test_parameters_t *psFlashCrc, flash_configuration_parameters_t *psFlashConfig, fs_flash_dcp_state_t *psFlashDCPState)
+void SafetyFlashTestInit(flash_runtime_test_parameters_t *psFlashCrc, flash_configuration_parameters_t *psFlashConfig, flash_dcp_state_t *psFlashDCPState)
 {
-#if defined(__IAR_SYSTEMS_ICC__)
-    psFlashConfig->startAddress = (uint32_t)&c_checksumStart;
-    psFlashConfig->endAddress = 4 + (uint32_t)&c_checksumEnd; /*We must test also last adress, due to this reason +4 in IAR*/
-    psFlashConfig->checksum = __checksum;
-#endif
-#if defined(__GNUC__) || defined(__ARMCC_VERSION)
-    psFlashConfig->startAddress = (uint32_t)FLASH_TEST_START_ADDRESS;
-    psFlashConfig->endAddress = (uint32_t)FLASH_TEST_END_ADDRESS;
-    psFlashConfig->checksum = crcPostbuild;
+#if defined(__IAR_SYSTEMS_ICC__) /* IAR */
+    psFlashConfig->ui32Iec60730bStartAddress = (uint32_t)&c_checksumStart;
+    psFlashConfig->ui32Iec60730bEndAddress = 4 + (uint32_t)&c_checksumEnd; /*We must test also last adress, due to this reason +4 in IAR*/
+    psFlashConfig->ui32Iec60730bChecksum = __checksum;
+#else
+    psFlashConfig->ui32Iec60730bStartAddress = (uint32_t)FLASH_TEST_START_ADDRESS;
+    psFlashConfig->ui32Iec60730bEndAddress = (uint32_t)FLASH_TEST_END_ADDRESS;
+    psFlashConfig->ui32Iec60730bChecksum = crcPostbuild;
 #endif
 
-    psFlashConfig->size = psFlashConfig->endAddress - psFlashConfig->startAddress;
-    psFlashConfig->startConditionSeed = (uint32_t)FLASH_TEST_CONDITION_SEED;
-    psFlashConfig->blockSize = FLASH_TEST_BLOCK_SIZE;
+    psFlashConfig->ui32Iec60730bSize = psFlashConfig->ui32Iec60730bEndAddress - psFlashConfig->ui32Iec60730bStartAddress;
+    psFlashConfig->ui32Iec60730bStartConditionSeed = (uint32_t)FLASH_TEST_CONDITION_SEED;
+    psFlashConfig->ui32Iec60730bBlockSize = FLASH_TEST_BLOCK_SIZE;
 
-    psFlashCrc->actualAddress  = psFlashConfig->startAddress;    /* start address */
-    psFlashCrc->actualAddress = psFlashConfig->startConditionSeed;    /* initial seed */
-    psFlashCrc->blockSize = (psFlashConfig->size < psFlashConfig->blockSize) ? psFlashConfig->size : psFlashConfig->blockSize;
+    psFlashCrc->ui32ActualAddress  = psFlashConfig->ui32Iec60730bStartAddress;    /* start address */
+    psFlashCrc->ui32PartCrc = psFlashConfig->ui32Iec60730bStartConditionSeed;    /* initial seed */
+    psFlashCrc->ui32BlockSize = (psFlashConfig->ui32Iec60730bSize < psFlashConfig->ui32Iec60730bBlockSize) ? psFlashConfig->ui32Iec60730bSize : psFlashConfig->ui32Iec60730bBlockSize;
     
     /* Init DCP channels states and results */
-    psFlashDCPState->CH0State = FS_DCP_AVAILABLE;
-    psFlashDCPState->CH0Result = 0;
-    psFlashDCPState->CH1State = FS_DCP_AVAILABLE;
-    psFlashDCPState->CH1Result = 0;
-    psFlashDCPState->CH2State = FS_DCP_AVAILABLE;
-    psFlashDCPState->CH2Result = 0;
-    psFlashDCPState->CH3State = FS_DCP_AVAILABLE;
-    psFlashDCPState->CH3Result = 0;
+    psFlashDCPState->ui32Iec60730bCH0State = IEC60730B_ST_DCP_AVAILABLE;
+    psFlashDCPState->ui32Iec60730bCH0Result = 0;
+    psFlashDCPState->ui32Iec60730bCH1State = IEC60730B_ST_DCP_AVAILABLE;
+    psFlashDCPState->ui32Iec60730bCH1Result = 0;
+    psFlashDCPState->ui32Iec60730bCH2State = IEC60730B_ST_DCP_AVAILABLE;
+    psFlashDCPState->ui32Iec60730bCH2Result = 0;
+    psFlashDCPState->ui32Iec60730bCH3State = IEC60730B_ST_DCP_AVAILABLE;
+    psFlashDCPState->ui32Iec60730bCH3Result = 0;
     InitPackets(psFlashDCPState);
     g_dcpSafetyChannel = DCP_CH3;
 }
@@ -315,30 +310,30 @@ void SafetyFlashTestInit(flash_runtime_test_parameters_t *psFlashCrc, flash_conf
 *
 *          This function calls the flash test function from IEC60730 library.
 *          Safety-related part of the flash is tested at once.
-*          In case of incorrect flash test result, it updates the safetyErrors variable accordingly.
+*          In case of incorrect flash test result, it updates the ui32SafetyErrors variable accordingly.
 *
 * @param   psSafetyCommon - The pointer of the Common Safety structure
 * @param   psFlashConfig  - The pointer of the Safety Flash test configuration structure.
 *
 * @return  None
 */
-void SafetyFlashAfterResetTest(safety_common_t *psSafetyCommon, flash_configuration_parameters_t *psFlashConfig, fs_flash_dcp_state_t *psFlashDCPState)
+void SafetyFlashAfterResetTest(safety_common_t *psSafetyCommon, flash_configuration_parameters_t *psFlashConfig, flash_dcp_state_t *psFlashDCPState)
 {
     /* CRC calculation of SAFETY_FLASH_BLOCK (channel should be available after reset) */
     do
     {
-        FS_CM4_CM7_FLASH_HW32_DCP(psFlashConfig->startAddress, psFlashConfig->size,
-                                  psFlashConfig->startConditionSeed, g_dcpSafetyChannel, psFlashDCPState, 0);
+        IEC60730B_CM7_Flash_HWTest_DCP(psFlashConfig->ui32Iec60730bStartAddress, psFlashConfig->ui32Iec60730bSize,
+                                       psFlashConfig->ui32Iec60730bStartConditionSeed, g_dcpSafetyChannel, psFlashDCPState, 0);
     }
-    while (psFlashDCPState->CH3State == FS_DCP_BUSY);
+    while (psFlashDCPState->ui32Iec60730bCH3State == IEC60730B_ST_DCP_BUSY);
     
     /* Store the result */
-    psSafetyCommon->FLASH_test_result = psFlashDCPState->CH3Result;
+    psSafetyCommon->IEC60730B_flash_test_result = psFlashDCPState->ui32Iec60730bCH3Result;
     
     /* Check if result equals precomputed CRC value */
-    if (psSafetyCommon->FLASH_test_result != psFlashConfig->checksum)
+    if(psSafetyCommon->IEC60730B_flash_test_result != psFlashConfig->ui32Iec60730bChecksum)
     {
-        psSafetyCommon->safetyErrors |= FLASH_TEST_ERROR;
+        psSafetyCommon->ui32SafetyErrors |= FLASH_TEST_ERROR;
         SafetyErrorHandling(psSafetyCommon);
     }   
 }
@@ -349,7 +344,7 @@ void SafetyFlashAfterResetTest(safety_common_t *psSafetyCommon, flash_configurat
 *          This function calls the flash test function from IEC60730 library.
 *          Safety-related part of the flash is tested in sequence.
 *          Calls SafetyFlashTestHandling function.
-*          In case of incorrect flash test result, it updates the safetyErrors variable accordingly.
+*          In case of incorrect flash test result, it updates the ui32SafetyErrors variable accordingly.
 *          A node of program flow check is placed here.
 *
 * @param   psSafetyCommon          - The pointer of the Common Safety structure
@@ -359,22 +354,22 @@ void SafetyFlashAfterResetTest(safety_common_t *psSafetyCommon, flash_configurat
 *
 * @return  None
 */
-void SafetyFlashRuntimeTest(safety_common_t *psSafetyCommon, flash_runtime_test_parameters_t *psFlashCrc, flash_configuration_parameters_t *psFlashConfig, fs_flash_dcp_state_t *psFlashDCPState)
+void SafetyFlashRuntimeTest(safety_common_t *psSafetyCommon, flash_runtime_test_parameters_t *psFlashCrc, flash_configuration_parameters_t *psFlashConfig, flash_dcp_state_t *psFlashDCPState)
 {
     /* Start CRC calculation for a given block of Flash memory */
-    FS_CM4_CM7_FLASH_HW32_DCP(psFlashCrc->actualAddress, psFlashCrc->blockSize,
-                              psFlashCrc->partCrc, g_dcpSafetyChannel, psFlashDCPState, 0);          
+    IEC60730B_CM7_Flash_HWTest_DCP(psFlashCrc->ui32ActualAddress, psFlashCrc->ui32BlockSize,
+                               psFlashCrc->ui32PartCrc, g_dcpSafetyChannel, psFlashDCPState, 0);          
 
     /* Check if calculation finished */
-    if (psFlashDCPState->CH3State == FS_DCP_AVAILABLE)
+    if (psFlashDCPState->ui32Iec60730bCH3State == IEC60730B_ST_DCP_AVAILABLE)
     {
         /* Store partial result */
-        psFlashCrc->partCrc = psFlashDCPState->CH3Result;
+        psFlashCrc->ui32PartCrc = psFlashDCPState->ui32Iec60730bCH3Result;
       
         /* Handle result */
-        if(SafetyFlashTestHandling(psFlashCrc, psFlashConfig) == FS_FLASH_FAIL)
+        if(SafetyFlashTestHandling(psFlashCrc, psFlashConfig) == IEC60730B_ST_FLASH_FAIL)
         {
-            psSafetyCommon->safetyErrors |= FLASH_TEST_ERROR;
+            psSafetyCommon->ui32SafetyErrors |= FLASH_TEST_ERROR;
             SafetyErrorHandling(psSafetyCommon);
         }
     }
@@ -394,29 +389,29 @@ void SafetyFlashRuntimeTest(safety_common_t *psSafetyCommon, flash_runtime_test_
 uint32_t SafetyFlashTestHandling(flash_runtime_test_parameters_t *psFlashCrc, flash_configuration_parameters_t *psFlashConfig)
 {
     uint32_t ui32Status;
-	ui32Status = FS_FLASH_PROGRESS;
+	ui32Status = IEC60730B_ST_FLASH_PROGRESS;
 
-	psFlashCrc->actualAddress += psFlashCrc->blockSize;    /* set the actual address for testing */
+	psFlashCrc->ui32ActualAddress += psFlashCrc->ui32BlockSize;    /* set the actual address for testing */
 
-    if(psFlashCrc->actualAddress == psFlashConfig->endAddress)
+    if(psFlashCrc->ui32ActualAddress == psFlashConfig->ui32Iec60730bEndAddress)
     {
-        if(psFlashCrc->partCrc == psFlashConfig->checksum)      /* checksum must be same as calculated in post-build */
+        if(psFlashCrc->ui32PartCrc == psFlashConfig->ui32Iec60730bChecksum)      /* checksum must be same as calculated in post-build */
         {
-        	ui32Status = FS_FLASH_PASS;
+        	ui32Status = IEC60730B_ST_FLASH_PASS;
         }
         else
         {
-        	ui32Status = FS_FLASH_FAIL;
+        	ui32Status = IEC60730B_ST_FLASH_FAIL;
         }
 
-        psFlashCrc->partCrc = psFlashConfig->startConditionSeed;   /* set start seed as input for CRC calculation */
-        psFlashCrc->actualAddress = psFlashConfig->startAddress;   /* set start address */
-        psFlashCrc->blockSize = psFlashConfig->blockSize;          /* size of block for CRC testing */
+        psFlashCrc->ui32PartCrc = psFlashConfig->ui32Iec60730bStartConditionSeed;   /* set start seed as input for CRC calculation */
+        psFlashCrc->ui32ActualAddress = psFlashConfig->ui32Iec60730bStartAddress;   /* set start address */
+        psFlashCrc->ui32BlockSize = psFlashConfig->ui32Iec60730bBlockSize;          /* size of block for CRC testing */
     }
 
-    if((psFlashCrc->actualAddress + psFlashCrc->blockSize) >= psFlashConfig->endAddress)
+    if((psFlashCrc->ui32ActualAddress + psFlashCrc->ui32BlockSize) >= psFlashConfig->ui32Iec60730bEndAddress)
     {
-    	psFlashCrc->blockSize = psFlashConfig->endAddress - psFlashCrc->actualAddress;
+    	psFlashCrc->ui32BlockSize = psFlashConfig->ui32Iec60730bEndAddress - psFlashCrc->ui32ActualAddress;
 
     }
 
@@ -429,24 +424,24 @@ uint32_t SafetyFlashTestHandling(flash_runtime_test_parameters_t *psFlashCrc, fl
 *
 *          Inits the RAM test variables
 *
-* @param   psSafetyRamTest - The pointer of the RAM test structure.
-* @param   pSafetyRamStart - The pointer of the RAM test start address.
-* @param   pSafetyRamEnd   - The pointer of the RAM test end address.
+* @param   psSafetyRamTest     - The pointer of the RAM test structure.
+* @param   pui32SafetyRamStart - The pointer of the RAM test start address.
+* @param   pui32SafetyRamEnd   - The pointer of the RAM test end address.
 *
 * @return  None
 */
-void SafetyRamTestInit(ram_test_t *psSafetyRamTest, uint32_t *pSafetyRamStart, uint32_t *pSafetyRamEnd)
+void SafetyRamTestInit(ram_test_t *psSafetyRamTest, uint32_t *pui32SafetyRamStart, uint32_t *pui32SafetyRamEnd)
 {
-    psSafetyRamTest->ramTestStartAddress = (uint32_t)pSafetyRamStart;
-    psSafetyRamTest->ramTestEndAddress =   (uint32_t)pSafetyRamEnd;
-    psSafetyRamTest->defaultBlockSize =  RAM_TEST_BACKUP_SIZE;
-    psSafetyRamTest->blockSize = RAM_TEST_BLOCK_SIZE;
-    psSafetyRamTest->actualAddress = psSafetyRamTest->ramTestStartAddress;
+    psSafetyRamTest->ui32RamTestStartAddress = (uint32_t)pui32SafetyRamStart;
+    psSafetyRamTest->ui32RamTestEndAddress =   (uint32_t)pui32SafetyRamEnd;
+    psSafetyRamTest->ui32DefaultBlockSize =  RAM_TEST_BACKUP_SIZE;
+    psSafetyRamTest->ui32BlockSize = RAM_TEST_BLOCK_SIZE;
+    psSafetyRamTest->ui32ActualAddress = psSafetyRamTest->ui32RamTestStartAddress;
 
-#if defined(__ARMCC_VERSION)  /* For ARM(KEIL) compiler */
-    psSafetyRamTest->backupAddress = (uint32_t)m_ram_test_backup;
-#else /*For IAR and MCUx compiler*/
-    psSafetyRamTest->backupAddress = (uint32_t)&m_ram_test_backup;
+#if (defined(__GNUC__) && ( __ARMCC_VERSION >= 6010050)) /* KEIL */
+    psSafetyRamTest->ui32BackupAddress = (uint32_t)m_ram_test_backup;
+#else /* IAR + MCUXpresso */
+    psSafetyRamTest->ui32BackupAddress = (uint32_t)&m_ram_test_backup;
 #endif
 }
 
@@ -455,7 +450,7 @@ void SafetyRamTestInit(ram_test_t *psSafetyRamTest, uint32_t *pSafetyRamStart, u
 *
 *          This function calls the RAM test function from IEC60730 library.
 *          Safety-related part of the RAM is tested at once.
-*          In case of incorrect RAM test result, it updates the safetyErrors variable accordingly.
+*          In case of incorrect RAM test result, it updates the ui32SafetyErrors variable accordingly.
 *
 * @param   psSafetyCommon  - The pointer of the Common Safety structure
 * @param   psSafetyRamTest - The pointer of the Safety RAM test structure.
@@ -464,14 +459,14 @@ void SafetyRamTestInit(ram_test_t *psSafetyRamTest, uint32_t *pSafetyRamStart, u
 */
 void SafetyRamAfterResetTest(safety_common_t *psSafetyCommon, ram_test_t *psSafetyRamTest)
 {
-    psSafetyCommon->RAM_test_result = FS_CM4_CM7_RAM_AfterReset(psSafetyRamTest->ramTestStartAddress, \
-                                                psSafetyRamTest->ramTestEndAddress,   \
-                                                psSafetyRamTest->defaultBlockSize,    \
-                                                psSafetyRamTest->backupAddress,       \
-                                                FS_CM4_CM7_RAM_SegmentMarchC);
-    if(psSafetyCommon->RAM_test_result == FS_RAM_FAIL)
+    psSafetyCommon->IEC60730B_ram_test_result = IEC60730B_CM4_CM7_RAM_AfterResetTest(psSafetyRamTest->ui32RamTestStartAddress, \
+                                                psSafetyRamTest->ui32RamTestEndAddress,   \
+                                                psSafetyRamTest->ui32DefaultBlockSize,    \
+                                                psSafetyRamTest->ui32BackupAddress,       \
+                                                IEC60730B_CM4_CM7_RAM_SegmentMarchC);
+    if(psSafetyCommon->IEC60730B_ram_test_result == IEC60730B_ST_RAM_FAIL)
     {
-        psSafetyCommon->safetyErrors |= RAM_TEST_ERROR;
+        psSafetyCommon->ui32SafetyErrors |= RAM_TEST_ERROR;
         SafetyErrorHandling(psSafetyCommon);
     }
 }
@@ -482,7 +477,7 @@ void SafetyRamAfterResetTest(safety_common_t *psSafetyCommon, ram_test_t *psSafe
 *          This function calls the RAM test function from IEC60730 library.
 *          Safety-related part of the RAM is tested in sequence.
 *          Calls SafetyFlashTestHandling function.
-*          In case of incorrect RAM test result, it updates the safetyErrors variable accordingly.
+*          In case of incorrect RAM test result, it updates the ui32SafetyErrors variable accordingly.
 *
 * @param   psSafetyCommon  - The pointer of the Common Safety structure
 * @param   psSafetyRamTest - The pointer of the Safety RAM test structure.
@@ -491,16 +486,16 @@ void SafetyRamAfterResetTest(safety_common_t *psSafetyCommon, ram_test_t *psSafe
 */
 void SafetyRamRuntimeTest(safety_common_t *psSafetyCommon, ram_test_t *psSafetyRamTest)
 {
-    psSafetyCommon->RAM_test_result = FS_CM4_CM7_RAM_Runtime(psSafetyRamTest->ramTestStartAddress, \
-        psSafetyRamTest->ramTestEndAddress,   \
-            (uint32_t *)&psSafetyRamTest->actualAddress,      \
-                psSafetyRamTest->blockSize,           \
-                    psSafetyRamTest->backupAddress,       \
-                        FS_CM4_CM7_RAM_SegmentMarchX);
+    psSafetyCommon->IEC60730B_ram_test_result = IEC60730B_CM4_CM7_RAM_RuntimeTest(psSafetyRamTest->ui32RamTestStartAddress, \
+        psSafetyRamTest->ui32RamTestEndAddress,   \
+            (unsigned long *)&psSafetyRamTest->ui32ActualAddress,      \
+                psSafetyRamTest->ui32BlockSize,           \
+                    psSafetyRamTest->ui32BackupAddress,       \
+                        IEC60730B_CM4_CM7_RAM_SegmentMarchX);
 
-    if(psSafetyCommon->RAM_test_result == FS_RAM_FAIL)
+    if(psSafetyCommon->IEC60730B_ram_test_result == IEC60730B_ST_RAM_FAIL)
     {
-        psSafetyCommon->safetyErrors |= RAM_TEST_ERROR;
+        psSafetyCommon->ui32SafetyErrors |= RAM_TEST_ERROR;
         SafetyErrorHandling(psSafetyCommon);
     }
 }
@@ -511,8 +506,8 @@ void SafetyRamRuntimeTest(safety_common_t *psSafetyCommon, ram_test_t *psSafetyR
 *          This function uses two addresses: first is defined in linker file (IEC60730_B_CM4_CM7_pc_object.o),
 *          second address comes as function argument (must be RAM address).
 *          Both addresses must be defined by the developer and suitable to test all of the possible PC bits.
-*          This test can�t be interrupted.
-*          In case of incorrect PC test result, it updates the safetyErrors variable accordingly.
+*          This test can?t be interrupted.
+*          In case of incorrect PC test result, it updates the ui32SafetyErrors variable accordingly.
 *
 * @param   psSafetyCommon - The pointer of the Common Safety structure
 * @param   pattern        - RAM address, it can vary with multiple function calls
@@ -521,10 +516,10 @@ void SafetyRamRuntimeTest(safety_common_t *psSafetyCommon, ram_test_t *psSafetyR
 */
 void SafetyPcTest(safety_common_t *psSafetyCommon, uint32_t pattern)
 {
-    psSafetyCommon->PC_test_result = FS_CM4_CM7_PC_Test(pattern, FS_PC_Object, (uint32_t *)PC_TEST_FLAG);
-    if(psSafetyCommon->PC_test_result == FS_PC_FAIL)
+    psSafetyCommon->IEC60730B_pc_test_result = IEC60730B_CM7_PC_Test(pattern, IEC60730B_PC_object, (unsigned long *)PC_TEST_FLAG);
+    if(psSafetyCommon->IEC60730B_pc_test_result == IEC60730B_ST_PC_FAIL)
     {
-        psSafetyCommon->safetyErrors |= PC_TEST_ERROR;
+        psSafetyCommon->ui32SafetyErrors |= PC_TEST_ERROR;
         SafetyErrorHandling(psSafetyCommon);
     }
 }
@@ -534,7 +529,7 @@ void SafetyPcTest(safety_common_t *psSafetyCommon, uint32_t pattern)
 *
 *          This function calls the CPU test functions from IEC60730 library.
 *          All the registers are tested at once.
-*          In case of incorrect flash test result, it updates the safetyErrors variable accordingly.
+*          In case of incorrect flash test result, it updates the ui32SafetyErrors variable accordingly.
 *          See IEC60730 library documentation for CPU errors handling !
 *
 * @param   psSafetyCommon - The pointer of the Common Safety structure
@@ -544,72 +539,72 @@ void SafetyPcTest(safety_common_t *psSafetyCommon, uint32_t pattern)
 void SafetyCpuAfterResetTest(safety_common_t *psSafetyCommon)
 {
     /* stacked CPU registers */
-    psSafetyCommon->CPU_reg_test_result = FS_CM4_CM7_CPU_Register();
-    if(psSafetyCommon->CPU_reg_test_result == FS_CPU_REGISTER_FAIL)
+    psSafetyCommon->IEC60730B_cpu_reg_test_result = IEC60730B_CM4_CM7_CPU_RegisterTest();
+    if(psSafetyCommon->IEC60730B_cpu_reg_test_result == IEC60730B_ST_CPU_REGISTER_FAIL)
     {
-        psSafetyCommon->safetyErrors |= CPU_REGISTERS_ERROR;
+        psSafetyCommon->ui32SafetyErrors |= CPU_REGISTERS_ERROR;
         SafetyErrorHandling(psSafetyCommon);
     }
     /* non-stacked CPU registers */
-    psSafetyCommon->CPU_non_stacked_test_result = FS_CM4_CM7_CPU_NonStackedRegister();
-    if(psSafetyCommon->CPU_non_stacked_test_result == FS_CPU_NONSTACKED_REGISTER_FAIL)
+    psSafetyCommon->IEC60730B_cpu_non_stacked_test_result = IEC60730B_CM4_CM7_CPU_NonStackedRegisterTest();
+    if(psSafetyCommon->IEC60730B_cpu_non_stacked_test_result == IEC60730B_ST_CPU_NONSTACKED_REGISTER_FAIL)
     {
-        psSafetyCommon->safetyErrors |= CPU_NONSTACKED_ERROR;
+        psSafetyCommon->ui32SafetyErrors |= CPU_NONSTACKED_ERROR;
         SafetyErrorHandling(psSafetyCommon);
     }
     /* CONTROL */
 #if __FPU_PRESENT
-    psSafetyCommon->CPU_control_test_result = FS_CM4_CM7_CPU_ControlFpu();
+    psSafetyCommon->IEC60730B_cpu_control_test_result = IEC60730B_CM4_CM7_CPU_ControlTest_fpu();
 #else
-    psSafetyCommon->CPU_control_test_result = FS_CM4_CM7_CPU_Control();
+    psSafetyCommon->IEC60730B_cpu_control_test_result = IEC60730B_CM4_CM7_CPU_ControlTest();
 #endif
 
-    if(psSafetyCommon->CPU_control_test_result == FS_CPU_CONTROL_FAIL)
+    if(psSafetyCommon->IEC60730B_cpu_control_test_result == IEC60730B_ST_CPU_CONTROL_FAIL)
     {
-        psSafetyCommon->safetyErrors |= CPU_CONTROL_ERROR;
+        psSafetyCommon->ui32SafetyErrors |= CPU_CONTROL_ERROR;
         SafetyErrorHandling(psSafetyCommon);
     }
     /* SP main */
-    psSafetyCommon->CPU_sp_main_test_result = FS_CM4_CM7_CPU_SPmain();
-    if(psSafetyCommon->CPU_sp_main_test_result == FS_CPU_SP_MAIN_FAIL)
+    psSafetyCommon->IEC60730B_cpu_sp_main_test_result = IEC60730B_CM4_CM7_CPU_SPmainTest();
+    if(psSafetyCommon->IEC60730B_cpu_sp_main_test_result == IEC60730B_ST_CPU_SP_MAIN_FAIL)
     {
-        psSafetyCommon->safetyErrors |= CPU_SP_MAIN_ERROR;
+        psSafetyCommon->ui32SafetyErrors |= CPU_SP_MAIN_ERROR;
         SafetyErrorHandling(psSafetyCommon);
     }
     /* SP process */
-    psSafetyCommon->CPU_sp_process_test_result = FS_CM4_CM7_CPU_SPprocess();
-    if(psSafetyCommon->CPU_sp_process_test_result == FS_CPU_SP_PROCESS_FAIL)
+    psSafetyCommon->IEC60730B_cpu_sp_process_test_result = IEC60730B_CM4_CM7_CPU_SPprocessTest();
+    if(psSafetyCommon->IEC60730B_cpu_sp_process_test_result == IEC60730B_ST_CPU_SP_PROCESS_FAIL)
     {
-        psSafetyCommon->safetyErrors |= CPU_SP_PROCESS_ERROR;
+        psSafetyCommon->ui32SafetyErrors |= CPU_SP_PROCESS_ERROR;
         SafetyErrorHandling(psSafetyCommon);
     }
     /* PRIMASK */
-    psSafetyCommon->CPU_primask_test_result = FS_CM4_CM7_CPU_Primask();
-    if(psSafetyCommon->CPU_primask_test_result == FS_CPU_PRIMASK_FAIL)
+    psSafetyCommon->IEC60730B_cpu_primask_test_result = IEC60730B_CM4_CM7_CPU_PrimaskTest();
+    if(psSafetyCommon->IEC60730B_cpu_primask_test_result == IEC60730B_ST_CPU_PRIMASK_FAIL)
     {
-        psSafetyCommon->safetyErrors |= CPU_PRIMASK_ERROR;
+        psSafetyCommon->ui32SafetyErrors |= CPU_PRIMASK_ERROR;
         SafetyErrorHandling(psSafetyCommon);
     }
     /* Special CPU registers  */ 
-    psSafetyCommon->CPU_special_test_result = FS_CM4_CM7_CPU_Special();
-    if(psSafetyCommon->CPU_special_test_result == FS_CPU_SPECIAL_FAIL)
+    psSafetyCommon->IEC60730B_cpu_special_test_result = IEC60730B_CM4_CM7_CPU_SpecialTest();
+    if(psSafetyCommon->IEC60730B_cpu_special_test_result == IEC60730B_ST_CPU_SPECIAL_FAIL)
     {
-        psSafetyCommon->safetyErrors |= CPU_SPECIAL_ERROR;
+        psSafetyCommon->ui32SafetyErrors |= CPU_SPECIAL_ERROR;
         SafetyErrorHandling(psSafetyCommon);
     }
     /* group 1 of FPU registers */
 #if __FPU_PRESENT
-    psSafetyCommon->CPU_float_test_1_result = FS_CM4_CM7_CPU_Float1();
-    if(psSafetyCommon->CPU_float_test_1_result == FS_CPU_FLOAT_1_FAIL)
+    psSafetyCommon->IEC60730B_cpu_float_test_1_result =IEC60730B_CM4_CM7_CPU_FloatTest1();
+    if(psSafetyCommon->IEC60730B_cpu_float_test_1_result == IEC60730B_ST_CPU_FLOAT_1_FAIL)
     {
-        psSafetyCommon->safetyErrors |= CPU_FLOAT_1_ERROR;
+        psSafetyCommon->ui32SafetyErrors |= CPU_FLOAT_1_ERROR;
         SafetyErrorHandling(psSafetyCommon);
     }
     /* group 2 of FPU registers */
-    psSafetyCommon->CPU_float_test_2_result = FS_CM4_CM7_CPU_Float2();
-    if(psSafetyCommon->CPU_float_test_2_result == FS_CPU_FLOAT_2_FAIL)
+    psSafetyCommon->IEC60730B_cpu_float_test_2_result =IEC60730B_CM4_CM7_CPU_FloatTest2();
+    if(psSafetyCommon->IEC60730B_cpu_float_test_2_result == IEC60730B_ST_CPU_FLOAT_2_FAIL)
     {
-        psSafetyCommon->safetyErrors |= CPU_FLOAT_2_ERROR;
+        psSafetyCommon->ui32SafetyErrors |= CPU_FLOAT_2_ERROR;
         SafetyErrorHandling(psSafetyCommon);
     }
 #endif
@@ -620,7 +615,7 @@ void SafetyCpuAfterResetTest(safety_common_t *psSafetyCommon)
 *
 *          This function calls the CPU test functions from IEC60730 library.
 *          The function must be called from an interrupt with highest priority.
-*          In case of incorrect flash test result, it updates the safetyErrors variable accordingly.
+*          In case of incorrect flash test result, it updates the ui32SafetyErrors variable accordingly.
 *          See IEC60730 library documentation for CPU errors handling !
 *
 * @param   psSafetyCommon - The pointer of the Common Safety structure
@@ -629,24 +624,24 @@ void SafetyCpuAfterResetTest(safety_common_t *psSafetyCommon)
 */
 void SafetyCpuIsrTest(safety_common_t *psSafetyCommon)
 {
-    psSafetyCommon->CPU_primask_test_result = FS_CM4_CM7_CPU_Primask();
-    if(psSafetyCommon->CPU_primask_test_result == FS_CPU_PRIMASK_FAIL)
+    psSafetyCommon->IEC60730B_cpu_primask_test_result = IEC60730B_CM4_CM7_CPU_PrimaskTest();
+    if(psSafetyCommon->IEC60730B_cpu_primask_test_result == IEC60730B_ST_CPU_PRIMASK_FAIL)
     {
-        psSafetyCommon->safetyErrors |= CPU_PRIMASK_ERROR;
+        psSafetyCommon->ui32SafetyErrors |= CPU_PRIMASK_ERROR;
         SafetyErrorHandling(psSafetyCommon);
     }
 
-    psSafetyCommon->CPU_sp_main_test_result = FS_CM4_CM7_CPU_SPmain();
-    if(psSafetyCommon->CPU_sp_main_test_result == FS_CPU_SP_MAIN_FAIL)
+    psSafetyCommon->IEC60730B_cpu_sp_main_test_result = IEC60730B_CM4_CM7_CPU_SPmainTest();
+    if(psSafetyCommon->IEC60730B_cpu_sp_main_test_result == IEC60730B_ST_CPU_SP_MAIN_FAIL)
     {
-        psSafetyCommon->safetyErrors |= CPU_SP_MAIN_ERROR;
+        psSafetyCommon->ui32SafetyErrors |= CPU_SP_MAIN_ERROR;
         SafetyErrorHandling(psSafetyCommon);
     }
   
-    psSafetyCommon->CPU_special_test_result = FS_CM4_CM7_CPU_Special();
-    if(psSafetyCommon->CPU_special_test_result == FS_CPU_SPECIAL_FAIL)
+    psSafetyCommon->IEC60730B_cpu_special_test_result = IEC60730B_CM4_CM7_CPU_SpecialTest();
+    if(psSafetyCommon->IEC60730B_cpu_special_test_result == IEC60730B_ST_CPU_SPECIAL_FAIL)
     {
-        psSafetyCommon->safetyErrors |= CPU_SPECIAL_ERROR;
+        psSafetyCommon->ui32SafetyErrors |= CPU_SPECIAL_ERROR;
         SafetyErrorHandling(psSafetyCommon);
     }
 }
@@ -656,7 +651,7 @@ void SafetyCpuIsrTest(safety_common_t *psSafetyCommon)
 *
 *          This function calls the CPU test functions from IEC60730 library.
 *          The function can be called from the background loop.
-*          In case of incorrect flash test result, it updates the safetyErrors variable accordingly.
+*          In case of incorrect flash test result, it updates the ui32SafetyErrors variable accordingly.
 *          See IEC60730 library documentation for CPU errors handling !
 *
 * @param   psSafetyCommon - The pointer of the Common Safety structure
@@ -665,31 +660,31 @@ void SafetyCpuIsrTest(safety_common_t *psSafetyCommon)
 */
 void SafetyCpuBackgroundTest(safety_common_t *psSafetyCommon)
 {
-    psSafetyCommon->CPU_reg_test_result = FS_CM4_CM7_CPU_Register();
-    if(psSafetyCommon->CPU_reg_test_result == FS_CPU_REGISTER_FAIL)
+    psSafetyCommon->IEC60730B_cpu_reg_test_result = IEC60730B_CM4_CM7_CPU_RegisterTest();
+    if(psSafetyCommon->IEC60730B_cpu_reg_test_result == IEC60730B_ST_CPU_REGISTER_FAIL)
     {
-        psSafetyCommon->safetyErrors |= CPU_REGISTERS_ERROR;
+        psSafetyCommon->ui32SafetyErrors |= CPU_REGISTERS_ERROR;
         SafetyErrorHandling(psSafetyCommon);
     }
 
-    psSafetyCommon->CPU_non_stacked_test_result = FS_CM4_CM7_CPU_NonStackedRegister();
-    if(psSafetyCommon->CPU_non_stacked_test_result == FS_CPU_NONSTACKED_REGISTER_FAIL)
+    psSafetyCommon->IEC60730B_cpu_non_stacked_test_result = IEC60730B_CM4_CM7_CPU_NonStackedRegisterTest();
+    if(psSafetyCommon->IEC60730B_cpu_non_stacked_test_result == IEC60730B_ST_CPU_NONSTACKED_REGISTER_FAIL)
     {
-        psSafetyCommon->safetyErrors |= CPU_NONSTACKED_ERROR;
+        psSafetyCommon->ui32SafetyErrors |= CPU_NONSTACKED_ERROR;
         SafetyErrorHandling(psSafetyCommon);
     }
 #if __FPU_PRESENT
-    psSafetyCommon->CPU_float_test_1_result = FS_CM4_CM7_CPU_Float1();
-    if(psSafetyCommon->CPU_float_test_1_result == FS_CPU_FLOAT_1_FAIL)
+    psSafetyCommon->IEC60730B_cpu_float_test_1_result =IEC60730B_CM4_CM7_CPU_FloatTest1();
+    if(psSafetyCommon->IEC60730B_cpu_float_test_1_result == IEC60730B_ST_CPU_FLOAT_1_FAIL)
     {
-        psSafetyCommon->safetyErrors |= CPU_FLOAT_1_ERROR;
+        psSafetyCommon->ui32SafetyErrors |= CPU_FLOAT_1_ERROR;
         SafetyErrorHandling(psSafetyCommon);
     }
 
-    psSafetyCommon->CPU_float_test_2_result = FS_CM4_CM7_CPU_Float2();
-    if(psSafetyCommon->CPU_float_test_2_result == FS_CPU_FLOAT_2_FAIL)
+    psSafetyCommon->IEC60730B_cpu_float_test_2_result =IEC60730B_CM4_CM7_CPU_FloatTest2();
+    if(psSafetyCommon->IEC60730B_cpu_float_test_2_result == IEC60730B_ST_CPU_FLOAT_2_FAIL)
     {
-        psSafetyCommon->safetyErrors |= CPU_FLOAT_2_ERROR;
+        psSafetyCommon->ui32SafetyErrors |= CPU_FLOAT_2_ERROR;
         SafetyErrorHandling(psSafetyCommon);
     }
 #endif
@@ -706,7 +701,7 @@ void SafetyCpuBackgroundTest(safety_common_t *psSafetyCommon)
 */
 void SafetyStackTestInit(void)
 {
-    FS_CM4_CM7_STACK_Init(STACK_TEST_PATTERN, c_stackTestFirstAddress, c_stackTestSecondAddress, STACK_TEST_BLOCK_SIZE);
+    IEC60730B_CM4_CM7_Stack_Init(STACK_TEST_PATTERN, c_stackTestFirstAddress, c_stackTestSecondAddress, STACK_TEST_BLOCK_SIZE);
 }
 
 
@@ -715,7 +710,7 @@ void SafetyStackTestInit(void)
 *
 *          This function calls the STACK test function from IEC60730 library
 *          Stack is tested for underflow and overflow condition.
-*          In case of incorrect Stack test result, it updates the safetyErrors variable accordingly.
+*          In case of incorrect Stack test result, it updates the ui32SafetyErrors variable accordingly.
 *
 * @param   psSafetyCommon - The pointer of the Common Safety structure
 *
@@ -723,103 +718,11 @@ void SafetyStackTestInit(void)
 */
 void SafetyStackTest(safety_common_t *psSafetyCommon)
 {
-    psSafetyCommon->STACK_test_result = FS_CM4_CM7_STACK_Test(STACK_TEST_PATTERN, c_stackTestFirstAddress, c_stackTestSecondAddress, STACK_TEST_BLOCK_SIZE);
-    if(psSafetyCommon->STACK_test_result == FS_STACK_FAIL)
+    psSafetyCommon->IEC60730B_stack_test_result =IEC60730B_CM4_CM7_Stack_Test(STACK_TEST_PATTERN, c_stackTestFirstAddress, c_stackTestSecondAddress, STACK_TEST_BLOCK_SIZE);
+    if(psSafetyCommon->IEC60730B_stack_test_result == IEC60730B_ST_STACK_FAIL)
     {
-        psSafetyCommon->safetyErrors |= STACK_TEST_ERROR;
+        psSafetyCommon->ui32SafetyErrors |= STACK_TEST_ERROR;
         SafetyErrorHandling(psSafetyCommon);
-    }
-}
-
-/*!
- * @brief  SafetyDIOTestInit
- * 
- *         Check if every item of input array has valid pin definition.
- *         It also fills the muxAddr and padAddr variables with appropriate address (IOMUXC registers), which is used in DIO test.
- *
- * @param   psSafetyCommon - The pointer of the Common Safety structure
- * @param   *pTestItems    - Array of pointers to DIO test items (pin definitions)
- *
- * @return None
- */
-void SafetyDIOTestInit(safety_common_t *psSafetyCommon, fs_dio_test_rt_t *pTestItems[])
-{
-    uint32_t st = 0;
-    
-    /* Check every item */
-    for (uint16_t i = 0; pTestItems[i] != 0; i++)
-    {
-        if (pTestItems[i]->pinNum < 32)
-        {
-            if (pTestItems[i]->gpio == (uint32_t)FS_DIO_GPIO1_IMX)
-            {
-                pTestItems[i]->muxAddr = (0x401F80BCU + (pTestItems[i]->pinNum * 4U)); /* IOMUXC GPIO1_x */
-                pTestItems[i]->padAddr = pTestItems[i]->muxAddr + 0x1F0U;
-            }
-            else if (pTestItems[i]->gpio == (uint32_t)FS_DIO_GPIO2_IMX)
-            {
-                pTestItems[i]->muxAddr = (0x401F8140U + (pTestItems[i]->pinNum * 4U)); /* IOMUXC GPIO2_x */
-                pTestItems[i]->padAddr = pTestItems[i]->muxAddr + 0x1F0U;
-            }
-            else if (pTestItems[i]->gpio == (uint32_t)FS_DIO_GPIO3_IMX)
-            {
-                if (pTestItems[i]->pinNum < 12)
-                {
-                    pTestItems[i]->muxAddr = (0x401F81D4U + (pTestItems[i]->pinNum * 4U)); /* IOMUXC GPIO3_x */
-                    pTestItems[i]->padAddr = pTestItems[i]->muxAddr + 0x1F0U;
-                }
-                else if (pTestItems[i]->pinNum < 18)
-                {
-                    pTestItems[i]->muxAddr = (0x401F81BCU + ((pTestItems[i]->pinNum - 12U) * 4U)); /* IOMUXC GPIO3_x */
-                    pTestItems[i]->padAddr = pTestItems[i]->muxAddr + 0x1F0U;
-                }
-                else if (pTestItems[i]->pinNum < 28)
-                {
-                    pTestItems[i]->muxAddr = (0x401F8094U + ((pTestItems[i]->pinNum - 18U) * 4U)); /* IOMUXC GPIO3_x */
-                    pTestItems[i]->padAddr = pTestItems[i]->muxAddr + 0x1F0U;
-                }
-                else
-                {
-                    st = 1; // Error - invalid pin number
-                }
-            }
-            else if (pTestItems[i]->gpio == (uint32_t)FS_DIO_GPIO4_IMX)
-            {
-                pTestItems[i]->muxAddr = (0x401F8014U + (pTestItems[i]->pinNum * 4U)); /* IOMUXC GPIO4_x */
-                pTestItems[i]->padAddr = pTestItems[i]->muxAddr + 0x1F0U;
-            }
-            else if (pTestItems[i]->gpio == (uint32_t)FS_DIO_GPIO5_IMX) /* GPIO5 */
-            {  
-                if (pTestItems[i]->pinNum < 3)
-                {
-                    pTestItems[i]->muxAddr = (0x400A8000U + (pTestItems[i]->pinNum * 4U)); /* IOMUXC GPIO5_x */
-                    pTestItems[i]->padAddr = pTestItems[i]->muxAddr + 0x1F0U;
-                }
-                else
-                {
-                    st = 1; // Error - invalid pin number
-                }
-            }
-            else
-            {
-                st = 1; // Error - invalid GPIOx module
-            }
-        }
-        else
-        {
-            st = 1; // Error - invalid pin number
-        }
-
-        /* Check pin direction */
-        if (pTestItems[i]->pinDir != PIN_DIRECTION_IN && pTestItems[i]->pinDir != PIN_DIRECTION_OUT)
-          st = 1;
-        
-        /* Error check */
-        if (st)
-        {
-            psSafetyCommon->safetyErrors |= DIO_TEST_ERROR;
-            SafetyErrorHandling(psSafetyCommon);
-        }
     }
 }
 
@@ -827,25 +730,25 @@ void SafetyDIOTestInit(safety_common_t *psSafetyCommon, fs_dio_test_rt_t *pTestI
  * @brief   Digital Input/Output test.
  *
  *          This function calls output test functions from IEC60730 library
- *          In case of incorrect test result, it updates the safetyErrors variable accordingly.
+ *          In case of incorrect test result, it updates the ui32SafetyErrors variable accordingly.
  *
  * @param   psSafetyCommon - The pointer of the Common Safety structure
  * @param   *pTestedPin    - The pointer to the DIO test item structure (pin definition)
  *
  * @return  None
  */
-void SafetyDigitalOutputTest(safety_common_t *psSafetyCommon, fs_dio_test_rt_t *pTestedPin)
+void SafetyDigitalOutputTestRT(safety_common_t *psSafetyCommon, dio_test_rt_t *pTestedPin)
 {      
     /* Setup port for testing */
     PortSetup(pTestedPin->gpio, pTestedPin->pinNum, PIN_DIRECTION_OUT);
     
     /* Output test */
-    psSafetyCommon->DIO_output_test_result = FS_DIO_Output_RT(pTestedPin, DIO_WAIT_CYCLE);
+    psSafetyCommon->IEC60730B_dio_output_test_result = IEC60730B_CM4_CM7_DIO_OutputTest_RT(pTestedPin, DIO_WAIT_CYCLE);
 
     /* Error check */
-    if(psSafetyCommon->DIO_output_test_result == FS_DIO_FAIL)
+    if(psSafetyCommon->IEC60730B_dio_output_test_result == IEC60730B_ST_DIO_FAIL)
     {
-        psSafetyCommon->safetyErrors |= DIO_TEST_ERROR;
+        psSafetyCommon->ui32SafetyErrors |= DIO_TEST_ERROR;
         SafetyErrorHandling(psSafetyCommon);
     }  
   
@@ -857,7 +760,7 @@ void SafetyDigitalOutputTest(safety_common_t *psSafetyCommon, fs_dio_test_rt_t *
  * @brief   Digital Input/Output Short to Adjacent pins test
  *
  *          This function calls digital io short test SET and GET functions from IEC60730 library
- *          In case of incorrect test conditions, it updates the safetyErrors variable accordingly.
+ *          In case of incorrect test conditions, it updates the ui32SafetyErrors variable accordingly.
  *
  * @param   psSafetyCommon - The pointer of the Common Safety structure
  * @param   *pTestedPin    - The pointer to the DIO test item structure (pin definition)
@@ -866,16 +769,16 @@ void SafetyDigitalOutputTest(safety_common_t *psSafetyCommon, fs_dio_test_rt_t *
  *
  * @return  None
  */
-void SafetyDigitalInputOutput_ShortAdjTest(safety_common_t *psSafetyCommon, fs_dio_test_rt_t *pTestedPin, fs_dio_test_rt_t *pAdjPin, uint32_t PinValue)
+void SafetyDigitalInputOutput_ShortAdjTestRT(safety_common_t *psSafetyCommon, dio_test_rt_t *pTestedPin, dio_test_rt_t *pAdjPin, unsigned long PinValue)
 
 {
     PortSetup(pTestedPin->gpio, pTestedPin->pinNum, PIN_DIRECTION_IN);
     PortSetup(pAdjPin->gpio,    pAdjPin->pinNum,    PIN_DIRECTION_OUT);
 
-    psSafetyCommon->DIO_short_test_result = FS_DIO_ShortToAdjSet_RT(pTestedPin, pAdjPin, PinValue, DIO_BACKUP);
-    if((psSafetyCommon->DIO_short_test_result) == FS_DIO_FAIL)
+    psSafetyCommon->IEC60730B_dio_short_test_result = IEC60730B_CM4_CM7_DIO_ShortToAdjTest_Set_RT(pTestedPin, pAdjPin, PinValue, DIO_BACKUP);
+    if((psSafetyCommon->IEC60730B_dio_short_test_result) == IEC60730B_ST_DIO_FAIL)
     {
-        psSafetyCommon->safetyErrors |= DIO_TEST_ERROR;
+        psSafetyCommon->ui32SafetyErrors |= DIO_TEST_ERROR;
         SafetyErrorHandling(psSafetyCommon);
     }
       
@@ -885,10 +788,10 @@ void SafetyDigitalInputOutput_ShortAdjTest(safety_common_t *psSafetyCommon, fs_d
         __asm("nop");
     }
     
-    psSafetyCommon->DIO_input_test_result = FS_DIO_InputExt_RT(pTestedPin, pAdjPin, PinValue, DIO_BACKUP);    
-    if((psSafetyCommon->DIO_input_test_result) == FS_DIO_FAIL)
+    psSafetyCommon->IEC60730B_dio_short_test_result = IEC60730B_CM4_CM7_DIO_InputTest_Ext_RT(pTestedPin, pAdjPin, PinValue, DIO_BACKUP);    
+    if((psSafetyCommon->IEC60730B_dio_short_test_result) == IEC60730B_ST_DIO_FAIL)
     {
-        psSafetyCommon->safetyErrors |= DIO_TEST_ERROR;
+        psSafetyCommon->ui32SafetyErrors |= DIO_TEST_ERROR;
         SafetyErrorHandling(psSafetyCommon);
     }
 
@@ -900,7 +803,7 @@ void SafetyDigitalInputOutput_ShortAdjTest(safety_common_t *psSafetyCommon, fs_d
  * @brief   Digital Input/Output Short to Supply test.
  *
  *          This function calls digital io short test SET and GET functions from IEC60730 library
- *          In case of incorrect test conditions, it updates the safetyErrors variable accordingly.
+ *          In case of incorrect test conditions, it updates the ui32SafetyErrors variable accordingly.
  *
  * @param   psSafetyCommon   - The pointer of the Common Safety structure
  * @param   *pTestedPin      - The pointer to the DIO test item structure (pin definition)
@@ -908,14 +811,14 @@ void SafetyDigitalInputOutput_ShortAdjTest(safety_common_t *psSafetyCommon, fs_d
  *
  * @return  None
  */
-void SafetyDigitalInputOutput_ShortSupplyTest(safety_common_t *psSafetyCommon, fs_dio_test_rt_t *pTestedPin, uint8_t polarity)
+void SafetyDigitalInputOutput_ShortSupplyTestRT(safety_common_t *psSafetyCommon, dio_test_rt_t *pTestedPin, uint8_t polarity)
 {
     PortSetup(pTestedPin->gpio, pTestedPin->pinNum, PIN_DIRECTION_IN);
 
-    psSafetyCommon->DIO_short_test_result = FS_DIO_ShortToSupplySet_RT(pTestedPin, polarity, DIO_BACKUP);
-    if((psSafetyCommon->DIO_short_test_result) == FS_DIO_FAIL)
+    psSafetyCommon->IEC60730B_dio_short_test_result = IEC60730B_CM4_CM7_DIO_ShortToSupplyTest_Set_RT(pTestedPin, polarity, DIO_BACKUP);
+    if((psSafetyCommon->IEC60730B_dio_short_test_result) == IEC60730B_ST_DIO_FAIL)
     {
-        psSafetyCommon->safetyErrors |= DIO_TEST_ERROR;
+        psSafetyCommon->ui32SafetyErrors |= DIO_TEST_ERROR;
         SafetyErrorHandling(psSafetyCommon);
     }
 
@@ -925,10 +828,10 @@ void SafetyDigitalInputOutput_ShortSupplyTest(safety_common_t *psSafetyCommon, f
         __asm("nop");
     }
 
-    psSafetyCommon->DIO_input_test_result = FS_DIO_InputExt_RT(pTestedPin, pTestedPin, polarity, DIO_BACKUP);
-    if((psSafetyCommon->DIO_input_test_result) == FS_DIO_FAIL)
+    psSafetyCommon->IEC60730B_dio_short_test_result = IEC60730B_CM4_CM7_DIO_InputTest_Ext_RT(pTestedPin, pTestedPin, polarity, DIO_BACKUP);
+    if((psSafetyCommon->IEC60730B_dio_short_test_result) == IEC60730B_ST_DIO_FAIL)
     {
-        psSafetyCommon->safetyErrors |= DIO_TEST_ERROR;
+        psSafetyCommon->ui32SafetyErrors |= DIO_TEST_ERROR;
         SafetyErrorHandling(psSafetyCommon);
     }
 
@@ -948,14 +851,14 @@ void SafetyDigitalInputOutput_ShortSupplyTest(safety_common_t *psSafetyCommon, f
 */
 void SafetyIsrFunction(safety_common_t *psSafetyCommon, ram_test_t *psSafetyRamTest, ram_test_t *psSafetyRamStackTest)
 {
-    switch(psSafetyCommon->fastIsrSafetySwitch){
+    switch(psSafetyCommon->ui32FastIsrSafetySwitch){
     case 0:   /* CPU registers test that cannot be interrupted */
         SafetyCpuIsrTest(psSafetyCommon);
         break;
     case 1:   /* Program counter test */
-#if PC_TEST_ENABLED
-        SafetyPcTest(psSafetyCommon, PC_TEST_PATTERN);
-#endif
+        #ifdef PC_TEST_ENABLED
+          SafetyPcTest(psSafetyCommon, PC_TEST_PATTERN);
+        #endif
         break;
     case 2:   /* RAM March test for safety related RAM space */
         SafetyRamRuntimeTest(psSafetyCommon, psSafetyRamTest);
@@ -968,9 +871,9 @@ void SafetyIsrFunction(safety_common_t *psSafetyCommon, ram_test_t *psSafetyRamT
         break;
     }
 
-    psSafetyCommon->fastIsrSafetySwitch++;
-    if (psSafetyCommon->fastIsrSafetySwitch == 4)
-        psSafetyCommon->fastIsrSafetySwitch = 0;
+    psSafetyCommon->ui32FastIsrSafetySwitch++;
+    if(psSafetyCommon->ui32FastIsrSafetySwitch ==4)
+        psSafetyCommon->ui32FastIsrSafetySwitch = 0;
 }
 
 /*!
@@ -985,8 +888,8 @@ void SafetyIsrFunction(safety_common_t *psSafetyCommon, ram_test_t *psSafetyRamT
 */
 void SafetyErrorHandling(safety_common_t *psSafetyCommon)
 {
-    *SAFETY_ERROR_CODE = psSafetyCommon->safetyErrors;
-#if SAFETY_ERROR_ACTION
+    *SAFETY_ERROR_CODE = psSafetyCommon->ui32SafetyErrors;
+#ifdef SAFETY_ERROR_ACTION
     __asm("CPSID i"); /* disable interrupts */
     while(1);
 #endif

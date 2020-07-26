@@ -12,6 +12,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================*/
+
+/* File modified by NXP. Changes are described in file
+   /middleware/eiq/tensorflow-lite/readme.txt in section "Release notes" */
+
 #ifndef TENSORFLOW_LITE_KERNELS_INTERNAL_ROUND_H_
 #define TENSORFLOW_LITE_KERNELS_INTERNAL_ROUND_H_
 
@@ -31,7 +35,7 @@ inline double TfLiteRound(const double x) { return ::round(x); }
 #else
 template <class T>
 inline T TfLiteRound(const T x) {
-  return std::round(x);
+  return ::std::round(x);
 }
 #endif
 

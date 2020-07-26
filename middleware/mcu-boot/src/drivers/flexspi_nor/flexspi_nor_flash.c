@@ -1,18 +1,18 @@
 /*
  * Copyright 2014-2015 Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  *
  */
 
-#include <string.h>
-#include <stdlib.h>
 #include <stdbool.h>
-#include "flexspi/fsl_flexspi.h"
-#include "flexspi_nor_flash.h"
+#include <stdlib.h>
+#include <string.h>
 
+#include "bl_flexspi.h"
+#include "flexspi_nor_flash.h"
 
 /******************************************************************************
  * Definitions
@@ -765,7 +765,6 @@ status_t flexspi_nor_flash_page_program(uint32_t instance,
 }
 #endif // #if (!BL_FEATURE_HAS_FLEXSPI_NOR_ROMAPI) || (!ROM_API_HAS_FELXSPI_NOR_PROGRAM)
 
-
 #if (!BL_FEATURE_HAS_FLEXSPI_NOR_ROMAPI) || (!ROM_API_HAS_FLEXSPI_NOR_ERASE_ALL)
 // See flexspi_nor_flash.h for more details
 status_t flexspi_nor_flash_erase_all(uint32_t instance, flexspi_nor_config_t *config)
@@ -862,7 +861,6 @@ status_t flexspi_nor_flash_erase_all(uint32_t instance, flexspi_nor_config_t *co
 }
 #endif // #if (!BL_FEATURE_HAS_FLEXSPI_NOR_ROMAPI) || (!ROM_API_HAS_FLEXSPI_NOR_ERASE_ALL)
 
-
 #if (!BL_FEATURE_HAS_FLEXSPI_NOR_ROMAPI) || (!ROM_API_HAS_FLEXSPI_NOR_ERASE_SECTOR)
 // See flexspi_nor_flash.h for more details.
 status_t flexspi_nor_flash_erase_sector(uint32_t instance, flexspi_nor_config_t *config, uint32_t address)
@@ -933,7 +931,6 @@ status_t flexspi_nor_flash_erase_sector(uint32_t instance, flexspi_nor_config_t 
     return status;
 }
 #endif // #if (!BL_FEATURE_HAS_FLEXSPI_NOR_ROMAPI) || (!ROM_API_HAS_FLEXSPI_NOR_ERASE_SECTOR)
-
 
 #if (!BL_FEATURE_HAS_FLEXSPI_NOR_ROMAPI) || (!ROM_API_HAS_FLEXSPI_NOR_ERASE_BLOCK)
 status_t flexspi_nor_flash_erase_block(uint32_t instance, flexspi_nor_config_t *config, uint32_t address)
@@ -1759,14 +1756,15 @@ status_t parse_sfdp(uint32_t instance,
         }
 
         uint32_t enhance_mode = 0x00;
-        if (option->option0.B.misc_mode == kSerialNorEnhanceMode_Disabled)
+        uint8_t misc_mode = option->option0.B.misc_mode;
+        if (misc_mode == kSerialNorEnhanceMode_Disabled)
         {
             // Treat mode cycles as dummy cycles
             dummy_cycles += mode_cycles;
             mode_cycles = 0;
         }
 #if FLEXSPI_ENABLE_NO_CMD_MODE_SUPPORT
-        else if (option->option0.B.misc_mode == kSerialNorEnhanceMode_0_4_4_Mode)
+        else if (misc_mode == kSerialNorEnhanceMode_0_4_4_Mode)
         {
             // Cannot detect the 0-4-4 mode entry method, disable 0-4-4 mode
             if ((tbl->flash_param_tbl_size < kSfdp_BasicProtocolTableSize_RevA) ||
@@ -1826,9 +1824,13 @@ status_t parse_sfdp(uint32_t instance,
             }
         }
 #endif // FLEXSPI_ENABLE_NO_CMD_MODE_SUPPORT
+        else if (misc_mode == kSerialNorEnhanceMode_InternalLoopback)
+        {
+            config->memConfig.readSampleClkSrc = kFlexSPIReadSampleClk_LoopbackInternally;
+        }
         else
         {
-            break;
+            // Do nothing
         }
 
         if (mode_cycles == 0)
@@ -1888,7 +1890,7 @@ status_t parse_sfdp(uint32_t instance,
                 config->memConfig.lookupTable[1] =
                     FLEXSPI_LUT_SEQ(mode_inst, FLEXSPI_4PAD, enhance_mode, DUMMY_SDR, FLEXSPI_4PAD, dummy_cycles);
                 config->memConfig.lookupTable[2] =
-                    FLEXSPI_LUT_SEQ(READ_SDR, FLEXSPI_4PAD, 0x04, JMP_ON_CS, FLEXSPI_1PAD, 1);
+                    FLEXSPI_LUT_SEQ(READ_SDR, FLEXSPI_4PAD, 0x04, STOP, FLEXSPI_1PAD, 0x0);
             }
         }
 
@@ -2225,7 +2227,7 @@ status_t flexspi_nor_generate_config_block_hyperflash(uint32_t instance, flexspi
          * Read ID-CFI Parameters,be aware that data stored on HyperFLASH are 16bit big-endian, so need to be swapped.
          */
         // CFI Entry
-        uint32_t data[1] = {0x9800};
+        uint32_t data[1] = { 0x9800 };
         status = flexspi_nor_hyperbus_write(instance, 0x555, &data[0], 2);
         if (status != kStatus_Success)
         {
@@ -3412,7 +3414,6 @@ status_t flexspi_nor_get_config(uint32_t instance, flexspi_nor_config_t *config,
 }
 #endif // #if (!BL_FEATURE_HAS_FLEXSPI_NOR_ROMAPI) || (!ROM_API_HAS_FLEXSPI_NOR_GET_CFG)
 
-
 #if (!BL_FEATURE_HAS_FLEXSPI_NOR_ROMAPI) || (!ROM_API_HAS_FLEXSPI_NOR_ERASE)
 // See flexspi_nor_flash.h for more details.
 status_t flexspi_nor_flash_erase(uint32_t instance, flexspi_nor_config_t *config, uint32_t start, uint32_t length)
@@ -3476,7 +3477,6 @@ status_t flexspi_nor_flash_erase(uint32_t instance, flexspi_nor_config_t *config
     return status;
 }
 #endif // #if (!BL_FEATURE_HAS_FLEXSPI_NOR_ROMAPI) || (!ROM_API_HAS_FLEXSPI_NOR_ERASE)
-
 
 #if (!BL_FEATURE_HAS_FLEXSPI_NOR_ROMAPI) || (!ROM_API_HAS_FLEXSPI_NOR_READ)
 // See flexspi_nor_flash.h for more details.
@@ -3619,4 +3619,3 @@ status_t flexspi_nor_restore_spi_protocol(uint32_t instance, flexspi_nor_config_
 
     return status;
 }
-

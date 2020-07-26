@@ -1,30 +1,30 @@
 /*
  * Copyright 2014-2015 Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  *
  */
 
-#include "bootloader/bl_context.h"
+#include "bl_context.h"
 #include "bootloader_common.h"
+#include "fsl_assert.h"
 #include "fsl_device_registers.h"
-#include "lpuart/fsl_lpuart.h"
-#include "utilities/fsl_assert.h"
+#include "fsl_lpuart.h"
 #if BL_ENABLE_CRC_CHECK
-#include "bootloader/bl_app_crc_check.h"
+#include "bl_app_crc_check.h"
 #endif
 #if BL_FEATURE_FLEXSPI_NOR_MODULE || BL_FEATURE_SPINAND_MODULE
-#include "flexspi/fsl_flexspi.h"
-#include "flexspi_nor/flexspi_nor_flash.h"
+#include "bl_flexspi.h"
+#include "flexspi_nor_flash.h"
 #endif // #if BL_FEATURE_FLEXSPI_NOR_MODULE || BL_FEATURE_SPINAND_MODULE
 #if BL_FEATURE_SPI_NOR_EEPROM_MODULE
 #include "microseconds.h"
-#include "memory/src/spi_nor_eeprom_memory.h"
+#include "spi_nor_eeprom_memory.h"
 #endif // BL_FEATURE_SPI_NOR_EEPROM_MODULE
 #if BL_FEATURE_SEMC_NAND_MODULE || BL_FEATURE_SEMC_NOR_MODULE
-#include "semc/fsl_semc.h"
+#include "bl_semc.h"
 #endif // #if BL_FEATURE_SEMC_NAND_MODULE || BL_FEATURE_SEMC_NOR_MODULE
 #include "fusemap.h"
 #include "peripherals_pinmux.h"
@@ -114,7 +114,7 @@ void flexspi_iomux_config(uint32_t instance, flexspi_mem_config_t *config)
             IOMUXC->SW_MUX_CTL_PAD[SW_MUX_CTL_PAD_FLEXSPIB_DATA3_IDX] = FLEXSPIA_MUX_VAL;
             IOMUXC->SW_PAD_CTL_PAD[SW_PAD_CTL_PAD_FLEXSPIB_DATA3_IDX] = dataPadCtlValue;
         }
-#endif 
+#endif
 
         // Configure DQS pad
         if ((config->readSampleClkSrc == kFlexSPIReadSampleClk_ExternalInputFromDqsPad) ||
@@ -132,7 +132,7 @@ void flexspi_iomux_config(uint32_t instance, flexspi_mem_config_t *config)
             IOMUXC->SW_MUX_CTL_PAD[SW_MUX_CTL_PAD_FLEXSPIA_SCLK_B_IDX] = FLEXSPIA_MUX_VAL;
             IOMUXC->SW_PAD_CTL_PAD[SW_PAD_CTL_PAD_FLEXSPIA_SCLK_B_IDX] = sclkPadCtlValue;
         }
-#endif 
+#endif
     }
 }
 #endif // BL_FEATURE_FLEXSPI_NOR_MODULE || BL_FEATURE_SPINAND_MODULE
@@ -460,9 +460,7 @@ void dummy_byte_callback(uint8_t byte)
     (void)byte;
 }
 
-void debug_init(void)
-{
-}
+void debug_init(void) {}
 
 #if __ICCARM__
 
@@ -473,9 +471,7 @@ size_t __write(int handle, const unsigned char *buf, size_t size)
 
 #endif // __ICCARM__
 
-void update_available_peripherals()
-{
-}
+void update_available_peripherals() {}
 
 void init_hardware(void)
 {

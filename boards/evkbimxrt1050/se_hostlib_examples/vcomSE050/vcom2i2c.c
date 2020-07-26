@@ -1,4 +1,4 @@
-/* Copyright 2018 NXP
+/* Copyright 2018,2020 NXP
  *
  * This software is owned or controlled by NXP and may only be used
  * strictly in accordance with the applicable license terms.  By expressly
@@ -38,6 +38,11 @@
 #include "global_platf.h"
 #include "sm_apdu.h"
 #include "sm_timer.h"
+
+#ifdef FLOW_VERBOSE
+#define NX_LOG_ENABLE_SMCOM_DEBUG 1
+#endif
+
 #include "nxLog_VCOM.h"
 //- A71CH I2C
 
@@ -49,7 +54,6 @@ static uint16_t curr_index = 0;
 //+ A71CH I2C
 static uint8_t g_sendresp_vcom = 0;
 static uint8_t g_senddata_i2c = 0;
-
 
 U32 selectResponseDataLen = 0;
 //USB_DMA_NONINIT_DATA_ALIGN
@@ -71,9 +75,11 @@ void state_vcom_read_write(
     U16 sw = SW_OK;
     if ((1 == p_cdcVcom->attach) && (1 == p_cdcVcom->startTransactions))
     {
+        LOG_W("L1");
         /* User Code */
         if ((0 != (*p_recvSize)) && (0xFFFFFFFFU != (*p_recvSize)))
         {
+            LOG_W("VCOM Rd");
             if (s_FrameParseInProgress == 0)
             {
                 nExpectedPayload = (s_currRecvBuf[2] << 8) + s_currRecvBuf[3];
@@ -105,9 +111,9 @@ void state_vcom_read_write(
 
                     AtrLen = sizeof(Atr);
                     #if defined(SCI2C)
-                        sw = smComSCI2C_Open(ESTABLISH_SCI2C, 0x00, Atr, &AtrLen);
+                        sw = smComSCI2C_Open(NULL, ESTABLISH_SCI2C, 0x00, Atr, &AtrLen);
                     #elif defined(T1oI2C)
-                        sw = smComT1oI2C_Open(ESTABLISH_SCI2C, 0x00, Atr, &AtrLen);
+                        sw = smComT1oI2C_Open(NULL, ESTABLISH_SCI2C, 0x00, Atr, &AtrLen);
                     #endif
                     if (sw == SW_OK)
                     {
@@ -151,13 +157,15 @@ void state_vcom_read_write(
                     break;
                 case APDU_DATA:
                     if (s_RecvBuff[4] == 0xFF) {
-                        U16 time_us;
-                        time_us = (s_RecvBuff[6] << 8);
-                        time_us |= s_RecvBuff[7];
+                        uint32_t time_ms;
+                        time_ms = (s_RecvBuff[6] << 24);
+                        time_ms |= (s_RecvBuff[7] << 16);
+                        time_ms |= (s_RecvBuff[8] << 8);
+                        time_ms |= s_RecvBuff[9];
 #if SSS_HAVE_SE05X || SSS_HAVE_LOOPBACK
 #if FSL_FEATURE_SOC_PIT_COUNT > 0
-                        LOG_W("Starting the %d usec Timer to reset the IC", time_us);
-                        se_pit_SetTimer(time_us);
+                        LOG_W("Starting the %d usec Timer to reset the IC", time_ms);
+                        se_pit_SetTimer(time_ms);
                         g_sendresp_vcom = 1;
 #endif
 #endif
@@ -170,10 +178,9 @@ void state_vcom_read_write(
                 case CLOSE_CONN:
                     LOG_I("Closing connection");
                     #if defined(SCI2C)
-                    smComSCI2C_Close(0);
-                    sw = SW_OK;
+                    sw = smComSCI2C_Close(0);
                     #elif defined(T1oI2C)
-                    sw = smComT1oI2C_Close(0);
+                    sw = smComT1oI2C_Close(NULL, 0);
                     #endif
                     if (sw == SW_OK)
                     {
@@ -224,7 +231,8 @@ void state_vcom_read_write(
         if (g_sendresp_vcom)
         {
             g_sendresp_vcom = 0;
-            error = USB_DeviceCdcAcmSend(p_cdcVcom->cdcAcmHandle, USB_CDC_VCOM_BULK_IN_ENDPOINT, selectResponseData,
+			error = USB_DeviceCdcAcmSend(p_cdcVcom->cdcAcmHandle,
+					USB_CDC_VCOM_BULK_IN_ENDPOINT, selectResponseData,
                 selectResponseDataLen);
 
             if (error != kStatus_USB_Success)
@@ -285,8 +293,8 @@ void state_vcom_2_i2c()
             U16 respLen = sizeof(resp);
             LOG_E("SM_SendAPDUVcom Failed");
 
-            resp[0] = 0x69;
-            resp[1] = 0x82;
+            resp[0] = ERR_COMM_ERROR >> 8;
+            resp[1] = ERR_COMM_ERROR & 0xFF;
             targetBufferLen = sizeof(targetBuffer);
             statusValue = vcomPackageApduResponse(APDU_DATA, 0x00, resp, respLen, targetBuffer, &targetBufferLen);
             if (targetBufferLen > sizeof(selectResponseData)) {
@@ -332,7 +340,7 @@ U16 SM_SendAPDUVcom(
 
     U32 respLenLocal = *respLen;
 
-    status = smCom_TransceiveRaw(cmd, cmdLen, resp, &respLenLocal);
+    status = smCom_TransceiveRaw(NULL, cmd, cmdLen, resp, &respLenLocal);
     if(status != SMCOM_OK)
         LOG_E("Failed to communicate with IC");
     *respLen = (U16) respLenLocal;

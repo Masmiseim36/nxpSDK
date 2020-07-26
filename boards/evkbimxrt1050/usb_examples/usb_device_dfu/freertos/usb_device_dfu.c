@@ -95,9 +95,10 @@ static usb_status_t USB_DeviceDfuFreeHandle(usb_device_dfu_struct_t *handle)
 usb_status_t USB_DeviceDfuEvent(void *handle, uint32_t event, void *param)
 {
     usb_device_dfu_struct_t *dfuHandle;
-    usb_status_t error = kStatus_USB_Error;
+    usb_status_t error                 = kStatus_USB_Error;
+    usb_device_class_event_t eventCode = (usb_device_class_event_t)event;
 
-    if ((!param) || (!handle))
+    if ((NULL == param) || (NULL == handle))
     {
         return kStatus_USB_InvalidHandle;
     }
@@ -105,7 +106,7 @@ usb_status_t USB_DeviceDfuEvent(void *handle, uint32_t event, void *param)
     /* Get the dfu class handle. */
     dfuHandle = (usb_device_dfu_struct_t *)handle;
 
-    switch (event)
+    switch (eventCode)
     {
         case kUSB_DeviceClassEventDeviceReset:
             error = kStatus_USB_Success;
@@ -114,60 +115,59 @@ usb_status_t USB_DeviceDfuEvent(void *handle, uint32_t event, void *param)
             error = kStatus_USB_Success;
             break;
         case kUSB_DeviceClassEventClassRequest:
-            if (param)
+        {
+            /* Handle the dfu class specific request. */
+            usb_device_control_request_struct_t *controlRequest = (usb_device_control_request_struct_t *)param;
+            int32_t dfuRequest                                  = -1;
+
+            if ((controlRequest->setup->bmRequestType & USB_REQUEST_TYPE_RECIPIENT_MASK) !=
+                USB_REQUEST_TYPE_RECIPIENT_INTERFACE)
             {
-                /* Handle the dfu class specific request. */
-                usb_device_control_request_struct_t *controlRequest = (usb_device_control_request_struct_t *)param;
-                int32_t dfuRequest                                  = -1;
-
-                if ((controlRequest->setup->bmRequestType & USB_REQUEST_TYPE_RECIPIENT_MASK) !=
-                    USB_REQUEST_TYPE_RECIPIENT_INTERFACE)
-                {
-                    break;
-                }
-
-                if ((controlRequest->setup->wIndex & 0xFFU) != 0x00U /* Interface number is always 0 */)
-                {
-                    break;
-                }
-
-                switch (controlRequest->setup->bRequest)
-                {
-                    case USB_DEVICE_DFU_DETACH:
-                        dfuRequest = (int32_t)kUSB_DeviceDfuEventDetach;
-                        break;
-                    case USB_DEVICE_DFU_DNLOAD:
-                        dfuRequest = (int32_t)kUSB_DeviceDfuEventDownLoad;
-                        break;
-                    case USB_DEVICE_DFU_UPLOAD:
-                        dfuRequest = (int32_t)kUSB_DeviceDfuEventUpLoad;
-                        break;
-                    case USB_DEVICE_DFU_GETSTATUS:
-                        dfuRequest = (int32_t)kUSB_DeviceDfuEventGetStatus;
-                        break;
-                    case USB_DEVICE_DFU_CLRSTATUS:
-                        dfuRequest = (int32_t)kUSB_DeviceDfuEventClearStatus;
-                        break;
-                    case USB_DEVICE_DFU_GETSTATE:
-                        dfuRequest = (int32_t)kUSB_DeviceDfuEventGetState;
-                        break;
-                    case USB_DEVICE_DFU_ABORT:
-                        dfuRequest = (int32_t)kUSB_DeviceDfuEventAbort;
-                        break;
-                    default:
-                        error = kStatus_USB_InvalidRequest;
-                        break;
-                }
-                if (dfuRequest >= 0)
-                {
-                    /* ClassCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
-                    it is from the second parameter of classInit */
-                    error =
-                        dfuHandle->configStruct->classCallback((class_handle_t)dfuHandle, dfuRequest, controlRequest);
-                }
+                break;
             }
-            break;
+
+            if ((controlRequest->setup->wIndex & 0xFFU) != 0x00U /* Interface number is always 0 */)
+            {
+                break;
+            }
+
+            switch (controlRequest->setup->bRequest)
+            {
+                case USB_DEVICE_DFU_DETACH:
+                    dfuRequest = (int32_t)kUSB_DeviceDfuEventDetach;
+                    break;
+                case USB_DEVICE_DFU_DNLOAD:
+                    dfuRequest = (int32_t)kUSB_DeviceDfuEventDownLoad;
+                    break;
+                case USB_DEVICE_DFU_UPLOAD:
+                    dfuRequest = (int32_t)kUSB_DeviceDfuEventUpLoad;
+                    break;
+                case USB_DEVICE_DFU_GETSTATUS:
+                    dfuRequest = (int32_t)kUSB_DeviceDfuEventGetStatus;
+                    break;
+                case USB_DEVICE_DFU_CLRSTATUS:
+                    dfuRequest = (int32_t)kUSB_DeviceDfuEventClearStatus;
+                    break;
+                case USB_DEVICE_DFU_GETSTATE:
+                    dfuRequest = (int32_t)kUSB_DeviceDfuEventGetState;
+                    break;
+                case USB_DEVICE_DFU_ABORT:
+                    dfuRequest = (int32_t)kUSB_DeviceDfuEventAbort;
+                    break;
+                default:
+                    error = kStatus_USB_InvalidRequest;
+                    break;
+            }
+            if (dfuRequest >= 0)
+            {
+                /* ClassCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
+                it is from the second parameter of classInit */
+                error = dfuHandle->configStruct->classCallback((class_handle_t)dfuHandle, dfuRequest, controlRequest);
+            }
+        }
+        break;
         default:
+            /*no action*/
             break;
     }
     return error;
@@ -187,7 +187,7 @@ usb_status_t USB_DeviceDfuEvent(void *handle, uint32_t event, void *param)
 usb_status_t USB_DeviceDfuInit(uint8_t controllerId, usb_device_class_config_struct_t *config, class_handle_t *handle)
 {
     usb_device_dfu_struct_t *dfuHandle;
-    usb_status_t error = kStatus_USB_Error;
+    usb_status_t error;
 
     /* Allocate a dfu class handle. */
     error = USB_DeviceDfuAllocateHandle(&dfuHandle);
@@ -205,7 +205,7 @@ usb_status_t USB_DeviceDfuInit(uint8_t controllerId, usb_device_class_config_str
         return error;
     }
 
-    if (!dfuHandle->handle)
+    if (NULL == dfuHandle->handle)
     {
         return kStatus_USB_InvalidHandle;
     }
@@ -232,13 +232,13 @@ usb_status_t USB_DeviceDfuDeinit(class_handle_t handle)
 
     dfuHandle = (usb_device_dfu_struct_t *)handle;
 
-    if (!dfuHandle)
+    if (NULL == dfuHandle)
     {
         return kStatus_USB_InvalidHandle;
     }
 
     /* Free the dfu class handle. */
-    USB_DeviceDfuFreeHandle(dfuHandle);
+    (void)USB_DeviceDfuFreeHandle(dfuHandle);
     return error;
 }
 #endif

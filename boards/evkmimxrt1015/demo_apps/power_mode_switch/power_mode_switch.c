@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  *
@@ -28,14 +28,14 @@
  ******************************************************************************/
 #define CPU_NAME "iMXRT1015"
 
-#define APP_WAKEUP_BUTTON_GPIO BOARD_USER_BUTTON_GPIO
-#define APP_WAKEUP_BUTTON_GPIO_PIN BOARD_USER_BUTTON_GPIO_PIN
-#define APP_WAKEUP_BUTTON_IRQ BOARD_USER_BUTTON_IRQ
+#define APP_WAKEUP_BUTTON_GPIO        BOARD_USER_BUTTON_GPIO
+#define APP_WAKEUP_BUTTON_GPIO_PIN    BOARD_USER_BUTTON_GPIO_PIN
+#define APP_WAKEUP_BUTTON_IRQ         BOARD_USER_BUTTON_IRQ
 #define APP_WAKEUP_BUTTON_IRQ_HANDLER BOARD_USER_BUTTON_IRQ_HANDLER
-#define APP_WAKEUP_BUTTON_NAME BOARD_USER_BUTTON_NAME
+#define APP_WAKEUP_BUTTON_NAME        BOARD_USER_BUTTON_NAME
 
-#define APP_WAKEUP_GPT_BASE DEMO_GPT_PERIPHERAL
-#define APP_WAKEUP_GPT_IRQn GPT2_IRQn
+#define APP_WAKEUP_GPT_BASE         DEMO_GPT_PERIPHERAL
+#define APP_WAKEUP_GPT_IRQn         GPT2_IRQn
 #define APP_WAKEUP_GPT_IRQn_HANDLER GPT2_IRQHandler
 
 /*******************************************************************************
@@ -116,15 +116,25 @@ bool APP_CheckPowerMode(lpm_power_mode_t originPowerMode, lpm_power_mode_t targe
         modeValid = false;
     }
 
+#if (!HAS_WAKEUP_PIN)
+    /* Can't wakeup from SNVS when no wake up pin available. */
+    if (targetPowerMode == LPM_PowerModeSNVS)
+    {
+        modeValid = false;
+    }
+#endif
+
     return modeValid;
 }
 
 void APP_PowerPreSwitchHook(lpm_power_mode_t targetMode)
 {
+#if (HAS_WAKEUP_PIN)
     if (targetMode == LPM_PowerModeSNVS)
     {
         PRINTF("Now shutting down the system...\r\n");
     }
+#endif
 
     if (targetMode > LPM_PowerModeRunEnd)
     {
@@ -213,9 +223,7 @@ static app_wakeup_source_t APP_GetWakeupSource(lpm_power_mode_t targetMode)
     {
         PRINTF("Select the wake up source:\r\n");
         PRINTF("Press T for GPT - GPT Timer\r\n");
-#if (HAS_WAKEUP_PIN)
         PRINTF("Press S for switch/button %s. \r\n", APP_WAKEUP_BUTTON_NAME);
-#endif
 
         PRINTF("\r\nWaiting for key press..\r\n\r\n");
 
@@ -230,12 +238,10 @@ static app_wakeup_source_t APP_GetWakeupSource(lpm_power_mode_t targetMode)
         {
             return kAPP_WakeupSourceGPT;
         }
-#if (HAS_WAKEUP_PIN)
         else if (ch == 'S')
         {
             return kAPP_WakeupSourcePin;
         }
-#endif
         else
         {
             PRINTF("Wrong value!\r\n");
@@ -246,12 +252,14 @@ static app_wakeup_source_t APP_GetWakeupSource(lpm_power_mode_t targetMode)
 /* Get wakeup timeout and wakeup source. */
 static void APP_GetWakeupConfig(lpm_power_mode_t targetMode)
 {
+#if (HAS_WAKEUP_PIN)
     if (targetMode == LPM_PowerModeSNVS)
     {
         /* In SNVS mode, only SNVS domain is powered, GPT could not work. */
         s_wakeupSource = kAPP_WakeupSourcePin;
     }
     else
+#endif
     {
         /* Get wakeup source by user input. */
         s_wakeupSource = APP_GetWakeupSource(targetMode);
@@ -281,6 +289,7 @@ static void APP_SetWakeupConfig(lpm_power_mode_t targetMode)
 
         /* Enable GPT Output Compare1 interrupt */
         GPT_EnableInterrupts(APP_WAKEUP_GPT_BASE, kGPT_OutputCompare1InterruptEnable);
+        NVIC_ClearPendingIRQ(APP_WAKEUP_GPT_IRQn);
         NVIC_SetPriority(APP_WAKEUP_GPT_IRQn, configMAX_SYSCALL_INTERRUPT_PRIORITY + 2);
         EnableIRQ(APP_WAKEUP_GPT_IRQn);
 
@@ -294,6 +303,7 @@ static void APP_SetWakeupConfig(lpm_power_mode_t targetMode)
         GPIO_ClearPinsInterruptFlags(APP_WAKEUP_BUTTON_GPIO, 1U << APP_WAKEUP_BUTTON_GPIO_PIN);
         /* Enable GPIO pin interrupt */
         GPIO_EnableInterrupts(APP_WAKEUP_BUTTON_GPIO, 1U << APP_WAKEUP_BUTTON_GPIO_PIN);
+        NVIC_ClearPendingIRQ(APP_WAKEUP_BUTTON_IRQ);
         NVIC_SetPriority(APP_WAKEUP_BUTTON_IRQ, configMAX_SYSCALL_INTERRUPT_PRIORITY + 2);
         /* Enable the Interrupt */
         EnableIRQ(APP_WAKEUP_BUTTON_IRQ);
@@ -459,6 +469,12 @@ int main(void)
     BOARD_ConfigMPU();
     BOARD_InitPins();
     BOARD_InitBootClocks();
+
+    /* When wakeup from suspend, peripheral's doze & stop requests won't be cleared, need to clear them manually */
+    IOMUXC_GPR->GPR4  = 0x00000000;
+    IOMUXC_GPR->GPR7  = 0x00000000;
+    IOMUXC_GPR->GPR8  = 0x00000000;
+    IOMUXC_GPR->GPR12 = 0x00000000;
 
     /* Configure UART divider to default */
     CLOCK_SetMux(kCLOCK_UartMux, 1); /* Set UART source to OSC 24M */

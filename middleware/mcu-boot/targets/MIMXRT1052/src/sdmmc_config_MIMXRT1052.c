@@ -1,21 +1,21 @@
 /*
- * Copyright 2017-2018 NXP
+ * Copyright 2017-2020 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
+#include "bl_card.h"
 #include "bootloader_common.h"
+#include "fsl_assert.h"
 #include "fsl_device_registers.h"
 #include "fusemap.h"
 #include "sdmmc_init.h"
-#include "utilities/fsl_assert.h"
-#include "fsl_card.h"
 #if BL_FEATURE_MMC_MODULE
-#include "memory/src/mmc_memory.h"
+#include "mmc_memory.h"
 #endif
 #if BL_FEATURE_SD_MODULE
-#include "memory/src/sd_memory.h"
+#include "sd_memory.h"
 #endif
 /*******************************************************************************
  * Definitons

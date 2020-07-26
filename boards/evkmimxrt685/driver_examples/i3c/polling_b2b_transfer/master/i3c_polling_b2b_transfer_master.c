@@ -17,12 +17,12 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_MASTER I3C
-#define EXAMPLE_I2C_BAUDRATE 400000
+#define EXAMPLE_MASTER             I3C
+#define EXAMPLE_I2C_BAUDRATE       400000
 #define I3C_MASTER_CLOCK_FREQUENCY CLOCK_GetI3cClkFreq()
 #define I3C_MASTER_SLAVE_ADDR_7BIT 0x1E
-#define WAIT_TIME 1000
-#define I3C_DATA_LENGTH 33
+#define WAIT_TIME                  1000
+#define I3C_DATA_LENGTH            33
 
 /*******************************************************************************
  * Prototypes

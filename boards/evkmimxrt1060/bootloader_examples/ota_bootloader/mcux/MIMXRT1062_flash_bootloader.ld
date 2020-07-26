@@ -73,6 +73,7 @@ SECTIONS
   .interrupts :
   {
     __VECTOR_TABLE = .;
+    __Vectors = .;
     . = ALIGN(4);
     KEEP(*(.isr_vector))     /* Startup code */
     . = ALIGN(4);
@@ -156,7 +157,7 @@ SECTIONS
     __end__ = .;
     PROVIDE(end = .);
     __HeapBase = .;
-	_pvHeapStart = .;
+    _pvHeapStart = .;
     . += HEAP_SIZE;
     __HeapLimit = .;
   } > m_data

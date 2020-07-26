@@ -79,10 +79,10 @@
 /******************************************************************************
  *                                Constants
  ******************************************************************************/
-#define ERR_CMD_OK 0
+#define ERR_CMD_OK  0
 #define ERR_UNKNOWN 1
 
-#define MAX_ASCII_VALUE 0x7e
+#define MAX_ASCII_VALUE       0x7e
 #define ROLL_OVER_ASCII_VALUE 0x2f
 
 #ifndef BLE_KEY_FLASH_ADDR

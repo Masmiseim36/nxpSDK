@@ -106,10 +106,12 @@ volatile uint8_t controlIng;
 volatile usb_status_t controlStatus;
 
 #if MSD_FATFS_THROUGHPUT_TEST_ENABLE
-USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint32_t testThroughputBuffer[THROUGHPUT_BUFFER_SIZE / 4]; /* the buffer for throughput test */
-uint32_t testSizeArray[] = {20 * 1024, 20 * 1024}; /* test time and test size (uint: K)*/
+USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
+static uint32_t testThroughputBuffer[THROUGHPUT_BUFFER_SIZE / 4]; /* the buffer for throughput test */
+uint32_t testSizeArray[] = {20 * 1024, 20 * 1024};                /* test time and test size (uint: K)*/
 #else
-USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t testBuffer[(FF_MAX_SS > 256) ? FF_MAX_SS : 256]; /* normal test buffer */
+USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
+static uint8_t testBuffer[(FF_MAX_SS > 256) ? FF_MAX_SS : 256]; /* normal test buffer */
 #endif /* MSD_FATFS_THROUGHPUT_TEST_ENABLE */
 
 /*******************************************************************************
@@ -123,9 +125,9 @@ void USB_HostMsdControlCallback(void *param, uint8_t *data, uint32_t dataLength,
     if (msdFatfsInstance->runWaitState == kUSB_HostMsdRunWaitSetInterface) /* set interface finish */
     {
         msdFatfsInstance->runWaitState = kUSB_HostMsdRunIdle;
-        msdFatfsInstance->runState = kUSB_HostMsdRunMassStorageTest;
+        msdFatfsInstance->runState     = kUSB_HostMsdRunMassStorageTest;
     }
-    controlIng = 0;
+    controlIng    = 0;
     controlStatus = status;
 }
 
@@ -149,7 +151,7 @@ static void USB_HostMsdFatfsThroughputTest(usb_host_msd_fatfs_instance_t *msdFat
     /* time delay (~100ms) */
     for (resultSize = 0; resultSize < 400000; ++resultSize)
     {
-        __ASM("nop");
+        __NOP();
     }
 
     usb_echo("............................fatfs test.....................\r\n");
@@ -188,7 +190,7 @@ static void USB_HostMsdFatfsThroughputTest(usb_host_msd_fatfs_instance_t *msdFat
         }
 
         totalTime = 0;
-        testSize = testSizeArray[testIndex] * 1024;
+        testSize  = testSizeArray[testIndex] * 1024;
         while (testSize)
         {
             if (msdFatfsInstance->deviceState != kStatus_DEV_Attached)
@@ -221,7 +223,7 @@ static void USB_HostMsdFatfsThroughputTest(usb_host_msd_fatfs_instance_t *msdFat
             return;
         }
         totalTime = 0;
-        testSize = testSizeArray[testIndex] * 1024;
+        testSize  = testSizeArray[testIndex] * 1024;
         while (testSize)
         {
             if (msdFatfsInstance->deviceState != kStatus_DEV_Attached)
@@ -363,7 +365,7 @@ static void USB_HostMsdFatfsTest(usb_host_msd_fatfs_instance_t *msdFatfsInstance
     /* time delay */
     for (freeClusterNumber = 0; freeClusterNumber < 10000; ++freeClusterNumber)
     {
-        __ASM("nop");
+        __NOP();
     }
 
     usb_echo("............................fatfs test.....................\r\n");
@@ -390,8 +392,10 @@ static void USB_HostMsdFatfsTest(usb_host_msd_fatfs_instance_t *msdFatfsInstance
 #endif
 
 #if FF_USE_MKFS
+    MKFS_PARM formatOptions;
+    formatOptions.fmt = FM_SFD | FM_ANY;
     usb_echo("test f_mkfs......");
-    fatfsCode = f_mkfs((char const *)&driverNumberBuffer[0], FM_SFD | FM_ANY, 0U, testBuffer, FF_MAX_SS);
+    fatfsCode = f_mkfs((char const *)&driverNumberBuffer[0], &formatOptions, testBuffer, FF_MAX_SS);
     if (fatfsCode)
     {
         usb_echo("error\r\n");
@@ -572,7 +576,7 @@ static void USB_HostMsdFatfsTest(usb_host_msd_fatfs_instance_t *msdFatfsInstance
     usb_echo("change \"dir_1\" timestamp to 2015.10.1, 12:30:0......");
     fileInfo.fdate = ((2015 - 1980) << 9 | 10 << 5 | 1); /* 2015.10.1 */
     fileInfo.ftime = (12 << 11 | 30 << 5);               /* 12:30:00 */
-    fatfsCode = f_utime(_T("1:/dir_1"), &fileInfo);
+    fatfsCode      = f_utime(_T("1:/dir_1"), &fileInfo);
     if (fatfsCode)
     {
         usb_echo("error\r\n");
@@ -617,7 +621,7 @@ static void USB_HostMsdFatfsTest(usb_host_msd_fatfs_instance_t *msdFatfsInstance
     }
     testBuffer[58] = '\r';
     testBuffer[59] = '\n';
-    fatfsCode = f_write(&file, testBuffer, 60, (UINT *)&resultSize);
+    fatfsCode      = f_write(&file, testBuffer, 60, (UINT *)&resultSize);
     if ((fatfsCode) || (resultSize != 60))
     {
         usb_echo("error\r\n");
@@ -757,7 +761,7 @@ static void USB_HostMsdFatfsTest(usb_host_msd_fatfs_instance_t *msdFatfsInstance
     usb_echo("change \"f_1.dat\" timestamp to 2015.10.1, 12:30:0......");
     fileInfo.fdate = ((uint32_t)(2015 - 1980) << 9 | 10 << 5 | 1); /* 2015.10.1 */
     fileInfo.ftime = (12 << 11 | 30 << 5);                         /* 12:30:00 */
-    fatfsCode = f_utime(_T("1:/f_1.dat"), &fileInfo);
+    fatfsCode      = f_utime(_T("1:/f_1.dat"), &fileInfo);
     if (fatfsCode)
     {
         usb_echo("error\r\n");
@@ -849,7 +853,7 @@ void USB_HostMsdTask(void *arg)
                 break;
 
             case kStatus_DEV_Attached: /* deivce is attached and numeration is done */
-                status = USB_HostMsdInit(msdFatfsInstance->deviceHandle,
+                status                = USB_HostMsdInit(msdFatfsInstance->deviceHandle,
                                          &msdFatfsInstance->classHandle); /* msd class initialization */
                 g_UsbFatfsClassHandle = msdFatfsInstance->classHandle;
                 if (status != kStatus_USB_Success)
@@ -862,7 +866,7 @@ void USB_HostMsdTask(void *arg)
 
             case kStatus_DEV_Detached: /* device is detached */
                 msdFatfsInstance->deviceState = kStatus_DEV_Idle;
-                msdFatfsInstance->runState = kUSB_HostMsdRunIdle;
+                msdFatfsInstance->runState    = kUSB_HostMsdRunIdle;
                 USB_HostMsdDeinit(msdFatfsInstance->deviceHandle,
                                   msdFatfsInstance->classHandle); /* msd class de-initialization */
                 msdFatfsInstance->classHandle = NULL;
@@ -882,7 +886,7 @@ void USB_HostMsdTask(void *arg)
             break;
 
         case kUSB_HostMsdRunSetInterface: /* set msd interface */
-            msdFatfsInstance->runState = kUSB_HostMsdRunIdle;
+            msdFatfsInstance->runState     = kUSB_HostMsdRunIdle;
             msdFatfsInstance->runWaitState = kUSB_HostMsdRunWaitSetInterface;
             status = USB_HostMsdSetInterface(msdFatfsInstance->classHandle, msdFatfsInstance->interfaceHandle, 0,
                                              USB_HostMsdControlCallback, msdFatfsInstance);
@@ -925,7 +929,7 @@ usb_status_t USB_HostMsdEvent(usb_device_handle deviceHandle,
             for (interfaceIndex = 0; interfaceIndex < configuration->interfaceCount; ++interfaceIndex)
             {
                 interface = &configuration->interfaceList[interfaceIndex];
-                id = interface->interfaceDesc->bInterfaceClass;
+                id        = interface->interfaceDesc->bInterfaceClass;
                 if (id != USB_HOST_MSD_CLASS_CODE)
                 {
                     continue;
@@ -945,9 +949,9 @@ usb_status_t USB_HostMsdEvent(usb_device_handle deviceHandle,
                     if (g_MsdFatfsInstance.deviceState == kStatus_DEV_Idle)
                     {
                         /* the interface is supported by the application */
-                        g_MsdFatfsInstance.deviceHandle = deviceHandle;
+                        g_MsdFatfsInstance.deviceHandle    = deviceHandle;
                         g_MsdFatfsInstance.interfaceHandle = interface;
-                        g_MsdFatfsInstance.configHandle = configurationHandle;
+                        g_MsdFatfsInstance.configHandle    = configurationHandle;
                         return kStatus_USB_Success;
                     }
                     else
@@ -992,7 +996,7 @@ usb_status_t USB_HostMsdEvent(usb_device_handle deviceHandle,
             if (g_MsdFatfsInstance.configHandle == configurationHandle)
             {
                 /* the device is detached */
-                g_UsbFatfsClassHandle = NULL;
+                g_UsbFatfsClassHandle           = NULL;
                 g_MsdFatfsInstance.configHandle = NULL;
                 if (g_MsdFatfsInstance.deviceState != kStatus_DEV_Idle)
                 {
@@ -1014,9 +1018,9 @@ usb_status_t USB_HostTestEvent(usb_device_handle deviceHandle,
 {
     /* process the same supported device that is identified by configurationHandle */
     static usb_host_configuration_handle s_ConfigHandle = NULL;
-    static usb_device_handle s_DeviceHandle = NULL;
-    static usb_host_interface_handle s_InterfaceHandle = NULL;
-    usb_status_t status = kStatus_USB_Success;
+    static usb_device_handle s_DeviceHandle             = NULL;
+    static usb_host_interface_handle s_InterfaceHandle  = NULL;
+    usb_status_t status                                 = kStatus_USB_Success;
     usb_host_configuration_t *configuration;
     uint8_t interfaceIndex;
     usb_host_interface_t *interface;
@@ -1034,9 +1038,9 @@ usb_status_t USB_HostTestEvent(usb_device_handle deviceHandle,
                 if (id == 0x1a0a) /* certification Vendor ID */
                 {
                     usb_echo("cetification test device VID match\r\n");
-                    s_DeviceHandle = deviceHandle;
+                    s_DeviceHandle    = deviceHandle;
                     s_InterfaceHandle = interface;
-                    s_ConfigHandle = configurationHandle;
+                    s_ConfigHandle    = configurationHandle;
                     return kStatus_USB_Success;
                 }
             }
@@ -1060,9 +1064,9 @@ usb_status_t USB_HostTestEvent(usb_device_handle deviceHandle,
                 usb_echo("PET test device detach\r\n");
                 USB_HostCloseDeviceInterface(s_DeviceHandle, s_InterfaceHandle);
                 /* the device is detached */
-                s_DeviceHandle = NULL;
+                s_DeviceHandle    = NULL;
                 s_InterfaceHandle = NULL;
-                s_ConfigHandle = NULL;
+                s_ConfigHandle    = NULL;
             }
             break;
 

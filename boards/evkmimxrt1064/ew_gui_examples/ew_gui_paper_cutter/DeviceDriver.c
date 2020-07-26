@@ -30,7 +30,7 @@
 *   Feel free to adapt this file according your needs!
 *
 *   Within this sample, we demonstrate the access to the board LED and the
-*   hardware button. Furthemore, the serial interface is used to print a string.
+*   hardware button. Furthemore, the console interface is used to print a string.
 *
 *   This file assumes to be the counterpart of the device class 'DeviceClass'
 *   within the unit 'Application'.
@@ -140,10 +140,11 @@ void DeviceDriver_Initialize( void )
   */
 
   /* configure LED */
-  EwBspConfigLed();
+  EwBspInOutInitLed();
 
   /* Configure interrupt for hardware button */
-  EwBspConfigButton( HardButtonIsrCallback );
+  EwBspInOutInitButton( HardButtonIsrCallback );
+
 
 #ifdef _ApplicationDeviceClass_
 
@@ -341,9 +342,9 @@ void DeviceDriver_SetLedStatus( XInt32 aValue )
   */
 
   if ( aValue )
-    EwBspLedOn();
+    EwBspInOutLedOn();
   else
-    EwBspLedOff();
+    EwBspInOutLedOff();
 }
 
 
@@ -355,7 +356,7 @@ void DeviceDriver_SetLedStatus( XInt32 aValue )
 *   This is a sample for a function that is called directly from a 'Command'
 *   method of the device class. As a result, the corresponding action should
 *   happen.
-*   In this implementation the given message is printed via the serial interface.
+*   In this implementation the given message is printed via the console interface.
 *
 *******************************************************************************/
 void DeviceDriver_PrintMessage( XString aText )
@@ -404,7 +405,7 @@ void DeviceDriver_SetTime( XUInt32 aTime )
      BSP / driver function.
   */
 
-  EwBspSetTime( aTime );
+  EwBspClockSetTime( aTime );
 }
 
 

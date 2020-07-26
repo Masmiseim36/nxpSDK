@@ -1,23 +1,23 @@
 /*
- * Copyright 2016-2018 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "bootloader/bootloader.h"
+#include "bootloader.h"
 #include "bootloader_common.h"
 #include "fsl_device_registers.h"
-#include "memory/memory.h"
-#include "semc_nand/semc_nand_flash.h"
+#include "memory.h"
+#include "semc_nand_flash.h"
 #include "semc_nand_memory.h"
 #include <string.h>
-#include "bootloader/bl_context.h"
-#include "crc/crc32.h"
-#include "utilities/fsl_assert.h"
-#include "utilities/fsl_rtos_abstraction.h"
+#include "bl_context.h"
+#include "crc32.h"
+#include "fsl_assert.h"
+#include "fsl_rtos_abstraction.h"
 #if BL_FEATURE_GEN_KEYBLOB
-#include "bootloader/bl_keyblob.h"
+#include "bl_keyblob.h"
 #endif // BL_FEATURE_GEN_KEYBLOB
 
 #if BL_FEATURE_SEMC_NAND_MODULE

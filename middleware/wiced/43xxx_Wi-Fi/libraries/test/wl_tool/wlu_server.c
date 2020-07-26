@@ -351,7 +351,7 @@ deserialize_args(char *buf, int buf_len, int *argc_ret, char ***argv_ret, int ad
     /* args mandated for function specific functionality */
     argc += additional_argc;
 
-    argv = calloc(argc, sizeof( *argv ) );
+    argv = WWD_CALLOC(argc, sizeof( *argv ) );
     if (argv == NULL)
     {
         err = -1;
@@ -368,7 +368,7 @@ deserialize_args(char *buf, int buf_len, int *argc_ret, char ***argv_ret, int ad
             *string_end = '\0';
         }
 
-        argv[index] = calloc( strlen(string_start) + 1, sizeof(*string_start) );
+        argv[index] = WWD_CALLOC( strlen(string_start) + 1, sizeof(*string_start) );
 
         if ( argv[index] == NULL )
         {
@@ -401,9 +401,9 @@ exit:
 
             for ( index = 0 ; index < argc && argv[index] != NULL; index++ )
             {
-                free( argv[index] );
+                WWD_FREE( argv[index] );
             }
-            free( argv );
+            WWD_FREE( argv );
         }
         *argc_ret = 0;
         *argv_ret = NULL;
@@ -469,12 +469,12 @@ iperf_exec( uint32_t arg )
     /* last two args are NOT allocated memory so don't free see silence_argv above */
     for ( index = 0 ; index < argc - 2 ; index++ )
     {
-        free( argv[index] );
+        WWD_FREE( argv[index] );
     }
 
-    free( argv );
-    free( iperf_params->buf );
-    free( iperf_params );
+    WWD_FREE( argv );
+    WWD_FREE( iperf_params->buf );
+    WWD_FREE( iperf_params );
 
     WICED_END_OF_CURRENT_THREAD( );
 }
@@ -484,8 +484,8 @@ int start_iperf(char *buffer, int len)
 {
 #if defined(MFG_TEST_ENABLE_IPERF)
     int err                      = 0;
-    thread_cmd_params_t *iperf_params = malloc(sizeof(*iperf_params));
-    char *copy_buf               = malloc(len);
+    thread_cmd_params_t *iperf_params = WWD_MALLOC(sizeof(*iperf_params));
+    char *copy_buf               = WWD_MALLOC(len);
 
     if ( iperf_thread_is_running == WICED_TRUE )
     {
@@ -524,12 +524,12 @@ int start_iperf(char *buffer, int len)
     {
         if ( copy_buf != NULL )
         {
-            free(copy_buf);
+            WWD_FREE(copy_buf);
         }
 
         if ( iperf_params != NULL )
         {
-            free(iperf_params);
+            WWD_FREE(iperf_params);
         }
     }
     else
@@ -684,13 +684,13 @@ extern size_t strlcpy(char *dst, const char *src, size_t siz);
 //    {
 //        for ( index = 0 ; index < argc ; index++ )
 //        {
-//            free( argv[index] );
+//            WWD_FREE( argv[index] );
 //        }
 //
-//        free( argv );
+//        WWD_FREE( argv );
 //    }
-//    free( cmd->buf );
-//    free( cmd );
+//    WWD_FREE( cmd->buf );
+//    WWD_FREE( cmd );
 //    WICED_END_OF_CURRENT_THREAD( );
 //}
 
@@ -762,7 +762,7 @@ exit:
 //
 //int wiced_wlu_wireless_network_start( char *buf_ptr, int buf_len )
 //{
-//    thread_cmd_params_t *cmd = malloc( sizeof( *cmd ) );
+//    thread_cmd_params_t *cmd = WWD_MALLOC( sizeof( *cmd ) );
 //    int result               = 0;
 //
 //    if ( wireless_network_start_thread_running == WICED_TRUE )
@@ -778,7 +778,7 @@ exit:
 //        goto exit;
 //    }
 //
-//    cmd->buf = malloc( buf_len );
+//    cmd->buf = WWD_MALLOC( buf_len );
 //
 //    if ( cmd->buf == NULL )
 //    {
@@ -800,10 +800,10 @@ exit:
 //    {
 //        if ( cmd->buf != NULL )
 //        {
-//            free( cmd->buf );
+//            WWD_FREE( cmd->buf );
 //        }
 //
-//        free( cmd );
+//        WWD_FREE( cmd );
 //    }
 //    else
 //    {

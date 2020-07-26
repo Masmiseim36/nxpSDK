@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -21,8 +21,8 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief LPSPI driver version 2.0.4. */
-#define FSL_LPSPI_DRIVER_VERSION (MAKE_VERSION(2, 0, 4))
+/*! @brief LPSPI driver version 2.0.5. */
+#define FSL_LPSPI_DRIVER_VERSION (MAKE_VERSION(2, 0, 5))
 /*@}*/
 
 #ifndef LPSPI_DUMMY_DATA
@@ -30,16 +30,22 @@
 #define LPSPI_DUMMY_DATA (0x00U) /*!< Dummy data used for tx if there is not txData. */
 #endif
 
+/*! @brief Retry times for waiting flag. */
+#ifndef SPI_RETRY_TIMES
+#define SPI_RETRY_TIMES 0U /* Define to zero means keep waiting until the flag is assert/deassert. */
+#endif
+
 /*! @brief Global variable for dummy data value setting. */
 extern volatile uint8_t g_lpspiDummyData[];
 
 /*! @brief Status for the LPSPI driver.*/
-enum _lpspi_status
+enum
 {
     kStatus_LPSPI_Busy       = MAKE_STATUS(kStatusGroup_LPSPI, 0), /*!< LPSPI transfer is busy.*/
     kStatus_LPSPI_Error      = MAKE_STATUS(kStatusGroup_LPSPI, 1), /*!< LPSPI driver error. */
     kStatus_LPSPI_Idle       = MAKE_STATUS(kStatusGroup_LPSPI, 2), /*!< LPSPI is idle.*/
-    kStatus_LPSPI_OutOfRange = MAKE_STATUS(kStatusGroup_LPSPI, 3)  /*!< LPSPI transfer out Of range. */
+    kStatus_LPSPI_OutOfRange = MAKE_STATUS(kStatusGroup_LPSPI, 3), /*!< LPSPI transfer out Of range. */
+    kStatus_LPSPI_Timeout    = MAKE_STATUS(kStatusGroup_LPSPI, 4)  /*!< LPSPI timeout polling status flags. */
 };
 
 /*! @brief LPSPI status flags in SPIx_SR register.*/
@@ -189,8 +195,8 @@ typedef enum _lpspi_delay_type
     kLPSPI_BetweenTransfer /*!< Delay between transfers. */
 } lpspi_delay_type_t;
 
-#define LPSPI_MASTER_PCS_SHIFT (4U)   /*!< LPSPI master PCS shift macro , internal used. */
-#define LPSPI_MASTER_PCS_MASK (0xF0U) /*!< LPSPI master PCS shift macro , internal used. */
+#define LPSPI_MASTER_PCS_SHIFT (4U)    /*!< LPSPI master PCS shift macro , internal used. */
+#define LPSPI_MASTER_PCS_MASK  (0xF0U) /*!< LPSPI master PCS shift macro , internal used. */
 
 /*! @brief Use this enumeration for LPSPI master transfer configFlags. */
 enum _lpspi_transfer_config_flag_for_master
@@ -217,8 +223,8 @@ enum _lpspi_transfer_config_flag_for_master
                   */
 };
 
-#define LPSPI_SLAVE_PCS_SHIFT (4U)   /*!< LPSPI slave PCS shift macro , internal used. */
-#define LPSPI_SLAVE_PCS_MASK (0xF0U) /*!< LPSPI slave PCS shift macro , internal used. */
+#define LPSPI_SLAVE_PCS_SHIFT (4U)    /*!< LPSPI slave PCS shift macro , internal used. */
+#define LPSPI_SLAVE_PCS_MASK  (0xF0U) /*!< LPSPI slave PCS shift macro , internal used. */
 
 /*! @brief Use this enumeration for LPSPI slave transfer configFlags. */
 enum _lpspi_transfer_config_flag_for_slave
@@ -481,6 +487,14 @@ void LPSPI_Deinit(LPSPI_Type *base);
 void LPSPI_Reset(LPSPI_Type *base);
 
 /*!
+ * @brief Get the LPSPI instance from peripheral base address.
+ *
+ * @param base LPSPI peripheral base address.
+ * @return LPSPI instance.
+ */
+uint32_t LPSPI_GetInstance(LPSPI_Type *base);
+
+/*!
  * @brief Enables the LPSPI peripheral and sets the MCR MDIS to 0.
  *
  * @param base LPSPI peripheral address.
@@ -522,7 +536,7 @@ static inline uint32_t LPSPI_GetStatusFlags(LPSPI_Type *base)
  * @param base LPSPI peripheral address.
  * @return The LPSPI Tx FIFO size.
  */
-static inline uint32_t LPSPI_GetTxFifoSize(LPSPI_Type *base)
+static inline uint8_t LPSPI_GetTxFifoSize(LPSPI_Type *base)
 {
     return (1U << ((base->PARAM & LPSPI_PARAM_TXFIFO_MASK) >> LPSPI_PARAM_TXFIFO_SHIFT));
 }
@@ -532,7 +546,7 @@ static inline uint32_t LPSPI_GetTxFifoSize(LPSPI_Type *base)
  * @param base LPSPI peripheral address.
  * @return The LPSPI Rx FIFO size.
  */
-static inline uint32_t LPSPI_GetRxFifoSize(LPSPI_Type *base)
+static inline uint8_t LPSPI_GetRxFifoSize(LPSPI_Type *base)
 {
     return (1U << ((base->PARAM & LPSPI_PARAM_RXFIFO_MASK) >> LPSPI_PARAM_RXFIFO_SHIFT));
 }
@@ -701,8 +715,8 @@ static inline uint32_t LPSPI_GetRxRegisterAddress(LPSPI_Type *base)
  * @brief Check the argument for transfer .
  *
  * @param transfer the transfer struct to be used.
- * @param bitPerFrame The bit size of one frame.
- * @param bytePerFrame The byte size of one frame.
+ * @param bitsPerFrame The bit size of one frame.
+ * @param bytesPerFrame The byte size of one frame.
  * @return Return true for right and false for wrong.
  */
 bool LPSPI_CheckTransferArgument(lpspi_transfer_t *transfer, uint32_t bitsPerFrame, uint32_t bytesPerFrame);
@@ -799,7 +813,7 @@ static inline void LPSPI_SetAllPcsPolarity(LPSPI_Type *base, uint32_t mask)
  */
 static inline void LPSPI_SetFrameSize(LPSPI_Type *base, uint32_t frameSize)
 {
-    base->TCR = (base->TCR & ~LPSPI_TCR_FRAMESZ_MASK) | LPSPI_TCR_FRAMESZ(frameSize - 1);
+    base->TCR = (base->TCR & ~LPSPI_TCR_FRAMESZ_MASK) | LPSPI_TCR_FRAMESZ(frameSize - 1U);
 }
 
 /*!
@@ -1101,9 +1115,8 @@ void LPSPI_SlaveTransferHandleIRQ(LPSPI_Type *base, lpspi_slave_handle_t *handle
 
 #if defined(__cplusplus)
 }
-#endif /*_cplusplus*/
-       /*!
-        *@}
-        */
+#endif
+
+/*! @}*/
 
 #endif /*_FSL_LPSPI_H_*/

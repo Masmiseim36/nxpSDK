@@ -48,14 +48,14 @@ usb_status_t USB_DeviceHidKeyboardAction(void)
     if (g_ButtonPress)
     {
         s_UsbDeviceHidKeyboard.buffer[0] = 0x04U;
-        g_ButtonPress = false;
+        g_ButtonPress                    = false;
         return USB_DeviceHidSend(g_UsbDeviceComposite->hidKeyboard.hidHandle, USB_HID_KEYBOARD_ENDPOINT,
                                  s_UsbDeviceHidKeyboard.buffer, USB_HID_KEYBOARD_REPORT_LENGTH);
     }
     else if (g_CodecMuteUnmute)
     {
         s_UsbDeviceHidKeyboard.buffer[0] = 0x00U;
-        g_CodecMuteUnmute = false;
+        g_CodecMuteUnmute                = false;
         return USB_DeviceHidSend(g_UsbDeviceComposite->hidKeyboard.hidHandle, USB_HID_KEYBOARD_ENDPOINT,
                                  s_UsbDeviceHidKeyboard.buffer, USB_HID_KEYBOARD_REPORT_LENGTH);
     }
@@ -114,7 +114,7 @@ usb_status_t USB_DeviceHidKeyboardSetInterface(class_handle_t handle, uint8_t in
 
 usb_status_t USB_DeviceHidKeyboardInit(usb_device_composite_struct_t *deviceComposite)
 {
-    g_UsbDeviceComposite = deviceComposite;
+    g_UsbDeviceComposite          = deviceComposite;
     s_UsbDeviceHidKeyboard.buffer = s_KeyboardBuffer;
     return kStatus_USB_Success;
 }

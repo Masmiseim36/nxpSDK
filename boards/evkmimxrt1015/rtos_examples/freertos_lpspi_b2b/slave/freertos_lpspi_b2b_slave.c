@@ -29,9 +29,9 @@
  ******************************************************************************/
 /* Slave related */
 #define EXAMPLE_LPSPI_SLAVE_BASEADDR (LPSPI1)
-#define EXAMPLE_LPSPI_SLAVE_IRQN (LPSPI1_IRQn)
+#define EXAMPLE_LPSPI_SLAVE_IRQN     (LPSPI1_IRQn)
 
-#define EXAMPLE_LPSPI_SLAVE_PCS_FOR_INIT (kLPSPI_Pcs0)
+#define EXAMPLE_LPSPI_SLAVE_PCS_FOR_INIT     (kLPSPI_Pcs0)
 #define EXAMPLE_LPSPI_SLAVE_PCS_FOR_TRANSFER (kLPSPI_SlavePcs0)
 
 /* Select USB1 PLL PFD0 (720 MHz) as lpspi clock source */
@@ -82,8 +82,8 @@ int main(void)
 
     /* Init board hardware. */
     BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
 
     /*Set clock source for LPSPI*/

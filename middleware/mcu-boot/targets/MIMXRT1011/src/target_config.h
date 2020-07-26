@@ -27,6 +27,20 @@ enum _target_version_constants
     kTarget_Version_Bugfix = 0
 };
 
+//! @brief FlexSPI supported speed defintions
+enum
+{
+    kFlexSpiSerialClk_30MHz = 1,
+    kFlexSpiSerialClk_50MHz = 2,
+    kFlexSpiSerialClk_60MHz = 3,
+    kFlexSpiSerialClk_75MHz = 4,
+    kFlexSpiSerialClk_80MHz = 5,
+    kFlexSpiSerialClk_100MHz = 6,
+    kFlexSpiSerialClk_133MHz = 7,
+    kFlexSpiSerialClk_166MHz = 8,
+    kFlexSpiSerialClk_200MHz = 9,
+};
+
 #endif // __TARGET_CONFIG_H__
 ////////////////////////////////////////////////////////////////////////////////
 // EOF

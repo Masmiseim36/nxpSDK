@@ -141,12 +141,12 @@ int main(void)
         }
         if (errors != 0)
         {
-            PRINTF("Not all EC scalar multipication tests were succesfull.\r\n");
+            PRINTF("Not all EC scalar multipication tests were successful.\r\n");
             PRINTF("%d / 8 tests failed.\n", errors);
         }
         else
         {
-            PRINTF("All EC scalar multiplication tests were succesfull.\r\n");
+            PRINTF("All EC scalar multiplication tests were successful.\r\n");
         }
     }
     /* End code to test elliptic curve scalar multiplication. */
@@ -177,12 +177,12 @@ int main(void)
         }
         if (errors != 0)
         {
-            PRINTF("Not all EC double scalar multipication tests were succesfull.\r\n");
+            PRINTF("Not all EC double scalar multipication tests were successful.\r\n");
             PRINTF("%d / 8 tests failed.\n", errors);
         }
         else
         {
-            PRINTF("All EC double scalar multiplication tests were succesfull.\r\n");
+            PRINTF("All EC double scalar multiplication tests were successful.\r\n");
         }
     }
     /* End code to test elliptic curve double scalar multiplication. */
@@ -216,12 +216,12 @@ int main(void)
         }
         if (errors != 0)
         {
-            PRINTF("Not all EC scalar multipication tests were succesfull.\r\n");
+            PRINTF("Not all EC scalar multipication tests were successful.\r\n");
             PRINTF("%d / 8 tests failed.\r\n", errors);
         }
         else
         {
-            PRINTF("All EC scalar multiplication tests were succesfull.\r\n");
+            PRINTF("All EC scalar multiplication tests were successful.\r\n");
         }
     }
     /* End code to test elliptic curve scalar multiplication. */
@@ -251,12 +251,12 @@ int main(void)
         }
         if (errors != 0)
         {
-            PRINTF("Not all EC double scalar multipication tests were succesfull.\r\n");
+            PRINTF("Not all EC double scalar multipication tests were successful.\r\n");
             PRINTF("%d / 128 tests failed.\r\n", errors);
         }
         else
         {
-            PRINTF("All EC double scalar multiplication tests were succesfull.\r\n");
+            PRINTF("All EC double scalar multiplication tests were successful.\r\n");
         }
     }
 /* End code to test elliptic curve scalar multiplication. */

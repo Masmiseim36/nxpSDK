@@ -58,7 +58,6 @@ extern uint8_t dfuFirmwareBlock[MAX_TRANSFER_SIZE];
 /* Instant of DFU structure */
 usb_device_dfu_app_struct_t g_UsbDeviceDfu;
 
-
 /*******************************************************************************
  * Code
  ******************************************************************************/
@@ -147,16 +146,16 @@ void USB_DeviceTaskFn(void *deviceHandle)
 usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *param)
 {
     usb_status_t error = kStatus_USB_Error;
-    uint8_t *temp8 = (uint8_t *)param;
+    uint8_t *temp8     = (uint8_t *)param;
 
     switch (event)
     {
         case kUSB_DeviceEventBusReset:
         {
             /* USB bus reset signal detected */
-             /* Initialize the control IN and OUT pipes */
+            /* Initialize the control IN and OUT pipes */
             USB_DeviceControlPipeInit(handle);
-            g_UsbDeviceDfu.attach = 0U;
+            g_UsbDeviceDfu.attach               = 0U;
             g_UsbDeviceDfu.currentConfiguration = 0U;
             USB_DeviceDfuBusReset();
             error = kStatus_USB_Success;
@@ -164,8 +163,8 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
 #if (defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)) || \
     (defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))
             /* Get USB speed to configure the device, including max packet size and interval of the endpoints. */
-            if (kStatus_USB_Success == USB_DeviceGetStatus(g_UsbDeviceDfu.deviceHandle, kUSB_DeviceStatusSpeed,
-                                                           &g_UsbDeviceDfu.speed))
+            if (kStatus_USB_Success ==
+                USB_DeviceGetStatus(g_UsbDeviceDfu.deviceHandle, kUSB_DeviceStatusSpeed, &g_UsbDeviceDfu.speed))
             {
                 USB_DeviceSetSpeed(g_UsbDeviceDfu.speed);
             }
@@ -175,15 +174,15 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
         case kUSB_DeviceEventSetConfiguration:
             if (0U == (*temp8))
             {
-                g_UsbDeviceDfu.attach = 0U;
+                g_UsbDeviceDfu.attach               = 0U;
                 g_UsbDeviceDfu.currentConfiguration = 0U;
             }
             else if (USB_DFU_CONFIGURE_INDEX == (*temp8))
             {
                 /* Set device configuration request */
-                g_UsbDeviceDfu.attach = 1U;
+                g_UsbDeviceDfu.attach               = 1U;
                 g_UsbDeviceDfu.currentConfiguration = *temp8;
-                error = kStatus_USB_Success;
+                error                               = kStatus_USB_Success;
             }
             else
             {
@@ -221,8 +220,8 @@ usb_status_t USB_DeviceProcessVendorRequest(usb_device_handle handle,
                                             uint32_t *length,
                                             uint8_t **buffer)
 {
-   usb_status_t error = kStatus_USB_InvalidRequest;
-   
+    usb_status_t error = kStatus_USB_InvalidRequest;
+
     error = USB_DeviceGetVerdorDescriptor(handle, setup, length, buffer);
 
     return error;
@@ -238,11 +237,9 @@ usb_status_t USB_DeviceConfigureEndpointStatus(usb_device_handle handle, uint8_t
 {
     if (status)
     {
-
     }
     else
     {
-
     }
     return kStatus_USB_InvalidRequest;
 }
@@ -252,15 +249,15 @@ usb_status_t USB_DeviceGetClassReceiveBuffer(usb_device_handle handle,
                                              uint32_t *length,
                                              uint8_t **buffer)
 {
-    usb_status_t error = kStatus_USB_InvalidRequest ; 
+    usb_status_t error = kStatus_USB_InvalidRequest;
     switch (setup->bRequest)
     {
         case USB_DEVICE_DFU_DNLOAD:
             *buffer = dfuFirmwareBlock;
-            error = kStatus_USB_Success;
-        break;
+            error   = kStatus_USB_Success;
+            break;
     }
-    
+
     return error;
 }
 /* Handle class-specific request */
@@ -296,12 +293,11 @@ static void USB_DeviceApplicationInit(void)
 #endif /* FSL_FEATURE_SOC_SYSMPU_COUNT */
 
     /* Set composite device to default state */
-    g_UsbDeviceDfu.speed = USB_SPEED_FULL;
-    g_UsbDeviceDfu.attach = 0U;
+    g_UsbDeviceDfu.speed        = USB_SPEED_FULL;
+    g_UsbDeviceDfu.attach       = 0U;
     g_UsbDeviceDfu.deviceHandle = NULL;
- 
-    if (kStatus_USB_Success !=
-        USB_DeviceInit(CONTROLLER_ID, USB_DeviceCallback, &g_UsbDeviceDfu.deviceHandle))
+
+    if (kStatus_USB_Success != USB_DeviceInit(CONTROLLER_ID, USB_DeviceCallback, &g_UsbDeviceDfu.deviceHandle))
     {
         usb_echo("USB device dfu demo init failed\r\n");
         return;
@@ -316,6 +312,8 @@ static void USB_DeviceApplicationInit(void)
     USB_DeviceIsrEnable();
 
     /* Start the device function */
+    /*Add one delay here to make the DP pull down long enough to allow host to detect the previous disconnection.*/
+    SDK_DelayAtLeastUs(5000, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
     USB_DeviceRun(g_UsbDeviceDfu.deviceHandle);
 }
 /*!

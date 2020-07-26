@@ -10,10 +10,6 @@
 #ifndef EIGEN_CXX11_TENSOR_TENSOR_FFT_H
 #define EIGEN_CXX11_TENSOR_TENSOR_FFT_H
 
-// This code requires the ability to initialize arrays of constant
-// values directly inside a class.
-#if __cplusplus >= 201103L || EIGEN_COMP_MSVC >= 1900
-
 namespace Eigen {
 
 /** \class TensorFFT
@@ -131,16 +127,22 @@ struct TensorEvaluator<const TensorFFTOp<FFT, ArgType, FFTResultType, FFTDir>, D
   typedef OutputScalar CoeffReturnType;
   typedef typename PacketType<OutputScalar, Device>::type PacketReturnType;
   static const int PacketSize = internal::unpacket_traits<PacketReturnType>::size;
+    typedef StorageMemory<CoeffReturnType, Device> Storage;
+  typedef typename Storage::Type EvaluatorPointerType;
 
   enum {
     IsAligned = false,
     PacketAccess = true,
-    BlockAccess = false,
+    BlockAccessV2 = false,
     PreferBlockAccess = false,
     Layout = TensorEvaluator<ArgType, Device>::Layout,
     CoordAccess = false,
     RawAccess = false
   };
+
+  //===- Tensor block evaluation strategy (see TensorBlock.h) -------------===//
+  typedef internal::TensorBlockNotImplemented TensorBlockV2;
+  //===--------------------------------------------------------------------===//
 
   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE TensorEvaluator(const XprType& op, const Device& device) : m_fft(op.fft()), m_impl(op.expression(), device), m_data(NULL), m_device(device) {
     const typename TensorEvaluator<ArgType, Device>::Dimensions& input_dims = m_impl.dimensions();
@@ -167,13 +169,13 @@ struct TensorEvaluator<const TensorFFTOp<FFT, ArgType, FFTResultType, FFTDir>, D
     return m_dimensions;
   }
 
-  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE bool evalSubExprsIfNeeded(OutputScalar* data) {
+  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE bool evalSubExprsIfNeeded(EvaluatorPointerType data) {
     m_impl.evalSubExprsIfNeeded(NULL);
     if (data) {
       evalToBuf(data);
       return false;
     } else {
-      m_data = (CoeffReturnType*)m_device.allocate(sizeof(CoeffReturnType) * m_size);
+      m_data = (EvaluatorPointerType)m_device.get((CoeffReturnType*)(m_device.allocate_temp(sizeof(CoeffReturnType) * m_size)));
       evalToBuf(m_data);
       return true;
     }
@@ -202,11 +204,16 @@ struct TensorEvaluator<const TensorFFTOp<FFT, ArgType, FFTResultType, FFTDir>, D
     return TensorOpCost(sizeof(CoeffReturnType), 0, 0, vectorized, PacketSize);
   }
 
-  EIGEN_DEVICE_FUNC Scalar* data() const { return m_data; }
-
+  EIGEN_DEVICE_FUNC EvaluatorPointerType data() const { return m_data; }
+#ifdef EIGEN_USE_SYCL
+  // binding placeholder accessors to a command group handler for SYCL
+  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE void bind(cl::sycl::handler &cgh) const {
+    m_data.bind(cgh);
+  }
+#endif
 
  private:
-  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE void evalToBuf(OutputScalar* data) {
+  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE void evalToBuf(EvaluatorPointerType data) {
     const bool write_to_out = internal::is_same<OutputScalar, ComplexScalar>::value;
     ComplexScalar* buf = write_to_out ? (ComplexScalar*)data : (ComplexScalar*)m_device.allocate(sizeof(ComplexScalar) * m_size);
 
@@ -576,12 +583,12 @@ struct TensorEvaluator<const TensorFFTOp<FFT, ArgType, FFTResultType, FFTDir>, D
 
  protected:
   Index m_size;
-  const FFT& m_fft;
+  const FFT EIGEN_DEVICE_REF m_fft;
   Dimensions m_dimensions;
   array<Index, NumDims> m_strides;
   TensorEvaluator<ArgType, Device> m_impl;
-  CoeffReturnType* m_data;
-  const Device& m_device;
+  EvaluatorPointerType m_data;
+  const Device EIGEN_DEVICE_REF m_device;
 
   // This will support a maximum FFT size of 2^32 for each dimension
   // m_sin_PI_div_n_LUT[i] = (-2) * std::sin(M_PI / std::pow(2,i)) ^ 2;
@@ -658,8 +665,5 @@ struct TensorEvaluator<const TensorFFTOp<FFT, ArgType, FFTResultType, FFTDir>, D
 };
 
 }  // end namespace Eigen
-
-#endif  // EIGEN_HAS_CONSTEXPR
-
 
 #endif  // EIGEN_CXX11_TENSOR_TENSOR_FFT_H

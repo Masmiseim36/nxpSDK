@@ -24,6 +24,8 @@ extern "C" {
 #endif /* __cplusplus*/
 void BOARD_SetPmicVoltageForFreq(power_part_temp_range temp_range, uint32_t main_clk_freq, uint32_t dsp_main_clk_freq);
 void BOARD_InitPmic(void);
+void BOARD_SetPmicVoltageBeforeDeepSleep(void);
+void BOARD_RestorePmicVoltageAfterDeepSleep(void);
 #if defined(__cplusplus)
 }
 #endif /* __cplusplus*/

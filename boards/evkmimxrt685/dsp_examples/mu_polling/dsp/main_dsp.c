@@ -77,7 +77,7 @@ int main(void)
     uint32_t i;
 
     /* Init board hardware. */
-    BOARD_InitPins();
+    BOARD_InitBootPins();
 
     /* Initialize LED */
     LED_INIT();

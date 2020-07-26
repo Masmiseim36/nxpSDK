@@ -72,8 +72,8 @@ int main(void)
     PRINTF("\r\nAudio demo started. Initialize pins and codec on core 'Cortex-M33'\r\n");
 
     /* Initialize standard SDK demo application pins */
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
 
     CLOCK_EnableClock(kCLOCK_InputMux);
@@ -81,7 +81,7 @@ int main(void)
     /* Clear MUA reset before run DSP core */
     RESET_PeripheralReset(kMU_RST_SHIFT_RSTn);
 
-    /* attach main clock to I3C */
+    /* attach main clock to I3C (500MHz / 20 = 25MHz). */
     CLOCK_AttachClk(kMAIN_CLK_to_I3C_CLK);
     CLOCK_SetClkDiv(kCLOCK_DivI3cClk, 20);
 

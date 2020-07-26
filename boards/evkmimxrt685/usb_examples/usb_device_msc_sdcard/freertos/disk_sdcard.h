@@ -29,7 +29,8 @@
 #else
 #define USB_DEVICE_INTERRUPT_PRIORITY (3U)
 #endif
-/* application define logical unit number, if LOGICAL_UNIT_SUPPORTED > USB_DEVICE_MSC_MAX_LUN, update USB_DEVICE_MSC_MAX_LUN in class driver usb_device_msc.h*/
+/* application define logical unit number, if LOGICAL_UNIT_SUPPORTED > USB_DEVICE_MSC_MAX_LUN, update
+ * USB_DEVICE_MSC_MAX_LUN in class driver usb_device_msc.h*/
 #define LOGICAL_UNIT_SUPPORTED (1U)
 
 #define USB_DEVICE_MSC_WRITE_BUFF_NUM (3U)
@@ -38,7 +39,7 @@
 /*the block size should be multiple of 512, the least value is 512*/
 
 #define USB_DEVICE_MSC_WRITE_BUFF_SIZE (512 * 8U)
-#define USB_DEVICE_MSC_READ_BUFF_SIZE (512 * 8U)
+#define USB_DEVICE_MSC_READ_BUFF_SIZE  (512 * 8U)
 
 
 #define USB_DEVICE_SDCARD_BLOCK_SIZE_POWER (9U)

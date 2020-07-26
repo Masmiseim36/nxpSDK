@@ -104,6 +104,7 @@ static void BOARD_LCD_InterfaceInit(void)
     gpio_pin_config_t dc_config = {
         kGPIO_DigitalOutput,
         1,
+        kGPIO_NoIntmode,
     };
 
     /* Init data/command GPIO output . */

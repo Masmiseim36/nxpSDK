@@ -12,11 +12,11 @@
 
 #define _MAX_UNAME 				30
 typedef struct _greal_utsname {
-	char  			sysname[_MAX_UNAME];	//name of this implementation of the operating system
-	char  			nodename[_MAX_UNAME];	//name of this node within an implementation-dependent communications network
-	char  			release[_MAX_UNAME];	//current release level of this implementation
-	char  			version[_MAX_UNAME];	//current version level of this release
-	char  			machine[_MAX_UNAME];	//name of the hardware type on which the system is running
+	char  			sysname[_MAX_UNAME];	///<name of this implementation of the operating system
+	char  			nodename[_MAX_UNAME];	///<name of this node within an implementation-dependent communications network
+	char  			release[_MAX_UNAME];	///<current release level of this implementation
+	char  			version[_MAX_UNAME];	///<current version level of this release
+	char  			machine[_MAX_UNAME];	///<name of the hardware type on which the system is running
 } greal_utsname_t;
 
 typedef struct _greal_timespec_t {
@@ -53,9 +53,10 @@ int greal_clock_gettime(int _clock, greal_timespec_t *_ts);
 
 #define PTHREAD_NAME_MAX_LENGTH 9
 int greal_pthread_create(pthread_t *thread, const pthread_attr_t *attr, void *(*start_routine)(void *), void *arg, const char *name);
-int greal_pthread_detach(pthread_t thread);
 
-//General Non-ANSI Functions
+/**
+ * General Non-ANSI Functions
+ */
 char *strdup(const char *_str);
 char *getenv(const char *_var);
 
@@ -70,41 +71,54 @@ char *getcwd(char *buf, int size);
  * Platform specific values
  */
 
-/* prototypes needed for iar 'require prototypes options in order to compile libgreal.a */
+/**
+ * Prototypes needed for IAR in order to compile libgreal.a 
+ */
 #if(GR_TOOLCHAIN(iar))
-//stub_getcwd.c
+
 char * getcwd(char *buf, int size); 
 
-//iar_threading.c
-void __iar_system_Mtxinit(__iar_Rmtx* lock);    // Initialize a system lock
-void __iar_system_Mtxdst(__iar_Rmtx* lock);     // Destroy a system lock
-void __iar_system_Mtxlock(__iar_Rmtx* lock);    // Lock a system lock
-void __iar_system_Mtxunlock(__iar_Rmtx* lock);  // Unlock a system lock
-void __iar_file_Mtxinit(__iar_Rmtx* lock);    // Initialize a system lock
-void __iar_file_Mtxdst(__iar_Rmtx* lock);     // Destroy a system lock
-void __iar_file_Mtxlock(__iar_Rmtx* lock);    // Lock a system lock
-void __iar_file_Mtxunlock(__iar_Rmtx* lock);  // Unlock a system lock
+/**
+ * Thread safety calls.  These are enabled through the general library option "Enable threading support"
+ */
+void __iar_system_Mtxinit(__iar_Rmtx* lock);
+void __iar_system_Mtxdst(__iar_Rmtx* lock);
+void __iar_system_Mtxlock(__iar_Rmtx* lock);
+void __iar_system_Mtxunlock(__iar_Rmtx* lock);
+void __iar_file_Mtxinit(__iar_Rmtx* lock);
+void __iar_file_Mtxdst(__iar_Rmtx* lock);
+void __iar_file_Mtxlock(__iar_Rmtx* lock);
+void __iar_file_Mtxunlock(__iar_Rmtx* lock);
 int remove(const char* filename);
 
-// stub_dlfcn.c
+/**
+ * The dl* function calls
+ */
 void * dlopen(const char *_file, int _mode);
 void * dlsym(void *_handle, const char *_name);
 int    dlclose(void *_handle);
 char * dlerror(void);
 
-// stub metrics.c
+/**
+ * The calls to monitor CPU usage
+ */ 
 void vApplicationIdleHook(void);
 void vApplicationTickHook(void);
 void StartIdleMonitor(void);
 
 void EndIdleMonitor(void);
-// stubb thread.c
+
+/**
+ * Threading prototypes
+ */
 pthread_t pthread_self(void);
 int pthread_kill(pthread_t tid, int sig);
 int pthread_create_named(pthread_t *thread, const pthread_attr_t *_attr, void *(*start_routine)(void*), void *arg, const char *name);
 void taskYield(void);
 
-// timer.c
+/**
+ * Timer prorotypes
+ */
 #include <FreeRTOS.h>
 #include <timers.h>
 void vCallbackFunction(TimerHandle_t xTimer);

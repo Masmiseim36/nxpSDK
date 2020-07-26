@@ -39,7 +39,7 @@
  * LWIP_SOCKET==1: Enable Socket API (require to use sockets.c)
  */
 #define LWIP_SOCKET 1
-#define LWIP_DNS 1
+#define LWIP_DNS    1
 /**
  * LWIP_SO_RCVTIMEO==1: Enable receive timeout for sockets/netconns and
  * SO_RCVTIMEO processing.
@@ -50,7 +50,7 @@
 /**
  * NO_SYS==1: Bare metal lwIP
  */
-#define NO_SYS 1
+#define NO_SYS       1
 /**
  * LWIP_NETCONN==0: Disable Netconn API (require to use api_lib.c)
  */
@@ -58,8 +58,25 @@
 /**
  * LWIP_SOCKET==0: Disable Socket API (require to use sockets.c)
  */
-#define LWIP_SOCKET 0
+#define LWIP_SOCKET  0
 
+#endif
+
+/* ---------- Core locking ---------- */
+
+#define LWIP_TCPIP_CORE_LOCKING 0
+#if (LWIP_TCPIP_CORE_LOCKING > 0)
+void sys_lock_tcpip_core(void);
+#define LOCK_TCPIP_CORE() sys_lock_tcpip_core()
+
+void sys_unlock_tcpip_core(void);
+#define UNLOCK_TCPIP_CORE() sys_unlock_tcpip_core()
+
+void sys_check_core_locking(void);
+#define LWIP_ASSERT_CORE_LOCKED() sys_check_core_locking()
+
+void sys_mark_tcpip_thread(void);
+#define LWIP_MARK_TCPIP_THREAD() sys_mark_tcpip_thread()
 #endif
 /* ---------- Memory options ---------- */
 /**
@@ -224,13 +241,13 @@ Some MCU allow computing and verifying the IP, UDP, TCP and ICMP checksums by ha
 #define CHECKSUM_CHECK_TCP 0
 #else
 /* CHECKSUM_GEN_IP==1: Generate checksums in software for outgoing IP packets.*/
-#define CHECKSUM_GEN_IP 1
+#define CHECKSUM_GEN_IP    1
 /* CHECKSUM_GEN_UDP==1: Generate checksums in software for outgoing UDP packets.*/
-#define CHECKSUM_GEN_UDP 1
+#define CHECKSUM_GEN_UDP   1
 /* CHECKSUM_GEN_TCP==1: Generate checksums in software for outgoing TCP packets.*/
-#define CHECKSUM_GEN_TCP 1
+#define CHECKSUM_GEN_TCP   1
 /* CHECKSUM_CHECK_IP==1: Check checksums in software for incoming IP packets.*/
-#define CHECKSUM_CHECK_IP 1
+#define CHECKSUM_CHECK_IP  1
 /* CHECKSUM_CHECK_UDP==1: Check checksums in software for incoming UDP packets.*/
 #define CHECKSUM_CHECK_UDP 1
 /* CHECKSUM_CHECK_TCP==1: Check checksums in software for incoming TCP packets.*/
@@ -264,9 +281,9 @@ Some MCU allow computing and verifying the IP, UDP, TCP and ICMP checksums by ha
 #define LWIP_DEBUG
 
 #ifdef LWIP_DEBUG
-#define U8_F "c"
-#define S8_F "c"
-#define X8_F "02x"
+#define U8_F  "c"
+#define S8_F  "c"
+#define X8_F  "02x"
 #define U16_F "u"
 #define S16_F "d"
 #define X16_F "x"
@@ -276,9 +293,9 @@ Some MCU allow computing and verifying the IP, UDP, TCP and ICMP checksums by ha
 #define SZT_F "u"
 #endif
 
-#define TCPIP_MBOX_SIZE 32
+#define TCPIP_MBOX_SIZE        32
 #define TCPIP_THREAD_STACKSIZE 1024
-#define TCPIP_THREAD_PRIO 8
+#define TCPIP_THREAD_PRIO      8
 
 /**
  * DEFAULT_RAW_RECVMBOX_SIZE: The mailbox size for the incoming packets on a
@@ -286,7 +303,7 @@ Some MCU allow computing and verifying the IP, UDP, TCP and ICMP checksums by ha
  * to sys_mbox_new() when the recvmbox is created.
  */
 #define DEFAULT_RAW_RECVMBOX_SIZE 12
-#define PING_USE_SOCKETS 0
+#define PING_USE_SOCKETS          0
 /**
  * DEFAULT_UDP_RECVMBOX_SIZE: The mailbox size for the incoming packets on a
  * NETCONN_UDP. The queue size value itself is platform-dependent, but is passed
@@ -312,7 +329,7 @@ Some MCU allow computing and verifying the IP, UDP, TCP and ICMP checksums by ha
 /* When using IGMP or IPv6, LWIP_RAND() needs to be defined to a random-function returning an u32_t random value*/
 #include "lwip/arch.h"
 extern u32_t lwip_rand(void);
-#define MYY 12
+#define MYY         12
 #define LWIP_RAND() lwip_rand()
 #endif
 

@@ -65,12 +65,12 @@ typedef struct _usb_host_printer_app
  ******************************************************************************/
 
 /*!
-* @brief host printer task function.
-*
-* This function implements the host printer action, it is used to create task.
-*
-* @param param   the host printer instance pointer.
-*/
+ * @brief host printer task function.
+ *
+ * This function implements the host printer action, it is used to create task.
+ *
+ * @param param   the host printer instance pointer.
+ */
 extern void USB_HostPrinterAppTask(void *param);
 
 /*!

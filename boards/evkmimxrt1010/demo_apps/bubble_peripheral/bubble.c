@@ -18,7 +18,7 @@
  * Definitions
  ******************************************************************************/
 #define TIMER_COMPARE_CHANNEL (kGPT_OutputCompare_Channel2)
-#define EXAMPLE_DELAY_COUNT 8000000
+#define EXAMPLE_DELAY_COUNT   8000000
 
 /* Upper bound and lower bound angle values */
 #define ANGLE_UPPER_BOUND 85U

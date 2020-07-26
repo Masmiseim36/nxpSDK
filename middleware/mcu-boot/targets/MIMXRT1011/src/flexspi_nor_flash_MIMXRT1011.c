@@ -1,17 +1,16 @@
 /*
- * Copyright 2014-2016 Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  *
  */
 
-#include <string.h>
-#include <stdlib.h>
 #include <stdbool.h>
-#include "flexspi/fsl_flexspi.h"
-#include "flexspi_nor/flexspi_nor_flash.h"
+#include <stdlib.h>
+#include <string.h>
+#include "bl_flexspi.h"
+#include "flexspi_nor_flash.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
@@ -1356,15 +1355,15 @@ status_t get_page_sector_block_size_from_sfdp(flexspi_nor_config_t *config,
     uint32_t flash_size;
     uint32_t flash_density = tbl->flash_param_tbl.flash_density;
 
-    if (flash_density & (1U << 0x1F))
+    if (flash_density & (1UL << 0x1Fu))
     {
         // Flash size >= 4G bits
-        flash_size = 1U << ((flash_density & ~(1U << 0x1F)) - 3);
+        flash_size = 1U << ((flash_density & ~(1UL << 0x1F)) - 3U);
     }
     else
     {
         // Flash size < 4G bits
-        flash_size = (flash_density + 1) >> 3;
+        flash_size = (flash_density + 1U) >> 3;
     }
     config->memConfig.sflashA1Size = flash_size;
 
@@ -1372,31 +1371,31 @@ status_t get_page_sector_block_size_from_sfdp(flexspi_nor_config_t *config,
     uint32_t page_size;
     if (tbl->flash_param_tbl_size < kSfdp_BasicProtocolTableSize_RevA)
     {
-        config->pageSize = 256;
+        config->pageSize = 256U;
     }
     else
     {
-        page_size = 1u << (param_tbl->chip_erase_progrm_info.page_size);
-        config->pageSize = (page_size == (1u << 15)) ? 256 : page_size;
+        page_size = 1UL << (param_tbl->chip_erase_progrm_info.page_size);
+        config->pageSize = (page_size == (1U << 15)) ? 256U : page_size;
     }
 
     // Calculate Sector Size;
     uint32_t sector_size = 0xFFFFFFu;
     uint32_t block_size = 0u;
-    uint32_t block_erase_type;
-    uint32_t sector_erase_type;
+    uint32_t block_erase_type = 0U;
+    uint32_t sector_erase_type = 0U;
 
-    for (uint32_t index = 0; index < 4; index++)
+    for (uint32_t index = 0U; index < 4U; index++)
     {
-        if (param_tbl->erase_info[index].size != 0)
+        if (param_tbl->erase_info[index].size != 0U)
         {
-            uint32_t current_erase_size = 1U << param_tbl->erase_info[index].size;
+            uint32_t current_erase_size = 1UL << param_tbl->erase_info[index].size;
             if (current_erase_size < sector_size)
             {
                 sector_size = current_erase_size;
                 sector_erase_type = index;
             }
-            if ((current_erase_size > block_size) && (current_erase_size < (1024U * 1024U)))
+            if ((current_erase_size > block_size) && (current_erase_size < (1024UL * 1024U)))
             {
                 block_size = current_erase_size;
                 block_erase_type = index;
@@ -1427,6 +1426,9 @@ status_t get_page_sector_block_size_from_sfdp(flexspi_nor_config_t *config,
         {
             switch (param_tbl->erase_info[sector_erase_type].inst)
             {
+                default:
+                    *sector_erase_cmd = kSerialNorCmd_SE4K_4B;
+                    break;
                 case kSerialNorCmd_SE4K_3B:
                     *sector_erase_cmd = kSerialNorCmd_SE4K_4B;
                     break;
@@ -1436,6 +1438,9 @@ status_t get_page_sector_block_size_from_sfdp(flexspi_nor_config_t *config,
             }
             switch (param_tbl->erase_info[block_erase_type].inst)
             {
+                default:
+                    *block_erase_cmd = kSerialNorCmd_SE4K_4B;
+                    break;
                 case kSerialNorCmd_SE4K_3B:
                     *block_erase_cmd = kSerialNorCmd_SE4K_4B;
                     break;

@@ -29,13 +29,13 @@
 #include "config.h"
 
 #if !defined(kmalloc) || !defined(kfree)
-#define kmalloc(ptr, flags) malloc(ptr)
-#define kfree(ptr) free(ptr)
-#define GFP_KERNEL 0
+#define kmalloc(ptr, flags)       malloc(ptr)
+#define kfree(ptr)                free(ptr)
+#define GFP_KERNEL                0
 #define msleep_interruptible(val) usleep(1000 * val)
 #endif
 
-#define le16_to_cpu(a) (a)
+#define le16_to_cpu(a)   (a)
 
 typedef enum log_level
 {
@@ -50,19 +50,19 @@ typedef enum log_level
     map kernel dev_* logging functions to user space
     - dev pointer is used point to idx
 */
-#define dev_err(I, ...) tfaprintf(LOG_ERR, I, __VA_ARGS__)
+#define dev_err(I, ...)  tfaprintf(LOG_ERR, I, __VA_ARGS__)
 #define dev_warn(I, ...) tfaprintf(LOG_WARN, I, __VA_ARGS__)
 #define dev_info(I, ...) tfaprintf(LOG_INFO, I, __VA_ARGS__)
-#define dev_dbg(I, ...) tfaprintf(LOG_DEBUG, I, __VA_ARGS__)
+#define dev_dbg(I, ...)  tfaprintf(LOG_DEBUG, I, __VA_ARGS__)
 
 /*
     map kernel pr_* logging functions to user space
     - no dev pointer available, make it NULL
 */
-#define pr_err(...) dev_err(NULL, __VA_ARGS__)
-#define pr_warn(...) dev_warn(NULL, __VA_ARGS__)
-#define pr_info(...) dev_info(NULL, __VA_ARGS__)
-#define pr_debug(...) dev_dbg(NULL, __VA_ARGS__)
+#define pr_err(...)      dev_err(NULL, __VA_ARGS__)
+#define pr_warn(...)     dev_warn(NULL, __VA_ARGS__)
+#define pr_info(...)     dev_info(NULL, __VA_ARGS__)
+#define pr_debug(...)    dev_dbg(NULL, __VA_ARGS__)
 
 struct i2c_client
 {
@@ -141,9 +141,9 @@ typedef enum tfa9xxx_core_bf
 } tfa9xxx_core_bf_t;
 
 /* TODO haptic profile names */
-#define HB_LRA_MAIN "lra_main.hap"
-#define HB_LRA_DATA "lra_data.hap"
-#define HB_LRA_RECALC "lra_recalculation.hap"
+#define HB_LRA_MAIN       "lra_main.hap"
+#define HB_LRA_DATA       "lra_data.hap"
+#define HB_LRA_RECALC     "lra_recalculation.hap"
 #define HB_RECALC_PROFILE "lra_recalculation.hap"
 
 /* return true if in TFA range */

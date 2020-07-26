@@ -7,18 +7,22 @@
 *
 ********************************************************************************
 *
+* This software is delivered "as is" and shows the usage of other software 
+* components. It is provided as an example software which is intended to be 
+* modified and extended according to particular requirements.
+* 
+* TARA Systems hereby disclaims all warranties and conditions with regard to the
+* software, including all implied warranties and conditions of merchantability 
+* and non-infringement of any third party IPR or other rights which may result 
+* from the use or the inability to use the software.
+*
 * This file was generated automatically by Embedded Wizard Studio.
 *
 * Please do not make any modifications of this file! The modifications are lost
 * when the file is generated again by Embedded Wizard Studio!
 *
-* The template of this heading text can be found in the file 'head.ewt' in the
-* directory 'Platforms' of your Embedded Wizard installation directory. If you
-* wish to adapt this text, please copy the template file 'head.ewt' into your
-* project directory and edit the copy only. Please avoid any modifications of
-* the original template file!
-*
-* Version  : 9.20
+* Version  : 9.30
+* Date     : 14.02.2020  8:00:50
 * Profile  : iMX_RT
 * Platform : NXP.iMX_RT.RGB565
 *
@@ -33,12 +37,12 @@
 #endif
 
 #include "ewrte.h"
-#if EW_RTE_VERSION != 0x00090014
+#if EW_RTE_VERSION != 0x0009001E
   #error Wrong version of Embedded Wizard Runtime Environment.
 #endif
 
 #include "ewgfx.h"
-#if EW_GFX_VERSION != 0x00090014
+#if EW_GFX_VERSION != 0x0009001E
   #error Wrong version of Embedded Wizard Graphics Engine.
 #endif
 
@@ -94,15 +98,24 @@
    - If the size of the outline changes, all embedded views are automatically arranged 
    within the outline boundary accordingly to their @Layout properties.
    - The property @Formation allows more sophisticated arrangement of embedded views 
-   in columns and rows. It is useful to create scrollable menus or lists.
+   in columns and rows. Even table-like grid is possible. It is useful to create 
+   scrollable menus or lists. With the properties @SpaceHorz, @SpaceVert and @Space 
+   the padding between the automatically arranged views is controlled.
    - To find and enumerate the embedded views, the methods like @FindNextView(), 
    @FindPrevView(), @FindViewAtPosition, @FindViewInDirection() or @GetViewAtIndex() 
    are available. 
+   - The method @EnsureVisible() has the job to scroll the outline contents until 
+   the given view is visible. The method @AdjustContent() in contrast tries to scroll 
+   the outline so the entire outline area is filled with views. Usually this is 
+   used after the outline size changes.
    The outline itself is invisible except the Embedded Wizard Composer, where all 
    outlines appear as semitransparent rectangles. This allows you to interact with 
    the outlines during the design time. */
 EW_DEFINE_FIELDS( CoreOutline, CoreRectView )
+  EW_PROPERTY( OnUpdate,        XSlot )
   EW_PROPERTY( ScrollOffset,    XPoint )
+  EW_PROPERTY( SpaceVert,       XInt32 )
+  EW_PROPERTY( SpaceHorz,       XInt32 )
   EW_PROPERTY( Space,           XInt32 )
   EW_PROPERTY( Formation,       XEnum )
 EW_END_OF_FIELDS( CoreOutline )

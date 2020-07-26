@@ -1,16 +1,16 @@
 /*
- * Copyright 2016-2018 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
+#include "bl_semc.h"
 #include "bootloader_common.h"
+#include "fsl_assert.h"
 #include "fsl_device_registers.h"
-#include "semc/fsl_semc.h"
-#include "semc_nand/semc_nand_flash.h"
 #include "fusemap.h"
-#include "utilities/fsl_assert.h"
+#include "semc_nand_flash.h"
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
 ////////////////////////////////////////////////////////////////////////////////
@@ -19,67 +19,67 @@
 // 1 - RT1050 A1
 #define SEMC_NAND_FUSE_MAP_VERSION (0)
 
-#define SEMC_NAND_TYPICAL_PAGES_IN_BLOCK  (64U)
+#define SEMC_NAND_TYPICAL_PAGES_IN_BLOCK (64U)
 
 /* Fuse: ONFI flag */
 enum
 {
-   kFuseSemcNand_OnfiCompliant_Yes = 0U,
-   kFuseSemcNand_OnfiCompliant_No = 1U,
+    kFuseSemcNand_OnfiCompliant_Yes = 0U,
+    kFuseSemcNand_OnfiCompliant_No = 1U,
 };
 
 /* Fuse: ECC type */
 enum
 {
 #if (SEMC_NAND_FUSE_MAP_VERSION == 0)
-   kFuseSemcNand_EccType_Sw = 0U,
-   kFuseSemcNand_EccType_Hw = 1U,
+    kFuseSemcNand_EccType_Sw = 0U,
+    kFuseSemcNand_EccType_Hw = 1U,
 #elif (SEMC_NAND_FUSE_MAP_VERSION == 1)
-   kFuseSemcNand_EccType_Hw = 0U,
-   kFuseSemcNand_EccType_Sw = 1U,
+    kFuseSemcNand_EccType_Hw = 0U,
+    kFuseSemcNand_EccType_Sw = 1U,
 #endif
 };
 
 /* Fuse: DQS mode */
 enum
 {
-   kFuseSemcNand_DqsPadMode_Disabled  = 0U,
-   kFuseSemcNand_DqsPadMode_Enabled = 1U,
+    kFuseSemcNand_DqsPadMode_Disabled = 0U,
+    kFuseSemcNand_DqsPadMode_Enabled = 1U,
 };
 
 /* Fuse: Pcs selection */
 enum
 {
-   kFuseSemcNand_PcsSelection_CSX0  = 0U,
-   kFuseSemcNand_PcsSelection_CSX1  = 1U,
-   kFuseSemcNand_PcsSelection_CSX2  = 2U,
-   kFuseSemcNand_PcsSelection_CSX3  = 3U,
-   //kFuseSemcNand_PcsSelection_A8  = 4-7U,
+    kFuseSemcNand_PcsSelection_CSX0 = 0U,
+    kFuseSemcNand_PcsSelection_CSX1 = 1U,
+    kFuseSemcNand_PcsSelection_CSX2 = 2U,
+    kFuseSemcNand_PcsSelection_CSX3 = 3U,
+    // kFuseSemcNand_PcsSelection_A8  = 4-7U,
 };
 
 /* Fuse: I/O Port Size */
 enum
 {
-   kFuseSemcNand_IoPortSize_8bit  = 0U,
-   kFuseSemcNand_IoPortSize_16bit  = 1U,
+    kFuseSemcNand_IoPortSize_8bit = 0U,
+    kFuseSemcNand_IoPortSize_16bit = 1U,
 };
 
 /* Fuse: EDO mode */
 enum
 {
-   kFuseSemcNand_EdoMode_Dis  = 0U,
-   kFuseSemcNand_EdoMode_En = 1U,
+    kFuseSemcNand_EdoMode_Dis = 0U,
+    kFuseSemcNand_EdoMode_En = 1U,
 };
 
 /* Fuse: RDY# Polarity */
 enum
 {
 #if (SEMC_NAND_FUSE_MAP_VERSION == 0)
-   kFuseSemcNand_RdyPolarity_High  = 0U,
-   kFuseSemcNand_RdyPolarity_Low = 1U,
+    kFuseSemcNand_RdyPolarity_High = 0U,
+    kFuseSemcNand_RdyPolarity_Low = 1U,
 #elif (SEMC_NAND_FUSE_MAP_VERSION == 1)
-   kFuseSemcNand_RdyPolarity_Low  = 0U,
-   kFuseSemcNand_RdyPolarity_High = 1U,
+    kFuseSemcNand_RdyPolarity_Low = 0U,
+    kFuseSemcNand_RdyPolarity_High = 1U,
 #endif
 };
 
@@ -87,98 +87,96 @@ enum
 enum
 {
 #if (SEMC_NAND_FUSE_MAP_VERSION == 0)
-   kFuseSemcNand_ReadyCheckType_RB  = 0U,
-   kFuseSemcNand_ReadyCheckType_SR  = 1U,
+    kFuseSemcNand_ReadyCheckType_RB = 0U,
+    kFuseSemcNand_ReadyCheckType_SR = 1U,
 #elif (SEMC_NAND_FUSE_MAP_VERSION == 1)
-   kFuseSemcNand_ReadyCheckType_SR  = 0U,
-   kFuseSemcNand_ReadyCheckType_RB  = 1U,
+    kFuseSemcNand_ReadyCheckType_SR = 0U,
+    kFuseSemcNand_ReadyCheckType_RB = 1U,
 #endif
 };
 
 /* Fuse: Clock frequency */
 enum
 {
-   kFuseSemcNand_ClkFreq_2ndMax  = 0U,
-   kFuseSemcNand_ClkFreq_Max = 1U,
+    kFuseSemcNand_ClkFreq_2ndMax = 0U,
+    kFuseSemcNand_ClkFreq_Max = 1U,
 };
 
 /* Fuse: Row Column address mode */
 enum
 {
-   kFuseSemcNand_RowColAddrMode_5byte_CA2RA3  = 0U,
-   kFuseSemcNand_RowColAddrMode_5byte_CA2RA3_plus  = 1U,
-   kFuseSemcNand_RowColAddrMode_4byte_CA2RA2 = 2U,
-   kFuseSemcNand_RowColAddrMode_3byte_CA2RA1 = 3U,
-   kFuseSemcNand_RowColAddrMode_4byte_CA1RA3 = 4U,
-   kFuseSemcNand_RowColAddrMode_4byte_CA1RA3_plus = 5U,
-   kFuseSemcNand_RowColAddrMode_3byte_CA1RA2 = 6U,
-   kFuseSemcNand_RowColAddrMode_2byte_CA1RA1 = 7U,
+    kFuseSemcNand_RowColAddrMode_5byte_CA2RA3 = 0U,
+    kFuseSemcNand_RowColAddrMode_5byte_CA2RA3_plus = 1U,
+    kFuseSemcNand_RowColAddrMode_4byte_CA2RA2 = 2U,
+    kFuseSemcNand_RowColAddrMode_3byte_CA2RA1 = 3U,
+    kFuseSemcNand_RowColAddrMode_4byte_CA1RA3 = 4U,
+    kFuseSemcNand_RowColAddrMode_4byte_CA1RA3_plus = 5U,
+    kFuseSemcNand_RowColAddrMode_3byte_CA1RA2 = 6U,
+    kFuseSemcNand_RowColAddrMode_2byte_CA1RA1 = 7U,
 };
 
 /* Fuse: Column Address Width */
 enum
 {
-   kFuseSemcNand_ColumnAddressWidth_12bits = 0U,
-   kFuseSemcNand_ColumnAddressWidth_9bits = 1U,
-   kFuseSemcNand_ColumnAddressWidth_10bits = 2U,
-   kFuseSemcNand_ColumnAddressWidth_11bits = 3U,
-   kFuseSemcNand_ColumnAddressWidth_13bits = 4U,
-   kFuseSemcNand_ColumnAddressWidth_14bits = 5U,
-   kFuseSemcNand_ColumnAddressWidth_15bits = 6U,
-   kFuseSemcNand_ColumnAddressWidth_16bits = 7U,
+    kFuseSemcNand_ColumnAddressWidth_12bits = 0U,
+    kFuseSemcNand_ColumnAddressWidth_9bits = 1U,
+    kFuseSemcNand_ColumnAddressWidth_10bits = 2U,
+    kFuseSemcNand_ColumnAddressWidth_11bits = 3U,
+    kFuseSemcNand_ColumnAddressWidth_13bits = 4U,
+    kFuseSemcNand_ColumnAddressWidth_14bits = 5U,
+    kFuseSemcNand_ColumnAddressWidth_15bits = 6U,
+    kFuseSemcNand_ColumnAddressWidth_16bits = 7U,
 };
 
 /* Fuse: Status Command Type */
 enum
 {
-   kFuseSemcNand_StatusCmdType_Common  = 0U,
-   kFuseSemcNand_StatusCmdType_Enhanced  = 1U,
+    kFuseSemcNand_StatusCmdType_Common = 0U,
+    kFuseSemcNand_StatusCmdType_Enhanced = 1U,
 };
 
 /* Fuse: Pages in block */
 enum
 {
-   kFuseSemcNand_PagesInBlock_128 = 0U,
-   kFuseSemcNand_PagesInBlock_8 = 1U,
-   kFuseSemcNand_PagesInBlock_16 = 2U,
-   kFuseSemcNand_PagesInBlock_32 = 3U,
-   kFuseSemcNand_PagesInBlock_64 = 4U,
-   kFuseSemcNand_PagesInBlock_256 = 5U,
-   kFuseSemcNand_PagesInBlock_512 = 6U,
-   kFuseSemcNand_PagesInBlock_1024 = 7U,
+    kFuseSemcNand_PagesInBlock_128 = 0U,
+    kFuseSemcNand_PagesInBlock_8 = 1U,
+    kFuseSemcNand_PagesInBlock_16 = 2U,
+    kFuseSemcNand_PagesInBlock_32 = 3U,
+    kFuseSemcNand_PagesInBlock_64 = 4U,
+    kFuseSemcNand_PagesInBlock_256 = 5U,
+    kFuseSemcNand_PagesInBlock_512 = 6U,
+    kFuseSemcNand_PagesInBlock_1024 = 7U,
 };
 
 /* Fuse: Device ECC status */
 enum
 {
-   kFuseSemcNand_DeviceEccStatus_On = 0U,
-   kFuseSemcNand_DeviceEccStatus_Off = 1U,
+    kFuseSemcNand_DeviceEccStatus_On = 0U,
+    kFuseSemcNand_DeviceEccStatus_Off = 1U,
 };
 
 /* Fuse: ONFI Timing mode */
 enum
 {
-   kFuseSemcNand_OnfiTimingMode_0_10MHz = 0U,
-   kFuseSemcNand_OnfiTimingMode_1_20MHz = 1U,
-   kFuseSemcNand_OnfiTimingMode_2_28MHz = 2U,
-   kFuseSemcNand_OnfiTimingMode_3_33MHz = 3U,
-   kFuseSemcNand_OnfiTimingMode_4_40MHz = 4U,
-   kFuseSemcNand_OnfiTimingMode_5_50MHz = 5U,
-   //kFuseSemcNand_OnfiTimingMode_Fastest = 6-7U,
+    kFuseSemcNand_OnfiTimingMode_0_10MHz = 0U,
+    kFuseSemcNand_OnfiTimingMode_1_20MHz = 1U,
+    kFuseSemcNand_OnfiTimingMode_2_28MHz = 2U,
+    kFuseSemcNand_OnfiTimingMode_3_33MHz = 3U,
+    kFuseSemcNand_OnfiTimingMode_4_40MHz = 4U,
+    kFuseSemcNand_OnfiTimingMode_5_50MHz = 5U,
+    // kFuseSemcNand_OnfiTimingMode_Fastest = 6-7U,
 };
 
 /* Fuse: Memory Access command */
 enum
 {
-   kFuseSemcNand_AccessCommand_AXI = 0U,
-   kFuseSemcNand_AccessCommand_IPG = 1U,
+    kFuseSemcNand_AccessCommand_AXI = 0U,
+    kFuseSemcNand_AccessCommand_IPG = 1U,
 };
 
 ////////////////////////////////////////////////////////////////////////////////
 // Variables
 ////////////////////////////////////////////////////////////////////////////////
-
-
 
 ////////////////////////////////////////////////////////////////////////////////
 // Code
@@ -208,20 +206,20 @@ void semc_nand_get_config_data_from_fuse(semc_nand_config_t *config)
 
     // Get ONFI flag
     fuseValue = ROM_OCOTP_SEMC_NAND_ONFI_COMPLIANT_VALUE();
-    switch(fuseValue)
+    switch (fuseValue)
     {
         case kFuseSemcNand_OnfiCompliant_No:
             pNandConfig->onfiVersion = kNandOnfiVersion_None;
             break;
-         case kFuseSemcNand_OnfiCompliant_Yes:
-         default:
+        case kFuseSemcNand_OnfiCompliant_Yes:
+        default:
             pNandConfig->onfiVersion = kNandOnfiVersion_1p0;
             break;
     }
 
     // Get ECC check type
     fuseValue = ROM_OCOTP_SEMC_NAND_ECC_TYPE_VALUE();
-    switch(fuseValue)
+    switch (fuseValue)
     {
         case kFuseSemcNand_EccType_Sw:
             pNandConfig->eccCheckType = kSemcNandEccCheckType_SoftwareECC;
@@ -235,7 +233,7 @@ void semc_nand_get_config_data_from_fuse(semc_nand_config_t *config)
 #if (SEMC_NAND_FUSE_MAP_VERSION == 0)
     // Get DQS pad mode
     fuseValue = ROM_OCOTP_SEMC_NAND_DQS_PAD_MODE_VALUE();
-    switch(fuseValue)
+    switch (fuseValue)
     {
         case kFuseSemcNand_DqsPadMode_Enabled:
             pNandConfig->memConfig.readStrobeMode = kSemcDqsMode_LoopbackFromDqsPad;
@@ -248,7 +246,7 @@ void semc_nand_get_config_data_from_fuse(semc_nand_config_t *config)
 
     // Get PCS selection
     fuseValue = ROM_OCOTP_SEMC_NAND_PCS_SELECTION_VALUE();
-    switch(fuseValue)
+    switch (fuseValue)
     {
         case kFuseSemcNand_PcsSelection_CSX0:
             pNandConfig->memConfig.nandMemConfig.cePortOutputSelection = kSemcCeOutputSelection_MUX_CSX0;
@@ -262,7 +260,7 @@ void semc_nand_get_config_data_from_fuse(semc_nand_config_t *config)
         case kFuseSemcNand_PcsSelection_CSX3:
             pNandConfig->memConfig.nandMemConfig.cePortOutputSelection = kSemcCeOutputSelection_MUX_CSX3;
             break;
-        //case kFuseSemcNand_PcsSelection_A8:
+        // case kFuseSemcNand_PcsSelection_A8:
         default:
             pNandConfig->memConfig.nandMemConfig.cePortOutputSelection = kSemcCeOutputSelection_MUX_A8;
             break;
@@ -271,7 +269,7 @@ void semc_nand_get_config_data_from_fuse(semc_nand_config_t *config)
 
     // Get I/O Port Size
     fuseValue = ROM_OCOTP_SEMC_NAND_IO_PORT_WIDTH_VALUE();
-    switch(fuseValue)
+    switch (fuseValue)
     {
         case kFuseSemcNand_IoPortSize_16bit:
             pNandConfig->memConfig.nandMemConfig.ioPortWidth = 16;
@@ -284,7 +282,7 @@ void semc_nand_get_config_data_from_fuse(semc_nand_config_t *config)
 
     // Get EDO mode
     fuseValue = ROM_OCOTP_SEMC_NAND_EDO_MODE_VALUE();
-    switch(fuseValue)
+    switch (fuseValue)
     {
         case kFuseSemcNand_EdoMode_En:
             pNandConfig->memConfig.nandMemConfig.edoMode = kSemcNandEdoMode_Enabled;
@@ -297,7 +295,7 @@ void semc_nand_get_config_data_from_fuse(semc_nand_config_t *config)
 
     // Get RDY Polarity
     fuseValue = ROM_OCOTP_SEMC_NAND_RDY_POLARITY_VALUE();
-    switch(fuseValue)
+    switch (fuseValue)
     {
         case kFuseSemcNand_RdyPolarity_High:
             pNandConfig->memConfig.nandMemConfig.rdyPortPolarity = kSemcPortPloarity_HighActive;
@@ -310,7 +308,7 @@ void semc_nand_get_config_data_from_fuse(semc_nand_config_t *config)
 
     // Get Ready check type
     fuseValue = ROM_OCOTP_SEMC_NAND_READY_CHECK_TYPE_VALUE();
-    switch(fuseValue)
+    switch (fuseValue)
     {
         case kFuseSemcNand_ReadyCheckType_RB:
             pNandConfig->readyCheckOption = kSemcNandReadyCheckOption_RB;
@@ -324,7 +322,7 @@ void semc_nand_get_config_data_from_fuse(semc_nand_config_t *config)
 #if (SEMC_NAND_FUSE_MAP_VERSION == 1)
     // Get clk freq
     fuseValue = ROM_OCOTP_SEMC_NAND_CLK_FREQ_VALUE();
-    switch(fuseValue)
+    switch (fuseValue)
     {
         case kFuseSemcNand_ClkFreq_Max:
             pNandConfig->memConfig.asyncClkFreq = SEMC_MAX_CLK_FREQ;
@@ -338,7 +336,7 @@ void semc_nand_get_config_data_from_fuse(semc_nand_config_t *config)
 
     // Get Row-Column address mode
     fuseValue = ROM_OCOTP_SEMC_NAND_ROW_COL_ADDR_MODE_VALUE();
-    switch(fuseValue)
+    switch (fuseValue)
     {
         case kFuseSemcNand_RowColAddrMode_4byte_CA2RA2:
             pNandConfig->memConfig.nandMemConfig.arrayAddressOption = kSemcNandAddressOption_4byte_CA2RA2;
@@ -365,7 +363,7 @@ void semc_nand_get_config_data_from_fuse(semc_nand_config_t *config)
 
     // Get Column Address Width
     fuseValue = ROM_OCOTP_SEMC_NAND_COL_ADDRESS_WIDTH_VALUE();
-    switch(fuseValue)
+    switch (fuseValue)
     {
         case kFuseSemcNand_ColumnAddressWidth_9bits:
             pNandConfig->memConfig.nandMemConfig.columnAddressWidth = 9;
@@ -396,7 +394,7 @@ void semc_nand_get_config_data_from_fuse(semc_nand_config_t *config)
 
     // Get Status command type
     fuseValue = ROM_OCOTP_SEMC_NAND_STATUS_CMD_TYPE_VALUE();
-    switch(fuseValue)
+    switch (fuseValue)
     {
         case kFuseSemcNand_StatusCmdType_Enhanced:
             pNandConfig->statusCommandType = kSemcNandStatusCommandType_Enhanced;
@@ -410,7 +408,7 @@ void semc_nand_get_config_data_from_fuse(semc_nand_config_t *config)
 #if (SEMC_NAND_FUSE_MAP_VERSION == 1)
     // Get Memory access command type
     fuseValue = ROM_OCOTP_SEMC_NAND_ACCESS_COMMAND_VALUE();
-    switch(fuseValue)
+    switch (fuseValue)
     {
         case kFuseSemcNand_AccessCommand_IPG:
             pNandConfig->memConfig.accessCommandType = kSemcAccessCommandType_IPBUSCMD;
@@ -424,7 +422,7 @@ void semc_nand_get_config_data_from_fuse(semc_nand_config_t *config)
 
     // Get Pages in block
     fuseValue = ROM_OCOTP_SEMC_NAND_PAGES_IN_BLOCK_VALUE();
-    switch(fuseValue)
+    switch (fuseValue)
     {
         case kFuseSemcNand_PagesInBlock_8:
             pNandConfig->pagesInBlock = 8;
@@ -457,7 +455,7 @@ void semc_nand_get_config_data_from_fuse(semc_nand_config_t *config)
     {
         // Get device ECC initial status
         fuseValue = ROM_OCOTP_SEMC_NAND_DEVICE_ECC_STATUS_VALUE();
-        switch(fuseValue)
+        switch (fuseValue)
         {
             case kFuseSemcNand_DeviceEccStatus_Off:
                 pNandConfig->deviceEccStatus = kSemcNandDeviceEccStatus_Disabled;
@@ -471,7 +469,7 @@ void semc_nand_get_config_data_from_fuse(semc_nand_config_t *config)
 #if (SEMC_NAND_FUSE_MAP_VERSION == 1)
         // Get ONFI Timing Mode
         fuseValue = ROM_OCOTP_SEMC_NAND_TIMING_MODE_VALUE();
-        switch(fuseValue)
+        switch (fuseValue)
         {
             case kFuseSemcNand_OnfiTimingMode_0_10MHz:
                 pNandConfig->acTimingTableIndex = kNandAcTimingTableIndex_ONFI_1p0_Mode0_10MHz;
@@ -491,7 +489,7 @@ void semc_nand_get_config_data_from_fuse(semc_nand_config_t *config)
             case kFuseSemcNand_OnfiTimingMode_5_50MHz:
                 pNandConfig->acTimingTableIndex = kNandAcTimingTableIndex_ONFI_1p0_Mode5_50MHz;
                 break;
-            //case kFuseSemcNand_OnfiTimingMode_Fastest:
+            // case kFuseSemcNand_OnfiTimingMode_Fastest:
             default:
                 pNandConfig->acTimingTableIndex = kNandAcTimingTableIndex_ONFI_1p0_FastestMode;
                 break;
@@ -518,7 +516,7 @@ status_t semc_nand_get_default_config_block(semc_nand_config_t *config)
     pNandConfig->memConfig.asyncClkFreq = SEMC_2ND_MAX_CLK_FREQ;
 
     pNandConfig->memConfig.nandMemConfig.arrayAddressOption = kSemcNandAddressOption_5byte_CA2RA3;
-    // Note NA1.0: COL setting should be aligned with device spec for both x8 and x16 device, 
+    // Note NA1.0: COL setting should be aligned with device spec for both x8 and x16 device,
     //   it always mean actual page column bit in byte(x8) or word(x16) here. (see Note NA3.0)
     // For example:
     //   MT29F4G08, COL=12, columnAddressWidth=11
@@ -542,14 +540,14 @@ status_t semc_nand_get_default_config_block(semc_nand_config_t *config)
     pNandConfig->readyCheckTimeoutInMs = 1000;
     pNandConfig->readyCheckIntervalInUs = 1;
 
-    // Note NA1.1: since the COL setting of x8 and x16 device is set differently, so the page 
+    // Note NA1.1: since the COL setting of x8 and x16 device is set differently, so the page
     //   unit is differnet here, that's why we have below different calculation.
     //   besides, bytesInPageDataArea is important to following nand address conversion (see Note NA2.x).
     if (pNandConfig->memConfig.nandMemConfig.ioPortWidth == 8)
     {
         pNandConfig->bytesInPageDataArea = 1 << pNandConfig->memConfig.nandMemConfig.columnAddressWidth;
     }
-    else if(pNandConfig->memConfig.nandMemConfig.ioPortWidth == 16)
+    else if (pNandConfig->memConfig.nandMemConfig.ioPortWidth == 16)
     {
         pNandConfig->bytesInPageDataArea = 1 << (pNandConfig->memConfig.nandMemConfig.columnAddressWidth + 1);
     }

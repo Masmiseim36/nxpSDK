@@ -40,7 +40,7 @@ static void APP_CSI_RGB565(void);
  * Variables
  ******************************************************************************/
 AT_NONCACHEABLE_SECTION_ALIGN(
-    static uint16_t s_frameBuffer[APP_FRAME_BUFFER_COUNT][DEMO_PANEL_HEIGHT][DEMO_PANEL_WIDTH],
+    static uint16_t s_frameBuffer[APP_FRAME_BUFFER_COUNT][DEMO_BUFFER_HEIGHT][DEMO_BUFFER_WIDTH],
     DEMO_FRAME_BUFFER_ALIGN);
 
 /*
@@ -95,7 +95,7 @@ static void APP_InitCamera(void)
          * camera resoution is smaller than display, it can still be shown
          * correct in the screen.
          */
-        .frameBufferLinePitch_Bytes = DEMO_PANEL_WIDTH * APP_BPP,
+        .frameBufferLinePitch_Bytes = DEMO_BUFFER_WIDTH * APP_BPP,
         .interface                  = kCAMERA_InterfaceGatedClock,
         .controlFlags               = DEMO_CAMERA_CONTROL_FLAGS,
         .framePerSec                = 30,
@@ -140,9 +140,11 @@ static void APP_InitDisplay(void)
 
     g_dc.ops->getLayerDefaultConfig(&g_dc, 0, &fbInfo);
     fbInfo.pixelFormat = kVIDEO_PixelFormatRGB565;
-    fbInfo.width       = DEMO_PANEL_WIDTH;
-    fbInfo.height      = DEMO_PANEL_HEIGHT;
-    fbInfo.strideBytes = DEMO_PANEL_WIDTH * APP_BPP;
+    fbInfo.width       = DEMO_BUFFER_WIDTH;
+    fbInfo.height      = DEMO_BUFFER_HEIGHT;
+    fbInfo.startX      = DEMO_BUFFER_START_X;
+    fbInfo.startY      = DEMO_BUFFER_START_Y;
+    fbInfo.strideBytes = DEMO_BUFFER_WIDTH * APP_BPP;
     g_dc.ops->setLayerConfig(&g_dc, 0, &fbInfo);
 
     g_dc.ops->setCallback(&g_dc, 0, APP_BufferSwitchOffCallback, NULL);

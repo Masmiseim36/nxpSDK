@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015-2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -59,14 +59,16 @@ static uint32_t FLEXIO_UART_GetInstance(FLEXIO_UART_Type *base)
 static size_t FLEXIO_UART_TransferGetRxRingBufferLength(flexio_uart_handle_t *handle)
 {
     size_t size;
+    uint16_t rxRingBufferHead = handle->rxRingBufferHead;
+    uint16_t rxRingBufferTail = handle->rxRingBufferTail;
 
-    if (handle->rxRingBufferTail > handle->rxRingBufferHead)
+    if (rxRingBufferTail > rxRingBufferHead)
     {
-        size = (size_t)(handle->rxRingBufferHead + handle->rxRingBufferSize - handle->rxRingBufferTail);
+        size = (size_t)rxRingBufferHead + handle->rxRingBufferSize - (size_t)rxRingBufferTail;
     }
     else
     {
-        size = (size_t)(handle->rxRingBufferHead - handle->rxRingBufferTail);
+        size = (size_t)rxRingBufferHead - (size_t)rxRingBufferTail;
     }
 
     return size;
@@ -121,7 +123,7 @@ static bool FLEXIO_UART_TransferIsRxRingBufferFull(flexio_uart_handle_t *handle)
 */
 status_t FLEXIO_UART_Init(FLEXIO_UART_Type *base, const flexio_uart_config_t *userConfig, uint32_t srcClock_Hz)
 {
-    assert(base && userConfig);
+    assert((base != NULL) && (userConfig != NULL));
 
     flexio_shifter_config_t shifterConfig;
     flexio_timer_config_t timerConfig;
@@ -131,8 +133,8 @@ status_t FLEXIO_UART_Init(FLEXIO_UART_Type *base, const flexio_uart_config_t *us
     status_t result   = kStatus_Success;
 
     /* Clear the shifterConfig & timerConfig struct. */
-    memset(&shifterConfig, 0, sizeof(shifterConfig));
-    memset(&timerConfig, 0, sizeof(timerConfig));
+    (void)memset(&shifterConfig, 0, sizeof(shifterConfig));
+    (void)memset(&timerConfig, 0, sizeof(timerConfig));
 
 #if !(defined(FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL) && FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL)
     /* Ungate flexio clock. */
@@ -181,15 +183,15 @@ status_t FLEXIO_UART_Init(FLEXIO_UART_Type *base, const flexio_uart_config_t *us
     timerConfig.timerStop       = kFLEXIO_TimerStopBitEnableOnTimerDisable;
     timerConfig.timerStart      = kFLEXIO_TimerStartBitEnabled;
 
-    timerDiv = srcClock_Hz / userConfig->baudRate_Bps;
-    timerDiv = timerDiv / 2 - 1;
+    timerDiv = (uint16_t)(srcClock_Hz / userConfig->baudRate_Bps);
+    timerDiv = timerDiv / 2U - 1U;
 
     if (timerDiv > 0xFFU)
     {
         result = kStatus_InvalidArgument;
     }
 
-    timerCmp = ((uint32_t)(userConfig->bitCountPerChar * 2 - 1)) << 8U;
+    timerCmp = ((uint16_t)userConfig->bitCountPerChar * 2U - 1U) << 8U;
     timerCmp |= timerDiv;
 
     timerConfig.timerCompare = timerCmp;
@@ -252,11 +254,11 @@ void FLEXIO_UART_Deinit(FLEXIO_UART_Type *base)
     base->flexioBase->TIMCMP[base->timerIndex[1]]     = 0;
     base->flexioBase->TIMCTL[base->timerIndex[1]]     = 0;
     /* Clear the shifter flag. */
-    base->flexioBase->SHIFTSTAT = (1U << base->shifterIndex[0]);
-    base->flexioBase->SHIFTSTAT = (1U << base->shifterIndex[1]);
+    base->flexioBase->SHIFTSTAT = (1UL << base->shifterIndex[0]);
+    base->flexioBase->SHIFTSTAT = (1UL << base->shifterIndex[1]);
     /* Clear the timer flag. */
-    base->flexioBase->TIMSTAT = (1U << base->timerIndex[0]);
-    base->flexioBase->TIMSTAT = (1U << base->timerIndex[1]);
+    base->flexioBase->TIMSTAT = (1UL << base->timerIndex[0]);
+    base->flexioBase->TIMSTAT = (1UL << base->timerIndex[1]);
 }
 
 /*!
@@ -271,10 +273,10 @@ void FLEXIO_UART_Deinit(FLEXIO_UART_Type *base)
 */
 void FLEXIO_UART_GetDefaultConfig(flexio_uart_config_t *userConfig)
 {
-    assert(userConfig);
+    assert(userConfig != NULL);
 
     /* Initializes the configure structure to zero. */
-    memset(userConfig, 0, sizeof(*userConfig));
+    (void)memset(userConfig, 0, sizeof(*userConfig));
 
     userConfig->enableUart       = true;
     userConfig->enableInDoze     = false;
@@ -296,13 +298,13 @@ void FLEXIO_UART_GetDefaultConfig(flexio_uart_config_t *userConfig)
  */
 void FLEXIO_UART_EnableInterrupts(FLEXIO_UART_Type *base, uint32_t mask)
 {
-    if (mask & kFLEXIO_UART_TxDataRegEmptyInterruptEnable)
+    if ((mask & (uint32_t)kFLEXIO_UART_TxDataRegEmptyInterruptEnable) != 0U)
     {
-        FLEXIO_EnableShifterStatusInterrupts(base->flexioBase, 1U << base->shifterIndex[0]);
+        FLEXIO_EnableShifterStatusInterrupts(base->flexioBase, 1UL << base->shifterIndex[0]);
     }
-    if (mask & kFLEXIO_UART_RxDataRegFullInterruptEnable)
+    if ((mask & (uint32_t)kFLEXIO_UART_RxDataRegFullInterruptEnable) != 0U)
     {
-        FLEXIO_EnableShifterStatusInterrupts(base->flexioBase, 1U << base->shifterIndex[1]);
+        FLEXIO_EnableShifterStatusInterrupts(base->flexioBase, 1UL << base->shifterIndex[1]);
     }
 }
 
@@ -316,13 +318,13 @@ void FLEXIO_UART_EnableInterrupts(FLEXIO_UART_Type *base, uint32_t mask)
  */
 void FLEXIO_UART_DisableInterrupts(FLEXIO_UART_Type *base, uint32_t mask)
 {
-    if (mask & kFLEXIO_UART_TxDataRegEmptyInterruptEnable)
+    if ((mask & (uint32_t)kFLEXIO_UART_TxDataRegEmptyInterruptEnable) != 0U)
     {
-        FLEXIO_DisableShifterStatusInterrupts(base->flexioBase, 1U << base->shifterIndex[0]);
+        FLEXIO_DisableShifterStatusInterrupts(base->flexioBase, 1UL << base->shifterIndex[0]);
     }
-    if (mask & kFLEXIO_UART_RxDataRegFullInterruptEnable)
+    if ((mask & (uint32_t)kFLEXIO_UART_RxDataRegFullInterruptEnable) != 0U)
     {
-        FLEXIO_DisableShifterStatusInterrupts(base->flexioBase, 1U << base->shifterIndex[1]);
+        FLEXIO_DisableShifterStatusInterrupts(base->flexioBase, 1UL << base->shifterIndex[1]);
     }
 }
 
@@ -335,14 +337,14 @@ void FLEXIO_UART_DisableInterrupts(FLEXIO_UART_Type *base, uint32_t mask)
 
 uint32_t FLEXIO_UART_GetStatusFlags(FLEXIO_UART_Type *base)
 {
-    uint32_t status = 0;
+    uint32_t status = 0U;
     status =
-        ((FLEXIO_GetShifterStatusFlags(base->flexioBase) & (1U << base->shifterIndex[0])) >> base->shifterIndex[0]);
+        ((FLEXIO_GetShifterStatusFlags(base->flexioBase) & (1UL << base->shifterIndex[0])) >> base->shifterIndex[0]);
     status |=
-        (((FLEXIO_GetShifterStatusFlags(base->flexioBase) & (1U << base->shifterIndex[1])) >> (base->shifterIndex[1]))
+        (((FLEXIO_GetShifterStatusFlags(base->flexioBase) & (1UL << base->shifterIndex[1])) >> (base->shifterIndex[1]))
          << 1U);
     status |=
-        (((FLEXIO_GetShifterErrorFlags(base->flexioBase) & (1U << base->shifterIndex[1])) >> (base->shifterIndex[1]))
+        (((FLEXIO_GetShifterErrorFlags(base->flexioBase) & (1UL << base->shifterIndex[1])) >> (base->shifterIndex[1]))
          << 2U);
     return status;
 }
@@ -360,17 +362,17 @@ uint32_t FLEXIO_UART_GetStatusFlags(FLEXIO_UART_Type *base)
 
 void FLEXIO_UART_ClearStatusFlags(FLEXIO_UART_Type *base, uint32_t mask)
 {
-    if (mask & kFLEXIO_UART_TxDataRegEmptyFlag)
+    if ((mask & (uint32_t)kFLEXIO_UART_TxDataRegEmptyFlag) != 0U)
     {
-        FLEXIO_ClearShifterStatusFlags(base->flexioBase, 1U << base->shifterIndex[0]);
+        FLEXIO_ClearShifterStatusFlags(base->flexioBase, 1UL << base->shifterIndex[0]);
     }
-    if (mask & kFLEXIO_UART_RxDataRegFullFlag)
+    if ((mask & (uint32_t)kFLEXIO_UART_RxDataRegFullFlag) != 0U)
     {
-        FLEXIO_ClearShifterStatusFlags(base->flexioBase, 1U << base->shifterIndex[1]);
+        FLEXIO_ClearShifterStatusFlags(base->flexioBase, 1UL << base->shifterIndex[1]);
     }
-    if (mask & kFLEXIO_UART_RxOverRunFlag)
+    if ((mask & (uint32_t)kFLEXIO_UART_RxOverRunFlag) != 0U)
     {
-        FLEXIO_ClearShifterErrorFlags(base->flexioBase, 1U << base->shifterIndex[1]);
+        FLEXIO_ClearShifterErrorFlags(base->flexioBase, 1UL << base->shifterIndex[1]);
     }
 }
 
@@ -382,21 +384,39 @@ void FLEXIO_UART_ClearStatusFlags(FLEXIO_UART_Type *base, uint32_t mask)
  * param base Pointer to the FLEXIO_UART_Type structure.
  * param txData The data bytes to send.
  * param txSize The number of data bytes to send.
+ * retval kStatus_FLEXIO_UART_Timeout Transmission timed out and was aborted.
+ * retval kStatus_Success Successfully wrote all data.
  */
-void FLEXIO_UART_WriteBlocking(FLEXIO_UART_Type *base, const uint8_t *txData, size_t txSize)
+status_t FLEXIO_UART_WriteBlocking(FLEXIO_UART_Type *base, const uint8_t *txData, size_t txSize)
 {
-    assert(txData);
-    assert(txSize);
+    assert(txData != NULL);
+    assert(txSize != 0U);
+#if UART_RETRY_TIMES
+    uint32_t waitTimes;
+#endif
 
-    while (txSize--)
+    while (0U != txSize--)
     {
         /* Wait until data transfer complete. */
-        while (!(FLEXIO_GetShifterStatusFlags(base->flexioBase) & (1U << base->shifterIndex[0])))
+#if UART_RETRY_TIMES
+        waitTimes = UART_RETRY_TIMES;
+        while ((0U == (FLEXIO_GetShifterStatusFlags(base->flexioBase) & (1UL << base->shifterIndex[0]))) &&
+               (0U != --waitTimes))
+#else
+        while (0U == (FLEXIO_GetShifterStatusFlags(base->flexioBase) & (1UL << base->shifterIndex[0])))
+#endif
         {
         }
+#if UART_RETRY_TIMES
+        if (0U == waitTimes)
+        {
+            return kStatus_FLEXIO_UART_Timeout;
+        }
+#endif
 
         base->flexioBase->SHIFTBUF[base->shifterIndex[0]] = *txData++;
     }
+    return kStatus_Success;
 }
 
 /*!
@@ -407,21 +427,39 @@ void FLEXIO_UART_WriteBlocking(FLEXIO_UART_Type *base, const uint8_t *txData, si
  * param base Pointer to the FLEXIO_UART_Type structure.
  * param rxData The buffer to store the received bytes.
  * param rxSize The number of data bytes to be received.
+ * retval kStatus_FLEXIO_UART_Timeout Transmission timed out and was aborted.
+ * retval kStatus_Success Successfully received all data.
  */
-void FLEXIO_UART_ReadBlocking(FLEXIO_UART_Type *base, uint8_t *rxData, size_t rxSize)
+status_t FLEXIO_UART_ReadBlocking(FLEXIO_UART_Type *base, uint8_t *rxData, size_t rxSize)
 {
-    assert(rxData);
-    assert(rxSize);
+    assert(rxData != NULL);
+    assert(rxSize != 0U);
+#if UART_RETRY_TIMES
+    uint32_t waitTimes;
+#endif
 
-    while (rxSize--)
+    while (0U != rxSize--)
     {
         /* Wait until data transfer complete. */
-        while (!(FLEXIO_UART_GetStatusFlags(base) & kFLEXIO_UART_RxDataRegFullFlag))
+#if UART_RETRY_TIMES
+        waitTimes = UART_RETRY_TIMES;
+        while ((0U == (FLEXIO_UART_GetStatusFlags(base) & (uint32_t)kFLEXIO_UART_RxDataRegFullFlag)) &&
+               (0U != --waitTimes))
+#else
+        while (0U == (FLEXIO_UART_GetStatusFlags(base) & (uint32_t)kFLEXIO_UART_RxDataRegFullFlag))
+#endif
         {
         }
+#if UART_RETRY_TIMES
+        if (0U == waitTimes)
+        {
+            return kStatus_FLEXIO_UART_Timeout;
+        }
+#endif
 
-        *rxData++ = base->flexioBase->SHIFTBUFBYS[base->shifterIndex[1]];
+        *rxData++ = (uint8_t)(base->flexioBase->SHIFTBUFBYS[base->shifterIndex[1]]);
     }
+    return kStatus_Success;
 }
 
 /*!
@@ -449,23 +487,23 @@ status_t FLEXIO_UART_TransferCreateHandle(FLEXIO_UART_Type *base,
                                           flexio_uart_transfer_callback_t callback,
                                           void *userData)
 {
-    assert(handle);
+    assert(handle != NULL);
 
     IRQn_Type flexio_irqs[] = FLEXIO_IRQS;
 
     /* Zero the handle. */
-    memset(handle, 0, sizeof(*handle));
+    (void)memset(handle, 0, sizeof(*handle));
 
     /* Set the TX/RX state. */
-    handle->rxState = kFLEXIO_UART_RxIdle;
-    handle->txState = kFLEXIO_UART_TxIdle;
+    handle->rxState = (uint8_t)kFLEXIO_UART_RxIdle;
+    handle->txState = (uint8_t)kFLEXIO_UART_TxIdle;
 
     /* Set the callback and user data. */
     handle->callback = callback;
     handle->userData = userData;
 
     /* Enable interrupt in NVIC. */
-    EnableIRQ(flexio_irqs[FLEXIO_UART_GetInstance(base)]);
+    (void)EnableIRQ(flexio_irqs[FLEXIO_UART_GetInstance(base)]);
 
     /* Save the context in global variables to support the double weak mechanism. */
     return FLEXIO_RegisterHandleIRQ(base, handle, FLEXIO_UART_TransferHandleIRQ);
@@ -493,10 +531,10 @@ void FLEXIO_UART_TransferStartRingBuffer(FLEXIO_UART_Type *base,
                                          uint8_t *ringBuffer,
                                          size_t ringBufferSize)
 {
-    assert(handle);
+    assert(handle != NULL);
 
     /* Setup the ringbuffer address */
-    if (ringBuffer)
+    if (ringBuffer != NULL)
     {
         handle->rxRingBuffer     = ringBuffer;
         handle->rxRingBufferSize = ringBufferSize;
@@ -504,7 +542,7 @@ void FLEXIO_UART_TransferStartRingBuffer(FLEXIO_UART_Type *base,
         handle->rxRingBufferTail = 0U;
 
         /* Enable the interrupt to accept the data when user need the ring buffer. */
-        FLEXIO_UART_EnableInterrupts(base, kFLEXIO_UART_RxDataRegFullInterruptEnable);
+        FLEXIO_UART_EnableInterrupts(base, (uint32_t)kFLEXIO_UART_RxDataRegFullInterruptEnable);
     }
 }
 
@@ -518,11 +556,11 @@ void FLEXIO_UART_TransferStartRingBuffer(FLEXIO_UART_Type *base,
  */
 void FLEXIO_UART_TransferStopRingBuffer(FLEXIO_UART_Type *base, flexio_uart_handle_t *handle)
 {
-    assert(handle);
+    assert(handle != NULL);
 
-    if (handle->rxState == kFLEXIO_UART_RxIdle)
+    if (handle->rxState == (uint8_t)kFLEXIO_UART_RxIdle)
     {
-        FLEXIO_UART_DisableInterrupts(base, kFLEXIO_UART_RxDataRegFullInterruptEnable);
+        FLEXIO_UART_DisableInterrupts(base, (uint32_t)kFLEXIO_UART_RxDataRegFullInterruptEnable);
     }
 
     handle->rxRingBuffer     = NULL;
@@ -561,7 +599,7 @@ status_t FLEXIO_UART_TransferSendNonBlocking(FLEXIO_UART_Type *base,
     }
 
     /* Return error if current TX busy. */
-    if (kFLEXIO_UART_TxBusy == handle->txState)
+    if ((uint8_t)kFLEXIO_UART_TxBusy == handle->txState)
     {
         status = kStatus_FLEXIO_UART_TxBusy;
     }
@@ -570,10 +608,10 @@ status_t FLEXIO_UART_TransferSendNonBlocking(FLEXIO_UART_Type *base,
         handle->txData        = xfer->data;
         handle->txDataSize    = xfer->dataSize;
         handle->txDataSizeAll = xfer->dataSize;
-        handle->txState       = kFLEXIO_UART_TxBusy;
+        handle->txState       = (uint8_t)kFLEXIO_UART_TxBusy;
 
         /* Enable transmiter interrupt. */
-        FLEXIO_UART_EnableInterrupts(base, kFLEXIO_UART_TxDataRegEmptyInterruptEnable);
+        FLEXIO_UART_EnableInterrupts(base, (uint32_t)kFLEXIO_UART_TxDataRegEmptyInterruptEnable);
 
         status = kStatus_Success;
     }
@@ -593,10 +631,10 @@ status_t FLEXIO_UART_TransferSendNonBlocking(FLEXIO_UART_Type *base,
 void FLEXIO_UART_TransferAbortSend(FLEXIO_UART_Type *base, flexio_uart_handle_t *handle)
 {
     /* Disable the transmitter and disable the interrupt. */
-    FLEXIO_UART_DisableInterrupts(base, kFLEXIO_UART_TxDataRegEmptyInterruptEnable);
+    FLEXIO_UART_DisableInterrupts(base, (uint32_t)kFLEXIO_UART_TxDataRegEmptyInterruptEnable);
 
-    handle->txDataSize = 0;
-    handle->txState    = kFLEXIO_UART_TxIdle;
+    handle->txDataSize = 0U;
+    handle->txState    = (uint8_t)kFLEXIO_UART_TxIdle;
 }
 
 /*!
@@ -612,10 +650,10 @@ void FLEXIO_UART_TransferAbortSend(FLEXIO_UART_Type *base, flexio_uart_handle_t 
  */
 status_t FLEXIO_UART_TransferGetSendCount(FLEXIO_UART_Type *base, flexio_uart_handle_t *handle, size_t *count)
 {
-    assert(handle);
-    assert(count);
+    assert(handle != NULL);
+    assert(count != NULL);
 
-    if (kFLEXIO_UART_TxIdle == handle->txState)
+    if ((uint8_t)kFLEXIO_UART_TxIdle == handle->txState)
     {
         return kStatus_NoTransferInProgress;
     }
@@ -680,7 +718,7 @@ status_t FLEXIO_UART_TransferReceiveNonBlocking(FLEXIO_UART_Type *base,
           save the xfer->data remained empty space to uart handle, receive data
           to this empty space and trigger callback when finished. */
 
-    if (kFLEXIO_UART_RxBusy == handle->rxState)
+    if ((uint8_t)kFLEXIO_UART_RxBusy == handle->rxState)
     {
         status = kStatus_FLEXIO_UART_RxBusy;
     }
@@ -690,15 +728,15 @@ status_t FLEXIO_UART_TransferReceiveNonBlocking(FLEXIO_UART_Type *base,
         bytesCurrentReceived = 0U;
 
         /* If RX ring buffer is used. */
-        if (handle->rxRingBuffer)
+        if (handle->rxRingBuffer != NULL)
         {
             /* Disable FLEXIO_UART RX IRQ, protect ring buffer. */
-            FLEXIO_UART_DisableInterrupts(base, kFLEXIO_UART_RxDataRegFullInterruptEnable);
+            FLEXIO_UART_DisableInterrupts(base, (uint32_t)kFLEXIO_UART_RxDataRegFullInterruptEnable);
 
             /* How many bytes in RX ring buffer currently. */
             bytesToCopy = FLEXIO_UART_TransferGetRxRingBufferLength(handle);
 
-            if (bytesToCopy)
+            if (bytesToCopy != 0U)
             {
                 bytesToCopy = MIN(bytesToReceive, bytesToCopy);
 
@@ -710,7 +748,7 @@ status_t FLEXIO_UART_TransferReceiveNonBlocking(FLEXIO_UART_Type *base,
                     xfer->data[bytesCurrentReceived++] = handle->rxRingBuffer[handle->rxRingBufferTail];
 
                     /* Wrap to 0. Not use modulo (%) because it might be large and slow. */
-                    if (handle->rxRingBufferTail + 1U == handle->rxRingBufferSize)
+                    if ((uint32_t)handle->rxRingBufferTail + 1U == handle->rxRingBufferSize)
                     {
                         handle->rxRingBufferTail = 0U;
                     }
@@ -722,22 +760,22 @@ status_t FLEXIO_UART_TransferReceiveNonBlocking(FLEXIO_UART_Type *base,
             }
 
             /* If ring buffer does not have enough data, still need to read more data. */
-            if (bytesToReceive)
+            if (bytesToReceive != 0U)
             {
                 /* No data in ring buffer, save the request to UART handle. */
                 handle->rxData        = xfer->data + bytesCurrentReceived;
                 handle->rxDataSize    = bytesToReceive;
                 handle->rxDataSizeAll = bytesToReceive;
-                handle->rxState       = kFLEXIO_UART_RxBusy;
+                handle->rxState       = (uint8_t)kFLEXIO_UART_RxBusy;
             }
 
             /* Enable FLEXIO_UART RX IRQ if previously enabled. */
-            FLEXIO_UART_EnableInterrupts(base, kFLEXIO_UART_RxDataRegFullInterruptEnable);
+            FLEXIO_UART_EnableInterrupts(base, (uint32_t)kFLEXIO_UART_RxDataRegFullInterruptEnable);
 
             /* Call user callback since all data are received. */
-            if (0 == bytesToReceive)
+            if (0U == bytesToReceive)
             {
-                if (handle->callback)
+                if (handle->callback != NULL)
                 {
                     handle->callback(base, handle, kStatus_FLEXIO_UART_RxIdle, handle->userData);
                 }
@@ -749,14 +787,14 @@ status_t FLEXIO_UART_TransferReceiveNonBlocking(FLEXIO_UART_Type *base,
             handle->rxData        = xfer->data + bytesCurrentReceived;
             handle->rxDataSize    = bytesToReceive;
             handle->rxDataSizeAll = bytesToReceive;
-            handle->rxState       = kFLEXIO_UART_RxBusy;
+            handle->rxState       = (uint8_t)kFLEXIO_UART_RxBusy;
 
             /* Enable RX interrupt. */
-            FLEXIO_UART_EnableInterrupts(base, kFLEXIO_UART_RxDataRegFullInterruptEnable);
+            FLEXIO_UART_EnableInterrupts(base, (uint32_t)kFLEXIO_UART_RxDataRegFullInterruptEnable);
         }
 
         /* Return the how many bytes have read. */
-        if (receivedBytes)
+        if (receivedBytes != NULL)
         {
             *receivedBytes = bytesCurrentReceived;
         }
@@ -778,14 +816,14 @@ status_t FLEXIO_UART_TransferReceiveNonBlocking(FLEXIO_UART_Type *base,
 void FLEXIO_UART_TransferAbortReceive(FLEXIO_UART_Type *base, flexio_uart_handle_t *handle)
 {
     /* Only abort the receive to handle->rxData, the RX ring buffer is still working. */
-    if (!handle->rxRingBuffer)
+    if (NULL == handle->rxRingBuffer)
     {
         /* Disable RX interrupt. */
-        FLEXIO_UART_DisableInterrupts(base, kFLEXIO_UART_RxDataRegFullInterruptEnable);
+        FLEXIO_UART_DisableInterrupts(base, (uint32_t)kFLEXIO_UART_RxDataRegFullInterruptEnable);
     }
 
     handle->rxDataSize = 0U;
-    handle->rxState    = kFLEXIO_UART_RxIdle;
+    handle->rxState    = (uint8_t)kFLEXIO_UART_RxIdle;
 }
 
 /*!
@@ -801,10 +839,10 @@ void FLEXIO_UART_TransferAbortReceive(FLEXIO_UART_Type *base, flexio_uart_handle
  */
 status_t FLEXIO_UART_TransferGetReceiveCount(FLEXIO_UART_Type *base, flexio_uart_handle_t *handle, size_t *count)
 {
-    assert(handle);
-    assert(count);
+    assert(handle != NULL);
+    assert(count != NULL);
 
-    if (kFLEXIO_UART_RxIdle == handle->rxState)
+    if ((uint8_t)kFLEXIO_UART_RxIdle == handle->rxState)
     {
         return kStatus_NoTransferInProgress;
     }
@@ -827,28 +865,30 @@ void FLEXIO_UART_TransferHandleIRQ(void *uartType, void *uartHandle)
     uint8_t count                = 1;
     FLEXIO_UART_Type *base       = (FLEXIO_UART_Type *)uartType;
     flexio_uart_handle_t *handle = (flexio_uart_handle_t *)uartHandle;
+    uint16_t rxRingBufferHead;
 
     /* Read the status back. */
-    uint8_t status = FLEXIO_UART_GetStatusFlags(base);
+    uint32_t status = FLEXIO_UART_GetStatusFlags(base);
 
     /* If RX overrun. */
-    if (kFLEXIO_UART_RxOverRunFlag & status)
+    if (((uint32_t)kFLEXIO_UART_RxOverRunFlag & status) != 0U)
     {
         /* Clear Overrun flag. */
-        FLEXIO_UART_ClearStatusFlags(base, kFLEXIO_UART_RxOverRunFlag);
+        FLEXIO_UART_ClearStatusFlags(base, (uint32_t)kFLEXIO_UART_RxOverRunFlag);
 
         /* Trigger callback. */
-        if (handle->callback)
+        if (handle->callback != NULL)
         {
             handle->callback(base, handle, kStatus_FLEXIO_UART_RxHardwareOverrun, handle->userData);
         }
     }
 
     /* Receive data register full */
-    if ((kFLEXIO_UART_RxDataRegFullFlag & status) && (base->flexioBase->SHIFTSIEN & (1U << base->shifterIndex[1])))
+    if ((((uint32_t)kFLEXIO_UART_RxDataRegFullFlag & status) != 0U) &&
+        ((base->flexioBase->SHIFTSIEN & (1UL << base->shifterIndex[1])) != 0U))
     {
         /* If handle->rxDataSize is not 0, first save data to handle->rxData. */
-        if (handle->rxDataSize)
+        if (handle->rxDataSize != 0U)
         {
             /* Using non block API to read the data from the registers. */
             FLEXIO_UART_ReadByte(base, handle->rxData);
@@ -857,25 +897,25 @@ void FLEXIO_UART_TransferHandleIRQ(void *uartType, void *uartHandle)
             count--;
 
             /* If all the data required for upper layer is ready, trigger callback. */
-            if (!handle->rxDataSize)
+            if (0U == handle->rxDataSize)
             {
-                handle->rxState = kFLEXIO_UART_RxIdle;
+                handle->rxState = (uint8_t)kFLEXIO_UART_RxIdle;
 
-                if (handle->callback)
+                if (handle->callback != NULL)
                 {
                     handle->callback(base, handle, kStatus_FLEXIO_UART_RxIdle, handle->userData);
                 }
             }
         }
 
-        if (handle->rxRingBuffer)
+        if (handle->rxRingBuffer != NULL)
         {
-            if (count)
+            if (count != 0U)
             {
                 /* If RX ring buffer is full, trigger callback to notify over run. */
                 if (FLEXIO_UART_TransferIsRxRingBufferFull(handle))
                 {
-                    if (handle->callback)
+                    if (handle->callback != NULL)
                     {
                         handle->callback(base, handle, kStatus_FLEXIO_UART_RxRingBufferOverrun, handle->userData);
                     }
@@ -885,7 +925,7 @@ void FLEXIO_UART_TransferHandleIRQ(void *uartType, void *uartHandle)
                 if (FLEXIO_UART_TransferIsRxRingBufferFull(handle))
                 {
                     /* Increase handle->rxRingBufferTail to make room for new data. */
-                    if (handle->rxRingBufferTail + 1U == handle->rxRingBufferSize)
+                    if ((uint32_t)handle->rxRingBufferTail + 1U == handle->rxRingBufferSize)
                     {
                         handle->rxRingBufferTail = 0U;
                     }
@@ -896,10 +936,12 @@ void FLEXIO_UART_TransferHandleIRQ(void *uartType, void *uartHandle)
                 }
 
                 /* Read data. */
-                handle->rxRingBuffer[handle->rxRingBufferHead] = base->flexioBase->SHIFTBUFBYS[base->shifterIndex[1]];
+                rxRingBufferHead = handle->rxRingBufferHead;
+                handle->rxRingBuffer[rxRingBufferHead] =
+                    (uint8_t)(base->flexioBase->SHIFTBUFBYS[base->shifterIndex[1]]);
 
                 /* Increase handle->rxRingBufferHead. */
-                if (handle->rxRingBufferHead + 1U == handle->rxRingBufferSize)
+                if ((uint32_t)handle->rxRingBufferHead + 1U == handle->rxRingBufferSize)
                 {
                     handle->rxRingBufferHead = 0U;
                 }
@@ -910,9 +952,9 @@ void FLEXIO_UART_TransferHandleIRQ(void *uartType, void *uartHandle)
             }
         }
         /* If no receive requst pending, stop RX interrupt. */
-        else if (!handle->rxDataSize)
+        else if (0U == handle->rxDataSize)
         {
-            FLEXIO_UART_DisableInterrupts(base, kFLEXIO_UART_RxDataRegFullInterruptEnable);
+            FLEXIO_UART_DisableInterrupts(base, (uint32_t)kFLEXIO_UART_RxDataRegFullInterruptEnable);
         }
         else
         {
@@ -920,26 +962,26 @@ void FLEXIO_UART_TransferHandleIRQ(void *uartType, void *uartHandle)
     }
 
     /* Send data register empty and the interrupt is enabled. */
-    if ((kFLEXIO_UART_TxDataRegEmptyFlag & status) && (base->flexioBase->SHIFTSIEN & (1U << base->shifterIndex[0])))
+    if ((((uint32_t)kFLEXIO_UART_TxDataRegEmptyFlag & status) != 0U) &&
+        ((base->flexioBase->SHIFTSIEN & (1UL << base->shifterIndex[0])) != 0U))
     {
-        if (handle->txDataSize)
+        if (handle->txDataSize != 0U)
         {
             /* Using non block API to write the data to the registers. */
             FLEXIO_UART_WriteByte(base, handle->txData);
             handle->txData++;
             handle->txDataSize--;
-            count--;
 
             /* If all the data are written to data register, TX finished. */
-            if (!handle->txDataSize)
+            if (0U == handle->txDataSize)
             {
-                handle->txState = kFLEXIO_UART_TxIdle;
+                handle->txState = (uint8_t)kFLEXIO_UART_TxIdle;
 
                 /* Disable TX register empty interrupt. */
-                FLEXIO_UART_DisableInterrupts(base, kFLEXIO_UART_TxDataRegEmptyInterruptEnable);
+                FLEXIO_UART_DisableInterrupts(base, (uint32_t)kFLEXIO_UART_TxDataRegEmptyInterruptEnable);
 
                 /* Trigger callback. */
-                if (handle->callback)
+                if (handle->callback != NULL)
                 {
                     handle->callback(base, handle, kStatus_FLEXIO_UART_TxIdle, handle->userData);
                 }

@@ -15,9 +15,9 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_SPI_MASTER SPI5
-#define EXAMPLE_SPI_MASTER_IRQ FLEXCOMM5_IRQn
-#define EXAMPLE_SPI_MASTER_CLK_SRC kCLOCK_Flexcomm5
+#define EXAMPLE_SPI_MASTER          SPI5
+#define EXAMPLE_SPI_MASTER_IRQ      FLEXCOMM5_IRQn
+#define EXAMPLE_SPI_MASTER_CLK_SRC  kCLOCK_Flexcomm5
 #define EXAMPLE_SPI_MASTER_CLK_FREQ CLOCK_GetFlexCommClkFreq(5U)
 
 #define EXAMPLE_SPI_SSEL 0

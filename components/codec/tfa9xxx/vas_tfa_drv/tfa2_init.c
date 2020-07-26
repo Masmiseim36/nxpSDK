@@ -424,9 +424,9 @@ static int tfa9912_init(struct tfa2_device *tfa)
 }
 
 #define TFA9912_BF_DCMCCAPI 0xf020
-#define TFA9912_BF_DCMCC 0x7033
-#define TFA9912_BF_DCMCCCL 0xf042
-#define TFA9912_BF_DCMCCSB 0xf030
+#define TFA9912_BF_DCMCC    0x7033
+#define TFA9912_BF_DCMCCCL  0xf042
+#define TFA9912_BF_DCMCCSB  0xf030
 
 static int tfa9912_factory_trimmer(struct tfa2_device *tfa)
 {
@@ -493,12 +493,12 @@ static int tfa9912_factory_trimmer(struct tfa2_device *tfa)
 }
 
 /* Maksimum value for combination of boost_voltage and vout calibration offset (see PLMA5322, PLMA5528). */
-#define TFA9912_BF_DCVOF 0x7635
-#define TFA9912_BF_DCVOS 0x7695
-#define TFA9912_VBOOST_MAX 57
+#define TFA9912_BF_DCVOF         0x7635
+#define TFA9912_BF_DCVOS         0x7695
+#define TFA9912_VBOOST_MAX       57
 #define TFA9912_CALIBR_BOOST_MAX 63
-#define TFA9912_DCDCCNT6_REG (TFA9912_BF_DCVOF >> 8)
-#define TFA9912_CALIBR_REG 0xf1
+#define TFA9912_DCDCCNT6_REG     (TFA9912_BF_DCVOF >> 8)
+#define TFA9912_CALIBR_REG       0xf1
 
 static int tfa9912_vboost_fixup(struct tfa2_device *tfa)
 {

@@ -31,6 +31,8 @@
     <definition extID="mdk"/>
     <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
+    <definition extID="com.nxp.mcuxpresso.core.debug.support.segger.debug"/>
+    <definition extID="com.nxp.mcuxpresso.core.debug.support.segger.release"/>
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
@@ -57,7 +59,6 @@
         <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
           <value>CPU_MIMXRT685SFVKB_cm33</value>
           <value>BOOT_HEADER_ENABLE=1</value>
-          <value>ARM_MATH_CM33</value>
           <value>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</value>
           <value>SERIAL_PORT_TYPE_UART=1</value>
         </option>
@@ -100,6 +101,24 @@
       </toolchainSetting>
     </toolchainSettings>
     <debug_configurations>
+      <debug_configuration id_refs="com.nxp.mcuxpresso.core.debug.support.segger.debug">
+        <scripts>
+          <script type="segger_script">
+            <source path="boards/evkmimxrt685/trustzone_examples/secure_faults/secure_faults_ns" type="script" target_path="script">
+              <files mask="evkmimxrt685.JLinkScript"/>
+            </source>
+          </script>
+        </scripts>
+      </debug_configuration>
+      <debug_configuration id_refs="com.nxp.mcuxpresso.core.debug.support.segger.release">
+        <scripts>
+          <script type="segger_script">
+            <source path="boards/evkmimxrt685/trustzone_examples/secure_faults/secure_faults_ns" type="script" target_path="script">
+              <files mask="evkmimxrt685.JLinkScript"/>
+            </source>
+          </script>
+        </scripts>
+      </debug_configuration>
       <debug_configuration id_refs="com.crt.advproject.config.exe.debug com.crt.advproject.config.exe.release">
         <drivers>
           <driver id_refs="QSPI_FLASH_MIMXRT685S">
@@ -110,17 +129,17 @@
         </drivers>
       </debug_configuration>
     </debug_configurations>
-    <source path="boards/evkmimxrt685/trustzone_examples/secure_faults/secure_faults_ns/armgcc" target_path="src" type="linker" toolchain="armgcc">
+    <source path="boards/evkmimxrt685/trustzone_examples/secure_faults/secure_faults_ns/armgcc" target_path="MIMXRT685S/gcc" type="linker" toolchain="armgcc">
       <files mask="MIMXRT685Sxxxx_cm33_ram_ns.ld"/>
     </source>
-    <source path="boards/evkmimxrt685/trustzone_examples/secure_faults/secure_faults_ns/iar" target_path="src" type="linker" toolchain="iar">
+    <source path="boards/evkmimxrt685/trustzone_examples/secure_faults/secure_faults_ns/iar" target_path="MIMXRT685S/iar" type="linker" toolchain="iar">
       <files mask="MIMXRT685Sxxxx_cm33_ram_ns.icf"/>
     </source>
-    <source path="boards/evkmimxrt685/trustzone_examples/secure_faults/secure_faults_ns/mdk" target_path="src" type="configuration" toolchain="mdk">
-      <files mask="evkmimxrt685_ram.ini"/>
-    </source>
-    <source path="boards/evkmimxrt685/trustzone_examples/secure_faults/secure_faults_ns/mdk" target_path="src" type="linker" toolchain="mdk">
+    <source path="boards/evkmimxrt685/trustzone_examples/secure_faults/secure_faults_ns/mdk" target_path="MIMXRT685S/arm" type="linker" toolchain="mdk">
       <files mask="MIMXRT685Sxxxx_cm33_ram_ns.scf"/>
+    </source>
+    <source path="boards/evkmimxrt685/trustzone_examples/secure_faults/secure_faults_ns/mdk" target_path="evkmimxrt685" type="configuration" toolchain="mdk">
+      <files mask="evkmimxrt685_flash.ini"/>
     </source>
     <source path="boards/evkmimxrt685/trustzone_examples/secure_faults/secure_faults_ns" target_path="board" type="c_include">
       <files mask="board.h"/>

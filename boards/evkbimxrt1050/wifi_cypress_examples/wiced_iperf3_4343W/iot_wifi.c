@@ -1,5 +1,5 @@
 /*
- * Amazon FreeRTOS Wi-Fi for LPC54018 IoT Module V1.0.1
+ * FreeRTOS Wi-Fi for LPC54018 IoT Module V1.0.1
  * Copyright (C) 2017 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -52,7 +52,7 @@
 #endif
 
 #ifndef WIFI_DHCP_DELAY_MS
-#define WIFI_DHCP_DELAY_MS              (500)
+#define WIFI_DHCP_DELAY_MS              (2000)
 #endif
 
 #ifndef WIFI_DNS_TIMEOUT_MS
@@ -419,7 +419,7 @@ WIFIReturnCode_t WIFI_ConnectAP( const WIFINetworkParams_t * const pxNetworkPara
                 break;
 
             /* Launch DHCP client and wait some time to get result */
-            dhcp_start(&fsl_netif0);
+            netifapi_dhcp_start(&fsl_netif0);
             pdhcp = (struct dhcp *)netif_get_client_data(&fsl_netif0, LWIP_NETIF_CLIENT_DATA_INDEX_DHCP);
             assert( NULL != pdhcp);
             for (int i = 10; i > 0 && pdhcp->state != DHCP_STATE_BOUND; i--)
@@ -671,7 +671,9 @@ WIFIReturnCode_t WIFI_GetHostIP( char * pxHost,
     {
         /* Cleanup semaphore */
         xQueueReset((void*)g_api_sema);
+        LOCK_TCPIP_CORE();
         status = dns_gethostbyname(pxHost, &g_host_ip, smtp_serverFound, NULL);
+        UNLOCK_TCPIP_CORE();
         if (ERR_OK == status)
         {
             pxIPAddr[0] = ip4_addr1(&g_host_ip);

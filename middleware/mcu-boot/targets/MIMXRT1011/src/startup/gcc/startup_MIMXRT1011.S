@@ -417,7 +417,7 @@ Reset_Handler:
 
     cpsie   i               /* Unmask interrupts */
 #ifndef __START
-#define __START _start
+#define __START main
 #endif
 #ifndef __ATOLLIC__
     ldr   r0,=__START

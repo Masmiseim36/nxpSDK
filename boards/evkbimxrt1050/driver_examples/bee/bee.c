@@ -20,11 +20,11 @@
 #define BEE_USE_USER_KEY 0
 /* FAC region configuration registers */
 #define REG0_START_ADDR_GPR GPR18
-#define REG0_END_ADDR_GPR GPR19
+#define REG0_END_ADDR_GPR   GPR19
 #define REG0_DECRYPT_EN_GPR GPR11
-#define REG0_DECRYPT_EN IOMUXC_GPR_GPR11_BEE_DE_RX_EN(1) /* FlexSPI data decryption enabled for region-0 */
-#define AES_KEY_LEN 16
-#define AES_NONCE_LEN 16
+#define REG0_DECRYPT_EN     IOMUXC_GPR_GPR11_BEE_DE_RX_EN(1) /* FlexSPI data decryption enabled for region-0 */
+#define AES_KEY_LEN     16
+#define AES_NONCE_LEN   16
 #define BEE_REGION_SIZE 0x10000U
 
 /*******************************************************************************
@@ -103,7 +103,7 @@ int main(void)
     /* Enable BEE decryption */
     BEE_Enable(BEE);
 
-    PRINTF("BEE was succesfully configured for reading from 0x%x to 0x%x.\r\n", FLEXSPI_START_ADDR,
+    PRINTF("BEE was successfully configured for reading from 0x%x to 0x%x.\r\n", FLEXSPI_START_ADDR,
            FLEXSPI_START_ADDR + BEE_REGION_SIZE);
 
     /* Disable and deinit BEE */

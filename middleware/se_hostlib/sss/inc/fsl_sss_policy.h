@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP
+ * Copyright 2019,2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -16,16 +16,15 @@
 #endif
 
 #include "fsl_sss_types.h"
+//#include <Applet_SE050_Ver.h>
 
-/** @defgroup sss_policy
+/** @defgroup sss_policy Policy
  *
  * Policies to restrict and control sessions and objects.
  */
 
 /** @addtogroup sss_policy
  * @{ */
-
-#define MAX_POLICIES (SSS_POLICY_COUNT_MAX)
 
 /** Type of policy */
 typedef enum
@@ -50,10 +49,16 @@ typedef struct
 {
     /** Number of operations permitted in a session */
     uint16_t maxOperationsInSession;
+    /** Session can be used for this much time, in seconds */
+    uint16_t maxDurationOfSession_sec;
     /** Whether maxOperationsInSession is set.
      * This is to ensure '0 == maxOperationsInSession' does not get set
      * by middleware. */
     uint8_t has_MaxOperationsInSession : 1;
+    /** Whether maxOperationsInSession is set.
+     * This is to ensure '0 == maxDurationOfSession_sec' does not get set
+     * by middleware. */
+    uint8_t has_MaxDurationOfSession_sec : 1;
     /** Whether this session can be refreshed without losing context.
      * And also reset maxDurationOfSession_sec / maxOperationsInSession */
     uint8_t allowRefresh : 1;
@@ -84,6 +89,12 @@ typedef struct
     uint8_t can_Desfire_Dump : 1;
     /** Allow to imported or exported */
     uint8_t can_Import_Export : 1;
+#if 1 // SSS_HAVE_SE05X_VER_GTE_04_04
+    /** Forbid derived output */
+    uint8_t forbid_Derived_Output : 1;
+#endif
+    /** Allow kdf(prf) external random */
+    uint8_t allow_kdf_ext_rnd : 1;
 } sss_policy_sym_key_u;
 
 /** Policies applicable to Asymmetric KEY */
@@ -113,6 +124,10 @@ typedef struct
     uint8_t can_Read : 1;
     /** Allow to attest an object */
     uint8_t can_Attest : 1;
+#if 1 // SSS_HAVE_SE05X_VER_GTE_04_04
+    /** Forbid derived output */
+    uint8_t forbid_Derived_Output : 1;
+#endif
 } sss_policy_asym_key_u;
 
 /** All policies related to secure object type File */
@@ -149,7 +164,7 @@ typedef struct
     uint8_t can_Write : 1;
 } sss_policy_userid_u;
 
-/*Common Policies for all object types*/
+/** Common Policies for all object types */
 typedef struct
 {
     /** Forbid all operations */
@@ -178,6 +193,8 @@ typedef struct
     sss_policy_type_u type;
     /** Auth ID for each Object Policy, invalid for session policy type == KPolicy_Session*/
     uint32_t auth_obj_id;
+    /** Union of applicable policies based on the type of object
+     */
     union {
         sss_policy_file_u file;
         sss_policy_counter_u counter;
@@ -191,10 +208,11 @@ typedef struct
     } policy;
 } sss_policy_u;
 
+/** An array of policies @ref sss_policy_u */
 typedef struct
 {
     /** Array of unique policies, this needs to be allocated based  nPolicies */
-    const sss_policy_u *policies[MAX_POLICIES];
+    const sss_policy_u *policies[SSS_POLICY_COUNT_MAX];
     /** Number of policies */
     size_t nPolicies;
 } sss_policy_t;

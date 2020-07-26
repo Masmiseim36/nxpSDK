@@ -20,7 +20,7 @@
  ******************************************************************************/
 /******************* Macro definitions ***************/
 #include "usb_charger_detect.h"
- /*! @brief USB error code */
+/*! @brief USB error code */
 typedef enum _usb_hsdcd_status
 {
     kStatus_hsdcd_Success = 0x00U, /*!< Success */
@@ -39,22 +39,22 @@ typedef enum _usb_hsdcd_status
  * @return A USB error code or kStatus_USB_Success.
  */
 typedef usb_hsdcd_status_t (*usb_hsdcd_callback_t)(void *handle, uint32_t callbackEvent, void *eventParam);
-typedef void *  usb_hsdcd_handle;
+typedef void *usb_hsdcd_handle;
 /*! @brief dcd configuration structure */
 typedef struct _usb_hsdcd_config_struct
 {
-    usb_hsdcd_callback_t dcdCallback;             /*!< DCD base address*/
-    void *dcdCallbackParam;                       /*!< DCD callback parameter*/
+    usb_hsdcd_callback_t dcdCallback; /*!< DCD base address*/
+    void *dcdCallbackParam;           /*!< DCD callback parameter*/
 } usb_hsdcd_config_struct_t;
 
 /*! @brief Available common EVENT types in device callback */
 typedef enum _usb_hsdcd_control
 {
-    kUSB_DeviceHSDcdRun = 1U,    /*!< USB dcd dectect start */
-    kUSB_DeviceHSDcdStop,        /*!< USB dcd module reset */
-    kUSB_DeviceHSDcdEnable,      /*!< Enable USB dcd dectect module */
-    kUSB_DeviceHSDcdDisable,     /*!< USB dcd module moudle */
-    kUSB_HostHSDcdSetType,       /*!< set host dcd type */
+    kUSB_DeviceHSDcdRun = 1U, /*!< USB dcd dectect start */
+    kUSB_DeviceHSDcdStop,     /*!< USB dcd module reset */
+    kUSB_DeviceHSDcdEnable,   /*!< Enable USB dcd dectect module */
+    kUSB_DeviceHSDcdDisable,  /*!< USB dcd module moudle */
+    kUSB_HostHSDcdSetType,    /*!< set host dcd type */
 } usb_hsdcd_control_t;
 
 /*!
@@ -106,7 +106,7 @@ usb_hsdcd_status_t USB_HSDCD_Deinit(usb_hsdcd_handle handle);
  *
  * @retval kStatus_dcd_Success              control the status successfully.
  * @retval kStatus_USB_Error                control the status failed .
- *                                          
+ *
  */
 usb_hsdcd_status_t USB_HSDCD_Control(usb_hsdcd_handle handle, usb_hsdcd_control_t type, void *param);
 /*!
@@ -126,4 +126,3 @@ extern void USB_HSDcdIsrFunction(usb_hsdcd_handle handle);
 /*! @} */
 
 #endif /* __USB_DEVICE_HSDCD_H__ */
-

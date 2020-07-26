@@ -1,5 +1,5 @@
 /*
-* Copyright 2018 NXP
+* Copyright 2018,2020 NXP
 * All rights reserved.
 *
 * SPDX-License-Identifier: BSD-3-Clause
@@ -15,6 +15,13 @@
 #include <nxLog_scp.h>
 #include "nxScp03_Apis.h"
 #include "nxEnsure.h"
+#include "se05x_const.h"
+
+#if defined(SE05X_MAX_BUF_SIZE_CMD) && (SE05X_MAX_BUF_SIZE_CMD != 892)
+#   error "Expect hard coded for SE05X_MAX_BUF_SIZE_CMD = 892"
+#endif
+
+#define NX_SCP03_MAX_BUFFER_SIZE 0x380 /* 0x380 = 896 */
 
 /* ************************************************************************** */
 /* Functions : Private function declaration                                   */
@@ -58,7 +65,7 @@ sss_status_t nxSCP03_Encrypt_CommandAPDU(NXSCP03_DynCtx_t *pdySCP03SessCtx, uint
         sss_symmetric_t symm;
         uint8_t iv[16] = {0};
         uint8_t *pIv = (uint8_t *)iv;
-        uint8_t apduPayloadToEncrypt[2048] = {0};
+        uint8_t apduPayloadToEncrypt[NX_SCP03_MAX_BUFFER_SIZE] = {0};
 
         /* Prior to encrypting the data, the data shall be padded as defined in section 4.1.4.
         This padding becomes part of the data field.*/
@@ -79,7 +86,7 @@ sss_status_t nxSCP03_Encrypt_CommandAPDU(NXSCP03_DynCtx_t *pdySCP03SessCtx, uint
         ENSURE_OR_GO_CLEANUP(sss_status == kStatus_SSS_Success);
         LOG_AU8_D(cmdBuf, dataLen);
         LOG_MAU8_D("Output: EncryptedcmdBuf", cmdBuf, dataLen);
-        sss_symmetric_context_free(&symm);
+        sss_host_symmetric_context_free(&symm);
     }
     else {
         /* Nothing to encrypt */
@@ -104,17 +111,15 @@ uint16_t nxpSCP03_Decrypt_ResponseAPDU(
     size_t signatureLen = sizeof(respMac);
     size_t compareoffset = 0;
     size_t macSize = SCP_CMAC_SIZE;
-#if SSS_HAVE_SE050_M_SR1
-#else
     uint8_t iv[SCP_IV_SIZE];
     uint8_t *pIv = (uint8_t *)iv;
-    uint8_t response[2048];
-    uint8_t plaintextResponse[2048];
+    uint8_t response[NX_SCP03_MAX_BUFFER_SIZE];
+    uint8_t plaintextResponse[NX_SCP03_MAX_BUFFER_SIZE];
     sss_algorithm_t algorithm_aes = kAlgorithm_SSS_AES_CBC;
     sss_mode_t mode_aes = kMode_SSS_Decrypt;
     sss_symmetric_t symm;
     size_t actualRespLen = 0;
-#endif
+
     ENSURE_OR_GO_EXIT(pRspBufLen != NULL);
     ENSURE_OR_GO_EXIT(pdySCP03SessCtx != NULL);
     ENSURE_OR_GO_EXIT(rspBuf != NULL);
@@ -154,15 +159,8 @@ uint16_t nxpSCP03_Decrypt_ResponseAPDU(
             LOG_E(" RESPONSE MAC DID NOT VERIFY %04X", status);
             return status;
         }
-#if SSS_HAVE_SE050_M_SR1
-        memcpy(sw, &(rspBuf[*pRspBufLen - SCP_GP_SW_LEN]), SCP_GP_SW_LEN);
-        memcpy(&(rspBuf[*pRspBufLen - SCP_COMMAND_MAC_SIZE - SCP_GP_SW_LEN]), sw, SCP_GP_SW_LEN);
-        *pRspBufLen -= SCP_COMMAND_MAC_SIZE;
-#endif /* SSS_HAVE_SE050_M_SR1 */
     }
-#if SSS_HAVE_SE050_M_SR1
-    /* Skipped */
-#else /* SSS_HAVE_SE050_M_SR1 */
+
     LOG_D("RMAC verified successfully...Decrypt Response Data");
     // Decrypt Response Data Field in case Reponse Mac verified OK
     if (*pRspBufLen > (SCP_COMMAND_MAC_SIZE + SCP_GP_SW_LEN)) {
@@ -204,14 +202,12 @@ uint16_t nxpSCP03_Decrypt_ResponseAPDU(
         *pRspBufLen = SCP_GP_SW_LEN;
         sss_status = kStatus_SSS_Success;
     }
-#endif /* SSS_HAVE_SE050_M_SR1 */
 
     if (sss_status == kStatus_SSS_Success) {
         status = SCP_OK;
     }
 
-    if (((pdySCP03SessCtx->authType == kSSS_AuthType_AppletSCP03) ||
-            (pdySCP03SessCtx->authType == kSSS_AuthType_FastSCP)) ||
+    if (((pdySCP03SessCtx->authType == kSSS_AuthType_AESKey) || (pdySCP03SessCtx->authType == kSSS_AuthType_ECKey)) ||
         ((pdySCP03SessCtx->authType == kSSS_AuthType_SCP03) && cmdBufLen > 0)) {
         status = SCP_OK;
         nxpSCP03_Inc_CommandCounter(pdySCP03SessCtx);

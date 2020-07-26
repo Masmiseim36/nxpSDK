@@ -15,15 +15,15 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_UART UART0
-#define DEMO_UART_CLKSRC SYS_CLK
-#define DEMO_UART_CLK_FREQ CLOCK_GetFreq(SYS_CLK)
-#define UART_TX_DMA_CHANNEL 0U
-#define UART_RX_DMA_CHANNEL 1U
+#define DEMO_UART                    UART0
+#define DEMO_UART_CLKSRC             SYS_CLK
+#define DEMO_UART_CLK_FREQ           CLOCK_GetFreq(SYS_CLK)
+#define UART_TX_DMA_CHANNEL          0U
+#define UART_RX_DMA_CHANNEL          1U
 #define EXAMPLE_UART_DMAMUX_BASEADDR DMAMUX0
-#define EXAMPLE_UART_DMA_BASEADDR DMA0
-#define UART_TX_DMA_REQUEST kDmaRequestMux0UART0Tx
-#define UART_RX_DMA_REQUEST kDmaRequestMux0UART0Rx
+#define EXAMPLE_UART_DMA_BASEADDR    DMA0
+#define UART_TX_DMA_REQUEST          kDmaRequestMux0UART0Tx
+#define UART_RX_DMA_REQUEST          kDmaRequestMux0UART0Rx
 #define ECHO_BUFFER_LENGTH 8
 
 /*******************************************************************************

@@ -14,9 +14,9 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define BOARD_FLEXIO_BASE FLEXIO0
-#define FLEXIO_UART_TX_PIN 5U
-#define FLEXIO_UART_RX_PIN 4U
+#define BOARD_FLEXIO_BASE      FLEXIO0
+#define FLEXIO_UART_TX_PIN     5U
+#define FLEXIO_UART_RX_PIN     4U
 #define FLEXIO_CLOCK_FREQUENCY 12000000U
 
 /*******************************************************************************

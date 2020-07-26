@@ -30,7 +30,7 @@
  ******************************************************************************/
 
 #define SYSVIEW_DEVICE_NAME "FRDMK22F Cortex-M4"
-#define SYSVIEW_RAM_BASE (0x1FFF0000)
+#define SYSVIEW_RAM_BASE    (0x1FFF0000)
 
 extern SEGGER_RTT_CB _SEGGER_RTT;
 extern const SEGGER_SYSVIEW_OS_API SYSVIEW_X_OS_TraceAPI;
@@ -57,7 +57,7 @@ extern const SEGGER_SYSVIEW_OS_API SYSVIEW_X_OS_TraceAPI;
 #endif
 
 /* Task priorities. */
-#define FIRST_TASK_PRIORITY (configMAX_PRIORITIES - 1)
+#define FIRST_TASK_PRIORITY  (configMAX_PRIORITIES - 1)
 #define SECOND_TASK_PRIORITY (configMAX_PRIORITIES - 2)
 
 /*******************************************************************************
@@ -97,7 +97,7 @@ int main(void)
 {
     /* Init board hardware. */
     BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
 
     SEGGER_SYSVIEW_Conf();

@@ -68,7 +68,7 @@ static usb_status_t USB_DeviceHidKeyboardAction(void)
             x--;
             if (x < 1U)
             {
-                dir = DOWN;
+                dir                              = DOWN;
                 s_UsbDeviceHidKeyboard.buffer[2] = KEY_PAGEDOWN;
             }
             break;
@@ -98,10 +98,10 @@ usb_status_t USB_DeviceHidKeyboardSetConfigure(usb_device_handle handle, uint8_t
 
     if (USB_COMPOSITE_CONFIGURE_INDEX == configure)
     {
-        epCallback.callbackFn = USB_DeviceHidKeyboardInterruptIn;
+        epCallback.callbackFn    = USB_DeviceHidKeyboardInterruptIn;
         epCallback.callbackParam = handle;
 
-        epInitStruct.zlt = 0U;
+        epInitStruct.zlt          = 0U;
         epInitStruct.transferType = USB_ENDPOINT_INTERRUPT;
         epInitStruct.endpointAddress =
             USB_HID_KEYBOARD_ENDPOINT_IN | (USB_IN << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT);
@@ -144,7 +144,7 @@ usb_status_t USB_DeviceHidKeyboardClassRequest(usb_device_handle handle,
         case USB_DEVICE_HID_REQUEST_SET_REPORT:
             break;
         case USB_DEVICE_HID_REQUEST_SET_IDLE:
-            error = kStatus_USB_Success;
+            error                           = kStatus_USB_Success;
             s_UsbDeviceHidKeyboard.idleRate = 125U;
             break;
         case USB_DEVICE_HID_REQUEST_SET_PROTOCOL:
@@ -173,7 +173,7 @@ usb_status_t USB_DeviceHidKeyboardEndpointStall(usb_device_handle handle, uint8_
 
 usb_status_t USB_DeviceHidKeyboardInit(usb_device_composite_struct_t *deviceComposite)
 {
-    s_UsbDeviceComposite = deviceComposite;
+    s_UsbDeviceComposite          = deviceComposite;
     s_UsbDeviceHidKeyboard.buffer = s_KeyboardBuffer;
     return kStatus_USB_Success;
 }

@@ -9,7 +9,7 @@
 *                                                                    *
 **********************************************************************
 
-** emWin V5.50 - Graphical user interface for embedded applications **
+** emWin V6.10 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -117,9 +117,12 @@ GUI_COLOR        MULTIEDIT_GetBkColor       (MULTIEDIT_HANDLE hObj, unsigned Ind
 int              MULTIEDIT_GetCursorCharPos (MULTIEDIT_HANDLE hObj);
 void             MULTIEDIT_GetCursorPixelPos(MULTIEDIT_HANDLE hObj, int * pxPos, int * pyPos);
 const GUI_FONT * MULTIEDIT_GetFont          (MULTIEDIT_HANDLE hObj);
+int              MULTIEDIT_GetNumChars      (MULTIEDIT_HANDLE hObj);
 void             MULTIEDIT_GetPrompt        (MULTIEDIT_HANDLE hObj, char* sDest, int MaxNumChars);
 void             MULTIEDIT_GetText          (MULTIEDIT_HANDLE hObj, char* sDest, int MaxNumChars);
 GUI_COLOR        MULTIEDIT_GetTextColor     (MULTIEDIT_HANDLE hObj, unsigned Index);
+int              MULTIEDIT_GetTextFromLine  (MULTIEDIT_HANDLE hObj, char * sDest, int MaxLen, unsigned CharPos, unsigned Line);
+int              MULTIEDIT_GetTextFromPos   (MULTIEDIT_HANDLE hObj, char * sDest, int MaxLen, int CharStart, int LineStart, int CharEnd, int LineEnd);
 int              MULTIEDIT_GetTextSize      (MULTIEDIT_HANDLE hObj);
 int              MULTIEDIT_GetUserData      (MULTIEDIT_HANDLE hObj, void * pDest, int NumBytes);
 void             MULTIEDIT_SetTextAlign     (MULTIEDIT_HANDLE hObj, int Align);

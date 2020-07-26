@@ -61,4 +61,18 @@ typedef struct
 
 } apdu_t;
 
+/**
+ * Contains APDU TxRx case as described in ISO/IEC FDIS 7816-3 spec.
+ */
+typedef enum
+{
+    APDU_TXRX_CASE_1  = 0x00,
+    APDU_TXRX_CASE_2  = 0x01,
+    APDU_TXRX_CASE_2E = 0x02,
+    APDU_TXRX_CASE_3  = 0x03,
+    APDU_TXRX_CASE_3E = 0x04,
+    APDU_TXRX_CASE_4  = 0x05,
+    APDU_TXRX_CASE_4E = 0x06,
+    APDU_TXRX_CASE_INVALID = 0xFF,
+} apduTxRx_case_t;
 #endif //_APDUCOMM_H_

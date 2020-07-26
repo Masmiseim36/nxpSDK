@@ -74,7 +74,7 @@ static void QSPI_SendEDMACallback(edma_handle_t *handle, void *param, bool trans
 
     /* Avoid the warning for unused variables. */
     handle = handle;
-    tcds = tcds;
+    tcds   = tcds;
 
     if (transferDone)
     {
@@ -94,7 +94,7 @@ static void QSPI_ReceiveEDMACallback(edma_handle_t *handle, void *param, bool tr
 
     /* Avoid warning for unused parameters. */
     handle = handle;
-    tcds = tcds;
+    tcds   = tcds;
 
     if (transferDone)
     {
@@ -128,12 +128,12 @@ void QSPI_TransferTxCreateHandleEDMA(QuadSPI_Type *base,
 
     uint32_t instance = QSPI_GetInstance(base);
 
-    s_edmaPrivateHandle[instance][0].base = base;
+    s_edmaPrivateHandle[instance][0].base   = base;
     s_edmaPrivateHandle[instance][0].handle = handle;
 
     memset(handle, 0, sizeof(*handle));
 
-    handle->state = kQSPI_Idle;
+    handle->state     = kQSPI_Idle;
     handle->dmaHandle = dmaHandle;
 
     handle->callback = callback;
@@ -165,12 +165,12 @@ void QSPI_TransferRxCreateHandleEDMA(QuadSPI_Type *base,
 
     uint32_t instance = QSPI_GetInstance(base);
 
-    s_edmaPrivateHandle[instance][1].base = base;
+    s_edmaPrivateHandle[instance][1].base   = base;
     s_edmaPrivateHandle[instance][1].handle = handle;
 
     memset(handle, 0, sizeof(*handle));
 
-    handle->state = kQSPI_Idle;
+    handle->state     = kQSPI_Idle;
     handle->dmaHandle = dmaHandle;
 
     handle->callback = callback;

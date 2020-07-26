@@ -219,15 +219,13 @@
 #endif
 
 /*! @brief Set parameter types for the SSCP operation. Each param type is encoded into 4-bits bit field. */
-#define SSCP_OP_SET_PARAM(p0, p1, p2, p3, p4, p5, p6)                     \
-    (((uint32_t)p0 & 0xFu)) | (((uint32_t)p1 & 0xFu) << 4u) |             \
-        (((uint32_t)p2 & 0xFu) << 8u) | (((uint32_t)p3 & 0xFu) << 12u) |  \
-        (((uint32_t)p4 & 0xFu) << 16u) | (((uint32_t)p5 & 0xFu) << 20u) | \
+#define SSCP_OP_SET_PARAM(p0, p1, p2, p3, p4, p5, p6)                                                      \
+    (((uint32_t)p0 & 0xFu)) | (((uint32_t)p1 & 0xFu) << 4u) | (((uint32_t)p2 & 0xFu) << 8u) |              \
+        (((uint32_t)p3 & 0xFu) << 12u) | (((uint32_t)p4 & 0xFu) << 16u) | (((uint32_t)p5 & 0xFu) << 20u) | \
         (((uint32_t)p6 & 0xFu) << 24u);
 
 /*! @brief Decode i-th parameter as 4-bit unsigned integer. */
-#define SSCP_OP_GET_PARAM(i, paramTypes) \
-    ((uint32_t)((((uint32_t)paramTypes) >> i * 4) & 0xFu))
+#define SSCP_OP_GET_PARAM(i, paramTypes) ((uint32_t)((((uint32_t)paramTypes) >> i * 4) & 0xFu))
 
 /*! @brief Data type for SSCP function return values */
 typedef uint32_t sscp_status_t;
@@ -256,10 +254,8 @@ typedef struct _sscp_operation sscp_operation_t;
  * @retval kStatus_SSCP_Fail Operation failure, for example hardware fail.
  * @retval kStatus_SSCP_InvalidArgument One of the arguments is invalid for the function to execute.
  */
-typedef sscp_status_t (*fn_sscp_invoke_command_t)(sscp_context_t *context,
-    uint32_t commandID,
-    sscp_operation_t *op,
-    uint32_t *ret);
+typedef sscp_status_t (*fn_sscp_invoke_command_t)(
+    sscp_context_t *context, uint32_t commandID, sscp_operation_t *op, uint32_t *ret);
 
 /**
  * struct _sscp_context - SSCP context struct
@@ -375,16 +371,16 @@ struct _sscp_operation
  */
 typedef enum _sscp_param_types
 {
-    kSSCP_ParamType_None = 0,         /*! Parameter not in use */
+    kSSCP_ParamType_None      = 0,    /*! Parameter not in use */
     kSSCP_ParamType_Aggregate = 0x1u, /*! Link to another ::sscp_operation_t */
     kSSCP_ParamType_ContextReference, /*! Reference to a context structure - pointer and type */
-    kSSCP_ParamType_MemrefInput, /*! Reference to a memory buffer - input to remote function or service */
-    kSSCP_ParamType_MemrefOutput, /*! Reference to a memory buffer - output by remote function or service.
+    kSSCP_ParamType_MemrefInput,      /*! Reference to a memory buffer - input to remote function or service */
+    kSSCP_ParamType_MemrefOutput,     /*! Reference to a memory buffer - output by remote function or service.
                                           Implementations shall update the size member of the ::sscp_memref_t
                                           with the actual number of bytes written. */
     kSSCP_ParamType_MemrefInOut, /*! Reference to a memory buffer - input to and ouput from remote function or service
                                     */
-    kSSCP_ParamType_ValueInput, /*! Tuple of two 32-bit integers  - input to remote function or service */
+    kSSCP_ParamType_ValueInput,  /*! Tuple of two 32-bit integers  - input to remote function or service */
     kSSCP_ParamType_ValueOutput, /*! Tuple of two 32-bit integers - output by remote function or service */
 } sscp_param_types_t;
 
@@ -394,7 +390,7 @@ typedef enum _sscp_param_types
 enum _sscp_return_values
 {
     kStatus_SSCP_Success = 0x10203040u,
-    kStatus_SSCP_Fail = 0x40302010u,
+    kStatus_SSCP_Fail    = 0x40302010u,
 };
 
 /*******************************************************************************
@@ -420,10 +416,7 @@ extern "C" {
  * @retval kStatus_SSCP_Fail Operation failure, for example hardware fail.
  * @retval kStatus_SSCP_InvalidArgument One of the arguments is invalid for the function to execute.
  */
-sscp_status_t sscp_invoke_command(sscp_context_t *context,
-    uint32_t commandID,
-    sscp_operation_t *op,
-    uint32_t *ret);
+sscp_status_t sscp_invoke_command(sscp_context_t *context, uint32_t commandID, sscp_operation_t *op, uint32_t *ret);
 
 #if defined(__cplusplus)
 }

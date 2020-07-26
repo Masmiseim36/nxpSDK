@@ -19,11 +19,11 @@
  ******************************************************************************/
 
 /*******************************************************************************
-  * Prototypes
-  ******************************************************************************/
+ * Prototypes
+ ******************************************************************************/
 /*******************************************************************************
-  * Variables
-  ******************************************************************************/
+ * Variables
+ ******************************************************************************/
 
 USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
 uint8_t s_DataBuffer[USB_HOST_CDC_BUFFER_NUM * 2][USB_DATA_ALIGN_SIZE_MULTIPLE(USB_HOST_SEND_RECV_PER_TIME)];
@@ -132,7 +132,7 @@ usb_uart_buffer_struct_t *getNodeFromQueue(usb_uart_buffer_struct_t **queue)
  * This function is used to get a buffer from memory queue .
  *
  * @param queue    buffer queue pointer.
-  * @param p        the buffer pointer for free.
+ * @param p        the buffer pointer for free.
  */
 void freeNodeToQueue(usb_uart_buffer_struct_t **queue, usb_uart_buffer_struct_t *p)
 {
@@ -141,8 +141,8 @@ void freeNodeToQueue(usb_uart_buffer_struct_t **queue, usb_uart_buffer_struct_t 
 
     if (p)
     {
-        p->next = *queue;
-        *queue = p;
+        p->next       = *queue;
+        *queue        = p;
         p->dataLength = 0;
     }
     USB_HostCdcExitCritical(usbOsaCurrentSr);
@@ -153,7 +153,7 @@ void freeNodeToQueue(usb_uart_buffer_struct_t **queue, usb_uart_buffer_struct_t 
  * This function is used to insert to usb send queue or uart send queue .
  *
  * @param queue    buffer queue pointer.
-  * @param p        the buffer pointer for insert.
+ * @param p        the buffer pointer for insert.
  */
 void insertNodeToQueue(usb_uart_buffer_struct_t **queue, usb_uart_buffer_struct_t *p)
 {
@@ -183,7 +183,7 @@ void insertNodeToQueue(usb_uart_buffer_struct_t **queue, usb_uart_buffer_struct_
  *
  * This function is used to get the data buffer's state structure .
  * the buffer and state structure relation is init in init function.
-  * @param p        the buffer pointer for data transfer.
+ * @param p        the buffer pointer for data transfer.
  */
 usb_uart_buffer_struct_t *getBufferNode(uint8_t *p)
 {
@@ -246,15 +246,15 @@ void USB_HostCdcDataInCallback(void *param, uint8_t *data, uint32_t dataLength, 
 }
 
 /*!
-* @brief host cdc data transfer callback.
-*
-* This function is used as callback function for bulk out transfer .
-*
-* @param param    the host cdc instance pointer.
-* @param data     data buffer pointer.
-* @param dataLength data length.
-* @status         transfer result status.
-*/
+ * @brief host cdc data transfer callback.
+ *
+ * This function is used as callback function for bulk out transfer .
+ *
+ * @param param    the host cdc instance pointer.
+ * @param data     data buffer pointer.
+ * @param dataLength data length.
+ * @status         transfer result status.
+ */
 void USB_HostCdcDataOutCallback(void *param, uint8_t *data, uint32_t dataLength, usb_status_t status)
 {
     freeNodeToQueue(&g_EmptyQueue, g_UsbSendNode);
@@ -262,7 +262,7 @@ void USB_HostCdcDataOutCallback(void *param, uint8_t *data, uint32_t dataLength,
     g_CurrentUsbRecvNode = getNodeFromQueue(&g_EmptySendQueue);
     if (g_CurrentUsbRecvNode)
     {
-        g_CurrentUsbRecvNode->next = NULL;
+        g_CurrentUsbRecvNode->next       = NULL;
         g_CurrentUsbRecvNode->dataLength = USB_HOST_SEND_RECV_PER_TIME;
         USB_HostCdcDataRecv(g_cdc.classHandle, (uint8_t *)&g_CurrentUsbRecvNode->buffer[0],
                             g_CurrentUsbRecvNode->dataLength, USB_HostCdcDataInCallback, &g_cdc);
@@ -285,8 +285,9 @@ void USB_HostCdcDataOutCallback(void *param, uint8_t *data, uint32_t dataLength,
  *This callback will be called if the uart has get specific num(USB_HOST_CDC_UART_RX_MAX_LEN) char.
  *
  */
- void UART_UserRxCallback(void *callbackParam, serial_manager_callback_message_t *message,
-                        serial_manager_status_t status)
+void UART_UserRxCallback(void *callbackParam,
+                         serial_manager_callback_message_t *message,
+                         serial_manager_status_t status)
 
 {
     if (status == kStatus_SerialManager_Success)
@@ -331,8 +332,9 @@ void USB_HostCdcDataOutCallback(void *param, uint8_t *data, uint32_t dataLength,
  *This callback will be called if the uart send get specific num(USB_HOST_CDC_UART_RX_MAX_LEN) char.
  *
  */
- void UART_UserTxCallback(void *callbackParam, serial_manager_callback_message_t *message,
-                        serial_manager_status_t status)
+void UART_UserTxCallback(void *callbackParam,
+                         serial_manager_callback_message_t *message,
+                         serial_manager_status_t status)
 
 {
     if (status == kStatus_SerialManager_Success)
@@ -382,30 +384,30 @@ void USB_HostCdcInitBuffer(void)
     p = g_EmptyQueue;
     for (int m = 1; m < (sizeof(g_EmptyBuffer) / sizeof(usb_uart_buffer_struct_t)); m++)
     {
-        p->next = &g_EmptyBuffer[m];
+        p->next       = &g_EmptyBuffer[m];
         p->dataLength = 0;
-        p = p->next;
+        p             = p->next;
     }
-    p->next = NULL;
+    p->next               = NULL;
     g_CurrentUartRecvNode = g_EmptyQueue;
-    g_EmptyQueue = g_EmptyQueue->next;
+    g_EmptyQueue          = g_EmptyQueue->next;
 
     g_EmptySendQueue = &g_EmptySendBuffer[0];
-    p = g_EmptySendQueue;
+    p                = g_EmptySendQueue;
     for (int m = 1; m < (sizeof(g_EmptySendBuffer) / sizeof(usb_uart_buffer_struct_t)); m++)
     {
-        p->next = &g_EmptySendBuffer[m];
+        p->next       = &g_EmptySendBuffer[m];
         p->dataLength = 0;
-        p = p->next;
+        p             = p->next;
     }
     p->next = NULL;
     USB_HostCdcExitCritical(usbOsaCurrentSr);
 
-    g_UsbSendQueue = NULL;
+    g_UsbSendQueue  = NULL;
     g_UartSendQueue = NULL;
-    g_UsbSendBusy = 0;
-    g_UartSendBusy = 0;
-    g_UartActive = 0;
+    g_UsbSendBusy   = 0;
+    g_UartSendBusy  = 0;
+    g_UartActive    = 0;
 }
 
 /*!
@@ -495,7 +497,7 @@ void USB_HostCdcControlCallback(void *param, uint8_t *data, uint32_t dataLength,
  */
 void USB_HostCdcTask(void *param)
 {
-    usb_status_t status = kStatus_USB_Success;
+    usb_status_t status                = kStatus_USB_Success;
     cdc_instance_struct_t *cdcInstance = (cdc_instance_struct_t *)param;
     /* device state changes */
     if (cdcInstance->deviceState != cdcInstance->previousState)
@@ -507,17 +509,17 @@ void USB_HostCdcTask(void *param)
                 break;
             case kStatus_DEV_Attached:
                 cdcInstance->runState = kUSB_HostCdcRunSetControlInterface;
-                status = USB_HostCdcInit(cdcInstance->deviceHandle, &cdcInstance->classHandle);
+                status                = USB_HostCdcInit(cdcInstance->deviceHandle, &cdcInstance->classHandle);
                 usb_echo("cdc device attached\r\n");
                 break;
             case kStatus_DEV_Detached:
                 cdcInstance->deviceState = kStatus_DEV_Idle;
-                cdcInstance->runState = kUSB_HostCdcRunIdle;
+                cdcInstance->runState    = kUSB_HostCdcRunIdle;
                 USB_HostCdcDeinit(cdcInstance->deviceHandle, cdcInstance->classHandle);
-                cdcInstance->dataInterfaceHandle = NULL;
-                cdcInstance->classHandle = NULL;
+                cdcInstance->dataInterfaceHandle    = NULL;
+                cdcInstance->classHandle            = NULL;
                 cdcInstance->controlInterfaceHandle = NULL;
-                cdcInstance->deviceHandle = NULL;
+                cdcInstance->deviceHandle           = NULL;
                 usb_echo("cdc device detached\r\n");
                 break;
             default:
@@ -547,9 +549,9 @@ void USB_HostCdcTask(void *param)
 
                     if (g_UartSendNode)
                     {
-
                         g_UartSendBusy = 1;
-                        SerialManager_WriteNonBlocking(g_UartTxHandle, g_UartSendNode->buffer, g_UartSendNode->dataLength);
+                        SerialManager_WriteNonBlocking(g_UartTxHandle, g_UartSendNode->buffer,
+                                                       g_UartSendNode->dataLength);
                     }
                 }
                 g_UartActive++;
@@ -570,7 +572,7 @@ void USB_HostCdcTask(void *param)
             break;
         case kUSB_HostCdcRunSetControlInterface:
             cdcInstance->runWaitState = kUSB_HostCdcRunWaitSetControlInterface;
-            cdcInstance->runState = kUSB_HostCdcRunIdle;
+            cdcInstance->runState     = kUSB_HostCdcRunIdle;
             if (USB_HostCdcSetControlInterface(cdcInstance->classHandle, cdcInstance->controlInterfaceHandle, 0,
                                                USB_HostCdcControlCallback, &g_cdc) != kStatus_USB_Success)
             {
@@ -579,7 +581,7 @@ void USB_HostCdcTask(void *param)
             break;
         case kUSB_HostCdcRunSetControlInterfaceDone:
             cdcInstance->runWaitState = kUSB_HostCdcRunWaitSetDataInterface;
-            cdcInstance->runState = kUSB_HostCdcRunIdle;
+            cdcInstance->runState     = kUSB_HostCdcRunIdle;
             if (USB_HostCdcSetDataInterface(cdcInstance->classHandle, cdcInstance->dataInterfaceHandle, 0,
                                             USB_HostCdcControlCallback, &g_cdc) != kStatus_USB_Success)
             {
@@ -589,7 +591,7 @@ void USB_HostCdcTask(void *param)
                 USB_HostCdcGetPacketsize(cdcInstance->classHandle, USB_ENDPOINT_BULK, USB_IN);
             break;
         case kUSB_HostCdcRunSetDataInterfaceDone:
-            g_AttachFlag = 1;
+            g_AttachFlag          = 1;
             cdcInstance->runState = kUSB_HostCdcRunGetStateDone;
             /*get the class-specific descriptor */
             /*usb_host_cdc_head_function_desc_struct_t *headDesc = NULL;
@@ -607,7 +609,7 @@ void USB_HostCdcTask(void *param)
             break;
         case kUSB_HostCdcRunGetStateDone:
             cdcInstance->runWaitState = kUSB_HostCdcRunWaitSetCtrlState;
-            cdcInstance->runState = kUSB_HostCdcRunIdle;
+            cdcInstance->runState     = kUSB_HostCdcRunIdle;
 #if USB_HOST_UART_SUPPORT_HW_FLOW
             USB_HostCdcSetAcmCtrlState(cdcInstance->classHandle, 1, 1, USB_HostCdcControlCallback, (void *)cdcInstance);
 #else
@@ -616,7 +618,7 @@ void USB_HostCdcTask(void *param)
             break;
         case kUSB_HostCdcRunSetCtrlStateDone:
             cdcInstance->runWaitState = kUSB_HostCdcRunWaitGetLineCode;
-            cdcInstance->runState = kUSB_HostCdcRunIdle;
+            cdcInstance->runState     = kUSB_HostCdcRunIdle;
             USB_HostCdcGetAcmLineCoding(cdcInstance->classHandle, &g_LineCode, USB_HostCdcControlCallback,
                                         (void *)cdcInstance);
             break;
@@ -645,17 +647,17 @@ usb_status_t USB_HostCdcEvent(usb_device_handle deviceHandle,
     {
         case kUSB_HostEventAttach:
             /* judge whether is configurationHandle supported */
-            configuration = (usb_host_configuration_t *)configurationHandle;
+            configuration          = (usb_host_configuration_t *)configurationHandle;
             cdcDataInterfaceHandle = NULL;
-            cdcDeviceHandle = NULL;
-            cdcControlIntfHandle = NULL;
+            cdcDeviceHandle        = NULL;
+            cdcControlIntfHandle   = NULL;
 
             USB_HostCdcInitBuffer();
 
             for (interface_index = 0; interface_index < configuration->interfaceCount; ++interface_index)
             {
                 hostInterface = &configuration->interfaceList[interface_index];
-                id = hostInterface->interfaceDesc->bInterfaceClass;
+                id            = hostInterface->interfaceDesc->bInterfaceClass;
 
                 if (id != USB_HOST_CDC_COMMUNICATIONS_CLASS_CODE)
                 {
@@ -675,13 +677,13 @@ usb_status_t USB_HostCdcEvent(usb_device_handle deviceHandle,
                 else
                 {
                     cdcControlIntfHandle = hostInterface;
-                    cdcDeviceHandle = deviceHandle;
+                    cdcDeviceHandle      = deviceHandle;
                 }
             }
             for (interface_index = 0; interface_index < configuration->interfaceCount; ++interface_index)
             {
                 hostInterface = &configuration->interfaceList[interface_index];
-                id = hostInterface->interfaceDesc->bInterfaceClass;
+                id            = hostInterface->interfaceDesc->bInterfaceClass;
 
                 if (id != USB_HOST_CDC_DATA_CLASS_CODE)
                 {
@@ -720,9 +722,9 @@ usb_status_t USB_HostCdcEvent(usb_device_handle deviceHandle,
             {
                 if ((cdcDeviceHandle != NULL) && (cdcDataInterfaceHandle != NULL) && (cdcControlIntfHandle != NULL))
                 {
-                    g_cdc.deviceState = kStatus_DEV_Attached;
-                    g_cdc.deviceHandle = cdcDeviceHandle;
-                    g_cdc.dataInterfaceHandle = cdcDataInterfaceHandle;
+                    g_cdc.deviceState            = kStatus_DEV_Attached;
+                    g_cdc.deviceHandle           = cdcDeviceHandle;
+                    g_cdc.dataInterfaceHandle    = cdcDataInterfaceHandle;
                     g_cdc.controlInterfaceHandle = cdcControlIntfHandle;
 
                     USB_HostHelperGetPeripheralInformation(deviceHandle, kUSB_HostGetDevicePID, &info_value);
@@ -743,7 +745,7 @@ usb_status_t USB_HostCdcEvent(usb_device_handle deviceHandle,
             if (g_cdc.deviceState != kStatus_DEV_Idle)
             {
                 g_cdc.deviceState = kStatus_DEV_Detached;
-                g_AttachFlag = 0;
+                g_AttachFlag      = 0;
                 USB_HostCdcInitBuffer();
             }
             break;

@@ -76,7 +76,7 @@ int CreateAndRunDemoTask()
         goto cleanup;
     }
 
-#if EX_SSS_BOOT_OPEN_HOST_SESSION
+#if EX_SSS_BOOT_OPEN_HOST_SESSION && SSS_HAVE_HOSTCRYPTO_ANY
     ex_sss_boot_open_host_session((PCONTEXT));
 #endif
 

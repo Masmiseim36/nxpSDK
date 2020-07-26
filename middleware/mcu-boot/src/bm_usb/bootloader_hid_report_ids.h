@@ -8,7 +8,7 @@
 #if !defined(__BOOTLOADER_HID_REPORT_IDS_H__)
 #define __BOOTLOADER_HID_REPORT_IDS_H__
 
-#include "packet/command_packet.h"
+#include "command_packet.h"
 #include "usb_descriptor.h"
 
 ////////////////////////////////////////////////////////////////////////////////

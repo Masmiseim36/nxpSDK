@@ -1,5 +1,5 @@
 /*
-* Copyright 2018 NXP
+* Copyright 2018,2020 NXP
 * All rights reserved.
 *
 * SPDX-License-Identifier: BSD-3-Clause
@@ -27,28 +27,52 @@
 #if SSS_HAVE_OPENSSL
 #include <fsl_sss_openssl_apis.h>
 #endif
+#if SSS_HAVE_HOSTCRYPTO_USER
+#   include <fsl_sss_user_apis.h>
+#endif
 
 #include "sm_api.h"
 #if SSS_HAVE_SSCP
 #include "fsl_sscp_a71ch.h"
 #endif
 
-
 typedef enum
 {
     kSSS_AuthType_None = 0,
     /** Global platform SCP03 */
     kSSS_AuthType_SCP03 = 1,
-    /** e.g. SE050 UserID based connection */
+    /** (e.g. SE05X) UserID based connection */
     kSSS_AuthType_ID = 2,
-    /** e.g. SE050 Applet SCP03 where starting key is one AES Key */
-    kSSS_AuthType_AppletSCP03 = 3,
-    /** e.g. SE050 FastSCP where starting keys are ECC */
-    kSSS_AuthType_FastSCP = 4,
+
+    /** (e.g. SE05X) Use AESKey for user authentication
+     *
+     *  Earlier this was called  kSSS_AuthType_AppletSCP03
+     */
+    kSSS_AuthType_AESKey = 3,
+    /** (e.g. SE05X) Use ECKey for user authentication
+     *
+     *  Earlier this was called  kSSS_AuthType_FastSCP
+     */
+    kSSS_AuthType_ECKey = 4,
+
+    /* ================ Internal ======================= */
+    /* Not to be selected by end user... directly */
+
+    /**
+     * Used internally, not to be set/used by user.
+     *
+     * For the versions of the applet where we have to add
+     * the a counter during KDF.
+     */
+    kSSS_AuthType_INT_ECKey_Counter = 0x14,
 
     kSSS_SIZE = 0x7FFFFFFF,
 } SE_AuthType_t;
 
+#define kSSS_AuthType_INT_FastSCP_Counter kSSS_AuthType_INT_ECKey_Counter
+#define kSSS_AuthType_FastSCP_Counter kSSS_AuthType_INT_ECKey_Counter
+#define kSSS_AuthType_FastSCP         kSSS_AuthType_ECKey
+#define kSSS_AuthType_AppletSCP03     kSSS_AuthType_AESKey
 
 /**
  * Dynamic SCP03 Context.
@@ -113,23 +137,23 @@ typedef struct
     sss_object_t SeEcPubKey;
     /** Host master Secret */
     sss_object_t masterSec;
-} NXFastSCP03_StaticCtx_t;
+} NXECKey03_StaticCtx_t;
 
-/** Keys to connect for a FastSCP Connection */
+/** Keys to connect for a ECKey Connection */
 typedef struct
 {
-    /** The Input/Static part of the FastSCP Authentication
+    /** The Input/Static part of the ECKey Authentication
      *
      * We start/initiate a session with the keys here.
      */
-    NXFastSCP03_StaticCtx_t *pStatic_ctx;
-    /** The Dynamic part of the FastSCP Authentication
+    NXECKey03_StaticCtx_t *pStatic_ctx;
+    /** The Dynamic part of the ECKey Authentication
      *
      * We derive/compute the session keys based on the
      * ``pStatic_ctx``.
      */
     NXSCP03_DynCtx_t  *pDyn_ctx;   // session keys data
-} SE05x_AuthCtx_FastScp_t;
+} SE05x_AuthCtx_ECKey_t;
 
 /** UseID / PIN baed authentication object
  *
@@ -177,8 +201,8 @@ typedef struct _SE_AuthCtx
          * Same SCP context will be used for platform and applet scp03 */
         NXSCP03_AuthCtx_t scp03;
 
-        /** For FastSCP  */
-        SE05x_AuthCtx_FastScp_t fastscp;
+        /** For ECKey  */
+        SE05x_AuthCtx_ECKey_t eckey;
 
         /** For UserID/PIN based based Authentication */
         SE05x_AuthCtx_ID_t idobj;
@@ -220,6 +244,9 @@ typedef struct
 
     /** Connection port name for Socket names, etc. */
     const char *portName;
+
+    /** 12C address on embedded devices. */
+    U32 i2cAddress;
 
     /** If we need to refresh session, SE050 specific */
     uint8_t refresh_session : 1;
@@ -271,8 +298,8 @@ typedef struct
 #define kSE05x_AuthType_None kSSS_AuthType_None
 #define kSE05x_AuthType_SCP03 kSSS_AuthType_SCP03
 #define kSE05x_AuthType_UserID kSSS_AuthType_ID
-#define kSE05x_AuthType_AppletSCP03 kSSS_AuthType_AppletSCP03
-#define kSE05x_AuthType_FastSCP kSSS_AuthType_FastSCP
+#define kSE05x_AuthType_AESKey kSSS_AuthType_AESKey
+#define kSE05x_AuthType_ECKey kSSS_AuthType_ECKey
 
 /* For backwards compatibility */
 #define SE05x_AuthType_t SE_AuthType_t

@@ -41,8 +41,8 @@ extern uint8_t s_wavBuff[];
 static usb_device_composite_struct_t *g_deviceComposite;
 
 /*******************************************************************************
-* Code
-******************************************************************************/
+ * Code
+ ******************************************************************************/
 /*!
  * @brief Audio class specific request function.
  *
@@ -57,7 +57,7 @@ static usb_device_composite_struct_t *g_deviceComposite;
 usb_status_t USB_DeviceAudioRequest(class_handle_t handle, uint32_t event, void *param)
 {
     usb_device_control_request_struct_t *request = (usb_device_control_request_struct_t *)param;
-    usb_status_t error = kStatus_USB_Success;
+    usb_status_t error                           = kStatus_USB_Success;
     uint16_t volume;
 
     switch (event)
@@ -166,7 +166,33 @@ usb_status_t USB_DeviceAudioRequest(class_handle_t handle, uint32_t event, void 
             request->buffer = g_deviceComposite->audioGenerator.resSamplingFrequency;
             request->length = sizeof(g_deviceComposite->audioGenerator.resSamplingFrequency);
             break;
-
+#if (USB_DEVICE_CONFIG_AUDIO_CLASS_2_0)
+        case USB_DEVICE_AUDIO_GET_CUR_SAM_FREQ_CONTROL:
+            request->buffer = (uint8_t *)&g_deviceComposite->audioGenerator.curSampleFrequency;
+            request->length = sizeof(g_deviceComposite->audioGenerator.curSampleFrequency);
+            break;
+        case USB_DEVICE_AUDIO_GET_RANGE_SAM_FREQ_CONTROL:
+            request->buffer = (uint8_t *)&g_deviceComposite->audioGenerator.freqControlRange;
+            request->length = sizeof(g_deviceComposite->audioGenerator.freqControlRange);
+            break;
+        case USB_DEVICE_AUDIO_GET_CUR_CLOCK_VALID_CONTROL:
+            request->buffer = &g_deviceComposite->audioGenerator.curClockValid;
+            request->length = sizeof(g_deviceComposite->audioGenerator.curClockValid);
+            break;
+        case USB_DEVICE_AUDIO_GET_CUR_MUTE_CONTROL_AUDIO20:
+            request->buffer = (uint8_t *)&g_deviceComposite->audioGenerator.curMute20;
+            request->length = sizeof(g_deviceComposite->audioGenerator.curMute20);
+            break;
+        case USB_DEVICE_AUDIO_GET_CUR_VOLUME_CONTROL_AUDIO20:
+            request->buffer = (uint8_t *)&g_deviceComposite->audioGenerator.curVolume20;
+            request->length = sizeof(g_deviceComposite->audioGenerator.curVolume20);
+            break;
+        case USB_DEVICE_AUDIO_GET_RANGE_VOLUME_CONTROL_AUDIO20:
+            request->buffer = (uint8_t *)&g_deviceComposite->audioGenerator.volumeControlRange;
+            request->length = sizeof(g_deviceComposite->audioGenerator.volumeControlRange);
+            break;
+#endif
+            
         case USB_DEVICE_AUDIO_SET_CUR_VOLUME_CONTROL:
             if (request->isSetup == 1U)
             {
@@ -333,6 +359,24 @@ usb_status_t USB_DeviceAudioRequest(class_handle_t handle, uint32_t event, void 
                 request->buffer = g_deviceComposite->audioGenerator.resSamplingFrequency;
             }
             break;
+#if (USB_DEVICE_CONFIG_AUDIO_CLASS_2_0)
+        case USB_DEVICE_AUDIO_SET_CUR_SAM_FREQ_CONTROL:
+            if (request->isSetup == 1U)
+            {
+                request->buffer = (uint8_t *)&g_deviceComposite->audioGenerator.curSampleFrequency;
+            }
+            break;
+        case USB_DEVICE_AUDIO_SET_CUR_CLOCK_VALID_CONTROL:
+            if (request->isSetup == 1U)
+            {
+                request->buffer = &g_deviceComposite->audioGenerator.curClockValid;
+            }
+            break;
+        case USB_DEVICE_AUDIO_SET_CUR_MUTE_CONTROL_AUDIO20:
+            break;
+        case USB_DEVICE_AUDIO_SET_CUR_VOLUME_CONTROL_AUDIO20:
+            break;
+#endif
         default:
             error = kStatus_USB_InvalidRequest;
             break;
@@ -364,8 +408,8 @@ usb_status_t USB_DeviceAudioGeneratorCallback(class_handle_t handle, uint32_t ev
                                              FS_ISO_IN_ENDP_PACKET_SIZE)))
             {
                 USB_AudioRecorderGetBuffer(s_wavBuff, (USB_SPEED_HIGH == g_deviceComposite->audioGenerator.speed) ?
-                                                HS_ISO_IN_ENDP_PACKET_SIZE :
-                                                FS_ISO_IN_ENDP_PACKET_SIZE);
+                                                          HS_ISO_IN_ENDP_PACKET_SIZE :
+                                                          FS_ISO_IN_ENDP_PACKET_SIZE);
                 error = USB_DeviceAudioSend(handle, USB_AUDIO_STREAM_ENDPOINT, s_wavBuff,
                                             (USB_SPEED_HIGH == g_deviceComposite->audioGenerator.speed) ?
                                                 HS_ISO_IN_ENDP_PACKET_SIZE :
@@ -407,8 +451,8 @@ usb_status_t USB_DeviceAudioGeneratorSetInterface(class_handle_t handle, uint8_t
     if (alternateSetting == 1U)
     {
         USB_AudioRecorderGetBuffer(s_wavBuff, (USB_SPEED_HIGH == g_deviceComposite->audioGenerator.speed) ?
-                                        HS_ISO_IN_ENDP_PACKET_SIZE :
-                                        FS_ISO_IN_ENDP_PACKET_SIZE);
+                                                  HS_ISO_IN_ENDP_PACKET_SIZE :
+                                                  FS_ISO_IN_ENDP_PACKET_SIZE);
         USB_DeviceAudioSend(g_deviceComposite->audioGenerator.audioHandle, USB_AUDIO_STREAM_ENDPOINT, s_wavBuff,
                             (USB_SPEED_HIGH == g_deviceComposite->audioGenerator.speed) ? HS_ISO_IN_ENDP_PACKET_SIZE :
                                                                                           FS_ISO_IN_ENDP_PACKET_SIZE);
@@ -425,40 +469,40 @@ usb_status_t USB_DeviceAudioGeneratorSetInterface(class_handle_t handle, uint8_t
  */
 usb_status_t USB_DeviceAudioGeneratorInit(usb_device_composite_struct_t *device_composite)
 {
-    g_deviceComposite = device_composite;
-    g_deviceComposite->audioGenerator.copyProtect = 0x01U;
-    g_deviceComposite->audioGenerator.curMute = 0x01U;
-    g_deviceComposite->audioGenerator.curVolume[0] = 0x00U;
-    g_deviceComposite->audioGenerator.curVolume[1] = 0x80U;
-    g_deviceComposite->audioGenerator.minVolume[0] = 0x00U;
-    g_deviceComposite->audioGenerator.minVolume[1] = 0x80U;
-    g_deviceComposite->audioGenerator.maxVolume[0] = 0xFFU;
-    g_deviceComposite->audioGenerator.maxVolume[1] = 0X7FU;
-    g_deviceComposite->audioGenerator.resVolume[0] = 0x01U;
-    g_deviceComposite->audioGenerator.resVolume[1] = 0x00U;
-    g_deviceComposite->audioGenerator.curBass = 0x00U;
-    g_deviceComposite->audioGenerator.curBass = 0x00U;
-    g_deviceComposite->audioGenerator.minBass = 0x80U;
-    g_deviceComposite->audioGenerator.maxBass = 0x7FU;
-    g_deviceComposite->audioGenerator.resBass = 0x01U;
-    g_deviceComposite->audioGenerator.curMid = 0x00U;
-    g_deviceComposite->audioGenerator.minMid = 0x80U;
-    g_deviceComposite->audioGenerator.maxMid = 0x7FU;
-    g_deviceComposite->audioGenerator.resMid = 0x01U;
-    g_deviceComposite->audioGenerator.curTreble = 0x01U;
-    g_deviceComposite->audioGenerator.minTreble = 0x80U;
-    g_deviceComposite->audioGenerator.maxTreble = 0x7FU;
-    g_deviceComposite->audioGenerator.resTreble = 0x01U;
-    g_deviceComposite->audioGenerator.curAutomaticGain = 0x01U;
-    g_deviceComposite->audioGenerator.curDelay[0] = 0x00U;
-    g_deviceComposite->audioGenerator.curDelay[1] = 0x40U;
-    g_deviceComposite->audioGenerator.minDelay[0] = 0x00U;
-    g_deviceComposite->audioGenerator.minDelay[1] = 0x00U;
-    g_deviceComposite->audioGenerator.maxDelay[0] = 0xFFU;
-    g_deviceComposite->audioGenerator.maxDelay[1] = 0xFFU;
-    g_deviceComposite->audioGenerator.resDelay[0] = 0x00U;
-    g_deviceComposite->audioGenerator.resDelay[1] = 0x01U;
-    g_deviceComposite->audioGenerator.curLoudness = 0x01U;
+    g_deviceComposite                                         = device_composite;
+    g_deviceComposite->audioGenerator.copyProtect             = 0x01U;
+    g_deviceComposite->audioGenerator.curMute                 = 0x01U;
+    g_deviceComposite->audioGenerator.curVolume[0]            = 0x00U;
+    g_deviceComposite->audioGenerator.curVolume[1]            = 0x80U;
+    g_deviceComposite->audioGenerator.minVolume[0]            = 0x00U;
+    g_deviceComposite->audioGenerator.minVolume[1]            = 0x80U;
+    g_deviceComposite->audioGenerator.maxVolume[0]            = 0xFFU;
+    g_deviceComposite->audioGenerator.maxVolume[1]            = 0X7FU;
+    g_deviceComposite->audioGenerator.resVolume[0]            = 0x01U;
+    g_deviceComposite->audioGenerator.resVolume[1]            = 0x00U;
+    g_deviceComposite->audioGenerator.curBass                 = 0x00U;
+    g_deviceComposite->audioGenerator.curBass                 = 0x00U;
+    g_deviceComposite->audioGenerator.minBass                 = 0x80U;
+    g_deviceComposite->audioGenerator.maxBass                 = 0x7FU;
+    g_deviceComposite->audioGenerator.resBass                 = 0x01U;
+    g_deviceComposite->audioGenerator.curMid                  = 0x00U;
+    g_deviceComposite->audioGenerator.minMid                  = 0x80U;
+    g_deviceComposite->audioGenerator.maxMid                  = 0x7FU;
+    g_deviceComposite->audioGenerator.resMid                  = 0x01U;
+    g_deviceComposite->audioGenerator.curTreble               = 0x01U;
+    g_deviceComposite->audioGenerator.minTreble               = 0x80U;
+    g_deviceComposite->audioGenerator.maxTreble               = 0x7FU;
+    g_deviceComposite->audioGenerator.resTreble               = 0x01U;
+    g_deviceComposite->audioGenerator.curAutomaticGain        = 0x01U;
+    g_deviceComposite->audioGenerator.curDelay[0]             = 0x00U;
+    g_deviceComposite->audioGenerator.curDelay[1]             = 0x40U;
+    g_deviceComposite->audioGenerator.minDelay[0]             = 0x00U;
+    g_deviceComposite->audioGenerator.minDelay[1]             = 0x00U;
+    g_deviceComposite->audioGenerator.maxDelay[0]             = 0xFFU;
+    g_deviceComposite->audioGenerator.maxDelay[1]             = 0xFFU;
+    g_deviceComposite->audioGenerator.resDelay[0]             = 0x00U;
+    g_deviceComposite->audioGenerator.resDelay[1]             = 0x01U;
+    g_deviceComposite->audioGenerator.curLoudness             = 0x01U;
     g_deviceComposite->audioGenerator.curSamplingFrequency[0] = 0x00U;
     g_deviceComposite->audioGenerator.curSamplingFrequency[1] = 0x00U;
     g_deviceComposite->audioGenerator.curSamplingFrequency[2] = 0x01U;
@@ -471,5 +515,29 @@ usb_status_t USB_DeviceAudioGeneratorInit(usb_device_composite_struct_t *device_
     g_deviceComposite->audioGenerator.resSamplingFrequency[0] = 0x00U;
     g_deviceComposite->audioGenerator.resSamplingFrequency[1] = 0x00U;
     g_deviceComposite->audioGenerator.resSamplingFrequency[2] = 0x01U;
+#if USB_DEVICE_CONFIG_AUDIO_CLASS_2_0
+    g_deviceComposite->audioGenerator.curMute20          = 0U;
+    g_deviceComposite->audioGenerator.curClockValid      = 1U;
+    g_deviceComposite->audioGenerator.curVolume20[0]     = 0x00U;
+    g_deviceComposite->audioGenerator.curVolume20[1]     = 0x1FU;
+#if defined(AUDIO_DATA_SOURCE_DMIC) && (AUDIO_DATA_SOURCE_DMIC > 0U)
+    g_deviceComposite->audioGenerator.curSampleFrequency = 16000U;
+    g_deviceComposite->audioGenerator.freqControlRange.wNumSubRanges = 1U;
+    g_deviceComposite->audioGenerator.freqControlRange.wMIN          = 16000U;
+    g_deviceComposite->audioGenerator.freqControlRange.wMAX          = 16000U;
+    g_deviceComposite->audioGenerator.freqControlRange.wRES          = 0U;
+#else
+    g_deviceComposite->audioGenerator.curSampleFrequency = 8000U;
+    g_deviceComposite->audioGenerator.freqControlRange.wNumSubRanges = 1U;
+    g_deviceComposite->audioGenerator.freqControlRange.wMIN          = 8000U;
+    g_deviceComposite->audioGenerator.freqControlRange.wMAX          = 8000U;
+    g_deviceComposite->audioGenerator.freqControlRange.wRES          = 0U; 
+#endif
+    g_deviceComposite->audioGenerator.volumeControlRange.wNumSubRanges = 1U;
+    g_deviceComposite->audioGenerator.volumeControlRange.wMIN          = 0x8001U;
+    g_deviceComposite->audioGenerator.volumeControlRange.wMAX          = 0x7FFFU;
+    g_deviceComposite->audioGenerator.volumeControlRange.wRES          = 1U;
+
+#endif
     return kStatus_USB_Success;
 }

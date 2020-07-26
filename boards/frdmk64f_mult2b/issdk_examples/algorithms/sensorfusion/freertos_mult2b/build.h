@@ -24,9 +24,9 @@
 /// to be used for a particular build.  Change THISCOORDSYSTEM to whichever of NED, ANDROID
 /// or WIN8 you prefer.
 ///@{
-#define NED 0               ///< identifier for NED (Aerospace) axes and angles
-#define ANDROID 1           ///< identifier for Android axes and angles
-#define WIN8 2              ///< identifier for Windows 8 axes and angles
+#define NED             0   ///< identifier for NED (Aerospace) axes and angles
+#define ANDROID         1   ///< identifier for Android axes and angles
+#define WIN8            2   ///< identifier for Windows 8 axes and angles
 #define THISCOORDSYSTEM NED ///< the coordinate system to be used
 ///@}
 
@@ -34,12 +34,12 @@
 /// @name SensorBitFields
 /// These bit-field values are used to declare which sensor types are used in the application.
 /// Change bit-field values to 0x0000 for any features NOT USED
-#define F_USING_ACCEL 0x0001       ///< nominally 0x0001 if an accelerometer is to be used, 0x0000 otherwise
-#define F_USING_MAG 0x0002         ///< nominally 0x0002 if an magnetometer  is to be used, 0x0000 otherwise
-#define F_USING_GYRO 0x0004        ///< nominally 0x0004 if a gyro           is to be used, 0x0000 otherwise
-#define F_USING_PRESSURE 0x0008    ///< nominally 0x0008 if altimeter        is to be used, 0x0000 otherwise
+#define F_USING_ACCEL       0x0001 ///< nominally 0x0001 if an accelerometer is to be used, 0x0000 otherwise
+#define F_USING_MAG         0x0002 ///< nominally 0x0002 if an magnetometer  is to be used, 0x0000 otherwise
+#define F_USING_GYRO        0x0004 ///< nominally 0x0004 if a gyro           is to be used, 0x0000 otherwise
+#define F_USING_PRESSURE    0x0008 ///< nominally 0x0008 if altimeter        is to be used, 0x0000 otherwise
 #define F_USING_TEMPERATURE 0x0010 ///< nominally 0x0010 if temp sensor      is to be used, 0x0000 otherwise
-#define F_ALL_SENSORS 0x001F       ///< refers to all applicable sensor types for the given physical unit
+#define F_ALL_SENSORS       0x001F ///< refers to all applicable sensor types for the given physical unit
 ///@}
 /// @name FusionSelectionBitFields
 /// These bit-field values are used to declare which sensor fusion algorithms are used
@@ -65,14 +65,14 @@
 /// @name SensorParameters
 /// FIFO sizes effect the size of the sensor data structures.  ODR refers to "Output Data Rate"
 ///@{
-#define ACCEL_FIFO_SIZE 32 ///< FXOS8700 (accel), MMA8652, FXLS8952 all have 32 element FIFO
-#define MAG_FIFO_SIZE 16   ///< FXOS8700 (mag), MAG3110 have no FIFO so equivalent to 1 element FIFO
-#define GYRO_FIFO_SIZE 32  ///< FXAX21000, FXAS21002 have 32 element FIFO
-#define ACCEL_ODR_HZ 200   ///< (int) requested accelerometer ODR Hz (over-rides MAG_ODR_HZ for FXOS8700)
-#define MAG_ODR_HZ 200     ///< (int) requested magnetometer ODR Hz (over-ridden by ACCEL_ODR_HZ for FXOS8700)
-#define GYRO_ODR_HZ 400    ///< (int) requested gyroscope ODR Hz
-#define FUSION_HZ 40       ///< (int) actual rate of fusion algorithm execution and sensor FIFO reads
-#define FAST_LOOP_HZ 80    ///< Over Sample Ratio * FUSION_HZ when using no FIFO
+#define ACCEL_FIFO_SIZE 32  ///< FXOS8700 (accel), MMA8652, FXLS8952 all have 32 element FIFO
+#define MAG_FIFO_SIZE   16  ///< FXOS8700 (mag), MAG3110 have no FIFO so equivalent to 1 element FIFO
+#define GYRO_FIFO_SIZE  32  ///< FXAX21000, FXAS21002 have 32 element FIFO
+#define ACCEL_ODR_HZ    200 ///< (int) requested accelerometer ODR Hz (over-rides MAG_ODR_HZ for FXOS8700)
+#define MAG_ODR_HZ      200 ///< (int) requested magnetometer ODR Hz (over-ridden by ACCEL_ODR_HZ for FXOS8700)
+#define GYRO_ODR_HZ     400 ///< (int) requested gyroscope ODR Hz
+#define FUSION_HZ       40  ///< (int) actual rate of fusion algorithm execution and sensor FIFO reads
+#define FAST_LOOP_HZ    80  ///< Over Sample Ratio * FUSION_HZ when using no FIFO
 #define OVERSAMPLE_RATE FAST_LOOP_HZ / FUSION_HZ
 ///@}
 

@@ -11,7 +11,7 @@
 **         Linker file for the GNU C Compiler
 **
 **     Copyright (c) 2015 Freescale Semiconductor, Inc.
-**     Copyright 2016-2018 NXP
+**     Copyright 2016-2020 NXP
 **     All rights reserved.
 **
 **     SPDX-License-Identifier: BSD-3-Clause
@@ -27,7 +27,6 @@ ENTRY(Reset_Handler)
 
 HEAP_SIZE  = DEFINED(__heap_size__)  ? __heap_size__  : 0x0;
 STACK_SIZE = DEFINED(__stack_size__) ? __stack_size__ : 0x1000;
-M_VECTOR_RAM_SIZE = DEFINED(__ram_vector_table__) ? 0x0400 : 0x0;
 
 /* Specify the memory areas */
 MEMORY
@@ -54,6 +53,7 @@ SECTIONS
   .interrupts :
   {
     __VECTOR_TABLE = .;
+    __Vectors = .;
     . = ALIGN(4);
     KEEP(*(.isr_vector))     /* Startup code */
     . = ALIGN(4);
@@ -92,19 +92,7 @@ SECTIONS
   __etext = .;    /* define a global symbol at end of code */
   __DATA_ROM = .; /* Symbol is used by startup for data initialization */
 
-  .interrupts_ram :
-  {
-    . = ALIGN(4);
-    __VECTOR_RAM__ = .;
-    __interrupts_ram_start__ = .; /* Create a global symbol at data start */
-    *(.m_interrupts_ram)     /* This is a user defined section */
-    . += M_VECTOR_RAM_SIZE;
-    . = ALIGN(4);
-    __interrupts_ram_end__ = .; /* Define a global symbol at data end */
-  } > m_data
 
-  __VECTOR_RAM = DEFINED(__ram_vector_table__) ? __VECTOR_RAM__ : ORIGIN(m_interrupts);
-  __RAM_VECTOR_TABLE_SIZE_BYTES = DEFINED(__ram_vector_table__) ? (__interrupts_ram_end__ - __interrupts_ram_start__) : 0x0;
 
   .data : AT(__DATA_ROM)
   {
@@ -118,6 +106,7 @@ SECTIONS
   } > m_data
 
   __DATA_END = __DATA_ROM + (__data_end__ - __data_start__);
+  __VECTOR_RAM = __DATA_RAM;
 
   /* Uninitialized data section */
   .bss :

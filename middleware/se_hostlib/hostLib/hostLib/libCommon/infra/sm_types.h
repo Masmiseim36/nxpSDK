@@ -3,7 +3,7 @@
  * @author NXP Semiconductors
  * @version 1.0
  * @par License
- * Copyright 2016 NXP
+ * Copyright 2016,2020 NXP
  *
  * This software is owned or controlled by NXP and may only be used
  * strictly in accordance with the applicable license terms.  By expressly
@@ -75,6 +75,8 @@ typedef unsigned char bool; // C++ and GCC has bool.
 /** @define AX_EMBEDDED Plaform is embedded like Kinetis / LPC / i.MX RT / Freedom Series */
 #if defined(FREEDOM) || defined(IMX_RT) || defined(CPU_LPC54018) || defined(LPC_55x)
 #define AX_EMBEDDED 1
+#elif defined(AX_EMBEDDED)
+/* OK */
 #else
 #define AX_EMBEDDED 0
 #endif

@@ -1,5 +1,5 @@
 /*
- * Amazon FreeRTOS V1.0.0
+ * FreeRTOS V1.0.0
  * Copyright (C) 2017 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  * Copyright (c) 2013 - 2014, Freescale Semiconductor, Inc.
  * Copyright 2016-2019 NXP
@@ -35,7 +35,7 @@
 #include "ksdk_mbedtls.h"
 #include "pin_mux.h"
 
-/* Amazon FreeRTOS Demo Includes */
+/* FreeRTOS Demo Includes */
 #include "FreeRTOS.h"
 #include "task.h"
 #include "iot_logging_task.h"
@@ -52,6 +52,7 @@
 #include "fsl_mma.h"
 #endif
 
+#include "fsl_phy.h"
 /* lwIP Includes */
 #include "lwip/tcpip.h"
 #include "lwip/dhcp.h"
@@ -63,6 +64,8 @@
 #include "clock_config.h"
 #include "fsl_gpio.h"
 #include "fsl_port.h"
+#include "fsl_phyksz8081.h"
+#include "fsl_enet_mdio.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -72,7 +75,7 @@
 #endif /* EXAMPLE_NETIF_INIT_FN */
 
 #define INIT_SUCCESS 0
-#define INIT_FAIL 1
+#define INIT_FAIL    1
 
 /* MAC address configuration. */
 #define configMAC_ADDR                     \
@@ -83,39 +86,45 @@
 /* Address of PHY interface. */
 #define EXAMPLE_PHY_ADDRESS BOARD_ENET0_PHY_ADDRESS
 
-/* System clock name. */
-#define EXAMPLE_CLOCK_NAME kCLOCK_CoreSysClk
+/* MDIO operations. */
+#define EXAMPLE_MDIO_OPS enet_ops
+
+/* PHY operations. */
+#define EXAMPLE_PHY_OPS phyksz8081_ops
+
+/* ENET clock frequency. */
+#define EXAMPLE_CLOCK_FREQ CLOCK_GetFreq(kCLOCK_CoreSysClk)
 
 /* LPI2C */
-#define ACCEL_I2C_BASEADDR I2C0
+#define ACCEL_I2C_BASEADDR         I2C0
 #define BOARD_ACCEL_I2C_CLOCK_FREQ CLOCK_GetFreq(I2C0_CLK_SRC)
 
 #define I2C_BAUDRATE 100000U
 
-#define I2C_RELEASE_SDA_PORT PORTE
-#define I2C_RELEASE_SCL_PORT PORTE
-#define I2C_RELEASE_SDA_GPIO GPIOE
-#define I2C_RELEASE_SDA_PIN 25U
-#define I2C_RELEASE_SCL_GPIO GPIOE
-#define I2C_RELEASE_SCL_PIN 24U
+#define I2C_RELEASE_SDA_PORT  PORTE
+#define I2C_RELEASE_SCL_PORT  PORTE
+#define I2C_RELEASE_SDA_GPIO  GPIOE
+#define I2C_RELEASE_SDA_PIN   25U
+#define I2C_RELEASE_SCL_GPIO  GPIOE
+#define I2C_RELEASE_SCL_PIN   24U
 #define I2C_RELEASE_BUS_COUNT 100U
-#define LOGGING_TASK_PRIORITY (tskIDLE_PRIORITY + 1)
+#define LOGGING_TASK_PRIORITY   (tskIDLE_PRIORITY + 1)
 #define LOGGING_TASK_STACK_SIZE (200)
-#define LOGGING_QUEUE_LENGTH (16)
+#define LOGGING_QUEUE_LENGTH    (16)
 
 /* Accelerometer driver specific defines */
 #if defined(BOARD_ACCEL_FXOS)
-#define XYZ_DATA_CFG XYZ_DATA_CFG_REG
-#define ACCEL_INIT(handle, config) FXOS_Init(handle, config)
-#define ACCEL_READ_REG(handle, reg, val) FXOS_ReadReg(handle, reg, val, 1)
+#define XYZ_DATA_CFG                          XYZ_DATA_CFG_REG
+#define ACCEL_INIT(handle, config)            FXOS_Init(handle, config)
+#define ACCEL_READ_REG(handle, reg, val)      FXOS_ReadReg(handle, reg, val, 1)
 #define ACCELL_READ_SENSOR_DATA(handle, data) FXOS_ReadSensorData(handle, data)
-#define ACCEL_GET_RESOLUTION() FXOS_GetResolutionBits()
+#define ACCEL_GET_RESOLUTION()                FXOS_GetResolutionBits()
 #elif defined(BOARD_ACCEL_MMA)
-#define XYZ_DATA_CFG kMMA8652_XYZ_DATA_CFG
-#define ACCEL_INIT(handle, config) MMA_Init(handle, config)
-#define ACCEL_READ_REG(handle, reg, val) MMA_ReadReg(handle, reg, val)
+#define XYZ_DATA_CFG                          kMMA8652_XYZ_DATA_CFG
+#define ACCEL_INIT(handle, config)            MMA_Init(handle, config)
+#define ACCEL_READ_REG(handle, reg, val)      MMA_ReadReg(handle, reg, val)
 #define ACCELL_READ_SENSOR_DATA(handle, data) MMA_ReadSensorData(handle, data)
-#define ACCEL_GET_RESOLUTION() MMA_GetResolutionBits()
+#define ACCEL_GET_RESOLUTION()                MMA_GetResolutionBits()
 #endif
 
 /* Accelerometer and magnetometer */
@@ -145,6 +154,9 @@ extern int initNetwork(void);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
+static mdio_handle_t mdioHandle = {.ops = &EXAMPLE_MDIO_OPS};
+static phy_handle_t phyHandle   = {.phyAddr = EXAMPLE_PHY_ADDRESS, .mdioHandle = &mdioHandle, .ops = &EXAMPLE_PHY_OPS};
+
 struct netif netif;
 #if defined(FSL_FEATURE_SOC_LPC_ENET_COUNT) && (FSL_FEATURE_SOC_LPC_ENET_COUNT > 0)
 mem_range_t non_dma_memory[] = NON_DMA_MEMORY_ARRAY;
@@ -163,13 +175,14 @@ int initNetwork(void)
 {
     ip4_addr_t netif_ipaddr, netif_netmask, netif_gw;
     ethernetif_config_t enet_config = {
-        .phyAddress = EXAMPLE_PHY_ADDRESS,
-        .clockName  = EXAMPLE_CLOCK_NAME,
+        .phyHandle  = &phyHandle,
         .macAddress = configMAC_ADDR,
 #if defined(FSL_FEATURE_SOC_LPC_ENET_COUNT) && (FSL_FEATURE_SOC_LPC_ENET_COUNT > 0)
         .non_dma_memory = non_dma_memory,
 #endif /* FSL_FEATURE_SOC_LPC_ENET_COUNT */
     };
+
+    mdioHandle.resource.csrClock_Hz = EXAMPLE_CLOCK_FREQ;
 
     IP4_ADDR(&netif_ipaddr, 0, 0, 0, 0);
     IP4_ADDR(&netif_netmask, 0, 0, 0, 0);
@@ -369,7 +382,7 @@ status_t init_mag_accel(uint8_t *accelDataScale, uint8_t *accelResolution)
 }
 #endif
 
-void vApplicationDaemonTaskStartupHook(void)
+void main_task(void *pvParameters)
 {
     /* A simple example to demonstrate key and certificate provisioning in
      * microcontroller flash using PKCS#11 interface. This should be replaced
@@ -388,13 +401,15 @@ void vApplicationDaemonTaskStartupHook(void)
             vStartLedDemoTask();
         }
     }
+
+    vTaskDelete(NULL);
 }
 
 int main(void)
 {
     SYSMPU_Type *base = SYSMPU;
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
     /* Disable SYSMPU. */
     base->CESR &= ~SYSMPU_CESR_VLD_MASK;
@@ -417,6 +432,13 @@ int main(void)
             ;
     }
 #endif
+
+    if (xTaskCreate(main_task, "main_task", configMINIMAL_STACK_SIZE * 8, NULL, tskIDLE_PRIORITY + 1, NULL) != pdPASS)
+    {
+        PRINTF("Main task creation failed!.\r\n");
+        while (1)
+            ;
+    }
 
     xLoggingTaskInitialize(LOGGING_TASK_STACK_SIZE, LOGGING_TASK_PRIORITY, LOGGING_QUEUE_LENGTH);
 

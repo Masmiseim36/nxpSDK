@@ -189,13 +189,13 @@ static void USB_HostMsdClearHaltCallback(void *param, usb_host_transfer_t *trans
         USB_HostMsdCommandDone(msdInstance, kStatus_USB_TransferCancel);
     }
 
-    if (msdInstance->commandStatus == kMSD_CommandErrorDone)
+    if (msdInstance->commandStatus == (uint8_t)kMSD_CommandErrorDone)
     {
         USB_HostMsdCommandDone(msdInstance, kStatus_USB_Error); /* command fail */
     }
     else
     {
-        USB_HostMsdProcessCommand(msdInstance); /* continue to process ufi command */
+        (void)USB_HostMsdProcessCommand(msdInstance); /* continue to process ufi command */
     }
 }
 
@@ -217,20 +217,20 @@ static usb_status_t USB_HostMsdClearHalt(usb_host_msd_instance_t *msdInstance,
     }
 
     /* initialize transfer */
-    transfer->callbackFn = callbackFn;
-    transfer->callbackParam = msdInstance;
-    transfer->transferBuffer = NULL;
-    transfer->transferLength = 0;
-    transfer->setupPacket->bRequest = USB_REQUEST_STANDARD_CLEAR_FEATURE;
+    transfer->callbackFn                 = callbackFn;
+    transfer->callbackParam              = msdInstance;
+    transfer->transferBuffer             = NULL;
+    transfer->transferLength             = 0;
+    transfer->setupPacket->bRequest      = USB_REQUEST_STANDARD_CLEAR_FEATURE;
     transfer->setupPacket->bmRequestType = USB_REQUEST_TYPE_RECIPIENT_ENDPOINT;
-    transfer->setupPacket->wValue = USB_SHORT_TO_LITTLE_ENDIAN(USB_REQUEST_STANDARD_FEATURE_SELECTOR_ENDPOINT_HALT);
-    transfer->setupPacket->wIndex = USB_SHORT_TO_LITTLE_ENDIAN(endpoint);
+    transfer->setupPacket->wValue  = USB_SHORT_TO_LITTLE_ENDIAN(USB_REQUEST_STANDARD_FEATURE_SELECTOR_ENDPOINT_HALT);
+    transfer->setupPacket->wIndex  = USB_SHORT_TO_LITTLE_ENDIAN(endpoint);
     transfer->setupPacket->wLength = 0;
-    status = USB_HostSendSetup(msdInstance->hostHandle, msdInstance->controlPipe, transfer);
+    status                         = USB_HostSendSetup(msdInstance->hostHandle, msdInstance->controlPipe, transfer);
 
     if (status != kStatus_USB_Success)
     {
-        USB_HostFreeTransfer(msdInstance->hostHandle, transfer);
+        (void)USB_HostFreeTransfer(msdInstance->hostHandle, transfer);
     }
     msdInstance->controlTransfer = transfer;
 
@@ -239,17 +239,17 @@ static usb_status_t USB_HostMsdClearHalt(usb_host_msd_instance_t *msdInstance,
 
 static void USB_HostMsdResetDone(usb_host_msd_instance_t *msdInstance, usb_status_t status)
 {
-    if (msdInstance->internalResetRecovery == 1) /* internal mass reset recovery */
+    if (msdInstance->internalResetRecovery == 1U) /* internal mass reset recovery */
     {
-        msdInstance->internalResetRecovery = 0;
+        msdInstance->internalResetRecovery = 0U;
 
-        if ((status != kStatus_USB_Success) || (msdInstance->commandStatus == kMSD_CommandErrorDone))
+        if ((status != kStatus_USB_Success) || (msdInstance->commandStatus == (uint8_t)kMSD_CommandErrorDone))
         {
             USB_HostMsdCommandDone(msdInstance, kStatus_USB_Error); /* command fail */
         }
         else
         {
-            USB_HostMsdProcessCommand(msdInstance); /* continue to process ufi command */
+            (void)USB_HostMsdProcessCommand(msdInstance); /* continue to process ufi command */
         }
     }
     else /* user call mass storage reset recovery */
@@ -269,7 +269,7 @@ static void USB_HostMsdMassResetClearOutCallback(void *param, usb_host_transfer_
     usb_host_msd_instance_t *msdInstance = (usb_host_msd_instance_t *)param;
 
     msdInstance->controlTransfer = NULL;
-    USB_HostFreeTransfer(msdInstance->hostHandle, transfer);
+    (void)USB_HostFreeTransfer(msdInstance->hostHandle, transfer);
     USB_HostMsdResetDone(msdInstance, status); /* mass storage reset done */
 }
 
@@ -278,14 +278,14 @@ static void USB_HostMsdMassResetClearInCallback(void *param, usb_host_transfer_t
     usb_host_msd_instance_t *msdInstance = (usb_host_msd_instance_t *)param;
 
     msdInstance->controlTransfer = NULL;
-    USB_HostFreeTransfer(msdInstance->hostHandle, transfer);
+    (void)USB_HostFreeTransfer(msdInstance->hostHandle, transfer);
 
     if (status == kStatus_USB_Success)
     {
         if (msdInstance->outPipe != NULL)
         {
             /* continue to process mass storage reset */
-            USB_HostMsdClearHalt(
+            (void)USB_HostMsdClearHalt(
                 msdInstance, USB_HostMsdMassResetClearOutCallback,
                 (USB_REQUEST_TYPE_DIR_OUT | ((usb_host_pipe_t *)msdInstance->outPipe)->endpointAddress));
         }
@@ -301,14 +301,15 @@ static void USB_HostMsdMassResetCallback(void *param, usb_host_transfer_t *trans
     usb_host_msd_instance_t *msdInstance = (usb_host_msd_instance_t *)param;
 
     msdInstance->controlTransfer = NULL;
-    USB_HostFreeTransfer(msdInstance->hostHandle, transfer);
+    (void)USB_HostFreeTransfer(msdInstance->hostHandle, transfer);
     if (status == kStatus_USB_Success)
     {
         if (msdInstance->inPipe != NULL)
         {
             /* continue to process mass storage reset */
-            USB_HostMsdClearHalt(msdInstance, USB_HostMsdMassResetClearInCallback,
-                                 (USB_REQUEST_TYPE_DIR_IN | ((usb_host_pipe_t *)msdInstance->inPipe)->endpointAddress));
+            (void)USB_HostMsdClearHalt(
+                msdInstance, USB_HostMsdMassResetClearInCallback,
+                (USB_REQUEST_TYPE_DIR_IN | ((usb_host_pipe_t *)msdInstance->inPipe)->endpointAddress));
         }
     }
     else
@@ -329,7 +330,7 @@ static void USB_HostMsdControlCallback(void *param, usb_host_transfer_t *transfe
         msdInstance->controlCallbackFn(msdInstance->controlCallbackParam, transfer->transferBuffer,
                                        transfer->transferSofar, status); /* callback to application */
     }
-    USB_HostFreeTransfer(msdInstance->hostHandle, transfer);
+    (void)USB_HostFreeTransfer(msdInstance->hostHandle, transfer);
 }
 
 static void USB_HostMsdCommandDone(usb_host_msd_instance_t *msdInstance, usb_status_t status)
@@ -340,7 +341,7 @@ static void USB_HostMsdCommandDone(usb_host_msd_instance_t *msdInstance, usb_sta
         msdInstance->commandCallbackFn(msdInstance->commandCallbackParam, msdInstance->msdCommand.dataBuffer,
                                        msdInstance->msdCommand.dataSofar, status);
     }
-    msdInstance->commandStatus = kMSD_CommandIdle;
+    msdInstance->commandStatus = (uint8_t)kMSD_CommandIdle;
 }
 
 static void USB_HostMsdCswCallback(void *param, usb_host_transfer_t *transfer, usb_status_t status)
@@ -364,8 +365,8 @@ static void USB_HostMsdCswCallback(void *param, usb_host_transfer_t *transfer, u
                     break;
 
                 case 2:
-                    msdInstance->internalResetRecovery = 1;
-                    msdInstance->commandStatus = kMSD_CommandErrorDone;
+                    msdInstance->internalResetRecovery = 1U;
+                    msdInstance->commandStatus         = (uint8_t)kMSD_CommandErrorDone;
                     if (USB_HostMsdMassStorageReset(msdInstance, NULL, NULL) != kStatus_USB_Success)
                     {
                         USB_HostMsdCommandDone(msdInstance, kStatus_USB_Error);
@@ -380,8 +381,8 @@ static void USB_HostMsdCswCallback(void *param, usb_host_transfer_t *transfer, u
         else
         {
             /* mass reset recovery to end ufi command */
-            msdInstance->internalResetRecovery = 1;
-            msdInstance->commandStatus = kMSD_CommandErrorDone;
+            msdInstance->internalResetRecovery = 1U;
+            msdInstance->commandStatus         = (uint8_t)kMSD_CommandErrorDone;
             if (USB_HostMsdMassStorageReset(msdInstance, NULL, NULL) != kStatus_USB_Success)
             {
                 USB_HostMsdCommandDone(msdInstance, kStatus_USB_Error);
@@ -392,11 +393,11 @@ static void USB_HostMsdCswCallback(void *param, usb_host_transfer_t *transfer, u
     {
         if (status == kStatus_USB_TransferStall) /* case 1: stall */
         {
-            if (msdInstance->msdCommand.retryTime > 0)
+            if (msdInstance->msdCommand.retryTime > 0U)
             {
                 msdInstance->msdCommand.retryTime--; /* retry reduce when error */
             }
-            if (msdInstance->msdCommand.retryTime > 0)
+            if (msdInstance->msdCommand.retryTime > 0U)
             {
                 /* clear stall to continue the ufi command */
                 if (USB_HostMsdClearHalt(
@@ -410,8 +411,8 @@ static void USB_HostMsdCswCallback(void *param, usb_host_transfer_t *transfer, u
             else
             {
                 /* mass reset recovery to continue ufi command */
-                msdInstance->internalResetRecovery = 1;
-                msdInstance->commandStatus = kMSD_CommandErrorDone;
+                msdInstance->internalResetRecovery = 1U;
+                msdInstance->commandStatus         = (uint8_t)kMSD_CommandErrorDone;
                 if (USB_HostMsdMassStorageReset(msdInstance, NULL, NULL) != kStatus_USB_Success)
                 {
                     USB_HostMsdCommandDone(msdInstance, kStatus_USB_Error);
@@ -424,19 +425,19 @@ static void USB_HostMsdCswCallback(void *param, usb_host_transfer_t *transfer, u
         }
         else /* case 3: error */
         {
-            if (msdInstance->msdCommand.retryTime > 0)
+            if (msdInstance->msdCommand.retryTime > 0U)
             {
                 msdInstance->msdCommand.retryTime--; /* retry reduce when error */
             }
-            if (msdInstance->msdCommand.retryTime > 0)
+            if (msdInstance->msdCommand.retryTime > 0U)
             {
-                USB_HostMsdProcessCommand(msdInstance); /* retry the last step transaction */
+                (void)USB_HostMsdProcessCommand(msdInstance); /* retry the last step transaction */
             }
             else
             {
                 /* mass reset recovery to continue ufi command */
-                msdInstance->internalResetRecovery = 1;
-                msdInstance->commandStatus = kMSD_CommandErrorDone;
+                msdInstance->internalResetRecovery = 1U;
+                msdInstance->commandStatus         = (uint8_t)kMSD_CommandErrorDone;
                 if (USB_HostMsdMassStorageReset(msdInstance, NULL, NULL) != kStatus_USB_Success)
                 {
                     USB_HostMsdCommandDone(msdInstance, kStatus_USB_Error);
@@ -455,27 +456,35 @@ static void USB_HostMsdCbwCallback(void *param, usb_host_transfer_t *transfer, u
         /* kStatus_USB_Success */
         if (transfer->transferSofar == USB_HOST_UFI_CBW_LENGTH)
         {
-            msdInstance->commandStatus = kMSD_CommandTransferData;
-            USB_HostMsdProcessCommand(msdInstance); /* continue to process ufi command */
+            if (NULL != msdInstance->msdCommand.dataBuffer)
+            {
+                msdInstance->commandStatus = (uint8_t)kMSD_CommandTransferData;
+            }
+            else
+            {
+                msdInstance->commandStatus = (uint8_t)kMSD_CommandTransferCSW;
+            }
+
+            (void)USB_HostMsdProcessCommand(msdInstance); /* continue to process ufi command */
         }
         else
         {
-            if (msdInstance->msdCommand.retryTime > 0)
+            if (msdInstance->msdCommand.retryTime > 0U)
             {
                 msdInstance->msdCommand.retryTime--;
             }
-            if (msdInstance->msdCommand.retryTime > 0)
+            if (msdInstance->msdCommand.retryTime > 0U)
             {
-                USB_HostMsdProcessCommand(msdInstance); /* retry the last step transaction */
+                (void)USB_HostMsdProcessCommand(msdInstance); /* retry the last step transaction */
             }
             else
             {
                 /* mass reset recovery to continue ufi command */
-                msdInstance->internalResetRecovery = 1;
-                msdInstance->commandStatus = kMSD_CommandErrorDone;
+                msdInstance->internalResetRecovery = 1U;
+                msdInstance->commandStatus         = (uint8_t)kMSD_CommandErrorDone;
                 if (USB_HostMsdMassStorageReset(msdInstance, NULL, NULL) != kStatus_USB_Success)
                 {
-                    USB_HostMsdCommandDone(msdInstance, kStatus_USB_Error);
+                    (void)USB_HostMsdCommandDone(msdInstance, kStatus_USB_Error);
                 }
             }
         }
@@ -484,11 +493,11 @@ static void USB_HostMsdCbwCallback(void *param, usb_host_transfer_t *transfer, u
     {
         if (status == kStatus_USB_TransferStall) /* case 1: stall */
         {
-            if (msdInstance->msdCommand.retryTime > 0)
+            if (msdInstance->msdCommand.retryTime > 0U)
             {
                 msdInstance->msdCommand.retryTime--; /* retry reduce when error */
             }
-            if (msdInstance->msdCommand.retryTime > 0)
+            if (msdInstance->msdCommand.retryTime > 0U)
             {
                 /* clear stall to continue the ufi command */
                 if (USB_HostMsdClearHalt(
@@ -496,14 +505,14 @@ static void USB_HostMsdCbwCallback(void *param, usb_host_transfer_t *transfer, u
                         (USB_REQUEST_TYPE_DIR_OUT | ((usb_host_pipe_t *)msdInstance->inPipe)->endpointAddress)) !=
                     kStatus_USB_Success)
                 {
-                    USB_HostMsdCommandDone(msdInstance, kStatus_USB_Error);
+                    (void)USB_HostMsdCommandDone(msdInstance, kStatus_USB_Error);
                 }
             }
             else
             {
                 /* mass reset recovery to continue ufi command */
-                msdInstance->internalResetRecovery = 1;
-                msdInstance->commandStatus = kMSD_CommandErrorDone;
+                msdInstance->internalResetRecovery = 1U;
+                msdInstance->commandStatus         = (uint8_t)kMSD_CommandErrorDone;
                 if (USB_HostMsdMassStorageReset(msdInstance, NULL, NULL) != kStatus_USB_Success)
                 {
                     USB_HostMsdCommandDone(msdInstance, kStatus_USB_Error);
@@ -516,19 +525,19 @@ static void USB_HostMsdCbwCallback(void *param, usb_host_transfer_t *transfer, u
         }
         else /* case 3: error */
         {
-            if (msdInstance->msdCommand.retryTime > 0)
+            if (msdInstance->msdCommand.retryTime > 0U)
             {
                 msdInstance->msdCommand.retryTime--;
             }
-            if (msdInstance->msdCommand.retryTime > 0)
+            if (msdInstance->msdCommand.retryTime > 0U)
             {
-                USB_HostMsdProcessCommand(msdInstance); /* retry the last step transaction */
+                (void)USB_HostMsdProcessCommand(msdInstance); /* retry the last step transaction */
             }
             else
             {
                 /* mass reset recovery to continue ufi command */
-                msdInstance->internalResetRecovery = 1;
-                msdInstance->commandStatus = kMSD_CommandErrorDone;
+                msdInstance->internalResetRecovery = 1U;
+                msdInstance->commandStatus         = (uint8_t)kMSD_CommandErrorDone;
                 if (USB_HostMsdMassStorageReset(msdInstance, NULL, NULL) != kStatus_USB_Success)
                 {
                     USB_HostMsdCommandDone(msdInstance, kStatus_USB_Error);
@@ -548,13 +557,18 @@ static void USB_HostMsdDataCallback(void *param, usb_host_transfer_t *transfer, 
     {
         /* kStatus_USB_Success */
         msdInstance->msdCommand.dataSofar += transfer->transferSofar;
-        USB_HostMsdProcessCommand(msdInstance); /* continue to process ufi command */
+        if (msdInstance->msdCommand.dataSofar >= msdInstance->msdCommand.dataLength)
+        {
+            msdInstance->commandStatus = (uint8_t)kMSD_CommandTransferCSW; /* next step */
+        }
+
+        (void)USB_HostMsdProcessCommand(msdInstance); /* continue to process ufi command */
     }
     else
     {
         if (status == kStatus_USB_TransferStall) /* case 1: stall */
         {
-            if (msdInstance->msdCommand.retryTime > 0)
+            if (msdInstance->msdCommand.retryTime > 0U)
             {
                 msdInstance->msdCommand.retryTime--; /* retry reduce when error */
             }
@@ -567,9 +581,9 @@ static void USB_HostMsdDataCallback(void *param, usb_host_transfer_t *transfer, 
                 direction = USB_REQUEST_TYPE_DIR_OUT;
             }
 
-            if (msdInstance->msdCommand.retryTime == 0)
+            if (msdInstance->msdCommand.retryTime == 0U)
             {
-                msdInstance->commandStatus = kMSD_CommandTransferCSW; /* next step */
+                msdInstance->commandStatus = (uint8_t)kMSD_CommandTransferCSW; /* next step */
             }
             /* clear stall to continue the ufi command */
             if (USB_HostMsdClearHalt(msdInstance, USB_HostMsdClearHaltCallback,
@@ -586,8 +600,8 @@ static void USB_HostMsdDataCallback(void *param, usb_host_transfer_t *transfer, 
         else /* case 3: error */
         {
             /* mass reset recovery to finish ufi command */
-            msdInstance->internalResetRecovery = 1;
-            msdInstance->commandStatus = kMSD_CommandErrorDone;
+            msdInstance->internalResetRecovery = 1U;
+            msdInstance->commandStatus         = (uint8_t)kMSD_CommandErrorDone;
             if (USB_HostMsdMassStorageReset(msdInstance, NULL, NULL) != kStatus_USB_Success)
             {
                 USB_HostMsdCommandDone(msdInstance, kStatus_USB_Error);
@@ -600,7 +614,7 @@ static usb_status_t USB_HostMsdProcessCommand(usb_host_msd_instance_t *msdInstan
 {
     usb_status_t status = kStatus_USB_Success;
     usb_host_transfer_t *transfer;
-
+    usb_host_msd_command_status_t commandStatus;
     if (msdInstance->msdCommand.transfer == NULL)
     {
         /* malloc one transfer */
@@ -615,15 +629,17 @@ static usb_status_t USB_HostMsdProcessCommand(usb_host_msd_instance_t *msdInstan
         }
     }
     transfer = msdInstance->msdCommand.transfer;
-    switch (msdInstance->commandStatus)
+
+    commandStatus = (usb_host_msd_command_status_t)msdInstance->commandStatus;
+    switch (commandStatus)
     {
         case kMSD_CommandTransferCBW: /* ufi CBW phase */
-            transfer->direction = USB_OUT;
+            transfer->direction      = USB_OUT;
             transfer->transferBuffer = (uint8_t *)(&(msdInstance->msdCommand.cbwBlock));
             transfer->transferLength = USB_HOST_UFI_CBW_LENGTH;
-            transfer->callbackFn = USB_HostMsdCbwCallback;
-            transfer->callbackParam = msdInstance;
-            status = USB_HostSend(msdInstance->hostHandle, msdInstance->outPipe, transfer);
+            transfer->callbackFn     = USB_HostMsdCbwCallback;
+            transfer->callbackParam  = msdInstance;
+            status                   = USB_HostSend(msdInstance->hostHandle, msdInstance->outPipe, transfer);
             if (status != kStatus_USB_Success)
             {
 #ifdef HOST_ECHO
@@ -635,16 +651,16 @@ static usb_status_t USB_HostMsdProcessCommand(usb_host_msd_instance_t *msdInstan
         case kMSD_CommandTransferData: /* ufi DATA phase */
             if (msdInstance->msdCommand.dataBuffer != NULL)
             {
-                transfer->direction = msdInstance->msdCommand.dataDirection;
+                transfer->direction      = msdInstance->msdCommand.dataDirection;
                 transfer->transferBuffer = (msdInstance->msdCommand.dataBuffer + msdInstance->msdCommand.dataSofar);
                 transfer->transferLength = (msdInstance->msdCommand.dataLength - msdInstance->msdCommand.dataSofar);
-                transfer->callbackParam = msdInstance;
+                transfer->callbackParam  = msdInstance;
                 if (msdInstance->msdCommand.dataSofar != msdInstance->msdCommand.dataLength)
                 {
                     if (transfer->direction == USB_OUT)
                     {
                         transfer->callbackFn = USB_HostMsdDataCallback;
-                        status = USB_HostSend(msdInstance->hostHandle, msdInstance->outPipe, transfer);
+                        status               = USB_HostSend(msdInstance->hostHandle, msdInstance->outPipe, transfer);
                         if (status != kStatus_USB_Success)
                         {
 #ifdef HOST_ECHO
@@ -655,7 +671,7 @@ static usb_status_t USB_HostMsdProcessCommand(usb_host_msd_instance_t *msdInstan
                     else
                     {
                         transfer->callbackFn = USB_HostMsdDataCallback;
-                        status = USB_HostRecv(msdInstance->hostHandle, msdInstance->inPipe, transfer);
+                        status               = USB_HostRecv(msdInstance->hostHandle, msdInstance->inPipe, transfer);
                         if (status != kStatus_USB_Success)
                         {
 #ifdef HOST_ECHO
@@ -663,24 +679,20 @@ static usb_status_t USB_HostMsdProcessCommand(usb_host_msd_instance_t *msdInstan
 #endif
                         }
                     }
-                    break;
                 }
                 else
                 {
-                    /* don't break */
+                    /* for misra check */
                 }
             }
-            else
-            {
-                /* don't break */
-            }
+            break;
         case kMSD_CommandTransferCSW: /* ufi CSW phase */
-            transfer->direction = USB_IN;
+            transfer->direction      = USB_IN;
             transfer->transferBuffer = (uint8_t *)&msdInstance->msdCommand.cswBlock;
             transfer->transferLength = USB_HOST_UFI_CSW_LENGTH;
-            transfer->callbackFn = USB_HostMsdCswCallback;
-            transfer->callbackParam = msdInstance;
-            status = USB_HostRecv(msdInstance->hostHandle, msdInstance->inPipe, transfer);
+            transfer->callbackFn     = USB_HostMsdCswCallback;
+            transfer->callbackParam  = msdInstance;
+            status                   = USB_HostRecv(msdInstance->hostHandle, msdInstance->inPipe, transfer);
             if (status != kStatus_USB_Success)
             {
 #ifdef HOST_ECHO
@@ -694,6 +706,7 @@ static usb_status_t USB_HostMsdProcessCommand(usb_host_msd_instance_t *msdInstan
             break;
 
         default:
+            /*no action*/
             break;
     }
     return status;
@@ -723,21 +736,21 @@ usb_status_t USB_HostMsdCommand(usb_host_class_handle classHandle,
                                 uint8_t byteValues[10])
 {
     usb_host_msd_instance_t *msdInstance = (usb_host_msd_instance_t *)classHandle;
-    usb_host_cbw_t *cbwPointer = &(msdInstance->msdCommand.cbwBlock);
-    uint8_t index = 0;
+    usb_host_cbw_t *cbwPointer           = &(msdInstance->msdCommand.cbwBlock);
+    uint8_t index                        = 0;
 
     if (classHandle == NULL)
     {
         return kStatus_USB_InvalidHandle;
     }
 
-    if (msdInstance->commandStatus != kMSD_CommandIdle)
+    if (msdInstance->commandStatus != (uint8_t)kMSD_CommandIdle)
     {
         return kStatus_USB_Busy;
     }
 
     /* save the application callback function */
-    msdInstance->commandCallbackFn = callbackFn;
+    msdInstance->commandCallbackFn    = callbackFn;
     msdInstance->commandCallbackParam = callbackParam;
 
     /* initialize CBWCB fields */
@@ -748,11 +761,11 @@ usb_status_t USB_HostMsdCommand(usb_host_class_handle classHandle,
 
     /* initialize CBW fields */
     cbwPointer->CBWDataTransferLength = USB_LONG_TO_LITTLE_ENDIAN(bufferLength);
-    cbwPointer->CBWFlags = direction;
-    cbwPointer->CBWLun = (byteValues[1] >> USB_HOST_UFI_LOGICAL_UNIT_POSITION);
-    cbwPointer->CBWCBLength = USB_HOST_UFI_BLOCK_DATA_VALID_LENGTH;
+    cbwPointer->CBWFlags              = direction;
+    cbwPointer->CBWLun                = (byteValues[1] >> USB_HOST_UFI_LOGICAL_UNIT_POSITION);
+    cbwPointer->CBWCBLength           = USB_HOST_UFI_BLOCK_DATA_VALID_LENGTH;
 
-    msdInstance->commandStatus = kMSD_CommandTransferCBW;
+    msdInstance->commandStatus = (uint8_t)kMSD_CommandTransferCBW;
     if (direction == USB_HOST_MSD_CBW_FLAGS_DIRECTION_IN)
     {
         msdInstance->msdCommand.dataDirection = USB_IN;
@@ -764,8 +777,8 @@ usb_status_t USB_HostMsdCommand(usb_host_class_handle classHandle,
     msdInstance->msdCommand.dataBuffer = buffer;
 
     msdInstance->msdCommand.dataLength = bufferLength;
-    msdInstance->msdCommand.dataSofar = 0;
-    msdInstance->msdCommand.retryTime = USB_HOST_MSD_RETRY_MAX_TIME;
+    msdInstance->msdCommand.dataSofar  = 0;
+    msdInstance->msdCommand.retryTime  = USB_HOST_MSD_RETRY_MAX_TIME;
 
     return USB_HostMsdProcessCommand(msdInstance); /* start to process ufi command */
 }
@@ -810,16 +823,16 @@ static usb_status_t USB_HostMsdOpenInterface(usb_host_msd_instance_t *msdInstanc
              USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_IN) &&
             ((epDesc->bmAttributes & USB_DESCRIPTOR_ENDPOINT_ATTRIBUTE_TYPE_MASK) == USB_ENDPOINT_BULK))
         {
-            pipeInit.devInstance = msdInstance->deviceHandle;
-            pipeInit.pipeType = USB_ENDPOINT_BULK;
-            pipeInit.direction = USB_IN;
+            pipeInit.devInstance     = msdInstance->deviceHandle;
+            pipeInit.pipeType        = USB_ENDPOINT_BULK;
+            pipeInit.direction       = USB_IN;
             pipeInit.endpointAddress = (epDesc->bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_NUMBER_MASK);
-            pipeInit.interval = epDesc->bInterval;
-            pipeInit.maxPacketSize = (uint16_t)(USB_SHORT_FROM_LITTLE_ENDIAN_ADDRESS(epDesc->wMaxPacketSize) &
-                                                USB_DESCRIPTOR_ENDPOINT_MAXPACKETSIZE_SIZE_MASK);
-            pipeInit.numberPerUframe = (USB_SHORT_FROM_LITTLE_ENDIAN_ADDRESS(epDesc->wMaxPacketSize) &
-                                        USB_DESCRIPTOR_ENDPOINT_MAXPACKETSIZE_MULT_TRANSACTIONS_MASK);
-            pipeInit.nakCount = USB_HOST_CONFIG_MAX_NAK;
+            pipeInit.interval        = epDesc->bInterval;
+            pipeInit.maxPacketSize   = (uint16_t)((USB_SHORT_FROM_LITTLE_ENDIAN_ADDRESS(epDesc->wMaxPacketSize) &
+                                                 USB_DESCRIPTOR_ENDPOINT_MAXPACKETSIZE_SIZE_MASK));
+            pipeInit.numberPerUframe = (uint8_t)((USB_SHORT_FROM_LITTLE_ENDIAN_ADDRESS(epDesc->wMaxPacketSize) &
+                                                  USB_DESCRIPTOR_ENDPOINT_MAXPACKETSIZE_MULT_TRANSACTIONS_MASK));
+            pipeInit.nakCount        = USB_HOST_CONFIG_MAX_NAK;
 
             status = USB_HostOpenPipe(msdInstance->hostHandle, &msdInstance->inPipe, &pipeInit);
             if (status != kStatus_USB_Success)
@@ -834,16 +847,16 @@ static usb_status_t USB_HostMsdOpenInterface(usb_host_msd_instance_t *msdInstanc
                   USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_OUT) &&
                  ((epDesc->bmAttributes & USB_DESCRIPTOR_ENDPOINT_ATTRIBUTE_TYPE_MASK) == USB_ENDPOINT_BULK))
         {
-            pipeInit.devInstance = msdInstance->deviceHandle;
-            pipeInit.pipeType = USB_ENDPOINT_BULK;
-            pipeInit.direction = USB_OUT;
+            pipeInit.devInstance     = msdInstance->deviceHandle;
+            pipeInit.pipeType        = USB_ENDPOINT_BULK;
+            pipeInit.direction       = USB_OUT;
             pipeInit.endpointAddress = (epDesc->bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_NUMBER_MASK);
-            pipeInit.interval = epDesc->bInterval;
-            pipeInit.maxPacketSize = (uint16_t)(USB_SHORT_FROM_LITTLE_ENDIAN_ADDRESS(epDesc->wMaxPacketSize) &
-                                                USB_DESCRIPTOR_ENDPOINT_MAXPACKETSIZE_SIZE_MASK);
-            pipeInit.numberPerUframe = (USB_SHORT_FROM_LITTLE_ENDIAN_ADDRESS(epDesc->wMaxPacketSize) &
-                                        USB_DESCRIPTOR_ENDPOINT_MAXPACKETSIZE_MULT_TRANSACTIONS_MASK);
-            pipeInit.nakCount = USB_HOST_CONFIG_MAX_NAK;
+            pipeInit.interval        = epDesc->bInterval;
+            pipeInit.maxPacketSize   = (uint16_t)((USB_SHORT_FROM_LITTLE_ENDIAN_ADDRESS(epDesc->wMaxPacketSize) &
+                                                 USB_DESCRIPTOR_ENDPOINT_MAXPACKETSIZE_SIZE_MASK));
+            pipeInit.numberPerUframe = (uint8_t)((USB_SHORT_FROM_LITTLE_ENDIAN_ADDRESS(epDesc->wMaxPacketSize) &
+                                                  USB_DESCRIPTOR_ENDPOINT_MAXPACKETSIZE_MULT_TRANSACTIONS_MASK));
+            pipeInit.nakCount        = USB_HOST_CONFIG_MAX_NAK;
 
             status = USB_HostOpenPipe(msdInstance->hostHandle, &msdInstance->outPipe, &pipeInit);
             if (status != kStatus_USB_Success)
@@ -879,15 +892,16 @@ static void USB_HostMsdSetInterfaceCallback(void *param, usb_host_transfer_t *tr
         msdInstance->controlCallbackFn(msdInstance->controlCallbackParam, NULL, 0,
                                        status); /* callback to application */
     }
-    USB_HostFreeTransfer(msdInstance->hostHandle, transfer);
+    (void)USB_HostFreeTransfer(msdInstance->hostHandle, transfer);
 }
 
 usb_status_t USB_HostMsdInit(usb_device_handle deviceHandle, usb_host_class_handle *classHandle)
 {
     uint32_t infoValue;
     usb_status_t status;
-    usb_host_msd_instance_t *msdInstance = (usb_host_msd_instance_t *)OSA_MemoryAllocate(
-        sizeof(usb_host_msd_instance_t)); /* malloc msd class instance */
+    uint32_t *temp;
+    usb_host_msd_instance_t *msdInstance =
+        (usb_host_msd_instance_t *)OSA_MemoryAllocate(sizeof(usb_host_msd_instance_t)); /* malloc msd class instance */
 
     if (msdInstance == NULL)
     {
@@ -895,13 +909,14 @@ usb_status_t USB_HostMsdInit(usb_device_handle deviceHandle, usb_host_class_hand
     }
 
     /* initialize msd instance */
-    msdInstance->deviceHandle = deviceHandle;
+    msdInstance->deviceHandle    = deviceHandle;
     msdInstance->interfaceHandle = NULL;
-    USB_HostHelperGetPeripheralInformation(deviceHandle, kUSB_HostGetHostHandle, &infoValue);
-    msdInstance->hostHandle = (usb_host_handle)infoValue;
-    USB_HostHelperGetPeripheralInformation(deviceHandle, kUSB_HostGetDeviceControlPipe, &infoValue);
-    msdInstance->controlPipe = (usb_host_pipe_handle)infoValue;
-
+    (void)USB_HostHelperGetPeripheralInformation(deviceHandle, (uint32_t)kUSB_HostGetHostHandle, &infoValue);
+    temp                    = (uint32_t *)infoValue;
+    msdInstance->hostHandle = (usb_host_handle)temp;
+    (void)USB_HostHelperGetPeripheralInformation(deviceHandle, (uint32_t)kUSB_HostGetDeviceControlPipe, &infoValue);
+    temp                                          = (uint32_t *)infoValue;
+    msdInstance->controlPipe                      = (usb_host_pipe_handle)temp;
     msdInstance->msdCommand.cbwBlock.CBWSignature = USB_LONG_TO_LITTLE_ENDIAN(USB_HOST_MSD_CBW_SIGNATURE);
     status = USB_HostMallocTransfer(msdInstance->hostHandle, &(msdInstance->msdCommand.transfer));
     if (status != kStatus_USB_Success)
@@ -922,7 +937,7 @@ usb_status_t USB_HostMsdSetInterface(usb_host_class_handle classHandle,
                                      transfer_callback_t callbackFn,
                                      void *callbackParam)
 {
-    usb_status_t status = kStatus_USB_Error;
+    usb_status_t status;
     usb_host_msd_instance_t *msdInstance = (usb_host_msd_instance_t *)classHandle;
     usb_host_transfer_t *transfer;
 
@@ -961,7 +976,7 @@ usb_status_t USB_HostMsdSetInterface(usb_host_class_handle classHandle,
         }
     }
 
-    if (alternateSetting == 0) /* open interface directly */
+    if (alternateSetting == 0U) /* open interface directly */
     {
         if (callbackFn != NULL)
         {
@@ -980,20 +995,20 @@ usb_status_t USB_HostMsdSetInterface(usb_host_class_handle classHandle,
             return kStatus_USB_Busy;
         }
         /* save the application callback function */
-        msdInstance->controlCallbackFn = callbackFn;
+        msdInstance->controlCallbackFn    = callbackFn;
         msdInstance->controlCallbackParam = callbackParam;
         /* initialize transfer */
-        transfer->callbackFn = USB_HostMsdSetInterfaceCallback;
-        transfer->callbackParam = msdInstance;
-        transfer->setupPacket->bRequest = USB_REQUEST_STANDARD_SET_INTERFACE;
+        transfer->callbackFn                 = USB_HostMsdSetInterfaceCallback;
+        transfer->callbackParam              = msdInstance;
+        transfer->setupPacket->bRequest      = USB_REQUEST_STANDARD_SET_INTERFACE;
         transfer->setupPacket->bmRequestType = USB_REQUEST_TYPE_RECIPIENT_INTERFACE;
-        transfer->setupPacket->wIndex = USB_SHORT_TO_LITTLE_ENDIAN(
+        transfer->setupPacket->wIndex        = USB_SHORT_TO_LITTLE_ENDIAN(
             ((usb_host_interface_t *)msdInstance->interfaceHandle)->interfaceDesc->bInterfaceNumber);
-        transfer->setupPacket->wValue = USB_SHORT_TO_LITTLE_ENDIAN(alternateSetting);
+        transfer->setupPacket->wValue  = USB_SHORT_TO_LITTLE_ENDIAN(alternateSetting);
         transfer->setupPacket->wLength = 0;
-        transfer->transferBuffer = NULL;
-        transfer->transferLength = 0;
-        status = USB_HostSendSetup(msdInstance->hostHandle, msdInstance->controlPipe, transfer);
+        transfer->transferBuffer       = NULL;
+        transfer->transferLength       = 0;
+        status                         = USB_HostSendSetup(msdInstance->hostHandle, msdInstance->controlPipe, transfer);
 
         if (status == kStatus_USB_Success)
         {
@@ -1001,7 +1016,7 @@ usb_status_t USB_HostMsdSetInterface(usb_host_class_handle classHandle,
         }
         else
         {
-            USB_HostFreeTransfer(msdInstance->hostHandle, transfer);
+            (void)USB_HostFreeTransfer(msdInstance->hostHandle, transfer);
         }
     }
 
@@ -1018,7 +1033,13 @@ usb_status_t USB_HostMsdDeinit(usb_device_handle deviceHandle, usb_host_class_ha
         if (msdInstance->inPipe != NULL)
         {
             status = USB_HostCancelTransfer(msdInstance->hostHandle, msdInstance->inPipe, NULL); /* cancel pipe */
-            status = USB_HostClosePipe(msdInstance->hostHandle, msdInstance->inPipe);            /* close pipe */
+            if (status != kStatus_USB_Success)
+            {
+#ifdef HOST_ECHO
+                usb_echo("error when cancel pipe\r\n");
+#endif
+            }
+            status = USB_HostClosePipe(msdInstance->hostHandle, msdInstance->inPipe); /* close pipe */
             if (status != kStatus_USB_Success)
             {
 #ifdef HOST_ECHO
@@ -1029,7 +1050,13 @@ usb_status_t USB_HostMsdDeinit(usb_device_handle deviceHandle, usb_host_class_ha
         if (msdInstance->outPipe != NULL)
         {
             status = USB_HostCancelTransfer(msdInstance->hostHandle, msdInstance->outPipe, NULL); /* cancel pipe */
-            status = USB_HostClosePipe(msdInstance->hostHandle, msdInstance->outPipe);            /* close pipe */
+            if (status != kStatus_USB_Success)
+            {
+#ifdef HOST_ECHO
+                usb_echo("error when cancel pipe\r\n");
+#endif
+            }
+            status = USB_HostClosePipe(msdInstance->hostHandle, msdInstance->outPipe); /* close pipe */
             if (status != kStatus_USB_Success)
             {
 #ifdef HOST_ECHO
@@ -1042,18 +1069,24 @@ usb_status_t USB_HostMsdDeinit(usb_device_handle deviceHandle, usb_host_class_ha
         {
             status =
                 USB_HostCancelTransfer(msdInstance->hostHandle, msdInstance->controlPipe, msdInstance->controlTransfer);
+            if (status != kStatus_USB_Success)
+            {
+#ifdef HOST_ECHO
+                usb_echo("error when cancel pipe\r\n");
+#endif
+            }
         }
-        if (msdInstance->msdCommand.transfer)
+        if (NULL != msdInstance->msdCommand.transfer)
         {
-            USB_HostFreeTransfer(msdInstance->hostHandle, msdInstance->msdCommand.transfer);
+            (void)USB_HostFreeTransfer(msdInstance->hostHandle, msdInstance->msdCommand.transfer);
         }
-        USB_HostCloseDeviceInterface(deviceHandle,
-                                     msdInstance->interfaceHandle); /* notify host driver the interface is closed */
+        (void)USB_HostCloseDeviceInterface(
+            deviceHandle, msdInstance->interfaceHandle); /* notify host driver the interface is closed */
         OSA_MemoryFree(msdInstance);
     }
     else
     {
-        USB_HostCloseDeviceInterface(deviceHandle, NULL);
+        (void)USB_HostCloseDeviceInterface(deviceHandle, NULL);
     }
 
     return kStatus_USB_Success;
@@ -1084,17 +1117,17 @@ static usb_status_t USB_HostMsdControl(usb_host_msd_instance_t *msdInstance,
         return kStatus_USB_Busy;
     }
     /* save the application callback function */
-    msdInstance->controlCallbackFn = callbackFn;
+    msdInstance->controlCallbackFn    = callbackFn;
     msdInstance->controlCallbackParam = callbackParam;
     /* initialize transfer */
     transfer->transferBuffer = buffer;
     transfer->transferLength = bufferLength;
-    transfer->callbackFn = pipeCallbackFn;
-    transfer->callbackParam = msdInstance;
+    transfer->callbackFn     = pipeCallbackFn;
+    transfer->callbackParam  = msdInstance;
 
     transfer->setupPacket->bmRequestType = requestType;
-    transfer->setupPacket->bRequest = requestValue;
-    transfer->setupPacket->wValue = 0x0000;
+    transfer->setupPacket->bRequest      = requestValue;
+    transfer->setupPacket->wValue        = 0x0000;
     transfer->setupPacket->wIndex =
         ((usb_host_interface_t *)msdInstance->interfaceHandle)->interfaceDesc->bInterfaceNumber;
     transfer->setupPacket->wLength = bufferLength;
@@ -1102,7 +1135,7 @@ static usb_status_t USB_HostMsdControl(usb_host_msd_instance_t *msdInstance,
     if (USB_HostSendSetup(msdInstance->hostHandle, msdInstance->controlPipe, transfer) !=
         kStatus_USB_Success) /* call host driver api */
     {
-        USB_HostFreeTransfer(msdInstance->hostHandle, transfer);
+        (void)USB_HostFreeTransfer(msdInstance->hostHandle, transfer);
         return kStatus_USB_Error;
     }
     msdInstance->controlTransfer = transfer;

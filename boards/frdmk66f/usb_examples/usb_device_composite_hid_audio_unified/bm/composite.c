@@ -46,38 +46,38 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_SAI_BITWIDTH (kSAI_WordWidth16bits)
-#define SAI_TxIRQHandler I2S0_Tx_IRQHandler
-#define SAI_RxIRQHandler I2S0_Rx_IRQHandler
-#define SAI_IRQ_CHANNEL (0U)
-#define SAI_UserTxIRQHandler I2S0_Tx_IRQHandler
-#define SAI_UserRxIRQHandler I2S0_Rx_IRQHandler
-#define DEMO_SAI_IRQ_TX I2S0_Tx_IRQn
-#define DEMO_SAI_IRQ_RX I2S0_Rx_IRQn
-#define BOARD_DEMO_SAI I2S0
+#define DEMO_SAI_BITWIDTH     (kSAI_WordWidth16bits)
+#define SAI_TxIRQHandler      I2S0_Tx_IRQHandler
+#define SAI_RxIRQHandler      I2S0_Rx_IRQHandler
+#define SAI_IRQ_CHANNEL       (0U)
+#define SAI_UserTxIRQHandler  I2S0_Tx_IRQHandler
+#define SAI_UserRxIRQHandler  I2S0_Rx_IRQHandler
+#define DEMO_SAI_IRQ_TX       I2S0_Tx_IRQn
+#define DEMO_SAI_IRQ_RX       I2S0_Rx_IRQn
+#define BOARD_DEMO_SAI        I2S0
 #define BOARD_DEMO_SAI_CLKSRC kCLOCK_CoreSysClk
 #define BOARD_DEMO_I2C_CLKSRC kCLOCK_BusClk
-#define EXAMPLE_DMA DMA0
-#define EXAMPLE_DMAMUX DMAMUX
-#define EXAMPLE_TX_CHANNEL (0U)
-#define EXAMPLE_RX_CHANNEL (1U)
+#define EXAMPLE_DMA           DMA0
+#define EXAMPLE_DMAMUX        DMAMUX
+#define EXAMPLE_TX_CHANNEL    (0U)
+#define EXAMPLE_RX_CHANNEL    (1U)
 #define EXAMPLE_SAI_TX_SOURCE kDmaRequestMux0I2S0Tx
 #define EXAMPLE_SAI_RX_SOURCE kDmaRequestMux0I2S0Rx
 
-#define I2C_RELEASE_SDA_PORT PORTC
-#define I2C_RELEASE_SCL_PORT PORTC
-#define I2C_RELEASE_SDA_GPIO GPIOC
-#define I2C_RELEASE_SDA_PIN 11U
-#define I2C_RELEASE_SCL_GPIO GPIOC
-#define I2C_RELEASE_SCL_PIN 10U
+#define I2C_RELEASE_SDA_PORT  PORTC
+#define I2C_RELEASE_SCL_PORT  PORTC
+#define I2C_RELEASE_SDA_GPIO  GPIOC
+#define I2C_RELEASE_SDA_PIN   11U
+#define I2C_RELEASE_SCL_GPIO  GPIOC
+#define I2C_RELEASE_SCL_PIN   10U
 #define I2C_RELEASE_BUS_COUNT 100U
 
-#define BOARD_SW_GPIO BOARD_SW3_GPIO
-#define BOARD_SW_PORT BOARD_SW3_PORT
-#define BOARD_SW_GPIO_PIN BOARD_SW3_GPIO_PIN
-#define BOARD_SW_IRQ BOARD_SW3_IRQ
+#define BOARD_SW_GPIO        BOARD_SW3_GPIO
+#define BOARD_SW_PORT        BOARD_SW3_PORT
+#define BOARD_SW_GPIO_PIN    BOARD_SW3_GPIO_PIN
+#define BOARD_SW_IRQ         BOARD_SW3_IRQ
 #define BOARD_SW_IRQ_HANDLER BOARD_SW3_IRQ_HANDLER
-#define BOARD_SW_NAME BOARD_SW3_NAME
+#define BOARD_SW_NAME        BOARD_SW3_NAME
 
 #define AUDIO_DMA_EDMA_MODE (1U)
 
@@ -86,8 +86,8 @@
 /* demo audio bit width */
 #define DEMO_AUDIO_BIT_WIDTH kSAI_WordWidth16bits
 
-#define OVER_SAMPLE_RATE (256U)
-#define DEMO_AUDIO_SAMPLE_RATE (kSAI_SampleRate48KHz)
+#define OVER_SAMPLE_RATE            (256U)
+#define DEMO_AUDIO_SAMPLE_RATE      (kSAI_SampleRate48KHz)
 #define DEMO_AUDIO_SAI_MASTER_CLOCK OVER_SAMPLE_RATE *DEMO_AUDIO_SAMPLE_RATE
 /*******************************************************************************
  * Prototypes
@@ -488,7 +488,7 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
     {
         case kUSB_DeviceEventBusReset:
         {
-            for(count = 0U; count < USB_DEVICE_INTERFACE_COUNT; count++)
+            for (count = 0U; count < USB_DEVICE_INTERFACE_COUNT; count++)
             {
                 g_composite.currentInterfaceAlternateSetting[count] = 0U;
             }
@@ -657,6 +657,8 @@ void APPInit(void)
 
     USB_DeviceIsrEnable();
 
+    /*Add one delay here to make the DP pull down long enough to allow host to detect the previous disconnection.*/
+    SDK_DelayAtLeastUs(5000, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
     USB_DeviceRun(g_composite.deviceHandle);
 }
 

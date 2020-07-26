@@ -4,7 +4,7 @@
   * This file is based on \src\include\lwip\opt.h
   ******************************************************************************
    * Copyright (c) 2013-2016, Freescale Semiconductor, Inc.
-   * Copyright 2016-2017 NXP
+   * Copyright 2016-2017,2020 NXP
    * All rights reserved.
    *
    * SPDX-License-Identifier: BSD-3-Clause
@@ -21,6 +21,10 @@
  * allocation and deallocation.
  */
 #define SYS_LIGHTWEIGHT_PROT 1
+
+/* Reduce little ram */
+#define DNS_TABLE_SIZE 3
+
 
 /**
  * NO_SYS==0: Use RTOS
@@ -60,6 +64,26 @@
 #define LWIP_SOCKET 0
 
 #endif
+
+/* ---------- Core locking ---------- */
+
+//Uncomment below lines once KSDK gets tagged
+// #define LWIP_TCPIP_CORE_LOCKING 1
+
+// void sys_lock_tcpip_core(void);
+// #define LOCK_TCPIP_CORE() sys_lock_tcpip_core()
+
+// void sys_unlock_tcpip_core(void);
+// #define UNLOCK_TCPIP_CORE() sys_unlock_tcpip_core()
+
+// void sys_check_core_locking(void);
+// #define LWIP_ASSERT_CORE_LOCKED() sys_check_core_locking()
+
+// void sys_mark_tcpip_thread(void);
+// #define LWIP_MARK_TCPIP_THREAD() sys_mark_tcpip_thread()
+
+
+
 /* ---------- Memory options ---------- */
 /**
  * MEM_ALIGNMENT: should be set to the alignment of the CPU

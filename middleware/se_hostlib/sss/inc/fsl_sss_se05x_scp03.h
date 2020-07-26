@@ -1,5 +1,5 @@
 /*
-* Copyright 2018,2019 NXP
+* Copyright 2018-2020 NXP
 * All rights reserved.
 *
 * SPDX-License-Identifier: BSD-3-Clause
@@ -43,14 +43,12 @@ extern "C" {
 /**
 * To send and receive encrypted communication using SCP03
 */
-sss_status_t nxScp03_AuthenticateChannel(
-    pSe05xSession_t se05xSession, NXSCP03_AuthCtx_t *authScp03);
+sss_status_t nxScp03_AuthenticateChannel(pSe05xSession_t se05xSession, NXSCP03_AuthCtx_t *authScp03);
 
 /**
 * To send and receive encrypted communication using Fast SCP
 */
-sss_status_t nxFastScp_AuthenticateChannel(
-    pSe05xSession_t se05xSession, SE05x_AuthCtx_FastScp_t *pAuthFScp);
+sss_status_t nxECKey_AuthenticateChannel(pSe05xSession_t se05xSession, SE05x_AuthCtx_ECKey_t *pAuthFScp);
 
 #ifdef __cplusplus
 } /* extern "c"*/

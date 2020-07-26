@@ -99,6 +99,19 @@ usb_audio_generator_struct_t s_audioGenerator = {
     {0x00U, 0x00U, 0x01U}, /* minSamplingFrequency */
     {0x00U, 0x00U, 0x01U}, /* maxSamplingFrequency */
     {0x00U, 0x00U, 0x01U}, /* resSamplingFrequency */
+#if (USB_DEVICE_CONFIG_AUDIO_CLASS_2_0)
+    0U,                    /* curMute20 */
+    1U,                    /* curClockValid */ 
+    {0x00U, 0x1FU},        /* curVolume20 */
+#if defined(AUDIO_DATA_SOURCE_DMIC) && (AUDIO_DATA_SOURCE_DMIC > 0U)
+    16000U,                /* curSampleFrequency, This should be changed to 16000 if sampling rate is 16k */
+    {1U, 16000U, 16000U, 0U},   /* freqControlRange */
+#else
+    8000U,                /* curSampleFrequency, This should be changed to 8000 if sampling rate is 8k */
+    {1U, 8000U, 8000U, 0U},   /* freqControlRange */
+#endif
+    {1U, 0x8001U, 0x7FFFU, 1U}, /* volumeControlRange */ 
+#endif
     0,                     /* currentConfiguration */
     {0, 0},                /* currentInterfaceAlternateSetting */
     USB_SPEED_FULL,        /* speed */
@@ -283,7 +296,33 @@ usb_status_t USB_DeviceAudioRequest(class_handle_t handle, uint32_t event, void 
             request->buffer = s_audioGenerator.resSamplingFrequency;
             request->length = sizeof(s_audioGenerator.resSamplingFrequency);
             break;
-
+#if (USB_DEVICE_CONFIG_AUDIO_CLASS_2_0)
+        case USB_DEVICE_AUDIO_GET_CUR_SAM_FREQ_CONTROL:
+            request->buffer = (uint8_t *)&s_audioGenerator.curSampleFrequency;
+            request->length = sizeof(s_audioGenerator.curSampleFrequency);
+            break;
+        case USB_DEVICE_AUDIO_GET_RANGE_SAM_FREQ_CONTROL:
+            request->buffer = (uint8_t *)&s_audioGenerator.freqControlRange;
+            request->length = sizeof(s_audioGenerator.freqControlRange);
+            break;
+        case USB_DEVICE_AUDIO_GET_CUR_CLOCK_VALID_CONTROL:
+            request->buffer = &s_audioGenerator.curClockValid;
+            request->length = sizeof(s_audioGenerator.curClockValid);
+            break;
+        case USB_DEVICE_AUDIO_GET_CUR_MUTE_CONTROL_AUDIO20:
+            request->buffer = (uint8_t *)&s_audioGenerator.curMute20;
+            request->length = sizeof(s_audioGenerator.curMute20);
+            break;
+        case USB_DEVICE_AUDIO_GET_CUR_VOLUME_CONTROL_AUDIO20:
+            request->buffer = (uint8_t *)&s_audioGenerator.curVolume20;
+            request->length = sizeof(s_audioGenerator.curVolume20);
+            break;
+        case USB_DEVICE_AUDIO_GET_RANGE_VOLUME_CONTROL_AUDIO20:
+            request->buffer = (uint8_t *)&s_audioGenerator.volumeControlRange;
+            request->length = sizeof(s_audioGenerator.volumeControlRange);
+            break;
+#endif
+            
         case USB_DEVICE_AUDIO_SET_CUR_VOLUME_CONTROL:
             if (request->isSetup == 1U)
             {
@@ -448,6 +487,24 @@ usb_status_t USB_DeviceAudioRequest(class_handle_t handle, uint32_t event, void 
                 request->buffer = s_audioGenerator.resSamplingFrequency;
             }
             break;
+#if (USB_DEVICE_CONFIG_AUDIO_CLASS_2_0)
+        case USB_DEVICE_AUDIO_SET_CUR_SAM_FREQ_CONTROL:
+            if (request->isSetup == 1U)
+            {
+                request->buffer = (uint8_t *)&s_audioGenerator.curSampleFrequency;
+            }
+            break;
+        case USB_DEVICE_AUDIO_SET_CUR_CLOCK_VALID_CONTROL:
+            if (request->isSetup == 1U)
+            {
+                request->buffer = &s_audioGenerator.curClockValid;
+            }
+            break;
+        case USB_DEVICE_AUDIO_SET_CUR_MUTE_CONTROL_AUDIO20:
+            break;
+        case USB_DEVICE_AUDIO_SET_CUR_VOLUME_CONTROL_AUDIO20:
+            break;
+#endif
         default:
             error = kStatus_USB_InvalidRequest;
             break;
@@ -661,6 +718,8 @@ void APPInit(void)
 
     USB_DeviceIsrEnable();
 
+    /*Add one delay here to make the DP pull down long enough to allow host to detect the previous disconnection.*/
+    SDK_DelayAtLeastUs(5000, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
     USB_DeviceRun(s_audioGenerator.deviceHandle);
 }
 

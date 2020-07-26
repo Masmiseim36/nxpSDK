@@ -9,7 +9,7 @@
 *                                                                    *
 **********************************************************************
 
-** emWin V5.50 - Graphical user interface for embedded applications **
+** emWin V6.10 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -61,21 +61,22 @@ extern "C" {     /* Make sure we have C-declarations in C++ programs */
   //
   // Simulation prototypes
   //
-  U16  SIM_Lin_ReadMem16  (unsigned int Off);
-  U32  SIM_Lin_ReadMem32  (unsigned int Off);
-  U8   SIM_Lin_ReadMem08p (U8  * p);
-  U32  SIM_Lin_ReadMem32p (U32 * p);
-  void SIM_Lin_WriteMem16 (unsigned int Off, U16 Data);
-  void SIM_Lin_WriteMem32 (unsigned int Off, U32 Data);
-  void SIM_Lin_WriteMem08p(U8  * p, U8 Data);
-  void SIM_Lin_WriteMem16p(U16 * p, U16 Data);
-  void SIM_Lin_WriteMem32p(U32 * p, U32 Data);
-  void SIM_Lin_memcpy     (void * pDst, const void * pSrc, int Len);
-  void SIM_Lin_memset     (void * pDst, U8 Value, U32 Len);
-  void SIM_Lin_SetVRAMAddr(int LayerIndex, void * pVRAM);
-  void SIM_Lin_SetVRAMSize(int LayerIndex, int vxSize, int vySize, int xSize, int ySize);
-  void SIM_Lin_CopyBuffer (int IndexSrc, int IndexDst);
-  void SIM_Lin_ShowBuffer (int Index);
+  U16    SIM_Lin_ReadMem16  (unsigned int Off);
+  U32    SIM_Lin_ReadMem32  (unsigned int Off);
+  U8     SIM_Lin_ReadMem08p (U8  * p);
+  U32    SIM_Lin_ReadMem32p (U32 * p);
+  void   SIM_Lin_WriteMem16 (unsigned int Off, U16 Data);
+  void   SIM_Lin_WriteMem32 (unsigned int Off, U32 Data);
+  void   SIM_Lin_WriteMem08p(U8  * p, U8 Data);
+  void   SIM_Lin_WriteMem16p(U16 * p, U16 Data);
+  void   SIM_Lin_WriteMem32p(U32 * p, U32 Data);
+  void   SIM_Lin_memcpy     (void * pDst, const void * pSrc, int Len);
+  void   SIM_Lin_memset     (void * pDst, U8 Value, U32 Len);
+  void   SIM_Lin_SetVRAMAddr(int LayerIndex, void * pVRAM);
+  void   SIM_Lin_SetVRAMSize(int LayerIndex, int vxSize, int vySize, int xSize, int ySize);
+  void   SIM_Lin_CopyBuffer (int IndexSrc, int IndexDst);
+  void   SIM_Lin_ShowBuffer (int Index);
+  void * SIM_Lin_GetVRAMAddr(int LayerIndex);
   //
   // Access macro definition for internal simulation
   //
@@ -92,6 +93,10 @@ extern "C" {     /* Make sure we have C-declarations in C++ programs */
   #define GUI__MEMCPY(pDst, pSrc, Len)         SIM_Lin_memcpy(pDst, pSrc, Len)
   #undef  GUI__MEMSET
   #define GUI__MEMSET(pDst, Value, Len)        SIM_Lin_memset(pDst, Value, Len)
+  //
+  // Get VRAM address
+  //
+  #define GET_VRAM_ADDRESS SIM_Lin_GetVRAMAddr(pDevice->LayerIndex)
 #else
   //
   // Access macro definition for hardware
@@ -105,6 +110,10 @@ extern "C" {     /* Make sure we have C-declarations in C++ programs */
   #define LCD_WRITE_MEM08P(p, Data)            *((U8  *)p) = (U8)(Data)
   #define LCD_WRITE_MEM16P(p, Data)            *((U16 *)p) = (U16)(Data)
   #define LCD_WRITE_MEM32P(p, Data)            *((U32 *)p) = Data
+  //
+  // Get VRAM address
+  //
+  #define GET_VRAM_ADDRESS (void *)pContext->VRAMAddr
 #endif
 
 #ifndef   WRITE_MEM16
@@ -264,7 +273,7 @@ extern "C" {     /* Make sure we have C-declarations in C++ programs */
 //
 #define DEFAULT_MANAGEMENT_GETDEVDATA() \
   case LCD_DEVDATA_VRAMADDR:            \
-    return (void *)pContext->VRAMAddr;
+    return GET_VRAM_ADDRESS;
 
 //
 // Definition of private function management for _GetDevFunc()

@@ -9,7 +9,7 @@
 *                                                                    *
 **********************************************************************
 
-** emWin V5.50 - Graphical user interface for embedded applications **
+** emWin V6.10 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -59,9 +59,11 @@ Purpose     : RADIO include
 *
 *       Bitmap indices
 */
-#define RADIO_BI_INACTIV 0
-#define RADIO_BI_ACTIV   1
-#define RADIO_BI_CHECK   2
+#define RADIO_BI_INACTIV  0
+#define RADIO_BI_ACTIV    1
+#define RADIO_BI_INACTIVE RADIO_BI_INACTIV
+#define RADIO_BI_ACTIVE   RADIO_BI_ACTIV
+#define RADIO_BI_CHECK    2
 
 /*********************************************************************
 *

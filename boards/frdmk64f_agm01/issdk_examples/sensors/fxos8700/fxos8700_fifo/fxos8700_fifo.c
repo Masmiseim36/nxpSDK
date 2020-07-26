@@ -32,7 +32,7 @@
 /*! @def    FIFO_SIZE
  *  @brief  The watermark value configured for FXAS21002 FIFO Buffer.
  */
-#define FIFO_SIZE 4
+#define FIFO_SIZE           4
 #define RAW_ACCEL_DATA_SIZE (6)
 
 /*******************************************************************************

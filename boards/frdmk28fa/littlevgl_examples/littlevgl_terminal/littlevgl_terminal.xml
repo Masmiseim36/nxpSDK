@@ -12,9 +12,9 @@
     <definition extID="driver.dbi_flexio.MK28FA15"/>
     <definition extID="driver.ft5406.MK28FA15"/>
     <definition extID="driver.ssd1963.MK28FA15"/>
-    <definition extID="middleware.amazon_freertos-kernel.MK28FA15"/>
-    <definition extID="middleware.amazon_freertos-kernel.extension.MK28FA15"/>
-    <definition extID="middleware.amazon_freertos-kernel.heap_4.MK28FA15"/>
+    <definition extID="middleware.freertos-kernel.MK28FA15"/>
+    <definition extID="middleware.freertos-kernel.extension.MK28FA15"/>
+    <definition extID="middleware.freertos-kernel.heap_4.MK28FA15"/>
     <definition extID="middleware.littlevgl.MK28FA15"/>
     <definition extID="platform.Include_common.MK28FA15"/>
     <definition extID="platform.Include_core_cm4.MK28FA15"/>
@@ -40,7 +40,7 @@
     <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="frdmk28fa_littlevgl_terminal" name="littlevgl_terminal" category="littlevgl_examples" dependency="platform.drivers.flexio.MK28FA15 platform.drivers.flexio_mculcd.MK28FA15 platform.drivers.flexio_mculcd_edma.MK28FA15 platform.drivers.edma.MK28FA15 platform.drivers.dmamux.MK28FA15 driver.ssd1963.MK28FA15 platform.drivers.gpio.MK28FA15 driver.dbi.MK28FA15 driver.dbi_flexio.MK28FA15 driver.ft5406.MK28FA15 platform.drivers.i2c.MK28FA15 middleware.amazon_freertos-kernel.heap_4.MK28FA15 platform.drivers.common.MK28FA15 platform.drivers.clock.MK28FA15 middleware.littlevgl.MK28FA15 device.MK28FA15_CMSIS.MK28FA15 utility.debug_console.MK28FA15 component.lpuart_adapter.MK28FA15 component.serial_manager.MK28FA15 component.lists.MK28FA15 component.serial_manager_uart.MK28FA15 platform.drivers.lpuart.MK28FA15 device.MK28FA15_startup.MK28FA15 platform.drivers.port.MK28FA15 platform.drivers.smc.MK28FA15 platform.drivers.sysmpu.MK28FA15 platform.utilities.assert.MK28FA15 platform.Include_core_cm4.MK28FA15 platform.Include_common.MK28FA15 platform.Include_dsp.MK28FA15 middleware.amazon_freertos-kernel.MK28FA15 middleware.amazon_freertos-kernel.extension.MK28FA15 platform.utilities.misc_utilities.MK28FA15">
+  <example id="frdmk28fa_littlevgl_terminal" name="littlevgl_terminal" category="littlevgl_examples" dependency="platform.drivers.flexio.MK28FA15 platform.drivers.flexio_mculcd.MK28FA15 platform.drivers.flexio_mculcd_edma.MK28FA15 platform.drivers.edma.MK28FA15 platform.drivers.dmamux.MK28FA15 driver.ssd1963.MK28FA15 platform.drivers.gpio.MK28FA15 driver.dbi.MK28FA15 driver.dbi_flexio.MK28FA15 driver.ft5406.MK28FA15 platform.drivers.i2c.MK28FA15 middleware.freertos-kernel.heap_4.MK28FA15 platform.drivers.common.MK28FA15 platform.drivers.clock.MK28FA15 middleware.littlevgl.MK28FA15 device.MK28FA15_CMSIS.MK28FA15 utility.debug_console.MK28FA15 component.lpuart_adapter.MK28FA15 component.serial_manager.MK28FA15 component.lists.MK28FA15 component.serial_manager_uart.MK28FA15 platform.drivers.lpuart.MK28FA15 device.MK28FA15_startup.MK28FA15 platform.drivers.port.MK28FA15 platform.drivers.smc.MK28FA15 platform.drivers.sysmpu.MK28FA15 platform.utilities.assert.MK28FA15 platform.Include_core_cm4.MK28FA15 platform.Include_common.MK28FA15 platform.Include_dsp.MK28FA15 middleware.freertos-kernel.MK28FA15 middleware.freertos-kernel.extension.MK28FA15 platform.utilities.misc_utilities.MK28FA15">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -81,6 +81,10 @@
         </option>
       </toolchainSetting>
     </toolchainSettings>
+    <include_paths>
+      <include_path path="littlevgl"/>
+      <include_path path="littlevgl/lvgl"/>
+    </include_paths>
     <source path="boards/frdmk28fa/littlevgl_examples/littlevgl_terminal/armgcc" target_path="MK28FA15/gcc" type="linker" toolchain="armgcc">
       <files mask="MK28FN2M0Axxx15_flash.ld"/>
     </source>
@@ -117,10 +121,10 @@
     <source path="boards/frdmk28fa/littlevgl_examples" target_path="board" type="src">
       <files mask="littlevgl_support.c"/>
     </source>
-    <source path="middleware/littlevgl/lv_examples/terminal" target_path="littlevgl/lv_examples/terminal" type="c_include">
+    <source path="middleware/littlevgl/lv_examples/lv_apps/terminal" target_path="littlevgl/lv_examples/lv_apps/terminal" type="c_include">
       <files mask="terminal.h"/>
     </source>
-    <source path="middleware/littlevgl/lv_examples/terminal" target_path="littlevgl/lv_examples/terminal" type="src">
+    <source path="middleware/littlevgl/lv_examples/lv_apps/terminal" target_path="littlevgl/lv_examples/lv_apps/terminal" type="src">
       <files mask="terminal.c"/>
     </source>
   </example>

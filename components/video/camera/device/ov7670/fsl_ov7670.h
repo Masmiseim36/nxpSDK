@@ -27,7 +27,7 @@
 
 #define OV7670_VREF_REG 0x03U /*!< Pieces of GAIN, VSTART, VSTOP. */
 
-#define OV7670_COM1_REG 0x04U          /*!< Control 1. */
+#define OV7670_COM1_REG          0x04U /*!< Control 1. */
 #define OV7670_COM1_CCIR656_MASK 0x40U /*!< CCIR656 enable. */
 
 #define OV7670_BAVE_REG 0x05U /*!< U/B Average level. */
@@ -38,7 +38,7 @@
 
 #define OV7670_RAVE_REG 0x08U /*!< V/R Average level. */
 
-#define OV7670_COM2_REG 0x09U         /*!< Control 2. */
+#define OV7670_COM2_REG         0x09U /*!< Control 2. */
 #define OV7670_COM2_SSLEEP_MASK 0x10U /*!< Soft sleep mode. */
 
 #define OV7670_PID_REG 0x0AU /*!< Product ID MSB register address. */
@@ -47,10 +47,10 @@
 #define OV7670_VER_REG 0x0BU /*!< Product ID LSB register address. */
 #define OV7670_VER_NUM 0x73U /*!< Product VERION. */
 
-#define OV7670_COM3_REG 0x0CU          /*!< Control 3. */
-#define OV7670_COM3_SWAP_MASK 0x40U    /*!< Byte swap. */
+#define OV7670_COM3_REG          0x0CU /*!< Control 3. */
+#define OV7670_COM3_SWAP_MASK    0x40U /*!< Byte swap. */
 #define OV7670_COM3_SCALEEN_MASK 0x08U /*!< Enable scaling. */
-#define OV7670_COM3_DCWEN_MASK 0x04U   /*!< Enable downsamp/crop/window. */
+#define OV7670_COM3_DCWEN_MASK   0x04U /*!< Enable downsamp/crop/window. */
 
 #define OV7670_COM4_REG 0x0DU /*!< Control 4. */
 
@@ -60,39 +60,39 @@
 
 #define OV7670_AECH_REG 0x10U /*!< More bits of AEC value. */
 
-#define OV7670_CLKRC_REG 0x11U      /*!< Clocl control. */
-#define OV7670_CLK_EXT_MASK 0x40U   /*!< Use external clock directly. */
+#define OV7670_CLKRC_REG      0x11U /*!< Clocl control. */
+#define OV7670_CLK_EXT_MASK   0x40U /*!< Use external clock directly. */
 #define OV7670_CLK_SCALE_MASK 0x3FU /*!< Mask for internal clock scale. */
 
-#define OV7670_COM7_REG 0x12U        /*!< Control 7. */
-#define OV7670_COM7_RESET_MASK 0x80U /*!< Register reset. */
+#define OV7670_COM7_REG           0x12U /*!< Control 7. */
+#define OV7670_COM7_RESET_MASK    0x80U /*!< Register reset. */
 #define OV7670_COM7_FMT_MASK_MASK 0x38U
-#define OV7670_COM7_FMT_VGA_MASK 0x00U
-#define OV7670_COM7_FMT_CIF_MASK 0x20U  /*!< CIF format. */
+#define OV7670_COM7_FMT_VGA_MASK  0x00U
+#define OV7670_COM7_FMT_CIF_MASK  0x20U /*!< CIF format. */
 #define OV7670_COM7_FMT_QVGA_MASK 0x10U /*!< QVGA format. */
 #define OV7670_COM7_FMT_QCIF_MASK 0x08U /*!< QCIF format. */
-#define OV7670_COM7_RGB_MASK 0x04U      /*!< bits 0 and 2 - RGB format. */
-#define OV7670_COM7_YUV_MASK 0x00U      /*!< YUV. */
-#define OV7670_COM7_BAYER_MASK 0x01U    /*!< Bayer format. */
-#define OV7670_COM7_PBAYER_MASK 0x05U   /*!< "Processed bayer". */
+#define OV7670_COM7_RGB_MASK      0x04U /*!< bits 0 and 2 - RGB format. */
+#define OV7670_COM7_YUV_MASK      0x00U /*!< YUV. */
+#define OV7670_COM7_BAYER_MASK    0x01U /*!< Bayer format. */
+#define OV7670_COM7_PBAYER_MASK   0x05U /*!< "Processed bayer". */
 
-#define OV7670_COM8_REG 0x13U          /*!< Control 8. */
+#define OV7670_COM8_REG          0x13U /*!< Control 8. */
 #define OV7670_COM8_FASTAEC_MASK 0x80U /*!< Enable fast AGC/AEC. */
 #define OV7670_COM8_AECSTEP_MASK 0x40U /*!< Unlimited AEC step size. */
-#define OV7670_COM8_BFILT_MASK 0x20U   /*!< Band filter enable. */
-#define OV7670_COM8_AGC_MASK 0x04U     /*!< Auto gain enable. */
-#define OV7670_COM8_AWB_MASK 0x02U     /*!< White balance enable. */
-#define OV7670_COM8_AEC_MASK 0x01U     /*!< Auto exposure enable. */
+#define OV7670_COM8_BFILT_MASK   0x20U /*!< Band filter enable. */
+#define OV7670_COM8_AGC_MASK     0x04U /*!< Auto gain enable. */
+#define OV7670_COM8_AWB_MASK     0x02U /*!< White balance enable. */
+#define OV7670_COM8_AEC_MASK     0x01U /*!< Auto exposure enable. */
 
 #define OV7670_COM9_REG 0x14U /*!< Control 9  - gain ceiling. */
 
-#define OV7670_COM10_REG 0x15U           /*!< Control 10. */
-#define OV7670_COM10_HSYNC_MASK 0x40U    /*!< HSYNC instead of HREF. */
-#define OV7670_COM10_PCLK_HB_MASK 0x20U  /*!< Suppress PCLK on horiz blank. */
+#define OV7670_COM10_REG           0x15U /*!< Control 10. */
+#define OV7670_COM10_HSYNC_MASK    0x40U /*!< HSYNC instead of HREF. */
+#define OV7670_COM10_PCLK_HB_MASK  0x20U /*!< Suppress PCLK on horiz blank. */
 #define OV7670_COM10_HREF_REV_MASK 0x08U /*!< Reverse HREF. */
-#define OV7670_COM10_VS_LEAD_MASK 0x04U  /*!< VSYNC on clock leading edge. */
-#define OV7670_COM10_VS_NEG_MASK 0x02U   /*!< VSYNC negative. */
-#define OV7670_COM10_HS_NEG_MASK 0x01U   /*!< HSYNC negative. */
+#define OV7670_COM10_VS_LEAD_MASK  0x04U /*!< VSYNC on clock leading edge. */
+#define OV7670_COM10_VS_NEG_MASK   0x02U /*!< VSYNC negative. */
+#define OV7670_COM10_HS_NEG_MASK   0x01U /*!< HSYNC negative. */
 
 #define OV7670_RSVD_REG 0x16U /*!< reserved. */
 
@@ -110,13 +110,13 @@
 
 #define OV7670_MIDL_REG 0x1DU /*!< Manuf. ID low. */
 
-#define OV7670_MVFP_REG 0x1EU         /*!< Mirror / vflip. */
+#define OV7670_MVFP_REG         0x1EU /*!< Mirror / vflip. */
 #define OV7670_MVFP_MIRROR_MASK 0x20U /*!< Mirror image. */
-#define OV7670_MVFP_FLIP_MASK 0x10U   /*!< Vertical flip. */
+#define OV7670_MVFP_FLIP_MASK   0x10U /*!< Vertical flip. */
 
 #define OV7670_LAEC_REG 0x1FU /*!< reserved. */
 
-#define OV7670_ADCCTR0_REG 0x20U            /*!< ADC control. */
+#define OV7670_ADCCTR0_REG            0x20U /*!< ADC control. */
 #define OV7670_ADCCTR0_RANGE_ADJ_MASK 0x08U /*!< ADC range adjustment. */
 
 #define OV7670_ADCCTR1_REG 0x21U /*!< reserved. */
@@ -161,42 +161,42 @@
 
 #define OV7670_OFON_REG 0x39U /*!< ADC offset control. */
 
-#define OV7670_TSLB_REG 0x3AU        /*!< lots of stuff. */
+#define OV7670_TSLB_REG        0x3AU /*!< lots of stuff. */
 #define OV7670_TSLB_YLAST_MASK 0x04U /*!< UYVY or VYUY - see com13. */
 
-#define OV7670_COM11_REG 0x3BU         /*!< Control 11. */
-#define OV7670_COM11_NIGHT_MASK 0x80U  /*!< NIght mode enable. */
-#define OV7670_COM11_NMFR_MASK 0x60U   /*!< Two bit NM frame rate. */
+#define OV7670_COM11_REG         0x3BU /*!< Control 11. */
+#define OV7670_COM11_NIGHT_MASK  0x80U /*!< NIght mode enable. */
+#define OV7670_COM11_NMFR_MASK   0x60U /*!< Two bit NM frame rate. */
 #define OV7670_COM11_HZAUTO_MASK 0x10U /*!< Auto detect 50/60 Hz. */
-#define OV7670_COM11_50HZ_MASK 0x08U   /*!< Manual 50Hz select. */
-#define OV7670_COM11_EXP_MASK 0x02U
+#define OV7670_COM11_50HZ_MASK   0x08U /*!< Manual 50Hz select. */
+#define OV7670_COM11_EXP_MASK    0x02U
 
-#define OV7670_COM12_REG 0x3CU       /*!< Control 12. */
+#define OV7670_COM12_REG       0x3CU /*!< Control 12. */
 #define OV7670_COM12_HREF_MASK 0x80U /*!< HREF always. */
 
-#define OV7670_COM13_REG 0x3DU         /*!< Control 13. */
-#define OV7670_COM13_GAMMA_MASK 0x80U  /*!< Gamma enable. */
-#define OV7670_COM13_UVSAT_MASK 0x40U  /*!< UV saturation auto adjustment. */
+#define OV7670_COM13_REG         0x3DU /*!< Control 13. */
+#define OV7670_COM13_GAMMA_MASK  0x80U /*!< Gamma enable. */
+#define OV7670_COM13_UVSAT_MASK  0x40U /*!< UV saturation auto adjustment. */
 #define OV7670_COM13_UVSWAP_MASK 0x01U /*!< V before U - w/TSLB. */
 
-#define OV7670_COM14_REG 0x3EU        /*!< Control 14. */
+#define OV7670_COM14_REG        0x3EU /*!< Control 14. */
 #define OV7670_COM14_DCWEN_MASK 0x10U /*!< DCW/PCLK-scale enable. */
 
 #define OV7670_EDGE_REG 0x3FU /*!< Edge enhancement factor. */
 
-#define OV7670_COM15_REG 0x40U         /*!< Control 15. */
-#define OV7670_COM15_R10F0_MASK 0x00U  /*!< Data range 10 to F0. */
-#define OV7670_COM15_R01FE_MASK 0x80U  /*!< 01 to FE. */
-#define OV7670_COM15_R00FF_MASK 0xC0U  /*!<  00 to FF. */
+#define OV7670_COM15_REG         0x40U /*!< Control 15. */
+#define OV7670_COM15_R10F0_MASK  0x00U /*!< Data range 10 to F0. */
+#define OV7670_COM15_R01FE_MASK  0x80U /*!< 01 to FE. */
+#define OV7670_COM15_R00FF_MASK  0xC0U /*!<  00 to FF. */
 #define OV7670_COM15_RGB565_MASK 0x10U /*!< RGB565 output. */
 #define OV7670_COM15_RGB555_MASK 0x30U /*!< RGB555 output. */
 
-#define OV7670_COM16_REG 0x41U          /*!< Control 16. */
+#define OV7670_COM16_REG          0x41U /*!< Control 16. */
 #define OV7670_COM16_AWBGAIN_MASK 0x08U /*!< AWB gain enable. */
 
-#define OV7670_COM17_REG 0x42U         /*!< Control 17. */
+#define OV7670_COM17_REG         0x42U /*!< Control 17. */
 #define OV7670_COM17_AECWIN_MASK 0xc0U /*!< AEC window - must match COM4. */
-#define OV7670_COM17_CBAR_MASK 0x08U   /*!< DSP Color bar. */
+#define OV7670_COM17_CBAR_MASK   0x08U /*!< DSP Color bar. */
 
 #define OV7670_AWBC1_REG 0x43U /*!< AWB control 1. */
 
@@ -228,10 +228,10 @@
 
 #define OV7670_CONTRAS_CENTER_REG 0x57U /*!< Contrast cetnter control. */
 
-#define OV7670_MTXS_REG 0x58U    /*!< Matrix Coefficient Sign. */
-#define OV7670_AWBC7_MASK 0x59U  /*!< AWB Control 7. */
-#define OV7670_AWBC8_MASK 0x5AU  /*!< AWB Control 8. */
-#define OV7670_AWBC9_MASK 0x5BU  /*!< AWB Control 9. */
+#define OV7670_MTXS_REG    0x58U /*!< Matrix Coefficient Sign. */
+#define OV7670_AWBC7_MASK  0x59U /*!< AWB Control 7. */
+#define OV7670_AWBC8_MASK  0x5AU /*!< AWB Control 8. */
+#define OV7670_AWBC9_MASK  0x5BU /*!< AWB Control 9. */
 #define OV7670_AWBC10_MASK 0x5CU /*!< AWB Control 10. */
 #define OV7670_AWBC11_MASK 0x5DU /*!< AWB Control 11. */
 #define OV7670_AWBC12_MASK 0x5EU /*!< AWB Control 12. */
@@ -264,30 +264,30 @@
 
 #define OV7670_REG74_REG 0x74U /*!< register 74. */
 
-#define OV7670_REG76_REG 0x76U          /*!< OV's name. */
+#define OV7670_REG76_REG          0x76U /*!< OV's name. */
 #define OV7670_REG76_BLKPCOR_MASK 0x80U /*!< Black pixel correction enable. */
 #define OV7670_REG76_WHTPCOR_MASK 0x40U /*!< White pixel correction enable. */
 
 #define OV7670_SLOP_REG 0x7AU /*!< gamma curve highest segment slop. */
 
-#define OV7670_GAM1_REG 0x7BU         /*!< gamma curve 1 segment slop. */
-#define OV7670_GAM2_REG 0x7CU         /*!< gamma curve 2 segment slop. */
-#define OV7670_GAM3_REG 0x7DU         /*!< gamma curve 3 segment slop. */
-#define OV7670_GAM4_REG 0x7EU         /*!< gamma curve 4 segment slop. */
-#define OV7670_GAM5_REG 0x7FU         /*!< gamma curve 5 segment slop. */
-#define OV7670_GAM6_REG 0x80U         /*!< gamma curve 6 segment slop. */
-#define OV7670_GAM7_REG 0x81U         /*!< gamma curve 7 segment slop. */
-#define OV7670_GAM8_REG 0x82U         /*!< gamma curve 8 segment slop. */
-#define OV7670_GAM9_REG 0x83U         /*!< gamma curve 9 segment slop. */
-#define OV7670_GAM10_REG 0x84U        /*!< gamma curve 10 segment slop. */
-#define OV7670_GAM11_REG 0x85U        /*!< gamma curve 11 segment slop. */
-#define OV7670_GAM12_REG 0x86U        /*!< gamma curve 12 segment slop. */
-#define OV7670_GAM13_REG 0x87U        /*!< gamma curve 13 segment slop. */
-#define OV7670_GAM14_REG 0x88U        /*!< gamma curve 14 segment slop. */
-#define OV7670_GAM15_REG 0x89U        /*!< gamma curve 15 segment slop. */
-#define OV7670_RGB444_REG 0x8cU       /*!< RGB 444 control. */
+#define OV7670_GAM1_REG         0x7BU /*!< gamma curve 1 segment slop. */
+#define OV7670_GAM2_REG         0x7CU /*!< gamma curve 2 segment slop. */
+#define OV7670_GAM3_REG         0x7DU /*!< gamma curve 3 segment slop. */
+#define OV7670_GAM4_REG         0x7EU /*!< gamma curve 4 segment slop. */
+#define OV7670_GAM5_REG         0x7FU /*!< gamma curve 5 segment slop. */
+#define OV7670_GAM6_REG         0x80U /*!< gamma curve 6 segment slop. */
+#define OV7670_GAM7_REG         0x81U /*!< gamma curve 7 segment slop. */
+#define OV7670_GAM8_REG         0x82U /*!< gamma curve 8 segment slop. */
+#define OV7670_GAM9_REG         0x83U /*!< gamma curve 9 segment slop. */
+#define OV7670_GAM10_REG        0x84U /*!< gamma curve 10 segment slop. */
+#define OV7670_GAM11_REG        0x85U /*!< gamma curve 11 segment slop. */
+#define OV7670_GAM12_REG        0x86U /*!< gamma curve 12 segment slop. */
+#define OV7670_GAM13_REG        0x87U /*!< gamma curve 13 segment slop. */
+#define OV7670_GAM14_REG        0x88U /*!< gamma curve 14 segment slop. */
+#define OV7670_GAM15_REG        0x89U /*!< gamma curve 15 segment slop. */
+#define OV7670_RGB444_REG       0x8cU /*!< RGB 444 control. */
 #define OV7670_R444_ENABLE_MASK 0x02U /*!< Turn on RGB444, overrides 5x5. */
-#define OV7670_R444_RGBX_MASK 0x01U   /*!< Empty nibble at end. */
+#define OV7670_R444_RGBX_MASK   0x01U /*!< Empty nibble at end. */
 
 #define OV7670_DM_LNL_REG 0x92U /*!< dummy line low 8 bits. */
 

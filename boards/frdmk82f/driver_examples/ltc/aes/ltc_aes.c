@@ -23,15 +23,15 @@
 
 #define OUTPUT_ARRAY_LEN 512
 #define AES_BLOCK_LENGTH 16
-#define AES128 128
-#define AES128_KEY_SIZE 16
-#define CCM_PLAIN_SIZE 32
-#define CCM_IV_SIZE 12
-#define CCM_AAD_SIZE 20
-#define CCM_KEY_SIZE 16
-#define CCM_TAG_SIZE 8
-#define CMAC_HASH_SIZE 16
-#define CMAC_KEY_SIZE 16
+#define AES128           128
+#define AES128_KEY_SIZE  16
+#define CCM_PLAIN_SIZE   32
+#define CCM_IV_SIZE      12
+#define CCM_AAD_SIZE     20
+#define CCM_KEY_SIZE     16
+#define CCM_TAG_SIZE     8
+#define CMAC_HASH_SIZE   16
+#define CMAC_KEY_SIZE    16
 
 /* LTC peripheral base address */
 LTC_Type *base = LTC0;

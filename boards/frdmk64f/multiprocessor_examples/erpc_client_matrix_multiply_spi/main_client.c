@@ -19,7 +19,7 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define BUTTON_INIT() GPIO_PinInit(BOARD_SW2_GPIO, BOARD_SW2_GPIO_PIN, &button_config)
+#define BUTTON_INIT()       GPIO_PinInit(BOARD_SW2_GPIO, BOARD_SW2_GPIO_PIN, &button_config)
 #define IS_BUTTON_PRESSED() !GPIO_PinRead(BOARD_SW2_GPIO, BOARD_SW2_GPIO_PIN)
 
 #define MATRIX_ITEM_MAX_VALUE 50

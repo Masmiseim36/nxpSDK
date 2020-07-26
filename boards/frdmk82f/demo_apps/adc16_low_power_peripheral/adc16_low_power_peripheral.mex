@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding= "UTF-8" ?>
-<configuration name="MK82FN256xxx15" version="1.5" xsi:schemaLocation="http://mcuxpresso.nxp.com/XSD/mex_configuration_1.5 http://mcuxpresso.nxp.com/XSD/mex_configuration_1.5.xsd" uuid="014b39c7-35f2-469f-934d-f570a660c5cf" xmlns="http://mcuxpresso.nxp.com/XSD/mex_configuration_1.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<configuration name="MK82FN256xxx15" version="1.6" xsi:schemaLocation="http://mcuxpresso.nxp.com/XSD/mex_configuration_1.7 http://mcuxpresso.nxp.com/XSD/mex_configuration_1.7.xsd" uuid="6d4c19b2-0cb7-4b35-9d4e-cb62495d9fb1" xmlns="http://mcuxpresso.nxp.com/XSD/mex_configuration_1.7" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
    <common>
       <processor>MK82FN256xxx15</processor>
       <package>MK82FN256VLL15</package>
@@ -8,20 +8,16 @@
       <cores selected="core0">
          <core name="Cortex-M4F" id="core0" description="M4 core"/>
       </cores>
-      <description>Configuration imported from D:\mcu-sdk-2.0\boards\frdmk82f\demo_apps\adc16_low_power_peripheral\armgcc</description>
    </common>
    <preferences>
       <validate_boot_init_only>true</validate_boot_init_only>
       <generate_extended_information>false</generate_extended_information>
+      <generate_code_modified_registers_only>false</generate_code_modified_registers_only>
    </preferences>
    <tools>
-      <pins name="Pins" version="5.0" enabled="true" update_project_code="true">
-         <generated_project_files>
-            <file path="../pin_mux.c" update_enabled="true"/>
-            <file path="../pin_mux.h" update_enabled="true"/>
-         </generated_project_files>
+      <pins name="Pins" version="7.0" enabled="true" update_project_code="true">
          <pins_profile>
-            <processor_version>0.0.18</processor_version>
+            <processor_version>0.7.8</processor_version>
          </pins_profile>
          <functions_list>
             <function name="BOARD_InitPins">
@@ -34,6 +30,11 @@
                </options>
                <dependencies>
                   <dependency resourceType="Peripheral" resourceId="LPUART4" description="Peripheral LPUART4 is not initialized" problem_level="1" source="Pins:BOARD_InitPins">
+                     <feature name="initialized" evaluation="equal">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="Peripheral" resourceId="TPIU" description="Peripheral TPIU is not initialized" problem_level="1" source="Pins:BOARD_InitPins">
                      <feature name="initialized" evaluation="equal">
                         <data>true</data>
                      </feature>
@@ -76,12 +77,20 @@
                   </pin>
                   <pin peripheral="LPUART4" signal="RX" pin_num="86" pin_signal="PTC14/LPUART4_RX/FB_AD25/SDRAM_D25/FXIO0_D20"/>
                   <pin peripheral="LPUART4" signal="TX" pin_num="87" pin_signal="PTC15/LPUART4_TX/FB_AD24/SDRAM_D24/FXIO0_D21"/>
+                  <pin peripheral="TPIU" signal="SWO" pin_num="38" pin_signal="TSI0_CH3/PTA2/LPUART0_TX/FTM0_CH7/I2C3_SCL/FXIO0_D12/EMVSIM0_PD/JTAG_TDO/TRACE_SWO">
+                     <pin_features>
+                        <pin_feature name="identifier" value=""/>
+                        <pin_feature name="pull_select" value="down"/>
+                        <pin_feature name="pull_enable" value="disable"/>
+                     </pin_features>
+                  </pin>
                </pins>
             </function>
             <function name="BOARD_ConfigTriggerSource">
                <description>Configures pin routing and optionally pin electrical features.</description>
                <options>
                   <callFromInitBoot>false</callFromInitBoot>
+                  <prefix>BOARD_</prefix>
                   <coreID>core0</coreID>
                   <enableClock>true</enableClock>
                </options>
@@ -103,13 +112,9 @@
             </function>
          </functions_list>
       </pins>
-      <clocks name="Clocks" version="5.0" enabled="true" update_project_code="false">
-         <generated_project_files>
-            <file path="../../../clock_config.c" update_enabled="false"/>
-            <file path="../../../clock_config.h" update_enabled="false"/>
-         </generated_project_files>
+      <clocks name="Clocks" version="7.0" enabled="true" update_project_code="true">
          <clocks_profile>
-            <processor_version>0.0.18</processor_version>
+            <processor_version>0.7.8</processor_version>
          </clocks_profile>
          <clock_configurations>
             <clock_configuration name="BOARD_BootClockHSRUN">
@@ -311,56 +316,52 @@
             </clock_configuration>
          </clock_configurations>
       </clocks>
-      <periphs name="Peripherals" version="5.0" enabled="true" update_project_code="true">
+      <dcdx name="DCDx" version="2.0" enabled="false" update_project_code="true">
+         <dcdx_profile>
+            <processor_version>N/A</processor_version>
+         </dcdx_profile>
+         <dcdx_configurations/>
+      </dcdx>
+      <periphs name="Peripherals" version="7.0" enabled="true" update_project_code="true">
          <dependencies>
-            <dependency resourceType="SWComponent" resourceId="platform.drivers.lptmr" description="LPTMR Driver not found in the toolchain/IDE project." problem_level="2" source="Peripherals">
+            <dependency resourceType="SWComponent" resourceId="platform.drivers.lptmr" description="LPTMR Driver not found in the toolchain/IDE project. Project will not compile!" problem_level="2" source="Peripherals">
                <feature name="enabled" evaluation="equal">
                   <data type="Boolean">true</data>
                </feature>
             </dependency>
-            <dependency resourceType="SWComponent" resourceId="platform.drivers.lptmr" description="Unsupported version of the LPTMR Driver in the toolchain/IDE project. Required: ${required_value}, actual: ${actual_value}." problem_level="1" source="Peripherals">
+            <dependency resourceType="SWComponent" resourceId="platform.drivers.lptmr" description="Unsupported version of the LPTMR Driver in the toolchain/IDE project. Required: ${required_value}, actual: ${actual_value}. Project might not compile correctly." problem_level="1" source="Peripherals">
                <feature name="version" evaluation="equivalent">
                   <data type="Version">2.0.1</data>
                </feature>
             </dependency>
-            <dependency resourceType="SWComponent" resourceId="platform.drivers.adc16" description="ADC16 Driver not found in the toolchain/IDE project." problem_level="2" source="Peripherals">
+            <dependency resourceType="SWComponent" resourceId="platform.drivers.adc16" description="ADC16 Driver not found in the toolchain/IDE project. Project will not compile!" problem_level="2" source="Peripherals">
                <feature name="enabled" evaluation="equal">
                   <data type="Boolean">true</data>
                </feature>
             </dependency>
-            <dependency resourceType="SWComponent" resourceId="platform.drivers.adc16" description="Unsupported version of the ADC16 Driver in the toolchain/IDE project. Required: ${required_value}, actual: ${actual_value}." problem_level="1" source="Peripherals">
+            <dependency resourceType="SWComponent" resourceId="platform.drivers.adc16" description="Unsupported version of the ADC16 Driver in the toolchain/IDE project. Required: ${required_value}, actual: ${actual_value}. Project might not compile correctly." problem_level="1" source="Peripherals">
                <feature name="version" evaluation="equivalent">
                   <data type="Version">2.0.0</data>
                </feature>
             </dependency>
          </dependencies>
-         <generated_project_files>
-            <file path="../peripherals.c" update_enabled="true"/>
-            <file path="../peripherals.h" update_enabled="true"/>
-         </generated_project_files>
          <peripherals_profile>
-            <processor_version>0.0.18</processor_version>
+            <processor_version>0.7.8</processor_version>
          </peripherals_profile>
          <functional_groups>
-            <functional_group name="BOARD_InitPeripherals" uuid="29dcce3d-a27a-4cbd-8be5-e29b0d23527f" called_from_default_init="true" id_prefix="DEMO_" core="core0">
+            <functional_group name="BOARD_InitPeripherals" uuid="297b40f1-7704-4796-91f4-c921f65ea852" called_from_default_init="true" id_prefix="DEMO_" core="core0">
                <description></description>
                <options/>
                <dependencies>
-                  <dependency resourceType="ClockOutput" resourceId="LPO_clock" description="LPO clock is inactive." problem_level="2" source="Peripherals:BOARD_InitPeripherals">
+                  <dependency resourceType="ClockOutput" resourceId="LPO_clock" description="LPO clock is inactive. Problem must be resolved in another tool." problem_level="2" source="Peripherals:BOARD_InitPeripherals">
                      <feature name="frequency" evaluation="greaterThan">
                         <data type="Frequency" unit="Hz">0</data>
                      </feature>
                   </dependency>
                </dependencies>
                <instances>
-                  <instance name="LPTMR" type="lptmr" type_id="lptmr_2eeab91a1a42f8238f9ac768f18c65ae" mode="LPTMR_GENERAL" peripheral="LPTMR0" enabled="true">
+                  <instance name="LPTMR" uuid="a15772e1-b73e-4acf-915f-ae7867ed3e33" type="lptmr" type_id="lptmr_2eeab91a1a42f8238f9ac768f18c65ae" mode="LPTMR_GENERAL" peripheral="LPTMR0" enabled="true" comment="" custom_name_enabled="true">
                      <config_set name="fsl_lptmr" quick_selection="QS_LPTMR_1">
-                        <setting name="enableInterrupt" value="false"/>
-                        <struct name="interrupt">
-                           <setting name="IRQn" value="LPTMR0_LPTMR1_IRQn"/>
-                           <setting name="enable_priority" value="false"/>
-                           <setting name="enable_custom_name" value="false"/>
-                        </struct>
                         <struct name="lptmr_config">
                            <setting name="timerMode" value="kLPTMR_TimerModeTimeCounter"/>
                            <setting name="pinSelect" value="ALT.0"/>
@@ -368,31 +369,38 @@
                            <setting name="enableFreeRunning" value="false"/>
                            <setting name="bypassPrescaler" value="true"/>
                            <setting name="prescalerClockSource" value="kLPTMR_PrescalerClock_1"/>
-                           <setting name="clockSource" value="BOARD_BootClockVLPR"/>
+                           <setting name="clockSource" value="BOARD_BootClockRUN"/>
                            <setting name="value" value="kLPTMR_Prescale_Glitch_0"/>
                            <setting name="timerPeriod" value="1000000 us"/>
+                        </struct>
+                        <setting name="enableInterrupt" value="false"/>
+                        <struct name="interrupt">
+                           <setting name="IRQn" value="LPTMR0_LPTMR1_IRQn"/>
+                           <setting name="enable_priority" value="false"/>
+                           <setting name="priority" value="0"/>
+                           <setting name="enable_custom_name" value="false"/>
                         </struct>
                      </config_set>
                   </instance>
                </instances>
             </functional_group>
-            <functional_group name="BOARD_InitADCPeripheral" uuid="a95c1baa-fb82-428b-8107-4ae40ed93fe7" called_from_default_init="false" id_prefix="DEMO_" core="core0">
+            <functional_group name="BOARD_InitADCPeripheral" uuid="3c3c8197-c357-48f9-b13a-e45a2ed98f96" called_from_default_init="false" id_prefix="DEMO_" core="core0">
                <description></description>
                <options/>
                <dependencies>
-                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="ADC0.adc_se.26" description="Signal SE of the channel 26 of the peripheral ADC0 is not routed." problem_level="1" source="Peripherals:BOARD_InitADCPeripheral">
+                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="ADC0.adc_se.26" description="Signal SE of the channel 26 of the peripheral ADC0 is not routed. Problem must be resolved in another tool." problem_level="1" source="Peripherals:BOARD_InitADCPeripheral">
                      <feature name="routed" evaluation="">
                         <data type="Boolean">true</data>
                      </feature>
                   </dependency>
-                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="ADC0.adc_se.27" description="Signal SE of the channel 27 of the peripheral ADC0 is not routed." problem_level="1" source="Peripherals:BOARD_InitADCPeripheral">
+                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="ADC0.adc_se.27" description="Signal SE of the channel 27 of the peripheral ADC0 is not routed. Problem must be resolved in another tool." problem_level="1" source="Peripherals:BOARD_InitADCPeripheral">
                      <feature name="routed" evaluation="">
                         <data type="Boolean">true</data>
                      </feature>
                   </dependency>
                </dependencies>
                <instances>
-                  <instance name="ADC16" type="adc16" type_id="adc16_7d827be2dc433dc756d94a7ce88cbcc5" mode="ADC" peripheral="ADC0" enabled="true">
+                  <instance name="ADC16" uuid="1e6eda3c-7bff-4695-8346-6b7b0b9d4452" type="adc16" type_id="adc16_7d827be2dc433dc756d94a7ce88cbcc5" mode="ADC" peripheral="ADC0" enabled="true" comment="" custom_name_enabled="true">
                      <config_set name="fsl_adc16">
                         <struct name="adc16_config">
                            <setting name="referenceVoltageSource" value="kADC16_ReferenceVoltageSourceVref"/>
@@ -410,12 +418,15 @@
                            <setting name="hardwareCompareModeEnable" value="false"/>
                         </struct>
                         <setting name="doAutoCalibration" value="false"/>
+                        <setting name="offset" value="0"/>
                         <setting name="trigger" value="false"/>
                         <setting name="hardwareAverageConfiguration" value="kADC16_HardwareAverageCount32"/>
+                        <setting name="enable_dma" value="false"/>
                         <setting name="enable_irq" value="true"/>
                         <struct name="adc_interrupt">
                            <setting name="IRQn" value="ADC0_IRQn"/>
                            <setting name="enable_priority" value="false"/>
+                           <setting name="priority" value="0"/>
                            <setting name="enable_custom_name" value="false"/>
                         </struct>
                         <array name="adc16_channels_config">
@@ -423,11 +434,15 @@
                               <setting name="enableDifferentialConversion" value="false"/>
                               <setting name="channelNumber" value="SE.26"/>
                               <setting name="enableInterruptOnConversionCompleted" value="true"/>
+                              <setting name="channelGroup" value="0"/>
+                              <setting name="initializeChannel" value="false"/>
                            </struct>
                            <struct name="1">
                               <setting name="enableDifferentialConversion" value="false"/>
                               <setting name="channelNumber" value="SE.27"/>
                               <setting name="enableInterruptOnConversionCompleted" value="false"/>
+                              <setting name="channelGroup" value="0"/>
+                              <setting name="initializeChannel" value="false"/>
                            </struct>
                         </array>
                      </config_set>
@@ -436,10 +451,20 @@
             </functional_group>
          </functional_groups>
          <components>
-            <component name="system" type_id="system">
+            <component name="system" uuid="a5784293-9d11-429b-98b7-6c443fbbab6c" type_id="system">
                <config_set_global name="global_system_definitions"/>
+            </component>
+            <component name="msg" uuid="b3c56e7f-d912-4c8e-af18-5bacc8c55caa" type_id="msg_6e2baaf3b97dbeef01c0043275f9a0e7">
+               <config_set_global name="global_messages"/>
             </component>
          </components>
       </periphs>
+      <tee name="TEE" version="1.0" enabled="false" update_project_code="true">
+         <tee_profile>
+            <processor_version>N/A</processor_version>
+         </tee_profile>
+         <global_options/>
+         <user_memory_regions/>
+      </tee>
    </tools>
 </configuration>

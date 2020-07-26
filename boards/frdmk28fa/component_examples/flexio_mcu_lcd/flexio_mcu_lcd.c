@@ -27,40 +27,40 @@
  ******************************************************************************/
 
 /* Macros for the LCD controller. */
-#define DEMO_SSD1963_XTAL_FREQ 10000000U
-#define DEMO_SSD1963_PCLK_FREQ 30000000U
-#define DEMO_SSD1963_HSW 48U
-#define DEMO_SSD1963_HFP 40U
-#define DEMO_SSD1963_HBP 0U
-#define DEMO_SSD1963_VSW 3U
-#define DEMO_SSD1963_VFP 13U
-#define DEMO_SSD1963_VBP 18U
+#define DEMO_SSD1963_XTAL_FREQ     10000000U
+#define DEMO_SSD1963_PCLK_FREQ     30000000U
+#define DEMO_SSD1963_HSW           48U
+#define DEMO_SSD1963_HFP           40U
+#define DEMO_SSD1963_HBP           0U
+#define DEMO_SSD1963_VSW           3U
+#define DEMO_SSD1963_VFP           13U
+#define DEMO_SSD1963_VBP           18U
 #define DEMO_SSD1963_POLARITY_FLAG 0U
-#define DEMO_SSD1963_RST_GPIO GPIOA
-#define DEMO_SSD1963_RST_PIN 5
-#define DEMO_SSD1963_TE_GPIO GPIOA
-#define DEMO_SSD1963_TE_PIN 21
-#define DEMO_SSD1963_CS_GPIO GPIOA
-#define DEMO_SSD1963_CS_PIN 22
-#define DEMO_SSD1963_RS_GPIO GPIOA
-#define DEMO_SSD1963_RS_PIN 6
+#define DEMO_SSD1963_RST_GPIO      GPIOA
+#define DEMO_SSD1963_RST_PIN       5
+#define DEMO_SSD1963_TE_GPIO       GPIOA
+#define DEMO_SSD1963_TE_PIN        21
+#define DEMO_SSD1963_CS_GPIO       GPIOA
+#define DEMO_SSD1963_CS_PIN        22
+#define DEMO_SSD1963_RS_GPIO       GPIOA
+#define DEMO_SSD1963_RS_PIN        6
 
-#define DEMO_DMA DMA0
+#define DEMO_DMA    DMA0
 #define DEMO_DMAMUX DMAMUX0
 
-#define DEMO_FLEXIO FLEXIO0
-#define DEMO_FLEXIO_CLOCK_FREQ CLOCK_GetCoreSysClkFreq()
+#define DEMO_FLEXIO              FLEXIO0
+#define DEMO_FLEXIO_CLOCK_FREQ   CLOCK_GetCoreSysClkFreq()
 #define DEMO_FLEXIO_BAUDRATE_BPS 160000000U
 
 /* I2C for the touch. */
-#define DEMO_TOUCH_I2C I2C1
+#define DEMO_TOUCH_I2C            I2C1
 #define DEMO_TOUCH_I2C_CLOCK_FREQ CLOCK_GetBusClkFreq()
 
 /* Macros for the touch interrupt. */
-#define DEMO_TOUCH_INT_IRQn PORTA_IRQn
+#define DEMO_TOUCH_INT_IRQn       PORTA_IRQn
 #define DEMO_TOUCH_INT_IRQHandler PORTA_IRQHandler
-#define DEMO_TOUCH_INT_PORT PORTA
-#define DEMO_TOUCH_INT_PIN 2
+#define DEMO_TOUCH_INT_PORT       PORTA
+#define DEMO_TOUCH_INT_PIN        2
 #define DEMO_CONFIG_TOUCH_INTERRUPT() \
     PORT_SetPinInterruptConfig(DEMO_TOUCH_INT_PORT, DEMO_TOUCH_INT_PIN, kPORT_InterruptFallingEdge)
 #define DEMO_TOUCH_INTERRUPT_PENDING() ((1U << DEMO_TOUCH_INT_PIN) & PORT_GetPinsInterruptFlags(DEMO_TOUCH_INT_PORT))
@@ -74,25 +74,25 @@
 #define DEMO_FLEXIO_RX_DMA_REQUEST kDmaRequestMux0Group1FlexIO0Channel7
 
 /* Macros for FlexIO shifter, timer, and pins. */
-#define DEMO_FLEXIO_WR_PIN 7
-#define DEMO_FLEXIO_RD_PIN 8
-#define DEMO_FLEXIO_DATA_PIN_START 16
+#define DEMO_FLEXIO_WR_PIN           7
+#define DEMO_FLEXIO_RD_PIN           8
+#define DEMO_FLEXIO_DATA_PIN_START   16
 #define DEMO_FLEXIO_TX_START_SHIFTER 0
 #define DEMO_FLEXIO_RX_START_SHIFTER 0
-#define DEMO_FLEXIO_TX_END_SHIFTER 7
-#define DEMO_FLEXIO_RX_END_SHIFTER 7
-#define DEMO_FLEXIO_TIMER 0
+#define DEMO_FLEXIO_TX_END_SHIFTER   7
+#define DEMO_FLEXIO_RX_END_SHIFTER   7
+#define DEMO_FLEXIO_TIMER            0
 
 /* Macros of the arrow. */
 #define DEMO_ARROW_START_X 680
 #define DEMO_ARROW_START_Y 380
-#define DEMO_ARROW_SIZE 64
+#define DEMO_ARROW_SIZE    64
 
 /* Macros of the QSPI flash. */
-#define QSPI_CLK_FREQ CLOCK_GetCoreSysClkFreq()
-#define FLASH_PAGE_SIZE 256U
+#define QSPI_CLK_FREQ      CLOCK_GetCoreSysClkFreq()
+#define FLASH_PAGE_SIZE    256U
 #define FLASH_SECTORE_SIZE 4096U
-#define FLASH_SIZE 0x00400000U
+#define FLASH_SIZE         0x00400000U
 #define DEMO_I2C_BAUDRATE 100000U
 
 /* Color to fill the arraw. */
@@ -305,11 +305,7 @@ void DEMO_TOUCH_INT_IRQHandler(void)
         touchFlag = true;
         DEMO_CLEAR_TOUCH_INTERRUPT_PENDING();
     }
-    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-      exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 void DEMO_InitDma(void)

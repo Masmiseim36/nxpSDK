@@ -19,6 +19,14 @@
 #define MBEDTLS_CTR_DRBG_C
 #endif
 
+#if USE_RTOS && defined(FSL_RTOS_FREE_RTOS)
+
+#undef MBEDTLS_PLATFORM_MEMORY
+#undef MBEDTLS_PLATFORM_STD_CALLOC
+#undef MBEDTLS_PLATFORM_STD_FREE
+
+#endif /* USE_RTOS*/
+
 /* IF We use ALT from the EVKB, anything that is related to
  * AES256 would get skipped and because of this TLS Handshake
  * would not pass

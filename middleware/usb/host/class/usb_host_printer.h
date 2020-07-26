@@ -132,20 +132,6 @@ extern usb_status_t USB_HostPrinterSetInterface(usb_host_class_handle classHandl
 extern usb_status_t USB_HostPrinterDeinit(usb_device_handle deviceHandle, usb_host_class_handle classHandle);
 
 /*!
- * @brief Gets the pipe maximum packet size.
- *
- * @param[in] classHandle The class handle.
- * @param[in] pipeType    Its value is USB_ENDPOINT_CONTROL, USB_ENDPOINT_ISOCHRONOUS, USB_ENDPOINT_BULK or
- * USB_ENDPOINT_INTERRUPT.
- *                        See the usb_spec.h
- * @param[in] direction   Pipe direction.
- *
- * @retval 0        The classHandle is NULL.
- * @retval          Maximum Packet size.
- */
-extern uint16_t USB_HostPrinterGetPacketsize(usb_host_class_handle classHandle, uint8_t pipeType, uint8_t direction);
-
-/*!
  * @brief Receives data.
  *
  * This function implements the printer receiving data.

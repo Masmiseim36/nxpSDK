@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<example name="crc" category="driver_examples" board_ref="TWR_K60D100M" version="1.0.0" format_version="2.1">
+  <source path="CMSIS/Include" target_path="CMSIS/Include" type="c_include">
+    <files mask="arm_common_tables.h"/>
+    <files mask="arm_const_structs.h"/>
+    <files mask="arm_math.h"/>
+    <files mask="cmsis_armcc.h"/>
+    <files mask="cmsis_armcc_V6.h"/>
+    <files mask="cmsis_gcc.h"/>
+    <files mask="core_cm0.h"/>
+    <files mask="core_cm0plus.h"/>
+    <files mask="core_cm3.h"/>
+    <files mask="core_cm4.h"/>
+    <files mask="core_cm7.h"/>
+    <files mask="core_cmFunc.h"/>
+    <files mask="core_cmInstr.h"/>
+    <files mask="core_cmSimd.h"/>
+    <files mask="core_sc000.h"/>
+    <files mask="core_sc300.h"/>
+  </source>
+  <source path="boards/twrk60d100m/driver_examples/crc" target_path="sources" type="c_include">
+    <files mask="board.h"/>
+    <files mask="clock_config.h"/>
+    <files mask="pin_mux.h"/>
+  </source>
+  <source path="boards/twrk60d100m/driver_examples/crc" target_path="doc" type="doc">
+    <files mask="readme.txt"/>
+  </source>
+  <source path="boards/twrk60d100m/driver_examples/crc" target_path="sources" type="src">
+    <files mask="board.c"/>
+    <files mask="clock_config.c"/>
+    <files mask="crc.c"/>
+    <files mask="pin_mux.c"/>
+  </source>
+  <source path="devices/MK60D10/arm" target_path="devices/arm" type="src" compiler="arm">
+    <files mask="startup_MK60D10.s"/>
+  </source>
+  <source path="devices/MK60D10/drivers" target_path="drivers" type="c_include">
+    <files mask="fsl_clock.h"/>
+    <files mask="fsl_common.h"/>
+    <files mask="fsl_crc.h"/>
+    <files mask="fsl_flash.h"/>
+    <files mask="fsl_gpio.h"/>
+    <files mask="fsl_port.h"/>
+    <files mask="fsl_smc.h"/>
+    <files mask="fsl_uart.h"/>
+  </source>
+  <source path="devices/MK60D10/drivers" target_path="drivers" type="src">
+    <files mask="fsl_clock.c"/>
+    <files mask="fsl_common.c"/>
+    <files mask="fsl_crc.c"/>
+    <files mask="fsl_flash.c"/>
+    <files mask="fsl_gpio.c"/>
+    <files mask="fsl_smc.c"/>
+    <files mask="fsl_uart.c"/>
+  </source>
+  <source path="devices/MK60D10/gcc" target_path="devices/gcc" type="src" compiler="gcc">
+    <files mask="startup_MK60D10.S"/>
+  </source>
+  <source path="devices/MK60D10/iar" target_path="devices/iar" type="src" compiler="iar">
+    <files mask="startup_MK60D10.s"/>
+  </source>
+  <source path="devices/MK60D10/utilities" target_path="utilities" type="c_include">
+    <files mask="fsl_debug_console.h"/>
+  </source>
+  <source path="devices/MK60D10/utilities" target_path="utilities" type="src">
+    <files mask="fsl_debug_console.c"/>
+  </source>
+  <source path="devices/MK60D10" target_path="devices" type="c_include">
+    <files mask="MK60D10.h"/>
+    <files mask="MK60D10_features.h"/>
+    <files mask="fsl_device_registers.h"/>
+    <files mask="system_MK60D10.h"/>
+  </source>
+  <source path="devices/MK60D10" target_path="devices" type="src">
+    <files mask="system_MK60D10.c"/>
+  </source>
+  <include_paths>
+    <include path="CMSIS/Include"/>
+    <include path="devices"/>
+    <include path="drivers"/>
+    <include path="sources"/>
+    <include path="utilities"/>
+  </include_paths>
+</example>

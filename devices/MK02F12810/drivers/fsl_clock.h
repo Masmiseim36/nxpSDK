@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016 - 2019, NXP
+ * Copyright 2016 - 2020, NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -58,8 +58,8 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief CLOCK driver version 2.5.0. */
-#define FSL_CLOCK_DRIVER_VERSION (MAKE_VERSION(2, 5, 0))
+/*! @brief CLOCK driver version 2.5.1. */
+#define FSL_CLOCK_DRIVER_VERSION (MAKE_VERSION(2, 5, 1))
 /*@}*/
 
 /*! @brief External XTAL0 (OSC0) clock frequency.
@@ -94,13 +94,13 @@ extern volatile uint32_t g_xtal32Freq;
 /*! @brief IRC48M clock frequency in Hz. */
 #define MCG_INTERNAL_IRC_48M 48000000U
 
+#if (defined(OSC) && !(defined(OSC0)))
+#define OSC0 OSC
+#endif
+
 /* Definition for delay API in clock driver, users can redefine it to the real application. */
 #ifndef SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY
 #define SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY (120000000UL)
-#endif
-
-#if (defined(OSC) && !(defined(OSC0)))
-#define OSC0 OSC
 #endif
 
 /*! @brief Clock ip name array for DMAMUX. */
@@ -466,29 +466,29 @@ typedef enum _mcg_monitor_mode
     kMCG_MonitorReset /*!< System reset when clock lost.      */
 } mcg_monitor_mode_t;
 
-/*! @brief MCG status. */
-enum _mcg_status
+/*! @brief MCG status. Enumeration _mcg_status */
+enum
 {
-    kStatus_MCG_ModeUnreachable = MAKE_STATUS(kStatusGroup_MCG, 0),       /*!< Can't switch to target mode. */
-    kStatus_MCG_ModeInvalid     = MAKE_STATUS(kStatusGroup_MCG, 1),       /*!< Current mode invalid for the specific
+    kStatus_MCG_ModeUnreachable = MAKE_STATUS(kStatusGroup_MCG, 0U),       /*!< Can't switch to target mode. */
+    kStatus_MCG_ModeInvalid     = MAKE_STATUS(kStatusGroup_MCG, 1U),       /*!< Current mode invalid for the specific
                                                                                function. */
-    kStatus_MCG_AtmBusClockInvalid    = MAKE_STATUS(kStatusGroup_MCG, 2), /*!< Invalid bus clock for ATM. */
-    kStatus_MCG_AtmDesiredFreqInvalid = MAKE_STATUS(kStatusGroup_MCG, 3), /*!< Invalid desired frequency for ATM. */
-    kStatus_MCG_AtmIrcUsed            = MAKE_STATUS(kStatusGroup_MCG, 4), /*!< IRC is used when using ATM. */
-    kStatus_MCG_AtmHardwareFail       = MAKE_STATUS(kStatusGroup_MCG, 5), /*!< Hardware fail occurs during ATM. */
-    kStatus_MCG_SourceUsed            = MAKE_STATUS(kStatusGroup_MCG, 6)  /*!< Can't change the clock source because
+    kStatus_MCG_AtmBusClockInvalid    = MAKE_STATUS(kStatusGroup_MCG, 2U), /*!< Invalid bus clock for ATM. */
+    kStatus_MCG_AtmDesiredFreqInvalid = MAKE_STATUS(kStatusGroup_MCG, 3U), /*!< Invalid desired frequency for ATM. */
+    kStatus_MCG_AtmIrcUsed            = MAKE_STATUS(kStatusGroup_MCG, 4U), /*!< IRC is used when using ATM. */
+    kStatus_MCG_AtmHardwareFail       = MAKE_STATUS(kStatusGroup_MCG, 5U), /*!< Hardware fail occurs during ATM. */
+    kStatus_MCG_SourceUsed            = MAKE_STATUS(kStatusGroup_MCG, 6U)  /*!< Can't change the clock source because
                                                                                it is in use. */
 };
 
-/*! @brief MCG status flags. */
-enum _mcg_status_flags_t
+/*! @brief MCG status flags. Enumeration _mcg_status_flags_t */
+enum
 {
     kMCG_Osc0LostFlag = (1U << 0U), /*!< OSC0 lost.         */
     kMCG_Osc0InitFlag = (1U << 1U), /*!< OSC0 crystal initialized. */
 };
 
-/*! @brief MCG internal reference clock (MCGIRCLK) enable mode definition. */
-enum _mcg_irclk_enable_mode
+/*! @brief MCG internal reference clock (MCGIRCLK) enable mode definition. Enumeration _mcg_irclk_enable_mode */
+enum
 {
     kMCG_IrclkEnable       = MCG_C1_IRCLKEN_MASK, /*!< MCGIRCLK enable.              */
     kMCG_IrclkEnableInStop = MCG_C1_IREFSTEN_MASK /*!< MCGIRCLK enable in stop mode. */
@@ -551,7 +551,7 @@ extern "C" {
 static inline void CLOCK_EnableClock(clock_ip_name_t name)
 {
     uint32_t regAddr = SIM_BASE + CLK_GATE_ABSTRACT_REG_OFFSET((uint32_t)name);
-    (*(volatile uint32_t *)regAddr) |= (1U << CLK_GATE_ABSTRACT_BITS_SHIFT((uint32_t)name));
+    (*(volatile uint32_t *)regAddr) |= (1UL << CLK_GATE_ABSTRACT_BITS_SHIFT((uint32_t)name));
 }
 
 /*!
@@ -562,7 +562,7 @@ static inline void CLOCK_EnableClock(clock_ip_name_t name)
 static inline void CLOCK_DisableClock(clock_ip_name_t name)
 {
     uint32_t regAddr = SIM_BASE + CLK_GATE_ABSTRACT_REG_OFFSET((uint32_t)name);
-    (*(volatile uint32_t *)regAddr) &= ~(1U << CLK_GATE_ABSTRACT_BITS_SHIFT((uint32_t)name));
+    (*(volatile uint32_t *)regAddr) &= ~(1UL << CLK_GATE_ABSTRACT_BITS_SHIFT((uint32_t)name));
 }
 
 /*!
@@ -801,7 +801,7 @@ static inline void CLOCK_SetLowPowerEnable(bool enable)
  * Calling this function in FBI/PBI/BLPI modes may change the system clock. As a result,
  * using the function in these modes it is not allowed.
  *
- * @param enableMode MCGIRCLK enable mode, OR'ed value of @ref _mcg_irclk_enable_mode.
+ * @param enableMode MCGIRCLK enable mode, OR'ed value of the enumeration _mcg_irclk_enable_mode.
  * @param ircs       MCGIRCLK clock source, choose fast or slow.
  * @param fcrdiv     Fast IRC divider setting (\c FCRDIV).
  * @retval kStatus_MCG_SourceUsed Because the internal reference clock is used as a clock source,
@@ -836,15 +836,6 @@ static inline void CLOCK_SetFllExtRefDiv(uint8_t frdiv)
     MCG->C1 = (uint8_t)((MCG->C1 & ~MCG_C1_FRDIV_MASK) | MCG_C1_FRDIV(frdiv));
 }
 
-/*!
- * brief Sets the OSC0 clock monitor mode.
- *
- * This function sets the OSC0 clock monitor mode. See ref mcg_monitor_mode_t for details.
- *
- * param mode Monitor mode to set.
- */
-void CLOCK_SetOsc0MonitorMode(mcg_monitor_mode_t mode);
-
 /*@}*/
 
 /*! @name MCG clock lock monitor functions. */
@@ -863,7 +854,7 @@ void CLOCK_SetOsc0MonitorMode(mcg_monitor_mode_t mode);
  * @brief Gets the MCG status flags.
  *
  * This function gets the MCG clock status flags. All status flags are
- * returned as a logical OR of the enumeration @ref _mcg_status_flags_t. To
+ * returned as a logical OR of the enumeration refer to _mcg_status_flags_t. To
  * check a specific flag, compare the return value with the flag.
  *
  * Example:
@@ -883,7 +874,7 @@ void CLOCK_SetOsc0MonitorMode(mcg_monitor_mode_t mode);
  * }
  * @endcode
  *
- * @return  Logical OR value of the @ref _mcg_status_flags_t.
+ * @return  Logical OR value of the enumeration _mcg_status_flags_t.
  */
 uint32_t CLOCK_GetStatusFlags(void);
 
@@ -891,7 +882,7 @@ uint32_t CLOCK_GetStatusFlags(void);
  * @brief Clears the MCG status flags.
  *
  * This function clears the MCG clock lock lost status. The parameter is a logical
- * OR value of the flags to clear. See @ref _mcg_status_flags_t.
+ * OR value of the flags to clear. See the enumeration _mcg_status_flags_t.
  *
  * Example:
  * @code
@@ -901,7 +892,7 @@ uint32_t CLOCK_GetStatusFlags(void);
  * @endcode
  *
  * @param mask The status flags to clear. This is a logical OR of members of the
- *             enumeration @ref _mcg_status_flags_t.
+ *             enumeration _mcg_status_flags_t.
  */
 void CLOCK_ClearStatusFlags(uint32_t mask);
 
@@ -936,7 +927,7 @@ static inline void OSC_SetExtRefClkConfig(OSC_Type *base, oscer_config_t const *
 {
     uint8_t reg = base->CR;
 
-    reg &= ~(OSC_CR_ERCLKEN_MASK | OSC_CR_EREFSTEN_MASK);
+    reg &= (uint8_t)(~(OSC_CR_ERCLKEN_MASK | OSC_CR_EREFSTEN_MASK));
     reg |= config->enableMode;
 
     base->CR = reg;
@@ -964,7 +955,7 @@ static inline void OSC_SetCapLoad(OSC_Type *base, uint8_t capLoad)
 {
     uint8_t reg = base->CR;
 
-    reg &= ~(OSC_CR_SC2P_MASK | OSC_CR_SC4P_MASK | OSC_CR_SC8P_MASK | OSC_CR_SC16P_MASK);
+    reg &= (uint8_t)(~(OSC_CR_SC2P_MASK | OSC_CR_SC4P_MASK | OSC_CR_SC8P_MASK | OSC_CR_SC16P_MASK));
     reg |= capLoad;
 
     base->CR = reg;
@@ -1242,7 +1233,7 @@ status_t CLOCK_BootToFeeMode(
  *
  * @param  fcrdiv Fast IRC divider, FCRDIV.
  * @param  ircs   The internal reference clock to select, IRCS.
- * @param  ircEnableMode  The MCGIRCLK enable mode, OR'ed value of @ref _mcg_irclk_enable_mode.
+ * @param  ircEnableMode  The MCGIRCLK enable mode, OR'ed value of the enumeration _mcg_irclk_enable_mode.
  *
  * @retval kStatus_MCG_SourceUsed Could not change MCGIRCLK setting.
  * @retval kStatus_Success Switched to the target mode successfully.
@@ -1270,7 +1261,7 @@ status_t CLOCK_BootToBlpeMode(mcg_oscsel_t oscsel);
  * chooses the correct path.
  *
  * @param  config Pointer to the target MCG mode configuration structure.
- * @return Return kStatus_Success if switched successfully; Otherwise, it returns an error code #_mcg_status.
+ * @return Return kStatus_Success if switched successfully; Otherwise, it returns an error code _mcg_status.
  *
  * @note If the external clock is used in the target mode, ensure that it is
  * enabled. For example, if the OSC0 is used, set up OSC0 correctly before calling this

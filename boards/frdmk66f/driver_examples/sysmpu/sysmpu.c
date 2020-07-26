@@ -18,16 +18,16 @@
  ******************************************************************************/
 
 
-#define CPU_REG_NVIC_SHCSR (*((uint32_t *)(0xE000ED24U)))
-#define CPU_REG_NVIC_SHCSR_BUSFAULTENA (0x00020000U)
-#define CPU_REG_SCnSCB_ACTLR (*((uint32_t *)(0xE000E008U)))
+#define CPU_REG_NVIC_SHCSR              (*((uint32_t *)(0xE000ED24U)))
+#define CPU_REG_NVIC_SHCSR_BUSFAULTENA  (0x00020000U)
+#define CPU_REG_SCnSCB_ACTLR            (*((uint32_t *)(0xE000E008U)))
 #define CPU_REG_SCnSCB_ACTLR_DISDEFWBUF (0x00000002U)
 
 /* Region actual end/start address is computed by the following equation. */
-#define ACTUAL_REGION_END_ADDR(x) ((uint32_t)(x) | (0x1FU))
+#define ACTUAL_REGION_END_ADDR(x)   ((uint32_t)(x) | (0x1FU))
 #define ACTUAL_REGION_START_ADDR(x) ((uint32_t)(x) & (~0x1FU))
-#define SYSMPU_EXAMPLE_TEST_SIZE (20U)
-#define SYSMPU_FAULTHAND_TIMEOUT (0x100U)
+#define SYSMPU_EXAMPLE_TEST_SIZE    (20U)
+#define SYSMPU_FAULTHAND_TIMEOUT    (0x100U)
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -67,7 +67,7 @@ void DisableWritebuffer(void)
 /*!
  * @brief BusFault IRQ Handler
  */
-#if defined(KM34Z7_SERIES) || defined(KL81Z7_SERIES) || defined(KL82Z7_SERIES)
+#if defined(KM34Z7_SERIES) || defined(KM35Z7_SERIES) || defined(KL81Z7_SERIES) || defined(KL82Z7_SERIES)
 void HardFault_Handler(void)
 #else
 void BusFault_Handler(void)

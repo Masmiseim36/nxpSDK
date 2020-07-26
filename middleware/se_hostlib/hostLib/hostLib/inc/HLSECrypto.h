@@ -1,9 +1,8 @@
-/**
-* @file HLSECrypto.h
+/*
 * @author NXP Semiconductors
 * @version 1.0
 * @par License
-* Copyright 2017 NXP
+* Copyright 2017,2020 NXP
 *
 * This software is owned or controlled by NXP and may only be used
 * strictly in accordance with the applicable license terms.  By expressly
@@ -13,12 +12,15 @@
 * you do not agree to be bound by the applicable license terms, then you
 * may not retain, install, activate or otherwise use the software.
 *
-* @par Description
-* Host Lib wrapper API: Cryptographic functions
 *
 * @par HISTORY
 *
 */
+/**
+ * @file HLSECrypto.h
+ * @par Description
+ * Host Lib wrapper API: Cryptographic functions
+ */
 #ifndef _HLSE_CRYPTO_H_
 #define _HLSE_CRYPTO_H_
 

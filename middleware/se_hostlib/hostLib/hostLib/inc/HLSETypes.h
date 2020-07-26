@@ -4,7 +4,7 @@
  * @author NXP Semiconductors
  * @version 1.0
  * @par License
- * Copyright 2017 NXP
+ * Copyright 2017,2020 NXP
  *
  * This software is owned or controlled by NXP and may only be used
  * strictly in accordance with the applicable license terms.  By expressly
@@ -116,7 +116,7 @@ typedef HLSE_TYPE HLSE_OBJECT_TYPE;
 #ifdef TGT_A71CL
 #define HLSE_KEK_KEY        0x00040000       /**< Key Encryption Key for loading wrapped data */
 #endif
-#if (SSS_HAVE_A71CH || SSS_HAVE_SE050_EAR_CH || SSS_HAVE_SE05X)
+#if (SSS_HAVE_A71CH || SSS_HAVE_A71CH_SIM || SSS_HAVE_APPLET_SE05X_IOT)
 #define HLSE_CONFIG_KEY     0x00040000       /**< Configuration keys used for key wrapping and module unlocking */
 #endif
 #define HLSE_COUNTER        0x00050000       /**< Counter with rollback protection; size  4 bytes */
@@ -252,10 +252,10 @@ typedef HLSE_TYPE HLSE_MECHANISM_TYPE;
 #define     HLSE_DES_ECB_DECRYPT  7         //!< DES ECB Decryption
 #define     HLSE_DES_CBC_ENCRYPT  8         //!< DES CBC Encryption
 #define     HLSE_DES_CBC_DECRYPT  9         //!< DES CBC Decryption
-#define		HLSE_DES_CBC_ISO9797_M1 10		//!< DES CBC Signature
-#define		HLSE_DES_CBC_ISO9797_M2 11		//!< DES CBC Signature
-#define		HLSE_AES_CBC_ISO9797_M1 12		//!< AES CBC Signature
-#define		HLSE_AES_CBC_ISO9797_M2 13		//!< AES CBC Signature
+#define     HLSE_DES_CBC_ISO9797_M1 10      //!< DES CBC Signature
+#define     HLSE_DES_CBC_ISO9797_M2 11      //!< DES CBC Signature
+#define     HLSE_AES_CBC_ISO9797_M1 12      //!< AES CBC Signature
+#define     HLSE_AES_CBC_ISO9797_M2 13      //!< AES CBC Signature
 // Sign mechanisms
 #define     HLSE_DES_CMAC  20 /**< Ref. RFC 4493 */
 #define     HLSE_AES_CMAC  21 /**< Ref. RFC 4493 */
@@ -286,13 +286,13 @@ typedef HLSE_TYPE HLSE_MECHANISM_TYPE;
 
 
 // RSA
-#define     HLSE_RSA_KEY_GEN		100		//!< RSA Key Generation
-#define     HLSE_RSA_CRT_KEY_GEN	101		//!< RSA CRT Key Generation
-#define     HLSE_RSA_NO_PADDING		102		//!< RSA Encryption/Signature
-#define     HLSE_RSA_PKCS1_SHA1		103		//!< RSA Encryption/Signature
-#define     HLSE_RSA_PKCS1_SHA256	104		//!< RSA Encryption/Signature
-#define     HLSE_RSA_PKCS1_SHA1_PREHASH		105		//!< RSA Signature with pre-hashed data
-#define     HLSE_RSA_PKCS1_SHA256_PREHASH	106		//!< RSA Signature with pre-hashed data
+#define     HLSE_RSA_KEY_GEN        100     //!< RSA Key Generation
+#define     HLSE_RSA_CRT_KEY_GEN    101     //!< RSA CRT Key Generation
+#define     HLSE_RSA_NO_PADDING     102     //!< RSA Encryption/Signature
+#define     HLSE_RSA_PKCS1_SHA1     103     //!< RSA Encryption/Signature
+#define     HLSE_RSA_PKCS1_SHA256   104     //!< RSA Encryption/Signature
+#define     HLSE_RSA_PKCS1_SHA1_PREHASH     105     //!< RSA Signature with pre-hashed data
+#define     HLSE_RSA_PKCS1_SHA256_PREHASH   106     //!< RSA Signature with pre-hashed data
 
 
 /** @} */

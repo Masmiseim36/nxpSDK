@@ -9,7 +9,7 @@
 *                                                                    *
 **********************************************************************
 
-** emWin V5.50 - Graphical user interface for embedded applications **
+** emWin V6.10 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -91,6 +91,8 @@ void ROTARY_Callback(WM_MESSAGE * pMsg);
 void ROTARY_AddValue     (ROTARY_Handle hObj, I32 Delta);
 void ROTARY_AddAngle     (ROTARY_Handle hObj, I32 Delta);
 I32  ROTARY_GetAngle     (ROTARY_Handle hObj);
+int  ROTARY_GetImageSize (ROTARY_Handle hObj, int * pxSize, int * pySize);
+int  ROTARY_GetMarkerSize(ROTARY_Handle hObj, int * pxSize, int * pySize);
 int  ROTARY_GetUserData  (ROTARY_Handle hObj, void * pDest, int NumBytes);
 I32  ROTARY_GetValue     (ROTARY_Handle hObj);
 void ROTARY_SetAngle     (ROTARY_Handle hObj, I32 Pos);

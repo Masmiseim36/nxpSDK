@@ -1,5 +1,5 @@
 /*
- * Copyright 2018,2019 NXP
+ * Copyright 2018-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -11,6 +11,7 @@
 #include "ex_sss_boot.h"
 #include "ex_sss_objid.h"
 #include "ex_sss_scp03_keys.h"
+#include "ex_scp03_puf.h"
 /* ************************************************************************** */
 /* Includes                                                                   */
 /* ************************************************************************** */
@@ -28,7 +29,7 @@
         0xC0, 0x01, 0x02, 0x03, 0x04   \
     } /* COOL 234*/
 
-#define EX_SSS_AUTH_SE05X_FASTSCP_ECDSA_AUTH_ID kEX_SSS_objID_FASTSCP_Auth
+#define EX_SSS_AUTH_SE05X_ECKEY_ECDSA_AUTH_ID kEX_SSS_objID_ECKEY_Auth
 
 #define EX_SSS_AUTH_SE05X_APPLETSCP_AUTH_ID kEX_SSS_ObjID_APPLETSCP03_Auth
 
@@ -40,33 +41,36 @@
         0x4B, 0x4C, 0x4D, 0x4E, 0x4F                                      \
     }
 
-// Use the Platform SCP03 keys from required OEF
+/* Use the Platform SCP03 keys from required OEF
+ * See https://www.nxp.com/docs/en/application-note/AN12436.pdf
+ */
 
-#if SSS_HAVE_SE050M
-#   if SSS_SE050M_LCS_URS
-#       define EX_SSS_AUTH_SE05X_KEY_ENC SSS_AUTH_SE050_OEF_SE050M_BINDINGKEY1_KEY_ENC
-#       define EX_SSS_AUTH_SE05X_KEY_MAC SSS_AUTH_SE050_OEF_SE050M_BINDINGKEY1_KEY_MAC
-#       define EX_SSS_AUTH_SE05X_KEY_DEK SSS_AUTH_SE050_OEF_SE050M_BINDINGKEY1_KEY_DEK
-#   else
-#       define EX_SSS_AUTH_SE05X_KEY_ENC SSS_AUTH_SE050_OEF_SE050M_ININKEY1_KEY_ENC
-#       define EX_SSS_AUTH_SE05X_KEY_MAC SSS_AUTH_SE050_OEF_SE050M_ININKEY1_KEY_MAC
-#       define EX_SSS_AUTH_SE05X_KEY_DEK SSS_AUTH_SE050_OEF_SE050M_ININKEY1_KEY_DEK
-#   endif
+#if EXTERNAL_CUSTOMER_BUILD_CONFIGURATION
+#   define EX_SSS_AUTH_SE05X_KEY_ENC SSS_AUTH_SE050_DEVKIT_KEY_ENC
+#   define EX_SSS_AUTH_SE05X_KEY_MAC SSS_AUTH_SE050_DEVKIT_KEY_MAC
+#   define EX_SSS_AUTH_SE05X_KEY_DEK SSS_AUTH_SE050_DEVKIT_KEY_DEK
 #else
-#   define EX_SSS_AUTH_SE05X_KEY_ENC SSS_AUTH_SE050_OEF_0004A1F445884F17E519C069_KEY_ENC
-#   define EX_SSS_AUTH_SE05X_KEY_MAC SSS_AUTH_SE050_OEF_0004A1F445884F17E519C069_KEY_MAC
-#   define EX_SSS_AUTH_SE05X_KEY_DEK SSS_AUTH_SE050_OEF_0004A1F445884F17E519C069_KEY_DEK
+/* Test / dummy keys */
+
+#ifndef EX_SSS_AUTH_SE05X_KEY_ENC
+#   define EX_SSS_AUTH_SE05X_KEY_ENC  \
+    { 0xAB, 0xCD, 0xAB, 0xCD, 0xAB, 0xCD, 0xAB, 0xCD, 0xAB, 0xCD, 0xAB, 0xCD, 0xAB, 0xCD, 0x00, 0x01 }
 #endif
 
-#if SSS_HAVE_SE050M
-#   if SSS_SE050M_LCS_URS
-#       define EX_SSS_AUTH_SE05X_KEY_VERSION_NO 0x31   //BindingKey1
-#   else
-#       define EX_SSS_AUTH_SE05X_KEY_VERSION_NO 0x30   //InitialKey1
-#   endif
-#else
-#   define EX_SSS_AUTH_SE05X_KEY_VERSION_NO 0x0B
+#ifndef EX_SSS_AUTH_SE05X_KEY_MAC
+#   define EX_SSS_AUTH_SE05X_KEY_MAC   \
+    { 0xAB, 0xCD, 0xAB, 0xCD, 0xAB, 0xCD, 0xAB, 0xCD, 0xAB, 0xCD, 0xAB, 0xCD, 0xAB, 0xCD, 0x00, 0x02 }
 #endif
+
+#ifndef EX_SSS_AUTH_SE05X_KEY_DEK
+#   define EX_SSS_AUTH_SE05X_KEY_DEK   \
+    { 0xAB, 0xCD, 0xAB, 0xCD, 0xAB, 0xCD, 0xAB, 0xCD, 0xAB, 0xCD, 0xAB, 0xCD, 0xAB, 0xCD, 0x00, 0x03 }
+#endif
+
+#endif
+
+
+#define EX_SSS_AUTH_SE05X_KEY_VERSION_NO 0x0B
 
 #define EX_SSS_AUTH_SE05X_KEY_HOST_ECDSA_KEY                              \
     {                                                                     \

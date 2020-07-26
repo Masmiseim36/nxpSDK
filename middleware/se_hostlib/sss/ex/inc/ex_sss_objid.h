@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP
+ * Copyright 2019,2020 NXP
  *
  * This software is owned or controlled by NXP and may only be used
  * strictly in accordance with the applicable license terms.  By expressly
@@ -34,6 +34,7 @@
 
 /* clang-format off */
 #define EX_SSS_OBJID_CUST_START             0x00000001u
+#define SE05X_OBJID_TP_MASK(X)              (0xFFFFFFFC & (X))
 #define EX_SSS_OBJID_CUST_END               0x7BFFFFFFu
 
 #define EX_SSS_OBJID_AKM_START             0x7C000000u
@@ -83,13 +84,13 @@
 #define EX_SSS_OBJID_TP_CERT_RSA2K_D               0xF0000111
 //Gateway Key and Certificate - RSA-2K
 #define EX_SSS_OBJID_TP_KEY_RSA2K_G                0xF0000112
-#define EX_SSS_OBJID_TP_CERT_RSA2K_G	           0xF0000113
+#define EX_SSS_OBJID_TP_CERT_RSA2K_G               0xF0000113
 //Device Key and Certificate - RSA-4K
 #define EX_SSS_OBJID_TP_KEY_RSA4K_D                0xF0000120
 #define EX_SSS_OBJID_TP_CERT_RSA4K_D               0xF0000121
 //Gateway Key and Certificate - RSA-4K
 #define EX_SSS_OBJID_TP_KEY_RSA4K_G                0xF0000122
-#define EX_SSS_OBJID_TP_CERT_RSA4K_G	           0xF0000123
+#define EX_SSS_OBJID_TP_CERT_RSA4K_G               0xF0000123
 
 #define EX_SSS_OBJID_IOT_HUB_A_END          0xFFFFFFFFu
 
@@ -103,7 +104,7 @@ enum
 {
     kEX_SSS_ObjID_UserID_Auth = EX_SSS_OBJID_DEMO_AUTH_START + 1,
     kEX_SSS_ObjID_APPLETSCP03_Auth,
-    kEX_SSS_objID_FASTSCP_Auth,
+    kEX_SSS_objID_ECKEY_Auth,
 };
 
 /* *****************************************************************************************************************

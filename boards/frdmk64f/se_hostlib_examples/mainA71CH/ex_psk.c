@@ -132,9 +132,9 @@ U8 exPskTls1_2(U8 initMode, U8 pskMode)
     U8 masterSecretHost[AX_TLS_PSK_MASTER_SECRET_LEN] = {0};
     U16 masterSecretHostLen = sizeof(masterSecretHost);
 
-    SST_Index_t indexKp;
-    eccKeyComponents_t eccKcTls_0;
-    eccKeyComponents_t eccKcTls_Host;
+    SST_Index_t indexKp = 0;
+    eccKeyComponents_t eccKcTls_0 = { 0 };
+	eccKeyComponents_t eccKcTls_Host = { 0 };
     U8 ecdhSS[32];
     U16 ecdhSSLen = sizeof(ecdhSS);
 

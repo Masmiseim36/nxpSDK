@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 NXP
+ * Copyright 2016,2020 NXP
  *
  * This software is owned or controlled by NXP and may only be used
  * strictly in accordance with the applicable license terms.  By expressly
@@ -20,7 +20,8 @@ extern "C" {
 #endif
 
 
-#if AX_EMBEDDED
+#if AX_EMBEDDED \
+    && (!defined (__MBED__))
 #   include "fsl_debug_console.h"
 #else
 #   define PRINTF printf
@@ -28,9 +29,6 @@ extern "C" {
 #   define PUTCHAR putchar
 #   define GETCHAR getchar
 #endif
-
-
-
 
 #define CONSOLE         (0x01)
 #define MEMORY          (0x02)

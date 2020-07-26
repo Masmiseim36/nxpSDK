@@ -3,7 +3,7 @@
  * @author NXP Semiconductors
  * @version 1.0
  * @par License
- * Copyright 2016 NXP
+ * Copyright 2016,2020 NXP
  *
  * This software is owned or controlled by NXP and may only be used
  * strictly in accordance with the applicable license terms.  By expressly
@@ -38,13 +38,13 @@ extern "C" {
 
 
 /* ------------------------------------------------------------------------- */
-typedef U32 (*ApduTransceiveFunction_t) (apdu_t * pAdpu);
-typedef U32 (*ApduTransceiveRawFunction_t) (U8 * pTx, U16 txLen, U8 * pRx, U32 * pRxLen);
+typedef U32 (*ApduTransceiveFunction_t) (void* conn_ctx, apdu_t * pAdpu);
+typedef U32 (*ApduTransceiveRawFunction_t) (void* conn_ctx, U8 * pTx, U16 txLen, U8 * pRx, U32 * pRxLen);
 
 void smCom_Init(ApduTransceiveFunction_t pTransceive, ApduTransceiveRawFunction_t pTransceiveRaw);
 void smCom_DeInit(void);
-U32 smCom_Transceive(apdu_t *pApdu);
-U32 smCom_TransceiveRaw(U8 *pTx, U16 txLen, U8 *pRx, U32 *pRxLen);
+U32 smCom_Transceive(void *conn_ctx, apdu_t *pApdu);
+U32 smCom_TransceiveRaw(void *conn_ctx, U8 *pTx, U16 txLen, U8 *pRx, U32 *pRxLen);
 
 #ifdef __cplusplus
 }

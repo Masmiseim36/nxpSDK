@@ -149,9 +149,9 @@ usb_status_t USB_ShimAgentRecvComplete(void *handle, void *param)
         /* Receive all the data */
         AGENT_Callback(handle, SHIM_AGENT_EVENT_RECV_COMPLETE, g_shimAgent.bulkOutData.recvData.buffer,
                        g_shimAgent.bulkOutData.recvData.transferSize);
-        g_shimAgent.bulkOutData.transferCount = 0;
+        g_shimAgent.bulkOutData.transferCount         = 0;
         g_shimAgent.bulkOutData.recvData.transferSize = 0;
-        g_shimAgent.bulkOutData.recvData.buffer = NULL;
+        g_shimAgent.bulkOutData.recvData.buffer       = NULL;
         /* Prepare for the next receiving */
         USB_DeviceRecvRequest((void *)handle, g_shimAgent.bulkOutData.epNumber, g_shimAgent.recvDataBuffer,
                               g_shimAgent.bulkOutData.epMaxPacketSize);
@@ -181,7 +181,7 @@ usb_status_t USB_ShimAgentRecvComplete(void *handle, void *param)
 usb_status_t USB_ShimAgentSendComplete(void *handle, uint32_t event, void *param)
 {
     usb_device_endpoint_callback_message_struct_t *message = (usb_device_endpoint_callback_message_struct_t *)param;
-    usb_shim_tx_data_struct_t *sentData = NULL;
+    usb_shim_tx_data_struct_t *sentData                    = NULL;
     if (USB_PHDC_EVENT_INTERRUPT_IN_SEND_COMPLETE == event)
     {
         sentData = &g_shimAgent.interruptInData;
@@ -223,7 +223,7 @@ usb_status_t USB_ShimAgentSendComplete(void *handle, uint32_t event, void *param
  */
 usb_status_t USB_ShimAgentSendData(void *handle, uint8_t qos, uint8_t *appBuffer, uint32_t size)
 {
-    usb_status_t status = kStatus_USB_Success;
+    usb_status_t status                   = kStatus_USB_Success;
     usb_shim_tx_data_struct_t *dataToSend = NULL;
     if (qos != 0x01U /* low latency/good reliability */)
     {
@@ -285,7 +285,7 @@ usb_status_t USB_ShimAgentSendData(void *handle, uint8_t qos, uint8_t *appBuffer
         if ((uint8_t)(dataToSend->seller - dataToSend->buyer) < (uint8_t)(SHIM_AGENT_MAX_QUEUE_NUMBER))
         {
             dataToSend->sendData[dataToSend->seller % SHIM_AGENT_MAX_QUEUE_NUMBER].transferSize = size;
-            dataToSend->sendData[dataToSend->seller % SHIM_AGENT_MAX_QUEUE_NUMBER].buffer = appBuffer;
+            dataToSend->sendData[dataToSend->seller % SHIM_AGENT_MAX_QUEUE_NUMBER].buffer       = appBuffer;
             /* increase queue number by 1 */
             dataToSend->seller += 1U;
             /* send the first entry of queue */

@@ -1,5 +1,5 @@
 /*
- * Amazon FreeRTOS V1.2.0
+ * FreeRTOS V1.2.0
  * Copyright (C) 2017 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -34,21 +34,21 @@
 /**
  * @brief Max SSID length.
  */
-#define wificonfigMAX_SSID_LEN                ( 32 )
+#define wificonfigMAX_SSID_LEN (32)
 
 /**
  * @brief Max BSSID length.
  */
-#define wificonfigMAX_BSSID_LEN               ( 6 )
+#define wificonfigMAX_BSSID_LEN (6)
 
 /**
  * @brief Max passphrase length.
  */
-#define wificonfigMAX_PASSPHRASE_LEN          ( 32 )
+#define wificonfigMAX_PASSPHRASE_LEN (32)
 
 /**
  * @brief DNS query timeout when getting a host IP.
  */
-#define wificonfigDNS_QUERY_TIMEOUT           ( 10000 )
+#define wificonfigDNS_QUERY_TIMEOUT (10000)
 
 #endif

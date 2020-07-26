@@ -3,7 +3,7 @@
 * @author NXP Semiconductors
 * @version 1.0
 * @par License
-* Copyright 2016 NXP
+* Copyright 2016,2020 NXP
 *
 * This software is owned or controlled by NXP and may only be used
 * strictly in accordance with the applicable license terms.  By expressly
@@ -116,6 +116,9 @@ U16 A71_GetRandom(U8 *random, U8 randomLen);
 U16 A71_CreateClientHelloRandom(U8 *clientHello, U8 clientHelloLen);
 U16 A71_GetRestrictedKeyPairInfo(U8 *idx, U16 *nBlocks, U8 *blockInfo, U16 *blockInfoLen);
 U16 A71_GetSha256(U8 *data, U16 dataLen, U8 *sha, U16 *shaLen);
+U16 A71_Sha256Init(void);
+U16 A71_Sha256Update(U8 *data, U16 dataLen);
+U16 A71_Sha256Final(U8 *sha, U16 *shaLen);
 U16 A71_GetUniqueID(U8 *uid, U16 *uidLen);
 U16 A71_GetCertUid(U8 *certUid, U16 *certUidLen);
 U16 A71_GetKeyPairChallenge(U8 *challenge, U16 *challengeLen);
@@ -168,6 +171,9 @@ U16 A71_SetRfc3394WrappedAesKey(SST_Index_t index, const U8 *key, U16 keyLen);
 U16 A71_FreezeSymKey(SST_Index_t index);
 U16 A71_EraseSymKey(SST_Index_t index);
 U16 A71_GetHmacSha256(SST_Index_t index, U8 nBlock, const U8 *data, U16 dataLen, U8 *hmac, U16 *hmacLen);
+U16 A71_HmacSha256Init(SST_Index_t index, U8 nBlock);
+U16 A71_HmacSha256Update(SST_Index_t index, U8 nBlock, U8 *data, U16 dataLen);
+U16 A71_HmacSha256Final(SST_Index_t index, U8 nBlock, U8 *hmac, U16 *hmacLen);
 U16 A71_HkdfExpandSymKey(SST_Index_t index, U8 nBlock, const U8 *info, U16 infoLen, U8 *derivedData, U16 derivedDataLen);
 U16 A71_HkdfSymKey(SST_Index_t index, U8 nBlock, const U8 *salt, U16 saltLen, const U8 *info, U16 infoLen, U8 *derivedData, U16 derivedDataLen);
 U16 A71_PskDeriveMasterSecret(SST_Index_t index, U8 nBlock, const U8 *serverHelloRnd, U16 serverHelloRndLen, U8 *masterSecret);
@@ -226,7 +232,7 @@ U16 A71_SetRfc3394WrappedConfigKey(SST_Index_t index, const U8 *Key, U16 keyLen)
 #define MAX_CHUNK_LENGTH_LINK     256    //!< Limited by A71CH applet capability
 #elif defined(IPC)
 #define MAX_CHUNK_LENGTH_LINK     256    //!< Limited by A71CH applet capability
-#elif defined(RJCT_VCOM) || defined(SMCOM_JRCP_V1) || defined(SMCOM_JRCP_V2) || defined(SMCOM_PN7150) || defined(SMCOM_THREAD) || defined(SMCOM_PCSC)
+#elif defined(RJCT_VCOM) || defined(SMCOM_JRCP_V1) || defined(SMCOM_JRCP_V2) || defined(SMCOM_PN7150) || defined(SMCOM_THREAD) || defined(SMCOM_PCSC) || defined(SMCOM_RC663_VCOM)
 #define MAX_CHUNK_LENGTH_LINK     256    //!< Limited by A71CH applet capability
 #else
 #error "Define a communication layer as a preprocessor constant"

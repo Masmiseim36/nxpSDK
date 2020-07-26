@@ -3,7 +3,7 @@
  * @author NXP Semiconductors
  * @version 1.0
  * @par LICENSE
- * Copyright 2016 NXP
+ * Copyright 2016,2020 NXP
  *
  * This software is owned or controlled by NXP and may only be used
  * strictly in accordance with the applicable license terms.  By expressly
@@ -27,19 +27,31 @@
 extern "C" {
 #endif
 
-#if defined(_WIN32) && !defined(__MINGW64__)
-#include <Windows.h>
-#if defined(WINAPI_FAMILY) && (WINAPI_FAMILY == WINAPI_FAMILY_APP)
-#include <WinSock2.h>
+#if AX_EMBEDDED
+#   define SM_TIME_USE_LONG_LONG
+#elif defined(__STDC__) || defined(__GNU__)
+#   define SM_TIME_USE_TIMESPEC /* Linux Like */
+#elif defined(_WIN32)
+#   define SM_TIME_USE_TIMEVAL /* MSVC */
+#else
+#   error "Don't know how to do tst_sm_time"
 #endif
 
+#ifdef SM_TIME_USE_TIMEVAL
+#   include <Windows.h>
+#   if defined(WINAPI_FAMILY) && (WINAPI_FAMILY == WINAPI_FAMILY_APP)
+#       include <WinSock2.h>
+#   endif
+#endif
 
+#ifdef SM_TIME_USE_TIMEVAL
 typedef struct {
     struct timeval tStart;
     struct timeval tEnd;
 } axTimeMeasurement_t;
+#endif
 
-#elif AX_EMBEDDED
+#ifdef SM_TIME_USE_LONG_LONG
 /**
  * Utility structure enabling delta time measurement.
  */
@@ -47,7 +59,9 @@ typedef struct {
     long long tStart; //!< To contain start of time measurement
     long long tEnd;   //!< To contain end of time measurement
 } axTimeMeasurement_t;
-#else
+#endif
+
+#ifdef SM_TIME_USE_TIMESPEC
 /**
  * Utility structure enabling delta time measurement.
  */

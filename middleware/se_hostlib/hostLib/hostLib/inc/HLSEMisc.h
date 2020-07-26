@@ -1,9 +1,8 @@
-/**
-* @file HLSEMisc.h
+/*
 * @author NXP Semiconductors
 * @version 1.0
 * @par License
-* Copyright 2017 NXP
+* Copyright 2017,2020 NXP
 *
 * This software is owned or controlled by NXP and may only be used
 * strictly in accordance with the applicable license terms.  By expressly
@@ -13,11 +12,14 @@
 * you do not agree to be bound by the applicable license terms, then you
 * may not retain, install, activate or otherwise use the software.
 *
-* @par Description
-* Host Lib wrapper API: Miscellaneous functions
 *
 * @par HISTORY
 *
+*/
+/**
+* @file HLSEMisc.h
+* @par Description
+* Host Lib wrapper API: Miscellaneous functions
 */
 #ifndef _HLSE_MISC_H_
 #define _HLSE_MISC_H_

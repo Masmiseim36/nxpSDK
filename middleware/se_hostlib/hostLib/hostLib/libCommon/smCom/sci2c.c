@@ -3,7 +3,7 @@
  * @author NXP Semiconductors
  * @version 1.0
  * @par License
- * Copyright 2016 NXP
+ * Copyright 2016,2020 NXP
  *
  * This software is owned or controlled by NXP and may only be used
  * strictly in accordance with the applicable license terms.  By expressly
@@ -84,18 +84,18 @@ static uint8_t txData[270];
 static uint8_t * pRx = rxData;
 
 static U8 GetCounter(void);
-static U8 sci2c_WaitForStatusOkay(U32 msec);
-static i2c_status_t sci2c_SendByte(sci2c_Data_t * pSci2cData);
-static i2c_status_t sci2c_WriteBlock(sci2c_Data_t * pSci2cData);
-static i2c_status_t sci2c_ReadBlock(sci2c_Data_t * pSci2cData, U8 * pRead, U16 * pReadLen);
-static U16 sci2c_MasterToSlaveDataTx(tSCI2C_Data_t * pSCI2C);
-static U16 sci2c_SlaveToMasterDataTx(tSCI2C_Data_t * pSCI2C);
-static eSci2c_Error_t sci2c_Wakeup(void);
-static eSci2c_Error_t sci2c_SoftReset(U8 * pRx, U16 * pRxLen);
-static eSci2c_Error_t sci2c_ReadAnswerToReset(U8 * pAtrResponse, U16 * pRxLen);
-static eSci2c_Error_t sci2c_ParameterExchange(sci2c_maxDataBytesS2M_t maxData, sci2c_maxDataBytesM2S_t * pResponse);
-static eSci2c_Error_t sci2c_GetStatus(U8* pStatus);
-static eSci2c_Error_t sci2c_DataExchange(tSCI2C_Data_t * pSCI2C);
+static U8 sci2c_WaitForStatusOkay(void* conn_ctx, U32 msec);
+static i2c_status_t sci2c_SendByte(void* conn_ctx, sci2c_Data_t * pSci2cData);
+static i2c_status_t sci2c_WriteBlock(void* conn_ctx, sci2c_Data_t * pSci2cData);
+static i2c_status_t sci2c_ReadBlock(void* conn_ctx, sci2c_Data_t * pSci2cData, U8 * pRead, U16 * pReadLen);
+static U16 sci2c_MasterToSlaveDataTx(void* conn_ctx, tSCI2C_Data_t * pSCI2C);
+static U16 sci2c_SlaveToMasterDataTx(void* conn_ctx, tSCI2C_Data_t * pSCI2C);
+static eSci2c_Error_t sci2c_Wakeup(void* conn_ctx);
+static eSci2c_Error_t sci2c_SoftReset(void* conn_ctx, U8 * pRx, U16 * pRxLen);
+static eSci2c_Error_t sci2c_ReadAnswerToReset(void* conn_ctx, U8 * pAtrResponse, U16 * pRxLen);
+static eSci2c_Error_t sci2c_ParameterExchange(void* conn_ctx, sci2c_maxDataBytesS2M_t maxData, sci2c_maxDataBytesM2S_t * pResponse);
+static eSci2c_Error_t sci2c_GetStatus(void* conn_ctx, U8* pStatus);
+static eSci2c_Error_t sci2c_DataExchange(void* conn_ctx, tSCI2C_Data_t * pSCI2C);
 
 /**
  * @function sci2c_Init
@@ -104,7 +104,7 @@ static eSci2c_Error_t sci2c_DataExchange(tSCI2C_Data_t * pSCI2C);
  * @param SCI2CatrLen IN: Pointer to length of provided buffer; OUT: Actual length of retrieved ATR
  * @return
  */
-eSci2c_Error_t sci2c_Init(U8 *SCI2Catr, U16 *SCI2CatrLen)
+eSci2c_Error_t sci2c_Init(void* conn_ctx, U8 *SCI2Catr, U16 *SCI2CatrLen)
 {
     uint8_t atr[64];
 #if SSS_HAVE_A71XX
@@ -135,7 +135,7 @@ eSci2c_Error_t sci2c_Init(U8 *SCI2Catr, U16 *SCI2CatrLen)
     //
     while (status != SCI2C_STATUS_NORMAL_READY)
     {
-        sci2c_GetStatus(&status);
+        sci2c_GetStatus(conn_ctx, &status);
         if ((++nGetStatus) > GET_STATUS_MAX) {
             sm_printf(DBGOUT, "Error: Failed to retrieve ready status.\r\n");
             return eSci2c_Error;
@@ -152,7 +152,7 @@ eSci2c_Error_t sci2c_Init(U8 *SCI2Catr, U16 *SCI2CatrLen)
         }
         else {
             sm_printf(DBGOUT, "Recover from Status=0x%02X by sci2c_SoftReset.\r\n", status);
-            rv = sci2c_SoftReset(pRx, &nrRead);
+            rv = sci2c_SoftReset(conn_ctx, pRx, &nrRead);
             if (rv != eSci2c_No_Error)
             {
                 sm_printf(DBGOUT, "Soft reset failed\r\n");
@@ -164,7 +164,7 @@ eSci2c_Error_t sci2c_Init(U8 *SCI2Catr, U16 *SCI2CatrLen)
     // sm_sleep(T_WNCMD_ACTUAL); // Maximum value is 200 ms
 #endif
 
-    rv = sci2c_SoftReset(pRx, &nrRead);
+    rv = sci2c_SoftReset(conn_ctx, pRx, &nrRead);
     if (rv != eSci2c_No_Error)
     {
         sm_printf(DBGOUT, "Soft reset failed\r\n");
@@ -175,7 +175,7 @@ eSci2c_Error_t sci2c_Init(U8 *SCI2Catr, U16 *SCI2CatrLen)
 
     /* --- read ATR --- */
     // sm_printf(DBGOUT, "reading ATR\r\n");
-    rv = sci2c_ReadAnswerToReset(atr, &len);
+    rv = sci2c_ReadAnswerToReset(conn_ctx, atr, &len);
     if ((rv != eSci2c_No_Error) || (len == 0))
     {
         *SCI2CatrLen = 0;
@@ -193,7 +193,7 @@ eSci2c_Error_t sci2c_Init(U8 *SCI2Catr, U16 *SCI2CatrLen)
 #ifdef LOG_SCI2C_PARAMETER_EXCHANGE
     printf("\r\n-----------sci2c_ParameterExchange ------------------\r\n");
 #endif
-    rv = sci2c_ParameterExchange(SMCOM_MAX_BYTES, &maxCommandLength);
+    rv = sci2c_ParameterExchange(conn_ctx, SMCOM_MAX_BYTES, &maxCommandLength);
     /* next types are casted to U32 for comparison; if types do not match, this comparison needs to be changed */
     if ((rv != eSci2c_No_Error) || ((U32) maxCommandLength != (U32) SMCOM_MAX_BYTES))
     {
@@ -227,10 +227,10 @@ U8 sci2c_GetSequenceCounter()
 */
 void sci2c_TerminateI2C(U8 full)
 {
-    axI2CTerm(full);
+    axI2CTerm(NULL, full);
 }
 
-static eSci2c_Error_t sci2c_Wakeup(void)
+static eSci2c_Error_t sci2c_Wakeup(void* conn_ctx)
 {
     i2c_status_t i2cErr;
     sci2c_Data_t sci2cData;
@@ -241,7 +241,7 @@ static eSci2c_Error_t sci2c_Wakeup(void)
 #if AX_EMBEDDED
     axI2CResetBackoffDelay();
 #endif
-    i2cErr = sci2c_SendByte(pSci2cData);
+    i2cErr = sci2c_SendByte(conn_ctx, pSci2cData);
 
     // Depending on the speed of the I2C master controller
     // an extra delay may have to be inserted here to ensure
@@ -273,7 +273,7 @@ static eSci2c_Error_t sci2c_Wakeup(void)
  * @param pRxLen  number of bytes read in response to reset command.
  * @return
  */
-static eSci2c_Error_t sci2c_SoftReset(U8 * pRx, U16 * pRxLen)
+static eSci2c_Error_t sci2c_SoftReset(void* conn_ctx, U8 * pRx, U16 * pRxLen)
 {
    U8 i = 0;
    eSci2c_Error_t rv = eSci2c_Protocol_Error;
@@ -290,7 +290,7 @@ static eSci2c_Error_t sci2c_SoftReset(U8 * pRx, U16 * pRxLen)
 
    for (i = 0; i < N_RETRY_SRST; i++)
    {
-      i2cErr = sci2c_ReadBlock(pSci2cData, pRx, pRxLen);
+      i2cErr = sci2c_ReadBlock(conn_ctx, pSci2cData, pRx, pRxLen);
       if (i2cErr == i2c_Okay)
       {
          rv = eSci2c_No_Error;
@@ -317,7 +317,7 @@ exit:
  * @param pRxLen number of bytes read in response to reset command.
  * @return
  */
-static eSci2c_Error_t sci2c_ReadAnswerToReset(U8 * pAtrResponse, U16 * pRxLen)
+static eSci2c_Error_t sci2c_ReadAnswerToReset(void* conn_ctx, U8 * pAtrResponse, U16 * pRxLen)
 {
    i2c_status_t i2cErr = i2c_Okay;
    sci2c_Data_t sci2cData;
@@ -331,7 +331,7 @@ static eSci2c_Error_t sci2c_ReadAnswerToReset(U8 * pAtrResponse, U16 * pRxLen)
    pSci2cData->pcb = PCB_READ_ATR;
    pSci2cData->dataLen = 0;
 
-   i2cErr = sci2c_ReadBlock(pSci2cData, pAtrResponse, &nrRead);
+   i2cErr = sci2c_ReadBlock(conn_ctx, pSci2cData, pAtrResponse, &nrRead);
 
    if ((nrRead > MAX_ATR_RESPONSE_LENGTH) || (i2cErr == i2c_Failed) || (i2cErr == i2c_Sci2cException))
    {
@@ -361,7 +361,7 @@ exit:
  * @param maxData
  * @return
  */
-static eSci2c_Error_t sci2c_ParameterExchange(sci2c_maxDataBytesS2M_t maxData, sci2c_maxDataBytesM2S_t * pResponse)
+static eSci2c_Error_t sci2c_ParameterExchange(void* conn_ctx, sci2c_maxDataBytesS2M_t maxData, sci2c_maxDataBytesM2S_t * pResponse)
 {
     sci2c_Data_t sci2cData;
     sci2c_Data_t *pSci2cData = (sci2c_Data_t *)&sci2cData;
@@ -376,7 +376,7 @@ static eSci2c_Error_t sci2c_ParameterExchange(sci2c_maxDataBytesS2M_t maxData, s
 
     for (i = 0; i < N_RETRY_PE; i++) /* try N_RETRY_PE times if not okay */
     {
-        i2cErr = sci2c_ReadBlock(pSci2cData, pRx, &nrRead);
+        i2cErr = sci2c_ReadBlock(conn_ctx, pSci2cData, pRx, &nrRead);
 
         if ((i2cErr == i2c_Okay) && (((pRx[1] & 0x0C) >> 2) == ((~pRx[1] & 0x30) >> 4)) &&
             (((pRx[1] & 0xC0) >> 6) == maxData)) {
@@ -398,7 +398,7 @@ exit:
  * @param pStatus The status of the slave.
  * @return
  */
-static eSci2c_Error_t sci2c_GetStatus(U8* pStatus)
+static eSci2c_Error_t sci2c_GetStatus(void* conn_ctx, U8* pStatus)
 {
    eSci2c_Error_t rv = eSci2c_Error;
    sci2c_Data_t sci2cData;
@@ -410,7 +410,7 @@ static eSci2c_Error_t sci2c_GetStatus(U8* pStatus)
    pSci2cData->pcb = PCB_STATUS;
    pSci2cData->dataLen = 0;
 
-   i2cErr = sci2c_ReadBlock(pSci2cData, pRx, &nrRead);
+   i2cErr = sci2c_ReadBlock(conn_ctx, pSci2cData, pRx, &nrRead);
 
    if ( (i2cErr == i2c_Okay) || (i2cErr == i2c_Sci2cException) )
    {
@@ -444,7 +444,7 @@ exit:
     return rv;
 }
 
-static U16 sci2c_MasterToSlaveDataTx(tSCI2C_Data_t * pSCI2C)
+static U16 sci2c_MasterToSlaveDataTx(void* conn_ctx, tSCI2C_Data_t * pSCI2C)
 {
    U8 maxI2CPacketLen = 253; /* limited by the I2C driver */
    U16 remaining = 0;
@@ -482,7 +482,7 @@ static U16 sci2c_MasterToSlaveDataTx(tSCI2C_Data_t * pSCI2C)
 
          remaining -= nrBytesToTx;
 
-         i2cErr = sci2c_WriteBlock(pSci2cData);
+         i2cErr = sci2c_WriteBlock(conn_ctx, pSci2cData);
 
          // i2c_Okay,      /* the command has been transmitted succesfully */
          // i2c_NoAddrAck, /* the slave does not acknowledge the address byte */
@@ -501,7 +501,7 @@ static U16 sci2c_MasterToSlaveDataTx(tSCI2C_Data_t * pSCI2C)
          {
             /* wait until the status is okay after a packet with the More bit set */
             sm_usleep(T_CMDG_USec);
-            U8 okay = sci2c_WaitForStatusOkay(APP_SCI2C_TIMEOUT_ms);
+            U8 okay = sci2c_WaitForStatusOkay(conn_ctx, APP_SCI2C_TIMEOUT_ms);
             if (!okay)
             {
                sm_printf(DBGOUT, "sci2c_MasterToSlaveDataTx: stack specific timeout expired waiting for status\r\n");
@@ -516,7 +516,7 @@ static U16 sci2c_MasterToSlaveDataTx(tSCI2C_Data_t * pSCI2C)
       pSci2cData->pData = pSCI2C->pBuf;
       pSci2cData->dataLen = (U8) pSCI2C->buflen; /* cast safe: pSCI2C->buflen is always < 255 */
 
-      i2cErr = sci2c_WriteBlock(pSci2cData);
+      i2cErr = sci2c_WriteBlock(conn_ctx, pSci2cData);
 
       if (i2cErr != i2c_Okay)
       {
@@ -528,7 +528,7 @@ exit:
     return nStatus;
 }
 
-static U16 sci2c_SlaveToMasterDataTx(tSCI2C_Data_t * pSCI2C)
+static U16 sci2c_SlaveToMasterDataTx(void* conn_ctx, tSCI2C_Data_t * pSCI2C)
 {
    U8 reTxBit = 0;
    U16 nrRead = 0;
@@ -547,14 +547,14 @@ static U16 sci2c_SlaveToMasterDataTx(tSCI2C_Data_t * pSCI2C)
 
 #if SSS_HAVE_A71XX
    pSci2cData->pcb = (U8)((reTxBit<<7) | pSCI2C->dir | 0x80);
-#elif SSS_HAVE_SE050_EAR
-   pSci2cData->pcb = (U8)((reTxBit<<7) | pSCI2C->dir);
+   /* On SE050 based IC
+    * pSci2cData->pcb = (U8)((reTxBit<<7) | pSCI2C->dir); */
 #endif
    pSci2cData->dataLen = 0;
 
    do
    {
-      i2cErr = sci2c_ReadBlock(pSci2cData, pRx, &nrRead);
+      i2cErr = sci2c_ReadBlock(conn_ctx, pSci2cData, pRx, &nrRead);
 
       switch(i2cErr)
       {
@@ -609,7 +609,7 @@ exit:
  * @description Used for sending and receiving the response after the status is okay.
  * @param pSCI2C Pointer to the SCI2C data structure
  */
-static eSci2c_Error_t sci2c_DataExchange(tSCI2C_Data_t * pSCI2C)
+static eSci2c_Error_t sci2c_DataExchange(void* conn_ctx, tSCI2C_Data_t * pSCI2C)
 {
    U16 nStatus = SCI2C_M2S_OK;
    U8 okay = 0;
@@ -619,7 +619,7 @@ static eSci2c_Error_t sci2c_DataExchange(tSCI2C_Data_t * pSCI2C)
 
    if (pSCI2C->dir == eSci2c_DirectionM2S) /* master to slave */
    {
-      nStatus = sci2c_MasterToSlaveDataTx(pSCI2C);
+      nStatus = sci2c_MasterToSlaveDataTx(conn_ctx, pSCI2C);
 
       if (nStatus != SCI2C_M2S_OK)
       {
@@ -628,7 +628,7 @@ static eSci2c_Error_t sci2c_DataExchange(tSCI2C_Data_t * pSCI2C)
 
       /* wait until status is okay after sending the complete payload stream */
       sm_usleep(T_CMDG_USec);
-      okay = sci2c_WaitForStatusOkay(APP_SCI2C_TIMEOUT_ms);
+      okay = sci2c_WaitForStatusOkay(conn_ctx, APP_SCI2C_TIMEOUT_ms);
       if (!okay)
       {
           sm_printf(DBGOUT, "timeout expired waiting for status (3)\r\n");
@@ -637,7 +637,7 @@ static eSci2c_Error_t sci2c_DataExchange(tSCI2C_Data_t * pSCI2C)
    }
    else /* slave to master */
    {
-      nStatus = sci2c_SlaveToMasterDataTx(pSCI2C);
+      nStatus = sci2c_SlaveToMasterDataTx(conn_ctx, pSCI2C);
       if (nStatus != SCI2C_S2M_OK)
       {
           return eSci2c_Error;
@@ -663,7 +663,7 @@ static U8 GetCounter(void)
 /* sci2c_WaitForStatusOkay
  * Returns 1 if the status is okay before the timeout expires.
  */
-static U8 sci2c_WaitForStatusOkay(U32 msec)
+static U8 sci2c_WaitForStatusOkay(void* conn_ctx, U32 msec)
 {
    U8 status = SCI2C_STATUS_EXCEPTION_OTHER;
    eSci2c_Error_t rv = eSci2c_Error;
@@ -675,7 +675,7 @@ static U8 sci2c_WaitForStatusOkay(U32 msec)
 
    while (time < msec)
    {
-      rv = sci2c_GetStatus(&status);
+      rv = sci2c_GetStatus(conn_ctx, &status);
       if ( (rv == eSci2c_No_Error) && (status == SCI2C_STATUS_NORMAL_READY) )
       {
          break;
@@ -720,7 +720,7 @@ static U8 sci2c_WaitForStatusOkay(U32 msec)
  * @retval ::SMCOM_SND_FAILED
  * @retval ::SMCOM_RCV_FAILED
  */
-U32 sci2c_Transceive(apdu_t * pApdu)
+U32 sci2c_Transceive(void* conn_ctx, apdu_t * pApdu)
 {
    uint16_t expectedLen = 0;
    U8 tx[1] = { APDU_GET_RESPONSE };
@@ -737,10 +737,10 @@ U32 sci2c_Transceive(apdu_t * pApdu)
    pSCI2C->buflen = pApdu->buflen;
 
 
-   sci2c_Wakeup();
+   sci2c_Wakeup(conn_ctx);
 
 
-   sci2c_Error = sci2c_DataExchange(pSCI2C);
+   sci2c_Error = sci2c_DataExchange(conn_ctx, pSCI2C);
    if (sci2c_Error != eSci2c_No_Error)
    {
        return SMCOM_SND_FAILED;
@@ -760,7 +760,7 @@ U32 sci2c_Transceive(apdu_t * pApdu)
    pSCI2C->pBuf = pApdu->pBuf;
    pSCI2C->buflen = expectedLen;
 
-   sci2c_Error = sci2c_DataExchange(pSCI2C);
+   sci2c_Error = sci2c_DataExchange(conn_ctx, pSCI2C);
    pApdu->rxlen = pSCI2C->buflen;
    // reset offset for subsequent response parsing
    pApdu->offset = 0;
@@ -785,7 +785,7 @@ exit:
  * @retval ::SMCOM_SND_FAILED
  * @retval ::SMCOM_RCV_FAILED
  */
-U32 sci2c_TransceiveRaw(U8 * pTx, U16 txLen, U8 * pRx, U32 * pRxLen)
+U32 sci2c_TransceiveRaw(void* conn_ctx, U8 * pTx, U16 txLen, U8 * pRx, U32 * pRxLen)
 {
    U8 tx[1] = { APDU_GET_RESPONSE };
    tSCI2C_Data_t oSCI2C;
@@ -798,10 +798,10 @@ U32 sci2c_TransceiveRaw(U8 * pTx, U16 txLen, U8 * pRx, U32 * pRxLen)
    pSCI2C->buflen = txLen;
 
 
-   sci2c_Wakeup();
+   sci2c_Wakeup(conn_ctx);
 
 
-   sci2c_Error = sci2c_DataExchange(pSCI2C);
+   sci2c_Error = sci2c_DataExchange(conn_ctx, pSCI2C);
    if (sci2c_Error != eSci2c_No_Error)
    {
        return SMCOM_SND_FAILED;
@@ -813,7 +813,7 @@ U32 sci2c_TransceiveRaw(U8 * pTx, U16 txLen, U8 * pRx, U32 * pRxLen)
    pSCI2C->buflen = 1;
    pSCI2C->pBuf = pRx;
 
-   sci2c_Error = sci2c_DataExchange(pSCI2C);
+   sci2c_Error = sci2c_DataExchange(conn_ctx, pSCI2C);
    *pRxLen = pSCI2C->buflen;
 
    if (sci2c_Error != eSci2c_No_Error)
@@ -824,7 +824,7 @@ U32 sci2c_TransceiveRaw(U8 * pTx, U16 txLen, U8 * pRx, U32 * pRxLen)
    return SMCOM_OK;
 }
 
-static i2c_status_t sci2c_SendByte(sci2c_Data_t * pSci2cData)
+static i2c_status_t sci2c_SendByte(void* conn_ctx, sci2c_Data_t * pSci2cData)
 {
     i2c_error_t status = I2C_FAILED;
 
@@ -839,9 +839,9 @@ static i2c_status_t sci2c_SendByte(sci2c_Data_t * pSci2cData)
 
     /* only write 1 byte (the PCB) */
 #ifdef PLATFORM_IMX
-    status = axI2CWriteByte(I2C_BUS_0, SMCOM_I2C_ADDRESS, (U8 *) &txData);
+    status = axI2CWriteByte(conn_ctx, I2C_BUS_0, SMCOM_I2C_ADDRESS, (U8 *) &txData);
 #else
-    status = axI2CWrite(I2C_BUS_0, SMCOM_I2C_ADDRESS, (U8 *) &txData, 1);
+    status = axI2CWrite(conn_ctx, I2C_BUS_0, SMCOM_I2C_ADDRESS, (U8 *) &txData, 1);
 #endif
     if (status == I2C_OK)
     {
@@ -864,7 +864,7 @@ exit:
     return i2c_Failed;
 }
 
-static i2c_status_t sci2c_WriteBlock(sci2c_Data_t * pSci2cData)
+static i2c_status_t sci2c_WriteBlock(void* conn_ctx, sci2c_Data_t * pSci2cData)
 {
    U16 write_len = 1; /* PCB byte */
 #ifdef LOG_I2C
@@ -892,7 +892,7 @@ static i2c_status_t sci2c_WriteBlock(sci2c_Data_t * pSci2cData)
    printf("\r\n");
 #endif
 
-   status = axI2CWrite(I2C_BUS_0, SMCOM_I2C_ADDRESS, (U8 *) &txData, write_len);
+   status = axI2CWrite(conn_ctx, I2C_BUS_0, SMCOM_I2C_ADDRESS, (U8 *) &txData, write_len);
 
 #ifdef LOG_I2C
    printf("WRITE BLOCK done: %d\r\n", status);
@@ -922,7 +922,7 @@ exit:
 //
 // The values returned by axI2CWriteRead depend on the driver implementation.
 //
-static i2c_status_t sci2c_ReadBlock(sci2c_Data_t * pSci2cData, U8 * pRead, U16 * pReadLen)
+static i2c_status_t sci2c_ReadBlock(void* conn_ctx, sci2c_Data_t * pSci2cData, U8 * pRead, U16 * pReadLen)
 {
    U16 readlen = 0;
    i2c_error_t status = I2C_FAILED;
@@ -941,7 +941,7 @@ static i2c_status_t sci2c_ReadBlock(sci2c_Data_t * pSci2cData, U8 * pRead, U16 *
 
    txData[0] = pSci2cData->pcb;
 
-   status = axI2CWriteRead(I2C_BUS_0, SMCOM_I2C_ADDRESS, (U8 *) &txData, write_len, pRead, (U16 *) &readlen);
+   status = axI2CWriteRead(conn_ctx, I2C_BUS_0, SMCOM_I2C_ADDRESS, (U8 *) &txData, write_len, pRead, (U16 *) &readlen);
 
    if (status != I2C_OK)
    {

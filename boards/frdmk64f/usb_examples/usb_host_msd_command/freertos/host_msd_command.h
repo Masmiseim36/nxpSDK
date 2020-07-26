@@ -65,12 +65,12 @@ extern usb_status_t USB_HostMsdEvent(usb_device_handle deviceHandle,
                                      uint32_t eventCode);
 
 /*!
-* @brief host msd command task function.
-*
-* This function implements the host msd command action, it is used to create task.
-*
-* @param arg   the host msd command instance pointer.
-*/
+ * @brief host msd command task function.
+ *
+ * This function implements the host msd command action, it is used to create task.
+ *
+ * @param arg   the host msd command instance pointer.
+ */
 extern void USB_HostMsdTask(void *arg);
 
 #endif /* _HOST_MSD_COMMAND_H_ */

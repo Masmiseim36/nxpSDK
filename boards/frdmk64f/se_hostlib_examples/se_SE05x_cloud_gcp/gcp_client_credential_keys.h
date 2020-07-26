@@ -1,4 +1,4 @@
-/* Copyright 2019 NXP
+/* Copyright 2019,2020 NXP
  *
  * This software is owned or controlled by NXP and may only be used
  * strictly in accordance with the applicable license terms.  By expressly
@@ -17,10 +17,6 @@
 #include "fsl_sss_ftr.h"
 #else
 #include "fsl_sss_ftr_default.h"
-#endif
-
-#if !SSS_HAVE_GCP
-#error Only with GCP_IOT
 #endif
 
 #include <stdio.h>

@@ -17,25 +17,25 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define BOARD_FLEXIO_BASE FLEXIO0
-#define FLEXIO_SPI_SOUT_PIN 4U
-#define FLEXIO_SPI_SIN_PIN 5U
-#define FLEXIO_SPI_CLK_PIN 3U
-#define FLEXIO_SPI_PCS_PIN 2U
-#define FLEXIO_CLOCK_FREQUENCY CLOCK_GetFreq(kCLOCK_PllFllSelClk)
-#define FLEXIO_DMA_REQUEST_BASE kDmaRequestMux0Group1FlexIO0Channel0
-#define BOARD_DSPI_SLAVE_BASE SPI0
-#define SLAVE_SPI_IRQ SPI0_IRQn
-#define MASTER_SPI_IRQ FLEXIO0_IRQn
-#define EXAMPLE_FLEXIO_SPI_DMAMUX_BASEADDR DMAMUX0
+#define BOARD_FLEXIO_BASE                    FLEXIO0
+#define FLEXIO_SPI_SOUT_PIN                  4U
+#define FLEXIO_SPI_SIN_PIN                   5U
+#define FLEXIO_SPI_CLK_PIN                   3U
+#define FLEXIO_SPI_PCS_PIN                   2U
+#define FLEXIO_CLOCK_FREQUENCY               CLOCK_GetFreq(kCLOCK_PllFllSelClk)
+#define FLEXIO_DMA_REQUEST_BASE              kDmaRequestMux0Group1FlexIO0Channel0
+#define BOARD_DSPI_SLAVE_BASE                SPI0
+#define SLAVE_SPI_IRQ                        SPI0_IRQn
+#define MASTER_SPI_IRQ                       FLEXIO0_IRQn
+#define EXAMPLE_FLEXIO_SPI_DMAMUX_BASEADDR   DMAMUX0
 #define EXAMPLE_FLEXIO_SPI_DMA_DSPI_BASEADDR DMA0
-#define FLEXIO_SPI_TX_DMA_DSPI_CHANNEL 16U
-#define FLEXIO_SPI_RX_DMA_DSPI_CHANNEL 17U
-#define FLEXIO_TX_SHIFTER_INDEX 0U
-#define FLEXIO_RX_SHIFTER_INDEX 1U
-#define EXAMPLE_TX_DMA_SOURCE (FLEXIO_DMA_REQUEST_BASE + FLEXIO_TX_SHIFTER_INDEX)
-#define EXAMPLE_RX_DMA_SOURCE (FLEXIO_DMA_REQUEST_BASE + FLEXIO_RX_SHIFTER_INDEX)
-#define TRANSFER_SIZE 256U        /*! Transfer dataSize */
+#define FLEXIO_SPI_TX_DMA_DSPI_CHANNEL       16U
+#define FLEXIO_SPI_RX_DMA_DSPI_CHANNEL       17U
+#define FLEXIO_TX_SHIFTER_INDEX              0U
+#define FLEXIO_RX_SHIFTER_INDEX              1U
+#define EXAMPLE_TX_DMA_SOURCE                (FLEXIO_DMA_REQUEST_BASE + FLEXIO_TX_SHIFTER_INDEX)
+#define EXAMPLE_RX_DMA_SOURCE                (FLEXIO_DMA_REQUEST_BASE + FLEXIO_RX_SHIFTER_INDEX)
+#define TRANSFER_SIZE     256U    /*! Transfer dataSize */
 #define TRANSFER_BAUDRATE 500000U /*! Transfer baudrate - 500k */
 
 /*******************************************************************************

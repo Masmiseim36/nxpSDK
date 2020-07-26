@@ -3,7 +3,7 @@
 * @author NXP Semiconductors
 * @version 1.0
 * @par License
-* Copyright 2016 NXP
+* Copyright 2016,2020 NXP
 *
 * This software is owned or controlled by NXP and may only be used
 * strictly in accordance with the applicable license terms.  By expressly
@@ -34,7 +34,7 @@
 #if defined(TGT_A71CL)
 #include "a71cl_util.h"
 #include "sm_const.h"
-#elif (SSS_HAVE_A71CH || SSS_HAVE_SE050_EAR_CH || SSS_HAVE_SE05X)
+#elif (SSS_HAVE_A71CH || SSS_HAVE_A71CH_SIM || SSS_HAVE_APPLET_SE05X_IOT)
 #include "a71ch_util.h"
 #include "sm_const.h"
 #elif defined TGT_A70CI

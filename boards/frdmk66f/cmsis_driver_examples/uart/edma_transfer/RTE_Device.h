@@ -10,17 +10,17 @@
 #define __RTE_DEVICE_H
 
 /* Driver name mapping. */
-#define RTE_USART0 1
+#define RTE_USART0        1
 #define RTE_USART0_DMA_EN 1
 
 /* UART configuration. */
-#define RTE_USART0_DMA_TX_CH 0
-#define RTE_USART0_DMA_TX_PERI_SEL (uint8_t) kDmaRequestMux0UART0Tx
+#define RTE_USART0_DMA_TX_CH          0
+#define RTE_USART0_DMA_TX_PERI_SEL    (uint8_t) kDmaRequestMux0UART0Tx
 #define RTE_USART0_DMA_TX_DMAMUX_BASE DMAMUX0
-#define RTE_USART0_DMA_TX_DMA_BASE DMA0
-#define RTE_USART0_DMA_RX_CH 1
-#define RTE_USART0_DMA_RX_PERI_SEL (uint8_t) kDmaRequestMux0UART0Rx
+#define RTE_USART0_DMA_TX_DMA_BASE    DMA0
+#define RTE_USART0_DMA_RX_CH          1
+#define RTE_USART0_DMA_RX_PERI_SEL    (uint8_t) kDmaRequestMux0UART0Rx
 #define RTE_USART0_DMA_RX_DMAMUX_BASE DMAMUX0
-#define RTE_USART0_DMA_RX_DMA_BASE DMA0
+#define RTE_USART0_DMA_RX_DMA_BASE    DMA0
 
 #endif /* __RTE_DEVICE_H */

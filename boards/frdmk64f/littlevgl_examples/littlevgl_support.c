@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP
+ * Copyright 2019-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -7,8 +7,10 @@
 
 #include "littlevgl_support.h"
 #include "lvgl.h"
+#if defined(FSL_RTOS_FREE_RTOS)
 #include "FreeRTOS.h"
 #include "semphr.h"
+#endif
 
 #include "board.h"
 #include "fsl_gpio.h"
@@ -25,19 +27,19 @@
  ******************************************************************************/
 
 /* Port Me, Start. */
-#define BOARD_TOUCH_I2C Driver_I2C0
+#define BOARD_TOUCH_I2C     Driver_I2C0
 #define BOARD_TOUCH_I2C_IRQ I2C0_IRQn
 
-#define BOARD_LCD_SPI Driver_SPI0
+#define BOARD_LCD_SPI          Driver_SPI0
 #define BOARD_LCD_SPI_BAUDRATE 10000000U /*! Transfer baudrate */
-#define BOARD_LCD_SPI_IRQ SPI0_IRQn
-#define BOARD_LCD_SPI_DMA_IRQ DMA1_IRQn
+#define BOARD_LCD_SPI_IRQ      SPI0_IRQn
+#define BOARD_LCD_SPI_DMA_IRQ  DMA1_IRQn
 
 #define BOARD_LCD_DSPI_DMA_MUX_BASEADDR DMAMUX
-#define BOARD_LCD_DSPI_DMA_BASEADDR DMA0
+#define BOARD_LCD_DSPI_DMA_BASEADDR     DMA0
 
-#define BOARD_LCD_DC_GPIO GPIOC  /*! LCD data/command port */
-#define BOARD_LCD_DC_GPIO_PIN 4U /*! LCD data/command pin */
+#define BOARD_LCD_DC_GPIO     GPIOC /*! LCD data/command port */
+#define BOARD_LCD_DC_GPIO_PIN 4U    /*! LCD data/command pin */
 /* Port Me, End. */
 
 /*******************************************************************************
@@ -45,8 +47,8 @@
  ******************************************************************************/
 static void DEMO_InitLcd(void);
 static void DEMO_InitTouch(void);
-static bool DEMO_ReadTouch(lv_indev_data_t *data);
-static void DEMO_FlushDisplay(int32_t x1, int32_t y1, int32_t x2, int32_t y2, const lv_color_t *color_p);
+static bool DEMO_ReadTouch(lv_indev_drv_t *drv, lv_indev_data_t *data);
+static void DEMO_FlushDisplay(lv_disp_drv_t *disp_drv, const lv_area_t *area, lv_color_t *color_p);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
@@ -54,36 +56,45 @@ static ft6x06_handle_t touch_handle;
 static volatile uint32_t spi_event;
 static volatile bool spi_event_received;
 static ft6x06_handle_t touch_handle;
+#if defined(FSL_RTOS_FREE_RTOS)
 static SemaphoreHandle_t s_transferDone;
-static uint8_t s_frameBuffer[2][LCD_VIRTUAL_BUF_SIZE * LCD_FB_BYTE_PER_PIXEL];
+#else
+static volatile bool s_transferDone;
+#endif
+SDK_ALIGN(static uint8_t s_frameBuffer[2][LCD_VIRTUAL_BUF_SIZE * LCD_FB_BYTE_PER_PIXEL], 4);
 /*******************************************************************************
  * Code
  ******************************************************************************/
 void lv_port_pre_init(void)
 {
-    /*
-     * Pass in the frame buffer address to LittlevGL manually, the LV_VDB_ADR
-     * and LV_VDB2_ADR should be defined to LV_VDB_ADR_INV in lv_conf.h
-     */
-    memset(s_frameBuffer, 0, sizeof(s_frameBuffer));
-    lv_vdb_set_adr(s_frameBuffer[0], s_frameBuffer[1]);
 }
 
 static void SPI_MasterSignalEvent(uint32_t event)
 {
+#if defined(FSL_RTOS_FREE_RTOS)
     BaseType_t taskAwake = pdFALSE;
 
     xSemaphoreGiveFromISR(s_transferDone, &taskAwake);
 
     portYIELD_FROM_ISR(taskAwake);
+#else
+    s_transferDone = true;
+#endif
 }
 
 static void SPI_WaitEvent(void)
 {
+#if defined(FSL_RTOS_FREE_RTOS)
     if (xSemaphoreTake(s_transferDone, portMAX_DELAY) != pdTRUE)
     {
         PRINTF("LCD SPI transfer error\r\n");
     }
+#else
+    while (false == s_transferDone)
+    {
+    }
+    s_transferDone = false;
+#endif
 }
 
 static void DEMO_SPI_LCD_WriteCmd(uint8_t Data)
@@ -118,12 +129,16 @@ static void DEMO_InitLcd(void)
     /* Init data/command GPIO output . */
     GPIO_PinInit(BOARD_LCD_DC_GPIO, BOARD_LCD_DC_GPIO_PIN, &dc_config);
 
+#if defined(FSL_RTOS_FREE_RTOS)
     s_transferDone = xSemaphoreCreateBinary();
     if (NULL == s_transferDone)
     {
         PRINTF("Semaphore create failed\r\n");
         assert(0);
     }
+#else
+    s_transferDone = false;
+#endif
 
 /* DMA Mux init and EDMA init */
 #ifdef BOARD_LCD_DSPI_DMA_BASEADDR
@@ -140,9 +155,11 @@ static void DEMO_InitLcd(void)
     BOARD_LCD_SPI.PowerControl(ARM_POWER_FULL);
     BOARD_LCD_SPI.Control(ARM_SPI_MODE_MASTER | ARM_SPI_CPOL1_CPHA0 | ARM_SPI_DATA_BITS(8), BOARD_LCD_SPI_BAUDRATE);
 
+#if defined(FSL_RTOS_FREE_RTOS)
     /* FreeRTOS kernel API is used in SPI ISR, so need to set proper IRQ priority. */
     NVIC_SetPriority(BOARD_LCD_SPI_IRQ, configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY + 1);
     NVIC_SetPriority(BOARD_LCD_SPI_DMA_IRQ, configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY + 1);
+#endif
 
     FT9341_Init(DEMO_SPI_LCD_WriteData, DEMO_SPI_LCD_WriteCmd);
     /* Change to landscape view. */
@@ -152,6 +169,11 @@ static void DEMO_InitLcd(void)
 
 void lv_port_disp_init(void)
 {
+    static lv_disp_buf_t disp_buf;
+
+    memset(s_frameBuffer, 0, sizeof(s_frameBuffer));
+    lv_disp_buf_init(&disp_buf, s_frameBuffer[0], s_frameBuffer[1], LCD_VIRTUAL_BUF_SIZE);
+
     /*-------------------------
      * Initialize your display
      * -----------------------*/
@@ -164,15 +186,27 @@ void lv_port_disp_init(void)
     lv_disp_drv_t disp_drv;      /*Descriptor of a display driver*/
     lv_disp_drv_init(&disp_drv); /*Basic initialization*/
 
-    /*Used in buffered mode (LV_VDB_SIZE != 0  in lv_conf.h)*/
-    disp_drv.disp_flush = DEMO_FlushDisplay;
+    /*Set the resolution of the display*/
+    disp_drv.hor_res = LCD_WIDTH;
+    disp_drv.ver_res = LCD_HEIGHT;
+
+    /*Used to copy the buffer's content to the display*/
+    disp_drv.flush_cb = DEMO_FlushDisplay;
+
+    /*Set a display buffer*/
+    disp_drv.buffer = &disp_buf;
 
     /*Finally register the driver*/
     lv_disp_drv_register(&disp_drv);
 }
 
-static void DEMO_FlushDisplay(int32_t x1, int32_t y1, int32_t x2, int32_t y2, const lv_color_t *color_p)
+static void DEMO_FlushDisplay(lv_disp_drv_t *disp_drv, const lv_area_t *area, lv_color_t *color_p)
 {
+    lv_coord_t x1 = area->x1;
+    lv_coord_t y1 = area->y1;
+    lv_coord_t x2 = area->x2;
+    lv_coord_t y2 = area->y2;
+
     uint8_t data[4];
     const uint8_t *pdata = (const uint8_t *)color_p;
     uint32_t send_size   = (x2 - x1 + 1) * (y2 - y1 + 1) * LCD_FB_BYTE_PER_PIXEL;
@@ -197,7 +231,7 @@ static void DEMO_FlushDisplay(int32_t x1, int32_t y1, int32_t x2, int32_t y2, co
     DEMO_SPI_LCD_WriteCmd(ILI9341_CMD_GRAM);
     DEMO_SPI_LCD_WriteMultiData(pdata, send_size);
 
-    lv_flush_ready();
+    lv_disp_flush_ready(disp_drv);
 }
 
 void lv_port_indev_init(void)
@@ -213,8 +247,8 @@ void lv_port_indev_init(void)
 
     /*Register a touchpad input device*/
     lv_indev_drv_init(&indev_drv);
-    indev_drv.type = LV_INDEV_TYPE_POINTER;
-    indev_drv.read = DEMO_ReadTouch;
+    indev_drv.type    = LV_INDEV_TYPE_POINTER;
+    indev_drv.read_cb = DEMO_ReadTouch;
     lv_indev_drv_register(&indev_drv);
 }
 
@@ -249,7 +283,7 @@ static void DEMO_InitTouch(void)
 }
 
 /* Will be called by the library to read the touchpad */
-static bool DEMO_ReadTouch(lv_indev_data_t *data)
+static bool DEMO_ReadTouch(lv_indev_drv_t *drv, lv_indev_data_t *data)
 {
     touch_event_t touch_event;
     static int touch_x = 0;

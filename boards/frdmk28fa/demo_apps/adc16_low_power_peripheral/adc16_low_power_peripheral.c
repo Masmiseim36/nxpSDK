@@ -21,25 +21,25 @@
  * The method used in this demo to calculate temperature of chip is mapped to
  * Temperature Sensor for the HCS08 Microcontroller Family document (Document Number: AN3031)
  */
-#define ADCR_VDD (65535U) /* Maximum value when use 16b resolution */
-#define V_BG (1000U)      /* BANDGAP voltage in mV (trim to 1.0V) */
-#define V_TEMP25 (716U)   /* Typical VTEMP25 in mV */
-#define M (1620U)         /* Typical slope: (mV x 1000)/oC */
+#define ADCR_VDD      (65535U) /* Maximum value when use 16b resolution */
+#define V_BG          (1000U)  /* BANDGAP voltage in mV (trim to 1.0V) */
+#define V_TEMP25      (716U)   /* Typical VTEMP25 in mV */
+#define M             (1620U)  /* Typical slope: (mV x 1000)/oC */
 #define STANDARD_TEMP (25U)
 
-#define LED1_ON() LED_RED_ON()
+#define LED1_ON()  LED_RED_ON()
 #define LED1_OFF() LED_RED_OFF()
 
-#define LED2_ON() LED_GREEN_ON()
-#define LED2_OFF() LED_GREEN_OFF()
+#define LED2_ON()     LED_GREEN_ON()
+#define LED2_OFF()    LED_GREEN_OFF()
 #define LED2_TOGGLE() LED_GREEN_TOGGLE()
 
-#define LED3_ON() LED_BLUE_ON()
+#define LED3_ON()  LED_BLUE_ON()
 #define LED3_OFF() LED_BLUE_OFF()
 #define DEMO_ADC16_CHANNEL_GROUP 0U
 
 #define DEMO_ADC16_CHANNEL_TEMPSENSOR 0U
-#define DEMO_ADC16_CHANNEL_BANDGAP 1U
+#define DEMO_ADC16_CHANNEL_BANDGAP    1U
 
 #define UPPER_VALUE_LIMIT                                                 \
     (1U) /*!< This value/10 is going to be added to current Temp to set \ \
@@ -294,11 +294,7 @@ void DEMO_ADC16_IRQHANDLER(void)
     g_adcValue = ADC16_GetChannelConversionValue(DEMO_ADC16_PERIPHERAL, DEMO_ADC16_CHANNEL_GROUP);
     /* Set conversion completed flag. This prevents an wrong conversion in main function */
     g_conversionCompleted = true;
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 /*!

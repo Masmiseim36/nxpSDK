@@ -68,10 +68,10 @@ Purpose : Global types
 #ifndef GLOBAL_H // Guard against multiple inclusion
 #define GLOBAL_H
 
-#define U8 unsigned char
+#define U8  unsigned char
 #define U16 unsigned short
 #define U32 unsigned long
-#define I8 signed char
+#define I8  signed char
 #define I16 signed short
 #define I32 signed long
 
@@ -79,9 +79,9 @@ Purpose : Global types
 //
 // Microsoft VC6 compiler related
 //
-#define U64 unsigned __int64
+#define U64  unsigned __int64
 #define U128 unsigned __int128
-#define I64 __int64
+#define I64  __int64
 #define I128 __int128
 #if _MSC_VER <= 1200
 #define U64_C(x) x##UI64
@@ -92,8 +92,8 @@ Purpose : Global types
 //
 // C99 compliant compiler
 //
-#define U64 unsigned long long
-#define I64 signed long long
+#define U64      unsigned long long
+#define I64      signed long long
 #define U64_C(x) x##ULL
 #endif
 

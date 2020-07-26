@@ -31,71 +31,71 @@
 #endif
 
 /*! @brief Define the register address of CS42888. */
-#define CS42888_ID 0x01
-#define CS42888_POWER_CONTROL 0x02
-#define CS42888_FUNCTIONAL_MODE 0x03
-#define CS42888_INTERFACE_FORMATS 0x04
-#define CS42888_ADC_CONTROL 0x05
+#define CS42888_ID                 0x01
+#define CS42888_POWER_CONTROL      0x02
+#define CS42888_FUNCTIONAL_MODE    0x03
+#define CS42888_INTERFACE_FORMATS  0x04
+#define CS42888_ADC_CONTROL        0x05
 #define CS42888_TRANSITION_CONTROL 0x06
-#define CS42888_CHANNEL_MUTE 0x07
-#define CS42888_VOL_CONTROL_AOUT1 0x08
-#define CS42888_VOL_CONTROL_AOUT2 0x09
-#define CS42888_VOL_CONTROL_AOUT3 0x0A
-#define CS42888_VOL_CONTROL_AOUT4 0x0B
-#define CS42888_VOL_CONTROL_AOUT5 0x0C
-#define CS42888_VOL_CONTROL_AOUT6 0x0D
-#define CS42888_VOL_CONTROL_AOUT7 0x0E
-#define CS42888_VOL_CONTROL_AOUT8 0x0F
+#define CS42888_CHANNEL_MUTE       0x07
+#define CS42888_VOL_CONTROL_AOUT1  0x08
+#define CS42888_VOL_CONTROL_AOUT2  0x09
+#define CS42888_VOL_CONTROL_AOUT3  0x0A
+#define CS42888_VOL_CONTROL_AOUT4  0x0B
+#define CS42888_VOL_CONTROL_AOUT5  0x0C
+#define CS42888_VOL_CONTROL_AOUT6  0x0D
+#define CS42888_VOL_CONTROL_AOUT7  0x0E
+#define CS42888_VOL_CONTROL_AOUT8  0x0F
 #define CS42888_DAC_CHANNEL_INVERT 0x10
-#define CS42888_VOL_CONTROL_AIN1 0x11
-#define CS42888_VOL_CONTROL_AIN2 0x12
-#define CS42888_VOL_CONTROL_AIN3 0x13
-#define CS42888_VOL_CONTROL_AIN4 0x14
+#define CS42888_VOL_CONTROL_AIN1   0x11
+#define CS42888_VOL_CONTROL_AIN2   0x12
+#define CS42888_VOL_CONTROL_AIN3   0x13
+#define CS42888_VOL_CONTROL_AIN4   0x14
 #define CS42888_ADC_CHANNEL_INVERT 0x17
-#define CS42888_STATUS_CONTROL 0x18
-#define CS42888_STATUS 0x19
-#define CS42888_STATUS_MASK 0x1A
-#define CS42888_MUTEC_PIN_CONTROL 0x1B
+#define CS42888_STATUS_CONTROL     0x18
+#define CS42888_STATUS             0x19
+#define CS42888_STATUS_MASK        0x1A
+#define CS42888_MUTEC_PIN_CONTROL  0x1B
 
-#define CS42888_POWER_CONTROL_PDN_MASK 0x1
+#define CS42888_POWER_CONTROL_PDN_MASK  0x1
 #define CS42888_POWER_CONTROL_PDN_SHIFT 0
 #define CS42888_POWER_CONTROL_PDN(x) \
     (((uint8_t)((uint8_t)(x) << CS42888_POWER_CONTROL_PDN_SHIFT)) & CS42888_POWER_CONTROL_PDN_MASK)
-#define CS42888_POWER_CONTROL_PDN_DAC1_MASK 0x2
+#define CS42888_POWER_CONTROL_PDN_DAC1_MASK  0x2
 #define CS42888_POWER_CONTROL_PDN_DAC1_SHIFT 2
 #define CS42888_POWER_CONTROL_PDN_DAC1(x) \
     (((uint8_t)((uint8_t)(x) << CS42888_POWER_CONTROL_PDN_DAC1_SHIFT)) & CS42888_POWER_CONTROL_PDN_DAC1_MASK)
-#define CS42888_POWER_CONTROL_PDN_DAC2_MASK 0x4
+#define CS42888_POWER_CONTROL_PDN_DAC2_MASK  0x4
 #define CS42888_POWER_CONTROL_PDN_DAC2_SHIFT 3
 #define CS42888_POWER_CONTROL_PDN_DAC2(x) \
     (((uint8_t)((uint8_t)(x) << CS42888_POWER_CONTROL_PDN_DAC2_SHIFT)) & CS42888_POWER_CONTROL_PDN_DAC2_MASK)
-#define CS42888_POWER_CONTROL_PDN_DAC3_MASK 0x8
+#define CS42888_POWER_CONTROL_PDN_DAC3_MASK  0x8
 #define CS42888_POWER_CONTROL_PDN_DAC3_SHIFT 4
 #define CS42888_POWER_CONTROL_PDN_DAC3(x) \
     (((uint8_t)((uint8_t)(x) << CS42888_POWER_CONTROL_PDN_DAC3_SHIFT)) & CS42888_POWER_CONTROL_PDN_DAC3_MASK)
-#define CS42888_POWER_CONTROL_PDN_DAC4_MASK 0x10
+#define CS42888_POWER_CONTROL_PDN_DAC4_MASK  0x10
 #define CS42888_POWER_CONTROL_PDN_DAC4_SHIFT 5
 #define CS42888_POWER_CONTROL_PDN_DAC4(x) \
     (((uint8_t)((uint8_t)(x) << CS42888_POWER_CONTROL_PDN_DAC4_SHIFT)) & CS42888_POWER_CONTROL_PDN_DAC4_MASK)
-#define CS42888_POWER_CONTROL_PDN_ADC1_MASK 0x20
+#define CS42888_POWER_CONTROL_PDN_ADC1_MASK  0x20
 #define CS42888_POWER_CONTROL_PDN_ADC1_SHIFT 5
 #define CS42888_POWER_CONTROL_PDN_ADC1(x) \
     (((uint8_t)((uint8_t)(x) << CS42888_POWER_CONTROL_PDN_ADC1_SHIFT)) & CS42888_POWER_CONTROL_PDN_ADC1_MASK)
-#define CS42888_POWER_CONTROL_PDN_ADC2_MASK 0x40
+#define CS42888_POWER_CONTROL_PDN_ADC2_MASK  0x40
 #define CS42888_POWER_CONTROL_PDN_ADC2_SHIFT 6
 #define CS42888_POWER_CONTROL_PDN_ADC2(x) \
     (((uint8_t)((uint8_t)(x) << CS42888_POWER_CONTROL_PDN_ADC2_SHIFT)) & CS42888_POWER_CONTROL_PDN_ADC2_MASK)
 
-#define CS42888_FUNCTIONAL_MODE_ADC_FM_MASK 0x30
+#define CS42888_FUNCTIONAL_MODE_ADC_FM_MASK  0x30
 #define CS42888_FUNCTIONAL_MODE_ADC_FM_SHIFT 4
 #define CS42888_FUNCTIONAL_MODE_ADC_FM(x) \
     (((uint8_t)((uint8_t)(x) << CS42888_FUNCTIONAL_MODE_ADC_FM_SHIFT)) & CS42888_FUNCTIONAL_MODE_ADC_FM_MASK)
-#define CS42888_FUNCTIONAL_MODE_DAC_FM_MASK 0xC0
+#define CS42888_FUNCTIONAL_MODE_DAC_FM_MASK  0xC0
 #define CS42888_FUNCTIONAL_MODE_DAC_FM_SHIFT 6
 #define CS42888_FUNCTIONAL_MODE_DAC_FM(x) \
     (((uint8_t)((uint8_t)(x) << CS42888_FUNCTIONAL_MODE_DAC_FM_SHIFT)) & CS42888_FUNCTIONAL_MODE_DAC_FM_MASK)
 
-#define CS42888_INTERFACE_FORMATS_DAC_DIF_MASK 0x38
+#define CS42888_INTERFACE_FORMATS_DAC_DIF_MASK  0x38
 #define CS42888_INTERFACE_FORMATS_DAC_DIF_SHIFT 3
 #define CS42888_INTERFACE_FORMATS_DAC_DIF(x) \
     (((uint8_t)((uint8_t)(x) << CS42888_INTERFACE_FORMATS_DAC_DIF_SHIFT)) & CS42888_INTERFACE_FORMATS_DAC_DIF_MASK)
@@ -204,7 +204,7 @@ extern "C" {
  * codec_config->DACmode = kCS42888_ModeSlave
  *
  * @param handle CS42888 handle structure.
- * @param codec_config CS42888 configuration structure.
+ * @param config CS42888 configuration structure.
  */
 status_t CS42888_Init(cs42888_handle_t *handle, cs42888_config_t *config);
 
@@ -223,14 +223,15 @@ status_t CS42888_Deinit(cs42888_handle_t *handle);
  * CS42888 only supports I2S, left justified, right justified, PCM A, PCM B format.
  *
  * @param handle CS42888 handle structure.
- * @param bus Audio data transfer protocol.
+ * @param protocol Audio data transfer protocol.
+ * @param bitWidth bit width
  */
 status_t CS42888_SetProtocol(cs42888_handle_t *handle, cs42888_bus_t protocol, uint32_t bitWidth);
 
 /*!
  * @brief Set CS42888 to differernt working mode.
  *
- * @Deprecated api, Do not use it anymore. It has been superceded by @ref CS42888_SelectFunctionalMode.
+ * @deprecated api, Do not use it anymore. It has been superceded by @ref CS42888_SelectFunctionalMode.
  *
  * @param handle CS42888 handle structure.
  * @param mode differenht working mode of CS42888.
@@ -278,7 +279,6 @@ status_t CS42888_SetAINVolume(cs42888_handle_t *handle, uint8_t channel, uint8_t
  *
  * @param handle CS42888 handle structure.
  * @param channel AOUT channel, it shall be 1~8.
- * @return Volume value of the module.
  */
 uint8_t CS42888_GetAOUTVolume(cs42888_handle_t *handle, uint8_t channel);
 
@@ -290,7 +290,6 @@ uint8_t CS42888_GetAOUTVolume(cs42888_handle_t *handle, uint8_t channel);
  *
  * @param handle CS42888 handle structure.
  * @param channel AIN channel, it shall be 1~4.
- * @return Volume value of the module.
  */
 uint8_t CS42888_GetAINVolume(cs42888_handle_t *handle, uint8_t channel);
 

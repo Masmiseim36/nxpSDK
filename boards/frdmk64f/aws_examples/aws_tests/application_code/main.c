@@ -1,5 +1,5 @@
 /*
-Amazon FreeRTOS
+FreeRTOS
 Copyright (C) 2017 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
 Copyright (c) 2013 - 2014, Freescale Semiconductor, Inc.
 Copyright 2016-2017 NXP
@@ -36,7 +36,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "pin_mux.h"
 #include <stdbool.h>
 
-/* Amazon FreeRTOS Includes */
+/* FreeRTOS Includes */
 #include "FreeRTOS.h"
 #include "task.h"
 #include "aws_clientcredential.h"
@@ -57,9 +57,9 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 /* The lpc54018 usb logging driver calls a blocking write function. Since this
  * task is the lowest priority, all of the test task priorities must be higher than
  * this to run. */
-#define mainLOGGING_TASK_PRIORITY (tskIDLE_PRIORITY)
+#define mainLOGGING_TASK_PRIORITY   (tskIDLE_PRIORITY)
 #define mainLOGGING_TASK_STACK_SIZE (configMINIMAL_STACK_SIZE * 4)
-#define mainLOGGING_QUEUE_LENGTH (16)
+#define mainLOGGING_QUEUE_LENGTH    (16)
 
 /* Test runner task defines. */
 #define mainTEST_RUNNER_TASK_STACK_SIZE (configMINIMAL_STACK_SIZE * 16)
@@ -73,6 +73,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 
 static void prvWifiConnect(void);
+void main_task(void *pvParameters);
 
 /*******************************************************************************
  * Code
@@ -80,11 +81,18 @@ static void prvWifiConnect(void);
 
 int main(void)
 {
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
 
     CRYPTO_InitHardware();
+
+    if (xTaskCreate(main_task, "main_task", configMINIMAL_STACK_SIZE * 8, NULL, tskIDLE_PRIORITY + 1, NULL) != pdPASS)
+    {
+        PRINTF("Main task creation failed!.\r\n");
+        while (1)
+            ;
+    }
 
     xLoggingTaskInitialize(mainLOGGING_TASK_STACK_SIZE, mainLOGGING_TASK_PRIORITY, mainLOGGING_QUEUE_LENGTH);
 
@@ -93,16 +101,16 @@ int main(void)
         ;
 }
 
-void vApplicationDaemonTaskStartupHook(void)
+void main_task(void *pvParameters)
 {
     if (SYSTEM_Init() == pdPASS)
     {
-        prvWifiConnect();
-
         /* A simple example to demonstrate key and certificate provisioning in
          * microcontroller flash using PKCS#11 interface. This should be replaced
          * by production ready key provisioning mechanism. */
         vDevModeKeyProvisioning();
+
+        prvWifiConnect();
 
         /* Create the task to run tests. */
         if (xTaskCreate(TEST_RUNNER_RunTests_task, "TestRunner", mainTEST_RUNNER_TASK_STACK_SIZE, NULL,
@@ -114,6 +122,8 @@ void vApplicationDaemonTaskStartupHook(void)
             }
         }
     }
+
+    vTaskDelete(NULL);
 }
 
 /*-----------------------------------------------------------*/

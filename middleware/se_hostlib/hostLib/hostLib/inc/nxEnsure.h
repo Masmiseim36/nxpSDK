@@ -265,7 +265,7 @@
     if (!(CONDITION)) { \
         NX_ENSURE_MESSAGE(#CONDITION); \
         STATUS = RETURN_VALUE; \
-		goto exit; \
+        goto exit; \
     }
 
 /* *****************************************************************************************************************

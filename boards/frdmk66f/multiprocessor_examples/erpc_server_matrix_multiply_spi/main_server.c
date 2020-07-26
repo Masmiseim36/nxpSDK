@@ -17,7 +17,7 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define BUTTON_INIT() GPIO_PinInit(BOARD_SW3_GPIO, BOARD_SW3_GPIO_PIN, &button_config)
+#define BUTTON_INIT()       GPIO_PinInit(BOARD_SW3_GPIO, BOARD_SW3_GPIO_PIN, &button_config)
 #define IS_BUTTON_PRESSED() !GPIO_PinRead(BOARD_SW3_GPIO, BOARD_SW3_GPIO_PIN)
 
 

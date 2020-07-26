@@ -1,9 +1,8 @@
-/**
-* @file sm_connect.c
+/*
 * @author NXP Semiconductors
 * @version 1.0
 * @par License
-* Copyright 2016 NXP
+* Copyright 2016,2020 NXP
 *
 * This software is owned or controlled by NXP and may only be used
 * strictly in accordance with the applicable license terms.  By expressly
@@ -13,14 +12,17 @@
 * you do not agree to be bound by the applicable license terms, then you
 * may not retain, install, activate or otherwise use the software.
 *
-* @par Description
-* Implementation of basic communication functionality between Host and A71CH.
 * @par History
 * 1.0   1-oct-2016 : Initial version
 *
-* This file was named ``a71ch_com.c`` earlier.
 *
 *****************************************************************************/
+/**
+* @file sm_connect.c
+* @par Description
+* Implementation of basic communication functionality between Host and A71CH.
+* (This file was renamed from ``a71ch_com.c`` into ``sm_connect.c``.)
+*/
 
 #if defined(SSS_USE_FTR_FILE)
 #include "fsl_sss_ftr.h"
@@ -41,8 +43,12 @@
 #include "nxLog_smCom.h"
 #include "nxEnsure.h"
 
+/// @cond
+
 //Also do select after opening the connection
 #define OPEN_AND_SELECT 0
+
+/// @endcond
 
 #ifdef TDA8029_UART
 #include "smComAlpar.h"
@@ -80,6 +86,9 @@
 #endif
 #if defined(SMCOM_PCSC)
 #include "smComPCSC.h"
+#endif
+#if defined(SMCOM_RC663_VCOM)
+#include "smComNxpNfcRdLib.h"
 #endif
 
 #include "global_platf.h"
@@ -150,7 +159,7 @@ exit:
 *
 * @retval ::SW_OK Upon successful execution
 */
-U16 SM_RjctConnectSocket(const char *connectString, SmCommState_t *commState, U8 *atr, U16 *atrLen)
+U16 SM_RjctConnectSocket(void **conn_ctx, const char *connectString, SmCommState_t *commState, U8 *atr, U16 *atrLen)
 {
     U8 szServer[128];
     U16 szServerLen = sizeof(szServer);
@@ -176,7 +185,7 @@ U16 SM_RjctConnectSocket(const char *connectString, SmCommState_t *commState, U8
     // NOTE-MMA: The usage of the sss type kType_SE_Conn_Type_JRCP_V1 leads to a circular
     // dependency regarding the inclusion of header files.
     // if (commState->connType == kType_SE_Conn_Type_JRCP_V1) {
-    rv = smComSocket_Open(szServer, (U16)port, atr, atrLen);
+    rv = smComSocket_Open(conn_ctx, szServer, (U16)port, atr, atrLen);
     // }
 
 #endif
@@ -186,7 +195,7 @@ U16 SM_RjctConnectSocket(const char *connectString, SmCommState_t *commState, U8
             return ERR_API_ERROR;
         }
         strncpy(hostname, connectString, strlen(connectString));
-        rv = smComJRCP_Open(strtok(hostname, ":"), port);
+        rv = smComJRCP_Open(conn_ctx, strtok(hostname, ":"), port);
     }
 
 #endif
@@ -195,13 +204,19 @@ U16 SM_RjctConnectSocket(const char *connectString, SmCommState_t *commState, U8
         return rv;
     }
 
-    rv = SM_Connect(commState, atr, atrLen);
+    if (conn_ctx == NULL) {
+        rv = SM_Connect(NULL, commState, atr, atrLen);
+    }
+    else {
+        rv = SM_Connect(*conn_ctx, commState, atr, atrLen);
+    }
+
     return rv;
 }
 #endif /* defined(SMCOM_JRCP_V1) || defined (SMCOM_JRCP_V2) */
 
 #ifdef RJCT_VCOM
-U16 SM_RjctConnectVCOM(const char *connectString, SmCommState_t *commState, U8 *atr, U16 *atrLen)
+U16 SM_RjctConnectVCOM(void **conn_ctx, const char *connectString, SmCommState_t *commState, U8 *atr, U16 *atrLen)
 {
     U32 status;
 
@@ -211,12 +226,29 @@ U16 SM_RjctConnectVCOM(const char *connectString, SmCommState_t *commState, U8 *
     }
 #endif
 
-    status = smComVCom_Open(connectString);
+    status = smComVCom_Open(conn_ctx, connectString);
 
     if (status == 0) {
-        status = smComVCom_GetATR(atr, atrLen);
-        if (status == 0) {
-            status = (U16)SM_Connect(commState, atr, atrLen);
+        if (conn_ctx == NULL) {
+            status = smComVCom_GetATR(NULL, atr, atrLen);
+            if (status == 0) {
+                status = (U16)SM_Connect(NULL, commState, atr, atrLen);
+                if (status != SMCOM_OK) {
+                    SM_Close(NULL, 0);
+                }
+            }
+            else {
+                SM_Close(NULL, 0);
+            }
+        }
+        else {
+            status = smComVCom_GetATR(*conn_ctx, atr, atrLen);
+            if (status == 0) {
+                status = (U16)SM_Connect(*conn_ctx, commState, atr, atrLen);
+            }
+            else {
+                SM_Close(NULL, 0);
+            }
         }
     }
     else {
@@ -227,8 +259,33 @@ U16 SM_RjctConnectVCOM(const char *connectString, SmCommState_t *commState, U8 *
 }
 #endif // RJCT_VCOM
 
+#ifdef SMCOM_RC663_VCOM
+U16 SM_RjctConnectNxpNfcRdLib(void **conn_ctx, const char *connectString, SmCommState_t *commState, U8 *atr, U16 *atrLen)
+{
+    U32 status;
+
+    if ((connectString == NULL) || (commState == NULL) || (atr == NULL) || (atrLen == 0)) {
+        return ERR_API_ERROR;
+    }
+
+    status = smComNxpNfcRdLib_OpenVCOM(conn_ctx, connectString);
+
+    if (status == 0) {
+        status = (U16)SM_Connect(conn_ctx, commState, atr, atrLen);
+    }
+    else {
+        *atrLen = 0;
+    }
+    if (status == SMCOM_OK) {
+        *atrLen = 0;
+    }
+
+    return (U16)status;
+}
+#endif
+
 #ifdef SMCOM_PCSC
-U16 SM_RjctConnectPCSC(const char *connectString, SmCommState_t *commState, U8 *atr, U16 *atrLen)
+U16 SM_RjctConnectPCSC(void **conn_ctx, const char *connectString, SmCommState_t *commState, U8 *atr, U16 *atrLen)
 {
     U32 status = SMCOM_OK;
 
@@ -242,7 +299,12 @@ U16 SM_RjctConnectPCSC(const char *connectString, SmCommState_t *commState, U8 *
     status = smComPCSC_Open(connectString);
 
     if (status == SMCOM_OK) {
-        status = (U16)SM_Connect(commState, atr, atrLen);
+        if (conn_ctx == NULL) {
+            status = (U16)SM_Connect(NULL, commState, atr, atrLen);
+        }
+        else {
+            status = (U16)SM_Connect(*conn_ctx, commState, atr, atrLen);
+        }
     }
     else {
         *atrLen = 0;
@@ -252,16 +314,16 @@ U16 SM_RjctConnectPCSC(const char *connectString, SmCommState_t *commState, U8 *
 }
 #endif // RJCT_VCOM
 
-U16 SM_RjctConnect(const char *connectString, SmCommState_t *commState, U8 *atr, U16 *atrLen)
+U16 SM_RjctConnect(void **conn_ctx, const char *connectString, SmCommState_t *commState, U8 *atr, U16 *atrLen)
 {
-#if RJCT_VCOM || SMCOM_JRCP_V1 || SMCOM_JRCP_V2
+#if RJCT_VCOM || SMCOM_JRCP_V1 || SMCOM_JRCP_V2 || SMCOM_RC663_VCOM
     bool is_socket = FALSE;
     bool is_vcom = FALSE;
     AX_UNUSED_ARG(is_socket);
     AX_UNUSED_ARG(is_vcom);
 #endif
 
-#if RJCT_VCOM
+#if RJCT_VCOM || SMCOM_RC663_VCOM
     if (NULL == connectString) {
         is_vcom = FALSE;
     }
@@ -274,7 +336,7 @@ U16 SM_RjctConnect(const char *connectString, SmCommState_t *commState, U8 *atr,
     else if (0 == strncmp("/tty/", connectString, sizeof("/tty/") - 1)) {
         is_vcom = TRUE;
     }
-    else if (0 == strncmp("/dev/tty.", connectString, sizeof("/dev/tty.") - 1)) {
+    else if (0 == strncmp("/dev/tty", connectString, sizeof("/dev/tty") - 1)) {
         is_vcom = TRUE;
     }
 #endif
@@ -289,17 +351,30 @@ U16 SM_RjctConnect(const char *connectString, SmCommState_t *commState, U8 *atr,
 #endif
 #if RJCT_VCOM
     if (is_vcom) {
-        return SM_RjctConnectVCOM(connectString, commState, atr, atrLen);
+        return SM_RjctConnectVCOM(conn_ctx, connectString, commState, atr, atrLen);
+    }
+    else {
+        LOG_W("Build is compiled for VCOM. connectString='%s' does not look like COMPort",connectString);
+        LOG_W("e.g. connectString are COM3, \\\\.\\COM5, /dev/tty.usbmodem1432301, etc.");
+    }
+#endif
+#if SMCOM_RC663_VCOM
+    if (is_vcom) {
+        return SM_RjctConnectNxpNfcRdLib(conn_ctx, connectString, commState, atr, atrLen);
+    }
+    else {
+        LOG_W("Build is compiled for RC663_VCOM. connectString='%s' does not look like COMPort",connectString);
+        LOG_W("e.g. connectString are COM3, \\\\.\\COM5, /dev/tty.usbmodem1432301, etc.");
     }
 #endif
 #if SMCOM_JRCP_V1 || SMCOM_JRCP_V2
     if (is_socket) {
-        return SM_RjctConnectSocket(connectString, commState, atr, atrLen);
+        return SM_RjctConnectSocket(conn_ctx, connectString, commState, atr, atrLen);
     }
 #endif
 #if SMCOM_PCSC
     if (NULL != commState) {
-        return SM_RjctConnectPCSC(connectString, commState, atr, atrLen);
+        return SM_RjctConnectPCSC(conn_ctx, connectString, commState, atr, atrLen);
     }
 #endif
     LOG_W(
@@ -308,6 +383,29 @@ U16 SM_RjctConnect(const char *connectString, SmCommState_t *commState, U8 *atr,
         connectString);
     return ERR_NO_VALID_IP_PORT_PATTERN;
 }
+
+#if defined(SMCOM_JRCP_V1) || defined(SMCOM_JRCP_V2) || defined(RJCT_VCOM) || \
+    defined(SMCOM_PCSC)
+#else
+U16 SM_I2CConnect(void **conn_ctx, SmCommState_t *commState, U8 *atr, U16 *atrLen, const char *pConnString)
+{
+    U16 status = SMCOM_COM_FAILED;
+#if defined(T1oI2C)
+    status = smComT1oI2C_Init(conn_ctx, pConnString);
+#elif defined (SCI2C)
+    status = smComSCI2C_Init(conn_ctx, pConnString);
+#endif
+    if (status != SMCOM_OK) {
+        return status;
+    }
+    if (conn_ctx == NULL) {
+        return SM_Connect(NULL, commState, atr, atrLen);
+    }
+    else {
+        return SM_Connect(*conn_ctx, commState, atr, atrLen);
+    }
+}
+#endif
 
 /**
 * Establishes the communication with the Security Module (SM) at the link level and
@@ -320,7 +418,7 @@ U16 SM_RjctConnect(const char *connectString, SmCommState_t *commState, U8 *atr,
 *
 * @retval ::SW_OK Upon successful execution
 */
-U16 SM_Connect(SmCommState_t *commState, U8 *atr, U16 *atrLen)
+U16 SM_Connect(void *conn_ctx, SmCommState_t *commState, U8 *atr, U16 *atrLen)
 {
     U16 sw = SW_OK;
 #if !defined(IPC)
@@ -328,6 +426,9 @@ U16 SM_Connect(SmCommState_t *commState, U8 *atr, U16 *atrLen)
 #ifdef APPLET_NAME
     unsigned char appletName[] = APPLET_NAME;
 #endif // APPLET_NAME
+#ifdef SSD_NAME
+    unsigned char ssdName[] = SSD_NAME;
+#endif
     U16 selectResponseDataLen = 0;
     U8 selectResponseData[256] = {0};
     U16 uartBR = 0;
@@ -356,13 +457,13 @@ U16 SM_Connect(SmCommState_t *commState, U8 *atr, U16 *atrLen)
 #elif defined SMCOM_PN7150
     sw = smComPN7150_Open(0, 0x00, atr, atrLen);
 #elif defined(SCI2C)
-    sw = smComSCI2C_Open(ESTABLISH_SCI2C, 0x00, atr, atrLen);
+    sw = smComSCI2C_Open(conn_ctx, ESTABLISH_SCI2C, 0x00, atr, atrLen);
 #elif defined(SPI)
     smComSCSPI_Init(ESTABLISH_SCI2C, 0x00, atr, atrLen);
 #elif defined(IPC)
     sw = smComIpc_Open(atr, atrLen, &(commState->hostLibVersion), &(commState->appletVersion), &(commState->sbVersion));
 #elif defined(T1oI2C)
-    sw = smComT1oI2C_Open(ESE_MODE_NORMAL, 0x00, atr, atrLen);
+    sw = smComT1oI2C_Open(conn_ctx, ESE_MODE_NORMAL, 0x00, atr, atrLen);
 #elif defined(SMCOM_JRCP_V1) || defined(SMCOM_JRCP_V2) || defined(PCSC) || defined(SMCOM_PCSC)
     if (atrLen != NULL)
         *atrLen = 0;
@@ -385,16 +486,27 @@ U16 SM_Connect(SmCommState_t *commState, U8 *atr, U16 *atrLen)
         selectResponseDataLen = sizeof(selectResponseData);
         /* CARD */
         if (commState->skip_select_applet == 1) {
-            /* SKIP */
+            /* Use Case just Connect to SE (smCom) and no kind of applet selection */
             sw = SMCOM_OK;
             selectResponseDataLen = 0;
+        }
+        else if (commState->skip_select_applet == 2) {
+#ifdef SSD_NAME
+            /* Rotate keys Use Case Connect to SE and Select SSD */
+            /* Select SSD */
+            sw = GP_Select(conn_ctx, (U8 *)&ssdName, sizeof(ssdName), selectResponseData, &selectResponseDataLen);
+            //sw = SMCOM_OK;
+#else
+            sw = SMCOM_COM_FAILED;
+#endif
         }
         else
         {
             /* Select card manager */
-            GP_Select((U8 *)&appletName, 0, selectResponseData, &selectResponseDataLen);
+            GP_Select(conn_ctx, (U8 *)&appletName, 0, selectResponseData, &selectResponseDataLen);
+            selectResponseDataLen = sizeof(selectResponseData);
             /* Select the applet */
-            sw = GP_Select((U8 *)&appletName, APPLET_NAME_LEN, selectResponseData, &selectResponseDataLen);
+            sw = GP_Select(conn_ctx, (U8 *)&appletName, APPLET_NAME_LEN, selectResponseData, &selectResponseDataLen);
         }
 
         if (sw == SW_FILE_NOT_FOUND) {
@@ -404,20 +516,16 @@ U16 SM_Connect(SmCommState_t *commState, U8 *atr, U16 *atrLen)
             return sw;
         }
         else if (sw != SW_OK) {
+            LOG_E("SM_CONNECT Failed.");
             sw = ERR_CONNECT_SELECT_FAILED;
         }
         else {
 #ifdef FLOW_VERBOSE
             if (selectResponseDataLen > 0) {
-                int i = 0;
-                printf("selectResponseDataLen: %d\r\n", selectResponseDataLen);
-                for (i = 0; i < selectResponseDataLen; i++) {
-                    printf("0x%02X:", selectResponseData[i]);
-                }
-                printf("\r\n");
+                LOG_MAU8_I("selectResponseData", selectResponseData, selectResponseDataLen);
             }
 #endif // FLOW_VERBOSE
-#if SSS_HAVE_A71CH || SSS_HAVE_SE050_EAR_CH
+#if SSS_HAVE_A71CH || SSS_HAVE_A71CH_SIM
             if (selectResponseDataLen >= 2) {
                 commState->appletVersion = (selectResponseData[0] << 8) + selectResponseData[1];
                 if (selectResponseDataLen == 4) {
@@ -428,12 +536,7 @@ U16 SM_Connect(SmCommState_t *commState, U8 *atr, U16 *atrLen)
                 }
             }
             else {
-#if SSS_HAVE_SE050_EAR
-                commState->appletVersion = 0;
-                commState->sbVersion = 0;
-#else // SSS_HAVE_SE050_EAR
                 sw = ERR_CONNECT_SELECT_FAILED;
-#endif // SSS_HAVE_SE050_EAR
             }
 #elif SSS_HAVE_A71CL
             if (selectResponseDataLen == 0) {
@@ -475,7 +578,7 @@ exit:
  *
  * @retval ::SW_OK Upon successful execution
  */
-U16 SM_Close(U8 mode)
+U16 SM_Close(void *conn_ctx, U8 mode)
 {
     U16 sw = SW_OK;
 
@@ -493,7 +596,7 @@ U16 SM_Close(U8 mode)
     sw = smComIpc_Close();
 #endif
 #if defined(T1oI2C)
-    sw = smComT1oI2C_Close(mode);
+    sw = smComT1oI2C_Close(conn_ctx, mode);
 #endif
 #if defined(SMCOM_JRCP_V1)
     AX_UNUSED_ARG(mode);
@@ -501,15 +604,19 @@ U16 SM_Close(U8 mode)
 #endif
 #if defined(SMCOM_JRCP_V2)
     AX_UNUSED_ARG(mode);
-    sw = smComJRCP_Close(mode);
+    sw = smComJRCP_Close(conn_ctx, mode);
 #endif
 #if defined(RJCT_VCOM)
     AX_UNUSED_ARG(mode);
-    sw = smComVCom_Close();
+    sw = smComVCom_Close(conn_ctx);
 #endif
 #if defined(SMCOM_THREAD)
     AX_UNUSED_ARG(mode);
     sw = smComThread_Close();
+#endif
+#if defined(SMCOM_RC663_VCOM)
+    AX_UNUSED_ARG(mode);
+    smComNxpNfcRdLib_Close();
 #endif
     smCom_DeInit();
 
@@ -542,7 +649,7 @@ U16 SM_SendAPDU(U8 *cmd, U16 cmdLen, U8 *resp, U16 *respLen)
 
     respLenLocal = *respLen;
 
-    status = smCom_TransceiveRaw(cmd, cmdLen, resp, &respLenLocal);
+    status = smCom_TransceiveRaw(NULL, cmd, cmdLen, resp, &respLenLocal);
     *respLen = (U16)respLenLocal;
 
     return (U16)status;

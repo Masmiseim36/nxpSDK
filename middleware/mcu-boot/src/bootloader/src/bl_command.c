@@ -1,26 +1,26 @@
 /*
  * Copyright (c) 2013-2015 Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "bootloader_common.h"
-#include "bootloader/bootloader.h"
-#include "memory/memory.h"
-#include "sbloader/sbloader.h"
-#include "property/property.h"
-#include "utilities/fsl_assert.h"
-#include "utilities/fsl_rtos_abstraction.h"
-#include <string.h>
 #include <stdint.h>
+#include <string.h>
+#include "bootloader.h"
+#include "bootloader_common.h"
+#include "fsl_assert.h"
+#include "fsl_rtos_abstraction.h"
+#include "memory.h"
+#include "property.h"
+#include "sbloader.h"
 
 #if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
 #if !BL_DEVICE_IS_LPC_SERIES
 #include "fsl_flash.h"
 #else
-#include "flashiap_wrapper/fsl_flashiap_wrapper.h"
+#include "fsl_iap.h"
 #endif
 #endif // #if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
 #include "fsl_device_registers.h"
@@ -31,22 +31,22 @@
 #include "fsl_otfad_driver.h"
 #endif // #if BL_FEATURE_OTFAD_MODULE
 #if BL_FEATURE_OCOTP_MODULE
-#include "ocotp/fsl_ocotp.h"
+#include "bl_ocotp.h"
 #endif // #if BL_FEATURE_OCOTP_MODULE
 #if defined(BL_DEVICE_IS_LPC_SERIES) && defined(OTP_API)
-#include "otp/otp.h"
+#include "otp.h"
 #endif
 #if BL_FEATURE_RELIABLE_UPDATE
-#include "bootloader/bl_reliable_update.h"
+#include "bl_reliable_update.h"
 #endif
 
 #if BL_FEATURE_GEN_KEYBLOB
-#include "bootloader/bl_keyblob.h"
+#include "bl_keyblob.h"
 #endif
 
 #if BL_FEATURE_KEY_PROVISIONING
-#include "authentication/key_store.h"
-#include "authentication/key_store_hal.h"
+#include "key_store.h"
+#include "key_store_hal.h"
 /* the RAM address of key store comes from hal (key_store_hal_lpc54s018.c) */
 extern skboot_key_store_t *const s_keyStore;
 #endif
@@ -128,7 +128,7 @@ enum _secure_commands
 #if BL_FEATURE_KEY_PROVISIONING
                                   | HAS_CMD(kCommandTag_KeyProvisioning)
 #endif // BL_FEATURE_KEY_PROVISIONING
-                                  )
+                                      )
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -157,10 +157,10 @@ const command_handler_entry_t g_commandHandlerTable[] = {
     { handle_set_property, NULL },                    // kCommandTag_SetProperty = 0x0c
 #if BL_FEATURE_ERASEALL_UNSECURE
     { handle_flash_erase_all_unsecure, NULL }, // kCommandTag_FlashEraseAllUnsecure = 0x0d
-#else  // BL_FEATURE_ERASEALL_UNSECURE
+#else                                          // BL_FEATURE_ERASEALL_UNSECURE
     { 0 }, // kCommandTag_FlashEraseAllUnsecure = 0x0d
-#endif // BL_FEATURE_ERASEALL_UNSECURE
-#if (((!BL_FEATURE_HAS_NO_INTERNAL_FLASH) || BL_FEATURE_OCOTP_MODULE) && (!BL_DEVICE_IS_LPC_SERIES))|| \
+#endif                                         // BL_FEATURE_ERASEALL_UNSECURE
+#if (((!BL_FEATURE_HAS_NO_INTERNAL_FLASH) || BL_FEATURE_OCOTP_MODULE) && (!BL_DEVICE_IS_LPC_SERIES)) || \
     ((BL_DEVICE_IS_LPC_SERIES) && defined(OTP_API))
     { handle_flash_program_once, NULL }, // kCommandTag_ProgramOnce = 0x0e
     { handle_flash_read_once, NULL },    // kCommandTag_ReadOnce = 0x0f
@@ -173,14 +173,14 @@ const command_handler_entry_t g_commandHandlerTable[] = {
     { 0 },
     { 0 },
     { 0 },
-#endif // #if (((!BL_FEATURE_HAS_NO_INTERNAL_FLASH) || BL_FEATURE_OCOTP_MODULE) && (!BL_DEVICE_IS_LPC_SERIES))|| \
+#endif // #if (((!BL_FEATURE_HAS_NO_INTERNAL_FLASH) || BL_FEATURE_OCOTP_MODULE) && (!BL_DEVICE_IS_LPC_SERIES))||
        // ((BL_DEVICE_IS_LPC_SERIES) && defined(OTP_API))
 #if BL_FEATURE_QSPI_MODULE || BL_FEATURE_FLEXSPI_NOR_MODULE || BL_FEATURE_SEMC_NOR_MODULE || \
     BL_FEATURE_EXPAND_MEMORY || BL_FEATURE_SPI_NOR_EEPROM_MODULE || BL_FEATURE_SPIFI_NOR_MODULE
     { handle_configure_memory, NULL }, // kCommandTag_ConfigureMemory = 0x11
 #else
     { 0 }, // kCommandTag_ConfigureMemory = 0x11
-#endif // BL_FEATURE_QSPI_MODULE || BL_FEATURE_FLEXSPI_NOR_MODULE || BL_FEATURE_SEMC_NOR_MODULE || \
+#endif // BL_FEATURE_QSPI_MODULE || BL_FEATURE_FLEXSPI_NOR_MODULE || BL_FEATURE_SEMC_NOR_MODULE ||
        // BL_FEATURE_EXPAND_MEMORY || BL_FEATURE_SPI_NOR_EEPROM_MODULE || BL_FEATURE_SPIFI_NOR_MODULE
 #if BL_FEATURE_RELIABLE_UPDATE
     { handle_reliable_update, NULL }, // kCommandTag_ReliableUpdate = 0x12
@@ -194,42 +194,42 @@ const command_handler_entry_t g_commandHandlerTable[] = {
     { 0 },
 #if BL_FEATURE_KEY_PROVISIONING
     { handle_key_provisioning, handle_data_bidirection }, // kCommandTag_KeyProvisioning = 0x15
-#endif // BL_FEATURE_KEY_PROVISIONING
-#else // BL_FEATURE_MIN_PROFILE
-    { handle_flash_erase_all, NULL },    // kCommandTag_FlashEraseAll = 0x01
-    { handle_flash_erase_region, NULL }, // kCommandTag_FlashEraseRegion = 0x02
+#endif                                                    // BL_FEATURE_KEY_PROVISIONING
+#else                                                     // BL_FEATURE_MIN_PROFILE
+    { handle_flash_erase_all, NULL },                   // kCommandTag_FlashEraseAll = 0x01
+    { handle_flash_erase_region, NULL },                // kCommandTag_FlashEraseRegion = 0x02
 #if BL_FEATURE_READ_MEMORY
-    { handle_read_memory, handle_data_producer }, // kCommandTag_ReadMemory = 0x03
+    { handle_read_memory, handle_data_producer },       // kCommandTag_ReadMemory = 0x03
 #else // BL_FEATURE_READ_MEMORY
     { 0 }, // kCommandTag_ReadMemory = 0x03
 #endif
-    { handle_write_memory, handle_data_consumer }, // kCommandTag_WriteMemory = 0x04
+    { handle_write_memory, handle_data_consumer },      // kCommandTag_WriteMemory = 0x04
 #if BL_FEATURE_FILL_MEMORY
-    { handle_fill_memory, NULL }, // kCommandTag_FillMemory = 0x05
+    { handle_fill_memory, NULL },                       // kCommandTag_FillMemory = 0x05
 #else
     { 0 },
 #endif // BL_FEATURE_FILL_MEMORY
 #if BL_FEATURE_FLASH_SECURITY
-    { handle_flash_security_disable, NULL }, // kCommandTag_FlashSecurityDisable = 0x06
+    { handle_flash_security_disable, NULL },            // kCommandTag_FlashSecurityDisable = 0x06
 #else
     { 0 },
 #endif // BL_FEATURE_FLASH_SECURITY
-    { handle_get_property, NULL },             // kCommandTag_GetProperty = 0x07
-    { 0 },                                     // kCommandTag_ReceiveSbFile = 0x08
-    { handle_execute, NULL },                  // kCommandTag_Execute = 0x09
-    { 0 },                                     // kCommandTag_Call = 0x0a
-    { handle_reset, NULL },                    // kCommandTag_Reset = 0x0b
-    { handle_set_property, NULL },             // kCommandTag_SetProperty = 0x0c
+    { handle_get_property, NULL },                      // kCommandTag_GetProperty = 0x07
+    { 0 },                                              // kCommandTag_ReceiveSbFile = 0x08
+    { handle_execute, NULL },                           // kCommandTag_Execute = 0x09
+    { 0 },                                              // kCommandTag_Call = 0x0a
+    { handle_reset, NULL },                             // kCommandTag_Reset = 0x0b
+    { handle_set_property, NULL },                      // kCommandTag_SetProperty = 0x0c
 #if BL_FEATURE_ERASEALL_UNSECURE
-    { handle_flash_erase_all_unsecure, NULL }, // kCommandTag_FlashEraseAllUnsecure = 0x0d
+    { handle_flash_erase_all_unsecure, NULL },          // kCommandTag_FlashEraseAllUnsecure = 0x0d
 #else  // BL_FEATURE_ERASEALL_UNSECURE
     { 0 }, // kCommandTag_FlashEraseAllUnsecure = 0x0d
 #endif // BL_FEATURE_ERASEALL_UNSECURE
-    { 0 },                                     // kCommandTag_ProgramOnce = 0x0e
-    { 0 },                                     // kCommandTag_ReadOnce = 0x0f
-    { 0 },                                     // kCommandTag_ReadResource = 0x10
-    { 0 },                                     // kCommandTag_ConfigureQuadSpi = 0x11
-    { 0 },                                     // kCommandTag_ReliableUpdate = 0x12
+    { 0 },                                              // kCommandTag_ProgramOnce = 0x0e
+    { 0 },                                              // kCommandTag_ReadOnce = 0x0f
+    { 0 },                                              // kCommandTag_ReadResource = 0x10
+    { 0 },                                              // kCommandTag_ConfigureQuadSpi = 0x11
+    { 0 },                                              // kCommandTag_ReliableUpdate = 0x12
 #if BL_FEATURE_GEN_KEYBLOB
     { handle_generate_key_blob, handle_key_blob_data }, // kCommandTag_GenerateKeyBlob = 0x13
 #endif
@@ -249,7 +249,7 @@ command_interface_t g_commandInterface = { bootloader_command_init, bootloader_c
                                            (command_handler_entry_t *)&g_commandHandlerTable, &g_commandData };
 
 #if BL_FEATURE_EXPAND_PACKET_SIZE
-static uint8_t s_dataProducerPacket[kMaxBootloaderPacketSize];
+static uint32_t s_dataProducerPacket[kMaxBootloaderPacketSize / sizeof(uint32_t)];
 #endif // BL_FEATURE_EXPAND_PACKET_SIZE
 
 #if BL_FEATURE_KEY_PROVISIONING
@@ -354,8 +354,8 @@ static status_t handle_command(uint8_t *packet, uint32_t packetLength)
         // Note: Both Main and Secondary flash share the same security state
         //  So it doesn't matter what index of allFlashState[] we use for this FLASH API.
         ftfx_security_state_t securityState;
-        status = g_bootloaderContext.flashDriverInterface->flash_get_security_state(
-            g_bootloaderContext.allFlashState, &securityState);
+        status = g_bootloaderContext.flashDriverInterface->flash_get_security_state(g_bootloaderContext.allFlashState,
+                                                                                    &securityState);
         if (status == kStatus_Success)
         {
             // If flash security is enabled, make sure the command is one that is allowed. If
@@ -372,7 +372,7 @@ static status_t handle_command(uint8_t *packet, uint32_t packetLength)
             {
 #endif // !BL_DEVICE_IS_LPC_SERIES
 #endif // #if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
-                // Process the command normally.
+       // Process the command normally.
                 g_bootloaderContext.commandInterface->stateData->handlerEntry->handleCommand(packet, packetLength);
                 return kStatus_Success;
 #if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
@@ -452,7 +452,7 @@ void handle_reliable_update(uint8_t *packet, uint32_t packetLength)
 
     // A system reset is needed, For HW implementation swap command will only take
     //  effect after reset; For SW implementation, reset makes sure that behavior is consistent
-    if (status == kStatus_ReliableUpdateSuccess)
+    if (status == kStatus_ReliableUpdateSuccess || status == kStatus_ReliableUpdateSwapTest)
     {
         // Wait for the ack from the host to the generic response
         g_bootloaderContext.activePeripheral->packetInterface->finalize(g_bootloaderContext.activePeripheral);
@@ -570,7 +570,7 @@ void handle_flash_erase_all(uint8_t *packet, uint32_t packetLength)
             break;
     }
 #endif // #if ((!BL_FEATURE_QSPI_MODULE) && (!BL_FEATURE_FAC_ERASE) && (!BL_FEATURE_EXPAND_MEMORY) &&
-// (!BL_FEATURE_HAS_NO_INTERNAL_FLASH))
+       // (!BL_FEATURE_HAS_NO_INTERNAL_FLASH))
 
     send_generic_response(status, commandPacket->commandPacket.commandTag);
 }
@@ -590,7 +590,7 @@ void handle_flash_erase_all_unsecure(uint8_t *packet, uint32_t packetLength)
         status += flexNVM_mem_erase_all_unsecure();
     }
 #endif // BL_FEATURE_SUPPORT_DFLASH
-#endif //BL_FEATURE_ERASEALL_UNSECURE
+#endif // BL_FEATURE_ERASEALL_UNSECURE
 
     send_generic_response(status, commandPacket->commandTag);
 }
@@ -601,13 +601,12 @@ void handle_flash_erase_region(uint8_t *packet, uint32_t packetLength)
     flash_erase_region_packet_t *command = (flash_erase_region_packet_t *)packet;
     status_t status = kStatus_Success;
 
-// Call flash erase region implementation.
+    // Call flash erase region implementation.
     status = g_bootloaderContext.memoryInterface->erase(command->startAddress, command->byteCount, command->memoryId);
 
     send_generic_response(status, command->commandPacket.commandTag);
 }
 
-#if !BL_FEATURE_MIN_PROFILE
 //! @brief Receive SB File command handler.
 void handle_receive_sb_file(uint8_t *packet, uint32_t packetLength)
 {
@@ -622,7 +621,6 @@ void handle_receive_sb_file(uint8_t *packet, uint32_t packetLength)
     // Initialize the SB file loader state machine
     sbloader_init();
 }
-#endif // !BL_FEATURE_MIN_PROFILE
 
 //! @brief Get Property command handler.
 void handle_get_property(uint8_t *packet, uint32_t packetLength)
@@ -668,7 +666,7 @@ void handle_configure_memory(uint8_t *packet, uint32_t packetLength)
 #endif // BL_FEATURE_QSPI_MODULE
 
 #if BL_FEATURE_FLEXSPI_NOR_MODULE
-        if (command->flashMemId == kMemoryFlexSpiNor)
+    if (command->flashMemId == kMemoryFlexSpiNor)
     {
         status = flexspi_nor_mem_config((uint32_t *)command->configBlockAddress);
     }
@@ -682,7 +680,7 @@ void handle_configure_memory(uint8_t *packet, uint32_t packetLength)
 #endif // #if BL_FEATURE_SPIFI_NOR_MODULE
 
 #if BL_FEATURE_SEMC_NOR_MODULE
-        if (command->flashMemId == kMemorySemcNor)
+    if (command->flashMemId == kMemorySemcNor)
     {
         status = semc_nor_mem_config((uint32_t *)command->configBlockAddress);
     }
@@ -704,7 +702,8 @@ void handle_configure_memory(uint8_t *packet, uint32_t packetLength)
 #endif // #if BL_FEATURE_EXPAND_MEMORY
     send_generic_response(status, command->commandPacket.commandTag);
 }
-#endif // BL_FEATURE_QSPI_MODULE || BL_FEATURE_FLEXSPI_NOR_MODULE || BL_FEATURE_EXPAND_MEMORY || BL_FEATURE_SPI_NOR_EEPROM_MODULE || BL_FEATURE_SPIFI_NOR_MODULE
+#endif // BL_FEATURE_QSPI_MODULE || BL_FEATURE_FLEXSPI_NOR_MODULE || BL_FEATURE_EXPAND_MEMORY ||
+       // BL_FEATURE_SPI_NOR_EEPROM_MODULE || BL_FEATURE_SPIFI_NOR_MODULE
 
 #if BL_FEATURE_QSPI_MODULE
 status_t configure_qspi(const uint32_t address)
@@ -829,7 +828,7 @@ void finalize_data_phase(status_t status)
         if (g_bootloaderContext.commandInterface->stateData->dataPhase.argument0 ==
             kKeyProvisioning_Operation_SetUserKey)
         {
-            skboot_key_metadata_t keyMetaData = {.keyType = kPUF_KeyType_Invalid };
+            skboot_key_metadata_t keyMetaData = { .keyType = kPUF_KeyType_Invalid };
             keyMetaData.keyType =
                 (skboot_key_type_t)g_bootloaderContext.commandInterface->stateData->dataPhase.argument1;
             status = skboot_key_secretbox(
@@ -1042,7 +1041,7 @@ status_t handle_data_producer(bool *hasMoreData)
     // Initialize the data packet to send.
     uint32_t packetSize;
 #if BL_FEATURE_EXPAND_PACKET_SIZE
-    uint8_t *packet = s_dataProducerPacket;
+    uint8_t *packet = (uint8_t *)&s_dataProducerPacket;
     uint32_t packetBufferSize =
         g_bootloaderContext.activePeripheral->packetInterface->getMaxPacketSize(g_bootloaderContext.activePeripheral);
     packetSize = MIN(packetBufferSize, remaining);
@@ -1076,15 +1075,14 @@ status_t handle_data_producer(bool *hasMoreData)
 #if !BL_DEVICE_IS_LPC_SERIES
         else if (commandTag == kCommandTag_FlashReadResource)
         {
-// Read data from special-purpose flash memory
+            // Read data from special-purpose flash memory
             ftfx_read_resource_opt_t option =
                 (ftfx_read_resource_opt_t)g_bootloaderContext.commandInterface->stateData->dataPhase.option;
             lock_acquire();
             // Note: Both Main and Secondary flash share the same IFR Memory
             //  So it doesn't matter what index of allFlashState[] we use for this FLASH API.
             status = g_bootloaderContext.flashDriverInterface->flash_read_resource(
-                g_bootloaderContext.allFlashState, dataAddress, (uint8_t *)packet, packetSize,
-                option);
+                g_bootloaderContext.allFlashState, dataAddress, (uint8_t *)packet, packetSize, option);
             lock_release();
         }
 #endif // !BL_DEVICE_IS_LPC_SERIES
@@ -1255,8 +1253,8 @@ void handle_flash_security_disable(uint8_t *packet, uint32_t packetLength)
     // Flash interface wants little endian, so just send two uint32s.
     // Note: Both Main and Secondary flash share the same security control
     //  So it doesn't matter what index of allFlashState[] we use for this FLASH API.
-    status = g_bootloaderContext.flashDriverInterface->flash_security_bypass(
-        g_bootloaderContext.allFlashState, (uint8_t *)&command->keyLow);
+    status = g_bootloaderContext.flashDriverInterface->flash_security_bypass(g_bootloaderContext.allFlashState,
+                                                                             (uint8_t *)&command->keyLow);
 #endif // !BL_DEVICE_IS_LPC_SERIES
 #endif
 
@@ -1277,7 +1275,8 @@ void handle_flash_program_once(uint8_t *packet, uint32_t length)
     // Note: Both Main and Secondary flash share the same IFR Memory
     //  So it doesn't matter what index of allFlashState[] we use for this FLASH API.
     status = g_bootloaderContext.flashDriverInterface->flash_program_once(
-        &g_bootloaderContext.allFlashState->ftfxConfig[kFlashIndex_Main], command->index, (uint8_t *)&command->data[0], command->byteCount);
+        &g_bootloaderContext.allFlashState->ftfxConfig[kFlashIndex_Main], command->index, (uint8_t *)&command->data[0],
+        command->byteCount);
 #endif // !BL_DEVICE_IS_LPC_SERIES
 #elif BL_FEATURE_OCOTP_MODULE
     status = ocotp_program_once(OCOTP, command->index, &command->data[0], command->byteCount);
@@ -1304,7 +1303,8 @@ void handle_flash_read_once(uint8_t *packet, uint32_t length)
     // Note: Both Main and Secondary flash share the same IFR Memory
     //  So it doesn't matter what index of allFlashState[] we use for this FLASH API.
     status = g_bootloaderContext.flashDriverInterface->flash_read_once(
-        &g_bootloaderContext.allFlashState->ftfxConfig[kFlashIndex_Main], command->index, (uint8_t *)&readOnceItemData[0], command->byteCount);
+        &g_bootloaderContext.allFlashState->ftfxConfig[kFlashIndex_Main], command->index,
+        (uint8_t *)&readOnceItemData[0], command->byteCount);
 #endif // !BL_DEVICE_IS_LPC_SERIES
 #elif BL_FEATURE_OCOTP_MODULE
     status = ocotp_read_once(OCOTP, command->index, &readOnceItemData[0], command->byteCount);
@@ -1479,7 +1479,7 @@ void handle_key_provisioning(uint8_t *packet, uint32_t packetLength)
     key_provisioning_packet_t *command = (key_provisioning_packet_t *)packet;
     uint32_t operation = command->operation;
     bool isDataPhaseRequired = false;
-    skboot_key_metadata_t keyMetaData = {.keyType = kPUF_KeyType_Invalid };
+    skboot_key_metadata_t keyMetaData = { .keyType = kPUF_KeyType_Invalid };
     uint32_t memoryId = kMemoryInternal;
 
     g_bootloaderContext.commandInterface->stateData->dataPhase.option = kCmd_DataPhase_Option_Skip;

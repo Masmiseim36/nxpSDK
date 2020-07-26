@@ -256,15 +256,15 @@ PROCESS_ECC_CURVE(wap_wsg_idm_ecid_wtls11);
 PROCESS_ECC_CURVE(wap_wsg_idm_ecid_wtls12);
 
 /*
-	IPSec/IKE/Oakley curve #3 over a 155 bit binary field.
-	Not suitable for ECDSA.
-	Questionable extension field! */
+    IPSec/IKE/Oakley curve #3 over a 155 bit binary field.
+    Not suitable for ECDSA.
+    Questionable extension field! */
 PROCESS_ECC_CURVE(Oakley_EC2N_3);
 
 /*
-	IPSec/IKE/Oakley curve #4 over a 185 bit binary field.
-	Not suitable for ECDSA.
-	Questionable extension field! */
+    IPSec/IKE/Oakley curve #4 over a 185 bit binary field.
+    Not suitable for ECDSA.
+    Questionable extension field! */
 PROCESS_ECC_CURVE(Oakley_EC2N_4);
 
 

@@ -3,7 +3,7 @@
  * @author NXP Semiconductors
  * @version 1.0
  * @par License
- * Copyright 2017-2019 NXP
+ * Copyright 2017-2020 NXP
  *
  * This software is owned or controlled by NXP and may only be used
  * strictly in accordance with the applicable license terms.  By expressly
@@ -170,6 +170,7 @@ int app_boot_Init()
     }
     axReset_HostConfigure();
     axReset_PowerUp();
+    axReset_HostUnconfigure();
 #endif
 
 #ifdef USE_SERGER_RTT
@@ -300,7 +301,7 @@ static U16 establishConnnection(SmCommState_t *pCommState, const char *pConnecti
 
 #if defined(TDA8029_UART) || defined(SCI2C) || defined(PCSC) || defined(SPI) || defined(IPC) || defined(T1oI2C) || \
     defined(SMCOM_PN7150) || defined(SMCOM_THREAD)
-    connectStatus = SM_Connect(pCommState, Atr, &AtrLen);
+    connectStatus = SM_Connect(NULL, pCommState, Atr, &AtrLen);
 #elif defined(SMCOM_JRCP_V1) || defined(SMCOM_JRCP_V2)
 
 #if defined SMCOM_JRCP_V1 && !defined(SMCOM_JRCP_V2)
@@ -314,7 +315,7 @@ static U16 establishConnnection(SmCommState_t *pCommState, const char *pConnecti
         return 4;
     }
     else {
-        connectStatus = SM_RjctConnect(pConnectionParam, pCommState, Atr, &AtrLen);
+        connectStatus = SM_RjctConnect(NULL, pConnectionParam, pCommState, Atr, &AtrLen);
     }
 #elif defined(RJCT_VCOM)
     if (pConnectionParam == NULL) {
@@ -322,7 +323,7 @@ static U16 establishConnnection(SmCommState_t *pCommState, const char *pConnecti
         return 4;
     }
     else {
-        connectStatus = SM_RjctConnect(pConnectionParam, pCommState, Atr, &AtrLen);
+        connectStatus = SM_RjctConnect(NULL, pConnectionParam, pCommState, Atr, &AtrLen);
     }
 #elif defined(SMCOM_PCSC)
     if (pConnectionParam == NULL) {
@@ -330,7 +331,15 @@ static U16 establishConnnection(SmCommState_t *pCommState, const char *pConnecti
         return 4;
     }
     else {
-        connectStatus = SM_RjctConnect(pConnectionParam, pCommState, Atr, &AtrLen);
+        connectStatus = SM_RjctConnect(NULL, pConnectionParam, pCommState, Atr, &AtrLen);
+    }
+#elif defined(SMCOM_RC663_VCOM)
+    if (pConnectionParam == NULL) {
+        PRINTF("Pass the COM Port as arguments, e.g. \"COM5\"\n");
+        return 4;
+    }
+    else {
+        connectStatus = SM_RjctConnect(NULL, pConnectionParam, pCommState, Atr, &AtrLen);
     }
 #else
 #error "No communication channel defined"
@@ -338,9 +347,9 @@ static U16 establishConnnection(SmCommState_t *pCommState, const char *pConnecti
 
     if (AtrLen > 0) {
         int i = 0;
-#if defined(T1oI2C_UM1225_SE050)
+#if defined(T1oI2C_UM11225)
         PRINTF("ATR=0x");
-#elif defined(T1oI2C_GP)
+#elif defined(T1oI2C_GP1_0)
         /* for GP ATR is noting but CIP response*/
         PRINTF("CIP=0x");
 #endif

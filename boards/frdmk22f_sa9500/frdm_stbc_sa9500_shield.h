@@ -19,10 +19,10 @@
 
 // FXLC95000 Sensor Information
 #define FXLC95000_I2C_ADDR 0x4C
-#define FXLC95000_CS A2
-#define FXLC95000_INT1 D2
-#define FXLC95000_PDB_B D8
-#define FXLC95000_SSB_IO3 D10
+#define FXLC95000_CS       A2
+#define FXLC95000_INT1     D2
+#define FXLC95000_PDB_B    D8
+#define FXLC95000_SSB_IO3  D10
 #define FXLC95000_RST_GPIO A3
 
 #endif /* _frdm_stbc_sa9500_shield_H_ */

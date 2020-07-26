@@ -1,9 +1,8 @@
-/**
- * @file a71_debug.c
+/*
  * @author NXP Semiconductors
  * @version 1.0
  * @par License
- * Copyright 2016 NXP
+ * Copyright 2016,2020 NXP
  *
  * This software is owned or controlled by NXP and may only be used
  * strictly in accordance with the applicable license terms.  By expressly
@@ -13,12 +12,14 @@
  * you do not agree to be bound by the applicable license terms, then you
  * may not retain, install, activate or otherwise use the software.
  *
- * @par Description
- * This file implements the matching debug API for the Debug Mode specific
- * APDU's of the A71CH module.
  * @par History
  *
  *****************************************************************************/
+/**
+ * @file a71_debug.c
+ * @par Description
+ * Wrap Debug Mode specific APDU's of A71CH.
+*/
 
 #include <stddef.h>
 #include <stdio.h>
@@ -50,7 +51,7 @@ U16 A71_DbgReset(void)
     AllocateAPDUBuffer(pApdu);
     SetApduHeader(pApdu, USE_STANDARD_APDU_LEN);
 
-    rv = (U16)scp_Transceive(pApdu, NO_C_MAC_NO_C_ENC_NO_R_MAC_NO_R_ENC);
+    rv = (U16)scp_Transceive(NULL, pApdu, NO_C_MAC_NO_C_ENC_NO_R_MAC_NO_R_ENC);
 
     // no response data expected
     if (rv == SMCOM_OK)
@@ -80,7 +81,7 @@ U16 A71_DbgDisableDebug(void)
     AllocateAPDUBuffer(pApdu);
     SetApduHeader(pApdu, USE_STANDARD_APDU_LEN);
 
-    rv = (U16)scp_Transceive(pApdu, NO_C_MAC_NO_C_ENC_NO_R_MAC_NO_R_ENC);
+    rv = (U16)scp_Transceive(NULL, pApdu, NO_C_MAC_NO_C_ENC_NO_R_MAC_NO_R_ENC);
 
     // no response data expected
     if (rv == SMCOM_OK)
@@ -117,7 +118,7 @@ static U16 DBG_GetFreeMem(U8 type, S16 *freeMem)
     SetApduHeader(pApdu, USE_STANDARD_APDU_LEN);
     *freeMem = 0;
 
-    rv = (U16)scp_Transceive(pApdu, NO_C_MAC_NO_C_ENC_NO_R_MAC_NO_R_ENC);
+    rv = (U16)scp_Transceive(NULL, pApdu, NO_C_MAC_NO_C_ENC_NO_R_MAC_NO_R_ENC);
     if (rv == SMCOM_OK)
     {
         rv = smGetSw(pApdu, &isOk);
@@ -188,7 +189,7 @@ U16 A71_DbgReflect(U8 *sndBuf, U16 sndBufLen, U8 *rcvBuf, U16 *rcvBufLen)
 
     smApduAppendCmdData(pApdu, sndBuf, sndBufLen);
 
-    err = (U16)scp_Transceive(pApdu, SCP_MODE);
+    err = (U16)scp_Transceive(NULL, pApdu, SCP_MODE);
     if (err == SMCOM_OK)
     {
         err = smGetSw( pApdu, &isOk);

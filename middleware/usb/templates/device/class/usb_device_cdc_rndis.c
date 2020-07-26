@@ -22,12 +22,12 @@
  ******************************************************************************/
 #if defined(USB_STACK_BM)
 #define USB_CDC_RNDIS_MUTEX_LOCK(_X_) \
-    OSA_SR_ALLOC();                   \
-    OSA_ENTER_CRITICAL()
-#define USB_CDC_RNDIS_MUTEX_UNLOCK(_X_) OSA_EXIT_CRITICAL()
+    USB_OSA_SR_ALLOC();               \
+    USB_OSA_ENTER_CRITICAL()
+#define USB_CDC_RNDIS_MUTEX_UNLOCK(_X_) USB_OSA_EXIT_CRITICAL()
 #else
-#define USB_CDC_RNDIS_MUTEX_LOCK(_X_) OSA_MutexLock(_X_, USB_OSA_WAIT_TIMEOUT)
-#define USB_CDC_RNDIS_MUTEX_UNLOCK(_X_) OSA_MutexUnlock(_X_)
+#define USB_CDC_RNDIS_MUTEX_LOCK(_X_) USB_OsaMutexLock(_X_)
+#define USB_CDC_RNDIS_MUTEX_UNLOCK(_X_) USB_OsaMutexUnlock(_X_)
 #endif
 
 #define NOTIF_PACKET_SIZE (0x08)
@@ -133,7 +133,7 @@ static usb_status_t USB_DeviceCdcRndisAllocateHandle(usb_device_cdc_rndis_struct
  */
 static usb_status_t USB_DeviceCdcRndisFreeHandle(usb_device_cdc_rndis_struct_t *handle)
 {
-    handle->cdcAcmHandle = NULL;
+    handle->cdcAcmHandle = (uint32_t)NULL;
     return kStatus_USB_Success;
 }
 
@@ -170,8 +170,7 @@ usb_status_t USB_DeviceCdcRndisInit(class_handle_t classHandle,
     cdcRndisHandle->rndisCallback           = config->rndisCallback;
     cdcRndisHandle->rndisCommand            = &s_rndisCommand[0];
     cdcRndisHandle->responseData            = (uint8_t *)&s_responseData[0];
-    cdcRndisHandle->statusMutex             = (osa_mutex_handle_t)&cdcRndisHandle->mutexBuffer[0];
-    if (KOSA_StatusSuccess != OSA_MutexCreate((cdcRndisHandle->statusMutex)))
+    if (kStatus_USB_OSA_Success != USB_OsaMutexCreate(&(cdcRndisHandle->statusMutex)))
     {
 #ifdef DEBUG
         usb_echo("mutex create error!");
@@ -200,7 +199,7 @@ usb_status_t USB_DeviceCdcRndisDeinit(usb_device_cdc_rndis_struct_t *handle)
     {
         return kStatus_USB_InvalidHandle;
     }
-    if (KOSA_StatusSuccess != OSA_MutexDestroy(cdcRndisHandle->statusMutex))
+    if (kStatus_USB_OSA_Success != USB_OsaMutexDestroy(cdcRndisHandle->statusMutex))
     {
 #ifdef DEBUG
         usb_echo("mutex destroy error!");
@@ -230,7 +229,7 @@ usb_status_t USB_DeviceCdcRndisResponseAvailable(usb_device_cdc_rndis_struct_t *
     /* update array for current interface */
     s_responseAvailableData[4] = cdcAcmHandle->interfaceNumber;
 
-    error = USB_DeviceCdcAcmSend((void *)cdcAcmHandle, cdcAcmHandle->interruptIn.ep, s_responseAvailableData,
+    error = USB_DeviceCdcAcmSend((uint32_t)cdcAcmHandle, cdcAcmHandle->interruptIn.ep, s_responseAvailableData,
                                  NOTIF_PACKET_SIZE);
     return error;
 }

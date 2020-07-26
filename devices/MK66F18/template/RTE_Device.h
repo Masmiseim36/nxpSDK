@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -179,5 +179,11 @@ in the application for enabling according instance. */
 #define RTE_SPI2_DMA_RX_DMA_BASE DMA0
 #define RTE_SPI2_DMA_LINK_DMA_BASE DMA0
 #define RTE_SPI2_DMA_LINK_CH 2
+
+/* ENET configuration. */
+#define RTE_ENET 1
+#define RTE_ENET_PHY_ADDRESS 0
+#define RTE_ENET_MII 0
+#define RTE_ENET_RMII 1
 
 #endif /* __RTE_DEVICE_H */

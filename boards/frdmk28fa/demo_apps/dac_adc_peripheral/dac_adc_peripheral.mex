@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding= "UTF-8" ?>
-<configuration name="MK28FN2M0Axxx15" version="1.6" xsi:schemaLocation="http://mcuxpresso.nxp.com/XSD/mex_configuration_1.6 http://mcuxpresso.nxp.com/XSD/mex_configuration_1.6.xsd" uuid="c962dea3-9688-4132-82b9-3edcbc2c0f7f" xmlns="http://mcuxpresso.nxp.com/XSD/mex_configuration_1.6" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<configuration name="MK28FN2M0Axxx15" version="1.6" xsi:schemaLocation="http://mcuxpresso.nxp.com/XSD/mex_configuration_1.7 http://mcuxpresso.nxp.com/XSD/mex_configuration_1.7.xsd" uuid="c8181f1a-9fc5-4c1f-9bb3-4cd4fb81842f" xmlns="http://mcuxpresso.nxp.com/XSD/mex_configuration_1.7" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
    <common>
       <processor>MK28FN2M0Axxx15</processor>
       <package>MK28FN2M0AVMI15</package>
@@ -8,7 +8,6 @@
       <cores selected="core0">
          <core name="Cortex-M4F" id="core0" description="M4 core"/>
       </cores>
-      <description>Configuration imported from C:\Users\mcu-sdk-2.0\boards\frdmk28fa\demo_apps\dac_adc_peripheral\iar</description>
    </common>
    <preferences>
       <validate_boot_init_only>true</validate_boot_init_only>
@@ -16,9 +15,9 @@
       <generate_code_modified_registers_only>false</generate_code_modified_registers_only>
    </preferences>
    <tools>
-      <pins name="Pins" version="6.0" enabled="true" update_project_code="true">
+      <pins name="Pins" version="7.0" enabled="true" update_project_code="true">
          <pins_profile>
-            <processor_version>6.0.1</processor_version>
+            <processor_version>0.7.4</processor_version>
          </pins_profile>
          <functions_list>
             <function name="BOARD_InitPins">
@@ -45,6 +44,11 @@
                         <data>true</data>
                      </feature>
                   </dependency>
+                  <dependency resourceType="Peripheral" resourceId="TPIU" description="Peripheral TPIU is not initialized" problem_level="1" source="Pins:BOARD_InitPins">
+                     <feature name="initialized" evaluation="equal">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
                   <dependency resourceType="SWComponent" resourceId="platform.drivers.common" description="Pins initialization requires the COMMON Driver in the project." problem_level="2" source="Pins:BOARD_InitPins">
                      <feature name="enabled" evaluation="equal" configuration="core0">
                         <data>true</data>
@@ -61,13 +65,19 @@
                   <pin peripheral="LPUART0" signal="TX" pin_num="B7" pin_signal="PTC24/LPUART0_TX/FB_A5/SDRAM_D5/QSPI0A_DATA3"/>
                   <pin peripheral="DAC0" signal="OUT" pin_num="M4" pin_signal="DAC0_OUT/CMP1_IN3/ADC0_SE23"/>
                   <pin peripheral="ADC0" signal="SE, 23" pin_num="M4" pin_signal="DAC0_OUT/CMP1_IN3/ADC0_SE23"/>
+                  <pin peripheral="TPIU" signal="SWO" pin_num="M9" pin_signal="PTA2/LPUART0_TX/FTM0_CH7/I2C3_SCL/FXIO0_D12/JTAG_TDO/TRACE_SWO">
+                     <pin_features>
+                        <pin_feature name="pull_select" value="down"/>
+                        <pin_feature name="pull_enable" value="disable"/>
+                     </pin_features>
+                  </pin>
                </pins>
             </function>
          </functions_list>
       </pins>
-      <clocks name="Clocks" version="6.0" enabled="true" update_project_code="true">
+      <clocks name="Clocks" version="7.0" enabled="true" update_project_code="true">
          <clocks_profile>
-            <processor_version>6.0.1</processor_version>
+            <processor_version>0.7.4</processor_version>
          </clocks_profile>
          <clock_configurations>
             <clock_configuration name="BOARD_BootClockRUN">
@@ -265,55 +275,55 @@
          </dcdx_profile>
          <dcdx_configurations/>
       </dcdx>
-      <periphs name="Peripherals" version="6.0" enabled="true" update_project_code="true">
+      <periphs name="Peripherals" version="7.0" enabled="true" update_project_code="true">
          <dependencies>
-            <dependency resourceType="SWComponent" resourceId="platform.drivers.adc16" description="ADC16 Driver not found in the toolchain/IDE project." problem_level="2" source="Peripherals">
+            <dependency resourceType="SWComponent" resourceId="platform.drivers.adc16" description="ADC16 Driver not found in the toolchain/IDE project. Project will not compile!" problem_level="2" source="Peripherals">
                <feature name="enabled" evaluation="equal">
                   <data type="Boolean">true</data>
                </feature>
             </dependency>
-            <dependency resourceType="SWComponent" resourceId="platform.drivers.adc16" description="Unsupported version of the ADC16 Driver in the toolchain/IDE project. Required: ${required_value}, actual: ${actual_value}." problem_level="1" source="Peripherals">
+            <dependency resourceType="SWComponent" resourceId="platform.drivers.adc16" description="Unsupported version of the ADC16 Driver in the toolchain/IDE project. Required: ${required_value}, actual: ${actual_value}. Project might not compile correctly." problem_level="1" source="Peripherals">
                <feature name="version" evaluation="equivalent">
                   <data type="Version">2.0.0</data>
                </feature>
             </dependency>
-            <dependency resourceType="SWComponent" resourceId="platform.drivers.dac" description="DAC Driver not found in the toolchain/IDE project." problem_level="2" source="Peripherals">
+            <dependency resourceType="SWComponent" resourceId="platform.drivers.dac" description="DAC Driver not found in the toolchain/IDE project. Project will not compile!" problem_level="2" source="Peripherals">
                <feature name="enabled" evaluation="equal">
                   <data type="Boolean">true</data>
                </feature>
             </dependency>
-            <dependency resourceType="SWComponent" resourceId="platform.drivers.dac" description="Unsupported version of the DAC Driver in the toolchain/IDE project. Required: ${required_value}, actual: ${actual_value}." problem_level="1" source="Peripherals">
+            <dependency resourceType="SWComponent" resourceId="platform.drivers.dac" description="Unsupported version of the DAC Driver in the toolchain/IDE project. Required: ${required_value}, actual: ${actual_value}. Project might not compile correctly." problem_level="1" source="Peripherals">
                <feature name="version" evaluation="equivalent">
                   <data type="Version">2.0.1</data>
                </feature>
             </dependency>
          </dependencies>
          <peripherals_profile>
-            <processor_version>6.0.1</processor_version>
+            <processor_version>0.7.4</processor_version>
          </peripherals_profile>
          <functional_groups>
-            <functional_group name="BOARD_InitPeripherals" uuid="e1931d26-09f7-4c7e-b297-3b234093a4c0" called_from_default_init="true" id_prefix="BOARD_" core="core0">
+            <functional_group name="BOARD_InitPeripherals" uuid="5f1c5559-1c86-41ba-ba4b-b9a86b534f7c" called_from_default_init="true" id_prefix="BOARD_" core="core0">
                <description></description>
                <options/>
                <dependencies>
-                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="ADC0.adc_se.23" description="Signal SE of the channel 23 of the peripheral ADC0 is not routed." problem_level="1" source="Peripherals:BOARD_InitPeripherals">
+                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="ADC0.adc_se.23" description="Signal SE of the channel 23 of the peripheral ADC0 is not routed. Problem must be resolved in another tool." problem_level="1" source="Peripherals:BOARD_InitPeripherals">
                      <feature name="routed" evaluation="">
                         <data type="Boolean">true</data>
                      </feature>
                   </dependency>
-                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="DAC0.dac_ref_2" description="DACREF_2 signal not routed for DAC0" problem_level="1" source="Peripherals:BOARD_InitPeripherals">
+                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="DAC0.dac_ref_2" description="DACREF_2 signal not routed for DAC0 Problem must be resolved in another tool." problem_level="1" source="Peripherals:BOARD_InitPeripherals">
                      <feature name="routed" evaluation="">
                         <data type="Boolean">true</data>
                      </feature>
                   </dependency>
-                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="DAC0.dac_out" description="Output signal not routed for DAC0" problem_level="1" source="Peripherals:BOARD_InitPeripherals">
+                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="DAC0.dac_out" description="Output signal not routed for DAC0 Problem must be resolved in another tool." problem_level="1" source="Peripherals:BOARD_InitPeripherals">
                      <feature name="routed" evaluation="equal">
                         <data type="Boolean">true</data>
                      </feature>
                   </dependency>
                </dependencies>
                <instances>
-                  <instance name="ADC16" type="adc16" type_id="adc16_7d827be2dc433dc756d94a7ce88cbcc5" mode="ADC" peripheral="ADC0" enabled="true">
+                  <instance name="ADC16" uuid="33028081-1c6a-4ec3-af40-8a9c9c86f272" type="adc16" type_id="adc16_7d827be2dc433dc756d94a7ce88cbcc5" mode="ADC" peripheral="ADC0" enabled="true" comment="" custom_name_enabled="true">
                      <config_set name="fsl_adc16">
                         <struct name="adc16_config">
                            <setting name="referenceVoltageSource" value="kADC16_ReferenceVoltageSourceVref"/>
@@ -354,7 +364,7 @@
                         </array>
                      </config_set>
                   </instance>
-                  <instance name="DAC" type="dac" type_id="dac_a54f338a6fa6fd273bc89d61f5a3b85e" mode="basic" peripheral="DAC0" enabled="true">
+                  <instance name="DAC" uuid="3df57b9f-5c1d-426f-a7e6-7b348a071a84" type="dac" type_id="dac_a54f338a6fa6fd273bc89d61f5a3b85e" mode="basic" peripheral="DAC0" enabled="true" comment="" custom_name_enabled="true">
                      <config_set name="fsl_dac" quick_selection="QS_DAC_1">
                         <struct name="dac_config">
                            <setting name="referenceVoltageSource" value="kDAC_ReferenceVoltageSourceVref2"/>
@@ -368,10 +378,10 @@
             </functional_group>
          </functional_groups>
          <components>
-            <component name="system" type_id="system">
+            <component name="system" uuid="871d8819-a83d-4336-a6ee-28946cdf3049" type_id="system">
                <config_set_global name="global_system_definitions"/>
             </component>
-            <component name="msg" type_id="msg_6e2baaf3b97dbeef01c0043275f9a0e7">
+            <component name="msg" uuid="60b80d4a-7d79-410a-953e-d9b069dfedce" type_id="msg_6e2baaf3b97dbeef01c0043275f9a0e7">
                <config_set_global name="global_messages"/>
             </component>
          </components>

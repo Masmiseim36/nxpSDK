@@ -37,7 +37,6 @@
 /*! @brief Request code to set protocol of HID class. */
 #define USB_DEVICE_HID_REQUEST_SET_PROTOCOL (0x0BU)
 
-
 /*! @brief Available common EVENT types in HID class callback */
 typedef enum _usb_device_hid_event
 {
@@ -94,8 +93,8 @@ typedef struct _usb_device_hid_struct
     usb_device_interface_struct_t *interfaceHandle; /*!< Current interface handle */
     uint8_t *interruptInPipeDataBuffer;             /*!< IN pipe data buffer backup when stall */
     uint32_t interruptInPipeDataLen;                /*!< IN pipe data length backup when stall  */
-    uint8_t *interruptOutPipeDataBuffer;             /*!< OUT pipe data buffer backup when stall */
-    uint32_t interruptOutPipeDataLen;                /*!< OUT pipe data length backup when stall  */
+    uint8_t *interruptOutPipeDataBuffer;            /*!< OUT pipe data buffer backup when stall */
+    uint32_t interruptOutPipeDataLen;               /*!< OUT pipe data length backup when stall  */
     uint8_t configuration;                          /*!< Current configuration */
     uint8_t interfaceNumber;                        /*!< The interface number of the class */
     uint8_t alternate;                              /*!< Current alternate setting of the interface */
@@ -103,8 +102,8 @@ typedef struct _usb_device_hid_struct
     uint8_t protocol;                               /*!< Current protocol */
     uint8_t interruptInPipeBusy;                    /*!< Interrupt IN pipe busy flag */
     uint8_t interruptOutPipeBusy;                   /*!< Interrupt OUT pipe busy flag */
-    uint8_t interruptInPipeStall;                    /*!< Interrupt IN pipe stall flag */
-    uint8_t interruptOutPipeStall;                   /*!< Interrupt OUT pipe stall flag */
+    uint8_t interruptInPipeStall;                   /*!< Interrupt IN pipe stall flag */
+    uint8_t interruptOutPipeStall;                  /*!< Interrupt OUT pipe stall flag */
 } usb_device_hid_struct_t;
 
 /*******************************************************************************
@@ -176,7 +175,7 @@ extern usb_status_t USB_DeviceHidEvent(void *handle, uint32_t event, void *param
  * @return A USB error code or kStatus_USB_Success.
  *
  * @note The function can only be called in the same context.
- * 
+ *
  * @note The return value indicates whether the sending request is successful or not. The transfer done is notified by
  * usb_device_hid_interrupt_in.
  * Currently, only one transfer request can be supported for one specific endpoint.
@@ -201,7 +200,7 @@ extern usb_status_t USB_DeviceHidSend(class_handle_t handle, uint8_t ep, uint8_t
  *
  * @return A USB error code or kStatus_USB_Success.
  *
- * @note The function can only be called in the same context. 
+ * @note The function can only be called in the same context.
  *
  * @note The return value indicates whether the receiving request is successful or not. The transfer done is notified by
  * usb_device_hid_interrupt_out.

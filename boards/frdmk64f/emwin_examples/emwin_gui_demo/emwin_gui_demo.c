@@ -45,10 +45,10 @@
 #define GUI_SCALE_FACTOR_Y GUI_SCALE_FACTOR
 #endif
 
-#define GUI_SCALE(a) ((int)((a) * (GUI_SCALE_FACTOR)))
-#define GUI_SCALE_X(x) ((int)((x) * (GUI_SCALE_FACTOR_X)))
-#define GUI_SCALE_Y(y) ((int)((y) * (GUI_SCALE_FACTOR_Y)))
-#define GUI_SCALE_COORDS(x, y) GUI_SCALE_X(x), GUI_SCALE_Y(y)
+#define GUI_SCALE(a)                   ((int)((a) * (GUI_SCALE_FACTOR)))
+#define GUI_SCALE_X(x)                 ((int)((x) * (GUI_SCALE_FACTOR_X)))
+#define GUI_SCALE_Y(y)                 ((int)((y) * (GUI_SCALE_FACTOR_Y)))
+#define GUI_SCALE_COORDS(x, y)         GUI_SCALE_X(x), GUI_SCALE_Y(y)
 #define GUI_SCALE_RECT(x0, y0, xs, ys) GUI_SCALE_X(x0), GUI_SCALE_Y(y0), GUI_SCALE_X(xs), GUI_SCALE_Y(ys)
 
 #define GUI_ID_DRAWAREA (GUI_ID_USER + 0)
@@ -242,8 +242,8 @@ static void cbPageWin2(WM_MESSAGE *pMsg)
  */
 int main(void)
 {
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
 
     PRINTF("GUI demo start.\r\n");

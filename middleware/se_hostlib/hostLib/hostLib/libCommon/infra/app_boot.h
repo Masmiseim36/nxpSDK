@@ -101,4 +101,3 @@ extern int app_boot_Connect(
  * @parm[in] status 1 => Pass. 0 ==> Failed.
  */
 extern void app_test_status(U8 result);
-

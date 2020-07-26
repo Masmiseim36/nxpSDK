@@ -12,7 +12,7 @@
 #include "FreeRTOS.h"
 
 #define sslsrv_mem_alloc(x) pvPortMalloc(x)
-#define sslsrv_mem_free(x) vPortFree(x)
+#define sslsrv_mem_free(x)  vPortFree(x)
 
 /* Function used by mbedtls to send data */
 int sslsrv_mbedtls_send(void *ctx, unsigned char const *buf, size_t len);

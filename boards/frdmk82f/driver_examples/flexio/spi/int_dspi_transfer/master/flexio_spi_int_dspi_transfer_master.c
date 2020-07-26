@@ -16,16 +16,16 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define BOARD_FLEXIO_BASE FLEXIO0
-#define FLEXIO_SPI_SOUT_PIN 4U
-#define FLEXIO_SPI_SIN_PIN 5U
-#define FLEXIO_SPI_CLK_PIN 3U
-#define FLEXIO_SPI_PCS_PIN 2U
+#define BOARD_FLEXIO_BASE      FLEXIO0
+#define FLEXIO_SPI_SOUT_PIN    4U
+#define FLEXIO_SPI_SIN_PIN     5U
+#define FLEXIO_SPI_CLK_PIN     3U
+#define FLEXIO_SPI_PCS_PIN     2U
 #define FLEXIO_CLOCK_FREQUENCY CLOCK_GetFreq(kCLOCK_PllFllSelClk)
-#define BOARD_DSPI_SLAVE_BASE SPI0
-#define SLAVE_SPI_IRQ SPI0_IRQn
-#define MASTER_SPI_IRQ FLEXIO0_IRQn
-#define TRANSFER_SIZE 256U        /*! Transfer dataSize */
+#define BOARD_DSPI_SLAVE_BASE  SPI0
+#define SLAVE_SPI_IRQ          SPI0_IRQn
+#define MASTER_SPI_IRQ         FLEXIO0_IRQn
+#define TRANSFER_SIZE     256U    /*! Transfer dataSize */
 #define TRANSFER_BAUDRATE 500000U /*! Transfer baudrate - 500k */
 
 /*******************************************************************************

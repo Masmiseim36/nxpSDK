@@ -30,9 +30,9 @@
 /*******************************************************************************
  * Macros
  ******************************************************************************/
-#define SAMPLING_RATE_ms (100)                /* Timeout for the ODR Timer. */
-#define MMA9553_ACCEL_DATA_SIZE (6)           /* 2 byte X,Y,Z Axis Data each. */
-#define mma9553_en_callback LPTMR0_IRQHandler /* Timer timeout Callback. */
+#define SAMPLING_RATE_ms        (100)             /* Timeout for the ODR Timer. */
+#define MMA9553_ACCEL_DATA_SIZE (6)               /* 2 byte X,Y,Z Axis Data each. */
+#define mma9553_en_callback     LPTMR0_IRQHandler /* Timer timeout Callback. */
 
 /*******************************************************************************
  * Constants

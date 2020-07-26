@@ -6,17 +6,17 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "bootloader/bootloader.h"
+#include "bootloader.h"
 #if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
 #if !BL_DEVICE_IS_LPC_SERIES
 #include "fsl_flash.h"
-#include "memory/src/flash_memory.h"
+#include "flash_memory.h"
 #if BL_FEATURE_SUPPORT_DFLASH
-#include "memory/src/flexNVM_memory.h"
+#include "flexNVM_memory.h"
 #endif // BL_FEATURE_SUPPORT_DFLASH
 #else
-#include "flashiap_wrapper/fsl_flashiap_wrapper.h"
-#include "memory/src/flashiap_memory.h"
+#include "fsl_iap.h"
+#include "flash_c040hd_memory.h"
 #endif
 #endif // #if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
 #if BL_FEATURE_ENCRYPTION
@@ -34,10 +34,7 @@
 #if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
 #if !BL_DEVICE_IS_LPC_SERIES
 const flash_driver_interface_t g_flashDriverInterface = {
-    .version = {.name = kFLASH_DriverVersionName,
-                .major = kFLASH_DriverVersionMajor,
-                .minor = kFLASH_DriverVersionMinor,
-                .bugfix = kFLASH_DriverVersionBugfix },
+    {.version = FSL_FLASH_DRIVER_VERSION},
     .flash_init = FLASH_Init,
     .flash_erase_all = FLASH_EraseAll,
 #if BL_FEATURE_ERASEALL_UNSECURE
@@ -66,7 +63,9 @@ const flash_driver_interface_t g_flashDriverInterface = {
     .flash_read_once = NULL,
     .flash_read_resource = NULL,
 #endif
+#if defined(FSL_FEATURE_FLASH_HAS_ACCESS_CONTROL) && FSL_FEATURE_FLASH_HAS_ACCESS_CONTROL
     .flash_is_execute_only = FLASH_IsExecuteOnly,
+#endif
 #if BL_FEATURE_FAC_ERASE
     .flash_erase_all_execute_only_segments = FLASH_EraseAllExecuteOnlySegments,
     .flash_verify_erase_all_execute_only_segments = FLASH_VerifyEraseAllExecuteOnlySegments,
@@ -88,20 +87,18 @@ const flash_driver_interface_t g_flashDriverInterface = {
 };
 #else // BL_DEVICE_IS_LPC_SERIES
 const flashiap_driver_interface_t g_flashDriverInterface = {
-    .version = {.name = kFLASHIAP_DriverVersionName,
-                .major = kFLASHIAP_DriverVersionMajor,
-                .minor = kFLASHIAP_DriverVersionMinor,
-                .bugfix = kFLASHIAP_DriverVersionBugfix },
-    .flash_init = FLASHIAP_Init,
-    .flash_erase = FLASHIAP_Erase,
-    .flash_program = FLASHIAP_Program,
-    .flash_verify_erase = FLASHIAP_VerifyErase,
-    .flash_verify_program = FLASHIAP_VerifyProgram,
-    .flash_get_property = FLASHIAP_GetProperty,
+    .version = {.name = kFLASH_DriverVersionName,
+                .major = kFLASH_DriverVersionMajor,
+                .minor = kFLASH_DriverVersionMinor,
+                .bugfix = kFLASH_DriverVersionBugfix },
+    .flash_init = FLASH_Init,
+    .flash_erase = FLASH_Erase,
+    .flash_program = FLASH_Program,
+    .flash_verify_erase = FLASH_VerifyErase,
+    .flash_verify_program = FLASH_VerifyProgram,
+    .flash_get_property = FLASH_GetProperty,
 #if BL_FEATURE_BYPASS_WATCHDOG
-    .flash_register_callback = FLASHIAP_SetCallback,
-#else
-    .flash_register_callback = NULL,
+    .flash_register_callback = FLASH_SetCallback,
 #endif
 };
 #endif // !BL_DEVICE_IS_LPC_SERIES
@@ -173,7 +170,7 @@ const aes_driver_interface_t g_aesInterface = {
 #endif
 
 //! @brief Copyright string for the bootloader.
-const char bootloaderCopyright[] = "Copyright (c) 2013-2016 Freescale Semiconductor, Inc.\r\nCopyright 2016-2019 NXP\r\nAll rights reserved.";
+const char bootloaderCopyright[] = "Copyright (c) 2013-2016 Freescale Semiconductor, Inc. All rights reserved.";
 
 //! @brief Static API tree.
 const bootloader_tree_t g_bootloaderTree = {.runBootloader = bootloader_user_entry,

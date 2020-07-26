@@ -317,8 +317,8 @@ static void stack_init(void *arg)
  */
 int main(void)
 {
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
 #if ((defined FSL_FEATURE_SOC_SYSMPU_COUNT) && (FSL_FEATURE_SOC_SYSMPU_COUNT))
     SYSMPU_Enable(SYSMPU, 0);

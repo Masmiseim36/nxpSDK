@@ -226,8 +226,8 @@ int main(void)
 {
     BaseType_t result;
 
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
 
     result =

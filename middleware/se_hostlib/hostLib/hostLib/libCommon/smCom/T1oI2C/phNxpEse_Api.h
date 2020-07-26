@@ -1,5 +1,5 @@
 /*
- * Copyright 2012-2014,2018-2019 NXP
+ * Copyright 2012-2014,2018-2020 NXP
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -52,20 +52,20 @@ typedef struct phNxpEse_initParams
 } phNxpEse_initParams;
 
 
-ESESTATUS phNxpEse_init(phNxpEse_initParams initParams, phNxpEse_data *AtrRsp);
-ESESTATUS phNxpEse_open(phNxpEse_initParams initParams);
-ESESTATUS phNxpEse_Transceive(phNxpEse_data *pCmd, phNxpEse_data *pRsp);
-ESESTATUS phNxpEse_deInit(void);
-ESESTATUS phNxpEse_close(void);
-ESESTATUS phNxpEse_reset(void);
-ESESTATUS phNxpEse_chipReset(void);
+ESESTATUS phNxpEse_init(void *conn_ctx, phNxpEse_initParams initParams, phNxpEse_data *AtrRsp);
+ESESTATUS phNxpEse_open(void **conn_ctx, phNxpEse_initParams initParams, const char *pConnString);
+ESESTATUS phNxpEse_Transceive(void* conn_ctx, phNxpEse_data *pCmd, phNxpEse_data *pRsp);
+ESESTATUS phNxpEse_deInit(void* conn_ctx);
+ESESTATUS phNxpEse_close(void* conn_ctx);
+ESESTATUS phNxpEse_reset(void* conn_ctx);
+ESESTATUS phNxpEse_chipReset(void* conn_ctx);
 ESESTATUS phNxpEse_setIfsc(uint16_t IFSC_Size);
-ESESTATUS phNxpEse_EndOfApdu(void);
+ESESTATUS phNxpEse_EndOfApdu(void* conn_ctx);
 void* phNxpEse_memset(void *buff, int val, size_t len);
 void* phNxpEse_memcpy(void *dest, const void *src, size_t len);
 void *phNxpEse_memalloc(uint32_t size);
 void phNxpEse_free(void* ptr);
-ESESTATUS phNxpEse_getAtr(phNxpEse_data *pRsp);
-ESESTATUS phNxpEse_getCip(phNxpEse_data *pRsp);
+ESESTATUS phNxpEse_getAtr(void* conn_ctx, phNxpEse_data *pRsp);
+ESESTATUS phNxpEse_getCip(void* conn_ctx, phNxpEse_data *pRsp);
 /** @} */
 #endif /* _PHNXPESE_API_H_ */

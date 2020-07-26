@@ -1,28 +1,27 @@
 /*
  * Copyright (c) 2013-2015 Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "bootloader/bl_context.h"
-#include "bootloader/bootloader.h"
+#include "bl_context.h"
+#include "bootloader.h"
 #include "bootloader_common.h"
 #include "fsl_device_registers.h"
 #include "bootloader_core.h"
-#include "sbloader/sbloader.h"
-#include "sbloader/sb_file_format.h"
-#include "utilities/fsl_rtos_abstraction.h"
+#include "sbloader.h"
+#include "sb_file_format.h"
+#include "fsl_rtos_abstraction.h"
 #include <string.h>
-#include "property/property.h"
+#include "property.h"
 
 #include "usb_device_config.h"
 #include "usb.h"
 #include "usb_device.h"
 
 #include "usb_device_class.h"
-#include "usb_device_msc.h"
 #include "usb_device_hid.h"
 #include "usb_device_ch9.h"
 #include "usb_descriptor.h"

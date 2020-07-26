@@ -181,8 +181,6 @@ static usb_status_t USB_DeviceHidEndpointsInit(usb_device_hid_struct_t *hidHandl
     usb_device_interface_list_t *interfaceList;
     usb_device_interface_struct_t *interface = (usb_device_interface_struct_t *)NULL;
     usb_status_t error                       = kStatus_USB_Error;
-    int count;
-    int index;
 
     /* Check the configuration is valid or not. */
     if (!hidHandle->configuration)
@@ -203,11 +201,11 @@ static usb_status_t USB_DeviceHidEndpointsInit(usb_device_hid_struct_t *hidHandl
     interfaceList = &hidHandle->configStruct->classInfomation->interfaceList[hidHandle->configuration - 1U];
 
     /* Find interface by using the alternate setting of the interface. */
-    for (count = 0U; count < interfaceList->count; count++)
+    for (int count = 0U; count < interfaceList->count; count++)
     {
         if (USB_DEVICE_CONFIG_HID_CLASS_CODE == interfaceList->interfaces[count].classCode)
         {
-            for (index = 0U; index < interfaceList->interfaces[count].count; index++)
+            for (int index = 0U; index < interfaceList->interfaces[count].count; index++)
             {
                 if (interfaceList->interfaces[count].interface[index].alternateSetting == hidHandle->alternate)
                 {
@@ -229,7 +227,7 @@ static usb_status_t USB_DeviceHidEndpointsInit(usb_device_hid_struct_t *hidHandl
     hidHandle->interfaceHandle = interface;
 
     /* Initialize the endpoints of the new interface. */
-    for (count = 0U; count < interface->endpointList.count; count++)
+    for (int count = 0U; count < interface->endpointList.count; count++)
     {
         usb_device_endpoint_init_struct_t epInitStruct;
         usb_device_endpoint_callback_struct_t epCallback;
@@ -274,14 +272,13 @@ static usb_status_t USB_DeviceHidEndpointsInit(usb_device_hid_struct_t *hidHandl
 static usb_status_t USB_DeviceHidEndpointsDeinit(usb_device_hid_struct_t *hidHandle)
 {
     usb_status_t error = kStatus_USB_Error;
-    int count;
-    
+
     if (!hidHandle->interfaceHandle)
     {
         return error;
     }
     /* De-initialize all endpoints of the interface */
-    for (count = 0U; count < hidHandle->interfaceHandle->endpointList.count; count++)
+    for (int count = 0U; count < hidHandle->interfaceHandle->endpointList.count; count++)
     {
         error = USB_DeviceDeinitEndpoint(hidHandle->handle,
                                          hidHandle->interfaceHandle->endpointList.endpoint[count].endpointAddress);
@@ -310,7 +307,6 @@ usb_status_t USB_DeviceHidEvent(void *handle, uint32_t event, void *param)
     usb_device_hid_report_struct_t report;
     usb_status_t error = kStatus_USB_Error;
     uint16_t interfaceAlternate;
-    int count;
     uint8_t *temp8;
     uint8_t alternate;
 
@@ -389,7 +385,7 @@ usb_status_t USB_DeviceHidEvent(void *handle, uint32_t event, void *param)
             }
             /* Get the endpoint address */
             temp8 = ((uint8_t *)param);
-            for (count = 0U; count < hidHandle->interfaceHandle->endpointList.count; count++)
+            for (int count = 0U; count < hidHandle->interfaceHandle->endpointList.count; count++)
             {
                 if (*temp8 == hidHandle->interfaceHandle->endpointList.endpoint[count].endpointAddress)
                 {
@@ -415,7 +411,7 @@ usb_status_t USB_DeviceHidEvent(void *handle, uint32_t event, void *param)
             }
             /* Get the endpoint address */
             temp8 = ((uint8_t *)param);
-            for (count = 0U; count < hidHandle->interfaceHandle->endpointList.count; count++)
+            for (int count = 0U; count < hidHandle->interfaceHandle->endpointList.count; count++)
             {
                 if (*temp8 == hidHandle->interfaceHandle->endpointList.endpoint[count].endpointAddress)
                 {

@@ -37,19 +37,11 @@
 #define UFI_WRITE_VERIFY (0x2EU)
 
 #define GET_BYTE_FROM_LE_LONG(b, n) \
-    ((uint8_t)((USB_LONG_TO_LITTLE_ENDIAN(b)) >> (n * 8))) /* get the byte from the long value */
+    ((uint8_t)((USB_LONG_TO_LITTLE_ENDIAN(b)) >> ((n)*8))) /* get the byte from the long value */
 
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-
-extern usb_status_t USB_HostMsdCommand(usb_host_class_handle classHandle,
-                                       uint8_t *buffer,
-                                       uint32_t bufferLength,
-                                       transfer_callback_t callbackFn,
-                                       void *callbackParam,
-                                       uint8_t direction,
-                                       uint8_t byteValues[10]);
 
 /*******************************************************************************
  * Variables
@@ -242,11 +234,17 @@ usb_status_t USB_HostMsdModeSense(usb_host_class_handle classHandle,
                                   transfer_callback_t callbackFn,
                                   void *callbackParam)
 {
-    uint8_t ufiBytes[] = {UFI_MODE_SENSE, (uint8_t)(logicalUnit << USB_HOST_UFI_LOGICAL_UNIT_POSITION),
+    uint8_t ufiBytes[] = {UFI_MODE_SENSE,
+                          (uint8_t)(logicalUnit << USB_HOST_UFI_LOGICAL_UNIT_POSITION),
                           (uint8_t)(((uint32_t)pageCode << USB_HOST_UFI_MODE_SENSE_PAGE_CONTROL_SHIFT) |
                                     ((uint32_t)pageCode << USB_HOST_UFI_MODE_SENSE_PAGE_CODE_SHIFT)),
-                          0x00, 0x00, 0x00, 0x00, GET_BYTE_FROM_LE_LONG(bufferLength, 1),
-                          GET_BYTE_FROM_LE_LONG(bufferLength, 0), 0x00};
+                          0x00,
+                          0x00,
+                          0x00,
+                          0x00,
+                          GET_BYTE_FROM_LE_LONG(bufferLength, 1),
+                          GET_BYTE_FROM_LE_LONG(bufferLength, 0),
+                          0x00};
     return USB_HostMsdCommand(classHandle, buffer, bufferLength, callbackFn, callbackParam,
                               USB_HOST_MSD_CBW_FLAGS_DIRECTION_IN, ufiBytes);
 }
@@ -366,10 +364,17 @@ usb_status_t USB_HostMsdStartStopUnit(usb_host_class_handle classHandle,
                                       transfer_callback_t callbackFn,
                                       void *callbackParam)
 {
-    uint8_t ufiBytes[] = {UFI_START_STOP, (uint8_t)(logicalUnit << USB_HOST_UFI_LOGICAL_UNIT_POSITION), 0x00, 0x00,
+    uint8_t ufiBytes[] = {UFI_START_STOP,
+                          (uint8_t)(logicalUnit << USB_HOST_UFI_LOGICAL_UNIT_POSITION),
+                          0x00,
+                          0x00,
                           (uint8_t)(((uint32_t)loadEject << USB_HOST_UFI_START_STOP_UNIT_LOEJ_SHIFT) |
                                     ((uint32_t)start << USB_HOST_UFI_START_STOP_UNIT_START_SHIFT)),
-                          0x00, 0x00, 0x00, 0x00, 0x00};
+                          0x00,
+                          0x00,
+                          0x00,
+                          0x00,
+                          0x00};
     return USB_HostMsdCommand(classHandle, NULL, 0, callbackFn, callbackParam, USB_HOST_MSD_CBW_FLAGS_DIRECTION_OUT,
                               ufiBytes);
 }
@@ -443,7 +448,14 @@ usb_status_t USB_HostMsdSendDiagnostic(usb_host_class_handle classHandle,
     uint8_t ufiBytes[] = {UFI_REZERO_UINT,
                           (uint8_t)(((uint32_t)logicalUnit << USB_HOST_UFI_LOGICAL_UNIT_POSITION) |
                                     ((uint32_t)selfTest << USB_HOST_UFI_SEND_DIAGNOSTIC_SELF_TEST_SHIFT)),
-                          0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+                          0x00,
+                          0x00,
+                          0x00,
+                          0x00,
+                          0x00,
+                          0x00,
+                          0x00,
+                          0x00};
     return USB_HostMsdCommand(classHandle, NULL, 0, callbackFn, callbackParam, USB_HOST_MSD_CBW_FLAGS_DIRECTION_OUT,
                               ufiBytes);
 }

@@ -67,15 +67,15 @@ Purpose : Global types etc & general purpose utility functions
 #include "Global.h" // Type definitions: U8, U16, U32, I8, I16, I32
 
 #if defined(__cplusplus)
-extern "C" {/* Make sure we have C-declarations in C++ programs */
+extern "C" { /* Make sure we have C-declarations in C++ programs */
 #endif
 
 /*********************************************************************
-*
-*       Keywords/specifiers
-*
-**********************************************************************
-*/
+ *
+ *       Keywords/specifiers
+ *
+ **********************************************************************
+ */
 
 #ifndef INLINE
 #ifdef _WIN32
@@ -101,22 +101,22 @@ extern "C" {/* Make sure we have C-declarations in C++ programs */
 #endif
 
 /*********************************************************************
-*
-*       Function-like macros
-*
-**********************************************************************
-*/
+ *
+ *       Function-like macros
+ *
+ **********************************************************************
+ */
 
 #define SEGGER_COUNTOF(a) (sizeof((a)) / sizeof((a)[0]))
 #define SEGGER_MIN(a, b) (((a) < (b)) ? (a) : (b))
 #define SEGGER_MAX(a, b) (((a) > (b)) ? (a) : (b))
 
 /*********************************************************************
-*
-*       Types
-*
-**********************************************************************
-*/
+ *
+ *       Types
+ *
+ **********************************************************************
+ */
 
 typedef struct
 {
@@ -135,11 +135,11 @@ typedef struct
 } SEGGER_CACHE_CONFIG;
 
 /*********************************************************************
-*
-*       Utility functions
-*
-**********************************************************************
-*/
+ *
+ *       Utility functions
+ *
+ **********************************************************************
+ */
 
 void SEGGER_ARM_memcpy(void *pDest, const void *pSrc, int NumBytes);
 void SEGGER_memcpy(void *pDest, const void *pSrc, int NumBytes);

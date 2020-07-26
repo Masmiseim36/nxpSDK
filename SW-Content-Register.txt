@@ -59,6 +59,17 @@ SDK_Components             Name: SDK components and board peripheral drivers
                            Location: components/                             
                            Origin: NXP (BSD-3-Clause)                        
 
+usb                        Name: USB                                         
+                           Version: 2.6.0                                    
+                           Outgoing License: BSD-3-Clause                    
+                           License File: COPYING-BSD-3                       
+                           Format: source code                               
+                           Description: NXP USB stack. This is a version of  
+                           the USB stack that has been integrated with the   
+                           MCUXpresso SDK.                                   
+                           Location: middleware/usb                          
+                           Origin: NXP (BSD-3-Clause)                        
+
 freertos                   Name: FreeRTOS                                    
                            Version: 202002.00.0                              
                            Outgoing License: MIT                             
@@ -121,6 +132,95 @@ cmsis_drivers              Name: SDK CMSIS Peripheral Drivers
                            Location: devices/<device>/cmsis_drivers          
                            Origin: NXP (Apache License 2.0)                  
 
+multicore                  Name: Multicore SDK                               
+                           Version: 2.8.0                                    
+                           Outgoing License: BSD-3-Clause                    
+                           License File: COPYING-BSD-3                       
+                           Format: source code                               
+                           Description: NXP Multicore Software Development   
+                           Kit.                                              
+                           Location: middleware/multicore                    
+                           Origin: NXP (BSD-3-Clause)                        
+
+segger_systemview          Name: Segger SystemView Demo                      
+                           Version: 2.40a                                    
+                           Outgoing License: BSD-3-Clause                    
+                           License File:                                     
+                           boards/<board>/rtos_examples/visualization/freerto
+                           s_segger_sysview/LICENSE                          
+                           Format: source code                               
+                           Description: Segger systemview demo               
+                           Location:                                         
+                           boards/<board>/rtos_examples/visualization/freerto
+                           s_segger_sysview                                  
+                           Origin: Segger (BSD-3-Clause)                     
+
+erpc                       Name: eRPC                                        
+                           Version: 1.7.4                                    
+                           Outgoing License: BSD-3-Clause                    
+                           License File: middleware/multicore/erpc/LICENSE   
+                           Format: source code                               
+                           Description: Embedded Remote Procedure Call       
+                           Location: middleware/multicore/erpc               
+                           Origin: NXP & community contributors              
+                           Url: https://github.com/EmbeddedRPC/erpc          
+
+the_bus_pirate             Name: The Bus Pirate                              
+                           Version: NA                                       
+                           Outgoing License: Open Source - CC0 (Public Domain
+                           Dedication License)                               
+                           License File:                                     
+                           http://code.google.com/p/the-bus-pirate/          
+                           Format: source code                               
+                           Description: OS independent serial interface      
+                           Location:                                         
+                           middleware/multicore/erpc/erpc_c/port/erpc_serial.
+                           h,                                                
+                           middleware/multicore/erpc/erpc_c/port/erpc_serial.
+                           cpp                                               
+                           Origin: Community                                 
+                           Url: http://code.google.com/p/the-bus-pirate/     
+
+cpp_template               Name: CPP Template                                
+                           Version: NA                                       
+                           Outgoing License: Open Source - MIT               
+                           License File:                                     
+                           middleware/multicore/erpc/erpcgen/src/cpptemplate/
+                           LICENSE.txt                                       
+                           Format: source code                               
+                           Description: CPP Template                         
+                           Location:                                         
+                           middleware/multicore/erpc/erpcgen/src/cpptemplate 
+                           Origin: Ryan Ginstrom & Martinho Fernandes        
+
+cpp_option_parser          Name: C++ option-parser                           
+                           Version: NA                                       
+                           Outgoing License: Brad Appleton's license         
+                           License File:                                     
+                           http://www.bradapp.com/ftp/src/libs/C++/Options.ta
+                           r.gz , see README file                            
+                           Format: Plain Text                                
+                           Description: C++ option-parser                    
+                           Location:                                         
+                           middleware/multicore/erpc/erpcgen/src/options.cpp 
+                           Origin: Brad Appleton bradapp@enteract.com        
+                           Url:                                              
+                           http://www.bradapp.com/ftp/src/libs/C++/Options.ht
+                           ml                                                
+
+emwin                      Name: emWin                                       
+                           Version: 6.1                                      
+                           Outgoing License: LA_OPT_NXP_Software_License     
+                           License File: LA_OPT_NXP_Software_License.txt     
+                           Format: Precompiled libraries, header files       
+                           Description: emWin graphics library               
+                           Location: middleware/emwin                        
+                           Origin: SEGGER Microcontroller Systems LLC        
+                           (Proprietary)                                     
+                           Url:                                              
+                           http://www.nxp.com/pages/emwin-graphics-library:EM
+                           WIN-GRAPHICS-LIBRARY                              
+
 freemaster                 Name: FreeMASTER                                  
                            Version: 3.0.2                                    
                            Outgoing License: LA_OPT_NXP_Software_License     
@@ -167,6 +267,18 @@ Utility Source - elf.py    Name: Bootloader Utility Source - elf.py
                            http://bazaar.launchpad.net/~zsquareplusc/python-m
                            sp430-tools/trunk/view/head:/msp430/memory/elf.py 
 
+littlevgl                  Name: LittlevGL                                   
+                           Version: 6.1.1                                    
+                           Outgoing License: MIT                             
+                           License File:                                     
+                           middleware/littlevgl/lvgl/LICENSE.txt             
+                           Format: source code                               
+                           Description: littlevgl graphics library           
+                           Location: middleware/littlevgl                    
+                           Origin: Gabor Kiss-Vamosi                         
+                           Url:                                              
+                           https://github.com/lvgl/lvgl/releases/tag/v6.1.1  
+
 mbedtls                    Name: Mbed TLS                                    
                            Version: 2.16.6                                   
                            Outgoing License: Apache-2.0                      
@@ -177,6 +289,137 @@ mbedtls                    Name: Mbed TLS
                            Origin: ARM(Apache-2.0) -                         
                            https://github.com/ARMmbed/mbedtls/releases/tag/mb
                            edtls-2.16.6                                      
+
+jsmn                       Name: JSMN                                        
+                           Version: NA                                       
+                           Outgoing License: MIT                             
+                           License File:                                     
+                           https://opensource.org/licenses/mit-license.php   
+                           Format: source code                               
+                           Description: JSMN (Jasmine) JSON parser.          
+                           Location: rtos/freertos/libraries/3rdparty/jsmn   
+                           Origin: Serge A. Zaitsev (MIT)                    
+                           Url: http://zserge.com/jsmn.html                  
+
+pkcs11                     Name: PKCS #11                                    
+                           Version: NA                                       
+                           Outgoing License: MIT (with RF on RAND patent     
+                           clauses                                           
+                           https://www.oasis-open.org/policies-guidelines/ipr
+                           #RF-on-RAND-Mode)                                 
+                           License File:                                     
+                           rtos/freertos/libraries/3rdparty/pkcs11/LICENSE.md
+                           Format: source code                               
+                           Description: PKCS #11 standard for cryptographic  
+                           tokens controlling authentication. Forked from    
+                           https://github.com/oasis-tcs/pkcs11               
+                           Location: rtos/freertos/libraries/3rdparty/pkcs11 
+                           Origin: OASIS PKCS 11 TC (MIT)                    
+                           Url: https://github.com/amazon-freertos/pkcs11    
+
+unity                      Name: unity                                       
+                           Version: NA                                       
+                           Outgoing License: MIT                             
+                           License File:                                     
+                           rtos/freertos/libraries/3rdparty/unity/LICENSE.txt
+                           Format: source code                               
+                           Description: Unity Project - A Test Framework for 
+                           C                                                 
+                           Location: rtos/freertos/libraries/3rdparty/unity  
+                           Origin: Mike Karlesky, Mark VanderVoord, Greg     
+                           Williams (MIT)                                    
+                           Url: https://github.com/ThrowTheSwitch/Unity      
+
+sdmmc                      Name: SD MMC SDIO Card middleware                 
+                           Version: 2.2.7                                    
+                           Outgoing License: BSC-3-Clause                    
+                           License File: COPYING-BSD-3                       
+                           Format: source code                               
+                           Description: A software component support SD card,
+                           eMMC card, SDIO card.                             
+                           Location: middleware/sdmmc                        
+                           Origin: NXP (BSD-3-Clause)                        
+
+lwip                       Name: lwIP TCP/IP Stack                           
+                           Version: lwIP git repository (2019-12-12, branch: 
+                           master, SHA-1:                                    
+                           555812dcec38c9a2ef1ef9b31816291549fbf9f8)         
+                           Outgoing License: BSD-3-Clause                    
+                           License File: middleware/lwip/COPYING             
+                           Format: source code                               
+                           Description: A light-weight TCP/IP stack          
+                           Location: middleware/lwip                         
+                           Origin: Swedish Institute of Computer Science     
+                           Url: http://savannah.nongnu.org/projects/lwip     
+
+gradle                     Name: Gradle                                      
+                           Version: 4.1                                      
+                           Outgoing License: Apache-2-Clause                 
+                           License File:                                     
+                           https://github.com/gradle/gradle/blob/master/LICEN
+                           SE                                                
+                           Format: binary library                            
+                           Description: Gradle build tool                    
+                           Location:                                         
+                           boards/<board>/aws_examples/remote_control_android
+                           /gradle,                                          
+                           boards/<board>/aws_examples/led_wifi_android/gradl
+                           e,                                                
+                           boards/<board>/aws_examples/device_configuration_a
+                           ndroid/gradle                                     
+                           Origin: Gradle Inc (Apache-2-Clause)              
+                           Url: https://github.com/gradle/gradle             
+
+AwsRemoteControl           Name: AWS Remote Control                          
+                           Version: 1.0                                      
+                           Outgoing License: Apache-2-Clause & BSD           
+                           License File:                                     
+                           http://www.apache.org/licenses/LICENSE-2.0,       
+                           COPYING-BSD-3                                     
+                           Format: binary                                    
+                           Description: AWS Remote Control example Android   
+                           application                                       
+                           Location:                                         
+                           boards/<board>/aws_examples/remote_control_android
+                           /AwsRemoteControl.apk                             
+                           Origin: Android Open Source Project & NXP         
+                           (Apache-2-Clause & BSD)                           
+
+AwsDeviceConfiguration     Name: AWS Device Configuration                    
+                           Version: 1.0                                      
+                           Outgoing License: Apache-2-Clause & BSD           
+                           License File:                                     
+                           http://www.apache.org/licenses/LICENSE-2.0,       
+                           COPYING-BSD-3                                     
+                           Format: binary                                    
+                           Description: AWS Device Configuration example     
+                           Android application                               
+                           Location:                                         
+                           boards/<board>/aws_examples/device_configuration_a
+                           ndroid/AwsDeviceConfiguration.apk                 
+                           Origin: Android Open Source Project & NXP         
+                           (Apache-2-Clause & BSD)                           
+
+TinyCBOR                   Name: TinyCBOR                                    
+                           Version: 0.5.2                                    
+                           Outgoing License: MIT                             
+                           License File:                                     
+                           rtos/freertos/libraries/3rdparty/tinycbor/LICENSE 
+                           Format: source code                               
+                           Description: TinyCBOR                             
+                           Location:                                         
+                           rtos/freertos/libraries/3rdparty/tinycbor         
+                           Origin: Intel Corporation (MIT)                   
+
+mflash                     Name: NXP's FLASH programming support library     
+                           Version: 1.0.0                                    
+                           Outgoing License: BSD-3-Clause                    
+                           License File: COPYING-BSD-3                       
+                           Format: source code, header files                 
+                           Description: NXP's FLASH programming support      
+                           library                                           
+                           Location: middleware/mflash                       
+                           Origin: NXP (BSD-3-Clause)                        
 
 mmcau                      Name: mmCAU S/W Library                           
                            Version: 2.0.1                                    
@@ -248,3 +491,88 @@ motor_control - JavaScript Name: motor_control
                            Description: Cross-platform JavaScript library.   
                            Location: middleware/motor_control/freemaster     
                            Origin: jQuery Foundation, Inc.                   
+
+Azure IoT                  Name: Azure IoT C SDK                             
+                           Version: 1.3.4                                    
+                           Outgoing License: MIT                             
+                           License File: middleware/azure_iot/LICENSE        
+                           Format: source code                               
+                           Description: Azure IoT C SDKs and Libraries       
+                           Location: middleware/azure_iot                    
+                           Origin: Microsoft Corporation (MIT) umqtt (MIT) - 
+                           https://github.com/Azure/azure-umqtt-c uamqp (MIT)
+                           - https://github.com/Azure/azure-uamqp-c umock-c  
+                           (MIT) - https://github.com/Azure/umock-c parson   
+                           (MIT) - https://github.com/kgabis/parson          
+                           azure-macro-utils-c (MIT) -                       
+                           https://github.com/Azure/azure-macro-utils-c      
+                           c-utility (MIT) -                                 
+                           https://github.com/Azure/azure-c-shared-utility   
+                           Url: https://github.com/Azure/azure-iot-sdk-c     
+
+Azure umqtt                Name: Azure MQTT                                  
+                           Version: 1.1.12                                   
+                           Outgoing License: MIT                             
+                           License File: middleware/azure_iot/umqtt/LICENSE  
+                           Format: source code                               
+                           Description: General purpose library for MQTT     
+                           Location: middleware/azure_iot/umqtt              
+                           Origin: Microsoft Corporation (MIT)               
+                           Url: https://github.com/Azure/azure-umqtt-c       
+
+Azure uamqp                Name: Azure AMQP                                  
+                           Version: 1.2.12                                   
+                           Outgoing License: MIT                             
+                           License File: middleware/azure_iot/uamqp/LICENSE  
+                           Format: source code                               
+                           Description: General purpose library for AMQP 1.0 
+                           Location: middleware/azure_iot/uamqp              
+                           Origin: Microsoft Corporation (MIT)               
+                           Url: https://github.com/Azure/azure-uamqp-c       
+
+Azure umock-c              Name: Azure mocking library                       
+                           Version: 1.1.0                                    
+                           Outgoing License: MIT                             
+                           License File:                                     
+                           middleware/azure_iot/deps/umock-c/LICENSE         
+                           Format: source code                               
+                           Description: C mocking library                    
+                           Location: middleware/azure_iot/deps/umock-c       
+                           Origin: Microsoft Corporation (MIT)               
+                           Url: https://github.com/Azure/umock-c             
+
+parson                     Name: Parson                                      
+                           Version: 0.0.0                                    
+                           Outgoing License: MIT                             
+                           License File:                                     
+                           middleware/azure_iot/deps/parson/LICENSE          
+                           Format: source code                               
+                           Description: Lighweight json C library            
+                           Location: middleware/azure_iot/deps/parson        
+                           Origin: Krzysztof Gabis (MIT)                     
+                           Url: https://github.com/kgabis/parson             
+
+Azure-macro-utils-c        Name: Azure macro utils                           
+                           Version: 1.1.0                                    
+                           Outgoing License: MIT                             
+                           License File:                                     
+                           middleware/azure_iot/deps/azure-macro-utils-c/LICE
+                           NSE                                               
+                           Format: source code                               
+                           Description: Useful C macros                      
+                           Location:                                         
+                           middleware/azure_iot/deps/azure-macro-utils-c     
+                           Origin: Microsoft Corporation (MIT)               
+                           Url: https://github.com/Azure/azure-macro-utils-c 
+
+c-utility                  Name: Azure C Shared Utility                      
+                           Version: 1.1.12                                   
+                           Outgoing License: MIT                             
+                           License File:                                     
+                           middleware/azure_iot/c-utility/LICENSE            
+                           Format: source code                               
+                           Description: Common functionality for basic tasks 
+                           Location: middleware/azure_iot/c-utility          
+                           Origin: Microsoft Corporation (MIT)               
+                           Url:                                              
+                           https://github.com/Azure/azure-c-shared-utility   

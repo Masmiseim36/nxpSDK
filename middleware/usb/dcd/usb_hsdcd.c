@@ -23,28 +23,28 @@
 #endif
 typedef enum _usb_dcd_detection_sequence_results
 {
-    kUSB_DcdDetectionNoResults = 0x0U,
-    kUSB_DcdDetectionStandardHost = 0x01U,
-    kUSB_DcdDetectionChargingPort = 0x02U,
+    kUSB_DcdDetectionNoResults        = 0x0U,
+    kUSB_DcdDetectionStandardHost     = 0x01U,
+    kUSB_DcdDetectionChargingPort     = 0x02U,
     kUSB_DcdDetectionDedicatedCharger = 0x03U,
 } usb_dcd_detection_sequence_results_t;
 typedef enum _usb_dcd_detection_sequence_status
 {
-    kUSB_DcdDetectionNotEnabled = 0x0U,
-    kUSB_DcdDataPinDetectionCompleted = 0x01U,
+    kUSB_DcdDetectionNotEnabled            = 0x0U,
+    kUSB_DcdDataPinDetectionCompleted      = 0x01U,
     kUSB_DcdChargingPortDetectionCompleted = 0x02U,
-    kUSB_DcdChargerTypeDetectionCompleted = 0x03U,
+    kUSB_DcdChargerTypeDetectionCompleted  = 0x03U,
 } usb_dcd_detection_sequence_status_t;
 typedef struct _usb_hsdcd_state_struct
 {
-    USBHSDCD_Type *dcdRegisterBase;          /*!< The base address of the dcd module */
+    USBHSDCD_Type *dcdRegisterBase;   /*!< The base address of the dcd module */
     usb_hsdcd_callback_t dcdCallback; /*!< DCD callback function*/
-    void *dcdCallbackParam;                  /*!< DCD callback parameter*/
+    void *dcdCallbackParam;           /*!< DCD callback parameter*/
 #if (defined(FSL_FEATURE_USBPHY_HAS_DCD_ANALOG) && (FSL_FEATURE_USBPHY_HAS_DCD_ANALOG > 0U))
-    void *phyBase;                           /*!< dcd phy base address, if no phy control needed, set to NULL*/
+    void *phyBase; /*!< dcd phy base address, if no phy control needed, set to NULL*/
 #endif
-    uint8_t dcdDisable;                      /*!< whether enable dcd function or not*/
-    uint8_t detectResult;                    /*!< dcd detect result*/
+    uint8_t dcdDisable;   /*!< whether enable dcd function or not*/
+    uint8_t detectResult; /*!< dcd detect result*/
 } usb_hsdcd_state_struct_t;
 /*******************************************************************************
  * Prototypes
@@ -55,7 +55,7 @@ typedef struct _usb_hsdcd_state_struct
 
 static const uint32_t s_hsdcdBaseAddrs[FSL_FEATURE_SOC_USBHSDCD_COUNT] = USBHSDCD_BASE_ADDRS;
 
- /* Apply for device dcd state structure */
+/* Apply for device dcd state structure */
 static usb_hsdcd_state_struct_t s_UsbDeviceDcdHSState[FSL_FEATURE_SOC_USBHSDCD_COUNT];
 /*******************************************************************************
  * Code
@@ -63,9 +63,9 @@ static usb_hsdcd_state_struct_t s_UsbDeviceDcdHSState[FSL_FEATURE_SOC_USBHSDCD_C
 
 static uint32_t USB_HSDCD_GetInstance(USBHSDCD_Type *base)
 {
-    int i;
+    uint32_t i;
 
-    for (i = 0; i < FSL_FEATURE_SOC_USBHSDCD_COUNT; i++)
+    for (i = 0U; i < (uint32_t)(FSL_FEATURE_SOC_USBHSDCD_COUNT); i++)
     {
         if ((uint32_t)base == s_hsdcdBaseAddrs[i])
         {
@@ -77,25 +77,24 @@ static uint32_t USB_HSDCD_GetInstance(USBHSDCD_Type *base)
 
 usb_hsdcd_status_t USB_HSDCD_Init(USBHSDCD_Type *base, usb_hsdcd_config_struct_t *config, usb_hsdcd_handle *dcdHandle)
 {
-
     usb_hsdcd_state_struct_t *dcdHSState;
     uint32_t speed;
     uint32_t index;
 #if (defined(FSL_FEATURE_USBPHY_HAS_DCD_ANALOG) && (FSL_FEATURE_USBPHY_HAS_DCD_ANALOG > 0U))
     uint32_t phyBase[] = USBPHY_BASE_ADDRS;
-#endif  
-    if(NULL == base)
+#endif
+    if (NULL == base)
     {
         return kStatus_hsdcd_Error;
     }
     index = USB_HSDCD_GetInstance(base);
-    if(0xFF == index)
+    if (0xFFU == index)
     {
         return kStatus_hsdcd_Error;
     }
 
-    dcdHSState = &s_UsbDeviceDcdHSState[index];
-    *dcdHandle = dcdHSState;
+    dcdHSState                  = &s_UsbDeviceDcdHSState[index];
+    *dcdHandle                  = dcdHSState;
     dcdHSState->dcdRegisterBase = base;
     if ((NULL == config) || (NULL == config->dcdCallback))
     {
@@ -104,65 +103,58 @@ usb_hsdcd_status_t USB_HSDCD_Init(USBHSDCD_Type *base, usb_hsdcd_config_struct_t
     else
     {
 #if (defined(FSL_FEATURE_USBPHY_HAS_DCD_ANALOG) && (FSL_FEATURE_USBPHY_HAS_DCD_ANALOG > 0U))
-        dcdHSState->phyBase = (void *)phyBase[index];
+        dcdHSState->phyBase = (void *)(uint8_t*)phyBase[index];
 #endif
         dcdHSState->dcdCallbackParam = config->dcdCallbackParam;
         /*initialize the dcd controller*/
         dcdHSState->dcdCallback = config->dcdCallback;
     }
     dcdHSState->dcdDisable = 0U;
-    if(USB_HSDCD_CLOCK_SPEED)
-    {
-        /*clock speed unit is MHz*/
-        if(USB_HSDCD_CLOCK_SPEED/1000000U)
-        {
-            speed = USB_HSDCD_CLOCK_SPEED/1000000U;
-        }
-        else
-        {
-            speed = USB_HSDCD_CLOCK_SPEED/1000U;
-            dcdHSState->dcdRegisterBase->CLOCK &= ~(USBHSDCD_CLOCK_CLOCK_UNIT_MASK);
-        }
-        dcdHSState->dcdRegisterBase->CLOCK &= ~USBHSDCD_CLOCK_CLOCK_SPEED_MASK;
-        dcdHSState->dcdRegisterBase->CLOCK |= USBHSDCD_CLOCK_CLOCK_SPEED(speed);
-    }
+    /*misra 14.3*/
+#if (USB_HSDCD_CLOCK_SPEED > 1000000U)
+    /*clock speed unit is MHz*/
+    speed = USB_HSDCD_CLOCK_SPEED / 1000000U;
+#else
+    speed = USB_HSDCD_CLOCK_SPEED / 1000U;
+    dcdHSState->dcdRegisterBase->CLOCK &= ~(USBHSDCD_CLOCK_CLOCK_UNIT_MASK);
+#endif
+    dcdHSState->dcdRegisterBase->CLOCK &= ~USBHSDCD_CLOCK_CLOCK_SPEED_MASK;
+    dcdHSState->dcdRegisterBase->CLOCK |= USBHSDCD_CLOCK_CLOCK_SPEED(speed);
 
 #if !(defined(FSL_FEATURE_USBPHY_HAS_DCD_ANALOG) && (FSL_FEATURE_USBPHY_HAS_DCD_ANALOG > 0U))
     /*Valid values are 0-1023*/
     dcdHSState->dcdRegisterBase->TIMER0 &= ~(USBHSDCD_TIMER0_TSEQ_INIT_MASK);
     dcdHSState->dcdRegisterBase->TIMER0 |= USBHSDCD_TIMER0_TSEQ_INIT(USB_HSDCD_TSEQ_INIT_TIME);
     /*Valid values are 1-1023*/
-    if(USB_HSDCD_VDPSRC_ON)
-    {
-        dcdHSState->dcdRegisterBase->TIMER1 &= ~(USBHSDCD_TIMER1_TVDPSRC_ON_MASK);
-        dcdHSState->dcdRegisterBase->TIMER1 |= USBHSDCD_TIMER1_TVDPSRC_ON(USB_HSDCD_VDPSRC_ON);
-    }
+#if (USB_HSDCD_VDPSRC_ON > 0U)
+    dcdHSState->dcdRegisterBase->TIMER1 &= ~(USBHSDCD_TIMER1_TVDPSRC_ON_MASK);
+    dcdHSState->dcdRegisterBase->TIMER1 |= USBHSDCD_TIMER1_TVDPSRC_ON(USB_HSDCD_VDPSRC_ON);
+#endif
     /*Valid values are 1-1023*/
-    if(USB_HSDCD_TDCD_DBNC)
-    {
-        dcdHSState->dcdRegisterBase->TIMER1 &= ~(USBHSDCD_TIMER1_TDCD_DBNC_MASK);
-        dcdHSState->dcdRegisterBase->TIMER1 |= USBHSDCD_TIMER1_TDCD_DBNC(USB_HSDCD_TDCD_DBNC);
-    }
+#if (USB_HSDCD_TDCD_DBNC > 0U)
+    dcdHSState->dcdRegisterBase->TIMER1 &= ~(USBHSDCD_TIMER1_TDCD_DBNC_MASK);
+    dcdHSState->dcdRegisterBase->TIMER1 |= USBHSDCD_TIMER1_TDCD_DBNC(USB_HSDCD_TDCD_DBNC);
+#endif
     /*Valid values are 0-40ms*/
     dcdHSState->dcdRegisterBase->TIMER2_BC12 &= ~(USBHSDCD_TIMER2_BC12_TVDMSRC_ON_MASK);
     dcdHSState->dcdRegisterBase->TIMER2_BC12 |= USBHSDCD_TIMER2_BC12_TVDMSRC_ON(USB_HSDCD_TVDMSRC_ON);
- 
+
     /*Valid values are 1-1023ms*/
-    if(USB_HSDCD_TWAIT_AFTER_PRD)
-    {
-        dcdHSState->dcdRegisterBase->TIMER2_BC12 &= ~(USBHSDCD_TIMER2_BC12_TWAIT_AFTER_PRD_MASK);
-        dcdHSState->dcdRegisterBase->TIMER2_BC12 |= USBHSDCD_TIMER2_BC12_TWAIT_AFTER_PRD(USB_HSDCD_TWAIT_AFTER_PRD);
-    }
+#if (USB_HSDCD_TWAIT_AFTER_PRD > 0U)
+    dcdHSState->dcdRegisterBase->TIMER2_BC12 &= ~(USBHSDCD_TIMER2_BC12_TWAIT_AFTER_PRD_MASK);
+    dcdHSState->dcdRegisterBase->TIMER2_BC12 |= USBHSDCD_TIMER2_BC12_TWAIT_AFTER_PRD(USB_HSDCD_TWAIT_AFTER_PRD);
+#endif
+
 #endif
     dcdHSState->dcdRegisterBase->CONTROL |= USBHSDCD_CONTROL_BC12_MASK;
-   
+
     return kStatus_hsdcd_Success;
-}            
+}
 usb_hsdcd_status_t USB_HSDCD_Deinit(usb_hsdcd_handle handle)
 {
     usb_hsdcd_state_struct_t *dcdHSState;
     dcdHSState = (usb_hsdcd_state_struct_t *)handle;
-    if(NULL == handle)
+    if (NULL == handle)
     {
         return kStatus_hsdcd_Error;
     }
@@ -170,12 +162,12 @@ usb_hsdcd_status_t USB_HSDCD_Deinit(usb_hsdcd_handle handle)
     return kStatus_hsdcd_Success;
 }
 #if (defined(FSL_FEATURE_USBPHY_HAS_DCD_ANALOG) && (FSL_FEATURE_USBPHY_HAS_DCD_ANALOG > 0U))
-/*The USB PHY is shared between DCD function and USB function, but different configurations should be used 
-in these two functions. If DCD function is desired, USB_HSDCDResetEHCIPhy should be called to set the USB PHY 
-to DCD function; If USB function is desired, USB_HSDCDSetPHYToUSBMode should be called to set the USB PHY to USB function*/
+/*The USB PHY is shared between DCD function and USB function, but different configurations should be used
+in these two functions. If DCD function is desired, USB_HSDCDResetEHCIPhy should be called to set the USB PHY
+to DCD function; If USB function is desired, USB_HSDCDSetPHYToUSBMode should be called to set the USB PHY to USB
+function*/
 static usb_hsdcd_status_t USB_HSDCDSetPHYtoDCDMode(void *phyBase)
 {
-
     USBPHY_Type *usbPhyBase = (USBPHY_Type *)phyBase;
 
     if (NULL == usbPhyBase)
@@ -191,7 +183,6 @@ static usb_hsdcd_status_t USB_HSDCDSetPHYtoDCDMode(void *phyBase)
 }
 static usb_hsdcd_status_t USB_HSDCDSetPHYtoUSBMode(void *phyBase)
 {
-
     USBPHY_Type *usbPhyBase = (USBPHY_Type *)phyBase;
 
     if (NULL == usbPhyBase)
@@ -209,26 +200,26 @@ static usb_hsdcd_status_t USB_HSDCDSetPHYtoUSBMode(void *phyBase)
 usb_hsdcd_status_t USB_HSDCD_Control(usb_hsdcd_handle handle, usb_hsdcd_control_t type, void *param)
 {
     usb_hsdcd_state_struct_t *dcdHSState;
-    dcdHSState = (usb_hsdcd_state_struct_t *)handle;
+    dcdHSState                  = (usb_hsdcd_state_struct_t *)handle;
     usb_hsdcd_status_t dcdError = kStatus_hsdcd_Success;
-    if(NULL == handle)
+    if (NULL == handle)
     {
         return kStatus_hsdcd_Error;
     }
     switch (type)
     {
         case kUSB_DeviceHSDcdRun:
-            if(0U == dcdHSState->dcdDisable)
+            if (0U == dcdHSState->dcdDisable)
             {
 #if (defined(FSL_FEATURE_USBPHY_HAS_DCD_ANALOG) && (FSL_FEATURE_USBPHY_HAS_DCD_ANALOG > 0U)) && \
     ((defined FSL_FEATURE_SOC_USBPHY_COUNT) && (FSL_FEATURE_SOC_USBPHY_COUNT > 0U))
                 dcdError = USB_HSDCDSetPHYtoDCDMode(dcdHSState->phyBase);
 #endif
-                dcdHSState->dcdRegisterBase->CONTROL |= USBHSDCD_CONTROL_START_MASK;            
+                dcdHSState->dcdRegisterBase->CONTROL |= USBHSDCD_CONTROL_START_MASK;
             }
             break;
         case kUSB_DeviceHSDcdStop:
-            if(0U == dcdHSState->dcdDisable)
+            if (0U == dcdHSState->dcdDisable)
             {
 #if (defined(FSL_FEATURE_USBPHY_HAS_DCD_ANALOG) && (FSL_FEATURE_USBPHY_HAS_DCD_ANALOG > 0U)) && \
     ((defined FSL_FEATURE_SOC_USBPHY_COUNT) && (FSL_FEATURE_SOC_USBPHY_COUNT > 0U))
@@ -244,23 +235,28 @@ usb_hsdcd_status_t USB_HSDCD_Control(usb_hsdcd_handle handle, usb_hsdcd_control_
             dcdHSState->dcdDisable = 1U;
             break;
         case kUSB_HostHSDcdSetType:
-            if ((*((uint8_t *)param)) == kUSB_DcdCDP)
+            if ((*((uint8_t *)param)) == (uint8_t)kUSB_DcdCDP)
             {
-                dcdHSState->dcdRegisterBase->SIGNAL_OVERRIDE = ((dcdHSState->dcdRegisterBase->SIGNAL_OVERRIDE & (~(USBHSDCD_SIGNAL_OVERRIDE_PS_MASK << USBHSDCD_SIGNAL_OVERRIDE_PS_SHIFT))) | (USBHSDCD_SIGNAL_OVERRIDE_PS(3u)));
+                dcdHSState->dcdRegisterBase->SIGNAL_OVERRIDE =
+                    ((dcdHSState->dcdRegisterBase->SIGNAL_OVERRIDE &
+                      (~(USBHSDCD_SIGNAL_OVERRIDE_PS_MASK << USBHSDCD_SIGNAL_OVERRIDE_PS_SHIFT))) |
+                     (USBHSDCD_SIGNAL_OVERRIDE_PS(3u)));
             }
             else
             {
-                dcdHSState->dcdRegisterBase->SIGNAL_OVERRIDE = (dcdHSState->dcdRegisterBase->SIGNAL_OVERRIDE & (~(USBHSDCD_SIGNAL_OVERRIDE_PS_MASK << USBHSDCD_SIGNAL_OVERRIDE_PS_SHIFT)));
+                dcdHSState->dcdRegisterBase->SIGNAL_OVERRIDE =
+                    (dcdHSState->dcdRegisterBase->SIGNAL_OVERRIDE &
+                     (~(USBHSDCD_SIGNAL_OVERRIDE_PS_MASK << USBHSDCD_SIGNAL_OVERRIDE_PS_SHIFT)));
             }
             break;
         default:
-            break;      
+            /*no action*/
+            break;
     }
     return dcdError;
 }
 void USB_HSDcdIsrFunction(usb_hsdcd_handle handle)
 {
-
     uint32_t status;
     uint32_t chargerType;
     usb_hsdcd_state_struct_t *dcdHSState;
@@ -270,15 +266,24 @@ void USB_HSDcdIsrFunction(usb_hsdcd_handle handle)
     {
         return;
     }
-    
-    event = kUSB_DcdError;
+
+    event  = kUSB_DcdError;
     status = dcdHSState->dcdRegisterBase->STATUS;
 
-    dcdHSState->dcdRegisterBase->CONTROL |= USBHSDCD_CONTROL_IACK_MASK;
-
-    if (status & USBHSDCD_STATUS_ERR_MASK)
+#ifndef USBHSDCD_IRQS
+    if(0U == (dcdHSState->dcdRegisterBase->CONTROL & USBHSDCD_CONTROL_IF_MASK))
     {
-        if (status & USBHSDCD_STATUS_TO_MASK)
+        return;
+    }
+    if(0U != (dcdHSState->dcdRegisterBase->STATUS & USBHSDCD_STATUS_ACTIVE_MASK))
+    {
+        return;
+    }
+#endif
+
+    if (0U != (status & USBHSDCD_STATUS_ERR_MASK))
+    {
+        if (0U != (status & USBHSDCD_STATUS_TO_MASK))
         {
             event = kUSB_DcdTimeOut;
         }
@@ -301,6 +306,10 @@ void USB_HSDcdIsrFunction(usb_hsdcd_handle handle)
                 {
                     event = kUSB_DcdError;
                 }
+                else
+                {
+                    /*no action*/
+                }
                 break;
             case USBHSDCD_STATUS_SEQ_STAT(kUSB_DcdChargerTypeDetectionCompleted):
                 chargerType = status & USBHSDCD_STATUS_SEQ_RES_MASK;
@@ -310,18 +319,22 @@ void USB_HSDcdIsrFunction(usb_hsdcd_handle handle)
                 }
                 else if (chargerType == USBHSDCD_STATUS_SEQ_RES(kUSB_DcdDetectionDedicatedCharger))
                 {
-                    event = kUSB_DcdDCP;            
+                    event = kUSB_DcdDCP;
+                }
+                else
+                {
+                    /*no action*/
                 }
                 break;
             default:
+                /*no action*/
                 break;
         }
     }
-    dcdHSState->detectResult = event;
+
+    dcdHSState->detectResult = (uint8_t)event;
+    dcdHSState->dcdRegisterBase->CONTROL |= USBHSDCD_CONTROL_IACK_MASK;
     dcdHSState->dcdRegisterBase->CONTROL |= USBHSDCD_CONTROL_SR_MASK;
-    dcdHSState->dcdCallback(dcdHSState->dcdCallbackParam, event, (void *)&dcdHSState->detectResult);
-    USB_HSDCD_Control(dcdHSState, kUSB_DeviceHSDcdStop, NULL);
+    (void)dcdHSState->dcdCallback(dcdHSState->dcdCallbackParam, event, (void *)&dcdHSState->detectResult);
+    (void)USB_HSDCD_Control(dcdHSState, kUSB_DeviceHSDcdStop, NULL);
 }
-
-
-

@@ -36,8 +36,8 @@
  * Definitions
  ******************************************************************************/
 /*******************************************************************************
-  * Prototypes
-  ******************************************************************************/
+ * Prototypes
+ ******************************************************************************/
 void BOARD_InitHardware(void);
 void USB_DeviceClockInit(void);
 void USB_DeviceIsrEnable(void);
@@ -165,6 +165,7 @@ usb_status_t USB_DeviceMscCallback(class_handle_t handle, uint32_t event, void *
     usb_device_lba_information_struct_t *lbaInformationStructure;
     usb_device_lba_app_struct_t *lbaData;
     usb_device_ufi_app_struct_t *ufi;
+    usb_device_capacity_information_struct_t *capacityInformation;
 
     switch (event)
     {
@@ -185,12 +186,13 @@ usb_status_t USB_DeviceMscCallback(class_handle_t handle, uint32_t event, void *
             lbaData->buffer = g_msc.storageDisk + lbaData->offset * LENGTH_OF_EACH_LBA;
             break;
         case kUSB_DeviceMscEventGetLbaInformation:
-            lbaInformationStructure = (usb_device_lba_information_struct_t *)param;
+            lbaInformationStructure                             = (usb_device_lba_information_struct_t *)param;
             lbaInformationStructure->logicalUnitNumberSupported = LOGICAL_UNIT_SUPPORTED;
 
             lbaInformationStructure->logicalUnitInformations[0].lengthOfEachLba = LENGTH_OF_EACH_LBA;
-            lbaInformationStructure->logicalUnitInformations[0].totalLbaNumberSupports = TOTAL_LOGICAL_ADDRESS_BLOCKS_NORMAL;
-            lbaInformationStructure->logicalUnitInformations[0].bulkInBufferSize = DISK_SIZE_NORMAL;
+            lbaInformationStructure->logicalUnitInformations[0].totalLbaNumberSupports =
+                TOTAL_LOGICAL_ADDRESS_BLOCKS_NORMAL;
+            lbaInformationStructure->logicalUnitInformations[0].bulkInBufferSize  = DISK_SIZE_NORMAL;
             lbaInformationStructure->logicalUnitInformations[0].bulkOutBufferSize = DISK_SIZE_NORMAL;
             break;
         case kUSB_DeviceMscEventTestUnitReady:
@@ -198,13 +200,13 @@ usb_status_t USB_DeviceMscCallback(class_handle_t handle, uint32_t event, void *
             ufi = (usb_device_ufi_app_struct_t *)param;
             break;
         case kUSB_DeviceMscEventInquiry:
-            ufi = (usb_device_ufi_app_struct_t *)param;
-            ufi->size = sizeof(usb_device_inquiry_data_fromat_struct_t);
+            ufi         = (usb_device_ufi_app_struct_t *)param;
+            ufi->size   = sizeof(usb_device_inquiry_data_fromat_struct_t);
             ufi->buffer = (uint8_t *)&g_InquiryInfo;
             break;
         case kUSB_DeviceMscEventModeSense:
-            ufi = (usb_device_ufi_app_struct_t *)param;
-            ufi->size = sizeof(usb_device_mode_parameters_header_struct_t);
+            ufi         = (usb_device_ufi_app_struct_t *)param;
+            ufi->size   = sizeof(usb_device_mode_parameters_header_struct_t);
             ufi->buffer = (uint8_t *)&g_ModeParametersHeader;
             break;
         case kUSB_DeviceMscEventModeSelect:
@@ -215,6 +217,18 @@ usb_status_t USB_DeviceMscCallback(class_handle_t handle, uint32_t event, void *
         case kUSB_DeviceMscEventFormatComplete:
             break;
         case kUSB_DeviceMscEventRemovalRequest:
+            break;
+        case kUSB_DeviceMscEventRequestSense:
+            break;
+        case kUSB_DeviceMscEventReadCapacity:
+            capacityInformation                         = (usb_device_capacity_information_struct_t *)param;
+            capacityInformation->lengthOfEachLba        = LENGTH_OF_EACH_LBA;
+            capacityInformation->totalLbaNumberSupports = TOTAL_LOGICAL_ADDRESS_BLOCKS_NORMAL;
+            break;
+        case kUSB_DeviceMscEventReadFormatCapacity:
+            capacityInformation                         = (usb_device_capacity_information_struct_t *)param;
+            capacityInformation->lengthOfEachLba        = LENGTH_OF_EACH_LBA;
+            capacityInformation->totalLbaNumberSupports = TOTAL_LOGICAL_ADDRESS_BLOCKS_NORMAL;
             break;
         default:
             break;
@@ -233,15 +247,15 @@ usb_status_t USB_DeviceMscCallback(class_handle_t handle, uint32_t event, void *
 usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *param)
 {
     usb_status_t error = kStatus_USB_Error;
-    uint16_t *temp16 = (uint16_t *)param;
-    uint8_t *temp8 = (uint8_t *)param;
+    uint16_t *temp16   = (uint16_t *)param;
+    uint8_t *temp8     = (uint8_t *)param;
     switch (event)
     {
         case kUSB_DeviceEventBusReset:
         {
-            g_msc.attach = 0;
+            g_msc.attach               = 0;
             g_msc.currentConfiguration = 0U;
-            error = kStatus_USB_Success;
+            error                      = kStatus_USB_Success;
 #if (defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)) || \
     (defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))
             /* Get USB speed to configure the device, including max packet size and interval of the endpoints. */
@@ -253,14 +267,14 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
         }
         break;
         case kUSB_DeviceEventSetConfiguration:
-            if (0U ==(*temp8))
+            if (0U == (*temp8))
             {
-                g_msc.attach = 0;
+                g_msc.attach               = 0;
                 g_msc.currentConfiguration = 0U;
             }
             else if (USB_MSC_CONFIGURE_INDEX == (*temp8))
             {
-                g_msc.attach = 1;
+                g_msc.attach               = 1;
                 g_msc.currentConfiguration = *temp8;
             }
             else
@@ -271,7 +285,7 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
         case kUSB_DeviceEventSetInterface:
             if (g_msc.attach)
             {
-                uint8_t interface = (uint8_t)((*temp16 & 0xFF00U) >> 0x08U);
+                uint8_t interface        = (uint8_t)((*temp16 & 0xFF00U) >> 0x08U);
                 uint8_t alternateSetting = (uint8_t)(*temp16 & 0x00FFU);
                 if (interface < USB_MSC_INTERFACE_COUNT)
                 {
@@ -283,7 +297,7 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
             if (param)
             {
                 *temp8 = g_msc.currentConfiguration;
-                error = kStatus_USB_Success;
+                error  = kStatus_USB_Success;
             }
             break;
         case kUSB_DeviceEventGetInterface:
@@ -293,7 +307,7 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
                 if (interface < USB_INTERFACE_COUNT)
                 {
                     *temp16 = (*temp16 & 0xFF00U) | g_msc.currentInterfaceAlternateSetting[interface];
-                    error = kStatus_USB_Success;
+                    error   = kStatus_USB_Success;
                 }
                 else
                 {
@@ -337,11 +351,15 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
 }
 /* USB device class information */
 usb_device_class_config_struct_t msc_config[1] = {{
-    USB_DeviceMscCallback, 0, &g_UsbDeviceMscConfig,
+    USB_DeviceMscCallback,
+    0,
+    &g_UsbDeviceMscConfig,
 }};
 /* USB device class configuration information */
 usb_device_class_config_list_struct_t msc_config_list = {
-    msc_config, USB_DeviceCallback, 1,
+    msc_config,
+    USB_DeviceCallback,
+    1,
 };
 
 /*!
@@ -358,11 +376,11 @@ void USB_DeviceApplicationInit(void)
     SYSMPU_Enable(SYSMPU, 0);
 #endif /* FSL_FEATURE_SOC_SYSMPU_COUNT */
 
-    g_msc.speed = USB_SPEED_FULL;
-    g_msc.attach = 0;
-    g_msc.mscHandle = (class_handle_t)NULL;
+    g_msc.speed        = USB_SPEED_FULL;
+    g_msc.attach       = 0;
+    g_msc.mscHandle    = (class_handle_t)NULL;
     g_msc.deviceHandle = NULL;
-    g_msc.storageDisk = &s_StorageDisk[0];
+    g_msc.storageDisk  = &s_StorageDisk[0];
 
     if (kStatus_USB_Success != USB_DeviceClassInit(CONTROLLER_ID, &msc_config_list, &g_msc.deviceHandle))
     {
@@ -376,6 +394,8 @@ void USB_DeviceApplicationInit(void)
 
     USB_DeviceIsrEnable();
 
+    /*Add one delay here to make the DP pull down long enough to allow host to detect the previous disconnection.*/
+    SDK_DelayAtLeastUs(5000, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
     USB_DeviceRun(g_msc.deviceHandle);
 }
 

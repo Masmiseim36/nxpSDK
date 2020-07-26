@@ -4,10 +4,10 @@
  * Copyright 2016 NXP
  * All rights reserved.
  *
- * 
+ *
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided
- *  that the following conditions are met:
+ * that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -40,7 +40,11 @@
 #include "fsl_sdspi.h"
 #include "fsl_gpio.h"
 #include "fsl_sdspi_disk.h"
+#include "ffconf.h"
 
+/* This fatfs subcomponent is disabled by default
+ * To enable it, define following macro in ffconf.h */
+#ifdef SDSPI_DISK_ENABLE
 /* New project wizard guide note. */
 #ifndef BOARD_SDSPI_SPI_BASE
 #error Undefined macro. Define BOARD_SDSPI_SPI_BASE in board.h
@@ -256,3 +260,4 @@ void sdspi_host_init(void)
     /* Saves card state. */
     g_card.host = &g_host;
 }
+#endif

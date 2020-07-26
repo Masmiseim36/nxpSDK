@@ -98,19 +98,19 @@ USB_GLOBAL USB_RAM_ADDRESS_ALIGNMENT(USB_DATA_ALIGN_SIZE) static usb_device_audi
 static usb_status_t USB_DeviceAudioAllocateHandle(usb_device_audio_struct_t **handle)
 {
     uint32_t count;
-    OSA_SR_ALLOC();
+    USB_OSA_SR_ALLOC();
 
-    OSA_ENTER_CRITICAL();
+    USB_OSA_ENTER_CRITICAL();
     for (count = 0; count < USB_DEVICE_CONFIG_AUDIO; count++)
     {
         if (NULL == s_UsbDeviceAudioHandle[count].handle)
         {
             *handle = &s_UsbDeviceAudioHandle[count];
-            OSA_EXIT_CRITICAL();
+            USB_OSA_EXIT_CRITICAL();
             return kStatus_USB_Success;
         }
     }
-    OSA_EXIT_CRITICAL();
+    USB_OSA_EXIT_CRITICAL();
     return kStatus_USB_Busy;
 }
 
@@ -125,15 +125,15 @@ static usb_status_t USB_DeviceAudioAllocateHandle(usb_device_audio_struct_t **ha
  */
 static usb_status_t USB_DeviceAudioFreeHandle(usb_device_audio_struct_t *handle)
 {
-    OSA_SR_ALLOC();
+    USB_OSA_SR_ALLOC();
 
-    OSA_ENTER_CRITICAL();
+    USB_OSA_ENTER_CRITICAL();
     handle->handle           = NULL;
     handle->configStruct     = (usb_device_class_config_struct_t *)NULL;
     handle->configuration    = 0U;
     handle->controlAlternate = 0U;
     handle->streamAlternate  = 0U;
-    OSA_EXIT_CRITICAL();
+    USB_OSA_EXIT_CRITICAL();
     return kStatus_USB_Success;
 }
 
@@ -269,8 +269,6 @@ usb_status_t USB_DeviceAudioStreamEndpointsInit(usb_device_audio_struct_t *audio
     usb_device_interface_list_t *interfaceList;
     usb_device_interface_struct_t *interface = (usb_device_interface_struct_t *)NULL;
     usb_status_t error                       = kStatus_USB_Error;
-    int count;
-    int index;
 
     /* Check the configuration is valid or not. */
     if (!audioHandle->configuration)
@@ -293,12 +291,12 @@ usb_status_t USB_DeviceAudioStreamEndpointsInit(usb_device_audio_struct_t *audio
     interfaceList = &audioHandle->configStruct->classInfomation->interfaceList[audioHandle->configuration - 1];
 
     /* Find stream interface by using the alternate setting of the interface. */
-    for (count = 0U; count < interfaceList->count; count++)
+    for (int count = 0U; count < interfaceList->count; count++)
     {
         if ((USB_DEVICE_CONFIG_AUDIO_CLASS_CODE == interfaceList->interfaces[count].classCode) &&
             (USB_DEVICE_AUDIO_STREAM_SUBCLASS == interfaceList->interfaces[count].subclassCode))
         {
-            for (index = 0; index < interfaceList->interfaces[count].count; index++)
+            for (int index = 0; index < interfaceList->interfaces[count].count; index++)
             {
                 if (interfaceList->interfaces[count].interface[index].alternateSetting == audioHandle->streamAlternate)
                 {
@@ -318,7 +316,7 @@ usb_status_t USB_DeviceAudioStreamEndpointsInit(usb_device_audio_struct_t *audio
     audioHandle->streamInterfaceHandle = interface;
 
     /* Initialize the endpoints of the new interface. */
-    for (count = 0U; count < interface->endpointList.count; count++)
+    for (int count = 0U; count < interface->endpointList.count; count++)
     {
         usb_device_endpoint_init_struct_t epInitStruct;
         usb_device_endpoint_callback_struct_t epCallback;
@@ -359,20 +357,19 @@ usb_status_t USB_DeviceAudioStreamEndpointsDeinit(usb_device_audio_struct_t *aud
 {
     usb_status_t error = kStatus_USB_Error;
     usb_device_endpoint_callback_message_struct_t message;
-    int count;
 
     if (!audioHandle->streamInterfaceHandle)
     {
         return error;
     }
     /* De-initialize all stream endpoints of the interface */
-    for (count = 0U; count < audioHandle->streamInterfaceHandle->endpointList.count; count++)
+    for (int count = 0U; count < audioHandle->streamInterfaceHandle->endpointList.count; count++)
     {
         error = USB_DeviceDeinitEndpoint(
             audioHandle->handle, audioHandle->streamInterfaceHandle->endpointList.endpoint[count].endpointAddress);
     }
 
-    for (count = 0U; count < audioHandle->streamInterfaceHandle->endpointList.count; count++)
+    for (int count = 0U; count < audioHandle->streamInterfaceHandle->endpointList.count; count++)
     {
         if ((audioHandle->streamInterfaceHandle->endpointList.endpoint[count].endpointAddress &
              USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_MASK) >>
@@ -414,8 +411,6 @@ usb_status_t USB_DeviceAudioControlEndpointsInit(usb_device_audio_struct_t *audi
     usb_device_interface_list_t *interfaceList;
     usb_device_interface_struct_t *interface = (usb_device_interface_struct_t *)NULL;
     usb_status_t error                       = kStatus_USB_Error;
-    int count;
-    int index;
 
     /* Check the configuration is valid or not. */
     if (!audioHandle->configuration)
@@ -438,12 +433,12 @@ usb_status_t USB_DeviceAudioControlEndpointsInit(usb_device_audio_struct_t *audi
     interfaceList = &audioHandle->configStruct->classInfomation->interfaceList[audioHandle->configuration - 1];
 
     /* Find control interface by using the alternate setting of the interface. */
-    for (count = 0U; count < interfaceList->count; count++)
+    for (int count = 0U; count < interfaceList->count; count++)
     {
         if ((USB_DEVICE_CONFIG_AUDIO_CLASS_CODE == interfaceList->interfaces[count].classCode) &&
             (USB_DEVICE_AUDIO_CONTROL_SUBCLASS == interfaceList->interfaces[count].subclassCode))
         {
-            for (index = 0U; index < interfaceList->interfaces[count].count; index++)
+            for (int index = 0U; index < interfaceList->interfaces[count].count; index++)
             {
                 if (interfaceList->interfaces[count].interface[index].alternateSetting == audioHandle->controlAlternate)
                 {
@@ -463,7 +458,7 @@ usb_status_t USB_DeviceAudioControlEndpointsInit(usb_device_audio_struct_t *audi
     audioHandle->controlInterfaceHandle = interface;
 
     /* Initialize the control endpoints of the new interface. */
-    for (count = 0U; count < interface->endpointList.count; count++)
+    for (int count = 0U; count < interface->endpointList.count; count++)
     {
         usb_device_endpoint_init_struct_t epInitStruct;
         usb_device_endpoint_callback_struct_t epCallback;
@@ -503,14 +498,13 @@ usb_status_t USB_DeviceAudioControlEndpointsInit(usb_device_audio_struct_t *audi
 usb_status_t USB_DeviceAudioControlEndpointsDeinit(usb_device_audio_struct_t *audioHandle)
 {
     usb_status_t error = kStatus_USB_Error;
-    int count;
 
     if (!audioHandle->controlInterfaceHandle)
     {
         return error;
     }
     /* De-initialize all control endpoints of the interface */
-    for (count = 0U; count < audioHandle->controlInterfaceHandle->endpointList.count; count++)
+    for (int count = 0U; count < audioHandle->controlInterfaceHandle->endpointList.count; count++)
     {
         error = USB_DeviceDeinitEndpoint(
             audioHandle->handle, audioHandle->controlInterfaceHandle->endpointList.endpoint[count].endpointAddress);
@@ -1315,7 +1309,6 @@ usb_status_t USB_DeviceAudioEvent(void *handle, uint32_t event, void *param)
     uint16_t interfaceAlternate;
     uint8_t *temp8;
     uint8_t alternate;
-    int count;
 
     if ((!param) || (!handle))
     {
@@ -1415,7 +1408,7 @@ usb_status_t USB_DeviceAudioEvent(void *handle, uint32_t event, void *param)
             temp8 = ((uint8_t *)param);
             if (audioHandle->controlInterfaceHandle)
             {
-                for (count = 0U; count < audioHandle->controlInterfaceHandle->endpointList.count; count++)
+                for (int count = 0U; count < audioHandle->controlInterfaceHandle->endpointList.count; count++)
                 {
                     if (*temp8 == audioHandle->controlInterfaceHandle->endpointList.endpoint[count].endpointAddress)
                     {
@@ -1426,7 +1419,7 @@ usb_status_t USB_DeviceAudioEvent(void *handle, uint32_t event, void *param)
             }
             if (audioHandle->streamInterfaceHandle)
             {
-                for (count = 0U; count < audioHandle->streamInterfaceHandle->endpointList.count; count++)
+                for (int count = 0U; count < audioHandle->streamInterfaceHandle->endpointList.count; count++)
                 {
                     if (*temp8 == audioHandle->streamInterfaceHandle->endpointList.endpoint[count].endpointAddress)
                     {
@@ -1445,7 +1438,7 @@ usb_status_t USB_DeviceAudioEvent(void *handle, uint32_t event, void *param)
             temp8 = ((uint8_t *)param);
             if (audioHandle->controlInterfaceHandle)
             {
-                for (count = 0U; count < audioHandle->controlInterfaceHandle->endpointList.count; count++)
+                for (int count = 0U; count < audioHandle->controlInterfaceHandle->endpointList.count; count++)
                 {
                     if (*temp8 == audioHandle->controlInterfaceHandle->endpointList.endpoint[count].endpointAddress)
                     {
@@ -1456,7 +1449,7 @@ usb_status_t USB_DeviceAudioEvent(void *handle, uint32_t event, void *param)
             }
             if (audioHandle->streamInterfaceHandle)
             {
-                for (count = 0U; count < audioHandle->streamInterfaceHandle->endpointList.count; count++)
+                for (int count = 0U; count < audioHandle->streamInterfaceHandle->endpointList.count; count++)
                 {
                     if (*temp8 == audioHandle->streamInterfaceHandle->endpointList.endpoint[count].endpointAddress)
                     {

@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2014,2018-2019 NXP
+ * Copyright 2010-2014,2018-2020 NXP
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -71,6 +71,10 @@ typedef struct phPalEse_Config
       * Platform specific canonical device name to which ESE is connected.
       *
       * e.g. On Linux based systems this would be /dev/p73
+      */
+
+    int8_t DeviceAddress;
+    /*!< I2C Address of SE connected
       */
 
     uint32_t dwBaudRate;

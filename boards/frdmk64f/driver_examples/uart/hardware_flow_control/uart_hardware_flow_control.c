@@ -15,11 +15,11 @@
  * Definitions
  ******************************************************************************/
 /* UART instance and clock */
-#define DEMO_UART UART1
-#define DEMO_UART_CLKSRC UART1_CLK_SRC
+#define DEMO_UART          UART1
+#define DEMO_UART_CLKSRC   UART1_CLK_SRC
 #define DEMO_UART_CLK_FREQ CLOCK_GetFreq(UART1_CLK_SRC)
-#define DELAY_TIME 100000U
-#define TRANSFER_SIZE 256U        /*! Transfer dataSize */
+#define DELAY_TIME         100000U
+#define TRANSFER_SIZE     256U    /*! Transfer dataSize */
 #define TRANSFER_BAUDRATE 115200U /*! Transfer baudrate - 115200 */
 
 /*******************************************************************************

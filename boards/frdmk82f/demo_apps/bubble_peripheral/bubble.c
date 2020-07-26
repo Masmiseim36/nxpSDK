@@ -17,8 +17,8 @@
  ******************************************************************************/
 #define I2C_RELEASE_BUS_COUNT 100U
 
-#define BOARD_TIMER_BASEADDR FTM3
-#define BOARD_FIRST_TIMER_CHANNEL 4U
+#define BOARD_TIMER_BASEADDR       FTM3
+#define BOARD_FIRST_TIMER_CHANNEL  4U
 #define BOARD_SECOND_TIMER_CHANNEL 5U
 
 /*******************************************************************************

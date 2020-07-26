@@ -1,4 +1,9 @@
-
+/*
+ * Copyright 2018 NXP
+ * All rights reserved.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
 #ifndef _FSL_SSS_CONFIG_H_
 #define _FSL_SSS_CONFIG_H_
 
@@ -13,6 +18,8 @@
 #define SSS_ASYMMETRIC_MAX_CONTEXT_SIZE     (16)
 #define SSS_TUNNEL_MAX_CONTEXT_SIZE         (16)
 #define SSS_DERIVE_KEY_MAX_CONTEXT_SIZE     (16)
+#define SSS_RNG_MAX_CONTEXT_SIZE            (16)
+#define SSS_PH_CLSHA_CTX_MAX_CONTEXT_SIZE   (216)
 /* clang-format on */
 
 #endif /* _FSL_SSS_CONFIG_H_ */

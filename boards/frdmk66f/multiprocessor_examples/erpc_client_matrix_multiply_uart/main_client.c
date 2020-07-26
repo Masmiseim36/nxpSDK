@@ -17,9 +17,9 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define BUTTON_INIT() GPIO_PinInit(BOARD_SW3_GPIO, BOARD_SW3_GPIO_PIN, &button_config)
+#define BUTTON_INIT()       GPIO_PinInit(BOARD_SW3_GPIO, BOARD_SW3_GPIO_PIN, &button_config)
 #define IS_BUTTON_PRESSED() !GPIO_PinRead(BOARD_SW3_GPIO, BOARD_SW3_GPIO_PIN)
-#define ERPC_DEMO_UART Driver_USART0
+#define ERPC_DEMO_UART      Driver_USART0
 #define MATRIX_ITEM_MAX_VALUE 50
 
 /*******************************************************************************

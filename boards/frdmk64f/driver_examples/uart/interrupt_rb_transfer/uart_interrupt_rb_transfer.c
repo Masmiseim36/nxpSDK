@@ -15,12 +15,12 @@
  * Definitions
  ******************************************************************************/
 /* UART instance and clock */
-#define DEMO_UART UART0
-#define DEMO_UART_CLKSRC UART0_CLK_SRC
+#define DEMO_UART          UART0
+#define DEMO_UART_CLKSRC   UART0_CLK_SRC
 #define DEMO_UART_CLK_FREQ CLOCK_GetFreq(UART0_CLK_SRC)
 
 #define RX_RING_BUFFER_SIZE 20U
-#define ECHO_BUFFER_SIZE 8U
+#define ECHO_BUFFER_SIZE    8U
 
 /*******************************************************************************
  * Prototypes

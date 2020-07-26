@@ -63,7 +63,7 @@ static void LPUART_RTOS_Callback(LPUART_Type *base, lpuart_handle_t *state, stat
  * param handle The RTOS LPUART handle, the pointer to an allocated space for RTOS context.
  * param t_handle The pointer to an allocated space to store the transactional layer internal state.
  * param cfg The pointer to the parameters required to configure the LPUART after initialization.
- * return 0 succeed, others failed
+ * return kStatus_Success, others failed
  */
 int LPUART_RTOS_Init(lpuart_rtos_handle_t *handle, lpuart_handle_t *t_handle, const lpuart_rtos_config_t *cfg)
 {
@@ -156,7 +156,7 @@ int LPUART_RTOS_Init(lpuart_rtos_handle_t *handle, lpuart_handle_t *t_handle, co
     LPUART_EnableTx(handle->base, true);
     LPUART_EnableRx(handle->base, true);
 
-    return 0;
+    return kStatus_Success;
 }
 
 /*FUNCTION**********************************************************************
@@ -222,7 +222,7 @@ int LPUART_RTOS_Send(lpuart_rtos_handle_t *handle, const uint8_t *buffer, uint32
     }
     if (0 == length)
     {
-        return 0;
+        return kStatus_Success;
     }
     if (NULL == buffer)
     {
@@ -291,7 +291,7 @@ int LPUART_RTOS_Receive(lpuart_rtos_handle_t *handle, uint8_t *buffer, uint32_t 
         {
             *received = n;
         }
-        return 0;
+        return kStatus_Success;
     }
     if (NULL == buffer)
     {

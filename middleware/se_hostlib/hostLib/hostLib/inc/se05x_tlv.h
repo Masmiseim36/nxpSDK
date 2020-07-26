@@ -1,4 +1,4 @@
-/* Copyright 2019 NXP
+/* Copyright 2019,2020 NXP
  *
  * This software is owned or controlled by NXP and may only be used
  * strictly in accordance with the applicable license terms.  By expressly
@@ -90,7 +90,7 @@ typedef struct Se05xSession
     smStatus_t(*fp_TXn)(struct Se05xSession * pSession,
         const tlvHeader_t *hdr, uint8_t *cmdBuf, size_t cmdBufLen, uint8_t *rsp, size_t *rspLen, uint8_t hasle);
 
-    /** API called by fp_TXn. Helps handle UserID/Applet/FastSCP to transform buffer.
+    /** API called by fp_TXn. Helps handle UserID/Applet/ECKey to transform buffer.
      *
      * But this API never sends any data out over any communication link. */
     smStatus_t(*fp_Transform)(struct Se05xSession * pSession,
@@ -101,7 +101,7 @@ typedef struct Se05xSession
         /** IN */
         size_t inCmdBufLen,
         /** OUT:
-         *	For Session less,
+         *  For Session less,
          *      For Platform SCP this will be copy of,  inHDR, with outHdr[0] = outHdr[0] | 0x04
          *      For Plain Session: Same as inHDR
          *
@@ -127,13 +127,14 @@ typedef struct Se05xSession
         uint8_t *pInRxBuf,
         size_t *pInRxBufLen,
         uint8_t hasle);
-#if SSS_HAVE_SE05X
+#if SSS_HAVE_APPLET_SE05X_IOT
     /* It's either a minimal/single implemntation that calls smCom_TransceiveRaw()
      *
      * if pTunnelCtx is Null, directly call smCom_TransceiveRaw()
      *
      * Or an API part of tunnel ctx that can do PlatformSCP */
-    smStatus_t (*fp_RawTXn)(struct _sss_se05x_tunnel_context *pChannelCtx,
+    smStatus_t (*fp_RawTXn)(void *conn_ctx,
+        struct _sss_se05x_tunnel_context *pChannelCtx,
         SE_AuthType_t currAuth,
         const tlvHeader_t *hdr,
         uint8_t *cmdBuf,
@@ -155,6 +156,9 @@ typedef struct Se05xSession
         uint8_t hasle);
 #endif
     NXSCP03_DynCtx_t *pdynScp03Ctx;
+
+    /**Connection data context */
+    void *conn_ctx;
 } Se05xSession_t;
 
 
@@ -169,6 +173,18 @@ typedef struct
     uint8_t ts[12];
 } SE05x_TimeStamp_t;
 
+typedef struct
+{
+    uint8_t features[30];
+} SE05x_ExtendedFeatures_t;
+
+typedef struct
+{
+    SE05x_Variant_t variant;
+    SE05x_ExtendedFeatures_t *extended_features;
+} Se05x_AppletFeatures_t;
+
+typedef Se05x_AppletFeatures_t *pSe05xAppletFeatures_t;
 typedef Se05xSession_t *pSe05xSession_t;
 typedef Se05xPolicy_t *pSe05xPolicy_t;
 
@@ -203,6 +219,10 @@ typedef Se05xPolicy_t *pSe05xPolicy_t;
     tlvSet_U32(PBUF, PBUFLEN, TAG, VALUE);                 \
     DO_LOG_V(TAG, DESCRIPTION, VALUE)
 
+#define TLVSET_U64_SIZE(DESCRIPTION, PBUF, PBUFLEN, TAG, VALUE,SIZE) \
+    tlvSet_U64_size(PBUF, PBUFLEN, TAG, VALUE,SIZE);                 \
+    DO_LOG_V(TAG, DESCRIPTION, VALUE)
+
 #define TLVSET_KeyID(DESCRIPTION, PBUF, PBUFLEN, TAG, VALUE) \
     tlvSet_KeyID(PBUF, PBUFLEN, TAG, VALUE);                 \
     DO_LOG_V(TAG, DESCRIPTION, VALUE)
@@ -227,14 +247,14 @@ typedef Se05xPolicy_t *pSe05xPolicy_t;
 #define TLVSET_RSAKeyComponent TLVSET_U8
 #define TLVSET_RSASignatureAlgo TLVSET_U8
 #define TLVSET_DigestMode TLVSET_U8
-#define TLVSET_Variant TLVSET_U16
+#define TLVSET_Variant tlvSet_u8buf_features
 #define TLVSET_RSAPubKeyComp TLVSET_U8
 #define TLVSET_PlatformSCPRequest TLVSET_U8
 #define TLVSET_MemoryType TLVSET_U8
 
 #define TLVSET_CryptoContext TLVSET_U8
 #define TLVSET_CryptoModeSubType(DESCRIPTION, PBUF, PBUFLEN, TAG, VALUE) \
-    TLVSET_U8(DESCRIPTION, PBUF, PBUFLEN, TAG, ((VALUE).u8))
+    TLVSET_U8(DESCRIPTION, PBUF, PBUFLEN, TAG, ((VALUE).union_8bit))
 
 #define TLVSET_CryptoObjectID TLVSET_U16
 
@@ -249,6 +269,11 @@ typedef Se05xPolicy_t *pSe05xPolicy_t;
     tlvSet_u8bufOptional(PBUF, PBUFLEN, TAG, CMD, CMDLEN);                 \
     DO_LOG_A(TAG, DESCRIPTION, CMD, CMDLEN)
 
+#define TLVSET_u8bufOptional_ByteShift(DESCRIPTION, PBUF, PBUFLEN, TAG, CMD, CMDLEN) \
+    tlvSet_u8bufOptional_ByteShift(PBUF, PBUFLEN, TAG, CMD, CMDLEN);                 \
+    DO_LOG_A(TAG, DESCRIPTION, CMD, CMDLEN)
+
+
 #define TLVSET_u8buf_I2CM(DESCRIPTION, PBUF, PBUFLEN, TAG, CMD, CMDLEN) \
     tlvSet_u8buf_I2CM(PBUF, PBUFLEN, TAG, CMD, CMDLEN);                 \
     DO_LOG_A(TAG, DESCRIPTION, CMD, CMDLEN)
@@ -258,12 +283,16 @@ int tlvSet_U8(uint8_t **buf, size_t *bufLen, SE05x_TAG_t tag, uint8_t value);
 int tlvSet_U16(uint8_t **buf, size_t *bufLen, SE05x_TAG_t tag, uint16_t value);
 int tlvSet_U16Optional(uint8_t **buf, size_t *bufLen, SE05x_TAG_t tag, uint16_t value);
 int tlvSet_U32(uint8_t **buf, size_t *bufLen, SE05x_TAG_t tag, uint32_t value);
+int tlvSet_U64_size(uint8_t **buf, size_t *bufLen, SE05x_TAG_t tag, uint64_t value,uint16_t size);
 int tlvSet_u8buf(uint8_t **buf, size_t *bufLen, SE05x_TAG_t tag, const uint8_t *cmd, size_t cmdLen);
 int tlvSet_u8bufOptional(uint8_t **buf, size_t *bufLen, SE05x_TAG_t tag, const uint8_t *cmd, size_t cmdLen);
+/* Same as tlvSet_u8bufOptional, but some time, Most Significant Byte needs to be shifted and Plus by 1 */
+int tlvSet_u8bufOptional_ByteShift(uint8_t **buf, size_t *bufLen, SE05x_TAG_t tag, const uint8_t *cmd, size_t cmdLen);
 int tlvSet_Se05xPolicy(const char *description, uint8_t **buf, size_t *bufLen, SE05x_TAG_t tag, Se05xPolicy_t *policy);
 int tlvSet_KeyID(uint8_t **buf, size_t *bufLen, SE05x_TAG_t tag, uint32_t keyID);
 int tlvSet_MaxAttemps(uint8_t **buf, size_t *bufLen, SE05x_TAG_t tag, uint16_t maxAttemps);
 int tlvSet_ECCurve(uint8_t **buf, size_t *bufLen, SE05x_TAG_t tag, SE05x_ECCurve_t value);
+int tlvSet_u8buf_features(uint8_t **buf, size_t *bufLen, SE05x_TAG_t tag, pSe05xAppletFeatures_t appletVariant);
 
 int tlvGet_U8(uint8_t *buf, size_t *pBufIndex, const size_t bufLen, SE05x_TAG_t tag, uint8_t *pRsp);
 int tlvGet_U16(uint8_t *buf, size_t *pBufIndex, const size_t bufLen, SE05x_TAG_t tag, uint16_t *pRsp);
@@ -306,13 +335,18 @@ smStatus_t se05x_DeCrypt(struct Se05xSession *pSessionCtx,
     size_t *rspLength,
     uint8_t hasle);
 
-smStatus_t DoAPDUTx_s(Se05xSession_t *pSessionCtx, const tlvHeader_t *hdr, uint8_t *cmdBuf, size_t cmdBufLen);
-smStatus_t DoAPDUTxRx_s_Case3(Se05xSession_t *pSessionCtx,
+smStatus_t DoAPDUTxRx_s_Case2(Se05xSession_t *pSessionCtx,
     const tlvHeader_t *hdr,
     uint8_t *cmdBuf,
     size_t cmdBufLen,
     uint8_t *rspBuf,
     size_t *pRspBufLen);
+
+smStatus_t DoAPDUTx_s_Case3(Se05xSession_t *pSessionCtx,
+    const tlvHeader_t *hdr,
+    uint8_t *cmdBuf,
+    size_t cmdBufLen);
+
 smStatus_t DoAPDUTxRx_s_Case4(Se05xSession_t *pSessionCtx,
     const tlvHeader_t *hdr,
     uint8_t *cmdBuf,
@@ -320,8 +354,20 @@ smStatus_t DoAPDUTxRx_s_Case4(Se05xSession_t *pSessionCtx,
     uint8_t *rspBuf,
     size_t *pRspBufLen);
 
+smStatus_t DoAPDUTxRx_s_Case4_ext(Se05xSession_t *pSessionCtx,
+    const tlvHeader_t *hdr,
+    uint8_t *cmdBuf,
+    size_t cmdBufLen,
+    uint8_t *rspBuf,
+    size_t *pRspBufLen);
 
-#if SSS_HAVE_SE05X
+smStatus_t DoAPDUTxRx(Se05xSession_t *pSessionCtx,
+    uint8_t *cmdBuf,
+    size_t cmdBufLen,
+    uint8_t *rspBuf,
+    size_t *pRspBufLen);
+
+#if SSS_HAVE_APPLET_SE05X_IOT
 smStatus_t Se05x_API_I2CM_Send(
     pSe05xSession_t sessionId, const uint8_t *buffer, size_t bufferLen, uint8_t *result, size_t *presultLen);
 #endif

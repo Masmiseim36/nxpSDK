@@ -16,11 +16,11 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_SDRAMC SDRAM
+#define EXAMPLE_SDRAMC      SDRAM
 #define SDRAM_START_ADDRESS (0x70000000U)
-#define BUS_CLK_FREQ CLOCK_GetFreq(kCLOCK_FlexBusClk)
+#define BUS_CLK_FREQ        CLOCK_GetFreq(kCLOCK_FlexBusClk)
 
-#define SDRAM_EXAMPLE_DATALEN (0x1000U)
+#define SDRAM_EXAMPLE_DATALEN    (0x1000U)
 #define SDRAM_EXAMPLE_WRITETIMES (1000U)
 
 /*******************************************************************************

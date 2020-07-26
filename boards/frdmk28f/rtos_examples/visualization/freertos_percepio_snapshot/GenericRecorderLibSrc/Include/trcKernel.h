@@ -49,10 +49,10 @@
 /* Internal functions */
 
 #if !defined INCLUDE_READY_EVENTS || INCLUDE_READY_EVENTS == 1
-	void vTraceSetReadyEventsEnabled(int status);
-	void vTraceStoreTaskReady(objectHandleType handle);
+void vTraceSetReadyEventsEnabled(int status);
+void vTraceStoreTaskReady(objectHandleType handle);
 #else
-	#define vTraceSetReadyEventsEnabled(status)
+#define vTraceSetReadyEventsEnabled(status)
 #endif
 
 void vTraceStoreLowPower(uint32_t flag);
@@ -61,11 +61,12 @@ void vTraceStoreTaskswitch(objectHandleType task_handle);
 
 void vTraceStoreKernelCall(uint32_t eventcode, traceObjectClass objectClass, uint32_t byteParam);
 
-void vTraceStoreKernelCallWithNumericParamOnly(uint32_t evtcode,
-												uint32_t param);
+void vTraceStoreKernelCallWithNumericParamOnly(uint32_t evtcode, uint32_t param);
 
-void vTraceStoreKernelCallWithParam(uint32_t evtcode, traceObjectClass objectClass,
-									uint32_t objectNumber, uint32_t param);
+void vTraceStoreKernelCallWithParam(uint32_t evtcode,
+                                    traceObjectClass objectClass,
+                                    uint32_t objectNumber,
+                                    uint32_t param);
 
 void vTraceSetTaskInstanceFinished(objectHandleType handle);
 
@@ -79,11 +80,9 @@ uint8_t uiTraceGetObjectState(uint8_t objectclass, objectHandleType id);
 
 #if (INCLUDE_OBJECT_DELETE == 1)
 
-void vTraceStoreObjectNameOnCloseEvent(objectHandleType handle,
-										traceObjectClass objectclass);
+void vTraceStoreObjectNameOnCloseEvent(objectHandleType handle, traceObjectClass objectclass);
 
-void vTraceStoreObjectPropertiesOnCloseEvent(objectHandleType handle,
-											 traceObjectClass objectclass);
+void vTraceStoreObjectPropertiesOnCloseEvent(objectHandleType handle, traceObjectClass objectclass);
 #endif
 
 /* Internal constants for task state */
@@ -93,6 +92,3 @@ void vTraceStoreObjectPropertiesOnCloseEvent(objectHandleType handle,
 #endif
 
 #endif
-
-
-

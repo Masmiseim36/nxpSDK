@@ -1,5 +1,5 @@
 /*
- * Amazon FreeRTOS V1.0.0
+ * FreeRTOS V1.0.0
  * Copyright (C) 2017 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  * Copyright (c) 2013 - 2014, Freescale Semiconductor, Inc.
  * Copyright 2016-2019 NXP
@@ -35,7 +35,7 @@
 #include "ksdk_mbedtls.h"
 #include "pin_mux.h"
 
-/* Amazon FreeRTOS Demo Includes */
+/* FreeRTOS Demo Includes */
 #include "FreeRTOS.h"
 #include "task.h"
 #include "iot_logging_task.h"
@@ -47,6 +47,9 @@
 
 #include "fsl_device_registers.h"
 #include "clock_config.h"
+#include "fsl_phyksz8081.h"
+#include "fsl_enet_mdio.h"
+#include "fsl_phy.h"
 /* lwIP Includes */
 #include "lwip/tcpip.h"
 #include "lwip/dhcp.h"
@@ -67,21 +70,27 @@
 /* Address of PHY interface. */
 #define EXAMPLE_PHY_ADDRESS BOARD_ENET0_PHY_ADDRESS
 
-/* System clock name. */
-#define EXAMPLE_CLOCK_NAME kCLOCK_CoreSysClk
+/* MDIO operations. */
+#define EXAMPLE_MDIO_OPS enet_ops
+
+/* PHY operations. */
+#define EXAMPLE_PHY_OPS phyksz8081_ops
+
+/* ENET clock frequency. */
+#define EXAMPLE_CLOCK_FREQ CLOCK_GetFreq(kCLOCK_CoreSysClk)
 #ifndef EXAMPLE_NETIF_INIT_FN
 /*! @brief Network interface initialization function. */
 #define EXAMPLE_NETIF_INIT_FN ethernetif0_init
 #endif /* EXAMPLE_NETIF_INIT_FN */
 
 #define INIT_SUCCESS 0
-#define INIT_FAIL 1
-#define LOGGING_TASK_PRIORITY (tskIDLE_PRIORITY + 1)
+#define INIT_FAIL    1
+#define LOGGING_TASK_PRIORITY   (tskIDLE_PRIORITY + 1)
 #define LOGGING_TASK_STACK_SIZE (200)
-#define LOGGING_QUEUE_LENGTH (16)
+#define LOGGING_QUEUE_LENGTH    (16)
 
 #define DEMO_TASK_STACK_SIZE (configMINIMAL_STACK_SIZE * 22)
-#define DEMO_TASK_PRIORITY (tskIDLE_PRIORITY + 1)
+#define DEMO_TASK_PRIORITY   (tskIDLE_PRIORITY + 1)
 
 /*******************************************************************************
  * Prototypes
@@ -98,6 +107,9 @@ extern int initNetwork(void);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
+static mdio_handle_t mdioHandle = {.ops = &EXAMPLE_MDIO_OPS};
+static phy_handle_t phyHandle   = {.phyAddr = EXAMPLE_PHY_ADDRESS, .mdioHandle = &mdioHandle, .ops = &EXAMPLE_PHY_OPS};
+
 struct netif netif;
 #if defined(FSL_FEATURE_SOC_LPC_ENET_COUNT) && (FSL_FEATURE_SOC_LPC_ENET_COUNT > 0)
 mem_range_t non_dma_memory[] = NON_DMA_MEMORY_ARRAY;
@@ -111,13 +123,14 @@ int initNetwork(void)
 {
     ip4_addr_t netif_ipaddr, netif_netmask, netif_gw;
     ethernetif_config_t enet_config = {
-        .phyAddress = EXAMPLE_PHY_ADDRESS,
-        .clockName  = EXAMPLE_CLOCK_NAME,
+        .phyHandle  = &phyHandle,
         .macAddress = configMAC_ADDR,
 #if defined(FSL_FEATURE_SOC_LPC_ENET_COUNT) && (FSL_FEATURE_SOC_LPC_ENET_COUNT > 0)
         .non_dma_memory = non_dma_memory,
 #endif /* FSL_FEATURE_SOC_LPC_ENET_COUNT */
     };
+
+    mdioHandle.resource.csrClock_Hz = EXAMPLE_CLOCK_FREQ;
 
     IP4_ADDR(&netif_ipaddr, 0, 0, 0, 0);
     IP4_ADDR(&netif_netmask, 0, 0, 0, 0);
@@ -185,8 +198,8 @@ void vApplicationDaemonTaskStartupHook(void)
 int main(void)
 {
     SYSMPU_Type *base = SYSMPU;
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
     /* Disable SYSMPU. */
     base->CESR &= ~SYSMPU_CESR_VLD_MASK;

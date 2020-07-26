@@ -1,4 +1,4 @@
-/* Copyright 2019 NXP
+/* Copyright 2019,2020 NXP
  *
  * This software is owned or controlled by NXP and may only be used
  * strictly in accordance with the applicable license terms.  By expressly
@@ -18,7 +18,7 @@
 #include "fsl_sss_ftr_default.h"
 #endif
 
-#if SSS_HAVE_SE05X
+#if SSS_HAVE_APPLET_SE05X_IOT
 
 #include <Applet_SE050_Ver.h>
 
@@ -36,12 +36,6 @@
 #define SE05X_FTR_32BIT_CURVE_ID (1)
 #endif /* APPLET_SE050_VER_MAJOR_MINOR > 10002u */
 
-#if APPLET_SE050_VER_MAJOR_MINOR > 10002u
-#define SE05X_FTR_USE_INVERT_MGMTIDEXISTS (0)
-#else
-#define SE05X_FTR_USE_INVERT_MGMTIDEXISTS (1)
-#endif /* APPLET_SE050_VER_MAJOR_MINOR > 10002u */
-
-#endif /* SSS_HAVE_SE05X */
+#endif /* SSS_HAVE_APPLET_SE05X_IOT */
 
 #endif /* SE05X_FTR_H */

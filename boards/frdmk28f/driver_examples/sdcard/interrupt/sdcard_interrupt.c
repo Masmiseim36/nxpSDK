@@ -2,7 +2,7 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -30,18 +30,18 @@
  * Prototypes
  ******************************************************************************/
 /*!
-* @brief printf the card information log.
-*
-* @param card Card descriptor.
-*/
+ * @brief printf the card information log.
+ *
+ * @param card Card descriptor.
+ */
 static void CardInformationLog(sd_card_t *card);
 /*!
-* @brief call back function for SD card detect.
-*
-* @param isInserted  true,  indicate the card is insert.
-*                    false, indicate the card is remove.
-* @param userData
-*/
+ * @brief call back function for SD card detect.
+ *
+ * @param isInserted  true,  indicate the card is insert.
+ *                    false, indicate the card is remove.
+ * @param userData
+ */
 static void SDCARD_DetectCallBack(bool isInserted, void *userData);
 
 /*******************************************************************************
@@ -52,13 +52,13 @@ static void SDCARD_DetectCallBack(bool isInserted, void *userData);
 sd_card_t g_sd;
 
 /* @brief decription about the read/write buffer
-* The size of the read/write buffer should be a multiple of 512, since SDHC/SDXC card uses 512-byte fixed
-* block length and this driver example is enabled with a SDHC/SDXC card.If you are using a SDSC card, you
-* can define the block length by yourself if the card supports partial access.
-* The address of the read/write buffer should align to the specific DMA data buffer address align value if
-* DMA transfer is used, otherwise the buffer address is not important.
-* At the same time buffer address/size should be aligned to the cache line size if cache is supported.
-*/
+ * The size of the read/write buffer should be a multiple of 512, since SDHC/SDXC card uses 512-byte fixed
+ * block length and this driver example is enabled with a SDHC/SDXC card.If you are using a SDSC card, you
+ * can define the block length by yourself if the card supports partial access.
+ * The address of the read/write buffer should align to the specific DMA data buffer address align value if
+ * DMA transfer is used, otherwise the buffer address is not important.
+ * At the same time buffer address/size should be aligned to the cache line size if cache is supported.
+ */
 /*! @brief Data written to the card */
 SDK_ALIGN(uint8_t g_dataWrite[SDK_SIZEALIGN(DATA_BUFFER_SIZE, SDMMC_DATA_BUFFER_ALIGN_CACHE)],
           MAX(SDMMC_DATA_BUFFER_ALIGN_CACHE, SDMMCHOST_DMA_BUFFER_ADDR_ALIGN));
@@ -75,18 +75,27 @@ static const sdmmchost_detect_card_t s_sdCardDetect = {
 #endif
     .cdTimeOut_ms = (~0U),
     .cardInserted = SDCARD_DetectCallBack,
-    .cardRemoved = SDCARD_DetectCallBack,
+    .cardRemoved  = SDCARD_DetectCallBack,
 };
 
 /*! @brief SDMMC card power control configuration */
 #if defined DEMO_SDCARD_POWER_CTRL_FUNCTION_EXIST
 static const sdmmchost_pwr_card_t s_sdCardPwrCtrl = {
-    .powerOn = BOARD_PowerOnSDCARD, .powerOnDelay_ms = 500U, .powerOff = BOARD_PowerOffSDCARD, .powerOffDelay_ms = 0U,
+    .powerOn          = BOARD_PowerOnSDCARD,
+    .powerOnDelay_ms  = 500U,
+    .powerOff         = BOARD_PowerOffSDCARD,
+    .powerOffDelay_ms = 0U,
 };
 #endif
-
+/*! @brief SDMMC card power control configuration */
+#if defined DEMO_SDCARD_SWITCH_VOLTAGE_FUNCTION_EXIST
+static const sdmmchost_card_switch_voltage_func_t s_sdCardVoltageSwitch = {
+    .cardSignalLine1V8 = BOARD_USDHC_Switch_VoltageTo1V8,
+    .cardSignalLine3V3 = BOARD_USDHC_Switch_VoltageTo3V3,
+};
+#endif
 /*! @brief SD card detect flag  */
-static bool s_cardInserted = false;
+static volatile bool s_cardInserted = false;
 /*******************************************************************************
  * Code
  ******************************************************************************/
@@ -183,7 +192,7 @@ static status_t AccessCard(sd_card_t *card, bool isReadOnly)
 int main(void)
 {
     sd_card_t *card = &g_sd;
-    char ch = '0';
+    char ch         = '0';
     bool isReadOnly;
 
     BOARD_InitPins();
@@ -191,14 +200,16 @@ int main(void)
     BOARD_InitDebugConsole();
     SYSMPU_Enable(SYSMPU, false);
 
-    card->host.base = SD_HOST_BASEADDR;
+    card->host.base           = SD_HOST_BASEADDR;
     card->host.sourceClock_Hz = SD_HOST_CLK_FREQ;
     /* card detect type */
     card->usrParam.cd = &s_sdCardDetect;
 #if defined DEMO_SDCARD_POWER_CTRL_FUNCTION_EXIST
     card->usrParam.pwr = &s_sdCardPwrCtrl;
 #endif
-
+#if defined DEMO_SDCARD_SWITCH_VOLTAGE_FUNCTION_EXIST
+    card->usrParam.cardVoltage = &s_sdCardVoltageSwitch;
+#endif
     PRINTF("\r\nSDCARD interrupt example.\r\n");
 
     /* SD host init function */

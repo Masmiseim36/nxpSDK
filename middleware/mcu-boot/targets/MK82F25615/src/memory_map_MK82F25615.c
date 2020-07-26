@@ -5,8 +5,8 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "bootloader/bl_context.h"
-#include "memory/memory.h"
+#include "bl_context.h"
+#include "memory.h"
 #include "qspi.h"
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -27,10 +27,6 @@ memory_map_entry_t g_memoryMap[] = {
 #if BL_FEATURE_QSPI_ALIAS_AREA
     { 0x04000000, 0x07ffffff, kMemoryNotExecutable | kMemoryType_FLASH, &g_qspiAliasAreaInterface }, // QSPI alias area
 #endif                                                                           // BL_FEATURE_QSPI_ALIAS_AREA
-    { 0x40000000, 0x4007ffff, kMemoryNotExecutable | kMemoryType_Device, &g_deviceMemoryInterface },  // AIPS0 peripherals
-    { 0x40080000, 0x400fefff, kMemoryNotExecutable | kMemoryType_Device, &g_deviceMemoryInterface },  // AIPS1 peripherals
-    { 0x400ff000, 0x400fffff, kMemoryNotExecutable | kMemoryType_Device, &g_deviceMemoryInterface },  // GPIO
-    { 0xe0000000, 0xe00fffff, kMemoryNotExecutable | kMemoryType_Device, &g_deviceMemoryInterface },  // M4 private peripherals
     { 0 }                                                                        // Terminator
 };
 

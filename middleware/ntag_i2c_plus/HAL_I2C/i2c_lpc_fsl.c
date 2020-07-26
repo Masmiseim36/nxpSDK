@@ -8,13 +8,13 @@
  */
 #include "HAL_I2C_lpc_fsl.h"
 //---------------------------------------------------------------------
-int16_t I2C_InitDevice(uint32_t bitrate, clock_name_t input_clock, I2C_Type *instance)
+int16_t I2C_InitDevice(uint32_t bitrate, uint8_t flexcommInstance, I2C_Type *instance)
 {
     i2c_master_config_t masterConfig;
     I2C_MasterGetDefaultConfig(&masterConfig);
     masterConfig.baudRate_Bps = bitrate;
     uint32_t sourceClock;
-    sourceClock = CLOCK_GetFreq(input_clock);
+    sourceClock = CLOCK_GetFlexCommClkFreq(flexcommInstance);
 
     I2C_MasterInit(instance, &masterConfig, sourceClock);
 

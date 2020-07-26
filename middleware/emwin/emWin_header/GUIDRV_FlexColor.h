@@ -9,7 +9,7 @@
 *                                                                    *
 **********************************************************************
 
-** emWin V5.50 - Graphical user interface for embedded applications **
+** emWin V6.10 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -92,6 +92,7 @@ extern "C" {     /* Make sure we have C-declarations in C++ programs */
 #define GUIDRV_FLEXCOLOR_F66722   GUIDRV_FlexColor_SetFunc66722
 #define GUIDRV_FLEXCOLOR_F66723   GUIDRV_FlexColor_SetFunc66723
 #define GUIDRV_FLEXCOLOR_F66724   GUIDRV_FlexColor_SetFunc66724
+#define GUIDRV_FLEXCOLOR_F66725   GUIDRV_FlexColor_SetFunc66725
 #define GUIDRV_FLEXCOLOR_F66772   GUIDRV_FlexColor_SetFunc66772
 
 //
@@ -168,6 +169,7 @@ extern const GUI_DEVICE_API GUIDRV_FlexColor_API;
   void GUIDRV_FlexColor_SetFunc66722     (GUI_DEVICE * pDevice);
   void GUIDRV_FlexColor_SetFunc66723     (GUI_DEVICE * pDevice);
   void GUIDRV_FlexColor_SetFunc66724     (GUI_DEVICE * pDevice);
+  void GUIDRV_FlexColor_SetFunc66725     (GUI_DEVICE * pDevice);
   void GUIDRV_FlexColor_SetFunc66772     (GUI_DEVICE * pDevice);
 
   //

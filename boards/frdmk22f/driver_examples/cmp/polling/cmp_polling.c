@@ -17,12 +17,12 @@
  * Definitions
  ******************************************************************************/
 #define LED_INIT() LED_GREEN_INIT(LOGIC_LED_OFF)
-#define LED_ON() LED_GREEN_ON()
-#define LED_OFF() LED_GREEN_OFF()
+#define LED_ON()   LED_GREEN_ON()
+#define LED_OFF()  LED_GREEN_OFF()
 
-#define DEMO_CMP_BASE CMP0
+#define DEMO_CMP_BASE         CMP0
 #define DEMO_CMP_USER_CHANNEL 0U /* PTC6, CMP0_IN0, J1-16 on FRDM-K22F. */
-#define DEMO_CMP_DAC_CHANNEL 7U
+#define DEMO_CMP_DAC_CHANNEL  7U
 
 /*******************************************************************************
  * Prototypes

@@ -5,19 +5,15 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 #include "bootloader_common.h"
-#include "crc/crc16.h"
-#include "utilities/fsl_assert.h"
-#include "utilities/fsl_rtos_abstraction.h"
+#include "crc16.h"
+#include "fsl_assert.h"
+#include "fsl_rtos_abstraction.h"
 
 #include "fsl_device_registers.h"
-#include "utilities/fsl_rtos_abstraction.h"
+#include "fsl_rtos_abstraction.h"
 
 #if FSL_FEATURE_SOC_CRC_COUNT && !defined(BL_TARGET_RAM)
-#if !BL_DEVICE_IS_LPC_SERIES
 #include "fsl_crc.h"
-#else // BL_DEVICE_IS_LPC_SERIES
-#include "lpc_crc/fsl_crc.h"
-#endif // !BL_DEVICE_IS_LPC_SERIES
 
 /* Table of base addresses for crc instances. */
 static CRC_Type *const g_crcBase[1] = CRC_BASE_PTRS;
@@ -88,6 +84,7 @@ void crc16_onfi_init(crc16_data_t *crc16Config)
     crc16Config->currentCrc = 0x4F4EU;
 }
 
+#if !BL_DEVICE_IS_LPC_SERIES
 void crc16_onfi_update(crc16_data_t *crc16Config, const uint8_t *src, uint32_t lengthInBytes)
 {
     assert(crc16Config);
@@ -119,6 +116,7 @@ void crc16_onfi_update(crc16_data_t *crc16Config, const uint8_t *src, uint32_t l
 
     crc16Config->currentCrc = crcUserConfigPtr.seed;
 }
+#endif // !BL_DEVICE_IS_LPC_SERIES
 
 #else
 ////////////////////////////////////////////////////////////////////////////////

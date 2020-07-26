@@ -25,6 +25,8 @@
 #include "pin_mux.h"
 #include "se_reset_config.h"
 #include "sm_timer.h"
+#include "fsl_puf.h"
+#include "fsl_power.h"
 
 #if defined(MBEDTLS)
 #include "ksdk_mbedtls.h"
@@ -32,6 +34,9 @@
 
 void ex_sss_main_ksdk_bm()
 {
+    /* set BOD VBAT level to 1.65V */
+    POWER_SetBodVbatLevel(kPOWER_BodVbatLevel1650mv, kPOWER_BodHystLevel50mv, false);
+
     CLOCK_AttachClk(BOARD_DEBUG_UART_CLK_ATTACH);
 
     /* attach 12 MHz clock to FLEXCOMM8 (I2C master) */
@@ -62,6 +67,16 @@ void ex_sss_main_ksdk_bm()
 #endif /* defined(MBEDTLS) */
 
     sm_initSleep();
+
+#if defined(SECURE_WORLD)
+    puf_config_t conf;
+    PUF_GetDefaultConfig(&conf);
+    srand(0xbabadeda);
+
+    if(kStatus_Success != PUF_Init(PUF, &conf)) {
+        LOG_E("PUF_Init failed");
+    }
+#endif
 }
 
 void ex_sss_main_ksdk_boot_rtos_task()

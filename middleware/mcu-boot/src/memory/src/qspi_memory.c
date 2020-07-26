@@ -6,14 +6,14 @@
  */
 
 #include "bootloader_common.h"
-#include "memory/memory.h"
+#include "memory.h"
 #include "qspi_memory.h"
 #include "normal_memory.h"
 #include "qspi.h"
-#include "bootloader/bl_context.h"
+#include "bl_context.h"
 #include "fsl_device_registers.h"
-#include "utilities/fsl_rtos_abstraction.h"
-#include "utilities/fsl_assert.h"
+#include "fsl_rtos_abstraction.h"
+#include "fsl_assert.h"
 #include <string.h>
 
 ////////////////////////////////////////////////////////////////////////////////

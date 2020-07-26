@@ -53,8 +53,8 @@ void iperf_hw_init(struct iperf_ctx *ctx)
     xTempAddress.sin_family      = ATH_AF_INET;
     xTempAddress.sin_port        = SENDER_PORT_NUM;
 
-    ctx->ctrl_addr     = &xTempAddress;
-    ctx->ctrl_addr_len = sizeof(xTempAddress);
+    ctx->addr     = &xTempAddress;
+    ctx->addr_len = sizeof(xTempAddress);
 }
 int iperf_send(int socket, void *buffer, size_t len, int flag)
 {
@@ -89,12 +89,63 @@ int iperf_socket(int protocol)
     return socket;
 }
 
-int iperf_recv_from(int socket, void *buf, size_t len, int flags)
+volatile int g_select_counter     = 0;
+volatile int g_select_counter_max = 0;
+
+int iperf_recv_from_blocked(int socket, void *buf, size_t len, int flags)
+{
+    SOCKADDR_T tmp_struct = {0};
+    uint16_t sock_len     = sizeof(tmp_struct);
+    int recv_bytes;
+    int status    = A_ERROR;
+    char *tmp_buf = NULL;
+
+    assert(A_ERROR != socket);
+
+    for (g_select_counter = 0; (g_select_counter < 20) && (status != 0); g_select_counter++)
+    {
+        status = t_select(enetCtx, socket, 10000);
+    }
+
+    if (g_select_counter_max < g_select_counter)
+        g_select_counter_max = g_select_counter;
+
+    assert(0 == status);
+
+    if (status != 0)
+    {
+        return -1;
+    }
+
+    recv_bytes = qcom_recvfrom(socket, &tmp_buf, len, flags, (struct sockaddr *)&tmp_struct, &sock_len);
+
+    assert(((recv_bytes > 0) && (tmp_buf != NULL)) || ((recv_bytes <= 0) && (tmp_buf == NULL)));
+
+    if ((recv_bytes > 0) && (tmp_buf != NULL))
+    {
+        memcpy(buf, tmp_buf, recv_bytes);
+        zero_copy_free(tmp_buf);
+    }
+
+    return recv_bytes;
+}
+
+int iperf_recv_from_timeout(int socket, void *buf, size_t len, int flags, int timeout_ms)
 {
     SOCKADDR_T tmp_struct = {0};
     uint16_t sock_len     = sizeof(tmp_struct);
     int recv_bytes;
     char *tmp_buf = NULL;
+    int status    = A_ERROR;
+
+    assert(A_ERROR != socket);
+    assert(timeout_ms > 0);
+
+    status = t_select(enetCtx, socket, timeout_ms);
+    if (status != 0)
+    {
+        return -1;
+    }
 
     recv_bytes = qcom_recvfrom(socket, &tmp_buf, len, flags, (struct sockaddr *)&tmp_struct, &sock_len);
 
@@ -128,9 +179,6 @@ int iperf_recv_noblock(int socket, void *buf, size_t len, int flags)
     return recv_bytes;
 }
 
-volatile int g_select_counter     = 0;
-volatile int g_select_counter_max = 0;
-
 int iperf_recv_blocked(int socket, void *buf, size_t len, int flags)
 {
     int status = A_ERROR;
@@ -152,6 +200,33 @@ int iperf_recv_blocked(int socket, void *buf, size_t len, int flags)
     }
 
     return iperf_recv_noblock(socket, buf, len, flags);
+}
+
+int iperf_recv_timeout(int socket, void *buf, size_t len, int flags, int timeout_ms)
+{
+    int recv_bytes;
+    char *tmp_buf = NULL;
+    assert(NULL != buf);
+    assert(A_ERROR != socket);
+    assert(timeout_ms > 0);
+
+    int status = A_ERROR;
+    status     = t_select(enetCtx, socket, timeout_ms);
+    if (status != 0)
+    {
+        return -1;
+    }
+
+    recv_bytes = qcom_recv(socket, &tmp_buf, len, flags);
+    assert(((recv_bytes > 0) && (tmp_buf != NULL)) || ((recv_bytes <= 0) && (tmp_buf == NULL)));
+
+    if ((recv_bytes > 0) && (tmp_buf != NULL))
+    {
+        memcpy(buf, tmp_buf, recv_bytes);
+        zero_copy_free(tmp_buf);
+    }
+
+    return recv_bytes;
 }
 
 int iperf_socket_close(int socket)

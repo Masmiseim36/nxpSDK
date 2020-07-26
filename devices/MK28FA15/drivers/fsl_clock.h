@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016 - 2019, NXP
+ * Copyright 2016 - 2020, NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -58,8 +58,8 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief CLOCK driver version 2.5.1. */
-#define FSL_CLOCK_DRIVER_VERSION (MAKE_VERSION(2, 5, 1))
+/*! @brief CLOCK driver version 2.5.2. */
+#define FSL_CLOCK_DRIVER_VERSION (MAKE_VERSION(2, 5, 2))
 /*@}*/
 
 /*! @brief External XTAL0 (OSC0) clock frequency.
@@ -675,7 +675,7 @@ typedef enum _mcg_mode
 /*! @brief MCG PLL configuration. */
 typedef struct _mcg_pll_config
 {
-    uint8_t enableMode; /*!< Enable mode. OR'ed value of @ref _mcg_pll_enable_mode. */
+    uint8_t enableMode; /*!< Enable mode. OR'ed value of _mcg_pll_enable_mode. */
     uint8_t prdiv;      /*!< Reference divider PRDIV.    */
     uint8_t vdiv;       /*!< VCO divider VDIV.           */
 } mcg_pll_config_t;
@@ -807,6 +807,8 @@ static inline void CLOCK_SetUsbClock(uint32_t src)
  * @brief Set debug trace clock source.
  *
  * @param src The value to set debug trace clock source.
+ * @param divValue
+ * @param fracValue
  */
 static inline void CLOCK_SetTraceClock(uint32_t src, uint32_t divValue, uint32_t fracValue)
 {
@@ -818,6 +820,8 @@ static inline void CLOCK_SetTraceClock(uint32_t src, uint32_t divValue, uint32_t
  * @brief Set PLLFLLSEL clock source.
  *
  * @param src The value to set PLLFLLSEL clock source.
+ * @param divValue
+ * @param fracValue
  */
 static inline void CLOCK_SetPllFllSelClock(uint32_t src, uint32_t divValue, uint32_t fracValue)
 {
@@ -870,6 +874,7 @@ void CLOCK_DisableUsbhs0PhyPllClock(void);
 /*! Enable USB hs0 Pfd clock
  *
  * @param src USB hs0 clock source.
+ * @param frac 
  *
  */
 void CLOCK_EnableUsbhs0PfdClock(uint8_t frac, clock_usb_pfd_src_t src);
@@ -1012,8 +1017,6 @@ uint32_t CLOCK_GetOsc0ErClkFreq(void);
  * @brief Set the clock configure in SIM module.
  *
  * This function sets system layer clock settings in SIM module.
- *
- * @param config Pointer to the configure structure.
  */
 void CLOCK_SetSimConfig(sim_clock_config_t const *config);
 
@@ -1026,7 +1029,6 @@ void CLOCK_SetSimConfig(sim_clock_config_t const *config);
  * be used before MCG mode change, to make sure system level clocks are in allowed
  * range.
  *
- * @param config Pointer to the configure structure.
  */
 static inline void CLOCK_SetSimSafeDivs(void)
 {
@@ -1104,7 +1106,7 @@ uint32_t CLOCK_GetExtPllFreq(void);
  * function after the external PLL frequency is changed. Otherwise, the APIs, which are used to get
  * the frequency, may return an incorrect value.
  *
- * @param The frequency of MCG external PLL.
+ * @param freq The frequency of MCG external PLL.
  */
 void CLOCK_SetExtPllFreq(uint32_t freq);
 
@@ -1144,7 +1146,7 @@ static inline void CLOCK_SetLowPowerEnable(bool enable)
  * Calling this function in FBI/PBI/BLPI modes may change the system clock. As a result,
  * using the function in these modes it is not allowed.
  *
- * @param enableMode MCGIRCLK enable mode, OR'ed value of @ref _mcg_irclk_enable_mode.
+ * @param enableMode MCGIRCLK enable mode, OR'ed value of _mcg_irclk_enable_mode.
  * @param ircs       MCGIRCLK clock source, choose fast or slow.
  * @param fcrdiv     Fast IRC divider setting (\c FCRDIV).
  * @retval kStatus_MCG_SourceUsed Because the internal reference clock is used as a clock source,
@@ -1276,7 +1278,7 @@ void CLOCK_SetExtPllMonitorMode(mcg_monitor_mode_t mode);
  * @brief Gets the MCG status flags.
  *
  * This function gets the MCG clock status flags. All status flags are
- * returned as a logical OR of the enumeration @ref _mcg_status_flags_t. To
+ * returned as a logical OR of the enumeration _mcg_status_flags_t. To
  * check a specific flag, compare the return value with the flag.
  *
  * Example:
@@ -1296,7 +1298,7 @@ void CLOCK_SetExtPllMonitorMode(mcg_monitor_mode_t mode);
  * }
  * @endcode
  *
- * @return  Logical OR value of the @ref _mcg_status_flags_t.
+ * @return  Logical OR value of the _mcg_status_flags_t.
  */
 uint32_t CLOCK_GetStatusFlags(void);
 
@@ -1304,7 +1306,7 @@ uint32_t CLOCK_GetStatusFlags(void);
  * @brief Clears the MCG status flags.
  *
  * This function clears the MCG clock lock lost status. The parameter is a logical
- * OR value of the flags to clear. See @ref _mcg_status_flags_t.
+ * OR value of the flags to clear. See _mcg_status_flags_t.
  *
  * Example:
  * @code
@@ -1314,7 +1316,7 @@ uint32_t CLOCK_GetStatusFlags(void);
  * @endcode
  *
  * @param mask The status flags to clear. This is a logical OR of members of the
- *             enumeration @ref _mcg_status_flags_t.
+ *             enumeration _mcg_status_flags_t.
  */
 void CLOCK_ClearStatusFlags(uint32_t mask);
 
@@ -1690,7 +1692,7 @@ status_t CLOCK_BootToFeeMode(
  *
  * @param  fcrdiv Fast IRC divider, FCRDIV.
  * @param  ircs   The internal reference clock to select, IRCS.
- * @param  ircEnableMode  The MCGIRCLK enable mode, OR'ed value of @ref _mcg_irclk_enable_mode.
+ * @param  ircEnableMode  The MCGIRCLK enable mode, OR'ed value of _mcg_irclk_enable_mode.
  *
  * @retval kStatus_MCG_SourceUsed Could not change MCGIRCLK setting.
  * @retval kStatus_Success Switched to the target mode successfully.
@@ -1733,7 +1735,7 @@ status_t CLOCK_BootToPeeMode(mcg_oscsel_t oscsel, mcg_pll_clk_select_t pllcs, mc
  * chooses the correct path.
  *
  * @param  config Pointer to the target MCG mode configuration structure.
- * @return Return kStatus_Success if switched successfully; Otherwise, it returns an error code #_mcg_status.
+ * @return Return kStatus_Success if switched successfully; Otherwise, it returns an error code _mcg_status.
  *
  * @note If the external clock is used in the target mode, ensure that it is
  * enabled. For example, if the OSC0 is used, set up OSC0 correctly before calling this

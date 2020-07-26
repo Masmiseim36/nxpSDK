@@ -33,44 +33,45 @@
 #define ESCAPE 0x1BU
 
 /*******************************************************************************
-* Variables
-******************************************************************************/
+ * Variables
+ ******************************************************************************/
 
 extern usb_host_handle g_HostHandle;
 
 usb_host_printer_app_t g_HostPrinterApp;
 
-USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t s_HostPrinterBuffer[USB_HOST_PRINTER_APP_BUFFER_SIZE + 1];
+USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
+static uint8_t s_HostPrinterBuffer[USB_HOST_PRINTER_APP_BUFFER_SIZE + 1];
 
 const uint8_t nxpVirtualPrinterTestStr[] =
     "\r\n"
-    \
-"                file name\r\n"
-    \
-"        NXP host printer test\r\n";
+
+    "                file name\r\n"
+
+    "        NXP host printer test\r\n";
 
 const uint8_t pjlPostscriptTestStr[] =
     " " /* escape character */
-    \
-"%-12345X@PJL \r\n"
-    \
-"@PJL ENTER LANGUAGE = POSTSCRIPT \r\n"
-    \
-"/inch {72 mul}def\r\n"
-    \
-"/GetFont {findfont exch scalefont setfont} bind def\r\n"
-    \
-"/Font1 {0.5 inch /Helvetica GetFont} def\r\n"
-    \
-"/PrintString {moveto show} bind def\r\n"
-    \
-"(NXP host printer test) 20 700 Font1 PrintString\r\n"
-    \
-"showpage"
-    \
-" " /* escape character */
-    \
-"%-12345X";
+
+    "%-12345X@PJL \r\n"
+
+    "@PJL ENTER LANGUAGE = POSTSCRIPT \r\n"
+
+    "/inch {72 mul}def\r\n"
+
+    "/GetFont {findfont exch scalefont setfont} bind def\r\n"
+
+    "/Font1 {0.5 inch /Helvetica GetFont} def\r\n"
+
+    "/PrintString {moveto show} bind def\r\n"
+
+    "(NXP host printer test) 20 700 Font1 PrintString\r\n"
+
+    "showpage"
+
+    " " /* escape character */
+
+    "%-12345X";
 
 /*******************************************************************************
  * Code
@@ -91,12 +92,12 @@ static void USB_HostPrinterAppBulkInCallback(void *param, uint8_t *data, uint32_
     if (status == kStatus_USB_Success)
     {
         printerApp->receiveLength = dataLength;
-        printerApp->runState = kUSB_HostPrinterRunDataReceived;
+        printerApp->runState      = kUSB_HostPrinterRunDataReceived;
     }
     else
     {
         printerApp->receiveLength = 0U;
-        printerApp->runState = kUSB_HostPrinterRunPrimeReceive;
+        printerApp->runState      = kUSB_HostPrinterRunPrimeReceive;
     }
 }
 
@@ -251,7 +252,7 @@ static void USB_HostPrinterTest(usb_host_printer_app_t *printerApp)
             printerApp->printerAppBuffer[index] = pjlPostscriptTestStr[index];
         }
         /* to fix misra error */
-        printerApp->printerAppBuffer[0] = ESCAPE;
+        printerApp->printerAppBuffer[0]                                 = ESCAPE;
         printerApp->printerAppBuffer[sizeof(pjlPostscriptTestStr) - 10] = ESCAPE;
         status = USB_HostPrinterSend(printerApp->classHandle, printerApp->printerAppBuffer,
                                      sizeof(pjlPostscriptTestStr), USB_HostPrinterAppBulkOutCallback, printerApp);
@@ -338,7 +339,7 @@ void USB_HostPrinterAppTask(void *param)
 
             case kStatus_DEV_Detached: /* device is detached */
                 printerApp->deviceState = kStatus_DEV_Idle;
-                printerApp->runState = kUSB_HostPrinterRunIdle;
+                printerApp->runState    = kUSB_HostPrinterRunIdle;
                 /* printer class de-initialization */
                 USB_HostPrinterDeinit(printerApp->deviceHandle, printerApp->classHandle);
                 printerApp->classHandle = NULL;
@@ -391,7 +392,7 @@ void USB_HostPrinterAppTask(void *param)
                 }
                 printerApp->runWaitState = kUSB_HostPrinterRunWaitGetDeviceIdAll;
                 interfaceIndex = ((usb_host_interface_t *)printerApp->interfaceHandle)->interfaceDesc->bInterfaceNumber;
-                status = USB_HostPrinterGetDeviceId(printerApp->classHandle, interfaceIndex,
+                status         = USB_HostPrinterGetDeviceId(printerApp->classHandle, interfaceIndex,
                                                     printerApp->selectAlternateSetting, printerApp->deviceIdBuffer,
                                                     idLength, USB_HostPrinterAppControlCallback, printerApp);
                 if (status != kStatus_USB_Success)
@@ -436,13 +437,13 @@ void USB_HostPrinterAppTask(void *param)
             {
                 if (strstr((char *)&idBuffer[2], DEVICE_ID_STRING_POSTSCRIPT)) /* pjl & postscriptor */
                 {
-                    support = 1U;
+                    support                        = 1U;
                     printerApp->deviceLanguageType = kPrinter_PJLPostscriptor;
                 }
             }
             else if (strstr((char *)&idBuffer[2], DEVICE_ID_NXP_STRING)) /* device printer demo */
             {
-                support = 1U;
+                support                        = 1U;
                 printerApp->deviceLanguageType = kPrinter_NXPVirtual;
             }
             else
@@ -467,7 +468,7 @@ void USB_HostPrinterAppTask(void *param)
 
         case kUSB_HostPrinterRunSetInterface: /* 3. set supported printer interface */
             printerApp->runWaitState = kUSB_HostPrinterRunWaitSetInterface;
-            printerApp->runState = kUSB_HostPrinterRunIdle;
+            printerApp->runState     = kUSB_HostPrinterRunIdle;
             if (USB_HostPrinterSetInterface(printerApp->classHandle, printerApp->interfaceHandle,
                                             printerApp->selectAlternateSetting, USB_HostPrinterAppControlCallback,
                                             printerApp) != kStatus_USB_Success)
@@ -488,7 +489,7 @@ void USB_HostPrinterAppTask(void *param)
             }
 
             printerApp->receiveDelay = 0;
-            printerApp->runState = kUSB_HostPrinterRunIdle;
+            printerApp->runState     = kUSB_HostPrinterRunIdle;
             /* receive data */
             status =
                 USB_HostPrinterRecv(printerApp->classHandle, printerApp->printerAppBuffer,
@@ -546,7 +547,7 @@ usb_status_t USB_HostPrinterAppEvent(usb_device_handle deviceHandle,
             configuration = (usb_host_configuration_t *)configurationHandle;
             for (interfaceIndex = 0; interfaceIndex < configuration->interfaceCount; ++interfaceIndex)
             {
-                interface = &configuration->interfaceList[interfaceIndex];
+                interface     = &configuration->interfaceList[interfaceIndex];
                 interfaceDesc = interface->interfaceDesc;
                 if ((interfaceDesc->bInterfaceClass != USB_HOST_PRINTER_CLASS_CODE) ||
                     (interfaceDesc->bInterfaceSubClass != USB_HOST_PRINTER_SUBCLASS_CODE))
@@ -562,7 +563,7 @@ usb_status_t USB_HostPrinterAppEvent(usb_device_handle deviceHandle,
                 else if (interface->alternateSettingNumber != 0) /* need check the alternate setting interfaces */
                 {
                     unionDes = (usb_descriptor_union_t *)(interface->interfaceExtension);
-                    endPos = (uint32_t)(interface->interfaceExtension + interface->interfaceExtensionLength);
+                    endPos   = (uint32_t)(interface->interfaceExtension + interface->interfaceExtensionLength);
                     for (alternateIndex = 0; alternateIndex < interface->alternateSettingNumber; ++alternateIndex)
                     {
                         interfaceDesc = NULL;
@@ -598,10 +599,10 @@ usb_status_t USB_HostPrinterAppEvent(usb_device_handle deviceHandle,
                     if (g_HostPrinterApp.deviceState == kStatus_DEV_Idle)
                     {
                         /* the interface is supported by the application */
-                        g_HostPrinterApp.printerAppBuffer = s_HostPrinterBuffer;
-                        g_HostPrinterApp.deviceHandle = deviceHandle;
-                        g_HostPrinterApp.interfaceHandle = interface;
-                        g_HostPrinterApp.configHandle = configurationHandle;
+                        g_HostPrinterApp.printerAppBuffer       = s_HostPrinterBuffer;
+                        g_HostPrinterApp.deviceHandle           = deviceHandle;
+                        g_HostPrinterApp.interfaceHandle        = interface;
+                        g_HostPrinterApp.configHandle           = configurationHandle;
                         g_HostPrinterApp.selectAlternateSetting = interfaceDesc->bAlternateSetting;
                         return kStatus_USB_Success;
                     }

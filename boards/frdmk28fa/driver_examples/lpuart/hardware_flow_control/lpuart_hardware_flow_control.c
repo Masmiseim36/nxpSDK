@@ -14,11 +14,11 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_LPUART LPUART1
-#define DEMO_LPUART_CLKSRC kCLOCK_Osc0ErClk
+#define DEMO_LPUART          LPUART1
+#define DEMO_LPUART_CLKSRC   kCLOCK_Osc0ErClk
 #define DEMO_LPUART_CLK_FREQ CLOCK_GetFreq(kCLOCK_Osc0ErClk)
-#define DELAY_TIME 100000U
-#define TRANSFER_SIZE 256U        /*! Transfer dataSize */
+#define DELAY_TIME           100000U
+#define TRANSFER_SIZE     256U    /*! Transfer dataSize */
 #define TRANSFER_BAUDRATE 115200U /*! Transfer baudrate - 115200 */
 
 /*******************************************************************************

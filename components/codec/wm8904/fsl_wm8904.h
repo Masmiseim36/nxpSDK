@@ -21,8 +21,8 @@
  ******************************************************************************/
 /*! @name Driver version */
 /*@{*/
-/*! @brief WM8904 driver version 2.4.0. */
-#define FSL_WM8904_DRIVER_VERSION (MAKE_VERSION(2, 4, 0))
+/*! @brief WM8904 driver version 2.4.1. */
+#define FSL_WM8904_DRIVER_VERSION (MAKE_VERSION(2, 4, 1))
 /*@}*/
 
 /*! @brief wm8904 handle size */
@@ -35,42 +35,42 @@
 #endif
 
 /*! @brief WM8904 register map*/
-#define WM8904_RESET (0x00)
-#define WM8904_ANALOG_ADC_0 (0x0A)
-#define WM8904_POWER_MGMT_0 (0x0C)
-#define WM8904_POWER_MGMT_2 (0x0E)
-#define WM8904_POWER_MGMT_3 (0x0F)
-#define WM8904_POWER_MGMT_6 (0x12)
-#define WM8904_CLK_RATES_0 (0x14)
-#define WM8904_CLK_RATES_1 (0x15)
-#define WM8904_CLK_RATES_2 (0x16)
-#define WM8904_AUDIO_IF_0 (0x18)
-#define WM8904_AUDIO_IF_1 (0x19)
-#define WM8904_AUDIO_IF_2 (0x1A)
-#define WM8904_AUDIO_IF_3 (0x1B)
-#define WM8904_DAC_DIG_1 (0x21)
-#define WM8904_DAC_DIG_0 (0x27)
-#define WM8904_ANALOG_LEFT_IN_0 (0x2C)
-#define WM8904_ANALOG_RIGHT_IN_0 (0x2D)
-#define WM8904_ANALOG_LEFT_IN_1 (0x2E)
-#define WM8904_ANALOG_RIGHT_IN_1 (0x2F)
-#define WM8904_ANALOG_OUT1_LEFT (0x39)
-#define WM8904_ANALOG_OUT1_RIGHT (0x3A)
-#define WM8904_ANALOG_OUT12_ZC (0x3D)
-#define WM8904_DC_SERVO_0 (0x43)
-#define WM8904_ANALOG_HP_0 (0x5A)
-#define WM8904_CHRG_PUMP_0 (0x62)
-#define WM8904_CLS_W_0 (0x68)
-#define WM8904_WRT_SEQUENCER_0 (0x6C)
-#define WM8904_WRT_SEQUENCER_3 (0x6F)
-#define WM8904_WRT_SEQUENCER_4 (0x70)
-#define WM8904_DAC_DIGITAL_VOLUME_LEFT (0x1E)
+#define WM8904_RESET                    (0x00)
+#define WM8904_ANALOG_ADC_0             (0x0A)
+#define WM8904_POWER_MGMT_0             (0x0C)
+#define WM8904_POWER_MGMT_2             (0x0E)
+#define WM8904_POWER_MGMT_3             (0x0F)
+#define WM8904_POWER_MGMT_6             (0x12)
+#define WM8904_CLK_RATES_0              (0x14)
+#define WM8904_CLK_RATES_1              (0x15)
+#define WM8904_CLK_RATES_2              (0x16)
+#define WM8904_AUDIO_IF_0               (0x18)
+#define WM8904_AUDIO_IF_1               (0x19)
+#define WM8904_AUDIO_IF_2               (0x1A)
+#define WM8904_AUDIO_IF_3               (0x1B)
+#define WM8904_DAC_DIG_1                (0x21)
+#define WM8904_DAC_DIG_0                (0x27)
+#define WM8904_ANALOG_LEFT_IN_0         (0x2C)
+#define WM8904_ANALOG_RIGHT_IN_0        (0x2D)
+#define WM8904_ANALOG_LEFT_IN_1         (0x2E)
+#define WM8904_ANALOG_RIGHT_IN_1        (0x2F)
+#define WM8904_ANALOG_OUT1_LEFT         (0x39)
+#define WM8904_ANALOG_OUT1_RIGHT        (0x3A)
+#define WM8904_ANALOG_OUT12_ZC          (0x3D)
+#define WM8904_DC_SERVO_0               (0x43)
+#define WM8904_ANALOG_HP_0              (0x5A)
+#define WM8904_CHRG_PUMP_0              (0x62)
+#define WM8904_CLS_W_0                  (0x68)
+#define WM8904_WRT_SEQUENCER_0          (0x6C)
+#define WM8904_WRT_SEQUENCER_3          (0x6F)
+#define WM8904_WRT_SEQUENCER_4          (0x70)
+#define WM8904_DAC_DIGITAL_VOLUME_LEFT  (0x1E)
 #define WM8904_DAC_DIGITAL_VOLUME_RIGHT (0x1F)
-#define WM8904_ADC_DIGITAL_VOLUME_LEFT (0x24)
+#define WM8904_ADC_DIGITAL_VOLUME_LEFT  (0x24)
 #define WM8904_ADC_DIGITAL_VOLUME_RIGHT (0x25)
-#define WM8904_ANALOG_OUT2_LEFT (0x3B)
-#define WM8904_ANALOG_OUT2_RIGHT (0x3C)
-#define WM8904_GPIO_CONTROL_4 (0x7C)
+#define WM8904_ANALOG_OUT2_LEFT         (0x3B)
+#define WM8904_ANALOG_OUT2_RIGHT        (0x3C)
+#define WM8904_GPIO_CONTROL_4           (0x7C)
 /* FLL control register */
 #define WM8904_FLL_CONTROL_1 (0x74)
 #define WM8904_FLL_CONTROL_2 (0x75)
@@ -223,7 +223,7 @@ typedef enum _wm8904_fll_clk_source
     kWM8904_FLLClkSourceMCLK = 0U, /*!< wm8904 FLL clock source from MCLK */
 } wm8904_fll_clk_source_t;
 
-/*! @wm8904 fll configuration */
+/*! @brief wm8904 fll configuration */
 typedef struct _wm8904_fll_config
 {
     wm8904_fll_clk_source_t source; /*!< fll reference clock source */
@@ -298,7 +298,7 @@ status_t WM8904_ReadRegister(wm8904_handle_t *handle, uint8_t reg, uint16_t *val
  *
  * @param handle WM8904 handle structure.
  * @param reg register address.
- * @oaram mask register bits mask.
+ * @param mask register bits mask.
  * @param value value to write.
  * @return kStatus_Success, else failed.
  */
@@ -308,7 +308,7 @@ status_t WM8904_ModifyRegister(wm8904_handle_t *handle, uint8_t reg, uint16_t ma
  * @brief Initializes WM8904.
  *
  * @param handle WM8904 handle structure.
- * @param codec_config WM8904 configuration structure.
+ * @param wm8904_config WM8904 configuration structure.
  */
 status_t WM8904_Init(wm8904_handle_t *handle, wm8904_config_t *wm8904_config);
 
@@ -334,7 +334,7 @@ status_t WM8904_Deinit(wm8904_handle_t *handle);
  *   format.sampleRate = kWM8904_SampleRate48kHz;
  *   format.bitWidth = kWM8904_BitWidth16;
  *
- * @param handle WM8904 handle structure to be filled with default values.
+ * @param config default configurations of wm8904.
  */
 void WM8904_GetDefaultConfig(wm8904_config_t *config);
 
@@ -414,8 +414,8 @@ status_t WM8904_CheckAudioFormat(wm8904_handle_t *handle, wm8904_audio_format_t 
  * 0 for mute, 100 for maximum volume value.
  *
  * @param handle WM8904 handle structure.
- * @param module wm8904 module name.
- * @param volume volume value.
+ * @param volumeLeft left channel volume.
+ * @param volumeRight right channel volume.
  *
  * @return kStatus_WM8904_Success if successful, different code otherwise.
  */
@@ -446,7 +446,7 @@ status_t WM8904_SelectLRCPolarity(wm8904_handle_t *handle, uint32_t polarity);
  * @brief Enable WM8904 DAC time slot.
  *
  * @param handle WM8904 handle structure.
- * @param timeslot timeslot number.
+ * @param timeSlot timeslot number.
  *
  * @return kStatus_WM8904_Success if successful, different code otherwise.
  */
@@ -456,7 +456,7 @@ status_t WM8904_EnableDACTDMMode(wm8904_handle_t *handle, wm8904_timeslot_t time
  * @brief Enable WM8904 ADC time slot.
  *
  * @param handle WM8904 handle structure.
- * @param timeslot timeslot number.
+ * @param timeSlot timeslot number.
  *
  * @return kStatus_WM8904_Success if successful, different code otherwise.
  */
@@ -491,7 +491,7 @@ status_t WM8904_SetModulePower(wm8904_handle_t *handle, wm8904_module_t module, 
  * The resulting volume will be.
  * 0 for mute, 100 for maximum volume value.
  *
- * param handle codec handle structure.
+ * @param handle codec handle structure.
  * @param channel codec channel.
  * @param volume volume value.
  *
@@ -538,7 +538,7 @@ status_t WM8904_SetPlay(wm8904_handle_t *handle, uint32_t playSource);
  * @brief Sets the channel mute.
  *
  * @param handle codec handle structure.
- * @param module codec module name.
+ * @param channel codec module name.
  * @param isMute true is mute, false unmute.
  *
  * @return kStatus_WM8904_Success if successful, different code otherwise.

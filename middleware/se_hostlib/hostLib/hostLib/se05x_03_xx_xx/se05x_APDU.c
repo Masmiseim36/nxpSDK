@@ -1,4 +1,4 @@
-/* Copyright 2019 NXP
+/* Copyright 2019,2020 NXP
  *
  * This software is owned or controlled by NXP and may only be used
  * strictly in accordance with the applicable license terms.  By expressly
@@ -47,18 +47,19 @@ extern "C" {
 /* Generated implementation */
 #include "se05x_APDU_impl.h"
 
-
-
+#if SSS_HAVE_SE05X_VER_GTE_04_04
+#include "se05x_04_xx_APDU_impl.h"
+#endif
 
 smStatus_t Se05x_API_I2CM_Send(
     pSe05xSession_t session_ctx, const uint8_t *buffer, size_t bufferLen, uint8_t *result, size_t *presultLen)
 {
-    smStatus_t retStatus = SM_NOT_OK;
+    smStatus_t retStatus  = SM_NOT_OK;
     const tlvHeader_t hdr = {{kSE05x_CLA, kSE05x_INS_CRYPTO, kSE05x_P1_DEFAULT, kSE05x_P2_I2CM}};
     uint8_t cmdbuf[SE05X_MAX_BUF_SIZE_CMD];
     uint8_t *pCmdbuf = &cmdbuf[0];
     size_t cmdbufLen = 0;
-    int tlvRet = 0;
+    int tlvRet       = 0;
     uint8_t rspbuf[SE05X_MAX_BUF_SIZE_RSP];
     uint8_t *pRspbuf = &rspbuf[0];
     size_t rspbufLen = ARRAY_SIZE(rspbuf);
@@ -71,13 +72,13 @@ smStatus_t Se05x_API_I2CM_Send(
     if (0 != tlvRet) {
         goto cleanup;
     }
-    retStatus = DoAPDUTxRx_s_Case3(session_ctx, &hdr, cmdbuf, cmdbufLen, rspbuf, &rspbufLen);
+    retStatus = DoAPDUTxRx_s_Case4_ext(session_ctx, &hdr, cmdbuf, cmdbufLen, rspbuf, &rspbufLen);
 
     LOG_AU8_D(rspbuf, rspbufLen);
     if (retStatus == SM_OK) {
-        retStatus = SM_NOT_OK;
+        retStatus       = SM_NOT_OK;
         size_t rspIndex = 0;
-        tlvRet = tlvGet_u8buf(pRspbuf, &rspIndex, rspbufLen, kSE05x_TAG_1, result, presultLen);
+        tlvRet          = tlvGet_u8buf(pRspbuf, &rspIndex, rspbufLen, kSE05x_TAG_1, result, presultLen);
         if (0 != tlvRet) { //Response check is skipped to be corrected.
             goto cleanup;
         }
@@ -93,4 +94,3 @@ cleanup:
 #ifdef __cplusplus
 }
 #endif
-

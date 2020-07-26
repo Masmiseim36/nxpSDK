@@ -9,8 +9,8 @@
 #define _packet_h
 
 #include "bootloader_common.h"
-#include "bootloader/bl_peripheral.h"
-#include "property/property.h"
+#include "bl_peripheral.h"
+#include "property.h"
 
 //! @addtogroup packet
 //! @{

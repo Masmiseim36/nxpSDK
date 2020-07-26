@@ -3,7 +3,7 @@
  * @author NXP Semiconductors
  * @version 1.0
  * @par License
- * Copyright 2016 NXP
+ * Copyright 2016,2020 NXP
  *
  * This software is owned or controlled by NXP and may only be used
  * strictly in accordance with the applicable license terms.  By expressly
@@ -79,7 +79,7 @@ U8 a71chInitModule(U8 initMode)
         err = A71_DbgReset();
         result &= AX_CHECK_SW(err, SW_OK, "Failed to reset module");
         PRINTF("Select applet.\n");
-        err = GP_Select(appletName, appletNameLen, response, &responseLen);
+        err = GP_Select(NULL, appletName, appletNameLen, response, &responseLen);
         result &= AX_CHECK_SW(err, SW_OK, "Failed to select applet");
         break;
     case INIT_MODE_PATTERN_NO_RESET:

@@ -3,7 +3,7 @@
  * @author NXP Semiconductors
  * @version 1.0
  * @par License
- * Copyright 2017,2018 NXP
+ * Copyright 2017,2018,2020 NXP
  *
  * This software is owned or controlled by NXP and may only be used
  * strictly in accordance with the applicable license terms.  By expressly
@@ -39,7 +39,7 @@
 
 #include <fsl_sss_api.h>
 
-#if SSS_HAVE_A71CH || SSS_HAVE_SE050_EAR_CH
+#if SSS_HAVE_A71CH || SSS_HAVE_A71CH_SIM
 #endif
 #include "gcp_iot_config.h"
 #include "mbedtls/platform.h"
@@ -86,6 +86,9 @@ ex_sss_cloud_ctx_t *pex_sss_demo_tls_ctx = &gex_sss_demo_tls_ctx;
 
 sss_status_t ex_sss_entry(ex_sss_boot_ctx_t *pCtx)
 {
+    pex_sss_demo_tls_ctx->client_keyPair_index = SSS_KEYPAIR_INDEX_CLIENT_PRIVATE;
+    pex_sss_demo_tls_ctx->client_cert_index = SSS_CERTIFICATE_INDEX;
+
     gcp_jwt_task((void*)pCtx);
 
     /* Should not reach this statement */

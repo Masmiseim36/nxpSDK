@@ -16,12 +16,12 @@
  * Definitions
  ******************************************************************************/
 #define LED_INIT() LED_RED_INIT(LOGIC_LED_OFF)
-#define LED_ON() LED_RED_ON()
-#define LED_OFF() LED_RED_OFF()
+#define LED_ON()   LED_RED_ON()
+#define LED_OFF()  LED_RED_OFF()
 
-#define DEMO_CMP_BASE CMP0
+#define DEMO_CMP_BASE         CMP0
 #define DEMO_CMP_USER_CHANNEL 1U /* PTC7, CMP0_IN1, J1-11 on board FRDM K82F */
-#define DEMO_CMP_DAC_CHANNEL 7U
+#define DEMO_CMP_DAC_CHANNEL  7U
 
 /*******************************************************************************
  * Prototypes

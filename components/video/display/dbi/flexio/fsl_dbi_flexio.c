@@ -26,13 +26,13 @@ static void DBI_FLEXIO_TransferCompletedCallback(FLEXIO_MCULCD_Type *base,
 #if (defined(FSL_FEATURE_SOC_EDMA_COUNT) && FSL_FEATURE_SOC_EDMA_COUNT)
 
 /* Wrapper for DMA and eDMA transfer. */
-#define _DBI_FLEXIO_TransferDMA FLEXIO_MCULCD_TransferEDMA
+#define _DBI_FLEXIO_TransferDMA             FLEXIO_MCULCD_TransferEDMA
 #define _DBI_FLEXIO_TransferCreateHandleDMA FLEXIO_MCULCD_TransferCreateHandleEDMA
 
 #else
 
 /* Wrapper for DMA and eDMA transfer. */
-#define _DBI_FLEXIO_TransferDMA FLEXIO_MCULCD_TransferDMA
+#define _DBI_FLEXIO_TransferDMA             FLEXIO_MCULCD_TransferDMA
 #define _DBI_FLEXIO_TransferCreateHandleDMA FLEXIO_MCULCD_TransferCreateHandleDMA
 
 #endif

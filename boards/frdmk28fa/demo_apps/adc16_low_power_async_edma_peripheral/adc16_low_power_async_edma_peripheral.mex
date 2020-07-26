@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding= "UTF-8" ?>
-<configuration name="MK28FN2M0Axxx15" version="1.6" xsi:schemaLocation="http://mcuxpresso.nxp.com/XSD/mex_configuration_1.6 http://mcuxpresso.nxp.com/XSD/mex_configuration_1.6.xsd" uuid="57e2dc6d-977b-4416-b6f2-c3d343e49841" xmlns="http://mcuxpresso.nxp.com/XSD/mex_configuration_1.6" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<configuration name="MK28FN2M0Axxx15" version="1.6" xsi:schemaLocation="http://mcuxpresso.nxp.com/XSD/mex_configuration_1.7 http://mcuxpresso.nxp.com/XSD/mex_configuration_1.7.xsd" uuid="5e532ae0-1728-4041-99ef-0aaff6762c6c" xmlns="http://mcuxpresso.nxp.com/XSD/mex_configuration_1.7" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
    <common>
       <processor>MK28FN2M0Axxx15</processor>
       <package>MK28FN2M0AVMI15</package>
-      <board></board>
+      <board>FRDM-K28FA</board>
       <mcu_data>ksdk2_0</mcu_data>
       <cores selected="core0">
          <core name="Cortex-M4F" id="core0" description="M4 core"/>
       </cores>
-      <description>Configuration imported from C:\Users\nxf47778\Documents\mcu-sdk-2.0\boards\frdmk28fa\demo_apps\adc16_low_power_async_edma_peripheral\iar</description>
    </common>
    <preferences>
       <validate_boot_init_only>true</validate_boot_init_only>
@@ -16,24 +15,26 @@
       <generate_code_modified_registers_only>false</generate_code_modified_registers_only>
    </preferences>
    <tools>
-      <pins name="Pins" version="6.0" enabled="true" update_project_code="false">
-         <generated_project_files>
-            <file path="../pin_mux.c" update_enabled="false"/>
-            <file path="../pin_mux.h" update_enabled="false"/>
-         </generated_project_files>
+      <pins name="Pins" version="7.0" enabled="true" update_project_code="true">
          <pins_profile>
-            <processor_version>6.0.1</processor_version>
+            <processor_version>0.7.4</processor_version>
          </pins_profile>
          <functions_list>
             <function name="BOARD_InitPins">
                <description>Configures pin routing and optionally pin electrical features.</description>
                <options>
                   <callFromInitBoot>true</callFromInitBoot>
+                  <prefix>BOARD_</prefix>
                   <coreID>core0</coreID>
                   <enableClock>true</enableClock>
                </options>
                <dependencies>
                   <dependency resourceType="Peripheral" resourceId="LPUART0" description="Peripheral LPUART0 is not initialized" problem_level="1" source="Pins:BOARD_InitPins">
+                     <feature name="initialized" evaluation="equal">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="Peripheral" resourceId="TPIU" description="Peripheral TPIU is not initialized" problem_level="1" source="Pins:BOARD_InitPins">
                      <feature name="initialized" evaluation="equal">
                         <data>true</data>
                      </feature>
@@ -62,17 +63,19 @@
                         <pin_feature name="direction" value="OUTPUT"/>
                      </pin_features>
                   </pin>
+                  <pin peripheral="TPIU" signal="SWO" pin_num="M9" pin_signal="PTA2/LPUART0_TX/FTM0_CH7/I2C3_SCL/FXIO0_D12/JTAG_TDO/TRACE_SWO">
+                     <pin_features>
+                        <pin_feature name="pull_select" value="down"/>
+                        <pin_feature name="pull_enable" value="disable"/>
+                     </pin_features>
+                  </pin>
                </pins>
             </function>
          </functions_list>
       </pins>
-      <clocks name="Clocks" version="6.0" enabled="true" update_project_code="false">
-         <generated_project_files>
-            <file path="../../../clock_config.c" update_enabled="false"/>
-            <file path="../../../clock_config.h" update_enabled="false"/>
-         </generated_project_files>
+      <clocks name="Clocks" version="7.0" enabled="true" update_project_code="true">
          <clocks_profile>
-            <processor_version>6.0.1</processor_version>
+            <processor_version>0.7.4</processor_version>
          </clocks_profile>
          <clock_configurations>
             <clock_configuration name="BOARD_BootClockRUN">
@@ -265,108 +268,81 @@
          </clock_configurations>
       </clocks>
       <dcdx name="DCDx" version="2.0" enabled="false" update_project_code="true">
-         <generated_project_files/>
          <dcdx_profile>
             <processor_version>N/A</processor_version>
          </dcdx_profile>
          <dcdx_configurations/>
       </dcdx>
-      <periphs name="Peripherals" version="6.0" enabled="true" update_project_code="true">
+      <periphs name="Peripherals" version="7.0" enabled="true" update_project_code="true">
          <dependencies>
-            <dependency resourceType="SWComponent" resourceId="platform.drivers.lptmr" description="LPTMR Driver not found in the toolchain/IDE project." problem_level="2" source="Peripherals">
+            <dependency resourceType="SWComponent" resourceId="platform.drivers.adc16" description="ADC16 Driver not found in the toolchain/IDE project. Project will not compile!" problem_level="2" source="Peripherals">
                <feature name="enabled" evaluation="equal">
                   <data type="Boolean">true</data>
                </feature>
             </dependency>
-            <dependency resourceType="SWComponent" resourceId="platform.drivers.lptmr" description="Unsupported version of the LPTMR Driver in the toolchain/IDE project. Required: ${required_value}, actual: ${actual_value}." problem_level="1" source="Peripherals">
-               <feature name="version" evaluation="equivalent">
-                  <data type="Version">2.0.1</data>
-               </feature>
-            </dependency>
-            <dependency resourceType="SWComponent" resourceId="platform.drivers.adc16" description="ADC16 Driver not found in the toolchain/IDE project." problem_level="2" source="Peripherals">
-               <feature name="enabled" evaluation="equal">
-                  <data type="Boolean">true</data>
-               </feature>
-            </dependency>
-            <dependency resourceType="SWComponent" resourceId="platform.drivers.adc16" description="Unsupported version of the ADC16 Driver in the toolchain/IDE project. Required: ${required_value}, actual: ${actual_value}." problem_level="1" source="Peripherals">
+            <dependency resourceType="SWComponent" resourceId="platform.drivers.adc16" description="Unsupported version of the ADC16 Driver in the toolchain/IDE project. Required: ${required_value}, actual: ${actual_value}. Project might not compile correctly." problem_level="1" source="Peripherals">
                <feature name="version" evaluation="equivalent">
                   <data type="Version">2.0.0</data>
                </feature>
             </dependency>
-            <dependency resourceType="SWComponent" resourceId="platform.drivers.edma" description="EDMA Driver not found in the toolchain/IDE project." problem_level="2" source="Peripherals">
+            <dependency resourceType="SWComponent" resourceId="platform.drivers.lptmr" description="LPTMR Driver not found in the toolchain/IDE project. Project will not compile!" problem_level="2" source="Peripherals">
                <feature name="enabled" evaluation="equal">
                   <data type="Boolean">true</data>
                </feature>
             </dependency>
-            <dependency resourceType="SWComponent" resourceId="platform.drivers.edma" description="Unsupported version of the EDMA Driver in the toolchain/IDE project. Required: ${required_value}, actual: ${actual_value}." problem_level="1" source="Peripherals">
+            <dependency resourceType="SWComponent" resourceId="platform.drivers.lptmr" description="Unsupported version of the LPTMR Driver in the toolchain/IDE project. Required: ${required_value}, actual: ${actual_value}. Project might not compile correctly." problem_level="1" source="Peripherals">
+               <feature name="version" evaluation="equivalent">
+                  <data type="Version">2.0.1</data>
+               </feature>
+            </dependency>
+            <dependency resourceType="SWComponent" resourceId="platform.drivers.edma" description="EDMA Driver not found in the toolchain/IDE project. Project will not compile!" problem_level="2" source="Peripherals">
+               <feature name="enabled" evaluation="equal">
+                  <data type="Boolean">true</data>
+               </feature>
+            </dependency>
+            <dependency resourceType="SWComponent" resourceId="platform.drivers.edma" description="Unsupported version of the EDMA Driver in the toolchain/IDE project. Required: ${required_value}, actual: ${actual_value}. Project might not compile correctly." problem_level="1" source="Peripherals">
                <feature name="version" evaluation="equivalent">
                   <data type="Version">2.1.1</data>
                </feature>
             </dependency>
          </dependencies>
-         <generated_project_files>
-            <file path="../peripherals.c" update_enabled="true"/>
-            <file path="../peripherals.h" update_enabled="true"/>
-         </generated_project_files>
          <peripherals_profile>
-            <processor_version>6.0.1</processor_version>
+            <processor_version>0.7.4</processor_version>
          </peripherals_profile>
          <functional_groups>
-            <functional_group name="BOARD_InitPeripherals" uuid="ff5e8cb6-8ec2-4896-8c9c-08ce9863b576" called_from_default_init="true" id_prefix="DEMO_" core="core0">
+            <functional_group name="BOARD_InitPeripherals" uuid="c4cbf308-f2d2-4974-b2f5-e7c794f175b9" called_from_default_init="true" id_prefix="DEMO_" core="core0">
                <description></description>
                <options/>
                <dependencies>
-                  <dependency resourceType="ClockOutput" resourceId="LPO_clock" description="LPO clock is inactive." problem_level="2" source="Peripherals:BOARD_InitPeripherals">
-                     <feature name="frequency" evaluation="greaterThan">
-                        <data type="Frequency" unit="Hz">0</data>
-                     </feature>
-                  </dependency>
-                  <dependency resourceType="Peripheral" resourceId="ADC0" description="At least one of ADC0 hardware triggers (A or B) needs to be routed." problem_level="1" source="Peripherals:BOARD_InitPeripherals">
+                  <dependency resourceType="Peripheral" resourceId="ADC0" description="At least one of ADC0 hardware triggers (A or B) needs to be routed. Problem must be resolved in another tool." problem_level="1" source="Peripherals:BOARD_InitPeripherals">
                      <feature name="routedUnifiedSignals" evaluation="includesAny">
                         <data type="String">ADC0.adc_trigger.A</data>
                         <data type="String">ADC0.adc_trigger.B</data>
                      </feature>
                   </dependency>
-                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="ADC0.adc_se.26" description="Signal SE of the channel 26 of the peripheral ADC0 is not routed." problem_level="1" source="Peripherals:BOARD_InitPeripherals">
+                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="ADC0.adc_se.26" description="Signal SE of the channel 26 of the peripheral ADC0 is not routed. Problem must be resolved in another tool." problem_level="1" source="Peripherals:BOARD_InitPeripherals">
                      <feature name="routed" evaluation="">
                         <data type="Boolean">true</data>
                      </feature>
                   </dependency>
-                  <dependency resourceType="SWComponent" resourceId="platform.drivers.dmamux" description="The fsl_flexio_uart_dma driver is missing in the project (required for the eDMA)." problem_level="1" source="Peripherals:BOARD_InitPeripherals">
+                  <dependency resourceType="ClockOutput" resourceId="LPO_clock" description="LPO clock is inactive. Problem must be resolved in another tool." problem_level="2" source="Peripherals:BOARD_InitPeripherals">
+                     <feature name="frequency" evaluation="greaterThan">
+                        <data type="Frequency" unit="Hz">0</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="SWComponent" resourceId="platform.drivers.dmamux" description="The fsl_dmamux driver is missing in the project (required for the eDMA). Problem must be resolved in another tool." problem_level="1" source="Peripherals:BOARD_InitPeripherals">
                      <feature name="enabled" evaluation="equal">
                         <data type="Boolean">true</data>
                      </feature>
                   </dependency>
-                  <dependency resourceType="SWComponent" resourceId="platform.drivers.dmamux" description="The compatible version of the fsl_flexio_uart_dma driver is not available in the project (required for the eDMA)." problem_level="1" source="Peripherals:BOARD_InitPeripherals">
+                  <dependency resourceType="SWComponent" resourceId="platform.drivers.dmamux" description="The compatible version of the fsl_dmamux driver is not available in the project (required for the eDMA). Problem must be resolved in another tool." problem_level="1" source="Peripherals:BOARD_InitPeripherals">
                      <feature name="version" evaluation="compatible">
                         <data type="Version">2.0.2</data>
                      </feature>
                   </dependency>
                </dependencies>
                <instances>
-                  <instance name="LPTMR" type="lptmr" type_id="lptmr_2eeab91a1a42f8238f9ac768f18c65ae" mode="LPTMR_GENERAL" peripheral="LPTMR0" enabled="true">
-                     <config_set name="fsl_lptmr">
-                        <setting name="enableInterrupt" value="false"/>
-                        <struct name="interrupt">
-                           <setting name="IRQn" value="LPTMR0_LPTMR1_IRQn"/>
-                           <setting name="enable_priority" value="false"/>
-                           <setting name="priority" value="0"/>
-                           <setting name="enable_custom_name" value="false"/>
-                        </struct>
-                        <struct name="lptmr_config">
-                           <setting name="timerMode" value="kLPTMR_TimerModeTimeCounter"/>
-                           <setting name="pinSelect" value="ALT.0"/>
-                           <setting name="pinPolarity" value="kLPTMR_PinPolarityActiveHigh"/>
-                           <setting name="enableFreeRunning" value="false"/>
-                           <setting name="bypassPrescaler" value="true"/>
-                           <setting name="prescalerClockSource" value="kLPTMR_PrescalerClock_1"/>
-                           <setting name="clockSource" value="BOARD_BootClockRUN"/>
-                           <setting name="value" value="kLPTMR_Prescale_Glitch_0"/>
-                           <setting name="timerPeriod" value="100000"/>
-                        </struct>
-                     </config_set>
-                  </instance>
-                  <instance name="ADC16" type="adc16" type_id="adc16_7d827be2dc433dc756d94a7ce88cbcc5" mode="ADC" peripheral="ADC0" enabled="true">
+                  <instance name="ADC16" uuid="401ec744-851c-43ab-9b84-dac212e405eb" type="adc16" type_id="adc16_7d827be2dc433dc756d94a7ce88cbcc5" mode="ADC" peripheral="ADC0" enabled="true" comment="" custom_name_enabled="true">
                      <config_set name="fsl_adc16">
                         <struct name="adc16_config">
                            <setting name="referenceVoltageSource" value="kADC16_ReferenceVoltageSourceVref"/>
@@ -405,7 +381,29 @@
                         </array>
                      </config_set>
                   </instance>
-                  <instance name="eDMA" type="edma" type_id="edma_a23fca76a894e1bcdf9d01a687505ff9" mode="basic" peripheral="DMA" enabled="true">
+                  <instance name="LPTMR" uuid="4a36f8ad-7dc3-4f74-83f2-782cab8489bf" type="lptmr" type_id="lptmr_2eeab91a1a42f8238f9ac768f18c65ae" mode="LPTMR_GENERAL" peripheral="LPTMR0" enabled="true" comment="" custom_name_enabled="true">
+                     <config_set name="fsl_lptmr">
+                        <struct name="lptmr_config">
+                           <setting name="timerMode" value="kLPTMR_TimerModeTimeCounter"/>
+                           <setting name="pinSelect" value="ALT.0"/>
+                           <setting name="pinPolarity" value="kLPTMR_PinPolarityActiveHigh"/>
+                           <setting name="enableFreeRunning" value="false"/>
+                           <setting name="bypassPrescaler" value="true"/>
+                           <setting name="prescalerClockSource" value="kLPTMR_PrescalerClock_1"/>
+                           <setting name="clockSource" value="BOARD_BootClockRUN"/>
+                           <setting name="value" value="kLPTMR_Prescale_Glitch_0"/>
+                           <setting name="timerPeriod" value="100000"/>
+                        </struct>
+                        <setting name="enableInterrupt" value="false"/>
+                        <struct name="interrupt">
+                           <setting name="IRQn" value="LPTMR0_LPTMR1_IRQn"/>
+                           <setting name="enable_priority" value="false"/>
+                           <setting name="priority" value="0"/>
+                           <setting name="enable_custom_name" value="false"/>
+                        </struct>
+                     </config_set>
+                  </instance>
+                  <instance name="eDMA" uuid="98d05b1d-e4d3-4e11-9062-b81d8c8bb7e3" type="edma" type_id="edma_a23fca76a894e1bcdf9d01a687505ff9" mode="basic" peripheral="DMA" enabled="true" comment="" custom_name_enabled="true">
                      <config_set name="fsl_edma">
                         <struct name="common_settings">
                            <setting name="enableContinuousLinkMode" value="false"/>
@@ -422,6 +420,7 @@
                                  <setting name="channel_prefix_id" value="ADC0"/>
                                  <setting name="eDMAn" value="0"/>
                                  <setting name="eDMA_source" value="kDmaRequestMux0ADC0"/>
+                                 <setting name="enableTriggerPIT" value="false"/>
                                  <setting name="enable_custom_name" value="false"/>
                               </struct>
                               <setting name="init_callback" value="false"/>
@@ -458,23 +457,19 @@
             </functional_group>
          </functional_groups>
          <components>
-            <component name="system" type_id="system_54b53072540eeeb8f8e9343e71f28176">
+            <component name="system" uuid="de942cba-39f7-4773-919f-e2c40787d3fa" type_id="system_54b53072540eeeb8f8e9343e71f28176">
                <config_set_global name="global_system_definitions"/>
             </component>
-            <component name="msg" type_id="msg_6e2baaf3b97dbeef01c0043275f9a0e7">
+            <component name="msg" uuid="a174f191-984e-4d3c-91ca-9bade0de49f2" type_id="msg_6e2baaf3b97dbeef01c0043275f9a0e7">
                <config_set_global name="global_messages"/>
             </component>
          </components>
       </periphs>
       <tee name="TEE" version="1.0" enabled="false" update_project_code="true">
-         <generated_project_files/>
-         <ahb simple_master_in_strict_mode="false" smart_master_in_strict_mode="false">
-            <masters/>
-            <peripherals/>
-            <interrupts/>
-            <pins_masks/>
-         </ahb>
-         <sau enabled="false"/>
+         <tee_profile>
+            <processor_version>N/A</processor_version>
+         </tee_profile>
+         <global_options/>
          <user_memory_regions/>
       </tee>
    </tools>

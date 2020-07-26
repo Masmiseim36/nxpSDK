@@ -3,7 +3,7 @@
  * @author NXP Semiconductors
  * @version 1.0
  * @par License
- * Copyright 2017 NXP
+ * Copyright 2017,2020 NXP
  *
  * This software is owned or controlled by NXP and may only be used
  * strictly in accordance with the applicable license terms.  By expressly
@@ -31,7 +31,7 @@
 #include <a71ch_api.h>
 #include <a71_debug.h>
 
-#if SSS_HAVE_A71CH || SSS_HAVE_SE050_EAR_CH
+#if SSS_HAVE_A71CH || SSS_HAVE_A71CH_SIM
 
 /// Key Operations
 typedef struct {
@@ -1482,6 +1482,9 @@ HLSE_RET_CODE   HLSE_GetObjectAttribute(HLSE_OBJECT_HANDLE hObject, HLSE_ATTRIBU
                     return lReturn;
                 }
 
+                if (attribute->value == NULL) {
+                    return HLSE_ERR_MEMORY;
+                }
                 memcpy(attribute->value, &offset, sizeof(offset));
                 attribute->valueLen = sizeof(offset);
                 return lReturn;
@@ -2027,7 +2030,7 @@ HLSE_RET_CODE HLSE_CloseConnection(HLSE_CLOSE_CONNECTION_MODE mode)
         return HLSE_ERR_API_ERROR;
     }
 
-    return SM_Close((U8)mode);
+    return SM_Close(NULL, (U8)mode);
 }
 
 HLSE_RET_CODE HLSE_Connect(HLSE_CONNECTION_PARAMS* params, HLSE_COMMUNICATION_STATE *commState)
@@ -2042,7 +2045,7 @@ HLSE_RET_CODE HLSE_Connect(HLSE_CONNECTION_PARAMS* params, HLSE_COMMUNICATION_ST
         }
 #endif
 
-        lReturn = SM_RjctConnect((const char *)params->pParameter, &a71SmCommState, commState->atr, &(commState->atrLen));
+        lReturn = SM_RjctConnect(NULL, (const char *)params->pParameter, &a71SmCommState, commState->atr, &(commState->atrLen));
         if (lReturn != SW_OK)
             return lReturn;
 
@@ -2058,7 +2061,7 @@ HLSE_RET_CODE HLSE_Connect(HLSE_CONNECTION_PARAMS* params, HLSE_COMMUNICATION_ST
         }
 #endif
 
-        lReturn = SM_Connect(&a71SmCommState, commState->atr, &(commState->atrLen));
+        lReturn = SM_Connect(NULL, &a71SmCommState, commState->atr, &(commState->atrLen));
 
         if (lReturn != SW_OK) {
             return lReturn;
@@ -2113,8 +2116,8 @@ HLSE_RET_CODE HLSE_SMChannelAuthenticate(HLSE_SECURE_CHANNEL_ESTABLISH_PARAMS* p
 #endif
 #if defined(USE_HOSTCRYPTO_FOR_SCP03)
     HLSE_SCP03_CHANNEL_STATE *scp03ChannelState;
-#endif
     U16 counterLen = 16;
+#endif
     U16 lReturn = ERR_COMM_ERROR;
 
 #ifndef HLSE_IGNORE_PARAM_CHECK
@@ -2141,17 +2144,11 @@ HLSE_RET_CODE HLSE_SMChannelAuthenticate(HLSE_SECURE_CHANNEL_ESTABLISH_PARAMS* p
 
 #if defined(USE_HOSTCRYPTO_FOR_SCP03)
     lReturn = SCP_Authenticate(scp03EstablishParams->keyEnc, scp03EstablishParams->keyMac, scp03EstablishParams->keyDek, 16, scp03ChannelState->cCounter, &counterLen);
+    if (lReturn == SW_OK) {
+        channelState->ulParameterLen = counterLen;
+    }
 #endif
-//fix coverity issue fileInstanceId=301668246&defectInstanceId=329073129&mergedDefectId=8606953
-    if (lReturn != SW_OK)
-    {
-        return lReturn;
-    }
-    else
-    {
-    channelState->ulParameterLen = counterLen;
-    return HLSE_SW_OK;
-    }
+    return lReturn;
 }
 
 HLSE_RET_CODE HLSE_SMChannelGetScpSessionState(HLSE_SECURE_CHANNEL_SESSION_STATE *channelState)
@@ -2215,5 +2212,5 @@ HLSE_RET_CODE Debug_ForceReadGPDataTable()
     return ReadGPDataTable(&table, 1);
 }
 
-#endif /* SSS_HAVE_A71CH || SSS_HAVE_SE050_EAR_CH */
+#endif /* SSS_HAVE_A71CH || SSS_HAVE_A71CH_SIM */
 

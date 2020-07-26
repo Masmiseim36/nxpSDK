@@ -47,21 +47,21 @@
 /* If Win32 port */
 #ifdef WIN32
 
-	#undef _WIN32_WINNT
-	#define _WIN32_WINNT 0x0600
+#undef _WIN32_WINNT
+#define _WIN32_WINNT 0x0600
 
-	/* Standard includes. */
-	#include <stdio.h>
-	#include <windows.h>
-	#include <direct.h>
+/* Standard includes. */
+#include <stdio.h>
+#include <windows.h>
+#include <direct.h>
 
 /*******************************************************************************
  * The Win32 port by default saves the trace to file and then kills the
  * program when the recorder is stopped, to facilitate quick, simple tests
  * of the recorder.
  ******************************************************************************/
-	#define WIN32_PORT_SAVE_WHEN_STOPPED 1
-	#define WIN32_PORT_EXIT_WHEN_STOPPED 1
+#define WIN32_PORT_SAVE_WHEN_STOPPED 1
+#define WIN32_PORT_EXIT_WHEN_STOPPED 1
 
 #endif
 
@@ -99,26 +99,26 @@
  *****************************************************************************/
 
 /****** Port Name ********************** Code ***** Official ** OS Platform *********/
-#define PORT_APPLICATION_DEFINED			-2	/*	-			-					*/
-#define PORT_NOT_SET						-1	/*	-			-					*/
-#define PORT_HWIndependent					0	/*	Yes			Any					*/
-#define PORT_Win32							1	/*	Yes			FreeRTOS on Win32	*/
-#define PORT_Atmel_AT91SAM7					2	/*	No			Any					*/
-#define PORT_Atmel_UC3A0					3	/*	No			Any					*/
-#define PORT_ARM_CortexM					4	/*	Yes			Any					*/
-#define PORT_ARM_CortexM_SysTick			5	/*	Yes			Any					*/
-#define PORT_Renesas_RX600					6	/*	Yes			Any					*/
-#define PORT_Microchip_dsPIC_AND_PIC24		7	/*	Yes			Any					*/
-#define PORT_TEXAS_INSTRUMENTS_TMS570		8	/*	No			Any					*/
-#define PORT_TEXAS_INSTRUMENTS_MSP430		9	/*	No			Any					*/
-#define PORT_MICROCHIP_PIC32MX				10	/*	Yes			Any					*/
-#define PORT_XILINX_PPC405					11	/*	No			FreeRTOS			*/
-#define PORT_XILINX_PPC440					12	/*	No			FreeRTOS			*/
-#define PORT_XILINX_MICROBLAZE				13	/*	No			Any					*/
-#define PORT_NXP_LPC210X					14	/*	No			Any					*/
-#define PORT_MICROCHIP_PIC32MZ				15	/*	Yes			Any					*/
-#define PORT_ARM_CORTEX_A9					16	/*	Yes			Any					*/
-#define PORT_ARM_CORTEX_M0					17	/*	Yes			Any					*/
+#define PORT_APPLICATION_DEFINED -2      /*	-			-					*/
+#define PORT_NOT_SET -1                  /*	-			-					*/
+#define PORT_HWIndependent 0             /*	Yes			Any					*/
+#define PORT_Win32 1                     /*	Yes			FreeRTOS on Win32	*/
+#define PORT_Atmel_AT91SAM7 2            /*	No			Any					*/
+#define PORT_Atmel_UC3A0 3               /*	No			Any					*/
+#define PORT_ARM_CortexM 4               /*	Yes			Any					*/
+#define PORT_ARM_CortexM_SysTick 5       /*	Yes			Any					*/
+#define PORT_Renesas_RX600 6             /*	Yes			Any					*/
+#define PORT_Microchip_dsPIC_AND_PIC24 7 /*	Yes			Any					*/
+#define PORT_TEXAS_INSTRUMENTS_TMS570 8  /*	No			Any					*/
+#define PORT_TEXAS_INSTRUMENTS_MSP430 9  /*	No			Any					*/
+#define PORT_MICROCHIP_PIC32MX 10        /*	Yes			Any					*/
+#define PORT_XILINX_PPC405 11            /*	No			FreeRTOS			*/
+#define PORT_XILINX_PPC440 12            /*	No			FreeRTOS			*/
+#define PORT_XILINX_MICROBLAZE 13        /*	No			Any					*/
+#define PORT_NXP_LPC210X 14              /*	No			Any					*/
+#define PORT_MICROCHIP_PIC32MZ 15        /*	Yes			Any					*/
+#define PORT_ARM_CORTEX_A9 16            /*	Yes			Any					*/
+#define PORT_ARM_CORTEX_M0 17            /*	Yes			Any					*/
 
 #include "trcConfig.h"
 
@@ -183,305 +183,311 @@
  ******************************************************************************/
 
 #if (SELECTED_PORT == PORT_Win32)
-	// This can be used as a template for any free-running 32-bit counter
-	#define HWTC_COUNT_DIRECTION DIRECTION_INCREMENTING
-	#define HWTC_TYPE HWTC_TYPE_FREERUNNING
-	#define HWTC_COUNT (ulGetRunTimeCounterValue())
-	#define HWTC_PERIOD 0
-	#define HWTC_DIVISOR 1
-	// Please update according to your system...
-	#define IRQ_PRIORITY_ORDER 1
+// This can be used as a template for any free-running 32-bit counter
+#define HWTC_COUNT_DIRECTION DIRECTION_INCREMENTING
+#define HWTC_TYPE HWTC_TYPE_FREERUNNING
+#define HWTC_COUNT (ulGetRunTimeCounterValue())
+#define HWTC_PERIOD 0
+#define HWTC_DIVISOR 1
+// Please update according to your system...
+#define IRQ_PRIORITY_ORDER 1
 
 #elif (SELECTED_PORT == PORT_HWIndependent)
-	// OS Tick only (typically 1 ms resolution)
-	#define HWTC_COUNT_DIRECTION DIRECTION_INCREMENTING
-	#define HWTC_TYPE HWTC_TYPE_SYSTICK
-	#define HWTC_COUNT 0
-	#define HWTC_PERIOD 1
-	#define HWTC_DIVISOR 1
+// OS Tick only (typically 1 ms resolution)
+#define HWTC_COUNT_DIRECTION DIRECTION_INCREMENTING
+#define HWTC_TYPE HWTC_TYPE_SYSTICK
+#define HWTC_COUNT 0
+#define HWTC_PERIOD 1
+#define HWTC_DIVISOR 1
 
-	// Please update according to your system...
-	#define IRQ_PRIORITY_ORDER NOT_SET
-
+// Please update according to your system...
+#define IRQ_PRIORITY_ORDER NOT_SET
 
 #elif (SELECTED_PORT == PORT_ARM_CortexM)
 
-	void prvTraceInitCortexM(void);
+void prvTraceInitCortexM(void);
 
-	#define REG_DEMCR (*(volatile uint32_t*)0xE000EDFC)
-	#define REG_DWT_CTRL (*(volatile uint32_t*)0xE0001000)
-	#define REG_DWT_CYCCNT (*(volatile uint32_t*)0xE0001004)
-	#define REG_DWT_EXCCNT (*(volatile uint32_t*)0xE000100C)
+#define REG_DEMCR (*(volatile uint32_t *)0xE000EDFC)
+#define REG_DWT_CTRL (*(volatile uint32_t *)0xE0001000)
+#define REG_DWT_CYCCNT (*(volatile uint32_t *)0xE0001004)
+#define REG_DWT_EXCCNT (*(volatile uint32_t *)0xE000100C)
 
-	/* Bit mask for TRCENA bit in DEMCR - Global enable for DWT and ITM */
-	#define DEMCR_TRCENA (1 << 24)
+/* Bit mask for TRCENA bit in DEMCR - Global enable for DWT and ITM */
+#define DEMCR_TRCENA (1 << 24)
 
-	/* Bit mask for NOPRFCNT bit in DWT_CTRL. If 1, DWT_EXCCNT is not supported */
-	#define DWT_CTRL_NOPRFCNT (1 << 24)
+/* Bit mask for NOPRFCNT bit in DWT_CTRL. If 1, DWT_EXCCNT is not supported */
+#define DWT_CTRL_NOPRFCNT (1 << 24)
 
-	/* Bit mask for NOCYCCNT bit in DWT_CTRL. If 1, DWT_CYCCNT is not supported */
-	#define DWT_CTRL_NOCYCCNT (1 << 25)
+/* Bit mask for NOCYCCNT bit in DWT_CTRL. If 1, DWT_CYCCNT is not supported */
+#define DWT_CTRL_NOCYCCNT (1 << 25)
 
-	/* Bit mask for EXCEVTENA_ bit in DWT_CTRL. Set to 1 to enable DWT_EXCCNT */
-	#define DWT_CTRL_EXCEVTENA (1 << 18)
+/* Bit mask for EXCEVTENA_ bit in DWT_CTRL. Set to 1 to enable DWT_EXCCNT */
+#define DWT_CTRL_EXCEVTENA (1 << 18)
 
-	/* Bit mask for EXCEVTENA_ bit in DWT_CTRL. Set to 1 to enable DWT_CYCCNT */
-	#define DWT_CTRL_CYCCNTENA (1)
+/* Bit mask for EXCEVTENA_ bit in DWT_CTRL. Set to 1 to enable DWT_CYCCNT */
+#define DWT_CTRL_CYCCNTENA (1)
 
-	#define PORT_SPECIFIC_INIT() prvTraceInitCortexM()
+#define PORT_SPECIFIC_INIT() prvTraceInitCortexM()
 
-	extern uint32_t DWT_CYCLES_ADDED;
+extern uint32_t DWT_CYCLES_ADDED;
 
-	#define HWTC_COUNT_DIRECTION DIRECTION_INCREMENTING
-	#define HWTC_TYPE HWTC_TYPE_FREERUNNING
-	#define HWTC_COUNT (REG_DWT_CYCCNT + DWT_CYCLES_ADDED)
-	#define HWTC_PERIOD 0
-	#define HWTC_DIVISOR 4
+#define HWTC_COUNT_DIRECTION DIRECTION_INCREMENTING
+#define HWTC_TYPE HWTC_TYPE_FREERUNNING
+#define HWTC_COUNT (REG_DWT_CYCCNT + DWT_CYCLES_ADDED)
+#define HWTC_PERIOD 0
+#define HWTC_DIVISOR 4
 
-	#define IRQ_PRIORITY_ORDER 0 // lower IRQ priority values are more significant
+#define IRQ_PRIORITY_ORDER 0 // lower IRQ priority values are more significant
 
 #elif (SELECTED_PORT == PORT_ARM_CortexM_SysTick)
 #define HWTC_COUNT_DIRECTION DIRECTION_DECREMENTING
 #define HWTC_TYPE HWTC_TYPE_SYSTICK
-#define HWTC_COUNT (*((volatile uint32_t*)0xE000E018))
-#define HWTC_PERIOD ((*((volatile uint32_t*)0xE000E014)) + 1)
+#define HWTC_COUNT (*((volatile uint32_t *)0xE000E018))
+#define HWTC_PERIOD ((*((volatile uint32_t *)0xE000E014)) + 1)
 #define HWTC_DIVISOR 4
 
 #define IRQ_PRIORITY_ORDER 0 // lower IRQ priority values are more significant
 
 #elif (SELECTED_PORT == PORT_ARM_CORTEX_M0)
-    #define HWTC_COUNT_DIRECTION DIRECTION_DECREMENTING
-    #define HWTC_TYPE HWTC_TYPE_SYSTICK
-    #define HWTC_COUNT (*((volatile uint32_t*)0xE000E018))
-    #define HWTC_PERIOD ((*((volatile uint32_t*)0xE000E014)) + 1)
-    #define HWTC_DIVISOR 2
-	
-    #define IRQ_PRIORITY_ORDER 0 // lower IRQ priority values are more significant
-	
+#define HWTC_COUNT_DIRECTION DIRECTION_DECREMENTING
+#define HWTC_TYPE HWTC_TYPE_SYSTICK
+#define HWTC_COUNT (*((volatile uint32_t *)0xE000E018))
+#define HWTC_PERIOD ((*((volatile uint32_t *)0xE000E014)) + 1)
+#define HWTC_DIVISOR 2
+
+#define IRQ_PRIORITY_ORDER 0 // lower IRQ priority values are more significant
+
 #elif (SELECTED_PORT == PORT_Renesas_RX600)
 
-	#include "iodefine.h"
+#include "iodefine.h"
 
-	#define HWTC_COUNT_DIRECTION DIRECTION_INCREMENTING
-	#define HWTC_TYPE HWTC_TYPE_SYSTICK
-	#define HWTC_COUNT (CMT0.CMCNT)
-	#define HWTC_PERIOD (CMT0.CMCOR + 1)
-	#define HWTC_DIVISOR 1
+#define HWTC_COUNT_DIRECTION DIRECTION_INCREMENTING
+#define HWTC_TYPE HWTC_TYPE_SYSTICK
+#define HWTC_COUNT (CMT0.CMCNT)
+#define HWTC_PERIOD (CMT0.CMCOR + 1)
+#define HWTC_DIVISOR 1
 
-	#define IRQ_PRIORITY_ORDER 1 // higher IRQ priority values are more significant
+#define IRQ_PRIORITY_ORDER 1 // higher IRQ priority values are more significant
 
 #elif ((SELECTED_PORT == PORT_MICROCHIP_PIC32MX) || (SELECTED_PORT == PORT_MICROCHIP_PIC32MZ))
 
-	#define HWTC_COUNT_DIRECTION DIRECTION_INCREMENTING
-	#define HWTC_TYPE HWTC_TYPE_SYSTICK
-	#define HWTC_COUNT (TMR1)
-	#define HWTC_PERIOD (PR1 + 1)
-	#define HWTC_DIVISOR 1
+#define HWTC_COUNT_DIRECTION DIRECTION_INCREMENTING
+#define HWTC_TYPE HWTC_TYPE_SYSTICK
+#define HWTC_COUNT (TMR1)
+#define HWTC_PERIOD (PR1 + 1)
+#define HWTC_DIVISOR 1
 
-	#define IRQ_PRIORITY_ORDER 0 // lower IRQ priority values are more significant
+#define IRQ_PRIORITY_ORDER 0 // lower IRQ priority values are more significant
 
 #elif (SELECTED_PORT == PORT_Microchip_dsPIC_AND_PIC24)
 
-	/* For Microchip PIC24 and dsPIC (16 bit) */
+/* For Microchip PIC24 and dsPIC (16 bit) */
 
-	/* Note: The trace library is designed for 32-bit MCUs and is slower than
-		intended on 16-bit MCUs. Storing an event on a PIC24 takes about 70 usec.
-		In comparison, this is 10-20 times faster on a 32-bit MCU... */
+/* Note: The trace library is designed for 32-bit MCUs and is slower than
+ intended on 16-bit MCUs. Storing an event on a PIC24 takes about 70 usec.
+ In comparison, this is 10-20 times faster on a 32-bit MCU... */
 
-	#define HWTC_COUNT_DIRECTION DIRECTION_INCREMENTING
-	#define HWTC_TYPE HWTC_TYPE_SYSTICK
-	#define HWTC_COUNT (TMR1)
-	#define HWTC_PERIOD (PR1+1)
-	#define HWTC_DIVISOR 1
+#define HWTC_COUNT_DIRECTION DIRECTION_INCREMENTING
+#define HWTC_TYPE HWTC_TYPE_SYSTICK
+#define HWTC_COUNT (TMR1)
+#define HWTC_PERIOD (PR1 + 1)
+#define HWTC_DIVISOR 1
 
-	#define IRQ_PRIORITY_ORDER 0 // lower IRQ priority values are more significant
+#define IRQ_PRIORITY_ORDER 0 // lower IRQ priority values are more significant
 
 #elif (SELECTED_PORT == PORT_Atmel_AT91SAM7)
 
-	/* UNOFFICIAL PORT - NOT YET VERIFIED BY PERCEPIO */
+/* UNOFFICIAL PORT - NOT YET VERIFIED BY PERCEPIO */
 
-	#define HWTC_COUNT_DIRECTION DIRECTION_INCREMENTING
-	#define HWTC_TYPE HWTC_TYPE_SYSTICK
-	#define HWTC_COUNT ((uint32_t)(AT91C_BASE_PITC->PITC_PIIR & 0xFFFFF))
-	#define HWTC_PERIOD ((uint32_t)(AT91C_BASE_PITC->PITC_PIMR + 1))
-	#define HWTC_DIVISOR 1
+#define HWTC_COUNT_DIRECTION DIRECTION_INCREMENTING
+#define HWTC_TYPE HWTC_TYPE_SYSTICK
+#define HWTC_COUNT ((uint32_t)(AT91C_BASE_PITC->PITC_PIIR & 0xFFFFF))
+#define HWTC_PERIOD ((uint32_t)(AT91C_BASE_PITC->PITC_PIMR + 1))
+#define HWTC_DIVISOR 1
 
-	#define IRQ_PRIORITY_ORDER 1 // higher IRQ priority values are more significant
+#define IRQ_PRIORITY_ORDER 1 // higher IRQ priority values are more significant
 
 #elif (SELECTED_PORT == PORT_Atmel_UC3A0)
 
-	/* UNOFFICIAL PORT - NOT YET VERIFIED BY PERCEPIO */
-	/* For Atmel AVR32 (AT32UC3A).*/
+/* UNOFFICIAL PORT - NOT YET VERIFIED BY PERCEPIO */
+/* For Atmel AVR32 (AT32UC3A).*/
 
-	#define HWTC_COUNT_DIRECTION DIRECTION_INCREMENTING
-	#define HWTC_TYPE HWTC_TYPE_SYSTICK
-	#define HWTC_COUNT ((uint32_t)sysreg_read(AVR32_COUNT))
-	#define HWTC_PERIOD ((uint32_t)(sysreg_read(AVR32_COMPARE) + 1))
-	#define HWTC_DIVISOR 1
+#define HWTC_COUNT_DIRECTION DIRECTION_INCREMENTING
+#define HWTC_TYPE HWTC_TYPE_SYSTICK
+#define HWTC_COUNT ((uint32_t)sysreg_read(AVR32_COUNT))
+#define HWTC_PERIOD ((uint32_t)(sysreg_read(AVR32_COMPARE) + 1))
+#define HWTC_DIVISOR 1
 
-	#define IRQ_PRIORITY_ORDER 1 // higher IRQ priority values are more significant
+#define IRQ_PRIORITY_ORDER 1 // higher IRQ priority values are more significant
 
 #elif (SELECTED_PORT == PORT_NXP_LPC210X)
 
-	/* UNOFFICIAL PORT - NOT YET VERIFIED BY PERCEPIO */
-	/* Tested with LPC2106, but should work with most LPC21XX chips. */
+/* UNOFFICIAL PORT - NOT YET VERIFIED BY PERCEPIO */
+/* Tested with LPC2106, but should work with most LPC21XX chips. */
 
-	#define HWTC_COUNT_DIRECTION DIRECTION_INCREMENTING
-	#define HWTC_TYPE HWTC_TYPE_SYSTICK
-	#define HWTC_COUNT *((uint32_t *)0xE0004008 )
-	#define HWTC_PERIOD *((uint32_t *)0xE0004018 )
-	#define HWTC_DIVISOR 1
+#define HWTC_COUNT_DIRECTION DIRECTION_INCREMENTING
+#define HWTC_TYPE HWTC_TYPE_SYSTICK
+#define HWTC_COUNT *((uint32_t *)0xE0004008)
+#define HWTC_PERIOD *((uint32_t *)0xE0004018)
+#define HWTC_DIVISOR 1
 
-	#define IRQ_PRIORITY_ORDER 0 // lower IRQ priority values are more significant
+#define IRQ_PRIORITY_ORDER 0 // lower IRQ priority values are more significant
 
 #elif (SELECTED_PORT == PORT_TEXAS_INSTRUMENTS_TMS570)
 
-	/* UNOFFICIAL PORT - NOT YET VERIFIED BY PERCEPIO */
+/* UNOFFICIAL PORT - NOT YET VERIFIED BY PERCEPIO */
 
-	#define TRC_RTIFRC0 *((uint32_t *)0xFFFFFC10)
-	#define TRC_RTICOMP0 *((uint32_t *)0xFFFFFC50)
-	#define TRC_RTIUDCP0 *((uint32_t *)0xFFFFFC54)
-	#define HWTC_COUNT_DIRECTION DIRECTION_INCREMENTING
-	#define HWTC_TYPE HWTC_TYPE_SYSTICK
-	#define HWTC_COUNT (TRC_RTIFRC0 - (TRC_RTICOMP0 - TRC_RTIUDCP0))
-	#define HWTC_PERIOD (RTIUDCP0)
-	#define HWTC_DIVISOR 1
+#define TRC_RTIFRC0 *((uint32_t *)0xFFFFFC10)
+#define TRC_RTICOMP0 *((uint32_t *)0xFFFFFC50)
+#define TRC_RTIUDCP0 *((uint32_t *)0xFFFFFC54)
+#define HWTC_COUNT_DIRECTION DIRECTION_INCREMENTING
+#define HWTC_TYPE HWTC_TYPE_SYSTICK
+#define HWTC_COUNT (TRC_RTIFRC0 - (TRC_RTICOMP0 - TRC_RTIUDCP0))
+#define HWTC_PERIOD (RTIUDCP0)
+#define HWTC_DIVISOR 1
 
-	#define IRQ_PRIORITY_ORDER 0 // lower IRQ priority values are more significant
+#define IRQ_PRIORITY_ORDER 0 // lower IRQ priority values are more significant
 
 #elif (SELECTED_PORT == PORT_TEXAS_INSTRUMENTS_MSP430)
 
-	/* UNOFFICIAL PORT - NOT YET VERIFIED BY PERCEPIO */
+/* UNOFFICIAL PORT - NOT YET VERIFIED BY PERCEPIO */
 
-	#define HWTC_COUNT_DIRECTION DIRECTION_INCREMENTING
-	#define HWTC_TYPE HWTC_TYPE_SYSTICK
-	#define HWTC_COUNT (TA0R)
-	#define HWTC_PERIOD (((uint16_t)TACCR0)+1)
-	#define HWTC_DIVISOR 1
-	#define IRQ_PRIORITY_ORDER 1 // higher IRQ priority values are more significant
+#define HWTC_COUNT_DIRECTION DIRECTION_INCREMENTING
+#define HWTC_TYPE HWTC_TYPE_SYSTICK
+#define HWTC_COUNT (TA0R)
+#define HWTC_PERIOD (((uint16_t)TACCR0) + 1)
+#define HWTC_DIVISOR 1
+#define IRQ_PRIORITY_ORDER 1 // higher IRQ priority values are more significant
 
 #elif (SELECTED_PORT == PORT_XILINX_PPC405)
 
-	/* UNOFFICIAL PORT - NOT YET VERIFIED BY PERCEPIO */
+/* UNOFFICIAL PORT - NOT YET VERIFIED BY PERCEPIO */
 
-	#define HWTC_COUNT_DIRECTION DIRECTION_DECREMENTING
-	#define HWTC_TYPE HWTC_TYPE_SYSTICK
-	#define HWTC_COUNT mfspr(0x3db)
-	#if (defined configCPU_CLOCK_HZ && defined configTICK_RATE_HZ) // Check if FreeRTOS
-		/* For FreeRTOS only - found no generic OS independent solution for the PPC405 architecture. */
-		#define HWTC_PERIOD ( configCPU_CLOCK_HZ / configTICK_RATE_HZ ) // Same as in port.c for PPC405
-	#else
-		/* Not defined for other operating systems yet */
-		#error HWTC_PERIOD must be defined to give the number of hardware timer ticks per OS tick.
-	#endif
-	#define HWTC_DIVISOR 1
-	#define IRQ_PRIORITY_ORDER 0 // lower IRQ priority values are more significant
+#define HWTC_COUNT_DIRECTION DIRECTION_DECREMENTING
+#define HWTC_TYPE HWTC_TYPE_SYSTICK
+#define HWTC_COUNT mfspr(0x3db)
+#if (defined configCPU_CLOCK_HZ && defined configTICK_RATE_HZ) // Check if FreeRTOS
+/* For FreeRTOS only - found no generic OS independent solution for the PPC405 architecture. */
+#define HWTC_PERIOD (configCPU_CLOCK_HZ / configTICK_RATE_HZ)  // Same as in port.c for PPC405
+#else
+/* Not defined for other operating systems yet */
+#error HWTC_PERIOD must be defined to give the number of hardware timer ticks per OS tick.
+#endif
+#define HWTC_DIVISOR 1
+#define IRQ_PRIORITY_ORDER 0 // lower IRQ priority values are more significant
 
 #elif (SELECTED_PORT == PORT_XILINX_PPC440)
 
-	/* UNOFFICIAL PORT - NOT YET VERIFIED BY PERCEPIO */
-	/* This should work with most PowerPC chips */
+/* UNOFFICIAL PORT - NOT YET VERIFIED BY PERCEPIO */
+/* This should work with most PowerPC chips */
 
-	#define HWTC_COUNT_DIRECTION DIRECTION_DECREMENTING
-	#define HWTC_TYPE HWTC_TYPE_SYSTICK
-	#define HWTC_COUNT mfspr(0x016)
-	#if (defined configCPU_CLOCK_HZ && defined configTICK_RATE_HZ) // Check if FreeRTOS
-		/* For FreeRTOS only - found no generic OS independent solution for the PPC440 architecture. */
-		#define HWTC_PERIOD ( configCPU_CLOCK_HZ / configTICK_RATE_HZ ) // Same as in port.c for PPC440
-	#else
-		/* Not defined for other operating systems yet */
-		#error HWTC_PERIOD must be defined to give the number of hardware timer ticks per OS tick.
-	#endif
-	#define HWTC_DIVISOR 1
-	#define IRQ_PRIORITY_ORDER 0 // lower IRQ priority values are more significant
+#define HWTC_COUNT_DIRECTION DIRECTION_DECREMENTING
+#define HWTC_TYPE HWTC_TYPE_SYSTICK
+#define HWTC_COUNT mfspr(0x016)
+#if (defined configCPU_CLOCK_HZ && defined configTICK_RATE_HZ) // Check if FreeRTOS
+/* For FreeRTOS only - found no generic OS independent solution for the PPC440 architecture. */
+#define HWTC_PERIOD (configCPU_CLOCK_HZ / configTICK_RATE_HZ)  // Same as in port.c for PPC440
+#else
+/* Not defined for other operating systems yet */
+#error HWTC_PERIOD must be defined to give the number of hardware timer ticks per OS tick.
+#endif
+#define HWTC_DIVISOR 1
+#define IRQ_PRIORITY_ORDER 0 // lower IRQ priority values are more significant
 
 #elif (SELECTED_PORT == PORT_XILINX_MICROBLAZE)
 
-	/* UNOFFICIAL PORT - NOT YET VERIFIED BY PERCEPIO */
+/* UNOFFICIAL PORT - NOT YET VERIFIED BY PERCEPIO */
 
-	/* This should work with most Microblaze configurations.
-	 * It uses the AXI Timer 0 - the tick interrupt source.
-	 * If an AXI Timer 0 peripheral is available on your hardware platform, no modifications are required.
-	 */
-	#include "xtmrctr_l.h"
+/* This should work with most Microblaze configurations.
+ * It uses the AXI Timer 0 - the tick interrupt source.
+ * If an AXI Timer 0 peripheral is available on your hardware platform, no modifications are required.
+ */
+#include "xtmrctr_l.h"
 
-	#define HWTC_COUNT_DIRECTION DIRECTION_DECREMENTING
-	#define HWTC_TYPE HWTC_TYPE_SYSTICK
-	#define HWTC_COUNT XTmrCtr_GetTimerCounterReg( XPAR_TMRCTR_0_BASEADDR, 0 )
- 	#define HWTC_PERIOD (XTmrCtr_mGetLoadReg( XPAR_TMRCTR_0_BASEADDR, 0) + 1)
-	#define HWTC_DIVISOR 16
-	#define IRQ_PRIORITY_ORDER 0 // lower IRQ priority values are more significant
+#define HWTC_COUNT_DIRECTION DIRECTION_DECREMENTING
+#define HWTC_TYPE HWTC_TYPE_SYSTICK
+#define HWTC_COUNT XTmrCtr_GetTimerCounterReg(XPAR_TMRCTR_0_BASEADDR, 0)
+#define HWTC_PERIOD (XTmrCtr_mGetLoadReg(XPAR_TMRCTR_0_BASEADDR, 0) + 1)
+#define HWTC_DIVISOR 16
+#define IRQ_PRIORITY_ORDER 0 // lower IRQ priority values are more significant
 
 #elif (SELECTED_PORT == PORT_ARM_CORTEX_A9)
-	/* INPUT YOUR PERIPHERAL BASE ADDRESS HERE */
-	#define CA9_MPCORE_PERIPHERAL_BASE_ADDRESS	0xSOMETHING
-	
-	#define CA9_MPCORE_PRIVATE_MEMORY_OFFSET	0x0600
-	#define CA9_MPCORE_PRIVCTR_PERIOD_REG	(*(volatile uint32_t*)(CA9_MPCORE_PERIPHERAL_BASE_ADDRESS + CA9_MPCORE_PRIVATE_MEMORY_OFFSET + 0x00))
-	#define CA9_MPCORE_PRIVCTR_COUNTER_REG	(*(volatile uint32_t*)(CA9_MPCORE_PERIPHERAL_BASE_ADDRESS + CA9_MPCORE_PRIVATE_MEMORY_OFFSET + 0x04))
-	#define CA9_MPCORE_PRIVCTR_CONTROL_REG	(*(volatile uint32_t*)(CA9_MPCORE_PERIPHERAL_BASE_ADDRESS + CA9_MPCORE_PRIVATE_MEMORY_OFFSET + 0x08))
-	
-	#define CA9_MPCORE_PRIVCTR_CONTROL_PRESCALER_MASK    0x0000FF00
-	#define CA9_MPCORE_PRIVCTR_CONTROL_PRESCALER_SHIFT   8
-	#define CA9_MPCORE_PRIVCTR_PRESCALER        (((CA9_MPCORE_PRIVCTR_CONTROL_REG & CA9_MPCORE_PRIVCTR_CONTROL_PRESCALER_MASK) >> CA9_MPCORE_PRIVCTR_CONTROL_PRESCALER_SHIFT) + 1)
+/* INPUT YOUR PERIPHERAL BASE ADDRESS HERE */
+#define CA9_MPCORE_PERIPHERAL_BASE_ADDRESS 0xSOMETHING
 
-    #define HWTC_COUNT_DIRECTION                DIRECTION_DECREMENTING
-    #define HWTC_TYPE                           HWTC_TYPE_SYSTICK
-    #define HWTC_COUNT                          CA9_MPCORE_PRIVCTR_COUNTER_REG
-    #define HWTC_PERIOD                         (CA9_MPCORE_PRIVCTR_PERIOD_REG + 1)
+#define CA9_MPCORE_PRIVATE_MEMORY_OFFSET 0x0600
+#define CA9_MPCORE_PRIVCTR_PERIOD_REG \
+    (*(volatile uint32_t *)(CA9_MPCORE_PERIPHERAL_BASE_ADDRESS + CA9_MPCORE_PRIVATE_MEMORY_OFFSET + 0x00))
+#define CA9_MPCORE_PRIVCTR_COUNTER_REG \
+    (*(volatile uint32_t *)(CA9_MPCORE_PERIPHERAL_BASE_ADDRESS + CA9_MPCORE_PRIVATE_MEMORY_OFFSET + 0x04))
+#define CA9_MPCORE_PRIVCTR_CONTROL_REG \
+    (*(volatile uint32_t *)(CA9_MPCORE_PERIPHERAL_BASE_ADDRESS + CA9_MPCORE_PRIVATE_MEMORY_OFFSET + 0x08))
 
-    //NOTE: The private timer ticks with a very high frequency (half the core-clock usually),
-    //but offers the possibility to apply a prescaler. Depending on the prescaler you set the
-    //HWTC_DIVISOR may need to be raised. Refer to the notes at the beginning of this file
-    //for more information.
-    #define HWTC_DIVISOR 1
+#define CA9_MPCORE_PRIVCTR_CONTROL_PRESCALER_MASK 0x0000FF00
+#define CA9_MPCORE_PRIVCTR_CONTROL_PRESCALER_SHIFT 8
+#define CA9_MPCORE_PRIVCTR_PRESCALER                                                  \
+    (((CA9_MPCORE_PRIVCTR_CONTROL_REG & CA9_MPCORE_PRIVCTR_CONTROL_PRESCALER_MASK) >> \
+      CA9_MPCORE_PRIVCTR_CONTROL_PRESCALER_SHIFT) +                                   \
+     1)
 
-    #define IRQ_PRIORITY_ORDER 0  // lower IRQ priority values are more significant
+#define HWTC_COUNT_DIRECTION DIRECTION_DECREMENTING
+#define HWTC_TYPE HWTC_TYPE_SYSTICK
+#define HWTC_COUNT CA9_MPCORE_PRIVCTR_COUNTER_REG
+#define HWTC_PERIOD (CA9_MPCORE_PRIVCTR_PERIOD_REG + 1)
+
+// NOTE: The private timer ticks with a very high frequency (half the core-clock usually),
+// but offers the possibility to apply a prescaler. Depending on the prescaler you set the
+// HWTC_DIVISOR may need to be raised. Refer to the notes at the beginning of this file
+// for more information.
+#define HWTC_DIVISOR 1
+
+#define IRQ_PRIORITY_ORDER 0 // lower IRQ priority values are more significant
 
 #elif (SELECTED_PORT == PORT_APPLICATION_DEFINED)
 
-	#if !( defined (HWTC_COUNT_DIRECTION) defined (HWTC_TYPE) && defined (HWTC_COUNT) && defined (HWTC_PERIOD) && defined (HWTC_DIVISOR) && defined (IRQ_PRIORITY_ORDER) )
-		#error SELECTED_PORT is PORT_APPLICATION_DEFINED but not all of the necessary constants have been defined.
-	#endif
+#if !(defined(HWTC_COUNT_DIRECTION) defined(HWTC_TYPE) && defined(HWTC_COUNT) && defined(HWTC_PERIOD) && \
+      defined(HWTC_DIVISOR) && defined(IRQ_PRIORITY_ORDER))
+#error SELECTED_PORT is PORT_APPLICATION_DEFINED but not all of the necessary constants have been defined.
+#endif
 
 #elif (SELECTED_PORT != PORT_NOT_SET)
 
-	#error "SELECTED_PORT had unsupported value!"
-	#define SELECTED_PORT PORT_NOT_SET
+#error "SELECTED_PORT had unsupported value!"
+#define SELECTED_PORT PORT_NOT_SET
 
 #endif
 
 #if (SELECTED_PORT != PORT_NOT_SET)
 
-	#ifndef HWTC_COUNT_DIRECTION
-	#error "HWTC_COUNT_DIRECTION is not set!"
-	#endif
-	
-	#ifndef HWTC_TYPE
-	#error "HWTC_TYPE is not set!"
-	#endif
+#ifndef HWTC_COUNT_DIRECTION
+#error "HWTC_COUNT_DIRECTION is not set!"
+#endif
 
-	#ifndef HWTC_COUNT
-	#error "HWTC_COUNT is not set!"
-	#endif
+#ifndef HWTC_TYPE
+#error "HWTC_TYPE is not set!"
+#endif
 
-	#ifndef HWTC_PERIOD
-	#error "HWTC_PERIOD is not set!"
-	#endif
+#ifndef HWTC_COUNT
+#error "HWTC_COUNT is not set!"
+#endif
 
-	#ifndef HWTC_DIVISOR
-	#error "HWTC_DIVISOR is not set!"
-	#endif
+#ifndef HWTC_PERIOD
+#error "HWTC_PERIOD is not set!"
+#endif
 
-	#ifndef IRQ_PRIORITY_ORDER
-	#error "IRQ_PRIORITY_ORDER is not set!"
-	#elif (IRQ_PRIORITY_ORDER != 0) && (IRQ_PRIORITY_ORDER != 1)
-	#error "IRQ_PRIORITY_ORDER has bad value!"
-	#endif
+#ifndef HWTC_DIVISOR
+#error "HWTC_DIVISOR is not set!"
+#endif
 
-	#if (HWTC_DIVISOR < 1)
-	#error "HWTC_DIVISOR must be a non-zero positive value!"
-	#endif
+#ifndef IRQ_PRIORITY_ORDER
+#error "IRQ_PRIORITY_ORDER is not set!"
+#elif (IRQ_PRIORITY_ORDER != 0) && (IRQ_PRIORITY_ORDER != 1)
+#error "IRQ_PRIORITY_ORDER has bad value!"
+#endif
+
+#if (HWTC_DIVISOR < 1)
+#error "HWTC_DIVISOR must be a non-zero positive value!"
+#endif
 
 #endif
 /*******************************************************************************

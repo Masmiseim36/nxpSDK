@@ -39,18 +39,15 @@ void sscp_mu_deinit(sscp_context_t *context)
     MU_Deinit(muContext->base);
 }
 
-sscp_status_t sscp_mu_invoke_command(sscp_context_t *context,
-    uint32_t commandID,
-    sscp_operation_t *op,
-    uint32_t *ret)
+sscp_status_t sscp_mu_invoke_command(sscp_context_t *context, uint32_t commandID, sscp_operation_t *op, uint32_t *ret)
 {
     sscp_mu_context_t *muContext = (sscp_mu_context_t *)(uintptr_t)context;
 
     /* parse the operation to create message */
     uint32_t msg[16] = {0};
     int i;
-    msg[0] = commandID;
-    msg[1] = op->paramTypes;
+    msg[0]    = commandID;
+    msg[1]    = op->paramTypes;
     int wrIdx = 2;
 
     bool done = false;

@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 NXP
+ * Copyright 2016, 2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -32,12 +32,12 @@ usb_device_endpoint_struct_t g_UsbDevicePrinterEndpoints[USB_PRINTER_ENDPOINT_CO
     /* printer BULK OUT pipe */
     {
         USB_PRINTER_BULK_ENDPOINT_OUT | (USB_OUT << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT), USB_ENDPOINT_BULK,
-        FS_PRINTER_BULK_OUT_PACKET_SIZE,
+        FS_PRINTER_BULK_OUT_PACKET_SIZE,0U,
     },
     /* printer BULK IN pipe */
     {
         USB_PRINTER_BULK_ENDPOINT_IN | (USB_IN << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT), USB_ENDPOINT_BULK,
-        FS_PRINTER_BULK_IN_PACKET_SIZE,
+        FS_PRINTER_BULK_IN_PACKET_SIZE,0U,
     },
 };
 

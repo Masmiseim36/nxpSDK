@@ -2,7 +2,7 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -40,7 +40,7 @@ enum _flexio_camera_status
 enum _flexio_camera_status_flags
 {
     kFLEXIO_CAMERA_RxDataRegFullFlag = 0x1U, /*!< Receive buffer full flag. */
-    kFLEXIO_CAMERA_RxErrorFlag = 0x2U,       /*!< Receive buffer error flag. */
+    kFLEXIO_CAMERA_RxErrorFlag       = 0x2U, /*!< Receive buffer error flag. */
 };
 
 /*!
@@ -96,7 +96,7 @@ extern "C" {
  *
  * @param base Pointer to FLEXIO_CAMERA_Type structure
  * @param config Pointer to flexio_camera_config_t structure
-*/
+ */
 void FLEXIO_CAMERA_Init(FLEXIO_CAMERA_Type *base, const flexio_camera_config_t *config);
 
 /*!
@@ -105,7 +105,7 @@ void FLEXIO_CAMERA_Init(FLEXIO_CAMERA_Type *base, const flexio_camera_config_t *
  * @note After calling this API, call FLEXO_CAMERA_Init to use the FlexIO Camera module.
  *
  * @param base Pointer to FLEXIO_CAMERA_Type structure
-*/
+ */
 void FLEXIO_CAMERA_Deinit(FLEXIO_CAMERA_Type *base);
 
 /*!
@@ -125,7 +125,7 @@ void FLEXIO_CAMERA_GetDefaultConfig(flexio_camera_config_t *config);
  *
  * @param base Pointer to the FLEXIO_CAMERA_Type
  * @param enable True to enable, false does not have any effect.
-*/
+ */
 static inline void FLEXIO_CAMERA_Enable(FLEXIO_CAMERA_Type *base, bool enable)
 {
     if (enable)
@@ -148,7 +148,7 @@ static inline void FLEXIO_CAMERA_Enable(FLEXIO_CAMERA_Type *base, bool enable)
  * @return FlexIO shifter status flags
  *          @arg FLEXIO_SHIFTSTAT_SSF_MASK
  *          @arg 0
-*/
+ */
 uint32_t FLEXIO_CAMERA_GetStatusFlags(FLEXIO_CAMERA_Type *base);
 
 /*!

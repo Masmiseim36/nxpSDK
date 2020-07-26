@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2014,2018-2019 NXP
+ * Copyright 2010-2014,2018-2020 NXP
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,7 +37,7 @@ typedef enum sFrameTypes {
       ABORT_RES = 0x22,/*!< Abort response */
       WTX_REQ = 0x03,/*!< WTX request */
       WTX_RSP = 0x23,/*!< WTX response */
-#if defined(T1oI2C_UM1225_SE050)
+#if defined(T1oI2C_UM11225)
       INTF_RESET_REQ = 0x0F,/*!< Interface reset request */
       INTF_RESET_RSP = 0x2F,/*!< Interface reset response */
       PROP_END_APDU_REQ = 0x05,/*!< Proprietary Enf of APDU request */
@@ -46,11 +46,11 @@ typedef enum sFrameTypes {
       CHIP_RESET_RES = 0x26, /*chip reset response*/
       ATR_REQ = 0x07, /* get ATR request*/
       ATR_RES = 0x27, /*get ATR response*/
-#elif defined(T1oI2C_GP)
+#elif defined(T1oI2C_GP1_0)
       SWR_REQ = 0x0F,/*!< Software reset request */
       SWR_RSP = 0x2F,/*!< Software reset response */
-      CHIP_RESET_REQ = 0x0E, /*chip reset request*/
-      CHIP_RESET_RES = 0x2E, /*chip reset response*/
+      COLD_RESET_REQ = 0x1E, /*cold reset request*/
+      COLD_RESET_RES = 0x3E, /*cold reset response*/
       RELEASE_REQ = 0x06, /* Release  request*/
       RELEASE_RES = 0x26, /* Release  response*/
       CIP_REQ = 0x04,/*!< Get CIP request */
@@ -112,19 +112,20 @@ typedef enum phNxpEseProto7816_TransceiveStates
   SEND_R_NACK, /*!< 7816-3 protocol transceive state: R-NACK frame to be sent */
   SEND_R_ACK, /*!< 7816-3 protocol transceive state: R-ACK frame to be sent */
   SEND_S_RSYNC, /*!< 7816-3 protocol transceive state: S-frame re-synchronisation command to be sent */
-#if defined(T1oI2C_UM1225_SE050)
+#if defined(T1oI2C_UM11225)
   SEND_S_INTF_RST, /*!< 7816-3 protocol transceive state: S-frame interface reset command to be sent */
   SEND_S_EOS, /*!< 7816-3 protocol transceive state: S-frame end of session command to be sent */
   SEND_S_ATR, /*!< 7816-3 protocol transceive state: S-frame ATR command to be sent */
-#elif defined(T1oI2C_GP)
+  SEND_S_CHIP_RST, /*!< 7816-3 protocol transceive state: S-frame chip reset command to be sent */
+#elif defined(T1oI2C_GP1_0)
   SEND_S_SWR, /*!< 7816-3 protocol transceive state: S-frame Software reset command to be sent */
   SEND_S_RELEASE, /*!< 7816-3 protocol transceive state: S-frame RELEASE command to be sent */
   SEND_S_CIP, /*!< 7816-3 protocol transceive state: S-frame CIP command to be sent */
+  SEND_S_COLD_RST, /*!< 7816-3 protocol transceive state: S-frame cold reset command to be sent */
 #endif
   SEND_S_WTX_REQ, /*!< 7816-3 protocol transceive state: S-frame WTX command to be sent */
   SEND_S_WTX_RSP, /*!< 7816-3 protocol transceive state: S-frame WTX response to be sent */
 
-  SEND_S_CHIP_RST /*!< 7816-3 protocol transceive state: S-frame chip reset command to be sent */
 }phNxpEseProto7816_TransceiveStates_t;
 
 /*!
@@ -143,7 +144,6 @@ typedef struct iFrameInfo
   uint32_t dataOffset; /*!< I-frame: Offset to the actual data(INF) for the current frame of the packet */
   uint32_t totalDataLen; /*!< I-frame: Total data left in the packet, used to set the chained flag/calculating offset */
   uint32_t sendDataLen; /*!< I-frame: the length of the I-frame actual data */
-  phNxpEse_data *pRsp;
 }iFrameInfo_t;
 
 /*!
@@ -156,7 +156,6 @@ typedef struct iFrameInfo
 typedef struct sFrameInfo
 {
   sFrameTypes_t sFrameType;/*!< S-frame: Type of S-frame cmd/rsp */
-  phNxpEse_data *pRsp;
 }sFrameInfo_t;
 
 /*!
@@ -181,10 +180,15 @@ typedef struct rFrameInfo
  */
 typedef struct phNxpEseProto7816_NextTx_Info
 {
-  iFrameInfo_t IframeInfo; /*!< Information of the I-frame to be send next or the last sent I-frame depending on the frame type */
-  rFrameInfo_t RframeInfo; /*!< Information of the R-frame to be send next or the last sent R-frame depending on the frame type */
-  sFrameInfo_t SframeInfo; /*!< Information of the S-frame to be send next or the last sent S-frame depending on the frame type */
-  phNxpEseProto7816_FrameTypes_t FrameType; /*!< Frame (I/R/S frames) type to be sent next */
+    //union {
+    iFrameInfo_t
+        IframeInfo; /*!< Information of the I-frame to be send next or the last sent I-frame depending on the frame type */
+    rFrameInfo_t
+        RframeInfo; /*!< Information of the R-frame to be send next or the last sent R-frame depending on the frame type */
+    sFrameInfo_t
+        SframeInfo; /*!< Information of the S-frame to be send next or the last sent S-frame depending on the frame type */
+                    //} f;
+    phNxpEseProto7816_FrameTypes_t FrameType; /*!< Frame (I/R/S frames) type to be sent next */
 }phNxpEseProto7816_NextTx_Info_t;
 
 /*!
@@ -209,6 +213,7 @@ typedef struct phNxpEseRx_Cntx
   rFrameInfo_t lastRcvdRframeInfo; /*!< R-frame: Last received frame */
   sFrameInfo_t lastRcvdSframeInfo; /*!< S-frame: Last received frame */
   phNxpEseProto7816_FrameTypes_t lastRcvdFrameType; /*!< Last received frame type */
+  phNxpEse_data *pRsp;
 }phNxpEseRx_Cntx_t;
 
 /*!
@@ -282,9 +287,9 @@ typedef struct phNxpEseProto7816_PCB_bits {
 /*!
  * \brief 7816-3 protocol frame header length
  */
-#if defined(T1oI2C_UM1225_SE050)
+#if defined(T1oI2C_UM11225)
   #define PH_PROTO_7816_HEADER_LEN 0x03 // LEN field is 1 byte
-#elif defined(T1oI2C_GP)
+#elif defined(T1oI2C_GP1_0)
   #define PH_PROTO_7816_HEADER_LEN 0x04 // LEN field is 2 byte
 #endif
 /*!
@@ -350,10 +355,10 @@ typedef struct phNxpEseProto7816_PCB_bits {
 /*!
  * \brief 7816-3 S-block chip reset mask
  */
-#if defined(T1oI2C_UM1225_SE050)
+#if defined(T1oI2C_UM11225)
 #define PH_PROTO_7816_S_CHIP_RST      0x06
-#elif defined(T1oI2C_GP)
-#define PH_PROTO_7816_S_CHIP_RST      0x0E
+#elif defined(T1oI2C_GP1_0)
+#define PH_PROTO_7816_S_COLD_RST      0x1E
 #endif
 /*!
  * \brief 7816-3 S-block get atr mask
@@ -372,7 +377,7 @@ typedef struct phNxpEseProto7816_PCB_bits {
  */
 #define PH_PROTO_7816_S_GET_CIP      0x04
 
-/* T=1 protocol Block format for T1oI2C UM1225_SE050
+/* T=1 protocol Block format for T1oI2C UM11225_SE050
  ___________________________________________________________________________________________________
 |       Prologue Filed (Mandatory)       | Information Field (Optional)| Epilogue Filed (Mandatory) |
 |________________________________________|_____________________________|____________________________|
@@ -399,17 +404,17 @@ typedef struct phNxpEseProto7816_PCB_bits {
 /*!
  * \brief Start of frame marker
  * \ communication Direction      NAD value
- * \ SE host to SE					0x5A
- * \ SE to SE host					0xA5
+ * \ SE host to SE                  0x5A
+ * \ SE to SE host                  0xA5
  * \ eUICC host to Euicc            0x4B
- * \ eUICC to eUICC host			0xB4
+ * \ eUICC to eUICC host            0xB4
  */
 #define SEND_PACKET_SOF    0x5A
 /*!
  * \Retrieve Information Filed from 7816-3 T=1 protocol frame
  * NAD   -1 byte
  * PCB   -1 byte
- * LEN   -(1 or 3 bytes for UM1225_SE050) & (2 bytes for GP)
+ * LEN   -(1 or 3 bytes for UM11225_SE050) & (2 bytes for GP)
  * CRC16 -2 bytes
  */
 #define PH_PROTO_7816_INF_FILED (PH_PROTO_7816_HEADER_LEN + PH_PROTO_7816_CRC_LEN)
@@ -417,20 +422,21 @@ typedef struct phNxpEseProto7816_PCB_bits {
  * APIs exposed from the 7816-3 protocol layer
  */
 
-#if defined(T1oI2C_UM1225_SE050)
-bool_t phNxpEseProto7816_IntfReset(phNxpEse_data *AtrRsp);
-bool_t phNxpEseProto7816_GetAtr(phNxpEse_data *pRsp);
+#if defined(T1oI2C_UM11225)
+bool_t phNxpEseProto7816_IntfReset(void* conn_ctx, phNxpEse_data *AtrRsp);
+bool_t phNxpEseProto7816_GetAtr(void* conn_ctx, phNxpEse_data *pRsp);
+bool_t phNxpEseProto7816_ChipReset(void* conn_ctx);
 #endif
-bool_t phNxpEseProto7816_Close(void);
-bool_t phNxpEseProto7816_Open(phNxpEseProto7816InitParam_t initParam , phNxpEse_data *AtrRsp);
-bool_t phNxpEseProto7816_Transceive(phNxpEse_data *pCmd, phNxpEse_data *pRsp);
+bool_t phNxpEseProto7816_Close(void* conn_ctx);
+bool_t phNxpEseProto7816_Open(void* conn_ctx, phNxpEseProto7816InitParam_t initParam , phNxpEse_data *AtrRsp);
+bool_t phNxpEseProto7816_Transceive(void* conn_ctx, phNxpEse_data *pCmd, phNxpEse_data *pRsp);
 bool_t phNxpEseProto7816_Reset(void);
 bool_t phNxpEseProto7816_SetIfscSize(uint16_t IFSC_Size);
-bool_t phNxpEseProto7816_ChipReset(void);
 bool_t phNxpEseProto7816_ResetProtoParams(void);
-#if defined(T1oI2C_GP)
-bool_t phNxpEseProto7816_SoftReset(void);
-bool_t phNxpEseProto7816_GetCip(phNxpEse_data *pRsp);
+#if defined(T1oI2C_GP1_0)
+bool_t phNxpEseProto7816_SoftReset(void* conn_ctx);
+bool_t phNxpEseProto7816_GetCip(void* conn_ctx, phNxpEse_data *pRsp);
+bool_t phNxpEseProto7816_ColdReset(void* conn_ctx);
 #endif
 uint8_t getMaxSupportedSendIFrameSize(void);
 /** @} */

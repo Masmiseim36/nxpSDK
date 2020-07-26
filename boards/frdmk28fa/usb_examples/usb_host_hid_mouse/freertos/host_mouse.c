@@ -60,6 +60,10 @@ extern void USB_HostTurnOnVbus(void);
 extern void USB_HostTurnOffVbus(void);
 #endif
 
+usb_status_t USB_HostEvent(usb_device_handle deviceHandle,
+                           usb_host_configuration_handle configurationHandle,
+                           uint32_t eventCode);
+
 /*******************************************************************************
  * Variables
  ******************************************************************************/
@@ -206,6 +210,40 @@ static void USB_HostHidInCallback(void *param, uint8_t *data, uint32_t dataLengt
     }
 }
 
+#if (defined USB_HOST_APP_CHARGER_TYPE_SWITCH) && (USB_HOST_APP_CHARGER_TYPE_SWITCH)
+void USB_AppEnterCritical(uint32_t *sr)
+{
+#if defined(__GIC_PRIO_BITS)
+    if ((__get_CPSR() & CPSR_M_Msk) == 0x13)
+#else
+    if (__get_IPSR())
+#endif
+    {
+        *sr = portSET_INTERRUPT_MASK_FROM_ISR();
+    }
+    else
+    {
+        portENTER_CRITICAL();
+    }
+}
+
+void USB_AppExitCritical(uint32_t sr)
+{
+#if defined(__GIC_PRIO_BITS)
+    if ((__get_CPSR() & CPSR_M_Msk) == 0x13)
+#else
+    if (__get_IPSR())
+#endif
+    {
+        portCLEAR_INTERRUPT_MASK_FROM_ISR(sr);
+    }
+    else
+    {
+        portEXIT_CRITICAL();
+    }
+}
+#endif
+
 void USB_HostHidMouseTask(void *param)
 {
     usb_host_hid_descriptor_t *hidDescriptor;
@@ -241,7 +279,8 @@ void USB_HostHidMouseTask(void *param)
                 mouseInstance->runState    = kUSB_HostHidRunIdle;
                 USB_HostHidDeinit(mouseInstance->deviceHandle,
                                   mouseInstance->classHandle); /* hid class de-initialization */
-                mouseInstance->classHandle = NULL;
+                mouseInstance->deviceHandle = NULL;
+                mouseInstance->classHandle  = NULL;
                 usb_echo("mouse detached\r\n");
                 break;
 
@@ -394,22 +433,51 @@ void USB_HostHidMouseTask(void *param)
         }
         else
         {
+            uint32_t critialSr;
+            usb_status_t status = kStatus_USB_Success;
             /* toggle charger type and turn off vbus */
             mouseInstance->chargerType ^= 1;
+
+            usb_echo("turn off vbus\r\n");
+            USB_HostTurnOffVbus();
+            usb_echo("remove device\r\n");
+            USB_AppEnterCritical(&critialSr);
+            mouseInstance->deviceState = kStatus_DEV_Idle;
+            mouseInstance->runState    = kUSB_HostHidRunIdle;
+            if ((mouseInstance->deviceHandle != NULL) && (mouseInstance->classHandle != NULL))
+            {
+                USB_HostHidDeinit(mouseInstance->deviceHandle,
+                                  mouseInstance->classHandle); /* hid class de-initialization */
+            }
+            mouseInstance->classHandle = NULL;
+            if (mouseInstance->deviceHandle != NULL)
+            {
+                USB_HostRemoveDevice(g_HostHandle, mouseInstance->deviceHandle);
+            }
+            mouseInstance->deviceHandle = NULL;
+
+            USB_HostDeinit(g_HostHandle);
+            g_HostHandle = NULL;
+            status       = USB_HostInit(CONTROLLER_ID, &g_HostHandle, USB_HostEvent);
+            if (status != kStatus_USB_Success)
+            {
+                USB_AppExitCritical(critialSr);
+                usb_echo("host init error\r\n");
+                return;
+            }
+            USB_AppExitCritical(critialSr);
             /* 0 - SDP; 1 - CDP */
             usb_echo("change charger type as ");
             if (mouseInstance->chargerType == 0)
             {
-                usb_echo("SDP");
+                usb_echo("SDP\r\n");
                 USB_HostSetChargerType(g_HostHandle, kUSB_DcdSDP);
             }
             else
             {
-                usb_echo("CDP");
+                usb_echo("CDP\r\n");
                 USB_HostSetChargerType(g_HostHandle, kUSB_DcdCDP);
             }
-            usb_echo(" and turn off vbus\r\n");
-            USB_HostTurnOffVbus();
             mouseInstance->vbusState = 0;
         }
     }

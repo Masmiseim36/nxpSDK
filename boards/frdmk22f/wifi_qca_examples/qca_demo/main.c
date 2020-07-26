@@ -49,7 +49,7 @@ TaskHandle_t task_main_task_handler;
 
 // Hardwired SSID, passphrase, auth and cipher algo of AP to connect to
 // Change this to fit your AP
-#define AP_SSID "nxp"
+#define AP_SSID       "nxp"
 #define AP_PASSPHRASE "NXP0123456789"
 
 QCOM_SSID g_ssid             = {.ssid = (AP_SSID)};
@@ -337,8 +337,8 @@ int main(void)
     BaseType_t result = 0;
     (void)result;
 
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
 
     result =

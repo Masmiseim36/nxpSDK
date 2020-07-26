@@ -9,7 +9,9 @@
 #ifndef __USB_DEVICE_COMPOSITE_H__
 #define __USB_DEVICE_COMPOSITE_H__
 
+#if (BL_CONFIG_USB_MSC || BL_CONFIG_HS_USB_MSC)
 #include "msc_disk.h"
+#endif
 #include "hid_bootloader.h"
 #include "usb_device_config.h"
 

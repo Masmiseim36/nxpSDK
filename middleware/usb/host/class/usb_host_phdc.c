@@ -10,7 +10,6 @@
 #if ((defined USB_HOST_CONFIG_PHDC) && (USB_HOST_CONFIG_PHDC))
 #include "usb_host.h"
 #include "usb_host_phdc.h"
-
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -101,7 +100,7 @@ static void USB_HostPhdcClearInHaltCallback(void *param, usb_host_transfer_t *tr
         phdcInstance->inCallbackFn(phdcInstance->inCallbackParam, phdcInstance->stallDataBuffer,
                                    phdcInstance->stallDataLength, kStatus_USB_TransferStall);
     }
-    USB_HostFreeTransfer(phdcInstance->hostHandle, transfer);
+    (void)USB_HostFreeTransfer(phdcInstance->hostHandle, transfer);
 }
 
 static void USB_HostPhdcClearOutHaltCallback(void *param, usb_host_transfer_t *transfer, usb_status_t status)
@@ -115,7 +114,7 @@ static void USB_HostPhdcClearOutHaltCallback(void *param, usb_host_transfer_t *t
         phdcInstance->outCallbackFn(phdcInstance->outCallbackParam, phdcInstance->stallDataBuffer,
                                     phdcInstance->stallDataLength, kStatus_USB_TransferStall);
     }
-    USB_HostFreeTransfer(phdcInstance->hostHandle, transfer);
+    (void)USB_HostFreeTransfer(phdcInstance->hostHandle, transfer);
 }
 
 static usb_status_t USB_HostPhdcClearHalt(usb_host_phdc_instance_t *phdcInstance,
@@ -138,23 +137,23 @@ static usb_status_t USB_HostPhdcClearHalt(usb_host_phdc_instance_t *phdcInstance
     phdcInstance->stallDataBuffer = stallTransfer->transferBuffer;
     phdcInstance->stallDataLength = stallTransfer->transferSofar;
     /* save the application callback function */
-    phdcInstance->controlCallbackFn = NULL;
+    phdcInstance->controlCallbackFn    = NULL;
     phdcInstance->controlCallbackParam = NULL;
     /* initialize transfer */
-    transfer->callbackFn = callbackFn;
-    transfer->callbackParam = phdcInstance;
-    transfer->transferBuffer = NULL;
-    transfer->transferLength = 0;
-    transfer->setupPacket->bRequest = USB_REQUEST_STANDARD_CLEAR_FEATURE;
+    transfer->callbackFn                 = callbackFn;
+    transfer->callbackParam              = phdcInstance;
+    transfer->transferBuffer             = NULL;
+    transfer->transferLength             = 0;
+    transfer->setupPacket->bRequest      = USB_REQUEST_STANDARD_CLEAR_FEATURE;
     transfer->setupPacket->bmRequestType = USB_REQUEST_TYPE_RECIPIENT_ENDPOINT;
-    transfer->setupPacket->wValue = USB_SHORT_TO_LITTLE_ENDIAN(USB_REQUEST_STANDARD_FEATURE_SELECTOR_ENDPOINT_HALT);
-    transfer->setupPacket->wIndex = USB_SHORT_TO_LITTLE_ENDIAN(endpoint);
+    transfer->setupPacket->wValue  = USB_SHORT_TO_LITTLE_ENDIAN(USB_REQUEST_STANDARD_FEATURE_SELECTOR_ENDPOINT_HALT);
+    transfer->setupPacket->wIndex  = USB_SHORT_TO_LITTLE_ENDIAN(endpoint);
     transfer->setupPacket->wLength = 0;
-    status = USB_HostSendSetup(phdcInstance->hostHandle, phdcInstance->controlPipe, transfer);
+    status                         = USB_HostSendSetup(phdcInstance->hostHandle, phdcInstance->controlPipe, transfer);
 
     if (status != kStatus_USB_Success)
     {
-        USB_HostFreeTransfer(phdcInstance->hostHandle, transfer);
+        (void)USB_HostFreeTransfer(phdcInstance->hostHandle, transfer);
     }
     phdcInstance->controlTransfer = transfer;
 
@@ -173,7 +172,7 @@ static usb_status_t USB_HostPhdcClearHalt(usb_host_phdc_instance_t *phdcInstance
 static void USB_HostPhdcControlPipeCallback(void *param, usb_host_transfer_t *transfer, usb_status_t status)
 {
     usb_host_phdc_instance_t *phdcInstance = (usb_host_phdc_instance_t *)param;
-    phdcInstance->controlTransfer = NULL;
+    phdcInstance->controlTransfer          = NULL;
     if (kStatus_USB_Success == status)
     {
         if (USB_HOST_PHDC_SET_FEATURE_REQUEST == transfer->setupPacket->bRequest)
@@ -188,6 +187,7 @@ static void USB_HostPhdcControlPipeCallback(void *param, usb_host_transfer_t *tr
         }
         else
         {
+            /*no action*/
         }
     }
     if (NULL != phdcInstance->controlCallbackFn)
@@ -196,7 +196,7 @@ static void USB_HostPhdcControlPipeCallback(void *param, usb_host_transfer_t *tr
         phdcInstance->controlCallbackFn(phdcInstance->controlCallbackParam, transfer->transferBuffer,
                                         transfer->transferSofar, status);
     }
-    USB_HostFreeTransfer(phdcInstance->hostHandle, transfer);
+    (void)USB_HostFreeTransfer(phdcInstance->hostHandle, transfer);
 }
 
 /*!
@@ -211,7 +211,7 @@ static void USB_HostPhdcSetClearFeatureEndpointHaltCallback(void *param,
                                                             usb_status_t status)
 {
     usb_host_phdc_instance_t *phdcInstance = (usb_host_phdc_instance_t *)param;
-    phdcInstance->controlTransfer = NULL;
+    phdcInstance->controlTransfer          = NULL;
     if (kStatus_USB_Success == status)
     {
         if ((transfer->setupPacket->bRequest == USB_REQUEST_STANDARD_SET_FEATURE) &&
@@ -223,8 +223,8 @@ static void USB_HostPhdcSetClearFeatureEndpointHaltCallback(void *param,
         {
             /* The host shall issue CLEAR_FEATURE ENDPOINT_HALT request to the device */
             usb_host_process_feature_param_t featureParam;
-            featureParam.requestType = kRequestEndpoint;
-            featureParam.featureSelector = USB_REQUEST_STANDARD_FEATURE_SELECTOR_ENDPOINT_HALT;
+            featureParam.requestType         = (uint8_t)kRequestEndpoint;
+            featureParam.featureSelector     = USB_REQUEST_STANDARD_FEATURE_SELECTOR_ENDPOINT_HALT;
             featureParam.interfaceOrEndpoint = phdcInstance->bulkInEndpointInformation.epDesc->bEndpointAddress;
             if (kStatus_USB_Success != USB_HostPhdcSetClearFeatureEndpointHalt(phdcInstance->hostHandle,
                                                                                USB_REQUEST_STANDARD_CLEAR_FEATURE,
@@ -252,7 +252,7 @@ static void USB_HostPhdcSetClearFeatureEndpointHaltCallback(void *param,
         phdcInstance->controlCallbackFn(phdcInstance->controlCallbackParam, transfer->transferBuffer,
                                         transfer->transferSofar, status);
     }
-    USB_HostFreeTransfer(phdcInstance->hostHandle, transfer);
+    (void)USB_HostFreeTransfer(phdcInstance->hostHandle, transfer);
 }
 
 /*!
@@ -274,7 +274,7 @@ static void USB_HostPhdcInterruptPipeCallback(void *param, usb_host_transfer_t *
                 (USB_REQUEST_TYPE_DIR_IN | ((usb_host_pipe_t *)phdcInstance->interruptPipe)->endpointAddress)) ==
             kStatus_USB_Success)
         {
-            USB_HostFreeTransfer(phdcInstance->hostHandle, transfer);
+            (void)USB_HostFreeTransfer(phdcInstance->hostHandle, transfer);
             return;
         }
     }
@@ -285,7 +285,7 @@ static void USB_HostPhdcInterruptPipeCallback(void *param, usb_host_transfer_t *
         phdcInstance->inCallbackFn(phdcInstance->inCallbackParam, transfer->transferBuffer, transfer->transferSofar,
                                    status);
     }
-    USB_HostFreeTransfer(phdcInstance->hostHandle, transfer);
+    (void)USB_HostFreeTransfer(phdcInstance->hostHandle, transfer);
 }
 
 /*!
@@ -298,7 +298,7 @@ static void USB_HostPhdcInterruptPipeCallback(void *param, usb_host_transfer_t *
 static void USB_HostPhdcBulkInPipeCallback(void *param, usb_host_transfer_t *transfer, usb_status_t status)
 {
     usb_host_phdc_instance_t *phdcInstance = (usb_host_phdc_instance_t *)param;
-
+    void *temp;
 #if ((defined USB_HOST_CONFIG_CLASS_AUTO_CLEAR_STALL) && USB_HOST_CONFIG_CLASS_AUTO_CLEAR_STALL)
     if (status == kStatus_USB_TransferStall)
     {
@@ -307,7 +307,7 @@ static void USB_HostPhdcBulkInPipeCallback(void *param, usb_host_transfer_t *tra
                 (USB_REQUEST_TYPE_DIR_IN | ((usb_host_pipe_t *)phdcInstance->bulkInPipe)->endpointAddress)) ==
             kStatus_USB_Success)
         {
-            USB_HostFreeTransfer(phdcInstance->hostHandle, transfer);
+            (void)USB_HostFreeTransfer(phdcInstance->hostHandle, transfer);
             return;
         }
     }
@@ -321,7 +321,7 @@ static void USB_HostPhdcBulkInPipeCallback(void *param, usb_host_transfer_t *tra
             of data transfers shall be preceded by a meta-data message preamble transfer. The
             numberTransferBulkIn is initialized as zero for receiving this message preamble data,
             then it is updated to the value of bNumTransfers field of message preamble data */
-            if (phdcInstance->numberTransferBulkIn)
+            if (0U != phdcInstance->numberTransferBulkIn)
             {
                 /* When numberTransferBulkIn reduces to 0, a new meta-data message preamble shall
                 be transferred */
@@ -331,22 +331,22 @@ static void USB_HostPhdcBulkInPipeCallback(void *param, usb_host_transfer_t *tra
             {
                 uint8_t preambleSignatureChecking = 1U;
                 /* The received packet is meta-data message preamble */
-                usb_host_phdc_metadata_preamble_t *metaDataMsgPreamble =
-                    (usb_host_phdc_metadata_preamble_t *)transfer->transferBuffer;
+                temp                                                   = (void *)transfer->transferBuffer;
+                usb_host_phdc_metadata_preamble_t *metaDataMsgPreamble = (usb_host_phdc_metadata_preamble_t *)temp;
                 /* Meta-data message preamble signature checking */
                 for (uint8_t i = 0U; i < USB_HOST_PHDC_MESSAGE_PREAMBLE_SIGNATURE_SIZE; i++)
                 {
-                    if (*(transfer->transferBuffer + i) != metaDataMsgPreambleSignature[i])
+                    if (*(transfer->transferBuffer + i) != (uint8_t)metaDataMsgPreambleSignature[i])
                     {
                         preambleSignatureChecking = 0U;
                         break;
                     }
                 }
-                if (preambleSignatureChecking)
+                if (0U != preambleSignatureChecking)
                 {
                     /* Checks if the meta-data message preamble contains an invalid bmLatencyReliability value
                     or bNumTransfers value */
-                    if ((!(metaDataMsgPreamble->bNumberTransfers)) || /* bNumTransfers shall never equal zero */
+                    if ((0U == (metaDataMsgPreamble->bNumberTransfers)) || /* bNumTransfers shall never equal zero */
                         (metaDataMsgPreamble->bQosEncodingVersion != 0x01U) || /* Encoding version should be 0x01 */
                         ((metaDataMsgPreamble->bmLatencyReliability !=
                           0x02U) && /* Medium.Good latency, reliability bin */
@@ -361,7 +361,7 @@ static void USB_HostPhdcBulkInPipeCallback(void *param, usb_host_transfer_t *tra
                     {
                         /* The host shall issue SET_FEATURE ENDPOINT_HALT request to the device */
                         usb_host_process_feature_param_t featureParam;
-                        featureParam.requestType = kRequestEndpoint;
+                        featureParam.requestType     = (uint8_t)kRequestEndpoint;
                         featureParam.featureSelector = USB_REQUEST_STANDARD_FEATURE_SELECTOR_ENDPOINT_HALT;
                         featureParam.interfaceOrEndpoint =
                             phdcInstance->bulkInEndpointInformation.epDesc->bEndpointAddress;
@@ -392,7 +392,7 @@ static void USB_HostPhdcBulkInPipeCallback(void *param, usb_host_transfer_t *tra
         phdcInstance->inCallbackFn(phdcInstance->inCallbackParam, transfer->transferBuffer, transfer->transferSofar,
                                    status);
     }
-    USB_HostFreeTransfer(phdcInstance->hostHandle, transfer);
+    (void)USB_HostFreeTransfer(phdcInstance->hostHandle, transfer);
 }
 
 /*!
@@ -414,7 +414,7 @@ static void USB_HostPhdcBulkOutPipeCallback(void *param, usb_host_transfer_t *tr
                 (USB_REQUEST_TYPE_DIR_OUT | ((usb_host_pipe_t *)phdcInstance->bulkOutPipe)->endpointAddress)) ==
             kStatus_USB_Success)
         {
-            USB_HostFreeTransfer(phdcInstance->hostHandle, transfer);
+            (void)USB_HostFreeTransfer(phdcInstance->hostHandle, transfer);
             return;
         }
     }
@@ -425,7 +425,7 @@ static void USB_HostPhdcBulkOutPipeCallback(void *param, usb_host_transfer_t *tr
         phdcInstance->outCallbackFn(phdcInstance->outCallbackParam, transfer->transferBuffer, transfer->transferSofar,
                                     status);
     }
-    USB_HostFreeTransfer(phdcInstance->hostHandle, transfer);
+    (void)USB_HostFreeTransfer(phdcInstance->hostHandle, transfer);
 }
 
 /*!
@@ -494,16 +494,16 @@ static usb_status_t USB_HostPhdcOpenInterface(usb_host_phdc_instance_t *phdcInst
             ((epDesc->bmAttributes & USB_DESCRIPTOR_ENDPOINT_ATTRIBUTE_TYPE_MASK) == USB_ENDPOINT_INTERRUPT))
         {
             /* Initialize the interrupt pipe */
-            pipeInit.devInstance = phdcInstance->deviceHandle;
-            pipeInit.pipeType = USB_ENDPOINT_INTERRUPT;
-            pipeInit.direction = USB_IN;
+            pipeInit.devInstance     = phdcInstance->deviceHandle;
+            pipeInit.pipeType        = USB_ENDPOINT_INTERRUPT;
+            pipeInit.direction       = USB_IN;
             pipeInit.endpointAddress = (epDesc->bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_NUMBER_MASK);
-            pipeInit.interval = epDesc->bInterval;
-            pipeInit.maxPacketSize = (uint16_t)(USB_SHORT_FROM_LITTLE_ENDIAN_ADDRESS(epDesc->wMaxPacketSize) &
-                                                USB_DESCRIPTOR_ENDPOINT_MAXPACKETSIZE_SIZE_MASK);
-            pipeInit.numberPerUframe = (USB_SHORT_FROM_LITTLE_ENDIAN_ADDRESS(epDesc->wMaxPacketSize) &
-                                        USB_DESCRIPTOR_ENDPOINT_MAXPACKETSIZE_MULT_TRANSACTIONS_MASK);
-            pipeInit.nakCount = USB_HOST_CONFIG_MAX_NAK;
+            pipeInit.interval        = epDesc->bInterval;
+            pipeInit.maxPacketSize   = (uint16_t)((USB_SHORT_FROM_LITTLE_ENDIAN_ADDRESS(epDesc->wMaxPacketSize) &
+                                                 USB_DESCRIPTOR_ENDPOINT_MAXPACKETSIZE_SIZE_MASK));
+            pipeInit.numberPerUframe = (uint8_t)((USB_SHORT_FROM_LITTLE_ENDIAN_ADDRESS(epDesc->wMaxPacketSize) &
+                                                  USB_DESCRIPTOR_ENDPOINT_MAXPACKETSIZE_MULT_TRANSACTIONS_MASK));
+            pipeInit.nakCount        = USB_HOST_CONFIG_MAX_NAK;
             status = USB_HostOpenPipe(phdcInstance->hostHandle, &phdcInstance->interruptPipe, &pipeInit);
             if (status != kStatus_USB_Success)
             {
@@ -520,16 +520,16 @@ static usb_status_t USB_HostPhdcOpenInterface(usb_host_phdc_instance_t *phdcInst
                  ((epDesc->bmAttributes & USB_DESCRIPTOR_ENDPOINT_ATTRIBUTE_TYPE_MASK) == USB_ENDPOINT_BULK))
         {
             /* Initialize bulk in pipe */
-            pipeInit.devInstance = phdcInstance->deviceHandle;
-            pipeInit.pipeType = USB_ENDPOINT_BULK;
-            pipeInit.direction = USB_IN;
+            pipeInit.devInstance     = phdcInstance->deviceHandle;
+            pipeInit.pipeType        = USB_ENDPOINT_BULK;
+            pipeInit.direction       = USB_IN;
             pipeInit.endpointAddress = (epDesc->bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_NUMBER_MASK);
-            pipeInit.maxPacketSize = (uint16_t)(USB_SHORT_FROM_LITTLE_ENDIAN_ADDRESS(epDesc->wMaxPacketSize) &
-                                                USB_DESCRIPTOR_ENDPOINT_MAXPACKETSIZE_SIZE_MASK);
-            pipeInit.numberPerUframe = (USB_SHORT_FROM_LITTLE_ENDIAN_ADDRESS(epDesc->wMaxPacketSize) &
-                                        USB_DESCRIPTOR_ENDPOINT_MAXPACKETSIZE_MULT_TRANSACTIONS_MASK);
-            pipeInit.nakCount = USB_HOST_CONFIG_MAX_NAK;
-            status = USB_HostOpenPipe(phdcInstance->hostHandle, &phdcInstance->bulkInPipe, &pipeInit);
+            pipeInit.maxPacketSize   = (uint16_t)((USB_SHORT_FROM_LITTLE_ENDIAN_ADDRESS(epDesc->wMaxPacketSize) &
+                                                 USB_DESCRIPTOR_ENDPOINT_MAXPACKETSIZE_SIZE_MASK));
+            pipeInit.numberPerUframe = (uint8_t)((USB_SHORT_FROM_LITTLE_ENDIAN_ADDRESS(epDesc->wMaxPacketSize) &
+                                                  USB_DESCRIPTOR_ENDPOINT_MAXPACKETSIZE_MULT_TRANSACTIONS_MASK));
+            pipeInit.nakCount        = USB_HOST_CONFIG_MAX_NAK;
+            status                   = USB_HostOpenPipe(phdcInstance->hostHandle, &phdcInstance->bulkInPipe, &pipeInit);
             if (status != kStatus_USB_Success)
             {
 #ifdef HOST_ECHO
@@ -545,15 +545,15 @@ static usb_status_t USB_HostPhdcOpenInterface(usb_host_phdc_instance_t *phdcInst
                  ((epDesc->bmAttributes & USB_DESCRIPTOR_ENDPOINT_ATTRIBUTE_TYPE_MASK) == USB_ENDPOINT_BULK))
         {
             /* Initialize bulk out pipe */
-            pipeInit.devInstance = phdcInstance->deviceHandle;
-            pipeInit.pipeType = USB_ENDPOINT_BULK;
-            pipeInit.direction = USB_OUT;
+            pipeInit.devInstance     = phdcInstance->deviceHandle;
+            pipeInit.pipeType        = USB_ENDPOINT_BULK;
+            pipeInit.direction       = USB_OUT;
             pipeInit.endpointAddress = (epDesc->bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_NUMBER_MASK);
-            pipeInit.maxPacketSize = (uint16_t)(USB_SHORT_FROM_LITTLE_ENDIAN_ADDRESS(epDesc->wMaxPacketSize) &
-                                                USB_DESCRIPTOR_ENDPOINT_MAXPACKETSIZE_SIZE_MASK);
-            pipeInit.numberPerUframe = (USB_SHORT_FROM_LITTLE_ENDIAN_ADDRESS(epDesc->wMaxPacketSize) &
-                                        USB_DESCRIPTOR_ENDPOINT_MAXPACKETSIZE_MULT_TRANSACTIONS_MASK);
-            pipeInit.nakCount = USB_HOST_CONFIG_MAX_NAK;
+            pipeInit.maxPacketSize   = (uint16_t)((USB_SHORT_FROM_LITTLE_ENDIAN_ADDRESS(epDesc->wMaxPacketSize) &
+                                                 USB_DESCRIPTOR_ENDPOINT_MAXPACKETSIZE_SIZE_MASK));
+            pipeInit.numberPerUframe = (uint8_t)((USB_SHORT_FROM_LITTLE_ENDIAN_ADDRESS(epDesc->wMaxPacketSize) &
+                                                  USB_DESCRIPTOR_ENDPOINT_MAXPACKETSIZE_MULT_TRANSACTIONS_MASK));
+            pipeInit.nakCount        = USB_HOST_CONFIG_MAX_NAK;
             status = USB_HostOpenPipe(phdcInstance->hostHandle, &phdcInstance->bulkOutPipe, &pipeInit);
             if (status != kStatus_USB_Success)
             {
@@ -567,6 +567,7 @@ static usb_status_t USB_HostPhdcOpenInterface(usb_host_phdc_instance_t *phdcInst
         }
         else
         {
+            /*no action*/
         }
     }
     return kStatus_USB_Success;
@@ -596,7 +597,7 @@ static void USB_HostPhdcSetInterfaceCallback(void *param, usb_host_transfer_t *t
          * USB_HostPhdcSetInterface */
         phdcInstance->controlCallbackFn(phdcInstance->controlCallbackParam, NULL, 0U, status);
     }
-    USB_HostFreeTransfer(phdcInstance->hostHandle, transfer);
+    (void)USB_HostFreeTransfer(phdcInstance->hostHandle, transfer);
 }
 
 /*!
@@ -694,19 +695,19 @@ usb_status_t USB_HostPhdcSetInterface(usb_host_class_handle classHandle,
             return kStatus_USB_Error;
         }
         /* Save application callback function and parameter */
-        phdcInstance->controlCallbackFn = callbackFn;
+        phdcInstance->controlCallbackFn    = callbackFn;
         phdcInstance->controlCallbackParam = callbackParam;
         /* Initialize transfer */
-        transfer->callbackFn = USB_HostPhdcSetInterfaceCallback;
-        transfer->callbackParam = phdcInstance;
-        transfer->setupPacket->bRequest = USB_REQUEST_STANDARD_SET_INTERFACE;
+        transfer->callbackFn                 = USB_HostPhdcSetInterfaceCallback;
+        transfer->callbackParam              = phdcInstance;
+        transfer->setupPacket->bRequest      = USB_REQUEST_STANDARD_SET_INTERFACE;
         transfer->setupPacket->bmRequestType = USB_REQUEST_TYPE_RECIPIENT_INTERFACE;
-        transfer->setupPacket->wIndex = USB_SHORT_TO_LITTLE_ENDIAN(
+        transfer->setupPacket->wIndex        = USB_SHORT_TO_LITTLE_ENDIAN(
             ((usb_host_interface_t *)phdcInstance->interfaceHandle)->interfaceDesc->bInterfaceNumber);
-        transfer->setupPacket->wValue = USB_SHORT_TO_LITTLE_ENDIAN(alternateSetting);
+        transfer->setupPacket->wValue  = USB_SHORT_TO_LITTLE_ENDIAN(alternateSetting);
         transfer->setupPacket->wLength = 0;
-        transfer->transferBuffer = NULL;
-        transfer->transferLength = 0;
+        transfer->transferBuffer       = NULL;
+        transfer->transferLength       = 0;
         /* Send set interface request to device */
         status = USB_HostSendSetup(phdcInstance->hostHandle, phdcInstance->controlPipe, transfer);
         if (status == kStatus_USB_Success)
@@ -715,7 +716,7 @@ usb_status_t USB_HostPhdcSetInterface(usb_host_class_handle classHandle,
         }
         else
         {
-            USB_HostFreeTransfer(phdcInstance->hostHandle, transfer);
+            (void)USB_HostFreeTransfer(phdcInstance->hostHandle, transfer);
         }
     }
     return status;
@@ -737,18 +738,20 @@ usb_status_t USB_HostPhdcInit(usb_host_handle deviceHandle, usb_host_class_handl
     usb_host_phdc_instance_t *phdcInstance =
         (usb_host_phdc_instance_t *)OSA_MemoryAllocate(sizeof(usb_host_phdc_instance_t));
     uint32_t infoValue;
-
+    uint32_t *temp;
     if (NULL == phdcInstance)
     {
         return kStatus_USB_AllocFail;
     }
     /* Initialize PHDC instance */
-    phdcInstance->deviceHandle = deviceHandle;
+    phdcInstance->deviceHandle    = deviceHandle;
     phdcInstance->interfaceHandle = NULL;
-    USB_HostHelperGetPeripheralInformation(deviceHandle, kUSB_HostGetHostHandle, &infoValue);
-    phdcInstance->hostHandle = (usb_host_handle)infoValue;
-    USB_HostHelperGetPeripheralInformation(deviceHandle, kUSB_HostGetDeviceControlPipe, &infoValue);
-    phdcInstance->controlPipe = (usb_host_pipe_handle)infoValue;
+    (void)USB_HostHelperGetPeripheralInformation(deviceHandle, (uint32_t)kUSB_HostGetHostHandle, &infoValue);
+    temp                     = (uint32_t *)infoValue;
+    phdcInstance->hostHandle = (usb_host_handle)temp;
+    (void)USB_HostHelperGetPeripheralInformation(deviceHandle, (uint32_t)kUSB_HostGetDeviceControlPipe, &infoValue);
+    temp                      = (uint32_t *)infoValue;
+    phdcInstance->controlPipe = (usb_host_pipe_handle)temp;
 
     *classHandle = phdcInstance;
     return kStatus_USB_Success;
@@ -780,6 +783,12 @@ usb_status_t USB_HostPhdcDeinit(usb_host_handle deviceHandle, usb_host_class_han
         {
             /* Cancel/close interrupt transfers/pipe */
             status = USB_HostCancelTransfer(phdcInstance->hostHandle, phdcInstance->interruptPipe, NULL);
+            if (status != kStatus_USB_Success)
+            {
+#ifdef HOST_ECHO
+                usb_echo("error when cancel pipe\r\n");
+#endif
+            }
             status = USB_HostClosePipe(phdcInstance->hostHandle, phdcInstance->interruptPipe);
 
             if (status != kStatus_USB_Success)
@@ -794,6 +803,12 @@ usb_status_t USB_HostPhdcDeinit(usb_host_handle deviceHandle, usb_host_class_han
         {
             /* Cancel/close bulk in transfers/pipe */
             status = USB_HostCancelTransfer(phdcInstance->hostHandle, phdcInstance->bulkInPipe, NULL);
+            if (status != kStatus_USB_Success)
+            {
+#ifdef HOST_ECHO
+                usb_echo("error when cancel pipe\r\n");
+#endif
+            }
             status = USB_HostClosePipe(phdcInstance->hostHandle, phdcInstance->bulkInPipe);
 
             if (status != kStatus_USB_Success)
@@ -808,6 +823,12 @@ usb_status_t USB_HostPhdcDeinit(usb_host_handle deviceHandle, usb_host_class_han
         {
             /* Cancel/close bulk out transfers/pipe */
             status = USB_HostCancelTransfer(phdcInstance->hostHandle, phdcInstance->bulkOutPipe, NULL);
+            if (status != kStatus_USB_Success)
+            {
+#ifdef HOST_ECHO
+                usb_echo("error when cancel pipe\r\n");
+#endif
+            }
             status = USB_HostClosePipe(phdcInstance->hostHandle, phdcInstance->bulkOutPipe);
 
             if (status != kStatus_USB_Success)
@@ -823,15 +844,21 @@ usb_status_t USB_HostPhdcDeinit(usb_host_handle deviceHandle, usb_host_class_han
             /* Cancel control transfers */
             status = USB_HostCancelTransfer(phdcInstance->hostHandle, phdcInstance->controlPipe,
                                             phdcInstance->controlTransfer);
+            if (status != kStatus_USB_Success)
+            {
+#ifdef HOST_ECHO
+                usb_echo("error when cancel pipe\r\n");
+#endif
+            }
         }
         /* Close device interface */
-        USB_HostCloseDeviceInterface(deviceHandle, phdcInstance->interfaceHandle);
+        (void)USB_HostCloseDeviceInterface(deviceHandle, phdcInstance->interfaceHandle);
         /* Release PHDC instance */
         OSA_MemoryFree(phdcInstance);
     }
     else
     {
-        USB_HostCloseDeviceInterface(deviceHandle, NULL);
+        (void)USB_HostCloseDeviceInterface(deviceHandle, NULL);
     }
     return kStatus_USB_Success;
 }
@@ -865,7 +892,7 @@ usb_status_t USB_HostPhdcRecv(usb_host_class_handle classHandle,
     usb_host_transfer_t *transfer;
     usb_host_pipe_handle pipe;
     usb_host_phdc_qos_descriptor_t *qosDesc = NULL;
-
+    void *temp;
     if (NULL == classHandle)
     {
         return kStatus_USB_InvalidHandle;
@@ -884,28 +911,30 @@ usb_status_t USB_HostPhdcRecv(usb_host_class_handle classHandle,
         return kStatus_USB_Error;
     }
     /* Save application callback function and parameter */
-    phdcInstance->inCallbackFn = callbackFn;
+    phdcInstance->inCallbackFn    = callbackFn;
     phdcInstance->inCallbackParam = callbackParam;
     /* Initialize the transfer pointer */
     transfer->transferBuffer = buffer;
     transfer->transferLength = bufferLength;
-    transfer->callbackParam = phdcInstance;
+    transfer->callbackParam  = phdcInstance;
     /* The on can receive the data on interrupt pipe or bulk in pipe depends on the QoS value */
-    pipe = (qos & 0x01U) ? (phdcInstance->interruptPipe) : (phdcInstance->bulkInPipe);
+    pipe = (0U != (qos & 0x01U)) ? (phdcInstance->interruptPipe) : (phdcInstance->bulkInPipe);
     if (pipe == phdcInstance->bulkInPipe)
     {
         /* get bulk in QoS descriptor */
-        qosDesc = (usb_host_phdc_qos_descriptor_t *)phdcInstance->bulkInEndpointInformation.epExtension;
+        temp                 = (void *)phdcInstance->bulkInEndpointInformation.epExtension;
+        qosDesc              = (usb_host_phdc_qos_descriptor_t *)temp;
         transfer->callbackFn = USB_HostPhdcBulkInPipeCallback;
     }
     else
     {
         /* get interrupt in QoS descriptor */
-        qosDesc = (usb_host_phdc_qos_descriptor_t *)phdcInstance->interruptInEndpointInformation.epExtension;
+        temp                 = (void *)phdcInstance->interruptInEndpointInformation.epExtension;
+        qosDesc              = (usb_host_phdc_qos_descriptor_t *)temp;
         transfer->callbackFn = USB_HostPhdcInterruptPipeCallback;
     }
     /* Latency and reliability checking */
-    if (!(qos & qosDesc->bmLatencyReliability))
+    if (0U == (qos & qosDesc->bmLatencyReliability))
     {
 #ifdef HOST_ECHO
         usb_echo("USB_HostPhdcRecv, ERROR: invalid QoS bin");
@@ -925,7 +954,7 @@ usb_status_t USB_HostPhdcRecv(usb_host_class_handle classHandle,
 #ifdef HOST_ECHO
         usb_echo("fail to USB_HostRecv\r\n");
 #endif
-        USB_HostFreeTransfer(phdcInstance->hostHandle, transfer);
+        (void)USB_HostFreeTransfer(phdcInstance->hostHandle, transfer);
         return kStatus_USB_Error;
     }
 
@@ -957,6 +986,8 @@ usb_status_t USB_HostPhdcSend(usb_host_class_handle classHandle,
 {
     usb_host_phdc_instance_t *phdcInstance = (usb_host_phdc_instance_t *)classHandle;
     usb_host_transfer_t *transfer;
+    void *temp;
+    usb_host_phdc_metadata_preamble_t *preamble;
     usb_status_t status;
     if (classHandle == NULL)
     {
@@ -982,7 +1013,7 @@ usb_status_t USB_HostPhdcSend(usb_host_class_handle classHandle,
         of data transfers shall be preceded by a meta-data message preamble transfer. The
         numberTransferBulkOut is initialized as zero for sending this message preamble data,
         then it is updated to the value of bNumTransfers field of message preamble data */
-        if (phdcInstance->numberTransferBulkOut)
+        if (0U != phdcInstance->numberTransferBulkOut)
         {
             /* When numberTransferBulkOut reduces to 0, a new meta-data message preamble shall
             be transferred */
@@ -990,10 +1021,11 @@ usb_status_t USB_HostPhdcSend(usb_host_class_handle classHandle,
         }
         else
         {
-            usb_host_phdc_qos_descriptor_t *qosDesc =
-                (usb_host_phdc_qos_descriptor_t *)phdcInstance->bulkOutEndpointInformation.epExtension;
-            ;
-            uint8_t latencyReliability = ((usb_host_phdc_metadata_preamble_t *)buffer)->bmLatencyReliability;
+            temp                                    = (void *)phdcInstance->bulkOutEndpointInformation.epExtension;
+            usb_host_phdc_qos_descriptor_t *qosDesc = (usb_host_phdc_qos_descriptor_t *)temp;
+            temp                                    = (void *)buffer;
+            preamble                                = (usb_host_phdc_metadata_preamble_t *)temp;
+            uint8_t latencyReliability              = preamble->bmLatencyReliability;
             /* Latency reliability validity checking */
             if ((latencyReliability != 0x02U) && /* Medium.Good latency, reliability bin */
                 (latencyReliability != 0x04U) && /* Medium.Better latency, reliability bin */
@@ -1016,7 +1048,7 @@ usb_status_t USB_HostPhdcSend(usb_host_class_handle classHandle,
 #endif
                 return status;
             }
-            if (0U == ((usb_host_phdc_metadata_preamble_t *)buffer)->bNumberTransfers)
+            if (0U == preamble->bNumberTransfers)
             {
                 status = kStatus_USB_Error;
 #ifdef HOST_ECHO
@@ -1025,7 +1057,7 @@ usb_status_t USB_HostPhdcSend(usb_host_class_handle classHandle,
                 return status;
             }
             /* Update the number of bulk out transfer */
-            phdcInstance->numberTransferBulkOut = ((usb_host_phdc_metadata_preamble_t *)buffer)->bNumberTransfers;
+            phdcInstance->numberTransferBulkOut = preamble->bNumberTransfers;
         }
     }
     /* Allocate the transfer pointer */
@@ -1037,19 +1069,19 @@ usb_status_t USB_HostPhdcSend(usb_host_class_handle classHandle,
         return kStatus_USB_Error;
     }
     /* Save the application callback function and parameter */
-    phdcInstance->outCallbackFn = callbackFn;
+    phdcInstance->outCallbackFn    = callbackFn;
     phdcInstance->outCallbackParam = callbackParam;
     /* Initialize the transfer pointer */
     transfer->transferBuffer = buffer;
     transfer->transferLength = bufferLength;
-    transfer->callbackFn = USB_HostPhdcBulkOutPipeCallback;
-    transfer->callbackParam = phdcInstance;
+    transfer->callbackFn     = USB_HostPhdcBulkOutPipeCallback;
+    transfer->callbackParam  = phdcInstance;
     if (USB_HostSend(phdcInstance->hostHandle, phdcInstance->bulkOutPipe, transfer) != kStatus_USB_Success)
     {
 #ifdef HOST_ECHO
         usb_echo("fail to USB_HostSend\r\n");
 #endif
-        USB_HostFreeTransfer(phdcInstance->hostHandle, transfer);
+        (void)USB_HostFreeTransfer(phdcInstance->hostHandle, transfer);
         return kStatus_USB_Error;
     }
     return kStatus_USB_Success;
@@ -1075,7 +1107,7 @@ usb_status_t USB_HostPhdcSendControlRequest(usb_host_class_handle classHandle,
                                             void *callbackParam)
 {
     usb_host_phdc_instance_t *phdcInstance = (usb_host_phdc_instance_t *)classHandle;
-    usb_status_t status = kStatus_USB_Success;
+    usb_status_t status                    = kStatus_USB_Success;
     usb_host_transfer_t *transfer;
 
     if (NULL == classHandle)
@@ -1101,13 +1133,13 @@ usb_status_t USB_HostPhdcSendControlRequest(usb_host_class_handle classHandle,
         return kStatus_USB_Error;
     }
     /* Save the callback function and parameter */
-    phdcInstance->controlCallbackFn = callbackFn;
+    phdcInstance->controlCallbackFn    = callbackFn;
     phdcInstance->controlCallbackParam = callbackParam;
     /* Initialize the transfer pointer */
-    transfer->callbackFn = USB_HostPhdcControlPipeCallback;
-    transfer->callbackParam = phdcInstance;
+    transfer->callbackFn            = USB_HostPhdcControlPipeCallback;
+    transfer->callbackParam         = phdcInstance;
     transfer->setupPacket->bRequest = request;
-    transfer->setupPacket->wIndex = USB_SHORT_TO_LITTLE_ENDIAN(
+    transfer->setupPacket->wIndex   = USB_SHORT_TO_LITTLE_ENDIAN(
         ((usb_host_interface_t *)phdcInstance->interfaceHandle)->interfaceDesc->bInterfaceNumber);
     switch (request)
     {
@@ -1136,7 +1168,7 @@ usb_status_t USB_HostPhdcSendControlRequest(usb_host_class_handle classHandle,
 #ifdef HOST_ECHO
         usb_echo("fail for USB_HostSendSetup\r\n");
 #endif
-        USB_HostFreeTransfer(phdcInstance->hostHandle, transfer);
+        (void)USB_HostFreeTransfer(phdcInstance->hostHandle, transfer);
         return kStatus_USB_Error;
     }
     phdcInstance->controlTransfer = transfer;
@@ -1190,17 +1222,17 @@ usb_status_t USB_HostPhdcSetClearFeatureEndpointHalt(usb_host_class_handle class
         return kStatus_USB_Error;
     }
     /* Save application callback function and parameter */
-    phdcInstance->controlCallbackFn = callbackFn;
+    phdcInstance->controlCallbackFn    = callbackFn;
     phdcInstance->controlCallbackParam = callbackParam;
     /* Initialize the transfer request */
-    transfer->callbackFn = USB_HostPhdcSetClearFeatureEndpointHaltCallback;
+    transfer->callbackFn    = USB_HostPhdcSetClearFeatureEndpointHaltCallback;
     transfer->callbackParam = phdcInstance;
-    if (USB_HostRequestControl(phdcInstance->deviceHandle, request, transfer, param))
+    if (kStatus_USB_Success != USB_HostRequestControl(phdcInstance->deviceHandle, request, transfer, param))
     {
 #ifdef HOST_ECHO
         usb_echo("fail for USB_HostRequestControl\r\n");
 #endif
-        USB_HostFreeTransfer(phdcInstance->hostHandle, transfer);
+        (void)USB_HostFreeTransfer(phdcInstance->hostHandle, transfer);
         return kStatus_USB_Error;
     }
     phdcInstance->controlTransfer = transfer;
@@ -1225,7 +1257,7 @@ usb_host_ep_t *USB_HostPhdcGetEndpointInformation(usb_host_class_handle classHan
                                                   uint8_t direction)
 {
     usb_host_phdc_instance_t *phdcInstance = (usb_host_phdc_instance_t *)classHandle;
-    usb_host_ep_t *endpointReturn = NULL;
+    usb_host_ep_t *endpointReturn          = NULL;
     if (NULL != classHandle)
     {
         if (pipeType == USB_ENDPOINT_BULK)
@@ -1248,6 +1280,7 @@ usb_host_ep_t *USB_HostPhdcGetEndpointInformation(usb_host_class_handle classHan
         }
         else
         {
+            /*no action*/
         }
     }
     return endpointReturn;

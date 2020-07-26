@@ -3,7 +3,7 @@
  * @author NXP Semiconductors
  * @version 1.0
  * @par License
- * Copyright 2016 NXP
+ * Copyright 2016,2020 NXP
  *
  * This software is owned or controlled by NXP and may only be used
  * strictly in accordance with the applicable license terms.  By expressly
@@ -24,6 +24,9 @@
 * project specific include files
 *******************************************************************/
 
+#ifndef MBEDTLS
+#   define MBEDTLS
+#endif
 #include "tstHostCrypto.h"
 #include "tst_sm_util.h"
 #include "sm_printf.h"
@@ -55,8 +58,7 @@
 /*******************************************************************
 * global variables and struct definitions
 *******************************************************************/
-
-static int fast_aes_wrap(const uint8_t *kek, int n, const uint8_t *plain, uint8_t *cipher);
+int fast_aes_wrap(const uint8_t *kek, int n, const uint8_t *plain, uint8_t *cipher);
 
 #if AX_EMBEDDED
 static int HOSTCRYPTO_GetRandom(void *pCtx, unsigned char *output, size_t len);
@@ -89,23 +91,32 @@ U16 HOSTCRYPTO_Sign(EC_KEY* pKey, U8* pInputData, U16 inputLength, U8* pSignatur
 U16 HOSTCRYPTO_ECC_ComputeSharedSecret(EC_KEY *pKey, U8 *pubKey, U16 pubKeyLen, U8 *pSharedSecretData, U16 *pSharedSecretDataLen)
 {
     int retval;
-    int keyLen = 0;
-    int sharedSecretLen;
-    int sharedSecretLen_Derived;
+    int keyLen = 0; // # byte
+    int sharedSecretLen; // # bits
+    int sharedSecretLen_Derived; // # bits
     U16 nStatus = SW_OK;
     mbedtls_mpi rawSharedData;
     mbedtls_ecp_point ecp_point;
     const mbedtls_ecp_curve_info *p_curve_info = NULL;
+
+    if (pKey == NULL) {
+        return ERR_NO_PRIVATE_KEY;
+    }
     mbedtls_ecp_keypair * pEcCtx = mbedtls_pk_ec( *pKey );
 
     mbedtls_ecp_point_init(&ecp_point);
     mbedtls_mpi_init(&rawSharedData);
+
     /* Compute the size of the shared secret */
-    sharedSecretLen = mbedtls_mpi_size( &(pEcCtx->d) );
-    if (sharedSecretLen > *pSharedSecretDataLen)
+    p_curve_info = mbedtls_ecp_curve_info_from_grp_id(pEcCtx->grp.id);
+    keyLen = ((p_curve_info->bit_size + 7)) / 8;
+    sharedSecretLen = keyLen * 8;
+    if (keyLen > *pSharedSecretDataLen)
     {
-        return ERR_API_ERROR;
+        return ERR_BUF_TOO_SMALL;
     }
+    // NOTE: alternative approach to get #byte shared secret (based upon bitsize of EC curve)
+    // (pEcCtx->grp.pbits + 7) / 8
 
      // convert external public key data to POINT
     // external public key curve == local curve
@@ -129,27 +140,19 @@ U16 HOSTCRYPTO_ECC_ComputeSharedSecret(EC_KEY *pKey, U8 *pubKey, U16 pubKeyLen, 
     mbedtls_ecp_point_free(&ecp_point);
 
     sharedSecretLen_Derived = mbedtls_mpi_size( &(rawSharedData) );
-    if (sharedSecretLen_Derived != sharedSecretLen)
+    if (sharedSecretLen_Derived > sharedSecretLen)
     {
+        // Unclear what error would trigger this code.
         mbedtls_mpi_free(&(rawSharedData));
         return ERR_GENERAL_ERROR;
     }
 
-    p_curve_info = mbedtls_ecp_curve_info_from_grp_id( pEcCtx->grp.id );
-    keyLen = ((p_curve_info->bit_size + 7))/8;
-    //get sharedsecret len from rawSharedData and check with sharedsecretlen. must be same
-    if (keyLen > *pSharedSecretDataLen)
-    {
-        mbedtls_mpi_free(&(rawSharedData));
-        return ERR_BUF_TOO_SMALL;
-    }
     *pSharedSecretDataLen = keyLen;
-    retval = mbedtls_mpi_write_binary(&rawSharedData,pSharedSecretData,keyLen);
+    retval = mbedtls_mpi_write_binary(&rawSharedData,pSharedSecretData, keyLen);
     if (retval != 0)
     {
         return ERR_GENERAL_ERROR;
     }
-
 
     mbedtls_mpi_free(&(rawSharedData));
     return nStatus;
@@ -338,7 +341,11 @@ U16 HOSTCRYPTO_GenerateEccKey(ECCCurve_t curveType, EC_KEY** ppKey)
 
     mbedtls_pk_free( pKey );
     free(pKey);
-    *ppKey = NULL;
+
+    if ( ppKey != NULL && *ppKey != NULL ) {
+        HOSTCRYPTO_FreeEccKey(ppKey);
+        *ppKey = NULL;
+    }
 
 #if !AX_EMBEDDED
     mbedtls_ctr_drbg_free( &ctr_drbg );
@@ -440,66 +447,6 @@ U16 HOSTCRYPTO_AesWrapKeyRFC3394(const U8 *wrapKey, U16 wrapKeyLen, U8 *out, U16
     return retval;
 }
 
-/**
- * fast_aes_wrap - Wrap keys with AES Key Wrap Algorithm (128-bit KEK) (RFC3394)
- * @kek: 16-octet Key encryption key (KEK)
- * @n: Length of the plaintext key in 64-bit units; e.g., 2 = 128-bit = 16
- * bytes
- * @plain: Plaintext key to be wrapped, n * 64 bits
- * @cipher: Wrapped key, (n + 1) * 64 bits
- * Returns: 0 on success, -1 on failure
- */
-static int fast_aes_wrap(const uint8_t *kek, int n, const uint8_t *plain, uint8_t *cipher)
-{
-    uint8_t *a, *r, b[16];
-    int32_t i, j;
-    int32_t ret = 0;
-    mbedtls_aes_context ctx;
-
-    a = cipher;
-    r = cipher + 8;
-
-    /* 1) Initialize variables. */
-    memset(a, 0xa6, 8);
-    memcpy(r, plain, 8 * n);
-
-    mbedtls_aes_init(&ctx);
-    ret = mbedtls_aes_setkey_enc(&ctx, kek, 128);
-    /*TODO check return code */
-    if (ret != 0) {
-        mbedtls_aes_free(&ctx);
-        return ret;
-    }
-
-    /* 2) Calculate intermediate values.
-     * For j = 0 to 5
-     *     For i=1 to n
-     *         B = AES(K, A | R[i])
-     *         A = MSB(64, B) ^ t where t = (n*j)+i
-     *         R[i] = LSB(64, B)
-     */
-    for (j = 0; j <= 5; j++) {
-    r = cipher + 8;
-    for (i = 1; i <= n; i++) {
-            memcpy(b, a, 8);
-            memcpy(b + 8, r, 8);
-            mbedtls_aes_encrypt(&ctx, b, b);
-            memcpy(a, b, 8);
-            a[7] ^= n * j + i;
-            memcpy(r, b + 8, 8);
-            r += 8;
-    }
-    }
-    mbedtls_aes_free(&ctx);
-
-    /* 3) Output the results.
-     *
-     * These are already in @cipher due to the location of temporary
-     * variables.
-     */
-
-    return SW_OK;
-}
 #ifdef TGT_A71CH
 U16 HOSTCRYPTO_HkdfExpandSha256(const U8 *secret, U16 secretLen, const U8 *info, U16 infoLen, U8 *derivedData, U16 derivedDataLen)
 {

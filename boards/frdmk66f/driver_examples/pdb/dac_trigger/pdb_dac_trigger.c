@@ -16,17 +16,17 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_PDB_BASE PDB0
-#define DEMO_PDB_IRQ_ID PDB0_IRQn
-#define DEMO_PDB_IRQ_HANDLER PDB0_IRQHandler
-#define DEMO_PDB_DELAY_VALUE 1000U
-#define DEMO_PDB_MODULUS_VALUE 1000U
+#define DEMO_PDB_BASE               PDB0
+#define DEMO_PDB_IRQ_ID             PDB0_IRQn
+#define DEMO_PDB_IRQ_HANDLER        PDB0_IRQHandler
+#define DEMO_PDB_DELAY_VALUE        1000U
+#define DEMO_PDB_MODULUS_VALUE      1000U
 #define DEMO_PDB_DAC_INTERVAL_VALUE 800U
 
-#define DEMO_DAC_BASE DAC0
-#define DEMO_DAC_CHANNEL kPDB_DACTriggerChannel0
-#define DEMO_DAC_IRQ_ID DAC0_IRQn
-#define DEMO_DAC_IRQ_HANDLER DAC0_IRQHandler
+#define DEMO_DAC_BASE             DAC0
+#define DEMO_DAC_CHANNEL          kPDB_DACTriggerChannel0
+#define DEMO_DAC_IRQ_ID           DAC0_IRQn
+#define DEMO_DAC_IRQ_HANDLER      DAC0_IRQHandler
 #define DEMO_DAC_USED_BUFFER_SIZE DAC_DATL_COUNT
 
 /*******************************************************************************
@@ -113,11 +113,7 @@ void DEMO_PDB_IRQ_HANDLER(void)
     PDB_ClearStatusFlags(DEMO_PDB_BASE, kPDB_DelayEventFlag);
     g_PdbDelayInterruptCounter++;
     g_PdbDelayInterruptFlag = true;
-    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-      exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 /*!
@@ -143,11 +139,7 @@ void DEMO_DAC_IRQ_HANDLER(void)
     }
     /* Clear flags. */
     DAC_ClearBufferStatusFlags(DEMO_DAC_BASE, flags);
-    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-      exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 /*!

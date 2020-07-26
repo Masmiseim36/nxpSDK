@@ -106,7 +106,7 @@
 
 #define CRLF "\r\n"
 #if LWIP_HTTPD_SUPPORT_11_KEEPALIVE
-#define HTTP11_CONNECTIONKEEPALIVE "Connection: keep-alive"
+#define HTTP11_CONNECTIONKEEPALIVE  "Connection: keep-alive"
 #define HTTP11_CONNECTIONKEEPALIVE2 "Connection: Keep-Alive"
 #endif
 
@@ -134,9 +134,9 @@
 #endif
 
 /* Return values for http_send_*() */
-#define HTTP_DATA_TO_SEND_BREAK 2
+#define HTTP_DATA_TO_SEND_BREAK    2
 #define HTTP_DATA_TO_SEND_CONTINUE 1
-#define HTTP_NO_DATA_TO_SEND 0
+#define HTTP_NO_DATA_TO_SEND       0
 
 typedef struct
 {
@@ -172,11 +172,11 @@ static char http_uri_buf[LWIP_HTTPD_URI_BUF_LEN + 1];
 /* The number of individual strings that comprise the headers sent before each
  * requested file.
  */
-#define NUM_FILE_HDR_STRINGS 5
-#define HDR_STRINGS_IDX_HTTP_STATUS 0          /* e.g. "HTTP/1.0 200 OK\r\n" */
-#define HDR_STRINGS_IDX_SERVER_NAME 1          /* e.g. "Server: "HTTPD_SERVER_AGENT"\r\n" */
+#define NUM_FILE_HDR_STRINGS                 5
+#define HDR_STRINGS_IDX_HTTP_STATUS          0 /* e.g. "HTTP/1.0 200 OK\r\n" */
+#define HDR_STRINGS_IDX_SERVER_NAME          1 /* e.g. "Server: "HTTPD_SERVER_AGENT"\r\n" */
 #define HDR_STRINGS_IDX_CONTENT_LEN_KEPALIVE 2 /* e.g. "Content-Length: xy\r\n" and/or "Connection: keep-alive\r\n" */
-#define HDR_STRINGS_IDX_CONTENT_LEN_NR 3       /* the byte count, when content-length is used */
+#define HDR_STRINGS_IDX_CONTENT_LEN_NR       3 /* the byte count, when content-length is used */
 #define HDR_STRINGS_IDX_CONTENT_TYPE \
     4 /* the content type (or default answer content type including default document) */
 
@@ -326,7 +326,7 @@ const char *const g_pcTagLeadOut = "-->";
 const tCGI *g_pCGIs;
 int g_iNumCGIs;
 int http_cgi_paramcount;
-#define http_cgi_params hs->params
+#define http_cgi_params     hs->params
 #define http_cgi_param_vals hs->param_vals
 #elif LWIP_HTTPD_CGI_SSI
 char *http_cgi_params[LWIP_HTTPD_MAX_CGI_PARAMETERS];     /* Params extracted from the request URI */
@@ -936,9 +936,9 @@ static void get_tag_insert(struct http_state *hs)
      * we don't have a handler for. Merely echo back the tags with an error
      * marker. */
 #define UNKNOWN_TAG1_TEXT "<b>***UNKNOWN TAG "
-#define UNKNOWN_TAG1_LEN 18
+#define UNKNOWN_TAG1_LEN  18
 #define UNKNOWN_TAG2_TEXT "***</b>"
-#define UNKNOWN_TAG2_LEN 7
+#define UNKNOWN_TAG2_LEN  7
     len = LWIP_MIN(sizeof(ssi->tag_name), LWIP_MIN(strlen(ssi->tag_name), LWIP_HTTPD_MAX_TAG_INSERT_LEN -
                                                                               (UNKNOWN_TAG1_LEN + UNKNOWN_TAG2_LEN)));
     MEMCPY(ssi->tag_insert, UNKNOWN_TAG1_TEXT, UNKNOWN_TAG1_LEN);
@@ -1986,8 +1986,8 @@ static err_t http_post_request(
     if (crlfcrlf != NULL)
     {
         /* search for "Content-Length: " */
-#define HTTP_HDR_CONTENT_LEN "Content-Length: "
-#define HTTP_HDR_CONTENT_LEN_LEN 16
+#define HTTP_HDR_CONTENT_LEN               "Content-Length: "
+#define HTTP_HDR_CONTENT_LEN_LEN           16
 #define HTTP_HDR_CONTENT_LEN_DIGIT_MAX_LEN 10
         char *scontent_len = lwip_strnstr(uri_end + 1, HTTP_HDR_CONTENT_LEN, crlfcrlf - (uri_end + 1));
         if (scontent_len != NULL)

@@ -4,13 +4,16 @@
     <definition extID="com.nxp.mcuxpresso"/>
     <definition extID="component.lists.MK28FA15"/>
     <definition extID="component.lpuart_adapter.MK28FA15"/>
+    <definition extID="component.osa_bm.MK28FA15"/>
     <definition extID="component.serial_manager.MK28FA15"/>
     <definition extID="component.serial_manager_uart.MK28FA15"/>
     <definition extID="device.MK28FA15_CMSIS.MK28FA15"/>
     <definition extID="device.MK28FA15_startup.MK28FA15"/>
     <definition extID="middleware.sdmmc.common.MK28FA15"/>
+    <definition extID="middleware.sdmmc.host.sdhc.MK28FA15"/>
+    <definition extID="middleware.sdmmc.host.sdhc.polling.MK28FA15"/>
+    <definition extID="middleware.sdmmc.osa.bm.MK28FA15"/>
     <definition extID="middleware.sdmmc.sd.MK28FA15"/>
-    <definition extID="middleware.sdmmc.sdhcadaptor.polling.MK28FA15"/>
     <definition extID="platform.Include_common.MK28FA15"/>
     <definition extID="platform.Include_core_cm4.MK28FA15"/>
     <definition extID="platform.Include_dsp.MK28FA15"/>
@@ -30,7 +33,7 @@
     <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="frdmk28fa_sdcard_polling" name="sdcard_polling" category="sdmmc_examples/sdcard_polling" dependency="platform.drivers.gpio.MK28FA15 platform.drivers.sysmpu.MK28FA15 platform.drivers.sdhc.MK28FA15 middleware.sdmmc.sdhcadaptor.polling.MK28FA15 platform.drivers.port.MK28FA15 middleware.sdmmc.sd.MK28FA15 platform.drivers.clock.MK28FA15 platform.drivers.common.MK28FA15 device.MK28FA15_CMSIS.MK28FA15 utility.debug_console.MK28FA15 component.lpuart_adapter.MK28FA15 component.serial_manager.MK28FA15 component.lists.MK28FA15 component.serial_manager_uart.MK28FA15 platform.drivers.lpuart.MK28FA15 device.MK28FA15_startup.MK28FA15 platform.drivers.smc.MK28FA15 platform.utilities.assert.MK28FA15 platform.Include_core_cm4.MK28FA15 platform.Include_common.MK28FA15 platform.Include_dsp.MK28FA15 middleware.sdmmc.common.MK28FA15 platform.utilities.misc_utilities.MK28FA15">
+  <example id="frdmk28fa_sdcard_polling" name="sdcard_polling" category="sdmmc_examples/sdcard_polling" dependency="platform.drivers.gpio.MK28FA15 platform.drivers.sysmpu.MK28FA15 platform.drivers.sdhc.MK28FA15 middleware.sdmmc.sd.MK28FA15 middleware.sdmmc.common.MK28FA15 middleware.sdmmc.host.sdhc.MK28FA15 middleware.sdmmc.host.sdhc.polling.MK28FA15 platform.drivers.port.MK28FA15 platform.drivers.clock.MK28FA15 platform.drivers.common.MK28FA15 device.MK28FA15_CMSIS.MK28FA15 utility.debug_console.MK28FA15 component.lpuart_adapter.MK28FA15 component.serial_manager.MK28FA15 component.lists.MK28FA15 component.serial_manager_uart.MK28FA15 platform.drivers.lpuart.MK28FA15 device.MK28FA15_startup.MK28FA15 platform.drivers.smc.MK28FA15 platform.utilities.assert.MK28FA15 platform.Include_core_cm4.MK28FA15 platform.Include_common.MK28FA15 platform.Include_dsp.MK28FA15 middleware.sdmmc.osa.bm.MK28FA15 component.osa_bm.MK28FA15 platform.utilities.misc_utilities.MK28FA15">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -49,6 +52,7 @@
           <value>CPU_MK28FN2M0AVMI15</value>
           <value>FRDM_K28FA</value>
           <value>FREEDOM</value>
+          <value>SD_ENABLED</value>
           <value>SERIAL_PORT_TYPE_UART=1</value>
         </option>
         <option id="gnu.c.compiler.option.optimization.flags" type="string">
@@ -82,11 +86,13 @@
       <files mask="board.h"/>
       <files mask="clock_config.h"/>
       <files mask="pin_mux.h"/>
+      <files mask="sdmmc_config.h"/>
     </source>
     <source path="boards/frdmk28fa/sdmmc_examples/sdcard_polling" target_path="board" type="src">
       <files mask="board.c"/>
       <files mask="clock_config.c"/>
       <files mask="pin_mux.c"/>
+      <files mask="sdmmc_config.c"/>
     </source>
     <source path="boards/frdmk28fa/sdmmc_examples/sdcard_polling" target_path="doc" type="doc" toolchain="iar mdk mcuxpresso armgcc">
       <files mask="readme.txt"/>

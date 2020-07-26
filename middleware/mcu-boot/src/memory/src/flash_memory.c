@@ -7,14 +7,14 @@
  */
 
 #include "bootloader_common.h"
-#include "memory/memory.h"
+#include "memory.h"
 #include "flash_memory.h"
 #include "normal_memory.h"
 #include "fsl_flash.h"
-#include "bootloader/bl_context.h"
+#include "bl_context.h"
 #include "fsl_device_registers.h"
-#include "utilities/fsl_rtos_abstraction.h"
-#include "utilities/fsl_assert.h"
+#include "fsl_rtos_abstraction.h"
+#include "fsl_assert.h"
 #include <string.h>
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -93,9 +93,11 @@ static uint32_t s_regPrimask = 0U;
 ////////////////////////////////////////////////////////////////////////////////
 //! @brief check if a flash region is in an XA controlled region or contains an XA controlled region.
 //         and try to open flash program state by calling verify_erase_all command if needed.
+#if defined(FSL_FEATURE_FLASH_HAS_ACCESS_CONTROL) && FSL_FEATURE_FLASH_HAS_ACCESS_CONTROL
 status_t flash_preprocess_execute_only_region(uint32_t address,
                                               uint32_t length,
                                               flash_xacc_state_t *state);
+#endif
 
 status_t flash_check_access_before_programming(uint32_t address, uint32_t length, bool *verifyWrites);
 
@@ -708,6 +710,7 @@ static uint32_t flash_get_instance(uint32_t address, uint32_t length)
 
 //! @brief check if a flash region is in an XA controlled region or contains an XA controlled region.
 //         and try to open flash program state by calling verify_erase_all command if needed.
+#if defined(FSL_FEATURE_FLASH_HAS_ACCESS_CONTROL) && FSL_FEATURE_FLASH_HAS_ACCESS_CONTROL
 status_t flash_preprocess_execute_only_region(uint32_t address,
                                               uint32_t length,
                                               flash_xacc_state_t *state)
@@ -750,6 +753,7 @@ status_t flash_preprocess_execute_only_region(uint32_t address,
 #endif // FSL_FEATURE_FLASH_HAS_ACCESS_CONTROL
     return status;
 }
+#endif
 
 status_t flash_check_access_before_programming(uint32_t address, uint32_t length, bool *verifyWrites)
 {

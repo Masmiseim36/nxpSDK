@@ -3,7 +3,7 @@
  * @author NXP Semiconductors
  * @version 1.0
  * @par License
- * Copyright 2017 NXP
+ * Copyright 2017,2020 NXP
  *
  * This software is owned or controlled by NXP and may only be used
  * strictly in accordance with the applicable license terms.  By expressly
@@ -21,14 +21,14 @@
  *
  * - T=1 over I2C is the protocol used by SE050 family of secure elements.
  *
- * - T=1 over I2C  with GP is the protocol used by SN050  & SE051 family of secure elements.
+ * - T=1 over I2C with GP is the protocol used by other secure elements.
  *
  * These APIs are to be implemented when porting the Middleware stack to a new
  * host platform.
  *
  * @note Few APIs are only required for the SCI2C protocol and few are only
  *       needed for T=1 over I2C Protocol.  They are marked by the defines
- *       ``SCI2C`` ,  ``T1oI2C`` and ``T1oI2C_GP``
+ *       ``SCI2C`` ,  ``T1oI2C`` and ``T1oI2C_GP1_0``
  *
  * # Convention of the APIs.
  *
@@ -95,11 +95,12 @@ extern "C"{
 #endif
 /** Initialize the I2C platform HW/Driver*/
 
-i2c_error_t axI2CInit( void );
+i2c_error_t axI2CInit(void **conn_ctx, const char *pDevName);
 
 /** Terminate / de-initialize the I2C platform HW/Driver
  *
  *
+ * @param[in] connection context.
  * @param[in] mode Can be either 0 or 1.
  *
  *            Where applicable, and implemented a value of 0 corresponds
@@ -110,7 +111,7 @@ i2c_error_t axI2CInit( void );
  *
  *
  */
-void axI2CTerm(int mode);
+void axI2CTerm(void* conn_ctx, int mode);
 
 #if AX_EMBEDDED
 /** Smarter handling of back off logic
@@ -126,11 +127,12 @@ void axI2CResetBackoffDelay( void );
 /** Write a byte.
  *
  * Needed only for SCI2C */
-i2c_error_t axI2CWriteByte(unsigned char bus, unsigned char addr, unsigned char * pTx);
+i2c_error_t axI2CWriteByte(void* conn_ctx, unsigned char bus, unsigned char addr, unsigned char * pTx);
 /** Write and read only after an ACK.
  *
  * Needed only for SCI2C */
-i2c_error_t axI2CWriteRead(unsigned char bus,
+i2c_error_t axI2CWriteRead(void* conn_ctx,
+	unsigned char bus,
     unsigned char addr,
     unsigned char *pTx,
     unsigned short txLen,
@@ -142,14 +144,14 @@ i2c_error_t axI2CWriteRead(unsigned char bus,
 /** Write a frame.
  *
  * Needed for SCI2C and T=1 over I2C */
-i2c_error_t axI2CWrite(unsigned char bus, unsigned char addr, unsigned char * pTx, unsigned short txLen);
+i2c_error_t axI2CWrite(void* conn_ctx, unsigned char bus, unsigned char addr, unsigned char * pTx, unsigned short txLen);
 #endif
 
 #ifdef T1oI2C
 /** Read a byte.
  *
  * Needed only for T=1 over I2C */
-i2c_error_t axI2CRead(unsigned char bus, unsigned char addr, unsigned char * pRx, unsigned short rxLen);
+i2c_error_t axI2CRead(void* conn_ctx, unsigned char bus, unsigned char addr, unsigned char * pRx, unsigned short rxLen);
 #endif /* T1oI2C */
 #if defined(__cplusplus)
 }

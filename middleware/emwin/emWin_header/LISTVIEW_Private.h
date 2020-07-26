@@ -9,7 +9,7 @@
 *                                                                    *
 **********************************************************************
 
-** emWin V5.50 - Graphical user interface for embedded applications **
+** emWin V6.10 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -129,6 +129,10 @@ struct LISTVIEW_Obj {
   int                          SelCol;
   int                          ShowGrid;
   int                          SortIndex;                                         // Column for sorting
+  int                          MotionPosX;
+  int                          MotionPosOldX;
+  int                          MotionPosY;
+  int                          MotionPosOldY;
   unsigned                     RowDistY;
   unsigned                     LBorder;
   unsigned                     RBorder;
@@ -185,7 +189,7 @@ unsigned             LISTVIEW__GetRowSorted         (LISTVIEW_Handle   hObj, int
 void                 LISTVIEW__InvalidateInsideArea (LISTVIEW_Handle   hObj);
 void                 LISTVIEW__InvalidateRow        (LISTVIEW_Handle   hObj, int Sel);
 void                 LISTVIEW__InvalidateRowAndBelow(LISTVIEW_Handle   hObj, int Sel);
-void                 LISTVIEW__SetSel               (LISTVIEW_Handle   hObj, int NewSel);
+void                 LISTVIEW__SetSel               (LISTVIEW_Handle   hObj, int NewSel, int CheckPos);
 void                 LISTVIEW__SetSelCol            (LISTVIEW_Handle   hObj, int NewSelCol);
 int                  LISTVIEW__UpdateScrollParas    (LISTVIEW_Handle   hObj);
 

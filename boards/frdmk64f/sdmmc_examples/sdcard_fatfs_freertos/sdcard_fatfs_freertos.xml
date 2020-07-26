@@ -3,19 +3,22 @@
   <externalDefinitions>
     <definition extID="com.nxp.mcuxpresso"/>
     <definition extID="component.lists.MK64F12"/>
+    <definition extID="component.osa_free_rtos.MK64F12"/>
     <definition extID="component.serial_manager.MK64F12"/>
     <definition extID="component.serial_manager_uart.MK64F12"/>
     <definition extID="component.uart_adapter.MK64F12"/>
     <definition extID="device.MK64F12_CMSIS.MK64F12"/>
     <definition extID="device.MK64F12_startup.MK64F12"/>
-    <definition extID="middleware.amazon_freertos-kernel.MK64F12"/>
-    <definition extID="middleware.amazon_freertos-kernel.extension.MK64F12"/>
-    <definition extID="middleware.amazon_freertos-kernel.heap_4.MK64F12"/>
     <definition extID="middleware.fatfs.MK64F12"/>
     <definition extID="middleware.fatfs.sd.MK64F12"/>
+    <definition extID="middleware.freertos-kernel.MK64F12"/>
+    <definition extID="middleware.freertos-kernel.extension.MK64F12"/>
+    <definition extID="middleware.freertos-kernel.heap_4.MK64F12"/>
     <definition extID="middleware.sdmmc.common.MK64F12"/>
+    <definition extID="middleware.sdmmc.host.sdhc.MK64F12"/>
+    <definition extID="middleware.sdmmc.host.sdhc.freertos.MK64F12"/>
+    <definition extID="middleware.sdmmc.osa.freertos.MK64F12"/>
     <definition extID="middleware.sdmmc.sd.MK64F12"/>
-    <definition extID="middleware.sdmmc.sdhcadaptor.freertos.MK64F12"/>
     <definition extID="platform.Include_common.MK64F12"/>
     <definition extID="platform.Include_core_cm4.MK64F12"/>
     <definition extID="platform.Include_dsp.MK64F12"/>
@@ -36,7 +39,7 @@
     <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="frdmk64f_sdcard_fatfs_freertos" name="sdcard_fatfs_freertos" category="sdmmc_examples/sdcard_fatfs_freertos" dependency="platform.drivers.sdhc.MK64F12 middleware.sdmmc.sdhcadaptor.freertos.MK64F12 platform.drivers.sysmpu.MK64F12 middleware.fatfs.MK64F12 middleware.fatfs.sd.MK64F12 middleware.amazon_freertos-kernel.MK64F12 middleware.amazon_freertos-kernel.heap_4.MK64F12 platform.drivers.port.MK64F12 platform.drivers.gpio.MK64F12 platform.drivers.clock.MK64F12 platform.drivers.flash.MK64F12 utility.debug_console.MK64F12 platform.drivers.uart.MK64F12 platform.drivers.smc.MK64F12 device.MK64F12_CMSIS.MK64F12 component.uart_adapter.MK64F12 component.serial_manager.MK64F12 platform.drivers.common.MK64F12 component.lists.MK64F12 component.serial_manager_uart.MK64F12 device.MK64F12_startup.MK64F12 platform.utilities.assert.MK64F12 platform.Include_core_cm4.MK64F12 platform.Include_common.MK64F12 platform.Include_dsp.MK64F12 middleware.sdmmc.sd.MK64F12 middleware.sdmmc.common.MK64F12 middleware.amazon_freertos-kernel.extension.MK64F12 platform.utilities.misc_utilities.MK64F12">
+  <example id="frdmk64f_sdcard_fatfs_freertos" name="sdcard_fatfs_freertos" category="sdmmc_examples/sdcard_fatfs_freertos" dependency="platform.drivers.sdhc.MK64F12 middleware.sdmmc.sd.MK64F12 middleware.sdmmc.common.MK64F12 middleware.sdmmc.host.sdhc.MK64F12 middleware.sdmmc.host.sdhc.freertos.MK64F12 platform.drivers.sysmpu.MK64F12 middleware.fatfs.MK64F12 middleware.fatfs.sd.MK64F12 middleware.freertos-kernel.heap_4.MK64F12 platform.drivers.port.MK64F12 platform.drivers.gpio.MK64F12 platform.drivers.clock.MK64F12 platform.drivers.flash.MK64F12 utility.debug_console.MK64F12 platform.drivers.uart.MK64F12 platform.drivers.smc.MK64F12 device.MK64F12_CMSIS.MK64F12 component.uart_adapter.MK64F12 component.serial_manager.MK64F12 platform.drivers.common.MK64F12 component.lists.MK64F12 component.serial_manager_uart.MK64F12 device.MK64F12_startup.MK64F12 platform.utilities.assert.MK64F12 platform.Include_core_cm4.MK64F12 platform.Include_common.MK64F12 platform.Include_dsp.MK64F12 middleware.sdmmc.osa.freertos.MK64F12 component.osa_free_rtos.MK64F12 middleware.freertos-kernel.MK64F12 middleware.freertos-kernel.extension.MK64F12 platform.utilities.misc_utilities.MK64F12">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -55,8 +58,9 @@
           <value>CPU_MK64FN1M0VLL12</value>
           <value>FRDM_K64F</value>
           <value>FREEDOM</value>
-          <value>FSL_RTOS_FREE_RTOS</value>
+          <value>SD_ENABLED</value>
           <value>SERIAL_PORT_TYPE_UART=1</value>
+          <value>FSL_RTOS_FREE_RTOS</value>
         </option>
         <option id="gnu.c.compiler.option.optimization.flags" type="string">
           <value>-fno-common</value>
@@ -88,11 +92,13 @@
       <files mask="board.h"/>
       <files mask="clock_config.h"/>
       <files mask="pin_mux.h"/>
+      <files mask="sdmmc_config.h"/>
     </source>
     <source path="boards/frdmk64f/sdmmc_examples/sdcard_fatfs_freertos" target_path="board" type="src">
       <files mask="board.c"/>
       <files mask="clock_config.c"/>
       <files mask="pin_mux.c"/>
+      <files mask="sdmmc_config.c"/>
     </source>
     <source path="boards/frdmk64f/sdmmc_examples/sdcard_fatfs_freertos" target_path="doc" type="doc" toolchain="iar mdk mcuxpresso armgcc">
       <files mask="readme.txt"/>

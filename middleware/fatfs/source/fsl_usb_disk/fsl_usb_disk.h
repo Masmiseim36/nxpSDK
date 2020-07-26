@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  *
@@ -57,7 +57,7 @@ extern DSTATUS USB_HostMsdGetDiskStatus(BYTE pdrv);
  * @retval RES_ERROR     usb stack driver error.
  * @retval RES_NOTRDY    read disk error.
  */
-extern DRESULT USB_HostMsdReadDisk(BYTE pdrv, BYTE *buff, DWORD sector, UINT count);
+extern DRESULT USB_HostMsdReadDisk(BYTE pdrv, BYTE *buff, LBA_t sector, UINT count);
 
 /*!
  * @brief fatfs call this function to write data to physical disk.
@@ -71,7 +71,7 @@ extern DRESULT USB_HostMsdReadDisk(BYTE pdrv, BYTE *buff, DWORD sector, UINT cou
  * @retval RES_ERROR     usb stack driver error.
  * @retval RES_NOTRDY    write disk error.
  */
-extern DRESULT USB_HostMsdWriteDisk(BYTE pdrv, const BYTE *buff, DWORD sector, UINT count);
+extern DRESULT USB_HostMsdWriteDisk(BYTE pdrv, const BYTE *buff, LBA_t sector, UINT count);
 
 /*!
  * @brief fatfs call this function to write data to physical disk.

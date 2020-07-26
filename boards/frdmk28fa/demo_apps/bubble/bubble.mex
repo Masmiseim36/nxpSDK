@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding= "UTF-8" ?>
-<configuration name="" version="1.6" xsi:schemaLocation="http://mcuxpresso.nxp.com/XSD/mex_configuration_1.6 http://mcuxpresso.nxp.com/XSD/mex_configuration_1.6.xsd" uuid="74f16daa-e072-4b7f-a25d-e2f55c4b90b8" xmlns="http://mcuxpresso.nxp.com/XSD/mex_configuration_1.6" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<configuration name="MK28FN2M0Axxx15" version="1.6" xsi:schemaLocation="http://mcuxpresso.nxp.com/XSD/mex_configuration_1.7 http://mcuxpresso.nxp.com/XSD/mex_configuration_1.7.xsd" uuid="69dae563-f896-49ae-a6e4-e738ed839b76" xmlns="http://mcuxpresso.nxp.com/XSD/mex_configuration_1.7" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
    <common>
       <processor>MK28FN2M0Axxx15</processor>
       <package>MK28FN2M0AVMI15</package>
@@ -8,7 +8,6 @@
       <cores selected="core0">
          <core name="Cortex-M4F" id="core0" description="M4 core"/>
       </cores>
-      <description></description>
    </common>
    <preferences>
       <validate_boot_init_only>true</validate_boot_init_only>
@@ -16,9 +15,9 @@
       <generate_code_modified_registers_only>false</generate_code_modified_registers_only>
    </preferences>
    <tools>
-      <pins name="Pins" version="6.0" enabled="true" update_project_code="true">
+      <pins name="Pins" version="7.0" enabled="true" update_project_code="true">
          <pins_profile>
-            <processor_version>6.0.1</processor_version>
+            <processor_version>0.7.4</processor_version>
          </pins_profile>
          <functions_list>
             <function name="BOARD_InitPins">
@@ -36,6 +35,11 @@
                      </feature>
                   </dependency>
                   <dependency resourceType="Peripheral" resourceId="FTM3" description="Peripheral FTM3 is not initialized" problem_level="1" source="Pins:BOARD_InitPins">
+                     <feature name="initialized" evaluation="equal">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="Peripheral" resourceId="TPIU" description="Peripheral TPIU is not initialized" problem_level="1" source="Pins:BOARD_InitPins">
                      <feature name="initialized" evaluation="equal">
                         <data>true</data>
                      </feature>
@@ -68,6 +72,12 @@
                         <pin_feature name="slew_rate" value="slow"/>
                         <pin_feature name="open_drain" value="disable"/>
                         <pin_feature name="drive_strength" value="low"/>
+                        <pin_feature name="pull_select" value="down"/>
+                        <pin_feature name="pull_enable" value="disable"/>
+                     </pin_features>
+                  </pin>
+                  <pin peripheral="TPIU" signal="SWO" pin_num="M9" pin_signal="PTA2/LPUART0_TX/FTM0_CH7/I2C3_SCL/FXIO0_D12/JTAG_TDO/TRACE_SWO">
+                     <pin_features>
                         <pin_feature name="pull_select" value="down"/>
                         <pin_feature name="pull_enable" value="disable"/>
                      </pin_features>
@@ -118,9 +128,9 @@
             </function>
          </functions_list>
       </pins>
-      <clocks name="Clocks" version="6.0" enabled="true" update_project_code="true">
+      <clocks name="Clocks" version="7.0" enabled="true" update_project_code="true">
          <clocks_profile>
-            <processor_version>6.0.1</processor_version>
+            <processor_version>0.7.4</processor_version>
          </clocks_profile>
          <clock_configurations>
             <clock_configuration name="BOARD_BootClockRUN">
@@ -312,26 +322,25 @@
             </clock_configuration>
          </clock_configurations>
       </clocks>
-      <periphs name="Peripherals" version="6.0" enabled="true" update_project_code="true">
+      <dcdx name="DCDx" version="2.0" enabled="false" update_project_code="true">
+         <dcdx_profile>
+            <processor_version>N/A</processor_version>
+         </dcdx_profile>
+         <dcdx_configurations/>
+      </dcdx>
+      <periphs name="Peripherals" version="7.0" enabled="false" update_project_code="true">
          <peripherals_profile>
-            <processor_version>6.0.1</processor_version>
+            <processor_version>N/A</processor_version>
          </peripherals_profile>
-         <functional_groups>
-            <functional_group name="BOARD_InitPeripherals" uuid="4c19a463-a032-45f6-836e-b0a91e61d8bd" called_from_default_init="true" id_prefix="" core="core0">
-               <description></description>
-               <options/>
-               <dependencies/>
-               <instances/>
-            </functional_group>
-         </functional_groups>
-         <components>
-            <component name="system" type_id="system_54b53072540eeeb8f8e9343e71f28176">
-               <config_set_global name="global_system_definitions"/>
-            </component>
-            <component name="msg" type_id="msg_6e2baaf3b97dbeef01c0043275f9a0e7">
-               <config_set_global name="global_messages"/>
-            </component>
-         </components>
+         <functional_groups/>
+         <components/>
       </periphs>
+      <tee name="TEE" version="1.0" enabled="false" update_project_code="true">
+         <tee_profile>
+            <processor_version>N/A</processor_version>
+         </tee_profile>
+         <global_options/>
+         <user_memory_regions/>
+      </tee>
    </tools>
 </configuration>

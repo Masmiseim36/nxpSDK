@@ -22,6 +22,6 @@
  *       time_ms: Time in ms
  *
 */
-void se_pit_SetTimer(U16 time_ms);
+void se_pit_SetTimer(uint32_t time_ms);
 #endif // FSL_FEATURE_SOC_PIT_COUNT
 #endif // _SE_PIT_CONFIG_H

@@ -26,35 +26,35 @@
 /*! @brief a_wait_bcon_tmr in OTG spec, Wait for B-Connect, 1.1sec ~ 30^15sec */
 #define USB_OTG_TIMER_A_WAIT_BCON_TMR (2000U)
 /*! @brief a_aidl_bdis_tmr in OTG spec, A-Idle to B-Disconnect, 200ms ~ infinity */
-#define USB_OTG_TIMER_A_AIDL_BDIS_TMR (500)
+#define USB_OTG_TIMER_A_AIDL_BDIS_TMR (500U)
 /*! @brief b_ase0_brst_tmr in OTG spec, A-SE0 to B-Reset, 155ms ~ 200ms */
-#define USB_OTG_TIMER_B_ASE0_BRST_TMR (155)
+#define USB_OTG_TIMER_B_ASE0_BRST_TMR (155U)
 /*! @brief TB_DATA_PLS in OTG spec, Data-Line Pulse Time, 5ms ~ 10ms. generate the data pulse using this time value. */
-#define USB_OTG_TIME_B_DATA_PLS (7)
+#define USB_OTG_TIME_B_DATA_PLS (7U)
 /*! @brief TB_DATA_PLS in OTG spec, Data-Line Pulse Time's minimum value */
-#define USB_OTG_TIME_B_DATA_PLS_MIN (5)
+#define USB_OTG_TIME_B_DATA_PLS_MIN (5U)
 /*! @brief TB_DATA_PLS in OTG spec, Data-Line Pulse Time's maximum value */
-#define USB_OTG_TIME_B_DATA_PLS_MAX (10)
+#define USB_OTG_TIME_B_DATA_PLS_MAX (10U)
 /*! @brief TA_BCON_LDB in OTG spec, B-Connect Long Debounce, 100ms ~ infinity */
-#define USB_OTG_TIME_A_BCON_LDB (100)
+#define USB_OTG_TIME_A_BCON_LDB (100U)
 /*! @brief TA_BCON_SDB in OTG spec, B-Connect Short Debounce, 2.5us ~ infinity */
-#define USB_OTG_TIME_A_BCON_SDB (1)
+#define USB_OTG_TIME_A_BCON_SDB (1U)
 /*! @brief TB_SSEND_SRP in OTG spec, Session end to SRP init, 1.5sec ~ infinity */
-#define USB_OTG_TIME_B_SSEND_SRP (1500)
+#define USB_OTG_TIME_B_SSEND_SRP (1500U)
 /*! @brief TB_SE0_SRP in OTG spec, SE0 Time Before SRP, 1sec ~ infinity */
-#define USB_OTG_TIME_B_SE0_SRP (1000)
+#define USB_OTG_TIME_B_SE0_SRP (1000U)
 /*! @brief TB_AIDL_BDIS in OTG spec, A-Idle to B-Disconnect, 4ms ~ 150ms */
-#define USB_OTG_TIME_B_AIDL_BDIS (100)
+#define USB_OTG_TIME_B_AIDL_BDIS (100U)
 /*! @brief TA_BIDL_ADIS in OTG spec, B-Idle to A-Disconnect,
 Used by an A-device to determine when the B-device has finished being host, 155ms ~ 200ms */
-#define USB_OTG_TIME_A_BIDL_ADIS (190)
+#define USB_OTG_TIME_A_BIDL_ADIS (190U)
 
 /* self-defined constant time value */
 /*! @brief wait another device initialize device stack before initializing the host stack */
 #define USB_OTG_TIME_WAIT_DEVICE_INIT (200U)
 /*! @brief delay this time before check idle in a_peripheral state, wait another device initialize host stack */
 #define USB_OTG_TIME_WAIT_BHOST (1000U)
-#define USB_OTG_MESSAGES_SIZE (sizeof(uint32_t)*(1U + (sizeof(usb_otg_msg_t) - 1U) / sizeof(uint32_t)))
+#define USB_OTG_MESSAGES_SIZE (sizeof(uint32_t) * (1U + (sizeof(usb_otg_msg_t) - 1U) / sizeof(uint32_t)))
 /*! @brief The control types */
 typedef enum _usb_otg_control
 {
@@ -111,10 +111,12 @@ typedef struct _usb_otg_msg
 /*! @brief USB OTG instance structure */
 typedef struct _usb_otg_instance
 {
-    usb_otg_controller_handle controllerHandle;                /*!< The low level controller handle */
-    usb_otg_callback_t otgCallback;                            /*!< OTG callback function*/
-    void *otgCallbackParameter;                                /*!< OTG callback function parameter */
-    MSGQ_HANDLE_BUFFER_DEFINE(otgMsgHandleBuffer,USB_OTG_MSG_COUNT, (USB_OTG_MESSAGES_SIZE)); /*!< OTG task message queue handle */
+    usb_otg_controller_handle controllerHandle; /*!< The low level controller handle */
+    usb_otg_callback_t otgCallback;             /*!< OTG callback function*/
+    void *otgCallbackParameter;                 /*!< OTG callback function parameter */
+    OSA_MSGQ_HANDLE_DEFINE(otgMsgHandleBuffer,
+                           USB_OTG_MSG_COUNT,
+                           (USB_OTG_MESSAGES_SIZE)); /*!< OTG task message queue handle */
     osa_msgq_handle_t otgMsgHandle;
     const usb_otg_controller_interface_t *controllerInterface; /*!< controller interface APIs */
     uint32_t otgControllerStatus;                              /*!< please reference to #usb_otg_status_type_t */

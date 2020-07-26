@@ -27,6 +27,13 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+#define I2C_RELEASE_SDA_PORT  PORTA
+#define I2C_RELEASE_SCL_PORT  PORTA
+#define I2C_RELEASE_SDA_GPIO  GPIOA
+#define I2C_RELEASE_SDA_PIN   9U
+#define I2C_RELEASE_SCL_GPIO  GPIOA
+#define I2C_RELEASE_SCL_PIN   8U
+#define I2C_RELEASE_BUS_COUNT 100U
 
 #ifndef GUI_NORMAL_FONT
 #define GUI_NORMAL_FONT (&GUI_Font16_ASCII)
@@ -48,10 +55,10 @@
 #define GUI_SCALE_FACTOR_Y GUI_SCALE_FACTOR
 #endif
 
-#define GUI_SCALE(a) ((int)((a) * (GUI_SCALE_FACTOR)))
-#define GUI_SCALE_X(x) ((int)((x) * (GUI_SCALE_FACTOR_X)))
-#define GUI_SCALE_Y(y) ((int)((y) * (GUI_SCALE_FACTOR_Y)))
-#define GUI_SCALE_COORDS(x, y) GUI_SCALE_X(x), GUI_SCALE_Y(y)
+#define GUI_SCALE(a)                   ((int)((a) * (GUI_SCALE_FACTOR)))
+#define GUI_SCALE_X(x)                 ((int)((x) * (GUI_SCALE_FACTOR_X)))
+#define GUI_SCALE_Y(y)                 ((int)((y) * (GUI_SCALE_FACTOR_Y)))
+#define GUI_SCALE_COORDS(x, y)         GUI_SCALE_X(x), GUI_SCALE_Y(y)
 #define GUI_SCALE_RECT(x0, y0, xs, ys) GUI_SCALE_X(x0), GUI_SCALE_Y(y0), GUI_SCALE_X(xs), GUI_SCALE_Y(ys)
 
 #define GUI_ID_DRAWAREA (GUI_ID_USER + 0)
@@ -65,6 +72,8 @@
 /*******************************************************************************
  * Code
  ******************************************************************************/
+void BOARD_I2C_ReleaseBus(void);
+
 
 void BOARD_SetCSPin(bool set)
 {
@@ -74,6 +83,62 @@ void BOARD_SetCSPin(bool set)
 void BOARD_SetRSPin(bool set)
 {
     GPIO_PinWrite(BOARD_SSD1963_RS_GPIO, BOARD_SSD1963_RS_PIN, (uint8_t)set);
+}
+
+static void i2c_release_bus_delay(void)
+{
+    SDK_DelayAtLeastUs(100U, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
+}
+
+void BOARD_I2C_ReleaseBus(void)
+{
+    uint8_t i = 0;
+    gpio_pin_config_t pin_config;
+    port_pin_config_t i2c_pin_config = {0};
+
+    /* Config pin mux as gpio */
+    i2c_pin_config.pullSelect = kPORT_PullUp;
+    i2c_pin_config.mux        = kPORT_MuxAsGpio;
+
+    pin_config.pinDirection = kGPIO_DigitalOutput;
+    pin_config.outputLogic  = 1U;
+    CLOCK_EnableClock(kCLOCK_PortA);
+    PORT_SetPinConfig(I2C_RELEASE_SCL_PORT, I2C_RELEASE_SCL_PIN, &i2c_pin_config);
+    PORT_SetPinConfig(I2C_RELEASE_SCL_PORT, I2C_RELEASE_SDA_PIN, &i2c_pin_config);
+
+    GPIO_PinInit(I2C_RELEASE_SCL_GPIO, I2C_RELEASE_SCL_PIN, &pin_config);
+    GPIO_PinInit(I2C_RELEASE_SDA_GPIO, I2C_RELEASE_SDA_PIN, &pin_config);
+
+    /* Drive SDA low first to simulate a start */
+    GPIO_PinWrite(I2C_RELEASE_SDA_GPIO, I2C_RELEASE_SDA_PIN, 0U);
+    i2c_release_bus_delay();
+
+    /* Send 9 pulses on SCL and keep SDA high */
+    for (i = 0; i < 9; i++)
+    {
+        GPIO_PinWrite(I2C_RELEASE_SCL_GPIO, I2C_RELEASE_SCL_PIN, 0U);
+        i2c_release_bus_delay();
+
+        GPIO_PinWrite(I2C_RELEASE_SDA_GPIO, I2C_RELEASE_SDA_PIN, 1U);
+        i2c_release_bus_delay();
+
+        GPIO_PinWrite(I2C_RELEASE_SCL_GPIO, I2C_RELEASE_SCL_PIN, 1U);
+        i2c_release_bus_delay();
+        i2c_release_bus_delay();
+    }
+
+    /* Send stop */
+    GPIO_PinWrite(I2C_RELEASE_SCL_GPIO, I2C_RELEASE_SCL_PIN, 0U);
+    i2c_release_bus_delay();
+
+    GPIO_PinWrite(I2C_RELEASE_SDA_GPIO, I2C_RELEASE_SDA_PIN, 0U);
+    i2c_release_bus_delay();
+
+    GPIO_PinWrite(I2C_RELEASE_SCL_GPIO, I2C_RELEASE_SCL_PIN, 1U);
+    i2c_release_bus_delay();
+
+    GPIO_PinWrite(I2C_RELEASE_SDA_GPIO, I2C_RELEASE_SDA_PIN, 1U);
+    i2c_release_bus_delay();
 }
 
 static DROPDOWN_Handle hDropdown0;
@@ -245,8 +310,9 @@ int main(void)
         .outputLogic  = 1,
     };
 
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootClocks();
+    BOARD_I2C_ReleaseBus();
+    BOARD_InitBootPins();
     BOARD_InitDebugConsole();
 
     /* Use system clock as FlexIO clock source. */

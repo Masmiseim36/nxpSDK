@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP
+ * Copyright 2019,2020 NXP
  *
  * This software is owned or controlled by NXP and may only be used
  * strictly in accordance with the applicable license terms.  By expressly
@@ -29,6 +29,12 @@
 extern "C" {
 #endif
 
+#if defined(SSS_USE_FTR_FILE)
+#include "fsl_sss_ftr.h"
+#else
+#include "fsl_sss_ftr_default.h"
+#endif
+
 #include "ex_sss_boot.h"
 
 #include <ex_sss.h>
@@ -38,13 +44,10 @@ extern "C" {
 #include "nxLog_App.h"
 #include "stdio.h"
 
-#if defined(SSS_USE_FTR_FILE)
-#include "fsl_sss_ftr.h"
-#else
-#include "fsl_sss_ftr_default.h"
-#endif
+#include "fsl_sss_lpc55s_apis.h"
 
-#if SSS_HAVE_A71CH || SSS_HAVE_SE050_EAR_CH
+#if SSS_HAVE_APPLET_SE05X_IOT
+#include "se05x_APDU.h"
 #endif
 
 /* *****************************************************************************************************************
@@ -72,13 +75,11 @@ sss_status_t ex_sss_boot_open(ex_sss_boot_ctx_t *pCtx, const char *portName)
 {
     sss_status_t status = kStatus_SSS_Fail;
 
-#if SSS_HAVE_A71CH || SSS_HAVE_SE050_EAR_CH
+#if SSS_HAVE_A71CH || SSS_HAVE_A71CH_SIM
     status = ex_sss_boot_a71ch_open(pCtx, portName);
 #elif SSS_HAVE_A71CL || SSS_HAVE_SE050_L
     status = ex_sss_boot_a71cl_open(pCtx, portName);
-#elif SSS_HAVE_SE050M
-    status = ex_sss_boot_se_open(pCtx, portName);
-#elif SSS_HAVE_SE05X
+#elif SSS_HAVE_APPLET_SE05X_IOT
     status = ex_sss_boot_se05x_open(pCtx, portName);
 #elif SSS_HAVE_SE
     status = ex_sss_boot_se_open(pCtx, portName);
@@ -94,7 +95,7 @@ sss_status_t ex_sss_boot_factory_reset(ex_sss_boot_ctx_t *pCtx)
 {
     sss_status_t status = kStatus_SSS_Fail;
 
-#if SSS_HAVE_A71CH || SSS_HAVE_SE050_EAR_CH
+#if SSS_HAVE_A71CH || SSS_HAVE_A71CH_SIM
     uint16_t ret;
     ret = HLSE_DbgReset();
     if (ret == HLSE_SW_OK)
@@ -103,10 +104,10 @@ sss_status_t ex_sss_boot_factory_reset(ex_sss_boot_ctx_t *pCtx)
 #elif SSS_HAVE_A71CL || SSS_HAVE_SE050_L
     status = kStatus_SSS_Success;
 
-#elif SSS_HAVE_SE05X
+#elif SSS_HAVE_APPLET_SE05X_IOT
     smStatus_t st;
     sss_se05x_session_t *pSession = (sss_se05x_session_t *)&pCtx->session;
-    st = Se05x_API_DeleteAll_Iterative(&pSession->s_ctx);
+    st                            = Se05x_API_DeleteAll_Iterative(&pSession->s_ctx);
     if (st == SW_OK)
         status = kStatus_SSS_Success;
 
@@ -139,20 +140,95 @@ cleanup:
     return status;
 }
 
+#if SSS_HAVE_HOSTCRYPTO_ANY && defined(EXFL_SE050_AUTH_UserID_PlatfSCP03) || \
+    defined(EXFL_SE050_AUTH_AESKey_PlatfSCP03) || defined(EXFL_SE050_AUTH_ECKey_PlatfSCP03)
+static void free_auth_objects(SE_Connect_Ctx_t *pConnectCtx)
+{
+    if (pConnectCtx->auth.authType == kSSS_AuthType_ID) {
+        sss_host_key_object_free(pConnectCtx->auth.ctx.idobj.pObj);
+    }
+
+    if (pConnectCtx->auth.authType == kSSS_AuthType_SCP03 || pConnectCtx->auth.authType == kSSS_AuthType_AESKey) {
+        NXSCP03_AuthCtx_t *pSC = &pConnectCtx->auth.ctx.scp03;
+        sss_host_key_object_free(&pSC->pStatic_ctx->Enc);
+        sss_host_key_object_free(&pSC->pStatic_ctx->Mac);
+        sss_host_key_object_free(&pSC->pStatic_ctx->Dek);
+        sss_host_key_object_free(&pSC->pDyn_ctx->Enc);
+        sss_host_key_object_free(&pSC->pDyn_ctx->Mac);
+        sss_host_key_object_free(&pSC->pDyn_ctx->Rmac);
+    }
+
+    if (pConnectCtx->auth.authType == kSSS_AuthType_ECKey) {
+        SE05x_AuthCtx_ECKey_t *pEC = &pConnectCtx->auth.ctx.eckey;
+        sss_host_key_object_free(&pEC->pStatic_ctx->HostEcdsaObj);
+        sss_host_key_object_free(&pEC->pStatic_ctx->HostEcKeypair);
+        sss_host_key_object_free(&pEC->pStatic_ctx->masterSec);
+        sss_host_key_object_free(&pEC->pStatic_ctx->SeEcPubKey);
+        sss_host_key_object_free(&pEC->pDyn_ctx->Enc);
+        sss_host_key_object_free(&pEC->pDyn_ctx->Mac);
+        sss_host_key_object_free(&pEC->pDyn_ctx->Rmac);
+    }
+}
+#endif /* SSS_HAVE_HOSTCRYPTO_ANY */
+
 void ex_sss_session_close(ex_sss_boot_ctx_t *pCtx)
 {
-#if SSS_HAVE_SE05X || SSS_HAVE_SSCP
+#if SSS_HAVE_APPLET_SE05X_IOT || SSS_HAVE_SSCP
     if (pCtx->session.subsystem != kType_SSS_SubSystem_NONE) {
         sss_session_close(&pCtx->session);
         sss_session_delete(&pCtx->session);
     }
 
+#if SSS_HAVE_APPLET_SE05X_IOT
+#if SSS_HAVE_HOSTCRYPTO_ANY && defined(EXFL_SE050_AUTH_UserID_PlatfSCP03) || \
+    defined(EXFL_SE050_AUTH_AESKey_PlatfSCP03) || defined(EXFL_SE050_AUTH_ECKey_PlatfSCP03)
+    SE_Connect_Ctx_t *pConnectCtx = &pCtx->se05x_open_ctx;
+    free_auth_objects(pConnectCtx);
+#endif /* SSS_HAVE_HOSTCRYPTO_ANY */
+
+    if (pCtx->pTunnel_ctx && pCtx->pTunnel_ctx->session) {
+        if (pCtx->pTunnel_ctx->session->subsystem != kType_SSS_SubSystem_NONE) {
+            sss_session_close(pCtx->pTunnel_ctx->session);
+        }
+    }
+
+#if defined(EXFL_SE050_AUTH_UserID_PlatfSCP03) || defined(EXFL_SE050_AUTH_AESKey_PlatfSCP03) || \
+    defined(EXFL_SE050_AUTH_ECKey_PlatfSCP03) || defined(EXFL_SE050_AUTH_PlatfSCP03) ||         \
+    defined(EXFL_SE050_AUTH_AESKey)
+    {
+        ex_SE05x_authCtx_t *pauth = &pCtx->ex_se05x_auth;
+        sss_host_key_object_free(&pauth->scp03.ex_static.Enc);
+        sss_host_key_object_free(&pauth->scp03.ex_static.Mac);
+        sss_host_key_object_free(&pauth->scp03.ex_static.Dek);
+        sss_host_key_object_free(&pauth->scp03.ex_dyn.Enc);
+        sss_host_key_object_free(&pauth->scp03.ex_dyn.Mac);
+        sss_host_key_object_free(&pauth->scp03.ex_dyn.Rmac);
+    }
+#elif defined(EXFL_SE050_AUTH_UserID)
+    sss_host_key_object_free(pCtx->se05x_open_ctx.auth.ctx.idobj.pObj);
+#elif defined(EXFL_SE050_AUTH_ECKey)
+    {
+        ex_SE05x_authCtx_t *pauth = &pCtx->ex_se05x_auth;
+        sss_host_key_object_free(&pauth->eckey.ex_static.HostEcdsaObj);
+        sss_host_key_object_free(&pauth->eckey.ex_static.HostEcKeypair);
+        sss_host_key_object_free(&pauth->eckey.ex_static.masterSec);
+        sss_host_key_object_free(&pauth->eckey.ex_static.SeEcPubKey);
+        sss_host_key_object_free(&pauth->eckey.ex_dyn.Enc);
+        sss_host_key_object_free(&pauth->eckey.ex_dyn.Mac);
+        sss_host_key_object_free(&pauth->eckey.ex_dyn.Rmac);
+    }
+#endif /* PF SCP */
+
+#endif /* SSS_HAVE_APPLET_SE05X_IOT */
+
+#if SSS_HAVE_HOSTCRYPTO_ANY
     if (pCtx->host_ks.session != NULL) {
-        sss_key_store_context_free(&pCtx->host_ks);
+        sss_host_key_store_context_free(&pCtx->host_ks);
     }
     if (pCtx->host_session.subsystem != kType_SSS_SubSystem_NONE) {
-        sss_session_close(&pCtx->host_session);
+        sss_host_session_close(&pCtx->host_session);
     }
+#endif // SSS_HAVE_HOSTCRYPTO_ANY
 #endif
 
     if (pCtx->ks.session != NULL) {
@@ -160,28 +236,20 @@ void ex_sss_session_close(ex_sss_boot_ctx_t *pCtx)
     }
 }
 
+#if SSS_HAVE_HOSTCRYPTO_ANY
 sss_status_t ex_sss_boot_open_host_session(ex_sss_boot_ctx_t *pCtx)
 {
     sss_status_t status = kStatus_SSS_Fail;
 
-#if SSS_HAVE_SE05X || SSS_HAVE_SSCP
+#if SSS_HAVE_APPLET_SE05X_IOT || SSS_HAVE_SSCP
     if (pCtx->host_ks.session == NULL) {
-        status = sss_session_open(&pCtx->host_session,
-#if SSS_HAVE_MBEDTLS
-            kType_SSS_mbedTLS,
-#else
-            kType_SSS_OpenSSL,
-#endif
-            0,
-            kSSS_ConnectionType_Plain,
-            NULL);
+        status = sss_session_open(&pCtx->host_session, kType_SSS_Software, 0, kSSS_ConnectionType_Plain, NULL);
         if (kStatus_SSS_Success != status) {
             LOG_E("Failed to open mbedtls Session");
             return status;
         }
 
-        status =
-            sss_key_store_context_init(&pCtx->host_ks, &pCtx->host_session);
+        status = sss_key_store_context_init(&pCtx->host_ks, &pCtx->host_session);
         if (kStatus_SSS_Success != status) {
             LOG_E("sss_key_store_context_init failed");
             return status;
@@ -193,9 +261,9 @@ sss_status_t ex_sss_boot_open_host_session(ex_sss_boot_ctx_t *pCtx)
         }
     }
 #endif
-
     return status;
 }
+#endif // SSS_HAVE_HOSTCRYPTO_ANY
 
 /* *****************************************************************************************************************
  * Private Functions

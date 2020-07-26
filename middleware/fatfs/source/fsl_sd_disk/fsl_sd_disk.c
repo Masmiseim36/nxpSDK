@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  *
@@ -35,14 +35,14 @@ sd_card_t g_sd;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-DRESULT sd_disk_write(uint8_t physicalDrive, const uint8_t *buffer, uint32_t sector, uint8_t count)
+DRESULT sd_disk_write(BYTE pdrv, const BYTE* buff, LBA_t sector, UINT count)
 {
-    if (physicalDrive != SDDISK)
+    if (pdrv != SDDISK)
     {
         return RES_PARERR;
     }
 
-    if (kStatus_Success != SD_WriteBlocks(&g_sd, buffer, sector, count))
+    if (kStatus_Success != SD_WriteBlocks(&g_sd, buff, sector, count))
     {
         return RES_ERROR;
     }
@@ -50,14 +50,14 @@ DRESULT sd_disk_write(uint8_t physicalDrive, const uint8_t *buffer, uint32_t sec
     return RES_OK;
 }
 
-DRESULT sd_disk_read(uint8_t physicalDrive, uint8_t *buffer, uint32_t sector, uint8_t count)
+DRESULT sd_disk_read(BYTE pdrv, BYTE* buff, LBA_t sector, UINT count)
 {
-    if (physicalDrive != SDDISK)
+    if (pdrv != SDDISK)
     {
         return RES_PARERR;
     }
 
-    if (kStatus_Success != SD_ReadBlocks(&g_sd, buffer, sector, count))
+    if (kStatus_Success != SD_ReadBlocks(&g_sd, buff, sector, count))
     {
         return RES_ERROR;
     }
@@ -65,21 +65,21 @@ DRESULT sd_disk_read(uint8_t physicalDrive, uint8_t *buffer, uint32_t sector, ui
     return RES_OK;
 }
 
-DRESULT sd_disk_ioctl(uint8_t physicalDrive, uint8_t command, void *buffer)
+DRESULT sd_disk_ioctl(BYTE pdrv, BYTE cmd, void* buff)
 {
     DRESULT result = RES_OK;
 
-    if (physicalDrive != SDDISK)
+    if (pdrv != SDDISK)
     {
         return RES_PARERR;
     }
 
-    switch (command)
+    switch (cmd)
     {
         case GET_SECTOR_COUNT:
-            if (buffer)
+            if (buff)
             {
-                *(uint32_t *)buffer = g_sd.blockCount;
+                *(uint32_t *)buff = g_sd.blockCount;
             }
             else
             {
@@ -87,9 +87,9 @@ DRESULT sd_disk_ioctl(uint8_t physicalDrive, uint8_t command, void *buffer)
             }
             break;
         case GET_SECTOR_SIZE:
-            if (buffer)
+            if (buff)
             {
-                *(uint32_t *)buffer = g_sd.blockSize;
+                *(uint32_t *)buff = g_sd.blockSize;
             }
             else
             {
@@ -97,9 +97,9 @@ DRESULT sd_disk_ioctl(uint8_t physicalDrive, uint8_t command, void *buffer)
             }
             break;
         case GET_BLOCK_SIZE:
-            if (buffer)
+            if (buff)
             {
-                *(uint32_t *)buffer = g_sd.csd.eraseSectorSize;
+                *(uint32_t *)buff = g_sd.csd.eraseSectorSize;
             }
             else
             {
@@ -117,9 +117,9 @@ DRESULT sd_disk_ioctl(uint8_t physicalDrive, uint8_t command, void *buffer)
     return result;
 }
 
-DSTATUS sd_disk_status(uint8_t physicalDrive)
+DSTATUS sd_disk_status(BYTE pdrv)
 {
-    if (physicalDrive != SDDISK)
+    if (pdrv != SDDISK)
     {
         return STA_NOINIT;
     }
@@ -127,9 +127,9 @@ DSTATUS sd_disk_status(uint8_t physicalDrive)
     return 0;
 }
 
-DSTATUS sd_disk_initialize(uint8_t physicalDrive)
+DSTATUS sd_disk_initialize(BYTE pdrv)
 {
-    if (physicalDrive != SDDISK)
+    if (pdrv != SDDISK)
     {
         return STA_NOINIT;
     }
@@ -137,7 +137,9 @@ DSTATUS sd_disk_initialize(uint8_t physicalDrive)
     if(g_sd.isHostReady)
     {
         /* reset host */
-        SD_HostReset(&(g_sd.host));
+        SD_HostDoReset(&g_sd);
+        SD_SetCardPower(&g_sd, false);
+        SD_SetCardPower(&g_sd, true);
     }
     else
     {

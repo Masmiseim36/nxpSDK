@@ -9,7 +9,7 @@
 *                                                                    *
 **********************************************************************
 
-** emWin V5.50 - Graphical user interface for embedded applications **
+** emWin V6.10 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -272,6 +272,9 @@ void GUI_AA__DrawCharAA2(int x0, int y0, int XSize, int YSize, int BytesPerLine,
 void GUI_AA__DrawCharAA4(int x0, int y0, int XSize, int YSize, int BytesPerLine, const U8 * pData);
 void GUI_AA__DrawCharAA8(int x0, int y0, int XSize, int YSize, int BytesPerLine, const U8 * pData);
 
+/* Default routine for drawing string characters with EXT fonts */
+U16 GUI__DrawCharEXT(int RemChars, const char ** ps);
+
 /* Alpha blending helper functions */
 #define GUI_ALPHABLENDING_DONE  (1 << 0)
 
@@ -327,6 +330,7 @@ void GUI__InvertRectColors (int x0, int y0, int x1, int y1);
 void GUI__DispLine         (const char * s, int Len, const GUI_RECT * pr);
 void GUI__AddSpaceHex      (U32 v, U8 Len, char ** ps);
 void GUI__CalcTextRect     (const char * pText, const GUI_RECT * pTextRectIn, GUI_RECT * pTextRectOut, int TextAlign);
+int  GUI__IsPointInRect    (GUI_RECT * pRect, int x, int y);
 
 void GUI__DrawNonExistingCharacter(LCD_DRAWMODE DrawMode);
 int  GUI__GetNonExistingCharWidth (void);
@@ -501,6 +505,7 @@ void GL_DrawArc          (int x0, int y0, int rx, int ry, int a0, int a1);
 void GL_DrawBitmap       (const GUI_BITMAP * pBM, int x0, int y0);
 void GL_DrawCircle       (int x0, int y0, int r);
 void GL_DrawEllipse      (int x0, int y0, int rx, int ry, int w);
+void GL_DrawEllipseXL    (int xm, int ym, int rx, int ry, int w);
 void GL_DrawHLine        (int y0, int x0, int x1);
 void GL_DrawPolygon      (const GUI_POINT * pPoints, int NumPoints, int x0, int y0);
 void GL_DrawPoint        (int x,  int y);
@@ -654,6 +659,11 @@ extern GUI_COLOR        GUI__BkColorDefault;
 extern GUI_SADDR GUI_CONTEXT * GUI_pContext;
 
 extern GUI_DEVICE * GUI__apDevice[GUI_NUM_LAYERS];
+
+//
+// Function pointer for drawing string characters with EXT fonts
+//
+extern U16 (* GUI__pfDrawCharEXT)(int RemChars, const char ** ps);
 
 //
 // Function pointer for converting a palette containing a color array into an index array

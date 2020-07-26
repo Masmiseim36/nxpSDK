@@ -3,7 +3,7 @@
  * @author NXP Semiconductors
  * @version 1.0
  * @par License
- * Copyright 2018,2019 NXP
+ * Copyright 2018-2020 NXP
  *
  * This software is owned or controlled by NXP and may only be used
  * strictly in accordance with the applicable license terms.  By expressly
@@ -37,7 +37,7 @@
 
 #include <fsl_sss_api.h>
 
-#if SSS_HAVE_A71CH || SSS_HAVE_SE050_EAR_CH
+#if SSS_HAVE_A71CH || SSS_HAVE_A71CH_SIM
 #include <fsl_sscp_a71ch.h>
 #endif
 #if SSS_HAVE_MBEDTLS
@@ -55,42 +55,44 @@
  * @brief      Associate a keypair provisioned in the secure element for
  *             subsequent operations.
  *
- * @param[in]  key_index  Index in which the keypair is provisoned in the SE
  * @param[out] pkey       Pointer to the mbedtls_pk_context which will be
  *                        associated with data corresponding to the key_index
  *
+ * @param[in]  pkeyObject The object that we are going to be use.
+ *
  * @return     0 if successful, or 1 if unsuccessful
  */
-int sss_mbedtls_associate_keypair(
-    mbedtls_pk_context *pkey, sss_object_t *pkeyObject);
+int sss_mbedtls_associate_keypair(mbedtls_pk_context *pkey, sss_object_t *pkeyObject);
 
 /**
  * @brief      Associate a pubkey provisioned in the secure element for
  *             subsequent operations.
  *
- * @param[in]  key_index  Index in which the pub key is provisioned in the SE
  * @param[out] pkey       Pointer to the mbedtls_pk_context which will be
  *                        associated with data corresponding to the key index
  *
+ * @param[in]  pkeyObject The object that we are going to be use.
+ *
  * @return     0 if successful, or 1 if unsuccessful
  */
-int sss_mbedtls_associate_pubkey(
-    mbedtls_pk_context *pkey, sss_object_t *pkeyObject);
+int sss_mbedtls_associate_pubkey(mbedtls_pk_context *pkey, sss_object_t *pkeyObject);
 
 /**
  * @brief         Update ECDSA HandShake key with given inded.
  *
- * @param[in]     key_index  Index in which the pub key is provisioned in the SE
  * @param[in,out] handshake  Pointer to the mbedtls_ssl_handshake_params which
  *                           will be associated with data corresponding to the
  *                           key index
  *
+ * @param[in]  pkeyObject The object that we are going to be use.
+ *
+ * @param[in] hostKs Keystore to host for session key.
+ *
  * @return        0 if successful, or 1 if unsuccessful
  */
 
-int sss_mbedtls_associate_ecdhctx(mbedtls_ssl_handshake_params *handshake,
-    sss_object_t *pkeyObject,
-    sss_key_store_t *hostKs);
+int sss_mbedtls_associate_ecdhctx(
+    mbedtls_ssl_handshake_params *handshake, sss_object_t *pkeyObject, sss_key_store_t *hostKs);
 
 /** @} */
 
@@ -101,9 +103,8 @@ int sss_mbedtls_associate_ecdhctx(mbedtls_ssl_handshake_params *handshake,
 void mbedtls_ecp_keypair_free_o(mbedtls_ecp_keypair *key);
 
 /**
- * same as @ref mbedtls_ecp_tls_read_group
+ * same as  ``mbedtls_ecp_tls_read_group``
  */
-int mbedtls_ecp_tls_read_group_o(
-    mbedtls_ecp_group *grp, const unsigned char **buf, size_t len);
+int mbedtls_ecp_tls_read_group_o(mbedtls_ecp_group *grp, const unsigned char **buf, size_t len);
 
 #endif /* AX_MBEDTLS_H */

@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  *
@@ -24,10 +24,13 @@
 #include "enet_ethernetif.h"
 
 #include "board.h"
+#include "fsl_phy.h"
 
 #include "fsl_device_registers.h"
 #include "pin_mux.h"
 #include "clock_config.h"
+#include "fsl_phyksz8081.h"
+#include "fsl_enet_mdio.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -41,16 +44,22 @@
 /* Address of PHY interface. */
 #define EXAMPLE_PHY_ADDRESS BOARD_ENET0_PHY_ADDRESS
 
-/* System clock name. */
-#define EXAMPLE_CLOCK_NAME kCLOCK_CoreSysClk
+/* MDIO operations. */
+#define EXAMPLE_MDIO_OPS enet_ops
+
+/* PHY operations. */
+#define EXAMPLE_PHY_OPS phyksz8081_ops
+
+/* ENET clock frequency. */
+#define EXAMPLE_CLOCK_FREQ CLOCK_GetFreq(kCLOCK_CoreSysClk)
 
 /* GPIO pin configuration. */
-#define BOARD_LED_GPIO BOARD_LED_RED_GPIO
-#define BOARD_LED_GPIO_PIN BOARD_LED_RED_GPIO_PIN
-#define BOARD_SW_GPIO BOARD_SW3_GPIO
-#define BOARD_SW_GPIO_PIN BOARD_SW3_GPIO_PIN
-#define BOARD_SW_PORT BOARD_SW3_PORT
-#define BOARD_SW_IRQ BOARD_SW3_IRQ
+#define BOARD_LED_GPIO       BOARD_LED_RED_GPIO
+#define BOARD_LED_GPIO_PIN   BOARD_LED_RED_GPIO_PIN
+#define BOARD_SW_GPIO        BOARD_SW3_GPIO
+#define BOARD_SW_GPIO_PIN    BOARD_SW3_GPIO_PIN
+#define BOARD_SW_PORT        BOARD_SW3_PORT
+#define BOARD_SW_IRQ         BOARD_SW3_IRQ
 #define BOARD_SW_IRQ_HANDLER BOARD_SW3_IRQ_HANDLER
 
 
@@ -66,6 +75,9 @@
 /*******************************************************************************
  * Variables
  ******************************************************************************/
+
+static mdio_handle_t mdioHandle = {.ops = &EXAMPLE_MDIO_OPS};
+static phy_handle_t phyHandle   = {.phyAddr = EXAMPLE_PHY_ADDRESS, .mdioHandle = &mdioHandle, .ops = &EXAMPLE_PHY_OPS};
 
 /*******************************************************************************
  * Code
@@ -160,8 +172,7 @@ int main(void)
 #endif /* FSL_FEATURE_SOC_LPC_ENET_COUNT */
     ip4_addr_t netif_ipaddr, netif_netmask, netif_gw;
     ethernetif_config_t enet_config = {
-        .phyAddress = EXAMPLE_PHY_ADDRESS,
-        .clockName  = EXAMPLE_CLOCK_NAME,
+        .phyHandle  = &phyHandle,
         .macAddress = configMAC_ADDR,
 #if defined(FSL_FEATURE_SOC_LPC_ENET_COUNT) && (FSL_FEATURE_SOC_LPC_ENET_COUNT > 0)
         .non_dma_memory = non_dma_memory,
@@ -169,11 +180,13 @@ int main(void)
     };
 
     SYSMPU_Type *base = SYSMPU;
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
     /* Disable SYSMPU. */
     base->CESR &= ~SYSMPU_CESR_VLD_MASK;
+
+    mdioHandle.resource.csrClock_Hz = EXAMPLE_CLOCK_FREQ;
 
     time_init();
 

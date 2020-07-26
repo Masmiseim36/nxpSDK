@@ -18,7 +18,7 @@
  ******************************************************************************/
 
 /*! @brief restart to check the SRP when time exceeds the value */
-#define USB_OTG_TIME_SRP_TIME_OUT (2000)
+#define USB_OTG_TIME_SRP_TIME_OUT (2000U)
 /*! @brief check BHNP flag for the max3353 periodically */
 #define USB_OTG_TIME_CHECK_BHNP_PERIODIC (20U)
 /*! @brief check detach time */
@@ -40,11 +40,11 @@ typedef enum _usb_otg_check_type
 /*! @brief check the status on peripheral */
 typedef enum _usb_otg_peripheral_status_type
 {
-    kPeripheral_StatusId = 0x01U,          /*! id */
-    kPeripheral_StatusSessVld = 0x02U,     /*! b_sess_vld */
-    kPeripheral_StatusVbusVld = 0x04U,     /*! b_vbus_vld */
+    kPeripheral_StatusId          = 0x01U, /*! id */
+    kPeripheral_StatusSessVld     = 0x02U, /*! b_sess_vld */
+    kPeripheral_StatusVbusVld     = 0x04U, /*! b_vbus_vld */
     kPeripheral_StatusHNPdetected = 0x08U, /*! detect HNP */
-    kPeripheral_StatusAll = 0x10U,         /*! all above status bits value */
+    kPeripheral_StatusAll         = 0x10U, /*! all above status bits value */
 } usb_otg_peripheral_status_type_t;
 
 /*! @brief The control types */

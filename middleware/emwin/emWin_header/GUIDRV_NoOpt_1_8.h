@@ -9,7 +9,7 @@
 *                                                                    *
 **********************************************************************
 
-** emWin V5.50 - Graphical user interface for embedded applications **
+** emWin V6.10 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -42,7 +42,7 @@ Purpose     : Interface definition for non optimized drawing functions
 ---------------------------END-OF-HEADER------------------------------
 */
 
-#include "GUI_Private.h"
+#include "GUI.h"
 
 #ifndef GUIDRV_NOOPT_1_8_H
 #define GUIDRV_NOOPT_1_8_H

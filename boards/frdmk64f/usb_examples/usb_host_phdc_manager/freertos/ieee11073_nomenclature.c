@@ -55,5 +55,5 @@ const partition_ascii_struct_t g_partitionAsciiTable[] = {
     {MDC_PARTITION_RETURN_CODE, _INT8_P_CASTING_ "Return Codes"},
     {MDC_PARTITION_EXTERNAL_NOMENCLATURE, _INT8_P_CASTING_ "Ext. Nomenclature"}};
 
-const uint16_t g_nomAsciiCount = sizeof(g_nomenclatureAsciiTable) / sizeof(g_nomenclatureAsciiTable[0U]);
+const uint16_t g_nomAsciiCount       = sizeof(g_nomenclatureAsciiTable) / sizeof(g_nomenclatureAsciiTable[0U]);
 const uint16_t g_partitionAsciiCount = sizeof(g_partitionAsciiTable) / sizeof(g_partitionAsciiTable[0U]);

@@ -77,9 +77,10 @@ volatile usb_status_t ufiStatus;
 USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t s_TestUfiBuffer[512]; /*!< test buffer */
 
 #if MSD_THROUGHPUT_TEST_ENABLE
-USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint32_t testThroughputBuffer[THROUGHPUT_BUFFER_SIZE / 4]; /* the buffer for throughput test */
-uint32_t testSizeArray[] = {50 * 1024, 50 * 1024}; /* test time and test size (uint: K) */
-#endif                                             /* MSD_THROUGHPUT_TEST_ENABLE */
+USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
+static uint32_t testThroughputBuffer[THROUGHPUT_BUFFER_SIZE / 4]; /* the buffer for throughput test */
+uint32_t testSizeArray[] = {50 * 1024, 50 * 1024};                /* test time and test size (uint: K) */
+#endif                                                            /* MSD_THROUGHPUT_TEST_ENABLE */
 
 /*******************************************************************************
  * Code
@@ -100,7 +101,7 @@ static void USB_HostMsdControlCallback(void *param, uint8_t *data, uint32_t data
     if (msdCommandInstance->runWaitState == kUSB_HostMsdRunWaitSetInterface) /* set interface finish */
     {
         msdCommandInstance->runWaitState = kUSB_HostMsdRunIdle;
-        msdCommandInstance->runState = kUSB_HostMsdRunMassStorageTest;
+        msdCommandInstance->runState     = kUSB_HostMsdRunMassStorageTest;
     }
 }
 
@@ -269,11 +270,11 @@ static void USB_HostMsdCommandTest(usb_host_msd_command_instance_t *msdCommandIn
     }
     if (ufiStatus == kStatus_USB_Success) /* print the command result */
     {
-        address = (uint32_t) & (msdCommandInstance->testUfiBuffer[0]);
-        address = (uint32_t)((usb_host_ufi_read_capacity_t *)(address))->blockLengthInBytes;
+        address   = (uint32_t) & (msdCommandInstance->testUfiBuffer[0]);
+        address   = (uint32_t)((usb_host_ufi_read_capacity_t *)(address))->blockLengthInBytes;
         blockSize = USB_LONG_FROM_BIG_ENDIAN_ADDRESS(((uint8_t *)address));
-        address = (uint32_t) & (msdCommandInstance->testUfiBuffer[0]);
-        address = (uint32_t)((usb_host_ufi_read_capacity_t *)(address))->lastLogicalBlockAddress;
+        address   = (uint32_t) & (msdCommandInstance->testUfiBuffer[0]);
+        address   = (uint32_t)((usb_host_ufi_read_capacity_t *)(address))->lastLogicalBlockAddress;
         usb_echo("success, last logical block:%d block length:%d\r\n",
                  USB_LONG_FROM_BIG_ENDIAN_ADDRESS(((uint8_t *)address)), blockSize);
     }
@@ -357,7 +358,7 @@ static void USB_HostMsdCommandTest(usb_host_msd_command_instance_t *msdCommandIn
     /* time delay (~100ms) */
     for (testSize = 0; testSize < 400000; ++testSize)
     {
-        __ASM("nop");
+        __NOP();
     }
 
     CoreDebug->DEMCR |= (1 << CoreDebug_DEMCR_TRCENA_Pos);
@@ -370,9 +371,9 @@ static void USB_HostMsdCommandTest(usb_host_msd_command_instance_t *msdCommandIn
     usb_echo("throughput test:\r\n");
     for (testIndex = 0; testIndex < (sizeof(testSizeArray) / 4); ++testIndex)
     {
-        totalTime = 0;
+        totalTime    = 0;
         blockAddress = 0;
-        testSize = testSizeArray[testIndex] * 1024;
+        testSize     = testSizeArray[testIndex] * 1024;
         while (testSize)
         {
             if (msdCommandInstance->deviceState != kStatus_DEV_Attached)
@@ -412,9 +413,9 @@ static void USB_HostMsdCommandTest(usb_host_msd_command_instance_t *msdCommandIn
         usb_echo("    write %dKB data the speed is %d KB/s\r\n", testSize,
                  (uint32_t)((uint64_t)testSize * (uint64_t)MCU_CORE_CLOCK / (uint64_t)totalTime));
 
-        totalTime = 0;
+        totalTime    = 0;
         blockAddress = 0;
-        testSize = testSizeArray[testIndex] * 1024;
+        testSize     = testSizeArray[testIndex] * 1024;
         while (testSize)
         {
             if (msdCommandInstance->deviceState != kStatus_DEV_Attached)
@@ -485,7 +486,7 @@ void USB_HostMsdTask(void *arg)
 
             case kStatus_DEV_Detached: /* device is detached */
                 msdCommandInstance->deviceState = kStatus_DEV_Idle;
-                msdCommandInstance->runState = kUSB_HostMsdRunIdle;
+                msdCommandInstance->runState    = kUSB_HostMsdRunIdle;
                 USB_HostMsdDeinit(msdCommandInstance->deviceHandle,
                                   msdCommandInstance->classHandle); /* msd class de-initialization */
                 msdCommandInstance->classHandle = NULL;
@@ -505,7 +506,7 @@ void USB_HostMsdTask(void *arg)
             break;
 
         case kUSB_HostMsdRunSetInterface: /* set msd interface */
-            msdCommandInstance->runState = kUSB_HostMsdRunIdle;
+            msdCommandInstance->runState     = kUSB_HostMsdRunIdle;
             msdCommandInstance->runWaitState = kUSB_HostMsdRunWaitSetInterface;
             status = USB_HostMsdSetInterface(msdCommandInstance->classHandle, msdCommandInstance->interfaceHandle, 0,
                                              USB_HostMsdControlCallback, msdCommandInstance);
@@ -544,7 +545,7 @@ usb_status_t USB_HostMsdEvent(usb_device_handle deviceHandle,
             for (interfaceIndex = 0; interfaceIndex < configuration->interfaceCount; ++interfaceIndex)
             {
                 interface = &configuration->interfaceList[interfaceIndex];
-                id = interface->interfaceDesc->bInterfaceClass;
+                id        = interface->interfaceDesc->bInterfaceClass;
                 if (id != USB_HOST_MSD_CLASS_CODE)
                 {
                     continue;
@@ -564,10 +565,10 @@ usb_status_t USB_HostMsdEvent(usb_device_handle deviceHandle,
                     if (g_MsdCommandInstance.deviceState == kStatus_DEV_Idle)
                     {
                         /* the interface is supported by the application */
-                        g_MsdCommandInstance.testUfiBuffer = s_TestUfiBuffer;
-                        g_MsdCommandInstance.deviceHandle = deviceHandle;
+                        g_MsdCommandInstance.testUfiBuffer   = s_TestUfiBuffer;
+                        g_MsdCommandInstance.deviceHandle    = deviceHandle;
                         g_MsdCommandInstance.interfaceHandle = interface;
-                        g_MsdCommandInstance.configHandle = configurationHandle;
+                        g_MsdCommandInstance.configHandle    = configurationHandle;
                         return kStatus_USB_Success;
                     }
                     else

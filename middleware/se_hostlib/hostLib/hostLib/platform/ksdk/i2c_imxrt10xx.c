@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 NXP
+ * Copyright 2018,2020 NXP
  *
  * This software is owned or controlled by NXP and may only be used
  * strictly in accordance with the applicable license terms.  By expressly
@@ -25,7 +25,15 @@
 #include "fsl_gpio.h"
 #include "sci2c_cfg.h"
 
-#define I2C_BAUDRATE            (400u*1000u)
+#if defined(SCI2C)
+#define I2C_BAUDRATE (400u * 1000u) // 400K
+#elif defined(T1oI2C)
+//#define I2C_BAUDRATE (3400u * 1000u) // 3.4. Not used by default
+#define I2C_BAUDRATE (400u * 1000u) // 400K
+#else
+#error "Invalid combination"
+#endif
+
 
 #define DELAY_LPI2C_US            (0)
 
@@ -160,8 +168,7 @@ lpi2c_rtos_handle_t gmaster_rtos_handle;
 
 #endif
 
-i2c_error_t axI2CInit(
-    void)
+i2c_error_t axI2CInit(void **conn_ctx, const char *pDevName)
 {
     lpi2c_master_config_t masterConfig;
     LPI2C_MasterGetDefaultConfig(&masterConfig);
@@ -183,6 +190,7 @@ i2c_error_t axI2CInit(
 }
 
 void axI2CTerm(
+    void* conn_ctx,
     int mode)
 {
 }
@@ -196,7 +204,7 @@ void axI2CTerm(
 #endif
 
 unsigned int axI2CWrite(
-    unsigned char bus_unused_param, unsigned char addr, unsigned char * pTx, unsigned short txLen)
+    void* conn_ctx, unsigned char bus_unused_param, unsigned char addr, unsigned char * pTx, unsigned short txLen)
 {
     status_t result;
     lpi2c_master_transfer_t masterXfer;
@@ -237,7 +245,7 @@ unsigned int axI2CWrite(
 }
 
 unsigned int axI2CWriteRead(
-    unsigned char bus_unused_param, unsigned char addr, unsigned char * pTx, unsigned short txLen, unsigned char * pRx,
+    void* conn_ctx, unsigned char bus_unused_param, unsigned char addr, unsigned char * pTx, unsigned short txLen, unsigned char * pRx,
     unsigned short * pRxLen)
 {
     lpi2c_master_transfer_t masterXfer;
@@ -265,7 +273,7 @@ unsigned int axI2CWriteRead(
 }
 
 
-unsigned int axI2CRead(unsigned char bus, unsigned char addr, unsigned char * pRx, unsigned short rxLen)
+unsigned int axI2CRead(void* conn_ctx, unsigned char bus, unsigned char addr, unsigned char * pRx, unsigned short rxLen)
 {
 	lpi2c_master_transfer_t masterXfer;
     status_t result;

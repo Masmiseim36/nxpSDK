@@ -19,20 +19,20 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define BOARD_TIMER_BASEADDR FTM3
-#define BOARD_FIRST_TIMER_CHANNEL 2U
+#define BOARD_TIMER_BASEADDR       FTM3
+#define BOARD_FIRST_TIMER_CHANNEL  2U
 #define BOARD_SECOND_TIMER_CHANNEL 1U
 /* Get source clock for FTM driver */
 #define BOARD_TIMER_SOURCE_CLOCK CLOCK_GetFreq(BUS_CLK)
 /* I2C source clock */
 #define I2C_BAUDRATE 100000U
 
-#define I2C_RELEASE_SDA_PORT PORTC
-#define I2C_RELEASE_SCL_PORT PORTC
-#define I2C_RELEASE_SDA_GPIO GPIOC
-#define I2C_RELEASE_SDA_PIN 28U
-#define I2C_RELEASE_SCL_GPIO GPIOC
-#define I2C_RELEASE_SCL_PIN 29U
+#define I2C_RELEASE_SDA_PORT  PORTC
+#define I2C_RELEASE_SCL_PORT  PORTC
+#define I2C_RELEASE_SDA_GPIO  GPIOC
+#define I2C_RELEASE_SDA_PIN   28U
+#define I2C_RELEASE_SCL_GPIO  GPIOC
+#define I2C_RELEASE_SCL_PIN   29U
 #define I2C_RELEASE_BUS_COUNT 100U
 /* Upper bound and lower bound angle values */
 #define ANGLE_UPPER_BOUND 85U

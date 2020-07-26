@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP
+ * Copyright 2019,2020 NXP
  *
  * This software is owned or controlled by NXP and may only be used
  * strictly in accordance with the applicable license terms.  By expressly
@@ -52,29 +52,24 @@ sss_status_t ex_sss_boot_se_open(ex_sss_boot_ctx_t *pCtx, const char *portName);
 
 /** Entry Point for SE050 based build */
 
-#if SSS_HAVE_SE05X
-sss_status_t ex_sss_boot_se05x_open(
-    ex_sss_boot_ctx_t *pCtx, const char *portName);
+#if SSS_HAVE_APPLET_SE05X_IOT
+sss_status_t ex_sss_boot_se05x_open(ex_sss_boot_ctx_t *pCtx, const char *portName);
 #endif
 
 #if SSS_HAVE_MBEDTLS
-sss_status_t ex_sss_boot_mbedtls_open(
-    ex_sss_boot_ctx_t *pCtx, const char *portName);
+sss_status_t ex_sss_boot_mbedtls_open(ex_sss_boot_ctx_t *pCtx, const char *portName);
 #endif
 
 #if SSS_HAVE_OPENSSL
-sss_status_t ex_sss_boot_openssl_open(
-    ex_sss_boot_ctx_t *pCtx, const char *portName);
+sss_status_t ex_sss_boot_openssl_open(ex_sss_boot_ctx_t *pCtx, const char *portName);
 #endif
 
-#if SSS_HAVE_A71CH || SSS_HAVE_SE050_EAR_CH
-sss_status_t ex_sss_boot_a71ch_open(
-    ex_sss_boot_ctx_t *pCtx, const char *portName);
+#if SSS_HAVE_A71CH || SSS_HAVE_A71CH_SIM
+sss_status_t ex_sss_boot_a71ch_open(ex_sss_boot_ctx_t *pCtx, const char *portName);
 #endif
 
 #if SSS_HAVE_A71CL || SSS_HAVE_SE050_L
-sss_status_t ex_sss_boot_a71cl_open(
-    ex_sss_boot_ctx_t *pCtx, const char *portName);
+sss_status_t ex_sss_boot_a71cl_open(ex_sss_boot_ctx_t *pCtx, const char *portName);
 #endif
 
 #endif /* SSS_EX_SRC_EX_SSS_BOOT_INT_H_ */

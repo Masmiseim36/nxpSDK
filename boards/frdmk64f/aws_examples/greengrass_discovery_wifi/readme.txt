@@ -29,10 +29,10 @@ Before running the demo it is needed to configure AWS IoT Console, AWS Greengras
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.40.2
-- GCC ARM Embedded  8.3.1
-- Keil MDK  5.29
-- MCUXpresso  11.1.0
+- IAR embedded Workbench  8.50.1
+- GCC ARM Embedded  9.2.1
+- Keil MDK  5.30
+- MCUXpresso  11.2.0
 
 Hardware requirements
 =====================
@@ -63,7 +63,7 @@ Prepare the Demo
         static const char clientcredentialMQTT_BROKER_ENDPOINT[] = "abcdefgh123456.iot.us-west-2.amazonaws.com";
         #define clientcredentialIOT_THING_NAME "HelloWorldDevice"
 
-    The device certificate and private key needs to be opened in text editor and its content copied into the "aws_clientcredential_keys.h" or you can use the CertificateConfigurator.html (mcu-sdk-2.0\rtos\amazon-freertos\tools\certificate_configuration) to generate the "aws_clientcredential_keys.h".
+    The device certificate and private key needs to be opened in text editor and its content copied into the "aws_clientcredential_keys.h" or you can use the CertificateConfigurator.html (mcu-sdk-2.0\rtos\freertos\tools\certificate_configuration) to generate the "aws_clientcredential_keys.h".
 
     keyCLIENT_CERTIFICATE_PEM is stored in <device id>.cert.pem file and keyCLIENT_PRIVATE_KEY_PEM is stored in <device id>.private.key file.
 
@@ -104,7 +104,7 @@ Prepare the Demo
 Running the demo
 ================
 
-Demo is by default set to send message "Hello #0 from Amazon FreeRTOS to Greengrass Core." 3 times (can be changed with ggdDEMO_MAX_MQTT_MESSAGES).
+Demo is by default set to send message "Hello #0 from FreeRTOS to Greengrass Core." 3 times (can be changed with ggdDEMO_MAX_MQTT_MESSAGES).
 
 You can check connection log in Greengrass device on path: /greengrass/ggc/var/log/system/connection_manager.log
 

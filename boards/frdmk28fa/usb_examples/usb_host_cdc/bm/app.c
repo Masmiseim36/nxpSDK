@@ -38,10 +38,12 @@ extern void USB_HostClockInit(void);
 extern void USB_HostIsrEnable(void);
 extern void USB_HostTaskFn(void *param);
 void BOARD_InitHardware(void);
-extern void UART_UserRxCallback(void *callbackParam, serial_manager_callback_message_t *message,
-                        serial_manager_status_t status);
-extern void UART_UserTxCallback(void *callbackParam, serial_manager_callback_message_t *message,
-                        serial_manager_status_t status);
+extern void UART_UserRxCallback(void *callbackParam,
+                                serial_manager_callback_message_t *message,
+                                serial_manager_status_t status);
+extern void UART_UserTxCallback(void *callbackParam,
+                                serial_manager_callback_message_t *message,
+                                serial_manager_status_t status);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
@@ -184,20 +186,19 @@ usb_status_t USB_HostEvent(usb_device_handle deviceHandle,
  */
 void APP_init(void)
 {
-
     status_t status = (status_t)kStatus_SerialManager_Error;
-    g_UartTxHandle = (serial_write_handle_t)&s_serialWriteHandleBuffer[0];
-    g_UartRxHandle = (serial_read_handle_t)&s_serialReadHandleBuffer[0];
-    status = (status_t)SerialManager_OpenWriteHandle(g_serialHandle, g_UartTxHandle);
+    g_UartTxHandle  = (serial_write_handle_t)&s_serialWriteHandleBuffer[0];
+    g_UartRxHandle  = (serial_read_handle_t)&s_serialReadHandleBuffer[0];
+    status          = (status_t)SerialManager_OpenWriteHandle(g_serialHandle, g_UartTxHandle);
     assert(kStatus_SerialManager_Success == status);
     (void)SerialManager_InstallTxCallback(g_UartTxHandle, UART_UserTxCallback, &g_UartTxHandle);
-     
+
     status = (status_t)SerialManager_OpenReadHandle(g_serialHandle, g_UartRxHandle);
     assert(kStatus_SerialManager_Success == status);
     (void)SerialManager_InstallRxCallback(g_UartRxHandle, UART_UserRxCallback, &g_UartRxHandle);
 
     SerialManager_ReadNonBlocking(g_UartRxHandle, (uint8_t *)&usbRecvUart[0], USB_HOST_CDC_UART_RX_MAX_LEN);
-    
+
     g_AttachFlag = 0;
 
     USB_HostCdcInitBuffer();

@@ -86,7 +86,7 @@ static SLIDER_Handle hSlider1;
 static SPINBOX_Handle hSpinbox0;
 static PROGBAR_Handle hProgbar0;
 
-static const GUI_COLOR color_list[] = {GUI_BLACK,   GUI_YELLOW, GUI_ORANGE, GUI_RED,
+static const GUI_COLOR color_list[]      = {GUI_BLACK,   GUI_YELLOW, GUI_ORANGE, GUI_RED,
                                        GUI_MAGENTA, GUI_BLUE,   GUI_CYAN,   GUI_GREEN};
 static const GUI_POINT triangle_points[] = {
     {GUI_SCALE(0), GUI_SCALE(0)}, {GUI_SCALE(-50), GUI_SCALE(100)}, {GUI_SCALE(50), GUI_SCALE(100)}};
@@ -147,7 +147,7 @@ static void cbPageWin1(WM_MESSAGE *pMsg)
     switch (pMsg->MsgId)
     {
         case WM_NOTIFY_PARENT:
-            Id = WM_GetId(pMsg->hWinSrc);
+            Id    = WM_GetId(pMsg->hWinSrc);
             NCode = pMsg->Data.v;
 
             switch (Id)
@@ -195,7 +195,7 @@ static void cbPageWin2(WM_MESSAGE *pMsg)
     switch (pMsg->MsgId)
     {
         case WM_NOTIFY_PARENT:
-            Id = WM_GetId(pMsg->hWinSrc);
+            Id    = WM_GetId(pMsg->hWinSrc);
             NCode = pMsg->Data.v;
 
             switch (Id)
@@ -241,7 +241,8 @@ static void cbPageWin2(WM_MESSAGE *pMsg)
 int main(void)
 {
     const gpio_pin_config_t resetPinConfig = {
-        .pinDirection = kGPIO_DigitalOutput, .outputLogic = 1,
+        .pinDirection = kGPIO_DigitalOutput,
+        .outputLogic  = 1,
     };
 
     BOARD_InitPins();

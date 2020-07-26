@@ -1,9 +1,11 @@
 /*
- * Copyright 2018,2019 NXP
+ * Copyright 2018-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
+
+/** @file */
 
 #ifndef FSL_SSS_SE05X_APIS_H
 #define FSL_SSS_SE05X_APIS_H
@@ -18,7 +20,7 @@ extern "C" {
 #include "fsl_sss_ftr_default.h"
 #endif
 
-#if SSS_HAVE_SE05X
+#if SSS_HAVE_APPLET_SE05X_IOT
 #include <fsl_sss_se05x_types.h>
 
 /* ************************************************************************** */
@@ -34,7 +36,7 @@ extern "C" {
 sss_status_t sss_se05x_session_create(sss_se05x_session_t *session,
     sss_type_t subsystem,
     uint32_t application_id,
-    sss_connection_type_t connetion_type,
+    sss_connection_type_t connection_type,
     void *connectionData);
 
 /** @copydoc sss_session_open
@@ -43,22 +45,19 @@ sss_status_t sss_se05x_session_create(sss_se05x_session_t *session,
 sss_status_t sss_se05x_session_open(sss_se05x_session_t *session,
     sss_type_t subsystem,
     uint32_t application_id,
-    sss_connection_type_t connetion_type,
+    sss_connection_type_t connection_type,
     void *connectionData);
 
 /** @copydoc sss_session_prop_get_u32
  *
  */
-sss_status_t sss_se05x_session_prop_get_u32(
-    sss_se05x_session_t *session, uint32_t property, uint32_t *pValue);
+sss_status_t sss_se05x_session_prop_get_u32(sss_se05x_session_t *session, uint32_t property, uint32_t *pValue);
 
 /** @copydoc sss_session_prop_get_au8
  *
  */
-sss_status_t sss_se05x_session_prop_get_au8(sss_se05x_session_t *session,
-    uint32_t property,
-    uint8_t *pValue,
-    size_t *pValueLen);
+sss_status_t sss_se05x_session_prop_get_au8(
+    sss_se05x_session_t *session, uint32_t property, uint8_t *pValue, size_t *pValueLen);
 
 /** @copydoc sss_session_close
  *
@@ -79,10 +78,14 @@ void sss_se05x_session_delete(sss_se05x_session_t *session);
 /** @copydoc sss_key_object_init
  *
  */
-sss_status_t sss_se05x_key_object_init(
-    sss_se05x_object_t *keyObject, sss_se05x_key_store_t *keyStore);
+sss_status_t sss_se05x_key_object_init(sss_se05x_object_t *keyObject, sss_se05x_key_store_t *keyStore);
 
 /** @copydoc sss_key_object_allocate_handle
+ *
+ * On SE050, the memory get reserved only when the actual object is created and
+ * hence there is no memory reservation happening in this API call.  but
+ * internally it checks if the object already exists or not . if the object is
+ * already existing it returns a failure.
  *
  */
 sss_status_t sss_se05x_key_object_allocate_handle(sss_se05x_object_t *keyObject,
@@ -94,54 +97,50 @@ sss_status_t sss_se05x_key_object_allocate_handle(sss_se05x_object_t *keyObject,
 
 /** @copydoc sss_key_object_get_handle
  *
- */
-sss_status_t sss_se05x_key_object_get_handle(
-    sss_se05x_object_t *keyObject, uint32_t keyId);
-
-/** @copydoc sss_key_object_set_user
+ * On SE05X, this API uses @ref Se05x_API_ReadType and fetches
+ * parameters of the API.
  *
  */
-sss_status_t sss_se05x_key_object_set_user(
-    sss_se05x_object_t *keyObject, uint32_t user, uint32_t options);
+sss_status_t sss_se05x_key_object_get_handle(sss_se05x_object_t *keyObject, uint32_t keyId);
+
+/** Not Available for SE05X
+ *
+ */
+sss_status_t sss_se05x_key_object_set_user(sss_se05x_object_t *keyObject, uint32_t user, uint32_t options);
 
 /** @copydoc sss_key_object_set_purpose
  *
  */
-sss_status_t sss_se05x_key_object_set_purpose(
-    sss_se05x_object_t *keyObject, sss_mode_t purpose, uint32_t options);
+sss_status_t sss_se05x_key_object_set_purpose(sss_se05x_object_t *keyObject, sss_mode_t purpose, uint32_t options);
 
-/** @copydoc sss_key_object_set_access
+/** Not Available for SE05X
  *
  */
-sss_status_t sss_se05x_key_object_set_access(
-    sss_se05x_object_t *keyObject, uint32_t access, uint32_t options);
+sss_status_t sss_se05x_key_object_set_access(sss_se05x_object_t *keyObject, uint32_t access, uint32_t options);
 
-/** @copydoc sss_key_object_set_eccgfp_group
+/** Not Available for SE05X
  *
  */
-sss_status_t sss_se05x_key_object_set_eccgfp_group(
-    sss_se05x_object_t *keyObject, sss_eccgfp_group_t *group);
+sss_status_t sss_se05x_key_object_set_eccgfp_group(sss_se05x_object_t *keyObject, sss_eccgfp_group_t *group);
 
-/** @copydoc sss_key_object_get_user
+/** Not Available for SE05X
  *
  */
-sss_status_t sss_se05x_key_object_get_user(
-    sss_se05x_object_t *keyObject, uint32_t *user);
+sss_status_t sss_se05x_key_object_get_user(sss_se05x_object_t *keyObject, uint32_t *user);
 
-/** @copydoc sss_key_object_get_purpose
+/** Not Available for SE05X
  *
  */
-sss_status_t sss_se05x_key_object_get_purpose(
-    sss_se05x_object_t *keyObject, sss_mode_t *purpose);
+sss_status_t sss_se05x_key_object_get_purpose(sss_se05x_object_t *keyObject, sss_mode_t *purpose);
 
-/** @copydoc sss_key_object_get_access
+/** Not Available for SE05X
  *
  */
-sss_status_t sss_se05x_key_object_get_access(
-    sss_se05x_object_t *keyObject, uint32_t *access);
+sss_status_t sss_se05x_key_object_get_access(sss_se05x_object_t *keyObject, uint32_t *access);
 
 /** @copydoc sss_key_object_free
  *
+ * On SE050, this has no impact on physical Key Object.
  */
 void sss_se05x_key_object_free(sss_se05x_object_t *keyObject);
 
@@ -173,12 +172,32 @@ sss_status_t sss_se05x_derive_key_go(sss_se05x_derive_key_t *context,
     uint8_t *hkdfOutput,
     size_t *hkdfOutputLen);
 
+/** @copydoc sss_derive_key_one_go
+ *
+ */
+sss_status_t sss_se05x_derive_key_one_go(sss_se05x_derive_key_t *context,
+    const uint8_t *saltData,
+    size_t saltLen,
+    const uint8_t *info,
+    size_t infoLen,
+    sss_se05x_object_t *derivedKeyObject,
+    uint16_t deriveDataLen);
+
+/** @copydoc sss_derive_key_sobj_one_go
+*
+*/
+sss_status_t sss_se05x_derive_key_sobj_one_go(sss_se05x_derive_key_t *context,
+    sss_se05x_object_t *saltKeyObject,
+    const uint8_t *info,
+    size_t infoLen,
+    sss_se05x_object_t *derivedKeyObject,
+    uint16_t deriveDataLen);
+
 /** @copydoc sss_derive_key_dh
  *
  */
-sss_status_t sss_se05x_derive_key_dh(sss_se05x_derive_key_t *context,
-    sss_se05x_object_t *otherPartyKeyObject,
-    sss_se05x_object_t *derivedKeyObject);
+sss_status_t sss_se05x_derive_key_dh(
+    sss_se05x_derive_key_t *context, sss_se05x_object_t *otherPartyKeyObject, sss_se05x_object_t *derivedKeyObject);
 
 /** @copydoc sss_derive_key_context_free
  *
@@ -194,22 +213,23 @@ void sss_se05x_derive_key_context_free(sss_se05x_derive_key_t *context);
 /** @copydoc sss_key_store_context_init
  *
  */
-sss_status_t sss_se05x_key_store_context_init(
-    sss_se05x_key_store_t *keyStore, sss_se05x_session_t *session);
+sss_status_t sss_se05x_key_store_context_init(sss_se05x_key_store_t *keyStore, sss_se05x_session_t *session);
 
 /** @copydoc sss_key_store_allocate
  *
+ * This API does not do anything special on SE05X.
  */
-sss_status_t sss_se05x_key_store_allocate(
-    sss_se05x_key_store_t *keyStore, uint32_t keyStoreId);
+sss_status_t sss_se05x_key_store_allocate(sss_se05x_key_store_t *keyStore, uint32_t keyStoreId);
 
 /** @copydoc sss_key_store_save
  *
+ * This API does not do anything special on SE05X.
  */
 sss_status_t sss_se05x_key_store_save(sss_se05x_key_store_t *keyStore);
 
 /** @copydoc sss_key_store_load
  *
+ * This API does not do anything special on SE05X.
  */
 sss_status_t sss_se05x_key_store_load(sss_se05x_key_store_t *keyStore);
 
@@ -227,92 +247,53 @@ sss_status_t sss_se05x_key_store_set_key(sss_se05x_key_store_t *keyStore,
 /** @copydoc sss_key_store_generate_key
  *
  */
-sss_status_t sss_se05x_key_store_generate_key(sss_se05x_key_store_t *keyStore,
-    sss_se05x_object_t *keyObject,
-    size_t keyBitLen,
-    void *options);
+sss_status_t sss_se05x_key_store_generate_key(
+    sss_se05x_key_store_t *keyStore, sss_se05x_object_t *keyObject, size_t keyBitLen, void *options);
 
 /** @copydoc sss_key_store_get_key
  *
  */
-sss_status_t sss_se05x_key_store_get_key(sss_se05x_key_store_t *keyStore,
-    sss_se05x_object_t *keyObject,
-    uint8_t *data,
-    size_t *dataLen,
-    size_t *pKeyBitLen);
+sss_status_t sss_se05x_key_store_get_key(
+    sss_se05x_key_store_t *keyStore, sss_se05x_object_t *keyObject, uint8_t *data, size_t *dataLen, size_t *pKeyBitLen);
 
 /** @copydoc sss_key_store_open_key
  *
+ * In SE05X, these keys can be used as KEK encryption key
+ *
+ * If ``keyObject`` == NULL, then subsequent key injection does not use any KEK.
+ *
+ * @return     The sss status.
  */
-sss_status_t sss_se05x_key_store_open_key(
-    sss_se05x_key_store_t *keyStore, sss_se05x_object_t *keyObject);
+sss_status_t sss_se05x_key_store_open_key(sss_se05x_key_store_t *keyStore, sss_se05x_object_t *keyObject);
 
-/** @copydoc sss_key_store_freeze_key
+/** Not available for SE05X
  *
  */
-sss_status_t sss_se05x_key_store_freeze_key(
-    sss_se05x_key_store_t *keyStore, sss_se05x_object_t *keyObject);
+sss_status_t sss_se05x_key_store_freeze_key(sss_se05x_key_store_t *keyStore, sss_se05x_object_t *keyObject);
 
 /** @copydoc sss_key_store_erase_key
  *
  */
-sss_status_t sss_se05x_key_store_erase_key(
-    sss_se05x_key_store_t *keyStore, sss_se05x_object_t *keyObject);
-
-/** @copydoc sss_key_store_prop_get_u32
- *
- */
-sss_status_t sss_se05x_key_store_prop_get_u32(
-    sss_se05x_key_store_t *session, uint32_t property, uint32_t *pValue);
-
-/** @copydoc sss_key_store_prop_get_au8
- *
- */
-sss_status_t sss_se05x_key_store_prop_get_au8(sss_se05x_key_store_t *session,
-    uint32_t property,
-    uint8_t *pValue,
-    size_t *pValueLen);
+sss_status_t sss_se05x_key_store_erase_key(sss_se05x_key_store_t *keyStore, sss_se05x_object_t *keyObject);
 
 /** @copydoc sss_key_store_context_free
  *
  */
 void sss_se05x_key_store_context_free(sss_se05x_key_store_t *keyStore);
 
-#if SSSFTR_SE05X_ECC
-/** @copydoc sss_se05x_key_store_create_curve
+/** Export Key from SE050 to host
  *
+ * Only Transient keys can be exported.
  */
-sss_status_t sss_se05x_key_store_create_curve(
-    Se05xSession_t *pSession, uint32_t curve_id);
+sss_status_t sss_se05x_key_store_export_key(
+    sss_se05x_key_store_t *keyStore, sss_se05x_object_t *keyObject, uint8_t *key, size_t *keylen);
 
-/** @copydoc sss_se05x_key_store_check_curve
+/** Re Import previously exported SE05X key from host to the SE05X
  *
+ * Only Transient keys can be imported.
  */
-sss_status_t sss_se05x_key_store_check_curve(
-    Se05xSession_t *pSession, uint32_t curve_id);
-
-/** @copydoc sss_se05x_key_store_delete_curve
- *
- */
-sss_status_t sss_se05x_key_store_delete_curve(
-    Se05xSession_t *pSession, uint32_t curve_id);
-#endif // SSSFTR_SE05X_ECC
-
-/** @copydoc sss_se05x_key_store_export_key
- *
- */
-sss_status_t sss_se05x_key_store_export_key(sss_se05x_key_store_t *keyStore,
-    sss_se05x_object_t *keyObject,
-    uint8_t *key,
-    size_t *keylen);
-
-/** @copydoc sss_se05x_key_store_import_key
- *
- */
-sss_status_t sss_se05x_key_store_import_key(sss_se05x_key_store_t *keyStore,
-    sss_se05x_object_t *keyObject,
-    uint8_t *key,
-    size_t keylen);
+sss_status_t sss_se05x_key_store_import_key(
+    sss_se05x_key_store_t *keyStore, sss_se05x_object_t *keyObject, uint8_t *key, size_t keylen);
 
 /*! @} */ /* end of : sss_se05x_keystore */
 
@@ -332,38 +313,26 @@ sss_status_t sss_se05x_asymmetric_context_init(sss_se05x_asymmetric_t *context,
 /** @copydoc sss_asymmetric_encrypt
  *
  */
-sss_status_t sss_se05x_asymmetric_encrypt(sss_se05x_asymmetric_t *context,
-    const uint8_t *srcData,
-    size_t srcLen,
-    uint8_t *destData,
-    size_t *destLen);
+sss_status_t sss_se05x_asymmetric_encrypt(
+    sss_se05x_asymmetric_t *context, const uint8_t *srcData, size_t srcLen, uint8_t *destData, size_t *destLen);
 
 /** @copydoc sss_asymmetric_decrypt
  *
  */
-sss_status_t sss_se05x_asymmetric_decrypt(sss_se05x_asymmetric_t *context,
-    const uint8_t *srcData,
-    size_t srcLen,
-    uint8_t *destData,
-    size_t *destLen);
+sss_status_t sss_se05x_asymmetric_decrypt(
+    sss_se05x_asymmetric_t *context, const uint8_t *srcData, size_t srcLen, uint8_t *destData, size_t *destLen);
 
 /** @copydoc sss_asymmetric_sign_digest
  *
  */
-sss_status_t sss_se05x_asymmetric_sign_digest(sss_se05x_asymmetric_t *context,
-    uint8_t *digest,
-    size_t digestLen,
-    uint8_t *signature,
-    size_t *signatureLen);
+sss_status_t sss_se05x_asymmetric_sign_digest(
+    sss_se05x_asymmetric_t *context, uint8_t *digest, size_t digestLen, uint8_t *signature, size_t *signatureLen);
 
 /** @copydoc sss_asymmetric_verify_digest
  *
  */
-sss_status_t sss_se05x_asymmetric_verify_digest(sss_se05x_asymmetric_t *context,
-    uint8_t *digest,
-    size_t digestLen,
-    uint8_t *signature,
-    size_t signatureLen);
+sss_status_t sss_se05x_asymmetric_verify_digest(
+    sss_se05x_asymmetric_t *context, uint8_t *digest, size_t digestLen, uint8_t *signature, size_t signatureLen);
 
 /** @copydoc sss_asymmetric_context_free
  *
@@ -398,26 +367,19 @@ sss_status_t sss_se05x_cipher_one_go(sss_se05x_symmetric_t *context,
 /** @copydoc sss_cipher_init
  *
  */
-sss_status_t sss_se05x_cipher_init(
-    sss_se05x_symmetric_t *context, uint8_t *iv, size_t ivLen);
+sss_status_t sss_se05x_cipher_init(sss_se05x_symmetric_t *context, uint8_t *iv, size_t ivLen);
 
 /** @copydoc sss_cipher_update
  *
  */
-sss_status_t sss_se05x_cipher_update(sss_se05x_symmetric_t *context,
-    const uint8_t *srcData,
-    size_t srcLen,
-    uint8_t *destData,
-    size_t *destLen);
+sss_status_t sss_se05x_cipher_update(
+    sss_se05x_symmetric_t *context, const uint8_t *srcData, size_t srcLen, uint8_t *destData, size_t *destLen);
 
 /** @copydoc sss_cipher_finish
  *
  */
-sss_status_t sss_se05x_cipher_finish(sss_se05x_symmetric_t *context,
-    const uint8_t *srcData,
-    size_t srcLen,
-    uint8_t *destData,
-    size_t *destLen);
+sss_status_t sss_se05x_cipher_finish(
+    sss_se05x_symmetric_t *context, const uint8_t *srcData, size_t srcLen, uint8_t *destData, size_t *destLen);
 
 /** @copydoc sss_cipher_crypt_ctr
  *
@@ -467,27 +429,19 @@ sss_status_t sss_se05x_aead_one_go(sss_se05x_aead_t *context,
 /** @copydoc sss_aead_init
  *
  */
-sss_status_t sss_se05x_aead_init(sss_se05x_aead_t *context,
-    uint8_t *nonce,
-    size_t nonceLen,
-    size_t tagLen,
-    size_t aadLen,
-    size_t payloadLen);
+sss_status_t sss_se05x_aead_init(
+    sss_se05x_aead_t *context, uint8_t *nonce, size_t nonceLen, size_t tagLen, size_t aadLen, size_t payloadLen);
 
 /** @copydoc sss_aead_update_aad
  *
  */
-sss_status_t sss_se05x_aead_update_aad(
-    sss_se05x_aead_t *context, const uint8_t *aadData, size_t aadDataLen);
+sss_status_t sss_se05x_aead_update_aad(sss_se05x_aead_t *context, const uint8_t *aadData, size_t aadDataLen);
 
 /** @copydoc sss_aead_update
  *
  */
-sss_status_t sss_se05x_aead_update(sss_se05x_aead_t *context,
-    const uint8_t *srcData,
-    size_t srcLen,
-    uint8_t destData,
-    size_t *destLen);
+sss_status_t sss_se05x_aead_update(
+    sss_se05x_aead_t *context, const uint8_t *srcData, size_t srcLen, uint8_t *destData, size_t *destLen);
 
 /** @copydoc sss_aead_finish
  *
@@ -495,7 +449,7 @@ sss_status_t sss_se05x_aead_update(sss_se05x_aead_t *context,
 sss_status_t sss_se05x_aead_finish(sss_se05x_aead_t *context,
     const uint8_t *srcData,
     size_t srcLen,
-    uint8_t destData,
+    uint8_t *destData,
     size_t *destLen,
     uint8_t *tag,
     size_t *tagLen);
@@ -523,11 +477,8 @@ sss_status_t sss_se05x_mac_context_init(sss_se05x_mac_t *context,
 /** @copydoc sss_mac_one_go
  *
  */
-sss_status_t sss_se05x_mac_one_go(sss_se05x_mac_t *context,
-    const uint8_t *message,
-    size_t messageLen,
-    uint8_t *mac,
-    size_t *macLen);
+sss_status_t sss_se05x_mac_one_go(
+    sss_se05x_mac_t *context, const uint8_t *message, size_t messageLen, uint8_t *mac, size_t *macLen);
 
 /** @copydoc sss_mac_init
  *
@@ -537,14 +488,12 @@ sss_status_t sss_se05x_mac_init(sss_se05x_mac_t *context);
 /** @copydoc sss_mac_update
  *
  */
-sss_status_t sss_se05x_mac_update(
-    sss_se05x_mac_t *context, const uint8_t *message, size_t messageLen);
+sss_status_t sss_se05x_mac_update(sss_se05x_mac_t *context, const uint8_t *message, size_t messageLen);
 
 /** @copydoc sss_mac_finish
  *
  */
-sss_status_t sss_se05x_mac_finish(
-    sss_se05x_mac_t *context, uint8_t *mac, size_t *macLen);
+sss_status_t sss_se05x_mac_finish(sss_se05x_mac_t *context, uint8_t *mac, size_t *macLen);
 
 /** @copydoc sss_mac_context_free
  *
@@ -560,19 +509,14 @@ void sss_se05x_mac_context_free(sss_se05x_mac_t *context);
 /** @copydoc sss_digest_context_init
  *
  */
-sss_status_t sss_se05x_digest_context_init(sss_se05x_digest_t *context,
-    sss_se05x_session_t *session,
-    sss_algorithm_t algorithm,
-    sss_mode_t mode);
+sss_status_t sss_se05x_digest_context_init(
+    sss_se05x_digest_t *context, sss_se05x_session_t *session, sss_algorithm_t algorithm, sss_mode_t mode);
 
 /** @copydoc sss_digest_one_go
  *
  */
-sss_status_t sss_se05x_digest_one_go(sss_se05x_digest_t *context,
-    const uint8_t *message,
-    size_t messageLen,
-    uint8_t *digest,
-    size_t *digestLen);
+sss_status_t sss_se05x_digest_one_go(
+    sss_se05x_digest_t *context, const uint8_t *message, size_t messageLen, uint8_t *digest, size_t *digestLen);
 
 /** @copydoc sss_digest_init
  *
@@ -582,14 +526,12 @@ sss_status_t sss_se05x_digest_init(sss_se05x_digest_t *context);
 /** @copydoc sss_digest_update
  *
  */
-sss_status_t sss_se05x_digest_update(
-    sss_se05x_digest_t *context, const uint8_t *message, size_t messageLen);
+sss_status_t sss_se05x_digest_update(sss_se05x_digest_t *context, const uint8_t *message, size_t messageLen);
 
 /** @copydoc sss_digest_finish
  *
  */
-sss_status_t sss_se05x_digest_finish(
-    sss_se05x_digest_t *context, uint8_t *digest, size_t *digestLen);
+sss_status_t sss_se05x_digest_finish(sss_se05x_digest_t *context, uint8_t *digest, size_t *digestLen);
 
 /** @copydoc sss_digest_context_free
  *
@@ -605,14 +547,12 @@ void sss_se05x_digest_context_free(sss_se05x_digest_t *context);
 /** @copydoc sss_rng_context_init
  *
  */
-sss_status_t sss_se05x_rng_context_init(
-    sss_se05x_rng_context_t *context, sss_se05x_session_t *session);
+sss_status_t sss_se05x_rng_context_init(sss_se05x_rng_context_t *context, sss_se05x_session_t *session);
 
 /** @copydoc sss_rng_get_random
  *
  */
-sss_status_t sss_se05x_rng_get_random(
-    sss_se05x_rng_context_t *context, uint8_t *random_data, size_t dataLen);
+sss_status_t sss_se05x_rng_get_random(sss_se05x_rng_context_t *context, uint8_t *random_data, size_t dataLen);
 
 /** @copydoc sss_rng_context_free
  *
@@ -621,55 +561,14 @@ sss_status_t sss_se05x_rng_context_free(sss_se05x_rng_context_t *context);
 
 /*! @} */ /* end of : sss_se05x_rng */
 
-/** @copydoc sss_se05x_tls_generate_random
- *
- */
-sss_status_t sss_se05x_tls_generate_random(
-    sss_se05x_rng_context_t *context, uint8_t *random_data, size_t *dataLen);
-
-/** @copydoc sss_se05x_tls_get_preMaster_secret
- *
- */
-sss_status_t sss_se05x_tls_get_preMaster_secret(sss_se05x_key_store_t *keyStore,
-    uint32_t keyPairId,
-    uint32_t pskId,
-    uint32_t hmacKeyId,
-    const uint8_t *inputData,
-    size_t inputDataLen);
-
-/** @copydoc sss_se05x_tls_perform_PRF
- *
- */
-sss_status_t sss_se05x_tls_perform_PRF(sss_se05x_mac_t *context,
-    const uint8_t *label,
-    size_t labelLen,
-    const uint8_t *random,
-    size_t randomLen,
-    uint16_t reqLen,
-    uint8_t *outputData,
-    size_t *poutputDataLen,
-    const SE05x_TLSPerformPRFType_t tlsprf);
-
-/** @copydoc sss_se05x_session_cancel_scp_request
- *
- */
-sss_status_t sss_se05x_session_cancel_scp_request(sss_se05x_session_t *session);
-
-/** @copydoc sss_se05x_set_feature
- *
- */
-sss_status_t sss_se05x_set_feature(
-    sss_se05x_session_t *session, SE05x_Applet_Feature_t feature);
-
 /**
 * @addtogroup sss_se05x_tunnel
 * @{
 */
 /** @copydoc sss_tunnel_context_init
-    *
-    */
-sss_status_t sss_se05x_tunnel_context_init(
-    sss_se05x_tunnel_context_t *context, sss_se05x_session_t *session);
+ *
+ */
+sss_status_t sss_se05x_tunnel_context_init(sss_se05x_tunnel_context_t *context, sss_se05x_session_t *session);
 
 /** @copydoc sss_tunnel_context_free
 *
@@ -678,8 +577,7 @@ void sss_se05x_tunnel_context_free(sss_se05x_tunnel_context_t *context);
 
 /*! @} */ /* end of : sss_se05x_tunnel */
 
-sss_status_t sss_se05x_refresh_session(
-    sss_se05x_session_t *session, void *connectionData);
+sss_status_t sss_se05x_refresh_session(sss_se05x_session_t *session, void *connectionData);
 
 /**
  * @addtogroup sss_se05x_tunnel
@@ -689,10 +587,9 @@ sss_status_t sss_se05x_refresh_session(
 /** @copydoc sss_tunnel_context_init
  *
  */
-sss_status_t sss_se05x_tunnel_context_init(
-    sss_se05x_tunnel_context_t *context, sss_se05x_session_t *session);
+sss_status_t sss_se05x_tunnel_context_init(sss_se05x_tunnel_context_t *context, sss_se05x_session_t *session);
 
-/** @copydoc sss_tunnel
+/** @copydoc sss_tunnel_t
  *
  */
 sss_status_t sss_se05x_tunnel(sss_se05x_tunnel_context_t *context,
@@ -709,13 +606,26 @@ void sss_se05x_tunnel_context_free(sss_se05x_tunnel_context_t *context);
 
 /*! @} */ /* end of : sss_se05x_tunnel */
 
+/** Set features of the Applet.
+ *
+ * See @ref Se05x_API_SetAppletFeatures
+ */
+sss_status_t sss_se05x_set_feature(
+    sss_se05x_session_t *session, SE05x_Applet_Feature_t feature, SE05x_Applet_Feature_Disable_t disable_features);
+
+SE05x_DigestMode_t se05x_get_sha_algo(sss_algorithm_t algorithm);
+
+#if SSSFTR_SE05X_ECC
+sss_status_t sss_se05x_key_store_create_curve(Se05xSession_t *pSession, uint32_t curve_id);
+#endif
+
 /* clang-format off */
 #   if (SSS_HAVE_SSS == 1)
         /* Direct Call : session */
-#       define sss_session_create(session,subsystem,application_id,connetion_type,connectionData) \
-            sss_se05x_session_create(((sss_se05x_session_t * ) session),(subsystem),(application_id),(connetion_type),(connectionData))
-#       define sss_session_open(session,subsystem,application_id,connetion_type,connectionData) \
-            sss_se05x_session_open(((sss_se05x_session_t * ) session),(subsystem),(application_id),(connetion_type),(connectionData))
+#       define sss_session_create(session,subsystem,application_id,connection_type,connectionData) \
+            sss_se05x_session_create(((sss_se05x_session_t * ) session),(subsystem),(application_id),(connection_type),(connectionData))
+#       define sss_session_open(session,subsystem,application_id,connection_type,connectionData) \
+            sss_se05x_session_open(((sss_se05x_session_t * ) session),(subsystem),(application_id),(connection_type),(connectionData))
 #       define sss_session_prop_get_u32(session,property,pValue) \
             sss_se05x_session_prop_get_u32(((sss_se05x_session_t * ) session),(property),(pValue))
 #       define sss_session_prop_get_au8(session,property,pValue,pValueLen) \
@@ -777,10 +687,6 @@ void sss_se05x_tunnel_context_free(sss_se05x_tunnel_context_t *context);
             sss_se05x_key_store_freeze_key(((sss_se05x_key_store_t * ) keyStore),((sss_se05x_object_t * ) keyObject))
 #       define sss_key_store_erase_key(keyStore,keyObject) \
             sss_se05x_key_store_erase_key(((sss_se05x_key_store_t * ) keyStore),((sss_se05x_object_t * ) keyObject))
-#       define sss_key_store_prop_get_u32(session,property,pValue) \
-            sss_se05x_key_store_prop_get_u32(((sss_se05x_key_store_t * ) session),(property),(pValue))
-#       define sss_key_store_prop_get_au8(session,property,pValue,pValueLen) \
-            sss_se05x_key_store_prop_get_au8(((sss_se05x_key_store_t * ) session),(property),(pValue),(pValueLen))
 #       define sss_key_store_context_free(keyStore) \
             sss_se05x_key_store_context_free(((sss_se05x_key_store_t * ) keyStore))
         /* Direct Call : asym */
@@ -868,7 +774,7 @@ void sss_se05x_tunnel_context_free(sss_se05x_tunnel_context_t *context);
             sss_se05x_tunnel_context_free(((sss_se05x_tunnel_context_t * ) context))
 #   endif /* (SSS_HAVE_SSS == 1) */
 /* clang-format on */
-#endif /* SSS_HAVE_SE05X */
+#endif /* SSS_HAVE_APPLET_SE05X_IOT */
 #ifdef __cplusplus
 } // extern "C"
 #endif /* __cplusplus */

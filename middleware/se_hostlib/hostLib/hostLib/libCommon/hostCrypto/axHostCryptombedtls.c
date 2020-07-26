@@ -246,51 +246,51 @@ S32 HOST_AES_CBC_Process(const U8 *pKey, U32 keyLen, const U8 *pIv, U8 dir, cons
 
 S32 HOST_AES_ECB_Process(const U8 *pKey, U32 keyLen, const U8 *pIv, U8 dir, const U8 *pIn, U32 inLen, U8 *pOut)
 {
-	int ret = HOST_CRYPTO_ERROR;
-	mbedtls_aes_context aes_ctx;
+    int ret = HOST_CRYPTO_ERROR;
+    mbedtls_aes_context aes_ctx;
 
-	if (dir == HOST_ENCRYPT)
-	{
-		ret = mbedtls_aes_setkey_enc(&aes_ctx, pKey, 128);
-		if (ret == 0)
-		{
-			ret = mbedtls_aes_crypt_ecb(&aes_ctx, MBEDTLS_AES_ENCRYPT, pIn, pOut);
-			if (ret == 0)
-			{
-				ret = HOST_CRYPTO_OK;
-			}
-		}
-	}
-	else if (dir == HOST_DECRYPT)
-	{
-		ret = mbedtls_aes_setkey_dec(&aes_ctx, pKey, 128);
-		if (ret == 0)
-		{
-			ret = mbedtls_aes_crypt_ecb(&aes_ctx, MBEDTLS_AES_DECRYPT, pIn, pOut);
-			if (ret == 0)
-			{
-				ret = HOST_CRYPTO_OK;
-			}
-		}
-	}
+    if (dir == HOST_ENCRYPT)
+    {
+        ret = mbedtls_aes_setkey_enc(&aes_ctx, pKey, 128);
+        if (ret == 0)
+        {
+            ret = mbedtls_aes_crypt_ecb(&aes_ctx, MBEDTLS_AES_ENCRYPT, pIn, pOut);
+            if (ret == 0)
+            {
+                ret = HOST_CRYPTO_OK;
+            }
+        }
+    }
+    else if (dir == HOST_DECRYPT)
+    {
+        ret = mbedtls_aes_setkey_dec(&aes_ctx, pKey, 128);
+        if (ret == 0)
+        {
+            ret = mbedtls_aes_crypt_ecb(&aes_ctx, MBEDTLS_AES_DECRYPT, pIn, pOut);
+            if (ret == 0)
+            {
+                ret = HOST_CRYPTO_OK;
+            }
+        }
+    }
 
-	return ret;
+    return ret;
 }
 
 S32 HOST_CMAC_Get_Des(const U8 *pKey, U8 keySizeInBytes, const U8 *pMsg, U32 msgLen, U8* pMac)
 {
-	return HOST_CRYPTO_ERROR;
+    return HOST_CRYPTO_ERROR;
 }
 
 S32 HOST_3DES_CBC_Process(const U8 *pKey, U32 keyLen, const U8 *pIv, U8 dir, const U8 *pIn, U32 inLen, U8 *pOut)
 {
-	return HOST_CRYPTO_ERROR;
+    return HOST_CRYPTO_ERROR;
 }
 
 S32 HOST_3DES_ECB_Process(const U8 *pKey, U32 keyLen, const U8 *pIv,
-	U8 dir, const U8 *pIn, U32 inLen, U8 *pOut)
+    U8 dir, const U8 *pIn, U32 inLen, U8 *pOut)
 {
-	return HOST_CRYPTO_ERROR;
+    return HOST_CRYPTO_ERROR;
 }
 
 S32 HOST_GetRandom(U32 inLen, U8 *pRandom)

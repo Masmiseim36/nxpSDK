@@ -19,13 +19,13 @@
  ******************************************************************************/
 
 /*! @brief The class code of the PHDC class */
-#define USB_DEVICE_CONFIG_PHDC_CLASS_CODE (0x0F)
+#define USB_DEVICE_CONFIG_PHDC_CLASS_CODE (0x0FU)
 /*! @brief The PHDC class set Meta-data message preamble feature request */
-#define USB_DEVICE_PHDC_REQUEST_SET_FEATURE (0x03)
+#define USB_DEVICE_PHDC_REQUEST_SET_FEATURE (0x03U)
 /*! @brief The PHDC class clear Meta-data message preamble feature request */
-#define USB_DEVICE_PHDC_REQUEST_CLEAR_FEATURE (0x01)
+#define USB_DEVICE_PHDC_REQUEST_CLEAR_FEATURE (0x01U)
 /*! @brief The PHDC class get data status request */
-#define USB_DEVICE_PHDC_REQUEST_GET_STATUS (0x00)
+#define USB_DEVICE_PHDC_REQUEST_GET_STATUS (0x00U)
 /*! @brief Available common EVENT types in PHDC class callback */
 typedef enum
 {
@@ -40,11 +40,11 @@ typedef enum
 /*! @brief Definition of pipe structure. */
 typedef struct _usb_device_phdc_pipe
 {
-    uint8_t *pipeDataBuffer;      /*!< pipe data buffer backup when stall */
-    uint32_t pipeDataLen;         /*!< pipe data length backup when stall  */
-    uint8_t pipeStall;            /*!< pipe is stall  */
-    uint8_t ep;     /*!< The endpoint number of the pipe. */
-    uint8_t isBusy; /*!< 1: The pipe is transferring packet, 0: The pipe is idle. */
+    uint8_t *pipeDataBuffer; /*!< pipe data buffer backup when stall */
+    uint32_t pipeDataLen;    /*!< pipe data length backup when stall  */
+    uint8_t pipeStall;       /*!< pipe is stall  */
+    uint8_t ep;              /*!< The endpoint number of the pipe. */
+    uint8_t isBusy;          /*!< 1: The pipe is transferring packet, 0: The pipe is idle. */
 } usb_device_phdc_pipe_t;
 
 /*! @brief The PHDC device class status structure */
@@ -133,7 +133,7 @@ extern usb_status_t USB_DevicePhdcEvent(void *handle, uint32_t event, void *para
  * @retval kStatus_USB_Busy                 The previous transfer is pending.
  * @retval kStatus_USB_Success              The sending is successful.
  *
- * @note The function can only be called in the same context. 
+ * @note The function can only be called in the same context.
  */
 extern usb_status_t USB_DevicePhdcSend(class_handle_t handle, uint8_t ep, uint8_t *buffer, uint32_t length);
 
@@ -152,7 +152,7 @@ extern usb_status_t USB_DevicePhdcSend(class_handle_t handle, uint8_t ep, uint8_
  * @retval kStatus_USB_Busy                 The previous transfer is pending.
  * @retval kStatus_USB_Success              The receiving is successful.
  *
- * @note The function can only be called in the same context. 
+ * @note The function can only be called in the same context.
  */
 extern usb_status_t USB_DevicePhdcRecv(class_handle_t handle, uint8_t ep, uint8_t *buffer, uint32_t length);
 

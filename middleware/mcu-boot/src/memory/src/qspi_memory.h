@@ -7,7 +7,7 @@
 #if !defined(__QSPI_MEMORY_INTERFACE_H__)
 #define __QSPI_MEMORY_INTERFACE_H__
 
-#include "memory/memory.h"
+#include "memory.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 // Prototypes

@@ -10,14 +10,16 @@
 #define __USB_DESCRIPTOR_H__ 1
 
 #include "bootloader_common.h"
-#include "packet/command_packet.h"
+#include "command_packet.h"
 #include "usb.h"
 #include "usb_device.h"
 #include "usb_device_config.h"
 
 #include "usb_device_class.h"
 #include "usb_device_hid.h"
+#if (BL_CONFIG_USB_MSC || BL_CONFIG_HS_USB_MSC)
 #include "usb_device_msc.h"
+#endif
 
 #define USB_BCD_VERSION (0x0200)
 

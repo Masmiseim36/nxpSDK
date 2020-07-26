@@ -3,7 +3,7 @@
  * @author NXP Semiconductors
  * @version 1.0
  * @par License
- * Copyright 2016 NXP
+ * Copyright 2016,2020 NXP
  *
  * This software is owned or controlled by NXP and may only be used
  * strictly in accordance with the applicable license terms.  By expressly
@@ -43,7 +43,7 @@ extern "C" {
 /** \name Debug functions (only available in case the Applet is in Debug Mode)
    @{ */
 
-#if (SSS_HAVE_A71CH || SSS_HAVE_A71CL || SSS_HAVE_SE050_EAR_CH || SSS_HAVE_SE050_L)
+#if (SSS_HAVE_A71CH || SSS_HAVE_A71CL || SSS_HAVE_A71CH_SIM || SSS_HAVE_SE050_L)
 U16 A71_DbgDisableDebug(void);
 U16 A71_DbgEraseCounter(SST_Index_t index);
 U16 A71_DbgGetFreePersistentMemory(S16 *freeMem);

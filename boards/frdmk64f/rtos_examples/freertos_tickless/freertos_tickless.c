@@ -26,19 +26,19 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define BOARD_LED_GPIO BOARD_LED_RED_GPIO
+#define BOARD_LED_GPIO     BOARD_LED_RED_GPIO
 #define BOARD_LED_GPIO_PIN BOARD_LED_RED_GPIO_PIN
 
-#define BOARD_SW_GPIO BOARD_SW3_GPIO
-#define BOARD_SW_PORT BOARD_SW3_PORT
-#define BOARD_SW_GPIO_PIN BOARD_SW3_GPIO_PIN
-#define BOARD_SW_IRQ BOARD_SW3_IRQ
+#define BOARD_SW_GPIO        BOARD_SW3_GPIO
+#define BOARD_SW_PORT        BOARD_SW3_PORT
+#define BOARD_SW_GPIO_PIN    BOARD_SW3_GPIO_PIN
+#define BOARD_SW_IRQ         BOARD_SW3_IRQ
 #define BOARD_SW_IRQ_HANDLER BOARD_SW3_IRQ_HANDLER
-#define BOARD_SW_NAME BOARD_SW3_NAME
+#define BOARD_SW_NAME        BOARD_SW3_NAME
 
 /* @brief FreeRTOS tickless timer configuration. */
-#define TICKLESS_LPTMR_BASE_PTR LPTMR0  /*!< Tickless timer base address. */
-#define TICKLESS_LPTMR_IRQn LPTMR0_IRQn /*!< Tickless timer IRQ number. */
+#define TICKLESS_LPTMR_BASE_PTR LPTMR0      /*!< Tickless timer base address. */
+#define TICKLESS_LPTMR_IRQn     LPTMR0_IRQn /*!< Tickless timer IRQ number. */
 
 /* Task priorities. */
 /* clang-format off */
@@ -137,8 +137,8 @@ int main(void)
     /* Enable at the NVIC */
     EnableIRQ(LPTMR0_IRQn);
 #endif
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
 
     PRINTF("Press any key to start the example\r\n");

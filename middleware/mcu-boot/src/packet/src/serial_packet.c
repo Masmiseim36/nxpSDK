@@ -7,12 +7,12 @@
 
 #include <string.h>
 #include "bootloader_common.h"
-#include "bootloader/bl_context.h"
-#include "bootloader/bootloader.h"
-#include "packet/command_packet.h"
-#include "packet/serial_packet.h"
-#include "crc/crc16.h"
-#include "utilities/fsl_assert.h"
+#include "bl_context.h"
+#include "bootloader.h"
+#include "command_packet.h"
+#include "serial_packet.h"
+#include "crc16.h"
+#include "fsl_assert.h"
 #include "microseconds.h"
 
 //! @addtogroup packet

@@ -52,7 +52,7 @@ void IEEE_TimerInit(void)
 {
     /* Create the phdTimer timer. */
     s_ieee11073TimerHandle = xTimerCreate("phdTimer", IEEE11073_TIMER_PERIOD, pdTRUE, 0, IEEE_TimerISR);
-    s_ieee11073TimerLevel = 0U;
+    s_ieee11073TimerLevel  = 0U;
     /* Clear timer queue */
     (void)memset(s_ieee11073TimerObjectArray, 0U, sizeof(s_ieee11073TimerObjectArray));
 }

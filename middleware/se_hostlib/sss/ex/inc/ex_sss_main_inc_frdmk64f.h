@@ -10,13 +10,13 @@
  * may not retain, install, activate or otherwise use the software.
  */
 
-/* Common header fils used by Freedom K64F */
+/* Common header file used by Freedom K64F */
 
 #ifndef HAVE_KSDK
 #error "HAVE_KSDK must be defined"
 #endif
 
-/* Expsosed variables */
+/* Exposed variables */
 #define HAVE_KSDK_LED_APIS 1
 
 #include "ax_reset.h"

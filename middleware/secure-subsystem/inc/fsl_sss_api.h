@@ -1,9 +1,10 @@
 /*
- * Copyright 2018 NXP
+ * Copyright 2018,2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
+/** @file */
 #ifndef _FSL_SSS_H_
 #define _FSL_SSS_H_
 
@@ -13,193 +14,505 @@
 #include SSS_CONFIG_FILE
 #endif
 
-#include "fsl_sss_types.h"
+/* #include "fsl_sss_types.h" */
 
+/* #include <fsl_sss_policy.h> */
+
+#include <stdint.h>
+#include <stddef.h>
+
+/** Version of the SSS API */
 #define SSS_API_VERSION (0x00000001u)
 
+/** Size of an AES Block, in bytes */
 #define SSS_AES_BLOCK_SIZE (16u)
+/** Size of a DES Block, in bytes */
 #define SSS_DES_BLOCK_SIZE (8u)
+/** Size of a DES Key, in bytes */
 #define SSS_DES_KEY_SIZE (8u)
+/** Size of a DES IV, in bytes */
 #define SSS_DES_IV_SIZE (8u)
 
+/** Status of the SSS APIs */
+#if !defined(SSS_STATUS_ENUM_ALT)
 typedef enum _sss_status
 {
-    kStatus_SSS_Success = (int)0x5a5a5a5a,
-    kStatus_SSS_Fail = (int)0xc3c30000,
-    kStatus_SSS_InvalidArgument = (int)0xc3c30001,
-    kStatus_SSS_ResourceBusy = (int)0xc3c30002,
+    /** Operation was successful */
+    kStatus_SSS_Success = 0x5a5a5a5au,
+    /** Operation failed */
+    kStatus_SSS_Fail = 0x3c3c0000u,
+    /** Operation not performed because some of the passed parameters
+     * were found inappropriate */
+    kStatus_SSS_InvalidArgument = 0x3c3c0001u,
+    /** Where the underlying sub-system *supports* multi-threading,
+     * Internal status to handle simultaneous access.
+     *
+     * This status is not expected to be returned to higher layers.
+     * */
+    kStatus_SSS_ResourceBusy = 0x3c3c0002u,
 } sss_status_t;
+#endif
 
+/** Cryptographic sub system */
+
+#define SSS_ENUM(GROUP, INDEX) ((GROUP) | (INDEX))
+
+#if !defined(SSS_TYPE_ENUM_ALT)
 typedef enum _sss_type
 {
     kType_SSS_SubSystem_NONE,
-    kType_SSS_Software,
-    kType_SSS_mbedTLS,
-    kType_SSS_OpenSSL,
-    kType_SSS_SECO,
-    kType_SSS_Sentinel200,
-    kType_SSS_Sentinel300,
-    kType_SSS_Sentinel400,
-    kType_SSS_Sentinel500,
-    kType_SSS_SecureElement,
-    kType_SSS_SE_A71CH,
-    kType_SSS_SE_SE050,
-    kType_SSS_HW,
+    /** Software based */
+    kType_SSS_Software = SSS_ENUM(0x01 < 8, 0x00),
+    kType_SSS_mbedTLS  = SSS_ENUM(kType_SSS_Software, 0x01),
+    kType_SSS_OpenSSL  = SSS_ENUM(kType_SSS_Software, 0x02),
+    /** HOST HW Based */
+    kType_SSS_HW   = SSS_ENUM(0x02 < 8, 0x00),
+    kType_SSS_SECO = SSS_ENUM(kType_SSS_HW, 0x01),
+    /** Isolated HW */
+    kType_SSS_Isolated_HW = SSS_ENUM(0x04 < 8, 0x00),
+    kType_SSS_Sentinel    = SSS_ENUM(kType_SSS_Isolated_HW, 0x01),
+    kType_SSS_Sentinel200 = SSS_ENUM(kType_SSS_Isolated_HW, 0x02),
+    kType_SSS_Sentinel300 = SSS_ENUM(kType_SSS_Isolated_HW, 0x03),
+    kType_SSS_Sentinel400 = SSS_ENUM(kType_SSS_Isolated_HW, 0x04),
+    kType_SSS_Sentinel500 = SSS_ENUM(kType_SSS_Isolated_HW, 0x05),
+    /** Secure Eleemnt */
+    kType_SSS_SecureElement = SSS_ENUM(0x08 < 8, 0x00),
+    /** To connect to https://www.nxp.com/products/:A71CH */
+    kType_SSS_SE_A71CH = SSS_ENUM(kType_SSS_SecureElement, 0x01),
+    kType_SSS_SE_A71CL = SSS_ENUM(kType_SSS_SecureElement, 0x02),
+    /** To connect to https://www.nxp.com/products/:SE050 */
+    kType_SSS_SE_SE05x = SSS_ENUM(kType_SSS_SecureElement, 0x03),
     kType_SSS_SubSystem_LAST
 } sss_type_t;
+#endif
 
+typedef enum
+{
+    /* Plain => Lowest level of security requested.
+     *       => Probably a system with no mechanism to *identify* who
+     *          has opened the session from host
+     *       => Probably a system with Easy for man in the middle attack.
+     *
+     */
+    kSSS_ConnectionType_Plain,
+    /* Password:
+     *       => Some level of user authentication/identification requested
+     *       => Probably a system with "static" authentication/identification.
+     *       => Probably same Password us always.
+     *       => "Password" mostly gets sent in plain over the communication layer
+     *       => Probably a system with replay attack possible
+     */
+    kSSS_ConnectionType_Password,
+    /* Encrypted:
+     *    Communication is guaranteed to be Encrypted.
+     *    For SE => This would mean highest level of authentication
+     *    For other system => channel would be encrypted
+     *
+     *    In general, almost a level of security that is definitely higher than
+     *    Plain/Password/PIN.
+     *
+     *    Using *Dynamic* Sessions Keys for authenticated communication.
+     */
+    kSSS_ConnectionType_Encrypted
+} sss_connection_type_t;
+
+#define SSS_ALGORITHM_START_AES (0x00)
+#define SSS_ALGORITHM_START_CHACHA (0x01)
+#define SSS_ALGORITHM_START_DES (0x02)
+#define SSS_ALGORITHM_START_SHA (0x03)
+#define SSS_ALGORITHM_START_MAC (0x04)
+#define SSS_ALGORITHM_START_DH (0x05)
+#define SSS_ALGORITHM_START_DSA (0x06)
+#define SSS_ALGORITHM_START_RSASSA_PKCS1_V1_5 (0x07)
+#define SSS_ALGORITHM_START_RSASSA_PKCS1_PSS_MGF1 (0x08)
+#define SSS_ALGORITHM_START_RSAES_PKCS1_OAEP (0x09)
+#define SSS_ALGORITHM_START_RSAES_PKCS1_V1_5 (0x0A)
+#define SSS_ALGORITHM_START_RSASSA_NO_PADDING (0x0B)
+#define SSS_ALGORITHM_START_ECDSA (0x0C)
+
+#define SSS_ENUM_ALGORITHM(GROUP, INDEX) (((SSS_ALGORITHM_START_##GROUP) << 8) | (INDEX))
+
+/** Cryptographic algorithm to be applied */
+#if !defined(SSS_ALGORITHM_ENUM_ALT)
 typedef enum _sss_algorithm
 {
+    kAlgorithm_None,
     /* AES */
-    kAlgorithm_SSS_AES_ECB,
-    kAlgorithm_SSS_AES_CBC,
-    kAlgorithm_SSS_AES_CTR,
-    kAlgorithm_SSS_AES_GCM,
-    kAlgorithm_SSS_AES_CCM,
+    kAlgorithm_SSS_AES_ECB = SSS_ENUM_ALGORITHM(AES, 0x01),
+    kAlgorithm_SSS_AES_CBC = SSS_ENUM_ALGORITHM(AES, 0x02),
+    kAlgorithm_SSS_AES_CTR = SSS_ENUM_ALGORITHM(AES, 0x03),
+    kAlgorithm_SSS_AES_GCM = SSS_ENUM_ALGORITHM(AES, 0x04),
+    kAlgorithm_SSS_AES_CCM = SSS_ENUM_ALGORITHM(AES, 0x05),
     /* CHACHA_POLY */
-    kAlgorithm_SSS_CHACHA_POLY,
+    kAlgorithm_SSS_CHACHA_POLY = SSS_ENUM_ALGORITHM(CHACHA, 0x01),
+    /* DES */
+    kAlgorithm_SSS_DES_ECB = SSS_ENUM_ALGORITHM(DES, 0x01),
+    kAlgorithm_SSS_DES_CBC = SSS_ENUM_ALGORITHM(DES, 0x02),
     /* DES3 */
-    kAlgorithm_SSS_DES3_ECB,
-    kAlgorithm_SSS_DES3_CBC,
+    kAlgorithm_SSS_DES3_ECB = SSS_ENUM_ALGORITHM(DES, 0x03),
+    kAlgorithm_SSS_DES3_CBC = SSS_ENUM_ALGORITHM(DES, 0x04),
     /* digest */
-    kAlgorithm_SSS_SHA1,
-    kAlgorithm_SSS_SHA224,
-    kAlgorithm_SSS_SHA256,
-    kAlgorithm_SSS_SHA384,
-    kAlgorithm_SSS_SHA512,
+    kAlgorithm_SSS_SHA1   = SSS_ENUM_ALGORITHM(SHA, 0x01),
+    kAlgorithm_SSS_SHA224 = SSS_ENUM_ALGORITHM(SHA, 0x02),
+    kAlgorithm_SSS_SHA256 = SSS_ENUM_ALGORITHM(SHA, 0x03),
+    kAlgorithm_SSS_SHA384 = SSS_ENUM_ALGORITHM(SHA, 0x04),
+    kAlgorithm_SSS_SHA512 = SSS_ENUM_ALGORITHM(SHA, 0x05),
     /* MAC */
-    kAlgorithm_SSS_CMAC_AES,
-    kAlgorithm_SSS_HMAC_SHA256,
-    /* Diffie-Helmann */
-    kAlgorithm_SSS_DH,
-    kAlgorithm_SSS_ECDH,
-    /* DSA */
-    kAlgorithm_SSS_DSA_SHA1,
-    kAlgorithm_SSS_DSA_SHA224,
-    kAlgorithm_SSS_DSA_SHA256,
-    /* RSA */
-    kAlgorithm_SSS_RSASSA_PKCS1_V1_5_SHA1,
-    kAlgorithm_SSS_RSASSA_PKCS1_V1_5_SHA224,
-    kAlgorithm_SSS_RSASSA_PKCS1_V1_5_SHA256,
-    kAlgorithm_SSS_RSASSA_PKCS1_V1_5_SHA384,
-    kAlgorithm_SSS_RSASSA_PKCS1_V1_5_SHA512,
-    kAlgorithm_SSS_RSASSA_PKCS1_PSS_MGF1_SHA1,
-    kAlgorithm_SSS_RSASSA_PKCS1_PSS_MGF1_SHA224,
-    kAlgorithm_SSS_RSASSA_PKCS1_PSS_MGF1_SHA256,
-    kAlgorithm_SSS_RSASSA_PKCS1_PSS_MGF1_SHA384,
-    kAlgorithm_SSS_RSASSA_PKCS1_PSS_MGF1_SHA512,
-    /* ECDSA */
-    kAlgorithm_SSS_ECDSA_SHA1,
-    kAlgorithm_SSS_ECDSA_SHA224,
-    kAlgorithm_SSS_ECDSA_SHA256,
-    kAlgorithm_SSS_ECDSA_SHA384,
-    kAlgorithm_SSS_ECDSA_SHA512,
-} sss_algorithm_t;
+    kAlgorithm_SSS_CMAC_AES    = SSS_ENUM_ALGORITHM(MAC, 0x01),
+    kAlgorithm_SSS_HMAC_SHA1   = SSS_ENUM_ALGORITHM(MAC, 0x02),
+    kAlgorithm_SSS_HMAC_SHA224 = SSS_ENUM_ALGORITHM(MAC, 0x03),
+    kAlgorithm_SSS_HMAC_SHA256 = SSS_ENUM_ALGORITHM(MAC, 0x04),
+    kAlgorithm_SSS_HMAC_SHA384 = SSS_ENUM_ALGORITHM(MAC, 0x05),
+    kAlgorithm_SSS_HMAC_SHA512 = SSS_ENUM_ALGORITHM(MAC, 0x06),
+    /* See above:
+     * kAlgorithm_SSS_HMAC_SHA224 = SSS_ENUM_ALGORITHM(CHACHA, 0x01) */
 
+    /* Diffie-Helmann */
+    kAlgorithm_SSS_DH   = SSS_ENUM_ALGORITHM(DH, 0x01),
+    kAlgorithm_SSS_ECDH = SSS_ENUM_ALGORITHM(DH, 0x02),
+    /* DSA */
+    kAlgorithm_SSS_DSA_SHA1   = SSS_ENUM_ALGORITHM(DSA, 0x01),
+    kAlgorithm_SSS_DSA_SHA224 = SSS_ENUM_ALGORITHM(DSA, 0x02),
+    kAlgorithm_SSS_DSA_SHA256 = SSS_ENUM_ALGORITHM(DSA, 0x03),
+    /* RSA */
+    kAlgorithm_SSS_RSASSA_PKCS1_V1_5_SHA1       = SSS_ENUM_ALGORITHM(RSASSA_PKCS1_V1_5, 0x01),
+    kAlgorithm_SSS_RSASSA_PKCS1_V1_5_SHA224     = SSS_ENUM_ALGORITHM(RSASSA_PKCS1_V1_5, 0x02),
+    kAlgorithm_SSS_RSASSA_PKCS1_V1_5_SHA256     = SSS_ENUM_ALGORITHM(RSASSA_PKCS1_V1_5, 0x03),
+    kAlgorithm_SSS_RSASSA_PKCS1_V1_5_SHA384     = SSS_ENUM_ALGORITHM(RSASSA_PKCS1_V1_5, 0x04),
+    kAlgorithm_SSS_RSASSA_PKCS1_V1_5_SHA512     = SSS_ENUM_ALGORITHM(RSASSA_PKCS1_V1_5, 0x05),
+    kAlgorithm_SSS_RSASSA_PKCS1_PSS_MGF1_SHA1   = SSS_ENUM_ALGORITHM(RSASSA_PKCS1_PSS_MGF1, 0x01),
+    kAlgorithm_SSS_RSASSA_PKCS1_PSS_MGF1_SHA224 = SSS_ENUM_ALGORITHM(RSASSA_PKCS1_PSS_MGF1, 0x02),
+    kAlgorithm_SSS_RSASSA_PKCS1_PSS_MGF1_SHA256 = SSS_ENUM_ALGORITHM(RSASSA_PKCS1_PSS_MGF1, 0x03),
+    kAlgorithm_SSS_RSASSA_PKCS1_PSS_MGF1_SHA384 = SSS_ENUM_ALGORITHM(RSASSA_PKCS1_PSS_MGF1, 0x04),
+    kAlgorithm_SSS_RSASSA_PKCS1_PSS_MGF1_SHA512 = SSS_ENUM_ALGORITHM(RSASSA_PKCS1_PSS_MGF1, 0x05),
+    kAlgorithm_SSS_RSAES_PKCS1_OAEP_SHA1        = SSS_ENUM_ALGORITHM(RSAES_PKCS1_OAEP, 0x01),
+    kAlgorithm_SSS_RSAES_PKCS1_OAEP_SHA224      = SSS_ENUM_ALGORITHM(RSAES_PKCS1_OAEP, 0x02),
+    kAlgorithm_SSS_RSAES_PKCS1_OAEP_SHA256      = SSS_ENUM_ALGORITHM(RSAES_PKCS1_OAEP, 0x03),
+    kAlgorithm_SSS_RSAES_PKCS1_OAEP_SHA384      = SSS_ENUM_ALGORITHM(RSAES_PKCS1_OAEP, 0x04),
+    kAlgorithm_SSS_RSAES_PKCS1_OAEP_SHA512      = SSS_ENUM_ALGORITHM(RSAES_PKCS1_OAEP, 0x05),
+    kAlgorithm_SSS_RSAES_PKCS1_V1_5_SHA1        = SSS_ENUM_ALGORITHM(RSAES_PKCS1_V1_5, 0x01),
+    kAlgorithm_SSS_RSAES_PKCS1_V1_5_SHA224      = SSS_ENUM_ALGORITHM(RSAES_PKCS1_V1_5, 0x02),
+    kAlgorithm_SSS_RSAES_PKCS1_V1_5_SHA256      = SSS_ENUM_ALGORITHM(RSAES_PKCS1_V1_5, 0x03),
+    kAlgorithm_SSS_RSAES_PKCS1_V1_5_SHA384      = SSS_ENUM_ALGORITHM(RSAES_PKCS1_V1_5, 0x04),
+    kAlgorithm_SSS_RSAES_PKCS1_V1_5_SHA512      = SSS_ENUM_ALGORITHM(RSAES_PKCS1_V1_5, 0x05),
+    kAlgorithm_SSS_RSASSA_NO_PADDING            = SSS_ENUM_ALGORITHM(RSASSA_NO_PADDING, 0x01),
+    /* ECDSA */
+    kAlgorithm_SSS_ECDSA_SHA1   = SSS_ENUM_ALGORITHM(ECDSA, 0x01),
+    kAlgorithm_SSS_ECDSA_SHA224 = SSS_ENUM_ALGORITHM(ECDSA, 0x02),
+    kAlgorithm_SSS_ECDSA_SHA256 = SSS_ENUM_ALGORITHM(ECDSA, 0x03),
+    kAlgorithm_SSS_ECDSA_SHA384 = SSS_ENUM_ALGORITHM(ECDSA, 0x04),
+    kAlgorithm_SSS_ECDSA_SHA512 = SSS_ENUM_ALGORITHM(ECDSA, 0x05),
+} sss_algorithm_t;
+#endif
+
+// Deprecated names for RSAES_PKCS1_OAEP algorithms
+#define kAlgorithm_SSS_RSASSA_PKCS1_OEAP_SHA1 kAlgorithm_SSS_RSAES_PKCS1_OAEP_SHA1
+#define kAlgorithm_SSS_RSASSA_PKCS1_OEAP_SHA224 kAlgorithm_SSS_RSAES_PKCS1_OAEP_SHA224
+#define kAlgorithm_SSS_RSASSA_PKCS1_OEAP_SHA256 kAlgorithm_SSS_RSAES_PKCS1_OAEP_SHA256
+#define kAlgorithm_SSS_RSASSA_PKCS1_OEAP_SHA384 kAlgorithm_SSS_RSAES_PKCS1_OAEP_SHA384
+#define kAlgorithm_SSS_RSASSA_PKCS1_OEAP_SHA512 kAlgorithm_SSS_RSAES_PKCS1_OAEP_SHA512
+
+/** High level algorihtmic operations.
+ *
+ * Augmented by @ref sss_algorithm_t
+ */
+#if !defined(SSS_MODE_ENUM_ALT)
 typedef enum _sss_mode
 {
-    kMode_SSS_Encrypt,
-    kMode_SSS_Decrypt,
-    kMode_SSS_Sign,
-    kMode_SSS_Verify,
-    kMode_SSS_ComputeSharedSecret,
-    kMode_SSS_Digest,
-    kMode_SSS_Mac,
+    kMode_SSS_Encrypt = 1, //!< Encrypt
+    kMode_SSS_Decrypt = 2, //!< Decrypt
+    kMode_SSS_Sign    = 3, //!< Sign
+    kMode_SSS_Verify  = 4, //!< Verify
+    /* Compute Shared Secret. e.g. Diffie-Hellman */
+    kMode_SSS_ComputeSharedSecret = 5,
+    kMode_SSS_Digest              = 6, //!< Message Digest
+    kMode_SSS_Mac                 = 7, //!< Message Authentication Code
 } sss_mode_t;
+#endif
 
+/**
+ * Permissions of an object
+ */
+#if !defined(SSS_ACCESS_PERMISSION_ENUM_ALT)
 typedef enum _sss_access_permission
 {
+    /** Can read (applicable) contents of the key.
+     *
+     *  @note This is not same as @ref kAccessPermission_SSS_Use.
+     *
+     *  Without reading, the object, the key can be used.
+     */
     kAccessPermission_SSS_Read = (1u << 0),
+    /** Can change the value of an object */
     kAccessPermission_SSS_Write = (1u << 1),
+    /** Can use an object */
     kAccessPermission_SSS_Use = (1u << 2),
+    /** Can delete an object */
     kAccessPermission_SSS_Delete = (1u << 3),
+    /** Can change permissions applicable to an object */
     kAccessPermission_SSS_ChangeAttributes = (1u << 4),
 } sss_access_permission_t;
+#endif
 
+/**
+ * Persistent / Non persistent mode of a key
+ */
+#if !defined(SSS_KEY_OBJECT_MODE_ENUM_ALT)
 typedef enum _sss_key_object_mode
 {
-    kKeyObject_Mode_None = 0,
-    kKeyObject_Mode_Persistent,
-    kKeyObject_Mode_Transient,
+    kKeyObject_Mode_None = 0, //!< kKeyObject_Mode_None
+    /** Key object will be persisted in memory
+     * and will retain it's value after a closed session
+     */
+    kKeyObject_Mode_Persistent = 1,
+    /** Key Object will be stored in RAM.
+     * It will lose it's contents after a session is closed
+     */
+    kKeyObject_Mode_Transient = 2,
 } sss_key_object_mode_t;
+#endif
 
-typedef enum _sss_key_type
+#if !defined(SSS_KEY_PART_ENUM_ALT)
+/** Part of a key */
+typedef enum _sss_key_part
 {
-    kSSS_KeyType_NONE,
-    kSSS_KeyType_Certificate,
-    kSSS_KeyType_AES,
-    kSSS_KeyType_DES,
-    kSSS_KeyType_MAC,
-    kSSS_KeyType_RSA_Public,
-    kSSS_KeyType_ECC_Public, /*! Weierstrass form elliptic curve public key  */
-    kSSS_KeyType_ECM_Public, /*! Montgomery form elliptic curve public key  */
-    kSSS_KeyType_ECT_Public, /*! twisted Edwards form elliptic curve public key  */
-    kSSS_KeyType_RSA_Private,
-    kSSS_KeyType_ECC_Private,
-    kSSS_KeyType_ECM_Private,
-    kSSS_KeyType_ECT_Private,
-    kSSS_KeyType_RSA_Pair,
-    kSSS_KeyType_ECC_Pair,
-    kSSS_KeyType_ECM_Pair,
-    kSSS_KeyType_ECT_Pair,
-} sss_key_type_t;
+    kSSS_KeyPart_NONE,
+    /** Applicable where we have UserID, PIN, Binary Files,
+     * Certificates, Symmetric Keys, PCR */
+    kSSS_KeyPart_Default = 1,
+    /** Public part of asymmetric key */
+    kSSS_KeyPart_Public = 2,
+    /** Private only part of asymmetric key */
+    kSSS_KeyPart_Private = 3,
+    /** Both, public and private part of asymmetric key */
+    kSSS_KeyPart_Pair = 4,
+} sss_key_part_t;
+#endif
 
+/*! For all cipher types, key bit length is provides at the time key is inserted/generated */
+#if !defined(SSS_KEY_CIPHER_TYPE_ENUM_ALT)
+typedef enum _sss_cipher_type
+{
+    kSSS_CipherType_NONE,
+    kSSS_CipherType_AES = 10,
+    kSSS_CipherType_DES = 12,
+
+    kSSS_CipherType_CMAC = 20,
+    kSSS_CipherType_HMAC = 21,
+
+    kSSS_CipherType_MAC     = 30,
+    kSSS_CipherType_RSA     = 31, /*! RSA RAW format      */
+    kSSS_CipherType_RSA_CRT = 32, /*! RSA CRT format      */
+
+    /* The following keys can be identified
+     * solely by the *Family* and bit length
+     */
+    kSSS_CipherType_EC_NIST_P = 40, /*! Keys Part of NIST-P Family */
+    kSSS_CipherType_EC_NIST_K = 41, /*! Keys Part of NIST-K Family */
+
+    /* The following keys need their full curve parameters (p,a,b,x,y,n,h)
+     */
+    /*! Montgomery Key,   */
+    kSSS_CipherType_EC_MONTGOMERY = 50,
+    /*! twisted Edwards form elliptic curve public key */
+    kSSS_CipherType_EC_TWISTED_ED = 51,
+    /*! Brainpool form elliptic curve public key */
+    kSSS_CipherType_EC_BRAINPOOL = 52,
+    /*! Barreto Naehrig curve */
+    kSSS_CipherType_EC_BARRETO_NAEHRIG = 53,
+
+    kSSS_CipherType_UserID      = 70,
+    kSSS_CipherType_Certificate = 71,
+    kSSS_CipherType_Binary      = 72,
+    kSSS_CipherType_Count       = 73,
+    kSSS_CipherType_PCR         = 74,
+    kSSS_CipherType_ReservedPin = 75,
+} sss_cipher_type_t;
+#endif
+
+/** XY Co-ordinates for ECC Curves */
 typedef struct _sss_ecc_point
 {
+    /** X Point */
     uint8_t *X;
+    /** Y Point */
     uint8_t *Y;
 } sss_ecc_point_t;
 
+/** ECC Curve Parameter */
 typedef struct _sss_eccgfp_group
 {
-    uint8_t *p;
-    uint8_t *a;
-    uint8_t *b;
-    sss_ecc_point_t *G;
-    uint8_t *n;
-    uint8_t *h;
+    uint8_t *p;         /**< ECC parameter P */
+    uint8_t *a;         /**< ECC parameter a */
+    uint8_t *b;         /**< ECC parameter b */
+    sss_ecc_point_t *G; /**< ECC parameter G */
+    uint8_t *n;         /**< ECC parameter n */
+    uint8_t *h;         /**< ECC parameter h */
 } sss_eccgfp_group_t;
 
+/*!
+ * @addtogroup sss_session
+ * @{
+ */
+
+/** Properties of session that are U32
+ *
+ * From 0 to kSSS_SessionProp_Optional_Prop_Start,
+ * around 2^24 = 16777215 Properties are
+ * possible.
+ *
+ * From 0 to kSSS_SessionProp_Optional_Prop_Start,
+ * around 2^24 = 16777215 Properties are
+ * possible.
+ *
+ */
+typedef enum
+{
+    /** Invalid */
+    kSSS_SessionProp_u32_NA = 0,
+    /** Major version */
+    kSSS_SessionProp_VerMaj,
+    /** Minor Version */
+    kSSS_SessionProp_VerMin,
+    /** Development Version */
+    kSSS_SessionProp_VerDev,
+
+    /* Lenght of UID */
+    kSSS_SessionProp_UIDLen,
+
+    /** Optional Properties Start */
+    kSSS_SessionProp_u32_Optional_Start = 0x00FFFFFFu,
+
+    /** How much persistent memory is free */
+    kSSS_KeyStoreProp_FreeMem_Persistant,
+
+    /** How much transient memory is free */
+    kSSS_KeyStoreProp_FreeMem_Transient,
+
+    /** Proprietary Properties Start */
+    kSSS_SessionProp_u32_Proprietary_Start = 0x01FFFFFFu,
+
+} sss_session_prop_u32_t;
+
+/** Properties of session that are S32
+ *
+ * From 0 to kSSS_SessionProp_Optional_Prop_Start,
+ * around 2^24 = 16777215 Properties are
+ * possible.
+ *
+ * From 0 to kSSS_SessionProp_Optional_Prop_Start,
+ * around 2^24 = 16777215 Properties are
+ * possible.
+ *
+ */
+typedef enum
+{
+    /** Invalid */
+    kSSS_SessionProp_au8_NA = 0,
+    /** Name of the product, string */
+    kSSS_SessionProp_szName,
+    /** Unique Identifier */
+    kSSS_SessionProp_UID,
+
+    /** Optional Properties Start */
+    kSSS_SessionProp_au8_Optional_Start = 0x00FFFFFFu,
+
+    /** Proprietary Properties Start */
+    kSSS_SessionProp_au8_Proprietary_Start = 0x01FFFFFFu,
+
+} sss_session_prop_au8_t;
+
+/** @} */
+
+/*!
+ * @addtogroup sss_session
+ * @{
+ */
+
+/** @brief Root session
+ *
+ * This is a *singleton* for each connection (physical/logical)
+ * to individual cryptographic system.
+ */
 typedef struct _sss_session
 {
-    /*! Indicates which security subsystem is selected to be used. */
+    /*! Indicates which security subsystem is selected.
+     *
+     *  This is set when @ref sss_session_open is successful */
     sss_type_t subsystem;
 
-    /*! Implementation specific part */
+    /** Reserved memory for implementation specific extension */
     struct
     {
         uint8_t data[SSS_SESSION_MAX_CONTEXT_SIZE];
-    } context;
+    } extension;
 } sss_session_t;
+/** @} */
 
+/*!
+ * @addtogroup sss_key_store
+ * @{
+ */
+
+/** @brief Store for secure and non secure key objects within a cryptographic system.
+ *
+ * - A cryptographic system may have more than partitions to store such keys.
+ *
+ */
 typedef struct _sss_key_store
 {
     /*! Virtual connection between application (user context) and specific
      * security subsystem and function thereof. */
     sss_session_t *session;
-    /*! Implementation specific part */
+
+    /** Reserved memory for implementation specific extension */
     struct
     {
         uint8_t data[SSS_KEY_STORE_MAX_CONTEXT_SIZE];
-    } context;
+    } extension;
 } sss_key_store_t;
 
+typedef enum
+{
+    kSSS_TunnelDest_None = 0,
+    kSSS_TunnelType_Se05x_Iot_applet,
+} sss_tunnel_dest_t;
+
+/** @} */
+
+/*!
+ * @addtogroup sss_key_object
+ * @{
+ */
+
+/** @brief An object (secure / non-secure) within a Key Store.
+ *
+ */
 typedef struct _sss_object
 {
     /*! key store holding the data and other properties */
     sss_key_store_t *keyStore;
-    /*! TODO define object types */
+    /*! FIXME define object types */
     uint32_t objectType;
+    /*! FIXME define cipherType types */
+    uint32_t cipherType;
     /*! Application specific key identifier. The keyId is kept in the key  store
      * along with the key data and other properties. */
     uint32_t keyId;
 
-    /*! Implementation specific part */
+    /** Reserved memory for implementation specific extension */
     struct
     {
         uint8_t data[SSS_KEY_OBJECT_MAX_CONTEXT_SIZE];
-    } context;
+    } extension;
 } sss_object_t;
+
+/** @} */
+
+/*!
+ * @addtogroup sss_crypto_symmetric
+ * @{
+ */
 
 /*! @brief Typedef for the symmetric crypto context */
 typedef struct _sss_symmetric
@@ -207,105 +520,180 @@ typedef struct _sss_symmetric
     /*! Virtual connection between application (user context) and specific
      * security subsystem and function thereof. */
     sss_session_t *session;
-    sss_object_t *keyObject;   /*!< Reference to key and it's properties. */
-    sss_algorithm_t algorithm; /*!  */
-    sss_mode_t mode;           /*!  */
+    /** Key to be used for the symmetric operation */
+    sss_object_t *keyObject;
+    /** Algorithm to be applied, e.g AES_ECB / CBC */
+    sss_algorithm_t algorithm;
+    /** Mode of operation, e.g Encryption/Decryption */
+    sss_mode_t mode;
 
-    /*! Implementation specific part */
+    /** Reserved memory for implementation specific extension */
     struct
     {
         uint8_t data[SSS_SYMMETRIC_MAX_CONTEXT_SIZE];
-    } context;
+    } extension;
 } sss_symmetric_t;
+/** @} */
 
+/** @brief Authenticated Encryption with Additional Data
+ *
+ */
 typedef struct _sss_aead
 {
     /*! Virtual connection between application (user context) and specific
      * security subsystem and function thereof. */
     sss_session_t *session;
-    sss_object_t *keyObject;   /*! Reference to key and it's properties. */
-    sss_algorithm_t algorithm; /*!  */
-    sss_mode_t mode;           /*!  */
+    /** Key to be used for asymmetric */
+    sss_object_t *keyObject;
+    /** TODO : Algorithm to be applied */
+    sss_algorithm_t algorithm;
+    /** TODO : High level operation */
+    sss_mode_t mode;
 
-    /*! Implementation specific part */
+    /** Reserved memory for implementation specific extension */
     struct
     {
         uint8_t data[SSS_AEAD_MAX_CONTEXT_SIZE];
-    } context;
+    } extension;
 } sss_aead_t;
+
+typedef struct _sss_sha_ctx
+{
+    uint8_t ctx[SSS_PH_CLSHA_CTX_MAX_CONTEXT_SIZE];
+    uint32_t pHashFcnInfo;
+} sss_sha_ctx_t;
 
 typedef struct _sss_digest
 {
     /*! Virtual connection between application (user context) and specific
      * security subsystem and function thereof. */
     sss_session_t *session;
-    sss_algorithm_t algorithm; /*!  */
-    sss_mode_t mode;           /*!  */
+    /** Algorithm to be applied, e.g SHA1, SHA256 */
+    sss_algorithm_t algorithm;
+    /** Mode of operation, e.g Sign/Verify */
+    sss_mode_t mode;
     /*! Full digest length per algorithm definition. This field is initialized along with algorithm. */
     size_t digestFullLen;
+    sss_sha_ctx_t shaCtx;
     /*! Implementation specific part */
     struct
     {
         uint8_t data[SSS_DIGEST_MAX_CONTEXT_SIZE];
-    } context;
+    } extension;
 } sss_digest_t;
 
+/** @brief Message Authentication Code
+ *
+ */
 typedef struct _sss_mac
 {
     /*! Virtual connection between application (user context) and specific
      * security subsystem and function thereof. */
     sss_session_t *session;
-    sss_object_t *keyObject;   /*! Reference to key and it's properties. */
-    sss_algorithm_t algorithm; /*!  */
-    sss_mode_t mode;           /*!  */
+    /** Key to be used for ... */
+    sss_object_t *keyObject;
+    /** Algorithm to be applied, e.g. MAC/CMAC */
+    sss_algorithm_t algorithm;
+    /** Mode of operation for MAC e.g. ...
+     * @todo : May be we don ot this mode here. */
+    sss_mode_t mode;
 
-    /*! Implementation specific part */
+    /** Reserved memory for implementation specific extension */
     struct
     {
         uint8_t data[SSS_MAC_MAX_CONTEXT_SIZE];
-    } context;
+    } extension;
 } sss_mac_t;
+
+/** @brief Asymmetric Cryptographic operations
+ *
+ * e.g. RSA/ECC.
+ */
 
 typedef struct _sss_asymmetric
 {
+    /** Pointer to root session */
     sss_session_t *session;
+    /** KeyObject used for Asymmetric operation */
     sss_object_t *keyObject;
-    sss_algorithm_t algorithm; /*!  */
-    sss_mode_t mode;           /*!  */
-    size_t signatureFullLen;
+    /** Algorithm to be applied, e.g. ECDSA */
+    sss_algorithm_t algorithm;
+    /** Mode of operation for the Asymmetric operation.
+     *  e.g. Sign/Verify/Encrypt/Decrypt */
+    sss_mode_t mode;
 
-    /*! Implementation specific part */
+    /** Reserved memory for implementation specific extension */
     struct
     {
         uint8_t data[SSS_ASYMMETRIC_MAX_CONTEXT_SIZE];
-    } context;
+    } extension;
 } sss_asymmetric_t;
 
+/** Tunneling */
+
+typedef struct
+{
+    uint8_t hdr[0   /* For Indentation */
+                + 1 /* CLA */
+                + 1 /* INS */
+                + 1 /* P1 */
+                + 1 /* P2 */
+    ];
+} tlvHeader_t;
+
+/** Tunneling */
 typedef struct _sss_tunnel
 {
+    /** Pointer to the session */
     sss_session_t *session;
+    /** TODO: More documentation */
     uint32_t tunnelType;
 
-    /*! Implementation specific part */
+    /** Reserved memory for implementation specific extension */
     struct
     {
         uint8_t data[SSS_TUNNEL_MAX_CONTEXT_SIZE];
-    } context;
+    } extension;
 } sss_tunnel_t;
 
+/*!
+ * @addtogroup sss_crypto_derive_key
+ * @{
+ */
+
+/** Key derivation */
 typedef struct _sss_derive_key
 {
+    /** Pointer to the session */
     sss_session_t *session;
+    /** KeyObject used to derive key s*/
     sss_object_t *keyObject;
-    sss_algorithm_t algorithm; /*!  */
-    sss_mode_t mode;           /*!  */
+    /** Algorithm to be applied, e.g. ... */
+    sss_algorithm_t algorithm;
+    /** Mode of operation for .... e.g. ... */
+    sss_mode_t mode;
 
-    /*! Implementation specific part */
+    /** Reserved memory for implementation specific extension */
     struct
     {
         uint8_t data[SSS_DERIVE_KEY_MAX_CONTEXT_SIZE];
-    } context;
+    } extension;
 } sss_derive_key_t;
+/** @} */
+
+/** Random number generator context */
+typedef struct
+{
+    /** Pointer to the session */
+    sss_session_t *session;
+
+    /** Reserved memory for implementation specific extension */
+    struct
+    {
+        uint8_t data[SSS_RNG_MAX_CONTEXT_SIZE];
+    } context;
+
+} sss_rng_context_t;
 
 /*******************************************************************************
  * API
@@ -313,6 +701,321 @@ typedef struct _sss_derive_key
 #if defined(__cplusplus)
 extern "C" {
 #endif
+
+/*!
+ * @addtogroup sss_session
+ * @{
+ */
+
+/* Same as @ref sss_session_open but to support sub systems
+ * that explictily need a create before opening.
+ *
+ * For the sake of portabilty across various sub systems,
+ * the applicaiton has to call @ref sss_session_create
+ * before calling @ref sss_session_open.
+ */
+sss_status_t sss_session_create(sss_session_t *session,
+                                sss_type_t subsystem,
+                                uint32_t application_id,
+                                sss_connection_type_t connetion_type,
+                                void *connectionData);
+
+/*!
+ * @brief Open session between application and a security subsystem.
+ *
+ * Open virtual session between application (user context) and a security subsystem and function thereof.
+ * Pointer to session shall be supplied to all SSS APIs as argument.
+ * Low level SSS functions can provide implementation specific behaviour based on the session argument.
+ *
+ * @param   session Session context.
+ * @param   subsystem Indicates which security subsystem is selected to be used.
+ * @param   application_id ObjectId/AuthenticationID Connecting to
+ *
+ *              0 => Super use / Plaform user
+ *              Anything else => Authenticated user
+ *
+ * @param connetion_type How are we connecting to the system.
+ *
+ * @param   connectionData subsystem specific connection parameters.
+ * @return  status
+ */
+sss_status_t sss_session_open(sss_session_t *session,
+                              sss_type_t subsystem,
+                              uint32_t application_id,
+                              sss_connection_type_t connetion_type,
+                              void *connectionData);
+
+/*!
+ * @brief Get an underlying property of the crypto sub system
+ *
+ * This API is used to get values that are
+ * numeric in nature.
+ *
+ * Property can be either fixed value that is
+ * calculated at compile time and returned
+ * directly, or it may involve some access to the
+ * underlying system.
+ *
+ * For applicable properties see @ref sss_session_prop_u32_t
+ *
+ * @param[in] session Session context
+ * @param[in] property Value that is part of @ref sss_session_prop_u32_t
+ * @param[out] pValue
+ *
+ * @return
+ */
+sss_status_t sss_session_prop_get_u32(sss_session_t *session, uint32_t property, uint32_t *pValue);
+
+/*!
+ * @brief Get an underlying property of the crypto sub system
+ *
+ * This API is used to get values that are
+ * numeric in nature.
+ *
+ * Property can be either fixed value that is
+ * calculated at compile time and returned
+ * directly, or it may involve some access to the
+ * underlying system.
+ *
+ * @param[in] session Session context
+ * @param[in] property Value that is part of @ref sss_session_prop_au8_t
+ * @param[out] pValue Output buffer array
+ * @param[in,out] pValueLen Count of values thare are/must br read
+ * @return
+ */
+sss_status_t sss_session_prop_get_au8(sss_session_t *session, uint32_t property, uint8_t *pValue, size_t *pValueLen);
+
+/*!
+ * @brief Close session between application and security subsystem.
+ *
+ * This function closes a session which has been opened with a security subsystem.
+ * All commands within the session must have completed before this function can be called.
+ * The implementation must do nothing if the input ``session`` parameter is NULL.
+ *
+ * @param   session Session context.
+ */
+void sss_session_close(sss_session_t *session);
+
+/* Counterpart to @ref sss_session_create
+ *
+ * Similar to contraint on @ref sss_session_create, application
+ * may call @ref sss_session_delete to explicitly release all
+ * underlying/used session specific resoures of that implementation.
+ */
+void sss_session_delete(sss_session_t *session);
+
+/*!
+ *@}
+ */ /* end of sss_session */
+
+/*!
+ * @addtogroup sss_key_store
+ * @{
+ */
+
+/*! @brief Constructor for the key store context data structure.
+ *
+ * @param[out] keyStore Pointer to key store context. Key store context is updated on function return.
+ * @param session Session context.
+ */
+sss_status_t sss_key_store_context_init(sss_key_store_t *keyStore, sss_session_t *session);
+
+/*! @brief Get handle to key store.
+ *  If the key store already exists, nothing is allocated.
+ *  If the key store does not exists, new empty key store is created and initialized.
+ *  Key store context structure is updated with actual information.
+ *
+ * @param[out] keyStore Pointer to key store context. Key store context is updated on function return.
+ * @param keyStoreId Implementation specific ID, can be used in case security subsystem manages multiple different
+ * key stores.
+ */
+sss_status_t sss_key_store_allocate(sss_key_store_t *keyStore, uint32_t keyStoreId);
+
+/*! @brief Save all cached persistent objects to persistent memory.
+ */
+sss_status_t sss_key_store_save(sss_key_store_t *keyStore);
+
+/*! @brief Load from persistent memory to cached objects.
+ */
+sss_status_t sss_key_store_load(sss_key_store_t *keyStore);
+
+/*! @brief This function moves data[] from memory to the destination key store.
+ *
+ * @param keyStore Key store context
+ * @param keyObject Reference to a key and it's properties
+ * @param data Data to be stored in Key
+ * @param dataLen Length of the data
+ * @param keyBitLen Crypto algorithm key bit length
+ * @param options Pointer to implementation specific options
+ * @param optionsLen Length of the options in bytes
+ *
+ * @return
+ */
+sss_status_t sss_key_store_set_key(sss_key_store_t *keyStore,
+                                   sss_object_t *keyObject,
+                                   const uint8_t *data,
+                                   size_t dataLen,
+                                   size_t keyBitLen,
+                                   void *options,
+                                   size_t optionsLen);
+
+/*! @brief This function generates key[] in the destination key store. */
+sss_status_t sss_key_store_generate_key(sss_key_store_t *keyStore,
+                                        sss_object_t *keyObject,
+                                        size_t keyBitLen,
+                                        void *options);
+
+/*! @brief This function exports plain key[] from key store (if constraints and user id allows reading) */
+sss_status_t sss_key_store_get_key(
+    sss_key_store_t *keyStore, sss_object_t *keyObject, uint8_t *data, size_t *dataLen, size_t *pKeyBitLen);
+
+#if 0
+/* To be reviewed: Purnank */
+/*! @brief This function exports plain key[] from key store (if constraints and user id allows reading) */
+sss_status_t sss_key_store_get_key_fromoffset(sss_key_store_t *keyStore,
+    sss_object_t *keyObject,
+    uint8_t *data,
+    size_t *dataLen,
+    size_t *pKeyBitLen);
+#endif
+
+/*! @brief This function outputs referenced plain key[] to destination security subsystem - e.g.to secret key bus or
+ * CryptoLib context */
+sss_status_t sss_key_store_open_key(sss_key_store_t *keyStore, sss_object_t *keyObject);
+
+/*! @brief The referenced plain key[] cannot be updated any more. */
+sss_status_t sss_key_store_freeze_key(sss_key_store_t *keyStore, sss_object_t *keyObject);
+
+/*! @brief The referenced plain key[] is discarded. */
+sss_status_t sss_key_store_erase_key(sss_key_store_t *keyStore, sss_object_t *keyObject);
+
+// sss_status_t sss_key_store_clear_all(sss_key_store_t *keyStore);
+
+/*! @brief Destructor for the key store context. */
+void sss_key_store_context_free(sss_key_store_t *keyStore);
+
+/*!
+ *@}
+ */ /* end of sss_key_store */
+
+/*!
+ * @addtogroup sss_key_object
+ * @{
+ */
+
+/*! @brief Constructor for a key object data structure
+ *  The function initializes keyObject data structure and associates it with a key store
+ *  in which the plain key and other attributes are stored.
+ *
+ * @param keyObject
+ * @param keyStore
+ *
+ * @returns Status of the operation
+ * @retval #kStatus_SSS_Success The operation has completed successfully.
+ * @retval #kStatus_SSS_Fail The operation has failed.
+ * @retval #kStatus_SSS_InvalidArgument One of the arguments is invalid for the function to execute.
+ */
+sss_status_t sss_key_object_init(sss_object_t *keyObject, sss_key_store_t *keyStore);
+
+/**  @brief create new key
+ *
+ * @param[in,out] keyObject The object
+ *        If required, update implementation defined values
+ *        inside the keyObject
+ * @param keyId External Key ID.  Later on this may be used by
+ *        @ref sss_key_object_get_handle
+ * @param keyPart See @ref sss_key_part_t
+ * @param cipherType See @ref sss_cipher_type_t
+ * @param keyByteLenMax Maximum storage this type of key may need.
+ *        For systems that have their own internal allocation table
+ *        this would help
+ * @param options 0 = Persistant Key (Default) or Transient Key.
+ *        See sss_key_object_mode_t
+ * @return Status of object allocation.
+ */
+sss_status_t sss_key_object_allocate_handle(sss_object_t *keyObject,
+                                            uint32_t keyId,
+                                            sss_key_part_t keyPart,
+                                            sss_cipher_type_t cipherType,
+                                            size_t keyByteLenMax,
+                                            uint32_t options); /* Check if this can be made sss_key_object_mode_t */
+
+/*! @brief get handle to existing
+ *
+ * See @ref sss_key_object_allocate_handle.
+ *
+ * Ideally keyObject should be same for sss_key_object_allocate_handle and
+ * sss_key_object_get_handle
+ * */
+sss_status_t sss_key_object_get_handle(sss_object_t *keyObject, uint32_t keyId);
+
+/*! @brief Assign user to a key object.
+ *
+ * @param keyObject the object where permission restrictions are applied
+ *
+ * @param user Assign User id for a key object. The user is kept in the key
+ *        store along with the key data and other properties.
+ * @param options Transient or persistent update. Allows for transient update
+ * of persistent attributes.
+ */
+sss_status_t sss_key_object_set_user(sss_object_t *keyObject, uint32_t user, uint32_t options);
+
+/*! @brief Assign purpose to a key object.
+ *
+ *  @param keyObject the object where permission restrictions are applied
+ *  @param purpose Usage of the key.
+ *  @param options Transient or persistent update. Allows for transient update of persistent attributes.
+ */
+sss_status_t sss_key_object_set_purpose(sss_object_t *keyObject, sss_mode_t purpose, uint32_t options);
+
+/*! @brief Assign access permissions to a key object.
+ *
+ *  @param keyObject the object where permission restrictions are applied
+ *  @param access Logical OR of read, write, delete, use, change attributes defined by enum _sss_access_permission.
+ *  @param options Transient or persistent update. Allows for transient update of persistent attributes.
+ */
+sss_status_t sss_key_object_set_access(sss_object_t *keyObject, uint32_t access, uint32_t options);
+
+/*! @brief Set elliptic curve domain parameters over Fp for a key object
+ *
+ *  When the key object is a reference to one of ECC Private, ECC Public or ECC Pair key types,
+ *  this function shall be used to specify the exact domain parameters prior to using the key object
+ *  for ECDSA or ECDH algorithms.
+ *
+ *  @param keyObject The destination key object
+ *  @param group Pointer to elliptic curve domain parameters over Fp (sextuple p,a,b,G,n,h)
+ */
+sss_status_t sss_key_object_set_eccgfp_group(sss_object_t *keyObject, sss_eccgfp_group_t *group);
+
+/*! @brief get attributes */
+sss_status_t sss_key_object_get_user(sss_object_t *keyObject, uint32_t *user);
+
+/** Check what is purpose restrictions on an object
+ *
+ * @param keyObject Object to be checked
+ * @param purpose Know what is permitted.
+ * @return
+ */
+sss_status_t sss_key_object_get_purpose(sss_object_t *keyObject, sss_mode_t *purpose);
+
+/** Check what are access restrictions on an object
+ *
+ * @param keyObject Object
+ * @param access What is permitted
+ * @return
+ */
+sss_status_t sss_key_object_get_access(sss_object_t *keyObject, uint32_t *access);
+
+/*! @brief Destructor for the key object.
+ *  The function frees key object context.
+ *
+ * @param keyObject Pointer to key object context.
+ */
+void sss_key_object_free(sss_object_t *keyObject);
+
+/*!
+ *@}
+ */ /* end of sss_key_object */
 
 /*!
  * @addtogroup sss_crypto_symmetric
@@ -329,9 +1032,9 @@ extern "C" {
  * @param mode One of the modes defined by @ref sss_mode_t.
  *
  * @returns Status of the operation
- * @retval kStatus_SSS_Success The operation has completed successfully.
- * @retval kStatus_SSS_Fail The operation has failed.
- * @retval kStatus_SSS_InvalidArgument One of the arguments is invalid for the function to execute.
+ * @retval #kStatus_SSS_Success The operation has completed successfully.
+ * @retval #kStatus_SSS_Fail The operation has failed.
+ * @retval #kStatus_SSS_InvalidArgument One of the arguments is invalid for the function to execute.
  */
 sss_status_t sss_symmetric_context_init(sss_symmetric_t *context,
                                         sss_session_t *session,
@@ -349,8 +1052,8 @@ sss_status_t sss_symmetric_context_init(sss_symmetric_t *context,
  * @param destData Buffer containing the output data.
  * @param dataLen Size of input and output data buffer in bytes.
  * @returns Status of the operation
- * @retval kStatus_SSS_Success The operation has completed successfully.
- * @retval kStatus_SSS_Fail The operation has failed.
+ * @retval #kStatus_SSS_Success The operation has completed successfully.
+ * @retval #kStatus_SSS_Fail The operation has failed.
  */
 sss_status_t sss_cipher_one_go(
     sss_symmetric_t *context, uint8_t *iv, size_t ivLen, const uint8_t *srcData, uint8_t *destData, size_t dataLen);
@@ -362,8 +1065,8 @@ sss_status_t sss_cipher_one_go(
  * @param iv Buffer containing the symmetric operation Initialization Vector.
  * @param ivLen Length of the Initialization Vector in bytes.
  * @returns Status of the operation
- * @retval kStatus_SSS_Success The operation has completed successfully.
- * @retval kStatus_SSS_Fail The operation has failed.
+ * @retval #kStatus_SSS_Success The operation has completed successfully.
+ * @retval #kStatus_SSS_Fail The operation has failed.
  */
 sss_status_t sss_cipher_init(sss_symmetric_t *context, uint8_t *iv, size_t ivLen);
 
@@ -379,9 +1082,9 @@ sss_status_t sss_cipher_init(sss_symmetric_t *context, uint8_t *iv, size_t ivLen
  * @param[in,out] destLen Length of the output data in bytes. Buffer length on entry, reflects actual output size on
  * return.
  * @returns Status of the operation
- * @retval kStatus_SSS_Success The operation has completed successfully.
- * @retval kStatus_SSS_Fail The operation has failed.
- * @retval kStatus_SSS_InvalidArgument One of the arguments is invalid for the function to execute.
+ * @retval #kStatus_SSS_Success The operation has completed successfully.
+ * @retval #kStatus_SSS_Fail The operation has failed.
+ * @retval #kStatus_SSS_InvalidArgument One of the arguments is invalid for the function to execute.
  */
 sss_status_t sss_cipher_update(
     sss_symmetric_t *context, const uint8_t *srcData, size_t srcLen, uint8_t *destData, size_t *destLen);
@@ -395,9 +1098,9 @@ sss_status_t sss_cipher_update(
  * @param[in,out] destLen Length of output data in bytes. Buffer length on entry, reflects actual output size on
  * return.
  * @returns Status of the operation
- * @retval kStatus_SSS_Success The operation has completed successfully.
- * @retval kStatus_SSS_Fail The operation has failed.
- * @retval kStatus_SSS_InvalidArgument One of the arguments is invalid for the function to execute.
+ * @retval #kStatus_SSS_Success The operation has completed successfully.
+ * @retval #kStatus_SSS_Fail The operation has failed.
+ * @retval #kStatus_SSS_InvalidArgument One of the arguments is invalid for the function to execute.
  */
 sss_status_t sss_cipher_finish(
     sss_symmetric_t *context, const uint8_t *srcData, size_t srcLen, uint8_t *destData, size_t *destLen);
@@ -415,8 +1118,8 @@ sss_status_t sss_cipher_finish(
  * @param[out] szLeft Output number of bytes in left unused in lastEncryptedCounter block. NULL can be passed if
  * chained calls are not used.
  * @returns Status of the operation
- * @retval kStatus_SSS_Success The operation has completed successfully.
- * @retval kStatus_SSS_Fail The operation has failed.
+ * @retval #kStatus_SSS_Success The operation has completed successfully.
+ * @retval #kStatus_SSS_Fail The operation has failed.
  */
 sss_status_t sss_cipher_crypt_ctr(sss_symmetric_t *context,
                                   const uint8_t *srcData,
@@ -451,9 +1154,9 @@ void sss_symmetric_context_free(sss_symmetric_t *context);
  * @param mode One of the modes defined by @ref sss_mode_t.
  *
  * @returns Status of the operation
- * @retval kStatus_SSS_Success The operation has completed successfully.
- * @retval kStatus_SSS_Fail The operation has failed.
- * @retval kStatus_SSS_InvalidArgument One of the arguments is invalid for the function to execute.
+ * @retval #kStatus_SSS_Success The operation has completed successfully.
+ * @retval #kStatus_SSS_Fail The operation has failed.
+ * @retval #kStatus_SSS_InvalidArgument One of the arguments is invalid for the function to execute.
  */
 sss_status_t sss_aead_context_init(
     sss_aead_t *context, sss_session_t *session, sss_object_t *keyObject, sss_algorithm_t algorithm, sss_mode_t mode);
@@ -477,8 +1180,8 @@ sss_status_t sss_aead_context_init(
  *               For AES-CCM it must be 4,6,8,10,12,14 or 16.
  *
  * @returns Status of the operation
- * @retval kStatus_SSS_Success The operation has completed successfully.
- * @retval kStatus_SSS_Fail The operation has failed.
+ * @retval #kStatus_SSS_Success The operation has completed successfully.
+ * @retval #kStatus_SSS_Fail The operation has failed.
  */
 sss_status_t sss_aead_one_go(sss_aead_t *context,
                              const uint8_t *srcData,
@@ -504,8 +1207,8 @@ sss_status_t sss_aead_one_go(sss_aead_t *context,
  * @param aadLen Input size in bytes of AAD. Used only for AES-CCM. Ignored for AES-GCM.
  * @param payloadLen Length in bytes of the payload. Used only for AES-CCM. Ignored for AES-GCM.
  * @returns Status of the operation
- * @retval kStatus_SSS_Success The operation has completed successfully.
- * @retval kStatus_SSS_Fail The operation has failed.
+ * @retval #kStatus_SSS_Success The operation has completed successfully.
+ * @retval #kStatus_SSS_Fail The operation has failed.
  */
 sss_status_t sss_aead_init(
     sss_aead_t *context, uint8_t *nonce, size_t nonceLen, size_t tagLen, size_t aadLen, size_t payloadLen);
@@ -518,9 +1221,9 @@ sss_status_t sss_aead_init(
  * @param aadDataLen Length of the AAD data in bytes.
  *
  * @returns Status of the operation
- * @retval kStatus_SSS_Success The operation has completed successfully.
- * @retval kStatus_SSS_Fail The operation has failed.
- * @retval kStatus_SSS_InvalidArgument One of the arguments is invalid for the function to execute.
+ * @retval #kStatus_SSS_Success The operation has completed successfully.
+ * @retval #kStatus_SSS_Fail The operation has failed.
+ * @retval #kStatus_SSS_InvalidArgument One of the arguments is invalid for the function to execute.
  */
 sss_status_t sss_aead_update_aad(sss_aead_t *context, const uint8_t *aadData, size_t aadDataLen);
 
@@ -539,9 +1242,9 @@ sss_status_t sss_aead_update_aad(sss_aead_t *context, const uint8_t *aadData, si
  * return.
  *
  * @returns Status of the operation
- * @retval kStatus_SSS_Success The operation has completed successfully.
- * @retval kStatus_SSS_Fail The operation has failed.
- * @retval kStatus_SSS_InvalidArgument One of the arguments is invalid for the function to execute.
+ * @retval #kStatus_SSS_Success The operation has completed successfully.
+ * @retval #kStatus_SSS_Fail The operation has failed.
+ * @retval #kStatus_SSS_InvalidArgument One of the arguments is invalid for the function to execute.
  */
 sss_status_t sss_aead_update(
     sss_aead_t *context, const uint8_t *srcData, size_t srcLen, uint8_t destData, size_t *destLen);
@@ -563,9 +1266,9 @@ sss_status_t sss_aead_update(
  *               For AES-GCM it must be 4,8,12,13,14,15 or 16.
  *               For AES-CCM it must be 4,6,8,10,12,14 or 16.
  * @returns Status of the operation
- * @retval kStatus_SSS_Success The operation has completed successfully.
- * @retval kStatus_SSS_Fail The operation has failed.
- * @retval kStatus_SSS_InvalidArgument One of the arguments is invalid for the function to execute.
+ * @retval #kStatus_SSS_Success The operation has completed successfully.
+ * @retval #kStatus_SSS_Fail The operation has failed.
+ * @retval #kStatus_SSS_InvalidArgument One of the arguments is invalid for the function to execute.
  */
 sss_status_t sss_aead_finish(sss_aead_t *context,
                              const uint8_t *srcData,
@@ -599,9 +1302,9 @@ void sss_aead_context_free(sss_aead_t *context);
  * @param mode One of the modes defined by @ref sss_mode_t.
  *
  * @returns Status of the operation
- * @retval kStatus_SSS_Success The operation has completed successfully.
- * @retval kStatus_SSS_Fail The operation has failed.
- * @retval kStatus_SSS_InvalidArgument One of the arguments is invalid for the function to execute.
+ * @retval #kStatus_SSS_Success The operation has completed successfully.
+ * @retval #kStatus_SSS_Fail The operation has failed.
+ * @retval #kStatus_SSS_InvalidArgument One of the arguments is invalid for the function to execute.
  */
 sss_status_t sss_digest_context_init(sss_digest_t *context,
                                      sss_session_t *session,
@@ -618,8 +1321,8 @@ sss_status_t sss_digest_context_init(sss_digest_t *context,
  * @param digestLen Message digest byte length
  *
  * @returns Status of the operation
- * @retval kStatus_SSS_Success The operation has completed successfully.
- * @retval kStatus_SSS_Fail The operation has failed.
+ * @retval #kStatus_SSS_Success The operation has completed successfully.
+ * @retval #kStatus_SSS_Fail The operation has failed.
  */
 sss_status_t sss_digest_one_go(
     sss_digest_t *context, const uint8_t *message, size_t messageLen, uint8_t *digest, size_t *digestLen);
@@ -630,20 +1333,22 @@ sss_status_t sss_digest_one_go(
  * @param context Pointer to digest context.
  *
  * @returns Status of the operation
- * @retval kStatus_SSS_Success The operation has completed successfully.
- * @retval kStatus_SSS_Fail The operation has failed.
+ * @retval #kStatus_SSS_Success The operation has completed successfully.
+ * @retval #kStatus_SSS_Fail The operation has failed.
  */
 sss_status_t sss_digest_init(sss_digest_t *context);
 
 /*! @brief Update digest for a message.
- *  The function blocks current thread until the operation completes or an error occurs.
+ *
+ * The function blocks current thread until the operation completes or an error occurs.
  *
  * @param context Pointer to digest context.
- * @message Buffer with a message chunk.
- * @messageLen Length of the input buffer in bytes.
+ * @param message Buffer with a message chunk.
+ * @param messageLen Length of the input buffer in bytes.
  * @returns Status of the operation
- * @retval kStatus_SSS_Success The operation has completed successfully.
- * @retval kStatus_SSS_Fail The operation has failed.
+ *
+ * @retval #kStatus_SSS_Success The operation has completed successfully.
+ * @retval #kStatus_SSS_Fail The operation has failed.
  */
 sss_status_t sss_digest_update(sss_digest_t *context, const uint8_t *message, size_t messageLen);
 
@@ -655,8 +1360,8 @@ sss_status_t sss_digest_update(sss_digest_t *context, const uint8_t *message, si
  * @param digestLen Message digest byte length
  *
  * @returns Status of the operation
- * @retval kStatus_SSS_Success The operation has completed successfully.
- * @retval kStatus_SSS_Fail The operation has failed.
+ * @retval #kStatus_SSS_Success The operation has completed successfully.
+ * @retval #kStatus_SSS_Fail The operation has failed.
  */
 sss_status_t sss_digest_finish(sss_digest_t *context, uint8_t *digest, size_t *digestLen);
 
@@ -686,9 +1391,9 @@ void sss_digest_context_free(sss_digest_t *context);
  * @param mode One of the modes defined by @ref sss_mode_t.
  *
  * @returns Status of the operation
- * @retval kStatus_SSS_Success The operation has completed successfully.
- * @retval kStatus_SSS_Fail The operation has failed.
- * @retval kStatus_SSS_InvalidArgument One of the arguments is invalid for the function to execute.
+ * @retval #kStatus_SSS_Success The operation has completed successfully.
+ * @retval #kStatus_SSS_Fail The operation has failed.
+ * @retval #kStatus_SSS_InvalidArgument One of the arguments is invalid for the function to execute.
  */
 sss_status_t sss_mac_context_init(
     sss_mac_t *context, sss_session_t *session, sss_object_t *keyObject, sss_algorithm_t algorithm, sss_mode_t mode);
@@ -703,8 +1408,8 @@ sss_status_t sss_mac_context_init(
  * @param macLen Computed MAC byte length
  *
  * @returns Status of the operation
- * @retval kStatus_SSS_Success The operation has completed successfully.
- * @retval kStatus_SSS_Fail The operation has failed.
+ * @retval #kStatus_SSS_Success The operation has completed successfully.
+ * @retval #kStatus_SSS_Fail The operation has failed.
  */
 sss_status_t sss_mac_one_go(
     sss_mac_t *context, const uint8_t *message, size_t messageLen, uint8_t *mac, size_t *macLen);
@@ -715,20 +1420,22 @@ sss_status_t sss_mac_one_go(
  * @param context Pointer to mac context.
  *
  * @returns Status of the operation
- * @retval kStatus_SSS_Success The operation has completed successfully.
- * @retval kStatus_SSS_Fail The operation has failed.
+ * @retval #kStatus_SSS_Success The operation has completed successfully.
+ * @retval #kStatus_SSS_Fail The operation has failed.
  */
 sss_status_t sss_mac_init(sss_mac_t *context);
 
 /*! @brief Update mac for a message.
+ *
  *  The function blocks current thread until the operation completes or an error occurs.
  *
  * @param context Pointer to mac context.
- * @message Buffer with a message chunk.
- * @messageLen Length of the input buffer in bytes.
+ * @param message Buffer with a message chunk.
+ * @param messageLen Length of the input buffer in bytes.
  * @returns Status of the operation
- * @retval kStatus_SSS_Success The operation has completed successfully.
- * @retval kStatus_SSS_Fail The operation has failed.
+ *
+ * @retval #kStatus_SSS_Success The operation has completed successfully.
+ * @retval #kStatus_SSS_Fail The operation has failed.
  */
 sss_status_t sss_mac_update(sss_mac_t *context, const uint8_t *message, size_t messageLen);
 
@@ -740,8 +1447,8 @@ sss_status_t sss_mac_update(sss_mac_t *context, const uint8_t *message, size_t m
  * @param macLen Computed MAC byte length
  *
  * @returns Status of the operation
- * @retval kStatus_SSS_Success The operation has completed successfully.
- * @retval kStatus_SSS_Fail The operation has failed.
+ * @retval #kStatus_SSS_Success The operation has completed successfully.
+ * @retval #kStatus_SSS_Fail The operation has failed.
  */
 sss_status_t sss_mac_finish(sss_mac_t *context, uint8_t *mac, size_t *macLen);
 
@@ -770,9 +1477,9 @@ void sss_mac_context_free(sss_mac_t *context);
  * @param mode One of the modes defined by @ref sss_mode_t.
  *
  * @returns Status of the operation
- * @retval kStatus_SSS_Success The operation has completed successfully.
- * @retval kStatus_SSS_Fail The operation has failed.
- * @retval kStatus_SSS_InvalidArgument One of the arguments is invalid for the function to execute.
+ * @retval #kStatus_SSS_Success The operation has completed successfully.
+ * @retval #kStatus_SSS_Fail The operation has failed.
+ * @retval #kStatus_SSS_InvalidArgument One of the arguments is invalid for the function to execute.
  */
 sss_status_t sss_asymmetric_context_init(sss_asymmetric_t *context,
                                          sss_session_t *session,
@@ -790,9 +1497,9 @@ sss_status_t sss_asymmetric_context_init(sss_asymmetric_t *context,
  * @param destLen Length of the output in bytes
  *
  * @returns Status of the operation
- * @retval kStatus_SSS_Success The operation has completed successfully.
- * @retval kStatus_SSS_Fail The operation has failed.
- * @retval kStatus_SSS_InvalidArgument One of the arguments is invalid for the function to execute.
+ * @retval #kStatus_SSS_Success The operation has completed successfully.
+ * @retval #kStatus_SSS_Fail The operation has failed.
+ * @retval #kStatus_SSS_InvalidArgument One of the arguments is invalid for the function to execute.
  */
 sss_status_t sss_asymmetric_encrypt(
     sss_asymmetric_t *context, const uint8_t *srcData, size_t srcLen, uint8_t *destData, size_t *destLen);
@@ -808,9 +1515,9 @@ sss_status_t sss_asymmetric_encrypt(
  * @param destLen Length of the output in bytes
  *
  * @returns Status of the operation
- * @retval kStatus_SSS_Success The operation has completed successfully.
- * @retval kStatus_SSS_Fail The operation has failed.
- * @retval kStatus_SSS_InvalidArgument One of the arguments is invalid for the function to execute.
+ * @retval #kStatus_SSS_Success The operation has completed successfully.
+ * @retval #kStatus_SSS_Fail The operation has failed.
+ * @retval #kStatus_SSS_InvalidArgument One of the arguments is invalid for the function to execute.
  */
 sss_status_t sss_asymmetric_decrypt(
     sss_asymmetric_t *context, const uint8_t *srcData, size_t srcLen, uint8_t *destData, size_t *destLen);
@@ -825,9 +1532,9 @@ sss_status_t sss_asymmetric_decrypt(
  * @param signatureLen Length of the signature in bytes
  *
  * @returns Status of the operation
- * @retval kStatus_SSS_Success The operation has completed successfully.
- * @retval kStatus_SSS_Fail The operation has failed.
- * @retval kStatus_SSS_InvalidArgument One of the arguments is invalid for the function to execute.
+ * @retval #kStatus_SSS_Success The operation has completed successfully.
+ * @retval #kStatus_SSS_Fail The operation has failed.
+ * @retval #kStatus_SSS_InvalidArgument One of the arguments is invalid for the function to execute.
  */
 sss_status_t sss_asymmetric_sign_digest(
     sss_asymmetric_t *context, uint8_t *digest, size_t digestLen, uint8_t *signature, size_t *signatureLen);
@@ -842,9 +1549,9 @@ sss_status_t sss_asymmetric_sign_digest(
  * @param signatureLen Length of the signature in bytes
  *
  * @returns Status of the operation
- * @retval kStatus_SSS_Success The operation has completed successfully.
- * @retval kStatus_SSS_Fail The operation has failed.
- * @retval kStatus_SSS_InvalidArgument One of the arguments is invalid for the function to execute.
+ * @retval #kStatus_SSS_Success The operation has completed successfully.
+ * @retval #kStatus_SSS_Fail The operation has failed.
+ * @retval #kStatus_SSS_InvalidArgument One of the arguments is invalid for the function to execute.
  */
 sss_status_t sss_asymmetric_verify_digest(
     sss_asymmetric_t *context, uint8_t *digest, size_t digestLen, uint8_t *signature, size_t signatureLen);
@@ -858,43 +1565,6 @@ void sss_asymmetric_context_free(sss_asymmetric_t *context);
 /*!
  *@}
  */ /* end of sss_crypto_asymmetric */
-
-/*!
- * @addtogroup sss_crypto_tunnelling
- * @{
- */
-
-/*! @brief Constructor for the tunnelling service context.
- *
- * @param[out] context Pointer to tunnel context. Tunnel context is updated on function return.
- * @param session Pointer to session this tunnelling service belongs to.
- */
-sss_status_t sss_init_tunnel_context(sss_tunnel_t *context, sss_session_t *session);
-
-/*! @brief Tunnelling service.
- *
- * @param[in,out] context Pointer to tunnel context.
- * @param data Pointer to data to be send to subsystem.
- * @param dataLen Length of the data in bytes.
- * @param keyObjects Objects references used by the service.
- * @param keyObjectCount Number of key references at @ref keyObjects.
- * @param tunnelType Implementation specific id of the service.
- */
-sss_status_t sss_tunnel(sss_tunnel_t *context,
-                        uint8_t *data,
-                        size_t dataLen,
-                        sss_object_t *keyObjects,
-                        uint32_t keyObjectCount,
-                        uint32_t tunnelType);
-
-/*! @brief Destructor for the tunnelling service context.
- *
- * @param[out] context Pointer to tunnel context. */
-void sss_free_tunnel_context(sss_tunnel_t *context);
-
-/*!
- *@}
- */ /* end of sss_crypto_tunnelling */
 
 /*!
  * @addtogroup sss_crypto_derive_key
@@ -911,9 +1581,9 @@ void sss_free_tunnel_context(sss_tunnel_t *context);
  * @param mode One of the modes defined by @ref sss_mode_t.
  *
  * @returns Status of the operation
- * @retval kStatus_SSS_Success The operation has completed successfully.
- * @retval kStatus_SSS_Fail The operation has failed.
- * @retval kStatus_SSS_InvalidArgument One of the arguments is invalid for the function to execute.
+ * @retval #kStatus_SSS_Success The operation has completed successfully.
+ * @retval #kStatus_SSS_Fail The operation has failed.
+ * @retval #kStatus_SSS_InvalidArgument One of the arguments is invalid for the function to execute.
  */
 sss_status_t sss_derive_key_context_init(sss_derive_key_t *context,
                                          sss_session_t *session,
@@ -933,16 +1603,19 @@ sss_status_t sss_derive_key_context_init(sss_derive_key_t *context,
  * @param[in,out] derivedKeyObject Reference to a derived key
  *
  * @returns Status of the operation
- * @retval kStatus_SSS_Success The operation has completed successfully.
- * @retval kStatus_SSS_Fail The operation has failed.
- * @retval kStatus_SSS_InvalidArgument One of the arguments is invalid for the function to execute.
+ * @retval #kStatus_SSS_Success The operation has completed successfully.
+ * @retval #kStatus_SSS_Fail The operation has failed.
+ * @retval #kStatus_SSS_InvalidArgument One of the arguments is invalid for the function to execute.
  */
-sss_status_t sss_derive_key(sss_derive_key_t *context,
-                            const uint8_t *saltData,
-                            size_t saltLen,
-                            const uint8_t *info,
-                            size_t infoLen,
-                            sss_object_t *derivedKeyObject);
+sss_status_t sss_derive_key_go(sss_derive_key_t *context,
+                               const uint8_t *saltData,
+                               size_t saltLen,
+                               const uint8_t *info,
+                               size_t infoLen,
+                               sss_object_t *derivedKeyObject,
+                               uint16_t deriveDataLen,
+                               uint8_t *hkdfOutput,
+                               size_t *hkdfOutputLen);
 
 /*! @brief Asymmetric key derivation Diffie-Helmann
  *  The function cryptographically derives a key from another key.
@@ -953,13 +1626,13 @@ sss_status_t sss_derive_key(sss_derive_key_t *context,
  * @param[in,out] derivedKeyObject Reference to a derived key
  *
  * @returns Status of the operation
- * @retval kStatus_SSS_Success The operation has completed successfully.
- * @retval kStatus_SSS_Fail The operation has failed.
- * @retval kStatus_SSS_InvalidArgument One of the arguments is invalid for the function to execute.
+ * @retval #kStatus_SSS_Success The operation has completed successfully.
+ * @retval #kStatus_SSS_Fail The operation has failed.
+ * @retval #kStatus_SSS_InvalidArgument One of the arguments is invalid for the function to execute.
  */
-sss_status_t sss_asymmetric_dh_derive_key(sss_derive_key_t *context,
-                                          sss_object_t *otherPartyKeyObject,
-                                          sss_object_t *derivedKeyObject);
+sss_status_t sss_derive_key_dh(sss_derive_key_t *context,
+                               sss_object_t *otherPartyKeyObject,
+                               sss_object_t *derivedKeyObject);
 
 /*! @brief Derive key context release.
  *  The function frees derive key context.
@@ -972,216 +1645,100 @@ void sss_derive_key_context_free(sss_derive_key_t *context);
  */ /* end of sss_crypto_derive_key */
 
 /*!
- * @addtogroup sss_key_object
- * @{
- */
-
-/*! @brief Constructor for a key object data structure
- *  The function initializes keyObject data structure and associates it with a key store
- *  in which the plain key and other attributes are stored.
- *
- * @param keyObject
- * @param keyStore
- *
- * @returns Status of the operation
- * @retval kStatus_SSS_Success The operation has completed successfully.
- * @retval kStatus_SSS_Fail The operation has failed.
- * @retval kStatus_SSS_InvalidArgument One of the arguments is invalid for the function to execute.
- */
-sss_status_t sss_key_object_init(sss_object_t *keyObject, sss_key_store_t *keyStore);
-
-/**  @brief create new key
- *
- * @param[in,out] keyObject The object
- *        If required, update implementation defined values
- *        inside the keyObject
- * @param keyId External Key ID.  Later on this may be used by
- *        @ref sss_key_object_get_handle
- * @param keyType See @ref sss_key_type_t
- * @param keyByteLenMax Maximum storage this type of key may need.
- *        For systems that have their own internal allocation table
- *        this would help
- * @param options 0 = Persistant Key (Default) or Transient Key.
- *        FIXME: Check valid values of options
- * @return Status of object allocation.
- */
-sss_status_t sss_key_object_allocate_handle(
-    sss_object_t *keyObject, uint32_t keyId, sss_key_type_t keyType, uint32_t keyByteLenMax, uint32_t options);
-
-/*! @brief get handle to existing
- *
- * See @ref sss_key_object_allocate_handle.
- *
- * Ideally keyObject should be same for sss_key_object_allocate_handle and
- * sss_key_object_get_handle
- * */
-sss_status_t sss_key_object_get_handle(sss_object_t *keyObject, uint32_t keyId);
-
-/*! @brief Assign user to a key object.
- * @param user Assign User id for a key object. The user is kept in the key
- *		  store along with the key data and other properties.
- * @param options Transient or persistent update. Allows for transient update
- * of persistent attributes.
- */
-sss_status_t sss_key_object_set_user(sss_object_t *keyObject, uint32_t user, uint32_t options);
-
-/*! @brief Assign purpose to a key object.
- *  @param purpose Usage of the key.
- *  @param options Transient or persistent update. Allows for transient update of persistent attributes.
- */
-sss_status_t sss_key_object_set_purpose(sss_object_t *keyObject, sss_mode_t purpose, uint32_t options);
-
-/*! @brief Assign access permissions to a key object.
- *  @param access Logical OR of read, write, delete, use, change attributes defined by enum _sss_access_permission.
- *  @param options Transient or persistent update. Allows for transient update of persistent attributes.
- */
-sss_status_t sss_key_object_set_access(sss_object_t *keyObject, uint32_t access, uint32_t options);
-
-/*! @brief Set elliptic curve domain parameters over Fp for a key object
- *  When the key object is a reference to one of ECC Private, ECC Public or ECC Pair key types,
- *  this function shall be used to specify the exact domain parameters prior to using the key object
- *  for ECDSA or ECDH algorithms.
- *  @param keyObject The destination key object
- *  @param group Pointer to elliptic curve domain parameters over Fp (sextuple p,a,b,G,n,h)
- */
-sss_status_t sss_key_object_set_eccgfp_group(sss_object_t *keyObject, sss_eccgfp_group_t *group);
-
-/*! @brief get attributes */
-sss_status_t sss_key_object_get_user(sss_object_t *keyObject, uint32_t *user);
-sss_status_t sss_key_object_get_purpose(sss_object_t *keyObject, sss_mode_t *purpose);
-sss_status_t sss_key_object_get_access(sss_object_t *keyObject, uint32_t *access);
-
-/*! @brief Destructor for the key object.
- *  The function frees key object context.
- *
- * @param keyObject Pointer to key object context.
- */
-void sss_key_object_free(sss_object_t *keyObject);
-
-/*!
- *@}
- */ /* end of sss_key_object */
-
-/*!
- * @addtogroup sss_key_store
- * @{
- */
-
-/*! @brief Constructor for the key store context data structure.
- *
- * @param[out] keyStore Pointer to key store context. Key store context is updated on function return.
- * @param session Session context.
- */
-sss_status_t sss_key_store_context_init(sss_key_store_t *keyStore, sss_session_t *session);
-
-/*! @brief Get handle to key store.
- *  If the key store already exists, nothing is allocated.
- *  If the key store does not exists, new empty key store is created and initialized.
- *  Key store context structure is updated with actual information.
- *
- * @param[out] keyStore Pointer to key store context. Key store context is updated on function return.
- * @param keyStoreId Implementation specific ID, can be used in case security subsystem manages multiple different
- * key stores.
- */
-sss_status_t sss_key_store_allocate(sss_key_store_t *keyStore, uint32_t keyStoreId);
-
-/*! @brief Save all cached persistent objects to persistent memory.
- */
-sss_status_t sss_key_store_save(sss_key_store_t *keyStore);
-
-/*! @brief Load from persistent memory to cached objects.
- */
-sss_status_t sss_key_store_load(sss_key_store_t *keyStore);
-
-/*! @brief This function moves key[] from memory to the destination key store.
- *  The function moves key[] from memory to the destination key store.
- *
- * @param keyStore Key store context
- * @param keyObject Reference to a key and it's properties
- * @param data Input data buffer with the plain key
- * @param dataLen Length of the Input data buffer in bytes
- * @param keyBitLen Crypto algorithm key bit length
- * @param options Pointer to implementation specific options
- * @param optionsLen Length of the options in bytes
- */
-sss_status_t sss_key_store_set_key(sss_key_store_t *keyStore,
-                                   sss_object_t *keyObject,
-                                   const uint8_t *key,
-                                   uint32_t keyBitLen,
-                                   void *options,
-                                   size_t optionsLen);
-
-/*! @brief This function generates key[] in the destination key store. */
-sss_status_t sss_key_store_generate_key(sss_key_store_t *keyStore,
-                                        sss_object_t *keyObject,
-                                        uint32_t keyBitLen,
-                                        void *options);
-
-/*! @brief This function exports plain key[] from key store (if constraints and user id allows reading) */
-sss_status_t sss_key_store_get_key(sss_key_store_t *keyStore,
-                                   sss_object_t *keyObject,
-                                   uint8_t *key,
-                                   size_t *pKeyBitLen);
-
-/*! @brief This function outputs referenced plain key[] to destination security subsystem - e.g.to secret key bus or
- * CryptoLib context */
-sss_status_t sss_key_store_open_key(sss_key_store_t *keyStore, sss_object_t *keyObject);
-
-/*! @brief The referenced plain key[] cannot be updated any more. */
-sss_status_t sss_key_store_freeze_key(sss_key_store_t *keyStore, sss_object_t *keyObject);
-
-/*! @brief The referenced plain key[] is discarded. */
-sss_status_t sss_key_store_erase_key(sss_key_store_t *keyStore, sss_object_t *keyObject);
-
-// sss_status_t sss_key_store_clear_all(sss_key_store_t *keyStore);
-
-/*! @brief Destructor for the key store context. */
-void sss_key_store_context_free(sss_key_store_t *keyStore);
-
-/*!
- *@}
- */ /* end of sss_key_store */
-
-/*!
- * @addtogroup sss_session
+ * @addtogroup sss_rng
  * @{
  */
 
 /*!
- * @brief Open session between application and a security subsystem.
+ * @brief Initialise random generator context between application and a security subsystem.
  *
- * Open virtual session between application (user context) and a security subsystem and function thereof.
- * Pointer to session shall be supplied to all SSS APIs as argument.
- * Low level SSS functions can provide implementation specific behaviour based on the session argument.
+ *
+ * @warn API Changed
+ *
+ *      Earlier:
+ *          sss_status_t sss_rng_context_init(
+ *              sss_session_t *session, sss_rng_context_t *context);
+ *
+ *      Now: Parameters are swapped
+ *       sss_status_t sss_rng_context_init(
+ *           sss_rng_context_t *context, sss_session_t *session);
  *
  * @param   session Session context.
- * @param   subsystem Indicates which security subsystem is selected to be used.
- * @param   additionalApplicationId Additional ID that is supplied to the subsystem, implementation specific.
- * @param   connectionMethod Selects which identity credentials about application are used to determine access
- * control permissions to SSS functionality or SSS data.
- * @param   connectionData Data required by connectionMethod
+ * @param   context random generator context.
  * @return  status
  */
-sss_status_t sss_open_session(sss_session_t *session,
-                              sss_type_t subsystem,
-                              uint32_t additionalApplicationId,
-                              uint32_t connectionMethod,
-                              const void *connectionData);
+sss_status_t sss_rng_context_init(sss_rng_context_t *context, sss_session_t *session);
 
 /*!
- * @brief Close session between application and security subsystem.
+ * @brief Generate random number.
  *
- * This function closes a session which has been opened with a security subsystem.
- * All commands within the session must have completed before this function can be called.
- * The implementation must do nothing if the input @ref session parameter is NULL.
- *
- * @param   session Session context.
+ * @param   context random generator context.
+ * @param   random_data buffer to hold random data.
+ * @param   dataLen required random number length
+ * @return  status
  */
-void sss_close_session(sss_session_t *session);
+sss_status_t sss_rng_get_random(sss_rng_context_t *context, uint8_t *random_data, size_t dataLen);
+
+/*!
+ * @brief free random genertor context.
+ *
+ * @param   context generator context.
+ * @return  status
+ */
+sss_status_t sss_rng_context_free(sss_rng_context_t *context);
 
 /*!
  *@}
- */ /* end of sss_session */
+ */ /* end of sss_rng */
+
+/*!
+ *@}
+ */ /* end of sss_crypto_tunnelling */
+
+/*!
+ * @addtogroup sss_crypto_tunnel
+ * @{
+ */
+
+/*! @brief Constructor for the tunnelling service context.
+ *
+ *      Earlier:
+ *          sss_status_t sss_tunnel_context_init(
+ *              sss_session_t *session, sss_tunnel_t *context);
+ *
+ *      Now: Parameters are swapped
+ *          sss_status_t sss_tunnel_context_init(
+ *              sss_tunnel_t *context, sss_session_t *session);
+ *
+ * @param[out] context Pointer to tunnel context. Tunnel context is updated on function return.
+ * @param session Pointer to session this tunnelling service belongs to.
+ */
+sss_status_t sss_tunnel_context_init(sss_tunnel_t *context, sss_session_t *session);
+
+/*! @brief Tunnelling service.
+ *
+ * @param[in,out] context Pointer to tunnel context.
+ * @param data Pointer to data to be send to subsystem.
+ * @param dataLen Length of the data in bytes.
+ * @param keyObjects Objects references used by the service.
+ * @param keyObjectCount Number of key references at ``keyObjects``.
+ * @param tunnelType Implementation specific id of the service.
+ */
+sss_status_t sss_tunnel(sss_tunnel_t *context,
+                        uint8_t *data,
+                        size_t dataLen,
+                        sss_object_t *keyObjects,
+                        uint32_t keyObjectCount,
+                        uint32_t tunnelType);
+
+/*! @brief Destructor for the tunnelling service context.
+ *
+ * @param[out] context Pointer to tunnel context. */
+void sss_tunnel_context_free(sss_tunnel_t *context);
+
+/*!
+ *@}
+ */ /* end of sss_crypto_channel */
 
 #if defined(__cplusplus)
 }

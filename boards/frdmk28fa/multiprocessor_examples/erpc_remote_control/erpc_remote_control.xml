@@ -9,9 +9,9 @@
     <definition extID="device.MK28FA15_CMSIS.MK28FA15"/>
     <definition extID="device.MK28FA15_startup.MK28FA15"/>
     <definition extID="driver.fxos8700cq.MK28FA15"/>
-    <definition extID="middleware.amazon_freertos-kernel.MK28FA15"/>
-    <definition extID="middleware.amazon_freertos-kernel.extension.MK28FA15"/>
-    <definition extID="middleware.amazon_freertos-kernel.heap_4.MK28FA15"/>
+    <definition extID="middleware.freertos-kernel.MK28FA15"/>
+    <definition extID="middleware.freertos-kernel.extension.MK28FA15"/>
+    <definition extID="middleware.freertos-kernel.heap_4.MK28FA15"/>
     <definition extID="middleware.multicore.erpc.common.MK28FA15"/>
     <definition extID="middleware.multicore.erpc.doc.MK28FA15"/>
     <definition extID="middleware.multicore.erpc.eRPC_arbitrator.MK28FA15"/>
@@ -44,7 +44,7 @@
     <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="frdmk28fa_erpc_remote_control" name="erpc_remote_control" category="multiprocessor_examples" dependency="platform.drivers.edma.MK28FA15 platform.drivers.lpuart.MK28FA15 platform.drivers.lpuart_edma.MK28FA15 platform.drivers.dac.MK28FA15 driver.fxos8700cq.MK28FA15 platform.drivers.lpuart_cmsis_edma.MK28FA15 platform.drivers.gpio.MK28FA15 platform.drivers.port.MK28FA15 platform.drivers.i2c.MK28FA15 platform.drivers.adc16.MK28FA15 platform.drivers.dmamux.MK28FA15 middleware.multicore.erpc.eRPC_arbitrator.MK28FA15 middleware.multicore.erpc.eRPC_port_freertos.MK28FA15 middleware.multicore.erpc.eRPC_uart_cmsis_transport.MK28FA15 middleware.amazon_freertos-kernel.heap_4.MK28FA15 middleware.multicore.erpc.doc.MK28FA15 platform.drivers.clock.MK28FA15 platform.drivers.common.MK28FA15 device.MK28FA15_CMSIS.MK28FA15 utility.debug_console.MK28FA15 component.lpuart_adapter.MK28FA15 component.serial_manager.MK28FA15 component.lists.MK28FA15 component.serial_manager_uart.MK28FA15 device.MK28FA15_startup.MK28FA15 platform.drivers.smc.MK28FA15 platform.drivers.sysmpu.MK28FA15 platform.utilities.assert.MK28FA15 platform.Include_core_cm4.MK28FA15 platform.Include_common.MK28FA15 platform.Include_dsp.MK28FA15 platform.CMSIS_Driver_Include.USART_CMSISInclude.MK28FA15 platform.CMSIS_Driver_Include.Common_CMSISInclude.MK28FA15 middleware.multicore.erpc.common.MK28FA15 middleware.amazon_freertos-kernel.MK28FA15 middleware.amazon_freertos-kernel.extension.MK28FA15 platform.utilities.misc_utilities.MK28FA15">
+  <example id="frdmk28fa_erpc_remote_control" name="erpc_remote_control" category="multiprocessor_examples" dependency="platform.drivers.edma.MK28FA15 platform.drivers.lpuart.MK28FA15 platform.drivers.lpuart_edma.MK28FA15 platform.drivers.dac.MK28FA15 driver.fxos8700cq.MK28FA15 platform.drivers.lpuart_cmsis_edma.MK28FA15 platform.drivers.gpio.MK28FA15 platform.drivers.port.MK28FA15 platform.drivers.i2c.MK28FA15 platform.drivers.adc16.MK28FA15 platform.drivers.dmamux.MK28FA15 middleware.multicore.erpc.eRPC_arbitrator.MK28FA15 middleware.multicore.erpc.eRPC_port_freertos.MK28FA15 middleware.multicore.erpc.eRPC_uart_cmsis_transport.MK28FA15 middleware.freertos-kernel.heap_4.MK28FA15 middleware.multicore.erpc.doc.MK28FA15 platform.drivers.clock.MK28FA15 platform.drivers.common.MK28FA15 device.MK28FA15_CMSIS.MK28FA15 utility.debug_console.MK28FA15 component.lpuart_adapter.MK28FA15 component.serial_manager.MK28FA15 component.lists.MK28FA15 component.serial_manager_uart.MK28FA15 device.MK28FA15_startup.MK28FA15 platform.drivers.smc.MK28FA15 platform.drivers.sysmpu.MK28FA15 platform.utilities.assert.MK28FA15 platform.Include_core_cm4.MK28FA15 platform.Include_common.MK28FA15 platform.Include_dsp.MK28FA15 platform.CMSIS_Driver_Include.USART_CMSISInclude.MK28FA15 platform.CMSIS_Driver_Include.Common_CMSISInclude.MK28FA15 middleware.multicore.erpc.common.MK28FA15 middleware.freertos-kernel.MK28FA15 middleware.freertos-kernel.extension.MK28FA15 platform.utilities.misc_utilities.MK28FA15">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.ccnature"/>
     </projects>

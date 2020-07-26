@@ -3,7 +3,7 @@
  * @author NXP Semiconductors
  * @version 1.0
  * @par License
- * Copyright 2016 NXP
+ * Copyright 2016,2020 NXP
  *
  * This software is owned or controlled by NXP and may only be used
  * strictly in accordance with the applicable license terms.  By expressly
@@ -30,8 +30,10 @@
 #include "nxLog_smCom.h"
 #include "nxEnsure.h"
 
-static U32 smComSCI2C_Transceive(apdu_t *pApdu);
-static U32 smComSCI2C_TransceiveRaw(U8 *pTx, U16 txLen, U8 *pRx, U32 *pRxLen);
+static void* gpHandle = NULL;
+
+static U32 smComSCI2C_Transceive(void* conn_ctx, apdu_t *pApdu);
+static U32 smComSCI2C_TransceiveRaw(void* conn_ctx, U8 *pTx, U16 txLen, U8 *pRx, U32 *pRxLen);
 
 U16 smComSCI2C_Close(U8 mode)
 {
@@ -39,19 +41,34 @@ U16 smComSCI2C_Close(U8 mode)
     return SW_OK;
 }
 
-U16 smComSCI2C_Open(U8 mode, U8 seqCnt, U8 *SCI2Catr, U16 *SCI2CatrLen)
+U16 smComSCI2C_Init(void **conn_ctx, const char *pConnString)
 {
-    eSci2c_Error_t st = eSci2c_Error;
     i2c_error_t i2c_status;
-    U16 rv = SMCOM_PROTOCOL_FAILED;
+    void* ctx = NULL;
 
-    i2c_status = axI2CInit();
+    i2c_status = axI2CInit(&ctx, pConnString);
     if (i2c_status != I2C_OK) {
         return SMCOM_COM_FAILED;
     }
 
+    (conn_ctx == NULL)? (gpHandle = ctx):(*conn_ctx = ctx);
+    return SMCOM_OK;
+}
+
+U16 smComSCI2C_Open(void *conn_ctx, U8 mode, U8 seqCnt, U8 *SCI2Catr, U16 *SCI2CatrLen)
+{
+    eSci2c_Error_t st = eSci2c_Error;
+    U16 rv = SMCOM_PROTOCOL_FAILED;
+    void* ctx = NULL;
+
+    if (conn_ctx == NULL) {
+        smComSCI2C_Init(NULL, NULL);
+    }
+
+    ctx = (conn_ctx == NULL) ? gpHandle : conn_ctx;
+
     if (mode == ESTABLISH_SCI2C) {
-        st = sci2c_Init(SCI2Catr, SCI2CatrLen);
+        st = sci2c_Init(ctx, SCI2Catr, SCI2CatrLen);
         if (st != eSci2c_No_Error) {
             LOG_E("sci2c_Init failed %x", st);
             *SCI2CatrLen = 0;
@@ -73,21 +90,23 @@ exit:
     return rv;
 }
 
-static U32 smComSCI2C_Transceive(apdu_t *pApdu)
+static U32 smComSCI2C_Transceive(void* conn_ctx, apdu_t *pApdu)
 {
     U32 status;
+    void* ctx = (conn_ctx == NULL) ? gpHandle : conn_ctx;
     LOG_MAU8_D("Tx>", pApdu->pBuf, pApdu->buflen);
-    status = sci2c_Transceive(pApdu);
+    status = sci2c_Transceive(ctx, pApdu);
     if ((status == SMCOM_OK) && (pApdu->rxlen > 0))
         LOG_MAU8_D("<Rx", pApdu->pBuf, pApdu->rxlen);
     return status;
 }
 
-static U32 smComSCI2C_TransceiveRaw(U8 *pTx, U16 txLen, U8 *pRx, U32 *pRxLen)
+static U32 smComSCI2C_TransceiveRaw(void* conn_ctx, U8 *pTx, U16 txLen, U8 *pRx, U32 *pRxLen)
 {
     U32 status;
+    void* ctx = (conn_ctx == NULL) ? gpHandle : conn_ctx;
     LOG_MAU8_D("Tx>", pTx, txLen);
-    status = sci2c_TransceiveRaw(pTx, txLen, pRx, pRxLen);
+    status = sci2c_TransceiveRaw(ctx, pTx, txLen, pRx, pRxLen);
     LOG_MAU8_D("<Rx", pRx, *pRxLen);
     return status;
 }

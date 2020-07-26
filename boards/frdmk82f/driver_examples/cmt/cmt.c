@@ -18,9 +18,9 @@
 
 #define BUS_CLK_FREQ CLOCK_GetFreq(kCLOCK_BusClk)
 
-#define CMT_TEST_DATA_BITS 11       /*! The data test bit numbers. */
-#define CMT_DATA_MODULATE_RATE 9600 /*! The data modulation transmit rate */
-#define CMT_CG_FREQUENCY 40000      /*! The carrier generator frequency */
+#define CMT_TEST_DATA_BITS     11    /*! The data test bit numbers. */
+#define CMT_DATA_MODULATE_RATE 9600  /*! The data modulation transmit rate */
+#define CMT_CG_FREQUENCY       40000 /*! The carrier generator frequency */
 
 /*******************************************************************************
  * Prototypes
@@ -125,11 +125,7 @@ void CMT_IRQHandler(void)
             g_CmtDataBitLen++;
         }
     }
-    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-      exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 int main(void)

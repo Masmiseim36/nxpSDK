@@ -8,8 +8,8 @@
     <definition extID="component.serial_manager_uart.MK28F15"/>
     <definition extID="device.MK28F15_CMSIS.MK28F15"/>
     <definition extID="device.MK28F15_startup.MK28F15"/>
-    <definition extID="middleware.freertos.MK28F15"/>
-    <definition extID="middleware.freertos.heap.heap_4.MK28F15"/>
+    <definition extID="middleware.amazon_freertos.freertos.MK28F15"/>
+    <definition extID="middleware.amazon_freertos.freertos.heap_4.MK28F15"/>
     <definition extID="middleware.sdmmc.common.MK28F15"/>
     <definition extID="middleware.sdmmc.sd.MK28F15"/>
     <definition extID="middleware.usb.device_controller_ehci.MK28F15"/>
@@ -32,7 +32,7 @@
     <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="frdmk28f_dev_msc_sdcard_freertos" name="dev_msc_sdcard_freertos" category="usb_examples" dependency="middleware.usb.device_controller_khci.MK28F15 middleware.usb.device_controller_ehci.MK28F15 middleware.usb.phy.MK28F15 platform.drivers.sdhc.MK28F15 middleware.freertos.heap.heap_4.MK28F15 middleware.freertos.MK28F15 middleware.sdmmc.sd.MK28F15 platform.drivers.smc.MK28F15 platform.drivers.clock.MK28F15 platform.drivers.common.MK28F15 device.MK28F15_CMSIS.MK28F15 device.MK28F15_startup.MK28F15 platform.drivers.lpuart.MK28F15 platform.drivers.gpio.MK28F15 platform.drivers.sysmpu.MK28F15 platform.utilities.assert.MK28F15 utility.debug_console.MK28F15 component.lpuart_adapter.MK28F15 component.serial_manager.MK28F15 component.serial_manager_uart.MK28F15 component.lists.MK28F15 platform.drivers.port.MK28F15 platform.Include_core_cm4.MK28F15 platform.Include_common.MK28F15 middleware.sdmmc.common.MK28F15" toolchain="iar mdk armgcc mcuxpresso">
+  <example id="frdmk28f_dev_msc_sdcard_freertos" name="dev_msc_sdcard_freertos" category="usb_examples" dependency="middleware.usb.device_controller_khci.MK28F15 middleware.usb.device_controller_ehci.MK28F15 middleware.usb.phy.MK28F15 platform.drivers.sdhc.MK28F15 middleware.amazon_freertos.freertos.heap_4.MK28F15 middleware.amazon_freertos.freertos.MK28F15 middleware.sdmmc.sd.MK28F15 platform.drivers.smc.MK28F15 platform.drivers.clock.MK28F15 platform.drivers.common.MK28F15 device.MK28F15_CMSIS.MK28F15 device.MK28F15_startup.MK28F15 platform.drivers.lpuart.MK28F15 platform.drivers.gpio.MK28F15 platform.drivers.sysmpu.MK28F15 platform.utilities.assert.MK28F15 utility.debug_console.MK28F15 component.lpuart_adapter.MK28F15 component.serial_manager.MK28F15 component.serial_manager_uart.MK28F15 component.lists.MK28F15 platform.drivers.port.MK28F15 platform.Include_core_cm4.MK28F15 platform.Include_common.MK28F15 middleware.sdmmc.common.MK28F15">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -109,6 +109,9 @@
     <source path="boards/frdmk28f/usb_examples/usb_device_msc_sdcard/freertos" target_path="source" type="src">
       <files mask="disk_sdcard.c"/>
       <files mask="usb_device_descriptor.c"/>
+    </source>
+    <source path="boards/frdmk28f/usb_examples/usb_device_msc_sdcard/freertos" target_path="src" type="doc" exclude="true">
+      <files mask="readme.pdf"/>
     </source>
     <source path="boards/frdmk28f/usb_examples/usb_device_msc_sdcard/freertos" target_path="usb/device/class/msc" type="c_include">
       <files mask="usb_device_msc.h"/>

@@ -47,7 +47,7 @@
 /**
  * NO_SYS==1: Bare metal lwIP
  */
-#define NO_SYS 1
+#define NO_SYS       1
 /**
  * LWIP_NETCONN==0: Disable Netconn API (require to use api_lib.c)
  */
@@ -55,7 +55,7 @@
 /**
  * LWIP_SOCKET==0: Disable Socket API (require to use sockets.c)
  */
-#define LWIP_SOCKET 0
+#define LWIP_SOCKET  0
 
 /**
  * LWIP_ALLOW_MEM_FREE_FROM_OTHER_CONTEXT=1: we need to free PBUF_RAM pbufs
@@ -68,6 +68,12 @@
 #endif
 
 #endif
+
+/* ---------- Core locking ---------- */
+
+void sys_check_core_locking(void);
+#define LWIP_ASSERT_CORE_LOCKED() sys_check_core_locking()
+
 /* ---------- Memory options ---------- */
 /**
  * MEM_ALIGNMENT: should be set to the alignment of the CPU
@@ -226,13 +232,13 @@ Some MCU allow computing and verifying the IP, UDP, TCP and ICMP checksums by ha
 #define CHECKSUM_CHECK_TCP 0
 #else
 /* CHECKSUM_GEN_IP==1: Generate checksums in software for outgoing IP packets.*/
-#define CHECKSUM_GEN_IP 1
+#define CHECKSUM_GEN_IP    1
 /* CHECKSUM_GEN_UDP==1: Generate checksums in software for outgoing UDP packets.*/
-#define CHECKSUM_GEN_UDP 1
+#define CHECKSUM_GEN_UDP   1
 /* CHECKSUM_GEN_TCP==1: Generate checksums in software for outgoing TCP packets.*/
-#define CHECKSUM_GEN_TCP 1
+#define CHECKSUM_GEN_TCP   1
 /* CHECKSUM_CHECK_IP==1: Check checksums in software for incoming IP packets.*/
-#define CHECKSUM_CHECK_IP 1
+#define CHECKSUM_CHECK_IP  1
 /* CHECKSUM_CHECK_UDP==1: Check checksums in software for incoming UDP packets.*/
 #define CHECKSUM_CHECK_UDP 1
 /* CHECKSUM_CHECK_TCP==1: Check checksums in software for incoming TCP packets.*/
@@ -266,9 +272,9 @@ Some MCU allow computing and verifying the IP, UDP, TCP and ICMP checksums by ha
 #define LWIP_DEBUG
 
 #ifdef LWIP_DEBUG
-#define U8_F "c"
-#define S8_F "c"
-#define X8_F "02x"
+#define U8_F  "c"
+#define S8_F  "c"
+#define X8_F  "02x"
 #define U16_F "u"
 #define S16_F "d"
 #define X16_F "x"
@@ -278,9 +284,9 @@ Some MCU allow computing and verifying the IP, UDP, TCP and ICMP checksums by ha
 #define SZT_F "u"
 #endif
 
-#define TCPIP_MBOX_SIZE 32
+#define TCPIP_MBOX_SIZE        32
 #define TCPIP_THREAD_STACKSIZE 1024
-#define TCPIP_THREAD_PRIO 8
+#define TCPIP_THREAD_PRIO      8
 
 /**
  * DEFAULT_RAW_RECVMBOX_SIZE: The mailbox size for the incoming packets on a

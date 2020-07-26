@@ -1,5 +1,5 @@
 /*
- * Copyright 2018,2019 NXP
+ * Copyright 2018-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -14,111 +14,318 @@
 
 /* clang-format off */
 
-#define SSS_HAVE_MBEDTLS         1
-#define SSS_HAVE_OPENSSL         0
-
-/* A71CH IC */
-#define SSS_HAVE_A71CH           1
-
-/* A71CL IC */
-#define SSS_HAVE_A71CL           0
-
-/* A71CH or A71CL IC */
-#define SSS_HAVE_A71XX           (SSS_HAVE_A71CH + SSS_HAVE_A71CL)
-
-/** Early access release Applet, CH/CL Compatible implementation */
-#define SSS_HAVE_SE050_EAR_CH    0
-#define SSS_HAVE_SE050_EAR_CL    0
-
-#define SSS_HAVE_SE050_EAR       (SSS_HAVE_SE050_EAR_CH + SSS_HAVE_SE050_EAR_CL)
-
-/** Next generation of SE050 Applet */
-/* Successor of A71CH */
-#define SSS_HAVE_SE050_A         0
-/* Successor of A71CL */
-#define SSS_HAVE_SE050_B         0
-/* Super set of A and B */
-#define SSS_HAVE_SE050_C         0
-
-/* To be selected/modified by user */
-#define SSS_HAVE_SE050_M_SR1     0
-#define SSS_HAVE_SE050_M_SR2     0
-
-/* Life Cycle States: User Release State
- * Only applicable with SE050M */
-#define SSS_SE050M_LCS_URS       1
-
-#define SSS_HAVE_SE05X           (SSS_HAVE_SE050_A + SSS_HAVE_SE050_B + SSS_HAVE_SE050_C)
-#define SSS_HAVE_SE050M          (SSS_HAVE_SE050_M_SR1 + SSS_HAVE_SE050_M_SR2)
-
-
-#define SSS_HAVE_LOOPBACK        0
-
-#define SSS_HAVE_SSCP            (SSS_HAVE_A71XX + SSS_HAVE_SE050_EAR)
-
-/* mbedTLS ALT implementations */
-#define SSS_HAVE_ALT_A71CH       1
-#define SSS_HAVE_ALT_SSS         0
-
-#define SSS_HAVE_ALT             (SSS_HAVE_ALT_A71CH + SSS_HAVE_ALT_SSS)
-
-
-#if (SSS_HAVE_A71XX + SSS_HAVE_SE05X + SSS_HAVE_SE050_EAR) >= 2
-#   error Multiple SEs selected. Select only one Secure Element at a time.
-#endif
-
-/* Set to 1 for any SE */
-#define SSS_HAVE_SE              (0 + SSS_HAVE_SE050M + SSS_HAVE_SE05X )
-
-#define SSS_HAVE_SSS             (SSS_HAVE_SE + SSS_HAVE_MBEDTLS +  SSS_HAVE_OPENSSL + SSS_HAVE_SSCP + SSS_HAVE_SE05X)
-
-/* Which cloud is being used/configured */
-
-#define SSS_HAVE_GCP             1 /* Google Cloud Platform */
-#define SSS_HAVE_IBM             0 /* IBM Watson */
-#define SSS_HAVE_AWS             0 /* Amazon web services */
-#define SSS_HAVE_AZURE           0 /* Azure web services */
-
-/* ********************************* */
-/* Individual features of sub-system */
-/* ********************************* */
-
-/* ECC Mode is availabe */
-#define SSS_HAVE_ECC 1
-
-/* RSA is available */
-#define SSS_HAVE_RSA 0
-
-/* Tests and examples are aware that FIPS mode
- * is enabled.
- */
-#define SSS_HAVE_FIPS 0
-
-/* TPM BARRETO_NAEHRIG Curve is enabled */
-#define SSS_HAVE_TPM_BN 0
-
-/* Edwards Curve is enabled */
-#define SSS_HAVE_EC_ED 0
-
-/* Montgomery Curve is enabled */
-#define SSS_HAVE_EC_MONT 0
-
-/* Enable usage of secure messaging channels */
-
-#define SSS_HAVE_SCP_SCP03_SSS 0
-
-/* With NXP NFC Reader Library */
-#define SSS_HAVE_NXPNFCRDLIB 0
-
-/* TLS handshake support on SE is enabled */
-#define SSS_HAVE_TLS_HANDSHAKE 0
-
-/* Import Export Key is enabled */
-#define SSS_HAVE_IMPORT 0
-
-
 
 /* # CMake Features : Start */
+
+
+/** Applet : The Secure Element Applet
+ *
+ * You can compile host library for different Applets listed below.
+ * Please note, some of these Applets may be for NXP Internal use only.
+ */
+
+/** Compiling without any Applet Support */
+#define SSS_HAVE_APPLET_NONE 0
+
+/** A71CH (ECC) */
+#define SSS_HAVE_APPLET_A71CH 1
+
+/** A71CL (RSA) */
+#define SSS_HAVE_APPLET_A71CL 0
+
+/** Similar to A71CH */
+#define SSS_HAVE_APPLET_A71CH_SIM 0
+
+/** SE050 Type A (ECC) */
+#define SSS_HAVE_APPLET_SE05X_A 0
+
+/** SE050 Type B (RSA) */
+#define SSS_HAVE_APPLET_SE05X_B 0
+
+/** SE050 (Super set of A + B) */
+#define SSS_HAVE_APPLET_SE05X_C 0
+
+/** SE050 (Similar to A71CL) */
+#define SSS_HAVE_APPLET_SE05X_L 0
+
+/** NXP Internal testing Applet */
+#define SSS_HAVE_APPLET_LOOPBACK 0
+
+#if (( 0                             \
+    + SSS_HAVE_APPLET_NONE           \
+    + SSS_HAVE_APPLET_A71CH          \
+    + SSS_HAVE_APPLET_A71CL          \
+    + SSS_HAVE_APPLET_A71CH_SIM      \
+    + SSS_HAVE_APPLET_SE05X_A        \
+    + SSS_HAVE_APPLET_SE05X_B        \
+    + SSS_HAVE_APPLET_SE05X_C        \
+    + SSS_HAVE_APPLET_SE05X_L        \
+    + SSS_HAVE_APPLET_LOOPBACK       \
+    ) > 1)
+#        error "Enable only one of 'Applet'"
+#endif
+
+
+#if (( 0                             \
+    + SSS_HAVE_APPLET_NONE           \
+    + SSS_HAVE_APPLET_A71CH          \
+    + SSS_HAVE_APPLET_A71CL          \
+    + SSS_HAVE_APPLET_A71CH_SIM      \
+    + SSS_HAVE_APPLET_SE05X_A        \
+    + SSS_HAVE_APPLET_SE05X_B        \
+    + SSS_HAVE_APPLET_SE05X_C        \
+    + SSS_HAVE_APPLET_SE05X_L        \
+    + SSS_HAVE_APPLET_LOOPBACK       \
+    ) == 0)
+#        error "Enable at-least one of 'Applet'"
+#endif
+
+
+
+/** SE05X_Ver : SE50 Applet version.
+ *
+ * 03_XX would only enable features of version 03.XX version of applet.
+ * But, this would be compatibility would be added for newer versions of the Applet.
+ * When 04_XX is selected, it would expose features available in 04_XX at compile time.
+ */
+
+/** SE050 */
+#define SSS_HAVE_SE05X_VER_03_XX 1
+
+/** NXP Internal - 4.4 */
+#define SSS_HAVE_SE05X_VER_04_04 0
+
+/** NXP Internal - 5.00 */
+#define SSS_HAVE_SE05X_VER_05_00 0
+
+/** NXP Internal - 5.02 */
+#define SSS_HAVE_SE05X_VER_05_02 0
+
+/** NXP Internal - 5.04 */
+#define SSS_HAVE_SE05X_VER_05_04 0
+
+/** NXP Internal - 5.06 */
+#define SSS_HAVE_SE05X_VER_05_06 0
+
+/** NXP Internal - 5.08 */
+#define SSS_HAVE_SE05X_VER_05_08 0
+
+#if (( 0                             \
+    + SSS_HAVE_SE05X_VER_03_XX       \
+    + SSS_HAVE_SE05X_VER_04_04       \
+    + SSS_HAVE_SE05X_VER_05_00       \
+    + SSS_HAVE_SE05X_VER_05_02       \
+    + SSS_HAVE_SE05X_VER_05_04       \
+    + SSS_HAVE_SE05X_VER_05_06       \
+    + SSS_HAVE_SE05X_VER_05_08       \
+    ) > 1)
+#        error "Enable only one of 'SE05X_Ver'"
+#endif
+
+
+#if (( 0                             \
+    + SSS_HAVE_SE05X_VER_03_XX       \
+    + SSS_HAVE_SE05X_VER_04_04       \
+    + SSS_HAVE_SE05X_VER_05_00       \
+    + SSS_HAVE_SE05X_VER_05_02       \
+    + SSS_HAVE_SE05X_VER_05_04       \
+    + SSS_HAVE_SE05X_VER_05_06       \
+    + SSS_HAVE_SE05X_VER_05_08       \
+    ) == 0)
+#        error "Enable at-least one of 'SE05X_Ver'"
+#endif
+
+
+
+/** HostCrypto : Counterpart Crypto on Host
+ *
+ * What is being used as a cryptographic library on the host.
+ * As of now only OpenSSL / mbedTLS is supported
+ */
+
+/** Use mbedTLS as host crypto */
+#define SSS_HAVE_HOSTCRYPTO_MBEDTLS 1
+
+/** Use mbed-crypto as host crypto
+ * Required for ARM-PSA / TF-M
+ * NXP Internal
+ */
+#define SSS_HAVE_HOSTCRYPTO_MBEDCRYPTO 0
+
+/** Use OpenSSL as host crypto */
+#define SSS_HAVE_HOSTCRYPTO_OPENSSL 0
+
+/** User Implementation of Host Crypto
+ * e.g. Files at ``sss/src/user/crypto`` have low level AES/CMAC primitives.
+ * The files at ``sss/src/user`` use those primitives.
+ * This becomes an example for users with their own AES Implementation
+ * This then becomes integration without mbedTLS/OpenSSL for SCP03 / AESKey.
+ *
+ * .. note:: ECKey abstraction is not implemented/available yet. */
+#define SSS_HAVE_HOSTCRYPTO_USER 0
+
+/** NO Host Crypto
+ * Note, this is unsecure and only provided for experimentation
+ * on platforms that do not have an mbedTLS PORT
+ * Many :ref:`sssftr-control` have to be disabled to have a valid build. */
+#define SSS_HAVE_HOSTCRYPTO_NONE 0
+
+#if (( 0                             \
+    + SSS_HAVE_HOSTCRYPTO_MBEDTLS    \
+    + SSS_HAVE_HOSTCRYPTO_MBEDCRYPTO \
+    + SSS_HAVE_HOSTCRYPTO_OPENSSL    \
+    + SSS_HAVE_HOSTCRYPTO_USER       \
+    + SSS_HAVE_HOSTCRYPTO_NONE       \
+    ) > 1)
+#        error "Enable only one of 'HostCrypto'"
+#endif
+
+
+#if (( 0                             \
+    + SSS_HAVE_HOSTCRYPTO_MBEDTLS    \
+    + SSS_HAVE_HOSTCRYPTO_MBEDCRYPTO \
+    + SSS_HAVE_HOSTCRYPTO_OPENSSL    \
+    + SSS_HAVE_HOSTCRYPTO_USER       \
+    + SSS_HAVE_HOSTCRYPTO_NONE       \
+    ) == 0)
+#        error "Enable at-least one of 'HostCrypto'"
+#endif
+
+
+
+/** mbedTLS_ALT : ALT Engine implementation for mbedTLS
+ *
+ * When set to None, mbedTLS would not use ALT Implementation to connect to / use Secure Element.
+ * This needs to be set to SSS for Cloud Demos over SSS APIs
+ */
+
+/** Use SSS Layer ALT implementation */
+#define SSS_HAVE_MBEDTLS_ALT_SSS 0
+
+/** Legacy implementation */
+#define SSS_HAVE_MBEDTLS_ALT_A71CH 1
+
+/** Not using any mbedTLS_ALT
+ *
+ * When this is selected, cloud demos can not work with mbedTLS */
+#define SSS_HAVE_MBEDTLS_ALT_NONE 0
+
+#if (( 0                             \
+    + SSS_HAVE_MBEDTLS_ALT_SSS       \
+    + SSS_HAVE_MBEDTLS_ALT_A71CH     \
+    + SSS_HAVE_MBEDTLS_ALT_NONE      \
+    ) > 1)
+#        error "Enable only one of 'mbedTLS_ALT'"
+#endif
+
+
+#if (( 0                             \
+    + SSS_HAVE_MBEDTLS_ALT_SSS       \
+    + SSS_HAVE_MBEDTLS_ALT_A71CH     \
+    + SSS_HAVE_MBEDTLS_ALT_NONE      \
+    ) == 0)
+#        error "Enable at-least one of 'mbedTLS_ALT'"
+#endif
+
+
+
+/** SCP : Secure Channel Protocol
+ *
+ * In case we enable secure channel to Secure Element, which interface to be used.
+ */
+
+/**  */
+#define SSS_HAVE_SCP_NONE 1
+
+/** Use SSS Layer for SCP.  Used for SE050 family. */
+#define SSS_HAVE_SCP_SCP03_SSS 0
+
+/** Use Host Crypto Layer for SCP03. Legacy implementation. Used for older demos of A71CH Family. */
+#define SSS_HAVE_SCP_SCP03_HOSTCRYPTO 0
+
+#if (( 0                             \
+    + SSS_HAVE_SCP_NONE              \
+    + SSS_HAVE_SCP_SCP03_SSS         \
+    + SSS_HAVE_SCP_SCP03_HOSTCRYPTO  \
+    ) > 1)
+#        error "Enable only one of 'SCP'"
+#endif
+
+
+#if (( 0                             \
+    + SSS_HAVE_SCP_NONE              \
+    + SSS_HAVE_SCP_SCP03_SSS         \
+    + SSS_HAVE_SCP_SCP03_HOSTCRYPTO  \
+    ) == 0)
+#        error "Enable at-least one of 'SCP'"
+#endif
+
+
+
+/** FIPS : Enable or disable FIPS
+ *
+ * This selection mostly impacts tests, and generally not the actual Middleware
+ */
+
+/** NO FIPS */
+#define SSS_HAVE_FIPS_NONE 1
+
+/** SE050 IC FIPS */
+#define SSS_HAVE_FIPS_SE050 0
+
+/** FIPS 140-2 */
+#define SSS_HAVE_FIPS_140_2 0
+
+/** FIPS 140-3 */
+#define SSS_HAVE_FIPS_140_3 0
+
+#if (( 0                             \
+    + SSS_HAVE_FIPS_NONE             \
+    + SSS_HAVE_FIPS_SE050            \
+    + SSS_HAVE_FIPS_140_2            \
+    + SSS_HAVE_FIPS_140_3            \
+    ) > 1)
+#        error "Enable only one of 'FIPS'"
+#endif
+
+
+#if (( 0                             \
+    + SSS_HAVE_FIPS_NONE             \
+    + SSS_HAVE_FIPS_SE050            \
+    + SSS_HAVE_FIPS_140_2            \
+    + SSS_HAVE_FIPS_140_3            \
+    ) == 0)
+#        error "Enable at-least one of 'FIPS'"
+#endif
+
+
+
+/** A71CH_AUTH : A71CH Authentication
+ *
+ * This settings is used by SSS-API based examples to connect using either plain or authenticated to the A71CH.
+ */
+
+/** Plain communication, not authenticated or encrypted */
+#define SSS_HAVE_A71CH_AUTH_NONE 1
+
+/** SCP03 enabled */
+#define SSS_HAVE_A71CH_AUTH_SCP03 0
+
+#if (( 0                             \
+    + SSS_HAVE_A71CH_AUTH_NONE       \
+    + SSS_HAVE_A71CH_AUTH_SCP03      \
+    ) > 1)
+#        error "Enable only one of 'A71CH_AUTH'"
+#endif
+
+
+#if (( 0                             \
+    + SSS_HAVE_A71CH_AUTH_NONE       \
+    + SSS_HAVE_A71CH_AUTH_SCP03      \
+    ) == 0)
+#        error "Enable at-least one of 'A71CH_AUTH'"
+#endif
+
 
 /* ====================================================================== *
  * == Feature selection/values ========================================== *
@@ -140,8 +347,8 @@
 /** SE05X Secure Element : KEY operations : GET Key */
 #define SSSFTR_SE05X_KEY_GET 1
 
-/** SE05X Secure Element : Authenticate via FastSCP */
-#define SSSFTR_SE05X_AuthFastSCP 1
+/** SE05X Secure Element : Authenticate via ECKey */
+#define SSSFTR_SE05X_AuthECKey 1
 
 /** SE05X Secure Element : Allow creation of user/authenticated session.
  *
@@ -202,10 +409,248 @@
 /** KEY operations */
 #define SSSFTR_SW_KEY            (SSSFTR_SW_KEY_SET + SSSFTR_SW_KEY_GET)
 
+
+#define SSS_HAVE_APPLET \
+ (SSS_HAVE_APPLET_A71CH | SSS_HAVE_APPLET_A71CL | SSS_HAVE_APPLET_A71CH_SIM | SSS_HAVE_APPLET_SE05X_A | SSS_HAVE_APPLET_SE05X_B | SSS_HAVE_APPLET_SE05X_C | SSS_HAVE_APPLET_SE05X_L | SSS_HAVE_APPLET_LOOPBACK)
+
+#define SSS_HAVE_APPLET_SE05X_IOT \
+ (SSS_HAVE_APPLET_SE05X_A | SSS_HAVE_APPLET_SE05X_B | SSS_HAVE_APPLET_SE05X_C)
+
+#define SSS_HAVE_MBEDTLS_ALT \
+ (SSS_HAVE_MBEDTLS_ALT_SSS | SSS_HAVE_MBEDTLS_ALT_A71CH)
+
+#define SSS_HAVE_HOSTCRYPTO_ANY \
+ (SSS_HAVE_HOSTCRYPTO_MBEDTLS | SSS_HAVE_HOSTCRYPTO_MBEDCRYPTO | SSS_HAVE_HOSTCRYPTO_OPENSSL | SSS_HAVE_HOSTCRYPTO_USER)
+
+#define SSS_HAVE_FIPS \
+ (SSS_HAVE_FIPS_SE050 | SSS_HAVE_FIPS_140_2 | SSS_HAVE_FIPS_140_3)
+
+
+/* Version checks GTE - Greater Than Or Equal To */
+#if SSS_HAVE_APPLET_SE05X_IOT
+#    if SSS_HAVE_SE05X_VER_05_08
+#        define SSS_HAVE_SE05X_VER_GTE_05_08 1
+#        define SSS_HAVE_SE05X_VER_GTE_05_06 1
+#        define SSS_HAVE_SE05X_VER_GTE_05_04 1
+#        define SSS_HAVE_SE05X_VER_GTE_05_02 1
+#        define SSS_HAVE_SE05X_VER_GTE_05_00 1
+#        define SSS_HAVE_SE05X_VER_GTE_04_12 1
+#        define SSS_HAVE_SE05X_VER_GTE_04_08 1
+#        define SSS_HAVE_SE05X_VER_GTE_04_04 1
+#        define SSS_HAVE_SE05X_VER_GTE_03_XX 1
+#    endif /* SSS_HAVE_SE05X_VER_05_08 */
+#    if SSS_HAVE_SE05X_VER_05_06
+#        define SSS_HAVE_SE05X_VER_GTE_05_08 0
+#        define SSS_HAVE_SE05X_VER_GTE_05_06 1
+#        define SSS_HAVE_SE05X_VER_GTE_05_04 1
+#        define SSS_HAVE_SE05X_VER_GTE_05_02 1
+#        define SSS_HAVE_SE05X_VER_GTE_05_00 1
+#        define SSS_HAVE_SE05X_VER_GTE_04_12 1
+#        define SSS_HAVE_SE05X_VER_GTE_04_08 1
+#        define SSS_HAVE_SE05X_VER_GTE_04_04 1
+#        define SSS_HAVE_SE05X_VER_GTE_03_XX 1
+#    endif /* SSS_HAVE_SE05X_VER_05_06 */
+#    if SSS_HAVE_SE05X_VER_05_04
+#        define SSS_HAVE_SE05X_VER_GTE_05_08 0
+#        define SSS_HAVE_SE05X_VER_GTE_05_06 0
+#        define SSS_HAVE_SE05X_VER_GTE_05_04 1
+#        define SSS_HAVE_SE05X_VER_GTE_05_02 1
+#        define SSS_HAVE_SE05X_VER_GTE_05_00 1
+#        define SSS_HAVE_SE05X_VER_GTE_04_12 1
+#        define SSS_HAVE_SE05X_VER_GTE_04_08 1
+#        define SSS_HAVE_SE05X_VER_GTE_04_04 1
+#        define SSS_HAVE_SE05X_VER_GTE_03_XX 1
+#    endif /* SSS_HAVE_SE05X_VER_05_04 */
+#    if SSS_HAVE_SE05X_VER_05_02
+#        define SSS_HAVE_SE05X_VER_GTE_05_08 0
+#        define SSS_HAVE_SE05X_VER_GTE_05_06 0
+#        define SSS_HAVE_SE05X_VER_GTE_05_04 0
+#        define SSS_HAVE_SE05X_VER_GTE_05_02 1
+#        define SSS_HAVE_SE05X_VER_GTE_05_00 1
+#        define SSS_HAVE_SE05X_VER_GTE_04_12 1
+#        define SSS_HAVE_SE05X_VER_GTE_04_08 1
+#        define SSS_HAVE_SE05X_VER_GTE_04_04 1
+#        define SSS_HAVE_SE05X_VER_GTE_03_XX 1
+#    endif /* SSS_HAVE_SE05X_VER_05_02 */
+#    if SSS_HAVE_SE05X_VER_05_00
+#        define SSS_HAVE_SE05X_VER_GTE_05_08 0
+#        define SSS_HAVE_SE05X_VER_GTE_05_06 0
+#        define SSS_HAVE_SE05X_VER_GTE_05_04 0
+#        define SSS_HAVE_SE05X_VER_GTE_05_02 0
+#        define SSS_HAVE_SE05X_VER_GTE_05_00 1
+#        define SSS_HAVE_SE05X_VER_GTE_04_12 1
+#        define SSS_HAVE_SE05X_VER_GTE_04_08 1
+#        define SSS_HAVE_SE05X_VER_GTE_04_04 1
+#        define SSS_HAVE_SE05X_VER_GTE_03_XX 1
+#    endif /* SSS_HAVE_SE05X_VER_05_00 */
+#    if SSS_HAVE_SE05X_VER_04_12
+#        define SSS_HAVE_SE05X_VER_GTE_05_08 0
+#        define SSS_HAVE_SE05X_VER_GTE_05_06 0
+#        define SSS_HAVE_SE05X_VER_GTE_05_04 0
+#        define SSS_HAVE_SE05X_VER_GTE_05_02 0
+#        define SSS_HAVE_SE05X_VER_GTE_05_00 0
+#        define SSS_HAVE_SE05X_VER_GTE_04_12 1
+#        define SSS_HAVE_SE05X_VER_GTE_04_08 1
+#        define SSS_HAVE_SE05X_VER_GTE_04_04 1
+#        define SSS_HAVE_SE05X_VER_GTE_03_XX 1
+#    endif /* SSS_HAVE_SE05X_VER_04_12 */
+#    if SSS_HAVE_SE05X_VER_04_08
+#        define SSS_HAVE_SE05X_VER_GTE_05_08 0
+#        define SSS_HAVE_SE05X_VER_GTE_05_06 0
+#        define SSS_HAVE_SE05X_VER_GTE_05_04 0
+#        define SSS_HAVE_SE05X_VER_GTE_05_02 0
+#        define SSS_HAVE_SE05X_VER_GTE_05_00 0
+#        define SSS_HAVE_SE05X_VER_GTE_04_12 0
+#        define SSS_HAVE_SE05X_VER_GTE_04_08 1
+#        define SSS_HAVE_SE05X_VER_GTE_04_04 1
+#        define SSS_HAVE_SE05X_VER_GTE_03_XX 1
+#    endif /* SSS_HAVE_SE05X_VER_04_08 */
+#    if SSS_HAVE_SE05X_VER_04_04
+#        define SSS_HAVE_SE05X_VER_GTE_05_08 0
+#        define SSS_HAVE_SE05X_VER_GTE_05_06 0
+#        define SSS_HAVE_SE05X_VER_GTE_05_04 0
+#        define SSS_HAVE_SE05X_VER_GTE_05_02 0
+#        define SSS_HAVE_SE05X_VER_GTE_05_00 0
+#        define SSS_HAVE_SE05X_VER_GTE_04_12 0
+#        define SSS_HAVE_SE05X_VER_GTE_04_08 0
+#        define SSS_HAVE_SE05X_VER_GTE_04_04 1
+#        define SSS_HAVE_SE05X_VER_GTE_03_XX 1
+#    endif /* SSS_HAVE_SE05X_VER_04_04 */
+#    if SSS_HAVE_SE05X_VER_03_XX
+#        define SSS_HAVE_SE05X_VER_GTE_05_08 0
+#        define SSS_HAVE_SE05X_VER_GTE_05_06 0
+#        define SSS_HAVE_SE05X_VER_GTE_05_04 0
+#        define SSS_HAVE_SE05X_VER_GTE_05_02 0
+#        define SSS_HAVE_SE05X_VER_GTE_05_00 0
+#        define SSS_HAVE_SE05X_VER_GTE_04_12 0
+#        define SSS_HAVE_SE05X_VER_GTE_04_08 0
+#        define SSS_HAVE_SE05X_VER_GTE_04_04 0
+#        define SSS_HAVE_SE05X_VER_GTE_03_XX 1
+#    endif /* SSS_HAVE_SE05X_VER_03_XX */
+#else //SSS_HAVE_APPLET_SE05X_IOT
+#   define SSS_HAVE_SE05X_VER_GTE_03_XX 0
+#   define SSS_HAVE_SE05X_VER_GTE_04_04 0
+#   define SSS_HAVE_SE05X_VER_GTE_04_08 0
+#   define SSS_HAVE_SE05X_VER_GTE_04_12 0
+#   define SSS_HAVE_SE05X_VER_GTE_05_00 0
+#   define SSS_HAVE_SE05X_VER_GTE_05_02 0
+#   define SSS_HAVE_SE05X_VER_GTE_05_04 0
+#   define SSS_HAVE_SE05X_VER_GTE_05_06 0
+#   define SSS_HAVE_SE05X_VER_GTE_05_08 0
+#endif // SSS_HAVE_APPLET_SE05X_IOT
+/** Deprecated items. Used here for backwards compatibility. */
+
+#define WithApplet_SE05X (SSS_HAVE_APPLET_SE05X_IOT)
+#define WithApplet_SE050_A (SSS_HAVE_APPLET_SE05X_A)
+#define WithApplet_SE050_B (SSS_HAVE_APPLET_SE05X_B)
+#define WithApplet_SE050_C (SSS_HAVE_APPLET_SE05X_C)
+#define SSS_HAVE_SE050_A (SSS_HAVE_APPLET_SE05X_A)
+#define SSS_HAVE_SE050_B (SSS_HAVE_APPLET_SE05X_B)
+#define SSS_HAVE_SE050_C (SSS_HAVE_APPLET_SE05X_C)
+#define SSS_HAVE_SE05X (SSS_HAVE_APPLET_SE05X_IOT)
+#define SSS_HAVE_SE (SSS_HAVE_APPLET)
+#define SSS_HAVE_LOOPBACK (SSS_HAVE_APPLET_LOOPBACK)
+#define SSS_HAVE_ALT (SSS_HAVE_MBEDTLS_ALT)
+#define WithApplet_None (SSS_HAVE_APPLET_NONE)
+#define SSS_HAVE_None (SSS_HAVE_APPLET_NONE)
+#define WithApplet_A71CH (SSS_HAVE_APPLET_A71CH)
+#define SSS_HAVE_A71CH (SSS_HAVE_APPLET_A71CH)
+#define WithApplet_A71CL (SSS_HAVE_APPLET_A71CL)
+#define SSS_HAVE_A71CL (SSS_HAVE_APPLET_A71CL)
+#define WithApplet_A71CH_SIM (SSS_HAVE_APPLET_A71CH_SIM)
+#define SSS_HAVE_A71CH_SIM (SSS_HAVE_APPLET_A71CH_SIM)
+#define WithApplet_SE05X_A (SSS_HAVE_APPLET_SE05X_A)
+#define SSS_HAVE_SE05X_A (SSS_HAVE_APPLET_SE05X_A)
+#define WithApplet_SE05X_B (SSS_HAVE_APPLET_SE05X_B)
+#define SSS_HAVE_SE05X_B (SSS_HAVE_APPLET_SE05X_B)
+#define WithApplet_SE05X_C (SSS_HAVE_APPLET_SE05X_C)
+#define SSS_HAVE_SE05X_C (SSS_HAVE_APPLET_SE05X_C)
+#define WithApplet_SE05X_L (SSS_HAVE_APPLET_SE05X_L)
+#define SSS_HAVE_SE05X_L (SSS_HAVE_APPLET_SE05X_L)
+#define WithApplet_LoopBack (SSS_HAVE_APPLET_LOOPBACK)
+#define SSS_HAVE_LoopBack (SSS_HAVE_APPLET_LOOPBACK)
+#define SSS_HAVE_MBEDTLS (SSS_HAVE_HOSTCRYPTO_MBEDTLS)
+#define SSS_HAVE_MBEDCRYPTO (SSS_HAVE_HOSTCRYPTO_MBEDCRYPTO)
+#define SSS_HAVE_OPENSSL (SSS_HAVE_HOSTCRYPTO_OPENSSL)
+#define SSS_HAVE_USER (SSS_HAVE_HOSTCRYPTO_USER)
+#define SSS_HAVE_NONE (SSS_HAVE_HOSTCRYPTO_NONE)
+#define SSS_HAVE_ALT_SSS (SSS_HAVE_MBEDTLS_ALT_SSS)
+#define SSS_HAVE_ALT_A71CH (SSS_HAVE_MBEDTLS_ALT_A71CH)
+#define SSS_HAVE_ALT_NONE (SSS_HAVE_MBEDTLS_ALT_NONE)
+#define SSS_HAVE_SE05X_Auth_None (SSS_HAVE_SE05X_AUTH_NONE)
+#define SSS_HAVE_SE05X_Auth_UserID (SSS_HAVE_SE05X_AUTH_USERID)
+#define SSS_HAVE_SE05X_Auth_PlatfSCP03 (SSS_HAVE_SE05X_AUTH_PLATFSCP03)
+#define SSS_HAVE_SE05X_Auth_AESKey (SSS_HAVE_SE05X_AUTH_AESKEY)
+#define SSS_HAVE_SE05X_Auth_ECKey (SSS_HAVE_SE05X_AUTH_ECKEY)
+#define SSS_HAVE_SE05X_Auth_UserID_PlatfSCP03 (SSS_HAVE_SE05X_AUTH_USERID_PLATFSCP03)
+#define SSS_HAVE_SE05X_Auth_AESKey_PlatfSCP03 (SSS_HAVE_SE05X_AUTH_AESKEY_PLATFSCP03)
+#define SSS_HAVE_SE05X_Auth_ECKey_PlatfSCP03 (SSS_HAVE_SE05X_AUTH_ECKEY_PLATFSCP03)
+
 /* # CMake Features : END */
+
+/* ========= Miscellaneous values : START =================== */
+
+/* ECC Mode is available */
+#define SSS_HAVE_ECC 1
+
+/* RSA is available */
+#define SSS_HAVE_RSA 0
+
+/* TPM BARRETO_NAEHRIG Curve is enabled */
+#define SSS_HAVE_TPM_BN 0
+
+/* Edwards Curve is enabled */
+#define SSS_HAVE_EC_ED 0
+
+/* Montgomery Curve is enabled */
+#define SSS_HAVE_EC_MONT 1
+
+/* TLS handshake support on SE is enabled */
+#define SSS_HAVE_TLS_HANDSHAKE 0
+
+/* Import Export Key is enabled */
+#define SSS_HAVE_IMPORT 0
+
+/* With NXP NFC Reader Library */
+#define SSS_HAVE_NXPNFCRDLIB 0
+
+#define SSS_HAVE_A71XX \
+    (SSS_HAVE_APPLET_A71CH | SSS_HAVE_APPLET_A71CH_SIM)
+
+#define SSS_HAVE_SSCP  (SSS_HAVE_A71XX)
 
 /* For backwards compatibility */
 #define SSS_HAVE_TESTCOUNTERPART (SSSFTR_SW_TESTCOUNTERPART)
+
+/* ========= Miscellaneous values : END ===================== */
+
+/* ========= Calculated values : START ====================== */
+
+/* Should we expose, SSS APIs */
+#define SSS_HAVE_SSS ( 0             \
+    + SSS_HAVE_SSCP                  \
+    + SSS_HAVE_APPLET_SE05X_IOT      \
+    + SSS_HAVE_HOSTCRYPTO_OPENSSL    \
+    + SSS_HAVE_HOSTCRYPTO_MBEDCRYPTO \
+    + SSS_HAVE_HOSTCRYPTO_MBEDTLS    \
+    + SSS_HAVE_HOSTCRYPTO_USER       \
+    )
+
+/* MBEDCRYPTO is superset of MBEDTLS and exposing that way */
+#if SSS_HAVE_HOSTCRYPTO_MBEDCRYPTO
+#   undef SSS_HAVE_MBEDTLS
+#   undef SSS_HAVE_HOSTCRYPTO_MBEDTLS
+
+#   define SSS_HAVE_MBEDTLS 1
+#   define SSS_HAVE_HOSTCRYPTO_MBEDTLS 1
+#endif // SSS_HAVE_HOSTCRYPTO_MBEDCRYPTO
+
+#if SSS_HAVE_HOSTCRYPTO_NONE
+#   undef SSSFTR_SE05X_AuthSession
+#   define SSSFTR_SE05X_AuthSession 0
+#endif
+
+/* ========= Calculated values : END ======================== */
 
 /* clang-format on */
 

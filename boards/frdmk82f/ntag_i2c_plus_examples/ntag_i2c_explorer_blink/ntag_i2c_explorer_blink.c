@@ -20,15 +20,15 @@
  ******************************************************************************/
 #ifdef I2C_CMSIS
 #define NTAG_I2C_MASTER_BASEADDR &Driver_I2C3
-#define I2C_MASTER_IRQ I2C3_IRQn
+#define I2C_MASTER_IRQ           I2C3_IRQn
 #endif
 
 #ifdef I2C_FSL
 #define NTAG_I2C_MASTER_BASEADDR I2C3
-#define I2C_MASTER_CLK_SRC I2C3_CLK_SRC
+#define I2C_MASTER_CLK_SRC       I2C3_CLK_SRC
 #endif
 
-#define BOARD_LED_GPIO BOARD_LED_RED_GPIO
+#define BOARD_LED_GPIO     BOARD_LED_RED_GPIO
 #define BOARD_LED_GPIO_PIN BOARD_LED_RED_GPIO_PIN
 
 

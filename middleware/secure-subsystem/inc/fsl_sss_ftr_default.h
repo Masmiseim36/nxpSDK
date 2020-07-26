@@ -1,9 +1,9 @@
 /*
-* Copyright 2018 NXP
-* All rights reserved.
-*
-* SPDX-License-Identifier: BSD-3-Clause
-*/
+ * Copyright 2018 NXP
+ * All rights reserved.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
 
 #ifndef SSS_APIS_INC_FSL_SSS_FTR_DEFAULT_H_
 #define SSS_APIS_INC_FSL_SSS_FTR_DEFAULT_H_

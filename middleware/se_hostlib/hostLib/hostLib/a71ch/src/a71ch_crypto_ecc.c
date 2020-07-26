@@ -1,9 +1,8 @@
-/**
-* @file a71ch_crypto_ecc.c
+/*
 * @author NXP Semiconductors
 * @version 1.2
 * @par License
-* Copyright 2017 NXP
+* Copyright 2017,2020 NXP
 *
 * This software is owned or controlled by NXP and may only be used
 * strictly in accordance with the applicable license terms.  By expressly
@@ -13,14 +12,17 @@
 * you do not agree to be bound by the applicable license terms, then you
 * may not retain, install, activate or otherwise use the software.
 *
-* @par Description
-* This file wraps the ECC cryptographic functionality of the A71CH module.
 * @par History
 * 1.0   2016-Aug-26: Initial version
 * 1.1   2017-Nov-30: Adding function A71_EccRestrictedSign
 * 1.2   2018-Dec-12: Modified implementation of A71_EccSign to adapt reported size of ECDSA signature
 *
 *****************************************************************************/
+/**
+* @file a71ch_crypto_ecc.c
+* @par Description
+* Wrap the ECC cryptographic functionality of the A71CH.
+*/
 #include <stdio.h>
 
 #include "a71ch_api.h"
@@ -55,7 +57,7 @@ U16 A71_GenerateEccKeyPair(SST_Index_t index)
     AllocateAPDUBuffer(pApdu);
     SetApduHeader(pApdu, USE_STANDARD_APDU_LEN);
 
-    rv = (U16)scp_Transceive(pApdu, SCP_MODE);
+    rv = (U16)scp_Transceive(NULL, pApdu, SCP_MODE);
     if (rv == SMCOM_OK)
     {
         // No response data expected
@@ -150,7 +152,7 @@ U16 A71_GenerateEccKeyPairWithCode(SST_Index_t index, const U8 *code, U16 codeLe
 
     smApduAppendCmdData(pApdu, code, codeLen);
 
-    rv = (U16)scp_Transceive(pApdu, SCP_MODE);
+    rv = (U16)scp_Transceive(NULL, pApdu, SCP_MODE);
     if (rv == SMCOM_OK)
     {
         // No response data expected
@@ -217,7 +219,7 @@ static U16 A71_EccSign_Local(SST_Index_t index, const U8 *pHash, U16 hashLen, U8
 
     smApduAppendCmdData(pApdu, pHash, hashLen);
 
-    rv = (U16)scp_Transceive(pApdu, SCP_MODE);
+    rv = (U16)scp_Transceive(NULL, pApdu, SCP_MODE);
     if (rv == SMCOM_OK)
     {
         rv = smGetSw(pApdu, &isOk);
@@ -305,7 +307,7 @@ U16 A71_EccRestrictedSign(SST_Index_t index, const U8 *updateBytes, U16 updateBy
 
     smApduAppendCmdData(pApdu, updateBytes, updateBytesLen);
 
-    rv = (U16)scp_Transceive(pApdu, SCP_MODE);
+    rv = (U16)scp_Transceive(NULL, pApdu, SCP_MODE);
     if (rv == SMCOM_OK)
     {
         U8 result = 0x00;
@@ -373,7 +375,7 @@ U16 A71_EccVerify(SST_Index_t index, const U8 *pHash, U16 hashLen, const U8 *pSi
     smApduAppendCmdData(pApdu, pHash, hashLen);
     smApduAppendCmdData(pApdu, pSignature, signatureLen);
 
-    rv = (U16)scp_Transceive(pApdu, SCP_MODE);
+    rv = (U16)scp_Transceive(NULL, pApdu, SCP_MODE);
     if (rv == SMCOM_OK)
     {
         U8 result = AX_VERIFY_FAILURE;
@@ -437,7 +439,7 @@ U16 A71_EcdhGetSharedSecret(U8 index, const U8 *pOtherPublicKey, U16 otherPublic
 
     smApduAppendCmdData(pApdu, pOtherPublicKey, otherPublicKeyLen);
 
-    rv = (U16)scp_Transceive(pApdu, SCP_MODE);
+    rv = (U16)scp_Transceive(NULL, pApdu, SCP_MODE);
     if (rv == SMCOM_OK)
     {
         rv = smGetSw(pApdu, &isOk);

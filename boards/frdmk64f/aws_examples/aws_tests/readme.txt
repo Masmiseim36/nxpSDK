@@ -4,15 +4,15 @@ Amazon FreeRTOS Qualification Tests
 
 The Amazon FreeRTOS Qualification (AFQ) defines a process that the author of an Amazon FreeRTOS port must follow,
 and a set of tests that the port must pass, in order for the port to be described as 'qualified by Amazon'
-For more information see: <SDK_Install>/rtos/amazon-freertos/tests/Amazon FreeRTOS Qualification Developer Guide.pdf
+For more information see: <SDK_Install>/rtos/freertos/tests/Amazon FreeRTOS Qualification Developer Guide.pdf
 
 
 Toolchain supported
 ===================
-- Keil MDK  5.29
-- GCC ARM Embedded  8.3.1
-- IAR embedded Workbench  8.40.2
-- MCUXpresso  11.1.0
+- Keil MDK  5.30
+- GCC ARM Embedded  9.2.1
+- IAR embedded Workbench  8.50.1
+- MCUXpresso  11.2.0
 
 Hardware requirements
 =====================

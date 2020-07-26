@@ -1,20 +1,20 @@
 /*
  * Copyright (c) 2013-2015 Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP.
+ * Copyright 2016-2019 NXP.
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "bootloader_common.h"
-#include "property/property.h"
-#include "memory/memory.h"
-#include "packet/command_packet.h"
-#include "packet/serial_packet.h"
-#include "bootloader/bl_peripheral.h"
-#include "bootloader/bl_context.h"
-#include "bootloader/bl_version.h"
-#include "utilities/fsl_assert.h"
+#include "property.h"
+#include "memory.h"
+#include "command_packet.h"
+#include "serial_packet.h"
+#include "bl_peripheral.h"
+#include "bl_context.h"
+#include "bl_version.h"
+#include "fsl_assert.h"
 #include <string.h>
 #if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
 #include "fsl_flash.h"
@@ -24,7 +24,7 @@
 #include "qspi.h"
 #endif // BL_FEATURE_QSPI_MODULE
 #if BL_FEATURE_CRC_CHECK
-#include "bootloader/bl_app_crc_check.h"
+#include "bl_app_crc_check.h"
 #endif // BL_FEATURE_CRC_CHECK
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -43,7 +43,7 @@
 #define __RAM_END ((uint32_t)__section_end("ApplicationRam") - 1)
 #define __ROM_START ((uint32_t)__section_begin(".intvec"))
 #define __ROM_END ((uint32_t)__section_end("ApplicationFlash"))
-#elif(defined(__CC_ARM)) // MDK
+#elif(defined(__CC_ARM)) || (defined(__ARMCC_VERSION)) // MDK
 extern uint32_t Image$$VECTOR_ROM$$Base[];
 extern uint32_t Load$$RW_m_data$$Limit[];
 extern char Image$$VECTOR_RAM$$Base[];
@@ -633,7 +633,7 @@ status_t bootloader_get_external_memory_properties(uint32_t memoryId, external_m
         return kStatus_InvalidArgument;
     }
 
-    external_memory_property_store_t propertyStore;
+    external_memory_property_store_t propertyStore = { 0 };
     uint32_t memoryInitStatus;
     map->get(kExternalMemoryPropertyTag_InitStatus, &memoryInitStatus);
     if (memoryInitStatus != kStatus_Success)

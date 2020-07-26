@@ -93,6 +93,8 @@ typedef enum _sscp_command
     kSSCP_DERIVE_KEY,
     kSSCP_ASYMM_DH_DERIVE_KEY,
     kSSCP_GEN_RANDOM_NUM,
+    kSSCP_GET_UID,
+    kSSCP_GET_CERT_UID,
     kSSCP_CMD_LAST
 } sscp_command_t;
 

@@ -77,7 +77,7 @@
       <files mask="MK82FN256xxx15_qspi_alias.scf"/>
     </source>
     <source path="boards/frdmk82f/demo_apps/hello_world_qspi_alias/startup/arm" target_path="startup" type="asm_include" toolchain="mdk">
-      <files mask="startup_MK82F25615.s"/>
+      <files mask="startup_MK82F25615.S"/>
     </source>
     <source path="boards/frdmk82f/demo_apps/hello_world_qspi_alias/startup/gcc" target_path="startup" type="asm_include" toolchain="armgcc">
       <files mask="startup_MK82F25615.S"/>

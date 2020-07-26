@@ -1,6 +1,7 @@
 /*
  * Amazon FreeRTOS V1.4.8
  * Copyright (C) 2018 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
+ * Copyright 2020 NXP
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -31,6 +32,12 @@
 
 #ifndef _AWS_PKCS11_CONFIG_H_
 #define _AWS_PKCS11_CONFIG_H_
+
+#define STR_HELPER(x) #x
+#define STR(x) STR_HELPER(x)
+
+#define CLIENT_KEY_PAIR_INDEX 0x0F000001 /* Random KeyID for PKCS#11 Testing */
+#define CLIENT_CERT_INDEX 0x0F000002 /* Random KeyID for PKCS#11 Testing */
 
 /* A non-standard version of C_INITIALIZE should be used by this port. */
 #define pkcs11configC_INITIALIZE_ALT
@@ -89,7 +96,10 @@
  * Private key for connection to AWS IoT endpoint.  The corresponding
  * public key should be registered with the AWS IoT endpoint.
  */
-#define pkcs11configLABEL_DEVICE_PRIVATE_KEY_FOR_TLS       "Device Priv TLS Key"
+
+/* Define Object labels with keyId. PKCS#11 implementation should parse it. */
+// #define pkcs11configLABEL_DEVICE_PRIVATE_KEY_FOR_TLS       "Device Priv TLS Key"
+#define pkcs11configLABEL_DEVICE_PRIVATE_KEY_FOR_TLS       "sss:" STR(CLIENT_KEY_PAIR_INDEX)
 
 /**
  * @brief The PKCS #11 label for device public key.
@@ -103,7 +113,10 @@
  *
  * Device certificate corresponding to pkcs11configLABEL_DEVICE_PRIVATE_KEY_FOR_TLS.
  */
-#define pkcs11configLABEL_DEVICE_CERTIFICATE_FOR_TLS       "Device Cert"
+
+/* Define Object labels with keyId. PKCS#11 implementation should parse it. */
+// #define pkcs11configLABEL_DEVICE_CERTIFICATE_FOR_TLS       "Device Cert"
+#define pkcs11configLABEL_DEVICE_CERTIFICATE_FOR_TLS       "sss:" STR(CLIENT_CERT_INDEX)
 
 /**
  * @brief The PKCS #11 label for the object to be used for code verification.

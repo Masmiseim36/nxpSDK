@@ -31,12 +31,12 @@
 #include <https.h>
 
 #define DEFAULT_PACKET_SIZE 1400
-#define CLIENT_WAIT_TIME 1000
+#define CLIENT_WAIT_TIME    1000
 
 #define HTTPS_DEFAULT_PORT 443
 
-#define HTTPD_RESP_200 "200 OK"
-#define HTTPD_RESP_404 "404 Not found"
+#define HTTPD_RESP_200      "200 OK"
+#define HTTPD_RESP_404      "404 Not found"
 #define HTTPD_RESP_PROTOCOL "HTTP/1.0"
 
 #define HTTPS_PRINTF(args...) // no printing...

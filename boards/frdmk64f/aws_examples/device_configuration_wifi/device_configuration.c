@@ -17,23 +17,23 @@
 #include "fnet_mdns.h"
 
 #define FILENAME_AWS_THING_NAME "aws_thing_name.dat"
-#define FILENAME_AWS_ENDPOINT "aws_endpoint.dat"
-#define FILENAME_MDNS_HOSTNAME "mdns_hostname.dat"
+#define FILENAME_AWS_ENDPOINT   "aws_endpoint.dat"
+#define FILENAME_MDNS_HOSTNAME  "mdns_hostname.dat"
 #define FILENAME_LOGIN_PASSWORD "login_password.dat"
-#define FILENAME_WIFI_PARAMS "wifi_params.dat"
+#define FILENAME_WIFI_PARAMS    "wifi_params.dat"
 
 #define MDNS_SERVICE_TYPE "_sslserver._tcp"
 #define MDNS_SERVICE_PORT FNET_HTONS(443)
 
-#define DEFAULT_MDNS_HOSTNAME "aws-iot-device"
+#define DEFAULT_MDNS_HOSTNAME  "aws-iot-device"
 #define DEFAULT_LOGIN_PASSWORD "admin"
 
-#define MAX_LENGTH_AWS_ENDPOINT 64
+#define MAX_LENGTH_AWS_ENDPOINT   64
 #define MAX_LENGTH_AWS_THING_NAME 32
 #define MAX_LENGTH_LOGIN_PASSWORD 32
-#define MAX_LENGTH_HOSTNAME 32
-#define MAX_LENGTH_MDNS_KEY_VAL 32
-#define MAX_LENGTH_DEVICE_INFO 128
+#define MAX_LENGTH_HOSTNAME       32
+#define MAX_LENGTH_MDNS_KEY_VAL   32
+#define MAX_LENGTH_DEVICE_INFO    128
 
 //#define DEV_CFG_DEBUG
 

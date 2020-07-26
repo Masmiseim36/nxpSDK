@@ -16,7 +16,7 @@
  * Definitions
  ******************************************************************************/
 #define PIT_IRQ_HANDLER PIT0_IRQHandler
-#define PIT_IRQ_ID PIT0_IRQn
+#define PIT_IRQ_ID      PIT0_IRQn
 /* Get source clock for PIT driver */
 #define PIT_SOURCE_CLOCK CLOCK_GetFreq(kCLOCK_BusClk)
 
@@ -87,11 +87,7 @@ void PIT_IRQ_HANDLER(void)
             encoder_direction = false;
         }
     }
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 /*!

@@ -8,9 +8,10 @@
 #ifndef __USB_AUDIO_H__
 #define __USB_AUDIO_H__ 1
 
+#include "usb_device_audio.h" 
 /*******************************************************************************
-* Definitions
-******************************************************************************/
+ * Definitions
+ ******************************************************************************/
 #define DATA_BUFF_SIZE (AUDIO_ENDPOINT_PACKET_SIZE)
 
 typedef struct _usb_audio_generator_struct
@@ -45,6 +46,14 @@ typedef struct _usb_audio_generator_struct
     uint8_t minSamplingFrequency[3];
     uint8_t maxSamplingFrequency[3];
     uint8_t resSamplingFrequency[3];
+#if (USB_DEVICE_CONFIG_AUDIO_CLASS_2_0)
+    uint8_t curMute20;
+    uint8_t curClockValid;
+    uint8_t curVolume20[2];
+    uint32_t curSampleFrequency;
+    usb_device_control_range_layout3_struct_t freqControlRange;
+    usb_device_control_range_layout2_struct_t volumeControlRange;
+#endif
     uint8_t currentConfiguration;
     uint8_t currentInterfaceAlternateSetting[USB_AUDIO_GENERATOR_INTERFACE_COUNT];
     uint8_t speed;

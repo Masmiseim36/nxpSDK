@@ -1,5 +1,5 @@
 ..
-    Copyright 2019 NXP
+    Copyright 2019,2020 NXP
 
     This software is owned or controlled by NXP and may only be used
     strictly in accordance with the applicable license terms.  By expressly
@@ -17,8 +17,8 @@
  GCP Demo for KSDK
 =======================================================================
 
-This demo demonstrates connection to Google Cloud Platform using 
-pre-provisioned device credentials and publish/subscribe procedure 
+This demo demonstrates connection to Google Cloud Platform using
+pre-provisioned device credentials and publish/subscribe procedure
 using MQTT.
 
 Prerequisites
@@ -33,7 +33,7 @@ Prerequisites
 Using WiFi with LPC55S
 =======================================================================
 
-WiFi shield Silex-2401 is supported with LPCS55S. Mount the WiFi shield on to the 
+WiFi shield Silex-2401 is supported with LPCS55S. Mount the WiFi shield on to the
 arduino stackable headers.
 
 
@@ -42,20 +42,16 @@ Creating and updating device keys and certificates to SE
 
 1) Complete :numref:`cli-doc-pre-steps` :ref:`cli-doc-pre-steps`
 
-#) call::
-
-    call venv\Scripts\activate.bat
-    cd Provisioning
-
 #) Check the vcom port number
 
-#)  To create certificates on windows and provision, call::    
+#)  To create certificates on windows and provision, go to ``simw-top/pycli`` directory and call::
 
-        cd simw-top/pycli/Provisioning
-        python GenerateGCPCredentials.py
+        call venv\Scripts\activate.bat
+        cd Provisioning
+        python GenerateGCPCredentials.py <COM_PORT>
         python ResetAndUpdate_GCP.py <COM_PORT>
 
-#) Certificates and Keys are generated at simw-top/pycli/Provisioning/gcp
+#) Certificates and Keys are generated at ``simw-top/pycli/Provisioning/gcp``
 
 
 .. _prepare-gcp-cloud:

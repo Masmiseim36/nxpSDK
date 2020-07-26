@@ -14,7 +14,7 @@
  ******************************************************************************/
 
 #if (defined(USB_HOST_CONFIG_BATTERY_CHARGER) && (USB_HOST_CONFIG_BATTERY_CHARGER > 0U)) && \
-        (defined(FSL_FEATURE_SOC_USBHSDCD_COUNT) && (FSL_FEATURE_SOC_USBHSDCD_COUNT > 0U))
+    (defined(FSL_FEATURE_SOC_USBHSDCD_COUNT) && (FSL_FEATURE_SOC_USBHSDCD_COUNT > 0U))
 #define USB_HOST_APP_CHARGER_TYPE_SWITCH (1)
 #endif
 
@@ -64,12 +64,12 @@ typedef struct _usb_host_mouse_instance
  ******************************************************************************/
 
 /*!
-* @brief host mouse task function.
-*
-* This function implements the host mouse action, it is used to create task.
-*
-* @param param   the host mouse instance pointer.
-*/
+ * @brief host mouse task function.
+ *
+ * This function implements the host mouse action, it is used to create task.
+ *
+ * @param param   the host mouse instance pointer.
+ */
 extern void USB_HostHidMouseTask(void *param);
 
 /*!

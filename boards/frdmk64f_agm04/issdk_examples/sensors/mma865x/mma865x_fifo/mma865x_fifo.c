@@ -33,8 +33,8 @@
 // Macros
 //-----------------------------------------------------------------------
 /* The watermark value configured for MMA865x FIFO Buffer. */
-#define FIFO_WATERMARK (16)         /* Must be between 1 - 32 */
-#define MMA865x_ACCEL_DATA_SIZE (6) /* 2 byte X,Y,Z Axis Data each. */
+#define FIFO_WATERMARK          (16) /* Must be between 1 - 32 */
+#define MMA865x_ACCEL_DATA_SIZE (6)  /* 2 byte X,Y,Z Axis Data each. */
 
 //-----------------------------------------------------------------------
 // Constants

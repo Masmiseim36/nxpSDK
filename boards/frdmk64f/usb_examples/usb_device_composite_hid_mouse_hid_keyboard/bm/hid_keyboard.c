@@ -67,7 +67,7 @@ static usb_status_t USB_DeviceHidKeyboardAction(void)
             x--;
             if (x < 1U)
             {
-                dir = DOWN;
+                dir                              = DOWN;
                 s_UsbDeviceHidKeyboard.buffer[2] = KEY_PAGEDOWN;
             }
             break;
@@ -127,7 +127,7 @@ usb_status_t USB_DeviceHidKeyboardSetInterface(class_handle_t handle, uint8_t in
 
 usb_status_t USB_DeviceHidKeyboardInit(usb_device_composite_struct_t *deviceComposite)
 {
-    s_UsbDeviceComposite = deviceComposite;
+    s_UsbDeviceComposite          = deviceComposite;
     s_UsbDeviceHidKeyboard.buffer = s_KeyboardBuffer;
     return kStatus_USB_Success;
 }

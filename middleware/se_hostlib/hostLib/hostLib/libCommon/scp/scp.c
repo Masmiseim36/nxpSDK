@@ -3,7 +3,7 @@
  * @author NXP Semiconductors
  * @version 1.0
  * @par License
- * Copyright 2016 NXP
+ * Copyright 2016,2020 NXP
  *
  * This software is owned or controlled by NXP and may only be used
  * strictly in accordance with the applicable license terms.  By expressly
@@ -37,10 +37,10 @@
 #include "fsl_sss_ftr_default.h"
 #endif
 
-#if (SSS_HAVE_SE05X) || (SSS_HAVE_LOOPBACK)
+#if ! (SSS_HAVE_A71CH)
 
 
-U32 scp_Transceive(apdu_t * pApdu, scp_CommandType_t type)
+U32 scp_Transceive(void *conn_ctx, apdu_t * pApdu, scp_CommandType_t type)
 {
     U32 rv = ERR_COMM_ERROR;
 
@@ -49,10 +49,9 @@ U32 scp_Transceive(apdu_t * pApdu, scp_CommandType_t type)
     else
         smApduAdaptLcLe(pApdu, pApdu->lc, 0);
 
-    rv = smCom_Transceive(pApdu);
+    rv = smCom_Transceive(conn_ctx, pApdu);
 
     return rv;
 }
 
 #endif  // (SSS_HAVE_SE05X) || (SSS_HAVE_LOOPBACK)
-

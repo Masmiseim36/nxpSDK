@@ -86,19 +86,19 @@ USB_GLOBAL USB_RAM_ADDRESS_ALIGNMENT(USB_DATA_ALIGN_SIZE) static usb_device_vide
 static usb_status_t USB_DeviceVideoAllocateHandle(usb_device_video_struct_t **handle)
 {
     uint32_t count;
-    OSA_SR_ALLOC();
+    USB_OSA_SR_ALLOC();
 
-    OSA_ENTER_CRITICAL();
+    USB_OSA_ENTER_CRITICAL();
     for (count = 0U; count < USB_DEVICE_CONFIG_VIDEO; count++)
     {
         if (NULL == s_UsbDeviceVideoHandle[count].handle)
         {
             *handle = &s_UsbDeviceVideoHandle[count];
-            OSA_EXIT_CRITICAL();
+            USB_OSA_EXIT_CRITICAL();
             return kStatus_USB_Success;
         }
     }
-    OSA_EXIT_CRITICAL();
+    USB_OSA_EXIT_CRITICAL();
     return kStatus_USB_Busy;
 }
 
@@ -113,15 +113,15 @@ static usb_status_t USB_DeviceVideoAllocateHandle(usb_device_video_struct_t **ha
  */
 static usb_status_t USB_DeviceVideoFreeHandle(usb_device_video_struct_t *handle)
 {
-    OSA_SR_ALLOC();
+    USB_OSA_SR_ALLOC();
 
-    OSA_ENTER_CRITICAL();
+    USB_OSA_ENTER_CRITICAL();
     handle->handle           = NULL;
     handle->configStruct     = (usb_device_class_config_struct_t *)NULL;
     handle->configuration    = 0U;
     handle->controlAlternate = 0U;
     handle->streamAlternate  = 0U;
-    OSA_EXIT_CRITICAL();
+    USB_OSA_EXIT_CRITICAL();
     return kStatus_USB_Success;
 }
 

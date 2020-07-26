@@ -60,13 +60,13 @@ extern void USB_HostClockInit(void);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
- /* Allocate the memory for the heap. */
+/* Allocate the memory for the heap. */
 #if defined(configAPPLICATION_ALLOCATED_HEAP) && (configAPPLICATION_ALLOCATED_HEAP)
 USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) uint8_t ucHeap[configTOTAL_HEAP_SIZE];
 #endif
-volatile uint32_t g_idPinStatus = 0;
+volatile uint32_t g_idPinStatus       = 0;
 volatile uint32_t g_idPinStatusChange = 0;
-volatile uint32_t g_deviceMode = 0;
+volatile uint32_t g_deviceMode        = 0;
 volatile USBHS_Type *ehciRegisterBase;
 /*******************************************************************************
  * Code
@@ -90,6 +90,21 @@ void USB_HostClockInit(void)
     USB_EhciPhyInit(kUSB_ControllerEhci0, BOARD_XTAL0_CLK_HZ, &phyConfig);
 #endif
 }
+
+#if ((defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)) || \
+     (defined(USB_HOST_CONFIG_EHCI) && (USB_HOST_CONFIG_EHCI > 0U)))
+void USBHS_IRQHandler(void)
+{
+    USB_Comom_IRQHandler();
+}
+#endif
+#if ((defined(USB_DEVICE_CONFIG_KHCI) && (USB_DEVICE_CONFIG_KHCI > 0U)) || \
+     (defined(USB_HOST_CONFIG_KHCI) && (USB_HOST_CONFIG_KHCI > 0U)))
+void USB0_IRQHandler(void)
+{
+    USB_Comom_IRQHandler();
+}
+#endif
 
 void USB_HostIsrEnable(void)
 {
@@ -239,7 +254,7 @@ uint8_t USB_GetIdPinStatus(void)
 /*!
  * @brief ehci host isr
  */
-void USBHS_IRQHandler(void)
+void USB_Comom_IRQHandler(void)
 {
     if ((ehciRegisterBase->OTGSC & USBHS_OTGSC_IDIS_MASK) && (ehciRegisterBase->OTGSC & USBHS_OTGSC_IDIE_MASK))
     {
@@ -364,20 +379,20 @@ void APP_init(void)
     /* Some time delay waitfor phy ID status stable */
     for (volatile int i = 0U; i < 1000000U; i++)
     {
-        __ASM("nop");
+        __NOP();
     }
 
     if (USB_GetIdPinStatus())
     {
         g_idPinStatus = 1;
-        g_deviceMode = 1;
+        g_deviceMode  = 1;
         BOARD_UsbVbusOn(0);
         Device_AppInit();
     }
     else
     {
         g_idPinStatus = 0;
-        g_deviceMode = 0;
+        g_deviceMode  = 0;
         BOARD_UsbVbusOn(1);
         Host_AppInit();
     }

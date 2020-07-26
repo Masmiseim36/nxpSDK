@@ -16,9 +16,9 @@
  * Definitions
  ******************************************************************************/
 
-/* Component ID definition, used by tools. */ 
-#ifndef FSL_COMPONENT_ID 
-#define FSL_COMPONENT_ID "middleware.usb.otg_stack" 
+/* Component ID definition, used by tools. */
+#ifndef FSL_COMPONENT_ID
+#define FSL_COMPONENT_ID "middleware.usb.otg_stack"
 #endif
 
 /*******************************************************************************
@@ -85,7 +85,7 @@ static const usb_otg_controller_interface_t s_KhciInterface = {USB_OtgKhciInit, 
 static void _USB_OtgGetControllerInterface(uint8_t controllerId, const usb_otg_controller_interface_t **controllerTable)
 {
 #if (USB_OTG_CONFIG_KHCI)
-    if (controllerId == kUSB_ControllerKhci0)
+    if (controllerId == (uint8_t)kUSB_ControllerKhci0)
     {
         *controllerTable = &s_KhciInterface;
     }
@@ -95,8 +95,8 @@ static void _USB_OtgGetControllerInterface(uint8_t controllerId, const usb_otg_c
 static void _USB_OtgStartTimer(usb_otg_instance_t *otgInstance, uint32_t timeValue)
 {
 #if (USB_OTG_CONFIG_KHCI)
-    otgInstance->controllerInterface->controllerControl(otgInstance->controllerHandle, kOtg_ControlSetTimer, timeValue,
-                                                        0);
+    (void)otgInstance->controllerInterface->controllerControl(otgInstance->controllerHandle, kOtg_ControlSetTimer,
+                                                              timeValue, 0);
 #endif
 }
 
@@ -104,108 +104,114 @@ static void _USB_OtgStartTimer(usb_otg_instance_t *otgInstance, uint32_t timeVal
 static void _USB_OtgCancelTimer(usb_otg_instance_t *otgInstance)
 {
 #if (USB_OTG_CONFIG_KHCI)
-    otgInstance->controllerInterface->controllerControl(otgInstance->controllerHandle, kOtg_ControlCancelTimer, 0, 0);
+    (void)otgInstance->controllerInterface->controllerControl(otgInstance->controllerHandle, kOtg_ControlCancelTimer, 0,
+                                                              0);
 #endif
-    if (otgInstance->hasTimeOutMsg > 0)
+    if (otgInstance->hasTimeOutMsg > 0U)
     {
-        otgInstance->cancelTime = 1;
+        otgInstance->cancelTime = 1U;
     }
 }
 
 static void _USB_OtgEnterStateStart(usb_otg_instance_t *otgInstance)
 {
-    otgInstance->otgDeviceState = kOtg_State_Start;
-    otgInstance->controllerInterface->controllerControl(otgInstance->controllerHandle, kOtg_ControlRequestStatus,
-                                                        kOtg_StatusId, kOtg_State_Start);
+    otgInstance->otgDeviceState = (uint8_t)kOtg_State_Start;
+    (void)otgInstance->controllerInterface->controllerControl(otgInstance->controllerHandle, kOtg_ControlRequestStatus,
+                                                              kOtg_StatusId, kOtg_State_Start);
 
-    USB_OtgNotifyChange(otgInstance, kOtg_StatusPowerUp, 1);
+    (void)USB_OtgNotifyChange(otgInstance, (uint32_t)kOtg_StatusPowerUp, 1);
 }
 
 static void _USB_OtgProcessStateStart(usb_otg_instance_t *otgInstance, uint32_t otgChangeType, uint32_t changeValue)
 {
-    if (otgInstance->otgControllerStatus & kOtg_StatusBusDrop) /* a_bus_drop/ */
+    usb_otg_status_type_t statusType = (usb_otg_status_type_t)otgChangeType;
+    if (0U != (otgInstance->otgControllerStatus & ((uint32_t)kOtg_StatusBusDrop))) /* a_bus_drop/ */
     {
         return;
     }
 
-    switch (otgChangeType)
+    switch (statusType)
     {
         case kOtg_StatusId:
-            if (changeValue)
+            if (0U != changeValue)
             {
                 /* todo: update controller state */
-                otgInstance->otgControllerStatus |= kOtg_StatusId;
+                otgInstance->otgControllerStatus |= (uint32_t)kOtg_StatusId;
 
                 _USB_OtgEnterStateBIdle(otgInstance); /* go to b_idle */
             }
             else
             {
                 /* todo: update controller state */
-                otgInstance->otgControllerStatus &= (uint32_t)(~kOtg_StatusId);
+                otgInstance->otgControllerStatus &= ~((uint32_t)kOtg_StatusId);
 
                 _USB_OtgEnterStateAIdle(otgInstance); /* go to a_idle */
             }
             break;
 
         case kOtg_StatusPowerUp:
-            if (changeValue)
+            if (0U != changeValue)
             {
                 /* todo: update controller state */
-                otgInstance->otgControllerStatus |= kOtg_StatusPowerUp;
+                otgInstance->otgControllerStatus |= (uint32_t)kOtg_StatusPowerUp;
             }
             break;
 
         default:
+            /*no action*/
             break;
     }
 }
 
 static void _USB_OtgEnterStateAIdle(usb_otg_instance_t *otgInstance)
 {
-    if (otgInstance->otgControllerStatus & kOtg_StatusId)
+    if (0U != (otgInstance->otgControllerStatus & ((uint32_t)kOtg_StatusId)))
     {
         _USB_OtgEnterStateBIdle(otgInstance);
     }
-    else if ((!(otgInstance->otgControllerStatus & kOtg_StatusBusDrop)) &&
-             (otgInstance->otgControllerStatus & kOtg_StatusPowerUp))
+    else if ((0U == (otgInstance->otgControllerStatus & ((uint32_t)kOtg_StatusBusDrop))) &&
+             (0U != (otgInstance->otgControllerStatus & ((uint32_t)kOtg_StatusPowerUp))))
     {
         _USB_OtgEnterStateAWaitVrise(otgInstance);
     }
     else
     {
-        otgInstance->otgDeviceState = kOtg_State_AIdle;
-        otgInstance->otgControllerStatus &= (uint32_t)(~kOtg_StatusBConn); /* clear b_conn */
+        otgInstance->otgDeviceState = (uint8_t)kOtg_State_AIdle;
+        otgInstance->otgControllerStatus &= (~((uint32_t)kOtg_StatusBConn)); /* clear b_conn */
 
 #if ((defined USB_OTG_ADP_ENABLE) && (USB_OTG_ADP_ENABLE))
 /* todo: adp */
 #endif
 
-        otgInstance->controllerInterface->controllerControl(otgInstance->controllerHandle, kOtg_ControlRequestStatus,
-                                                            kOtg_StatusId | kOtg_StatusSrpDet | kOtg_StatusAdpChange,
-                                                            kOtg_State_AIdle);
+        (void)otgInstance->controllerInterface->controllerControl(
+            otgInstance->controllerHandle, kOtg_ControlRequestStatus,
+            ((uint32_t)kOtg_StatusId) | ((uint32_t)kOtg_StatusSrpDet) | ((uint32_t)kOtg_StatusAdpChange),
+            (uint32_t)kOtg_State_AIdle);
 
-        otgInstance->otgCallback(otgInstance->otgCallbackParameter, kOtg_EventStateChange, kOtg_State_AIdle);
+        otgInstance->otgCallback(otgInstance->otgCallbackParameter, (uint8_t)kOtg_EventStateChange,
+                                 (uint32_t)kOtg_State_AIdle);
 
-        if (otgInstance->idChangeAsFalse)
+        if (0U != otgInstance->idChangeAsFalse)
         {
             otgInstance->idChangeAsFalse = 0U;
             /* a change in id from TRUE to FALSE causes a_bus_req to be asserted unless the device is ADP capable. */
-            USB_OtgNotifyChange(otgInstance, kOtg_StatusBusReq, 1);
+            (void)USB_OtgNotifyChange(otgInstance, (uint32_t)kOtg_StatusBusReq, 1);
         }
     }
 }
 
 static void _USB_OtgProcessStateAIdle(usb_otg_instance_t *otgInstance, uint32_t otgChangeType, uint32_t changeValue)
 {
-    switch (otgChangeType)
+    usb_otg_status_type_t statusType = (usb_otg_status_type_t)otgChangeType;
+    switch (statusType)
     {
         case kOtg_StatusBusReq:
-            if (changeValue)
+            if (0U != changeValue)
             {
                 /* todo: update controller state */
-                otgInstance->otgControllerStatus |= kOtg_StatusBusReq;
+                otgInstance->otgControllerStatus |= (uint32_t)kOtg_StatusBusReq;
 
-                if (!(otgInstance->otgControllerStatus & kOtg_StatusBusDrop))
+                if (0U == (otgInstance->otgControllerStatus & ((uint32_t)kOtg_StatusBusDrop)))
                 {
                     _USB_OtgEnterStateAWaitVrise(otgInstance); /* go to a_wait_vrise */
                 }
@@ -213,17 +219,17 @@ static void _USB_OtgProcessStateAIdle(usb_otg_instance_t *otgInstance, uint32_t 
             else
             {
                 /* todo: update controller state */
-                otgInstance->otgControllerStatus &= (uint32_t)(~kOtg_StatusBusReq);
+                otgInstance->otgControllerStatus &= ~((uint32_t)kOtg_StatusBusReq);
             }
             break;
 
 #if (USB_OTG_SRP_ENABLE)
         case kOtg_StatusSrpDet:
-            if (changeValue)
+            if (0U != changeValue)
             {
                 /* todo: update controller state */
 
-                if (!(otgInstance->otgControllerStatus & kOtg_StatusBusDrop))
+                if (0U == (otgInstance->otgControllerStatus & ((uint32_t)kOtg_StatusBusDrop)))
                 {
                     _USB_OtgEnterStateAWaitVrise(otgInstance); /* go to a_wait_vrise */
                 }
@@ -233,11 +239,11 @@ static void _USB_OtgProcessStateAIdle(usb_otg_instance_t *otgInstance, uint32_t 
 
 #if ((defined USB_OTG_ADP_ENABLE) && (USB_OTG_ADP_ENABLE))
         case kOtg_StatusAdpChange:
-            if (changeValue)
+            if (0U != changeValue)
             {
                 /* todo: update controller state */
 
-                if (!(otgInstance->otgControllerStatus & kOtg_StatusBusDrop))
+                if (0U == (otgInstance->otgControllerStatus & ((uint32_t)kOtg_StatusBusDrop)))
                 {
                     _USB_OtgEnterStateAWaitVrise(otgInstance); /* go to a_wait_vrise */
                 }
@@ -247,12 +253,12 @@ static void _USB_OtgProcessStateAIdle(usb_otg_instance_t *otgInstance, uint32_t 
 
         case kOtg_StatusPowerUp:
             /* when power up, the kOtg_StatusBusDrop must be false */
-            if (changeValue)
+            if (0U != changeValue)
             {
                 /* todo: update controller state */
-                otgInstance->otgControllerStatus &= (uint32_t)(~kOtg_StatusPowerUp);
+                otgInstance->otgControllerStatus &= ~((uint32_t)kOtg_StatusPowerUp);
 
-                if (!(otgInstance->otgControllerStatus & kOtg_StatusBusDrop))
+                if (0U == (otgInstance->otgControllerStatus & ((uint32_t)kOtg_StatusBusDrop)))
                 {
                     _USB_OtgEnterStateAWaitVrise(otgInstance); /* go to a_wait_vrise */
                 }
@@ -260,29 +266,29 @@ static void _USB_OtgProcessStateAIdle(usb_otg_instance_t *otgInstance, uint32_t 
             break;
 
         case kOtg_StatusId:
-            if (changeValue)
+            if (0U != changeValue)
             {
                 /* todo: update controller state */
-                otgInstance->otgControllerStatus |= kOtg_StatusId;
+                otgInstance->otgControllerStatus |= (uint32_t)kOtg_StatusId;
 
                 _USB_OtgEnterStateBHost(otgInstance); /* go to b_host */
             }
             break;
 
         case kOtg_StatusBusDrop:
-            if (changeValue)
+            if (0U != changeValue)
             {
                 /* todo: update controller state */
-                otgInstance->otgControllerStatus |= kOtg_StatusBusDrop;
+                otgInstance->otgControllerStatus |= (uint32_t)kOtg_StatusBusDrop;
             }
             else
             {
                 /* todo: update controller state */
-                otgInstance->otgControllerStatus &= (uint32_t)(~kOtg_StatusBusDrop);
+                otgInstance->otgControllerStatus &= ~((uint32_t)kOtg_StatusBusDrop);
 
-                if ((otgInstance->otgControllerStatus & kOtg_StatusBusReq) ||
-                    (otgInstance->otgControllerStatus & kOtg_StatusSrpDet) ||
-                    (otgInstance->otgControllerStatus & kOtg_StatusAdpChange))
+                if ((0U != (otgInstance->otgControllerStatus & ((uint32_t)kOtg_StatusBusReq))) ||
+                    (0U != (otgInstance->otgControllerStatus & ((uint32_t)kOtg_StatusSrpDet))) ||
+                    (0U != (otgInstance->otgControllerStatus & ((uint32_t)kOtg_StatusAdpChange))))
                 {
                     _USB_OtgEnterStateAWaitVrise(otgInstance); /* go to a_wait_vrise */
                 }
@@ -290,13 +296,13 @@ static void _USB_OtgProcessStateAIdle(usb_otg_instance_t *otgInstance, uint32_t 
             break;
 
         default:
-            if (changeValue)
+            if (0U != changeValue)
             {
                 otgInstance->otgControllerStatus |= otgChangeType;
             }
             else
             {
-                otgInstance->otgControllerStatus &= (~otgChangeType);
+                otgInstance->otgControllerStatus &= ~((uint32_t)otgChangeType);
             }
             break;
     }
@@ -304,28 +310,32 @@ static void _USB_OtgProcessStateAIdle(usb_otg_instance_t *otgInstance, uint32_t 
 
 static void _USB_OtgEnterStateAWaitVrise(usb_otg_instance_t *otgInstance)
 {
-    if ((otgInstance->otgControllerStatus & kOtg_StatusId) || (otgInstance->otgControllerStatus & kOtg_StatusBusDrop))
+    if ((0U != (otgInstance->otgControllerStatus & ((uint32_t)kOtg_StatusId))) ||
+        (0U != (otgInstance->otgControllerStatus & ((uint32_t)kOtg_StatusBusDrop))))
     {
         _USB_OtgEnterStateAWaitVfall(otgInstance);
     }
-    else if (otgInstance->otgControllerStatus & kOtg_StatusVbusVld)
+    else if (0U != (otgInstance->otgControllerStatus & ((uint32_t)kOtg_StatusVbusVld)))
     {
         _USB_OtgEnterStateAWaitBcon(otgInstance);
     }
     else
     {
-        otgInstance->otgDeviceState = kOtg_State_AWaitVrise;
+        otgInstance->otgDeviceState = (uint8_t)kOtg_State_AWaitVrise;
 
         /* driver vbus */
-        if (!(otgInstance->otgControllerStatus & kOtg_StatusVbusVld))
+        if (0U == (otgInstance->otgControllerStatus & ((uint32_t)kOtg_StatusVbusVld)))
         {
-            otgInstance->otgControllerStatus |= kOtg_StatusVbusVld;
-            otgInstance->controllerInterface->controllerControl(otgInstance->controllerHandle, kOtg_ControlVbus, 1, 0);
+            otgInstance->otgControllerStatus |= (uint32_t)kOtg_StatusVbusVld;
+            (void)otgInstance->controllerInterface->controllerControl(otgInstance->controllerHandle,
+                                                                      (uint32_t)kOtg_ControlVbus, 1, 0);
         }
-        otgInstance->controllerInterface->controllerControl(otgInstance->controllerHandle, kOtg_ControlRequestStatus,
-                                                            kOtg_StatusId | kOtg_StatusVbusVld, kOtg_State_AWaitVrise);
+        (void)otgInstance->controllerInterface->controllerControl(
+            otgInstance->controllerHandle, kOtg_ControlRequestStatus,
+            ((uint32_t)kOtg_StatusId) | ((uint32_t)kOtg_StatusVbusVld), kOtg_State_AWaitVrise);
 
-        otgInstance->otgCallback(otgInstance->otgCallbackParameter, kOtg_EventStateChange, kOtg_State_AWaitVrise);
+        otgInstance->otgCallback(otgInstance->otgCallbackParameter, (uint32_t)kOtg_EventStateChange,
+                                 (uint8_t)kOtg_State_AWaitVrise);
 
         /* set timer */
         _USB_OtgStartTimer(otgInstance, USB_OTG_TIMER_A_WAIT_VRISE_TMR);
@@ -336,13 +346,14 @@ static void _USB_OtgProcessStateAWaitVrise(usb_otg_instance_t *otgInstance,
                                            uint32_t otgChangeType,
                                            uint32_t changeValue)
 {
-    switch (otgChangeType)
+    usb_otg_status_type_t statusType = (usb_otg_status_type_t)otgChangeType;
+    switch (statusType)
     {
         case kOtg_StatusBusDrop:
-            if (changeValue)
+            if (0U != changeValue)
             {
                 /* todo: update controller state */
-                otgInstance->otgControllerStatus |= kOtg_StatusBusDrop;
+                otgInstance->otgControllerStatus |= (uint32_t)kOtg_StatusBusDrop;
 
                 _USB_OtgCancelTimer(otgInstance);
                 _USB_OtgEnterStateAWaitVfall(otgInstance); /* go to a_wait_vfall */
@@ -350,10 +361,10 @@ static void _USB_OtgProcessStateAWaitVrise(usb_otg_instance_t *otgInstance,
             break;
 
         case kOtg_StatusId:
-            if (changeValue)
+            if (0U != changeValue)
             {
                 /* todo: update controller state */
-                otgInstance->otgControllerStatus |= kOtg_StatusId;
+                otgInstance->otgControllerStatus |= (uint32_t)kOtg_StatusId;
 
                 _USB_OtgCancelTimer(otgInstance);
                 _USB_OtgEnterStateAWaitVfall(otgInstance); /* go to a_wait_vfall */
@@ -363,7 +374,7 @@ static void _USB_OtgProcessStateAWaitVrise(usb_otg_instance_t *otgInstance,
         case kOtg_StatusTimeOut:
             /* todo: update controller state */
 
-            if (otgInstance->otgControllerStatus & kOtg_StatusVbusVld)
+            if (0U != (otgInstance->otgControllerStatus & ((uint32_t)kOtg_StatusVbusVld)))
             {
                 _USB_OtgEnterStateAWaitBcon(otgInstance); /* go to a_wait_bcon */
             }
@@ -374,10 +385,10 @@ static void _USB_OtgProcessStateAWaitVrise(usb_otg_instance_t *otgInstance,
             break;
 
         case kOtg_StatusVbusVld:
-            if (changeValue)
+            if (0U != changeValue)
             {
                 /* todo: update controller state */
-                otgInstance->otgControllerStatus |= kOtg_StatusVbusVld;
+                otgInstance->otgControllerStatus |= (uint32_t)kOtg_StatusVbusVld;
 
                 _USB_OtgCancelTimer(otgInstance);
                 _USB_OtgEnterStateAWaitBcon(otgInstance); /* go to a_wait_bcon */
@@ -385,13 +396,13 @@ static void _USB_OtgProcessStateAWaitVrise(usb_otg_instance_t *otgInstance,
             break;
 
         default:
-            if (changeValue)
+            if (0U != changeValue)
             {
-                otgInstance->otgControllerStatus |= otgChangeType;
+                otgInstance->otgControllerStatus |= (uint32_t)otgChangeType;
             }
             else
             {
-                otgInstance->otgControllerStatus &= (~otgChangeType);
+                otgInstance->otgControllerStatus &= ~((uint32_t)otgChangeType);
             }
             break;
     }
@@ -399,21 +410,22 @@ static void _USB_OtgProcessStateAWaitVrise(usb_otg_instance_t *otgInstance,
 
 static void _USB_OtgEnterStateAWaitVfall(usb_otg_instance_t *otgInstance)
 {
-    otgInstance->otgDeviceState = kOtg_State_AWaitVfall;
+    otgInstance->otgDeviceState = (uint8_t)kOtg_State_AWaitVfall;
 
-    USB_OtgKhciControl(otgInstance->controllerHandle, kOtg_ControlPullUp, 0, 0);
+    (void)USB_OtgKhciControl(otgInstance->controllerHandle, (uint32_t)kOtg_ControlPullUp, 0, 0);
 
     /* if there is bus req, the bus req fail. Or there is bus drop. */
-    otgInstance->otgControllerStatus &= (~kOtg_StatusBusReq);
+    otgInstance->otgControllerStatus &= ~((uint32_t)kOtg_StatusBusReq);
 
     /* close vbus */
-    if (otgInstance->otgControllerStatus & kOtg_StatusVbusVld)
+    if (0U != (otgInstance->otgControllerStatus & ((uint32_t)kOtg_StatusVbusVld)))
     {
-        otgInstance->otgControllerStatus &= (uint32_t)(~kOtg_StatusVbusVld);
-        otgInstance->controllerInterface->controllerControl(otgInstance->controllerHandle, kOtg_ControlVbus, 0, 0);
+        otgInstance->otgControllerStatus &= ~((uint32_t)kOtg_StatusVbusVld);
+        (void)otgInstance->controllerInterface->controllerControl(otgInstance->controllerHandle,
+                                                                  (uint32_t)kOtg_ControlVbus, 0, 0);
     }
-    otgInstance->controllerInterface->controllerControl(otgInstance->controllerHandle, kOtg_ControlRequestStatus, 0,
-                                                        kOtg_State_AWaitVfall);
+    (void)otgInstance->controllerInterface->controllerControl(otgInstance->controllerHandle, kOtg_ControlRequestStatus,
+                                                              0, kOtg_State_AWaitVfall);
 
     otgInstance->otgCallback(otgInstance->otgCallbackParameter, kOtg_EventStateChange, kOtg_State_AWaitVfall);
 
@@ -425,7 +437,8 @@ static void _USB_OtgProcessStateAWaitVfall(usb_otg_instance_t *otgInstance,
                                            uint32_t otgChangeType,
                                            uint32_t changeValue)
 {
-    switch (otgChangeType)
+    usb_otg_status_type_t statusType = (usb_otg_status_type_t)otgChangeType;
+    switch (statusType)
     {
         case kOtg_StatusTimeOut:
             /* todo: update controller state */
@@ -434,13 +447,13 @@ static void _USB_OtgProcessStateAWaitVfall(usb_otg_instance_t *otgInstance,
             break;
 
         default:
-            if (changeValue)
+            if (0U != changeValue)
             {
-                otgInstance->otgControllerStatus |= otgChangeType;
+                otgInstance->otgControllerStatus |= (uint32_t)otgChangeType;
             }
             else
             {
-                otgInstance->otgControllerStatus &= (~otgChangeType);
+                otgInstance->otgControllerStatus &= ~((uint32_t)otgChangeType);
             }
             break;
     }
@@ -448,31 +461,34 @@ static void _USB_OtgProcessStateAWaitVfall(usb_otg_instance_t *otgInstance,
 
 static void _USB_OtgEnterStateAWaitBcon(usb_otg_instance_t *otgInstance)
 {
-    if ((otgInstance->otgControllerStatus & kOtg_StatusId) || (otgInstance->otgControllerStatus & kOtg_StatusBusDrop))
+    if ((0U != (otgInstance->otgControllerStatus & ((uint32_t)kOtg_StatusId))) ||
+        (0U != (otgInstance->otgControllerStatus & ((uint32_t)kOtg_StatusBusDrop))))
     {
         _USB_OtgEnterStateAWaitVfall(otgInstance);
     }
-    else if (otgInstance->otgControllerStatus & kOtg_StatusBConn)
+    else if (0U != (otgInstance->otgControllerStatus & ((uint32_t)kOtg_StatusBConn)))
     {
         _USB_OtgEnterStateAHost(otgInstance);
     }
-    else if (!(otgInstance->otgControllerStatus & kOtg_StatusVbusVld))
+    else if (0U == (otgInstance->otgControllerStatus & ((uint32_t)kOtg_StatusVbusVld)))
     {
         _USB_OtgEnterStateAVbusErr(otgInstance);
     }
     else
     {
-        otgInstance->otgDeviceState = kOtg_State_AWaitBcon;
+        otgInstance->otgDeviceState = (uint8_t)kOtg_State_AWaitBcon;
 
         /* driver vbus */
-        if (!(otgInstance->otgControllerStatus & kOtg_StatusVbusVld))
+        if (0U == (otgInstance->otgControllerStatus & ((uint32_t)kOtg_StatusVbusVld)))
         {
-            otgInstance->otgControllerStatus |= kOtg_StatusVbusVld;
-            otgInstance->controllerInterface->controllerControl(otgInstance->controllerHandle, kOtg_ControlVbus, 1, 0);
+            otgInstance->otgControllerStatus |= (uint32_t)kOtg_StatusVbusVld;
+            (void)otgInstance->controllerInterface->controllerControl(otgInstance->controllerHandle,
+                                                                      (uint32_t)kOtg_ControlVbus, 1, 0);
         }
-        otgInstance->controllerInterface->controllerControl(otgInstance->controllerHandle, kOtg_ControlRequestStatus,
-                                                            kOtg_StatusId | kOtg_StatusVbusInvld | kOtg_StatusBConn,
-                                                            kOtg_State_AWaitBcon);
+        (void)otgInstance->controllerInterface->controllerControl(
+            otgInstance->controllerHandle, kOtg_ControlRequestStatus,
+            ((uint32_t)kOtg_StatusId) | ((uint32_t)kOtg_StatusVbusInvld) | ((uint32_t)kOtg_StatusBConn),
+            kOtg_State_AWaitBcon);
 
         otgInstance->otgCallback(otgInstance->otgCallbackParameter, kOtg_EventStateChange, kOtg_State_AWaitBcon);
 
@@ -485,7 +501,8 @@ static void _USB_OtgEnterStateAWaitBcon(usb_otg_instance_t *otgInstance)
 
 static void _USB_OtgProcessStateAWaitBcon(usb_otg_instance_t *otgInstance, uint32_t otgChangeType, uint32_t changeValue)
 {
-    switch (otgChangeType)
+    usb_otg_status_type_t statusType = (usb_otg_status_type_t)otgChangeType;
+    switch (statusType)
     {
         case kOtg_StatusTimeOut:
             /* todo: update controller state */
@@ -494,53 +511,53 @@ static void _USB_OtgProcessStateAWaitBcon(usb_otg_instance_t *otgInstance, uint3
             break;
 
         case kOtg_StatusId:
-            if (changeValue)
+            if (0U != changeValue)
             {
                 /* todo: update controller state */
-                otgInstance->otgControllerStatus |= kOtg_StatusId;
+                otgInstance->otgControllerStatus |= ((uint32_t)kOtg_StatusId);
 
                 _USB_OtgEnterStateAWaitVfall(otgInstance); /* go to a_wait_vfall */
             }
             break;
 
         case kOtg_StatusBusDrop:
-            if (changeValue)
+            if (0U != changeValue)
             {
                 /* todo: update controller state */
-                otgInstance->otgControllerStatus |= kOtg_StatusBusDrop;
+                otgInstance->otgControllerStatus |= ((uint32_t)kOtg_StatusBusDrop);
 
                 _USB_OtgEnterStateAWaitVfall(otgInstance); /* go to a_wait_vfall */
             }
             break;
 
         case kOtg_StatusBConn:
-            if (changeValue)
+            if (0U != changeValue)
             {
                 /* todo: update controller state */
-                otgInstance->otgControllerStatus |= kOtg_StatusBConn;
+                otgInstance->otgControllerStatus |= ((uint32_t)kOtg_StatusBConn);
 
                 _USB_OtgEnterStateAHost(otgInstance); /* go to a_host */
             }
             break;
 
         case kOtg_StatusVbusVld:
-            if (!changeValue)
+            if (0U == changeValue)
             {
                 /* todo: update controller state */
-                otgInstance->otgControllerStatus &= ~kOtg_StatusVbusVld;
+                otgInstance->otgControllerStatus &= ~((uint32_t)kOtg_StatusVbusVld);
 
                 _USB_OtgEnterStateAVbusErr(otgInstance); /* go to a_vbus_err */
             }
             break;
 
         default:
-            if (changeValue)
+            if (0U != changeValue)
             {
-                otgInstance->otgControllerStatus |= otgChangeType;
+                otgInstance->otgControllerStatus |= ((uint32_t)otgChangeType);
             }
             else
             {
-                otgInstance->otgControllerStatus &= (~otgChangeType);
+                otgInstance->otgControllerStatus &= ~((uint32_t)otgChangeType);
             }
             break;
     }
@@ -548,11 +565,12 @@ static void _USB_OtgProcessStateAWaitBcon(usb_otg_instance_t *otgInstance, uint3
 
 static void _USB_OtgEnterStateAHost(usb_otg_instance_t *otgInstance)
 {
-    if ((otgInstance->otgControllerStatus & kOtg_StatusId) || (otgInstance->otgControllerStatus & kOtg_StatusBusDrop))
+    if ((0U != (otgInstance->otgControllerStatus & ((uint32_t)kOtg_StatusId))) ||
+        (0U != (otgInstance->otgControllerStatus & ((uint32_t)kOtg_StatusBusDrop))))
     {
         _USB_OtgEnterStateAWaitVfall(otgInstance);
     }
-    else if (!(otgInstance->otgControllerStatus & kOtg_StatusBConn))
+    else if (0U == (otgInstance->otgControllerStatus & ((uint32_t)kOtg_StatusBConn)))
     {
         _USB_OtgEnterStateAWaitBcon(otgInstance);
     }
@@ -562,32 +580,34 @@ static void _USB_OtgEnterStateAHost(usb_otg_instance_t *otgInstance)
         _USB_OtgEnterStateASuspend(otgInstance);
     }
     */
-    else if (!(otgInstance->otgControllerStatus & kOtg_StatusVbusVld))
+    else if (0U == (otgInstance->otgControllerStatus & ((uint32_t)kOtg_StatusVbusVld)))
     {
         _USB_OtgEnterStateAVbusErr(otgInstance);
     }
     else
     {
-        otgInstance->otgDeviceState = kOtg_State_AHost;
-        otgInstance->otgControllerStatus &= (~kOtg_StatusBHNPFeature);
+        otgInstance->otgDeviceState = ((uint8_t)kOtg_State_AHost);
+        otgInstance->otgControllerStatus &= ~((uint32_t)kOtg_StatusBHNPFeature);
 
         /* driver vbus */
-        if (!(otgInstance->otgControllerStatus & kOtg_StatusVbusVld))
+        if (0U == (otgInstance->otgControllerStatus & ((uint32_t)kOtg_StatusVbusVld)))
         {
-            otgInstance->otgControllerStatus |= kOtg_StatusVbusVld;
-            otgInstance->controllerInterface->controllerControl(otgInstance->controllerHandle, kOtg_ControlVbus, 1, 0);
+            otgInstance->otgControllerStatus |= ((uint32_t)kOtg_StatusVbusVld);
+            (void)otgInstance->controllerInterface->controllerControl(otgInstance->controllerHandle,
+                                                                      (uint32_t)kOtg_ControlVbus, 1, 0);
         }
         /* pull down dp and dm */
-        otgInstance->controllerInterface->controllerControl(otgInstance->controllerHandle, kOtg_ControlPullDown,
-                                                            kOtg_PullDp | kOtg_PullDm, 0);
-        otgInstance->controllerInterface->controllerControl(otgInstance->controllerHandle, kOtg_ControlRequestStatus,
-                                                            kOtg_StatusId | kOtg_StatusBDisconn | kOtg_StatusVbusInvld,
-                                                            kOtg_State_AHost);
+        (void)otgInstance->controllerInterface->controllerControl(otgInstance->controllerHandle, kOtg_ControlPullDown,
+                                                                  ((uint32_t)kOtg_PullDp) | ((uint32_t)kOtg_PullDm), 0);
+        (void)otgInstance->controllerInterface->controllerControl(
+            otgInstance->controllerHandle, kOtg_ControlRequestStatus,
+            ((uint32_t)kOtg_StatusId) | ((uint32_t)kOtg_StatusBDisconn) | ((uint32_t)kOtg_StatusVbusInvld),
+            kOtg_State_AHost);
 
         otgInstance->otgCallback(otgInstance->otgCallbackParameter, kOtg_EventStateChange, kOtg_State_AHost);
 
 #if (USB_OTG_TIME_WAIT_DEVICE_INIT != 0U)
-        otgInstance->waitInit = 1;
+        otgInstance->waitInit = 1U;
         _USB_OtgStartTimer(otgInstance, USB_OTG_TIME_WAIT_DEVICE_INIT); /* wait the B-Device init the device stack */
 #else
         /* start work as host */
@@ -600,30 +620,32 @@ static void _USB_OtgExitHost(usb_otg_instance_t *otgInstance)
 {
     otgInstance->otgCallback(otgInstance->otgCallbackParameter, kOtg_EventStackInit,
                              kOtg_StackHostDeinit); /* host stack de-init */
-    otgInstance->controllerInterface->controllerControl(otgInstance->controllerHandle, kOtg_ControlPullDown, 0, 0);
+    (void)otgInstance->controllerInterface->controllerControl(otgInstance->controllerHandle,
+                                                              (uint32_t)kOtg_ControlPullDown, 0, 0);
 }
 
 static void _USB_OtgProcessStateAHost(usb_otg_instance_t *otgInstance, uint32_t otgChangeType, uint32_t changeValue)
 {
-    switch (otgChangeType)
+    usb_otg_status_type_t statusType = (usb_otg_status_type_t)otgChangeType;
+    switch (statusType)
     {
 #if (USB_OTG_TIME_WAIT_DEVICE_INIT != 0U)
         case kOtg_StatusTimeOut:
-            if (otgInstance->waitInit) /* init host */
+            if (0U != otgInstance->waitInit) /* init host */
             {
                 /* start work as host */
                 otgInstance->otgCallback(otgInstance->otgCallbackParameter, kOtg_EventStackInit,
                                          kOtg_StackHostInit); /* host stack init */
-                otgInstance->waitInit = 0;
+                otgInstance->waitInit = 0U;
             }
             break;
 #endif
 
         case kOtg_StatusBConn:
-            if (!changeValue)
+            if (0U == changeValue)
             {
                 /* todo: update controller state */
-                otgInstance->otgControllerStatus &= (uint32_t)(~kOtg_StatusBConn);
+                otgInstance->otgControllerStatus &= ~((uint32_t)kOtg_StatusBConn);
 
                 _USB_OtgExitHost(otgInstance);
                 _USB_OtgEnterStateAWaitBcon(otgInstance); /* go to a_wait_bcon */
@@ -631,10 +653,10 @@ static void _USB_OtgProcessStateAHost(usb_otg_instance_t *otgInstance, uint32_t 
             break;
 
         case kOtg_StatusId:
-            if (changeValue)
+            if (0U != changeValue)
             {
                 /* todo: update controller state */
-                otgInstance->otgControllerStatus |= kOtg_StatusId;
+                otgInstance->otgControllerStatus |= (uint32_t)kOtg_StatusId;
 
                 _USB_OtgExitHost(otgInstance);
                 _USB_OtgEnterStateAWaitVfall(otgInstance); /* go to a_wait_vfall */
@@ -642,21 +664,21 @@ static void _USB_OtgProcessStateAHost(usb_otg_instance_t *otgInstance, uint32_t 
             break;
 
         case kOtg_StatusBusDrop:
-            if (changeValue)
+            if (0U != changeValue)
             {
                 /* todo: update controller state */
-                otgInstance->otgControllerStatus |= kOtg_StatusBusDrop;
+                otgInstance->otgControllerStatus |= (uint32_t)kOtg_StatusBusDrop;
 
                 _USB_OtgExitHost(otgInstance);
                 _USB_OtgEnterStateAWaitVfall(otgInstance); /* go to a_wait_vfall */
             }
             break;
 
-        case kOtg_StatusBusReq: /* hnp or host release bus */
-            if (!changeValue)   /* bus release */
+        case kOtg_StatusBusReq:    /* hnp or host release bus */
+            if (0U == changeValue) /* bus release */
             {
                 /* todo: update controller state */
-                otgInstance->otgControllerStatus &= (uint32_t)(~kOtg_StatusBusReq);
+                otgInstance->otgControllerStatus &= ~((uint32_t)kOtg_StatusBusReq);
 
                 _USB_OtgExitHost(otgInstance);
                 /* USB_HostSuspend(otgInstance->hostHandle); */
@@ -674,10 +696,10 @@ static void _USB_OtgProcessStateAHost(usb_otg_instance_t *otgInstance, uint32_t 
             break;
 
         case kOtg_StatusVbusVld:
-            if (!changeValue)
+            if (0U == changeValue)
             {
                 /* todo: update controller state */
-                otgInstance->otgControllerStatus &= (uint32_t)(~kOtg_StatusVbusVld);
+                otgInstance->otgControllerStatus &= ~((uint32_t)kOtg_StatusVbusVld);
 
                 _USB_OtgExitHost(otgInstance);
                 _USB_OtgEnterStateAVbusErr(otgInstance); /* go to a_vbus_err */
@@ -685,13 +707,13 @@ static void _USB_OtgProcessStateAHost(usb_otg_instance_t *otgInstance, uint32_t 
             break;
 
         default:
-            if (changeValue)
+            if (0U != changeValue)
             {
-                otgInstance->otgControllerStatus |= otgChangeType;
+                otgInstance->otgControllerStatus |= (uint32_t)otgChangeType;
             }
             else
             {
-                otgInstance->otgControllerStatus &= (~otgChangeType);
+                otgInstance->otgControllerStatus &= ~((uint32_t)otgChangeType);
             }
             break;
     }
@@ -699,13 +721,14 @@ static void _USB_OtgProcessStateAHost(usb_otg_instance_t *otgInstance, uint32_t 
 
 static void _USB_OtgEnterStateASuspend(usb_otg_instance_t *otgInstance)
 {
-    if ((otgInstance->otgControllerStatus & kOtg_StatusId) || (otgInstance->otgControllerStatus & kOtg_StatusBusDrop))
+    if ((0U != (otgInstance->otgControllerStatus & ((uint32_t)kOtg_StatusId))) ||
+        (0U != (otgInstance->otgControllerStatus & ((uint32_t)kOtg_StatusBusDrop))))
     {
         _USB_OtgEnterStateAWaitVfall(otgInstance);
     }
-    else if (!(otgInstance->otgControllerStatus & kOtg_StatusBConn))
+    else if (0U == (otgInstance->otgControllerStatus & ((uint32_t)kOtg_StatusBConn)))
     {
-        if (otgInstance->otgControllerStatus & kOtg_StatusBHNPFeature)
+        if (0U != (otgInstance->otgControllerStatus & ((uint32_t)kOtg_StatusBHNPFeature)))
         {
             _USB_OtgEnterStateAPeripheral(otgInstance);
         }
@@ -714,27 +737,30 @@ static void _USB_OtgEnterStateASuspend(usb_otg_instance_t *otgInstance)
             _USB_OtgEnterStateAWaitBcon(otgInstance);
         }
     }
-    else if (!(otgInstance->otgControllerStatus & kOtg_StatusVbusVld))
+    else if (0U == (otgInstance->otgControllerStatus & ((uint32_t)kOtg_StatusVbusVld)))
     {
         _USB_OtgEnterStateAVbusErr(otgInstance);
     }
     else
     {
-        otgInstance->otgDeviceState = kOtg_State_ASuspend;
+        otgInstance->otgDeviceState = (uint8_t)kOtg_State_ASuspend;
 
         /* driver vbus */
-        if (!(otgInstance->otgControllerStatus & kOtg_StatusVbusVld))
+        if (0U == (otgInstance->otgControllerStatus & ((uint32_t)kOtg_StatusVbusVld)))
         {
-            otgInstance->otgControllerStatus |= kOtg_StatusVbusVld;
-            otgInstance->controllerInterface->controllerControl(otgInstance->controllerHandle, kOtg_ControlVbus, 1, 0);
+            otgInstance->otgControllerStatus |= (uint32_t)kOtg_StatusVbusVld;
+            (void)otgInstance->controllerInterface->controllerControl(otgInstance->controllerHandle,
+                                                                      (uint32_t)kOtg_ControlVbus, 1, 0);
         }
-        otgInstance->controllerInterface->controllerControl(otgInstance->controllerHandle, kOtg_ControlRequestStatus,
-                                                            kOtg_StatusId | kOtg_StatusBDisconn | kOtg_StatusVbusInvld,
-                                                            kOtg_State_ASuspend);
+        (void)otgInstance->controllerInterface->controllerControl(
+            otgInstance->controllerHandle, kOtg_ControlRequestStatus,
+            ((uint32_t)kOtg_StatusId) | ((uint32_t)kOtg_StatusBDisconn) | ((uint32_t)kOtg_StatusVbusInvld),
+            (uint32_t)kOtg_State_ASuspend);
 
-        otgInstance->otgCallback(otgInstance->otgCallbackParameter, kOtg_EventStateChange, kOtg_State_ASuspend);
+        otgInstance->otgCallback(otgInstance->otgCallbackParameter, (uint32_t)kOtg_EventStateChange,
+                                 kOtg_State_ASuspend);
 
-        if (otgInstance->otgControllerStatus & kOtg_StatusBHNPFeature)
+        if (0U != (otgInstance->otgControllerStatus & ((uint32_t)kOtg_StatusBHNPFeature)))
         {
             /* set timer */
             _USB_OtgStartTimer(otgInstance, USB_OTG_TIMER_A_AIDL_BDIS_TMR);
@@ -744,15 +770,16 @@ static void _USB_OtgEnterStateASuspend(usb_otg_instance_t *otgInstance)
 
 static void _USB_OtgProcessStateASuspend(usb_otg_instance_t *otgInstance, uint32_t otgChangeType, uint32_t changeValue)
 {
-    switch (otgChangeType)
+    usb_otg_status_type_t statusType = (usb_otg_status_type_t)otgChangeType;
+    switch (statusType)
     {
         case kOtg_StatusBConn:
-            if (!changeValue)
+            if (0U == changeValue)
             {
                 /* todo: update controller state */
-                otgInstance->otgControllerStatus &= (uint32_t)(~kOtg_StatusBConn);
+                otgInstance->otgControllerStatus &= ~((uint32_t)kOtg_StatusBConn);
                 _USB_OtgCancelTimer(otgInstance);
-                if (!(otgInstance->otgControllerStatus & kOtg_StatusBHNPFeature))
+                if (0U == (otgInstance->otgControllerStatus & ((uint32_t)kOtg_StatusBHNPFeature)))
                 {
                     _USB_OtgEnterStateAWaitBcon(otgInstance); /* go to a_wait_bcon */
                 }
@@ -764,9 +791,9 @@ static void _USB_OtgProcessStateASuspend(usb_otg_instance_t *otgInstance, uint32
             break;
 
         case kOtg_StatusTimeOut:
-            if (otgInstance->otgControllerStatus & kOtg_StatusBHNPFeature)
+            if (0U != (otgInstance->otgControllerStatus & ((uint32_t)kOtg_StatusBHNPFeature)))
             {
-                if (changeValue)
+                if (0U != changeValue)
                 {
                     /* todo: update controller state */
 
@@ -776,24 +803,24 @@ static void _USB_OtgProcessStateASuspend(usb_otg_instance_t *otgInstance, uint32
             break;
 
         case kOtg_StatusBusReq: /* resume */
-            if (changeValue)
+            if (0U != changeValue)
             {
                 /* todo: update controller state */
-                otgInstance->otgControllerStatus |= kOtg_StatusBusReq;
+                otgInstance->otgControllerStatus |= (uint32_t)kOtg_StatusBusReq;
 
                 _USB_OtgCancelTimer(otgInstance);
-                otgInstance->controllerInterface->controllerControl(otgInstance->controllerHandle, kOtg_ControlResume,
-                                                                    20, 0);
+                (void)otgInstance->controllerInterface->controllerControl(otgInstance->controllerHandle,
+                                                                          kOtg_ControlResume, 20, 0);
 
                 _USB_OtgEnterStateAHost(otgInstance); /* go to a_host */
             }
             break;
 
         case kOtg_StatusId:
-            if (changeValue)
+            if (0U != changeValue)
             {
                 /* todo: update controller state */
-                otgInstance->otgControllerStatus |= kOtg_StatusId;
+                otgInstance->otgControllerStatus |= (uint32_t)kOtg_StatusId;
 
                 _USB_OtgCancelTimer(otgInstance);
                 _USB_OtgEnterStateAWaitVfall(otgInstance); /* go to a_wait_vfall */
@@ -801,10 +828,10 @@ static void _USB_OtgProcessStateASuspend(usb_otg_instance_t *otgInstance, uint32
             break;
 
         case kOtg_StatusBusDrop:
-            if (changeValue)
+            if (0U != changeValue)
             {
                 /* todo: update controller state */
-                otgInstance->otgControllerStatus |= kOtg_StatusBusDrop;
+                otgInstance->otgControllerStatus |= (uint32_t)kOtg_StatusBusDrop;
 
                 _USB_OtgCancelTimer(otgInstance);
                 _USB_OtgEnterStateAWaitVfall(otgInstance); /* go to a_wait_vfall */
@@ -812,10 +839,10 @@ static void _USB_OtgProcessStateASuspend(usb_otg_instance_t *otgInstance, uint32
             break;
 
         case kOtg_StatusVbusVld:
-            if (!changeValue)
+            if (0U == changeValue)
             {
                 /* todo: update controller state */
-                otgInstance->otgControllerStatus &= (uint32_t)(~kOtg_StatusVbusVld);
+                otgInstance->otgControllerStatus &= ~((uint32_t)kOtg_StatusVbusVld);
 
                 _USB_OtgCancelTimer(otgInstance);
                 _USB_OtgEnterStateAVbusErr(otgInstance); /* go to a_vbus_err */
@@ -823,13 +850,13 @@ static void _USB_OtgProcessStateASuspend(usb_otg_instance_t *otgInstance, uint32
             break;
 
         default:
-            if (changeValue)
+            if (0U != changeValue)
             {
-                otgInstance->otgControllerStatus |= otgChangeType;
+                otgInstance->otgControllerStatus |= (uint32_t)otgChangeType;
             }
             else
             {
-                otgInstance->otgControllerStatus &= (~otgChangeType);
+                otgInstance->otgControllerStatus &= ~((uint32_t)otgChangeType);
             }
             break;
     }
@@ -837,40 +864,44 @@ static void _USB_OtgProcessStateASuspend(usb_otg_instance_t *otgInstance, uint32
 
 static void _USB_OtgEnterStateAPeripheral(usb_otg_instance_t *otgInstance)
 {
-    if ((otgInstance->otgControllerStatus & kOtg_StatusId) || (otgInstance->otgControllerStatus & kOtg_StatusBusDrop))
+    if ((0U != (otgInstance->otgControllerStatus & ((uint32_t)kOtg_StatusId))) ||
+        (0U != (otgInstance->otgControllerStatus & ((uint32_t)kOtg_StatusBusDrop))))
     {
         _USB_OtgEnterStateAWaitVfall(otgInstance);
     }
-    else if (!(otgInstance->otgControllerStatus & kOtg_StatusVbusVld))
+    else if (0U == (otgInstance->otgControllerStatus & ((uint32_t)kOtg_StatusVbusVld)))
     {
         _USB_OtgEnterStateAVbusErr(otgInstance);
     }
     else
     {
-        otgInstance->otgDeviceState = kOtg_State_APeripheral;
-        otgInstance->otgControllerStatus &= (uint32_t)(~kOtg_StatusBConn);
+        otgInstance->otgDeviceState = (uint8_t)kOtg_State_APeripheral;
+        otgInstance->otgControllerStatus &= ~((uint32_t)kOtg_StatusBConn);
 
         /* start work as device */
-        otgInstance->controllerInterface->controllerControl(otgInstance->controllerHandle, kOtg_ControlPullUp,
-                                                            kOtg_PullDp, 0);
-        otgInstance->controllerInterface->controllerControl(otgInstance->controllerHandle, kOtg_ControlPullDown,
-                                                            kOtg_PullDm, 0);
+        (void)otgInstance->controllerInterface->controllerControl(otgInstance->controllerHandle,
+                                                                  (uint32_t)kOtg_ControlPullUp, kOtg_PullDp, 0);
+        (void)otgInstance->controllerInterface->controllerControl(otgInstance->controllerHandle,
+                                                                  (uint32_t)kOtg_ControlPullDown, kOtg_PullDm, 0);
         /* driver vbus */
-        if (!(otgInstance->otgControllerStatus & kOtg_StatusVbusVld))
+        if (0U == (otgInstance->otgControllerStatus & ((uint32_t)kOtg_StatusVbusVld)))
         {
-            otgInstance->otgControllerStatus |= kOtg_StatusVbusVld;
-            otgInstance->controllerInterface->controllerControl(otgInstance->controllerHandle, kOtg_ControlVbus, 1, 0);
+            otgInstance->otgControllerStatus |= (uint32_t)kOtg_StatusVbusVld;
+            (void)otgInstance->controllerInterface->controllerControl(otgInstance->controllerHandle,
+                                                                      (uint32_t)kOtg_ControlVbus, 1, 0);
         }
         otgInstance->otgCallback(otgInstance->otgCallbackParameter, kOtg_EventStackInit,
                                  kOtg_StackDeviceInit); /* device stack init */
 #if (USB_OTG_TIME_WAIT_BHOST != 0U)
-        otgInstance->controllerInterface->controllerControl(otgInstance->controllerHandle, kOtg_ControlRequestStatus,
-                                                            kOtg_StatusId | kOtg_StatusVbusInvld,
-                                                            kOtg_State_APeripheral);
-#else
-        otgInstance->controllerInterface->controllerControl(
+        (void)otgInstance->controllerInterface->controllerControl(
             otgInstance->controllerHandle, kOtg_ControlRequestStatus,
-            kOtg_StatusId | kOtg_StatusVbusInvld | kOtg_StatusCheckIdleInAPeripheral, kOtg_State_APeripheral);
+            ((uint32_t)kOtg_StatusId) | ((uint32_t)kOtg_StatusVbusInvld), kOtg_State_APeripheral);
+#else
+        (void)otgInstance->controllerInterface->controllerControl(
+            otgInstance->controllerHandle, kOtg_ControlRequestStatus,
+            ((uint32_t)kOtg_StatusId) | ((uint32_t)kOtg_StatusVbusInvld) |
+                ((uint32_t)kOtg_StatusCheckIdleInAPeripheral),
+            kOtg_State_APeripheral);
 #endif
 
         otgInstance->otgCallback(otgInstance->otgCallbackParameter, kOtg_EventStateChange, kOtg_State_APeripheral);
@@ -885,10 +916,12 @@ static void _USB_OtgEnterStateAPeripheral(usb_otg_instance_t *otgInstance)
 
 static void _USB_OtgExitDevice(usb_otg_instance_t *otgInstance)
 {
-    otgInstance->controllerInterface->controllerControl(otgInstance->controllerHandle, kOtg_ControlPullUp, 0, 0);
-    otgInstance->controllerInterface->controllerControl(otgInstance->controllerHandle, kOtg_ControlPullDown, 0, 0);
+    (void)otgInstance->controllerInterface->controllerControl(otgInstance->controllerHandle,
+                                                              (uint32_t)kOtg_ControlPullUp, 0, 0);
+    (void)otgInstance->controllerInterface->controllerControl(otgInstance->controllerHandle,
+                                                              (uint32_t)kOtg_ControlPullDown, 0, 0);
     /* otgInstance->controllerInterface->controllerControl(otgInstance->controllerHandle, kOtg_ControlPullUp, 0); */
-    otgInstance->otgCallback(otgInstance->otgCallbackParameter, kOtg_EventStackInit,
+    otgInstance->otgCallback(otgInstance->otgCallbackParameter, (uint32_t)kOtg_EventStackInit,
                              kOtg_StackDeviceDeinit); /* device stack de-init */
 }
 
@@ -896,21 +929,22 @@ static void _USB_OtgProcessStateAPeripheral(usb_otg_instance_t *otgInstance,
                                             uint32_t otgChangeType,
                                             uint32_t changeValue)
 {
-    switch (otgChangeType)
+    usb_otg_status_type_t statusType = (usb_otg_status_type_t)otgChangeType;
+    switch (statusType)
     {
         case kOtg_StatusBusReq:
-            if (changeValue)
+            if (0U != changeValue)
             {
                 /* todo: set hnp flag for polling */
-                otgInstance->otgControllerStatus |= kOtg_StatusBusReq;
+                otgInstance->otgControllerStatus |= (uint32_t)kOtg_StatusBusReq;
             }
             break;
 
         case kOtg_StatusId:
-            if (changeValue)
+            if (0U != changeValue)
             {
                 /* todo: update controller state */
-                otgInstance->otgControllerStatus |= kOtg_StatusId;
+                otgInstance->otgControllerStatus |= (uint32_t)kOtg_StatusId;
 
                 _USB_OtgCancelTimer(otgInstance);
                 _USB_OtgExitDevice(otgInstance);
@@ -919,10 +953,10 @@ static void _USB_OtgProcessStateAPeripheral(usb_otg_instance_t *otgInstance,
             break;
 
         case kOtg_StatusBusDrop:
-            if (changeValue)
+            if (0U != changeValue)
             {
                 /* todo: update controller state */
-                otgInstance->otgControllerStatus |= kOtg_StatusBusDrop;
+                otgInstance->otgControllerStatus |= (uint32_t)kOtg_StatusBusDrop;
 
                 _USB_OtgCancelTimer(otgInstance);
                 _USB_OtgExitDevice(otgInstance);
@@ -932,9 +966,9 @@ static void _USB_OtgProcessStateAPeripheral(usb_otg_instance_t *otgInstance,
 
         case kOtg_StatusTimeOut:
 #if (USB_OTG_TIME_WAIT_BHOST != 0U)
-            if (otgInstance->waitInit) /* wait init host */
+            if (0U != otgInstance->waitInit) /* wait init host */
             {
-                otgInstance->controllerInterface->controllerControl(
+                (void)otgInstance->controllerInterface->controllerControl(
                     otgInstance->controllerHandle, kOtg_ControlRequestStatus, kOtg_StatusCheckIdleInAPeripheral,
                     kOtg_State_APeripheral);
                 otgInstance->waitInit = 0;
@@ -942,7 +976,7 @@ static void _USB_OtgProcessStateAPeripheral(usb_otg_instance_t *otgInstance,
             else
             {
 #endif
-                if (changeValue)
+                if (0U != changeValue)
                 {
                     /* todo: update controller state */
 
@@ -955,10 +989,10 @@ static void _USB_OtgProcessStateAPeripheral(usb_otg_instance_t *otgInstance,
             break;
 
         case kOtg_StatusVbusVld:
-            if (!changeValue)
+            if (0U == changeValue)
             {
                 /* todo: update controller state */
-                otgInstance->otgControllerStatus &= (uint32_t)(~kOtg_StatusVbusVld);
+                otgInstance->otgControllerStatus &= ~((uint32_t)kOtg_StatusVbusVld);
 
                 _USB_OtgCancelTimer(otgInstance);
                 _USB_OtgExitDevice(otgInstance);
@@ -967,7 +1001,7 @@ static void _USB_OtgProcessStateAPeripheral(usb_otg_instance_t *otgInstance,
             break;
 
         default:
-            if (changeValue)
+            if (0U != changeValue)
             {
                 otgInstance->otgControllerStatus |= otgChangeType;
             }
@@ -981,22 +1015,24 @@ static void _USB_OtgProcessStateAPeripheral(usb_otg_instance_t *otgInstance,
 
 static void _USB_OtgEnterStateAVbusErr(usb_otg_instance_t *otgInstance)
 {
-    if ((otgInstance->otgControllerStatus & kOtg_StatusId) || (otgInstance->otgControllerStatus & kOtg_StatusBusDrop))
+    if ((0U != (otgInstance->otgControllerStatus & ((uint32_t)kOtg_StatusId))) ||
+        (0U != (otgInstance->otgControllerStatus & ((uint32_t)kOtg_StatusBusDrop))))
     {
         _USB_OtgEnterStateAWaitVfall(otgInstance);
     }
     else
     {
-        otgInstance->otgDeviceState = kOtg_State_AVbusErr;
+        otgInstance->otgDeviceState = (uint8_t)kOtg_State_AVbusErr;
 
         /* don't driver vbus */
-        if (otgInstance->otgControllerStatus & kOtg_StatusVbusVld)
+        if (0U != (otgInstance->otgControllerStatus & ((uint32_t)kOtg_StatusVbusVld)))
         {
-            otgInstance->otgControllerStatus &= (uint32_t)(~kOtg_StatusVbusVld);
-            otgInstance->controllerInterface->controllerControl(otgInstance->controllerHandle, kOtg_ControlVbus, 0, 0);
+            otgInstance->otgControllerStatus &= ~((uint32_t)kOtg_StatusVbusVld);
+            (void)otgInstance->controllerInterface->controllerControl(otgInstance->controllerHandle,
+                                                                      (uint32_t)kOtg_ControlVbus, 0, 0);
         }
-        otgInstance->controllerInterface->controllerControl(otgInstance->controllerHandle, kOtg_ControlRequestStatus,
-                                                            kOtg_StatusId, kOtg_State_AVbusErr);
+        (void)otgInstance->controllerInterface->controllerControl(
+            otgInstance->controllerHandle, kOtg_ControlRequestStatus, kOtg_StatusId, kOtg_State_AVbusErr);
 
         otgInstance->otgCallback(otgInstance->otgCallbackParameter, kOtg_EventStateChange, kOtg_State_AVbusErr);
     }
@@ -1004,30 +1040,31 @@ static void _USB_OtgEnterStateAVbusErr(usb_otg_instance_t *otgInstance)
 
 static void _USB_OtgProcessStateAVbusErr(usb_otg_instance_t *otgInstance, uint32_t otgChangeType, uint32_t changeValue)
 {
-    switch (otgChangeType)
+    usb_otg_status_type_t statusType = (usb_otg_status_type_t)otgChangeType;
+    switch (statusType)
     {
         case kOtg_StatusId:
-            if (changeValue)
+            if (0U != changeValue)
             {
                 /* todo: update controller state */
-                otgInstance->otgControllerStatus |= kOtg_StatusId;
+                otgInstance->otgControllerStatus |= (uint32_t)kOtg_StatusId;
 
                 _USB_OtgEnterStateAWaitVfall(otgInstance); /* go to a_wait_vfall */
             }
             break;
 
         case kOtg_StatusBusDrop:
-            if (changeValue)
+            if (0U != changeValue)
             {
                 /* todo: update controller state */
-                otgInstance->otgControllerStatus |= kOtg_StatusBusDrop;
+                otgInstance->otgControllerStatus |= (uint32_t)kOtg_StatusBusDrop;
 
                 _USB_OtgEnterStateAWaitVfall(otgInstance); /* go to a_wait_vfall */
             }
             break;
 
         case kOtg_StatusClrErr:
-            if (!changeValue)
+            if (0U == changeValue)
             {
                 /* todo: update controller state */
 
@@ -1036,13 +1073,13 @@ static void _USB_OtgProcessStateAVbusErr(usb_otg_instance_t *otgInstance, uint32
             break;
 
         default:
-            if (changeValue)
+            if (0U != changeValue)
             {
-                otgInstance->otgControllerStatus |= otgChangeType;
+                otgInstance->otgControllerStatus |= (uint32_t)otgChangeType;
             }
             else
             {
-                otgInstance->otgControllerStatus &= (~otgChangeType);
+                otgInstance->otgControllerStatus &= ~((uint32_t)otgChangeType);
             }
             break;
     }
@@ -1050,32 +1087,33 @@ static void _USB_OtgProcessStateAVbusErr(usb_otg_instance_t *otgInstance, uint32
 
 static void _USB_OtgEnterStateBIdle(usb_otg_instance_t *otgInstance)
 {
-    if (!(otgInstance->otgControllerStatus & kOtg_StatusId))
+    if (0U == (otgInstance->otgControllerStatus & ((uint32_t)kOtg_StatusId)))
     {
         otgInstance->otgControllerStatus = 0U; /* default controller status */
         _USB_OtgEnterStateAIdle(otgInstance);
     }
-    else if (otgInstance->otgControllerStatus & kOtg_StatusSessVld)
+    else if (0U != (otgInstance->otgControllerStatus & ((uint32_t)kOtg_StatusSessVld)))
     {
-        otgInstance->otgControllerStatus = kOtg_StatusId;
+        otgInstance->otgControllerStatus = (uint32_t)kOtg_StatusId;
         _USB_OtgEnterStateBPeripheral(otgInstance);
     }
     else
     {
-        otgInstance->otgDeviceState = kOtg_State_BIdle;
-        otgInstance->otgControllerStatus = kOtg_StatusId;
+        otgInstance->otgDeviceState      = (uint8_t)kOtg_State_BIdle;
+        otgInstance->otgControllerStatus = (uint32_t)kOtg_StatusId;
 
 #if ((defined USB_OTG_ADP_ENABLE) && (USB_OTG_ADP_ENABLE))
 /* todo: adp */
 #endif
 
-        otgInstance->controllerInterface->controllerControl(otgInstance->controllerHandle, kOtg_ControlPullUp, 0,
-                                                            0); /* disable pull-up */
-        otgInstance->controllerInterface->controllerControl(otgInstance->controllerHandle, kOtg_ControlPullDown, 0,
-                                                            0); /* disable DP&DM pulldown */
-        otgInstance->controllerInterface->controllerControl(
+        (void)otgInstance->controllerInterface->controllerControl(otgInstance->controllerHandle, kOtg_ControlPullUp, 0,
+                                                                  0); /* disable pull-up */
+        (void)otgInstance->controllerInterface->controllerControl(otgInstance->controllerHandle, kOtg_ControlPullDown,
+                                                                  0, 0); /* disable DP&DM pulldown */
+        (void)otgInstance->controllerInterface->controllerControl(
             otgInstance->controllerHandle, kOtg_ControlRequestStatus,
-            kOtg_StatusId | kOtg_StatusAdpChange | kOtg_StatusSessVld | kOtg_StatusSe0Srp | kOtg_StatusSsendSrp,
+            ((uint32_t)kOtg_StatusId) | ((uint32_t)kOtg_StatusAdpChange) | ((uint32_t)kOtg_StatusSessVld) |
+                ((uint32_t)kOtg_StatusSe0Srp) | ((uint32_t)kOtg_StatusSsendSrp),
             kOtg_State_BIdle);
 
         otgInstance->otgCallback(otgInstance->otgCallbackParameter, kOtg_EventStateChange, kOtg_State_BIdle);
@@ -1084,10 +1122,11 @@ static void _USB_OtgEnterStateBIdle(usb_otg_instance_t *otgInstance)
 
 static void _USB_OtgProcessStateBIdle(usb_otg_instance_t *otgInstance, uint32_t otgChangeType, uint32_t changeValue)
 {
-    switch (otgChangeType)
+    usb_otg_status_type_t statusType = (usb_otg_status_type_t)otgChangeType;
+    switch (statusType)
     {
         case kOtg_StatusId:
-            if (!changeValue)
+            if (0U == changeValue)
             {
                 /* todo: update controller state */
                 otgInstance->otgControllerStatus = 0U; /* default controller status */
@@ -1097,56 +1136,56 @@ static void _USB_OtgProcessStateBIdle(usb_otg_instance_t *otgInstance, uint32_t 
             break;
 
         case kOtg_StatusSsendSrp:
-            otgInstance->otgControllerStatus |= kOtg_StatusSsendSrp;
-            if (otgInstance->otgControllerStatus & kOtg_StatusSe0Srp)
+            otgInstance->otgControllerStatus |= (uint32_t)kOtg_StatusSsendSrp;
+            if (0U != (otgInstance->otgControllerStatus & ((uint32_t)kOtg_StatusSe0Srp)))
             {
-                if ((otgInstance->otgControllerStatus & kOtg_StatusPowerUp) ||
-                    (otgInstance->otgControllerStatus & kOtg_StatusBusReq) ||
-                    (otgInstance->otgControllerStatus & kOtg_StatusAdpChange))
+                if ((0U != (otgInstance->otgControllerStatus & ((uint32_t)kOtg_StatusPowerUp))) ||
+                    (0U != (otgInstance->otgControllerStatus & ((uint32_t)kOtg_StatusBusReq))) ||
+                    (0U != (otgInstance->otgControllerStatus & ((uint32_t)kOtg_StatusAdpChange))))
                 {
-                    otgInstance->otgControllerStatus &= (uint32_t)(~kOtg_StatusPowerUp);
+                    otgInstance->otgControllerStatus &= ~((uint32_t)kOtg_StatusPowerUp);
                     _USB_OtgEnterStateBSrpInit(otgInstance); /* go to b_srp_init */
                 }
             }
             break;
 
         case kOtg_StatusSe0Srp:
-            otgInstance->otgControllerStatus |= kOtg_StatusSe0Srp;
-            if (otgInstance->otgControllerStatus & kOtg_StatusSsendSrp)
+            otgInstance->otgControllerStatus |= (uint32_t)kOtg_StatusSe0Srp;
+            if (0U != (otgInstance->otgControllerStatus & ((uint32_t)kOtg_StatusSsendSrp)))
             {
-                if ((otgInstance->otgControllerStatus & kOtg_StatusPowerUp) ||
-                    (otgInstance->otgControllerStatus & kOtg_StatusBusReq) ||
-                    (otgInstance->otgControllerStatus & kOtg_StatusAdpChange))
+                if ((0U != (otgInstance->otgControllerStatus & ((uint32_t)kOtg_StatusPowerUp))) ||
+                    (0U != (otgInstance->otgControllerStatus & ((uint32_t)kOtg_StatusBusReq))) ||
+                    (0U != (otgInstance->otgControllerStatus & ((uint32_t)kOtg_StatusAdpChange))))
                 {
-                    otgInstance->otgControllerStatus &= (uint32_t)(~kOtg_StatusPowerUp);
+                    otgInstance->otgControllerStatus &= ~((uint32_t)kOtg_StatusPowerUp);
                     _USB_OtgEnterStateBSrpInit(otgInstance); /* go to b_srp_init */
                 }
             }
             break;
 
         case kOtg_StatusPowerUp:
-            if (changeValue)
+            if (0U != changeValue)
             {
                 /* todo: update controller state */
-                otgInstance->otgControllerStatus |= kOtg_StatusPowerUp;
+                otgInstance->otgControllerStatus |= (uint32_t)kOtg_StatusPowerUp;
 
-                if ((otgInstance->otgControllerStatus & kOtg_StatusSsendSrp) &&
-                    (otgInstance->otgControllerStatus & kOtg_StatusSe0Srp))
+                if ((0U != (otgInstance->otgControllerStatus & ((uint32_t)kOtg_StatusSsendSrp))) &&
+                    (0U != (otgInstance->otgControllerStatus & ((uint32_t)kOtg_StatusSe0Srp))))
                 {
-                    otgInstance->otgControllerStatus &= (uint32_t)(~kOtg_StatusPowerUp);
+                    otgInstance->otgControllerStatus &= ~((uint32_t)kOtg_StatusPowerUp);
                     _USB_OtgEnterStateBSrpInit(otgInstance); /* go to b_srp_init */
                 }
             }
             break;
 
         case kOtg_StatusBusReq:
-            if (changeValue)
+            if (0U != changeValue)
             {
                 /* todo: update controller state */
-                otgInstance->otgControllerStatus |= kOtg_StatusBusReq;
+                otgInstance->otgControllerStatus |= (uint32_t)kOtg_StatusBusReq;
 
-                if ((otgInstance->otgControllerStatus & kOtg_StatusSsendSrp) &&
-                    (otgInstance->otgControllerStatus & kOtg_StatusSe0Srp))
+                if ((0U != (otgInstance->otgControllerStatus & ((uint32_t)kOtg_StatusSsendSrp))) &&
+                    (0U != (otgInstance->otgControllerStatus & ((uint32_t)kOtg_StatusSe0Srp))))
                 {
                     _USB_OtgEnterStateBSrpInit(otgInstance); /* go to b_srp_init */
                 }
@@ -1154,12 +1193,12 @@ static void _USB_OtgProcessStateBIdle(usb_otg_instance_t *otgInstance, uint32_t 
             break;
 
         case kOtg_StatusAdpChange:
-            if (changeValue)
+            if (0U != changeValue)
             {
                 /* todo: update controller state */
 
-                if ((otgInstance->otgControllerStatus & kOtg_StatusSsendSrp) &&
-                    (otgInstance->otgControllerStatus & kOtg_StatusSe0Srp))
+                if ((0U != (otgInstance->otgControllerStatus & ((uint32_t)kOtg_StatusSsendSrp))) &&
+                    (0U != (otgInstance->otgControllerStatus & ((uint32_t)kOtg_StatusSe0Srp))))
                 {
                     _USB_OtgEnterStateBSrpInit(otgInstance); /* go to b_srp_init */
                 }
@@ -1167,23 +1206,23 @@ static void _USB_OtgProcessStateBIdle(usb_otg_instance_t *otgInstance, uint32_t 
             break;
 
         case kOtg_StatusSessVld:
-            if (changeValue)
+            if (0U != changeValue)
             {
                 /* todo: update controller state */
-                otgInstance->otgControllerStatus |= kOtg_StatusSessVld;
+                otgInstance->otgControllerStatus |= (uint32_t)kOtg_StatusSessVld;
 
                 _USB_OtgEnterStateBPeripheral(otgInstance); /* go to b_peripheral */
             }
             break;
 
         default:
-            if (changeValue)
+            if (0U != changeValue)
             {
-                otgInstance->otgControllerStatus |= otgChangeType;
+                otgInstance->otgControllerStatus |= (uint32_t)otgChangeType;
             }
             else
             {
-                otgInstance->otgControllerStatus &= (~otgChangeType);
+                otgInstance->otgControllerStatus &= ~((uint32_t)otgChangeType);
             }
             break;
     }
@@ -1191,20 +1230,22 @@ static void _USB_OtgProcessStateBIdle(usb_otg_instance_t *otgInstance, uint32_t 
 
 static void _USB_OtgEnterStateBSrpInit(usb_otg_instance_t *otgInstance)
 {
-    otgInstance->otgControllerStatus = (~kOtg_StatusBusReq); /* clear b_bus_req */
+    otgInstance->otgControllerStatus = ~((uint32_t)kOtg_StatusBusReq); /* clear b_bus_req */
 
-    if (!(otgInstance->otgControllerStatus & kOtg_StatusId))
+    if (0U == (otgInstance->otgControllerStatus & ((uint32_t)kOtg_StatusId)))
     {
         _USB_OtgEnterStateBIdle(otgInstance);
     }
     else
     {
-        otgInstance->otgDeviceState = kOtg_State_BSrpInit;
+        otgInstance->otgDeviceState = (uint8_t)kOtg_State_BSrpInit;
 
-        otgInstance->controllerInterface->controllerControl(otgInstance->controllerHandle, kOtg_ControlDataPulse, 1, 0);
+        (void)otgInstance->controllerInterface->controllerControl(otgInstance->controllerHandle,
+                                                                  (uint32_t)kOtg_ControlDataPulse, 1, 0);
 
-        otgInstance->controllerInterface->controllerControl(otgInstance->controllerHandle, kOtg_ControlRequestStatus,
-                                                            kOtg_StatusId | kOtg_StatusBSrpDone, kOtg_State_BSrpInit);
+        (void)otgInstance->controllerInterface->controllerControl(
+            otgInstance->controllerHandle, (uint32_t)kOtg_ControlRequestStatus,
+            ((uint32_t)kOtg_StatusId) | ((uint32_t)kOtg_StatusBSrpDone), (uint32_t)kOtg_State_BSrpInit);
         /* todo: check SRP fail */
         /* _USB_OtgStartTimer(otgInstance, USB_OTG_TIME_B_SRP_FAIL); */
 
@@ -1214,20 +1255,21 @@ static void _USB_OtgEnterStateBSrpInit(usb_otg_instance_t *otgInstance)
 
 static void _USB_OtgProcessStateBSrpInit(usb_otg_instance_t *otgInstance, uint32_t otgChangeType, uint32_t changeValue)
 {
-    switch (otgChangeType)
+    usb_otg_status_type_t statusType = (usb_otg_status_type_t)otgChangeType;
+    switch (statusType)
     {
         case kOtg_StatusId:
-            if (!changeValue)
+            if (0U == changeValue)
             {
                 /* todo: update controller state */
-                otgInstance->otgControllerStatus &= (uint32_t)(~kOtg_StatusId);
+                otgInstance->otgControllerStatus &= ~((uint32_t)kOtg_StatusId);
 
                 _USB_OtgEnterStateBIdle(otgInstance); /* go to b_idle */
             }
             break;
 
         case kOtg_StatusBSrpDone:
-            if (changeValue)
+            if (0U != changeValue)
             {
                 /* todo: update controller state */
 
@@ -1237,7 +1279,7 @@ static void _USB_OtgProcessStateBSrpInit(usb_otg_instance_t *otgInstance, uint32
 
 #if 0
         case kOtg_StatusTimeOut: /* b_srp_done and srp fail */
-            if (changeValue)
+            if (0U != changeValue)
             {
                 /* todo: update controller state */
 
@@ -1246,7 +1288,7 @@ static void _USB_OtgProcessStateBSrpInit(usb_otg_instance_t *otgInstance, uint32
             break;
 
         case kOtg_StatusSessVld: /* this change is not align with spec state machine */
-            if (changeValue)
+            if (0U != changeValue)
             {
                 /* todo: update controller state */
                 otgInstance->otgControllerStatus |= kOtg_StatusSessVld;
@@ -1258,13 +1300,13 @@ static void _USB_OtgProcessStateBSrpInit(usb_otg_instance_t *otgInstance, uint32
 #endif
 
         default:
-            if (changeValue)
+            if (0U != changeValue)
             {
-                otgInstance->otgControllerStatus |= otgChangeType;
+                otgInstance->otgControllerStatus |= (uint32_t)otgChangeType;
             }
             else
             {
-                otgInstance->otgControllerStatus &= (~otgChangeType);
+                otgInstance->otgControllerStatus &= ~((uint32_t)otgChangeType);
             }
             break;
     }
@@ -1272,29 +1314,30 @@ static void _USB_OtgProcessStateBSrpInit(usb_otg_instance_t *otgInstance, uint32
 
 static void _USB_OtgEnterStateBPeripheral(usb_otg_instance_t *otgInstance)
 {
-    otgInstance->otgControllerStatus &= (uint32_t)(~kOtg_StatusAConn);
+    otgInstance->otgControllerStatus &= ~((uint32_t)kOtg_StatusAConn);
 
-    if ((!(otgInstance->otgControllerStatus & kOtg_StatusId)) ||
-        (!(otgInstance->otgControllerStatus & kOtg_StatusSessVld)))
+    if ((0U == (otgInstance->otgControllerStatus & ((uint32_t)kOtg_StatusId))) ||
+        (0U == (otgInstance->otgControllerStatus & ((uint32_t)kOtg_StatusSessVld))))
     {
         _USB_OtgEnterStateBIdle(otgInstance);
     }
     else
     {
-        otgInstance->otgDeviceState = kOtg_State_BPeripheral;
-        otgInstance->otgControllerStatus &= (~kOtg_StatusBHNPFeature);
+        otgInstance->otgDeviceState = (uint8_t)kOtg_State_BPeripheral;
+        otgInstance->otgControllerStatus &= ~((uint32_t)kOtg_StatusBHNPFeature);
 
         /* start work as device */
-        otgInstance->controllerInterface->controllerControl(otgInstance->controllerHandle, kOtg_ControlPullUp,
-                                                            kOtg_PullDp, 0);
-        otgInstance->controllerInterface->controllerControl(otgInstance->controllerHandle, kOtg_ControlPullDown,
-                                                            kOtg_PullDm, 0);
+        (void)otgInstance->controllerInterface->controllerControl(
+            otgInstance->controllerHandle, (uint32_t)kOtg_ControlPullUp, (uint32_t)kOtg_PullDp, 0);
+        (void)otgInstance->controllerInterface->controllerControl(
+            otgInstance->controllerHandle, (uint32_t)kOtg_ControlPullDown, (uint32_t)kOtg_PullDm, 0);
         otgInstance->otgCallback(otgInstance->otgCallbackParameter, kOtg_EventStackInit,
                                  kOtg_StackDeviceInit); /* device stack init */
 
-        otgInstance->controllerInterface->controllerControl(
-            otgInstance->controllerHandle, kOtg_ControlRequestStatus,
-            kOtg_StatusId | kOtg_StatusSessInvld | kOtg_StatusBusSuspend, kOtg_State_BPeripheral);
+        (void)otgInstance->controllerInterface->controllerControl(
+            otgInstance->controllerHandle, (uint32_t)kOtg_ControlRequestStatus,
+            ((uint32_t)kOtg_StatusId) | ((uint32_t)kOtg_StatusSessInvld) | ((uint32_t)kOtg_StatusBusSuspend),
+            ((uint32_t)kOtg_State_BPeripheral));
 
         otgInstance->otgCallback(otgInstance->otgCallbackParameter, kOtg_EventStateChange, kOtg_State_BPeripheral);
     }
@@ -1304,13 +1347,14 @@ static void _USB_OtgProcessStateBPeripheral(usb_otg_instance_t *otgInstance,
                                             uint32_t otgChangeType,
                                             uint32_t changeValue)
 {
-    switch (otgChangeType)
+    usb_otg_status_type_t statusType = (usb_otg_status_type_t)otgChangeType;
+    switch (statusType)
     {
         case kOtg_StatusId:
-            if (!changeValue)
+            if (0U == changeValue)
             {
                 /* todo: update controller state */
-                otgInstance->otgControllerStatus &= (uint32_t)(~kOtg_StatusId);
+                otgInstance->otgControllerStatus &= ~((uint32_t)kOtg_StatusId);
 
                 _USB_OtgExitDevice(otgInstance);
                 _USB_OtgEnterStateBIdle(otgInstance); /* go to b_idle */
@@ -1318,10 +1362,10 @@ static void _USB_OtgProcessStateBPeripheral(usb_otg_instance_t *otgInstance,
             break;
 
         case kOtg_StatusSessVld:
-            if (!changeValue)
+            if (0U == changeValue)
             {
                 /* todo: update controller state */
-                otgInstance->otgControllerStatus &= (uint32_t)(~kOtg_StatusSessVld);
+                otgInstance->otgControllerStatus &= ~((uint32_t)kOtg_StatusSessVld);
 
                 _USB_OtgExitDevice(otgInstance);
                 _USB_OtgEnterStateBIdle(otgInstance); /* go to b_idle */
@@ -1329,9 +1373,9 @@ static void _USB_OtgProcessStateBPeripheral(usb_otg_instance_t *otgInstance,
             break;
 
         case kOtg_StatusVbusVld:
-            if (!changeValue)
+            if (0U == changeValue)
             {
-                otgInstance->otgControllerStatus &= (uint32_t)(~kOtg_StatusVbusVld);
+                otgInstance->otgControllerStatus &= ~((uint32_t)kOtg_StatusVbusVld);
                 _USB_OtgExitDevice(otgInstance);
                 _USB_OtgEnterStateBIdle(otgInstance); /* go to b_idle */
             }
@@ -1342,23 +1386,23 @@ static void _USB_OtgProcessStateBPeripheral(usb_otg_instance_t *otgInstance,
             break;
 
         case kOtg_StatusBusReq:
-            if (changeValue)
+            if (0U != changeValue)
             {
                 /* todo: update controller state */
-                otgInstance->otgControllerStatus |= kOtg_StatusBusReq;
+                otgInstance->otgControllerStatus |= (uint32_t)kOtg_StatusBusReq;
             }
             break;
 
         case kOtg_StatusBusSuspend:
-            if (changeValue)
+            if (0U != changeValue)
             {
                 /* todo: update controller state */
 
-                if ((otgInstance->otgControllerStatus & kOtg_StatusBHNPFeature) &&
-                    (otgInstance->otgControllerStatus & kOtg_StatusBusReq))
+                if ((0U != (otgInstance->otgControllerStatus & ((uint32_t)kOtg_StatusBHNPFeature))) &&
+                    (0U != (otgInstance->otgControllerStatus & ((uint32_t)kOtg_StatusBusReq))))
                 {
-                    otgInstance->controllerInterface->controllerControl(otgInstance->controllerHandle,
-                                                                        kOtg_ControlPullUp, 0, 0);
+                    (void)otgInstance->controllerInterface->controllerControl(otgInstance->controllerHandle,
+                                                                              (uint32_t)kOtg_ControlPullUp, 0, 0);
                     _USB_OtgExitDevice(otgInstance);
                     _USB_OtgEnterStateBWaitAcon(otgInstance); /* go to b_wait_acon */
                 }
@@ -1366,13 +1410,13 @@ static void _USB_OtgProcessStateBPeripheral(usb_otg_instance_t *otgInstance,
             break;
 
         default:
-            if (changeValue)
+            if (0U != changeValue)
             {
-                otgInstance->otgControllerStatus |= otgChangeType;
+                otgInstance->otgControllerStatus |= (uint32_t)otgChangeType;
             }
             else
             {
-                otgInstance->otgControllerStatus &= (~otgChangeType);
+                otgInstance->otgControllerStatus &= ~((uint32_t)otgChangeType);
             }
             break;
     }
@@ -1380,23 +1424,24 @@ static void _USB_OtgProcessStateBPeripheral(usb_otg_instance_t *otgInstance,
 
 static void _USB_OtgEnterStateBWaitAcon(usb_otg_instance_t *otgInstance)
 {
-    if ((!(otgInstance->otgControllerStatus & kOtg_StatusId)) ||
-        (!(otgInstance->otgControllerStatus & kOtg_StatusSessVld)))
+    if ((0U == (otgInstance->otgControllerStatus & ((uint32_t)kOtg_StatusId))) ||
+        (0U == (otgInstance->otgControllerStatus & ((uint32_t)kOtg_StatusSessVld))))
     {
         _USB_OtgEnterStateBIdle(otgInstance);
     }
-    else if (otgInstance->otgControllerStatus & kOtg_StatusAConn)
+    else if (0U != (otgInstance->otgControllerStatus & ((uint32_t)kOtg_StatusAConn)))
     {
         _USB_OtgEnterStateBHost(otgInstance);
     }
     else
     {
-        otgInstance->otgDeviceState = kOtg_State_BWaitAcon;
+        otgInstance->otgDeviceState = (uint8_t)kOtg_State_BWaitAcon;
 
-        otgInstance->controllerInterface->controllerControl(otgInstance->controllerHandle, kOtg_ControlPullUp, 0, 0);
-        otgInstance->controllerInterface->controllerControl(otgInstance->controllerHandle, kOtg_ControlRequestStatus,
-                                                            kOtg_StatusBusResume | kOtg_StatusAConn,
-                                                            kOtg_State_BWaitAcon);
+        (void)otgInstance->controllerInterface->controllerControl(otgInstance->controllerHandle,
+                                                                  (uint32_t)kOtg_ControlPullUp, 0, 0);
+        (void)otgInstance->controllerInterface->controllerControl(
+            otgInstance->controllerHandle, (uint32_t)kOtg_ControlRequestStatus,
+            ((uint32_t)kOtg_StatusBusResume) | ((uint32_t)kOtg_StatusAConn), (uint32_t)kOtg_State_BWaitAcon);
 
         otgInstance->otgCallback(otgInstance->otgCallbackParameter, kOtg_EventStateChange, kOtg_State_BWaitAcon);
 
@@ -1407,13 +1452,14 @@ static void _USB_OtgEnterStateBWaitAcon(usb_otg_instance_t *otgInstance)
 
 static void _USB_OtgProcessStateBWaitAcon(usb_otg_instance_t *otgInstance, uint32_t otgChangeType, uint32_t changeValue)
 {
-    switch (otgChangeType)
+    usb_otg_status_type_t statusType = (usb_otg_status_type_t)otgChangeType;
+    switch (statusType)
     {
         case kOtg_StatusAConn:
-            if (changeValue)
+            if (0U != changeValue)
             {
                 /* todo: update controller state */
-                otgInstance->otgControllerStatus |= kOtg_StatusAConn;
+                otgInstance->otgControllerStatus |= (uint32_t)kOtg_StatusAConn;
 
                 _USB_OtgCancelTimer(otgInstance);
                 _USB_OtgEnterStateBHost(otgInstance); /* go to b_host */
@@ -1421,10 +1467,10 @@ static void _USB_OtgProcessStateBWaitAcon(usb_otg_instance_t *otgInstance, uint3
             break;
 
         case kOtg_StatusId:
-            if (!changeValue)
+            if (0U == changeValue)
             {
                 /* todo: update controller state */
-                otgInstance->otgControllerStatus &= (uint32_t)(~kOtg_StatusId);
+                otgInstance->otgControllerStatus &= ~((uint32_t)kOtg_StatusId);
 
                 _USB_OtgCancelTimer(otgInstance);
                 _USB_OtgEnterStateBIdle(otgInstance); /* go to b_idle */
@@ -1432,10 +1478,10 @@ static void _USB_OtgProcessStateBWaitAcon(usb_otg_instance_t *otgInstance, uint3
             break;
 
         case kOtg_StatusSessVld:
-            if (!changeValue)
+            if (0U == changeValue)
             {
                 /* todo: update controller state */
-                otgInstance->otgControllerStatus &= (uint32_t)(~kOtg_StatusSessVld);
+                otgInstance->otgControllerStatus &= ~((uint32_t)kOtg_StatusSessVld);
 
                 _USB_OtgCancelTimer(otgInstance);
                 _USB_OtgEnterStateBIdle(otgInstance); /* go to b_idle */
@@ -1443,7 +1489,7 @@ static void _USB_OtgProcessStateBWaitAcon(usb_otg_instance_t *otgInstance, uint3
             break;
 
         case kOtg_StatusBusResume:
-            if (changeValue)
+            if (0U != changeValue)
             {
                 /* todo: update controller state */
 
@@ -1453,7 +1499,7 @@ static void _USB_OtgProcessStateBWaitAcon(usb_otg_instance_t *otgInstance, uint3
             break;
 
         case kOtg_StatusTimeOut:
-            if (changeValue)
+            if (0U != changeValue)
             {
                 /* todo: update controller state */
 
@@ -1462,13 +1508,13 @@ static void _USB_OtgProcessStateBWaitAcon(usb_otg_instance_t *otgInstance, uint3
             break;
 
         default:
-            if (changeValue)
+            if (0U != changeValue)
             {
-                otgInstance->otgControllerStatus |= otgChangeType;
+                otgInstance->otgControllerStatus |= (uint32_t)otgChangeType;
             }
             else
             {
-                otgInstance->otgControllerStatus &= (~otgChangeType);
+                otgInstance->otgControllerStatus &= ~((uint32_t)otgChangeType);
             }
             break;
     }
@@ -1476,31 +1522,33 @@ static void _USB_OtgProcessStateBWaitAcon(usb_otg_instance_t *otgInstance, uint3
 
 static void _USB_OtgEnterStateBHost(usb_otg_instance_t *otgInstance)
 {
-    if ((!(otgInstance->otgControllerStatus & kOtg_StatusAConn)) ||
-        (!(otgInstance->otgControllerStatus & kOtg_StatusBusReq)))
+    if ((0U == (otgInstance->otgControllerStatus & ((uint32_t)kOtg_StatusAConn))) ||
+        (0U == (otgInstance->otgControllerStatus & ((uint32_t)kOtg_StatusBusReq))))
     {
         _USB_OtgEnterStateBPeripheral(otgInstance);
     }
-    else if (!(otgInstance->otgControllerStatus & kOtg_StatusVbusVld))
+    else if (0U == (otgInstance->otgControllerStatus & ((uint32_t)kOtg_StatusVbusVld)))
     {
         _USB_OtgEnterStateBPeripheral(otgInstance);
     }
     else
     {
-        otgInstance->otgDeviceState = kOtg_State_BHost;
-        otgInstance->otgControllerStatus &= (uint32_t)(~kOtg_StatusBusReq);
-        otgInstance->otgControllerStatus |= kOtg_StatusBHNPFeature;
+        otgInstance->otgDeviceState = (uint8_t)kOtg_State_BHost;
+        otgInstance->otgControllerStatus &= ~((uint32_t)kOtg_StatusBusReq);
+        otgInstance->otgControllerStatus |= (uint32_t)kOtg_StatusBHNPFeature;
 
-        otgInstance->controllerInterface->controllerControl(otgInstance->controllerHandle, kOtg_ControlPullDown,
-                                                            kOtg_PullDp | kOtg_PullDm, 0);
+        (void)otgInstance->controllerInterface->controllerControl(otgInstance->controllerHandle,
+                                                                  (uint32_t)kOtg_ControlPullDown,
+                                                                  ((uint32_t)kOtg_PullDp) | ((uint32_t)kOtg_PullDm), 0);
 
-        otgInstance->controllerInterface->controllerControl(otgInstance->controllerHandle, kOtg_ControlRequestStatus,
-                                                            kOtg_StatusADisconn, kOtg_State_BHost);
+        (void)otgInstance->controllerInterface->controllerControl(
+            otgInstance->controllerHandle, (uint32_t)kOtg_ControlRequestStatus, (uint32_t)kOtg_StatusADisconn,
+            (uint32_t)kOtg_State_BHost);
 
         otgInstance->otgCallback(otgInstance->otgCallbackParameter, kOtg_EventStateChange, kOtg_State_BHost);
 
 #if (USB_OTG_TIME_WAIT_DEVICE_INIT != 0U)
-        otgInstance->waitInit = 1;
+        otgInstance->waitInit = 1U;
         _USB_OtgStartTimer(otgInstance, USB_OTG_TIME_WAIT_DEVICE_INIT);
 #else
         /* start work as host */
@@ -1511,11 +1559,12 @@ static void _USB_OtgEnterStateBHost(usb_otg_instance_t *otgInstance)
 
 static void _USB_OtgProcessStateBHost(usb_otg_instance_t *otgInstance, uint32_t otgChangeType, uint32_t changeValue)
 {
-    switch (otgChangeType)
+    usb_otg_status_type_t statusType = (usb_otg_status_type_t)otgChangeType;
+    switch (statusType)
     {
 #if (USB_OTG_TIME_WAIT_DEVICE_INIT != 0U)
         case kOtg_StatusTimeOut:
-            if (otgInstance->waitInit) /* wait device init */
+            if (0U != otgInstance->waitInit) /* wait device init */
             {
                 /* start work as host */
                 otgInstance->waitInit = 0;
@@ -1526,10 +1575,10 @@ static void _USB_OtgProcessStateBHost(usb_otg_instance_t *otgInstance, uint32_t 
 #endif
 
         case kOtg_StatusBusReq:
-            if (!changeValue) /* B release bus */
+            if (0U == changeValue) /* B release bus */
             {
                 /* todo: update controller state */
-                otgInstance->otgControllerStatus &= (uint32_t)(~kOtg_StatusBusReq);
+                otgInstance->otgControllerStatus &= ~((uint32_t)kOtg_StatusBusReq);
 
                 _USB_OtgExitHost(otgInstance);
                 _USB_OtgEnterStateBPeripheral(otgInstance); /* go to b_peripheral */
@@ -1544,10 +1593,10 @@ static void _USB_OtgProcessStateBHost(usb_otg_instance_t *otgInstance, uint32_t 
             break;
 
         case kOtg_StatusAConn:
-            if (!changeValue)
+            if (0U == changeValue)
             {
                 /* todo: update controller state */
-                otgInstance->otgControllerStatus &= (uint32_t)(~kOtg_StatusAConn);
+                otgInstance->otgControllerStatus &= ~((uint32_t)kOtg_StatusAConn);
 
                 _USB_OtgExitHost(otgInstance);
                 _USB_OtgEnterStateBPeripheral(otgInstance); /* go to b_peripheral */
@@ -1555,10 +1604,10 @@ static void _USB_OtgProcessStateBHost(usb_otg_instance_t *otgInstance, uint32_t 
             break;
 
         case kOtg_StatusVbusVld:
-            if (!changeValue)
+            if (0U == changeValue)
             {
                 /* todo: update controller state */
-                otgInstance->otgControllerStatus &= (uint32_t)(~kOtg_StatusVbusVld);
+                otgInstance->otgControllerStatus &= ~((uint32_t)kOtg_StatusVbusVld);
 
                 _USB_OtgExitHost(otgInstance);
                 _USB_OtgEnterStateBPeripheral(otgInstance); /* go to b_peripheral */
@@ -1566,13 +1615,13 @@ static void _USB_OtgProcessStateBHost(usb_otg_instance_t *otgInstance, uint32_t 
             break;
 
         default:
-            if (changeValue)
+            if (0U != changeValue)
             {
-                otgInstance->otgControllerStatus |= otgChangeType;
+                otgInstance->otgControllerStatus |= (uint32_t)otgChangeType;
             }
             else
             {
-                otgInstance->otgControllerStatus &= (~otgChangeType);
+                otgInstance->otgControllerStatus &= ~((uint32_t)otgChangeType);
             }
             break;
     }
@@ -1598,17 +1647,16 @@ usb_status_t USB_OtgInit(uint8_t controllerId,
     }
     /* initialize msg queue */
     otgInstance->otgMsgHandle = (osa_msgq_handle_t)&otgInstance->otgMsgHandleBuffer[0];
-    if (KOSA_StatusSuccess !=
-        OSA_MsgQCreate(otgInstance->otgMsgHandle, USB_OTG_MSG_COUNT, USB_OTG_MESSAGES_SIZE))
+    if (KOSA_StatusSuccess != OSA_MsgQCreate(otgInstance->otgMsgHandle, USB_OTG_MSG_COUNT, USB_OTG_MESSAGES_SIZE))
     {
         OSA_MemoryFree(otgInstance);
         return kStatus_USB_Error;
     }
     /* otg instance structure filed initialization */
-    otgInstance->otgControllerStatus = 0U; /* default controller status */
-    otgInstance->otgCallback = otgCallbackFn;
+    otgInstance->otgControllerStatus  = 0U; /* default controller status */
+    otgInstance->otgCallback          = otgCallbackFn;
     otgInstance->otgCallbackParameter = callbackParameter;
-    otgInstance->hasUpdateMsg = 0U;
+    otgInstance->hasUpdateMsg         = 0U;
 
     /* 2. initialize controller */
     _USB_OtgGetControllerInterface(controllerId, &otgInstance->controllerInterface);
@@ -1616,14 +1664,14 @@ usb_status_t USB_OtgInit(uint8_t controllerId,
         (otgInstance->controllerInterface->controllerDeinit == NULL) ||
         (otgInstance->controllerInterface->controllerControl == NULL))
     {
-        OSA_MsgQDestroy(otgInstance->otgMsgHandle);
+        (void)OSA_MsgQDestroy(otgInstance->otgMsgHandle);
         OSA_MemoryFree(otgInstance);
         return kStatus_USB_Error;
     }
     if (otgInstance->controllerInterface->controllerInit(controllerId, otgInstance, &otgInstance->controllerHandle) !=
         kStatus_USB_Success)
     {
-        OSA_MsgQDestroy(otgInstance->otgMsgHandle);
+        (void)OSA_MsgQDestroy(otgInstance->otgMsgHandle);
         OSA_MemoryFree(otgInstance);
         return kStatus_USB_Error;
     }
@@ -1644,10 +1692,10 @@ usb_status_t USB_OtgDeinit(usb_otg_handle otgHandle)
     }
 
     /* 1. de-initialize controller */
-    otgInstance->controllerInterface->controllerDeinit(otgInstance->controllerHandle);
+    (void)otgInstance->controllerInterface->controllerDeinit(otgInstance->controllerHandle);
 
     /* 2. de-initialize otg stack */
-    OSA_MsgQDestroy(otgInstance->otgMsgHandle);
+    (void)OSA_MsgQDestroy(otgInstance->otgMsgHandle);
     OSA_MemoryFree(otgInstance);
 
     return kStatus_USB_Success;
@@ -1657,6 +1705,7 @@ void USB_OtgTaskFunction(usb_otg_handle otgHandle)
 {
     usb_otg_instance_t *otgInstance = (usb_otg_instance_t *)otgHandle;
     usb_otg_msg_t otgMsg;
+    usb_otg_device_state_t deviceState;
 
     if (otgHandle == NULL)
     {
@@ -1669,22 +1718,23 @@ void USB_OtgTaskFunction(usb_otg_handle otgHandle)
         if (otgMsg.otgStatusType == (uint32_t)kOtg_StatusChange)
         {
             otgInstance->hasUpdateMsg = 0;
-            otgInstance->controllerInterface->controllerControl(otgInstance->controllerHandle, kOtg_ControlUpdateStatus,
-                                                                0, 0);
+            (void)otgInstance->controllerInterface->controllerControl(otgInstance->controllerHandle,
+                                                                      kOtg_ControlUpdateStatus, 0, 0);
         }
         else
         {
-            if (otgMsg.otgStatusType == kOtg_StatusTimeOut)
+            if (otgMsg.otgStatusType == (uint32_t)kOtg_StatusTimeOut)
             {
                 otgInstance->hasTimeOutMsg--;
-                if (otgInstance->cancelTime)
+                if (0U != otgInstance->cancelTime)
                 {
                     otgInstance->cancelTime = 0;
                     return;
                 }
             }
 
-            switch (otgInstance->otgDeviceState)
+            deviceState = (usb_otg_device_state_t)otgInstance->otgDeviceState;
+            switch (deviceState)
             {
                 case kOtg_State_Start:
                     _USB_OtgProcessStateStart(otgInstance, otgMsg.otgStatusType, otgMsg.otgStatusValue);
@@ -1747,6 +1797,7 @@ void USB_OtgTaskFunction(usb_otg_handle otgHandle)
                     break;
 
                 default:
+                    /*no action*/
                     break;
             }
         }
@@ -1762,9 +1813,10 @@ usb_status_t USB_OtgBusDrop(usb_otg_handle otgHandle, uint8_t drop)
         return kStatus_USB_InvalidHandle;
     }
 
-    if ((otgInstance->otgDeviceState >= kOtg_State_AIdle) && (otgInstance->otgDeviceState <= kOtg_State_AVbusErr))
+    if ((otgInstance->otgDeviceState >= (uint8_t)kOtg_State_AIdle) &&
+        (otgInstance->otgDeviceState <= (uint8_t)kOtg_State_AVbusErr))
     {
-        return USB_OtgNotifyChange(otgHandle, kOtg_StatusBusDrop, drop);
+        return USB_OtgNotifyChange(otgHandle, (uint32_t)kOtg_StatusBusDrop, drop);
     }
     else
     {
@@ -1779,7 +1831,7 @@ usb_status_t USB_OtgBusRequest(usb_otg_handle otgHandle)
         return kStatus_USB_InvalidHandle;
     }
 
-    return USB_OtgNotifyChange(otgHandle, kOtg_StatusBusReq, 1);
+    return USB_OtgNotifyChange(otgHandle, (uint32_t)kOtg_StatusBusReq, 1);
 }
 
 usb_status_t USB_OtgBusRelease(usb_otg_handle otgHandle)
@@ -1789,7 +1841,7 @@ usb_status_t USB_OtgBusRelease(usb_otg_handle otgHandle)
         return kStatus_USB_InvalidHandle;
     }
 
-    return USB_OtgNotifyChange(otgHandle, kOtg_StatusBusReq, 0);
+    return USB_OtgNotifyChange(otgHandle, (uint32_t)kOtg_StatusBusReq, 0);
 }
 
 usb_status_t USB_OtgClearError(usb_otg_handle otgHandle)
@@ -1801,9 +1853,9 @@ usb_status_t USB_OtgClearError(usb_otg_handle otgHandle)
         return kStatus_USB_InvalidHandle;
     }
 
-    if (otgInstance->otgDeviceState == kOtg_State_AVbusErr)
+    if (otgInstance->otgDeviceState == (uint8_t)kOtg_State_AVbusErr)
     {
-        return USB_OtgNotifyChange(otgHandle, kOtg_StatusClrErr, 1);
+        return USB_OtgNotifyChange(otgHandle, (uint32_t)kOtg_StatusClrErr, 1);
     }
     else
     {
@@ -1821,29 +1873,29 @@ usb_status_t USB_OtgNotifyChange(usb_otg_handle otgHandle, uint32_t statusType, 
         return kStatus_USB_InvalidHandle;
     }
 
-    if (statusType == kOtg_StatusTimeOut)
+    if (statusType == (uint32_t)kOtg_StatusTimeOut)
     {
         otgInstance->hasTimeOutMsg++;
     }
     else if (statusType == (uint32_t)kOtg_StatusChange)
     {
-        if (otgInstance->hasUpdateMsg == 1)
+        if (otgInstance->hasUpdateMsg == 1U)
         {
             return kStatus_USB_Success;
         }
     }
-    else if (statusType == kOtg_StatusBHNPFeature)
+    else if (statusType == (uint32_t)kOtg_StatusBHNPFeature)
     {
-        if (statusValue)
+        if (0U != statusValue)
         {
-            otgInstance->otgControllerStatus |= kOtg_StatusBHNPFeature;
+            otgInstance->otgControllerStatus |= (uint32_t)kOtg_StatusBHNPFeature;
         }
         else
         {
-            otgInstance->otgControllerStatus &= (~kOtg_StatusBHNPFeature);
+            otgInstance->otgControllerStatus &= ~((uint32_t)kOtg_StatusBHNPFeature);
         }
     }
-    else if (statusType == kOtg_StatusId)
+    else if (statusType == (uint32_t)kOtg_StatusId)
     {
         if (statusValue == 0U)
         {
@@ -1854,7 +1906,7 @@ usb_status_t USB_OtgNotifyChange(usb_otg_handle otgHandle, uint32_t statusType, 
     {
     }
 
-    otgMsg.otgStatusType = statusType;
+    otgMsg.otgStatusType  = statusType;
     otgMsg.otgStatusValue = statusValue;
     if (OSA_MsgQPut(otgInstance->otgMsgHandle, (osa_msg_handle_t)&otgMsg) == KOSA_StatusSuccess)
     {

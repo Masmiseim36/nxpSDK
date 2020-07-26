@@ -1,9 +1,8 @@
-/**
-* @file a71ch_crypto_derive.c
+/*
 * @author NXP Semiconductors
 * @version 1.0
 * @par License
-* Copyright 2016 NXP
+* Copyright 2016,2020 NXP
 *
 * This software is owned or controlled by NXP and may only be used
 * strictly in accordance with the applicable license terms.  By expressly
@@ -13,12 +12,15 @@
 * you do not agree to be bound by the applicable license terms, then you
 * may not retain, install, activate or otherwise use the software.
 *
-* @par Description
-* This file wraps the key derivation functionality of the A71CH module.
 * @par History
 * 1.0   2016-Sep-22 : Initial version
 *
 *****************************************************************************/
+/**
+* @file a71ch_crypto_derive.c
+* @par Description
+* Wrap the key derivation functionality of the A71CH.
+*/
 #include <stddef.h>
 #include <string.h>
 #include <stdio.h> // DEBUG
@@ -71,7 +73,7 @@ static U16 DERIVE_KdfGeneric(SST_Index_t index, U8 nBlock, const U8 *salt, U16 s
     smApduAppendCmdData(pApdu, &data, 1);
     smApduAppendCmdData(pApdu, info, infoLen);
 
-    rv = (U16)scp_Transceive(pApdu, SCP_MODE);
+    rv = (U16)scp_Transceive(NULL, pApdu, SCP_MODE);
     if (rv == SMCOM_OK)
     {
         rv = smGetSw(pApdu, &isOk);
@@ -219,7 +221,7 @@ U16 A71_PskDeriveMasterSecret(SST_Index_t index, U8 nBlock, const U8 *serverHell
 
     smApduAppendCmdData(pApdu, serverHelloRnd, serverHelloRndLen);
 
-    rv = (U16)scp_Transceive(pApdu, SCP_MODE);
+    rv = (U16)scp_Transceive(NULL, pApdu, SCP_MODE);
     if (rv == SMCOM_OK)
     {
         rv = smGetSw(pApdu, &isOk);
@@ -308,7 +310,7 @@ U16 A71_EcdhPskDeriveMasterSecret(SST_Index_t indexKp, const U8 *publicKey, U16 
     smApduAppendCmdData(pApdu, publicKey, publicKeyLen);
     smApduAppendCmdData(pApdu, serverHelloRnd, serverHelloRndLen);
 
-    rv = (U16)scp_Transceive(pApdu, SCP_MODE);
+    rv = (U16)scp_Transceive(NULL, pApdu, SCP_MODE);
     if (rv == SMCOM_OK)
     {
         rv = smGetSw(pApdu, &isOk);
@@ -383,7 +385,7 @@ U16 A71_GetHmacSha256(SST_Index_t index, U8 nBlock, const U8 *data, U16 dataLen,
         SetApduHeader(pApdu, USE_STANDARD_APDU_LEN);
         smApduAppendCmdData(pApdu, data, dataLen);
 
-        rv = (U16)scp_Transceive(pApdu, SCP_MODE);
+        rv = (U16)scp_Transceive(NULL, pApdu, SCP_MODE);
         if (rv == SMCOM_OK)
         {
             rv = smGetSw(pApdu, &isOk);
@@ -414,7 +416,7 @@ U16 A71_GetHmacSha256(SST_Index_t index, U8 nBlock, const U8 *data, U16 dataLen,
         smApduAppendCmdData(pApdu, data, toSend);
         dataOffset += toSend;
 
-        rv = (U16)scp_Transceive(pApdu, SCP_MODE);
+        rv = (U16)scp_Transceive(NULL, pApdu, SCP_MODE);
         if (rv == SMCOM_OK)
         {
             if (rv == SMCOM_OK)
@@ -435,7 +437,7 @@ U16 A71_GetHmacSha256(SST_Index_t index, U8 nBlock, const U8 *data, U16 dataLen,
             smApduAppendCmdData(pApdu, &data[dataOffset], toSend);
             dataOffset += toSend;
 
-            rv = (U16)scp_Transceive(pApdu, SCP_MODE);
+            rv = (U16)scp_Transceive(NULL, pApdu, SCP_MODE);
             if (rv == SMCOM_OK)
             {
                 if (rv == SMCOM_OK)
@@ -455,7 +457,7 @@ U16 A71_GetHmacSha256(SST_Index_t index, U8 nBlock, const U8 *data, U16 dataLen,
         // dataOffset += toSend;
         smApduAppendCmdData(pApdu, &data[dataOffset], toSend);
 
-        rv = (U16)scp_Transceive(pApdu, SCP_MODE);
+        rv = (U16)scp_Transceive(NULL, pApdu, SCP_MODE);
         {
             rv = smGetSw(pApdu, &isOk);
             if (isOk)
@@ -473,6 +475,155 @@ U16 A71_GetHmacSha256(SST_Index_t index, U8 nBlock, const U8 *data, U16 dataLen,
     }
 
 LBL_LEAVE_A71_GetHmacSha256:
+    FreeAPDUBuffer(pApdu);
+    return rv;
+}
+
+/**
+* Initialise multistep HMACSHA256.
+* @param[in] index Index of the SYM key store containing the MSB part of the pre-shared secret
+* @param[in] nBlock Amount of blocks, equivalent to the pre-shared secret length when multiplied by 16
+* @retval ::SW_OK Upon successful execution
+*/
+U16 A71_HmacSha256Init(SST_Index_t index, U8 nBlock)
+{
+    apdu_t apdu;
+    apdu_t * pApdu = (apdu_t *)&apdu;
+    U16 rv;
+
+    pApdu->cla = AX_CLA;
+    pApdu->ins = A71CH_INS_HMAC_SHA256_SYM_KEY;
+    pApdu->p1 = (nBlock << 4) + index;
+    pApdu->p2 = P2_HMAC_INIT;
+
+    AllocateAPDUBuffer(pApdu);
+    SetApduHeader(pApdu, USE_STANDARD_APDU_LEN);
+
+    rv = (U16)scp_Transceive(NULL, pApdu, SCP_MODE);
+    if (rv == SMCOM_OK)
+    {
+        // No response data expected
+        rv = CheckNoResponseData(pApdu);
+    }
+
+    FreeAPDUBuffer(pApdu);
+    return rv;
+}
+
+/**
+* Update the data for calulating HMACSHA256 value (in multistep).
+* @param[in] index Index of the SYM key store containing the MSB part of the pre-shared secret
+* @param[in] nBlock Amount of blocks, equivalent to the pre-shared secret length when multiplied by 16
+* @param[in] data    Data buffer for which the HMACSHA256 must be calculated
+* @param[in] dataLen The length of data passed as argument
+* @retval ::SW_OK Upon successful execution
+*/
+U16 A71_HmacSha256Update(SST_Index_t index, U8 nBlock, U8 *data, U16 dataLen)
+{
+    apdu_t apdu;
+    apdu_t * pApdu = (apdu_t *)&apdu;
+    U16 rv = 0;
+    U16 maxChunk = A71CH_HMAC_SHA256_MAX_DATA_CHUNK;
+    U16 remainingData = dataLen;
+    U16 toSend = 0;
+    U16 dataSent = 0;
+
+#ifndef A71_IGNORE_PARAM_CHECK
+    if (data == NULL) {
+        return ERR_API_ERROR;
+    }
+#endif
+
+    pApdu->cla = AX_CLA;
+    pApdu->ins = A71CH_INS_HMAC_SHA256_SYM_KEY;
+    pApdu->p1 = (nBlock << 4) + index;
+    pApdu->p2 = P2_HMAC_UPDATE;
+
+    AllocateAPDUBuffer(pApdu);
+    SetApduHeader(pApdu, USE_STANDARD_APDU_LEN);
+
+    if (dataLen == 0) {
+        rv = (U16)scp_Transceive(NULL, pApdu, SCP_MODE);
+        if (rv == SMCOM_OK)
+        {
+            // No response data expected
+            rv = CheckNoResponseData(pApdu);
+            if (rv != SW_OK) { goto LBL_LEAVE_A71_Sha256Update; }
+        }
+    }
+    else {
+        while (remainingData != 0)
+        {
+            toSend = (remainingData > maxChunk) ? maxChunk : remainingData;
+            smApduAppendCmdData(pApdu, (data + dataSent), toSend);
+
+            rv = (U16)scp_Transceive(NULL, pApdu, SCP_MODE);
+            if (rv == SMCOM_OK)
+            {
+                // No response data expected
+                rv = CheckNoResponseData(pApdu);
+                if (rv != SW_OK) { goto LBL_LEAVE_A71_Sha256Update; }
+            }
+
+            dataSent += toSend;
+            remainingData -= toSend;
+        }
+    }
+
+
+LBL_LEAVE_A71_Sha256Update:
+    FreeAPDUBuffer(pApdu);
+    return rv;
+}
+
+/**
+* calulating HMACSHA256 value (in multistep).
+* @param[in] index Index of the SYM key store containing the MSB part of the pre-shared secret
+* @param[in] nBlock Amount of blocks, equivalent to the pre-shared secret length when multiplied by 16
+* @param[in,out] hmac    IN: caller passes a buffer of at least 32 byte;
+OUT: contains the calculated HMACSHA256
+* @param[in,out] hmacLen IN: length of the sha buffer passed;
+OUT: because HMACSHA256 is used this is 32 byte exact
+* @retval ::SW_OK Upon successful execution
+*/
+U16 A71_HmacSha256Final(SST_Index_t index, U8 nBlock, U8 *hmac, U16 *hmacLen)
+{
+    apdu_t apdu;
+    apdu_t * pApdu = (apdu_t *)&apdu;
+    U16 rv;
+    U8 isOk = 0;
+
+#ifndef A71_IGNORE_PARAM_CHECK
+    if ((hmac == NULL) || (hmacLen == NULL)) {
+        return ERR_API_ERROR;
+    }
+#endif
+
+    pApdu->cla = AX_CLA;
+    pApdu->ins = A71CH_INS_HMAC_SHA256_SYM_KEY;
+    pApdu->p1 = (nBlock << 4) + index;
+    pApdu->p2 = P2_HMAC_FINAL;
+
+    AllocateAPDUBuffer(pApdu);
+    SetApduHeader(pApdu, USE_STANDARD_APDU_LEN);
+
+    rv = (U16)scp_Transceive(NULL, pApdu, SCP_MODE);
+    if (rv == SMCOM_OK)
+    {
+        rv = smGetSw(pApdu, &isOk);
+        if (isOk)
+        {
+            rv = smApduGetResponseBody(pApdu, hmac, hmacLen);
+            if (rv == SW_OK)
+            {
+                if (32 != *hmacLen)
+                {
+                    rv = ERR_WRONG_RESPONSE;
+                }
+            }
+        }
+    }
+
     FreeAPDUBuffer(pApdu);
     return rv;
 }

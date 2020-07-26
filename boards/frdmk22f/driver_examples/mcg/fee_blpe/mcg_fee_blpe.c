@@ -16,8 +16,8 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define LED_INIT() LED_GREEN_INIT(LOGIC_LED_ON)
-#define LED_TOGGLE() LED_GREEN_TOGGLE()
+#define LED_INIT()    LED_GREEN_INIT(LOGIC_LED_ON)
+#define LED_TOGGLE()  LED_GREEN_TOGGLE()
 #define CORE_CLK_FREQ CLOCK_GetFreq(kCLOCK_CoreSysClk)
 
 /*******************************************************************************

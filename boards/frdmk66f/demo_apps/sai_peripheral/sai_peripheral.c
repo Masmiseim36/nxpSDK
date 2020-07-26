@@ -22,18 +22,18 @@
  ******************************************************************************/
 /* SAI and I2C instance and clock */
 #define DEMO_CODEC_DA7212
-#define DEMO_SDCARD (1)
+#define DEMO_SDCARD          (1)
 #define SAI_UserTxIRQHandler I2S0_Tx_IRQHandler
 #define SAI_UserRxIRQHandler I2S0_Rx_IRQHandler
-#define DEMO_SAI_TX_IRQ I2S0_Tx_IRQn
-#define DEMO_SAI_RX_IRQ I2S0_Rx_IRQn
+#define DEMO_SAI_TX_IRQ      I2S0_Tx_IRQn
+#define DEMO_SAI_RX_IRQ      I2S0_Rx_IRQn
 
-#define I2C_RELEASE_SDA_PORT PORTC
-#define I2C_RELEASE_SCL_PORT PORTC
-#define I2C_RELEASE_SDA_GPIO GPIOC
-#define I2C_RELEASE_SDA_PIN 11U
-#define I2C_RELEASE_SCL_GPIO GPIOC
-#define I2C_RELEASE_SCL_PIN 10U
+#define I2C_RELEASE_SDA_PORT  PORTC
+#define I2C_RELEASE_SCL_PORT  PORTC
+#define I2C_RELEASE_SDA_GPIO  GPIOC
+#define I2C_RELEASE_SDA_PIN   11U
+#define I2C_RELEASE_SCL_GPIO  GPIOC
+#define I2C_RELEASE_SCL_PIN   10U
 #define I2C_RELEASE_BUS_COUNT 100U
 
 /*******************************************************************************
@@ -44,6 +44,8 @@ void BOARD_I2C_ReleaseBus(void);
 #include "ff.h"
 #include "diskio.h"
 #include "fsl_sd.h"
+#include "sdmmc_config.h"
+
 /*!
  * @brief wait card insert function.
  */
@@ -58,7 +60,7 @@ da7212_config_t da7212Config = {
     .dacSource    = kDA7212_DACSourceInputStream,
     .slaveAddress = DA7212_ADDRESS,
     .protocol     = kDA7212_BusI2S,
-    .format       = {.mclk_HZ = 6144000U, .sampleRate = 16000, .bitWidth = 16},
+    .format       = {.mclk_HZ = 12288000U, .sampleRate = 16000, .bitWidth = 16},
     .isMaster     = false,
 };
 codec_config_t boardCodecConfig = {.codecDevType = kCODEC_DA7212, .codecDevConfig = &da7212Config};
@@ -77,29 +79,11 @@ volatile uint32_t emptyBlock   = BUFFER_NUM;
 AT_NONCACHEABLE_SECTION(FATFS g_fileSystem); /* File system object */
 AT_NONCACHEABLE_SECTION(FIL g_fileObject);   /* File object */
 AT_NONCACHEABLE_SECTION(BYTE work[FF_MAX_SS]);
-/*! @brief SDMMC host detect card configuration */
-static const sdmmchost_detect_card_t s_sdCardDetect = {
-#ifndef BOARD_SD_DETECT_TYPE
-    .cdType = kSDMMCHOST_DetectCardByGpioCD,
-#else
-    .cdType = BOARD_SD_DETECT_TYPE,
-#endif
-    .cdTimeOut_ms = (~0U),
-};
 extern sd_card_t g_sd; /* sd card descriptor */
-/*! @brief SDMMC card power control configuration */
-#if defined DEMO_SDCARD_POWER_CTRL_FUNCTION_EXIST
-static const sdmmchost_pwr_card_t s_sdCardPwrCtrl = {
-    .powerOn          = BOARD_PowerOnSDCARD,
-    .powerOnDelay_ms  = 500U,
-    .powerOff         = BOARD_PowerOffSDCARD,
-    .powerOffDelay_ms = 0U,
-};
-#endif
 #endif
 sai_transceiver_t config;
-uint8_t codecHandleBuffer[CODEC_HANDLE_SIZE] = {0U};
-codec_handle_t *codecHandle                  = (codec_handle_t *)codecHandleBuffer;
+codec_handle_t codecHandle;
+
 /*******************************************************************************
  * Code
  ******************************************************************************/
@@ -132,14 +116,8 @@ void rxCallback(I2S_Type *base, sai_edma_handle_t *handle, status_t status, void
 #if defined DEMO_SDCARD
 static status_t sdcardWaitCardInsert(void)
 {
-    /* Save host information. */
-    g_sd.host.base           = SD_HOST_BASEADDR;
-    g_sd.host.sourceClock_Hz = SD_HOST_CLK_FREQ;
-    /* card detect type */
-    g_sd.usrParam.cd = &s_sdCardDetect;
-#if defined DEMO_SDCARD_POWER_CTRL_FUNCTION_EXIST
-    g_sd.usrParam.pwr = &s_sdCardPwrCtrl;
-#endif
+    BOARD_SD_Config(&g_sd, NULL, BOARD_SDMMC_SD_HOST_IRQ_PRIORITY, NULL);
+
     /* SD host init function */
     if (SD_HostInit(&g_sd) != kStatus_Success)
     {
@@ -147,13 +125,13 @@ static status_t sdcardWaitCardInsert(void)
         return kStatus_Fail;
     }
     /* power off card */
-    SD_PowerOffCard(g_sd.host.base, g_sd.usrParam.pwr);
+    SD_SetCardPower(&g_sd, false);
     /* wait card insert */
-    if (SD_WaitCardDetectStatus(SD_HOST_BASEADDR, &s_sdCardDetect, true) == kStatus_Success)
+    if (SD_PollingCardInsert(&g_sd, kSD_Inserted) == kStatus_Success)
     {
         PRINTF("\r\nCard inserted.\r\n");
         /* power on the card */
-        SD_PowerOnCard(g_sd.host.base, g_sd.usrParam.pwr);
+        SD_SetCardPower(&g_sd, true);
     }
     else
     {
@@ -195,7 +173,7 @@ int SD_FatFsInit()
 
 #if FF_USE_MKFS
     PRINTF("\r\nMake file system......The time may be long if the card capacity is big.\r\n");
-    if (f_mkfs(driverNumberBuffer, FM_ANY, 0U, work, sizeof work))
+    if (f_mkfs(driverNumberBuffer, 0, work, sizeof work))
     {
         PRINTF("Make file system failed.\r\n");
         return -1;
@@ -238,7 +216,7 @@ int main(void)
     PRINTF("SAI Demo started!\n\r");
 
     /* Use default setting to init codec */
-    CODEC_Init(codecHandle, &boardCodecConfig);
+    CODEC_Init(&codecHandle, &boardCodecConfig);
 
     /* Enable interrupt to handle FIFO error */
     SAI_TxEnableInterrupts(DEMO_SAI_PERIPHERAL, kSAI_FIFOErrorInterruptEnable);
@@ -281,7 +259,7 @@ int main(void)
             case '1':
 #if defined DIG_MIC
                 /* Set the audio input source to AUX */
-                DA7212_ChangeInput((da7212_handle_t *)((uint32_t) & (codecHandle->codecDevHandle)), kDA7212_Input_AUX);
+                DA7212_ChangeInput((da7212_handle_t *)((uint32_t)(codecHandle.codecDevHandle)), kDA7212_Input_AUX);
 #endif
                 RecordPlayback(DEMO_SAI_PERIPHERAL, 30);
                 break;
@@ -296,8 +274,7 @@ int main(void)
 #if defined DIG_MIC
             case userItem - 1U + 48U:
                 /* Set the audio input source to DMIC */
-                DA7212_ChangeInput((da7212_handle_t *)((uint32_t) & (codecHandle->codecDevHandle)),
-                                   kDA7212_Input_MIC1_Dig);
+                DA7212_ChangeInput((da7212_handle_t *)((uint32_t)(codecHandle.codecDevHandle)), kDA7212_Input_MIC1_Dig);
                 RecordPlayback(DEMO_SAI_PERIPHERAL, 30);
                 break;
 #endif
@@ -308,7 +285,7 @@ int main(void)
         userItem = 1U;
     }
 
-    CODEC_Deinit(codecHandle);
+    CODEC_Deinit(&codecHandle);
     PRINTF("\n\r SAI demo finished!\n\r ");
     while (1)
     {
@@ -320,22 +297,14 @@ void SAI_UserTxIRQHandler(void)
     /* Clear the FEF flag */
     SAI_TxClearStatusFlags(DEMO_SAI_PERIPHERAL, kSAI_FIFOErrorFlag);
     SAI_TxSoftwareReset(DEMO_SAI_PERIPHERAL, kSAI_ResetTypeFIFO);
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 void SAI_UserRxIRQHandler(void)
 {
     SAI_RxClearStatusFlags(DEMO_SAI_PERIPHERAL, kSAI_FIFOErrorFlag);
     SAI_RxSoftwareReset(DEMO_SAI_PERIPHERAL, kSAI_ResetTypeFIFO);
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 void SAI_UserIRQHandler(void)

@@ -14,8 +14,8 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_LPUART LPUART4
-#define DEMO_LPUART_CLKSRC kCLOCK_Osc0ErClk
+#define DEMO_LPUART          LPUART4
+#define DEMO_LPUART_CLKSRC   kCLOCK_Osc0ErClk
 #define DEMO_LPUART_CLK_FREQ CLOCK_GetFreq(kCLOCK_Osc0ErClk)
 #define ECHO_BUFFER_LENGTH 8
 

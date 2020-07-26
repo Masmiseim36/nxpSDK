@@ -18,8 +18,8 @@
  ******************************************************************************/
 #define EXAMPLE_DSPI_SLAVE_BASEADDR SPI0
 
-#define EXAMPLE_DSPI_SLAVE_DMA_MUX_BASEADDR DMAMUX
-#define EXAMPLE_DSPI_SLAVE_DMA_BASEADDR DMA0
+#define EXAMPLE_DSPI_SLAVE_DMA_MUX_BASEADDR      DMAMUX
+#define EXAMPLE_DSPI_SLAVE_DMA_BASEADDR          DMA0
 #define EXAMPLE_DSPI_SLAVE_DMA_RX_REQUEST_SOURCE kDmaRequestMux0SPI0Rx
 #define EXAMPLE_DSPI_SLAVE_DMA_TX_REQUEST_SOURCE kDmaRequestMux0SPI0Tx
 /* The slave will receive 64 bytes from master, and then send them back.
@@ -28,8 +28,8 @@
  * first half transimission. In the second half transimission, slave will send them
  * back to the master board.
  */
-#define BUFFER_SIZE (192)
-#define RX_BUFFER_INDEX (64)
+#define BUFFER_SIZE        (192)
+#define RX_BUFFER_INDEX    (64)
 #define TRANSFER_DATA_SIZE (128)
 
 /*******************************************************************************

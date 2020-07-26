@@ -55,15 +55,14 @@ void mbedtls_ecp_keypair_free(mbedtls_ecp_keypair *key)
 /*
  * Set a group from an ECParameters record (RFC 4492)
  */
-int mbedtls_ecp_tls_read_group(
-    mbedtls_ecp_group *grp, const unsigned char **buf, size_t len)
+int mbedtls_ecp_tls_read_group(mbedtls_ecp_group *grp, const unsigned char **buf, size_t len)
 {
     int ret;
     sss_object_t *backup_type_SSS_Object = grp->pSSSObject;
-    sss_key_store_t *backup_type_hostKs = grp->hostKs;
-    ret = mbedtls_ecp_tls_read_group_o(grp, buf, len);
-    grp->pSSSObject = backup_type_SSS_Object;
-    grp->hostKs = backup_type_hostKs;
+    sss_key_store_t *backup_type_hostKs  = grp->hostKs;
+    ret                                  = mbedtls_ecp_tls_read_group_o(grp, buf, len);
+    grp->pSSSObject                      = backup_type_SSS_Object;
+    grp->hostKs                          = backup_type_hostKs;
 
     return ret;
 }

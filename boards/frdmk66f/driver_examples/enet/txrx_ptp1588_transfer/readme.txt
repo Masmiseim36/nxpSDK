@@ -20,15 +20,15 @@ in TWR-SERIAL board for the external PHY.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.40.2
-- Keil MDK  5.29
-- GCC ARM Embedded  8.3.1
-- MCUXpresso  11.1.0
+- IAR embedded Workbench  8.50.1
+- Keil MDK  5.30
+- GCC ARM Embedded  9.2.1
+- MCUXpresso  11.2.0
 
 Hardware requirements
 =====================
 - Mini/micro USB cable
-- Network cable RJ45 standard
+- Loopback network cable RJ45 standard
 - FRDM-K66F board
 - Personal Computer
 
@@ -45,7 +45,7 @@ Prepare the Demo
     - No parity
     - One stop bit
     - No flow control
-3.  Insert Cable to Ethernet RJ45 port and connect it to your PC.
+3.  Insert loopback network cable to Ethernet RJ45 port.
 4.  Download the program to the target board.
 5.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
 
@@ -67,9 +67,6 @@ The 4 frame transmitted success! the timestamp is xx second, xx nanosecond
 The 20 frame transmitted success! the timestamp is xx second, xx nanosecond
 
 Note: the xx second and xx nanosecond should not be zero and should be number with solid increment.
-
-the transmitted frame is a 1000 length broadcast frame. the frame can be seen
-when the PC is installed with wireshark.
 
 when a 1000 length ptp event message frame is received, the log would be added to the terminal like:
 A frame received. the length 1000 the timestamp is xx second, xx nanosecond

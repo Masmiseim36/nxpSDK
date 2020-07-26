@@ -100,6 +100,9 @@
     <source path="boards/frdmk66f/bootloader_examples/flashloader_loader/mdk" target_path="middleware/mcu-boot" type="linker" toolchain="mdk">
       <files mask="MK66FN2M0xxx18_flashloader_loader.scf"/>
     </source>
+    <source path="boards/frdmk66f/bootloader_examples/flashloader_loader" target_path="doc" type="doc" toolchain="iar mdk mcuxpresso armgcc">
+      <files mask="readme.txt"/>
+    </source>
     <source path="middleware/mcu-boot/targets/MK66F18/src" target_path="MK66F18" type="c_include">
       <files mask="bootloader_config.h"/>
       <files mask="target_config.h"/>

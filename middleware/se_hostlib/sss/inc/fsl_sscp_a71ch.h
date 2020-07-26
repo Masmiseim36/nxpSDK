@@ -1,5 +1,5 @@
 /*
- * Copyright 2018,2019 NXP
+ * Copyright 2018-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -11,7 +11,7 @@
 #include "fsl_sscp.h"
 #include "fsl_sss_sscp.h"
 
-#if SSS_HAVE_A71XX || SSS_HAVE_SE050_EAR
+#if SSS_HAVE_A71XX
 
 #include <HLSEAPI.h>
 #include <fsl_sss_keyid_map.h>
@@ -63,8 +63,7 @@ typedef struct _sscp_a71ch_context
  * @retval kStatus_SSCP_Success SSCP init success
  * @retval kStatus_SSCP_Fail SSCP init failure
  */
-sss_status_t sscp_a71ch_init(
-    sscp_a71ch_context_t *context, sss_a71ch_key_store_t *keyStore);
+sss_status_t sscp_a71ch_init(sscp_a71ch_context_t *context, sss_a71ch_key_store_t *keyStore);
 
 /*! @brief Close the SSCP link
  *
@@ -95,13 +94,10 @@ void sscp_a71ch_free(sscp_a71ch_context_t *context);
  * @retval kStatus_SSCP_InvalidArgument One of the arguments is invalid for the
  * function to execute.
  */
-sscp_status_t sscp_a71ch_invoke_command(sscp_context_t *context,
-    uint32_t commandID,
-    sscp_operation_t *op,
-    uint32_t *ret);
+sscp_status_t sscp_a71ch_invoke_command(
+    sscp_context_t *context, uint32_t commandID, sscp_operation_t *op, uint32_t *ret);
 
-sss_status_t sscp_a71ch_openSession(
-    void *connectionData, sss_sscp_session_t *openSession);
+sss_status_t sscp_a71ch_openSession(void *connectionData, sss_sscp_session_t *openSession);
 
 void sscp_a71chkey_store_context_free(sss_a71ch_key_store_t *context);
 

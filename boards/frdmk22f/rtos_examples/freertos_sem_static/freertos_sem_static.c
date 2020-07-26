@@ -89,8 +89,8 @@ TaskHandle_t TaskHandle = 0;
 int main(void)
 {
     /* Init board hardware. */
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
     TaskHandle = xTaskCreateStatic(producer_task, "PRODUCER_TASK", PRODUCER_TASK_STACK_SIZE, NULL, TASK_PRIO,
                                    &(ProducerTaskStack[0]), &ProducerTaskTCB);

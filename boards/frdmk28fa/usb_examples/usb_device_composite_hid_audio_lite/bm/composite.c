@@ -50,7 +50,10 @@ void USB_DeviceTaskFn(void *deviceHandle);
 #if defined(AUDIO_DATA_SOURCE_DMIC) && (AUDIO_DATA_SOURCE_DMIC > 0U)
 extern void Board_DMIC_DMA_Init(void);
 #endif
-
+extern usb_status_t USB_DeviceAudioProcessTerminalRequest(uint32_t audioCommand,
+                                                          uint32_t *length,
+                                                          uint8_t **buffer,
+                                                          uint8_t entityOrEndpoint);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
@@ -207,7 +210,7 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
             {
                 uint8_t interface        = (uint8_t)(*temp8);
                 uint8_t alternateSetting = (uint8_t)g_UsbDeviceInterface[interface];
-                if (USB_AUDIO_GENERATOR_STREAM_INTERFACE_INDEX == interface)
+                if (USB_AUDIO_STREAM_INTERFACE_INDEX == interface)
                 {
                     USB_DeviceAudioGeneratorSetInterface(handle, interface, alternateSetting);
                     error = kStatus_USB_Success;
@@ -359,19 +362,133 @@ usb_status_t USB_DeviceProcessClassRequest(usb_device_handle handle,
                                            uint8_t **buffer)
 {
     usb_status_t error = kStatus_USB_InvalidRequest;
-
-    if (USB_AUDIO_INTERFACE_INDEX == setup->wIndex)
+#if (USB_DEVICE_CONFIG_AUDIO_CLASS_2_0)
+    /* Handle the audio class specific request. */
+    uint8_t entityId      = (uint8_t)(setup->wIndex >> 0x08);
+    uint32_t audioCommand = 0;
+    if ((((setup->bmRequestType & USB_REQUEST_TYPE_RECIPIENT_MASK) != USB_REQUEST_TYPE_RECIPIENT_INTERFACE)) ||
+        ((((setup->bmRequestType & USB_REQUEST_TYPE_RECIPIENT_MASK) == USB_REQUEST_TYPE_RECIPIENT_INTERFACE)) &&
+         (USB_AUDIO_CONTROL_INTERFACE_INDEX == (setup->wIndex & 0xFFU))))
     {
-        return USB_DeviceAudioGeneratorClassRequest(handle, setup, length, buffer);
+        switch (entityId)
+        {
+            case USB_AUDIO_RECORDER_CONTROL_OUTPUT_TERMINAL_ID:
+                break;
+            case USB_AUDIO_RECORDER_CONTROL_INPUT_TERMINAL_ID:
+                break;
+            case USB_AUDIO_RECORDER_CONTROL_CLOCK_SOURCE_ID:
+                if (((setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) == USB_REQUEST_TYPE_DIR_IN))
+                {
+                    switch (setup->wValue >> 8)
+                    {
+                        case USB_DEVICE_AUDIO_CS_SAM_FREQ_CONTROL:
+                            if (setup->bRequest == USB_DEVICE_AUDIO_REQUEST_CUR)
+                            {
+                                audioCommand = USB_DEVICE_AUDIO_GET_CUR_SAM_FREQ_CONTROL;
+                            }
+                            else if (setup->bRequest == USB_DEVICE_AUDIO_REQUEST_RANGE)
+                            {
+                                audioCommand = USB_DEVICE_AUDIO_GET_RANGE_SAM_FREQ_CONTROL;
+                            }
+                            else
+                            {
+                            }
+                            break;
+                        case USB_DEVICE_AUDIO_CS_CLOCK_VALID_CONTROL:
+                            audioCommand = USB_DEVICE_AUDIO_GET_CUR_CLOCK_VALID_CONTROL;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                else if (((setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) == USB_REQUEST_TYPE_DIR_OUT))
+                {
+                    switch (setup->wValue >> 8)
+                    {
+                        case USB_DEVICE_AUDIO_CS_SAM_FREQ_CONTROL:
+                            audioCommand = USB_DEVICE_AUDIO_SET_CUR_SAM_FREQ_CONTROL;
+                            break;
+                        case USB_DEVICE_AUDIO_CS_CLOCK_VALID_CONTROL:
+                            audioCommand = USB_DEVICE_AUDIO_SET_CUR_CLOCK_VALID_CONTROL;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                else
+                {
+                }
+                break;
+            case USB_AUDIO_RECORDER_CONTROL_FEATURE_UNIT_ID:
+                if (((setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) == USB_REQUEST_TYPE_DIR_IN))
+                {
+                    switch (setup->wValue >> 8)
+                    {
+                        case USB_DEVICE_AUDIO_FU_MUTE_CONTROL:
+                            audioCommand = USB_DEVICE_AUDIO_GET_CUR_MUTE_CONTROL_AUDIO20;
+                            break;
+                        case USB_DEVICE_AUDIO_FU_VOLUME_CONTROL:
+                            if (setup->bRequest == USB_DEVICE_AUDIO_REQUEST_CUR)
+                            {
+                                audioCommand = USB_DEVICE_AUDIO_GET_CUR_VOLUME_CONTROL_AUDIO20;
+                            }
+                            else if (setup->bRequest == USB_DEVICE_AUDIO_REQUEST_RANGE)
+                            {
+                                audioCommand = USB_DEVICE_AUDIO_GET_RANGE_VOLUME_CONTROL_AUDIO20;
+                            }
+                            else
+                            {
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                else if (((setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) == USB_REQUEST_TYPE_DIR_OUT))
+                {
+                    switch (setup->wValue >> 8)
+                    {
+                        case USB_DEVICE_AUDIO_FU_MUTE_CONTROL:
+                            audioCommand = USB_DEVICE_AUDIO_SET_CUR_MUTE_CONTROL_AUDIO20;
+                            break;
+                        case USB_DEVICE_AUDIO_FU_VOLUME_CONTROL:
+                            if (setup->bRequest == USB_DEVICE_AUDIO_REQUEST_CUR)
+                            {
+                                audioCommand = USB_DEVICE_AUDIO_SET_CUR_VOLUME_CONTROL_AUDIO20;
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                break;
+            default:
+            break;
+        }
+        error = USB_DeviceAudioProcessTerminalRequest(audioCommand, length, buffer, entityId);
     }
-    else if (USB_HID_INTERFACE_INDEX == setup->wIndex)
+    else if (USB_HID_MOUSE_INTERFACE_INDEX == (setup->wIndex & 0xFFU))
     {
         return USB_DeviceHidClassRequest(handle, setup, length, buffer);
     }
     else
     {
     }
-
+#else
+    if ((((setup->bmRequestType & USB_REQUEST_TYPE_RECIPIENT_MASK) != USB_REQUEST_TYPE_RECIPIENT_INTERFACE)) ||
+        ((((setup->bmRequestType & USB_REQUEST_TYPE_RECIPIENT_MASK) == USB_REQUEST_TYPE_RECIPIENT_INTERFACE)) &&
+         (USB_AUDIO_CONTROL_INTERFACE_INDEX == (setup->wIndex & 0xFFU))))
+    {
+        return USB_DeviceAudioGeneratorClassRequest(handle, setup, length, buffer);
+    }
+    else if (USB_HID_MOUSE_INTERFACE_INDEX == setup->wIndex)
+    {
+        return USB_DeviceHidClassRequest(handle, setup, length, buffer);
+    }
+    else
+    {
+    }
+#endif
     return error;
 }
 
@@ -408,6 +525,8 @@ void APPInit(void)
 
     USB_DeviceIsrEnable();
 
+    /*Add one delay here to make the DP pull down long enough to allow host to detect the previous disconnection.*/
+    SDK_DelayAtLeastUs(5000, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
     USB_DeviceRun(g_composite.deviceHandle);
 }
 

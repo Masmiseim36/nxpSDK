@@ -15,8 +15,8 @@
  * Definitions
  ******************************************************************************/
 /* UART instance and clock */
-#define DEMO_UART UART0
-#define DEMO_UART_CLKSRC UART0_CLK_SRC
+#define DEMO_UART          UART0
+#define DEMO_UART_CLKSRC   UART0_CLK_SRC
 #define DEMO_UART_CLK_FREQ CLOCK_GetFreq(UART0_CLK_SRC)
 #define ECHO_BUFFER_LENGTH 8
 

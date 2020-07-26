@@ -1,4 +1,4 @@
-/* Copyright 2019 NXP
+/* Copyright 2019,2020 NXP
 *
 * This software is owned or controlled by NXP and may only be used
 * strictly in accordance with the applicable license terms.  By expressly
@@ -9,26 +9,64 @@
 * may not retain, install, activate or otherwise use the software.
 */
 
+/** @file */
+
 #ifndef SE05x_ENUMS_H
 #define SE05x_ENUMS_H
 
-/* + Machine Generated */
+#include <Applet_SE050_Ver.h>
 
+
+/* + more or less machine Generated */
+
+/** Reserved idendntifiers of the Applet */
 typedef enum
-{ /** Invalid */
+{
+    /** Invalid */
     kSE05x_AppletResID_NA = 0,
+    /** An authentication object which allows the user to switch
+     * LockState of the applet. The LockState defines whether the
+     * applet is transport locked or not. */
     kSE05x_AppletResID_TRANSPORT = 0x7FFF0200,
-    kSE05x_AppletResID_KP_FASTSCP_USER = 0x7FFF0201,
-    kSE05x_AppletResID_KP_FASTSCP_IMPORT = 0x7FFF0202,
-    kSE05x_AppletResID_PUB_FASTSCP_IMPORT = 0x7FFF0203,
+    /** A device unique NIST P-256 key pair which contains SK.SE.ECKA
+     * and PK.SE.ECKA in ECKey session context. */
+    kSE05x_AppletResID_KP_ECKEY_USER = 0x7FFF0201,
+    /** A device unique NIST P-256 key pair which contains SK.SE.ECKA
+     * and PK.SE.ECKA in ECKey session context; A constant card
+     * challenge (all zeroes) is applicable. */
+    kSE05x_AppletResID_KP_ECKEY_IMPORT = 0x7FFF0202,
+    /* Reserved Key @ location 0x7FFF0203 */
+    /** An authentication object which allows the user to change the
+    applet variant. */
     kSE05x_AppletResID_FEATURE = 0x7FFF0204,
+    /** An authentication object which allows the user to delete all
+    objects, except trust provisioned by NXP objects. */
     kSE05x_AppletResID_FACTORY_RESET = 0x7FFF0205,
+    /** A BinaryFile Secure Object which holds the device unique
+     *  ID. This file cannot be overwritten or deleted. */
     kSE05x_AppletResID_UNIQUE_ID = 0x7FFF0206,
+    /** An authentication object which allows the user to change the
+    * platform SCP requirements, i.e. make platform SCP mandatory or
+    * not, using SetPlatformSCPRequest. Mandatory means full security,
+    * i.e. command & response MAC and encryption. Only SCP03 will be
+    * sufficient. */
     kSE05x_AppletResID_PLATFORM_SCP = 0x7FFF0207,
+    /** An authentication object which grants access to the I2C master
+     * feature. If the credential is not present, access to I2C master
+     * is allowed in general. Otherwise, a session using this
+     * credential shall be established and I2CM commands shall be sent
+     * within this session. */
+    kSE05x_AppletResID_I2CM_ACCESS = 0x7FFF0208,
+    /** An authentication object which grants access to the
+    * SetLockState command */
+    kSE05x_AppletResID_RESTRICT = 0x7FFF020A,
+
 } SE05x_AppletResID_t;
 
+/** Mapping of 2 byte return code */
 typedef enum
-{ /** Invalid */
+{
+    /** Invalid */
     kSE05x_SW12_NA = 0,
     /** No Error */
     kSE05x_SW12_NO_ERROR = 0x9000,
@@ -44,8 +82,10 @@ typedef enum
     kSE05x_SW12_COMMAND_NOT_ALLOWED = 0x6986,
 } SE05x_SW12_t;
 
+/** Values for INS in ISO7816 APDU */
 typedef enum
-{ /** Invalid */
+{
+    /** Invalid */
     kSE05x_INS_NA = 0,
     /** 3 MSBit for instruction characteristics. */
     kSE05x_INS_MASK_INS_CHAR = 0xE0,
@@ -71,8 +111,10 @@ typedef enum
     kSE05x_INS_PROCESS = 0x05,
 } SE05x_INS_t;
 
+/** Values for P1 in ISO7816 APDU */
 typedef enum
-{ /** Invalid */
+{
+    /** Invalid */
     kSE05x_P1_NA = 0,
     /** Highest bit not used */
     kSE05x_P1_UNUSED = 0x80,
@@ -104,11 +146,18 @@ typedef enum
     kSE05x_P1_CIPHER = 0x0E,
     kSE05x_P1_TLS = 0x0F,
     kSE05x_P1_CRYPTO_OBJ = 0x10,
+#if SSS_HAVE_SE05X_VER_GTE_04_04
+    /** Applet >= 4.4 */
+    kSE05x_P1_AEAD = 0x11,
+    /** Applet >= 4.4 */
+    kSE05x_P1_AEAD_SP800_38D = 0x12,
+#endif /* SSS_HAVE_SE05X_VER_GTE_04_04 */
 } SE05x_P1_t;
 
+/** Values for P2 in ISO7816 APDU */
 typedef enum
-{ /** Invalid */
-    kSE05x_P2_NA = 0,
+{
+    /** Invalid */
     kSE05x_P2_DEFAULT = 0x00,
     kSE05x_P2_GENERATE = 0x03,
     kSE05x_P2_CREATE = 0x04,
@@ -121,7 +170,7 @@ typedef enum
     kSE05x_P2_ONESHOT = 0x0E,
     kSE05x_P2_DH = 0x0F,
     kSE05x_P2_DIVERSIFY = 0x10,
-    kSE05x_P2_AUTH_PART1 = 0x11,
+    // kSE05x_P2_AUTH_PART1 = 0x11,
     kSE05x_P2_AUTH_FIRST_PART2 = 0x12,
     kSE05x_P2_AUTH_NONFIRST_PART2 = 0x13,
     kSE05x_P2_DUMP_KEY = 0x14,
@@ -144,6 +193,8 @@ typedef enum
     kSE05x_P2_SESSION_UserID = 0x2C,
     kSE05x_P2_HKDF = 0x2D,
     kSE05x_P2_PBKDF = 0x2E,
+    /* Applet >= 4.4 */
+    kSE05x_P2_HKDF_EXPAND_ONLY = 0x2F,
     kSE05x_P2_I2CM = 0x30,
     kSE05x_P2_I2CM_ATTESTED = 0x31,
     kSE05x_P2_MAC = 0x32,
@@ -173,36 +224,26 @@ typedef enum
     kSE05x_P2_TLS_PRF_SRV_HELLO = 0x4C,
     kSE05x_P2_TLS_PRF_CLI_RND = 0x4D,
     kSE05x_P2_TLS_PRF_SRV_RND = 0x4E,
+    kSE05x_P2_TLS_PRF_BOTH = 0x5A,
     kSE05x_P2_RAW = 0x4F,
     kSE05x_P2_IMPORT_EXT = 0x51,
     kSE05x_P2_SCP = 0x52,
     kSE05x_P2_AUTH_FIRST_PART1 = 0x53,
     kSE05x_P2_AUTH_NONFIRST_PART1 = 0x54,
+#if SSS_HAVE_SE05X_VER_GTE_04_04
+    kSE05x_P2_CM_COMMAND = 0x55,
+    kSE05x_P2_MODE_OF_OPERATION = 0x56,
+    kSE05x_P2_RESTRICT = 0x57,
+    kSE05x_P2_SANITY = 0x58,
+    kSE05x_P2_DH_REVERSE = 0x59
+#endif
 } SE05x_P2_t;
 
-// typedef enum
-// { /** Invalid */
-//     kSE05x_SecureObject_NA = 0,
-//     kSE05x_SecureObject_EC_KEY_PAIR = 0x01,
-//     kSE05x_SecureObject_EC_PRIV_KEY = 0x02,
-//     kSE05x_SecureObject_EC_PUB_KEY = 0x03,
-//     kSE05x_SecureObject_RSA_KEY_PAIR = 0x04,
-//     kSE05x_SecureObject_RSA_KEY_PAIR_CRT = 0x05,
-//     kSE05x_SecureObject_RSA_PRIV_KEY = 0x06,
-//     kSE05x_SecureObject_RSA_PRIV_KEY_CRT = 0x07,
-//     kSE05x_SecureObject_RSA_PUB_KEY = 0x08,
-//     kSE05x_SecureObject_AES_KEY = 0x09,
-//     kSE05x_SecureObject_DES_KEY = 0x0A,
-//     kSE05x_SecureObject_BINARY_FILE = 0x0B,
-//     kSE05x_SecureObject_UserID = 0x0C,
-//     kSE05x_SecureObject_COUNTER = 0x0D,
-//     kSE05x_SecureObject_PCR = 0x0F,
-//     kSE05x_SecureObject_CURVE = 0x10,
-//     kSE05x_SecureObject_HMAC_KEY = 0x11,
-// } SE05x_SecureObject_t;
 
+/** Data for available memory */
 typedef enum
-{ /** Invalid */
+{
+    /** Invalid */
     kSE05x_MemoryType_NA = 0,
     /** Persistent memory */
     kSE05x_MemoryType_PERSISTENT = 0x01,
@@ -212,8 +253,10 @@ typedef enum
     kSE05x_MemoryType_TRANSIENT_DESELECT = 0x03,
 } SE05x_MemoryType_t;
 
+/** Where was this object originated */
 typedef enum
-{ /** Invalid */
+{
+    /** Invalid */
     kSE05x_Origin_NA = 0,
     /** Generated outside the module. */
     kSE05x_Origin_EXTERNAL = 0x01,
@@ -223,12 +266,16 @@ typedef enum
     kSE05x_Origin_PROVISIONED = 0x03,
 } SE05x_Origin_t;
 
+/** Different TAG Values to talk to SE05X IoT Applet */
 typedef enum
-{ /** Invalid */
+{
+    /** Invalid */
     kSE05x_TAG_NA = 0,
     kSE05x_TAG_SESSION_ID = 0x10,
     kSE05x_TAG_POLICY = 0x11,
     kSE05x_TAG_MAX_ATTEMPTS = 0x12,
+    kSE05x_TAG_IMPORT_AUTH_DATA = 0x13,
+    kSE05x_TAG_IMPORT_AUTH_KEY_ID = 0x14,
     kSE05x_TAG_1 = 0x41,
     kSE05x_TAG_2 = 0x42,
     kSE05x_TAG_3 = 0x43,
@@ -239,7 +286,8 @@ typedef enum
     kSE05x_TAG_8 = 0x48,
     kSE05x_TAG_9 = 0x49,
     kSE05x_TAG_10 = 0x4A,
-    kSE05x_TAG_GP_CONTRL_REF_PARM = 0xA6,
+    kSE05x_TAG_11 = 0x4B,
+    kSE05x_GP_TAG_CONTRL_REF_PARM = 0xA6,
     kSE05x_GP_TAG_AID = 0x4F,
     kSE05x_GP_TAG_KEY_TYPE = 0x80,
     kSE05x_GP_TAG_KEY_LEN = 0x81,
@@ -249,8 +297,14 @@ typedef enum
     kSE05x_GP_TAG_SCP_PARMS = 0x90,
 } SE05x_TAG_t;
 
+#ifndef __DOXYGEN__
+#define kSE05x_TAG_GP_CONTRL_REF_PARM kSE05x_GP_TAG_CONTRL_REF_PARM
+#endif
+
+/** Different signature algorithms for EC */
 typedef enum
-{ /** Invalid */
+{
+    /** Invalid */
     kSE05x_ECSignatureAlgo_NA = 0,
     /** NOT SUPPORTED */
     kSE05x_ECSignatureAlgo_PLAIN = 0x09,
@@ -261,22 +315,28 @@ typedef enum
     kSE05x_ECSignatureAlgo_SHA_512 = 0x26,
 } SE05x_ECSignatureAlgo_t;
 
+/** Different signature algorithms for ED */
 typedef enum
-{ /** Invalid */
+{
+    /** Invalid */
     kSE05x_EDSignatureAlgo_NA = 0,
-    /** Message input must be prehashed (using SHA512). */
+    /** Message input must be pre-hashed (using SHA512). */
     kSE05x_EDSignatureAlgo_ED25519PH_SHA_512 = 0xA3,
 } SE05x_EDSignatureAlgo_t;
 
+/** Different signature algorithms for ECDAA */
 typedef enum
-{ /** Invalid */
+{
+    /** Invalid */
     kSE05x_ECDAASignatureAlgo_NA = 0,
-    /** Message input must be prehashed (using SHA256) */
+    /** Message input must be pre-hashed (using SHA256) */
     kSE05x_ECDAASignatureAlgo_ECDAA = 0xF4,
 } SE05x_ECDAASignatureAlgo_t;
 
+/** Different signature algorithms for RSA */
 typedef enum
-{ /** Invalid */
+{
+    /** Invalid */
     kSE05x_RSASignatureAlgo_NA = 0,
     /** RFC8017: RSASSA-PSS */
     kSE05x_RSASignatureAlgo_SHA1_PKCS1_PSS = 0x15,
@@ -300,8 +360,10 @@ typedef enum
     kSE05x_RSASignatureAlgo_SHA_512_PKCS1 = 0x2A,
 } SE05x_RSASignatureAlgo_t;
 
+/** Different encryption/decryption algorithms for RSA */
 typedef enum
-{ /** Invalid */
+{
+    /** Invalid */
     kSE05x_RSAEncryptionAlgo_NA = 0,
     /** Plain RSA, padding required on host. */
     kSE05x_RSAEncryptionAlgo_NO_PAD = 0x0C,
@@ -311,8 +373,10 @@ typedef enum
     kSE05x_RSAEncryptionAlgo_PKCS1_OAEP = 0x0F,
 } SE05x_RSAEncryptionAlgo_t;
 
+/** Size of RSA Key Objects  */
 typedef enum
-{ /** Invalid */
+{
+    /** Invalid */
     kSE05x_RSABitLength_NA = 0,
     kSE05x_RSABitLength_512 = 512,
     kSE05x_RSABitLength_1024 = 1024,
@@ -322,9 +386,11 @@ typedef enum
     kSE05x_RSABitLength_4096 = 4096,
 } SE05x_RSABitLength_t;
 
+/** Part of the RSA Key Objects  */
 typedef enum
-{ /** Invalid */
-    kSE05x_RSAKeyComponent_NA = 0,
+{
+    /** Invalid */
+    kSE05x_RSAKeyComponent_NA = 0xFF,
     /** Modulus */
     kSE05x_RSAKeyComponent_MOD = 0x00,
     /** Public key exponent */
@@ -343,8 +409,10 @@ typedef enum
     kSE05x_RSAKeyComponent_INVQ = 0x07,
 } SE05x_RSAKeyComponent_t;
 
+/** Hashing/Digest algorithms */
 typedef enum
-{ /** Invalid */
+{
+    /** Invalid */
     kSE05x_DigestMode_NA = 0,
     kSE05x_DigestMode_NO_HASH = 0x00,
     kSE05x_DigestMode_SHA = 0x01,
@@ -355,8 +423,10 @@ typedef enum
     kSE05x_DigestMode_SHA512 = 0x06,
 } SE05x_DigestMode_t;
 
+/** HMAC/CMAC Algorithms  */
 typedef enum
-{ /** Invalid */
+{
+    /** Invalid */
     kSE05x_MACAlgo_NA = 0,
     kSE05x_MACAlgo_HMAC_SHA1 = 0x18,
     kSE05x_MACAlgo_HMAC_SHA256 = 0x19,
@@ -365,10 +435,29 @@ typedef enum
     kSE05x_MACAlgo_CMAC_128 = 0x31,
 } SE05x_MACAlgo_t;
 
+/** AEAD Algorithms */
 typedef enum
-{ /** Invalid */
-    kSE05x_ECCurve_NA = 0,
-    kSE05x_ECCurve_UNUSED = 0x00,
+{
+    /** Invalid */
+    kSE05x_AeadAlgo_NA = 0,
+    kSE05x_AeadGCMAlgo = 0xB0,
+    kSE05x_AeadCCMAlgo = 0xF4,
+} SE05x_AeadAlgo_t;
+
+/** HKDF Mode */
+typedef enum
+{
+    /** Invalid */
+    kSE05x_HkdfMode_NA = 0x00,
+    kSE05x_HkdfMode_ExtractExpand = 0x01,
+    kSE05x_HkdfMode_ExpandOnly = 0x02,
+} SE05x_HkdfMode_t;
+
+/** ECC Curve Identifiers */
+typedef enum
+{
+    /** Invalid */
+    kSE05x_ECCurve_NA = 0x00,
     kSE05x_ECCurve_NIST_P192 = 0x01,
     kSE05x_ECCurve_NIST_P224 = 0x02,
     kSE05x_ECCurve_NIST_P256 = 0x03,
@@ -386,12 +475,25 @@ typedef enum
     kSE05x_ECCurve_Secp224k1 = 0x0F,
     kSE05x_ECCurve_Secp256k1 = 0x10,
     kSE05x_ECCurve_TPM_ECC_BN_P256 = 0x11,
-    kSE05x_ECCurve_RESERVED_ID_ECC_ED_25519 = 0x40,
-    kSE05x_ECCurve_RESERVED_ID_ECC_MONT_DH_25519 = 0x41,
+    /** Not Weierstrass */
+    kSE05x_ECCurve_ECC_ED_25519 = 0x40,
+    kSE05x_ECCurve_ECC_MONT_DH_25519 = 0x41,
+    /** Not Weierstrass */
+    kSE05x_ECCurve_ECC_MONT_DH_448 = 0x43,
 } SE05x_ECCurve_t;
 
-#define kSE05x_ECCurve_Total_Weierstrass_Curves kSE05x_ECCurve_TPM_ECC_BN_P256
+#ifndef __DOXYGEN__
 
+/** Same as kSE05x_ECCurve_TPM_ECC_BN_P256 */
+#define kSE05x_ECCurve_RESERVED_ID_ECC_ED_25519 kSE05x_ECCurve_ECC_ED_25519
+#define kSE05x_ECCurve_RESERVED_ID_ECC_MONT_DH_25519 kSE05x_ECCurve_ECC_MONT_DH_25519
+#if SSS_HAVE_SE05X_VER_GTE_04_04
+#define kSE05x_ECCurve_RESERVED_ID_ECC_MONT_DH_448 kSE05x_ECCurve_ECC_MONT_DH_448
+#endif
+#define kSE05x_ECCurve_Total_Weierstrass_Curves kSE05x_ECCurve_TPM_ECC_BN_P256
+#endif
+
+/** Parameters while setting the curve */
 typedef enum
 {   /** Invalid */
     kSE05x_ECCurveParam_NA = 0,
@@ -402,8 +504,10 @@ typedef enum
     kSE05x_ECCurveParam_PARAM_PRIME = 0x10,
 } SE05x_ECCurveParam_t;
 
+/** Symmetric cipher modes */
 typedef enum
-{ /** Invalid */
+{
+    /** Invalid */
     kSE05x_CipherMode_NA = 0,
     /** Typically using DESKey identifiers */
     kSE05x_CipherMode_DES_CBC_NOPAD = 0x01,
@@ -431,10 +535,15 @@ typedef enum
     kSE05x_CipherMode_AES_CBC_ISO9797_M2 = 0x17,
     /** NOT SUPPORTED */
     kSE05x_CipherMode_AES_CBC_PKCS5 = 0x18,
+    /** Typically using AEAD GCM mode */
+    kSE05x_CipherMode_AES_GCM = 0xB0,
     /** Typically using AESKey identifiers */
     kSE05x_CipherMode_AES_CTR = 0xF0,
+    /** Typically using AEAD CCM mode */
+    kSE05x_CipherMode_AES_CCM = 0xF4,
 } SE05x_CipherMode_t;
 
+/** Features which are available / enabled in the Applet */
 typedef enum {
     /** Invalid */
     kSE05x_AppletConfig_NA = 0,
@@ -470,22 +579,41 @@ typedef enum {
     kSE05x_AppletConfig_RFU2 = 0x4000,
 } SE05x_AppletConfig_t;
 
+/** Transient / Persistent lock */
 typedef enum
-{ /** Invalid */
+{
+    /** Invalid */
     kSE05x_LockIndicator_NA = 0,
     kSE05x_LockIndicator_TRANSIENT_LOCK = 0x01,
-    //    kSE05x_LockIndicator_PERSISTENT_LOCK = Any except 0x01,
+    kSE05x_LockIndicator_PERSISTENT_LOCK = 0x02,
 } SE05x_LockIndicator_t;
 
+/**
+ * Applet >= 4.4
+ *
+ * See @ref Se05x_API_DisableObjCreation */
 typedef enum
-{ /** Invalid */
+{
+    kSE05x_RestrictMode_NA = 0,
+    kSE05x_RestrictMode_RESTRICT_NEW = 0x01,
+    kSE05x_RestrictMode_RESTRICT_ALL = 0x02,
+} SE05x_RestrictMode_t;
+
+/**
+ * Lock the sample (until unlocked )
+ */
+typedef enum
+{
+    /** Invalid */
     kSE05x_LockState_NA = 0,
     kSE05x_LockState_LOCKED = 0x01,
     //    kSE05x_LockState_UNLOCKED = Any except 0x01,
 } SE05x_LockState_t;
 
+/** Cryptographic context for operation */
 typedef enum
-{ /** Invalid */
+{
+    /** Invalid */
     kSE05x_CryptoContext_NA = 0,
     /** For DigestInit/DigestUpdate/DigestFinal */
     kSE05x_CryptoContext_DIGEST = 0x01,
@@ -493,31 +621,41 @@ typedef enum
     kSE05x_CryptoContext_CIPHER = 0x02,
     /** For MACInit/MACUpdate/MACFinal */
     kSE05x_CryptoContext_SIGNATURE = 0x03,
+    /** For AEADInit/AEADUpdate/AEADFinal */
+    kSE05x_CryptoContext_AEAD = 0x04,
 } SE05x_CryptoContext_t;
 
+/** Result of operations */
 typedef enum
-{ /** Invalid */
+{
+    /** Invalid */
     kSE05x_Result_NA = 0,
     kSE05x_Result_SUCCESS = 0x01,
     kSE05x_Result_FAILURE = 0x02,
 } SE05x_Result_t;
 
+/** Whether object is transient or persistent */
 typedef enum
-{ /** Invalid */
+{
+    /** Invalid */
     kSE05x_TransientIndicator_NA = 0,
     kSE05x_TransientIndicator_PERSISTENT = 0x01,
     kSE05x_TransientIndicator_TRANSIENT = 0x02,
 } SE05x_TransientIndicator_t;
 
+/** TODO */
 typedef enum
-{ /** Invalid */
+{
+    /** Invalid */
     kSE05x_SetIndicator_NA = 0,
     kSE05x_SetIndicator_NOT_SET = 0x01,
     kSE05x_SetIndicator_SET = 0x02,
 } SE05x_SetIndicator_t;
 
+/** When there are more entries yet to be fetched from few of the APIs */
 typedef enum
-{ /** Invalid */
+{
+    /** Invalid */
     kSE05x_MoreIndicator_NA = 0,
     /** No more data available */
     kSE05x_MoreIndicator_NO_MORE = 0x01,
@@ -525,8 +663,40 @@ typedef enum
     kSE05x_MoreIndicator_MORE = 0x02,
 } SE05x_MoreIndicator_t;
 
+#if SSS_HAVE_SE05X_VER_GTE_04_04
+/** Health check */
 typedef enum
-{ /** Invalid */
+{
+    /** Invalid */
+    kSE05x_HealthCheckMode_NA = 0,
+    /** Performs all on-demand self-tests. Can only be done when
+     * the module is in FIPS mode. When the test fails, the chip
+     * goes into TERMINATED state. */
+    kSE05x_HealthCheckMode_FIPS = 0xF906,
+    /** Performs ROM integrity checks. When the test fails, the chip
+     * triggers the attack counter and the chip will reset. */
+    kSE05x_HealthCheckMode_CODE_SIGNATURE = 0xFE01,
+    /** Performs flash integrity tests. When the test fails, the chip
+     * triggers the attack counter and the chip will reset. */
+    kSE05x_HealthCheckMode_DYNAMIC_FLASH_INTEGRITY = 0xFD02,
+    /** Performs tests on the active shield protection of the
+     * hardware. When the test fails, the chip triggers the attack
+     * counter and the chip will reset. */
+    kSE05x_HealthCheckMode_SHIELDING = 0xFB04,
+    /** Performs self-tests on hardware sensors and reports the
+     * status. */
+    kSE05x_HealthCheckMode_SENSOR = 0xFA05,
+    /** Performs self-tests on the hardware registers. When the test
+     * fails, the chip triggers the attack counter and the chip will
+     * reset. */
+    kSE05x_HealthCheckMode_SFR_CHECK = 0xFC03,
+} SE05x_HealthCheckMode_t;
+#endif
+
+/** Mandate platform SCP or not */
+typedef enum
+{
+    /** Invalid */
     kSE05x_PlatformSCPRequest_NA = 0,
     /** Platform SCP is required (full enc & MAC) */
     kSE05x_PlatformSCPRequest_REQUIRED = 0x01,
@@ -534,8 +704,10 @@ typedef enum
     kSE05x_PlatformSCPRequest_NOT_REQUIRED = 0x02,
 } SE05x_PlatformSCPRequest_t;
 
+/** Crypto object identifiers */
 typedef enum
-{ /** Invalid */
+{
+    /** Invalid */
     kSE05x_CryptoObject_NA = 0,
     kSE05x_CryptoObject_DIGEST_SHA,
     kSE05x_CryptoObject_DIGEST_SHA224,
@@ -561,36 +733,31 @@ typedef enum
     kSE05x_CryptoObject_HMAC_SHA384,
     kSE05x_CryptoObject_HMAC_SHA512,
     kSE05x_CryptoObject_CMAC_128,
+    kSE05x_CryptoObject_AES_GCM,
+    kSE05x_CryptoObject_AES_CCM,
 } SE05x_CryptoObject_t;
 
-/* - Machine Genreated  */
-
-
-typedef enum
-{
-
-    kSE05x_RES_ID_TRANSPORT = 0x7FFF0200,
-    kSE05x_RES_ID_KP_FASTSCP_USER = 0x7FFF0201,
-    kSE05x_RES_ID_KP_FASTSCP_IMPORT = 0x7FFF0202,
-    kSE05x_RES_ID_PUB_FASTSCP_IMPORT = 0x7FFF0203,
-    kSE05x_RES_ID_FEATURE = 0x7FFF0204,
-    kSE05x_RES_ID_FACTORY_RESET = 0x7FFF0205,
-    kSE05x_RES_ID_UNIQUE_ID = 0x7FFF0206,
-} SE05x_RES_ID_t;
-
+/** @copydoc SE05x_CryptoObject_t */
 #define SE05x_CryptoObjectID_t SE05x_CryptoObject_t
 
-#define SE050_MAX_NUMBER_OF_SESSIONS 3
+/** Maximum number of session supported by SE050 */
+#define SE050_MAX_NUMBER_OF_SESSIONS 2
+/** Maximum number of session supported by SE050 */
 #define SE050_OBJECT_IDENTIFIER_SIZE 4
+/** How many bytes can be used for buffer for I2C Master interface */
 #define SE050_MAX_I2CM_COMMAND_LENGTH 255
+/**
+ * the maximum APDU payload length will be smaller, depending on which protocol applies, etc.
+ */
 #define SE050_MAX_APDU_PAYLOAD_LENGTH 896
-#define SE050_DEFAULT_MAX_ATTEMPTS 10
+//#define SE050_DEFAULT_MAX_ATTEMPTS 10
 
-/* 3 MSBit for instruction characteristics. */
+/** 3 MSBit for instruction characteristics. */
 #define SE050_INS_MASK_INS_CHAR 0xE0
-/* 5 LSBit for instruction */
+/** 5 LSBit for instruction */
 #define SE050_INS_MASK_INSTRUCTION 0x1F
 
+/** Type of Object */
 typedef enum
 {
     /**  */
@@ -627,8 +794,10 @@ typedef enum
     kSE05x_SecObjTyp_HMAC_KEY = 0x11,
 } SE05x_SecObjTyp_t;
 
+/** @copydoc SE05x_SecObjTyp_t */
 typedef SE05x_SecObjTyp_t SE05x_SecureObjectType_t;
 
+/** Type of memory. Used when we query available free size */
 typedef enum
 {
     /** Transient memory, clear on reset */
@@ -639,8 +808,7 @@ typedef enum
     kSE05x_MemTyp_PERSISTENT = 0x03,
 } SE05x_MemTyp_t;
 
-
-
+/** Algorithms for RSA Signature */
 typedef enum
 {
     /** Invalid */
@@ -691,8 +859,10 @@ typedef union {
     SE05x_CipherMode_t cipher;
     /** In case it's mac */
     SE05x_MACAlgo_t mac;
+    /** In case it's aead */
+    SE05x_AeadAlgo_t aead;
     /** Accessing 8 bit value for APDUs */
-    uint8_t u8;
+    uint8_t union_8bit;
 } SE05x_CryptoModeSubType_t;
 
 /** @addtogroup se050_i2cm
@@ -711,13 +881,14 @@ typedef enum
 *@}
 */ /* end of se050_i2cm */
 
-/** Whether key is transinet of persistant */
+/** Whether key is transient of persistent */
 typedef enum
 {
     kSE05x_TransientType_Persistent = 0,
     kSE05x_TransientType_Transient = kSE05x_INS_TRANSIENT,
 } SE05x_TransientType_t;
 
+/** Part of the asymmetric key */
 typedef enum
 {
     kSE05x_KeyPart_NA = kSE05x_P1_DEFAULT,
@@ -729,6 +900,9 @@ typedef enum
     kSE05x_KeyPart_Public = kSE05x_P1_PUBLIC,
 } SE05x_KeyPart_t;
 
+/** Cipher Operation.
+ *
+ * Encrypt or decrypt */
 typedef enum
 {
     kSE05x_Cipher_Oper_NA = 0,
@@ -736,6 +910,7 @@ typedef enum
     kSE05x_Cipher_Oper_Decrypt = kSE05x_P2_DECRYPT,
 } SE05x_Cipher_Oper_t;
 
+/** One Shot operations helper */
 typedef enum
 {
     kSE05x_Cipher_Oper_OneShot_NA = 0,
@@ -743,6 +918,7 @@ typedef enum
     kSE05x_Cipher_Oper_OneShot_Decrypt = kSE05x_P2_DECRYPT_ONESHOT,
 } SE05x_Cipher_Oper_OneShot_t;
 
+/** MAC operations */
 typedef enum
 {
     kSE05x_Mac_Oper_NA = 0,
@@ -750,12 +926,14 @@ typedef enum
     kSE05x_Mac_Oper_Validate = kSE05x_P2_VALIDATE,
 } SE05x_Mac_Oper_t;
 
+/** In case the read is attested */
 typedef enum
 {
     kSE05x_AttestationType_None = 0,
     kSE05x_AttestationType_AUTH = kSE05x_INS_AUTH_OBJECT,
 } SE05x_AttestationType_t;
 
+/** Symmetric keys */
 typedef enum
 {
     kSE05x_SymmKeyType_AES = kSE05x_P1_AES,
@@ -764,8 +942,10 @@ typedef enum
     kSE05x_SymmKeyType_CMAC = kSE05x_P1_AES,
 } SE05x_SymmKeyType_t;
 
+/** @copydoc SE05x_AppletConfig_t */
 typedef SE05x_AppletConfig_t SE05x_Variant_t;
 
+/** TLS Perform PRF */
 typedef enum
 {
     kSE05x_TLS_PRF_NA = 0,
@@ -773,8 +953,10 @@ typedef enum
     kSE05x_TLS_PRF_SRV_HELLO = kSE05x_P2_TLS_PRF_SRV_HELLO,
     kSE05x_TLS_PRF_CLI_RND = kSE05x_P2_TLS_PRF_CLI_RND,
     kSE05x_TLS_PRF_SRV_RND = kSE05x_P2_TLS_PRF_SRV_RND,
+    kSE05x_TLS_PRF_BOTH = kSE05x_P2_TLS_PRF_BOTH,
 } SE05x_TLSPerformPRFType_t;
 
+/** Attestation */
 typedef enum
 {
     kSE05x_AttestationAlgo_NA = 0,
@@ -798,33 +980,39 @@ typedef enum
 
 } SE05x_AttestationAlgo_t;
 
+/** RSA Key format */
 typedef enum
 {
     kSE05x_RSAKeyFormat_CRT = kSE05x_P2_DEFAULT,
     kSE05x_RSAKeyFormat_RAW = kSE05x_P2_RAW,
 } SE05x_RSAKeyFormat_t;
 
-
+/** @copydoc SE05x_MACAlgo_t */
 typedef SE05x_MACAlgo_t SE05x_MacOperation_t;
 
+/** SE05X's key IDs */
 typedef uint32_t SE05x_KeyID_t;
-/** Case when thes is no KEK */
+/** Case when there is no KEK */
 #define SE05x_KeyID_KEK_NONE 0
 
 /** [Optional: if the authentication key is the same as the key to be replaced, this TAG should not be present]. */
 #define SE05x_KeyID_MFDF_NONE 0
 
+/** SE05X key's max attempts */
 typedef uint16_t SE05x_MaxAttemps_t;
-/* Fall back to applet default */
+/** Fall back to applet default */
 #define SE05x_MaxAttemps_UNLIMITED 0
-/* Identify in code that this is not an AUTH obect and hence not applicable */
+/** Identify in code that this is not an AUTH object and hence not applicable */
 #define SE05x_MaxAttemps_NA 0
 
-
+/** When we want to read with attestation */
 #define kSE05x_INS_READ_With_Attestation (kSE05x_INS_READ | kSE05x_INS_ATTEST)
 
+/** When we want to read I2CM Data with attestation */
 #define kSE05x_INS_I2CM_Attestation (kSE05x_INS_CRYPTO | kSE05x_INS_ATTEST)
 
+#ifndef __DOXYGEN__
+/* RSA Helper Macros to make code little more readable */
 #define SE05X_RSA_NO_p /* Skip */ NULL, 0
 #define SE05X_RSA_NO_q /* Skip */ NULL, 0
 #define SE05X_RSA_NO_dp /* Skip */ NULL, 0
@@ -833,5 +1021,7 @@ typedef uint16_t SE05x_MaxAttemps_t;
 #define SE05X_RSA_NO_pubExp /* Skip */ NULL, 0
 #define SE05X_RSA_NO_priv /* Skip */ NULL, 0
 #define SE05X_RSA_NO_pubMod /* Skip */ NULL, 0
+#endif // __DOXYGEN__
+
 
 #endif /* SE05x_ENUMS_H */

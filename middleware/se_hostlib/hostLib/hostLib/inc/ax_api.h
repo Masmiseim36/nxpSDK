@@ -3,7 +3,7 @@
 * @author NXP Semiconductors
 * @version 1.0
 * @par License
-* Copyright 2016 NXP
+* Copyright 2016,2020 NXP
 *
 * This software is owned or controlled by NXP and may only be used
 * strictly in accordance with the applicable license terms.  By expressly
@@ -32,7 +32,7 @@
 
 #include "sm_types.h"
 #include "ax_common.h"
-#if (SSS_HAVE_A71CH || SSS_HAVE_SE050_EAR_CH)
+#if (SSS_HAVE_A71CH || SSS_HAVE_A71CH_SIM)
 #include "a71ch_api.h"
 #include "ax_scp.h"
 #elif (SSS_HAVE_A71CL || SSS_HAVE_SE050_L)
@@ -46,13 +46,13 @@
 #include "ax_common_a71ch.h"
 #include "a71ch_api.h"
 /* Nothing specific to do */
-#elif SSS_HAVE_SE05X
+#elif SSS_HAVE_APPLET_SE05X_IOT
 #if AX_EMBEDDED
 #include "ax_scp.h"
 #endif
 #include "a71ch_api.h"
 #include "ax_common_a71ch.h"
-#elif (SSS_HAVE_MBEDTLS || SSS_HAVE_OPENSSL)
+#elif (SSS_HAVE_MBEDTLS || SSS_HAVE_OPENSSL || SSS_HAVE_HOSCRYPTO_USER)
 /* Nothing specific to do */
 #else
 #error "Define TGT_X (the secure module target, either TGT_A71CH, TGT_A70CI or TGT_A70CM) as a preprocessor constant"
@@ -71,7 +71,7 @@ typedef enum SST_Item
 } SST_Item_t;
 /// @endcond
 
-#if (SSS_HAVE_A71CH || SSS_HAVE_A71CL || SSS_HAVE_SE050_EAR_CH || SSS_HAVE_SE050_L)
+#if (SSS_HAVE_A71CH || SSS_HAVE_A71CL || SSS_HAVE_A71CH_SIM || SSS_HAVE_SE050_L)
 U16 SM_ResumeConnection(SmCommState_t *commState, Scp03SessionState_t *scp03State);
 #endif
 

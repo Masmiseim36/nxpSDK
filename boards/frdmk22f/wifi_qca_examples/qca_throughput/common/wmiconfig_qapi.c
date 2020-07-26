@@ -53,7 +53,7 @@ WMI_NOA_INFO_STRUCT p2p_noa;
 uint16_t ap_channel_hint;
 QCOM_SSID ssid_str_concurrent = {0};
 #define AUTOIP_BASE_ADDR 0xA9FE0100
-#define AUTOIP_MAX_ADDR 0xA9FEFEFF
+#define AUTOIP_MAX_ADDR  0xA9FEFEFF
 
 /* Set defaults for Base & range on AUtoIP address pool */
 unsigned long dBASE_AUTO_IP_ADDRESS = AUTOIP_BASE_ADDR; /* 169.254.1.0 */
@@ -1884,8 +1884,8 @@ static int32_t connect_handler(int32_t index, int32_t argc, char *argv[])
 // t_ipconfig((void*)handle,IPCFG_STATIC, &ip_addr, &mask, &gateway);
 #else
 
-#define AP_IPADDR IPADDR(192, 168, 1, 1)
-#define AP_IPMASK IPADDR(255, 255, 255, 0)
+#define AP_IPADDR    IPADDR(192, 168, 1, 1)
+#define AP_IPMASK    IPADDR(255, 255, 255, 0)
 #define AP_IPGATEWAY IPADDR(192, 168, 1, 1)
 
         uint32_t error;
@@ -8247,10 +8247,10 @@ int32_t ota_format(int32_t argc, char *argv[])
 /*       OTA_FTP */
 /*                                                                                                                           */
 /*****************************************************************************************************************************/
-#define OTA_FTP_DATA_PORT 1068
-#define OTA_FTP_BUF_SIZE MAX_OTA_AREA_READ_SIZE
+#define OTA_FTP_DATA_PORT                1068
+#define OTA_FTP_BUF_SIZE                 MAX_OTA_AREA_READ_SIZE
 #define OTA_FTP_INCOMING_CONNECT_TIMEOUT (20 * 1000)
-#define OTA_FTP_WAIT_TIME (50)
+#define OTA_FTP_WAIT_TIME                (50)
 
 /*
  * OTA FTP Status codes

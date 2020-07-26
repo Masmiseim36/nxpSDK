@@ -1,9 +1,8 @@
-/**
-* @file ax_scp.c
+/*
 * @author NXP Semiconductors
 * @version 1.0
 * @par License
-* Copyright 2016 NXP
+* Copyright 2016,2020 NXP
 *
 * This software is owned or controlled by NXP and may only be used
 * strictly in accordance with the applicable license terms.  By expressly
@@ -13,13 +12,16 @@
 * you do not agree to be bound by the applicable license terms, then you
 * may not retain, install, activate or otherwise use the software.
 *
-* @par Description
-* This file implements the setting up of the SCP03 communication channel.
 * @note Execution flow and Error messages can be sent to the console by defining
 * FLOW_VERBOSE and ERROR_VERBOSE respectively at the start of the source code file.
 * @par History
 * 1.0   26-march-2014 : Initial version
 *
+*/
+/**
+* @file ax_scp.c
+* @par Description
+* Set up the SCP03 communication channel.
 */
 #include <string.h>
 #include <stdint.h>
@@ -34,6 +36,8 @@
 #include "global_platf.h"
 #include "nxLog_scp.h"
 #include <nxEnsure.h>
+
+/// @cond
 
 static ScpState_t scpState[2];
 
@@ -69,7 +73,6 @@ U16 SCP_HostLocal_SetDefaultValueIcvCCounter(ChannelId_t channelId)
 
     return SCP_OK;
 }
-
 
 
 // No check on overflow
@@ -243,6 +246,8 @@ U16 SCP_HostLocal_SetMacChainingValue(ChannelId_t channelId, U8 *mcv)
     return SCP_OK;
 }
 
+/// @endcond
+
 
 /**
  * Copy the session state into \p pSession. Caller must allocate memory of \p pSession.
@@ -272,7 +277,7 @@ U16 SCP_HostLocal_GetSessionState(ChannelId_t channelId, Scp03SessionState_t *pS
     return SCP_OK;
 }
 
-
+/// @cond
 U16 SCP_HostLocal_CalculateSessionKeys(ChannelId_t channelId, U8 *hostChallenge, U8 *cardChallenge)
 {
     int stateIdx = 0;
@@ -373,7 +378,7 @@ U16 SCP_HostLocal_CalculateHostCryptogram(ChannelId_t channelId, U8 *hostChallen
         return SCP_UNDEFINED_CHANNEL_ID;
     }
 
-    LOG_I("HOST: Calculate Host Cryptogram\r\n");
+    LOG_I("HOST: Calculate Host Cryptogram");
 
     memcpy(context, hostChallenge, SCP_GP_HOST_CHALLENGE_LEN);
     memcpy(&context[SCP_GP_HOST_CHALLENGE_LEN], cardChallenge, SCP_GP_CARD_CHALLENGE_LEN);
@@ -422,7 +427,7 @@ U16 SCP_HostLocal_VerifyCardCryptogram(ChannelId_t channelId, U8 *hostChallenge,
         return SCP_UNDEFINED_CHANNEL_ID;
     }
 
-    LOG_I("HOST: Verify Card Cryptogram\r\n");
+    LOG_I("HOST: Verify Card Cryptogram");
 
     memcpy(context, hostChallenge, SCP_GP_HOST_CHALLENGE_LEN);
     memcpy(&context[SCP_GP_HOST_CHALLENGE_LEN], cardChallenge, SCP_GP_CARD_CHALLENGE_LEN);
@@ -445,6 +450,7 @@ U16 SCP_HostLocal_VerifyCardCryptogram(ChannelId_t channelId, U8 *hostChallenge,
 
     return rv;
 }
+/// @endcond
 
 /**
 * Retrieve the SCP03 session state of the host - secure module channel from the Host Library.
@@ -503,7 +509,7 @@ U16 SCP_GP_ExternalAuthenticate(ChannelId_t channelId, U8* hostCryptogram)
     memset(&mechInfo, 0, sizeof(mechInfo));
     mechInfo.mechanism = HLSE_AES_CMAC;
 
-    LOG_I(">> %s: Enter\r\n", "SCP_GP_ExternalAuthenticate");
+    LOG_I(">> %s: Enter", "SCP_GP_ExternalAuthenticate");
 
     switch (channelId)
     {
@@ -572,11 +578,11 @@ U16 SCP_GP_ExternalAuthenticate(ChannelId_t channelId, U8* hostCryptogram)
     txBuf[0] = cla;
 #endif
 
-    st = smCom_TransceiveRaw((U8*)txBuf, 5 + AES_KEY_LEN_nBYTE, response, &responseLen);
+    st = smCom_TransceiveRaw(NULL, (U8*)txBuf, 5 + AES_KEY_LEN_nBYTE, response, &responseLen);
 
     if (st != SMCOM_OK)
     {
-        LOG_E("SCP_GP_ExternalAuthenticate %lX\r\n", st);
+        LOG_E("SCP_GP_ExternalAuthenticate %lX", st);
         rv = ERR_GENERAL_ERROR;
     }
     else
@@ -613,7 +619,7 @@ U16 SCP_GP_InitializeUpdate(ChannelId_t channelId, U8 *hostChallenge, U16 hostCh
         SCP_GP_IU_SEQ_COUNTER_LEN +
         SCP_GP_SW_LEN;
 
-    LOG_I(">> %s: Enter\r\n", "SCP_GP_InitializeUpdate");
+    LOG_I(">> %s: Enter", "SCP_GP_InitializeUpdate");
 
     ENSURE_OR_GO_EXIT(hostChallengeLen == SCP_GP_HOST_CHALLENGE_LEN);
     ENSURE_OR_GO_EXIT(*pKeyDivDataLen == SCP_GP_IU_KEY_DIV_DATA_LEN);
@@ -654,11 +660,11 @@ U16 SCP_GP_InitializeUpdate(ChannelId_t channelId, U8 *hostChallenge, U16 hostCh
     memcpy(&txBuf[5], hostChallenge, hostChallengeLen);
     txBuf[5 + hostChallengeLen] = 0x00;
 
-    st = smCom_TransceiveRaw((U8*)txBuf, 6 + hostChallengeLen, response, &responseLen);
+    st = smCom_TransceiveRaw(NULL, (U8*)txBuf, 6 + hostChallengeLen, response, &responseLen);
 
     if (st != SMCOM_OK)
     {
-        LOG_E("SCP_GP_InitializeUpdate. Failure on communication Link (0x%04lX)\r\n", st);
+        LOG_E("SCP_GP_InitializeUpdate. Failure on communication Link (0x%04lX)", st);
         return (U16)st;
     }
 
@@ -668,7 +674,7 @@ U16 SCP_GP_InitializeUpdate(ChannelId_t channelId, U8 *hostChallenge, U16 hostCh
     if ((responseLen != iuResponseLenSmall) && (responseLen != iuResponseLenBig))
     {
         // Note: A response of length 2 (a proper SW) is also collapsed into return code SCP_FAIL
-        LOG_E("Unexpected amount of data returned: %ld\r\n", responseLen);
+        LOG_E("Unexpected amount of data returned: %ld", responseLen);
         return SCP_FAIL;
     }
 
@@ -697,6 +703,7 @@ exit:
     return sw;
 }
 
+/// @cond
 /**
 * Utility function used by ::SCP_GP_PutKeys
 * @param[in] keyType
@@ -752,6 +759,7 @@ static U8 createKeyDataField(U8 keyType, U8 *key, U8 *currentKeyDek, U8 *targetS
         CRYPTO_KEY_CHECK_LEN);
     return (3 + AES_KEY_LEN_nBYTE + 1 + CRYPTO_KEY_CHECK_LEN);
 }
+/// @endcond
 
 /**
 * Persistently stores the provided SCP03 base key set in the security module.
@@ -817,11 +825,11 @@ U16 SCP_GP_PutKeys(U8 keyVersion, U8 *keyEnc, U8 *keyMac, U8 *keyDek, U8 *curren
     // In case there is a DEK key, proper command encryption and MACing shall be applied.
     if (currentKeyDek == NULL)
     {
-        st = smCom_TransceiveRaw((U8*)txBuf, 6 + len, response, &responseLen);
+        st = smCom_TransceiveRaw(NULL, (U8*)txBuf, 6 + len, response, &responseLen);
 
         if (st != SMCOM_OK)
         {
-            LOG_E("SCP_GP_PutKeys %lx\r\n", st);
+            LOG_E("SCP_GP_PutKeys %lx", st);
             rv = (U16)st;
         }
         else
@@ -846,7 +854,7 @@ U16 SCP_GP_PutKeys(U8 keyVersion, U8 *keyEnc, U8 *keyMac, U8 *keyDek, U8 *curren
 
         smApduAppendCmdData(pApdu, txBuf + 5, len);
 
-        rv = (U16)scp_Transceive(pApdu, SCP_MODE);
+        rv = (U16)scp_Transceive(NULL, pApdu, SCP_MODE);
         if (rv == SMCOM_OK)
         {
             // No response data expected
@@ -899,7 +907,7 @@ U16 SCP_Authenticate(U8 *keyEnc, U8 *keyMac, U8 *keyDek, U16 keyBytes, U8 *sCoun
     err = SCP_HostLocal_SetKeysScp(channelId, keyEnc, keyMac, keyDek, keyBytes);
     if (err != SW_OK)
     {
-        LOG_E("SCP_HostLocal_SetKeysScp fails with status: 0x%04X\r\n", err);
+        LOG_E("SCP_HostLocal_SetKeysScp fails with status: 0x%04X", err);
         goto exit;
     }
 
@@ -917,7 +925,7 @@ U16 SCP_Authenticate(U8 *keyEnc, U8 *keyMac, U8 *keyDek, U16 keyBytes, U8 *sCoun
         seqCounter, &seqCounterLen);
     if (err != SW_OK)
     {
-        LOG_E("SCP_GP_InitializeUpdate fails with status: 0x%04X\r\n", err);
+        LOG_E("SCP_GP_InitializeUpdate fails with status: 0x%04X", err);
         goto exit;
     }
     LOG_MAU8_D("keyDivData", keyDivData, keyDivDataLen);
@@ -946,14 +954,14 @@ U16 SCP_Authenticate(U8 *keyEnc, U8 *keyMac, U8 *keyDek, U16 keyBytes, U8 *sCoun
     err = SCP_HostLocal_CalculateSessionKeys(channelId, hostChallenge, cardChallenge);
     if (err != SW_OK)
     {
-        LOG_E("SCP_HostLocal_CalculateSessionKeys fails with status: 0x%04X\r\n", err);
+        LOG_E("SCP_HostLocal_CalculateSessionKeys fails with status: 0x%04X", err);
         goto exit;
     }
 
     err = SCP_HostLocal_VerifyCardCryptogram(channelId, hostChallenge, cardChallenge, cardCryptoGram);
     if (err != SW_OK)
     {
-        LOG_E("SCP_HostLocal_VerifyCardCryptogram fails with status: 0x%04X\r\n", err);
+        LOG_E("SCP_HostLocal_VerifyCardCryptogram fails with status: 0x%04X", err);
         goto exit;
     }
 
@@ -961,14 +969,14 @@ U16 SCP_Authenticate(U8 *keyEnc, U8 *keyMac, U8 *keyDek, U16 keyBytes, U8 *sCoun
     LOG_MAU8_D("hostCryptogram", hostCryptogram, SCP_GP_IU_CARD_CRYPTOGRAM_LEN);
     if (err != SW_OK)
     {
-        LOG_E("SCP_HostLocal_CalculateHostCryptogram fails with status: 0x%04X\r\n", err);
+        LOG_E("SCP_HostLocal_CalculateHostCryptogram fails with status: 0x%04X", err);
         goto exit;
     }
 
     err = SCP_GP_ExternalAuthenticate(channelId, hostCryptogram);
     if (err != SW_OK)
     {
-        LOG_E("SCP_GP_ExternalAuthenticate fails with status: 0x%04X\r\n", err);
+        LOG_E("SCP_GP_ExternalAuthenticate fails with status: 0x%04X", err);
         goto exit;
     }
 
@@ -978,6 +986,7 @@ U16 SCP_Authenticate(U8 *keyEnc, U8 *keyMac, U8 *keyDek, U16 keyBytes, U8 *sCoun
 exit:
     return err;
 }
+
 #ifdef USE_SCP02
 U16 SCP02_GP_InitializeUpdate(ChannelId_t channelId, U8 *hostChallenge, U16 hostChallengeLen,
     U8 *keyDivData, U16 *pKeyDivDataLen,
@@ -1001,7 +1010,7 @@ U16 SCP02_GP_InitializeUpdate(ChannelId_t channelId, U8 *hostChallenge, U16 host
         SCP_GP_IU_CARD_CRYPTOGRAM_LEN +
         SCP_GP_SW_LEN;
 
-    LOG_I(">> %s: Enter\n", "SCP02_GP_InitializeUpdate");
+    LOG_I(">> %s: Enter", "SCP02_GP_InitializeUpdate");
 
     ENSURE_OR_GO_EXIT(hostChallengeLen == SCP_GP_HOST_CHALLENGE_LEN);
     ENSURE_OR_GO_EXIT(*pKeyDivDataLen == SCP_GP_IU_KEY_DIV_DATA_LEN);
@@ -1043,11 +1052,11 @@ U16 SCP02_GP_InitializeUpdate(ChannelId_t channelId, U8 *hostChallenge, U16 host
     memcpy(&txBuf[5], hostChallenge, hostChallengeLen);
     txBuf[5 + hostChallengeLen] = 0x00;
 
-    st = smCom_TransceiveRaw((U8*)txBuf, 6 + hostChallengeLen, response, &responseLen);
+    st = smCom_TransceiveRaw(NULL, (U8*)txBuf, 6 + hostChallengeLen, response, &responseLen);
 
     if (st != SMCOM_OK)
     {
-        LOG_E("SCP02_GP_InitializeUpdate. Failure on communication Link (0x%04lX)\n", st);
+        LOG_E("SCP02_GP_InitializeUpdate. Failure on communication Link (0x%04lX)", st);
         return (U16)st;
     }
 
@@ -1059,7 +1068,7 @@ U16 SCP02_GP_InitializeUpdate(ChannelId_t channelId, U8 *hostChallenge, U16 host
     // The pseudo-random challenge case also includes a 3 byte sequence counter
     if (responseLen != iuResponseLen) {
         // Note: A response of length 2 (a proper SW) is also collapsed into return code SCP_FAIL
-        LOG_E("Unexpected amount of data returned: %ld\n", responseLen);
+        LOG_E("Unexpected amount of data returned: %ld", responseLen);
         return SCP_FAIL;
     }
 
@@ -1118,7 +1127,7 @@ U16 SCP02_HostLocal_CalculateSessionKeys(ChannelId_t channelId, U8* seqCounter)
         return SCP_UNDEFINED_CHANNEL_ID;
     }
 
-    LOG_I("HOST: Calculate session keys\n");
+    LOG_I("HOST: Calculate session keys");
 
     // Prepare derivation data
     dDataSC02_C_MAC[2] = seqCounter[0];
@@ -1207,7 +1216,7 @@ U16 SCP02_HostLocal_VerifyCardCryptogram(ChannelId_t channelId, U8 *hostChalleng
         return SCP_UNDEFINED_CHANNEL_ID;
     }
 
-    LOG_I("HOST: Verify Card Cryptogram\n");
+    LOG_I("HOST: Verify Card Cryptogram");
 
     // Prepare the 24-byte data in order to calculate the card cryptogram
     memcpy(context, hostChallenge, SCP_GP_HOST_CHALLENGE_LEN);
@@ -1261,7 +1270,7 @@ U16 SCP02_HostLocal_CalculateHostCryptogram(ChannelId_t channelId, U8 *hostChall
         return SCP_UNDEFINED_CHANNEL_ID;
     }
 
-    LOG_I("HOST: Calculate Host Cryptogram\n");
+    LOG_I("HOST: Calculate Host Cryptogram");
 
     // Prepare the 24-byte data in order to calculate the card cryptogram
     memcpy(context, seqCounter, SCP02_GP_IU_SEQ_COUNTER_LEN); //hostChallenge, SCP_GP_HOST_CHALLENGE_LEN);
@@ -1305,7 +1314,7 @@ U16 SCP02_GP_ExternalAuthenticate(ChannelId_t channelId, U8* hostCryptogram)
     U32 outLen = 0;
     U8 encData[8];
 
-    LOG_I(">> %s: Enter\n", "SCP02_GP_ExternalAuthenticate");
+    LOG_I(">> %s: Enter", "SCP02_GP_ExternalAuthenticate");
 
     switch (channelId)
     {
@@ -1349,10 +1358,10 @@ U16 SCP02_GP_ExternalAuthenticate(ChannelId_t channelId, U8* hostCryptogram)
     // Retain the calculated mac, to be used as iv in next commands
     memcpy(scpState[stateIdx].session.mcv, calchostmac, 8);
 
-    st = smCom_TransceiveRaw((U8*)extauthcmd, 5 + 16, response, &responseLen);
+    st = smCom_TransceiveRaw(NULL, (U8*)extauthcmd, 5 + 16, response, &responseLen);
 
     if (st != SMCOM_OK) {
-        LOG_E("SCP01_GP_ExternalAuthenticate %lX\n", st);
+        LOG_E("SCP01_GP_ExternalAuthenticate %lX", st);
         return ERR_GENERAL_ERROR;
     }
     else {
@@ -1402,7 +1411,7 @@ U16 SCP02_Authenticate(U8 *keyEnc, U8 *keyMac, U8 *keyDek, U16 keyBytes, U8 *sCo
     err = SCP_HostLocal_SetKeysScp(channelId, keyEnc, keyMac, keyDek, keyBytes);
     if (err != SW_OK)
     {
-        LOG_E("SCP_HostLocal_SetKeysScp fails with status: 0x%04X\n", err);
+        LOG_E("SCP_HostLocal_SetKeysScp fails with status: 0x%04X", err);
         goto exit;
     }
 
@@ -1420,7 +1429,7 @@ U16 SCP02_Authenticate(U8 *keyEnc, U8 *keyMac, U8 *keyDek, U16 keyBytes, U8 *sCo
         seqCounter, &seqCounterLen);
     if (err != SW_OK)
     {
-        LOG_E("SCP02_GP_InitializeUpdate fails with status: 0x%04X\n", err);
+        LOG_E("SCP02_GP_InitializeUpdate fails with status: 0x%04X", err);
         goto exit;
     }
     LOG_MAU8_D("keyDivData", keyDivData, keyDivDataLen);
@@ -1449,14 +1458,14 @@ U16 SCP02_Authenticate(U8 *keyEnc, U8 *keyMac, U8 *keyDek, U16 keyBytes, U8 *sCo
     err = SCP02_HostLocal_CalculateSessionKeys(channelId, seqCounter);
     if (err != SW_OK)
     {
-        LOG_E("SCP02_HostLocal_CalculateSessionKeys fails with status: 0x%04X\n", err);
+        LOG_E("SCP02_HostLocal_CalculateSessionKeys fails with status: 0x%04X", err);
         goto exit;
     }
 
     err = SCP02_HostLocal_VerifyCardCryptogram(channelId, hostChallenge, seqCounter, cardChallenge, cardCryptoGram);
     if (err != SW_OK)
     {
-        LOG_E("SCP02_HostLocal_VerifyCardCryptogram fails with status: 0x%04X\n", err);
+        LOG_E("SCP02_HostLocal_VerifyCardCryptogram fails with status: 0x%04X", err);
         goto exit;
     }
 
@@ -1464,14 +1473,14 @@ U16 SCP02_Authenticate(U8 *keyEnc, U8 *keyMac, U8 *keyDek, U16 keyBytes, U8 *sCo
     LOG_MAU8_D("hostCryptogram", hostCryptogram, SCP_GP_IU_CARD_CRYPTOGRAM_LEN);
     if (err != SW_OK)
     {
-        LOG_E("SCP02_HostLocal_CalculateHostCryptogram fails with status: 0x%04X\n", err);
+        LOG_E("SCP02_HostLocal_CalculateHostCryptogram fails with status: 0x%04X", err);
         goto exit;
     }
 
     err = SCP02_GP_ExternalAuthenticate(channelId, hostCryptogram);
     if (err != SW_OK)
     {
-        LOG_E("SCP02_GP_ExternalAuthenticate fails with status: 0x%04X\n", err);
+        LOG_E("SCP02_GP_ExternalAuthenticate fails with status: 0x%04X", err);
         goto exit;
     }
 

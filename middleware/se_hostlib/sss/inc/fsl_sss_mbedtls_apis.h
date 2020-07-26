@@ -1,5 +1,5 @@
 /*
- * Copyright 2018,2019 NXP
+ * Copyright 2018-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -34,7 +34,7 @@ extern "C" {
 sss_status_t sss_mbedtls_session_create(sss_mbedtls_session_t *session,
     sss_type_t subsystem,
     uint32_t application_id,
-    sss_connection_type_t connetion_type,
+    sss_connection_type_t connection_type,
     void *connectionData);
 
 /** @copydoc sss_session_open
@@ -43,22 +43,19 @@ sss_status_t sss_mbedtls_session_create(sss_mbedtls_session_t *session,
 sss_status_t sss_mbedtls_session_open(sss_mbedtls_session_t *session,
     sss_type_t subsystem,
     uint32_t application_id,
-    sss_connection_type_t connetion_type,
+    sss_connection_type_t connection_type,
     void *connectionData);
 
 /** @copydoc sss_session_prop_get_u32
  *
  */
-sss_status_t sss_mbedtls_session_prop_get_u32(
-    sss_mbedtls_session_t *session, uint32_t property, uint32_t *pValue);
+sss_status_t sss_mbedtls_session_prop_get_u32(sss_mbedtls_session_t *session, uint32_t property, uint32_t *pValue);
 
 /** @copydoc sss_session_prop_get_au8
  *
  */
-sss_status_t sss_mbedtls_session_prop_get_au8(sss_mbedtls_session_t *session,
-    uint32_t property,
-    uint8_t *pValue,
-    size_t *pValueLen);
+sss_status_t sss_mbedtls_session_prop_get_au8(
+    sss_mbedtls_session_t *session, uint32_t property, uint8_t *pValue, size_t *pValueLen);
 
 /** @copydoc sss_session_close
  *
@@ -79,14 +76,12 @@ void sss_mbedtls_session_delete(sss_mbedtls_session_t *session);
 /** @copydoc sss_key_object_init
  *
  */
-sss_status_t sss_mbedtls_key_object_init(
-    sss_mbedtls_object_t *keyObject, sss_mbedtls_key_store_t *keyStore);
+sss_status_t sss_mbedtls_key_object_init(sss_mbedtls_object_t *keyObject, sss_mbedtls_key_store_t *keyStore);
 
 /** @copydoc sss_key_object_allocate_handle
  *
  */
-sss_status_t sss_mbedtls_key_object_allocate_handle(
-    sss_mbedtls_object_t *keyObject,
+sss_status_t sss_mbedtls_key_object_allocate_handle(sss_mbedtls_object_t *keyObject,
     uint32_t keyId,
     sss_key_part_t keyPart,
     sss_cipher_type_t cipherType,
@@ -96,50 +91,42 @@ sss_status_t sss_mbedtls_key_object_allocate_handle(
 /** @copydoc sss_key_object_get_handle
  *
  */
-sss_status_t sss_mbedtls_key_object_get_handle(
-    sss_mbedtls_object_t *keyObject, uint32_t keyId);
+sss_status_t sss_mbedtls_key_object_get_handle(sss_mbedtls_object_t *keyObject, uint32_t keyId);
 
 /** @copydoc sss_key_object_set_user
  *
  */
-sss_status_t sss_mbedtls_key_object_set_user(
-    sss_mbedtls_object_t *keyObject, uint32_t user, uint32_t options);
+sss_status_t sss_mbedtls_key_object_set_user(sss_mbedtls_object_t *keyObject, uint32_t user, uint32_t options);
 
 /** @copydoc sss_key_object_set_purpose
  *
  */
-sss_status_t sss_mbedtls_key_object_set_purpose(
-    sss_mbedtls_object_t *keyObject, sss_mode_t purpose, uint32_t options);
+sss_status_t sss_mbedtls_key_object_set_purpose(sss_mbedtls_object_t *keyObject, sss_mode_t purpose, uint32_t options);
 
 /** @copydoc sss_key_object_set_access
  *
  */
-sss_status_t sss_mbedtls_key_object_set_access(
-    sss_mbedtls_object_t *keyObject, uint32_t access, uint32_t options);
+sss_status_t sss_mbedtls_key_object_set_access(sss_mbedtls_object_t *keyObject, uint32_t access, uint32_t options);
 
 /** @copydoc sss_key_object_set_eccgfp_group
  *
  */
-sss_status_t sss_mbedtls_key_object_set_eccgfp_group(
-    sss_mbedtls_object_t *keyObject, sss_eccgfp_group_t *group);
+sss_status_t sss_mbedtls_key_object_set_eccgfp_group(sss_mbedtls_object_t *keyObject, sss_eccgfp_group_t *group);
 
 /** @copydoc sss_key_object_get_user
  *
  */
-sss_status_t sss_mbedtls_key_object_get_user(
-    sss_mbedtls_object_t *keyObject, uint32_t *user);
+sss_status_t sss_mbedtls_key_object_get_user(sss_mbedtls_object_t *keyObject, uint32_t *user);
 
 /** @copydoc sss_key_object_get_purpose
  *
  */
-sss_status_t sss_mbedtls_key_object_get_purpose(
-    sss_mbedtls_object_t *keyObject, sss_mode_t *purpose);
+sss_status_t sss_mbedtls_key_object_get_purpose(sss_mbedtls_object_t *keyObject, sss_mode_t *purpose);
 
 /** @copydoc sss_key_object_get_access
  *
  */
-sss_status_t sss_mbedtls_key_object_get_access(
-    sss_mbedtls_object_t *keyObject, uint32_t *access);
+sss_status_t sss_mbedtls_key_object_get_access(sss_mbedtls_object_t *keyObject, uint32_t *access);
 
 /** @copydoc sss_key_object_free
  *
@@ -155,8 +142,7 @@ void sss_mbedtls_key_object_free(sss_mbedtls_object_t *keyObject);
 /** @copydoc sss_derive_key_context_init
  *
  */
-sss_status_t sss_mbedtls_derive_key_context_init(
-    sss_mbedtls_derive_key_t *context,
+sss_status_t sss_mbedtls_derive_key_context_init(sss_mbedtls_derive_key_t *context,
     sss_mbedtls_session_t *session,
     sss_mbedtls_object_t *keyObject,
     sss_algorithm_t algorithm,
@@ -174,6 +160,27 @@ sss_status_t sss_mbedtls_derive_key_go(sss_mbedtls_derive_key_t *context,
     uint16_t deriveDataLen,
     uint8_t *hkdfOutput,
     size_t *hkdfOutputLen);
+
+/** @copydoc sss_derive_key_one_go
+*
+*/
+sss_status_t sss_mbedtls_derive_key_one_go(sss_mbedtls_derive_key_t *context,
+    const uint8_t *saltData,
+    size_t saltLen,
+    const uint8_t *info,
+    size_t infoLen,
+    sss_mbedtls_object_t *derivedKeyObject,
+    uint16_t deriveDataLen);
+
+/** @copydoc sss_derive_key_sobj_one_go
+*
+*/
+sss_status_t sss_mbedtls_derive_key_sobj_one_go(sss_mbedtls_derive_key_t *context,
+    sss_mbedtls_object_t *saltKeyObject,
+    const uint8_t *info,
+    size_t infoLen,
+    sss_mbedtls_object_t *derivedKeyObject,
+    uint16_t deriveDataLen);
 
 /** @copydoc sss_derive_key_dh
  *
@@ -196,14 +203,12 @@ void sss_mbedtls_derive_key_context_free(sss_mbedtls_derive_key_t *context);
 /** @copydoc sss_key_store_context_init
  *
  */
-sss_status_t sss_mbedtls_key_store_context_init(
-    sss_mbedtls_key_store_t *keyStore, sss_mbedtls_session_t *session);
+sss_status_t sss_mbedtls_key_store_context_init(sss_mbedtls_key_store_t *keyStore, sss_mbedtls_session_t *session);
 
 /** @copydoc sss_key_store_allocate
  *
  */
-sss_status_t sss_mbedtls_key_store_allocate(
-    sss_mbedtls_key_store_t *keyStore, uint32_t keyStoreId);
+sss_status_t sss_mbedtls_key_store_allocate(sss_mbedtls_key_store_t *keyStore, uint32_t keyStoreId);
 
 /** @copydoc sss_key_store_save
  *
@@ -230,10 +235,7 @@ sss_status_t sss_mbedtls_key_store_set_key(sss_mbedtls_key_store_t *keyStore,
  *
  */
 sss_status_t sss_mbedtls_key_store_generate_key(
-    sss_mbedtls_key_store_t *keyStore,
-    sss_mbedtls_object_t *keyObject,
-    size_t keyBitLen,
-    void *options);
+    sss_mbedtls_key_store_t *keyStore, sss_mbedtls_object_t *keyObject, size_t keyBitLen, void *options);
 
 /** @copydoc sss_key_store_get_key
  *
@@ -247,35 +249,17 @@ sss_status_t sss_mbedtls_key_store_get_key(sss_mbedtls_key_store_t *keyStore,
 /** @copydoc sss_key_store_open_key
  *
  */
-sss_status_t sss_mbedtls_key_store_open_key(
-    sss_mbedtls_key_store_t *keyStore, sss_mbedtls_object_t *keyObject);
+sss_status_t sss_mbedtls_key_store_open_key(sss_mbedtls_key_store_t *keyStore, sss_mbedtls_object_t *keyObject);
 
 /** @copydoc sss_key_store_freeze_key
  *
  */
-sss_status_t sss_mbedtls_key_store_freeze_key(
-    sss_mbedtls_key_store_t *keyStore, sss_mbedtls_object_t *keyObject);
+sss_status_t sss_mbedtls_key_store_freeze_key(sss_mbedtls_key_store_t *keyStore, sss_mbedtls_object_t *keyObject);
 
 /** @copydoc sss_key_store_erase_key
  *
  */
-sss_status_t sss_mbedtls_key_store_erase_key(
-    sss_mbedtls_key_store_t *keyStore, sss_mbedtls_object_t *keyObject);
-
-/** @copydoc sss_key_store_prop_get_u32
- *
- */
-sss_status_t sss_mbedtls_key_store_prop_get_u32(
-    sss_mbedtls_key_store_t *session, uint32_t property, uint32_t *pValue);
-
-/** @copydoc sss_key_store_prop_get_au8
- *
- */
-sss_status_t sss_mbedtls_key_store_prop_get_au8(
-    sss_mbedtls_key_store_t *session,
-    uint32_t property,
-    uint8_t *pValue,
-    size_t *pValueLen);
+sss_status_t sss_mbedtls_key_store_erase_key(sss_mbedtls_key_store_t *keyStore, sss_mbedtls_object_t *keyObject);
 
 /** @copydoc sss_key_store_context_free
  *
@@ -291,8 +275,7 @@ void sss_mbedtls_key_store_context_free(sss_mbedtls_key_store_t *keyStore);
 /** @copydoc sss_asymmetric_context_init
  *
  */
-sss_status_t sss_mbedtls_asymmetric_context_init(
-    sss_mbedtls_asymmetric_t *context,
+sss_status_t sss_mbedtls_asymmetric_context_init(sss_mbedtls_asymmetric_t *context,
     sss_mbedtls_session_t *session,
     sss_mbedtls_object_t *keyObject,
     sss_algorithm_t algorithm,
@@ -301,40 +284,26 @@ sss_status_t sss_mbedtls_asymmetric_context_init(
 /** @copydoc sss_asymmetric_encrypt
  *
  */
-sss_status_t sss_mbedtls_asymmetric_encrypt(sss_mbedtls_asymmetric_t *context,
-    const uint8_t *srcData,
-    size_t srcLen,
-    uint8_t *destData,
-    size_t *destLen);
+sss_status_t sss_mbedtls_asymmetric_encrypt(
+    sss_mbedtls_asymmetric_t *context, const uint8_t *srcData, size_t srcLen, uint8_t *destData, size_t *destLen);
 
 /** @copydoc sss_asymmetric_decrypt
  *
  */
-sss_status_t sss_mbedtls_asymmetric_decrypt(sss_mbedtls_asymmetric_t *context,
-    const uint8_t *srcData,
-    size_t srcLen,
-    uint8_t *destData,
-    size_t *destLen);
+sss_status_t sss_mbedtls_asymmetric_decrypt(
+    sss_mbedtls_asymmetric_t *context, const uint8_t *srcData, size_t srcLen, uint8_t *destData, size_t *destLen);
 
 /** @copydoc sss_asymmetric_sign_digest
  *
  */
 sss_status_t sss_mbedtls_asymmetric_sign_digest(
-    sss_mbedtls_asymmetric_t *context,
-    uint8_t *digest,
-    size_t digestLen,
-    uint8_t *signature,
-    size_t *signatureLen);
+    sss_mbedtls_asymmetric_t *context, uint8_t *digest, size_t digestLen, uint8_t *signature, size_t *signatureLen);
 
 /** @copydoc sss_asymmetric_verify_digest
  *
  */
 sss_status_t sss_mbedtls_asymmetric_verify_digest(
-    sss_mbedtls_asymmetric_t *context,
-    uint8_t *digest,
-    size_t digestLen,
-    uint8_t *signature,
-    size_t signatureLen);
+    sss_mbedtls_asymmetric_t *context, uint8_t *digest, size_t digestLen, uint8_t *signature, size_t signatureLen);
 
 /** @copydoc sss_asymmetric_context_free
  *
@@ -350,8 +319,7 @@ void sss_mbedtls_asymmetric_context_free(sss_mbedtls_asymmetric_t *context);
 /** @copydoc sss_symmetric_context_init
  *
  */
-sss_status_t sss_mbedtls_symmetric_context_init(
-    sss_mbedtls_symmetric_t *context,
+sss_status_t sss_mbedtls_symmetric_context_init(sss_mbedtls_symmetric_t *context,
     sss_mbedtls_session_t *session,
     sss_mbedtls_object_t *keyObject,
     sss_algorithm_t algorithm,
@@ -370,26 +338,19 @@ sss_status_t sss_mbedtls_cipher_one_go(sss_mbedtls_symmetric_t *context,
 /** @copydoc sss_cipher_init
  *
  */
-sss_status_t sss_mbedtls_cipher_init(
-    sss_mbedtls_symmetric_t *context, uint8_t *iv, size_t ivLen);
+sss_status_t sss_mbedtls_cipher_init(sss_mbedtls_symmetric_t *context, uint8_t *iv, size_t ivLen);
 
 /** @copydoc sss_cipher_update
  *
  */
-sss_status_t sss_mbedtls_cipher_update(sss_mbedtls_symmetric_t *context,
-    const uint8_t *srcData,
-    size_t srcLen,
-    uint8_t *destData,
-    size_t *destLen);
+sss_status_t sss_mbedtls_cipher_update(
+    sss_mbedtls_symmetric_t *context, const uint8_t *srcData, size_t srcLen, uint8_t *destData, size_t *destLen);
 
 /** @copydoc sss_cipher_finish
  *
  */
-sss_status_t sss_mbedtls_cipher_finish(sss_mbedtls_symmetric_t *context,
-    const uint8_t *srcData,
-    size_t srcLen,
-    uint8_t *destData,
-    size_t *destLen);
+sss_status_t sss_mbedtls_cipher_finish(
+    sss_mbedtls_symmetric_t *context, const uint8_t *srcData, size_t srcLen, uint8_t *destData, size_t *destLen);
 
 /** @copydoc sss_cipher_crypt_ctr
  *
@@ -439,27 +400,19 @@ sss_status_t sss_mbedtls_aead_one_go(sss_mbedtls_aead_t *context,
 /** @copydoc sss_aead_init
  *
  */
-sss_status_t sss_mbedtls_aead_init(sss_mbedtls_aead_t *context,
-    uint8_t *nonce,
-    size_t nonceLen,
-    size_t tagLen,
-    size_t aadLen,
-    size_t payloadLen);
+sss_status_t sss_mbedtls_aead_init(
+    sss_mbedtls_aead_t *context, uint8_t *nonce, size_t nonceLen, size_t tagLen, size_t aadLen, size_t payloadLen);
 
 /** @copydoc sss_aead_update_aad
  *
  */
-sss_status_t sss_mbedtls_aead_update_aad(
-    sss_mbedtls_aead_t *context, const uint8_t *aadData, size_t aadDataLen);
+sss_status_t sss_mbedtls_aead_update_aad(sss_mbedtls_aead_t *context, const uint8_t *aadData, size_t aadDataLen);
 
 /** @copydoc sss_aead_update
  *
  */
-sss_status_t sss_mbedtls_aead_update(sss_mbedtls_aead_t *context,
-    const uint8_t *srcData,
-    size_t srcLen,
-    uint8_t destData,
-    size_t *destLen);
+sss_status_t sss_mbedtls_aead_update(
+    sss_mbedtls_aead_t *context, const uint8_t *srcData, size_t srcLen, uint8_t *destData, size_t *destLen);
 
 /** @copydoc sss_aead_finish
  *
@@ -467,7 +420,7 @@ sss_status_t sss_mbedtls_aead_update(sss_mbedtls_aead_t *context,
 sss_status_t sss_mbedtls_aead_finish(sss_mbedtls_aead_t *context,
     const uint8_t *srcData,
     size_t srcLen,
-    uint8_t destData,
+    uint8_t *destData,
     size_t *destLen,
     uint8_t *tag,
     size_t *tagLen);
@@ -495,11 +448,8 @@ sss_status_t sss_mbedtls_mac_context_init(sss_mbedtls_mac_t *context,
 /** @copydoc sss_mac_one_go
  *
  */
-sss_status_t sss_mbedtls_mac_one_go(sss_mbedtls_mac_t *context,
-    const uint8_t *message,
-    size_t messageLen,
-    uint8_t *mac,
-    size_t *macLen);
+sss_status_t sss_mbedtls_mac_one_go(
+    sss_mbedtls_mac_t *context, const uint8_t *message, size_t messageLen, uint8_t *mac, size_t *macLen);
 
 /** @copydoc sss_mac_init
  *
@@ -509,14 +459,12 @@ sss_status_t sss_mbedtls_mac_init(sss_mbedtls_mac_t *context);
 /** @copydoc sss_mac_update
  *
  */
-sss_status_t sss_mbedtls_mac_update(
-    sss_mbedtls_mac_t *context, const uint8_t *message, size_t messageLen);
+sss_status_t sss_mbedtls_mac_update(sss_mbedtls_mac_t *context, const uint8_t *message, size_t messageLen);
 
 /** @copydoc sss_mac_finish
  *
  */
-sss_status_t sss_mbedtls_mac_finish(
-    sss_mbedtls_mac_t *context, uint8_t *mac, size_t *macLen);
+sss_status_t sss_mbedtls_mac_finish(sss_mbedtls_mac_t *context, uint8_t *mac, size_t *macLen);
 
 /** @copydoc sss_mac_context_free
  *
@@ -532,19 +480,14 @@ void sss_mbedtls_mac_context_free(sss_mbedtls_mac_t *context);
 /** @copydoc sss_digest_context_init
  *
  */
-sss_status_t sss_mbedtls_digest_context_init(sss_mbedtls_digest_t *context,
-    sss_mbedtls_session_t *session,
-    sss_algorithm_t algorithm,
-    sss_mode_t mode);
+sss_status_t sss_mbedtls_digest_context_init(
+    sss_mbedtls_digest_t *context, sss_mbedtls_session_t *session, sss_algorithm_t algorithm, sss_mode_t mode);
 
 /** @copydoc sss_digest_one_go
  *
  */
-sss_status_t sss_mbedtls_digest_one_go(sss_mbedtls_digest_t *context,
-    const uint8_t *message,
-    size_t messageLen,
-    uint8_t *digest,
-    size_t *digestLen);
+sss_status_t sss_mbedtls_digest_one_go(
+    sss_mbedtls_digest_t *context, const uint8_t *message, size_t messageLen, uint8_t *digest, size_t *digestLen);
 
 /** @copydoc sss_digest_init
  *
@@ -554,14 +497,12 @@ sss_status_t sss_mbedtls_digest_init(sss_mbedtls_digest_t *context);
 /** @copydoc sss_digest_update
  *
  */
-sss_status_t sss_mbedtls_digest_update(
-    sss_mbedtls_digest_t *context, const uint8_t *message, size_t messageLen);
+sss_status_t sss_mbedtls_digest_update(sss_mbedtls_digest_t *context, const uint8_t *message, size_t messageLen);
 
 /** @copydoc sss_digest_finish
  *
  */
-sss_status_t sss_mbedtls_digest_finish(
-    sss_mbedtls_digest_t *context, uint8_t *digest, size_t *digestLen);
+sss_status_t sss_mbedtls_digest_finish(sss_mbedtls_digest_t *context, uint8_t *digest, size_t *digestLen);
 
 /** @copydoc sss_digest_context_free
  *
@@ -577,14 +518,12 @@ void sss_mbedtls_digest_context_free(sss_mbedtls_digest_t *context);
 /** @copydoc sss_rng_context_init
  *
  */
-sss_status_t sss_mbedtls_rng_context_init(
-    sss_mbedtls_rng_context_t *context, sss_mbedtls_session_t *session);
+sss_status_t sss_mbedtls_rng_context_init(sss_mbedtls_rng_context_t *context, sss_mbedtls_session_t *session);
 
 /** @copydoc sss_rng_get_random
  *
  */
-sss_status_t sss_mbedtls_rng_get_random(
-    sss_mbedtls_rng_context_t *context, uint8_t *random_data, size_t dataLen);
+sss_status_t sss_mbedtls_rng_get_random(sss_mbedtls_rng_context_t *context, uint8_t *random_data, size_t dataLen);
 
 /** @copydoc sss_rng_context_free
  *
@@ -596,10 +535,10 @@ sss_status_t sss_mbedtls_rng_context_free(sss_mbedtls_rng_context_t *context);
 /* clang-format off */
 #   if (SSS_HAVE_SSS == 1)
         /* Direct Call : session */
-#       define sss_session_create(session,subsystem,application_id,connetion_type,connectionData) \
-            sss_mbedtls_session_create(((sss_mbedtls_session_t * ) session),(subsystem),(application_id),(connetion_type),(connectionData))
-#       define sss_session_open(session,subsystem,application_id,connetion_type,connectionData) \
-            sss_mbedtls_session_open(((sss_mbedtls_session_t * ) session),(subsystem),(application_id),(connetion_type),(connectionData))
+#       define sss_session_create(session,subsystem,application_id,connection_type,connectionData) \
+            sss_mbedtls_session_create(((sss_mbedtls_session_t * ) session),(subsystem),(application_id),(connection_type),(connectionData))
+#       define sss_session_open(session,subsystem,application_id,connection_type,connectionData) \
+            sss_mbedtls_session_open(((sss_mbedtls_session_t * ) session),(subsystem),(application_id),(connection_type),(connectionData))
 #       define sss_session_prop_get_u32(session,property,pValue) \
             sss_mbedtls_session_prop_get_u32(((sss_mbedtls_session_t * ) session),(property),(pValue))
 #       define sss_session_prop_get_au8(session,property,pValue,pValueLen) \
@@ -636,6 +575,10 @@ sss_status_t sss_mbedtls_rng_context_free(sss_mbedtls_rng_context_t *context);
             sss_mbedtls_derive_key_context_init(((sss_mbedtls_derive_key_t * ) context),((sss_mbedtls_session_t * ) session),((sss_mbedtls_object_t * ) keyObject),(algorithm),(mode))
 #       define sss_derive_key_go(context,saltData,saltLen,info,infoLen,derivedKeyObject,deriveDataLen,hkdfOutput,hkdfOutputLen) \
             sss_mbedtls_derive_key_go(((sss_mbedtls_derive_key_t * ) context),(saltData),(saltLen),(info),(infoLen),((sss_mbedtls_object_t * ) derivedKeyObject),(deriveDataLen),(hkdfOutput),(hkdfOutputLen))
+#       define sss_derive_key_one_go(context,saltData,saltLen,info,infoLen,derivedKeyObject,deriveDataLen) \
+            sss_mbedtls_derive_key_one_go(((sss_mbedtls_derive_key_t * ) context),(saltData),(saltLen),(info),(infoLen),((sss_mbedtls_object_t * ) derivedKeyObject),(deriveDataLen))
+#       define sss_derive_key_sobj_one_go(context,saltKeyObject,info,infoLen,derivedKeyObject,deriveDataLen) \
+            sss_mbedtls_derive_key_sobj_one_go(((sss_mbedtls_derive_key_t * ) context),((sss_mbedtls_object_t * )saltKeyObject),(info),(infoLen),((sss_mbedtls_object_t * ) derivedKeyObject),(deriveDataLen))
 #       define sss_derive_key_dh(context,otherPartyKeyObject,derivedKeyObject) \
             sss_mbedtls_derive_key_dh(((sss_mbedtls_derive_key_t * ) context),((sss_mbedtls_object_t * ) otherPartyKeyObject),((sss_mbedtls_object_t * ) derivedKeyObject))
 #       define sss_derive_key_context_free(context) \
@@ -661,10 +604,6 @@ sss_status_t sss_mbedtls_rng_context_free(sss_mbedtls_rng_context_t *context);
             sss_mbedtls_key_store_freeze_key(((sss_mbedtls_key_store_t * ) keyStore),((sss_mbedtls_object_t * ) keyObject))
 #       define sss_key_store_erase_key(keyStore,keyObject) \
             sss_mbedtls_key_store_erase_key(((sss_mbedtls_key_store_t * ) keyStore),((sss_mbedtls_object_t * ) keyObject))
-#       define sss_key_store_prop_get_u32(session,property,pValue) \
-            sss_mbedtls_key_store_prop_get_u32(((sss_mbedtls_key_store_t * ) session),(property),(pValue))
-#       define sss_key_store_prop_get_au8(session,property,pValue,pValueLen) \
-            sss_mbedtls_key_store_prop_get_au8(((sss_mbedtls_key_store_t * ) session),(property),(pValue),(pValueLen))
 #       define sss_key_store_context_free(keyStore) \
             sss_mbedtls_key_store_context_free(((sss_mbedtls_key_store_t * ) keyStore))
         /* Direct Call : asym */
@@ -746,10 +685,10 @@ sss_status_t sss_mbedtls_rng_context_free(sss_mbedtls_rng_context_t *context);
 #   endif /* (SSS_HAVE_SSS == 1) */
 #   if (SSS_HAVE_OPENSSL == 0)
         /* Host Call : session */
-#       define sss_host_session_create(session,subsystem,application_id,connetion_type,connectionData) \
-            sss_mbedtls_session_create(((sss_mbedtls_session_t * ) session),(subsystem),(application_id),(connetion_type),(connectionData))
-#       define sss_host_session_open(session,subsystem,application_id,connetion_type,connectionData) \
-            sss_mbedtls_session_open(((sss_mbedtls_session_t * ) session),(subsystem),(application_id),(connetion_type),(connectionData))
+#       define sss_host_session_create(session,subsystem,application_id,connection_type,connectionData) \
+            sss_mbedtls_session_create(((sss_mbedtls_session_t * ) session),(subsystem),(application_id),(connection_type),(connectionData))
+#       define sss_host_session_open(session,subsystem,application_id,connection_type,connectionData) \
+            sss_mbedtls_session_open(((sss_mbedtls_session_t * ) session),(subsystem),(application_id),(connection_type),(connectionData))
 #       define sss_host_session_prop_get_u32(session,property,pValue) \
             sss_mbedtls_session_prop_get_u32(((sss_mbedtls_session_t * ) session),(property),(pValue))
 #       define sss_host_session_prop_get_au8(session,property,pValue,pValueLen) \
@@ -811,10 +750,6 @@ sss_status_t sss_mbedtls_rng_context_free(sss_mbedtls_rng_context_t *context);
             sss_mbedtls_key_store_freeze_key(((sss_mbedtls_key_store_t * ) keyStore),((sss_mbedtls_object_t * ) keyObject))
 #       define sss_host_key_store_erase_key(keyStore,keyObject) \
             sss_mbedtls_key_store_erase_key(((sss_mbedtls_key_store_t * ) keyStore),((sss_mbedtls_object_t * ) keyObject))
-#       define sss_host_key_store_prop_get_u32(session,property,pValue) \
-            sss_mbedtls_key_store_prop_get_u32(((sss_mbedtls_key_store_t * ) session),(property),(pValue))
-#       define sss_host_key_store_prop_get_au8(session,property,pValue,pValueLen) \
-            sss_mbedtls_key_store_prop_get_au8(((sss_mbedtls_key_store_t * ) session),(property),(pValue),(pValueLen))
 #       define sss_host_key_store_context_free(keyStore) \
             sss_mbedtls_key_store_context_free(((sss_mbedtls_key_store_t * ) keyStore))
         /* Host Call : asym */

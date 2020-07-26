@@ -39,7 +39,7 @@
  * These values have been derived based on the MMA865x DataSheet and Application Note AN4070 for MMA8451 (the same is
  * applicable to MMA865x too).
  * http://cache.freescale.com/files/sensors/doc/app_note/AN4070.pdf */
-#define FF_MT_WT_DBCNT 0x28  /* Debounce count value. */
+#define FF_MT_WT_DBCNT  0x28 /* Debounce count value. */
 #define FF_MT_THS_VALUE 0x03 /* Threshold Value. */
 
 //-----------------------------------------------------------------------

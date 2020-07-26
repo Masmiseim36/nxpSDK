@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015-2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -114,6 +114,10 @@ static const da7212_register_value_t kOutputRegisterSequence[kDA7212_Output_MAX]
 
 static const da7212_register_value_t kInitRegisterSequence[DA7212_INIT_SIZE] = {
     {
+        DIALOG7212_CIF_CTRL,
+        0x80,
+    },
+    {
         DIALOG7212_DIG_ROUTING_DAI,
         0x10,
     },
@@ -139,7 +143,7 @@ static const da7212_register_value_t kInitRegisterSequence[DA7212_INIT_SIZE] = {
     },
     {
         DIALOG7212_PLL_CTRL,
-        (DIALOG7212_PLL_INDIV_10_20MHZ | DIALOG7212_PLL_EN_MASK),
+        0U,
     },
     {
         DIALOG7212_DAI_CLK_MODE,
@@ -284,7 +288,6 @@ status_t DA7212_ReadRegister(da7212_handle_t *handle, uint8_t u8Register, uint8_
 
     return CODEC_I2C_Receive(handle->i2cHandle, handle->config->slaveAddress, u8Register, 1U,
                              (uint8_t *)pu8RegisterData, 1U);
-    ;
 }
 
 status_t DA7212_ModifyRegister(da7212_handle_t *handle, uint8_t reg, uint8_t mask, uint8_t value)
@@ -311,6 +314,7 @@ status_t DA7212_Init(da7212_handle_t *handle, da7212_config_t *codecConfig)
 
     uint32_t i              = 0;
     da7212_config_t *config = codecConfig;
+    uint32_t sysClock       = config->format.mclk_HZ;
     handle->config          = config;
 
     /* i2c bus initialization */
@@ -326,12 +330,14 @@ status_t DA7212_Init(da7212_handle_t *handle, da7212_config_t *codecConfig)
         DA7212_WriteRegister(handle, kInitRegisterSequence[i].addr, kInitRegisterSequence[i].value);
     }
 
-    /* Set to be master or slave */
-    DA7212_WriteRegister(handle, DIALOG7212_DAI_CLK_MODE,
-                         (DIALOG7212_DAI_BCLKS_PER_WCLK_BCLK64 | (config->isMaster << 7U)));
+    if (config->isMaster)
+    {
+        /* clock configurations */
+        DA7212_WriteRegister(handle, DIALOG7212_DAI_CLK_MODE,
+                             (config->format.isBclkInvert ? 1U << 2U : 0U) | (1U << 7U));
 
-    /* Set the audio protocol */
-    DA7212_WriteRegister(handle, DIALOG7212_DAI_CTRL, (DIALOG7212_DAI_EN_MASK | config->protocol));
+        DA7212_SetMasterModeBits(handle, config->format.bitWidth);
+    }
 
     /* Set DA7212 functionality */
     if (config->dacSource == kDA7212_DACSourceADC)
@@ -344,8 +350,88 @@ status_t DA7212_Init(da7212_handle_t *handle, da7212_config_t *codecConfig)
     }
 
     /* Set the audio protocol */
-    DA7212_WriteRegister(handle, DIALOG7212_DAI_CTRL, (DIALOG7212_DAI_EN_MASK | config->protocol));
-    DA7212_ConfigAudioFormat(handle, config->format.mclk_HZ, config->format.sampleRate, config->format.bitWidth);
+    DA7212_WriteRegister(handle, DIALOG7212_DAI_CTRL, DIALOG7212_DAI_EN_MASK | config->protocol);
+
+    if (codecConfig->sysClkSource == kDA7212_SysClkSourcePLL)
+    {
+        if (DA7212_SetPLLConfig(handle, codecConfig->pll) != kStatus_Success)
+        {
+            return kStatus_Fail;
+        }
+
+        sysClock = codecConfig->pll->outputClock_HZ;
+    }
+
+    DA7212_ConfigAudioFormat(handle, sysClock, config->format.sampleRate, config->format.bitWidth);
+
+    return kStatus_Success;
+}
+
+status_t DA7212_SetPLLConfig(da7212_handle_t *handle, da7212_pll_config_t *config)
+{
+    assert(config != NULL);
+
+    uint8_t indiv = 0, inputDiv = 0, regVal = 0;
+    uint64_t pllValue = 0;
+    uint32_t pllFractional;
+    uint8_t pllInteger;
+    uint8_t pllFracTop;
+    uint8_t pllFracBottom;
+    uint8_t pllEnMask = DIALOG7212_PLL_EN_MASK;
+
+    if (config->refClock_HZ == 32768U)
+    {
+        pllEnMask |= DIALOG7212_PLL_SRM_EN_MASK | DIALOG7212_PLL_32K_MODE_MASK;
+        indiv    = DIALOG7212_PLL_INDIV_2_10MHZ;
+        inputDiv = 1;
+    }
+    /* Compute the PLL_INDIV and DIV value for sysClock */
+    else if ((config->refClock_HZ > 2000000) && (config->refClock_HZ <= 10000000))
+    {
+        indiv    = DIALOG7212_PLL_INDIV_2_10MHZ;
+        inputDiv = 2;
+    }
+    else if ((config->refClock_HZ > 10000000) && (config->refClock_HZ <= 20000000))
+    {
+        indiv    = DIALOG7212_PLL_INDIV_10_20MHZ;
+        inputDiv = 4;
+    }
+    else if ((config->refClock_HZ > 20000000) && (config->refClock_HZ <= 40000000))
+    {
+        indiv    = DIALOG7212_PLL_INDIV_20_40MHZ;
+        inputDiv = 8;
+    }
+    else
+    {
+        indiv    = DIALOG7212_PLL_INDIV_40_80MHZ;
+        inputDiv = 16;
+    }
+
+    /* PLL feedback divider is a Q13 value */
+    pllValue =
+        (uint64_t)(((uint64_t)((((uint64_t)config->outputClock_HZ * 8) * inputDiv) << 13)) / (config->refClock_HZ));
+
+    /* extract integer and fractional */
+    pllInteger    = pllValue >> 13;
+    pllFractional = (pllValue - (pllInteger << 13));
+    pllFracTop    = (pllFractional >> 8);
+    pllFracBottom = (pllFractional & 0xFF);
+
+    DA7212_WriteRegister(handle, DIALOG7212_PLL_FRAC_TOP, pllFracTop);
+
+    DA7212_WriteRegister(handle, DIALOG7212_PLL_FRAC_BOT, pllFracBottom);
+
+    DA7212_WriteRegister(handle, DIALOG7212_PLL_INTEGER, pllInteger);
+
+    regVal = pllEnMask | indiv;
+
+    DA7212_WriteRegister(handle, DIALOG7212_PLL_CTRL, regVal);
+
+    /* wait for PLL lock bits */
+    while ((regVal & 1U) == 0U)
+    {
+        DA7212_ReadRegister(handle, DIALOG7212_PLL_STATUS, &regVal);
+    }
 
     return kStatus_Success;
 }
@@ -360,13 +446,7 @@ status_t DA7212_ConfigAudioFormat(da7212_handle_t *handle,
                                   uint32_t sampleRate_Hz,
                                   uint32_t dataBits)
 {
-    uint32_t sysClock_Hz = 0;
-    uint8_t indiv = 0, inputDiv = 0, regVal = 0;
-    uint64_t PllValue = 0;
-    uint32_t PllFractional;
-    uint8_t PllInteger;
-    uint8_t PllFracTop;
-    uint8_t PllFracBottom;
+    uint8_t regVal = 0;
 
     switch (sampleRate_Hz)
     {
@@ -429,59 +509,32 @@ status_t DA7212_ConfigAudioFormat(da7212_handle_t *handle,
     }
     DA7212_WriteRegister(handle, DIALOG7212_DAI_CTRL, regVal);
 
-    /* Set PLL clock settings */
-    if ((sampleRate_Hz == 8000) || (sampleRate_Hz == 16000) || (sampleRate_Hz == 24000) || (sampleRate_Hz == 32000) ||
-        (sampleRate_Hz == 48000) || (sampleRate_Hz == 96000))
-    {
-        sysClock_Hz = 12288000;
-    }
-    else
-    {
-        sysClock_Hz = 11289600;
-    }
-
-    /* Compute the PLL_INDIV and DIV value for sysClock */
-    if ((masterClock_Hz > 2000000) && (masterClock_Hz <= 10000000))
-    {
-        indiv    = DIALOG7212_PLL_INDIV_2_10MHZ;
-        inputDiv = 2;
-    }
-    else if ((masterClock_Hz > 10000000) && (masterClock_Hz <= 20000000))
-    {
-        indiv    = DIALOG7212_PLL_INDIV_10_20MHZ;
-        inputDiv = 4;
-    }
-    else if ((masterClock_Hz > 20000000) && (masterClock_Hz <= 40000000))
-    {
-        indiv    = DIALOG7212_PLL_INDIV_20_40MHZ;
-        inputDiv = 8;
-    }
-    else
-    {
-        indiv    = DIALOG7212_PLL_INDIV_40_80MHZ;
-        inputDiv = 16;
-    }
-
-    /* PLL feedback divider is a Q13 value */
-    PllValue = (uint64_t)(((uint64_t)((((uint64_t)sysClock_Hz * 8) * inputDiv) << 13)) / (masterClock_Hz));
-
-    /* extract integer and fractional */
-    PllInteger    = PllValue >> 13;
-    PllFractional = (PllValue - (PllInteger << 13));
-    PllFracTop    = (PllFractional >> 8);
-    PllFracBottom = (PllFractional & 0xFF);
-
-    DA7212_WriteRegister(handle, DIALOG7212_PLL_FRAC_TOP, PllFracTop);
-
-    DA7212_WriteRegister(handle, DIALOG7212_PLL_FRAC_BOT, PllFracBottom);
-
-    DA7212_WriteRegister(handle, DIALOG7212_PLL_INTEGER, PllInteger);
-
-    regVal = DIALOG7212_PLL_EN_MASK | indiv;
-
-    DA7212_WriteRegister(handle, DIALOG7212_PLL_CTRL, regVal);
-
     return kStatus_Success;
+}
+
+status_t DA7212_SetMasterModeBits(da7212_handle_t *handle, uint32_t bitWidth)
+{
+    uint8_t regVal = 0U;
+
+    switch (bitWidth)
+    {
+        case 16:
+            regVal = 0U;
+            break;
+        case 32:
+            regVal = 1U;
+            break;
+        case 64:
+            regVal = 2U;
+            break;
+        case 128:
+            regVal = 3U;
+            break;
+        default:
+            assert(false);
+    }
+
+    return DA7212_ModifyRegister(handle, DIALOG7212_DAI_CLK_MODE, 3, regVal);
 }
 
 void DA7212_ChangeInput(da7212_handle_t *handle, da7212_Input_t DA7212_Input)

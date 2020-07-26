@@ -27,9 +27,9 @@ typedef struct _ft6x06_touch_data
 } ft6x06_touch_data_t;
 
 #define TOUCH_POINT_GET_EVENT(T) ((touch_event_t)((T).XH >> 6))
-#define TOUCH_POINT_GET_ID(T) ((T).YH >> 4)
-#define TOUCH_POINT_GET_X(T) ((((T).XH & 0x0f) << 8) | (T).XL)
-#define TOUCH_POINT_GET_Y(T) ((((T).YH & 0x0f) << 8) | (T).YL)
+#define TOUCH_POINT_GET_ID(T)    ((T).YH >> 4)
+#define TOUCH_POINT_GET_X(T)     ((((T).XH & 0x0f) << 8) | (T).XL)
+#define TOUCH_POINT_GET_Y(T)     ((((T).YH & 0x0f) << 8) | (T).YL)
 
 void FT6X06_EventHandler(ft6x06_handle_t *handle, uint32_t i2c_event)
 {

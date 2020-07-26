@@ -1,24 +1,24 @@
 /*
  * Copyright (c) 2013-2015 Freescale Semiconductor, Inc.
+ * Copyright 2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "bootloader_common.h"
-#include "bootloader/bl_context.h"
+#include "bl_context.h"
 #include "fsl_device_registers.h"
 #include "fsl_uart.h"
 #include "smc.h"
+#include "pin_mux.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
 ////////////////////////////////////////////////////////////////////////////////
 
 #define BOOT_PIN_NUMBER 6
-#define BOOT_PIN_PORT PORTC
 #define BOOT_PIN_GPIO GPIOC
-#define BOOT_PIN_ALT_MODE 1
 #define BOOT_PIN_DEBOUNCE_READ_COUNT 500
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -40,7 +40,7 @@ void init_hardware(void)
     SIM->SCGC5 |= (SIM_SCGC5_PORTA_MASK | SIM_SCGC5_PORTB_MASK | SIM_SCGC5_PORTC_MASK | SIM_SCGC5_PORTD_MASK |
                    SIM_SCGC5_PORTE_MASK);
 
-    // Enable flash access for crossbar swicth master 4 (USB FS/LS)
+    // Enable flash access for crossbar switch master 4 (USB FS/LS)
     FMC->PFAPR |= FMC_PFAPR_M4AP_MASK;
     
     // Load the user configuration data so that we can configure the clocks
@@ -105,13 +105,7 @@ uint32_t get_uart_clock(uint32_t instance)
 bool is_boot_pin_asserted(void)
 {
 #ifdef BL_TARGET_FLASH
-    // Initialize boot pin for GPIO
-    BOOT_PIN_PORT->PCR[BOOT_PIN_NUMBER] |= PORT_PCR_MUX(BOOT_PIN_ALT_MODE);
-
-    // Set boot pin as an input
-    BOOT_PIN_GPIO->PDDR &= (uint32_t) ~(1 << BOOT_PIN_NUMBER);
-    // Set boot pin pullup enabled, pullup select, filter enable
-    BOOT_PIN_PORT->PCR[BOOT_PIN_NUMBER] |= (PORT_PCR_PE_MASK | PORT_PCR_PS_MASK | PORT_PCR_PFE_MASK);
+    BOARD_InitBootPin();
 
     uint32_t readCount = 0;
 

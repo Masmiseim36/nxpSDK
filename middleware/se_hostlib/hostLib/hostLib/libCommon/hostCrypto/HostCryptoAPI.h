@@ -287,7 +287,7 @@ HLSE_RET_CODE    HLCRYPT_GetRandom(U32 inLen, U8 * pRandom);
 If \p outData is NULL, then all that the function does is return (in \p *outEncryptedDataLen) a number of bytes which would suffice
 to hold the return value.  HLSE_SW_OK is returned by the function.
 
-If \p outData is not NULL, then \p *outDataLen must contain the number of bytes in the buffer \p outData.  If that buffer is large enough to hold the 
+If \p outData is not NULL, then \p *outDataLen must contain the number of bytes in the buffer \p outData.  If that buffer is large enough to hold the
 data be returned, then the data is copied to \p outData, and HLSE_SW_OK is returned by the function.
 If the buffer is not large enough, then HLSE_ERR_BUF_TOO_SMALL is returned.  In either case, \p *outDataLen is set to hold the exact number of
 bytes to be returned.
@@ -307,11 +307,11 @@ OUT: the number of bytes returned in \p outEncryptedData
 * \retval ::HLSE_ERR_BUF_TOO_SMALL \p outEncryptedData is too small to return the data
 * \retval ::HLSE_ERR_API_ERROR Invalid function arguments
 */
-HLSE_RET_CODE HLCRYPT_Single_DES_CBC_Encrypt(U8 *key, U32 keylen, 
-             U8 *iv, 
-             U16 ivlen, 
-             U8 *inData, 
-             U32 inDatalen, 
+HLSE_RET_CODE HLCRYPT_Single_DES_CBC_Encrypt(U8 *key, U32 keylen,
+             U8 *iv,
+             U16 ivlen,
+             U8 *inData,
+             U32 inDatalen,
              U8 * outData,
              U32 *outDatalen);
 #endif

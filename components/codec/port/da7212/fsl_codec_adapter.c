@@ -6,8 +6,8 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "fsl_dialog7212.h"
 #include "fsl_codec_adapter.h"
+#include "fsl_codec_common.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -52,16 +52,16 @@ static const codec_capability_t s_da7212_capability = {
  * param config codec configuration.
  * return kStatus_Success is success, else initial failed.
  */
-status_t HAL_CODEC_Init(codec_handle_t *handle, void *config)
+status_t HAL_CODEC_Init(void *handle, void *config)
 {
     assert((config != NULL) && (handle != NULL));
 
     codec_config_t *codecConfig = (codec_config_t *)config;
 
     da7212_config_t *da7212Config = (da7212_config_t *)(codecConfig->codecDevConfig);
-    da7212_handle_t *da7212Handle = (da7212_handle_t *)((uint32_t)(handle->codecDevHandle));
+    da7212_handle_t *da7212Handle = (da7212_handle_t *)((uint32_t)(((codec_handle_t *)handle)->codecDevHandle));
 
-    handle->codecCapability = &s_da7212_capability;
+    ((codec_handle_t *)handle)->codecCapability = &s_da7212_capability;
 
     /* codec device initialization */
     return DA7212_Init(da7212Handle, da7212Config);
@@ -73,11 +73,11 @@ status_t HAL_CODEC_Init(codec_handle_t *handle, void *config)
  * param handle codec handle.
  * return kStatus_Success is success, else de-initial failed.
  */
-status_t HAL_CODEC_Deinit(codec_handle_t *handle)
+status_t HAL_CODEC_Deinit(void *handle)
 {
     assert(handle != NULL);
 
-    return DA7212_Deinit((da7212_handle_t *)((uint32_t)(handle->codecDevHandle)));
+    return DA7212_Deinit((da7212_handle_t *)((uint32_t)(((codec_handle_t *)handle)->codecDevHandle)));
 }
 
 /*!
@@ -89,12 +89,12 @@ status_t HAL_CODEC_Deinit(codec_handle_t *handle)
  * param bitWidth bit width.
  * return kStatus_Success is success, else configure failed.
  */
-status_t HAL_CODEC_SetFormat(codec_handle_t *handle, uint32_t mclk, uint32_t sampleRate, uint32_t bitWidth)
+status_t HAL_CODEC_SetFormat(void *handle, uint32_t mclk, uint32_t sampleRate, uint32_t bitWidth)
 {
     assert(handle != NULL);
 
-    return DA7212_ConfigAudioFormat((da7212_handle_t *)((uint32_t)(handle->codecDevHandle)), mclk, sampleRate,
-                                    bitWidth);
+    return DA7212_ConfigAudioFormat((da7212_handle_t *)((uint32_t)(((codec_handle_t *)handle)->codecDevHandle)), mclk,
+                                    sampleRate, bitWidth);
 }
 
 /*!
@@ -105,11 +105,12 @@ status_t HAL_CODEC_SetFormat(codec_handle_t *handle, uint32_t mclk, uint32_t sam
  * param volume volume value, support 0 ~ 100, 0 is mute, 100 is the maximum volume value.
  * return kStatus_Success is success, else configure failed.
  */
-status_t HAL_CODEC_SetVolume(codec_handle_t *handle, uint32_t playChannel, uint32_t volume)
+status_t HAL_CODEC_SetVolume(void *handle, uint32_t playChannel, uint32_t volume)
 {
     assert(handle != NULL);
 
-    return DA7212_SetChannelVolume((da7212_handle_t *)((uint32_t)(handle->codecDevHandle)), playChannel, volume);
+    return DA7212_SetChannelVolume((da7212_handle_t *)((uint32_t)(((codec_handle_t *)handle)->codecDevHandle)),
+                                   playChannel, volume);
 }
 
 /*!
@@ -120,11 +121,12 @@ status_t HAL_CODEC_SetVolume(codec_handle_t *handle, uint32_t playChannel, uint3
  * param isMute true is mute, false is unmute.
  * return kStatus_Success is success, else configure failed.
  */
-status_t HAL_CODEC_SetMute(codec_handle_t *handle, uint32_t playChannel, bool isMute)
+status_t HAL_CODEC_SetMute(void *handle, uint32_t playChannel, bool isMute)
 {
     assert(handle != NULL);
 
-    return DA7212_SetChannelMute((da7212_handle_t *)((uint32_t)(handle->codecDevHandle)), playChannel, isMute);
+    return DA7212_SetChannelMute((da7212_handle_t *)((uint32_t)(((codec_handle_t *)handle)->codecDevHandle)),
+                                 playChannel, isMute);
 }
 
 /*!
@@ -135,7 +137,7 @@ status_t HAL_CODEC_SetMute(codec_handle_t *handle, uint32_t playChannel, bool is
  * param powerOn true is power on, false is power down.
  * return kStatus_Success is success, else configure failed.
  */
-status_t HAL_CODEC_SetPower(codec_handle_t *handle, codec_module_t module, bool powerOn)
+status_t HAL_CODEC_SetPower(void *handle, uint32_t module, bool powerOn)
 {
     return kStatus_CODEC_NotSupport;
 }
@@ -148,7 +150,7 @@ status_t HAL_CODEC_SetPower(codec_handle_t *handle, codec_module_t module, bool 
  *
  * return kStatus_Success is success, else configure failed.
  */
-status_t HAL_CODEC_SetRecord(codec_handle_t *handle, uint32_t recordSource)
+status_t HAL_CODEC_SetRecord(void *handle, uint32_t recordSource)
 {
     return kStatus_CODEC_NotSupport;
 }
@@ -164,7 +166,7 @@ status_t HAL_CODEC_SetRecord(codec_handle_t *handle, uint32_t recordSource)
 
  * return kStatus_Success is success, else configure failed.
  */
-status_t HAL_CODEC_SetRecordChannel(codec_handle_t *handle, uint32_t leftRecordChannel, uint32_t rightRecordChannel)
+status_t HAL_CODEC_SetRecordChannel(void *handle, uint32_t leftRecordChannel, uint32_t rightRecordChannel)
 {
     return kStatus_CODEC_NotSupport;
 }
@@ -177,7 +179,7 @@ status_t HAL_CODEC_SetRecordChannel(codec_handle_t *handle, uint32_t leftRecordC
  *
  * return kStatus_Success is success, else configure failed.
  */
-status_t HAL_CODEC_SetPlay(codec_handle_t *handle, uint32_t playSource)
+status_t HAL_CODEC_SetPlay(void *handle, uint32_t playSource)
 {
     return kStatus_CODEC_NotSupport;
 }
@@ -192,7 +194,7 @@ status_t HAL_CODEC_SetPlay(codec_handle_t *handle, uint32_t playSource)
  *  codec specific driver for detail configurations.
  * return kStatus_Success is success, else configure failed.
  */
-status_t HAL_CODEC_ModuleControl(codec_handle_t *handle, codec_module_ctrl_cmd_t cmd, uint32_t data)
+status_t HAL_CODEC_ModuleControl(void *handle, uint32_t cmd, uint32_t data)
 {
     return kStatus_CODEC_NotSupport;
 }

@@ -19,8 +19,7 @@
 #ifndef _APP_BOOT_NFC_H_
 #define _APP_BOOT_NFC_H_
 
-extern void app_boot_pinConfig_NFC(); 
+extern void app_boot_pinConfig_NFC();
 extern void StartDiscovery(void);
 
 #endif /*_APP_BOOT_NFC_H_*/
-

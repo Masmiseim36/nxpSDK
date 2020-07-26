@@ -51,26 +51,26 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_ADC16_BASEADDR ADC0
+#define DEMO_ADC16_BASEADDR      ADC0
 #define DEMO_ADC16_CHANNEL_GROUP 0U
-#define DEMO_ADC16_USER_CHANNEL 10U /* ADC0_SE10 */
+#define DEMO_ADC16_USER_CHANNEL  10U /* ADC0_SE10 */
 
-#define DEMO_ADC16_IRQn ADC0_IRQn
+#define DEMO_ADC16_IRQn             ADC0_IRQn
 #define DEMO_ADC16_IRQ_HANDLER_FUNC ADC0_IRQHandler
 
-#define BOARD_LED_GPIO BOARD_LED_GREEN_GPIO
+#define BOARD_LED_GPIO     BOARD_LED_GREEN_GPIO
 #define BOARD_LED_GPIO_PIN BOARD_LED_GREEN_GPIO_PIN
 
 /* I2C source clock */
-#define I2C_BAUDRATE 100000U
-#define ACCEL_I2C_ADDR 1CU
-#define ACCEL_I2C_CLK_SRC I2C0_CLK_SRC
-#define I2C_RELEASE_SDA_PORT PORTC
-#define I2C_RELEASE_SCL_PORT PORTC
-#define I2C_RELEASE_SDA_GPIO GPIOC
-#define I2C_RELEASE_SDA_PIN 28U
-#define I2C_RELEASE_SCL_GPIO GPIOC
-#define I2C_RELEASE_SCL_PIN 29U
+#define I2C_BAUDRATE          100000U
+#define ACCEL_I2C_ADDR        1CU
+#define ACCEL_I2C_CLK_SRC     I2C0_CLK_SRC
+#define I2C_RELEASE_SDA_PORT  PORTC
+#define I2C_RELEASE_SCL_PORT  PORTC
+#define I2C_RELEASE_SDA_GPIO  GPIOC
+#define I2C_RELEASE_SDA_PIN   28U
+#define I2C_RELEASE_SCL_GPIO  GPIOC
+#define I2C_RELEASE_SCL_PIN   29U
 #define I2C_RELEASE_BUS_COUNT 100U
 
 #define ERPC_DEMO_UART Driver_USART0
@@ -83,15 +83,15 @@
 
 /* Accelerometer driver specific defines */
 #if defined(BOARD_ACCEL_FXOS)
-#define XYZ_DATA_CFG XYZ_DATA_CFG_REG
-#define ACCEL_INIT(handle, config) FXOS_Init(handle, config)
-#define ACCEL_READ_REG(handle, reg, val) FXOS_ReadReg(handle, reg, val, 1)
+#define XYZ_DATA_CFG                          XYZ_DATA_CFG_REG
+#define ACCEL_INIT(handle, config)            FXOS_Init(handle, config)
+#define ACCEL_READ_REG(handle, reg, val)      FXOS_ReadReg(handle, reg, val, 1)
 #define ACCELL_READ_SENSOR_DATA(handle, data) FXOS_ReadSensorData(handle, data)
 
 #elif defined(BOARD_ACCEL_MMA)
-#define XYZ_DATA_CFG kMMA8451_XYZ_DATA_CFG
-#define ACCEL_INIT(handle, config) MMA_Init(handle, config)
-#define ACCEL_READ_REG(handle, reg, val) MMA_ReadReg(handle, reg, val)
+#define XYZ_DATA_CFG                          kMMA8451_XYZ_DATA_CFG
+#define ACCEL_INIT(handle, config)            MMA_Init(handle, config)
+#define ACCEL_READ_REG(handle, reg, val)      MMA_ReadReg(handle, reg, val)
 #define ACCELL_READ_SENSOR_DATA(handle, data) MMA_ReadSensorData(handle, data)
 #endif
 
@@ -385,11 +385,7 @@ void BOARD_SW1_IRQ_HANDLER(void)
 
     /* Clear external interrupt flag. */
     GPIO_PortClearInterruptFlags(BOARD_SW1_GPIO, 1U << BOARD_SW1_GPIO_PIN);
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 #endif
 #if defined(BOARD_SW2_SW3_SHARED_IRQ_HANDLER)
@@ -410,11 +406,7 @@ void BOARD_SW2_IRQ_HANDLER(void)
         swButton = 3;
         GPIO_PortClearInterruptFlags(BOARD_SW3_GPIO, 1U << BOARD_SW3_GPIO_PIN);
     }
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 #else
 #if defined(BOARD_SW2_GPIO)
@@ -425,11 +417,7 @@ void BOARD_SW2_IRQ_HANDLER(void)
 
     /* Clear external interrupt flag. */
     GPIO_PortClearInterruptFlags(BOARD_SW2_GPIO, 1U << BOARD_SW2_GPIO_PIN);
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 #endif
 #if defined(BOARD_SW3_GPIO)
@@ -440,11 +428,7 @@ void BOARD_SW3_IRQ_HANDLER(void)
 
     /* Clear external interrupt flag. */
     GPIO_PortClearInterruptFlags(BOARD_SW3_GPIO, 1U << BOARD_SW3_GPIO_PIN);
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 #endif
 #endif

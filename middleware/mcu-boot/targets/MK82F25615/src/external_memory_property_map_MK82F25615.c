@@ -5,7 +5,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "property/property.h"
+#include "property.h"
 #include "qspi.h"
 #include "bootloader_common.h"
 

@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2014 Freescale Semiconductor, Inc.
+ * Copyright 2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -37,13 +38,13 @@
 #define UART0_RX_PORT_BASE PORTB
 #define UART0_RX_GPIO_BASE PTB
 #define UART0_RX_GPIO_PIN_NUM 16               // PTB16
-#define UART0_RX_FUNC_ALT_MODE kPORT_MuxAlt3   // ALT mode for UART1 RX functionality
+#define UART0_RX_FUNC_ALT_MODE kPORT_MuxAlt3   // ALT mode for UART0 RX functionality
 #define UART0_RX_GPIO_ALT_MODE kPORT_MuxAsGpio // ALT mdoe for GPIO functionality
 #define UART0_RX_GPIO_IRQn PORTB_IRQn
 #define UART0_RX_GPIO_IRQHandler PORTB_IRQHandler
 #define UART0_TX_PORT_BASE PORTB
 #define UART0_TX_GPIO_PIN_NUM 17             // PTB17
-#define UART0_TX_FUNC_ALT_MODE kPORT_MuxAlt3 // ALT mode for UART1 TX functionality
+#define UART0_TX_FUNC_ALT_MODE kPORT_MuxAlt3 // ALT mode for UART0 TX functionality
 #endif                                       // TOWER
 
 //! I2C pinmux configurations
@@ -57,16 +58,16 @@
 //! SPI pinmux configurations
 #define SPI0_PCS_PORT_BASE PORTD
 #define SPI0_PCS_GPIO_PIN_NUM 0              // PTD0
-#define SPI0_PCS_FUNC_ALT_MODE kPORT_MuxAlt2 // ALT mode for SPI1 PCS functionality
+#define SPI0_PCS_FUNC_ALT_MODE kPORT_MuxAlt2 // ALT mode for SPI0 PCS functionality
 #define SPI0_SCK_PORT_BASE PORTD
 #define SPI0_SCK_GPIO_PIN_NUM 1              // PTD1
-#define SPI0_SCK_FUNC_ALT_MODE kPORT_MuxAlt2 // ALT mode for SPI1 SCK functionality
+#define SPI0_SCK_FUNC_ALT_MODE kPORT_MuxAlt2 // ALT mode for SPI0 SCK functionality
 #define SPI0_SOUT_PORT_BASE PORTD
 #define SPI0_SOUT_GPIO_PIN_NUM 2              // PTD2
-#define SPI0_SOUT_FUNC_ALT_MODE kPORT_MuxAlt2 // ALT mode for SPI1 SOUT functionality
+#define SPI0_SOUT_FUNC_ALT_MODE kPORT_MuxAlt2 // ALT mode for SPI0 SOUT functionality
 #define SPI0_SIN_PORT_BASE PORTD
 #define SPI0_SIN_GPIO_PIN_NUM 3              // PTD3
-#define SPI0_SIN_FUNC_ALT_MODE kPORT_MuxAlt2 // ALT mode for SPI1 SIN functionality
+#define SPI0_SIN_FUNC_ALT_MODE kPORT_MuxAlt2 // ALT mode for SPI0 SIN functionality
 
 ////////////////////////////////////////////////////////////////////////////////
 // EOF

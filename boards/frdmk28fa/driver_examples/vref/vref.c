@@ -15,10 +15,10 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_VREF_BASE VREF
-#define DEMO_ADC16_BASE ADC0
+#define DEMO_VREF_BASE           VREF
+#define DEMO_ADC16_BASE          ADC0
 #define DEMO_ADC16_CHANNEL_GROUP 0U
-#define DEMO_ADC16_USER_CHANNEL 22U /* ADC0 channel 22, VREF_OUT. */
+#define DEMO_ADC16_USER_CHANNEL  22U /* ADC0 channel 22, VREF_OUT. */
 
 /*******************************************************************************
  * Prototypes

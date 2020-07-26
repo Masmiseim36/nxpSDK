@@ -1,0 +1,2510 @@
+[!BeginContent-a11acf34-ad17-467d-a3e6-c8d55ba7724b]
+
+[!EndContent-a11acf34-ad17-467d-a3e6-c8d55ba7724b]
+[!BeginChild-a11acf34-ad17-467d-a3e6-c8d55ba7724b]
+[!BeginContent-94de44c5-8e64-44d2-8693-115b424bdeff]
+<?xml version="1.0" encoding="utf-8"?>
+<OptionModel xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <QualificationWithMicroprossDevice>true</QualificationWithMicroprossDevice>
+  <QualificationApplicationPath>C:\Users\gwenhael\Documents\MPManager\ISO PICC Digital\QualificationApplication\ISOPICCDigitalQualification.exe</QualificationApplicationPath>
+  <REQB_N_16_SUPPORTED>false</REQB_N_16_SUPPORTED>
+  <NAD>12</NAD>
+  <AlphaList>
+    <double>0.005</double>
+  </AlphaList>
+  <SelectedCardType>A</SelectedCardType>
+  <CommandSet1>
+    <string>00A4040007D276000085010100</string>
+  </CommandSet1>
+  <CommandSet2>
+    <string>00A4040007D276000085010100</string>
+    <string>00A4000C02E104</string>
+    <string>00B0000064</string>
+  </CommandSet2>
+  <CommandSet3>
+    <string>00A4040007D276000085010100</string>
+    <string>00A4000C02E104</string>
+    <string>00DEADFEED</string>
+  </CommandSet3>
+  <IsSParamsSupported>false</IsSParamsSupported>
+  <ResetDelay>5</ResetDelay>
+  <PowerOnDelay>0</PowerOnDelay>
+</OptionModel>
+[!EndContent-94de44c5-8e64-44d2-8693-115b424bdeff]
+[!EndChild-a11acf34-ad17-467d-a3e6-c8d55ba7724b]
+[!BeginChild-a11acf34-ad17-467d-a3e6-c8d55ba7724b]
+[!BeginContent-9827b156-84a1-4626-bd34-2d4923e79583]
+<?xml version="1.0" encoding="utf-8"?>
+<IcsAfiModel xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <AfiFamilies>
+    <AfiListElement>
+      <ErrorsList />
+      <ContentValid>true</ContentValid>
+      <Value>0</Value>
+      <Label>0</Label>
+      <IsChecked>true</IsChecked>
+      <IsActivated>false</IsActivated>
+      <SubFamilies>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>0</Value>
+          <Label>0</Label>
+          <IsChecked>true</IsChecked>
+          <IsActivated>false</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>1</Value>
+          <Label>1</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>2</Value>
+          <Label>2</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>3</Value>
+          <Label>3</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>4</Value>
+          <Label>4</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>5</Value>
+          <Label>5</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>6</Value>
+          <Label>6</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>7</Value>
+          <Label>7</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>8</Value>
+          <Label>8</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>9</Value>
+          <Label>9</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>10</Value>
+          <Label>A</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>11</Value>
+          <Label>B</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>12</Value>
+          <Label>C</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>13</Value>
+          <Label>D</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>14</Value>
+          <Label>E</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>15</Value>
+          <Label>F</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+      </SubFamilies>
+    </AfiListElement>
+    <AfiListElement>
+      <ErrorsList />
+      <ContentValid>true</ContentValid>
+      <Value>1</Value>
+      <Label>1 - Transport</Label>
+      <IsChecked>false</IsChecked>
+      <IsActivated>true</IsActivated>
+      <SubFamilies>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>0</Value>
+          <Label>0</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>1</Value>
+          <Label>1</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>2</Value>
+          <Label>2</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>3</Value>
+          <Label>3</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>4</Value>
+          <Label>4</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>5</Value>
+          <Label>5</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>6</Value>
+          <Label>6</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>7</Value>
+          <Label>7</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>8</Value>
+          <Label>8</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>9</Value>
+          <Label>9</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>10</Value>
+          <Label>A</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>11</Value>
+          <Label>B</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>12</Value>
+          <Label>C</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>13</Value>
+          <Label>D</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>14</Value>
+          <Label>E</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>15</Value>
+          <Label>F</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+      </SubFamilies>
+    </AfiListElement>
+    <AfiListElement>
+      <ErrorsList />
+      <ContentValid>true</ContentValid>
+      <Value>2</Value>
+      <Label>2 - Financial</Label>
+      <IsChecked>false</IsChecked>
+      <IsActivated>true</IsActivated>
+      <SubFamilies>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>0</Value>
+          <Label>0</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>1</Value>
+          <Label>1</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>2</Value>
+          <Label>2</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>3</Value>
+          <Label>3</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>4</Value>
+          <Label>4</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>5</Value>
+          <Label>5</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>6</Value>
+          <Label>6</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>7</Value>
+          <Label>7</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>8</Value>
+          <Label>8</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>9</Value>
+          <Label>9</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>10</Value>
+          <Label>A</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>11</Value>
+          <Label>B</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>12</Value>
+          <Label>C</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>13</Value>
+          <Label>D</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>14</Value>
+          <Label>E</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>15</Value>
+          <Label>F</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+      </SubFamilies>
+    </AfiListElement>
+    <AfiListElement>
+      <ErrorsList />
+      <ContentValid>true</ContentValid>
+      <Value>3</Value>
+      <Label>3 - Identification</Label>
+      <IsChecked>false</IsChecked>
+      <IsActivated>true</IsActivated>
+      <SubFamilies>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>0</Value>
+          <Label>0</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>1</Value>
+          <Label>1</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>2</Value>
+          <Label>2</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>3</Value>
+          <Label>3</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>4</Value>
+          <Label>4</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>5</Value>
+          <Label>5</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>6</Value>
+          <Label>6</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>7</Value>
+          <Label>7</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>8</Value>
+          <Label>8</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>9</Value>
+          <Label>9</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>10</Value>
+          <Label>A</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>11</Value>
+          <Label>B</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>12</Value>
+          <Label>C</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>13</Value>
+          <Label>D</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>14</Value>
+          <Label>E</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>15</Value>
+          <Label>F</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+      </SubFamilies>
+    </AfiListElement>
+    <AfiListElement>
+      <ErrorsList />
+      <ContentValid>true</ContentValid>
+      <Value>4</Value>
+      <Label>4 - Telecommunication</Label>
+      <IsChecked>false</IsChecked>
+      <IsActivated>true</IsActivated>
+      <SubFamilies>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>0</Value>
+          <Label>0</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>1</Value>
+          <Label>1</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>2</Value>
+          <Label>2</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>3</Value>
+          <Label>3</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>4</Value>
+          <Label>4</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>5</Value>
+          <Label>5</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>6</Value>
+          <Label>6</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>7</Value>
+          <Label>7</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>8</Value>
+          <Label>8</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>9</Value>
+          <Label>9</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>10</Value>
+          <Label>A</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>11</Value>
+          <Label>B</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>12</Value>
+          <Label>C</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>13</Value>
+          <Label>D</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>14</Value>
+          <Label>E</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>15</Value>
+          <Label>F</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+      </SubFamilies>
+    </AfiListElement>
+    <AfiListElement>
+      <ErrorsList />
+      <ContentValid>true</ContentValid>
+      <Value>5</Value>
+      <Label>5 - Medical</Label>
+      <IsChecked>false</IsChecked>
+      <IsActivated>true</IsActivated>
+      <SubFamilies>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>0</Value>
+          <Label>0</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>1</Value>
+          <Label>1</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>2</Value>
+          <Label>2</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>3</Value>
+          <Label>3</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>4</Value>
+          <Label>4</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>5</Value>
+          <Label>5</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>6</Value>
+          <Label>6</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>7</Value>
+          <Label>7</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>8</Value>
+          <Label>8</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>9</Value>
+          <Label>9</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>10</Value>
+          <Label>A</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>11</Value>
+          <Label>B</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>12</Value>
+          <Label>C</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>13</Value>
+          <Label>D</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>14</Value>
+          <Label>E</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>15</Value>
+          <Label>F</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+      </SubFamilies>
+    </AfiListElement>
+    <AfiListElement>
+      <ErrorsList />
+      <ContentValid>true</ContentValid>
+      <Value>6</Value>
+      <Label>6 - Multimedia</Label>
+      <IsChecked>false</IsChecked>
+      <IsActivated>true</IsActivated>
+      <SubFamilies>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>0</Value>
+          <Label>0</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>1</Value>
+          <Label>1</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>2</Value>
+          <Label>2</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>3</Value>
+          <Label>3</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>4</Value>
+          <Label>4</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>5</Value>
+          <Label>5</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>6</Value>
+          <Label>6</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>7</Value>
+          <Label>7</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>8</Value>
+          <Label>8</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>9</Value>
+          <Label>9</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>10</Value>
+          <Label>A</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>11</Value>
+          <Label>B</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>12</Value>
+          <Label>C</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>13</Value>
+          <Label>D</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>14</Value>
+          <Label>E</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>15</Value>
+          <Label>F</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+      </SubFamilies>
+    </AfiListElement>
+    <AfiListElement>
+      <ErrorsList />
+      <ContentValid>true</ContentValid>
+      <Value>7</Value>
+      <Label>7 - Gaming</Label>
+      <IsChecked>false</IsChecked>
+      <IsActivated>true</IsActivated>
+      <SubFamilies>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>0</Value>
+          <Label>0</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>1</Value>
+          <Label>1</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>2</Value>
+          <Label>2</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>3</Value>
+          <Label>3</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>4</Value>
+          <Label>4</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>5</Value>
+          <Label>5</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>6</Value>
+          <Label>6</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>7</Value>
+          <Label>7</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>8</Value>
+          <Label>8</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>9</Value>
+          <Label>9</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>10</Value>
+          <Label>A</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>11</Value>
+          <Label>B</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>12</Value>
+          <Label>C</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>13</Value>
+          <Label>D</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>14</Value>
+          <Label>E</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>15</Value>
+          <Label>F</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+      </SubFamilies>
+    </AfiListElement>
+    <AfiListElement>
+      <ErrorsList />
+      <ContentValid>true</ContentValid>
+      <Value>8</Value>
+      <Label>8 - Data Storage</Label>
+      <IsChecked>false</IsChecked>
+      <IsActivated>true</IsActivated>
+      <SubFamilies>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>0</Value>
+          <Label>0</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>1</Value>
+          <Label>1</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>2</Value>
+          <Label>2</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>3</Value>
+          <Label>3</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>4</Value>
+          <Label>4</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>5</Value>
+          <Label>5</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>6</Value>
+          <Label>6</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>7</Value>
+          <Label>7</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>8</Value>
+          <Label>8</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>9</Value>
+          <Label>9</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>10</Value>
+          <Label>A</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>11</Value>
+          <Label>B</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>12</Value>
+          <Label>C</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>13</Value>
+          <Label>D</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>14</Value>
+          <Label>E</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>15</Value>
+          <Label>F</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+      </SubFamilies>
+    </AfiListElement>
+    <AfiListElement>
+      <ErrorsList />
+      <ContentValid>true</ContentValid>
+      <Value>9</Value>
+      <Label>9 - RFU</Label>
+      <IsChecked>false</IsChecked>
+      <IsActivated>true</IsActivated>
+      <SubFamilies>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>0</Value>
+          <Label>0</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>1</Value>
+          <Label>1</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>2</Value>
+          <Label>2</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>3</Value>
+          <Label>3</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>4</Value>
+          <Label>4</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>5</Value>
+          <Label>5</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>6</Value>
+          <Label>6</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>7</Value>
+          <Label>7</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>8</Value>
+          <Label>8</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>9</Value>
+          <Label>9</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>10</Value>
+          <Label>A</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>11</Value>
+          <Label>B</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>12</Value>
+          <Label>C</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>13</Value>
+          <Label>D</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>14</Value>
+          <Label>E</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>15</Value>
+          <Label>F</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+      </SubFamilies>
+    </AfiListElement>
+    <AfiListElement>
+      <ErrorsList />
+      <ContentValid>true</ContentValid>
+      <Value>10</Value>
+      <Label>A - RFU</Label>
+      <IsChecked>false</IsChecked>
+      <IsActivated>true</IsActivated>
+      <SubFamilies>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>0</Value>
+          <Label>0</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>1</Value>
+          <Label>1</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>2</Value>
+          <Label>2</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>3</Value>
+          <Label>3</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>4</Value>
+          <Label>4</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>5</Value>
+          <Label>5</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>6</Value>
+          <Label>6</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>7</Value>
+          <Label>7</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>8</Value>
+          <Label>8</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>9</Value>
+          <Label>9</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>10</Value>
+          <Label>A</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>11</Value>
+          <Label>B</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>12</Value>
+          <Label>C</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>13</Value>
+          <Label>D</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>14</Value>
+          <Label>E</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>15</Value>
+          <Label>F</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+      </SubFamilies>
+    </AfiListElement>
+    <AfiListElement>
+      <ErrorsList />
+      <ContentValid>true</ContentValid>
+      <Value>11</Value>
+      <Label>B - RFU</Label>
+      <IsChecked>false</IsChecked>
+      <IsActivated>true</IsActivated>
+      <SubFamilies>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>0</Value>
+          <Label>0</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>1</Value>
+          <Label>1</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>2</Value>
+          <Label>2</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>3</Value>
+          <Label>3</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>4</Value>
+          <Label>4</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>5</Value>
+          <Label>5</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>6</Value>
+          <Label>6</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>7</Value>
+          <Label>7</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>8</Value>
+          <Label>8</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>9</Value>
+          <Label>9</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>10</Value>
+          <Label>A</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>11</Value>
+          <Label>B</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>12</Value>
+          <Label>C</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>13</Value>
+          <Label>D</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>14</Value>
+          <Label>E</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>15</Value>
+          <Label>F</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+      </SubFamilies>
+    </AfiListElement>
+    <AfiListElement>
+      <ErrorsList />
+      <ContentValid>true</ContentValid>
+      <Value>12</Value>
+      <Label>C - RFU</Label>
+      <IsChecked>false</IsChecked>
+      <IsActivated>true</IsActivated>
+      <SubFamilies>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>0</Value>
+          <Label>0</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>1</Value>
+          <Label>1</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>2</Value>
+          <Label>2</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>3</Value>
+          <Label>3</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>4</Value>
+          <Label>4</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>5</Value>
+          <Label>5</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>6</Value>
+          <Label>6</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>7</Value>
+          <Label>7</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>8</Value>
+          <Label>8</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>9</Value>
+          <Label>9</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>10</Value>
+          <Label>A</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>11</Value>
+          <Label>B</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>12</Value>
+          <Label>C</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>13</Value>
+          <Label>D</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>14</Value>
+          <Label>E</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>15</Value>
+          <Label>F</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+      </SubFamilies>
+    </AfiListElement>
+    <AfiListElement>
+      <ErrorsList />
+      <ContentValid>true</ContentValid>
+      <Value>13</Value>
+      <Label>D - RFU</Label>
+      <IsChecked>false</IsChecked>
+      <IsActivated>true</IsActivated>
+      <SubFamilies>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>0</Value>
+          <Label>0</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>1</Value>
+          <Label>1</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>2</Value>
+          <Label>2</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>3</Value>
+          <Label>3</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>4</Value>
+          <Label>4</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>5</Value>
+          <Label>5</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>6</Value>
+          <Label>6</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>7</Value>
+          <Label>7</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>8</Value>
+          <Label>8</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>9</Value>
+          <Label>9</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>10</Value>
+          <Label>A</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>11</Value>
+          <Label>B</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>12</Value>
+          <Label>C</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>13</Value>
+          <Label>D</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>14</Value>
+          <Label>E</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>15</Value>
+          <Label>F</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+      </SubFamilies>
+    </AfiListElement>
+    <AfiListElement>
+      <ErrorsList />
+      <ContentValid>true</ContentValid>
+      <Value>14</Value>
+      <Label>E - MRTD</Label>
+      <IsChecked>false</IsChecked>
+      <IsActivated>true</IsActivated>
+      <SubFamilies>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>0</Value>
+          <Label>0</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>1</Value>
+          <Label>1 - ePassport</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>2</Value>
+          <Label>2 - eVisa</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>3</Value>
+          <Label>3</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>4</Value>
+          <Label>4</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>5</Value>
+          <Label>5</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>6</Value>
+          <Label>6</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>7</Value>
+          <Label>7</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>8</Value>
+          <Label>8</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>9</Value>
+          <Label>9</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>10</Value>
+          <Label>A</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>11</Value>
+          <Label>B</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>12</Value>
+          <Label>C</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>13</Value>
+          <Label>D</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>14</Value>
+          <Label>E</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>15</Value>
+          <Label>F</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+      </SubFamilies>
+    </AfiListElement>
+    <AfiListElement>
+      <ErrorsList />
+      <ContentValid>true</ContentValid>
+      <Value>15</Value>
+      <Label>F - RFU</Label>
+      <IsChecked>false</IsChecked>
+      <IsActivated>true</IsActivated>
+      <SubFamilies>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>0</Value>
+          <Label>0</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>1</Value>
+          <Label>1</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>2</Value>
+          <Label>2</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>3</Value>
+          <Label>3</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>4</Value>
+          <Label>4</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>5</Value>
+          <Label>5</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>6</Value>
+          <Label>6</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>7</Value>
+          <Label>7</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>8</Value>
+          <Label>8</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>9</Value>
+          <Label>9</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>10</Value>
+          <Label>A</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>11</Value>
+          <Label>B</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>12</Value>
+          <Label>C</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>13</Value>
+          <Label>D</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>14</Value>
+          <Label>E</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+        <AfiListElement>
+          <ErrorsList />
+          <ContentValid>true</ContentValid>
+          <Value>15</Value>
+          <Label>F</Label>
+          <IsChecked>false</IsChecked>
+          <IsActivated>true</IsActivated>
+          <SubFamilies />
+        </AfiListElement>
+      </SubFamilies>
+    </AfiListElement>
+  </AfiFamilies>
+  <AfiValues>
+    <int>0</int>
+  </AfiValues>
+</IcsAfiModel>
+[!EndContent-9827b156-84a1-4626-bd34-2d4923e79583]
+[!EndChild-a11acf34-ad17-467d-a3e6-c8d55ba7724b]

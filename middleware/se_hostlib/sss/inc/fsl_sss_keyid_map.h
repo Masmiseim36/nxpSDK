@@ -1,5 +1,5 @@
 /*
- * Copyright 2018,2019 NXP
+ * Copyright 2018-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -41,9 +41,7 @@
 
 #define KS_N_ENTIRES_CL (0 + KS_N_RSA_KEY_PAIRS + KS_N_SYM_KEYS)
 
-#define KS_N_ENTIRES                                              \
-    (0 + KS_N_ECC_KEY_PAIRS + KS_N_ECC_PUB_KEYS + KS_N_AES_KEYS + \
-        KS_N_CERTIFCATES)
+#define KS_N_ENTIRES (0 + KS_N_ECC_KEY_PAIRS + KS_N_ECC_PUB_KEYS + KS_N_AES_KEYS + KS_N_CERTIFCATES)
 
 #define KEYSTORE_MAGIC (0xA71C401L)
 #define KEYSTORE_VERSION (0x0004)
@@ -56,7 +54,11 @@ typedef struct
 {
     /** External index */
     uint32_t extKeyId;
-    uint8_t keyPart; /* Of type sss_key_part_t */
+
+    /* Of type sss_key_part_t
+     *
+     * B0,B1,B2,B3 -> Key part  and  B4,B5,B6,B7 -> (No of slots taken - 1) */
+    uint8_t keyPart;
     uint8_t accessPermission;
     uint8_t cipherType; /* Of type sss_cipher_type_t */
     /** Internal index */
@@ -97,9 +99,8 @@ typedef struct _keyStoreTable_t
  * @param lookup_entires Mapping table
  * @param max_entries Maximum entries that the Key Store can have
  */
-void ks_common_init_fat(keyStoreTable_t *keystore_shadow,
-    keyIdAndTypeIndexLookup_t *lookup_entires,
-    size_t max_entries);
+void ks_common_init_fat(
+    keyStoreTable_t *keystore_shadow, keyIdAndTypeIndexLookup_t *lookup_entires, size_t max_entries);
 
 /**
  * Update the File Allocation Table for the key.
@@ -122,7 +123,8 @@ sss_status_t ks_common_update_fat(keyStoreTable_t *keystore_shadow,
     sss_key_part_t object_part,
     sss_cipher_type_t cipher_type,
     uint8_t intIndex,
-    uint32_t accessPermission);
+    uint32_t accessPermission,
+    uint16_t keyLen);
 
 /**
  * check if the internal slot is availble for the key type.
@@ -134,14 +136,13 @@ sss_status_t ks_common_update_fat(keyStoreTable_t *keystore_shadow,
  *
  * @return Fail if internal index is not available.
  */
-sss_status_t ks_common_check_available_int_index(
-    keyStoreTable_t *keystore_shadow,
+sss_status_t ks_common_check_available_int_index(keyStoreTable_t *keystore_shadow,
     uint8_t object_type,
     uint8_t cipher_type,
-    uint16_t *next_free_index);
+    uint16_t *next_free_index,
+    uint16_t keyLen);
 
-sss_status_t ks_common_extId_to_int_index(
-    keyStoreTable_t *keystore_shadow, uint32_t extId, uint16_t *intIndex);
+sss_status_t ks_common_extId_to_int_index(keyStoreTable_t *keystore_shadow, uint32_t extId, uint16_t *intIndex);
 /**
  * check if the key store is valid.
  *
@@ -160,10 +161,8 @@ sss_status_t isValidKeyStoreShadow(keyStoreTable_t *keystore_shadow);
 *
 * @return Fail if keyId not found
 */
-sss_status_t ks_common_get_keyType_from_keyid(keyStoreTable_t *keystore_shadow,
-    uint32_t keyId,
-    uint32_t *keyType,
-    uint32_t *cipherType);
+sss_status_t ks_common_get_keyType_from_keyid(
+    keyStoreTable_t *keystore_shadow, uint32_t keyId, uint32_t *keyType, uint32_t *cipherType);
 /**
  * remove entry from shadow keystore.
  *
@@ -172,17 +171,13 @@ sss_status_t ks_common_get_keyType_from_keyid(keyStoreTable_t *keystore_shadow,
  *
  * @return Fail if keyId not found
  */
-sss_status_t ks_common_remove_fat(
-    keyStoreTable_t *keystore_shadow, uint32_t extId);
+sss_status_t ks_common_remove_fat(keyStoreTable_t *keystore_shadow, uint32_t extId);
 
 void ks_sw_fat_remove(const char *szRootPath);
 void ks_sw_fat_free(keyStoreTable_t *keystore_shadow);
 void ks_sw_fat_allocate(keyStoreTable_t **keystore_shadow);
-void ks_sw_getKeyFileName(char *const file_name,
-    const size_t size,
-    const sss_object_t *sss_key,
-    const char *root_folder);
-sss_status_t ks_sw_fat_load(
-    const char *szRootPath, keyStoreTable_t *pKeystore_shadow);
+void ks_sw_getKeyFileName(
+    char *const file_name, const size_t size, const sss_object_t *sss_key, const char *root_folder);
+sss_status_t ks_sw_fat_load(const char *szRootPath, keyStoreTable_t *pKeystore_shadow);
 
 #endif /* SSS_INC_KEYID_MAP_H_ */

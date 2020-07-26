@@ -82,11 +82,15 @@ extern usb_device_class_struct_t g_UsbDeviceVideoFlexioCameraConfig;
 usb_video_flexio_camera_struct_t g_UsbDeviceVideoFlexioCamera;
 
 usb_device_class_config_struct_t g_UsbDeviceVideoConfig[1] = {{
-    USB_DeviceVideoCallback, (class_handle_t)NULL, &g_UsbDeviceVideoFlexioCameraConfig,
+    USB_DeviceVideoCallback,
+    (class_handle_t)NULL,
+    &g_UsbDeviceVideoFlexioCameraConfig,
 }};
 
 usb_device_class_config_list_struct_t g_UsbDeviceVideoConfigList = {
-    g_UsbDeviceVideoConfig, USB_DeviceCallback, 1U,
+    g_UsbDeviceVideoConfig,
+    USB_DeviceCallback,
+    1U,
 };
 
 USB_DMA_NONINIT_DATA_ALIGN(((32 > USB_DATA_ALIGN_SIZE) ? 32 : USB_DATA_ALIGN_SIZE))
@@ -259,7 +263,7 @@ static void USB_DeviceVideoPrepareVideoData(void)
     {
         g_UsbDeviceVideoFlexioCamera.imageBuffer[i] = 0x00U;
     }
-    payloadHeader->bHeaderLength = sizeof(usb_device_video_mjpeg_payload_header_struct_t);
+    payloadHeader->bHeaderLength                = sizeof(usb_device_video_mjpeg_payload_header_struct_t);
     payloadHeader->headerInfoUnion.bmheaderInfo = 0U;
     payloadHeader->headerInfoUnion.headerInfoBits.frameIdentifier = g_UsbDeviceVideoFlexioCamera.currentFrameId;
     g_UsbDeviceVideoFlexioCamera.imageBufferLength = sizeof(usb_device_video_mjpeg_payload_header_struct_t);
@@ -286,11 +290,11 @@ static void USB_DeviceVideoPrepareVideoData(void)
         }
         else
         {
-            g_UsbDeviceVideoFlexioCamera.imagePosition = 0U;
-            g_UsbDeviceVideoFlexioCamera.currentTime = 0U;
-            g_UsbDeviceVideoFlexioCamera.waitForNewInterval = 0U;
+            g_UsbDeviceVideoFlexioCamera.imagePosition               = 0U;
+            g_UsbDeviceVideoFlexioCamera.currentTime                 = 0U;
+            g_UsbDeviceVideoFlexioCamera.waitForNewInterval          = 0U;
             payloadHeader->headerInfoUnion.headerInfoBits.endOfFrame = 1U;
-            g_UsbDeviceVideoFlexioCamera.stillImageTransmission = 0U;
+            g_UsbDeviceVideoFlexioCamera.stillImageTransmission      = 0U;
             g_UsbDeviceVideoFlexioCamera.currentFrameId ^= 1U;
             if (USB_DEVICE_VIDEO_STILL_IMAGE_TRIGGER_TRANSMIT_STILL_IMAGE ==
                 g_UsbDeviceVideoFlexioCamera.stillImageTriggerControl)
@@ -334,10 +338,10 @@ static void USB_DeviceVideoPrepareVideoData(void)
             }
             else
             {
-                g_UsbDeviceVideoFlexioCamera.imagePosition = 0U;
-                g_UsbDeviceVideoFlexioCamera.currentTime = 0U;
+                g_UsbDeviceVideoFlexioCamera.imagePosition               = 0U;
+                g_UsbDeviceVideoFlexioCamera.currentTime                 = 0U;
                 payloadHeader->headerInfoUnion.headerInfoBits.endOfFrame = 1U;
-                g_UsbDeviceVideoFlexioCamera.stillImageTransmission = 0U;
+                g_UsbDeviceVideoFlexioCamera.stillImageTransmission      = 0U;
                 g_UsbDeviceVideoFlexioCamera.currentFrameId ^= 1U;
                 if (USB_DEVICE_VIDEO_STILL_IMAGE_TRIGGER_TRANSMIT_STILL_IMAGE ==
                     g_UsbDeviceVideoFlexioCamera.stillImageTriggerControl)
@@ -387,7 +391,7 @@ static usb_status_t USB_DeviceVideoRequest(class_handle_t handle, uint32_t event
                                                g_UsbDeviceVideoFlexioCamera.probeStruct.dwMaxPayloadTransferSize);
             }
             g_UsbDeviceVideoFlexioCamera.probeStruct.bFormatIndex = probe->bFormatIndex;
-            g_UsbDeviceVideoFlexioCamera.probeStruct.bFrameIndex = probe->bFrameIndex;
+            g_UsbDeviceVideoFlexioCamera.probeStruct.bFrameIndex  = probe->bFrameIndex;
             break;
         case USB_DEVICE_VIDEO_GET_CUR_VS_PROBE_CONTROL:
             request->buffer = (uint8_t *)&g_UsbDeviceVideoFlexioCamera.probeStruct;
@@ -421,7 +425,7 @@ static usb_status_t USB_DeviceVideoRequest(class_handle_t handle, uint32_t event
                                                g_UsbDeviceVideoFlexioCamera.commitStruct.dwMaxPayloadTransferSize);
             }
             g_UsbDeviceVideoFlexioCamera.commitStruct.bFormatIndex = commit->bFormatIndex;
-            g_UsbDeviceVideoFlexioCamera.commitStruct.bFrameIndex = commit->bFrameIndex;
+            g_UsbDeviceVideoFlexioCamera.commitStruct.bFrameIndex  = commit->bFrameIndex;
             break;
         case USB_DEVICE_VIDEO_GET_CUR_VS_COMMIT_CONTROL:
             request->buffer = (uint8_t *)&g_UsbDeviceVideoFlexioCamera.commitStruct;
@@ -450,7 +454,7 @@ static usb_status_t USB_DeviceVideoRequest(class_handle_t handle, uint32_t event
             }
 
             g_UsbDeviceVideoFlexioCamera.stillProbeStruct.bFormatIndex = still_probe->bFormatIndex;
-            g_UsbDeviceVideoFlexioCamera.stillProbeStruct.bFrameIndex = still_probe->bFrameIndex;
+            g_UsbDeviceVideoFlexioCamera.stillProbeStruct.bFrameIndex  = still_probe->bFrameIndex;
             break;
         case USB_DEVICE_VIDEO_GET_CUR_VS_STILL_PROBE_CONTROL:
             request->buffer = (uint8_t *)&g_UsbDeviceVideoFlexioCamera.stillProbeStruct;
@@ -478,7 +482,7 @@ static usb_status_t USB_DeviceVideoRequest(class_handle_t handle, uint32_t event
             }
 
             g_UsbDeviceVideoFlexioCamera.stillCommitStruct.bFormatIndex = still_commit->bFormatIndex;
-            g_UsbDeviceVideoFlexioCamera.stillCommitStruct.bFrameIndex = still_commit->bFrameIndex;
+            g_UsbDeviceVideoFlexioCamera.stillCommitStruct.bFrameIndex  = still_commit->bFrameIndex;
             break;
         case USB_DEVICE_VIDEO_GET_CUR_VS_STILL_COMMIT_CONTROL:
             request->buffer = (uint8_t *)&g_UsbDeviceVideoFlexioCamera.stillCommitStruct;
@@ -530,7 +534,7 @@ static usb_status_t USB_DeviceVideoCallback(class_handle_t handle, uint32_t even
                 if (request->length <= sizeof(usb_device_video_probe_and_commit_controls_struct_t))
                 {
                     request->buffer = (uint8_t *)&g_UsbDeviceVideoFlexioCamera.classRequestBuffer;
-                    error = kStatus_USB_Success;
+                    error           = kStatus_USB_Success;
                 }
             }
             break;
@@ -549,14 +553,14 @@ static usb_status_t USB_DeviceVideoCallback(class_handle_t handle, uint32_t even
 /* Set to default state */
 static void USB_DeviceVideoApplicationSetDefault(void)
 {
-    g_UsbDeviceVideoFlexioCamera.speed = USB_SPEED_FULL;
-    g_UsbDeviceVideoFlexioCamera.attach = 0U;
+    g_UsbDeviceVideoFlexioCamera.speed                = USB_SPEED_FULL;
+    g_UsbDeviceVideoFlexioCamera.attach               = 0U;
     g_UsbDeviceVideoFlexioCamera.currentMaxPacketSize = FS_STREAM_IN_PACKET_SIZE;
-    g_UsbDeviceVideoFlexioCamera.fullBufferIndex = 0U;
-    g_UsbDeviceVideoFlexioCamera.imagePosition = 0U;
+    g_UsbDeviceVideoFlexioCamera.fullBufferIndex      = 0U;
+    g_UsbDeviceVideoFlexioCamera.imagePosition        = 0U;
 
     g_UsbDeviceVideoFlexioCamera.probeStruct.bFormatIndex = USB_VIDEO_CAMERA_UNCOMPRESSED_FORMAT_INDEX;
-    g_UsbDeviceVideoFlexioCamera.probeStruct.bFrameIndex = USB_VIDEO_CAMERA_UNCOMPRESSED_FRAME_INDEX;
+    g_UsbDeviceVideoFlexioCamera.probeStruct.bFrameIndex  = USB_VIDEO_CAMERA_UNCOMPRESSED_FRAME_INDEX;
     USB_LONG_TO_LITTLE_ENDIAN_DATA(USB_VIDEO_CAMERA_UNCOMPRESSED_FRAME_DEFAULT_INTERVAL,
                                    g_UsbDeviceVideoFlexioCamera.probeStruct.dwFrameInterval);
     USB_LONG_TO_LITTLE_ENDIAN_DATA(g_UsbDeviceVideoFlexioCamera.currentMaxPacketSize,
@@ -565,7 +569,7 @@ static void USB_DeviceVideoApplicationSetDefault(void)
                                    g_UsbDeviceVideoFlexioCamera.probeStruct.dwMaxVideoFrameSize);
 
     g_UsbDeviceVideoFlexioCamera.commitStruct.bFormatIndex = USB_VIDEO_CAMERA_UNCOMPRESSED_FORMAT_INDEX;
-    g_UsbDeviceVideoFlexioCamera.commitStruct.bFrameIndex = USB_VIDEO_CAMERA_UNCOMPRESSED_FRAME_INDEX;
+    g_UsbDeviceVideoFlexioCamera.commitStruct.bFrameIndex  = USB_VIDEO_CAMERA_UNCOMPRESSED_FRAME_INDEX;
     USB_LONG_TO_LITTLE_ENDIAN_DATA(USB_VIDEO_CAMERA_UNCOMPRESSED_FRAME_DEFAULT_INTERVAL,
                                    g_UsbDeviceVideoFlexioCamera.commitStruct.dwFrameInterval);
     USB_LONG_TO_LITTLE_ENDIAN_DATA(g_UsbDeviceVideoFlexioCamera.currentMaxPacketSize,
@@ -573,39 +577,39 @@ static void USB_DeviceVideoApplicationSetDefault(void)
     USB_LONG_TO_LITTLE_ENDIAN_DATA(USB_VIDEO_CAMERA_UNCOMPRESSED_FRAME_MAX_FRAME_SIZE,
                                    g_UsbDeviceVideoFlexioCamera.commitStruct.dwMaxVideoFrameSize);
 
-    g_UsbDeviceVideoFlexioCamera.probeInfo = 0x03U;
-    g_UsbDeviceVideoFlexioCamera.probeLength = 26U;
-    g_UsbDeviceVideoFlexioCamera.commitInfo = 0x03U;
+    g_UsbDeviceVideoFlexioCamera.probeInfo    = 0x03U;
+    g_UsbDeviceVideoFlexioCamera.probeLength  = 26U;
+    g_UsbDeviceVideoFlexioCamera.commitInfo   = 0x03U;
     g_UsbDeviceVideoFlexioCamera.commitLength = 26U;
 
-    g_UsbDeviceVideoFlexioCamera.stillProbeStruct.bFormatIndex = USB_VIDEO_CAMERA_UNCOMPRESSED_FORMAT_INDEX;
-    g_UsbDeviceVideoFlexioCamera.stillProbeStruct.bFrameIndex = USB_VIDEO_CAMERA_UNCOMPRESSED_FRAME_INDEX;
+    g_UsbDeviceVideoFlexioCamera.stillProbeStruct.bFormatIndex      = USB_VIDEO_CAMERA_UNCOMPRESSED_FORMAT_INDEX;
+    g_UsbDeviceVideoFlexioCamera.stillProbeStruct.bFrameIndex       = USB_VIDEO_CAMERA_UNCOMPRESSED_FRAME_INDEX;
     g_UsbDeviceVideoFlexioCamera.stillProbeStruct.bCompressionIndex = 0x01U;
     USB_LONG_TO_LITTLE_ENDIAN_DATA(g_UsbDeviceVideoFlexioCamera.currentMaxPacketSize,
                                    g_UsbDeviceVideoFlexioCamera.stillProbeStruct.dwMaxPayloadTransferSize);
     USB_LONG_TO_LITTLE_ENDIAN_DATA(USB_VIDEO_CAMERA_UNCOMPRESSED_FRAME_MAX_FRAME_SIZE,
                                    g_UsbDeviceVideoFlexioCamera.stillProbeStruct.dwMaxVideoFrameSize);
 
-    g_UsbDeviceVideoFlexioCamera.stillCommitStruct.bFormatIndex = USB_VIDEO_CAMERA_UNCOMPRESSED_FORMAT_INDEX;
-    g_UsbDeviceVideoFlexioCamera.stillCommitStruct.bFrameIndex = USB_VIDEO_CAMERA_UNCOMPRESSED_FRAME_INDEX;
+    g_UsbDeviceVideoFlexioCamera.stillCommitStruct.bFormatIndex      = USB_VIDEO_CAMERA_UNCOMPRESSED_FORMAT_INDEX;
+    g_UsbDeviceVideoFlexioCamera.stillCommitStruct.bFrameIndex       = USB_VIDEO_CAMERA_UNCOMPRESSED_FRAME_INDEX;
     g_UsbDeviceVideoFlexioCamera.stillCommitStruct.bCompressionIndex = 0x01U;
     USB_LONG_TO_LITTLE_ENDIAN_DATA(g_UsbDeviceVideoFlexioCamera.currentMaxPacketSize,
                                    g_UsbDeviceVideoFlexioCamera.stillCommitStruct.dwMaxPayloadTransferSize);
     USB_LONG_TO_LITTLE_ENDIAN_DATA(USB_VIDEO_CAMERA_UNCOMPRESSED_FRAME_MAX_FRAME_SIZE,
                                    g_UsbDeviceVideoFlexioCamera.stillCommitStruct.dwMaxVideoFrameSize);
 
-    g_UsbDeviceVideoFlexioCamera.stillProbeInfo = 0x03U;
-    g_UsbDeviceVideoFlexioCamera.stillProbeLength = sizeof(g_UsbDeviceVideoFlexioCamera.stillProbeStruct);
-    g_UsbDeviceVideoFlexioCamera.stillCommitInfo = 0x03U;
+    g_UsbDeviceVideoFlexioCamera.stillProbeInfo    = 0x03U;
+    g_UsbDeviceVideoFlexioCamera.stillProbeLength  = sizeof(g_UsbDeviceVideoFlexioCamera.stillProbeStruct);
+    g_UsbDeviceVideoFlexioCamera.stillCommitInfo   = 0x03U;
     g_UsbDeviceVideoFlexioCamera.stillCommitLength = sizeof(g_UsbDeviceVideoFlexioCamera.stillCommitStruct);
 
-    g_UsbDeviceVideoFlexioCamera.currentTime = 0U;
-    g_UsbDeviceVideoFlexioCamera.currentFrameId = 0U;
+    g_UsbDeviceVideoFlexioCamera.currentTime                            = 0U;
+    g_UsbDeviceVideoFlexioCamera.currentFrameId                         = 0U;
     g_UsbDeviceVideoFlexioCamera.currentStreamInterfaceAlternateSetting = 0U;
-    g_UsbDeviceVideoFlexioCamera.imageBufferLength = 0U;
-    g_UsbDeviceVideoFlexioCamera.imageIndex = 0U;
-    g_UsbDeviceVideoFlexioCamera.waitForNewInterval = 0U;
-    g_UsbDeviceVideoFlexioCamera.stillImageTransmission = 0U;
+    g_UsbDeviceVideoFlexioCamera.imageBufferLength                      = 0U;
+    g_UsbDeviceVideoFlexioCamera.imageIndex                             = 0U;
+    g_UsbDeviceVideoFlexioCamera.waitForNewInterval                     = 0U;
+    g_UsbDeviceVideoFlexioCamera.stillImageTransmission                 = 0U;
     g_UsbDeviceVideoFlexioCamera.stillImageTriggerControl = USB_DEVICE_VIDEO_STILL_IMAGE_TRIGGER_NORMAL_OPERATION;
 }
 
@@ -613,8 +617,8 @@ static void USB_DeviceVideoApplicationSetDefault(void)
 static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *param)
 {
     usb_status_t error = kStatus_USB_Success;
-    uint8_t *temp8 = (uint8_t *)param;
-    uint16_t *temp16 = (uint16_t *)param;
+    uint8_t *temp8     = (uint8_t *)param;
+    uint16_t *temp16   = (uint16_t *)param;
 
     switch (event)
     {
@@ -622,7 +626,7 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
         {
             /* The device BUS reset signal detected */
             USB_DeviceVideoApplicationSetDefault();
-            g_UsbDeviceVideoFlexioCamera.attach = 0U;
+            g_UsbDeviceVideoFlexioCamera.attach               = 0U;
             g_UsbDeviceVideoFlexioCamera.currentConfiguration = 0U;
 #if (defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)) || \
     (defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))
@@ -643,13 +647,13 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
         case kUSB_DeviceEventSetConfiguration:
             if (0 == (*temp8))
             {
-                g_UsbDeviceVideoFlexioCamera.attach = 0U;
+                g_UsbDeviceVideoFlexioCamera.attach               = 0U;
                 g_UsbDeviceVideoFlexioCamera.currentConfiguration = 0U;
             }
             else if (USB_VIDEO_CAMERA_CONFIGURE_INDEX == (*temp8))
             {
                 /* Set the configuration request */
-                g_UsbDeviceVideoFlexioCamera.attach = 1U;
+                g_UsbDeviceVideoFlexioCamera.attach               = 1U;
                 g_UsbDeviceVideoFlexioCamera.currentConfiguration = *temp8;
             }
             else
@@ -661,7 +665,7 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
             if ((g_UsbDeviceVideoFlexioCamera.attach) && param)
             {
                 /* Set alternateSetting of the interface request */
-                uint8_t interface = (uint8_t)((*temp16 & 0xFF00U) >> 0x08U);
+                uint8_t interface        = (uint8_t)((*temp16 & 0xFF00U) >> 0x08U);
                 uint8_t alternateSetting = (uint8_t)(*temp16 & 0x00FFU);
 
                 if (g_UsbDeviceVideoFlexioCamera.currentInterfaceAlternateSetting[interface] != alternateSetting)
@@ -686,7 +690,7 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
             {
                 /* Get the current configuration request */
                 *temp8 = g_UsbDeviceVideoFlexioCamera.currentConfiguration;
-                error = kStatus_USB_Success;
+                error  = kStatus_USB_Success;
             }
             break;
         case kUSB_DeviceEventGetInterface:
@@ -759,10 +763,10 @@ static void USB_DeviceApplicationInit(void)
     USB_DeviceIsrEnable();
 
     const camera_config_t cameraConfig = {
-        .pixelFormat = kVIDEO_PixelFormatRGB565,
+        .pixelFormat   = kVIDEO_PixelFormatRGB565,
         .bytesPerPixel = 2,
-        .resolution = kVIDEO_ResolutionQQVGA,
-        .framePerSec = 25,
+        .resolution    = kVIDEO_ResolutionQQVGA,
+        .framePerSec   = 25,
     };
 
     CAMERA_DEVICE_Init(&cameraDevice, &cameraConfig);
@@ -775,6 +779,8 @@ static void USB_DeviceApplicationInit(void)
 
     CAMERA_RECEIVER_Start(&cameraReceiver);
 
+    /*Add one delay here to make the DP pull down long enough to allow host to detect the previous disconnection.*/
+    SDK_DelayAtLeastUs(5000, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
     USB_DeviceRun(g_UsbDeviceVideoFlexioCamera.deviceHandle);
 }
 

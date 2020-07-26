@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding= "UTF-8" ?>
-<configuration name="MK22FN512xxx12" version="1.5" xsi:schemaLocation="http://mcuxpresso.nxp.com/XSD/mex_configuration_1.5 http://mcuxpresso.nxp.com/XSD/mex_configuration_1.5.xsd" uuid="3a8fd1e5-21d6-4da6-b567-6c5b3aeb4fda" xmlns="http://mcuxpresso.nxp.com/XSD/mex_configuration_1.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<configuration name="MK22FN512xxx12" version="1.6" xsi:schemaLocation="http://mcuxpresso.nxp.com/XSD/mex_configuration_1.7 http://mcuxpresso.nxp.com/XSD/mex_configuration_1.7.xsd" uuid="784ac27e-d56d-429a-b371-dd9855f6a3ba" xmlns="http://mcuxpresso.nxp.com/XSD/mex_configuration_1.7" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
    <common>
       <processor>MK22FN512xxx12</processor>
       <package>MK22FN512VLH12</package>
@@ -8,20 +8,16 @@
       <cores selected="core0">
          <core name="Cortex-M4F" id="core0" description="M4 core"/>
       </cores>
-      <description>Configuration imported from D:\mcu-sdk-2.0\boards\frdmk22f\demo_apps\ecompass_peripheral\armgcc</description>
    </common>
    <preferences>
       <validate_boot_init_only>true</validate_boot_init_only>
       <generate_extended_information>false</generate_extended_information>
+      <generate_code_modified_registers_only>false</generate_code_modified_registers_only>
    </preferences>
    <tools>
-      <pins name="Pins" version="5.0" enabled="true" update_project_code="true">
-         <generated_project_files>
-            <file path="../pin_mux.c" update_enabled="true"/>
-            <file path="../pin_mux.h" update_enabled="true"/>
-         </generated_project_files>
+      <pins name="Pins" version="7.0" enabled="true" update_project_code="true">
          <pins_profile>
-            <processor_version>0.0.18</processor_version>
+            <processor_version>0.7.8</processor_version>
             <pin_labels>
                <pin_label pin_num="37" pin_signal="ADC0_SE12/PTB2/I2C0_SCL/UART0_RTS_b/FTM0_FLT3" label="ACCEL_SCL" identifier="ACCEL_SCL"/>
                <pin_label pin_num="38" pin_signal="ADC0_SE13/PTB3/I2C0_SDA/UART0_CTS_b/FTM0_FLT0" label="ACCEL_SDA" identifier="ACCEL_SDA"/>
@@ -44,6 +40,11 @@
                         <data>true</data>
                      </feature>
                   </dependency>
+                  <dependency resourceType="Peripheral" resourceId="TPIU" description="Peripheral TPIU is not initialized" problem_level="1" source="Pins:BOARD_InitPins">
+                     <feature name="initialized" evaluation="equal">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
                   <dependency resourceType="SWComponent" resourceId="platform.drivers.common" description="Pins initialization requires the COMMON Driver in the project." problem_level="2" source="Pins:BOARD_InitPins">
                      <feature name="enabled" evaluation="equal" configuration="core0">
                         <data>true</data>
@@ -60,6 +61,13 @@
                   <pin peripheral="UART1" signal="TX" pin_num="1" pin_signal="ADC1_SE4a/PTE0/CLKOUT32K/SPI1_PCS1/UART1_TX/I2C1_SDA/RTC_CLKOUT">
                      <pin_features>
                         <pin_feature name="direction" value="OUTPUT"/>
+                     </pin_features>
+                  </pin>
+                  <pin peripheral="TPIU" signal="SWO" pin_num="24" pin_signal="PTA2/UART0_TX/FTM0_CH7/JTAG_TDO/TRACE_SWO/EZP_DO">
+                     <pin_features>
+                        <pin_feature name="identifier" value=""/>
+                        <pin_feature name="pull_select" value="down"/>
+                        <pin_feature name="pull_enable" value="disable"/>
                      </pin_features>
                   </pin>
                </pins>
@@ -150,13 +158,9 @@
             </function>
          </functions_list>
       </pins>
-      <clocks name="Clocks" version="5.0" enabled="true" update_project_code="false">
-         <generated_project_files>
-            <file path="../../../clock_config.c" update_enabled="false"/>
-            <file path="../../../clock_config.h" update_enabled="false"/>
-         </generated_project_files>
+      <clocks name="Clocks" version="7.0" enabled="true" update_project_code="true">
          <clocks_profile>
-            <processor_version>0.0.18</processor_version>
+            <processor_version>0.7.8</processor_version>
          </clocks_profile>
          <clock_configurations>
             <clock_configuration name="BOARD_BootClockRUN">
@@ -361,49 +365,51 @@
             </clock_configuration>
          </clock_configurations>
       </clocks>
-      <periphs name="Peripherals" version="5.0" enabled="true" update_project_code="true">
+      <dcdx name="DCDx" version="2.0" enabled="false" update_project_code="true">
+         <dcdx_profile>
+            <processor_version>N/A</processor_version>
+         </dcdx_profile>
+         <dcdx_configurations/>
+      </dcdx>
+      <periphs name="Peripherals" version="7.0" enabled="true" update_project_code="true">
          <dependencies>
-            <dependency resourceType="SWComponent" resourceId="platform.drivers.i2c" description="I2C Driver not found in the toolchain/IDE project." problem_level="2" source="Peripherals">
+            <dependency resourceType="SWComponent" resourceId="platform.drivers.i2c" description="I2C Driver not found in the toolchain/IDE project. Project will not compile!" problem_level="2" source="Peripherals">
                <feature name="enabled" evaluation="equal">
                   <data type="Boolean">true</data>
                </feature>
             </dependency>
-            <dependency resourceType="SWComponent" resourceId="platform.drivers.i2c" description="Unsupported version of the I2C Driver in the toolchain/IDE project. Required: ${required_value}, actual: ${actual_value}." problem_level="1" source="Peripherals">
+            <dependency resourceType="SWComponent" resourceId="platform.drivers.i2c" description="Unsupported version of the I2C Driver in the toolchain/IDE project. Required: ${required_value}, actual: ${actual_value}. Project might not compile correctly." problem_level="1" source="Peripherals">
                <feature name="version" evaluation="equivalent">
                   <data type="Version">2.0.5</data>
                </feature>
             </dependency>
          </dependencies>
-         <generated_project_files>
-            <file path="../peripherals.c" update_enabled="true"/>
-            <file path="../peripherals.h" update_enabled="true"/>
-         </generated_project_files>
          <peripherals_profile>
-            <processor_version>0.0.18</processor_version>
+            <processor_version>0.7.8</processor_version>
          </peripherals_profile>
          <functional_groups>
-            <functional_group name="BOARD_InitPeripherals" uuid="78ef6e9a-3b4c-4afc-a85b-e1e72626f615" called_from_default_init="true" id_prefix="BOARD_" core="core0">
+            <functional_group name="BOARD_InitPeripherals" uuid="3d81a8aa-94c3-4fd0-a7ec-ec85120db3d3" called_from_default_init="true" id_prefix="BOARD_" core="core0">
                <description></description>
                <options/>
                <dependencies>
-                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="I2C0.i2c_scl" description="Signal serial clock of the peripheral I2C0 is not routed." problem_level="1" source="Peripherals:BOARD_InitPeripherals">
+                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="I2C0.i2c_scl" description="Signal serial clock of the peripheral I2C0 is not routed. Problem must be resolved in another tool." problem_level="1" source="Peripherals:BOARD_InitPeripherals">
                      <feature name="routed" evaluation="">
                         <data type="Boolean">true</data>
                      </feature>
                   </dependency>
-                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="I2C0.i2c_sda" description="Signal serial data of the peripheral I2C0 is not routed." problem_level="1" source="Peripherals:BOARD_InitPeripherals">
+                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="I2C0.i2c_sda" description="Signal serial data of the peripheral I2C0 is not routed. Problem must be resolved in another tool." problem_level="1" source="Peripherals:BOARD_InitPeripherals">
                      <feature name="routed" evaluation="">
                         <data type="Boolean">true</data>
                      </feature>
                   </dependency>
-                  <dependency resourceType="ClockOutput" resourceId="Bus_clock" description="Bus clock is inactive." problem_level="1" source="Peripherals:BOARD_InitPeripherals">
+                  <dependency resourceType="ClockOutput" resourceId="Bus_clock" description="Bus clock is inactive. Problem must be resolved in another tool." problem_level="1" source="Peripherals:BOARD_InitPeripherals">
                      <feature name="frequency" evaluation="greaterThan">
                         <data type="Frequency" unit="Hz">0</data>
                      </feature>
                   </dependency>
                </dependencies>
                <instances>
-                  <instance name="ACCEL_I2C" type="i2c" type_id="i2c_2566d7363e7e9aaedabb432110e372d7" mode="I2C_Polling" peripheral="I2C0" enabled="true">
+                  <instance name="ACCEL_I2C" uuid="4e47e118-353a-44cb-be45-eca0bb0c4195" type="i2c" type_id="i2c_2566d7363e7e9aaedabb432110e372d7" mode="I2C_Polling" peripheral="I2C0" enabled="true" comment="" custom_name_enabled="true">
                      <config_set name="fsl_i2c" quick_selection="QS_I2C_1">
                         <setting name="i2c_mode" value="kI2C_Master"/>
                         <setting name="clockSource" value="BusInterfaceClock"/>
@@ -420,10 +426,20 @@
             </functional_group>
          </functional_groups>
          <components>
-            <component name="system" type_id="system_54b53072540eeeb8f8e9343e71f28176">
+            <component name="system" uuid="3b956b2a-4dce-4cb6-a42f-bc567793cdb4" type_id="system_54b53072540eeeb8f8e9343e71f28176">
                <config_set_global name="global_system_definitions"/>
+            </component>
+            <component name="msg" uuid="dbee0200-7ebd-4d89-b0b7-1770d4968aca" type_id="msg_6e2baaf3b97dbeef01c0043275f9a0e7">
+               <config_set_global name="global_messages"/>
             </component>
          </components>
       </periphs>
+      <tee name="TEE" version="1.0" enabled="false" update_project_code="true">
+         <tee_profile>
+            <processor_version>N/A</processor_version>
+         </tee_profile>
+         <global_options/>
+         <user_memory_regions/>
+      </tee>
    </tools>
 </configuration>

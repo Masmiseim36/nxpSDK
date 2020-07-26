@@ -33,34 +33,34 @@ typedef void *usb_otg_controller_handle;
 /*! @brief please reference to 7.4 in OTG spec */
 typedef enum _usb_otg_status_type
 {
-    kOtg_StatusId = 0x0001U,                       /*! id */
-    kOtg_StatusAdpChange = 0x0002U,                /*! adp_change */
-    kOtg_StatusSrpDet = 0x0004U,                   /*! a_srp_det */
-    kOtg_StatusVbusVld = 0x0008U,                  /*! a_vbus_vld */
-    kOtg_StatusAConn = 0x0010U,                    /*! a_conn */
-    kOtg_StatusBusResume = 0x0020U,                /*! a_bus_resume */
-    kOtg_StatusBusSuspend = 0x0040U,               /*! a_bus_suspend */
-    kOtg_StatusSe0Srp = 0x0080U,                   /*! b_se0_srp */
-    kOtg_StatusSsendSrp = 0x0100U,                 /*! b_ssend_srp */
-    kOtg_StatusSessVld = 0x0200U,                  /*! b_sess_vld */
-    kOtg_StatusBusDrop = 0x0400U,                  /*! a_bus_drop */
-    kOtg_StatusBusReq = 0x0800U,                   /*! a_bus_req and b_bus_req */
-    kOtg_StatusPowerUp = 0x1000U,                  /*! power_up */
-    kOtg_StatusTimeOut = 0x2000U,                  /*! all the timeout in the state machine */
-    kOtg_StatusBConn = 0x4000U,                    /*! b_conn */
-    kOtg_StatusClrErr = 0x8000U,                   /*! a_clr_err */
-    kOtg_StatusBSrpDone = 0x10000U,                /*! b_srp_done */
-    kOtg_StatusADisconn = 0x20000U,                /*! a_conn(non) */
-    kOtg_StatusBDisconn = 0x40000U,                /*! b_conn(non) */
-    kOtg_StatusVbusInvld = 0x80000U,               /*! a_vbus_vld(non) */
-    kOtg_StatusSessInvld = 0x100000U,              /*! b_sess_vld(non) */
+    kOtg_StatusId                     = 0x0001U,   /*! id */
+    kOtg_StatusAdpChange              = 0x0002U,   /*! adp_change */
+    kOtg_StatusSrpDet                 = 0x0004U,   /*! a_srp_det */
+    kOtg_StatusVbusVld                = 0x0008U,   /*! a_vbus_vld */
+    kOtg_StatusAConn                  = 0x0010U,   /*! a_conn */
+    kOtg_StatusBusResume              = 0x0020U,   /*! a_bus_resume */
+    kOtg_StatusBusSuspend             = 0x0040U,   /*! a_bus_suspend */
+    kOtg_StatusSe0Srp                 = 0x0080U,   /*! b_se0_srp */
+    kOtg_StatusSsendSrp               = 0x0100U,   /*! b_ssend_srp */
+    kOtg_StatusSessVld                = 0x0200U,   /*! b_sess_vld */
+    kOtg_StatusBusDrop                = 0x0400U,   /*! a_bus_drop */
+    kOtg_StatusBusReq                 = 0x0800U,   /*! a_bus_req and b_bus_req */
+    kOtg_StatusPowerUp                = 0x1000U,   /*! power_up */
+    kOtg_StatusTimeOut                = 0x2000U,   /*! all the timeout in the state machine */
+    kOtg_StatusBConn                  = 0x4000U,   /*! b_conn */
+    kOtg_StatusClrErr                 = 0x8000U,   /*! a_clr_err */
+    kOtg_StatusBSrpDone               = 0x10000U,  /*! b_srp_done */
+    kOtg_StatusADisconn               = 0x20000U,  /*! a_conn(non) */
+    kOtg_StatusBDisconn               = 0x40000U,  /*! b_conn(non) */
+    kOtg_StatusVbusInvld              = 0x80000U,  /*! a_vbus_vld(non) */
+    kOtg_StatusSessInvld              = 0x100000U, /*! b_sess_vld(non) */
     kOtg_StatusCheckIdleInAPeripheral = 0x200000U, /*! check the idle timeout when in a_peripheral state */
 
     kOtg_StatusBHNPFeature = 0x40000000U, /*! This status is valid when
                                               (1) b_hnp_enable feature is sent when A-device works as host; Or
                                               (2) b_hnp_enable feature is received when B-device works as device */
-    kOtg_StatusChange = (int)0x80000000U,      /*! there are status change, need call control interface
-                                           (kOtg_ControlUpdateStatus) to update status */
+    kOtg_StatusChange = (int)0x80000000U, /*! there are status change, need call control interface
+                                      (kOtg_ControlUpdateStatus) to update status */
 } usb_otg_status_type_t;
 
 /*! @brief Please reference to chapter 7 in OTG spec */

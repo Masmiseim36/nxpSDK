@@ -5,11 +5,11 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 #include "bootloader_common.h"
-#include "bootloader/bootloader.h"
-#include "memory/memory.h"
-#include "sbloader/sbloader.h"
-#include "property/property.h"
-#include "utilities/fsl_assert.h"
+#include "bootloader.h"
+#include "memory.h"
+#include "sbloader.h"
+#include "property.h"
+#include "fsl_assert.h"
 #if BL_FEATURE_QSPI_MODULE
 #include "qspi.h"
 #endif
@@ -23,7 +23,7 @@
 #if !BL_DEVICE_IS_LPC_SERIES
 #include "fsl_flash.h"
 #else
-#include "flashiap_wrapper/fsl_flashiap_wrapper.h"
+#include "fsl_iap.h"
 #endif
 #endif // #if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
 
@@ -82,15 +82,7 @@ static status_t get_otfad_key(otfad_kek_t *kek);
 bool qspi_need_configure(void)
 {
 #if BL_FEATURE_QSPI_MODULE
-#if defined(BL_TARGET_ROM)
-    // Get BOOTSRC_SEL from FOPT
-    uint8_t fopt = FTFx_FOPT;
-    uint8_t bootSrc = (uint8_t)((fopt & FTFx_FOPT_BOOTSRCSEL_MASK) >> FTFx_FOPT_BOOTSRCSEL_SHIFT);
-
-    return (bootSrc == kBootSource_QSPI);
-#else
     return true;
-#endif //#if defined(BL_TARGET_ROM)
 #else
     return false;
 #endif

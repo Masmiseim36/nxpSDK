@@ -75,9 +75,9 @@ Revision: $Rev: 3734 $
 // Constants for known core configuration
 //
 #define SEGGER_SYSVIEW_CORE_OTHER 0
-#define SEGGER_SYSVIEW_CORE_CM0 1 // Cortex-M0/M0+/M1
-#define SEGGER_SYSVIEW_CORE_CM3 2 // Cortex-M3/M4/M7
-#define SEGGER_SYSVIEW_CORE_RX 3  // Renesas RX
+#define SEGGER_SYSVIEW_CORE_CM0   1 // Cortex-M0/M0+/M1
+#define SEGGER_SYSVIEW_CORE_CM3   2 // Cortex-M3/M4/M7
+#define SEGGER_SYSVIEW_CORE_RX    3 // Renesas RX
 
 #if (defined __SES_ARM) || (defined __CROSSWORKS_ARM) || (defined __GNUC__)
 #ifdef __ARM_ARCH_6M__
@@ -118,7 +118,7 @@ Revision: $Rev: 3734 $
  *       SystemView buffer configuration
  */
 #define SEGGER_SYSVIEW_RTT_BUFFER_SIZE 1024 // Number of bytes that SystemView uses for the buffer.
-#define SEGGER_SYSVIEW_RTT_CHANNEL 1        // The RTT channel that SystemView will use. 0: Auto selection
+#define SEGGER_SYSVIEW_RTT_CHANNEL     1    // The RTT channel that SystemView will use. 0: Auto selection
 
 #define SEGGER_SYSVIEW_USE_STATIC_BUFFER 1 // Use a static buffer to generate events instead of a buffer on the stack
 
@@ -130,7 +130,7 @@ Revision: $Rev: 3734 $
  */
 #if SEGGER_SYSVIEW_CORE == SEGGER_SYSVIEW_CORE_CM3
 #define SEGGER_SYSVIEW_GET_TIMESTAMP() (*(U32 *)(0xE0001004)) // Retrieve a system timestamp. Cortex-M cycle counter.
-#define SEGGER_SYSVIEW_TIMESTAMP_BITS 32 // Define number of valid bits low-order delivered by clock source
+#define SEGGER_SYSVIEW_TIMESTAMP_BITS  32 // Define number of valid bits low-order delivered by clock source
 #else
 #define SEGGER_SYSVIEW_GET_TIMESTAMP() \
     SEGGER_SYSVIEW_X_GetTimestamp() // Retrieve a system timestamp via user-defined function

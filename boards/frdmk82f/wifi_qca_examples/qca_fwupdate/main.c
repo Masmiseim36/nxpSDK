@@ -65,9 +65,9 @@
  ******************************************************************************/
 #include "FreeRTOSConfig.h"
 /* UART instance and clock */
-#define DEMO_UART BOARD_DEBUG_UART_BASEADDR
-#define DEMO_UART_BAUDRATE BOARD_DEBUG_UART_BAUDRATE
-#define DEMO_UART_CLK_FREQ BOARD_DEBUG_UART_CLK_FREQ
+#define DEMO_UART            BOARD_DEBUG_UART_BASEADDR
+#define DEMO_UART_BAUDRATE   BOARD_DEBUG_UART_BAUDRATE
+#define DEMO_UART_CLK_FREQ   BOARD_DEBUG_UART_CLK_FREQ
 #define DEMO_UART_RX_TX_IRQn BOARD_UART_IRQ
 #ifdef configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY
 #define DEMO_UART_RX_TX_IRQp ((configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY) + 1)
@@ -507,8 +507,8 @@ int main(void)
     BaseType_t result = 0;
     (void)result;
 
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
 #ifdef DEMO_UART_RX_TX_IRQp
     NVIC_SetPriority(DEMO_UART_RX_TX_IRQn, DEMO_UART_RX_TX_IRQp);

@@ -22,8 +22,8 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief QSPI driver version 2.0.2. */
-#define FSL_QSPI_DRIVER_VERSION (MAKE_VERSION(2, 0, 2))
+/*! @brief QSPI driver version 2.2.0. */
+#define FSL_QSPI_DRIVER_VERSION (MAKE_VERSION(2, 2, 0))
 /*@}*/
 
 /*! @brief Macro functions for LUT table */
@@ -62,8 +62,8 @@
 /*! @brief Status structure of QSPI.*/
 enum _status_t
 {
-    kStatus_QSPI_Idle = MAKE_STATUS(kStatusGroup_QSPI, 0),  /*!< QSPI is in idle state  */
-    kStatus_QSPI_Busy = MAKE_STATUS(kStatusGroup_QSPI, 1),  /*!< QSPI is busy */
+    kStatus_QSPI_Idle  = MAKE_STATUS(kStatusGroup_QSPI, 0), /*!< QSPI is in idle state  */
+    kStatus_QSPI_Busy  = MAKE_STATUS(kStatusGroup_QSPI, 1), /*!< QSPI is busy */
     kStatus_QSPI_Error = MAKE_STATUS(kStatusGroup_QSPI, 2), /*!< Error occurred during QSPI transfer */
 };
 
@@ -77,16 +77,16 @@ typedef enum _qspi_read_area
 /*! @brief QSPI command sequence type */
 typedef enum _qspi_command_seq
 {
-    kQSPI_IPSeq = QuadSPI_SPTRCLR_IPPTRC_MASK,                               /*!< IP command sequence */
-    kQSPI_BufferSeq = QuadSPI_SPTRCLR_BFPTRC_MASK,                           /*!< Buffer command sequence */
-    kQSPI_AllSeq = QuadSPI_SPTRCLR_IPPTRC_MASK | QuadSPI_SPTRCLR_BFPTRC_MASK /* All command sequence */
+    kQSPI_IPSeq     = QuadSPI_SPTRCLR_IPPTRC_MASK,                              /*!< IP command sequence */
+    kQSPI_BufferSeq = QuadSPI_SPTRCLR_BFPTRC_MASK,                              /*!< Buffer command sequence */
+    kQSPI_AllSeq    = QuadSPI_SPTRCLR_IPPTRC_MASK | QuadSPI_SPTRCLR_BFPTRC_MASK /* All command sequence */
 } qspi_command_seq_t;
 
 /*! @brief QSPI buffer type */
 typedef enum _qspi_fifo
 {
-    kQSPI_TxFifo = QuadSPI_MCR_CLR_TXF_MASK,                            /*!< QSPI Tx FIFO */
-    kQSPI_RxFifo = QuadSPI_MCR_CLR_RXF_MASK,                            /*!< QSPI Rx FIFO */
+    kQSPI_TxFifo  = QuadSPI_MCR_CLR_TXF_MASK,                           /*!< QSPI Tx FIFO */
+    kQSPI_RxFifo  = QuadSPI_MCR_CLR_RXF_MASK,                           /*!< QSPI Rx FIFO */
     kQSPI_AllFifo = QuadSPI_MCR_CLR_TXF_MASK | QuadSPI_MCR_CLR_RXF_MASK /*!< QSPI all FIFO, including Tx and Rx */
 } qspi_fifo_t;
 
@@ -102,13 +102,13 @@ typedef enum _qspi_endianness
 /*! @brief QSPI error flags */
 enum _qspi_error_flags
 {
-    kQSPI_DataLearningFail = (int)QuadSPI_FR_DLPFF_MASK, /*!< Data learning pattern failure flag */
-    kQSPI_TxBufferFill = QuadSPI_FR_TBFF_MASK,           /*!< Tx buffer fill flag */
-    kQSPI_TxBufferUnderrun = QuadSPI_FR_TBUF_MASK,       /*!< Tx buffer underrun flag */
-    kQSPI_IllegalInstruction = QuadSPI_FR_ILLINE_MASK,   /*!< Illegal instruction error flag */
-    kQSPI_RxBufferOverflow = QuadSPI_FR_RBOF_MASK,       /*!< Rx buffer overflow flag */
-    kQSPI_RxBufferDrain = QuadSPI_FR_RBDF_MASK,          /*!< Rx buffer drain flag */
-    kQSPI_AHBSequenceError = QuadSPI_FR_ABSEF_MASK,      /*!< AHB sequence error flag */
+    kQSPI_DataLearningFail   = (int)QuadSPI_FR_DLPFF_MASK, /*!< Data learning pattern failure flag */
+    kQSPI_TxBufferFill       = QuadSPI_FR_TBFF_MASK,       /*!< Tx buffer fill flag */
+    kQSPI_TxBufferUnderrun   = QuadSPI_FR_TBUF_MASK,       /*!< Tx buffer underrun flag */
+    kQSPI_IllegalInstruction = QuadSPI_FR_ILLINE_MASK,     /*!< Illegal instruction error flag */
+    kQSPI_RxBufferOverflow   = QuadSPI_FR_RBOF_MASK,       /*!< Rx buffer overflow flag */
+    kQSPI_RxBufferDrain      = QuadSPI_FR_RBDF_MASK,       /*!< Rx buffer drain flag */
+    kQSPI_AHBSequenceError   = QuadSPI_FR_ABSEF_MASK,      /*!< AHB sequence error flag */
 #if !defined(FSL_FEATURE_QSPI_HAS_NO_AITEF) || (!FSL_FEATURE_QSPI_HAS_NO_AITEF)
     kQSPI_AHBIllegalTransaction = QuadSPI_FR_AITEF_MASK, /*!< AHB illegal transaction error flag */
 #endif                                                   /* FSL_FEATURE_QSPI_HAS_NO_AITEF */
@@ -120,52 +120,52 @@ enum _qspi_error_flags
     kQSPI_IPCommandUsageError = QuadSPI_FR_IUEF_MASK,              /*!< IP command usage error flag */
 #endif                                                             /* FSL_FEATURE_QSPI_HAS_IP_COMMAND_USAGE_ERROR */
     kQSPI_IPCommandTriggerDuringAHBAccess = QuadSPI_FR_IPAEF_MASK, /*!< IP command trigger during AHB access error */
-    kQSPI_IPCommandTriggerDuringIPAccess = QuadSPI_FR_IPIEF_MASK,  /*!< IP command trigger cannot be executed */
-    kQSPI_IPCommandTriggerDuringAHBGrant = QuadSPI_FR_IPGEF_MASK,  /*!< IP command trigger during AHB grant error */
-    kQSPI_IPCommandTransactionFinished = QuadSPI_FR_TFF_MASK,      /*!< IP command transaction finished flag */
-    kQSPI_FlagAll = (int)0x8C83F8D1U                               /*!< All error flag */
+    kQSPI_IPCommandTriggerDuringIPAccess  = QuadSPI_FR_IPIEF_MASK, /*!< IP command trigger cannot be executed */
+    kQSPI_IPCommandTriggerDuringAHBGrant  = QuadSPI_FR_IPGEF_MASK, /*!< IP command trigger during AHB grant error */
+    kQSPI_IPCommandTransactionFinished    = QuadSPI_FR_TFF_MASK,   /*!< IP command transaction finished flag */
+    kQSPI_FlagAll                         = (int)0x8C83F8D1U       /*!< All error flag */
 };
 
 /*! @brief QSPI state bit */
 enum _qspi_flags
 {
     kQSPI_DataLearningSamplePoint = (int)QuadSPI_SR_DLPSMP_MASK, /*!< Data learning sample point */
-    kQSPI_TxBufferFull = QuadSPI_SR_TXFULL_MASK,                 /*!< Tx buffer full flag */
+    kQSPI_TxBufferFull            = QuadSPI_SR_TXFULL_MASK,      /*!< Tx buffer full flag */
 #if !defined(FSL_FEATURE_QSPI_HAS_NO_TXDMA) || (!FSL_FEATURE_QSPI_HAS_NO_TXDMA)
-    kQSPI_TxDMA = QuadSPI_SR_TXDMA_MASK,                      /*!< Tx DMA is requested or running */
-    kQSPI_TxWatermark = QuadSPI_SR_TXWA_MASK,                 /*!< Tx buffer watermark available */
-#endif                                                        /* FSL_FEATURE_QSPI_HAS_NO_TXDMA */
-    kQSPI_TxBufferEnoughData = QuadSPI_SR_TXEDA_MASK,         /*!< Tx buffer enough data available */
-    kQSPI_RxDMA = QuadSPI_SR_RXDMA_MASK,                      /*!< Rx DMA is requesting or running */
-    kQSPI_RxBufferFull = QuadSPI_SR_RXFULL_MASK,              /*!< Rx buffer full */
-    kQSPI_RxWatermark = QuadSPI_SR_RXWE_MASK,                 /*!< Rx buffer watermark exceeded */
-    kQSPI_AHB3BufferFull = QuadSPI_SR_AHB3FUL_MASK,           /*!< AHB buffer 3 full*/
-    kQSPI_AHB2BufferFull = QuadSPI_SR_AHB2FUL_MASK,           /*!< AHB buffer 2 full */
-    kQSPI_AHB1BufferFull = QuadSPI_SR_AHB1FUL_MASK,           /*!< AHB buffer 1 full */
-    kQSPI_AHB0BufferFull = QuadSPI_SR_AHB0FUL_MASK,           /*!< AHB buffer 0 full */
-    kQSPI_AHB3BufferNotEmpty = QuadSPI_SR_AHB3NE_MASK,        /*!< AHB buffer 3 not empty */
-    kQSPI_AHB2BufferNotEmpty = QuadSPI_SR_AHB2NE_MASK,        /*!< AHB buffer 2 not empty */
-    kQSPI_AHB1BufferNotEmpty = QuadSPI_SR_AHB1NE_MASK,        /*!< AHB buffer 1 not empty */
-    kQSPI_AHB0BufferNotEmpty = QuadSPI_SR_AHB0NE_MASK,        /*!< AHB buffer 0 not empty */
-    kQSPI_AHBTransactionPending = QuadSPI_SR_AHBTRN_MASK,     /*!< AHB access transaction pending */
-    kQSPI_AHBCommandPriorityGranted = QuadSPI_SR_AHBGNT_MASK, /*!< AHB command priority granted */
-    kQSPI_AHBAccess = QuadSPI_SR_AHB_ACC_MASK,                /*!< AHB access */
-    kQSPI_IPAccess = QuadSPI_SR_IP_ACC_MASK,                  /*!< IP access */
-    kQSPI_Busy = QuadSPI_SR_BUSY_MASK,                        /*!< Module busy */
-    kQSPI_StateAll = (int)0xEF897FE7U                         /*!< All flags */
+    kQSPI_TxDMA       = QuadSPI_SR_TXDMA_MASK,                 /*!< Tx DMA is requested or running */
+    kQSPI_TxWatermark = QuadSPI_SR_TXWA_MASK,                  /*!< Tx buffer watermark available */
+#endif                                                         /* FSL_FEATURE_QSPI_HAS_NO_TXDMA */
+    kQSPI_TxBufferEnoughData        = QuadSPI_SR_TXEDA_MASK,   /*!< Tx buffer enough data available */
+    kQSPI_RxDMA                     = QuadSPI_SR_RXDMA_MASK,   /*!< Rx DMA is requesting or running */
+    kQSPI_RxBufferFull              = QuadSPI_SR_RXFULL_MASK,  /*!< Rx buffer full */
+    kQSPI_RxWatermark               = QuadSPI_SR_RXWE_MASK,    /*!< Rx buffer watermark exceeded */
+    kQSPI_AHB3BufferFull            = QuadSPI_SR_AHB3FUL_MASK, /*!< AHB buffer 3 full*/
+    kQSPI_AHB2BufferFull            = QuadSPI_SR_AHB2FUL_MASK, /*!< AHB buffer 2 full */
+    kQSPI_AHB1BufferFull            = QuadSPI_SR_AHB1FUL_MASK, /*!< AHB buffer 1 full */
+    kQSPI_AHB0BufferFull            = QuadSPI_SR_AHB0FUL_MASK, /*!< AHB buffer 0 full */
+    kQSPI_AHB3BufferNotEmpty        = QuadSPI_SR_AHB3NE_MASK,  /*!< AHB buffer 3 not empty */
+    kQSPI_AHB2BufferNotEmpty        = QuadSPI_SR_AHB2NE_MASK,  /*!< AHB buffer 2 not empty */
+    kQSPI_AHB1BufferNotEmpty        = QuadSPI_SR_AHB1NE_MASK,  /*!< AHB buffer 1 not empty */
+    kQSPI_AHB0BufferNotEmpty        = QuadSPI_SR_AHB0NE_MASK,  /*!< AHB buffer 0 not empty */
+    kQSPI_AHBTransactionPending     = QuadSPI_SR_AHBTRN_MASK,  /*!< AHB access transaction pending */
+    kQSPI_AHBCommandPriorityGranted = QuadSPI_SR_AHBGNT_MASK,  /*!< AHB command priority granted */
+    kQSPI_AHBAccess                 = QuadSPI_SR_AHB_ACC_MASK, /*!< AHB access */
+    kQSPI_IPAccess                  = QuadSPI_SR_IP_ACC_MASK,  /*!< IP access */
+    kQSPI_Busy                      = QuadSPI_SR_BUSY_MASK,    /*!< Module busy */
+    kQSPI_StateAll                  = (int)0xEF897FE7U         /*!< All flags */
 };
 
 /*! @brief QSPI interrupt enable */
 enum _qspi_interrupt_enable
 {
     kQSPI_DataLearningFailInterruptEnable =
-        (int)QuadSPI_RSER_DLPFIE_MASK,                           /*!< Data learning pattern failure interrupt enable */
-    kQSPI_TxBufferFillInterruptEnable = QuadSPI_RSER_TBFIE_MASK, /*!< Tx buffer fill interrupt enable */
+        (int)QuadSPI_RSER_DLPFIE_MASK, /*!< Data learning pattern failure interrupt enable */
+    kQSPI_TxBufferFillInterruptEnable     = QuadSPI_RSER_TBFIE_MASK, /*!< Tx buffer fill interrupt enable */
     kQSPI_TxBufferUnderrunInterruptEnable = QuadSPI_RSER_TBUIE_MASK, /*!< Tx buffer underrun interrupt enable */
     kQSPI_IllegalInstructionInterruptEnable =
         QuadSPI_RSER_ILLINIE_MASK,                                    /*!< Illegal instruction error interrupt enable */
     kQSPI_RxBufferOverflowInterruptEnable = QuadSPI_RSER_RBOIE_MASK,  /*!< Rx buffer overflow interrupt enable */
-    kQSPI_RxBufferDrainInterruptEnable = QuadSPI_RSER_RBDIE_MASK,     /*!< Rx buffer drain interrupt enable */
+    kQSPI_RxBufferDrainInterruptEnable    = QuadSPI_RSER_RBDIE_MASK,  /*!< Rx buffer drain interrupt enable */
     kQSPI_AHBSequenceErrorInterruptEnable = QuadSPI_RSER_ABSEIE_MASK, /*!< AHB sequence error interrupt enable */
 #if !defined(FSL_FEATURE_QSPI_HAS_NO_AITEF) || (!FSL_FEATURE_QSPI_HAS_NO_AITEF)
     kQSPI_AHBIllegalTransactionInterruptEnable =
@@ -213,15 +213,25 @@ typedef enum _qspi_dqs_phrase_shift
     kQSPI_DQSPhraseShift135Degree  /*!< Select 135 degree phase shift */
 } qspi_dqs_phrase_shift_t;
 
+/*! @brief Qspi read sampling option. */
+typedef enum _qspi_dqs_read_sample_clock
+{
+    kQSPI_ReadSampleClkInternalLoopback   = 0x0U,      /*!< Read sample clock adopts internal loopback mode. */
+    kQSPI_ReadSampleClkLoopbackFromDqsPad = 0x1U,      /*!< Dummy Read strobe generated by QSPI Controller
+                                                             and loopback from DQS pad. */
+    kQSPI_ReadSampleClkExternalInputFromDqsPad = 0x2U, /*!< Flash provided Read strobe and input from DQS pad. */
+} qspi_dqs_read_sample_clock_t;
+
 /*! @brief DQS configure features*/
 typedef struct QspiDQSConfig
 {
-    uint32_t portADelayTapNum;     /*!< Delay chain tap number selection for QSPI port A DQS */
-    uint32_t portBDelayTapNum;     /*!< Delay chain tap number selection for QSPI port B DQS*/
-    qspi_dqs_phrase_shift_t shift; /*!< Phase shift for internal DQS generation */
-    bool enableDQSClkInverse;      /*!< Enable inverse clock for internal DQS generation */
-    bool enableDQSPadLoopback;     /*!< Enable DQS loop back from DQS pad */
-    bool enableDQSLoopback;        /*!< Enable DQS loop back */
+    uint32_t portADelayTapNum; /*!< Delay chain tap number selection for QSPI port A DQS */
+#if defined(QuadSPI_SOCCR_DQS_IFB_DELAY_CHAIN_SEL_MASK)
+    uint32_t portBDelayTapNum; /*!< Delay chain tap number selection for QSPI port B DQS*/
+#endif
+    qspi_dqs_phrase_shift_t shift;              /*!< Phase shift for internal DQS generation */
+    qspi_dqs_read_sample_clock_t rxSampleClock; /*!< Read sample clock for Dqs. */
+    bool enableDQSClkInverse;                   /*!< Enable inverse clock for internal DQS generation */
 } qspi_dqs_config_t;
 
 /*! @brief Flash timing configuration. */
@@ -274,6 +284,21 @@ typedef struct _qspi_transfer
     size_t dataSize; /*!< Bytes to be transmit */
 } qspi_transfer_t;
 
+/*! @brief 16-bit access reg for IPCR register */
+typedef struct _ip_command_config
+{
+    union
+    {
+        __IO uint32_t IPCR; /*!< IP Configuration Register */
+        struct
+        {
+            __IO uint16_t IDATZ;     /*!< 16-bit access for IDATZ field in IPCR register */
+            __IO uint8_t RESERVED_0; /*!< 8-bit access for RESERVED_0 field in IPCR register */
+            __IO uint8_t SEQID;      /*!< 8-bit access for SEQID field in IPCR register */
+        } BITFIELD;
+    } IPCR_REG;
+} ip_command_config_t;
+
 /******************************************************************************
  * API
  *****************************************************************************/
@@ -287,10 +312,10 @@ extern "C" {
  */
 
 /*!
-* @brief Get the instance number for QSPI.
-*
-* @param base QSPI base pointer.
-*/
+ * @brief Get the instance number for QSPI.
+ *
+ * @param base QSPI base pointer.
+ */
 uint32_t QSPI_GetInstance(QuadSPI_Type *base);
 
 /*!
@@ -331,6 +356,19 @@ void QSPI_Deinit(QuadSPI_Type *base);
  * @param config Flash configuration parameters.
  */
 void QSPI_SetFlashConfig(QuadSPI_Type *base, qspi_flash_config_t *config);
+
+#if (!defined(FSL_FEATURE_QSPI_HAS_NO_SOCCR_REG)) || !FSL_FEATURE_QSPI_HAS_NO_SOCCR_REG
+/*!
+ * @brief Configures the serial flash DQS parameter.
+ *
+ * This function configures the serial flash DQS relevant parameters, such as the delay chain tap number, .
+ * DQS shift phase, whether need to inverse and the rxc sample clock selection.
+ *
+ * @param base Pointer to QuadSPI Type.
+ * @param config Dqs configuration parameters.
+ */
+void QSPI_SetDqsConfig(QuadSPI_Type *base, qspi_dqs_config_t *config);
+#endif
 
 /*!
  * @brief Software reset for the QSPI logic.
@@ -500,7 +538,8 @@ static inline void QSPI_SetIPCommandAddress(QuadSPI_Type *base, uint32_t addr)
  */
 static inline void QSPI_SetIPCommandSize(QuadSPI_Type *base, uint32_t size)
 {
-    base->IPCR = ((base->IPCR & (~QuadSPI_IPCR_IDATSZ_MASK)) | QuadSPI_IPCR_IDATSZ(size));
+    ip_command_config_t *ipCommand     = (ip_command_config_t *)(&(base->IPCR));
+    ipCommand->IPCR_REG.BITFIELD.IDATZ = QuadSPI_IPCR_IDATSZ(size);
 }
 
 /*! @brief Executes IP commands located in LUT table.
@@ -554,11 +593,11 @@ static inline void QSPI_EnableAHBParallelMode(QuadSPI_Type *base, bool enable)
 #endif /* FSL_FEATURE_QSPI_SUPPORT_PARALLEL_MODE */
 
 /*! @brief Updates the LUT table.
-*
-* @param base Pointer to QuadSPI Type.
-* @param index Which LUT index needs to be located. It should be an integer divided by 4.
-* @param cmd Command sequence array.
-*/
+ *
+ * @param base Pointer to QuadSPI Type.
+ * @param index Which LUT index needs to be located. It should be an integer divided by 4.
+ * @param cmd Command sequence array.
+ */
 void QSPI_UpdateLUT(QuadSPI_Type *base, uint32_t index, uint32_t *cmd);
 
 /*! @brief Clears the QSPI FIFO logic.
@@ -599,6 +638,15 @@ static inline void QSPI_EnableDDRMode(QuadSPI_Type *base, bool enable)
         base->MCR &= ~QuadSPI_MCR_DDR_EN_MASK;
     }
 }
+
+#if defined(FSL_FEATURE_QSPI_SOCCR_HAS_CLR_LPCAC) && (FSL_FEATURE_QSPI_SOCCR_HAS_CLR_LPCAC)
+
+/*! @brief Clears the QSPI cache.
+ *
+ * @param base Pointer to QuadSPI Type.
+ */
+void QSPI_ClearCache(QuadSPI_Type *base);
+#endif
 
 /*!@ brief Set the RX buffer readout area.
  *

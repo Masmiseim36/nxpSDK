@@ -30,7 +30,10 @@ static void _USB_OtgKhciRequestState(usb_otg_khci_instance_t *otgKhciInstance,
                                      uint32_t requestState,
                                      uint32_t stateMachine);
 static usb_status_t _USB_OtgKhciCheckSrp(usb_otg_khci_instance_t *otgKhciInstance);
-
+/*misra 17.2 function can't call themselves*/
+static usb_status_t USB_OtgKhciControlPullUp(usb_otg_controller_handle controllerHandle,
+                                             uint32_t controlValue1,
+                                             uint32_t controlValue2);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
@@ -45,120 +48,158 @@ static usb_status_t _USB_OtgKhciCheckSrp(usb_otg_khci_instance_t *otgKhciInstanc
 
     if (otgKhciInstance->checkTime >= USB_OTG_TIME_SRP_TIME_OUT)
     {
-        otgKhciInstance->checkTime = 0;
-        otgKhciInstance->checkSrpState = 0;
+        otgKhciInstance->checkTime     = 0U;
+        otgKhciInstance->checkSrpState = 0U;
     }
 
-    if (otgKhciInstance->checkSrpState == 0) /* check SE0 */
+    if (otgKhciInstance->checkSrpState == 0U) /* check SE0 */
     {
-        if (otgKhciInstance->se0State) /* se0 */
+        if (0U != otgKhciInstance->se0State) /* se0 */
         {
-            otgKhciInstance->checkSrpState = 1;
+            otgKhciInstance->checkSrpState = 1U;
         }
     }
-    else if (otgKhciInstance->checkSrpState == 1) /* check J */
+    else if (otgKhciInstance->checkSrpState == 1U) /* check J */
     {
-        if (otgKhciInstance->jState) /* J */
+        if (0U != otgKhciInstance->jState) /* J */
         {
             otgKhciInstance->checkSrpState = 2;
-            otgKhciInstance->checkTime = 0;
+            otgKhciInstance->checkTime     = 0;
         }
-        else if ((!(otgKhciInstance->se0State)) &&
-                 (otgKhciInstance->usbRegBase->OTGSTAT & USB_OTGSTAT_LINESTATESTABLE_MASK))
+        else if ((0U == (otgKhciInstance->se0State)) &&
+                 (0U != (otgKhciInstance->usbRegBase->OTGSTAT & USB_OTGSTAT_LINESTATESTABLE_MASK)))
         {
-            otgKhciInstance->checkSrpState = 0;
+            otgKhciInstance->checkSrpState = 0U;
         }
         else
         {
+            /*no action*/
         }
     }
-    else if (otgKhciInstance->checkSrpState == 2) /* check SE0 */
+    else if (otgKhciInstance->checkSrpState == 2U) /* check SE0 */
     {
-        if (otgKhciInstance->se0State) /* se0 */
+        if (0U != otgKhciInstance->se0State) /* se0 */
         {
-            otgKhciInstance->checkSrpState = 0; /* check next srp */
+            otgKhciInstance->checkSrpState = 0U; /* check next srp */
             if ((otgKhciInstance->checkTime >= USB_OTG_TIME_B_DATA_PLS_MIN) &&
                 (otgKhciInstance->checkTime <= USB_OTG_TIME_B_DATA_PLS_MAX))
             {
-                otgKhciInstance->checkTime = 0;
-                USB_OtgNotifyChange(otgKhciInstance->otgHandle, kOtg_StatusSrpDet, 1);
+                otgKhciInstance->checkTime = 0U;
+                (void)USB_OtgNotifyChange(otgKhciInstance->otgHandle, (uint32_t)kOtg_StatusSrpDet, 1U);
                 return kStatus_USB_Success;
             }
         }
-        else if ((!(otgKhciInstance->jState)) &&
-                 (otgKhciInstance->usbRegBase->OTGSTAT & USB_OTGSTAT_LINESTATESTABLE_MASK))
+        else if ((0U == (otgKhciInstance->jState)) &&
+                 (0U != (otgKhciInstance->usbRegBase->OTGSTAT & USB_OTGSTAT_LINESTATESTABLE_MASK)))
         {
-            otgKhciInstance->checkSrpState = 0;
+            otgKhciInstance->checkSrpState = 0U;
         }
         else
         {
+            /*no action*/
         }
     }
     else
     {
+        /*no action*/
     }
 
     return kStatus_USB_Error;
 }
+/*add this for misra 17.2, function can't call themselves. the function is same as kOtg_ControlPullUp of
+ * USB_OtgKhciControl*/
+static usb_status_t USB_OtgKhciControlPullUp(usb_otg_controller_handle controllerHandle,
+                                             uint32_t controlValue1,
+                                             uint32_t controlValue2)
 
-void USB_OtgKhciParsePeripheralStatus(usb_otg_khci_instance_t *otgKhciInstance, uint32_t newStatus)
+{
+    usb_otg_khci_instance_t *otgKhciInstance = (usb_otg_khci_instance_t *)controllerHandle;
+    if (controllerHandle == NULL)
+    {
+        return kStatus_USB_Error;
+    }
+
+    if (0U != (controlValue1 & ((uint32_t)kOtg_PullDp)))
+    {
+#if (FSL_FEATURE_USB_KHCI_OTG_ENABLED)
+        otgKhciInstance->usbRegBase->OTGCTL |= USB_OTGCTL_DPHIGH_MASK;
+        otgKhciInstance->usbRegBase->CONTROL |= USB_CONTROL_DPPULLUPNONOTG_MASK;
+#else
+        otgKhciInstance->usbRegBase->CONTROL |= USB_CONTROL_DPPULLUPNONOTG_MASK;
+#endif
+    }
+    else
+    {
+#if (FSL_FEATURE_USB_KHCI_OTG_ENABLED)
+        otgKhciInstance->usbRegBase->OTGCTL &= (uint8_t)(~USB_OTGCTL_DPHIGH_MASK);
+        otgKhciInstance->usbRegBase->CONTROL &= (uint8_t)(~USB_CONTROL_DPPULLUPNONOTG_MASK);
+#else
+        otgKhciInstance->usbRegBase->CONTROL &= (uint8_t)(~USB_CONTROL_DPPULLUPNONOTG_MASK);
+#endif
+    }
+    return kStatus_USB_Success;
+}
+static void USB_OtgKhciParsePeripheralStatus(usb_otg_khci_instance_t *otgKhciInstance, uint32_t newStatus)
 {
     uint32_t changes = 0;
-    uint32_t value = 0;
+    uint32_t value   = 0;
 
-    changes = otgKhciInstance->peripheralStatus ^ newStatus;
+    changes                           = otgKhciInstance->peripheralStatus ^ newStatus;
     otgKhciInstance->peripheralStatus = newStatus;
 
-    if (otgKhciInstance->checkType == kOtg_CheckBHNP)
+    if (otgKhciInstance->checkType == (uint8_t)kOtg_CheckBHNP)
     {
-        if (newStatus & kPeripheral_StatusHNPdetected)
+        if (0U != (newStatus & ((uint32_t)kPeripheral_StatusHNPdetected)))
         {
-            if (otgKhciInstance->lastState == kOtg_State_ASuspend)
+            if (otgKhciInstance->lastState == (uint32_t)kOtg_State_ASuspend)
             {
                 /* keep the pull-up */
-                USB_OtgKhciControl(otgKhciInstance, kOtg_ControlPullUp, kOtg_PullDp, 0);
+                (void)USB_OtgKhciControlPullUp(otgKhciInstance, (uint32_t)kOtg_PullDp, 0U);
                 /* disable hnp check */
-                USB_OtgPeripheralControl(otgKhciInstance, kPeripheral_ControlHNPCheckEnable, 0, 0);
-                USB_OtgNotifyChange(otgKhciInstance->otgHandle, kOtg_StatusBConn, 0); /* enter a_peripheral */
+                (void)USB_OtgPeripheralControl(otgKhciInstance, (uint32_t)kPeripheral_ControlHNPCheckEnable, 0U, 0U);
+                (void)USB_OtgNotifyChange(otgKhciInstance->otgHandle, (uint32_t)kOtg_StatusBConn,
+                                          0U); /* enter a_peripheral */
             }
-            else if (otgKhciInstance->lastState == kOtg_State_BWaitAcon)
+            else if (otgKhciInstance->lastState == (uint32_t)kOtg_State_BWaitAcon)
             {
-                USB_OtgNotifyChange(otgKhciInstance->otgHandle, kOtg_StatusAConn, 1); /* enter b_host */
+                (void)USB_OtgNotifyChange(otgKhciInstance->otgHandle, (uint32_t)kOtg_StatusAConn,
+                                          1U); /* enter b_host */
             }
             else
             {
+                /*no action*/
             }
         }
     }
 
-    if (changes & kPeripheral_StatusId)
+    if (0U != (changes & ((uint32_t)kPeripheral_StatusId)))
     {
-        value = 0;
-        if (newStatus & kPeripheral_StatusId)
+        value = 0U;
+        if (0U != (newStatus & ((uint32_t)kPeripheral_StatusId)))
         {
-            value = 1;
+            value = 1U;
         }
-        USB_OtgNotifyChange(otgKhciInstance->otgHandle, kOtg_StatusId, value);
+        (void)USB_OtgNotifyChange(otgKhciInstance->otgHandle, (uint32_t)kOtg_StatusId, value);
     }
 
-    if (changes & kPeripheral_StatusSessVld)
+    if (0U != (changes & ((uint32_t)kPeripheral_StatusSessVld)))
     {
-        value = 0;
-        if (newStatus & kPeripheral_StatusSessVld)
+        value = 0U;
+        if (0U != (newStatus & ((uint32_t)kPeripheral_StatusSessVld)))
         {
-            value = 1;
+            value = 1U;
         }
-        USB_OtgNotifyChange(otgKhciInstance->otgHandle, kOtg_StatusSessVld, value);
+        (void)USB_OtgNotifyChange(otgKhciInstance->otgHandle, (uint32_t)kOtg_StatusSessVld, value);
     }
 
-    if (changes & kPeripheral_StatusVbusVld)
+    if (0U != (changes & ((uint8_t)kPeripheral_StatusVbusVld)))
     {
-        value = 0;
-        if (newStatus & kPeripheral_StatusVbusVld)
+        value = 0U;
+        if (0U != (newStatus & ((uint8_t)kPeripheral_StatusVbusVld)))
         {
-            value = 1;
+            value = 1U;
         }
-        USB_OtgNotifyChange(otgKhciInstance->otgHandle, kOtg_StatusVbusVld, value);
+        (void)USB_OtgNotifyChange(otgKhciInstance->otgHandle, (uint32_t)kOtg_StatusVbusVld, value);
     }
 }
 
@@ -167,70 +208,70 @@ static void _USB_OtgKhciRequestState(usb_otg_khci_instance_t *otgKhciInstance,
                                      uint32_t stateMachine)
 {
     uint32_t value;
-    otgKhciInstance->checkType = kOtg_CheckNone;
+    otgKhciInstance->checkType = (uint8_t)kOtg_CheckNone;
 
-    if ((stateMachine == kOtg_State_ASuspend) || (stateMachine == kOtg_State_BWaitAcon))
+    if ((stateMachine == ((uint32_t)kOtg_State_ASuspend)) || (stateMachine == ((uint32_t)kOtg_State_BWaitAcon)))
     {
         /* enable hnp check */
-        USB_OtgPeripheralControl(otgKhciInstance, kPeripheral_ControlHNPCheckEnable, 1, 0);
+        (void)USB_OtgPeripheralControl(otgKhciInstance, (uint32_t)kPeripheral_ControlHNPCheckEnable, 1U, 0U);
         otgKhciInstance->checkTime = USB_OTG_TIME_CHECK_BHNP_PERIODIC;
-        otgKhciInstance->checkType = kOtg_CheckBHNP;
+        otgKhciInstance->checkType = (uint8_t)kOtg_CheckBHNP;
     }
     else
     {
         /* disable hnp check */
-        USB_OtgPeripheralControl(otgKhciInstance, kPeripheral_ControlHNPCheckEnable, 0, 0);
+        (void)USB_OtgPeripheralControl(otgKhciInstance, (uint32_t)kPeripheral_ControlHNPCheckEnable, 0U, 0U);
     }
 
     /*
      * Don't need process the follow requested state because they are notified by interrupt:
      * kOtg_StatusId, kOtg_StatusVbusVld, kOtg_StatusVbusInvld, kOtg_StatusSessInvld, kOtg_StatusSessVld
-    */
-    if (requestState & kOtg_StatusAdpChange)
+     */
+    if (0U != (requestState & ((uint32_t)kOtg_StatusAdpChange)))
     {
         /* todo: not yet */
     }
 
-    if (requestState & kOtg_StatusSrpDet)
+    if (0U != (requestState & ((uint32_t)kOtg_StatusSrpDet)))
     {
         otgKhciInstance->checkTime = 0;
-        otgKhciInstance->checkType = kOtg_CheckSrp;
+        otgKhciInstance->checkType = (uint8_t)kOtg_CheckSrp;
     }
 
-    if (requestState & kOtg_StatusAConn)
+    if (0U != (requestState & ((uint8_t)kOtg_StatusAConn)))
     {
         /* check max3353 BHNP periodic */
         otgKhciInstance->checkTime = USB_OTG_TIME_CHECK_BHNP_PERIODIC;
-        otgKhciInstance->checkType = kOtg_CheckBHNP;
+        otgKhciInstance->checkType = (uint8_t)kOtg_CheckBHNP;
     }
 
-    if (requestState & kOtg_StatusBusResume)
+    if (0U != (requestState & ((uint32_t)kOtg_StatusBusResume)))
     {
         /* todo: check resume, not yet */
     }
 
-    if (requestState & kOtg_StatusBusSuspend)
+    if (0U != (requestState & ((uint8_t)kOtg_StatusBusSuspend)))
     {
-        otgKhciInstance->checkType = kOtg_CheckSuspend;
+        otgKhciInstance->checkType = (uint8_t)kOtg_CheckSuspend;
     }
 
-    if (requestState & kOtg_StatusSe0Srp)
+    if (0U != (requestState & ((uint32_t)kOtg_StatusSe0Srp)))
     {
         otgKhciInstance->checkTime = 0;
-        otgKhciInstance->checkType = kOtg_CheckSsendSe0Srp; /* check session invalid */
+        otgKhciInstance->checkType = (uint8_t)kOtg_CheckSsendSe0Srp; /* check session invalid */
     }
 
-    if (requestState & kOtg_StatusSsendSrp)
+    if (0U != (requestState & ((uint32_t)kOtg_StatusSsendSrp)))
     {
         if (otgKhciInstance->bssendsrpCheck > USB_OTG_TIME_B_SSEND_SRP)
         {
-            USB_OtgNotifyChange(otgKhciInstance->otgHandle, kOtg_StatusSsendSrp, 1);
+            (void)USB_OtgNotifyChange(otgKhciInstance->otgHandle, (uint32_t)kOtg_StatusSsendSrp, 1);
         }
     }
 
-    if (requestState & kOtg_StatusBConn)
+    if (0U != (requestState & ((uint32_t)kOtg_StatusBConn)))
     {
-        if (otgKhciInstance->lastState == kOtg_State_AWaitVrise)
+        if (otgKhciInstance->lastState == (uint32_t)kOtg_State_AWaitVrise)
         {
             otgKhciInstance->checkTime = USB_OTG_TIME_A_BCON_LDB;
         }
@@ -238,40 +279,40 @@ static void _USB_OtgKhciRequestState(usb_otg_khci_instance_t *otgKhciInstance,
         {
             otgKhciInstance->checkTime = USB_OTG_TIME_A_BCON_SDB;
         }
-        otgKhciInstance->checkType = kOtg_CheckConn;
+        otgKhciInstance->checkType = (uint8_t)kOtg_CheckConn;
     }
 
-    if (requestState & kOtg_StatusBDisconn)
+    if (0U != (requestState & ((uint32_t)kOtg_StatusBDisconn)))
     {
-        if (stateMachine != kOtg_State_ASuspend)
+        if (stateMachine != ((uint32_t)kOtg_State_ASuspend))
         {
             otgKhciInstance->checkTime = USB_OTG_TIME_CHECK_DETACH;
-            otgKhciInstance->checkType = kOtg_CheckNonConn;
+            otgKhciInstance->checkType = (uint8_t)kOtg_CheckNonConn;
         }
     }
 
-    if (requestState & kOtg_StatusADisconn)
+    if (0U != (requestState & ((uint32_t)kOtg_StatusADisconn)))
     {
         otgKhciInstance->checkTime = USB_OTG_TIME_CHECK_DETACH;
-        otgKhciInstance->checkType = kOtg_CheckNonConn;
+        otgKhciInstance->checkType = (uint8_t)kOtg_CheckNonConn;
     }
 
-    if (requestState & kOtg_StatusCheckIdleInAPeripheral)
+    if (0U != (requestState & ((uint32_t)kOtg_StatusCheckIdleInAPeripheral)))
     {
-        otgKhciInstance->checkType = kOtg_CheckIdleTimeOut;
+        otgKhciInstance->checkType      = (uint8_t)kOtg_CheckIdleTimeOut;
         otgKhciInstance->lineStableTime = 0U;
     }
 
 #if ((defined USB_OTG_KHCI_PERIPHERAL_ENABLE) && (USB_OTG_KHCI_PERIPHERAL_ENABLE))
-    USB_OtgPeripheralGetStatus(kPeripheral_StatusAll, &value);
-    USB_OtgKhciParsePeripheralStatus(otgKhciInstance, value);
+    (void)USB_OtgPeripheralGetStatus((uint32_t)kPeripheral_StatusAll, &value);
+    (void)USB_OtgKhciParsePeripheralStatus(otgKhciInstance, value);
 
     /* at start, don't know the id state, so need notify the id state no matter the id value */
-    if ((requestState & kOtg_StatusId) && (stateMachine == kOtg_State_Start))
+    if (0U != ((requestState & ((uint32_t)kOtg_StatusId))) && (stateMachine == ((uint32_t)kOtg_State_Start)))
     {
-        USB_OtgPeripheralGetStatus(kPeripheral_StatusAll, &value);
+        (void)USB_OtgPeripheralGetStatus((uint32_t)kPeripheral_StatusAll, &value);
         otgKhciInstance->peripheralStatus = value; /* initialized status */
-        if (value & kPeripheral_StatusId)
+        if (0U != (value & ((uint32_t)kPeripheral_StatusId)))
         {
             value = 1U;
         }
@@ -279,7 +320,7 @@ static void _USB_OtgKhciRequestState(usb_otg_khci_instance_t *otgKhciInstance,
         {
             value = 0U;
         }
-        USB_OtgNotifyChange(otgKhciInstance->otgHandle, kOtg_StatusId, value);
+        (void)USB_OtgNotifyChange(otgKhciInstance->otgHandle, (uint32_t)kOtg_StatusId, value);
     }
 #endif
 
@@ -292,8 +333,11 @@ usb_status_t USB_OtgKhciInit(uint8_t controllerId,
 {
     usb_otg_khci_instance_t *otgKhciInstance;
     uint32_t usbfsBaseAddrs[] = USB_BASE_ADDRS;
+    void *temp;
+    uint32_t *pointer;
 
-    if ((uint32_t)(controllerId - kUSB_ControllerKhci0) >= (sizeof(usbfsBaseAddrs) / sizeof(usbfsBaseAddrs[0])))
+    if (((uint32_t)controllerId - (uint32_t)kUSB_ControllerKhci0) >=
+        (sizeof(usbfsBaseAddrs) / sizeof(usbfsBaseAddrs[0])))
     {
         return kStatus_USB_ControllerNotFound;
     }
@@ -307,12 +351,14 @@ usb_status_t USB_OtgKhciInit(uint8_t controllerId,
     {
         return kStatus_USB_AllocFail;
     }
-    otgKhciInstance->otgHandle = otgHandle;
-    otgKhciInstance->usbRegBase = (USB_Type *)usbfsBaseAddrs[controllerId - kUSB_ControllerKhci0];
-    otgKhciInstance->externalTimerEnable = 0;
+    otgKhciInstance->otgHandle           = otgHandle;
+    pointer                              = (uint32_t *)usbfsBaseAddrs[controllerId - (uint8_t)kUSB_ControllerKhci0];
+    temp                                 = (void *)pointer;
+    otgKhciInstance->usbRegBase          = (USB_Type *)temp;
+    otgKhciInstance->externalTimerEnable = 0U;
 
     /* initialize controller */
-    otgKhciInstance->usbRegBase->ISTAT = 0xFFU; /* clear all interrupts */
+    otgKhciInstance->usbRegBase->ISTAT    = 0xFFU; /* clear all interrupts */
     otgKhciInstance->usbRegBase->OTGISTAT = 0xFFU;
     otgKhciInstance->usbRegBase->OTGCTL |= USB_OTGCTL_OTGEN_MASK; /* enable otg */
     otgKhciInstance->usbRegBase->OTGICR |=
@@ -336,8 +382,8 @@ usb_status_t USB_OtgKhciDeinit(usb_otg_controller_handle controllerHandle)
     }
 
     /* clear all interrupts */
-    otgKhciInstance->usbRegBase->OTGCTL &= (~USB_OTGCTL_OTGEN_MASK); /* disable otg */
-    otgKhciInstance->usbRegBase->ISTAT = 0xFFU;
+    otgKhciInstance->usbRegBase->OTGCTL &= (uint8_t)(~USB_OTGCTL_OTGEN_MASK); /* disable otg */
+    otgKhciInstance->usbRegBase->ISTAT    = 0xFFU;
     otgKhciInstance->usbRegBase->OTGISTAT = 0xFFU;
 
     OSA_MemoryFree(otgKhciInstance);
@@ -355,17 +401,17 @@ usb_status_t USB_OtgKhciControl(usb_otg_controller_handle controllerHandle,
                                 uint32_t controlValue2)
 {
     usb_otg_khci_instance_t *otgKhciInstance = (usb_otg_khci_instance_t *)controllerHandle;
-    uint32_t statusValue = 0;
-
+    uint32_t statusValue                     = 0U;
+    usb_otg_control_t controlCode            = (usb_otg_control_t)controlType;
     if (controllerHandle == NULL)
     {
         return kStatus_USB_Error;
     }
 
-    switch (controlType)
+    switch (controlCode)
     {
         case kOtg_ControlPullUp:
-            if (controlValue1 & kOtg_PullDp)
+            if (0U != (controlValue1 & ((uint32_t)kOtg_PullDp)))
             {
 #if (FSL_FEATURE_USB_KHCI_OTG_ENABLED)
                 otgKhciInstance->usbRegBase->OTGCTL |= USB_OTGCTL_DPHIGH_MASK;
@@ -377,45 +423,44 @@ usb_status_t USB_OtgKhciControl(usb_otg_controller_handle controllerHandle,
             else
             {
 #if (FSL_FEATURE_USB_KHCI_OTG_ENABLED)
-                otgKhciInstance->usbRegBase->OTGCTL &= (~USB_OTGCTL_DPHIGH_MASK);
-                otgKhciInstance->usbRegBase->CONTROL &= (~USB_CONTROL_DPPULLUPNONOTG_MASK);
+                otgKhciInstance->usbRegBase->OTGCTL &= (uint8_t)(~USB_OTGCTL_DPHIGH_MASK);
+                otgKhciInstance->usbRegBase->CONTROL &= (uint8_t)(~USB_CONTROL_DPPULLUPNONOTG_MASK);
 #else
-                otgKhciInstance->usbRegBase->CONTROL &= (~USB_CONTROL_DPPULLUPNONOTG_MASK);
+                otgKhciInstance->usbRegBase->CONTROL &= (uint8_t)(~USB_CONTROL_DPPULLUPNONOTG_MASK);
 #endif
             }
             break;
-
         case kOtg_ControlPullDown:
-            if (controlValue1 & kOtg_PullDp)
+            if (0U != (controlValue1 & ((uint32_t)kOtg_PullDp)))
             {
                 otgKhciInstance->usbRegBase->OTGCTL |= USB_OTGCTL_DPLOW_MASK;
             }
             else
             {
-                otgKhciInstance->usbRegBase->OTGCTL &= (~USB_OTGCTL_DPLOW_MASK);
+                otgKhciInstance->usbRegBase->OTGCTL &= (uint8_t)(~USB_OTGCTL_DPLOW_MASK);
             }
 
-            if (controlValue1 & kOtg_PullDm)
+            if (0U != (controlValue1 & ((uint32_t)kOtg_PullDm)))
             {
                 otgKhciInstance->usbRegBase->OTGCTL |= USB_OTGCTL_DMLOW_MASK;
             }
             else
             {
-                otgKhciInstance->usbRegBase->OTGCTL &= (~USB_OTGCTL_DMLOW_MASK);
+                otgKhciInstance->usbRegBase->OTGCTL &= (uint8_t)(~USB_OTGCTL_DMLOW_MASK);
             }
             break;
 
         case kOtg_ControlResume:
-            if (controlValue1)
+            if (0U != controlValue1)
             {
                 otgKhciInstance->usbRegBase->CTL |= USB_CTL_RESUME_MASK;
 
-                otgKhciInstance->internalTimerValue = controlValue1; /* ms */
-                while (otgKhciInstance->internalTimerValue > 0)
+                otgKhciInstance->internalTimerValue = (uint16_t)controlValue1; /* ms */
+                while (otgKhciInstance->internalTimerValue > 0U)
                 {
                 }
 
-                otgKhciInstance->usbRegBase->CTL &= (~USB_CTL_RESUME_MASK);
+                otgKhciInstance->usbRegBase->CTL &= (uint8_t)(~USB_CTL_RESUME_MASK);
             }
             break;
 #if ((defined USB_OTG_ADP_ENABLE) && (USB_OTG_ADP_ENABLE))
@@ -425,43 +470,45 @@ usb_status_t USB_OtgKhciControl(usb_otg_controller_handle controllerHandle,
 
         case kOtg_ControlDataPulse:
             /* send srp */
-            USB_OtgKhciControl(otgKhciInstance, kOtg_ControlPullUp, kOtg_PullDp, 0);
+            (void)USB_OtgKhciControlPullUp(otgKhciInstance, (uint32_t)kOtg_PullDp, 0U);
             otgKhciInstance->internalTimerValue = USB_OTG_TIME_B_DATA_PLS; /* ms */
-            while (otgKhciInstance->internalTimerValue > 0)
+            while (otgKhciInstance->internalTimerValue > 0U)
             {
             }
-            USB_OtgKhciControl(otgKhciInstance, kOtg_ControlPullUp, 0, 0);
-            USB_OtgNotifyChange(otgKhciInstance->otgHandle, kOtg_StatusBSrpDone, 1);
+            (void)USB_OtgKhciControlPullUp(otgKhciInstance, 0U, 0U);
+            (void)USB_OtgNotifyChange(otgKhciInstance->otgHandle, (uint32_t)kOtg_StatusBSrpDone, 1U);
             break;
 
         case kOtg_ControlSetTimer:
-            otgKhciInstance->externalTimerEnable = 1;
-            otgKhciInstance->externalTimerValue = controlValue1;
+            otgKhciInstance->externalTimerEnable = 1U;
+            otgKhciInstance->externalTimerValue  = (uint16_t)controlValue1;
             break;
 
         case kOtg_ControlCancelTimer:
-            otgKhciInstance->externalTimerEnable = 0;
+            otgKhciInstance->externalTimerEnable = 0U;
             break;
 
         case kOtg_ControlVbus:
 #if ((defined USB_OTG_KHCI_PERIPHERAL_ENABLE) && (USB_OTG_KHCI_PERIPHERAL_ENABLE))
-            USB_OtgPeripheralControl(otgKhciInstance, kPeripheral_ControlVbus, controlValue1, 0);
+            (void)USB_OtgPeripheralControl(otgKhciInstance, (uint32_t)kPeripheral_ControlVbus, controlValue1, 0U);
 #endif
             break;
 
         case kOtg_ControlUpdateStatus:
 #if ((defined USB_OTG_KHCI_PERIPHERAL_ENABLE) && (USB_OTG_KHCI_PERIPHERAL_ENABLE))
-            USB_OtgPeripheralControl(otgKhciInstance, kPeripheral_ControlUpdateStatus, controlValue1, 0);
+            (void)USB_OtgPeripheralControl(otgKhciInstance, (uint32_t)kPeripheral_ControlUpdateStatus, controlValue1,
+                                           0U);
 #endif
-            USB_OtgPeripheralGetStatus(kPeripheral_StatusAll, &statusValue);
-            USB_OtgKhciParsePeripheralStatus(otgKhciInstance, statusValue);
+            (void)USB_OtgPeripheralGetStatus((uint32_t)kPeripheral_StatusAll, &statusValue);
+            (void)USB_OtgKhciParsePeripheralStatus(otgKhciInstance, statusValue);
             break;
 
         case kOtg_ControlRequestStatus:
-            _USB_OtgKhciRequestState(otgKhciInstance, controlValue1, controlValue2);
+            (void)_USB_OtgKhciRequestState(otgKhciInstance, controlValue1, controlValue2);
             break;
 
         default:
+            /*no action*/
             break;
     }
 
@@ -473,7 +520,7 @@ void USB_OtgKhciIsrFunction(usb_otg_handle otgHandle)
     usb_otg_khci_instance_t *otgKhciInstance;
     uint8_t otgInterrupts;
     uint32_t value;
-
+    usb_otg_check_type_t checkType;
     if (otgHandle == NULL)
     {
         return;
@@ -483,14 +530,15 @@ void USB_OtgKhciIsrFunction(usb_otg_handle otgHandle)
     otgInterrupts = (otgKhciInstance->usbRegBase->OTGISTAT & otgKhciInstance->usbRegBase->OTGICR);
     otgKhciInstance->usbRegBase->OTGISTAT = otgInterrupts; /* clear interrupts */
 
-    if ((otgInterrupts & USB_OTGISTAT_LINE_STATE_CHG_MASK) &&
-        (otgKhciInstance->usbRegBase->OTGSTAT & USB_OTGSTAT_LINESTATESTABLE_MASK)) /* line state change and stable */
+    if ((0U != (otgInterrupts & USB_OTGISTAT_LINE_STATE_CHG_MASK)) &&
+        (0U !=
+         (otgKhciInstance->usbRegBase->OTGSTAT & USB_OTGSTAT_LINESTATESTABLE_MASK))) /* line state change and stable */
     {
         otgKhciInstance->lineStableTime = 0U;
-        otgKhciInstance->se0State = otgKhciInstance->usbRegBase->CTL & USB_CTL_SE0_MASK;
-        if (otgKhciInstance->se0State)
+        otgKhciInstance->se0State       = otgKhciInstance->usbRegBase->CTL & USB_CTL_SE0_MASK;
+        if (0U != (otgKhciInstance->se0State))
         {
-            otgKhciInstance->jState = 0;
+            otgKhciInstance->jState = 0U;
         }
         else
         {
@@ -498,13 +546,13 @@ void USB_OtgKhciIsrFunction(usb_otg_handle otgHandle)
         }
     }
 
-    if (otgInterrupts & USB_OTGISTAT_ONEMSEC_MASK) /* 1ms */
+    if (0U != (otgInterrupts & USB_OTGISTAT_ONEMSEC_MASK)) /* 1ms */
     {
-        if (!(otgKhciInstance->usbRegBase->OTGSTAT & USB_OTGSTAT_LINESTATESTABLE_MASK))
+        if (0U == (otgKhciInstance->usbRegBase->OTGSTAT & USB_OTGSTAT_LINESTATESTABLE_MASK))
         {
             otgKhciInstance->lineStableTime = 0U;
-            otgKhciInstance->se0State = otgKhciInstance->usbRegBase->CTL & USB_CTL_SE0_MASK;
-            otgKhciInstance->jState = 0;
+            otgKhciInstance->se0State       = otgKhciInstance->usbRegBase->CTL & USB_CTL_SE0_MASK;
+            otgKhciInstance->jState         = 0U;
         }
         else
         {
@@ -514,84 +562,86 @@ void USB_OtgKhciIsrFunction(usb_otg_handle otgHandle)
             }
         }
 
-        if ((otgKhciInstance->externalTimerEnable) && (otgKhciInstance->externalTimerValue > 0))
+        if ((0U != otgKhciInstance->externalTimerEnable) && (otgKhciInstance->externalTimerValue > 0U))
         {
             otgKhciInstance->externalTimerValue--;
-            if (otgKhciInstance->externalTimerValue == 0)
+            if (otgKhciInstance->externalTimerValue == 0U)
             {
-                otgKhciInstance->externalTimerEnable = 0;
-                USB_OtgNotifyChange(otgHandle, kOtg_StatusTimeOut, 1);
+                otgKhciInstance->externalTimerEnable = 0U;
+                (void)USB_OtgNotifyChange(otgHandle, (uint32_t)kOtg_StatusTimeOut, 1U);
             }
         }
 
-        if (otgKhciInstance->internalTimerValue > 0)
+        if (otgKhciInstance->internalTimerValue > 0U)
         {
             otgKhciInstance->internalTimerValue--;
         }
 
-        switch (otgKhciInstance->checkType)
+        checkType = (usb_otg_check_type_t)otgKhciInstance->checkType;
+        switch (checkType)
         {
             case kOtg_CheckNonConn:
-                if ((otgKhciInstance->se0State) && (otgKhciInstance->lineStableTime > otgKhciInstance->checkTime))
+                if ((0U != otgKhciInstance->se0State) && (otgKhciInstance->lineStableTime > otgKhciInstance->checkTime))
                 {
-                    otgKhciInstance->checkType = kOtg_CheckNone;
-                    if (otgKhciInstance->lastState == kOtg_State_BHost)
+                    otgKhciInstance->checkType = (uint8_t)kOtg_CheckNone;
+                    if (otgKhciInstance->lastState == (uint32_t)kOtg_State_BHost)
                     {
-                        USB_OtgNotifyChange(otgHandle, kOtg_StatusAConn, 0);
+                        (void)USB_OtgNotifyChange(otgHandle, (uint32_t)kOtg_StatusAConn, 0);
                     }
-                    else if ((otgKhciInstance->lastState == kOtg_State_AHost))
+                    else if ((otgKhciInstance->lastState == (uint32_t)kOtg_State_AHost))
                     {
-                        USB_OtgNotifyChange(otgHandle, kOtg_StatusBConn, 0);
+                        (void)USB_OtgNotifyChange(otgHandle, (uint32_t)kOtg_StatusBConn, 0);
                     }
                     else
                     {
+                        /*no action*/
                     }
                 }
                 break;
 
             case kOtg_CheckConn:
-                if ((!(otgKhciInstance->se0State)) && (otgKhciInstance->jState) &&
-                    (otgKhciInstance->usbRegBase->OTGSTAT & USB_OTGSTAT_LINESTATESTABLE_MASK))
+                if ((0U == (otgKhciInstance->se0State)) && (0U != otgKhciInstance->jState) &&
+                    (0U != (otgKhciInstance->usbRegBase->OTGSTAT & USB_OTGSTAT_LINESTATESTABLE_MASK)))
                 {
-                    if (otgKhciInstance->lastState == kOtg_State_AWaitBcon)
+                    if (otgKhciInstance->lastState == (uint32_t)kOtg_State_AWaitBcon)
                     {
                         if (otgKhciInstance->lineStableTime >= otgKhciInstance->checkTime)
                         {
-                            otgKhciInstance->checkType = kOtg_CheckNone;
-                            USB_OtgNotifyChange(otgHandle, kOtg_StatusBConn, 1);
+                            otgKhciInstance->checkType = (uint8_t)kOtg_CheckNone;
+                            (void)USB_OtgNotifyChange(otgHandle, (uint32_t)kOtg_StatusBConn, 1U);
                         }
                     }
                 }
                 break;
 
             case kOtg_CheckSsendSe0Srp: /* b_idle */
-                if ((otgKhciInstance->se0State) &&
+                if ((0U != otgKhciInstance->se0State) &&
                     (otgKhciInstance->lineStableTime >= USB_OTG_TIME_B_SE0_SRP)) /* se0 */
                 {
-                    otgKhciInstance->lineStableTime = 0;
-                    USB_OtgNotifyChange(otgHandle, kOtg_StatusSe0Srp, 1);
+                    otgKhciInstance->lineStableTime = 0U;
+                    (void)USB_OtgNotifyChange(otgHandle, (uint32_t)kOtg_StatusSe0Srp, 1U);
                 }
                 break;
 
             case kOtg_CheckIdleTimeOut: /* a_peripheral */
                 if ((otgKhciInstance->lineStableTime >= USB_OTG_TIME_A_BIDL_ADIS))
                 {
-                    otgKhciInstance->checkType = kOtg_CheckNone;
-                    USB_OtgNotifyChange(otgHandle, kOtg_StatusTimeOut, 1);
+                    otgKhciInstance->checkType = (uint8_t)kOtg_CheckNone;
+                    (void)USB_OtgNotifyChange(otgHandle, (uint32_t)kOtg_StatusTimeOut, 1U);
                 }
                 break;
 
             case kOtg_CheckSrp:
-                _USB_OtgKhciCheckSrp(otgKhciInstance);
+                (void)_USB_OtgKhciCheckSrp(otgKhciInstance);
                 break;
 
             case kOtg_CheckBHNP:
                 otgKhciInstance->checkTime--;
-                if (otgKhciInstance->checkTime == 0)
+                if (otgKhciInstance->checkTime == 0U)
                 {
                     otgKhciInstance->checkTime = USB_OTG_TIME_CHECK_BHNP_PERIODIC;
                     /* poll for HNP because max3353 has no interrupt for it */
-                    USB_OtgNotifyChange(otgHandle, (uint32_t)kOtg_StatusChange, 1);
+                    (void)USB_OtgNotifyChange(otgHandle, (uint32_t)kOtg_StatusChange, 1U);
                 }
                 break;
 
@@ -599,38 +649,39 @@ void USB_OtgKhciIsrFunction(usb_otg_handle otgHandle)
                 if (otgKhciInstance->lineStableTime >= USB_OTG_TIME_B_AIDL_BDIS) /* suspend */
                 {
                     otgKhciInstance->lineStableTime = 0;
-                    USB_OtgNotifyChange(otgHandle, kOtg_StatusBusSuspend, 1);
+                    (void)USB_OtgNotifyChange(otgHandle, (uint32_t)kOtg_StatusBusSuspend, 1);
                 }
                 break;
 
             default:
+                /*no action*/
                 break;
         }
 
         if (otgKhciInstance->bssendsrpCheck <= USB_OTG_TIME_B_SSEND_SRP)
         {
-            USB_OtgPeripheralGetStatus(kPeripheral_StatusSessVld, &value);
-            if (value)
+            (void)USB_OtgPeripheralGetStatus((uint32_t)kPeripheral_StatusSessVld, &value);
+            if (0U != value)
             {
-                otgKhciInstance->peripheralStatus |= kPeripheral_StatusSessVld;
+                otgKhciInstance->peripheralStatus |= (uint32_t)kPeripheral_StatusSessVld;
             }
             else
             {
-                otgKhciInstance->peripheralStatus &= (~kPeripheral_StatusSessVld);
+                otgKhciInstance->peripheralStatus &= (~((uint32_t)kPeripheral_StatusSessVld));
             }
-            if (!value) /* invalid */
+            if (0U == value) /* invalid */
             {
                 otgKhciInstance->bssendsrpCheck++;
                 if (otgKhciInstance->bssendsrpCheck > USB_OTG_TIME_B_SSEND_SRP)
                 {
-                    USB_OtgNotifyChange(otgHandle, kOtg_StatusSsendSrp, 1);
+                    (void)USB_OtgNotifyChange(otgHandle, (uint32_t)kOtg_StatusSsendSrp, 1);
                 }
             }
 #if 0
             else /* valid */
             {
                 otgKhciInstance->bssendsrpCheck = 0; /* stop check */
-                USB_OtgNotifyChange(otgHandle, kOtg_StatusSessVld, 1);
+                (void)USB_OtgNotifyChange(otgHandle, (uint32_t)kOtg_StatusSessVld, 1);
             }
 #endif
         }

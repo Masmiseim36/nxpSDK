@@ -19,7 +19,7 @@
  ******************************************************************************/
 
 /*! @brief Macro to define class handle */
-typedef void *class_handle_t;
+#define class_handle_t uint32_t
 
 /*! @brief Available class types. */
 typedef enum _usb_usb_device_class_type

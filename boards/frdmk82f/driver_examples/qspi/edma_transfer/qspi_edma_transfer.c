@@ -16,16 +16,16 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_QSPI QuadSPI0
-#define QSPI_CLOCK_SOURCE kCLOCK_McgPll0Clk
-#define QSPI_CLK_FREQ CLOCK_GetFreq(kCLOCK_McgPll0Clk)
-#define EXAMPLE_DMAMUX DMAMUX0
-#define EXAMPLE_CHANNEL 16U
-#define EXAMPLE_DMA DMA0
-#define EXAMPLE_DMA_SOURCE kDmaRequestMux0Group1QSPI0Tx
-#define FLASH_PAGE_SIZE 256U
-#define FLASH_SECTORE_SIZE 4096U
-#define FLASH_SIZE 0x00400000U
+#define EXAMPLE_QSPI          QuadSPI0
+#define QSPI_CLOCK_SOURCE     kCLOCK_McgPll0Clk
+#define QSPI_CLK_FREQ         CLOCK_GetFreq(kCLOCK_McgPll0Clk)
+#define EXAMPLE_DMAMUX        DMAMUX0
+#define EXAMPLE_CHANNEL       16U
+#define EXAMPLE_DMA           DMA0
+#define EXAMPLE_DMA_SOURCE    kDmaRequestMux0Group1QSPI0Tx
+#define FLASH_PAGE_SIZE       256U
+#define FLASH_SECTORE_SIZE    4096U
+#define FLASH_SIZE            0x00400000U
 #define FLASH_ENABLE_QUAD_CMD 0x40U
 #define DUMMY_MASTER (0xE)
 

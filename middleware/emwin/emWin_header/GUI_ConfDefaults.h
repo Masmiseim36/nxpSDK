@@ -9,7 +9,7 @@
 *                                                                    *
 **********************************************************************
 
-** emWin V5.50 - Graphical user interface for embedded applications **
+** emWin V6.10 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -52,7 +52,7 @@ Attention : Do not modify this file ! If you do, you will not
 #include "GUIConf.h"
 
 #ifndef   GUI_SUPPORT_BIDI
-  #define GUI_SUPPORT_BIDI 0
+  #define GUI_SUPPORT_BIDI 1
 #endif
 
 #ifndef   GUI_USE_BIDI2

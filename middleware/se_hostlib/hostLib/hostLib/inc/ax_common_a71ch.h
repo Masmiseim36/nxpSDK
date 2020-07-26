@@ -3,7 +3,7 @@
  * @author NXP Semiconductors
  * @version 1.0
  * @par License
- * Copyright 2016 NXP
+ * Copyright 2016,2020 NXP
  *
  * This software is owned or controlled by NXP and may only be used
  * strictly in accordance with the applicable license terms.  By expressly
@@ -323,7 +323,7 @@ typedef struct {
 #define P1_DISABLE_DEBUG               (0x00)
 #define INS_AX_DEBUG                   A70CM_INS_DEBUG
 
-#elif (SSS_HAVE_A71CH || SSS_HAVE_SE050_EAR_CH || SSS_HAVE_SE05X)
+#elif (SSS_HAVE_A71CH || SSS_HAVE_A71CH_SIM || SSS_HAVE_APPLET_SE05X_IOT)
 #define A71CH_CLA                     (0x80)
 
 /// @cond

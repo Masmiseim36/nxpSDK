@@ -1,5 +1,5 @@
 /*
- * Copyright 2018,2019 NXP
+ * Copyright 2018-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -41,15 +41,13 @@
 /* Public Functions                                                           */
 /* ************************************************************************** */
 
-void ks_common_init_fat(keyStoreTable_t *keystore_shadow,
-    keyIdAndTypeIndexLookup_t *lookup_entires,
-    size_t max_entries)
+void ks_common_init_fat(keyStoreTable_t *keystore_shadow, keyIdAndTypeIndexLookup_t *lookup_entires, size_t max_entries)
 {
     memset(keystore_shadow, 0, sizeof(*keystore_shadow));
-    keystore_shadow->magic = KEYSTORE_MAGIC;
-    keystore_shadow->version = KEYSTORE_VERSION;
+    keystore_shadow->magic      = KEYSTORE_MAGIC;
+    keystore_shadow->version    = KEYSTORE_VERSION;
     keystore_shadow->maxEntries = (uint16_t)max_entries;
-    keystore_shadow->entries = lookup_entires;
+    keystore_shadow->entries    = lookup_entires;
     memset(keystore_shadow->entries, 0, sizeof(*lookup_entires) * max_entries);
 }
 
@@ -58,35 +56,49 @@ sss_status_t ks_common_update_fat(keyStoreTable_t *keystore_shadow,
     sss_key_part_t key_part,
     sss_cipher_type_t cipherType,
     uint8_t intIndex,
-    uint32_t accessPermission)
+    uint32_t accessPermission,
+    uint16_t keyLen)
 {
     sss_status_t retval = kStatus_SSS_Fail;
     uint32_t i;
-    bool found_entry = FALSE;
-    retval = isValidKeyStoreShadow(keystore_shadow);
+    bool found_entry         = FALSE;
+    uint8_t slots_req        = 1;
+    uint8_t entries_written  = 0;
+    uint16_t keyLen_roundoff = 0;
+    retval                   = isValidKeyStoreShadow(keystore_shadow);
     if (retval != kStatus_SSS_Success)
         goto cleanup;
     for (i = 0; i < keystore_shadow->maxEntries; i++) {
         keyIdAndTypeIndexLookup_t *keyEntry = &keystore_shadow->entries[i];
         if (keyEntry->extKeyId == extId) {
             LOG_W("ENTRY already exists 0x%04X", extId);
-            retval = kStatus_SSS_Fail;
+            retval      = kStatus_SSS_Fail;
             found_entry = TRUE;
             break;
         }
     }
+
+    if (key_part == kSSS_KeyPart_Default && (cipherType == kSSS_CipherType_AES || cipherType == kSSS_CipherType_HMAC)) {
+        keyLen_roundoff = ((keyLen / 16) * 16) + ((keyLen % 16) == 0 ? 0 : 16);
+        slots_req       = (keyLen_roundoff / 16);
+    }
+
     if (!found_entry) {
         retval = kStatus_SSS_Fail;
         for (i = 0; i < keystore_shadow->maxEntries; i++) {
             keyIdAndTypeIndexLookup_t *keyEntry = &keystore_shadow->entries[i];
             if (keyEntry->extKeyId == 0) {
-                keyEntry->extKeyId = extId;
+                keyEntry->extKeyId    = extId;
                 keyEntry->keyIntIndex = intIndex;
-                keyEntry->keyPart = key_part;
-                keyEntry->cipherType = cipherType;
+                keyEntry->keyPart     = key_part | ((slots_req - 1) << 4);
+                keyEntry->cipherType  = cipherType;
                 //keyEntry->accessPermission = accessPermission;
-                retval = kStatus_SSS_Success;
-                break;
+
+                entries_written++;
+                if (entries_written == slots_req) {
+                    retval = kStatus_SSS_Success;
+                    break;
+                }
             }
         }
     }
@@ -94,13 +106,12 @@ cleanup:
     return retval;
 }
 
-sss_status_t ks_common_remove_fat(
-    keyStoreTable_t *keystore_shadow, uint32_t extId)
+sss_status_t ks_common_remove_fat(keyStoreTable_t *keystore_shadow, uint32_t extId)
 {
     sss_status_t retval = kStatus_SSS_Fail;
     uint32_t i;
     bool found_entry = FALSE;
-    retval = isValidKeyStoreShadow(keystore_shadow);
+    retval           = isValidKeyStoreShadow(keystore_shadow);
     if (retval != kStatus_SSS_Success)
         goto cleanup;
 
@@ -110,7 +121,6 @@ sss_status_t ks_common_remove_fat(
             retval = kStatus_SSS_Success;
             memset(keyEntry, 0, sizeof(keyIdAndTypeIndexLookup_t));
             found_entry = TRUE;
-            break;
         }
     }
     if (!found_entry) {
@@ -130,78 +140,83 @@ sss_status_t keystore_shadow_From2_To_3(keyStoreTable_t *keystore_shadow)
     for (i = 0; i < keystore_shadow->maxEntries; i++) {
         keyIdAndTypeIndexLookup_t *keyEntry = &keystore_shadow->entries[i];
         if (keyEntry != NULL) {
-            uint16_t org_keyIntIndex =
-                (keyEntry->cipherType) | ((keyEntry->keyIntIndex) << 8);
+            uint16_t org_keyIntIndex = (keyEntry->cipherType) | ((keyEntry->keyIntIndex) << 8);
 
             switch (keyEntry->keyPart) {
             case 0:
                 continue;
             case 1:
-                keyEntry->keyPart = kSSS_KeyPart_Default;
+                keyEntry->keyPart    = kSSS_KeyPart_Default;
                 keyEntry->cipherType = kSSS_CipherType_Certificate;
                 break;
             case 2:
-                keyEntry->keyPart = kSSS_KeyPart_Default;
+                keyEntry->keyPart    = kSSS_KeyPart_Default;
                 keyEntry->cipherType = kSSS_CipherType_AES;
                 break;
             case 3:
-                keyEntry->keyPart = kSSS_KeyPart_Default;
+                keyEntry->keyPart    = kSSS_KeyPart_Default;
                 keyEntry->cipherType = kSSS_CipherType_DES;
                 break;
             case 4:
-                keyEntry->keyPart = kSSS_KeyPart_Default;
+                keyEntry->keyPart    = kSSS_KeyPart_Default;
                 keyEntry->cipherType = kSSS_CipherType_CMAC;
                 break;
+#if SSSFTR_RSA
             case 5:
-                keyEntry->keyPart = kSSS_KeyPart_Public;
+                keyEntry->keyPart    = kSSS_KeyPart_Public;
                 keyEntry->cipherType = kSSS_CipherType_RSA_CRT;
                 break;
+#endif
             case 6:
-                keyEntry->keyPart = kSSS_KeyPart_Public;
+                keyEntry->keyPart    = kSSS_KeyPart_Public;
                 keyEntry->cipherType = kSSS_CipherType_EC_NIST_P;
                 break;
             case 7:
-                keyEntry->keyPart = kSSS_KeyPart_Public;
+                keyEntry->keyPart    = kSSS_KeyPart_Public;
                 keyEntry->cipherType = kSSS_CipherType_EC_MONTGOMERY;
                 break;
             case 8:
-                keyEntry->keyPart = kSSS_KeyPart_Public;
+                keyEntry->keyPart    = kSSS_KeyPart_Public;
                 keyEntry->cipherType = kSSS_CipherType_EC_TWISTED_ED;
                 break;
+#if SSSFTR_RSA
             case 9:
-                keyEntry->keyPart = kSSS_KeyPart_Private;
+                keyEntry->keyPart    = kSSS_KeyPart_Private;
                 keyEntry->cipherType = kSSS_CipherType_RSA_CRT;
                 break;
+#endif
             case 10:
-                keyEntry->keyPart = kSSS_KeyPart_Private;
+                keyEntry->keyPart    = kSSS_KeyPart_Private;
                 keyEntry->cipherType = kSSS_CipherType_EC_NIST_P;
                 break;
             case 11:
-                keyEntry->keyPart = kSSS_KeyPart_Private;
+                keyEntry->keyPart    = kSSS_KeyPart_Private;
                 keyEntry->cipherType = kSSS_CipherType_EC_MONTGOMERY;
                 break;
             case 12:
-                keyEntry->keyPart = kSSS_KeyPart_Private;
+                keyEntry->keyPart    = kSSS_KeyPart_Private;
                 keyEntry->cipherType = kSSS_CipherType_EC_TWISTED_ED;
                 break;
+#if SSSFTR_RSA
             case 13:
-                keyEntry->keyPart = kSSS_KeyPart_Pair;
+                keyEntry->keyPart    = kSSS_KeyPart_Pair;
                 keyEntry->cipherType = kSSS_CipherType_RSA_CRT;
                 break;
+#endif
             case 14:
-                keyEntry->keyPart = kSSS_KeyPart_Pair;
+                keyEntry->keyPart    = kSSS_KeyPart_Pair;
                 keyEntry->cipherType = kSSS_CipherType_EC_NIST_P;
                 break;
             case 15:
-                keyEntry->keyPart = kSSS_KeyPart_Pair;
+                keyEntry->keyPart    = kSSS_KeyPart_Pair;
                 keyEntry->cipherType = kSSS_CipherType_EC_MONTGOMERY;
                 break;
             case 16:
-                keyEntry->keyPart = kSSS_KeyPart_Pair;
+                keyEntry->keyPart    = kSSS_KeyPart_Pair;
                 keyEntry->cipherType = kSSS_CipherType_EC_TWISTED_ED;
                 break;
             case 17:
-                keyEntry->keyPart = kSSS_KeyPart_Default;
+                keyEntry->keyPart    = kSSS_KeyPart_Default;
                 keyEntry->cipherType = kSSS_CipherType_UserID;
                 break;
             default:

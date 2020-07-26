@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  *
@@ -146,7 +146,7 @@ DSTATUS USB_HostMsdGetDiskStatus(BYTE pdrv)
     return 0x00;
 }
 
-DRESULT USB_HostMsdReadDisk(BYTE pdrv, BYTE *buff, DWORD sector, UINT count)
+DRESULT USB_HostMsdReadDisk(BYTE pdrv, BYTE *buff, LBA_t sector, UINT count)
 {
     DRESULT fatfs_code = RES_ERROR;
     usb_status_t status = kStatus_USB_Success;
@@ -214,7 +214,7 @@ DRESULT USB_HostMsdReadDisk(BYTE pdrv, BYTE *buff, DWORD sector, UINT count)
     return fatfs_code;
 }
 
-DRESULT USB_HostMsdWriteDisk(BYTE pdrv, const BYTE *buff, DWORD sector, UINT count)
+DRESULT USB_HostMsdWriteDisk(BYTE pdrv, const BYTE *buff, LBA_t sector, UINT count)
 {
     DRESULT fatfs_code = RES_ERROR;
     usb_status_t status = kStatus_USB_Success;

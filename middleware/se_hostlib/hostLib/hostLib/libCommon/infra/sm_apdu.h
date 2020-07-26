@@ -193,6 +193,32 @@ U16 smApduGetResponseBody(apdu_t *pApdu, U8 *buf, U16 *bufLen);
 U16 smApduAppendCmdData(apdu_t * pApdu, const U8 *data, U16 dataLen);
 U16 smApduAdaptChkSum(apdu_t *pApdu, U16 chkSum);
 
+/**
+ * @brief Check and convert given hex string to array of bytes to buffer.
+ *
+ * Memory allocation needs to be done by the caller, boundary checks on the output
+ * are performed, null-termination is always added.
+ * @param[in] str: The binary data to convert.
+ * @param[in] buffer: buffer to which converted array to be copied.
+ * @param[in] buffer_len: Size of the available buffer for sanity check.
+ * @param[out] len: The length of the binary data written to buffer.
+ * @return True if conversion is successful.
+ */
+bool smApduGetArrayBytes(char *str, size_t *len, uint8_t * buffer, size_t buffer_len);
+
+/**
+    * @brief Parse given apdu command and return command data offset and command data length along with case-id as described in ISO/IEC FDIS 7816-3 spec.
+    *
+    * @param[in] apdu: Buffer containing APDU command.
+    * @param[in] apduLen: The length of APDU command.
+    * @param[out] data_offset: Offset of data field if present.
+    * @param[out] dataLen: Length of data field (LC field value)  if present.
+    * @param[out] apdu_case: APDU txrx case accoring to 7816 spec.
+    * @return True if APDU command has valid format.
+    */
+bool smApduGetTxRxCase(uint8_t *apdu, size_t apduLen, size_t* data_offset, size_t *dataLen, apduTxRx_case_t *apdu_case);
+
+
 #ifdef __cplusplus
 }
 #endif

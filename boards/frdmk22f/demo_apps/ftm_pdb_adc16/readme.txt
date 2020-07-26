@@ -8,10 +8,10 @@ The ADC0 uses channel 1 and channel 5, and ADC1 uses channel 1 and channel 7.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.40.2
-- Keil MDK  5.29
-- GCC ARM Embedded  8.3.1
-- MCUXpresso  11.1.0
+- IAR embedded Workbench  8.50.1
+- Keil MDK  5.30
+- GCC ARM Embedded  9.2.1
+- MCUXpresso  11.2.0
 
 Hardware requirements
 =====================

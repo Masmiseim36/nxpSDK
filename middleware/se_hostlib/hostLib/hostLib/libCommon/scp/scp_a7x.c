@@ -1,9 +1,8 @@
-/**
- * @file scp_a7x.c
+/*
  * @author NXP Semiconductors
  * @version 1.0
  * @par License
- * Copyright 2016 NXP
+ * Copyright 2016,2020 NXP
  *
  * This software is owned or controlled by NXP and may only be used
  * strictly in accordance with the applicable license terms.  By expressly
@@ -13,13 +12,15 @@
  * you do not agree to be bound by the applicable license terms, then you
  * may not retain, install, activate or otherwise use the software.
  *
- * @par Description
- * This file defines A7-series specific types
  * @par History
  *
- * Originally, this file was scp.c, but now renaming it to scp_a7x.c
- *
  */
+/**
+ * @file scp_a7x.c
+ * @par Description
+ * Conditionally apply SCP03 channel encryption
+ * (This file was renamed from ``scp.c`` into ``scp_a7x.c``.)
+*/
 
 #include <string.h>
 #include "scp.h"
@@ -33,7 +34,7 @@
 #include "fsl_sss_ftr_default.h"
 #endif
 
-#if SSS_HAVE_A71XX || SSS_HAVE_SE050_EAR || SSS_HAVE_SE050_L
+#if SSS_HAVE_A71XX || SSS_HAVE_SE050_L
 
 #if !defined(TGT_A70CI) && !defined(TGT_A70CM) && !defined(NO_SECURE_CHANNEL_SUPPORT)
 #define SECURE_CHANNEL_SUPPORTED
@@ -99,7 +100,7 @@ U16 SCP_Subscribe(SCP_SignalFunction callback, void *context)
 #endif
 
 
-U32 scp_Transceive(apdu_t * pApdu, scp_CommandType_t type)
+U32 scp_Transceive(void *conn_ctx, apdu_t * pApdu, scp_CommandType_t type)
 {
     U32 rv = SMCOM_OK;
 
@@ -145,7 +146,7 @@ U32 scp_Transceive(apdu_t * pApdu, scp_CommandType_t type)
     smApduAdaptLcLe(pApdu, pApdu->lc, 0);
 #endif //SECURE_CHANNEL_SUPPORTED
 
-    rv = smCom_Transceive(pApdu);
+    rv = smCom_Transceive(conn_ctx, pApdu);
 
 #ifdef SECURE_CHANNEL_SUPPORTED
     // transform response
@@ -610,6 +611,6 @@ static U32 scp_TransformResponse(apdu_t *pApdu)
     return status;
 }
 
-#endif /* SSS_HAVE_A71XX || SSS_HAVE_SE050_EAR */
+#endif /* SSS_HAVE_A71XX */
 
 #endif // SECURE_CHANNEL_SUPPORTED

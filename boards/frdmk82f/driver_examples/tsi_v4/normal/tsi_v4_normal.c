@@ -20,7 +20,7 @@
 #define PAD_TSI_ELECTRODE_1_NAME "E1"
 
 /* TSI indication leds for electrode 1/2 */
-#define LED_INIT() LED_RED_INIT(LOGIC_LED_OFF)
+#define LED_INIT()   LED_RED_INIT(LOGIC_LED_OFF)
 #define LED_TOGGLE() LED_RED_TOGGLE()
 
 /* Get source clock for LPTMR driver */
@@ -55,11 +55,7 @@ void TSI0_IRQHandler(void)
     /* Clear flags */
     TSI_ClearStatusFlags(TSI0, kTSI_EndOfScanFlag);
     TSI_ClearStatusFlags(TSI0, (uint32_t)kTSI_OutOfRangeFlag);
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 /*!

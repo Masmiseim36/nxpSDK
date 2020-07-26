@@ -3,7 +3,7 @@
 * @author NXP Semiconductors
 * @version 1.0
 * @par License
-* Copyright 2016 NXP
+* Copyright 2016,2020 NXP
 *
 * This software is owned or controlled by NXP and may only be used
 * strictly in accordance with the applicable license terms.  By expressly
@@ -30,15 +30,15 @@ extern "C" {
 #include "fsl_sss_ftr_default.h"
 #endif
 
-#if SSS_HAVE_A71CH
+#if SSS_HAVE_A71CH && (!(SSS_HAVE_A71CH_SIM))
 #   define APPLET_NAME "a71ch" // 0x61.37.31.63.68
 #   define APPLET_NAME_LEN (sizeof(APPLET_NAME) - 1)
 #   define SE_NAME  "A71CH"
 #endif
 #if SSS_HAVE_LOOPBACK
 #   define APPLET_NAME  \
-	{ 0xD2, 0x76, 0x00, 0x00,  0x85, 0x54, 0x65, 0x73, \
-	  0x74, 0x01, 0x01 } //echo applet
+    { 0xD2, 0x76, 0x00, 0x00,  0x85, 0x54, 0x65, 0x73, \
+      0x74, 0x01, 0x01 } //echo applet
 #   define APPLET_NAME_LEN (11)
 #   define SE_NAME  "LoopBack"
 #endif
@@ -61,7 +61,7 @@ extern "C" {
 #   define SE_NAME  "SE050_L"
 #endif
 
-#if SSS_HAVE_SE050_EAR_CH
+#if SSS_HAVE_A71CH_SIM
 #   define APPLET_NAME \
         {0xa0, 0x00, 0x00, 0x03,     0x96, 0x54, 0x53, 0x00, \
          0x00, 0x00, 0x01, 0x03,     0x00, 0x00, 0x00, 0x00}
@@ -69,38 +69,24 @@ extern "C" {
 #   define SE_NAME  "SE050:EAR:CH"
 #endif
 
-#if SSS_HAVE_SE050_EAR_CL
-#   define APPLET_NAME { 0xA0, 0x00, 0x00, 0x00, 0x41, 0x6C, 0x69, 0x59, 0x75, 0x6E, 0x2E, 0x49, 0x44, 0x32, 0x01 }
-#   define APPLET_NAME_LEN (15)
-#   define SE_NAME  "SE050:EAR:CL"
-#endif
-
-#if SSS_HAVE_SE05X
+#if SSS_HAVE_APPLET_SE05X_IOT
 #   define APPLET_NAME \
         {0xa0, 0x00, 0x00, 0x03,     0x96, 0x54, 0x53, 0x00,  \
          0x00, 0x00, 0x01, 0x03,     0x00, 0x00, 0x00,}
 #   define APPLET_NAME_LEN (15)
+
+#   define SSD_NAME \
+        { 0xD2, 0x76, 0x00, 0x00, 0x85, 0x30, 0x4A, 0x43, 0x4F, 0x90, 0x03}
 #endif
 
-#if SSS_HAVE_SE050M
-#define APPLET_NAME \
-        {0xa0, 0x00, 0x00, 0x03,     0x96, 0x54, 0x53, 0x00,  \
-         0x00, 0x00, 0x01, 0x03,     0x20, 0x00, 0x00,}
-#define APPLET_NAME_LEN (15)
-
-#endif
-
-#if SSS_HAVE_SE050_A
+#if SSS_HAVE_SE05X_A
 #   define SE_NAME  "SE050:A"
 #endif
-#if SSS_HAVE_SE050_B
+#if SSS_HAVE_SE05X_B
 #   define SE_NAME  "SE050:B"
 #endif
-#if SSS_HAVE_SE050_C
+#if SSS_HAVE_SE05X_C
 #   define SE_NAME  "SE050:C"
-#endif
-#if SSS_HAVE_SE050M
-#   define SE_NAME  "SE050:M"
 #endif
 
 #define A71CH_KEY_PAIR_MAX_A    2 //!< Maximum amount of ECC key pairs that can be stored in A71CH (A device)

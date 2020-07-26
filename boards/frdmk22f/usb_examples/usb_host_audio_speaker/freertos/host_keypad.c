@@ -133,7 +133,7 @@ void USB_KeypadTask(void *arg)
 
             case kStatus_DEV_Attached:
                 g_keypad.runState = kUSB_HostHidRunSetInterface;
-                status = USB_HostHidInit(g_keypad.deviceHandle, &g_keypad.classHandle);
+                status            = USB_HostHidInit(g_keypad.deviceHandle, &g_keypad.classHandle);
                 usb_echo("keypad attached\r\n");
                 break;
 
@@ -158,7 +158,7 @@ void USB_KeypadTask(void *arg)
 
         case kUSB_HostHidRunSetInterface:
             g_keypad.runWaitState = kUSB_HostHidRunWaitSetInterface;
-            g_keypad.runState = kUSB_HostHidRunIdle;
+            g_keypad.runState     = kUSB_HostHidRunIdle;
             if (USB_HostHidSetInterface(g_keypad.classHandle, g_keypad.interfaceHandle, 0, Hid_ControlCallback,
                                         &g_keypad) != kStatus_USB_Success)
             {
@@ -168,8 +168,8 @@ void USB_KeypadTask(void *arg)
 
         case kUSB_HostHidRunSetInterfaceDone:
             g_keypad.maxPacketSize = USB_HostHidGetPacketsize(g_keypad.classHandle, USB_ENDPOINT_INTERRUPT, USB_IN);
-            g_keypad.runWaitState = kUSB_HostHidRunWaitDataReceived;
-            g_keypad.runState = kUSB_HostHidRunIdle;
+            g_keypad.runWaitState  = kUSB_HostHidRunWaitDataReceived;
+            g_keypad.runState      = kUSB_HostHidRunIdle;
             if (USB_HostHidRecv(g_keypad.classHandle, g_keypad.keypadBuffer, g_keypad.maxPacketSize, Hid_InCallback,
                                 &g_keypad) != kStatus_USB_Success)
             {
@@ -181,7 +181,7 @@ void USB_KeypadTask(void *arg)
             process_keypadBuffer(g_keypad.keypadBuffer);
 
             g_keypad.runWaitState = kUSB_HostHidRunWaitDataReceived;
-            g_keypad.runState = kUSB_HostHidRunIdle;
+            g_keypad.runState     = kUSB_HostHidRunIdle;
             if (USB_HostHidRecv(g_keypad.classHandle, g_keypad.keypadBuffer, g_keypad.maxPacketSize, Hid_InCallback,
                                 &g_keypad) != kStatus_USB_Success)
             {
@@ -191,7 +191,7 @@ void USB_KeypadTask(void *arg)
 
         case kUSB_HostHidRunPrimeDataReceive:
             g_keypad.runWaitState = kUSB_HostHidRunWaitDataReceived;
-            g_keypad.runState = kUSB_HostHidRunIdle;
+            g_keypad.runState     = kUSB_HostHidRunIdle;
             if (USB_HostHidRecv(g_keypad.classHandle, g_keypad.keypadBuffer, g_keypad.maxPacketSize, Hid_InCallback,
                                 &g_keypad) != kStatus_USB_Success)
             {
@@ -231,14 +231,14 @@ usb_status_t USB_HostKeypadEvent(usb_device_handle deviceHandle,
     {
         case kUSB_HostEventAttach:
             /* judge whether is configurationHandle supported */
-            configuration_ptr = (usb_host_configuration_t *)configurationHandle;
-            g_keypadDeviceHandle = NULL;
-            g_keypadIntfHandle = NULL;
+            configuration_ptr     = (usb_host_configuration_t *)configurationHandle;
+            g_keypadDeviceHandle  = NULL;
+            g_keypadIntfHandle    = NULL;
             g_keypad.keypadBuffer = &g_keypadBuffer[0];
             for (interface_index = 0; interface_index < configuration_ptr->interfaceCount; ++interface_index)
             {
                 interface_ptr = &configuration_ptr->interfaceList[interface_index];
-                id = interface_ptr->interfaceDesc->bInterfaceClass;
+                id            = interface_ptr->interfaceDesc->bInterfaceClass;
                 if (id != USB_HOST_HID_CLASS_CODE)
                 {
                     continue;
@@ -256,7 +256,7 @@ usb_status_t USB_HostKeypadEvent(usb_device_handle deviceHandle,
                 else
                 {
                     g_keypadDeviceHandle = deviceHandle;
-                    g_keypadIntfHandle = interface_ptr;
+                    g_keypadIntfHandle   = interface_ptr;
                     return kStatus_USB_Success;
                 }
             }
@@ -272,8 +272,8 @@ usb_status_t USB_HostKeypadEvent(usb_device_handle deviceHandle,
             {
                 if ((g_keypadDeviceHandle != NULL) && (g_keypadIntfHandle != NULL))
                 {
-                    g_keypad.devState = kStatus_DEV_Attached;
-                    g_keypad.deviceHandle = g_keypadDeviceHandle;
+                    g_keypad.devState        = kStatus_DEV_Attached;
+                    g_keypad.deviceHandle    = g_keypadDeviceHandle;
                     g_keypad.interfaceHandle = g_keypadIntfHandle;
 
                     USB_HostHelperGetPeripheralInformation(deviceHandle, kUSB_HostGetDevicePID, &info_value);

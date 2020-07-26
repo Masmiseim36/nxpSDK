@@ -171,37 +171,32 @@ int get_group_id(uint32_t *objectid, uint8_t objectIdLen)
     return groupId;
 }
 
-int sss_mbedtls_associate_keypair(
-    mbedtls_pk_context *pkey, sss_object_t *pkeyObject)
+int sss_mbedtls_associate_keypair(mbedtls_pk_context *pkey, sss_object_t *pkeyObject)
 {
-    void *pax_ctx = NULL;
+    void *pax_ctx         = NULL;
     uint32_t objectId[16] = {
         0,
     };
-    uint8_t objectIdLen = 0;
+    uint8_t objectIdLen = sizeof(objectId);
     sss_status_t status = kStatus_SSS_Fail;
 
     memset(pkey, 0, sizeof(*pkey));
 
-    if (pkeyObject->cipherType == kSSS_CipherType_EC_NIST_P ||
-        pkeyObject->cipherType == kSSS_CipherType_EC_NIST_K ||
+    if (pkeyObject->cipherType == kSSS_CipherType_EC_NIST_P || pkeyObject->cipherType == kSSS_CipherType_EC_NIST_K ||
         pkeyObject->cipherType == kSSS_CipherType_EC_BRAINPOOL ||
         pkeyObject->cipherType == kSSS_CipherType_EC_MONTGOMERY ||
         pkeyObject->cipherType == kSSS_CipherType_EC_TWISTED_ED) {
         LOG_D("Associating ECC key-pair '0x%08X'", pkeyObject->keyId);
 
         pkey->pk_info = &ax_mbedtls_eckeypair_info;
-        pax_ctx = (mbedtls_ecp_keypair *)mbedtls_calloc(
-            1, sizeof(mbedtls_ecp_keypair));
+        pax_ctx       = (mbedtls_ecp_keypair *)mbedtls_calloc(1, sizeof(mbedtls_ecp_keypair));
         ((mbedtls_ecp_keypair *)pax_ctx)->grp.pSSSObject = pkeyObject;
-        status = sss_util_asn1_get_oid_from_sssObj(
-            pkeyObject, objectId, &objectIdLen);
+        status = sss_util_asn1_get_oid_from_sssObj(pkeyObject, objectId, &objectIdLen);
         if (status != kStatus_SSS_Success) {
             return 1;
         }
 
-        ((mbedtls_ecp_keypair *)pax_ctx)->grp.id =
-            get_group_id(objectId, objectIdLen);
+        ((mbedtls_ecp_keypair *)pax_ctx)->grp.id = get_group_id(objectId, objectIdLen);
         if (((mbedtls_ecp_keypair *)pax_ctx)->grp.id == MBEDTLS_ECP_DP_NONE) {
             LOG_E(" sss_mbedtls_associate_keypair: Group id not found...\n");
             return 1;
@@ -209,34 +204,35 @@ int sss_mbedtls_associate_keypair(
         pkey->pk_ctx = pax_ctx;
     }
 #ifdef MBEDTLS_RSA_ALT
-    else if (pkeyObject->cipherType == kSSS_CipherType_RSA ||
-             pkeyObject->cipherType == kSSS_CipherType_RSA_CRT) {
+    else if (pkeyObject->cipherType == kSSS_CipherType_RSA || pkeyObject->cipherType == kSSS_CipherType_RSA_CRT) {
         uint8_t pbKey[1024];
-        size_t pbKeyBitLen = 0;
+        size_t pbKeyBitLen   = 0;
         size_t pbKeyBytetLen = sizeof(pbKey);
-        uint8_t *modulus = NULL;
-        size_t modlen = 0;
-        uint8_t *pubExp = NULL;
-        size_t pubExplen = 0;
+        uint8_t *modulus     = NULL;
+        size_t modlen        = 0;
+        uint8_t *pubExp      = NULL;
+        size_t pubExplen     = 0;
 
         LOG_D("Associating RSA key-pair '0x%08X'", pkeyObject->keyId);
 
         pkey->pk_info = &ax_mbedtls_rsakeypair_info;
-        pax_ctx = (mbedtls_rsa_context *)mbedtls_calloc(
-            1, sizeof(mbedtls_rsa_context));
+        pax_ctx       = (mbedtls_rsa_context *)mbedtls_calloc(1, sizeof(mbedtls_rsa_context));
         ((mbedtls_rsa_context *)pax_ctx)->pSSSObject = pkeyObject;
 
-        status = sss_key_store_get_key(pkeyObject->keyStore,
-            pkeyObject,
-            pbKey,
-            &pbKeyBytetLen,
-            &pbKeyBitLen);
+        status = sss_key_store_get_key(pkeyObject->keyStore, pkeyObject, pbKey, &pbKeyBytetLen, &pbKeyBitLen);
         if (status != kStatus_SSS_Success) {
             return 1;
         }
 
-        status = sss_util_asn1_rsa_parse_public(
-            pbKey, pbKeyBytetLen, &modulus, &modlen, &pubExp, &pubExplen);
+        status = sss_util_asn1_rsa_parse_public(pbKey, pbKeyBytetLen, &modulus, &modlen, &pubExp, &pubExplen);
+        if (modulus != NULL) {
+            free(modulus);
+            modulus = NULL;
+        }
+        if (pubExp != NULL) {
+            free(pubExp);
+            pubExp = NULL;
+        }
         if (status != kStatus_SSS_Success) {
             return 1;
         }
@@ -252,73 +248,69 @@ int sss_mbedtls_associate_keypair(
     return 0;
 }
 
-int sss_mbedtls_associate_pubkey(
-    mbedtls_pk_context *pkey, sss_object_t *pkeyObject)
+int sss_mbedtls_associate_pubkey(mbedtls_pk_context *pkey, sss_object_t *pkeyObject)
 {
-    void *pax_ctx = NULL;
+    void *pax_ctx         = NULL;
     uint32_t objectId[16] = {
         0,
     };
-    uint8_t objectIdLen = 0;
+    uint8_t objectIdLen = sizeof(objectId);
     sss_status_t status = kStatus_SSS_Fail;
 
     memset(pkey, 0, sizeof(*pkey));
 
-    if (pkeyObject->cipherType == kSSS_CipherType_EC_NIST_P ||
-        pkeyObject->cipherType == kSSS_CipherType_EC_NIST_K ||
+    if (pkeyObject->cipherType == kSSS_CipherType_EC_NIST_P || pkeyObject->cipherType == kSSS_CipherType_EC_NIST_K ||
         pkeyObject->cipherType == kSSS_CipherType_EC_BRAINPOOL ||
         pkeyObject->cipherType == kSSS_CipherType_EC_MONTGOMERY ||
         pkeyObject->cipherType == kSSS_CipherType_EC_TWISTED_ED) {
         LOG_D("Associating ECC public key '0x%08X'", pkeyObject->keyId);
 
         pkey->pk_info = &ax_mbedtls_ecpubkey_info;
-        pax_ctx = (mbedtls_ecp_keypair *)mbedtls_calloc(
-            1, sizeof(mbedtls_ecp_keypair));
+        pax_ctx       = (mbedtls_ecp_keypair *)mbedtls_calloc(1, sizeof(mbedtls_ecp_keypair));
         ((mbedtls_ecp_keypair *)pax_ctx)->grp.pSSSObject = pkeyObject;
 
-        status = sss_util_asn1_get_oid_from_sssObj(
-            pkeyObject, objectId, &objectIdLen);
+        status = sss_util_asn1_get_oid_from_sssObj(pkeyObject, objectId, &objectIdLen);
         if (status != kStatus_SSS_Success) {
             return 1;
         }
 
-        ((mbedtls_ecp_keypair *)pax_ctx)->grp.id =
-            get_group_id(objectId, objectIdLen);
+        ((mbedtls_ecp_keypair *)pax_ctx)->grp.id = get_group_id(objectId, objectIdLen);
         if (((mbedtls_ecp_keypair *)pax_ctx)->grp.id == MBEDTLS_ECP_DP_NONE) {
             LOG_E(" sss_mbedtls_associate_pubkey: Group id not found...\n");
             return 1;
         }
     }
 #ifdef MBEDTLS_RSA_ALT
-    else if (pkeyObject->cipherType == kSSS_CipherType_RSA ||
-             pkeyObject->cipherType == kSSS_CipherType_RSA_CRT) {
+    else if (pkeyObject->cipherType == kSSS_CipherType_RSA || pkeyObject->cipherType == kSSS_CipherType_RSA_CRT) {
         uint8_t pbKey[1400];
-        size_t pbKeyBitLen = 0;
+        size_t pbKeyBitLen   = 0;
         size_t pbKeyBytetLen = sizeof(pbKey);
-        uint8_t *modulus = NULL;
-        size_t modlen = 0;
-        uint8_t *pubExp = NULL;
-        size_t pubExplen = 0;
+        uint8_t *modulus     = NULL;
+        size_t modlen        = 0;
+        uint8_t *pubExp      = NULL;
+        size_t pubExplen     = 0;
 
         LOG_D("Associating RSA public key '0x%08X'", pkeyObject->keyId);
 
-        pax_ctx = (mbedtls_rsa_context *)mbedtls_calloc(
-            1, sizeof(mbedtls_rsa_context));
-        pkey->pk_ctx = pax_ctx;
+        pax_ctx       = (mbedtls_rsa_context *)mbedtls_calloc(1, sizeof(mbedtls_rsa_context));
+        pkey->pk_ctx  = pax_ctx;
         pkey->pk_info = &ax_mbedtls_rsapubkey_info;
         ((mbedtls_rsa_context *)pax_ctx)->pSSSObject = pkeyObject;
 
-        status = sss_key_store_get_key(pkeyObject->keyStore,
-            pkeyObject,
-            pbKey,
-            &pbKeyBytetLen,
-            &pbKeyBitLen);
+        status = sss_key_store_get_key(pkeyObject->keyStore, pkeyObject, pbKey, &pbKeyBytetLen, &pbKeyBitLen);
         if (status != kStatus_SSS_Success) {
             return 1;
         }
 
-        status = sss_util_asn1_rsa_parse_public(
-            pbKey, pbKeyBytetLen, &modulus, &modlen, &pubExp, &pubExplen);
+        status = sss_util_asn1_rsa_parse_public(pbKey, pbKeyBytetLen, &modulus, &modlen, &pubExp, &pubExplen);
+        if (modulus != NULL) {
+            free(modulus);
+            modulus = NULL;
+        }
+        if (pubExp != NULL) {
+            free(pubExp);
+            pubExp = NULL;
+        }
         if (status != kStatus_SSS_Success) {
             return 1;
         }
@@ -334,18 +326,16 @@ int sss_mbedtls_associate_pubkey(
     return 0;
 }
 
-int sss_mbedtls_associate_ecdhctx(mbedtls_ssl_handshake_params *handshake,
-    sss_object_t *pSSSObject,
-    sss_key_store_t *hostKs)
+int sss_mbedtls_associate_ecdhctx(
+    mbedtls_ssl_handshake_params *handshake, sss_object_t *pSSSObject, sss_key_store_t *hostKs)
 {
-    sss_status_t status = kStatus_SSS_Fail;
+    sss_status_t status   = kStatus_SSS_Fail;
     uint32_t objectId[16] = {
         0,
     };
-    uint8_t objectIdLen = 0;
+    uint8_t objectIdLen = sizeof(objectId);
 
-    status =
-        sss_util_asn1_get_oid_from_sssObj(pSSSObject, objectId, &objectIdLen);
+    status = sss_util_asn1_get_oid_from_sssObj(pSSSObject, objectId, &objectIdLen);
     if (status != kStatus_SSS_Success) {
         return 1;
     }
@@ -353,7 +343,7 @@ int sss_mbedtls_associate_ecdhctx(mbedtls_ssl_handshake_params *handshake,
     handshake->ecdh_ctx.grp.id = get_group_id(objectId, objectIdLen);
 
     handshake->ecdh_ctx.grp.pSSSObject = pSSSObject;
-    handshake->ecdh_ctx.grp.hostKs = hostKs;
+    handshake->ecdh_ctx.grp.hostKs     = hostKs;
 #if LOG_API_CALLS > 1
     LOG_I("Associating ECC key-pair '%d' for handshake.\r\n", key_index);
 #endif
@@ -402,17 +392,13 @@ static int sss_eckey_verify(void *ctx,
 
     LOG_D("Using ECC key-pair '0x%08X'", pax_ctx->grp.pSSSObject->keyId);
 
-    status = sss_asymmetric_context_init(&asymVerifyCtx,
-        sssObject->keyStore->session,
-        sssObject,
-        algorithm,
-        kMode_SSS_Verify);
+    status = sss_asymmetric_context_init(
+        &asymVerifyCtx, sssObject->keyStore->session, sssObject, algorithm, kMode_SSS_Verify);
     if (status != kStatus_SSS_Success) {
         LOG_E(" sss_asymmetric_context_init verify context Failed...\n");
         return 1;
     }
-    status = sss_asymmetric_verify_digest(
-        &asymVerifyCtx, (uint8_t *)hash, hash_len, (uint8_t *)sig, sig_len);
+    status = sss_asymmetric_verify_digest(&asymVerifyCtx, (uint8_t *)hash, hash_len, (uint8_t *)sig, sig_len);
     if (status != kStatus_SSS_Success) {
         LOG_E(" sss_asymmetric_verify_digest Failed...\n");
         return 1;
@@ -430,11 +416,11 @@ static int sss_eckey_sign(void *ctx,
     int (*f_rng)(void *, unsigned char *, size_t),
     void *p_rng)
 {
-    int ret = 0;
+    int ret            = 0;
     size_t u16_sig_len = 1024;
     sss_asymmetric_t asymVerifyCtx;
-    sss_status_t status = kStatus_SSS_Success;
-    sss_object_t *sssObject = NULL;
+    sss_status_t status          = kStatus_SSS_Success;
+    sss_object_t *sssObject      = NULL;
     mbedtls_ecp_keypair *pax_ctx = (mbedtls_ecp_keypair *)ctx;
     sss_algorithm_t algorithm;
 
@@ -459,11 +445,8 @@ static int sss_eckey_sign(void *ctx,
         return 1;
     }
 
-    status = sss_asymmetric_context_init(&asymVerifyCtx,
-        sssObject->keyStore->session,
-        sssObject,
-        algorithm,
-        kMode_SSS_Sign);
+    status =
+        sss_asymmetric_context_init(&asymVerifyCtx, sssObject->keyStore->session, sssObject, algorithm, kMode_SSS_Sign);
     if (status != kStatus_SSS_Success) {
         LOG_E(" sss_asymmetric_context_init verify context Failed...\n");
         return 1;
@@ -471,8 +454,7 @@ static int sss_eckey_sign(void *ctx,
 
     LOG_D("Signing using key %08lX\r\n", pax_ctx->grp.pSSSObject->keyId);
 
-    status = sss_asymmetric_sign_digest(
-        &asymVerifyCtx, (uint8_t *)hash, hash_len, sig, &u16_sig_len);
+    status = sss_asymmetric_sign_digest(&asymVerifyCtx, (uint8_t *)hash, hash_len, sig, &u16_sig_len);
     if (status != kStatus_SSS_Success) {
         LOG_W(" sss_asymmetric_sign_digest Failed...\n");
         return 1;
@@ -490,14 +472,12 @@ static int sss_eckey_check_pair(const void *pub, const void *prv)
 
 static int sss_eckeypair_can_do(mbedtls_pk_type_t type)
 {
-    return (type == MBEDTLS_PK_ECKEY || type == MBEDTLS_PK_ECKEY_DH ||
-            type == MBEDTLS_PK_ECDSA);
+    return (type == MBEDTLS_PK_ECKEY || type == MBEDTLS_PK_ECKEY_DH || type == MBEDTLS_PK_ECDSA);
 }
 
 static int sss_ecpubkey_can_do(mbedtls_pk_type_t type)
 {
-    return (type == MBEDTLS_PK_ECKEY || type == MBEDTLS_PK_ECKEY_DH ||
-            type == MBEDTLS_PK_ECDSA);
+    return (type == MBEDTLS_PK_ECKEY || type == MBEDTLS_PK_ECKEY_DH || type == MBEDTLS_PK_ECDSA);
 }
 
 static void sss_eckeypair_free_func(void *ctx)

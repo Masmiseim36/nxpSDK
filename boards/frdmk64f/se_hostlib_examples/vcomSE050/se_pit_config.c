@@ -49,7 +49,7 @@ void SE_PIT_RESET_HANDLER(void)
     se05x_ic_reset();
 }
 
-void se_pit_SetTimer(U16 time_us)
+void se_pit_SetTimer(uint32_t time_ms)
 {
     pit_config_t pitConfig;
     PIT_GetDefaultConfig(&pitConfig);
@@ -57,7 +57,7 @@ void se_pit_SetTimer(U16 time_us)
     PIT_Init(PIT, &pitConfig);
     /* Set timer period for channel 0 */
     PIT_SetTimerPeriod(
-        PIT, kPIT_Chnl_0, USEC_TO_COUNT(time_us, PIT_SOURCE_CLOCK));
+        PIT, kPIT_Chnl_0, MSEC_TO_COUNT(time_ms, PIT_SOURCE_CLOCK));
     /* Enable timer interrupts for channel 0 */
     PIT_EnableInterrupts(PIT, kPIT_Chnl_0, kPIT_TimerInterruptEnable);
     /* Enable at the NVIC */

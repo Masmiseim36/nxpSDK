@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2018 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
+ * Copyright 2020 NXP
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -25,7 +26,7 @@
 #define IOT_CONFIG_H_
 
 /* Platform thread stack size and priority. */
-#define IOT_THREAD_DEFAULT_STACK_SIZE 900
+#define IOT_THREAD_DEFAULT_STACK_SIZE 1500
 #define IOT_THREAD_DEFAULT_PRIORITY 5
 
 /* Include the common configuration file for FreeRTOS. */

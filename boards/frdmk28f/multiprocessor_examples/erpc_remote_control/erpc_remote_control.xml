@@ -10,8 +10,8 @@
     <definition extID="device.MK28F15_CMSIS.MK28F15"/>
     <definition extID="device.MK28F15_startup.MK28F15"/>
     <definition extID="driver.fxos8700cq.MK28F15"/>
-    <definition extID="middleware.freertos.MK28F15"/>
-    <definition extID="middleware.freertos.heap.heap_4.MK28F15"/>
+    <definition extID="middleware.amazon_freertos.freertos.MK28F15"/>
+    <definition extID="middleware.amazon_freertos.freertos.heap_4.MK28F15"/>
     <definition extID="middleware.multicore.erpc.common.MK28F15"/>
     <definition extID="middleware.multicore.erpc.doc.MK28F15"/>
     <definition extID="middleware.multicore.erpc.eRPC_arbitrator.MK28F15"/>
@@ -42,7 +42,7 @@
     <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="frdmk28f_erpc_remote_control" name="erpc_remote_control" category="multiprocessor_examples" dependency="platform.drivers.edma.MK28F15 platform.drivers.lpuart.MK28F15 platform.drivers.lpuart_edma.MK28F15 platform.drivers.dac.MK28F15 driver.fxos8700cq.MK28F15 platform.drivers.lpuart_cmsis_edma.MK28F15 platform.drivers.gpio.MK28F15 platform.drivers.port.MK28F15 platform.drivers.i2c.MK28F15 platform.drivers.adc16.MK28F15 platform.drivers.dmamux.MK28F15 middleware.multicore.erpc.eRPC_arbitrator.MK28F15 middleware.multicore.erpc.eRPC_port_freertos.MK28F15 middleware.multicore.erpc.eRPC_uart_cmsis_transport.MK28F15 middleware.freertos.heap.heap_4.MK28F15 middleware.freertos.MK28F15 platform.drivers.clock.MK28F15 platform.drivers.common.MK28F15 device.MK28F15_CMSIS.MK28F15 utility.debug_console.MK28F15 component.lpuart_adapter.MK28F15 component.serial_manager.MK28F15 component.serial_manager_uart.MK28F15 component.lists.MK28F15 device.MK28F15_startup.MK28F15 platform.drivers.smc.MK28F15 platform.drivers.sysmpu.MK28F15 platform.utilities.assert.MK28F15 platform.Include_core_cm4.MK28F15 platform.Include_common.MK28F15 platform.CMSIS_Driver_Include.USART_CMSISInclude.MK28F15 platform.CMSIS_Driver_Include.Common_CMSISInclude.MK28F15 RTE_Device.MK28F15 middleware.multicore.erpc.common.MK28F15 middleware.multicore.erpc.doc.MK28F15" toolchain="iar mdk armgcc mcuxpresso">
+  <example id="frdmk28f_erpc_remote_control" name="erpc_remote_control" category="multiprocessor_examples" dependency="platform.drivers.edma.MK28F15 platform.drivers.lpuart.MK28F15 platform.drivers.lpuart_edma.MK28F15 platform.drivers.dac.MK28F15 driver.fxos8700cq.MK28F15 platform.drivers.lpuart_cmsis_edma.MK28F15 platform.drivers.gpio.MK28F15 platform.drivers.port.MK28F15 platform.drivers.i2c.MK28F15 platform.drivers.adc16.MK28F15 platform.drivers.dmamux.MK28F15 middleware.multicore.erpc.eRPC_arbitrator.MK28F15 middleware.multicore.erpc.eRPC_port_freertos.MK28F15 middleware.multicore.erpc.eRPC_uart_cmsis_transport.MK28F15 middleware.amazon_freertos.freertos.heap_4.MK28F15 middleware.amazon_freertos.freertos.MK28F15 middleware.multicore.erpc.doc.MK28F15 platform.drivers.clock.MK28F15 platform.drivers.common.MK28F15 device.MK28F15_CMSIS.MK28F15 utility.debug_console.MK28F15 component.lpuart_adapter.MK28F15 component.serial_manager.MK28F15 component.serial_manager_uart.MK28F15 component.lists.MK28F15 device.MK28F15_startup.MK28F15 platform.drivers.smc.MK28F15 platform.drivers.sysmpu.MK28F15 platform.utilities.assert.MK28F15 platform.Include_core_cm4.MK28F15 platform.Include_common.MK28F15 platform.CMSIS_Driver_Include.USART_CMSISInclude.MK28F15 platform.CMSIS_Driver_Include.Common_CMSISInclude.MK28F15 RTE_Device.MK28F15 middleware.multicore.erpc.common.MK28F15">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.ccnature"/>
     </projects>
@@ -101,10 +101,10 @@
       <files mask="Driver_Common.h"/>
       <files mask="Driver_USART.h"/>
     </source>
-    <source path="boards/frdmk28f/multiprocessor_examples/erpc_common" target_path="erpc" type="c_include">
+    <source path="boards/frdmk28f/multiprocessor_examples/erpc_common" target_path="source" type="c_include">
       <files mask="erpc_error_handler.h"/>
     </source>
-    <source path="boards/frdmk28f/multiprocessor_examples/erpc_common" target_path="erpc" type="src">
+    <source path="boards/frdmk28f/multiprocessor_examples/erpc_common" target_path="source" type="src">
       <files mask="erpc_error_handler.cpp"/>
     </source>
     <source path="boards/frdmk28f/multiprocessor_examples/erpc_remote_control/armgcc" target_path="src" type="linker" toolchain="armgcc">
@@ -116,6 +116,20 @@
     <source path="boards/frdmk28f/multiprocessor_examples/erpc_remote_control/mdk" target_path="src" type="linker" toolchain="mdk">
       <files mask="MK28FN2M0xxx15_flash.scf"/>
     </source>
+    <source path="boards/frdmk28f/multiprocessor_examples/erpc_remote_control/service/erpc_remote_control_app_0" target_path="erpc/service/erpc_remote_control_app_0" type="script" exclude="true">
+      <files mask="__init__.py"/>
+      <files mask="client.py"/>
+      <files mask="common.py"/>
+      <files mask="interface.py"/>
+      <files mask="server.py"/>
+    </source>
+    <source path="boards/frdmk28f/multiprocessor_examples/erpc_remote_control/service/erpc_remote_control_app_1" target_path="erpc/service/erpc_remote_control_app_1" type="script" exclude="true">
+      <files mask="__init__.py"/>
+      <files mask="client.py"/>
+      <files mask="common.py"/>
+      <files mask="interface.py"/>
+      <files mask="server.py"/>
+    </source>
     <source path="boards/frdmk28f/multiprocessor_examples/erpc_remote_control/service" target_path="erpc/service" type="c_include">
       <files mask="erpc_remote_control.h"/>
       <files mask="erpc_remote_control_app_0.h"/>
@@ -124,6 +138,9 @@
     </source>
     <source path="boards/frdmk28f/multiprocessor_examples/erpc_remote_control/service" target_path="erpc/service" type="script">
       <files mask="erpc_remote_control.erpc"/>
+    </source>
+    <source path="boards/frdmk28f/multiprocessor_examples/erpc_remote_control/service" target_path="erpc/service" type="script" exclude="true">
+      <files mask="__init__.py"/>
     </source>
     <source path="boards/frdmk28f/multiprocessor_examples/erpc_remote_control/service" target_path="erpc/service" type="src">
       <files mask="erpc_remote_control_app_0_server.cpp"/>
@@ -146,6 +163,9 @@
     <source path="boards/frdmk28f/multiprocessor_examples/erpc_remote_control" target_path="source" type="c_include">
       <files mask="FreeRTOSConfig.h"/>
       <files mask="erpc_config.h"/>
+    </source>
+    <source path="boards/frdmk28f/multiprocessor_examples/erpc_remote_control" target_path="source" type="script" exclude="true">
+      <files mask="run.py"/>
     </source>
     <source path="boards/frdmk28f/multiprocessor_examples/erpc_remote_control" target_path="source" type="src">
       <files mask="remote_control.c"/>

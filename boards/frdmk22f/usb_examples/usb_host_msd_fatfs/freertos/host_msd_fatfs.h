@@ -63,12 +63,12 @@ extern usb_status_t USB_HostMsdEvent(usb_device_handle deviceHandle,
                                      uint32_t eventCode);
 
 /*!
-* @brief host msd fatfs task function.
-*
-* This function implements the host msd fatfs action, it is used to create task.
-*
-* @param arg   the host msd fatfs instance pointer.
-*/
+ * @brief host msd fatfs task function.
+ *
+ * This function implements the host msd fatfs action, it is used to create task.
+ *
+ * @param arg   the host msd fatfs instance pointer.
+ */
 extern void USB_HostMsdTask(void *arg);
 
 #endif /* _HOST_MSD_FATFS_H_ */

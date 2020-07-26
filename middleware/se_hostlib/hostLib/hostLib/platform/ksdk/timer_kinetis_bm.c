@@ -91,7 +91,7 @@ void sm_sleep(uint32_t msec) {
     sm_initSleep();
 #endif
     /* if struck here check whether sm_initSleep() is called */
-    systick_delay(msec);
+    systick_delay(MS_TO_TICKS(msec));
 }
 
 #endif /* !SDK_OS_FREE_RTOS && ! FSL_RTOS_FREE_RTOS */

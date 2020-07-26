@@ -1,6 +1,7 @@
 /*
  * Amazon FreeRTOS V201908.00
  * Copyright (C) 2019 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
+ * Copyright 2020 NXP
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -37,7 +38,16 @@
  * "...base64 data...\n"\
  * "-----END CERTIFICATE-----\n"
  */
-#define keyCLIENT_CERTIFICATE_PEM                   ""
+#define keyCLIENT_CERTIFICATE_PEM                   "-----BEGIN CERTIFICATE-----\n" \
+    "MIIBVDCB+6ADAgECAgkAoJ9fIf9ayYswCgYIKoZIzj0EAwIwHTEbMBkGA1UEAwwS\n"    \
+    "bm9ib2R5QG5vd2hlcmUuY29tMB4XDTE4MDMwODIyNDIzNFoXDTE5MDMwODIyNDIz\n"    \
+    "NFowHTEbMBkGA1UEAwwSbm9ib2R5QG5vd2hlcmUuY29tMFkwEwYHKoZIzj0CAQYI\n"    \
+    "KoZIzj0DAQcDQgAExYJLN8zYGzFieyF4ONxk2BCY8I4fQTpfOJyWSYCqat83xtNE\n"    \
+    "KoOxB33FP22MJXn7rj24YILu1uRLrFkH2pcRkKMkMCIwCwYDVR0PBAQDAgeAMBMG\n"    \
+    "A1UdJQQMMAoGCCsGAQUFBwMDMAoGCCqGSM49BAMCA0gAMEUCIQDhXUT02TsIlzBe\n"    \
+    "Aw9pLCowZ+6dPY1igspplUqZcuDAKQIgN6j5s7x5AudklULRuFyBQBlkVR35IdWs\n"    \
+    "zu/xp2COg9g=\n"    \
+    "-----END CERTIFICATE-----"
 
 /*
  * @brief PEM-encoded issuer certificate for AWS IoT Just In Time Registration (JITR).
@@ -71,6 +81,10 @@
  * "...base64 data...\n"\
  * "-----END RSA PRIVATE KEY-----\n"
  */
-#define keyCLIENT_PRIVATE_KEY_PEM                   ""
+#define keyCLIENT_PRIVATE_KEY_PEM                   "-----BEGIN PRIVATE KEY-----\n" \
+    "MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQg8gHhd5ELAooWRQls\n"    \
+    "PfpcQREiLrvEb3oLioicMYdUmrmhRANCAATFgks3zNgbMWJ7IXg43GTYEJjwjh9B\n"    \
+    "Ol84nJZJgKpq3zfG00Qqg7EHfcU/bYwlefuuPbhggu7W5EusWQfalxGQ\n"    \
+    "-----END PRIVATE KEY-----"
 
 #endif /* AWS_CLIENT_CREDENTIAL_KEYS_H */

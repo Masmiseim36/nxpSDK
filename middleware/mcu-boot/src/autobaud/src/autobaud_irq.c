@@ -6,7 +6,7 @@
  */
 
 #include "fsl_device_registers.h"
-#include "autobaud/autobaud.h"
+#include "autobaud.h"
 #include "microseconds.h"
 #include "bootloader_common.h"
 

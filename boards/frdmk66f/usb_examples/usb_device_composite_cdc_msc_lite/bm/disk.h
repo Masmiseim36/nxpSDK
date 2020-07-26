@@ -10,8 +10,8 @@
 #define _USB_MSC_DISK_H_ 1
 
 /*******************************************************************************
-* Definitions
-******************************************************************************/
+ * Definitions
+ ******************************************************************************/
 #if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0)
 #define CONTROLLER_ID kUSB_ControllerEhci0
 #endif

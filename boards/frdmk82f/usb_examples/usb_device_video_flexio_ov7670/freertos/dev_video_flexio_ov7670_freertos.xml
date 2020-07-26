@@ -15,10 +15,12 @@
     <definition extID="driver.camera-device-sccb.MK82F25615"/>
     <definition extID="driver.camera-receiver-common.MK82F25615"/>
     <definition extID="driver.video-common.MK82F25615"/>
-    <definition extID="middleware.amazon_freertos-kernel.MK82F25615"/>
-    <definition extID="middleware.amazon_freertos-kernel.extension.MK82F25615"/>
-    <definition extID="middleware.amazon_freertos-kernel.heap_4.MK82F25615"/>
-    <definition extID="middleware.usb.device.MK82F25615"/>
+    <definition extID="middleware.freertos-kernel.MK82F25615"/>
+    <definition extID="middleware.freertos-kernel.extension.MK82F25615"/>
+    <definition extID="middleware.freertos-kernel.heap_4.MK82F25615"/>
+    <definition extID="middleware.usb.common_header.MK82F25615"/>
+    <definition extID="middleware.usb.device.common_header.MK82F25615"/>
+    <definition extID="middleware.usb.device.controller.driver.MK82F25615"/>
     <definition extID="middleware.usb.device_controller_khci.MK82F25615"/>
     <definition extID="platform.Include_common.MK82F25615"/>
     <definition extID="platform.Include_core_cm4.MK82F25615"/>
@@ -43,7 +45,7 @@
     <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="frdmk82f_dev_video_flexio_ov7670_freertos" name="dev_video_flexio_ov7670_freertos" category="usb_examples" dependency="middleware.usb.device_controller_khci.MK82F25615 middleware.usb.device.MK82F25615 middleware.amazon_freertos-kernel.heap_4.MK82F25615 middleware.amazon_freertos-kernel.MK82F25615 platform.drivers.i2c.MK82F25615 platform.drivers.port.MK82F25615 platform.drivers.flexio.MK82F25615 platform.drivers.edma.MK82F25615 platform.drivers.dmamux.MK82F25615 platform.drivers.flexio_camera.MK82F25615 driver.camera-receiver-common.MK82F25615 driver.camera-device-ov7670.MK82F25615 driver.camera-device-sccb.MK82F25615 driver.camera-device-common.MK82F25615 driver.camera-common.MK82F25615 platform.drivers.smc.MK82F25615 platform.drivers.clock.MK82F25615 platform.drivers.common.MK82F25615 device.MK82F25615_CMSIS.MK82F25615 device.MK82F25615_startup.MK82F25615 platform.drivers.lpuart.MK82F25615 platform.drivers.gpio.MK82F25615 platform.drivers.sysmpu.MK82F25615 platform.utilities.assert.MK82F25615 utility.debug_console.MK82F25615 component.lpuart_adapter.MK82F25615 component.serial_manager.MK82F25615 component.lists.MK82F25615 component.serial_manager_uart.MK82F25615 component.osa.MK82F25615 platform.Include_core_cm4.MK82F25615 platform.Include_common.MK82F25615 platform.Include_dsp.MK82F25615 middleware.amazon_freertos-kernel.extension.MK82F25615 driver.video-common.MK82F25615 platform.utilities.misc_utilities.MK82F25615">
+  <example id="frdmk82f_dev_video_flexio_ov7670_freertos" name="dev_video_flexio_ov7670_freertos" category="usb_examples" dependency="middleware.usb.device_controller_khci.MK82F25615 middleware.freertos-kernel.heap_4.MK82F25615 middleware.freertos-kernel.MK82F25615 platform.drivers.i2c.MK82F25615 platform.drivers.port.MK82F25615 platform.drivers.flexio.MK82F25615 platform.drivers.edma.MK82F25615 platform.drivers.dmamux.MK82F25615 platform.drivers.flexio_camera.MK82F25615 driver.camera-receiver-common.MK82F25615 driver.camera-device-ov7670.MK82F25615 driver.camera-device-sccb.MK82F25615 driver.camera-device-common.MK82F25615 driver.camera-common.MK82F25615 platform.drivers.smc.MK82F25615 platform.drivers.clock.MK82F25615 platform.drivers.common.MK82F25615 device.MK82F25615_CMSIS.MK82F25615 device.MK82F25615_startup.MK82F25615 platform.drivers.lpuart.MK82F25615 platform.drivers.gpio.MK82F25615 platform.drivers.sysmpu.MK82F25615 platform.utilities.assert.MK82F25615 utility.debug_console.MK82F25615 component.lpuart_adapter.MK82F25615 component.serial_manager.MK82F25615 component.lists.MK82F25615 component.serial_manager_uart.MK82F25615 middleware.usb.device.controller.driver.MK82F25615 component.osa.MK82F25615 middleware.usb.device.common_header.MK82F25615 platform.Include_core_cm4.MK82F25615 platform.Include_common.MK82F25615 platform.Include_dsp.MK82F25615 middleware.usb.common_header.MK82F25615 middleware.freertos-kernel.extension.MK82F25615 driver.video-common.MK82F25615 platform.utilities.misc_utilities.MK82F25615">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>

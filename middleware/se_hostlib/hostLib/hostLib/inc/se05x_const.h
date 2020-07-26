@@ -1,4 +1,4 @@
-/* Copyright 2019 NXP
+/* Copyright 2019,2020 NXP
  *
  * This software is owned or controlled by NXP and may only be used
  * strictly in accordance with the applicable license terms.  By expressly
@@ -18,14 +18,26 @@
 #include "fsl_sss_ftr_default.h"
 #endif
 
-#if SSS_HAVE_SE05X
+#if SSS_HAVE_APPLET_SE05X_IOT
 
 #include <se05x_ftr.h>
 
 #define SE05X_SESSIONID_LEN (8)
 
-#define SE05X_MAX_BUF_SIZE_CMD (900)
-#define SE05X_MAX_BUF_SIZE_RSP (900)
+/* See MAX_APDU_PAYLOAD_LENGTH in SE050 APDU Specifications.
+ *
+ * Using 892 so that buffer boundaries are potentially word aligned.
+ * And expecting a failure from OnCard in case host sends a
+ * larger than expected buffer.
+ *
+ * Please note, depending on choise of of:
+ * {No Auth | UserID Auth | Applet SCP | Fast SCP }
+ * and combination of either of above along with Platform SCP,
+ * there is no easy way how many Exact bytes the host can
+ * send to SE050.
+ */
+#define SE05X_MAX_BUF_SIZE_CMD (892)
+#define SE05X_MAX_BUF_SIZE_RSP (892)
 
 #define SE050_MODULE_UNIQUE_ID_LEN 18
 
@@ -34,6 +46,10 @@
 #define SE05X_I2CM_MAX_TIMESTAMP_SIZE (12)
 #define SE05X_I2CM_MAX_FRESHNESS_SIZE (16)
 #define SE05X_I2CM_MAX_CHIP_ID_SIZE (18)
+
+/** How many attestation records
+ *
+ * Whle reading RSA Objects, modulus and public exporent get attested separately, */
 
 #define SE05X_MAX_ATTST_DATA 2
 
@@ -44,6 +60,7 @@
 #endif
 
 #define CIPHER_BLOCK_SIZE 16
+#define AEAD_BLOCK_SIZE 16
 #define BINARY_WRITE_MAX_LEN 500
 
 enum Se05x_SYMM_CIPHER_MODES
@@ -130,6 +147,12 @@ example : B1b8 : 0x80000000
 #define POLICY_OBJ_ALLOW_DESFIRE_AUTHENTICATION     0x00004000
 #define POLICY_OBJ_ALLOW_DESFIRE_DUMP_SESSION_KEYS  0x00002000
 #define POLICY_OBJ_ALLOW_IMPORT_EXPORT              0x00001000
+#if SSS_HAVE_SE05X_VER_GTE_04_04
+#define POLICY_OBJ_FORBID_DERIVED_OUTPUT            0x00000800
+#endif
+#if SSS_HAVE_SE05X_VER_GTE_05_04
+#define POLICY_OBJ_ALLOW_KDF_EXT_RANDOM     0x00000400
+#endif
 
 /* Access Rules for Session Policy*/
 #define POLICY_SESSION_MAX_APDU         0x8000
@@ -137,6 +160,6 @@ example : B1b8 : 0x80000000
 #define POLICY_SESSION_ALLOW_REFRESH    0x2000
 /**/
 
-#endif /* SSS_HAVE_SE05X */
+#endif /* SSS_HAVE_APPLET_SE05X_IOT */
 
 #endif /* FSL_SSS_SE05X_CONST_H */

@@ -16,7 +16,7 @@
  * Definitions
  ******************************************************************************/
 /* The Flextimer base address/channel used for board */
-#define BOARD_FTM_BASEADDR FTM0
+#define BOARD_FTM_BASEADDR    FTM0
 #define BOARD_FTM_OUT_CHANNEL kFTM_Chnl_6
 
 /* Get source clock for FTM driver */

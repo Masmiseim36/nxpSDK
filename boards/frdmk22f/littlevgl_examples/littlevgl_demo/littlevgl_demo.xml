@@ -10,9 +10,9 @@
     <definition extID="device.MK22F51212_startup.MK22F51212"/>
     <definition extID="driver.ft6x06.MK22F51212"/>
     <definition extID="driver.ili9341.MK22F51212"/>
-    <definition extID="middleware.amazon_freertos-kernel.MK22F51212"/>
-    <definition extID="middleware.amazon_freertos-kernel.extension.MK22F51212"/>
-    <definition extID="middleware.amazon_freertos-kernel.heap_4.MK22F51212"/>
+    <definition extID="middleware.freertos-kernel.MK22F51212"/>
+    <definition extID="middleware.freertos-kernel.extension.MK22F51212"/>
+    <definition extID="middleware.freertos-kernel.heap_4.MK22F51212"/>
     <definition extID="middleware.littlevgl.MK22F51212"/>
     <definition extID="platform.CMSIS_Driver_Include.Common_CMSISInclude.MK22F51212"/>
     <definition extID="platform.CMSIS_Driver_Include.I2C_CMSISInclude.MK22F51212"/>
@@ -43,7 +43,7 @@
     <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="frdmk22f_littlevgl_demo" name="littlevgl_demo" category="littlevgl_examples" dependency="driver.ili9341.MK22F51212 driver.ft6x06.MK22F51212 platform.drivers.port.MK22F51212 platform.drivers.clock.MK22F51212 platform.drivers.gpio.MK22F51212 platform.drivers.lpuart.MK22F51212 platform.drivers.edma.MK22F51212 platform.drivers.dmamux.MK22F51212 platform.drivers.dspi.MK22F51212 platform.drivers.dspi_edma.MK22F51212 platform.drivers.dspi_cmsis.MK22F51212 platform.drivers.i2c.MK22F51212 platform.drivers.i2c_edma.MK22F51212 platform.drivers.i2c_cmsis_edma.MK22F51212 middleware.amazon_freertos-kernel.heap_4.MK22F51212 platform.drivers.common.MK22F51212 middleware.littlevgl.MK22F51212 device.MK22F51212_CMSIS.MK22F51212 utility.debug_console.MK22F51212 component.uart_adapter.MK22F51212 component.serial_manager.MK22F51212 component.lists.MK22F51212 component.serial_manager_uart.MK22F51212 platform.drivers.uart.MK22F51212 device.MK22F51212_startup.MK22F51212 platform.drivers.smc.MK22F51212 platform.utilities.assert.MK22F51212 platform.Include_core_cm4.MK22F51212 platform.Include_common.MK22F51212 platform.Include_dsp.MK22F51212 platform.CMSIS_Driver_Include.I2C_CMSISInclude.MK22F51212 platform.CMSIS_Driver_Include.Common_CMSISInclude.MK22F51212 platform.CMSIS_Driver_Include.SPI_CMSISInclude.MK22F51212 middleware.amazon_freertos-kernel.MK22F51212 middleware.amazon_freertos-kernel.extension.MK22F51212 platform.utilities.misc_utilities.MK22F51212">
+  <example id="frdmk22f_littlevgl_demo" name="littlevgl_demo" category="littlevgl_examples" dependency="driver.ili9341.MK22F51212 driver.ft6x06.MK22F51212 platform.drivers.port.MK22F51212 platform.drivers.clock.MK22F51212 platform.drivers.gpio.MK22F51212 platform.drivers.lpuart.MK22F51212 platform.drivers.edma.MK22F51212 platform.drivers.dmamux.MK22F51212 platform.drivers.dspi.MK22F51212 platform.drivers.dspi_edma.MK22F51212 platform.drivers.dspi_cmsis.MK22F51212 platform.drivers.i2c.MK22F51212 platform.drivers.i2c_edma.MK22F51212 platform.drivers.i2c_cmsis_edma.MK22F51212 middleware.freertos-kernel.heap_4.MK22F51212 platform.drivers.common.MK22F51212 middleware.littlevgl.MK22F51212 device.MK22F51212_CMSIS.MK22F51212 utility.debug_console.MK22F51212 component.uart_adapter.MK22F51212 component.serial_manager.MK22F51212 component.lists.MK22F51212 component.serial_manager_uart.MK22F51212 platform.drivers.uart.MK22F51212 device.MK22F51212_startup.MK22F51212 platform.drivers.smc.MK22F51212 platform.utilities.assert.MK22F51212 platform.Include_core_cm4.MK22F51212 platform.Include_common.MK22F51212 platform.Include_dsp.MK22F51212 platform.CMSIS_Driver_Include.I2C_CMSISInclude.MK22F51212 platform.CMSIS_Driver_Include.Common_CMSISInclude.MK22F51212 platform.CMSIS_Driver_Include.SPI_CMSISInclude.MK22F51212 middleware.freertos-kernel.MK22F51212 middleware.freertos-kernel.extension.MK22F51212 platform.utilities.misc_utilities.MK22F51212">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -80,6 +80,10 @@
         </option>
       </toolchainSetting>
     </toolchainSettings>
+    <include_paths>
+      <include_path path="littlevgl"/>
+      <include_path path="littlevgl/lvgl"/>
+    </include_paths>
     <source path="boards/frdmk22f/littlevgl_examples/littlevgl_demo/armgcc" target_path="MK22F51212/gcc" type="linker" toolchain="armgcc">
       <files mask="MK22FN512xxx12_flash.ld"/>
     </source>
@@ -117,13 +121,13 @@
     <source path="boards/frdmk22f/littlevgl_examples" target_path="board" type="src">
       <files mask="littlevgl_support.c"/>
     </source>
-    <source path="middleware/littlevgl/lv_examples/demo" target_path="littlevgl/lv_examples/demo" type="c_include">
+    <source path="middleware/littlevgl/lv_examples/lv_apps/demo" target_path="littlevgl/lv_examples/lv_apps/demo" type="c_include">
       <files mask="demo.h"/>
     </source>
-    <source path="middleware/littlevgl/lv_examples/demo" target_path="littlevgl/lv_examples/demo" type="image" exclude="true">
+    <source path="middleware/littlevgl/lv_examples/lv_apps/demo" target_path="littlevgl/lv_examples/lv_apps/demo" type="image" exclude="true">
       <files mask="bubble_pattern.png"/>
     </source>
-    <source path="middleware/littlevgl/lv_examples/demo" target_path="littlevgl/lv_examples/demo" type="src">
+    <source path="middleware/littlevgl/lv_examples/lv_apps/demo" target_path="littlevgl/lv_examples/lv_apps/demo" type="src">
       <files mask="demo.c"/>
       <files mask="img_bubble_pattern.c"/>
     </source>

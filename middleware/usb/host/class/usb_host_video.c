@@ -114,7 +114,7 @@ static usb_status_t USB_HostVideoControlOpenInterface(usb_host_video_instance_st
     usb_host_pipe_init_t pipe_init;
     usb_descriptor_endpoint_t *ep_desc = NULL;
     usb_host_interface_t *interface_ptr;
-
+    void *temp;
     if (videoInstance->interruptPipe != NULL)
     {
         status = USB_HostClosePipe(videoInstance->hostHandle, videoInstance->interruptPipe);
@@ -129,7 +129,8 @@ static usb_status_t USB_HostVideoControlOpenInterface(usb_host_video_instance_st
     }
 
     /* open interface pipes */
-    interface_ptr = (usb_host_interface_t *)videoInstance->controlIntfHandle;
+    temp          = (void *)videoInstance->controlIntfHandle;
+    interface_ptr = (usb_host_interface_t *)temp;
     for (ep_index = 0U; ep_index < interface_ptr->epCount; ++ep_index)
     {
         ep_desc = interface_ptr->epList[ep_index].epDesc;
@@ -137,19 +138,19 @@ static usb_status_t USB_HostVideoControlOpenInterface(usb_host_video_instance_st
              USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_IN) &&
             ((ep_desc->bmAttributes & USB_DESCRIPTOR_ENDPOINT_ATTRIBUTE_TYPE_MASK) == USB_ENDPOINT_INTERRUPT))
         {
-            pipe_init.devInstance = videoInstance->deviceHandle;
-            pipe_init.pipeType = USB_ENDPOINT_INTERRUPT;
-            pipe_init.direction = USB_IN;
+            pipe_init.devInstance     = videoInstance->deviceHandle;
+            pipe_init.pipeType        = USB_ENDPOINT_INTERRUPT;
+            pipe_init.direction       = USB_IN;
             pipe_init.endpointAddress = (ep_desc->bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_NUMBER_MASK);
-            pipe_init.interval = ep_desc->bInterval;
-            pipe_init.maxPacketSize = (uint16_t)(USB_SHORT_FROM_LITTLE_ENDIAN_ADDRESS(ep_desc->wMaxPacketSize) &
-                                                 USB_DESCRIPTOR_ENDPOINT_MAXPACKETSIZE_SIZE_MASK);
-            pipe_init.numberPerUframe = (USB_SHORT_FROM_LITTLE_ENDIAN_ADDRESS(ep_desc->wMaxPacketSize) &
-                                         USB_DESCRIPTOR_ENDPOINT_MAXPACKETSIZE_MULT_TRANSACTIONS_MASK);
-            pipe_init.nakCount = USB_HOST_CONFIG_MAX_NAK;
+            pipe_init.interval        = ep_desc->bInterval;
+            pipe_init.maxPacketSize   = (uint16_t)((USB_SHORT_FROM_LITTLE_ENDIAN_ADDRESS(ep_desc->wMaxPacketSize) &
+                                                  USB_DESCRIPTOR_ENDPOINT_MAXPACKETSIZE_SIZE_MASK));
+            pipe_init.numberPerUframe = (uint8_t)((USB_SHORT_FROM_LITTLE_ENDIAN_ADDRESS(ep_desc->wMaxPacketSize) &
+                                                   USB_DESCRIPTOR_ENDPOINT_MAXPACKETSIZE_MULT_TRANSACTIONS_MASK));
+            pipe_init.nakCount        = USB_HOST_CONFIG_MAX_NAK;
 
             videoInstance->interruptInPacketSize = pipe_init.maxPacketSize;
-            videoInstance->interruptInEpNum = pipe_init.endpointAddress;
+            videoInstance->interruptInEpNum      = pipe_init.endpointAddress;
             status = USB_HostOpenPipe(videoInstance->hostHandle, &videoInstance->interruptPipe, &pipe_init);
             if (status != kStatus_USB_Success)
             {
@@ -181,6 +182,7 @@ static usb_status_t USB_HostVideoStreamOpenInterface(usb_host_video_instance_str
     usb_host_pipe_init_t pipe_init;
     usb_descriptor_endpoint_t *ep_desc = NULL;
     usb_host_interface_t *interface_ptr;
+    void *temp;
 
     if (videoInstance->streamIsoInPipe != NULL)
     {
@@ -196,7 +198,8 @@ static usb_status_t USB_HostVideoStreamOpenInterface(usb_host_video_instance_str
     }
 
     /* open interface pipes */
-    interface_ptr = (usb_host_interface_t *)videoInstance->streamIntfHandle;
+    temp          = (void *)videoInstance->streamIntfHandle;
+    interface_ptr = (usb_host_interface_t *)temp;
     for (ep_index = 0U; ep_index < interface_ptr->epCount; ++ep_index)
     {
         ep_desc = interface_ptr->epList[ep_index].epDesc;
@@ -204,20 +207,20 @@ static usb_status_t USB_HostVideoStreamOpenInterface(usb_host_video_instance_str
              USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_IN) &&
             ((ep_desc->bmAttributes & USB_DESCRIPTOR_ENDPOINT_ATTRIBUTE_TYPE_MASK) == USB_ENDPOINT_ISOCHRONOUS))
         {
-            pipe_init.devInstance = videoInstance->deviceHandle;
-            pipe_init.pipeType = USB_ENDPOINT_ISOCHRONOUS;
-            pipe_init.direction = USB_IN;
+            pipe_init.devInstance     = videoInstance->deviceHandle;
+            pipe_init.pipeType        = USB_ENDPOINT_ISOCHRONOUS;
+            pipe_init.direction       = USB_IN;
             pipe_init.endpointAddress = (ep_desc->bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_NUMBER_MASK);
-            pipe_init.interval = ep_desc->bInterval;
-            pipe_init.maxPacketSize = (uint16_t)(USB_SHORT_FROM_LITTLE_ENDIAN_ADDRESS(ep_desc->wMaxPacketSize) &
-                                                 USB_DESCRIPTOR_ENDPOINT_MAXPACKETSIZE_SIZE_MASK);
-            pipe_init.numberPerUframe = (USB_SHORT_FROM_LITTLE_ENDIAN_ADDRESS(ep_desc->wMaxPacketSize) &
-                                         USB_DESCRIPTOR_ENDPOINT_MAXPACKETSIZE_MULT_TRANSACTIONS_MASK) >>
-                                        USB_DESCRIPTOR_ENDPOINT_MAXPACKETSIZE_MULT_TRANSACTIONS_SHFIT;
-            pipe_init.nakCount = USB_HOST_CONFIG_MAX_NAK;
+            pipe_init.interval        = ep_desc->bInterval;
+            pipe_init.maxPacketSize   = (uint16_t)((USB_SHORT_FROM_LITTLE_ENDIAN_ADDRESS(ep_desc->wMaxPacketSize) &
+                                                  USB_DESCRIPTOR_ENDPOINT_MAXPACKETSIZE_SIZE_MASK));
+            pipe_init.numberPerUframe = (uint8_t)((USB_SHORT_FROM_LITTLE_ENDIAN_ADDRESS(ep_desc->wMaxPacketSize) &
+                                                   USB_DESCRIPTOR_ENDPOINT_MAXPACKETSIZE_MULT_TRANSACTIONS_MASK) >>
+                                                  USB_DESCRIPTOR_ENDPOINT_MAXPACKETSIZE_MULT_TRANSACTIONS_SHFIT);
+            pipe_init.nakCount        = USB_HOST_CONFIG_MAX_NAK;
 
             videoInstance->isoInPacketSize = pipe_init.maxPacketSize;
-            videoInstance->isoInEpNum = pipe_init.endpointAddress;
+            videoInstance->isoInEpNum      = pipe_init.endpointAddress;
             status = USB_HostOpenPipe(videoInstance->hostHandle, &videoInstance->streamIsoInPipe, &pipe_init);
             if (status != kStatus_USB_Success)
             {
@@ -260,7 +263,7 @@ static void USB_HostVideoSetControlInterfaceCallback(void *param, usb_host_trans
         videoInstance->controlCallbackFn(videoInstance->controlCallbackParam, transfer->transferBuffer,
                                          transfer->transferSofar, status);
     }
-    USB_HostFreeTransfer(videoInstance->hostHandle, transfer);
+    (void)USB_HostFreeTransfer(videoInstance->hostHandle, transfer);
 }
 
 /*!
@@ -287,7 +290,7 @@ static void USB_HostVideoSetStreamInterfaceCallback(void *param, usb_host_transf
         or USB_HostAudioControlSetInterface, but is the same function */
         videoInstance->controlCallbackFn(videoInstance->controlCallbackParam, NULL, 0U, status);
     }
-    USB_HostFreeTransfer(videoInstance->hostHandle, transfer);
+    (void)USB_HostFreeTransfer(videoInstance->hostHandle, transfer);
 }
 
 /*!
@@ -309,7 +312,7 @@ static void USB_HostVideoControlCommandCallback(void *param, usb_host_transfer_t
         videoInstance->controlCallbackFn(videoInstance->controlCallbackParam, transfer->transferBuffer,
                                          transfer->transferSofar, status);
     }
-    USB_HostFreeTransfer(videoInstance->hostHandle, transfer);
+    (void)USB_HostFreeTransfer(videoInstance->hostHandle, transfer);
 }
 
 /*!
@@ -329,7 +332,7 @@ static void USB_HostVideoStreamIsoInPipeCallback(void *param, usb_host_transfer_
         videoInstance->streamIsoInCallbackFn(videoInstance->streamIsoInCallbackParam, transfer->transferBuffer,
                                              transfer->transferSofar, status);
     }
-    USB_HostFreeTransfer(videoInstance->hostHandle, transfer);
+    (void)USB_HostFreeTransfer(videoInstance->hostHandle, transfer);
 }
 
 /*!
@@ -372,25 +375,25 @@ static usb_status_t USB_HostVideoControl(usb_host_class_handle classHandle,
 #endif
         return kStatus_USB_Error;
     }
-    videoInstance->controlCallbackFn = callbackFn;
+    videoInstance->controlCallbackFn    = callbackFn;
     videoInstance->controlCallbackParam = callbackParam;
 
-    transfer->transferBuffer = data;
-    transfer->transferLength = wlength;
-    transfer->callbackFn = USB_HostVideoControlCommandCallback;
-    transfer->callbackParam = videoInstance;
+    transfer->transferBuffer             = data;
+    transfer->transferLength             = wlength;
+    transfer->callbackFn                 = USB_HostVideoControlCommandCallback;
+    transfer->callbackParam              = videoInstance;
     transfer->setupPacket->bmRequestType = typeRequest;
-    transfer->setupPacket->bRequest = request;
-    transfer->setupPacket->wValue = USB_SHORT_TO_LITTLE_ENDIAN(wvalue);
-    transfer->setupPacket->wIndex = USB_SHORT_TO_LITTLE_ENDIAN(windex);
-    transfer->setupPacket->wLength = USB_SHORT_TO_LITTLE_ENDIAN(wlength);
+    transfer->setupPacket->bRequest      = request;
+    transfer->setupPacket->wValue        = USB_SHORT_TO_LITTLE_ENDIAN(wvalue);
+    transfer->setupPacket->wIndex        = USB_SHORT_TO_LITTLE_ENDIAN(windex);
+    transfer->setupPacket->wLength       = USB_SHORT_TO_LITTLE_ENDIAN(wlength);
 
     if (USB_HostSendSetup(videoInstance->hostHandle, videoInstance->controlPipe, transfer) != kStatus_USB_Success)
     {
 #ifdef HOST_ECHO
         usb_echo("failed for USB_HostSendSetup\r\n");
 #endif
-        USB_HostFreeTransfer(videoInstance->hostHandle, transfer);
+        (void)USB_HostFreeTransfer(videoInstance->hostHandle, transfer);
         return kStatus_USB_Error;
     }
     videoInstance->controlTransfer = transfer;
@@ -430,6 +433,7 @@ usb_status_t USB_HostVideoStreamSetInterface(usb_host_class_handle classHandle,
     usb_host_video_descriptor_union_t descUnion;
     uint32_t length, ep = 0U;
     uint32_t descLength = 0;
+    void *temp;
 
     if (classHandle == NULL)
     {
@@ -459,17 +463,18 @@ usb_status_t USB_HostVideoStreamSetInterface(usb_host_class_handle classHandle,
     /* open interface pipes */
     interface_ptr = (usb_host_interface_t *)interfaceHandle;
 
-    if (0 == alternateSetting)
+    if (0U == alternateSetting)
     {
         descUnion.bufr = interface_ptr->interfaceExtension;
-        length = 0U;
+        length         = 0U;
         while (length < interface_ptr->interfaceExtensionLength)
         {
             if (descUnion.common->bDescriptorType == USB_HOST_DESC_CS_INTERFACE)
             {
                 if (descUnion.common->bData[0] == USB_HOST_DESC_SUBTYPE_VS_INPUT_HEADER)
                 {
-                    videoInstance->vsInputHeaderDesc = (usb_host_video_stream_input_header_desc_t *)descUnion.bufr;
+                    temp                             = (void *)descUnion.bufr;
+                    videoInstance->vsInputHeaderDesc = (usb_host_video_stream_input_header_desc_t *)temp;
                     break;
                 }
             }
@@ -480,7 +485,7 @@ usb_status_t USB_HostVideoStreamSetInterface(usb_host_class_handle classHandle,
     else
     {
         descUnion.bufr = interface_ptr->interfaceExtension;
-        length = 0U;
+        length         = 0U;
         while (length < interface_ptr->interfaceExtensionLength)
         {
             if ((descUnion.common->bDescriptorType == USB_DESCRIPTOR_TYPE_INTERFACE) &&
@@ -497,13 +502,14 @@ usb_status_t USB_HostVideoStreamSetInterface(usb_host_class_handle classHandle,
         {
             if (descUnion.common->bDescriptorType == USB_DESCRIPTOR_TYPE_ENDPOINT)
             {
-                interface_ptr->epList[ep].epDesc = (usb_descriptor_endpoint_t *)descUnion.bufr;
-                descLength = descUnion.common->bLength;
+                temp                             = (void *)descUnion.bufr;
+                interface_ptr->epList[ep].epDesc = (usb_descriptor_endpoint_t *)temp;
+                descLength                       = descUnion.common->bLength;
                 descUnion.bufr += descUnion.common->bLength;
 
                 if (USB_HOST_DESC_CS_ENDPOINT == descUnion.common->bDescriptorType)
                 {
-                    interface_ptr->epList[ep].epExtension = descUnion.bufr;
+                    interface_ptr->epList[ep].epExtension       = descUnion.bufr;
                     interface_ptr->epList[ep].epExtensionLength = descUnion.common->bLength;
                 }
                 else
@@ -533,19 +539,19 @@ usb_status_t USB_HostVideoStreamSetInterface(usb_host_class_handle classHandle,
 #endif
             return kStatus_USB_Error;
         }
-        videoInstance->controlCallbackFn = callbackFn;
+        videoInstance->controlCallbackFn    = callbackFn;
         videoInstance->controlCallbackParam = callbackParam;
         /* initialize transfer */
-        transfer->callbackFn = USB_HostVideoSetStreamInterfaceCallback;
-        transfer->callbackParam = videoInstance;
-        transfer->setupPacket->bRequest = USB_REQUEST_STANDARD_SET_INTERFACE;
+        transfer->callbackFn                 = USB_HostVideoSetStreamInterfaceCallback;
+        transfer->callbackParam              = videoInstance;
+        transfer->setupPacket->bRequest      = USB_REQUEST_STANDARD_SET_INTERFACE;
         transfer->setupPacket->bmRequestType = USB_REQUEST_TYPE_RECIPIENT_INTERFACE;
-        transfer->setupPacket->wIndex = USB_SHORT_TO_LITTLE_ENDIAN(
+        transfer->setupPacket->wIndex        = USB_SHORT_TO_LITTLE_ENDIAN(
             ((usb_host_interface_t *)videoInstance->streamIntfHandle)->interfaceDesc->bInterfaceNumber);
-        transfer->setupPacket->wValue = USB_SHORT_TO_LITTLE_ENDIAN(alternateSetting);
+        transfer->setupPacket->wValue  = USB_SHORT_TO_LITTLE_ENDIAN(alternateSetting);
         transfer->setupPacket->wLength = 0;
-        transfer->transferBuffer = NULL;
-        transfer->transferLength = 0;
+        transfer->transferBuffer       = NULL;
+        transfer->transferLength       = 0;
         status = USB_HostSendSetup(videoInstance->hostHandle, videoInstance->controlPipe, transfer);
 
         if (status == kStatus_USB_Success)
@@ -554,7 +560,7 @@ usb_status_t USB_HostVideoStreamSetInterface(usb_host_class_handle classHandle,
         }
         else
         {
-            USB_HostFreeTransfer(videoInstance->hostHandle, transfer);
+            (void)USB_HostFreeTransfer(videoInstance->hostHandle, transfer);
         }
     }
 
@@ -592,13 +598,14 @@ usb_status_t USB_HostVideoControlSetInterface(usb_host_class_handle classHandle,
     usb_host_transfer_t *transfer;
     usb_host_video_descriptor_union_t desc;
     uint32_t length = 0U;
+    void *temp;
 
     if (classHandle == NULL)
     {
         return kStatus_USB_InvalidParameter;
     }
     videoInstance->controlIntfHandle = interfaceHandle;
-    interface_ptr = (usb_host_interface_t *)interfaceHandle;
+    interface_ptr                    = (usb_host_interface_t *)interfaceHandle;
 
     status = USB_HostOpenDeviceInterface(videoInstance->deviceHandle, interfaceHandle);
     if (status != kStatus_USB_Success)
@@ -625,24 +632,26 @@ usb_status_t USB_HostVideoControlSetInterface(usb_host_class_handle classHandle,
     {
         if (desc.common->bDescriptorType == USB_HOST_DESC_CS_INTERFACE)
         {
+            temp = (void *)desc.bufr;
             if (desc.common->bData[0] == USB_HOST_DESC_SUBTYPE_VC_HEADER)
             {
-                videoInstance->vcHeaderDesc = (usb_host_video_ctrl_header_desc_t *)desc.bufr;
+                videoInstance->vcHeaderDesc = (usb_host_video_ctrl_header_desc_t *)temp;
             }
             else if (desc.common->bData[0] == USB_HOST_DESC_SUBTYPE_VC_INPUT_TERMINAL)
             {
-                videoInstance->vcInputTerminalDesc = (usb_host_video_ctrl_it_desc_t *)desc.bufr;
+                videoInstance->vcInputTerminalDesc = (usb_host_video_ctrl_it_desc_t *)temp;
             }
             else if (desc.common->bData[0] == USB_HOST_DESC_SUBTYPE_VC_OUTPUT_TERMINAL)
             {
-                videoInstance->vcOutputTerminalDesc = (usb_host_video_ctrl_ot_desc_t *)desc.bufr;
+                videoInstance->vcOutputTerminalDesc = (usb_host_video_ctrl_ot_desc_t *)temp;
             }
             else if (desc.common->bData[0] == USB_HOST_DESC_SUBTYPE_VC_PROCESSING_UNIT)
             {
-                videoInstance->vcProcessingUnitDesc = (usb_host_video_ctrl_pu_desc_t *)desc.bufr;
+                videoInstance->vcProcessingUnitDesc = (usb_host_video_ctrl_pu_desc_t *)temp;
             }
             else
             {
+                /*no action*/
             }
         }
         length += desc.common->bLength;
@@ -666,19 +675,19 @@ usb_status_t USB_HostVideoControlSetInterface(usb_host_class_handle classHandle,
 #endif
             return kStatus_USB_Error;
         }
-        videoInstance->controlCallbackFn = callbackFn;
+        videoInstance->controlCallbackFn    = callbackFn;
         videoInstance->controlCallbackParam = callbackParam;
         /* initialize transfer */
-        transfer->callbackFn = USB_HostVideoSetControlInterfaceCallback;
-        transfer->callbackParam = videoInstance;
-        transfer->setupPacket->bRequest = USB_REQUEST_STANDARD_SET_INTERFACE;
+        transfer->callbackFn                 = USB_HostVideoSetControlInterfaceCallback;
+        transfer->callbackParam              = videoInstance;
+        transfer->setupPacket->bRequest      = USB_REQUEST_STANDARD_SET_INTERFACE;
         transfer->setupPacket->bmRequestType = USB_REQUEST_TYPE_RECIPIENT_INTERFACE;
-        transfer->setupPacket->wIndex = USB_SHORT_TO_LITTLE_ENDIAN(
+        transfer->setupPacket->wIndex        = USB_SHORT_TO_LITTLE_ENDIAN(
             ((usb_host_interface_t *)videoInstance->controlIntfHandle)->interfaceDesc->bInterfaceNumber);
-        transfer->setupPacket->wValue = USB_SHORT_TO_LITTLE_ENDIAN(alternateSetting);
+        transfer->setupPacket->wValue  = USB_SHORT_TO_LITTLE_ENDIAN(alternateSetting);
         transfer->setupPacket->wLength = 0;
-        transfer->transferBuffer = NULL;
-        transfer->transferLength = 0;
+        transfer->transferBuffer       = NULL;
+        transfer->transferLength       = 0;
         status = USB_HostSendSetup(videoInstance->hostHandle, videoInstance->controlPipe, transfer);
 
         if (status == kStatus_USB_Success)
@@ -687,7 +696,7 @@ usb_status_t USB_HostVideoControlSetInterface(usb_host_class_handle classHandle,
         }
         else
         {
-            USB_HostFreeTransfer(videoInstance->hostHandle, transfer);
+            (void)USB_HostFreeTransfer(videoInstance->hostHandle, transfer);
         }
     }
 
@@ -737,19 +746,19 @@ usb_status_t USB_HosVideoStreamRecv(usb_host_class_handle classHandle,
 #endif
         return kStatus_USB_Error;
     }
-    videoInstance->streamIsoInCallbackFn = callbackFn;
+    videoInstance->streamIsoInCallbackFn    = callbackFn;
     videoInstance->streamIsoInCallbackParam = callbackParam;
-    transfer->transferBuffer = buffer;
-    transfer->transferLength = bufferLen;
-    transfer->callbackFn = USB_HostVideoStreamIsoInPipeCallback;
-    transfer->callbackParam = videoInstance;
+    transfer->transferBuffer                = buffer;
+    transfer->transferLength                = bufferLen;
+    transfer->callbackFn                    = USB_HostVideoStreamIsoInPipeCallback;
+    transfer->callbackParam                 = videoInstance;
 
     if (USB_HostRecv(videoInstance->hostHandle, videoInstance->streamIsoInPipe, transfer) != kStatus_USB_Success)
     {
 #ifdef HOST_ECHO
         usb_echo("failed to USB_HostRecv\r\n");
 #endif
-        USB_HostFreeTransfer(videoInstance->hostHandle, transfer);
+        (void)USB_HostFreeTransfer(videoInstance->hostHandle, transfer);
         return kStatus_USB_Error;
     }
 
@@ -772,19 +781,21 @@ usb_status_t USB_HostVideoInit(usb_device_handle deviceHandle, usb_host_class_ha
     usb_host_video_instance_struct_t *videoInstance =
         (usb_host_video_instance_struct_t *)OSA_MemoryAllocate(sizeof(usb_host_video_instance_struct_t));
     uint32_t info_value;
-
+    uint32_t *temp;
     if (videoInstance == NULL)
     {
         return kStatus_USB_AllocFail;
     }
 
-    videoInstance->deviceHandle = deviceHandle;
+    videoInstance->deviceHandle      = deviceHandle;
     videoInstance->controlIntfHandle = NULL;
-    videoInstance->streamIntfHandle = NULL;
-    USB_HostHelperGetPeripheralInformation(deviceHandle, kUSB_HostGetHostHandle, &info_value);
-    videoInstance->hostHandle = (usb_host_handle)info_value;
-    USB_HostHelperGetPeripheralInformation(deviceHandle, kUSB_HostGetDeviceControlPipe, &info_value);
-    videoInstance->controlPipe = (usb_host_pipe_handle)info_value;
+    videoInstance->streamIntfHandle  = NULL;
+    (void)USB_HostHelperGetPeripheralInformation(deviceHandle, (uint32_t)kUSB_HostGetHostHandle, &info_value);
+    temp                      = (uint32_t *)info_value;
+    videoInstance->hostHandle = (usb_host_handle)temp;
+    (void)USB_HostHelperGetPeripheralInformation(deviceHandle, (uint32_t)kUSB_HostGetDeviceControlPipe, &info_value);
+    temp                       = (uint32_t *)info_value;
+    videoInstance->controlPipe = (usb_host_pipe_handle)temp;
 
     *classHandle = videoInstance;
     return kStatus_USB_Success;
@@ -815,6 +826,12 @@ usb_status_t USB_HostVideoDeinit(usb_device_handle deviceHandle, usb_host_class_
         if (videoInstance->streamIsoInPipe != NULL)
         {
             status = USB_HostCancelTransfer(videoInstance->hostHandle, videoInstance->streamIsoInPipe, NULL);
+            if (status != kStatus_USB_Success)
+            {
+#ifdef HOST_ECHO
+                usb_echo("error when cancel pipe\r\n");
+#endif
+            }
             status = USB_HostClosePipe(videoInstance->hostHandle, videoInstance->streamIsoInPipe);
 
             if (status != kStatus_USB_Success)
@@ -826,11 +843,17 @@ usb_status_t USB_HostVideoDeinit(usb_device_handle deviceHandle, usb_host_class_
             videoInstance->streamIsoInPipe = NULL;
         }
 
-        USB_HostCloseDeviceInterface(deviceHandle, videoInstance->streamIntfHandle);
+        (void)USB_HostCloseDeviceInterface(deviceHandle, videoInstance->streamIntfHandle);
 
         if (videoInstance->interruptPipe != NULL)
         {
             status = USB_HostCancelTransfer(videoInstance->hostHandle, videoInstance->interruptPipe, NULL);
+            if (status != kStatus_USB_Success)
+            {
+#ifdef HOST_ECHO
+                usb_echo("error when cancel pipe\r\n");
+#endif
+            }
             status = USB_HostClosePipe(videoInstance->hostHandle, videoInstance->interruptPipe);
 
             if (status != kStatus_USB_Success)
@@ -845,13 +868,19 @@ usb_status_t USB_HostVideoDeinit(usb_device_handle deviceHandle, usb_host_class_
         {
             status = USB_HostCancelTransfer(videoInstance->hostHandle, videoInstance->controlPipe,
                                             videoInstance->controlTransfer);
+            if (status != kStatus_USB_Success)
+            {
+#ifdef HOST_ECHO
+                usb_echo("error when cancel pipe\r\n");
+#endif
+            }
         }
-        USB_HostCloseDeviceInterface(deviceHandle, videoInstance->controlIntfHandle);
+        (void)USB_HostCloseDeviceInterface(deviceHandle, videoInstance->controlIntfHandle);
         OSA_MemoryFree(videoInstance);
     }
     else
     {
-        USB_HostCloseDeviceInterface(deviceHandle, NULL);
+        (void)USB_HostCloseDeviceInterface(deviceHandle, NULL);
     }
 
     return kStatus_USB_Success;
@@ -888,7 +917,7 @@ usb_status_t USB_HostVideoStreamGetFormatDescriptor(usb_host_class_handle classH
     interface_ptr = (usb_host_interface_t *)videoInstance->streamIntfHandle;
 
     descUnion.bufr = interface_ptr->interfaceExtension;
-    length = 0U;
+    length         = 0U;
     while (length < interface_ptr->interfaceExtensionLength)
     {
         if (descUnion.common->bDescriptorType == USB_HOST_DESC_CS_INTERFACE)
@@ -928,8 +957,8 @@ usb_status_t USB_HostVideoStreamGetFrameDescriptor(
     usb_host_video_stream_payload_format_common_desc_t *formatDesc =
         (usb_host_video_stream_payload_format_common_desc_t *)formatDescriptor;
     usb_host_video_descriptor_union_t desc;
-    uint32_t i = 0;
-    uint8_t frameCount = 0;
+    uint32_t i         = 0U;
+    uint8_t frameCount = 0U;
 
     if (NULL == classHandle)
     {
@@ -942,7 +971,7 @@ usb_status_t USB_HostVideoStreamGetFrameDescriptor(
     }
 
     frameCount = formatDesc->bNumFrameDescriptors;
-    desc.bufr = (void *)formatDesc;
+    desc.bufr  = (void *)formatDesc;
     desc.bufr += desc.common->bLength;
 
     while (i <= frameCount)
@@ -999,8 +1028,8 @@ usb_status_t USB_HostVideoSetProbe(usb_host_class_handle classHandle,
     }
     status = USB_HostVideoControl(
         classHandle, USB_REQUEST_TYPE_DIR_OUT | USB_REQUEST_TYPE_TYPE_CLASS | USB_REQUEST_TYPE_RECIPIENT_INTERFACE,
-        request, USB_HOST_VS_PROBE_CONTROL << 8, streamInterface->interfaceDesc->bInterfaceNumber, 26, probe,
-        callbackFn, callbackParam);
+        request, (uint16_t)(USB_HOST_VS_PROBE_CONTROL << 8UL), streamInterface->interfaceDesc->bInterfaceNumber, 26U,
+        probe, callbackFn, callbackParam);
     return status;
 }
 
@@ -1039,8 +1068,8 @@ usb_status_t USB_HostVideoGetProbe(usb_host_class_handle classHandle,
     }
     status = USB_HostVideoControl(
         classHandle, USB_REQUEST_TYPE_DIR_IN | USB_REQUEST_TYPE_TYPE_CLASS | USB_REQUEST_TYPE_RECIPIENT_INTERFACE,
-        request, USB_HOST_VS_PROBE_CONTROL << 8, streamInterface->interfaceDesc->bInterfaceNumber, 26, probe,
-        callbackFn, callbackParam);
+        request, (uint16_t)(USB_HOST_VS_PROBE_CONTROL << 8UL), streamInterface->interfaceDesc->bInterfaceNumber, 26U,
+        probe, callbackFn, callbackParam);
     return status;
 }
 
@@ -1079,8 +1108,8 @@ usb_status_t USB_HostVideoGetCommit(usb_host_class_handle classHandle,
     }
     status = USB_HostVideoControl(
         classHandle, USB_REQUEST_TYPE_DIR_IN | USB_REQUEST_TYPE_TYPE_CLASS | USB_REQUEST_TYPE_RECIPIENT_INTERFACE,
-        brequest, USB_HOST_VS_COMMIT_CONTROL << 8, streamInterface->interfaceDesc->bInterfaceNumber, 26, probe,
-        callbackFn, callbackParam);
+        brequest, (uint16_t)(USB_HOST_VS_COMMIT_CONTROL << 8UL), streamInterface->interfaceDesc->bInterfaceNumber, 26U,
+        probe, callbackFn, callbackParam);
     return status;
 }
 
@@ -1119,8 +1148,8 @@ usb_status_t USB_HostVideoSetCommit(usb_host_class_handle classHandle,
     }
     status = USB_HostVideoControl(
         classHandle, USB_REQUEST_TYPE_DIR_OUT | USB_REQUEST_TYPE_TYPE_CLASS | USB_REQUEST_TYPE_RECIPIENT_INTERFACE,
-        brequest, USB_HOST_VS_COMMIT_CONTROL << 8, streamInterface->interfaceDesc->bInterfaceNumber, 26, probe,
-        callbackFn, callbackParam);
+        brequest, (uint16_t)(USB_HOST_VS_COMMIT_CONTROL << 8UL), streamInterface->interfaceDesc->bInterfaceNumber, 26U,
+        probe, callbackFn, callbackParam);
     return status;
 }
 

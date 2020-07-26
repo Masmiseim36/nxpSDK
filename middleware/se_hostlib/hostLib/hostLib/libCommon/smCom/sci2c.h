@@ -3,7 +3,7 @@
  * @author NXP Semiconductors
  * @version 1.0
  * @par License
- * Copyright 2017 NXP
+ * Copyright 2017,2020 NXP
  *
  * This software is owned or controlled by NXP and may only be used
  * strictly in accordance with the applicable license terms.  By expressly
@@ -175,9 +175,9 @@ typedef struct
 } tSCI2C_Data_t;
 
 /* ------------------------------------------------------------------------- */
-eSci2c_Error_t sci2c_Init(U8 *SCI2Catr, U16 *SCI2CatrLen);
-U32 sci2c_Transceive(apdu_t * pApdu);
-U32 sci2c_TransceiveRaw(U8 * pTx, U16 txLen, U8 * pRx, U32 * pRxLen);
+eSci2c_Error_t sci2c_Init(void* conn_ctx, U8 *SCI2Catr, U16 *SCI2CatrLen);
+U32 sci2c_Transceive(void* conn_ctx, apdu_t * pApdu);
+U32 sci2c_TransceiveRaw(void* conn_ctx, U8 * pTx, U16 txLen, U8 * pRx, U32 * pRxLen);
 void sci2c_SetSequenceCounter(U8 seqCounter);
 U8 sci2c_GetSequenceCounter(void);
 void sci2c_TerminateI2C(U8 full);

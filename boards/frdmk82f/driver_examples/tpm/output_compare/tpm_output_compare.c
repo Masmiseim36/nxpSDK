@@ -15,7 +15,7 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_TPM_BASEADDR TPM2
+#define DEMO_TPM_BASEADDR     TPM2
 #define BOARD_TPM_OUT_CHANNEL kTPM_Chnl_0
 
 /* Get source clock for TPM driver */

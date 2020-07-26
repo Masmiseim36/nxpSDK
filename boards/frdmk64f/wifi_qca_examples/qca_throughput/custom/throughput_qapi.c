@@ -79,8 +79,8 @@ unsigned char v6EnableFlag = 0;
  *     Definitions.
  *************************************************************************/
 
-#define CFG_COMPLETED_STR "IOT Throughput Test Completed" NL
-#define CFG_REPORT_STR "."
+#define CFG_COMPLETED_STR  "IOT Throughput Test Completed" NL
+#define CFG_REPORT_STR     "."
 #define PRINT_SHELL_PROMPT /* PRINTF("shell> "); */
 
 /*************************** Function Declarations **************************/
@@ -4027,8 +4027,8 @@ int32_t wait_for_response(THROUGHPUT_CXT *p_tCxt, SOCKADDR_T foreign_addr, SOCKA
         {
             addr_len_raw = 0;
             /* Set IP_HDRINCL socket option if need to receive the packet with IP header */
-            if (qcom_setsockopt(p_tCxt->sock_peer, ATH_IPPROTO_IP, IP_HDRINCL, (uint8_t *)&addr_len_raw, sizeof(addr_len_raw)) !=
-                A_OK)
+            if (qcom_setsockopt(p_tCxt->sock_peer, ATH_IPPROTO_IP, IP_HDRINCL, (uint8_t *)&addr_len_raw,
+                                sizeof(addr_len_raw)) != A_OK)
             {
                 PRINTF("SetsockOPT error:IP_HDRINCL" NL);
                 goto ERROR_2;

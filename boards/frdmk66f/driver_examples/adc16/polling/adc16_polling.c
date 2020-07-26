@@ -15,9 +15,9 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_ADC16_BASE ADC1
+#define DEMO_ADC16_BASE          ADC1
 #define DEMO_ADC16_CHANNEL_GROUP 0U
-#define DEMO_ADC16_USER_CHANNEL 23U
+#define DEMO_ADC16_USER_CHANNEL  23U
 
 /*******************************************************************************
  * Prototypes

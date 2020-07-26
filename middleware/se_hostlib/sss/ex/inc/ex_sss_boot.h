@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP
+ * Copyright 2019,2020 NXP
  *
  * This software is owned or controlled by NXP and may only be used
  * strictly in accordance with the applicable license terms.  By expressly
@@ -35,7 +35,7 @@ extern "C" {
 #include "ex_sss.h"
 #include "fsl_sss_api.h"
 
-#if SSS_HAVE_SE05X
+#if SSS_HAVE_APPLET_SE05X_IOT
 #include "fsl_sss_se05x_types.h"
 #endif
 #include "ex_sss_ports.h"
@@ -48,7 +48,7 @@ extern "C" {
 /* *****************************************************************************************************************
  * Types/Structure Declarations
  * ***************************************************************************************************************** */
-#if SSS_HAVE_SE || SSS_HAVE_SE05X
+#if SSS_HAVE_SE || SSS_HAVE_APPLET_SE05X_IOT
 
 typedef union ex_auth {
     struct
@@ -58,9 +58,9 @@ typedef union ex_auth {
     } scp03;
     struct
     {
-        NXFastSCP03_StaticCtx_t ex_static; //!< .static keys data
-        NXSCP03_DynCtx_t ex_dyn;           //!<  session keys data
-    } fastscp;
+        NXECKey03_StaticCtx_t ex_static; //!< .static keys data
+        NXSCP03_DynCtx_t ex_dyn;         //!<  session keys data
+    } eckey;
     struct
     {
         sss_object_t ex_id;
@@ -73,29 +73,37 @@ typedef struct
     sss_session_t session;
     sss_key_store_t ks;
 
-#if SSS_HAVE_SE || SSS_HAVE_SE05X
+#if SSS_HAVE_HOSTCRYPTO_ANY || SSS_HAVE_SSCP
     sss_session_t host_session;
+#endif
+
+#if SSS_HAVE_HOSTCRYPTO_ANY
     sss_key_store_t host_ks;
+#endif
+
+#if SSS_HAVE_APPLET_SE05X_IOT || SSS_HAVE_APPLET_LOOPBACK
     SE_Connect_Ctx_t se05x_open_ctx;
     sss_tunnel_t *pTunnel_ctx;
     ex_SE05x_authCtx_t ex_se05x_auth;
 #endif
+
 #if SSS_HAVE_SSCP
-    sss_session_t host_session;
-    sss_key_store_t host_ks;
     sscp_context_t sscp_ctx;
 #endif
 
 } ex_sss_boot_ctx_t;
 
-#if SSS_HAVE_SE05X
+#if SSS_HAVE_APPLET_SE05X_IOT
 typedef struct
 {
     sss_session_t platf_session;
-    SE05x_Connect_Ctx_t platf_open_ctx;
+    SE_Connect_Ctx_t platf_open_ctx;
     sss_session_t *phost_session;
     sss_key_store_t *phost_ks;
+#if 1 //SSS_HAVE_HOSTCRYPTO_ANY
+    /* Keeping this to be consistant on binary sizes */
     ex_SE05x_authCtx_t ex_se05x_auth;
+#endif // SSS_HAVE_HOSTCRYPTO_ANY
 } ex_sss_platf_ctx_t;
 #endif
 
@@ -106,6 +114,8 @@ typedef struct
     sss_object_t dev_cert;
     sss_object_t interCaCert;
     sss_key_store_t *pHost_ks;
+    uint32_t client_keyPair_index;
+    uint32_t client_cert_index;
 } ex_sss_cloud_ctx_t;
 
 /* *****************************************************************************************************************
@@ -116,7 +126,7 @@ typedef struct
  *   Function Prototypes
  * ***************************************************************************************************************** */
 
-#if SSS_HAVE_SE05X
+#if SSS_HAVE_APPLET_SE05X_IOT
 
 sss_status_t ex_sss_se05x_prepare_host(sss_session_t *host_session,
     sss_key_store_t *host_ks,
@@ -164,8 +174,7 @@ sss_status_t ex_sss_boot_direct(void);
  * @param[out] pPortName Possible port name
  * @return 0 if successful.
  */
-sss_status_t ex_sss_boot_connectstring(
-    int argc, const char *argv[], const char **pPortName);
+sss_status_t ex_sss_boot_connectstring(int argc, const char *argv[], const char **pPortName);
 
 /**
  * For the case where few activities have to be performed
@@ -178,6 +187,9 @@ sss_status_t ex_sss_boot_rtos(void *);
 
 /** Is this a serail port */
 bool ex_sss_boot_isSerialPortName(const char *portName);
+
+/** Is this --help request */
+bool ex_sss_boot_isHelp(const char *argname);
 
 /** Is this a socket port */
 bool ex_sss_boot_isSocketPortName(const char *portName);
@@ -198,7 +210,9 @@ sss_status_t ex_sss_kestore_and_object_init(ex_sss_boot_ctx_t *pCtx);
 
 int ex_sss_boot_rtos_init(void);
 
+#if SSS_HAVE_HOSTCRYPTO_ANY
 sss_status_t ex_sss_boot_open_host_session(ex_sss_boot_ctx_t *pCtx);
+#endif
 
 #if defined(__cplusplus)
 }

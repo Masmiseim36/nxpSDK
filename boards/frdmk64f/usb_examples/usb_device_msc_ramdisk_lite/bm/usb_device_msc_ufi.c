@@ -26,8 +26,8 @@
 extern usb_device_inquiry_data_fromat_struct_t g_InquiryInfo;
 extern usb_device_mode_parameters_header_struct_t g_ModeParametersHeader;
 /*******************************************************************************
-* Code
-******************************************************************************/
+ * Code
+ ******************************************************************************/
 
 /*!
  * @brief Thirteen possible case check.
@@ -48,7 +48,7 @@ usb_status_t USB_DeviceMscUfiThirteenCasesCheck(usb_device_msc_struct_t *mscHand
     usb_device_msc_thirteen_case_struct_t *mscCheckEvent;
 
     mscCheckEvent = (usb_device_msc_thirteen_case_struct_t *)&mscHandle->mscUfi.thirteenCase;
-    ufi = &mscHandle->mscUfi;
+    ufi           = &mscHandle->mscUfi;
     /* The following code describe the thirteen possible cases of host
         expectations and device intent in absence of overriding error conditions ,refer to bulk-only spec chapter 6.7
        The Thirteen Cases*/
@@ -84,8 +84,8 @@ usb_status_t USB_DeviceMscUfiThirteenCasesCheck(usb_device_msc_struct_t *mscHand
             }
             else
             {
-                mscHandle->mscCsw->cswStatus = USB_DEVICE_MSC_COMMAND_FAILED;
-                ufi->requestSense->senseKey = USB_DEVICE_MSC_UFI_MEDIUM_ERROR;
+                mscHandle->mscCsw->cswStatus           = USB_DEVICE_MSC_COMMAND_FAILED;
+                ufi->requestSense->senseKey            = USB_DEVICE_MSC_UFI_MEDIUM_ERROR;
                 ufi->requestSense->additionalSenseCode = USB_DEVICE_MSC_UFI_UNRECOVERED_READ_ERROR;
             }
             error = kStatus_USB_InvalidRequest;
@@ -114,8 +114,8 @@ usb_status_t USB_DeviceMscUfiThirteenCasesCheck(usb_device_msc_struct_t *mscHand
                 }
                 else
                 {
-                    mscHandle->mscCsw->cswStatus = USB_DEVICE_MSC_COMMAND_FAILED;
-                    ufi->requestSense->senseKey = USB_DEVICE_MSC_UFI_MEDIUM_ERROR;
+                    mscHandle->mscCsw->cswStatus           = USB_DEVICE_MSC_COMMAND_FAILED;
+                    ufi->requestSense->senseKey            = USB_DEVICE_MSC_UFI_MEDIUM_ERROR;
                     ufi->requestSense->additionalSenseCode = USB_DEVICE_MSC_UFI_UNRECOVERED_READ_ERROR;
                 }
                 error = kStatus_USB_InvalidRequest;
@@ -139,8 +139,8 @@ usb_status_t USB_DeviceMscUfiThirteenCasesCheck(usb_device_msc_struct_t *mscHand
                 }
                 else
                 {
-                    mscHandle->mscCsw->cswStatus = USB_DEVICE_MSC_COMMAND_FAILED;
-                    ufi->requestSense->senseKey = USB_DEVICE_MSC_UFI_MEDIUM_ERROR;
+                    mscHandle->mscCsw->cswStatus           = USB_DEVICE_MSC_COMMAND_FAILED;
+                    ufi->requestSense->senseKey            = USB_DEVICE_MSC_UFI_MEDIUM_ERROR;
                     ufi->requestSense->additionalSenseCode = USB_DEVICE_MSC_UFI_UNRECOVERED_READ_ERROR;
                 }
             }
@@ -176,8 +176,8 @@ usb_status_t USB_DeviceMscUfiThirteenCasesCheck(usb_device_msc_struct_t *mscHand
                 }
                 else
                 {
-                    mscHandle->mscCsw->cswStatus = USB_DEVICE_MSC_COMMAND_FAILED;
-                    ufi->requestSense->senseKey = USB_DEVICE_MSC_UFI_MEDIUM_ERROR;
+                    mscHandle->mscCsw->cswStatus           = USB_DEVICE_MSC_COMMAND_FAILED;
+                    ufi->requestSense->senseKey            = USB_DEVICE_MSC_UFI_MEDIUM_ERROR;
                     ufi->requestSense->additionalSenseCode = USB_DEVICE_MSC_UFI_UNRECOVERED_READ_ERROR;
                 }
             }
@@ -188,7 +188,7 @@ usb_status_t USB_DeviceMscUfiThirteenCasesCheck(usb_device_msc_struct_t *mscHand
             mscHandle->mscCsw->dataResidue = mscCheckEvent->hostExpectedDataLength;
             error = USB_DeviceSendRequest(mscHandle->handle, mscHandle->bulkInEndpoint, mscCheckEvent->buffer, 0);
             mscHandle->mscCsw->cswStatus = USB_DEVICE_MSC_PHASE_ERROR;
-            error = kStatus_USB_InvalidRequest;
+            error                        = kStatus_USB_InvalidRequest;
         }
     }
     else
@@ -197,18 +197,18 @@ usb_status_t USB_DeviceMscUfiThirteenCasesCheck(usb_device_msc_struct_t *mscHand
         if (0 == mscCheckEvent->deviceExpectedDataLength)
         { /*case 9,Device intends to transfer no data*/
             USB_DeviceStallEndpoint(mscHandle->handle, mscHandle->bulkOutEndpoint);
-            mscHandle->mscCsw->dataResidue = mscCheckEvent->hostExpectedDataLength;
-            mscHandle->mscCsw->cswStatus = USB_DEVICE_MSC_COMMAND_FAILED;
+            mscHandle->mscCsw->dataResidue  = mscCheckEvent->hostExpectedDataLength;
+            mscHandle->mscCsw->cswStatus    = USB_DEVICE_MSC_COMMAND_FAILED;
             mscHandle->outEndpointStallFlag = 1;
-            error = kStatus_USB_InvalidRequest;
+            error                           = kStatus_USB_InvalidRequest;
         }
         else if (mscCheckEvent->deviceExpectedDirection)
         { /*case 10,Device intends to send data to the host*/
             USB_DeviceStallEndpoint(mscHandle->handle, mscHandle->bulkOutEndpoint);
-            mscHandle->mscCsw->dataResidue = mscCheckEvent->hostExpectedDataLength;
-            mscHandle->mscCsw->cswStatus = USB_DEVICE_MSC_PHASE_ERROR;
+            mscHandle->mscCsw->dataResidue  = mscCheckEvent->hostExpectedDataLength;
+            mscHandle->mscCsw->cswStatus    = USB_DEVICE_MSC_PHASE_ERROR;
             mscHandle->outEndpointStallFlag = 1;
-            error = kStatus_USB_InvalidRequest;
+            error                           = kStatus_USB_InvalidRequest;
         }
         else
         {
@@ -233,8 +233,8 @@ usb_status_t USB_DeviceMscUfiThirteenCasesCheck(usb_device_msc_struct_t *mscHand
                 }
                 else
                 {
-                    mscHandle->mscCsw->cswStatus = USB_DEVICE_MSC_COMMAND_FAILED;
-                    ufi->requestSense->senseKey = USB_DEVICE_MSC_UFI_MEDIUM_ERROR;
+                    mscHandle->mscCsw->cswStatus           = USB_DEVICE_MSC_COMMAND_FAILED;
+                    ufi->requestSense->senseKey            = USB_DEVICE_MSC_UFI_MEDIUM_ERROR;
                     ufi->requestSense->additionalSenseCode = USB_DEVICE_MSC_UFI_WRITE_FAULT;
                 }
                 error = kStatus_USB_InvalidRequest;
@@ -257,8 +257,8 @@ usb_status_t USB_DeviceMscUfiThirteenCasesCheck(usb_device_msc_struct_t *mscHand
                 }
                 else
                 {
-                    mscHandle->mscCsw->cswStatus = USB_DEVICE_MSC_COMMAND_FAILED;
-                    ufi->requestSense->senseKey = USB_DEVICE_MSC_UFI_MEDIUM_ERROR;
+                    mscHandle->mscCsw->cswStatus           = USB_DEVICE_MSC_COMMAND_FAILED;
+                    ufi->requestSense->senseKey            = USB_DEVICE_MSC_UFI_MEDIUM_ERROR;
                     ufi->requestSense->additionalSenseCode = USB_DEVICE_MSC_UFI_WRITE_FAULT;
                 }
             }
@@ -293,7 +293,7 @@ usb_status_t USB_DeviceMscUfiThirteenCasesCheck(usb_device_msc_struct_t *mscHand
                 }
                 else
                 {
-                    ufi->requestSense->senseKey = USB_DEVICE_MSC_UFI_MEDIUM_ERROR;
+                    ufi->requestSense->senseKey            = USB_DEVICE_MSC_UFI_MEDIUM_ERROR;
                     ufi->requestSense->additionalSenseCode = USB_DEVICE_MSC_UFI_WRITE_FAULT;
                 }
             }
@@ -317,12 +317,12 @@ usb_status_t USB_DeviceMscUfiRequestSenseCommand(usb_device_msc_struct_t *mscHan
     usb_device_msc_ufi_struct_t *ufi = NULL;
     usb_status_t error;
 
-    ufi = &mscHandle->mscUfi;
+    ufi                                        = &mscHandle->mscUfi;
     ufi->thirteenCase.deviceExpectedDataLength = USB_DEVICE_MSC_UFI_REQ_SENSE_DATA_LENGTH;
-    ufi->thirteenCase.deviceExpectedDirection = USB_IN;
-    ufi->thirteenCase.buffer = (uint8_t *)ufi->requestSense;
-    ufi->thirteenCase.lbaSendRecvSelect = 0;
-    error = USB_DeviceMscUfiThirteenCasesCheck(mscHandle);
+    ufi->thirteenCase.deviceExpectedDirection  = USB_IN;
+    ufi->thirteenCase.buffer                   = (uint8_t *)ufi->requestSense;
+    ufi->thirteenCase.lbaSendRecvSelect        = 0;
+    error                                      = USB_DeviceMscUfiThirteenCasesCheck(mscHandle);
 
     return error;
 }
@@ -335,7 +335,7 @@ usb_status_t USB_DeviceMscUfiRequestSenseCommand(usb_device_msc_struct_t *mscHan
  * @param handle          The device msc class handle.
  *
  *@return A USB error code or kStatus_USB_Success.
-*/
+ */
 usb_status_t USB_DeviceMscUfiInquiryCommand(usb_device_msc_struct_t *mscHandle)
 {
     usb_device_msc_ufi_struct_t *ufi = NULL;
@@ -344,9 +344,9 @@ usb_status_t USB_DeviceMscUfiInquiryCommand(usb_device_msc_struct_t *mscHandle)
     ufi = &mscHandle->mscUfi;
 
     ufi->thirteenCase.deviceExpectedDataLength = USB_DEVICE_MSC_UFI_INQUIRY_ALLOCATION_LENGTH;
-    ufi->thirteenCase.deviceExpectedDirection = USB_IN;
-    ufi->thirteenCase.buffer = (uint8_t *)&g_InquiryInfo;
-    ufi->thirteenCase.lbaSendRecvSelect = 0;
+    ufi->thirteenCase.deviceExpectedDirection  = USB_IN;
+    ufi->thirteenCase.buffer                   = (uint8_t *)&g_InquiryInfo;
+    ufi->thirteenCase.lbaSendRecvSelect        = 0;
 
     error = USB_DeviceMscUfiThirteenCasesCheck(mscHandle);
     return error;
@@ -360,13 +360,13 @@ usb_status_t USB_DeviceMscUfiInquiryCommand(usb_device_msc_struct_t *mscHandle)
  * @param handle          The device msc class handle.
  *
  *@return A USB error code or kStatus_USB_Success.
-*/
+ */
 usb_status_t USB_DeviceMscUfiReadCommand(usb_device_msc_struct_t *mscHandle)
 {
     usb_device_msc_ufi_struct_t *ufi = NULL;
     usb_status_t error;
     uint32_t logicalBlockAddress = 0;
-    uint32_t lbaTransferLength = 0;
+    uint32_t lbaTransferLength   = 0;
 
     ufi = &mscHandle->mscUfi;
 
@@ -391,13 +391,13 @@ usb_status_t USB_DeviceMscUfiReadCommand(usb_device_msc_struct_t *mscHandle)
     {
     }
 
-    ufi->thirteenCase.deviceExpectedDirection = USB_IN;
+    ufi->thirteenCase.deviceExpectedDirection  = USB_IN;
     ufi->thirteenCase.deviceExpectedDataLength = mscHandle->lengthOfEachLba * lbaTransferLength;
-    ufi->thirteenCase.buffer = NULL;
+    ufi->thirteenCase.buffer                   = NULL;
 
-    ufi->thirteenCase.lbaSendRecvSelect = 1;
+    ufi->thirteenCase.lbaSendRecvSelect                          = 1;
     ufi->thirteenCase.lbaInformation.startingLogicalBlockAddress = logicalBlockAddress;
-    ufi->thirteenCase.lbaInformation.transferNumber = lbaTransferLength;
+    ufi->thirteenCase.lbaInformation.transferNumber              = lbaTransferLength;
 
     error = USB_DeviceMscUfiThirteenCasesCheck(mscHandle);
     return error;
@@ -411,13 +411,13 @@ usb_status_t USB_DeviceMscUfiReadCommand(usb_device_msc_struct_t *mscHandle)
  * @param handle          The device msc class handle.
  *
  *@return A USB error code or kStatus_USB_Success.
-*/
+ */
 usb_status_t USB_DeviceMscUfiWriteCommand(usb_device_msc_struct_t *mscHandle)
 {
     usb_device_msc_ufi_struct_t *ufi = NULL;
     usb_status_t error;
     uint32_t logicalBlockAddress = 0;
-    uint32_t lbaTransferLength = 0;
+    uint32_t lbaTransferLength   = 0;
 
     ufi = &mscHandle->mscUfi;
 
@@ -441,13 +441,13 @@ usb_status_t USB_DeviceMscUfiWriteCommand(usb_device_msc_struct_t *mscHandle)
     else
     {
     }
-    ufi->thirteenCase.deviceExpectedDirection = USB_OUT;
+    ufi->thirteenCase.deviceExpectedDirection  = USB_OUT;
     ufi->thirteenCase.deviceExpectedDataLength = mscHandle->lengthOfEachLba * lbaTransferLength;
-    ufi->thirteenCase.buffer = NULL;
+    ufi->thirteenCase.buffer                   = NULL;
 
-    ufi->thirteenCase.lbaSendRecvSelect = 1;
+    ufi->thirteenCase.lbaSendRecvSelect                          = 1;
     ufi->thirteenCase.lbaInformation.startingLogicalBlockAddress = logicalBlockAddress;
-    ufi->thirteenCase.lbaInformation.transferNumber = lbaTransferLength;
+    ufi->thirteenCase.lbaInformation.transferNumber              = lbaTransferLength;
 
     error = USB_DeviceMscUfiThirteenCasesCheck(mscHandle);
     return error;
@@ -461,7 +461,7 @@ usb_status_t USB_DeviceMscUfiWriteCommand(usb_device_msc_struct_t *mscHandle)
  * @param handle          The device msc class handle.
  *
  *@return A USB error code or kStatus_USB_Success.
-*/
+ */
 usb_status_t USB_DeviceMscUfiTestUnitReadyCommand(usb_device_msc_struct_t *mscHandle)
 {
     usb_device_msc_ufi_struct_t *ufi = NULL;
@@ -470,9 +470,9 @@ usb_status_t USB_DeviceMscUfiTestUnitReadyCommand(usb_device_msc_struct_t *mscHa
     ufi = &mscHandle->mscUfi;
 
     ufi->thirteenCase.deviceExpectedDataLength = 0;
-    ufi->thirteenCase.deviceExpectedDirection = USB_IN;
-    ufi->thirteenCase.buffer = NULL;
-    ufi->thirteenCase.lbaSendRecvSelect = 0;
+    ufi->thirteenCase.deviceExpectedDirection  = USB_IN;
+    ufi->thirteenCase.buffer                   = NULL;
+    ufi->thirteenCase.lbaSendRecvSelect        = 0;
 
     error = USB_DeviceMscUfiThirteenCasesCheck(mscHandle);
     return error;
@@ -486,7 +486,7 @@ usb_status_t USB_DeviceMscUfiTestUnitReadyCommand(usb_device_msc_struct_t *mscHa
  * @param handle          The device msc class handle.
  *
  *@return A USB error code or kStatus_USB_Success.
-*/
+ */
 usb_status_t USB_DeviceMscUfiVerifyCommand(usb_device_msc_struct_t *mscHandle)
 {
     usb_device_msc_ufi_struct_t *ufi = NULL;
@@ -495,9 +495,9 @@ usb_status_t USB_DeviceMscUfiVerifyCommand(usb_device_msc_struct_t *mscHandle)
     ufi = &mscHandle->mscUfi;
 
     ufi->thirteenCase.deviceExpectedDataLength = 0;
-    ufi->thirteenCase.deviceExpectedDirection = USB_IN;
-    ufi->thirteenCase.buffer = NULL;
-    ufi->thirteenCase.lbaSendRecvSelect = 0;
+    ufi->thirteenCase.deviceExpectedDirection  = USB_IN;
+    ufi->thirteenCase.buffer                   = NULL;
+    ufi->thirteenCase.lbaSendRecvSelect        = 0;
 
     error = USB_DeviceMscUfiThirteenCasesCheck(mscHandle);
     return error;
@@ -511,7 +511,7 @@ usb_status_t USB_DeviceMscUfiVerifyCommand(usb_device_msc_struct_t *mscHandle)
  * @param handle          The device msc class handle.
  *
  *@return A USB error code or kStatus_USB_Success.
-*/
+ */
 usb_status_t USB_DeviceMscUfiModeSenseCommand(usb_device_msc_struct_t *mscHandle)
 {
     usb_device_msc_ufi_struct_t *ufi = NULL;
@@ -520,9 +520,9 @@ usb_status_t USB_DeviceMscUfiModeSenseCommand(usb_device_msc_struct_t *mscHandle
     ufi = &mscHandle->mscUfi;
 
     ufi->thirteenCase.deviceExpectedDataLength = sizeof(g_ModeParametersHeader);
-    ufi->thirteenCase.deviceExpectedDirection = USB_IN;
-    ufi->thirteenCase.buffer = (uint8_t *)&g_ModeParametersHeader;
-    ufi->thirteenCase.lbaSendRecvSelect = 0;
+    ufi->thirteenCase.deviceExpectedDirection  = USB_IN;
+    ufi->thirteenCase.buffer                   = (uint8_t *)&g_ModeParametersHeader;
+    ufi->thirteenCase.lbaSendRecvSelect        = 0;
 
     error = USB_DeviceMscUfiThirteenCasesCheck(mscHandle);
     return error;
@@ -536,24 +536,24 @@ usb_status_t USB_DeviceMscUfiModeSenseCommand(usb_device_msc_struct_t *mscHandle
  * @param handle          The device msc class handle.
  *
  *@return A USB error code or kStatus_USB_Success.
-*/
+ */
 usb_status_t USB_DeviceMscUfiModeSelectCommand(usb_device_msc_struct_t *mscHandle)
 {
     usb_device_msc_ufi_struct_t *ufi = NULL;
-    usb_status_t error = kStatus_USB_TransferFailed;
+    usb_status_t error               = kStatus_USB_TransferFailed;
 
     ufi = &mscHandle->mscUfi;
 
     ufi->thirteenCase.deviceExpectedDataLength = sizeof(g_ModeParametersHeader);
-    ufi->thirteenCase.deviceExpectedDirection = USB_OUT;
-    ufi->thirteenCase.buffer = (uint8_t *)&g_ModeParametersHeader;
-    ufi->thirteenCase.lbaSendRecvSelect = 0;
+    ufi->thirteenCase.deviceExpectedDirection  = USB_OUT;
+    ufi->thirteenCase.buffer                   = (uint8_t *)&g_ModeParametersHeader;
+    ufi->thirteenCase.lbaSendRecvSelect        = 0;
 
     error = USB_DeviceMscUfiThirteenCasesCheck(mscHandle);
 
     if (mscHandle->mscCbw->cbwcb[1] & 0x01)
     {
-        ufi->requestSense->senseKey = USB_DEVICE_MSC_UFI_ILLEGAL_REQUEST;
+        ufi->requestSense->senseKey            = USB_DEVICE_MSC_UFI_ILLEGAL_REQUEST;
         ufi->requestSense->additionalSenseCode = USB_DEVICE_MSC_UFI_INVALID_FIELD_IN_COMMAND_PKT;
     }
     return error;
@@ -567,26 +567,26 @@ usb_status_t USB_DeviceMscUfiModeSelectCommand(usb_device_msc_struct_t *mscHandl
  * @param handle          The device msc class handle.
  *
  *@return A USB error code or kStatus_USB_Success.
-*/
+ */
 usb_status_t USB_DeviceMscUfiReadCapacityCommand(usb_device_msc_struct_t *mscHandle)
 {
     usb_device_msc_ufi_struct_t *ufi = NULL;
-    usb_status_t error = kStatus_USB_TransferFailed;
+    usb_status_t error               = kStatus_USB_TransferFailed;
 
     ufi = &mscHandle->mscUfi;
 
     if (mscHandle->mscCbw->cbwcb[0] == USB_DEVICE_MSC_READ_CAPACITY_10_COMMAND)
     {
         ufi->thirteenCase.deviceExpectedDataLength = USB_DEVICE_MSC_UFI_READ_CAPACITY_DATA_LENGTH;
-        ufi->thirteenCase.buffer = (uint8_t *)(ufi->readCapacity);
+        ufi->thirteenCase.buffer                   = (uint8_t *)(ufi->readCapacity);
     }
     else
     {
         ufi->thirteenCase.deviceExpectedDataLength = USB_DEVICE_MSC_UFI_READ_CAPACITY16_DATA_LENGTH;
-        ufi->thirteenCase.buffer = (uint8_t *)(ufi->readCapacity16);
+        ufi->thirteenCase.buffer                   = (uint8_t *)(ufi->readCapacity16);
     }
     ufi->thirteenCase.deviceExpectedDirection = USB_IN;
-    ufi->thirteenCase.lbaSendRecvSelect = 0;
+    ufi->thirteenCase.lbaSendRecvSelect       = 0;
 
     error = USB_DeviceMscUfiThirteenCasesCheck(mscHandle);
     return error;
@@ -596,16 +596,16 @@ usb_status_t USB_DeviceMscUfiReadCapacityCommand(usb_device_msc_struct_t *mscHan
  * @brief read format capacity command.
  *
  * The READ FORMAT CAPACITIES command allows the host to request a list of the possible capacities that
-* can be formatted on the currently installed medium.
+ * can be formatted on the currently installed medium.
  *
  * @param handle          The device msc class handle.
  *
  *@return A USB error code or kStatus_USB_Success.
-*/
+ */
 usb_status_t USB_DeviceMscUfiReadFormatCapacityCommand(usb_device_msc_struct_t *mscHandle)
 {
     usb_device_msc_ufi_struct_t *ufi = NULL;
-    usb_status_t error = kStatus_USB_TransferFailed;
+    usb_status_t error               = kStatus_USB_TransferFailed;
     usb_device_current_max_capacity_descriptor_struct_t currentMaxHead;
     usb_device_formattable_capacity_descriptor_struct_t formattableCapacityHead;
     usb_device_capacity_list_header_struct_t capacityListHead = {{0x00, 0x00, 0x00}, 0x00};
@@ -614,11 +614,11 @@ usb_status_t USB_DeviceMscUfiReadFormatCapacityCommand(usb_device_msc_struct_t *
     uint8_t numberFormattableCapDesc;
     uint8_t descriptorCode;
     uint8_t count = 0;
-    uint8_t i = 0;
-    uint8_t j = 0;
+    uint8_t i     = 0;
+    uint8_t j     = 0;
     uint8_t *ptr;
 
-    ufi = &mscHandle->mscUfi;
+    ufi              = &mscHandle->mscUfi;
     allocationLength = (uint16_t)((uint8_t)(mscHandle->mscCbw->cbwcb[7] << 8) | mscHandle->mscCbw->cbwcb[8]);
     /*reference ufi command spec table-33 Descriptor Code definition*/
     numberFormattableCapDesc = (uint8_t)(ufi->formattedDisk ? (mscHandle->implementingDiskDrive ? 0x02 : 0x03) : 0x00);
@@ -629,8 +629,9 @@ usb_status_t USB_DeviceMscUfiReadFormatCapacityCommand(usb_device_msc_struct_t *
     descriptorCode =
         (uint8_t)(ufi->formattedDisk ? USB_DEVICE_MSC_UFI_FORMATTED_MEDIA : USB_DEVICE_MSC_UFI_UNFORMATTED_MEDIA);
     capacityListHead.capacityListLength = numberFormattableCapDesc * 8;
-    currentMaxHead.blockNumber = USB_LONG_TO_BIG_ENDIAN(mscHandle->totalLogicalBlockNumber);
-    currentMaxHead.descriptorCodeBlockLength = USB_LONG_TO_BIG_ENDIAN(((uint8_t)(descriptorCode << 24U) | mscHandle->lengthOfEachLba));
+    currentMaxHead.blockNumber          = USB_LONG_TO_BIG_ENDIAN(mscHandle->totalLogicalBlockNumber);
+    currentMaxHead.descriptorCodeBlockLength =
+        USB_LONG_TO_BIG_ENDIAN(((uint8_t)(descriptorCode << 24U) | mscHandle->lengthOfEachLba));
 
     responseSize = sizeof(usb_device_capacity_list_header_struct_t) +
                    sizeof(usb_device_current_max_capacity_descriptor_struct_t) +
@@ -651,7 +652,7 @@ usb_status_t USB_DeviceMscUfiReadFormatCapacityCommand(usb_device_msc_struct_t *
         ufi->formatCapacityData[count] = ptr[i++];
     }
     ptr = (uint8_t *)&currentMaxHead;
-    i = 0;
+    i   = 0;
     for (; i < sizeof(currentMaxHead); count++)
     {
         ufi->formatCapacityData[count] = ptr[i++];
@@ -671,9 +672,9 @@ usb_status_t USB_DeviceMscUfiReadFormatCapacityCommand(usb_device_msc_struct_t *
     }
 
     ufi->thirteenCase.deviceExpectedDataLength = responseSize;
-    ufi->thirteenCase.deviceExpectedDirection = USB_IN;
-    ufi->thirteenCase.buffer = ufi->formatCapacityData;
-    ufi->thirteenCase.lbaSendRecvSelect = 0;
+    ufi->thirteenCase.deviceExpectedDirection  = USB_IN;
+    ufi->thirteenCase.buffer                   = ufi->formatCapacityData;
+    ufi->thirteenCase.lbaSendRecvSelect        = 0;
 
     error = USB_DeviceMscUfiThirteenCasesCheck(mscHandle);
 
@@ -689,7 +690,7 @@ usb_status_t USB_DeviceMscUfiReadFormatCapacityCommand(usb_device_msc_struct_t *
  * @param handle          The device msc class handle.
  *
  *@return A USB error code or kStatus_USB_Success.
-*/
+ */
 usb_status_t USB_DeviceMscUfiFormatUnitCommand(usb_device_msc_struct_t *mscHandle)
 {
     usb_device_msc_ufi_struct_t *ufi = NULL;
@@ -698,9 +699,9 @@ usb_status_t USB_DeviceMscUfiFormatUnitCommand(usb_device_msc_struct_t *mscHandl
     ufi = &mscHandle->mscUfi;
 
     ufi->thirteenCase.deviceExpectedDataLength = 0;
-    ufi->thirteenCase.deviceExpectedDirection = USB_IN;
-    ufi->thirteenCase.buffer = NULL;
-    ufi->thirteenCase.lbaSendRecvSelect = 0;
+    ufi->thirteenCase.deviceExpectedDirection  = USB_IN;
+    ufi->thirteenCase.buffer                   = NULL;
+    ufi->thirteenCase.lbaSendRecvSelect        = 0;
 
     error = USB_DeviceMscUfiThirteenCasesCheck(mscHandle);
 
@@ -712,8 +713,8 @@ usb_status_t USB_DeviceMscUfiFormatUnitCommand(usb_device_msc_struct_t *mscHandl
         }
         else
         {
-            mscHandle->mscCsw->cswStatus = USB_DEVICE_MSC_COMMAND_FAILED;
-            ufi->requestSense->senseKey = USB_DEVICE_MSC_UFI_ILLEGAL_REQUEST;
+            mscHandle->mscCsw->cswStatus           = USB_DEVICE_MSC_COMMAND_FAILED;
+            ufi->requestSense->senseKey            = USB_DEVICE_MSC_UFI_ILLEGAL_REQUEST;
             ufi->requestSense->additionalSenseCode = USB_DEVICE_MSC_UFI_INVALID_FIELD_IN_COMMAND_PKT;
         }
     }
@@ -728,20 +729,20 @@ usb_status_t USB_DeviceMscUfiFormatUnitCommand(usb_device_msc_struct_t *mscHandl
  * @param handle          The device msc class handle.
  *
  *@return A USB error code or kStatus_USB_Success.
-*/
+ */
 usb_status_t USB_DeviceMscUfiPreventAllowMediumCommand(usb_device_msc_struct_t *mscHandle)
 {
     usb_device_msc_ufi_struct_t *ufi = NULL;
     usb_status_t error;
     uint8_t prevent;
 
-    ufi = &mscHandle->mscUfi;
+    ufi     = &mscHandle->mscUfi;
     prevent = mscHandle->mscCbw->cbwcb[4] & USB_DEVICE_MSC_UFI_PREVENT_ALLOW_REMOVAL_MASK;
 
     ufi->thirteenCase.deviceExpectedDataLength = 0;
-    ufi->thirteenCase.deviceExpectedDirection = USB_IN;
-    ufi->thirteenCase.buffer = NULL;
-    ufi->thirteenCase.lbaSendRecvSelect = 0;
+    ufi->thirteenCase.deviceExpectedDirection  = USB_IN;
+    ufi->thirteenCase.buffer                   = NULL;
+    ufi->thirteenCase.lbaSendRecvSelect        = 0;
 
     error = USB_DeviceMscUfiThirteenCasesCheck(mscHandle);
 
@@ -749,8 +750,8 @@ usb_status_t USB_DeviceMscUfiPreventAllowMediumCommand(usb_device_msc_struct_t *
     {
         if ((!USB_DEVICE_CONFIG_MSC_SUPPORT_DISK_LOCKING_MECHANISM && prevent))
         {
-            mscHandle->mscCsw->cswStatus = USB_DEVICE_MSC_COMMAND_FAILED;
-            ufi->requestSense->senseKey = USB_DEVICE_MSC_UFI_ILLEGAL_REQUEST;
+            mscHandle->mscCsw->cswStatus           = USB_DEVICE_MSC_COMMAND_FAILED;
+            ufi->requestSense->senseKey            = USB_DEVICE_MSC_UFI_ILLEGAL_REQUEST;
             ufi->requestSense->additionalSenseCode = USB_DEVICE_MSC_UFI_INVALID_FIELD_IN_COMMAND_PKT;
         }
     }
@@ -766,7 +767,7 @@ usb_status_t USB_DeviceMscUfiPreventAllowMediumCommand(usb_device_msc_struct_t *
  * @param handle          The device msc class handle.
  *
  *@return A USB error code or kStatus_USB_Success.
-*/
+ */
 usb_status_t USB_DeviceMscUfiSendDiagnosticCommand(usb_device_msc_struct_t *mscHandle)
 {
     usb_device_msc_ufi_struct_t *ufi = NULL;
@@ -775,9 +776,9 @@ usb_status_t USB_DeviceMscUfiSendDiagnosticCommand(usb_device_msc_struct_t *mscH
     ufi = &mscHandle->mscUfi;
 
     ufi->thirteenCase.deviceExpectedDataLength = 0;
-    ufi->thirteenCase.deviceExpectedDirection = USB_IN;
-    ufi->thirteenCase.buffer = NULL;
-    ufi->thirteenCase.lbaSendRecvSelect = 0;
+    ufi->thirteenCase.deviceExpectedDirection  = USB_IN;
+    ufi->thirteenCase.buffer                   = NULL;
+    ufi->thirteenCase.lbaSendRecvSelect        = 0;
 
     error = USB_DeviceMscUfiThirteenCasesCheck(mscHandle);
     return error;
@@ -791,7 +792,7 @@ usb_status_t USB_DeviceMscUfiSendDiagnosticCommand(usb_device_msc_struct_t *mscH
  * @param handle          The device msc class handle.
  *
  *@return A USB error code or kStatus_USB_Success.
-*/
+ */
 usb_status_t USB_DeviceMscUfiStartStopUnitCommand(usb_device_msc_struct_t *mscHandle)
 {
     usb_device_msc_ufi_struct_t *ufi = NULL;
@@ -802,9 +803,9 @@ usb_status_t USB_DeviceMscUfiStartStopUnitCommand(usb_device_msc_struct_t *mscHa
     /* loej_start = mscHandle->mscCbw->cbwcb[4] & USB_DEVICE_MSC_UFI_LOAD_EJECT_START_MASK;*/
 
     ufi->thirteenCase.deviceExpectedDataLength = 0;
-    ufi->thirteenCase.deviceExpectedDirection = USB_IN;
-    ufi->thirteenCase.buffer = NULL;
-    ufi->thirteenCase.lbaSendRecvSelect = 0;
+    ufi->thirteenCase.deviceExpectedDirection  = USB_IN;
+    ufi->thirteenCase.buffer                   = NULL;
+    ufi->thirteenCase.lbaSendRecvSelect        = 0;
 
     error = USB_DeviceMscUfiThirteenCasesCheck(mscHandle);
 
@@ -819,7 +820,7 @@ usb_status_t USB_DeviceMscUfiStartStopUnitCommand(usb_device_msc_struct_t *mscHa
  * @param handle          The device msc class handle.
  *
  *@return A USB error code or kStatus_USB_Success.
-*/
+ */
 usb_status_t USB_DeviceMscUfiUnsupportCommand(usb_device_msc_struct_t *mscHandle)
 {
     usb_device_msc_ufi_struct_t *ufi = NULL;
@@ -827,10 +828,10 @@ usb_status_t USB_DeviceMscUfiUnsupportCommand(usb_device_msc_struct_t *mscHandle
     ufi = &mscHandle->mscUfi;
 
     mscHandle->mscCsw->dataResidue = 0;
-    mscHandle->mscCsw->cswStatus = USB_DEVICE_MSC_COMMAND_FAILED;
+    mscHandle->mscCsw->cswStatus   = USB_DEVICE_MSC_COMMAND_FAILED;
 
-    ufi->requestSense->senseKey = USB_DEVICE_MSC_UFI_ILLEGAL_REQUEST;
-    ufi->requestSense->additionalSenseCode = USB_DEVICE_MSC_UFI_INVALID_COMMAND_OPCODE;
+    ufi->requestSense->senseKey                = USB_DEVICE_MSC_UFI_ILLEGAL_REQUEST;
+    ufi->requestSense->additionalSenseCode     = USB_DEVICE_MSC_UFI_INVALID_COMMAND_OPCODE;
     ufi->requestSense->additionalSenseQualifer = USB_DEVICE_MSC_UFI_NO_SENSE;
 
     return kStatus_USB_Success;

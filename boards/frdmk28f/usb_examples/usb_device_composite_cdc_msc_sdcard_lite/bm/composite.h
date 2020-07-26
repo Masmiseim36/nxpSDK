@@ -30,7 +30,6 @@
 #endif
 
 #define USB_DEVICE_INTERRUPT_PRIORITY (3U)
-
 typedef struct _usb_device_composite_struct
 {
     usb_device_handle deviceHandle; /* USB device handle. */

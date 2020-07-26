@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP
+ * Copyright 2019,2020 NXP
  *
  * This software is owned or controlled by NXP and may only be used
  * strictly in accordance with the applicable license terms.  By expressly
@@ -43,8 +43,9 @@
  * Total Size: NNNbytes
  * ***************************************************************************************************************** */
 
-const char gszCOMPortDefault[] = EX_SSS_BOOT_SSS_COMPORT_DEFAULT;
+const char gszCOMPortDefault[]    = EX_SSS_BOOT_SSS_COMPORT_DEFAULT;
 const char gszSocketPortDefault[] = EX_SSS_BOOT_SSS_SOCKETPORT_DEFAULT;
+const char gszReaderDefault[]     = EX_SSS_BOOT_SSS_PCSC_READER_DEFAULT;
 
 /* *****************************************************************************************************************
  * Private Functions Prototypes
@@ -54,21 +55,37 @@ const char gszSocketPortDefault[] = EX_SSS_BOOT_SSS_SOCKETPORT_DEFAULT;
  * Public Functions
  * ***************************************************************************************************************** */
 
-sss_status_t ex_sss_boot_connectstring(
-    int argc, const char *argv[], const char **pPortName)
+sss_status_t ex_sss_boot_connectstring(int argc, const char *argv[], const char **pPortName)
 {
     const char *portName = NULL;
-    sss_status_t status = kStatus_SSS_Success;
+    sss_status_t status  = kStatus_SSS_Success;
 #if defined(_WIN32) && defined(WIN32) && defined(DEBUG)
     _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
     _CrtSetReportMode(_CRT_ERROR, _CRTDBG_MODE_DEBUG);
 #endif
 
 #if !AX_EMBEDDED
+    bool last_is_help = FALSE;
     if (argv != NULL) {
         LOG_I("Running %s", argv[0]);
     }
-    if (argc > 1 && argv != NULL) {
+    if (argc > 1                  /* Alteast 1 cli argument */
+        && argv != NULL           /* argv not null */
+        && argv[argc - 1] != NULL /* Last parameter exists */
+    ) {
+        if (0 == strncmp("--help", argv[argc - 1], sizeof("--help"))) {
+            last_is_help = TRUE;
+        }
+    }
+    if (TRUE == last_is_help) {
+        *pPortName = argv[argc - 1]; /* --help */
+        return kStatus_SSS_Success;
+    }
+    if (argc > 1                    /* Alteast 1 cli argument */
+        && argv != NULL             /* argv not null */
+        && argv[argc - 1] != NULL   /* Last parameter exists */
+        && argv[argc - 1][0] != '-' /* Not something like -h / --help */
+    ) {
         portName = argv[argc - 1]; /* last entry, deemed as port name */
         LOG_I("Using PortName='%s' (CLI)", portName);
     }
@@ -78,8 +95,7 @@ sss_status_t ex_sss_boot_connectstring(
         const char *portName_env = getenv(EX_SSS_BOOT_SSS_PORT);
         if (portName_env != NULL) {
             portName = portName_env;
-            LOG_I(
-                "Using PortName='%s' (ENV=%s)", portName, EX_SSS_BOOT_SSS_PORT);
+            LOG_I("Using PortName='%s' (ENV: %s=%s)", portName, EX_SSS_BOOT_SSS_PORT, portName);
         }
     }
 
@@ -90,6 +106,8 @@ sss_status_t ex_sss_boot_connectstring(
 #elif SMCOM_JRCP_V1 || SMCOM_JRCP_V2
         portName = gszSocketPortDefault;
         LOG_I("Using PortName='%s' (gszSocketPortDefault)", portName);
+#elif SMCOM_PCSC
+        portName = gszReaderDefault;
 #else
         status = kStatus_SSS_Success;
 #endif
@@ -126,7 +144,7 @@ bool ex_sss_boot_isSerialPortName(const char *portName)
     else if (0 == strncmp("/tty/", portName, sizeof("/tty/") - 1)) {
         is_vcom = TRUE;
     }
-    else if (0 == strncmp("/dev/tty.", portName, sizeof("/dev/tty.") - 1)) {
+    else if (0 == strncmp("/dev/tty", portName, sizeof("/dev/tty") - 1)) {
         is_vcom = TRUE;
     }
 #endif
@@ -145,6 +163,16 @@ bool ex_sss_boot_isSocketPortName(const char *portName)
     }
 #endif
     return is_socket;
+}
+
+bool ex_sss_boot_isHelp(const char *argname)
+{
+    bool last_is_help = FALSE;
+
+    if (NULL != argname && (0 == strncmp("--help", argname, sizeof("--help")))) {
+        last_is_help = TRUE;
+    }
+    return last_is_help;
 }
 
 /* *****************************************************************************************************************

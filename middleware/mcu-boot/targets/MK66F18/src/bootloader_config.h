@@ -41,13 +41,16 @@
 #define BL_CONFIG_HS_USB_HID (1) // For TOWER and FRDM boards
 #endif
 #if !defined(BL_CONFIG_HS_USB_MSC)
-#define BL_CONFIG_HS_USB_MSC (1) // For TOWER and FRDM boards
+#define BL_CONFIG_HS_USB_MSC (0) // For TOWER and FRDM boards
 #endif
 //@}
 
 #if !defined(BL_TARGET_FLASH) && !defined(BL_TARGET_RAM)
 #define BL_TARGET_FLASH (1)
 #endif
+
+// Determines whether to support Kinetis C90TFS FTFx flash
+#define BL_FLASH_TYPE_KINETIS_C90TFS_FLASH (1)
 
 #if defined(BL_TARGET_RAM)
 #define BL_FEATURE_FLASH_SECURITY (0)

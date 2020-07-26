@@ -1,4 +1,4 @@
-/* Copyright 2019 NXP
+/* Copyright 2019,2020 NXP
  *
  * This software is owned or controlled by NXP and may only be used
  * strictly in accordance with the applicable license terms.  By expressly
@@ -15,7 +15,7 @@
 #include "se05x_tlv.h"
 
 #define PROCESS_ECC_CURVE(NAME) \
-    smStatus_t Se05x_API_CreateCurve_##NAME(Se05xSession_t *pSession, Se05xPolicy_t *pPolicy, uint32_t obj_id)
+    smStatus_t Se05x_API_CreateCurve_##NAME(Se05xSession_t *pSession, uint32_t obj_id)
 
 #include <se05x_ecc_curves_inc.h>
 

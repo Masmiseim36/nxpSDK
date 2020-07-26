@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP
+ * Copyright 2019-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -7,8 +7,10 @@
 
 #include "littlevgl_support.h"
 #include "lvgl.h"
+#if defined(FSL_RTOS_FREE_RTOS)
 #include "FreeRTOS.h"
 #include "semphr.h"
+#endif
 
 #include "board.h"
 #include "fsl_gpio.h"
@@ -24,35 +26,35 @@
  ******************************************************************************/
 
 /* Port Me. Start */
-#define BOARD_SSD1963_XTAL_FREQ 10000000U
-#define BOARD_SSD1963_PCLK_FREQ 30000000U
-#define BOARD_SSD1963_HSW 48U
-#define BOARD_SSD1963_HFP 40U
-#define BOARD_SSD1963_HBP 0U
-#define BOARD_SSD1963_VSW 3U
-#define BOARD_SSD1963_VFP 13U
-#define BOARD_SSD1963_VBP 18U
+#define BOARD_SSD1963_XTAL_FREQ     10000000U
+#define BOARD_SSD1963_PCLK_FREQ     30000000U
+#define BOARD_SSD1963_HSW           48U
+#define BOARD_SSD1963_HFP           40U
+#define BOARD_SSD1963_HBP           0U
+#define BOARD_SSD1963_VSW           3U
+#define BOARD_SSD1963_VFP           13U
+#define BOARD_SSD1963_VBP           18U
 #define BOARD_SSD1963_POLARITY_FLAG 0U
 
 /* Macros for FlexIO interfacing the LCD */
-#define BOARD_FLEXIO FLEXIO0
-#define BOARD_FLEXIO_CLOCK_FREQ CLOCK_GetCoreSysClkFreq()
+#define BOARD_FLEXIO              FLEXIO0
+#define BOARD_FLEXIO_CLOCK_FREQ   CLOCK_GetCoreSysClkFreq()
 #define BOARD_FLEXIO_BAUDRATE_BPS 160000000U
 
 /* Macros for FlexIO shifter, timer, and pins. */
-#define BOARD_FLEXIO_WR_PIN 7
-#define BOARD_FLEXIO_RD_PIN 8
-#define BOARD_FLEXIO_DATA_PIN_START 16
+#define BOARD_FLEXIO_WR_PIN           7
+#define BOARD_FLEXIO_RD_PIN           8
+#define BOARD_FLEXIO_DATA_PIN_START   16
 #define BOARD_FLEXIO_TX_START_SHIFTER 0
 #define BOARD_FLEXIO_RX_START_SHIFTER 0
-#define BOARD_FLEXIO_TX_END_SHIFTER 7
-#define BOARD_FLEXIO_RX_END_SHIFTER 7
-#define BOARD_FLEXIO_TIMER 0
+#define BOARD_FLEXIO_TX_END_SHIFTER   7
+#define BOARD_FLEXIO_RX_END_SHIFTER   7
+#define BOARD_FLEXIO_TIMER            0
 
 /* Macros for the touch touch controller. */
-#define BOARD_TOUCH_I2C I2C1
+#define BOARD_TOUCH_I2C            I2C1
 #define BOARD_TOUCH_I2C_CLOCK_FREQ CLOCK_GetBusClkFreq()
-#define BOARD_TOUCH_I2C_BAUDRATE 100000U
+#define BOARD_TOUCH_I2C_BAUDRATE   100000U
 /* Port Me. End */
 
 #define DEMO_MS_TO_TICK(ms) ((ms * configTICK_RATE_HZ / 1000) + 1)
@@ -66,11 +68,11 @@ static void DEMO_InitLcdClock(void);
 
 static status_t DEMO_InitLcdController(void);
 
-static void DEMO_FlushDisplay(int32_t x1, int32_t y1, int32_t x2, int32_t y2, const lv_color_t *color_p);
+static void DEMO_FlushDisplay(lv_disp_drv_t *disp_drv, const lv_area_t *area, lv_color_t *color_p);
 
 static void DEMO_InitTouch(void);
 
-static bool DEMO_ReadTouch(lv_indev_data_t *data);
+static bool DEMO_ReadTouch(lv_indev_drv_t *drv, lv_indev_data_t *data);
 
 static void DEMO_SetCSPin(bool set);
 
@@ -80,7 +82,11 @@ static void DEMO_SetRSPin(bool set);
  * Variables
  ******************************************************************************/
 static ft5406_handle_t touchHandle;
+#if defined(FSL_RTOS_FREE_RTOS)
 static SemaphoreHandle_t s_memWriteDone;
+#else
+static volatile bool s_memWriteDone;
+#endif
 
 /* SSD1963 LCD controller handle. */
 ssd1963_handle_t lcdHandle;
@@ -103,7 +109,7 @@ FLEXIO_MCULCD_Type flexioLcdDev = {
     .setRDWRPin          = NULL /* Not used in 8080 mode. */
 };
 
-static uint8_t s_frameBuffer[2][LCD_VIRTUAL_BUF_SIZE * LCD_FB_BYTE_PER_PIXEL];
+SDK_ALIGN(static uint8_t s_frameBuffer[2][LCD_VIRTUAL_BUF_SIZE * LCD_FB_BYTE_PER_PIXEL], 4);
 
 /*******************************************************************************
  * Code
@@ -120,11 +126,15 @@ static void DEMO_SetRSPin(bool set)
 
 static void DEMO_DbiMemoryDoneCallback(status_t status, void *userData)
 {
+#if defined(FSL_RTOS_FREE_RTOS)
     BaseType_t taskAwake = pdFALSE;
 
     xSemaphoreGiveFromISR(s_memWriteDone, &taskAwake);
 
     portYIELD_FROM_ISR(taskAwake);
+#else
+    s_memWriteDone = true;
+#endif
 }
 
 /* Clear the LCD controller video memory content. */
@@ -141,14 +151,24 @@ static void DEMO_ClearLcd(void)
 
         SSD1963_SelectArea(&lcdHandle, 0, startLine, LCD_WIDTH - 1, startLine + curLinesToClear - 1);
 
+#if !defined(FSL_RTOS_FREE_RTOS)
+        s_memWriteDone = false;
+#endif
+
         SSD1963_WriteMemory(&lcdHandle, (const uint8_t *)s_frameBuffer,
                             curLinesToClear * LCD_WIDTH * LCD_FB_BYTE_PER_PIXEL);
 
+#if defined(FSL_RTOS_FREE_RTOS)
         if (xSemaphoreTake(s_memWriteDone, portMAX_DELAY) != pdTRUE)
         {
             PRINTF("Wait semaphore error: s_memWriteDone\r\n");
             assert(0);
         }
+#else
+        while (false == s_memWriteDone)
+        {
+        }
+#endif
 
         startLine += curLinesToClear;
         leftLinesToClear -= curLinesToClear;
@@ -214,9 +234,17 @@ status_t DEMO_InitLcdController(void)
 
     /* Reset the SSD1963 LCD controller. */
     GPIO_PinWrite(BOARD_LCD_RST_GPIO, BOARD_LCD_RST_PIN, 0);
+#if defined(FSL_RTOS_FREE_RTOS)
     vTaskDelay(DEMO_MS_TO_TICK(1)); /* Delay at least 10ns. */
+#else
+    SDK_DelayAtLeastUs(1000U, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
+#endif
     GPIO_PinWrite(BOARD_LCD_RST_GPIO, BOARD_LCD_RST_PIN, 1);
+#if defined(FSL_RTOS_FREE_RTOS)
     vTaskDelay(DEMO_MS_TO_TICK(5)); /* Delay at 5ms. */
+#else
+    SDK_DelayAtLeastUs(5000U, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
+#endif
 
     status =
         SSD1963_Init(&lcdHandle, &ssd1963Config, &g_dbiFlexioXferOps, &g_dbiFlexioXferHandle, BOARD_SSD1963_XTAL_FREQ);
@@ -248,12 +276,16 @@ static void DEMO_InitLcdClock(void)
 
 static void DEMO_InitLcd(void)
 {
+#if defined(FSL_RTOS_FREE_RTOS)
     s_memWriteDone = xSemaphoreCreateBinary();
     if (NULL == s_memWriteDone)
     {
         PRINTF("Frame semaphore create failed\r\n");
         assert(0);
     }
+#else
+    s_memWriteDone = false;
+#endif
 
     DEMO_InitLcdClock();
     DEMO_InitLcdController();
@@ -263,37 +295,51 @@ static void DEMO_InitLcd(void)
  * You can use DMA or any hardware acceleration to do this operation in the background but
  * 'lv_flush_ready()' has to be called when finished
  * This function is required only when LV_VDB_SIZE != 0 in lv_conf.h*/
-static void DEMO_FlushDisplay(int32_t x1, int32_t y1, int32_t x2, int32_t y2, const lv_color_t *color_p)
+static void DEMO_FlushDisplay(lv_disp_drv_t *disp_drv, const lv_area_t *area, lv_color_t *color_p)
 {
+    lv_coord_t x1 = area->x1;
+    lv_coord_t y1 = area->y1;
+    lv_coord_t x2 = area->x2;
+    lv_coord_t y2 = area->y2;
+
     int32_t length = (x2 - x1 + 1) * (y2 - y1 + 1) * LCD_FB_BYTE_PER_PIXEL;
 
     SSD1963_SelectArea(&lcdHandle, x1, y1, x2, y2);
 
+#if !defined(FSL_RTOS_FREE_RTOS)
+    s_memWriteDone = false;
+#endif
+
     SSD1963_WriteMemory(&lcdHandle, (const uint8_t *)color_p, length);
 
+#if defined(FSL_RTOS_FREE_RTOS)
     if (xSemaphoreTake(s_memWriteDone, portMAX_DELAY) != pdTRUE)
     {
         PRINTF("Wait semaphore error: s_memWriteDone\r\n");
         assert(0);
     }
+#else
+    while (!s_memWriteDone)
+    {
+    }
+#endif
 
     /* IMPORTANT!!!
      * Inform the graphics library that you are ready with the flushing*/
-    lv_flush_ready();
+    lv_disp_flush_ready(disp_drv);
 }
 
 void lv_port_pre_init(void)
 {
-    /*
-     * Pass in the frame buffer address to LittlevGL manually, the LV_VDB_ADR
-     * and LV_VDB2_ADR should be defined to LV_VDB_ADR_INV in lv_conf.h
-     */
-    memset(s_frameBuffer, 0, sizeof(s_frameBuffer));
-    lv_vdb_set_adr((void *)s_frameBuffer[0], (void *)s_frameBuffer[1]);
 }
 
 void lv_port_disp_init(void)
 {
+    static lv_disp_buf_t disp_buf;
+
+    memset(s_frameBuffer, 0, sizeof(s_frameBuffer));
+    lv_disp_buf_init(&disp_buf, (void *)s_frameBuffer[0], (void *)s_frameBuffer[1], LCD_VIRTUAL_BUF_SIZE);
+
     /*-------------------------
      * Initialize your display
      * -----------------------*/
@@ -308,8 +354,15 @@ void lv_port_disp_init(void)
 
     /*Set up the functions to access to your display*/
 
-    /*Used in buffered mode (LV_VDB_SIZE != 0  in lv_conf.h)*/
-    disp_drv.disp_flush = DEMO_FlushDisplay;
+    /*Set the resolution of the display*/
+    disp_drv.hor_res = LCD_WIDTH;
+    disp_drv.ver_res = LCD_HEIGHT;
+
+    /*Used to copy the buffer's content to the display*/
+    disp_drv.flush_cb = DEMO_FlushDisplay;
+
+    /*Set a display buffer*/
+    disp_drv.buffer = &disp_buf;
 
     /*Finally register the driver*/
     lv_disp_drv_register(&disp_drv);
@@ -328,8 +381,8 @@ void lv_port_indev_init(void)
 
     /*Register a touchpad input device*/
     lv_indev_drv_init(&indev_drv);
-    indev_drv.type = LV_INDEV_TYPE_POINTER;
-    indev_drv.read = DEMO_ReadTouch;
+    indev_drv.type    = LV_INDEV_TYPE_POINTER;
+    indev_drv.read_cb = DEMO_ReadTouch;
     lv_indev_drv_register(&indev_drv);
 }
 
@@ -356,7 +409,7 @@ static void DEMO_InitTouch(void)
 }
 
 /* Will be called by the library to read the touchpad */
-static bool DEMO_ReadTouch(lv_indev_data_t *data)
+static bool DEMO_ReadTouch(lv_indev_drv_t *drv, lv_indev_data_t *data)
 {
     touch_event_t touch_event;
     static int touch_x = 0;

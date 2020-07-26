@@ -3,7 +3,7 @@
  * @author NXP Semiconductors
  * @version 1.0
  * @par License
- * Copyright 2016 NXP
+ * Copyright 2016,2020 NXP
  *
  * This software is owned or controlled by NXP and may only be used
  * strictly in accordance with the applicable license terms.  By expressly
@@ -164,9 +164,9 @@ U8 exBoot(U8 bootMode)
         SCP_Subscribe(signalFunctionCallback, NULL);
         DEV_ClearChannelState();
 #if defined(SCI2C)|| defined(T1oI2C)
-        SM_Close(SMCOM_CLOSE_MODE_TERMINATE);
+        SM_Close(NULL, SMCOM_CLOSE_MODE_TERMINATE);
 #endif
-        connectStatus = SM_Connect(&commState, Atr, &AtrLen);
+        connectStatus = SM_Connect(NULL, &commState, Atr, &AtrLen);
         if (connectStatus != SW_OK)
         {
             sm_printf(CONSOLE, "Failed to establish connection to Secure Module: 0x%04" PRIX32 "\r\n", connectStatus);
@@ -214,7 +214,7 @@ U8 exBoot(U8 bootMode)
 #if defined(SCI2C)
         commState.param1 = sci2c_GetSequenceCounter();
         // At this stage the System Integrator must store communication state in Mailbox for HostOS
-        SM_Close(SMCOM_CLOSE_MODE_STD);
+        SM_Close(NULL, SMCOM_CLOSE_MODE_STD);
 #endif
         sm_printf(DBGOUT, "\r\n\r\n");
         sm_printf(DBGOUT, "******************************************************************\r\n");
@@ -245,8 +245,8 @@ U8 exBoot(U8 bootMode)
         // Installing Callback (this step is optional)
         SCP_Subscribe(signalFunctionCallback, NULL);
         DEV_ClearChannelState();
-        SM_Close(SMCOM_CLOSE_MODE_TERMINATE);
-        connectStatus = SM_Connect(&commState, Atr, &AtrLen);
+        SM_Close(NULL, SMCOM_CLOSE_MODE_TERMINATE);
+        connectStatus = SM_Connect(NULL, &commState, Atr, &AtrLen);
         if (connectStatus != SW_OK)
         {
             sm_printf(CONSOLE, "Failed to establish connection to Secure Module: 0x%04" PRIX32 "\r\n", connectStatus);
@@ -289,7 +289,7 @@ U8 exBoot(U8 bootMode)
         SCP_GetScpSessionState(&sessionState);
         commState.param1 = sci2c_GetSequenceCounter();
 
-        SM_Close(SMCOM_CLOSE_MODE_STD);
+        SM_Close(NULL, SMCOM_CLOSE_MODE_STD);
 
         sm_printf(DBGOUT, "\r\n\r\n");
         sm_printf(DBGOUT, "******************************************************************\r\n");

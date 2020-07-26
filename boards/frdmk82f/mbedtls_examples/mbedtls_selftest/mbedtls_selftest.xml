@@ -9,6 +9,7 @@
     <definition extID="device.MK82F25615_CMSIS.MK82F25615"/>
     <definition extID="device.MK82F25615_startup.MK82F25615"/>
     <definition extID="middleware.mbedtls.MK82F25615"/>
+    <definition extID="middleware.mbedtls.port.ksdk.MK82F25615"/>
     <definition extID="middleware.mmcau.cm4_cm7.MK82F25615"/>
     <definition extID="platform.Include_common.MK82F25615"/>
     <definition extID="platform.Include_core_cm4.MK82F25615"/>
@@ -30,7 +31,7 @@
     <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="frdmk82f_mbedtls_selftest" name="mbedtls_selftest" category="mbedtls_examples" dependency="platform.drivers.ltc.MK82F25615 platform.drivers.trng.MK82F25615 middleware.mmcau.cm4_cm7.MK82F25615 platform.drivers.port.MK82F25615 middleware.mbedtls.MK82F25615 platform.drivers.clock.MK82F25615 platform.drivers.flash.MK82F25615 platform.drivers.common.MK82F25615 device.MK82F25615_CMSIS.MK82F25615 utility.debug_console.MK82F25615 component.lpuart_adapter.MK82F25615 component.serial_manager.MK82F25615 component.lists.MK82F25615 component.serial_manager_uart.MK82F25615 platform.drivers.lpuart.MK82F25615 device.MK82F25615_startup.MK82F25615 platform.drivers.smc.MK82F25615 platform.drivers.gpio.MK82F25615 platform.utilities.assert.MK82F25615 platform.Include_core_cm4.MK82F25615 platform.Include_common.MK82F25615 platform.Include_dsp.MK82F25615 platform.utilities.misc_utilities.MK82F25615">
+  <example id="frdmk82f_mbedtls_selftest" name="mbedtls_selftest" category="mbedtls_examples" dependency="platform.drivers.ltc.MK82F25615 platform.drivers.trng.MK82F25615 middleware.mmcau.cm4_cm7.MK82F25615 platform.drivers.port.MK82F25615 middleware.mbedtls.MK82F25615 middleware.mbedtls.port.ksdk.MK82F25615 platform.drivers.clock.MK82F25615 platform.drivers.flash.MK82F25615 platform.drivers.common.MK82F25615 device.MK82F25615_CMSIS.MK82F25615 utility.debug_console.MK82F25615 component.lpuart_adapter.MK82F25615 component.serial_manager.MK82F25615 component.lists.MK82F25615 component.serial_manager_uart.MK82F25615 platform.drivers.lpuart.MK82F25615 device.MK82F25615_startup.MK82F25615 platform.drivers.smc.MK82F25615 platform.drivers.gpio.MK82F25615 platform.utilities.assert.MK82F25615 platform.Include_core_cm4.MK82F25615 platform.Include_common.MK82F25615 platform.Include_dsp.MK82F25615 platform.utilities.misc_utilities.MK82F25615">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>

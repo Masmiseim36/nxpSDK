@@ -16,8 +16,8 @@
 #include "task.h"
 #include "semphr.h"
 
-#define SSLSRV_VALID (1)
-#define SSLSRV_INVALID (0)
+#define SSLSRV_VALID            (1)
+#define SSLSRV_INVALID          (0)
 #define SSLSRV_SES_BUF_SIZE_PRV (SSLSRV_CFG_SES_BUFFER_SIZE)
 
 /*

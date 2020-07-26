@@ -10,7 +10,7 @@
 
 #include <stdint.h>
 #include "bootloader_common.h"
-#include "crc/crc32.h"
+#include "crc32.h"
 
 //! @addtogroup sbloader
 //! @{

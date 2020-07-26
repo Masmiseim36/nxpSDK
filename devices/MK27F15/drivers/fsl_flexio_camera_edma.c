@@ -72,7 +72,7 @@ static void FLEXIO_CAMERA_TransferReceiveEDMACallback(edma_handle_t *handle,
 
     /* Avoid the warning for unused variables. */
     handle = handle;
-    tcds = tcds;
+    tcds   = tcds;
 
     if (transferDone)
     {
@@ -111,7 +111,7 @@ status_t FLEXIO_CAMERA_TransferCreateHandleEDMA(FLEXIO_CAMERA_Type *base,
     {
         if (s_edmaPrivateHandle[index].base == NULL)
         {
-            s_edmaPrivateHandle[index].base = base;
+            s_edmaPrivateHandle[index].base   = base;
             s_edmaPrivateHandle[index].handle = handle;
             break;
         }
@@ -122,12 +122,12 @@ status_t FLEXIO_CAMERA_TransferCreateHandleEDMA(FLEXIO_CAMERA_Type *base,
         return kStatus_OutOfRange;
     }
 
-    s_edmaPrivateHandle[index].base = base;
+    s_edmaPrivateHandle[index].base   = base;
     s_edmaPrivateHandle[index].handle = handle;
 
     memset(handle, 0, sizeof(*handle));
 
-    handle->rxState = kFLEXIO_CAMERA_RxIdle;
+    handle->rxState      = kFLEXIO_CAMERA_RxIdle;
     handle->rxEdmaHandle = rxEdmaHandle;
 
     handle->callback = callback;

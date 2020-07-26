@@ -21,12 +21,12 @@
  ******************************************************************************/
 #ifdef I2C_CMSIS
 #define NTAG_I2C_MASTER_BASEADDR &Driver_I2C0
-#define I2C_MASTER_IRQ I2C0_IRQn
+#define I2C_MASTER_IRQ           I2C0_IRQn
 #endif
 
 #ifdef I2C_FSL
 #define NTAG_I2C_MASTER_BASEADDR I2C0
-#define I2C_MASTER_CLK_SRC I2C0_CLK_SRC
+#define I2C_MASTER_CLK_SRC       I2C0_CLK_SRC
 #endif
 
 

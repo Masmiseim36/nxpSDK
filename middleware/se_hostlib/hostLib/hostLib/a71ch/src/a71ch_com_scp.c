@@ -3,7 +3,7 @@
 * @author NXP Semiconductors
 * @version 1.0
 * @par License
-* Copyright 2016,2018 NXP
+* Copyright 2016,2018,2020 NXP
 *
 * This software is owned or controlled by NXP and may only be used
 * strictly in accordance with the applicable license terms.  By expressly
@@ -113,7 +113,7 @@ U16 SM_ResumeConnection(
     smUartSetBaudRate(commState->param2);
 #elif defined(SCI2C)
     sw = smComSCI2C_Open(
-        RESUME_SCI2C, (U8)(commState->param1), atrDummy, &atrDummyLen);
+        NULL, RESUME_SCI2C, (U8)(commState->param1), atrDummy, &atrDummyLen);
 #else
     AX_UNUSED_ARG(commState);
 #endif

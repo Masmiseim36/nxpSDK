@@ -14,9 +14,9 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define BOARD_FLEXIO_BASE FLEXIO0
-#define FLEXIO_UART_TX_PIN 25U
-#define FLEXIO_UART_RX_PIN 24U
+#define BOARD_FLEXIO_BASE      FLEXIO0
+#define FLEXIO_UART_TX_PIN     25U
+#define FLEXIO_UART_RX_PIN     24U
 #define FLEXIO_CLOCK_FREQUENCY 12000000U
 #define ECHO_BUFFER_LENGTH 8
 

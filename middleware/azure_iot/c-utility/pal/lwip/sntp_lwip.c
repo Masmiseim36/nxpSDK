@@ -39,8 +39,10 @@ int SNTP_Init(void)
 {
     time_t now = 0;
     LogInfo("Initializing SNTP");
+    LOCK_TCPIP_CORE();
     sntp_setoperatingmode(SNTP_OPMODE_POLL);
     sntp_init();
+    UNLOCK_TCPIP_CORE();
     sntp_get_current_timestamp();
     LogInfo("SNTP initialization complete");
     now = time(NULL);

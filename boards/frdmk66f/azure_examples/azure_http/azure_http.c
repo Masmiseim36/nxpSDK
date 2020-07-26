@@ -15,6 +15,7 @@
 #include "certs_azure.h"
 
 #include "board.h"
+#include "fsl_phy.h"
 #include "ksdk_mbedtls.h"
 
 #include "FreeRTOS.h"
@@ -31,6 +32,8 @@
 #include "fsl_device_registers.h"
 #include "pin_mux.h"
 #include "clock_config.h"
+#include "fsl_phyksz8081.h"
+#include "fsl_enet_mdio.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -44,16 +47,22 @@
 /* Address of PHY interface. */
 #define EXAMPLE_PHY_ADDRESS BOARD_ENET0_PHY_ADDRESS
 
-/* System clock name. */
-#define EXAMPLE_CLOCK_NAME kCLOCK_CoreSysClk
+/* MDIO operations. */
+#define EXAMPLE_MDIO_OPS enet_ops
+
+/* PHY operations. */
+#define EXAMPLE_PHY_OPS phyksz8081_ops
+
+/* ENET clock frequency. */
+#define EXAMPLE_CLOCK_FREQ CLOCK_GetFreq(kCLOCK_CoreSysClk)
 
 /* GPIO pin configuration. */
-#define BOARD_LED_GPIO BOARD_LED_RED_GPIO
-#define BOARD_LED_GPIO_PIN BOARD_LED_RED_GPIO_PIN
-#define BOARD_SW_GPIO BOARD_SW3_GPIO
-#define BOARD_SW_GPIO_PIN BOARD_SW3_GPIO_PIN
-#define BOARD_SW_PORT BOARD_SW3_PORT
-#define BOARD_SW_IRQ BOARD_SW3_IRQ
+#define BOARD_LED_GPIO       BOARD_LED_RED_GPIO
+#define BOARD_LED_GPIO_PIN   BOARD_LED_RED_GPIO_PIN
+#define BOARD_SW_GPIO        BOARD_SW3_GPIO
+#define BOARD_SW_GPIO_PIN    BOARD_SW3_GPIO_PIN
+#define BOARD_SW_PORT        BOARD_SW3_PORT
+#define BOARD_SW_IRQ         BOARD_SW3_IRQ
 #define BOARD_SW_IRQ_HANDLER BOARD_SW3_IRQ_HANDLER
 
 #ifndef EXAMPLE_NETIF_INIT_FN
@@ -92,6 +101,8 @@ static int callbackCounter;
 static bool g_continueRunning;
 static char msgText[1024];
 static char propText[1024];
+static mdio_handle_t mdioHandle = {.ops = &EXAMPLE_MDIO_OPS};
+static phy_handle_t phyHandle   = {.phyAddr = EXAMPLE_PHY_ADDRESS, .mdioHandle = &mdioHandle, .ops = &EXAMPLE_PHY_OPS};
 typedef struct EVENT_INSTANCE_TAG
 {
     IOTHUB_MESSAGE_HANDLE messageHandle;
@@ -315,8 +326,8 @@ int main(void)
 {
     /* Init board hardware. */
     SYSMPU_Type *base = SYSMPU;
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
     /* Disable SYSMPU. */
     base->CESR &= ~SYSMPU_CESR_VLD_MASK;
@@ -332,11 +343,13 @@ int main(void)
     /* Initialize network interface */
     ip4_addr_t netif_ipaddr, netif_netmask, netif_gw;
     ethernetif_config_t enet_config = {
-        .phyAddress = EXAMPLE_PHY_ADDRESS, .clockName = EXAMPLE_CLOCK_NAME, .macAddress = configMAC_ADDR,
+        .phyHandle  = &phyHandle, .macAddress = configMAC_ADDR,
 #if defined(FSL_FEATURE_SOC_LPC_ENET_COUNT) && (FSL_FEATURE_SOC_LPC_ENET_COUNT > 0)
         .non_dma_memory = non_dma_memory,
 #endif /* FSL_FEATURE_SOC_LPC_ENET_COUNT */
     };
+
+    mdioHandle.resource.csrClock_Hz = EXAMPLE_CLOCK_FREQ;
 
     IP4_ADDR(&netif_ipaddr, 0U, 0U, 0U, 0U);
     IP4_ADDR(&netif_netmask, 0U, 0U, 0U, 0U);

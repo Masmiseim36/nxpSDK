@@ -78,9 +78,8 @@ typedef struct _usb_host_cbw
 {
     uint32_t CBWSignature; /*!< Signature that helps identify this data packet as a CBW. The signature field shall
                               contain the value 43425355h (little endian), indicating a CBW */
-    uint32_t
-        CBWTag; /*!< A Command Block Tag sent by the host. The device shall echo the contents of this field back to the
-                   host in the dCSWTag field of the associated CSW */
+    uint32_t CBWTag; /*!< A Command Block Tag sent by the host. The device shall echo the contents of this field back to
+                        the host in the dCSWTag field of the associated CSW */
     uint32_t CBWDataTransferLength; /*!< The number of bytes of data that the host expects to transfer on the Bulk-In or
                                        Bulk-Out endpoint during the execution of this command */
     uint8_t CBWFlags;               /*!<
@@ -839,6 +838,29 @@ extern usb_status_t USB_HostMsdSendDiagnostic(usb_host_class_handle classHandle,
                                               uint8_t selfTest,
                                               transfer_callback_t callbackFn,
                                               void *callbackParam);
+
+/*!
+ * @brief all ufi function calls this api.
+ *
+ * This function implements the common ufi commands.
+ *
+ * @param classHandle   the class msd handle.
+ * @param buffer         buffer pointer.
+ * @param bufferLength     buffer length.
+ * @param callbackFn    callback function.
+ * @param callbackParam callback parameter.
+ * @param direction      command direction.
+ * @param byteValues    ufi command fields value.
+ *
+ * @return An error code or kStatus_USB_Success.
+ */
+usb_status_t USB_HostMsdCommand(usb_host_class_handle classHandle,
+                                uint8_t *buffer,
+                                uint32_t bufferLength,
+                                transfer_callback_t callbackFn,
+                                void *callbackParam,
+                                uint8_t direction,
+                                uint8_t byteValues[10]);
 
 /*! @}*/
 

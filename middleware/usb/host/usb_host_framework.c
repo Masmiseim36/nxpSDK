@@ -10,7 +10,7 @@
 #include "usb_host.h"
 #include "usb_host_hci.h"
 #include "usb_host_devices.h"
-
+#include "usb_host_framework.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -19,112 +19,6 @@
 #ifndef FSL_COMPONENT_ID
 #define FSL_COMPONENT_ID "middleware.usb.host.fatfs_usb_stack"
 #endif
-
-/*!
- * @brief standard control transfer common code.
- *
- * @param deviceInstance device instance handle.
- * @param transfer       transfer.
- * @param buffer         data buffer pointer.
- * @param bufferLen      data length.
- *
- * @return kStatus_USB_Success or error codes.
- */
-usb_status_t USB_HostCh9RequestCommon(usb_host_device_instance_t *deviceInstance,
-                                      usb_host_transfer_t *transfer,
-                                      uint8_t *buffer,
-                                      uint32_t bufferLen);
-
-/*!
- * @brief standard get status implementation.
- *
- * @param deviceInstance device instance handle.
- * @param transfer       transfer.
- * @param param          parameter.
- *
- * @return kStatus_USB_Success or error codes.
- */
-usb_status_t USB_HostStandardGetStatus(usb_host_device_instance_t *deviceInstance,
-                                       usb_host_transfer_t *transfer,
-                                       void *param);
-
-/*!
- * @brief standard set/clear feature implementation.
- *
- * @param deviceInstance device instance handle.
- * @param transfer       transfer.
- * @param param          parameter.
- *
- * @return kStatus_USB_Success or error codes.
- */
-usb_status_t USB_HostStandardSetClearFeature(usb_host_device_instance_t *deviceInstance,
-                                             usb_host_transfer_t *transfer,
-                                             void *param);
-
-/*!
- * @brief standard set address implementation.
- *
- * @param deviceInstance device instance handle.
- * @param transfer       transfer.
- * @param param          parameter.
- *
- * @return kStatus_USB_Success or error codes.
- */
-usb_status_t USB_HostStandardSetAddress(usb_host_device_instance_t *deviceInstance,
-                                        usb_host_transfer_t *transfer,
-                                        void *param);
-
-/*!
- * @brief standard set/get descriptor implementation.
- *
- * @param deviceInstance device instance handle.
- * @param transfer       transfer.
- * @param param          parameter.
- *
- * @return kStatus_USB_Success or error codes.
- */
-usb_status_t USB_HostStandardSetGetDescriptor(usb_host_device_instance_t *deviceInstance,
-                                              usb_host_transfer_t *transfer,
-                                              void *param);
-
-/*!
- * @brief standard get interface implementation.
- *
- * @param deviceInstance device instance handle.
- * @param transfer       transfer.
- * @param param          parameter.
- *
- * @return kStatus_USB_Success or error codes.
- */
-usb_status_t USB_HostStandardGetInterface(usb_host_device_instance_t *deviceInstance,
-                                          usb_host_transfer_t *transfer,
-                                          void *param);
-
-/*!
- * @brief standard set interface implementation.
- *
- * @param deviceInstance device instance handle.
- * @param transfer       transfer.
- * @param param          parameter.
- *
- * @return kStatus_USB_Success or error codes.
- */
-usb_status_t USB_HostStandardSetInterface(usb_host_device_instance_t *deviceInstance,
-                                          usb_host_transfer_t *transfer,
-                                          void *param);
-
-/*!
- * @brief standard sync frame implementation.
- *
- * @param deviceInstance device instance handle.
- * @param transfer       transfer.
- * @param param          parameter.
- *
- * @return kStatus_USB_Success or error codes.
- */
-usb_status_t USB_HostStandardSyncFrame(usb_host_device_instance_t *deviceInstance,
-                                       usb_host_transfer_t *transfer,
-                                       void *param);
 
 /*******************************************************************************
  * Prototypes
@@ -144,7 +38,7 @@ usb_status_t USB_HostCh9RequestCommon(usb_host_device_instance_t *deviceInstance
                                       uint32_t bufferLen)
 {
     /* initialize transfer */
-    transfer->setupPacket->wLength = USB_SHORT_TO_LITTLE_ENDIAN(bufferLen);
+    transfer->setupPacket->wLength = USB_SHORT_TO_LITTLE_ENDIAN((uint16_t)bufferLen);
     transfer->transferBuffer       = buffer;
     transfer->transferLength       = bufferLen;
 
@@ -154,7 +48,7 @@ usb_status_t USB_HostCh9RequestCommon(usb_host_device_instance_t *deviceInstance
 #ifdef HOST_ECHO
         usb_echo("failed for USB_HostSendSetup\r\n");
 #endif
-        USB_HostFreeTransfer(deviceInstance->hostHandle, transfer);
+        (void)USB_HostFreeTransfer(deviceInstance->hostHandle, transfer);
         return kStatus_USB_Error;
     }
     return kStatus_USB_Success;
@@ -170,11 +64,11 @@ usb_status_t USB_HostStandardGetStatus(usb_host_device_instance_t *deviceInstanc
     /* initialize transfer */
     statusParam                          = (usb_host_get_status_param_t *)param;
     transfer->setupPacket->bmRequestType = USB_REQUEST_TYPE_DIR_IN | USB_REQUEST_TYPE_TYPE_STANDARD;
-    if (statusParam->requestType == kRequestDevice)
+    if (statusParam->requestType == (uint8_t)kRequestDevice)
     {
         transfer->setupPacket->bmRequestType |= USB_REQUEST_TYPE_RECIPIENT_DEVICE;
     }
-    else if (statusParam->requestType == kRequestInterface)
+    else if (statusParam->requestType == (uint8_t)kRequestInterface)
     {
         transfer->setupPacket->bmRequestType |= USB_REQUEST_TYPE_RECIPIENT_INTERFACE;
     }
@@ -200,11 +94,11 @@ usb_status_t USB_HostStandardSetClearFeature(usb_host_device_instance_t *deviceI
 
     /* initialize transfer */
     featureParam = (usb_host_process_feature_param_t *)param;
-    if (featureParam->requestType == kRequestDevice)
+    if (featureParam->requestType == (uint8_t)kRequestDevice)
     {
         transfer->setupPacket->bmRequestType |= USB_REQUEST_TYPE_RECIPIENT_DEVICE;
     }
-    else if (featureParam->requestType == kRequestInterface)
+    else if (featureParam->requestType == (uint8_t)kRequestInterface)
     {
         transfer->setupPacket->bmRequestType |= USB_REQUEST_TYPE_RECIPIENT_INTERFACE;
     }
@@ -359,6 +253,7 @@ usb_status_t USB_HostRequestControl(usb_device_handle deviceHandle,
             break;
 
         default:
+            /*no action*/
             break;
     }
 

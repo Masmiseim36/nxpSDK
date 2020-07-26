@@ -11,11 +11,12 @@
     <definition extID="device.MK28FA15_CMSIS.MK28FA15"/>
     <definition extID="device.MK28FA15_startup.MK28FA15"/>
     <definition extID="middleware.baremetal.MK28FA15"/>
-    <definition extID="middleware.usb.host.MK28FA15"/>
+    <definition extID="middleware.usb.common_header.MK28FA15"/>
+    <definition extID="middleware.usb.host.common_header.MK28FA15"/>
+    <definition extID="middleware.usb.host.stack.MK28FA15"/>
     <definition extID="middleware.usb.host_controller_ehci.MK28FA15"/>
     <definition extID="middleware.usb.host_controller_khci.MK28FA15"/>
     <definition extID="middleware.usb.host_hid.MK28FA15"/>
-    <definition extID="middleware.usb.host_hub.MK28FA15"/>
     <definition extID="middleware.usb.phy.MK28FA15"/>
     <definition extID="platform.Include_common.MK28FA15"/>
     <definition extID="platform.Include_core_cm4.MK28FA15"/>
@@ -36,7 +37,7 @@
     <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="frdmk28fa_host_suspend_resume_hid_mouse_bm" name="host_suspend_resume_hid_mouse_bm" category="usb_examples" dependency="middleware.usb.host_controller_khci.MK28FA15 middleware.usb.host_controller_ehci.MK28FA15 middleware.usb.phy.MK28FA15 component.pit_adapter.MK28FA15 middleware.usb.host.MK28FA15 middleware.usb.host_hid.MK28FA15 middleware.usb.host_hub.MK28FA15 platform.drivers.pit.MK28FA15 platform.drivers.smc.MK28FA15 platform.drivers.clock.MK28FA15 platform.drivers.common.MK28FA15 device.MK28FA15_CMSIS.MK28FA15 device.MK28FA15_startup.MK28FA15 platform.drivers.lpuart.MK28FA15 platform.drivers.gpio.MK28FA15 platform.drivers.sysmpu.MK28FA15 platform.utilities.assert.MK28FA15 utility.debug_console.MK28FA15 component.lpuart_adapter.MK28FA15 component.serial_manager.MK28FA15 component.lists.MK28FA15 component.serial_manager_uart.MK28FA15 platform.drivers.port.MK28FA15 component.osa.MK28FA15 platform.Include_core_cm4.MK28FA15 platform.Include_common.MK28FA15 platform.Include_dsp.MK28FA15 platform.utilities.misc_utilities.MK28FA15 middleware.baremetal.MK28FA15">
+  <example id="frdmk28fa_host_suspend_resume_hid_mouse_bm" name="host_suspend_resume_hid_mouse_bm" category="usb_examples" dependency="middleware.usb.host_controller_khci.MK28FA15 middleware.usb.host_controller_ehci.MK28FA15 middleware.usb.phy.MK28FA15 component.pit_adapter.MK28FA15 middleware.usb.host_hid.MK28FA15 platform.drivers.pit.MK28FA15 platform.drivers.smc.MK28FA15 platform.drivers.clock.MK28FA15 platform.drivers.common.MK28FA15 device.MK28FA15_CMSIS.MK28FA15 device.MK28FA15_startup.MK28FA15 platform.drivers.lpuart.MK28FA15 platform.drivers.gpio.MK28FA15 platform.drivers.sysmpu.MK28FA15 platform.utilities.assert.MK28FA15 utility.debug_console.MK28FA15 component.lpuart_adapter.MK28FA15 component.serial_manager.MK28FA15 component.lists.MK28FA15 component.serial_manager_uart.MK28FA15 platform.drivers.port.MK28FA15 middleware.usb.host.stack.MK28FA15 component.osa.MK28FA15 middleware.usb.host.common_header.MK28FA15 platform.Include_core_cm4.MK28FA15 platform.Include_common.MK28FA15 platform.Include_dsp.MK28FA15 middleware.usb.common_header.MK28FA15 platform.utilities.misc_utilities.MK28FA15 middleware.baremetal.MK28FA15">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>

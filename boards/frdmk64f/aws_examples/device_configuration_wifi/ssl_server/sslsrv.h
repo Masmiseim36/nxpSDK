@@ -18,15 +18,15 @@
 /*
 ** SSL server return codes
 */
-#define SSLSRV_OK 0
-#define SSLSRV_ERR -1
-#define SSLSRV_BIND_FAIL -2
-#define SSLSRV_LISTEN_FAIL -3
-#define SSLSRV_CREATE_FAIL -5
-#define SSLSRV_BAD_FAMILY -6
+#define SSLSRV_OK           0
+#define SSLSRV_ERR          -1
+#define SSLSRV_BIND_FAIL    -2
+#define SSLSRV_LISTEN_FAIL  -3
+#define SSLSRV_CREATE_FAIL  -5
+#define SSLSRV_BAD_FAMILY   -6
 #define SSLSRV_SOCKOPT_FAIL -7
-#define SSLSRV_SES_INVALID -8
-#define SSLSRV_FAIL -9
+#define SSLSRV_SES_INVALID  -8
+#define SSLSRV_FAIL         -9
 
 /*
 ** SSL server TLS parameters

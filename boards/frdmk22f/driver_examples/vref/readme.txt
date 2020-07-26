@@ -2,19 +2,19 @@ Overview
 ========
 The vref example shows how to use the vref driver.
 
-In this example, the adc16 module is initiealized and used to measure the VREF output voltage. So, it cannot use interal
+In this example, the adc16 module is initialized and used to measure the VREF output voltage. So, it cannot use internal
 VREF as the reference voltage.
 
 Then, user should configure the VREF output pin as the ADC16's sample input. When running the project, it will firstly
 measure the VREF output voltage within the default (factory) trim value. Then, it will measure the VREF output voltage
-under different trim value.
+under different trim values.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.40.2
-- Keil MDK  5.29
-- GCC ARM Embedded  8.3.1
-- MCUXpresso  11.1.0
+- IAR embedded Workbench  8.50.1
+- Keil MDK  5.30
+- GCC ARM Embedded  9.2.1
+- MCUXpresso  11.2.0
 
 Hardware requirements
 =====================

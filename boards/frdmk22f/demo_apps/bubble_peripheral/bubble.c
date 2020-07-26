@@ -16,8 +16,8 @@
  * Definitions
  ******************************************************************************/
 /* The Flextimer instance/channel used for board */
-#define BOARD_TIMER_BASEADDR FTM0
-#define BOARD_FIRST_TIMER_CHANNEL 7U
+#define BOARD_TIMER_BASEADDR       FTM0
+#define BOARD_FIRST_TIMER_CHANNEL  7U
 #define BOARD_SECOND_TIMER_CHANNEL 6U
 #define BOARD_FTM_PRESCALE_DIVIDER kFTM_Prescale_Divide_128
 /* Get source clock for TPM driver */

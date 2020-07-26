@@ -32,7 +32,7 @@
 //-----------------------------------------------------------------------
 // Macros
 //-----------------------------------------------------------------------
-#define FIFO_WMRK_SIZE (8)    /* Buffer 8 Samples. */
+#define FIFO_WMRK_SIZE    (8) /* Buffer 8 Samples. */
 #define MPL3115_DATA_SIZE (5) /* 3 byte Pressure/Altitude and 2 byte Temperature. */
 /*! In MPL3115 the Auto Acquisition Time Step (ODR) can be set only in powers of 2 (i.e. 2^x, where x is the
  *  SAMPLING_EXPONENT).

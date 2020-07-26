@@ -9,6 +9,7 @@
     <definition extID="device.MK64F12_CMSIS.MK64F12"/>
     <definition extID="device.MK64F12_startup.MK64F12"/>
     <definition extID="middleware.mbedtls.MK64F12"/>
+    <definition extID="middleware.mbedtls.port.ksdk.MK64F12"/>
     <definition extID="middleware.mmcau.cm4_cm7.MK64F12"/>
     <definition extID="middleware.secure-subsystem.MK64F12"/>
     <definition extID="platform.Include_common.MK64F12"/>
@@ -30,7 +31,7 @@
     <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="frdmk64f_secure-subsystem_digest" name="secure-subsystem_digest" category="secure-subsystem_examples" dependency="platform.drivers.rnga.MK64F12 middleware.mmcau.cm4_cm7.MK64F12 middleware.mbedtls.MK64F12 platform.drivers.port.MK64F12 middleware.secure-subsystem.MK64F12 platform.drivers.flash.MK64F12 platform.drivers.gpio.MK64F12 platform.drivers.clock.MK64F12 utility.debug_console.MK64F12 platform.drivers.uart.MK64F12 platform.drivers.smc.MK64F12 device.MK64F12_CMSIS.MK64F12 component.uart_adapter.MK64F12 component.serial_manager.MK64F12 platform.drivers.common.MK64F12 component.lists.MK64F12 component.serial_manager_uart.MK64F12 device.MK64F12_startup.MK64F12 platform.utilities.assert.MK64F12 platform.Include_core_cm4.MK64F12 platform.Include_common.MK64F12 platform.Include_dsp.MK64F12 platform.utilities.misc_utilities.MK64F12">
+  <example id="frdmk64f_secure-subsystem_digest" name="secure-subsystem_digest" category="secure-subsystem_examples" dependency="platform.drivers.rnga.MK64F12 middleware.mmcau.cm4_cm7.MK64F12 middleware.mbedtls.MK64F12 middleware.mbedtls.port.ksdk.MK64F12 platform.drivers.port.MK64F12 middleware.secure-subsystem.MK64F12 platform.drivers.flash.MK64F12 platform.drivers.gpio.MK64F12 platform.drivers.clock.MK64F12 utility.debug_console.MK64F12 platform.drivers.uart.MK64F12 platform.drivers.smc.MK64F12 device.MK64F12_CMSIS.MK64F12 component.uart_adapter.MK64F12 component.serial_manager.MK64F12 platform.drivers.common.MK64F12 component.lists.MK64F12 component.serial_manager_uart.MK64F12 device.MK64F12_startup.MK64F12 platform.utilities.assert.MK64F12 platform.Include_core_cm4.MK64F12 platform.Include_common.MK64F12 platform.Include_dsp.MK64F12 platform.utilities.misc_utilities.MK64F12">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>

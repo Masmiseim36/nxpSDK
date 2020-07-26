@@ -1,4 +1,4 @@
-/* Copyright 2019 NXP
+/* Copyright 2019,2020 NXP
  * 
  * This software is owned or controlled by NXP and may only be used
  * strictly in accordance with the applicable license terms.  By expressly
@@ -16,18 +16,18 @@
 
 /* clang-format off */
 #define PLUGANDTRUST_HOSTLIB_PROD_NAME          "PlugAndTrust_HostLib"
-#define PLUGANDTRUST_HOSTLIB_VER_STRING_NUM     "v02.11.00_20191110"
-#define PLUGANDTRUST_HOSTLIB_PROD_NAME_VER_FULL "PlugAndTrust_HostLib_v02.11.00_20191110"
+#define PLUGANDTRUST_HOSTLIB_VER_STRING_NUM     "v02.15.00_20200522"
+#define PLUGANDTRUST_HOSTLIB_PROD_NAME_VER_FULL "PlugAndTrust_HostLib_v02.15.00_20200522"
 #define PLUGANDTRUST_HOSTLIB_VER_MAJOR          (2u)
-#define PLUGANDTRUST_HOSTLIB_VER_MINOR          (11u)
+#define PLUGANDTRUST_HOSTLIB_VER_MINOR          (15u)
 #define PLUGANDTRUST_HOSTLIB_VER_DEV            (0u)
 
-/* v02.11 = 20011u */
+/* v02.15 = 20015u */
 #define PLUGANDTRUST_HOSTLIB_VER_MAJOR_MINOR ( 0 \
     | (PLUGANDTRUST_HOSTLIB_VER_MAJOR * 10000u)    \
     | (PLUGANDTRUST_HOSTLIB_VER_MINOR))
 
-/* v02.11.00 = 200110000ULL */
+/* v02.15.00 = 200150000ULL */
 #define PLUGANDTRUST_HOSTLIB_VER_MAJOR_MINOR_DEV ( 0 \
     | (PLUGANDTRUST_HOSTLIB_VER_MAJOR * 10000*10000u)    \
     | (PLUGANDTRUST_HOSTLIB_VER_MINOR * 10000u)    \
@@ -54,7 +54,7 @@
  * 
  * v_major  = "02"
  * 
- * v_minor  = "11"
+ * v_minor  = "15"
  * 
  * v_dev    = "00"
  * 

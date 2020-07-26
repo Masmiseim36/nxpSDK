@@ -9,7 +9,7 @@
 *                                                                    *
 **********************************************************************
 
-** emWin V5.50 - Graphical user interface for embedded applications **
+** emWin V6.10 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -169,6 +169,7 @@ GUI_COLOR          SWIPELIST_GetTextColor            (SWIPELIST_Handle hObj, uns
 int                SWIPELIST_GetThreshold            (SWIPELIST_Handle hObj);
 int                SWIPELIST_GetUserData             (SWIPELIST_Handle hObj, void * pDest, int NumBytes);
 
+int                SWIPELIST_IsSepItem               (SWIPELIST_Handle hObj, U32 ItemIndex);
 int                SWIPELIST_ItemAttachWindow        (SWIPELIST_Handle hObj, unsigned ItemIndex, WM_HWIN hWin, int x0, int y0);
 void               SWIPELIST_ItemDetachWindow        (SWIPELIST_Handle hObj, WM_HWIN hWin);
 int                SWIPELIST_OwnerDraw               (const WIDGET_ITEM_DRAW_INFO * pDrawItemInfo);

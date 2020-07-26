@@ -109,7 +109,7 @@ static void USB_HostPrinterClearInHaltCallback(void *param, usb_host_transfer_t 
         printerInstance->inCallbackFn(printerInstance->outCallbackParam, printerInstance->stallDataBuffer,
                                       printerInstance->stallDataLength, kStatus_USB_TransferStall);
     }
-    USB_HostFreeTransfer(printerInstance->hostHandle, transfer);
+    (void)USB_HostFreeTransfer(printerInstance->hostHandle, transfer);
 }
 
 static void USB_HostPrinterClearOutHaltCallback(void *param, usb_host_transfer_t *transfer, usb_status_t status)
@@ -122,13 +122,13 @@ static void USB_HostPrinterClearOutHaltCallback(void *param, usb_host_transfer_t
         printerInstance->outCallbackFn(printerInstance->outCallbackParam, printerInstance->stallDataBuffer,
                                        printerInstance->stallDataLength, kStatus_USB_TransferStall);
     }
-    USB_HostFreeTransfer(printerInstance->hostHandle, transfer);
+    (void)USB_HostFreeTransfer(printerInstance->hostHandle, transfer);
 }
 
-static void USB_HostPrinterClearHalt(usb_host_printer_instance_t *printerInstance,
-                                     usb_host_transfer_t *stallTransfer,
-                                     host_inner_transfer_callback_t callbackFn,
-                                     uint8_t endpoint)
+static usb_status_t USB_HostPrinterClearHalt(usb_host_printer_instance_t *printerInstance,
+                                             usb_host_transfer_t *stallTransfer,
+                                             host_inner_transfer_callback_t callbackFn,
+                                             uint8_t endpoint)
 {
     usb_status_t status;
     usb_host_transfer_t *transfer;
@@ -145,23 +145,23 @@ static void USB_HostPrinterClearHalt(usb_host_printer_instance_t *printerInstanc
     printerInstance->stallDataBuffer = stallTransfer->transferBuffer;
     printerInstance->stallDataLength = stallTransfer->transferSofar;
     /* save the application callback function */
-    printerInstance->controlCallbackFn = NULL;
+    printerInstance->controlCallbackFn    = NULL;
     printerInstance->controlCallbackParam = NULL;
     /* initialize transfer */
-    transfer->callbackFn = callbackFn;
-    transfer->callbackParam = printerInstance;
-    transfer->transferBuffer = NULL;
-    transfer->transferLength = 0;
-    transfer->setupPacket->bRequest = USB_REQUEST_STANDARD_CLEAR_FEATURE;
+    transfer->callbackFn                 = callbackFn;
+    transfer->callbackParam              = printerInstance;
+    transfer->transferBuffer             = NULL;
+    transfer->transferLength             = 0;
+    transfer->setupPacket->bRequest      = USB_REQUEST_STANDARD_CLEAR_FEATURE;
     transfer->setupPacket->bmRequestType = USB_REQUEST_TYPE_RECIPIENT_ENDPOINT;
-    transfer->setupPacket->wValue = USB_SHORT_TO_LITTLE_ENDIAN(USB_REQUEST_STANDARD_FEATURE_SELECTOR_ENDPOINT_HALT);
-    transfer->setupPacket->wIndex = USB_SHORT_TO_LITTLE_ENDIAN(endpoint);
+    transfer->setupPacket->wValue  = USB_SHORT_TO_LITTLE_ENDIAN(USB_REQUEST_STANDARD_FEATURE_SELECTOR_ENDPOINT_HALT);
+    transfer->setupPacket->wIndex  = USB_SHORT_TO_LITTLE_ENDIAN(endpoint);
     transfer->setupPacket->wLength = 0;
     status = USB_HostSendSetup(printerInstance->hostHandle, printerInstance->controlPipe, transfer);
 
     if (status != kStatus_USB_Success)
     {
-        USB_HostFreeTransfer(printerInstance->hostHandle, transfer);
+        (void)USB_HostFreeTransfer(printerInstance->hostHandle, transfer);
     }
     printerInstance->controlTransfer = transfer;
 
@@ -181,7 +181,7 @@ static void USB_HostPrinterInPipeCallback(void *param, usb_host_transfer_t *tran
                 (USB_REQUEST_TYPE_DIR_IN | ((usb_host_pipe_t *)printerInstance->inPipe)->endpointAddress)) ==
             kStatus_USB_Success)
         {
-            USB_HostFreeTransfer(printerInstance->hostHandle, transfer);
+            (void)USB_HostFreeTransfer(printerInstance->hostHandle, transfer);
             return;
         }
     }
@@ -193,7 +193,7 @@ static void USB_HostPrinterInPipeCallback(void *param, usb_host_transfer_t *tran
         printerInstance->inCallbackFn(printerInstance->inCallbackParam, transfer->transferBuffer,
                                       transfer->transferSofar, status);
     }
-    USB_HostFreeTransfer(printerInstance->hostHandle, transfer);
+    (void)USB_HostFreeTransfer(printerInstance->hostHandle, transfer);
 }
 
 static void USB_HostPrinterOutPipeCallback(void *param, usb_host_transfer_t *transfer, usb_status_t status)
@@ -208,7 +208,7 @@ static void USB_HostPrinterOutPipeCallback(void *param, usb_host_transfer_t *tra
                 (USB_REQUEST_TYPE_DIR_OUT | ((usb_host_pipe_t *)printerInstance->outPipe)->endpointAddress)) ==
             kStatus_USB_Success)
         {
-            USB_HostFreeTransfer(printerInstance->hostHandle, transfer);
+            (void)USB_HostFreeTransfer(printerInstance->hostHandle, transfer);
             return;
         }
     }
@@ -219,7 +219,7 @@ static void USB_HostPrinterOutPipeCallback(void *param, usb_host_transfer_t *tra
         printerInstance->outCallbackFn(printerInstance->outCallbackParam, transfer->transferBuffer,
                                        transfer->transferSofar, status);
     }
-    USB_HostFreeTransfer(printerInstance->hostHandle, transfer);
+    (void)USB_HostFreeTransfer(printerInstance->hostHandle, transfer);
 }
 
 static void USB_HostPrinterControlPipeCallback(void *param, usb_host_transfer_t *transfer, usb_status_t status)
@@ -235,7 +235,7 @@ static void USB_HostPrinterControlPipeCallback(void *param, usb_host_transfer_t 
         printerInstance->controlCallbackFn(printerInstance->controlCallbackParam, transfer->transferBuffer,
                                            transfer->transferSofar, status);
     }
-    USB_HostFreeTransfer(printerInstance->hostHandle, transfer);
+    (void)USB_HostFreeTransfer(printerInstance->hostHandle, transfer);
 }
 
 static usb_status_t USB_HostPrinterOpenInterface(usb_host_printer_instance_t *printerInstance)
@@ -280,16 +280,16 @@ static usb_status_t USB_HostPrinterOpenInterface(usb_host_printer_instance_t *pr
              USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_IN) &&
             ((epDesc->bmAttributes & USB_DESCRIPTOR_ENDPOINT_ATTRIBUTE_TYPE_MASK) == USB_ENDPOINT_BULK))
         {
-            pipeInit.devInstance = printerInstance->deviceHandle;
-            pipeInit.pipeType = USB_ENDPOINT_BULK;
-            pipeInit.direction = USB_IN;
+            pipeInit.devInstance     = printerInstance->deviceHandle;
+            pipeInit.pipeType        = USB_ENDPOINT_BULK;
+            pipeInit.direction       = USB_IN;
             pipeInit.endpointAddress = (epDesc->bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_NUMBER_MASK);
-            pipeInit.interval = epDesc->bInterval;
-            pipeInit.maxPacketSize = (uint16_t)(USB_SHORT_FROM_LITTLE_ENDIAN_ADDRESS(epDesc->wMaxPacketSize) &
-                                                USB_DESCRIPTOR_ENDPOINT_MAXPACKETSIZE_SIZE_MASK);
-            pipeInit.numberPerUframe = (USB_SHORT_FROM_LITTLE_ENDIAN_ADDRESS(epDesc->wMaxPacketSize) &
-                                        USB_DESCRIPTOR_ENDPOINT_MAXPACKETSIZE_MULT_TRANSACTIONS_MASK);
-            pipeInit.nakCount = USB_HOST_CONFIG_MAX_NAK;
+            pipeInit.interval        = epDesc->bInterval;
+            pipeInit.maxPacketSize   = (uint16_t)((USB_SHORT_FROM_LITTLE_ENDIAN_ADDRESS(epDesc->wMaxPacketSize) &
+                                                 USB_DESCRIPTOR_ENDPOINT_MAXPACKETSIZE_SIZE_MASK));
+            pipeInit.numberPerUframe = (uint8_t)((USB_SHORT_FROM_LITTLE_ENDIAN_ADDRESS(epDesc->wMaxPacketSize) &
+                                                  USB_DESCRIPTOR_ENDPOINT_MAXPACKETSIZE_MULT_TRANSACTIONS_MASK));
+            pipeInit.nakCount        = USB_HOST_CONFIG_MAX_NAK;
 
             printerInstance->inPacketSize = pipeInit.maxPacketSize;
 
@@ -306,16 +306,16 @@ static usb_status_t USB_HostPrinterOpenInterface(usb_host_printer_instance_t *pr
                   USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_OUT) &&
                  ((epDesc->bmAttributes & USB_DESCRIPTOR_ENDPOINT_ATTRIBUTE_TYPE_MASK) == USB_ENDPOINT_BULK))
         {
-            pipeInit.devInstance = printerInstance->deviceHandle;
-            pipeInit.pipeType = USB_ENDPOINT_BULK;
-            pipeInit.direction = USB_OUT;
+            pipeInit.devInstance     = printerInstance->deviceHandle;
+            pipeInit.pipeType        = USB_ENDPOINT_BULK;
+            pipeInit.direction       = USB_OUT;
             pipeInit.endpointAddress = (epDesc->bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_NUMBER_MASK);
-            pipeInit.interval = epDesc->bInterval;
-            pipeInit.maxPacketSize = (uint16_t)(USB_SHORT_FROM_LITTLE_ENDIAN_ADDRESS(epDesc->wMaxPacketSize) &
-                                                USB_DESCRIPTOR_ENDPOINT_MAXPACKETSIZE_SIZE_MASK);
-            pipeInit.numberPerUframe = (USB_SHORT_FROM_LITTLE_ENDIAN_ADDRESS(epDesc->wMaxPacketSize) &
-                                        USB_DESCRIPTOR_ENDPOINT_MAXPACKETSIZE_MULT_TRANSACTIONS_MASK);
-            pipeInit.nakCount = USB_HOST_CONFIG_MAX_NAK;
+            pipeInit.interval        = epDesc->bInterval;
+            pipeInit.maxPacketSize   = (uint16_t)((USB_SHORT_FROM_LITTLE_ENDIAN_ADDRESS(epDesc->wMaxPacketSize) &
+                                                 USB_DESCRIPTOR_ENDPOINT_MAXPACKETSIZE_SIZE_MASK));
+            pipeInit.numberPerUframe = (uint8_t)((USB_SHORT_FROM_LITTLE_ENDIAN_ADDRESS(epDesc->wMaxPacketSize) &
+                                                  USB_DESCRIPTOR_ENDPOINT_MAXPACKETSIZE_MULT_TRANSACTIONS_MASK));
+            pipeInit.nakCount        = USB_HOST_CONFIG_MAX_NAK;
 
             printerInstance->outPacketSize = pipeInit.maxPacketSize;
 
@@ -353,12 +353,13 @@ static void USB_HostPrinterSetInterfaceCallback(void *param, usb_host_transfer_t
         USB_HostPrinterSetInterface or USB_HostHubClassRequestCommon, but is the same function */
         printerInstance->controlCallbackFn(printerInstance->controlCallbackParam, NULL, 0, status);
     }
-    USB_HostFreeTransfer(printerInstance->hostHandle, transfer);
+    (void)USB_HostFreeTransfer(printerInstance->hostHandle, transfer);
 }
 
 usb_status_t USB_HostPrinterInit(usb_device_handle deviceHandle, usb_host_class_handle *classHandle)
 {
     uint32_t infoValue;
+    uint32_t *temp;
     /* malloc printer class instance */
     usb_host_printer_instance_t *printerInstance =
         (usb_host_printer_instance_t *)OSA_MemoryAllocate(sizeof(usb_host_printer_instance_t));
@@ -369,12 +370,15 @@ usb_status_t USB_HostPrinterInit(usb_device_handle deviceHandle, usb_host_class_
     }
 
     /* initialize printer instance */
-    printerInstance->deviceHandle = deviceHandle;
+    printerInstance->deviceHandle    = deviceHandle;
     printerInstance->interfaceHandle = NULL;
-    USB_HostHelperGetPeripheralInformation(deviceHandle, kUSB_HostGetHostHandle, &infoValue);
-    printerInstance->hostHandle = (usb_host_handle)infoValue;
-    USB_HostHelperGetPeripheralInformation(deviceHandle, kUSB_HostGetDeviceControlPipe, &infoValue);
-    printerInstance->controlPipe = (usb_host_pipe_handle)infoValue;
+
+    (void)USB_HostHelperGetPeripheralInformation(deviceHandle, (uint32_t)kUSB_HostGetHostHandle, &infoValue);
+    temp                        = (uint32_t *)infoValue;
+    printerInstance->hostHandle = (usb_host_handle)temp;
+    (void)USB_HostHelperGetPeripheralInformation(deviceHandle, (uint32_t)kUSB_HostGetDeviceControlPipe, &infoValue);
+    temp                         = (uint32_t *)infoValue;
+    printerInstance->controlPipe = (usb_host_pipe_handle)temp;
 
     *classHandle = printerInstance;
     return kStatus_USB_Success;
@@ -427,7 +431,7 @@ usb_status_t USB_HostPrinterSetInterface(usb_host_class_handle classHandle,
         }
     }
 
-    if (alternateSetting == 0) /* open interface directly */
+    if (alternateSetting == 0U) /* open interface directly */
     {
         if (callbackFn != NULL)
         {
@@ -447,19 +451,19 @@ usb_status_t USB_HostPrinterSetInterface(usb_host_class_handle classHandle,
         }
 
         /* save the application callback function */
-        printerInstance->controlCallbackFn = callbackFn;
+        printerInstance->controlCallbackFn    = callbackFn;
         printerInstance->controlCallbackParam = callbackParam;
         /* initialize transfer */
-        transfer->callbackFn = USB_HostPrinterSetInterfaceCallback;
-        transfer->callbackParam = printerInstance;
-        transfer->setupPacket->bRequest = USB_REQUEST_STANDARD_SET_INTERFACE;
+        transfer->callbackFn                 = USB_HostPrinterSetInterfaceCallback;
+        transfer->callbackParam              = printerInstance;
+        transfer->setupPacket->bRequest      = USB_REQUEST_STANDARD_SET_INTERFACE;
         transfer->setupPacket->bmRequestType = USB_REQUEST_TYPE_RECIPIENT_INTERFACE;
-        transfer->setupPacket->wIndex = USB_SHORT_TO_LITTLE_ENDIAN(
+        transfer->setupPacket->wIndex        = USB_SHORT_TO_LITTLE_ENDIAN(
             ((usb_host_interface_t *)printerInstance->interfaceHandle)->interfaceDesc->bInterfaceNumber);
-        transfer->setupPacket->wValue = USB_SHORT_TO_LITTLE_ENDIAN(alternateSetting);
+        transfer->setupPacket->wValue  = USB_SHORT_TO_LITTLE_ENDIAN(alternateSetting);
         transfer->setupPacket->wLength = 0;
-        transfer->transferBuffer = NULL;
-        transfer->transferLength = 0;
+        transfer->transferBuffer       = NULL;
+        transfer->transferLength       = 0;
         status = USB_HostSendSetup(printerInstance->hostHandle, printerInstance->controlPipe, transfer);
 
         if (status == kStatus_USB_Success)
@@ -468,7 +472,7 @@ usb_status_t USB_HostPrinterSetInterface(usb_host_class_handle classHandle,
         }
         else
         {
-            USB_HostFreeTransfer(printerInstance->hostHandle, transfer);
+            (void)USB_HostFreeTransfer(printerInstance->hostHandle, transfer);
         }
     }
 
@@ -491,7 +495,13 @@ usb_status_t USB_HostPrinterDeinit(usb_device_handle deviceHandle, usb_host_clas
         {
             status =
                 USB_HostCancelTransfer(printerInstance->hostHandle, printerInstance->inPipe, NULL); /* cancel pipe */
-            status = USB_HostClosePipe(printerInstance->hostHandle, printerInstance->inPipe);       /* close pipe */
+            if (status != kStatus_USB_Success)
+            {
+#ifdef HOST_ECHO
+                usb_echo("error when cancel pipe\r\n");
+#endif
+            }
+            status = USB_HostClosePipe(printerInstance->hostHandle, printerInstance->inPipe); /* close pipe */
 
             if (status != kStatus_USB_Success)
             {
@@ -505,7 +515,13 @@ usb_status_t USB_HostPrinterDeinit(usb_device_handle deviceHandle, usb_host_clas
         {
             status =
                 USB_HostCancelTransfer(printerInstance->hostHandle, printerInstance->outPipe, NULL); /* cancel pipe */
-            status = USB_HostClosePipe(printerInstance->hostHandle, printerInstance->outPipe);       /* close pipe */
+            if (status != kStatus_USB_Success)
+            {
+#ifdef HOST_ECHO
+                usb_echo("error when cancel pipe\r\n");
+#endif
+            }
+            status = USB_HostClosePipe(printerInstance->hostHandle, printerInstance->outPipe); /* close pipe */
 
             if (status != kStatus_USB_Success)
             {
@@ -521,14 +537,20 @@ usb_status_t USB_HostPrinterDeinit(usb_device_handle deviceHandle, usb_host_clas
         {
             status = USB_HostCancelTransfer(printerInstance->hostHandle, printerInstance->controlPipe,
                                             printerInstance->controlTransfer);
+            if (status != kStatus_USB_Success)
+            {
+#ifdef HOST_ECHO
+                usb_echo("error when cancel pipe\r\n");
+#endif
+            }
         }
-        USB_HostCloseDeviceInterface(deviceHandle,
-                                     printerInstance->interfaceHandle); /* notify host driver the interface is closed */
+        (void)USB_HostCloseDeviceInterface(
+            deviceHandle, printerInstance->interfaceHandle); /* notify host driver the interface is closed */
         OSA_MemoryFree(printerInstance);
     }
     else
     {
-        USB_HostCloseDeviceInterface(deviceHandle, NULL);
+        (void)USB_HostCloseDeviceInterface(deviceHandle, NULL);
     }
 
     return kStatus_USB_Success;
@@ -562,13 +584,13 @@ usb_status_t USB_HostPrinterRecv(usb_host_class_handle classHandle,
         return kStatus_USB_Busy;
     }
     /* save the application callback function */
-    printerInstance->inCallbackFn = callbackFn;
+    printerInstance->inCallbackFn    = callbackFn;
     printerInstance->inCallbackParam = callbackParam;
     /* initialize transfer */
     transfer->transferBuffer = buffer;
     transfer->transferLength = bufferLength;
-    transfer->callbackFn = USB_HostPrinterInPipeCallback;
-    transfer->callbackParam = printerInstance;
+    transfer->callbackFn     = USB_HostPrinterInPipeCallback;
+    transfer->callbackParam  = printerInstance;
 
     /* call host driver api */
     if (USB_HostRecv(printerInstance->hostHandle, printerInstance->inPipe, transfer) != kStatus_USB_Success)
@@ -576,7 +598,7 @@ usb_status_t USB_HostPrinterRecv(usb_host_class_handle classHandle,
 #ifdef HOST_ECHO
         usb_echo("fail to USB_HostRecv\r\n");
 #endif
-        USB_HostFreeTransfer(printerInstance->hostHandle, transfer);
+        (void)USB_HostFreeTransfer(printerInstance->hostHandle, transfer);
         return kStatus_USB_Error;
     }
 
@@ -634,13 +656,13 @@ usb_status_t USB_HostPrinterSend(usb_host_class_handle classHandle,
         return kStatus_USB_Error;
     }
     /* save the application callback function */
-    printerInstance->outCallbackFn = callbackFn;
+    printerInstance->outCallbackFn    = callbackFn;
     printerInstance->outCallbackParam = callbackParam;
     /* initialize transfer */
     transfer->transferBuffer = buffer;
     transfer->transferLength = bufferLength;
-    transfer->callbackFn = USB_HostPrinterOutPipeCallback;
-    transfer->callbackParam = printerInstance;
+    transfer->callbackFn     = USB_HostPrinterOutPipeCallback;
+    transfer->callbackParam  = printerInstance;
 
     /* call host driver api */
     if (USB_HostSend(printerInstance->hostHandle, printerInstance->outPipe, transfer) != kStatus_USB_Success)
@@ -648,7 +670,7 @@ usb_status_t USB_HostPrinterSend(usb_host_class_handle classHandle,
 #ifdef HOST_ECHO
         usb_echo("fail to USB_HostSend\r\n");
 #endif
-        USB_HostFreeTransfer(printerInstance->hostHandle, transfer);
+        (void)USB_HostFreeTransfer(printerInstance->hostHandle, transfer);
         return kStatus_USB_Error;
     }
 
@@ -680,18 +702,18 @@ static usb_status_t USB_HostPrinterControl(usb_host_printer_instance_t *printerI
         return kStatus_USB_Busy;
     }
     /* save the application callback function */
-    printerInstance->controlCallbackFn = callbackFn;
+    printerInstance->controlCallbackFn    = callbackFn;
     printerInstance->controlCallbackParam = callbackParam;
     /* initialize transfer */
-    transfer->transferBuffer = data;
-    transfer->transferLength = wlength;
-    transfer->callbackFn = USB_HostPrinterControlPipeCallback;
-    transfer->callbackParam = printerInstance;
+    transfer->transferBuffer             = data;
+    transfer->transferLength             = wlength;
+    transfer->callbackFn                 = USB_HostPrinterControlPipeCallback;
+    transfer->callbackParam              = printerInstance;
     transfer->setupPacket->bmRequestType = requestType;
-    transfer->setupPacket->bRequest = request;
-    transfer->setupPacket->wValue = USB_SHORT_TO_LITTLE_ENDIAN(wvalue);
-    transfer->setupPacket->wIndex = USB_SHORT_TO_LITTLE_ENDIAN(windex);
-    transfer->setupPacket->wLength = USB_SHORT_TO_LITTLE_ENDIAN(wlength);
+    transfer->setupPacket->bRequest      = request;
+    transfer->setupPacket->wValue        = USB_SHORT_TO_LITTLE_ENDIAN(wvalue);
+    transfer->setupPacket->wIndex        = USB_SHORT_TO_LITTLE_ENDIAN(windex);
+    transfer->setupPacket->wLength       = USB_SHORT_TO_LITTLE_ENDIAN(wlength);
 
     /* call host driver api */
     if (USB_HostSendSetup(printerInstance->hostHandle, printerInstance->controlPipe, transfer) != kStatus_USB_Success)
@@ -699,7 +721,7 @@ static usb_status_t USB_HostPrinterControl(usb_host_printer_instance_t *printerI
 #ifdef HOST_ECHO
         usb_echo("fail for USB_HostSendSetup\r\n");
 #endif
-        USB_HostFreeTransfer(printerInstance->hostHandle, transfer);
+        (void)USB_HostFreeTransfer(printerInstance->hostHandle, transfer);
         return kStatus_USB_Error;
     }
     printerInstance->controlTransfer = transfer;
@@ -716,14 +738,15 @@ usb_status_t USB_HostPrinterGetDeviceId(usb_host_class_handle classHandle,
                                         void *callbackParam)
 {
     usb_host_printer_instance_t *printerInstance = (usb_host_printer_instance_t *)classHandle;
-    uint32_t infoValue;
+    uint32_t infoValue                           = 0U;
 
-    USB_HostHelperGetPeripheralInformation(printerInstance->deviceHandle, kUSB_HostGetDeviceConfigIndex, &infoValue);
+    (void)USB_HostHelperGetPeripheralInformation(printerInstance->deviceHandle, (uint32_t)kUSB_HostGetDeviceConfigIndex,
+                                                 &infoValue);
 
     return USB_HostPrinterControl(
         printerInstance, USB_REQUEST_TYPE_DIR_IN | USB_REQUEST_TYPE_TYPE_CLASS | USB_REQUEST_TYPE_RECIPIENT_INTERFACE,
         USB_HOST_PRINTER_GET_DEVICE_ID, (uint16_t)infoValue,
-        (uint16_t)((uint16_t)((uint16_t)interfaceIndex << 8U) | alternateSetting), length, buffer, callbackFn,
+        (uint16_t)((uint16_t)((uint16_t)interfaceIndex << 8U) | alternateSetting), (uint16_t)length, buffer, callbackFn,
         callbackParam);
 }
 

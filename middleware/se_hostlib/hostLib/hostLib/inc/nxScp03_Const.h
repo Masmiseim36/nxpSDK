@@ -49,11 +49,6 @@
 #define P1_GP_GET_DATA (0xBF)               //!< Global platform defined instruction
 #define P2_GP_GET_DATA (0x21)               //!< Global platform defined instruction
 
-#if (SSS_HAVE_SE050_M_SR1 || SSS_HAVE_SE050_M_SR2)
-#define INS_SE050M_INITIALIZE_UPDATE (0x30)     //!< SE050M defined instruction
-#define INS_SE050M_EXTERNAL_AUTHENTICATE (0x31) //!< SE050M defined instruction
-#endif
-
 /* Sizes used in SCP */
 #define AES_KEY_LEN_nBYTE (16) //!< AES key length
 

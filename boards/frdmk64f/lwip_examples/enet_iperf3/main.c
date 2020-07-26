@@ -1,11 +1,10 @@
 /*
  * Copyright (c) 2013 - 2014, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-
 /* FreeRTOS kernel includes. */
 #include <stdint.h>
 #include "FreeRTOSConfig.h"
@@ -19,11 +18,12 @@
 #include "fsl_debug_console.h"
 
 #include "iperf_api.h"
-#define IPERF_DEFAULT_DURATION 10
 
 #include "fsl_device_registers.h"
 #include "pin_mux.h"
 #include "clock_config.h"
+#include "fsl_phyksz8081.h"
+#include "fsl_enet_mdio.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -37,17 +37,69 @@
 /* Address of PHY interface. */
 #define EXAMPLE_PHY_ADDRESS BOARD_ENET0_PHY_ADDRESS
 
-/* System clock name. */
-#define EXAMPLE_CLOCK_NAME kCLOCK_CoreSysClk
+/* MDIO operations. */
+#define EXAMPLE_MDIO_OPS enet_ops
 
-/*******************************************************************************
- * Prototypes
- ******************************************************************************/
-/*******************************************************************************
- * Code
- ******************************************************************************/
+/* PHY operations. */
+#define EXAMPLE_PHY_OPS phyksz8081_ops
+
+/* ENET clock frequency. */
+#define EXAMPLE_CLOCK_FREQ CLOCK_GetFreq(kCLOCK_CoreSysClk)
+
+#define RECV_TIMEOUT_MS 100
+
+#define TASK_MAIN_STACK_SIZE 800
+
+#ifdef IPERF3_WIFI
+
+#include "iot_wifi.h"
+
+/*
+ * Bandwidth limit of the iperf3 server for the UDP receive test.
+ * "0" means there is no limit and server will transmit testing UDP packets at its maximum speed.
+ * Other number means server will transmit at given bits per second speed.
+ */
+#define UDP_RX_BANDWIDTH "30000000"
+
+#define TASK_MAIN_PRIO (configMAX_PRIORITIES - 4)
+
+#if TASK_MAIN_PRIO_AFTER_WIFI_INIT > configTIMER_TASK_PRIORITY
+#error "TASK_MAIN_PRIO_AFTER_WIFI_INIT > configTIMER_TASK_PRIORITY"
+#endif
+
+// Hardwired SSID, passphrase, auth and cipher algo of AP to connect to
+// Change this to fit your AP
+#define AP_SSID       "nxp"
+#define AP_PASSPHRASE "NXP0123456789"
+
+#endif /* IPERF3_WIFI */
 
 #ifdef IPERF3_ENET
+
+#include "enet_ethernetif.h"
+#include "lwip/netifapi.h"
+#include "board.h"
+#include "lwip/tcpip.h"
+#include "fsl_phy.h"
+#include "lwip/prot/dhcp.h"
+
+#define UDP_RX_BANDWIDTH "0"
+
+#define TASK_MAIN_PRIO (configMAX_PRIORITIES - 2)
+
+#if TASK_MAIN_PRIO <= TCPIP_THREAD_PRIO
+#error "TASK_MAIN_PRIO <= TCPIP_THREAD_PRIO"
+#endif
+
+#if TASK_MAIN_PRIO > configTIMER_TASK_PRIORITY
+#error "TASK_MAIN_PRIO > configTIMER_TASK_PRIORITY"
+#endif
+
+/* MAC address configuration. */
+#define configMAC_ADDR                     \
+    {                                      \
+        0x02, 0x12, 0x13, 0x10, 0x15, 0x11 \
+    }
 
 /* IP address configuration. */
 #define configIP_ADDR0 192
@@ -67,47 +119,19 @@
 #define configGW_ADDR2 0
 #define configGW_ADDR3 100
 
-/* MAC address configuration. */
-#define configMAC_ADDR                     \
-    {                                      \
-        0x02, 0x12, 0x13, 0x10, 0x15, 0x11 \
-    }
+#endif /* IPERF3_ENET */
 
-#endif
+/*******************************************************************************
+ * Variables
+ ******************************************************************************/
 
-// 0 is the highest priority and priority 15 is the lowest priority
-const int TASK_MAIN_PRIO       = configMAX_PRIORITIES - 3;
-const int TASK_MAIN_STACK_SIZE = 800;
+static TaskHandle_t task_main_task_handler;
 
-// portSTACK_TYPE *task_main_stack = NULL;
-TaskHandle_t task_main_task_handler;
-TaskHandle_t recv_task_handler;
+static char *json_buf;
+static TimerHandle_t iperf_timer = NULL;
+static char json_results[OUTPUT_STR_MAX];
 
-// Hardwired SSID, passphrase, auth and cipher algo of AP to connect to
-// Change this to fit your AP
-#define AP_SSID "nxp"
-#define AP_PASSPHRASE "NXP0123456789"
-
-#define CERT_HEADER_LEN sizeof(CERT_HEADER_T)
-
-typedef struct
-{
-    char id[4];
-    uint32_t length;
-    uint8_t data[1]; // NOTE: previously 0
-} CERT_HEADER_T;
-
-extern int numIrqs;
-extern int initTime;
-
-char input;
-char *buffer_iperf_data = NULL;
-char *json_buf;
-TimerHandle_t iperf_timer = NULL;
-void *tmp_addr            = NULL;
-char json_results[OUTPUT_STR_MAX];
-
-char json_format[OUTPUT_STR_MAX] =
+static char json_format[OUTPUT_STR_MAX] =
     "{"
     "\"cpu_util_total\":0,"
     "\"cpu_util_user\":0,"
@@ -123,22 +147,53 @@ char json_format[OUTPUT_STR_MAX] =
     "\"packets\": %d,"
     "\"end_time\": 10}]}";
 
-void separator()
+static int turn                  = 0;
+static int juck_counter          = 0;
+static int junk                  = 0;
+static TickType_t start_ticks    = 0;
+static TickType_t expected_ticks = 0;
+static TickType_t current_ticks  = 0;
+
+static struct iperf_ctx iperf_test;
+
+static char *json_req[] = {
+    "{\"tcp\":1, \"time\": 10}",
+    "{\"tcp\":1, \"reverse\":1, \"time\": 10}",
+    "{\"udp\":\"true\", \"len\": 1024, \"time\": 10}",
+    "{\"udp\":\"true\", \"reverse\":1, \"len\": 1024, "
+    "\"time\": 10, \"fqrate\": 512, \"bandwidth\": " UDP_RX_BANDWIDTH "}",
+};
+
+#ifdef IPERF3_WIFI
+
+WIFIReturnCode_t xWifiStatus;
+
+#elif defined(IPERF3_ENET)
+
+static mdio_handle_t mdioHandle = {.ops = &EXAMPLE_MDIO_OPS};
+static phy_handle_t phyHandle   = {.phyAddr = EXAMPLE_PHY_ADDRESS, .mdioHandle = &mdioHandle, .ops = &EXAMPLE_PHY_OPS};
+
+#endif /* IPERF3_WIFI */
+
+/*******************************************************************************
+ * Prototypes
+ ******************************************************************************/
+
+/*******************************************************************************
+ * Code
+ ******************************************************************************/
+
+static void separator()
 {
     PRINTF("\r\n===========================================================\r\n");
 }
 
-struct iperf_ctx iperf_test = {
-    //.server_ip = {192, 168, 2, 115},
-    .server_ip = {0},
-};
-
-void iperf_init(struct iperf_ctx *ctx)
+static void iperf_init(struct iperf_ctx *ctx)
 {
     iperf_hw_init(ctx);
 }
 
-void menu(struct iperf_ctx *ctx)
+static void menu(struct iperf_ctx *ctx)
 {
     char mode_switch;
     int choosing_mode = 1;
@@ -182,7 +237,8 @@ void menu(struct iperf_ctx *ctx)
         }
     }
 }
-uint32_t iperf_bswap32(uint32_t source)
+
+static uint32_t iperf_bswap32(uint32_t source)
 {
     uint32_t tmp = 0;
     tmp |= ((source & 0xFF) << 24);
@@ -192,7 +248,7 @@ uint32_t iperf_bswap32(uint32_t source)
     return tmp;
 }
 
-int iperf_send_state(struct iperf_ctx *ctx, uint8_t state)
+static int iperf_send_state(struct iperf_ctx *ctx, uint8_t state)
 {
     uint32_t transmitted = 0;
     ctx->ctrl_buf[0]     = state;
@@ -216,10 +272,19 @@ int iperf_send_and_set_state(struct iperf_ctx *ctx, uint8_t state)
     return -1;
 }
 
-int iperf_recv_state(struct iperf_ctx *ctx, uint8_t *state)
+static int iperf_recv_state(struct iperf_ctx *ctx, uint8_t *state, bool dont_block)
 {
-    int received = 0;
-    received     = iperf_recv_noblock(ctx->ctrl_sock, ctx->recv_buf, 1, 0);
+    int received;
+
+    if (dont_block)
+    {
+        received = iperf_recv_noblock(ctx->ctrl_sock, ctx->recv_buf, 1, 0);
+    }
+    else
+    {
+        received = iperf_recv_timeout(ctx->ctrl_sock, ctx->recv_buf, 1, 0, RECV_TIMEOUT_MS);
+    }
+
     if (received == 1)
     {
         *state = ctx->recv_buf[0];
@@ -228,65 +293,58 @@ int iperf_recv_state(struct iperf_ctx *ctx, uint8_t *state)
     return -1;
 }
 
-int iperf_recv_and_set_state(struct iperf_ctx *ctx)
+static void iperf_recv_and_set_state(struct iperf_ctx *ctx)
 {
-    uint8_t state = 0;
-    if (0 == iperf_recv_state(ctx, &state))
+    uint8_t state   = 0;
+    bool dont_block = (ctx->state == TEST_RUNNING);
+
+    if (0 == iperf_recv_state(ctx, &state, dont_block))
     {
-        ctx->state = state;
-        if (ctx->state == EXCHANGE_RESULTS)
-            return 0;
+        if ((state != TEST_START) || (ctx->state != TEST_RUNNING))
+        {
+            ctx->state = state;
+        }
     }
-    return -1;
 }
 
-int turn                  = 0;
-int juck_bytes            = 0;
-int juck_counter          = 0;
-int junk                  = 0;
-TickType_t start_ticks    = 0;
-TickType_t expected_ticks = 0;
-TickType_t current_ticks  = 0;
-
-void disposal_of_unprofitable_data_tcp(int dataSocket, struct iperf_ctx *ctx)
+static void disposal_of_unprofitable_data_tcp(int dataSocket, struct iperf_ctx *ctx)
 {
-    juck_bytes = juck_counter = junk = 0;
-    start_ticks                      = xTaskGetTickCount();
-    expected_ticks                   = start_ticks + 1000 / portTICK_PERIOD_MS;
+    juck_counter = junk = 0;
+    start_ticks         = xTaskGetTickCount();
+    expected_ticks      = start_ticks + pdMS_TO_TICKS(1000);
     do
     {
-        junk          = iperf_recv_noblock(dataSocket, ctx->recv_buf, IPERF_BUFFER_MAX, 0);
+        junk          = iperf_recv_timeout(dataSocket, ctx->recv_buf, IPERF_BUFFER_MAX, 0, RECV_TIMEOUT_MS);
         juck_counter  = junk > 0 ? 0 : juck_counter + 1;
         current_ticks = xTaskGetTickCount();
     } while (expected_ticks > current_ticks);
 }
 
-void disposal_of_unprofitable_data_udp(int dataSocket, struct iperf_ctx *ctx)
+static void disposal_of_unprofitable_data_udp(int dataSocket, struct iperf_ctx *ctx)
 {
-    juck_bytes = juck_counter = junk = 0;
-    start_ticks                      = xTaskGetTickCount();
-    expected_ticks                   = start_ticks + 3000 / portTICK_PERIOD_MS;
+    juck_counter = junk = 0;
+    start_ticks         = xTaskGetTickCount();
+    expected_ticks      = start_ticks + pdMS_TO_TICKS(3000);
     do
     {
-        junk          = iperf_recv_from(dataSocket, ctx->recv_buf, IPERF_BUFFER_MAX, 0);
+        junk          = iperf_recv_from_timeout(dataSocket, ctx->recv_buf, IPERF_BUFFER_MAX, 0, RECV_TIMEOUT_MS);
         juck_counter  = junk > 0 ? 0 : juck_counter + 1;
         current_ticks = xTaskGetTickCount();
-
     } while (expected_ticks > current_ticks);
 }
 
-uint8_t tmp_state           = 0;
-volatile uint8_t tmp_statev = 0;
-int g_ignore_start          = 0;
-
-void iperfc_timer_start(struct iperf_ctx *ctx)
+static void iperfc_timer_start(struct iperf_ctx *ctx)
 {
     BaseType_t result = 0;
-    result     = xTimerStart(iperf_timer, 0);
-    assert(pdPASS == result);
+    result            = xTimerStart(iperf_timer, 0);
+    if (result != pdPASS)
+    {
+        PRINTF("Failed to start timer! \r\n");
+        __BKPT(0);
+    }
 }
 
-int iperfc_create_streams(struct iperf_ctx *ctx)
+static int iperfc_create_streams(struct iperf_ctx *ctx)
 {
     int result = 0;
     PRINTF("Creating streams\r\n");
@@ -300,7 +358,7 @@ int iperfc_create_streams(struct iperf_ctx *ctx)
     ctx->data_sock = iperf_socket(ctx->socket_type);
     if (ctx->socket_type == TCP)
     {
-        result = iperf_connect(ctx->data_sock, ctx->ctrl_addr, ctx->ctrl_addr_len);
+        result = iperf_connect(ctx->data_sock, ctx->addr, ctx->addr_len);
         assert(0 == result);
         strcpy(ctx->ctrl_buf, MAGIC_COOKIE);
         result = iperf_send(ctx->data_sock, ctx->ctrl_buf, 37, 0);
@@ -311,16 +369,16 @@ int iperfc_create_streams(struct iperf_ctx *ctx)
     {
         /* Send "hello" to server - tells server to start countin */
         strcpy(ctx->send_buf, "hello");
-        result = iperf_send_to(ctx->data_sock, ctx->send_buf, IPERF_BUFFER_MAX, 0, ctx->ctrl_addr, ctx->ctrl_addr_len);
+        result = iperf_send_to(ctx->data_sock, ctx->send_buf, IPERF_BUFFER_MAX, 0, ctx->addr, ctx->addr_len);
         if (ctx->mode != IPERF_CLIENT_TX_UDP)
         {
             /* Wait for "hello" from server */
             do
             {
-                result = iperf_recv_from(ctx->data_sock, ctx->recv_buf, IPERF_BUFFER_MAX, 0);
+                result = iperf_recv_from_timeout(ctx->data_sock, ctx->recv_buf, IPERF_BUFFER_MAX, 0, RECV_TIMEOUT_MS);
             } while (result != IPERF_BUFFER_MAX);
-            /* Force running state, because server sends data immediately */
 
+            /* Force running state, because server sends data immediately */
             ctx->skip_state_start = 1;
             iperfc_timer_start(ctx);
             ctx->state = TEST_RUNNING;
@@ -333,10 +391,12 @@ int iperfc_create_streams(struct iperf_ctx *ctx)
     return 0;
 }
 
-int iperfc_test_start(struct iperf_ctx *ctx)
+static int iperfc_test_start(struct iperf_ctx *ctx)
 {
     if (ctx->skip_state_start)
+    {
         return 0;
+    }
 
     PRINTF("Starting test\r\n");
     iperfc_timer_start(ctx);
@@ -352,18 +412,9 @@ int iperfc_test_start(struct iperf_ctx *ctx)
     return 0;
 }
 
-
-char *json_req[] = {
-    "{\"tcp\":1, \"time\": 10}",
-    "{\"tcp\":1, \"reverse\":1, \"time\": 10}",
-    "{\"udp\":\"true\", \"len\": 1024, \"time\": 10}",
-    "{\"udp\":\"true\", \"reverse\":1, \"len\": 1024, ""\"time\": 10, \"fqrate\": 512}",
-};
-
-
-int iperf_exchange_params(struct iperf_ctx *ctx)
+static int iperf_exchange_params(struct iperf_ctx *ctx)
 {
-    int result = 0;
+    int result           = 0;
     int32_t exchange_len = 0;
     PRINTF("Exchanging parameters\r\n");
     switch (ctx->mode)
@@ -389,12 +440,16 @@ int iperf_exchange_params(struct iperf_ctx *ctx)
     *((uint32_t *)&ctx->ctrl_buf[0]) = iperf_bswap32(strlen(json_buf));
     exchange_len                     = strlen(json_buf) + 4;
     result                           = iperf_send(ctx->ctrl_sock, ctx->ctrl_buf, exchange_len, 0);
-    assert(result == exchange_len);
-    ctx->state                       = IPERF_NOP;
+    if (result != exchange_len)
+    {
+        PRINTF("Failed to send information!\r\n");
+        __BKPT(0);
+    }
+    ctx->state = IPERF_NOP;
     return 0;
 }
 
-void iperf_running_test(struct iperf_ctx *ctx)
+static void iperf_running_test(struct iperf_ctx *ctx)
 {
     int result = 0;
     if (ctx->mode == IPERF_CLIENT_TX || ctx->mode == IPERF_CLIENT_TX_UDP)
@@ -403,17 +458,16 @@ void iperf_running_test(struct iperf_ctx *ctx)
         if (ctx->socket_type == TCP)
         {
             result = iperf_send(ctx->data_sock, ctx->send_buf, IPERF_BUFFER_MAX, 0);
-            assert(result == IPERF_BUFFER_MAX);
         }
         else
         {
-			/* Prepare header */
-			/* seconds */
-			*((uint32_t*)&ctx->send_buf[0]) = 0;
-			/* usec */
-			*((uint32_t*)&ctx->send_buf[4]) = 0;
-			/* pcount */
-            *((uint32_t*)&ctx->send_buf[8]) = iperf_bswap32((uint32_t)(turn + 1));
+            /* Prepare header */
+            /* seconds */
+            *((uint32_t *)&ctx->send_buf[0]) = 0;
+            /* usec */
+            *((uint32_t *)&ctx->send_buf[4]) = 0;
+            /* pcount */
+            *((uint32_t *)&ctx->send_buf[8]) = iperf_bswap32((uint32_t)(turn + 1));
 
             // Iperf server counts UDP packets using it`s data...
             for (int i = 12; i < IPERF_BUFFER_MAX; i++)
@@ -422,8 +476,7 @@ void iperf_running_test(struct iperf_ctx *ctx)
             }
 
             turn++;
-            result =
-                iperf_send_to(ctx->data_sock, ctx->send_buf, IPERF_BUFFER_MAX, 0, ctx->ctrl_addr, ctx->ctrl_addr_len);
+            result = iperf_send_to(ctx->data_sock, ctx->send_buf, IPERF_BUFFER_MAX, 0, ctx->addr, ctx->addr_len);
         }
         if (result > 0)
         {
@@ -438,7 +491,7 @@ void iperf_running_test(struct iperf_ctx *ctx)
         }
         else
         {
-            result = iperf_recv_from(ctx->data_sock, ctx->recv_buf, IPERF_BUFFER_MAX, 0);
+            result = iperf_recv_from_blocked(ctx->data_sock, ctx->recv_buf, IPERF_BUFFER_MAX, 0);
         }
         if (result > 0)
         {
@@ -447,7 +500,7 @@ void iperf_running_test(struct iperf_ctx *ctx)
     }
 }
 
-void iperf_exchange_results(struct iperf_ctx *ctx)
+static void iperf_exchange_results(struct iperf_ctx *ctx)
 {
     int result        = 0;
     int tmp_len       = 0;
@@ -499,7 +552,7 @@ void iperf_exchange_results(struct iperf_ctx *ctx)
     ctx->state = IPERF_NOP;
 }
 
-void iperf_end_test(struct iperf_ctx *ctx)
+static void iperf_end_test(struct iperf_ctx *ctx)
 {
     PRINTF("Ending test\r\n");
     iperf_send_state(ctx, TEST_END);
@@ -511,28 +564,35 @@ void iperf_end_test(struct iperf_ctx *ctx)
         }
         else
         {
-            vTaskDelay((const TickType_t)10000 / portTICK_PERIOD_MS);
             disposal_of_unprofitable_data_udp(ctx->data_sock, ctx);
         }
     }
-    ctx->state = IPERF_NOP;
+    else
+    {
+        iperf_socket_close(iperf_test.data_sock);
+        iperf_test.data_sock = -1;
+    }
+
+    turn                  = 0;
+    ctx->state            = IPERF_NOP;
+    ctx->skip_state_start = 0;
 }
 
-void print_results(struct iperf_ctx *ctx)
+static void print_results(struct iperf_ctx *ctx)
 {
     separator();
     if (ctx->mode == IPERF_CLIENT_TX || ctx->mode == IPERF_CLIENT_TX_UDP)
     {
         PRINTF(
-            "IPERF finished, supposed to send %d KB (%d KiB)(%d Bytes)!\r\n"
-            "Transmited %d KB (%d KiB)(%d Bytes).\r\n",
+            "IPERF finished, supposed to send %d kB (%d KiB)(%d bytes)!\r\n"
+            "Transmited %d kB (%d KiB)(%d bytes).\r\n",
             ((ctx->send_counter * IPERF_BUFFER_MAX) / 1000), ((ctx->send_counter * IPERF_BUFFER_MAX) / 1024),
             ctx->send_counter * IPERF_BUFFER_MAX, (ctx->real_send_buff_counter / 1000),
             (ctx->real_send_buff_counter / 1024), ctx->real_send_buff_counter);
     }
     else
     {
-        PRINTF("IPERF finished, Recieved %d KB (%d KiB)!\r\n", (ctx->real_recv_buff_counter / 1000),
+        PRINTF("IPERF finished, Received %d kB (%d KiB)!\r\n", (ctx->real_recv_buff_counter / 1000),
                (ctx->real_recv_buff_counter / 1024));
     }
 #if 0
@@ -546,7 +606,7 @@ void print_results(struct iperf_ctx *ctx)
     separator();
 }
 
-void iperf_switch_state(struct iperf_ctx *ctx)
+static void iperf_switch_state(struct iperf_ctx *ctx)
 {
     int xStatus = 0;
     switch (ctx->state)
@@ -609,13 +669,17 @@ void iperf_switch_state(struct iperf_ctx *ctx)
             PRINTF("Unexpected state, shutting down!!\r\n");
             ctx->ctrl_buf[0] = CLIENT_TERMINATE;
             xStatus          = iperf_send(ctx->ctrl_sock, ctx->ctrl_buf, CTRL_IPERF_MSG_LEN, 0);
-            assert(xStatus != -1);
+            if (xStatus == -1)
+            {
+                PRINTF("Failed to send status! \r\n");
+                __BKPT(0);
+            }
             ctx->iperf_done = 2;
             break;
     }
 }
 
-void get_server_ip(struct iperf_ctx *ctx)
+static void get_server_ip(struct iperf_ctx *ctx)
 {
     uint32_t safe_scanf_ip[4] = {0};
     int result                = 0;
@@ -638,10 +702,10 @@ void get_server_ip(struct iperf_ctx *ctx)
            ctx->server_ip.ip[3]);
 }
 
-void iperf_run(struct iperf_ctx *ctx)
+static void iperf_run(struct iperf_ctx *ctx)
 {
     int xStatus                 = -1;
-    char                        c = '\0';
+    char c                      = '\0';
     ctx->iperf_done             = 0;
     ctx->send_counter           = 0;
     ctx->real_send_buff_counter = 0;
@@ -654,7 +718,7 @@ void iperf_run(struct iperf_ctx *ctx)
         ctx->socket_type = TCP;
         ctx->ctrl_sock   = iperf_socket(ctx->socket_type);
         PRINTF("Connecting to the server...\r\n");
-        xStatus = iperf_connect(ctx->ctrl_sock, ctx->ctrl_addr, ctx->ctrl_addr_len);
+        xStatus = iperf_connect(ctx->ctrl_sock, ctx->addr, ctx->addr_len);
         if (xStatus == -1)
         {
             PRINTF("Failed!\r\n");
@@ -673,8 +737,8 @@ void iperf_run(struct iperf_ctx *ctx)
         /* Receive context 'state' from server */
         iperf_recv_and_set_state(ctx);
         iperf_switch_state(ctx);
-
     } while (!ctx->iperf_done);
+
     if (ctx->iperf_done == 1)
     {
         print_results(ctx);
@@ -683,6 +747,7 @@ void iperf_run(struct iperf_ctx *ctx)
     {
         PRINTF("Test ended");
     }
+
     iperf_socket_close(ctx->ctrl_sock);
     memset(ctx->recv_buf, 0, IPERF_BUFFER_MAX);
 
@@ -693,10 +758,7 @@ void iperf_run(struct iperf_ctx *ctx)
     } while (c != 'F');
 }
 
-/**/
-#if defined(IPERF3_WIFI)
-#include "iot_wifi.h"
-WIFIReturnCode_t xWifiStatus;
+#ifdef IPERF3_WIFI
 
 void con_to_ap(struct iperf_ctx *ctx)
 {
@@ -757,8 +819,73 @@ void iperf_startup(struct iperf_ctx *ctx)
         PRINTF("Problem with turning wifi on!\r\n");
     }
 }
+
 #elif defined(IPERF3_ENET)
-extern void enet_init(void);
+
+void setup_default_ip(struct netif *fsl_netif0,
+                      ip4_addr_t *fsl_netif0_ipaddr,
+                      ip4_addr_t *fsl_netif0_netmask,
+                      ip4_addr_t *fsl_netif0_gw)
+{
+    err_t result = 0;
+
+    IP4_ADDR(fsl_netif0_ipaddr, configIP_ADDR0, configIP_ADDR1, configIP_ADDR2, configIP_ADDR3);
+    IP4_ADDR(fsl_netif0_netmask, configNET_MASK0, configNET_MASK1, configNET_MASK2, configNET_MASK3);
+    IP4_ADDR(fsl_netif0_gw, configGW_ADDR0, configGW_ADDR1, configGW_ADDR2, configGW_ADDR3);
+
+    result = netifapi_netif_set_addr(fsl_netif0, fsl_netif0_ipaddr, fsl_netif0_netmask, fsl_netif0_gw);
+    if (result != 0)
+    {
+        PRINTF("Failed to set default IP!\r\n");
+        __BKPT(0);
+    }
+}
+
+void enet_init(void)
+{
+    err_t result = 0;
+    static struct netif fsl_netif0;
+    struct dhcp *pdhcp = NULL;
+    ip4_addr_t fsl_netif0_ipaddr, fsl_netif0_netmask, fsl_netif0_gw;
+    ethernetif_config_t fsl_enet_config0 = {
+        .phyHandle  = &phyHandle,
+        .macAddress = configMAC_ADDR,
+    };
+
+    mdioHandle.resource.csrClock_Hz = EXAMPLE_CLOCK_FREQ;
+
+    tcpip_init(NULL, NULL);
+
+    result = netifapi_netif_add(&fsl_netif0, &fsl_netif0_ipaddr, &fsl_netif0_netmask, &fsl_netif0_gw, &fsl_enet_config0,
+                                ethernetif0_init, tcpip_input);
+    if (result != 0)
+    {
+        PRINTF("Failed to add netif!\r\n");
+        __BKPT(0);
+    }
+
+    result = netifapi_netif_set_default(&fsl_netif0);
+    assert(0 == result);
+
+    result = netifapi_netif_set_up(&fsl_netif0);
+    assert(0 == result);
+
+    netifapi_dhcp_start(&fsl_netif0);
+
+    pdhcp = (struct dhcp *)netif_get_client_data(&fsl_netif0, LWIP_NETIF_CLIENT_DATA_INDEX_DHCP);
+    for (int i = 20; i > 0 && pdhcp->state != DHCP_STATE_BOUND; i--)
+    {
+        vTaskDelay(pdMS_TO_TICKS(500));
+    }
+    if (pdhcp->state != DHCP_STATE_BOUND)
+    {
+        netifapi_dhcp_stop(&fsl_netif0);
+        PRINTF("DHCP has failed.. setting IP address to: %u.%u.%u.%u\r\n", configIP_ADDR0, configIP_ADDR1,
+               configIP_ADDR2, configIP_ADDR3);
+        setup_default_ip(&fsl_netif0, &fsl_netif0_ipaddr, &fsl_netif0_netmask, &fsl_netif0_gw);
+    }
+}
+
 void iperf_startup(struct iperf_ctx *ctx)
 {
     enet_init();
@@ -767,7 +894,8 @@ void iperf_startup(struct iperf_ctx *ctx)
         iperf_run(ctx);
     }
 }
-#endif
+
+#endif /* IPERF3_WIFI */
 
 void task_main(void *arg)
 {
@@ -776,11 +904,7 @@ void task_main(void *arg)
     get_server_ip(ctx);
 
     iperf_init(ctx);
-#if defined(IPERF3_WIFI)
     iperf_startup(ctx);
-#elif defined(IPERF3_ENET)
-    iperf_startup(ctx);
-#endif
 
     while (1)
         ;
@@ -789,11 +913,6 @@ void task_main(void *arg)
 void callback_time(TimerHandle_t xTimer)
 {
     iperf_test.state = TEST_END;
-    if (iperf_test.mode != IPERF_CLIENT_RX && iperf_test.mode != IPERF_CLIENT_RX_UDP)
-    {
-        iperf_socket_close(iperf_test.data_sock);
-        iperf_test.data_sock = -1;
-    }
 }
 
 /*!
@@ -804,14 +923,15 @@ int main(void)
     BaseType_t result = 0;
     (void)result;
     SYSMPU_Type *base = SYSMPU;
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
     /* Disable SYSMPU. */
     base->CESR &= ~SYSMPU_CESR_VLD_MASK;
 
     iperf_timer = xTimerCreate("iperf_timer", configTICK_RATE_HZ * 12, pdFALSE, (void *)0, callback_time);
     assert(NULL != iperf_timer);
+
     result = xTaskCreate(task_main, "main", TASK_MAIN_STACK_SIZE, &iperf_test, TASK_MAIN_PRIO, &task_main_task_handler);
 
     assert(pdPASS == result);

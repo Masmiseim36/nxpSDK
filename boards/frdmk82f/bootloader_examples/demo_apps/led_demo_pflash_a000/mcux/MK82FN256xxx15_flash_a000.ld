@@ -14,7 +14,7 @@
 **         Linker file for the GNU C Compiler
 **
 **     Copyright (c) 2015 Freescale Semiconductor, Inc.
-**     Copyright 2016-2018 NXP
+**     Copyright 2016-2020 NXP
 **     All rights reserved.
 **
 **     SPDX-License-Identifier: BSD-3-Clause
@@ -30,7 +30,6 @@ ENTRY(Reset_Handler)
 
 HEAP_SIZE  = DEFINED(__heap_size__)  ? __heap_size__  : 0x0;
 STACK_SIZE = DEFINED(__stack_size__) ? __stack_size__ : 0x0400;
-M_VECTOR_RAM_SIZE = DEFINED(__ram_vector_table__) ? 0x03C0 : 0x0;
 
 /* Specify the memory areas */
 MEMORY
@@ -58,6 +57,7 @@ SECTIONS
   .interrupts :
   {
     __VECTOR_TABLE = .;
+    __Vectors = .;
     . = ALIGN(4);
     KEEP(*(.isr_vector))     /* Startup code */
     . = ALIGN(4);
@@ -109,7 +109,6 @@ SECTIONS
     __VECTOR_RAM__ = .;
     __interrupts_ram_start__ = .; /* Create a global symbol at data start */
     *(.m_interrupts_ram)     /* This is a user defined section */
-    . += M_VECTOR_RAM_SIZE;
     . = ALIGN(4);
     __interrupts_ram_end__ = .; /* Define a global symbol at data end */
   } > m_data
@@ -151,6 +150,7 @@ SECTIONS
   {
     . = ALIGN(8);
     __end__ = .;
+    _pvHeapStart = .;
     PROVIDE(end = .);
     __HeapBase = .;
     . += HEAP_SIZE;

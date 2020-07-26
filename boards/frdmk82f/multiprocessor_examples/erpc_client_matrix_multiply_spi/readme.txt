@@ -13,10 +13,10 @@ eRPC documentation can be also found in: http://embeddedrpc.github.io
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.40.2
-- MCUXpresso  11.1.0
-- Keil MDK  5.29
-- GCC ARM Embedded  8.3.1
+- IAR embedded Workbench  8.50.1
+- MCUXpresso  11.2.0
+- Keil MDK  5.30
+- GCC ARM Embedded  9.2.1
 
 Hardware requirements
 =====================
@@ -44,7 +44,7 @@ Pin Name      Board Location
 SIN           J1 pin 7
 SOUT          J1 pin 13
 SCK           J1 pin 15
-PCS0          J1 pin 9
+PCS           J1 pin 9
 SLAVE_READY   J1 pin 6
 GND           J2 pin 14
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

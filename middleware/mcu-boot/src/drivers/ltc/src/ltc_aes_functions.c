@@ -6,7 +6,7 @@
  */
 
 #include "fsl_device_registers.h"
-#include "security/aes_security.h"
+#include "aes_security.h"
 
 // * - 00010000 - AES
 #define LTC_MODE_AES 0x10

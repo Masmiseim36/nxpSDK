@@ -9,7 +9,7 @@
 *                                                                    *
 **********************************************************************
 
-** emWin V5.50 - Graphical user interface for embedded applications **
+** emWin V6.10 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -94,8 +94,9 @@ typedef struct {
   LISTBOX_PROPS Props;
   WM_HWIN hOwner;
   I16 Sel;                        /* current selection */
-  U8 Flags;
+  U8  Flags;
   U8  ScrollbarWidth;
+  int MotionPosY;
   U16 ItemSpacing;
   U16 ContentSizeX;
   U16 FixedScrollPos;

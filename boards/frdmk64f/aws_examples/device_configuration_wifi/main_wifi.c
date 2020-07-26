@@ -1,5 +1,5 @@
 /*
- * Amazon FreeRTOS V1.0.0
+ * FreeRTOS V1.0.0
  * Copyright (C) 2017 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  * Copyright (c) 2013 - 2014, Freescale Semiconductor, Inc.
  * Copyright 2016-2019 NXP
@@ -35,7 +35,7 @@
 #include "pin_mux.h"
 #include "ksdk_mbedtls.h"
 
-/* Amazon FreeRTOS Demo Includes */
+/* FreeRTOS Demo Includes */
 #include "FreeRTOS.h"
 #include "task.h"
 #include "aws_clientcredential.h"
@@ -51,9 +51,9 @@
  * Definitions
  ******************************************************************************/
 
-#define LOGGING_TASK_PRIORITY (tskIDLE_PRIORITY + 1)
+#define LOGGING_TASK_PRIORITY   (tskIDLE_PRIORITY + 1)
 #define LOGGING_TASK_STACK_SIZE (200)
-#define LOGGING_QUEUE_LENGTH (16)
+#define LOGGING_QUEUE_LENGTH    (16)
 
 /*******************************************************************************
  * Prototypes
@@ -152,8 +152,8 @@ void vApplicationDaemonTaskStartupHook(void)
 
 int main(void)
 {
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
     CRYPTO_InitHardware();
 

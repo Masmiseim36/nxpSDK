@@ -3,7 +3,7 @@
  * @author NXP Semiconductors
  * @version 1.0
  * @par License
- * Copyright 2017,2018 NXP
+ * Copyright 2017,2018,2020 NXP
  *
  * This software is owned or controlled by NXP and may only be used
  * strictly in accordance with the applicable license terms.  By expressly
@@ -57,7 +57,24 @@
 #   include "netif/ethernet.h"
 #   include "enet_ethernetif.h"
 #   include "lwip/netifapi.h"
+#   include "fsl_phyksz8081.h"
+#   include "fsl_enet_mdio.h"
 #endif
+
+#if defined (LPC_ENET)
+/* ENET clock frequency. */
+#define EXAMPLE_CLOCK_FREQ CLOCK_GetFreq(kCLOCK_CoreSysClk)
+#ifndef EXAMPLE_NETIF_INIT_FN
+/*! @brief Network interface initialization function. */
+#define EXAMPLE_NETIF_INIT_FN ethernetif0_init
+#endif /* EXAMPLE_NETIF_INIT_FN */
+
+/* MDIO operations. */
+#define EXAMPLE_MDIO_OPS enet_ops
+
+/* PHY operations. */
+#define EXAMPLE_PHY_OPS phyksz8081_ops
+#endif  // (LPC_ENET)
 
 #include "HLSEAPI.h"
 #include "sm_demo_utils.h"
@@ -73,7 +90,7 @@
     }
 
 /* Address of PHY interface. */
-#define EXAMPLE_PHY_ADDRESS BOARD_ENET0_PHY_ADDRESS
+#define EXAMPLE_PHY_ADDRESS ((uint32_t)BOARD_ENET0_PHY_ADDRESS)
 
 /* System clock name. */
 #define EXAMPLE_CLOCK_NAME kCLOCK_CoreSysClk
@@ -86,6 +103,9 @@
  * Static variables
  ******************************************************************************/
 static struct netif fsl_netif0;
+static mdio_handle_t mdioHandle = {.ops = &EXAMPLE_MDIO_OPS};
+static phy_handle_t phyHandle   = {.phyAddr = EXAMPLE_PHY_ADDRESS, .mdioHandle = &mdioHandle, .ops = &EXAMPLE_PHY_OPS};
+
 
 #else // LPC_ENET
     uint8_t Wifi_IP[4] = {0};
@@ -94,7 +114,7 @@ static struct netif fsl_netif0;
 /*******************************************************************************
  * Global variables
  ******************************************************************************/
-#if (SSS_HAVE_A71CH || SSS_HAVE_SE050_EAR_CH)
+#if (SSS_HAVE_A71CH || SSS_HAVE_A71CH_SIM)
 HLSE_OBJECT_HANDLE Gpstorage_handle;
 #endif
 
@@ -131,8 +151,12 @@ void BOARD_InitNetwork_MAC(const unsigned char buffer[18])
 
     ip4_addr_t fsl_netif0_ipaddr, fsl_netif0_netmask, fsl_netif0_gw;
     ethernetif_config_t fsl_enet_config0 = {
-        .phyAddress = EXAMPLE_PHY_ADDRESS, .clockName = EXAMPLE_CLOCK_NAME, .macAddress = configMAC_ADDR,
-    };
+            .phyHandle  = &phyHandle,
+            .macAddress = configMAC_ADDR,
+    #if defined(FSL_FEATURE_SOC_LPC_ENET_COUNT) && (FSL_FEATURE_SOC_LPC_ENET_COUNT > 0)
+            .non_dma_memory = non_dma_memory,
+    #endif /* FSL_FEATURE_SOC_LPC_ENET_COUNT */
+        };
     if (buffer != NULL)
     {
         MAC_HASH(1);
@@ -142,12 +166,14 @@ void BOARD_InitNetwork_MAC(const unsigned char buffer[18])
         MAC_HASH(5);
     }
 
-    LOG_I("Connecting to network\r\n");
-    tcpip_init(NULL, NULL);
+    mdioHandle.resource.csrClock_Hz = EXAMPLE_CLOCK_FREQ;
 
     IP4_ADDR(&fsl_netif0_ipaddr, 0U, 0U, 0U, 0U);
     IP4_ADDR(&fsl_netif0_netmask, 0U, 0U, 0U, 0U);
     IP4_ADDR(&fsl_netif0_gw, 0U, 0U, 0U, 0U);
+
+    LOG_I("Connecting to network\r\n");
+    tcpip_init(NULL, NULL);
 
     netif_add(&fsl_netif0, &fsl_netif0_ipaddr, &fsl_netif0_netmask, &fsl_netif0_gw, &fsl_enet_config0, ethernetif0_init,
               tcpip_input);
@@ -166,7 +192,7 @@ void BOARD_InitNetwork_MAC(const unsigned char buffer[18])
 
     while (dhcp->state != DHCP_STATE_BOUND)
     {
-        vTaskDelay(1000);
+        vTaskDelay(pdMS_TO_TICKS(1000));
     }
 
     if (dhcp->state == DHCP_STATE_BOUND)
@@ -180,7 +206,7 @@ void BOARD_InitNetwork_MAC(const unsigned char buffer[18])
 #endif
 }
 
-#if (SSS_HAVE_A71CH || SSS_HAVE_SE050_EAR_CH)
+#if (SSS_HAVE_A71CH || SSS_HAVE_A71CH_SIM)
 
 /*Set and Get the flag value from GP Storage */
 int SetGetFlag_GPstorage(U32 *p_val, GpStorageMode_t mode, HLSE_OBJECT_HANDLE handle)

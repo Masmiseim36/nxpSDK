@@ -10,10 +10,13 @@
 #define _USB_DEVICE_DESCRIPTOR_H_ 1
 
 /*******************************************************************************
-* Definitions
-******************************************************************************/
+ * Definitions
+ ******************************************************************************/
 #define USB_DEVICE_SPECIFIC_BCD_VERSION (0x0200)
 #define USB_DEVICE_DEMO_BCD_VERSION (0x0101U)
+
+#define USB_DEVICE_VID (0x1FC9U)
+#define USB_DEVICE_PID (0x009EU)
 
 /* Communication Class SubClass Codes */
 #define USB_CDC_DIRECT_LINE_CONTROL_MODEL (0x01)
@@ -163,8 +166,8 @@
 #define USB_DEVICE_MAX_POWER (0x32)
 
 /*******************************************************************************
-* API
-******************************************************************************/
+ * API
+ ******************************************************************************/
 /*!
  * @brief USB device callback function.
  *

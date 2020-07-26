@@ -8,30 +8,32 @@
     <definition extID="component.uart_adapter.MK64F12"/>
     <definition extID="device.MK64F12_CMSIS.MK64F12"/>
     <definition extID="device.MK64F12_startup.MK64F12"/>
-    <definition extID="middleware.amazon_freertos-aws_iot.MK64F12"/>
-    <definition extID="middleware.amazon_freertos-aws_iot.demos.dev_mode_key_provisioning.MK64F12"/>
-    <definition extID="middleware.amazon_freertos-aws_iot.libraries.3rdparty.jsmn.MK64F12"/>
-    <definition extID="middleware.amazon_freertos-aws_iot.libraries.3rdparty.pkcs11.MK64F12"/>
-    <definition extID="middleware.amazon_freertos-aws_iot.libraries.abstractions.pkcs11.MK64F12"/>
-    <definition extID="middleware.amazon_freertos-aws_iot.libraries.abstractions.platform.MK64F12"/>
-    <definition extID="middleware.amazon_freertos-aws_iot.libraries.abstractions.secure_sockets.MK64F12"/>
-    <definition extID="middleware.amazon_freertos-aws_iot.libraries.abstractions.wifi.MK64F12"/>
-    <definition extID="middleware.amazon_freertos-aws_iot.libraries.freertos_plus.aws.greengrass.MK64F12"/>
-    <definition extID="middleware.amazon_freertos-aws_iot.libraries.freertos_plus.standard.crypto.MK64F12"/>
-    <definition extID="middleware.amazon_freertos-aws_iot.libraries.freertos_plus.standard.pkcs11.MK64F12"/>
-    <definition extID="middleware.amazon_freertos-aws_iot.libraries.freertos_plus.standard.tls.MK64F12"/>
-    <definition extID="middleware.amazon_freertos-aws_iot.libraries.freertos_plus.standard.utils.MK64F12"/>
-    <definition extID="middleware.amazon_freertos-aws_iot.tests.MK64F12"/>
-    <definition extID="middleware.amazon_freertos-aws_iot.vendor.nxp.mflash.frdmk64f.MK64F12"/>
-    <definition extID="middleware.amazon_freertos-aws_iot.vendor.nxp.pkcs11.MK64F12"/>
-    <definition extID="middleware.amazon_freertos-aws_iot.vendor.nxp.secure_sockets.wifi_qca.MK64F12"/>
-    <definition extID="middleware.amazon_freertos-aws_iot.vendor.nxp.wifi.qca_400x.MK64F12"/>
-    <definition extID="middleware.amazon_freertos-kernel.MK64F12"/>
-    <definition extID="middleware.amazon_freertos-kernel.extension.MK64F12"/>
-    <definition extID="middleware.amazon_freertos-kernel.heap_4.MK64F12"/>
+    <definition extID="middleware.freertos-aws_iot.MK64F12"/>
+    <definition extID="middleware.freertos-aws_iot.demos.dev_mode_key_provisioning.MK64F12"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.3rdparty.jsmn.MK64F12"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.3rdparty.pkcs11.MK64F12"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.abstractions.pkcs11.MK64F12"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.abstractions.platform.MK64F12"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.abstractions.secure_sockets.MK64F12"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.abstractions.wifi.MK64F12"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.freertos_plus.aws.greengrass.MK64F12"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.freertos_plus.standard.crypto.MK64F12"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.freertos_plus.standard.pkcs11.MK64F12"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.freertos_plus.standard.tls.MK64F12"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.freertos_plus.standard.utils.MK64F12"/>
+    <definition extID="middleware.freertos-aws_iot.tests.MK64F12"/>
+    <definition extID="middleware.freertos-aws_iot.vendor.nxp.pkcs11.MK64F12"/>
+    <definition extID="middleware.freertos-aws_iot.vendor.nxp.secure_sockets.wifi_qca.MK64F12"/>
+    <definition extID="middleware.freertos-aws_iot.vendor.nxp.wifi.qca_400x.MK64F12"/>
+    <definition extID="middleware.freertos-kernel.MK64F12"/>
+    <definition extID="middleware.freertos-kernel.extension.MK64F12"/>
+    <definition extID="middleware.freertos-kernel.heap_4.MK64F12"/>
     <definition extID="middleware.mbedtls.MK64F12"/>
+    <definition extID="middleware.mbedtls.port.ksdk.MK64F12"/>
     <definition extID="middleware.mmcau.cm4_cm7.MK64F12"/>
-    <definition extID="middleware.wifi_qca.common.MK64F12"/>
+    <definition extID="middleware.nxp.mflash.frdmk64f.MK64F12"/>
+    <definition extID="middleware.nxp.mflash_file.MK64F12"/>
+    <definition extID="middleware.wifi_qca.MK64F12"/>
     <definition extID="middleware.wifi_qca.frdmk64f.freertos.shields.MK64F12"/>
     <definition extID="middleware.wifi_qca.frdmk64f.freertos.shields.gt202.MK64F12"/>
     <definition extID="middleware.wifi_qca.frdmk64f.freertos.shields.silex2401.MK64F12"/>
@@ -61,7 +63,7 @@
     <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="frdmk64f_aws_tests" name="aws_tests" category="aws_examples" dependency="middleware.wifi_qca.frdmk64f.freertos.shields.gt202.MK64F12 middleware.wifi_qca.frdmk64f.freertos.shields.silex2401.MK64F12 middleware.wifi_qca.frdmk64f.freertos.shields.wifi10click.MK64F12 platform.drivers.rnga.MK64F12 middleware.mmcau.cm4_cm7.MK64F12 middleware.amazon_freertos-aws_iot.vendor.nxp.mflash.frdmk64f.MK64F12 middleware.wifi_qca.common.MK64F12 middleware.amazon_freertos-aws_iot.vendor.nxp.secure_sockets.wifi_qca.MK64F12 middleware.amazon_freertos-aws_iot.vendor.nxp.wifi.qca_400x.MK64F12 middleware.amazon_freertos-aws_iot.tests.MK64F12 middleware.amazon_freertos-aws_iot.libraries.abstractions.wifi.MK64F12 middleware.amazon_freertos-aws_iot.libraries.freertos_plus.aws.greengrass.MK64F12 middleware.amazon_freertos-aws_iot.demos.dev_mode_key_provisioning.MK64F12 platform.drivers.flash.MK64F12 middleware.amazon_freertos-kernel.MK64F12 middleware.amazon_freertos-kernel.heap_4.MK64F12 middleware.amazon_freertos-aws_iot.libraries.abstractions.platform.MK64F12 middleware.amazon_freertos-aws_iot.MK64F12 middleware.amazon_freertos-aws_iot.libraries.abstractions.secure_sockets.MK64F12 middleware.amazon_freertos-aws_iot.libraries.freertos_plus.standard.crypto.MK64F12 middleware.amazon_freertos-aws_iot.libraries.freertos_plus.standard.pkcs11.MK64F12 middleware.amazon_freertos-aws_iot.libraries.freertos_plus.standard.utils.MK64F12 middleware.amazon_freertos-aws_iot.libraries.freertos_plus.standard.tls.MK64F12 middleware.amazon_freertos-aws_iot.libraries.abstractions.pkcs11.MK64F12 middleware.amazon_freertos-aws_iot.libraries.3rdparty.pkcs11.MK64F12 middleware.amazon_freertos-aws_iot.libraries.3rdparty.jsmn.MK64F12 middleware.amazon_freertos-aws_iot.vendor.nxp.pkcs11.MK64F12 middleware.mbedtls.MK64F12 platform.drivers.gpio.MK64F12 platform.drivers.clock.MK64F12 utility.debug_console.MK64F12 platform.drivers.port.MK64F12 platform.drivers.uart.MK64F12 platform.drivers.smc.MK64F12 device.MK64F12_CMSIS.MK64F12 component.uart_adapter.MK64F12 component.serial_manager.MK64F12 platform.drivers.common.MK64F12 component.lists.MK64F12 component.serial_manager_uart.MK64F12 device.MK64F12_startup.MK64F12 platform.utilities.assert.MK64F12 middleware.wifi_qca.frdmk64f.freertos.shields.MK64F12 middleware.wifi_qca.freertos.MK64F12 middleware.amazon_freertos-kernel.extension.MK64F12 middleware.wifi_qca.freertos.drivers.dspi_edma.MK64F12 platform.drivers.dspi.MK64F12 platform.Include_core_cm4.MK64F12 platform.Include_common.MK64F12 platform.Include_dsp.MK64F12 platform.drivers.dspi_edma.MK64F12 platform.drivers.edma.MK64F12 platform.drivers.dmamux.MK64F12 platform.utilities.misc_utilities.MK64F12">
+  <example id="frdmk64f_aws_tests" name="aws_tests" category="aws_examples" dependency="middleware.wifi_qca.frdmk64f.freertos.shields.gt202.MK64F12 middleware.wifi_qca.frdmk64f.freertos.shields.silex2401.MK64F12 middleware.wifi_qca.frdmk64f.freertos.shields.wifi10click.MK64F12 platform.drivers.rnga.MK64F12 middleware.mmcau.cm4_cm7.MK64F12 middleware.nxp.mflash.frdmk64f.MK64F12 middleware.wifi_qca.MK64F12 middleware.freertos-aws_iot.vendor.nxp.secure_sockets.wifi_qca.MK64F12 middleware.freertos-aws_iot.vendor.nxp.wifi.qca_400x.MK64F12 middleware.freertos-aws_iot.tests.MK64F12 middleware.freertos-aws_iot.libraries.abstractions.wifi.MK64F12 middleware.freertos-aws_iot.libraries.freertos_plus.aws.greengrass.MK64F12 middleware.freertos-aws_iot.demos.dev_mode_key_provisioning.MK64F12 platform.drivers.flash.MK64F12 middleware.freertos-kernel.MK64F12 middleware.freertos-kernel.heap_4.MK64F12 middleware.freertos-aws_iot.libraries.abstractions.platform.MK64F12 middleware.freertos-aws_iot.MK64F12 middleware.freertos-aws_iot.libraries.abstractions.secure_sockets.MK64F12 middleware.freertos-aws_iot.libraries.freertos_plus.standard.crypto.MK64F12 middleware.freertos-aws_iot.libraries.freertos_plus.standard.pkcs11.MK64F12 middleware.freertos-aws_iot.libraries.freertos_plus.standard.utils.MK64F12 middleware.freertos-aws_iot.libraries.freertos_plus.standard.tls.MK64F12 middleware.freertos-aws_iot.libraries.abstractions.pkcs11.MK64F12 middleware.freertos-aws_iot.libraries.3rdparty.pkcs11.MK64F12 middleware.freertos-aws_iot.libraries.3rdparty.jsmn.MK64F12 middleware.freertos-aws_iot.vendor.nxp.pkcs11.MK64F12 middleware.mbedtls.MK64F12 middleware.mbedtls.port.ksdk.MK64F12 platform.drivers.gpio.MK64F12 platform.drivers.clock.MK64F12 utility.debug_console.MK64F12 platform.drivers.port.MK64F12 platform.drivers.uart.MK64F12 platform.drivers.smc.MK64F12 device.MK64F12_CMSIS.MK64F12 component.uart_adapter.MK64F12 component.serial_manager.MK64F12 platform.drivers.common.MK64F12 component.lists.MK64F12 component.serial_manager_uart.MK64F12 device.MK64F12_startup.MK64F12 platform.utilities.assert.MK64F12 middleware.wifi_qca.frdmk64f.freertos.shields.MK64F12 middleware.wifi_qca.freertos.MK64F12 middleware.freertos-kernel.extension.MK64F12 middleware.wifi_qca.freertos.drivers.dspi_edma.MK64F12 platform.drivers.dspi.MK64F12 platform.Include_core_cm4.MK64F12 platform.Include_common.MK64F12 platform.Include_dsp.MK64F12 platform.drivers.dspi_edma.MK64F12 platform.drivers.edma.MK64F12 platform.drivers.dmamux.MK64F12 platform.utilities.misc_utilities.MK64F12 middleware.nxp.mflash_file.MK64F12">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -107,9 +109,9 @@
       </toolchainSetting>
     </toolchainSettings>
     <include_paths>
-      <include_path path="amazon-freertos/libraries/abstractions/platform/freertos/include"/>
-      <include_path path="amazon-freertos/libraries/abstractions/platform/include"/>
-      <include_path path="amazon-freertos/libraries/c_sdk/standard/mqtt/src"/>
+      <include_path path="freertos/libraries/abstractions/platform/freertos/include"/>
+      <include_path path="freertos/libraries/abstractions/platform/include"/>
+      <include_path path="freertos/libraries/c_sdk/standard/mqtt/src"/>
       <include_path path="mbedtls/include"/>
     </include_paths>
     <source path="boards/frdmk64f/aws_examples/aws_tests/application_code" target_path="source" type="src">

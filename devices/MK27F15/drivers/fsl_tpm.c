@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2018 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -74,7 +74,7 @@ static uint32_t TPM_GetInstance(TPM_Type *base)
  */
 void TPM_Init(TPM_Type *base, const tpm_config_t *config)
 {
-    assert(config);
+    assert(NULL != config);
 
 #if !(defined(FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL) && FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL)
     /* Enable the module clock */
@@ -100,7 +100,7 @@ void TPM_Init(TPM_Type *base, const tpm_config_t *config)
                  TPM_CONF_TRGSRC(config->triggerSource) |
 #endif
                  TPM_CONF_TRGSEL(config->triggerSelect);
-    if (config->enableDebugMode)
+    if (true == config->enableDebugMode)
     {
         base->CONF |= TPM_CONF_DBGMODE_MASK;
     }
@@ -155,10 +155,10 @@ void TPM_Deinit(TPM_Type *base)
  */
 void TPM_GetDefaultConfig(tpm_config_t *config)
 {
-    assert(config);
+    assert(NULL != config);
 
     /* Initializes the configure structure to zero. */
-    memset(config, 0, sizeof(*config));
+    (void)memset(config, 0, sizeof(*config));
 
     /* TPM clock divide by 1 */
     config->prescale = kTPM_Prescale_Divide_1;
@@ -210,25 +210,26 @@ status_t TPM_SetupPwm(TPM_Type *base,
                       uint32_t pwmFreq_Hz,
                       uint32_t srcClock_Hz)
 {
-    assert(chnlParams);
-    assert(pwmFreq_Hz);
-    assert(numOfChnls);
-    assert(srcClock_Hz);
+    assert(NULL != chnlParams);
+    assert(0U != pwmFreq_Hz);
+    assert(0U != numOfChnls);
+    assert(0U != srcClock_Hz);
 #if defined(FSL_FEATURE_TPM_HAS_COMBINE) && FSL_FEATURE_TPM_HAS_COMBINE
     if (mode == kTPM_CombinedPwm)
     {
-        assert(FSL_FEATURE_TPM_COMBINE_HAS_EFFECTn(base));
+        assert(0 != FSL_FEATURE_TPM_COMBINE_HAS_EFFECTn(base));
     }
 #endif
 
-    uint32_t mod;
-    uint32_t tpmClock = (srcClock_Hz / (1U << (base->SC & TPM_SC_PS_MASK)));
+    uint32_t mod      = 0;
+    uint32_t u32flag  = 1;
+    uint32_t tpmClock = (srcClock_Hz / (u32flag << (base->SC & TPM_SC_PS_MASK)));
     uint16_t cnv;
     uint8_t i;
 
 #if defined(FSL_FEATURE_TPM_HAS_QDCTRL) && FSL_FEATURE_TPM_HAS_QDCTRL
     /* The TPM's QDCTRL register required to be effective */
-    if (FSL_FEATURE_TPM_QDCTRL_HAS_EFFECTn(base))
+    if (0 != FSL_FEATURE_TPM_QDCTRL_HAS_EFFECTn(base))
     {
         /* Clear quadrature Decoder mode because in quadrature Decoder mode PWM doesn't operate*/
         base->QDCTRL &= ~TPM_QDCTRL_QUADEN_MASK;
@@ -242,14 +243,16 @@ status_t TPM_SetupPwm(TPM_Type *base,
         case kTPM_CombinedPwm:
 #endif
             base->SC &= ~TPM_SC_CPWMS_MASK;
-            mod = (tpmClock / pwmFreq_Hz) - 1;
+            mod = (tpmClock / pwmFreq_Hz) - 1u;
             break;
         case kTPM_CenterAlignedPwm:
             base->SC |= TPM_SC_CPWMS_MASK;
-            mod = tpmClock / (pwmFreq_Hz * 2);
+            mod = tpmClock / (pwmFreq_Hz * 2u);
             break;
         default:
-            return kStatus_Fail;
+            /* All the cease have been listed above, the default case should not be reached. */
+            assert(false);
+            break;
     }
 
     /* Return an error in case we overflow the registers, probably would require changing
@@ -265,7 +268,7 @@ status_t TPM_SetupPwm(TPM_Type *base,
     for (i = 0; i < numOfChnls; i++)
     {
         /* Return error if requested dutycycle is greater than the max allowed */
-        if (chnlParams->dutyCyclePercent > 100)
+        if (chnlParams->dutyCyclePercent > 100U)
         {
             return kStatus_Fail;
         }
@@ -275,125 +278,131 @@ status_t TPM_SetupPwm(TPM_Type *base,
             uint16_t cnvFirstEdge;
 
             /* This check is added for combined mode as the channel number should be the pair number */
-            if (chnlParams->chnlNumber >= (FSL_FEATURE_TPM_CHANNEL_COUNTn(base) / 2))
+            if ((int8_t)(chnlParams->chnlNumber) >= (FSL_FEATURE_TPM_CHANNEL_COUNTn(base) / 2))
             {
                 return kStatus_Fail;
             }
 
             /* Return error if requested value is greater than the max allowed */
-            if (chnlParams->firstEdgeDelayPercent > 100)
+            if (chnlParams->firstEdgeDelayPercent > 100U)
             {
                 return kStatus_Fail;
             }
             /* Configure delay of the first edge */
-            if (chnlParams->firstEdgeDelayPercent == 0)
+            if (chnlParams->firstEdgeDelayPercent == 0U)
             {
                 /* No delay for the first edge */
                 cnvFirstEdge = 0;
             }
             else
             {
-                cnvFirstEdge = (mod * chnlParams->firstEdgeDelayPercent) / 100;
+                cnvFirstEdge = (uint16_t)((mod * chnlParams->firstEdgeDelayPercent) / 100U);
             }
             /* Configure dutycycle */
-            if (chnlParams->dutyCyclePercent == 0)
+            if (chnlParams->dutyCyclePercent == 0U)
             {
                 /* Signal stays low */
-                cnv = 0;
+                cnv          = 0;
                 cnvFirstEdge = 0;
             }
             else
             {
-                cnv = (mod * chnlParams->dutyCyclePercent) / 100;
+                cnv = (uint16_t)((mod * chnlParams->dutyCyclePercent) / 100U);
                 /* For 100% duty cycle */
                 if (cnv >= mod)
                 {
-                    cnv = mod + 1;
+                    cnv = (uint16_t)(mod + 1u);
                 }
             }
 
             /* Set the combine bit for the channel pair */
-            base->COMBINE |= (1U << (TPM_COMBINE_COMBINE0_SHIFT + (TPM_COMBINE_SHIFT * chnlParams->chnlNumber)));
+            base->COMBINE |=
+                (u32flag << (TPM_COMBINE_COMBINE0_SHIFT + (TPM_COMBINE_SHIFT * (uint32_t)chnlParams->chnlNumber)));
 
             /* When switching mode, disable channel n first */
-            base->CONTROLS[chnlParams->chnlNumber * 2].CnSC &=
+            base->CONTROLS[(uint32_t)chnlParams->chnlNumber * 2U].CnSC &=
                 ~(TPM_CnSC_MSA_MASK | TPM_CnSC_MSB_MASK | TPM_CnSC_ELSA_MASK | TPM_CnSC_ELSB_MASK);
 
             /* Wait till mode change to disable channel is acknowledged */
-            while ((base->CONTROLS[chnlParams->chnlNumber * 2].CnSC &
-                    (TPM_CnSC_MSA_MASK | TPM_CnSC_MSB_MASK | TPM_CnSC_ELSA_MASK | TPM_CnSC_ELSB_MASK)))
+            while (0U != (base->CONTROLS[(uint32_t)chnlParams->chnlNumber * 2U].CnSC &
+                          (TPM_CnSC_MSA_MASK | TPM_CnSC_MSB_MASK | TPM_CnSC_ELSA_MASK | TPM_CnSC_ELSB_MASK)))
             {
             }
 
             /* Set the requested PWM mode for channel n, PWM output requires mode select to be set to 2 */
-            base->CONTROLS[chnlParams->chnlNumber * 2].CnSC |=
-                ((chnlParams->level << TPM_CnSC_ELSA_SHIFT) | (2U << TPM_CnSC_MSA_SHIFT));
+            base->CONTROLS[(uint32_t)chnlParams->chnlNumber * 2U].CnSC |=
+                (((uint32_t)chnlParams->level << TPM_CnSC_ELSA_SHIFT) | (2U << TPM_CnSC_MSA_SHIFT));
 
             /* Wait till mode change is acknowledged */
-            while (!(base->CONTROLS[chnlParams->chnlNumber * 2].CnSC &
-                     (TPM_CnSC_MSA_MASK | TPM_CnSC_MSB_MASK | TPM_CnSC_ELSA_MASK | TPM_CnSC_ELSB_MASK)))
+            while (0U == (base->CONTROLS[(uint32_t)chnlParams->chnlNumber * 2U].CnSC &
+                          (TPM_CnSC_MSA_MASK | TPM_CnSC_MSB_MASK | TPM_CnSC_ELSA_MASK | TPM_CnSC_ELSB_MASK)))
             {
             }
             /* Set the channel pair values */
-            base->CONTROLS[chnlParams->chnlNumber * 2].CnV = cnvFirstEdge;
+            base->CONTROLS[(uint16_t)chnlParams->chnlNumber * 2U].CnV = cnvFirstEdge;
 
             /* When switching mode, disable channel n + 1 first */
-            base->CONTROLS[(chnlParams->chnlNumber * 2) + 1].CnSC &=
+            base->CONTROLS[((uint32_t)chnlParams->chnlNumber * 2U) + 1U].CnSC &=
                 ~(TPM_CnSC_MSA_MASK | TPM_CnSC_MSB_MASK | TPM_CnSC_ELSA_MASK | TPM_CnSC_ELSB_MASK);
 
             /* Wait till mode change to disable channel is acknowledged */
-            while ((base->CONTROLS[(chnlParams->chnlNumber * 2) + 1].CnSC &
-                    (TPM_CnSC_MSA_MASK | TPM_CnSC_MSB_MASK | TPM_CnSC_ELSA_MASK | TPM_CnSC_ELSB_MASK)))
+            while (0U != (base->CONTROLS[((uint32_t)chnlParams->chnlNumber * 2U) + 1U].CnSC &
+                          (TPM_CnSC_MSA_MASK | TPM_CnSC_MSB_MASK | TPM_CnSC_ELSA_MASK | TPM_CnSC_ELSB_MASK)))
             {
             }
 
             /* Set the requested PWM mode for channel n + 1, PWM output requires mode select to be set to 2 */
-            base->CONTROLS[(chnlParams->chnlNumber * 2) + 1].CnSC |=
-                ((chnlParams->level << TPM_CnSC_ELSA_SHIFT) | (2U << TPM_CnSC_MSA_SHIFT));
+            base->CONTROLS[((uint32_t)chnlParams->chnlNumber * 2U) + 1U].CnSC |=
+                (((uint32_t)chnlParams->level << TPM_CnSC_ELSA_SHIFT) | (2U << TPM_CnSC_MSA_SHIFT));
 
             /* Wait till mode change is acknowledged */
-            while (!(base->CONTROLS[(chnlParams->chnlNumber * 2) + 1].CnSC &
-                     (TPM_CnSC_MSA_MASK | TPM_CnSC_MSB_MASK | TPM_CnSC_ELSA_MASK | TPM_CnSC_ELSB_MASK)))
+            while (0U == (base->CONTROLS[((uint32_t)chnlParams->chnlNumber * 2U) + 1U].CnSC &
+                          (TPM_CnSC_MSA_MASK | TPM_CnSC_MSB_MASK | TPM_CnSC_ELSA_MASK | TPM_CnSC_ELSB_MASK)))
             {
             }
             /* Set the channel pair values */
-            base->CONTROLS[(chnlParams->chnlNumber * 2) + 1].CnV = cnvFirstEdge + cnv;
+            base->CONTROLS[((uint16_t)chnlParams->chnlNumber * 2u) + 1u].CnV = cnvFirstEdge + cnv;
         }
         else
         {
 #endif
-            if (chnlParams->dutyCyclePercent == 0)
+            if (chnlParams->dutyCyclePercent == 0U)
             {
                 /* Signal stays low */
                 cnv = 0;
             }
             else
             {
-                cnv = (mod * chnlParams->dutyCyclePercent) / 100;
+                cnv = (uint16_t)((mod * chnlParams->dutyCyclePercent) / 100U);
                 /* For 100% duty cycle */
                 if (cnv >= mod)
                 {
-                    cnv = mod + 1;
+                    cnv = (uint16_t)(mod + 1U);
                 }
             }
-
+            /* Fix ERROR050050  When TPM is configured in EPWM mode as PS = 0, the compare event is missed on
+            the first reload/overflow after writing 1 to the CnV register and causes an incorrect duty output.*/
+#if (defined(FSL_FEATURE_TPM_HAS_ERRATA_050050) && FSL_FEATURE_TPM_HAS_ERRATA_050050)
+            assert(!(mode == kTPM_EdgeAlignedPwm && cnv == 1U &&
+                     (base->SC & TPM_SC_PS_MASK) == kTPM_Prescale_Divide_1));
+#endif
             /* When switching mode, disable channel first */
             base->CONTROLS[chnlParams->chnlNumber].CnSC &=
                 ~(TPM_CnSC_MSA_MASK | TPM_CnSC_MSB_MASK | TPM_CnSC_ELSA_MASK | TPM_CnSC_ELSB_MASK);
 
             /* Wait till mode change to disable channel is acknowledged */
-            while ((base->CONTROLS[chnlParams->chnlNumber].CnSC &
-                    (TPM_CnSC_MSA_MASK | TPM_CnSC_MSB_MASK | TPM_CnSC_ELSA_MASK | TPM_CnSC_ELSB_MASK)))
+            while (0U != (base->CONTROLS[chnlParams->chnlNumber].CnSC &
+                          (TPM_CnSC_MSA_MASK | TPM_CnSC_MSB_MASK | TPM_CnSC_ELSA_MASK | TPM_CnSC_ELSB_MASK)))
             {
             }
 
             /* Set the requested PWM mode, PWM output requires mode select to be set to 2 */
             base->CONTROLS[chnlParams->chnlNumber].CnSC |=
-                ((chnlParams->level << TPM_CnSC_ELSA_SHIFT) | (2U << TPM_CnSC_MSA_SHIFT));
+                (((uint32_t)chnlParams->level << TPM_CnSC_ELSA_SHIFT) | (2U << TPM_CnSC_MSA_SHIFT));
 
             /* Wait till mode change is acknowledged */
-            while (!(base->CONTROLS[chnlParams->chnlNumber].CnSC &
-                     (TPM_CnSC_MSA_MASK | TPM_CnSC_MSB_MASK | TPM_CnSC_ELSA_MASK | TPM_CnSC_ELSB_MASK)))
+            while (0U == (base->CONTROLS[chnlParams->chnlNumber].CnSC &
+                          (TPM_CnSC_MSA_MASK | TPM_CnSC_MSB_MASK | TPM_CnSC_ELSA_MASK | TPM_CnSC_ELSB_MASK)))
             {
             }
             base->CONTROLS[chnlParams->chnlNumber].CnV = cnv;
@@ -427,41 +436,46 @@ void TPM_UpdatePwmDutycycle(TPM_Type *base,
 #if defined(FSL_FEATURE_TPM_HAS_COMBINE) && FSL_FEATURE_TPM_HAS_COMBINE
     if (currentPwmMode == kTPM_CombinedPwm)
     {
-        assert(FSL_FEATURE_TPM_COMBINE_HAS_EFFECTn(base));
+        assert(0 != FSL_FEATURE_TPM_COMBINE_HAS_EFFECTn(base));
     }
 #endif
 
     uint16_t cnv, mod;
 
-    mod = base->MOD;
+    mod = (uint16_t)(base->MOD);
 #if defined(FSL_FEATURE_TPM_HAS_COMBINE) && FSL_FEATURE_TPM_HAS_COMBINE
     if (currentPwmMode == kTPM_CombinedPwm)
     {
         uint16_t cnvFirstEdge;
 
         /* This check is added for combined mode as the channel number should be the pair number */
-        if (chnlNumber >= (FSL_FEATURE_TPM_CHANNEL_COUNTn(base) / 2))
+        if ((int8_t)chnlNumber >= ((int8_t)FSL_FEATURE_TPM_CHANNEL_COUNTn(base) / 2))
         {
             return;
         }
-        cnv = (mod * dutyCyclePercent) / 100;
-        cnvFirstEdge = base->CONTROLS[chnlNumber * 2].CnV;
+        cnv          = (uint16_t)((mod * dutyCyclePercent) / 100U);
+        cnvFirstEdge = (uint16_t)(base->CONTROLS[((uint8_t)chnlNumber * 2u) & 0x3U].CnV);
         /* For 100% duty cycle */
         if (cnv >= mod)
         {
-            cnv = mod + 1;
+            cnv = mod + 1u;
         }
-        base->CONTROLS[(chnlNumber * 2) + 1].CnV = cnvFirstEdge + cnv;
+        base->CONTROLS[(((uint8_t)chnlNumber * 2u) + 1u) & 0x3U].CnV = cnvFirstEdge + cnv;
     }
     else
     {
 #endif
-        cnv = (mod * dutyCyclePercent) / 100;
+        cnv = (uint16_t)((mod * dutyCyclePercent) / 100U);
         /* For 100% duty cycle */
         if (cnv >= mod)
         {
-            cnv = mod + 1;
+            cnv = mod + 1u;
         }
+        /* Fix ERROR050050 */
+#if (defined(FSL_FEATURE_TPM_HAS_ERRATA_050050) && FSL_FEATURE_TPM_HAS_ERRATA_050050)
+        assert(!(currentPwmMode == kTPM_EdgeAlignedPwm && cnv == 1U &&
+                 (base->SC & TPM_SC_PS_MASK) == kTPM_Prescale_Divide_1));
+#endif
         base->CONTROLS[chnlNumber].CnV = cnv;
 #if defined(FSL_FEATURE_TPM_WAIT_CnV_REGISTER_UPDATE) && FSL_FEATURE_TPM_WAIT_CnV_REGISTER_UPDATE
         while (!(cnv == base->CONTROLS[chnlNumber].CnV))
@@ -497,8 +511,8 @@ void TPM_UpdateChnlEdgeLevelSelect(TPM_Type *base, tpm_chnl_t chnlNumber, uint8_
         ~(TPM_CnSC_MSA_MASK | TPM_CnSC_MSB_MASK | TPM_CnSC_ELSA_MASK | TPM_CnSC_ELSB_MASK);
 
     /* Wait till mode change to disable channel is acknowledged */
-    while ((base->CONTROLS[chnlNumber].CnSC &
-            (TPM_CnSC_MSA_MASK | TPM_CnSC_MSB_MASK | TPM_CnSC_ELSA_MASK | TPM_CnSC_ELSB_MASK)))
+    while (0U != (base->CONTROLS[chnlNumber].CnSC &
+                  (TPM_CnSC_MSA_MASK | TPM_CnSC_MSB_MASK | TPM_CnSC_ELSA_MASK | TPM_CnSC_ELSB_MASK)))
     {
     }
 
@@ -532,10 +546,10 @@ void TPM_SetupInputCapture(TPM_Type *base, tpm_chnl_t chnlNumber, tpm_input_capt
 
 #if defined(FSL_FEATURE_TPM_HAS_QDCTRL) && FSL_FEATURE_TPM_HAS_QDCTRL
     /* The TPM's QDCTRL register required to be effective */
-    if (FSL_FEATURE_TPM_QDCTRL_HAS_EFFECTn(base))
+    if (0 != FSL_FEATURE_TPM_QDCTRL_HAS_EFFECTn(base))
     {
         /* Clear quadrature Decoder mode for channel 0 or 1*/
-        if ((chnlNumber == 0) || (chnlNumber == 1))
+        if (((uint32_t)chnlNumber == 0u) || ((uint32_t)chnlNumber == 1u))
         {
             base->QDCTRL &= ~TPM_QDCTRL_QUADEN_MASK;
         }
@@ -544,10 +558,10 @@ void TPM_SetupInputCapture(TPM_Type *base, tpm_chnl_t chnlNumber, tpm_input_capt
 
 #if defined(FSL_FEATURE_TPM_HAS_COMBINE) && FSL_FEATURE_TPM_HAS_COMBINE
     /* The TPM's COMBINE register required to be effective */
-    if (FSL_FEATURE_TPM_COMBINE_HAS_EFFECTn(base))
+    if (0 != FSL_FEATURE_TPM_COMBINE_HAS_EFFECTn(base))
     {
         /* Clear the combine bit for chnlNumber */
-        base->COMBINE &= ~(1U << TPM_COMBINE_SHIFT * (chnlNumber / 2));
+        base->COMBINE &= ~(1U << (TPM_COMBINE_SHIFT * ((uint32_t)chnlNumber / 2U)));
     }
 #endif
 
@@ -556,17 +570,17 @@ void TPM_SetupInputCapture(TPM_Type *base, tpm_chnl_t chnlNumber, tpm_input_capt
         ~(TPM_CnSC_MSA_MASK | TPM_CnSC_MSB_MASK | TPM_CnSC_ELSA_MASK | TPM_CnSC_ELSB_MASK);
 
     /* Wait till mode change to disable channel is acknowledged */
-    while ((base->CONTROLS[chnlNumber].CnSC &
-            (TPM_CnSC_MSA_MASK | TPM_CnSC_MSB_MASK | TPM_CnSC_ELSA_MASK | TPM_CnSC_ELSB_MASK)))
+    while (0U != (base->CONTROLS[chnlNumber].CnSC &
+                  (TPM_CnSC_MSA_MASK | TPM_CnSC_MSB_MASK | TPM_CnSC_ELSA_MASK | TPM_CnSC_ELSB_MASK)))
     {
     }
 
     /* Set the requested input capture mode */
-    base->CONTROLS[chnlNumber].CnSC |= captureMode;
+    base->CONTROLS[chnlNumber].CnSC |= (uint32_t)captureMode;
 
     /* Wait till mode change is acknowledged */
-    while (!(base->CONTROLS[chnlNumber].CnSC &
-             (TPM_CnSC_MSA_MASK | TPM_CnSC_MSB_MASK | TPM_CnSC_ELSA_MASK | TPM_CnSC_ELSB_MASK)))
+    while (0U == (base->CONTROLS[chnlNumber].CnSC &
+                  (TPM_CnSC_MSA_MASK | TPM_CnSC_MSB_MASK | TPM_CnSC_ELSA_MASK | TPM_CnSC_ELSB_MASK)))
     {
     }
 }
@@ -591,10 +605,10 @@ void TPM_SetupOutputCompare(TPM_Type *base,
 
 #if defined(FSL_FEATURE_TPM_HAS_QDCTRL) && FSL_FEATURE_TPM_HAS_QDCTRL
     /* The TPM's QDCTRL register required to be effective */
-    if (FSL_FEATURE_TPM_QDCTRL_HAS_EFFECTn(base))
+    if (0 != FSL_FEATURE_TPM_QDCTRL_HAS_EFFECTn(base))
     {
         /* Clear quadrature Decoder mode for channel 0 or 1 */
-        if ((chnlNumber == 0) || (chnlNumber == 1))
+        if (((uint32_t)chnlNumber == 0U) || ((uint32_t)chnlNumber == 1U))
         {
             base->QDCTRL &= ~TPM_QDCTRL_QUADEN_MASK;
         }
@@ -606,20 +620,20 @@ void TPM_SetupOutputCompare(TPM_Type *base,
         ~(TPM_CnSC_MSA_MASK | TPM_CnSC_MSB_MASK | TPM_CnSC_ELSA_MASK | TPM_CnSC_ELSB_MASK);
 
     /* Wait till mode change to disable channel is acknowledged */
-    while ((base->CONTROLS[chnlNumber].CnSC &
-            (TPM_CnSC_MSA_MASK | TPM_CnSC_MSB_MASK | TPM_CnSC_ELSA_MASK | TPM_CnSC_ELSB_MASK)))
+    while (0U != (base->CONTROLS[chnlNumber].CnSC &
+                  (TPM_CnSC_MSA_MASK | TPM_CnSC_MSB_MASK | TPM_CnSC_ELSA_MASK | TPM_CnSC_ELSB_MASK)))
     {
     }
 
     /* Setup the channel output behaviour when a match occurs with the compare value */
-    base->CONTROLS[chnlNumber].CnSC |= compareMode;
+    base->CONTROLS[chnlNumber].CnSC |= (uint32_t)compareMode;
 
     /* Setup the compare value */
     base->CONTROLS[chnlNumber].CnV = compareValue;
 
     /* Wait till mode change is acknowledged */
-    while (!(base->CONTROLS[chnlNumber].CnSC &
-             (TPM_CnSC_MSA_MASK | TPM_CnSC_MSB_MASK | TPM_CnSC_ELSA_MASK | TPM_CnSC_ELSB_MASK)))
+    while (0U == (base->CONTROLS[chnlNumber].CnSC &
+                  (TPM_CnSC_MSA_MASK | TPM_CnSC_MSB_MASK | TPM_CnSC_ELSA_MASK | TPM_CnSC_ELSB_MASK)))
     {
     }
 }
@@ -641,18 +655,19 @@ void TPM_SetupDualEdgeCapture(TPM_Type *base,
                               const tpm_dual_edge_capture_param_t *edgeParam,
                               uint32_t filterValue)
 {
-    assert(edgeParam);
-    assert(chnlPairNumber < FSL_FEATURE_TPM_CHANNEL_COUNTn(base) / 2);
-    assert(FSL_FEATURE_TPM_COMBINE_HAS_EFFECTn(base));
+    assert(NULL != edgeParam);
+    assert((int8_t)chnlPairNumber < (int8_t)FSL_FEATURE_TPM_CHANNEL_COUNTn(base) / 2);
+    assert(0 != FSL_FEATURE_TPM_COMBINE_HAS_EFFECTn(base));
 
     uint32_t reg;
+    uint32_t u32flag;
 
 #if defined(FSL_FEATURE_TPM_HAS_QDCTRL) && FSL_FEATURE_TPM_HAS_QDCTRL
     /* The TPM's QDCTRL register required to be effective */
-    if (FSL_FEATURE_TPM_QDCTRL_HAS_EFFECTn(base))
+    if (0 != FSL_FEATURE_TPM_QDCTRL_HAS_EFFECTn(base))
     {
         /* Clear quadrature Decoder mode for channel 0 or 1*/
-        if (chnlPairNumber == 0)
+        if ((uint32_t)chnlPairNumber == 0u)
         {
             base->QDCTRL &= ~TPM_QDCTRL_QUADEN_MASK;
         }
@@ -660,69 +675,70 @@ void TPM_SetupDualEdgeCapture(TPM_Type *base,
 #endif
 
     /* Unlock: When switching mode, disable channel first */
-    base->CONTROLS[chnlPairNumber * 2].CnSC &=
+    base->CONTROLS[(uint32_t)chnlPairNumber * 2U].CnSC &=
         ~(TPM_CnSC_MSA_MASK | TPM_CnSC_MSB_MASK | TPM_CnSC_ELSA_MASK | TPM_CnSC_ELSB_MASK);
 
     /* Wait till mode change to disable channel is acknowledged */
-    while ((base->CONTROLS[chnlPairNumber * 2].CnSC &
-            (TPM_CnSC_MSA_MASK | TPM_CnSC_MSB_MASK | TPM_CnSC_ELSA_MASK | TPM_CnSC_ELSB_MASK)))
+    while (0U != (base->CONTROLS[(uint32_t)chnlPairNumber * 2U].CnSC &
+                  (TPM_CnSC_MSA_MASK | TPM_CnSC_MSB_MASK | TPM_CnSC_ELSA_MASK | TPM_CnSC_ELSB_MASK)))
     {
     }
 
-    base->CONTROLS[chnlPairNumber * 2 + 1].CnSC &=
+    base->CONTROLS[((uint32_t)chnlPairNumber * 2U) + 1U].CnSC &=
         ~(TPM_CnSC_MSA_MASK | TPM_CnSC_MSB_MASK | TPM_CnSC_ELSA_MASK | TPM_CnSC_ELSB_MASK);
 
     /* Wait till mode change to disable channel is acknowledged */
-    while ((base->CONTROLS[chnlPairNumber * 2 + 1].CnSC &
-            (TPM_CnSC_MSA_MASK | TPM_CnSC_MSB_MASK | TPM_CnSC_ELSA_MASK | TPM_CnSC_ELSB_MASK)))
+    while (0U != (base->CONTROLS[((uint32_t)chnlPairNumber * 2U) + 1U].CnSC &
+                  (TPM_CnSC_MSA_MASK | TPM_CnSC_MSB_MASK | TPM_CnSC_ELSA_MASK | TPM_CnSC_ELSB_MASK)))
     {
     }
 
     /* Now, the registers for input mode can be operated. */
-    if (edgeParam->enableSwap)
+    if (true == edgeParam->enableSwap)
     {
+        u32flag = TPM_COMBINE_COMBINE0_MASK | TPM_COMBINE_COMSWAP0_MASK;
         /* Set the combine and swap bits for the channel pair */
-        base->COMBINE |= (TPM_COMBINE_COMBINE0_MASK | TPM_COMBINE_COMSWAP0_MASK)
-                         << (TPM_COMBINE_SHIFT * chnlPairNumber);
+        base->COMBINE |= u32flag << (TPM_COMBINE_SHIFT * (uint32_t)chnlPairNumber);
 
         /* Input filter setup for channel n+1 input */
         reg = base->FILTER;
-        reg &= ~(TPM_FILTER_CH0FVAL_MASK << (TPM_FILTER_CH1FVAL_SHIFT * (chnlPairNumber + 1)));
-        reg |= (filterValue << (TPM_FILTER_CH1FVAL_SHIFT * (chnlPairNumber + 1)));
+        reg &= ~((uint32_t)TPM_FILTER_CH0FVAL_MASK << (TPM_FILTER_CH1FVAL_SHIFT * ((uint32_t)chnlPairNumber + 1U)));
+        reg |= (filterValue << (TPM_FILTER_CH1FVAL_SHIFT * ((uint32_t)chnlPairNumber + 1U)));
         base->FILTER = reg;
     }
     else
     {
         reg = base->COMBINE;
         /* Clear the swap bit for the channel pair */
-        reg &= ~(TPM_COMBINE_COMSWAP0_MASK << (TPM_COMBINE_COMSWAP0_SHIFT * chnlPairNumber));
+        reg &= ~(TPM_COMBINE_COMSWAP0_MASK << (TPM_COMBINE_COMSWAP0_SHIFT * (uint32_t)chnlPairNumber));
+        u32flag = TPM_COMBINE_COMBINE0_MASK;
 
         /* Set the combine bit for the channel pair */
-        reg |= TPM_COMBINE_COMBINE0_MASK << (TPM_COMBINE_SHIFT * chnlPairNumber);
+        reg |= u32flag << (TPM_COMBINE_SHIFT * (uint32_t)chnlPairNumber);
         base->COMBINE = reg;
 
         /* Input filter setup for channel n input */
         reg = base->FILTER;
-        reg &= ~(TPM_FILTER_CH0FVAL_MASK << (TPM_FILTER_CH1FVAL_SHIFT * chnlPairNumber));
-        reg |= (filterValue << (TPM_FILTER_CH1FVAL_SHIFT * chnlPairNumber));
+        reg &= ~(TPM_FILTER_CH0FVAL_MASK << (TPM_FILTER_CH1FVAL_SHIFT * (uint32_t)chnlPairNumber));
+        reg |= (filterValue << (TPM_FILTER_CH1FVAL_SHIFT * (uint32_t)chnlPairNumber));
         base->FILTER = reg;
     }
 
     /* Setup the edge detection from channel n */
-    base->CONTROLS[chnlPairNumber * 2].CnSC |= edgeParam->currChanEdgeMode;
+    base->CONTROLS[(uint32_t)chnlPairNumber * 2u].CnSC |= (uint32_t)edgeParam->currChanEdgeMode;
 
     /* Wait till mode change is acknowledged */
-    while (!(base->CONTROLS[chnlPairNumber * 2].CnSC &
-             (TPM_CnSC_MSA_MASK | TPM_CnSC_MSB_MASK | TPM_CnSC_ELSA_MASK | TPM_CnSC_ELSB_MASK)))
+    while (0U == (base->CONTROLS[(uint32_t)chnlPairNumber * 2U].CnSC &
+                  (TPM_CnSC_MSA_MASK | TPM_CnSC_MSB_MASK | TPM_CnSC_ELSA_MASK | TPM_CnSC_ELSB_MASK)))
     {
     }
 
     /* Setup the edge detection from channel n+1 */
-    base->CONTROLS[(chnlPairNumber * 2) + 1].CnSC |= edgeParam->nextChanEdgeMode;
+    base->CONTROLS[((uint32_t)chnlPairNumber * 2U) + 1U].CnSC |= (uint32_t)edgeParam->nextChanEdgeMode;
 
     /* Wait till mode change is acknowledged */
-    while (!(base->CONTROLS[(chnlPairNumber * 2) + 1].CnSC &
-             (TPM_CnSC_MSA_MASK | TPM_CnSC_MSB_MASK | TPM_CnSC_ELSA_MASK | TPM_CnSC_ELSB_MASK)))
+    while (0U == (base->CONTROLS[((uint32_t)chnlPairNumber * 2U) + 1U].CnSC &
+                  (TPM_CnSC_MSA_MASK | TPM_CnSC_MSB_MASK | TPM_CnSC_ELSA_MASK | TPM_CnSC_ELSB_MASK)))
     {
     }
 }
@@ -742,14 +758,15 @@ void TPM_SetupQuadDecode(TPM_Type *base,
                          const tpm_phase_params_t *phaseBParams,
                          tpm_quad_decode_mode_t quadMode)
 {
-    assert(phaseAParams);
-    assert(phaseBParams);
-    assert(FSL_FEATURE_TPM_QDCTRL_HAS_EFFECTn(base));
+    assert(NULL != phaseAParams);
+    assert(NULL != phaseBParams);
+    assert(0 != FSL_FEATURE_TPM_QDCTRL_HAS_EFFECTn(base));
 
     base->CONTROLS[0].CnSC &= ~(TPM_CnSC_MSA_MASK | TPM_CnSC_MSB_MASK | TPM_CnSC_ELSA_MASK | TPM_CnSC_ELSB_MASK);
 
     /* Wait till mode change to disable channel is acknowledged */
-    while ((base->CONTROLS[0].CnSC & (TPM_CnSC_MSA_MASK | TPM_CnSC_MSB_MASK | TPM_CnSC_ELSA_MASK | TPM_CnSC_ELSB_MASK)))
+    while (0U !=
+           (base->CONTROLS[0].CnSC & (TPM_CnSC_MSA_MASK | TPM_CnSC_MSB_MASK | TPM_CnSC_ELSA_MASK | TPM_CnSC_ELSB_MASK)))
     {
     }
     uint32_t reg;
@@ -762,7 +779,7 @@ void TPM_SetupQuadDecode(TPM_Type *base,
 
 #if defined(FSL_FEATURE_TPM_HAS_POL) && FSL_FEATURE_TPM_HAS_POL
     /* Set Phase A polarity */
-    if (phaseAParams->phasePolarity)
+    if (kTPM_QuadPhaseInvert == phaseAParams->phasePolarity)
     {
         base->POL |= TPM_POL_POL0_MASK;
     }
@@ -775,7 +792,8 @@ void TPM_SetupQuadDecode(TPM_Type *base,
     base->CONTROLS[1].CnSC &= ~(TPM_CnSC_MSA_MASK | TPM_CnSC_MSB_MASK | TPM_CnSC_ELSA_MASK | TPM_CnSC_ELSB_MASK);
 
     /* Wait till mode change to disable channel is acknowledged */
-    while ((base->CONTROLS[1].CnSC & (TPM_CnSC_MSA_MASK | TPM_CnSC_MSB_MASK | TPM_CnSC_ELSA_MASK | TPM_CnSC_ELSB_MASK)))
+    while (0U !=
+           (base->CONTROLS[1].CnSC & (TPM_CnSC_MSA_MASK | TPM_CnSC_MSB_MASK | TPM_CnSC_ELSA_MASK | TPM_CnSC_ELSB_MASK)))
     {
     }
     /* Set Phase B filter value */
@@ -785,7 +803,7 @@ void TPM_SetupQuadDecode(TPM_Type *base,
     base->FILTER = reg;
 #if defined(FSL_FEATURE_TPM_HAS_POL) && FSL_FEATURE_TPM_HAS_POL
     /* Set Phase B polarity */
-    if (phaseBParams->phasePolarity)
+    if (kTPM_QuadPhaseInvert == phaseBParams->phasePolarity)
     {
         base->POL |= TPM_POL_POL1_MASK;
     }
@@ -816,19 +834,19 @@ void TPM_SetupQuadDecode(TPM_Type *base,
  */
 void TPM_EnableInterrupts(TPM_Type *base, uint32_t mask)
 {
-    uint32_t chnlInterrupts = (mask & 0xFF);
-    uint8_t chnlNumber = 0;
+    uint32_t chnlInterrupts = (mask & 0xFFU);
+    uint8_t chnlNumber      = 0;
 
     /* Enable the timer overflow interrupt */
-    if (mask & kTPM_TimeOverflowInterruptEnable)
+    if ((uint32_t)kTPM_TimeOverflowInterruptEnable == (mask & (uint32_t)kTPM_TimeOverflowInterruptEnable))
     {
         base->SC |= TPM_SC_TOIE_MASK;
     }
 
     /* Enable the channel interrupts */
-    while (chnlInterrupts)
+    while (0U != chnlInterrupts)
     {
-        if (chnlInterrupts & 0x1)
+        if (0U != (chnlInterrupts & 0x1u))
         {
             base->CONTROLS[chnlNumber].CnSC |= TPM_CnSC_CHIE_MASK;
         }
@@ -846,19 +864,19 @@ void TPM_EnableInterrupts(TPM_Type *base, uint32_t mask)
  */
 void TPM_DisableInterrupts(TPM_Type *base, uint32_t mask)
 {
-    uint32_t chnlInterrupts = (mask & 0xFF);
-    uint8_t chnlNumber = 0;
+    uint32_t chnlInterrupts = (mask & 0xFFU);
+    uint8_t chnlNumber      = 0;
 
     /* Disable the timer overflow interrupt */
-    if (mask & kTPM_TimeOverflowInterruptEnable)
+    if ((uint32_t)kTPM_TimeOverflowInterruptEnable == (mask & (uint32_t)kTPM_TimeOverflowInterruptEnable))
     {
         base->SC &= ~TPM_SC_TOIE_MASK;
     }
 
     /* Disable the channel interrupts */
-    while (chnlInterrupts)
+    while (0U != chnlInterrupts)
     {
-        if (chnlInterrupts & 0x1)
+        if (0U != (chnlInterrupts & 0x1u))
         {
             base->CONTROLS[chnlNumber].CnSC &= ~TPM_CnSC_CHIE_MASK;
         }
@@ -878,24 +896,25 @@ void TPM_DisableInterrupts(TPM_Type *base, uint32_t mask)
 uint32_t TPM_GetEnabledInterrupts(TPM_Type *base)
 {
     uint32_t enabledInterrupts = 0;
-    int8_t chnlCount = FSL_FEATURE_TPM_CHANNEL_COUNTn(base);
+    uint32_t u32flag           = 1;
+    int8_t chnlCount           = FSL_FEATURE_TPM_CHANNEL_COUNTn(base);
 
     /* The CHANNEL_COUNT macro returns -1 if it cannot match the TPM instance */
     assert(chnlCount != -1);
 
     /* Check if timer overflow interrupt is enabled */
-    if (base->SC & TPM_SC_TOIE_MASK)
+    if (0U != (base->SC & TPM_SC_TOIE_MASK))
     {
-        enabledInterrupts |= kTPM_TimeOverflowInterruptEnable;
+        enabledInterrupts |= (uint32_t)kTPM_TimeOverflowInterruptEnable;
     }
 
     /* Check if the channel interrupts are enabled */
     while (chnlCount > 0)
     {
         chnlCount--;
-        if (base->CONTROLS[chnlCount].CnSC & TPM_CnSC_CHIE_MASK)
+        if (0U != (base->CONTROLS[chnlCount].CnSC & TPM_CnSC_CHIE_MASK))
         {
-            enabledInterrupts |= (1U << chnlCount);
+            enabledInterrupts |= (u32flag << (uint8_t)chnlCount);
         }
     }
 

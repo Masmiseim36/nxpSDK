@@ -1,9 +1,8 @@
-/**
-* @file a71ch_sst.c
+/*
 * @author NXP Semiconductors
 * @version 1.0
 * @par License
-* Copyright 2016 NXP
+* Copyright 2016,2020 NXP
 *
 * This software is owned or controlled by NXP and may only be used
 * strictly in accordance with the applicable license terms.  By expressly
@@ -13,12 +12,15 @@
 * you do not agree to be bound by the applicable license terms, then you
 * may not retain, install, activate or otherwise use the software.
 *
-* @par Description
-* This file wraps the secure storage functionality of the A71CH module.
 * @par History
 * 1.0   1-oct-2016 : Initial version
 *
 *****************************************************************************/
+/**
+* @file a71ch_sst.c
+* @par Description
+* **Wrap the secure storage functionality of the A71CH.**
+*/
 #include <stddef.h>
 #include <string.h>
 #include <stdio.h> // DEBUG
@@ -45,7 +47,7 @@ static U16 SST_FreezeGeneric(U8 ins, SST_Index_t index)
     AllocateAPDUBuffer(pApdu);
     SetApduHeader(pApdu, USE_STANDARD_APDU_LEN);
 
-    rv = (U16)scp_Transceive(pApdu, SCP_MODE);
+    rv = (U16)scp_Transceive(NULL, pApdu, SCP_MODE);
     if (rv == SMCOM_OK)
     {
         // No response data expected
@@ -77,7 +79,7 @@ static U16 SST_FreezeGenericWithCode(U8 ins, SST_Index_t index, U8 *code, U16 co
 
     smApduAppendCmdData(pApdu, code, codeLen);
 
-    rv = (U16)scp_Transceive(pApdu, SCP_MODE);
+    rv = (U16)scp_Transceive(NULL, pApdu, SCP_MODE);
     if (rv == SMCOM_OK)
     {
         // No response data expected
@@ -142,7 +144,7 @@ static U16 SST_EraseGeneric(U8 ins, SST_Index_t index)
     AllocateAPDUBuffer(pApdu);
     SetApduHeader(pApdu, USE_STANDARD_APDU_LEN);
 
-    rv = (U16)scp_Transceive(pApdu, SCP_MODE);
+    rv = (U16)scp_Transceive(NULL, pApdu, SCP_MODE);
     if (rv == SMCOM_OK)
     {
         // No response data expected
@@ -173,7 +175,7 @@ static U16 SST_EraseGenericWithCode(U8 ins, SST_Index_t index, U8 *code, U16 cod
 
     smApduAppendCmdData(pApdu, code, codeLen);
 
-    rv = (U16)scp_Transceive(pApdu, SCP_MODE);
+    rv = (U16)scp_Transceive(NULL, pApdu, SCP_MODE);
     if (rv == SMCOM_OK)
     {
         // No response data expected
@@ -261,7 +263,7 @@ U16 A71_SetEccKeyPair(SST_Index_t index, const U8 *publicKey, U16 publicKeyLen, 
     smApduAppendCmdData(pApdu, privateKey, privateKeyLen);
     smApduAppendCmdData(pApdu, publicKey, publicKeyLen);
 
-    rv = (U16)scp_Transceive(pApdu, SCP_MODE);
+    rv = (U16)scp_Transceive(NULL, pApdu, SCP_MODE);
     if (rv == SMCOM_OK)
     {
         // No response data expected
@@ -299,7 +301,7 @@ U16 A71_GetPublicKeyEccKeyPair(SST_Index_t index, U8 *publicKey, U16 *publicKeyL
     AllocateAPDUBuffer(pApdu);
     SetApduHeader(pApdu, USE_STANDARD_APDU_LEN);
 
-    rv = (U16)scp_Transceive(pApdu, SCP_MODE);
+    rv = (U16)scp_Transceive(NULL, pApdu, SCP_MODE);
     if (rv == SMCOM_OK)
     {
         rv = smGetSw(pApdu, &isOk);
@@ -350,7 +352,7 @@ U16 A71_GetEccKeyPairUsage(SST_Index_t index, U8 *restricted, U16 *usedCnt, U16 
     AllocateAPDUBuffer(pApdu);
     SetApduHeader(pApdu, USE_STANDARD_APDU_LEN);
 
-    rv = (U16)scp_Transceive(pApdu, SCP_MODE);
+    rv = (U16)scp_Transceive(NULL, pApdu, SCP_MODE);
     if (rv == SMCOM_OK)
     {
         rv = smGetSw(pApdu, &isOk);
@@ -527,7 +529,7 @@ U16 A71_SetEccPublicKey(SST_Index_t index, const U8 *publicKey, U16 publicKeyLen
 
     smApduAppendCmdData(pApdu, publicKey, publicKeyLen);
 
-    rv = (U16)scp_Transceive(pApdu, SCP_MODE);
+    rv = (U16)scp_Transceive(NULL, pApdu, SCP_MODE);
     if (rv == SMCOM_OK)
     {
         // No response data expected
@@ -564,7 +566,7 @@ U16 A71_GetEccPublicKey(SST_Index_t index, U8 *publicKey, U16 *publicKeyLen)
     AllocateAPDUBuffer(pApdu);
     SetApduHeader(pApdu, USE_STANDARD_APDU_LEN);
 
-    rv = (U16)scp_Transceive(pApdu, SCP_MODE);
+    rv = (U16)scp_Transceive(NULL, pApdu, SCP_MODE);
     if (rv == SMCOM_OK)
     {
         rv = smGetSw(pApdu, &isOk);
@@ -714,7 +716,7 @@ U16 A71_SetSymKey(SST_Index_t index, const U8 *key, U16 keyLen)
 
     smApduAppendCmdData(pApdu, key, keyLen);
 
-    rv = (U16)scp_Transceive(pApdu, SCP_MODE);
+    rv = (U16)scp_Transceive(NULL, pApdu, SCP_MODE);
     if (rv == SMCOM_OK)
     {
         // No response data expected
@@ -756,7 +758,7 @@ U16 A71_SetRfc3394WrappedAesKey(SST_Index_t index, const U8 *key, U16 keyLen)
 
     smApduAppendCmdData(pApdu, key, keyLen);
 
-    rv = (U16)scp_Transceive(pApdu, SCP_MODE);
+    rv = (U16)scp_Transceive(NULL, pApdu, SCP_MODE);
     if (rv == SMCOM_OK)
     {
         // No response data expected
@@ -813,7 +815,7 @@ U16 A71_IncrementCounter(SST_Index_t index)
     AllocateAPDUBuffer(pApdu);
     SetApduHeader(pApdu, USE_STANDARD_APDU_LEN);
 
-    rv = (U16)scp_Transceive(pApdu, SCP_MODE);
+    rv = (U16)scp_Transceive(NULL, pApdu, SCP_MODE);
     if (rv == SMCOM_OK)
     {
         // No response data expected
@@ -854,7 +856,7 @@ U16 A71_SetCounter(SST_Index_t index, U32 value)
 
     smApduAppendCmdData(pApdu, byteArray, MONOTONIC_COUNTER_BYTE_COUNT);
 
-    rv = (U16)scp_Transceive(pApdu, SCP_MODE);
+    rv = (U16)scp_Transceive(NULL, pApdu, SCP_MODE);
     if (rv == SMCOM_OK)
     {
         // No response data expected
@@ -896,7 +898,7 @@ U16 A71_GetCounter(SST_Index_t index, U32 *pValue)
     AllocateAPDUBuffer(pApdu);
     SetApduHeader(pApdu, USE_STANDARD_APDU_LEN);
 
-    rv = (U16)scp_Transceive(pApdu, SCP_MODE);
+    rv = (U16)scp_Transceive(NULL, pApdu, SCP_MODE);
     if (rv == SMCOM_OK)
     {
         rv = smGetSw(pApdu, &isOk);
@@ -990,7 +992,7 @@ U16 A71_SetGpData(U16 dataOffset, const U8 *data, U16 dataLen)
 
         smApduAppendCmdData(pApdu, &data[sentLength], chunkSize);
 
-        rv = (U16)scp_Transceive(pApdu, SCP_MODE);
+        rv = (U16)scp_Transceive(NULL, pApdu, SCP_MODE);
         if (rv == SMCOM_OK)
         {
             // No response data expected
@@ -1129,7 +1131,7 @@ U16 A71_GetGpData(U16 dataOffset, U8 *data, U16 dataLen)
         tmp[1] = toRead & 0xff;
         smApduAppendCmdData(pApdu, tmp, 2);
 
-        rv = (U16)scp_Transceive(pApdu, SCP_MODE);
+        rv = (U16)scp_Transceive(NULL, pApdu, SCP_MODE);
         if (rv == SMCOM_OK)
         {
             rv = smGetSw(pApdu, &isOk);
@@ -1197,7 +1199,7 @@ U16 A71_FreezeGpData(U16 dataOffset, U16 dataLen)
 
     smApduAppendCmdData(pApdu, byteArray, 2);
 
-    rv = (U16)scp_Transceive(pApdu, SCP_MODE);
+    rv = (U16)scp_Transceive(NULL, pApdu, SCP_MODE);
     if (rv == SMCOM_OK)
     {
         // No response data expected
@@ -1238,7 +1240,7 @@ U16 A71_SetConfigKey(SST_Index_t index, const U8 *key, U16 keyLen)
 
     smApduAppendCmdData(pApdu, key, keyLen);
 
-    rv = (U16)scp_Transceive(pApdu, SCP_MODE);
+    rv = (U16)scp_Transceive(NULL, pApdu, SCP_MODE);
     if (rv == SMCOM_OK)
     {
         // No response data expected
@@ -1280,7 +1282,7 @@ U16 A71_SetRfc3394WrappedConfigKey(SST_Index_t index, const U8 *key, U16 keyLen)
 
     smApduAppendCmdData(pApdu, key, keyLen);
 
-    rv = (U16)scp_Transceive(pApdu, SCP_MODE);
+    rv = (U16)scp_Transceive(NULL, pApdu, SCP_MODE);
     if (rv == SMCOM_OK)
     {
         // No response data expected

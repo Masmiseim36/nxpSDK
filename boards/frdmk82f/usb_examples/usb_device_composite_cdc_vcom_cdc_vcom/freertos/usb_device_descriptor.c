@@ -170,12 +170,10 @@ uint8_t g_UsbDeviceDescriptor[] = {
     USB_DEVICE_PROTOCOL,
     /* Maximum packet size for endpoint zero (only 8, 16, 32, or 64 are valid) */
     USB_CONTROL_MAX_PACKET_SIZE,
-    /* Vendor ID (assigned by the USB-IF) */
-    0xC9U,
-    0x1FU,
-    /* Product ID (assigned by the manufacturer) */
-    0xA3,
-    0x00,
+    USB_SHORT_GET_LOW(USB_DEVICE_VID),
+    USB_SHORT_GET_HIGH(USB_DEVICE_VID), /* Vendor ID (assigned by the USB-IF) */
+    USB_SHORT_GET_LOW(USB_DEVICE_PID),
+    USB_SHORT_GET_HIGH(USB_DEVICE_PID), /* Product ID (assigned by the manufacturer) */
     /* Device release number in binary-coded decimal */
     USB_SHORT_GET_LOW(USB_DEVICE_DEMO_BCD_VERSION),
     USB_SHORT_GET_HIGH(USB_DEVICE_DEMO_BCD_VERSION),

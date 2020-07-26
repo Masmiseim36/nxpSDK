@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding= "UTF-8" ?>
-<configuration name="MK28FN2M0Axxx15" version="1.6" xsi:schemaLocation="http://mcuxpresso.nxp.com/XSD/mex_configuration_1.6 http://mcuxpresso.nxp.com/XSD/mex_configuration_1.6.xsd" uuid="0e3005ee-c580-4b62-af77-577a76a07d91" xmlns="http://mcuxpresso.nxp.com/XSD/mex_configuration_1.6" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<configuration name="MK28FN2M0Axxx15" version="1.6" xsi:schemaLocation="http://mcuxpresso.nxp.com/XSD/mex_configuration_1.7 http://mcuxpresso.nxp.com/XSD/mex_configuration_1.7.xsd" uuid="a0e89169-d54f-404e-bed8-16db3b2ef07b" xmlns="http://mcuxpresso.nxp.com/XSD/mex_configuration_1.7" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
    <common>
       <processor>MK28FN2M0Axxx15</processor>
       <package>MK28FN2M0AVMI15</package>
@@ -8,7 +8,6 @@
       <cores selected="core0">
          <core name="Cortex-M4F" id="core0" description="M4 core"/>
       </cores>
-      <description>Configuration imported from C:\Users\mcu-sdk-2.0\boards\frdmk28fa\demo_apps\bubble_peripheral\iar</description>
    </common>
    <preferences>
       <validate_boot_init_only>true</validate_boot_init_only>
@@ -16,9 +15,9 @@
       <generate_code_modified_registers_only>false</generate_code_modified_registers_only>
    </preferences>
    <tools>
-      <pins name="Pins" version="6.0" enabled="true" update_project_code="true">
+      <pins name="Pins" version="7.0" enabled="true" update_project_code="true">
          <pins_profile>
-            <processor_version>6.0.1</processor_version>
+            <processor_version>0.7.4</processor_version>
             <pin_labels>
                <pin_label pin_num="C6" pin_signal="PTC28/I2C3_SDA/FB_A1/SDRAM_D1/QSPI0A_DATA1" label="U6[6]/I2C SDA" identifier="I2C_SDA;ACCEL_I2C_SDA"/>
                <pin_label pin_num="B6" pin_signal="PTC29/I2C3_SCL/FB_A0/SDRAM_D0/QSPI0A_SS0_B" label="U6[4]/I2C_SCL" identifier="I2C_SCL;ACCEL_I2C_SCL"/>
@@ -40,6 +39,11 @@
                      </feature>
                   </dependency>
                   <dependency resourceType="Peripheral" resourceId="FTM3" description="Peripheral FTM3 is not initialized" problem_level="1" source="Pins:BOARD_InitPins">
+                     <feature name="initialized" evaluation="equal">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="Peripheral" resourceId="TPIU" description="Peripheral TPIU is not initialized" problem_level="1" source="Pins:BOARD_InitPins">
                      <feature name="initialized" evaluation="equal">
                         <data>true</data>
                      </feature>
@@ -66,6 +70,12 @@
                   <pin peripheral="FTM3" signal="CH, 2" pin_num="E3" pin_signal="PTE7/FXIO0_D13/LPUART3_RTS_b/I2S0_RXD0/QSPI0B_SCLK/FTM3_CH2/QSPI0A_SS1_B">
                      <pin_features>
                         <pin_feature name="direction" value="OUTPUT"/>
+                     </pin_features>
+                  </pin>
+                  <pin peripheral="TPIU" signal="SWO" pin_num="M9" pin_signal="PTA2/LPUART0_TX/FTM0_CH7/I2C3_SCL/FXIO0_D12/JTAG_TDO/TRACE_SWO">
+                     <pin_features>
+                        <pin_feature name="pull_select" value="down"/>
+                        <pin_feature name="pull_enable" value="disable"/>
                      </pin_features>
                   </pin>
                </pins>
@@ -160,9 +170,9 @@
             </function>
          </functions_list>
       </pins>
-      <clocks name="Clocks" version="6.0" enabled="false" update_project_code="true">
+      <clocks name="Clocks" version="7.0" enabled="true" update_project_code="true">
          <clocks_profile>
-            <processor_version>6.0.1</processor_version>
+            <processor_version>0.7.4</processor_version>
          </clocks_profile>
          <clock_configurations>
             <clock_configuration name="BOARD_BootClockRUN">
@@ -360,70 +370,70 @@
          </dcdx_profile>
          <dcdx_configurations/>
       </dcdx>
-      <periphs name="Peripherals" version="6.0" enabled="true" update_project_code="true">
+      <periphs name="Peripherals" version="7.0" enabled="true" update_project_code="true">
          <dependencies>
-            <dependency resourceType="SWComponent" resourceId="platform.drivers.i2c" description="I2C Driver not found in the toolchain/IDE project." problem_level="2" source="Peripherals">
+            <dependency resourceType="SWComponent" resourceId="platform.drivers.i2c" description="I2C Driver not found in the toolchain/IDE project. Project will not compile!" problem_level="2" source="Peripherals">
                <feature name="enabled" evaluation="equal">
                   <data type="Boolean">true</data>
                </feature>
             </dependency>
-            <dependency resourceType="SWComponent" resourceId="platform.drivers.i2c" description="Unsupported version of the I2C Driver in the toolchain/IDE project. Required: ${required_value}, actual: ${actual_value}." problem_level="1" source="Peripherals">
+            <dependency resourceType="SWComponent" resourceId="platform.drivers.i2c" description="Unsupported version of the I2C Driver in the toolchain/IDE project. Required: ${required_value}, actual: ${actual_value}. Project might not compile correctly." problem_level="1" source="Peripherals">
                <feature name="version" evaluation="equivalent">
                   <data type="Version">2.0.5</data>
                </feature>
             </dependency>
-            <dependency resourceType="SWComponent" resourceId="platform.drivers.ftm" description="FTM Driver not found in the toolchain/IDE project." problem_level="2" source="Peripherals">
+            <dependency resourceType="SWComponent" resourceId="platform.drivers.ftm" description="FTM Driver not found in the toolchain/IDE project. Project will not compile!" problem_level="2" source="Peripherals">
                <feature name="enabled" evaluation="equal">
                   <data type="Boolean">true</data>
                </feature>
             </dependency>
-            <dependency resourceType="SWComponent" resourceId="platform.drivers.ftm" description="Unsupported version of the FTM Driver in the toolchain/IDE project. Required: ${required_value}, actual: ${actual_value}." problem_level="1" source="Peripherals">
+            <dependency resourceType="SWComponent" resourceId="platform.drivers.ftm" description="Unsupported version of the FTM Driver in the toolchain/IDE project. Required: ${required_value}, actual: ${actual_value}. Project might not compile correctly." problem_level="1" source="Peripherals">
                <feature name="version" evaluation="equivalent">
                   <data type="Version">2.1.0</data>
                </feature>
             </dependency>
          </dependencies>
          <peripherals_profile>
-            <processor_version>6.0.1</processor_version>
+            <processor_version>0.7.4</processor_version>
          </peripherals_profile>
          <functional_groups>
-            <functional_group name="BOARD_InitPeripherals" uuid="9e9a602a-ccde-4e54-b3ef-8c73b0f869d2" called_from_default_init="true" id_prefix="BOARD_" core="core0">
+            <functional_group name="BOARD_InitPeripherals" uuid="4f1a65dd-9c48-46ce-a4d1-a48d05151d1f" called_from_default_init="true" id_prefix="BOARD_" core="core0">
                <description></description>
                <options/>
                <dependencies>
-                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="I2C3.i2c_scl" description="Signal serial clock of the peripheral I2C3 is not routed." problem_level="1" source="Peripherals:BOARD_InitPeripherals">
+                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="I2C3.i2c_scl" description="Signal serial clock of the peripheral I2C3 is not routed. Problem must be resolved in another tool." problem_level="1" source="Peripherals:BOARD_InitPeripherals">
                      <feature name="routed" evaluation="">
                         <data type="Boolean">true</data>
                      </feature>
                   </dependency>
-                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="I2C3.i2c_sda" description="Signal serial data of the peripheral I2C3 is not routed." problem_level="1" source="Peripherals:BOARD_InitPeripherals">
+                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="I2C3.i2c_sda" description="Signal serial data of the peripheral I2C3 is not routed. Problem must be resolved in another tool." problem_level="1" source="Peripherals:BOARD_InitPeripherals">
                      <feature name="routed" evaluation="">
                         <data type="Boolean">true</data>
                      </feature>
                   </dependency>
-                  <dependency resourceType="ClockOutput" resourceId="Bus_clock" description="Bus clockis inactive." problem_level="1" source="Peripherals:BOARD_InitPeripherals">
+                  <dependency resourceType="ClockOutput" resourceId="Bus_clock" description="Bus clock is inactive. Problem must be resolved in another tool." problem_level="1" source="Peripherals:BOARD_InitPeripherals">
                      <feature name="frequency" evaluation="greaterThan">
                         <data type="Frequency" unit="Hz">0</data>
                      </feature>
                   </dependency>
-                  <dependency resourceType="ClockOutput" resourceId="Bus_clock" description="Bus clockis inactive." problem_level="1" source="Peripherals:BOARD_InitPeripherals">
+                  <dependency resourceType="ClockOutput" resourceId="Bus_clock" description="Bus clock is inactive. Problem must be resolved in another tool." problem_level="1" source="Peripherals:BOARD_InitPeripherals">
                      <feature name="frequency" evaluation="greaterThan">
                         <data type="Frequency" unit="Hz">0</data>
                      </feature>
                   </dependency>
-                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="FTM3.tmr_ch.2" description="Signal CH2 of peripheral FTM3 is not routed" problem_level="1" source="Peripherals:BOARD_InitPeripherals">
+                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="FTM3.tmr_ch.2" description="Signal CH2 of peripheral FTM3 is not routed Problem must be resolved in another tool." problem_level="1" source="Peripherals:BOARD_InitPeripherals">
                      <feature name="routed" evaluation="equal">
                         <data type="Boolean">true</data>
                      </feature>
                   </dependency>
-                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="FTM3.tmr_ch.1" description="Signal CH1 of peripheral FTM3 is not routed" problem_level="1" source="Peripherals:BOARD_InitPeripherals">
+                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="FTM3.tmr_ch.1" description="Signal CH1 of peripheral FTM3 is not routed Problem must be resolved in another tool." problem_level="1" source="Peripherals:BOARD_InitPeripherals">
                      <feature name="routed" evaluation="equal">
                         <data type="Boolean">true</data>
                      </feature>
                   </dependency>
                </dependencies>
                <instances>
-                  <instance name="ACCEL_I2C" type="i2c" type_id="i2c_2566d7363e7e9aaedabb432110e372d7" mode="I2C_Polling" peripheral="I2C3" enabled="true">
+                  <instance name="ACCEL_I2C" uuid="bab279fc-ad83-4f32-9b69-66afb6bd8834" type="i2c" type_id="i2c_2566d7363e7e9aaedabb432110e372d7" mode="I2C_Polling" peripheral="I2C3" enabled="true" comment="" custom_name_enabled="true">
                      <config_set name="fsl_i2c" quick_selection="QS_I2C_1">
                         <setting name="i2c_mode" value="kI2C_Master"/>
                         <setting name="clockSource" value="BusInterfaceClock"/>
@@ -436,7 +446,7 @@
                         </struct>
                      </config_set>
                   </instance>
-                  <instance name="TIMER" type="ftm" type_id="ftm_04a15ae4af2b404bf2ae403c3dbe98b3" mode="EdgeAligned" peripheral="FTM3" enabled="true">
+                  <instance name="TIMER" uuid="5d95d666-232f-48b2-93d1-7881c41c3308" type="ftm" type_id="ftm_04a15ae4af2b404bf2ae403c3dbe98b3" mode="EdgeAligned" peripheral="FTM3" enabled="true" comment="" custom_name_enabled="true">
                      <config_set name="ftm_main_config">
                         <struct name="ftm_config">
                            <setting name="clockSource" value="kFTM_SystemClock"/>
@@ -506,10 +516,10 @@
             </functional_group>
          </functional_groups>
          <components>
-            <component name="system" type_id="system">
+            <component name="system" uuid="07b72b80-08eb-4057-a275-171ca178ad14" type_id="system">
                <config_set_global name="global_system_definitions"/>
             </component>
-            <component name="msg" type_id="msg_6e2baaf3b97dbeef01c0043275f9a0e7">
+            <component name="msg" uuid="45243970-897a-47af-9bc3-94f52871a238" type_id="msg_6e2baaf3b97dbeef01c0043275f9a0e7">
                <config_set_global name="global_messages"/>
             </component>
          </components>

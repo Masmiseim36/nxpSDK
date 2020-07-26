@@ -1,9 +1,9 @@
 /**
-* @file ax_scp.c
+* @file ax_sss_scp.c
 * @author NXP Semiconductors
 * @version 1.0
 * @par License
-* Copyright 2016 NXP
+* Copyright 2016,2020 NXP
 *
 * This software is owned or controlled by NXP and may only be used
 * strictly in accordance with the applicable license terms.  By expressly
@@ -496,7 +496,7 @@ U16 SCP_SSS_GP_ExternalAuthenticate(ChannelId_t channelId, U8* hostCryptogram)
     txBuf[0] = cla;
 #endif
 
-    st = smCom_TransceiveRaw((U8*)txBuf, 5 + AES_KEY_LEN_nBYTE, response, &responseLen);
+    st = smCom_TransceiveRaw(NULL, (U8*)txBuf, 5 + AES_KEY_LEN_nBYTE, response, &responseLen);
 
     if (st != SMCOM_OK)
     {

@@ -3,7 +3,7 @@
 * @author NXP Semiconductors
 * @version 1.0
 * @par License
-* Copyright 2018 NXP
+* Copyright 2018,2020 NXP
 *
 * This software is owned or controlled by NXP and may only be used
 * strictly in accordance with the applicable license terms.  By expressly
@@ -93,11 +93,12 @@ typedef struct {
 
 /** \name Communication functions
    @{ */
-U16 SM_Close(U8 mode);
-U16 SM_Connect(SmCommState_t *commState, U8 *atr, U16 *atrLen);
+U16 SM_Close(void *conn_ctx, U8 mode);
+U16 SM_Connect(void *conn_ctx, SmCommState_t *commState, U8 *atr, U16 *atrLen);
 U16 SM_ConnectWithAID(SmCommState_t *commState, U8* appletAID, U16 appletAIDLen, U8 *atr, U16 *atrLen);
-U16 SM_RjctConnect(const char *connectString, SmCommState_t *commState, U8 *atr, U16 *atrLen);
+U16 SM_RjctConnect(void **conn_ctx, const char *connectString, SmCommState_t *commState, U8 *atr, U16 *atrLen);
 U16 SM_RjctConnectWithAID(const char *connectString, SmCommState_t *commState, U8* appletAID, U16 appletAIDLen, U8 *atr, U16 *atrLen);
+U16 SM_I2CConnect(void **conn_ctx, SmCommState_t *commState, U8 *atr, U16 *atrLen, const char *pConnString);
 
 U16 SM_SendAPDU(U8 *cmd, U16 cmdLen, U8 *resp, U16 *respLen);
 /** @}*/

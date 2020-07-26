@@ -14,8 +14,8 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_UART UART1
-#define DEMO_UART_CLKSRC SYS_CLK
+#define DEMO_UART          UART1
+#define DEMO_UART_CLKSRC   SYS_CLK
 #define DEMO_UART_CLK_FREQ CLOCK_GetFreq(SYS_CLK)
 #define ECHO_BUFFER_LENGTH 8
 

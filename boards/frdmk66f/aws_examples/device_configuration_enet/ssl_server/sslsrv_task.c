@@ -17,7 +17,14 @@
 #include "sslsrv_port.h"
 #include "FreeRTOS.h"
 #include "task.h"
+
+#ifdef DEMO_DEVICE_CONFIGURATION_WIFI
 #include "device_configuration.h"
+#endif
+
+#ifdef DEMO_DEVICE_CONFIGURATION_ENET
+#include "device_configuration_lwip.h"
+#endif
 
 //#define SSL_SRV_DEBUG
 

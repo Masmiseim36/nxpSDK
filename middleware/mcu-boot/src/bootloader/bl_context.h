@@ -8,22 +8,22 @@
 #define __CONTEXT_H__
 
 #include "bootloader_common.h"
-#include "bootloader/bl_peripheral.h"
-#include "memory/memory.h"
-#include "packet/command_packet.h"
-#include "bootloader/bl_command.h"
-#include "property/property.h"
+#include "bl_peripheral.h"
+#include "memory.h"
+#include "command_packet.h"
+#include "bl_command.h"
+#include "property.h"
 
 #if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
 #if !BL_DEVICE_IS_LPC_SERIES
 #include "fsl_flash.h"
-#include "memory/src/flash_memory.h"
+#include "flash_memory.h"
 #if BL_FEATURE_SUPPORT_DFLASH
-#include "memory/src/flexNVM_memory.h"
+#include "flexNVM_memory.h"
 #endif // BL_FEATURE_SUPPORT_DFLASH
 #else
-#include "flashiap_wrapper/fsl_flashiap_wrapper.h"
-#include "memory/src/flashiap_memory.h"
+#include "fsl_iap.h"
+#include "flash_c040hd_memory.h"
 #endif
 #endif //#if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
 #if BL_FEATURE_ENCRYPTION
@@ -63,17 +63,19 @@ typedef struct FlashDriverInterface
                                      uint32_t *failedAddress,
                                      uint32_t *failedData);
     status_t (*flash_get_property)(flash_config_t *config, flash_property_tag_t whichProperty, uint32_t *value);
-    status_t (*flash_program_once)(ftfx_config_t *config, uint32_t index, uint8_t *src, uint32_t lengthInBytes);
+    status_t (*flash_program_once)(ftfx_config_t *config, uint32_t index, const uint8_t *src, uint32_t lengthInBytes);
     status_t (*flash_read_once)(ftfx_config_t *config, uint32_t index, uint8_t *dst, uint32_t lengthInBytes);
     status_t (*flash_read_resource)(flash_config_t *config,
                                     uint32_t start,
                                     uint8_t *dst,
                                     uint32_t lengthInBytes,
                                     ftfx_read_resource_opt_t option);
+#if defined(FSL_FEATURE_FLASH_HAS_ACCESS_CONTROL) && FSL_FEATURE_FLASH_HAS_ACCESS_CONTROL
     status_t (*flash_is_execute_only)(flash_config_t *config,
                                       uint32_t start,
                                       uint32_t lengthInBytes,
                                       flash_xacc_state_t *access_state);
+#endif
     status_t (*flash_erase_all_execute_only_segments)(flash_config_t *config, uint32_t key);
     status_t (*flash_verify_erase_all_execute_only_segments)(flash_config_t *config, ftfx_margin_value_t margin);
     status_t (*flash_set_flexram_function)(flash_config_t *config, ftfx_flexram_func_opt_t option);
@@ -83,19 +85,17 @@ typedef struct FlashDriverInterface
 typedef struct FlashiapDriverInterface
 {
     standard_version_t version; //!< flash driver API version number.
-    status_t (*flash_init)(flashiap_config_t *config);
-    status_t (*flash_erase)(flashiap_config_t *config, uint32_t start, uint32_t lengthInBytes, uint32_t key);
-    status_t (*flash_program)(flashiap_config_t *config, uint32_t start, uint8_t *src, uint32_t lengthInBytes);
-    status_t (*flash_verify_erase)(flashiap_config_t *config, uint32_t start, uint32_t lengthInBytes);
-    status_t (*flash_verify_program)(flashiap_config_t *config,
+    status_t (*flash_init)(flash_config_t *config);
+    status_t (*flash_erase)(flash_config_t *config, uint32_t start, uint32_t lengthInBytes, uint32_t key);
+    status_t (*flash_program)(flash_config_t *config, uint32_t start, uint8_t *src, uint32_t lengthInBytes);
+    status_t (*flash_verify_erase)(flash_config_t *config, uint32_t start, uint32_t lengthInBytes);
+    status_t (*flash_verify_program)(flash_config_t *config,
                                      uint32_t start,
                                      uint32_t lengthInBytes,
                                      const uint8_t *expectedData,
-                                     ftfx_margin_value_t margin,
                                      uint32_t *failedAddress,
                                      uint32_t *failedData);
-    status_t (*flash_get_property)(flashiap_config_t *config, flash_property_tag_t whichProperty, uint32_t *value);
-    status_t (*flash_register_callback)(flashiap_config_t *config, flash_callback_t callback);
+    status_t (*flash_get_property)(flash_config_t *config, flash_property_tag_t whichProperty, uint32_t *value);
 } flashiap_driver_interface_t;
 #endif // !BL_DEVICE_IS_LPC_SERIES
 #endif //#if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
@@ -212,10 +212,14 @@ typedef struct _bootloaderContext
     ftfx_cache_config_t *allFlashCacheState;                   //!< FTFx cache driver state information
 #if BL_FEATURE_SUPPORT_DFLASH
     flexnvm_config_t *dFlashState;             //!< Kinetis DFlash driver instance.
-#endif     
-#else
-    flashiap_config_t *allFlashState;                //!< LPC Flash driver instance.
 #endif
+#else
+    flash_config_t *allFlashState;                //!< LPC Flash driver instance.
+#endif
+#endif
+
+#if BL_FEATURE_RELIABLE_UPDATE
+    uint32_t imageStart;
 #endif
     //@}
 } bootloader_context_t;

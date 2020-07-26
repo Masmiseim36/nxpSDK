@@ -65,8 +65,10 @@ static void PHDC_ManagerRecvComplete(void *param);
  * Variables
  ******************************************************************************/
 
-USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t s_SendDataBuffer[APDU_MAX_BUFFER_SIZE];   /*!< use to send application protocol data unit */
-USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t s_RecvDataBuffer[APDU_MAX_BUFFER_SIZE];   /*!< use to receive application protocol data unit */
+USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
+static uint8_t s_SendDataBuffer[APDU_MAX_BUFFER_SIZE]; /*!< use to send application protocol data unit */
+USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
+static uint8_t s_RecvDataBuffer[APDU_MAX_BUFFER_SIZE]; /*!< use to receive application protocol data unit */
 
 /*! @brief the temp buffer used to prepare the manager response data */
 uint8_t s_tempBuffer[50U];
@@ -144,7 +146,7 @@ static void PHDC_ManagerSetState(void *param, uint8_t state)
 static void PHDC_ManagerRecvAssociationRequest(void *param, aarq_apdu_t *associationRequest)
 {
     host_phdc_manager_instance_t *phdcManagerInstance = (host_phdc_manager_instance_t *)param;
-    aare_apdu_t *associationResponse = NULL;
+    aare_apdu_t *associationResponse                  = NULL;
     /* Initialize the association result variable is Reject-unknown */
     phdcManagerInstance->assocResult = REJECTED_UNKNOWN;
     uint32_t tempassocVersion;
@@ -157,9 +159,9 @@ static void PHDC_ManagerRecvAssociationRequest(void *param, aarq_apdu_t *associa
         /* The manager does not understand the association version, it shall reject
            the association request with reject-unsupported-assoc-version */
         phdcManagerInstance->assocResult = REJECTED_UNSUPPORTED_ASSOC_VERSION;
-        associationResponse = (aare_apdu_t *)&s_tempBuffer[0U];
-        associationResponse->result = USB_SHORT_FROM_BIG_ENDIAN(phdcManagerInstance->assocResult);
-        associationResponse->selectedDataProto.dataProtoId = dataProto->dataProtoId;
+        associationResponse              = (aare_apdu_t *)&s_tempBuffer[0U];
+        associationResponse->result      = USB_SHORT_FROM_BIG_ENDIAN(phdcManagerInstance->assocResult);
+        associationResponse->selectedDataProto.dataProtoId          = dataProto->dataProtoId;
         associationResponse->selectedDataProto.dataProtoInfo.length = 0U;
     }
     else
@@ -170,16 +172,16 @@ static void PHDC_ManagerRecvAssociationRequest(void *param, aarq_apdu_t *associa
             /* The data-proto-id is not set to data-proto-id-20601, the manager shall send association
                response with reject-no-common-protocol */
             phdcManagerInstance->assocResult = REJECTED_NO_COMMON_PROTOCOL;
-            associationResponse = (aare_apdu_t *)&s_tempBuffer[0U];
-            associationResponse->result = USB_SHORT_FROM_BIG_ENDIAN(phdcManagerInstance->assocResult);
-            associationResponse->selectedDataProto.dataProtoId = dataProto->dataProtoId;
+            associationResponse              = (aare_apdu_t *)&s_tempBuffer[0U];
+            associationResponse->result      = USB_SHORT_FROM_BIG_ENDIAN(phdcManagerInstance->assocResult);
+            associationResponse->selectedDataProto.dataProtoId          = dataProto->dataProtoId;
             associationResponse->selectedDataProto.dataProtoInfo.length = 0U;
         }
         else
         {
             /* The data-proto-id is set to data-proto-id-20601, the data-proto-info shall be filled with
                PhdAssociationInformation */
-            uint16_t offset = 0;
+            uint16_t offset                                  = 0;
             phd_association_information_t *assocResponseInfo = NULL;
             phd_association_information_t *assocInfo =
                 (phd_association_information_t *)&dataProto->dataProtoInfo.value[0U];
@@ -228,7 +230,7 @@ static void PHDC_ManagerRecvAssociationRequest(void *param, aarq_apdu_t *associa
             assocResponseInfo =
                 (phd_association_information_t *)&associationResponse->selectedDataProto.dataProtoInfo.value[0];
             associationResponse->result = USB_SHORT_FROM_BIG_ENDIAN(phdcManagerInstance->assocResult);
-            associationResponse->selectedDataProto.dataProtoId = dataProto->dataProtoId;
+            associationResponse->selectedDataProto.dataProtoId          = dataProto->dataProtoId;
             associationResponse->selectedDataProto.dataProtoInfo.length = dataProto->dataProtoInfo.length;
             if (USB_SHORT_FROM_BIG_ENDIAN(dataProto->dataProtoInfo.length) > 0U)
             {
@@ -316,10 +318,10 @@ static void PHDC_ManagerSendAssociationAbortRequest(void *param, abort_reason_t 
     apdu_t *pApdu;
     uint16_t size;
     /* Calculate the size of association request data */
-    size = (uint16_t)(ASSOC_ABRT_HEADER_SIZE + APDU_HEADER_SIZE);
-    pApdu = (apdu_t *)&phdcManagerInstance->sendDataBuffer[0];
-    pApdu->choice = USB_SHORT_FROM_BIG_ENDIAN(ABRT_CHOSEN);
-    pApdu->length = (uint16_t)USB_SHORT_FROM_BIG_ENDIAN(size - APDU_HEADER_SIZE);
+    size                 = (uint16_t)(ASSOC_ABRT_HEADER_SIZE + APDU_HEADER_SIZE);
+    pApdu                = (apdu_t *)&phdcManagerInstance->sendDataBuffer[0];
+    pApdu->choice        = USB_SHORT_FROM_BIG_ENDIAN(ABRT_CHOSEN);
+    pApdu->length        = (uint16_t)USB_SHORT_FROM_BIG_ENDIAN(size - APDU_HEADER_SIZE);
     pApdu->u.abrt.reason = USB_SHORT_FROM_BIG_ENDIAN(abortReason);
     /* Send abort request to the device */
     if (kStatus_USB_Success != USB_HostPhdcSend(phdcManagerInstance->classHandle, (uint8_t *)pApdu, (uint32_t)size,
@@ -341,10 +343,10 @@ static void PHDC_ManagerSendAssociationReleaseResponse(void *param, release_resp
     host_phdc_manager_instance_t *phdcManagerInstance = (host_phdc_manager_instance_t *)param;
     apdu_t *pApdu;
     uint16_t size;
-    size = (uint16_t)(ASSOC_RLRE_HEADER_SIZE + APDU_HEADER_SIZE);
-    pApdu = (apdu_t *)&phdcManagerInstance->sendDataBuffer[0];
-    pApdu->choice = USB_SHORT_FROM_BIG_ENDIAN(RLRE_CHOSEN);
-    pApdu->length = (uint16_t)USB_SHORT_FROM_BIG_ENDIAN(size - APDU_HEADER_SIZE);
+    size                 = (uint16_t)(ASSOC_RLRE_HEADER_SIZE + APDU_HEADER_SIZE);
+    pApdu                = (apdu_t *)&phdcManagerInstance->sendDataBuffer[0];
+    pApdu->choice        = USB_SHORT_FROM_BIG_ENDIAN(RLRE_CHOSEN);
+    pApdu->length        = (uint16_t)USB_SHORT_FROM_BIG_ENDIAN(size - APDU_HEADER_SIZE);
     pApdu->u.rlre.reason = USB_SHORT_FROM_BIG_ENDIAN(releaseReason);
     /* Send release response to the device */
     if (kStatus_USB_Success != USB_HostPhdcSend(phdcManagerInstance->classHandle, (uint8_t *)pApdu, (uint32_t)size,
@@ -364,7 +366,7 @@ static void PHDC_ManagerSendAssociationReleaseResponse(void *param, release_resp
 static void PHDC_ManagerRecvPresentationProtocolDataUnit(void *param, prst_apdu_t *pPrst)
 {
     host_phdc_manager_instance_t *phdcManagerInstance = (host_phdc_manager_instance_t *)param;
-    data_apdu_t *dataApdu = (data_apdu_t *)&(pPrst->value[0U]);
+    data_apdu_t *dataApdu                             = (data_apdu_t *)&(pPrst->value[0U]);
     /* Store the invoke ID */
     phdcManagerInstance->invokeId = dataApdu->invokeId;
     /* Get the prst choice */
@@ -382,8 +384,8 @@ static void PHDC_ManagerRecvPresentationProtocolDataUnit(void *param, prst_apdu_
                 if (IEEE11073_MANAGER_CONNECTED_ASSOCIATED_CONFIGURING_WAITING == phdcManagerInstance->managerState)
                 {
                     /* Not allowed, send Roer with no-such-object-instance, no state transition */
-                    error_result_t *errorResult = (error_result_t *)&s_tempBuffer[0U];
-                    errorResult->errorValue = USB_SHORT_FROM_BIG_ENDIAN(NO_SUCH_OBJECT_INSTANCE);
+                    error_result_t *errorResult   = (error_result_t *)&s_tempBuffer[0U];
+                    errorResult->errorValue       = USB_SHORT_FROM_BIG_ENDIAN(NO_SUCH_OBJECT_INSTANCE);
                     errorResult->parameter.length = 0U; /* There is no parameter for error result */
                     /* Send rors or rore or rorj, no state transition */
                     PHDC_ManagerSendRoer(param, errorResult);
@@ -393,8 +395,8 @@ static void PHDC_ManagerRecvPresentationProtocolDataUnit(void *param, prst_apdu_
                 {
                     /* The Agent only ever sends event report messages. This should never happen.
                     Roer with no-such-action is sent */
-                    error_result_t *errorResult = (error_result_t *)&s_tempBuffer[0U];
-                    errorResult->errorValue = USB_SHORT_FROM_BIG_ENDIAN(NO_SUCH_ACTION);
+                    error_result_t *errorResult   = (error_result_t *)&s_tempBuffer[0U];
+                    errorResult->errorValue       = USB_SHORT_FROM_BIG_ENDIAN(NO_SUCH_ACTION);
                     errorResult->parameter.length = 0U; /* There is no parameter for error result */
                     /* Send rors or rore or rorj, no state transition */
                     PHDC_ManagerSendRoer(param, errorResult);
@@ -417,8 +419,8 @@ static void PHDC_ManagerRecvPresentationProtocolDataUnit(void *param, prst_apdu_
                 if (IEEE11073_MANAGER_CONNECTED_ASSOCIATED_CONFIGURING_WAITING == phdcManagerInstance->managerState)
                 {
                     /* Not allowed, send Roer with no-such-object-instance, no state transition */
-                    error_result_t *errorResult = (error_result_t *)&s_tempBuffer[0U];
-                    errorResult->errorValue = USB_SHORT_FROM_BIG_ENDIAN(NO_SUCH_OBJECT_INSTANCE);
+                    error_result_t *errorResult   = (error_result_t *)&s_tempBuffer[0U];
+                    errorResult->errorValue       = USB_SHORT_FROM_BIG_ENDIAN(NO_SUCH_OBJECT_INSTANCE);
                     errorResult->parameter.length = 0U; /* There is no parameter for error result */
                     /* Send rors or rore or rorj, no state transition */
                     PHDC_ManagerSendRoer(param, errorResult);
@@ -428,8 +430,8 @@ static void PHDC_ManagerRecvPresentationProtocolDataUnit(void *param, prst_apdu_
                 {
                     /* The Agent only ever sends event report messages. This should never happen.
                     Roer with no-such-action is sent */
-                    error_result_t *errorResult = (error_result_t *)&s_tempBuffer[0U];
-                    errorResult->errorValue = USB_SHORT_FROM_BIG_ENDIAN(NO_SUCH_ACTION);
+                    error_result_t *errorResult   = (error_result_t *)&s_tempBuffer[0U];
+                    errorResult->errorValue       = USB_SHORT_FROM_BIG_ENDIAN(NO_SUCH_ACTION);
                     errorResult->parameter.length = 0U; /* There is no parameter for error result */
                     /* Send rors or rore or rorj, no state transition */
                     PHDC_ManagerSendRoer(param, errorResult);
@@ -447,8 +449,8 @@ static void PHDC_ManagerRecvPresentationProtocolDataUnit(void *param, prst_apdu_
                 if (IEEE11073_MANAGER_CONNECTED_ASSOCIATED_CONFIGURING_WAITING == phdcManagerInstance->managerState)
                 {
                     /* Not allowed, send Roer with no-such-object-instance, no state transition */
-                    error_result_t *errorResult = (error_result_t *)&s_tempBuffer[0U];
-                    errorResult->errorValue = USB_SHORT_FROM_BIG_ENDIAN(NO_SUCH_OBJECT_INSTANCE);
+                    error_result_t *errorResult   = (error_result_t *)&s_tempBuffer[0U];
+                    errorResult->errorValue       = USB_SHORT_FROM_BIG_ENDIAN(NO_SUCH_OBJECT_INSTANCE);
                     errorResult->parameter.length = 0U; /* There is no parameter for error result */
                     /* Send rors or rore or rorj, no state transition */
                     PHDC_ManagerSendRoer(param, errorResult);
@@ -458,8 +460,8 @@ static void PHDC_ManagerRecvPresentationProtocolDataUnit(void *param, prst_apdu_
                 {
                     /* The Agent only ever sends event report messages. This should never happen.
                     Roer with no-such-action is sent */
-                    error_result_t *errorResult = (error_result_t *)&s_tempBuffer[0U];
-                    errorResult->errorValue = USB_SHORT_FROM_BIG_ENDIAN(NO_SUCH_ACTION);
+                    error_result_t *errorResult   = (error_result_t *)&s_tempBuffer[0U];
+                    errorResult->errorValue       = USB_SHORT_FROM_BIG_ENDIAN(NO_SUCH_ACTION);
                     errorResult->parameter.length = 0U; /* There is no parameter for error result */
                     /* Send rors or rore or rorj, no state transition */
                     PHDC_ManagerSendRoer(param, errorResult);
@@ -477,8 +479,8 @@ static void PHDC_ManagerRecvPresentationProtocolDataUnit(void *param, prst_apdu_
                 if (IEEE11073_MANAGER_CONNECTED_ASSOCIATED_CONFIGURING_WAITING == phdcManagerInstance->managerState)
                 {
                     /* Not allowed, send Roer with no-such-object-instance, no state transition */
-                    error_result_t *errorResult = (error_result_t *)&s_tempBuffer[0U];
-                    errorResult->errorValue = USB_SHORT_FROM_BIG_ENDIAN(NO_SUCH_OBJECT_INSTANCE);
+                    error_result_t *errorResult   = (error_result_t *)&s_tempBuffer[0U];
+                    errorResult->errorValue       = USB_SHORT_FROM_BIG_ENDIAN(NO_SUCH_OBJECT_INSTANCE);
                     errorResult->parameter.length = 0U; /* There is no parameter for error result */
                     /* Send rors or rore or rorj, no state transition */
                     PHDC_ManagerSendRoer(param, errorResult);
@@ -488,8 +490,8 @@ static void PHDC_ManagerRecvPresentationProtocolDataUnit(void *param, prst_apdu_
                 {
                     /* The Agent only ever sends event report messages. This should never happen.
                     Roer with no-such-action is sent */
-                    error_result_t *errorResult = (error_result_t *)&s_tempBuffer[0U];
-                    errorResult->errorValue = USB_SHORT_FROM_BIG_ENDIAN(NO_SUCH_ACTION);
+                    error_result_t *errorResult   = (error_result_t *)&s_tempBuffer[0U];
+                    errorResult->errorValue       = USB_SHORT_FROM_BIG_ENDIAN(NO_SUCH_ACTION);
                     errorResult->parameter.length = 0U; /* There is no parameter for error result */
                     /* Send rors or rore or rorj, no state transition */
                     PHDC_ManagerSendRoer(param, errorResult);
@@ -507,8 +509,8 @@ static void PHDC_ManagerRecvPresentationProtocolDataUnit(void *param, prst_apdu_
                 if (IEEE11073_MANAGER_CONNECTED_ASSOCIATED_CONFIGURING_WAITING == phdcManagerInstance->managerState)
                 {
                     /* Not allowed, send Roer with no-such-object-instance, no state transition */
-                    error_result_t *errorResult = (error_result_t *)&s_tempBuffer[0U];
-                    errorResult->errorValue = USB_SHORT_FROM_BIG_ENDIAN(NO_SUCH_OBJECT_INSTANCE);
+                    error_result_t *errorResult   = (error_result_t *)&s_tempBuffer[0U];
+                    errorResult->errorValue       = USB_SHORT_FROM_BIG_ENDIAN(NO_SUCH_OBJECT_INSTANCE);
                     errorResult->parameter.length = 0U; /* There is no parameter for error result */
                     /* Send rors or rore or rorj, no state transition */
                     PHDC_ManagerSendRoer(param, errorResult);
@@ -518,8 +520,8 @@ static void PHDC_ManagerRecvPresentationProtocolDataUnit(void *param, prst_apdu_
                 {
                     /* The Agent only ever sends event report messages. This should never happen.
                     Roer with no-such-action is sent */
-                    error_result_t *errorResult = (error_result_t *)&s_tempBuffer[0U];
-                    errorResult->errorValue = USB_SHORT_FROM_BIG_ENDIAN(NO_SUCH_ACTION);
+                    error_result_t *errorResult   = (error_result_t *)&s_tempBuffer[0U];
+                    errorResult->errorValue       = USB_SHORT_FROM_BIG_ENDIAN(NO_SUCH_ACTION);
                     errorResult->parameter.length = 0U; /* There is no parameter for error result */
                     /* Send rors or rore or rorj, no state transition */
                     PHDC_ManagerSendRoer(param, errorResult);
@@ -537,8 +539,8 @@ static void PHDC_ManagerRecvPresentationProtocolDataUnit(void *param, prst_apdu_
                 if (IEEE11073_MANAGER_CONNECTED_ASSOCIATED_CONFIGURING_WAITING == phdcManagerInstance->managerState)
                 {
                     /* Not allowed, send Roer with no-such-object-instance, no state transition */
-                    error_result_t *errorResult = (error_result_t *)&s_tempBuffer[0U];
-                    errorResult->errorValue = USB_SHORT_FROM_BIG_ENDIAN(NO_SUCH_OBJECT_INSTANCE);
+                    error_result_t *errorResult   = (error_result_t *)&s_tempBuffer[0U];
+                    errorResult->errorValue       = USB_SHORT_FROM_BIG_ENDIAN(NO_SUCH_OBJECT_INSTANCE);
                     errorResult->parameter.length = 0U; /* There is no parameter for error result */
                     /* Send rors or rore or rorj, no state transition */
                     PHDC_ManagerSendRoer(param, errorResult);
@@ -548,8 +550,8 @@ static void PHDC_ManagerRecvPresentationProtocolDataUnit(void *param, prst_apdu_
                 {
                     /* The Agent only ever sends event report messages. This should never happen.
                     Roer with no-such-action is sent */
-                    error_result_t *errorResult = (error_result_t *)&s_tempBuffer[0U];
-                    errorResult->errorValue = USB_SHORT_FROM_BIG_ENDIAN(NO_SUCH_ACTION);
+                    error_result_t *errorResult   = (error_result_t *)&s_tempBuffer[0U];
+                    errorResult->errorValue       = USB_SHORT_FROM_BIG_ENDIAN(NO_SUCH_ACTION);
                     errorResult->parameter.length = 0U; /* There is no parameter for error result */
                     /* Send rors or rore or rorj, no state transition */
                     PHDC_ManagerSendRoer(param, errorResult);
@@ -741,8 +743,8 @@ static void PHDC_ManagerRecvMdcNotiConfig(void *param, event_report_argument_sim
     if (IEEE11073_MANAGER_CONNECTED_ASSOCIATED_CONFIGURING_WAITING == phdcManagerInstance->managerState)
     {
         event_report_result_simple_t *eventResponse = NULL;
-        uint16_t configOffset = 0U;
-        uint16_t configListSize = (uint16_t)(USB_SHORT_FROM_BIG_ENDIAN(configObjectList->length) +
+        uint16_t configOffset                       = 0U;
+        uint16_t configListSize                     = (uint16_t)(USB_SHORT_FROM_BIG_ENDIAN(configObjectList->length) +
                                              sizeof(configObjectList->count) + sizeof(configObjectList->length));
         /* Clear config object list */
         memset((void *)&phdcManagerInstance->configObjectList[0U], 0U, APDU_MAX_BUFFER_SIZE);
@@ -755,7 +757,7 @@ static void PHDC_ManagerRecvMdcNotiConfig(void *param, event_report_argument_sim
             config_object_t *configObject =
                 (config_object_t *)(((uint8_t *)&configObjectList->value[0U]) + configOffset);
             attribute_list_t *attributeList = (attribute_list_t *)&configObject->attributes;
-            uint16_t attributeOffset = 0U;
+            uint16_t attributeOffset        = 0U;
             usb_echo("\n\r11073Manager:  > Object Handle %d: Class = %d  Num Attributes = %d.",
                      USB_SHORT_FROM_BIG_ENDIAN(configObject->objectHandle),
                      USB_SHORT_FROM_BIG_ENDIAN(configObject->objectClass),
@@ -784,11 +786,11 @@ static void PHDC_ManagerRecvMdcNotiConfig(void *param, event_report_argument_sim
         config_report_rsp_t *configResponse;
         eventResponse->objectHandle = eventReport->objectHandle;
         USB_ASSIGN_VALUE_ADDRESS_LONG_BY_BYTE(eventResponse->currentTime, eventReport->eventTime);
-        eventResponse->eventType = eventReport->eventType;
+        eventResponse->eventType             = eventReport->eventType;
         eventResponse->eventReplyInfo.length = USB_SHORT_FROM_BIG_ENDIAN(sizeof(config_report_rsp_t));
-        configResponse = (config_report_rsp_t *)(&eventResponse->eventReplyInfo.value[0]);
-        configResponse->configReportId = configReport->configReportId;
-        configResponse->configResult = USB_SHORT_FROM_BIG_ENDIAN(phdcManagerInstance->configResult);
+        configResponse                       = (config_report_rsp_t *)(&eventResponse->eventReplyInfo.value[0]);
+        configResponse->configReportId       = configReport->configReportId;
+        configResponse->configResult         = USB_SHORT_FROM_BIG_ENDIAN(phdcManagerInstance->configResult);
         PHDC_ManagerSendRorsCmipConfirmedEventReport(param, eventResponse);
     }
     else if (IEEE11073_MANAGER_CONNECTED_ASSOCIATED_CONFIGURING_CHECKING_CONFIG == phdcManagerInstance->managerState)
@@ -799,8 +801,8 @@ static void PHDC_ManagerRecvMdcNotiConfig(void *param, event_report_argument_sim
     }
     else if (IEEE11073_MANAGER_CONNECTED_ASSOCIATED_OPERATING == phdcManagerInstance->managerState)
     {
-        error_result_t *errorResult = (error_result_t *)&s_tempBuffer[0U];
-        errorResult->errorValue = USB_SHORT_FROM_BIG_ENDIAN(NO_SUCH_OBJECT_INSTANCE);
+        error_result_t *errorResult   = (error_result_t *)&s_tempBuffer[0U];
+        errorResult->errorValue       = USB_SHORT_FROM_BIG_ENDIAN(NO_SUCH_OBJECT_INSTANCE);
         errorResult->parameter.length = 0U; /* There is no parameter for error result */
         /* Send rors or rore or rorj, no state transition */
         PHDC_ManagerSendRoer(param, errorResult);
@@ -824,7 +826,7 @@ static void PHDC_ManagerRecvMdcNotiScanReportFixed(void *param, event_report_arg
     observation_scan_fixed_list_t *obsScanFixedList =
         (observation_scan_fixed_list_t *)&scanReportInfoFixed->obsScanFixed;
     event_report_result_simple_t *eventResponse = NULL;
-    uint16_t obsListOffset = 0U;
+    uint16_t obsListOffset                      = 0U;
     usb_echo("\n\r11073Manager: Received a MDC Noti Scan Report Fixed event.");
     usb_echo("\n\r11073Manager: --------------------------------------------------");
     usb_echo("\n\r11073Manager: Scan Report Number: %d  Number Observations: %d",
@@ -867,10 +869,10 @@ static void PHDC_ManagerRecvMdcNotiScanReportFixed(void *param, event_report_arg
     usb_echo("\n\r11073Manager: --------------------------------------------------");
     usb_echo("\n\r11073Manager: Send back MDC Noti Scan Fixed response.");
     /* prepare response data */
-    eventResponse = (event_report_result_simple_t *)&s_tempBuffer[0U];
+    eventResponse               = (event_report_result_simple_t *)&s_tempBuffer[0U];
     eventResponse->objectHandle = eventReport->objectHandle;
     USB_ASSIGN_VALUE_ADDRESS_LONG_BY_BYTE(eventResponse->currentTime, eventReport->eventTime);
-    eventResponse->eventType = eventReport->eventType;
+    eventResponse->eventType             = eventReport->eventType;
     eventResponse->eventReplyInfo.length = 0U; /* There is no reply data */
     PHDC_ManagerSendRorsCmipConfirmedEventReport(param, eventResponse);
 }
@@ -998,7 +1000,7 @@ static void PHDC_ManagerSendRorsCmipConfirmedEventReport(void *param, event_repo
     uint16_t size;
 
     /* Calculate the size of rorsCmipConfirmedEventReport */
-    size = (uint16_t)(APDU_HEADER_SIZE + ASSOC_PRST_HEADER_SIZE + sizeof(eventResponse->objectHandle) +
+    size  = (uint16_t)(APDU_HEADER_SIZE + ASSOC_PRST_HEADER_SIZE + sizeof(eventResponse->objectHandle) +
                       sizeof(eventResponse->currentTime) + sizeof(eventResponse->eventType) +
                       sizeof(eventResponse->eventReplyInfo.length) +
                       USB_SHORT_FROM_BIG_ENDIAN(eventResponse->eventReplyInfo.length));
@@ -1069,7 +1071,7 @@ static void PHDC_ManagerSendRoivCmipGet(void *param, get_argument_simple_t *getA
     data_apdu_t *pPrst;
 
     /* Calculate the size of RoivCmipGet request data */
-    size = (uint16_t)(APDU_HEADER_SIZE + ASSOC_PRST_HEADER_SIZE + sizeof(getArg->objectHandle) +
+    size  = (uint16_t)(APDU_HEADER_SIZE + ASSOC_PRST_HEADER_SIZE + sizeof(getArg->objectHandle) +
                       sizeof(getArg->attributeIdList.count) + sizeof(getArg->attributeIdList.length) +
                       USB_SHORT_FROM_BIG_ENDIAN(getArg->attributeIdList.length));
     pApdu = (apdu_t *)&phdcManagerInstance->sendDataBuffer[0];
@@ -1116,7 +1118,7 @@ static void PHDC_ManagerSendRoivCmipGet(void *param, get_argument_simple_t *getA
 static void PHDC_ManagerRecvRorsCmipGet(void *param, get_result_simple_t *getResult)
 {
     attribute_list_t *attributeList = (attribute_list_t *)&getResult->attributeList;
-    uint16_t attributeOffset = 0U;
+    uint16_t attributeOffset        = 0U;
     usb_echo("\n\r11073Manager: Received a RORS_CMIP_GET_CHOSEN.");
     usb_echo("\n\r11073Manager: --------------------------------------------------");
     usb_echo("\n\r11073Manager: Number of attributes = %d", USB_SHORT_FROM_BIG_ENDIAN(attributeList->count));
@@ -1213,15 +1215,15 @@ static void PHDC_ManagerSendRoer(void *param, error_result_t *errorResult)
     size = (uint16_t)(APDU_HEADER_SIZE + ASSOC_PRST_HEADER_SIZE + sizeof(errorResult->errorValue) +
                       sizeof(errorResult->parameter.length) + USB_SHORT_FROM_BIG_ENDIAN(errorResult->parameter.length));
 
-    pApdu = (apdu_t *)&phdcManagerInstance->sendDataBuffer[0];
-    pApdu->choice = (uint16_t)USB_SHORT_FROM_BIG_ENDIAN(PRST_CHOSEN);
-    pApdu->length = (uint16_t)USB_SHORT_FROM_BIG_ENDIAN(size - APDU_HEADER_SIZE);
+    pApdu                = (apdu_t *)&phdcManagerInstance->sendDataBuffer[0];
+    pApdu->choice        = (uint16_t)USB_SHORT_FROM_BIG_ENDIAN(PRST_CHOSEN);
+    pApdu->length        = (uint16_t)USB_SHORT_FROM_BIG_ENDIAN(size - APDU_HEADER_SIZE);
     pApdu->u.prst.length = (uint16_t)USB_SHORT_FROM_BIG_ENDIAN(size - APDU_HEADER_SIZE - sizeof(uint16_t));
-    pPrst = (data_apdu_t *)&pApdu->u.prst.value[0U];
-    pPrst->invokeId = phdcManagerInstance->invokeId;
+    pPrst                = (data_apdu_t *)&pApdu->u.prst.value[0U];
+    pPrst->invokeId      = phdcManagerInstance->invokeId;
     pPrst->choice.choice = USB_SHORT_FROM_BIG_ENDIAN(ROER_CHOSEN);
     pPrst->choice.length = (uint16_t)USB_SHORT_FROM_BIG_ENDIAN(size - APDU_HEADER_SIZE - ASSOC_PRST_HEADER_SIZE);
-    pPrst->choice.u.roer.errorValue = errorResult->errorValue;
+    pPrst->choice.u.roer.errorValue       = errorResult->errorValue;
     pPrst->choice.u.roer.parameter.length = errorResult->parameter.length;
     if (USB_SHORT_FROM_BIG_ENDIAN(errorResult->parameter.length) > 0U)
     {
@@ -1250,7 +1252,7 @@ static config_object_t *PHDC_ManagerGetConfigObject(void *param, handle_t object
 {
     host_phdc_manager_instance_t *phdcManagerInstance = (host_phdc_manager_instance_t *)param;
     config_object_list_t *configObjectList = (config_object_list_t *)&phdcManagerInstance->configObjectList[0U];
-    config_object_t *configObjectEntry = NULL;
+    config_object_t *configObjectEntry     = NULL;
     if (0U != USB_SHORT_FROM_BIG_ENDIAN(configObjectList->count))
     {
         uint16_t configOffset = 0U;
@@ -1339,7 +1341,7 @@ static void PHDC_ManagerPrintFloatValue(uint8_t *value)
     mantissa = (int32_t)(rawValue & 0x00FFFFFFU);
     exponent = PHDC_ManagerConvertTwoComplement(8U, (uint8_t *)&exponent);
     mantissa = PHDC_ManagerConvertTwoComplement(24U, (uint8_t *)&mantissa);
-    fValue = (float)(mantissa * pow(10U, (double)exponent));
+    fValue   = (float)(mantissa * pow(10U, (double)exponent));
     usb_echo("%f", fValue);
 }
 
@@ -1369,7 +1371,7 @@ static void PHDC_ManagerPrintSfloatValue(uint8_t *value)
     mantissa = (int32_t)(rawValue & 0x0FFFU);
     exponent = PHDC_ManagerConvertTwoComplement(4U, (uint8_t *)&exponent);
     mantissa = PHDC_ManagerConvertTwoComplement(12U, (uint8_t *)&mantissa);
-    fValue = (float)(mantissa * pow(10U, (double)exponent));
+    fValue   = (float)(mantissa * pow(10U, (double)exponent));
     usb_echo("%f", fValue);
 }
 
@@ -1418,8 +1420,8 @@ static int32_t PHDC_ManagerConvertTwoComplement(uint8_t size, uint8_t *value)
         else
         {
             /* Negative number */
-            rawValue = rawValue - 1U;
-            rawValue = (uint32_t)((~rawValue) & significantMask);
+            rawValue     = rawValue - 1U;
+            rawValue     = (uint32_t)((~rawValue) & significantMask);
             decimalValue = (int32_t)(0U - rawValue);
         }
     }
@@ -1731,7 +1733,7 @@ static void PHDC_ManagerBulkOutCallback(void *param, uint8_t *data, uint32_t dat
                 PHDC_ManagerSetState(param, IEEE11073_MANAGER_CONNECTED_ASSOCIATED_OPERATING);
                 getArg->objectHandle = MDS_HANDLE;
                 /* There is no attribute for get MDS attribute service request */
-                getArg->attributeIdList.count = 0x0000U;
+                getArg->attributeIdList.count  = 0x0000U;
                 getArg->attributeIdList.length = 0x0000U;
                 PHDC_ManagerSendRoivCmipGet(param, getArg, 0x3456U /* start of DataApdu. MDER encoded. */);
             }
@@ -1755,7 +1757,7 @@ static void PHDC_ManagerBulkOutCallback(void *param, uint8_t *data, uint32_t dat
  */
 void HOST_PhdcManagerTask(void *param)
 {
-    usb_status_t status = kStatus_USB_Success;
+    usb_status_t status                               = kStatus_USB_Success;
     host_phdc_manager_instance_t *phdcManagerInstance = (host_phdc_manager_instance_t *)param;
 
     /* device state changes */
@@ -1802,7 +1804,7 @@ void HOST_PhdcManagerTask(void *param)
 
         case kUSB_HostPhdcRunSetInterface:
             phdcManagerInstance->runWaitState = kUSB_HostPhdcRunWaitSetInterface;
-            phdcManagerInstance->runState = kUSB_HostPhdcRunIdle;
+            phdcManagerInstance->runState     = kUSB_HostPhdcRunIdle;
             if (USB_HostPhdcSetInterface(phdcManagerInstance->classHandle, phdcManagerInstance->interfaceHandle, 0U,
                                          PHDC_ManagerControlCallback, phdcManagerInstance) != kStatus_USB_Success)
             {
@@ -1815,7 +1817,7 @@ void HOST_PhdcManagerTask(void *param)
             /* Clear received buffer */
             memset((void *)&phdcManagerInstance->recvDataBuffer[0U], 0U, APDU_MAX_BUFFER_SIZE);
             phdcManagerInstance->runWaitState = kUSB_HostPhdcRunWaitDataReceived;
-            phdcManagerInstance->runState = kUSB_HostPhdcRunIdle;
+            phdcManagerInstance->runState     = kUSB_HostPhdcRunIdle;
             status = USB_HostPhdcRecv(phdcManagerInstance->classHandle, 0xFEU, phdcManagerInstance->recvDataBuffer,
                                       APDU_MAX_BUFFER_SIZE, PHDC_ManagerBulkInCallback, phdcManagerInstance);
             if (status != kStatus_USB_Success)
@@ -1826,7 +1828,7 @@ void HOST_PhdcManagerTask(void *param)
         case kUSB_HostPhdcRunDataReceived:
             PHDC_ManagerRecvComplete(param);
             phdcManagerInstance->runWaitState = kUSB_HostPhdcRunWaitDataReceived;
-            phdcManagerInstance->runState = kUSB_HostPhdcRunIdle;
+            phdcManagerInstance->runState     = kUSB_HostPhdcRunIdle;
             status = USB_HostPhdcRecv(phdcManagerInstance->classHandle, 0xFEU, phdcManagerInstance->recvDataBuffer,
                                       APDU_MAX_BUFFER_SIZE, PHDC_ManagerBulkInCallback, phdcManagerInstance);
             if (status != kStatus_USB_Success)
@@ -1837,7 +1839,7 @@ void HOST_PhdcManagerTask(void *param)
 
         case kUSB_HostPhdcRunPrimeDataReceive:
             phdcManagerInstance->runWaitState = kUSB_HostPhdcRunWaitDataReceived;
-            phdcManagerInstance->runState = kUSB_HostPhdcRunIdle;
+            phdcManagerInstance->runState     = kUSB_HostPhdcRunIdle;
             status = USB_HostPhdcRecv(phdcManagerInstance->classHandle, 0xFEU, phdcManagerInstance->recvDataBuffer,
                                       APDU_MAX_BUFFER_SIZE, PHDC_ManagerBulkInCallback, phdcManagerInstance);
             if (status != kStatus_USB_Success)
@@ -1867,7 +1869,7 @@ usb_status_t HOST_PhdcManagerEvent(usb_device_handle deviceHandle,
                                    uint32_t eventCode)
 {
     static usb_host_configuration_handle configHandle = NULL;
-    usb_status_t status = kStatus_USB_Success;
+    usb_status_t status                               = kStatus_USB_Success;
     uint8_t id;
     usb_host_configuration_t *configuration;
     uint8_t interfaceIndex;
@@ -1883,7 +1885,7 @@ usb_status_t HOST_PhdcManagerEvent(usb_device_handle deviceHandle,
             for (interfaceIndex = 0U; interfaceIndex < configuration->interfaceCount; ++interfaceIndex)
             {
                 interface = &configuration->interfaceList[interfaceIndex];
-                id = interface->interfaceDesc->bInterfaceClass;
+                id        = interface->interfaceDesc->bInterfaceClass;
                 if (id != USB_HOST_PHDC_CLASS_CODE)
                 {
                     continue;
@@ -1900,12 +1902,12 @@ usb_status_t HOST_PhdcManagerEvent(usb_device_handle deviceHandle,
                 }
                 else
                 {
-                    g_phdcManagerInstance.recvDataBuffer = s_RecvDataBuffer;
-                    g_phdcManagerInstance.sendDataBuffer = s_SendDataBuffer;
-                    g_phdcManagerInstance.deviceHandle = deviceHandle;
+                    g_phdcManagerInstance.recvDataBuffer  = s_RecvDataBuffer;
+                    g_phdcManagerInstance.sendDataBuffer  = s_SendDataBuffer;
+                    g_phdcManagerInstance.deviceHandle    = deviceHandle;
                     g_phdcManagerInstance.interfaceHandle = interface;
-                    configHandle = configurationHandle;
-                    status = kStatus_USB_Success;
+                    configHandle                          = configurationHandle;
+                    status                                = kStatus_USB_Success;
                 }
             }
             break;

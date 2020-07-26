@@ -26,25 +26,25 @@
  ******************************************************************************/
 #define EXAMPLE_DSPI_MASTER_BASE (SPI0_BASE)
 #define EXAMPLE_DSPI_MASTER_IRQN (SPI0_IRQn)
-#define DSPI_MASTER_CLK_SRC (DSPI0_CLK_SRC)
-#define DSPI_MASTER_CLK_FREQ CLOCK_GetFreq((DSPI0_CLK_SRC))
+#define DSPI_MASTER_CLK_SRC      (DSPI0_CLK_SRC)
+#define DSPI_MASTER_CLK_FREQ     CLOCK_GetFreq((DSPI0_CLK_SRC))
 
 #define EXAMPLE_DSPI_SLAVE_BASE (SPI2_BASE)
 #define EXAMPLE_DSPI_SLAVE_IRQN (SPI2_IRQn)
 
-#define SINGLE_BOARD 0
+#define SINGLE_BOARD   0
 #define BOARD_TO_BOARD 1
 
 #define EXAMPLE_CONNECT_DSPI SINGLE_BOARD
 #if (EXAMPLE_CONNECT_DSPI == BOARD_TO_BOARD)
-#define isMASTER 0
-#define isSLAVE 1
+#define isMASTER         0
+#define isSLAVE          1
 #define SPI_MASTER_SLAVE isMASTER
 #endif
 #define EXAMPLE_DSPI_MASTER_BASEADDR ((SPI_Type *)EXAMPLE_DSPI_MASTER_BASE)
-#define EXAMPLE_DSPI_SLAVE_BASEADDR ((SPI_Type *)EXAMPLE_DSPI_SLAVE_BASE)
+#define EXAMPLE_DSPI_SLAVE_BASEADDR  ((SPI_Type *)EXAMPLE_DSPI_SLAVE_BASE)
 
-#define TRANSFER_SIZE (256)         /*! Transfer size */
+#define TRANSFER_SIZE     (256)     /*! Transfer size */
 #define TRANSFER_BAUDRATE (500000U) /*! Transfer baudrate - 500k */
 
 /*******************************************************************************
@@ -61,7 +61,7 @@ SemaphoreHandle_t dspi_sem;
  * Definitions
  ******************************************************************************/
 /* Task priorities. */
-#define slave_task_PRIORITY (configMAX_PRIORITIES - 2)
+#define slave_task_PRIORITY  (configMAX_PRIORITIES - 2)
 #define master_task_PRIORITY (configMAX_PRIORITIES - 1)
 /* Interrupt priorities. */
 #define DSPI_NVIC_PRIO 2
@@ -84,8 +84,8 @@ static void master_task(void *pvParameters);
 int main(void)
 {
     /* Init board hardware. */
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
 
     /* Set interrupt priorities */

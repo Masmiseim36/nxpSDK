@@ -49,10 +49,6 @@ usb_status_t USB_DeviceAudioSetControlTerminal(usb_device_audio_struct_t *audioH
                                                usb_device_control_request_struct_t *controlRequest);
 usb_status_t USB_DeviceAudioSetCurAudioFeatureUnit(usb_device_audio_struct_t *audioHandle,
                                                    usb_device_control_request_struct_t *controlRequest);
-usb_status_t USB_DeviceAudioSetControlTerminal(usb_device_audio_struct_t *audioHandle,
-                                               usb_device_control_request_struct_t *controlRequest);
-usb_status_t USB_DeviceAudioSetCurAudioFeatureUnit(usb_device_audio_struct_t *audioHandle,
-                                                   usb_device_control_request_struct_t *controlRequest);
 usb_status_t USB_DeviceAudioSetMinAudioFeatureUnit(usb_device_audio_struct_t *audioHandle,
                                                    usb_device_control_request_struct_t *controlRequest);
 usb_status_t USB_DeviceAudioSetMaxAudioFeatureUnit(usb_device_audio_struct_t *audioHandle,
@@ -160,12 +156,12 @@ usb_status_t USB_DeviceAudioInterruptIn(usb_device_handle handle,
     /* Get the audio class handle */
     audioHandle = (usb_device_audio_struct_t *)callbackParam;
 
-    if (!audioHandle)
+    if (NULL == audioHandle)
     {
         return kStatus_USB_InvalidHandle;
     }
 
-    if ((NULL != audioHandle->configStruct) && (audioHandle->configStruct->classCallback))
+    if ((NULL != audioHandle->configStruct) && (NULL != audioHandle->configStruct->classCallback))
     {
         /* Notify the application control data sent by calling the audio class callback.
         classCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
@@ -195,25 +191,25 @@ usb_status_t USB_DeviceAudioIsochronousIn(usb_device_handle handle,
                                           void *callbackParam)
 {
     usb_device_audio_struct_t *audioHandle;
-    usb_status_t error = kStatus_USB_Error;
+    usb_status_t status = kStatus_USB_Error;
 
     /* Get the audio class handle */
     audioHandle = (usb_device_audio_struct_t *)callbackParam;
-    if (!audioHandle)
+    if (NULL == audioHandle)
     {
         return kStatus_USB_InvalidHandle;
     }
     audioHandle->streamInPipeBusy = 0U;
-    if ((NULL != audioHandle->configStruct) && (audioHandle->configStruct->classCallback))
+    if ((NULL != audioHandle->configStruct) && (NULL != audioHandle->configStruct->classCallback))
     {
         /* Notify the application stream data sent by calling the audio class callback.
         classCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
         it is from the second parameter of classInit */
-        error = audioHandle->configStruct->classCallback((class_handle_t)audioHandle,
-                                                         kUSB_DeviceAudioEventStreamSendResponse, message);
+        status = audioHandle->configStruct->classCallback((class_handle_t)audioHandle,
+                                                          kUSB_DeviceAudioEventStreamSendResponse, message);
     }
 
-    return error;
+    return status;
 }
 
 /*!
@@ -234,24 +230,24 @@ usb_status_t USB_DeviceAudioIsochronousOut(usb_device_handle handle,
                                            void *callbackParam)
 {
     usb_device_audio_struct_t *audioHandle;
-    usb_status_t error = kStatus_USB_Error;
+    usb_status_t status = kStatus_USB_Error;
 
     /* Get the audio class handle */
     audioHandle = (usb_device_audio_struct_t *)callbackParam;
-    if (!audioHandle)
+    if (NULL == audioHandle)
     {
         return kStatus_USB_InvalidHandle;
     }
     audioHandle->streamOutPipeBusy = 0U;
 
-    if ((NULL != audioHandle->configStruct) && (audioHandle->configStruct->classCallback))
+    if ((NULL != audioHandle->configStruct) && (NULL != audioHandle->configStruct->classCallback))
     {
         /* classCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
         it is from the second parameter of classInit */
-        error = audioHandle->configStruct->classCallback((class_handle_t)audioHandle,
-                                                         kUSB_DeviceAudioEventStreamRecvResponse, message);
+        status = audioHandle->configStruct->classCallback((class_handle_t)audioHandle,
+                                                          kUSB_DeviceAudioEventStreamRecvResponse, message);
     }
-    return error;
+    return status;
 }
 
 /*!
@@ -268,29 +264,29 @@ usb_status_t USB_DeviceAudioStreamEndpointsInit(usb_device_audio_struct_t *audio
 {
     usb_device_interface_list_t *interfaceList;
     usb_device_interface_struct_t *interface = (usb_device_interface_struct_t *)NULL;
-    usb_status_t error                       = kStatus_USB_Error;
-    int count;
-    int index;
+    usb_status_t status                      = kStatus_USB_Error;
+    uint8_t count;
+    uint8_t index;
 
     /* Check the configuration is valid or not. */
-    if (!audioHandle->configuration)
+    if (0U == audioHandle->configuration)
     {
-        return error;
+        return status;
     }
 
     /* Check the configuration is valid or not. */
     if (audioHandle->configuration > audioHandle->configStruct->classInfomation->configurations)
     {
-        return error;
+        return status;
     }
 
     if (NULL == audioHandle->configStruct->classInfomation->interfaceList)
     {
-        return error;
+        return status;
     }
 
     /* Get the interface list of the new configuration. */
-    interfaceList = &audioHandle->configStruct->classInfomation->interfaceList[audioHandle->configuration - 1];
+    interfaceList = &audioHandle->configStruct->classInfomation->interfaceList[audioHandle->configuration - 1U];
 
     /* Find stream interface by using the alternate setting of the interface. */
     for (count = 0U; count < interfaceList->count; count++)
@@ -310,9 +306,9 @@ usb_status_t USB_DeviceAudioStreamEndpointsInit(usb_device_audio_struct_t *audio
             break;
         }
     }
-    if (!interface)
+    if (NULL == interface)
     {
-        return error;
+        return status;
     }
     /* Keep new stream interface handle. */
     audioHandle->streamInterfaceHandle = interface;
@@ -340,9 +336,9 @@ usb_status_t USB_DeviceAudioStreamEndpointsInit(usb_device_audio_struct_t *audio
         }
         epCallback.callbackParam = audioHandle;
 
-        error = USB_DeviceInitEndpoint(audioHandle->handle, &epInitStruct, &epCallback);
+        status = USB_DeviceInitEndpoint(audioHandle->handle, &epInitStruct, &epCallback);
     }
-    return error;
+    return status;
 }
 
 /*!
@@ -357,18 +353,18 @@ usb_status_t USB_DeviceAudioStreamEndpointsInit(usb_device_audio_struct_t *audio
  */
 usb_status_t USB_DeviceAudioStreamEndpointsDeinit(usb_device_audio_struct_t *audioHandle)
 {
-    usb_status_t error = kStatus_USB_Error;
+    usb_status_t status = kStatus_USB_Error;
     usb_device_endpoint_callback_message_struct_t message;
-    int count;
+    uint8_t count;
 
-    if (!audioHandle->streamInterfaceHandle)
+    if (NULL == audioHandle->streamInterfaceHandle)
     {
-        return error;
+        return status;
     }
     /* De-initialize all stream endpoints of the interface */
     for (count = 0U; count < audioHandle->streamInterfaceHandle->endpointList.count; count++)
     {
-        error = USB_DeviceDeinitEndpoint(
+        status = USB_DeviceDeinitEndpoint(
             audioHandle->handle, audioHandle->streamInterfaceHandle->endpointList.endpoint[count].endpointAddress);
     }
 
@@ -379,24 +375,24 @@ usb_status_t USB_DeviceAudioStreamEndpointsDeinit(usb_device_audio_struct_t *aud
                 USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT ==
             USB_IN)
         {
-            if (audioHandle->streamInPipeBusy)
+            if (0U != audioHandle->streamInPipeBusy)
             {
                 message.length = USB_UNINITIALIZED_VAL_32;
-                USB_DeviceAudioIsochronousIn(audioHandle->handle, &message, audioHandle);
+                (void)USB_DeviceAudioIsochronousIn(audioHandle->handle, &message, audioHandle);
             }
         }
         else
         {
-            if (audioHandle->streamOutPipeBusy)
+            if (0U != audioHandle->streamOutPipeBusy)
             {
                 message.length = USB_UNINITIALIZED_VAL_32;
-                USB_DeviceAudioIsochronousOut(audioHandle->handle, &message, audioHandle);
+                (void)USB_DeviceAudioIsochronousOut(audioHandle->handle, &message, audioHandle);
             }
         }
     }
 
     audioHandle->streamInterfaceHandle = NULL;
-    return error;
+    return status;
 }
 
 /*!
@@ -413,29 +409,29 @@ usb_status_t USB_DeviceAudioControlEndpointsInit(usb_device_audio_struct_t *audi
 {
     usb_device_interface_list_t *interfaceList;
     usb_device_interface_struct_t *interface = (usb_device_interface_struct_t *)NULL;
-    usb_status_t error                       = kStatus_USB_Error;
-    int count;
-    int index;
+    usb_status_t status                      = kStatus_USB_Error;
+    uint8_t count;
+    uint8_t index;
 
     /* Check the configuration is valid or not. */
-    if (!audioHandle->configuration)
+    if (0U == audioHandle->configuration)
     {
-        return error;
+        return status;
     }
 
     /* Check the configuration is valid or not. */
     if (audioHandle->configuration > audioHandle->configStruct->classInfomation->configurations)
     {
-        return error;
+        return status;
     }
 
     if (NULL == audioHandle->configStruct->classInfomation->interfaceList)
     {
-        return error;
+        return status;
     }
 
     /* Get the control interface list of the new configuration. */
-    interfaceList = &audioHandle->configStruct->classInfomation->interfaceList[audioHandle->configuration - 1];
+    interfaceList = &audioHandle->configStruct->classInfomation->interfaceList[audioHandle->configuration - 1U];
 
     /* Find control interface by using the alternate setting of the interface. */
     for (count = 0U; count < interfaceList->count; count++)
@@ -455,9 +451,9 @@ usb_status_t USB_DeviceAudioControlEndpointsInit(usb_device_audio_struct_t *audi
             break;
         }
     }
-    if (!interface)
+    if (NULL == interface)
     {
-        return error;
+        return status;
     }
     /* Keep new control interface handle. */
     audioHandle->controlInterfaceHandle = interface;
@@ -485,9 +481,9 @@ usb_status_t USB_DeviceAudioControlEndpointsInit(usb_device_audio_struct_t *audi
         }
         epCallback.callbackParam = audioHandle;
 
-        error = USB_DeviceInitEndpoint(audioHandle->handle, &epInitStruct, &epCallback);
+        status = USB_DeviceInitEndpoint(audioHandle->handle, &epInitStruct, &epCallback);
     }
-    return error;
+    return status;
 }
 
 /*!
@@ -502,21 +498,21 @@ usb_status_t USB_DeviceAudioControlEndpointsInit(usb_device_audio_struct_t *audi
  */
 usb_status_t USB_DeviceAudioControlEndpointsDeinit(usb_device_audio_struct_t *audioHandle)
 {
-    usb_status_t error = kStatus_USB_Error;
-    int count;
+    usb_status_t status = kStatus_USB_Error;
+    uint8_t count;
 
-    if (!audioHandle->controlInterfaceHandle)
+    if (NULL == audioHandle->controlInterfaceHandle)
     {
-        return error;
+        return status;
     }
     /* De-initialize all control endpoints of the interface */
     for (count = 0U; count < audioHandle->controlInterfaceHandle->endpointList.count; count++)
     {
-        error = USB_DeviceDeinitEndpoint(
+        status = USB_DeviceDeinitEndpoint(
             audioHandle->handle, audioHandle->controlInterfaceHandle->endpointList.endpoint[count].endpointAddress);
     }
     audioHandle->controlInterfaceHandle = NULL;
-    return error;
+    return status;
 }
 
 /*!
@@ -533,8 +529,8 @@ usb_status_t USB_DeviceAudioControlEndpointsDeinit(usb_device_audio_struct_t *au
 usb_status_t USB_DeviceAudioGetCurAudioFeatureUnit(usb_device_audio_struct_t *audioHandle,
                                                    usb_device_control_request_struct_t *controlRequest)
 {
-    usb_status_t error      = kStatus_USB_Error;
-    uint8_t controlSelector = (controlRequest->setup->wValue >> 0x08) & 0xFFU;
+    usb_status_t status     = kStatus_USB_Error;
+    uint8_t controlSelector = (uint8_t)((controlRequest->setup->wValue >> 0x08) & 0xFFU);
     uint32_t audioCommand   = 0U;
 
     /* Select SET request Control Feature Unit Module */
@@ -571,16 +567,18 @@ usb_status_t USB_DeviceAudioGetCurAudioFeatureUnit(usb_device_audio_struct_t *au
             audioCommand = USB_DEVICE_AUDIO_GET_CUR_LOUDNESS_CONTROL;
             break;
         default:
+            /*no action*/
             break;
     }
-    if ((audioCommand) && (NULL != audioHandle->configStruct) && (audioHandle->configStruct->classCallback))
+    if ((0U != audioCommand) && (NULL != audioHandle->configStruct) &&
+        (NULL != audioHandle->configStruct->classCallback))
     {
         /* classCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
         it is from the second parameter of classInit */
-        error = audioHandle->configStruct->classCallback((class_handle_t)audioHandle, audioCommand, controlRequest);
+        status = audioHandle->configStruct->classCallback((class_handle_t)audioHandle, audioCommand, controlRequest);
     }
 
-    return error;
+    return status;
 }
 
 /*!
@@ -597,9 +595,9 @@ usb_status_t USB_DeviceAudioGetCurAudioFeatureUnit(usb_device_audio_struct_t *au
 usb_status_t USB_DeviceAudioGetMinAudioFeatureUnit(usb_device_audio_struct_t *audioHandle,
                                                    usb_device_control_request_struct_t *controlRequest)
 {
-    usb_status_t error      = kStatus_USB_Error;
-    uint8_t controlSelector = (controlRequest->setup->wValue >> 0x08) & 0xFFU;
-    uint32_t audioCommand   = 0;
+    usb_status_t status     = kStatus_USB_Error;
+    uint8_t controlSelector = (uint8_t)((controlRequest->setup->wValue >> 0x08) & 0xFFU);
+    uint32_t audioCommand   = 0U;
 
     /* Select SET request Control Feature Unit Module */
     switch (controlSelector)
@@ -623,15 +621,17 @@ usb_status_t USB_DeviceAudioGetMinAudioFeatureUnit(usb_device_audio_struct_t *au
             audioCommand = USB_DEVICE_AUDIO_GET_MIN_DELAY_CONTROL;
             break;
         default:
+            /* no action*/
             break;
     }
-    if ((audioCommand) && (NULL != audioHandle->configStruct) && (audioHandle->configStruct->classCallback))
+    if ((0U != audioCommand) && (NULL != audioHandle->configStruct) &&
+        (NULL != audioHandle->configStruct->classCallback))
     {
         /* classCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
         it is from the second parameter of classInit */
-        error = audioHandle->configStruct->classCallback((class_handle_t)audioHandle, audioCommand, controlRequest);
+        status = audioHandle->configStruct->classCallback((class_handle_t)audioHandle, audioCommand, controlRequest);
     }
-    return error;
+    return status;
 }
 
 /*!
@@ -648,9 +648,9 @@ usb_status_t USB_DeviceAudioGetMinAudioFeatureUnit(usb_device_audio_struct_t *au
 usb_status_t USB_DeviceAudioGetMaxAudioFeatureUnit(usb_device_audio_struct_t *audioHandle,
                                                    usb_device_control_request_struct_t *controlRequest)
 {
-    usb_status_t error      = kStatus_USB_Error;
-    uint8_t controlSelector = (controlRequest->setup->wValue >> 0x08) & 0xFFU;
-    uint32_t audioCommand   = 0;
+    usb_status_t status     = kStatus_USB_Error;
+    uint8_t controlSelector = (uint8_t)((controlRequest->setup->wValue >> 0x08) & 0xFFU);
+    uint32_t audioCommand   = 0U;
 
     /* Select SET request Control Feature Unit Module */
     switch (controlSelector)
@@ -674,15 +674,17 @@ usb_status_t USB_DeviceAudioGetMaxAudioFeatureUnit(usb_device_audio_struct_t *au
             audioCommand = USB_DEVICE_AUDIO_GET_MAX_DELAY_CONTROL;
             break;
         default:
+            /*no action*/
             break;
     }
-    if ((audioCommand) && (NULL != audioHandle->configStruct) && (audioHandle->configStruct->classCallback))
+    if ((0U != audioCommand) && (NULL != audioHandle->configStruct) &&
+        (NULL != audioHandle->configStruct->classCallback))
     {
         /* classCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
         it is from the second parameter of classInit */
-        error = audioHandle->configStruct->classCallback((class_handle_t)audioHandle, audioCommand, controlRequest);
+        status = audioHandle->configStruct->classCallback((class_handle_t)audioHandle, audioCommand, controlRequest);
     }
-    return error;
+    return status;
 }
 
 /*!
@@ -699,9 +701,9 @@ usb_status_t USB_DeviceAudioGetMaxAudioFeatureUnit(usb_device_audio_struct_t *au
 usb_status_t USB_DeviceAudioGetResAudioFeatureUnit(usb_device_audio_struct_t *audioHandle,
                                                    usb_device_control_request_struct_t *controlRequest)
 {
-    usb_status_t error      = kStatus_USB_Error;
-    uint8_t controlSelector = (controlRequest->setup->wValue >> 0x08) & 0xFFU;
-    uint32_t audioCommand   = 0;
+    usb_status_t status     = kStatus_USB_Error;
+    uint8_t controlSelector = (uint8_t)((controlRequest->setup->wValue >> 0x08) & 0xFFU);
+    uint32_t audioCommand   = 0U;
 
     /* Select SET request Control Feature Unit Module */
     switch (controlSelector)
@@ -725,16 +727,18 @@ usb_status_t USB_DeviceAudioGetResAudioFeatureUnit(usb_device_audio_struct_t *au
             audioCommand = USB_DEVICE_AUDIO_GET_RES_DELAY_CONTROL;
             break;
         default:
+            /*no action*/
             break;
     }
-    if ((audioCommand) && (NULL != audioHandle->configStruct) && (audioHandle->configStruct->classCallback))
+    if ((0U != audioCommand) && (NULL != audioHandle->configStruct) &&
+        (NULL != audioHandle->configStruct->classCallback))
     {
         /* classCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
   it is from the second parameter of classInit*/
-        error = audioHandle->configStruct->classCallback((class_handle_t)audioHandle, audioCommand, controlRequest);
+        status = audioHandle->configStruct->classCallback((class_handle_t)audioHandle, audioCommand, controlRequest);
     }
 
-    return error;
+    return status;
 }
 
 /*!
@@ -751,9 +755,9 @@ usb_status_t USB_DeviceAudioGetResAudioFeatureUnit(usb_device_audio_struct_t *au
 usb_status_t USB_DeviceAudioSetControlTerminal(usb_device_audio_struct_t *audioHandle,
                                                usb_device_control_request_struct_t *controlRequest)
 {
-    usb_status_t error = kStatus_USB_Error;
+    usb_status_t status = kStatus_USB_Error;
 
-    return error;
+    return status;
 }
 
 /*!
@@ -770,8 +774,8 @@ usb_status_t USB_DeviceAudioSetControlTerminal(usb_device_audio_struct_t *audioH
 usb_status_t USB_DeviceAudioSetCurAudioFeatureUnit(usb_device_audio_struct_t *audioHandle,
                                                    usb_device_control_request_struct_t *controlRequest)
 {
-    usb_status_t error      = kStatus_USB_Error;
-    uint8_t controlSelector = (controlRequest->setup->wValue >> 0x08) & 0xFFU;
+    usb_status_t status     = kStatus_USB_Error;
+    uint8_t controlSelector = (uint8_t)((controlRequest->setup->wValue >> 0x08U) & 0xFFU);
     uint32_t audioCommand   = 0;
 
     switch (controlSelector)
@@ -807,15 +811,17 @@ usb_status_t USB_DeviceAudioSetCurAudioFeatureUnit(usb_device_audio_struct_t *au
             audioCommand = USB_DEVICE_AUDIO_SET_CUR_LOUDNESS_CONTROL;
             break;
         default:
+            /*no action*/
             break;
     }
-    if ((audioCommand) && (NULL != audioHandle->configStruct) && (audioHandle->configStruct->classCallback))
+    if ((0U != audioCommand) && (NULL != audioHandle->configStruct) &&
+        (NULL != audioHandle->configStruct->classCallback))
     {
         /* classCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
         it is from the second parameter of classInit */
-        error = audioHandle->configStruct->classCallback((class_handle_t)audioHandle, audioCommand, controlRequest);
+        status = audioHandle->configStruct->classCallback((class_handle_t)audioHandle, audioCommand, controlRequest);
     }
-    return error;
+    return status;
 }
 
 /*!
@@ -832,9 +838,9 @@ usb_status_t USB_DeviceAudioSetCurAudioFeatureUnit(usb_device_audio_struct_t *au
 usb_status_t USB_DeviceAudioSetMinAudioFeatureUnit(usb_device_audio_struct_t *audioHandle,
                                                    usb_device_control_request_struct_t *controlRequest)
 {
-    usb_status_t error      = kStatus_USB_Error;
-    uint8_t controlSelector = (controlRequest->setup->wValue >> 0x08) & 0xFFU;
-    uint32_t audioCommand   = 0;
+    usb_status_t status     = kStatus_USB_Error;
+    uint8_t controlSelector = (uint8_t)((controlRequest->setup->wValue >> 0x08) & 0xFFU);
+    uint32_t audioCommand   = 0U;
     switch (controlSelector)
     {
         case USB_DEVICE_AUDIO_VOLUME_CONTROL_SELECTOR:
@@ -856,16 +862,18 @@ usb_status_t USB_DeviceAudioSetMinAudioFeatureUnit(usb_device_audio_struct_t *au
             audioCommand = USB_DEVICE_AUDIO_SET_MIN_DELAY_CONTROL;
             break;
         default:
+            /*no action*/
             break;
     }
-    if ((audioCommand) && (NULL != audioHandle->configStruct) && (audioHandle->configStruct->classCallback))
+    if ((0U != audioCommand) && (NULL != audioHandle->configStruct) &&
+        (NULL != audioHandle->configStruct->classCallback))
     {
         /* classCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
         it is from the second parameter of classInit */
-        error = audioHandle->configStruct->classCallback((class_handle_t)audioHandle, audioCommand, controlRequest);
+        status = audioHandle->configStruct->classCallback((class_handle_t)audioHandle, audioCommand, controlRequest);
     }
 
-    return error;
+    return status;
 }
 
 /*!
@@ -882,8 +890,8 @@ usb_status_t USB_DeviceAudioSetMinAudioFeatureUnit(usb_device_audio_struct_t *au
 usb_status_t USB_DeviceAudioSetMaxAudioFeatureUnit(usb_device_audio_struct_t *audioHandle,
                                                    usb_device_control_request_struct_t *controlRequest)
 {
-    usb_status_t error      = kStatus_USB_Error;
-    uint8_t controlSelector = (controlRequest->setup->wValue >> 0x08) & 0xFFU;
+    usb_status_t status     = kStatus_USB_Error;
+    uint8_t controlSelector = (uint8_t)((controlRequest->setup->wValue >> 0x08) & 0xFFU);
     uint32_t audioCommand   = 0;
     switch (controlSelector)
     {
@@ -906,16 +914,18 @@ usb_status_t USB_DeviceAudioSetMaxAudioFeatureUnit(usb_device_audio_struct_t *au
             audioCommand = USB_DEVICE_AUDIO_SET_MAX_DELAY_CONTROL;
             break;
         default:
+            /*no action*/
             break;
     }
-    if ((audioCommand) && (NULL != audioHandle->configStruct) && (audioHandle->configStruct->classCallback))
+    if ((0U != audioCommand) && (NULL != audioHandle->configStruct) &&
+        (NULL != audioHandle->configStruct->classCallback))
     {
         /* classCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
         it is from the second parameter of classInit */
-        error = audioHandle->configStruct->classCallback((class_handle_t)audioHandle, audioCommand, controlRequest);
+        status = audioHandle->configStruct->classCallback((class_handle_t)audioHandle, audioCommand, controlRequest);
     }
 
-    return error;
+    return status;
 }
 
 /*!
@@ -932,8 +942,8 @@ usb_status_t USB_DeviceAudioSetMaxAudioFeatureUnit(usb_device_audio_struct_t *au
 usb_status_t USB_DeviceAudioSetResAudioFeatureUnit(usb_device_audio_struct_t *audioHandle,
                                                    usb_device_control_request_struct_t *controlRequest)
 {
-    usb_status_t error      = kStatus_USB_Error;
-    uint8_t controlSelector = (controlRequest->setup->wValue >> 0x08) & 0xFFU;
+    usb_status_t status     = kStatus_USB_Error;
+    uint8_t controlSelector = (uint8_t)((controlRequest->setup->wValue >> 0x08) & 0xFFU);
     uint32_t audioCommand   = 0;
     switch (controlSelector)
     {
@@ -956,15 +966,17 @@ usb_status_t USB_DeviceAudioSetResAudioFeatureUnit(usb_device_audio_struct_t *au
             audioCommand = USB_DEVICE_AUDIO_SET_RES_DELAY_CONTROL;
             break;
         default:
+            /*no action*/
             break;
     }
-    if ((audioCommand) && (NULL != audioHandle->configStruct) && (audioHandle->configStruct->classCallback))
+    if ((0U != audioCommand) && (NULL != audioHandle->configStruct) &&
+        (NULL != audioHandle->configStruct->classCallback))
     {
         /* classCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
         it is from the second parameter of classInit */
-        error = audioHandle->configStruct->classCallback((class_handle_t)audioHandle, audioCommand, controlRequest);
+        status = audioHandle->configStruct->classCallback((class_handle_t)audioHandle, audioCommand, controlRequest);
     }
-    return error;
+    return status;
 }
 
 /*!
@@ -981,26 +993,27 @@ usb_status_t USB_DeviceAudioSetResAudioFeatureUnit(usb_device_audio_struct_t *au
 usb_status_t USB_DeviceAudioSetFeatureUnit(usb_device_audio_struct_t *audioHandle,
                                            usb_device_control_request_struct_t *controlRequest)
 {
-    usb_status_t error = kStatus_USB_Error;
+    usb_status_t status = kStatus_USB_Error;
     /* Select SET request Control Feature Unit Module */
     switch (controlRequest->setup->bRequest)
     {
         case USB_DEVICE_AUDIO_SET_CUR_VOLUME_REQUEST:
-            error = USB_DeviceAudioSetCurAudioFeatureUnit(audioHandle, controlRequest);
+            status = USB_DeviceAudioSetCurAudioFeatureUnit(audioHandle, controlRequest);
             break;
         case USB_DEVICE_AUDIO_SET_MIN_VOLUME_REQUEST:
-            error = USB_DeviceAudioSetMinAudioFeatureUnit(audioHandle, controlRequest);
+            status = USB_DeviceAudioSetMinAudioFeatureUnit(audioHandle, controlRequest);
             break;
         case USB_DEVICE_AUDIO_SET_MAX_VOLUME_REQUEST:
-            error = USB_DeviceAudioSetMaxAudioFeatureUnit(audioHandle, controlRequest);
+            status = USB_DeviceAudioSetMaxAudioFeatureUnit(audioHandle, controlRequest);
             break;
         case USB_DEVICE_AUDIO_SET_RES_VOLUME_REQUEST:
-            error = USB_DeviceAudioSetResAudioFeatureUnit(audioHandle, controlRequest);
+            status = USB_DeviceAudioSetResAudioFeatureUnit(audioHandle, controlRequest);
             break;
         default:
+            /*no action*/
             break;
     }
-    return error;
+    return status;
 }
 
 /*!
@@ -1017,8 +1030,8 @@ usb_status_t USB_DeviceAudioSetFeatureUnit(usb_device_audio_struct_t *audioHandl
 usb_status_t USB_DeviceAudioSetRequestEndpoint(usb_device_audio_struct_t *audioHandle,
                                                usb_device_control_request_struct_t *controlRequest)
 {
-    usb_status_t error      = kStatus_USB_Error;
-    uint8_t controlSelector = (controlRequest->setup->wValue >> 0x08) & 0xFFU;
+    usb_status_t status     = kStatus_USB_Error;
+    uint8_t controlSelector = (uint8_t)((controlRequest->setup->wValue >> 0x08) & 0xFFU);
     uint32_t audioCommand   = 0;
 
     /* Select SET request Control Feature Unit Module */
@@ -1034,6 +1047,7 @@ usb_status_t USB_DeviceAudioSetRequestEndpoint(usb_device_audio_struct_t *audioH
                     audioCommand = USB_DEVICE_AUDIO_SET_CUR_PITCH_CONTROL;
                     break;
                 default:
+                    /*no action*/
                     break;
             }
             break;
@@ -1044,6 +1058,7 @@ usb_status_t USB_DeviceAudioSetRequestEndpoint(usb_device_audio_struct_t *audioH
                     audioCommand = USB_DEVICE_AUDIO_SET_MIN_SAMPLING_FREQ_CONTROL;
                     break;
                 default:
+                    /*no action*/
                     break;
             }
             break;
@@ -1054,6 +1069,7 @@ usb_status_t USB_DeviceAudioSetRequestEndpoint(usb_device_audio_struct_t *audioH
                     audioCommand = USB_DEVICE_AUDIO_SET_MAX_SAMPLING_FREQ_CONTROL;
                     break;
                 default:
+                    /*no action*/
                     break;
             }
             break;
@@ -1064,20 +1080,23 @@ usb_status_t USB_DeviceAudioSetRequestEndpoint(usb_device_audio_struct_t *audioH
                     audioCommand = USB_DEVICE_AUDIO_SET_RES_SAMPLING_FREQ_CONTROL;
                     break;
                 default:
+                    /*no action*/
                     break;
             }
             break;
 
         default:
+            /*no action*/
             break;
     }
-    if ((audioCommand) && (NULL != audioHandle->configStruct) && (audioHandle->configStruct->classCallback))
+    if ((0U != audioCommand) && (NULL != audioHandle->configStruct) &&
+        (NULL != audioHandle->configStruct->classCallback))
     {
         /* classCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
         it is from the second parameter of classInit */
-        error = audioHandle->configStruct->classCallback((class_handle_t)audioHandle, audioCommand, controlRequest);
+        status = audioHandle->configStruct->classCallback((class_handle_t)audioHandle, audioCommand, controlRequest);
     }
-    return error;
+    return status;
 }
 
 /*!
@@ -1094,8 +1113,8 @@ usb_status_t USB_DeviceAudioSetRequestEndpoint(usb_device_audio_struct_t *audioH
 usb_status_t USB_DeviceAudioGetRequestEndpoint(usb_device_audio_struct_t *audioHandle,
                                                usb_device_control_request_struct_t *controlRequest)
 {
-    usb_status_t error      = kStatus_USB_Error;
-    uint8_t controlSelector = (controlRequest->setup->wValue >> 0x08) & 0xFFU;
+    usb_status_t status     = kStatus_USB_Error;
+    uint8_t controlSelector = (uint8_t)((controlRequest->setup->wValue >> 0x08) & 0xFFU);
     uint32_t audioCommand   = 0;
     /* Select SET request Control Feature Unit Module */
     switch (controlRequest->setup->bRequest)
@@ -1108,6 +1127,7 @@ usb_status_t USB_DeviceAudioGetRequestEndpoint(usb_device_audio_struct_t *audioH
                     audioCommand = USB_DEVICE_AUDIO_GET_CUR_SAMPLING_FREQ_CONTROL;
                     break;
                 default:
+                    /*no action*/
                     break;
             }
             break;
@@ -1115,10 +1135,10 @@ usb_status_t USB_DeviceAudioGetRequestEndpoint(usb_device_audio_struct_t *audioH
             switch (controlSelector)
             {
                 case USB_DEVICE_AUDIO_SAMPLING_FREQ_CONTROL_SELECTOR:
-
                     audioCommand = USB_DEVICE_AUDIO_GET_MIN_SAMPLING_FREQ_CONTROL;
                     break;
                 default:
+                    /*no action*/
                     break;
             }
             break;
@@ -1130,6 +1150,7 @@ usb_status_t USB_DeviceAudioGetRequestEndpoint(usb_device_audio_struct_t *audioH
                     audioCommand = USB_DEVICE_AUDIO_GET_MAX_SAMPLING_FREQ_CONTROL;
                     break;
                 default:
+                    /*no action*/
                     break;
             }
             break;
@@ -1141,20 +1162,23 @@ usb_status_t USB_DeviceAudioGetRequestEndpoint(usb_device_audio_struct_t *audioH
 
                     break;
                 default:
+                    /*no action*/
                     break;
             }
             break;
 
         default:
+            /*no action*/
             break;
     }
-    if ((audioCommand) && (NULL != audioHandle->configStruct) && (audioHandle->configStruct->classCallback))
+    if ((0U != audioCommand) && (NULL != audioHandle->configStruct) &&
+        (NULL != audioHandle->configStruct->classCallback))
     {
         /* classCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
         it is from the second parameter of classInit */
-        error = audioHandle->configStruct->classCallback((class_handle_t)audioHandle, audioCommand, controlRequest);
+        status = audioHandle->configStruct->classCallback((class_handle_t)audioHandle, audioCommand, controlRequest);
     }
-    return error;
+    return status;
 }
 
 /*!
@@ -1171,9 +1195,9 @@ usb_status_t USB_DeviceAudioGetRequestEndpoint(usb_device_audio_struct_t *audioH
 usb_status_t USB_DeviceAudioGetControlTerminal(usb_device_audio_struct_t *audioHandle,
                                                usb_device_control_request_struct_t *controlRequest)
 {
-    usb_status_t error = kStatus_USB_Error;
+    usb_status_t status = kStatus_USB_Error;
 
-    return error;
+    return status;
 }
 
 /*!
@@ -1190,26 +1214,27 @@ usb_status_t USB_DeviceAudioGetControlTerminal(usb_device_audio_struct_t *audioH
 usb_status_t USB_DeviceAudioGetFeatureUnit(usb_device_audio_struct_t *audioHandle,
                                            usb_device_control_request_struct_t *controlRequest)
 {
-    usb_status_t error = kStatus_USB_Error;
+    usb_status_t status = kStatus_USB_Error;
     /* Select SET request Control Feature Unit Module */
     switch (controlRequest->setup->bRequest)
     {
         case USB_DEVICE_AUDIO_GET_CUR_VOLUME_REQUEST:
-            error = USB_DeviceAudioGetCurAudioFeatureUnit(audioHandle, controlRequest);
+            status = USB_DeviceAudioGetCurAudioFeatureUnit(audioHandle, controlRequest);
             break;
         case USB_DEVICE_AUDIO_GET_MIN_VOLUME_REQUEST:
-            error = USB_DeviceAudioGetMinAudioFeatureUnit(audioHandle, controlRequest);
+            status = USB_DeviceAudioGetMinAudioFeatureUnit(audioHandle, controlRequest);
             break;
         case USB_DEVICE_AUDIO_GET_MAX_VOLUME_REQUEST:
-            error = USB_DeviceAudioGetMaxAudioFeatureUnit(audioHandle, controlRequest);
+            status = USB_DeviceAudioGetMaxAudioFeatureUnit(audioHandle, controlRequest);
             break;
         case USB_DEVICE_AUDIO_GET_RES_VOLUME_REQUEST:
-            error = USB_DeviceAudioGetResAudioFeatureUnit(audioHandle, controlRequest);
+            status = USB_DeviceAudioGetResAudioFeatureUnit(audioHandle, controlRequest);
             break;
         default:
+            /*no action*/
             break;
     }
-    return error;
+    return status;
 }
 
 /*!
@@ -1228,8 +1253,8 @@ usb_status_t USB_DeviceAudioSetRequestInterface(usb_device_audio_struct_t *audio
 {
     uint32_t i;
     usb_device_audio_entities_struct_t *entity_list;
-    usb_status_t error = kStatus_USB_Error;
-    uint8_t entityId   = (uint8_t)(controlRequest->setup->wIndex >> 0x08);
+    usb_status_t status = kStatus_USB_Error;
+    uint8_t entityId    = (uint8_t)(controlRequest->setup->wIndex >> 0x08);
 
     entity_list = (usb_device_audio_entities_struct_t *)audioHandle->controlInterfaceHandle->classSpecific;
     for (i = 0; i < entity_list->count; i++)
@@ -1240,18 +1265,19 @@ usb_status_t USB_DeviceAudioSetRequestInterface(usb_device_audio_struct_t *audio
             {
                 case USB_DESCRIPTOR_SUBTYPE_AUDIO_CONTROL_OUTPUT_TERMINAL:
                     /*Select SET Request Control Input Terminal Module */
-                    error = USB_DeviceAudioSetControlTerminal(audioHandle, controlRequest);
+                    status = USB_DeviceAudioSetControlTerminal(audioHandle, controlRequest);
                     break;
                 case USB_DESCRIPTOR_SUBTYPE_AUDIO_CONTROL_FEATURE_UNIT:
                     /* Select SET request Control Feature Unit Module */
-                    error = USB_DeviceAudioSetFeatureUnit(audioHandle, controlRequest);
+                    status = USB_DeviceAudioSetFeatureUnit(audioHandle, controlRequest);
                     break;
                 default:
+                    /*no action*/
                     break;
             }
         }
     }
-    return error;
+    return status;
 }
 
 /*!
@@ -1270,8 +1296,8 @@ usb_status_t USB_DeviceAudioGetRequestInterface(usb_device_audio_struct_t *audio
 {
     uint32_t i;
     usb_device_audio_entities_struct_t *entity_list;
-    usb_status_t error = kStatus_USB_Error;
-    uint8_t entityId   = (uint8_t)(controlRequest->setup->wIndex >> 0x08);
+    usb_status_t status = kStatus_USB_Error;
+    uint8_t entityId    = (uint8_t)(controlRequest->setup->wIndex >> 0x08);
 
     entity_list = (usb_device_audio_entities_struct_t *)audioHandle->controlInterfaceHandle->classSpecific;
     for (i = 0; i < entity_list->count; i++)
@@ -1281,17 +1307,18 @@ usb_status_t USB_DeviceAudioGetRequestInterface(usb_device_audio_struct_t *audio
             switch (entity_list->entity[i].entityType)
             {
                 case USB_DESCRIPTOR_SUBTYPE_AUDIO_CONTROL_INPUT_TERMINAL:
-                    error = USB_DeviceAudioGetControlTerminal(audioHandle, controlRequest);
+                    status = USB_DeviceAudioGetControlTerminal(audioHandle, controlRequest);
                     break;
                 case USB_DESCRIPTOR_SUBTYPE_AUDIO_CONTROL_FEATURE_UNIT:
-                    error = USB_DeviceAudioGetFeatureUnit(audioHandle, controlRequest);
+                    status = USB_DeviceAudioGetFeatureUnit(audioHandle, controlRequest);
                     break;
                 default:
+                    /*no action*/
                     break;
             }
         }
     }
-    return error;
+    return status;
 }
 
 /*!
@@ -1315,9 +1342,9 @@ usb_status_t USB_DeviceAudioEvent(void *handle, uint32_t event, void *param)
     uint16_t interfaceAlternate;
     uint8_t *temp8;
     uint8_t alternate;
-    int count;
-
-    if ((!param) || (!handle))
+    uint32_t count;
+    usb_device_class_event_t eventCode = (usb_device_class_event_t)event;
+    if ((NULL == param) || (NULL == handle))
     {
         return kStatus_USB_InvalidHandle;
     }
@@ -1325,18 +1352,18 @@ usb_status_t USB_DeviceAudioEvent(void *handle, uint32_t event, void *param)
     /* Get the audio class handle. */
     audioHandle = (usb_device_audio_struct_t *)handle;
 
-    switch (event)
+    switch (eventCode)
     {
         case kUSB_DeviceClassEventDeviceReset:
             /* Bus reset, clear the configuration. */
-            audioHandle->configuration     = 0;
-            audioHandle->streamOutPipeBusy = 0;
-            audioHandle->streamInPipeBusy  = 0;
+            audioHandle->configuration     = 0U;
+            audioHandle->streamOutPipeBusy = 0U;
+            audioHandle->streamInPipeBusy  = 0U;
             break;
         case kUSB_DeviceClassEventSetConfiguration:
             /* Get the new configuration. */
             temp8 = ((uint8_t *)param);
-            if (!audioHandle->configStruct)
+            if (NULL == audioHandle->configStruct)
             {
                 break;
             }
@@ -1345,7 +1372,7 @@ usb_status_t USB_DeviceAudioEvent(void *handle, uint32_t event, void *param)
                 break;
             }
             /* De-initialize the endpoints when current configuration is none zero. */
-            if (audioHandle->configuration)
+            if (0U != audioHandle->configuration)
             {
                 error = USB_DeviceAudioControlEndpointsDeinit(audioHandle);
                 error = USB_DeviceAudioStreamEndpointsDeinit(audioHandle);
@@ -1353,9 +1380,9 @@ usb_status_t USB_DeviceAudioEvent(void *handle, uint32_t event, void *param)
             /* Save new configuration. */
             audioHandle->configuration = *temp8;
             /* Clear the alternate setting value. */
-            audioHandle->controlAlternate = 0;
+            audioHandle->controlAlternate = 0U;
             /* Clear the alternate setting value. */
-            audioHandle->streamAlternate        = 0;
+            audioHandle->streamAlternate        = 0U;
             audioHandle->controlInterfaceHandle = NULL;
             audioHandle->streamInterfaceHandle  = NULL;
             /* Initialize the control endpoints of the new current configuration by using the alternate setting 0. */
@@ -1364,7 +1391,7 @@ usb_status_t USB_DeviceAudioEvent(void *handle, uint32_t event, void *param)
             error = USB_DeviceAudioStreamEndpointsInit(audioHandle);
             break;
         case kUSB_DeviceClassEventSetInterface:
-            if (!audioHandle->configStruct)
+            if (NULL == audioHandle->configStruct)
             {
                 break;
             }
@@ -1404,16 +1431,17 @@ usb_status_t USB_DeviceAudioEvent(void *handle, uint32_t event, void *param)
             }
             else
             {
+                /*no action*/
             }
             break;
         case kUSB_DeviceClassEventSetEndpointHalt:
-            if (!audioHandle->configStruct)
+            if (NULL == audioHandle->configStruct)
             {
                 break;
             }
             /* Get the endpoint address */
             temp8 = ((uint8_t *)param);
-            if (audioHandle->controlInterfaceHandle)
+            if (NULL != audioHandle->controlInterfaceHandle)
             {
                 for (count = 0U; count < audioHandle->controlInterfaceHandle->endpointList.count; count++)
                 {
@@ -1424,7 +1452,7 @@ usb_status_t USB_DeviceAudioEvent(void *handle, uint32_t event, void *param)
                     }
                 }
             }
-            if (audioHandle->streamInterfaceHandle)
+            if (NULL != audioHandle->streamInterfaceHandle)
             {
                 for (count = 0U; count < audioHandle->streamInterfaceHandle->endpointList.count; count++)
                 {
@@ -1437,13 +1465,13 @@ usb_status_t USB_DeviceAudioEvent(void *handle, uint32_t event, void *param)
             }
             break;
         case kUSB_DeviceClassEventClearEndpointHalt:
-            if (!audioHandle->configStruct)
+            if (NULL == audioHandle->configStruct)
             {
                 break;
             }
             /* Get the endpoint address */
             temp8 = ((uint8_t *)param);
-            if (audioHandle->controlInterfaceHandle)
+            if (NULL != audioHandle->controlInterfaceHandle)
             {
                 for (count = 0U; count < audioHandle->controlInterfaceHandle->endpointList.count; count++)
                 {
@@ -1454,7 +1482,7 @@ usb_status_t USB_DeviceAudioEvent(void *handle, uint32_t event, void *param)
                     }
                 }
             }
-            if (audioHandle->streamInterfaceHandle)
+            if (NULL != audioHandle->streamInterfaceHandle)
             {
                 for (count = 0U; count < audioHandle->streamInterfaceHandle->endpointList.count; count++)
                 {
@@ -1467,190 +1495,197 @@ usb_status_t USB_DeviceAudioEvent(void *handle, uint32_t event, void *param)
             }
             break;
         case kUSB_DeviceClassEventClassRequest:
-#if USBCFG_AUDIO_CLASS_2_0
-            if (param)
+#if (USB_DEVICE_CONFIG_AUDIO_CLASS_2_0)
+        {
+            /* Handle the audio class specific request. */
+            usb_device_control_request_struct_t *controlRequest = (usb_device_control_request_struct_t *)param;
+            usb_device_audio_entities_struct_t *entity_list;
+            uint8_t entityId        = (uint8_t)(controlRequest->setup->wIndex >> 0x08);
+            uint32_t audioCommand   = 0;
+            uint8_t interface_index = (uint8_t)controlRequest->setup->wIndex;
+
+            if (audioHandle->controlInterfaceNumber == interface_index)
             {
-                /* Handle the audio class specific request. */
-                usb_device_control_request_struct_t *controlRequest = (usb_device_control_request_struct_t *)param;
-                uint8_t i;
-                usb_device_audio_entities_struct_t *entity_list;
-                uint8_t entityId        = (uint8_t)(controlRequest->setup->wIndex >> 0x08);
-                uint32_t audioCommand   = 0;
-                uint8_t interface_index = (uint8_t)controlRequest->setup->wIndex;
-
-                if (audioHandle->controlInterfaceNumber == interface_index)
+                entity_list = (usb_device_audio_entities_struct_t *)audioHandle->controlInterfaceHandle->classSpecific;
+                for (uint8_t i = 0; i < entity_list->count; i++)
                 {
-                    entity_list =
-                        (usb_device_audio_entities_struct_t *)audioHandle->controlInterfaceHandle->classSpecific;
-                    for (i = 0; i < entity_list->count; i++)
+                    if (entityId == entity_list->entity[i].entityId)
                     {
-                        if (entityId == entity_list->entity[i].entityId)
+                        switch (entity_list->entity[i].entityType)
                         {
-                            switch (entity_list->entity[i].entityType)
-                            {
-                                case USB_DESCRIPTOR_SUBTYPE_AUDIO_CONTROL_OUTPUT_TERMINAL:
-                                    break;
-                                case USB_DESCRIPTOR_SUBTYPE_AUDIO_CONTROL_FEATURE_UNIT:
-                                    if (((controlRequest->setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) ==
-                                         USB_REQUEST_TYPE_DIR_IN))
+                            case USB_DESCRIPTOR_SUBTYPE_AUDIO_CONTROL_OUTPUT_TERMINAL:
+                                break;
+                            case USB_DESCRIPTOR_SUBTYPE_AUDIO_CONTROL_FEATURE_UNIT:
+                                if (((controlRequest->setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) ==
+                                     USB_REQUEST_TYPE_DIR_IN))
+                                {
+                                    switch (controlRequest->setup->wValue >> 8)
                                     {
-                                        switch (controlRequest->setup->wValue >> 8)
-                                        {
-                                            case USB_DEVICE_AUDIO_FU_MUTE_CONTROL:
-                                                audioCommand = USB_DEVICE_AUDIO_GET_CUR_MUTE_CONTROL_AUDIO20;
-                                                break;
-                                            case USB_DEVICE_AUDIO_FU_VOLUME_CONTROL:
-                                                if (controlRequest->setup->bRequest == USB_DEVICE_AUDIO_REQUEST_CUR)
-                                                {
-                                                    audioCommand = USB_DEVICE_AUDIO_GET_CUR_VOLUME_CONTROL_AUDIO20;
-                                                }
-                                                else if (controlRequest->setup->bRequest ==
-                                                         USB_DEVICE_AUDIO_REQUEST_RANGE)
-                                                {
-                                                    audioCommand = USB_DEVICE_AUDIO_GET_RANGE_VOLUME_CONTROL_AUDIO20;
-                                                }
-                                                else
-                                                {
-                                                }
-                                                break;
-                                            default:
-                                                break;
-                                        }
+                                        case USB_DEVICE_AUDIO_FU_MUTE_CONTROL:
+                                            audioCommand = USB_DEVICE_AUDIO_GET_CUR_MUTE_CONTROL_AUDIO20;
+                                            break;
+                                        case USB_DEVICE_AUDIO_FU_VOLUME_CONTROL:
+                                            if (controlRequest->setup->bRequest == USB_DEVICE_AUDIO_REQUEST_CUR)
+                                            {
+                                                audioCommand = USB_DEVICE_AUDIO_GET_CUR_VOLUME_CONTROL_AUDIO20;
+                                            }
+                                            else if (controlRequest->setup->bRequest == USB_DEVICE_AUDIO_REQUEST_RANGE)
+                                            {
+                                                audioCommand = USB_DEVICE_AUDIO_GET_RANGE_VOLUME_CONTROL_AUDIO20;
+                                            }
+                                            else
+                                            {
+                                                /*no action*/
+                                            }
+                                            break;
+                                        default:
+                                            /*no action*/
+                                            break;
                                     }
-                                    else if (((controlRequest->setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) ==
-                                              USB_REQUEST_TYPE_DIR_OUT))
+                                }
+                                else if (((controlRequest->setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) ==
+                                          USB_REQUEST_TYPE_DIR_OUT))
+                                {
+                                    switch (controlRequest->setup->wValue >> 8)
                                     {
-                                        switch (controlRequest->setup->wValue >> 8)
-                                        {
-                                            case USB_DEVICE_AUDIO_FU_MUTE_CONTROL:
-                                                audioCommand = USB_DEVICE_AUDIO_SET_CUR_MUTE_CONTROL_AUDIO20;
-                                                break;
-                                            case USB_DEVICE_AUDIO_FU_VOLUME_CONTROL:
-                                                if (controlRequest->setup->bRequest == USB_DEVICE_AUDIO_REQUEST_CUR)
-                                                {
-                                                    audioCommand = USB_DEVICE_AUDIO_SET_CUR_VOLUME_CONTROL_AUDIO20;
-                                                }
-                                                break;
-                                            default:
-                                                break;
-                                        }
+                                        case USB_DEVICE_AUDIO_FU_MUTE_CONTROL:
+                                            audioCommand = USB_DEVICE_AUDIO_SET_CUR_MUTE_CONTROL_AUDIO20;
+                                            break;
+                                        case USB_DEVICE_AUDIO_FU_VOLUME_CONTROL:
+                                            if (controlRequest->setup->bRequest == USB_DEVICE_AUDIO_REQUEST_CUR)
+                                            {
+                                                audioCommand = USB_DEVICE_AUDIO_SET_CUR_VOLUME_CONTROL_AUDIO20;
+                                            }
+                                            break;
+                                        default:
+                                            /*no action*/
+                                            break;
                                     }
-
-                                    break;
-                                case USB_DESCRIPTOR_SUBTYPE_AUDIO_CONTROL_CLOCK_SOURCE_UNIT:
-                                    if (((controlRequest->setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) ==
-                                         USB_REQUEST_TYPE_DIR_IN))
+                                }
+                                else
+                                {
+                                    /*no action*/
+                                }
+                                break;
+                            case USB_DESCRIPTOR_SUBTYPE_AUDIO_CONTROL_CLOCK_SOURCE_UNIT:
+                                if (((controlRequest->setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) ==
+                                     USB_REQUEST_TYPE_DIR_IN))
+                                {
+                                    switch (controlRequest->setup->wValue >> 8)
                                     {
-                                        switch (controlRequest->setup->wValue >> 8)
-                                        {
-                                            case USB_DEVICE_AUDIO_CS_SAM_FREQ_CONTROL:
-                                                if (controlRequest->setup->bRequest == USB_DEVICE_AUDIO_REQUEST_CUR)
-                                                {
-                                                    audioCommand = USB_DEVICE_AUDIO_GET_CUR_SAM_FREQ_CONTROL;
-                                                }
-                                                else if (controlRequest->setup->bRequest ==
-                                                         USB_DEVICE_AUDIO_REQUEST_RANGE)
-                                                {
-                                                    audioCommand = USB_DEVICE_AUDIO_GET_RANGE_SAM_FREQ_CONTROL;
-                                                }
-                                                else
-                                                {
-                                                }
-                                                break;
-                                            case USB_DEVICE_AUDIO_CS_CLOCK_VALID_CONTROL:
-                                                audioCommand = USB_DEVICE_AUDIO_GET_CUR_CLOCK_VALID_CONTROL;
-                                                break;
-                                            default:
-                                                break;
-                                        }
+                                        case USB_DEVICE_AUDIO_CS_SAM_FREQ_CONTROL:
+                                            if (controlRequest->setup->bRequest == USB_DEVICE_AUDIO_REQUEST_CUR)
+                                            {
+                                                audioCommand = USB_DEVICE_AUDIO_GET_CUR_SAM_FREQ_CONTROL;
+                                            }
+                                            else if (controlRequest->setup->bRequest == USB_DEVICE_AUDIO_REQUEST_RANGE)
+                                            {
+                                                audioCommand = USB_DEVICE_AUDIO_GET_RANGE_SAM_FREQ_CONTROL;
+                                            }
+                                            else
+                                            {
+                                                /*no action*/
+                                            }
+                                            break;
+                                        case USB_DEVICE_AUDIO_CS_CLOCK_VALID_CONTROL:
+                                            audioCommand = USB_DEVICE_AUDIO_GET_CUR_CLOCK_VALID_CONTROL;
+                                            break;
+                                        default:
+                                            /*no action*/
+                                            break;
                                     }
-                                    else if (((controlRequest->setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) ==
-                                              USB_REQUEST_TYPE_DIR_OUT))
+                                }
+                                else if (((controlRequest->setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) ==
+                                          USB_REQUEST_TYPE_DIR_OUT))
+                                {
+                                    switch (controlRequest->setup->wValue >> 8)
                                     {
-                                        switch (controlRequest->setup->wValue >> 8)
-                                        {
-                                            case USB_DEVICE_AUDIO_CS_SAM_FREQ_CONTROL:
-                                                audioCommand = USB_DEVICE_AUDIO_SET_CUR_SAM_FREQ_CONTROL;
-                                                break;
-                                            case USB_DEVICE_AUDIO_CS_CLOCK_VALID_CONTROL:
-                                                audioCommand = USB_DEVICE_AUDIO_SET_CUR_CLOCK_VALID_CONTROL;
-                                                break;
-                                            default:
-                                                break;
-                                        }
+                                        case USB_DEVICE_AUDIO_CS_SAM_FREQ_CONTROL:
+                                            audioCommand = USB_DEVICE_AUDIO_SET_CUR_SAM_FREQ_CONTROL;
+                                            break;
+                                        case USB_DEVICE_AUDIO_CS_CLOCK_VALID_CONTROL:
+                                            audioCommand = USB_DEVICE_AUDIO_SET_CUR_CLOCK_VALID_CONTROL;
+                                            break;
+                                        default:
+                                            /*no action*/
+                                            break;
                                     }
-                                    else
-                                    {
-                                    }
-                                    break;
-                                default:
-                                    break;
-                            }
+                                }
+                                else
+                                {
+                                    /*no action*/
+                                }
+                                break;
+                            default:
+                                /*no action*/
+                                break;
                         }
                     }
-                    if ((audioCommand) && (NULL != audioHandle->configStruct) &&
-                        (audioHandle->configStruct->classCallback))
+                }
+                if ((0U != audioCommand) && (NULL != audioHandle->configStruct) &&
+                    (NULL != audioHandle->configStruct->classCallback))
+                {
+                    /* classCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
+                             it is from the second parameter of classInit*/
+                    error = audioHandle->configStruct->classCallback((class_handle_t)audioHandle, audioCommand,
+                                                                     controlRequest);
+                }
+            }
+        }
+        break;
+
+#else
+        {
+            /* Handle the audio class specific request. */
+            usb_device_control_request_struct_t *controlRequest = (usb_device_control_request_struct_t *)param;
+            if ((controlRequest->setup->bmRequestType & USB_REQUEST_TYPE_RECIPIENT_MASK) !=
+                USB_REQUEST_TYPE_RECIPIENT_INTERFACE)
+            {
+                if (USB_REQUEST_TYPE_TYPE_CLASS == (controlRequest->setup->bmRequestType & USB_REQUEST_TYPE_TYPE_MASK))
+                {
+                    switch (controlRequest->setup->bmRequestType)
                     {
-                        /* classCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
-                                 it is from the second parameter of classInit*/
-                        error = audioHandle->configStruct->classCallback((class_handle_t)audioHandle, audioCommand,
-                                                                         controlRequest);
+                        case USB_DEVICE_AUDIO_SET_REQUEST_ENDPOINT:
+                            error = USB_DeviceAudioSetRequestEndpoint(audioHandle, controlRequest);
+                            break;
+                        case USB_DEVICE_AUDIO_GET_REQUEST_ENDPOINT:
+                            error = USB_DeviceAudioGetRequestEndpoint(audioHandle, controlRequest);
+                            break;
+                        default:
+                            /*no action*/
+                            break;
                     }
                 }
             }
-            break;
-
-#else
-            if (param)
+            else
             {
-                /* Handle the audio class specific request. */
-                usb_device_control_request_struct_t *controlRequest = (usb_device_control_request_struct_t *)param;
-                if ((controlRequest->setup->bmRequestType & USB_REQUEST_TYPE_RECIPIENT_MASK) !=
-                    USB_REQUEST_TYPE_RECIPIENT_INTERFACE)
+                uint8_t interface_index = (uint8_t)controlRequest->setup->wIndex;
+
+                if (audioHandle->controlInterfaceNumber == interface_index)
                 {
                     if (USB_REQUEST_TYPE_TYPE_CLASS ==
                         (controlRequest->setup->bmRequestType & USB_REQUEST_TYPE_TYPE_MASK))
                     {
                         switch (controlRequest->setup->bmRequestType)
                         {
-                            case USB_DEVICE_AUDIO_SET_REQUEST_ENDPOINT:
-                                error = USB_DeviceAudioSetRequestEndpoint(audioHandle, controlRequest);
+                            case USB_DEVICE_AUDIO_SET_REQUEST_INTERFACE:
+                                error = USB_DeviceAudioSetRequestInterface(audioHandle, controlRequest);
                                 break;
-                            case USB_DEVICE_AUDIO_GET_REQUEST_ENDPOINT:
-                                error = USB_DeviceAudioGetRequestEndpoint(audioHandle, controlRequest);
+                            case USB_DEVICE_AUDIO_GET_REQUEST_INTERFACE:
+                                error = USB_DeviceAudioGetRequestInterface(audioHandle, controlRequest);
                                 break;
                             default:
+                                /*no action*/
                                 break;
-                        }
-                    }
-                }
-                else
-                {
-                    uint8_t interface_index = (uint8_t)controlRequest->setup->wIndex;
-
-                    if (audioHandle->controlInterfaceNumber == interface_index)
-                    {
-                        if (USB_REQUEST_TYPE_TYPE_CLASS ==
-                            (controlRequest->setup->bmRequestType & USB_REQUEST_TYPE_TYPE_MASK))
-                        {
-                            switch (controlRequest->setup->bmRequestType)
-                            {
-                                case USB_DEVICE_AUDIO_SET_REQUEST_INTERFACE:
-                                    error = USB_DeviceAudioSetRequestInterface(audioHandle, controlRequest);
-                                    break;
-                                case USB_DEVICE_AUDIO_GET_REQUEST_INTERFACE:
-                                    error = USB_DeviceAudioGetRequestInterface(audioHandle, controlRequest);
-                                    break;
-                                default:
-                                    break;
-                            }
                         }
                     }
                 }
             }
-            break;
+        }
+        break;
 #endif
         default:
+            /*no action*/
             break;
     }
     return error;
@@ -1688,7 +1723,7 @@ usb_status_t USB_DeviceAudioInit(uint8_t controllerId, usb_device_class_config_s
         return error;
     }
 
-    if (!audioHandle->handle)
+    if (NULL == audioHandle->handle)
     {
         return kStatus_USB_InvalidHandle;
     }
@@ -1719,13 +1754,13 @@ usb_status_t USB_DeviceAudioDeinit(class_handle_t handle)
 
     audioHandle = (usb_device_audio_struct_t *)handle;
 
-    if (!audioHandle)
+    if (NULL == audioHandle)
     {
         return kStatus_USB_InvalidHandle;
     }
     error = USB_DeviceAudioStreamEndpointsDeinit(audioHandle);
     error = USB_DeviceAudioControlEndpointsDeinit(audioHandle);
-    USB_DeviceAudioFreeHandle(audioHandle);
+    (void)USB_DeviceAudioFreeHandle(audioHandle);
     return error;
 }
 
@@ -1755,13 +1790,13 @@ usb_status_t USB_DeviceAudioSend(class_handle_t handle, uint8_t ep, uint8_t *buf
     usb_device_audio_struct_t *audioHandle;
     usb_status_t error = kStatus_USB_Error;
 
-    if (!handle)
+    if (NULL == handle)
     {
         return kStatus_USB_InvalidHandle;
     }
     audioHandle = (usb_device_audio_struct_t *)handle;
 
-    if (audioHandle->streamInPipeBusy)
+    if (0U != audioHandle->streamInPipeBusy)
     {
         return kStatus_USB_Busy;
     }
@@ -1801,13 +1836,13 @@ usb_status_t USB_DeviceAudioRecv(class_handle_t handle, uint8_t ep, uint8_t *buf
     usb_device_audio_struct_t *audioHandle;
     usb_status_t error = kStatus_USB_Error;
 
-    if (!handle)
+    if (NULL == handle)
     {
         return kStatus_USB_InvalidHandle;
     }
     audioHandle = (usb_device_audio_struct_t *)handle;
 
-    if (audioHandle->streamOutPipeBusy)
+    if (0U != audioHandle->streamOutPipeBusy)
     {
         return kStatus_USB_Busy;
     }

@@ -1,4 +1,4 @@
-/* Copyright 2018 NXP
+/* Copyright 2018,2020 NXP
  *
  * This software is owned or controlled by NXP and may only be used
  * strictly in accordance with the applicable license terms.  By expressly
@@ -31,7 +31,7 @@
 void se05x_ic_reset()
 {
     axReset_ResetPluseDUT();
-    smComT1oI2C_ComReset();
+    smComT1oI2C_ComReset(NULL);
     sm_usleep(3000);
     return;
 }

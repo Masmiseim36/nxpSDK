@@ -81,3 +81,9 @@ void axReset_PowerUp()
 #endif
     return;
 }
+
+void axReset_HostUnconfigure()
+{
+    /* Nothing to be done */
+    return;
+}

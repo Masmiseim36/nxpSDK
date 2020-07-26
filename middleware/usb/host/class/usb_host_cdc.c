@@ -25,7 +25,7 @@ static void USB_HostCdcClearInHaltCallback(void *param, usb_host_transfer_t *tra
         cdcInstance->inCallbackFn(cdcInstance->inCallbackParam, cdcInstance->stallDataBuffer,
                                   cdcInstance->stallDataLength, kStatus_USB_TransferStall);
     }
-    USB_HostFreeTransfer(cdcInstance->hostHandle, transfer);
+    (void)USB_HostFreeTransfer(cdcInstance->hostHandle, transfer);
 }
 
 static void USB_HostCdcClearOutHaltCallback(void *param, usb_host_transfer_t *transfer, usb_status_t status)
@@ -39,7 +39,7 @@ static void USB_HostCdcClearOutHaltCallback(void *param, usb_host_transfer_t *tr
         cdcInstance->outCallbackFn(cdcInstance->outCallbackParam, cdcInstance->stallDataBuffer,
                                    cdcInstance->stallDataLength, kStatus_USB_TransferStall);
     }
-    USB_HostFreeTransfer(cdcInstance->hostHandle, transfer);
+    (void)USB_HostFreeTransfer(cdcInstance->hostHandle, transfer);
 }
 static void USB_HostCdcClearInterruptHaltCallback(void *param, usb_host_transfer_t *transfer, usb_status_t status)
 {
@@ -52,7 +52,7 @@ static void USB_HostCdcClearInterruptHaltCallback(void *param, usb_host_transfer
         cdcInstance->interruptCallbackFn(cdcInstance->interruptCallbackParam, cdcInstance->stallDataBuffer,
                                          cdcInstance->stallDataLength, kStatus_USB_TransferStall);
     }
-    USB_HostFreeTransfer(cdcInstance->hostHandle, transfer);
+    (void)USB_HostFreeTransfer(cdcInstance->hostHandle, transfer);
 }
 
 static usb_status_t USB_HostCdcClearHalt(usb_host_cdc_instance_struct_t *cdcInstance,
@@ -75,23 +75,23 @@ static usb_status_t USB_HostCdcClearHalt(usb_host_cdc_instance_struct_t *cdcInst
     cdcInstance->stallDataBuffer = stallTransfer->transferBuffer;
     cdcInstance->stallDataLength = stallTransfer->transferSofar;
     /* save the application callback function */
-    cdcInstance->controlCallbackFn = NULL;
+    cdcInstance->controlCallbackFn    = NULL;
     cdcInstance->controlCallbackParam = NULL;
     /* initialize transfer */
-    transfer->callbackFn = callbackFn;
-    transfer->callbackParam = cdcInstance;
-    transfer->transferBuffer = NULL;
-    transfer->transferLength = 0;
-    transfer->setupPacket->bRequest = USB_REQUEST_STANDARD_CLEAR_FEATURE;
+    transfer->callbackFn                 = callbackFn;
+    transfer->callbackParam              = cdcInstance;
+    transfer->transferBuffer             = NULL;
+    transfer->transferLength             = 0;
+    transfer->setupPacket->bRequest      = USB_REQUEST_STANDARD_CLEAR_FEATURE;
     transfer->setupPacket->bmRequestType = USB_REQUEST_TYPE_RECIPIENT_ENDPOINT;
-    transfer->setupPacket->wValue = USB_SHORT_TO_LITTLE_ENDIAN(USB_REQUEST_STANDARD_FEATURE_SELECTOR_ENDPOINT_HALT);
-    transfer->setupPacket->wIndex = USB_SHORT_TO_LITTLE_ENDIAN(endpoint);
+    transfer->setupPacket->wValue  = USB_SHORT_TO_LITTLE_ENDIAN(USB_REQUEST_STANDARD_FEATURE_SELECTOR_ENDPOINT_HALT);
+    transfer->setupPacket->wIndex  = USB_SHORT_TO_LITTLE_ENDIAN(endpoint);
     transfer->setupPacket->wLength = 0;
-    status = USB_HostSendSetup(cdcInstance->hostHandle, cdcInstance->controlPipe, transfer);
+    status                         = USB_HostSendSetup(cdcInstance->hostHandle, cdcInstance->controlPipe, transfer);
 
     if (status != kStatus_USB_Success)
     {
-        USB_HostFreeTransfer(cdcInstance->hostHandle, transfer);
+        (void)USB_HostFreeTransfer(cdcInstance->hostHandle, transfer);
     }
     cdcInstance->controlTransfer = transfer;
 
@@ -106,7 +106,7 @@ static usb_status_t USB_HostCdcClearHalt(usb_host_cdc_instance_struct_t *cdcInst
  * @param transfer    callback transfer.
  * @param status      transfer status.
  */
-void USB_HostCdcDataInPipeCallback(void *param, usb_host_transfer_t *transfer, usb_status_t status)
+static void USB_HostCdcDataInPipeCallback(void *param, usb_host_transfer_t *transfer, usb_status_t status)
 {
     usb_host_cdc_instance_struct_t *cdcInstance = (usb_host_cdc_instance_struct_t *)param;
 #if ((defined USB_HOST_CONFIG_CLASS_AUTO_CLEAR_STALL) && USB_HOST_CONFIG_CLASS_AUTO_CLEAR_STALL)
@@ -116,7 +116,7 @@ void USB_HostCdcDataInPipeCallback(void *param, usb_host_transfer_t *transfer, u
                                  (USB_REQUEST_TYPE_DIR_IN |
                                   ((usb_host_pipe_t *)cdcInstance->inPipe)->endpointAddress)) == kStatus_USB_Success)
         {
-            USB_HostFreeTransfer(cdcInstance->hostHandle, transfer);
+            (void)USB_HostFreeTransfer(cdcInstance->hostHandle, transfer);
             return;
         }
     }
@@ -128,7 +128,7 @@ void USB_HostCdcDataInPipeCallback(void *param, usb_host_transfer_t *transfer, u
         cdcInstance->inCallbackFn(cdcInstance->inCallbackParam, transfer->transferBuffer, transfer->transferSofar,
                                   status);
     }
-    USB_HostFreeTransfer(cdcInstance->hostHandle, transfer);
+    (void)USB_HostFreeTransfer(cdcInstance->hostHandle, transfer);
 }
 
 /*!
@@ -138,7 +138,7 @@ void USB_HostCdcDataInPipeCallback(void *param, usb_host_transfer_t *transfer, u
  * @param transfer    callback transfer.
  * @param status      transfer status.
  */
-void USB_HostCdcDataOutPipeCallback(void *param, usb_host_transfer_t *transfer, usb_status_t status)
+static void USB_HostCdcDataOutPipeCallback(void *param, usb_host_transfer_t *transfer, usb_status_t status)
 {
     usb_host_cdc_instance_struct_t *cdcInstance = (usb_host_cdc_instance_struct_t *)param;
 #if ((defined USB_HOST_CONFIG_CLASS_AUTO_CLEAR_STALL) && USB_HOST_CONFIG_CLASS_AUTO_CLEAR_STALL)
@@ -148,7 +148,7 @@ void USB_HostCdcDataOutPipeCallback(void *param, usb_host_transfer_t *transfer, 
                                  (USB_REQUEST_TYPE_DIR_OUT |
                                   ((usb_host_pipe_t *)cdcInstance->outPipe)->endpointAddress)) == kStatus_USB_Success)
         {
-            USB_HostFreeTransfer(cdcInstance->hostHandle, transfer);
+            (void)USB_HostFreeTransfer(cdcInstance->hostHandle, transfer);
             return;
         }
     }
@@ -160,7 +160,7 @@ void USB_HostCdcDataOutPipeCallback(void *param, usb_host_transfer_t *transfer, 
                                    status);
     }
 
-    USB_HostFreeTransfer(cdcInstance->hostHandle, transfer);
+    (void)USB_HostFreeTransfer(cdcInstance->hostHandle, transfer);
 }
 
 /*!
@@ -170,7 +170,7 @@ void USB_HostCdcDataOutPipeCallback(void *param, usb_host_transfer_t *transfer, 
  * @param transfer    callback transfer.
  * @param status      transfer status.
  */
-void USB_HostCdcInterruptPipeCallback(void *param, usb_host_transfer_t *transfer, usb_status_t status)
+static void USB_HostCdcInterruptPipeCallback(void *param, usb_host_transfer_t *transfer, usb_status_t status)
 {
     usb_host_cdc_instance_struct_t *cdcInstance = (usb_host_cdc_instance_struct_t *)param;
 
@@ -182,7 +182,7 @@ void USB_HostCdcInterruptPipeCallback(void *param, usb_host_transfer_t *transfer
                 (USB_REQUEST_TYPE_DIR_OUT | ((usb_host_pipe_t *)cdcInstance->interruptPipe)->endpointAddress)) ==
             kStatus_USB_Success)
         {
-            USB_HostFreeTransfer(cdcInstance->hostHandle, transfer);
+            (void)USB_HostFreeTransfer(cdcInstance->hostHandle, transfer);
             return;
         }
     }
@@ -193,7 +193,7 @@ void USB_HostCdcInterruptPipeCallback(void *param, usb_host_transfer_t *transfer
         cdcInstance->interruptCallbackFn(cdcInstance->interruptCallbackParam, transfer->transferBuffer,
                                          transfer->transferSofar, status);
     }
-    USB_HostFreeTransfer(cdcInstance->hostHandle, transfer);
+    (void)USB_HostFreeTransfer(cdcInstance->hostHandle, transfer);
 }
 
 /*!
@@ -203,7 +203,7 @@ void USB_HostCdcInterruptPipeCallback(void *param, usb_host_transfer_t *transfer
  * @param transfer    callback transfer.
  * @param status      transfer status.
  */
-void USB_HostCdcControlPipeCallback(void *param, usb_host_transfer_t *transfer, usb_status_t status)
+static void USB_HostCdcControlPipeCallback(void *param, usb_host_transfer_t *transfer, usb_status_t status)
 {
     usb_host_cdc_instance_struct_t *cdcInstance = (usb_host_cdc_instance_struct_t *)param;
 
@@ -215,7 +215,7 @@ void USB_HostCdcControlPipeCallback(void *param, usb_host_transfer_t *transfer, 
         cdcInstance->controlCallbackFn(cdcInstance->controlCallbackParam, transfer->transferBuffer,
                                        transfer->transferSofar, status);
     }
-    USB_HostFreeTransfer(cdcInstance->hostHandle, transfer);
+    (void)USB_HostFreeTransfer(cdcInstance->hostHandle, transfer);
 }
 
 /*!
@@ -273,19 +273,19 @@ static usb_status_t USB_HostCdcOpenDataInterface(usb_host_cdc_instance_struct_t 
              USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_IN) &&
             ((ep_desc->bmAttributes & USB_DESCRIPTOR_ENDPOINT_ATTRIBUTE_TYPE_MASK) == USB_ENDPOINT_BULK))
         {
-            pipeInit.devInstance = cdcInstance->deviceHandle;
-            pipeInit.pipeType = USB_ENDPOINT_BULK;
-            pipeInit.direction = USB_IN;
+            pipeInit.devInstance     = cdcInstance->deviceHandle;
+            pipeInit.pipeType        = USB_ENDPOINT_BULK;
+            pipeInit.direction       = USB_IN;
             pipeInit.endpointAddress = (ep_desc->bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_NUMBER_MASK);
-            pipeInit.interval = ep_desc->bInterval;
-            pipeInit.maxPacketSize = (uint16_t)(USB_SHORT_FROM_LITTLE_ENDIAN_ADDRESS(ep_desc->wMaxPacketSize) &
-                                                USB_DESCRIPTOR_ENDPOINT_MAXPACKETSIZE_SIZE_MASK);
-            pipeInit.numberPerUframe = (USB_SHORT_FROM_LITTLE_ENDIAN_ADDRESS(ep_desc->wMaxPacketSize) &
-                                        USB_DESCRIPTOR_ENDPOINT_MAXPACKETSIZE_MULT_TRANSACTIONS_MASK);
-            pipeInit.nakCount = USB_HOST_CONFIG_MAX_NAK;
+            pipeInit.interval        = ep_desc->bInterval;
+            pipeInit.maxPacketSize   = (uint16_t)((USB_SHORT_FROM_LITTLE_ENDIAN_ADDRESS(ep_desc->wMaxPacketSize) &
+                                                 USB_DESCRIPTOR_ENDPOINT_MAXPACKETSIZE_SIZE_MASK));
+            pipeInit.numberPerUframe = (uint8_t)((USB_SHORT_FROM_LITTLE_ENDIAN_ADDRESS(ep_desc->wMaxPacketSize) &
+                                                  USB_DESCRIPTOR_ENDPOINT_MAXPACKETSIZE_MULT_TRANSACTIONS_MASK));
+            pipeInit.nakCount        = USB_HOST_CONFIG_MAX_NAK;
 
             cdcInstance->bulkInPacketSize = pipeInit.maxPacketSize;
-            status = USB_HostOpenPipe(cdcInstance->hostHandle, &cdcInstance->inPipe, &pipeInit);
+            status                        = USB_HostOpenPipe(cdcInstance->hostHandle, &cdcInstance->inPipe, &pipeInit);
             if (status != kStatus_USB_Success)
             {
 #ifdef HOST_ECHO
@@ -298,16 +298,16 @@ static usb_status_t USB_HostCdcOpenDataInterface(usb_host_cdc_instance_struct_t 
                   USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_OUT) &&
                  ((ep_desc->bmAttributes & USB_DESCRIPTOR_ENDPOINT_ATTRIBUTE_TYPE_MASK) == USB_ENDPOINT_BULK))
         {
-            pipeInit.devInstance = cdcInstance->deviceHandle;
-            pipeInit.pipeType = USB_ENDPOINT_BULK;
-            pipeInit.direction = USB_OUT;
+            pipeInit.devInstance     = cdcInstance->deviceHandle;
+            pipeInit.pipeType        = USB_ENDPOINT_BULK;
+            pipeInit.direction       = USB_OUT;
             pipeInit.endpointAddress = (ep_desc->bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_NUMBER_MASK);
-            pipeInit.interval = ep_desc->bInterval;
-            pipeInit.maxPacketSize = (uint16_t)(USB_SHORT_FROM_LITTLE_ENDIAN_ADDRESS(ep_desc->wMaxPacketSize) &
-                                                USB_DESCRIPTOR_ENDPOINT_MAXPACKETSIZE_SIZE_MASK);
-            pipeInit.numberPerUframe = (USB_SHORT_FROM_LITTLE_ENDIAN_ADDRESS(ep_desc->wMaxPacketSize) &
-                                        USB_DESCRIPTOR_ENDPOINT_MAXPACKETSIZE_MULT_TRANSACTIONS_MASK);
-            pipeInit.nakCount = USB_HOST_CONFIG_MAX_NAK;
+            pipeInit.interval        = ep_desc->bInterval;
+            pipeInit.maxPacketSize   = (uint16_t)((USB_SHORT_FROM_LITTLE_ENDIAN_ADDRESS(ep_desc->wMaxPacketSize) &
+                                                 USB_DESCRIPTOR_ENDPOINT_MAXPACKETSIZE_SIZE_MASK));
+            pipeInit.numberPerUframe = (uint8_t)((USB_SHORT_FROM_LITTLE_ENDIAN_ADDRESS(ep_desc->wMaxPacketSize) &
+                                                  USB_DESCRIPTOR_ENDPOINT_MAXPACKETSIZE_MULT_TRANSACTIONS_MASK));
+            pipeInit.nakCount        = USB_HOST_CONFIG_MAX_NAK;
 
             cdcInstance->bulkOutPacketSize = pipeInit.maxPacketSize;
             status = USB_HostOpenPipe(cdcInstance->hostHandle, &cdcInstance->outPipe, &pipeInit);
@@ -350,7 +350,7 @@ static void USB_HostCdcSetDataInterfaceCallback(void *param, usb_host_transfer_t
         or USB_HostCdcSetDataInterface, but is the same function */
         cdcInstance->controlCallbackFn(cdcInstance->controlCallbackParam, NULL, 0, status);
     }
-    USB_HostFreeTransfer(cdcInstance->hostHandle, transfer);
+    (void)USB_HostFreeTransfer(cdcInstance->hostHandle, transfer);
 }
 
 /*!
@@ -371,6 +371,12 @@ static usb_status_t USB_HostCdcOpenControlInterface(usb_host_cdc_instance_struct
     if (cdcInstance->interruptPipe != NULL)
     {
         status = USB_HostCancelTransfer(cdcInstance->hostHandle, cdcInstance->interruptPipe, NULL);
+        if (status != kStatus_USB_Success)
+        {
+#ifdef HOST_ECHO
+            usb_echo("error when cancel pipe\r\n");
+#endif
+        }
         status = USB_HostClosePipe(cdcInstance->hostHandle, cdcInstance->interruptPipe);
 
         if (status != kStatus_USB_Success)
@@ -397,16 +403,16 @@ static usb_status_t USB_HostCdcOpenControlInterface(usb_host_cdc_instance_struct
              USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_IN) &&
             ((ep_desc->bmAttributes & USB_DESCRIPTOR_ENDPOINT_ATTRIBUTE_TYPE_MASK) == USB_ENDPOINT_INTERRUPT))
         {
-            pipeInit.devInstance = cdcInstance->deviceHandle;
-            pipeInit.pipeType = USB_ENDPOINT_INTERRUPT;
-            pipeInit.direction = USB_IN;
+            pipeInit.devInstance     = cdcInstance->deviceHandle;
+            pipeInit.pipeType        = USB_ENDPOINT_INTERRUPT;
+            pipeInit.direction       = USB_IN;
             pipeInit.endpointAddress = (ep_desc->bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_NUMBER_MASK);
-            pipeInit.interval = ep_desc->bInterval;
-            pipeInit.maxPacketSize = (uint16_t)(USB_SHORT_FROM_LITTLE_ENDIAN_ADDRESS(ep_desc->wMaxPacketSize) &
-                                                USB_DESCRIPTOR_ENDPOINT_MAXPACKETSIZE_SIZE_MASK);
-            pipeInit.numberPerUframe = (USB_SHORT_FROM_LITTLE_ENDIAN_ADDRESS(ep_desc->wMaxPacketSize) &
-                                        USB_DESCRIPTOR_ENDPOINT_MAXPACKETSIZE_MULT_TRANSACTIONS_MASK);
-            pipeInit.nakCount = USB_HOST_CONFIG_MAX_NAK;
+            pipeInit.interval        = ep_desc->bInterval;
+            pipeInit.maxPacketSize   = (uint16_t)((USB_SHORT_FROM_LITTLE_ENDIAN_ADDRESS(ep_desc->wMaxPacketSize) &
+                                                 USB_DESCRIPTOR_ENDPOINT_MAXPACKETSIZE_SIZE_MASK));
+            pipeInit.numberPerUframe = (uint8_t)((USB_SHORT_FROM_LITTLE_ENDIAN_ADDRESS(ep_desc->wMaxPacketSize) &
+                                                  USB_DESCRIPTOR_ENDPOINT_MAXPACKETSIZE_MULT_TRANSACTIONS_MASK));
+            pipeInit.nakCount        = USB_HOST_CONFIG_MAX_NAK;
 
             cdcInstance->packetSize = pipeInit.maxPacketSize;
 
@@ -447,7 +453,7 @@ static void USB_HostCdcSetContorlInterfaceCallback(void *param, usb_host_transfe
         or USB_HostCdcSetDataInterface, but is the same function */
         cdcInstance->controlCallbackFn(cdcInstance->controlCallbackParam, NULL, 0, status);
     }
-    USB_HostFreeTransfer(cdcInstance->hostHandle, transfer);
+    (void)USB_HostFreeTransfer(cdcInstance->hostHandle, transfer);
 }
 
 /*!
@@ -466,19 +472,22 @@ usb_status_t USB_HostCdcInit(usb_device_handle deviceHandle, usb_host_class_hand
     usb_host_cdc_instance_struct_t *control_ptr =
         (usb_host_cdc_instance_struct_t *)OSA_MemoryAllocate(sizeof(usb_host_cdc_instance_struct_t));
     uint32_t info_value;
+    void *temp;
 
     if (control_ptr == NULL)
     {
         return kStatus_USB_AllocFail;
     }
 
-    control_ptr->deviceHandle = deviceHandle;
+    control_ptr->deviceHandle           = deviceHandle;
     control_ptr->controlInterfaceHandle = NULL;
-    control_ptr->dataInterfaceHandle = NULL;
-    USB_HostHelperGetPeripheralInformation(deviceHandle, kUSB_HostGetHostHandle, &info_value);
-    control_ptr->hostHandle = (usb_host_handle)info_value;
-    USB_HostHelperGetPeripheralInformation(deviceHandle, kUSB_HostGetDeviceControlPipe, &info_value);
-    control_ptr->controlPipe = (usb_host_pipe_handle)info_value;
+    control_ptr->dataInterfaceHandle    = NULL;
+    (void)USB_HostHelperGetPeripheralInformation(deviceHandle, (uint32_t)kUSB_HostGetHostHandle, &info_value);
+    temp                    = (uint32_t *)info_value;
+    control_ptr->hostHandle = (usb_host_handle)temp;
+    (void)USB_HostHelperGetPeripheralInformation(deviceHandle, (uint32_t)kUSB_HostGetDeviceControlPipe, &info_value);
+    temp                     = (uint32_t *)info_value;
+    control_ptr->controlPipe = (usb_host_pipe_handle)temp;
 
     *classHandle = control_ptr;
     return kStatus_USB_Success;
@@ -534,12 +543,12 @@ usb_status_t USB_HostCdcSetControlInterface(usb_host_class_handle classHandle,
         }
     }
 
-    if (alternateSetting == 0)
+    if (alternateSetting == 0U)
     {
         if (callbackFn != NULL)
         {
             status = USB_HostCdcOpenControlInterface(cdcInstance);
-            callbackFn(callbackParam, NULL, 0, status);
+            callbackFn(callbackParam, NULL, 0U, status);
         }
     }
     else
@@ -551,20 +560,20 @@ usb_status_t USB_HostCdcSetControlInterface(usb_host_class_handle classHandle,
 #endif
             return kStatus_USB_Error;
         }
-        cdcInstance->controlCallbackFn = callbackFn;
+        cdcInstance->controlCallbackFn    = callbackFn;
         cdcInstance->controlCallbackParam = callbackParam;
         /* initialize transfer */
-        transfer->callbackFn = USB_HostCdcSetContorlInterfaceCallback;
-        transfer->callbackParam = cdcInstance;
-        transfer->setupPacket->bRequest = USB_REQUEST_STANDARD_SET_INTERFACE;
+        transfer->callbackFn                 = USB_HostCdcSetContorlInterfaceCallback;
+        transfer->callbackParam              = cdcInstance;
+        transfer->setupPacket->bRequest      = USB_REQUEST_STANDARD_SET_INTERFACE;
         transfer->setupPacket->bmRequestType = USB_REQUEST_TYPE_RECIPIENT_INTERFACE;
-        transfer->setupPacket->wIndex = USB_SHORT_TO_LITTLE_ENDIAN(
+        transfer->setupPacket->wIndex        = USB_SHORT_TO_LITTLE_ENDIAN(
             ((usb_host_interface_t *)cdcInstance->controlInterfaceHandle)->interfaceDesc->bInterfaceNumber);
-        transfer->setupPacket->wValue = USB_SHORT_TO_LITTLE_ENDIAN(alternateSetting);
+        transfer->setupPacket->wValue  = USB_SHORT_TO_LITTLE_ENDIAN(alternateSetting);
         transfer->setupPacket->wLength = 0;
-        transfer->transferBuffer = NULL;
-        transfer->transferLength = 0;
-        status = USB_HostSendSetup(cdcInstance->hostHandle, cdcInstance->controlPipe, transfer);
+        transfer->transferBuffer       = NULL;
+        transfer->transferLength       = 0;
+        status                         = USB_HostSendSetup(cdcInstance->hostHandle, cdcInstance->controlPipe, transfer);
 
         if (status == kStatus_USB_Success)
         {
@@ -572,7 +581,7 @@ usb_status_t USB_HostCdcSetControlInterface(usb_host_class_handle classHandle,
         }
         else
         {
-            USB_HostFreeTransfer(cdcInstance->hostHandle, transfer);
+            (void)USB_HostFreeTransfer(cdcInstance->hostHandle, transfer);
         }
     }
 
@@ -641,7 +650,7 @@ usb_status_t USB_HostCdcSetDataInterface(usb_host_class_handle classHandle,
         }
     }
 
-    if (alternateSetting == 0)
+    if (alternateSetting == 0U)
     {
         if (callbackFn != NULL)
         {
@@ -658,20 +667,20 @@ usb_status_t USB_HostCdcSetDataInterface(usb_host_class_handle classHandle,
 #endif
             return kStatus_USB_Error;
         }
-        cdcInstance->controlCallbackFn = callbackFn;
+        cdcInstance->controlCallbackFn    = callbackFn;
         cdcInstance->controlCallbackParam = callbackParam;
         /* initialize transfer */
-        transfer->callbackFn = USB_HostCdcSetDataInterfaceCallback;
-        transfer->callbackParam = cdcInstance;
-        transfer->setupPacket->bRequest = USB_REQUEST_STANDARD_SET_INTERFACE;
+        transfer->callbackFn                 = USB_HostCdcSetDataInterfaceCallback;
+        transfer->callbackParam              = cdcInstance;
+        transfer->setupPacket->bRequest      = USB_REQUEST_STANDARD_SET_INTERFACE;
         transfer->setupPacket->bmRequestType = USB_REQUEST_TYPE_RECIPIENT_INTERFACE;
-        transfer->setupPacket->wIndex = USB_SHORT_TO_LITTLE_ENDIAN(
+        transfer->setupPacket->wIndex        = USB_SHORT_TO_LITTLE_ENDIAN(
             ((usb_host_interface_t *)cdcInstance->dataInterfaceHandle)->interfaceDesc->bInterfaceNumber);
-        transfer->setupPacket->wValue = USB_SHORT_TO_LITTLE_ENDIAN(alternateSetting);
+        transfer->setupPacket->wValue  = USB_SHORT_TO_LITTLE_ENDIAN(alternateSetting);
         transfer->setupPacket->wLength = 0;
-        transfer->transferBuffer = NULL;
-        transfer->transferLength = 0;
-        status = USB_HostSendSetup(cdcInstance->hostHandle, cdcInstance->controlPipe, transfer);
+        transfer->transferBuffer       = NULL;
+        transfer->transferLength       = 0;
+        status                         = USB_HostSendSetup(cdcInstance->hostHandle, cdcInstance->controlPipe, transfer);
 
         if (status == kStatus_USB_Success)
         {
@@ -679,7 +688,7 @@ usb_status_t USB_HostCdcSetDataInterface(usb_host_class_handle classHandle,
         }
         else
         {
-            USB_HostFreeTransfer(cdcInstance->hostHandle, transfer);
+            (void)USB_HostFreeTransfer(cdcInstance->hostHandle, transfer);
         }
     }
 
@@ -698,7 +707,7 @@ usb_status_t USB_HostCdcSetDataInterface(usb_host_class_handle classHandle,
  */
 usb_status_t USB_HostCdcDeinit(usb_device_handle deviceHandle, usb_host_class_handle classHandle)
 {
-    usb_status_t status;
+    usb_status_t status                         = kStatus_USB_Error;
     usb_host_cdc_instance_struct_t *cdcInstance = (usb_host_cdc_instance_struct_t *)classHandle;
 
     if (deviceHandle == NULL)
@@ -711,6 +720,12 @@ usb_status_t USB_HostCdcDeinit(usb_device_handle deviceHandle, usb_host_class_ha
         if (cdcInstance->interruptPipe != NULL)
         {
             status = USB_HostCancelTransfer(cdcInstance->hostHandle, cdcInstance->interruptPipe, NULL);
+            if (status != kStatus_USB_Success)
+            {
+#ifdef HOST_ECHO
+                usb_echo("error when Cancel pipe\r\n");
+#endif
+            }
             status = USB_HostClosePipe(cdcInstance->hostHandle, cdcInstance->interruptPipe);
 
             if (status != kStatus_USB_Success)
@@ -722,11 +737,17 @@ usb_status_t USB_HostCdcDeinit(usb_device_handle deviceHandle, usb_host_class_ha
             cdcInstance->interruptPipe = NULL;
         }
 
-        USB_HostCloseDeviceInterface(deviceHandle, cdcInstance->controlInterfaceHandle);
+        (void)USB_HostCloseDeviceInterface(deviceHandle, cdcInstance->controlInterfaceHandle);
 
         if (cdcInstance->inPipe != NULL)
         {
             status = USB_HostCancelTransfer(cdcInstance->hostHandle, cdcInstance->inPipe, NULL);
+            if (status != kStatus_USB_Success)
+            {
+#ifdef HOST_ECHO
+                usb_echo("error when Cancel pipe\r\n");
+#endif
+            }
             status = USB_HostClosePipe(cdcInstance->hostHandle, cdcInstance->inPipe);
 
             if (status != kStatus_USB_Success)
@@ -740,6 +761,12 @@ usb_status_t USB_HostCdcDeinit(usb_device_handle deviceHandle, usb_host_class_ha
         if (cdcInstance->outPipe != NULL)
         {
             status = USB_HostCancelTransfer(cdcInstance->hostHandle, cdcInstance->outPipe, NULL);
+            if (status != kStatus_USB_Success)
+            {
+#ifdef HOST_ECHO
+                usb_echo("error when Cancel pipe\r\n");
+#endif
+            }
             status = USB_HostClosePipe(cdcInstance->hostHandle, cdcInstance->outPipe);
 
             if (status != kStatus_USB_Success)
@@ -755,16 +782,18 @@ usb_status_t USB_HostCdcDeinit(usb_device_handle deviceHandle, usb_host_class_ha
             status =
                 USB_HostCancelTransfer(cdcInstance->hostHandle, cdcInstance->controlPipe, cdcInstance->controlTransfer);
         }
-        USB_HostCloseDeviceInterface(deviceHandle, cdcInstance->dataInterfaceHandle);
+        (void)USB_HostCloseDeviceInterface(deviceHandle, cdcInstance->dataInterfaceHandle);
 
         OSA_MemoryFree(cdcInstance);
     }
     else
     {
-        USB_HostCloseDeviceInterface(deviceHandle, NULL);
+        (void)USB_HostCloseDeviceInterface(deviceHandle, NULL);
+        /*add for misra*/
+        status = kStatus_USB_Success;
     }
 
-    return kStatus_USB_Success;
+    return status;
 }
 
 /*!
@@ -810,19 +839,19 @@ usb_status_t USB_HostCdcDataRecv(usb_host_class_handle classHandle,
 #endif
         return kStatus_USB_Error;
     }
-    cdcInstance->inCallbackFn = callbackFn;
+    cdcInstance->inCallbackFn    = callbackFn;
     cdcInstance->inCallbackParam = callbackParam;
-    transfer->transferBuffer = buffer;
-    transfer->transferLength = bufferLength;
-    transfer->callbackFn = USB_HostCdcDataInPipeCallback;
-    transfer->callbackParam = cdcInstance;
+    transfer->transferBuffer     = buffer;
+    transfer->transferLength     = bufferLength;
+    transfer->callbackFn         = USB_HostCdcDataInPipeCallback;
+    transfer->callbackParam      = cdcInstance;
 
     if (USB_HostRecv(cdcInstance->hostHandle, cdcInstance->inPipe, transfer) != kStatus_USB_Success)
     {
 #ifdef HOST_ECHO
         usb_echo("failed to USB_HostRecv\r\n");
 #endif
-        USB_HostFreeTransfer(cdcInstance->hostHandle, transfer);
+        (void)USB_HostFreeTransfer(cdcInstance->hostHandle, transfer);
         return kStatus_USB_Error;
     }
 
@@ -872,19 +901,19 @@ usb_status_t USB_HostCdcDataSend(usb_host_class_handle classHandle,
 #endif
         return kStatus_USB_Error;
     }
-    cdcInstance->outCallbackFn = callbackFn;
+    cdcInstance->outCallbackFn    = callbackFn;
     cdcInstance->outCallbackParam = callbackParam;
-    transfer->transferBuffer = buffer;
-    transfer->transferLength = bufferLength;
-    transfer->callbackFn = USB_HostCdcDataOutPipeCallback;
-    transfer->callbackParam = cdcInstance;
+    transfer->transferBuffer      = buffer;
+    transfer->transferLength      = bufferLength;
+    transfer->callbackFn          = USB_HostCdcDataOutPipeCallback;
+    transfer->callbackParam       = cdcInstance;
 
     if (USB_HostSend(cdcInstance->hostHandle, cdcInstance->outPipe, transfer) != kStatus_USB_Success)
     {
 #ifdef HOST_ECHO
         usb_echo("failed to USB_HostSend\r\n");
 #endif
-        USB_HostFreeTransfer(cdcInstance->hostHandle, transfer);
+        (void)USB_HostFreeTransfer(cdcInstance->hostHandle, transfer);
         return kStatus_USB_Error;
     }
     return kStatus_USB_Success;
@@ -933,19 +962,19 @@ usb_status_t USB_HostCdcInterruptRecv(usb_host_class_handle classHandle,
 #endif
         return kStatus_USB_Error;
     }
-    cdcInstance->interruptCallbackFn = callbackFn;
+    cdcInstance->interruptCallbackFn    = callbackFn;
     cdcInstance->interruptCallbackParam = callbackParam;
-    transfer->transferBuffer = buffer;
-    transfer->transferLength = bufferLength;
-    transfer->callbackFn = USB_HostCdcInterruptPipeCallback;
-    transfer->callbackParam = cdcInstance;
+    transfer->transferBuffer            = buffer;
+    transfer->transferLength            = bufferLength;
+    transfer->callbackFn                = USB_HostCdcInterruptPipeCallback;
+    transfer->callbackParam             = cdcInstance;
 
     if (USB_HostRecv(cdcInstance->hostHandle, cdcInstance->interruptPipe, transfer) != kStatus_USB_Success)
     {
 #ifdef HOST_ECHO
         usb_echo("failed to usb_interrupt_recv\r\n");
 #endif
-        USB_HostFreeTransfer(cdcInstance->hostHandle, transfer);
+        (void)USB_HostFreeTransfer(cdcInstance->hostHandle, transfer);
         return kStatus_USB_Error;
     }
     return kStatus_USB_Success;
@@ -1025,17 +1054,17 @@ usb_status_t USB_HostCdcControl(usb_host_class_handle classHandle,
 #endif
         return kStatus_USB_Error;
     }
-    cdcInstance->controlCallbackFn = callbackFn;
+    cdcInstance->controlCallbackFn    = callbackFn;
     cdcInstance->controlCallbackParam = callbackParam;
 
-    transfer->transferBuffer = data;
-    transfer->transferLength = wlength;
-    transfer->callbackFn = USB_HostCdcControlPipeCallback;
-    transfer->callbackParam = cdcInstance;
+    transfer->transferBuffer             = data;
+    transfer->transferLength             = wlength;
+    transfer->callbackFn                 = USB_HostCdcControlPipeCallback;
+    transfer->callbackParam              = cdcInstance;
     transfer->setupPacket->bmRequestType = request_type;
-    transfer->setupPacket->bRequest = request;
-    transfer->setupPacket->wValue = USB_SHORT_TO_LITTLE_ENDIAN(wvalue_l | (uint16_t)((uint16_t)wvalue_h << 8));
-    transfer->setupPacket->wIndex = USB_SHORT_TO_LITTLE_ENDIAN(
+    transfer->setupPacket->bRequest      = request;
+    transfer->setupPacket->wValue        = USB_SHORT_TO_LITTLE_ENDIAN(wvalue_l | (uint16_t)((uint16_t)wvalue_h << 8));
+    transfer->setupPacket->wIndex        = USB_SHORT_TO_LITTLE_ENDIAN(
         ((usb_host_interface_t *)cdcInstance->controlInterfaceHandle)->interfaceDesc->bInterfaceNumber);
     transfer->setupPacket->wLength = USB_SHORT_TO_LITTLE_ENDIAN(wlength);
 
@@ -1044,7 +1073,7 @@ usb_status_t USB_HostCdcControl(usb_host_class_handle classHandle,
 #ifdef HOST_ECHO
         usb_echo("failed for USB_HostSendSetup\r\n");
 #endif
-        USB_HostFreeTransfer(cdcInstance->hostHandle, transfer);
+        (void)USB_HostFreeTransfer(cdcInstance->hostHandle, transfer);
         return kStatus_USB_Error;
     }
     cdcInstance->controlTransfer = transfer;
@@ -1097,16 +1126,16 @@ usb_status_t USB_HostCdcGetAcmLineCoding(usb_host_class_handle classHandle,
 usb_status_t USB_HostCdcSetAcmCtrlState(
     usb_host_class_handle classHandle, uint8_t dtr, uint8_t rts, transfer_callback_t callbackFn, void *callbackParam)
 {
-    uint16_t lineState = 0;
+    uint16_t lineState = 0U;
 
     usb_host_cdc_instance_struct_t *cdcInstance = (usb_host_cdc_instance_struct_t *)classHandle;
 
-    lineState = dtr ? USB_HOST_CDC_CONTROL_LINE_STATE_DTR : 0;
-    lineState |= rts ? USB_HOST_CDC_CONTROL_LINE_STATE_RTS : 0;
+    lineState = (0U != dtr) ? USB_HOST_CDC_CONTROL_LINE_STATE_DTR : 0U;
+    lineState |= (0U != rts) ? USB_HOST_CDC_CONTROL_LINE_STATE_RTS : 0U;
     return USB_HostCdcControl(
         cdcInstance, USB_REQUEST_TYPE_DIR_OUT | USB_REQUEST_TYPE_TYPE_CLASS | USB_REQUEST_TYPE_RECIPIENT_INTERFACE,
-        USB_HOST_CDC_SET_CONTROL_LINE_STATE, USB_SHORT_GET_LOW(lineState), USB_SHORT_GET_HIGH(lineState), 0, NULL,
-        callbackFn, callbackParam);
+        USB_HOST_CDC_SET_CONTROL_LINE_STATE, (uint8_t)USB_SHORT_GET_LOW(lineState), USB_SHORT_GET_HIGH(lineState), 0U,
+        NULL, callbackFn, callbackParam);
 }
 
 /*!
@@ -1133,7 +1162,7 @@ usb_status_t USB_HostCdcSendEncapsulatedCommand(usb_host_class_handle classHandl
 {
     return USB_HostCdcControl(
         classHandle, USB_REQUEST_TYPE_DIR_OUT | USB_REQUEST_TYPE_TYPE_CLASS | USB_REQUEST_TYPE_RECIPIENT_INTERFACE,
-        USB_HOST_CDC_SEND_ENCAPSULATED_COMMAND, 0, 0, bufferLength, buffer, callbackFn, callbackParam);
+        USB_HOST_CDC_SEND_ENCAPSULATED_COMMAND, 0U, 0U, bufferLength, buffer, callbackFn, callbackParam);
 }
 
 /*!
@@ -1189,20 +1218,23 @@ usb_status_t USB_HostCdcGetAcmDescriptor(usb_host_class_handle classHandle,
     usb_host_cdc_instance_struct_t *cdcInstance = (usb_host_cdc_instance_struct_t *)classHandle;
     usb_cdc_func_desc_struct_t *cdc_common_ptr;
     usb_host_interface_t *interface_handle;
+    void *temp;
 
-    status = kStatus_USB_Success;
+    status           = kStatus_USB_Success;
     interface_handle = (usb_host_interface_t *)cdcInstance->controlInterfaceHandle;
-    ptr1 = (usb_descriptor_union_t *)interface_handle->interfaceExtension;
-    end_address = (uint32_t)(interface_handle->interfaceExtension + interface_handle->interfaceExtensionLength);
+    temp             = (void *)interface_handle->interfaceExtension;
+    ptr1             = (usb_descriptor_union_t *)temp;
+    end_address      = (uint32_t)(interface_handle->interfaceExtension + interface_handle->interfaceExtensionLength);
 
     while ((uint32_t)ptr1 < end_address)
     {
-        cdc_common_ptr = (usb_cdc_func_desc_struct_t *)&ptr1->common;
+        temp           = (void *)&ptr1->common;
+        cdc_common_ptr = (usb_cdc_func_desc_struct_t *)temp;
         switch (cdc_common_ptr->common.bDescriptorSubtype)
         {
             case USB_HOST_DESC_SUBTYPE_HEADER:
                 *headDesc = &cdc_common_ptr->head;
-                if ((((uint32_t)((*headDesc)->bcdCDC[1]) << 8) + (*headDesc)->bcdCDC[0]) > 0x0110)
+                if ((((uint32_t)((*headDesc)->bcdCDC[1U]) << 8U) + (*headDesc)->bcdCDC[0U]) > 0x0110U)
                 {
                     status = kStatus_USB_Error;
                 }
@@ -1224,6 +1256,7 @@ usb_status_t USB_HostCdcGetAcmDescriptor(usb_host_class_handle classHandle,
                 *abstractControlDesc = &cdc_common_ptr->acm;
                 break;
             default:
+                /*no action*/
                 break;
         }
 
@@ -1231,12 +1264,13 @@ usb_status_t USB_HostCdcGetAcmDescriptor(usb_host_class_handle classHandle,
         {
             break;
         }
-        ptr1 = (usb_descriptor_union_t *)((uint8_t *)ptr1 + ptr1->common.bLength);
+        temp = (void *)((uint8_t *)ptr1 + ptr1->common.bLength);
+        ptr1 = (usb_descriptor_union_t *)temp;
     }
-    cdcInstance->headDesc = *headDesc;
-    cdcInstance->callManageDesc = *callManageDesc;
+    cdcInstance->headDesc            = *headDesc;
+    cdcInstance->callManageDesc      = *callManageDesc;
     cdcInstance->abstractControlDesc = *abstractControlDesc;
-    cdcInstance->unionInterfaceDesc = *unionInterfaceDesc;
+    cdcInstance->unionInterfaceDesc  = *unionInterfaceDesc;
     return status;
 }
 

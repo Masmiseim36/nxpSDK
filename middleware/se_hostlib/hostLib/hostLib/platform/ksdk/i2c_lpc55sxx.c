@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 NXP
+ * Copyright 2018,2020 NXP
  *
  * This software is owned or controlled by NXP and may only be used
  * strictly in accordance with the applicable license terms.  By expressly
@@ -43,7 +43,16 @@
 #define AX_I2CM I2C4
 #define AX_I2C_CLK (12000000)
 #define AX_I2CM_IRQN FLEXCOMM4_IRQn
-#define I2C_BAUDRATE (400000) /* 400K */
+
+#if defined(SCI2C)
+#define I2C_BAUDRATE (400u * 1000u) // 400K
+#elif defined(T1oI2C)
+//#define I2C_BAUDRATE (3400u * 1000u) // 3.4. Not used by default
+#define I2C_BAUDRATE (400u * 1000u) // 400K
+#else
+#error "Invalid combination"
+#endif
+
 
 // #if defined(SDK_OS_FREE_RTOS) && SDK_OS_FREE_RTOS == 1
 // i2c_rtos_handle_t gmaster_rtos_handle;
@@ -127,7 +136,7 @@ static i2c_error_t kinetisI2cStatusToAxStatus(status_t kinetis_i2c_status)
 #if defined(SDK_OS_FREE_RTOS) && SDK_OS_FREE_RTOS == 1
 i2c_rtos_handle_t gmaster_rtos_handle;
 #endif
-i2c_error_t axI2CInit(void)
+i2c_error_t axI2CInit(void **conn_ctx, const char *pDevName)
 {
     i2c_master_config_t masterConfig;
 
@@ -145,8 +154,11 @@ i2c_error_t axI2CInit(void)
     return I2C_OK;
 }
 
-void axI2CTerm(int mode)
+void axI2CTerm(void* conn_ctx, int mode)
 {
+#if defined(SDK_OS_FREE_RTOS) && SDK_OS_FREE_RTOS == 1
+    I2C_RTOS_Deinit(&gmaster_rtos_handle);
+#endif
 }
 
 #if defined(SDK_OS_FREE_RTOS) && SDK_OS_FREE_RTOS == 1
@@ -155,7 +167,7 @@ void axI2CTerm(int mode)
 #define I2CM_TX() result = I2C_MasterTransferBlocking(AX_I2CM, &masterXfer)
 #endif
 
-unsigned int axI2CWrite(unsigned char bus_unused_param, unsigned char addr, unsigned char *pTx, unsigned short txLen)
+unsigned int axI2CWrite(void* conn_ctx, unsigned char bus_unused_param, unsigned char addr, unsigned char *pTx, unsigned short txLen)
 {
     status_t result;
     i2c_master_transfer_t masterXfer;
@@ -194,7 +206,8 @@ __attribute__((optimize("O0")))
 #endif
 
 unsigned int
-axI2CWriteRead(unsigned char bus_unused_param,
+axI2CWriteRead(void* conn_ctx,
+    unsigned char bus_unused_param,
     unsigned char addr,
     unsigned char *pTx,
     unsigned short txLen,
@@ -318,7 +331,7 @@ axI2CWriteRead(unsigned char bus_unused_param,
 }
 #endif /*SCI2C*/
 
-unsigned int axI2CRead(unsigned char bus, unsigned char addr, unsigned char *pRx, unsigned short rxLen)
+unsigned int axI2CRead(void* conn_ctx, unsigned char bus, unsigned char addr, unsigned char *pRx, unsigned short rxLen)
 {
     i2c_master_transfer_t masterXfer;
     status_t result;

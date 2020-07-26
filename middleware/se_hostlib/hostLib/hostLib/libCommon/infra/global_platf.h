@@ -3,7 +3,7 @@
  * @author NXP Semiconductors
  * @version 1.0
  * @par License
- * Copyright 2016 NXP
+ * Copyright 2016,2020 NXP
  *
  * This software is owned or controlled by NXP and may only be used
  * strictly in accordance with the applicable license terms.  By expressly
@@ -35,7 +35,7 @@ extern "C" {
 #define INS_GP_SELECT                 (0xA4)  //!< Global platform defined instruction
 #define INS_GP_PUT_KEY                (0xD8)  //!< Global platform defined instruction
 
-U16 GP_Select(U8 *appletName, U16 appletNameLen, U8 *response, U16 *responseLen);
+U16 GP_Select(void *conn_ctx, const U8 *appletName, U16 appletNameLen, U8 *response, U16 *responseLen);
 U16 GP_GetCLAppletVersion(U8 *appletVersion, U16 *verionLength);
 #ifdef __cplusplus
 }

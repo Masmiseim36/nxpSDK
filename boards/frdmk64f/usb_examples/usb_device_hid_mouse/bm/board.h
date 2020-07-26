@@ -22,13 +22,13 @@
 #define BOARD_NAME "FRDM-K64F"
 
 /* The UART to use for debug messages. */
-#define BOARD_DEBUG_UART_TYPE kSerialPort_Uart
+#define BOARD_DEBUG_UART_TYPE     kSerialPort_Uart
 #define BOARD_DEBUG_UART_BASEADDR (uint32_t) UART0
 #define BOARD_DEBUG_UART_INSTANCE 0U
-#define BOARD_DEBUG_UART_CLKSRC SYS_CLK
+#define BOARD_DEBUG_UART_CLKSRC   SYS_CLK
 #define BOARD_DEBUG_UART_CLK_FREQ CLOCK_GetCoreSysClkFreq()
-#define BOARD_UART_IRQ UART0_RX_TX_IRQn
-#define BOARD_UART_IRQ_HANDLER UART0_RX_TX_IRQHandler
+#define BOARD_UART_IRQ            UART0_RX_TX_IRQn
+#define BOARD_UART_IRQ_HANDLER    UART0_RX_TX_IRQHandler
 
 #ifndef BOARD_DEBUG_UART_BAUDRATE
 #define BOARD_DEBUG_UART_BAUDRATE 115200
@@ -47,9 +47,9 @@
 #ifndef BOARD_SW2_GPIO_PIN
 #define BOARD_SW2_GPIO_PIN 6U
 #endif
-#define BOARD_SW2_IRQ PORTC_IRQn
+#define BOARD_SW2_IRQ         PORTC_IRQn
 #define BOARD_SW2_IRQ_HANDLER PORTC_IRQHandler
-#define BOARD_SW2_NAME "SW2"
+#define BOARD_SW2_NAME        "SW2"
 
 #ifndef BOARD_SW3_GPIO
 #define BOARD_SW3_GPIO GPIOA
@@ -60,19 +60,19 @@
 #ifndef BOARD_SW3_GPIO_PIN
 #define BOARD_SW3_GPIO_PIN 4U
 #endif
-#define BOARD_SW3_IRQ PORTA_IRQn
+#define BOARD_SW3_IRQ         PORTA_IRQn
 #define BOARD_SW3_IRQ_HANDLER PORTA_IRQHandler
-#define BOARD_SW3_NAME "SW3"
+#define BOARD_SW3_NAME        "SW3"
 
-#define LLWU_SW_GPIO BOARD_SW2_GPIO
-#define LLWU_SW_PORT BOARD_SW2_PORT
-#define LLWU_SW_GPIO_PIN BOARD_SW2_GPIO_PIN
-#define LLWU_SW_IRQ BOARD_SW2_IRQ
+#define LLWU_SW_GPIO        BOARD_SW2_GPIO
+#define LLWU_SW_PORT        BOARD_SW2_PORT
+#define LLWU_SW_GPIO_PIN    BOARD_SW2_GPIO_PIN
+#define LLWU_SW_IRQ         BOARD_SW2_IRQ
 #define LLWU_SW_IRQ_HANDLER BOARD_SW2_IRQ_HANDLER
-#define LLWU_SW_NAME BOARD_SW2_NAME
+#define LLWU_SW_NAME        BOARD_SW2_NAME
 
 /* Board led color mapping */
-#define LOGIC_LED_ON 0U
+#define LOGIC_LED_ON  0U
 #define LOGIC_LED_OFF 1U
 #ifndef BOARD_LED_RED_GPIO
 #define BOARD_LED_RED_GPIO GPIOB
@@ -96,15 +96,15 @@
 #define BOARD_LED_BLUE_GPIO_PIN 21U
 #endif
 
-#define BOARD_ARDUINO_INT_IRQ (PORTC_IRQn)
-#define BOARD_ARDUINO_I2C_IRQ (I2C0_IRQn)
+#define BOARD_ARDUINO_INT_IRQ   (PORTC_IRQn)
+#define BOARD_ARDUINO_I2C_IRQ   (I2C0_IRQn)
 #define BOARD_ARDUINO_I2C_INDEX (0)
 
 #define LED_RED_INIT(output)                                           \
     GPIO_PinWrite(BOARD_LED_RED_GPIO, BOARD_LED_RED_GPIO_PIN, output); \
-    BOARD_LED_RED_GPIO->PDDR |= (1U << BOARD_LED_RED_GPIO_PIN)                        /*!< Enable target LED_RED */
-#define LED_RED_ON() GPIO_PortClear(BOARD_LED_RED_GPIO, 1U << BOARD_LED_RED_GPIO_PIN) /*!< Turn on target LED_RED */
-#define LED_RED_OFF() GPIO_PortSet(BOARD_LED_RED_GPIO, 1U << BOARD_LED_RED_GPIO_PIN)  /*!< Turn off target LED_RED */
+    BOARD_LED_RED_GPIO->PDDR |= (1U << BOARD_LED_RED_GPIO_PIN)                         /*!< Enable target LED_RED */
+#define LED_RED_ON()  GPIO_PortClear(BOARD_LED_RED_GPIO, 1U << BOARD_LED_RED_GPIO_PIN) /*!< Turn on target LED_RED */
+#define LED_RED_OFF() GPIO_PortSet(BOARD_LED_RED_GPIO, 1U << BOARD_LED_RED_GPIO_PIN)   /*!< Turn off target LED_RED */
 #define LED_RED_TOGGLE() \
     GPIO_PortToggle(BOARD_LED_RED_GPIO, 1U << BOARD_LED_RED_GPIO_PIN) /*!< Toggle on target LED_RED */
 
@@ -130,35 +130,18 @@
 #define LED_BLUE_TOGGLE() \
     GPIO_PortToggle(BOARD_LED_BLUE_GPIO, 1U << BOARD_LED_BLUE_GPIO_PIN) /*!< Toggle on target LED_BLUE */
 
-/* The SDHC instance/channel used for board */
-#define BOARD_SDHC_CD_GPIO_IRQ_HANDLER PORTB_IRQHandler
-
-/* SDHC base address, clock and card detection pin */
-#define BOARD_SDHC_BASEADDR SDHC
-#define BOARD_SDHC_CLKSRC kCLOCK_CoreSysClk
-#define BOARD_SDHC_CLK_FREQ CLOCK_GetFreq(kCLOCK_CoreSysClk)
-#define BOARD_SDHC_IRQ SDHC_IRQn
-#define BOARD_SDHC_CD_GPIO_BASE GPIOE
-#ifndef BOARD_SDHC_CD_GPIO_PIN
-#define BOARD_SDHC_CD_GPIO_PIN 6U
-#endif
-#define BOARD_SDHC_CD_PORT_BASE PORTE
-#define BOARD_SDHC_CD_PORT_IRQ PORTE_IRQn
-#define BOARD_SDHC_CD_PORT_IRQ_HANDLER PORTE_IRQHandler
-#define BOARD_SDHC_CARD_INSERT_CD_LEVEL (1U)
-
-#define BOARD_ACCEL_I2C_BASEADDR I2C0
+#define BOARD_ACCEL_I2C_BASEADDR   I2C0
 #define BOARD_ACCEL_I2C_CLOCK_FREQ CLOCK_GetFreq(I2C0_CLK_SRC)
 
 /* ERPC DSPI configuration */
-#define ERPC_BOARD_DSPI_BASEADDR SPI0
-#define ERPC_BOARD_DSPI_BAUDRATE 500000U
-#define ERPC_BOARD_DSPI_CLKSRC DSPI0_CLK_SRC
-#define ERPC_BOARD_DSPI_CLK_FREQ CLOCK_GetFreq(DSPI0_CLK_SRC)
-#define ERPC_BOARD_DSPI_INT_GPIO GPIOB
-#define ERPC_BOARD_DSPI_INT_PORT PORTB
-#define ERPC_BOARD_DSPI_INT_PIN 2U
-#define ERPC_BOARD_DSPI_INT_PIN_IRQ PORTB_IRQn
+#define ERPC_BOARD_DSPI_BASEADDR            SPI0
+#define ERPC_BOARD_DSPI_BAUDRATE            500000U
+#define ERPC_BOARD_DSPI_CLKSRC              DSPI0_CLK_SRC
+#define ERPC_BOARD_DSPI_CLK_FREQ            CLOCK_GetFreq(DSPI0_CLK_SRC)
+#define ERPC_BOARD_DSPI_INT_GPIO            GPIOB
+#define ERPC_BOARD_DSPI_INT_PORT            PORTB
+#define ERPC_BOARD_DSPI_INT_PIN             2U
+#define ERPC_BOARD_DSPI_INT_PIN_IRQ         PORTB_IRQn
 #define ERPC_BOARD_DSPI_INT_PIN_IRQ_HANDLER PORTB_IRQHandler
 
 /* DAC base address */

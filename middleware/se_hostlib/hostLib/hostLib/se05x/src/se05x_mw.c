@@ -1,4 +1,4 @@
-/* Copyright 2019 NXP
+/* Copyright 2019,2020 NXP
  *
  * This software is owned or controlled by NXP and may only be used
  * strictly in accordance with the applicable license terms.  By expressly
@@ -12,9 +12,8 @@
 #include <se05x_const.h>
 #include <se05x_APDU.h>
 #include <nxLog_hostLib.h>
-#include <ex_sss_auth.h>
-#include <nxScp03_Const.h>
-#include <nxScp03_Apis.h>
+//#include <ex_sss_auth.h>
+#include <ex_sss_objid.h>
 #include <smCom.h>
 #include <string.h>
 #include "sm_const.h"
@@ -31,7 +30,7 @@ smStatus_t Se05x_API_DeleteAll_Iterative(pSe05xSession_t session_ctx)
     uint8_t list[1024];
     size_t listlen = sizeof(list);
     size_t i;
-    smStatus_t retStatus = SM_NOT_OK;
+    smStatus_t retStatus  = SM_NOT_OK;
     uint16_t outputOffset = 0;
     do {
         retStatus = Se05x_API_ReadIDList(session_ctx, outputOffset, 0xFF, &pmore, list, &listlen);
@@ -54,6 +53,9 @@ smStatus_t Se05x_API_DeleteAll_Iterative(pSe05xSession_t session_ctx)
                 LOG_D("Not erasing ObjId=0x%08X (IoT Hub)", id);
                 /* Not reasing IoT Hub object */
             }
+            else if (!SE05X_OBJID_TP_MASK(id) && id) {
+                LOG_D("Not erasing Trust Provisioned objects");
+            }
             else {
                 retStatus = Se05x_API_DeleteSecureObject(session_ctx, id);
                 if (retStatus != SM_OK) {
@@ -69,7 +71,7 @@ smStatus_t Se05x_API_DeleteAll_Iterative(pSe05xSession_t session_ctx)
     }
     for (i = 0; i < listlen; i += 4) {
         uint16_t cryptoObjectId = list[i + 1] | (list[i + 0] << 8);
-        retStatus = Se05x_API_DeleteCryptoObject(session_ctx, cryptoObjectId);
+        retStatus               = Se05x_API_DeleteCryptoObject(session_ctx, cryptoObjectId);
         if (retStatus != SM_OK) {
             LOG_W("Error in erasing CryptoObject=%04X", cryptoObjectId);
         }
@@ -81,7 +83,8 @@ cleanup:
 
 #endif
 
-bool Se05x_IsInValidRangeOfUID(uint32_t uid) {
+bool Se05x_IsInValidRangeOfUID(uint32_t uid)
+{
 #if 0
     // For SIMW-656
     bool retVal = TRUE;
@@ -105,20 +108,3 @@ bool Se05x_IsInValidRangeOfUID(uint32_t uid) {
     return FALSE;
 #endif
 }
-
-
-#if SE05X_FTR_USE_INVERT_MGMTIDEXISTS
-
-smStatus_t Se05x_API_MgmtIdExists_INV(pSe05xSession_t sessionId, uint32_t objId);
-
-smStatus_t Se05x_API_MgmtIdExists(pSe05xSession_t sessionId, uint32_t objId)
-{
-    smStatus_t ret = Se05x_API_MgmtIdExists_INV(sessionId, objId);
-    if (ret == SM_OK)
-        ret = SM_NOT_OK;
-    else
-        ret = SM_OK;
-    return ret;
-}
-
-#endif /* SE05X_FTR_USE_INVERT_MGMTIDEXISTS */

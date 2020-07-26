@@ -1,4 +1,4 @@
-/* Copyright 2018 NXP
+/* Copyright 2018,2020 NXP
  *
  * This software is owned or controlled by NXP and may only be used
  * strictly in accordance with the applicable license terms.  By expressly
@@ -23,10 +23,6 @@ extern "C" {
 #include <windows.h>
 #endif
 
-#if defined (NONSECURE_WORLD)
-#include "veneer_printf_table.h"
-#endif
-
 #define COLOR_RED "\033[0;31m"
 #define COLOR_GREEN "\033[0;32m"
 #define COLOR_YELLOW "\033[0;33m"
@@ -46,7 +42,8 @@ static void msvc_reSetColor(void);
 #define szEOL szLF
 #endif
 
-#if defined(__GNUC__)
+#if defined(__GNUC__) && !defined(__ARMCC_VERSION)
+#include <unistd.h>
 static void ansi_setColor(int level);
 static void ansi_reSetColor(void);
 #if AX_EMBEDDED
@@ -54,13 +51,37 @@ static void ansi_reSetColor(void);
 #else
 #define szEOL szLF
 #endif
-#endif /* __GNUC__ */
+#endif /* __GNUC__ && !defined(__ARMCC_VERSION) */
 
 #ifndef szEOL
 #define szEOL szCRLF
 #endif
 
+/* Set this to do not widen the logs.
+ *
+ * When set to 0, and logging is verbose, it looks like this
+ *
+ *    APDU:DEBUG:ReadECCurveList []
+ *   smCom:DEBUG:Tx> (Len=4)
+ *    80 02 0B 25
+ *   smCom:DEBUG:<Rx (Len=23)
+ *    41 82 00 11    01 01 02 01    01 01 01 01    01 01 01 01
+ *    01 01 01 01    01 90 00
+ *
+ * When set to 1, same log looks like this
+ *
+ *       APDU:DEBUG:ReadECCurveList []
+ *      smCom:DEBUG:Tx> (Len=4)
+ * =>   80 02 0B 25
+ *      smCom:DEBUG:<Rx (Len=23)
+ * =>   41 82 00 11 01 01 02 01 01 01 01 01 01 01 01 01
+ *    01 01 01 01 01 90 00
+ *
+ */
 #define COMPRESSED_LOGGING_STYLE 0
+
+/* Set this to 1 if you want colored logs with GCC based compilers */
+#define USE_COLORED_LOGS 1
 
 #if NX_LOG_SHORT_PREFIX
 static const char *szLevel[] = {"D", "I", "W", "E"};
@@ -74,39 +95,26 @@ static const char *szLevel[] = {"DEBUG", "INFO ", "WARN ", "ERROR"};
 #define TAB_SEPRATOR "   "
 #endif
 
+#if defined(SMCOM_JRCP_V2)
+#include "smComJRCP.h"
+#endif
 
+/* Used for scenarios other than LPC55S_NS */
 void nLog(const char *comp, int level, const char *format, ...)
 {
-#if defined (NONSECURE_WORLD)
-	/* Logging for LPC55s from Non secure world */
-	DbgConsole_Printf_NSE(comp);
-	DbgConsole_Printf_NSE(":");
-	DbgConsole_Printf_NSE(szLevel[level]);
-	DbgConsole_Printf_NSE(":");
-    if (format == NULL) {
-        /* Nothing */
-    }
-    else if (format[0] == '\0') {
-        /* Nothing */
-    }
-    else {
-        char buffer[256];
-        size_t size_buff = sizeof(buffer) / sizeof(buffer[0]) - 1;
-        va_list vArgs;
-        va_start(vArgs, format);
-        vsnprintf(buffer, size_buff, format, vArgs);
-        va_end(vArgs);
-        DbgConsole_Printf_NSE(buffer);
-    }
-    DbgConsole_Printf_NSE(szEOL);
-#else
     setColor(level);
-    PRINTF("%10s:%s:", comp, szLevel[level]);
+    PRINTF("%-6s:%s:", comp, szLevel[level]);
     if (format == NULL) {
         /* Nothing */
+#ifdef SMCOM_JRCP_V2
+        smComJRCP_Echo(NULL, comp, szLevel[level], "");
+#endif // SMCOM_JRCP_V2
     }
     else if (format[0] == '\0') {
         /* Nothing */
+#ifdef SMCOM_JRCP_V2
+        smComJRCP_Echo(NULL, comp, szLevel[level], "");
+#endif // SMCOM_JRCP_V2
     }
     else {
         char buffer[256];
@@ -116,37 +124,19 @@ void nLog(const char *comp, int level, const char *format, ...)
         vsnprintf(buffer, size_buff, format, vArgs);
         va_end(vArgs);
         PRINTF("%s", buffer);
+#ifdef SMCOM_JRCP_V2
+        smComJRCP_Echo(NULL, comp, szLevel[level], buffer);
+#endif // SMCOM_JRCP_V2
     }
     reSetColor();
     PRINTF(szEOL);
-#endif //defined (NONSECURE_WORLD)
 }
-
-#if 0
-#if !(defined SDK_OS_FREE_RTOS)
-void vLoggingPrintf(const char *pcFormat, ...) {
-    char buffer[256];
-    va_list vArgs;
-    size_t size_buff = sizeof(buffer) / sizeof(buffer[0]) - 1;
-    va_start(vArgs, pcFormat);
-    setColor(NX_LEVEL_DEBUG);
-    PRINTF("%10s:%s:", "AWS", szLevel[NX_LEVEL_DEBUG]);
-    va_start(vArgs, pcFormat);
-    vsnprintf(buffer, size_buff, pcFormat, vArgs);
-    PRINTF("%s", buffer);
-    va_end(vArgs);
-    reSetColor();
-    PRINTF(szEOL);
-    va_end(vArgs);
-}
-#endif // SDK_OS_FREE_RTOS
-#endif // 0
 
 void nLog_au8(const char *comp, int level, const char *message, const unsigned char *array, size_t array_len)
 {
     size_t i;
     setColor(level);
-    PRINTF("%10s:%s:%s (Len=%" PRId32 ")", comp, szLevel[level], message, (int32_t)array_len);
+    PRINTF("%-6s:%s:%s (Len=%" PRId32 ")", comp, szLevel[level], message, (int32_t)array_len);
     for (i = 0; i < array_len; i++) {
         if (0 == (i % 16)) {
             PRINTF(szEOL);
@@ -176,7 +166,7 @@ static void setColor(int level)
 #if defined(_MSC_VER)
     msvc_setColor(level);
 #endif
-#if defined(__GNUC__)
+#if defined(__GNUC__) && !defined(__ARMCC_VERSION)
     ansi_setColor(level);
 #endif
 }
@@ -186,14 +176,15 @@ static void reSetColor(void)
 #if defined(_MSC_VER)
     msvc_reSetColor();
 #endif
-#if defined(__GNUC__)
+#if defined(__GNUC__) && !defined(__ARMCC_VERSION)
     ansi_reSetColor();
 #endif
 }
 
-#if defined(_MSC_VER)
+#if defined(_MSC_VER) && USE_COLORED_LOGS
 static void msvc_setColor(int level)
 {
+#if USE_COLORED_LOGS
     WORD wAttributes = 0;
     if (sStdOutConsoleHandle == INVALID_HANDLE_VALUE) {
         sStdOutConsoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -218,17 +209,25 @@ static void msvc_setColor(int level)
         wAttributes = FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED;
     }
     SetConsoleTextAttribute(sStdOutConsoleHandle, wAttributes);
+#endif // USE_COLORED_LOGS
 }
 
 static void msvc_reSetColor()
 {
+#if USE_COLORED_LOGS
     msvc_setColor(-1 /* default */);
+#endif // USE_COLORED_LOGS
 }
 #endif
 
-#if defined(__GNUC__)
+#if defined(__GNUC__) && !defined(__ARMCC_VERSION)
 static void ansi_setColor(int level)
 {
+#if USE_COLORED_LOGS
+    if (!isatty(fileno(stdout))) {
+        return;
+    }
+
     switch (level) {
     case NX_LEVEL_ERROR:
         PRINTF(COLOR_RED);
@@ -248,11 +247,17 @@ static void ansi_setColor(int level)
     default:
         PRINTF(COLOR_RESET);
     }
+#endif // USE_COLORED_LOGS
 }
 
 static void ansi_reSetColor()
 {
+#if USE_COLORED_LOGS
+    if (!isatty(fileno(stdout))) {
+        return;
+    }
     PRINTF(COLOR_RESET);
+#endif // USE_COLORED_LOGS
 }
 #endif
 

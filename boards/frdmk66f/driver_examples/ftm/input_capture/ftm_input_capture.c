@@ -21,12 +21,12 @@
 #define BOARD_FTM_INPUT_CAPTURE_CHANNEL kFTM_Chnl_1
 
 /* Interrupt number and interrupt handler for the FTM base address used */
-#define FTM_INTERRUPT_NUMBER FTM3_IRQn
+#define FTM_INTERRUPT_NUMBER      FTM3_IRQn
 #define FTM_INPUT_CAPTURE_HANDLER FTM3_IRQHandler
 
 /* Interrupt to enable and flag to read */
 #define FTM_CHANNEL_INTERRUPT_ENABLE kFTM_Chnl1InterruptEnable
-#define FTM_CHANNEL_FLAG kFTM_Chnl1Flag
+#define FTM_CHANNEL_FLAG             kFTM_Chnl1Flag
 
 /* Get source clock for FTM driver */
 #define FTM_SOURCE_CLOCK CLOCK_GetFreq(kCLOCK_BusClk)

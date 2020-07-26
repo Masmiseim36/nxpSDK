@@ -15,10 +15,10 @@
  * Definitions
  ******************************************************************************/
 /* UART instance and clock */
-#define DEMO_UART UART0
-#define DEMO_UART_CLKSRC UART0_CLK_SRC
-#define DEMO_UART_CLK_FREQ CLOCK_GetFreq(UART0_CLK_SRC)
-#define DEMO_UART_IRQn UART0_RX_TX_IRQn
+#define DEMO_UART            UART0
+#define DEMO_UART_CLKSRC     UART0_CLK_SRC
+#define DEMO_UART_CLK_FREQ   CLOCK_GetFreq(UART0_CLK_SRC)
+#define DEMO_UART_IRQn       UART0_RX_TX_IRQn
 #define DEMO_UART_IRQHandler UART0_RX_TX_IRQHandler
 
 
@@ -70,11 +70,7 @@ void DEMO_UART_IRQHandler(void)
             rxIndex %= DEMO_RING_BUFFER_SIZE;
         }
     }
-    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-      exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 /*!

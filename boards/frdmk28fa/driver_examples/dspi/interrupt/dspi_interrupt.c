@@ -16,17 +16,17 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_DSPI_MASTER_BASEADDR SPI0
-#define EXAMPLE_DSPI_MASTER_CLK_SRC DSPI0_CLK_SRC
-#define EXAMPLE_DSPI_MASTER_CLK_FREQ CLOCK_GetFreq(DSPI0_CLK_SRC)
-#define EXAMPLE_DSPI_MASTER_IRQ SPI0_IRQn
-#define EXAMPLE_DSPI_MASTER_PCS kDSPI_Pcs0
+#define EXAMPLE_DSPI_MASTER_BASEADDR   SPI0
+#define EXAMPLE_DSPI_MASTER_CLK_SRC    DSPI0_CLK_SRC
+#define EXAMPLE_DSPI_MASTER_CLK_FREQ   CLOCK_GetFreq(DSPI0_CLK_SRC)
+#define EXAMPLE_DSPI_MASTER_IRQ        SPI0_IRQn
+#define EXAMPLE_DSPI_MASTER_PCS        kDSPI_Pcs0
 #define EXAMPLE_DSPI_MASTER_IRQHandler SPI0_IRQHandler
 
-#define EXAMPLE_DSPI_SLAVE_BASEADDR SPI2
-#define EXAMPLE_DSPI_SLAVE_IRQ SPI2_IRQn
+#define EXAMPLE_DSPI_SLAVE_BASEADDR   SPI2
+#define EXAMPLE_DSPI_SLAVE_IRQ        SPI2_IRQn
 #define EXAMPLE_DSPI_SLAVE_IRQHandler SPI2_IRQHandler
-#define TRANSFER_SIZE 256U        /*! Transfer dataSize */
+#define TRANSFER_SIZE     256U    /*! Transfer dataSize */
 #define TRANSFER_BAUDRATE 500000U /*! Transfer baudrate - 500k */
 
 /*******************************************************************************
@@ -103,11 +103,7 @@ void EXAMPLE_DSPI_MASTER_IRQHandler(void)
         DSPI_DisableInterrupts(EXAMPLE_DSPI_MASTER_BASEADDR,
                                kDSPI_RxFifoDrainRequestInterruptEnable | kDSPI_TxFifoFillRequestInterruptEnable);
     }
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 void EXAMPLE_DSPI_SLAVE_IRQHandler(void)
@@ -144,11 +140,7 @@ void EXAMPLE_DSPI_SLAVE_IRQHandler(void)
         /* Disable interrupt requests */
         DSPI_DisableInterrupts(EXAMPLE_DSPI_SLAVE_BASEADDR, kDSPI_RxFifoDrainRequestInterruptEnable);
     }
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 /*!

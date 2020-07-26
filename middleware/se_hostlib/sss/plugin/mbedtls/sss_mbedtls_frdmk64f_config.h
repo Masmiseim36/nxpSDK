@@ -9,7 +9,7 @@
  *
  *  Copyright (C) 2006-2015, ARM Limited, All Rights Reserved
  *  SPDX-License-Identifier: Apache-2.0
- *  Copyright 2017-2019 NXP
+ *  Copyright 2017-2020 NXP
  *
  *  Licensed under the Apache License, Version 2.0 (the "License"); you may
  *  not use this file except in compliance with the License.
@@ -44,8 +44,8 @@
 #include "fsl_sss_ftr_default.h"
 #endif
 
-#include "fsl_debug_console.h"
 #include "fsl_device_registers.h"
+#include "fsl_debug_console.h"
 
 /* Enable LTC use in library if there is LTC on chip. */
 #if defined(FSL_FEATURE_SOC_LTC_COUNT) && (FSL_FEATURE_SOC_LTC_COUNT > 0)
@@ -130,9 +130,14 @@
 #include "fsl_hashcrypt.h"
 
 #define MBEDTLS_FREESCALE_HASHCRYPT_AES    /* Enable use of HASHCRYPT AES.*/
+/* Hashcrypt without context switch is not able to calculate SHA in parallel with AES.
+ * HW acceleration of SHA is disabled by default in MbedTLS integration.
+ * HW acceleration of SHA is enabled on chip with context switch.
+ */
+#if defined(FSL_FEATURE_HASHCRYPT_HAS_RELOAD_FEATURE)
 #define MBEDTLS_FREESCALE_HASHCRYPT_SHA1   /* Enable use of HASHCRYPT SHA1.*/
 #define MBEDTLS_FREESCALE_HASHCRYPT_SHA256 /* Enable use of HASHCRYPT SHA256.*/
-
+#endif
 #endif
 
 #if defined(MBEDTLS_FREESCALE_LTC_PKHA) || defined(MBEDTLS_FREESCALE_CAU3_PKHA) || defined(MBEDTLS_FREESCALE_CAAM_PKHA)
@@ -167,10 +172,14 @@
 #if defined(FSL_FEATURE_SOC_SHA_COUNT) && (FSL_FEATURE_SOC_SHA_COUNT > 0)
 #include "fsl_sha.h"
 
-#define SHA_INSTANCE SHA0            /* AES base register.*/
-#define MBEDTLS_FREESCALE_LPC_SHA1   /* Enable use of LPC SHA.*/
-#define MBEDTLS_FREESCALE_LPC_SHA256 /* Enable use of LPC SHA256.*/
-
+/* SHA HW accelerator does not support to compute multiple interleaved hashes,
+ * it doesn't support context switch.
+ * HW acceleration of SHA is disabled by default in MbedTLS integration.
+ */
+//#define SHA_INSTANCE SHA0            /* SHA base register.*/
+//#define MBEDTLS_FREESCALE_LPC_SHA1   /* Enable use of LPC SHA.*/
+//#define MBEDTLS_FREESCALE_LPC_SHA256 /* Enable use of LPC SHA256.*/
+//#define MANUAL_LOAD_SHA_INPUT 1      /* 0 - use MEMADDR, MEMCRL (pseudo-DMA), 1 - manual load */
 #endif
 
 /* Enable CASPER use in library if there is CASPER on chip. */
@@ -181,21 +190,29 @@
 #define MBEDTLS_FREESCALE_CASPER_PKHA /* Enable use of CASPER PKHA.*/
 #define FREESCALE_PKHA_INT_MAX_BYTES (512)
 
+/* Note: While using CASPER for ECC, please enable appropriate ECC curve in fls_casper.h */
+/* (CASPER_ECC_P256 or CASPER_ECC_P384) and MbedTLS define */
+/* (MBEDTLS_ECP_DP_SECP256R1_ENABLED or MBEDTLS_ECP_DP_SECP384R1_ENABLED) */
+//#define MBEDTLS_ECP_MUL_COMB_ALT /* Alternate implementation of ecp_mul_comb() */
+//#define MBEDTLS_ECP_MULADD_ALT /* Alternate implementation of mbedtls_ecp_muladd() */
+//#define MBEDTLS_MCUX_CASPER_ECC /* CASPER implementation */
+
 #endif
 
 /**
  * \def MBEDTLS_FREESCALE_FREERTOS_CALLOC_ALT
  *
  * Enable implementation for FreeRTOS's pvPortCalloc() in ksdk_mbedtls.c module.
- * You can comment this macro if you provide your own alternate implementation.
- *
+ * You can comment this macro if you provide your own alternate implementation. 
+ * 
  */
 #if USE_RTOS && defined(FSL_RTOS_FREE_RTOS)
 #define MBEDTLS_FREESCALE_FREERTOS_CALLOC_ALT
 #endif
 
 
-/* Define ALT MMCAU & LTC functions. Do not change it. */
+/* Define ALT functions. */
+
 #if defined(MBEDTLS_FREESCALE_MMCAU_DES) || defined(MBEDTLS_FREESCALE_LTC_DES) || defined(MBEDTLS_FREESCALE_CAAM_DES) || defined(MBEDTLS_FREESCALE_CAU3_DES)
 #define MBEDTLS_DES_ALT
 #define MBEDTLS_DES3_SETKEY_ENC_ALT
@@ -618,14 +635,14 @@ void *pvPortCalloc(size_t num, size_t size); /*Calloc for HEAP3.*/
  */
 
 #if SSS_HAVE_ALT
-#if (SSS_HAVE_A71CH || SSS_HAVE_SE050_A || SSS_HAVE_SE050_C)
+#if (SSS_HAVE_ECC)
 #   define MBEDTLS_ECP_ALT
 #   define MBEDTLS_ECDH_ALT
 #   define MBEDTLS_ECDH_GEN_PUBLIC_ALT
 #   define MBEDTLS_ECDH_COMPUTE_SHARED_ALT
 #endif /*  TGT_A71CH */
 
-#if (SSS_HAVE_SE050_B || SSS_HAVE_SE050_C)
+#if (SSS_HAVE_RSA)
 #   define MBEDTLS_RSA_ALT
 #endif
 
@@ -2420,9 +2437,7 @@ void *pvPortCalloc(size_t num, size_t size); /*Calloc for HEAP3.*/
  * This module enables the AES-GCM and CAMELLIA-GCM ciphersuites, if other
  * requisites are enabled as well.
  */
-#if SSSFTR_SW_TESTCOUNTERPART
 #define MBEDTLS_GCM_C
-#endif
 
 /**
  * \def MBEDTLS_HAVEGE_C
@@ -2828,6 +2843,10 @@ void *pvPortCalloc(size_t num, size_t size); /*Calloc for HEAP3.*/
  */
 #if SSSFTR_SW_TESTCOUNTERPART
 #define MBEDTLS_SHA512_C
+#endif
+
+#if (SSS_HAVE_A71CH || SSS_HAVE_A71CH_SIM)
+#undef MBEDTLS_SHA512_C
 #endif
 
 /**

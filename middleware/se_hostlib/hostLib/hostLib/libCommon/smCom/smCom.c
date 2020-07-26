@@ -3,7 +3,7 @@
  * @author NXP Semiconductors
  * @version 1.0
  * @par License
- * Copyright 2016 NXP
+ * Copyright 2016,2020 NXP
  *
  * This software is owned or controlled by NXP and may only be used
  * strictly in accordance with the applicable license terms.  By expressly
@@ -55,7 +55,7 @@ void smCom_Init(ApduTransceiveFunction_t pTransceive, ApduTransceiveRawFunction_
 
 #if (__GNUC__  && !AX_EMBEDDED)
     if (pthread_mutex_init(&gSmComlock, NULL) != 0)
-    { 
+    {
         LOG_E("\n mutex init has failed");
         return;
     }
@@ -83,13 +83,13 @@ void smCom_DeInit(void)
  * @retval ::SMCOM_SND_FAILED  Send Failed
  * @retval ::SMCOM_RCV_FAILED  Receive Failed
  */
-U32 smCom_Transceive(apdu_t * pApdu)
+U32 smCom_Transceive(void *conn_ctx, apdu_t * pApdu)
 {
-	U32 ret = SMCOM_NO_PRIOR_INIT;
+    U32 ret = SMCOM_NO_PRIOR_INIT;
     if (pSmCom_Transceive != NULL)
     {
         LOCK_TXN();
-        ret = pSmCom_Transceive(pApdu);
+        ret = pSmCom_Transceive(conn_ctx, pApdu);
         UNLOCK_TXN();
     }
     return ret;
@@ -107,13 +107,13 @@ U32 smCom_Transceive(apdu_t * pApdu)
  * @retval ::SMCOM_SND_FAILED  Send Failed
  * @retval ::SMCOM_RCV_FAILED  Receive Failed
  */
-U32 smCom_TransceiveRaw(U8 * pTx, U16 txLen, U8 * pRx, U32 * pRxLen)
+U32 smCom_TransceiveRaw(void *conn_ctx, U8 * pTx, U16 txLen, U8 * pRx, U32 * pRxLen)
 {
-	U32 ret = SMCOM_NO_PRIOR_INIT;
+    U32 ret = SMCOM_NO_PRIOR_INIT;
     if (pSmCom_TransceiveRaw != NULL)
     {
         LOCK_TXN();
-        ret = pSmCom_TransceiveRaw(pTx, txLen, pRx, pRxLen);
+        ret = pSmCom_TransceiveRaw(conn_ctx, pTx, txLen, pRx, pRxLen);
         UNLOCK_TXN();
     }
     return ret;

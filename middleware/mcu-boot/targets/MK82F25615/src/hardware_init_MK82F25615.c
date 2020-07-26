@@ -6,13 +6,13 @@
  */
 
 #include "bootloader_common.h"
-#include "bootloader/bl_context.h"
+#include "bl_context.h"
 #include "fsl_device_registers.h"
 #include "qspi.h"
 #include "fsl_lpuart.h"
-#include "utilities/fsl_assert.h"
+#include "fsl_assert.h"
 #if BL_ENABLE_CRC_CHECK
-#include "bootloader/bl_app_crc_check.h"
+#include "bl_app_crc_check.h"
 #endif
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
@@ -276,7 +276,7 @@ uint32_t read_autobaud_pin( uint32_t instance )
 */
 bool is_boot_pin_asserted(void)
 {
-    // Boot pin for Flash only target
+    // ROM has boot pin
     return false;
 }
 

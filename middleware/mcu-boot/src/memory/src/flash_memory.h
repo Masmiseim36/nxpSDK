@@ -8,7 +8,7 @@
 #if !defined(__FLASH_MEMORY_INTERFACE_H__)
 #define __FLASH_MEMORY_INTERFACE_H__
 
-#include "memory/memory.h"
+#include "memory.h"
 #if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
 #include "fsl_flash.h"
 #endif

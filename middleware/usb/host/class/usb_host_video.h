@@ -127,16 +127,16 @@
 #define USB_HOST_XU_CONTROL_UNDEFINED (0x00U)
 
 /* VideoStreming Unit Control Selector Codes */
-#define USB_HOST_VS_CONTROL_UNDEFINED (0x00U)
-#define USB_HOST_VS_PROBE_CONTROL (0x01U)
-#define USB_HOST_VS_COMMIT_CONTROL (0x02U)
-#define USB_HOST_VS_STILL_PROBE_CONTROL (0x03U)
-#define USB_HOST_VS_STILL_COMMIT_CONTROL (0x04U)
-#define USB_HOST_VS_STILL_IMAGE_TRIGGER_CONTROL (0x05U)
-#define USB_HOST_VS_STREAM_ERROR_CODE_CONTROL (0x06U)
-#define USB_HOST_VS_GENERATE_KEY_FRAME_CONTROL (0x07U)
-#define USB_HOST_VS_UPDATE_FRAME_SEGMENT_CONTROL (0x08U)
-#define USB_HOST_VS_SYNCH_DELAY_CONTROL (0x09U)
+#define USB_HOST_VS_CONTROL_UNDEFINED (0x00UL)
+#define USB_HOST_VS_PROBE_CONTROL (0x01UL)
+#define USB_HOST_VS_COMMIT_CONTROL (0x02UL)
+#define USB_HOST_VS_STILL_PROBE_CONTROL (0x03UL)
+#define USB_HOST_VS_STILL_COMMIT_CONTROL (0x04UL)
+#define USB_HOST_VS_STILL_IMAGE_TRIGGER_CONTROL (0x05UL)
+#define USB_HOST_VS_STREAM_ERROR_CODE_CONTROL (0x06UL)
+#define USB_HOST_VS_GENERATE_KEY_FRAME_CONTROL (0x07UL)
+#define USB_HOST_VS_UPDATE_FRAME_SEGMENT_CONTROL (0x08UL)
+#define USB_HOST_VS_SYNCH_DELAY_CONTROL (0x09UL)
 
 /*! @brief Video control interface header descriptor structure */
 typedef struct _usb_host_video_ctrl_header_desc
@@ -491,7 +491,8 @@ typedef struct _usb_host_video_payload_header
     uint8_t bHeaderLength;
     /*< Provides information on the sample data following the header, as well as the availability of optional header
      * fields in this header */
-    union {
+    union
+    {
         uint8_t bmHeaderInfo;
         struct
         {
@@ -551,7 +552,7 @@ typedef struct _usb_host_video_stream_payload_frame_common_desc
     /*< Index of this Frame Descriptor */
     uint8_t bFrameIndex;
     /*< D0 specifies whether still images are supported at this frame setting. D1 specifies whether the device provides
-    * a fixed frame rate on a stream associated with this frame descriptor */
+     * a fixed frame rate on a stream associated with this frame descriptor */
     uint8_t bmCapabilities;
     /*< Width of decoded bitmap frame in pixels */
     uint8_t wWitd[2];
@@ -560,7 +561,8 @@ typedef struct _usb_host_video_stream_payload_frame_common_desc
 } usb_host_video_stream_payload_frame_common_desc_t;
 
 /*! @brief video descriptor uinon */
-typedef union _usb_host_video_descriptor_union {
+typedef union _usb_host_video_descriptor_union
+{
     /*< common word */
     uint32_t word;
     /*< common buffer pointer */

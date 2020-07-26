@@ -23,7 +23,7 @@
 
 #define OUTPUT_ARRAY_LEN 512
 #define DES_BLOCK_LENGTH 8
-#define DES_KEY_LENGTH 8
+#define DES_KEY_LENGTH   8
 
 /* LTC peripheral base address */
 LTC_Type *base = LTC0;

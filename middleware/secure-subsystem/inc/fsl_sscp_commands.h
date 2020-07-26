@@ -7,49 +7,67 @@
 #ifndef _FSL_SSCP_COMMANDS_H_
 #define _FSL_SSCP_COMMANDS_H_
 
+#if !defined(SSCP_CONFIG_FILE)
+#include "fsl_sscp_config.h"
+#else
+#include SSCP_CONFIG_FILE
+#endif
+
 /*!
 @defgroup sscp_cmd SSCP commands
 @details This section describes the SSCP commands and parameters.
 @ingroup sscp
 */
-
 /*!
  * @addtogroup sscp_cmd
  * @{
  */
 
+#if !defined(SSCP_COMMAND_ENUM_ALT)
 /*! @brief SSCP common commands */
 typedef enum _sscp_command
 {
     kSSCP_CMD_SSS_OpenSession,
     kSSCP_CMD_SSS_CloseSession,
+    kSSCP_CMD_SSS_Ping,
+    kSSCP_CMD_SSS_ContextFree,
+    kSSCP_CMD_SSS_SymmetricContextInit,
     kSSCP_CMD_SSS_SymmetricCipherOneGo,
     kSSCP_CMD_SSS_SymmetricCipherInit,
     kSSCP_CMD_SSS_SymmetricCipherUpdate,
     kSSCP_CMD_SSS_SymmetricCipherFinish,
     kSSCP_CMD_SSS_SymmetricCryptCtr,
+    kSSCP_CMD_SSS_AeadContextInit,
     kSSCP_CMD_SSS_AeadOneGo,
-    kSSCP_CMD_SSS_AeadOneInit,
-    kSSCP_CMD_SSS_AeadOneUpdateAad,
-    kSSCP_CMD_SSS_AeadOneUpdate,
-    kSSCP_CMD_SSS_AeadOneFinish,
+    kSSCP_CMD_SSS_AeadInit,
+    kSSCP_CMD_SSS_AeadUpdateAead,
+    kSSCP_CMD_SSS_AeadUpdate,
+    kSSCP_CMD_SSS_AeadFinish,
+    kSSCP_CMD_SSS_DigestContextInit,
     kSSCP_CMD_SSS_DigestOneGo,
     kSSCP_CMD_SSS_DigestInit,
     kSSCP_CMD_SSS_DigestUpdate,
     kSSCP_CMD_SSS_DigestFinish,
+    kSSCP_CMD_SSS_MacContextInit,
     kSSCP_CMD_SSS_MacOneGo,
     kSSCP_CMD_SSS_MacInit,
     kSSCP_CMD_SSS_MacUpdate,
     kSSCP_CMD_SSS_MacFinish,
+    kSSCP_CMD_SSS_AsymetricContextInit,
     kSSCP_CMD_SSS_AsymmetricEncrypt,
     kSSCP_CMD_SSS_AsymmetricDecrypt,
     kSSCP_CMD_SSS_AsymmetricSignDigest,
     kSSCP_CMD_SSS_AsymmetricVerifyDigest,
+    kSSCP_CMD_SSS_TunnelContextInit,
     kSSCP_CMD_SSS_Tunnel,
+    kSSCP_CMD_SSS_DeriveKeyContextInit,
     kSSCP_CMD_SSS_DeriveKey,
     kSSCP_CMD_SSS_AsymmetricDeriveKey,
+    kSSCP_CMD_SSS_KeyObjectContextInit,
     kSSCP_CMD_SSS_KeyObjectAllocateHandle,
     kSSCP_CMD_SSS_KeyObjectGetHandle,
+    kSSCP_CMD_SSS_KeyObjectContextFree,
+    kSSCP_CMD_SSS_KeyStoreContextInit,
     kSSCP_CMD_SSS_KeyStoreAllocate,
     kSSCP_CMD_SSS_KeyStoreSave,
     kSSCP_CMD_SSS_KeyStoreLoad,
@@ -60,6 +78,25 @@ typedef enum _sscp_command
     kSSCP_CMD_SSS_KeyStoreFreezeKey,
     kSSCP_CMD_SSS_KeyStoreEraseKey,
     kSSCP_CMD_SSS_KeyStoreEraseAll,
+    KSSCP_CMD_SSS_RngGet,
+    kSSCP_CMD_SSS_MGMT_ContextInit,
+    kSSCP_CMD_SSS_MGMT_FuseRead,
+    kSSCP_CMD_SSS_MGMT_FuseShadowRegisterRead,
+    kSSCP_CMD_SSS_MGMT_FuseProgram,
+    kSSCP_CMD_SSS_MGMT_PropertyGet,
+    kSSCP_CMD_SSS_MGMT_LifeCycleGet,
+    kSSCP_CMD_SSS_MGMT_PropertySet,
+    kSSCP_CMD_SSS_MGMT_AdvanceLifecycle,
+    kSSCP_CMD_SSS_MGMT_SecretImport,
+    kSSCP_CMD_SSS_MGMT_SecretExport,
+    kSSCP_CMD_SSS_MGMT_Attest,
+    kSSCP_CMD_SSS_MGMT_SecretBlobLoad,
+    kSSCP_CMD_SSS_MGMT_SecretBlobExport,
+    kSSCP_CMD_SSS_MGMT_SecretBlobImport,
+    kSSCP_CMD_SSS_MGMT_SoftwareVersionGet,
+    kSSCP_CMD_SSS_MGMT_ReturnFaSet,
+    kSSCP_CMD_SSS_MGMT_HostAccessPermissionSet,
+    kSSCP_CMD_SSS_MGMT_IntegrityCheckEnable,
 
     /* TODO: Remove TEE */
     TEE_CMD_NONE,
@@ -96,10 +133,12 @@ typedef enum _sscp_command
     TEE_ASYMM_DH_DERIVE_KEY,
     TEE_CMD_LAST
 } sscp_command_t;
+#endif
 
 enum _sscp_context_type
 {
-    kSSCP_ParamContextType_SSS_Symmetric = 1u,
+    kSSCP_ParamContextType_SSS_Session = 1u,
+    kSSCP_ParamContextType_SSS_Symmetric,
     kSSCP_ParamContextType_SSS_Aead,
     kSSCP_ParamContextType_SSS_Digest,
     kSSCP_ParamContextType_SSS_Mac,
@@ -108,6 +147,9 @@ enum _sscp_context_type
     kSSCP_ParamContextType_SSS_DeriveKey,
     kSSCP_ParamContextType_SSS_Object,
     kSSCP_ParamContextType_SSS_KeyStore,
+    kSSCP_ParamContextType_SSS_KeyStoreCtx,
+    kSSCP_ParamContextType_SSS_Mgmt,
+    kSSCP_ParamContextType_SSS_Rng,
 };
 
 /*!

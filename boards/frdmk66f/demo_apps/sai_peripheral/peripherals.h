@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP
+ * Copyright 2019-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -40,11 +40,11 @@ extern "C" {
 /* Master clock source frequency used for calculating the master clock divider, not available on all devices. */
 #define DEMO_SAI_MCLK_SOURCE_CLOCK_HZ 120000000UL
 /* Master clock value set by the user to the Master clock frequency item. */
-#define DEMO_SAI_USER_MCLK_HZ 6144000UL
+#define DEMO_SAI_USER_MCLK_HZ 12288000UL
 /* Bit clock source frequency used for calculating the bit clock divider in the TxSetBitClockRate function. */
-#define DEMO_SAI_TX_BCLK_SOURCE_CLOCK_HZ 6144000UL
+#define DEMO_SAI_TX_BCLK_SOURCE_CLOCK_HZ 12288000UL
 /* Bit clock source frequency used for calculating the bit clock divider in the RxSetBitClockRate function. */
-#define DEMO_SAI_RX_BCLK_SOURCE_CLOCK_HZ 6144000UL
+#define DEMO_SAI_RX_BCLK_SOURCE_CLOCK_HZ 12288000UL
 /* Sample rate used for calculating the bit clock divider in the TxSetBitClockRate function. */
 #define DEMO_SAI_TX_SAMPLE_RATE 16000UL
 /* Sample rate used for calculating the bit clock divider in the RxSetBitClockRate function. */

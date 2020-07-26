@@ -3,7 +3,7 @@
  * @author NXP Semiconductors
  * @version 1.0
  * @par License
- * Copyright 2016 NXP
+ * Copyright 2016,2020 NXP
  *
  * This software is owned or controlled by NXP and may only be used
  * strictly in accordance with the applicable license terms.  By expressly
@@ -35,7 +35,7 @@
 extern "C" {
 #endif
 
-#if		defined(TGT_A71CL)
+#if     defined(TGT_A71CL)
 #include "ax_common_a71cl.h"
 #define A71XX_CLA A71CL_CLA
 #define A71XX_INS_REFLECT A71CL_INS_REFLECT
@@ -43,7 +43,7 @@ extern "C" {
 #define A71XX_INS_FREEZE_MODULE A71CL_INS_FREEZE_MODULE
 #define A71XX_INS_GET_MODULE A71CL_INS_GET_MODULE
 
-#elif (SSS_HAVE_A71CH || SSS_HAVE_SE050_EAR_CH || SSS_HAVE_SE05X)
+#elif (SSS_HAVE_A71CH || SSS_HAVE_A71CH_SIM || SSS_HAVE_APPLET_SE05X_IOT)
 #include "ax_common_a71ch.h"
 #define A71XX_CLA A71CH_CLA
 #define A71XX_INS_REFLECT A71CH_INS_REFLECT

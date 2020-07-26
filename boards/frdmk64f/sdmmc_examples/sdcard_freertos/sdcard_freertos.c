@@ -13,6 +13,7 @@
 #include "semphr.h"
 #include "task.h"
 #include "board.h"
+#include "sdmmc_config.h"
 #include "fsl_sysmpu.h"
 #include "pin_mux.h"
 #include "clock_config.h"
@@ -89,40 +90,9 @@ sd_card_t g_sd;
  * At the same time buffer address/size should be aligned to the cache line size if cache is supported.
  */
 /*! @brief Data written to the card */
-SDK_ALIGN(uint8_t g_dataWrite[SDK_SIZEALIGN(DATA_BUFFER_SIZE, SDMMC_DATA_BUFFER_ALIGN_CACHE)],
-          MAX(SDMMC_DATA_BUFFER_ALIGN_CACHE, SDMMCHOST_DMA_BUFFER_ADDR_ALIGN));
+SDK_ALIGN(uint8_t g_dataWrite[DATA_BUFFER_SIZE], BOARD_SDMMC_DATA_BUFFER_ALIGN_SIZE);
 /*! @brief Data read from the card */
-SDK_ALIGN(uint8_t g_dataRead[SDK_SIZEALIGN(DATA_BUFFER_SIZE, SDMMC_DATA_BUFFER_ALIGN_CACHE)],
-          MAX(SDMMC_DATA_BUFFER_ALIGN_CACHE, SDMMCHOST_DMA_BUFFER_ADDR_ALIGN));
-
-/*! @brief SDMMC host detect card configuration */
-static const sdmmchost_detect_card_t s_sdCardDetect = {
-#ifndef BOARD_SD_DETECT_TYPE
-    .cdType = kSDMMCHOST_DetectCardByGpioCD,
-#else
-    .cdType = BOARD_SD_DETECT_TYPE,
-#endif
-    .cdTimeOut_ms = (~0U),
-    .cardInserted = SDCARD_DetectCallBack,
-    .cardRemoved  = SDCARD_DetectCallBack,
-};
-
-/*! @brief SDMMC card power control configuration */
-#if defined DEMO_SDCARD_POWER_CTRL_FUNCTION_EXIST
-static const sdmmchost_pwr_card_t s_sdCardPwrCtrl = {
-    .powerOn          = BOARD_PowerOnSDCARD,
-    .powerOnDelay_ms  = 500U,
-    .powerOff         = BOARD_PowerOffSDCARD,
-    .powerOffDelay_ms = 0U,
-};
-#endif
-/*! @brief SDMMC card power control configuration */
-#if defined DEMO_SDCARD_SWITCH_VOLTAGE_FUNCTION_EXIST
-static const sdmmchost_card_switch_voltage_func_t s_sdCardVoltageSwitch = {
-    .cardSignalLine1V8 = BOARD_USDHC_Switch_VoltageTo1V8,
-    .cardSignalLine3V3 = BOARD_USDHC_Switch_VoltageTo3V3,
-};
-#endif
+SDK_ALIGN(uint8_t g_dataRead[DATA_BUFFER_SIZE], BOARD_SDMMC_DATA_BUFFER_ALIGN_SIZE);
 /*! @brief SD card detect flag  */
 static volatile bool s_cardInserted     = false;
 static volatile bool s_cardInsertStatus = false;
@@ -144,15 +114,16 @@ static void CardDetectTask(void *pvParameters)
     s_CardAccessSemaphore = xSemaphoreCreateBinary();
     s_CardDetectSemaphore = xSemaphoreCreateBinary();
 
-    g_sd.host.base           = SD_HOST_BASEADDR;
-    g_sd.host.sourceClock_Hz = SD_HOST_CLK_FREQ;
-    g_sd.usrParam.cd         = &s_sdCardDetect;
-#if defined DEMO_SDCARD_POWER_CTRL_FUNCTION_EXIST
-    g_sd.usrParam.pwr = &s_sdCardPwrCtrl;
+    BOARD_SD_Config(&g_sd, SDCARD_DetectCallBack, BOARD_SDMMC_SD_HOST_IRQ_PRIORITY, NULL);
+    /*
+     * Since DEBUG_CONSOLE_TRANSFER_NON_BLOCKING is used in this case, so the debug console port uart's intterrupt
+     * should be enabled, but debug console cannot cover the case that on some platform the uart's interrupt is enabled
+     * in INTMUX, such as FRDMK32L3A6.
+     */
+#if defined(DEMO_DEBUG_CONSOLE_IRQ_REDIRECT) && (DEMO_DEBUG_CONSOLE_IRQ_REDIRECT)
+    BOARD_DebugConsoleIRQRedirect();
 #endif
-#if defined DEMO_SDCARD_SWITCH_VOLTAGE_FUNCTION_EXIST
-    g_sd.usrParam.cardVoltage = &s_sdCardVoltageSwitch;
-#endif
+
     /* SD host init function */
     if (SD_HostInit(&g_sd) == kStatus_Success)
     {
@@ -168,13 +139,13 @@ static void CardDetectTask(void *pvParameters)
                 s_cardInserted = s_cardInsertStatus;
 
                 /* power off card */
-                SD_PowerOffCard(g_sd.host.base, g_sd.usrParam.pwr);
+                SD_SetCardPower(&g_sd, false);
 
                 if (s_cardInserted)
                 {
                     PRINTF("\r\nCard inserted.\r\n");
                     /* power on the card */
-                    SD_PowerOnCard(g_sd.host.base, g_sd.usrParam.pwr);
+                    SD_SetCardPower(&g_sd, true);
                     /* Init card. */
                     if (SD_CardInit(&g_sd))
                     {
@@ -214,6 +185,8 @@ static void AccessCardTask(void *pvParameters)
     {
         if (SD_IsCardPresent(card) == false)
         {
+            /* make sure host is ready for card re-initialization */
+            SD_HostDoReset(card);
             /* take card access semaphore */
             if (xSemaphoreTake(s_CardAccessSemaphore, portMAX_DELAY) != pdTRUE)
             {
@@ -248,12 +221,6 @@ int main(void)
     BOARD_BootClockRUN();
     BOARD_InitDebugConsole();
     SYSMPU_Enable(SYSMPU, false);
-
-#if defined(__CORTEX_M)
-    NVIC_SetPriority(SD_HOST_IRQ, 5U);
-#else
-    GIC_SetPriority(SD_HOST_IRQ, 25U);
-#endif
 
     PRINTF("\r\nSDCARD freertos example.\r\n");
 

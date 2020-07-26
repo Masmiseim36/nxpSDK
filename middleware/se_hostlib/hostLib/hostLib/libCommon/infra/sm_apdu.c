@@ -3,7 +3,7 @@
  * @author NXP Semiconductors
  * @version 1.0
  * @par License
- * Copyright 2019 NXP
+ * Copyright 2019,2020 NXP
  *
  * This software is owned or controlled by NXP and may only be used
  * strictly in accordance with the applicable license terms.  By expressly
@@ -23,6 +23,7 @@
 #include <stddef.h>
 #include <string.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 
 #if defined(SSS_USE_FTR_FILE)
@@ -41,7 +42,7 @@ static void ReserveLc(apdu_t * pApdu);
 static void SetLc(apdu_t * pApdu, U16 lc);
 static void AddLe(apdu_t * pApdu, U16 le);
 
-#if SSS_HAVE_SE050_EAR_CH
+#if SSS_HAVE_A71CH_SIM
 /* Send session ID in trans-receive */
 static U8 session_Tlv[7];
 static U8 gEnableEnc = 0;
@@ -64,7 +65,7 @@ static U8 sharedApduBuffer[MAX_APDU_BUF_LENGTH];
  * \param[in,out] pApdu         APDU buffer
  * \returns always returns 0
  */
-U8 AllocateAPDUBuffer(apdu_t * pApdu)
+U8 AllocateAPDUBuffer(apdu_t *pApdu)
 {
     ENSURE_OR_GO_EXIT(pApdu != NULL);
     // In case of e.g. TGT_A7, pApdu is pointing to a structure defined on the stack
@@ -135,7 +136,7 @@ exit:
     return ret;
 }
 
-#if SSS_HAVE_SE050_EAR_CH
+#if SSS_HAVE_A71CH_SIM
 /**
  * Creates session TLV from session ID. Session ID is retrieved as response to auth command.
  * \param[in] sessionId
@@ -530,8 +531,8 @@ U16 ParseResponse(apdu_t *pApdu, U16 expectedTag, U16 *pLen, U8 *pValue)
 
 /**
  * Add or append data to the body of a command APDU.
- * WARNING: 
- * - Bufferoverflow fix not applied for SSS_HAVE_SE050_EAR_CH
+ * WARNING:
+ * - Bufferoverflow fix not applied for SSS_HAVE_A71CH_SIM
  * WARNING for non-TGT_A71CH cases :
  * - TGT_A71CL: This function must only be called once in case pApdu->txHasChkSum is set
  */
@@ -576,7 +577,7 @@ U16 smApduAppendCmdData(apdu_t *pApdu, const U8 *data, U16 dataLen)
         ReserveLc(pApdu);
     }
 
-#if SSS_HAVE_SE050_EAR_CH
+#if SSS_HAVE_A71CH_SIM
     if (gEnableEnc)
     {
         pApdu->lc += (dataLen + sizeof(session_Tlv));
@@ -585,7 +586,7 @@ U16 smApduAppendCmdData(apdu_t *pApdu, const U8 *data, U16 dataLen)
         pApdu->offset += sizeof(session_Tlv);
     }
     else
-#endif // SSS_HAVE_SE050_EAR_CH
+#endif // SSS_HAVE_A71CH_SIM
     {
         pApdu->lc += dataLen;
     }
@@ -772,3 +773,112 @@ exit:
     return rv;
 }
 #endif
+
+bool smApduGetArrayBytes(char *str, size_t *len, uint8_t *buffer, size_t buffer_len)
+{
+    if ((strlen(str) % 2) != 0) {
+        LOG_E("Invalid length");
+        return false;
+    }
+
+    *len = strlen(str) / 2;
+    if (buffer_len < *len)
+    {
+        LOG_E("Insufficient buffer size\n");
+        *len = 0;
+        return false;
+    }
+    char *pos = str;
+    for (size_t count = 0; count < *len; count++) {
+        if (sscanf(pos, "%2hhx", &buffer[count]) < 1) {
+            *len = 0;
+            return false;
+        }
+        pos += 2;
+    }
+    return true;
+}
+
+bool smApduGetTxRxCase(uint8_t *apdu, size_t apduLen, size_t* data_offset, size_t *dataLen, apduTxRx_case_t *apdu_case)
+{
+    *data_offset = 0;
+    *dataLen = 0;
+    *apdu_case = APDU_TXRX_CASE_INVALID;
+    //Invalid apdu
+    if (apduLen < 4)
+    {
+        LOG_E("Wrong APDU format\n");
+        return false;
+    }
+
+    //Case 1
+    if (apduLen == 4)
+    {
+        *apdu_case = APDU_TXRX_CASE_1;
+        return true;
+    }
+    //Case 2S
+    else if (apduLen == 5)
+    {
+        *apdu_case = APDU_TXRX_CASE_2;
+        return true;
+    }
+    else
+    {
+        size_t byte5 = apdu[4] & 0xFF;
+        if (byte5 != 0x0)
+        {
+            if (apduLen == 5 + byte5)
+            {
+                //case 3S
+                *apdu_case = APDU_TXRX_CASE_3;
+                *data_offset = 5;
+                *dataLen = byte5;
+            }
+            else if (apduLen == 6 + byte5)
+            {
+                //case 4S
+                *apdu_case = APDU_TXRX_CASE_4;
+                *data_offset = 5;
+                *dataLen = byte5;
+            }
+            else
+            {
+                LOG_E("Wrong APDU format\n");
+                return false;
+            }
+        }
+        else if (apduLen == 7)
+        {
+            //case 2E
+            *apdu_case = APDU_TXRX_CASE_2E;
+        }
+        else if (apduLen < 7)
+        {
+            LOG_E("Wrong APDU format\n");
+            return false;
+        }
+        else
+        {
+            size_t len = ((apdu[5] & 0xFF) << 8) | (apdu[6] & 0xFF);
+            if (apduLen == 7 + len) {
+                //case 3E
+                *apdu_case = APDU_TXRX_CASE_3E;
+                *data_offset = 7;
+                *dataLen = len;
+            }
+            else if (apduLen == 9 + len) {
+                //Case 4E
+                *apdu_case = APDU_TXRX_CASE_4E;
+                *data_offset = 7;
+                *dataLen = len;
+            }
+            else
+            {
+                LOG_E("Wrong APDU format\n");
+                return false;
+            }
+        }
+    }
+    return true;
+}

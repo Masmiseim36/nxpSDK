@@ -121,12 +121,12 @@ typedef struct _usb_host_hub_instance
     uint8_t hubStatusBuffer[4];                                  /*!< HUB status buffer*/
     uint8_t portStatusBuffer[4];                                 /*!< Port status buffer*/
 #endif
-    uint8_t hubStatus;                                           /*!< HUB instance running status*/
-    uint8_t portCount;                                           /*!< HUB port count*/
-    uint8_t portIndex;                                           /*!< Record the index when processing ports in turn*/
-    uint8_t portProcess;                                         /*!< The port that is processing*/
-    uint8_t primeStatus;                                         /*!< Data prime transfer status*/
-    uint8_t invalid; /*!< 0/1, when invalid, cannot send transfer to the class*/
+    uint8_t hubStatus;   /*!< HUB instance running status*/
+    uint8_t portCount;   /*!< HUB port count*/
+    uint8_t portIndex;   /*!< Record the index when processing ports in turn*/
+    uint8_t portProcess; /*!< The port that is processing*/
+    uint8_t primeStatus; /*!< Data prime transfer status*/
+    uint8_t invalid;     /*!< 0/1, when invalid, cannot send transfer to the class*/
 #if ((defined(USB_HOST_CONFIG_LOW_POWER_MODE)) && (USB_HOST_CONFIG_LOW_POWER_MODE > 0U))
     uint8_t supportRemoteWakeup; /*!< The HUB supports remote wakeup or not*/
     uint8_t controlRetry;        /*!< Retry count for set remote wakeup feature*/

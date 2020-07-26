@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  *
@@ -41,55 +41,55 @@ extern "C" {
 /*!
  * @brief Initializes MMC disk.
  *
- * @param physicalDrive Physical drive number.
+ * @param pdrv Physical drive number.
  * @retval STA_NOINIT Failed.
  * @retval RES_OK Success.
  */
-DSTATUS mmc_disk_initialize(uint8_t physicalDrive);
+DSTATUS mmc_disk_initialize(BYTE pdrv);
 
 /*!
  * @brief Gets MMC disk status
  *
- * @param physicalDrive Physical drive number.
+ * @param pdrv Physical drive number.
  * @retval STA_NOINIT Failed.
  * @retval RES_OK Success.
  */
-DSTATUS mmc_disk_status(uint8_t physicalDrive);
+DSTATUS mmc_disk_status(BYTE pdrv);
 
 /*!
  * @brief Reads MMC disk.
  *
- * @param physicalDrive Physical drive number.
- * @param buffer The data buffer pointer to store read content.
+ * @param pdrv Physical drive number.
+ * @param buff The data buffer pointer to store read content.
  * @param sector The start sector number to be read.
  * @param count The sector count to be read.
  * @retval RES_PARERR Failed.
  * @retval RES_OK Success.
  */
-DRESULT mmc_disk_read(uint8_t physicalDrive, uint8_t *buffer, uint32_t sector, uint8_t count);
+DRESULT mmc_disk_read(BYTE pdrv, BYTE* buff, LBA_t sector, UINT count);
 
 /*!
  * @brief Writes MMC disk.
  *
- * @param physicalDrive Physical drive number.
- * @param buffer The data buffer pointer to store write content.
+ * @param pdrv Physical drive number.
+ * @param buff The data buffer pointer to store write content.
  * @param sector The start sector number to be written.
  * @param count The sector count to be written.
  * @retval RES_PARERR Failed.
  * @retval RES_OK Success.
  */
-DRESULT mmc_disk_write(uint8_t physicalDrive, const uint8_t *buffer, uint32_t sector, uint8_t count);
+DRESULT mmc_disk_write(BYTE pdrv, const BYTE* buff, LBA_t sector, UINT count);
 
 /*!
  * @brief MMC disk IO operation.
  *
- * @param physicalDrive Physical drive number.
- * @param command The command to be set.
- * @param buffer The buffer to store command result.
+ * @param pdrv Physical drive number.
+ * @param cmd The command to be set.
+ * @param buff The buffer to store command result.
  * @retval RES_PARERR Failed.
  * @retval RES_OK Success.
  */
-DRESULT mmc_disk_ioctl(uint8_t physicalDrive, uint8_t command, void *buffer);
+DRESULT mmc_disk_ioctl(BYTE pdrv, BYTE cmd, void* buff);
 
 /* @} */
 

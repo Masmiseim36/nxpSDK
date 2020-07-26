@@ -15,7 +15,9 @@
     <definition extID="middleware.mcu-boot.src_bm_usb.MK66F18"/>
     <definition extID="middleware.mcu-boot.src_security.MK66F18"/>
     <definition extID="middleware.mcu-boot.src_startup.MK66F18"/>
-    <definition extID="middleware.usb.device.MK66F18"/>
+    <definition extID="middleware.usb.common_header.MK66F18"/>
+    <definition extID="middleware.usb.device.common_header.MK66F18"/>
+    <definition extID="middleware.usb.device.controller.driver.MK66F18"/>
     <definition extID="middleware.usb.device_controller_ehci.MK66F18"/>
     <definition extID="middleware.usb.device_controller_khci.MK66F18"/>
     <definition extID="middleware.usb.phy.MK66F18"/>
@@ -36,7 +38,7 @@
     <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="frdmk66f_freedom_bootloader" name="freedom_bootloader" category="bootloader_examples" dependency="platform.drivers.clock.MK66F18 platform.drivers.flash.MK66F18 device.MK66F18_CMSIS.MK66F18 platform.drivers.uart.MK66F18 platform.drivers.gpio.MK66F18 platform.drivers.i2c.MK66F18 platform.drivers.port.MK66F18 platform.drivers.dspi.MK66F18 platform.drivers.crc.MK66F18 middleware.usb.device_controller_khci.MK66F18 middleware.usb.device_controller_ehci.MK66F18 middleware.usb.device.MK66F18 middleware.mcu-boot.MK66F18_startup.MK66F18 middleware.mcu-boot.bootsources.MK66F18 middleware.mcu-boot.bootsources_kinetis.MK66F18 middleware.mcu-boot.MK66F18_sources.MK66F18 middleware.mcu-boot.src_bm_usb.MK66F18 middleware.mcu-boot.drv_mmcau.MK66F18 middleware.mcu-boot.src_security.MK66F18 middleware.mcu-boot.src_startup.MK66F18 middleware.mcu-boot.drv_microseconds_pit.MK66F18 platform.drivers.common.MK66F18 platform.Include_core_cm4.MK66F18 platform.Include_common.MK66F18 platform.Include_dsp.MK66F18 component.osa.MK66F18 component.lists.MK66F18 middleware.usb.phy.MK66F18 middleware.baremetal.MK66F18">
+  <example id="frdmk66f_freedom_bootloader" name="freedom_bootloader" category="bootloader_examples" dependency="platform.drivers.clock.MK66F18 platform.drivers.flash.MK66F18 device.MK66F18_CMSIS.MK66F18 platform.drivers.uart.MK66F18 platform.drivers.gpio.MK66F18 platform.drivers.i2c.MK66F18 platform.drivers.port.MK66F18 platform.drivers.dspi.MK66F18 platform.drivers.crc.MK66F18 middleware.usb.device.controller.driver.MK66F18 component.osa.MK66F18 middleware.usb.device_controller_khci.MK66F18 middleware.usb.device_controller_ehci.MK66F18 middleware.mcu-boot.MK66F18_startup.MK66F18 middleware.mcu-boot.bootsources.MK66F18 middleware.mcu-boot.bootsources_kinetis.MK66F18 middleware.mcu-boot.MK66F18_sources.MK66F18 middleware.mcu-boot.src_bm_usb.MK66F18 middleware.mcu-boot.drv_mmcau.MK66F18 middleware.mcu-boot.src_security.MK66F18 middleware.mcu-boot.src_startup.MK66F18 middleware.mcu-boot.drv_microseconds_pit.MK66F18 platform.drivers.common.MK66F18 platform.Include_core_cm4.MK66F18 platform.Include_common.MK66F18 platform.Include_dsp.MK66F18 component.lists.MK66F18 middleware.usb.device.common_header.MK66F18 middleware.usb.common_header.MK66F18 middleware.usb.phy.MK66F18 middleware.baremetal.MK66F18">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -91,7 +93,6 @@
         <option id="gnu.c.link.option.other" type="stringList">
           <value>--gc-sections</value>
           <value>-Map=${BuildArtifactFileBaseName}.map</value>
-          <value>--defsym=__ram_vector_table__=1</value>
         </option>
         <option id="com.crt.advproject.gas.hdrlib" type="enum">
           <value>com.crt.advproject.gas.hdrlib.newlibnano</value>
@@ -121,6 +122,12 @@
     </source>
     <source path="boards/frdmk66f/bootloader_examples/freedom_bootloader/mdk" target_path="middleware/mcu-boot" type="linker" toolchain="mdk">
       <files mask="MK66FN2M0xxx18_application_0x0000.scf"/>
+    </source>
+    <source path="boards/frdmk66f/bootloader_examples/freedom_bootloader" target_path="board" type="c_include">
+      <files mask="pin_mux.h"/>
+    </source>
+    <source path="boards/frdmk66f/bootloader_examples/freedom_bootloader" target_path="board" type="src">
+      <files mask="pin_mux.c"/>
     </source>
     <source path="boards/frdmk66f/bootloader_examples/freedom_bootloader" target_path="usb/device/class/hid" type="c_include">
       <files mask="usb_device_hid.h"/>

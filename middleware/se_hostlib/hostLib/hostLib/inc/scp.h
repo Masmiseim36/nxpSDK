@@ -3,7 +3,7 @@
  * @author NXP Semiconductors
  * @version 1.0
  * @par License
- * Copyright 2016 NXP
+ * Copyright 2016,2020 NXP
  *
  * This software is owned or controlled by NXP and may only be used
  * strictly in accordance with the applicable license terms.  By expressly
@@ -51,9 +51,9 @@ extern "C" {
 
 #define SECLVL_CDEC_RENC_CMAC_RMAC      (0x33)
 
-#define SCP02_SECLVL_CMAC			    (0x01)
-#define SCP02_SECLVL_CDEC_CMAC		    (0x03)
-#define SCP02_SECLVL_CDEC_CMAC_RMAC	    (0x13)
+#define SCP02_SECLVL_CMAC               (0x01)
+#define SCP02_SECLVL_CDEC_CMAC          (0x03)
+#define SCP02_SECLVL_CDEC_CMAC_RMAC     (0x13)
 
 #define SCP03_KEY_ID                    (0x01)
 
@@ -116,6 +116,7 @@ typedef enum
  * Exchanges APDU, applies SCP03 encryption depending on \p type parameter and on the
  * authentication status of the SCP03 channel.
  *
+ * @param[in]     conn_ctx     connection context
  * @param[in,out] pApdu        apdu_t datastructure
  * @param[in]     type         encryption/mac request
  *
@@ -126,7 +127,7 @@ typedef enum
  * @retval ::SCP_RSP_MAC_FAIL          MAC on response failed to verify
  * @retval ::SCP_DECODE_FAIL           Encrypted Response did not decode to correctly padded plaintext
  */
-U32 scp_Transceive(apdu_t * pApdu, scp_CommandType_t type);
+U32 scp_Transceive(void *conn_ctx, apdu_t * pApdu, scp_CommandType_t type);
 
 #ifdef __cplusplus
 }

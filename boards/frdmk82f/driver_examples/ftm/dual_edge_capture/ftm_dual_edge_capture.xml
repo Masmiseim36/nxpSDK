@@ -44,6 +44,7 @@
         </option>
         <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
           <value>CPU_MK82FN256VLL15</value>
+          <value>PRINTF_FLOAT_ENABLE=1</value>
           <value>FRDM_K82F</value>
           <value>FREEDOM</value>
           <value>SERIAL_PORT_TYPE_UART=1</value>

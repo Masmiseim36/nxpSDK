@@ -21,8 +21,8 @@
  * first half transimission. In the second half transimission, slave will send them
  * back to the master board.
  */
-#define BUFFER_SIZE (192)
-#define RX_BUFFER_INDEX (64)
+#define BUFFER_SIZE        (192)
+#define RX_BUFFER_INDEX    (64)
 #define TRANSFER_DATA_SIZE (128)
 /*******************************************************************************
  * Prototypes

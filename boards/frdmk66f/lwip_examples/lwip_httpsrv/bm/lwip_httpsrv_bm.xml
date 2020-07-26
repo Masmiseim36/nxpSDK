@@ -8,11 +8,13 @@
     <definition extID="component.uart_adapter.MK66F18"/>
     <definition extID="device.MK66F18_CMSIS.MK66F18"/>
     <definition extID="device.MK66F18_startup.MK66F18"/>
-    <definition extID="driver.phyksz8081.MK66F18"/>
+    <definition extID="driver.mdio-common.MK66F18"/>
+    <definition extID="driver.mdio-enet.MK66F18"/>
+    <definition extID="driver.phy-common.MK66F18"/>
+    <definition extID="driver.phy-device-ksz8081.MK66F18"/>
     <definition extID="middleware.lwip.MK66F18"/>
     <definition extID="middleware.lwip.apps.httpd.MK66F18"/>
     <definition extID="middleware.lwip.apps.httpd.support.MK66F18"/>
-    <definition extID="middleware.lwip.enet_ethernetif.MK66F18"/>
     <definition extID="middleware.lwip.enet_ethernetif_kinetis.MK66F18"/>
     <definition extID="platform.Include_common.MK66F18"/>
     <definition extID="platform.Include_core_cm4.MK66F18"/>
@@ -35,7 +37,7 @@
     <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="frdmk66f_lwip_httpsrv_bm" name="lwip_httpsrv_bm" category="lwip_examples" dependency="driver.phyksz8081.MK66F18 middleware.lwip.apps.httpd.MK66F18 middleware.lwip.MK66F18 middleware.lwip.enet_ethernetif_kinetis.MK66F18 platform.drivers.port.MK66F18 platform.drivers.sim.MK66F18 platform.drivers.clock.MK66F18 platform.drivers.flash.MK66F18 platform.drivers.common.MK66F18 device.MK66F18_CMSIS.MK66F18 utility.debug_console.MK66F18 component.uart_adapter.MK66F18 component.serial_manager.MK66F18 component.lists.MK66F18 component.serial_manager_uart.MK66F18 platform.drivers.uart.MK66F18 device.MK66F18_startup.MK66F18 platform.drivers.lpuart.MK66F18 platform.drivers.smc.MK66F18 platform.drivers.gpio.MK66F18 platform.utilities.assert.MK66F18 platform.drivers.enet.MK66F18 platform.Include_core_cm4.MK66F18 platform.Include_common.MK66F18 platform.Include_dsp.MK66F18 middleware.lwip.apps.httpd.support.MK66F18 middleware.lwip.enet_ethernetif.MK66F18 platform.utilities.misc_utilities.MK66F18">
+  <example id="frdmk66f_lwip_httpsrv_bm" name="lwip_httpsrv_bm" category="lwip_examples" dependency="driver.mdio-enet.MK66F18 driver.phy-device-ksz8081.MK66F18 middleware.lwip.apps.httpd.MK66F18 middleware.lwip.MK66F18 utility.debug_console.MK66F18 middleware.lwip.enet_ethernetif_kinetis.MK66F18 platform.drivers.port.MK66F18 platform.drivers.sim.MK66F18 platform.drivers.clock.MK66F18 platform.drivers.flash.MK66F18 platform.drivers.common.MK66F18 device.MK66F18_CMSIS.MK66F18 component.uart_adapter.MK66F18 component.serial_manager.MK66F18 component.lists.MK66F18 component.serial_manager_uart.MK66F18 platform.drivers.uart.MK66F18 device.MK66F18_startup.MK66F18 platform.drivers.lpuart.MK66F18 platform.drivers.smc.MK66F18 platform.drivers.gpio.MK66F18 platform.utilities.assert.MK66F18 driver.mdio-common.MK66F18 platform.Include_core_cm4.MK66F18 platform.Include_common.MK66F18 platform.Include_dsp.MK66F18 platform.drivers.enet.MK66F18 driver.phy-common.MK66F18 middleware.lwip.apps.httpd.support.MK66F18 platform.utilities.misc_utilities.MK66F18">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>

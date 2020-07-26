@@ -117,7 +117,7 @@
 #if defined(USB_STACK_FREERTOS_HEAP_SIZE) && (USB_STACK_FREERTOS_HEAP_SIZE > 0)
 #define configTOTAL_HEAP_SIZE ((size_t)(USB_STACK_FREERTOS_HEAP_SIZE))
 #else
-#define configTOTAL_HEAP_SIZE ((size_t)(100 * 1024))
+#define configTOTAL_HEAP_SIZE ((size_t)(109 * 1024))
 #endif
 #define configAPPLICATION_ALLOCATED_HEAP 0
 

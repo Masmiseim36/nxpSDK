@@ -26,9 +26,9 @@
 #define USB_DEVICE_MSC_GET_MAX_LUN (0xFEU)
 
 /*! @brief CBW dCBWSignature*/
-#define USB_DEVICE_MSC_DCBWSIGNATURE USB_LONG_TO_BIG_ENDIAN(0x55534243U)
+#define USB_DEVICE_MSC_DCBWSIGNATURE USB_LONG_TO_BIG_ENDIAN(0x55534243UL)
 /*! @brief CSW dCSSWSignature*/
-#define USB_DEVICE_MSC_DCSWSIGNATURE USB_LONG_TO_BIG_ENDIAN(0x55534253U)
+#define USB_DEVICE_MSC_DCSWSIGNATURE USB_LONG_TO_BIG_ENDIAN(0x55534253UL)
 /*! @brief CSW bmCBWFlags bit7 */
 #define USB_DEVICE_MSC_CBW_DIRECTION_BIT (0x80U)
 #define USB_DEVICE_MSC_CBW_DIRECTION_SHIFT (7U)
@@ -65,7 +65,7 @@
 #define USB_DEVICE_MSC_MAX_RECV_TRANSFER_LENGTH (65536U)
 #define USB_DEVICE_MSC_MAX_SEND_TRANSFER_LENGTH (65536U)
 
-#define USB_DEVICE_MSC_MAX_LUN (3)
+#define USB_DEVICE_MSC_MAX_LUN (3U)
 
 /*! @brief Command Block Wrapper(CBW) */
 typedef struct _usb_device_msc_cbw
@@ -95,10 +95,10 @@ typedef struct _usb_lba_transfer_information_struct
 /*! @brief device information */
 typedef struct _usb_device_logical_unit_information_struct
 {
-    uint32_t totalLbaNumberSupports;    /*!< Total blocks number supported*/
-    uint32_t lengthOfEachLba;           /*!< Length of each block*/
-    uint32_t bulkInBufferSize;          /*!< Bulk in buffer size*/
-    uint32_t bulkOutBufferSize;         /*!< Bulk out buffer size*/
+    uint32_t totalLbaNumberSupports; /*!< Total blocks number supported*/
+    uint32_t lengthOfEachLba;        /*!< Length of each block*/
+    uint32_t bulkInBufferSize;       /*!< Bulk in buffer size*/
+    uint32_t bulkOutBufferSize;      /*!< Bulk out buffer size*/
 } usb_device_logical_unit_information_struct_t;
 /*! @brief device information */
 typedef struct _usb_device_lba_information_struct
@@ -106,6 +106,12 @@ typedef struct _usb_device_lba_information_struct
     uint32_t logicalUnitNumberSupported; /*!< Number of LUN*/
     usb_device_logical_unit_information_struct_t logicalUnitInformations[USB_DEVICE_MSC_MAX_LUN];
 } usb_device_lba_information_struct_t;
+typedef struct _usb_device_capacity_information_struct
+{
+    uint32_t totalLbaNumberSupports; /*!< Total blocks number supported*/
+    uint32_t lengthOfEachLba;        /*!< Length of each block*/
+    uint8_t logicalUnitNumber;       /*!< Logical Unit Number*/
+} usb_device_capacity_information_struct_t;
 
 /*! @brief Data transfer information */
 typedef struct _usb_device_lba_app_struct
@@ -122,6 +128,7 @@ typedef struct _usb_device_ufi_app_struct
     uint32_t size;   /*!< Size of the transferred data if commmand has data flow*/
     uint8_t *buffer; /*!< Buffer address of the transferred data if commmand has data flow*/
     usb_device_request_sense_data_struct_t *requestSense; /*!< sense data for the current command*/
+    uint8_t logicalUnitNumber;                            /*!< Logical Unit Number*/
 } usb_device_ufi_app_struct_t;
 /*! @brief The thirteen possible use cases of host expectations and device intent in the absence of
 overriding error conditions. */
@@ -145,12 +152,14 @@ typedef enum
 /*! @brief Available common EVENT types in MSC class callback */
 typedef enum
 {
-    kUSB_DeviceMscEventReadResponse = 0x01U, /*!< host has already read the whole data from device or device send is cancelled etc*/
-    kUSB_DeviceMscEventWriteResponse,        /*!< devcie has already received the data from host or device receive is cancelled etc. */
-    kUSB_DeviceMscEventWriteRequest, /*!< Host want to write data to device through write command, devcie need prepare
-                                        one buffer to store the data from host*/
-    kUSB_DeviceMscEventReadRequest,  /*!< Host want to read data from device through read command, device need prepare
-                                        one buffer containing data pending for transfer*/
+    kUSB_DeviceMscEventReadResponse =
+        0x01U, /*!< host has already read the whole data from device or device send is cancelled etc*/
+    kUSB_DeviceMscEventWriteResponse, /*!< devcie has already received the data from host or device receive is cancelled
+                                         etc. */
+    kUSB_DeviceMscEventWriteRequest,  /*!< Host want to write data to device through write command, devcie need prepare
+                                         one buffer to store the data from host*/
+    kUSB_DeviceMscEventReadRequest,   /*!< Host want to read data from device through read command, device need prepare
+                                         one buffer containing data pending for transfer*/
     kUSB_DeviceMscEventGetLbaInformation, /*!< Get device information */
     kUSB_DeviceMscEventFormatComplete,    /*!< Format complete */
     kUSB_DeviceMscEventTestUnitReady,     /*!<  Test Unit Ready command*/
@@ -162,7 +171,9 @@ typedef enum
     kUSB_DeviceMscEventRemovalRequest,     /*!< Prevent_allow_medium_command */
     kUSB_DeviceMscEventSendDiagnostic,     /*!< Send Diagnostic command */
     kUSB_DeviceMscEventStopEjectMedia,     /*!< Start_stop_unit_command */
-
+    kUSB_DeviceMscEventRequestSense,       /*!< Request Sense command */
+    kUSB_DeviceMscEventReadCapacity,       /*!< ReadCapacity command */
+    kUSB_DeviceMscEventReadFormatCapacity, /*!< Read Format Capacity command */
 } USB_DeviceMscEvent_t;
 /*! @brief The MSC device UFI command status structure */
 typedef struct _usb_device_msc_ufi_struct
@@ -190,7 +201,7 @@ typedef struct _usb_device_msc_struct
     usb_device_msc_csw_t *mscCsw; /*!< CSW structure */
 
     usb_device_msc_ufi_struct_t mscUfi; /*!< UFI command information structure*/
-    
+
     usb_device_logical_unit_information_struct_t luInformations[USB_DEVICE_MSC_MAX_LUN];
 
     uint8_t dataOutFlag;          /*!< CBW indicating bulk out transfer, clear this flag when data transfer done*/
@@ -228,16 +239,16 @@ extern "C" {
  * @{
  */
 /*!
-* @brief Initializes the MSC class.
-*
-* This function is used to initialize the MSC class.
-*
-* @param controllerId   The controller ID of the USB IP. See the enumeration usb_controller_index_t.
-* @param config          The class configuration information.
-* @param handle          A parameter used to return pointer of the MSC class handle to the caller.
-*
-* @return A USB error code or kStatus_USB_Success.
-*/
+ * @brief Initializes the MSC class.
+ *
+ * This function is used to initialize the MSC class.
+ *
+ * @param controllerId   The controller ID of the USB IP. See the enumeration usb_controller_index_t.
+ * @param config          The class configuration information.
+ * @param handle          A parameter used to return pointer of the MSC class handle to the caller.
+ *
+ * @return A USB error code or kStatus_USB_Success.
+ */
 extern usb_status_t USB_DeviceMscInit(uint8_t controllerId,
                                       usb_device_class_config_struct_t *config,
                                       class_handle_t *handle);
@@ -258,8 +269,6 @@ extern usb_status_t USB_DeviceMscEvent(void *handle, uint32_t event, void *param
 extern usb_status_t USB_DeviceMscLbaTransfer(usb_device_msc_struct_t *mscHandle,
                                              uint8_t direction,
                                              usb_lba_transfer_information_struct_t *lba_info_ptr);
-
-
 
 #ifdef __cplusplus
 }

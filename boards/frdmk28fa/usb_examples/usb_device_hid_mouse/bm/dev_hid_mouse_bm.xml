@@ -10,10 +10,11 @@
     <definition extID="device.MK28FA15_CMSIS.MK28FA15"/>
     <definition extID="device.MK28FA15_startup.MK28FA15"/>
     <definition extID="middleware.baremetal.MK28FA15"/>
-    <definition extID="middleware.usb.device.MK28FA15"/>
+    <definition extID="middleware.usb.common_header.MK28FA15"/>
+    <definition extID="middleware.usb.device.common_header.MK28FA15"/>
+    <definition extID="middleware.usb.device.controller.driver.MK28FA15"/>
     <definition extID="middleware.usb.device_controller_ehci.MK28FA15"/>
     <definition extID="middleware.usb.device_controller_khci.MK28FA15"/>
-    <definition extID="middleware.usb.hsdcd.MK28FA15"/>
     <definition extID="middleware.usb.phy.MK28FA15"/>
     <definition extID="platform.Include_common.MK28FA15"/>
     <definition extID="platform.Include_core_cm4.MK28FA15"/>
@@ -33,7 +34,7 @@
     <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="frdmk28fa_dev_hid_mouse_bm" name="dev_hid_mouse_bm" category="usb_examples" dependency="middleware.usb.device_controller_khci.MK28FA15 middleware.usb.device_controller_ehci.MK28FA15 middleware.usb.phy.MK28FA15 middleware.usb.hsdcd.MK28FA15 middleware.usb.device.MK28FA15 platform.drivers.smc.MK28FA15 platform.drivers.clock.MK28FA15 platform.drivers.common.MK28FA15 device.MK28FA15_CMSIS.MK28FA15 device.MK28FA15_startup.MK28FA15 platform.drivers.lpuart.MK28FA15 platform.drivers.gpio.MK28FA15 platform.drivers.sysmpu.MK28FA15 platform.utilities.assert.MK28FA15 utility.debug_console.MK28FA15 component.lpuart_adapter.MK28FA15 component.serial_manager.MK28FA15 component.lists.MK28FA15 component.serial_manager_uart.MK28FA15 platform.drivers.port.MK28FA15 component.osa.MK28FA15 platform.Include_core_cm4.MK28FA15 platform.Include_common.MK28FA15 platform.Include_dsp.MK28FA15 platform.utilities.misc_utilities.MK28FA15 middleware.baremetal.MK28FA15">
+  <example id="frdmk28fa_dev_hid_mouse_bm" name="dev_hid_mouse_bm" category="usb_examples" dependency="middleware.usb.device_controller_khci.MK28FA15 middleware.usb.device_controller_ehci.MK28FA15 middleware.usb.phy.MK28FA15 platform.drivers.smc.MK28FA15 platform.drivers.clock.MK28FA15 platform.drivers.common.MK28FA15 device.MK28FA15_CMSIS.MK28FA15 device.MK28FA15_startup.MK28FA15 platform.drivers.lpuart.MK28FA15 platform.drivers.gpio.MK28FA15 platform.drivers.sysmpu.MK28FA15 platform.utilities.assert.MK28FA15 utility.debug_console.MK28FA15 component.lpuart_adapter.MK28FA15 component.serial_manager.MK28FA15 component.lists.MK28FA15 component.serial_manager_uart.MK28FA15 platform.drivers.port.MK28FA15 middleware.usb.device.controller.driver.MK28FA15 component.osa.MK28FA15 middleware.usb.device.common_header.MK28FA15 platform.Include_core_cm4.MK28FA15 platform.Include_common.MK28FA15 platform.Include_dsp.MK28FA15 middleware.usb.common_header.MK28FA15 platform.utilities.misc_utilities.MK28FA15 middleware.baremetal.MK28FA15">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -92,7 +93,7 @@
       <files mask="clock_config.c"/>
       <files mask="pin_mux.c"/>
     </source>
-    <source path="boards/frdmk28fa/usb_examples/usb_device_hid_mouse/bm" target_path="doc" type="doc">
+    <source path="boards/frdmk28fa/usb_examples/usb_device_hid_mouse/bm" target_path="doc" type="doc" toolchain="iar mdk mcuxpresso">
       <files mask="readme.txt"/>
     </source>
     <source path="boards/frdmk28fa/usb_examples/usb_device_hid_mouse/bm" target_path="frdmk28fa/usb_examples/usb_device_hid_mouse/bm" type="doc" exclude="true">
@@ -125,6 +126,13 @@
     </source>
     <source path="boards/frdmk28fa/usb_examples/usb_device_hid_mouse/bm" target_path="usb/device/source" type="src">
       <files mask="usb_device_ch9.c"/>
+    </source>
+    <source path="middleware/usb/dcd" target_path="usb/dcd" type="c_include">
+      <files mask="usb_charger_detect.h"/>
+      <files mask="usb_hsdcd.h"/>
+    </source>
+    <source path="middleware/usb/dcd" target_path="usb/dcd" type="src">
+      <files mask="usb_hsdcd.c"/>
     </source>
   </example>
 </ksdk:examples>

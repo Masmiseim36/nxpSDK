@@ -9,7 +9,7 @@
 *                                                                    *
 **********************************************************************
 
-** emWin V5.50 - Graphical user interface for embedded applications **
+** emWin V6.10 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -139,6 +139,7 @@ extern IMAGE_PROPS IMAGE__DefaultProps;
 */
 void IMAGE__SetWindowSize(IMAGE_Handle hObj);
 void IMAGE__FreeAttached (IMAGE_Handle hObj, int LeaveTimer);
+void IMAGE__SetVoid      (IMAGE_Handle hObj, const void * pData);
 
 #endif // GUI_WINSUPPORT
 #endif // IMAGE_PRIVATE_H

@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016 - 2017 NXP
+ * Copyright 2016 - 2017, 2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -24,10 +24,12 @@
 
 #if defined(__GIC_PRIO_BITS)
 #define USB_DEVICE_INTERRUPT_PRIORITY (25U)
+#elif defined(__NVIC_PRIO_BITS) && (__NVIC_PRIO_BITS >= 3)
+#define USB_DEVICE_INTERRUPT_PRIORITY (6U)
 #else
 #define USB_DEVICE_INTERRUPT_PRIORITY (3U)
 #endif
-
+/* application define logical unit number, if LOGICAL_UNIT_SUPPORTED > USB_DEVICE_MSC_MAX_LUN, update USB_DEVICE_MSC_MAX_LUN in class driver usb_device_msc.h*/
 #define LOGICAL_UNIT_SUPPORTED (1U)
 
 #define USB_DEVICE_MSC_WRITE_BUFF_NUM (3U)

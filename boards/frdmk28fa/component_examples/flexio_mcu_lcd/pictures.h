@@ -9,10 +9,10 @@
 #ifndef _PICTURES_H_
 #define _PICTURES_H_
 
-#define DEMO_PIC_NUM 3U       /* Number of pictures. */
-#define DEMO_PIC_WIDTH 800U   /* Width of the pictures. */
-#define DEMO_PIC_HEIGHT 480U  /* Height of the pictures. */
-#define DEMO_BYTE_PER_PIXEL 2 /* Bytes per pixel. */
+#define DEMO_PIC_NUM        3U   /* Number of pictures. */
+#define DEMO_PIC_WIDTH      800U /* Width of the pictures. */
+#define DEMO_PIC_HEIGHT     480U /* Height of the pictures. */
+#define DEMO_BYTE_PER_PIXEL 2    /* Bytes per pixel. */
 
 #ifndef BUILD_PIC_BIN
 #define BUILD_PIC_BIN 0

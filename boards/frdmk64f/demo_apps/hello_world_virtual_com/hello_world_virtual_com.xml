@@ -7,12 +7,15 @@
     <definition extID="component.serial_manager.MK64F12"/>
     <definition extID="component.serial_manager_uart.MK64F12"/>
     <definition extID="component.serial_manager_usb_cdc.MK64F12"/>
-    <definition extID="component.serial_manager_usb_cdc_device_config.frdmk64f.MK64F12"/>
     <definition extID="component.uart_adapter.MK64F12"/>
     <definition extID="device.MK64F12_CMSIS.MK64F12"/>
     <definition extID="device.MK64F12_startup.MK64F12"/>
     <definition extID="middleware.baremetal.MK64F12"/>
-    <definition extID="middleware.usb.device.MK64F12"/>
+    <definition extID="middleware.usb.common_header.MK64F12"/>
+    <definition extID="middleware.usb.device.cdc.external.MK64F12"/>
+    <definition extID="middleware.usb.device.common_header.MK64F12"/>
+    <definition extID="middleware.usb.device.controller.driver.MK64F12"/>
+    <definition extID="middleware.usb.device.stack.external.MK64F12"/>
     <definition extID="middleware.usb.device_controller_khci.MK64F12"/>
     <definition extID="platform.Include_common.MK64F12"/>
     <definition extID="platform.Include_core_cm4.MK64F12"/>
@@ -33,7 +36,7 @@
     <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="frdmk64f_hello_world_virtual_com" name="hello_world_virtual_com" category="demo_apps" dependency="component.serial_manager.MK64F12 platform.drivers.common.MK64F12 component.lists.MK64F12 component.serial_manager_usb_cdc.MK64F12 component.serial_manager_usb_cdc_device_config.frdmk64f.MK64F12 middleware.usb.device_controller_khci.MK64F12 platform.drivers.sysmpu.MK64F12 middleware.usb.device.MK64F12 platform.drivers.flash.MK64F12 platform.drivers.gpio.MK64F12 platform.drivers.clock.MK64F12 utility.debug_console.MK64F12 platform.drivers.port.MK64F12 platform.drivers.uart.MK64F12 platform.drivers.smc.MK64F12 device.MK64F12_CMSIS.MK64F12 component.uart_adapter.MK64F12 component.serial_manager_uart.MK64F12 device.MK64F12_startup.MK64F12 platform.utilities.assert.MK64F12 platform.Include_core_cm4.MK64F12 platform.Include_common.MK64F12 platform.Include_dsp.MK64F12 component.osa.MK64F12 platform.utilities.misc_utilities.MK64F12 middleware.baremetal.MK64F12">
+  <example id="frdmk64f_hello_world_virtual_com" name="hello_world_virtual_com" category="demo_apps" dependency="component.serial_manager.MK64F12 platform.drivers.common.MK64F12 component.lists.MK64F12 component.serial_manager_usb_cdc.MK64F12 middleware.usb.device.controller.driver.MK64F12 component.osa.MK64F12 middleware.usb.device_controller_khci.MK64F12 platform.drivers.sysmpu.MK64F12 platform.drivers.flash.MK64F12 platform.drivers.gpio.MK64F12 platform.drivers.clock.MK64F12 utility.debug_console.MK64F12 platform.drivers.port.MK64F12 platform.drivers.uart.MK64F12 platform.drivers.smc.MK64F12 device.MK64F12_CMSIS.MK64F12 component.uart_adapter.MK64F12 component.serial_manager_uart.MK64F12 device.MK64F12_startup.MK64F12 platform.utilities.assert.MK64F12 platform.Include_core_cm4.MK64F12 platform.Include_common.MK64F12 platform.Include_dsp.MK64F12 middleware.usb.device.cdc.external.MK64F12 middleware.usb.device.stack.external.MK64F12 middleware.usb.device.common_header.MK64F12 middleware.usb.common_header.MK64F12 platform.utilities.misc_utilities.MK64F12 middleware.baremetal.MK64F12">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -60,7 +63,7 @@
           <value>BOARD_USE_VIRTUALCOM=1</value>
           <value>FRDM_K64F</value>
           <value>FREEDOM</value>
-          <value>SERIAL_PORT_TYPE_USBCDC=1</value>
+          <value>USB_DEVICE_CONFIG_CDC_ACM=1</value>
           <value>SERIAL_PORT_TYPE_UART=1</value>
         </option>
         <option id="gnu.c.compiler.option.optimization.flags" type="string">
@@ -96,6 +99,9 @@
     <source path="boards/frdmk64f/demo_apps/hello_world_virtual_com" target_path="board" type="src">
       <files mask="board.c"/>
       <files mask="clock_config.c"/>
+    </source>
+    <source path="boards/frdmk64f/demo_apps/hello_world_virtual_com" target_path="component/serial_manager/usb_cdc_adapter" type="c_include">
+      <files mask="usb_device_config.h"/>
     </source>
     <source path="boards/frdmk64f/demo_apps/hello_world_virtual_com" target_path="doc" type="doc" toolchain="iar mdk mcuxpresso armgcc">
       <files mask="readme.txt"/>

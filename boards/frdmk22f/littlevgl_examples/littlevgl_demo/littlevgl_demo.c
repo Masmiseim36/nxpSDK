@@ -11,7 +11,7 @@
 #include "fsl_debug_console.h"
 #include "littlevgl_support.h"
 #include "board.h"
-#include "lv_examples/demo/demo.h"
+#include "lv_examples/lv_apps/demo/demo.h"
 
 #include "pin_mux.h"
 #include "clock_config.h"
@@ -47,9 +47,9 @@ uint32_t DSPI1_GetFreq(void)
     return CLOCK_GetBusClkFreq();
 }
 
-uint32_t I2C0_GetFreq(void)
+uint32_t I2C1_GetFreq(void)
 {
-    return CLOCK_GetFreq(I2C0_CLK_SRC);
+    return CLOCK_GetFreq(I2C1_CLK_SRC);
 }
 /*!
  * @brief Main function

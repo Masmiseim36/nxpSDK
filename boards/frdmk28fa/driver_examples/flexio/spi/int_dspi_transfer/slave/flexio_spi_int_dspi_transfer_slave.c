@@ -16,20 +16,20 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define BOARD_FLEXIO_BASE FLEXIO0
-#define FLEXIO_SPI_SOUT_PIN 24U
-#define FLEXIO_SPI_SIN_PIN 25U
-#define FLEXIO_SPI_CLK_PIN 3U
-#define FLEXIO_SPI_PCS_PIN 2U
-#define FLEXIO_CLOCK_FREQUENCY CLOCK_GetFreq(kCLOCK_PllFllSelClk)
-#define DSPI_MASTER_CLK_SRC DSPI0_CLK_SRC
-#define DSPI_MASTER_CLK_FREQ CLOCK_GetFreq(DSPI0_CLK_SRC)
-#define BOARD_DSPI_MASTER_PCS_FOR_INIT kDSPI_Pcs0
+#define BOARD_FLEXIO_BASE                  FLEXIO0
+#define FLEXIO_SPI_SOUT_PIN                24U
+#define FLEXIO_SPI_SIN_PIN                 25U
+#define FLEXIO_SPI_CLK_PIN                 3U
+#define FLEXIO_SPI_PCS_PIN                 2U
+#define FLEXIO_CLOCK_FREQUENCY             CLOCK_GetFreq(kCLOCK_PllFllSelClk)
+#define DSPI_MASTER_CLK_SRC                DSPI0_CLK_SRC
+#define DSPI_MASTER_CLK_FREQ               CLOCK_GetFreq(DSPI0_CLK_SRC)
+#define BOARD_DSPI_MASTER_PCS_FOR_INIT     kDSPI_Pcs0
 #define BOARD_DSPI_MASTER_PCS_FOR_TRANSFER kDSPI_MasterPcs0
-#define BOARD_DSPI_MASTER_BASE SPI0
-#define SLAVE_SPI_IRQ FLEXIO0_IRQn
-#define MASTER_SPI_IRQ SPI0_IRQn
-#define TRANSFER_SIZE 256U        /*! Transfer dataSize */
+#define BOARD_DSPI_MASTER_BASE             SPI0
+#define SLAVE_SPI_IRQ                      FLEXIO0_IRQn
+#define MASTER_SPI_IRQ                     SPI0_IRQn
+#define TRANSFER_SIZE     256U    /*! Transfer dataSize */
 #define TRANSFER_BAUDRATE 500000U /*! Transfer baudrate - 500k */
 
 /*******************************************************************************

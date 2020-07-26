@@ -78,7 +78,7 @@ Revision: $Rev: 3892 $
  **********************************************************************
  */
 
-#define SEGGER_RTT_MAX_NUM_UP_BUFFERS (3)   // Max. number of up-buffers (T->H) available on this target    (Default: 3)
+#define SEGGER_RTT_MAX_NUM_UP_BUFFERS   (3) // Max. number of up-buffers (T->H) available on this target    (Default: 3)
 #define SEGGER_RTT_MAX_NUM_DOWN_BUFFERS (3) // Max. number of down-buffers (H->T) available on this target  (Default: 3)
 
 #define BUFFER_SIZE_UP (1024) // Size of the buffer for terminal output of target, up to host (Default: 1k)

@@ -2,7 +2,7 @@
 *  The RSA public-key cryptosystem
 *
 *  Copyright (C) 2006-2015, ARM Limited, All Rights Reserved
-*  Copyright (C) 2019, NXP, All Rights Reserved
+*  Copyright 2019,2020 NXP, All Rights Reserved
 *  SPDX-License-Identifier: Apache-2.0
 *
 *  Licensed under the Apache License, Version 2.0 (the "License"); you may
@@ -43,69 +43,70 @@
 #include <stdlib.h>
 #include <string.h>
 
-#if SSS_HAVE_SE05X
+#if SSS_HAVE_APPLET_SE05X_IOT && SSSFTR_RSA
 
 #include "se05x_APDU.h"
 
-uint8_t pkcs1_v15_encode(sss_se05x_asymmetric_t *context,
-    const uint8_t *hash,
-    size_t hashlen,
-    uint8_t *out,
-    size_t *outLen)
+uint8_t pkcs1_v15_encode(
+    sss_se05x_asymmetric_t *context, const uint8_t *hash, size_t hashlen, uint8_t *out, size_t *outLen)
 {
-    size_t oid_size = 0;
-    size_t nb_pad = 0;
+    size_t oid_size  = 0;
+    size_t nb_pad    = 0;
     unsigned char *p = out;
     /* clang-format off */
     char oid1[16] = { 0x60, 0x86, 0x48, 0x01, 0x65, 0x03, 0x04, 0x02, };
     /* clang-format on */
-    size_t outlength = 0;
+    size_t outlength        = 0;
     uint16_t key_size_bytes = 0;
-    smStatus_t ret_val = SM_NOT_OK;
+    smStatus_t ret_val      = SM_NOT_OK;
 
     /* Constants */
-    const uint8_t RSA_Sign = 0x01;
-    const uint8_t ASN1_sequence = 0x10;
-    const uint8_t ASN1_constructed = 0x20;
-    const uint8_t ASN1_oid = 0x06;
-    const uint8_t ASN1_null = 0x05;
+    const uint8_t RSA_Sign          = 0x01;
+    const uint8_t ASN1_sequence     = 0x10;
+    const uint8_t ASN1_constructed  = 0x20;
+    const uint8_t ASN1_oid          = 0x06;
+    const uint8_t ASN1_null         = 0x05;
     const uint8_t ASN1_octat_string = 0x04;
 
-    ret_val = Se05x_API_ReadSize(
-        &context->session->s_ctx, context->keyObject->keyId, &key_size_bytes);
+    ret_val = Se05x_API_ReadSize(&context->session->s_ctx, context->keyObject->keyId, &key_size_bytes);
     if (ret_val != SM_OK) {
         return 1;
     }
 
     outlength = key_size_bytes;
-    nb_pad = outlength;
+    nb_pad    = outlength;
 
     switch (context->algorithm) {
     case kAlgorithm_SSS_RSASSA_PKCS1_V1_5_SHA1:
-        oid1[0] = 0x2b;
-        oid1[1] = 0x0e;
-        oid1[2] = 0x03;
-        oid1[3] = 0x02;
-        oid1[4] = 0x1a;
+        oid1[0]  = 0x2b;
+        oid1[1]  = 0x0e;
+        oid1[2]  = 0x03;
+        oid1[3]  = 0x02;
+        oid1[4]  = 0x1a;
         oid_size = 5;
         break;
     case kAlgorithm_SSS_RSASSA_PKCS1_V1_5_SHA224:
-        oid1[8] = 0x04;
+        oid1[8]  = 0x04;
         oid_size = 9;
         break;
     case kAlgorithm_SSS_RSASSA_PKCS1_V1_5_SHA256:
-        oid1[8] = 0x01;
+        oid1[8]  = 0x01;
         oid_size = 9;
         break;
     case kAlgorithm_SSS_RSASSA_PKCS1_V1_5_SHA384:
-        oid1[8] = 0x02;
+        oid1[8]  = 0x02;
         oid_size = 9;
         break;
     case kAlgorithm_SSS_RSASSA_PKCS1_V1_5_SHA512:
-        oid1[8] = 0x03;
+        oid1[8]  = 0x03;
         oid_size = 9;
         break;
     default:
+        return 1;
+    }
+
+    if (outlength < (hashlen + oid_size + 6 /* DigestInfo TLV overhead */)) {
+        LOG_E("Intended encoded message length too short");
         return 1;
     }
 
@@ -186,6 +187,36 @@ uint8_t pkcs1_v15_encode(sss_se05x_asymmetric_t *context,
     return 0;
 }
 
+uint8_t pkcs1_v15_encode_no_hash(
+    sss_se05x_asymmetric_t *context, const uint8_t *hash, size_t hashlen, uint8_t *out, size_t *outLen)
+{
+    uint16_t key_size_bytes = 0;
+    smStatus_t ret_val      = SM_NOT_OK;
+
+    ret_val = Se05x_API_ReadSize(&context->session->s_ctx, context->keyObject->keyId, &key_size_bytes);
+    if (ret_val != SM_OK) {
+        return 1;
+    }
+
+    if (hashlen > (size_t)(key_size_bytes - 11)) {
+        return 1;
+    }
+
+    if (*outLen < key_size_bytes) {
+        return 1;
+    }
+
+    memset(out, 0xFF, *outLen);
+    out[0]                            = 0x00;
+    out[1]                            = 0x01;
+    out[key_size_bytes - hashlen - 1] = 0x00;
+    memcpy(&out[key_size_bytes - hashlen], hash, hashlen);
+
+    *outLen = key_size_bytes;
+
+    return 0;
+}
+
 uint8_t sss_mgf_mask_func(uint8_t *dst,
     size_t dlen,
     uint8_t *src,
@@ -197,19 +228,16 @@ uint8_t sss_mgf_mask_func(uint8_t *dst,
     uint8_t counter[4];
     uint8_t *p;
     size_t i, use_len;
-    uint8_t ret = 1;
+    uint8_t ret         = 1;
     sss_status_t status = kStatus_SSS_Fail;
     sss_digest_t digest;
-    size_t digestLen = 512; /* MAX - SHA512*/
+    size_t digestLen  = 512; /* MAX - SHA512*/
     size_t hashlength = slen;
 
     memset(mask, 0, 64);
     memset(counter, 0, 4);
 
-    status = sss_digest_context_init(&digest,
-        (sss_session_t *)context->session,
-        sha_algorithm,
-        kMode_SSS_Digest);
+    status = sss_digest_context_init(&digest, (sss_session_t *)context->session, sha_algorithm, kMode_SSS_Digest);
     if (status != kStatus_SSS_Success) {
         goto exit;
     }
@@ -258,32 +286,35 @@ exit:
     return ret;
 }
 
-uint8_t emsa_encode(sss_se05x_asymmetric_t *context,
-    const uint8_t *hash,
-    size_t hashlen,
-    uint8_t *out,
-    size_t *outLen)
+// Note-1: This function does not implement the full EMSA-PSS Encoding Operation operation
+//         (refer to RFC 8017 Section 9.1 Figure 2), the caller MUST pass 'mHash' (= Hash(M)) as input
+//         via function argument(s) hash / haslen.
+//
+// Note-2: Any hash value passed as input that does not match (in byte length)
+//         the hash requested for the signature (kAlgorithm_SSS_RSASSA_PKCS1_PSS_MGF1_SHAxxx)
+//         will be rejected.
+//
+uint8_t emsa_encode(sss_se05x_asymmetric_t *context, const uint8_t *hash, size_t hashlen, uint8_t *out, size_t *outLen)
 {
     size_t outlength = 0;
-    uint8_t *p = out;
+    uint8_t *p       = out;
     uint8_t salt[64] = {
         0,
     };
     uint32_t saltlength = 0;
     uint32_t hashlength = 0;
-    uint32_t offset = 0;
-    uint8_t ret = 1;
+    uint32_t offset     = 0;
+    uint8_t ret         = 1;
     size_t msb;
     sss_rng_context_t rng;
     sss_digest_t digest;
     sss_algorithm_t sha_algorithm = -1;
-    size_t digestLen = 512; /* MAX - SHA512*/
-    sss_status_t status = kStatus_SSS_Fail;
-    uint16_t key_size_bytes = 0;
-    smStatus_t ret_val = SM_NOT_OK;
+    size_t digestLen              = 512; /* MAX - SHA512*/
+    sss_status_t status           = kStatus_SSS_Fail;
+    uint16_t key_size_bytes       = 0;
+    smStatus_t ret_val            = SM_NOT_OK;
 
-    ret_val = Se05x_API_ReadSize(
-        &context->session->s_ctx, context->keyObject->keyId, &key_size_bytes);
+    ret_val = Se05x_API_ReadSize(&context->session->s_ctx, context->keyObject->keyId, &key_size_bytes);
     if (ret_val != SM_OK) {
         goto exit;
     }
@@ -292,35 +323,51 @@ uint8_t emsa_encode(sss_se05x_asymmetric_t *context,
 
     switch (context->algorithm) {
     case kAlgorithm_SSS_RSASSA_PKCS1_PSS_MGF1_SHA1:
-        hashlength = 20;
+        hashlength    = 20;
         sha_algorithm = kAlgorithm_SSS_SHA1;
         break;
     case kAlgorithm_SSS_RSASSA_PKCS1_PSS_MGF1_SHA224:
-        hashlength = 28;
+        hashlength    = 28;
         sha_algorithm = kAlgorithm_SSS_SHA224;
         break;
     case kAlgorithm_SSS_RSASSA_PKCS1_PSS_MGF1_SHA256:
-        hashlength = 32;
+        if (key_size_bytes <= 64) { /* RSA Key size = 512 */
+            LOG_E("SHA256 not supported with this RSA key");
+            goto exit;
+        }
+        hashlength    = 32;
         sha_algorithm = kAlgorithm_SSS_SHA256;
         break;
     case kAlgorithm_SSS_RSASSA_PKCS1_PSS_MGF1_SHA384:
-        hashlength = 48;
+        if (key_size_bytes <= 64) { /* RSA Key size = 512 */
+            LOG_E("SHA384 not supported with this RSA key");
+            goto exit;
+        }
+        hashlength    = 48;
         sha_algorithm = kAlgorithm_SSS_SHA384;
         break;
     case kAlgorithm_SSS_RSASSA_PKCS1_PSS_MGF1_SHA512:
-        hashlength = 64;
+        if (key_size_bytes <= 128) { /* RSA Key size = 1024 and 512 */
+            LOG_E("SHA512 not supported with this RSA key");
+            goto exit;
+        }
+        hashlength    = 64;
         sha_algorithm = kAlgorithm_SSS_SHA512;
         break;
     default:
         goto exit;
     }
 
+    if (hashlength != hashlen) {
+        ret_val = SM_NOT_OK;
+        goto exit;
+    }
+
     saltlength = hashlength;
-    *outLen = outlength;
+    *outLen    = outlength;
 
     /* Generate salt of length saltlength */
-    status = sss_rng_context_init(
-        &rng, (sss_session_t *)context->session /* session */);
+    status = sss_rng_context_init(&rng, (sss_session_t *)context->session /* session */);
     if (status != kStatus_SSS_Success) {
         goto exit;
     }
@@ -336,10 +383,7 @@ uint8_t emsa_encode(sss_se05x_asymmetric_t *context,
     memcpy(p, salt, saltlength);
     p += saltlength;
 
-    status = sss_digest_context_init(&digest,
-        (sss_session_t *)context->session,
-        sha_algorithm,
-        kMode_SSS_Digest);
+    status = sss_digest_context_init(&digest, (sss_session_t *)context->session, sha_algorithm, kMode_SSS_Digest);
     if (status != kStatus_SSS_Success) {
         goto exit;
     }
@@ -375,15 +419,10 @@ uint8_t emsa_encode(sss_se05x_asymmetric_t *context,
         offset = 1;
 
     /* Apply MGF Mask */
-    if (0 != sss_mgf_mask_func(out + offset,
-                 outlength - hashlength - 1 - offset,
-                 p,
-                 hashlength,
-                 sha_algorithm,
-                 context))
+    if (0 !=
+        sss_mgf_mask_func(out + offset, outlength - hashlength - 1 - offset, p, hashlength, sha_algorithm, context))
         goto exit;
 
-    msb = 2048 - 1;
     out[0] &= 0xFF >> (outlength * 8 - msb);
 
     p += hashlength;
@@ -395,11 +434,8 @@ exit:
     return ret;
 }
 
-uint8_t emsa_decode_and_compare(sss_se05x_asymmetric_t *context,
-    uint8_t *sig,
-    size_t siglen,
-    uint8_t *hash,
-    size_t hashlen)
+uint8_t emsa_decode_and_compare(
+    sss_se05x_asymmetric_t *context, uint8_t *sig, size_t siglen, uint8_t *hash, size_t hashlen)
 {
     uint8_t *p;
     uint8_t *hash_start;
@@ -411,30 +447,30 @@ uint8_t emsa_decode_and_compare(sss_se05x_asymmetric_t *context,
     uint8_t buf[1024];
     sss_algorithm_t sha_algorithm = -1;
     sss_digest_t digest;
-    size_t digestLen = 512; /* MAX - SHA512*/
+    size_t digestLen    = 512; /* MAX - SHA512*/
     sss_status_t status = kStatus_SSS_Fail;
 
     memcpy(buf, sig, siglen);
 
     switch (context->algorithm) {
     case kAlgorithm_SSS_RSASSA_PKCS1_PSS_MGF1_SHA1:
-        hlen = 20;
+        hlen          = 20;
         sha_algorithm = kAlgorithm_SSS_SHA1;
         break;
     case kAlgorithm_SSS_RSASSA_PKCS1_PSS_MGF1_SHA224:
-        hlen = 28;
+        hlen          = 28;
         sha_algorithm = kAlgorithm_SSS_SHA224;
         break;
     case kAlgorithm_SSS_RSASSA_PKCS1_PSS_MGF1_SHA256:
-        hlen = 32;
+        hlen          = 32;
         sha_algorithm = kAlgorithm_SSS_SHA256;
         break;
     case kAlgorithm_SSS_RSASSA_PKCS1_PSS_MGF1_SHA384:
-        hlen = 48;
+        hlen          = 48;
         sha_algorithm = kAlgorithm_SSS_SHA384;
         break;
     case kAlgorithm_SSS_RSASSA_PKCS1_PSS_MGF1_SHA512:
-        hlen = 64;
+        hlen          = 64;
         sha_algorithm = kAlgorithm_SSS_SHA512;
         break;
     default:
@@ -458,9 +494,7 @@ uint8_t emsa_decode_and_compare(sss_se05x_asymmetric_t *context,
         goto exit;
     hash_start = p + siglen - hlen - 1;
 
-    if (0 !=
-        sss_mgf_mask_func(
-            p, siglen - hlen - 1, hash_start, hlen, sha_algorithm, context))
+    if (0 != sss_mgf_mask_func(p, siglen - hlen - 1, hash_start, hlen, sha_algorithm, context))
         goto exit;
 
     buf[0] &= 0xFF >> ((siglen * 8 - msb) % 8);
@@ -474,10 +508,7 @@ uint8_t emsa_decode_and_compare(sss_se05x_asymmetric_t *context,
 
     observed_salt_len = hash_start - p;
 
-    status = sss_digest_context_init(&digest,
-        (sss_session_t *)context->session,
-        sha_algorithm,
-        kMode_SSS_Digest);
+    status = sss_digest_context_init(&digest, (sss_session_t *)context->session, sha_algorithm, kMode_SSS_Digest);
     if (status != kStatus_SSS_Success) {
         goto exit;
     }

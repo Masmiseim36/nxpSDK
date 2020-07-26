@@ -22,8 +22,8 @@
 #define CONTROLLER_ID kUSB_ControllerLpcIp3511Hs0
 #endif
 
-#define USB_DEVICE_INTERRUPT_PRIORITY (3U)
-/*! @brief enable the write task. 1U supported, 0U not supported . if this macro is enable ,the
+#define USB_DEVICE_INTERRUPT_PRIORITY                                                                    \
+    (3U) /*! @brief enable the write task. 1U supported, 0U not supported . if this macro is enable ,the \
 USB_DEVICE_CONFIG_USE_TASK macro should also be enable.*/
 #define USB_DEVICE_MSC_USE_WRITE_TASK (0U)
 #define USB_DEVICE_MSC_BUFFER_NUMBER (3U)
@@ -52,7 +52,7 @@ typedef struct _usb_msc_buffer_struct
     uint32_t offset; /*!< Offset of the block need to access*/
     uint32_t size;   /*!< Size of the transfered data*/
     struct _usb_msc_buffer_struct *next;
-    uint8_t* buffer; /*!< Buffer address of the transferred data*/
+    uint8_t *buffer; /*!< Buffer address of the transferred data*/
 } usb_msc_buffer_struct_t;
 typedef struct _usb_msc_struct
 {

@@ -12,10 +12,10 @@ Program boot from QSPI alias region (if the chip supports QSPI alias region).
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.40.2
-- Keil MDK  5.29
-- GCC ARM Embedded  8.3.1
-- MCUXpresso  11.1.0
+- IAR embedded Workbench  8.50.1
+- Keil MDK  5.30
+- GCC ARM Embedded  9.2.1
+- MCUXpresso  11.2.0
 
 Hardware requirements
 =====================
@@ -30,11 +30,11 @@ No special settings are required.
 Prepare the Demo
 ================
 On the FRDMK-28 board, the user can use the USB port to download the demo program through blhost. At step 1, press the
-SW2 button and connect to the USB cable to the target hardware.
+SW2 button and connect to the USB cable to the target hardware USB port J24. And this platform only support USB connection for blhost. Please use ./blhost.exe -u" to configure the bootloader and download image.
 
 Running the demo
 ================
-When the program is downloaded via blhost, just re-connect the OpenSDA port, and press reset button. After the target
+When the program is downloaded via blhost, just connect the OpenSDA port, and press reset button. After the target
 processor resets, the demo application will print hello world to the terminal and echo the characters received from the
 user to the screen.
 

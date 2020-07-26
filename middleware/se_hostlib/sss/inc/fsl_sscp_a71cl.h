@@ -1,5 +1,5 @@
 /*
- * Copyright 2018,2019 NXP
+ * Copyright 2018-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -65,8 +65,7 @@ typedef struct _sscp_a71cl_context
  * @retval kStatus_SSCP_Success SSCP init success
  * @retval kStatus_SSCP_Fail SSCP init failure
  */
-sss_status_t sscp_a71cl_init(
-    sscp_a71cl_context_t *context, sss_a71cl_key_store_t *keyStore);
+sss_status_t sscp_a71cl_init(sscp_a71cl_context_t *context, sss_a71cl_key_store_t *keyStore);
 
 /*! @brief Close the SSCP link
  *
@@ -97,10 +96,8 @@ void sscp_a71cl_free(sscp_a71cl_context_t *context);
  * @retval kStatus_SSCP_InvalidArgument One of the arguments is invalid for the
  * function to execute.
  */
-sscp_status_t sscp_a71cl_invoke_command(sscp_context_t *context,
-    uint32_t commandID,
-    sscp_operation_t *op,
-    uint32_t *ret);
+sscp_status_t sscp_a71cl_invoke_command(
+    sscp_context_t *context, uint32_t commandID, sscp_operation_t *op, uint32_t *ret);
 
 sss_status_t sscp_a71cl_openSession(const void *connectionData);
 void sscp_a71cl_closeSession(void);
@@ -113,5 +110,5 @@ void sscp_a71cl_closeSession(void);
  *@}
  */ /* end of sscp_a71cl */
 
-#endif /* SSS_HAVE_SE050_EAR_CL */
+#endif /* SSS_HAVE_A71CL || SSS_HAVE_SE050_L */
 #endif /* _FSL_SSCP_a71cl_H_ */

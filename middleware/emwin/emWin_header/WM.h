@@ -9,7 +9,7 @@
 *                                                                    *
 **********************************************************************
 
-** emWin V5.50 - Graphical user interface for embedded applications **
+** emWin V6.10 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -324,9 +324,11 @@ typedef struct {
 #define WM_NOTIFICATION_LOST_FOCUS          9
 #define WM_NOTIFICATION_SCROLL_CHANGED     10
 #define WM_NOTIFICATION_MOTION_STOPPED     11
+#define WM_NOTIFICATION_SET                12
+#define WM_NOTIFICATION_CLEAR              13
 
-#define WM_NOTIFICATION_WIDGET             12      /* Space for widget defined notifications */
-#define WM_NOTIFICATION_USER               16      /* Space for  application (user) defined notifications */
+#define WM_NOTIFICATION_WIDGET             20      /* Space for widget defined notifications */
+#define WM_NOTIFICATION_USER               30      /* Space for  application (user) defined notifications */
 
 /*********************************************************************
 *

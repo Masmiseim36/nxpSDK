@@ -30,7 +30,7 @@
 #define LPTMR_SOURCE_CLOCK CLOCK_GetFreq(kCLOCK_LpoClk)
 /* Define LPTMR microseconds counts value */
 #define LPTMR_USEC_COUNT (500000U)
-#define CORE_CLK_FREQ CLOCK_GetFreq(kCLOCK_CoreSysClk)
+#define CORE_CLK_FREQ    CLOCK_GetFreq(kCLOCK_CoreSysClk)
 
 /*******************************************************************************
  * Prototypes
@@ -85,11 +85,7 @@ void TSI0_IRQHandler(void)
     /* Clear flags */
     TSI_ClearStatusFlags(TSI0, kTSI_EndOfScanFlag);
     TSI_ClearStatusFlags(TSI0, (uint32_t)kTSI_OutOfRangeFlag);
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 void LLWU_IRQHandler(void)
@@ -100,11 +96,7 @@ void LLWU_IRQHandler(void)
         TSI_ClearStatusFlags(TSI0, kTSI_EndOfScanFlag);
         TSI_ClearStatusFlags(TSI0, (uint32_t)kTSI_OutOfRangeFlag);
     }
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 /*!

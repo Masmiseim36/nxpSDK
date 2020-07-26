@@ -99,6 +99,9 @@
     <source path="boards/frdmk22f/bootloader_examples/flashloader_loader/mdk" target_path="middleware/mcu-boot" type="linker" toolchain="mdk">
       <files mask="MK22FN512xxx12_flashloader_loader.scf"/>
     </source>
+    <source path="boards/frdmk22f/bootloader_examples/flashloader_loader" target_path="doc" type="doc" toolchain="iar mdk mcuxpresso armgcc">
+      <files mask="readme.txt"/>
+    </source>
     <source path="middleware/mcu-boot/targets/MK22F51212/src" target_path="MK22F51212" type="c_include">
       <files mask="bootloader_config.h"/>
       <files mask="target_config.h"/>

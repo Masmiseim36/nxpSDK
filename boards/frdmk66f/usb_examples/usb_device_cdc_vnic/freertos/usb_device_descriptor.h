@@ -9,10 +9,13 @@
 #define _USB_DEVICE_DESCRIPTOR_H_ 1
 
 /*******************************************************************************
-* Definitions
-******************************************************************************/
+ * Definitions
+ ******************************************************************************/
 #define USB_DEVICE_SPECIFIC_BCD_VERSION (0x0200)
 #define USB_DEVICE_DEMO_BCD_VERSION (0x0101U)
+
+#define USB_DEVICE_VID (0x1FC9U)
+#define USB_DEVICE_PID (0x0095U)
 
 /* Communication  Class Codes */
 #define CDC_COMM_CLASS (0x02)
@@ -144,8 +147,8 @@
 #define USB_CDC_VNIC_DIC_PROTOCOL (USB_CDC_NO_CLASS_SPECIFIC_PROTOCOL)
 
 /*******************************************************************************
-* API
-******************************************************************************/
+ * API
+ ******************************************************************************/
 /*!
  * @brief USB device set speed function.
  *

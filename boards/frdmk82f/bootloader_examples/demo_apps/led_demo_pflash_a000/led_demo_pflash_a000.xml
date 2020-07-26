@@ -11,12 +11,16 @@
     <definition extID="platform.Include_common.MK82F25615"/>
     <definition extID="platform.Include_core_cm4.MK82F25615"/>
     <definition extID="platform.Include_dsp.MK82F25615"/>
+    <definition extID="platform.drivers.clock.MK82F25615"/>
+    <definition extID="platform.drivers.common.MK82F25615"/>
+    <definition extID="platform.drivers.gpio.MK82F25615"/>
+    <definition extID="platform.drivers.port.MK82F25615"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
     <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
   </externalDefinitions>
-  <example id="frdmk82f_led_demo_pflash_a000" name="led_demo_pflash_a000" category="bootloader_examples/demo_apps" dependency="middleware.mcu-boot.qspi_led_demo.MK82F25615 middleware.mcu-boot.MK82F25615_qspi_pflash_startup.MK82F25615 device.MK82F25615_CMSIS.MK82F25615 middleware.mcu-boot.qspi_milliseconds.MK82F25615 middleware.mcu-boot.MK82F25615_qspi_demo_startup.MK82F25615 middleware.mcu-boot.src_startup.MK82F25615 platform.Include_core_cm4.MK82F25615 platform.Include_common.MK82F25615 platform.Include_dsp.MK82F25615">
+  <example id="frdmk82f_led_demo_pflash_a000" name="led_demo_pflash_a000" category="bootloader_examples/demo_apps" dependency="middleware.mcu-boot.qspi_led_demo.MK82F25615 middleware.mcu-boot.MK82F25615_qspi_pflash_startup.MK82F25615 platform.drivers.port.MK82F25615 platform.drivers.gpio.MK82F25615 device.MK82F25615_CMSIS.MK82F25615 middleware.mcu-boot.qspi_milliseconds.MK82F25615 middleware.mcu-boot.MK82F25615_qspi_demo_startup.MK82F25615 middleware.mcu-boot.src_startup.MK82F25615 platform.drivers.common.MK82F25615 platform.drivers.clock.MK82F25615 platform.Include_core_cm4.MK82F25615 platform.Include_common.MK82F25615 platform.Include_dsp.MK82F25615">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -68,7 +72,6 @@
         <option id="gnu.c.link.option.other" type="stringList">
           <value>--gc-sections</value>
           <value>-Map=${BuildArtifactFileBaseName}.map</value>
-          <value>--defsym=__ram_vector_table__=1</value>
         </option>
         <option id="com.crt.advproject.gas.hdrlib" type="enum">
           <value>com.crt.advproject.gas.hdrlib.newlibnano</value>
@@ -98,6 +101,12 @@
     </source>
     <source path="boards/frdmk82f/bootloader_examples/demo_apps/led_demo_pflash_a000/mdk" target_path="middleware/mcu-boot" type="linker" toolchain="mdk">
       <files mask="MK82FN256xxx15_flash_a000.scf"/>
+    </source>
+    <source path="boards/frdmk82f/bootloader_examples/demo_apps/led_demo_pflash_a000" target_path="board" type="c_include">
+      <files mask="pin_mux.h"/>
+    </source>
+    <source path="boards/frdmk82f/bootloader_examples/demo_apps/led_demo_pflash_a000" target_path="board" type="src">
+      <files mask="pin_mux.c"/>
     </source>
   </example>
 </ksdk:examples>

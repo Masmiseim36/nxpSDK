@@ -56,12 +56,12 @@
 
 #ifdef I2C_CMSIS
 #define NTAG_I2C_MASTER_BASEADDR &Driver_I2C0
-#define I2C_MASTER_IRQ I2C0_IRQn
+#define I2C_MASTER_IRQ           I2C0_IRQn
 #endif
 
 #ifdef I2C_FSL
 #define NTAG_I2C_MASTER_BASEADDR I2C0
-#define I2C_MASTER_CLK_SRC I2C0_CLK_SRC
+#define I2C_MASTER_CLK_SRC       I2C0_CLK_SRC
 #endif
 
 #define SW1_PRESSED (!GPIO_PinRead(BOARD_SW2_GPIO, BOARD_SW2_GPIO_PIN))
@@ -69,9 +69,9 @@
 #define SW3_PRESSED (SW1_PRESSED && SW2_PRESSED)
 
 /* define the ADC input pin connected to the VOUT pin on NTAG I2C plus chip*/
-#define DEMO_ADC16_BASE ADC1
+#define DEMO_ADC16_BASE          ADC1
 #define DEMO_ADC16_CHANNEL_GROUP 0U
-#define DEMO_ADC16_USER_CHANNEL 14U
+#define DEMO_ADC16_USER_CHANNEL  14U
 
 typedef enum LED__
 {

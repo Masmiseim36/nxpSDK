@@ -1,9 +1,8 @@
-/**
-* @file a71ch_module.c
+/*
 * @author NXP Semiconductors
 * @version 1.0
 * @par License
-* Copyright 2016 NXP
+* Copyright 2016,2020 NXP
 *
 * This software is owned or controlled by NXP and may only be used
 * strictly in accordance with the applicable license terms.  By expressly
@@ -13,11 +12,14 @@
 * you do not agree to be bound by the applicable license terms, then you
 * may not retain, install, activate or otherwise use the software.
 *
-* @par Description
-* This file wraps the module centric APDU functionality of the A71CH module.
 * @par History
 * 1.0   2016-aug-29 : Initial version
 *
+*/
+/**
+* @file a71ch_module.c
+* @par Description
+* Wrap module centric APDU functionality of the A71CH
 */
 #include <stdio.h>
 #include <string.h>
@@ -34,10 +36,11 @@
 #include "fsl_sss_ftr_default.h"
 #endif
 
+/// @cond
+
 #define NX_LOG_ENABLE_HOSTLIB_DEBUG 1
 #include <nxLog_hostLib.h>
 
-/// @cond
 static U16 A71_GetChallengeGeneric(U8 challengeType, U8 *challenge, U16 *challengeLen)
 {
     U16 rv = 0;
@@ -64,7 +67,7 @@ static U16 A71_GetChallengeGeneric(U8 challengeType, U8 *challenge, U16 *challen
     AllocateAPDUBuffer(pApdu);
     SetApduHeader(pApdu, USE_STANDARD_APDU_LEN);
 
-    rv = (U16)scp_Transceive(pApdu, SCP_MODE);
+    rv = (U16)scp_Transceive(NULL, pApdu, SCP_MODE);
     if (rv == SMCOM_OK)
     {
         rv = smGetSw(pApdu, &isOk);
@@ -105,7 +108,7 @@ static U16 A71_GetRandomGeneric(U8 *random, U8 randomLen, U8 mode)
     AllocateAPDUBuffer(pApdu);
     SetApduHeader(pApdu, USE_STANDARD_APDU_LEN);
 
-    rv = (U16)scp_Transceive(pApdu, SCP_MODE);
+    rv = (U16)scp_Transceive(NULL, pApdu, SCP_MODE);
     if (rv == SMCOM_OK)
     {
         rv = smGetSw(pApdu, &isOk);
@@ -155,7 +158,7 @@ U16 A71_GetCredentialInfo(U8 *map, U16 *mapLen)
     AllocateAPDUBuffer(pApdu);
     SetApduHeader(pApdu, 0);
 
-    rv = (U16)scp_Transceive(pApdu, SCP_MODE);
+    rv = (U16)scp_Transceive(NULL, pApdu, SCP_MODE);
     if (rv == SMCOM_OK)
     {
         rv = smGetSw(pApdu, &isOk);
@@ -181,12 +184,12 @@ U16 A71_GetCredentialInfo(U8 *map, U16 *mapLen)
 * Get info on Module
 * @param[out] selectResponse     Encodes applet revision and whether Debug Mode is available
 * @param[out] debugOn            Equals 0x01 when the Debug Mode is available
-* @param[out] restrictedKpIdx    Either the index of the restricted keypair or ::A71XX_NO_RESTRICTED_KP
-* @param[out] transportLockState The value retieved is one of ::A71XX_TRANSPORT_LOCK_STATE_LOCKED,
-*   A71XX_TRANSPORT_LOCK_STATE_UNLOCKED or A71XX_TRANSPORT_LOCK_STATE_ALLOW_LOCK
-* @param[out] scpState           The value retrieved is on of ::A71XX_SCP_MANDATORY, ::A71XX_SCP_NOT_SET_UP
-*   or ::A71XX_SCP_KEYS_SET
-* @param[out] injectLockState The value retrieved is one of ::A71XX_INJECT_LOCK_STATE_LOCKED or ::A71XX_INJECT_LOCK_STATE_UNLOCKED
+* @param[out] restrictedKpIdx    Either the index of the restricted keypair or ::A71CH_NO_RESTRICTED_KP
+* @param[out] transportLockState The value retieved is one of ::A71CH_TRANSPORT_LOCK_STATE_LOCKED,
+*   A71CH_TRANSPORT_LOCK_STATE_UNLOCKED or A71CH_TRANSPORT_LOCK_STATE_ALLOW_LOCK
+* @param[out] scpState           The value retrieved is on of ::A71CH_SCP_MANDATORY, ::A71CH_SCP_NOT_SET_UP
+*   or ::A71CH_SCP_KEYS_SET
+* @param[out] injectLockState The value retrieved is one of ::A71CH_INJECT_LOCK_STATE_LOCKED or ::A71CH_INJECT_LOCK_STATE_UNLOCKED
 * @param[out] gpStorageSize   Total storage size (in byte) of the General Purpose data store
 * @retval ::SW_OK Upon successful execution
 */
@@ -221,7 +224,7 @@ U16 A71_GetModuleInfo(U16 *selectResponse, U8 *debugOn, U8 *restrictedKpIdx, U8 
     *injectLockState = 0;
     *gpStorageSize = 0;
 
-    rv = (U16)scp_Transceive(pApdu, SCP_MODE);
+    rv = (U16)scp_Transceive(NULL, pApdu, SCP_MODE);
     if (rv == SMCOM_OK)
     {
         rv = smGetSw(pApdu, &isOk);
@@ -284,7 +287,7 @@ U16 A71_GetUniqueID(U8 *uid, U16 *uidLen)
     AllocateAPDUBuffer(pApdu);
     SetApduHeader(pApdu, USE_STANDARD_APDU_LEN);
 
-    rv = (U16)scp_Transceive(pApdu, SCP_MODE);
+    rv = (U16)scp_Transceive(NULL, pApdu, SCP_MODE);
     if (rv == SMCOM_OK)
     {
         rv = smGetSw(pApdu, &isOk);
@@ -305,8 +308,8 @@ U16 A71_GetUniqueID(U8 *uid, U16 *uidLen)
 /**
  * Get cert uid from the Secure Module. The cert uid is a subset of the Secure Module Unique Identifier
  * @param[in,out] certUid IN: buffer to contain cert uid; OUT: cert uid retrieved from Secure Module
- * @param[in,out] certUidLen IN: Size of buffer provided (at least ::A71XX_MODULE_CERT_UID_LEN byte);
- * OUT: length of retrieved unique identifier (expected to be ::A71XX_MODULE_CERT_UID_LEN byte)
+ * @param[in,out] certUidLen IN: Size of buffer provided (at least ::A71CH_MODULE_CERT_UID_LEN byte);
+ * OUT: length of retrieved unique identifier (expected to be ::A71CH_MODULE_CERT_UID_LEN byte)
  *
  * @retval ::SW_OK Upon successful execution
  * @retval ::ERR_WRONG_RESPONSE In case the Secure Module Unique Identifier (i.e. the base uid) did not have the expected length
@@ -389,7 +392,7 @@ U16 A71_GetPublicKeyChallenge(U8 *challenge, U16 *challengeLen)
 * Retrieves a random byte array of size randomLen from the Secure Module.
 * The maximum amount of data that can be retrieved depends on
 * whether an authenticated channel (SCP03) has been set up.
-* In case SCP03 has been set up, this (worst-case) maximum is ::A71XX_SCP03_MAX_PAYLOAD_SIZE
+* In case SCP03 has been set up, this (worst-case) maximum is ::A71CH_SCP03_MAX_PAYLOAD_SIZE
 * @param[in,out] random  IN: buffer to contain random value (at least of size randomLen);
                          OUT: retrieved random data
 * @param[in] randomLen Amount of byte to retrieve
@@ -425,7 +428,7 @@ U16 A71_CreateClientHelloRandom(U8 *clientHello, U8 clientHelloLen)
  * Per block 2 bytes indicate the offset into GP storage and two bytes indicate the length of
  * the modifiable block.
  *
- * @param[out] idx Index of restricted key pair. ::A71XX_NO_RESTRICTED_KP in case there is no restricted key pair
+ * @param[out] idx Index of restricted key pair. ::A71CH_NO_RESTRICTED_KP in case there is no restricted key pair
  * @param[out] nBlocks Number of modifiable blocks
  * @param[in,out] blockInfo IN: Storage to contain blockInfo; OUT: Raw info on block offset and block lenght per block.
  * @param[in,out] blockInfoLen IN: Size of blockInfo (in byte); OUT: effective size of blockInfo
@@ -463,7 +466,7 @@ U16 A71_GetRestrictedKeyPairInfo(U8 *idx, U16 *nBlocks, U8 *blockInfo, U16 *bloc
     AllocateAPDUBuffer(pApdu);
     SetApduHeader(pApdu, USE_STANDARD_APDU_LEN);
 
-    rv = (U16)scp_Transceive(pApdu, SCP_MODE);
+    rv = (U16)scp_Transceive(NULL, pApdu, SCP_MODE);
     if (rv == SMCOM_OK)
     {
         rv = smGetSw(pApdu, &isOk);
@@ -560,9 +563,12 @@ U16 A71_GetSha256(U8 *data, U16 dataLen, U8 *sha, U16 *shaLen)
     if (dataLen <= maxChunk)
     {
         SetApduHeader(pApdu, USE_STANDARD_APDU_LEN);
-        smApduAppendCmdData(pApdu, data, dataLen);
 
-        rv = (U16)scp_Transceive(pApdu, SCP_MODE);
+        if (dataLen != 0){
+            smApduAppendCmdData(pApdu, data, dataLen);
+        }
+
+        rv = (U16)scp_Transceive(NULL, pApdu, SCP_MODE);
         if (rv == SMCOM_OK)
         {
             rv = smGetSw(pApdu, &isOk);
@@ -590,7 +596,7 @@ U16 A71_GetSha256(U8 *data, U16 dataLen, U8 *sha, U16 *shaLen)
         smApduAppendCmdData(pApdu, data, toSend);
         dataOffset += toSend;
 
-        rv = (U16)scp_Transceive(pApdu, SCP_MODE);
+        rv = (U16)scp_Transceive(NULL, pApdu, SCP_MODE);
         if (rv == SMCOM_OK)
         {
             if (rv == SMCOM_OK)
@@ -611,7 +617,7 @@ U16 A71_GetSha256(U8 *data, U16 dataLen, U8 *sha, U16 *shaLen)
             smApduAppendCmdData(pApdu, &data[dataOffset], toSend);
             dataOffset += toSend;
 
-            rv = (U16)scp_Transceive(pApdu, SCP_MODE);
+            rv = (U16)scp_Transceive(NULL, pApdu, SCP_MODE);
             if (rv == SMCOM_OK)
             {
                 if (rv == SMCOM_OK)
@@ -631,7 +637,7 @@ U16 A71_GetSha256(U8 *data, U16 dataLen, U8 *sha, U16 *shaLen)
         // dataOffset += toSend;
         smApduAppendCmdData(pApdu, &data[dataOffset], toSend);
 
-        rv = (U16)scp_Transceive(pApdu, SCP_MODE);
+        rv = (U16)scp_Transceive(NULL, pApdu, SCP_MODE);
         {
             rv = smGetSw(pApdu, &isOk);
             if (isOk)
@@ -652,6 +658,150 @@ LBL_LEAVE_A71_GetSha256:
     FreeAPDUBuffer(pApdu);
     return rv;
 }
+
+/**
+* Initialise multistep SHA256.
+* @retval ::SW_OK Upon successful execution
+*/
+U16 A71_Sha256Init(void)
+{
+    apdu_t apdu;
+    apdu_t * pApdu = (apdu_t *) &apdu;
+    U16 rv;
+
+    pApdu->cla   = AX_CLA;
+    pApdu->ins   = A71CH_INS_MODULE_GET_SHA256;
+    pApdu->p1    = 0x00;
+    pApdu->p2    = P2_SHA256_INIT;
+
+    AllocateAPDUBuffer(pApdu);
+    SetApduHeader(pApdu, USE_STANDARD_APDU_LEN);
+
+    rv = (U16)scp_Transceive(NULL, pApdu, SCP_MODE);
+    if (rv == SMCOM_OK)
+    {
+        // No response data expected
+        rv = CheckNoResponseData(pApdu);
+    }
+
+    FreeAPDUBuffer(pApdu);
+    return rv;
+}
+
+/**
+* Update the data for calulating SHA256 value (in multistep).
+* @param[in] data    Data buffer for which the SHA256 must be calculated
+* @param[in] dataLen The length of data passed as argument
+* @retval ::SW_OK Upon successful execution
+*/
+U16 A71_Sha256Update(U8 *data, U16 dataLen)
+{
+    apdu_t apdu;
+    apdu_t * pApdu = (apdu_t *)&apdu;
+    U16 rv = 0;
+    U16 maxChunk = A71CH_SHA256_MAX_DATA_CHUNK;
+    U16 remainingData = dataLen;
+    U16 toSend = 0;
+    U16 dataSent = 0;
+
+#ifndef A71_IGNORE_PARAM_CHECK
+    if (data == NULL) {
+        return ERR_API_ERROR;
+    }
+#endif
+
+    pApdu->cla = AX_CLA;
+    pApdu->ins = A71CH_INS_MODULE_GET_SHA256;
+    pApdu->p1 = 0x00;
+    pApdu->p2 = P2_SHA256_UPDATE;
+
+    AllocateAPDUBuffer(pApdu);
+    SetApduHeader(pApdu, USE_STANDARD_APDU_LEN);
+
+    if (dataLen == 0) {
+        rv = (U16)scp_Transceive(NULL, pApdu, SCP_MODE);
+        if (rv == SMCOM_OK)
+        {
+            // No response data expected
+            rv = CheckNoResponseData(pApdu);
+            if (rv != SW_OK) { goto LBL_LEAVE_A71_Sha256Update; }
+        }
+    }
+    else {
+        while (remainingData != 0)
+        {
+            toSend = (remainingData > maxChunk) ? maxChunk : remainingData;
+            smApduAppendCmdData(pApdu, (data + dataSent), toSend);
+
+            rv = (U16)scp_Transceive(NULL, pApdu, SCP_MODE);
+            if (rv == SMCOM_OK)
+            {
+                // No response data expected
+                rv = CheckNoResponseData(pApdu);
+                if (rv != SW_OK) { goto LBL_LEAVE_A71_Sha256Update; }
+            }
+
+            dataSent += toSend;
+            remainingData -= toSend;
+        }
+    }
+
+
+LBL_LEAVE_A71_Sha256Update:
+    FreeAPDUBuffer(pApdu);
+    return rv;
+}
+
+/**
+* calulating SHA256 value (in multistep).
+* @param[in,out] sha    IN: caller passes a buffer of at least 32 byte;
+OUT: contains the calculated SHA256
+* @param[in,out] shaLen IN: length of the sha buffer passed;
+OUT: because SHA256 is used this is 32 byte exact
+* @retval ::SW_OK Upon successful execution
+*/
+U16 A71_Sha256Final(U8 *sha, U16 *shaLen)
+{
+    apdu_t apdu;
+    apdu_t * pApdu = (apdu_t *)&apdu;
+    U16 rv;
+    U8 isOk = 0;
+
+#ifndef A71_IGNORE_PARAM_CHECK
+    if ((sha == NULL) || (shaLen == NULL)) {
+        return ERR_API_ERROR;
+    }
+#endif
+
+    pApdu->cla = AX_CLA;
+    pApdu->ins = A71CH_INS_MODULE_GET_SHA256;
+    pApdu->p1 = 0x00;
+    pApdu->p2 = P2_SHA256_FINAL;
+
+    AllocateAPDUBuffer(pApdu);
+    SetApduHeader(pApdu, USE_STANDARD_APDU_LEN);
+
+    rv = (U16)scp_Transceive(NULL, pApdu, SCP_MODE);
+    if (rv == SMCOM_OK)
+    {
+        rv = smGetSw(pApdu, &isOk);
+        if (isOk)
+        {
+            rv = smApduGetResponseBody(pApdu, sha, shaLen);
+            if (rv == SW_OK)
+            {
+                if (32 != *shaLen)
+                {
+                    rv = ERR_WRONG_RESPONSE;
+                }
+            }
+        }
+    }
+
+    FreeAPDUBuffer(pApdu);
+    return rv;
+}
+
 
 /**
 * This function disables - at device level - the ability to
@@ -676,7 +826,7 @@ U16 A71_InjectLock()
     AllocateAPDUBuffer(pApdu);
     SetApduHeader(pApdu, USE_STANDARD_APDU_LEN);
 
-    rv = (U16)scp_Transceive(pApdu, SCP_MODE);
+    rv = (U16)scp_Transceive(NULL, pApdu, SCP_MODE);
     if (rv == SMCOM_OK)
     {
         // No response data expected
@@ -711,7 +861,7 @@ U16 A71_LockModule()
     AllocateAPDUBuffer(pApdu);
     SetApduHeader(pApdu, USE_STANDARD_APDU_LEN);
 
-    rv = (U16)scp_Transceive(pApdu, SCP_MODE);
+    rv = (U16)scp_Transceive(NULL, pApdu, SCP_MODE);
     if (rv == SMCOM_OK)
     {
         // No response data expected
@@ -729,7 +879,7 @@ or unlocked again (it will remain unlocked).
 
 The unlock code is calculated as follows:
     - Request a challenge from A71CH using ::A71_GetUnlockChallenge.
-    - Decrypt the challenge in ECB mode using the appropriate configuration key value (the same as stored at index ::A71XX_CFG_KEY_IDX_MODULE_LOCK).
+    - Decrypt the challenge in ECB mode using the appropriate configuration key value (the same as stored at index ::A71CH_CFG_KEY_IDX_MODULE_LOCK).
     - The decrypted value is the unlock \p code
 * @param[in] code Value of unlock code
 * @param[in] codeLen Length of unlock code (must be 16)
@@ -762,7 +912,7 @@ U16 A71_UnlockModule(U8 *code, U16 codeLen)
 
     smApduAppendCmdData(pApdu, code, codeLen);
 
-    rv = (U16)scp_Transceive(pApdu, SCP_MODE);
+    rv = (U16)scp_Transceive(NULL, pApdu, SCP_MODE);
     if (rv == SMCOM_OK)
     {
         // No response data expected
@@ -779,7 +929,7 @@ U16 A71_UnlockModule(U8 *code, U16 codeLen)
  * used by the A71CH is \p 'master secret' (no quotes) as applicable for TLS 1.2.
  * The maximum size of the label that can be set is 24 byte.
  * @param[in] label Value to be stored and used as 'label' in TLS 1.2 protocol
- * @param[in] labelLen Length of label (less than or equal to ::A71XX_TLS_MAX_LABEL)
+ * @param[in] labelLen Length of label (less than or equal to ::A71CH_TLS_MAX_LABEL)
  * @retval ::SW_OK Upon successful execution
  */
 U16 A71_SetTlsLabel(const U8* label, U16 labelLen)
@@ -809,7 +959,7 @@ U16 A71_SetTlsLabel(const U8* label, U16 labelLen)
 
     smApduAppendCmdData(pApdu, label, labelLen);
 
-    rv = (U16)scp_Transceive(pApdu, SCP_MODE);
+    rv = (U16)scp_Transceive(NULL, pApdu, SCP_MODE);
     if (rv == SMCOM_OK)
     {
         // No response data expected
@@ -867,7 +1017,7 @@ U16 A71_EccVerifyWithKey(const U8 *pKeyData, U16 keyDataLen, const U8 *pHash, U1
     smApduAppendCmdData(pApdu, pSignature, signatureLen);
     smApduAppendCmdData(pApdu, pKeyData, keyDataLen);
 
-    rv = (U16)scp_Transceive(pApdu, SCP_MODE);
+    rv = (U16)scp_Transceive(NULL, pApdu, SCP_MODE);
     if (rv == SMCOM_OK)
     {
         U8 result = AX_VERIFY_FAILURE;

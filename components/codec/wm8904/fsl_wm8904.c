@@ -14,10 +14,10 @@
  * Definitions
  ******************************************************************************/
 /*! @brief wm8904 volume mapping */
-#define WM8904_MAP_DAC_ADC_VOLUME(volume) (volume * (255 / 100U))
-#define WM8904_MAP_PGA_VOLUME(volume) (volume > 0x1FU ? 0x1FU : volume)
+#define WM8904_MAP_DAC_ADC_VOLUME(volume)           (volume * (255 / 100U))
+#define WM8904_MAP_PGA_VOLUME(volume)               (volume > 0x1FU ? 0x1FU : volume)
 #define WM8904_MAP_HEADPHONE_LINEOUT_VOLUME(volume) (volume > 0x3FU ? 0x3FU : volume)
-#define WM8904_SWAP_UINT16_BYTE_SEQUENCE(x) (__REV16(x))
+#define WM8904_SWAP_UINT16_BYTE_SEQUENCE(x)         (__REV16(x))
 #define WM8904_MAP_SAMPLERATE(x)        \
     (x == kWM8904_SampleRate8kHz ?      \
          8000U :                        \
@@ -82,7 +82,7 @@ static status_t WM8904_UpdateFormat(wm8904_handle_t *handle, wm8904_audio_format
     }
 
     /* Set bit resolution and bclk direction */
-    result = WM8904_ModifyRegister(handle, WM8904_AUDIO_IF_1, 0x000C | (1U << 6U), format->bitWidth);
+    result = WM8904_ModifyRegister(handle, WM8904_AUDIO_IF_1, 0x000C | (1U << 6U), format->bitWidth << 2U);
     if (result != kStatus_WM8904_Success)
     {
         return result;

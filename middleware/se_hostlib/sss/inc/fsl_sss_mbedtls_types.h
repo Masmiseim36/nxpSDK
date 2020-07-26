@@ -1,5 +1,5 @@
 /*
- * Copyright 2018,2019 NXP
+ * Copyright 2018-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -32,6 +32,8 @@
 #include <mbedtls/cipher.h>
 #include <mbedtls/ctr_drbg.h>
 #include <mbedtls/entropy.h>
+#include <mbedtls/gcm.h>
+#include <mbedtls/ccm.h>
 #include <mbedtls/md.h>
 #include <mbedtls/pk.h>
 
@@ -44,38 +46,27 @@
 /* Defines                                                                    */
 /* ************************************************************************** */
 
-#define SSS_SUBSYSTEM_TYPE_IS_MBEDTLS(subsystem) \
-    (subsystem == kType_SSS_mbedTLS)
+#define SSS_SUBSYSTEM_TYPE_IS_MBEDTLS(subsystem) (subsystem == kType_SSS_mbedTLS)
 
-#define SSS_SESSION_TYPE_IS_MBEDTLS(session) \
-    (session && SSS_SUBSYSTEM_TYPE_IS_MBEDTLS(session->subsystem))
+#define SSS_SESSION_TYPE_IS_MBEDTLS(session) (session && SSS_SUBSYSTEM_TYPE_IS_MBEDTLS(session->subsystem))
 
-#define SSS_KEY_STORE_TYPE_IS_MBEDTLS(keyStore) \
-    (keyStore && SSS_SESSION_TYPE_IS_MBEDTLS(keyStore->session))
+#define SSS_KEY_STORE_TYPE_IS_MBEDTLS(keyStore) (keyStore && SSS_SESSION_TYPE_IS_MBEDTLS(keyStore->session))
 
-#define SSS_OBJECT_TYPE_IS_MBEDTLS(pObject) \
-    (pObject && SSS_KEY_STORE_TYPE_IS_MBEDTLS(pObject->keyStore))
+#define SSS_OBJECT_TYPE_IS_MBEDTLS(pObject) (pObject && SSS_KEY_STORE_TYPE_IS_MBEDTLS(pObject->keyStore))
 
-#define SSS_ASYMMETRIC_TYPE_IS_MBEDTLS(context) \
-    (context && SSS_SESSION_TYPE_IS_MBEDTLS(context->session))
+#define SSS_ASYMMETRIC_TYPE_IS_MBEDTLS(context) (context && SSS_SESSION_TYPE_IS_MBEDTLS(context->session))
 
-#define SSS_DERIVE_KEY_TYPE_IS_MBEDTLS(context) \
-    (context && SSS_SESSION_TYPE_IS_MBEDTLS(context->session))
+#define SSS_DERIVE_KEY_TYPE_IS_MBEDTLS(context) (context && SSS_SESSION_TYPE_IS_MBEDTLS(context->session))
 
-#define SSS_SYMMETRIC_TYPE_IS_MBEDTLS(context) \
-    (context && SSS_SESSION_TYPE_IS_MBEDTLS(context->session))
+#define SSS_SYMMETRIC_TYPE_IS_MBEDTLS(context) (context && SSS_SESSION_TYPE_IS_MBEDTLS(context->session))
 
-#define SSS_MAC_TYPE_IS_MBEDTLS(context) \
-    (context && SSS_SESSION_TYPE_IS_MBEDTLS(context->session))
+#define SSS_MAC_TYPE_IS_MBEDTLS(context) (context && SSS_SESSION_TYPE_IS_MBEDTLS(context->session))
 
-#define SSS_RNG_CONTEXT_TYPE_IS_MBEDTLS(context) \
-    (context && SSS_SESSION_TYPE_IS_MBEDTLS(context->session))
+#define SSS_RNG_CONTEXT_TYPE_IS_MBEDTLS(context) (context && SSS_SESSION_TYPE_IS_MBEDTLS(context->session))
 
-#define SSS_DIGEST_TYPE_IS_MBEDTLS(context) \
-    (context && SSS_SESSION_TYPE_IS_MBEDTLS(context->session))
+#define SSS_DIGEST_TYPE_IS_MBEDTLS(context) (context && SSS_SESSION_TYPE_IS_MBEDTLS(context->session))
 
-#define SSS_AEAD_TYPE_IS_MBEDTLS(context) \
-    (context && SSS_SESSION_TYPE_IS_MBEDTLS(context->session))
+#define SSS_AEAD_TYPE_IS_MBEDTLS(context) (context && SSS_SESSION_TYPE_IS_MBEDTLS(context->session))
 
 /* ************************************************************************** */
 /* Structrues and Typedefs                                                    */
@@ -162,10 +153,9 @@ typedef struct _sss_mbedtls_symmetric
     /*! Virtual connection between application (user context) and specific
      * security subsystem and function thereof. */
     sss_mbedtls_session_t *session;
-    sss_mbedtls_object_t
-        *keyObject;            /*!< Reference to key and it's properties. */
-    sss_algorithm_t algorithm; /*!  */
-    sss_mode_t mode;           /*!  */
+    sss_mbedtls_object_t *keyObject; /*!< Reference to key and it's properties. */
+    sss_algorithm_t algorithm;       /*!  */
+    sss_mode_t mode;                 /*!  */
     mbedtls_cipher_context_t *cipher_ctx;
     uint8_t cache_data[16];
     size_t cache_data_len;
@@ -175,10 +165,9 @@ typedef struct _sss_mbedtls_symmetric
 typedef struct _sss_mbedtls_mac
 {
     sss_mbedtls_session_t *session;
-    sss_mbedtls_object_t
-        *keyObject;            /*! Reference to key and it's properties. */
-    sss_algorithm_t algorithm; /*!  */
-    sss_mode_t mode;           /*!  */
+    sss_mbedtls_object_t *keyObject; /*! Reference to key and it's properties. */
+    sss_algorithm_t algorithm;       /*!  */
+    sss_mode_t mode;                 /*!  */
 
     /*! Implementation specific part */
     mbedtls_cipher_context_t *cipher_ctx; /*For init- update -finish*/
@@ -190,12 +179,22 @@ typedef struct _sss_mbedtls_aead
     /*! Virtual connection between application (user context) and specific
      * security subsystem and function thereof. */
     sss_mbedtls_session_t *session;
-    sss_mbedtls_object_t
-        *keyObject;            /*!< Reference to key and it's properties. */
-    sss_algorithm_t algorithm; /*!<  */
-    sss_mode_t mode;           /*!<  */
+    sss_mbedtls_object_t *keyObject; /*!< Reference to key and it's properties. */
+    sss_algorithm_t algorithm;       /*!<  */
+    sss_mode_t mode;                 /*!<  */
 
     /*! Implementation specific part */
+    mbedtls_gcm_context *gcm_ctx; /*!< Reference to gcm context. */
+    mbedtls_ccm_context *ccm_ctx; /*!< Reference to ccm context. */
+    uint8_t *pNonce;              /*!< Reference to IV. */
+    size_t nonceLen;              /*!< Store IV len. */
+    const uint8_t *pCcm_aad;      /*!< Reference to AAD */
+    size_t ccm_aadLen;            /*!< Store AAD len. */
+    uint8_t *pCcm_data;           /*!< Ref to CCM data dynamic allocated.. */
+    size_t ccm_dataTotalLen;      /*!< Store CCM data total len. */
+    size_t ccm_dataoffset;        /*!< Store CCM data offset. */
+    uint8_t cache_data[16];       /*!< Cache for GCM data  */
+    size_t cache_data_len;        /*!< Store GCM Cache len*/
 } sss_mbedtls_aead_t;
 
 typedef struct _sss_mbedtls_digest
@@ -232,9 +231,7 @@ typedef struct
 /** Store key inside persistant key store */
 sss_status_t ks_mbedtls_store_key(const sss_mbedtls_object_t *sss_key);
 
-sss_status_t ks_mbedtls_load_key(sss_mbedtls_object_t *sss_key,
-    keyStoreTable_t *keystore_shadow,
-    uint32_t extKeyId);
+sss_status_t ks_mbedtls_load_key(sss_mbedtls_object_t *sss_key, keyStoreTable_t *keystore_shadow, uint32_t extKeyId);
 
 sss_status_t ks_mbedtls_remove_key(const sss_mbedtls_object_t *sss_key);
 

@@ -1,6 +1,7 @@
 /*
  * Amazon FreeRTOS V1.2.3
  * Copyright (C) 2017 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
+ * Copyright 2020 NXP
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -26,6 +27,7 @@
 #ifndef __AWS_CLIENTCREDENTIAL__H__
 #define __AWS_CLIENTCREDENTIAL__H__
 
+#if 0
 #if defined(SSS_USE_FTR_FILE)
 #include "fsl_sss_ftr.h"
 #else
@@ -36,11 +38,10 @@
 /*
  * Include for device certificate and private key
  */
-#if SSS_HAVE_GCP
 #include "gcp_client_credential_keys.h"
-#elif SSS_HAVE_AZURE
+
 #include "azure_client_credential_keys.h"
-#elif SSS_HAVE_IBM
+#if SSS_HAVE_IBM
 #include "ibm_client_credential_keys.h"
 #elif SSS_HAVE_GGC
 #include "greengrass_client_credential_keys.h"
@@ -94,4 +95,5 @@ static const uint32_t clientcredentialCLIENT_CERTIFICATE_LENGTH = sizeof(keyCLIE
 
 static const uint32_t clientcredentialCLIENT_PRIVATE_KEY_LENGTH = sizeof(keyCLIENT_PRIVATE_KEY_PEM);
 
+#endif // 0
 #endif

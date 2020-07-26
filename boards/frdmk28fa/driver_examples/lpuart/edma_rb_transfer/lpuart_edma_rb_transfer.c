@@ -15,17 +15,17 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_LPUART LPUART0
-#define EXAMPLE_LPUART_CLKSRC kCLOCK_Osc0ErClk
-#define EXAMPLE_LPUART_CLK_FREQ CLOCK_GetFreq(kCLOCK_Osc0ErClk)
-#define LPUART_TX_DMA_CHANNEL 0U
-#define LPUART_RX_DMA_CHANNEL 1U
+#define EXAMPLE_LPUART                 LPUART0
+#define EXAMPLE_LPUART_CLKSRC          kCLOCK_Osc0ErClk
+#define EXAMPLE_LPUART_CLK_FREQ        CLOCK_GetFreq(kCLOCK_Osc0ErClk)
+#define LPUART_TX_DMA_CHANNEL          0U
+#define LPUART_RX_DMA_CHANNEL          1U
 #define EXAMPLE_LPUART_DMAMUX_BASEADDR DMAMUX0
-#define EXAMPLE_LPUART_DMA_BASEADDR DMA0
-#define LPUART_TX_DMA_REQUEST kDmaRequestMux0LPUART0Tx
-#define LPUART_RX_DMA_REQUEST kDmaRequestMux0LPUART0Rx
-#define EXAMPLE_LPUART_IRQHandler LPUART0_IRQHandler
-#define EXAMPLE_LPUART_IRQn LPUART0_IRQn
+#define EXAMPLE_LPUART_DMA_BASEADDR    DMA0
+#define LPUART_TX_DMA_REQUEST          kDmaRequestMux0LPUART0Tx
+#define LPUART_RX_DMA_REQUEST          kDmaRequestMux0LPUART0Rx
+#define EXAMPLE_LPUART_IRQHandler      LPUART0_IRQHandler
+#define EXAMPLE_LPUART_IRQn            LPUART0_IRQn
 /* Ring buffer size definition, please make sure to set this value large enough.
  * Otherwise, once overflow occurred, data in ring buffer will be overwritten.
  */
@@ -213,11 +213,7 @@ void EXAMPLE_LPUART_IRQHandler(void)
             __NOP();
         }
     }
-    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-      exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 /* LPUART RX EDMA call back. */

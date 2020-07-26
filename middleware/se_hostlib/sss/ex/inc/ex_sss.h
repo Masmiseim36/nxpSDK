@@ -1,5 +1,5 @@
 /*
- * Copyright 2018,2019 NXP
+ * Copyright 2018-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -20,7 +20,7 @@
 
 #include <fsl_sss_api.h>
 
-#if SSS_HAVE_A71CH || SSS_HAVE_SE050_EAR_CH
+#if SSS_HAVE_A71CH || SSS_HAVE_A71CH_SIM
 #include <fsl_sscp_a71ch.h>
 #endif
 #if SSS_HAVE_MBEDTLS
@@ -54,7 +54,7 @@ typedef struct
     sss_key_store_t ks;
 
     sss_sscp_session_t *sscp_session;
-#if (SSS_HAVE_A71CH) || (SSS_HAVE_SE050_EAR_CH)
+#if (SSS_HAVE_A71CH) || (SSS_HAVE_A71CH_SIM)
     sss_a71ch_key_store_t *a71ch_keystore;
 #endif
 
@@ -69,7 +69,7 @@ typedef struct
     sss_object_t interCaCert;
     sss_object_t interkeyPair;
     sss_object_t clientCert;
-#if SSS_HAVE_SE05X
+#if SSS_HAVE_APPLET_SE05X_IOT
     sss_session_t hostSession;
     sss_key_store_t hostKs;
     sss_object_t hostKey;

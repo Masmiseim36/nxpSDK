@@ -26,7 +26,7 @@
 #define SDRAM_COMMAND_ACCESSVALUE 0xaaU
 
 /*! @brief Define the right address line for the mrs register setting. */
-#define ADDR9 9U
+#define ADDR9  9U
 #define ADDR10 10U
 #define ADDR11 11U
 #define ADDR12 12U
@@ -43,26 +43,26 @@
 #define ADDR23 23U
 
 /*! @brief Define the physical connection--16bit port 8 column. */
-#define SDRAM_A0 ADDR16
-#define SDRAM_A1 ADDR15
-#define SDRAM_A2 ADDR14
-#define SDRAM_A3 ADDR13
-#define SDRAM_A4 ADDR12
-#define SDRAM_A5 ADDR11
-#define SDRAM_A6 ADDR10
-#define SDRAM_A7 ADDR9
-#define SDRAM_A8 ADDR17
-#define SDRAM_A9 ADDR18
+#define SDRAM_A0  ADDR16
+#define SDRAM_A1  ADDR15
+#define SDRAM_A2  ADDR14
+#define SDRAM_A3  ADDR13
+#define SDRAM_A4  ADDR12
+#define SDRAM_A5  ADDR11
+#define SDRAM_A6  ADDR10
+#define SDRAM_A7  ADDR9
+#define SDRAM_A8  ADDR17
+#define SDRAM_A9  ADDR18
 #define SDRAM_A10 ADDR19
 #define SDRAM_A11 ADDR20
 #define SDRAM_A12 ADDR21
 #define SDRAM_A13 ADDR22
 #define SDRAM_A14 ADDR23
 
-#define BURSTLENGTH 0U
-#define BURSTTYPE 0U
-#define CASLATENCY 2U
-#define OPMODE 0U
+#define BURSTLENGTH    0U
+#define BURSTTYPE      0U
+#define CASLATENCY     2U
+#define OPMODE         0U
 #define WRITEBURSTMODE 0U
 
 /*! @brief SDRAM Mode register write burst mode setting. */

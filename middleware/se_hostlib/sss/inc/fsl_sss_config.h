@@ -31,9 +31,9 @@
     + 4  /* Buffer length in case of unaligned block cipher operations */ \
     + 16)
 #define SSS_AEAD_MAX_CONTEXT_SIZE           ( 0 \
-    + (2 * sizeof(void *)) \
-    + (2 * sizeof(int)) \
-    + (2 * sizeof(void *)) \
+    + (5 * sizeof(void *)) \
+    + (6 * sizeof(int)) \
+    + (5 * sizeof(void *)) \
     + 16)
 #define SSS_DIGEST_MAX_CONTEXT_SIZE         ( 0 \
     + (1 * sizeof(void *)) \
@@ -44,7 +44,7 @@
     + (2 * sizeof(void *)) \
     + (2 * sizeof(int)) \
     + (2 * sizeof(void *)) \
-    + 16)
+    + 32)
 #define SSS_ASYMMETRIC_MAX_CONTEXT_SIZE      ( 0 \
     + (2 * sizeof(void *)) \
     + (3 * sizeof(int)) \

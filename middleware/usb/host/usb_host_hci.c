@@ -36,11 +36,8 @@
  ******************************************************************************/
 #if ((defined USB_HOST_CONFIG_HUB) && (USB_HOST_CONFIG_HUB))
 
-extern uint32_t USB_HostHubGetTotalThinkTime(usb_host_handle hostHandle, uint8_t parentHubNo);
-
-extern usb_status_t USB_HostHubSuspendDevice(usb_host_handle hostHandle);
-
-extern usb_status_t USB_HostHubResumeDevice(usb_host_handle hostHandle);
+#include "usb_host_hub.h"
+#include "usb_host_hub_app.h"
 #endif
 
 /*!
@@ -65,15 +62,6 @@ static void USB_HostReleaseInstance(usb_host_instance_t *hostInstance);
  */
 static void USB_HostGetControllerInterface(uint8_t controllerId,
                                            const usb_host_controller_interface_t **controllerTable);
-
-#if ((defined USB_HOST_CONFIG_COMPLIANCE_TEST) && (USB_HOST_CONFIG_COMPLIANCE_TEST))
-#if ((defined USB_HOST_CONFIG_EHCI) && (USB_HOST_CONFIG_EHCI))
-extern void USB_HostEhciTestModeInit(usb_device_handle devHandle);
-#endif /* USB_HOST_CONFIG_COMPLIANCE_TEST */
-#if ((defined USB_HOST_CONFIG_IP3516HS) && (USB_HOST_CONFIG_IP3516HS))
-extern void USB_HostIp3516HsTestModeInit(usb_device_handle devHandle);
-#endif /* USB_HOST_CONFIG_COMPLIANCE_TEST */
-#endif /* USB_HOST_CONFIG_EHCI */
 
 /*******************************************************************************
  * Variables
@@ -139,33 +127,35 @@ usb_status_t USB_HostTestModeInit(usb_device_handle deviceHandle)
     uint32_t productId;
     uint32_t vendorId;
 
-    usb_echo("usb host test init\r\n");
-    USB_HostHelperGetPeripheralInformation(deviceHandle, kUSB_HostGetDevicePID, &productId);
-    USB_HostHelperGetPeripheralInformation(deviceHandle, kUSB_HostGetDeviceVID, &vendorId);
-    usb_echo(" vendor id :0x%x product id:0x%x \r\n", vendorId, productId);
+    (void)usb_echo("usb host test init\r\n");
+    (void)USB_HostHelperGetPeripheralInformation(deviceHandle, (uint32_t)kUSB_HostGetDevicePID, &productId);
+    (void)USB_HostHelperGetPeripheralInformation(deviceHandle, (uint32_t)kUSB_HostGetDeviceVID, &vendorId);
+    (void)usb_echo(" vendor id :0x%x product id:0x%x \r\n", vendorId, productId);
 
-    if ((productId != 0x0200U) && (productId != 0x0101) && (productId != 0x0102) && (productId != 0x0103) &&
-        (productId != 0x0104) && (productId != 0x0105) && (productId != 0x0106) && (productId != 0x0107) &&
-        (productId != 0x0108))
+    if ((productId != 0x0200U) && (productId != 0x0101U) && (productId != 0x0102U) && (productId != 0x0103U) &&
+        (productId != 0x0104U) && (productId != 0x0105U) && (productId != 0x0106U) && (productId != 0x0107U) &&
+        (productId != 0x0108U))
     {
-        usb_echo("Unsupported Device\r\n");
+        (void)usb_echo("Unsupported Device\r\n");
     }
 
     if (productId == 0x0200U)
     {
-        usb_echo("PET test device attached\r\n");
+        (void)usb_echo("PET test device attached\r\n");
     }
     else
     {
 #if ((defined USB_HOST_CONFIG_EHCI) && (USB_HOST_CONFIG_EHCI))
         if (hostInstance->controllerTable == &s_EhciInterface)
         {
-            USB_HostEhciTestModeInit(deviceHandle);
+            (void)hostInstance->controllerTable->controllerIoctl(hostInstance->controllerHandle, kUSB_HostTestModeInit,
+                                                                 (void *)deviceHandle);
         }
 #elif ((defined USB_HOST_CONFIG_IP3516HS) && (USB_HOST_CONFIG_IP3516HS))
         if (hostInstance->controllerTable == &s_Ip3516HsInterface)
         {
-            USB_HostIp3516HsTestModeInit(deviceHandle);
+            (void)hostInstance->controllerTable->controllerIoctl(hostInstance->controllerHandle, kUSB_HostTestModeInit,
+                                                                 (void *)deviceHandle);
         }
 #endif
     }
@@ -178,11 +168,12 @@ static usb_host_instance_t *USB_HostGetInstance(void)
 {
     uint8_t i      = 0;
     uint32_t index = 0;
+    void *temp;
     OSA_SR_ALLOC();
     OSA_ENTER_CRITICAL();
     for (; i < USB_HOST_CONFIG_MAX_HOST; i++)
     {
-        if (g_UsbHostInstance[i].occupied != 1)
+        if (g_UsbHostInstance[i].occupied != 1U)
         {
             uint8_t *buffer = (uint8_t *)&g_UsbHostInstance[i];
             for (uint32_t j = 0U; j < sizeof(usb_host_instance_t); j++)
@@ -193,8 +184,8 @@ static usb_host_instance_t *USB_HostGetInstance(void)
             OSA_EXIT_CRITICAL();
             for (index = 0; index < USB_HOST_CONFIG_MAX_TRANSFERS; ++index)
             {
-                g_UsbHostInstance[i].transferList[index].setupPacket =
-                    (usb_setup_struct_t *)&(s_Setupbuffer[i][index][0]);
+                temp                                                 = (void *)&(s_Setupbuffer[i][index][0]);
+                g_UsbHostInstance[i].transferList[index].setupPacket = (usb_setup_struct_t *)temp;
             }
             return &g_UsbHostInstance[i];
         }
@@ -215,28 +206,28 @@ static void USB_HostGetControllerInterface(uint8_t controllerId,
                                            const usb_host_controller_interface_t **controllerTable)
 {
 #if ((defined USB_HOST_CONFIG_KHCI) && (USB_HOST_CONFIG_KHCI))
-    if (controllerId == kUSB_ControllerKhci0)
+    if (controllerId == (uint8_t)kUSB_ControllerKhci0)
     {
         *controllerTable = &s_KhciInterface;
     }
 #endif /* USB_HOST_CONFIG_KHCI */
 
 #if ((defined USB_HOST_CONFIG_EHCI) && (USB_HOST_CONFIG_EHCI))
-    if ((controllerId == kUSB_ControllerEhci0) || (controllerId == kUSB_ControllerEhci1))
+    if ((controllerId == (uint8_t)kUSB_ControllerEhci0) || (controllerId == (uint8_t)kUSB_ControllerEhci1))
     {
         *controllerTable = &s_EhciInterface;
     }
 #endif /* USB_HOST_CONFIG_EHCI */
 
 #if ((defined USB_HOST_CONFIG_OHCI) && (USB_HOST_CONFIG_OHCI > 0U))
-    if (controllerId == kUSB_ControllerOhci0)
+    if (controllerId == (uint8_t)kUSB_ControllerOhci0)
     {
         *controllerTable = &s_OhciInterface;
     }
 #endif /* USB_HOST_CONFIG_OHCI */
 
 #if ((defined USB_HOST_CONFIG_IP3516HS) && (USB_HOST_CONFIG_IP3516HS > 0U))
-    if (controllerId == kUSB_ControllerIp3516Hs0)
+    if (controllerId == (uint8_t)kUSB_ControllerIp3516Hs0)
     {
         *controllerTable = &s_Ip3516HsInterface;
     }
@@ -333,7 +324,7 @@ usb_status_t USB_HostDeinit(usb_host_handle hostHandle)
     while (deviceInstance != NULL)
     {
         deviceInstance = (usb_host_device_instance_t *)hostInstance->deviceList;
-        USB_HostDetachDeviceInternal(hostHandle, deviceInstance);
+        (void)USB_HostDetachDeviceInternal(hostHandle, deviceInstance);
     }
 
     /* controller instance destroy, the callbackFn is initialized in USB_HostGetControllerInterface */
@@ -347,9 +338,9 @@ usb_status_t USB_HostDeinit(usb_host_handle hostHandle)
     }
 
     /* resource release */
-    if (hostInstance->hostMutex)
+    if (NULL != hostInstance->hostMutex)
     {
-        OSA_MutexDestroy(hostInstance->hostMutex);
+        (void)OSA_MutexDestroy(hostInstance->hostMutex);
         hostInstance->hostMutex = NULL;
     }
     USB_HostReleaseInstance(hostInstance);
@@ -405,7 +396,7 @@ usb_status_t USB_HostSend(usb_host_handle hostHandle, usb_host_pipe_handle pipeH
     transfer->transferSofar = 0;
     transfer->direction     = USB_OUT;
 
-    USB_HostLock(); /* This api can be called by host task and app task */
+    (void)USB_HostLock(); /* This api can be called by host task and app task */
 /* keep this code: in normal situation application will guarantee the device is attached when call send/receive function
  */
 #if 0
@@ -425,7 +416,7 @@ usb_status_t USB_HostSend(usb_host_handle hostHandle, usb_host_pipe_handle pipeH
     /* the callbackFn is initialized in USB_HostGetControllerInterface */
     status = hostInstance->controllerTable->controllerWritePipe(hostInstance->controllerHandle, pipeHandle, transfer);
 
-    USB_HostUnlock();
+    (void)USB_HostUnlock();
     return status;
 }
 
@@ -454,7 +445,7 @@ usb_status_t USB_HostSendSetup(usb_host_handle hostHandle,
         transfer->direction = USB_OUT;
     }
 
-    USB_HostLock(); /* This API can be called by host task and application task */
+    (void)USB_HostLock(); /* This API can be called by host task and application task */
 /* keep this code: in normal situation application will guarantee the device is attached when call send/receive function
  */
 #if 0
@@ -475,7 +466,7 @@ usb_status_t USB_HostSendSetup(usb_host_handle hostHandle,
     /* the callbackFn is initialized in USB_HostGetControllerInterface */
     status = hostInstance->controllerTable->controllerWritePipe(hostInstance->controllerHandle, pipeHandle, transfer);
 
-    USB_HostUnlock();
+    (void)USB_HostUnlock();
     return status;
 }
 
@@ -493,7 +484,7 @@ usb_status_t USB_HostRecv(usb_host_handle hostHandle, usb_host_pipe_handle pipeH
     transfer->transferSofar = 0;
     transfer->direction     = USB_IN;
 
-    USB_HostLock(); /* This API can be called by host task and application task */
+    (void)USB_HostLock(); /* This API can be called by host task and application task */
 /* keep this code: in normal situation application will guarantee the device is attached when call send/receive function
  */
 #if 0
@@ -513,7 +504,7 @@ usb_status_t USB_HostRecv(usb_host_handle hostHandle, usb_host_pipe_handle pipeH
     /* the callbackFn is initialized in USB_HostGetControllerInterface */
     status = hostInstance->controllerTable->controllerReadPipe(hostInstance->controllerHandle, pipeHandle, transfer);
 
-    USB_HostUnlock();
+    (void)USB_HostUnlock();
     return status;
 }
 
@@ -553,18 +544,18 @@ usb_status_t USB_HostMallocTransfer(usb_host_handle hostHandle, usb_host_transfe
     }
 
     /* get one from the transfer_head */
-    USB_HostLock();
+    (void)USB_HostLock();
     if (hostInstance->transferHead != NULL)
     {
         *transfer                  = hostInstance->transferHead;
         hostInstance->transferHead = hostInstance->transferHead->next;
-        USB_HostUnlock();
+        (void)USB_HostUnlock();
         return kStatus_USB_Success;
     }
     else
     {
         *transfer = NULL;
-        USB_HostUnlock();
+        (void)USB_HostUnlock();
         return kStatus_USB_Error;
     }
 }
@@ -583,10 +574,10 @@ usb_status_t USB_HostFreeTransfer(usb_host_handle hostHandle, usb_host_transfer_
     }
 
     /* release one to the transfer_head */
-    USB_HostLock();
+    (void)USB_HostLock();
     transfer->next             = hostInstance->transferHead;
     hostInstance->transferHead = transfer;
-    USB_HostUnlock();
+    (void)USB_HostUnlock();
     return kStatus_USB_Success;
 }
 
@@ -595,23 +586,28 @@ usb_status_t USB_HostHelperGetPeripheralInformation(usb_device_handle deviceHand
                                                     uint32_t *infoValue)
 {
     usb_host_device_instance_t *deviceInstance = (usb_host_device_instance_t *)deviceHandle;
+    uint32_t *temp;
+    usb_host_dev_info_t devInfo;
     if ((deviceHandle == NULL) || (infoValue == NULL))
     {
         return kStatus_USB_InvalidParameter;
     }
-
-    switch (infoCode)
+    devInfo = (usb_host_dev_info_t)infoCode;
+    switch (devInfo)
     {
         case kUSB_HostGetDeviceAddress: /* device address */
+
             *infoValue = (uint32_t)deviceInstance->setAddress;
             break;
 
         case kUSB_HostGetDeviceControlPipe: /* device control pipe */
-            *infoValue = (uint32_t)deviceInstance->controlPipe;
+            temp       = (uint32_t *)deviceInstance->controlPipe;
+            *infoValue = (uint32_t)temp;
             break;
 
         case kUSB_HostGetHostHandle: /* device host handle */
-            *infoValue = (uint32_t)deviceInstance->hostHandle;
+            temp       = (uint32_t *)deviceInstance->hostHandle;
+            *infoValue = (uint32_t)temp;
             break;
 
 #if ((defined USB_HOST_CONFIG_HUB) && (USB_HOST_CONFIG_HUB))
@@ -676,7 +672,8 @@ usb_status_t USB_HostHelperGetPeripheralInformation(usb_device_handle deviceHand
             break;
 
         default:
-            return kStatus_USB_Error;
+            /*no action*/
+            break;
     }
 
     return kStatus_USB_Success;
@@ -689,20 +686,21 @@ usb_status_t USB_HostHelperParseAlternateSetting(usb_host_interface_handle inter
     uint32_t endPosition;
     usb_descriptor_union_t *unionDes;
     usb_host_ep_t *epParse;
-
+    void *temp;
     if (interfaceHandle == NULL)
     {
         return kStatus_USB_InvalidHandle;
     }
 
-    if (alternateSetting == 0)
+    if (alternateSetting == 0U)
     {
         return kStatus_USB_InvalidParameter;
     }
 
     /* parse configuration descriptor */
-    unionDes = (usb_descriptor_union_t *)((usb_host_interface_t *)interfaceHandle)
-                   ->interfaceDesc; /* interface extend descriptor start */
+    temp = (void *)((usb_host_interface_t *)interfaceHandle)->interfaceDesc;
+    ;
+    unionDes = (usb_descriptor_union_t *)temp; /* interface extend descriptor start */
     endPosition =
         (uint32_t)unionDes +
         ((usb_host_interface_t *)interfaceHandle)->interfaceExtensionLength; /* interface extend descriptor end */
@@ -734,10 +732,10 @@ usb_status_t USB_HostHelperParseAlternateSetting(usb_host_interface_handle inter
 
     /* initialize interface handle structure instance */
     interface->interfaceDesc            = &unionDes->interface;
-    interface->alternateSettingNumber   = 0;
-    interface->epCount                  = 0;
+    interface->alternateSettingNumber   = 0U;
+    interface->epCount                  = 0U;
     interface->interfaceExtension       = NULL;
-    interface->interfaceExtensionLength = 0;
+    interface->interfaceExtensionLength = 0U;
     interface->interfaceIndex           = unionDes->interface.bInterfaceNumber;
 
     /* search for endpoint descriptor start position */
@@ -761,7 +759,7 @@ usb_status_t USB_HostHelperParseAlternateSetting(usb_host_interface_handle inter
     }
 
     /* parse endpoint descriptor */
-    if (interface->interfaceDesc->bNumEndpoints != 0)
+    if (interface->interfaceDesc->bNumEndpoints != 0U)
     {
         if ((unionDes->common.bDescriptorType != USB_DESCRIPTOR_TYPE_ENDPOINT) ||
             (interface->interfaceDesc->bNumEndpoints > USB_HOST_CONFIG_INTERFACE_MAX_EP))
@@ -782,7 +780,8 @@ usb_status_t USB_HostHelperParseAlternateSetting(usb_host_interface_handle inter
                 return kStatus_USB_Error;
             }
             epParse                    = (usb_host_ep_t *)&interface->epList[interface->epCount];
-            epParse->epDesc            = (usb_descriptor_endpoint_t *)unionDes;
+            temp                       = (void *)unionDes;
+            epParse->epDesc            = (usb_descriptor_endpoint_t *)temp;
             epParse->epExtensionLength = 0;
             epParse->epExtension       = NULL;
             unionDes                   = (usb_descriptor_union_t *)((uint32_t)unionDes + unionDes->common.bLength);
@@ -811,7 +810,7 @@ usb_status_t USB_HostHelperParseAlternateSetting(usb_host_interface_handle inter
 
 void USB_HostGetVersion(uint32_t *version)
 {
-    if (version)
+    if (NULL != version)
     {
         *version =
             (uint32_t)USB_MAKE_VERSION(USB_STACK_VERSION_MAJOR, USB_STACK_VERSION_MINOR, USB_STACK_VERSION_BUGFIX);
@@ -849,7 +848,7 @@ usb_status_t USB_HostSuspendDeviceResquest(usb_host_handle hostHandle, usb_devic
     {
 #if ((defined USB_HOST_CONFIG_HUB) && (USB_HOST_CONFIG_HUB))
         deviceInstance = (usb_host_device_instance_t *)deviceHandle;
-        if (0 == deviceInstance->hubNumber)
+        if (0U == deviceInstance->hubNumber)
         {
 #endif
             if (hostInstance->deviceList == deviceHandle)
@@ -906,7 +905,7 @@ usb_status_t USB_HostResumeDeviceResquest(usb_host_handle hostHandle, usb_device
     {
 #if ((defined USB_HOST_CONFIG_HUB) && (USB_HOST_CONFIG_HUB))
         deviceInstance = (usb_host_device_instance_t *)deviceHandle;
-        if (0 == deviceInstance->hubNumber)
+        if (0U == deviceInstance->hubNumber)
         {
 #endif
             if (hostInstance->deviceList == deviceHandle)

@@ -33,8 +33,14 @@ uint32_t sm_initSleep() {
 /**
  * Implement a blocking (for the calling thread) wait for a number of milliseconds.
  */
+
+#ifndef MSEC_TO_TICK
+#define MSEC_TO_TICK(msec) \
+	((((uint32_t)configTICK_RATE_HZ * (uint32_t)(msec))) / 1000L)
+#endif /* MSEC_TO_TICK */
+
 void sm_sleep(uint32_t msec) {
-    vTaskDelay(msec);
+    vTaskDelay(1 >= pdMS_TO_TICKS(msec) ? 1 : pdMS_TO_TICKS(msec));
 }
 
 void vApplicationTickHook() {

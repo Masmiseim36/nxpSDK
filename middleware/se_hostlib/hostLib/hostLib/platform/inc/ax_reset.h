@@ -41,4 +41,10 @@ void axReset_PowerDown(void);
  */
 void axReset_PowerUp(void);
 
+/* 
+ * Where applicable, Unconfigure the PINs on the Host
+ *
+ */
+void axReset_HostUnconfigure(void);
+
 #endif // _AX_RESET_H

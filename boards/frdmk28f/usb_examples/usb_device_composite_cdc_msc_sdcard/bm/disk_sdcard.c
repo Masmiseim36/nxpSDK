@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 - 2017 NXP
+ * Copyright 2016 - 2017, 2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -382,11 +382,11 @@ usb_status_t USB_DeviceMscCallback(class_handle_t handle, uint32_t event, void *
             break;
         case kUSB_DeviceMscEventGetLbaInformation:
             lbaInformation = (usb_device_lba_information_struct_t *)param;
-            lbaInformation->lengthOfEachLba = usbDeviceMscCard->blockSize;
-            lbaInformation->totalLbaNumberSupports = usbDeviceMscCard->blockCount;
             lbaInformation->logicalUnitNumberSupported = LOGICAL_UNIT_SUPPORTED;
-            lbaInformation->bulkInBufferSize = USB_DEVICE_MSC_READ_BUFF_SIZE;
-            lbaInformation->bulkOutBufferSize = USB_DEVICE_MSC_WRITE_BUFF_SIZE;
+            lbaInformation->logicalUnitInformations[0].lengthOfEachLba = usbDeviceMscCard->blockSize;
+            lbaInformation->logicalUnitInformations[0].totalLbaNumberSupports =usbDeviceMscCard->blockCount;
+            lbaInformation->logicalUnitInformations[0].bulkInBufferSize = USB_DEVICE_MSC_READ_BUFF_SIZE;
+            lbaInformation->logicalUnitInformations[0].bulkOutBufferSize = USB_DEVICE_MSC_WRITE_BUFF_SIZE;
             break;
         case kUSB_DeviceMscEventTestUnitReady:
             /*change the test unit ready command's sense data if need, be careful to modify*/

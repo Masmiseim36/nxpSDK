@@ -56,9 +56,9 @@ usb_device_interface_struct_t g_UsbDeviceCdcVcomDataInterface[] = {
 usb_device_interfaces_struct_t g_UsbDeviceCdcVcomInterfaces[USB_CDC_VCOM_INTERFACE_COUNT] = {
     {USB_CDC_VCOM_CIC_CLASS, USB_CDC_VCOM_CIC_SUBCLASS, USB_CDC_VCOM_CIC_PROTOCOL, USB_CDC_VCOM_COMM_INTERFACE_INDEX,
      g_UsbDeviceCdcVcomCommunicationInterface,
-     sizeof(g_UsbDeviceCdcVcomCommunicationInterface) / sizeof(usb_device_interfaces_struct_t)},
+     sizeof(g_UsbDeviceCdcVcomCommunicationInterface) / sizeof(usb_device_interface_struct_t)},
     {USB_CDC_VCOM_DIC_CLASS, USB_CDC_VCOM_DIC_SUBCLASS, USB_CDC_VCOM_DIC_PROTOCOL, USB_CDC_VCOM_DATA_INTERFACE_INDEX,
-     g_UsbDeviceCdcVcomDataInterface, sizeof(g_UsbDeviceCdcVcomDataInterface) / sizeof(usb_device_interfaces_struct_t)},
+     g_UsbDeviceCdcVcomDataInterface, sizeof(g_UsbDeviceCdcVcomDataInterface) / sizeof(usb_device_interface_struct_t)},
 };
 
 /* Define configurations for virtual com */
@@ -220,9 +220,9 @@ uint8_t g_UsbDeviceString1[] = {
 USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
 uint8_t g_UsbDeviceString2[] = {2U + 2U * 14U, USB_DESCRIPTOR_TYPE_STRING,
                                 'F',           0,
-                                'R',           0,
-                                'E',           0,
-                                'E',           0,
+                                'r',           0,
+                                'e',           0,
+                                'e',           0,
                                 'M',           0,
                                 'A',           0,
                                 'S',           0,
@@ -230,9 +230,9 @@ uint8_t g_UsbDeviceString2[] = {2U + 2U * 14U, USB_DESCRIPTOR_TYPE_STRING,
                                 'E',           0,
                                 'R',           0,
                                 ' ',           0,
-                                '2',           0,
-                                '.',           0,
-                                '0',           0,};
+                                'U',           0,
+                                'S',           0,
+                                'B',           0,};
 
 uint8_t *g_UsbDeviceStringDescriptorArray[USB_DEVICE_STRING_COUNT] = {g_UsbDeviceString0, g_UsbDeviceString1,
                                                                       g_UsbDeviceString2};

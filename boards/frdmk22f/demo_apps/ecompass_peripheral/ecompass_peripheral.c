@@ -17,7 +17,7 @@
  ******************************************************************************/
 #define I2C_RELEASE_BUS_COUNT 100U
 #define MAX_ACCEL_AVG_COUNT 25U
-#define HWTIMER_PERIOD 10000U
+#define HWTIMER_PERIOD      10000U
 /* multiplicative conversion constants */
 #define DegToRad 0.017453292
 #define RadToDeg 57.295779

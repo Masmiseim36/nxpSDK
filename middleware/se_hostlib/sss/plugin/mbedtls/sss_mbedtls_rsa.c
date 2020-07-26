@@ -144,17 +144,13 @@ static int sss_rsakey_verify(void *ctx,
 
     LOG_D("Using RSA key-pair '0x%08X'", pax_ctx->pSSSObject->keyId);
 
-    status = sss_asymmetric_context_init(&asymVerifyCtx,
-        sssObject->keyStore->session,
-        sssObject,
-        algorithm,
-        kMode_SSS_Verify);
+    status = sss_asymmetric_context_init(
+        &asymVerifyCtx, sssObject->keyStore->session, sssObject, algorithm, kMode_SSS_Verify);
     if (status != kStatus_SSS_Success) {
         LOG_E(" sss_asymmetric_context_init verify context Failed.");
         return 1;
     }
-    status = sss_asymmetric_verify_digest(
-        &asymVerifyCtx, (uint8_t *)hash, hash_len, (uint8_t *)sig, sig_len);
+    status = sss_asymmetric_verify_digest(&asymVerifyCtx, (uint8_t *)hash, hash_len, (uint8_t *)sig, sig_len);
     if (status != kStatus_SSS_Success) {
         LOG_E(" sss_asymmetric_verify_digest Failed.");
         return 1;
@@ -172,15 +168,15 @@ static int sss_rsakey_sign(void *ctx,
     int (*f_rng)(void *, unsigned char *, size_t),
     void *p_rng)
 {
-    int ret = 0;
+    int ret            = 0;
     size_t u16_sig_len = 1024;
     sss_asymmetric_t asymVerifyCtx;
-    sss_status_t status = kStatus_SSS_Success;
-    sss_object_t *sssObject = NULL;
+    sss_status_t status          = kStatus_SSS_Success;
+    sss_object_t *sssObject      = NULL;
     mbedtls_rsa_context *pax_ctx = NULL;
     sss_algorithm_t algorithm;
 
-    pax_ctx = (mbedtls_rsa_context *)ctx;
+    pax_ctx   = (mbedtls_rsa_context *)ctx;
     sssObject = (sss_object_t *)pax_ctx->pSSSObject;
 
     switch (md_alg) {
@@ -203,11 +199,8 @@ static int sss_rsakey_sign(void *ctx,
         return 1;
     }
 
-    status = sss_asymmetric_context_init(&asymVerifyCtx,
-        sssObject->keyStore->session,
-        sssObject,
-        algorithm,
-        kMode_SSS_Sign);
+    status =
+        sss_asymmetric_context_init(&asymVerifyCtx, sssObject->keyStore->session, sssObject, algorithm, kMode_SSS_Sign);
     if (status != kStatus_SSS_Success) {
         LOG_E(" sss_asymmetric_context_init verify context Failed.");
         return 1;
@@ -215,8 +208,7 @@ static int sss_rsakey_sign(void *ctx,
 
     LOG_D("Signing using key %08lX\r\n", pax_ctx->pSSSObject->keyId);
 
-    status = sss_asymmetric_sign_digest(
-        &asymVerifyCtx, (uint8_t *)hash, hash_len, sig, &u16_sig_len);
+    status = sss_asymmetric_sign_digest(&asymVerifyCtx, (uint8_t *)hash, hash_len, sig, &u16_sig_len);
     if (status != kStatus_SSS_Success) {
         LOG_E(" sss_asymmetric_sign_digest failed.");
         return 1;

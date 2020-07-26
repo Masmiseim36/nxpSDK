@@ -15,12 +15,14 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define PIT_LED_HANDLER PIT0_IRQHandler
-#define PIT_IRQ_ID PIT0_IRQn
+#define DEMO_PIT_BASEADDR PIT
+#define DEMO_PIT_CHANNEL  kPIT_Chnl_0
+#define PIT_LED_HANDLER   PIT0_IRQHandler
+#define PIT_IRQ_ID        PIT0_IRQn
 /* Get source clock for PIT driver */
 #define PIT_SOURCE_CLOCK CLOCK_GetFreq(kCLOCK_BusClk)
-#define LED_INIT() LED_RED_INIT(LOGIC_LED_ON)
-#define LED_TOGGLE() LED_RED_TOGGLE()
+#define LED_INIT()       LED_RED_INIT(LOGIC_LED_ON)
+#define LED_TOGGLE()     LED_RED_TOGGLE()
 
 /*******************************************************************************
  * Prototypes
@@ -38,7 +40,7 @@ volatile bool pitIsrFlag = false;
 void PIT_LED_HANDLER(void)
 {
     /* Clear interrupt flag.*/
-    PIT_ClearStatusFlags(PIT, kPIT_Chnl_0, kPIT_TimerFlag);
+    PIT_ClearStatusFlags(DEMO_PIT_BASEADDR, DEMO_PIT_CHANNEL, kPIT_TimerFlag);
     pitIsrFlag = true;
     /* Added for, and affects, all PIT handlers. For CPU clock which is much larger than the IP bus clock,
      * CPU can run out of the interrupt handler before the interrupt flag being cleared, resulting in the
@@ -69,20 +71,20 @@ int main(void)
     PIT_GetDefaultConfig(&pitConfig);
 
     /* Init pit module */
-    PIT_Init(PIT, &pitConfig);
+    PIT_Init(DEMO_PIT_BASEADDR, &pitConfig);
 
     /* Set timer period for channel 0 */
-    PIT_SetTimerPeriod(PIT, kPIT_Chnl_0, USEC_TO_COUNT(1000000U, PIT_SOURCE_CLOCK));
+    PIT_SetTimerPeriod(DEMO_PIT_BASEADDR, DEMO_PIT_CHANNEL, USEC_TO_COUNT(1000000U, PIT_SOURCE_CLOCK));
 
     /* Enable timer interrupts for channel 0 */
-    PIT_EnableInterrupts(PIT, kPIT_Chnl_0, kPIT_TimerInterruptEnable);
+    PIT_EnableInterrupts(DEMO_PIT_BASEADDR, DEMO_PIT_CHANNEL, kPIT_TimerInterruptEnable);
 
     /* Enable at the NVIC */
     EnableIRQ(PIT_IRQ_ID);
 
     /* Start channel 0 */
     PRINTF("\r\nStarting channel No.0 ...");
-    PIT_StartTimer(PIT, kPIT_Chnl_0);
+    PIT_StartTimer(DEMO_PIT_BASEADDR, DEMO_PIT_CHANNEL);
 
     while (true)
     {

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018,2019 NXP
+ * Copyright 2018-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -34,38 +34,27 @@
 /* Defines                                                                    */
 /* ************************************************************************** */
 
-#define SSS_SUBSYSTEM_TYPE_IS_OPENSSL(subsystem) \
-    (subsystem == kType_SSS_OpenSSL)
+#define SSS_SUBSYSTEM_TYPE_IS_OPENSSL(subsystem) (subsystem == kType_SSS_OpenSSL)
 
-#define SSS_SESSION_TYPE_IS_OPENSSL(session) \
-    (session && SSS_SUBSYSTEM_TYPE_IS_OPENSSL(session->subsystem))
+#define SSS_SESSION_TYPE_IS_OPENSSL(session) (session && SSS_SUBSYSTEM_TYPE_IS_OPENSSL(session->subsystem))
 
-#define SSS_KEY_STORE_TYPE_IS_OPENSSL(keyStore) \
-    (keyStore && SSS_SESSION_TYPE_IS_OPENSSL(keyStore->session))
+#define SSS_KEY_STORE_TYPE_IS_OPENSSL(keyStore) (keyStore && SSS_SESSION_TYPE_IS_OPENSSL(keyStore->session))
 
-#define SSS_OBJECT_TYPE_IS_OPENSSL(pObject) \
-    (pObject && SSS_KEY_STORE_TYPE_IS_OPENSSL(pObject->keyStore))
+#define SSS_OBJECT_TYPE_IS_OPENSSL(pObject) (pObject && SSS_KEY_STORE_TYPE_IS_OPENSSL(pObject->keyStore))
 
-#define SSS_ASYMMETRIC_TYPE_IS_OPENSSL(context) \
-    (context && SSS_SESSION_TYPE_IS_OPENSSL(context->session))
+#define SSS_ASYMMETRIC_TYPE_IS_OPENSSL(context) (context && SSS_SESSION_TYPE_IS_OPENSSL(context->session))
 
-#define SSS_DERIVE_KEY_TYPE_IS_OPENSSL(context) \
-    (context && SSS_SESSION_TYPE_IS_OPENSSL(context->session))
+#define SSS_DERIVE_KEY_TYPE_IS_OPENSSL(context) (context && SSS_SESSION_TYPE_IS_OPENSSL(context->session))
 
-#define SSS_SYMMETRIC_TYPE_IS_OPENSSL(context) \
-    (context && SSS_SESSION_TYPE_IS_OPENSSL(context->session))
+#define SSS_SYMMETRIC_TYPE_IS_OPENSSL(context) (context && SSS_SESSION_TYPE_IS_OPENSSL(context->session))
 
-#define SSS_MAC_TYPE_IS_OPENSSL(context) \
-    (context && SSS_SESSION_TYPE_IS_OPENSSL(context->session))
+#define SSS_MAC_TYPE_IS_OPENSSL(context) (context && SSS_SESSION_TYPE_IS_OPENSSL(context->session))
 
-#define SSS_RNG_CONTEXT_TYPE_IS_OPENSSL(context) \
-    (context && SSS_SESSION_TYPE_IS_OPENSSL(context->session))
+#define SSS_RNG_CONTEXT_TYPE_IS_OPENSSL(context) (context && SSS_SESSION_TYPE_IS_OPENSSL(context->session))
 
-#define SSS_DIGEST_TYPE_IS_OPENSSL(context) \
-    (context && SSS_SESSION_TYPE_IS_OPENSSL(context->session))
+#define SSS_DIGEST_TYPE_IS_OPENSSL(context) (context && SSS_SESSION_TYPE_IS_OPENSSL(context->session))
 
-#define SSS_AEAD_TYPE_IS_OPENSSL(context) \
-    (context && SSS_SESSION_TYPE_IS_OPENSSL(context->session))
+#define SSS_AEAD_TYPE_IS_OPENSSL(context) (context && SSS_SESSION_TYPE_IS_OPENSSL(context->session))
 
 /* ************************************************************************** */
 /* Structrues and Typedefs                                                    */
@@ -146,10 +135,9 @@ typedef struct _sss_openssl_symmetric
     /*! Virtual connection between application (user context) and specific
      * security subsystem and function thereof. */
     sss_openssl_session_t *session;
-    sss_openssl_object_t
-        *keyObject;            /*!< Reference to key and it's properties. */
-    sss_algorithm_t algorithm; /*!  */
-    sss_mode_t mode;           /*!  */
+    sss_openssl_object_t *keyObject; /*!< Reference to key and it's properties. */
+    sss_algorithm_t algorithm;       /*!  */
+    sss_mode_t mode;                 /*!  */
     EVP_CIPHER_CTX *cipher_ctx;
     uint8_t cache_data[16];
     size_t cache_data_len;
@@ -158,10 +146,9 @@ typedef struct _sss_openssl_symmetric
 typedef struct
 {
     sss_openssl_session_t *session;
-    sss_openssl_object_t
-        *keyObject;            /*!< Reference to key and it's properties. */
-    sss_algorithm_t algorithm; /*!  */
-    sss_mode_t mode;           /*!  */
+    sss_openssl_object_t *keyObject; /*!< Reference to key and it's properties. */
+    sss_algorithm_t algorithm;       /*!  */
+    sss_mode_t mode;                 /*!  */
     CMAC_CTX *cmac_ctx;
     HMAC_CTX *hmac_ctx;
 } sss_openssl_mac_t;
@@ -171,12 +158,23 @@ typedef struct _sss_openssl_aead
     /*! Virtual connection between application (user context) and specific
      * security subsystem and function thereof. */
     sss_openssl_session_t *session;
-    sss_openssl_object_t
-        *keyObject;            /*!< Reference to key and it's properties. */
-    sss_algorithm_t algorithm; /*!<  */
-    sss_mode_t mode;           /*!<  */
+    sss_openssl_object_t *keyObject; /*!< Reference to key and it's properties. */
+    sss_algorithm_t algorithm;       /*!<  */
+    sss_mode_t mode;                 /*!<  */
 
     /*! Implementation specific part */
+    EVP_CIPHER_CTX *aead_ctx; /*!< Reference to aead context. */
+    uint8_t cache_data[16];   /*!< Cache for GCM data  */
+    size_t cache_data_len;    /*!< Store GCM Cache len*/
+    uint8_t *pCcm_data;       /*!< Ref to CCM data dynamic allocated.. */
+    size_t ccm_dataTotalLen;  /*!< Store CCM data total len. */
+    size_t ccm_dataoffset;    /*!< Store CCM data offset. */
+    uint8_t *pCcm_tag;        /*!< Reference to tag. */
+    size_t ccm_tagLen;        /*!< Store tag len. */
+    const uint8_t *pCcm_aad;  /*!< Reference to AAD */
+    size_t ccm_aadLen;        /*!< Store AAD len. */
+    const uint8_t *pCcm_iv;   /*!< Reference to IV. */
+    size_t ccm_ivLen;         /*!< Store IV len. */
 } sss_openssl_aead_t;
 
 typedef struct _sss_openssl_digest
@@ -205,12 +203,24 @@ typedef struct
 /* Functions                                                                  */
 /* ************************************************************************** */
 
+/** Similar to @ref sss_openssl_asymmetric_sign_digest,
+*
+* but hashing/digest done by openssl
+*/
+sss_status_t sss_openssl_asymmetric_sign(
+    sss_openssl_asymmetric_t *context, uint8_t *srcData, size_t srcLen, uint8_t *signature, size_t *signatureLen);
+
+/** Similar to @ref sss_openssl_asymmetric_verify_digest,
+* but hashing/digest done by openssl
+*
+*/
+sss_status_t sss_openssl_asymmetric_verify(
+    sss_openssl_asymmetric_t *context, uint8_t *srcData, size_t srcLen, uint8_t *signature, size_t signatureLen);
+
 /** Store key inside persistant key store */
 sss_status_t ks_openssl_store_key(const sss_openssl_object_t *sss_key);
 
-sss_status_t ks_openssl_load_key(sss_openssl_object_t *sss_key,
-    keyStoreTable_t *keystore_shadow,
-    uint32_t extKeyId);
+sss_status_t ks_openssl_load_key(sss_openssl_object_t *sss_key, keyStoreTable_t *keystore_shadow, uint32_t extKeyId);
 
 sss_status_t ks_openssl_fat_update(sss_openssl_key_store_t *keyStore);
 

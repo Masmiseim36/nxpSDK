@@ -1,5 +1,5 @@
 /*
- * Amazon FreeRTOS Shadow Demo V1.4.7
+ * FreeRTOS Shadow Demo V1.4.7
  * Copyright (C) 2017 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -59,7 +59,7 @@
 #include "iot_init.h"
 
 /* Task names. */
-#define shadowDemoCHAR_TASK_NAME "Shd-IOT-%d"
+#define shadowDemoCHAR_TASK_NAME   "Shd-IOT-%d"
 #define shadowDemoUPDATE_TASK_NAME "ShDemoUpdt"
 
 /* Format string and length of the initial reported state, "red". */
@@ -114,7 +114,7 @@
 /* Queue configuration parameters. */
 #define shadowDemoSEND_QUEUE_WAIT_TICKS 3000
 #define shadowDemoRECV_QUEUE_WAIT_TICKS 500
-#define shadowDemoUPDATE_QUEUE_LENGTH democonfigSHADOW_DEMO_NUM_TASKS * 2
+#define shadowDemoUPDATE_QUEUE_LENGTH   democonfigSHADOW_DEMO_NUM_TASKS * 2
 
 /* The maximum amount of time tasks will wait for their updates to process. Tasks
  * should not continue executing until their updates have processed.*/

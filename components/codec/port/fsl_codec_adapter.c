@@ -6,43 +6,9 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#ifdef CODEC_WM8904_ENABLE
-#include "fsl_wm8904_adapter.h"
-#endif
-
-#ifdef CODEC_WM8960_ENABLE
-#include "fsl_wm8960_adapter.h"
-#endif
-
-#ifdef CODEC_WM8524_ENABLE
-#include "fsl_wm8524_adapter.h"
-#endif
-
-#ifdef CODEC_SGTL5000_ENABLE
-#include "fsl_sgtl5000_adapter.h"
-#endif
-
-#ifdef CODEC_DA7212_ENABLE
-#include "fsl_da7212_adapter.h"
-#endif
-
-#ifdef CODEC_CS42888_ENABLE
-#include "fsl_cs42888_adapter.h"
-#endif
-
-#ifdef CODEC_AK4497_ENABLE
-#include "fsl_ak4497_adapter.h"
-#endif
-
-#ifdef CODEC_AK4458_ENABLE
-#include "fsl_ak4458_adapter.h"
-#endif
-
-#ifdef CODEC_TFA9XXX_ENABLE
-#include "fsl_tfa9xxx_adapter.h"
-#endif
-
 #include "fsl_codec_adapter.h"
+#include "fsl_codec_common.h"
+
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -65,7 +31,7 @@
  * param config codec configuration.
  * return kStatus_Success is success, else initial failed.
  */
-status_t HAL_CODEC_Init(codec_handle_t *handle, void *config)
+status_t HAL_CODEC_Init(void *handle, void *config)
 {
     assert((config != NULL) && (handle != NULL));
 
@@ -127,6 +93,12 @@ status_t HAL_CODEC_Init(codec_handle_t *handle, void *config)
             retVal = HAL_CODEC_TFA9XXX_Init(handle, config);
             break;
 #endif
+
+#ifdef CODEC_TFA9896_ENABLE
+        case kCODEC_TFA9896:
+            retVal = HAL_CODEC_TFA9896_Init(handle, config);
+            break;
+#endif
         default:
             return kStatus_InvalidArgument;
     }
@@ -140,12 +112,12 @@ status_t HAL_CODEC_Init(codec_handle_t *handle, void *config)
  * param handle codec handle.
  * return kStatus_Success is success, else de-initial failed.
  */
-status_t HAL_CODEC_Deinit(codec_handle_t *handle)
+status_t HAL_CODEC_Deinit(void *handle)
 {
     assert(handle != NULL);
     status_t retVal = kStatus_Success;
 
-    switch (handle->codecConfig->codecDevType)
+    switch (((codec_handle_t *)handle)->codecConfig->codecDevType)
     {
 #ifdef CODEC_WM8904_ENABLE
         case kCODEC_WM8904:
@@ -216,12 +188,12 @@ status_t HAL_CODEC_Deinit(codec_handle_t *handle)
  * param bitWidth bit width.
  * return kStatus_Success is success, else configure failed.
  */
-status_t HAL_CODEC_SetFormat(codec_handle_t *handle, uint32_t mclk, uint32_t sampleRate, uint32_t bitWidth)
+status_t HAL_CODEC_SetFormat(void *handle, uint32_t mclk, uint32_t sampleRate, uint32_t bitWidth)
 {
     assert(handle != NULL);
     status_t retVal = kStatus_Success;
 
-    switch (handle->codecConfig->codecDevType)
+    switch (((codec_handle_t *)handle)->codecConfig->codecDevType)
     {
 #ifdef CODEC_WM8904_ENABLE
         case kCODEC_WM8904:
@@ -291,12 +263,12 @@ status_t HAL_CODEC_SetFormat(codec_handle_t *handle, uint32_t mclk, uint32_t sam
  * param volume volume value, support 0 ~ 100, 0 is mute, 100 is the maximum volume value.
  * return kStatus_Success is success, else configure failed.
  */
-status_t HAL_CODEC_SetVolume(codec_handle_t *handle, uint32_t playChannel, uint32_t volume)
+status_t HAL_CODEC_SetVolume(void *handle, uint32_t playChannel, uint32_t volume)
 {
     assert(handle != NULL);
     status_t retVal = kStatus_Success;
 
-    switch (handle->codecConfig->codecDevType)
+    switch (((codec_handle_t *)handle)->codecConfig->codecDevType)
     {
 #ifdef CODEC_WM8904_ENABLE
         case kCODEC_WM8904:
@@ -366,12 +338,12 @@ status_t HAL_CODEC_SetVolume(codec_handle_t *handle, uint32_t playChannel, uint3
  * param isMute true is mute, false is unmute.
  * return kStatus_Success is success, else configure failed.
  */
-status_t HAL_CODEC_SetMute(codec_handle_t *handle, uint32_t playChannel, bool isMute)
+status_t HAL_CODEC_SetMute(void *handle, uint32_t playChannel, bool isMute)
 {
     assert(handle != NULL);
     status_t retVal = kStatus_Success;
 
-    switch (handle->codecConfig->codecDevType)
+    switch (((codec_handle_t *)handle)->codecConfig->codecDevType)
     {
 #ifdef CODEC_WM8904_ENABLE
         case kCODEC_WM8904:
@@ -441,12 +413,12 @@ status_t HAL_CODEC_SetMute(codec_handle_t *handle, uint32_t playChannel, bool is
  * param powerOn true is power on, false is power down.
  * return kStatus_Success is success, else configure failed.
  */
-status_t HAL_CODEC_SetPower(codec_handle_t *handle, codec_module_t module, bool powerOn)
+status_t HAL_CODEC_SetPower(void *handle, uint32_t module, bool powerOn)
 {
     assert(handle != NULL);
     status_t retVal = kStatus_Success;
 
-    switch (handle->codecConfig->codecDevType)
+    switch (((codec_handle_t *)handle)->codecConfig->codecDevType)
     {
 #ifdef CODEC_WM8904_ENABLE
         case kCODEC_WM8904:
@@ -516,12 +488,12 @@ status_t HAL_CODEC_SetPower(codec_handle_t *handle, codec_module_t module, bool 
  *
  * return kStatus_Success is success, else configure failed.
  */
-status_t HAL_CODEC_SetRecord(codec_handle_t *handle, uint32_t recordSource)
+status_t HAL_CODEC_SetRecord(void *handle, uint32_t recordSource)
 {
     assert(handle != NULL);
     status_t retVal = kStatus_Success;
 
-    switch (handle->codecConfig->codecDevType)
+    switch (((codec_handle_t *)handle)->codecConfig->codecDevType)
     {
 #ifdef CODEC_WM8904_ENABLE
         case kCODEC_WM8904:
@@ -594,12 +566,12 @@ status_t HAL_CODEC_SetRecord(codec_handle_t *handle, uint32_t recordSource)
 
  * return kStatus_Success is success, else configure failed.
  */
-status_t HAL_CODEC_SetRecordChannel(codec_handle_t *handle, uint32_t leftRecordChannel, uint32_t rightRecordChannel)
+status_t HAL_CODEC_SetRecordChannel(void *handle, uint32_t leftRecordChannel, uint32_t rightRecordChannel)
 {
     assert(handle != NULL);
     status_t retVal = kStatus_Success;
 
-    switch (handle->codecConfig->codecDevType)
+    switch (((codec_handle_t *)handle)->codecConfig->codecDevType)
     {
 #ifdef CODEC_WM8904_ENABLE
         case kCODEC_WM8904:
@@ -669,12 +641,12 @@ status_t HAL_CODEC_SetRecordChannel(codec_handle_t *handle, uint32_t leftRecordC
  *
  * return kStatus_Success is success, else configure failed.
  */
-status_t HAL_CODEC_SetPlay(codec_handle_t *handle, uint32_t playSource)
+status_t HAL_CODEC_SetPlay(void *handle, uint32_t playSource)
 {
     assert(handle != NULL);
     status_t retVal = kStatus_Success;
 
-    switch (handle->codecConfig->codecDevType)
+    switch (((codec_handle_t *)handle)->codecConfig->codecDevType)
     {
 #ifdef CODEC_WM8904_ENABLE
         case kCODEC_WM8904:
@@ -749,12 +721,12 @@ status_t HAL_CODEC_SetPlay(codec_handle_t *handle, uint32_t playSource)
  *  codec specific driver for detail configurations.
  * return kStatus_Success is success, else configure failed.
  */
-status_t HAL_CODEC_ModuleControl(codec_handle_t *handle, codec_module_ctrl_cmd_t cmd, uint32_t data)
+status_t HAL_CODEC_ModuleControl(void *handle, uint32_t cmd, uint32_t data)
 {
     assert(handle != NULL);
     status_t retVal = kStatus_Success;
 
-    switch (handle->codecConfig->codecDevType)
+    switch (((codec_handle_t *)handle)->codecConfig->codecDevType)
     {
 #ifdef CODEC_WM8904_ENABLE
         case kCODEC_WM8904:

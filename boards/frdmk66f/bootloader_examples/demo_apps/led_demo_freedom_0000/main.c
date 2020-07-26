@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2013 Freescale Semiconductor, Inc.
+ * Copyright 2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -7,6 +8,7 @@
 
 #include "fsl_device_registers.h"
 #include "milliseconds_delay.h"
+#include "pin_mux.h"
 
 #define LED1_OFFSET 9
 #define LED2_OFFSET 6
@@ -18,23 +20,6 @@
 static uint8_t led_offset[LED_COUNT] = { LED1_OFFSET, LED2_OFFSET, LED3_OFFSET };
 static PORT_Type *led_port[LED_COUNT] = { PORTC, PORTE, PORTA };
 static GPIO_Type *led_gpio[LED_COUNT] = { GPIOC, GPIOE, GPIOA };
-
-static void init_hardware(void)
-{
-    SIM->SCGC5 |= (SIM_SCGC5_PORTA_MASK | SIM_SCGC5_PORTB_MASK | SIM_SCGC5_PORTC_MASK | SIM_SCGC5_PORTD_MASK |
-                   SIM_SCGC5_PORTE_MASK);
-
-    SIM->SOPT2 |= SIM_SOPT2_PLLFLLSEL_MASK; // set PLLFLLSEL to select the PLL for this clock source
-
-    uint8_t i;
-    for (i = 0; i < LED_COUNT; i++)
-    {
-        // Enable the LED pins GPIO
-        led_port[i]->PCR[led_offset[i]] = PORT_PCR_MUX(1);
-        // Set ports to outputs
-        led_gpio[i]->PDDR |= (1 << led_offset[i]);
-    }
-}
 
 static void led_toggle(uint32_t leds)
 {
@@ -60,7 +45,7 @@ void delay(void)
 
 int main(void)
 {
-    init_hardware();
+    BOARD_InitBootPins();
     // Note: for ROM development, use this version of delay function,
     // Which is in order to test if the VTCOR is correct.
     milliseconds_delay_init();

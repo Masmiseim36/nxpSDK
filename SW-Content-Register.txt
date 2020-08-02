@@ -422,6 +422,16 @@ TinyCBOR                   Name: TinyCBOR
                            rtos/freertos/libraries/3rdparty/tinycbor         
                            Origin: Intel Corporation (MIT)                   
 
+wifi_qca                   version: 2.0.0                                    
+                           Location: middleware/wifi_qca                     
+                           Description: Qualcomm Wi-Fi stack                 
+                           License: Open Source - BSD-3-Clause               
+                           Author: Qualcomm Atheros, Inc.                    
+                           name: wifi_qca                                    
+                           Format: source code                               
+                           URL: https://www.qualcomm.com/products/wifi-      
+                           platforms                                         
+
 wifi_wiced                 Name: wifi_wiced                                  
                            Version: 6.4                                      
                            Outgoing License: Cypress IOT Community License   

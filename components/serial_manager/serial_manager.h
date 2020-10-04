@@ -19,111 +19,99 @@
  ******************************************************************************/
 /*! @brief Enable or disable serial manager non-blocking mode (1 - enable, 0 - disable) */
 #ifdef DEBUG_CONSOLE_TRANSFER_NON_BLOCKING
-#ifndef SERIAL_MANAGER_NON_BLOCKING_MODE
-#define SERIAL_MANAGER_NON_BLOCKING_MODE (1U)
-#endif
+	#ifndef SERIAL_MANAGER_NON_BLOCKING_MODE
+		#define SERIAL_MANAGER_NON_BLOCKING_MODE (1U)
+	#endif
 #else
-#ifndef SERIAL_MANAGER_NON_BLOCKING_MODE
-#define SERIAL_MANAGER_NON_BLOCKING_MODE (0U)
-#endif
+	#ifndef SERIAL_MANAGER_NON_BLOCKING_MODE
+		#define SERIAL_MANAGER_NON_BLOCKING_MODE (0U)
+	#endif
 #endif
 
 /*! @brief Enable or disable uart port (1 - enable, 0 - disable) */
 #ifndef SERIAL_PORT_TYPE_UART
-#define SERIAL_PORT_TYPE_UART (0U)
+	#define SERIAL_PORT_TYPE_UART (0U)
 #endif
 
 /*! @brief Enable or disable USB CDC port (1 - enable, 0 - disable) */
 #ifndef SERIAL_PORT_TYPE_USBCDC
-#define SERIAL_PORT_TYPE_USBCDC (0U)
+	#define SERIAL_PORT_TYPE_USBCDC (0U)
 #endif
 
 /*! @brief Enable or disable SWO port (1 - enable, 0 - disable) */
 #ifndef SERIAL_PORT_TYPE_SWO
-#define SERIAL_PORT_TYPE_SWO (0U)
+	#define SERIAL_PORT_TYPE_SWO (0U)
 #endif
 
 /*! @brief Enable or disable USB CDC virtual port (1 - enable, 0 - disable) */
 #ifndef SERIAL_PORT_TYPE_USBCDC_VIRTUAL
-#define SERIAL_PORT_TYPE_USBCDC_VIRTUAL (0U)
+	#define SERIAL_PORT_TYPE_USBCDC_VIRTUAL (0U)
 #endif
 
 /*! @brief Set serial manager write handle size */
 #if (defined(SERIAL_MANAGER_NON_BLOCKING_MODE) && (SERIAL_MANAGER_NON_BLOCKING_MODE > 0U))
-#define SERIAL_MANAGER_WRITE_HANDLE_SIZE (44U)
-#define SERIAL_MANAGER_READ_HANDLE_SIZE  (44U)
+	#define SERIAL_MANAGER_WRITE_HANDLE_SIZE (44U)
+	#define SERIAL_MANAGER_READ_HANDLE_SIZE  (44U)
 #else
-#define SERIAL_MANAGER_WRITE_HANDLE_SIZE (4U)
-#define SERIAL_MANAGER_READ_HANDLE_SIZE  (4U)
+	#define SERIAL_MANAGER_WRITE_HANDLE_SIZE (4U)
+	#define SERIAL_MANAGER_READ_HANDLE_SIZE  (4U)
 #endif
 
 #if (defined(SERIAL_PORT_TYPE_UART) && (SERIAL_PORT_TYPE_UART > 0U))
-#include "serial_port_uart.h"
+	#include "serial_port_uart.h"
 #endif
 
 #if (defined(SERIAL_PORT_TYPE_USBCDC) && (SERIAL_PORT_TYPE_USBCDC > 0U))
-
-#if !(defined(SERIAL_MANAGER_NON_BLOCKING_MODE) && (SERIAL_MANAGER_NON_BLOCKING_MODE > 0U))
-#error The serial manager blocking mode cannot be supported for USB CDC.
-#endif
-
-#include "serial_port_usb.h"
+	#if !(defined(SERIAL_MANAGER_NON_BLOCKING_MODE) && (SERIAL_MANAGER_NON_BLOCKING_MODE > 0U))
+		#error The serial manager blocking mode cannot be supported for USB CDC.
+	#endif
+	#include "serial_port_usb.h"
 #endif
 
 #if (defined(SERIAL_PORT_TYPE_SWO) && (SERIAL_PORT_TYPE_SWO > 0U))
-#include "serial_port_swo.h"
+	#include "serial_port_swo.h"
 #endif
 
 #if (defined(SERIAL_PORT_TYPE_USBCDC_VIRTUAL) && (SERIAL_PORT_TYPE_USBCDC_VIRTUAL > 0U))
-
-#if !(defined(SERIAL_MANAGER_NON_BLOCKING_MODE) && (SERIAL_MANAGER_NON_BLOCKING_MODE > 0U))
-#error The serial manager blocking mode cannot be supported for USB CDC.
-#endif
-
-#include "serial_port_usb_virtual.h"
+	#if !(defined(SERIAL_MANAGER_NON_BLOCKING_MODE) && (SERIAL_MANAGER_NON_BLOCKING_MODE > 0U))
+		#error The serial manager blocking mode cannot be supported for USB CDC.
+	#endif
+	#include "serial_port_usb_virtual.h"
 #endif
 
 #define SERIAL_MANAGER_HANDLE_SIZE_TEMP 0U
 #if (defined(SERIAL_PORT_TYPE_UART) && (SERIAL_PORT_TYPE_UART > 0U))
-
-#if (SERIAL_PORT_UART_HANDLE_SIZE > SERIAL_MANAGER_HANDLE_SIZE_TEMP)
-#undef SERIAL_MANAGER_HANDLE_SIZE_TEMP
-#define SERIAL_MANAGER_HANDLE_SIZE_TEMP SERIAL_PORT_UART_HANDLE_SIZE
-#endif
-
+	#if (SERIAL_PORT_UART_HANDLE_SIZE > SERIAL_MANAGER_HANDLE_SIZE_TEMP)
+		#undef SERIAL_MANAGER_HANDLE_SIZE_TEMP
+		#define SERIAL_MANAGER_HANDLE_SIZE_TEMP SERIAL_PORT_UART_HANDLE_SIZE
+	#endif
 #endif
 
 #if (defined(SERIAL_PORT_TYPE_USBCDC) && (SERIAL_PORT_TYPE_USBCDC > 0U))
-
-#if (SERIAL_PORT_USB_CDC_HANDLE_SIZE > SERIAL_MANAGER_HANDLE_SIZE_TEMP)
-#undef SERIAL_MANAGER_HANDLE_SIZE_TEMP
-#define SERIAL_MANAGER_HANDLE_SIZE_TEMP SERIAL_PORT_USB_CDC_HANDLE_SIZE
-#endif
-
+	#if (SERIAL_PORT_USB_CDC_HANDLE_SIZE > SERIAL_MANAGER_HANDLE_SIZE_TEMP)
+		#undef SERIAL_MANAGER_HANDLE_SIZE_TEMP
+		#define SERIAL_MANAGER_HANDLE_SIZE_TEMP SERIAL_PORT_USB_CDC_HANDLE_SIZE
+	#endif
 #endif
 
 #if (defined(SERIAL_PORT_TYPE_SWO) && (SERIAL_PORT_TYPE_SWO > 0U))
-
-#if (SERIAL_PORT_SWO_HANDLE_SIZE > SERIAL_MANAGER_HANDLE_SIZE_TEMP)
-#undef SERIAL_MANAGER_HANDLE_SIZE_TEMP
-#define SERIAL_MANAGER_HANDLE_SIZE_TEMP SERIAL_PORT_SWO_HANDLE_SIZE
-#endif
-
+	#if (SERIAL_PORT_SWO_HANDLE_SIZE > SERIAL_MANAGER_HANDLE_SIZE_TEMP)
+		#undef SERIAL_MANAGER_HANDLE_SIZE_TEMP
+		#define SERIAL_MANAGER_HANDLE_SIZE_TEMP SERIAL_PORT_SWO_HANDLE_SIZE
+	#endif
 #endif
 
 #if (defined(SERIAL_PORT_TYPE_USBCDC_VIRTUAL) && (SERIAL_PORT_TYPE_USBCDC_VIRTUAL > 0U))
-
-#if (SERIAL_PORT_USB_VIRTUAL_HANDLE_SIZE > SERIAL_MANAGER_HANDLE_SIZE_TEMP)
-#undef SERIAL_MANAGER_HANDLE_SIZE_TEMP
-#define SERIAL_MANAGER_HANDLE_SIZE_TEMP SERIAL_PORT_USB_VIRTUAL_HANDLE_SIZE
-#endif
-
+	#if (SERIAL_PORT_USB_VIRTUAL_HANDLE_SIZE > SERIAL_MANAGER_HANDLE_SIZE_TEMP)
+		#undef SERIAL_MANAGER_HANDLE_SIZE_TEMP
+		#define SERIAL_MANAGER_HANDLE_SIZE_TEMP SERIAL_PORT_USB_VIRTUAL_HANDLE_SIZE
+	#endif
 #endif
 
 /*! @brief SERIAL_PORT_UART_HANDLE_SIZE/SERIAL_PORT_USB_CDC_HANDLE_SIZE + serial manager dedicated size */
 #if ((defined(SERIAL_MANAGER_HANDLE_SIZE_TEMP) && (SERIAL_MANAGER_HANDLE_SIZE_TEMP > 0U)))
 #else
-#error SERIAL_PORT_TYPE_UART, SERIAL_PORT_TYPE_USBCDC, SERIAL_PORT_TYPE_SWO and SERIAL_PORT_TYPE_USBCDC_VIRTUAL should not be cleared at same time.
+	#error SERIAL_PORT_TYPE_UART, SERIAL_PORT_TYPE_USBCDC, SERIAL_PORT_TYPE_SWO and SERIAL_PORT_TYPE_USBCDC_VIRTUAL should not be cleared at same time.
 #endif
 
 /*! @brief Definition of serial manager handle size. */

@@ -16,7 +16,7 @@
       arm_target_loader_applicable_loaders=""
       arm_target_loader_default_loader=""
       arm_target_loader_reset_after_download="No"
-      c_preprocessor_definitions="XIP_EXTERNAL_FLASH=1;XIP_BOOT_HEADER_ENABLE=1;NDEBUG;CPU_MIMXRT1011DAE5A"
+      c_preprocessor_definitions="XIP_EXTERNAL_FLASH=1;XIP_BOOT_HEADER_ENABLE=1;NDEBUG;CPU_MIMXRT1011DAE5A;SERIAL_PORT_TYPE_UART=1"
       c_system_include_directories="$(StudioDir)/include;$(PackagesDir)/include;$(TargetsDir)/iMXRT"
       c_user_include_directories=";./..;./../../../../..;./../../../../../../../CMSIS/Include;./../../../../../../../devices;./../../../../../../../devices/MIMXRT1011/drivers;./../../../../../../../devices/MIMXRT1011/drivers;./../../../../../../../devices/MIMXRT1011/drivers;./../../../../../../../devices/MIMXRT1011;./../../../../../../../devices/MIMXRT1011/utilities/str;./../../../../../../../devices/MIMXRT1011/utilities/debug_console;./../../../../../../../components/uart;./../../../../../../../components/serial_manager;./../../../../../../../components/serial_manager;./../../../../../../../devices/MIMXRT1011/drivers;./../../../../../../../components/lists;./../../../../../../../devices/MIMXRT1011/drivers;./../../../../../../../devices/MIMXRT1011/drivers;./../../../../../../../devices/MIMXRT1011/xip;./../../../../../xip"
       debug_register_definition_file="$(TargetsDir)/iMXRT/XML/$(DeviceName)_registers.xml"
@@ -146,4 +146,7 @@
     gcc_omit_frame_pointer="Yes"
     gcc_optimization_level="Level 1"
     hidden="Yes" />
+  <configuration
+    Name="Common"
+    c_preprocessor_definitions="SERIAL_PORT_TYPE_UART=1" />
 </solution>

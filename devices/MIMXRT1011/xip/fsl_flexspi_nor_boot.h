@@ -65,17 +65,20 @@ typedef struct _ivt_
 
 /* Set resume entry */
 #if defined(__CC_ARM) || defined(__ARMCC_VERSION)
-extern uint32_t __Vectors[];
-#define IMAGE_ENTRY_ADDRESS ((uint32_t)__Vectors)
+	extern uint32_t __Vectors[];
+	#define IMAGE_ENTRY_ADDRESS ((uint32_t)__Vectors)
 #elif defined(__MCUXPRESSO)
-extern uint32_t __Vectors[];
-#define IMAGE_ENTRY_ADDRESS ((uint32_t)__Vectors)
+	extern uint32_t __Vectors[];
+	#define IMAGE_ENTRY_ADDRESS ((uint32_t)__Vectors)
 #elif defined(__ICCARM__)
-extern uint32_t __VECTOR_TABLE[];
-#define IMAGE_ENTRY_ADDRESS ((uint32_t)__VECTOR_TABLE)
+	extern uint32_t __VECTOR_TABLE[];
+	#define IMAGE_ENTRY_ADDRESS ((uint32_t)__VECTOR_TABLE)
+#elif defined __CROSSWORKS_ARM
+	extern uint32_t __vectors_load_start__;
+	#define IMAGE_ENTRY_ADDRESS ((uint32_t)&__vectors_load_start__)
 #elif defined(__GNUC__)
-extern uint32_t __VECTOR_TABLE[];
-#define IMAGE_ENTRY_ADDRESS ((uint32_t)__VECTOR_TABLE)
+	extern uint32_t __VECTOR_TABLE[];
+	#define IMAGE_ENTRY_ADDRESS ((uint32_t)__VECTOR_TABLE)
 #endif
 
 #if defined(XIP_BOOT_HEADER_DCD_ENABLE) && (1 == XIP_BOOT_HEADER_DCD_ENABLE)

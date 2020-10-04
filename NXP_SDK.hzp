@@ -1,0 +1,74 @@
+<!DOCTYPE CrossStudio_Project_File>
+<solution Name="NXP_SDK" target="8" version="2">
+  <folder Name="iMXRT 1010">
+    <import file_name="./boards/evkmimxrt1010/bootloader_examples/flashloader/Crossworks/flashloader.hzp" />
+    <import file_name="./boards/evkmimxrt1010/driver_examples/lpspi/edma_b2b_transfer/master/Crossworks/lpspi_edma_b2b_transfer_master.hzp" />
+    <import file_name="./boards/evkmimxrt1010/driver_examples/lpspi/edma_b2b_transfer/slave/Crossworks/lpspi_edma_b2b_transfer_slave.hzp" />
+    <import file_name="./boards/evkmimxrt1010/driver_examples/lpspi/polling_b2b_transfer/master/Crossworks/lpspi_polling_b2b_transfer_master.hzp" />
+    <import file_name="./boards/evkmimxrt1010/driver_examples/lpspi/polling_b2b_transfer/slave/Crossworks/lpspi_polling_b2b_transfer_slave.hzp" />
+  </folder>
+  <folder Name="iMXRT 1015">
+    <import file_name="./boards/evkmimxrt1015/bootloader_examples/flashloader/Crossworks/flashloader.hzp" />
+    <import file_name="./boards/evkmimxrt1015/driver_examples/flexspi/nor/polling_transfer/Crossworks/flexspi_nor_polling_transfer.hzp" />
+    <import file_name="./boards/evkmimxrt1015/driver_examples/lpspi/edma_b2b_transfer/master/Crossworks/lpspi_edma_b2b_transfer_master.hzp" />
+    <import file_name="./boards/evkmimxrt1015/driver_examples/lpspi/edma_b2b_transfer/slave/Crossworks/lpspi_edma_b2b_transfer_slave.hzp" />
+  </folder>
+  <folder Name="iMXRT 1020">
+    <import file_name="./boards/evkmimxrt1020/driver_examples/enet/txrx_transfer/Crossworks/enet_txrx_transfer.hzp" />
+    <import file_name="./boards/evkmimxrt1020/driver_examples/flexspi/nor/polling_transfer/Crossworks/flexspi_nor_polling_transfer.hzp" />
+    <import file_name="./boards/evkmimxrt1020/driver_examples/lpuart/edma_transfer/Crossworks/lpuart_edma_transfer.hzp" />
+    <import file_name="./boards/evkmimxrt1020/driver_examples/lpuart/interrupt/Crossworks/lpuart_interrupt.hzp" />
+    <import file_name="./boards/evkmimxrt1020/driver_examples/lpuart/polling/Crossworks/lpuart_polling.hzp" />
+    <import file_name="./boards/evkmimxrt1020/driver_examples/sdcard/interrupt/Crossworks/usdcard_interrupt.hzp" />
+    <import file_name="./boards/evkmimxrt1020/fatfs_examples/fatfs_sdcard/Crossworks/fatfs_usdcard.hzp" />
+    <import file_name="./boards/evkmimxrt1020/lwip_examples/lwip_dhcp/bm/Crossworks/lwip_dhcp_bm.hzp" />
+    <import file_name="./boards/evkmimxrt1020/lwip_examples/lwip_ping/bm/Crossworks/lwip_ping_bm.hzp" />
+  </folder>
+  <folder Name="iMXRT 1050">
+    <import file_name="./boards/evkbimxrt1050/bootloader_examples/flashloader/Crossworks/flashloader.hzp" />
+    <import file_name="./boards/evkbimxrt1050/driver_examples/enet/txrx_transfer/Crossworks/enet_txrx_transfer.hzp" />
+    <import file_name="./boards/evkbimxrt1050/driver_examples/flexspi/hyper_flash/polling_transfer/Crossworks/flexspi_hyper_flash_polling_transfer.hzp" />
+    <import file_name="./boards/evkbimxrt1050/driver_examples/flexspi/hyper_ram/polling_transfer/Crossworks/flexspi_hyper_ram_polling_transfer.hzp" />
+    <import file_name="./boards/evkbimxrt1050/driver_examples/flexspi/nor/polling_transfer/Crossworks/flexspi_nor_polling_transfer.hzp" />
+    <import file_name="./boards/evkbimxrt1050/driver_examples/pwm/Crossworks/pwm.hzp" />
+    <import file_name="./boards/evkbimxrt1050/driver_examples/qtmr/timer/Crossworks/qtmr_timer.hzp" />
+    <import file_name="./boards/evkbimxrt1050/driver_examples/sdcard/interrupt/Crossworks/usdcard_interrupt.hzp" />
+    <import file_name="./boards/evkbimxrt1050/lwip_examples/lwip_dhcp/bm/Crossworks/lwip_dhcp_bm.hzp" />
+  </folder>
+  <folder Name="iMXRT 1060">
+    <import file_name="./boards/evkmimxrt1060/driver_examples/flexcan/interrupt_transfer/crossworks/flexcan_interrupt_transfer.hzp" />
+    <import file_name="./boards/evkmimxrt1060/driver_examples/flexcan/loopback/crossworks/flexcan_loopback.hzp" />
+    <import file_name="./boards/evkmimxrt1060/driver_examples/flexcan/loopback_edma_transfer/crossworks/flexcan_loopback_edma_transfer.hzp" />
+    <import file_name="./boards/evkmimxrt1060/driver_examples/flexcan/loopback_transfer/crossworks/flexcan_loopback_transfer.hzp" />
+    <import file_name="./boards/evkmimxrt1060/cmsis_driver_examples/lpspi/edma_b2b_transfer/master/Crossworks/cmsis_lpspi_edma_b2b_transfer_master.hzp" />
+    <import file_name="./boards/evkmimxrt1060/cmsis_driver_examples/lpspi/edma_b2b_transfer/slave/Crossworks/cmsis_lpspi_edma_b2b_transfer_slave.hzp" />
+    <import file_name="./boards/evkmimxrt1060/driver_examples/flexspi/hyper_flash/polling_transfer/Crossworks/flexspi_hyper_flash_polling_transfer.hzp" />
+    <import file_name="./boards/evkmimxrt1060/driver_examples/flexspi/nor/polling_transfer/Crossworks/flexspi_nor_polling_transfer.hzp" />
+    <import file_name="./boards/evkmimxrt1060/driver_examples/lpspi/interrupt_b2b/master/Crossworks/lpspi_interrupt_b2b_master.hzp" />
+    <import file_name="./boards/evkmimxrt1060/driver_examples/lpspi/interrupt_b2b/slave/Crossworks/lpspi_interrupt_b2b_slave.hzp" />
+    <import file_name="./boards/evkmimxrt1060/driver_examples/lpuart/edma_transfer/Crossworks/lpuart_edma_transfer.hzp" />
+    <import file_name="./boards/evkmimxrt1060/driver_examples/lpuart/interrupt/Crossworks/lpuart_interrupt.hzp" />
+    <import file_name="./boards/evkmimxrt1060/driver_examples/lpuart/interrupt_rb_transfer/Crossworks/lpuart_interrupt_rb_transfer.hzp" />
+    <import file_name="./boards/evkmimxrt1060/driver_examples/lpuart/interrupt_transfer/Crossworks/lpuart_interrupt_transfer.hzp" />
+    <import file_name="./boards/evkmimxrt1060/driver_examples/lpuart/interrupt_transfer_seven_bits/Crossworks/lpuart_interrupt_transfer_seven_bits.hzp" />
+    <import file_name="./boards/evkmimxrt1060/driver_examples/lpuart/polling/Crossworks/lpuart_polling.hzp" />
+    <import file_name="./boards/evkmimxrt1060/driver_examples/lpuart/polling_seven_bits/Crossworks/lpuart_polling_seven_bits.hzp" />
+    <import file_name="./boards/evkmimxrt1060/littlefs_examples/littlefs_shell/Crossworks/littlefs_shell.hzp" />
+  </folder>
+  <folder Name="iMXRT 1064">
+    <import file_name="./boards/evkmimxrt1064/bootloader_examples/flashloader/Crossworks/flashloader.hzp" />
+    <import file_name="./boards/evkmimxrt1064/driver_examples/flexspi/hyper_flash/polling_transfer/Crossworks/flexspi_hyper_flash_polling_transfer.hzp" />
+    <import file_name="./boards/evkmimxrt1064/driver_examples/flexspi/nor/polling_transfer/Crossworks/flexspi_nor_polling_transfer.hzp" />
+  </folder>
+  <folder Name="iMX7ULP">
+    <import file_name="./boards/evkmcimx7ulp/driver_examples/lpuart/interrupt/Crossworks/lpuart_interrupt.hzp" />
+    <import file_name="./boards/evkmcimx7ulp/driver_examples/qspi/edma_transfer/Crossworks/qspi_edma_transfer.hzp" />
+  </folder>
+  <folder Name="iMXRT 600">
+    <import file_name="./boards/evkmimxrt685/driver_examples/flexspi/octal/polling_transfer/Crossworks/flexspi_octal_polling_transfer.hzp" />
+  </folder>
+  <folder Name="Kinets K64">
+    <import file_name="boards/frdmk64f/driver_examples/i2c/edma_b2b_transfer/master/Crossworks/i2c_edma_b2b_transfer_master.hzp" />
+    <import file_name="./boards/frdmk64f/fatfs_examples/fatfs_sdcard/Crossworks/fatfs_sdcard.hzp" />
+  </folder>
+</solution>

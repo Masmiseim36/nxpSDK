@@ -248,6 +248,11 @@ void BOARD_ConfigMPU(void)
     extern uint32_t __top_NCACHE_REGION;
     uint32_t nonCacheStart = (uint32_t)(&__base_NCACHE_REGION);
     uint32_t size          = (uint32_t)(&__top_NCACHE_REGION) - nonCacheStart;
+#elif defined(__CROSSWORKS_ARM)
+	extern uint32_t __DTCM_segment_start__;
+	extern uint32_t __DTCM_segment_size__;
+	uint32_t nonCacheStart = (uint32_t)&__DTCM_segment_start__;
+	uint32_t size          = (uint32_t)&__DTCM_segment_size__;
 #elif defined(__ICCARM__) || defined(__GNUC__)
     extern uint32_t __NCACHE_REGION_START[];
     extern uint32_t __NCACHE_REGION_SIZE[];

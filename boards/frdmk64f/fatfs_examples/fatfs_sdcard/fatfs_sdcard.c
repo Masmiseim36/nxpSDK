@@ -116,7 +116,7 @@ int main(void)
 
 #if FF_USE_MKFS
     PRINTF("\r\nMake file system......The time may be long if the card capacity is big.\r\n");
-    if (f_mkfs(driverNumberBuffer, FM_ANY, 0U, work, sizeof work))
+    if (f_mkfs(driverNumberBuffer, NULL, 0U, work, sizeof work))
     {
         PRINTF("Make file system failed.\r\n");
         return -1;

@@ -18,8 +18,8 @@ once more.
 Toolchain supported
 ===================
 - GCC ARM Embedded  9.2.1
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
+- IAR embedded Workbench  8.50.5
+- Keil MDK  5.31
 - MCUXpresso  11.2.0
 
 Hardware requirements
@@ -33,9 +33,6 @@ Board settings
 This example project does not call for any special hardware configurations.
 Although not required, the recommendation is to leave the development board's jumper settings
 and configurations in default state when running this example.
-Prepare the Demo
-================
-
 Running the demo
 ================
 
@@ -46,7 +43,4 @@ The RTT block address is location of '_SEGGER_RTT' variable.
 2) Launch System Viewer tool and click "Target - Start Recording". In modal window set the target 
 interface. Automatic detection might not work so switch "RTT Control Block Detection" to "address"
 and put the address from step (1) into the text field.
-
-Customization options
-=====================
 

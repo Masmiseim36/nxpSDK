@@ -15,8 +15,8 @@ than the nornal method.
 Toolchain supported
 ===================
 - MCUXpresso  11.2.0
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
+- IAR embedded Workbench  8.50.5
+- Keil MDK  5.31
 - GCC ARM Embedded  9.2.1
 
 Hardware requirements
@@ -44,6 +44,3 @@ Prepare the Demo
 Running the demo
 ================
 The message about error or success will be output to the terminal.
-Customization options
-=====================
-

@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP
+ * Copyright 2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -31,5 +31,10 @@
 #define RTE_SPI1_DMA_RX_PERI_SEL    (uint8_t) kDmaRequestMuxLPSPI1Rx
 #define RTE_SPI1_DMA_RX_DMAMUX_BASE DMAMUX
 #define RTE_SPI1_DMA_RX_DMA_BASE    DMA0
+
+#define RTE_SPI1_PCS_TO_SCK_DELAY       0
+#define RTE_SPI1_SCK_TO_PSC_DELAY       0
+#define RTE_SPI1_BETWEEN_TRANSFER_DELAY 50 /* For 10MHz baudrate. delay(ns) = 10^9/baudrate/2. */
+#define RTE_SPI1_MASTER_PCS_PIN_SEL     kLPSPI_MasterPcs0
 
 #endif /* __RTE_DEVICE_H */

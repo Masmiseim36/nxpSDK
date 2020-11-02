@@ -5,8 +5,8 @@ from CMP and PIT. If the button is pressed(CMP interrupt) and the PIT periodic i
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
+- IAR embedded Workbench  8.50.5
+- Keil MDK  5.31
 - GCC ARM Embedded  9.2.1
 - MCUXpresso  11.2.0
 
@@ -46,6 +46,3 @@ XBAR interrupt occurred
 
 XBAR interrupt occurred
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

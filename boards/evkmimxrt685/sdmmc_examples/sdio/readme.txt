@@ -5,8 +5,8 @@ Note: If the sdio card need WL_REG_ON, please connect WL_REG_ON to the sdio card
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
+- IAR embedded Workbench  8.50.5
+- Keil MDK  5.31
 - GCC ARM Embedded  9.2.1
 - MCUXpresso  11.2.0
 
@@ -53,6 +53,3 @@ Read function CIS, in extended way, non-block mode, non-word aligned size
 Read function CIS, in extended way, block mode, non-word aligned size
 The read content is consistent.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

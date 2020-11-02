@@ -9,8 +9,8 @@ The example shows the usage of PF1550 API to:
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
+- IAR embedded Workbench  8.50.5
+- Keil MDK  5.31
 - GCC ARM Embedded  9.2.1
 - MCUXpresso  11.2.0
 
@@ -49,6 +49,3 @@ Please select the PMIC example you want to run:
 [4]. Feed watch dog
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Note: Example enable watchdog power in mode 3, so it will timerout after 16 seconds unless keep call Feed watch dog example. 
-Customization options
-=====================
-

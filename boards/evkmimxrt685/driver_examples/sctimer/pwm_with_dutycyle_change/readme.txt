@@ -5,8 +5,8 @@ and periodically updates the PWM signals dutycycle.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
+- IAR embedded Workbench  8.50.5
+- Keil MDK  5.31
 - GCC ARM Embedded  9.2.1
 - MCUXpresso  11.2.0
 
@@ -30,9 +30,6 @@ No special settings are required.
 3.  Download the program to the target board.
 4.  Launch the debugger in your IDE to begin running the demo.
 
-Prepare the Demo
-================
-
 Running the demo
 ================
 The log below shows example output of the SCTimer driver PWM demo in the terminal window:
@@ -43,6 +40,3 @@ You will see a change in LED brightness if an LED is connected to the SCTimer ou
 If no LED is connected to the pin, then probe the signal using an oscilloscope
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Observe the green led to see the SCTimer pwm signal.
-Customization options
-=====================
-

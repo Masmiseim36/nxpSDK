@@ -5,8 +5,8 @@ In this example, CTimer is used to generate a PWM signal.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
+- IAR embedded Workbench  8.50.5
+- Keil MDK  5.31
 - GCC ARM Embedded  9.2.1
 - MCUXpresso  11.2.0
 
@@ -39,7 +39,4 @@ The log below shows example output of the CTimer simple PWM demo in the terminal
 CTimer example to generate a PWM signal
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Use Oscilloscope to measure and observe the JP6-2 output signal to see the ctimer pwm signal.
-
-Customization options
-=====================
 

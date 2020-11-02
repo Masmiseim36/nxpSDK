@@ -16,8 +16,8 @@ Toolchain supported
 ===================
 - GCC ARM Embedded  9.2.1
 - MCUXpresso  11.2.0
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
+- IAR embedded Workbench  8.50.5
+- Keil MDK  5.31
 
 Hardware requirements
 =====================
@@ -122,6 +122,3 @@ For secure project using <PERIPH_BASE> means access through secure alias (addres
 using <PERIPH_BASE>_NS means access through non-secure alias(address bit A28=0)
 For non-secure project using <PERIPH_BASE> means access through non-secure alias (address bit A28=0). 
 The non-secure project doesn't have access to secure memory or peripherals regions so the secure access is not defined.
-Customization options
-=====================
-

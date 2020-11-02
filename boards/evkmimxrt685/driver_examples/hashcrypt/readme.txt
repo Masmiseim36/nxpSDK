@@ -6,8 +6,8 @@ and decrypt it back using AES and SHA algorithm. SHA-1, SHA-256, AES ECB and AES
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
+- IAR embedded Workbench  8.50.5
+- Keil MDK  5.31
 - GCC ARM Embedded  9.2.1
 - MCUXpresso  11.2.0
 
@@ -43,6 +43,3 @@ AES CTR Test pass
 SHA-1 Test pass
 SHA-256 Test pass
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

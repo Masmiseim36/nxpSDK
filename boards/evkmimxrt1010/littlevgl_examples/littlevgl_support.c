@@ -26,7 +26,6 @@
  ******************************************************************************/
 #define LPSPI1_Freq CLOCK_GetFreq(kCLOCK_SysPllClk) / LPSPI_CLOCK_SOURCE_DIVIDER
 #define LPI2C1_Freq CLOCK_GetFreq(kCLOCK_OscClk) / LPI2C_CLOCK_SOURCE_DIVIDER
-#define Data_Size   1000 /*Buffer Size*/
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -38,11 +37,10 @@ static void my_disp_flush(lv_disp_drv_t *disp_drv, const lv_area_t *area, lv_col
  * Variables
  ******************************************************************************/
 static ft6x06_handle_t touch_handle;
-static uint8_t data_buffer[Data_Size];
 static volatile uint32_t spi_event;
 static volatile bool spi_event_received;
 static ft6x06_handle_t touch_handle;
-SDK_ALIGN(static uint8_t s_frameBuffer[2][LCD_VIRTUAL_BUF_SIZE * LCD_FB_BYTE_PER_PIXEL], 4);
+SDK_ALIGN(static uint8_t s_frameBuffer[1][LCD_VIRTUAL_BUF_SIZE * LCD_FB_BYTE_PER_PIXEL], 4);
 /*******************************************************************************
  * Code
  ******************************************************************************/
@@ -86,7 +84,6 @@ static uint32_t SPI_WaitEvent(void)
 
 static void APP_pfWrite8_A0(uint8_t Data)
 {
-    L1CACHE_CleanDCacheByRange((uint32_t)&Data, 1);
     GPIO_PortClear(BOARD_LCD_DC_GPIO, 1u << BOARD_LCD_DC_GPIO_PIN);
     BOARD_LCD_SPI.Send(&Data, 1);
     SPI_WaitEvent();
@@ -94,7 +91,6 @@ static void APP_pfWrite8_A0(uint8_t Data)
 
 static void APP_pfWrite8_A1(uint8_t Data)
 {
-    L1CACHE_CleanDCacheByRange((uint32_t)&Data, 1);
     GPIO_PortSet(BOARD_LCD_DC_GPIO, 1u << BOARD_LCD_DC_GPIO_PIN);
     BOARD_LCD_SPI.Send(&Data, 1);
     SPI_WaitEvent();
@@ -102,7 +98,6 @@ static void APP_pfWrite8_A1(uint8_t Data)
 
 static void APP_pfWriteM8_A1(uint8_t *pData, int NumItems)
 {
-    L1CACHE_CleanDCacheByRange((uint32_t)pData, NumItems);
     GPIO_PortSet(BOARD_LCD_DC_GPIO, 1u << BOARD_LCD_DC_GPIO_PIN);
     BOARD_LCD_SPI.Send(pData, NumItems);
     SPI_WaitEvent();
@@ -134,7 +129,7 @@ void lv_port_disp_init(void)
 {
     static lv_disp_buf_t disp_buf;
 
-    lv_disp_buf_init(&disp_buf, s_frameBuffer[0], s_frameBuffer[1], LCD_VIRTUAL_BUF_SIZE);
+    lv_disp_buf_init(&disp_buf, s_frameBuffer[0], NULL, LCD_VIRTUAL_BUF_SIZE);
 
     /*-------------------------
      * Initialize your display
@@ -170,10 +165,7 @@ static void my_disp_flush(lv_disp_drv_t *disp_drv, const lv_area_t *area, lv_col
     lv_coord_t y2 = area->y2;
 
     uint8_t data[4];
-    uint16_t *pdata                  = (uint16_t *)color_p;
     uint32_t send_size               = (x2 - x1 + 1) * (y2 - y1 + 1) * 2;
-    uint16_t send_data_buffer_number = send_size / Data_Size;
-    uint16_t send_last_size          = send_size % Data_Size;
     /*Column addresses*/
     APP_pfWrite8_A0(ILI9341_CMD_COLADDR);
     data[0] = (x1 >> 8) & 0xFF;
@@ -192,26 +184,8 @@ static void my_disp_flush(lv_disp_drv_t *disp_drv, const lv_area_t *area, lv_col
 
     /*Memory write*/
     APP_pfWrite8_A0(ILI9341_CMD_GRAM);
-    for (uint16_t i = 0; i < send_data_buffer_number; i++)
-    {
-        for (uint16_t j = 0; j < Data_Size; j += 2)
-        {
-            data_buffer[j + 1] = (*pdata) & 0xff;
-            data_buffer[j]     = ((*pdata) >> 8) & 0xff;
-            pdata++;
-        }
-        APP_pfWriteM8_A1(data_buffer, Data_Size);
-    }
-    for (uint16_t j = 0; j < send_last_size; j += 2)
-    {
-        data_buffer[j + 1] = (*pdata) & 0xff;
-        data_buffer[j]     = ((*pdata) >> 8) & 0xff;
-        pdata++;
-    }
-    if (send_last_size > 0)
-    {
-        APP_pfWriteM8_A1(data_buffer, send_last_size);
-    }
+
+    APP_pfWriteM8_A1((void*)color_p, send_size);
 
     lv_disp_flush_ready(disp_drv);
 }

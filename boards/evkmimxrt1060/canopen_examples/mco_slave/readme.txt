@@ -40,7 +40,6 @@ User can use a CAN monitor (USB CAN analysis) to probe the CAN frame transfered.
 Toolchain supported
 ===================
 - IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
 - MCUXpresso  11.2.0
 
 Hardware requirements

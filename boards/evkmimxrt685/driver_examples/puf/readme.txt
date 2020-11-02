@@ -22,9 +22,9 @@ Usual use consists of these steps:
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
+- IAR embedded Workbench  8.50.5
 - MCUXpresso  11.2.0
-- Keil MDK  5.30
+- Keil MDK  5.31
 - GCC ARM Embedded  9.2.1
 
 Hardware requirements
@@ -58,6 +58,3 @@ PUF Peripheral Driver Example
 Reconstructed key = 1c 1 fc d5 ca 7f df 42 1f e4 85 bc 7e 19 c2 42
 Example end.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

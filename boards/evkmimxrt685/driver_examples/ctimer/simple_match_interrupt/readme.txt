@@ -6,8 +6,8 @@ With an interrupt callback the match value is changed frequently in such a way t
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
+- IAR embedded Workbench  8.50.5
+- Keil MDK  5.31
 - GCC ARM Embedded  9.2.1
 - MCUXpresso  11.2.0
 
@@ -41,6 +41,3 @@ CTimer match example to toggle the output.
 This example uses interrupt to change the match period.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Observe the green led to see the ctimer toggle operation.
-Customization options
-=====================
-

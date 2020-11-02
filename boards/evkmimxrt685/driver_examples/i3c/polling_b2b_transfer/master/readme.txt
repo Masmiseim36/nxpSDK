@@ -7,8 +7,8 @@ In this example, one i3c instance as master and another i3c instance on the othe
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
+- IAR embedded Workbench  8.50.5
+- Keil MDK  5.31
 - GCC ARM Embedded  9.2.1
 - MCUXpresso  11.2.0
 
@@ -76,6 +76,3 @@ Start to do I3C master transfer in I3C SDR mode.
 I3C master transfer successful in I3C SDR mode .
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

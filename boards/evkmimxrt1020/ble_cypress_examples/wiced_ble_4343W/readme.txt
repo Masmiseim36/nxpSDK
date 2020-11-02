@@ -6,7 +6,7 @@ The demo configures the wifi driver to use STA mode and advertises via BLE.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
+- IAR embedded Workbench  8.50.5
 - GCC ARM Embedded  9.2.1
 - MCUXpresso  11.2.0
 
@@ -34,9 +34,6 @@ The following pins between the evkmimxrt1020 board and Murata uSD M.2 Adapter ar
 - evkmimxrt1020 board's connector J17, pin 7 to Murata uSD M.2 Adapter's connector J9, pin 2
 - evkmimxrt1020 board's connector J19, pin 2 to Murata uSD M.2 Adapter's connector J9, pin 1
 - evkmimxrt1020 board's connector J19, pins 4-5 to Murata uSD M.2 Adapter's connector J8, pins 3-4
-Prepare the Demo
-================
-
 Running the demo
 ================
 
@@ -92,6 +89,3 @@ wiced_bt_ble_set_advertisement_data 0
 wiced_bt_ble_set_scan_response_data 0
 Advertisement State Change: 3
 wiced_bt_start_advertisements 0
-Customization options
-=====================
-

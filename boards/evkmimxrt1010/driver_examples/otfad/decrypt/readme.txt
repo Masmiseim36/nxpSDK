@@ -9,8 +9,8 @@ It including configure AES key and counter into OTFAD and OTFAD will decryption 
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
+- IAR embedded Workbench  8.50.5
+- Keil MDK  5.31
 - GCC ARM Embedded  9.2.1
 - MCUXpresso  11.2.0
 
@@ -72,6 +72,3 @@ Note:
 To generate ciphertext, you can use OTFAD_GetEncryptedCounter() and OTFAD_EncryptData() API in example[selected] or other library.
 1. use OTFAD_GetEncryptedCounter() API get encrypted counter.
 2. use encrypted counter XOR plaintext to generate ciphertext.
-Customization options
-=====================
-

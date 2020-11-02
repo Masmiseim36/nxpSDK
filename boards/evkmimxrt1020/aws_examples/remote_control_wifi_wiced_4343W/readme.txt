@@ -7,7 +7,7 @@ Please take look into section "Board settings" if there are some board limitatio
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
+- IAR embedded Workbench  8.50.5
 - GCC ARM Embedded  9.2.1
 - MCUXpresso  11.2.0
 
@@ -236,6 +236,3 @@ WLAN CLM         : API: 12.2 Data: 9.10.39 Compiler: 1.29.4 ClmImport: 1.36.3 Cr
 .
 .
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

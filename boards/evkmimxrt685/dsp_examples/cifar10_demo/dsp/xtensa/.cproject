@@ -55,7 +55,7 @@
     </cconfiguration>
   </storageModule>
   <storageModule moduleId="cdtBuildSystem" version="4.0.0">
-    <project id="dsp_cifar10_demo_hifi4.null.28145352" name="dsp_cifar10_demo_hifi4"/>
+    <project id="dsp_cifar10_demo_hifi4.null.78361172" name="dsp_cifar10_demo_hifi4"/>
   </storageModule>
   <storageModule moduleId="scannerConfiguration">
     <autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.make.core.GCCStandardMakePerProjectProfile"/>

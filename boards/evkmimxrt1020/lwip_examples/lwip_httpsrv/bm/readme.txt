@@ -8,8 +8,8 @@ page back to the PC.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
+- IAR embedded Workbench  8.50.5
+- Keil MDK  5.31
 - GCC ARM Embedded  9.2.1
 - MCUXpresso  11.2.0
 
@@ -76,7 +76,4 @@ Running the demo
 
 		More information about lwIP can be found at the lwIP homepage at http://savannah.nongnu.org/projects/lwip/ or at
 		the lwIP wiki at http://lwip.wikia.com/.
-
-Customization options
-=====================
 

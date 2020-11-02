@@ -6,8 +6,8 @@ The example toggles an output per counter when a match occurs.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
+- IAR embedded Workbench  8.50.5
+- Keil MDK  5.31
 - GCC ARM Embedded  9.2.1
 - MCUXpresso  11.2.0
 
@@ -31,9 +31,6 @@ No special settings are required.
 3.  Download the program to the target board.
 4.  Launch the debugger in your IDE to begin running the demo.
 
-Prepare the Demo
-================
-
 Running the demo
 ================
 The log below shows example output of the SCTimer 16-bit counter demo in the terminal window:
@@ -42,6 +39,3 @@ SCTimer example to use it in 16-bit mode
 
 The example shows both 16-bit counters running and toggling an output periodically
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

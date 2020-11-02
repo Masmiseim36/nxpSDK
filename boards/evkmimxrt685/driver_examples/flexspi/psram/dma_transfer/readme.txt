@@ -9,8 +9,8 @@ Example will write/read through the whole chip, using DMA transfer way.
 Toolchain supported
 ===================
 - MCUXpresso  11.2.0
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
+- IAR embedded Workbench  8.50.5
+- Keil MDK  5.31
 - GCC ARM Embedded  9.2.1
 
 Hardware requirements
@@ -41,6 +41,3 @@ The log below shows the output of the FlexSPI example in the terminal window:
 FLEXSPI example started!
 DMA Command Read/Write data succeed at all address range!
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

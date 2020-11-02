@@ -6,9 +6,9 @@ The dsp_nn_demo demo application demonstrates starting DSP core with DSP image a
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
+- IAR embedded Workbench  8.50.5
 - MCUXpresso  11.2.0
-- Keil MDK  5.30
+- Keil MDK  5.31
 - GCC ARM Embedded  9.2.1
 
 Hardware requirements
@@ -18,8 +18,6 @@ Hardware requirements
 - evkmimxrt685 board
 - Personal Computer
 
-Board settings
-==============
 Prepare the Demo
 ================
 1.  Connect a USB cable between the PC host and the OpenSDA USB port on the target board.
@@ -78,6 +76,3 @@ Running MAXPOOL ASYNC
 MAXPOOL output check succeded
 Avg Inference cycles: 23248 time: 0.371 ms
 Throughput: 2695.4 fps
-Customization options
-=====================
-

@@ -15,7 +15,7 @@ https://community.cypress.com/docs/DOC-15586 (Linux)
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
+- IAR embedded Workbench  8.50.5
 - GCC ARM Embedded  9.2.1
 - MCUXpresso  11.2.0
 
@@ -47,9 +47,6 @@ Connect the board with PC by using USB/UART converter:
 - board uart RX (pin 1 on J17) - connect it to TX pin on converter
 - board uart TX (pin 2 on J17) - connect it to RX pin on converter
 - board GND (pin 7 on J19)
-Prepare the Demo
-================
-
 Running the demo
 ================
 
@@ -151,6 +148,3 @@ When the application boots up the logs are as follows.
 ************************************************
  Bluetooth HCI Pass-Through example
 ************************************************
-Customization options
-=====================
-

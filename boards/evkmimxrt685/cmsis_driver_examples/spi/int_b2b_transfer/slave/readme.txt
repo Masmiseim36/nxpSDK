@@ -14,8 +14,8 @@ slave is correct.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
+- IAR embedded Workbench  8.50.5
+- Keil MDK  5.31
 - GCC ARM Embedded  9.2.1
 - MCUXpresso  11.2.0
 
@@ -67,6 +67,3 @@ SPI CMSIS driver board to board interrupt example.
      30 31 32 33 34 35 36 37 38 39 3A 3B 3C 3D 3E 3F
 Succeed!
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

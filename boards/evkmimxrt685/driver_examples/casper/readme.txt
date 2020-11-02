@@ -4,8 +4,8 @@ The CASPER Example project is a demonstration program that uses the KSDK softwar
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
+- IAR embedded Workbench  8.50.5
+- Keil MDK  5.31
 - MCUXpresso  11.2.0
 - GCC ARM Embedded  9.2.1
 
@@ -57,6 +57,3 @@ Round: 6
 Round: 7
 All EC double scalar multiplication tests were succesfull.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

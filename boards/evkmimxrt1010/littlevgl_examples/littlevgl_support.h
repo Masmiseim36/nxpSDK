@@ -19,7 +19,7 @@
 #define LCD_VIRTUAL_BUF_SIZE (LCD_WIDTH * LCD_HEIGHT / 10)
 
 #define BOARD_LCD_SPI          Driver_SPI1
-#define BOARD_LCD_SPI_BAUDRATE 80000000U /*! Transfer baudrate */
+#define BOARD_LCD_SPI_BAUDRATE 10000000U /*! Transfer baudrate */
 
 #define BOARD_LCD_DC_GPIO     GPIO1 /*! LCD data/command port */
 #define BOARD_LCD_DC_GPIO_PIN 03U   /*! LCD data/command pin */

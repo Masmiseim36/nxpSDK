@@ -5,7 +5,7 @@ The simple Shadow lightbulb example to illustrate how client application and thi
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
+- IAR embedded Workbench  8.50.5
 - GCC ARM Embedded  9.2.1
 - MCUXpresso  11.2.0
 
@@ -166,6 +166,3 @@ Current:  {"state":{"desired":{"powerOn":1},"reported":{"powerOn":0}}}
 .
 .
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

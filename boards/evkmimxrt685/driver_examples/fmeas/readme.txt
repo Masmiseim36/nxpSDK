@@ -5,8 +5,8 @@ It shows how to measure a target frequency using a (faster) reference frequency.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
+- IAR embedded Workbench  8.50.5
+- Keil MDK  5.31
 - GCC ARM Embedded  9.2.1
 - MCUXpresso  11.2.0
 
@@ -48,6 +48,3 @@ Capture source: FRO oscillator (main clock reference), reference frequency = 480
 Computed frequency value = 52240185 Hz
 Expected frequency value = 48000000 Hz
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

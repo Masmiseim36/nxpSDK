@@ -9,10 +9,10 @@ just define DEBUG_CONSOLE_TRANSFER_NON_BLOCKING in your project to use the advan
 
 Toolchain supported
 ===================
-- Keil MDK  5.30
+- Keil MDK  5.31
 - GCC ARM Embedded  9.2.1
 - MCUXpresso  11.2.0
-- IAR embedded Workbench  8.50.1
+- IAR embedded Workbench  8.50.5
 
 Hardware requirements
 =====================
@@ -44,6 +44,3 @@ The log below shows the output of the hello world demo in the terminal window:
 hello world.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 The debug console virtual com will echo back the received characters.
-Customization options
-=====================
-

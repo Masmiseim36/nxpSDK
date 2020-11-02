@@ -8,8 +8,8 @@ mpi_loader_extram_loader.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
+- IAR embedded Workbench  8.50.5
+- Keil MDK  5.31
 - MCUXpresso  11.2.0
 - GCC ARM Embedded  9.2.1
 
@@ -62,7 +62,4 @@ When the demo runs successfully, the terminal will display the following:
 Loading finished, now enter external RAM application.
 hello world.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Customization options
-=====================
 

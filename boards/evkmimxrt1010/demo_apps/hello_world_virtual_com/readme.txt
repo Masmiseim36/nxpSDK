@@ -10,8 +10,8 @@ just define DEBUG_CONSOLE_TRANSFER_NON_BLOCKING in your project to use the advan
 Toolchain supported
 ===================
 - GCC ARM Embedded  9.2.1
-- Keil MDK  5.30
-- IAR embedded Workbench  8.50.1
+- Keil MDK  5.31
+- IAR embedded Workbench  8.50.5
 - MCUXpresso  11.2.0
 
 Hardware requirements
@@ -51,6 +51,3 @@ To debug in qspiflash, following steps are needed:
 Note:
 When the USB serial port is emuerated and termial is opened, the printf has been executed, so the message cannot be displayed.
 Please use putty,sscom and other terminal that support data caching replace it.
-Customization options
-=====================
-

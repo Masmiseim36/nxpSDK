@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
+  <externalDefinitions>
+    <definition extID="com.nxp.mcuxpresso"/>
+    <definition extID="component.lists.MIMXRT1052"/>
+    <definition extID="component.lpuart_adapter.MIMXRT1052"/>
+    <definition extID="component.serial_manager.MIMXRT1052"/>
+    <definition extID="component.serial_manager_uart.MIMXRT1052"/>
+    <definition extID="device.MIMXRT1052_CMSIS.MIMXRT1052"/>
+    <definition extID="device.MIMXRT1052_startup.MIMXRT1052"/>
+    <definition extID="middleware.azure_rtos.fx.MIMXRT1052"/>
+    <definition extID="middleware.azure_rtos.nxd.MIMXRT1052"/>
+    <definition extID="middleware.azure_rtos.tx.MIMXRT1052"/>
+    <definition extID="middleware.azure_rtos.ux.MIMXRT1052"/>
+    <definition extID="platform.Include_common.MIMXRT1052"/>
+    <definition extID="platform.Include_core_cm7.MIMXRT1052"/>
+    <definition extID="platform.Include_dsp.MIMXRT1052"/>
+    <definition extID="platform.drivers.clock.MIMXRT1052"/>
+    <definition extID="platform.drivers.common.MIMXRT1052"/>
+    <definition extID="platform.drivers.igpio.MIMXRT1052"/>
+    <definition extID="platform.drivers.iomuxc.MIMXRT1052"/>
+    <definition extID="platform.drivers.lpuart.MIMXRT1052"/>
+    <definition extID="platform.drivers.xip_board.MIMXRT1052"/>
+    <definition extID="platform.drivers.xip_device.MIMXRT1052"/>
+    <definition extID="platform.utilities.assert.MIMXRT1052"/>
+    <definition extID="platform.utilities.misc_utilities.MIMXRT1052"/>
+    <definition extID="utility.debug_console.MIMXRT1052"/>
+    <definition extID="iar"/>
+    <definition extID="armgcc"/>
+    <definition extID="mcuxpresso"/>
+    <definition extID="com.crt.advproject.config.exe.debug"/>
+    <definition extID="com.crt.advproject.config.exe.release"/>
+  </externalDefinitions>
+  <example id="evkbimxrt1050_usbx_device_mass_storage" name="usbx_device_mass_storage" category="azure_rtos_examples" dependency="middleware.azure_rtos.ux.MIMXRT1052 middleware.azure_rtos.fx.MIMXRT1052 platform.drivers.clock.MIMXRT1052 platform.drivers.common.MIMXRT1052 device.MIMXRT1052_CMSIS.MIMXRT1052 utility.debug_console.MIMXRT1052 component.lpuart_adapter.MIMXRT1052 component.serial_manager.MIMXRT1052 component.lists.MIMXRT1052 component.serial_manager_uart.MIMXRT1052 platform.drivers.lpuart.MIMXRT1052 device.MIMXRT1052_startup.MIMXRT1052 platform.drivers.iomuxc.MIMXRT1052 platform.utilities.assert.MIMXRT1052 platform.drivers.igpio.MIMXRT1052 platform.drivers.xip_device.MIMXRT1052 platform.drivers.xip_board.MIMXRT1052 middleware.azure_rtos.tx.MIMXRT1052 middleware.azure_rtos.nxd.MIMXRT1052 platform.utilities.misc_utilities.MIMXRT1052 platform.Include_core_cm7.MIMXRT1052 platform.Include_common.MIMXRT1052 platform.Include_dsp.MIMXRT1052">
+    <projects>
+      <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
+    </projects>
+    <memory>
+      <memoryBlock addr="60000000" size="04000000" access="RO" type="ExtFlash" id="BOARD_FLASH_evkbimxrt1050" name="BOARD_FLASH"/>
+      <memoryBlock addr="20200000" size="00040000" access="RW" type="RAM" id="SRAM_OC_evkbimxrt1050" name="SRAM_OC"/>
+      <memoryBlock addr="00000000" size="00020000" access="RW" type="RAM" id="SRAM_ITC_evkbimxrt1050" name="SRAM_ITC"/>
+      <memoryBlock addr="20000000" size="00020000" access="RW" type="RAM" id="NCACHE_REGION_evkbimxrt1050" name="NCACHE_REGION"/>
+    </memory>
+    <toolchainSettings>
+      <toolchainSetting id_refs="com.nxp.mcuxpresso">
+        <option id="com.crt.advproject.gas.fpu" type="enum">
+          <value>com.crt.advproject.gas.fpu.fpv5dp.hard</value>
+        </option>
+        <option id="com.crt.advproject.gcc.fpu" type="enum">
+          <value>com.crt.advproject.gcc.fpu.fpv5dp.hard</value>
+        </option>
+        <option id="com.crt.advproject.c.misc.dialect" type="enum">
+          <value>com.crt.advproject.misc.dialect.gnu99</value>
+        </option>
+        <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
+          <value>CPU_MIMXRT1052DVL6B</value>
+          <value>SDK_DEBUGCONSOLE=1</value>
+          <value>XIP_EXTERNAL_FLASH=1</value>
+          <value>XIP_BOOT_HEADER_ENABLE=1</value>
+          <value>SDK_DEBUGCONSOLE_UART</value>
+          <value>PRINTF_FLOAT_ENABLE=0</value>
+          <value>SCANF_FLOAT_ENABLE=0</value>
+          <value>PRINTF_ADVANCED_ENABLE=0</value>
+          <value>SCANF_ADVANCED_ENABLE=0</value>
+          <value>SERIAL_PORT_TYPE_UART=1</value>
+          <value>MIMXRT</value>
+          <value>UX_OTG_SUPPORT</value>
+          <value>TX_INCLUDE_USER_DEFINE_FILE</value>
+          <value>FX_INCLUDE_USER_DEFINE_FILE</value>
+          <value>UX_INCLUDE_USER_DEFINE_FILE</value>
+        </option>
+        <option id="gnu.c.compiler.option.optimization.flags" type="string">
+          <value>-fno-common</value>
+        </option>
+        <option id="gnu.c.compiler.option.misc.other" type="string">
+          <value>-c  -ffunction-sections  -fdata-sections  -ffreestanding  -fno-builtin</value>
+        </option>
+        <option id="com.crt.advproject.link.fpu" type="enum">
+          <value>com.crt.advproject.link.fpu.fpv5dp.hard</value>
+        </option>
+        <option id="gnu.c.link.option.nostdlibs" type="boolean">
+          <value>true</value>
+        </option>
+        <option id="com.crt.advproject.link.memory.sections" type="stringList">
+          <value>isd=*(NonCacheable.init);region=NCACHE_REGION;type=.data</value>
+          <value>isd=*(NonCacheable);region=NCACHE_REGION;type=.bss</value>
+        </option>
+      </toolchainSetting>
+    </toolchainSettings>
+    <debug_configurations>
+      <debug_configuration id_refs="com.crt.advproject.config.exe.debug com.crt.advproject.config.exe.release">
+        <drivers>
+          <driver id_refs="BOARD_FLASH_evkbimxrt1050">
+            <driverBinary path="devices/MIMXRT1052/mcuxpresso" type="binary" target_path="binary">
+              <files mask="MIMXRT1050-EVK_S26KS512S.cfx"/>
+            </driverBinary>
+          </driver>
+        </drivers>
+      </debug_configuration>
+    </debug_configurations>
+    <source path="boards/evkbimxrt1050/azure_rtos_examples/usbx_device_mass_storage/armgcc" target_path="azure-rtos/boards/evkbimxrt1050/linker" type="linker" toolchain="armgcc">
+      <files mask="MIMXRT1052xxxxx_ram.ld"/>
+    </source>
+    <source path="boards/evkbimxrt1050/azure_rtos_examples/usbx_device_mass_storage/iar" target_path="azure-rtos/boards/evkbimxrt1050/linker" type="linker" toolchain="iar">
+      <files mask="MIMXRT1052xxxxx_ram.icf"/>
+    </source>
+    <source path="boards/evkbimxrt1050/azure_rtos_examples/usbx_device_mass_storage/iar" target_path="evkbimxrt1050" type="other" toolchain="iar">
+      <files mask="evkbimxrt1050.mac"/>
+    </source>
+    <source path="boards/evkbimxrt1050/azure_rtos_examples/usbx_device_mass_storage/usbx_device_controllers" target_path="ports/usbx" type="c_include">
+      <files mask="ux_dcd_mcimx6.h"/>
+    </source>
+    <source path="boards/evkbimxrt1050/azure_rtos_examples/usbx_device_mass_storage/usbx_device_controllers" target_path="ports/usbx" type="src">
+      <files mask="ux_dcd_mcimx6_address_set.c"/>
+      <files mask="ux_dcd_mcimx6_endpoint_address_get.c"/>
+      <files mask="ux_dcd_mcimx6_endpoint_create.c"/>
+      <files mask="ux_dcd_mcimx6_endpoint_destroy.c"/>
+      <files mask="ux_dcd_mcimx6_endpoint_flush.c"/>
+      <files mask="ux_dcd_mcimx6_endpoint_reset.c"/>
+      <files mask="ux_dcd_mcimx6_endpoint_stall.c"/>
+      <files mask="ux_dcd_mcimx6_endpoint_stall_clear.c"/>
+      <files mask="ux_dcd_mcimx6_endpoint_status.c"/>
+      <files mask="ux_dcd_mcimx6_frame_number_get.c"/>
+      <files mask="ux_dcd_mcimx6_function.c"/>
+      <files mask="ux_dcd_mcimx6_initialize.c"/>
+      <files mask="ux_dcd_mcimx6_initialize_complete.c"/>
+      <files mask="ux_dcd_mcimx6_interrupt_handler.c"/>
+      <files mask="ux_dcd_mcimx6_interrupt_thread.c"/>
+      <files mask="ux_dcd_mcimx6_qtd_get.c"/>
+      <files mask="ux_dcd_mcimx6_register_clear.c"/>
+      <files mask="ux_dcd_mcimx6_register_read.c"/>
+      <files mask="ux_dcd_mcimx6_register_set.c"/>
+      <files mask="ux_dcd_mcimx6_register_write.c"/>
+      <files mask="ux_dcd_mcimx6_state_change.c"/>
+      <files mask="ux_dcd_mcimx6_status_phase_hook.c"/>
+      <files mask="ux_dcd_mcimx6_transfer_abort.c"/>
+      <files mask="ux_dcd_mcimx6_transfer_callback.c"/>
+      <files mask="ux_dcd_mcimx6_transfer_request.c"/>
+    </source>
+    <source path="boards/evkbimxrt1050/azure_rtos_examples/usbx_device_mass_storage" target_path="board" type="c_include">
+      <files mask="board.h"/>
+      <files mask="board_setup.h"/>
+      <files mask="clock_config.h"/>
+      <files mask="dcd.h"/>
+      <files mask="pin_mux.h"/>
+    </source>
+    <source path="boards/evkbimxrt1050/azure_rtos_examples/usbx_device_mass_storage" target_path="board" type="src">
+      <files mask="board.c"/>
+      <files mask="board_setup.c"/>
+      <files mask="clock_config.c"/>
+      <files mask="dcd.c"/>
+      <files mask="pin_mux.c"/>
+    </source>
+    <source path="boards/evkbimxrt1050/azure_rtos_examples/usbx_device_mass_storage" target_path="doc" type="doc" toolchain="mcuxpresso armgcc">
+      <files mask="readme.txt"/>
+    </source>
+    <source path="boards/evkbimxrt1050/azure_rtos_examples/usbx_device_mass_storage" target_path="ports" type="asm_include" toolchain="armgcc">
+      <files mask="tx_initialize_low_level_armgcc.s"/>
+    </source>
+    <source path="boards/evkbimxrt1050/azure_rtos_examples/usbx_device_mass_storage" target_path="ports" type="asm_include" toolchain="iar">
+      <files mask="tx_initialize_low_level_iar.s"/>
+    </source>
+    <source path="boards/evkbimxrt1050/azure_rtos_examples/usbx_device_mass_storage" target_path="ports" type="asm_include" toolchain="mcuxpresso">
+      <files mask="tx_initialize_low_level_mcux.s"/>
+    </source>
+    <source path="boards/evkbimxrt1050/azure_rtos_examples/usbx_device_mass_storage" target_path="ports" type="c_include">
+      <files mask="fx_user.h"/>
+      <files mask="tx_user.h"/>
+      <files mask="ux_user.h"/>
+    </source>
+    <source path="boards/evkbimxrt1050/azure_rtos_examples/usbx_device_mass_storage" target_path="ports" type="src">
+      <files mask="ux_dcd_interrupt_handler.c"/>
+    </source>
+    <source path="boards/evkbimxrt1050/azure_rtos_examples/usbx_device_mass_storage" target_path="source" type="src">
+      <files mask="usbx_device_mass_storage.c"/>
+    </source>
+    <source path="components/osa" target_path="board" type="c_include">
+      <files mask="fsl_os_abstraction.h"/>
+      <files mask="fsl_os_abstraction_bm.h"/>
+      <files mask="fsl_os_abstraction_config.h"/>
+    </source>
+    <source path="middleware/usb/include" target_path="board" type="c_include">
+      <files mask="usb.h"/>
+      <files mask="usb_misc.h"/>
+      <files mask="usb_spec.h"/>
+    </source>
+    <source path="middleware/usb/phy" target_path="board" type="c_include">
+      <files mask="usb_phy.h"/>
+    </source>
+    <source path="middleware/usb/phy" target_path="board" type="src">
+      <files mask="usb_phy.c"/>
+    </source>
+    <source path="rtos/azure-rtos/filex" target_path="azure-rtos/filex" type="script" toolchain="armgcc">
+      <files mask="CMakeLists.txt"/>
+    </source>
+    <source path="rtos/azure-rtos/netxduo" target_path="azure-rtos/netxduo" type="script" toolchain="armgcc">
+      <files mask="CMakeLists.txt"/>
+    </source>
+    <source path="rtos/azure-rtos/threadx" target_path="azure-rtos/threadx" type="script" toolchain="armgcc">
+      <files mask="CMakeLists.txt"/>
+    </source>
+    <source path="rtos/azure-rtos/usbx" target_path="azure-rtos/usbx" type="script" toolchain="armgcc">
+      <files mask="CMakeLists.txt"/>
+    </source>
+  </example>
+</ksdk:examples>

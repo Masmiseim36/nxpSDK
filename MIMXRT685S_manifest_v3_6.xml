@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ksdk:manifest xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="SDK_2.x_MIMXRT685S" name="MIMXRT685S" brief="This is SDK version 2.8.0 manifest file. It describes the content of the MIMXRT685S and additional settings for tools that support SDK version 2.8.0" format_version="3.6" api_version="2.0.0" configuration="f769bb9231a240c8b3aa25b026214cf4" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd http://nxp.com/mcuxpresso/sdk/sdk_manifest_v3.6.xsd">
-  <!--Timestamp (UTC): 2020-07-22 12:15:56.734855-->
-  <!--This manifest is generated based on sdk repo commit: 5df5022c7426188357d0e69b4ff94b58f0d1b557-->
+<ksdk:manifest xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="SDK_2.x_MIMXRT685S" name="MIMXRT685S" brief="This is SDK version 2.8.2 manifest file. It describes the content of the MIMXRT685S and additional settings for tools that support SDK version 2.8.2" format_version="3.6" api_version="2.0.0" configuration="e6b9ba4bae1ec9c693aadd80616d2684" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd http://nxp.com/mcuxpresso/sdk/sdk_manifest_v3.6.xsd">
+  <!--Timestamp (UTC): 2020-08-24 10:49:05.141679-->
+  <!--This manifest is generated based on sdk repo commit: 60475d31bf67266eef97c59a3859a1437273841b-->
   <defines>
     <define name="CPU_$|package|" value=""/>
     <define name="CPU_$|package|_$|core|" value=""/>
   </defines>
-  <ksdk id="MCUXpresso280" name="MCUXpresso280" version="2.8.0" revision="Epluginsite 356 2020-07-22"/>
+  <ksdk id="MCUXpresso282" name="MCUXpresso282" version="2.8.2" revision="Epluginsite 358 2020-08-19"/>
   <compilers>
     <compiler id="compiler_armclang" name="armclang" type="armclang"/>
     <compiler id="compiler_gcc" name="gcc" type="gcc"/>
@@ -36,8 +36,8 @@
   </toolchainSettings>
   <toolchains>
     <toolchain id="armgcc" name="GCC_ARM_Embedded" version="9.2.1" full_name="GCC ARM Embedded" compiler="compiler_gcc" type="armgcc" vendor="GCC ARM Embedded" vendor_url="http://launchpad.net/gcc-arm-embedded"/>
-    <toolchain id="mdk" name="Keil_MDK" version="5.30" full_name="Keil MDK" compiler="compiler_armclang" type="mdk" vendor="ARM" vendor_url="http://www.arm.com"/>
-    <toolchain id="iar" name="IAR_Embedded_Workbench_for_ARM" version="8.50.1" full_name="IAR Embedded Workbench for ARM" compiler="compiler_iar" type="iar" vendor="IAR Systems" vendor_url="http://www.iar.com"/>
+    <toolchain id="mdk" name="Keil_MDK" version="5.31" full_name="Keil MDK" compiler="compiler_armclang" type="mdk" vendor="ARM" vendor_url="http://www.arm.com"/>
+    <toolchain id="iar" name="IAR_Embedded_Workbench_for_ARM" version="8.50.5" full_name="IAR Embedded Workbench for ARM" compiler="compiler_iar" type="iar" vendor="IAR Systems" vendor_url="http://www.iar.com"/>
     <toolchain id="mcuxpresso" name="MCUXpresso_IDE" version="11.2.0" full_name="MCUXpresso IDE" compiler="compiler_gcc" type="mcuxpresso" vendor="NXP Semiconductors" vendor_url="http://www.nxp.com">
       <debug>
         <debug_configuration id="com.crt.advproject.config.exe.release" name="Release Configuration" probe="LinkServer">
@@ -543,6 +543,16 @@ ${load}</script>
         <example id="evkmimxrt685_iap_otp" name="iap_otp" brief="The IAP project is a simple demonstration program of the SDK IAP driver. It reads fuse word with input index. A message a printed on the UART terminal as fuse read iap operations are performed." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="driver_examples" path="boards/evkmimxrt685/driver_examples/iap/iap_otp">
           <external path="boards/evkmimxrt685/driver_examples/iap/iap_otp" type="xml">
             <files mask="iap_otp.xml"/>
+          </external>
+        </example>
+        <example id="evkmimxrt685_littlevgl_demo_widgets" name="littlevgl_demo_widgets" brief="A demo application to show littlevgl widgets." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="littlevgl_examples" path="boards/evkmimxrt685/littlevgl_examples/littlevgl_demo_widgets">
+          <external path="boards/evkmimxrt685/littlevgl_examples/littlevgl_demo_widgets" type="xml">
+            <files mask="littlevgl_demo_widgets.xml"/>
+          </external>
+        </example>
+        <example id="evkmimxrt685_littlevgl_demo_widgets_bm" name="littlevgl_demo_widgets_bm" brief="A demo application to show littlevgl widgets." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="littlevgl_examples" path="boards/evkmimxrt685/littlevgl_examples/littlevgl_demo_widgets_bm">
+          <external path="boards/evkmimxrt685/littlevgl_examples/littlevgl_demo_widgets_bm" type="xml">
+            <files mask="littlevgl_demo_widgets_bm.xml"/>
           </external>
         </example>
         <example id="evkmimxrt685_lpadc_dma" name="lpadc_dma" brief="The lpdc_dma example shows how to use ADC to trigger a DMA transfer. In this example, user should indicate a channel to provide a voltage signal (can be controlled by user) as the LPADC's sample input. When running the project, typing any key into debug console would trigger the conversion, the software trigger API is called to start the conversion. When the ADC conversion is completed, it would trigger the DMA in ping-pong transfer mode to move the ADC conversion result from ADC conversion data register to user indicated memory. Then the main loop waits for the transfer to be done and print the result to terminal." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="driver_examples/lpadc" path="boards/evkmimxrt685/driver_examples/lpadc/dma">
@@ -7680,6 +7690,262 @@ ${load}</script>
       <source path="rtos/freertos/freertos_kernel/portable/ARMClang" target_path="freertos/freertos_kernel/portable/ARMClang" type="doc">
         <files mask="Use-the-GCC-ports.txt"/>
       </source>
+    </component>
+    <component id="middleware.littlevgl.MIMXRT685S" name="littlevgl" brief="littlevgl library" version="6.1.1" full_name="Middleware littlevgl" devices="MIMXRT685S" user_visible="false" type="middleware">
+      <source exclude="true" path="middleware/littlevgl" target_path="littlevgl" type="doc">
+        <files mask="ChangeLogKSDK.txt" hidden="true"/>
+      </source>
+      <source exclude="true" path="middleware/littlevgl/lvgl" target_path="littlevgl/lvgl" type="doc">
+        <files mask="LICENCE.txt" hidden="true"/>
+      </source>
+      <source exclude="true" path="middleware/littlevgl/lvgl" target_path="littlevgl/lvgl" type="other">
+        <files mask="README.md" hidden="true"/>
+      </source>
+      <source path="middleware/littlevgl/lvgl" target_path="littlevgl/lvgl" type="c_include">
+        <files mask="lvgl.h"/>
+      </source>
+      <source exclude="true" path="middleware/littlevgl/lvgl/porting" target_path="littlevgl/lvgl/porting" type="src">
+        <files mask="lv_port_disp_template.c" hidden="true"/>
+        <files mask="lv_port_fs_template.c" hidden="true"/>
+        <files mask="lv_port_indev_template.c" hidden="true"/>
+      </source>
+      <source exclude="true" path="middleware/littlevgl/lvgl/porting" target_path="littlevgl/lvgl/porting" type="c_include">
+        <files mask="lv_port_disp_template.h" hidden="true"/>
+        <files mask="lv_port_fs_template.h" hidden="true"/>
+        <files mask="lv_port_indev_template.h" hidden="true"/>
+      </source>
+      <source path="middleware/littlevgl/lvgl/src" target_path="littlevgl/lvgl/src" type="c_include">
+        <files mask="lv_api_map.h"/>
+        <files mask="lv_conf_internal.h"/>
+      </source>
+      <source path="middleware/littlevgl/lvgl/src/lv_core" target_path="littlevgl/lvgl/src/lv_core" type="src">
+        <files mask="lv_debug.c"/>
+        <files mask="lv_disp.c"/>
+        <files mask="lv_group.c"/>
+        <files mask="lv_indev.c"/>
+        <files mask="lv_obj.c"/>
+        <files mask="lv_refr.c"/>
+        <files mask="lv_style.c"/>
+      </source>
+      <source path="middleware/littlevgl/lvgl/src/lv_core" target_path="littlevgl/lvgl/src/lv_core" type="c_include">
+        <files mask="lv_debug.h"/>
+        <files mask="lv_disp.h"/>
+        <files mask="lv_group.h"/>
+        <files mask="lv_indev.h"/>
+        <files mask="lv_obj.h"/>
+        <files mask="lv_obj_style_dec.h"/>
+        <files mask="lv_refr.h"/>
+        <files mask="lv_style.h"/>
+      </source>
+      <source path="middleware/littlevgl/lvgl/src/lv_draw" target_path="littlevgl/lvgl/src/lv_draw" type="c_include">
+        <files mask="lv_draw.h"/>
+        <files mask="lv_draw_arc.h"/>
+        <files mask="lv_draw_blend.h"/>
+        <files mask="lv_draw_img.h"/>
+        <files mask="lv_draw_label.h"/>
+        <files mask="lv_draw_line.h"/>
+        <files mask="lv_draw_mask.h"/>
+        <files mask="lv_draw_rect.h"/>
+        <files mask="lv_draw_triangle.h"/>
+        <files mask="lv_img_buf.h"/>
+        <files mask="lv_img_cache.h"/>
+        <files mask="lv_img_decoder.h"/>
+      </source>
+      <source path="middleware/littlevgl/lvgl/src/lv_draw" target_path="littlevgl/lvgl/src/lv_draw" type="src">
+        <files mask="lv_draw_arc.c"/>
+        <files mask="lv_draw_blend.c"/>
+        <files mask="lv_draw_img.c"/>
+        <files mask="lv_draw_label.c"/>
+        <files mask="lv_draw_line.c"/>
+        <files mask="lv_draw_mask.c"/>
+        <files mask="lv_draw_rect.c"/>
+        <files mask="lv_draw_triangle.c"/>
+        <files mask="lv_img_buf.c"/>
+        <files mask="lv_img_cache.c"/>
+        <files mask="lv_img_decoder.c"/>
+      </source>
+      <source path="middleware/littlevgl/lvgl/src/lv_font" target_path="littlevgl/lvgl/src/lv_font" type="src">
+        <files mask="lv_font.c"/>
+        <files mask="lv_font_dejavu_16_persian_hebrew.c"/>
+        <files mask="lv_font_fmt_txt.c"/>
+        <files mask="lv_font_montserrat_12.c"/>
+        <files mask="lv_font_montserrat_12_subpx.c"/>
+        <files mask="lv_font_montserrat_14.c"/>
+        <files mask="lv_font_montserrat_16.c"/>
+        <files mask="lv_font_montserrat_18.c"/>
+        <files mask="lv_font_montserrat_20.c"/>
+        <files mask="lv_font_montserrat_22.c"/>
+        <files mask="lv_font_montserrat_24.c"/>
+        <files mask="lv_font_montserrat_26.c"/>
+        <files mask="lv_font_montserrat_28.c"/>
+        <files mask="lv_font_montserrat_28_compressed.c"/>
+        <files mask="lv_font_montserrat_30.c"/>
+        <files mask="lv_font_montserrat_32.c"/>
+        <files mask="lv_font_montserrat_34.c"/>
+        <files mask="lv_font_montserrat_36.c"/>
+        <files mask="lv_font_montserrat_38.c"/>
+        <files mask="lv_font_montserrat_40.c"/>
+        <files mask="lv_font_montserrat_42.c"/>
+        <files mask="lv_font_montserrat_44.c"/>
+        <files mask="lv_font_montserrat_46.c"/>
+        <files mask="lv_font_montserrat_48.c"/>
+        <files mask="lv_font_simsun_16_cjk.c"/>
+        <files mask="lv_font_unscii_8.c"/>
+      </source>
+      <source path="middleware/littlevgl/lvgl/src/lv_font" target_path="littlevgl/lvgl/src/lv_font" type="c_include">
+        <files mask="lv_font.h"/>
+        <files mask="lv_font_fmt_txt.h"/>
+        <files mask="lv_symbol_def.h"/>
+      </source>
+      <source path="middleware/littlevgl/lvgl/src/lv_gpu" target_path="littlevgl/lvgl/src/lv_gpu" type="src">
+        <files mask="lv_gpu_nxp_pxp.c"/>
+        <files mask="lv_gpu_nxp_pxp_osa.c"/>
+      </source>
+      <source path="middleware/littlevgl/lvgl/src/lv_gpu" target_path="littlevgl/lvgl/src/lv_gpu" type="c_include">
+        <files mask="lv_gpu_nxp_pxp.h"/>
+        <files mask="lv_gpu_nxp_pxp_osa.h"/>
+        <files mask="lv_gpu_stm32_dma2d.h"/>
+      </source>
+      <source path="middleware/littlevgl/lvgl/src/lv_hal" target_path="littlevgl/lvgl/src/lv_hal" type="c_include">
+        <files mask="lv_hal.h"/>
+        <files mask="lv_hal_disp.h"/>
+        <files mask="lv_hal_indev.h"/>
+        <files mask="lv_hal_tick.h"/>
+      </source>
+      <source path="middleware/littlevgl/lvgl/src/lv_hal" target_path="littlevgl/lvgl/src/lv_hal" type="src">
+        <files mask="lv_hal_disp.c"/>
+        <files mask="lv_hal_indev.c"/>
+        <files mask="lv_hal_tick.c"/>
+      </source>
+      <source path="middleware/littlevgl/lvgl/src/lv_misc" target_path="littlevgl/lvgl/src/lv_misc" type="src">
+        <files mask="lv_anim.c"/>
+        <files mask="lv_area.c"/>
+        <files mask="lv_async.c"/>
+        <files mask="lv_bidi.c"/>
+        <files mask="lv_color.c"/>
+        <files mask="lv_fs.c"/>
+        <files mask="lv_gc.c"/>
+        <files mask="lv_ll.c"/>
+        <files mask="lv_log.c"/>
+        <files mask="lv_math.c"/>
+        <files mask="lv_mem.c"/>
+        <files mask="lv_printf.c"/>
+        <files mask="lv_task.c"/>
+        <files mask="lv_templ.c"/>
+        <files mask="lv_txt.c"/>
+        <files mask="lv_txt_ap.c"/>
+        <files mask="lv_utils.c"/>
+      </source>
+      <source path="middleware/littlevgl/lvgl/src/lv_misc" target_path="littlevgl/lvgl/src/lv_misc" type="c_include">
+        <files mask="lv_anim.h"/>
+        <files mask="lv_area.h"/>
+        <files mask="lv_async.h"/>
+        <files mask="lv_bidi.h"/>
+        <files mask="lv_color.h"/>
+        <files mask="lv_fs.h"/>
+        <files mask="lv_gc.h"/>
+        <files mask="lv_ll.h"/>
+        <files mask="lv_log.h"/>
+        <files mask="lv_math.h"/>
+        <files mask="lv_mem.h"/>
+        <files mask="lv_printf.h"/>
+        <files mask="lv_task.h"/>
+        <files mask="lv_templ.h"/>
+        <files mask="lv_txt.h"/>
+        <files mask="lv_txt_ap.h"/>
+        <files mask="lv_types.h"/>
+        <files mask="lv_utils.h"/>
+      </source>
+      <source path="middleware/littlevgl/lvgl/src/lv_themes" target_path="littlevgl/lvgl/src/lv_themes" type="src">
+        <files mask="lv_theme.c"/>
+        <files mask="lv_theme_empty.c"/>
+        <files mask="lv_theme_material.c"/>
+        <files mask="lv_theme_mono.c"/>
+        <files mask="lv_theme_template.c"/>
+      </source>
+      <source path="middleware/littlevgl/lvgl/src/lv_themes" target_path="littlevgl/lvgl/src/lv_themes" type="c_include">
+        <files mask="lv_theme.h"/>
+        <files mask="lv_theme_empty.h"/>
+        <files mask="lv_theme_material.h"/>
+        <files mask="lv_theme_mono.h"/>
+        <files mask="lv_theme_template.h"/>
+      </source>
+      <source path="middleware/littlevgl/lvgl/src/lv_widgets" target_path="littlevgl/lvgl/src/lv_widgets" type="src">
+        <files mask="lv_arc.c"/>
+        <files mask="lv_bar.c"/>
+        <files mask="lv_btn.c"/>
+        <files mask="lv_btnmatrix.c"/>
+        <files mask="lv_calendar.c"/>
+        <files mask="lv_canvas.c"/>
+        <files mask="lv_chart.c"/>
+        <files mask="lv_checkbox.c"/>
+        <files mask="lv_cont.c"/>
+        <files mask="lv_cpicker.c"/>
+        <files mask="lv_dropdown.c"/>
+        <files mask="lv_gauge.c"/>
+        <files mask="lv_img.c"/>
+        <files mask="lv_imgbtn.c"/>
+        <files mask="lv_keyboard.c"/>
+        <files mask="lv_label.c"/>
+        <files mask="lv_led.c"/>
+        <files mask="lv_line.c"/>
+        <files mask="lv_linemeter.c"/>
+        <files mask="lv_list.c"/>
+        <files mask="lv_msgbox.c"/>
+        <files mask="lv_objmask.c"/>
+        <files mask="lv_objx_templ.c"/>
+        <files mask="lv_page.c"/>
+        <files mask="lv_roller.c"/>
+        <files mask="lv_slider.c"/>
+        <files mask="lv_spinbox.c"/>
+        <files mask="lv_spinner.c"/>
+        <files mask="lv_switch.c"/>
+        <files mask="lv_table.c"/>
+        <files mask="lv_tabview.c"/>
+        <files mask="lv_textarea.c"/>
+        <files mask="lv_tileview.c"/>
+        <files mask="lv_win.c"/>
+      </source>
+      <source path="middleware/littlevgl/lvgl/src/lv_widgets" target_path="littlevgl/lvgl/src/lv_widgets" type="c_include">
+        <files mask="lv_arc.h"/>
+        <files mask="lv_bar.h"/>
+        <files mask="lv_btn.h"/>
+        <files mask="lv_btnmatrix.h"/>
+        <files mask="lv_calendar.h"/>
+        <files mask="lv_canvas.h"/>
+        <files mask="lv_chart.h"/>
+        <files mask="lv_checkbox.h"/>
+        <files mask="lv_cont.h"/>
+        <files mask="lv_cpicker.h"/>
+        <files mask="lv_dropdown.h"/>
+        <files mask="lv_gauge.h"/>
+        <files mask="lv_img.h"/>
+        <files mask="lv_imgbtn.h"/>
+        <files mask="lv_keyboard.h"/>
+        <files mask="lv_label.h"/>
+        <files mask="lv_led.h"/>
+        <files mask="lv_line.h"/>
+        <files mask="lv_linemeter.h"/>
+        <files mask="lv_list.h"/>
+        <files mask="lv_msgbox.h"/>
+        <files mask="lv_objmask.h"/>
+        <files mask="lv_objx_templ.h"/>
+        <files mask="lv_page.h"/>
+        <files mask="lv_roller.h"/>
+        <files mask="lv_slider.h"/>
+        <files mask="lv_spinbox.h"/>
+        <files mask="lv_spinner.h"/>
+        <files mask="lv_switch.h"/>
+        <files mask="lv_table.h"/>
+        <files mask="lv_tabview.h"/>
+        <files mask="lv_textarea.h"/>
+        <files mask="lv_tileview.h"/>
+        <files mask="lv_win.h"/>
+      </source>
+      <include_paths>
+        <include_path path="littlevgl"/>
+        <include_path path="littlevgl/lvgl"/>
+      </include_paths>
     </component>
     <component id="middleware.lwip.MIMXRT685S" name="lwIP" brief="lwIP - A Lightweight TCP/IP Stack" version="2.2.0" revision="2" full_name="lwIP" devices="MIMXRT685S" device_cores="cm33_MIMXRT685S" category="Network/lwIP TCPIP Networking Stack" user_visible="true" type="middleware">
       <dependencies>

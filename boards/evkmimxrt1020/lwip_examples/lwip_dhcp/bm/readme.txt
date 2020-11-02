@@ -8,8 +8,8 @@ Once the interface is being bound to an IP address obtained from DHCP server, ad
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
+- IAR embedded Workbench  8.50.5
+- Keil MDK  5.31
 - GCC ARM Embedded  9.2.1
 - MCUXpresso  11.2.0
 
@@ -60,7 +60,4 @@ Initializing PHY...
  IPv4 Address     : 192.168.0.4
  IPv4 Subnet mask : 255.255.255.0
  IPv4 Gateway     : 192.168.0.1
-
-Customization options
-=====================
 

@@ -8,8 +8,8 @@ page back to the PC.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
+- IAR embedded Workbench  8.50.5
+- Keil MDK  5.31
 - GCC ARM Embedded  9.2.1
 - MCUXpresso  11.2.0
 
@@ -83,6 +83,3 @@ To modify content available through the web server you must complete following s
 		Done.
   3. Overwrite the middleware\lwip\src\apps\httpsrv\httpsrv_fs_data.c file by the new generated middleware\lwip\src\apps\httpsrv\mkfs\httpsrv_fs_data.c file.
   4. Re-compile the HTTP server application example and download it to your board. 
-Customization options
-=====================
-

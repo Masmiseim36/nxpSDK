@@ -4,8 +4,8 @@ This example shows how to use SDK drivers to use the Pin interrupt & pattern mat
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
+- IAR embedded Workbench  8.50.5
+- Keil MDK  5.31
 - GCC ARM Embedded  9.2.1
 - MCUXpresso  11.2.0
 
@@ -48,7 +48,4 @@ Press corresponding switches to generate events
    "Pin Interrupt 2" is configured to be invoked when rising edge on SW1, SW2 is detected. The 
    interrupt callback prints "PINT Pin Interrupt 2 event detected. PatternMatch status =     100". Bit slices
    1 configured to detect sticky rising edge. Bit slice 2 is configured as an endpoint.
-
-Customization options
-=====================
 

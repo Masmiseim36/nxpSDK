@@ -7,8 +7,8 @@ wakeup the MCU from low power modes.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
+- IAR embedded Workbench  8.50.5
+- Keil MDK  5.31
 - GCC ARM Embedded  9.2.1
 - MCUXpresso  11.2.0
 
@@ -118,6 +118,3 @@ To debug in qspiflash, following steps are needed:
 
 Known issue:
 This case will be blocked when switching from "OVER RUN" to "FULL RUN" after power up on armgcc flexspi_nor_release target. This issue will be fixed in later release.
-Customization options
-=====================
-

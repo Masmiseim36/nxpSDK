@@ -6,13 +6,10 @@ The qca_throughput demo tests transfer throughput.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
+- IAR embedded Workbench  8.50.5
+- Keil MDK  5.31
 - GCC ARM Embedded  9.2.1
 - MCUXpresso  11.2.0
-
-Hardware requirements
-=====================
 
 Board settings
 ==============
@@ -112,7 +109,4 @@ Full description of former throughput demo is available at "GT202 Demo Applicati
 
 GT202 communication is described in "GT202 MQX PDK Demo Applications 1.3.pdf".
 https://static4.arrow.com/-/media/images/part-detail-pages/gt202-kits/gt202-mqx-pdk-demo-applications-user-guide-1-3.pdf
-
-Customization options
-=====================
 

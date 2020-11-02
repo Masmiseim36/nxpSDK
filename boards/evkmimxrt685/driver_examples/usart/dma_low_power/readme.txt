@@ -9,8 +9,8 @@ characters were received, system will be woken up and echo the characters to PC.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
+- IAR embedded Workbench  8.50.5
+- Keil MDK  5.31
 - GCC ARM Embedded  9.2.1
 - MCUXpresso  11.2.0
 
@@ -46,6 +46,3 @@ Echo every 8 characters (1st char 'q' leads to end).
 12345678asdfghjkqwertyui
 Done!
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

@@ -7,8 +7,8 @@ State 1 has 4 events that generate 2 PWM signals, it also has an event linked to
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
+- IAR embedded Workbench  8.50.5
+- Keil MDK  5.31
 - GCC ARM Embedded  9.2.1
 - MCUXpresso  11.2.0
 
@@ -32,9 +32,6 @@ No special settings are required.
 3.  Download the program to the target board.
 4.  Launch the debugger in your IDE to begin running the demo.
 
-Prepare the Demo
-================
-
 Running the demo
 ================
 The log below shows example output of the SCTimer driver simple PWM demo in the terminal window:
@@ -46,6 +43,3 @@ When user presses the switch again PWM signal on Out 3 will turn off
 The PWM signal from Out 0 will remain active all the time
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Use Oscilloscope to measure and observe the TP6(out 0) and TP7(out 3) output signal.
-Customization options
-=====================
-

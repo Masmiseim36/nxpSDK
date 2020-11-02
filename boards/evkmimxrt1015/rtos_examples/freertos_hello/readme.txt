@@ -12,8 +12,8 @@ via debug console utility and suspend itself.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
+- IAR embedded Workbench  8.50.5
+- Keil MDK  5.31
 - GCC ARM Embedded  9.2.1
 - MCUXpresso  11.2.0
 
@@ -51,6 +51,3 @@ After the board is flashed the Tera Term will print "Hello world" message on ter
 
 Example output:
 Hello world.
-Customization options
-=====================
-

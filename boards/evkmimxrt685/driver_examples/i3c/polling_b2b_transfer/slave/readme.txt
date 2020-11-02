@@ -6,8 +6,8 @@ In this example, one i3c instance as slave and another i3c instance on the other
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
+- IAR embedded Workbench  8.50.5
+- Keil MDK  5.31
 - GCC ARM Embedded  9.2.1
 - MCUXpresso  11.2.0
 
@@ -73,6 +73,3 @@ Slave received data :
  I3C master I3C SDR transfer finished .
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

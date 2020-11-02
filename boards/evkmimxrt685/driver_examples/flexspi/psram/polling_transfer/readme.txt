@@ -9,8 +9,8 @@ Example will write/read through the whole chip, through IP command and AHB comma
 Toolchain supported
 ===================
 - MCUXpresso  11.2.0
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
+- IAR embedded Workbench  8.50.5
+- Keil MDK  5.31
 - GCC ARM Embedded  9.2.1
 
 Hardware requirements
@@ -42,6 +42,3 @@ FLEXSPI example started!
 IP Command Read/Write data succeed at all address range !
 AHB Command Read/Write data succeed at all address range !
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

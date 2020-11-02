@@ -19,9 +19,9 @@ Note that Microsoft Internet Explorer is not supported by this webconfig example
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
+- IAR embedded Workbench  8.50.5
 - GCC ARM Embedded  9.2.1
-- Keil MDK  5.30
+- Keil MDK  5.31
 - MCUXpresso  11.2.0
 
 Hardware requirements
@@ -115,7 +115,4 @@ IPv4 Address got from DHCP  : 192.168.14.5
 Known Issues
 Using this example with NXP WiFi (wifi_webconfig):
 After entering the wrong password, the board has to be manually reset.
-
-Customization options
-=====================
 

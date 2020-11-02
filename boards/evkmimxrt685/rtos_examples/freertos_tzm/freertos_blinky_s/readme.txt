@@ -11,8 +11,8 @@ so it demonstrates following techniques for TrustZone applications development:
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
+- IAR embedded Workbench  8.50.5
+- Keil MDK  5.31
 - GCC ARM Embedded  9.2.1
 - MCUXpresso  11.2.0
 
@@ -143,7 +143,4 @@ After the secure function call finishes, it verifies that both the counters
 are incremented.
 3. It calls a secure side function to toggle the green LED
 The second task just calls a secure side function to toggle the blue LED
-
-Customization options
-=====================
 

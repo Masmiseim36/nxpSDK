@@ -12,8 +12,8 @@ be printed when the execution return to the main function.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
+- IAR embedded Workbench  8.50.5
+- Keil MDK  5.31
 - GCC ARM Embedded  9.2.1
 - MCUXpresso  11.2.0
 
@@ -48,6 +48,3 @@ LPADC Single Interrupt Example
 Please press any key to get user channel's ADC value.
 ADC value: 2714
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

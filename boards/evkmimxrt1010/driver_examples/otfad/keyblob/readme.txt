@@ -12,8 +12,8 @@ for all four contexts and OTFAD will decryption automatically.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
+- IAR embedded Workbench  8.50.5
+- Keil MDK  5.31
 - GCC ARM Embedded  9.2.1
 - MCUXpresso  11.2.0
 
@@ -87,6 +87,3 @@ To generate ciphertext, you can use OTFAD_GetEncryptedCounter() and OTFAD_Encryp
 
 Note:
 To generate keyblob, address need to be 1KB aligned, otherwise OTFAD doesn't decrypt keyblob successfully in keyblob process.
-Customization options
-=====================
-

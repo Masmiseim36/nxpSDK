@@ -9,8 +9,8 @@ The file 'lpspi_edma_b2b_transfer_slave.c' includes the LPSPI slave code.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
+- IAR embedded Workbench  8.50.5
+- Keil MDK  5.31
 - GCC ARM Embedded  9.2.1
 - MCUXpresso  11.2.0
 
@@ -75,6 +75,3 @@ To debug in qspiflash, following steps are needed:
 2. Set the SW8: 1 off 2 off 3 on 4 off, then power on the board and connect USB cable to J41.
 3. Start debugging in IDE.
    - Keil: Click "Download (F8)" to program the image to qspiflash first then clicking "Start/Stop Debug Session (Ctrl+F5)" to start debugging.
-Customization options
-=====================
-

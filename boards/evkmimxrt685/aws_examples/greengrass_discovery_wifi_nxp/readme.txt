@@ -28,8 +28,8 @@ Before running the demo it is needed to configure AWS IoT Console, AWS Greengras
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
+- IAR embedded Workbench  8.50.5
+- Keil MDK  5.31
 - GCC ARM Embedded  9.2.1
 - MCUXpresso  11.2.0
 
@@ -141,6 +141,3 @@ You can check connection log in Greengrass device on path: /greengrass/ggc/var/l
 30 18723 [iot_thread] Heap low watermark: 2576. Stack high watermark: 876.
 31 18723 [iot_thread] ----Demo finished----
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

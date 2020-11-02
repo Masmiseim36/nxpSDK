@@ -21,10 +21,10 @@ be classified into one of the 10 output classes.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
+- IAR embedded Workbench  8.50.5
 - MCUXpresso  11.2.0
 - GCC ARM Embedded  9.2.1
-- Keil MDK  5.30
+- Keil MDK  5.31
 
 Hardware requirements
 =====================
@@ -33,8 +33,6 @@ Hardware requirements
 - evkmimxrt685 board
 - Personal Computer
 
-Board settings
-==============
 Prepare the Demo
 ================
 0. Create a folder "dataset" in the root directory of the project.
@@ -162,6 +160,3 @@ Inference = 99.267 (ms)
 Throughput = 10.1 fps
 
 Overall accuracy = 69.00 %
-Customization options
-=====================
-

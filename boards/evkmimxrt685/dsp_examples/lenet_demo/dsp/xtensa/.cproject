@@ -55,7 +55,7 @@
     </cconfiguration>
   </storageModule>
   <storageModule moduleId="cdtBuildSystem" version="4.0.0">
-    <project id="dsp_lenet_demo_hifi4.null.61290114" name="dsp_lenet_demo_hifi4"/>
+    <project id="dsp_lenet_demo_hifi4.null.32126083" name="dsp_lenet_demo_hifi4"/>
   </storageModule>
   <storageModule moduleId="scannerConfiguration">
     <autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.make.core.GCCStandardMakePerProjectProfile"/>

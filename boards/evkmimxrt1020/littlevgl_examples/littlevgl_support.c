@@ -60,7 +60,7 @@ static SemaphoreHandle_t s_transferDone;
 #else
 static volatile bool s_transferDone;
 #endif
-SDK_ALIGN(static uint8_t s_frameBuffer[2][LCD_VIRTUAL_BUF_SIZE * LCD_FB_BYTE_PER_PIXEL], 4);
+SDK_ALIGN(static uint8_t s_frameBuffer[1][LCD_VIRTUAL_BUF_SIZE * LCD_FB_BYTE_PER_PIXEL], 4);
 /*******************************************************************************
  * Code
  ******************************************************************************/
@@ -183,7 +183,7 @@ void lv_port_disp_init(void)
     static lv_disp_buf_t disp_buf;
 
     memset(s_frameBuffer, 0, sizeof(s_frameBuffer));
-    lv_disp_buf_init(&disp_buf, s_frameBuffer[0], s_frameBuffer[1], LCD_VIRTUAL_BUF_SIZE);
+    lv_disp_buf_init(&disp_buf, s_frameBuffer[0], NULL, LCD_VIRTUAL_BUF_SIZE);
 
     /*-------------------------
      * Initialize your display

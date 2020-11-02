@@ -8,7 +8,7 @@ FreeRTOS. The user uses an Internet browser to upload new version of firmware an
 Toolchain supported
 ===================
 - MCUXpresso  11.2.0
-- IAR embedded Workbench  8.50.1
+- IAR embedded Workbench  8.50.5
 
 Hardware requirements
 =====================
@@ -75,6 +75,3 @@ To modify content available through the web server you must complete following s
         Done.
   3. Overwrite the middleware\lwip\src\apps\httpsrv\httpsrv_fs_data.c file by the new generated httpsrv_fs_data.c file.
   4. Re-compile the HTTP server application example and download it to your board. 
-Customization options
-=====================
-

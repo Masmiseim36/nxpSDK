@@ -8,8 +8,8 @@ user defined button.
 Toolchain supported
 ===================
 - MCUXpresso  11.2.0
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
+- IAR embedded Workbench  8.50.5
+- Keil MDK  5.31
 - GCC ARM Embedded  9.2.1
 
 Hardware requirements
@@ -71,6 +71,3 @@ of time.
 While the CPU is in sleep mode and the user defined button is pressed, the CPU is woken up
 by the external interrupt and continues to sleep after the interrupt is handled.
 The period of time delay is not changed after the external interrupt occurs.
-Customization options
-=====================
-

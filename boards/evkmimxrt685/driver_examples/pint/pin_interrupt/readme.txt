@@ -4,8 +4,8 @@ This example shows how to use SDK drivers to use the Pin interrupt & pattern mat
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
+- IAR embedded Workbench  8.50.5
+- Keil MDK  5.31
 - GCC ARM Embedded  9.2.1
 - MCUXpresso  11.2.0
 
@@ -46,6 +46,3 @@ Press corresponding switches to generate events
    is configured to be invoked when SW2 is pressed. The interrupt callback prints "PINT Pin Interrupt 
    1 event detected". "Pin Interrupt 2" is configured to be invoked when J1-3 pin has falling edge. The interrupt 
    callback prints "PINT Pin Interrupt 2 event detected".
-Customization options
-=====================
-

@@ -7,8 +7,8 @@ The example itself does not perform any data decryption operation over QSPI. It 
 Toolchain supported
 ===================
 - MCUXpresso  11.2.0
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
+- IAR embedded Workbench  8.50.5
+- Keil MDK  5.31
 - GCC ARM Embedded  9.2.1
 
 Hardware requirements
@@ -43,6 +43,3 @@ BEE was succesfully configured for reading from 0x60000000 to 0x60010000.
 
 Example end.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

@@ -9,8 +9,8 @@ PC.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
+- IAR embedded Workbench  8.50.5
+- Keil MDK  5.31
 - GCC ARM Embedded  9.2.1
 - MCUXpresso  11.2.0
 
@@ -82,6 +82,3 @@ When the demo runs, the log would be seen on the terminal like:
 	ping: recv
 	192.168.0.100
 	 3 ms
-Customization options
-=====================
-

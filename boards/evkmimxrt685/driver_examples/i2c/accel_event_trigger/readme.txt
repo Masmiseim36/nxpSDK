@@ -10,8 +10,8 @@ event will be captured.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
+- IAR embedded Workbench  8.50.5
+- Keil MDK  5.31
 - GCC ARM Embedded  9.2.1
 - MCUXpresso  11.2.0
 
@@ -86,6 +86,3 @@ Pulse trigger source 0xc4.
 30 -- X:  -53,  Y: -106,  Z: 1008
 31 -- X:   -3,  Y: -121,  Z: 2281
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

@@ -6,9 +6,9 @@ The dsp_hello_world demo application demonstrates starting DSP core with DSP ima
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
+- IAR embedded Workbench  8.50.5
 - MCUXpresso  11.2.0
-- Keil MDK  5.30
+- Keil MDK  5.31
 - GCC ARM Embedded  9.2.1
 
 Hardware requirements
@@ -18,8 +18,6 @@ Hardware requirements
 - evkmimxrt685 board
 - Personal Computer
 
-Board settings
-==============
 Prepare the Demo
 ================
 0.  Before running the demo, a LeNet network demo should be trained.
@@ -95,6 +93,3 @@ BAD:    1
 ACC:    0.990000
 Avg Inference cycles: 572817 time: 9.161 ms
 Throughput: 109.2 fps
-Customization options
-=====================
-

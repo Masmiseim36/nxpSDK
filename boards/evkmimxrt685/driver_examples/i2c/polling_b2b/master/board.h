@@ -228,6 +228,12 @@
 #define BOARD_USB_PHY_TXCAL45DM (0x06U)
 
 #define BOARD_FLASH_SIZE (0x4000000U)
+
+/* Display. */
+#define BOARD_LCD_DC_GPIO      GPIO
+#define BOARD_LCD_DC_GPIO_PORT 1U
+#define BOARD_LCD_DC_GPIO_PIN  7U
+
 #if defined(__cplusplus)
 extern "C" {
 #endif /* __cplusplus */

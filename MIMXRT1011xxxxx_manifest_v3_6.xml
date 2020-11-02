@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ksdk:manifest xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="SDK_2.x_MIMXRT1011xxxxx" name="MIMXRT1011xxxxx" brief="This is SDK version 2.8.0 manifest file. It describes the content of the MIMXRT1011xxxxx and additional settings for tools that support SDK version 2.8.0" format_version="3.6" api_version="2.0.0" configuration="8b46c7c993b40eae3240b1bc2f4fd29d" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd http://nxp.com/mcuxpresso/sdk/sdk_manifest_v3.6.xsd">
-  <!--Timestamp (UTC): 2020-07-22 12:23:33.554540-->
-  <!--This manifest is generated based on sdk repo commit: 5df5022c7426188357d0e69b4ff94b58f0d1b557-->
+<ksdk:manifest xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="SDK_2.x_MIMXRT1011xxxxx" name="MIMXRT1011xxxxx" brief="This is SDK version 2.8.2 manifest file. It describes the content of the MIMXRT1011xxxxx and additional settings for tools that support SDK version 2.8.2" format_version="3.6" api_version="2.0.0" configuration="4f32faec2becc9ecc08010a8846e07fe" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd http://nxp.com/mcuxpresso/sdk/sdk_manifest_v3.6.xsd">
+  <!--Timestamp (UTC): 2020-08-24 10:54:41.305618-->
+  <!--This manifest is generated based on sdk repo commit: 60475d31bf67266eef97c59a3859a1437273841b-->
   <defines>
     <define name="CPU_$|package|" value=""/>
     <define name="CPU_$|package|_$|core|" value=""/>
   </defines>
-  <ksdk id="MCUXpresso280" name="MCUXpresso280" version="2.8.0" revision="Epluginsite 356 2020-07-22"/>
+  <ksdk id="MCUXpresso282" name="MCUXpresso282" version="2.8.2" revision="Epluginsite 358 2020-08-19"/>
   <compilers>
     <compiler id="compiler_gcc" name="gcc" type="gcc"/>
   </compilers>
@@ -686,24 +686,14 @@ ${load}</script>
             <files mask="kpp.xml"/>
           </external>
         </example>
-        <example id="evkmimxrt1010_littlevgl_demo" name="littlevgl_demo" brief="A demo application with Keyboard, Text area, List and Chart placed on Tab view" toolchain="mcuxpresso" compiler="compiler_gcc" category="littlevgl_examples" path="boards/evkmimxrt1010/littlevgl_examples/littlevgl_demo">
-          <external path="boards/evkmimxrt1010/littlevgl_examples/littlevgl_demo" type="xml">
-            <files mask="littlevgl_demo.xml"/>
+        <example id="evkmimxrt1010_littlevgl_demo_widgets" name="littlevgl_demo_widgets" brief="A demo application to show littlevgl widgets." toolchain="mcuxpresso" compiler="compiler_gcc" category="littlevgl_examples" path="boards/evkmimxrt1010/littlevgl_examples/littlevgl_demo_widgets">
+          <external path="boards/evkmimxrt1010/littlevgl_examples/littlevgl_demo_widgets" type="xml">
+            <files mask="littlevgl_demo_widgets.xml"/>
           </external>
         </example>
-        <example id="evkmimxrt1010_littlevgl_demo_bm" name="littlevgl_demo_bm" brief="A demo application with Keyboard, Text area, List and Chart placed on Tab view" toolchain="mcuxpresso" compiler="compiler_gcc" category="littlevgl_examples" path="boards/evkmimxrt1010/littlevgl_examples/littlevgl_demo_bm">
-          <external path="boards/evkmimxrt1010/littlevgl_examples/littlevgl_demo_bm" type="xml">
-            <files mask="littlevgl_demo_bm.xml"/>
-          </external>
-        </example>
-        <example id="evkmimxrt1010_littlevgl_terminal" name="littlevgl_terminal" brief="A terminal to display received characters." toolchain="mcuxpresso" compiler="compiler_gcc" category="littlevgl_examples" path="boards/evkmimxrt1010/littlevgl_examples/littlevgl_terminal">
-          <external path="boards/evkmimxrt1010/littlevgl_examples/littlevgl_terminal" type="xml">
-            <files mask="littlevgl_terminal.xml"/>
-          </external>
-        </example>
-        <example id="evkmimxrt1010_littlevgl_terminal_bm" name="littlevgl_terminal_bm" brief="A terminal to display received characters." toolchain="mcuxpresso" compiler="compiler_gcc" category="littlevgl_examples" path="boards/evkmimxrt1010/littlevgl_examples/littlevgl_terminal_bm">
-          <external path="boards/evkmimxrt1010/littlevgl_examples/littlevgl_terminal_bm" type="xml">
-            <files mask="littlevgl_terminal_bm.xml"/>
+        <example id="evkmimxrt1010_littlevgl_demo_widgets_bm" name="littlevgl_demo_widgets_bm" brief="A demo application to show littlevgl widgets." toolchain="mcuxpresso" compiler="compiler_gcc" category="littlevgl_examples" path="boards/evkmimxrt1010/littlevgl_examples/littlevgl_demo_widgets_bm">
+          <external path="boards/evkmimxrt1010/littlevgl_examples/littlevgl_demo_widgets_bm" type="xml">
+            <files mask="littlevgl_demo_widgets_bm.xml"/>
           </external>
         </example>
         <example id="evkmimxrt1010_lpi2c_edma_b2b_transfer_master" name="lpi2c_edma_b2b_transfer_master" brief="The lpi2c_edma_b2b_transfer_master example shows how to use lpi2c driver as master to do board to board transfer with EDMA:In this example, one lpi2c instance as master and another lpi2c instance on the other board as slave. Master sends a piece of data to slave, and receive a piece of data from slave. This example checks if the data received from slave is correct." toolchain="mcuxpresso" compiler="compiler_gcc" category="driver_examples/lpi2c" path="boards/evkmimxrt1010/driver_examples/lpi2c/edma_b2b_transfer/master">
@@ -4868,8 +4858,8 @@ ${load}</script>
         <files mask="lv_port_indev_template.h" hidden="true"/>
       </source>
       <source path="middleware/littlevgl/lvgl/src" target_path="littlevgl/lvgl/src" type="c_include">
-        <files mask="lv_conf_checker.h"/>
-        <files mask="lv_version.h"/>
+        <files mask="lv_api_map.h"/>
+        <files mask="lv_conf_internal.h"/>
       </source>
       <source path="middleware/littlevgl/lvgl/src/lv_core" target_path="littlevgl/lvgl/src/lv_core" type="src">
         <files mask="lv_debug.c"/>
@@ -4886,48 +4876,78 @@ ${load}</script>
         <files mask="lv_group.h"/>
         <files mask="lv_indev.h"/>
         <files mask="lv_obj.h"/>
+        <files mask="lv_obj_style_dec.h"/>
         <files mask="lv_refr.h"/>
         <files mask="lv_style.h"/>
-      </source>
-      <source path="middleware/littlevgl/lvgl/src/lv_draw" target_path="littlevgl/lvgl/src/lv_draw" type="src">
-        <files mask="lv_draw.c"/>
-        <files mask="lv_draw_arc.c"/>
-        <files mask="lv_draw_basic.c"/>
-        <files mask="lv_draw_img.c"/>
-        <files mask="lv_draw_label.c"/>
-        <files mask="lv_draw_line.c"/>
-        <files mask="lv_draw_rect.c"/>
-        <files mask="lv_draw_triangle.c"/>
-        <files mask="lv_img_cache.c"/>
-        <files mask="lv_img_decoder.c"/>
       </source>
       <source path="middleware/littlevgl/lvgl/src/lv_draw" target_path="littlevgl/lvgl/src/lv_draw" type="c_include">
         <files mask="lv_draw.h"/>
         <files mask="lv_draw_arc.h"/>
-        <files mask="lv_draw_basic.h"/>
+        <files mask="lv_draw_blend.h"/>
         <files mask="lv_draw_img.h"/>
         <files mask="lv_draw_label.h"/>
         <files mask="lv_draw_line.h"/>
+        <files mask="lv_draw_mask.h"/>
         <files mask="lv_draw_rect.h"/>
         <files mask="lv_draw_triangle.h"/>
+        <files mask="lv_img_buf.h"/>
         <files mask="lv_img_cache.h"/>
         <files mask="lv_img_decoder.h"/>
       </source>
+      <source path="middleware/littlevgl/lvgl/src/lv_draw" target_path="littlevgl/lvgl/src/lv_draw" type="src">
+        <files mask="lv_draw_arc.c"/>
+        <files mask="lv_draw_blend.c"/>
+        <files mask="lv_draw_img.c"/>
+        <files mask="lv_draw_label.c"/>
+        <files mask="lv_draw_line.c"/>
+        <files mask="lv_draw_mask.c"/>
+        <files mask="lv_draw_rect.c"/>
+        <files mask="lv_draw_triangle.c"/>
+        <files mask="lv_img_buf.c"/>
+        <files mask="lv_img_cache.c"/>
+        <files mask="lv_img_decoder.c"/>
+      </source>
       <source path="middleware/littlevgl/lvgl/src/lv_font" target_path="littlevgl/lvgl/src/lv_font" type="src">
         <files mask="lv_font.c"/>
+        <files mask="lv_font_dejavu_16_persian_hebrew.c"/>
         <files mask="lv_font_fmt_txt.c"/>
-        <files mask="lv_font_roboto_12.c"/>
-        <files mask="lv_font_roboto_12_subpx.c"/>
-        <files mask="lv_font_roboto_16.c"/>
-        <files mask="lv_font_roboto_22.c"/>
-        <files mask="lv_font_roboto_28.c"/>
-        <files mask="lv_font_roboto_28_compressed.c"/>
+        <files mask="lv_font_montserrat_12.c"/>
+        <files mask="lv_font_montserrat_12_subpx.c"/>
+        <files mask="lv_font_montserrat_14.c"/>
+        <files mask="lv_font_montserrat_16.c"/>
+        <files mask="lv_font_montserrat_18.c"/>
+        <files mask="lv_font_montserrat_20.c"/>
+        <files mask="lv_font_montserrat_22.c"/>
+        <files mask="lv_font_montserrat_24.c"/>
+        <files mask="lv_font_montserrat_26.c"/>
+        <files mask="lv_font_montserrat_28.c"/>
+        <files mask="lv_font_montserrat_28_compressed.c"/>
+        <files mask="lv_font_montserrat_30.c"/>
+        <files mask="lv_font_montserrat_32.c"/>
+        <files mask="lv_font_montserrat_34.c"/>
+        <files mask="lv_font_montserrat_36.c"/>
+        <files mask="lv_font_montserrat_38.c"/>
+        <files mask="lv_font_montserrat_40.c"/>
+        <files mask="lv_font_montserrat_42.c"/>
+        <files mask="lv_font_montserrat_44.c"/>
+        <files mask="lv_font_montserrat_46.c"/>
+        <files mask="lv_font_montserrat_48.c"/>
+        <files mask="lv_font_simsun_16_cjk.c"/>
         <files mask="lv_font_unscii_8.c"/>
       </source>
       <source path="middleware/littlevgl/lvgl/src/lv_font" target_path="littlevgl/lvgl/src/lv_font" type="c_include">
         <files mask="lv_font.h"/>
         <files mask="lv_font_fmt_txt.h"/>
         <files mask="lv_symbol_def.h"/>
+      </source>
+      <source path="middleware/littlevgl/lvgl/src/lv_gpu" target_path="littlevgl/lvgl/src/lv_gpu" type="src">
+        <files mask="lv_gpu_nxp_pxp.c"/>
+        <files mask="lv_gpu_nxp_pxp_osa.c"/>
+      </source>
+      <source path="middleware/littlevgl/lvgl/src/lv_gpu" target_path="littlevgl/lvgl/src/lv_gpu" type="c_include">
+        <files mask="lv_gpu_nxp_pxp.h"/>
+        <files mask="lv_gpu_nxp_pxp_osa.h"/>
+        <files mask="lv_gpu_stm32_dma2d.h"/>
       </source>
       <source path="middleware/littlevgl/lvgl/src/lv_hal" target_path="littlevgl/lvgl/src/lv_hal" type="c_include">
         <files mask="lv_hal.h"/>
@@ -4945,7 +4965,6 @@ ${load}</script>
         <files mask="lv_area.c"/>
         <files mask="lv_async.c"/>
         <files mask="lv_bidi.c"/>
-        <files mask="lv_circ.c"/>
         <files mask="lv_color.c"/>
         <files mask="lv_fs.c"/>
         <files mask="lv_gc.c"/>
@@ -4957,6 +4976,7 @@ ${load}</script>
         <files mask="lv_task.c"/>
         <files mask="lv_templ.c"/>
         <files mask="lv_txt.c"/>
+        <files mask="lv_txt_ap.c"/>
         <files mask="lv_utils.c"/>
       </source>
       <source path="middleware/littlevgl/lvgl/src/lv_misc" target_path="littlevgl/lvgl/src/lv_misc" type="c_include">
@@ -4964,7 +4984,6 @@ ${load}</script>
         <files mask="lv_area.h"/>
         <files mask="lv_async.h"/>
         <files mask="lv_bidi.h"/>
-        <files mask="lv_circ.h"/>
         <files mask="lv_color.h"/>
         <files mask="lv_fs.h"/>
         <files mask="lv_gc.h"/>
@@ -4976,100 +4995,95 @@ ${load}</script>
         <files mask="lv_task.h"/>
         <files mask="lv_templ.h"/>
         <files mask="lv_txt.h"/>
+        <files mask="lv_txt_ap.h"/>
         <files mask="lv_types.h"/>
         <files mask="lv_utils.h"/>
       </source>
-      <source path="middleware/littlevgl/lvgl/src/lv_objx" target_path="littlevgl/lvgl/src/lv_objx" type="src">
-        <files mask="lv_arc.c"/>
-        <files mask="lv_bar.c"/>
-        <files mask="lv_btn.c"/>
-        <files mask="lv_btnm.c"/>
-        <files mask="lv_calendar.c"/>
-        <files mask="lv_canvas.c"/>
-        <files mask="lv_cb.c"/>
-        <files mask="lv_chart.c"/>
-        <files mask="lv_cont.c"/>
-        <files mask="lv_cpicker.c"/>
-        <files mask="lv_ddlist.c"/>
-        <files mask="lv_gauge.c"/>
-        <files mask="lv_img.c"/>
-        <files mask="lv_imgbtn.c"/>
-        <files mask="lv_kb.c"/>
-        <files mask="lv_label.c"/>
-        <files mask="lv_led.c"/>
-        <files mask="lv_line.c"/>
-        <files mask="lv_list.c"/>
-        <files mask="lv_lmeter.c"/>
-        <files mask="lv_mbox.c"/>
-        <files mask="lv_objx_templ.c"/>
-        <files mask="lv_page.c"/>
-        <files mask="lv_preload.c"/>
-        <files mask="lv_roller.c"/>
-        <files mask="lv_slider.c"/>
-        <files mask="lv_spinbox.c"/>
-        <files mask="lv_sw.c"/>
-        <files mask="lv_ta.c"/>
-        <files mask="lv_table.c"/>
-        <files mask="lv_tabview.c"/>
-        <files mask="lv_tileview.c"/>
-        <files mask="lv_win.c"/>
-      </source>
-      <source path="middleware/littlevgl/lvgl/src/lv_objx" target_path="littlevgl/lvgl/src/lv_objx" type="c_include">
-        <files mask="lv_arc.h"/>
-        <files mask="lv_bar.h"/>
-        <files mask="lv_btn.h"/>
-        <files mask="lv_btnm.h"/>
-        <files mask="lv_calendar.h"/>
-        <files mask="lv_canvas.h"/>
-        <files mask="lv_cb.h"/>
-        <files mask="lv_chart.h"/>
-        <files mask="lv_cont.h"/>
-        <files mask="lv_cpicker.h"/>
-        <files mask="lv_ddlist.h"/>
-        <files mask="lv_gauge.h"/>
-        <files mask="lv_img.h"/>
-        <files mask="lv_imgbtn.h"/>
-        <files mask="lv_kb.h"/>
-        <files mask="lv_label.h"/>
-        <files mask="lv_led.h"/>
-        <files mask="lv_line.h"/>
-        <files mask="lv_list.h"/>
-        <files mask="lv_lmeter.h"/>
-        <files mask="lv_mbox.h"/>
-        <files mask="lv_objx_templ.h"/>
-        <files mask="lv_page.h"/>
-        <files mask="lv_preload.h"/>
-        <files mask="lv_roller.h"/>
-        <files mask="lv_slider.h"/>
-        <files mask="lv_spinbox.h"/>
-        <files mask="lv_sw.h"/>
-        <files mask="lv_ta.h"/>
-        <files mask="lv_table.h"/>
-        <files mask="lv_tabview.h"/>
-        <files mask="lv_tileview.h"/>
-        <files mask="lv_win.h"/>
-      </source>
       <source path="middleware/littlevgl/lvgl/src/lv_themes" target_path="littlevgl/lvgl/src/lv_themes" type="src">
         <files mask="lv_theme.c"/>
-        <files mask="lv_theme_alien.c"/>
-        <files mask="lv_theme_default.c"/>
+        <files mask="lv_theme_empty.c"/>
         <files mask="lv_theme_material.c"/>
         <files mask="lv_theme_mono.c"/>
-        <files mask="lv_theme_nemo.c"/>
-        <files mask="lv_theme_night.c"/>
-        <files mask="lv_theme_templ.c"/>
-        <files mask="lv_theme_zen.c"/>
+        <files mask="lv_theme_template.c"/>
       </source>
       <source path="middleware/littlevgl/lvgl/src/lv_themes" target_path="littlevgl/lvgl/src/lv_themes" type="c_include">
         <files mask="lv_theme.h"/>
-        <files mask="lv_theme_alien.h"/>
-        <files mask="lv_theme_default.h"/>
+        <files mask="lv_theme_empty.h"/>
         <files mask="lv_theme_material.h"/>
         <files mask="lv_theme_mono.h"/>
-        <files mask="lv_theme_nemo.h"/>
-        <files mask="lv_theme_night.h"/>
-        <files mask="lv_theme_templ.h"/>
-        <files mask="lv_theme_zen.h"/>
+        <files mask="lv_theme_template.h"/>
+      </source>
+      <source path="middleware/littlevgl/lvgl/src/lv_widgets" target_path="littlevgl/lvgl/src/lv_widgets" type="src">
+        <files mask="lv_arc.c"/>
+        <files mask="lv_bar.c"/>
+        <files mask="lv_btn.c"/>
+        <files mask="lv_btnmatrix.c"/>
+        <files mask="lv_calendar.c"/>
+        <files mask="lv_canvas.c"/>
+        <files mask="lv_chart.c"/>
+        <files mask="lv_checkbox.c"/>
+        <files mask="lv_cont.c"/>
+        <files mask="lv_cpicker.c"/>
+        <files mask="lv_dropdown.c"/>
+        <files mask="lv_gauge.c"/>
+        <files mask="lv_img.c"/>
+        <files mask="lv_imgbtn.c"/>
+        <files mask="lv_keyboard.c"/>
+        <files mask="lv_label.c"/>
+        <files mask="lv_led.c"/>
+        <files mask="lv_line.c"/>
+        <files mask="lv_linemeter.c"/>
+        <files mask="lv_list.c"/>
+        <files mask="lv_msgbox.c"/>
+        <files mask="lv_objmask.c"/>
+        <files mask="lv_objx_templ.c"/>
+        <files mask="lv_page.c"/>
+        <files mask="lv_roller.c"/>
+        <files mask="lv_slider.c"/>
+        <files mask="lv_spinbox.c"/>
+        <files mask="lv_spinner.c"/>
+        <files mask="lv_switch.c"/>
+        <files mask="lv_table.c"/>
+        <files mask="lv_tabview.c"/>
+        <files mask="lv_textarea.c"/>
+        <files mask="lv_tileview.c"/>
+        <files mask="lv_win.c"/>
+      </source>
+      <source path="middleware/littlevgl/lvgl/src/lv_widgets" target_path="littlevgl/lvgl/src/lv_widgets" type="c_include">
+        <files mask="lv_arc.h"/>
+        <files mask="lv_bar.h"/>
+        <files mask="lv_btn.h"/>
+        <files mask="lv_btnmatrix.h"/>
+        <files mask="lv_calendar.h"/>
+        <files mask="lv_canvas.h"/>
+        <files mask="lv_chart.h"/>
+        <files mask="lv_checkbox.h"/>
+        <files mask="lv_cont.h"/>
+        <files mask="lv_cpicker.h"/>
+        <files mask="lv_dropdown.h"/>
+        <files mask="lv_gauge.h"/>
+        <files mask="lv_img.h"/>
+        <files mask="lv_imgbtn.h"/>
+        <files mask="lv_keyboard.h"/>
+        <files mask="lv_label.h"/>
+        <files mask="lv_led.h"/>
+        <files mask="lv_line.h"/>
+        <files mask="lv_linemeter.h"/>
+        <files mask="lv_list.h"/>
+        <files mask="lv_msgbox.h"/>
+        <files mask="lv_objmask.h"/>
+        <files mask="lv_objx_templ.h"/>
+        <files mask="lv_page.h"/>
+        <files mask="lv_roller.h"/>
+        <files mask="lv_slider.h"/>
+        <files mask="lv_spinbox.h"/>
+        <files mask="lv_spinner.h"/>
+        <files mask="lv_switch.h"/>
+        <files mask="lv_table.h"/>
+        <files mask="lv_tabview.h"/>
+        <files mask="lv_textarea.h"/>
+        <files mask="lv_tileview.h"/>
+        <files mask="lv_win.h"/>
       </source>
       <include_paths>
         <include_path path="littlevgl"/>

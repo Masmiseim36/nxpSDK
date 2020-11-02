@@ -5,8 +5,8 @@ for an ASCII string. Several CRC protocols are implemented using the CRC driver 
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
+- IAR embedded Workbench  8.50.5
+- Keil MDK  5.31
 - GCC ARM Embedded  9.2.1
 - MCUXpresso  11.2.0
 
@@ -43,6 +43,3 @@ CRC-16 CCITT FALSE: 0x29b1
 CRC-16 ARC: 0xbb3d
 CRC-32: 0xcbf43926
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

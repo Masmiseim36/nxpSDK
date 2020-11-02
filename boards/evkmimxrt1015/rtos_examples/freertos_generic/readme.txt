@@ -19,8 +19,8 @@ Other hook types used for RTOS and resource statistics are also demonstrated in 
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
+- IAR embedded Workbench  8.50.5
+- Keil MDK  5.31
 - GCC ARM Embedded  9.2.1
 - MCUXpresso  11.2.0
 
@@ -74,6 +74,3 @@ Event task is running.
 Receive message counter: 13.
 Receive message counter: 14.
 ...
-Customization options
-=====================
-

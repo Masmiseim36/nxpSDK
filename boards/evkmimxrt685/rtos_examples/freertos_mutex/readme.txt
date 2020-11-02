@@ -19,8 +19,8 @@ unlocked and second instance of write_task_2 is executed.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
+- IAR embedded Workbench  8.50.5
+- Keil MDK  5.31
 - GCC ARM Embedded  9.2.1
 - MCUXpresso  11.2.0
 
@@ -35,9 +35,6 @@ Board settings
 This example project does not call for any special hardware configurations.
 Although not required, the recommendation is to leave the development board's jumper settings
 and configurations in default state when running this example.
-Prepare the Demo
-================
-
 Running the demo
 ================
 After the board is flashed the Tera Term will start periodically printing strings synchronized by
@@ -48,6 +45,3 @@ Example output:
 "1234 | 5678"
 "ABCD | EFGH"
 "1234 | 5678"
-Customization options
-=====================
-

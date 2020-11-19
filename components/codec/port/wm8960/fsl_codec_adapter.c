@@ -135,18 +135,29 @@ status_t HAL_CODEC_SetVolume(void *handle, uint32_t playChannel, uint32_t volume
 {
     assert(handle != NULL);
 
-    status_t retVal = kStatus_Success;
+    status_t retVal       = kStatus_Success;
+    uint32_t mappedVolume = 0U;
+
+    /*
+     * 0 is mute
+     * 1 - 100 is mapped to 0x30 - 0x7F
+     */
+    if (volume != 0U)
+    {
+        mappedVolume = (volume * (WM8960_HEADPHONE_MAX_VOLUME_vALUE - WM8960_HEADPHONE_MIN_VOLUME_vALUE)) / 100 +
+                       WM8960_HEADPHONE_MIN_VOLUME_vALUE;
+    }
 
     if ((playChannel & kWM8960_HeadphoneLeft) || (playChannel & kWM8960_HeadphoneRight))
     {
         retVal = WM8960_SetVolume((wm8960_handle_t *)((uint32_t)(((codec_handle_t *)handle)->codecDevHandle)),
-                                  kWM8960_ModuleHP, volume);
+                                  kWM8960_ModuleHP, mappedVolume);
     }
 
     if ((playChannel & kWM8960_SpeakerLeft) || (playChannel & kWM8960_SpeakerRight))
     {
         retVal = WM8960_SetVolume((wm8960_handle_t *)((uint32_t)(((codec_handle_t *)handle)->codecDevHandle)),
-                                  kWM8960_ModuleSpeaker, volume);
+                                  kWM8960_ModuleSpeaker, mappedVolume);
     }
 
     return retVal;

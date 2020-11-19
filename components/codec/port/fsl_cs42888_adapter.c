@@ -93,8 +93,9 @@ status_t HAL_CODEC_CS42888_SetFormat(void *handle, uint32_t mclk, uint32_t sampl
 status_t HAL_CODEC_CS42888_SetVolume(void *handle, uint32_t playChannel, uint32_t volume)
 {
     assert(handle != NULL);
-    uint32_t i   = 0U;
-    status_t ret = kStatus_Success;
+    uint32_t i           = 0U;
+    status_t ret         = kStatus_Success;
+    uint8_t mappedVolume = 0;
 
     for (i = 0U; i < kCS42888_AOUT8; i++)
     {
@@ -103,8 +104,27 @@ status_t HAL_CODEC_CS42888_SetVolume(void *handle, uint32_t playChannel, uint32_
             continue;
         }
 
-        ret = CS42888_SetAOUTVolume((cs42888_handle_t *)((uint32_t)(((codec_handle_t *)handle)->codecDevHandle)),
-                                    i + 1U, volume);
+        if (volume == 0U)
+        {
+            ret = CS42888_SetChannelMute((cs42888_handle_t *)((uint32_t)(((codec_handle_t *)handle)->codecDevHandle)),
+                                         i + 1U, true);
+        }
+        else
+        {
+            /* 1 is mapped t0 255, 100 is mapped to 0 */
+            mappedVolume =
+                CS42888_AOUT_MAX_VOLUME_VALUE - ((volume - 1U) * (CS42888_AOUT_MAX_VOLUME_VALUE + 3U)) / 100U;
+
+            ret = CS42888_SetAOUTVolume((cs42888_handle_t *)((uint32_t)(((codec_handle_t *)handle)->codecDevHandle)),
+                                        i + 1U, mappedVolume);
+            /* unmute the channel */
+            if (ret == kStatus_Success)
+            {
+                ret = CS42888_SetChannelMute(
+                    (cs42888_handle_t *)((uint32_t)(((codec_handle_t *)handle)->codecDevHandle)), i + 1U, false);
+            }
+        }
+
         if (ret != kStatus_Success)
         {
             return ret;

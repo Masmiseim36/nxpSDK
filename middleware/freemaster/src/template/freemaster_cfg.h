@@ -14,7 +14,7 @@
 // function and that FMSTR_Init() and FMSTR_Poll() functions are called from the main application loop.
 // See freemaster_examples/fmstr_uart example application for more information.
 // Remove this error statement when done.
-#error This freemaster_cfg.h file needs to be edited to confiugure low-level communication.
+#error This freemaster_cfg.h file needs to be edited to configure low-level communication.
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions

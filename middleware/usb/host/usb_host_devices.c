@@ -453,6 +453,11 @@ static usb_status_t USB_HostProcessCallback(usb_host_device_instance_t *deviceIn
                 deviceInstance->configurationDesc = NULL;
             }
 
+            /* the only configuration descriptor is at least 9 bytes length */
+            if (deviceInstance->configurationLen < 9U)
+            {
+                return kStatus_USB_Error;
+            }
             /* fix misra 4.14 */
             if (deviceInstance->configurationLen > USB_HOST_CONFIG_MAX_CONFIGURATION_DESCRIPTOR_LENGTH)
             {
@@ -779,7 +784,8 @@ static usb_status_t USB_HostParseDeviceConfigurationDescriptor(usb_device_handle
     unionDes = (usb_descriptor_union_t *)temp;
     endPos   = (uint32_t)(deviceInstance->configurationDesc + deviceInstance->configurationLen);
 
-    if ((unionDes->common.bLength == USB_DESCRIPTOR_LENGTH_CONFIGURE) &&
+    if (((((uint32_t)unionDes) + 1U) < endPos) &&
+        (unionDes->common.bLength == USB_DESCRIPTOR_LENGTH_CONFIGURE) &&
         (unionDes->common.bDescriptorType == USB_DESCRIPTOR_TYPE_CONFIGURE))
     {
         /* configuration descriptor */
@@ -791,7 +797,8 @@ static usb_status_t USB_HostParseDeviceConfigurationDescriptor(usb_device_handle
         unionDes = (usb_descriptor_union_t *)((uint32_t)unionDes + unionDes->common.bLength);
         while ((uint32_t)unionDes < endPos)
         {
-            if (unionDes->common.bDescriptorType != USB_DESCRIPTOR_TYPE_INTERFACE)
+            if (((((uint32_t)unionDes) + 1U) < endPos) &&
+                (unionDes->common.bDescriptorType != USB_DESCRIPTOR_TYPE_INTERFACE))
             {
                 if (deviceInstance->configuration.configurationExtension == NULL)
                 {
@@ -815,8 +822,14 @@ static usb_status_t USB_HostParseDeviceConfigurationDescriptor(usb_device_handle
         deviceInstance->configuration.interfaceCount = 0U;
         while ((uint32_t)unionDes < endPos)
         {
-            if (unionDes->common.bDescriptorType == USB_DESCRIPTOR_TYPE_INTERFACE)
+            if (((((uint32_t)unionDes) + 1U) < endPos) &&
+                (unionDes->common.bDescriptorType == USB_DESCRIPTOR_TYPE_INTERFACE))
             {
+                /* the interface descriptor length is 9 bytes */
+                if ((((uint32_t)unionDes) + 9U) > endPos)
+                {
+                    return kStatus_USB_Error;
+                }
                 if (unionDes->interface.bAlternateSetting == 0x00U)
                 {
                     if (deviceInstance->configuration.interfaceCount >= USB_HOST_CONFIG_CONFIGURATION_MAX_INTERFACE)
@@ -844,7 +857,8 @@ static usb_status_t USB_HostParseDeviceConfigurationDescriptor(usb_device_handle
                     unionDes = (usb_descriptor_union_t *)((uint32_t)unionDes + unionDes->common.bLength);
                     while ((uint32_t)unionDes < endPos)
                     {
-                        if ((unionDes->common.bDescriptorType != USB_DESCRIPTOR_TYPE_INTERFACE) &&
+                        if (((((uint32_t)unionDes) + 1U) < endPos) &&
+                            (unionDes->common.bDescriptorType != USB_DESCRIPTOR_TYPE_INTERFACE) &&
                             (unionDes->common.bDescriptorType != USB_DESCRIPTOR_TYPE_ENDPOINT))
                         {
                             if (interfaceParse->interfaceExtension == NULL)
@@ -868,7 +882,8 @@ static usb_status_t USB_HostParseDeviceConfigurationDescriptor(usb_device_handle
                     /* endpoint descriptor */
                     if (interfaceParse->interfaceDesc->bNumEndpoints != 0U)
                     {
-                        if ((unionDes->common.bDescriptorType != USB_DESCRIPTOR_TYPE_ENDPOINT) ||
+                        if (((((uint32_t)unionDes) + 1U) >= endPos) ||
+                            (unionDes->common.bDescriptorType != USB_DESCRIPTOR_TYPE_ENDPOINT) ||
                             (interfaceParse->interfaceDesc->bNumEndpoints > USB_HOST_CONFIG_INTERFACE_MAX_EP))
                         {
 #ifdef HOST_ECHO
@@ -879,7 +894,7 @@ static usb_status_t USB_HostParseDeviceConfigurationDescriptor(usb_device_handle
                         for (; interfaceParse->epCount < interfaceParse->interfaceDesc->bNumEndpoints;
                              (interfaceParse->epCount)++)
                         {
-                            if (((uint32_t)unionDes >= endPos) ||
+                            if (((((uint32_t)unionDes) + 1U) >= endPos) ||
                                 (unionDes->common.bDescriptorType != USB_DESCRIPTOR_TYPE_ENDPOINT))
                             {
 #ifdef HOST_ECHO
@@ -900,7 +915,8 @@ static usb_status_t USB_HostParseDeviceConfigurationDescriptor(usb_device_handle
                             unionDes = (usb_descriptor_union_t *)((uint32_t)unionDes + unionDes->common.bLength);
                             while ((uint32_t)unionDes < endPos)
                             {
-                                if ((unionDes->common.bDescriptorType != USB_DESCRIPTOR_TYPE_ENDPOINT) &&
+                                if (((((uint32_t)unionDes) + 1U) < endPos) &&
+                                    (unionDes->common.bDescriptorType != USB_DESCRIPTOR_TYPE_ENDPOINT) &&
                                     (unionDes->common.bDescriptorType != USB_DESCRIPTOR_TYPE_INTERFACE))
                                 {
                                     if (epParse->epExtension == NULL)
@@ -943,7 +959,8 @@ static usb_status_t USB_HostParseDeviceConfigurationDescriptor(usb_device_handle
                     unionDes = (usb_descriptor_union_t *)((uint32_t)unionDes + unionDes->common.bLength);
                     while ((uint32_t)unionDes < endPos)
                     {
-                        if (unionDes->common.bDescriptorType != USB_DESCRIPTOR_TYPE_INTERFACE)
+                        if (((((uint32_t)unionDes) + 1U) < endPos) &&
+                            (unionDes->common.bDescriptorType != USB_DESCRIPTOR_TYPE_INTERFACE))
                         {
                             if ((unionDes->common.bDescriptorType == 0x00U) ||
                                 (unionDes->common.bLength == 0x00U)) /* the descriptor data is wrong */
@@ -965,6 +982,10 @@ static usb_status_t USB_HostParseDeviceConfigurationDescriptor(usb_device_handle
                 return kStatus_USB_Error;
             }
         }
+    }
+    else
+    {
+        return kStatus_USB_Error;
     }
 
     for (endPos = 0U; endPos < deviceInstance->configuration.interfaceCount; ++endPos)

@@ -21,24 +21,6 @@
 /*! @brief PHY driver version */
 #define FSL_PHY_DRIVER_VERSION (MAKE_VERSION(2, 0, 0)) /*!< Version 2.0.0. */
 
-/*! @brief Defines the PHY registers. */
-#define PHY_CONTROL1_REG 0x1EU /*!< The PHY control one register. */
-#define PHY_CONTROL2_REG 0x1FU /*!< The PHY control two register. */
-
-#define PHY_CONTROL_ID1 0x22U /*!< The PHY ID1*/
-
-/*!@brief Defines the mask flag of operation mode in control two register*/
-#define PHY_CTL2_REMOTELOOP_MASK    0x0004U /*!< The PHY remote loopback mask. */
-#define PHY_CTL2_REFCLK_SELECT_MASK 0x0080U /*!< The PHY RMII reference clock select. */
-#define PHY_CTL1_10HALFDUPLEX_MASK  0x0001U /*!< The PHY 10M half duplex mask. */
-#define PHY_CTL1_100HALFDUPLEX_MASK 0x0002U /*!< The PHY 100M half duplex mask. */
-#define PHY_CTL1_10FULLDUPLEX_MASK  0x0005U /*!< The PHY 10M full duplex mask. */
-#define PHY_CTL1_100FULLDUPLEX_MASK 0x0006U /*!< The PHY 100M full duplex mask. */
-#define PHY_CTL1_SPEEDUPLX_MASK     0x0007U /*!< The PHY speed and duplex mask. */
-#define PHY_CTL1_ENERGYDETECT_MASK  0x10U   /*!< The PHY signal present on rx differential pair. */
-#define PHY_CTL1_LINKUP_MASK        0x100U  /*!< The PHY link up. */
-#define PHY_LINK_READY_MASK         (PHY_CTL1_ENERGYDETECT_MASK | PHY_CTL1_LINKUP_MASK)
-
 /*! @brief ENET MDIO operations structure. */
 extern const phy_operations_t phyksz8081_ops;
 
@@ -64,7 +46,6 @@ extern "C" {
  * @param config       Pointer to structure of phy_config_t.
  * @retval kStatus_Success  PHY initializes success
  * @retval kStatus_PHY_SMIVisitTimeout  PHY SMI visit time out
- * @retval kStatus_PHY_AutoNegotiateFail  PHY auto negotiate fail
  */
 status_t PHY_KSZ8081_Init(phy_handle_t *handle, const phy_config_t *config);
 
@@ -93,20 +74,6 @@ status_t PHY_KSZ8081_Write(phy_handle_t *handle, uint32_t phyReg, uint32_t data)
 status_t PHY_KSZ8081_Read(phy_handle_t *handle, uint32_t phyReg, uint32_t *dataPtr);
 
 /*!
- * @brief Enables/disables PHY loopback.
- *
- * @param handle   PHY device handle.
- * @param mode     The loopback mode to be enabled, please see "phy_loop_t".
- * All loopback modes should not be set together, when one loopback mode is set
- * another should be disabled.
- * @param speed    PHY speed for loopback mode.
- * @param enable   True to enable, false to disable.
- * @retval kStatus_Success  PHY loopback success
- * @retval kStatus_PHY_SMIVisitTimeout  PHY SMI visit time out
- */
-status_t PHY_KSZ8081_EnableLoopback(phy_handle_t *handle, phy_loop_t mode, phy_speed_t speed, bool enable);
-
-/*!
  * @brief Gets the PHY link status.
  *
  * @param handle   PHY device handle.
@@ -128,6 +95,32 @@ status_t PHY_KSZ8081_GetLinkStatus(phy_handle_t *handle, bool *status);
  * @retval kStatus_PHY_SMIVisitTimeout  PHY SMI visit time out
  */
 status_t PHY_KSZ8081_GetLinkSpeedDuplex(phy_handle_t *handle, phy_speed_t *speed, phy_duplex_t *duplex);
+
+/*!
+ * @brief Gets the PHY auto-negotiation status.
+ *
+ * @param handle   PHY device handle.
+ * @param status   The auto-negotiation status of the PHY.
+ *         - true the auto-negotiation is over.
+ *         - false the auto-negotiation is on-going or not started.
+ * @retval kStatus_Success   PHY gets status success
+ * @retval kStatus_PHY_SMIVisitTimeout  PHY SMI visit time out
+ */
+status_t PHY_KSZ8081_GetAutoNegotiationStatus(phy_handle_t *handle, bool *status);
+
+/*!
+ * @brief Enables/disables PHY loopback.
+ *
+ * @param handle   PHY device handle.
+ * @param mode     The loopback mode to be enabled, please see "phy_loop_t".
+ * All loopback modes should not be set together, when one loopback mode is set
+ * another should be disabled.
+ * @param speed    PHY speed for loopback mode.
+ * @param enable   True to enable, false to disable.
+ * @retval kStatus_Success  PHY loopback success
+ * @retval kStatus_PHY_SMIVisitTimeout  PHY SMI visit time out
+ */
+status_t PHY_KSZ8081_EnableLoopback(phy_handle_t *handle, phy_loop_t mode, phy_speed_t speed, bool enable);
 
 /* @} */
 

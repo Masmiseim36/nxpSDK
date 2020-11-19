@@ -21,7 +21,7 @@
 
 /** Makefsdata can generate *all* files deflate-compressed (where file size shrinks).
  * Since nearly all browsers support this, this is a good way to reduce ROM size.
- * To compress the files, "miniz.c" must be downloaded seperately.
+ * To compress the files, "miniz.c" must be downloaded separately.
  */
 #ifndef MAKEFS_SUPPORT_DEFLATE
 #define MAKEFS_SUPPORT_DEFLATE 0
@@ -259,7 +259,7 @@ int main(int argc, char *argv[])
         printf("Excluding files with extensions %s" NEWLINE, exclude_list);
       } else if (strstr(argv[i], "-xc:") == argv[i]) {
         ncompress_list = &argv[i][4];
-        printf("Skipping compresion for files with extensions %s" NEWLINE, ncompress_list);
+        printf("Skipping compression for files with extensions %s" NEWLINE, ncompress_list);
       } else if ((strstr(argv[i], "-?")) || (strstr(argv[i], "-h"))) {
         print_usage();
         exit(0);
@@ -639,7 +639,7 @@ static u8_t *get_file_data(const char *filename, int *file_size, int can_be_comp
           printf(" - uncompressed: (would be %d bytes larger using deflate)" NEWLINE, (int)(out_bytes - fsize));
         }
       } else {
-        printf(" - uncompressed: (file is larger than deflate bufer)" NEWLINE);
+        printf(" - uncompressed: (file is larger than deflate buffer)" NEWLINE);
       }
     } else {
       printf(" - cannot be compressed" NEWLINE);
@@ -1069,17 +1069,17 @@ int file_write_http_header(FILE *data_file, const char *filename, int file_size,
   }
 
   fprintf(data_file, NEWLINE "/* HTTP header */");
-  if (strstr(filename, "404") == filename) {
+  if (strstr(filename, "404.") == filename) {
     response_type = HTTP_HDR_NOT_FOUND;
     if (useHttp11) {
       response_type = HTTP_HDR_NOT_FOUND_11;
     }
-  } else if (strstr(filename, "400") == filename) {
+  } else if (strstr(filename, "400.") == filename) {
     response_type = HTTP_HDR_BAD_REQUEST;
     if (useHttp11) {
       response_type = HTTP_HDR_BAD_REQUEST_11;
     }
-  } else if (strstr(filename, "501") == filename) {
+  } else if (strstr(filename, "501.") == filename) {
     response_type = HTTP_HDR_NOT_IMPL;
     if (useHttp11) {
       response_type = HTTP_HDR_NOT_IMPL_11;

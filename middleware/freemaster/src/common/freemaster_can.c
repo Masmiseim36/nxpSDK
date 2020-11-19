@@ -614,11 +614,14 @@ void FMSTR_ProcessCanRx(void)
     /* Time to send another test frame? */
     else if(fmstr_doDebugTx && fmstr_nDebugTxPollCount == 0)
     {
-        /* yes, start sending it now */
-        if(FMSTR_SendTestFrame(&fmstr_pCommBuffer[2]))
+        /* we are going to measure how long it takes to transmit it */
+        fmstr_nDebugTxPollCount = -1;
+        
+        /* Send it now */
+        if(!FMSTR_SendTestFrame(&fmstr_pCommBuffer[2]))
         {
-            /* measure how long it takes to transmit it */
-            fmstr_nDebugTxPollCount = -1;
+            /* failed to send, try again next time */
+            fmstr_nDebugTxPollCount = 0;
         }
     }
 #endif

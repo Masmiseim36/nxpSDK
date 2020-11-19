@@ -100,7 +100,7 @@ unity                      Name: unity
                            Url: https://github.com/ThrowTheSwitch/Unity      
 
 usb                        Name: USB                                         
-                           Version: 2.6.0                                    
+                           Version: 2.6.1                                    
                            Outgoing License: BSD-3-Clause                    
                            License File: COPYING-BSD-3                       
                            Format: source code                               
@@ -698,7 +698,7 @@ wifi_wiced - wl_tool       Name: wl_tool
                            Origin: Cypress Semiconductor Corporation         
 
 littlevgl                  Name: LittlevGL                                   
-                           Version: 6.1.1                                    
+                           Version: 7.0.0                                    
                            Outgoing License: MIT                             
                            License File:                                     
                            middleware/littlevgl/lvgl/LICENSE.txt             
@@ -707,7 +707,7 @@ littlevgl                  Name: LittlevGL
                            Location: middleware/littlevgl                    
                            Origin: Gabor Kiss-Vamosi                         
                            Url:                                              
-                           https://github.com/lvgl/lvgl/releases/tag/v6.1.1  
+                           https://github.com/lvgl/lvgl/releases/tag/v7.0.0  
 
 CMSIS-NN                   Name: CMSIS-NN library                            
                            Version: 1.1.0 (CMSIS download 5.6.0)             

@@ -19,6 +19,7 @@
  * Definitions
  ******************************************************************************/
 
+#define USB_HostHubLockMutexCheck() hubGlobal->hubMutex != NULL
 /*! @brief HUB lock */
 #define USB_HostHubLock() OSA_MutexLock(hubGlobal->hubMutex, USB_OSA_WAIT_TIMEOUT)
 /*! @brief HUB unlock */
@@ -1248,10 +1249,16 @@ usb_status_t USB_HostHubDeviceEvent(usb_host_handle hostHandle,
                 hubInstance = (usb_host_hub_instance_t *)hubClassHandle;
 
                 /* link hub instance to list */
-                (void)USB_HostHubLock();
+                if (USB_HostHubLockMutexCheck())
+                {
+                    (void)USB_HostHubLock();
+                }
                 hubInstance->next  = hubGlobal->hubList;
                 hubGlobal->hubList = hubInstance;
-                (void)USB_HostHubUnlock();
+                if (USB_HostHubLockMutexCheck())
+                {
+                    (void)USB_HostHubUnlock();
+                }
 #if ((defined(USB_HOST_CONFIG_LOW_POWER_MODE)) && (USB_HOST_CONFIG_LOW_POWER_MODE > 0U))
                 hubInstance->supportRemoteWakeup = 0U;
                 hubInstance->controlRetry        = USB_HOST_HUB_REMOTE_WAKEUP_TIMES;
@@ -1280,7 +1287,10 @@ usb_status_t USB_HostHubDeviceEvent(usb_host_handle hostHandle,
             hubInstance = NULL;
 
             /* get device's hub instance handle */
-            (void)USB_HostHubLock();
+            if (USB_HostHubLockMutexCheck())
+            {
+                (void)USB_HostHubLock();
+            }
             prevInstance = hubGlobal->hubList;
             if (prevInstance->deviceHandle == deviceHandle)
             {
@@ -1301,7 +1311,10 @@ usb_status_t USB_HostHubDeviceEvent(usb_host_handle hostHandle,
                     hubInstance  = hubInstance->next;
                 }
             }
-            (void)USB_HostHubUnlock();
+            if (USB_HostHubLockMutexCheck())
+            {
+                (void)USB_HostHubUnlock();
+            }
 
             if (hubInstance != NULL)
             {

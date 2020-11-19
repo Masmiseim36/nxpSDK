@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/actionRefresh"
+        android:title="@string/refresh"
+        android:orderInCategory="100"
+        android:icon="@android:drawable/stat_notify_sync"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/menuItemLoadPreferences"
+        android:orderInCategory="100"
+        android:title="@string/load_preferences"
+        android:icon="@android:drawable/ic_menu_upload"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menuItemAbout"
+        android:orderInCategory="100"
+        android:title="@string/title_activity_about"
+        android:icon="@android:drawable/ic_menu_info_details"
+        app:showAsAction="never" />
+
+</menu>

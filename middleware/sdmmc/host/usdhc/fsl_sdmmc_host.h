@@ -21,17 +21,17 @@
  * Definitions
  ******************************************************************************/
 /*! @brief Middleware adapter version. */
-#define FSL_SDMMC_HOST_ADAPTER_VERSION (MAKE_VERSION(2U, 3U, 0U)) /*2.3.0*/
+#define FSL_SDMMC_HOST_ADAPTER_VERSION (MAKE_VERSION(2U, 4U, 0U)) /*2.4.0*/
 
 /*!@brief host capability */
-#define SDMMCHOST_SUPPORT_HIGH_SPEED (1U)
+#define SDMMCHOST_SUPPORT_HIGH_SPEED     (1U)
 #define SDMMCHOST_SUPPORT_SUSPEND_RESUME (1U)
-#define SDMMCHOST_SUPPORT_VOLTAGE_3V3 (1U)
-#define SDMMCHOST_SUPPORT_VOLTAGE_3V0 (0U)
-#define SDMMCHOST_SUPPORT_VOLTAGE_1V8 (0U)
-#define SDMMCHOST_SUPPORT_VOLTAGE_1V2 (0U)
-#define SDMMCHOST_SUPPORT_4_BIT_WIDTH (1U)
-#define SDMMCHOST_SUPPORT_8_BIT_WIDTH (1U)
+#define SDMMCHOST_SUPPORT_VOLTAGE_3V3    (1U)
+#define SDMMCHOST_SUPPORT_VOLTAGE_3V0    (0U)
+#define SDMMCHOST_SUPPORT_VOLTAGE_1V8    (0U)
+#define SDMMCHOST_SUPPORT_VOLTAGE_1V2    (0U)
+#define SDMMCHOST_SUPPORT_4_BIT_WIDTH    (1U)
+#define SDMMCHOST_SUPPORT_8_BIT_WIDTH    (1U)
 
 #define SDMMCHOST_SUPPORT_DDR50 (1U)
 
@@ -56,19 +56,20 @@
 #endif
 
 #define SDMMCHOST_SUPPORT_DETECT_CARD_BY_DATA3 (1U)
-#define SDMMCHOST_SUPPORT_DETECT_CARD_BY_CD (1U)
-#define SDMMCHOST_SUPPORT_AUTO_CMD12 (1U)
-#define SDMMCHOST_SUPPORT_MAX_BLOCK_LENGTH (4096U)
-#define SDMMCHOST_SUPPORT_MAX_BLOCK_COUNT (USDHC_MAX_BLOCK_COUNT)
+#define SDMMCHOST_SUPPORT_DETECT_CARD_BY_CD    (1U)
+#define SDMMCHOST_SUPPORT_AUTO_CMD12           (1U)
+#define SDMMCHOST_SUPPORT_MAX_BLOCK_LENGTH     (4096U)
+#define SDMMCHOST_SUPPORT_MAX_BLOCK_COUNT      (USDHC_MAX_BLOCK_COUNT)
 
 /*!@brief SDMMC host dma descriptor buffer address align size */
 #define SDMMCHOST_DMA_DESCRIPTOR_BUFFER_ALIGN_SIZE (4U)
 /*!@brief tuning configuration */
-#define SDMMCHOST_STANDARD_TUNING_START (10U) /*!< standard tuning start point */
-#define SDMMCHOST_TUINIG_STEP (2U)            /*!< standard tuning step */
-#define SDMMCHOST_STROBE_DLL_DELAY_TARGET (7U)
+#define SDMMCHOST_STANDARD_TUNING_START            (10U) /*!< standard tuning start point */
+#define SDMMCHOST_TUINIG_STEP                      (2U)  /*!< standard tuning step */
+#define SDMMCHOST_STANDARD_TUNING_COUNTER          (60)
+#define SDMMCHOST_STROBE_DLL_DELAY_TARGET          (7U)
 #define SDMMCHOST_STROBE_DLL_DELAY_UPDATE_INTERVAL (4U)
-#define SDMMCHOST_MAX_TUNING_DELAY_CELL (128U)
+#define SDMMCHOST_MAX_TUNING_DELAY_CELL            (128U)
 /*!@brief sdmmc host transfer function */
 typedef usdhc_transfer_t sdmmchost_transfer_t;
 typedef usdhc_command_t sdmmchost_cmd_t;
@@ -96,6 +97,13 @@ enum _sdmmchost_tuning_type
 };
 #endif
 
+/*! @brief sdmmc host maintain cache flag */
+enum _sdmmc_host_cache_control
+{
+    kSDMMCHOST_NoCacheControl       = 0U, /*!< sdmmc host cache control disabled */
+    kSDMMCHOST_CacheControlRWBuffer = 1U, /*!< sdmmc host cache control read/write buffer */
+};
+
 /*! @brief card power control function pointer */
 typedef void (*sdmmchost_pwr_t)(void);
 
@@ -122,9 +130,16 @@ typedef struct _sdmmchost_
 #if SDMMCHOST_SUPPORT_SDR104 || SDMMCHOST_SUPPORT_SDR50 || SDMMCHOST_SUPPORT_HS200 || SDMMCHOST_SUPPORT_HS400
     uint8_t tuningType; /*!< host tuning type */
 #endif
-    void *hostEvent; /*!< host event handler pointer */
-    void *cd;        /*!< card detect */
-    void *cardInt;   /*!< call back function for card interrupt */
+    sdmmc_osa_event_t hostEvent; /*!< host event handler */
+    void *cd;                    /*!< card detect */
+    void *cardInt;               /*!< call back function for card interrupt */
+
+#if (defined __DCACHE_PRESENT) && __DCACHE_PRESENT
+    uint8_t enableCacheControl; /*!< Cache maintain flag in host driver. Host driver only maintain cache when
+                                   FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL is not defined and enableCacheControl =
+                                   kSDMMCHOST_CacheControlRWBuffer. While FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL is
+                                   defined, host driver will not maintain cache and peripheral driver will do it.*/
+#endif
 } sdmmchost_t;
 
 /*******************************************************************************

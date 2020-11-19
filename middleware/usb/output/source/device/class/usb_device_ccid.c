@@ -293,8 +293,10 @@ static usb_status_t USB_DeviceCcidBulkIn(usb_device_handle deviceHandle,
     usb_device_ccid_struct_t *ccidHandle = (usb_device_ccid_struct_t *)callbackParam;
     usb_device_ccid_transfer_struct_t *transfer;
     usb_status_t error = kStatus_USB_Error;
+
+    /* endpoint callback length is USB_CANCELLED_TRANSFER_LENGTH (0xFFFFFFFFU) when transfer is canceled */
     if (((NULL == deviceHandle) || (NULL == callbackParam) || (NULL == event)) || (NULL == event->buffer) ||
-        (USB_UNINITIALIZED_VAL_32 == event->length))
+        (USB_CANCELLED_TRANSFER_LENGTH == event->length))
     {
         return kStatus_USB_Error;
     }
@@ -353,8 +355,9 @@ static usb_status_t USB_DeviceCcidBulkOut(usb_device_handle deviceHandle,
     usb_status_t usbError  = kStatus_USB_InvalidRequest;
     uint8_t response_error = USB_DEVICE_CCID_SLOT_ERROR_COMMAND_NOT_SUPPORTED;
 
+    /* endpoint callback length is USB_CANCELLED_TRANSFER_LENGTH (0xFFFFFFFFU) when transfer is canceled */
     if (((NULL == deviceHandle) || (NULL == callbackParam) || (NULL == event)) || (NULL == event->buffer) ||
-        (USB_UNINITIALIZED_VAL_32 == event->length))
+        (USB_CANCELLED_TRANSFER_LENGTH == event->length))
     {
         return kStatus_USB_Error;
     }

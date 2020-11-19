@@ -1691,13 +1691,14 @@ status_t SDIO_Init(sdio_card_t *card)
         /* reset the host */
         SDIO_HostReset(card->host);
     }
-    /* power off card */
-    SDIO_SetCardPower(card, false);
+
     /* card detect */
     if (SDIO_PollingCardInsert(card, kSD_Inserted) != kStatus_Success)
     {
         return kStatus_SDMMC_CardDetectFailed;
     }
+    /* power off card */
+    SDIO_SetCardPower(card, false);
     /* power on card */
     SDIO_SetCardPower(card, true);
 

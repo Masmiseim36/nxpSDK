@@ -34,20 +34,16 @@
 extern "C" {
 #endif /* __cplusplus */
 
-extern int DbgConsole_Printf(const char *fmt_s, ...);
+extern int DbgConsole_Printf(const char *formatString, ...);
 
 #if defined(__cplusplus)
 }
 #endif /* __cplusplus */
 
-#ifndef __DSC__
 #if defined(SDK_DEBUGCONSOLE) && (SDK_DEBUGCONSOLE < 1)
 #define usb_echo printf
 #else
 #define usb_echo DbgConsole_Printf
-#endif
-#else
-#define usb_echo
 #endif
 
 #if defined(__ICCARM__)
@@ -80,9 +76,18 @@ extern int DbgConsole_Printf(const char *fmt_s, ...);
 #define STRUCT_UNPACKED _Pragma("pack()")
 #endif
 
+#elif (defined(__DSC__) || defined(__CW__))
+
+#ifndef STRUCT_PACKED
+#define STRUCT_PACKED
 #endif
 
-#define USB_SHORT_GET_LOW(x) (((uint16_t)x) & 0xFFU)
+#ifndef STRUCT_UNPACKED
+#define STRUCT_UNPACKED __attribute__((packed))
+#endif
+#endif
+
+#define USB_SHORT_GET_LOW(x)  (((uint16_t)x) & 0xFFU)
 #define USB_SHORT_GET_HIGH(x) ((uint8_t)(((uint16_t)x) >> 8U) & 0xFFU)
 
 #define USB_LONG_GET_BYTE0(x) ((uint8_t)(((uint32_t)(x))) & 0xFFU)
@@ -93,7 +98,7 @@ extern int DbgConsole_Printf(const char *fmt_s, ...);
 #define USB_MEM4_ALIGN_MASK (0x03U)
 
 /* accessory macro */
-#define USB_MEM4_ALIGN(n) ((n + 3U) & (0xFFFFFFFCu))
+#define USB_MEM4_ALIGN(n)  ((n + 3U) & (0xFFFFFFFCu))
 #define USB_MEM32_ALIGN(n) ((n + 31U) & (0xFFFFFFE0u))
 #define USB_MEM64_ALIGN(n) ((n + 63U) & (0xFFFFFFC0u))
 
@@ -132,15 +137,15 @@ extern int DbgConsole_Printf(const char *fmt_s, ...);
 
 #if (ENDIANNESS == USB_BIG_ENDIAN)
 
-#define USB_SHORT_TO_LITTLE_ENDIAN(n) SWAP2BYTE_CONST(n)
-#define USB_LONG_TO_LITTLE_ENDIAN(n) SWAP4BYTE_CONST(n)
+#define USB_SHORT_TO_LITTLE_ENDIAN(n)   SWAP2BYTE_CONST(n)
+#define USB_LONG_TO_LITTLE_ENDIAN(n)    SWAP4BYTE_CONST(n)
 #define USB_SHORT_FROM_LITTLE_ENDIAN(n) SWAP2BYTE_CONST(n)
-#define USB_LONG_FROM_LITTLE_ENDIAN(n) SWAP2BYTE_CONST(n)
+#define USB_LONG_FROM_LITTLE_ENDIAN(n)  SWAP2BYTE_CONST(n)
 
-#define USB_SHORT_TO_BIG_ENDIAN(n) (n)
-#define USB_LONG_TO_BIG_ENDIAN(n) (n)
+#define USB_SHORT_TO_BIG_ENDIAN(n)   (n)
+#define USB_LONG_TO_BIG_ENDIAN(n)    (n)
 #define USB_SHORT_FROM_BIG_ENDIAN(n) (n)
-#define USB_LONG_FROM_BIG_ENDIAN(n) (n)
+#define USB_LONG_FROM_BIG_ENDIAN(n)  (n)
 
 #define USB_LONG_TO_LITTLE_ENDIAN_ADDRESS(n, m)             \
     {                                                       \
@@ -205,15 +210,15 @@ extern int DbgConsole_Printf(const char *fmt_s, ...);
 
 #else
 
-#define USB_SHORT_TO_LITTLE_ENDIAN(n) (n)
-#define USB_LONG_TO_LITTLE_ENDIAN(n) (n)
+#define USB_SHORT_TO_LITTLE_ENDIAN(n)   (n)
+#define USB_LONG_TO_LITTLE_ENDIAN(n)    (n)
 #define USB_SHORT_FROM_LITTLE_ENDIAN(n) (n)
-#define USB_LONG_FROM_LITTLE_ENDIAN(n) (n)
+#define USB_LONG_FROM_LITTLE_ENDIAN(n)  (n)
 
-#define USB_SHORT_TO_BIG_ENDIAN(n) SWAP2BYTE_CONST(n)
-#define USB_LONG_TO_BIG_ENDIAN(n) SWAP4BYTE_CONST(n)
+#define USB_SHORT_TO_BIG_ENDIAN(n)   SWAP2BYTE_CONST(n)
+#define USB_LONG_TO_BIG_ENDIAN(n)    SWAP4BYTE_CONST(n)
 #define USB_SHORT_FROM_BIG_ENDIAN(n) SWAP2BYTE_CONST(n)
-#define USB_LONG_FROM_BIG_ENDIAN(n) SWAP4BYTE_CONST(n)
+#define USB_LONG_FROM_BIG_ENDIAN(n)  SWAP4BYTE_CONST(n)
 
 #define USB_LONG_TO_LITTLE_ENDIAN_ADDRESS(n, m)             \
     {                                                       \
@@ -293,7 +298,7 @@ extern int DbgConsole_Printf(const char *fmt_s, ...);
  * the USB dedicated RAM size is not more than 512 Bytes.
  */
 #define USB_STACK_DEDICATED_RAM_TYPE_BDT_GLOBAL 1
-#define USB_STACK_DEDICATED_RAM_TYPE_BDT 2
+#define USB_STACK_DEDICATED_RAM_TYPE_BDT        2
 
 #if defined(__ICCARM__)
 
@@ -306,21 +311,21 @@ _Pragma("diag_suppress=Pm120")
 
 #define USB_RAM_ADDRESS_ALIGNMENT(n) USB_ALIGN_PRAGMA(data_alignment = n)
         _Pragma("diag_suppress=Pm120")
-#define USB_LINK_SECTION_PART(str) _Pragma(#str)
+#define USB_LINK_SECTION_PART(str)  _Pragma(#str)
 #define USB_LINK_DMA_INIT_DATA(sec) USB_LINK_SECTION_PART(location = #sec)
-#define USB_LINK_USB_GLOBAL _Pragma("location = \"m_usb_global\"")
-#define USB_LINK_USB_BDT _Pragma("location = \"m_usb_bdt\"")
+#define USB_LINK_USB_GLOBAL         _Pragma("location = \"m_usb_global\"")
+#define USB_LINK_USB_BDT            _Pragma("location = \"m_usb_bdt\"")
 #define USB_LINK_USB_GLOBAL_BSS
 #define USB_LINK_USB_BDT_BSS
             _Pragma("diag_default=Pm120")
-#define USB_LINK_DMA_NONINIT_DATA _Pragma("location = \"m_usb_dma_noninit_data\"")
+#define USB_LINK_DMA_NONINIT_DATA      _Pragma("location = \"m_usb_dma_noninit_data\"")
 #define USB_LINK_NONCACHE_NONINIT_DATA _Pragma("location = \"NonCacheable\"")
 #elif defined(__CC_ARM) || (defined(__ARMCC_VERSION))
 
-#define USB_WEAK_VAR __attribute__((weak))
-#define USB_WEAK_FUN __attribute__((weak))
+#define USB_WEAK_VAR                 __attribute__((weak))
+#define USB_WEAK_FUN                 __attribute__((weak))
 #define USB_RAM_ADDRESS_ALIGNMENT(n) __attribute__((aligned(n)))
-#define USB_LINK_DMA_INIT_DATA(sec) __attribute__((section(#sec)))
+#define USB_LINK_DMA_INIT_DATA(sec)  __attribute__((section(#sec)))
 #if defined(__CC_ARM)
 #define USB_LINK_USB_GLOBAL __attribute__((section("m_usb_global"))) __attribute__((zero_init))
 #else
@@ -346,21 +351,21 @@ _Pragma("diag_suppress=Pm120")
 
 #elif defined(__GNUC__)
 
-#define USB_WEAK_VAR __attribute__((weak))
-#define USB_WEAK_FUN __attribute__((weak))
+#define USB_WEAK_VAR                 __attribute__((weak))
+#define USB_WEAK_FUN                 __attribute__((weak))
 #define USB_RAM_ADDRESS_ALIGNMENT(n) __attribute__((aligned(n)))
-#define USB_LINK_DMA_INIT_DATA(sec) __attribute__((section(#sec)))
-#define USB_LINK_USB_GLOBAL __attribute__((section("m_usb_global, \"aw\", %nobits @")))
-#define USB_LINK_USB_BDT __attribute__((section("m_usb_bdt, \"aw\", %nobits @")))
+#define USB_LINK_DMA_INIT_DATA(sec)  __attribute__((section(#sec)))
+#define USB_LINK_USB_GLOBAL          __attribute__((section("m_usb_global, \"aw\", %nobits @")))
+#define USB_LINK_USB_BDT             __attribute__((section("m_usb_bdt, \"aw\", %nobits @")))
 #define USB_LINK_USB_GLOBAL_BSS
 #define USB_LINK_USB_BDT_BSS
-#define USB_LINK_DMA_NONINIT_DATA __attribute__((section("m_usb_dma_noninit_data, \"aw\", %nobits @")))
+#define USB_LINK_DMA_NONINIT_DATA      __attribute__((section("m_usb_dma_noninit_data, \"aw\", %nobits @")))
 #define USB_LINK_NONCACHE_NONINIT_DATA __attribute__((section("NonCacheable, \"aw\", %nobits @")))
 
 #elif (defined(__DSC__) && defined(__CW__))
-#define MAX(a, b) (((a) > (b)) ? (a) : (b))
-#define USB_WEAK_VAR __attribute__((weak))
-#define USB_WEAK_FUN __attribute__((weak))
+#define MAX(a, b)                    (((a) > (b)) ? (a) : (b))
+#define USB_WEAK_VAR                 __attribute__((weak))
+#define USB_WEAK_FUN                 __attribute__((weak))
 #define USB_RAM_ADDRESS_ALIGNMENT(n) __attribute__((aligned(n)))
 #define USB_LINK_USB_BDT_BSS
 #define USB_LINK_USB_GLOBAL_BSS
@@ -403,18 +408,18 @@ _Pragma("diag_suppress=Pm120")
 #if defined(USB_STACK_USE_DEDICATED_RAM) && (USB_STACK_USE_DEDICATED_RAM == USB_STACK_DEDICATED_RAM_TYPE_BDT_GLOBAL)
 
 #define USB_GLOBAL USB_LINK_USB_GLOBAL
-#define USB_BDT USB_LINK_USB_BDT
+#define USB_BDT    USB_LINK_USB_BDT
 
 #if (defined(USB_DEVICE_CONFIG_BUFFER_PROPERTY_CACHEABLE) && (USB_DEVICE_CONFIG_BUFFER_PROPERTY_CACHEABLE)) || \
     (defined(USB_HOST_CONFIG_BUFFER_PROPERTY_CACHEABLE) && (USB_HOST_CONFIG_BUFFER_PROPERTY_CACHEABLE))
 #define USB_DMA_DATA_NONINIT_SUB USB_LINK_DMA_NONINIT_DATA
-#define USB_DMA_DATA_INIT_SUB USB_LINK_DMA_INIT_DATA(m_usb_dma_init_data)
-#define USB_CONTROLLER_DATA USB_LINK_NONCACHE_NONINIT_DATA
+#define USB_DMA_DATA_INIT_SUB    USB_LINK_DMA_INIT_DATA(m_usb_dma_init_data)
+#define USB_CONTROLLER_DATA      USB_LINK_NONCACHE_NONINIT_DATA
 #else
 #if (defined(DATA_SECTION_IS_CACHEABLE) && (DATA_SECTION_IS_CACHEABLE))
 #define USB_DMA_DATA_NONINIT_SUB USB_LINK_NONCACHE_NONINIT_DATA
-#define USB_DMA_DATA_INIT_SUB USB_LINK_DMA_INIT_DATA(NonCacheable.init)
-#define USB_CONTROLLER_DATA USB_LINK_NONCACHE_NONINIT_DATA
+#define USB_DMA_DATA_INIT_SUB    USB_LINK_DMA_INIT_DATA(NonCacheable.init)
+#define USB_CONTROLLER_DATA      USB_LINK_NONCACHE_NONINIT_DATA
 #else
 #define USB_DMA_DATA_NONINIT_SUB
 #define USB_DMA_DATA_INIT_SUB
@@ -428,16 +433,16 @@ _Pragma("diag_suppress=Pm120")
 
 #if (defined(USB_DEVICE_CONFIG_BUFFER_PROPERTY_CACHEABLE) && (USB_DEVICE_CONFIG_BUFFER_PROPERTY_CACHEABLE)) || \
     (defined(USB_HOST_CONFIG_BUFFER_PROPERTY_CACHEABLE) && (USB_HOST_CONFIG_BUFFER_PROPERTY_CACHEABLE))
-#define USB_GLOBAL USB_LINK_DMA_NONINIT_DATA
+#define USB_GLOBAL               USB_LINK_DMA_NONINIT_DATA
 #define USB_DMA_DATA_NONINIT_SUB USB_LINK_DMA_NONINIT_DATA
-#define USB_DMA_DATA_INIT_SUB USB_LINK_DMA_INIT_DATA(m_usb_dma_init_data)
-#define USB_CONTROLLER_DATA USB_LINK_NONCACHE_NONINIT_DATA
+#define USB_DMA_DATA_INIT_SUB    USB_LINK_DMA_INIT_DATA(m_usb_dma_init_data)
+#define USB_CONTROLLER_DATA      USB_LINK_NONCACHE_NONINIT_DATA
 #else
 #if (defined(DATA_SECTION_IS_CACHEABLE) && (DATA_SECTION_IS_CACHEABLE))
-#define USB_GLOBAL USB_LINK_NONCACHE_NONINIT_DATA
+#define USB_GLOBAL               USB_LINK_NONCACHE_NONINIT_DATA
 #define USB_DMA_DATA_NONINIT_SUB USB_LINK_NONCACHE_NONINIT_DATA
-#define USB_DMA_DATA_INIT_SUB USB_LINK_DMA_INIT_DATA(NonCacheable.init)
-#define USB_CONTROLLER_DATA USB_LINK_NONCACHE_NONINIT_DATA
+#define USB_DMA_DATA_INIT_SUB    USB_LINK_DMA_INIT_DATA(NonCacheable.init)
+#define USB_CONTROLLER_DATA      USB_LINK_NONCACHE_NONINIT_DATA
 #else
 #define USB_GLOBAL USB_LINK_USB_GLOBAL_BSS
 #define USB_DMA_DATA_NONINIT_SUB
@@ -451,23 +456,23 @@ _Pragma("diag_suppress=Pm120")
 #if (defined(USB_DEVICE_CONFIG_BUFFER_PROPERTY_CACHEABLE) && (USB_DEVICE_CONFIG_BUFFER_PROPERTY_CACHEABLE)) || \
     (defined(USB_HOST_CONFIG_BUFFER_PROPERTY_CACHEABLE) && (USB_HOST_CONFIG_BUFFER_PROPERTY_CACHEABLE))
 
-#define USB_GLOBAL USB_LINK_DMA_NONINIT_DATA
-#define USB_BDT USB_LINK_NONCACHE_NONINIT_DATA
+#define USB_GLOBAL               USB_LINK_DMA_NONINIT_DATA
+#define USB_BDT                  USB_LINK_NONCACHE_NONINIT_DATA
 #define USB_DMA_DATA_NONINIT_SUB USB_LINK_DMA_NONINIT_DATA
-#define USB_DMA_DATA_INIT_SUB USB_LINK_DMA_INIT_DATA(m_usb_dma_init_data)
-#define USB_CONTROLLER_DATA USB_LINK_NONCACHE_NONINIT_DATA
+#define USB_DMA_DATA_INIT_SUB    USB_LINK_DMA_INIT_DATA(m_usb_dma_init_data)
+#define USB_CONTROLLER_DATA      USB_LINK_NONCACHE_NONINIT_DATA
 
 #else
 
 #if (defined(DATA_SECTION_IS_CACHEABLE) && (DATA_SECTION_IS_CACHEABLE))
-#define USB_GLOBAL USB_LINK_NONCACHE_NONINIT_DATA
-#define USB_BDT USB_LINK_NONCACHE_NONINIT_DATA
+#define USB_GLOBAL               USB_LINK_NONCACHE_NONINIT_DATA
+#define USB_BDT                  USB_LINK_NONCACHE_NONINIT_DATA
 #define USB_DMA_DATA_NONINIT_SUB USB_LINK_NONCACHE_NONINIT_DATA
-#define USB_DMA_DATA_INIT_SUB USB_LINK_DMA_INIT_DATA(NonCacheable.init)
-#define USB_CONTROLLER_DATA USB_LINK_NONCACHE_NONINIT_DATA
+#define USB_DMA_DATA_INIT_SUB    USB_LINK_DMA_INIT_DATA(NonCacheable.init)
+#define USB_CONTROLLER_DATA      USB_LINK_NONCACHE_NONINIT_DATA
 #else
 #define USB_GLOBAL USB_LINK_USB_GLOBAL_BSS
-#define USB_BDT USB_LINK_USB_BDT_BSS
+#define USB_BDT    USB_LINK_USB_BDT_BSS
 #define USB_DMA_DATA_NONINIT_SUB
 #define USB_DMA_DATA_INIT_SUB
 #define USB_CONTROLLER_DATA
@@ -478,7 +483,7 @@ _Pragma("diag_suppress=Pm120")
 #endif
 
 #define USB_DMA_NONINIT_DATA_ALIGN(n) USB_RAM_ADDRESS_ALIGNMENT(n) USB_DMA_DATA_NONINIT_SUB
-#define USB_DMA_INIT_DATA_ALIGN(n) USB_RAM_ADDRESS_ALIGNMENT(n) USB_DMA_DATA_INIT_SUB
+#define USB_DMA_INIT_DATA_ALIGN(n)    USB_RAM_ADDRESS_ALIGNMENT(n) USB_DMA_DATA_INIT_SUB
 
 #if (defined(USB_DEVICE_CONFIG_BUFFER_PROPERTY_CACHEABLE) && (USB_DEVICE_CONFIG_BUFFER_PROPERTY_CACHEABLE)) || \
     (defined(USB_HOST_CONFIG_BUFFER_PROPERTY_CACHEABLE) && (USB_HOST_CONFIG_BUFFER_PROPERTY_CACHEABLE))

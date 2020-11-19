@@ -169,6 +169,10 @@ void FMSTR_Poll(void)
 
 void FMSTR_SendResponse(FMSTR_BPTR response, FMSTR_SIZE length, FMSTR_U8 statusCode)
 {
+#if FMSTR_DEBUG_LEVEL >= 2
+    FMSTR_DEBUG_PRINTF("FMSTR SendResponse Status: 0x%x, Len: 0x%x\n", statusCode, length);
+#endif
+
     FMSTR_TRANSPORT.SendResponse(response, length, statusCode);
 }
 
@@ -190,6 +194,10 @@ FMSTR_BOOL FMSTR_ProtocolDecoder(FMSTR_BPTR msgBuffIO, FMSTR_SIZE msgSize, FMSTR
 {
     FMSTR_BPTR responseEnd = msgBuffIO;
     FMSTR_U8 statusCode = FMSTR_STS_INVALID;
+
+#if FMSTR_DEBUG_LEVEL >= 2
+    FMSTR_DEBUG_PRINTF("FMSTR ProtocolDecoder Cmd: 0x%x, Len: 0x%x\n", cmdCode, msgSize);
+#endif
 
     /* process command   */
     switch (cmdCode)
@@ -309,6 +317,11 @@ FMSTR_BOOL FMSTR_ProtocolDecoder(FMSTR_BPTR msgBuffIO, FMSTR_SIZE msgSize, FMSTR
     {
         /*lint -e{946,960} subtracting pointers is appropriate here */
         FMSTR_SIZE respSize = (FMSTR_SIZE)(responseEnd - msgBuffIO);
+
+        /* Non-variable length error responses are forced to 0 length */
+        if((statusCode & (FMSTR_STSF_VARLEN | FMSTR_STSF_ERROR)) == FMSTR_STSF_ERROR)
+            respSize = 0;
+
 #if FMSTR_DEBUG_TX
         /* the first sane frame received from PC Host ends test frame sending */
         fmstr_doDebugTx = FMSTR_FALSE;

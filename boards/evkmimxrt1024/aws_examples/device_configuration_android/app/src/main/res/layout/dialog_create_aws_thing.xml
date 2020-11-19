@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/createAwsThing_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/createAwsThing"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:fontFamily="sans-serif"
+            android:hint="@string/new_aws_iot_thing_name"
+            android:maxLength="32"
+            android:layout_margin="4sp"
+            android:textSize="18sp"/>
+    </android.support.design.widget.TextInputLayout>
+
+</LinearLayout>

@@ -95,16 +95,16 @@ static flexcan_frame_t fmstr_txmsg;        /* Buffer to prepare transmission */
 
 const FMSTR_CAN_DRV_INTF FMSTR_CAN_MCUX_FLEXCAN =
 {
-    .Init = _FMSTR_FlexCAN_Init,
-    .EnableTxInterrupt = _FMSTR_FlexCAN_EnableTxInterrupt,
-    .EnableRxInterrupt = _FMSTR_FlexCAN_EnableRxInterrupt,
-    .EnableRx =        _FMSTR_FlexCAN_EnableRx,
-    .GetRxFrameLen =   _FMSTR_FlexCAN_GetRxFrameLen,
-    .GetRxFrameByte =  _FMSTR_FlexCAN_GetRxFrameByte,
-    .AckRxFrame =      _FMSTR_FlexCAN_AckRxFrame,
-    .PrepareTxFrame =  _FMSTR_FlexCAN_PrepareTxFrame,
-    .PutTxFrameByte =  _FMSTR_FlexCAN_PutTxFrameByte,
-    .SendTxFrame =     _FMSTR_FlexCAN_SendTxFrame,
+    FMSTR_C99_INIT(Init             ) _FMSTR_FlexCAN_Init,
+    FMSTR_C99_INIT(EnableTxInterrupt) _FMSTR_FlexCAN_EnableTxInterrupt,
+    FMSTR_C99_INIT(EnableRxInterrupt) _FMSTR_FlexCAN_EnableRxInterrupt,
+    FMSTR_C99_INIT(EnableRx         ) _FMSTR_FlexCAN_EnableRx,
+    FMSTR_C99_INIT(GetRxFrameLen    ) _FMSTR_FlexCAN_GetRxFrameLen,
+    FMSTR_C99_INIT(GetRxFrameByte   ) _FMSTR_FlexCAN_GetRxFrameByte,
+    FMSTR_C99_INIT(AckRxFrame       ) _FMSTR_FlexCAN_AckRxFrame,
+    FMSTR_C99_INIT(PrepareTxFrame   ) _FMSTR_FlexCAN_PrepareTxFrame,
+    FMSTR_C99_INIT(PutTxFrameByte   ) _FMSTR_FlexCAN_PutTxFrameByte,
+    FMSTR_C99_INIT(SendTxFrame      ) _FMSTR_FlexCAN_SendTxFrame,
 };
 
 /******************************************************************************
@@ -128,10 +128,11 @@ static FMSTR_BOOL _FMSTR_FlexCAN_Init(FMSTR_U32 idRx, FMSTR_U32 idTx)
     fmstr_txmsg.type = kFLEXCAN_FrameTypeData;
     FLEXCAN_SetTxMbConfig(fmstr_canBaseAddr, FMSTR_FLEXCAN_TXMB, 1);
 
-#if FMSTR_LONG_INTR || FMSTR_SHORT_INTR
-    FLEXCAN_DisableInterrupts(fmstr_canBaseAddr, 0xFFFFFFFF);
-    (void)EnableIRQ((IRQn_Type)(CAN0_ORed_Message_buffer_IRQn));
-#endif
+    { 
+        /* Make sure the RX Message Buffer is unlocked. */
+        volatile uint32_t dummy = fmstr_canBaseAddr->TIMER;
+        FMSTR_UNUSED(dummy);
+    }
 
     return FMSTR_TRUE;
 }
@@ -160,7 +161,7 @@ static void _FMSTR_FlexCAN_EnableRx(void)
 
 static FMSTR_SIZE8 _FMSTR_FlexCAN_GetRxFrameLen(void)
 {
-#ifdef FMSTR_POLL_DRIVEN
+#if FMSTR_POLL_DRIVEN
     /* Is any data received? */
     if(FLEXCAN_GetMbStatusFlags(fmstr_canBaseAddr, FMSTR_FLEXCAN_RXMB_FLAG) == 0)
         return 0;
@@ -172,9 +173,15 @@ static FMSTR_SIZE8 _FMSTR_FlexCAN_GetRxFrameLen(void)
     /* Current cache still valid? */
     if(!fmstr_rxmsg.length)
     {
-        /* Try to read, when successfull, the MB is acknowledged and set for next receive */
-        if(FLEXCAN_ReadRxMb(fmstr_canBaseAddr, FMSTR_FLEXCAN_RXMB, &fmstr_rxmsg) == kStatus_Fail)
-            return 0; /* no frame available */
+        /* Try to read data, when successful, the MB is acknowledged and set for next receive */
+        status_t s = FLEXCAN_ReadRxMb(fmstr_canBaseAddr, FMSTR_FLEXCAN_RXMB, &fmstr_rxmsg);
+
+        /* Make sure the RX Message Buffer is unlocked. */
+        volatile uint32_t dummy = fmstr_canBaseAddr->TIMER;
+        FMSTR_UNUSED(dummy);
+
+        if(s == kStatus_Fail)
+            fmstr_rxmsg.length = 0; /* no frame available */
     }
 
     /* we have got some frame, return its length */

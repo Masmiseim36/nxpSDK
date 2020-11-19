@@ -265,12 +265,15 @@ void ethernetif_enet_init(struct netif *netif, struct ethernetif *ethernetif,
     buffCfg[0].rxBufferAlign = &(ethernetif->RxDataBuff[0][0]); /* Receive data buffer start address. */
     buffCfg[0].txBufferAlign = &(ethernetif->TxDataBuff[0][0]); /* Transmit data buffer start address. */
     buffCfg[0].txFrameInfo = NULL;                              /* Transmit frame information start address. Set only if using zero-copy transmit. */
-    buffCfg[0].rxMaintainEnable = true;                         /*!< Receive buffer cache maintain. */
-    buffCfg[0].txMaintainEnable = true;                         /*!< Transmit buffer cache maintain. */
+    buffCfg[0].rxMaintainEnable = true;                         /* Receive buffer cache maintain. */
+    buffCfg[0].txMaintainEnable = true;                         /* Transmit buffer cache maintain. */
 
     sysClock = ethernetifConfig->phyHandle->mdioHandle->resource.csrClock_Hz;
 
     ENET_GetDefaultConfig(&config);
+#ifdef LWIP_PORT_PHY_RMII
+    config.miiMode = kENET_RmiiMode;
+#endif
     config.ringNum = ENET_RING_NUM;
 
     ethernetif_phy_init(ethernetif, ethernetifConfig, &config);

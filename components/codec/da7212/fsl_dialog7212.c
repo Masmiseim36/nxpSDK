@@ -586,26 +586,26 @@ void DA7212_Mute(da7212_handle_t *handle, bool isMuted)
 
 status_t DA7212_SetChannelVolume(da7212_handle_t *handle, uint32_t channel, uint32_t volume)
 {
-    status_t retVal   = kStatus_Success;
-    uint16_t muteCtrl = volume == 0U ? 0x40 : 0x80U;
-    uint32_t vol      = volume == 100U ? 64U : volume;
+    status_t retVal = kStatus_Success;
+
+    if (volume > DA7212_HEADPHONE_MAX_VOLUME_VALUE)
+    {
+        return kStatus_InvalidArgument;
+    }
 
     if (channel & kDA7212_HeadphoneLeft)
     {
-        retVal = DA7212_WriteRegister(handle, DIALOG7212_HP_L_GAIN, vol - 1U);
-        retVal = DA7212_ModifyRegister(handle, DIALOG7212_HP_L_CTRL, 0xC0U, muteCtrl);
+        retVal = DA7212_WriteRegister(handle, DIALOG7212_HP_L_GAIN, volume);
     }
 
     if (channel & kDA7212_HeadphoneRight)
     {
-        retVal = DA7212_WriteRegister(handle, DIALOG7212_HP_R_GAIN, vol - 1U);
-        retVal = DA7212_ModifyRegister(handle, DIALOG7212_HP_R_CTRL, 0xC0U, muteCtrl);
+        retVal = DA7212_WriteRegister(handle, DIALOG7212_HP_R_GAIN, volume);
     }
 
     if (channel & kDA7212_Speaker)
     {
-        retVal = DA7212_WriteRegister(handle, DIALOG7212_LINE_GAIN, vol - 1U);
-        retVal = DA7212_ModifyRegister(handle, DIALOG7212_LINE_CTRL, 0xC0U, muteCtrl);
+        retVal = DA7212_WriteRegister(handle, DIALOG7212_LINE_GAIN, volume);
     }
 
     return retVal;

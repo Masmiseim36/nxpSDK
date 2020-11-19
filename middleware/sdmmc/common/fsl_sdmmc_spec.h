@@ -662,6 +662,10 @@ enum _mmc_support_boot_mode
 #define MMC_POWER_CLASS_4BIT_MASK (0x0FU)
 /*! @brief The power class current value bit mask when bus in 8 bit mode */
 #define MMC_POWER_CLASS_8BIT_MASK (0xF0U)
+/*! @brief mmc cache control enable*/
+#define MMC_CACHE_CONTROL_ENABLE (1U)
+/*! @brief mmc cache flush */
+#define MMC_CACHE_TRIGGER_FLUSH (1U)
 
 /*! @brief MMC card high-speed timing(HS_TIMING in Extended CSD) */
 typedef enum _mmc_high_speed_timing
@@ -807,6 +811,8 @@ typedef enum _mmc_extended_csd_access_mode
 /*! @brief EXT CSD byte index */
 typedef enum _mmc_extended_csd_index
 {
+    kMMC_ExtendedCsdIndexFlushCache           = 32U,  /*!< flush cache */
+    kMMC_ExtendedCsdIndexCacheControl         = 33U,  /*!< cache control */
     kMMC_ExtendedCsdIndexBootPartitionWP      = 173U, /*!< Boot partition write protect */
     kMMC_ExtendedCsdIndexEraseGroupDefinition = 175U, /*!< Erase Group Def */
     kMMC_ExtendedCsdIndexBootBusConditions    = 177U, /*!< Boot Bus conditions */
@@ -1053,7 +1059,7 @@ typedef struct _mmc_extended_csd
     /*uint8_t ffuStatus;*/                    /*!< FFU status [26]*/
     /*uint8_t modeOperationCode;*/            /*!< mode operation code[29]*/
     /*uint8_t modeConfig;*/                   /*!< mode config [30]*/
-    /*uint8_t cacheCtrl;*/                    /*!< control to turn on/off cache[33]*/
+    uint8_t cacheCtrl;                        /*!< control to turn on/off cache[33]*/
     /*uint8_t pwroffNotify;*/                 /*!< power off notification[34]*/
     /*uint8_t packedCmdFailIndex;*/           /*!< packed cmd fail index [35]*/
     /*uint8_t packedCmdStatus;*/              /*!< packed cmd status[36]*/
@@ -1136,7 +1142,7 @@ typedef struct _mmc_extended_csd
     /*uint32_t correctPrgSectorNum;*/          /*!< correct prg sectors number[245-242]*/
     /*uint8_t bkOpsStatus;*/                   /*!< background operations status[246]*/
     /*uint8_t powerOffNotifyTimeout;*/         /*!< power off notification timeout[247]*/
-    /*uint8_t genericCMD6Timeout;*/            /*!< generic CMD6 timeout[248]*/
+    uint32_t genericCMD6Timeout;               /*!< generic CMD6 timeout[248]*/
     uint32_t cacheSize;                        /*!< cache size[252-249]*/
     uint8_t powerClass200MHZDDR360V;           /*!< power class for 200MHZ, DDR at VCC=2.6V[253]*/
     /*uint32_t fwVer[2U];*/                    /*!< fw VERSION [261-254]*/

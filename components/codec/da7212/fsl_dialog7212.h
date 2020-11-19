@@ -20,7 +20,7 @@
 /*! @name Driver version */
 /*@{*/
 /*! @brief CLOCK driver version 2.2.0. */
-#define FSL_DA7212_DRIVER_VERSION (MAKE_VERSION(2, 2, 0))
+#define FSL_DA7212_DRIVER_VERSION (MAKE_VERSION(2, 2, 1))
 /*@}*/
 
 /*! @brief da7212 handle size */
@@ -974,6 +974,9 @@
 /* DIALOG7212_SYSTEM_ACTIVE                      0xFD */
 #define DIALOG7212_SYSTEM_ACTIVE_MASK (1 << 0)
 
+/*! @brief da7212 volume setting range */
+#define DA7212_HEADPHONE_MAX_VOLUME_VALUE 0x3FU
+
 /*! @brief DA7212 input source select */
 typedef enum _da7212_Input
 {
@@ -1201,7 +1204,7 @@ void DA7212_ChangeOutput(da7212_handle_t *handle, da7212_Output_t DA7212_Output)
  *
  * @param handle DA7212 handle pointer.
  * @param module shoule be a value of _da7212_module
- * @param volume volume range 0 - 100, 0 is mute, 100 is the maximum value.
+ * @param volume volume range 0 - 0x3F mapped to range -57dB - 6dB.
  */
 status_t DA7212_SetChannelVolume(da7212_handle_t *handle, uint32_t module, uint32_t volume);
 

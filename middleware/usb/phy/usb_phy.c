@@ -153,7 +153,7 @@ uint32_t USB_EhciLowPowerPhyInit(uint8_t controllerId, uint32_t freq, usb_phy_co
 #endif
 
 #if ((defined USBPHY_CTRL_AUTORESUME_EN_MASK) && (USBPHY_CTRL_AUTORESUME_EN_MASK > 0U))
-    usbPhyBase->CTRL |= USBPHY_CTRL_AUTORESUME_EN_MASK;
+    usbPhyBase->CTRL_CLR |= USBPHY_CTRL_AUTORESUME_EN_MASK;
 #else
     usbPhyBase->CTRL |= USBPHY_CTRL_ENAUTO_PWRON_PLL_MASK;
 #endif

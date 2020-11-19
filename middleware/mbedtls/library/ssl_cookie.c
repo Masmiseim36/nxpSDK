@@ -50,7 +50,12 @@
  * with max 32 bytes of cookie for DTLS 1.0
  */
 #if defined(MBEDTLS_SHA256_C)
+/* NXP: Use SHA-256 HW acceleration for MD COOKIE when SHA-224 mode is not available */
+#if defined(FSL_MD_COOKIE_USE_SHA256)
+#define COOKIE_MD           MBEDTLS_MD_SHA256
+#else
 #define COOKIE_MD           MBEDTLS_MD_SHA224
+#endif /* FSL_MD_COOKIE_USE_SHA256 */
 #define COOKIE_MD_OUTLEN    32
 #define COOKIE_HMAC_LEN     28
 #elif defined(MBEDTLS_SHA512_C)

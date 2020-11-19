@@ -513,25 +513,27 @@ altcp_mbedtls_lower_sent(void *arg, struct altcp_pcb *inner_conn, u16_t len)
   struct altcp_pcb *conn = (struct altcp_pcb *)arg;
   LWIP_UNUSED_ARG(inner_conn); /* for LWIP_NOASSERT */
   if (conn) {
+    int overhead;
+    u16_t app_len;
     altcp_mbedtls_state_t *state = (altcp_mbedtls_state_t *)conn->state;
     LWIP_ASSERT("state", state != NULL);
     LWIP_ASSERT("pcb mismatch", conn->inner_conn == inner_conn);
     /* calculate TLS overhead part to not send it to application */
-    int overhead = state->overhead_bytes_adjust + state->ssl_context.out_left;
-    if ((unsigned)overhead > len)
+    overhead = state->overhead_bytes_adjust + state->ssl_context.out_left;
+    if ((unsigned)overhead > len) {
       overhead = len;
+    }
     /* remove ACKed bytes from overhead adjust counter */
     state->overhead_bytes_adjust -= len;
     /* try to send more if we failed before (may increase overhead adjust counter) */
     mbedtls_ssl_flush_output(&state->ssl_context);
     /* remove calculated overhead from ACKed bytes len */
-    len -= overhead;
+    app_len = len - (u16_t)overhead;
     /* update application write counter and inform application */
-    if (len)
-    {
-      state->overhead_bytes_adjust += len;
+    if (app_len) {
+      state->overhead_bytes_adjust += app_len;
       if (conn->sent)
-        return conn->sent(conn->arg, conn, len);
+        return conn->sent(conn->arg, conn, app_len);
     }
   }
   return ERR_OK;
@@ -716,10 +718,10 @@ altcp_mbedtls_debug(void *ctx, int level, const char *file, int line, const char
 #endif
 
 static err_t
-altcp_mbedtls_ref_entropy()
+altcp_mbedtls_ref_entropy(void)
 {
-  SYS_ARCH_DECL_PROTECT(old_level);
-  SYS_ARCH_PROTECT(old_level);
+  LWIP_ASSERT_CORE_LOCKED();
+
   if (!altcp_tls_entropy_rng) {
     altcp_tls_entropy_rng = (struct altcp_tls_entropy_rng *)altcp_mbedtls_alloc_config(sizeof(struct altcp_tls_entropy_rng));
     if (altcp_tls_entropy_rng) {
@@ -737,31 +739,25 @@ altcp_mbedtls_ref_entropy()
         mbedtls_entropy_free(&altcp_tls_entropy_rng->entropy);
         altcp_mbedtls_free_config(altcp_tls_entropy_rng);
         altcp_tls_entropy_rng = NULL;
-        SYS_ARCH_UNPROTECT(old_level);
         return ERR_ARG;
       }
-    }
-    else {
-      SYS_ARCH_UNPROTECT(old_level);
+    } else {
       return ERR_MEM;
     }
-  }
-  else
+  } else {
     altcp_tls_entropy_rng->ref++;
-  SYS_ARCH_UNPROTECT(old_level);
+  }
   return ERR_OK;
 }
 
-
-
 static void
-altcp_mbedtls_unref_entropy()
+altcp_mbedtls_unref_entropy(void)
 {
-  SYS_ARCH_DECL_PROTECT(old_level);
-  SYS_ARCH_PROTECT(old_level);
-  if (altcp_tls_entropy_rng && altcp_tls_entropy_rng->ref)
+  LWIP_ASSERT_CORE_LOCKED();
+
+  if (altcp_tls_entropy_rng && altcp_tls_entropy_rng->ref) {
       altcp_tls_entropy_rng->ref--;
-  SYS_ARCH_UNPROTECT(old_level);
+  }
 }
 
 /** Create new TLS configuration
@@ -1046,8 +1042,6 @@ altcp_tls_free_config(struct altcp_tls_config *conf)
   if (conf->ca) {
     mbedtls_x509_crt_free(conf->ca);
   }
-  mbedtls_entropy_free(&conf->entropy);
-  mbedtls_ctr_drbg_free(&conf->ctr_drbg);
   altcp_mbedtls_free_config(conf);
   altcp_mbedtls_unref_entropy();
 }
@@ -1055,15 +1049,14 @@ altcp_tls_free_config(struct altcp_tls_config *conf)
 void
 altcp_tls_free_entropy(void)
 {
-  SYS_ARCH_DECL_PROTECT(old_level);
-  SYS_ARCH_PROTECT(old_level);
+  LWIP_ASSERT_CORE_LOCKED();
+
   if (altcp_tls_entropy_rng && altcp_tls_entropy_rng->ref == 0) {
     mbedtls_ctr_drbg_free(&altcp_tls_entropy_rng->ctr_drbg);
     mbedtls_entropy_free(&altcp_tls_entropy_rng->entropy);
     altcp_mbedtls_free_config(altcp_tls_entropy_rng);
     altcp_tls_entropy_rng = NULL;
   }
-  SYS_ARCH_UNPROTECT(old_level);
 }
 
 /* "virtual" functions */
@@ -1189,7 +1182,7 @@ altcp_mbedtls_sndbuf(struct altcp_pcb *conn)
           size_t max_len = 0xFFFF;
           size_t ret;
 #if defined(MBEDTLS_SSL_MAX_FRAGMENT_LENGTH)
-          /* @todo: adjust ssl_added to real value related to negociated cipher */
+          /* @todo: adjust ssl_added to real value related to negotiated cipher */
           size_t max_frag_len = mbedtls_ssl_get_max_frag_len(&state->ssl_context);
           max_len = LWIP_MIN(max_frag_len, max_len);
 #endif

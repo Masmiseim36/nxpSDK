@@ -74,7 +74,7 @@
 
 /** Platform specific diagnostic output.<br>
  * Note the default implementation pulls in printf, which may
- * in turn pull in a lot of standard libary code. In resource-constrained
+ * in turn pull in a lot of standard library code. In resource-constrained
  * systems, this should be defined to something less resource-consuming.
  */
 #ifndef LWIP_PLATFORM_DIAG
@@ -85,7 +85,7 @@
 
 /** Platform specific assertion handling.<br>
  * Note the default implementation pulls in printf, fflush and abort, which may
- * in turn pull in a lot of standard libary code. In resource-constrained
+ * in turn pull in a lot of standard library code. In resource-constrained
  * systems, this should be defined to something less resource-consuming.
  */
 #ifndef LWIP_PLATFORM_ASSERT
@@ -380,6 +380,15 @@ extern "C" {
  */
 #if defined __DOXYGEN__
 #define LWIP_PROVIDE_ERRNO
+#endif
+
+/* Use a special, reproducable version of rand() for fuzz tests? */
+#ifdef LWIP_RAND_FOR_FUZZ
+#ifdef LWIP_RAND
+#undef LWIP_RAND
+#endif
+u32_t lwip_fuzz_rand(void);
+#define LWIP_RAND() lwip_fuzz_rand()
 #endif
 
 /**

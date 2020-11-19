@@ -473,7 +473,6 @@ static err_t ppp_netif_init_cb(struct netif *netif) {
 #if PPP_IPV6_SUPPORT
   netif->output_ip6 = ppp_netif_output_ip6;
 #endif /* PPP_IPV6_SUPPORT */
-  netif->flags = NETIF_FLAG_UP;
 #if LWIP_NETIF_HOSTNAME
   /* @todo: Initialize interface hostname */
   /* netif_set_hostname(netif, "lwip"); */
@@ -707,6 +706,9 @@ ppp_pcb *ppp_new(struct netif *pppif, const struct link_callbacks *callbacks, vo
     PPPDEBUG(LOG_ERR, ("ppp_new: netif_add failed\n"));
     return NULL;
   }
+  /* FIXME: user application should be responsible to call netif_set_up(),
+   * remove it for next release with allowed behavior break */
+  netif_set_up(pcb->netif);
 
   pcb->link_cb = callbacks;
   pcb->link_ctx_cb = link_ctx_cb;
@@ -798,7 +800,7 @@ void ppp_input(ppp_pcb *pcb, struct pbuf *pb) {
    * Toss all non-LCP packets unless LCP is OPEN.
    */
   if (protocol != PPP_LCP && pcb->lcp_fsm.state != PPP_FSM_OPENED) {
-    ppp_dbglog("Discarded non-LCP packet when LCP not open");
+    ppp_dbglog(("Discarded non-LCP packet when LCP not open"));
     goto drop;
   }
 
@@ -821,7 +823,7 @@ void ppp_input(ppp_pcb *pcb, struct pbuf *pb) {
    || protocol == PPP_EAP
 #endif /* EAP_SUPPORT */
    )) {
-    ppp_dbglog("discarding proto 0x%x in phase %d", protocol, pcb->phase);
+    ppp_dbglog(("discarding proto 0x%x in phase %d", protocol, pcb->phase));
     goto drop;
   }
 
@@ -956,10 +958,10 @@ void ppp_input(ppp_pcb *pcb, struct pbuf *pb) {
 #if PPP_PROTOCOLNAME
       pname = protocol_name(protocol);
       if (pname != NULL) {
-        ppp_warn("Unsupported protocol '%s' (0x%x) received", pname, protocol);
+        ppp_warn(("Unsupported protocol '%s' (0x%x) received", pname, protocol));
       } else
 #endif /* PPP_PROTOCOLNAME */
-        ppp_warn("Unsupported protocol 0x%x received", protocol);
+        ppp_warn(("Unsupported protocol 0x%x received", protocol));
 #endif /* PPP_DEBUG */
         if (pbuf_add_header(pb, sizeof(protocol))) {
           PPPDEBUG(LOG_WARNING, ("ppp_input[%d]: Dropping (pbuf_add_header failed)\n", pcb->netif->num));
@@ -1126,12 +1128,12 @@ int cdns(ppp_pcb *pcb, u32_t ns1, u32_t ns2) {
 
   nsa = dns_getserver(0);
   ip_addr_set_ip4_u32_val(nsb, ns1);
-  if (ip_addr_cmp(nsa, &nsb)) {
+  if (ip_addr_eq(nsa, &nsb)) {
     dns_setserver(0, IP_ADDR_ANY);
   }
   nsa = dns_getserver(1);
   ip_addr_set_ip4_u32_val(nsb, ns2);
-  if (ip_addr_cmp(nsa, &nsb)) {
+  if (ip_addr_eq(nsa, &nsb)) {
     dns_setserver(1, IP_ADDR_ANY);
   }
   return 1;

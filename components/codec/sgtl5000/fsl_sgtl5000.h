@@ -21,8 +21,8 @@
  ******************************************************************************/
 /*! @name Driver version */
 /*@{*/
-/*! @brief CLOCK driver version 2.1.0. */
-#define FSL_SGTL5000_DRIVER_VERSION (MAKE_VERSION(2, 1, 0))
+/*! @brief CLOCK driver version 2.1.1. */
+#define FSL_SGTL5000_DRIVER_VERSION (MAKE_VERSION(2, 1, 1))
 /*@}*/
 
 /*! @brief Define the register address of sgtl5000. */
@@ -735,6 +735,16 @@
 #define SGTL5000_DAP_COEF_WR_A2_LSB_LSB_CLR_MASK 0xFFF0
 #define SGTL5000_DAP_COEF_WR_A2_LSB_LSB_SHIFT    0x0
 
+/*! @brief SGTL5000 volume setting range */
+#define SGTL5000_HEADPHONE_MAX_VOLUME_VALUE 0x7FU
+#define SGTL5000_HEADPHONE_MIN_VOLUME_VALUE 0U
+#define SGTL5000_LINE_OUT_MAX_VOLUME_VALUE  0x1FU
+#define SGTL5000_LINE_OUT_MIN_VOLUME_VALUE  0U
+#define SGTL5000_ADC_MAX_VOLUME_VALUE       0xFU
+#define SGTL5000_ADC_MIN_VOLUME_VALUE       0U
+#define SGTL5000_DAC_MAX_VOLUME_VALUE       0xF0U
+#define SGTL5000_DAC_MIN_VOLUME_VALUE       0x3CU
+
 /*! @brief SGTL5000 I2C address. */
 #define SGTL5000_I2C_ADDR 0x0A
 
@@ -910,6 +920,12 @@ void SGTL_SetMasterSlave(sgtl_handle_t *handle, bool master);
  *
  * This function would set the volume of sgtl5000 modules. This interface set module volume.
  * The function assume that left channel and right channel has the same volume.
+ *
+ * kSGTL_ModuleADC volume range:      0 - 0xF,     0dB - 22.5dB
+ * kSGTL_ModuleDAC volume range:      0x3C - 0xF0, 0dB - -90dB
+ * kSGTL_ModuleHP volume range:       0 - 0x7F,    12dB - -51.5dB
+ * kSGTL_ModuleLineOut volume range:  0 - 0x1F,    0.5dB steps
+ *
  * @param handle Sgtl5000 handle structure.
  * @param module Sgtl5000 module, such as DAC, ADC and etc.
  * @param volume Volume value need to be set. The value is the exact value in register.

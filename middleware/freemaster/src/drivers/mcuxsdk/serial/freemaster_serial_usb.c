@@ -325,7 +325,8 @@ void FMSTR_SerialUsbProcessEvent(FMSTR_SERIAL_USBCDC_EVENT_TYPE type, FMSTR_U8 *
     /* Data received */
     else if(type == FMSTR_SERIAL_USBCDC_EVENT_TYPE_RECEIVED)
     {
-        if(data != NULL)
+        /* Also check if size is sane. It may go invalid (e.g. "negative") on some unexpected events. */
+        if(data != NULL && size < 0x10000)
         {
             for(int i=0; i<size; i++)
             {

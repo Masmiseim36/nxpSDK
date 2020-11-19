@@ -78,17 +78,6 @@ static DWORD netconn_sem_tls_index;
 
 static HCRYPTPROV hcrypt;
 
-u32_t
-lwip_port_rand(void)
-{
-  u32_t ret;
-  if (CryptGenRandom(hcrypt, sizeof(ret), (BYTE*)&ret)) {
-    return ret;
-  }
-  LWIP_ASSERT("CryptGenRandom failed", 0);
-  return 0;
-}
-
 static void
 sys_win_rand_init(void)
 {
@@ -103,6 +92,22 @@ sys_win_rand_init(void)
       LWIP_ASSERT(errbuf, 0);
     }
   }
+}
+
+unsigned int
+lwip_port_rand(void)
+{
+  u32_t ret;
+  if (CryptGenRandom(hcrypt, sizeof(ret), (BYTE*)&ret)) {
+    return ret;
+  }
+  // maybe CryptAcquireContext has not been called...
+  sys_win_rand_init();
+  if (CryptGenRandom(hcrypt, sizeof(ret), (BYTE*)&ret)) {
+    return ret;
+  }
+  LWIP_ASSERT("CryptGenRandom failed", 0);
+  return 0;
 }
 
 static void
@@ -137,7 +142,11 @@ sys_jiffies(void)
 u32_t
 sys_now(void)
 {
-  return (u32_t)sys_get_ms_longlong();
+  u32_t now = (u32_t)sys_get_ms_longlong();
+#ifdef LWIP_FUZZ_SYS_NOW
+  now += sys_now_offset;
+#endif
+  return now;
 }
 
 CRITICAL_SECTION critSec;
@@ -421,7 +430,7 @@ SetThreadName(DWORD dwThreadID, const char* threadName)
 }
 #endif /* _MSC_VER */
 
-static void
+static DWORD WINAPI
 sys_thread_function(void* arg)
 {
   struct threadlist* t = (struct threadlist*)arg;
@@ -432,6 +441,7 @@ sys_thread_function(void* arg)
 #if LWIP_NETCONN_SEM_PER_THREAD
   sys_arch_netconn_sem_free();
 #endif
+  return 0;
 }
 
 sys_thread_t
@@ -454,7 +464,7 @@ sys_thread_new(const char *name, lwip_thread_fn function, void *arg, int stacksi
     new_thread->next = lwip_win32_threads;
     lwip_win32_threads = new_thread;
 
-    h = CreateThread(0, 0, (LPTHREAD_START_ROUTINE)sys_thread_function, new_thread, 0, &(new_thread->id));
+    h = CreateThread(0, 0, sys_thread_function, new_thread, 0, &(new_thread->id));
     LWIP_ASSERT("h != 0", h != 0);
     LWIP_ASSERT("h != -1", h != INVALID_HANDLE_VALUE);
     LWIP_UNUSED_ARG(h);

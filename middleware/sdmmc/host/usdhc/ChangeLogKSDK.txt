@@ -2,7 +2,13 @@
 @page middleware_log Middleware Change Log
 
 @section host_usdhc Host USDHC driver for MCUXpresso SDK
-The current driver version is 2.3.0.
+The current driver version is 2.4.0.
+
+  - 2.4.0
+    - Improvements
+      - Added cache maintain functionality in the host driver.
+      - Enabled DAT3 card detect feature.
+      - Increase the default STD tuning counter to 60 to cover range of the tuning window.
 
   - 2.3.0
     - Improvements

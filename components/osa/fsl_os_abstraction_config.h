@@ -14,7 +14,7 @@
 #endif
 
 #ifndef gMainThreadPriority_c
-#define gMainThreadPriority_c 1
+#define gMainThreadPriority_c 7
 #endif
 
 #ifndef gTaskMultipleInstancesManagement_c

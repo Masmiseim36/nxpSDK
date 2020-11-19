@@ -12,6 +12,12 @@
  ******************************************************************************/
 /*!@brief power reset delay */
 #define SD_POWER_RESET_DELAY (500U)
+#ifndef SD_CARD_ACCESS_WAIT_IDLE_TIMEOUT
+#define SD_CARD_ACCESS_WAIT_IDLE_TIMEOUT (10000U)
+#endif
+#ifndef SD_CMD13_RETRY_TIMES
+#define SD_CMD13_RETRY_TIMES (10000U)
+#endif
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -525,6 +531,7 @@ static status_t SD_WaitWriteComplete(sd_card_t *card)
     sdmmchost_transfer_t content = {0};
     sdmmchost_cmd_t command      = {0};
     status_t error               = kStatus_Success;
+    uint32_t retry               = SD_CMD13_RETRY_TIMES;
 
     command.index        = kSDMMC_SendStatus;
     command.argument     = card->relativeAddress << 16U;
@@ -546,9 +553,48 @@ static status_t SD_WaitWriteComplete(sd_card_t *card)
         {
             break;
         }
-    } while (true);
+
+        retry--;
+
+    } while (retry != 0U);
 
     return error;
+}
+
+static status_t SD_PollingCardStatusBusy(sd_card_t *card, bool sendStatusOnly, uint32_t timeout)
+{
+    assert(card != NULL);
+
+    uint32_t statusTimeout = timeout;
+    bool dat0Busy          = false;
+
+    /* Wait for the card write process complete because of that card read process and write process use one buffer. */
+    if (kStatus_Success != SD_WaitWriteComplete(card))
+    {
+        return kStatus_SDMMC_WaitWriteCompleteFailed;
+    }
+
+    if (!sendStatusOnly)
+    {
+        do
+        {
+            dat0Busy = SDMMCHOST_IsCardBusy(card->host);
+            if (dat0Busy)
+            {
+                if (statusTimeout == 0U)
+                {
+                    return kStatus_SDMMC_PollingCardIdleFailed;
+                }
+                else
+                {
+                    SDMMC_OSADelay(1U);
+                    statusTimeout--;
+                }
+            }
+        } while (dat0Busy);
+    }
+
+    return kStatus_Success;
 }
 
 static status_t SD_SendWriteSuccessBlocks(sd_card_t *card, uint32_t *blocks)
@@ -564,7 +610,7 @@ static status_t SD_SendWriteSuccessBlocks(sd_card_t *card, uint32_t *blocks)
     memset(rawBuffer, 0U, 4u);
 
     /* Wait for the card write process complete because of that card read process and write process use one buffer. */
-    if (kStatus_Success != SD_WaitWriteComplete(card))
+    if (kStatus_Success != SD_PollingCardStatusBusy(card, true, 0))
     {
         return kStatus_SDMMC_WaitWriteCompleteFailed;
     }
@@ -1345,7 +1391,7 @@ status_t SD_ReadStatus(sd_card_t *card)
     memset(rawPointer, 0U, 64U);
 
     /* wait card status ready. */
-    if (kStatus_Success != SD_WaitWriteComplete(card))
+    if (kStatus_Success != SD_PollingCardStatusBusy(card, true, 0))
     {
         return kStatus_SDMMC_WaitWriteCompleteFailed;
     }
@@ -1449,8 +1495,8 @@ static status_t SD_Read(sd_card_t *card, uint8_t *buffer, uint32_t startBlock, u
         return kStatus_SDMMC_CardNotSupport;
     }
 
-    /* Wait for the card write process complete because of that card read process and write process use one buffer. */
-    if (kStatus_Success != SD_WaitWriteComplete(card))
+    /* check card status for not busy*/
+    if (kStatus_Success != SD_PollingCardStatusBusy(card, true, 0))
     {
         return kStatus_SDMMC_WaitWriteCompleteFailed;
     }
@@ -1499,15 +1545,10 @@ static status_t SD_Write(sd_card_t *card,
         return kStatus_SDMMC_CardNotSupport;
     }
 
-    /* Wait for the card write process complete because of that card read process and write process use one buffer.*/
-    if (kStatus_Success != SD_WaitWriteComplete(card))
+    /* check card status for not busy*/
+    if (kStatus_Success != SD_PollingCardStatusBusy(card, false, SD_CARD_ACCESS_WAIT_IDLE_TIMEOUT))
     {
         return kStatus_SDMMC_WaitWriteCompleteFailed;
-    }
-
-    /* Wait for the card's buffer to be not full to write to improve the write performance. */
-    while (SDMMCHOST_IsCardBusy(card->host))
-    {
     }
 
     data.enableAutoCommand12   = true;
@@ -1558,14 +1599,10 @@ static status_t SD_Erase(sd_card_t *card, uint32_t startBlock, uint32_t blockCou
     sdmmchost_cmd_t command      = {0};
     status_t error               = kStatus_Success;
 
-    /* Wait for the card write process complete because of that card read process and write process use one buffer.*/
-    if (kStatus_Success != SD_WaitWriteComplete(card))
+    /* check card status for not busy*/
+    if (kStatus_Success != SD_PollingCardStatusBusy(card, false, SD_CARD_ACCESS_WAIT_IDLE_TIMEOUT))
     {
         return kStatus_SDMMC_WaitWriteCompleteFailed;
-    }
-    /* Wait for the card's buffer to be not full to write to improve the write performance. */
-    while (SDMMCHOST_IsCardBusy(card->host))
-    {
     }
 
     eraseBlockStart = startBlock;
@@ -1656,6 +1693,7 @@ status_t SD_ReadBlocks(sd_card_t *card, uint8_t *buffer, uint32_t startBlock, ui
             blockCountOneTime = 1;
             memset(alignBuffer, 0U, FSL_SDMMC_DEFAULT_BLOCK_SIZE);
             dataAddrAlign = false;
+            blockLeft -= blockCountOneTime;
         }
         else
         {
@@ -2121,12 +2159,13 @@ status_t SD_Init(sd_card_t *card)
     {
         SD_HostDoReset(card);
     }
-    SD_SetCardPower(card, false);
 
     if (SD_PollingCardInsert(card, kSD_Inserted) != kStatus_Success)
     {
         return kStatus_SDMMC_CardDetectFailed;
     }
+    /* card power reset */
+    SD_SetCardPower(card, false);
     SD_SetCardPower(card, true);
 
     return SD_CardInit(card);

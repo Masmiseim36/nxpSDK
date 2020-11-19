@@ -127,7 +127,7 @@ PACK_STRUCT_END
 #endif
 /* There must be sufficient timeouts, taking into account requirements of the subsystems. */
 #if LWIP_TIMERS && (MEMP_NUM_SYS_TIMEOUT < LWIP_NUM_SYS_TIMEOUT_INTERNAL)
-#error "MEMP_NUM_SYS_TIMEOUT is too low to accomodate all required timeouts"
+#error "MEMP_NUM_SYS_TIMEOUT is too low to accommodate all required timeouts"
 #endif
 #if (IP_REASSEMBLY && (MEMP_NUM_REASSDATA > IP_REASS_MAX_PBUFS))
 #error "MEMP_NUM_REASSDATA > IP_REASS_MAX_PBUFS doesn't make sense since each struct ip_reassdata must hold 2 pbufs at least!"
@@ -219,6 +219,9 @@ PACK_STRUCT_END
 #endif
 #if PPP_SUPPORT && PPP_IPV6_SUPPORT && !LWIP_IPV6
 #error "PPP_IPV6_SUPPORT needs LWIP_IPV6 turned on"
+#endif
+#if PPP_SUPPORT && CCP_SUPPORT && !MPPE_SUPPORT
+#error "CCP_SUPPORT needs MPPE_SUPPORT turned on"
 #endif
 #if !LWIP_ETHERNET && (LWIP_ARP || PPPOE_SUPPORT)
 #error "LWIP_ETHERNET needs to be turned on for LWIP_ARP or PPPOE_SUPPORT"

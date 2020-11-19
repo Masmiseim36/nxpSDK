@@ -320,19 +320,36 @@ status_t SGTL_SetVolume(sgtl_handle_t *handle, sgtl_module_t module, uint32_t vo
     switch (module)
     {
         case kSGTL_ModuleADC:
+            if (volume > SGTL5000_ADC_MAX_VOLUME_VALUE)
+            {
+                return kStatus_InvalidArgument;
+            }
+
             vol = volume | (volume << 4U);
             ret = SGTL_ModifyReg(handle, CHIP_ANA_ADC_CTRL,
                                  SGTL5000_ADC_VOL_LEFT_CLR_MASK & SGTL5000_ADC_VOL_RIGHT_CLR_MASK, vol);
             break;
         case kSGTL_ModuleDAC:
+            if ((volume > SGTL5000_DAC_MAX_VOLUME_VALUE) || (volume < SGTL5000_DAC_MIN_VOLUME_VALUE))
+            {
+                return kStatus_InvalidArgument;
+            }
             vol = volume | (volume << 8U);
             ret = SGTL_WriteReg(handle, CHIP_DAC_VOL, vol);
             break;
         case kSGTL_ModuleHP:
+            if (volume > SGTL5000_HEADPHONE_MAX_VOLUME_VALUE)
+            {
+                return kStatus_InvalidArgument;
+            }
             vol = volume | (volume << 8U);
             ret = SGTL_WriteReg(handle, CHIP_ANA_HP_CTRL, vol);
             break;
         case kSGTL_ModuleLineOut:
+            if (volume > SGTL5000_LINE_OUT_MAX_VOLUME_VALUE)
+            {
+                return kStatus_InvalidArgument;
+            }
             vol = volume | (volume << 8U);
             ret = SGTL_WriteReg(handle, CHIP_LINE_OUT_VOL, vol);
             break;

@@ -368,6 +368,7 @@ static usb_status_t USB_HostVideoControl(usb_host_class_handle classHandle,
         return kStatus_USB_InvalidHandle;
     }
 
+    /* malloc one transfer */
     if (USB_HostMallocTransfer(videoInstance->hostHandle, &transfer) != kStatus_USB_Success)
     {
 #ifdef HOST_ECHO
@@ -375,6 +376,7 @@ static usb_status_t USB_HostVideoControl(usb_host_class_handle classHandle,
 #endif
         return kStatus_USB_Error;
     }
+    /* save the application callback function */
     videoInstance->controlCallbackFn    = callbackFn;
     videoInstance->controlCallbackParam = callbackParam;
 
@@ -442,12 +444,13 @@ usb_status_t USB_HostVideoStreamSetInterface(usb_host_class_handle classHandle,
 
     videoInstance->streamIntfHandle = interfaceHandle;
 
-    status = USB_HostOpenDeviceInterface(videoInstance->deviceHandle, interfaceHandle);
+    status = USB_HostOpenDeviceInterface(videoInstance->deviceHandle, interfaceHandle); /* save the application callback function */
     if (status != kStatus_USB_Success)
     {
         return status;
     }
-
+    
+    /* cancel transfers */
     if (videoInstance->streamIsoInPipe != NULL)
     {
         status = USB_HostCancelTransfer(videoInstance->hostHandle, videoInstance->streamIsoInPipe, NULL);
@@ -522,7 +525,7 @@ usb_status_t USB_HostVideoStreamSetInterface(usb_host_class_handle classHandle,
         }
     }
 
-    if (alternateSetting == 0U)
+    if (alternateSetting == 0U) /* open interface directly */
     {
         if (callbackFn != NULL)
         {
@@ -530,8 +533,9 @@ usb_status_t USB_HostVideoStreamSetInterface(usb_host_class_handle classHandle,
             callbackFn(callbackParam, NULL, 0U, kStatus_USB_Success);
         }
     }
-    else
+    else /* send setup transfer */
     {
+        /* malloc one transfer */
         if (USB_HostMallocTransfer(videoInstance->hostHandle, &transfer) != kStatus_USB_Success)
         {
 #ifdef HOST_ECHO
@@ -539,6 +543,7 @@ usb_status_t USB_HostVideoStreamSetInterface(usb_host_class_handle classHandle,
 #endif
             return kStatus_USB_Error;
         }
+        /* save the application callback function */
         videoInstance->controlCallbackFn    = callbackFn;
         videoInstance->controlCallbackParam = callbackParam;
         /* initialize transfer */
@@ -607,7 +612,7 @@ usb_status_t USB_HostVideoControlSetInterface(usb_host_class_handle classHandle,
     videoInstance->controlIntfHandle = interfaceHandle;
     interface_ptr                    = (usb_host_interface_t *)interfaceHandle;
 
-    status = USB_HostOpenDeviceInterface(videoInstance->deviceHandle, interfaceHandle);
+    status = USB_HostOpenDeviceInterface(videoInstance->deviceHandle, interfaceHandle); /* notify host driver the interface is open */
     if (status != kStatus_USB_Success)
     {
         return status;
@@ -658,7 +663,7 @@ usb_status_t USB_HostVideoControlSetInterface(usb_host_class_handle classHandle,
         desc.bufr += desc.common->bLength;
     }
 
-    if (alternateSetting == 0U)
+    if (alternateSetting == 0U) /* open interface directly */
     {
         if (callbackFn != NULL)
         {
@@ -666,8 +671,9 @@ usb_status_t USB_HostVideoControlSetInterface(usb_host_class_handle classHandle,
             callbackFn(callbackParam, NULL, 0U, kStatus_USB_Success);
         }
     }
-    else
+    else /* send setup transfer */
     {
+        /* malloc one transfer */
         if (USB_HostMallocTransfer(videoInstance->hostHandle, &transfer) != kStatus_USB_Success)
         {
 #ifdef HOST_ECHO
@@ -675,6 +681,7 @@ usb_status_t USB_HostVideoControlSetInterface(usb_host_class_handle classHandle,
 #endif
             return kStatus_USB_Error;
         }
+        /* save the application callback function */
         videoInstance->controlCallbackFn    = callbackFn;
         videoInstance->controlCallbackParam = callbackParam;
         /* initialize transfer */
@@ -739,6 +746,7 @@ usb_status_t USB_HosVideoStreamRecv(usb_host_class_handle classHandle,
         return kStatus_USB_Error;
     }
 
+    /* malloc one transfer */
     if (USB_HostMallocTransfer(videoInstance->hostHandle, &transfer) != kStatus_USB_Success)
     {
 #ifdef HOST_ECHO
@@ -746,6 +754,7 @@ usb_status_t USB_HosVideoStreamRecv(usb_host_class_handle classHandle,
 #endif
         return kStatus_USB_Error;
     }
+    /* save the application callback function */
     videoInstance->streamIsoInCallbackFn    = callbackFn;
     videoInstance->streamIsoInCallbackParam = callbackParam;
     transfer->transferBuffer                = buffer;
@@ -786,7 +795,8 @@ usb_status_t USB_HostVideoInit(usb_device_handle deviceHandle, usb_host_class_ha
     {
         return kStatus_USB_AllocFail;
     }
-
+    
+    /* initialize video instance */
     videoInstance->deviceHandle      = deviceHandle;
     videoInstance->controlIntfHandle = NULL;
     videoInstance->streamIntfHandle  = NULL;
@@ -823,6 +833,7 @@ usb_status_t USB_HostVideoDeinit(usb_device_handle deviceHandle, usb_host_class_
 
     if (classHandle != NULL)
     {
+        /* cancel transfers */
         if (videoInstance->streamIsoInPipe != NULL)
         {
             status = USB_HostCancelTransfer(videoInstance->hostHandle, videoInstance->streamIsoInPipe, NULL);
@@ -845,6 +856,7 @@ usb_status_t USB_HostVideoDeinit(usb_device_handle deviceHandle, usb_host_class_
 
         (void)USB_HostCloseDeviceInterface(deviceHandle, videoInstance->streamIntfHandle);
 
+        /* cancel transfers */
         if (videoInstance->interruptPipe != NULL)
         {
             status = USB_HostCancelTransfer(videoInstance->hostHandle, videoInstance->interruptPipe, NULL);
@@ -864,6 +876,7 @@ usb_status_t USB_HostVideoDeinit(usb_device_handle deviceHandle, usb_host_class_
             }
             videoInstance->interruptPipe = NULL;
         }
+        /* cancel transfers */
         if ((videoInstance->controlPipe != NULL) && (videoInstance->controlTransfer != NULL))
         {
             status = USB_HostCancelTransfer(videoInstance->hostHandle, videoInstance->controlPipe,
@@ -913,7 +926,8 @@ usb_status_t USB_HostVideoStreamGetFormatDescriptor(usb_host_class_handle classH
     {
         return kStatus_USB_InvalidHandle;
     }
-
+    
+    /* get the steam interface handle */
     interface_ptr = (usb_host_interface_t *)videoInstance->streamIntfHandle;
 
     descUnion.bufr = interface_ptr->interfaceExtension;

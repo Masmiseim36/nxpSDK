@@ -30,6 +30,9 @@
 #if defined(FSL_FEATURE_SOC_HASHCRYPT_COUNT) && (FSL_FEATURE_SOC_HASHCRYPT_COUNT > 0)
 #include "fsl_hashcrypt.h"
 #endif
+#if defined(FSL_FEATURE_SOC_CASPER_COUNT) && (FSL_FEATURE_SOC_CASPER_COUNT > 0)
+#include "fsl_casper.h"
+#endif
 #if defined(FSL_FEATURE_SOC_TRNG_COUNT) && (FSL_FEATURE_SOC_TRNG_COUNT > 0)
 #include "fsl_trng.h"
 #elif defined(FSL_FEATURE_SOC_RNG_COUNT) && (FSL_FEATURE_SOC_RNG_COUNT > 0)
@@ -49,6 +52,19 @@
 /******************************************************************************/
 #if defined(FSL_FEATURE_SOC_CAAM_COUNT) && (FSL_FEATURE_SOC_CAAM_COUNT > 0) && defined(CRYPTO_USE_DRIVER_CAAM)
 static caam_handle_t s_caamHandle = {.jobRing = kCAAM_JobRing0};
+
+/*! @brief CAAM job ring interface 0 in system memory. */
+static caam_job_ring_interface_t s_jrif0;
+
+/*! @brief CAAM job ring interface 1 in system memory. */
+static caam_job_ring_interface_t s_jrif1;
+
+/*! @brief CAAM job ring interface 2 in system memory. */
+static caam_job_ring_interface_t s_jrif2;
+
+/*! @brief CAAM job ring interface 3 in system memory. */
+static caam_job_ring_interface_t s_jrif3;
+
 #endif
 
 /******************************************************************************/
@@ -136,6 +152,9 @@ void CRYPTO_InitHardware(void)
     CAAM_GetDefaultConfig(&caamConfig);
     caamConfig.jobRingInterface[0] = &s_jrif0;
     caamConfig.jobRingInterface[1] = &s_jrif1;
+    caamConfig.jobRingInterface[2] = &s_jrif2;
+    caamConfig.jobRingInterface[3] = &s_jrif3;
+
     CAAM_Init(CAAM, &caamConfig);
 #endif
 #if defined(FSL_FEATURE_SOC_CAU3_COUNT) && (FSL_FEATURE_SOC_CAU3_COUNT > 0)

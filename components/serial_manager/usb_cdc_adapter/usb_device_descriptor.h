@@ -144,6 +144,50 @@
 #define USB_CDC_VCOM_DIC_PROTOCOL (USB_CDC_NO_CLASS_SPECIFIC_PROTOCOL)
 
 /*******************************************************************************
+ * Variables
+ ******************************************************************************/
+/* Define endpoint for communication class */
+extern usb_device_endpoint_struct_t g_UsbDeviceCdcVcomCicEndpoints[USB_CDC_VCOM_ENDPOINT_CIC_COUNT];
+
+/* Define endpoint for data class */
+extern usb_device_endpoint_struct_t g_UsbDeviceCdcVcomDicEndpoints[USB_CDC_VCOM_ENDPOINT_DIC_COUNT];
+
+/* Define interface for communication class */
+extern usb_device_interface_struct_t g_UsbDeviceCdcVcomCommunicationInterface[];
+
+/* Define interface for data class */
+extern usb_device_interface_struct_t g_UsbDeviceCdcVcomDataInterface[];
+
+/* Define interfaces for virtual com */
+extern usb_device_interfaces_struct_t g_UsbDeviceCdcVcomInterfaces[USB_CDC_VCOM_INTERFACE_COUNT];
+
+/* Define configurations for virtual com */
+extern usb_device_interface_list_t g_UsbDeviceCdcVcomInterfaceLIST_[USB_DEVICE_CONFIGURATION_COUNT];
+
+/* Define class information for virtual com */
+extern usb_device_class_struct_t g_UsbDeviceCdcVcomConfig;
+
+/* Define device descriptor */
+extern uint8_t g_UsbDeviceDescriptor[];
+
+/* Define configuration descriptor */
+extern uint8_t g_UsbDeviceConfigurationDescriptor[];
+
+/* Define string descriptor */
+extern uint8_t g_UsbDeviceString0[];
+
+extern uint8_t g_UsbDeviceString1[];
+
+extern uint8_t g_UsbDeviceString2[];
+
+extern uint8_t *g_UsbDeviceStringDescriptorArray[USB_DEVICE_STRING_COUNT];
+
+/* Define string descriptor size */
+extern uint32_t g_UsbDeviceStringDescriptorLength[USB_DEVICE_STRING_COUNT];
+extern usb_language_t g_UsbDeviceLanguage[USB_DEVICE_LANGUAGE_COUNT];
+extern usb_language_list_t g_UsbDeviceLanguageList;
+
+/*******************************************************************************
  * API
  ******************************************************************************/
 /*!

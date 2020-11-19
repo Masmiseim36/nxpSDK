@@ -21,8 +21,8 @@
  ******************************************************************************/
 /*! @name Driver version */
 /*@{*/
-/*! @brief cs42888 driver version 2.1.1. */
-#define FSL_CS42888_DRIVER_VERSION (MAKE_VERSION(2, 1, 1))
+/*! @brief cs42888 driver version 2.1.2. */
+#define FSL_CS42888_DRIVER_VERSION (MAKE_VERSION(2, 1, 2))
 /*@}*/
 
 /*! @brief CS42888 handle size */
@@ -99,6 +99,9 @@
 #define CS42888_INTERFACE_FORMATS_DAC_DIF_SHIFT 3
 #define CS42888_INTERFACE_FORMATS_DAC_DIF(x) \
     (((uint8_t)((uint8_t)(x) << CS42888_INTERFACE_FORMATS_DAC_DIF_SHIFT)) & CS42888_INTERFACE_FORMATS_DAC_DIF_MASK)
+
+/*! @brief CS42888 volume setting range */
+#define CS42888_AOUT_MAX_VOLUME_VALUE 0xFFU
 
 /*! @brief Cache register number */
 #define CS42888_CACHEREGNUM 28

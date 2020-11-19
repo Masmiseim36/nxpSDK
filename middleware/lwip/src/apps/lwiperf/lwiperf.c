@@ -727,7 +727,7 @@ lwiperf_tcp_accept(void *arg, struct tcp_pcb *newpcb, err_t err)
   LWIP_ASSERT("invalid conn pcb", s->conn_pcb == NULL);
   if (s->specific_remote) {
     LWIP_ASSERT("s->base.related_master_state != NULL", s->base.related_master_state != NULL);
-    if (!ip_addr_cmp(&newpcb->remote_ip, &s->remote_addr)) {
+    if (!ip_addr_eq(&newpcb->remote_ip, &s->remote_addr)) {
       /* this listener belongs to a client session, and this is not the correct remote */
       return ERR_VAL;
     }
@@ -976,7 +976,7 @@ lwiperf_udp_search_client(lwiperf_state_udp_t *s,
       continue;
     if (iter->base.related_master_state != (lwiperf_state_base_t *)s)
       continue;
-    if (ip_addr_cmp(addr, &iter->remote_addr) && (port == iter->remote_port))
+    if (ip_addr_eq(addr, &iter->remote_addr) && (port == iter->remote_port))
       break;
   }
   return iter;

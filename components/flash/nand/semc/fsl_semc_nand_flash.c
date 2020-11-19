@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 NXP
+ * Copyright 2018-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -14,21 +14,18 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define NAND_READY_CHECK_INTERVAL_NORMAL                          (0U)
-#define NAND_MAX_FEATURE_ACCESS_TIME_tFEAT_US                     (1000U)
-#define NAND_MAX_READ_PARAMETER_PAGE_TIME_tR_US                   (1000U)
-#define NAND_FIRST_CMD_CHANGE_COLUMN_SETUP_TIME_NS                (500U)
-#define NAND_MAX_RST_TIME0_tRST_US                                (5U)
-#define NAND_MAX_RST_TIME1_tRST_US                                (10U)
-#define NAND_MAX_RST_TIME2_tRST_US                                (500U)
-#define NAND_MAX_RST_TIME3_tRST_US                                (1000U)
-#define NAND_ONFI_SIGNATURE_MIN_MATCHED_BYTES                     (0x2U)
-#define NAND_FLASH_DEVICEFEATURE_MT29F_ARRAYOPTIONMODEADDRESS     (0x90U)
-#define NAND_FLASH_DEVICEFEATURE_MT29F_ARRAYOPTIONMODE_DISABLEECC (0x00u)
-#define NAND_FLASH_DEVICEFEATURE_MT29F_ARRAYOPTIONMODE_ENABLEECC  (0x08u)
-#define NAND_FLASH_SR_ONFI_PASSBITMASK                            (0x01U)
-#define NAND_FLASH_SR_ONFI_READYBITMASK                           (0x40U)
-#define NAND_FLASH_COLUMNBITSNUM_MAX                              (16U)
+#define NAND_READY_CHECK_INTERVAL_NORMAL           (0U)
+#define NAND_MAX_FEATURE_ACCESS_TIME_tFEAT_US      (1000U)
+#define NAND_MAX_READ_PARAMETER_PAGE_TIME_tR_US    (1000U)
+#define NAND_FIRST_CMD_CHANGE_COLUMN_SETUP_TIME_NS (500U)
+#define NAND_MAX_RST_TIME0_tRST_US                 (5U)
+#define NAND_MAX_RST_TIME1_tRST_US                 (10U)
+#define NAND_MAX_RST_TIME2_tRST_US                 (500U)
+#define NAND_MAX_RST_TIME3_tRST_US                 (1000U)
+#define NAND_ONFI_SIGNATURE_MIN_MATCHED_BYTES      (0x2U)
+#define NAND_FLASH_SR_ONFI_PASSBITMASK             (0x01U)
+#define NAND_FLASH_SR_ONFI_READYBITMASK            (0x40U)
+#define NAND_FLASH_COLUMNBITSNUM_MAX               (16U)
 
 /*! @brief Constructs the four character code for tag */
 #if !defined(FOUR_CHAR_CODE)
@@ -38,19 +35,19 @@
 /*! @brief Parallel NAND timing config */
 typedef struct _nand_ac_timing_parameter
 {
-    uint16_t min_tCS_ns;
-    uint16_t min_tCH_ns;
-    uint16_t min_tCEITV_ns;
-    uint16_t min_tWP_ns;
-    uint16_t min_tWH_ns;
-    uint16_t min_tRP_ns;
-    uint16_t min_tREH_ns;
-    uint16_t min_tTA_ns;
-    uint16_t min_tWHR_ns;
-    uint16_t min_tRHW_ns;
-    uint16_t min_tADL_ns;
-    uint16_t min_tRR_ns;
-    uint16_t max_tWB_ns;
+    uint8_t min_tCS_ns;
+    uint8_t min_tCH_ns;
+    uint8_t min_tCEITV_ns;
+    uint8_t min_tWP_ns;
+    uint8_t min_tWH_ns;
+    uint8_t min_tRP_ns;
+    uint8_t min_tREH_ns;
+    uint8_t min_tTA_ns;
+    uint8_t min_tWHR_ns;
+    uint8_t min_tRHW_ns;
+    uint8_t min_tADL_ns;
+    uint8_t min_tRR_ns;
+    uint8_t max_tWB_ns;
 } nand_ac_timing_parameter_t;
 
 /*******************************************************************************
@@ -105,14 +102,14 @@ const nand_ac_timing_parameter_t s_nandAcTimingParameterTable[] = {
     /* Auto-Detection */
     {0}};
 
-const uint8_t s_nandDeviceManufacturerList[][12] = {{'M', 'I', 'C', 'R', 'O', 'N', ' ', ' ', ' ', ' ', ' ', ' '},
-                                                    {'S', 'P', 'A', 'N', 'S', 'I', 'O', 'N', ' ', ' ', ' ', ' '},
-                                                    {'S', 'A', 'M', 'S', 'U', 'N', 'G', ' ', ' ', ' ', ' ', ' '},
-                                                    {'W', 'I', 'N', 'B', 'O', 'N', 'D', ' ', ' ', ' ', ' ', ' '},
-                                                    {'H', 'Y', 'N', 'I', 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
-                                                    {'T', 'O', 'S', 'H', 'I', 'B', 'A', ' ', ' ', ' ', ' ', ' '},
-                                                    {'M', 'A', 'C', 'R', 'O', 'N', 'I', 'X', ' ', ' ', ' ', ' '},
-                                                    {0}};
+const char s_nandDeviceManufacturerList[][12] = {{'M', 'I', 'C', 'R', 'O', 'N', ' ', ' ', ' ', ' ', ' ', ' '},
+                                                 {'S', 'P', 'A', 'N', 'S', 'I', 'O', 'N', ' ', ' ', ' ', ' '},
+                                                 {'S', 'A', 'M', 'S', 'U', 'N', 'G', ' ', ' ', ' ', ' ', ' '},
+                                                 {'W', 'I', 'N', 'B', 'O', 'N', 'D', ' ', ' ', ' ', ' ', ' '},
+                                                 {'H', 'Y', 'N', 'I', 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                                                 {'T', 'O', 'S', 'H', 'I', 'B', 'A', ' ', ' ', ' ', ' ', ' '},
+                                                 {'M', 'A', 'C', 'R', 'O', 'N', 'I', 'X', ' ', ' ', ' ', ' '},
+                                                 {0}};
 
 semc_mem_nand_handle_t semc_handle;
 
@@ -146,14 +143,13 @@ static status_t semc_nand_get_onfi_timing_configure(nand_handle_t *handle, nand_
     assert(config->memControlConfig);
     assert(handle->deviceSpecific);
 
-    status_t status       = kStatus_Success;
-    uint32_t matchedBytes = 0;
+    status_t status = kStatus_Success;
     uint32_t ch;
     uint32_t nandOnfiTag                                 = FOUR_CHAR_CODE('O', 'N', 'F', 'I');
     nand_onfi_parameter_config_t nandOnfiParameterConfig = {0};
     uint8_t acTimingTableIndex                           = 0;
-    semc_mem_nand_config_t *semcNandConfig               = (semc_mem_nand_config_t *)config->memControlConfig;
-    semc_nand_config_t *semcConfig                       = semcNandConfig->semcNandConfig;
+    semc_mem_nand_config_t *semcMemNandConfig            = (semc_mem_nand_config_t *)config->memControlConfig;
+    semc_nand_config_t *semcConfig                       = semcMemNandConfig->semcNandConfig;
     semc_mem_nand_handle_t *semcHandle                   = (semc_mem_nand_handle_t *)handle->deviceSpecific;
 
     /* Read First ONFI parameter data from device */
@@ -164,21 +160,14 @@ static status_t semc_nand_get_onfi_timing_configure(nand_handle_t *handle, nand_
     }
 
     /* Check ONFI signature. */
-    for (uint32_t i = 0; i < sizeof(nandOnfiParameterConfig.signature); i++)
-    {
-        if ((*(((uint8_t *)&nandOnfiTag) + i)) == (*(((uint8_t *)&nandOnfiParameterConfig.signature) + i)))
-        {
-            matchedBytes++;
-        }
-    }
-    if (matchedBytes < NAND_ONFI_SIGNATURE_MIN_MATCHED_BYTES)
+    if (nandOnfiParameterConfig.signature != nandOnfiTag)
     {
         return kStatus_Fail;
     }
 
     /* Get device vendor */
     handle->vendorType = kNandVendorType_Unknown;
-    for (uint32_t vendorIndex = kNandVendorType_Micron; vendorIndex < kNandVendorType_Unknown; vendorIndex++)
+    for (uint8_t vendorIndex = kNandVendorType_Micron; vendorIndex < (uint8_t)kNandVendorType_Unknown; vendorIndex++)
     {
         for (ch = 0; ch < sizeof(s_nandDeviceManufacturerList[vendorIndex]); ch++)
         {
@@ -195,23 +184,27 @@ static status_t semc_nand_get_onfi_timing_configure(nand_handle_t *handle, nand_
     }
 
     /* Set NAND feature/command info in handler */
-    semcHandle->isFeatureCommandSupport = nandOnfiParameterConfig.optionalCommands.setGetfeatures;
-    if (nandOnfiParameterConfig.optionalCommands.readStatusEnhanced)
+    semcHandle->isFeatureCommandSupport =
+        nandOnfiParameterConfig.optionalCommands.setGetfeatures != 0x00U ? true : false;
+
+    if (nandOnfiParameterConfig.optionalCommands.readStatusEnhanced != 0x00U)
     {
-        semcHandle->statusCommandType = kNandStatusCommandType_Enhanced;
+        semcHandle->statusCommandType = (uint8_t)kNandStatusCommandType_Enhanced;
     }
     else
     {
-        semcHandle->statusCommandType = kNandStatusCommandType_Common;
+        semcHandle->statusCommandType = (uint8_t)kNandStatusCommandType_Common;
     }
-    if (nandOnfiParameterConfig.optionalCommands.changeReadColumnEnhanced)
+
+    if (nandOnfiParameterConfig.optionalCommands.changeReadColumnEnhanced != 0x00U)
     {
-        semcHandle->changeReadColumnType = kNandChangeReadColumnCommandType_Enhanced;
+        semcHandle->changeReadColumnType = (uint8_t)kNandChangeReadColumnCommandType_Enhanced;
     }
     else
     {
-        semcHandle->changeReadColumnType = kNandChangeReadColumnCommandType_Common;
+        semcHandle->changeReadColumnType = (uint8_t)kNandChangeReadColumnCommandType_Common;
     }
+
     handle->bytesInPageDataArea     = nandOnfiParameterConfig.dataBytesPerPage;
     handle->bytesInPageSpareArea    = nandOnfiParameterConfig.spareBytesPerPage;
     handle->pagesInBlock            = nandOnfiParameterConfig.pagesPerBlock;
@@ -255,27 +248,27 @@ static status_t semc_nand_get_onfi_timing_configure(nand_handle_t *handle, nand_
     }
 
     /* Get onfi timing mode for timing mode setting only when appliation have no timing configuration. */
-    if (!semcConfig->timingConfig)
+    if (semcConfig->timingConfig == NULL)
     {
         const nand_ac_timing_parameter_t *timingArray;
 
-        if (nandOnfiParameterConfig.timingMode.mode5)
+        if (nandOnfiParameterConfig.timingMode.mode5 != 0x00U)
         {
             acTimingTableIndex = kNandAcTimingTableIndex_ONFI_1p0_Mode5_50MHz;
         }
-        else if (nandOnfiParameterConfig.timingMode.mode4)
+        else if (nandOnfiParameterConfig.timingMode.mode4 != 0x00U)
         {
             acTimingTableIndex = kNandAcTimingTableIndex_ONFI_1p0_Mode4_40MHz;
         }
-        else if (nandOnfiParameterConfig.timingMode.mode3)
+        else if (nandOnfiParameterConfig.timingMode.mode3 != 0x00U)
         {
             acTimingTableIndex = kNandAcTimingTableIndex_ONFI_1p0_Mode3_33MHz;
         }
-        else if (nandOnfiParameterConfig.timingMode.mode2)
+        else if (nandOnfiParameterConfig.timingMode.mode2 != 0x00U)
         {
             acTimingTableIndex = kNandAcTimingTableIndex_ONFI_1p0_Mode2_28MHz;
         }
-        else if (nandOnfiParameterConfig.timingMode.mode1)
+        else if (nandOnfiParameterConfig.timingMode.mode1 != 0x00U)
         {
             acTimingTableIndex = kNandAcTimingTableIndex_ONFI_1p0_Mode1_20MHz;
         }
@@ -301,24 +294,22 @@ static status_t semc_nand_get_onfi_timing_configure(nand_handle_t *handle, nand_
         semcConfig->timingConfig->tWehigh2Busy_Ns    = timingArray->max_tWB_ns;
 
         /* Change the timing mode: on onfi spec, enable EDO mode when using timing mode 4 and 5. */
-        if ((acTimingTableIndex == kNandAcTimingTableIndex_ONFI_1p0_Mode4_40MHz) ||
-            (acTimingTableIndex == kNandAcTimingTableIndex_ONFI_1p0_Mode5_50MHz))
+        if ((acTimingTableIndex == (uint8_t)kNandAcTimingTableIndex_ONFI_1p0_Mode4_40MHz) ||
+            (acTimingTableIndex == (uint8_t)kNandAcTimingTableIndex_ONFI_1p0_Mode5_50MHz))
         {
             semcConfig->edoModeEnabled = true;
         }
 
-        if ((acTimingTableIndex > kNandAcTimingTableIndex_ONFI_1p0_Mode0_10MHz) &&
-            (acTimingTableIndex <= kNandAcTimingTableIndex_ONFI_1p0_Mode5_50MHz) &&
-            nandOnfiParameterConfig.optionalCommands.setGetfeatures)
+        if ((acTimingTableIndex > (uint8_t)kNandAcTimingTableIndex_ONFI_1p0_Mode0_10MHz) &&
+            (nandOnfiParameterConfig.optionalCommands.setGetfeatures != 0x00U))
         {
             /* Switch to specific timing mode */
-            nand_onfi_feature_config_t featureConfig = {.command      = kNandDeviceCmd_ONFI_SetFeatures,
-                                                        .address      = 0x01, /* Feature address for timing mode. */
-                                                        .parameter[0] = acTimingTableIndex,
-                                                        .parameter[1] = 0,
-                                                        .parameter[2] = 0,
-                                                        .parameter[3] = 0};
-            status                                   = semc_nand_issue_access_feature(handle, &featureConfig);
+            nand_onfi_feature_config_t featureConfig = {
+                .command   = kNandDeviceCmd_ONFI_SetFeatures,
+                .address   = 0x01, /* Feature address for timing mode. */
+                .parameter = {acTimingTableIndex, 0, 0, 0},
+            };
+            status = semc_nand_issue_access_feature(handle, &featureConfig);
             if (status != kStatus_Success)
             {
                 return status;
@@ -337,10 +328,6 @@ static status_t semc_nand_get_onfi_timing_configure(nand_handle_t *handle, nand_
             {
                 return kStatus_Fail;
             }
-            if (status != kStatus_Success)
-            {
-                return status;
-            }
         }
     }
 
@@ -353,14 +340,14 @@ static status_t semc_nand_wait_status_ready(nand_handle_t *handle, uint32_t read
     bool isDeviceReady                 = false;
     semc_mem_nand_handle_t *semcHandle = (semc_mem_nand_handle_t *)handle->deviceSpecific;
 
-    if (!semcHandle->delayUS)
+    if (semcHandle->delayUS == NULL)
     {
         return kStatus_Fail;
     }
 
     while (!isDeviceReady)
     {
-        if (semcHandle->readyCheckOption == kNandReadyCheckOption_SR)
+        if (semcHandle->readyCheckOption == (uint8_t)kNandReadyCheckOption_SR)
         {
             /* Get SR value from Device by issuing READ STATUS commmand */
             uint8_t stat = 0;
@@ -372,9 +359,9 @@ static status_t semc_nand_wait_status_ready(nand_handle_t *handle, uint32_t read
                 return status;
             }
             /* stat[RDY] = 0, Busy, stat[RDY] = 1, Ready */
-            isDeviceReady = (stat & NAND_FLASH_SR_ONFI_READYBITMASK);
+            isDeviceReady = (stat & NAND_FLASH_SR_ONFI_READYBITMASK) == 0x00U ? false : true;
         }
-        else if (semcHandle->readyCheckOption == kNandReadyCheckOption_RB)
+        else if (semcHandle->readyCheckOption == (uint8_t)kNandReadyCheckOption_RB)
         {
             /* Monitors the target's R/B# signal to determine the progress. */
             isDeviceReady = SEMC_IsNandReady((SEMC_Type *)handle->driverBaseAddr);
@@ -384,12 +371,16 @@ static status_t semc_nand_wait_status_ready(nand_handle_t *handle, uint32_t read
                 isDeviceReady = SEMC_IsNandReady((SEMC_Type *)handle->driverBaseAddr);
             }
         }
+        else
+        {
+            ; /* Intentional empty for MISRA c-2012 rule 15.7 */
+        }
     }
 
     /* Note: If the ReadStatus command is used to monitor for command completion, the
     ReadMode command must be used to re-enable data output mode.
     */
-    if ((readOpen) && (semcHandle->readyCheckOption == kNandReadyCheckOption_SR))
+    if ((readOpen) && (semcHandle->readyCheckOption == (uint8_t)kNandReadyCheckOption_SR))
     {
         status = semc_nand_issue_read_mode(handle);
         if (status != kStatus_Success)
@@ -410,7 +401,7 @@ static status_t semc_nand_issue_reset(nand_handle_t *handle)
                                                    kSEMC_NANDAM_ColumnRow, // Don't care
                                                    kSEMC_NANDCM_Command);  // Command Only
     status = SEMC_SendIPCommand((SEMC_Type *)handle->driverBaseAddr, kSEMC_MemType_NAND, semcHandle->ctlAccessMemAddr1,
-                                commandCode, 0, 0);
+                                commandCode, 0, NULL);
     if (status != kStatus_Success)
     {
         return status;
@@ -435,17 +426,15 @@ static status_t semc_nand_set_device_ecc(nand_handle_t *handle)
 
     if (semcHandle->eccCheckType == kNandEccCheckType_DeviceECC)
     {
-        if (handle->vendorType == kNandVendorType_Micron)
+        if (handle->vendorType == (uint8_t)kNandVendorType_Micron)
         {
             if (semcHandle->isFeatureCommandSupport)
             {
                 nand_onfi_feature_config_t featureConfig = {
-                    .command      = kNandDeviceCmd_ONFI_SetFeatures,
-                    .address      = NAND_FLASH_DEVICEFEATURE_MT29F_ARRAYOPTIONMODEADDRESS,
-                    .parameter[0] = NAND_FLASH_DEVICEFEATURE_MT29F_ARRAYOPTIONMODE_ENABLEECC,
-                    .parameter[1] = 0,
-                    .parameter[2] = 0,
-                    .parameter[3] = 0};
+                    .command   = kNandDeviceCmd_ONFI_SetFeatures,
+                    .address   = kNandDeviceFeature_ArrayOperationMode_Address,
+                    .parameter = {kNandDeviceFeature_ArrayOperationMode_EnableECC, 0, 0, 0},
+                };
                 status = semc_nand_issue_access_feature(handle, &featureConfig);
                 if (status != kStatus_Success)
                 {
@@ -453,20 +442,29 @@ static status_t semc_nand_set_device_ecc(nand_handle_t *handle)
                 }
             }
         }
+        else if (handle->vendorType == (uint8_t)kNandVendorType_Macronix)
+        {
+            if (semcHandle->isFeatureCommandSupport)
+            {
+                /* The internal ECC is always enabled for MX30LF serials. */
+            }
+        }
+        else
+        {
+            ; /* Intentional empty */
+        }
     }
     else
     {
-        if (handle->vendorType == kNandVendorType_Micron)
+        if (handle->vendorType == (uint8_t)kNandVendorType_Micron)
         {
             if (semcHandle->isFeatureCommandSupport)
             {
                 nand_onfi_feature_config_t featureConfig = {
-                    .command      = kNandDeviceCmd_ONFI_SetFeatures,
-                    .address      = NAND_FLASH_DEVICEFEATURE_MT29F_ARRAYOPTIONMODEADDRESS,
-                    .parameter[0] = NAND_FLASH_DEVICEFEATURE_MT29F_ARRAYOPTIONMODE_DISABLEECC,
-                    .parameter[1] = 0,
-                    .parameter[2] = 0,
-                    .parameter[3] = 0};
+                    .command   = kNandDeviceCmd_ONFI_SetFeatures,
+                    .address   = kNandDeviceFeature_ArrayOperationMode_Address,
+                    .parameter = {kNandDeviceFeature_ArrayOperationMode_DisableECC, 0, 0, 0},
+                };
                 status = semc_nand_issue_access_feature(handle, &featureConfig);
                 if (status != kStatus_Success)
                 {
@@ -511,13 +509,13 @@ static status_t semc_nand_issue_access_feature(nand_handle_t *handle, nand_onfi_
                                                    kSEMC_NANDAM_ColumnCA0,       // CA1
                                                    kSEMC_NANDCM_CommandAddress); // Commmand Address
     status = SEMC_SendIPCommand((SEMC_Type *)handle->driverBaseAddr, kSEMC_MemType_NAND, featureConfig->address,
-                                commandCode, 0, 0);
+                                commandCode, 0, NULL);
     if (status != kStatus_Success)
     {
         return status;
     }
 
-    if (featureConfig->command == kNandDeviceCmd_ONFI_SetFeatures)
+    if (featureConfig->command == (uint8_t)kNandDeviceCmd_ONFI_SetFeatures)
     {
         status = SEMC_IPCommandNandWrite((SEMC_Type *)handle->driverBaseAddr, 0, featureConfig->parameter,
                                          sizeof(featureConfig->parameter));
@@ -527,7 +525,7 @@ static status_t semc_nand_issue_access_feature(nand_handle_t *handle, nand_onfi_
         }
         /* Note: From Spec, both R/B and SR can be used to determine the progress,
             but actually only when we choose R/B, then it works well on the EVB and FPGA. */
-        if (semcHandle->readyCheckOption == kNandReadyCheckOption_RB)
+        if (semcHandle->readyCheckOption == (uint8_t)kNandReadyCheckOption_RB)
         {
             status = semc_nand_wait_status_ready(handle, NAND_READY_CHECK_INTERVAL_NORMAL, false);
         }
@@ -537,11 +535,11 @@ static status_t semc_nand_issue_access_feature(nand_handle_t *handle, nand_onfi_
             semcHandle->delayUS(NAND_MAX_FEATURE_ACCESS_TIME_tFEAT_US);
         }
     }
-    else if (featureConfig->command == kNandDeviceCmd_ONFI_GetFeatures)
+    else if (featureConfig->command == (uint8_t)kNandDeviceCmd_ONFI_GetFeatures)
     {
         /* Note: From Spec, both R/B and SR can be used to determine the progress,
             but actually only when we choose R/B, then it works well on the EVB and FPGA. */
-        if (semcHandle->readyCheckOption == kNandReadyCheckOption_RB)
+        if (semcHandle->readyCheckOption == (uint8_t)kNandReadyCheckOption_RB)
         {
             status = semc_nand_wait_status_ready(handle, NAND_READY_CHECK_INTERVAL_NORMAL, true);
             if (status != kStatus_Success)
@@ -558,6 +556,10 @@ static status_t semc_nand_issue_access_feature(nand_handle_t *handle, nand_onfi_
         status = SEMC_IPCommandNandRead((SEMC_Type *)handle->driverBaseAddr, 0, featureConfig->parameter,
                                         sizeof(featureConfig->parameter));
     }
+    else
+    {
+        ; /* Intentional empty */
+    }
 
     return status;
 }
@@ -571,7 +573,7 @@ static status_t semc_nand_issue_read_parameter(nand_handle_t *handle, nand_onfi_
     uint16_t commandCode = SEMC_BuildNandIPCommand(kNandDeviceCmd_ONFI_ReadParameterPage,
                                                    kSEMC_NANDAM_ColumnCA0,       // 1 byte address
                                                    kSEMC_NANDCM_CommandAddress); // Command Address
-    status = SEMC_SendIPCommand((SEMC_Type *)handle->driverBaseAddr, kSEMC_MemType_NAND, 0, commandCode, 0, 0);
+    status = SEMC_SendIPCommand((SEMC_Type *)handle->driverBaseAddr, kSEMC_MemType_NAND, 0, commandCode, 0, NULL);
     if (status != kStatus_Success)
     {
         return status;
@@ -584,7 +586,7 @@ static status_t semc_nand_issue_read_parameter(nand_handle_t *handle, nand_onfi_
     readyCheckIntervalInUs = (NAND_MAX_READ_PARAMETER_PAGE_TIME_tR_US > semcHandle->pageReadTimeInUs_tR) ?
                                  NAND_MAX_READ_PARAMETER_PAGE_TIME_tR_US :
                                  semcHandle->pageReadTimeInUs_tR;
-    if (semcHandle->readyCheckOption == kNandReadyCheckOption_RB)
+    if (semcHandle->readyCheckOption == (uint8_t)kNandReadyCheckOption_RB)
     {
         status = semc_nand_wait_status_ready(handle, readyCheckIntervalInUs, true);
         if (status != kStatus_Success)
@@ -618,7 +620,7 @@ status_t semc_nand_issue_read_status(nand_handle_t *handle, uint8_t *stat)
        die (multi-plane) operations, the READ STATUS ENHANCED command must be used to select the
        die (LUN) that should report status.
     */
-    if (semcHandle->statusCommandType == kNandStatusCommandType_Enhanced)
+    if (semcHandle->statusCommandType == (uint8_t)kNandStatusCommandType_Enhanced)
     {
         /* READ STATUS ENHANCED command is accepted by all planes in device even when they are busy (RDY = 0).*/
         commandCode  = SEMC_BuildNandIPCommand(kNandDeviceCmd_ONFI_ReadStatusEnhanced,
@@ -666,7 +668,8 @@ static status_t semc_nand_issue_read_page(nand_handle_t *handle, uint32_t ipgCmd
     uint16_t commandCode = SEMC_BuildNandIPCommand(kNandDeviceCmd_ONFI_ReadPageSetup,
                                                    kSEMC_NANDAM_ColumnRow,       // Address value
                                                    kSEMC_NANDCM_CommandAddress); // Command Address
-    status = SEMC_SendIPCommand((SEMC_Type *)handle->driverBaseAddr, kSEMC_MemType_NAND, ipgCmdAddr, commandCode, 0, 0);
+    status =
+        SEMC_SendIPCommand((SEMC_Type *)handle->driverBaseAddr, kSEMC_MemType_NAND, ipgCmdAddr, commandCode, 0, NULL);
     if (status != kStatus_Success)
     {
         return status;
@@ -675,7 +678,8 @@ static status_t semc_nand_issue_read_page(nand_handle_t *handle, uint32_t ipgCmd
     commandCode = SEMC_BuildNandIPCommand(kNandDeviceCmd_ONFI_ReadPageConfirm,
                                           kSEMC_NANDAM_ColumnRow,    // Don't care
                                           kSEMC_NANDCM_CommandHold); // Commmand Hold
-    status = SEMC_SendIPCommand((SEMC_Type *)handle->driverBaseAddr, kSEMC_MemType_NAND, ipgCmdAddr, commandCode, 0, 0);
+    status =
+        SEMC_SendIPCommand((SEMC_Type *)handle->driverBaseAddr, kSEMC_MemType_NAND, ipgCmdAddr, commandCode, 0, NULL);
     if (status != kStatus_Success)
     {
         return status;
@@ -711,7 +715,7 @@ static status_t semc_nand_is_device_ecc_check_passed(nand_handle_t *handle, bool
     if (status == kStatus_Success)
     {
         /* SR[PASS] = 0, Successful PROGRAM/ERASE/READ; SR[PASS] = 1, Error in PROGRAM/ERASE/READ */
-        *isEccPassed = !(SR & NAND_FLASH_SR_ONFI_PASSBITMASK);
+        *isEccPassed = (SR & NAND_FLASH_SR_ONFI_PASSBITMASK) == 0x00U ? true : false;
     }
     else
     {
@@ -733,7 +737,7 @@ status_t Nand_Flash_Read_Page_Partial(
 {
     status_t status     = kStatus_Success;
     uint32_t pageSize   = handle->bytesInPageDataArea + handle->bytesInPageSpareArea;
-    uint32_t ipgCmdAddr = pageIndex * (1U << ((semc_mem_nand_handle_t *)handle->deviceSpecific)->columnWidth);
+    uint32_t ipgCmdAddr = pageIndex * (1UL << ((semc_mem_nand_handle_t *)handle->deviceSpecific)->columnWidth);
     uint32_t pageNum    = handle->pagesInBlock * handle->blocksInPlane * handle->planesInDevice;
     bool eccCheckPassed;
 
@@ -761,8 +765,9 @@ status_t Nand_Flash_Read_Page_Partial(
     }
 
     /* Read data from device through AXI */
-    memcpy(buffer, (uint8_t *)(((semc_mem_nand_handle_t *)handle->deviceSpecific)->ctlAccessMemAddr2 + offset_bytes),
-           length);
+    (void)memcpy(buffer,
+                 (uint8_t *)(((semc_mem_nand_handle_t *)handle->deviceSpecific)->ctlAccessMemAddr2 + offset_bytes),
+                 length);
     while (!SEMC_IsInIdle((SEMC_Type *)handle->driverBaseAddr))
     {
     }
@@ -782,24 +787,25 @@ status_t Nand_Flash_Init(nand_config_t *config, nand_handle_t *handle)
     bool setFlag = false;
     status_t status;
 
-    memset(handle, 0, sizeof(handle));
+    (void)memset(handle, 0, sizeof(handle));
 
     /* Store all needs for NAND operations. */
-    handle->deviceSpecific = (void *)&semc_handle, handle->driverBaseAddr = config->driverBaseAddr;
+    handle->deviceSpecific        = (void *)&semc_handle;
+    handle->driverBaseAddr        = config->driverBaseAddr;
     semcHandle                    = (semc_mem_nand_handle_t *)handle->deviceSpecific;
     semcHandle->delayUS           = semcConfig->delayUS;
     semcHandle->eccCheckType      = semcConfig->eccCheckType;
     semcHandle->readyCheckOption  = semcConfig->readyCheckOption;
     semcHandle->ctlAccessMemAddr1 = semcConfig->semcNandConfig->ipgAddress;
     semcHandle->ctlAccessMemAddr2 = semcConfig->semcNandConfig->axiAddress;
-    semcHandle->columnWidth       = (NAND_FLASH_COLUMNBITSNUM_MAX - semcConfig->semcNandConfig->columnAddrBitNum);
+    semcHandle->columnWidth = (NAND_FLASH_COLUMNBITSNUM_MAX - (uint8_t)semcConfig->semcNandConfig->columnAddrBitNum);
     /* Currently we only support ONFI device. */
     if (semcConfig->onfiVersion == kNandOnfiVersion_None)
     {
         return kStatus_Fail;
     }
 
-    if (!semcConfig->semcNandConfig->timingConfig)
+    if (semcConfig->semcNandConfig->timingConfig == NULL)
     {
         /* Prepare the NAND configuration part one: get timing parameter in SEMC NAND configure structure. */
         semc_get_default_timing_configure(&semcNandTimingConfig);
@@ -883,7 +889,7 @@ status_t Nand_Flash_Read_Page(nand_handle_t *handle, uint32_t pageIndex, uint8_t
     semc_mem_nand_handle_t *semcHandle = (semc_mem_nand_handle_t *)handle->deviceSpecific;
     uint32_t pageNum                   = handle->pagesInBlock * handle->blocksInPlane * handle->planesInDevice;
 
-    ipgCmdAddr = pageIndex * (1U << semcHandle->columnWidth);
+    ipgCmdAddr = pageIndex * (1UL << semcHandle->columnWidth);
     /* Validate given length */
     if ((length > pageSize) || (pageIndex >= pageNum))
     {
@@ -909,7 +915,7 @@ status_t Nand_Flash_Read_Page(nand_handle_t *handle, uint32_t pageIndex, uint8_t
     }
 
     /* Read Page data from device through AXI */
-    memcpy(buffer, (uint8_t *)semcHandle->ctlAccessMemAddr2, length);
+    (void)memcpy(buffer, (uint8_t *)semcHandle->ctlAccessMemAddr2, length);
     while (!SEMC_IsInIdle((SEMC_Type *)handle->driverBaseAddr))
     {
     }
@@ -931,7 +937,7 @@ status_t Nand_Flash_Page_Program(nand_handle_t *handle, uint32_t pageIndex, uint
         return kStatus_Fail;
     }
 
-    ipgCmdAddr                    = pageIndex * (1U << semcHandle->columnWidth);
+    ipgCmdAddr                    = pageIndex * (1UL << semcHandle->columnWidth);
     semcHandle->rowAddressToGetSR = ipgCmdAddr;
 
     /* PROGRAM PAGE command is excuteable when semc in idle. */
@@ -958,7 +964,7 @@ status_t Nand_Flash_Page_Program(nand_handle_t *handle, uint32_t pageIndex, uint
     /* Write Page data to device
        Note: the memory address(row, column address) is always assigned by ipg commmand,
        the given address for axi command is just byte offset of available page array. */
-    memcpy((uint8_t *)semcHandle->ctlAccessMemAddr2, (uint8_t *)src, length);
+    (void)memcpy((uint8_t *)semcHandle->ctlAccessMemAddr2, (uint8_t *)src, length);
     while (!SEMC_IsInIdle((SEMC_Type *)handle->driverBaseAddr))
     {
     }
@@ -1000,7 +1006,7 @@ status_t Nand_Flash_Erase_Block(nand_handle_t *handle, uint32_t blockIndex)
     uint32_t ipgCmdAddr;
     bool eccCheckPassed                = false;
     semc_mem_nand_handle_t *semcHandle = (semc_mem_nand_handle_t *)handle->deviceSpecific;
-    ipgCmdAddr                         = blockIndex * handle->pagesInBlock * (1 << semcHandle->columnWidth);
+    ipgCmdAddr                         = blockIndex * handle->pagesInBlock * (1UL << semcHandle->columnWidth);
 
     if (blockIndex >= handle->blocksInPlane * handle->planesInDevice)
     {

@@ -57,9 +57,9 @@ status_t WM8960_Init(wm8960_handle_t *handle, const wm8960_config_t *wm8960Confi
      */
     WM8960_WriteReg(handle, WM8960_POWER1, 0xFE);
     /*
-     * Enable DACL, DACR, LOUT1, ROUT1, PLL down
+     * Enable DACL, DACR, LOUT1, ROUT1, PLL down, SPKL, SPKR
      */
-    WM8960_WriteReg(handle, WM8960_POWER2, 0x1E0);
+    WM8960_WriteReg(handle, WM8960_POWER2, 0x1F8);
     /*
      * Enable left and right channel input PGA, left and right output mixer
      */
@@ -104,6 +104,12 @@ status_t WM8960_Init(wm8960_handle_t *handle, const wm8960_config_t *wm8960Confi
      */
     WM8960_WriteReg(handle, WM8960_LOUT1, 0x16F);
     WM8960_WriteReg(handle, WM8960_ROUT1, 0x16F);
+
+    /* speaker volume 6dB */
+    WM8960_WriteReg(handle, WM8960_LOUT2, 0x1ff);
+    WM8960_WriteReg(handle, WM8960_ROUT2, 0x1ff);
+    /* enable class D output */
+    WM8960_WriteReg(handle, WM8960_CLASSD1, 0xf7);
 
     /* Unmute DAC. */
     WM8960_WriteReg(handle, WM8960_DACCTL1, 0x0000);
@@ -382,45 +388,80 @@ status_t WM8960_SetVolume(wm8960_handle_t *handle, wm8960_module_t module, uint3
     switch (module)
     {
         case kWM8960_ModuleADC:
-            vol = volume;
-            ret = WM8960_WriteReg(handle, WM8960_LADC, vol);
-            ret = WM8960_WriteReg(handle, WM8960_RADC, vol);
-            /* Update volume */
-            vol = 0x100 | volume;
-            ret = WM8960_WriteReg(handle, WM8960_LADC, vol);
-            ret = WM8960_WriteReg(handle, WM8960_RADC, vol);
+            if (volume > 255)
+            {
+                ret = kStatus_InvalidArgument;
+            }
+            else
+            {
+                vol = volume;
+                ret = WM8960_WriteReg(handle, WM8960_LADC, vol);
+                ret = WM8960_WriteReg(handle, WM8960_RADC, vol);
+                /* Update volume */
+                vol = 0x100 | volume;
+                ret = WM8960_WriteReg(handle, WM8960_LADC, vol);
+                ret = WM8960_WriteReg(handle, WM8960_RADC, vol);
+            }
             break;
         case kWM8960_ModuleDAC:
-            vol = volume;
-            ret = WM8960_WriteReg(handle, WM8960_LDAC, vol);
-            ret = WM8960_WriteReg(handle, WM8960_RDAC, vol);
-            vol = 0x100 | volume;
-            ret = WM8960_WriteReg(handle, WM8960_LDAC, vol);
-            ret = WM8960_WriteReg(handle, WM8960_RDAC, vol);
+            if (volume > 255)
+            {
+                ret = kStatus_InvalidArgument;
+            }
+            else
+            {
+                vol = volume;
+                ret = WM8960_WriteReg(handle, WM8960_LDAC, vol);
+                ret = WM8960_WriteReg(handle, WM8960_RDAC, vol);
+                vol = 0x100 | volume;
+                ret = WM8960_WriteReg(handle, WM8960_LDAC, vol);
+                ret = WM8960_WriteReg(handle, WM8960_RDAC, vol);
+            }
             break;
         case kWM8960_ModuleHP:
-            vol = volume;
-            ret = WM8960_WriteReg(handle, WM8960_LOUT1, vol);
-            ret = WM8960_WriteReg(handle, WM8960_ROUT1, vol);
-            vol = 0x100 | volume;
-            ret = WM8960_WriteReg(handle, WM8960_LOUT1, vol);
-            ret = WM8960_WriteReg(handle, WM8960_ROUT1, vol);
+            if (volume > 0x7F)
+            {
+                ret = kStatus_InvalidArgument;
+            }
+            else
+            {
+                vol = volume;
+                ret = WM8960_WriteReg(handle, WM8960_LOUT1, vol);
+                ret = WM8960_WriteReg(handle, WM8960_ROUT1, vol);
+                vol = 0x100 | volume;
+                ret = WM8960_WriteReg(handle, WM8960_LOUT1, vol);
+                ret = WM8960_WriteReg(handle, WM8960_ROUT1, vol);
+            }
             break;
         case kWM8960_ModuleLineIn:
-            vol = volume;
-            ret = WM8960_WriteReg(handle, WM8960_LINVOL, vol);
-            ret = WM8960_WriteReg(handle, WM8960_RINVOL, vol);
-            vol = 0x100 | volume;
-            ret = WM8960_WriteReg(handle, WM8960_LINVOL, vol);
-            ret = WM8960_WriteReg(handle, WM8960_RINVOL, vol);
+            if (volume > 0x3F)
+            {
+                ret = kStatus_InvalidArgument;
+            }
+            else
+            {
+                vol = volume;
+                ret = WM8960_WriteReg(handle, WM8960_LINVOL, vol);
+                ret = WM8960_WriteReg(handle, WM8960_RINVOL, vol);
+                vol = 0x100 | volume;
+                ret = WM8960_WriteReg(handle, WM8960_LINVOL, vol);
+                ret = WM8960_WriteReg(handle, WM8960_RINVOL, vol);
+            }
             break;
         case kWM8960_ModuleSpeaker:
-            vol = volume;
-            ret = WM8960_WriteReg(handle, WM8960_LOUT2, vol);
-            ret = WM8960_WriteReg(handle, WM8960_ROUT2, vol);
-            vol = 0x100 | volume;
-            ret = WM8960_WriteReg(handle, WM8960_LOUT2, vol);
-            ret = WM8960_WriteReg(handle, WM8960_ROUT2, vol);
+            if (volume > 0x7F)
+            {
+                ret = kStatus_InvalidArgument;
+            }
+            else
+            {
+                vol = volume;
+                ret = WM8960_WriteReg(handle, WM8960_LOUT2, vol);
+                ret = WM8960_WriteReg(handle, WM8960_ROUT2, vol);
+                vol = 0x100 | volume;
+                ret = WM8960_WriteReg(handle, WM8960_LOUT2, vol);
+                ret = WM8960_WriteReg(handle, WM8960_ROUT2, vol);
+            }
             break;
         default:
             ret = kStatus_InvalidArgument;

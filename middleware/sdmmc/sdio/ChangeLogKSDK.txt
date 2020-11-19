@@ -2,7 +2,11 @@
 @page middleware_log Middleware Change Log
 
 @section sdio SDIO Card driver for MCUXpresso SDK
-The current driver version is 2.3.0.
+The current driver version is 2.3.1.
+
+  - 2.3.1
+    - Improvements
+      - Moved power off function after card detect in SD_Init for DAT3 detect card feature.
 
   - 2.3.0
     - Improvements

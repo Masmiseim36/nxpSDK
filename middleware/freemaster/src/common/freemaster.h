@@ -40,8 +40,8 @@
     /* CortexM is a generic 32bit little-endian platform */
     #define FMSTR_PLATFORM "S12Z"
     #include "freemaster_s12z.h"
-#elif FMSTR_PLATFORM_S32S
-    #define FMSTR_PLATFORM "S32S"
+#elif FMSTR_PLATFORM_S32
+    #define FMSTR_PLATFORM "S32"
     #include "freemaster_gen32le.h"
 #elif FMSTR_PLATFORM_PA32
     #define FMSTR_PLATFORM "PA32"

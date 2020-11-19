@@ -168,9 +168,9 @@
     #define FMSTR_REC_TIMEBASE 0
     #endif
 
-    /* default recorder buffer size is 256 */
+    /* 0 means that default recorder will not be created, user needs to call RecoderCreate */
     #ifndef FMSTR_REC_BUFF_SIZE
-    #define FMSTR_REC_BUFF_SIZE 256
+    #define FMSTR_REC_BUFF_SIZE 0
     #endif
 
 #endif
@@ -260,5 +260,19 @@
 /* Help macro to create ID string for preprocessor to recognize the drivers to enable or not */
 #define FMSTR_MK_IDSTR1(x) x##_ID
 #define FMSTR_MK_IDSTR(x) FMSTR_MK_IDSTR1(x)
+
+/* Default driver debugging print level (0=none, 1=errors, 2=normal, 3=verbose) */
+#ifndef FMSTR_DEBUG_LEVEL
+    #ifdef FMSTR_DEBUG_PRINTF
+    #define FMSTR_DEBUG_LEVEL 3
+    #else
+    #define FMSTR_DEBUG_LEVEL 0
+    #endif
+#endif
+
+#if FMSTR_DEBUG_LEVEL>0 && !defined(FMSTR_DEBUG_PRINTF)
+#undef FMSTR_DEBUG_LEVEL
+#define FMSTR_DEBUG_LEVEL 0
+#endif
 
 #endif /* __FREEMASTER_DEF_CFG_H */

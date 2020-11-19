@@ -12,11 +12,16 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+
+/*! @brief Defines the timeout macro. */
+#if defined(MDIO_TIMEOUT_COUNT_NUMBER) && MDIO_TIMEOUT_COUNT_NUMBER
+#define MDIO_TIMEOUT_COUNT MDIO_TIMEOUT_COUNT_NUMBER
+#endif
+
 /*! @brief Defines the PHY status. */
 enum _mdio_status
 {
-    kStatus_PHY_SMIVisitTimeout   = MAKE_STATUS(kStatusGroup_PHY, 1), /*!< ENET PHY SMI visit timeout. */
-    kStatus_PHY_AutoNegotiateFail = MAKE_STATUS(kStatusGroup_PHY, 2)  /*!< ENET PHY AutoNegotiate Fail. */
+    kStatus_PHY_SMIVisitTimeout = MAKE_STATUS(kStatusGroup_PHY, 1), /*!< ENET PHY SMI visit timeout. */
 };
 
 typedef struct _mdio_operations mdio_operations_t;

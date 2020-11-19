@@ -68,8 +68,14 @@ typedef enum _usb_endpoint_status
 /*! @brief  USB endpoint mask */
 #define USB_ENDPOINT_NUMBER_MASK (0x0FU)
 
-/*! @brief Default invalid value or the endpoint callback length of cancelled transfer */
+/*! @brief uninitialized value */
 #define USB_UNINITIALIZED_VAL_32 (0xFFFFFFFFU)
+
+/*! @brief the endpoint callback length of cancelled transfer */
+#define USB_CANCELLED_TRANSFER_LENGTH (0xFFFFFFFFU)
+
+/*! @brief invalid tranfer buffer addresss */
+#define USB_INVALID_TRANSFER_BUFFER (0xFFFFFFFEU)
 
 /*! @brief Available common EVENT types in device callback */
 typedef enum _usb_device_event

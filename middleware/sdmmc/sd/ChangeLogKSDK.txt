@@ -2,7 +2,15 @@
 @page middleware_log Middleware Change Log
 
 @section sd SD Card driver for MCUXpresso SDK
-  The current driver version is 2.3.0.
+  The current driver version is 2.3.2.
+
+  - 2.3.2
+    - Improvements
+      - Moved power off function after card detect in SD_Init for DAT3 detect card feature.
+
+  - 2.3.1
+    - Improvements
+      - Removed the dead loop while polling DAT0 and CMD13 instead of using timeout mechanism.
 
   - 2.3.0
     - Improvements

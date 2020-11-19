@@ -13,8 +13,7 @@
 * Include
 *************************************************************************************
 ********************************************************************************** */
-#include "fsl_common.h"
-#include "generic_list.h"
+#include "fsl_component_generic_list.h"
 #include "fsl_os_abstraction.h"
 #include "fsl_os_abstraction_bm.h"
 #include <string.h>
@@ -299,7 +298,10 @@ osa_status_t OSA_TaskSetPriority(osa_task_handle_t taskHandle, osa_task_priority
 {
     assert(taskHandle);
     list_element_handle_t list_element;
-    task_control_block_t *tcb         = NULL;
+    task_control_block_t *tcb = NULL;
+#if (defined(GENERIC_LIST_LIGHT) && (GENERIC_LIST_LIGHT > 0U))
+    task_control_block_t *preTcb = NULL;
+#endif
     task_control_block_t *ptaskStruct = (task_control_block_t *)taskHandle;
     uint32_t regPrimask;
 
@@ -312,9 +314,26 @@ osa_status_t OSA_TaskSetPriority(osa_task_handle_t taskHandle, osa_task_priority
         tcb = (task_control_block_t *)(void *)list_element;
         if (ptaskStruct->priority <= tcb->priority)
         {
+#if (defined(GENERIC_LIST_LIGHT) && (GENERIC_LIST_LIGHT > 0U))
+            if (preTcb == NULL)
+            {
+                (&tcb->link)->list->head = (struct list_element_tag *)(void *)ptaskStruct;
+            }
+            else
+            {
+                (&preTcb->link)->next = (struct list_element_tag *)(void *)ptaskStruct;
+            }
+            (&ptaskStruct->link)->list = (&tcb->link)->list;
+            (&ptaskStruct->link)->next = (struct list_element_tag *)(void *)tcb;
+            (&ptaskStruct->link)->list->size++;
+#else
             (void)LIST_AddPrevElement(&tcb->link, &ptaskStruct->link);
+#endif
             break;
         }
+#if (defined(GENERIC_LIST_LIGHT) && (GENERIC_LIST_LIGHT > 0U))
+        preTcb = tcb;
+#endif
         list_element = LIST_GetNext(list_element);
     }
     if (ptaskStruct->priority > tcb->priority)
@@ -338,11 +357,16 @@ osa_status_t OSA_TaskSetPriority(osa_task_handle_t taskHandle, osa_task_priority
  *
  *END**************************************************************************/
 #if (defined(FSL_OSA_TASK_ENABLE) && (FSL_OSA_TASK_ENABLE > 0U))
-osa_status_t OSA_TaskCreate(osa_task_handle_t taskHandle, osa_task_def_t *thread_def, osa_task_param_t task_param)
+osa_status_t OSA_TaskCreate(osa_task_handle_t taskHandle, const osa_task_def_t *thread_def, osa_task_param_t task_param)
 {
     list_element_handle_t list_element;
+
+    task_control_block_t *tcb = NULL;
+#if (defined(GENERIC_LIST_LIGHT) && (GENERIC_LIST_LIGHT > 0U))
+    task_control_block_t *preTcb = NULL;
+#endif
     list_status_t listStatus;
-    task_control_block_t *tcb         = NULL;
+
     task_control_block_t *ptaskStruct = (task_control_block_t *)taskHandle;
     uint32_t regPrimask;
     assert(sizeof(task_control_block_t) == OSA_TASK_HANDLE_SIZE);
@@ -360,6 +384,21 @@ osa_status_t OSA_TaskCreate(osa_task_handle_t taskHandle, osa_task_def_t *thread
         if (ptaskStruct->priority <= tcb->priority)
         {
             OSA_EnterCritical(&regPrimask);
+#if (defined(GENERIC_LIST_LIGHT) && (GENERIC_LIST_LIGHT > 0U))
+            if (preTcb == NULL)
+            {
+                (&tcb->link)->list->head = (struct list_element_tag *)(void *)ptaskStruct;
+            }
+            else
+            {
+                (&preTcb->link)->next = (struct list_element_tag *)(void *)ptaskStruct;
+            }
+            (&ptaskStruct->link)->list = (&tcb->link)->list;
+            (&ptaskStruct->link)->next = (struct list_element_tag *)(void *)tcb;
+            (&ptaskStruct->link)->list->size++;
+            OSA_ExitCritical(regPrimask);
+            return KOSA_StatusSuccess;
+#else
             listStatus = LIST_AddPrevElement(&tcb->link, &ptaskStruct->link);
             OSA_ExitCritical(regPrimask);
             if (listStatus == (list_status_t)kLIST_DuplicateError)
@@ -367,7 +406,11 @@ osa_status_t OSA_TaskCreate(osa_task_handle_t taskHandle, osa_task_def_t *thread
                 return KOSA_StatusError;
             }
             break;
+#endif
         }
+#if (defined(GENERIC_LIST_LIGHT) && (GENERIC_LIST_LIGHT > 0U))
+        preTcb = tcb;
+#endif
         list_element = LIST_GetNext(list_element);
     }
 
@@ -375,6 +418,7 @@ osa_status_t OSA_TaskCreate(osa_task_handle_t taskHandle, osa_task_def_t *thread
     {
         OSA_EnterCritical(&regPrimask);
         listStatus = LIST_AddTail(&s_osaState.taskList, (list_element_handle_t)(void *)&(ptaskStruct->link));
+        (void)listStatus;
         assert(listStatus == kLIST_Ok);
         OSA_ExitCritical(regPrimask);
     }
@@ -1187,7 +1231,9 @@ int main(void)
     (void)OSA_Init();
     /* Initialize MCU clock */
     BOARD_InitHardware();
+#if (FSL_OSA_BM_TIMER_CONFIG != FSL_OSA_BM_TIMER_NONE)
     OSA_TimeInit();
+#endif
     (void)OSA_TaskCreate((osa_task_handle_t)s_osaState.mainTaskHandle, OSA_TASK(main_task), NULL);
     OSA_Start();
 
@@ -1236,8 +1282,12 @@ void OSA_Start(void)
                 {
                     tcb->p_func(tcb->param);
                 }
+                list_element = LIST_GetHead(&s_osaState.taskList);
             }
-            list_element = LIST_GetNext(list_element);
+            else
+            {
+                list_element = LIST_GetNext(list_element);
+            }
         }
     }
 }

@@ -268,6 +268,10 @@ status_t bootloader_property_get(uint8_t tag, uint32_t id, const void **value, u
             returnValue = &propertyStore->availableCommands;
             break;
 
+        case kPropertyTag_VerifyWrites:
+            returnValue = &propertyStore->verifyWrites;
+            break;
+
         case kPropertyTag_MaxPacketSize:
             // Read the max packet size from the active peripheral.
             s_propertyReturnValue = g_bootloaderContext.activePeripheral->packetInterface->getMaxPacketSize(
@@ -340,7 +344,7 @@ status_t bootloader_property_set_uint32(uint8_t tag, uint32_t value)
     switch (tag)
     {
         case kPropertyTag_VerifyWrites:
-            propertyStore->verifyWrites = (value > 0) ? true : false;
+            status = kStatus_ReadOnlyProperty;
             break;
         case kPropertyTag_BootloaderVersion:
         case kPropertyTag_AvailablePeripherals:

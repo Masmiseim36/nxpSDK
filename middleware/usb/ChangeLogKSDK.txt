@@ -2,7 +2,11 @@
 @page middleware_log Middleware Change Log
 
 @section USB USB stack for MCUXpresso SDK  
-  The current version of USB stack is 2.6.0.
+  The current version of USB stack is 2.6.1.
+  - 2.6.1
+    - Improvement:
+      - rename sdcard as disk for all of sdcard demos. For ramdisk demos, they are not changed.
+      - add wrapper for all of disk demos to support emmc.
   - 2.6.0
     - Improvement:
       - Added more ufi event to support dynamic sdcard capacity.

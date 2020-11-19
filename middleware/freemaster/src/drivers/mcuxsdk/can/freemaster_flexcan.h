@@ -16,7 +16,7 @@
  * supplied directly or indirectly from NXP.  See the full NXP Software
  * License Agreement in license/LA_OPT_NXP_Software_License.pdf
  *
- * FreeMASTER Communication Driver - FlasCAN low-level driver
+ * FreeMASTER Communication Driver - FlexCAN low-level driver
  */
 
 #ifndef __FREEMASTER_FLEXCAN_H

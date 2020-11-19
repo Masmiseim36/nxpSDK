@@ -8,6 +8,12 @@
 
 #include "fsl_sdmmc_host.h"
 #include "fsl_sdmmc_common.h"
+#if (defined __DCACHE_PRESENT) && __DCACHE_PRESENT
+#if !(defined(FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL) && FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL)
+#include "fsl_cache.h"
+#endif
+#endif
+
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -61,7 +67,7 @@ static void SDMMCHOST_DetectCardInsertByHost(USDHC_Type *base, void *userData)
 {
     sd_detect_card_t *cd = NULL;
 
-    SDMMC_OSAEventSet(((sdmmchost_t *)userData)->hostEvent, SDMMC_OSA_EVENT_CARD_INSERTED);
+    SDMMC_OSAEventSet(&(((sdmmchost_t *)userData)->hostEvent), SDMMC_OSA_EVENT_CARD_INSERTED);
 
     if (userData != NULL)
     {
@@ -72,6 +78,14 @@ static void SDMMCHOST_DetectCardInsertByHost(USDHC_Type *base, void *userData)
             {
                 cd->callback(true, cd->userData);
             }
+            if (cd->type == kSD_DetectCardByHostDATA3)
+            {
+                USDHC_DisableInterruptSignal(base, kUSDHC_CardInsertionFlag);
+                if (cd->dat3PullFunc != NULL)
+                {
+                    cd->dat3PullFunc(kSD_DAT3PullUp);
+                }
+            }
         }
     }
 }
@@ -80,7 +94,7 @@ static void SDMMCHOST_DetectCardRemoveByHost(USDHC_Type *base, void *userData)
 {
     sd_detect_card_t *cd = NULL;
 
-    SDMMC_OSAEventSet(((sdmmchost_t *)userData)->hostEvent, SDMMC_OSA_EVENT_CARD_REMOVED);
+    SDMMC_OSAEventSet(&(((sdmmchost_t *)userData)->hostEvent), SDMMC_OSA_EVENT_CARD_REMOVED);
 
     if (userData != NULL)
     {
@@ -90,6 +104,11 @@ static void SDMMCHOST_DetectCardRemoveByHost(USDHC_Type *base, void *userData)
             if (cd->callback != NULL)
             {
                 cd->callback(false, cd->userData);
+            }
+
+            if (cd->type == kSD_DetectCardByHostDATA3)
+            {
+                USDHC_DisableInterruptSignal(base, kUSDHC_CardRemovalFlag);
             }
         }
     }
@@ -145,14 +164,12 @@ status_t SDMMCHOST_CardDetectInit(sdmmchost_t *host, void *cd)
     }
 
     /* enable card detect interrupt */
-    USDHC_EnableInterruptStatus(base, kUSDHC_CardInsertionFlag);
-    USDHC_EnableInterruptStatus(base, kUSDHC_CardRemovalFlag);
-    USDHC_EnableInterruptSignal(base, kUSDHC_CardInsertionFlag);
-    USDHC_EnableInterruptSignal(base, kUSDHC_CardRemovalFlag);
+    USDHC_ClearInterruptStatusFlags(base, kUSDHC_CardInsertionFlag | kUSDHC_CardRemovalFlag);
+    USDHC_EnableInterruptStatus(base, kUSDHC_CardInsertionFlag | kUSDHC_CardRemovalFlag);
 
     if (SDMMCHOST_CardDetectStatus(host) == kSD_Inserted)
     {
-        SDMMC_OSAEventSet(host->hostEvent, SDMMC_OSA_EVENT_CARD_INSERTED);
+        SDMMC_OSAEventSet(&(host->hostEvent), SDMMC_OSA_EVENT_CARD_INSERTED);
         /* notify application about the card insertion status */
         if (sdCD->callback)
         {
@@ -161,7 +178,8 @@ status_t SDMMCHOST_CardDetectInit(sdmmchost_t *host, void *cd)
     }
     else
     {
-        SDMMC_OSAEventSet(host->hostEvent, SDMMC_OSA_EVENT_CARD_REMOVED);
+        SDMMC_OSAEventSet(&(host->hostEvent), SDMMC_OSA_EVENT_CARD_REMOVED);
+        USDHC_EnableInterruptSignal(base, kUSDHC_CardInsertionFlag);
     }
 
     return kStatus_Success;
@@ -169,12 +187,25 @@ status_t SDMMCHOST_CardDetectInit(sdmmchost_t *host, void *cd)
 
 uint32_t SDMMCHOST_CardDetectStatus(sdmmchost_t *host)
 {
-    if ((USDHC_GetPresentStatusFlags(host->hostController.base) & kUSDHC_CardInsertedFlag) != 0U)
+    sd_detect_card_t *sdCD = (sd_detect_card_t *)(host->cd);
+    uint32_t insertStatus  = kSD_Removed;
+
+    if (sdCD->dat3PullFunc != NULL)
     {
-        return kSD_Inserted;
+        sdCD->dat3PullFunc(kSD_DAT3PullDown);
+        SDMMC_OSADelay(1U);
     }
 
-    return kSD_Removed;
+    if ((USDHC_GetPresentStatusFlags(host->hostController.base) & kUSDHC_CardInsertedFlag) != 0U)
+    {
+        insertStatus = kSD_Inserted;
+        if (sdCD->dat3PullFunc != NULL)
+        {
+            sdCD->dat3PullFunc(kSD_DAT3PullUp);
+        }
+    }
+
+    return insertStatus;
 }
 
 status_t SDMMCHOST_PollingCardDetectStatus(sdmmchost_t *host, uint32_t waitCardStatus, uint32_t timeout)
@@ -185,7 +216,7 @@ status_t SDMMCHOST_PollingCardDetectStatus(sdmmchost_t *host, uint32_t waitCardS
     sd_detect_card_t *cd = host->cd;
     uint32_t event       = 0U;
 
-    SDMMC_OSAEventGet(host->hostEvent, SDMMC_OSA_EVENT_CARD_INSERTED | SDMMC_OSA_EVENT_CARD_REMOVED, &event);
+    SDMMC_OSAEventGet(&(host->hostEvent), SDMMC_OSA_EVENT_CARD_INSERTED | SDMMC_OSA_EVENT_CARD_REMOVED, &event);
     if ((((event & SDMMC_OSA_EVENT_CARD_INSERTED) == SDMMC_OSA_EVENT_CARD_INSERTED) &&
          (waitCardStatus == kSD_Inserted)) ||
         (((event & SDMMC_OSA_EVENT_CARD_REMOVED) == SDMMC_OSA_EVENT_CARD_REMOVED) && (waitCardStatus == kSD_Removed)))
@@ -196,8 +227,8 @@ status_t SDMMCHOST_PollingCardDetectStatus(sdmmchost_t *host, uint32_t waitCardS
     /* Wait card inserted. */
     do
     {
-        if (SDMMC_OSAEventWait(host->hostEvent, SDMMC_OSA_EVENT_CARD_INSERTED | SDMMC_OSA_EVENT_CARD_REMOVED, timeout,
-                               &event) != kStatus_Success)
+        if (SDMMC_OSAEventWait(&(host->hostEvent), SDMMC_OSA_EVENT_CARD_INSERTED | SDMMC_OSA_EVENT_CARD_REMOVED,
+                               timeout, &event) != kStatus_Success)
         {
             return kStatus_Fail;
         }
@@ -261,7 +292,7 @@ static void SDMMCHOST_TransferCompleteCallback(USDHC_Type *base,
         eventStatus = SDMMC_OSA_EVENT_TRANSFER_CMD_SUCCESS;
     }
 
-    SDMMC_OSAEventSet(((sdmmchost_t *)userData)->hostEvent, eventStatus);
+    SDMMC_OSAEventSet(&(((sdmmchost_t *)userData)->hostEvent), eventStatus);
 }
 
 status_t SDMMCHOST_TransferFunction(sdmmchost_t *host, sdmmchost_transfer_t *content)
@@ -281,10 +312,22 @@ status_t SDMMCHOST_TransferFunction(sdmmchost_t *host, sdmmchost_transfer_t *con
 #endif
         dmaConfig.admaTable      = host->dmaDesBuffer;
         dmaConfig.admaTableWords = host->dmaDesBufferWordsNum;
+
+#if (defined __DCACHE_PRESENT) && __DCACHE_PRESENT
+#if !(defined(FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL) && FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL)
+        if (host->enableCacheControl == kSDMMCHOST_CacheControlRWBuffer)
+        {
+            /* no matter read or write transfer, clean the cache line anyway to avoid data miss */
+            DCACHE_CleanByRange(
+                (uint32_t)(content->data->txData == NULL ? content->data->rxData : content->data->txData),
+                (content->data->blockSize) * (content->data->blockCount));
+        }
+#endif
+#endif
     }
 
     /* clear redundant transfer event flag */
-    SDMMC_OSAEventClear(host->hostEvent, SDMMCHOST_TRANSFER_CMD_EVENT);
+    SDMMC_OSAEventClear(&(host->hostEvent), SDMMCHOST_TRANSFER_CMD_EVENT);
 
     do
     {
@@ -294,7 +337,7 @@ status_t SDMMCHOST_TransferFunction(sdmmchost_t *host, sdmmchost_transfer_t *con
     if (error == kStatus_Success)
     {
         /* wait command event */
-        if ((kStatus_Fail == SDMMC_OSAEventWait(host->hostEvent, SDMMCHOST_TRANSFER_CMD_EVENT,
+        if ((kStatus_Fail == SDMMC_OSAEventWait(&(host->hostEvent), SDMMCHOST_TRANSFER_CMD_EVENT,
                                                 SDMMCHOST_TRANSFER_COMPLETE_TIMEOUT, &event)) ||
             ((event & SDMMC_OSA_EVENT_TRANSFER_CMD_FAIL) != 0U))
         {
@@ -307,7 +350,7 @@ status_t SDMMCHOST_TransferFunction(sdmmchost_t *host, sdmmchost_transfer_t *con
                 if ((event & SDMMC_OSA_EVENT_TRANSFER_DATA_SUCCESS) == 0U)
                 {
                     if (((event & SDMMC_OSA_EVENT_TRANSFER_DATA_FAIL) != 0U) ||
-                        (kStatus_Fail == SDMMC_OSAEventWait(host->hostEvent, SDMMCHOST_TRANSFER_DATA_EVENT,
+                        (kStatus_Fail == SDMMC_OSAEventWait(&(host->hostEvent), SDMMCHOST_TRANSFER_DATA_EVENT,
                                                             SDMMCHOST_TRANSFER_COMPLETE_TIMEOUT, &event) ||
                          ((event & SDMMC_OSA_EVENT_TRANSFER_DATA_FAIL) != 0U)))
                     {
@@ -323,6 +366,20 @@ status_t SDMMCHOST_TransferFunction(sdmmchost_t *host, sdmmchost_transfer_t *con
         /* host error recovery */
         SDMMCHOST_ErrorRecovery(host->hostController.base);
     }
+#if (defined __DCACHE_PRESENT) && __DCACHE_PRESENT
+#if !(defined(FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL) && FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL)
+    else
+    {
+        if ((content->data != NULL) && (content->data->rxData != NULL) &&
+            (host->enableCacheControl == kSDMMCHOST_CacheControlRWBuffer))
+        {
+            /* no matter read or write transfer, clean the cache line anyway to avoid data miss */
+            DCACHE_InvalidateByRange((uint32_t)content->data->rxData,
+                                     (content->data->blockSize) * (content->data->blockCount));
+        }
+    }
+#endif
+#endif
 
     return error;
 }
@@ -378,7 +435,6 @@ void SDMMCHOST_PowerOnCard(SDMMCHOST_TYPE *base, const sdmmchost_pwr_card_t *pwr
 status_t SDMMCHOST_Init(sdmmchost_t *host)
 {
     assert(host != NULL);
-    assert(host->hostEvent != NULL);
 
     usdhc_transfer_callback_t usdhcCallback = {0};
     usdhc_host_t *usdhcHost                 = &(host->hostController);
@@ -398,7 +454,7 @@ status_t SDMMCHOST_Init(sdmmchost_t *host)
     USDHC_TransferCreateHandle(usdhcHost->base, &host->handle, &usdhcCallback, host);
 
     /* Create transfer event. */
-    if (kStatus_Success != SDMMC_OSAEventCreate(host->hostEvent))
+    if (kStatus_Success != SDMMC_OSAEventCreate(&(host->hostEvent)))
     {
         return kStatus_Fail;
     }
@@ -445,7 +501,7 @@ void SDMMCHOST_Deinit(sdmmchost_t *host)
     usdhc_host_t *sdhcHost = &host->hostController;
     SDMMCHOST_Reset(host);
     USDHC_Deinit(sdhcHost->base);
-    SDMMC_OSAEventDestroy(host->hostEvent);
+    SDMMC_OSAEventDestroy(&(host->hostEvent));
 }
 
 void SDMMCHOST_SwitchToVoltage(sdmmchost_t *host, uint32_t voltage)
@@ -481,7 +537,14 @@ status_t SDMMCHOST_ExecuteStdTuning(sdmmchost_t *host, uint32_t tuningCmd, uint3
     content.data    = &data;
 
     USDHC_Reset(host->hostController.base, kUSDHC_ResetTuning, 100U);
-
+    /* disable standard tuning */
+    USDHC_EnableStandardTuning(host->hostController.base, SDMMCHOST_STANDARD_TUNING_START, SDMMCHOST_TUINIG_STEP,
+                               false);
+    /*
+     * Tuning fail found on some SOCS caused by the difference of delay cell, so we need to i
+     * ncrease the tuning counter to cover the adjustable tuninig window
+     */
+    USDHC_SetStandardTuningCounter(host->hostController.base, SDMMCHOST_STANDARD_TUNING_COUNTER);
     /* enable the standard tuning */
     USDHC_EnableStandardTuning(host->hostController.base, SDMMCHOST_STANDARD_TUNING_START, SDMMCHOST_TUINIG_STEP, true);
 

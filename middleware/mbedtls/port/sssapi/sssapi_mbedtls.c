@@ -34,8 +34,8 @@ void CRYPTO_InitHardware(void)
 {
     if (!g_isCryptoHWInitialized)
     {
-        SNT_loadFwLocal();
-        if (sscp_mu_init(&g_sscpContext, 0u) != kStatus_SSCP_Success)
+        SNT_loadFwLocal(S3MUA);
+        if (sscp_mu_init(&g_sscpContext, (MU_Type*)S3MUA) != kStatus_SSCP_Success)
         {
         }
         else if (sss_sscp_open_session(&g_sssSession, kType_SSS_Sentinel300, &g_sscpContext, 0u, NULL) !=

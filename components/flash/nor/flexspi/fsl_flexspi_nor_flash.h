@@ -121,7 +121,7 @@ typedef enum _serial_nor_quad_mode
 {
     kSerialNorQuadMode_NotConfig            = 0, /*!< Quad mode do not configure*/
     kSerialNorQuadMode_StatusReg1_Bit6      = 1, /*!< Enable quad mode with status register 1 bit 6*/
-    kSerialNorQuadMode_StatusReg2_Bit1      = 2, /*!< Enable quad mode with status register 2 bit 1*/
+    kSerialNorQuadMode_StatusReg1AndReg2    = 2, /*!< Enable quad mode with status register 2 bit 1*/
     kSerialNorQuadMode_StatusReg2_Bit1_0x31 = 3, /*!< Enable quad mode with status register 2 bit 1(0x31)*/
     kSerialNorQuadMode_StatusReg2_Bit7      = 4, /*!< Enable quad mode with status register 2 bit 7*/
 } serial_nor_quad_mode_t;

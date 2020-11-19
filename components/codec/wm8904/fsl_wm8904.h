@@ -21,8 +21,8 @@
  ******************************************************************************/
 /*! @name Driver version */
 /*@{*/
-/*! @brief WM8904 driver version 2.4.1. */
-#define FSL_WM8904_DRIVER_VERSION (MAKE_VERSION(2, 4, 1))
+/*! @brief WM8904 driver version 2.4.2. */
+#define FSL_WM8904_DRIVER_VERSION (MAKE_VERSION(2, 4, 2))
 /*@}*/
 
 /*! @brief wm8904 handle size */
@@ -91,6 +91,9 @@
 
 /*! @brief WM8904 I2C bit rate. */
 #define WM8904_I2C_BITRATE (400000U)
+
+/*!@brief WM8904 maximum headphone/lineout volume */
+#define WM8904_MAP_HEADPHONE_LINEOUT_MAX_VOLUME 0x3FU
 
 /*! @brief WM8904 status return codes. */
 enum _wm8904_status
@@ -409,9 +412,9 @@ status_t WM8904_CheckAudioFormat(wm8904_handle_t *handle, wm8904_audio_format_t 
 /*!
  * @brief Sets the module output volume.
  *
- * The parameter should be from 0 to 100.
+ * The parameter should be from 0 to 63.
  * The resulting volume will be.
- * 0 for mute, 100 for maximum volume value.
+ * 0 for -57DB, 63 for 6DB.
  *
  * @param handle WM8904 handle structure.
  * @param volumeLeft left channel volume.
@@ -487,13 +490,13 @@ status_t WM8904_SetModulePower(wm8904_handle_t *handle, wm8904_module_t module, 
 /*!
  * @brief Sets the channel output volume.
  *
- * The parameter should be from 0 to 100.
+ * The parameter should be from 0 to 63.
  * The resulting volume will be.
- * 0 for mute, 100 for maximum volume value.
+ * 0 for -57dB, 63 for 6DB.
  *
  * @param handle codec handle structure.
  * @param channel codec channel.
- * @param volume volume value.
+ * @param volume volume value from 0 -63.
  *
  * @return kStatus_WM8904_Success if successful, different code otherwise.
  */

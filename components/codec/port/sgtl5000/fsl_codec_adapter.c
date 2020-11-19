@@ -115,19 +115,55 @@ status_t HAL_CODEC_SetVolume(void *handle, uint32_t playChannel, uint32_t volume
 {
     assert(handle != NULL);
 
+    uint32_t mappedVolume = 0;
+    status_t ret          = kStatus_Success;
+
     if (playChannel & (kCODEC_PlayChannelHeadphoneLeft | kCODEC_PlayChannelHeadphoneRight))
     {
-        return SGTL_SetVolume((sgtl_handle_t *)((uint32_t)(((codec_handle_t *)handle)->codecDevHandle)), kSGTL_ModuleHP,
-                              volume);
+        if (volume == 0U)
+        {
+            ret = SGTL_SetMute((sgtl_handle_t *)((uint32_t)(((codec_handle_t *)handle)->codecDevHandle)),
+                               kSGTL_ModuleHP, true);
+        }
+        else
+        {
+            /* 1-100 mapped to 0x7F-0 */
+            mappedVolume = SGTL5000_HEADPHONE_MAX_VOLUME_VALUE -
+                           ((volume - 1U) * (SGTL5000_HEADPHONE_MAX_VOLUME_VALUE + 2U)) / 100U;
+
+            ret = SGTL_SetVolume((sgtl_handle_t *)((uint32_t)(((codec_handle_t *)handle)->codecDevHandle)),
+                                 kSGTL_ModuleHP, mappedVolume);
+            if (ret == kStatus_Success)
+            {
+                ret = SGTL_SetMute((sgtl_handle_t *)((uint32_t)(((codec_handle_t *)handle)->codecDevHandle)),
+                                   kSGTL_ModuleHP, false);
+            }
+        }
     }
 
     if (playChannel & (kCODEC_PlayChannelLineOutLeft | kCODEC_PlayChannelLineOutRight))
     {
-        return SGTL_SetVolume((sgtl_handle_t *)((uint32_t)(((codec_handle_t *)handle)->codecDevHandle)),
-                              kSGTL_ModuleLineOut, volume);
+        if (volume == 0U)
+        {
+            ret = SGTL_SetMute((sgtl_handle_t *)((uint32_t)(((codec_handle_t *)handle)->codecDevHandle)),
+                               kSGTL_ModuleLineOut, true);
+        }
+        else
+        {
+            /* 1-100 mapped to 0-0x1F */
+            mappedVolume = ((volume - 1U) * (SGTL5000_LINE_OUT_MAX_VOLUME_VALUE + 1U)) / 100U;
+
+            ret = SGTL_SetVolume((sgtl_handle_t *)((uint32_t)(((codec_handle_t *)handle)->codecDevHandle)),
+                                 kSGTL_ModuleLineOut, mappedVolume);
+            if (ret == kStatus_Success)
+            {
+                ret = SGTL_SetMute((sgtl_handle_t *)((uint32_t)(((codec_handle_t *)handle)->codecDevHandle)),
+                                   kSGTL_ModuleLineOut, false);
+            }
+        }
     }
 
-    return kStatus_CODEC_NotSupport;
+    return ret;
 }
 
 /*!

@@ -27,6 +27,22 @@
 /*!@brief card detect event, start from index 8 */
 #define SDMMC_OSA_EVENT_CARD_INSERTED (1U << 8U)
 #define SDMMC_OSA_EVENT_CARD_REMOVED  (1U << 9U)
+
+/*!@brief enable semphore by default */
+#ifndef SDMMC_OSA_POLLING_EVENT_BY_SEMPHORE
+#define SDMMC_OSA_POLLING_EVENT_BY_SEMPHORE 1
+#endif
+
+/*!@brief sdmmc osa event */
+typedef struct _sdmmc_osa_event
+{
+#if defined(SDMMC_OSA_POLLING_EVENT_BY_SEMPHORE) && SDMMC_OSA_POLLING_EVENT_BY_SEMPHORE
+    volatile uint32_t eventFlag;
+    OSA_SEMAPHORE_HANDLE_DEFINE(handle);
+#else
+    OSA_EVENT_HANDLE_DEFINE(handle);
+#endif
+} sdmmc_osa_event_t;
 /*******************************************************************************
  * API
  ******************************************************************************/

@@ -81,25 +81,26 @@
 /* Serial Driver interface between the Serial layer and hardware driver */
 typedef struct FMSTR_SERIAL_DRV_INTF_S
 {
-    FMSTR_BOOL (*Init)(void);                           /* Serial adapter - Initialization */
-    void (*EnableTransmit)(FMSTR_BOOL enable);          /* Serial adapter - Enable/Disable transmitter */
-    void (*EnableReceive)(FMSTR_BOOL enable);           /* Serial adapter - Enable/Disable receiver */
-    void (*EnableTransmitInterrupt)(FMSTR_BOOL enable); /* Serial adapter - Enable/Disable interrupt from transmit register empty event */
-    void (*EnableTransmitCompleteInterrupt)(FMSTR_BOOL enable); /* Serial adapter - Enable/Disable interrupt from transmit complete event */
-    void (*EnableReceiveInterrupt)(FMSTR_BOOL enable);  /* Serial adapter - Enable/Disable interrupt from receive register full event */
-    FMSTR_BOOL (*IsTransmitRegEmpty)(void);             /* Serial adapter - Returns TRUE if the transmit register is empty, and it's possible to put next char */
-    FMSTR_BOOL (*IsReceiveRegFull)(void);               /* Serial adapter - Returns TRUE if the receive register is full, and it's possible to get received char */
-    FMSTR_BOOL (*IsTransmitterActive)(void);            /* Serial adapter - Returns TRUE if the transmitter is still active */
-    void (*PutChar)(FMSTR_BCHR  ch);                    /* Serial adapter - The function puts the char for transmit */
-    FMSTR_BCHR (*GetChar)(void);                        /* Serial adapter - The function gets the received char */
-    void (*Flush)(void);                                /* Serial adapter - The function flushes all buffered data */
+    FMSTR_BOOL (*Init)(void);                           /* Initialization */
+    void (*EnableTransmit)(FMSTR_BOOL enable);          /* Enable/Disable transmitter */
+    void (*EnableReceive)(FMSTR_BOOL enable);           /* Enable/Disable receiver */
+    void (*EnableTransmitInterrupt)(FMSTR_BOOL enable); /* Enable/Disable interrupt from transmit register empty event */
+    void (*EnableTransmitCompleteInterrupt)(FMSTR_BOOL enable); /* Enable/Disable interrupt from transmit complete event */
+    void (*EnableReceiveInterrupt)(FMSTR_BOOL enable);  /* Enable/Disable interrupt from receive register full event */
+    FMSTR_BOOL (*IsTransmitRegEmpty)(void);             /* Returns TRUE if the transmit register is empty, and it's possible to put next char */
+    FMSTR_BOOL (*IsReceiveRegFull)(void);               /* Returns TRUE if the receive register is full, and it's possible to get received char */
+    FMSTR_BOOL (*IsTransmitterActive)(void);            /* Returns TRUE if the transmitter is still active */
+    void (*PutChar)(FMSTR_BCHR  ch);                    /* Transmit character */
+    FMSTR_BCHR (*GetChar)(void);                        /* Receive character */
+    void (*Flush)(void);                                /* Transmit-flush all buffered data */
+    void (*Poll)(void);                                 /* General poll call (optional) */
 } FMSTR_SERIAL_DRV_INTF;
 
 /******************************************************************************
 * Functions definitions
 ******************************************************************************/
 
-/* Serial Proccess function - This function is called by communication sub system,
+/* Serial Process function - This function is called by communication sub system,
     in case of new data received or next data byte has been transmitted. */
 void FMSTR_ProcessSerial(void);
 

@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 - 2017,2019 NXP
+ * Copyright 2016 - 2017,2019 - 2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -484,11 +484,11 @@ static void USB_DeviceEhciCancelControlPipe(usb_device_ehci_state_struct_t *ehci
             message.buffer         = (uint8_t *)((bufferAddress & USB_DEVICE_ECHI_DTD_PAGE_MASK) |
                                          (currentDtd->reservedUnion.originalBufferInfo.originalBufferOffest));
         }
-        /* If the dtd is active, set the message length to USB_UNINITIALIZED_VAL_32. Or set the length by using finished
+        /* If the dtd is active, set the message length to USB_CANCELLED_TRANSFER_LENGTH. Or set the length by using finished
          * length. */
         if (0U != (currentDtd->dtdTokenUnion.dtdTokenBitmap.status & USB_DEVICE_ECHI_DTD_STATUS_ACTIVE))
         {
-            message.length = USB_UNINITIALIZED_VAL_32;
+            message.length = USB_CANCELLED_TRANSFER_LENGTH;
         }
         else
         {
@@ -1447,7 +1447,7 @@ usb_status_t USB_DeviceEhciCancel(usb_device_controller_handle ehciHandle, uint8
     OSA_ENTER_CRITICAL();
 
     message.buffer = NULL;
-    message.length = USB_UNINITIALIZED_VAL_32;
+    message.length = USB_CANCELLED_TRANSFER_LENGTH;
 
     /* Get the first dtd */
     currentDtd =
@@ -1699,6 +1699,9 @@ usb_status_t USB_DeviceEhciControl(usb_device_controller_handle ehciHandle, usb_
             }
             /* ehciState->registerPhyBase->CTRL |= ((1U << 21) | (1U << 22) | (1U << 23)); */
             ehciState->registerBase->USBSTS |= USBHS_USBSTS_SRI_MASK;
+#if (defined(FSL_FEATURE_USBPHY_28FDSOI) && (FSL_FEATURE_USBPHY_28FDSOI > 0U)) 
+            ehciState->registerPhyBase->USB1_VBUS_DETECT_SET |= USBPHY_USB1_VBUS_DETECT_VBUSVALID_TO_SESSVALID_MASK;
+#endif
             ehciState->registerBase->PORTSC1 |= USBHS_PORTSC1_PHCD_MASK;
 #if (defined(FSL_FEATURE_SOC_USBNC_COUNT) && (FSL_FEATURE_SOC_USBNC_COUNT > 0U))
 #if (defined(USBPHY_CTRL_ENVBUSCHG_WKUP_MASK))

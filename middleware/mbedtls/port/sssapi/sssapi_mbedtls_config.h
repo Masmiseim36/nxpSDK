@@ -55,6 +55,8 @@
 #define MBEDTLS_ECDSA_SIGN_ALT
 #define MBEDTLS_ECDSA_GENKEY_ALT
 #define MBEDTLS_ENTROPY_HARDWARE_ALT
+/* adding to remove build warnings on k4f1/k4w1_tv in cmac.c, should be refactored in next SDK release */
+#define MBEDTLS_AES_ALT_NO_192
 #endif
 #endif
 

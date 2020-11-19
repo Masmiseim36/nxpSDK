@@ -22,8 +22,8 @@
  ******************************************************************************/
 /*! @name Driver version */
 /*@{*/
-/*! @brief CLOCK driver version 2.1.1 */
-#define FSL_WM8960_DRIVER_VERSION (MAKE_VERSION(2, 1, 1))
+/*! @brief CLOCK driver version 2.1.2 */
+#define FSL_WM8960_DRIVER_VERSION (MAKE_VERSION(2, 1, 2))
 /*@}*/
 
 /*! @brief wm8960 handle size */
@@ -196,6 +196,14 @@
 #define WM8960_I2C_ADDR 0x1A
 /*! @brief WM8960 I2C baudrate */
 #define WM8960_I2C_BAUDRATE (100000U)
+/*! @brief WM8960 maximum volume value */
+#define WM8960_ADC_MAX_VOLUME_vALUE       0xFFU
+#define WM8960_DAC_MAX_VOLUME_vALUE       0xFFU
+#define WM8960_HEADPHONE_MAX_VOLUME_vALUE 0x7FU
+#define WM8960_HEADPHONE_MIN_VOLUME_vALUE 0x30U
+#define WM8960_LINEIN_MAX_VOLUME_vALUE    0x3FU
+#define WM8960_SPEAKER_MAX_VOLUME_vALUE   0x7FU
+#define WM8960_SPEAKER_MIN_VOLUME_vALUE   0x30U
 
 /*! @brief Modules in WM8960 board. */
 typedef enum _wm8960_module
@@ -406,6 +414,13 @@ void WM8960_SetMasterSlave(wm8960_handle_t *handle, bool master);
  *
  * This function would set the volume of WM8960 modules. Uses need to appoint the module.
  * The function assume that left channel and right channel has the same volume.
+ *
+ * Module:kWM8960_ModuleADC, volume range value: 0 is mute, 1-255 is -97db to 30db
+ * Module:kWM8960_ModuleDAC, volume range value: 0 is mute, 1-255 is -127db to 0db
+ * Module:kWM8960_ModuleHP, volume range value: 0 - 2F is mute, 0x30 - 0x7F is -73db to 6db
+ * Module:kWM8960_ModuleLineIn, volume range value: 0 - 0x3F is -17.25db to 30db
+ * Module:kWM8960_ModuleSpeaker, volume range value: 0 - 2F is mute, 0x30 - 0x7F is -73db to 6db
+ *
  *
  * @param handle WM8960 handle structure.
  * @param module Module to set volume, it can be ADC, DAC, Headphone and so on.

@@ -3097,8 +3097,9 @@ static uint32_t USB_HostEhciItdArrayRelease(usb_host_ehci_instance_t *ehciInstan
         /* USB_HostEhciLock(); */
         /*set next link pointer to invalid in case hardware access invalid itd structure in special case*/
         itdPointer->nextLinkPointer = EHCI_HOST_T_INVALID_VALUE;
-        itdPointer->nextItdPointer  = (usb_host_ehci_itd_t *)ehciInstance->ehciItdList;
-        ehciInstance->ehciItdList   = itdPointer;
+        USB_HostEhciZeroMem((uint32_t *)(void *)itdPointer + 1, ((sizeof(usb_host_ehci_itd_t) >> 2) - 4));
+        itdPointer->nextItdPointer = (usb_host_ehci_itd_t *)ehciInstance->ehciItdList;
+        ehciInstance->ehciItdList  = itdPointer;
         ehciInstance->ehciItdNumber++;
         /* USB_HostEhciUnlock(); */
 
@@ -4107,6 +4108,9 @@ static void USB_HostEhciTimer1(usb_host_ehci_instance_t *ehciInstance)
                                                       | USBPHY_CTRL_ENIRQRESUMEDETECT_MASK
                                                       ;
 #endif
+#endif
+#if (defined(FSL_FEATURE_USBPHY_28FDSOI) && (FSL_FEATURE_USBPHY_28FDSOI > 0U)) 
+                    ehciInstance->registerPhyBase->USB1_VBUS_DETECT_SET |= USBPHY_USB1_VBUS_DETECT_VBUSVALID_TO_SESSVALID_MASK;
 #endif
                     ehciInstance->ehciIpBase->PORTSC1 |= USBHS_PORTSC1_PHCD_MASK;
 

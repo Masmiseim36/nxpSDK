@@ -14,10 +14,7 @@
  * Definitions
  ******************************************************************************/
 /*! @brief wm8904 volume mapping */
-#define WM8904_MAP_DAC_ADC_VOLUME(volume)           (volume * (255 / 100U))
-#define WM8904_MAP_PGA_VOLUME(volume)               (volume > 0x1FU ? 0x1FU : volume)
-#define WM8904_MAP_HEADPHONE_LINEOUT_VOLUME(volume) (volume > 0x3FU ? 0x3FU : volume)
-#define WM8904_SWAP_UINT16_BYTE_SEQUENCE(x)         (__REV16(x))
+#define WM8904_SWAP_UINT16_BYTE_SEQUENCE(x) (__REV16(x))
 #define WM8904_MAP_SAMPLERATE(x)        \
     (x == kWM8904_SampleRate8kHz ?      \
          8000U :                        \
@@ -965,15 +962,19 @@ status_t WM8904_SetAudioFormat(wm8904_handle_t *handle, uint32_t sysclk, uint32_
  */
 status_t WM8904_SetVolume(wm8904_handle_t *handle, uint16_t volumeLeft, uint16_t volumeRight)
 {
+    assert(volumeRight <= WM8904_MAP_HEADPHONE_LINEOUT_MAX_VOLUME);
+    assert(volumeLeft <= WM8904_MAP_HEADPHONE_LINEOUT_MAX_VOLUME);
+
     status_t result;
 
-    result = WM8904_ModifyRegister(handle, WM8904_ANALOG_OUT1_LEFT, 0x3F, volumeLeft);
+    /* 0x1BF means unmute the OUT and reset the OUT volume update bit and volume range fields*/
+    result = WM8904_ModifyRegister(handle, WM8904_ANALOG_OUT1_LEFT, 0x1BF, volumeLeft);
     if (result != kStatus_WM8904_Success)
     {
         return result;
     }
 
-    result = WM8904_ModifyRegister(handle, WM8904_ANALOG_OUT1_RIGHT, 0xBF, volumeRight | 0x0080);
+    result = WM8904_ModifyRegister(handle, WM8904_ANALOG_OUT1_RIGHT, 0x1BF, volumeRight | 0x0080);
     if (result != kStatus_WM8904_Success)
     {
         return result;
@@ -1046,44 +1047,43 @@ status_t WM8904_PrintRegisters(wm8904_handle_t *handle)
 /*!
  * brief Sets the channel output volume.
  *
- * The parameter should be from 0 to 100.
+ * The parameter should be from 0 to 63.
  * The resulting volume will be.
- * 0 for mute, 100 for maximum volume value.
+ * 0 for -57dB, 63 for 6DB.
  *
  * param handle codec handle structure.
  * param channel codec channel.
- * param volume volume value.
+ * param volume volume value from 0 -63.
  *
  * return kStatus_WM8904_Success if successful, different code otherwise.
  */
 status_t WM8904_SetChannelVolume(wm8904_handle_t *handle, uint32_t channel, uint32_t volume)
 {
-    status_t ret = kStatus_Fail;
-    volume       = WM8904_MAP_HEADPHONE_LINEOUT_VOLUME(volume);
+    assert(volume <= WM8904_MAP_HEADPHONE_LINEOUT_MAX_VOLUME);
 
-    /* headphone left channel */
+    status_t ret = kStatus_Fail;
+
+    /* headphone left channel
+     *  0x1BF means unmute the OUT and reset the OUT volume update bit and volume range fields
+     */
     if (channel & kWM8904_HeadphoneLeft)
     {
-        ret = WM8904_ModifyRegister(handle, WM8904_ANALOG_OUT1_LEFT, volume == 0U ? 0x100U : 0x3FU,
-                                    volume == 0U ? 0x100U : (volume));
+        ret = WM8904_ModifyRegister(handle, WM8904_ANALOG_OUT1_LEFT, 0x1BFU, volume | 0x80U);
     }
     /* headphone right channel */
     if (channel & kWM8904_HeadphoneRight)
     {
-        ret = WM8904_ModifyRegister(handle, WM8904_ANALOG_OUT1_RIGHT, volume == 0U ? 0x100U : 0xBFU,
-                                    volume == 0U ? 0x100U : (volume | 0x80U));
+        ret = WM8904_ModifyRegister(handle, WM8904_ANALOG_OUT1_RIGHT, 0x1BFU, (volume | 0x80U));
     }
     /* line out left channel */
     if (channel & kWM8904_LineoutLeft)
     {
-        ret = WM8904_ModifyRegister(handle, WM8904_ANALOG_OUT2_LEFT, volume == 0U ? 0x100U : 0x3FU,
-                                    volume == 0U ? 0x100U : (volume));
+        ret = WM8904_ModifyRegister(handle, WM8904_ANALOG_OUT2_LEFT, 0x1BFU, volume | 0X80U);
     }
     /* line out right channel */
     if (channel & kWM8904_LineoutRight)
     {
-        ret = WM8904_ModifyRegister(handle, WM8904_ANALOG_OUT2_RIGHT, volume == 0U ? 0x100U : 0xBFU,
-                                    volume == 0U ? 0x100U : (volume | 0x80U));
+        ret = WM8904_ModifyRegister(handle, WM8904_ANALOG_OUT2_RIGHT, 0x1BFU, volume | 0x80U);
     }
 
     return ret;

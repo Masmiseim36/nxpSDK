@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">AWS Remote Control</string>
+
+    <string name="preference_file_key">com.nxp.awsremotecontrol.preferences</string>
+
+    <!-- dashboard -->
+    <string name="connection_status">MQTT connection status</string>
+    <string name="accel">Accelerometer</string>
+    <string name="timestamp">Data from:</string>
+    <string name="rgb_led">RGB LED</string>
+    <string name="rgb_red">Red</string>
+    <string name="rgb_green">Green</string>
+    <string name="rgb_blue">Blue</string>
+    <string name="desired">Desired</string>
+    <string name="reported">Reported</string>
+    <string name="load_preferences">Load preferences</string>
+
+    <!-- about -->
+    <string name="title_activity_about">About</string>
+    <string name="copyright">Copyright ©2018 NXP</string>
+</resources>

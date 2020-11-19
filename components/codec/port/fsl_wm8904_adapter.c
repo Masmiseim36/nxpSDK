@@ -137,9 +137,32 @@ status_t HAL_CODEC_WM8904_SetFormat(void *handle, uint32_t mclk, uint32_t sample
 status_t HAL_CODEC_WM8904_SetVolume(void *handle, uint32_t playChannel, uint32_t volume)
 {
     assert(handle != NULL);
+    assert(volume <= CODEC_VOLUME_MAX_VALUE);
 
-    return WM8904_SetChannelVolume((wm8904_handle_t *)((uint32_t)(((codec_handle_t *)handle)->codecDevHandle)),
-                                   playChannel, volume);
+    uint32_t mappedVolume = 0;
+    status_t ret          = kStatus_Success;
+
+    /* 0 will mute the output */
+    if (volume == 0U)
+    {
+        ret = WM8904_SetChannelMute((wm8904_handle_t *)((uint32_t)(((codec_handle_t *)handle)->codecDevHandle)),
+                                    playChannel, true);
+    }
+    else
+    {
+        /* 1-100 mapped to 0-63 */
+        mappedVolume = ((volume - 1U) * (WM8904_MAP_HEADPHONE_LINEOUT_MAX_VOLUME + 1U)) / 100U;
+
+        ret = WM8904_SetChannelVolume((wm8904_handle_t *)((uint32_t)(((codec_handle_t *)handle)->codecDevHandle)),
+                                      playChannel, mappedVolume);
+        if (ret == kStatus_Success)
+        {
+            ret = WM8904_SetChannelMute((wm8904_handle_t *)((uint32_t)(((codec_handle_t *)handle)->codecDevHandle)),
+                                        playChannel, false);
+        }
+    }
+
+    return ret;
 }
 
 /*!

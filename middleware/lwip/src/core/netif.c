@@ -342,8 +342,8 @@ netif_add(struct netif *netif,
 #endif /* LWIP_NUM_NETIF_CLIENT_DATA */
 #if LWIP_IPV6
 #if LWIP_IPV6_AUTOCONFIG
-  /* IPv6 address autoconfiguration not enabled by default */
-  netif->ip6_autoconfig_enabled = 0;
+  /* IPv6 address autoconfiguration should be enabled by default */
+  netif->ip6_autoconfig_enabled = 1;
 #endif /* LWIP_IPV6_AUTOCONFIG */
   nd6_restart_netif(netif);
 #endif /* LWIP_IPV6 */
@@ -359,10 +359,6 @@ netif_add(struct netif *netif,
 #if LWIP_IPV6 && LWIP_IPV6_MLD
   netif->mld_mac_filter = NULL;
 #endif /* LWIP_IPV6 && LWIP_IPV6_MLD */
-#if ENABLE_LOOPBACK
-  netif->loop_first = NULL;
-  netif->loop_last = NULL;
-#endif /* ENABLE_LOOPBACK */
 
   /* remember netif specific state information data */
   netif->state = state;
@@ -373,9 +369,16 @@ netif_add(struct netif *netif,
   netif->acd_list = NULL;
 #endif /* LWIP_ACD */
   NETIF_RESET_HINTS(netif);
-#if ENABLE_LOOPBACK && LWIP_LOOPBACK_MAX_PBUFS
+#if ENABLE_LOOPBACK
+  netif->loop_first = NULL;
+  netif->loop_last = NULL;
+#if LWIP_LOOPBACK_MAX_PBUFS
   netif->loop_cnt_current = 0;
-#endif /* ENABLE_LOOPBACK && LWIP_LOOPBACK_MAX_PBUFS */
+#endif /* LWIP_LOOPBACK_MAX_PBUFS */
+#if LWIP_NETIF_LOOPBACK_MULTITHREADING
+  netif->reschedule_poll = 0;
+#endif /* LWIP_NETIF_LOOPBACK_MULTITHREADING */
+#endif /* ENABLE_LOOPBACK */
 
 #if LWIP_IPV4
   netif_set_addr(netif, ipaddr, netmask, gw);
@@ -474,7 +477,7 @@ netif_do_set_ipaddr(struct netif *netif, const ip4_addr_t *ipaddr, ip_addr_t *ol
   LWIP_ASSERT("invalid pointer", old_addr != NULL);
 
   /* address is actually being changed? */
-  if (ip4_addr_cmp(ipaddr, netif_ip4_addr(netif)) == 0) {
+  if (ip4_addr_eq(ipaddr, netif_ip4_addr(netif)) == 0) {
     ip_addr_t new_addr;
     *ip_2_ip4(&new_addr) = *ipaddr;
     IP_SET_TYPE_VAL(new_addr, IPADDR_TYPE_V4);
@@ -541,7 +544,7 @@ static int
 netif_do_set_netmask(struct netif *netif, const ip4_addr_t *netmask, ip_addr_t *old_nm)
 {
   /* address is actually being changed? */
-  if (ip4_addr_cmp(netmask, netif_ip4_netmask(netif)) == 0) {
+  if (ip4_addr_eq(netmask, netif_ip4_netmask(netif)) == 0) {
 #if LWIP_NETIF_EXT_STATUS_CALLBACK
     LWIP_ASSERT("invalid pointer", old_nm != NULL);
     ip_addr_copy(*old_nm, *netif_ip_netmask4(netif));
@@ -605,7 +608,7 @@ static int
 netif_do_set_gw(struct netif *netif, const ip4_addr_t *gw, ip_addr_t *old_gw)
 {
   /* address is actually being changed? */
-  if (ip4_addr_cmp(gw, netif_ip4_gw(netif)) == 0) {
+  if (ip4_addr_eq(gw, netif_ip4_gw(netif)) == 0) {
 #if LWIP_NETIF_EXT_STATUS_CALLBACK
     LWIP_ASSERT("invalid pointer", old_gw != NULL);
     ip_addr_copy(*old_gw, *netif_ip_gw4(netif));
@@ -739,6 +742,12 @@ netif_set_addr(struct netif *netif, const ip4_addr_t *ipaddr, const ip4_addr_t *
 #if LWIP_NETIF_EXT_STATUS_CALLBACK
   if (change_reason != LWIP_NSC_NONE) {
     change_reason |= LWIP_NSC_IPV4_SETTINGS_CHANGED;
+  }
+  if (!remove) {
+    /* Issue a callback even if the address hasn't changed, eg. DHCP reboot */
+    change_reason |= LWIP_NSC_IPV4_ADDR_VALID;
+  }
+  if (change_reason != LWIP_NSC_NONE) {
     netif_invoke_ext_callback(netif, change_reason, &cb_args);
   }
 #endif
@@ -1096,11 +1105,12 @@ netif_set_link_callback(struct netif *netif, netif_status_callback_fn link_callb
 /**
  * @ingroup netif
  * Send an IP packet to be received on the same netif (loopif-like).
- * The pbuf is simply copied and handed back to netif->input.
- * In multithreaded mode, this is done directly since netif->input must put
- * the packet on a queue.
- * In callback mode, the packet is put on an internal queue and is fed to
+ * The pbuf is copied and added to an internal queue which is fed to 
  * netif->input by netif_poll().
+ * In multithreaded mode, the call to netif_poll() is queued to be done on the
+ * TCP/IP thread.
+ * In callback mode, the user has the responsibility to call netif_poll() in 
+ * the main loop of their application.
  *
  * @param netif the lwip network interface structure
  * @param p the (IP) packet to 'send'
@@ -1177,6 +1187,12 @@ netif_loop_output(struct netif *netif, struct pbuf *p)
     LWIP_ASSERT("if first != NULL, last must also be != NULL", netif->loop_last != NULL);
     netif->loop_last->next = r;
     netif->loop_last = last;
+#if LWIP_NETIF_LOOPBACK_MULTITHREADING
+    if (netif->reschedule_poll) {
+      schedule_poll = 1;
+      netif->reschedule_poll = 0;
+    }
+#endif /* LWIP_NETIF_LOOPBACK_MULTITHREADING */
   } else {
     netif->loop_first = r;
     netif->loop_last = last;
@@ -1194,7 +1210,11 @@ netif_loop_output(struct netif *netif, struct pbuf *p)
 #if LWIP_NETIF_LOOPBACK_MULTITHREADING
   /* For multithreading environment, schedule a call to netif_poll */
   if (schedule_poll) {
-    tcpip_try_callback((tcpip_callback_fn)netif_poll, netif);
+    if (tcpip_try_callback((tcpip_callback_fn)netif_poll, netif) != ERR_OK) {
+      SYS_ARCH_PROTECT(lev);
+      netif->reschedule_poll = 1;
+      SYS_ARCH_UNPROTECT(lev);
+    }
   }
 #endif /* LWIP_NETIF_LOOPBACK_MULTITHREADING */
 
@@ -1512,7 +1532,7 @@ netif_get_ip6_addr_match(struct netif *netif, const ip6_addr_t *ip6addr)
 
   for (i = 0; i < LWIP_IPV6_NUM_ADDRESSES; i++) {
     if (!ip6_addr_isinvalid(netif_ip6_addr_state(netif, i)) &&
-        ip6_addr_cmp_zoneless(netif_ip6_addr(netif, i), ip6addr)) {
+        ip6_addr_zoneless_eq(netif_ip6_addr(netif, i), ip6addr)) {
       return i;
     }
   }
@@ -1568,7 +1588,7 @@ netif_create_ip6_linklocal_address(struct netif *netif, u8_t from_mac_48bit)
   /* Set a link-local zone. Even though the zone is implied by the owning
    * netif, setting the zone anyway has two important conceptual advantages:
    * 1) it avoids the need for a ton of exceptions in internal code, allowing
-   *    e.g. ip6_addr_cmp() to be used on local addresses;
+   *    e.g. ip6_addr_eq() to be used on local addresses;
    * 2) the properly zoned address is visible externally, e.g. when any outside
    *    code enumerates available addresses or uses one to bind a socket.
    * Any external code unaware of address scoping is likely to just ignore the

@@ -4,6 +4,10 @@
 @section lwip lwIP for MCUXpresso SDK
   The current version of lwIP is based on lwIP 2.2.0.dev.
 
+  - 2.2.0_rev3
+    - New features:
+      - Ported lwIP 2.2.0.dev (2020-07-07, branch: master, SHA-1: c385f31076b27efb8ee37f00cb5568783a58f299) to KSDK 2.0.0.
+
   - 2.2.0_rev2
     - New features:
       - Kinetis ENET adaptation layer - implemented zero-copy on receive.

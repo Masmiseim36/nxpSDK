@@ -191,14 +191,24 @@ void FMSTR_ProcessSerial(void)
             /* just put the byte into the SCI transmit buffer */
             endOfPacket = _FMSTR_Tx(&ch);
             if(!endOfPacket)
+            {
+#if FMSTR_DEBUG_LEVEL >= 3
+                FMSTR_DEBUG_PRINTF("FMSTR Tx: %02x\n", (FMSTR_U8)ch);
+#endif
                 FMSTR_SERIAL_DRV.PutChar((FMSTR_U8) ch);
+            }
             else
+            {
                 break;
+            }
         }
 
         /* Flush data */
         if(endOfPacket)
         {
+#if FMSTR_DEBUG_LEVEL >= 3
+            FMSTR_DEBUG_PRINTF("FMSTR Tx Flush\n");
+#endif
             FMSTR_SERIAL_DRV.Flush();
             _fmstr_wFlags.flg.bTxWaitTC = 1;
 
@@ -228,6 +238,10 @@ void FMSTR_ProcessSerial(void)
         {
             FMSTR_BCHR rxChar = 0U;
             rxChar = FMSTR_SERIAL_DRV.GetChar();
+
+#if FMSTR_DEBUG_LEVEL >= 3
+            FMSTR_DEBUG_PRINTF("FMSTR Rx: %02x\n", (FMSTR_U8)rxChar);
+#endif
 
 #if FMSTR_SHORT_INTR
             _FMSTR_RingBuffPut(&fmstr_rxQueue, rxChar);    //TODO: if queue is lower than received data
@@ -283,6 +297,10 @@ static void _FMSTR_Listen(void)
     if(fmstr_nDebugTxPollCount < 0)
         fmstr_nDebugTxPollCount *= -(FMSTR_DEBUG_TX_POLLCNT_XFACTOR);
 #endif
+
+#if FMSTR_DEBUG_LEVEL >= 2
+    FMSTR_DEBUG_PRINTF("FMSTR Listening...\n");
+#endif
 }
 
 /**************************************************************************//*!
@@ -295,6 +313,10 @@ static void _FMSTR_Listen(void)
 
 static void _FMSTR_SendError(FMSTR_BCHR nErrCode)
 {
+#if FMSTR_DEBUG_LEVEL >= 1
+    FMSTR_DEBUG_PRINTF("FMSTR SendError code: 0x%x\n", (FMSTR_U8)nErrCode);
+#endif
+
     /* fill & send single-byte response */
     _FMSTR_SerialSendResponse(&fmstr_pCommBuffer[2], 0U, nErrCode);
 }
@@ -365,6 +387,10 @@ static void _FMSTR_SerialSendResponse(FMSTR_BPTR pResponse, FMSTR_SIZE nLength, 
     /* disable receiver, enable transmitter (single-wire communication) */
     FMSTR_SERIAL_DRV.EnableReceive(FMSTR_FALSE);
     FMSTR_SERIAL_DRV.EnableTransmit(FMSTR_TRUE);
+
+#if FMSTR_DEBUG_LEVEL >= 3
+    FMSTR_DEBUG_PRINTF("FMSTR Tx: %02x\n", (FMSTR_U8)FMSTR_SOB);
+#endif
 
     /* kick on the SCI transmission (also clears TX Empty flag on some platforms) */
     (void)FMSTR_SERIAL_DRV.IsTransmitRegEmpty();
@@ -448,6 +474,10 @@ static FMSTR_BOOL _FMSTR_Rx(FMSTR_BCHR rxChar)
     /* this is the command code! */
     if(pflg->flg.bRxLastCharSOB)
     {
+#if FMSTR_DEBUG_LEVEL >= 3
+        FMSTR_DEBUG_PRINTF("FMSTR Rx Frame start. Cmd: 0x%x\n", rxChar);
+#endif
+
         /* reset receiving process */
         fmstr_pRxBuff = fmstr_pCommBuffer;
 
@@ -468,6 +498,9 @@ static FMSTR_BOOL _FMSTR_Rx(FMSTR_BCHR rxChar)
     /* we are waiting for the length byte */
     if(pflg->flg.bRxMsgLengthNext)
     {
+#if FMSTR_DEBUG_LEVEL >= 3
+        FMSTR_DEBUG_PRINTF("FMSTR Rx Frame length: 0x%x\n", rxChar);
+#endif
         /* total data length and the checksum */
         fmstr_nRxTodo = (FMSTR_SIZE8)(rxChar + 1);
         FMSTR_Crc8AddByte(&fmstr_nRxCrc8, rxChar);
@@ -488,6 +521,10 @@ static FMSTR_BOOL _FMSTR_Rx(FMSTR_BCHR rxChar)
         /* was it the last byte of the message (checksum)? */
         if(!fmstr_nRxTodo)
         {
+#if FMSTR_DEBUG_LEVEL >= 3
+            FMSTR_DEBUG_PRINTF("FMSTR Rx Checksum: 0x%x, expected: 0x%x\n", rxChar, fmstr_nRxCrc8);
+#endif
+
             /* receive buffer overflow? */
             if(fmstr_pRxBuff == NULL)
             {
@@ -559,6 +596,10 @@ static FMSTR_BOOL _FMSTR_SerialInit(void)
     _fmstr_wFlags.all = 0U;
     fmstr_nTxTodo = 0U;
 
+#if FMSTR_DEBUG_LEVEL >= 2
+    FMSTR_DEBUG_PRINTF("FMSTR SerialInit\n");
+#endif
+
     /* Check the interface if it's valid */   //TODO this could be conditional to save some Flash
     if(!FMSTR_SERIAL_DRV.Init)
         return FMSTR_FALSE;
@@ -606,6 +647,11 @@ static FMSTR_BOOL _FMSTR_SerialInit(void)
 
     /* start listening for commands */
     _FMSTR_Listen();
+
+#if FMSTR_DEBUG_LEVEL >= 2
+    FMSTR_DEBUG_PRINTF("FMSTR SerialInit done\n");
+#endif
+
     return FMSTR_TRUE;
 }
 
@@ -618,11 +664,13 @@ static FMSTR_BOOL _FMSTR_SerialInit(void)
 * FMSTR_POLL_DRIVEN) or decodes messages received on the background by SCI interrupt
 * (short-interrupt mode = FMSTR_SHORT_INTR).
 *
-*
 *******************************************************************************/
 
 static void _FMSTR_SerialPoll(void)
 {
+    /* invoke low-level driver's poll if needed */
+    if(FMSTR_SERIAL_DRV.Poll)
+        FMSTR_SERIAL_DRV.Poll();
 
 #if FMSTR_POLL_DRIVEN
 

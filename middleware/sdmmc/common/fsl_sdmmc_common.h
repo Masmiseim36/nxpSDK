@@ -116,7 +116,7 @@ enum _sdmmc_status
     kStatus_SDMMC_HostNotReady          = MAKE_STATUS(kStatusGroup_SDMMC, 39U), /*!<  host controller not ready */
     kStatus_SDMMC_CardDetectFailed      = MAKE_STATUS(kStatusGroup_SDMMC, 40U), /*!<  card detect failed */
     kStatus_SDMMC_AuSizeNotSetProperly  = MAKE_STATUS(kStatusGroup_SDMMC, 41U), /*!<  AU size not set properly */
-
+    kStatus_SDMMC_PollingCardIdleFailed = MAKE_STATUS(kStatusGroup_SDMMC, 42U), /*!< polling card idle status failed */
 };
 
 /*! @brief sdmmc signal line  */
@@ -171,10 +171,18 @@ enum _sd_card_cd_status
     kSD_Removed  = 0U, /*!< card is removed */
 };
 
+/*!@ brief SD card detect status */
+enum _sd_card_dat3_pull_status
+{
+    kSD_DAT3PullDown = 0U, /*!< data3 pull down */
+    kSD_DAT3PullUp   = 1U, /*!< data3 pull up */
+};
+
 /*! @brief card detect aoolication callback definition */
 typedef void (*sd_cd_t)(bool isInserted, void *userData);
 /*! @brief card detect status */
 typedef bool (*sd_cd_status_t)(void);
+typedef void (*sd_dat3_pull_t)(uint32_t pullStatus);
 
 /*! @brief sd card detect */
 typedef struct _sd_detect_card
@@ -183,7 +191,9 @@ typedef struct _sd_detect_card
     uint32_t cdDebounce_ms;      /*!< card detect debounce delay ms */
     sd_cd_t callback;            /*!< card inserted callback which is meaningful for interrupt case */
     sd_cd_status_t cardDetected; /*!< used to check sd cd status when card detect through GPIO */
-    void *userData;              /*!< user data */
+    sd_dat3_pull_t dat3PullFunc; /*!< function pointer of DATA3 pull up/down */
+
+    void *userData; /*!< user data */
 } sd_detect_card_t;
 
 /*!@brief io voltage control type*/

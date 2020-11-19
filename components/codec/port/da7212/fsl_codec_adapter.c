@@ -109,8 +109,27 @@ status_t HAL_CODEC_SetVolume(void *handle, uint32_t playChannel, uint32_t volume
 {
     assert(handle != NULL);
 
-    return DA7212_SetChannelVolume((da7212_handle_t *)((uint32_t)(((codec_handle_t *)handle)->codecDevHandle)),
-                                   playChannel, volume);
+    uint32_t mappedVolume = 0;
+    status_t ret          = kStatus_Success;
+
+    if (volume == 0U)
+    {
+        return DA7212_SetChannelMute((da7212_handle_t *)((uint32_t)(((codec_handle_t *)handle)->codecDevHandle)),
+                                     playChannel, true);
+    }
+
+    mappedVolume = ((volume - 1U) * (DA7212_HEADPHONE_MAX_VOLUME_VALUE + 1U)) / 100U;
+
+    ret = DA7212_SetChannelVolume((da7212_handle_t *)((uint32_t)(((codec_handle_t *)handle)->codecDevHandle)),
+                                  playChannel, mappedVolume);
+
+    if (ret == kStatus_Success)
+    {
+        ret = DA7212_SetChannelMute((da7212_handle_t *)((uint32_t)(((codec_handle_t *)handle)->codecDevHandle)),
+                                    playChannel, false);
+    }
+
+    return ret;
 }
 
 /*!

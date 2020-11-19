@@ -2,7 +2,19 @@
 @page middleware_log Middleware Change Log
 
 @section mmc MMC Card driver for MCUXpresso SDK
-  The current driver version is 2.3.0.
+  The current driver version is 2.4.0.
+
+  - 2.4.0
+    - Improvements
+      - Added new apis MMC_EnableCacheControl/MMC_FlushCache to support cache feature.
+
+  - 2.3.1
+    - Improvements
+      - Removed the dead loop while polling DAT0 and CMD13 instead of using timeout mechanism.
+      - Added card state check before switching to HS400 to improve the emmc initialization stability.
+      - Removed the redundant operation of memset internal buffer in MMC_WrtiteBlocks function.
+    - Bug Fixes
+      - Fixed the sandisk emmc always busy while sending CMD1 without supported voltage provide in argument.
 
   - 2.3.0
     - Improvements

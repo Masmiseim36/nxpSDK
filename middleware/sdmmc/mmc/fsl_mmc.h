@@ -20,7 +20,7 @@
  * Definitions
  ******************************************************************************/
 /*! @brief Middleware mmc version. */
-#define FSL_MMC_DRIVER_VERSION (MAKE_VERSION(2U, 3U, 0U)) /*2.3.0*/
+#define FSL_MMC_DRIVER_VERSION (MAKE_VERSION(2U, 4U, 0U)) /*2.4.0*/
 
 /*! @brief MMC card flags */
 enum _mmc_card_flag
@@ -336,6 +336,32 @@ status_t MMC_StopBoot(mmc_card_t *card, uint32_t bootMode);
  * @param bootPartitionWP boot partition write protect value.
  */
 status_t MMC_SetBootPartitionWP(mmc_card_t *card, mmc_boot_partition_wp_t bootPartitionWP);
+
+/*!
+ * @brief MMC card cache control function.
+ *
+ * The mmc device's cache is enabled by the driver by default.
+ * The cache should in typical case reduce the access time (compared to an access to the main nonvolatile storage) for
+ * both write and read.
+ *
+ * @param card Card descriptor.
+ * @param enable true is enable the cache, false is disable the cache.
+ */
+status_t MMC_EnableCacheControl(mmc_card_t *card, bool enable);
+
+/*!
+ * @brief MMC card cache flush function.
+ *
+ * A Flush operation refers to the requirement, from the host to the device, to write the cached data to the nonvolatile
+ * memory. Prior to a flush, the device may autonomously write data to the nonvolatile memory, but after the flush
+ * operation all data in the volatile area must be written to nonvolatile memory There is no requirement for flush due
+ * to switching between the partitions. (Note: This also implies that the cache data shall not be lost when switching
+ * between partitions). Cached data may be lost in SLEEP state, so host should flush the cache before placing the device
+ * into SLEEP state.
+ *
+ * @param card Card descriptor.
+ */
+status_t MMC_FlushCache(mmc_card_t *card);
 
 /* @} */
 #if defined(__cplusplus)

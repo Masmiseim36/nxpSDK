@@ -39,7 +39,11 @@ status_t SDMMC_OSAEventCreate(void *eventHandle)
 {
     assert(eventHandle != NULL);
 
-    return OSA_EventCreate(eventHandle, true);
+#if defined(SDMMC_OSA_POLLING_EVENT_BY_SEMPHORE) && SDMMC_OSA_POLLING_EVENT_BY_SEMPHORE
+    return OSA_SemaphoreCreate(&(((sdmmc_osa_event_t *)eventHandle)->handle), 0U);
+#else
+    return OSA_EventCreate(&(((sdmmc_osa_event_t *)eventHandle)->handle), true);
+#endif
 }
 
 /*!
@@ -57,9 +61,29 @@ status_t SDMMC_OSAEventWait(void *eventHandle, uint32_t eventType, uint32_t time
 
     osa_status_t status = KOSA_StatusError;
 
+#if defined(SDMMC_OSA_POLLING_EVENT_BY_SEMPHORE) && SDMMC_OSA_POLLING_EVENT_BY_SEMPHORE
     while (1)
     {
-        status = OSA_EventWait(eventHandle, eventType, 0, timeoutMilliseconds, event);
+        status = OSA_SemaphoreWait(&(((sdmmc_osa_event_t *)eventHandle)->handle), timeoutMilliseconds);
+        if (KOSA_StatusTimeout == status)
+        {
+            break;
+        }
+
+        if (KOSA_StatusSuccess == status)
+        {
+            SDMMC_OSAEventGet(eventHandle, eventType, event);
+            if ((*event & eventType) != 0U)
+            {
+                return kStatus_Success;
+            }
+        }
+    }
+
+#else
+    while (1)
+    {
+        status = OSA_EventWait(&(((sdmmc_osa_event_t *)eventHandle)->handle), eventType, 0, timeoutMilliseconds, event);
         if ((KOSA_StatusSuccess == status) || (KOSA_StatusTimeout == status))
         {
             break;
@@ -70,6 +94,7 @@ status_t SDMMC_OSAEventWait(void *eventHandle, uint32_t eventType, uint32_t time
     {
         return kStatus_Success;
     }
+#endif
 
     return kStatus_Fail;
 }
@@ -84,7 +109,12 @@ status_t SDMMC_OSAEventSet(void *eventHandle, uint32_t eventType)
 {
     assert(eventHandle != NULL);
 
-    OSA_EventSet(eventHandle, eventType);
+#if defined(SDMMC_OSA_POLLING_EVENT_BY_SEMPHORE) && SDMMC_OSA_POLLING_EVENT_BY_SEMPHORE
+    ((sdmmc_osa_event_t *)eventHandle)->eventFlag |= eventType;
+    OSA_SemaphorePost(&(((sdmmc_osa_event_t *)eventHandle)->handle));
+#else
+    OSA_EventSet(&(((sdmmc_osa_event_t *)eventHandle)->handle), eventType);
+#endif
 
     return kStatus_Success;
 }
@@ -101,7 +131,15 @@ status_t SDMMC_OSAEventGet(void *eventHandle, uint32_t eventType, uint32_t *flag
     assert(eventHandle != NULL);
     assert(flag != NULL);
 
-    OSA_EventGet(eventHandle, eventType, flag);
+#if defined(SDMMC_OSA_POLLING_EVENT_BY_SEMPHORE) && SDMMC_OSA_POLLING_EVENT_BY_SEMPHORE
+    OSA_SR_ALLOC();
+    OSA_ENTER_CRITICAL();
+    *flag = ((sdmmc_osa_event_t *)eventHandle)->eventFlag;
+    ((sdmmc_osa_event_t *)eventHandle)->eventFlag &= ~eventType;
+    OSA_EXIT_CRITICAL();
+#else
+    OSA_EventGet(&(((sdmmc_osa_event_t *)eventHandle)->handle), eventType, flag);
+#endif
 
     return kStatus_Success;
 }
@@ -116,7 +154,14 @@ status_t SDMMC_OSAEventClear(void *eventHandle, uint32_t eventType)
 {
     assert(eventHandle != NULL);
 
-    OSA_EventClear(eventHandle, eventType);
+#if defined(SDMMC_OSA_POLLING_EVENT_BY_SEMPHORE) && SDMMC_OSA_POLLING_EVENT_BY_SEMPHORE
+    OSA_SR_ALLOC();
+    OSA_ENTER_CRITICAL();
+    ((sdmmc_osa_event_t *)eventHandle)->eventFlag = 0U;
+    OSA_EXIT_CRITICAL();
+#else
+    OSA_EventClear(&(((sdmmc_osa_event_t *)eventHandle)->handle), eventType);
+#endif
 
     return kStatus_Success;
 }
@@ -127,7 +172,11 @@ status_t SDMMC_OSAEventClear(void *eventHandle, uint32_t eventType)
  */
 status_t SDMMC_OSAEventDestroy(void *eventHandle)
 {
-    OSA_EventDestroy(eventHandle);
+#if defined(SDMMC_OSA_POLLING_EVENT_BY_SEMPHORE) && SDMMC_OSA_POLLING_EVENT_BY_SEMPHORE
+    OSA_SemaphoreDestroy(&(((sdmmc_osa_event_t *)eventHandle)->handle));
+#else
+    OSA_EventDestroy(&(((sdmmc_osa_event_t *)eventHandle)->handle));
+#endif
 
     return kStatus_Success;
 }

@@ -3,6 +3,11 @@
 
 @section LittlevGL LittlevGL for KSDK
 
+  - 7.0.0_rev1
+
+    - Integrate LittlevGL 7.0.0 to SDK.
+    - Added PXP hardware acceleration initial version.
+
   - 6.1.1_rev1
 
     - Integrate LittlevGL 6.1.1 to SDK.

@@ -771,22 +771,6 @@ target_link_libraries(usart_interrupt.elf optimized gcc)
 
 target_link_libraries(usart_interrupt.elf optimized nosys)
 
-link_directories(${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc)
-
-target_link_libraries(usart_interrupt.elf debug ${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc/libpower_hardabi.a)
-
-link_directories(${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc)
-
-target_link_libraries(usart_interrupt.elf optimized ${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc/libpower_hardabi.a)
-
-link_directories(${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc)
-
-target_link_libraries(usart_interrupt.elf optimized ${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc/libpower_hardabi.a)
-
-link_directories(${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc)
-
-target_link_libraries(usart_interrupt.elf optimized ${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc/libpower_hardabi.a)
-
 TARGET_LINK_LIBRARIES(usart_interrupt.elf -Wl,--end-group)
 
 ADD_CUSTOM_COMMAND(TARGET usart_interrupt.elf POST_BUILD COMMAND ${CMAKE_OBJCOPY}

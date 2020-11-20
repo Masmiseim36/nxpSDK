@@ -820,22 +820,6 @@ target_link_libraries(sdio.elf optimized gcc)
 
 target_link_libraries(sdio.elf optimized nosys)
 
-link_directories(${ProjDirPath}/../../../../../devices/MIMXRT685S/gcc)
-
-target_link_libraries(sdio.elf debug ${ProjDirPath}/../../../../../devices/MIMXRT685S/gcc/libpower_hardabi.a)
-
-link_directories(${ProjDirPath}/../../../../../devices/MIMXRT685S/gcc)
-
-target_link_libraries(sdio.elf optimized ${ProjDirPath}/../../../../../devices/MIMXRT685S/gcc/libpower_hardabi.a)
-
-link_directories(${ProjDirPath}/../../../../../devices/MIMXRT685S/gcc)
-
-target_link_libraries(sdio.elf optimized ${ProjDirPath}/../../../../../devices/MIMXRT685S/gcc/libpower_hardabi.a)
-
-link_directories(${ProjDirPath}/../../../../../devices/MIMXRT685S/gcc)
-
-target_link_libraries(sdio.elf optimized ${ProjDirPath}/../../../../../devices/MIMXRT685S/gcc/libpower_hardabi.a)
-
 TARGET_LINK_LIBRARIES(sdio.elf -Wl,--end-group)
 
 ADD_CUSTOM_COMMAND(TARGET sdio.elf POST_BUILD COMMAND ${CMAKE_OBJCOPY}

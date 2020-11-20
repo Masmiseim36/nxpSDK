@@ -172,7 +172,7 @@ int main(void)
     PCA9420_WriteModeConfigs(&pca9420Handle, kPCA9420_Mode0, &pca9420ModeCfg[0], ARRAY_SIZE(pca9420ModeCfg));
 
     /* Configure PMIC Vddcore value according to main clock. DSP not used in this demo. */
-    BOARD_SetPmicVoltageForFreq(kPartTemp_N20C_P70C, CLOCK_GetMainClkFreq(), 0U);
+    BOARD_SetPmicVoltageForFreq(kPartTemp_0C_P85C, kVoltOpFullRange, CLOCK_GetFreq(kCLOCK_CoreSysClk), 0U);
 
     /* Indicate to power library that PMIC is used. */
     POWER_UpdatePmicRecoveryTime(1);
@@ -220,14 +220,18 @@ int main(void)
                     "Press any key to confirm to enter the deep power down mode and wakeup the device by "
                     "reset.\r\n\r\n");
                 GETCHAR();
+                BOARD_SetPmicVoltageBeforeDeepPowerDown();
                 POWER_EnterDeepPowerDown(APP_EXCLUDE_FROM_DEEP_POWERDOWN);
+                /* After deep power down wakeup, the code will restart and cannot reach here. */
                 break;
             case kPmu_Full_Deep_PowerDown: /* Enter full deep power down mode. */
                 PRINTF(
                     "Press any key to confirm to enter the full deep power down mode and wakeup the device by "
                     "reset.\r\n\r\n");
                 GETCHAR();
+                BOARD_SetPmicVoltageBeforeDeepPowerDown();
                 POWER_EnterFullDeepPowerDown(APP_EXCLUDE_FROM_FULL_DEEP_POWERDOWN);
+                /* After full deep power down wakeup, the code will restart and cannot reach here. */
                 break;
             default:
                 break;

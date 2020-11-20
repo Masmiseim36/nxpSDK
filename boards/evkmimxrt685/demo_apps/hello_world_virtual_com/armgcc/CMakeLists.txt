@@ -921,22 +921,6 @@ target_link_libraries(hello_world_virtual_com.elf optimized gcc)
 
 target_link_libraries(hello_world_virtual_com.elf optimized nosys)
 
-link_directories(${ProjDirPath}/../../../../../devices/MIMXRT685S/gcc)
-
-target_link_libraries(hello_world_virtual_com.elf debug ${ProjDirPath}/../../../../../devices/MIMXRT685S/gcc/libpower_hardabi.a)
-
-link_directories(${ProjDirPath}/../../../../../devices/MIMXRT685S/gcc)
-
-target_link_libraries(hello_world_virtual_com.elf optimized ${ProjDirPath}/../../../../../devices/MIMXRT685S/gcc/libpower_hardabi.a)
-
-link_directories(${ProjDirPath}/../../../../../devices/MIMXRT685S/gcc)
-
-target_link_libraries(hello_world_virtual_com.elf optimized ${ProjDirPath}/../../../../../devices/MIMXRT685S/gcc/libpower_hardabi.a)
-
-link_directories(${ProjDirPath}/../../../../../devices/MIMXRT685S/gcc)
-
-target_link_libraries(hello_world_virtual_com.elf optimized ${ProjDirPath}/../../../../../devices/MIMXRT685S/gcc/libpower_hardabi.a)
-
 TARGET_LINK_LIBRARIES(hello_world_virtual_com.elf -Wl,--end-group)
 
 ADD_CUSTOM_COMMAND(TARGET hello_world_virtual_com.elf POST_BUILD COMMAND ${CMAKE_OBJCOPY}

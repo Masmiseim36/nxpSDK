@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ksdk:manifest xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="SDK_2.x_EVK-MIMXRT685" name="EVK-MIMXRT685" brief="This is SDK version 2.8.2 manifest file. It describes the content of the EVK-MIMXRT685 and additional settings for tools that support SDK version 2.8.2" format_version="3.6" api_version="2.0.0" configuration="3156b0d2a06ae8c79157b176f72d9888" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd http://nxp.com/mcuxpresso/sdk/sdk_manifest_v3.6.xsd">
-  <!--Timestamp (UTC): 2020-08-24 10:08:41.611956-->
-  <!--This manifest is generated based on sdk repo commit: 60475d31bf67266eef97c59a3859a1437273841b-->
+<ksdk:manifest xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="SDK_2.x_EVK-MIMXRT685" name="EVK-MIMXRT685" brief="This is SDK version 2.8.3 manifest file. It describes the content of the EVK-MIMXRT685 and additional settings for tools that support SDK version 2.8.3" format_version="3.6" api_version="2.0.0" configuration="6cc032fba63babc6919497985fc9292e" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd http://nxp.com/mcuxpresso/sdk/sdk_manifest_v3.6.xsd">
+  <!--Timestamp (UTC): 2020-11-13 00:49:47.955815-->
+  <!--This manifest is generated based on sdk repo commit: 3debb4506541232519d031380c2fcdcc5e5c7a9e-->
   <defines>
     <define name="CPU_$|package|" value=""/>
     <define name="CPU_$|package|_$|core|" value=""/>
   </defines>
-  <ksdk id="MCUXpresso282" name="MCUXpresso282" version="2.8.2" revision="Epluginsite 358 2020-08-19"/>
+  <ksdk id="MCUXpresso283" name="MCUXpresso283" version="2.8.3" revision="406 2020-11-09"/>
   <compilers>
     <compiler id="compiler_armclang" name="armclang" type="armclang"/>
     <compiler id="compiler_gcc" name="gcc" type="gcc"/>
@@ -3820,36 +3820,15 @@ ${load}</script>
         <files mask="fsl_pint.h"/>
       </source>
     </component>
-    <component id="platform.drivers.power.MIMXRT685S" name="power" brief="Power driver with Power Lib Hard ABI" version="2.0.0" full_name="power" devices="MIMXRT685S" device_cores="cm33_MIMXRT685S" user_visible="true" type="driver">
+    <component id="platform.drivers.power.MIMXRT685S" name="power" brief="Power driver" version="2.3.0" full_name="Driver power" devices="MIMXRT685S" device_cores="cm33_MIMXRT685S" user_visible="true" type="driver">
       <dependencies>
         <component_dependency value="platform.drivers.common.MIMXRT685S"/>
       </dependencies>
-      <source toolchain="mdk" path="devices/MIMXRT685S/arm" target_path="libs" type="lib" device_cores="cm33_MIMXRT685S">
-        <files mask="keil_lib_power.lib"/>
-      </source>
-      <source toolchain="mdk" path="devices/MIMXRT685S/arm" target_path="libs" type="other" device_cores="cm33_MIMXRT685S">
-        <files mask="keil_lib_power_disable_short_enum_wchar.lib" hidden="true"/>
-      </source>
       <source path="devices/MIMXRT685S/drivers" target_path="drivers" type="src">
         <files mask="fsl_power.c"/>
       </source>
       <source path="devices/MIMXRT685S/drivers" target_path="drivers" type="c_include">
         <files mask="fsl_power.h"/>
-      </source>
-      <source toolchain="armgcc" path="devices/MIMXRT685S/gcc" target_path="libs" type="lib" device_cores="cm33_MIMXRT685S">
-        <files mask="libpower_hardabi.a"/>
-      </source>
-      <source toolchain="armgcc" path="devices/MIMXRT685S/gcc" target_path="libs" type="other" device_cores="cm33_MIMXRT685S">
-        <files mask="libpower_softabi.a" hidden="true"/>
-      </source>
-      <source toolchain="iar" path="devices/MIMXRT685S/iar" target_path="libs" type="lib" device_cores="cm33_MIMXRT685S">
-        <files mask="iar_lib_power.a"/>
-      </source>
-      <source toolchain="mcuxpresso" path="devices/MIMXRT685S/mcuxpresso" target_path="libs" type="lib" device_cores="cm33_MIMXRT685S">
-        <files mask="libpower_hardabi.a"/>
-      </source>
-      <source toolchain="mcuxpresso" path="devices/MIMXRT685S/mcuxpresso" target_path="libs" type="other" device_cores="cm33_MIMXRT685S">
-        <files mask="libpower_softabi.a"/>
       </source>
     </component>
     <component id="platform.drivers.powerquad.MIMXRT685S" name="powerquad" brief="POWERQUAD Driver" version="2.0.3" full_name="POWERQUAD Driver" devices="MIMXRT685S" device_cores="cm33_MIMXRT685S" user_visible="true" type="driver">
@@ -12391,6 +12370,21 @@ ${load}</script>
       </source>
       <source path="middleware/issdk/sensors" target_path="sensors" type="src">
         <files mask="fxpq3115_drv.c"/>
+      </source>
+    </component>
+    <component id="middleware.issdk.sensor.fxps7250d4.MIMXRT685S" name="issdk_fxps7250d4" brief="ISSDK fxps7250d4 Sensor Driver Files" version="1.7.0" full_name="Middleware issdk sensor fxps7250d4" devices="MIMXRT685S" user_visible="false" type="middleware">
+      <dependencies>
+        <all>
+          <component_dependency value="platform.CMSIS_Driver_Include.I2C_CMSISInclude.MIMXRT685S"/>
+          <component_dependency value="platform.CMSIS_Driver_Include.SPI_CMSISInclude.MIMXRT685S"/>
+        </all>
+      </dependencies>
+      <source path="middleware/issdk/sensors" target_path="sensors" type="c_include">
+        <files mask="dbap.h"/>
+        <files mask="dbap_drv.h"/>
+      </source>
+      <source path="middleware/issdk/sensors" target_path="sensors" type="src">
+        <files mask="dbap_drv.c"/>
       </source>
     </component>
     <component id="middleware.issdk.sensor.interface.common.MIMXRT685S" name="issdk_interfaces" brief="ISSDK Sensor Interface Common" version="1.7.0" full_name="Middleware issdk sensor interface common" devices="MIMXRT685S" user_visible="true" type="middleware">

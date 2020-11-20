@@ -447,17 +447,9 @@ link_directories(${ProjDirPath}/../../secure_faults_s/armgcc/debug)
 
 target_link_libraries(secure_faults_ns.elf debug ${ProjDirPath}/../../secure_faults_s/armgcc/debug/secure_faults_s_CMSE_Lib.o)
 
-link_directories(${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc)
-
-target_link_libraries(secure_faults_ns.elf debug ${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc/libpower_hardabi.a)
-
 link_directories(${ProjDirPath}/../../secure_faults_s/armgcc/release)
 
 target_link_libraries(secure_faults_ns.elf optimized ${ProjDirPath}/../../secure_faults_s/armgcc/release/secure_faults_s_CMSE_Lib.o)
-
-link_directories(${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc)
-
-target_link_libraries(secure_faults_ns.elf optimized ${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc/libpower_hardabi.a)
 
 TARGET_LINK_LIBRARIES(secure_faults_ns.elf -Wl,--end-group)
 

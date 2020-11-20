@@ -1414,22 +1414,6 @@ target_link_libraries(wiced_mfg_test_4343W.elf optimized gcc)
 
 target_link_libraries(wiced_mfg_test_4343W.elf optimized nosys)
 
-link_directories(${ProjDirPath}/../../../../../devices/MIMXRT685S/gcc)
-
-target_link_libraries(wiced_mfg_test_4343W.elf debug ${ProjDirPath}/../../../../../devices/MIMXRT685S/gcc/libpower_hardabi.a)
-
-link_directories(${ProjDirPath}/../../../../../devices/MIMXRT685S/gcc)
-
-target_link_libraries(wiced_mfg_test_4343W.elf optimized ${ProjDirPath}/../../../../../devices/MIMXRT685S/gcc/libpower_hardabi.a)
-
-link_directories(${ProjDirPath}/../../../../../devices/MIMXRT685S/gcc)
-
-target_link_libraries(wiced_mfg_test_4343W.elf optimized ${ProjDirPath}/../../../../../devices/MIMXRT685S/gcc/libpower_hardabi.a)
-
-link_directories(${ProjDirPath}/../../../../../devices/MIMXRT685S/gcc)
-
-target_link_libraries(wiced_mfg_test_4343W.elf optimized ${ProjDirPath}/../../../../../devices/MIMXRT685S/gcc/libpower_hardabi.a)
-
 TARGET_LINK_LIBRARIES(wiced_mfg_test_4343W.elf -Wl,--end-group)
 
 ADD_CUSTOM_COMMAND(TARGET wiced_mfg_test_4343W.elf POST_BUILD COMMAND ${CMAKE_OBJCOPY}

@@ -773,22 +773,6 @@ target_link_libraries(sctimer_16bit_counter.elf optimized gcc)
 
 target_link_libraries(sctimer_16bit_counter.elf optimized nosys)
 
-link_directories(${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc)
-
-target_link_libraries(sctimer_16bit_counter.elf debug ${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc/libpower_hardabi.a)
-
-link_directories(${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc)
-
-target_link_libraries(sctimer_16bit_counter.elf optimized ${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc/libpower_hardabi.a)
-
-link_directories(${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc)
-
-target_link_libraries(sctimer_16bit_counter.elf optimized ${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc/libpower_hardabi.a)
-
-link_directories(${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc)
-
-target_link_libraries(sctimer_16bit_counter.elf optimized ${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc/libpower_hardabi.a)
-
 TARGET_LINK_LIBRARIES(sctimer_16bit_counter.elf -Wl,--end-group)
 
 ADD_CUSTOM_COMMAND(TARGET sctimer_16bit_counter.elf POST_BUILD COMMAND ${CMAKE_OBJCOPY}

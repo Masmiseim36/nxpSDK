@@ -953,33 +953,17 @@ link_directories(${ProjDirPath}/../../../../../middleware/emwin/emWin_library/AR
 
 target_link_libraries(emwin_gui_demo.elf debug ${ProjDirPath}/../../../../../middleware/emwin/emWin_library/ARMGCC/libemWin_M33.a)
 
-link_directories(${ProjDirPath}/../../../../../devices/MIMXRT685S/gcc)
+link_directories(${ProjDirPath}/../../../../../middleware/emwin/emWin_library/ARMGCC)
 
-target_link_libraries(emwin_gui_demo.elf debug ${ProjDirPath}/../../../../../devices/MIMXRT685S/gcc/libpower_hardabi.a)
+target_link_libraries(emwin_gui_demo.elf optimized ${ProjDirPath}/../../../../../middleware/emwin/emWin_library/ARMGCC/libemWin_M33.a)
 
 link_directories(${ProjDirPath}/../../../../../middleware/emwin/emWin_library/ARMGCC)
 
 target_link_libraries(emwin_gui_demo.elf optimized ${ProjDirPath}/../../../../../middleware/emwin/emWin_library/ARMGCC/libemWin_M33.a)
 
-link_directories(${ProjDirPath}/../../../../../devices/MIMXRT685S/gcc)
-
-target_link_libraries(emwin_gui_demo.elf optimized ${ProjDirPath}/../../../../../devices/MIMXRT685S/gcc/libpower_hardabi.a)
-
 link_directories(${ProjDirPath}/../../../../../middleware/emwin/emWin_library/ARMGCC)
 
 target_link_libraries(emwin_gui_demo.elf optimized ${ProjDirPath}/../../../../../middleware/emwin/emWin_library/ARMGCC/libemWin_M33.a)
-
-link_directories(${ProjDirPath}/../../../../../devices/MIMXRT685S/gcc)
-
-target_link_libraries(emwin_gui_demo.elf optimized ${ProjDirPath}/../../../../../devices/MIMXRT685S/gcc/libpower_hardabi.a)
-
-link_directories(${ProjDirPath}/../../../../../middleware/emwin/emWin_library/ARMGCC)
-
-target_link_libraries(emwin_gui_demo.elf optimized ${ProjDirPath}/../../../../../middleware/emwin/emWin_library/ARMGCC/libemWin_M33.a)
-
-link_directories(${ProjDirPath}/../../../../../devices/MIMXRT685S/gcc)
-
-target_link_libraries(emwin_gui_demo.elf optimized ${ProjDirPath}/../../../../../devices/MIMXRT685S/gcc/libpower_hardabi.a)
 
 TARGET_LINK_LIBRARIES(emwin_gui_demo.elf -Wl,--end-group)
 

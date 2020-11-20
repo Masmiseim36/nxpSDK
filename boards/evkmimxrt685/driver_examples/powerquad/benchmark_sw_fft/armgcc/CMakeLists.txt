@@ -874,22 +874,6 @@ target_link_libraries(powerquad_benchmark_sw_fft.elf optimized gcc)
 
 target_link_libraries(powerquad_benchmark_sw_fft.elf optimized nosys)
 
-link_directories(${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc)
-
-target_link_libraries(powerquad_benchmark_sw_fft.elf debug ${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc/libpower_hardabi.a)
-
-link_directories(${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc)
-
-target_link_libraries(powerquad_benchmark_sw_fft.elf optimized ${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc/libpower_hardabi.a)
-
-link_directories(${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc)
-
-target_link_libraries(powerquad_benchmark_sw_fft.elf optimized ${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc/libpower_hardabi.a)
-
-link_directories(${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc)
-
-target_link_libraries(powerquad_benchmark_sw_fft.elf optimized ${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc/libpower_hardabi.a)
-
 TARGET_LINK_LIBRARIES(powerquad_benchmark_sw_fft.elf -Wl,--end-group)
 
 ADD_CUSTOM_COMMAND(TARGET powerquad_benchmark_sw_fft.elf POST_BUILD COMMAND ${CMAKE_OBJCOPY}

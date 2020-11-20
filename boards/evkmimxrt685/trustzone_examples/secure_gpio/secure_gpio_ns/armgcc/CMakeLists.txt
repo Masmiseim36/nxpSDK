@@ -443,14 +443,6 @@ target_link_libraries(secure_gpio_ns.elf optimized gcc)
 
 target_link_libraries(secure_gpio_ns.elf optimized nosys)
 
-link_directories(${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc)
-
-target_link_libraries(secure_gpio_ns.elf debug ${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc/libpower_hardabi.a)
-
-link_directories(${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc)
-
-target_link_libraries(secure_gpio_ns.elf optimized ${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc/libpower_hardabi.a)
-
 TARGET_LINK_LIBRARIES(secure_gpio_ns.elf -Wl,--end-group)
 
 ADD_CUSTOM_COMMAND(TARGET secure_gpio_ns.elf POST_BUILD COMMAND ${CMAKE_OBJCOPY}

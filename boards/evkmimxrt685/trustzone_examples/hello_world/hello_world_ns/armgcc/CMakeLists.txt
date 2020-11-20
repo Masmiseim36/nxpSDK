@@ -447,17 +447,9 @@ link_directories(${ProjDirPath}/../../hello_world_s/armgcc/debug)
 
 target_link_libraries(hello_world_ns.elf debug ${ProjDirPath}/../../hello_world_s/armgcc/debug/hello_world_s_CMSE_Lib.o)
 
-link_directories(${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc)
-
-target_link_libraries(hello_world_ns.elf debug ${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc/libpower_hardabi.a)
-
 link_directories(${ProjDirPath}/../../hello_world_s/armgcc/release)
 
 target_link_libraries(hello_world_ns.elf optimized ${ProjDirPath}/../../hello_world_s/armgcc/release/hello_world_s_CMSE_Lib.o)
-
-link_directories(${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc)
-
-target_link_libraries(hello_world_ns.elf optimized ${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc/libpower_hardabi.a)
 
 TARGET_LINK_LIBRARIES(hello_world_ns.elf -Wl,--end-group)
 

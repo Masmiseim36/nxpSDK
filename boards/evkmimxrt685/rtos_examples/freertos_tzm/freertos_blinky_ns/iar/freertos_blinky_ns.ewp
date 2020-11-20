@@ -827,7 +827,6 @@
         <option>
           <name>IlinkAdditionalLibs</name>
           <state>$PROJ_DIR$/../../freertos_blinky_s/iar/debug/freertos_blinky_s_import_lib.o</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/iar/iar_lib_power.a</state>
         </option>
         <option>
           <name>IlinkOverrideProgramEntryLabel</name>
@@ -1870,7 +1869,6 @@
         <option>
           <name>IlinkAdditionalLibs</name>
           <state>$PROJ_DIR$/../../freertos_blinky_s/iar/flash_debug/freertos_blinky_s_import_lib.o</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/iar/iar_lib_power.a</state>
         </option>
         <option>
           <name>IlinkOverrideProgramEntryLabel</name>
@@ -2912,7 +2910,6 @@
         <option>
           <name>IlinkAdditionalLibs</name>
           <state>$PROJ_DIR$/../../freertos_blinky_s/iar/release/freertos_blinky_s_import_lib.o</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/iar/iar_lib_power.a</state>
         </option>
         <option>
           <name>IlinkOverrideProgramEntryLabel</name>
@@ -3954,7 +3951,6 @@
         <option>
           <name>IlinkAdditionalLibs</name>
           <state>$PROJ_DIR$/../../freertos_blinky_s/iar/flash_release/freertos_blinky_s_import_lib.o</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/iar/iar_lib_power.a</state>
         </option>
         <option>
           <name>IlinkOverrideProgramEntryLabel</name>

@@ -7,7 +7,7 @@
 **     Compiler:            IAR ANSI C/C++ Compiler for ARM
 **     Reference manual:    MIMXRT685 User manual Rev. 0.95 11 November 2019
 **     Version:             rev. 1.0, 2018-06-19
-**     Build:               b200413
+**     Build:               b201029
 **
 **     Abstract:
 **         Linker file for the IAR ANSI C/C++ Compiler for ARM
@@ -39,8 +39,9 @@ if (isdefinedsymbol(__heap_size__)) {
   define symbol __size_heap__          = 0x2800;
 }
 
-/* The SRAM region [0x0-0x20000] is reserved for ROM code and app-specific use cases. */
-/* The SRAM region [0x20000-0x80000] is reserved for Non-cached shared memory between M33 and DSP. */
+/* The SRAM region [0x10000-0x1BFFF] is reserved for ROM code. */
+/* The SRAM region [0x0-0xFFFF], [0x1C000-0x1FFFF] is reserved for app-specific use cases. */
+/* The SRAM region [0x20000-0x7FFFF] is reserved for Non-cached shared memory between M33 and DSP. */
 
 define symbol __ram_vector_table_size__        =  isdefinedsymbol(__ram_vector_table__) ? 0x00000130 : 0;
 define symbol __ram_vector_table_offset__      =  isdefinedsymbol(__ram_vector_table__) ? 0x0000012F : 0;

@@ -98,7 +98,7 @@
         <drivers>
           <driver id_refs="QSPI_FLASH_MIMXRT685S">
             <driverBinary path="devices/RT685/mcuxpresso" type="binary" target_path="binary">
-              <files mask="MIMXRT600_SFDP_MXIC_OPI.cfx"/>
+              <files mask="MIMXRT600_FlexSPI_B_MXIC_OPI.cfx"/>
             </driverBinary>
           </driver>
         </drivers>
@@ -112,6 +112,9 @@
     </source>
     <source path="boards/evkmimxrt685_agm01/issdk_examples/sensors/fxos8700/fxos8700_fifo/mdk" target_path="MIMXRT685S/arm" type="linker" toolchain="mdk">
       <files mask="MIMXRT685Sxxxx_cm33_ram.scf"/>
+    </source>
+    <source path="boards/evkmimxrt685_agm01/issdk_examples/sensors/fxos8700/fxos8700_fifo/mdk" target_path="evkmimxrt685" type="configuration" toolchain="mdk">
+      <files mask="evkmimxrt685_flash.ini"/>
     </source>
     <source path="boards/evkmimxrt685_agm01/issdk_examples/sensors/fxos8700/fxos8700_fifo" target_path="board" type="c_include">
       <files mask="board.h"/>

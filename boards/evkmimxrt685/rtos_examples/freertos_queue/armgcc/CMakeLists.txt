@@ -829,22 +829,6 @@ target_link_libraries(freertos_queue.elf optimized gcc)
 
 target_link_libraries(freertos_queue.elf optimized nosys)
 
-link_directories(${ProjDirPath}/../../../../../devices/MIMXRT685S/gcc)
-
-target_link_libraries(freertos_queue.elf debug ${ProjDirPath}/../../../../../devices/MIMXRT685S/gcc/libpower_hardabi.a)
-
-link_directories(${ProjDirPath}/../../../../../devices/MIMXRT685S/gcc)
-
-target_link_libraries(freertos_queue.elf optimized ${ProjDirPath}/../../../../../devices/MIMXRT685S/gcc/libpower_hardabi.a)
-
-link_directories(${ProjDirPath}/../../../../../devices/MIMXRT685S/gcc)
-
-target_link_libraries(freertos_queue.elf optimized ${ProjDirPath}/../../../../../devices/MIMXRT685S/gcc/libpower_hardabi.a)
-
-link_directories(${ProjDirPath}/../../../../../devices/MIMXRT685S/gcc)
-
-target_link_libraries(freertos_queue.elf optimized ${ProjDirPath}/../../../../../devices/MIMXRT685S/gcc/libpower_hardabi.a)
-
 TARGET_LINK_LIBRARIES(freertos_queue.elf -Wl,--end-group)
 
 ADD_CUSTOM_COMMAND(TARGET freertos_queue.elf POST_BUILD COMMAND ${CMAKE_OBJCOPY}

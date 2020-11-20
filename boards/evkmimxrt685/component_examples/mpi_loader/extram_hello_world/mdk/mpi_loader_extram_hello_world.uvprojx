@@ -368,7 +368,7 @@
             <ScatterFile>MIMXRT685Sxxxx_cm33_psram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../../../../../devices/MIMXRT685S/arm/keil_lib_power.lib</Misc>
+            <Misc/>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -1102,7 +1102,7 @@
             <ScatterFile>MIMXRT685Sxxxx_cm33_psram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../../../../../devices/MIMXRT685S/arm/keil_lib_power.lib</Misc>
+            <Misc/>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>

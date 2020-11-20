@@ -888,22 +888,6 @@ target_link_libraries(dsp_audio_demo_bm_cm33.elf optimized gcc)
 
 target_link_libraries(dsp_audio_demo_bm_cm33.elf optimized nosys)
 
-link_directories(${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc)
-
-target_link_libraries(dsp_audio_demo_bm_cm33.elf optimized ${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc/libpower_hardabi.a)
-
-link_directories(${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc)
-
-target_link_libraries(dsp_audio_demo_bm_cm33.elf optimized ${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc/libpower_hardabi.a)
-
-link_directories(${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc)
-
-target_link_libraries(dsp_audio_demo_bm_cm33.elf debug ${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc/libpower_hardabi.a)
-
-link_directories(${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc)
-
-target_link_libraries(dsp_audio_demo_bm_cm33.elf optimized ${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc/libpower_hardabi.a)
-
 TARGET_LINK_LIBRARIES(dsp_audio_demo_bm_cm33.elf -Wl,--end-group)
 
 ADD_CUSTOM_COMMAND(TARGET dsp_audio_demo_bm_cm33.elf POST_BUILD COMMAND ${CMAKE_OBJCOPY}

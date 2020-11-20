@@ -1281,22 +1281,6 @@ target_link_libraries(wifi_iperf.elf optimized gcc)
 
 target_link_libraries(wifi_iperf.elf optimized nosys)
 
-link_directories(${ProjDirPath}/../../../../../devices/MIMXRT685S/gcc)
-
-target_link_libraries(wifi_iperf.elf debug ${ProjDirPath}/../../../../../devices/MIMXRT685S/gcc/libpower_hardabi.a)
-
-link_directories(${ProjDirPath}/../../../../../devices/MIMXRT685S/gcc)
-
-target_link_libraries(wifi_iperf.elf optimized ${ProjDirPath}/../../../../../devices/MIMXRT685S/gcc/libpower_hardabi.a)
-
-link_directories(${ProjDirPath}/../../../../../devices/MIMXRT685S/gcc)
-
-target_link_libraries(wifi_iperf.elf optimized ${ProjDirPath}/../../../../../devices/MIMXRT685S/gcc/libpower_hardabi.a)
-
-link_directories(${ProjDirPath}/../../../../../devices/MIMXRT685S/gcc)
-
-target_link_libraries(wifi_iperf.elf optimized ${ProjDirPath}/../../../../../devices/MIMXRT685S/gcc/libpower_hardabi.a)
-
 TARGET_LINK_LIBRARIES(wifi_iperf.elf -Wl,--end-group)
 
 ADD_CUSTOM_COMMAND(TARGET wifi_iperf.elf POST_BUILD COMMAND ${CMAKE_OBJCOPY}

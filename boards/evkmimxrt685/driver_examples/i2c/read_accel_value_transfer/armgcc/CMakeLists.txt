@@ -781,22 +781,6 @@ target_link_libraries(i2c_read_accel_value_transfer.elf optimized gcc)
 
 target_link_libraries(i2c_read_accel_value_transfer.elf optimized nosys)
 
-link_directories(${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc)
-
-target_link_libraries(i2c_read_accel_value_transfer.elf debug ${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc/libpower_hardabi.a)
-
-link_directories(${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc)
-
-target_link_libraries(i2c_read_accel_value_transfer.elf optimized ${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc/libpower_hardabi.a)
-
-link_directories(${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc)
-
-target_link_libraries(i2c_read_accel_value_transfer.elf optimized ${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc/libpower_hardabi.a)
-
-link_directories(${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc)
-
-target_link_libraries(i2c_read_accel_value_transfer.elf optimized ${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc/libpower_hardabi.a)
-
 TARGET_LINK_LIBRARIES(i2c_read_accel_value_transfer.elf -Wl,--end-group)
 
 ADD_CUSTOM_COMMAND(TARGET i2c_read_accel_value_transfer.elf POST_BUILD COMMAND ${CMAKE_OBJCOPY}

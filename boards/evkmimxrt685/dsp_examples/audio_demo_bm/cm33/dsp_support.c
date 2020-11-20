@@ -67,7 +67,7 @@ void BOARD_DSP_Init(void)
     /* Initialize PMIC PCA9420 */
     BOARD_InitPmic();
     /* Configure PMIC Vddcore value according to main/dsp clock. */
-    BOARD_SetPmicVoltageForFreq(kPartTemp_N20C_P70C, CLOCK_GetMainClkFreq(), 600000000U);
+    BOARD_SetPmicVoltageForFreq(kPartTemp_0C_P85C, kVoltOpFullRange, CLOCK_GetFreq(kCLOCK_CoreSysClk), 594000000U);
 
     /* Enable DSP PLL clock 594MHz. */
     CLOCK_InitSysPfd(kCLOCK_Pfd1, 16);

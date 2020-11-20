@@ -1582,22 +1582,6 @@ target_link_libraries(wiced_nghttp2cli_mbedTLS_freertos.elf optimized gcc)
 
 target_link_libraries(wiced_nghttp2cli_mbedTLS_freertos.elf optimized nosys)
 
-link_directories(${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc)
-
-target_link_libraries(wiced_nghttp2cli_mbedTLS_freertos.elf debug ${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc/libpower_hardabi.a)
-
-link_directories(${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc)
-
-target_link_libraries(wiced_nghttp2cli_mbedTLS_freertos.elf optimized ${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc/libpower_hardabi.a)
-
-link_directories(${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc)
-
-target_link_libraries(wiced_nghttp2cli_mbedTLS_freertos.elf optimized ${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc/libpower_hardabi.a)
-
-link_directories(${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc)
-
-target_link_libraries(wiced_nghttp2cli_mbedTLS_freertos.elf optimized ${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc/libpower_hardabi.a)
-
 TARGET_LINK_LIBRARIES(wiced_nghttp2cli_mbedTLS_freertos.elf -Wl,--end-group)
 
 ADD_CUSTOM_COMMAND(TARGET wiced_nghttp2cli_mbedTLS_freertos.elf POST_BUILD COMMAND ${CMAKE_OBJCOPY}

@@ -368,7 +368,7 @@
             <ScatterFile>MIMXRT685Sxxxx_cm33_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../../../../../devices/MIMXRT685S/arm/keil_lib_power.lib --remove --keep=*(.flash_conf) --predefine="-D__stack_size__=0x1000"</Misc>
+            <Misc>--remove --keep=*(.flash_conf) --predefine="-D__stack_size__=0x1000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
@@ -1472,7 +1472,7 @@
             <ScatterFile>MIMXRT685Sxxxx_cm33_flash.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../../../../../devices/MIMXRT685S/arm/keil_lib_power.lib --remove --keep=*(CodeQuickAccess) --keep=*(.flash_conf) --predefine="-D__stack_size__=0x1000"</Misc>
+            <Misc>--remove --keep=*(CodeQuickAccess) --keep=*(.flash_conf) --predefine="-D__stack_size__=0x1000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
@@ -2576,7 +2576,7 @@
             <ScatterFile>MIMXRT685Sxxxx_cm33_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../../../../../devices/MIMXRT685S/arm/keil_lib_power.lib --remove --keep=*(.flash_conf) --predefine="-D__stack_size__=0x1000"</Misc>
+            <Misc>--remove --keep=*(.flash_conf) --predefine="-D__stack_size__=0x1000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
@@ -3680,7 +3680,7 @@
             <ScatterFile>MIMXRT685Sxxxx_cm33_flash.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../../../../../devices/MIMXRT685S/arm/keil_lib_power.lib --remove --keep=*(CodeQuickAccess) --keep=*(.flash_conf) --predefine="-D__stack_size__=0x1000"</Misc>
+            <Misc>--remove --keep=*(CodeQuickAccess) --keep=*(.flash_conf) --predefine="-D__stack_size__=0x1000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>

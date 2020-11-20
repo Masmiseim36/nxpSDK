@@ -819,7 +819,6 @@
         </option>
         <option>
           <name>IlinkAdditionalLibs</name>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/iar/iar_lib_power.a</state>
         </option>
         <option>
           <name>IlinkOverrideProgramEntryLabel</name>
@@ -1854,7 +1853,6 @@
         </option>
         <option>
           <name>IlinkAdditionalLibs</name>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/iar/iar_lib_power.a</state>
         </option>
         <option>
           <name>IlinkOverrideProgramEntryLabel</name>
@@ -2888,7 +2886,6 @@
         </option>
         <option>
           <name>IlinkAdditionalLibs</name>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/iar/iar_lib_power.a</state>
         </option>
         <option>
           <name>IlinkOverrideProgramEntryLabel</name>
@@ -3922,7 +3919,6 @@
         </option>
         <option>
           <name>IlinkAdditionalLibs</name>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/iar/iar_lib_power.a</state>
         </option>
         <option>
           <name>IlinkOverrideProgramEntryLabel</name>

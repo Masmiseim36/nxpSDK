@@ -786,22 +786,6 @@ target_link_libraries(cmsis_i2c_int_b2b_transfer_master.elf optimized gcc)
 
 target_link_libraries(cmsis_i2c_int_b2b_transfer_master.elf optimized nosys)
 
-link_directories(${ProjDirPath}/../../../../../../../devices/MIMXRT685S/gcc)
-
-target_link_libraries(cmsis_i2c_int_b2b_transfer_master.elf debug ${ProjDirPath}/../../../../../../../devices/MIMXRT685S/gcc/libpower_hardabi.a)
-
-link_directories(${ProjDirPath}/../../../../../../../devices/MIMXRT685S/gcc)
-
-target_link_libraries(cmsis_i2c_int_b2b_transfer_master.elf optimized ${ProjDirPath}/../../../../../../../devices/MIMXRT685S/gcc/libpower_hardabi.a)
-
-link_directories(${ProjDirPath}/../../../../../../../devices/MIMXRT685S/gcc)
-
-target_link_libraries(cmsis_i2c_int_b2b_transfer_master.elf optimized ${ProjDirPath}/../../../../../../../devices/MIMXRT685S/gcc/libpower_hardabi.a)
-
-link_directories(${ProjDirPath}/../../../../../../../devices/MIMXRT685S/gcc)
-
-target_link_libraries(cmsis_i2c_int_b2b_transfer_master.elf optimized ${ProjDirPath}/../../../../../../../devices/MIMXRT685S/gcc/libpower_hardabi.a)
-
 TARGET_LINK_LIBRARIES(cmsis_i2c_int_b2b_transfer_master.elf -Wl,--end-group)
 
 ADD_CUSTOM_COMMAND(TARGET cmsis_i2c_int_b2b_transfer_master.elf POST_BUILD COMMAND ${CMAKE_OBJCOPY}

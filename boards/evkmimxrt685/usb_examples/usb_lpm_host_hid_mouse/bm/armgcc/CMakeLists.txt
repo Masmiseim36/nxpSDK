@@ -931,22 +931,6 @@ target_link_libraries(host_lpm_hid_mouse_bm.elf optimized gcc)
 
 target_link_libraries(host_lpm_hid_mouse_bm.elf optimized nosys)
 
-link_directories(${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc)
-
-target_link_libraries(host_lpm_hid_mouse_bm.elf optimized ${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc/libpower_hardabi.a)
-
-link_directories(${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc)
-
-target_link_libraries(host_lpm_hid_mouse_bm.elf optimized ${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc/libpower_hardabi.a)
-
-link_directories(${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc)
-
-target_link_libraries(host_lpm_hid_mouse_bm.elf debug ${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc/libpower_hardabi.a)
-
-link_directories(${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc)
-
-target_link_libraries(host_lpm_hid_mouse_bm.elf optimized ${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc/libpower_hardabi.a)
-
 TARGET_LINK_LIBRARIES(host_lpm_hid_mouse_bm.elf -Wl,--end-group)
 
 ADD_CUSTOM_COMMAND(TARGET host_lpm_hid_mouse_bm.elf POST_BUILD COMMAND ${CMAKE_OBJCOPY}

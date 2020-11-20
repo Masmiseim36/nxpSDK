@@ -863,22 +863,6 @@ target_link_libraries(i2s_dma_transfer_tfa9xxx.elf optimized gcc)
 
 target_link_libraries(i2s_dma_transfer_tfa9xxx.elf optimized nosys)
 
-link_directories(${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc)
-
-target_link_libraries(i2s_dma_transfer_tfa9xxx.elf debug ${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc/libpower_hardabi.a)
-
-link_directories(${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc)
-
-target_link_libraries(i2s_dma_transfer_tfa9xxx.elf optimized ${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc/libpower_hardabi.a)
-
-link_directories(${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc)
-
-target_link_libraries(i2s_dma_transfer_tfa9xxx.elf optimized ${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc/libpower_hardabi.a)
-
-link_directories(${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc)
-
-target_link_libraries(i2s_dma_transfer_tfa9xxx.elf optimized ${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc/libpower_hardabi.a)
-
 TARGET_LINK_LIBRARIES(i2s_dma_transfer_tfa9xxx.elf -Wl,--end-group)
 
 ADD_CUSTOM_COMMAND(TARGET i2s_dma_transfer_tfa9xxx.elf POST_BUILD COMMAND ${CMAKE_OBJCOPY}

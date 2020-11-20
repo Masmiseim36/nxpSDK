@@ -1086,22 +1086,6 @@ target_link_libraries(littlevgl_demo_widgets.elf optimized gcc)
 
 target_link_libraries(littlevgl_demo_widgets.elf optimized nosys)
 
-link_directories(${ProjDirPath}/../../../../../devices/MIMXRT685S/gcc)
-
-target_link_libraries(littlevgl_demo_widgets.elf debug ${ProjDirPath}/../../../../../devices/MIMXRT685S/gcc/libpower_hardabi.a)
-
-link_directories(${ProjDirPath}/../../../../../devices/MIMXRT685S/gcc)
-
-target_link_libraries(littlevgl_demo_widgets.elf optimized ${ProjDirPath}/../../../../../devices/MIMXRT685S/gcc/libpower_hardabi.a)
-
-link_directories(${ProjDirPath}/../../../../../devices/MIMXRT685S/gcc)
-
-target_link_libraries(littlevgl_demo_widgets.elf optimized ${ProjDirPath}/../../../../../devices/MIMXRT685S/gcc/libpower_hardabi.a)
-
-link_directories(${ProjDirPath}/../../../../../devices/MIMXRT685S/gcc)
-
-target_link_libraries(littlevgl_demo_widgets.elf optimized ${ProjDirPath}/../../../../../devices/MIMXRT685S/gcc/libpower_hardabi.a)
-
 TARGET_LINK_LIBRARIES(littlevgl_demo_widgets.elf -Wl,--end-group)
 
 ADD_CUSTOM_COMMAND(TARGET littlevgl_demo_widgets.elf POST_BUILD COMMAND ${CMAKE_OBJCOPY}

@@ -969,14 +969,6 @@ target_link_libraries(wifi_webconfig.elf optimized gcc)
 
 target_link_libraries(wifi_webconfig.elf optimized nosys)
 
-link_directories(${ProjDirPath}/../../../../../devices/MIMXRT685S/gcc)
-
-target_link_libraries(wifi_webconfig.elf optimized ${ProjDirPath}/../../../../../devices/MIMXRT685S/gcc/libpower_hardabi.a)
-
-link_directories(${ProjDirPath}/../../../../../devices/MIMXRT685S/gcc)
-
-target_link_libraries(wifi_webconfig.elf optimized ${ProjDirPath}/../../../../../devices/MIMXRT685S/gcc/libpower_hardabi.a)
-
 TARGET_LINK_LIBRARIES(wifi_webconfig.elf -Wl,--end-group)
 
 ADD_CUSTOM_COMMAND(TARGET wifi_webconfig.elf POST_BUILD COMMAND ${CMAKE_OBJCOPY}

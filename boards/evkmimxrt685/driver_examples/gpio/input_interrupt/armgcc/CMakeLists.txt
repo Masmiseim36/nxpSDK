@@ -771,22 +771,6 @@ target_link_libraries(gpio_input_interrupt.elf optimized gcc)
 
 target_link_libraries(gpio_input_interrupt.elf optimized nosys)
 
-link_directories(${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc)
-
-target_link_libraries(gpio_input_interrupt.elf debug ${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc/libpower_hardabi.a)
-
-link_directories(${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc)
-
-target_link_libraries(gpio_input_interrupt.elf optimized ${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc/libpower_hardabi.a)
-
-link_directories(${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc)
-
-target_link_libraries(gpio_input_interrupt.elf optimized ${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc/libpower_hardabi.a)
-
-link_directories(${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc)
-
-target_link_libraries(gpio_input_interrupt.elf optimized ${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc/libpower_hardabi.a)
-
 TARGET_LINK_LIBRARIES(gpio_input_interrupt.elf -Wl,--end-group)
 
 ADD_CUSTOM_COMMAND(TARGET gpio_input_interrupt.elf POST_BUILD COMMAND ${CMAKE_OBJCOPY}

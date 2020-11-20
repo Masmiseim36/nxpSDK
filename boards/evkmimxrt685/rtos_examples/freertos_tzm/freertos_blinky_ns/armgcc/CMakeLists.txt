@@ -499,17 +499,9 @@ link_directories(${ProjDirPath}/../../freertos_blinky_s/armgcc/debug)
 
 target_link_libraries(freertos_blinky_ns.elf debug ${ProjDirPath}/../../freertos_blinky_s/armgcc/debug/freertos_blinky_s_CMSE_lib.o)
 
-link_directories(${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc)
-
-target_link_libraries(freertos_blinky_ns.elf debug ${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc/libpower_hardabi.a)
-
 link_directories(${ProjDirPath}/../../freertos_blinky_s/armgcc/release)
 
 target_link_libraries(freertos_blinky_ns.elf optimized ${ProjDirPath}/../../freertos_blinky_s/armgcc/release/freertos_blinky_s_CMSE_lib.o)
-
-link_directories(${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc)
-
-target_link_libraries(freertos_blinky_ns.elf optimized ${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc/libpower_hardabi.a)
 
 TARGET_LINK_LIBRARIES(freertos_blinky_ns.elf -Wl,--end-group)
 

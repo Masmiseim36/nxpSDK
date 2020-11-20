@@ -773,22 +773,6 @@ target_link_libraries(sctimer_multi_state_pwm.elf optimized gcc)
 
 target_link_libraries(sctimer_multi_state_pwm.elf optimized nosys)
 
-link_directories(${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc)
-
-target_link_libraries(sctimer_multi_state_pwm.elf debug ${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc/libpower_hardabi.a)
-
-link_directories(${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc)
-
-target_link_libraries(sctimer_multi_state_pwm.elf optimized ${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc/libpower_hardabi.a)
-
-link_directories(${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc)
-
-target_link_libraries(sctimer_multi_state_pwm.elf optimized ${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc/libpower_hardabi.a)
-
-link_directories(${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc)
-
-target_link_libraries(sctimer_multi_state_pwm.elf optimized ${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc/libpower_hardabi.a)
-
 TARGET_LINK_LIBRARIES(sctimer_multi_state_pwm.elf -Wl,--end-group)
 
 ADD_CUSTOM_COMMAND(TARGET sctimer_multi_state_pwm.elf POST_BUILD COMMAND ${CMAKE_OBJCOPY}

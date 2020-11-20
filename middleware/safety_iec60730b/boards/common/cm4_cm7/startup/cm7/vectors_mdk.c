@@ -275,8 +275,8 @@ vector_entry __vector_table[] __attribute__((section("section_ivt"), used)) =
     VECTOR_255 
 };
 
-#if (!defined(_IMXRT_) && !defined(_MIMX8MN6_CM7_H_))
-const unsigned long __memcfg_table[] __attribute__((section(".ARM.__at_0x10000400"),used)) = 
+#if (!defined(_IMX_))
+const unsigned long __memcfg_table[] __attribute__((section(".FlashConfig"),used)) = 
 {    
    CONFIG_1,
    CONFIG_2,

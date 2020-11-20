@@ -8,6 +8,8 @@
 
 #ifndef _USB_MSC_UFI_H
 #define _USB_MSC_UFI_H 1
+
+struct _usb_device_msc_struct;
 /*!
  * @addtogroup msc_ufi
  * @{
@@ -49,6 +51,11 @@ end-of-partition and data may remain in the buffer that has not been written to 
 #define USB_DEVICE_MSC_UFI_VOLUME_OVERFLOW 0x0DU
 /*! @brief Indicates that the source data did not match the data read from the medium*/
 #define USB_DEVICE_MSC_UFI_MISCOMPARE 0x0EU
+/*! @brief additional sense code*/
+/*! @brief additional sense code medium not present*/
+#define USB_DEVICE_MSC_UFI_ASC_MEDIUM_NOT_PRESENT 0x3AU
+/*! @brief additional sense code not ready to ready transition- media change*/
+#define USB_DEVICE_MSC_UFI_ASC_MEDIUM_CHANGE 0x28U
 
 /*! @brief Invalid command operation code*/
 #define USB_DEVICE_MSC_UFI_INVALID_COMMAND_OPCODE 0x20U
@@ -158,6 +165,13 @@ typedef struct _usb_device_read_write_10_command_struct
     uint8_t transferLengthLsb; /*!< Transfer Length (LSB)*/
     uint8_t reserved1[3];      /*!< Reserved*/
 } usb_device_read_write_10_command_struct_t;
+/*! @brief  UFI Test Unit Ready structure*/
+typedef struct _usb_device_test_unit_ready
+{
+    uint8_t operationCode;     /*!< Operation Code*/
+    uint8_t logicalUnitNumber; /*!< Logical Unit Number*/
+    uint8_t reserved1[10];     /*!< Reserved*/
+} usb_device_test_unit_ready_struct_t;
 
 /*! @brief  UFI inquiry data format structure*/
 typedef struct _usb_device_inquiry_data_fromat_struct
@@ -241,6 +255,25 @@ typedef struct _usb_device_format_capacity_response_data_struct
     uint8_t formattableCapacityDesccriptor[sizeof(usb_device_formattable_capacity_descriptor_struct_t) *
                                            3]; /*!<Formatting Capacity Descriptor*/
 } usb_device_format_capacity_response_data_struct_t;
+
+extern usb_status_t USB_DeviceMscUfiThirteenCasesCheck(struct _usb_device_msc_struct *mscHandle);
+
+extern usb_status_t USB_DeviceMscUfiRequestSenseCommand(struct _usb_device_msc_struct *mscHandle);
+extern usb_status_t USB_DeviceMscUfiInquiryCommand(struct _usb_device_msc_struct *mscHandle);
+extern usb_status_t USB_DeviceMscUfiReadCommand(struct _usb_device_msc_struct *mscHandle);
+extern usb_status_t USB_DeviceMscUfiWriteCommand(struct _usb_device_msc_struct *mscHandle);
+extern usb_status_t USB_DeviceMscUfiTestUnitReadyCommand(struct _usb_device_msc_struct *mscHandle);
+extern usb_status_t USB_DeviceMscUfiVerifyCommand(struct _usb_device_msc_struct *mscHandle);
+extern usb_status_t USB_DeviceMscUfiModeSenseCommand(struct _usb_device_msc_struct *mscHandle);
+extern usb_status_t USB_DeviceMscUfiModeSelectCommand(struct _usb_device_msc_struct *mscHandle);
+extern usb_status_t USB_DeviceMscUfiReadCapacityCommand(struct _usb_device_msc_struct *mscHandle);
+extern usb_status_t USB_DeviceMscUfiReadFormatCapacityCommand(struct _usb_device_msc_struct *mscHandle);
+extern usb_status_t USB_DeviceMscUfiFormatUnitCommand(struct _usb_device_msc_struct *mscHandle);
+extern usb_status_t USB_DeviceMscUfiPreventAllowMediumCommand(struct _usb_device_msc_struct *mscHandle);
+extern usb_status_t USB_DeviceMscUfiSendDiagnosticCommand(struct _usb_device_msc_struct *mscHandle);
+extern usb_status_t USB_DeviceMscUfiStartStopUnitCommand(struct _usb_device_msc_struct *mscHandle);
+extern usb_status_t USB_DeviceMscUfiUnsupportCommand(struct _usb_device_msc_struct *mscHandle);
+
 /*! @}*/
 
 #endif

@@ -187,6 +187,9 @@
           <state>CPU_MIMXRT1011DAE5A</state>
           <state>USB_STACK_BM</state>
           <state>PRINTF_ADVANCED_ENABLE=1</state>
+          <state>FSL_OSA_BM_TASK_ENABLE=0</state>
+          <state>FSL_OSA_BM_TIMER_CONFIG=0</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -321,32 +324,22 @@
           <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../devices</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/host</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/host</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host/class</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/host/class</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source/fsl_usb_disk</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/utilities</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1186,6 +1179,9 @@
           <state>CPU_MIMXRT1011DAE5A</state>
           <state>USB_STACK_BM</state>
           <state>PRINTF_ADVANCED_ENABLE=1</state>
+          <state>FSL_OSA_BM_TASK_ENABLE=0</state>
+          <state>FSL_OSA_BM_TIMER_CONFIG=0</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1320,32 +1316,22 @@
           <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../devices</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/host</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/host</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host/class</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/host/class</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source/fsl_usb_disk</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/utilities</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -2025,12 +2011,6 @@
     <file>
       <name>$PROJ_DIR$/../usb_host_config.h</name>
     </file>
-    <file>
-      <name>$PROJ_DIR$/../fsl_usb_disk.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../fsl_usb_disk_bm.c</name>
-    </file>
   </group>
   <group>
     <name>board</name>
@@ -2063,6 +2043,30 @@
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/usb/host/usb_host_ehci.h</name>
       </file>
+      <group>
+        <name>class</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/usb/host/class/usb_host_msd.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/usb/host/class/usb_host_msd.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/usb/host/class/usb_host_msd_ufi.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/usb/host/class/usb_host_hub.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/usb/host/class/usb_host_hub.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/usb/host/class/usb_host_hub_app.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/usb/host/class/usb_host_hub_app.h</name>
+        </file>
+      </group>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/usb/host/usb_host.h</name>
       </file>
@@ -2084,30 +2088,27 @@
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/usb/host/usb_host_hci.h</name>
       </file>
-      <group>
-        <name>class</name>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/usb/host/class/usb_host_hub.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/usb/host/class/usb_host_hub.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/usb/host/class/usb_host_hub_app.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/usb/host/class/usb_host_hub_app.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/usb/host/class/usb_host_msd.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/usb/host/class/usb_host_msd.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/usb/host/class/usb_host_msd_ufi.c</name>
-        </file>
-      </group>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/usb/host/usb_host.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/usb/host/usb_host_devices.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/usb/host/usb_host_framework.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/usb/host/usb_host_hci.h</name>
+      </file>
+    </group>
+    <group>
+      <name>phy</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/usb/phy/usb_phy.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/usb/phy/usb_phy.h</name>
+      </file>
     </group>
     <group>
       <name>include</name>
@@ -2121,27 +2122,6 @@
         <name>$PROJ_DIR$/../../../../../../middleware/usb/include/usb_spec.h</name>
       </file>
     </group>
-    <group>
-      <name>phy</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/usb/phy/usb_phy.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/usb/phy/usb_phy.h</name>
-      </file>
-    </group>
-  </group>
-  <group>
-    <name>osa</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../middleware/usb/osa/usb_osa.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../middleware/usb/osa/usb_osa_bm.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../middleware/usb/osa/usb_osa_bm.h</name>
-    </file>
   </group>
   <group>
     <name>drivers</name>
@@ -2182,7 +2162,7 @@
   <group>
     <name>fatfs</name>
     <group>
-      <name>fatfs_source</name>
+      <name>source</name>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/fatfs/source/diskio.c</name>
       </file>
@@ -2201,6 +2181,15 @@
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/fatfs/source/ffunicode.c</name>
       </file>
+      <group>
+        <name>fsl_usb_disk</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/fatfs/source/fsl_usb_disk/fsl_usb_disk.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/fatfs/source/fsl_usb_disk/fsl_usb_disk_bm.c</name>
+        </file>
+      </group>
     </group>
   </group>
   <group>
@@ -2301,11 +2290,29 @@
         <name>$PROJ_DIR$/../../../../../../components/lists/generic_list.h</name>
       </file>
     </group>
+    <group>
+      <name>osa</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_bm.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_bm.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_config.h</name>
+      </file>
+    </group>
   </group>
   <group>
     <name>CMSIS</name>
     <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_cm7.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/mpu_armv7.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_armcc.h</name>
@@ -2327,21 +2334,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_version.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_armv81mml.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_armv8mbl.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_armv8mml.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/mpu_armv7.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/mpu_armv8.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/arm_common_tables.h</name>

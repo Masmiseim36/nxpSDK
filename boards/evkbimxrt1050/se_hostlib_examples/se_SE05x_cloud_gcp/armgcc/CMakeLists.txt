@@ -108,6 +108,8 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -DLPC_EN
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -DGCP_IOT")
 
+SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -DSSS_HAVE_GCP")
+
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -DPRINTF_ADVANCED_ENABLE=1")
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -DSERIAL_PORT_TYPE_UART=1")
@@ -116,7 +118,7 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -DFSL_RT
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -DT1oI2C")
 
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -DT1oI2C_UM1225_SE050")
+SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -DT1oI2C_UM11225")
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -DSSS_USE_FTR_FILE")
 
@@ -134,6 +136,8 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -g")
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -O0")
 
+SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -fomit-frame-pointer")
+
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -mcpu=cortex-m7")
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -Wall")
@@ -147,8 +151,6 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -mthumb"
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -MMD")
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -MP")
-
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -fomit-frame-pointer")
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -fno-common")
 
@@ -188,6 +190,8 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -DLP
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -DGCP_IOT")
 
+SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -DSSS_HAVE_GCP")
+
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -DPRINTF_ADVANCED_ENABLE=1")
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -DSERIAL_PORT_TYPE_UART=1")
@@ -196,7 +200,7 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -DFS
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -DT1oI2C")
 
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -DT1oI2C_UM1225_SE050")
+SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -DT1oI2C_UM11225")
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -DSSS_USE_FTR_FILE")
 
@@ -212,6 +216,8 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -DSC
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -Os")
 
+SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -fomit-frame-pointer")
+
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -mcpu=cortex-m7")
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -Wall")
@@ -225,8 +231,6 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -mth
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -MMD")
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -MP")
-
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -fomit-frame-pointer")
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -fno-common")
 
@@ -248,7 +252,7 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG} -DSE
 
 SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG} -DT1oI2C")
 
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG} -DT1oI2C_UM1225_SE050")
+SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG} -DT1oI2C_UM11225")
 
 SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG} -g")
 
@@ -290,7 +294,7 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE} 
 
 SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE} -DT1oI2C")
 
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE} -DT1oI2C_UM1225_SE050")
+SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE} -DT1oI2C_UM11225")
 
 SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE} -Os")
 
@@ -466,7 +470,7 @@ include_directories(${ProjDirPath}/../../..)
 
 include_directories(${ProjDirPath}/../../../../../middleware/se_hostlib/demos/ksdk/common/freertos/boards/evkbimxrt1050)
 
-include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/portable/GCC/ARM_CM4F)
+include_directories(${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F)
 
 include_directories(${ProjDirPath}/..)
 
@@ -486,39 +490,43 @@ include_directories(${ProjDirPath}/../../../../../CMSIS/Include)
 
 include_directories(${ProjDirPath}/../../../../../devices)
 
-include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include)
-
-include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/abstractions/secure_sockets/include)
-
 include_directories(${ProjDirPath}/../../../../../middleware/mbedtls/include)
 
 include_directories(${ProjDirPath}/../../../../../middleware/mbedtls/port/ksdk)
 
-include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/abstractions/platform/freertos/include)
+include_directories(${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/include)
 
-include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/abstractions/platform/include)
+include_directories(${ProjDirPath}/../../../../../rtos/freertos/libraries/abstractions/secure_sockets/include)
 
-include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/freertos_plus/standard/tls/include)
+include_directories(${ProjDirPath}/../../../../../rtos/freertos/libraries/abstractions/platform/freertos/include)
 
-include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/freertos_plus/standard/pkcs11/include)
+include_directories(${ProjDirPath}/../../../../../rtos/freertos/libraries/abstractions/platform/include)
 
-include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/freertos_plus/standard/crypto/include)
+include_directories(${ProjDirPath}/../../../../../rtos/freertos/libraries/freertos_plus/standard/tls/include)
 
-include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/freertos_plus/standard/utils/include)
+include_directories(${ProjDirPath}/../../../../../rtos/freertos/libraries/freertos_plus/standard/pkcs11/include)
 
-include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/demos/network_manager)
+include_directories(${ProjDirPath}/../../../../../rtos/freertos/libraries/freertos_plus/standard/crypto/include)
 
-include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/include)
+include_directories(${ProjDirPath}/../../../../../rtos/freertos/libraries/freertos_plus/standard/utils/include)
 
-include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/src)
+include_directories(${ProjDirPath}/../../../../../rtos/freertos/demos/network_manager)
 
-include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include)
+include_directories(${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/include)
 
-include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include/private)
+include_directories(${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/src)
 
-include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/3rdparty/pkcs11)
+include_directories(${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/common/include)
 
-include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/3rdparty/jsmn)
+include_directories(${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/private)
+
+include_directories(${ProjDirPath}/../../../../../rtos/freertos/libraries/3rdparty/pkcs11)
+
+include_directories(${ProjDirPath}/../../../../../rtos/freertos/libraries/3rdparty/jsmn)
+
+include_directories(${ProjDirPath}/../../../../../components/phy/mdio/enet)
+
+include_directories(${ProjDirPath}/../../../../../components/phy/device/phyksz8081)
 
 include_directories(${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers)
 
@@ -527,6 +535,10 @@ include_directories(${ProjDirPath}/../../../../../middleware/lwip/src/include)
 include_directories(${ProjDirPath}/../../../../../middleware/lwip/port)
 
 include_directories(${ProjDirPath}/../../../../../middleware/lwip/src)
+
+include_directories(${ProjDirPath}/../../../../../devices/MIMXRT1052/utilities/str)
+
+include_directories(${ProjDirPath}/../../../../../devices/MIMXRT1052/utilities/debug_console)
 
 include_directories(${ProjDirPath}/../../../../../middleware/se_hostlib/sss/inc)
 
@@ -546,21 +558,15 @@ include_directories(${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/
 
 include_directories(${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/mbedtls/inc)
 
-include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/include/private)
+include_directories(${ProjDirPath}/../../../../../rtos/freertos/lib/include/private)
 
-include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/lib/pkcs11/portable/nxp/se_hostlib)
+include_directories(${ProjDirPath}/../../../../../rtos/freertos/lib/pkcs11/portable/nxp/se_hostlib)
 
-include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/vendors/nxp/mflash/se_hostlib)
-
-include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/abstractions/pkcs11/mbedtls)
+include_directories(${ProjDirPath}/../../../../../rtos/freertos/libraries/abstractions/pkcs11/mbedtls)
 
 include_directories(${ProjDirPath}/../../../../../middleware/se_hostlib/demos/ksdk/common/freertos/boards/evkbimxrt1050)
 
 include_directories(${ProjDirPath}/../../../../../devices/MIMXRT1052)
-
-include_directories(${ProjDirPath}/../../../../../devices/MIMXRT1052/utilities/str)
-
-include_directories(${ProjDirPath}/../../../../../devices/MIMXRT1052/utilities/debug_console)
 
 include_directories(${ProjDirPath}/../../../../../components/uart)
 
@@ -571,6 +577,8 @@ include_directories(${ProjDirPath}/../../../../../components/lists)
 include_directories(${ProjDirPath}/../../../../../devices/MIMXRT1052/xip)
 
 include_directories(${ProjDirPath}/../../../xip)
+
+include_directories(${ProjDirPath}/../../../../../components/phy)
 
 include_directories(${ProjDirPath}/../../../../../middleware/se_hostlib)
 
@@ -589,8 +597,6 @@ include_directories(${ProjDirPath}/../../../../../middleware/se_hostlib/demos/ks
 include_directories(${ProjDirPath}/../../../../../devices/MIMXRT1052/utilities)
 
 add_executable(se_SE05x_cloud_gcp.elf 
-"${ProjDirPath}/../../../../../middleware/se_hostlib/demos/ksdk/common/boards/evkbimxrt1050/se_hostlib_examples/cloud_demo/fsl_phy.c"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/demos/ksdk/common/boards/evkbimxrt1050/se_hostlib_examples/cloud_demo/fsl_phy.h"
 "${ProjDirPath}/../fsl_sss_ftr.h"
 "${ProjDirPath}/../gcpJWTDemo.c"
 "${ProjDirPath}/../gcpJWTDemo.h"
@@ -606,6 +612,12 @@ add_executable(se_SE05x_cloud_gcp.elf
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../clock_config.c"
 "${ProjDirPath}/../clock_config.h"
+"${ProjDirPath}/../dcd.c"
+"${ProjDirPath}/../dcd.h"
+"${ProjDirPath}/../../../../../components/phy/mdio/enet/fsl_enet_mdio.c"
+"${ProjDirPath}/../../../../../components/phy/mdio/enet/fsl_enet_mdio.h"
+"${ProjDirPath}/../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.c"
+"${ProjDirPath}/../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.h"
 "${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_trng.c"
 "${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_trng.h"
 "${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_lpi2c_freertos.c"
@@ -640,6 +652,7 @@ add_executable(se_SE05x_cloud_gcp.elf
 "${ProjDirPath}/../../../../../middleware/lwip/src/core/inet_chksum.c"
 "${ProjDirPath}/../../../../../middleware/lwip/src/core/init.c"
 "${ProjDirPath}/../../../../../middleware/lwip/src/core/ip.c"
+"${ProjDirPath}/../../../../../middleware/lwip/src/core/ipv4/acd.c"
 "${ProjDirPath}/../../../../../middleware/lwip/src/core/ipv4/autoip.c"
 "${ProjDirPath}/../../../../../middleware/lwip/src/core/ipv4/dhcp.c"
 "${ProjDirPath}/../../../../../middleware/lwip/src/core/ipv4/etharp.c"
@@ -674,6 +687,7 @@ add_executable(se_SE05x_cloud_gcp.elf
 "${ProjDirPath}/../../../../../middleware/lwip/src/include/compat/posix/netdb.h"
 "${ProjDirPath}/../../../../../middleware/lwip/src/include/compat/posix/sys/socket.h"
 "${ProjDirPath}/../../../../../middleware/lwip/src/include/compat/stdc/errno.h"
+"${ProjDirPath}/../../../../../middleware/lwip/src/include/lwip/acd.h"
 "${ProjDirPath}/../../../../../middleware/lwip/src/include/lwip/altcp.h"
 "${ProjDirPath}/../../../../../middleware/lwip/src/include/lwip/altcp_tcp.h"
 "${ProjDirPath}/../../../../../middleware/lwip/src/include/lwip/altcp_tls.h"
@@ -725,6 +739,7 @@ add_executable(se_SE05x_cloud_gcp.elf
 "${ProjDirPath}/../../../../../middleware/lwip/src/include/lwip/priv/sockets_priv.h"
 "${ProjDirPath}/../../../../../middleware/lwip/src/include/lwip/priv/tcp_priv.h"
 "${ProjDirPath}/../../../../../middleware/lwip/src/include/lwip/priv/tcpip_priv.h"
+"${ProjDirPath}/../../../../../middleware/lwip/src/include/lwip/prot/acd.h"
 "${ProjDirPath}/../../../../../middleware/lwip/src/include/lwip/prot/autoip.h"
 "${ProjDirPath}/../../../../../middleware/lwip/src/include/lwip/prot/dhcp.h"
 "${ProjDirPath}/../../../../../middleware/lwip/src/include/lwip/prot/dhcp6.h"
@@ -827,274 +842,19 @@ add_executable(se_SE05x_cloud_gcp.elf
 "${ProjDirPath}/../../../../../middleware/lwip/src/netif/ppp/vj.c"
 "${ProjDirPath}/../../../../../middleware/lwip/src/netif/slipif.c"
 "${ProjDirPath}/../../../../../middleware/lwip/src/netif/zepif.c"
-"${ProjDirPath}/../../../../../middleware/lwip/port/enet_ethernetif_kinetis.c"
-"${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_common.c"
-"${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_common.h"
-"${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_clock.c"
-"${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_clock.h"
-"${ProjDirPath}/../../../../../devices/MIMXRT1052/MIMXRT1052.h"
-"${ProjDirPath}/../../../../../devices/MIMXRT1052/MIMXRT1052_features.h"
-"${ProjDirPath}/../../../../../devices/MIMXRT1052/fsl_device_registers.h"
 "${ProjDirPath}/../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_debug_console.c"
 "${ProjDirPath}/../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_debug_console.h"
 "${ProjDirPath}/../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_debug_console_conf.h"
 "${ProjDirPath}/../../../../../devices/MIMXRT1052/utilities/str/fsl_str.c"
 "${ProjDirPath}/../../../../../devices/MIMXRT1052/utilities/str/fsl_str.h"
-"${ProjDirPath}/../../../../../components/uart/lpuart_adapter.c"
-"${ProjDirPath}/../../../../../components/uart/uart.h"
-"${ProjDirPath}/../../../../../components/serial_manager/serial_manager.c"
-"${ProjDirPath}/../../../../../components/serial_manager/serial_manager.h"
-"${ProjDirPath}/../../../../../components/serial_manager/serial_port_internal.h"
-"${ProjDirPath}/../../../../../components/lists/generic_list.c"
-"${ProjDirPath}/../../../../../components/lists/generic_list.h"
-"${ProjDirPath}/../../../../../components/serial_manager/serial_port_uart.c"
-"${ProjDirPath}/../../../../../components/serial_manager/serial_port_uart.h"
-"${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_lpuart.c"
-"${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_lpuart.h"
-"${ProjDirPath}/../../../../../devices/MIMXRT1052/gcc/startup_MIMXRT1052.S"
-"${ProjDirPath}/../../../../../devices/MIMXRT1052/system_MIMXRT1052.c"
-"${ProjDirPath}/../../../../../devices/MIMXRT1052/system_MIMXRT1052.h"
-"${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_iomuxc.h"
-"${ProjDirPath}/../../../../../devices/MIMXRT1052/utilities/fsl_assert.c"
-"${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_gpio.c"
-"${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_gpio.h"
-"${ProjDirPath}/../../../../../devices/MIMXRT1052/xip/fsl_flexspi_nor_boot.c"
-"${ProjDirPath}/../../../../../devices/MIMXRT1052/xip/fsl_flexspi_nor_boot.h"
-"${ProjDirPath}/../../../xip/evkbimxrt1050_flexspi_nor_config.c"
-"${ProjDirPath}/../../../xip/evkbimxrt1050_flexspi_nor_config.h"
-"${ProjDirPath}/../../../xip/evkbimxrt1050_sdram_ini_dcd.c"
-"${ProjDirPath}/../../../xip/evkbimxrt1050_sdram_ini_dcd.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/core_cm7.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_armcc.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_armclang.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_armclang_ltm.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_compiler.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_gcc.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_iccarm.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_version.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/core_armv81mml.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/core_armv8mbl.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/core_armv8mml.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/mpu_armv7.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/mpu_armv8.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/arm_common_tables.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/arm_const_structs.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/arm_math.h"
-"${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_lpi2c.c"
-"${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_lpi2c.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/event_groups.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include/FreeRTOS.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include/atomic.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include/deprecated_definitions.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include/event_groups.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include/list.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include/message_buffer.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include/mpu_prototypes.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include/mpu_wrappers.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include/portable.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include/projdefs.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include/queue.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include/semphr.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include/stack_macros.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include/stream_buffer.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include/task.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include/timers.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/list.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/portable/GCC/ARM_CM4F/port.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/portable/GCC/ARM_CM4F/portmacro.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/portable/MemMang/ReadMe.url"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/queue.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/stream_buffer.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/tasks.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/timers.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include/freertos_tasks_c_additions.h"
-"${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_enet.c"
-"${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_enet.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/vendors/nxp/secure_sockets/lwip/iot_secure_sockets.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/abstractions/secure_sockets/include/iot_secure_sockets.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/abstractions/secure_sockets/include/iot_secure_sockets_config_defaults.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/abstractions/secure_sockets/include/iot_secure_sockets_wrapper_metrics.h"
 "${ProjDirPath}/../../../../../middleware/lwip/port/enet_ethernetif.c"
 "${ProjDirPath}/../../../../../middleware/lwip/port/enet_ethernetif.h"
+"${ProjDirPath}/../../../../../middleware/lwip/port/enet_ethernetif_kinetis.c"
 "${ProjDirPath}/../../../../../middleware/lwip/port/enet_ethernetif_priv.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/inc/HLSEAPI.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/inc/HLSEComm.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/inc/HLSECrypto.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/inc/HLSEMisc.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/inc/HLSEObjects.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/inc/HLSETypes.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/inc/PlugAndTrust_HostLib_Ver.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/inc/PlugAndTrust_Pkg_Ver.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/inc/SE_HAL_Lib.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/inc/a71ch_api.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/inc/a71ch_util.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/inc/a71cl_api.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/inc/a71cl_util.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/inc/ax_api.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/inc/ax_common.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/inc/ax_common_a71ch.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/inc/ax_common_a71cl.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/inc/ax_common_private.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/inc/ax_scp.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/inc/ax_scp_private.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/inc/ax_sss_scp.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/inc/ax_util.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/inc/ledHandler.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/inc/nxEnsure.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/inc/nxScp03_Apis.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/inc/nxScp03_Const.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/inc/nxScp03_Types.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/inc/scp.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/inc/se05x_const.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/inc/se05x_ecc_curves.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/inc/se05x_ecc_curves_inc.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/inc/se05x_ecc_curves_values.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/inc/se05x_enums.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/inc/se05x_ftr.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/inc/se05x_tlv.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/inc/sm_const.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/se05x/src/se05x_ECC_curves.c"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/se05x/src/se05x_mw.c"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/se05x/src/se05x_tlv.c"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/inc/fsl_sscp.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/inc/fsl_sscp_a71ch.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/inc/fsl_sscp_a71cl.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/inc/fsl_sscp_commands.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/inc/fsl_sscp_mu.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/inc/fsl_sss_api.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/inc/fsl_sss_api_ver.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/inc/fsl_sss_config.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/inc/fsl_sss_ftr_default.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/inc/fsl_sss_keyid_map.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/inc/fsl_sss_mbedtls_apis.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/inc/fsl_sss_mbedtls_types.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/inc/fsl_sss_openssl_apis.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/inc/fsl_sss_openssl_types.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/inc/fsl_sss_policy.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/inc/fsl_sss_se05x_apis.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/inc/fsl_sss_se05x_policy.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/inc/fsl_sss_se05x_scp03.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/inc/fsl_sss_se05x_types.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/inc/fsl_sss_sscp.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/inc/fsl_sss_sscp_config.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/inc/fsl_sss_util_asn1_der.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/inc/fsl_sss_util_rsa_sign_utils.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/port/ksdk/fsl_sss_types.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/src/fsl_sss_apis.c"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/src/fsl_sss_util_asn1_der.c"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/src/fsl_sss_util_rsa_sign_utils.c"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/src/se05x/fsl_sss_se05x_apis.c"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/src/se05x/fsl_sss_se05x_fastscp.c"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/src/se05x/fsl_sss_se05x_mw.c"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/src/se05x/fsl_sss_se05x_policy.c"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/src/se05x/fsl_sss_se05x_scp03.c"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/platform/inc/ax_reset.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/platform/inc/i2c_a7.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/platform/inc/se05x_apis.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/platform/inc/se_pit_config.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/platform/inc/se_reset_config.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/platform/inc/sm_printf.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/platform/inc/sm_timer.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/platform/ksdk/ax_reset.c"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/platform/ksdk/i2c_frdm.c"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/platform/ksdk/i2c_imxrt10xx.c"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/platform/ksdk/i2c_lpc54xxx.c"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/platform/ksdk/i2c_lpc55sxx.c"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/platform/ksdk/se05x_reset.c"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/platform/ksdk/timer_kinetis.c"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/platform/ksdk/timer_kinetis_bm.c"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/platform/ksdk/timer_kinetis_freertos.c"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/T1oI2C/phEseStatus.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/T1oI2C/phEseTypes.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/T1oI2C/phNxpEsePal_i2c.c"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/T1oI2C/phNxpEsePal_i2c.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/T1oI2C/phNxpEseProto7816_3.c"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/T1oI2C/phNxpEseProto7816_3.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/T1oI2C/phNxpEse_Api.c"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/T1oI2C/phNxpEse_Api.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/T1oI2C/phNxpEse_Internal.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/apduComm.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/sci2c_cfg.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/smCom.c"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/smCom.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/smComT1oI2C.c"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/smComT1oI2C.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/a71_debug.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/app_boot.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/app_boot_nfc.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/global_platf.c"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/global_platf.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/nxLog.c"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/nxLog.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/nxLog_App.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/nxLog_DefaultConfig.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/nxLog_UseCases.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/nxLog_VCOM.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/nxLog_hostLib.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/nxLog_mbedtls.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/nxLog_scp.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/nxLog_smCom.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/nxLog_sscp.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/nxLog_sss.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/sm_apdu.c"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/sm_apdu.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/sm_api.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/sm_connect.c"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/sm_demo_utils.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/sm_errors.c"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/sm_errors.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/sm_printf.c"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/sm_types.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/ex/inc/ex_sss.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/ex/inc/ex_sss_auth.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/ex/inc/ex_sss_boot.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/ex/inc/ex_sss_main_freeRTOS_inc.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/ex/inc/ex_sss_main_inc.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/ex/inc/ex_sss_main_inc_frdmk64f.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/ex/inc/ex_sss_main_inc_imx_rt.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/ex/inc/ex_sss_main_inc_ksdk.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/ex/inc/ex_sss_main_inc_lpcxpresso55s.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/ex/inc/ex_sss_objid.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/ex/inc/ex_sss_ports.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/ex/inc/ex_sss_scp03_keys.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/ex/inc/ex_sss_tp_scp03_keys.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/ex/src/ex_sss_boot.c"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/ex/src/ex_sss_boot_connectstring.c"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/ex/src/ex_sss_boot_int.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/ex/src/ex_sss_se05x.c"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/ex/src/ex_sss_se05x_auth.c"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/se05x_03_xx_xx/Applet_SE050_Ver.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/se05x_03_xx_xx/se05x_APDU.c"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/se05x_03_xx_xx/se05x_APDU.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/se05x_03_xx_xx/se05x_APDU_apis.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/se05x_03_xx_xx/se05x_APDU_impl.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/nxScp/nxScp03_Com.c"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/scp/scp.c"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/demos/ksdk/common/aws_clientcredential.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/demos/ksdk/common/aws_clientcredential_keys.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/demos/ksdk/common/aws_demo_config.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/demos/ksdk/common/aws_pkcs11_config.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/demos/ksdk/common/boards/evkbimxrt1050/se_hostlib_examples/cloud_demo/pin_mux.c"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/demos/ksdk/common/boards/evkbimxrt1050/se_hostlib_examples/cloud_demo/pin_mux.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/demos/ksdk/common/freertos/FreeRTOSConfig.c"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/demos/ksdk/common/freertos/boards/evkbimxrt1050/FreeRTOSIPConfig.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/demos/ksdk/common/freertos/boards/evkbimxrt1050/app.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/demos/ksdk/common/freertos/boards/evkbimxrt1050/aws_bufferpool_config.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/demos/ksdk/common/freertos/boards/evkbimxrt1050/aws_mqtt_config.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/demos/ksdk/common/freertos/boards/evkbimxrt1050/aws_secure_sockets_config.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/demos/ksdk/common/freertos/boards/evkbimxrt1050/iot_mqtt_agent_config.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/demos/ksdk/common/https_client/httpsclient.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/demos/ksdk/common/iot_config.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/demos/ksdk/common/iot_config_common.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/demos/ksdk/common/iot_logging_task.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/demos/ksdk/common/iot_pkcs11_config.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/demos/ksdk/common/ledHandler.c"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/inc/ledHandler.h"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/sm_demo_utils.c"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/sm_demo_utils_rtos.c"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/tstUtil/tstHostCrypto.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/abstractions/pkcs11/mbedtls/threading_alt.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/vendors/nxp/pkcs11/se_hostlib/aws_pkcs11_pal.c"
+"${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_common.c"
+"${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_common.h"
+"${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_clock.c"
+"${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_clock.h"
 "${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/aes.h"
 "${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/aesni.h"
 "${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/arc4.h"
@@ -1265,72 +1025,338 @@ add_executable(se_SE05x_cloud_gcp.elf
 "${ProjDirPath}/../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls_config.h"
 "${ProjDirPath}/../../../../../middleware/mbedtls/port/ksdk/sha1_alt.h"
 "${ProjDirPath}/../../../../../middleware/mbedtls/port/ksdk/sha256_alt.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/portable/MemMang/heap_4.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/abstractions/platform/freertos/include/platform/iot_network_ble.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/abstractions/platform/freertos/include/platform/iot_network_freertos.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/abstractions/platform/freertos/include/platform/iot_platform_types_freertos.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/abstractions/platform/freertos/iot_clock_freertos.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/abstractions/platform/freertos/iot_metrics.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/abstractions/platform/freertos/iot_network_freertos.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/abstractions/platform/freertos/iot_threads_freertos.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/abstractions/platform/include/platform/iot_clock.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/abstractions/platform/include/platform/iot_metrics.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/abstractions/platform/include/platform/iot_network.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/abstractions/platform/include/platform/iot_threads.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/abstractions/platform/include/types/iot_platform_types.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/freertos_plus/standard/tls/include/iot_tls.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/freertos_plus/standard/tls/src/iot_tls.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/freertos_plus/standard/pkcs11/include/iot_pkcs11.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/freertos_plus/standard/pkcs11/src/iot_pkcs11.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/freertos_plus/standard/crypto/include/iot_crypto.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/freertos_plus/standard/crypto/src/iot_crypto.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/freertos_plus/standard/utils/include/iot_pki_utils.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/freertos_plus/standard/utils/include/iot_system_init.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/freertos_plus/standard/utils/src/iot_pki_utils.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/freertos_plus/standard/utils/src/iot_system_init.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include/iot_appversion32.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include/iot_atomic.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include/iot_init.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include/iot_linear_containers.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include/iot_logging_setup.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include/iot_logging_task.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include/iot_taskpool.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include/private/iot_default_root_certificates.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include/private/iot_doubly_linked_list.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include/private/iot_error.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include/private/iot_lib_init.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include/private/iot_logging.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include/private/iot_static_memory.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include/private/iot_taskpool_internal.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include/types/iot_network_types.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include/types/iot_taskpool_types.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/iot_device_metrics.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/iot_init.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/iot_static_memory_common.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/logging/iot_logging.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/logging/iot_logging_task_dynamic_buffers.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/taskpool/iot_taskpool.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/taskpool/iot_taskpool_static_memory.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/include/iot_mqtt.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/include/iot_mqtt_agent.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/include/iot_mqtt_agent_config_defaults.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/include/iot_mqtt_config_defaults.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/include/iot_mqtt_lib.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/include/types/iot_mqtt_types.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/src/iot_mqtt_agent.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/src/iot_mqtt_api.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/src/iot_mqtt_network.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/src/iot_mqtt_operation.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/src/iot_mqtt_serialize.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/src/iot_mqtt_static_memory.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/src/iot_mqtt_subscription.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/src/iot_mqtt_validate.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/src/private/iot_mqtt_internal.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/3rdparty/pkcs11/pkcs11.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/3rdparty/pkcs11/pkcs11f.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/3rdparty/pkcs11/pkcs11t.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/3rdparty/jsmn/jsmn.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/3rdparty/jsmn/jsmn.h"
+"${ProjDirPath}/../../../../../devices/MIMXRT1052/MIMXRT1052.h"
+"${ProjDirPath}/../../../../../devices/MIMXRT1052/MIMXRT1052_features.h"
+"${ProjDirPath}/../../../../../devices/MIMXRT1052/fsl_device_registers.h"
+"${ProjDirPath}/../../../../../components/uart/lpuart_adapter.c"
+"${ProjDirPath}/../../../../../components/uart/uart.h"
+"${ProjDirPath}/../../../../../components/serial_manager/serial_manager.c"
+"${ProjDirPath}/../../../../../components/serial_manager/serial_manager.h"
+"${ProjDirPath}/../../../../../components/serial_manager/serial_port_internal.h"
+"${ProjDirPath}/../../../../../components/lists/generic_list.c"
+"${ProjDirPath}/../../../../../components/lists/generic_list.h"
+"${ProjDirPath}/../../../../../components/serial_manager/serial_port_uart.c"
+"${ProjDirPath}/../../../../../components/serial_manager/serial_port_uart.h"
+"${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_lpuart.c"
+"${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_lpuart.h"
+"${ProjDirPath}/../../../../../devices/MIMXRT1052/gcc/startup_MIMXRT1052.S"
+"${ProjDirPath}/../../../../../devices/MIMXRT1052/system_MIMXRT1052.c"
+"${ProjDirPath}/../../../../../devices/MIMXRT1052/system_MIMXRT1052.h"
+"${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_iomuxc.h"
+"${ProjDirPath}/../../../../../devices/MIMXRT1052/utilities/fsl_assert.c"
+"${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_gpio.c"
+"${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_gpio.h"
+"${ProjDirPath}/../../../../../devices/MIMXRT1052/xip/fsl_flexspi_nor_boot.c"
+"${ProjDirPath}/../../../../../devices/MIMXRT1052/xip/fsl_flexspi_nor_boot.h"
+"${ProjDirPath}/../../../xip/evkbimxrt1050_flexspi_nor_config.c"
+"${ProjDirPath}/../../../xip/evkbimxrt1050_flexspi_nor_config.h"
+"${ProjDirPath}/../../../../../components/phy/fsl_mdio.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/core_cm7.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/mpu_armv7.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_armcc.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_armclang.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_armclang_ltm.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_compiler.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_gcc.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_iccarm.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_version.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/arm_common_tables.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/arm_const_structs.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/arm_math.h"
+"${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_enet.c"
+"${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_enet.h"
+"${ProjDirPath}/../../../../../components/phy/fsl_phy.h"
+"${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_lpi2c.c"
+"${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_lpi2c.h"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/croutine.c"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/event_groups.c"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/include/FreeRTOS.h"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/include/atomic.h"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/include/croutine.h"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/include/deprecated_definitions.h"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/include/event_groups.h"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/include/list.h"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/include/message_buffer.h"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/include/mpu_prototypes.h"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/include/mpu_wrappers.h"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/include/portable.h"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/include/projdefs.h"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/include/queue.h"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/include/semphr.h"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/include/stack_macros.h"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/include/stream_buffer.h"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/include/task.h"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/include/timers.h"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/list.c"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F/port.c"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F/portmacro.h"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/portable/MemMang/ReadMe.url"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/queue.c"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/stream_buffer.c"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/tasks.c"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/timers.c"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/include/freertos_tasks_c_additions.h"
+"${ProjDirPath}/../../../../../rtos/freertos/vendors/nxp/secure_sockets/lwip/iot_secure_sockets.c"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/abstractions/secure_sockets/include/iot_secure_sockets.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/abstractions/secure_sockets/include/iot_secure_sockets_config_defaults.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/abstractions/secure_sockets/include/iot_secure_sockets_wrapper_metrics.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/inc/Applet_SE050_Ver.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/inc/HLSEAPI.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/inc/HLSEComm.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/inc/HLSECrypto.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/inc/HLSEMisc.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/inc/HLSEObjects.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/inc/HLSETypes.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/inc/PlugAndTrust_HostLib_Ver.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/inc/PlugAndTrust_Pkg_Ver.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/inc/SE_HAL_Lib.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/inc/a71ch_api.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/inc/a71ch_util.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/inc/a71cl_api.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/inc/a71cl_util.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/inc/ax_api.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/inc/ax_common.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/inc/ax_common_a71ch.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/inc/ax_common_a71cl.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/inc/ax_common_private.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/inc/ax_scp.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/inc/ax_scp_private.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/inc/ax_sss_scp.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/inc/ax_util.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/inc/ledHandler.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/inc/nxEnsure.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/inc/nxScp03_Apis.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/inc/nxScp03_Const.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/inc/nxScp03_Types.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/inc/scp.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/inc/se05x_const.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/inc/se05x_ecc_curves.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/inc/se05x_ecc_curves_inc.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/inc/se05x_ecc_curves_values.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/inc/se05x_enums.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/inc/se05x_ftr.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/inc/se05x_tlv.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/inc/sm_const.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/se05x/src/se05x_ECC_curves.c"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/se05x/src/se05x_mw.c"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/se05x/src/se05x_tlv.c"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/inc/fsl_sscp.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/inc/fsl_sscp_a71ch.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/inc/fsl_sscp_a71cl.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/inc/fsl_sscp_commands.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/inc/fsl_sscp_mu.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/inc/fsl_sss_api.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/inc/fsl_sss_api_ver.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/inc/fsl_sss_config.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/inc/fsl_sss_ftr_default.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/inc/fsl_sss_keyid_map.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/inc/fsl_sss_lpc55s_apis.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/inc/fsl_sss_lpc55s_types.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/inc/fsl_sss_mbedtls_apis.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/inc/fsl_sss_mbedtls_types.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/inc/fsl_sss_openssl_apis.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/inc/fsl_sss_openssl_types.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/inc/fsl_sss_policy.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/inc/fsl_sss_se05x_apis.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/inc/fsl_sss_se05x_policy.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/inc/fsl_sss_se05x_scp03.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/inc/fsl_sss_se05x_types.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/inc/fsl_sss_sscp.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/inc/fsl_sss_sscp_config.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/inc/fsl_sss_user_apis.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/inc/fsl_sss_user_types.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/inc/fsl_sss_util_asn1_der.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/inc/fsl_sss_util_rsa_sign_utils.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/port/ksdk/fsl_sss_types.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/src/fsl_sss_apis.c"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/src/fsl_sss_util_asn1_der.c"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/src/fsl_sss_util_rsa_sign_utils.c"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/src/se05x/fsl_sss_se05x_apis.c"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/src/se05x/fsl_sss_se05x_eckey.c"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/src/se05x/fsl_sss_se05x_mw.c"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/src/se05x/fsl_sss_se05x_policy.c"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/src/se05x/fsl_sss_se05x_scp03.c"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/platform/inc/ax_reset.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/platform/inc/i2c_a7.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/platform/inc/se05x_apis.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/platform/inc/se_pit_config.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/platform/inc/se_reset_config.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/platform/inc/sm_printf.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/platform/inc/sm_timer.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/platform/ksdk/ax_reset.c"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/platform/ksdk/i2c_frdm.c"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/platform/ksdk/i2c_imxrt10xx.c"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/platform/ksdk/i2c_lpc54xxx.c"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/platform/ksdk/i2c_lpc55sxx.c"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/platform/ksdk/se05x_reset.c"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/platform/ksdk/timer_kinetis.c"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/platform/ksdk/timer_kinetis_bm.c"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/platform/ksdk/timer_kinetis_freertos.c"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/T1oI2C/phEseStatus.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/T1oI2C/phEseTypes.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/T1oI2C/phNxpEsePal_i2c.c"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/T1oI2C/phNxpEsePal_i2c.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/T1oI2C/phNxpEseProto7816_3.c"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/T1oI2C/phNxpEseProto7816_3.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/T1oI2C/phNxpEse_Api.c"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/T1oI2C/phNxpEse_Api.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/T1oI2C/phNxpEse_Internal.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/apduComm.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/sci2c_cfg.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/smCom.c"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/smCom.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/smComT1oI2C.c"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/smComT1oI2C.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/a71_debug.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/app_boot.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/app_boot_nfc.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/global_platf.c"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/global_platf.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/nxLog.c"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/nxLog.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/nxLog_App.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/nxLog_DefaultConfig.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/nxLog_UseCases.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/nxLog_VCOM.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/nxLog_hostLib.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/nxLog_mbedtls.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/nxLog_scp.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/nxLog_smCom.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/nxLog_sscp.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/nxLog_sss.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/sm_apdu.c"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/sm_apdu.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/sm_api.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/sm_connect.c"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/sm_demo_utils.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/sm_errors.c"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/sm_errors.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/sm_printf.c"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/sm_types.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/ex/inc/ex_a71ch_scp03.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/ex/inc/ex_scp03_puf.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/ex/inc/ex_sss.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/ex/inc/ex_sss_auth.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/ex/inc/ex_sss_boot.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/ex/inc/ex_sss_main_freeRTOS_inc.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/ex/inc/ex_sss_main_inc.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/ex/inc/ex_sss_main_inc_frdmk64f.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/ex/inc/ex_sss_main_inc_imx_rt.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/ex/inc/ex_sss_main_inc_ksdk.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/ex/inc/ex_sss_main_inc_linux.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/ex/inc/ex_sss_main_inc_lpcxpresso55s.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/ex/inc/ex_sss_objid.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/ex/inc/ex_sss_ports.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/ex/inc/ex_sss_scp03_keys.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/ex/inc/ex_sss_tp_scp03_keys.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/ex/src/ex_sss_boot.c"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/ex/src/ex_sss_boot_connectstring.c"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/ex/src/ex_sss_boot_int.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/ex/src/ex_sss_se05x.c"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/ex/src/ex_sss_se05x_auth.c"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/se05x_03_xx_xx/se05x_APDU.c"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/se05x_03_xx_xx/se05x_APDU.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/se05x_03_xx_xx/se05x_APDU_apis.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/se05x_03_xx_xx/se05x_APDU_impl.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/nxScp/nxScp03_Com.c"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/scp/scp.c"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/demos/ksdk/common/aws_clientcredential.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/demos/ksdk/common/aws_clientcredential_keys.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/demos/ksdk/common/aws_demo_config.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/demos/ksdk/common/aws_pkcs11_config.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/demos/ksdk/common/boards/evkbimxrt1050/se_hostlib_examples/cloud_demo/pin_mux.c"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/demos/ksdk/common/boards/evkbimxrt1050/se_hostlib_examples/cloud_demo/pin_mux.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/demos/ksdk/common/freertos/FreeRTOSConfig.c"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/demos/ksdk/common/freertos/boards/evkbimxrt1050/FreeRTOSIPConfig.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/demos/ksdk/common/freertos/boards/evkbimxrt1050/app.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/demos/ksdk/common/freertos/boards/evkbimxrt1050/aws_bufferpool_config.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/demos/ksdk/common/freertos/boards/evkbimxrt1050/aws_mqtt_config.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/demos/ksdk/common/freertos/boards/evkbimxrt1050/aws_secure_sockets_config.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/demos/ksdk/common/freertos/boards/evkbimxrt1050/iot_mqtt_agent_config.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/demos/ksdk/common/https_client/httpsclient.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/demos/ksdk/common/iot_config.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/demos/ksdk/common/iot_config_common.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/demos/ksdk/common/iot_logging_task.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/demos/ksdk/common/iot_pkcs11_config.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/demos/ksdk/common/ledHandler.c"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/inc/ledHandler.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/sm_demo_utils.c"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/sm_demo_utils_rtos.c"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/tstUtil/tstHostCrypto.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/plugin/pkcs11/aws_pkcs11_pal.c"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/plugin/pkcs11/pkcs11_mbedtls_utils.c"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/plugin/pkcs11/pkcs11_mbedtls_utils.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/abstractions/pkcs11/mbedtls/threading_alt.h"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/portable/MemMang/heap_4.c"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/abstractions/platform/freertos/include/platform/iot_network_ble.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/abstractions/platform/freertos/include/platform/iot_network_freertos.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/abstractions/platform/freertos/include/platform/iot_platform_types_freertos.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/abstractions/platform/freertos/iot_clock_freertos.c"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/abstractions/platform/freertos/iot_metrics.c"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/abstractions/platform/freertos/iot_network_freertos.c"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/abstractions/platform/freertos/iot_threads_freertos.c"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/abstractions/platform/include/platform/iot_clock.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/abstractions/platform/include/platform/iot_metrics.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/abstractions/platform/include/platform/iot_network.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/abstractions/platform/include/platform/iot_threads.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/abstractions/platform/include/types/iot_platform_types.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/freertos_plus/standard/tls/include/iot_tls.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/freertos_plus/standard/tls/src/iot_tls.c"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/freertos_plus/standard/pkcs11/include/iot_pkcs11.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/freertos_plus/standard/pkcs11/src/iot_pkcs11.c"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/freertos_plus/standard/crypto/include/iot_crypto.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/freertos_plus/standard/crypto/src/iot_crypto.c"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/freertos_plus/standard/utils/include/iot_pki_utils.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/freertos_plus/standard/utils/include/iot_system_init.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/freertos_plus/standard/utils/src/iot_pki_utils.c"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/freertos_plus/standard/utils/src/iot_system_init.c"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/iot_appversion32.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/iot_atomic.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/iot_init.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/iot_linear_containers.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/iot_logging_setup.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/iot_logging_task.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/iot_taskpool.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/private/iot_default_root_certificates.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/private/iot_doubly_linked_list.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/private/iot_error.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/private/iot_lib_init.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/private/iot_logging.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/private/iot_static_memory.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/private/iot_taskpool_internal.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/types/iot_network_types.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/types/iot_taskpool_types.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/common/iot_device_metrics.c"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/common/iot_init.c"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/common/iot_static_memory_common.c"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/common/logging/iot_logging.c"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/common/logging/iot_logging_task_dynamic_buffers.c"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/common/taskpool/iot_taskpool.c"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/common/taskpool/iot_taskpool_static_memory.c"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/include/iot_mqtt.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/include/iot_mqtt_agent.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/include/iot_mqtt_agent_config_defaults.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/include/iot_mqtt_config_defaults.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/include/iot_mqtt_lib.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/include/types/iot_mqtt_types.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/src/iot_mqtt_agent.c"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/src/iot_mqtt_api.c"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/src/iot_mqtt_network.c"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/src/iot_mqtt_operation.c"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/src/iot_mqtt_serialize.c"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/src/iot_mqtt_static_memory.c"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/src/iot_mqtt_subscription.c"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/src/iot_mqtt_validate.c"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/src/private/iot_mqtt_internal.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/3rdparty/pkcs11/CONTRIBUTING.md"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/3rdparty/pkcs11/LICENSE.md"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/3rdparty/pkcs11/README.md"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/3rdparty/pkcs11/pkcs11.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/3rdparty/pkcs11/pkcs11f.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/3rdparty/pkcs11/pkcs11t.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/3rdparty/jsmn/jsmn.c"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/3rdparty/jsmn/jsmn.h"
 "${ProjDirPath}/../../../../../middleware/se_hostlib/sss/plugin/mbedtls/ecdh_alt_ax.c"
 "${ProjDirPath}/../../../../../middleware/se_hostlib/sss/plugin/mbedtls/ecp_alt_sss.c"
 "${ProjDirPath}/../../../../../middleware/se_hostlib/sss/plugin/mbedtls/sss_mbedtls.c"

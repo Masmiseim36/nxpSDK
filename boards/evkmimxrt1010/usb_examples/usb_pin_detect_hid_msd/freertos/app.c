@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 - 2017 NXP
+ * Copyright 2016 - 2017,2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -42,10 +42,12 @@ void BOARD_InitHardware(void);
 extern void BOARD_UsbVbusOn(uint8_t on);
 extern void Device_AppInit(void);
 extern void Device_AppDeinit(void);
+#if USB_DEVICE_CONFIG_USE_TASK
 extern void Device_AppTaskFunction(void);
+#endif
 extern void Host_AppInit(void);
 extern void Host_AppDeinit(void);
-extern void Host_AppTaskFunction(void);
+extern void USB_HostTaskFn(void *param);
 extern void USB_DeviceKhciIsr(void);
 extern void USB_DeviceEhciIsr(void);
 extern void USB_HostKhciIsr(void);
@@ -54,13 +56,13 @@ extern void USB_HostClockInit(void);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
- /* Allocate the memory for the heap. */
+/* Allocate the memory for the heap. */
 #if defined(configAPPLICATION_ALLOCATED_HEAP) && (configAPPLICATION_ALLOCATED_HEAP)
 USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) uint8_t ucHeap[configTOTAL_HEAP_SIZE];
 #endif
-volatile uint32_t g_idPinStatus = 0;
+volatile uint32_t g_idPinStatus       = 0;
 volatile uint32_t g_idPinStatusChange = 0;
-volatile uint32_t g_deviceMode = 0;
+volatile uint32_t g_deviceMode        = 0;
 volatile USBHS_Type *ehciRegisterBase;
 extern usb_host_handle g_HostHandle;
 
@@ -109,6 +111,10 @@ void USB_DeviceTaskFn(void *deviceHandle)
     USB_DeviceEhciTaskFunction(deviceHandle);
 }
 #endif
+void USB_OTG1_IRQHandler(void)
+{
+    USB_Comom_IRQHandler();
+}
 
 void USB_HostClockInit(void)
 {
@@ -185,7 +191,7 @@ uint8_t USB_GetIdPinStatus(void)
 /*!
  * @brief ehci host isr
  */
-void USBHS_IRQHandler(void)
+void USB_Comom_IRQHandler(void)
 {
     if ((ehciRegisterBase->OTGSC & USBHS_OTGSC_IDIS_MASK) && (ehciRegisterBase->OTGSC & USBHS_OTGSC_IDIE_MASK))
     {
@@ -222,38 +228,6 @@ void USBHS_IRQHandler(void)
 }
 
 /*!
- * @brief host mouse freertos task function.
- *
- * @param param   the host mouse instance pointer.
- */
-void Host_AppTask(void *param)
-{
-    while (1)
-    {
-        if (g_deviceMode == 0)
-        {
-            Host_AppTaskFunction();
-        }
-    }
-}
-
-/*!
- * @brief device mouse freertos task function.
- *
- * @param param   the host mouse instance pointer.
- */
-void Device_AppTask(void *param)
-{
-    while (1)
-    {
-        if (g_deviceMode == 1)
-        {
-            Device_AppTaskFunction();
-        }
-    }
-}
-
-/*!
  * @brief pin detect  task function.
  */
 void Pin_DetectTaskFunction(void)
@@ -269,7 +243,6 @@ void Pin_DetectTaskFunction(void)
         }
         else
         {
-            vTaskDelay(100);
             Host_AppDeinit();
             g_deviceMode = 1;
             BOARD_UsbVbusOn(0);
@@ -311,20 +284,20 @@ void APP_init(void)
     /* Some time delay waitfor phy ID status stable */
     for (volatile int i = 0U; i < 1000000U; i++)
     {
-        __ASM("nop");
+        __NOP();
     }
 
     if (USB_GetIdPinStatus())
     {
         g_idPinStatus = 1;
-        g_deviceMode = 1;
+        g_deviceMode  = 1;
         BOARD_UsbVbusOn(0);
         Device_AppInit();
     }
     else
     {
         g_idPinStatus = 0;
-        g_deviceMode = 0;
+        g_deviceMode  = 0;
         BOARD_UsbVbusOn(1);
         Host_AppInit();
     }
@@ -346,18 +319,11 @@ void main(void)
     APP_init();
     Pin_DetectTaskFunction();
 
-    if (xTaskCreate(Pin_DetectTask, "pin detect task", 2000L / sizeof(portSTACK_TYPE), NULL, 5, NULL) != pdPASS)
+    if (xTaskCreate(Pin_DetectTask, "pin detect task", 2000L / sizeof(portSTACK_TYPE), NULL, 6, NULL) != pdPASS)
     {
         usb_echo("create pin detect task error\r\n");
     }
-    if (xTaskCreate(Device_AppTask, "usb device task", 2000L / sizeof(portSTACK_TYPE), NULL, 4, NULL) != pdPASS)
-    {
-        usb_echo("create usb device task error\r\n");
-    }
-    if (xTaskCreate(Host_AppTask, "usb host task", 2000L / sizeof(portSTACK_TYPE), NULL, 4, NULL) != pdPASS)
-    {
-        usb_echo("create usb host task error\r\n");
-    }
+
     vTaskStartScheduler();
 
     while (1)

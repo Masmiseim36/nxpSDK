@@ -336,6 +336,8 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI
 
 include_directories(${ProjDirPath}/..)
 
+include_directories(${ProjDirPath}/../../../../../CMSIS/Driver/Include)
+
 include_directories(${ProjDirPath}/../../..)
 
 include_directories(${ProjDirPath}/../../../../../CMSIS/Include)
@@ -369,8 +371,6 @@ include_directories(${ProjDirPath}/../../../../../components/lists)
 include_directories(${ProjDirPath}/../../../../../devices/MIMXRT1015/xip)
 
 include_directories(${ProjDirPath}/../../../xip)
-
-include_directories(${ProjDirPath}/../../../../../CMSIS/Driver/Include)
 
 include_directories(${ProjDirPath}/../../../../../devices/MIMXRT1015/utilities)
 
@@ -411,6 +411,8 @@ add_executable(emwin_gui_demo.elf
 "${ProjDirPath}/../../../../../devices/MIMXRT1015/cmsis_drivers/fsl_lpi2c_cmsis.h"
 "${ProjDirPath}/../../../../../middleware/emwin/emWin_Config/GUIConf.h"
 "${ProjDirPath}/../../../../../middleware/emwin/emWin_Config/LCDConf.h"
+"${ProjDirPath}/../../../../../middleware/emwin/emWin_header/AppWizard.h"
+"${ProjDirPath}/../../../../../middleware/emwin/emWin_header/AppWizard_Private.h"
 "${ProjDirPath}/../../../../../middleware/emwin/emWin_header/BUTTON.h"
 "${ProjDirPath}/../../../../../middleware/emwin/emWin_header/BUTTON_Private.h"
 "${ProjDirPath}/../../../../../middleware/emwin/emWin_header/CALENDAR.h"
@@ -522,6 +524,8 @@ add_executable(emwin_gui_demo.elf
 "${ProjDirPath}/../../../../../middleware/emwin/emWin_header/SPINBOX_Private.h"
 "${ProjDirPath}/../../../../../middleware/emwin/emWin_header/SWIPELIST.h"
 "${ProjDirPath}/../../../../../middleware/emwin/emWin_header/SWIPELIST_Private.h"
+"${ProjDirPath}/../../../../../middleware/emwin/emWin_header/SWITCH.h"
+"${ProjDirPath}/../../../../../middleware/emwin/emWin_header/SWITCH_Private.h"
 "${ProjDirPath}/../../../../../middleware/emwin/emWin_header/TEXT.h"
 "${ProjDirPath}/../../../../../middleware/emwin/emWin_header/TEXT_Private.h"
 "${ProjDirPath}/../../../../../middleware/emwin/emWin_header/TREEVIEW.h"
@@ -562,6 +566,7 @@ add_executable(emwin_gui_demo.elf
 "${ProjDirPath}/../../../xip/evkmimxrt1015_flexspi_nor_config.c"
 "${ProjDirPath}/../../../xip/evkmimxrt1015_flexspi_nor_config.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/core_cm7.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/mpu_armv7.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/cmsis_armcc.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/cmsis_armclang.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/cmsis_armclang_ltm.h"
@@ -569,11 +574,6 @@ add_executable(emwin_gui_demo.elf
 "${ProjDirPath}/../../../../../CMSIS/Include/cmsis_gcc.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/cmsis_iccarm.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/cmsis_version.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/core_armv81mml.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/core_armv8mbl.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/core_armv8mml.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/mpu_armv7.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/mpu_armv8.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/arm_common_tables.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/arm_const_structs.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/arm_math.h"

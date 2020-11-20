@@ -164,6 +164,8 @@ SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DSERIAL_PORT_TYPE_USBCDC=1")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING")
 
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DUSB_DEVICE_CONFIG_CDC_ACM=1")
+
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DMBEDTLS_CONFIG_FILE='\"sss_mbedtls_frdmk64f_config.h\"'")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DMBEDTLS")
@@ -174,7 +176,7 @@ SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DSERIAL_PORT_TYPE_UART=1")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DT1oI2C")
 
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DT1oI2C_UM1225_SE050")
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DT1oI2C_UM11225")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DSSS_USE_FTR_FILE")
 
@@ -183,6 +185,8 @@ SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DNO_SECURE_CHANNEL_SUPPORT")
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -g")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -O0")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -fomit-frame-pointer")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -mcpu=cortex-m7")
 
@@ -197,8 +201,6 @@ SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -mthumb")
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -MMD")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -MP")
-
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -fomit-frame-pointer")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -fno-common")
 
@@ -232,6 +234,8 @@ SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DSERIAL_PORT_TYPE_USBCDC=1"
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING")
 
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DUSB_DEVICE_CONFIG_CDC_ACM=1")
+
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DMBEDTLS_CONFIG_FILE='\"sss_mbedtls_frdmk64f_config.h\"'")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DMBEDTLS")
@@ -242,13 +246,15 @@ SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DSERIAL_PORT_TYPE_UART=1")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DT1oI2C")
 
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DT1oI2C_UM1225_SE050")
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DT1oI2C_UM11225")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DSSS_USE_FTR_FILE")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DNO_SECURE_CHANNEL_SUPPORT")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -Os")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -fomit-frame-pointer")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -mcpu=cortex-m7")
 
@@ -263,8 +269,6 @@ SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -mthumb")
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -MMD")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -MP")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -fomit-frame-pointer")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -fno-common")
 
@@ -302,6 +306,8 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -DSERIAL
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING")
 
+SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -DUSB_DEVICE_CONFIG_CDC_ACM=1")
+
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -DMBEDTLS_CONFIG_FILE='\"sss_mbedtls_frdmk64f_config.h\"'")
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -DMBEDTLS")
@@ -312,7 +318,7 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -DSERIAL
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -DT1oI2C")
 
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -DT1oI2C_UM1225_SE050")
+SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -DT1oI2C_UM11225")
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -DSSS_USE_FTR_FILE")
 
@@ -321,6 +327,8 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -DNO_SEC
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -g")
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -O0")
+
+SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -fomit-frame-pointer")
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -mcpu=cortex-m7")
 
@@ -335,8 +343,6 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -mthumb"
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -MMD")
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -MP")
-
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -fomit-frame-pointer")
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -fno-common")
 
@@ -374,6 +380,8 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -DSE
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING")
 
+SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -DUSB_DEVICE_CONFIG_CDC_ACM=1")
+
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -DMBEDTLS_CONFIG_FILE='\"sss_mbedtls_frdmk64f_config.h\"'")
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -DMBEDTLS")
@@ -384,13 +392,15 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -DSE
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -DT1oI2C")
 
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -DT1oI2C_UM1225_SE050")
+SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -DT1oI2C_UM11225")
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -DSSS_USE_FTR_FILE")
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -DNO_SECURE_CHANNEL_SUPPORT")
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -Os")
+
+SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -fomit-frame-pointer")
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -mcpu=cortex-m7")
 
@@ -405,8 +415,6 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -mth
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -MMD")
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -MP")
-
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -fomit-frame-pointer")
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -fno-common")
 
@@ -428,11 +436,13 @@ SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DSERIAL_PORT_TYPE_USBCDC=1"
 
 SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING")
 
+SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DUSB_DEVICE_CONFIG_CDC_ACM=1")
+
 SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DSERIAL_PORT_TYPE_UART=1")
 
 SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DT1oI2C")
 
-SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DT1oI2C_UM1225_SE050")
+SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DT1oI2C_UM11225")
 
 SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g")
 
@@ -474,11 +484,13 @@ SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DSERIAL_PORT_TYPE_USBCD
 
 SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING")
 
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DUSB_DEVICE_CONFIG_CDC_ACM=1")
+
 SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DSERIAL_PORT_TYPE_UART=1")
 
 SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DT1oI2C")
 
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DT1oI2C_UM1225_SE050")
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DT1oI2C_UM11225")
 
 SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Os")
 
@@ -518,11 +530,13 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG} -DSE
 
 SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG} -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING")
 
+SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG} -DUSB_DEVICE_CONFIG_CDC_ACM=1")
+
 SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG} -DSERIAL_PORT_TYPE_UART=1")
 
 SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG} -DT1oI2C")
 
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG} -DT1oI2C_UM1225_SE050")
+SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG} -DT1oI2C_UM11225")
 
 SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG} -g")
 
@@ -564,11 +578,13 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE} 
 
 SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE} -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING")
 
+SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE} -DUSB_DEVICE_CONFIG_CDC_ACM=1")
+
 SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE} -DSERIAL_PORT_TYPE_UART=1")
 
 SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE} -DT1oI2C")
 
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE} -DT1oI2C_UM1225_SE050")
+SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE} -DT1oI2C_UM11225")
 
 SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE} -Os")
 
@@ -866,13 +882,13 @@ include_directories(${ProjDirPath}/../../../../../middleware/mbedtls/include)
 
 include_directories(${ProjDirPath}/../../../../../middleware/mbedtls/port/ksdk)
 
+include_directories(${ProjDirPath}/../../../../../components/osa)
+
 include_directories(${ProjDirPath}/../../../../../middleware/usb/device)
 
 include_directories(${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers)
 
 include_directories(${ProjDirPath}/../../../../../components/serial_manager/usb_cdc_adapter)
-
-include_directories(${ProjDirPath}/../../../component_examples/config)
 
 include_directories(${ProjDirPath}/../../../../../devices/MIMXRT1052)
 
@@ -892,7 +908,9 @@ include_directories(${ProjDirPath}/../../../xip)
 
 include_directories(${ProjDirPath}/../../../../../middleware/usb/phy)
 
-include_directories(${ProjDirPath}/../../../../../components/osa)
+include_directories(${ProjDirPath}/../../../../../middleware/usb/output/source/device/class)
+
+include_directories(${ProjDirPath}/../../../../../middleware/usb/output/source/device)
 
 include_directories(${ProjDirPath}/../../../../../middleware/se_hostlib)
 
@@ -921,11 +939,17 @@ add_executable(se_hostlib_vcomSE050.elf
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../clock_config.c"
 "${ProjDirPath}/../clock_config.h"
+"${ProjDirPath}/../dcd.c"
+"${ProjDirPath}/../dcd.h"
+"${ProjDirPath}/../../../../../middleware/usb/device/usb_device.h"
+"${ProjDirPath}/../../../../../middleware/usb/device/usb_device_dci.c"
+"${ProjDirPath}/../../../../../middleware/usb/device/usb_device_dci.h"
+"${ProjDirPath}/../../../../../components/osa/fsl_os_abstraction.h"
+"${ProjDirPath}/../../../../../components/osa/fsl_os_abstraction_bm.c"
+"${ProjDirPath}/../../../../../components/osa/fsl_os_abstraction_bm.h"
+"${ProjDirPath}/../../../../../components/osa/fsl_os_abstraction_config.h"
 "${ProjDirPath}/../../../../../middleware/usb/device/usb_device_ehci.c"
 "${ProjDirPath}/../../../../../middleware/usb/device/usb_device_ehci.h"
-"${ProjDirPath}/../../../../../middleware/usb/include/usb.h"
-"${ProjDirPath}/../../../../../middleware/usb/include/usb_misc.h"
-"${ProjDirPath}/../../../../../middleware/usb/include/usb_spec.h"
 "${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_cache.c"
 "${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_cache.h"
 "${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_trng.c"
@@ -940,78 +964,15 @@ add_executable(se_hostlib_vcomSE050.elf
 "${ProjDirPath}/../../../../../components/serial_manager/serial_port_usb.h"
 "${ProjDirPath}/../../../../../components/serial_manager/usb_cdc_adapter/usb_device_descriptor.c"
 "${ProjDirPath}/../../../../../components/serial_manager/usb_cdc_adapter/usb_device_descriptor.h"
-"${ProjDirPath}/../../../../../components/serial_manager/usb_cdc_adapter/usb_device_cdc_acm.c"
-"${ProjDirPath}/../../../../../components/serial_manager/usb_cdc_adapter/usb_device_cdc_acm.h"
-"${ProjDirPath}/../../../../../components/serial_manager/usb_cdc_adapter/usb_device_class.c"
-"${ProjDirPath}/../../../../../components/serial_manager/usb_cdc_adapter/usb_device_class.h"
-"${ProjDirPath}/../../../../../components/serial_manager/usb_cdc_adapter/usb_device_ch9.c"
-"${ProjDirPath}/../../../../../components/serial_manager/usb_cdc_adapter/usb_device_ch9.h"
-"${ProjDirPath}/../../../component_examples/config/usb_device_config.h"
+"${ProjDirPath}/../usb_device_config.h"
 "${ProjDirPath}/../../../../../middleware/se_hostlib/sss/plugin/mbedtls/ecdh_alt_ax.c"
 "${ProjDirPath}/../../../../../middleware/se_hostlib/sss/plugin/mbedtls/ecp_alt_sss.c"
 "${ProjDirPath}/../../../../../middleware/se_hostlib/sss/plugin/mbedtls/sss_mbedtls.c"
 "${ProjDirPath}/../../../../../middleware/se_hostlib/sss/plugin/mbedtls/sss_mbedtls_rsa.c"
-"${ProjDirPath}/../../../../../middleware/usb/device/usb_device.h"
-"${ProjDirPath}/../../../../../middleware/usb/device/usb_device_dci.c"
-"${ProjDirPath}/../../../../../middleware/usb/device/usb_device_dci.h"
 "${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_common.c"
 "${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_common.h"
 "${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_clock.c"
 "${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_clock.h"
-"${ProjDirPath}/../../../../../devices/MIMXRT1052/MIMXRT1052.h"
-"${ProjDirPath}/../../../../../devices/MIMXRT1052/MIMXRT1052_features.h"
-"${ProjDirPath}/../../../../../devices/MIMXRT1052/fsl_device_registers.h"
-"${ProjDirPath}/../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_debug_console.c"
-"${ProjDirPath}/../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_debug_console.h"
-"${ProjDirPath}/../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_debug_console_conf.h"
-"${ProjDirPath}/../../../../../devices/MIMXRT1052/utilities/str/fsl_str.c"
-"${ProjDirPath}/../../../../../devices/MIMXRT1052/utilities/str/fsl_str.h"
-"${ProjDirPath}/../../../../../components/uart/lpuart_adapter.c"
-"${ProjDirPath}/../../../../../components/uart/uart.h"
-"${ProjDirPath}/../../../../../components/serial_manager/serial_manager.c"
-"${ProjDirPath}/../../../../../components/serial_manager/serial_manager.h"
-"${ProjDirPath}/../../../../../components/serial_manager/serial_port_internal.h"
-"${ProjDirPath}/../../../../../components/lists/generic_list.c"
-"${ProjDirPath}/../../../../../components/lists/generic_list.h"
-"${ProjDirPath}/../../../../../components/serial_manager/serial_port_uart.c"
-"${ProjDirPath}/../../../../../components/serial_manager/serial_port_uart.h"
-"${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_lpuart.c"
-"${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_lpuart.h"
-"${ProjDirPath}/../../../../../devices/MIMXRT1052/gcc/startup_MIMXRT1052.S"
-"${ProjDirPath}/../../../../../devices/MIMXRT1052/system_MIMXRT1052.c"
-"${ProjDirPath}/../../../../../devices/MIMXRT1052/system_MIMXRT1052.h"
-"${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_iomuxc.h"
-"${ProjDirPath}/../../../../../devices/MIMXRT1052/utilities/fsl_assert.c"
-"${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_gpio.c"
-"${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_gpio.h"
-"${ProjDirPath}/../../../../../devices/MIMXRT1052/xip/fsl_flexspi_nor_boot.c"
-"${ProjDirPath}/../../../../../devices/MIMXRT1052/xip/fsl_flexspi_nor_boot.h"
-"${ProjDirPath}/../../../xip/evkbimxrt1050_flexspi_nor_config.c"
-"${ProjDirPath}/../../../xip/evkbimxrt1050_flexspi_nor_config.h"
-"${ProjDirPath}/../../../xip/evkbimxrt1050_sdram_ini_dcd.c"
-"${ProjDirPath}/../../../xip/evkbimxrt1050_sdram_ini_dcd.h"
-"${ProjDirPath}/../../../../../middleware/usb/phy/usb_phy.c"
-"${ProjDirPath}/../../../../../middleware/usb/phy/usb_phy.h"
-"${ProjDirPath}/../../../../../components/osa/fsl_os_abstraction.h"
-"${ProjDirPath}/../../../../../components/osa/fsl_os_abstraction_bm.c"
-"${ProjDirPath}/../../../../../components/osa/fsl_os_abstraction_bm.h"
-"${ProjDirPath}/../../../../../components/osa/fsl_os_abstraction_config.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/core_cm7.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_armcc.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_armclang.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_armclang_ltm.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_compiler.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_gcc.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_iccarm.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_version.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/core_armv81mml.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/core_armv8mbl.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/core_armv8mml.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/mpu_armv7.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/mpu_armv8.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/arm_common_tables.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/arm_const_structs.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/arm_math.h"
 "${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/aes.h"
 "${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/aesni.h"
 "${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/arc4.h"
@@ -1182,6 +1143,62 @@ add_executable(se_hostlib_vcomSE050.elf
 "${ProjDirPath}/../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls_config.h"
 "${ProjDirPath}/../../../../../middleware/mbedtls/port/ksdk/sha1_alt.h"
 "${ProjDirPath}/../../../../../middleware/mbedtls/port/ksdk/sha256_alt.h"
+"${ProjDirPath}/../../../../../devices/MIMXRT1052/MIMXRT1052.h"
+"${ProjDirPath}/../../../../../devices/MIMXRT1052/MIMXRT1052_features.h"
+"${ProjDirPath}/../../../../../devices/MIMXRT1052/fsl_device_registers.h"
+"${ProjDirPath}/../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_debug_console.c"
+"${ProjDirPath}/../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_debug_console.h"
+"${ProjDirPath}/../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_debug_console_conf.h"
+"${ProjDirPath}/../../../../../devices/MIMXRT1052/utilities/str/fsl_str.c"
+"${ProjDirPath}/../../../../../devices/MIMXRT1052/utilities/str/fsl_str.h"
+"${ProjDirPath}/../../../../../components/uart/lpuart_adapter.c"
+"${ProjDirPath}/../../../../../components/uart/uart.h"
+"${ProjDirPath}/../../../../../components/serial_manager/serial_manager.c"
+"${ProjDirPath}/../../../../../components/serial_manager/serial_manager.h"
+"${ProjDirPath}/../../../../../components/serial_manager/serial_port_internal.h"
+"${ProjDirPath}/../../../../../components/lists/generic_list.c"
+"${ProjDirPath}/../../../../../components/lists/generic_list.h"
+"${ProjDirPath}/../../../../../components/serial_manager/serial_port_uart.c"
+"${ProjDirPath}/../../../../../components/serial_manager/serial_port_uart.h"
+"${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_lpuart.c"
+"${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_lpuart.h"
+"${ProjDirPath}/../../../../../devices/MIMXRT1052/gcc/startup_MIMXRT1052.S"
+"${ProjDirPath}/../../../../../devices/MIMXRT1052/system_MIMXRT1052.c"
+"${ProjDirPath}/../../../../../devices/MIMXRT1052/system_MIMXRT1052.h"
+"${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_iomuxc.h"
+"${ProjDirPath}/../../../../../devices/MIMXRT1052/utilities/fsl_assert.c"
+"${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_gpio.c"
+"${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_gpio.h"
+"${ProjDirPath}/../../../../../devices/MIMXRT1052/xip/fsl_flexspi_nor_boot.c"
+"${ProjDirPath}/../../../../../devices/MIMXRT1052/xip/fsl_flexspi_nor_boot.h"
+"${ProjDirPath}/../../../xip/evkbimxrt1050_flexspi_nor_config.c"
+"${ProjDirPath}/../../../xip/evkbimxrt1050_flexspi_nor_config.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/core_cm7.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/mpu_armv7.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_armcc.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_armclang.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_armclang_ltm.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_compiler.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_gcc.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_iccarm.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_version.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/arm_common_tables.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/arm_const_structs.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/arm_math.h"
+"${ProjDirPath}/../../../../../middleware/usb/phy/usb_phy.c"
+"${ProjDirPath}/../../../../../middleware/usb/phy/usb_phy.h"
+"${ProjDirPath}/../../../../../middleware/usb/include/usb.h"
+"${ProjDirPath}/../../../../../middleware/usb/include/usb_misc.h"
+"${ProjDirPath}/../../../../../middleware/usb/include/usb_spec.h"
+"${ProjDirPath}/../../../../../middleware/usb/device/usb_device.h"
+"${ProjDirPath}/../../../../../middleware/usb/device/usb_device_dci.h"
+"${ProjDirPath}/../../../../../middleware/usb/output/source/device/class/usb_device_cdc_acm.c"
+"${ProjDirPath}/../../../../../middleware/usb/output/source/device/class/usb_device_cdc_acm.h"
+"${ProjDirPath}/../../../../../middleware/usb/output/source/device/class/usb_device_class.c"
+"${ProjDirPath}/../../../../../middleware/usb/output/source/device/class/usb_device_class.h"
+"${ProjDirPath}/../../../../../middleware/usb/output/source/device/usb_device_ch9.c"
+"${ProjDirPath}/../../../../../middleware/usb/output/source/device/usb_device_ch9.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/inc/Applet_SE050_Ver.h"
 "${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/inc/HLSEAPI.h"
 "${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/inc/HLSEComm.h"
 "${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/inc/HLSECrypto.h"
@@ -1231,6 +1248,8 @@ add_executable(se_hostlib_vcomSE050.elf
 "${ProjDirPath}/../../../../../middleware/se_hostlib/sss/inc/fsl_sss_config.h"
 "${ProjDirPath}/../../../../../middleware/se_hostlib/sss/inc/fsl_sss_ftr_default.h"
 "${ProjDirPath}/../../../../../middleware/se_hostlib/sss/inc/fsl_sss_keyid_map.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/inc/fsl_sss_lpc55s_apis.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/inc/fsl_sss_lpc55s_types.h"
 "${ProjDirPath}/../../../../../middleware/se_hostlib/sss/inc/fsl_sss_mbedtls_apis.h"
 "${ProjDirPath}/../../../../../middleware/se_hostlib/sss/inc/fsl_sss_mbedtls_types.h"
 "${ProjDirPath}/../../../../../middleware/se_hostlib/sss/inc/fsl_sss_openssl_apis.h"
@@ -1242,6 +1261,8 @@ add_executable(se_hostlib_vcomSE050.elf
 "${ProjDirPath}/../../../../../middleware/se_hostlib/sss/inc/fsl_sss_se05x_types.h"
 "${ProjDirPath}/../../../../../middleware/se_hostlib/sss/inc/fsl_sss_sscp.h"
 "${ProjDirPath}/../../../../../middleware/se_hostlib/sss/inc/fsl_sss_sscp_config.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/inc/fsl_sss_user_apis.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/inc/fsl_sss_user_types.h"
 "${ProjDirPath}/../../../../../middleware/se_hostlib/sss/inc/fsl_sss_util_asn1_der.h"
 "${ProjDirPath}/../../../../../middleware/se_hostlib/sss/inc/fsl_sss_util_rsa_sign_utils.h"
 "${ProjDirPath}/../../../../../middleware/se_hostlib/sss/port/ksdk/fsl_sss_types.h"
@@ -1249,7 +1270,7 @@ add_executable(se_hostlib_vcomSE050.elf
 "${ProjDirPath}/../../../../../middleware/se_hostlib/sss/src/fsl_sss_util_asn1_der.c"
 "${ProjDirPath}/../../../../../middleware/se_hostlib/sss/src/fsl_sss_util_rsa_sign_utils.c"
 "${ProjDirPath}/../../../../../middleware/se_hostlib/sss/src/se05x/fsl_sss_se05x_apis.c"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/src/se05x/fsl_sss_se05x_fastscp.c"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/src/se05x/fsl_sss_se05x_eckey.c"
 "${ProjDirPath}/../../../../../middleware/se_hostlib/sss/src/se05x/fsl_sss_se05x_mw.c"
 "${ProjDirPath}/../../../../../middleware/se_hostlib/sss/src/se05x/fsl_sss_se05x_policy.c"
 "${ProjDirPath}/../../../../../middleware/se_hostlib/sss/src/se05x/fsl_sss_se05x_scp03.c"
@@ -1310,6 +1331,8 @@ add_executable(se_hostlib_vcomSE050.elf
 "${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/sm_errors.h"
 "${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/sm_printf.c"
 "${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra/sm_types.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/ex/inc/ex_a71ch_scp03.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/ex/inc/ex_scp03_puf.h"
 "${ProjDirPath}/../../../../../middleware/se_hostlib/sss/ex/inc/ex_sss.h"
 "${ProjDirPath}/../../../../../middleware/se_hostlib/sss/ex/inc/ex_sss_auth.h"
 "${ProjDirPath}/../../../../../middleware/se_hostlib/sss/ex/inc/ex_sss_boot.h"
@@ -1318,6 +1341,7 @@ add_executable(se_hostlib_vcomSE050.elf
 "${ProjDirPath}/../../../../../middleware/se_hostlib/sss/ex/inc/ex_sss_main_inc_frdmk64f.h"
 "${ProjDirPath}/../../../../../middleware/se_hostlib/sss/ex/inc/ex_sss_main_inc_imx_rt.h"
 "${ProjDirPath}/../../../../../middleware/se_hostlib/sss/ex/inc/ex_sss_main_inc_ksdk.h"
+"${ProjDirPath}/../../../../../middleware/se_hostlib/sss/ex/inc/ex_sss_main_inc_linux.h"
 "${ProjDirPath}/../../../../../middleware/se_hostlib/sss/ex/inc/ex_sss_main_inc_lpcxpresso55s.h"
 "${ProjDirPath}/../../../../../middleware/se_hostlib/sss/ex/inc/ex_sss_objid.h"
 "${ProjDirPath}/../../../../../middleware/se_hostlib/sss/ex/inc/ex_sss_ports.h"
@@ -1328,7 +1352,6 @@ add_executable(se_hostlib_vcomSE050.elf
 "${ProjDirPath}/../../../../../middleware/se_hostlib/sss/ex/src/ex_sss_boot_int.h"
 "${ProjDirPath}/../../../../../middleware/se_hostlib/sss/ex/src/ex_sss_se05x.c"
 "${ProjDirPath}/../../../../../middleware/se_hostlib/sss/ex/src/ex_sss_se05x_auth.c"
-"${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/se05x_03_xx_xx/Applet_SE050_Ver.h"
 "${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/se05x_03_xx_xx/se05x_APDU.c"
 "${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/se05x_03_xx_xx/se05x_APDU.h"
 "${ProjDirPath}/../../../../../middleware/se_hostlib/hostlib/hostLib/se05x_03_xx_xx/se05x_APDU_apis.h"

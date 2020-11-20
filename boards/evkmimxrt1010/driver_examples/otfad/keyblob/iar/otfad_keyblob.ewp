@@ -183,6 +183,7 @@
           <state>DEBUG</state>
           <state>FSL_DRIVER_TRANSFER_DOUBLE_WEAK_IRQ=0</state>
           <state>CPU_MIMXRT1011DAE5A</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -316,22 +317,15 @@
           <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../devices</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/drivers</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/utilities</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1168,6 +1162,7 @@
           <state>XIP_BOOT_HEADER_ENABLE=1</state>
           <state>FSL_DRIVER_TRANSFER_DOUBLE_WEAK_IRQ=0</state>
           <state>CPU_MIMXRT1011DAE5A</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1301,22 +1296,15 @@
           <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../devices</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/drivers</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/utilities</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -2150,6 +2138,7 @@
           <state>NDEBUG</state>
           <state>FSL_DRIVER_TRANSFER_DOUBLE_WEAK_IRQ=0</state>
           <state>CPU_MIMXRT1011DAE5A</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -2283,22 +2272,15 @@
           <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../devices</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/drivers</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/utilities</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -3135,6 +3117,7 @@
           <state>NDEBUG</state>
           <state>FSL_DRIVER_TRANSFER_DOUBLE_WEAK_IRQ=0</state>
           <state>CPU_MIMXRT1011DAE5A</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -3268,22 +3251,15 @@
           <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../devices</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/drivers</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1011/utilities</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -4127,6 +4103,9 @@
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_cm7.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/mpu_armv7.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_armcc.h</name>
     </file>
     <file>
@@ -4146,21 +4125,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_version.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_armv81mml.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_armv8mbl.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_armv8mml.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/mpu_armv7.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/mpu_armv8.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/arm_common_tables.h</name>

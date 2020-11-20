@@ -332,11 +332,20 @@ include_directories(${ProjDirPath}/../../../../../../middleware/mcu-boot/apps/le
 
 include_directories(${ProjDirPath}/..)
 
+include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT1052/drivers)
+
 add_executable(led_demo_evk_flexspi_nor.elf 
+"${ProjDirPath}/../pin_mux.c"
+"${ProjDirPath}/../pin_mux.h"
 "${ProjDirPath}/../main.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1052/MIMXRT1052.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1052/MIMXRT1052_features.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1052/fsl_device_registers.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT1052/drivers/fsl_common.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT1052/drivers/fsl_common.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT1052/drivers/fsl_iomuxc.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT1052/drivers/fsl_gpio.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT1052/drivers/fsl_gpio.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1052/system_MIMXRT1052.h"
 "${ProjDirPath}/../../../../../../middleware/mcu-boot/src/startup/crt0_gcc.S"
 "${ProjDirPath}/../../../../../../middleware/mcu-boot/targets/MIMXRT1052/src/startup/gcc/startup_MIMXRT1052.S"
@@ -346,6 +355,7 @@ add_executable(led_demo_evk_flexspi_nor.elf
 "${ProjDirPath}/../../../../../../middleware/mcu-boot/apps/led_demo/src/milliseconds_delay.c"
 "${ProjDirPath}/../../../../../../middleware/mcu-boot/apps/led_demo/src/milliseconds_delay.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/core_cm7.h"
+"${ProjDirPath}/../../../../../../CMSIS/Include/mpu_armv7.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_armcc.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_armclang.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_armclang_ltm.h"
@@ -353,14 +363,11 @@ add_executable(led_demo_evk_flexspi_nor.elf
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_gcc.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_iccarm.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_version.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/core_armv81mml.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/core_armv8mbl.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/core_armv8mml.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/mpu_armv7.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/mpu_armv8.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/arm_common_tables.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/arm_const_structs.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/arm_math.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT1052/drivers/fsl_clock.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT1052/drivers/fsl_clock.h"
 )
 
 

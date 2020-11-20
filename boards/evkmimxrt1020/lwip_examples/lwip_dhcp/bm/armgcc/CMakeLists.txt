@@ -148,6 +148,8 @@ SET(CMAKE_C_FLAGS_SDRAM_RELEASE "${CMAKE_C_FLAGS_SDRAM_RELEASE} -DFSL_SDK_ENABLE
 
 SET(CMAKE_C_FLAGS_SDRAM_RELEASE "${CMAKE_C_FLAGS_SDRAM_RELEASE} -DSKIP_SYSCLK_INIT")
 
+SET(CMAKE_C_FLAGS_SDRAM_RELEASE "${CMAKE_C_FLAGS_SDRAM_RELEASE} -DDATA_SECTION_IS_CACHEABLE=1")
+
 SET(CMAKE_C_FLAGS_SDRAM_RELEASE "${CMAKE_C_FLAGS_SDRAM_RELEASE} -DNDEBUG")
 
 SET(CMAKE_C_FLAGS_SDRAM_RELEASE "${CMAKE_C_FLAGS_SDRAM_RELEASE} -DFSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE")
@@ -682,7 +684,9 @@ include_directories(${ProjDirPath}/../../../../../../CMSIS/Include)
 
 include_directories(${ProjDirPath}/../../../../../../devices)
 
-include_directories(${ProjDirPath}/../../../../../../components/phyksz8081)
+include_directories(${ProjDirPath}/../../../../../../components/phy/mdio/enet)
+
+include_directories(${ProjDirPath}/../../../../../../components/phy/device/phyksz8081)
 
 include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT1021/drivers)
 
@@ -692,11 +696,11 @@ include_directories(${ProjDirPath}/../../../../../../middleware/lwip/src)
 
 include_directories(${ProjDirPath}/../../../../../../middleware/lwip/src/include)
 
-include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT1021)
-
 include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT1021/utilities/str)
 
 include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT1021/utilities/debug_console)
+
+include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT1021)
 
 include_directories(${ProjDirPath}/../../../../../../components/uart)
 
@@ -707,6 +711,8 @@ include_directories(${ProjDirPath}/../../../../../../components/lists)
 include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT1021/xip)
 
 include_directories(${ProjDirPath}/../../../../xip)
+
+include_directories(${ProjDirPath}/../../../../../../components/phy)
 
 include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT1021/utilities)
 
@@ -719,8 +725,12 @@ add_executable(lwip_dhcp_bm.elf
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../clock_config.c"
 "${ProjDirPath}/../clock_config.h"
-"${ProjDirPath}/../../../../../../components/phyksz8081/fsl_phy.c"
-"${ProjDirPath}/../../../../../../components/phyksz8081/fsl_phy.h"
+"${ProjDirPath}/../dcd.c"
+"${ProjDirPath}/../dcd.h"
+"${ProjDirPath}/../../../../../../components/phy/mdio/enet/fsl_enet_mdio.c"
+"${ProjDirPath}/../../../../../../components/phy/mdio/enet/fsl_enet_mdio.h"
+"${ProjDirPath}/../../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.c"
+"${ProjDirPath}/../../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1021/drivers/fsl_cache.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1021/drivers/fsl_cache.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1021/drivers/fsl_clock.c"
@@ -746,6 +756,7 @@ add_executable(lwip_dhcp_bm.elf
 "${ProjDirPath}/../../../../../../middleware/lwip/src/core/inet_chksum.c"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/core/init.c"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/core/ip.c"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/core/ipv4/acd.c"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/core/ipv4/autoip.c"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/core/ipv4/dhcp.c"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/core/ipv4/etharp.c"
@@ -780,6 +791,7 @@ add_executable(lwip_dhcp_bm.elf
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/compat/posix/netdb.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/compat/posix/sys/socket.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/compat/stdc/errno.h"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/acd.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/altcp.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/altcp_tcp.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/altcp_tls.h"
@@ -831,6 +843,7 @@ add_executable(lwip_dhcp_bm.elf
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/priv/sockets_priv.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/priv/tcp_priv.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/priv/tcpip_priv.h"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/prot/acd.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/prot/autoip.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/prot/dhcp.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/prot/dhcp6.h"
@@ -933,17 +946,20 @@ add_executable(lwip_dhcp_bm.elf
 "${ProjDirPath}/../../../../../../middleware/lwip/src/netif/ppp/vj.c"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/netif/slipif.c"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/netif/zepif.c"
-"${ProjDirPath}/../../../../../../middleware/lwip/port/enet_ethernetif_kinetis.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT1021/drivers/fsl_common.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT1021/drivers/fsl_common.h"
-"${ProjDirPath}/../../../../../../devices/MIMXRT1021/MIMXRT1021.h"
-"${ProjDirPath}/../../../../../../devices/MIMXRT1021/MIMXRT1021_features.h"
-"${ProjDirPath}/../../../../../../devices/MIMXRT1021/fsl_device_registers.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1021/utilities/debug_console/fsl_debug_console.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1021/utilities/debug_console/fsl_debug_console.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1021/utilities/debug_console/fsl_debug_console_conf.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1021/utilities/str/fsl_str.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1021/utilities/str/fsl_str.h"
+"${ProjDirPath}/../../../../../../middleware/lwip/port/enet_ethernetif.c"
+"${ProjDirPath}/../../../../../../middleware/lwip/port/enet_ethernetif.h"
+"${ProjDirPath}/../../../../../../middleware/lwip/port/enet_ethernetif_kinetis.c"
+"${ProjDirPath}/../../../../../../middleware/lwip/port/enet_ethernetif_priv.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT1021/drivers/fsl_common.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT1021/drivers/fsl_common.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT1021/MIMXRT1021.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT1021/MIMXRT1021_features.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT1021/fsl_device_registers.h"
 "${ProjDirPath}/../../../../../../components/uart/lpuart_adapter.c"
 "${ProjDirPath}/../../../../../../components/uart/uart.h"
 "${ProjDirPath}/../../../../../../components/serial_manager/serial_manager.c"
@@ -966,11 +982,9 @@ add_executable(lwip_dhcp_bm.elf
 "${ProjDirPath}/../../../../../../devices/MIMXRT1021/xip/fsl_flexspi_nor_boot.h"
 "${ProjDirPath}/../../../../xip/evkmimxrt1020_flexspi_nor_config.c"
 "${ProjDirPath}/../../../../xip/evkmimxrt1020_flexspi_nor_config.h"
-"${ProjDirPath}/../../../../xip/evkmimxrt1020_sdram_ini_dcd.c"
-"${ProjDirPath}/../../../../xip/evkmimxrt1020_sdram_ini_dcd.h"
-"${ProjDirPath}/../../../../../../devices/MIMXRT1021/drivers/fsl_enet.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT1021/drivers/fsl_enet.h"
+"${ProjDirPath}/../../../../../../components/phy/fsl_mdio.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/core_cm7.h"
+"${ProjDirPath}/../../../../../../CMSIS/Include/mpu_armv7.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_armcc.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_armclang.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_armclang_ltm.h"
@@ -978,17 +992,12 @@ add_executable(lwip_dhcp_bm.elf
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_gcc.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_iccarm.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_version.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/core_armv81mml.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/core_armv8mbl.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/core_armv8mml.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/mpu_armv7.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/mpu_armv8.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/arm_common_tables.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/arm_const_structs.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/arm_math.h"
-"${ProjDirPath}/../../../../../../middleware/lwip/port/enet_ethernetif.c"
-"${ProjDirPath}/../../../../../../middleware/lwip/port/enet_ethernetif.h"
-"${ProjDirPath}/../../../../../../middleware/lwip/port/enet_ethernetif_priv.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT1021/drivers/fsl_enet.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT1021/drivers/fsl_enet.h"
+"${ProjDirPath}/../../../../../../components/phy/fsl_phy.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1021/utilities/fsl_sbrk.c"
 )
 

@@ -33,7 +33,7 @@
         <option>
           <name>Input variant</name>
           <version>3</version>
-          <state>6</state>
+          <state>1</state>
         </option>
         <option>
           <name>Input description</name>
@@ -42,7 +42,7 @@
         <option>
           <name>Output variant</name>
           <version>2</version>
-          <state>5</state>
+          <state>1</state>
         </option>
         <option>
           <name>Output description</name>
@@ -59,12 +59,12 @@
         <option>
           <name>GRuntimeLibSelect</name>
           <version>0</version>
-          <state>1</state>
+          <state>2</state>
         </option>
         <option>
           <name>GRuntimeLibSelectSlave</name>
           <version>0</version>
-          <state>1</state>
+          <state>2</state>
         </option>
         <option>
           <name>RTDescription</name>
@@ -190,10 +190,10 @@
           <state>GRE_TARGET_OS_freertos</state>
           <state>GRE_TARGET_CPU_cortexm7</state>
           <state>GRE_FEATURE_VFS_RESOURCES</state>
-          <state>PRINTF_FLOAT_ENABLE=0</state>
-          <state>SCANF_FLOAT_ENABLE=0</state>
-          <state>PRINTF_ADVANCED_ENABLE=0</state>
-          <state>SCANF_ADVANCED_ENABLE=0</state>
+          <state>PRINTF_FLOAT_ENABLE=1</state>
+          <state>SCANF_FLOAT_ENABLE=1</state>
+          <state>PRINTF_ADVANCED_ENABLE=1</state>
+          <state>SCANF_ADVANCED_ENABLE=1</state>
           <state>FSL_RTOS_FREE_RTOS</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
@@ -324,34 +324,23 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
           <state>$PROJ_DIR$/../../..</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../devices</state>
-          <state>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/include</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include</state>
           <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/include/freertos</state>
           <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/include</state>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/drivers</state>
           <state>$PROJ_DIR$/../../../../../components/ft5406_rt</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/drivers</state>
-          <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/include</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/xip</state>
-          <state>$PROJ_DIR$/../../../xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities</state>
         </option>
@@ -819,15 +808,26 @@
           <name>IlinkAdditionalLibs</name>
           <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/lib/iar/libgre.a</state>
           <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/lib/iar/libgreal.a</state>
+          <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/lib/iar/libgreio.a</state>
           <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/lib/iar/libsbimage.a</state>
+          <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/lib/iar/libsblua.a</state>
           <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/lib/iar/libsbvfs.a</state>
           <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/lib/iar/libswrender.a</state>
-          <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/plugins/iar/libfont-plugin-sbfont.a</state>
+          <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/plugins/iar/libfont-plugin-freetype.a</state>
           <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/plugins/iar/libgre-plugin-animation.a</state>
+          <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/plugins/iar/libgre-plugin-canvas.a</state>
+          <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/plugins/iar/libgre-plugin-capture-playback.a</state>
           <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/plugins/iar/libgre-plugin-ccallback.a</state>
           <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/plugins/iar/libgre-plugin-circle.a</state>
+          <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/plugins/iar/libgre-plugin-greio.a</state>
           <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/plugins/iar/libgre-plugin-logger.a</state>
+          <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/plugins/iar/libgre-plugin-lua.a</state>
+          <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/plugins/iar/libgre-plugin-luagredom.a</state>
+          <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/plugins/iar/libgre-plugin-metrics.a</state>
           <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/plugins/iar/libgre-plugin-poly.a</state>
+          <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/plugins/iar/libgre-plugin-rtext.a</state>
+          <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/plugins/iar/libgre-plugin-screen-fade.a</state>
+          <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/plugins/iar/libgre-plugin-screen-path.a</state>
           <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/plugins/iar/libgre-plugin-timer.a</state>
           <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/plugins/iar/librender-plugin-swrender.a</state>
         </option>
@@ -1053,7 +1053,7 @@
         <option>
           <name>Input variant</name>
           <version>3</version>
-          <state>6</state>
+          <state>1</state>
         </option>
         <option>
           <name>Input description</name>
@@ -1062,7 +1062,7 @@
         <option>
           <name>Output variant</name>
           <version>2</version>
-          <state>5</state>
+          <state>1</state>
         </option>
         <option>
           <name>Output description</name>
@@ -1079,12 +1079,12 @@
         <option>
           <name>GRuntimeLibSelect</name>
           <version>0</version>
-          <state>1</state>
+          <state>2</state>
         </option>
         <option>
           <name>GRuntimeLibSelectSlave</name>
           <version>0</version>
-          <state>1</state>
+          <state>2</state>
         </option>
         <option>
           <name>RTDescription</name>
@@ -1210,10 +1210,10 @@
           <state>GRE_TARGET_OS_freertos</state>
           <state>GRE_TARGET_CPU_cortexm7</state>
           <state>GRE_FEATURE_VFS_RESOURCES</state>
-          <state>PRINTF_FLOAT_ENABLE=0</state>
-          <state>SCANF_FLOAT_ENABLE=0</state>
-          <state>PRINTF_ADVANCED_ENABLE=0</state>
-          <state>SCANF_ADVANCED_ENABLE=0</state>
+          <state>PRINTF_FLOAT_ENABLE=1</state>
+          <state>SCANF_FLOAT_ENABLE=1</state>
+          <state>PRINTF_ADVANCED_ENABLE=1</state>
+          <state>SCANF_ADVANCED_ENABLE=1</state>
           <state>FSL_RTOS_FREE_RTOS</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
@@ -1344,34 +1344,23 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
           <state>$PROJ_DIR$/../../..</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../devices</state>
-          <state>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/include</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include</state>
           <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/include/freertos</state>
           <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/include</state>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/drivers</state>
           <state>$PROJ_DIR$/../../../../../components/ft5406_rt</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/drivers</state>
-          <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/include</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/xip</state>
-          <state>$PROJ_DIR$/../../../xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities</state>
         </option>
@@ -1839,15 +1828,26 @@
           <name>IlinkAdditionalLibs</name>
           <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/lib/iar/libgre.a</state>
           <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/lib/iar/libgreal.a</state>
+          <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/lib/iar/libgreio.a</state>
           <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/lib/iar/libsbimage.a</state>
+          <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/lib/iar/libsblua.a</state>
           <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/lib/iar/libsbvfs.a</state>
           <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/lib/iar/libswrender.a</state>
-          <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/plugins/iar/libfont-plugin-sbfont.a</state>
+          <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/plugins/iar/libfont-plugin-freetype.a</state>
           <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/plugins/iar/libgre-plugin-animation.a</state>
+          <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/plugins/iar/libgre-plugin-canvas.a</state>
+          <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/plugins/iar/libgre-plugin-capture-playback.a</state>
           <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/plugins/iar/libgre-plugin-ccallback.a</state>
           <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/plugins/iar/libgre-plugin-circle.a</state>
+          <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/plugins/iar/libgre-plugin-greio.a</state>
           <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/plugins/iar/libgre-plugin-logger.a</state>
+          <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/plugins/iar/libgre-plugin-lua.a</state>
+          <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/plugins/iar/libgre-plugin-luagredom.a</state>
+          <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/plugins/iar/libgre-plugin-metrics.a</state>
           <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/plugins/iar/libgre-plugin-poly.a</state>
+          <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/plugins/iar/libgre-plugin-rtext.a</state>
+          <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/plugins/iar/libgre-plugin-screen-fade.a</state>
+          <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/plugins/iar/libgre-plugin-screen-path.a</state>
           <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/plugins/iar/libgre-plugin-timer.a</state>
           <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/plugins/iar/librender-plugin-swrender.a</state>
         </option>
@@ -2103,6 +2103,12 @@
     <file>
       <name>$PROJ_DIR$/../clock_config.h</name>
     </file>
+    <file>
+      <name>$PROJ_DIR$/../dcd.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../dcd.h</name>
+    </file>
   </group>
   <group>
     <name>doc</name>
@@ -2174,68 +2180,77 @@
     </file>
   </group>
   <group>
-    <name>amazon-freertos</name>
+    <name>freertos</name>
     <group>
       <name>freertos_kernel</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/event_groups.c</name>
+        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/croutine.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/event_groups.c</name>
       </file>
       <group>
         <name>include</name>
         <file>
-          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/include/FreeRTOS.h</name>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/FreeRTOS.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/include/atomic.h</name>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/include/deprecated_definitions.h</name>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/atomic.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/include/event_groups.h</name>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/croutine.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/include/list.h</name>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/deprecated_definitions.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/include/message_buffer.h</name>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/event_groups.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/include/mpu_prototypes.h</name>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/list.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/include/mpu_wrappers.h</name>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/message_buffer.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/include/portable.h</name>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/mpu_prototypes.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/include/projdefs.h</name>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/mpu_wrappers.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/include/queue.h</name>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/portable.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/include/semphr.h</name>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/projdefs.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/include/stack_macros.h</name>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/queue.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/include/stream_buffer.h</name>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/semphr.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/include/task.h</name>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/stack_macros.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/include/timers.h</name>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/stream_buffer.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/include/freertos_tasks_c_additions.h</name>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/task.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/timers.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/freertos_tasks_c_additions.h</name>
         </file>
       </group>
       <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/list.c</name>
+        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/list.c</name>
       </file>
       <group>
         <name>portable</name>
@@ -2244,40 +2259,40 @@
           <group>
             <name>ARM_CM4F</name>
             <file>
-              <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/portable/IAR/ARM_CM4F/port.c</name>
+              <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F/port.c</name>
             </file>
             <file>
-              <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/portable/IAR/ARM_CM4F/portasm.s</name>
+              <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F/portasm.s</name>
             </file>
             <file>
-              <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/portable/IAR/ARM_CM4F/portmacro.h</name>
+              <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F/portmacro.h</name>
             </file>
           </group>
         </group>
         <group>
           <name>MemMang</name>
           <file>
-            <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/portable/MemMang/ReadMe.url</name>
+            <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/MemMang/ReadMe.url</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/portable/MemMang/heap_3.c</name>
+            <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/MemMang/heap_3.c</name>
           </file>
         </group>
         <file>
-          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/portable/readme.txt</name>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/readme.txt</name>
         </file>
       </group>
       <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/queue.c</name>
+        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/queue.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/stream_buffer.c</name>
+        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/stream_buffer.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/tasks.c</name>
+        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/tasks.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/timers.c</name>
+        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/timers.c</name>
       </file>
     </group>
   </group>
@@ -2379,17 +2394,14 @@
     <file>
       <name>$PROJ_DIR$/../../../xip/evkbimxrt1050_flexspi_nor_config.h</name>
     </file>
-    <file>
-      <name>$PROJ_DIR$/../../../xip/evkbimxrt1050_sdram_ini_dcd.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../xip/evkbimxrt1050_sdram_ini_dcd.h</name>
-    </file>
   </group>
   <group>
     <name>CMSIS</name>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_cm7.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv7.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armcc.h</name>
@@ -2411,21 +2423,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_version.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv81mml.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mbl.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mml.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv7.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv8.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_common_tables.h</name>

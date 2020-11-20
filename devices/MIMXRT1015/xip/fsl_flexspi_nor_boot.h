@@ -78,19 +78,6 @@ typedef struct _ivt_ {
     extern uint32_t m_boot_hdr_conf_start[];
 #define IMAGE_ENTRY_ADDRESS ((uint32_t)__VECTOR_TABLE)    
 #define FLASH_BASE ((uint32_t)m_boot_hdr_conf_start)   
-#elif defined __CROSSWORKS_ARM
-	#if defined XIP_BOOT_FLEXSPI1 && defined FlexSPI_AMBA_BASE
-		#define FLASH_BASE FlexSPI_AMBA_BASE
-	#elif defined XIP_BOOT_FLEXSPI1 && defined FlexSPI1_AMBA_BASE
-		#define FLASH_BASE FlexSPI1_AMBA_BASE
-	#elif defined XIP_BOOT_FLEXSPI2 && defined FLEXSPI2
-		#define FLASH_BASE FlexSPI2_AMBA_BASE
-	#else
-		#error "unknown interface"
-	#endif
-    #define FLASH_END  (FLASH_BASE + 0x04000000)
-	extern uint32_t __vectors_load_start__;
-	#define IMAGE_ENTRY_ADDRESS ((uint32_t)&__vectors_load_start__)
 #elif defined(__GNUC__)
     extern uint32_t __VECTOR_TABLE[];
     extern uint32_t __FLASH_BASE[];

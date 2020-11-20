@@ -344,13 +344,15 @@ include_directories(${ProjDirPath}/..)
 
 include_directories(${ProjDirPath}/../support/mcuxsdk_usb)
 
-include_directories(${ProjDirPath}/../../../../../middleware/freemaster/boards/evkmimxrt1015)
+include_directories(${ProjDirPath}/../../..)
 
 include_directories(${ProjDirPath}/../../../../../CMSIS/Include)
 
 include_directories(${ProjDirPath}/../../../../../devices)
 
 include_directories(${ProjDirPath}/../../../../../devices/MIMXRT1015/drivers)
+
+include_directories(${ProjDirPath}/../../../../../components/osa)
 
 include_directories(${ProjDirPath}/../../../../../middleware/usb/device)
 
@@ -382,8 +384,6 @@ include_directories(${ProjDirPath}/../../../../../middleware/freemaster/src/plat
 
 include_directories(${ProjDirPath}/../../../../../middleware/usb/phy)
 
-include_directories(${ProjDirPath}/../../../../../components/osa)
-
 include_directories(${ProjDirPath}/../../../../../devices/MIMXRT1015/utilities)
 
 add_executable(fmstr_example_usb_cdc.elf 
@@ -413,17 +413,18 @@ add_executable(fmstr_example_usb_cdc.elf
 "${ProjDirPath}/../../../../../middleware/usb/device/usb_device.h"
 "${ProjDirPath}/../../../../../middleware/usb/device/usb_device_dci.c"
 "${ProjDirPath}/../../../../../middleware/usb/device/usb_device_dci.h"
-"${ProjDirPath}/../usb_device_ch9.c"
-"${ProjDirPath}/../usb_device_ch9.h"
-"${ProjDirPath}/../usb_device_class.c"
-"${ProjDirPath}/../usb_device_class.h"
-"${ProjDirPath}/../usb_device_cdc_acm.c"
-"${ProjDirPath}/../usb_device_cdc_acm.h"
+"${ProjDirPath}/../../../../../components/osa/fsl_os_abstraction.h"
+"${ProjDirPath}/../../../../../components/osa/fsl_os_abstraction_bm.c"
+"${ProjDirPath}/../../../../../components/osa/fsl_os_abstraction_bm.h"
+"${ProjDirPath}/../../../../../components/osa/fsl_os_abstraction_config.h"
 "${ProjDirPath}/../../../../../middleware/usb/device/usb_device_ehci.c"
 "${ProjDirPath}/../../../../../middleware/usb/device/usb_device_ehci.h"
-"${ProjDirPath}/../../../../../middleware/usb/include/usb.h"
-"${ProjDirPath}/../../../../../middleware/usb/include/usb_misc.h"
-"${ProjDirPath}/../../../../../middleware/usb/include/usb_spec.h"
+"${ProjDirPath}/../usb_device_class.c"
+"${ProjDirPath}/../usb_device_class.h"
+"${ProjDirPath}/../usb_device_ch9.c"
+"${ProjDirPath}/../usb_device_ch9.h"
+"${ProjDirPath}/../usb_device_cdc_acm.c"
+"${ProjDirPath}/../usb_device_cdc_acm.h"
 "${ProjDirPath}/../../../../../middleware/freemaster/src/common/freemaster.h"
 "${ProjDirPath}/../../../../../middleware/freemaster/src/common/freemaster_appcmd.c"
 "${ProjDirPath}/../../../../../middleware/freemaster/src/common/freemaster_can.c"
@@ -497,13 +498,8 @@ add_executable(fmstr_example_usb_cdc.elf
 "${ProjDirPath}/../../../xip/evkmimxrt1015_flexspi_nor_config.c"
 "${ProjDirPath}/../../../xip/evkmimxrt1015_flexspi_nor_config.h"
 "${ProjDirPath}/../../../../../middleware/freemaster/src/platforms/gen32le/freemaster_gen32le.h"
-"${ProjDirPath}/../../../../../middleware/usb/phy/usb_phy.c"
-"${ProjDirPath}/../../../../../middleware/usb/phy/usb_phy.h"
-"${ProjDirPath}/../../../../../components/osa/fsl_os_abstraction.h"
-"${ProjDirPath}/../../../../../components/osa/fsl_os_abstraction_bm.c"
-"${ProjDirPath}/../../../../../components/osa/fsl_os_abstraction_bm.h"
-"${ProjDirPath}/../../../../../components/osa/fsl_os_abstraction_config.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/core_cm7.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/mpu_armv7.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/cmsis_armcc.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/cmsis_armclang.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/cmsis_armclang_ltm.h"
@@ -511,14 +507,16 @@ add_executable(fmstr_example_usb_cdc.elf
 "${ProjDirPath}/../../../../../CMSIS/Include/cmsis_gcc.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/cmsis_iccarm.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/cmsis_version.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/core_armv81mml.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/core_armv8mbl.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/core_armv8mml.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/mpu_armv7.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/mpu_armv8.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/arm_common_tables.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/arm_const_structs.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/arm_math.h"
+"${ProjDirPath}/../../../../../middleware/usb/phy/usb_phy.c"
+"${ProjDirPath}/../../../../../middleware/usb/phy/usb_phy.h"
+"${ProjDirPath}/../../../../../middleware/usb/include/usb.h"
+"${ProjDirPath}/../../../../../middleware/usb/include/usb_misc.h"
+"${ProjDirPath}/../../../../../middleware/usb/include/usb_spec.h"
+"${ProjDirPath}/../../../../../middleware/usb/device/usb_device.h"
+"${ProjDirPath}/../../../../../middleware/usb/device/usb_device_dci.h"
 "${ProjDirPath}/../../../../../devices/MIMXRT1015/utilities/fsl_sbrk.c"
 )
 

@@ -19,7 +19,7 @@
  ******************************************************************************/
 
 /*! @brief Macro to define class handle */
-#define class_handle_t uint32_t
+typedef void *class_handle_t;
 
 /*! @brief Available class types. */
 typedef enum _usb_usb_device_class_type
@@ -61,11 +61,11 @@ typedef struct _usb_device_endpoint_struct
 } usb_device_endpoint_struct_t;
 
 /*!
-* @brief Obtains the endpoint group.
-*
-* Structure representing endpoints and the number of endpoints that the user wants.
-*
-*/
+ * @brief Obtains the endpoint group.
+ *
+ * Structure representing endpoints and the number of endpoints that the user wants.
+ *
+ */
 typedef struct _usb_device_endpoint_list
 {
     uint8_t count;                          /*!< How many endpoints in current interface*/

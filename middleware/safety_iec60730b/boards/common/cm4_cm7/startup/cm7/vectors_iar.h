@@ -790,9 +790,9 @@ extern uint32_t __BOOT_STACK_ADDRESS[];
   #define VECTOR_255      default_isr     
 #endif
 
-#if (!defined(_IMXRT_) && !defined(_MIMX8MN6_CM7_H_))
+#if (!defined(_IMX_))
   #define CONFIG_1  (uint32_t)0xFFFFFFFF 
-  #define CONFIG_2  (uint32_t)0xFFFFFFFF 
+  #define CONFIG_2  (uint32_t)0xFFFFFFFF
   #define CONFIG_3  (uint32_t)0xFFFFFFFF
   #ifdef 	_MKE18F16_H_
    #define CONFIG_4 (uint32_t)0xFFFF7DFE

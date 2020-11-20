@@ -314,6 +314,7 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Driver/Include</state>
           <state>$PROJ_DIR$/../../..</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../devices</state>
@@ -322,31 +323,15 @@
           <state>$PROJ_DIR$/../../../../../components/ili9341</state>
           <state>$PROJ_DIR$/../../../../../components/ft6x06</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/cmsis_drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/cmsis_drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Driver/Include</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Driver/Include</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/drivers</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Driver/Include</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/utilities</state>
         </option>
         <option>
@@ -1313,6 +1298,7 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Driver/Include</state>
           <state>$PROJ_DIR$/../../..</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../devices</state>
@@ -1321,31 +1307,15 @@
           <state>$PROJ_DIR$/../../../../../components/ili9341</state>
           <state>$PROJ_DIR$/../../../../../components/ft6x06</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/cmsis_drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/cmsis_drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Driver/Include</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Driver/Include</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/drivers</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Driver/Include</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/utilities</state>
         </option>
         <option>
@@ -2157,6 +2127,12 @@
     <group>
       <name>emWin_header</name>
       <file>
+        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/AppWizard.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/AppWizard_Private.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/BUTTON.h</name>
       </file>
       <file>
@@ -2490,6 +2466,12 @@
         <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/SWIPELIST_Private.h</name>
       </file>
       <file>
+        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/SWITCH.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/SWITCH_Private.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/TEXT.h</name>
       </file>
       <file>
@@ -2623,6 +2605,9 @@
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_cm7.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv7.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armcc.h</name>
     </file>
     <file>
@@ -2642,21 +2627,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_version.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv81mml.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mbl.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mml.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv7.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv8.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_common_tables.h</name>

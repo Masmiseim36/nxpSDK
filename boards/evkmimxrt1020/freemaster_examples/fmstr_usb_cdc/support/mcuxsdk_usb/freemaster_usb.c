@@ -129,8 +129,8 @@ static usb_device_class_config_list_struct_t s_cdcAcmConfigList = {
     s_cdcAcmConfig, USB_DeviceCallback, 1,
 };
 
-
-USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static FMSTR_EXAMPLE_USB_CTX _fmstr_exampleUsbCtx;
+/* context data that this application needs to handle USB communication */
+static FMSTR_EXAMPLE_USB_CTX _fmstr_exampleUsbCtx;
 
 /******************************************************************************
 * API functions

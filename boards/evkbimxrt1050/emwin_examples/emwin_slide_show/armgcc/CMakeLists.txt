@@ -92,6 +92,8 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEB
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -DSKIP_SYSCLK_INIT")
 
+SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -DDATA_SECTION_IS_CACHEABLE=1")
+
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -DDEBUG")
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -DCPU_MIMXRT1052DVL6B")
@@ -137,6 +139,8 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_R
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -DXIP_BOOT_HEADER_DCD_ENABLE=1")
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -DSKIP_SYSCLK_INIT")
+
+SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -DDATA_SECTION_IS_CACHEABLE=1")
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -DNDEBUG")
 
@@ -403,6 +407,8 @@ add_executable(emwin_slide_show.elf
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../clock_config.c"
 "${ProjDirPath}/../clock_config.h"
+"${ProjDirPath}/../dcd.c"
+"${ProjDirPath}/../dcd.h"
 "${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_elcdif.c"
 "${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_elcdif.h"
 "${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_pxp.c"
@@ -411,8 +417,12 @@ add_executable(emwin_slide_show.elf
 "${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_lpi2c.h"
 "${ProjDirPath}/../../../../../components/ft5406_rt/fsl_ft5406_rt.c"
 "${ProjDirPath}/../../../../../components/ft5406_rt/fsl_ft5406_rt.h"
+"${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_gpt.c"
+"${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_gpt.h"
 "${ProjDirPath}/../../../../../middleware/emwin/emWin_Config/GUIConf.h"
 "${ProjDirPath}/../../../../../middleware/emwin/emWin_Config/LCDConf.h"
+"${ProjDirPath}/../../../../../middleware/emwin/emWin_header/AppWizard.h"
+"${ProjDirPath}/../../../../../middleware/emwin/emWin_header/AppWizard_Private.h"
 "${ProjDirPath}/../../../../../middleware/emwin/emWin_header/BUTTON.h"
 "${ProjDirPath}/../../../../../middleware/emwin/emWin_header/BUTTON_Private.h"
 "${ProjDirPath}/../../../../../middleware/emwin/emWin_header/CALENDAR.h"
@@ -524,6 +534,8 @@ add_executable(emwin_slide_show.elf
 "${ProjDirPath}/../../../../../middleware/emwin/emWin_header/SPINBOX_Private.h"
 "${ProjDirPath}/../../../../../middleware/emwin/emWin_header/SWIPELIST.h"
 "${ProjDirPath}/../../../../../middleware/emwin/emWin_header/SWIPELIST_Private.h"
+"${ProjDirPath}/../../../../../middleware/emwin/emWin_header/SWITCH.h"
+"${ProjDirPath}/../../../../../middleware/emwin/emWin_header/SWITCH_Private.h"
 "${ProjDirPath}/../../../../../middleware/emwin/emWin_header/TEXT.h"
 "${ProjDirPath}/../../../../../middleware/emwin/emWin_header/TEXT_Private.h"
 "${ProjDirPath}/../../../../../middleware/emwin/emWin_header/TREEVIEW.h"
@@ -533,8 +545,6 @@ add_executable(emwin_slide_show.elf
 "${ProjDirPath}/../../../../../middleware/emwin/emWin_header/WM.h"
 "${ProjDirPath}/../../../../../middleware/emwin/emWin_header/WM_GUI.h"
 "${ProjDirPath}/../../../../../middleware/emwin/emWin_header/WM_Intern.h"
-"${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_gpt.c"
-"${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_gpt.h"
 "${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_common.c"
 "${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_common.h"
 "${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers/fsl_clock.c"
@@ -569,9 +579,8 @@ add_executable(emwin_slide_show.elf
 "${ProjDirPath}/../../../../../devices/MIMXRT1052/xip/fsl_flexspi_nor_boot.h"
 "${ProjDirPath}/../../../xip/evkbimxrt1050_flexspi_nor_config.c"
 "${ProjDirPath}/../../../xip/evkbimxrt1050_flexspi_nor_config.h"
-"${ProjDirPath}/../../../xip/evkbimxrt1050_sdram_ini_dcd.c"
-"${ProjDirPath}/../../../xip/evkbimxrt1050_sdram_ini_dcd.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/core_cm7.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/mpu_armv7.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/cmsis_armcc.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/cmsis_armclang.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/cmsis_armclang_ltm.h"
@@ -579,11 +588,6 @@ add_executable(emwin_slide_show.elf
 "${ProjDirPath}/../../../../../CMSIS/Include/cmsis_gcc.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/cmsis_iccarm.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/cmsis_version.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/core_armv81mml.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/core_armv8mbl.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/core_armv8mml.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/mpu_armv7.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/mpu_armv8.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/arm_common_tables.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/arm_const_structs.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/arm_math.h"

@@ -730,12 +730,11 @@ struct _usb_device_video_mjpeg_payload_header_struct
                                              constant for the rest of the frame.*/
             uint8_t endOfFrame : 1U; /*!< End of Frame. This bit indicates the end of a video frame and is set in the
                                         last video sample that belongs to a frame.*/
-            uint8_t
-                presentationTimeStamp : 1U; /*!< Presentation Time Stamp. This bit, when set, indicates the presence of
-                                               a PTS field.*/
-            uint8_t sourceClockReference : 1U; /*!< Source Clock Reference. This bit, when set, indicates the presence
-                                                  of a SCR field.*/
-            uint8_t reserved : 1U;             /*!< Reserved. Set to 0. */
+            uint8_t presentationTimeStamp : 1U; /*!< Presentation Time Stamp. This bit, when set, indicates the presence
+                                                   of a PTS field.*/
+            uint8_t sourceClockReference : 1U;  /*!< Source Clock Reference. This bit, when set, indicates the presence
+                                                   of a SCR field.*/
+            uint8_t reserved : 1U;              /*!< Reserved. Set to 0. */
             uint8_t stillImage : 1U;  /*!< Still Image. This bit, when set, identifies a video sample that belongs to a
                                          still image.*/
             uint8_t errorBit : 1U;    /*!< Error Bit. This bit, when set, indicates an error in the device streaming.*/
@@ -810,11 +809,10 @@ struct _usb_device_video_probe_and_commit_controls_struct
                             value.*/
 #if defined(USB_DEVICE_VIDEO_CLASS_VERSION_1_5) && USB_DEVICE_VIDEO_CLASS_VERSION_1_5
     uint8_t bUsage; /*!< This bitmap enables features reported by the bmUsages field of the Video Frame Descriptor.*/
-    uint8_t
-        bBitDepthLuma;  /*!< Represents bit_depth_luma_minus8 + 8U, which must be the same as bit_depth_chroma_minus8 +
-                           8.*/
-    uint8_t bmSettings; /*!< A bitmap of flags that is used to discover and control specific features of a temporally
-                           encoded video stream.*/
+    uint8_t bBitDepthLuma; /*!< Represents bit_depth_luma_minus8 + 8U, which must be the same as bit_depth_chroma_minus8
+                              + 8.*/
+    uint8_t bmSettings;    /*!< A bitmap of flags that is used to discover and control specific features of a temporally
+                              encoded video stream.*/
     uint8_t bMaxNumberOfRefFramesPlus1; /*!< Host indicates the maximum number of frames stored for use as references.*/
     uint16_t bmRateControlModes;        /*!< This field contains 4U sub-fields, each of which is a 4U bit number.*/
     uint64_t bmLayoutPerStream;         /*!< This field contains 4U sub-fields, each of which is a 2U byte number.*/
@@ -959,7 +957,7 @@ extern usb_status_t USB_DeviceVideoEvent(void *handle, uint32_t event, void *par
  *
  * @return A USB error code or kStatus_USB_Success.
  *
- * @note The function can only be called in the same context. 
+ * @note The function can only be called in the same context.
  *
  * @note The return value indicates whether the sending request is successful or not. The transfer done is notified by
  * USB_DeviceVideoStreamIn or USB_DeviceVideoControlIn.
@@ -985,7 +983,7 @@ extern usb_status_t USB_DeviceVideoSend(class_handle_t handle, uint8_t ep, uint8
  *
  * @return A USB error code or kStatus_USB_Success.
  *
- * @note The function can only be called in the same context. 
+ * @note The function can only be called in the same context.
  *
  * @note The return value indicates whether the receiving request is successful or not. The transfer done is notified by
  * USB_DeviceVideoStreamOut.

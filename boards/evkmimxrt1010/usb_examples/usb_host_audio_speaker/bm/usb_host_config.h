@@ -137,7 +137,7 @@
 /*!
  * @brief ehci ITD max count.
  */
-#define USB_HOST_CONFIG_EHCI_MAX_ITD (16U)
+#define USB_HOST_CONFIG_EHCI_MAX_ITD (15U)
 
 /*!
  * @brief ehci SITD max count.

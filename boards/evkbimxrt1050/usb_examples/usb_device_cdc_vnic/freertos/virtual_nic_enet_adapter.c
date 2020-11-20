@@ -46,8 +46,8 @@ bool ENETIF_GetLinkStatus(void);
 void VNIC_EnetRxBufFree(pbuf_t *pbuf);
 
 /*******************************************************************************
-* Variables
-******************************************************************************/
+ * Variables
+ ******************************************************************************/
 extern usb_cdc_vnic_t g_cdcVnic;
 /* Ethernet rx queue for nic device. */
 queue_t g_enetRxServiceQueue;
@@ -56,7 +56,8 @@ static vnic_enet_transfer_t s_enetRxQueueBuf[ENET_QUEUE_MAX];
 /* Enet rx data bufffer queue. */
 static uint8_t *s_dataRxBuffQue;
 /* Enet rx data bufffer. */
-USB_DMA_DATA_NONCACHEABLE static uint8_t s_dataRxBuffer[ENET_RXRTCSBUFF_NUM][ENET_FRAME_MAX_FRAMELEN + sizeof(enet_header_t)];
+USB_DMA_DATA_NONCACHEABLE static uint8_t s_dataRxBuffer[ENET_RXRTCSBUFF_NUM]
+                                                       [ENET_FRAME_MAX_FRAMELEN + sizeof(enet_header_t)];
 /* Enet available rx data buffer count . */
 static uint32_t s_dataRxBufferFreeCnt = 0;
 
@@ -67,7 +68,8 @@ static vnic_enet_transfer_t s_enetTxQueueBuf[ENET_QUEUE_MAX];
 /* Enet tx data bufffer queue. */
 static uint8_t *s_dataTxBuffQue;
 /* Enet tx data bufffer. */
-USB_DMA_DATA_NONCACHEABLE static uint8_t s_dataTxBuffer[ENET_RXRTCSBUFF_NUM][ENET_FRAME_MAX_FRAMELEN + +sizeof(enet_header_t)];
+USB_DMA_DATA_NONCACHEABLE static uint8_t s_dataTxBuffer[ENET_RXRTCSBUFF_NUM]
+                                                       [ENET_FRAME_MAX_FRAMELEN + +sizeof(enet_header_t)];
 /* Enet available tx data buffer count . */
 static uint32_t s_dataTxBufferFreeCnt = 0;
 
@@ -75,8 +77,8 @@ static uint32_t s_dataTxBufferFreeCnt = 0;
 uint8_t g_hwaddr[ENET_MAC_ADDR_SIZE];
 
 /*******************************************************************************
-* Code
-******************************************************************************/
+ * Code
+ ******************************************************************************/
 /*!
  * @brief Enqueue the rx packet buffer.
  *
@@ -102,7 +104,7 @@ static inline void VNIC_EnetEnqueueRxBuffer(void **queue, void *buffer)
     if (false == isFree)
     {
         *((void **)buffer) = *queue;
-        *queue = buffer;
+        *queue             = buffer;
         s_dataRxBufferFreeCnt++;
     }
     USB_DEVICE_VNIC_EXIT_CRITICAL();
@@ -140,7 +142,7 @@ static inline void *VNIC_EnetDequeueRxBuffer(void **queue)
 uint8_t *VNIC_EnetRxBufAlloc(void)
 {
     uint8_t *ret = NULL;
-    ret = VNIC_EnetDequeueRxBuffer((void **)&s_dataRxBuffQue);
+    ret          = VNIC_EnetDequeueRxBuffer((void **)&s_dataRxBuffQue);
     return (uint8_t *)ret;
 }
 
@@ -179,7 +181,7 @@ static inline void VNIC_EnetEnqueueTxBuffer(void **queue, void *buffer)
     if (false == isFree)
     {
         *((void **)buffer) = *queue;
-        *queue = buffer;
+        *queue             = buffer;
         s_dataTxBufferFreeCnt++;
     }
     USB_DEVICE_VNIC_EXIT_CRITICAL();
@@ -217,7 +219,7 @@ static inline void *VNIC_EnetDequeueTxBuffer(void **queue)
 uint8_t *VNIC_EnetTxBufAlloc(void)
 {
     uint8_t *ret = NULL;
-    ret = VNIC_EnetDequeueTxBuffer((void **)&s_dataTxBuffQue);
+    ret          = VNIC_EnetDequeueTxBuffer((void **)&s_dataTxBuffQue);
     return (uint8_t *)ret;
 }
 
@@ -270,7 +272,7 @@ usb_status_t VNIC_EnetTxDone(void)
     if (kStatus_USB_Success == error)
     {
         packetBuffer.payload = cdcAcmTransfer.buffer;
-        packetBuffer.length = cdcAcmTransfer.length;
+        packetBuffer.length  = cdcAcmTransfer.length;
 
         g_cdcVnic.nicTrafficInfo.enetTxUsb2enetSent++;
         VNIC_EnetTxBufFree(&packetBuffer);
@@ -339,7 +341,7 @@ usb_status_t VNIC_EnetSend(uint8_t *buf, uint32_t len)
     }
     else
     {
-        packetBuffer.length = len;
+        packetBuffer.length   = len;
         cdcAcmTransfer.buffer = packetBuffer.payload;
         cdcAcmTransfer.length = packetBuffer.length;
         memcpy(cdcAcmTransfer.buffer, buf, cdcAcmTransfer.length);
@@ -410,7 +412,7 @@ usb_status_t VNIC_EnetClearEnetQueue(void)
         if (kStatus_USB_Success == error)
         {
             enetPbuf.payload = cdcAcmTransfer.buffer;
-            enetPbuf.length = cdcAcmTransfer.length;
+            enetPbuf.length  = cdcAcmTransfer.length;
             VNIC_EnetRxBufFree(&enetPbuf);
             g_cdcVnic.nicTrafficInfo.enetRxUsb2hostCleared++;
         }
@@ -423,7 +425,7 @@ usb_status_t VNIC_EnetClearEnetQueue(void)
         if (kStatus_USB_Success == error)
         {
             enetPbuf.payload = cdcAcmTransfer.buffer;
-            enetPbuf.length = cdcAcmTransfer.length;
+            enetPbuf.length  = cdcAcmTransfer.length;
             VNIC_EnetTxBufFree(&enetPbuf);
             g_cdcVnic.nicTrafficInfo.enetTxUsb2hostCleared++;
         }

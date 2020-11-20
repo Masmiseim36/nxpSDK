@@ -1,30 +1,8 @@
 /*
- * Copyright 2018 NXP
+ * Copyright 2018-2020 NXP
+ * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
  
 void Clock_Init() 
@@ -123,8 +101,6 @@ void SDRAM_Init() {
   MEM_WriteU32(0x401F80A8,0x00000000); // EMC_37
   MEM_WriteU32(0x401F80AC,0x00000000); // EMC_38
   MEM_WriteU32(0x401F80B0,0x00000000); // EMC_39
-  MEM_WriteU32(0x401F80B4,0x00000000); // EMC_40
-  MEM_WriteU32(0x401F80B8,0x00000000); // EMC_41
   
   // PAD ctrl
   // drive strength = 0x7 to increase drive strength
@@ -169,8 +145,6 @@ void SDRAM_Init() {
   MEM_WriteU32(0x401F8298,0x000000F1); // EMC_37
   MEM_WriteU32(0x401F829C,0x000000F1); // EMC_38
   MEM_WriteU32(0x401F82A0,0x000000F1); // EMC_39
-  MEM_WriteU32(0x401F82A4,0x000000F1); // EMC_40
-  MEM_WriteU32(0x401F82A8,0x000000F1); // EMC_41
 
   // Config SDR Controller Registers/
   MEM_WriteU32(0x402F0000,0x10000004); // MCR
@@ -216,6 +190,24 @@ void SDRAM_Init() {
   Report("SDRAM Init Done");
 }
 
+void RestoreFlexRAM()
+{
+    unsigned int base;
+    unsigned int value;
+
+    base = 0x400AC000;
+
+    value = MEM_ReadU32(base + 0x44);
+    value &= ~(0xFFFF);
+    value |= 0x5FA5;
+    MEM_WriteU32(base + 0x44, value);
+
+    value = MEM_ReadU32(base + 0x40);
+    value |= (1 << 2);
+    MEM_WriteU32(base + 0x40, value);
+    Report("FlexRAM configuration is restored");
+}
+
 /* ConfigTarget */
 void ConfigTargetSettings(void)
 {
@@ -227,6 +219,7 @@ void ConfigTargetSettings(void)
 void SetupTarget(void) {
 
   Report("Enabling i.MXRT SDRAM");
+  RestoreFlexRAM();
   Clock_Init();
   SDRAM_Init();
 }
@@ -234,6 +227,7 @@ void SetupTarget(void) {
 /* AfterResetTarget */
 void AfterResetTarget(void) {
 
+  RestoreFlexRAM();
   Clock_Init();
   SDRAM_Init();
 }

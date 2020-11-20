@@ -578,7 +578,9 @@ include_directories(${ProjDirPath}/../../../../../../components/codec/wm8960)
 
 include_directories(${ProjDirPath}/../../../../../../components/codec)
 
-include_directories(${ProjDirPath}/../../../../../../components/codec/port)
+include_directories(${ProjDirPath}/../../../../../../components/codec/port/wm8960)
+
+include_directories(${ProjDirPath}/../../../../../../components/codec/i2c)
 
 include_directories(${ProjDirPath}/../../../../../../components/i2c)
 
@@ -600,8 +602,6 @@ include_directories(${ProjDirPath}/../../../../../../components/lists)
 
 include_directories(${ProjDirPath}/../../../../../../components/osa)
 
-include_directories(${ProjDirPath}/../../../../../../components/codec/i2c)
-
 include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT1015/utilities)
 
 add_executable(dev_audio_speaker_lite_bm.elf 
@@ -622,9 +622,6 @@ add_executable(dev_audio_speaker_lite_bm.elf
 "${ProjDirPath}/../pin_mux.h"
 "${ProjDirPath}/../../../../../../middleware/usb/device/usb_device_ehci.c"
 "${ProjDirPath}/../../../../../../middleware/usb/device/usb_device_ehci.h"
-"${ProjDirPath}/../../../../../../middleware/usb/include/usb.h"
-"${ProjDirPath}/../../../../../../middleware/usb/include/usb_misc.h"
-"${ProjDirPath}/../../../../../../middleware/usb/include/usb_spec.h"
 "${ProjDirPath}/../../../../../../middleware/usb/phy/usb_phy.c"
 "${ProjDirPath}/../../../../../../middleware/usb/phy/usb_phy.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1015/drivers/fsl_cache.c"
@@ -633,8 +630,12 @@ add_executable(dev_audio_speaker_lite_bm.elf
 "${ProjDirPath}/../../../../../../components/codec/wm8960/fsl_wm8960.h"
 "${ProjDirPath}/../../../../../../components/codec/fsl_codec_common.c"
 "${ProjDirPath}/../../../../../../components/codec/fsl_codec_common.h"
-"${ProjDirPath}/../../../../../../components/codec/port/fsl_codec_adapter.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT1015/drivers/fsl_common.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT1015/drivers/fsl_common.h"
 "${ProjDirPath}/../../../../../../components/codec/port/wm8960/fsl_codec_adapter.c"
+"${ProjDirPath}/../../../../../../components/codec/port/wm8960/fsl_codec_adapter.h"
+"${ProjDirPath}/../../../../../../components/codec/i2c/fsl_codec_i2c.c"
+"${ProjDirPath}/../../../../../../components/codec/i2c/fsl_codec_i2c.h"
 "${ProjDirPath}/../../../../../../components/i2c/i2c.h"
 "${ProjDirPath}/../../../../../../components/i2c/lpi2c_adapter.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1015/drivers/fsl_lpi2c.c"
@@ -647,13 +648,8 @@ add_executable(dev_audio_speaker_lite_bm.elf
 "${ProjDirPath}/../../../../../../devices/MIMXRT1015/drivers/fsl_dmamux.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1015/drivers/fsl_edma.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1015/drivers/fsl_edma.h"
-"${ProjDirPath}/../../../../../../middleware/usb/device/usb_device.h"
-"${ProjDirPath}/../../../../../../middleware/usb/device/usb_device_dci.c"
-"${ProjDirPath}/../../../../../../middleware/usb/device/usb_device_dci.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1015/drivers/fsl_clock.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1015/drivers/fsl_clock.h"
-"${ProjDirPath}/../../../../../../devices/MIMXRT1015/drivers/fsl_common.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT1015/drivers/fsl_common.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1015/MIMXRT1015.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1015/MIMXRT1015_features.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1015/fsl_device_registers.h"
@@ -684,11 +680,18 @@ add_executable(dev_audio_speaker_lite_bm.elf
 "${ProjDirPath}/../../../../../../components/lists/generic_list.h"
 "${ProjDirPath}/../../../../../../components/serial_manager/serial_port_uart.c"
 "${ProjDirPath}/../../../../../../components/serial_manager/serial_port_uart.h"
+"${ProjDirPath}/../../../../../../middleware/usb/device/usb_device.h"
+"${ProjDirPath}/../../../../../../middleware/usb/device/usb_device_dci.c"
+"${ProjDirPath}/../../../../../../middleware/usb/device/usb_device_dci.h"
 "${ProjDirPath}/../../../../../../components/osa/fsl_os_abstraction.h"
 "${ProjDirPath}/../../../../../../components/osa/fsl_os_abstraction_bm.c"
 "${ProjDirPath}/../../../../../../components/osa/fsl_os_abstraction_bm.h"
 "${ProjDirPath}/../../../../../../components/osa/fsl_os_abstraction_config.h"
+"${ProjDirPath}/../../../../../../middleware/usb/include/usb.h"
+"${ProjDirPath}/../../../../../../middleware/usb/include/usb_misc.h"
+"${ProjDirPath}/../../../../../../middleware/usb/include/usb_spec.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/core_cm7.h"
+"${ProjDirPath}/../../../../../../CMSIS/Include/mpu_armv7.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_armcc.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_armclang.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_armclang_ltm.h"
@@ -696,16 +699,11 @@ add_executable(dev_audio_speaker_lite_bm.elf
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_gcc.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_iccarm.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_version.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/core_armv81mml.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/core_armv8mbl.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/core_armv8mml.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/mpu_armv7.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/mpu_armv8.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/arm_common_tables.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/arm_const_structs.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/arm_math.h"
-"${ProjDirPath}/../../../../../../components/codec/i2c/fsl_codec_i2c.c"
-"${ProjDirPath}/../../../../../../components/codec/i2c/fsl_codec_i2c.h"
+"${ProjDirPath}/../../../../../../middleware/usb/device/usb_device.h"
+"${ProjDirPath}/../../../../../../middleware/usb/device/usb_device_dci.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1015/utilities/fsl_sbrk.c"
 )
 

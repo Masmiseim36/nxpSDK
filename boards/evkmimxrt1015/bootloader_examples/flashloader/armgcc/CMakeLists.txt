@@ -178,27 +178,9 @@ SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Xlinker")
 
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Map=output.map")
 
-include_directories(${ProjDirPath}/../../../../../CMSIS/Include)
-
-include_directories(${ProjDirPath}/../../../../../middleware/mcu-boot/src)
-
-include_directories(${ProjDirPath}/../../../../../middleware/mcu-boot/src/bootloader)
-
-include_directories(${ProjDirPath}/../../../../../middleware/mcu-boot/src/bm_usb)
-
-include_directories(${ProjDirPath}/../../../../../middleware/mcu-boot/src/include)
-
 include_directories(${ProjDirPath}/../../../../../middleware/mcu-boot/src/startup)
 
-include_directories(${ProjDirPath}/../../../../../middleware/mcu-boot/src/utilities)
-
-include_directories(${ProjDirPath}/../../../../../middleware/mcu-boot/src/drivers)
-
-include_directories(${ProjDirPath}/../../../../../middleware/mcu-boot/src/drivers/crc)
-
-include_directories(${ProjDirPath}/../../../../../middleware/mcu-boot/src/drivers/microseconds)
-
-include_directories(${ProjDirPath}/../../../../../middleware/mcu-boot/src/drivers/smc)
+include_directories(${ProjDirPath}/../../../../../CMSIS/Include)
 
 include_directories(${ProjDirPath}/../../../../../middleware/mcu-boot/targets/MIMXRT1015/src)
 
@@ -206,30 +188,75 @@ include_directories(${ProjDirPath}/../../../../../middleware/mcu-boot/src/autoba
 
 include_directories(${ProjDirPath}/../../../../../middleware/mcu-boot/src/drivers/sdmmc/inc)
 
-include_directories(${ProjDirPath}/../../../../../middleware/mcu-boot/src/drivers/lpuart)
+include_directories(${ProjDirPath}/..)
 
 include_directories(${ProjDirPath}/../../../../../devices/MIMXRT1015)
 
-include_directories(${ProjDirPath}/../../../../../middleware/mcu-boot/targets/MIMXRT1015/drivers)
+include_directories(${ProjDirPath}/../../../../../devices/MIMXRT1015/drivers)
 
-include_directories(${ProjDirPath}/..)
+include_directories(${ProjDirPath}/../../../../../middleware/mcu-boot/src/bm_usb)
+
+include_directories(${ProjDirPath}/../../../../../middleware/mcu-boot/src/bootloader)
+
+include_directories(${ProjDirPath}/../../../../../middleware/mcu-boot/src/crc)
+
+include_directories(${ProjDirPath}/../../../../../middleware/mcu-boot/src/include)
+
+include_directories(${ProjDirPath}/../../../../../middleware/mcu-boot/src/startup)
+
+include_directories(${ProjDirPath}/../../../../../middleware/mcu-boot/src/utilities)
+
+include_directories(${ProjDirPath}/../../../../../middleware/mcu-boot/src/memory)
+
+include_directories(${ProjDirPath}/../../../../../middleware/mcu-boot/src/memory/src)
+
+include_directories(${ProjDirPath}/../../../../../middleware/mcu-boot/src/packet)
+
+include_directories(${ProjDirPath}/../../../../../middleware/mcu-boot/src/property)
+
+include_directories(${ProjDirPath}/../../../../../middleware/mcu-boot/src/sbloader)
+
+include_directories(${ProjDirPath}/../../../../../middleware/mcu-boot/src/drivers/smc)
+
+include_directories(${ProjDirPath}/../../../../../middleware/mcu-boot/src/drivers/dcp)
+
+include_directories(${ProjDirPath}/../../../../../middleware/mcu-boot/src/drivers/trng)
+
+include_directories(${ProjDirPath}/../../../../../components/osa)
 
 include_directories(${ProjDirPath}/../../../../../middleware/usb/device)
 
 include_directories(${ProjDirPath}/../../../../../middleware/usb/include)
 
-include_directories(${ProjDirPath}/../../../../../middleware/usb/phy)
+include_directories(${ProjDirPath}/../../../../../middleware/mcu-boot/src/drivers/microseconds)
 
-include_directories(${ProjDirPath}/../../../../../components/osa)
+include_directories(${ProjDirPath}/../../../../../middleware/mcu-boot/src/drivers/flexspi)
 
-include_directories(${ProjDirPath}/../../../../../devices/MIMXRT1015/drivers)
+include_directories(${ProjDirPath}/../../../../../middleware/mcu-boot/src/drivers/flexspi_nand)
+
+include_directories(${ProjDirPath}/../../../../../middleware/mcu-boot/src/drivers/ocotp)
 
 include_directories(${ProjDirPath}/../../../../../components/lists)
 
+include_directories(${ProjDirPath}/../../../../../middleware/usb/phy)
+
+include_directories(${ProjDirPath}/../../../../../middleware/mcu-boot/src/drivers/flexspi_nor)
+
+include_directories(${ProjDirPath}/../../../../../middleware/mcu-boot/src/drivers/serial_nor_eeprom)
+
 add_executable(flashloader.elf 
+"${ProjDirPath}/../pin_mux.c"
+"${ProjDirPath}/../pin_mux.h"
 "${ProjDirPath}/../../../../../devices/MIMXRT1015/MIMXRT1015.h"
 "${ProjDirPath}/../../../../../devices/MIMXRT1015/MIMXRT1015_features.h"
 "${ProjDirPath}/../../../../../devices/MIMXRT1015/fsl_device_registers.h"
+"${ProjDirPath}/../../../../../devices/MIMXRT1015/drivers/fsl_clock.c"
+"${ProjDirPath}/../../../../../devices/MIMXRT1015/drivers/fsl_clock.h"
+"${ProjDirPath}/../../../../../devices/MIMXRT1015/drivers/fsl_gpio.c"
+"${ProjDirPath}/../../../../../devices/MIMXRT1015/drivers/fsl_gpio.h"
+"${ProjDirPath}/../../../../../devices/MIMXRT1015/drivers/fsl_lpuart.c"
+"${ProjDirPath}/../../../../../devices/MIMXRT1015/drivers/fsl_lpuart.h"
+"${ProjDirPath}/../../../../../devices/MIMXRT1015/drivers/fsl_iomuxc.h"
 "${ProjDirPath}/../../../../../devices/MIMXRT1015/system_MIMXRT1015.h"
 "${ProjDirPath}/../../../../../middleware/mcu-boot/src/startup/crt0_gcc.S"
 "${ProjDirPath}/../../../../../middleware/mcu-boot/targets/MIMXRT1015/src/startup/gcc/startup_MIMXRT1015.S"
@@ -240,8 +267,6 @@ add_executable(flashloader.elf
 "${ProjDirPath}/../../../../../middleware/mcu-boot/src/bm_usb/fat_directory_entry.h"
 "${ProjDirPath}/../../../../../middleware/mcu-boot/src/bm_usb/hid_bootloader.c"
 "${ProjDirPath}/../../../../../middleware/mcu-boot/src/bm_usb/hid_bootloader.h"
-"${ProjDirPath}/../../../../../middleware/mcu-boot/src/bm_usb/msc_disk.c"
-"${ProjDirPath}/../../../../../middleware/mcu-boot/src/bm_usb/msc_disk.h"
 "${ProjDirPath}/../../../../../middleware/mcu-boot/src/bm_usb/usb_descriptor.c"
 "${ProjDirPath}/../../../../../middleware/mcu-boot/src/bm_usb/usb_descriptor.h"
 "${ProjDirPath}/../../../../../middleware/mcu-boot/src/autobaud/autobaud.h"
@@ -271,8 +296,6 @@ add_executable(flashloader.elf
 "${ProjDirPath}/../../../../../middleware/mcu-boot/src/crc/src/crc32.c"
 "${ProjDirPath}/../../../../../middleware/mcu-boot/src/include/bootloader_common.h"
 "${ProjDirPath}/../../../../../middleware/mcu-boot/src/memory/memory.h"
-"${ProjDirPath}/../../../../../middleware/mcu-boot/src/memory/src/device_memory.c"
-"${ProjDirPath}/../../../../../middleware/mcu-boot/src/memory/src/device_memory.h"
 "${ProjDirPath}/../../../../../middleware/mcu-boot/src/memory/src/memory.c"
 "${ProjDirPath}/../../../../../middleware/mcu-boot/src/memory/src/normal_memory.c"
 "${ProjDirPath}/../../../../../middleware/mcu-boot/src/memory/src/normal_memory.h"
@@ -300,66 +323,58 @@ add_executable(flashloader.elf
 "${ProjDirPath}/../../../../../middleware/mcu-boot/src/bootloader/src/bl_nor_encrypt_bee.c"
 "${ProjDirPath}/../../../../../middleware/mcu-boot/src/bootloader/src/lpuart_peripheral_interface.c"
 "${ProjDirPath}/../../../../../middleware/mcu-boot/src/bootloader/src/usb_hid_msc_peripheral_interface.c"
-"${ProjDirPath}/../../../../../middleware/mcu-boot/src/drivers/dcp/fsl_dcp.c"
-"${ProjDirPath}/../../../../../middleware/mcu-boot/src/drivers/dcp/fsl_dcp.h"
-"${ProjDirPath}/../../../../../middleware/mcu-boot/src/drivers/igpio/fsl_gpio.c"
-"${ProjDirPath}/../../../../../middleware/mcu-boot/src/drivers/igpio/fsl_gpio.h"
-"${ProjDirPath}/../../../../../middleware/mcu-boot/src/drivers/lpuart/fsl_lpuart.c"
-"${ProjDirPath}/../../../../../middleware/mcu-boot/src/drivers/lpuart/fsl_lpuart.h"
-"${ProjDirPath}/../../../../../middleware/mcu-boot/src/drivers/port/fsl_port.h"
+"${ProjDirPath}/../../../../../middleware/mcu-boot/src/drivers/dcp/bl_dcp.c"
+"${ProjDirPath}/../../../../../middleware/mcu-boot/src/drivers/dcp/bl_dcp.h"
 "${ProjDirPath}/../../../../../middleware/mcu-boot/src/drivers/smc/smc.h"
-"${ProjDirPath}/../../../../../middleware/mcu-boot/src/drivers/trng/fsl_trng.c"
-"${ProjDirPath}/../../../../../middleware/mcu-boot/src/drivers/trng/fsl_trng.h"
+"${ProjDirPath}/../../../../../middleware/mcu-boot/src/drivers/trng/bl_trng.c"
+"${ProjDirPath}/../../../../../middleware/mcu-boot/src/drivers/trng/bl_trng.h"
 "${ProjDirPath}/../../../../../middleware/mcu-boot/src/property/src/property_imx.c"
-"${ProjDirPath}/../../../../../middleware/mcu-boot/targets/MIMXRT1015/drivers/fsl_iomuxc.h"
+"${ProjDirPath}/../../../../../middleware/mcu-boot/targets/MIMXRT1015/src/bl_clock_config_MIMXRT1015.c"
 "${ProjDirPath}/../../../../../middleware/mcu-boot/targets/MIMXRT1015/src/bl_lpuart_irq_config_MIMXRT1015.c"
+"${ProjDirPath}/../../../../../middleware/mcu-boot/targets/MIMXRT1015/src/bl_peripherals_MIMXRT1015.c"
 "${ProjDirPath}/../../../../../middleware/mcu-boot/targets/MIMXRT1015/src/bootloader_config.h"
-"${ProjDirPath}/../../../../../middleware/mcu-boot/targets/MIMXRT1015/src/clock_config_MIMXRT1015.c"
 "${ProjDirPath}/../../../../../middleware/mcu-boot/targets/MIMXRT1015/src/external_memory_property_map_MIMXRT1015.c"
 "${ProjDirPath}/../../../../../middleware/mcu-boot/targets/MIMXRT1015/src/flexspi_nand_config_MIMXRT1015.c"
 "${ProjDirPath}/../../../../../middleware/mcu-boot/targets/MIMXRT1015/src/flexspi_nor_config_MIMXRT1015.c"
 "${ProjDirPath}/../../../../../middleware/mcu-boot/targets/MIMXRT1015/src/fusemap.h"
 "${ProjDirPath}/../../../../../middleware/mcu-boot/targets/MIMXRT1015/src/hardware_init_MIMXRT1015.c"
 "${ProjDirPath}/../../../../../middleware/mcu-boot/targets/MIMXRT1015/src/memory_map_MIMXRT1015.c"
-"${ProjDirPath}/../../../../../middleware/mcu-boot/targets/MIMXRT1015/src/peripherals_MIMXRT1015.c"
 "${ProjDirPath}/../../../../../middleware/mcu-boot/targets/MIMXRT1015/src/peripherals_pinmux.h"
 "${ProjDirPath}/../../../../../middleware/mcu-boot/targets/MIMXRT1015/src/sram_init_MIMXRT1015.c"
 "${ProjDirPath}/../../../../../middleware/mcu-boot/targets/MIMXRT1015/src/target_config.h"
 "${ProjDirPath}/../../../../../middleware/mcu-boot/targets/MIMXRT1015/src/usb_device_config.h"
 "${ProjDirPath}/../../../../../middleware/mcu-boot/targets/common/src/pinmux_utility_imxrt_series.c"
-"${ProjDirPath}/../../../../../middleware/usb/device/usb_device_ehci.c"
-"${ProjDirPath}/../../../../../middleware/usb/device/usb_device_ehci.h"
-"${ProjDirPath}/../../../../../middleware/usb/include/usb.h"
-"${ProjDirPath}/../../../../../middleware/usb/include/usb_misc.h"
-"${ProjDirPath}/../../../../../middleware/usb/include/usb_spec.h"
-"${ProjDirPath}/../usb_device_hid.c"
-"${ProjDirPath}/../usb_device_hid.h"
-"${ProjDirPath}/../usb_device_msc.c"
-"${ProjDirPath}/../usb_device_msc.h"
-"${ProjDirPath}/../usb_device_msc_ufi.c"
-"${ProjDirPath}/../usb_device_msc_ufi.h"
-"${ProjDirPath}/../usb_device_ch9.c"
-"${ProjDirPath}/../usb_device_ch9.h"
-"${ProjDirPath}/../usb_device_class.c"
-"${ProjDirPath}/../usb_device_class.h"
 "${ProjDirPath}/../../../../../middleware/usb/device/usb_device.h"
 "${ProjDirPath}/../../../../../middleware/usb/device/usb_device_dci.c"
 "${ProjDirPath}/../../../../../middleware/usb/device/usb_device_dci.h"
+"${ProjDirPath}/../../../../../components/osa/fsl_os_abstraction.h"
+"${ProjDirPath}/../../../../../components/osa/fsl_os_abstraction_bm.c"
+"${ProjDirPath}/../../../../../components/osa/fsl_os_abstraction_bm.h"
+"${ProjDirPath}/../../../../../components/osa/fsl_os_abstraction_config.h"
+"${ProjDirPath}/../../../../../middleware/usb/device/usb_device_ehci.c"
+"${ProjDirPath}/../../../../../middleware/usb/device/usb_device_ehci.h"
+"${ProjDirPath}/../usb_device_hid.c"
+"${ProjDirPath}/../usb_device_hid.h"
+"${ProjDirPath}/../usb_device_class.c"
+"${ProjDirPath}/../usb_device_class.h"
+"${ProjDirPath}/../usb_device_ch9.c"
+"${ProjDirPath}/../usb_device_ch9.h"
 "${ProjDirPath}/../../../../../middleware/mcu-boot/src/include/bootloader_core.h"
 "${ProjDirPath}/../../../../../middleware/mcu-boot/src/startup/startup.c"
 "${ProjDirPath}/../../../../../middleware/mcu-boot/src/drivers/microseconds/microseconds.h"
 "${ProjDirPath}/../../../../../middleware/mcu-boot/src/drivers/microseconds/src/microseconds_pit.c"
 "${ProjDirPath}/../../../../../middleware/mcu-boot/src/memory/src/flexspi_nor_memory.c"
 "${ProjDirPath}/../../../../../middleware/mcu-boot/src/memory/src/flexspi_nor_memory.h"
-"${ProjDirPath}/../../../../../middleware/mcu-boot/src/drivers/flexspi/fsl_flexspi.c"
-"${ProjDirPath}/../../../../../middleware/mcu-boot/src/drivers/flexspi/fsl_flexspi.h"
+"${ProjDirPath}/../../../../../middleware/mcu-boot/src/drivers/flexspi/bl_flexspi.c"
+"${ProjDirPath}/../../../../../middleware/mcu-boot/src/drivers/flexspi/bl_flexspi.h"
 "${ProjDirPath}/../../../../../middleware/mcu-boot/src/drivers/flexspi_nand/flexspi_nand_flash.c"
 "${ProjDirPath}/../../../../../middleware/mcu-boot/src/drivers/flexspi_nand/flexspi_nand_flash.h"
 "${ProjDirPath}/../../../../../middleware/mcu-boot/src/memory/src/spi_nor_eeprom_memory.c"
 "${ProjDirPath}/../../../../../middleware/mcu-boot/src/memory/src/spi_nor_eeprom_memory.h"
-"${ProjDirPath}/../../../../../middleware/mcu-boot/src/drivers/ocotp/fsl_ocotp.c"
-"${ProjDirPath}/../../../../../middleware/mcu-boot/src/drivers/ocotp/fsl_ocotp.h"
+"${ProjDirPath}/../../../../../middleware/mcu-boot/src/drivers/ocotp/bl_ocotp.c"
+"${ProjDirPath}/../../../../../middleware/mcu-boot/src/drivers/ocotp/bl_ocotp.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/core_cm7.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/mpu_armv7.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/cmsis_armcc.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/cmsis_armclang.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/cmsis_armclang_ltm.h"
@@ -367,34 +382,28 @@ add_executable(flashloader.elf
 "${ProjDirPath}/../../../../../CMSIS/Include/cmsis_gcc.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/cmsis_iccarm.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/cmsis_version.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/core_armv81mml.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/core_armv8mbl.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/core_armv8mml.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/mpu_armv7.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/mpu_armv8.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/arm_common_tables.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/arm_const_structs.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/arm_math.h"
-"${ProjDirPath}/../../../../../middleware/usb/phy/usb_phy.c"
-"${ProjDirPath}/../../../../../middleware/usb/phy/usb_phy.h"
-"${ProjDirPath}/../../../../../components/osa/fsl_os_abstraction.h"
-"${ProjDirPath}/../../../../../components/osa/fsl_os_abstraction_bm.c"
-"${ProjDirPath}/../../../../../components/osa/fsl_os_abstraction_bm.h"
-"${ProjDirPath}/../../../../../components/osa/fsl_os_abstraction_config.h"
 "${ProjDirPath}/../../../../../devices/MIMXRT1015/drivers/fsl_common.c"
 "${ProjDirPath}/../../../../../devices/MIMXRT1015/drivers/fsl_common.h"
-"${ProjDirPath}/../../../../../devices/MIMXRT1015/drivers/fsl_clock.c"
-"${ProjDirPath}/../../../../../devices/MIMXRT1015/drivers/fsl_clock.h"
 "${ProjDirPath}/../../../../../components/lists/generic_list.c"
 "${ProjDirPath}/../../../../../components/lists/generic_list.h"
-"${ProjDirPath}/../../../../../middleware/mcu-boot/src/drivers/flexspi/fsl_flexspi.c"
-"${ProjDirPath}/../../../../../middleware/mcu-boot/src/drivers/flexspi/fsl_flexspi.h"
+"${ProjDirPath}/../../../../../middleware/usb/phy/usb_phy.c"
+"${ProjDirPath}/../../../../../middleware/usb/phy/usb_phy.h"
+"${ProjDirPath}/../../../../../middleware/usb/include/usb.h"
+"${ProjDirPath}/../../../../../middleware/usb/include/usb_misc.h"
+"${ProjDirPath}/../../../../../middleware/usb/include/usb_spec.h"
+"${ProjDirPath}/../../../../../middleware/usb/device/usb_device.h"
+"${ProjDirPath}/../../../../../middleware/usb/device/usb_device_dci.h"
+"${ProjDirPath}/../../../../../middleware/mcu-boot/src/drivers/flexspi/bl_flexspi.c"
+"${ProjDirPath}/../../../../../middleware/mcu-boot/src/drivers/flexspi/bl_flexspi.h"
 "${ProjDirPath}/../../../../../middleware/mcu-boot/src/drivers/flexspi_nor/flexspi_nor_flash.c"
 "${ProjDirPath}/../../../../../middleware/mcu-boot/src/drivers/flexspi_nor/flexspi_nor_flash.h"
-"${ProjDirPath}/../../../../../middleware/mcu-boot/src/drivers/lpspi/fsl_lpspi.c"
-"${ProjDirPath}/../../../../../middleware/mcu-boot/src/drivers/lpspi/fsl_lpspi.h"
 "${ProjDirPath}/../../../../../middleware/mcu-boot/src/drivers/serial_nor_eeprom/serial_nor_eeprom.c"
 "${ProjDirPath}/../../../../../middleware/mcu-boot/src/drivers/serial_nor_eeprom/serial_nor_eeprom.h"
+"${ProjDirPath}/../../../../../devices/MIMXRT1015/drivers/fsl_lpspi.c"
+"${ProjDirPath}/../../../../../devices/MIMXRT1015/drivers/fsl_lpspi.h"
 )
 
 

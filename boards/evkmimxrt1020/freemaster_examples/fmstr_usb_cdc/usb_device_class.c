@@ -314,8 +314,8 @@ usb_status_t USB_DeviceClassEvent(usb_device_handle handle, usb_device_class_eve
     usb_device_common_class_struct_t *classHandle;
     uint8_t mapIndex;
     uint8_t classIndex;
-    usb_status_t errorReturn = kStatus_USB_Error;
-    usb_status_t error       = kStatus_USB_Error;
+    usb_status_t errorReturn;
+    usb_status_t status = kStatus_USB_Error;
 
     if (NULL == param)
     {
@@ -349,14 +349,14 @@ usb_status_t USB_DeviceClassEvent(usb_device_handle handle, usb_device_class_eve
                 /* For composite device, it should return kStatus_USB_Success once a valid request has been handled */
                 if (kStatus_USB_Success == errorReturn)
                 {
-                    error = kStatus_USB_Success;
+                    status = kStatus_USB_Success;
                 }
                 break;
             }
         }
     }
 
-    return error;
+    return status;
 }
 
 /*!
@@ -373,28 +373,28 @@ usb_status_t USB_DeviceClassEvent(usb_device_handle handle, usb_device_class_eve
 usb_status_t USB_DeviceClassCallback(usb_device_handle handle, uint32_t event, void *param)
 {
     usb_device_common_class_struct_t *classHandle;
-    usb_status_t error = kStatus_USB_Error;
+    usb_status_t status;
 
     /* Get the common class handle according to the device handle. */
-    error = USB_DeviceClassGetHandleByDeviceHandle(handle, &classHandle);
-    if (kStatus_USB_Success != error)
+    status = USB_DeviceClassGetHandleByDeviceHandle(handle, &classHandle);
+    if (kStatus_USB_Success != status)
     {
-        return error;
+        return status;
     }
 
-    if (kUSB_DeviceEventBusReset == event)
+    if ((uint32_t)kUSB_DeviceEventBusReset == event)
     {
         /* Initialize the control pipes */
-        USB_DeviceControlPipeInit(handle, classHandle);
+        (void)USB_DeviceControlPipeInit(handle, classHandle);
 
         /* Notify the classes the USB bus reset signal detected. */
-        USB_DeviceClassEvent(handle, kUSB_DeviceClassEventDeviceReset, classHandle);
+        (void)USB_DeviceClassEvent(handle, kUSB_DeviceClassEventDeviceReset, classHandle);
     }
 
     /* Call the application device callback function. deviceCallback is from the second parameter of
        USB_DeviceClassInit */
-    error = classHandle->configList->deviceCallback(handle, event, param);
-    return error;
+    status = classHandle->configList->deviceCallback(handle, event, param);
+    return status;
 }
 
 /*!
@@ -421,7 +421,7 @@ usb_status_t USB_DeviceClassInit(
 )
 {
     usb_device_common_class_struct_t *classHandle;
-    usb_status_t error = kStatus_USB_Error;
+    usb_status_t error;
     uint8_t mapIndex;
     uint8_t classIndex;
 
@@ -444,8 +444,8 @@ usb_status_t USB_DeviceClassInit(
 
     if (kStatus_USB_Success != error)
     {
-        USB_DeviceDeinit(classHandle->handle);
-        USB_DeviceClassFreeHandle(controllerId);
+        (void)USB_DeviceDeinit(classHandle->handle);
+        (void)USB_DeviceClassFreeHandle(controllerId);
         return error;
     }
 
@@ -482,7 +482,7 @@ usb_status_t USB_DeviceClassDeinit(uint8_t controllerId /*!< [IN] Controller ID 
 )
 {
     usb_device_common_class_struct_t *classHandle;
-    usb_status_t error = kStatus_USB_Error;
+    usb_status_t error;
     uint8_t mapIndex;
     uint8_t classIndex;
 
@@ -534,7 +534,7 @@ usb_status_t USB_DeviceClassGetSpeed(uint8_t controllerId, /*!< [IN] Controller 
 )
 {
     usb_device_common_class_struct_t *classHandle;
-    usb_status_t error = kStatus_USB_Error;
+    usb_status_t error;
 
     /* Get the common class handle according to the controller id. */
     error = USB_DeviceClassGetHandleByControllerId(controllerId, &classHandle);

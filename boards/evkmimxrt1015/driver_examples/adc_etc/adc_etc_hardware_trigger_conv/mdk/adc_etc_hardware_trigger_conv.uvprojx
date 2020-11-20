@@ -333,7 +333,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>DEBUG, CPU_MIMXRT1015DAF5A, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../devices/MIMXRT1015/drivers;../../../../../../devices/MIMXRT1015/drivers;../../../../../../devices/MIMXRT1015/drivers;../../../../../../devices/MIMXRT1015/drivers;../../../../../../devices/MIMXRT1015/drivers;../../../../../../devices/MIMXRT1015/drivers;../../../../../../devices/MIMXRT1015;../../../../../../devices/MIMXRT1015/utilities/str;../../../../../../devices/MIMXRT1015/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1015/drivers;../../../../../../devices/MIMXRT1015/drivers;../../../../../../devices/MIMXRT1015/drivers;../../../../../../devices/MIMXRT1015/xip;../../../../xip;../../../../../../devices/MIMXRT1015/utilities</IncludePath>
+              <IncludePath>..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../devices/MIMXRT1015/drivers;../../../../../../devices/MIMXRT1015;../../../../../../devices/MIMXRT1015/utilities/str;../../../../../../devices/MIMXRT1015/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1015/xip;../../../../xip;../../../../../../devices/MIMXRT1015/utilities</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -648,9 +648,9 @@
           <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_MIMXRT1015.s</FileName>
+              <FileName>startup_MIMXRT1015.S</FileName>
               <FileType>2</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1015/arm/startup_MIMXRT1015.s</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1015/arm/startup_MIMXRT1015.S</FilePath>
             </File>
           </Files>
         </Group>
@@ -688,6 +688,11 @@
               <FilePath>../../../../../../CMSIS/Include/core_cm7.h</FilePath>
             </File>
             <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
+            </File>
+            <File>
               <FileName>cmsis_armcc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
@@ -721,31 +726,6 @@
               <FileName>cmsis_version.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv81mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv81mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mbl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
             </File>
             <File>
               <FileName>arm_common_tables.h</FileName>
@@ -1096,7 +1076,7 @@
               <MiscControls>-ffunction-sections  -fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1015DAF5A, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../devices/MIMXRT1015/drivers;../../../../../../devices/MIMXRT1015/drivers;../../../../../../devices/MIMXRT1015/drivers;../../../../../../devices/MIMXRT1015/drivers;../../../../../../devices/MIMXRT1015/drivers;../../../../../../devices/MIMXRT1015/drivers;../../../../../../devices/MIMXRT1015;../../../../../../devices/MIMXRT1015/utilities/str;../../../../../../devices/MIMXRT1015/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1015/drivers;../../../../../../devices/MIMXRT1015/drivers;../../../../../../devices/MIMXRT1015/drivers;../../../../../../devices/MIMXRT1015/xip;../../../../xip;../../../../../../devices/MIMXRT1015/utilities</IncludePath>
+              <IncludePath>..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../devices/MIMXRT1015/drivers;../../../../../../devices/MIMXRT1015;../../../../../../devices/MIMXRT1015/utilities/str;../../../../../../devices/MIMXRT1015/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1015/xip;../../../../xip;../../../../../../devices/MIMXRT1015/utilities</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1130,7 +1110,7 @@
             <ScatterFile>MIMXRT1015xxxxx_flexspi_nor.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --keep=*(.boot_hdr.ivt) --keep=*(.boot_hdr.boot_data) --keep=*(.boot_hdr.conf) --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
+            <Misc>--remove --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -1411,9 +1391,9 @@
           <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_MIMXRT1015.s</FileName>
+              <FileName>startup_MIMXRT1015.S</FileName>
               <FileType>2</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1015/arm/startup_MIMXRT1015.s</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1015/arm/startup_MIMXRT1015.S</FilePath>
             </File>
           </Files>
         </Group>
@@ -1451,6 +1431,11 @@
               <FilePath>../../../../../../CMSIS/Include/core_cm7.h</FilePath>
             </File>
             <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
+            </File>
+            <File>
               <FileName>cmsis_armcc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
@@ -1484,31 +1469,6 @@
               <FileName>cmsis_version.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv81mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv81mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mbl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
             </File>
             <File>
               <FileName>arm_common_tables.h</FileName>
@@ -1859,7 +1819,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>NDEBUG, CPU_MIMXRT1015DAF5A, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../devices/MIMXRT1015/drivers;../../../../../../devices/MIMXRT1015/drivers;../../../../../../devices/MIMXRT1015/drivers;../../../../../../devices/MIMXRT1015/drivers;../../../../../../devices/MIMXRT1015/drivers;../../../../../../devices/MIMXRT1015/drivers;../../../../../../devices/MIMXRT1015;../../../../../../devices/MIMXRT1015/utilities/str;../../../../../../devices/MIMXRT1015/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1015/drivers;../../../../../../devices/MIMXRT1015/drivers;../../../../../../devices/MIMXRT1015/drivers;../../../../../../devices/MIMXRT1015/xip;../../../../xip;../../../../../../devices/MIMXRT1015/utilities</IncludePath>
+              <IncludePath>..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../devices/MIMXRT1015/drivers;../../../../../../devices/MIMXRT1015;../../../../../../devices/MIMXRT1015/utilities/str;../../../../../../devices/MIMXRT1015/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1015/xip;../../../../xip;../../../../../../devices/MIMXRT1015/utilities</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2174,9 +2134,9 @@
           <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_MIMXRT1015.s</FileName>
+              <FileName>startup_MIMXRT1015.S</FileName>
               <FileType>2</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1015/arm/startup_MIMXRT1015.s</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1015/arm/startup_MIMXRT1015.S</FilePath>
             </File>
           </Files>
         </Group>
@@ -2214,6 +2174,11 @@
               <FilePath>../../../../../../CMSIS/Include/core_cm7.h</FilePath>
             </File>
             <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
+            </File>
+            <File>
               <FileName>cmsis_armcc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
@@ -2247,31 +2212,6 @@
               <FileName>cmsis_version.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv81mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv81mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mbl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
             </File>
             <File>
               <FileName>arm_common_tables.h</FileName>
@@ -2622,7 +2562,7 @@
               <MiscControls>-ffunction-sections  -fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1015DAF5A, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../devices/MIMXRT1015/drivers;../../../../../../devices/MIMXRT1015/drivers;../../../../../../devices/MIMXRT1015/drivers;../../../../../../devices/MIMXRT1015/drivers;../../../../../../devices/MIMXRT1015/drivers;../../../../../../devices/MIMXRT1015/drivers;../../../../../../devices/MIMXRT1015;../../../../../../devices/MIMXRT1015/utilities/str;../../../../../../devices/MIMXRT1015/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1015/drivers;../../../../../../devices/MIMXRT1015/drivers;../../../../../../devices/MIMXRT1015/drivers;../../../../../../devices/MIMXRT1015/xip;../../../../xip;../../../../../../devices/MIMXRT1015/utilities</IncludePath>
+              <IncludePath>..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../devices/MIMXRT1015/drivers;../../../../../../devices/MIMXRT1015;../../../../../../devices/MIMXRT1015/utilities/str;../../../../../../devices/MIMXRT1015/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1015/xip;../../../../xip;../../../../../../devices/MIMXRT1015/utilities</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2656,7 +2596,7 @@
             <ScatterFile>MIMXRT1015xxxxx_flexspi_nor.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --keep=*(.boot_hdr.ivt) --keep=*(.boot_hdr.boot_data) --keep=*(.boot_hdr.conf) --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
+            <Misc>--remove --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -2937,9 +2877,9 @@
           <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_MIMXRT1015.s</FileName>
+              <FileName>startup_MIMXRT1015.S</FileName>
               <FileType>2</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1015/arm/startup_MIMXRT1015.s</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1015/arm/startup_MIMXRT1015.S</FilePath>
             </File>
           </Files>
         </Group>
@@ -2977,6 +2917,11 @@
               <FilePath>../../../../../../CMSIS/Include/core_cm7.h</FilePath>
             </File>
             <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
+            </File>
+            <File>
               <FileName>cmsis_armcc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
@@ -3010,31 +2955,6 @@
               <FileName>cmsis_version.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv81mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv81mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mbl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
             </File>
             <File>
               <FileName>arm_common_tables.h</FileName>

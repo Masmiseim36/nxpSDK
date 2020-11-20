@@ -28,9 +28,9 @@
 #define SERVER_VERIFICATION 0
 /* This is the value used for ssl read timeout */
 #define IOT_SSL_READ_TIMEOUT 10
-#define GET_REQUEST "GET"
-#define DEBUG_LEVEL 0
-#define DEBUG_CALLBACKS 0
+#define GET_REQUEST          "GET"
+#define DEBUG_LEVEL          0
+#define DEBUG_CALLBACKS      0
 #define NV(name, value, valueLen)                                                           \
     {                                                                                       \
         (uint8_t *)name, (uint8_t *)value, sizeof(name) - 1, valueLen, NGHTTP2_NV_FLAG_NONE \

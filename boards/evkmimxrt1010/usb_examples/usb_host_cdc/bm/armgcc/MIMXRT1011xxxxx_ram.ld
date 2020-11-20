@@ -4,15 +4,15 @@
 **                          MIMXRT1011DAE5A
 **
 **     Compiler:            GNU C Compiler
-**     Reference manual:    IMXRT1010RM Rev.A, 03/2019
-**     Version:             rev. 0.1, 2019-02-14
-**     Build:               b190716
+**     Reference manual:    IMXRT1010RM Rev.0, 09/2019
+**     Version:             rev. 1.0, 2019-08-01
+**     Build:               b200110
 **
 **     Abstract:
 **         Linker file for the GNU C Compiler
 **
 **     Copyright 2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2019 NXP
+**     Copyright 2016-2020 NXP
 **     All rights reserved.
 **
 **     SPDX-License-Identifier: BSD-3-Clause
@@ -48,13 +48,11 @@ SECTIONS
   .interrupts :
   {
     __VECTOR_TABLE = .;
+    __Vectors = .;
     . = ALIGN(4);
     KEEP(*(.isr_vector))     /* Startup code */
     . = ALIGN(4);
   } > m_interrupts
-
-  __VECTOR_RAM = __VECTOR_TABLE;
-  __RAM_VECTOR_TABLE_SIZE_BYTES = 0x0;
 
   /* The program code and other data goes into internal RAM */
   .text :
@@ -144,6 +142,9 @@ SECTIONS
 
   __etext = .;    /* define a global symbol at end of code */
   __DATA_ROM = .; /* Symbol is used by startup for data initialization */
+
+  __VECTOR_RAM = ORIGIN(m_interrupts);
+  __RAM_VECTOR_TABLE_SIZE_BYTES = 0x0;
 
   .data : AT(__DATA_ROM)
   {

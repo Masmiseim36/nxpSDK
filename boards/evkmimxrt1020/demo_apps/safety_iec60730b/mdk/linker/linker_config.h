@@ -49,16 +49,12 @@
     #define SDRAM_end            0x81FFFFFF
 
     /* Compatibility with placing IVT in vectors_mdk.c and setting VTOR in startup_mdk.c */
-    #ifdef DEBUG        
-        #define __VECTOR_TABLE   RAM_interrupts_start
-        #define __ROM_start__    RAM_interrupts_start
-    #else
-        #define __VECTOR_TABLE   ROM_interrupts_start
-        #define __ROM_start__    ROM_interrupts_start
+    #undef  __VECTOR_TABLE
+    #define __VECTOR_TABLE   ROM_interrupts_start
+    #define __ROM_start__    ROM_interrupts_start
         
-        #define __PC_test_start__    0x60002410 /* PC object address */
-        #define __PC_test_end__      0x6000242F /* PC object reserved size: 0x20 */ 
-    #endif /* DEBUG */
+    #define __PC_test_start__    0x60002410 /* PC object address */
+    #define __PC_test_end__      0x6000242F /* PC object reserved size: 0x20 */ 
 
     /***** NOT USED IN THIS EXAMPLE *****/
     #define SRAM_OC_start 0x20200000 /* Part of on-chip RAM */
@@ -69,7 +65,7 @@
 	/******************     SYMBOLS     *******************************************/
 	/******************************************************************************/
 	#define m_ram_test_backup    SRAM_DTC_end - ram_test_backup_size + 0x1
-	#define m_wd_test_backup     m_ram_test_backup - 0x10
+	#define m_wd_test_backup     m_ram_test_backup - 0x20
 	#define m_pc_test_flag       m_wd_test_backup - 0x4
 	#define m_safety_error_code  m_pc_test_flag - 0x4
 	#define m_stack_test_p_4     m_safety_error_code - 0x4

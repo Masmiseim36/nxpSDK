@@ -57,7 +57,7 @@ define symbol m_interrupts_start       = 0x60002000;
 define symbol m_interrupts_end         = 0x600023FF;
 
 define symbol m_text_start             = 0x60002400;
-define symbol m_text_end               = 0x63FFFFFF;
+define symbol m_text_end               = 0x607FFFFF;
 
 define symbol m_data_start             = 0x20000000;
 define symbol m_data_end               = 0x2001FFFF;

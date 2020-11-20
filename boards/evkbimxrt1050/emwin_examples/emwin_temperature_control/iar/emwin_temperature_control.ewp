@@ -185,7 +185,9 @@
           <state>XIP_BOOT_HEADER_ENABLE=1</state>
           <state>XIP_BOOT_HEADER_DCD_ENABLE=1</state>
           <state>SKIP_SYSCLK_INIT</state>
+          <state>DATA_SECTION_IS_CACHEABLE=1</state>
           <state>CPU_MIMXRT1052DVL6B</state>
+          <state>APPWIZARD</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
@@ -322,24 +324,14 @@
           <state>$PROJ_DIR$/../../../../../middleware/emwin/emWin_Config</state>
           <state>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/drivers</state>
           <state>$PROJ_DIR$/../../../../../components/ft5406_rt</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/xip</state>
-          <state>$PROJ_DIR$/../../../xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities</state>
         </option>
@@ -1177,8 +1169,10 @@
           <state>XIP_BOOT_HEADER_ENABLE=1</state>
           <state>XIP_BOOT_HEADER_DCD_ENABLE=1</state>
           <state>SKIP_SYSCLK_INIT</state>
+          <state>DATA_SECTION_IS_CACHEABLE=1</state>
           <state>NDEBUG</state>
           <state>CPU_MIMXRT1052DVL6B</state>
+          <state>APPWIZARD</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
@@ -1315,24 +1309,14 @@
           <state>$PROJ_DIR$/../../../../../middleware/emwin/emWin_Config</state>
           <state>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/drivers</state>
           <state>$PROJ_DIR$/../../../../../components/ft5406_rt</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/xip</state>
-          <state>$PROJ_DIR$/../../../xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities</state>
         </option>
@@ -1994,30 +1978,6 @@
     </file>
   </group>
   <group>
-    <name>Resources</name>
-    <file>
-      <name>$PROJ_DIR$/../Resource.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../bmButtonRound_50x22.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../bmButtonRoundPressed_50x22.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../bmSEGGER_80x40.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../bmKNOB_124x124.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../Font_AA4_16_B.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../Font_AA4_16_L.c</name>
-    </file>
-  </group>
-  <group>
     <name>board</name>
     <file>
       <name>$PROJ_DIR$/../pin_mux.c</name>
@@ -2042,6 +2002,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../clock_config.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../dcd.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../dcd.h</name>
     </file>
   </group>
   <group>
@@ -2114,6 +2080,90 @@
     </file>
   </group>
   <group>
+    <name>AppWizard</name>
+    <file>
+      <name>$PROJ_DIR$/../AppWizard/APPW_X_NoFS.c</name>
+    </file>
+    <group>
+      <name>Resource</name>
+      <group>
+        <name>Font</name>
+        <file>
+          <name>$PROJ_DIR$/../AppWizard/Resource/Font/NettoOT_24_Normal_EXT_AA4.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../AppWizard/Resource/Font/Roboto_16_Normal_EXT_AA4.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../AppWizard/Resource/Font/Roboto_24_Normal_EXT_AA4.c</name>
+        </file>
+      </group>
+      <group>
+        <name>Image</name>
+        <file>
+          <name>$PROJ_DIR$/../AppWizard/Resource/Image/ButtonRoundPressed_48x21.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../AppWizard/Resource/Image/ButtonRound_48x21.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../AppWizard/Resource/Image/GreenGlowMarker_16x9.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../AppWizard/Resource/Image/KNOB_106x106.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../AppWizard/Resource/Image/SeggerLogo_80x40.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../AppWizard/Resource/Image/TemperatureControl_3_480x272.c</name>
+        </file>
+      </group>
+      <group>
+        <name>Text</name>
+        <file>
+          <name>$PROJ_DIR$/../AppWizard/Resource/Text/APPW_Language_0.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../AppWizard/Resource/Text/APPW_Pattern.c</name>
+        </file>
+      </group>
+    </group>
+    <group>
+      <name>Source</name>
+      <file>
+        <name>$PROJ_DIR$/../AppWizard/Source/APPW_MainTask.c</name>
+      </file>
+      <group>
+        <name>CustomCode</name>
+        <file>
+          <name>$PROJ_DIR$/../AppWizard/Source/CustomCode/Application.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../AppWizard/Source/CustomCode/ID_SCREEN_TEMP_CTRL_Slots.c</name>
+        </file>
+      </group>
+      <group>
+        <name>Generated</name>
+        <file>
+          <name>$PROJ_DIR$/../AppWizard/Source/Generated/APPWConf.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../AppWizard/Source/Generated/ID_SCREEN_TEMP_CTRL.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../AppWizard/Source/Generated/ID_SCREEN_TEMP_CTRL.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../AppWizard/Source/Generated/Resource.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../AppWizard/Source/Generated/Resource.h</name>
+        </file>
+      </group>
+    </group>
+  </group>
+  <group>
     <name>emwin</name>
     <group>
       <name>emWin_Config</name>
@@ -2126,6 +2176,12 @@
     </group>
     <group>
       <name>emWin_header</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/AppWizard.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/AppWizard_Private.h</name>
+      </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/BUTTON.h</name>
       </file>
@@ -2460,6 +2516,12 @@
         <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/SWIPELIST_Private.h</name>
       </file>
       <file>
+        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/SWITCH.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/SWITCH_Private.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/TEXT.h</name>
       </file>
       <file>
@@ -2586,17 +2648,14 @@
     <file>
       <name>$PROJ_DIR$/../../../xip/evkbimxrt1050_flexspi_nor_config.h</name>
     </file>
-    <file>
-      <name>$PROJ_DIR$/../../../xip/evkbimxrt1050_sdram_ini_dcd.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../xip/evkbimxrt1050_sdram_ini_dcd.h</name>
-    </file>
   </group>
   <group>
     <name>CMSIS</name>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_cm7.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv7.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armcc.h</name>
@@ -2618,21 +2677,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_version.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv81mml.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mbl.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mml.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv7.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv8.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_common_tables.h</name>

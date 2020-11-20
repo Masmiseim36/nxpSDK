@@ -43,16 +43,16 @@ extern unsigned long __BOOT_STACK_ADDRESS[];
   #define VECTOR_006      DefaultISR    // 6 - ARM core   Usage Fault Interrupt
 #endif
 #ifndef VECTOR_007
-  #define VECTOR_007      DefaultISR    // 7 - ARM core   
+  #define VECTOR_007      0    // 7 - ARM core   
 #endif
 #ifndef VECTOR_008
-  #define VECTOR_008      DefaultISR    // 8 - ARM core    
+  #define VECTOR_008      0    // 8 - ARM core    
 #endif
 #ifndef VECTOR_009
-  #define VECTOR_009      DefaultISR    // 9 - ARM core   
+  #define VECTOR_009      0    // 9 - ARM core   
 #endif
 #ifndef VECTOR_010
-  #define VECTOR_010      DefaultISR    // 10 - ARM core  
+  #define VECTOR_010      0    // 10 - ARM core  
 #endif
 #ifndef VECTOR_011
   #define VECTOR_011      DefaultISR    // 11 - ARM core  SV Call Interrupt
@@ -61,7 +61,7 @@ extern unsigned long __BOOT_STACK_ADDRESS[];
   #define VECTOR_012      DefaultISR    // 12 - ARM core  Debug Monitor Interrupt
 #endif
 #ifndef VECTOR_013
-  #define VECTOR_013      DefaultISR    // 13 - ARM core
+  #define VECTOR_013      0    // 13 - ARM core
 #endif
 #ifndef VECTOR_014
   #define VECTOR_014      DefaultISR    // 14 - ARM core  Pendable request for system service (PendableSrvReq)
@@ -790,7 +790,7 @@ extern unsigned long __BOOT_STACK_ADDRESS[];
   #define VECTOR_255      DefaultISR     
 #endif
 
-#if (!defined(_IMXRT_) && !defined(_MIMX8MN6_CM7_H_))
+#if (!defined(_IMX_))
   #define CONFIG_1  (unsigned long)0xFFFFFFFF 
   #define CONFIG_2  (unsigned long)0xFFFFFFFF 
   #define CONFIG_3  (unsigned long)0xFFFFFFFF

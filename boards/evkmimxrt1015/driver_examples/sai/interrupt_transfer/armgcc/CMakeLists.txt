@@ -366,7 +366,9 @@ include_directories(${ProjDirPath}/../../../../../../components/codec/wm8960)
 
 include_directories(${ProjDirPath}/../../../../../../components/codec)
 
-include_directories(${ProjDirPath}/../../../../../../components/codec/port)
+include_directories(${ProjDirPath}/../../../../../../components/codec/port/wm8960)
+
+include_directories(${ProjDirPath}/../../../../../../components/codec/i2c)
 
 include_directories(${ProjDirPath}/../../../../../../components/i2c)
 
@@ -386,8 +388,6 @@ include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT1015/xip)
 
 include_directories(${ProjDirPath}/../../../../xip)
 
-include_directories(${ProjDirPath}/../../../../../../components/codec/i2c)
-
 include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT1015/utilities)
 
 add_executable(sai_interrupt_transfer.elf 
@@ -405,16 +405,18 @@ add_executable(sai_interrupt_transfer.elf
 "${ProjDirPath}/../../../../../../components/codec/wm8960/fsl_wm8960.h"
 "${ProjDirPath}/../../../../../../components/codec/fsl_codec_common.c"
 "${ProjDirPath}/../../../../../../components/codec/fsl_codec_common.h"
-"${ProjDirPath}/../../../../../../components/codec/port/fsl_codec_adapter.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT1015/drivers/fsl_common.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT1015/drivers/fsl_common.h"
 "${ProjDirPath}/../../../../../../components/codec/port/wm8960/fsl_codec_adapter.c"
+"${ProjDirPath}/../../../../../../components/codec/port/wm8960/fsl_codec_adapter.h"
+"${ProjDirPath}/../../../../../../components/codec/i2c/fsl_codec_i2c.c"
+"${ProjDirPath}/../../../../../../components/codec/i2c/fsl_codec_i2c.h"
 "${ProjDirPath}/../../../../../../components/i2c/i2c.h"
 "${ProjDirPath}/../../../../../../components/i2c/lpi2c_adapter.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1015/drivers/fsl_clock.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1015/drivers/fsl_clock.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1015/drivers/fsl_sai.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1015/drivers/fsl_sai.h"
-"${ProjDirPath}/../../../../../../devices/MIMXRT1015/drivers/fsl_common.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT1015/drivers/fsl_common.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1015/MIMXRT1015.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1015/MIMXRT1015_features.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1015/fsl_device_registers.h"
@@ -446,6 +448,7 @@ add_executable(sai_interrupt_transfer.elf
 "${ProjDirPath}/../../../../xip/evkmimxrt1015_flexspi_nor_config.c"
 "${ProjDirPath}/../../../../xip/evkmimxrt1015_flexspi_nor_config.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/core_cm7.h"
+"${ProjDirPath}/../../../../../../CMSIS/Include/mpu_armv7.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_armcc.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_armclang.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_armclang_ltm.h"
@@ -453,16 +456,9 @@ add_executable(sai_interrupt_transfer.elf
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_gcc.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_iccarm.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_version.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/core_armv81mml.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/core_armv8mbl.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/core_armv8mml.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/mpu_armv7.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/mpu_armv8.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/arm_common_tables.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/arm_const_structs.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/arm_math.h"
-"${ProjDirPath}/../../../../../../components/codec/i2c/fsl_codec_i2c.c"
-"${ProjDirPath}/../../../../../../components/codec/i2c/fsl_codec_i2c.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1015/utilities/fsl_sbrk.c"
 )
 

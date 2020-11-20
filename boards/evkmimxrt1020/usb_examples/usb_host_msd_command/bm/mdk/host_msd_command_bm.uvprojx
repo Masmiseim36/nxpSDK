@@ -330,7 +330,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>_DEBUG=1, DEBUG, CPU_MIMXRT1021DAG5A, USB_STACK_BM, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../middleware/usb;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/host;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1021/drivers;../../../../../../middleware/usb/host;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/host/class;../../../../../../devices/MIMXRT1021/drivers;../../../../../../devices/MIMXRT1021/drivers;../../../../../../devices/MIMXRT1021;../../../../../../devices/MIMXRT1021/drivers;../../../../../../devices/MIMXRT1021/drivers;../../../../../../devices/MIMXRT1021/drivers;../../../../../../devices/MIMXRT1021/xip;../../../../xip;../../../../xip;../../../../../../devices/MIMXRT1021/utilities/str;../../../../../../devices/MIMXRT1021/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../components/serial_manager;../../../../../../components/osa;../../../../../../devices/MIMXRT1021/utilities</IncludePath>
+              <IncludePath>..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../middleware/usb;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1021/drivers;../../../../../../middleware/usb/host/class;../../../../../../devices/MIMXRT1021;../../../../../../devices/MIMXRT1021/xip;../../../../xip;../../../../../../devices/MIMXRT1021/utilities/str;../../../../../../devices/MIMXRT1021/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../components/osa;../../../../../../devices/MIMXRT1021/utilities</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -445,6 +445,16 @@
               <FileType>5</FileType>
               <FilePath>../pin_mux.h</FilePath>
             </File>
+            <File>
+              <FileName>dcd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../dcd.c</FilePath>
+            </File>
+            <File>
+              <FileName>dcd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../dcd.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -495,25 +505,25 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/usb/host/usb_host_hci.h</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>usb-include</GroupName>
-          <Files>
             <File>
-              <FileName>usb.h</FileName>
+              <FileName>usb_host.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/include/usb.h</FilePath>
+              <FilePath>../../../../../../middleware/usb/host/usb_host.h</FilePath>
             </File>
             <File>
-              <FileName>usb_misc.h</FileName>
+              <FileName>usb_host_devices.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/include/usb_misc.h</FilePath>
+              <FilePath>../../../../../../middleware/usb/host/usb_host_devices.h</FilePath>
             </File>
             <File>
-              <FileName>usb_spec.h</FileName>
+              <FileName>usb_host_framework.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/include/usb_spec.h</FilePath>
+              <FilePath>../../../../../../middleware/usb/host/usb_host_framework.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_host_hci.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/host/usb_host_hci.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -596,6 +606,21 @@
           <GroupName>usb-host-class</GroupName>
           <Files>
             <File>
+              <FileName>usb_host_msd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/usb/host/class/usb_host_msd.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_host_msd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/host/class/usb_host_msd.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_host_msd_ufi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/usb/host/class/usb_host_msd_ufi.c</FilePath>
+            </File>
+            <File>
               <FileName>usb_host_hub.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/usb/host/class/usb_host_hub.c</FilePath>
@@ -614,21 +639,6 @@
               <FileName>usb_host_hub_app.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/usb/host/class/usb_host_hub_app.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_host_msd.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/usb/host/class/usb_host_msd.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_host_msd.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/host/class/usb_host_msd.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_host_msd_ufi.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/usb/host/class/usb_host_msd_ufi.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -666,9 +676,9 @@
           <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_MIMXRT1021.s</FileName>
+              <FileName>startup_MIMXRT1021.S</FileName>
               <FileType>2</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1021/arm/startup_MIMXRT1021.s</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1021/arm/startup_MIMXRT1021.S</FilePath>
             </File>
           </Files>
         </Group>
@@ -729,16 +739,6 @@
               <FileName>evkmimxrt1020_flexspi_nor_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../xip/evkmimxrt1020_flexspi_nor_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>evkmimxrt1020_sdram_ini_dcd.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../xip/evkmimxrt1020_sdram_ini_dcd.c</FilePath>
-            </File>
-            <File>
-              <FileName>evkmimxrt1020_sdram_ini_dcd.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../xip/evkmimxrt1020_sdram_ini_dcd.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -828,12 +828,37 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>usb-include</GroupName>
+          <Files>
+            <File>
+              <FileName>usb.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/include/usb.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_misc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/include/usb_misc.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_spec.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/include/usb_spec.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
               <FileName>core_cm7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_armcc.h</FileName>
@@ -869,31 +894,6 @@
               <FileName>cmsis_version.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv81mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv81mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mbl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
             </File>
             <File>
               <FileName>arm_common_tables.h</FileName>
@@ -1241,7 +1241,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1021DAG5A, USB_STACK_BM, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../middleware/usb;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/host;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1021/drivers;../../../../../../middleware/usb/host;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/host/class;../../../../../../devices/MIMXRT1021/drivers;../../../../../../devices/MIMXRT1021/drivers;../../../../../../devices/MIMXRT1021;../../../../../../devices/MIMXRT1021/drivers;../../../../../../devices/MIMXRT1021/drivers;../../../../../../devices/MIMXRT1021/drivers;../../../../../../devices/MIMXRT1021/xip;../../../../xip;../../../../xip;../../../../../../devices/MIMXRT1021/utilities/str;../../../../../../devices/MIMXRT1021/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../components/serial_manager;../../../../../../components/osa;../../../../../../devices/MIMXRT1021/utilities</IncludePath>
+              <IncludePath>..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../middleware/usb;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1021/drivers;../../../../../../middleware/usb/host/class;../../../../../../devices/MIMXRT1021;../../../../../../devices/MIMXRT1021/xip;../../../../xip;../../../../../../devices/MIMXRT1021/utilities/str;../../../../../../devices/MIMXRT1021/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../components/osa;../../../../../../devices/MIMXRT1021/utilities</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1275,7 +1275,7 @@
             <ScatterFile>MIMXRT1021xxxxx_flexspi_nor.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --keep=*(.boot_hdr.ivt) --keep=*(.boot_hdr.boot_data) --keep=*(.boot_hdr.conf) --predefine="-DXIP_BOOT_HEADER_ENABLE=1" --predefine="-D__stack_size__=0x2000" --predefine="-D__heap_size__=0x2000"</Misc>
+            <Misc>--remove --predefine="-DXIP_BOOT_HEADER_ENABLE=1" --predefine="-D__stack_size__=0x2000" --predefine="-D__heap_size__=0x2000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -1356,6 +1356,16 @@
               <FileType>5</FileType>
               <FilePath>../pin_mux.h</FilePath>
             </File>
+            <File>
+              <FileName>dcd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../dcd.c</FilePath>
+            </File>
+            <File>
+              <FileName>dcd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../dcd.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1406,25 +1416,25 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/usb/host/usb_host_hci.h</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>usb-include</GroupName>
-          <Files>
             <File>
-              <FileName>usb.h</FileName>
+              <FileName>usb_host.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/include/usb.h</FilePath>
+              <FilePath>../../../../../../middleware/usb/host/usb_host.h</FilePath>
             </File>
             <File>
-              <FileName>usb_misc.h</FileName>
+              <FileName>usb_host_devices.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/include/usb_misc.h</FilePath>
+              <FilePath>../../../../../../middleware/usb/host/usb_host_devices.h</FilePath>
             </File>
             <File>
-              <FileName>usb_spec.h</FileName>
+              <FileName>usb_host_framework.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/include/usb_spec.h</FilePath>
+              <FilePath>../../../../../../middleware/usb/host/usb_host_framework.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_host_hci.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/host/usb_host_hci.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1507,6 +1517,21 @@
           <GroupName>usb-host-class</GroupName>
           <Files>
             <File>
+              <FileName>usb_host_msd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/usb/host/class/usb_host_msd.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_host_msd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/host/class/usb_host_msd.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_host_msd_ufi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/usb/host/class/usb_host_msd_ufi.c</FilePath>
+            </File>
+            <File>
               <FileName>usb_host_hub.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/usb/host/class/usb_host_hub.c</FilePath>
@@ -1525,21 +1550,6 @@
               <FileName>usb_host_hub_app.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/usb/host/class/usb_host_hub_app.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_host_msd.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/usb/host/class/usb_host_msd.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_host_msd.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/host/class/usb_host_msd.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_host_msd_ufi.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/usb/host/class/usb_host_msd_ufi.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1577,9 +1587,9 @@
           <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_MIMXRT1021.s</FileName>
+              <FileName>startup_MIMXRT1021.S</FileName>
               <FileType>2</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1021/arm/startup_MIMXRT1021.s</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1021/arm/startup_MIMXRT1021.S</FilePath>
             </File>
           </Files>
         </Group>
@@ -1640,16 +1650,6 @@
               <FileName>evkmimxrt1020_flexspi_nor_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../xip/evkmimxrt1020_flexspi_nor_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>evkmimxrt1020_sdram_ini_dcd.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../xip/evkmimxrt1020_sdram_ini_dcd.c</FilePath>
-            </File>
-            <File>
-              <FileName>evkmimxrt1020_sdram_ini_dcd.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../xip/evkmimxrt1020_sdram_ini_dcd.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1739,12 +1739,37 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>usb-include</GroupName>
+          <Files>
+            <File>
+              <FileName>usb.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/include/usb.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_misc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/include/usb_misc.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_spec.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/include/usb_spec.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
               <FileName>core_cm7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_armcc.h</FileName>
@@ -1780,31 +1805,6 @@
               <FileName>cmsis_version.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv81mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv81mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mbl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
             </File>
             <File>
               <FileName>arm_common_tables.h</FileName>
@@ -2152,7 +2152,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>DATA_SECTION_IS_CACHEABLE=1, SKIP_SYSCLK_INIT, DEBUG, CPU_MIMXRT1021DAG5A, USB_STACK_BM, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../middleware/usb;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/host;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1021/drivers;../../../../../../middleware/usb/host;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/host/class;../../../../../../devices/MIMXRT1021/drivers;../../../../../../devices/MIMXRT1021/drivers;../../../../../../devices/MIMXRT1021;../../../../../../devices/MIMXRT1021/drivers;../../../../../../devices/MIMXRT1021/drivers;../../../../../../devices/MIMXRT1021/drivers;../../../../../../devices/MIMXRT1021/xip;../../../../xip;../../../../xip;../../../../../../devices/MIMXRT1021/utilities/str;../../../../../../devices/MIMXRT1021/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../components/serial_manager;../../../../../../components/osa;../../../../../../devices/MIMXRT1021/utilities</IncludePath>
+              <IncludePath>..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../middleware/usb;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1021/drivers;../../../../../../middleware/usb/host/class;../../../../../../devices/MIMXRT1021;../../../../../../devices/MIMXRT1021/xip;../../../../xip;../../../../../../devices/MIMXRT1021/utilities/str;../../../../../../devices/MIMXRT1021/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../components/osa;../../../../../../devices/MIMXRT1021/utilities</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2267,6 +2267,16 @@
               <FileType>5</FileType>
               <FilePath>../pin_mux.h</FilePath>
             </File>
+            <File>
+              <FileName>dcd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../dcd.c</FilePath>
+            </File>
+            <File>
+              <FileName>dcd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../dcd.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -2317,25 +2327,25 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/usb/host/usb_host_hci.h</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>usb-include</GroupName>
-          <Files>
             <File>
-              <FileName>usb.h</FileName>
+              <FileName>usb_host.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/include/usb.h</FilePath>
+              <FilePath>../../../../../../middleware/usb/host/usb_host.h</FilePath>
             </File>
             <File>
-              <FileName>usb_misc.h</FileName>
+              <FileName>usb_host_devices.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/include/usb_misc.h</FilePath>
+              <FilePath>../../../../../../middleware/usb/host/usb_host_devices.h</FilePath>
             </File>
             <File>
-              <FileName>usb_spec.h</FileName>
+              <FileName>usb_host_framework.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/include/usb_spec.h</FilePath>
+              <FilePath>../../../../../../middleware/usb/host/usb_host_framework.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_host_hci.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/host/usb_host_hci.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2418,6 +2428,21 @@
           <GroupName>usb-host-class</GroupName>
           <Files>
             <File>
+              <FileName>usb_host_msd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/usb/host/class/usb_host_msd.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_host_msd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/host/class/usb_host_msd.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_host_msd_ufi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/usb/host/class/usb_host_msd_ufi.c</FilePath>
+            </File>
+            <File>
               <FileName>usb_host_hub.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/usb/host/class/usb_host_hub.c</FilePath>
@@ -2436,21 +2461,6 @@
               <FileName>usb_host_hub_app.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/usb/host/class/usb_host_hub_app.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_host_msd.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/usb/host/class/usb_host_msd.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_host_msd.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/host/class/usb_host_msd.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_host_msd_ufi.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/usb/host/class/usb_host_msd_ufi.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2488,9 +2498,9 @@
           <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_MIMXRT1021.s</FileName>
+              <FileName>startup_MIMXRT1021.S</FileName>
               <FileType>2</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1021/arm/startup_MIMXRT1021.s</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1021/arm/startup_MIMXRT1021.S</FilePath>
             </File>
           </Files>
         </Group>
@@ -2551,16 +2561,6 @@
               <FileName>evkmimxrt1020_flexspi_nor_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../xip/evkmimxrt1020_flexspi_nor_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>evkmimxrt1020_sdram_ini_dcd.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../xip/evkmimxrt1020_sdram_ini_dcd.c</FilePath>
-            </File>
-            <File>
-              <FileName>evkmimxrt1020_sdram_ini_dcd.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../xip/evkmimxrt1020_sdram_ini_dcd.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2650,12 +2650,37 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>usb-include</GroupName>
+          <Files>
+            <File>
+              <FileName>usb.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/include/usb.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_misc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/include/usb_misc.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_spec.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/include/usb_spec.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
               <FileName>core_cm7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_armcc.h</FileName>
@@ -2691,31 +2716,6 @@
               <FileName>cmsis_version.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv81mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv81mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mbl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
             </File>
             <File>
               <FileName>arm_common_tables.h</FileName>
@@ -3063,7 +3063,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>_DEBUG=0, NDEBUG, CPU_MIMXRT1021DAG5A, USB_STACK_BM, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../middleware/usb;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/host;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1021/drivers;../../../../../../middleware/usb/host;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/host/class;../../../../../../devices/MIMXRT1021/drivers;../../../../../../devices/MIMXRT1021/drivers;../../../../../../devices/MIMXRT1021;../../../../../../devices/MIMXRT1021/drivers;../../../../../../devices/MIMXRT1021/drivers;../../../../../../devices/MIMXRT1021/drivers;../../../../../../devices/MIMXRT1021/xip;../../../../xip;../../../../xip;../../../../../../devices/MIMXRT1021/utilities/str;../../../../../../devices/MIMXRT1021/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../components/serial_manager;../../../../../../components/osa;../../../../../../devices/MIMXRT1021/utilities</IncludePath>
+              <IncludePath>..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../middleware/usb;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1021/drivers;../../../../../../middleware/usb/host/class;../../../../../../devices/MIMXRT1021;../../../../../../devices/MIMXRT1021/xip;../../../../xip;../../../../../../devices/MIMXRT1021/utilities/str;../../../../../../devices/MIMXRT1021/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../components/osa;../../../../../../devices/MIMXRT1021/utilities</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3178,6 +3178,16 @@
               <FileType>5</FileType>
               <FilePath>../pin_mux.h</FilePath>
             </File>
+            <File>
+              <FileName>dcd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../dcd.c</FilePath>
+            </File>
+            <File>
+              <FileName>dcd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../dcd.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -3228,25 +3238,25 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/usb/host/usb_host_hci.h</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>usb-include</GroupName>
-          <Files>
             <File>
-              <FileName>usb.h</FileName>
+              <FileName>usb_host.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/include/usb.h</FilePath>
+              <FilePath>../../../../../../middleware/usb/host/usb_host.h</FilePath>
             </File>
             <File>
-              <FileName>usb_misc.h</FileName>
+              <FileName>usb_host_devices.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/include/usb_misc.h</FilePath>
+              <FilePath>../../../../../../middleware/usb/host/usb_host_devices.h</FilePath>
             </File>
             <File>
-              <FileName>usb_spec.h</FileName>
+              <FileName>usb_host_framework.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/include/usb_spec.h</FilePath>
+              <FilePath>../../../../../../middleware/usb/host/usb_host_framework.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_host_hci.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/host/usb_host_hci.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3329,6 +3339,21 @@
           <GroupName>usb-host-class</GroupName>
           <Files>
             <File>
+              <FileName>usb_host_msd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/usb/host/class/usb_host_msd.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_host_msd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/host/class/usb_host_msd.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_host_msd_ufi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/usb/host/class/usb_host_msd_ufi.c</FilePath>
+            </File>
+            <File>
               <FileName>usb_host_hub.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/usb/host/class/usb_host_hub.c</FilePath>
@@ -3347,21 +3372,6 @@
               <FileName>usb_host_hub_app.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/usb/host/class/usb_host_hub_app.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_host_msd.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/usb/host/class/usb_host_msd.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_host_msd.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/host/class/usb_host_msd.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_host_msd_ufi.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/usb/host/class/usb_host_msd_ufi.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -3399,9 +3409,9 @@
           <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_MIMXRT1021.s</FileName>
+              <FileName>startup_MIMXRT1021.S</FileName>
               <FileType>2</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1021/arm/startup_MIMXRT1021.s</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1021/arm/startup_MIMXRT1021.S</FilePath>
             </File>
           </Files>
         </Group>
@@ -3462,16 +3472,6 @@
               <FileName>evkmimxrt1020_flexspi_nor_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../xip/evkmimxrt1020_flexspi_nor_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>evkmimxrt1020_sdram_ini_dcd.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../xip/evkmimxrt1020_sdram_ini_dcd.c</FilePath>
-            </File>
-            <File>
-              <FileName>evkmimxrt1020_sdram_ini_dcd.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../xip/evkmimxrt1020_sdram_ini_dcd.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3561,12 +3561,37 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>usb-include</GroupName>
+          <Files>
+            <File>
+              <FileName>usb.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/include/usb.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_misc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/include/usb_misc.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_spec.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/include/usb_spec.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
               <FileName>core_cm7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_armcc.h</FileName>
@@ -3602,31 +3627,6 @@
               <FileName>cmsis_version.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv81mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv81mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mbl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
             </File>
             <File>
               <FileName>arm_common_tables.h</FileName>
@@ -3974,7 +3974,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1021DAG5A, USB_STACK_BM, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../middleware/usb;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/host;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1021/drivers;../../../../../../middleware/usb/host;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/host/class;../../../../../../devices/MIMXRT1021/drivers;../../../../../../devices/MIMXRT1021/drivers;../../../../../../devices/MIMXRT1021;../../../../../../devices/MIMXRT1021/drivers;../../../../../../devices/MIMXRT1021/drivers;../../../../../../devices/MIMXRT1021/drivers;../../../../../../devices/MIMXRT1021/xip;../../../../xip;../../../../xip;../../../../../../devices/MIMXRT1021/utilities/str;../../../../../../devices/MIMXRT1021/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../components/serial_manager;../../../../../../components/osa;../../../../../../devices/MIMXRT1021/utilities</IncludePath>
+              <IncludePath>..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../middleware/usb;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1021/drivers;../../../../../../middleware/usb/host/class;../../../../../../devices/MIMXRT1021;../../../../../../devices/MIMXRT1021/xip;../../../../xip;../../../../../../devices/MIMXRT1021/utilities/str;../../../../../../devices/MIMXRT1021/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../components/osa;../../../../../../devices/MIMXRT1021/utilities</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -4008,7 +4008,7 @@
             <ScatterFile>MIMXRT1021xxxxx_flexspi_nor.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --keep=*(.boot_hdr.ivt) --keep=*(.boot_hdr.boot_data) --keep=*(.boot_hdr.conf) --predefine="-DXIP_BOOT_HEADER_ENABLE=1" --predefine="-D__stack_size__=0x2000" --predefine="-D__heap_size__=0x2000"</Misc>
+            <Misc>--remove --predefine="-DXIP_BOOT_HEADER_ENABLE=1" --predefine="-D__stack_size__=0x2000" --predefine="-D__heap_size__=0x2000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -4089,6 +4089,16 @@
               <FileType>5</FileType>
               <FilePath>../pin_mux.h</FilePath>
             </File>
+            <File>
+              <FileName>dcd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../dcd.c</FilePath>
+            </File>
+            <File>
+              <FileName>dcd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../dcd.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -4139,25 +4149,25 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/usb/host/usb_host_hci.h</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>usb-include</GroupName>
-          <Files>
             <File>
-              <FileName>usb.h</FileName>
+              <FileName>usb_host.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/include/usb.h</FilePath>
+              <FilePath>../../../../../../middleware/usb/host/usb_host.h</FilePath>
             </File>
             <File>
-              <FileName>usb_misc.h</FileName>
+              <FileName>usb_host_devices.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/include/usb_misc.h</FilePath>
+              <FilePath>../../../../../../middleware/usb/host/usb_host_devices.h</FilePath>
             </File>
             <File>
-              <FileName>usb_spec.h</FileName>
+              <FileName>usb_host_framework.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/include/usb_spec.h</FilePath>
+              <FilePath>../../../../../../middleware/usb/host/usb_host_framework.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_host_hci.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/host/usb_host_hci.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4240,6 +4250,21 @@
           <GroupName>usb-host-class</GroupName>
           <Files>
             <File>
+              <FileName>usb_host_msd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/usb/host/class/usb_host_msd.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_host_msd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/host/class/usb_host_msd.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_host_msd_ufi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/usb/host/class/usb_host_msd_ufi.c</FilePath>
+            </File>
+            <File>
               <FileName>usb_host_hub.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/usb/host/class/usb_host_hub.c</FilePath>
@@ -4258,21 +4283,6 @@
               <FileName>usb_host_hub_app.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/usb/host/class/usb_host_hub_app.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_host_msd.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/usb/host/class/usb_host_msd.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_host_msd.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/host/class/usb_host_msd.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_host_msd_ufi.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/usb/host/class/usb_host_msd_ufi.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -4310,9 +4320,9 @@
           <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_MIMXRT1021.s</FileName>
+              <FileName>startup_MIMXRT1021.S</FileName>
               <FileType>2</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1021/arm/startup_MIMXRT1021.s</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1021/arm/startup_MIMXRT1021.S</FilePath>
             </File>
           </Files>
         </Group>
@@ -4373,16 +4383,6 @@
               <FileName>evkmimxrt1020_flexspi_nor_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../xip/evkmimxrt1020_flexspi_nor_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>evkmimxrt1020_sdram_ini_dcd.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../xip/evkmimxrt1020_sdram_ini_dcd.c</FilePath>
-            </File>
-            <File>
-              <FileName>evkmimxrt1020_sdram_ini_dcd.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../xip/evkmimxrt1020_sdram_ini_dcd.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4472,12 +4472,37 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>usb-include</GroupName>
+          <Files>
+            <File>
+              <FileName>usb.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/include/usb.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_misc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/include/usb_misc.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_spec.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/include/usb_spec.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
               <FileName>core_cm7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_armcc.h</FileName>
@@ -4513,31 +4538,6 @@
               <FileName>cmsis_version.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv81mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv81mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mbl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
             </File>
             <File>
               <FileName>arm_common_tables.h</FileName>
@@ -4885,7 +4885,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>DATA_SECTION_IS_CACHEABLE=1, SKIP_SYSCLK_INIT, NDEBUG, CPU_MIMXRT1021DAG5A, USB_STACK_BM, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../middleware/usb;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/host;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1021/drivers;../../../../../../middleware/usb/host;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/host/class;../../../../../../devices/MIMXRT1021/drivers;../../../../../../devices/MIMXRT1021/drivers;../../../../../../devices/MIMXRT1021;../../../../../../devices/MIMXRT1021/drivers;../../../../../../devices/MIMXRT1021/drivers;../../../../../../devices/MIMXRT1021/drivers;../../../../../../devices/MIMXRT1021/xip;../../../../xip;../../../../xip;../../../../../../devices/MIMXRT1021/utilities/str;../../../../../../devices/MIMXRT1021/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../components/serial_manager;../../../../../../components/osa;../../../../../../devices/MIMXRT1021/utilities</IncludePath>
+              <IncludePath>..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../middleware/usb;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1021/drivers;../../../../../../middleware/usb/host/class;../../../../../../devices/MIMXRT1021;../../../../../../devices/MIMXRT1021/xip;../../../../xip;../../../../../../devices/MIMXRT1021/utilities/str;../../../../../../devices/MIMXRT1021/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../components/osa;../../../../../../devices/MIMXRT1021/utilities</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -5000,6 +5000,16 @@
               <FileType>5</FileType>
               <FilePath>../pin_mux.h</FilePath>
             </File>
+            <File>
+              <FileName>dcd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../dcd.c</FilePath>
+            </File>
+            <File>
+              <FileName>dcd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../dcd.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -5050,25 +5060,25 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/usb/host/usb_host_hci.h</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>usb-include</GroupName>
-          <Files>
             <File>
-              <FileName>usb.h</FileName>
+              <FileName>usb_host.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/include/usb.h</FilePath>
+              <FilePath>../../../../../../middleware/usb/host/usb_host.h</FilePath>
             </File>
             <File>
-              <FileName>usb_misc.h</FileName>
+              <FileName>usb_host_devices.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/include/usb_misc.h</FilePath>
+              <FilePath>../../../../../../middleware/usb/host/usb_host_devices.h</FilePath>
             </File>
             <File>
-              <FileName>usb_spec.h</FileName>
+              <FileName>usb_host_framework.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/include/usb_spec.h</FilePath>
+              <FilePath>../../../../../../middleware/usb/host/usb_host_framework.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_host_hci.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/host/usb_host_hci.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -5151,6 +5161,21 @@
           <GroupName>usb-host-class</GroupName>
           <Files>
             <File>
+              <FileName>usb_host_msd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/usb/host/class/usb_host_msd.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_host_msd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/host/class/usb_host_msd.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_host_msd_ufi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/usb/host/class/usb_host_msd_ufi.c</FilePath>
+            </File>
+            <File>
               <FileName>usb_host_hub.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/usb/host/class/usb_host_hub.c</FilePath>
@@ -5169,21 +5194,6 @@
               <FileName>usb_host_hub_app.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/usb/host/class/usb_host_hub_app.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_host_msd.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/usb/host/class/usb_host_msd.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_host_msd.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/host/class/usb_host_msd.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_host_msd_ufi.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/usb/host/class/usb_host_msd_ufi.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -5221,9 +5231,9 @@
           <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_MIMXRT1021.s</FileName>
+              <FileName>startup_MIMXRT1021.S</FileName>
               <FileType>2</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1021/arm/startup_MIMXRT1021.s</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1021/arm/startup_MIMXRT1021.S</FilePath>
             </File>
           </Files>
         </Group>
@@ -5284,16 +5294,6 @@
               <FileName>evkmimxrt1020_flexspi_nor_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../xip/evkmimxrt1020_flexspi_nor_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>evkmimxrt1020_sdram_ini_dcd.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../xip/evkmimxrt1020_sdram_ini_dcd.c</FilePath>
-            </File>
-            <File>
-              <FileName>evkmimxrt1020_sdram_ini_dcd.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../xip/evkmimxrt1020_sdram_ini_dcd.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -5383,12 +5383,37 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>usb-include</GroupName>
+          <Files>
+            <File>
+              <FileName>usb.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/include/usb.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_misc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/include/usb_misc.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_spec.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/include/usb_spec.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
               <FileName>core_cm7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_armcc.h</FileName>
@@ -5424,31 +5449,6 @@
               <FileName>cmsis_version.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv81mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv81mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mbl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
             </File>
             <File>
               <FileName>arm_common_tables.h</FileName>

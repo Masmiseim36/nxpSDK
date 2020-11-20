@@ -188,7 +188,9 @@
           <state>SHELL_NON_BLOCKING_MODE=0</state>
           <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING=1</state>
           <state>A_LITTLE_ENDIAN</state>
+          <state>SDK_DEBUGCONSOLE_UART</state>
           <state>DEBUG_CONSOLE_RX_ENABLE=0</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>FSL_RTOS_FREE_RTOS</state>
         </option>
         <option>
@@ -318,14 +320,13 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/IAR/ARM_CM4F</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
           <state>$PROJ_DIR$/../../..</state>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../custom</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../devices</state>
-          <state>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include</state>
-          <state>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/private</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi_qca/port/boards/evkmimxrt1010/freertos/silex2401</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi_qca</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi_qca/include</state>
@@ -341,26 +342,17 @@
           <state>$PROJ_DIR$/../../../../../middleware/wifi_qca/port</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1011/utilities</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1011/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1011/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1011</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1011/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1011/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1011/drivers</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1011/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1011/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1011/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi_qca/port/boards/evkmimxrt1010/freertos</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi_qca/port/env/freertos</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi_qca/port/drivers/lpspi_edma_freertos</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1011/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1011/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1011/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1011/drivers</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1203,7 +1195,9 @@
           <state>SHELL_NON_BLOCKING_MODE=0</state>
           <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING=1</state>
           <state>A_LITTLE_ENDIAN</state>
+          <state>SDK_DEBUGCONSOLE_UART</state>
           <state>DEBUG_CONSOLE_RX_ENABLE=0</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>FSL_RTOS_FREE_RTOS</state>
         </option>
         <option>
@@ -1333,14 +1327,13 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/IAR/ARM_CM4F</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
           <state>$PROJ_DIR$/../../..</state>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../custom</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../devices</state>
-          <state>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include</state>
-          <state>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/private</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi_qca/port/boards/evkmimxrt1010/freertos/silex2401</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi_qca</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi_qca/include</state>
@@ -1356,26 +1349,17 @@
           <state>$PROJ_DIR$/../../../../../middleware/wifi_qca/port</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1011/utilities</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1011/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1011/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1011</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1011/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1011/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1011/drivers</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1011/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1011/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1011/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi_qca/port/boards/evkmimxrt1010/freertos</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi_qca/port/env/freertos</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi_qca/port/drivers/lpspi_edma_freertos</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1011/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1011/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1011/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1011/drivers</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -2135,19 +2119,25 @@
     <group>
       <name>port</name>
       <group>
-        <name>shields</name>
+        <name>boards</name>
         <group>
-          <name>silex2401</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/wifi_qca/port/boards/evkmimxrt1010/freertos/silex2401/wifi_shield_silex2401.h</name>
-          </file>
+          <name>evkmimxrt1010</name>
+          <group>
+            <name>freertos</name>
+            <group>
+              <name>silex2401</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/wifi_qca/port/boards/evkmimxrt1010/freertos/silex2401/wifi_shield_silex2401.h</name>
+              </file>
+            </group>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/wifi_qca/port/boards/evkmimxrt1010/freertos/wifi_shield.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/wifi_qca/port/boards/evkmimxrt1010/freertos/wifi_shield.h</name>
+            </file>
+          </group>
         </group>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wifi_qca/port/boards/evkmimxrt1010/freertos/wifi_shield.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wifi_qca/port/boards/evkmimxrt1010/freertos/wifi_shield.h</name>
-        </file>
       </group>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/wifi_qca/port/wifi_common.h</name>
@@ -2186,108 +2176,21 @@
         </group>
       </group>
     </group>
-    <group>
-      <name>include</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/wifi_qca/atheros_stack_offload.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/wifi_qca/atheros_wifi.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/wifi_qca/atheros_wifi_api.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/wifi_qca/atheros_wifi_internal.h</name>
-      </file>
-      <group>
-        <name>AR6002</name>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wifi_qca/include/AR6002/AR6K_version.h</name>
-        </file>
-        <group>
-          <name>hw2.0</name>
-          <group>
-            <name>hw</name>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/wifi_qca/include/AR6002/hw2.0/hw/hw20_apb_map.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/wifi_qca/include/AR6002/hw2.0/hw/hw20_gpio_reg.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/wifi_qca/include/AR6002/hw2.0/hw/hw20_mbox_host_reg.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/wifi_qca/include/AR6002/hw2.0/hw/hw20_mbox_reg.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/wifi_qca/include/AR6002/hw2.0/hw/hw20_rtc_reg.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/wifi_qca/include/AR6002/hw2.0/hw/hw20_si_reg.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/wifi_qca/include/AR6002/hw2.0/hw/hw20_uart_reg.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/wifi_qca/include/AR6002/hw2.0/hw/hw20_vmc_reg.h</name>
-            </file>
-          </group>
-        </group>
-        <group>
-          <name>hw4.0</name>
-          <group>
-            <name>hw</name>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/wifi_qca/include/AR6002/hw4.0/hw/hw40_rtc_reg.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/wifi_qca/include/AR6002/hw4.0/hw/hw40_rtc_wlan_reg.h</name>
-            </file>
-          </group>
-        </group>
-      </group>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/wifi_qca/include/athdefs.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/wifi_qca/include/bmi_msg.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/wifi_qca/include/dbglog.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/wifi_qca/include/dbglog_id.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/wifi_qca/include/htc.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/wifi_qca/include/htc_services.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/wifi_qca/include/p2p.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/wifi_qca/include/pkt_log.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/wifi_qca/include/pmu.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/wifi_qca/include/targaddrs.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/wifi_qca/include/wlan_defs.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/wifi_qca/include/wmi.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/wifi_qca/qcom_api.h</name>
-      </file>
-    </group>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/wifi_qca/ChangeLogKSDK.txt</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/wifi_qca/atheros_stack_offload.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/wifi_qca/atheros_wifi.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/wifi_qca/atheros_wifi_api.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/wifi_qca/atheros_wifi_internal.h</name>
+    </file>
     <group>
       <name>common_src</name>
       <group>
@@ -2334,12 +2237,12 @@
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/wifi_qca/common_src/hcd/hcd_api.h</name>
         </file>
-      </group>
-      <group>
-        <name>htc</name>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/wifi_qca/common_src/hcd/spi_hcd.c</name>
         </file>
+      </group>
+      <group>
+        <name>htc</name>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/wifi_qca/common_src/htc/htc.c</name>
         </file>
@@ -2415,9 +2318,6 @@
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/wifi_qca/common_src/qapi/qcom_legacy.c</name>
         </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wifi_qca/common_src/stack_common/api_stack_offload.c</name>
-        </file>
       </group>
       <group>
         <name>reorder</name>
@@ -2428,16 +2328,19 @@
       <group>
         <name>stack_common</name>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wifi_qca/common_src/stack_common/common_stack_offload.h</name>
+          <name>$PROJ_DIR$/../../../../../middleware/wifi_qca/common_src/stack_common/api_stack_offload.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wifi_qca/common_src/storerecall/dset_api.c</name>
+          <name>$PROJ_DIR$/../../../../../middleware/wifi_qca/common_src/stack_common/common_stack_offload.h</name>
         </file>
       </group>
       <group>
         <name>storerecall</name>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/wifi_qca/common_src/storerecall/dset.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wifi_qca/common_src/storerecall/dset_api.c</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/wifi_qca/common_src/storerecall/storerecall.c</name>
@@ -2534,100 +2437,214 @@
         </file>
       </group>
     </group>
+    <group>
+      <name>include</name>
+      <group>
+        <name>AR6002</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wifi_qca/include/AR6002/AR6K_version.h</name>
+        </file>
+        <group>
+          <name>hw2.0</name>
+          <group>
+            <name>hw</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/wifi_qca/include/AR6002/hw2.0/hw/hw20_apb_map.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/wifi_qca/include/AR6002/hw2.0/hw/hw20_gpio_reg.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/wifi_qca/include/AR6002/hw2.0/hw/hw20_mbox_host_reg.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/wifi_qca/include/AR6002/hw2.0/hw/hw20_mbox_reg.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/wifi_qca/include/AR6002/hw2.0/hw/hw20_rtc_reg.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/wifi_qca/include/AR6002/hw2.0/hw/hw20_si_reg.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/wifi_qca/include/AR6002/hw2.0/hw/hw20_uart_reg.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/wifi_qca/include/AR6002/hw2.0/hw/hw20_vmc_reg.h</name>
+            </file>
+          </group>
+        </group>
+        <group>
+          <name>hw4.0</name>
+          <group>
+            <name>hw</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/wifi_qca/include/AR6002/hw4.0/hw/hw40_rtc_reg.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/wifi_qca/include/AR6002/hw4.0/hw/hw40_rtc_wlan_reg.h</name>
+            </file>
+          </group>
+        </group>
+      </group>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/wifi_qca/include/athdefs.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/wifi_qca/include/bmi_msg.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/wifi_qca/include/dbglog.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/wifi_qca/include/dbglog_id.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/wifi_qca/include/htc.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/wifi_qca/include/htc_services.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/wifi_qca/include/p2p.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/wifi_qca/include/pkt_log.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/wifi_qca/include/pmu.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/wifi_qca/include/targaddrs.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/wifi_qca/include/wlan_defs.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/wifi_qca/include/wmi.h</name>
+      </file>
+    </group>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/wifi_qca/license.txt</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/wifi_qca/qcom_api.h</name>
+    </file>
   </group>
   <group>
-    <name>amazon-freertos</name>
+    <name>freertos</name>
     <group>
-      <name>freertos</name>
+      <name>freertos_kernel</name>
       <group>
         <name>portable</name>
+        <group>
+          <name>MemMang</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/MemMang/heap_4.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/MemMang/ReadMe.url</name>
+          </file>
+        </group>
+        <group>
+          <name>IAR</name>
+          <group>
+            <name>ARM_CM4F</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F/port.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F/portasm.s</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F/portmacro.h</name>
+            </file>
+          </group>
+        </group>
         <file>
-          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/MemMang/heap_4.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/IAR/ARM_CM4F/port.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/IAR/ARM_CM4F/portasm.s</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/IAR/ARM_CM4F/portmacro.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/portable/readme.txt</name>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/readme.txt</name>
         </file>
       </group>
       <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/event_groups.c</name>
+        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/croutine.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/list.c</name>
+        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/event_groups.c</name>
+      </file>
+      <group>
+        <name>include</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/FreeRTOS.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/atomic.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/croutine.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/deprecated_definitions.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/event_groups.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/list.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/message_buffer.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/mpu_prototypes.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/mpu_wrappers.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/portable.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/projdefs.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/queue.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/semphr.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/stack_macros.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/stream_buffer.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/task.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/timers.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/freertos_tasks_c_additions.h</name>
+        </file>
+      </group>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/list.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/queue.c</name>
+        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/queue.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/stream_buffer.c</name>
+        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/stream_buffer.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/tasks.c</name>
+        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/tasks.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/FreeRTOS/timers.c</name>
-      </file>
-    </group>
-    <group>
-      <name>include</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/FreeRTOS.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/event_groups.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/freertos_tasks_c_additions.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/message_buffer.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/private/deprecated_definitions.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/private/list.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/private/mpu_prototypes.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/private/mpu_wrappers.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/private/portable.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/private/projdefs.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/private/stack_macros.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/private/threading_alt.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/queue.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/semphr.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/stream_buffer.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/task.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/lib/include/timers.h</name>
+        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/timers.c</name>
       </file>
     </group>
   </group>
@@ -2796,6 +2813,9 @@
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_cm7.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv7.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armcc.h</name>
     </file>
     <file>
@@ -2815,21 +2835,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_version.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv81mml.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mbl.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mml.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv7.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv8.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_common_tables.h</name>

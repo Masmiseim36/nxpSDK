@@ -10,8 +10,8 @@
 #define __USB_DISK_SDCARD_H__ 1
 
 /*******************************************************************************
-* Definitions
-******************************************************************************/
+ * Definitions
+ ******************************************************************************/
 #if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0)
 #define CONTROLLER_ID kUSB_ControllerEhci0
 #endif
@@ -30,7 +30,8 @@
 USB_DEVICE_CONFIG_USE_TASK macro should also be enable.*/
 #define USB_DEVICE_MSC_USE_WRITE_TASK (0U)
 
-/* applicationi define logical unit number, if LOGICAL_UNIT_SUPPORTED < USB_DEVICE_MSC_MAX_LUN, update USB_DEVICE_MSC_MAX_LUN in class driver usb_device_msc.h*/
+/* applicationi define logical unit number, if LOGICAL_UNIT_SUPPORTED < USB_DEVICE_MSC_MAX_LUN, update
+ * USB_DEVICE_MSC_MAX_LUN in class driver usb_device_msc.h*/
 #define LOGICAL_UNIT_SUPPORTED (1U)
 
 #define USB_DEVICE_MSC_WRITE_BUFF_NUM (3U)
@@ -39,7 +40,7 @@ USB_DEVICE_CONFIG_USE_TASK macro should also be enable.*/
 /*the block size should be multiple of 512, the least value is 512*/
 
 #define USB_DEVICE_MSC_WRITE_BUFF_SIZE (512 * 8U)
-#define USB_DEVICE_MSC_READ_BUFF_SIZE (512 * 8U)
+#define USB_DEVICE_MSC_READ_BUFF_SIZE  (512 * 8U)
 
 
 #define USB_DEVICE_SDCARD_BLOCK_SIZE_POWER (9U)

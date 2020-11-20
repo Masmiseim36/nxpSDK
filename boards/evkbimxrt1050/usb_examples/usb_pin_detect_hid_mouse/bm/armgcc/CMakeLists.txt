@@ -1026,14 +1026,6 @@ include_directories(${ProjDirPath}/../../../../../../CMSIS/Include)
 
 include_directories(${ProjDirPath}/../../../../../../devices)
 
-include_directories(${ProjDirPath}/../../../../../../middleware/usb/host)
-
-include_directories(${ProjDirPath}/../../../../../../middleware/usb/include)
-
-include_directories(${ProjDirPath}/../../../../../../middleware/usb/device)
-
-include_directories(${ProjDirPath}/../../../../../../middleware/usb/phy)
-
 include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT1052/drivers)
 
 include_directories(${ProjDirPath}/../../../../../../middleware/usb/host/class)
@@ -1054,9 +1046,17 @@ include_directories(${ProjDirPath}/../../../../../../components/serial_manager)
 
 include_directories(${ProjDirPath}/../../../../../../components/lists)
 
+include_directories(${ProjDirPath}/../../../../../../middleware/usb/host)
+
+include_directories(${ProjDirPath}/../../../../../../middleware/usb/include)
+
 include_directories(${ProjDirPath}/../../../../../../components/osa)
 
+include_directories(${ProjDirPath}/../../../../../../middleware/usb/device)
+
 include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT1052/utilities)
+
+include_directories(${ProjDirPath}/../../../../../../middleware/usb/phy)
 
 add_executable(pin_detect_hid_mouse_bm.elf 
 "${ProjDirPath}/../app.c"
@@ -1075,42 +1075,18 @@ add_executable(pin_detect_hid_mouse_bm.elf
 "${ProjDirPath}/../clock_config.h"
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
-"${ProjDirPath}/../../../../../../middleware/usb/host/usb_host_ehci.c"
-"${ProjDirPath}/../../../../../../middleware/usb/host/usb_host_ehci.h"
-"${ProjDirPath}/../../../../../../middleware/usb/include/usb.h"
-"${ProjDirPath}/../../../../../../middleware/usb/include/usb_misc.h"
-"${ProjDirPath}/../../../../../../middleware/usb/include/usb_spec.h"
-"${ProjDirPath}/../../../../../../middleware/usb/device/usb_device_ehci.c"
-"${ProjDirPath}/../../../../../../middleware/usb/device/usb_device_ehci.h"
-"${ProjDirPath}/../../../../../../middleware/usb/include/usb.h"
-"${ProjDirPath}/../../../../../../middleware/usb/include/usb_misc.h"
-"${ProjDirPath}/../../../../../../middleware/usb/include/usb_spec.h"
-"${ProjDirPath}/../../../../../../middleware/usb/phy/usb_phy.c"
-"${ProjDirPath}/../../../../../../middleware/usb/phy/usb_phy.h"
+"${ProjDirPath}/../dcd.c"
+"${ProjDirPath}/../dcd.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1052/drivers/fsl_cache.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1052/drivers/fsl_cache.h"
-"${ProjDirPath}/../usb_device_ch9.c"
-"${ProjDirPath}/../usb_device_ch9.h"
-"${ProjDirPath}/../../../../../../middleware/usb/host/class/usb_host_hub.c"
-"${ProjDirPath}/../../../../../../middleware/usb/host/class/usb_host_hub.h"
-"${ProjDirPath}/../../../../../../middleware/usb/host/class/usb_host_hub_app.c"
-"${ProjDirPath}/../../../../../../middleware/usb/host/class/usb_host_hub_app.h"
-"${ProjDirPath}/../../../../../../middleware/usb/host/class/usb_host_hid.c"
-"${ProjDirPath}/../../../../../../middleware/usb/host/class/usb_host_hid.h"
-"${ProjDirPath}/../../../../../../middleware/usb/host/usb_host.h"
-"${ProjDirPath}/../../../../../../middleware/usb/host/usb_host_devices.c"
-"${ProjDirPath}/../../../../../../middleware/usb/host/usb_host_devices.h"
-"${ProjDirPath}/../../../../../../middleware/usb/host/usb_host_framework.c"
-"${ProjDirPath}/../../../../../../middleware/usb/host/usb_host_framework.h"
-"${ProjDirPath}/../../../../../../middleware/usb/host/usb_host_hci.c"
-"${ProjDirPath}/../../../../../../middleware/usb/host/usb_host_hci.h"
 "${ProjDirPath}/../usb_device_class.c"
 "${ProjDirPath}/../usb_device_class.h"
+"${ProjDirPath}/../usb_device_ch9.c"
+"${ProjDirPath}/../usb_device_ch9.h"
+"${ProjDirPath}/../../../../../../middleware/usb/host/class/usb_host_hid.c"
+"${ProjDirPath}/../../../../../../middleware/usb/host/class/usb_host_hid.h"
 "${ProjDirPath}/../usb_device_hid.c"
 "${ProjDirPath}/../usb_device_hid.h"
-"${ProjDirPath}/../../../../../../middleware/usb/device/usb_device.h"
-"${ProjDirPath}/../../../../../../middleware/usb/device/usb_device_dci.c"
-"${ProjDirPath}/../../../../../../middleware/usb/device/usb_device_dci.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1052/drivers/fsl_clock.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1052/drivers/fsl_clock.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1052/drivers/fsl_common.c"
@@ -1131,8 +1107,6 @@ add_executable(pin_detect_hid_mouse_bm.elf
 "${ProjDirPath}/../../../../../../devices/MIMXRT1052/xip/fsl_flexspi_nor_boot.h"
 "${ProjDirPath}/../../../../xip/evkbimxrt1050_flexspi_nor_config.c"
 "${ProjDirPath}/../../../../xip/evkbimxrt1050_flexspi_nor_config.h"
-"${ProjDirPath}/../../../../xip/evkbimxrt1050_sdram_ini_dcd.c"
-"${ProjDirPath}/../../../../xip/evkbimxrt1050_sdram_ini_dcd.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_debug_console.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_debug_console.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_debug_console_conf.h"
@@ -1147,11 +1121,30 @@ add_executable(pin_detect_hid_mouse_bm.elf
 "${ProjDirPath}/../../../../../../components/lists/generic_list.h"
 "${ProjDirPath}/../../../../../../components/serial_manager/serial_port_uart.c"
 "${ProjDirPath}/../../../../../../components/serial_manager/serial_port_uart.h"
+"${ProjDirPath}/../../../../../../middleware/usb/host/class/usb_host_hub.c"
+"${ProjDirPath}/../../../../../../middleware/usb/host/class/usb_host_hub.h"
+"${ProjDirPath}/../../../../../../middleware/usb/host/class/usb_host_hub_app.c"
+"${ProjDirPath}/../../../../../../middleware/usb/host/class/usb_host_hub_app.h"
+"${ProjDirPath}/../../../../../../middleware/usb/host/usb_host.h"
+"${ProjDirPath}/../../../../../../middleware/usb/host/usb_host_devices.c"
+"${ProjDirPath}/../../../../../../middleware/usb/host/usb_host_devices.h"
+"${ProjDirPath}/../../../../../../middleware/usb/host/usb_host_framework.c"
+"${ProjDirPath}/../../../../../../middleware/usb/host/usb_host_framework.h"
+"${ProjDirPath}/../../../../../../middleware/usb/host/usb_host_hci.c"
+"${ProjDirPath}/../../../../../../middleware/usb/host/usb_host_hci.h"
 "${ProjDirPath}/../../../../../../components/osa/fsl_os_abstraction.h"
 "${ProjDirPath}/../../../../../../components/osa/fsl_os_abstraction_bm.c"
 "${ProjDirPath}/../../../../../../components/osa/fsl_os_abstraction_bm.h"
 "${ProjDirPath}/../../../../../../components/osa/fsl_os_abstraction_config.h"
+"${ProjDirPath}/../../../../../../middleware/usb/host/usb_host_ehci.c"
+"${ProjDirPath}/../../../../../../middleware/usb/host/usb_host_ehci.h"
+"${ProjDirPath}/../../../../../../middleware/usb/device/usb_device.h"
+"${ProjDirPath}/../../../../../../middleware/usb/device/usb_device_dci.c"
+"${ProjDirPath}/../../../../../../middleware/usb/device/usb_device_dci.h"
+"${ProjDirPath}/../../../../../../middleware/usb/device/usb_device_ehci.c"
+"${ProjDirPath}/../../../../../../middleware/usb/device/usb_device_ehci.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/core_cm7.h"
+"${ProjDirPath}/../../../../../../CMSIS/Include/mpu_armv7.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_armcc.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_armclang.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_armclang_ltm.h"
@@ -1159,15 +1152,21 @@ add_executable(pin_detect_hid_mouse_bm.elf
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_gcc.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_iccarm.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_version.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/core_armv81mml.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/core_armv8mbl.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/core_armv8mml.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/mpu_armv7.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/mpu_armv8.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/arm_common_tables.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/arm_const_structs.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/arm_math.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1052/utilities/fsl_sbrk.c"
+"${ProjDirPath}/../../../../../../middleware/usb/phy/usb_phy.c"
+"${ProjDirPath}/../../../../../../middleware/usb/phy/usb_phy.h"
+"${ProjDirPath}/../../../../../../middleware/usb/include/usb.h"
+"${ProjDirPath}/../../../../../../middleware/usb/include/usb_misc.h"
+"${ProjDirPath}/../../../../../../middleware/usb/include/usb_spec.h"
+"${ProjDirPath}/../../../../../../middleware/usb/host/usb_host.h"
+"${ProjDirPath}/../../../../../../middleware/usb/host/usb_host_devices.h"
+"${ProjDirPath}/../../../../../../middleware/usb/host/usb_host_framework.h"
+"${ProjDirPath}/../../../../../../middleware/usb/host/usb_host_hci.h"
+"${ProjDirPath}/../../../../../../middleware/usb/device/usb_device.h"
+"${ProjDirPath}/../../../../../../middleware/usb/device/usb_device_dci.h"
 )
 
 

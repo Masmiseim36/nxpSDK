@@ -73,9 +73,6 @@ extern uint32_t __Vectors[];
 #elif defined(__ICCARM__)
 extern uint32_t __VECTOR_TABLE[];
 #define IMAGE_ENTRY_ADDRESS ((uint32_t)__VECTOR_TABLE)
-#elif defined __CROSSWORKS_ARM
-	extern uint32_t __vectors_load_start__;
-	#define IMAGE_ENTRY_ADDRESS ((uint32_t)&__vectors_load_start__)
 #elif defined(__GNUC__)
 extern uint32_t __VECTOR_TABLE[];
 #define IMAGE_ENTRY_ADDRESS ((uint32_t)__VECTOR_TABLE)

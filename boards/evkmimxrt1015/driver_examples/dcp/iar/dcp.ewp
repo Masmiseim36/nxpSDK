@@ -182,6 +182,7 @@
           <name>CCDefines</name>
           <state>DEBUG</state>
           <state>CPU_MIMXRT1015DAF5A</state>
+          <state>DCP_USE_DCACHE=1</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
@@ -316,18 +317,12 @@
           <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../devices</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/utilities</state>
@@ -1165,6 +1160,7 @@
           <state>XIP_EXTERNAL_FLASH=1</state>
           <state>XIP_BOOT_HEADER_ENABLE=1</state>
           <state>CPU_MIMXRT1015DAF5A</state>
+          <state>DCP_USE_DCACHE=1</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
@@ -1299,18 +1295,12 @@
           <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../devices</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/utilities</state>
@@ -2146,6 +2136,7 @@
           <name>CCDefines</name>
           <state>NDEBUG</state>
           <state>CPU_MIMXRT1015DAF5A</state>
+          <state>DCP_USE_DCACHE=1</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
@@ -2280,18 +2271,12 @@
           <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../devices</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/utilities</state>
@@ -3129,6 +3114,7 @@
           <state>XIP_BOOT_HEADER_ENABLE=1</state>
           <state>NDEBUG</state>
           <state>CPU_MIMXRT1015DAF5A</state>
+          <state>DCP_USE_DCACHE=1</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
@@ -3263,18 +3249,12 @@
           <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../devices</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/utilities</state>
@@ -4103,6 +4083,9 @@
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_cm7.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv7.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armcc.h</name>
     </file>
     <file>
@@ -4122,21 +4105,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_version.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv81mml.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mbl.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mml.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv7.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv8.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_common_tables.h</name>

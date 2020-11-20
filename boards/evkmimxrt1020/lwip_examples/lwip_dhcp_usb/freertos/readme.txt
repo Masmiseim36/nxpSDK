@@ -9,9 +9,9 @@ The application will get ip adress www.nxp.com and ping the ip address.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.40.2
-- Keil MDK  5.29
-- GCC ARM Embedded  8.3.1
+- IAR embedded Workbench  8.50.5
+- Keil MDK  5.31
+- GCC ARM Embedded  9.2.1
 
 Hardware requirements
 =====================
@@ -45,6 +45,3 @@ Prepare the Demo
 Running the demo
 ================
 refer to MCUXpresso SDK USB RNDIS & LWIP User Guide
-Customization options
-=====================
-

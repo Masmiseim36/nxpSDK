@@ -1,13 +1,13 @@
-#! armcc -E
+#!armclang --target=arm-arm-none-eabi -mcpu=cortex-m7 -E -x c
 /*
 ** ###################################################################
 **     Processors:          MIMXRT1011CAE4A
 **                          MIMXRT1011DAE5A
 **
 **     Compiler:            Keil ARM C/C++ Compiler
-**     Reference manual:    IMXRT1010RM Rev.A, 03/2019
-**     Version:             rev. 0.1, 2019-02-14
-**     Build:               b190723
+**     Reference manual:    IMXRT1010RM Rev.0, 09/2019
+**     Version:             rev. 1.0, 2019-08-01
+**     Build:               b191120
 **
 **     Abstract:
 **         Linker file for the Keil ARM C/C++ Compiler
@@ -51,16 +51,18 @@
 
 LR_m_text m_interrupts_start m_text_start+m_text_size-m_interrupts_start {   ; load region size_region
   VECTOR_ROM m_interrupts_start FIXED m_interrupts_size { ; load address = execution address
-    * (RESET,+FIRST)
+    * (.isr_vector,+FIRST)
   }
   ER_m_text m_text_start FIXED m_text_size { ; load address = execution address
     * (InRoot$$Sections)
     .ANY (+RO)
   }
+  VECTOR_RAM m_interrupts_start EMPTY 0 {
+  }
   RW_m_data m_data_start m_data_size-Stack_Size-Heap_Size { ; RW data
     .ANY (+RW +ZI)
     * (NonCacheable.init)
-    * (NonCacheable)
+    * (*NonCacheable)
   }
   ARM_LIB_HEAP +0 EMPTY Heap_Size {    ; Heap region growing up
   }

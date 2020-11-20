@@ -7,15 +7,14 @@
       <TargetName>sai_interrupt_record_playback debug</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>5060750::V5.06 update 6 (build 750)::ARMCC</pCCUsed>
-      <uAC6>0</uAC6>
+      <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>MIMXRT1011DAE5A</Device>
           <Vendor>NXP</Vendor>
           <PackID>NXP.MIMXRT1011_DFP.11.0.0</PackID>
           <PackURL>http://mcuxpresso.nxp.com/cmsis_pack/repo/</PackURL>
-          <Cpu>CPUTYPE("Cortex-M7") FPU3(DFPU)</Cpu>
+          <Cpu>CPUTYPE("Cortex-M7") FPU3(SFPU)</Cpu>
           <FlashUtilSpec/>
           <StartupFile/>
           <DeviceId>0</DeviceId>
@@ -308,7 +307,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>0</interw>
-            <Optim>1</Optim>
+            <Optim>2</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -317,10 +316,10 @@
             <PlainCh>0</PlainCh>
             <Ropi>0</Ropi>
             <Rwpi>0</Rwpi>
-            <wLevel>2</wLevel>
+            <wLevel>3</wLevel>
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
-            <uC99>1</uC99>
+            <uC99>0</uC99>
             <uGnu>0</uGnu>
             <useXO>0</useXO>
             <v6Lang>3</v6Lang>
@@ -331,10 +330,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>--library_interface=armcc --diag_suppress=1296,186</MiscControls>
-              <Define>DEBUG, CPU_MIMXRT1011DAE5A, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1, CODEC_WM8960_ENABLE</Define>
+              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <Define>DEBUG, CPU_MIMXRT1011DAE5A, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1, CODEC_WM8960_ENABLE, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>../..;..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../devices/MIMXRT1011/drivers;../../../../../../components/codec/wm8960;../../../../../../components/codec/i2c;../../../../../../components/codec;../../../../../../components/codec/port;../../../../../../components/codec/wm8960;../../../../../../components/codec;../../../../../../components/i2c;../../../../../../devices/MIMXRT1011/drivers;../../../../../../devices/MIMXRT1011/drivers;../../../../../../devices/MIMXRT1011/drivers;../../../../../../devices/MIMXRT1011;../../../../../../devices/MIMXRT1011/utilities/str;../../../../../../devices/MIMXRT1011/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1011/drivers;../../../../../../components/lists;../../../../../../devices/MIMXRT1011/drivers;../../../../../../devices/MIMXRT1011/drivers;../../../../../../devices/MIMXRT1011/xip;../../../../xip;../../../../../../components/codec/i2c</IncludePath>
+              <IncludePath>../..;..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../devices/MIMXRT1011/drivers;../../../../../../components/codec/wm8960;../../../../../../components/codec;../../../../../../components/codec/port/wm8960;../../../../../../components/codec/i2c;../../../../../../components/i2c;../../../../../../devices/MIMXRT1011;../../../../../../devices/MIMXRT1011/utilities/str;../../../../../../devices/MIMXRT1011/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1011/xip;../../../../xip;../../../../../../devices/MIMXRT1011/utilities</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -347,7 +346,7 @@
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
-            <uClangAs>0</uClangAs>
+            <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
               <Define>DEBUG, __STARTUP_INITIALIZE_NONCACHEDATA</Define>
@@ -444,6 +443,16 @@
               <FilePath>../../../../../../devices/MIMXRT1011/drivers/fsl_lpi2c.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1011/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1011/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_clock.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1011/drivers/fsl_clock.c</FilePath>
@@ -462,16 +471,6 @@
               <FileName>fsl_sai.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1011/drivers/fsl_sai.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1011/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1011/drivers/fsl_common.h</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.c</FileName>
@@ -524,14 +523,14 @@
               <FilePath>../../../../../../components/codec/fsl_codec_common.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_codec_adapter.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/codec/port/fsl_codec_adapter.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_codec_adapter.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/codec/port/wm8960/fsl_codec_adapter.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_codec_adapter.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/codec/port/wm8960/fsl_codec_adapter.h</FilePath>
             </File>
             <File>
               <FileName>fsl_codec_i2c.c</FileName>
@@ -689,9 +688,9 @@
           <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_MIMXRT1011.s</FileName>
+              <FileName>startup_MIMXRT1011.S</FileName>
               <FileType>2</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1011/arm/startup_MIMXRT1011.s</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1011/arm/startup_MIMXRT1011.S</FilePath>
             </File>
           </Files>
         </Group>
@@ -729,6 +728,11 @@
               <FilePath>../../../../../../CMSIS/Include/core_cm7.h</FilePath>
             </File>
             <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
+            </File>
+            <File>
               <FileName>cmsis_armcc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
@@ -764,31 +768,6 @@
               <FilePath>../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
             </File>
             <File>
-              <FileName>core_armv81mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv81mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mbl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
-            </File>
-            <File>
               <FileName>arm_common_tables.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
@@ -811,15 +790,14 @@
       <TargetName>sai_interrupt_record_playback flexspi_nor_debug</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>5060750::V5.06 update 6 (build 750)::ARMCC</pCCUsed>
-      <uAC6>0</uAC6>
+      <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>MIMXRT1011DAE5A</Device>
           <Vendor>NXP</Vendor>
           <PackID>NXP.MIMXRT1011_DFP.11.0.0</PackID>
           <PackURL>http://mcuxpresso.nxp.com/cmsis_pack/repo/</PackURL>
-          <Cpu>CPUTYPE("Cortex-M7") FPU3(DFPU)</Cpu>
+          <Cpu>CPUTYPE("Cortex-M7") FPU3(SFPU)</Cpu>
           <FlashUtilSpec/>
           <StartupFile/>
           <DeviceId>0</DeviceId>
@@ -1112,7 +1090,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>0</interw>
-            <Optim>1</Optim>
+            <Optim>2</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -1121,10 +1099,10 @@
             <PlainCh>0</PlainCh>
             <Ropi>0</Ropi>
             <Rwpi>0</Rwpi>
-            <wLevel>2</wLevel>
+            <wLevel>3</wLevel>
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
-            <uC99>1</uC99>
+            <uC99>0</uC99>
             <uGnu>0</uGnu>
             <useXO>0</useXO>
             <v6Lang>3</v6Lang>
@@ -1135,10 +1113,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>--library_interface=armcc --diag_suppress=66,1296,186 --diag_suppress=1296,186</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1011DAE5A, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1, CODEC_WM8960_ENABLE</Define>
+              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1011DAE5A, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1, CODEC_WM8960_ENABLE, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>../..;..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../devices/MIMXRT1011/drivers;../../../../../../components/codec/wm8960;../../../../../../components/codec/i2c;../../../../../../components/codec;../../../../../../components/codec/port;../../../../../../components/codec/wm8960;../../../../../../components/codec;../../../../../../components/i2c;../../../../../../devices/MIMXRT1011/drivers;../../../../../../devices/MIMXRT1011/drivers;../../../../../../devices/MIMXRT1011/drivers;../../../../../../devices/MIMXRT1011;../../../../../../devices/MIMXRT1011/utilities/str;../../../../../../devices/MIMXRT1011/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1011/drivers;../../../../../../components/lists;../../../../../../devices/MIMXRT1011/drivers;../../../../../../devices/MIMXRT1011/drivers;../../../../../../devices/MIMXRT1011/xip;../../../../xip;../../../../../../components/codec/i2c</IncludePath>
+              <IncludePath>../..;..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../devices/MIMXRT1011/drivers;../../../../../../components/codec/wm8960;../../../../../../components/codec;../../../../../../components/codec/port/wm8960;../../../../../../components/codec/i2c;../../../../../../components/i2c;../../../../../../devices/MIMXRT1011;../../../../../../devices/MIMXRT1011/utilities/str;../../../../../../devices/MIMXRT1011/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1011/xip;../../../../xip;../../../../../../devices/MIMXRT1011/utilities</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1151,7 +1129,7 @@
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
-            <uClangAs>0</uClangAs>
+            <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
               <Define>DEBUG, __STARTUP_INITIALIZE_NONCACHEDATA</Define>
@@ -1172,7 +1150,7 @@
             <ScatterFile>MIMXRT1011xxxxx_flexspi_nor.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --keep=*(.boot_hdr.ivt) --keep=*(.boot_hdr.boot_data) --keep=*(.boot_hdr.conf) --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
+            <Misc>--remove --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -1248,6 +1226,16 @@
               <FilePath>../../../../../../devices/MIMXRT1011/drivers/fsl_lpi2c.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1011/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1011/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_clock.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1011/drivers/fsl_clock.c</FilePath>
@@ -1266,16 +1254,6 @@
               <FileName>fsl_sai.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1011/drivers/fsl_sai.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1011/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1011/drivers/fsl_common.h</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.c</FileName>
@@ -1328,14 +1306,14 @@
               <FilePath>../../../../../../components/codec/fsl_codec_common.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_codec_adapter.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/codec/port/fsl_codec_adapter.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_codec_adapter.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/codec/port/wm8960/fsl_codec_adapter.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_codec_adapter.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/codec/port/wm8960/fsl_codec_adapter.h</FilePath>
             </File>
             <File>
               <FileName>fsl_codec_i2c.c</FileName>
@@ -1493,9 +1471,9 @@
           <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_MIMXRT1011.s</FileName>
+              <FileName>startup_MIMXRT1011.S</FileName>
               <FileType>2</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1011/arm/startup_MIMXRT1011.s</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1011/arm/startup_MIMXRT1011.S</FilePath>
             </File>
           </Files>
         </Group>
@@ -1533,6 +1511,11 @@
               <FilePath>../../../../../../CMSIS/Include/core_cm7.h</FilePath>
             </File>
             <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
+            </File>
+            <File>
               <FileName>cmsis_armcc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
@@ -1568,31 +1551,6 @@
               <FilePath>../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
             </File>
             <File>
-              <FileName>core_armv81mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv81mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mbl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
-            </File>
-            <File>
               <FileName>arm_common_tables.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
@@ -1615,15 +1573,14 @@
       <TargetName>sai_interrupt_record_playback release</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>5060750::V5.06 update 6 (build 750)::ARMCC</pCCUsed>
-      <uAC6>0</uAC6>
+      <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>MIMXRT1011DAE5A</Device>
           <Vendor>NXP</Vendor>
           <PackID>NXP.MIMXRT1011_DFP.11.0.0</PackID>
           <PackURL>http://mcuxpresso.nxp.com/cmsis_pack/repo/</PackURL>
-          <Cpu>CPUTYPE("Cortex-M7") FPU3(DFPU)</Cpu>
+          <Cpu>CPUTYPE("Cortex-M7") FPU3(SFPU)</Cpu>
           <FlashUtilSpec/>
           <StartupFile/>
           <DeviceId>0</DeviceId>
@@ -1916,7 +1873,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>0</interw>
-            <Optim>4</Optim>
+            <Optim>7</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -1925,10 +1882,10 @@
             <PlainCh>0</PlainCh>
             <Ropi>0</Ropi>
             <Rwpi>0</Rwpi>
-            <wLevel>2</wLevel>
+            <wLevel>3</wLevel>
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
-            <uC99>1</uC99>
+            <uC99>0</uC99>
             <uGnu>0</uGnu>
             <useXO>0</useXO>
             <v6Lang>3</v6Lang>
@@ -1939,10 +1896,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>--library_interface=armcc --diag_suppress=1296,186</MiscControls>
-              <Define>NDEBUG, CPU_MIMXRT1011DAE5A, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1, CODEC_WM8960_ENABLE</Define>
+              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <Define>NDEBUG, CPU_MIMXRT1011DAE5A, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1, CODEC_WM8960_ENABLE, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>../..;..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../devices/MIMXRT1011/drivers;../../../../../../components/codec/wm8960;../../../../../../components/codec/i2c;../../../../../../components/codec;../../../../../../components/codec/port;../../../../../../components/codec/wm8960;../../../../../../components/codec;../../../../../../components/i2c;../../../../../../devices/MIMXRT1011/drivers;../../../../../../devices/MIMXRT1011/drivers;../../../../../../devices/MIMXRT1011/drivers;../../../../../../devices/MIMXRT1011;../../../../../../devices/MIMXRT1011/utilities/str;../../../../../../devices/MIMXRT1011/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1011/drivers;../../../../../../components/lists;../../../../../../devices/MIMXRT1011/drivers;../../../../../../devices/MIMXRT1011/drivers;../../../../../../devices/MIMXRT1011/xip;../../../../xip;../../../../../../components/codec/i2c</IncludePath>
+              <IncludePath>../..;..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../devices/MIMXRT1011/drivers;../../../../../../components/codec/wm8960;../../../../../../components/codec;../../../../../../components/codec/port/wm8960;../../../../../../components/codec/i2c;../../../../../../components/i2c;../../../../../../devices/MIMXRT1011;../../../../../../devices/MIMXRT1011/utilities/str;../../../../../../devices/MIMXRT1011/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1011/xip;../../../../xip;../../../../../../devices/MIMXRT1011/utilities</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1955,7 +1912,7 @@
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
-            <uClangAs>0</uClangAs>
+            <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
               <Define>NDEBUG, __STARTUP_INITIALIZE_NONCACHEDATA</Define>
@@ -2052,6 +2009,16 @@
               <FilePath>../../../../../../devices/MIMXRT1011/drivers/fsl_lpi2c.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1011/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1011/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_clock.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1011/drivers/fsl_clock.c</FilePath>
@@ -2070,16 +2037,6 @@
               <FileName>fsl_sai.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1011/drivers/fsl_sai.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1011/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1011/drivers/fsl_common.h</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.c</FileName>
@@ -2132,14 +2089,14 @@
               <FilePath>../../../../../../components/codec/fsl_codec_common.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_codec_adapter.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/codec/port/fsl_codec_adapter.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_codec_adapter.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/codec/port/wm8960/fsl_codec_adapter.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_codec_adapter.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/codec/port/wm8960/fsl_codec_adapter.h</FilePath>
             </File>
             <File>
               <FileName>fsl_codec_i2c.c</FileName>
@@ -2297,9 +2254,9 @@
           <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_MIMXRT1011.s</FileName>
+              <FileName>startup_MIMXRT1011.S</FileName>
               <FileType>2</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1011/arm/startup_MIMXRT1011.s</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1011/arm/startup_MIMXRT1011.S</FilePath>
             </File>
           </Files>
         </Group>
@@ -2337,6 +2294,11 @@
               <FilePath>../../../../../../CMSIS/Include/core_cm7.h</FilePath>
             </File>
             <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
+            </File>
+            <File>
               <FileName>cmsis_armcc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
@@ -2372,31 +2334,6 @@
               <FilePath>../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
             </File>
             <File>
-              <FileName>core_armv81mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv81mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mbl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
-            </File>
-            <File>
               <FileName>arm_common_tables.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
@@ -2419,15 +2356,14 @@
       <TargetName>sai_interrupt_record_playback flexspi_nor_release</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>5060750::V5.06 update 6 (build 750)::ARMCC</pCCUsed>
-      <uAC6>0</uAC6>
+      <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>MIMXRT1011DAE5A</Device>
           <Vendor>NXP</Vendor>
           <PackID>NXP.MIMXRT1011_DFP.11.0.0</PackID>
           <PackURL>http://mcuxpresso.nxp.com/cmsis_pack/repo/</PackURL>
-          <Cpu>CPUTYPE("Cortex-M7") FPU3(DFPU)</Cpu>
+          <Cpu>CPUTYPE("Cortex-M7") FPU3(SFPU)</Cpu>
           <FlashUtilSpec/>
           <StartupFile/>
           <DeviceId>0</DeviceId>
@@ -2720,7 +2656,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>0</interw>
-            <Optim>4</Optim>
+            <Optim>7</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -2729,10 +2665,10 @@
             <PlainCh>0</PlainCh>
             <Ropi>0</Ropi>
             <Rwpi>0</Rwpi>
-            <wLevel>2</wLevel>
+            <wLevel>3</wLevel>
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
-            <uC99>1</uC99>
+            <uC99>0</uC99>
             <uGnu>0</uGnu>
             <useXO>0</useXO>
             <v6Lang>3</v6Lang>
@@ -2743,10 +2679,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>--library_interface=armcc --diag_suppress=66,1296,186 --diag_suppress=1296,186</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1011DAE5A, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1, CODEC_WM8960_ENABLE</Define>
+              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1011DAE5A, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1, CODEC_WM8960_ENABLE, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>../..;..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../devices/MIMXRT1011/drivers;../../../../../../components/codec/wm8960;../../../../../../components/codec/i2c;../../../../../../components/codec;../../../../../../components/codec/port;../../../../../../components/codec/wm8960;../../../../../../components/codec;../../../../../../components/i2c;../../../../../../devices/MIMXRT1011/drivers;../../../../../../devices/MIMXRT1011/drivers;../../../../../../devices/MIMXRT1011/drivers;../../../../../../devices/MIMXRT1011;../../../../../../devices/MIMXRT1011/utilities/str;../../../../../../devices/MIMXRT1011/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1011/drivers;../../../../../../components/lists;../../../../../../devices/MIMXRT1011/drivers;../../../../../../devices/MIMXRT1011/drivers;../../../../../../devices/MIMXRT1011/xip;../../../../xip;../../../../../../components/codec/i2c</IncludePath>
+              <IncludePath>../..;..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../devices/MIMXRT1011/drivers;../../../../../../components/codec/wm8960;../../../../../../components/codec;../../../../../../components/codec/port/wm8960;../../../../../../components/codec/i2c;../../../../../../components/i2c;../../../../../../devices/MIMXRT1011;../../../../../../devices/MIMXRT1011/utilities/str;../../../../../../devices/MIMXRT1011/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1011/xip;../../../../xip;../../../../../../devices/MIMXRT1011/utilities</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2759,7 +2695,7 @@
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
-            <uClangAs>0</uClangAs>
+            <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
               <Define>NDEBUG, __STARTUP_INITIALIZE_NONCACHEDATA</Define>
@@ -2780,7 +2716,7 @@
             <ScatterFile>MIMXRT1011xxxxx_flexspi_nor.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --keep=*(.boot_hdr.ivt) --keep=*(.boot_hdr.boot_data) --keep=*(.boot_hdr.conf) --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
+            <Misc>--remove --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -2856,6 +2792,16 @@
               <FilePath>../../../../../../devices/MIMXRT1011/drivers/fsl_lpi2c.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1011/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1011/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_clock.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1011/drivers/fsl_clock.c</FilePath>
@@ -2874,16 +2820,6 @@
               <FileName>fsl_sai.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1011/drivers/fsl_sai.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1011/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1011/drivers/fsl_common.h</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.c</FileName>
@@ -2936,14 +2872,14 @@
               <FilePath>../../../../../../components/codec/fsl_codec_common.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_codec_adapter.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/codec/port/fsl_codec_adapter.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_codec_adapter.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/codec/port/wm8960/fsl_codec_adapter.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_codec_adapter.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/codec/port/wm8960/fsl_codec_adapter.h</FilePath>
             </File>
             <File>
               <FileName>fsl_codec_i2c.c</FileName>
@@ -3101,9 +3037,9 @@
           <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_MIMXRT1011.s</FileName>
+              <FileName>startup_MIMXRT1011.S</FileName>
               <FileType>2</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1011/arm/startup_MIMXRT1011.s</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1011/arm/startup_MIMXRT1011.S</FilePath>
             </File>
           </Files>
         </Group>
@@ -3141,6 +3077,11 @@
               <FilePath>../../../../../../CMSIS/Include/core_cm7.h</FilePath>
             </File>
             <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
+            </File>
+            <File>
               <FileName>cmsis_armcc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
@@ -3174,31 +3115,6 @@
               <FileName>cmsis_version.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv81mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv81mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mbl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
             </File>
             <File>
               <FileName>arm_common_tables.h</FileName>

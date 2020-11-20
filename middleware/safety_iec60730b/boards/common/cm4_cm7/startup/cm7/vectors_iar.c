@@ -274,7 +274,7 @@ const vector_entry  __vector_table[] =
     VECTOR_255 
 };
 
-#if (!defined(_IMXRT_) && !defined(_MIMX8MN6_CM7_H_))
+#if (!defined(_IMX_))
 #pragma location = ".memcfg"
   __root const uint32_t __memcfg_table[] = 
 {    

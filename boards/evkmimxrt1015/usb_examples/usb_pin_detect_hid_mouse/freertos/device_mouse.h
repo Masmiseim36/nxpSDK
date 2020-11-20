@@ -13,13 +13,6 @@
  * Definitions
  ******************************************************************************/
 
-#if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)
-#define CONTROLLER_ID kUSB_ControllerEhci0
-#endif
-#if defined(USB_DEVICE_CONFIG_KHCI) && (USB_DEVICE_CONFIG_KHCI > 0U)
-#define CONTROLLER_ID kUSB_ControllerKhci0
-#endif
-
 
 #define USB_HID_MOUSE_REPORT_LENGTH (0x04U)
 typedef struct _usb_hid_mouse_struct

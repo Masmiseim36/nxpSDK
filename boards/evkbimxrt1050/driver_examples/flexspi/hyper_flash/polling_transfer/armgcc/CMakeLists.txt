@@ -366,6 +366,8 @@ SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -std=gnu99")
 
 SET(CMAKE_C_FLAGS_SDRAM_DEBUG "${CMAKE_C_FLAGS_SDRAM_DEBUG} -DSKIP_SYSCLK_INIT")
 
+SET(CMAKE_C_FLAGS_SDRAM_DEBUG "${CMAKE_C_FLAGS_SDRAM_DEBUG} -DDATA_SECTION_IS_CACHEABLE=1")
+
 SET(CMAKE_C_FLAGS_SDRAM_DEBUG "${CMAKE_C_FLAGS_SDRAM_DEBUG} -DDEBUG")
 
 SET(CMAKE_C_FLAGS_SDRAM_DEBUG "${CMAKE_C_FLAGS_SDRAM_DEBUG} -DCPU_MIMXRT1052DVL6B")
@@ -405,6 +407,8 @@ SET(CMAKE_C_FLAGS_SDRAM_DEBUG "${CMAKE_C_FLAGS_SDRAM_DEBUG} -mapcs")
 SET(CMAKE_C_FLAGS_SDRAM_DEBUG "${CMAKE_C_FLAGS_SDRAM_DEBUG} -std=gnu99")
 
 SET(CMAKE_C_FLAGS_SDRAM_RELEASE "${CMAKE_C_FLAGS_SDRAM_RELEASE} -DSKIP_SYSCLK_INIT")
+
+SET(CMAKE_C_FLAGS_SDRAM_RELEASE "${CMAKE_C_FLAGS_SDRAM_RELEASE} -DDATA_SECTION_IS_CACHEABLE=1")
 
 SET(CMAKE_C_FLAGS_SDRAM_RELEASE "${CMAKE_C_FLAGS_SDRAM_RELEASE} -DNDEBUG")
 
@@ -984,6 +988,8 @@ add_executable(flexspi_hyper_flash_polling_transfer.elf
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../clock_config.c"
 "${ProjDirPath}/../clock_config.h"
+"${ProjDirPath}/../dcd.c"
+"${ProjDirPath}/../dcd.h"
 "${ProjDirPath}/../../../../../../../devices/MIMXRT1052/drivers/fsl_flexspi.c"
 "${ProjDirPath}/../../../../../../../devices/MIMXRT1052/drivers/fsl_flexspi.h"
 "${ProjDirPath}/../../../../../../../devices/MIMXRT1052/drivers/fsl_cache.c"
@@ -1022,9 +1028,8 @@ add_executable(flexspi_hyper_flash_polling_transfer.elf
 "${ProjDirPath}/../../../../../../../devices/MIMXRT1052/xip/fsl_flexspi_nor_boot.h"
 "${ProjDirPath}/../../../../../xip/evkbimxrt1050_flexspi_nor_config.c"
 "${ProjDirPath}/../../../../../xip/evkbimxrt1050_flexspi_nor_config.h"
-"${ProjDirPath}/../../../../../xip/evkbimxrt1050_sdram_ini_dcd.c"
-"${ProjDirPath}/../../../../../xip/evkbimxrt1050_sdram_ini_dcd.h"
 "${ProjDirPath}/../../../../../../../CMSIS/Include/core_cm7.h"
+"${ProjDirPath}/../../../../../../../CMSIS/Include/mpu_armv7.h"
 "${ProjDirPath}/../../../../../../../CMSIS/Include/cmsis_armcc.h"
 "${ProjDirPath}/../../../../../../../CMSIS/Include/cmsis_armclang.h"
 "${ProjDirPath}/../../../../../../../CMSIS/Include/cmsis_armclang_ltm.h"
@@ -1032,11 +1037,6 @@ add_executable(flexspi_hyper_flash_polling_transfer.elf
 "${ProjDirPath}/../../../../../../../CMSIS/Include/cmsis_gcc.h"
 "${ProjDirPath}/../../../../../../../CMSIS/Include/cmsis_iccarm.h"
 "${ProjDirPath}/../../../../../../../CMSIS/Include/cmsis_version.h"
-"${ProjDirPath}/../../../../../../../CMSIS/Include/core_armv81mml.h"
-"${ProjDirPath}/../../../../../../../CMSIS/Include/core_armv8mbl.h"
-"${ProjDirPath}/../../../../../../../CMSIS/Include/core_armv8mml.h"
-"${ProjDirPath}/../../../../../../../CMSIS/Include/mpu_armv7.h"
-"${ProjDirPath}/../../../../../../../CMSIS/Include/mpu_armv8.h"
 "${ProjDirPath}/../../../../../../../CMSIS/Include/arm_common_tables.h"
 "${ProjDirPath}/../../../../../../../CMSIS/Include/arm_const_structs.h"
 "${ProjDirPath}/../../../../../../../CMSIS/Include/arm_math.h"

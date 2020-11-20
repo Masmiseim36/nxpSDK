@@ -186,9 +186,6 @@
           <state>CPU_MIMXRT1062DVL6A</state>
           <state>SKIP_SYSCLK_INIT</state>
           <state>XIP_BOOT_HEADER_DCD_ENABLE=1</state>
-          <state>EW_MAX_SURFACE_CACHE_SIZE=0x200000</state>
-          <state>EW_MAX_GLYPH_SURFACE_WIDTH=256</state>
-          <state>EW_MAX_GLYPH_SURFACE_HEIGHT=256</state>
           <state>EW_USE_DOUBLE_BUFFER=1</state>
           <state>EW_CPU_LOAD_MEASURING=1</state>
           <state>EW_FRAME_BUFFER_COLOR_FORMAT=EW_FRAME_BUFFER_COLOR_FORMAT_RGB565</state>
@@ -330,28 +327,16 @@
           <state>$PROJ_DIR$/../GeneratedCode</state>
           <state>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RTE</state>
           <state>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565</state>
-          <state>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/evkmimxrt1060</state>
-          <state>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/ThirdParty/TLSF</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
+          <state>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../components/ft5406_rt</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/xip</state>
-          <state>$PROJ_DIR$/../../../xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities</state>
         </option>
@@ -1193,9 +1178,6 @@
           <state>CPU_MIMXRT1062DVL6A</state>
           <state>SKIP_SYSCLK_INIT</state>
           <state>XIP_BOOT_HEADER_DCD_ENABLE=1</state>
-          <state>EW_MAX_SURFACE_CACHE_SIZE=0x200000</state>
-          <state>EW_MAX_GLYPH_SURFACE_WIDTH=256</state>
-          <state>EW_MAX_GLYPH_SURFACE_HEIGHT=256</state>
           <state>EW_USE_DOUBLE_BUFFER=1</state>
           <state>EW_CPU_LOAD_MEASURING=1</state>
           <state>EW_FRAME_BUFFER_COLOR_FORMAT=EW_FRAME_BUFFER_COLOR_FORMAT_RGB565</state>
@@ -1337,28 +1319,16 @@
           <state>$PROJ_DIR$/../GeneratedCode</state>
           <state>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RTE</state>
           <state>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565</state>
-          <state>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/evkmimxrt1060</state>
-          <state>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/ThirdParty/TLSF</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
+          <state>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../components/ft5406_rt</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/xip</state>
-          <state>$PROJ_DIR$/../../../xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities</state>
         </option>
@@ -2030,6 +2000,18 @@
       <name>$PROJ_DIR$/../clock_config.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../dcd.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../dcd.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../ewconfig.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../ewdef.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../pin_mux.c</name>
     </file>
     <file>
@@ -2197,7 +2179,55 @@
         <name>$PROJ_DIR$/../GeneratedCode/_AcceleratorAccelerator.h</name>
       </file>
       <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_AcceleratorFontLarge.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_AcceleratorFontMedium.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_AcceleratorFontSmall.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../GeneratedCode/_AcceleratorGraphicsFactory.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_AcceleratorImgBlend1.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_AcceleratorImgBlend2.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_AcceleratorImgBlend3.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_AcceleratorImgBlend4.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_AcceleratorImgBlend5.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_AcceleratorImgBlend6.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_AcceleratorImgBlend7.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_AcceleratorImgCopy1.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_AcceleratorImgCopy2.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_AcceleratorImgCopy3.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_AcceleratorImgCopy4.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_AcceleratorImgCopy5.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_AcceleratorLogo.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../GeneratedCode/_ApplicationApplication.h</name>
@@ -2284,6 +2314,9 @@
         <name>$PROJ_DIR$/../GeneratedCode/_ResourcesFont.h</name>
       </file>
       <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_ResourcesFontMedium.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../GeneratedCode/_TemplatesDeviceClass.h</name>
       </file>
       <file>
@@ -2303,6 +2336,12 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../GeneratedCode/_WidgetSetPushButtonConfig.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_WidgetSetPushButtonMedium.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_WidgetSetSwitchMedium.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../GeneratedCode/_WidgetSetToggleButton.h</name>
@@ -2377,69 +2416,54 @@
     <group>
       <name>TargetSpecific</name>
       <group>
-        <name>evkmimxrt1060</name>
+        <name>RT</name>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/evkmimxrt1060/ew_bsp_clock.c</name>
+          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_clock.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/evkmimxrt1060/ew_bsp_clock.h</name>
+          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_clock.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/evkmimxrt1060/ew_bsp_display.c</name>
+          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_console.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/evkmimxrt1060/ew_bsp_display.h</name>
+          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_console.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/evkmimxrt1060/ew_bsp_event.c</name>
+          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_display.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/evkmimxrt1060/ew_bsp_event.h</name>
+          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_display.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/evkmimxrt1060/ew_bsp_graphics.c</name>
+          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_event.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/evkmimxrt1060/ew_bsp_graphics.h</name>
+          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_event.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/evkmimxrt1060/ew_bsp_inout.c</name>
+          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_graphics.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/evkmimxrt1060/ew_bsp_inout.h</name>
+          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_graphics.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/evkmimxrt1060/ew_bsp_serial.c</name>
+          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_inout.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/evkmimxrt1060/ew_bsp_serial.h</name>
+          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_inout.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/evkmimxrt1060/ew_bsp_system.c</name>
+          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_system.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/evkmimxrt1060/ew_bsp_system.h</name>
+          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_system.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/evkmimxrt1060/ew_bsp_touch.c</name>
+          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_touch.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/evkmimxrt1060/ew_bsp_touch.h</name>
-        </file>
-      </group>
-    </group>
-    <group>
-      <name>ThirdParty</name>
-      <group>
-        <name>TLSF</name>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/ThirdParty/TLSF/tlsf.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/ThirdParty/TLSF/tlsf.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/ThirdParty/TLSF/tlsfbits.h</name>
+          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_touch.h</name>
         </file>
       </group>
     </group>
@@ -2542,17 +2566,14 @@
     <file>
       <name>$PROJ_DIR$/../../../xip/evkmimxrt1060_flexspi_nor_config.h</name>
     </file>
-    <file>
-      <name>$PROJ_DIR$/../../../xip/evkmimxrt1060_sdram_ini_dcd.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../xip/evkmimxrt1060_sdram_ini_dcd.h</name>
-    </file>
   </group>
   <group>
     <name>CMSIS</name>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_cm7.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv7.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armcc.h</name>
@@ -2574,21 +2595,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_version.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv81mml.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mbl.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mml.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv7.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv8.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_common_tables.h</name>

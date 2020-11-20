@@ -185,6 +185,7 @@
           <state>XIP_BOOT_HEADER_ENABLE=1</state>
           <state>XIP_BOOT_HEADER_DCD_ENABLE=1</state>
           <state>SKIP_SYSCLK_INIT</state>
+          <state>DATA_SECTION_IS_CACHEABLE=1</state>
           <state>CPU_MIMXRT1062DVL6A</state>
           <state>SDK_DEBUGCONSOLE_UART</state>
           <state>FLATBUFFERS_LITTLEENDIAN</state>
@@ -232,7 +233,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa093,Pe111,Pe549,Pe550</state>
+          <state>Pa093,Pe111,Pe549,Pe550,Pe186,Pe611</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -328,40 +329,20 @@
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/examples/common/source</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/cmsis_drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/cmsis_drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/cmsis_drivers</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Driver/Include</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Driver/Include</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Driver/Include</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Driver/Include</state>
-          <state>$PROJ_DIR$/../../../../../middleware/issdk/drivers/systick</state>
           <state>$PROJ_DIR$/../../../../../middleware/issdk/drivers/systick</state>
           <state>$PROJ_DIR$/../../../../../middleware/issdk/drivers/gpio</state>
           <state>$PROJ_DIR$/../../../../../middleware/issdk/drivers/gpio/i.mx</state>
           <state>$PROJ_DIR$/../../../../../middleware/issdk/sensors</state>
-          <state>$PROJ_DIR$/../../../../../middleware/issdk/sensors</state>
-          <state>$PROJ_DIR$/../../../../../middleware/issdk/sensors</state>
           <state>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite</state>
           <state>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include</state>
+          <state>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
-          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/xip</state>
-          <state>$PROJ_DIR$/../../../xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console</state>
@@ -1203,6 +1184,7 @@
           <state>XIP_BOOT_HEADER_ENABLE=1</state>
           <state>XIP_BOOT_HEADER_DCD_ENABLE=1</state>
           <state>SKIP_SYSCLK_INIT</state>
+          <state>DATA_SECTION_IS_CACHEABLE=1</state>
           <state>NDEBUG</state>
           <state>CPU_MIMXRT1062DVL6A</state>
           <state>SDK_DEBUGCONSOLE_UART</state>
@@ -1251,7 +1233,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa093,Pe111,Pe549,Pe550</state>
+          <state>Pa093,Pe111,Pe549,Pe550,Pe186,Pe611</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -1347,40 +1329,20 @@
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/examples/common/source</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/cmsis_drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/cmsis_drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/cmsis_drivers</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Driver/Include</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Driver/Include</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Driver/Include</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Driver/Include</state>
-          <state>$PROJ_DIR$/../../../../../middleware/issdk/drivers/systick</state>
           <state>$PROJ_DIR$/../../../../../middleware/issdk/drivers/systick</state>
           <state>$PROJ_DIR$/../../../../../middleware/issdk/drivers/gpio</state>
           <state>$PROJ_DIR$/../../../../../middleware/issdk/drivers/gpio/i.mx</state>
           <state>$PROJ_DIR$/../../../../../middleware/issdk/sensors</state>
-          <state>$PROJ_DIR$/../../../../../middleware/issdk/sensors</state>
-          <state>$PROJ_DIR$/../../../../../middleware/issdk/sensors</state>
           <state>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite</state>
           <state>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include</state>
+          <state>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
-          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/xip</state>
-          <state>$PROJ_DIR$/../../../xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console</state>
@@ -2077,6 +2039,12 @@
     <file>
       <name>$PROJ_DIR$/retarget.c</name>
     </file>
+    <file>
+      <name>$PROJ_DIR$/../dcd.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../dcd.h</name>
+    </file>
   </group>
   <group>
     <name>source</name>
@@ -2103,6 +2071,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/examples/adt/adt_train/adt_train.py</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/examples/adt/adt_train/requirements.txt</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../readme.txt</name>
@@ -2204,6 +2175,9 @@
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_cm7.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv7.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armcc.h</name>
     </file>
     <file>
@@ -2223,21 +2197,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_version.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv81mml.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mbl.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mml.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv7.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv8.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_common_tables.h</name>
@@ -2375,6 +2334,15 @@
             <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/core/public/version.h</name>
           </file>
         </group>
+        <group>
+          <name>util</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/core/util/stat_summarizer_options.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/core/util/stats_calculator.h</name>
+          </file>
+        </group>
       </group>
       <group>
         <name>lite</name>
@@ -2421,6 +2389,9 @@
             <file>
               <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/core/api/profiler.h</name>
             </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/core/api/tensor_utils.h</name>
+            </file>
           </group>
           <file>
             <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/core/subgraph.h</name>
@@ -2428,6 +2399,24 @@
         </group>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/error_reporter.h</name>
+        </file>
+        <group>
+          <name>experimental</name>
+          <group>
+            <name>resource_variable</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/experimental/resource_variable/resource_variable.h</name>
+            </file>
+          </group>
+          <group>
+            <name>ruy</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/experimental/ruy/ruy.h</name>
+            </file>
+          </group>
+        </group>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/external_cpu_backend_context.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/graph_info.h</name>
@@ -2439,6 +2428,9 @@
           <name>kernels</name>
           <file>
             <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/activation_functor.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/builtin_op_kernels.h</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/cpu_backend_context.h</name>
@@ -2462,16 +2454,16 @@
             <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/cpu_backend_gemm_ruy.h</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/cpu_backend_support.h</name>
+            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/cpu_backend_threadpool.h</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/cpu_backend_threadpool.h</name>
+            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/custom_ops_register.h</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/eigen_support.h</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/gemmlowp_support.h</name>
+            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/fully_connected.h</name>
           </file>
           <group>
             <name>internal</name>
@@ -2561,6 +2553,15 @@
         <group>
           <name>profiling</name>
           <file>
+            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/profiling/buffered_profiler.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/profiling/memory_info.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/profiling/noop_profiler.h</name>
+          </file>
+          <file>
             <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/profiling/profile_buffer.h</name>
           </file>
           <file>
@@ -2586,11 +2587,35 @@
           <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/stderr_reporter.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/string.h</name>
+          <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/string_type.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/string_util.h</name>
         </file>
+        <group>
+          <name>tools</name>
+          <group>
+            <name>benchmark</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/tools/benchmark/benchmark_model.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/tools/benchmark/benchmark_params.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/tools/benchmark/benchmark_tflite_model.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/tools/benchmark/benchmark_utils.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/tools/benchmark/logging.h</name>
+            </file>
+          </group>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/tools/command_line_flags.h</name>
+          </file>
+        </group>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/util.h</name>
         </file>
@@ -2601,6 +2626,15 @@
     </group>
     <group>
       <name>third_party</name>
+      <group>
+        <name>absl</name>
+        <group>
+          <name>base</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/absl/base/attributes.h</name>
+          </file>
+        </group>
+      </group>
       <group>
         <name>flatbuffers</name>
         <group>
@@ -2724,12 +2758,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../xip/evkmimxrt1060_flexspi_nor_config.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../xip/evkmimxrt1060_sdram_ini_dcd.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../xip/evkmimxrt1060_sdram_ini_dcd.h</name>
     </file>
   </group>
 </project>

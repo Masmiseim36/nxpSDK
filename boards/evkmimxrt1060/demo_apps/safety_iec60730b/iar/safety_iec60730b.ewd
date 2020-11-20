@@ -1675,11 +1675,11 @@
         </option>
         <option>
           <name>MacOverride</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>MacFile</name>
-          <state>$PROJ_DIR$/evkmimxrt1060_sdram_init.mac</state>
+          <state/>
         </option>
         <option>
           <name>MemOverride</name>
@@ -1699,11 +1699,11 @@
         </option>
         <option>
           <name>CExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>CExtraOptions</name>
-          <state>--jlink_script_file=$PROJ_DIR$/../evkmimxrt1060_sdram_init.jlinkscript</state>
+          <state/>
         </option>
         <option>
           <name>CFpuProcessor</name>

@@ -220,6 +220,8 @@ SET(CMAKE_C_FLAGS_SDRAM_DEBUG "${CMAKE_C_FLAGS_SDRAM_DEBUG} -DCPU_MIMXRT1062DVL6
 
 SET(CMAKE_C_FLAGS_SDRAM_DEBUG "${CMAKE_C_FLAGS_SDRAM_DEBUG} -DUSB_STACK_BM")
 
+SET(CMAKE_C_FLAGS_SDRAM_DEBUG "${CMAKE_C_FLAGS_SDRAM_DEBUG} -DSD_ENABLED")
+
 SET(CMAKE_C_FLAGS_SDRAM_DEBUG "${CMAKE_C_FLAGS_SDRAM_DEBUG} -DFSL_OSA_BM_TASK_ENABLE=0")
 
 SET(CMAKE_C_FLAGS_SDRAM_DEBUG "${CMAKE_C_FLAGS_SDRAM_DEBUG} -DFSL_OSA_BM_TIMER_CONFIG=0")
@@ -270,6 +272,8 @@ SET(CMAKE_C_FLAGS_SDRAM_RELEASE "${CMAKE_C_FLAGS_SDRAM_RELEASE} -DCPU_MIMXRT1062
 
 SET(CMAKE_C_FLAGS_SDRAM_RELEASE "${CMAKE_C_FLAGS_SDRAM_RELEASE} -DUSB_STACK_BM")
 
+SET(CMAKE_C_FLAGS_SDRAM_RELEASE "${CMAKE_C_FLAGS_SDRAM_RELEASE} -DSD_ENABLED")
+
 SET(CMAKE_C_FLAGS_SDRAM_RELEASE "${CMAKE_C_FLAGS_SDRAM_RELEASE} -DFSL_OSA_BM_TASK_ENABLE=0")
 
 SET(CMAKE_C_FLAGS_SDRAM_RELEASE "${CMAKE_C_FLAGS_SDRAM_RELEASE} -DFSL_OSA_BM_TIMER_CONFIG=0")
@@ -313,6 +317,8 @@ SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DDEBUG")
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DCPU_MIMXRT1062DVL6A")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DUSB_STACK_BM")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DSD_ENABLED")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DFSL_OSA_BM_TASK_ENABLE=0")
 
@@ -360,6 +366,8 @@ SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DCPU_MIMXRT1062DVL6A")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DUSB_STACK_BM")
 
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DSD_ENABLED")
+
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DFSL_OSA_BM_TASK_ENABLE=0")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DFSL_OSA_BM_TIMER_CONFIG=0")
@@ -405,6 +413,8 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -DDEBUG"
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -DCPU_MIMXRT1062DVL6A")
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -DUSB_STACK_BM")
+
+SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -DSD_ENABLED")
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -DFSL_OSA_BM_TASK_ENABLE=0")
 
@@ -453,6 +463,8 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -DND
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -DCPU_MIMXRT1062DVL6A")
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -DUSB_STACK_BM")
+
+SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -DSD_ENABLED")
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -DFSL_OSA_BM_TASK_ENABLE=0")
 
@@ -1060,7 +1072,11 @@ include_directories(${ProjDirPath}/../../../../../../middleware/usb/phy)
 
 include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT1062/drivers)
 
-include_directories(${ProjDirPath}/../../../../../../middleware/sdmmc/port)
+include_directories(${ProjDirPath}/../../../../../../middleware/sdmmc/sd)
+
+include_directories(${ProjDirPath}/../../../../../../middleware/sdmmc/common)
+
+include_directories(${ProjDirPath}/../../../../../../middleware/sdmmc/host/usdhc)
 
 include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT1062)
 
@@ -1080,16 +1096,13 @@ include_directories(${ProjDirPath}/../../../../../../components/lists)
 
 include_directories(${ProjDirPath}/../../../../../../components/osa)
 
-include_directories(${ProjDirPath}/../../../../../../middleware/sdmmc/inc)
-
-include_directories(${ProjDirPath}/../../../../../../middleware/sdmmc/src)
+include_directories(${ProjDirPath}/../../../../../../middleware/sdmmc/osa)
 
 include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT1062/utilities)
 
 add_executable(dev_composite_cdc_msc_sdcard_bm.elf 
-"${ProjDirPath}/../fsl_sdmmc_host.c"
-"${ProjDirPath}/../fsl_sdmmc_event.c"
-"${ProjDirPath}/../fsl_sdmmc_event.h"
+"${ProjDirPath}/../../../../sdmmc_config.c"
+"${ProjDirPath}/../../../../sdmmc_config.h"
 "${ProjDirPath}/../composite.c"
 "${ProjDirPath}/../composite.h"
 "${ProjDirPath}/../disk_sdcard.c"
@@ -1105,29 +1118,28 @@ add_executable(dev_composite_cdc_msc_sdcard_bm.elf
 "${ProjDirPath}/../clock_config.h"
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
+"${ProjDirPath}/../dcd.c"
+"${ProjDirPath}/../dcd.h"
 "${ProjDirPath}/../../../../../../middleware/usb/device/usb_device_ehci.c"
 "${ProjDirPath}/../../../../../../middleware/usb/device/usb_device_ehci.h"
-"${ProjDirPath}/../../../../../../middleware/usb/include/usb.h"
-"${ProjDirPath}/../../../../../../middleware/usb/include/usb_misc.h"
-"${ProjDirPath}/../../../../../../middleware/usb/include/usb_spec.h"
 "${ProjDirPath}/../../../../../../middleware/usb/phy/usb_phy.c"
 "${ProjDirPath}/../../../../../../middleware/usb/phy/usb_phy.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1062/drivers/fsl_usdhc.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1062/drivers/fsl_usdhc.h"
-"${ProjDirPath}/../../../../../../middleware/sdmmc/inc/fsl_sd.h"
-"${ProjDirPath}/../../../../../../middleware/sdmmc/inc/fsl_sdmmc_common.h"
-"${ProjDirPath}/../../../../../../middleware/sdmmc/inc/fsl_sdmmc_host.h"
-"${ProjDirPath}/../../../../../../middleware/sdmmc/src/fsl_sd.c"
-"${ProjDirPath}/../../../../../../middleware/sdmmc/src/fsl_sdmmc_common.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1062/drivers/fsl_cache.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1062/drivers/fsl_cache.h"
-"${ProjDirPath}/../../../../../../middleware/usb/device/usb_device.h"
-"${ProjDirPath}/../../../../../../middleware/usb/device/usb_device_dci.c"
-"${ProjDirPath}/../../../../../../middleware/usb/device/usb_device_dci.h"
-"${ProjDirPath}/../usb_device_ch9.c"
-"${ProjDirPath}/../usb_device_ch9.h"
+"${ProjDirPath}/../../../../../../middleware/sdmmc/sd/fsl_sd.c"
+"${ProjDirPath}/../../../../../../middleware/sdmmc/sd/fsl_sd.h"
+"${ProjDirPath}/../../../../../../middleware/sdmmc/common/fsl_sdmmc_common.c"
+"${ProjDirPath}/../../../../../../middleware/sdmmc/common/fsl_sdmmc_common.h"
+"${ProjDirPath}/../../../../../../middleware/sdmmc/common/fsl_sdmmc_spec.h"
+"${ProjDirPath}/../../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h"
+"${ProjDirPath}/../../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h"
+"${ProjDirPath}/../../../../../../middleware/sdmmc/host/usdhc/non_blocking/fsl_sdmmc_host.c"
 "${ProjDirPath}/../usb_device_class.c"
 "${ProjDirPath}/../usb_device_class.h"
+"${ProjDirPath}/../usb_device_ch9.c"
+"${ProjDirPath}/../usb_device_ch9.h"
 "${ProjDirPath}/../usb_device_cdc_acm.c"
 "${ProjDirPath}/../usb_device_cdc_acm.h"
 "${ProjDirPath}/../usb_device_msc.c"
@@ -1154,8 +1166,6 @@ add_executable(dev_composite_cdc_msc_sdcard_bm.elf
 "${ProjDirPath}/../../../../../../devices/MIMXRT1062/xip/fsl_flexspi_nor_boot.h"
 "${ProjDirPath}/../../../../xip/evkmimxrt1060_flexspi_nor_config.c"
 "${ProjDirPath}/../../../../xip/evkmimxrt1060_flexspi_nor_config.h"
-"${ProjDirPath}/../../../../xip/evkmimxrt1060_sdram_ini_dcd.c"
-"${ProjDirPath}/../../../../xip/evkmimxrt1060_sdram_ini_dcd.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console_conf.h"
@@ -1170,11 +1180,18 @@ add_executable(dev_composite_cdc_msc_sdcard_bm.elf
 "${ProjDirPath}/../../../../../../components/lists/generic_list.h"
 "${ProjDirPath}/../../../../../../components/serial_manager/serial_port_uart.c"
 "${ProjDirPath}/../../../../../../components/serial_manager/serial_port_uart.h"
+"${ProjDirPath}/../../../../../../middleware/usb/device/usb_device.h"
+"${ProjDirPath}/../../../../../../middleware/usb/device/usb_device_dci.c"
+"${ProjDirPath}/../../../../../../middleware/usb/device/usb_device_dci.h"
 "${ProjDirPath}/../../../../../../components/osa/fsl_os_abstraction.h"
 "${ProjDirPath}/../../../../../../components/osa/fsl_os_abstraction_bm.c"
 "${ProjDirPath}/../../../../../../components/osa/fsl_os_abstraction_bm.h"
 "${ProjDirPath}/../../../../../../components/osa/fsl_os_abstraction_config.h"
+"${ProjDirPath}/../../../../../../middleware/usb/include/usb.h"
+"${ProjDirPath}/../../../../../../middleware/usb/include/usb_misc.h"
+"${ProjDirPath}/../../../../../../middleware/usb/include/usb_spec.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/core_cm7.h"
+"${ProjDirPath}/../../../../../../CMSIS/Include/mpu_armv7.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_armcc.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_armclang.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_armclang_ltm.h"
@@ -1182,15 +1199,17 @@ add_executable(dev_composite_cdc_msc_sdcard_bm.elf
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_gcc.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_iccarm.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_version.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/core_armv81mml.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/core_armv8mbl.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/core_armv8mml.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/mpu_armv7.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/mpu_armv8.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/arm_common_tables.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/arm_const_structs.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/arm_math.h"
-"${ProjDirPath}/../../../../../../middleware/sdmmc/inc/fsl_sdmmc_spec.h"
+"${ProjDirPath}/../../../../../../middleware/usb/device/usb_device.h"
+"${ProjDirPath}/../../../../../../middleware/usb/device/usb_device_dci.h"
+"${ProjDirPath}/../../../../../../middleware/sdmmc/osa/fsl_sdmmc_osa.c"
+"${ProjDirPath}/../../../../../../middleware/sdmmc/osa/fsl_sdmmc_osa.h"
+"${ProjDirPath}/../../../../../../components/osa/fsl_os_abstraction.h"
+"${ProjDirPath}/../../../../../../components/osa/fsl_os_abstraction_bm.c"
+"${ProjDirPath}/../../../../../../components/osa/fsl_os_abstraction_bm.h"
+"${ProjDirPath}/../../../../../../components/osa/fsl_os_abstraction_config.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1062/utilities/fsl_sbrk.c"
 )
 

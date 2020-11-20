@@ -92,6 +92,8 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEB
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -DSKIP_SYSCLK_INIT")
 
+SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -DDATA_SECTION_IS_CACHEABLE=1")
+
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -DDEBUG")
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -DCPU_MIMXRT1062DVL6A")
@@ -105,6 +107,8 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEB
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -DARM_MATH_CM7")
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -D__FPU_PRESENT=1")
+
+SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -DSDK_I2C_BASED_COMPONENT_USED=1")
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -DSDK_I2C_BASED_COMPONENT_USED=1")
 
@@ -150,6 +154,8 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_R
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -DSKIP_SYSCLK_INIT")
 
+SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -DDATA_SECTION_IS_CACHEABLE=1")
+
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -DNDEBUG")
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -DCPU_MIMXRT1062DVL6A")
@@ -163,6 +169,8 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_R
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -DARM_MATH_CM7")
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -D__FPU_PRESENT=1")
+
+SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -DSDK_I2C_BASED_COMPONENT_USED=1")
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -DSDK_I2C_BASED_COMPONENT_USED=1")
 
@@ -450,6 +458,8 @@ include_directories(${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite
 
 include_directories(${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include)
 
+include_directories(${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party)
+
 include_directories(${ProjDirPath}/../../../../../components/lists)
 
 include_directories(${ProjDirPath}/../../../../../components/uart)
@@ -488,6 +498,8 @@ add_executable(tensorflow_lite_cifar10.elf
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../clock_config.c"
 "${ProjDirPath}/../clock_config.h"
+"${ProjDirPath}/../dcd.c"
+"${ProjDirPath}/../dcd.h"
 "${ProjDirPath}/../../../../../components/video/camera/device/fsl_camera_device.h"
 "${ProjDirPath}/../../../../../components/video/camera/receiver/fsl_camera_receiver.h"
 "${ProjDirPath}/../../../../../components/video/camera/device/sccb/fsl_sccb.c"
@@ -516,6 +528,8 @@ add_executable(tensorflow_lite_cifar10.elf
 "${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers/fsl_gpio.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/core/public/session.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/core/public/version.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/core/util/stat_summarizer_options.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/core/util/stats_calculator.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/allocation.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/arena_planner.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/builtin_op_data.h"
@@ -528,11 +542,16 @@ add_executable(tensorflow_lite_cifar10.elf
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/core/api/flatbuffer_conversions.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/core/api/op_resolver.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/core/api/profiler.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/core/api/tensor_utils.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/core/subgraph.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/error_reporter.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/experimental/resource_variable/resource_variable.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/experimental/ruy/ruy.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/external_cpu_backend_context.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/graph_info.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/interpreter.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/activation_functor.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/builtin_op_kernels.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/cpu_backend_context.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/cpu_backend_gemm.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/cpu_backend_gemm_custom_gemv.h"
@@ -540,10 +559,10 @@ add_executable(tensorflow_lite_cifar10.elf
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/cpu_backend_gemm_gemmlowp.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/cpu_backend_gemm_params.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/cpu_backend_gemm_ruy.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/cpu_backend_support.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/cpu_backend_threadpool.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/custom_ops_register.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/eigen_support.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/gemmlowp_support.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/fully_connected.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/integer_ops/add.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/integer_ops/conv.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/integer_ops/depthwise_conv.h"
@@ -569,6 +588,9 @@ add_executable(tensorflow_lite_cifar10.elf
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/mutable_op_resolver.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/op_resolver.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/optional_debug_tools.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/profiling/buffered_profiler.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/profiling/memory_info.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/profiling/noop_profiler.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/profiling/profile_buffer.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/profiling/profile_summarizer.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/profiling/profiler.h"
@@ -576,10 +598,17 @@ add_executable(tensorflow_lite_cifar10.elf
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/schema/schema_generated.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/simple_memory_arena.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/stderr_reporter.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/string.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/string_type.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/string_util.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/tools/benchmark/benchmark_model.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/tools/benchmark/benchmark_params.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/tools/benchmark/benchmark_tflite_model.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/tools/benchmark/benchmark_utils.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/tools/benchmark/logging.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/tools/command_line_flags.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/util.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/version.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/absl/base/attributes.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/base.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/code_generators.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/flatbuffers.h"
@@ -620,8 +649,6 @@ add_executable(tensorflow_lite_cifar10.elf
 "${ProjDirPath}/../../../../../devices/MIMXRT1062/xip/fsl_flexspi_nor_boot.h"
 "${ProjDirPath}/../../../xip/evkmimxrt1060_flexspi_nor_config.c"
 "${ProjDirPath}/../../../xip/evkmimxrt1060_flexspi_nor_config.h"
-"${ProjDirPath}/../../../xip/evkmimxrt1060_sdram_ini_dcd.c"
-"${ProjDirPath}/../../../xip/evkmimxrt1060_sdram_ini_dcd.h"
 "${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities/fsl_assert.c"
 "${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console.c"
 "${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console.h"
@@ -629,6 +656,7 @@ add_executable(tensorflow_lite_cifar10.elf
 "${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c"
 "${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/core_cm7.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/mpu_armv7.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/cmsis_armcc.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/cmsis_armclang.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/cmsis_armclang_ltm.h"
@@ -636,11 +664,6 @@ add_executable(tensorflow_lite_cifar10.elf
 "${ProjDirPath}/../../../../../CMSIS/Include/cmsis_gcc.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/cmsis_iccarm.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/cmsis_version.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/core_armv81mml.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/core_armv8mbl.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/core_armv8mml.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/mpu_armv7.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/mpu_armv8.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/arm_common_tables.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/arm_const_structs.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/arm_math.h"

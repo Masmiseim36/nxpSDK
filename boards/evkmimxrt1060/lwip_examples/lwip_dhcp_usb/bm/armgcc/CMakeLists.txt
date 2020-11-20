@@ -1036,6 +1036,8 @@ include_directories(${ProjDirPath}/../../../../../../middleware/usb/host)
 
 include_directories(${ProjDirPath}/../../../../../../middleware/usb/include)
 
+include_directories(${ProjDirPath}/../../../../../../components/osa)
+
 include_directories(${ProjDirPath}/../../../../../../middleware/usb/phy)
 
 include_directories(${ProjDirPath}/../../../../../../middleware/lwip/port)
@@ -1044,15 +1046,15 @@ include_directories(${ProjDirPath}/../../../../../../middleware/lwip/src)
 
 include_directories(${ProjDirPath}/../../../../../../middleware/lwip/src/include)
 
+include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT1062/utilities/str)
+
+include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT1062/utilities/debug_console)
+
 include_directories(${ProjDirPath}/../../../../../../middleware/lwip/contrib/apps/ping)
 
 include_directories(${ProjDirPath}/../../../../../../middleware/usb/host/class)
 
 include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT1062)
-
-include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT1062/utilities/str)
-
-include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT1062/utilities/debug_console)
 
 include_directories(${ProjDirPath}/../../../../../../components/uart)
 
@@ -1063,8 +1065,6 @@ include_directories(${ProjDirPath}/../../../../../../components/lists)
 include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT1062/xip)
 
 include_directories(${ProjDirPath}/../../../../xip)
-
-include_directories(${ProjDirPath}/../../../../../../components/osa)
 
 include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT1062/utilities)
 
@@ -1078,13 +1078,27 @@ add_executable(lwip_dhcp_usb_bm.elf
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../clock_config.c"
 "${ProjDirPath}/../clock_config.h"
+"${ProjDirPath}/../dcd.c"
+"${ProjDirPath}/../dcd.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1062/drivers/fsl_cache.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1062/drivers/fsl_cache.h"
+"${ProjDirPath}/../../../../../../middleware/usb/host/class/usb_host_hub.c"
+"${ProjDirPath}/../../../../../../middleware/usb/host/class/usb_host_hub.h"
+"${ProjDirPath}/../../../../../../middleware/usb/host/class/usb_host_hub_app.c"
+"${ProjDirPath}/../../../../../../middleware/usb/host/class/usb_host_hub_app.h"
+"${ProjDirPath}/../../../../../../middleware/usb/host/usb_host.h"
+"${ProjDirPath}/../../../../../../middleware/usb/host/usb_host_devices.c"
+"${ProjDirPath}/../../../../../../middleware/usb/host/usb_host_devices.h"
+"${ProjDirPath}/../../../../../../middleware/usb/host/usb_host_framework.c"
+"${ProjDirPath}/../../../../../../middleware/usb/host/usb_host_framework.h"
+"${ProjDirPath}/../../../../../../middleware/usb/host/usb_host_hci.c"
+"${ProjDirPath}/../../../../../../middleware/usb/host/usb_host_hci.h"
+"${ProjDirPath}/../../../../../../components/osa/fsl_os_abstraction.h"
+"${ProjDirPath}/../../../../../../components/osa/fsl_os_abstraction_bm.c"
+"${ProjDirPath}/../../../../../../components/osa/fsl_os_abstraction_bm.h"
+"${ProjDirPath}/../../../../../../components/osa/fsl_os_abstraction_config.h"
 "${ProjDirPath}/../../../../../../middleware/usb/host/usb_host_ehci.c"
 "${ProjDirPath}/../../../../../../middleware/usb/host/usb_host_ehci.h"
-"${ProjDirPath}/../../../../../../middleware/usb/include/usb.h"
-"${ProjDirPath}/../../../../../../middleware/usb/include/usb_misc.h"
-"${ProjDirPath}/../../../../../../middleware/usb/include/usb_spec.h"
 "${ProjDirPath}/../../../../../../middleware/usb/phy/usb_phy.c"
 "${ProjDirPath}/../../../../../../middleware/usb/phy/usb_phy.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1062/drivers/fsl_clock.c"
@@ -1110,6 +1124,7 @@ add_executable(lwip_dhcp_usb_bm.elf
 "${ProjDirPath}/../../../../../../middleware/lwip/src/core/inet_chksum.c"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/core/init.c"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/core/ip.c"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/core/ipv4/acd.c"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/core/ipv4/autoip.c"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/core/ipv4/dhcp.c"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/core/ipv4/etharp.c"
@@ -1144,6 +1159,7 @@ add_executable(lwip_dhcp_usb_bm.elf
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/compat/posix/netdb.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/compat/posix/sys/socket.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/compat/stdc/errno.h"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/acd.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/altcp.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/altcp_tcp.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/altcp_tls.h"
@@ -1195,6 +1211,7 @@ add_executable(lwip_dhcp_usb_bm.elf
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/priv/sockets_priv.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/priv/tcp_priv.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/priv/tcpip_priv.h"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/prot/acd.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/prot/autoip.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/prot/dhcp.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/prot/dhcp6.h"
@@ -1297,21 +1314,15 @@ add_executable(lwip_dhcp_usb_bm.elf
 "${ProjDirPath}/../../../../../../middleware/lwip/src/netif/ppp/vj.c"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/netif/slipif.c"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/netif/zepif.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console_conf.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/port/usb_ethernetif.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/port/usb_ethernetif_bm.c"
 "${ProjDirPath}/../../../../../../middleware/lwip/contrib/apps/ping/ping.c"
 "${ProjDirPath}/../../../../../../middleware/lwip/contrib/apps/ping/ping.h"
-"${ProjDirPath}/../../../../../../middleware/usb/host/usb_host.h"
-"${ProjDirPath}/../../../../../../middleware/usb/host/usb_host_devices.c"
-"${ProjDirPath}/../../../../../../middleware/usb/host/usb_host_devices.h"
-"${ProjDirPath}/../../../../../../middleware/usb/host/usb_host_framework.c"
-"${ProjDirPath}/../../../../../../middleware/usb/host/usb_host_framework.h"
-"${ProjDirPath}/../../../../../../middleware/usb/host/usb_host_hci.c"
-"${ProjDirPath}/../../../../../../middleware/usb/host/usb_host_hci.h"
-"${ProjDirPath}/../../../../../../middleware/usb/host/class/usb_host_hub.c"
-"${ProjDirPath}/../../../../../../middleware/usb/host/class/usb_host_hub.h"
-"${ProjDirPath}/../../../../../../middleware/usb/host/class/usb_host_hub_app.c"
-"${ProjDirPath}/../../../../../../middleware/usb/host/class/usb_host_hub_app.h"
 "${ProjDirPath}/../../../../../../middleware/usb/host/class/usb_host_cdc_rndis.c"
 "${ProjDirPath}/../../../../../../middleware/usb/host/class/usb_host_cdc_rndis.h"
 "${ProjDirPath}/../../../../../../middleware/usb/host/class/usb_host_cdc.c"
@@ -1321,11 +1332,6 @@ add_executable(lwip_dhcp_usb_bm.elf
 "${ProjDirPath}/../../../../../../devices/MIMXRT1062/MIMXRT1062.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1062/MIMXRT1062_features.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1062/fsl_device_registers.h"
-"${ProjDirPath}/../../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console.h"
-"${ProjDirPath}/../../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console_conf.h"
-"${ProjDirPath}/../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h"
 "${ProjDirPath}/../../../../../../components/uart/lpuart_adapter.c"
 "${ProjDirPath}/../../../../../../components/uart/uart.h"
 "${ProjDirPath}/../../../../../../components/serial_manager/serial_manager.c"
@@ -1348,9 +1354,8 @@ add_executable(lwip_dhcp_usb_bm.elf
 "${ProjDirPath}/../../../../../../devices/MIMXRT1062/xip/fsl_flexspi_nor_boot.h"
 "${ProjDirPath}/../../../../xip/evkmimxrt1060_flexspi_nor_config.c"
 "${ProjDirPath}/../../../../xip/evkmimxrt1060_flexspi_nor_config.h"
-"${ProjDirPath}/../../../../xip/evkmimxrt1060_sdram_ini_dcd.c"
-"${ProjDirPath}/../../../../xip/evkmimxrt1060_sdram_ini_dcd.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/core_cm7.h"
+"${ProjDirPath}/../../../../../../CMSIS/Include/mpu_armv7.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_armcc.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_armclang.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_armclang_ltm.h"
@@ -1358,18 +1363,16 @@ add_executable(lwip_dhcp_usb_bm.elf
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_gcc.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_iccarm.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_version.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/core_armv81mml.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/core_armv8mbl.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/core_armv8mml.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/mpu_armv7.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/mpu_armv8.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/arm_common_tables.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/arm_const_structs.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/arm_math.h"
-"${ProjDirPath}/../../../../../../components/osa/fsl_os_abstraction.h"
-"${ProjDirPath}/../../../../../../components/osa/fsl_os_abstraction_bm.c"
-"${ProjDirPath}/../../../../../../components/osa/fsl_os_abstraction_bm.h"
-"${ProjDirPath}/../../../../../../components/osa/fsl_os_abstraction_config.h"
+"${ProjDirPath}/../../../../../../middleware/usb/include/usb.h"
+"${ProjDirPath}/../../../../../../middleware/usb/include/usb_misc.h"
+"${ProjDirPath}/../../../../../../middleware/usb/include/usb_spec.h"
+"${ProjDirPath}/../../../../../../middleware/usb/host/usb_host.h"
+"${ProjDirPath}/../../../../../../middleware/usb/host/usb_host_devices.h"
+"${ProjDirPath}/../../../../../../middleware/usb/host/usb_host_framework.h"
+"${ProjDirPath}/../../../../../../middleware/usb/host/usb_host_hci.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1062/utilities/fsl_sbrk.c"
 )
 

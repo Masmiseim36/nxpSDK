@@ -296,6 +296,8 @@ SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -std=gnu99")
 
 SET(CMAKE_C_FLAGS_SDRAM_DEBUG "${CMAKE_C_FLAGS_SDRAM_DEBUG} -DSKIP_SYSCLK_INIT")
 
+SET(CMAKE_C_FLAGS_SDRAM_DEBUG "${CMAKE_C_FLAGS_SDRAM_DEBUG} -DDATA_SECTION_IS_CACHEABLE=1")
+
 SET(CMAKE_C_FLAGS_SDRAM_DEBUG "${CMAKE_C_FLAGS_SDRAM_DEBUG} -DDEBUG")
 
 SET(CMAKE_C_FLAGS_SDRAM_DEBUG "${CMAKE_C_FLAGS_SDRAM_DEBUG} -DCPU_MIMXRT1064DVL6A")
@@ -341,6 +343,8 @@ SET(CMAKE_C_FLAGS_SDRAM_DEBUG "${CMAKE_C_FLAGS_SDRAM_DEBUG} -mapcs")
 SET(CMAKE_C_FLAGS_SDRAM_DEBUG "${CMAKE_C_FLAGS_SDRAM_DEBUG} -std=gnu99")
 
 SET(CMAKE_C_FLAGS_SDRAM_RELEASE "${CMAKE_C_FLAGS_SDRAM_RELEASE} -DSKIP_SYSCLK_INIT")
+
+SET(CMAKE_C_FLAGS_SDRAM_RELEASE "${CMAKE_C_FLAGS_SDRAM_RELEASE} -DDATA_SECTION_IS_CACHEABLE=1")
 
 SET(CMAKE_C_FLAGS_SDRAM_RELEASE "${CMAKE_C_FLAGS_SDRAM_RELEASE} -DNDEBUG")
 
@@ -998,7 +1002,9 @@ include_directories(${ProjDirPath}/../../../../../../components/codec/wm8960)
 
 include_directories(${ProjDirPath}/../../../../../../components/codec)
 
-include_directories(${ProjDirPath}/../../../../../../components/codec/port)
+include_directories(${ProjDirPath}/../../../../../../components/codec/port/wm8960)
+
+include_directories(${ProjDirPath}/../../../../../../components/codec/i2c)
 
 include_directories(${ProjDirPath}/../../../../../../components/i2c)
 
@@ -1018,8 +1024,6 @@ include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT1064/xip)
 
 include_directories(${ProjDirPath}/../../../../xip)
 
-include_directories(${ProjDirPath}/../../../../../../components/codec/i2c)
-
 include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT1064/utilities)
 
 add_executable(sai_edma_transfer.elf 
@@ -1031,14 +1035,20 @@ add_executable(sai_edma_transfer.elf
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../clock_config.c"
 "${ProjDirPath}/../clock_config.h"
+"${ProjDirPath}/../dcd.c"
+"${ProjDirPath}/../dcd.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1064/drivers/fsl_lpi2c.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1064/drivers/fsl_lpi2c.h"
 "${ProjDirPath}/../../../../../../components/codec/wm8960/fsl_wm8960.c"
 "${ProjDirPath}/../../../../../../components/codec/wm8960/fsl_wm8960.h"
 "${ProjDirPath}/../../../../../../components/codec/fsl_codec_common.c"
 "${ProjDirPath}/../../../../../../components/codec/fsl_codec_common.h"
-"${ProjDirPath}/../../../../../../components/codec/port/fsl_codec_adapter.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT1064/drivers/fsl_common.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT1064/drivers/fsl_common.h"
 "${ProjDirPath}/../../../../../../components/codec/port/wm8960/fsl_codec_adapter.c"
+"${ProjDirPath}/../../../../../../components/codec/port/wm8960/fsl_codec_adapter.h"
+"${ProjDirPath}/../../../../../../components/codec/i2c/fsl_codec_i2c.c"
+"${ProjDirPath}/../../../../../../components/codec/i2c/fsl_codec_i2c.h"
 "${ProjDirPath}/../../../../../../components/i2c/i2c.h"
 "${ProjDirPath}/../../../../../../components/i2c/lpi2c_adapter.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1064/drivers/fsl_clock.c"
@@ -1051,8 +1061,6 @@ add_executable(sai_edma_transfer.elf
 "${ProjDirPath}/../../../../../../devices/MIMXRT1064/drivers/fsl_dmamux.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1064/drivers/fsl_edma.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1064/drivers/fsl_edma.h"
-"${ProjDirPath}/../../../../../../devices/MIMXRT1064/drivers/fsl_common.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT1064/drivers/fsl_common.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1064/MIMXRT1064.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1064/MIMXRT1064_features.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1064/fsl_device_registers.h"
@@ -1083,9 +1091,8 @@ add_executable(sai_edma_transfer.elf
 "${ProjDirPath}/../../../../../../devices/MIMXRT1064/xip/fsl_flexspi_nor_boot.h"
 "${ProjDirPath}/../../../../xip/evkmimxrt1064_flexspi_nor_config.c"
 "${ProjDirPath}/../../../../xip/evkmimxrt1064_flexspi_nor_config.h"
-"${ProjDirPath}/../../../../xip/evkmimxrt1064_sdram_ini_dcd.c"
-"${ProjDirPath}/../../../../xip/evkmimxrt1064_sdram_ini_dcd.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/core_cm7.h"
+"${ProjDirPath}/../../../../../../CMSIS/Include/mpu_armv7.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_armcc.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_armclang.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_armclang_ltm.h"
@@ -1093,16 +1100,9 @@ add_executable(sai_edma_transfer.elf
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_gcc.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_iccarm.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_version.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/core_armv81mml.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/core_armv8mbl.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/core_armv8mml.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/mpu_armv7.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/mpu_armv8.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/arm_common_tables.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/arm_const_structs.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/arm_math.h"
-"${ProjDirPath}/../../../../../../components/codec/i2c/fsl_codec_i2c.c"
-"${ProjDirPath}/../../../../../../components/codec/i2c/fsl_codec_i2c.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1064/utilities/fsl_sbrk.c"
 )
 

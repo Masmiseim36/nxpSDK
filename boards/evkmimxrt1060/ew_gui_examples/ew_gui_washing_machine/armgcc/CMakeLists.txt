@@ -96,12 +96,6 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -DSKIP_S
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -DXIP_BOOT_HEADER_DCD_ENABLE=1")
 
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -DEW_MAX_SURFACE_CACHE_SIZE=0x200000")
-
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -DEW_MAX_GLYPH_SURFACE_WIDTH=256")
-
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -DEW_MAX_GLYPH_SURFACE_HEIGHT=256")
-
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -DEW_USE_DOUBLE_BUFFER=1")
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -DEW_CPU_LOAD_MEASURING=1")
@@ -114,7 +108,7 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -DEW_USE
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -DSERIAL_PORT_TYPE_UART=1")
 
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -O2")
+SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -O1")
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -g")
 
@@ -159,12 +153,6 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -DCP
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -DSKIP_SYSCLK_INIT")
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -DXIP_BOOT_HEADER_DCD_ENABLE=1")
-
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -DEW_MAX_SURFACE_CACHE_SIZE=0x200000")
-
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -DEW_MAX_GLYPH_SURFACE_WIDTH=256")
-
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -DEW_MAX_GLYPH_SURFACE_HEIGHT=256")
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -DEW_USE_DOUBLE_BUFFER=1")
 
@@ -392,9 +380,7 @@ include_directories(${ProjDirPath}/../../../../../middleware/EmbeddedWizard/Plat
 
 include_directories(${ProjDirPath}/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565)
 
-include_directories(${ProjDirPath}/../../../../../middleware/EmbeddedWizard/TargetSpecific/evkmimxrt1060)
-
-include_directories(${ProjDirPath}/../../../../../middleware/EmbeddedWizard/ThirdParty/TLSF)
+include_directories(${ProjDirPath}/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT)
 
 include_directories(${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers)
 
@@ -423,8 +409,12 @@ add_executable(ew_gui_washing_machine.elf
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../clock_config.c"
 "${ProjDirPath}/../clock_config.h"
+"${ProjDirPath}/../dcd.c"
+"${ProjDirPath}/../dcd.h"
 "${ProjDirPath}/../main.c"
 "${ProjDirPath}/../ewmain.c"
+"${ProjDirPath}/../ewconfig.h"
+"${ProjDirPath}/../ewdef.h"
 "${ProjDirPath}/../ewmain.h"
 "${ProjDirPath}/../DeviceDriver.c"
 "${ProjDirPath}/../DeviceDriver.h"
@@ -495,9 +485,22 @@ add_executable(ew_gui_washing_machine.elf
 "${ProjDirPath}/../GeneratedCode/_ViewsImage.h"
 "${ProjDirPath}/../GeneratedCode/_ViewsRectangle.h"
 "${ProjDirPath}/../GeneratedCode/_ViewsText.h"
+"${ProjDirPath}/../GeneratedCode/_WasherBgDelicates.h"
+"${ProjDirPath}/../GeneratedCode/_WasherBgDrain.h"
+"${ProjDirPath}/../GeneratedCode/_WasherBgEasyCare.h"
+"${ProjDirPath}/../GeneratedCode/_WasherBgEco.h"
+"${ProjDirPath}/../GeneratedCode/_WasherBgHot.h"
+"${ProjDirPath}/../GeneratedCode/_WasherBgSpin.h"
+"${ProjDirPath}/../GeneratedCode/_WasherBgSportswear.h"
+"${ProjDirPath}/../GeneratedCode/_WasherBgWool.h"
+"${ProjDirPath}/../GeneratedCode/_WasherDescrFont.h"
 "${ProjDirPath}/../GeneratedCode/_WasherDeviceClass.h"
 "${ProjDirPath}/../GeneratedCode/_WasherHourItemL.h"
 "${ProjDirPath}/../GeneratedCode/_WasherHourItemS.h"
+"${ProjDirPath}/../GeneratedCode/_WasherListFontL.h"
+"${ProjDirPath}/../GeneratedCode/_WasherListFontM.h"
+"${ProjDirPath}/../GeneratedCode/_WasherListFontS.h"
+"${ProjDirPath}/../GeneratedCode/_WasherListFontXL.h"
 "${ProjDirPath}/../GeneratedCode/_WasherMinItemL.h"
 "${ProjDirPath}/../GeneratedCode/_WasherMinItemS.h"
 "${ProjDirPath}/../GeneratedCode/_WasherOptItemL.h"
@@ -506,6 +509,7 @@ add_executable(ew_gui_washing_machine.elf
 "${ProjDirPath}/../GeneratedCode/_WasherProgItemL.h"
 "${ProjDirPath}/../GeneratedCode/_WasherProgItemS.h"
 "${ProjDirPath}/../GeneratedCode/_WasherProgList.h"
+"${ProjDirPath}/../GeneratedCode/_WasherShadow.h"
 "${ProjDirPath}/../GeneratedCode/_WasherSpinItemL.h"
 "${ProjDirPath}/../GeneratedCode/_WasherSpinItemS.h"
 "${ProjDirPath}/../GeneratedCode/_WasherSpinList.h"
@@ -535,25 +539,22 @@ add_executable(ew_gui_washing_machine.elf
 "${ProjDirPath}/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RTE/ewextrte.c"
 "${ProjDirPath}/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RTE/ewextrte.h"
 "${ProjDirPath}/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RTE/ewrte.h"
-"${ProjDirPath}/../../../../../middleware/EmbeddedWizard/TargetSpecific/evkmimxrt1060/ew_bsp_clock.c"
-"${ProjDirPath}/../../../../../middleware/EmbeddedWizard/TargetSpecific/evkmimxrt1060/ew_bsp_clock.h"
-"${ProjDirPath}/../../../../../middleware/EmbeddedWizard/TargetSpecific/evkmimxrt1060/ew_bsp_display.c"
-"${ProjDirPath}/../../../../../middleware/EmbeddedWizard/TargetSpecific/evkmimxrt1060/ew_bsp_display.h"
-"${ProjDirPath}/../../../../../middleware/EmbeddedWizard/TargetSpecific/evkmimxrt1060/ew_bsp_event.c"
-"${ProjDirPath}/../../../../../middleware/EmbeddedWizard/TargetSpecific/evkmimxrt1060/ew_bsp_event.h"
-"${ProjDirPath}/../../../../../middleware/EmbeddedWizard/TargetSpecific/evkmimxrt1060/ew_bsp_graphics.c"
-"${ProjDirPath}/../../../../../middleware/EmbeddedWizard/TargetSpecific/evkmimxrt1060/ew_bsp_graphics.h"
-"${ProjDirPath}/../../../../../middleware/EmbeddedWizard/TargetSpecific/evkmimxrt1060/ew_bsp_inout.c"
-"${ProjDirPath}/../../../../../middleware/EmbeddedWizard/TargetSpecific/evkmimxrt1060/ew_bsp_inout.h"
-"${ProjDirPath}/../../../../../middleware/EmbeddedWizard/TargetSpecific/evkmimxrt1060/ew_bsp_serial.c"
-"${ProjDirPath}/../../../../../middleware/EmbeddedWizard/TargetSpecific/evkmimxrt1060/ew_bsp_serial.h"
-"${ProjDirPath}/../../../../../middleware/EmbeddedWizard/TargetSpecific/evkmimxrt1060/ew_bsp_system.c"
-"${ProjDirPath}/../../../../../middleware/EmbeddedWizard/TargetSpecific/evkmimxrt1060/ew_bsp_system.h"
-"${ProjDirPath}/../../../../../middleware/EmbeddedWizard/TargetSpecific/evkmimxrt1060/ew_bsp_touch.c"
-"${ProjDirPath}/../../../../../middleware/EmbeddedWizard/TargetSpecific/evkmimxrt1060/ew_bsp_touch.h"
-"${ProjDirPath}/../../../../../middleware/EmbeddedWizard/ThirdParty/TLSF/tlsf.c"
-"${ProjDirPath}/../../../../../middleware/EmbeddedWizard/ThirdParty/TLSF/tlsf.h"
-"${ProjDirPath}/../../../../../middleware/EmbeddedWizard/ThirdParty/TLSF/tlsfbits.h"
+"${ProjDirPath}/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_clock.c"
+"${ProjDirPath}/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_clock.h"
+"${ProjDirPath}/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_console.c"
+"${ProjDirPath}/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_console.h"
+"${ProjDirPath}/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_display.c"
+"${ProjDirPath}/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_display.h"
+"${ProjDirPath}/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_event.c"
+"${ProjDirPath}/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_event.h"
+"${ProjDirPath}/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_graphics.c"
+"${ProjDirPath}/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_graphics.h"
+"${ProjDirPath}/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_inout.c"
+"${ProjDirPath}/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_inout.h"
+"${ProjDirPath}/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_system.c"
+"${ProjDirPath}/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_system.h"
+"${ProjDirPath}/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_touch.c"
+"${ProjDirPath}/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_touch.h"
 "${ProjDirPath}/../../../../../devices/MIMXRT1062/MIMXRT1062.h"
 "${ProjDirPath}/../../../../../devices/MIMXRT1062/MIMXRT1062_features.h"
 "${ProjDirPath}/../../../../../devices/MIMXRT1062/fsl_device_registers.h"
@@ -584,9 +585,8 @@ add_executable(ew_gui_washing_machine.elf
 "${ProjDirPath}/../../../../../devices/MIMXRT1062/xip/fsl_flexspi_nor_boot.h"
 "${ProjDirPath}/../../../xip/evkmimxrt1060_flexspi_nor_config.c"
 "${ProjDirPath}/../../../xip/evkmimxrt1060_flexspi_nor_config.h"
-"${ProjDirPath}/../../../xip/evkmimxrt1060_sdram_ini_dcd.c"
-"${ProjDirPath}/../../../xip/evkmimxrt1060_sdram_ini_dcd.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/core_cm7.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/mpu_armv7.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/cmsis_armcc.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/cmsis_armclang.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/cmsis_armclang_ltm.h"
@@ -594,11 +594,6 @@ add_executable(ew_gui_washing_machine.elf
 "${ProjDirPath}/../../../../../CMSIS/Include/cmsis_gcc.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/cmsis_iccarm.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/cmsis_version.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/core_armv81mml.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/core_armv8mbl.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/core_armv8mml.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/mpu_armv7.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/mpu_armv8.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/arm_common_tables.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/arm_const_structs.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/arm_math.h"

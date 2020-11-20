@@ -324,35 +324,19 @@
           <state>$PROJ_DIR$/../../../../../../middleware/usb</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/host</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
-          <state>$PROJ_DIR$/../../../../../../components/osa</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/host</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host/class</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source/fsl_usb_disk</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/xip</state>
-          <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/host</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/host/class</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/host/class</state>
+          <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities</state>
         </option>
         <option>
@@ -1331,35 +1315,19 @@
           <state>$PROJ_DIR$/../../../../../../middleware/usb</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/host</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
-          <state>$PROJ_DIR$/../../../../../../components/osa</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/host</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host/class</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source/fsl_usb_disk</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/xip</state>
-          <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/host</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/host/class</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/host/class</state>
+          <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities</state>
         </option>
         <option>
@@ -2338,35 +2306,19 @@
           <state>$PROJ_DIR$/../../../../../../middleware/usb</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/host</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
-          <state>$PROJ_DIR$/../../../../../../components/osa</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/host</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host/class</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source/fsl_usb_disk</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/xip</state>
-          <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/host</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/host/class</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/host/class</state>
+          <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities</state>
         </option>
         <option>
@@ -3345,35 +3297,19 @@
           <state>$PROJ_DIR$/../../../../../../middleware/usb</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/host</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
-          <state>$PROJ_DIR$/../../../../../../components/osa</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/host</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host/class</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source/fsl_usb_disk</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/xip</state>
-          <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/host</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/host/class</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/host/class</state>
+          <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities</state>
         </option>
         <option>
@@ -4352,35 +4288,19 @@
           <state>$PROJ_DIR$/../../../../../../middleware/usb</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/host</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
-          <state>$PROJ_DIR$/../../../../../../components/osa</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/host</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host/class</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source/fsl_usb_disk</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/xip</state>
-          <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/host</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/host/class</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/host/class</state>
+          <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities</state>
         </option>
         <option>
@@ -5359,35 +5279,19 @@
           <state>$PROJ_DIR$/../../../../../../middleware/usb</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/host</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
-          <state>$PROJ_DIR$/../../../../../../components/osa</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/host</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host/class</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source/fsl_usb_disk</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/xip</state>
-          <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/host</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/host/class</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/host/class</state>
+          <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities</state>
         </option>
         <option>
@@ -6090,32 +5994,17 @@
     <file>
       <name>$PROJ_DIR$/../pin_mux.h</name>
     </file>
+    <file>
+      <name>$PROJ_DIR$/../dcd.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../dcd.h</name>
+    </file>
   </group>
   <group>
     <name>usb</name>
     <group>
       <name>host</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/usb/host/usb_host.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/usb/host/usb_host_devices.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/usb/host/usb_host_devices.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/usb/host/usb_host_framework.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/usb/host/usb_host_framework.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/usb/host/usb_host_hci.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/usb/host/usb_host_hci.h</name>
-      </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/usb/host/usb_host_ehci.c</name>
       </file>
@@ -6145,15 +6034,6 @@
         <file>
           <name>$PROJ_DIR$/../../../../../../middleware/usb/host/class/usb_host_hub_app.h</name>
         </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/usb/host/class/usb_host_msd.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/usb/host/class/usb_host_msd.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/usb/host/class/usb_host_msd_ufi.c</name>
-        </file>
       </group>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/usb/host/usb_host.h</name>
@@ -6176,6 +6056,27 @@
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/usb/host/usb_host_hci.h</name>
       </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/usb/host/usb_host.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/usb/host/usb_host_devices.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/usb/host/usb_host_framework.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/usb/host/usb_host_hci.h</name>
+      </file>
+    </group>
+    <group>
+      <name>phy</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/usb/phy/usb_phy.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/usb/phy/usb_phy.h</name>
+      </file>
     </group>
     <group>
       <name>include</name>
@@ -6187,75 +6088,6 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/usb/include/usb_spec.h</name>
-      </file>
-    </group>
-    <group>
-      <name>phy</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/usb/phy/usb_phy.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/usb/phy/usb_phy.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/usb/phy/usb_phy.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/usb/phy/usb_phy.h</name>
-      </file>
-    </group>
-  </group>
-  <group>
-    <name>component</name>
-    <group>
-      <name>osa</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_bm.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_bm.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_config.h</name>
-      </file>
-    </group>
-    <group>
-      <name>uart</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/uart/lpuart_adapter.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/uart/uart.h</name>
-      </file>
-    </group>
-    <group>
-      <name>serial_manager</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/serial_manager.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/serial_manager.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/serial_port_internal.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/serial_port_uart.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/serial_port_uart.h</name>
-      </file>
-    </group>
-    <group>
-      <name>lists</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/lists/generic_list.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/lists/generic_list.h</name>
       </file>
     </group>
   </group>
@@ -6387,17 +6219,68 @@
     <file>
       <name>$PROJ_DIR$/../../../../xip/evkmimxrt1064_flexspi_nor_config.h</name>
     </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../xip/evkmimxrt1064_sdram_ini_dcd.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../xip/evkmimxrt1064_sdram_ini_dcd.h</name>
-    </file>
+  </group>
+  <group>
+    <name>component</name>
+    <group>
+      <name>uart</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/uart/lpuart_adapter.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/uart/uart.h</name>
+      </file>
+    </group>
+    <group>
+      <name>serial_manager</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/serial_manager.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/serial_manager.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/serial_port_internal.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/serial_port_uart.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/serial_port_uart.h</name>
+      </file>
+    </group>
+    <group>
+      <name>lists</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/lists/generic_list.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/lists/generic_list.h</name>
+      </file>
+    </group>
+    <group>
+      <name>osa</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_bm.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_bm.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_config.h</name>
+      </file>
+    </group>
   </group>
   <group>
     <name>CMSIS</name>
     <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_cm7.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/mpu_armv7.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_armcc.h</name>
@@ -6419,21 +6302,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_version.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_armv81mml.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_armv8mbl.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_armv8mml.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/mpu_armv7.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/mpu_armv8.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/arm_common_tables.h</name>

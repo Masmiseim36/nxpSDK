@@ -92,9 +92,13 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEB
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -DSKIP_SYSCLK_INIT")
 
+SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -DDATA_SECTION_IS_CACHEABLE=1")
+
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -DDEBUG")
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -DCPU_MIMXRT1062DVL6A")
+
+SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -DAPPWIZARD")
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -DSERIAL_PORT_TYPE_UART=1")
 
@@ -138,9 +142,13 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_R
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -DSKIP_SYSCLK_INIT")
 
+SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -DDATA_SECTION_IS_CACHEABLE=1")
+
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -DNDEBUG")
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -DCPU_MIMXRT1062DVL6A")
+
+SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -DAPPWIZARD")
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -DSERIAL_PORT_TYPE_UART=1")
 
@@ -378,13 +386,6 @@ include_directories(${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities)
 
 add_executable(emwin_temperature_control.elf 
 "${ProjDirPath}/../emwin_temperature_control.c"
-"${ProjDirPath}/../Resource.h"
-"${ProjDirPath}/../bmButtonRound_50x22.c"
-"${ProjDirPath}/../bmButtonRoundPressed_50x22.c"
-"${ProjDirPath}/../bmSEGGER_80x40.c"
-"${ProjDirPath}/../bmKNOB_124x124.c"
-"${ProjDirPath}/../Font_AA4_16_B.c"
-"${ProjDirPath}/../Font_AA4_16_L.c"
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
 "${ProjDirPath}/../emwin_support.c"
@@ -393,6 +394,8 @@ add_executable(emwin_temperature_control.elf
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../clock_config.c"
 "${ProjDirPath}/../clock_config.h"
+"${ProjDirPath}/../dcd.c"
+"${ProjDirPath}/../dcd.h"
 "${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers/fsl_elcdif.c"
 "${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers/fsl_elcdif.h"
 "${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers/fsl_pxp.c"
@@ -401,8 +404,32 @@ add_executable(emwin_temperature_control.elf
 "${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers/fsl_lpi2c.h"
 "${ProjDirPath}/../../../../../components/ft5406_rt/fsl_ft5406_rt.c"
 "${ProjDirPath}/../../../../../components/ft5406_rt/fsl_ft5406_rt.h"
+"${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers/fsl_gpt.c"
+"${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers/fsl_gpt.h"
+"${ProjDirPath}/../AppWizard/APPW_X_NoFS.c"
+"${ProjDirPath}/../AppWizard/Resource/Font/NettoOT_24_Normal_EXT_AA4.c"
+"${ProjDirPath}/../AppWizard/Resource/Font/Roboto_16_Normal_EXT_AA4.c"
+"${ProjDirPath}/../AppWizard/Resource/Font/Roboto_24_Normal_EXT_AA4.c"
+"${ProjDirPath}/../AppWizard/Resource/Image/ButtonRoundPressed_48x21.c"
+"${ProjDirPath}/../AppWizard/Resource/Image/ButtonRound_48x21.c"
+"${ProjDirPath}/../AppWizard/Resource/Image/GreenGlowMarker_16x9.c"
+"${ProjDirPath}/../AppWizard/Resource/Image/KNOB_106x106.c"
+"${ProjDirPath}/../AppWizard/Resource/Image/SeggerLogo_80x40.c"
+"${ProjDirPath}/../AppWizard/Resource/Image/TemperatureControl_3_480x272.c"
+"${ProjDirPath}/../AppWizard/Resource/Text/APPW_Language_0.c"
+"${ProjDirPath}/../AppWizard/Resource/Text/APPW_Pattern.c"
+"${ProjDirPath}/../AppWizard/Source/APPW_MainTask.c"
+"${ProjDirPath}/../AppWizard/Source/CustomCode/Application.h"
+"${ProjDirPath}/../AppWizard/Source/CustomCode/ID_SCREEN_TEMP_CTRL_Slots.c"
+"${ProjDirPath}/../AppWizard/Source/Generated/APPWConf.c"
+"${ProjDirPath}/../AppWizard/Source/Generated/ID_SCREEN_TEMP_CTRL.c"
+"${ProjDirPath}/../AppWizard/Source/Generated/ID_SCREEN_TEMP_CTRL.h"
+"${ProjDirPath}/../AppWizard/Source/Generated/Resource.c"
+"${ProjDirPath}/../AppWizard/Source/Generated/Resource.h"
 "${ProjDirPath}/../../../../../middleware/emwin/emWin_Config/GUIConf.h"
 "${ProjDirPath}/../../../../../middleware/emwin/emWin_Config/LCDConf.h"
+"${ProjDirPath}/../../../../../middleware/emwin/emWin_header/AppWizard.h"
+"${ProjDirPath}/../../../../../middleware/emwin/emWin_header/AppWizard_Private.h"
 "${ProjDirPath}/../../../../../middleware/emwin/emWin_header/BUTTON.h"
 "${ProjDirPath}/../../../../../middleware/emwin/emWin_header/BUTTON_Private.h"
 "${ProjDirPath}/../../../../../middleware/emwin/emWin_header/CALENDAR.h"
@@ -514,6 +541,8 @@ add_executable(emwin_temperature_control.elf
 "${ProjDirPath}/../../../../../middleware/emwin/emWin_header/SPINBOX_Private.h"
 "${ProjDirPath}/../../../../../middleware/emwin/emWin_header/SWIPELIST.h"
 "${ProjDirPath}/../../../../../middleware/emwin/emWin_header/SWIPELIST_Private.h"
+"${ProjDirPath}/../../../../../middleware/emwin/emWin_header/SWITCH.h"
+"${ProjDirPath}/../../../../../middleware/emwin/emWin_header/SWITCH_Private.h"
 "${ProjDirPath}/../../../../../middleware/emwin/emWin_header/TEXT.h"
 "${ProjDirPath}/../../../../../middleware/emwin/emWin_header/TEXT_Private.h"
 "${ProjDirPath}/../../../../../middleware/emwin/emWin_header/TREEVIEW.h"
@@ -523,8 +552,6 @@ add_executable(emwin_temperature_control.elf
 "${ProjDirPath}/../../../../../middleware/emwin/emWin_header/WM.h"
 "${ProjDirPath}/../../../../../middleware/emwin/emWin_header/WM_GUI.h"
 "${ProjDirPath}/../../../../../middleware/emwin/emWin_header/WM_Intern.h"
-"${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers/fsl_gpt.c"
-"${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers/fsl_gpt.h"
 "${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers/fsl_common.c"
 "${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers/fsl_common.h"
 "${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers/fsl_clock.c"
@@ -559,9 +586,8 @@ add_executable(emwin_temperature_control.elf
 "${ProjDirPath}/../../../../../devices/MIMXRT1062/xip/fsl_flexspi_nor_boot.h"
 "${ProjDirPath}/../../../xip/evkmimxrt1060_flexspi_nor_config.c"
 "${ProjDirPath}/../../../xip/evkmimxrt1060_flexspi_nor_config.h"
-"${ProjDirPath}/../../../xip/evkmimxrt1060_sdram_ini_dcd.c"
-"${ProjDirPath}/../../../xip/evkmimxrt1060_sdram_ini_dcd.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/core_cm7.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/mpu_armv7.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/cmsis_armcc.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/cmsis_armclang.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/cmsis_armclang_ltm.h"
@@ -569,11 +595,6 @@ add_executable(emwin_temperature_control.elf
 "${ProjDirPath}/../../../../../CMSIS/Include/cmsis_gcc.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/cmsis_iccarm.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/cmsis_version.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/core_armv81mml.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/core_armv8mbl.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/core_armv8mml.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/mpu_armv7.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/mpu_armv8.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/arm_common_tables.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/arm_const_structs.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/arm_math.h"

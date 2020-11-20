@@ -315,32 +315,26 @@
           <state>$PROJ_DIR$/../../common/fmstr_example</state>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../support/mcuxsdk_usb</state>
-          <state>$PROJ_DIR$/../../../../../middleware/freemaster/boards/evkmimxrt1060</state>
+          <state>$PROJ_DIR$/../../..</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../devices</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
+          <state>$PROJ_DIR$/../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/device</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</state>
           <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/can</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/xip</state>
-          <state>$PROJ_DIR$/../../../xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
           <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/platforms/gen32le</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/phy</state>
-          <state>$PROJ_DIR$/../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities</state>
         </option>
         <option>
@@ -1309,32 +1303,26 @@
           <state>$PROJ_DIR$/../../common/fmstr_example</state>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../support/mcuxsdk_usb</state>
-          <state>$PROJ_DIR$/../../../../../middleware/freemaster/boards/evkmimxrt1060</state>
+          <state>$PROJ_DIR$/../../..</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../devices</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
+          <state>$PROJ_DIR$/../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/device</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</state>
           <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/can</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/xip</state>
-          <state>$PROJ_DIR$/../../../xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
           <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/platforms/gen32le</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/phy</state>
-          <state>$PROJ_DIR$/../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities</state>
         </option>
         <option>
@@ -2167,6 +2155,7 @@
         <option>
           <name>CCDefines</name>
           <state>SKIP_SYSCLK_INIT</state>
+          <state>DATA_SECTION_IS_CACHEABLE=1</state>
           <state>DEBUG</state>
           <state>CPU_MIMXRT1062DVL6A</state>
           <state>USB_STACK_BM</state>
@@ -2302,32 +2291,26 @@
           <state>$PROJ_DIR$/../../common/fmstr_example</state>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../support/mcuxsdk_usb</state>
-          <state>$PROJ_DIR$/../../../../../middleware/freemaster/boards/evkmimxrt1060</state>
+          <state>$PROJ_DIR$/../../..</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../devices</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
+          <state>$PROJ_DIR$/../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/device</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</state>
           <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/can</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/xip</state>
-          <state>$PROJ_DIR$/../../../xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
           <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/platforms/gen32le</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/phy</state>
-          <state>$PROJ_DIR$/../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities</state>
         </option>
         <option>
@@ -3294,32 +3277,26 @@
           <state>$PROJ_DIR$/../../common/fmstr_example</state>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../support/mcuxsdk_usb</state>
-          <state>$PROJ_DIR$/../../../../../middleware/freemaster/boards/evkmimxrt1060</state>
+          <state>$PROJ_DIR$/../../..</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../devices</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
+          <state>$PROJ_DIR$/../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/device</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</state>
           <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/can</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/xip</state>
-          <state>$PROJ_DIR$/../../../xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
           <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/platforms/gen32le</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/phy</state>
-          <state>$PROJ_DIR$/../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities</state>
         </option>
         <option>
@@ -4288,32 +4265,26 @@
           <state>$PROJ_DIR$/../../common/fmstr_example</state>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../support/mcuxsdk_usb</state>
-          <state>$PROJ_DIR$/../../../../../middleware/freemaster/boards/evkmimxrt1060</state>
+          <state>$PROJ_DIR$/../../..</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../devices</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
+          <state>$PROJ_DIR$/../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/device</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</state>
           <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/can</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/xip</state>
-          <state>$PROJ_DIR$/../../../xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
           <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/platforms/gen32le</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/phy</state>
-          <state>$PROJ_DIR$/../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities</state>
         </option>
         <option>
@@ -5147,6 +5118,7 @@
           <name>CCDefines</name>
           <state>NDEBUG</state>
           <state>SKIP_SYSCLK_INIT</state>
+          <state>DATA_SECTION_IS_CACHEABLE=1</state>
           <state>CPU_MIMXRT1062DVL6A</state>
           <state>USB_STACK_BM</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
@@ -5281,32 +5253,26 @@
           <state>$PROJ_DIR$/../../common/fmstr_example</state>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../support/mcuxsdk_usb</state>
-          <state>$PROJ_DIR$/../../../../../middleware/freemaster/boards/evkmimxrt1060</state>
+          <state>$PROJ_DIR$/../../..</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../devices</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
+          <state>$PROJ_DIR$/../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/device</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</state>
           <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/can</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/xip</state>
-          <state>$PROJ_DIR$/../../../xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
           <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/platforms/gen32le</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/phy</state>
-          <state>$PROJ_DIR$/../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities</state>
         </option>
         <option>
@@ -6036,6 +6002,12 @@
     <file>
       <name>$PROJ_DIR$/../clock_config.h</name>
     </file>
+    <file>
+      <name>$PROJ_DIR$/../dcd.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../dcd.h</name>
+    </file>
   </group>
   <group>
     <name>doc</name>
@@ -6082,6 +6054,9 @@
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/usb/device/usb_device.h</name>
         </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/usb/device/usb_device.h</name>
+        </file>
       </group>
       <group>
         <name>source</name>
@@ -6090,12 +6065,6 @@
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/usb/device/usb_device_dci.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../usb_device_ch9.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../usb_device_ch9.h</name>
         </file>
         <group>
           <name>ehci</name>
@@ -6106,6 +6075,15 @@
             <name>$PROJ_DIR$/../../../../../middleware/usb/device/usb_device_ehci.h</name>
           </file>
         </group>
+        <file>
+          <name>$PROJ_DIR$/../usb_device_ch9.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../usb_device_ch9.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/usb/device/usb_device_dci.h</name>
+        </file>
       </group>
       <group>
         <name>class</name>
@@ -6127,6 +6105,15 @@
       </group>
     </group>
     <group>
+      <name>phy</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/usb/phy/usb_phy.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/usb/phy/usb_phy.h</name>
+      </file>
+    </group>
+    <group>
       <name>include</name>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/usb/include/usb.h</name>
@@ -6138,13 +6125,58 @@
         <name>$PROJ_DIR$/../../../../../middleware/usb/include/usb_spec.h</name>
       </file>
     </group>
+  </group>
+  <group>
+    <name>component</name>
     <group>
-      <name>phy</name>
+      <name>osa</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/usb/phy/usb_phy.c</name>
+        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/usb/phy/usb_phy.h</name>
+        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction_bm.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction_bm.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction_config.h</name>
+      </file>
+    </group>
+    <group>
+      <name>uart</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/uart/lpuart_adapter.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/uart/uart.h</name>
+      </file>
+    </group>
+    <group>
+      <name>serial_manager</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_manager.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_manager.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_port_internal.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_port_uart.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_port_uart.h</name>
+      </file>
+    </group>
+    <group>
+      <name>lists</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/lists/generic_list.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/lists/generic_list.h</name>
       </file>
     </group>
   </group>
@@ -6329,60 +6361,6 @@
     </file>
   </group>
   <group>
-    <name>component</name>
-    <group>
-      <name>uart</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/uart/lpuart_adapter.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/uart/uart.h</name>
-      </file>
-    </group>
-    <group>
-      <name>serial_manager</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_manager.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_manager.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_port_internal.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_port_uart.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_port_uart.h</name>
-      </file>
-    </group>
-    <group>
-      <name>lists</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/lists/generic_list.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/lists/generic_list.h</name>
-      </file>
-    </group>
-    <group>
-      <name>osa</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction_bm.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction_bm.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction_config.h</name>
-      </file>
-    </group>
-  </group>
-  <group>
     <name>startup</name>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/iar/startup_MIMXRT1062.s</name>
@@ -6402,17 +6380,14 @@
     <file>
       <name>$PROJ_DIR$/../../../xip/evkmimxrt1060_flexspi_nor_config.h</name>
     </file>
-    <file>
-      <name>$PROJ_DIR$/../../../xip/evkmimxrt1060_sdram_ini_dcd.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../xip/evkmimxrt1060_sdram_ini_dcd.h</name>
-    </file>
   </group>
   <group>
     <name>CMSIS</name>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_cm7.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv7.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armcc.h</name>
@@ -6434,21 +6409,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_version.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv81mml.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mbl.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mml.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv7.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv8.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_common_tables.h</name>

@@ -317,28 +317,22 @@
           <state>$PROJ_DIR$/../../../..</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../devices</state>
-          <state>$PROJ_DIR$/../../../../../../components/phyksz8081</state>
+          <state>$PROJ_DIR$/../../../../../../components/phy/mdio/enet</state>
+          <state>$PROJ_DIR$/../../../../../../components/phy/device/phyksz8081</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/contrib/apps/ping</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/port</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/src</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/src/include</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
-          <state>$PROJ_DIR$/../../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../components/phy</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities</state>
         </option>
         <option>
@@ -1312,28 +1306,22 @@
           <state>$PROJ_DIR$/../../../..</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../devices</state>
-          <state>$PROJ_DIR$/../../../../../../components/phyksz8081</state>
+          <state>$PROJ_DIR$/../../../../../../components/phy/mdio/enet</state>
+          <state>$PROJ_DIR$/../../../../../../components/phy/device/phyksz8081</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/contrib/apps/ping</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/port</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/src</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/src/include</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
-          <state>$PROJ_DIR$/../../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../components/phy</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities</state>
         </option>
         <option>
@@ -2170,6 +2158,7 @@
           <name>CCDefines</name>
           <state>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1</state>
           <state>SKIP_SYSCLK_INIT</state>
+          <state>DATA_SECTION_IS_CACHEABLE=1</state>
           <state>DEBUG</state>
           <state>FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE</state>
           <state>CPU_MIMXRT1064DVL6A</state>
@@ -2307,28 +2296,22 @@
           <state>$PROJ_DIR$/../../../..</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../devices</state>
-          <state>$PROJ_DIR$/../../../../../../components/phyksz8081</state>
+          <state>$PROJ_DIR$/../../../../../../components/phy/mdio/enet</state>
+          <state>$PROJ_DIR$/../../../../../../components/phy/device/phyksz8081</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/contrib/apps/ping</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/port</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/src</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/src/include</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
-          <state>$PROJ_DIR$/../../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../components/phy</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities</state>
         </option>
         <option>
@@ -3300,28 +3283,22 @@
           <state>$PROJ_DIR$/../../../..</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../devices</state>
-          <state>$PROJ_DIR$/../../../../../../components/phyksz8081</state>
+          <state>$PROJ_DIR$/../../../../../../components/phy/mdio/enet</state>
+          <state>$PROJ_DIR$/../../../../../../components/phy/device/phyksz8081</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/contrib/apps/ping</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/port</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/src</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/src/include</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
-          <state>$PROJ_DIR$/../../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../components/phy</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities</state>
         </option>
         <option>
@@ -4295,28 +4272,22 @@
           <state>$PROJ_DIR$/../../../..</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../devices</state>
-          <state>$PROJ_DIR$/../../../../../../components/phyksz8081</state>
+          <state>$PROJ_DIR$/../../../../../../components/phy/mdio/enet</state>
+          <state>$PROJ_DIR$/../../../../../../components/phy/device/phyksz8081</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/contrib/apps/ping</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/port</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/src</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/src/include</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
-          <state>$PROJ_DIR$/../../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../components/phy</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities</state>
         </option>
         <option>
@@ -5154,6 +5125,7 @@
           <state>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1</state>
           <state>NDEBUG</state>
           <state>SKIP_SYSCLK_INIT</state>
+          <state>DATA_SECTION_IS_CACHEABLE=1</state>
           <state>FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE</state>
           <state>CPU_MIMXRT1064DVL6A</state>
           <state>PRINTF_ADVANCED_ENABLE=1</state>
@@ -5290,28 +5262,22 @@
           <state>$PROJ_DIR$/../../../..</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../devices</state>
-          <state>$PROJ_DIR$/../../../../../../components/phyksz8081</state>
+          <state>$PROJ_DIR$/../../../../../../components/phy/mdio/enet</state>
+          <state>$PROJ_DIR$/../../../../../../components/phy/device/phyksz8081</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/contrib/apps/ping</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/port</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/src</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/src/include</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
-          <state>$PROJ_DIR$/../../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../components/phy</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities</state>
         </option>
         <option>
@@ -5997,16 +5963,40 @@
       <name>$PROJ_DIR$/../clock_config.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../components/phyksz8081/fsl_phy.c</name>
+      <name>$PROJ_DIR$/../dcd.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../components/phyksz8081/fsl_phy.h</name>
+      <name>$PROJ_DIR$/../dcd.h</name>
     </file>
   </group>
   <group>
     <name>doc</name>
     <file>
       <name>$PROJ_DIR$/../readme.txt</name>
+    </file>
+  </group>
+  <group>
+    <name>mdio</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/phy/mdio/enet/fsl_enet_mdio.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/phy/mdio/enet/fsl_enet_mdio.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/phy/fsl_mdio.h</name>
+    </file>
+  </group>
+  <group>
+    <name>phy</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/phy/fsl_phy.h</name>
     </file>
   </group>
   <group>
@@ -6086,13 +6076,13 @@
         <name>$PROJ_DIR$/../../../../../../middleware/lwip/port/sys_arch.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/lwip/port/enet_ethernetif_kinetis.c</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../../middleware/lwip/port/enet_ethernetif.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/lwip/port/enet_ethernetif.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/lwip/port/enet_ethernetif_kinetis.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/lwip/port/enet_ethernetif_priv.h</name>
@@ -6158,6 +6148,9 @@
         </file>
         <group>
           <name>ipv4</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/ipv4/acd.c</name>
+          </file>
           <file>
             <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/ipv4/autoip.c</name>
           </file>
@@ -6287,6 +6280,9 @@
         </group>
         <group>
           <name>lwip</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/acd.h</name>
+          </file>
           <file>
             <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/altcp.h</name>
           </file>
@@ -6445,6 +6441,9 @@
           </group>
           <group>
             <name>prot</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/prot/acd.h</name>
+            </file>
             <file>
               <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/prot/autoip.h</name>
             </file>
@@ -6772,24 +6771,6 @@
     </group>
   </group>
   <group>
-    <name>device</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/MIMXRT1064.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/MIMXRT1064_features.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/fsl_device_registers.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/system_MIMXRT1064.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/system_MIMXRT1064.h</name>
-    </file>
-  </group>
-  <group>
     <name>utilities</name>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities/debug_console/fsl_debug_console.c</name>
@@ -6808,6 +6789,24 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities/fsl_assert.c</name>
+    </file>
+  </group>
+  <group>
+    <name>device</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/MIMXRT1064.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/MIMXRT1064_features.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/fsl_device_registers.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/system_MIMXRT1064.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/system_MIMXRT1064.h</name>
     </file>
   </group>
   <group>
@@ -6869,17 +6868,14 @@
     <file>
       <name>$PROJ_DIR$/../../../../xip/evkmimxrt1064_flexspi_nor_config.h</name>
     </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../xip/evkmimxrt1064_sdram_ini_dcd.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../xip/evkmimxrt1064_sdram_ini_dcd.h</name>
-    </file>
   </group>
   <group>
     <name>CMSIS</name>
     <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_cm7.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/mpu_armv7.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_armcc.h</name>
@@ -6901,21 +6897,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_version.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_armv81mml.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_armv8mbl.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_armv8mml.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/mpu_armv7.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/mpu_armv8.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/arm_common_tables.h</name>

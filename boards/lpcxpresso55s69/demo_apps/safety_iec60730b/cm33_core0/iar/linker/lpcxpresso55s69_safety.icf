@@ -1,0 +1,139 @@
+/*
+** ###################################################################
+**     Processors:          LPC55S69JBD100_cm33_core0
+**                          LPC55S69JBD64_cm33_core0
+**                          LPC55S69JEV98_cm33_core0
+**
+**     Compiler:            IAR ANSI C/C++ Compiler for ARM
+**     Reference manual:    UM11126
+**
+**     Abstract:
+**         Linker file for the IAR ANSI C/C++ Compiler for ARM
+**
+**     Copyright 2019 NXP.
+**     All rights reserved.
+**
+**     SPDX-License-Identifier: BSD-3-Clause
+**
+**     http:                 www.freescale.com
+**     mail:                 support@freescale.com
+**
+** ###################################################################
+*/
+
+//     ____________
+//    |            | --> __RAM_start__                ....ADR
+//    |            |                                  ....ADR + 0x4
+//    |  data      |                                  ....ADR + 0x8
+//    |            |                                  ....ADR + 0xC
+//    |            |
+//    |            |
+//    |            |
+//    |            |
+//    |            |
+//    |            |
+//    |            |
+//    |  data      |
+//    |            |
+//    |            |
+//    |____________| --> m_data_end
+//    |            | --> STACK_TEST_P_1
+//    |            |
+//    |____________| --> STACK_TEST_P_2
+//    |            |
+//    |            |
+//    |            |
+//    |   STACK    |
+//    |            |
+//    |            |
+//    |            |
+//    |____________| --> __BOOT_STACK_ADDRESS
+//    |            | --> STACK_TEST_P_3
+//    |            |
+//    |____________| --> STACK_TEST_P_4
+//    |____________| --> SAFETY_ERROR_CODE
+//    |____________| --> PC_test_flag
+//    |            | --> WD_TEST_BACKUP
+//    |____________|
+//    |            |
+//    |            | --> RAM_TEST_BACKUP
+//    |____________|
+
+/******************************************************************************/
+/******************     USER CONFIGURATION PART     ***************************/
+/******************************************************************************/
+define exported symbol __ROM_start__         = 0x00000140;
+define exported symbol __ROM_end__           = 0x00071FFF;
+
+define exported symbol __RAM_start__         = 0x20000000;
+define exported symbol __RAM_end__           = 0x200317FF;
+
+define exported symbol stack_test_block_size = 0x10;
+define exported symbol ram_test_backup_size  = 0x20;
+define symbol __size_cstack__                = 0x0400;
+
+define symbol __FlashCRC_start__             = 0x6FF0; /* for placing a checksum */
+define symbol __FlashCRC_end__               = 0x6FFF; /* for placing a checksum */
+
+define exported symbol __VECTOR_TABLE        = 0x00000000;
+
+/******************************************************************************/
+/******************     SYMBOLS     *******************************************/
+/******************************************************************************/
+define symbol __PC_test_size     =     0x20;
+define symbol __PC_test_end__ 		 =   __ROM_end__;
+define symbol __PC_test_start__ 	=   __PC_test_end__ - __PC_test_size;
+define symbol  m_flash_end  	    =   __PC_test_start__ - 0x1;
+
+define exported symbol m_ram_test_backup    = __RAM_end__ - ram_test_backup_size + 0x1;
+define exported symbol m_wd_test_backup     = m_ram_test_backup - 0x20;
+define exported symbol m_pc_test_flag       = m_wd_test_backup - 0x4;
+define exported symbol m_safety_error_code  = m_pc_test_flag - 0x4;
+define exported symbol m_stack_test_p_4     = m_safety_error_code - 0x4;
+define exported symbol m_stack_test_p_3     = m_stack_test_p_4 - stack_test_block_size + 0x4;
+define exported symbol __BOOT_STACK_ADDRESS = m_stack_test_p_3 - 0x4;
+define exported symbol m_stack_test_p_2     = __BOOT_STACK_ADDRESS - __size_cstack__;
+define exported symbol m_stack_test_p_1     = m_stack_test_p_2 - stack_test_block_size + 0x4;
+define symbol m_data_end                    = m_stack_test_p_1 - 0x1;
+
+/******************************************************************************/
+/******************     REGIONS     *******************************************/
+/******************************************************************************/
+define memory mem with size = 4G;
+define region ROM_region  = mem:[from __ROM_start__ to m_flash_end];
+define region CRC_region  = mem:[from __FlashCRC_start__   to __FlashCRC_end__] ;
+define region RAM_region  = mem:[from __RAM_start__ to m_data_end];
+define region PC_region   = mem:[from __PC_test_start__ to __PC_test_end__];
+
+/******************************************************************************/
+/******************     SECTIONS & BLOCKS    **********************************/
+/******************************************************************************/
+initialize manually { readwrite };
+initialize manually { section .data};
+initialize manually { section .bss };
+initialize manually { section .textrw };
+initialize manually { section .safety_ram };
+do not initialize   { section .noinit };
+
+define block RW                { readwrite };
+define block ZI                { zi };
+define block PC_TEST           with alignment = 8 { section .text object iec60730b_cm33_pc_object.o};
+define block CHECKSUM          with alignment = 8 { section .checksum };
+define block SAFETY_RAM_BLOCK  with alignment = 8 { section .safety_ram };
+define block SAFETY_FLASH_BLOCK with alignment = 8, fixed order
+{
+ readonly section checksum_start_mark,
+ section .text         object  main.o,
+ section .text         object  safety_cm33_lpc.o,
+ section .rodata       object  safety_cm33_lpc.o,
+ readonly section checksum_end_mark
+};
+
+place at address mem: 0x00000000  { readonly section .intvec };
+
+place in ROM_region               { readonly };
+place in ROM_region               { block SAFETY_FLASH_BLOCK };
+place in CRC_region               { block CHECKSUM };
+place in PC_region                { block PC_TEST};
+place in RAM_region               { block RW, block ZI };
+place in RAM_region               { block SAFETY_RAM_BLOCK };

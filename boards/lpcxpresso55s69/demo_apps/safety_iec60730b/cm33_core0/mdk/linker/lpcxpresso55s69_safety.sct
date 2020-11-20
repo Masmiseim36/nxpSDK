@@ -1,0 +1,57 @@
+#!armclang --target=arm-arm-none-eabi -march=armv8-m.main -E -x c
+
+/*
+ * Copyright 2019 NXP.
+ * All rights reserved.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
+
+/*     
+ *     Processors:          LPC55S69JBD100_cm33_core0
+ *                          LPC55S69JBD64_cm33_core0
+ *                          LPC55S69JEV98_cm33_core0
+ */
+
+; *************************************************************
+; *** Scatter-Loading Description File                      ***
+; *************************************************************
+#include "linker_config.h"
+
+/************ IVT ************/
+LR_IROM1_IVT __ROM_start__ __ROM_start__ + __vector_table_size__ {   ; load region size_region
+	ROM_VECTOR_TABLE __ROM_start__ NOCOMPRESS __vector_table_size__ { ; load address = execution address 
+        * (section_ivt)
+	}
+}
+
+/************ RO, RW, ZI, safety ram, stack ************/
+LR_IROM1 __region_ROM_start__ m_flash_end - __region_ROM_start__ {
+	ER_IROM1 __region_ROM_start__ NOCOMPRESS m_flash_end - __region_ROM_start__ { ; load address = execution address
+		* (InRoot$$Sections)
+		.ANY (+RO)
+	}
+
+	SafetyRam_region m_safety_ram_start NOCOMPRESS SAFETY_RAM_SIZE {
+		main.o (.safety_ram)
+		safety_test_items.o (+RW)
+	}
+
+	RW_IRAM1 m_data_start m_data_size  {  ; RW data
+		.ANY (+RW +ZI)
+	}
+
+	ARM_LIB_STACK __BOOT_STACK_ADDRESS EMPTY -__size_cstack__{ ; Stack region growing down
+	}
+    
+    ARM_LIB_HEAP m_data_end - 0x10 EMPTY 0x10 { ; Heap region growing up
+    }
+}
+
+/************ PC test object ************/
+LR_PC_OBJECT __PC_test_start__ __PC_test_size {
+    ER_PCTEST __PC_test_start__ __PC_test_size {
+        iec60730b_cm33_pc_object.o 
+    }
+}
+

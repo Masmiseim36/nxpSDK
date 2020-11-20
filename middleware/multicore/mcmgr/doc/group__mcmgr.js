@@ -2,6 +2,7 @@ var group__mcmgr =
 [
     [ "MCMGR_HANDLE_EXCEPTIONS", "group__mcmgr.html#ga5abd2254543ed537e35c9d5c5721d216", null ],
     [ "mcmgr_core_property_t", "group__mcmgr.html#ga8f1bf3fd703cc893f2f25268027049f0", null ],
+    [ "mcmgr_core_status_t", "group__mcmgr.html#gace62a1a59ea2e0bba2308b85dd3d3490", null ],
     [ "mcmgr_core_t", "group__mcmgr.html#gab4840600877ad51744dde7c8b640ef0d", null ],
     [ "mcmgr_core_type_t", "group__mcmgr.html#gac8ed540d496c628b11acf68ef7f48d25", null ],
     [ "mcmgr_event_callback_t", "group__mcmgr.html#gaab2d241f462fd7d5139ba39e82018cd4", null ],
@@ -17,11 +18,16 @@ var group__mcmgr =
       [ "kMCMGR_CoreType", "group__mcmgr.html#ggadc2ec0f3fda2d57dd3870335914b407fa878c01cabb8b391e0912d050a3a7c5de", null ],
       [ "kMCMGR_CorePowerMode", "group__mcmgr.html#ggadc2ec0f3fda2d57dd3870335914b407fa80a0a82df35088f86f6966fc285a3726", null ]
     ] ],
+    [ "_mcmgr_core_status", "group__mcmgr.html#ga7b053e7eeda6daac208a4038a2303955", [
+      [ "kMCMGR_InReset", "group__mcmgr.html#gga7b053e7eeda6daac208a4038a2303955a5ed482ec07b1619bf7c756a88227f8ca", null ],
+      [ "kMCMGR_NotInReset", "group__mcmgr.html#gga7b053e7eeda6daac208a4038a2303955a608cc3ceee195f29ccfb236989c68fb4", null ]
+    ] ],
     [ "_mcmgr_core_type", "group__mcmgr.html#gaad6bc70b5f869884191902e305d51a0a", [
       [ "kMCMGR_CoreTypeCortexM0", "group__mcmgr.html#ggaad6bc70b5f869884191902e305d51a0aad0d7f52fc5ed832a259e3fba00d936a6", null ],
       [ "kMCMGR_CoreTypeCortexM0Plus", "group__mcmgr.html#ggaad6bc70b5f869884191902e305d51a0aa9e0502d8798e4e70bbe70888a2573f86", null ],
       [ "kMCMGR_CoreTypeCortexM4", "group__mcmgr.html#ggaad6bc70b5f869884191902e305d51a0aaac1299d1dd439558115c6a5f49da6256", null ],
-      [ "kMCMGR_CoreTypeCortexM33", "group__mcmgr.html#ggaad6bc70b5f869884191902e305d51a0aa9d0db113fdc4348d3e833dfc0e0a8c38", null ]
+      [ "kMCMGR_CoreTypeCortexM33", "group__mcmgr.html#ggaad6bc70b5f869884191902e305d51a0aa9d0db113fdc4348d3e833dfc0e0a8c38", null ],
+      [ "kMCMGR_CoreTypeCortexM7", "group__mcmgr.html#ggaad6bc70b5f869884191902e305d51a0aae5015a4bd158184a81f1a413cf1001ba", null ]
     ] ],
     [ "_mcmgr_event_type_t", "group__mcmgr.html#ga0a45660b38a87ca65052a15d721a4949", null ],
     [ "_mcmgr_start_mode", "group__mcmgr.html#ga2b471b0504b78138baba1e17a05a9b9c", [

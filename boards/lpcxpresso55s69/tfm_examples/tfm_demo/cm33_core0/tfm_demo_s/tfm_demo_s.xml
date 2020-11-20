@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
+  <externalDefinitions>
+    <definition extID="com.nxp.mcuxpresso"/>
+    <definition extID="component.lists.LPC55S69"/>
+    <definition extID="component.serial_manager.LPC55S69"/>
+    <definition extID="component.serial_manager_uart.LPC55S69"/>
+    <definition extID="component.usart_adapter.LPC55S69"/>
+    <definition extID="middleware.mbedcrypto.LPC55S69"/>
+    <definition extID="middleware.tfm.s.LPC55S69"/>
+    <definition extID="middleware.tfm.s.crypto.LPC55S69"/>
+    <definition extID="middleware.tfm.s.initial_attestation.LPC55S69"/>
+    <definition extID="middleware.tfm.s.ipc_api.LPC55S69"/>
+    <definition extID="middleware.tfm.s.its.LPC55S69"/>
+    <definition extID="middleware.tfm.s.sst.LPC55S69"/>
+    <definition extID="platform.Include_common.LPC55S69"/>
+    <definition extID="platform.Include_core_cm33.LPC55S69"/>
+    <definition extID="platform.Include_dsp.LPC55S69"/>
+    <definition extID="platform.devices.LPC55S69_CMSIS.LPC55S69"/>
+    <definition extID="platform.drivers.casper.LPC55S69"/>
+    <definition extID="platform.drivers.clock.LPC55S69"/>
+    <definition extID="platform.drivers.common.LPC55S69"/>
+    <definition extID="platform.drivers.ctimer.LPC55S69"/>
+    <definition extID="platform.drivers.flexcomm.LPC55S69"/>
+    <definition extID="platform.drivers.flexcomm_usart.LPC55S69"/>
+    <definition extID="platform.drivers.hashcrypt.LPC55S69"/>
+    <definition extID="platform.drivers.iap1.LPC55S69"/>
+    <definition extID="platform.drivers.lpc_gpio.LPC55S69"/>
+    <definition extID="platform.drivers.lpc_iocon.LPC55S69"/>
+    <definition extID="platform.drivers.power.LPC55S69"/>
+    <definition extID="platform.drivers.reset.LPC55S69"/>
+    <definition extID="platform.drivers.rng_1.LPC55S69"/>
+    <definition extID="platform.utilities.assert.LPC55S69"/>
+    <definition extID="platform.utilities.misc_utilities.LPC55S69"/>
+    <definition extID="utility.debug_console.LPC55S69"/>
+    <definition extID="cm33_core0_LPC55S69"/>
+    <definition extID="lpcxpresso55s69_tfm_demo_ns"/>
+    <definition extID="mdk"/>
+    <definition extID="armgcc"/>
+    <definition extID="mcuxpresso"/>
+    <definition extID="iar"/>
+    <definition extID="com.crt.advproject.config.exe.debug"/>
+    <definition extID="com.crt.advproject.config.exe.release"/>
+  </externalDefinitions>
+  <example id="lpcxpresso55s69_tfm_demo_s" name="tfm_demo_s" category="tfm_examples" dependency="platform.drivers.casper.LPC55S69 platform.drivers.hashcrypt.LPC55S69 platform.drivers.rng_1.LPC55S69 platform.drivers.iap1.LPC55S69 platform.drivers.ctimer.LPC55S69 platform.drivers.lpc_iocon.LPC55S69 middleware.mbedcrypto.LPC55S69 middleware.tfm.s.LPC55S69 middleware.tfm.s.ipc_api.LPC55S69 middleware.tfm.s.crypto.LPC55S69 middleware.tfm.s.initial_attestation.LPC55S69 middleware.tfm.s.its.LPC55S69 middleware.tfm.s.sst.LPC55S69 platform.drivers.common.LPC55S69 platform.drivers.clock.LPC55S69 platform.drivers.power.LPC55S69 platform.devices.LPC55S69_CMSIS.LPC55S69 platform.drivers.flexcomm_usart.LPC55S69 platform.drivers.flexcomm.LPC55S69 platform.drivers.lpc_gpio.LPC55S69 platform.utilities.assert.LPC55S69 utility.debug_console.LPC55S69 component.usart_adapter.LPC55S69 component.serial_manager.LPC55S69 component.lists.LPC55S69 component.serial_manager_uart.LPC55S69 platform.Include_core_cm33.LPC55S69 platform.Include_common.LPC55S69 platform.Include_dsp.LPC55S69 platform.drivers.reset.LPC55S69 platform.utilities.misc_utilities.LPC55S69" device_core="cm33_core0_LPC55S69" linked_projects="lpcxpresso55s69_tfm_demo_ns">
+    <projects>
+      <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
+    </projects>
+    <memory>
+      <memoryBlock addr="10000000" size="00098000" access="RO" type="Flash" id="FLASH_LPC55S69" name="FLASH"/>
+      <memoryBlock addr="30000000" size="00044000" access="RW" type="RAM" id="RAM_LPC55S69" name="RAM"/>
+    </memory>
+    <toolchainSettings>
+      <toolchainSetting id_refs="com.nxp.mcuxpresso">
+        <buildSteps>
+          <preBuildStep>arm-none-eabi-gcc -DTFM_LVL=2 -DTFM_PSA_API -DTFM_PARTITION_CRYPTO -DTFM_PARTITION_INITIAL_ATTESTATION -DTFM_PARTITION_INTERNAL_TRUSTED_STORAGE -DTFM_PARTITION_SECURE_STORAGE -x c-header -E -P -c ../tfm/platform/ext/target/nxp/lpcxpresso55s69/Device/Source/mcux/LPC55S69_cm33_core0_s.lds -o ../tfm/platform/ext/target/nxp/lpcxpresso55s69/Device/Source/mcux/LPC55S69_cm33_core0_s.ld</preBuildStep>
+        </buildSteps>
+        <option id="com.crt.advproject.gas.fpu" type="enum">
+          <value>com.crt.advproject.gas.fpu.fpv5sp.hard</value>
+        </option>
+        <option id="com.crt.advproject.gcc.fpu" type="enum">
+          <value>com.crt.advproject.gcc.fpu.fpv5sp.hard</value>
+        </option>
+        <option id="com.crt.advproject.c.misc.dialect" type="enum">
+          <value>com.crt.advproject.misc.dialect.gnu99</value>
+        </option>
+        <option id="com.crt.advproject.gcc.exe.debug.option.optimization.level" type="enum">
+          <value>gnu.c.optimization.level.optimize</value>
+        </option>
+        <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
+          <value>CPU_LPC55S69JBD100_cm33_core0</value>
+          <value>TFM_LVL=2</value>
+          <value>SST_ENCRYPTION</value>
+          <value>SST_RAM_FS</value>
+          <value>SST_CREATE_FLASH_LAYOUT</value>
+          <value>ITS_RAM_FS</value>
+          <value>ITS_CREATE_FLASH_LAYOUT</value>
+          <value>DAUTH_CHIP_DEFAULT</value>
+          <value>MBEDTLS_MCUX_CASPER_ECC=0</value>
+          <value>MBEDTLS_MCUX_HASHCRYPT_SHA=0</value>
+          <value>MBEDTLS_CONFIG_FILE='"lpcxpresso55s69_mbedcrypto_config.h"'</value>
+          <value>TFM_PSA_API</value>
+          <value>CONFIG_TFM_ENABLE_MEMORY_PROTECT</value>
+          <value>TFM_PARTITION_CRYPTO</value>
+          <value>TFM_PARTITION_INITIAL_ATTESTATION</value>
+          <value>T_COSE_USE_PSA_CRYPTO</value>
+          <value>TFM_PARTITION_INTERNAL_TRUSTED_STORAGE</value>
+          <value>TFM_PARTITION_SECURE_STORAGE</value>
+          <value>SERIAL_PORT_TYPE_UART=1</value>
+        </option>
+        <option id="gnu.c.compiler.option.optimization.flags" type="string">
+          <value>-fno-common</value>
+        </option>
+        <option id="gnu.c.compiler.option.misc.other" type="string">
+          <value>-Wno-unused-variable  -Wno-unused-but-set-variable  -Wno-return-type  -mcpu=cortex-m33  -c  -ffunction-sections  -fdata-sections  -ffreestanding  -fno-builtin</value>
+        </option>
+        <option id="com.crt.advproject.gcc.securestate" type="enum">
+          <value>com.crt.advproject.gcc.securestate.secure</value>
+        </option>
+        <option id="com.crt.advproject.link.fpu" type="enum">
+          <value>com.crt.advproject.link.fpu.fpv5sp.hard</value>
+        </option>
+        <option id="gnu.c.link.option.nostdlibs" type="boolean">
+          <value>false</value>
+        </option>
+        <option id="gnu.c.link.option.other" type="stringList">
+          <value>--cmse-implib</value>
+          <value>--out-implib=tfm_demo_s_CMSE_lib.o</value>
+        </option>
+        <option id="com.crt.advproject.link.securestate" type="enum">
+          <value>com.crt.advproject.link.securestate.secure</value>
+        </option>
+        <option id="com.crt.advproject.debugger.security.nonsecureimage" type="string">
+          <value>${linked:lpcxpresso55s69_tfm_demo_ns}</value>
+        </option>
+        <option id="com.crt.advproject.gas.hdrlib" type="enum">
+          <value>com.crt.advproject.gas.hdrlib.newlibnano</value>
+        </option>
+        <option id="com.crt.advproject.gas.specs" type="enum">
+          <value>com.crt.advproject.gas.specs.newlibnano</value>
+        </option>
+        <option id="com.crt.advproject.gcc.hdrlib" type="enum">
+          <value>com.crt.advproject.gcc.hdrlib.newlibnano</value>
+        </option>
+        <option id="com.crt.advproject.gcc.specs" type="enum">
+          <value>com.crt.advproject.gcc.specs.newlibnano</value>
+        </option>
+        <option id="com.crt.advproject.link.gcc.hdrlib" type="enum">
+          <value>com.crt.advproject.gcc.link.hdrlib.newlibnano.semihost</value>
+        </option>
+        <option id="com.crt.advproject.link.script" type="string">
+          <value>LPC55S69_cm33_core0_s.ld</value>
+        </option>
+        <option id="com.crt.advproject.link.scriptdir" type="string">
+          <value>${ProjDirPath}/tfm/platform/ext/target/nxp/lpcxpresso55s69/Device/Source/mcux</value>
+        </option>
+      </toolchainSetting>
+    </toolchainSettings>
+    <debug_configurations>
+      <debug_configuration id_refs="com.crt.advproject.config.exe.debug com.crt.advproject.config.exe.release">
+        <drivers>
+          <driver id_refs="FLASH_LPC55S69">
+            <driverBinary path="devices/LPC55S69/mcuxpresso" type="binary" target_path="binary">
+              <files mask="LPC55xx_S.cfx"/>
+            </driverBinary>
+          </driver>
+        </drivers>
+      </debug_configuration>
+    </debug_configurations>
+    <include_paths>
+      <include_path path="mbed-crypto/include"/>
+      <include_path path="tfm"/>
+      <include_path path="tfm/interface/include"/>
+      <include_path path="tfm/secure_fw/include"/>
+    </include_paths>
+    <source path="boards/lpcxpresso55s69/tfm_examples/tfm_demo/cm33_core0/tfm_demo_s/mdk" target_path="lpcxpresso55s69/tfm_examples/tfm_demo/tfm_demo_s" type="configuration" toolchain="mdk">
+      <files mask="tfm_demo_flashdebug.ini"/>
+      <files mask="tfm_demo_flashdownload.ini"/>
+    </source>
+    <source path="boards/lpcxpresso55s69/tfm_examples/tfm_demo/cm33_core0/tfm_demo_s" target_path="board" type="c_include">
+      <files mask="app.h"/>
+      <files mask="board.h"/>
+      <files mask="clock_config.h"/>
+      <files mask="pin_mux.h"/>
+    </source>
+    <source path="boards/lpcxpresso55s69/tfm_examples/tfm_demo/cm33_core0/tfm_demo_s" target_path="board" type="src">
+      <files mask="board.c"/>
+      <files mask="clock_config.c"/>
+      <files mask="hardware_init.c"/>
+      <files mask="pin_mux.c"/>
+    </source>
+    <source path="boards/lpcxpresso55s69/tfm_examples/tfm_demo/cm33_core0/tfm_demo_s" target_path="doc" type="doc" toolchain="iar mdk mcuxpresso armgcc">
+      <files mask="readme.txt"/>
+    </source>
+    <source path="devices/LPC55S69/iar" target_path="LPC55S69/iar" type="linker" toolchain="iar">
+      <files mask="LPC55S69_cm33_core0_flash_s.icf"/>
+    </source>
+    <source path="middleware/tfm/platform/ext/target/nxp/lpcxpresso55s69/Device/Source/armclang" target_path="startup" type="asm_include" toolchain="mdk">
+      <files mask="startup_LPC55S69_cm33_core0_s.S"/>
+    </source>
+    <source path="middleware/tfm/platform/ext/target/nxp/lpcxpresso55s69/Device/Source/armclang" target_path="tfm/platform/ext/target/nxp/lpcxpresso55s69/Device/Source/armclang" type="linker" toolchain="mdk">
+      <files mask="LPC55S69_cm33_core0_s.sct"/>
+    </source>
+    <source path="middleware/tfm/platform/ext/target/nxp/lpcxpresso55s69/Device/Source/armgcc" target_path="startup" type="asm_include" toolchain="armgcc">
+      <files mask="startup_LPC55S69_cm33_core0_s.S"/>
+    </source>
+    <source path="middleware/tfm/platform/ext/target/nxp/lpcxpresso55s69/Device/Source/armgcc" target_path="tfm/platform/ext/target/nxp/lpcxpresso55s69/Device/Source/armgcc" type="linker" toolchain="armgcc">
+      <files mask="LPC55S69_cm33_core0_s.ld"/>
+    </source>
+    <source path="middleware/tfm/platform/ext/target/nxp/lpcxpresso55s69/Device/Source/mcux" target_path="startup" type="asm_include" toolchain="mcuxpresso">
+      <files mask="startup_LPC55S69_cm33_core0_s.S"/>
+    </source>
+    <source path="middleware/tfm/platform/ext/target/nxp/lpcxpresso55s69/Device/Source/mcux" target_path="tfm/platform/ext/target/nxp/lpcxpresso55s69/Device/Source/mcux" type="other" toolchain="mcuxpresso">
+      <files mask="LPC55S69_cm33_core0_s.lds"/>
+    </source>
+    <source path="middleware/tfm/secure_fw/core" target_path="source" type="src">
+      <files mask="tfm_core.c"/>
+    </source>
+  </example>
+</ksdk:examples>

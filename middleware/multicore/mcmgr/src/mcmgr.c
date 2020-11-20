@@ -20,7 +20,7 @@ mcmgr_status_t MCMGR_RegisterEvent(mcmgr_event_type_t type, mcmgr_event_callback
         return kStatus_MCMGR_Error;
     }
     /* Make sure any old handler is inactive */
-    MCMGR_eventTable[type].callback = NULL;
+    MCMGR_eventTable[type].callback = ((void *)0);
     /* Install callback data first */
     MCMGR_eventTable[type].callbackData = callbackData;
     /* Install the callback */
@@ -38,7 +38,7 @@ static mcmgr_status_t MCMGR_TriggerEventCommon(mcmgr_event_type_t type, uint16_t
     }
 
     mcmgr_core_t coreNum = MCMGR_GetCurrentCore();
-    if (coreNum < g_mcmgrSystem.coreCount)
+    if ((uint32_t)coreNum < g_mcmgrSystem.coreCount)
     {
         remoteData = (((uint32_t)type) << 16) | eventData;
         return mcmgr_trigger_event_internal(remoteData, forcedWrite);
@@ -64,14 +64,14 @@ static void MCMGR_StartupDataEventHandler(uint16_t startupDataChunk, void *conte
     {
         case kMCMGR_StartupGettingLowCoreState:
             coreContext->startupData = startupDataChunk; /* Receive the low part */
-            coreContext->state = kMCMGR_StartupGettingHighCoreState;
-            MCMGR_TriggerEvent(kMCMGR_FeedStartupDataEvent, kMCMGR_StartupGettingHighCoreState);
+            coreContext->state       = kMCMGR_StartupGettingHighCoreState;
+            (void)MCMGR_TriggerEvent(kMCMGR_FeedStartupDataEvent, (uint16_t)kMCMGR_StartupGettingHighCoreState);
             break;
 
         case kMCMGR_StartupGettingHighCoreState:
             coreContext->startupData |= ((uint32_t)startupDataChunk) << 16;
             coreContext->state = kMCMGR_RunningCoreState;
-            MCMGR_TriggerEvent(kMCMGR_FeedStartupDataEvent, kMCMGR_RunningCoreState);
+            (void)MCMGR_TriggerEvent(kMCMGR_FeedStartupDataEvent, (uint16_t)kMCMGR_RunningCoreState);
             break;
 
         default:
@@ -87,12 +87,12 @@ static void MCMGR_FeedStartupDataEventHandler(uint16_t startupDataChunk, void *c
     switch ((mcmgr_core_state_t)startupDataChunk)
     {
         case kMCMGR_StartupGettingLowCoreState:
-            MCMGR_TriggerEvent(kMCMGR_StartupDataEvent, (uint16_t)(coreContext->startupData & 0xFFFF));
+            (void)MCMGR_TriggerEvent(kMCMGR_StartupDataEvent, (uint16_t)(coreContext->startupData & 0xFFFFU));
             coreContext->state = (mcmgr_core_state_t)startupDataChunk;
             break;
 
         case kMCMGR_StartupGettingHighCoreState:
-            MCMGR_TriggerEvent(kMCMGR_StartupDataEvent, (uint16_t)((coreContext->startupData) >> 16));
+            (void)MCMGR_TriggerEvent(kMCMGR_StartupDataEvent, (uint16_t)((coreContext->startupData) >> 16));
             coreContext->state = (mcmgr_core_state_t)startupDataChunk;
             break;
 
@@ -109,7 +109,7 @@ static void MCMGR_FeedStartupDataEventHandler(uint16_t startupDataChunk, void *c
 mcmgr_status_t MCMGR_EarlyInit(void)
 {
     mcmgr_core_t coreNum = MCMGR_GetCurrentCore();
-    if (coreNum < g_mcmgrSystem.coreCount)
+    if ((uint32_t)coreNum < g_mcmgrSystem.coreCount)
     {
         return mcmgr_early_init_internal(coreNum);
     }
@@ -119,12 +119,20 @@ mcmgr_status_t MCMGR_EarlyInit(void)
 mcmgr_status_t MCMGR_Init(void)
 {
     mcmgr_core_t coreNum = MCMGR_GetCurrentCore();
-    if (coreNum < g_mcmgrSystem.coreCount)
+    if ((uint32_t)coreNum < g_mcmgrSystem.coreCount)
     {
         /* Register critical and generic event handlers */
-        MCMGR_RegisterEvent(kMCMGR_StartupDataEvent, MCMGR_StartupDataEventHandler, (void *)&s_mcmgrCoresContext[coreNum]);
-        MCMGR_RegisterEvent(kMCMGR_FeedStartupDataEvent, MCMGR_FeedStartupDataEventHandler,
-                            (void *)&s_mcmgrCoresContext[!coreNum]);
+        if (kStatus_MCMGR_Success != MCMGR_RegisterEvent(kMCMGR_StartupDataEvent, MCMGR_StartupDataEventHandler,
+                                                         (void *)&s_mcmgrCoresContext[coreNum]))
+        {
+            return kStatus_MCMGR_Error;
+        }
+        if (kStatus_MCMGR_Success !=
+            MCMGR_RegisterEvent(kMCMGR_FeedStartupDataEvent, MCMGR_FeedStartupDataEventHandler,
+                                (void *)&s_mcmgrCoresContext[(coreNum == kMCMGR_Core0) ? kMCMGR_Core1 : kMCMGR_Core0]))
+        {
+            return kStatus_MCMGR_Error;
+        }
         return mcmgr_late_init_internal(coreNum);
     }
     return kStatus_MCMGR_Error;
@@ -134,7 +142,7 @@ mcmgr_status_t MCMGR_StartCore(mcmgr_core_t coreNum, void *bootAddress, uint32_t
 {
     mcmgr_status_t ret;
 
-    if (coreNum < g_mcmgrSystem.coreCount)
+    if ((uint32_t)coreNum < g_mcmgrSystem.coreCount)
     {
         /* Pass the startupData - LSB first */
         s_mcmgrCoresContext[coreNum].startupData = startupData;
@@ -159,12 +167,16 @@ mcmgr_status_t MCMGR_StartCore(mcmgr_core_t coreNum, void *bootAddress, uint32_t
 mcmgr_status_t MCMGR_GetStartupData(uint32_t *startupData)
 {
     mcmgr_core_t coreNum = MCMGR_GetCurrentCore();
-    if (coreNum < g_mcmgrSystem.coreCount)
+    if ((uint32_t)coreNum < g_mcmgrSystem.coreCount)
     {
         if (s_mcmgrCoresContext[coreNum].state == kMCMGR_ResetCoreState)
         {
             s_mcmgrCoresContext[coreNum].state = kMCMGR_StartupGettingLowCoreState;
-            MCMGR_TriggerEvent(kMCMGR_FeedStartupDataEvent, kMCMGR_StartupGettingLowCoreState);
+            if (kStatus_MCMGR_Success !=
+                MCMGR_TriggerEvent(kMCMGR_FeedStartupDataEvent, (uint16_t)kMCMGR_StartupGettingLowCoreState))
+            {
+                return kStatus_MCMGR_Error;
+            }
         }
         return mcmgr_get_startup_data_internal(coreNum, startupData);
     }
@@ -173,7 +185,7 @@ mcmgr_status_t MCMGR_GetStartupData(uint32_t *startupData)
 
 mcmgr_status_t MCMGR_StopCore(mcmgr_core_t coreNum)
 {
-    if (coreNum < g_mcmgrSystem.coreCount)
+    if ((uint32_t)coreNum < g_mcmgrSystem.coreCount)
     {
         return mcmgr_stop_core_internal(coreNum);
     }
@@ -182,7 +194,7 @@ mcmgr_status_t MCMGR_StopCore(mcmgr_core_t coreNum)
 
 int32_t MCMGR_GetVersion(void)
 {
-    return kMCMGR_Version;
+    return (int32_t)kMCMGR_Version;
 }
 
 mcmgr_status_t MCMGR_GetCoreProperty(mcmgr_core_t coreNum,
@@ -190,7 +202,7 @@ mcmgr_status_t MCMGR_GetCoreProperty(mcmgr_core_t coreNum,
                                      void *value,
                                      uint32_t *length)
 {
-    if (coreNum < g_mcmgrSystem.coreCount)
+    if ((uint32_t)coreNum < g_mcmgrSystem.coreCount)
     {
         return mcmgr_get_core_property_internal(coreNum, property, value, length);
     }

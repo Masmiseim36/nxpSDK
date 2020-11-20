@@ -3,6 +3,7 @@ var searchData=
   ['mcmgr_20component',['MCMGR Component',['../index.html',1,'']]],
   ['mcmgr_20api',['MCMGR API',['../group__mcmgr.html',1,'']]],
   ['mcmgr_5fcore_5fproperty_5ft',['mcmgr_core_property_t',['../group__mcmgr.html#ga8f1bf3fd703cc893f2f25268027049f0',1,'mcmgr.h']]],
+  ['mcmgr_5fcore_5fstatus_5ft',['mcmgr_core_status_t',['../group__mcmgr.html#gace62a1a59ea2e0bba2308b85dd3d3490',1,'mcmgr.h']]],
   ['mcmgr_5fcore_5ft',['mcmgr_core_t',['../group__mcmgr.html#gab4840600877ad51744dde7c8b640ef0d',1,'mcmgr.h']]],
   ['mcmgr_5fcore_5ftype_5ft',['mcmgr_core_type_t',['../group__mcmgr.html#gac8ed540d496c628b11acf68ef7f48d25',1,'mcmgr.h']]],
   ['mcmgr_5fearlyinit',['MCMGR_EarlyInit',['../group__mcmgr.html#ga113834314ba8d727f8d601463ee71e88',1,'mcmgr.h']]],

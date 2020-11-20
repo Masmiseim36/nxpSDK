@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2014-2016, Freescale Semiconductor, Inc.
- * Copyright 2016 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  *
@@ -62,7 +62,9 @@ typedef enum _mcmgr_core_type
     /*! @brief Cortex M4 */
     kMCMGR_CoreTypeCortexM4,
     /*! @brief Cortex M33 */
-    kMCMGR_CoreTypeCortexM33
+    kMCMGR_CoreTypeCortexM33,
+    /*! @brief Cortex M7 */
+    kMCMGR_CoreTypeCortexM7
 } mcmgr_core_type_t;
 
 /*! @brief Enumeration that defines core. */
@@ -94,6 +96,7 @@ typedef enum _mcmgr_event_type_t
     kMCMGR_FeedStartupDataEvent,
     kMCMGR_RemoteRPMsgEvent,
     kMCMGR_RemoteApplicationEvent,
+    kMCMGR_FreeRtosMessageBuffersEvent,
     kMCMGR_EventTableLength
 } mcmgr_event_type_t;
 
@@ -111,7 +114,7 @@ typedef void (*mcmgr_event_callback_t)(uint16_t data, void *context);
  */
 enum mcmgr_version_enum
 {
-    kMCMGR_Version = 0x00040003
+    kMCMGR_Version = 0x00040100
 };
 
 #if defined(__cplusplus)

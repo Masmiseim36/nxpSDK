@@ -34,7 +34,7 @@
   <td id="projectlogo"><img alt="Logo" src="nxp_logo_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Multicore Manager (MCMGR) User&#39;s Guide
-   &#160;<span id="projectnumber">Rev. 4.0.3</span>
+   &#160;<span id="projectnumber">Rev. 4.1.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -131,6 +131,10 @@ typedef enum <a class="el" href="group__mcmgr.html#gaafc86a36cbeb3a8587cf1d03dfe
 typedef enum <a class="el" href="group__mcmgr.html#gadc2ec0f3fda2d57dd3870335914b407f">_mcmgr_core_property</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__mcmgr.html#ga8f1bf3fd703cc893f2f25268027049f0">mcmgr_core_property_t</a></td></tr>
 <tr class="memdesc:ga8f1bf3fd703cc893f2f25268027049f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enumeration that defines property of core. <br /></td></tr>
 <tr class="separator:ga8f1bf3fd703cc893f2f25268027049f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gace62a1a59ea2e0bba2308b85dd3d3490"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gace62a1a59ea2e0bba2308b85dd3d3490"></a>
+typedef enum <a class="el" href="group__mcmgr.html#ga7b053e7eeda6daac208a4038a2303955">_mcmgr_core_status</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__mcmgr.html#gace62a1a59ea2e0bba2308b85dd3d3490">mcmgr_core_status_t</a></td></tr>
+<tr class="memdesc:gace62a1a59ea2e0bba2308b85dd3d3490"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enumeration that defines the property value of core status. <br /></td></tr>
+<tr class="separator:gace62a1a59ea2e0bba2308b85dd3d3490"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac8ed540d496c628b11acf68ef7f48d25"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gac8ed540d496c628b11acf68ef7f48d25"></a>
 typedef enum <a class="el" href="group__mcmgr.html#gaad6bc70b5f869884191902e305d51a0a">_mcmgr_core_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__mcmgr.html#gac8ed540d496c628b11acf68ef7f48d25">mcmgr_core_type_t</a></td></tr>
 <tr class="memdesc:gac8ed540d496c628b11acf68ef7f48d25"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enumeration that defines property value of core type. <br /></td></tr>
@@ -176,6 +180,14 @@ Enumerations</h2></td></tr>
  }<tr class="memdesc:gadc2ec0f3fda2d57dd3870335914b407f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enumeration that defines property of core.  <a href="group__mcmgr.html#gadc2ec0f3fda2d57dd3870335914b407f">More...</a><br /></td></tr>
 </td></tr>
 <tr class="separator:gadc2ec0f3fda2d57dd3870335914b407f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7b053e7eeda6daac208a4038a2303955"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__mcmgr.html#ga7b053e7eeda6daac208a4038a2303955">_mcmgr_core_status</a> { <br />
+&#160;&#160;<a class="el" href="group__mcmgr.html#gga7b053e7eeda6daac208a4038a2303955a5ed482ec07b1619bf7c756a88227f8ca">kMCMGR_InReset</a>, 
+<br />
+&#160;&#160;<a class="el" href="group__mcmgr.html#gga7b053e7eeda6daac208a4038a2303955a608cc3ceee195f29ccfb236989c68fb4">kMCMGR_NotInReset</a>
+<br />
+ }<tr class="memdesc:ga7b053e7eeda6daac208a4038a2303955"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enumeration that defines the property value of core status.  <a href="group__mcmgr.html#ga7b053e7eeda6daac208a4038a2303955">More...</a><br /></td></tr>
+</td></tr>
+<tr class="separator:ga7b053e7eeda6daac208a4038a2303955"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaad6bc70b5f869884191902e305d51a0a"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__mcmgr.html#gaad6bc70b5f869884191902e305d51a0a">_mcmgr_core_type</a> { <br />
 &#160;&#160;<a class="el" href="group__mcmgr.html#ggaad6bc70b5f869884191902e305d51a0aad0d7f52fc5ed832a259e3fba00d936a6">kMCMGR_CoreTypeCortexM0</a>, 
 <br />
@@ -183,7 +195,9 @@ Enumerations</h2></td></tr>
 <br />
 &#160;&#160;<a class="el" href="group__mcmgr.html#ggaad6bc70b5f869884191902e305d51a0aaac1299d1dd439558115c6a5f49da6256">kMCMGR_CoreTypeCortexM4</a>, 
 <br />
-&#160;&#160;<a class="el" href="group__mcmgr.html#ggaad6bc70b5f869884191902e305d51a0aa9d0db113fdc4348d3e833dfc0e0a8c38">kMCMGR_CoreTypeCortexM33</a>
+&#160;&#160;<a class="el" href="group__mcmgr.html#ggaad6bc70b5f869884191902e305d51a0aa9d0db113fdc4348d3e833dfc0e0a8c38">kMCMGR_CoreTypeCortexM33</a>, 
+<br />
+&#160;&#160;<a class="el" href="group__mcmgr.html#ggaad6bc70b5f869884191902e305d51a0aae5015a4bd158184a81f1a413cf1001ba">kMCMGR_CoreTypeCortexM7</a>
 <br />
  }<tr class="memdesc:gaad6bc70b5f869884191902e305d51a0a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enumeration that defines property value of core type.  <a href="group__mcmgr.html#gaad6bc70b5f869884191902e305d51a0a">More...</a><br /></td></tr>
 </td></tr>
@@ -219,12 +233,14 @@ Enumerations</h2></td></tr>
 <br />
 &#160;&#160;<b>kMCMGR_RemoteApplicationEvent</b>, 
 <br />
+&#160;&#160;<b>kMCMGR_FreeRtosMessageBuffersEvent</b>, 
+<br />
 &#160;&#160;<b>kMCMGR_EventTableLength</b>
 <br />
  }<tr class="memdesc:ga0a45660b38a87ca65052a15d721a4949"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type definition of event types. <br /></td></tr>
 </td></tr>
 <tr class="separator:ga0a45660b38a87ca65052a15d721a4949"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabbf6e7e7978f537eaa72ea8e95bd0f1f"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__mcmgr.html#gabbf6e7e7978f537eaa72ea8e95bd0f1f">mcmgr_version_enum</a> { <b>kMCMGR_Version</b> = 0x00040003
+<tr class="memitem:gabbf6e7e7978f537eaa72ea8e95bd0f1f"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__mcmgr.html#gabbf6e7e7978f537eaa72ea8e95bd0f1f">mcmgr_version_enum</a> { <b>kMCMGR_Version</b> = 0x00040100
  }<tr class="memdesc:gabbf6e7e7978f537eaa72ea8e95bd0f1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Version of MCMGR.  <a href="group__mcmgr.html#gabbf6e7e7978f537eaa72ea8e95bd0f1f">More...</a><br /></td></tr>
 </td></tr>
 <tr class="separator:gabbf6e7e7978f537eaa72ea8e95bd0f1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -316,6 +332,28 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="ga7b053e7eeda6daac208a4038a2303955"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group__mcmgr.html#ga7b053e7eeda6daac208a4038a2303955">_mcmgr_core_status</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Enumeration that defines the property value of core status. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a class="anchor" id="gga7b053e7eeda6daac208a4038a2303955a5ed482ec07b1619bf7c756a88227f8ca"></a>kMCMGR_InReset&#160;</td><td class="fielddoc">
+<p>Core is held in reset. </p>
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="gga7b053e7eeda6daac208a4038a2303955a608cc3ceee195f29ccfb236989c68fb4"></a>kMCMGR_NotInReset&#160;</td><td class="fielddoc">
+<p>Core is not in reset. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
 <a class="anchor" id="gaad6bc70b5f869884191902e305d51a0a"></a>
 <div class="memitem">
 <div class="memproto">
@@ -339,6 +377,9 @@ Functions</h2></td></tr>
 </td></tr>
 <tr><td class="fieldname"><a class="anchor" id="ggaad6bc70b5f869884191902e305d51a0aa9d0db113fdc4348d3e833dfc0e0a8c38"></a>kMCMGR_CoreTypeCortexM33&#160;</td><td class="fielddoc">
 <p>Cortex M33. </p>
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="ggaad6bc70b5f869884191902e305d51a0aae5015a4bd158184a81f1a413cf1001ba"></a>kMCMGR_CoreTypeCortexM7&#160;</td><td class="fielddoc">
+<p>Cortex M7. </p>
 </td></tr>
 </table>
 
@@ -788,7 +829,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul class="foot">
-    <li class="footer">&copy; 2016 NXP Semiconductors. All rights reserved.
+    <li class="footer">Copyright 2016-2020 NXP Semiconductors. All rights reserved.
     </li>
   </ul>
 </div>

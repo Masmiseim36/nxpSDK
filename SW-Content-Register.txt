@@ -438,6 +438,69 @@ wifi_qca                   Name: wifi_qca
                            Location: middleware/wifi_qca                     
                            Origin: Qualcomm Atheros, Inc.                    
 
+ntag_i2c_plus              Name: NTAG I2C plus                               
+                           Version: 1.0.0                                    
+                           Outgoing License: BSD-3-Clause                    
+                           License File: COPYING-BSD-3                       
+                           Format: source code                               
+                           Description: NTAG I2C plus communication library  
+                           Location: middleware/ntag_i2c_plus                
+                           Origin: NXP (BSD-3-Clause)                        
+
+tfm                        Name: tfm                                         
+                           Version: 1.0                                      
+                           Outgoing License: BSD-3-Clause                    
+                           License File: COPYING-BSD-3                       
+                           Format: source code                               
+                           Description: Trusted Firmware M                   
+                           Location: middleware/tfm                          
+                           Origin: Arm (BSD-3-Clause) -                      
+                           https://git.trustedfirmware.org/trusted-firmware-m
+                           .git/                                             
+
+tfm_qcbor                  Name: tfm_qcbor                                   
+                           Version: 1.0                                      
+                           Outgoing License: BSD-3-Clause                    
+                           License File: COPYING-BSD-3                       
+                           Format: source code                               
+                           Description: QCBOR encodes and decodes RFC 7049   
+                           CBOR                                              
+                           Location: middleware/tfm/lib/ext/qcbor            
+                           Origin: Laurence Lundblade (BSD-3-Clause) -       
+                           https://github.com/laurencelundblade/QCBOR        
+
+tfm_t_cose                 Name: tfm_t_cose                                  
+                           Version: 1.0                                      
+                           Outgoing License: BSD-3-Clause                    
+                           License File: COPYING-BSD-3                       
+                           Format: source code                               
+                           Description: t_cose is a partial implementation of
+                           the COSE standard (RFC 8152)                      
+                           Location: middleware/tfm/lib/ext/t_cose           
+                           Origin: Laurence Lundblade (BSD-3-Clause)         
+
+psatest                    Name: PSA Test Suite                              
+                           Version: 1.0                                      
+                           Outgoing License: Apache-2.0                      
+                           License File: middleware/psa-arch-tests/LICENSE.md
+                           Format: source code                               
+                           Description: Arm Platform Security Architecture   
+                           Test Suite                                        
+                           Location: middleware/psa-arch-tests               
+                           Origin: ARM(Apache-2.0) -                         
+                           https://github.com/ARM-software/psa-arch-tests    
+
+mbed-crypto                Name: Mbed Crypto library                         
+                           Version: 3.0.1                                    
+                           Outgoing License: Apache-2.0                      
+                           License File:                                     
+                           middleware/mbed-crypto/apache-2.0.txt             
+                           Format: source code                               
+                           Description: Cryptographic Library                
+                           Location: middleware/mbed-crypto                  
+                           Origin: ARM(Apache-2.0) -                         
+                           https://github.com/ARMmbed/mbed-crypto            
+
 gradle                     Name: Gradle                                      
                            Version: 4.1                                      
                            Outgoing License: Apache-2-Clause                 
@@ -1098,4 +1161,31 @@ mflash                     Name: NXP's FLASH programming support library
                            Description: NXP's FLASH programming support      
                            library                                           
                            Location: middleware/mflash                       
+                           Origin: NXP (BSD-3-Clause)                        
+
+FNET                       Name: FNET                                        
+                           Version: 4.4.1                                    
+                           Outgoing License: Apache License 2.0              
+                           License File:                                     
+                           https://github.com/butok/FNET/blob/v4.4.1/fnet_lic
+                           ense.txt                                          
+                           Format: source code                               
+                           Description: Embedded TCP/IP stack                
+                           Location:                                         
+                           boards/<board>/aws_examples/device_configuration_w
+                           ifi/fnet_mdns,                                    
+                           boards/<board>/aws_examples/device_configuration_w
+                           ifi_qspi_xip/fnet_mdns,                           
+                           boards/<board>/aws_examples/device_configuration_w
+                           ifi/cm33_core0/fnet_mdns                          
+                           Origin: Andrey Butok. FNET Community.             
+                           Url: https://github.com/butok/FNET                
+
+MCMGR                      Name: MCMGR                                       
+                           Version: 4.1.0                                    
+                           Outgoing License: BSD-3-Clause                    
+                           License File: COPYING-BSD-3                       
+                           Format: source code                               
+                           Description: Multicore manager                    
+                           Location: middleware/multicore/mcmgr              
                            Origin: NXP (BSD-3-Clause)                        

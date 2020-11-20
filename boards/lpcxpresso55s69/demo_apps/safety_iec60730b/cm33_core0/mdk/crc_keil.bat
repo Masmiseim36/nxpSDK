@@ -1,0 +1,3 @@
+.\..\srec_cat .\debug\safety_iec60730b_core0.hex -intel -crop 0x100 0x300 -fill 0xFF 0x100 0x300 -CRC16_Little_Endian 0xFFF0 -o .\debug\safety_iec60730b_core0_temp.hex -intel
+.\..\srec_cat .\debug\safety_iec60730b_core0.hex -intel -exclude 0x100 0x300 -exclude 0xFFF0 0xFFF2 -fill 0x00 0xFFF2 0x10000 -o  .\debug\safety_iec60730b_core0.hex -intel 
+.\..\srec_cat .\debug\safety_iec60730b_core0.hex -intel .\debug\safety_iec60730b_core0_temp.hex -intel -o .\debug\safety_iec60730b_core0_crc.hex -intel

@@ -38,7 +38,7 @@ volatile bool g_hardfaultFlag = false;
  ******************************************************************************/
 
 /* The memory for MRC, here use the SRAM1 address. */
-#define MEM_REGION_SIZE kXRDC_MemSize128K
+#define MEM_REGION_SIZE  kXRDC_MemSize128K
 #define MEM_REGION_START 0x2F020000U
 
 #define APP_DOMAIN_ID 1

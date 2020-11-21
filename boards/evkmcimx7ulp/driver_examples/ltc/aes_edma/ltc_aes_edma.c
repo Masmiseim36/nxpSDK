@@ -22,22 +22,22 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DMAMUX0 DMA_CH_MUX0
-#define LTC_REQUEST_INPUT_FIFO kDmaRequestMux0LTCRx
-#define LTC_REQUEST_OUTPUT_FIFO kDmaRequestMux0LTCTx
-#define DMA_CHANNEL_LTC_INPUT_FIFO 0
+#define DMAMUX0                     DMA_CH_MUX0
+#define LTC_REQUEST_INPUT_FIFO      kDmaRequestMux0LTCRx
+#define LTC_REQUEST_OUTPUT_FIFO     kDmaRequestMux0LTCTx
+#define DMA_CHANNEL_LTC_INPUT_FIFO  0
 #define DMA_CHANNEL_LTC_OUTPUT_FIFO 1
 #define OUTPUT_ARRAY_LEN 512
 #define AES_BLOCK_LENGTH 16
-#define AES128 128
-#define AES128_KEY_SIZE 16
-#define CCM_PLAIN_SIZE 32
-#define CCM_IV_SIZE 12
-#define CCM_AAD_SIZE 20
-#define CCM_KEY_SIZE 16
-#define CCM_TAG_SIZE 8
-#define CMAC_HASH_SIZE 16
-#define CMAC_KEY_SIZE 16
+#define AES128           128
+#define AES128_KEY_SIZE  16
+#define CCM_PLAIN_SIZE   32
+#define CCM_IV_SIZE      12
+#define CCM_AAD_SIZE     20
+#define CCM_KEY_SIZE     16
+#define CCM_TAG_SIZE     8
+#define CMAC_HASH_SIZE   16
+#define CMAC_KEY_SIZE    16
 
 static unsigned int g_length;
 

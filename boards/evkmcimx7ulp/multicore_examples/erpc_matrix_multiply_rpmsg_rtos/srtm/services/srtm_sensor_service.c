@@ -28,18 +28,18 @@
 
 #define SRTM_SENSOR_VERSION (0x0100U)
 
-#define SRTM_SENSOR_RETURN_CODE_SUCEESS (0x0U)
-#define SRTM_SENSOR_RETURN_CODE_FAIL (0x1U)
+#define SRTM_SENSOR_RETURN_CODE_SUCEESS     (0x0U)
+#define SRTM_SENSOR_RETURN_CODE_FAIL        (0x1U)
 #define SRTM_SENSOR_RETURN_CODE_UNSUPPORTED (0x2U)
 
 /* Sensor Service Request Command definition */
 #define SRTM_SENSOR_CMD_ENABLE_STATE_DETECTOR (0x0U)
-#define SRTM_SENSOR_CMD_ENABLE_DATA_REPORT (0x1U)
-#define SRTM_SENSOR_CMD_SET_POLL_DELAY (0x2U)
+#define SRTM_SENSOR_CMD_ENABLE_DATA_REPORT    (0x1U)
+#define SRTM_SENSOR_CMD_SET_POLL_DELAY        (0x2U)
 
 /* Sensor Service Notification Command definition */
 #define SRTM_SENSOR_NTF_STATE_CHANGED (0x0U)
-#define SRTM_SENSOR_NTF_DATA (0x1U)
+#define SRTM_SENSOR_NTF_DATA          (0x1U)
 
 /* Service handle */
 typedef struct _srtm_sensor_service

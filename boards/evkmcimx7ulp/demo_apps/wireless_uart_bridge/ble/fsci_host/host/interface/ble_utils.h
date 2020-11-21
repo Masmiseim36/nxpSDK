@@ -52,12 +52,12 @@
 
 /*! Storage class modifier - alignment of a variable. It does not affect the type of the function */
 #if defined(__IAR_SYSTEMS_ICC__)
-#define ALIGN_8BIT #pragma data_alignment(1)
+#define ALIGN_8BIT  #pragma data_alignment(1)
 #define ALIGN_16BIT #pragma data_alignment(2)
 #define ALIGN_32BIT #pragma data_alignment(4)
 #define ALIGN_64BIT #pragma data_alignment(8)
 #elif defined(__GNUC__)
-#define ALIGN_8BIT #pragma pack(1)
+#define ALIGN_8BIT  #pragma pack(1)
 #define ALIGN_16BIT #pragma pack(2)
 #define ALIGN_32BIT #pragma pack(4)
 #define ALIGN_64BIT #pragma pack(8)

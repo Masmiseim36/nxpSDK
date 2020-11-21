@@ -30,8 +30,8 @@
 ************************************************************************************/
 #define gFsciUseBlockingTx_c 1
 #define MIN_VALID_PACKET_LEN (sizeof(clientPacketHdr_t))
-#define FSCI_txCallback MEM_BufferFree
-#define FSCI_rxCallback FSCI_receivePacket
+#define FSCI_txCallback      MEM_BufferFree
+#define FSCI_rxCallback      FSCI_receivePacket
 
 #ifndef mFsciRxAckTimeoutMs_c
 #define mFsciRxAckTimeoutMs_c 100 /* milliseconds */

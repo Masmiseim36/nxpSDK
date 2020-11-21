@@ -15,11 +15,11 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define QSPI_ALIAS_BASE 0x04000000U
-#define QSPI_CLK_FREQ CLOCK_GetIpFreq(kCLOCK_Qspi)
-#define FLASH_PAGE_SIZE 256U
-#define FLASH_SECTOR_SIZE 4096U
-#define FLASH_SIZE 0x00800000U
+#define QSPI_ALIAS_BASE       0x04000000U
+#define QSPI_CLK_FREQ         CLOCK_GetIpFreq(kCLOCK_Qspi)
+#define FLASH_PAGE_SIZE       256U
+#define FLASH_SECTOR_SIZE     4096U
+#define FLASH_SIZE            0x00800000U
 #define FLASH_ENABLE_QUAD_CMD 0x40U
 
 static uint32_t lut[FSL_FEATURE_QSPI_LUT_DEPTH] =

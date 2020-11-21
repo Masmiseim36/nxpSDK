@@ -1,13 +1,13 @@
 /*
 ** ###################################################################
 **     Version:             rev. 7.0, 2018-11-05
-**     Build:               b190319
+**     Build:               b200409
 **
 **     Abstract:
 **         Chip specific module features.
 **
 **     Copyright 2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2019 NXP
+**     Copyright 2016-2020 NXP
 **     All rights reserved.
 **
 **     SPDX-License-Identifier: BSD-3-Clause
@@ -144,10 +144,26 @@
 
 /* LPADC module features */
 
+/* @brief Has subsequent trigger priority (bitfield CFG[TPRICTRL]). */
+#define FSL_FEATURE_LPADC_HAS_CFG_SUBSEQUENT_PRIORITY (1)
 /* @brief Has differential mode (bitfield CMDLn[DIFF]). */
 #define FSL_FEATURE_LPADC_HAS_CMDL_DIFF (1)
 /* @brief Has channel scale (bitfield CMDLn[CSCALE]). */
 #define FSL_FEATURE_LPADC_HAS_CMDL_CSCALE (1)
+/* @brief Has conversion type select (bitfield CMDLn[CTYPE]). */
+#define FSL_FEATURE_LPADC_HAS_CMDL_CTYPE (0)
+/* @brief Has conversion resolution select  (bitfield CMDLn[MODE]). */
+#define FSL_FEATURE_LPADC_HAS_CMDL_MODE (0)
+/* @brief Has compare function enable (bitfield CMDHn[CMPEN]). */
+#define FSL_FEATURE_LPADC_HAS_CMDH_CMPEN (1)
+/* @brief Has Wait for trigger assertion before execution (bitfield CMDHn[WAIT_TRIG]). */
+#define FSL_FEATURE_LPADC_HAS_CMDH_WAIT_TRIG (0)
+/* @brief Has offset calibration (bitfield CTRL[CALOFS]). */
+#define FSL_FEATURE_LPADC_HAS_CTRL_CALOFS (0)
+/* @brief Has gain calibration (bitfield CTRL[CAL_REQ]). */
+#define FSL_FEATURE_LPADC_HAS_CTRL_CAL_REQ (0)
+/* @brief Has calibration average (bitfield CTRL[CAL_AVGS]). */
+#define FSL_FEATURE_LPADC_HAS_CTRL_CAL_AVGS (0)
 /* @brief Has internal clock (bitfield CFG[ADCKEN]). */
 #define FSL_FEATURE_LPADC_HAS_CFG_ADCKEN (0)
 /* @brief Enable support for low voltage reference on option 1 reference (bitfield CFG[VREF1RNG]). */
@@ -190,7 +206,7 @@
 /* @brief Number of DMA channel groups (register bit fields CR[ERGA], CR[GRPnPRI], ES[GPE], DCHPRIn[GRPPRI]). (Valid only for eDMA modules.) */
 #define FSL_FEATURE_EDMA_CHANNEL_GROUP_COUNT (1)
 /* @brief Has DMA_Error interrupt vector. */
-#define FSL_FEATURE_EDMA_HAS_ERROR_IRQ (0)
+#define FSL_FEATURE_EDMA_HAS_ERROR_IRQ (1)
 /* @brief Number of DMA channels with asynchronous request capability (register EARS). (Valid only for eDMA modules.) */
 #define FSL_FEATURE_EDMA_ASYNCHRO_REQUEST_CHANNEL_COUNT (32)
 /* @brief Channel IRQ entry shared offset. */
@@ -546,8 +562,6 @@
 #define FSL_FEATURE_LPIT_TIMER_COUNT (4)
 /* @brief Has lifetime timer (related to existence of registers LTMR64L and LTMR64H). */
 #define FSL_FEATURE_LPIT_HAS_LIFETIME_TIMER (0)
-/* @brief Has chain mode (related to existence of register bit field TCTRLn[CHN]). */
-#define FSL_FEATURE_LPIT_HAS_CHAIN_MODE (0)
 /* @brief Has shared interrupt handler (has not individual interrupt handler for each channel). */
 #define FSL_FEATURE_LPIT_HAS_SHARED_IRQ_HANDLER (0)
 
@@ -570,6 +584,8 @@
 #define FSL_FEATURE_LPTMR_CNR_WIDTH_IS_32B (0)
 /* @brief Has timer DMA request enable (register bit CSR[TDRE]). */
 #define FSL_FEATURE_LPTMR_HAS_CSR_TDRE (1)
+/* @brief Do not has prescaler clock source 1. */
+#define FSL_FEATURE_LPTMR_HAS_NO_PRESCALER_CLOCK_SOURCE_1_SUPPORT (0)
 
 /* LPUART module features */
 
@@ -721,6 +737,8 @@
 #define FSL_FEATURE_SMC_HAS_SRIE_CORE0 (0)
 /* @brief Has security violation reset (register bit SRIE[CORE1]). */
 #define FSL_FEATURE_SMC_HAS_SRIE_CORE1 (0)
+/* @brief Width of SMC registers. */
+#define FSL_FEATURE_SMC_REG_WIDTH (32)
 
 /* MU module features */
 
@@ -734,20 +752,26 @@
 #define FSL_FEATURE_MU_HAS_RESET_INT (1)
 /* @brief MU Has register SR[MURIP] */
 #define FSL_FEATURE_MU_HAS_SR_MURIP (0)
-/* @brief brief MU Has register SR[HRIP] */
+/* @brief MU Has register SR[HRIP] */
 #define FSL_FEATURE_MU_HAS_SR_HRIP (0)
-/* @brief brief MU does not support enable clock of the other core, CR[CLKE] or CCR[CLKE]. */
+/* @brief MU does not support enable clock of the other core, CR[CLKE] or CCR[CLKE]. */
 #define FSL_FEATURE_MU_NO_CLKE (0)
-/* @brief brief MU does not support NMI, CR[NMI]. */
+/* @brief MU does not support NMI, CR[NMI]. */
 #define FSL_FEATURE_MU_NO_NMI (0)
-/* @brief brief MU does not support hold the other core reset. CR[RSTH] or CCR[RSTH]. */
+/* @brief MU does not support hold the other core reset. CR[RSTH] or CCR[RSTH]. */
 #define FSL_FEATURE_MU_NO_RSTH (0)
-/* @brief brief MU does not supports MU reset, CR[MUR]. */
+/* @brief MU does not supports MU reset, CR[MUR]. */
 #define FSL_FEATURE_MU_NO_MUR (0)
-/* @brief brief MU does not supports hardware reset, CR[HR] or CCR[HR]. */
+/* @brief MU does not supports hardware reset, CR[HR] or CCR[HR]. */
 #define FSL_FEATURE_MU_NO_HR (0)
-/* @brief brief MU supports mask the hardware reset. CR[HRM] or CCR[HRM]. */
+/* @brief MU supports mask the hardware reset. CR[HRM] or CCR[HRM]. */
 #define FSL_FEATURE_MU_HAS_HRM (0)
+/* @brief MU does not support check the other core power mode. SR[PM]. */
+#define FSL_FEATURE_MU_NO_PM (0)
+/* @brief MU supports reset assert interrupt. CR[RAIE] or BCR[RAIE]. */
+#define FSL_FEATURE_MU_HAS_RESET_ASSERT_INT (1)
+/* @brief MU supports reset de-assert interrupt. CR[RDIE] or BCR[RDIE]. */
+#define FSL_FEATURE_MU_HAS_RESET_DEASSERT_INT (1)
 
 /* interrupt module features */
 
@@ -1214,6 +1238,10 @@
 
 /* @brief Has Secure Real Time Counter Enabled and Valid (bit field LPCR[SRTC_ENV]). */
 #define FSL_FEATURE_SNVS_HAS_SRTC (1)
+/* @brief Has Set Lock. */
+#define FSL_FEATURE_SNVS_HAS_SET_LOCK (1)
+/* @brief Has State Transition. */
+#define FSL_FEATURE_SNVS_HAS_STATE_TRANSITION (1)
 
 /* SysTick module features */
 
@@ -1278,6 +1306,11 @@
 #define FSL_FEATURE_USBHS_EHCI_COUNT (2)
 /* @brief Number of endpoints supported */
 #define FSL_FEATURE_USBHS_ENDPT_COUNT (8)
+
+/* USBPHY module features */
+
+/* @brief USBPHY contain DCD analog module */
+#define FSL_FEATURE_USBPHY_HAS_DCD_ANALOG (0)
 
 /* WDOG module features */
 

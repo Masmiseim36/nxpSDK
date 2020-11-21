@@ -1,6 +1,6 @@
 /*
  * Copyright 2014-2016 Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -15,7 +15,8 @@
  *
  * The CPU macro should be declared in the project or makefile.
  */
-#if (defined(CPU_MCIMX7U3CVP05) || defined(CPU_MCIMX7U3DVK08))
+#if (defined(CPU_MCIMX7U3CVP06) || defined(CPU_MCIMX7U3DVK07) || \
+     defined(CPU_MCIMX7U3CVP05) || defined(CPU_MCIMX7U3DVK08))
 
 #define MCIMX7U3_cm4_SERIES
 

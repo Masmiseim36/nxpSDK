@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -989,7 +989,7 @@ static inline uint8_t XRDC_GetMemExclAccessLockDomainOwner(XRDC_Type *base, xrdc
  *
  * @param base XRDC peripheral base address.
  * @param mem Which memory region descriptor to lock.
- * @param mem Which set/index of ACCSET to lock.
+ * @param accset Which set/index of ACCSET to lock.
  * @param lock True to set lock, false to set unlock.
  */
 void XRDC_SetMemAccsetLock(XRDC_Type *base, xrdc_mem_t mem, xrdc_mem_accset_t accset, bool lock);

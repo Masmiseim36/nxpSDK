@@ -17,9 +17,9 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_LPADC_BASE ADC1
+#define DEMO_LPADC_BASE         ADC1
 #define DEMO_LPADC_USER_CHANNEL 6U
-#define DEMO_LPADC_USER_CMDID 15U
+#define DEMO_LPADC_USER_CMDID   15U
 
 
 /*******************************************************************************

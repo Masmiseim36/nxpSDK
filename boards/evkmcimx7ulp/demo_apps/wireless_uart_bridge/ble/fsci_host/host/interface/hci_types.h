@@ -28,7 +28,7 @@
 *************************************************************************************
 ************************************************************************************/
 /* Generic constants */
-#define gHciLeAdvertisingDataLength_c (31)
+#define gHciLeAdvertisingDataLength_c  (31)
 #define gHciLeScanResponseDataLength_c (31)
 
 #if (gBLE41_d == TRUE)
@@ -41,40 +41,40 @@
 /* Hci packets header lengths */
 #define gHciCommandPacketHeaderLength_c (3)
 #define gHciAclDataPacketHeaderLength_c (4)
-#define gHciEventPacketHeaderLength_c (2)
+#define gHciEventPacketHeaderLength_c   (2)
 
 /* Both the Host and the Controller shall support command and event packets, where
 the data portion (excluding header) contained in the packets is 500 - header size octets in size. */
 #define gHcLeAclDataPacketLengthDefault_c (500 - gHciAclDataPacketHeaderLength_c)
-#define gHcEventPacketLengthDefault_c (500 - gHciEventPacketHeaderLength_c)
+#define gHcEventPacketLengthDefault_c     (500 - gHciEventPacketHeaderLength_c)
 
 /*! HCI OGF : 0x01 : Link Control Commands */
 #define gHciLinkControlCommands_c 0x01
 /*! HCI Commands OCF for OGF : 0x01 : Link Control Commands */
-#define gHciDisconnect_c 0x0006
+#define gHciDisconnect_c                   0x0006
 #define gHciReadRemoteVersionInformation_c 0x001D
 
 /*! HCI OGF : 0x03 : Controller & Baseband Commands */
 #define gHciControllerBasebandCommands_c 0x03
 /*! HCI Commands OCF for OGF : 0x03 : Controller & Baseband Commands */
-#define gHciSetEventMask_c 0x0001
-#define gHciReset_c 0x0003
-#define gHciReadTransmitPowerLevel_c 0x002D
+#define gHciSetEventMask_c                   0x0001
+#define gHciReset_c                          0x0003
+#define gHciReadTransmitPowerLevel_c         0x002D
 #define gHciSetControllerToHostFlowControl_c 0x0031
-#define gHciHostBufferSize_c 0x0033
-#define gHciHostNumberOfCompletedPackets_c 0x0035
+#define gHciHostBufferSize_c                 0x0033
+#define gHciHostNumberOfCompletedPackets_c   0x0035
 #if (gMwsIsSupported_d == TRUE)
-#define gHciSetMwsChannelParameters_c 0x006E
+#define gHciSetMwsChannelParameters_c       0x006E
 #define gHciSetExternalFrameConfiguration_c 0x006F
-#define gHciSetMwsSignaling_c 0x0070
-#define gHciSetMwsTransportLayer_c 0x0071
+#define gHciSetMwsSignaling_c               0x0070
+#define gHciSetMwsTransportLayer_c          0x0071
 /* #define gHciGetMwsTransportLayerConfiguration_c */
-#define gHciSetMwsScanFrequencyTable_c 0x0072
+#define gHciSetMwsScanFrequencyTable_c   0x0072
 #define gHciSetMwsPatternConfiguration_c 0x0073
 #endif
 #if (gLePingIsSupported_d == TRUE)
-#define gHciSetEventMaskPage2_c 0x0063
-#define gHciReadAuthenticatedPayloadTimeout_c 0x007B
+#define gHciSetEventMaskPage2_c                0x0063
+#define gHciReadAuthenticatedPayloadTimeout_c  0x007B
 #define gHciWriteAuthenticatedPayloadTimeout_c 0x007C
 #endif
 
@@ -82,10 +82,10 @@ the data portion (excluding header) contained in the packets is 500 - header siz
 #define gHciInformationalParameters_c 0x04
 /*! HCI Commands OCF for OGF : 0x04 : Informational Parameters */
 #define gHciReadLocalVersionInformation_c 0x0001
-#define gHciReadLocalSupportedCommands_c 0x0002
-#define gHciReadLocalSupportedFeatures_c 0x0003
-#define gHciReadBufferSize_c 0x0005
-#define gHciReadBdAddr_c 0x0009
+#define gHciReadLocalSupportedCommands_c  0x0002
+#define gHciReadLocalSupportedFeatures_c  0x0003
+#define gHciReadBufferSize_c              0x0005
+#define gHciReadBdAddr_c                  0x0009
 
 /*! HCI OGF : 0x05 : Status Parameters */
 #define gHciStatusParameters_c 0x05
@@ -98,56 +98,56 @@ the data portion (excluding header) contained in the packets is 500 - header siz
 /*! HCI OGF : 0x08 : LE Controller Commands */
 #define gHciLeControllerCommands_c 0x08
 /*! HCI Commands OCF for OGF : 0x08 : LE Controller Commands */
-#define gHciLeSetEventMask_c 0x0001
-#define gHciLeReadBufferSize_c 0x0002
-#define gHciLeReadLocalSupportedFeatures_c 0x0003
-#define gHciLeSetRandomAddress_c 0x0005
-#define gHciLeSetAdvertisingParameters_c 0x0006
-#define gHciLeReadAdvertisingChannelTxPower_c 0x0007
-#define gHciLeSetAdvertisingData_c 0x0008
-#define gHciLeSetScanResponseData_c 0x0009
-#define gHciLeSetAdvertiseEnable_c 0x000A
-#define gHciLeSetScanParameters_c 0x000B
-#define gHciLeSetScanEnable_c 0x000C
-#define gHciLeCreateConnection_c 0x000D
-#define gHciLeCreateConnectionCancel_c 0x000E
-#define gHciLeReadWhiteListSize_c 0x000F
-#define gHciLeClearWhiteList_c 0x0010
-#define gHciLeAddDeviceToWhiteList_c 0x0011
-#define gHciLeRemoveDeviceFromWhiteList_c 0x0012
-#define gHciLeConnectionUpdate_c 0x0013
-#define gHciLeSetHostChannelClassification_c 0x0014
-#define gHciLeReadChannelMap_c 0x0015
-#define gHciLeReadRemoteUsedFeatures_c 0x0016
-#define gHciLeEncrypt_c 0x0017
-#define gHciLeRand_c 0x0018
-#define gHciLeStartEncryption_c 0x0019
-#define gHciLeLongTermKeyRequestReply_c 0x001A
+#define gHciLeSetEventMask_c                    0x0001
+#define gHciLeReadBufferSize_c                  0x0002
+#define gHciLeReadLocalSupportedFeatures_c      0x0003
+#define gHciLeSetRandomAddress_c                0x0005
+#define gHciLeSetAdvertisingParameters_c        0x0006
+#define gHciLeReadAdvertisingChannelTxPower_c   0x0007
+#define gHciLeSetAdvertisingData_c              0x0008
+#define gHciLeSetScanResponseData_c             0x0009
+#define gHciLeSetAdvertiseEnable_c              0x000A
+#define gHciLeSetScanParameters_c               0x000B
+#define gHciLeSetScanEnable_c                   0x000C
+#define gHciLeCreateConnection_c                0x000D
+#define gHciLeCreateConnectionCancel_c          0x000E
+#define gHciLeReadWhiteListSize_c               0x000F
+#define gHciLeClearWhiteList_c                  0x0010
+#define gHciLeAddDeviceToWhiteList_c            0x0011
+#define gHciLeRemoveDeviceFromWhiteList_c       0x0012
+#define gHciLeConnectionUpdate_c                0x0013
+#define gHciLeSetHostChannelClassification_c    0x0014
+#define gHciLeReadChannelMap_c                  0x0015
+#define gHciLeReadRemoteUsedFeatures_c          0x0016
+#define gHciLeEncrypt_c                         0x0017
+#define gHciLeRand_c                            0x0018
+#define gHciLeStartEncryption_c                 0x0019
+#define gHciLeLongTermKeyRequestReply_c         0x001A
 #define gHciLeLongTermKeyRequestNegativeReply_c 0x001B
-#define gHciLeReadSupportedStates_c 0x001C
-#define gHciLeReceiverTest_c 0x001D
-#define gHciLeTransmitterTest_c 0x001E
-#define gHciLeTestEnd_c 0x001F
+#define gHciLeReadSupportedStates_c             0x001C
+#define gHciLeReceiverTest_c                    0x001D
+#define gHciLeTransmitterTest_c                 0x001E
+#define gHciLeTestEnd_c                         0x001F
 
-#define gHciLeRemoteConnectionParameterRequestReply_c 0x0020
+#define gHciLeRemoteConnectionParameterRequestReply_c         0x0020
 #define gHciLeRemoteConnectionParameterRequestNegativeReply_c 0x0021
 
 #if (gBLE42_d == TRUE)
 /* v4.2 specific interface */
-#define gHciLeSetDataLength_c 0x0022
-#define gHciLeReadSuggestedDefaultDataLength_c 0x0023
-#define gHciLeWriteSuggestedDefaultDataLength_c 0x0024
-#define gHciLeReadLocalP256PublicKey_c 0x0025
-#define gHciLeGenerateDhKey_c 0x0026
-#define gHciLeAddDeviceToResolvingList_c 0x0027
-#define gHciLeRemoveDeviceFromResolvingList_c 0x0028
-#define gHciLeClearResolvingList_c 0x0029
-#define gHciLeReadResolvingListSize_c 0x002A
-#define gHciLeReadPeerResolvableAddress_c 0x002B
-#define gHciLeReadLocalResolvableAddress_c 0x002C
-#define gHciLeSetAddressResolutionEnable_c 0x002D
+#define gHciLeSetDataLength_c                      0x0022
+#define gHciLeReadSuggestedDefaultDataLength_c     0x0023
+#define gHciLeWriteSuggestedDefaultDataLength_c    0x0024
+#define gHciLeReadLocalP256PublicKey_c             0x0025
+#define gHciLeGenerateDhKey_c                      0x0026
+#define gHciLeAddDeviceToResolvingList_c           0x0027
+#define gHciLeRemoveDeviceFromResolvingList_c      0x0028
+#define gHciLeClearResolvingList_c                 0x0029
+#define gHciLeReadResolvingListSize_c              0x002A
+#define gHciLeReadPeerResolvableAddress_c          0x002B
+#define gHciLeReadLocalResolvableAddress_c         0x002C
+#define gHciLeSetAddressResolutionEnable_c         0x002D
 #define gHciLeSetResolvablePrivateAddressTimeout_c 0x002E
-#define gHciLeReadMaximumDataLength_c 0x002F
+#define gHciLeReadMaximumDataLength_c              0x002F
 #endif /* gBLE42_d */
 
 /*! HCI OGF : 0x3F : Vendor Specific Debug Commands */
@@ -156,11 +156,11 @@ the data portion (excluding header) contained in the packets is 500 - header siz
 /* Will be inherited from "vendor_debug_commands.h" */
 
 /* Macros used to build full HCI OpCodes */
-#define HciCmdOpcode(cmdOgf, cmdOcf) ((cmdOgf << SHIFT10) | cmdOcf)
-#define HciLeCmdOpcode(leCmdOcf) (HciCmdOpcode(gHciLeControllerCommands_c, leCmdOcf))
-#define HciInfoCmdOpcode(infoCmdOcf) (HciCmdOpcode(gHciInformationalParameters_c, infoCmdOcf))
+#define HciCmdOpcode(cmdOgf, cmdOcf)       ((cmdOgf << SHIFT10) | cmdOcf)
+#define HciLeCmdOpcode(leCmdOcf)           (HciCmdOpcode(gHciLeControllerCommands_c, leCmdOcf))
+#define HciInfoCmdOpcode(infoCmdOcf)       (HciCmdOpcode(gHciInformationalParameters_c, infoCmdOcf))
 #define HciControllerCmdOpcode(ctrlCmdOcf) (HciCmdOpcode(gHciControllerBasebandCommands_c, ctrlCmdOcf))
-#define HciStatusCmdOpcode(statusCmdOcf) (HciCmdOpcode(gHciStatusParameters_c, statusCmdOcf))
+#define HciStatusCmdOpcode(statusCmdOcf)   (HciCmdOpcode(gHciStatusParameters_c, statusCmdOcf))
 
 #define BIT(x) (1 << (x))
 

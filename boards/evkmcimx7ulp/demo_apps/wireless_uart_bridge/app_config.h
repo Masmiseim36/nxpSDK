@@ -52,7 +52,7 @@
 
 #define gAppFSCIHostInterfaceBaud_d gUARTBaudRate115200_c
 #define gAppFSCIHostInterfaceType_d gSerialMgrLpuart_c
-#define gAppFSCIHostInterfaceId_d 2
+#define gAppFSCIHostInterfaceId_d   2
 
 /************************************************************************************
 *************************************************************************************

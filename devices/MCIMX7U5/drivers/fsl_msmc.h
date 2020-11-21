@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -22,7 +22,7 @@
 /*! @name Driver version */
 /*@{*/
 /*! @brief MSMC driver version. */
-#define FSL_MSMC_DRIVER_VERSION (MAKE_VERSION(2, 1, 1))
+#define FSL_MSMC_DRIVER_VERSION (MAKE_VERSION(2, 1, 2))
 /*@}*/
 
 /*!
@@ -106,7 +106,7 @@ typedef enum _smc_partial_stop_mode
 /*!
  * @brief SMC configuration status
  */
-enum _smc_status
+enum
 {
     kStatus_SMC_StopAbort = MAKE_STATUS(kStatusGroup_POWER, 0), /*!< Entering Stop mode is abort*/
 };
@@ -242,6 +242,7 @@ extern "C" {
  * use SMC_SetPowerModeProtection(kSMC_AllowPowerModeLls | kSMC_AllowPowerModeVlls).
  * To allow all modes, use SMC_SetPowerModeProtection(kSMC_AllowPowerModeAll).
  *
+ * @param base SMC peripheral base address.
  * @param allowedModes Bitmap of the allowed power modes.
  */
 static inline void SMC_SetPowerModeProtection(SMC_Type *base, uint8_t allowedModes)
@@ -457,6 +458,7 @@ status_t SMC_SetPowerModeVlls(SMC_Type *base);
    @endcode
 
    Example: To test multiple reset sources.
+   @code
    uint32_t resetStatus;
 
    resetStatus = SMC_GetPreviousResetSources(SMC0) & (kSMC_SourceWdog | kSMC_SourcePin);
@@ -615,7 +617,7 @@ static inline uint32_t SMC_GetResetInterruptSourcesStatus(SMC_Type *base)
    @endcode
  *
  * @param base SMC peripheral base address.
- * @param All reset interrupt source status bit map to clear.
+ * @param intMask All reset interrupt source status bit map to clear.
  */
 static inline void SMC_ClearResetInterruptSourcesStatus(SMC_Type *base, uint32_t intMask)
 {

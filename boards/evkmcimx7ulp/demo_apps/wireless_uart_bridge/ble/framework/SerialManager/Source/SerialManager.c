@@ -246,7 +246,7 @@ extern const uint8_t gUseRtos_c;
 extern osaEventId_t gFwkCommonEventId;
 extern osaTaskId_t gFwkCommonTaskId;
 #define gSerialManagerTaskId gFwkCommonTaskId
-#define mSMTaskEventId gFwkCommonEventId
+#define mSMTaskEventId       gFwkCommonEventId
 
 #else
 

@@ -16,9 +16,9 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_ACMP_BASEADDR CMP1
+#define DEMO_ACMP_BASEADDR    CMP1
 #define DEMO_ACMP_MINUS_INPUT 6U
-#define DEMO_ACMP_PLUS_INPUT 7U /*  Internal 8bit DAC output. */
+#define DEMO_ACMP_PLUS_INPUT  7U /*  Internal 8bit DAC output. */
 
 /*******************************************************************************
  * Prototypes

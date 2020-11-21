@@ -21,10 +21,10 @@
  * Definitions
  ******************************************************************************/
 #define ROM_RESERVED_MEM ((uint8_t *)0x20008000)
-#define ROM_HEADER_MEM ((uint8_t *)0x1FFD0000)
-#define ROM_HEADER_SIZE (0x1C00)
+#define ROM_HEADER_MEM   ((uint8_t *)0x1FFD0000)
+#define ROM_HEADER_SIZE  (0x1C00)
 
-#define SYSTICK_SOURCE_CLOCK CLOCK_GetFreq(kCLOCK_ScgSircClk)
+#define SYSTICK_SOURCE_CLOCK   CLOCK_GetFreq(kCLOCK_ScgSircClk)
 #define SYSTICK_TICKLESS_CLOCK CLOCK_GetFreq(kCLOCK_LpoClk)
 /* Define the count per tick of the systick(LPTMR) in run mode. For accuracy purpose,
  * please make SYSTICK_SOURCE_CLOCK times of configTICK_RATE_HZ.

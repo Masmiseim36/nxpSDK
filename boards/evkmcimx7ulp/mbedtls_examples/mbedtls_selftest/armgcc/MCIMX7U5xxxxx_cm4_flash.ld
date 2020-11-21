@@ -1,19 +1,19 @@
 /*
 ** ###################################################################
-**     Processors:          MCIMX7U5CVP05
-**                          MCIMX7U5DVK08
-**                          MCIMX7U5DVP08
+**     Processors:          MCIMX7U5CVP06
+**                          MCIMX7U5DVK07
+**                          MCIMX7U5DVP07
 **
 **     Compiler:            GNU C Compiler
 **     Reference manual:    IMX7ULPRM, Rev. 0, Nov. 2018
 **     Version:             rev. 7.0, 2018-11-05
-**     Build:               b181105
+**     Build:               b200331
 **
 **     Abstract:
 **         Linker file for the GNU C Compiler
 **
 **     Copyright 2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2018 NXP
+**     Copyright 2016-2020 NXP
 **     All rights reserved.
 **
 **     SPDX-License-Identifier: BSD-3-Clause
@@ -51,10 +51,18 @@ SECTIONS
   .interrupts :
   {
     __VECTOR_TABLE = .;
+    __Vectors = .;
     . = ALIGN(4);
     KEEP(*(.isr_vector))     /* Startup code */
     . = ALIGN(4);
   } > m_interrupts
+
+  .resource_table :
+  {
+    . = ALIGN(8);
+    KEEP(*(.resource_table)) /* Resource table */
+    . = ALIGN(8);
+  } > m_text
 
   /* The program code and other data goes into internal flash */
   .text :

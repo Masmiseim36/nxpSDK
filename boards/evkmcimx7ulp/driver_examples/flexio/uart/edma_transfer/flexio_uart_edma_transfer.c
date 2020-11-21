@@ -15,19 +15,19 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define BOARD_FLEXIO_BASE FLEXIO0
-#define FLEXIO_UART_TX_PIN 1U
-#define FLEXIO_UART_RX_PIN 0U
-#define FLEXIO_CLOCK_FREQUENCY CLOCK_GetIpFreq(kCLOCK_Flexio0)
-#define FLEXIO_DMA_REQUEST_BASE kDmaRequestMux0FlexIO0Shifter0
+#define BOARD_FLEXIO_BASE                   FLEXIO0
+#define FLEXIO_UART_TX_PIN                  1U
+#define FLEXIO_UART_RX_PIN                  0U
+#define FLEXIO_CLOCK_FREQUENCY              CLOCK_GetIpFreq(kCLOCK_Flexio0)
+#define FLEXIO_DMA_REQUEST_BASE             kDmaRequestMux0FlexIO0Shifter0
 #define EXAMPLE_FLEXIO_UART_DMAMUX_BASEADDR DMA_CH_MUX0
-#define EXAMPLE_FLEXIO_UART_DMA_BASEADDR DMA0
-#define FLEXIO_UART_TX_DMA_CHANNEL 0U
-#define FLEXIO_UART_RX_DMA_CHANNEL 1U
-#define FLEXIO_TX_SHIFTER_INDEX 0U
-#define FLEXIO_RX_SHIFTER_INDEX 1U
-#define EXAMPLE_TX_DMA_SOURCE (FLEXIO_DMA_REQUEST_BASE + FLEXIO_TX_SHIFTER_INDEX)
-#define EXAMPLE_RX_DMA_SOURCE (FLEXIO_DMA_REQUEST_BASE + FLEXIO_RX_SHIFTER_INDEX)
+#define EXAMPLE_FLEXIO_UART_DMA_BASEADDR    DMA0
+#define FLEXIO_UART_TX_DMA_CHANNEL          0U
+#define FLEXIO_UART_RX_DMA_CHANNEL          1U
+#define FLEXIO_TX_SHIFTER_INDEX             0U
+#define FLEXIO_RX_SHIFTER_INDEX             1U
+#define EXAMPLE_TX_DMA_SOURCE               (FLEXIO_DMA_REQUEST_BASE + FLEXIO_TX_SHIFTER_INDEX)
+#define EXAMPLE_RX_DMA_SOURCE               (FLEXIO_DMA_REQUEST_BASE + FLEXIO_RX_SHIFTER_INDEX)
 #define ECHO_BUFFER_LENGTH 8
 
 /*******************************************************************************

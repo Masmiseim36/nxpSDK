@@ -30,33 +30,33 @@
 
 #define SRTM_AUDIO_VERSION (0x0102U)
 
-#define SRTM_AUDIO_RETURN_CODE_SUCEESS (0x0U)
-#define SRTM_AUDIO_RETURN_CODE_FAIL (0x1U)
+#define SRTM_AUDIO_RETURN_CODE_SUCEESS     (0x0U)
+#define SRTM_AUDIO_RETURN_CODE_FAIL        (0x1U)
 #define SRTM_AUDIO_RETURN_CODE_UNSUPPORTED (0x2U)
 
 /* Audio Service Request Command definition */
-#define SRTM_AUDIO_CMD_TX_OPEN (0x0U)
-#define SRTM_AUDIO_CMD_TX_START (0x1U)
-#define SRTM_AUDIO_CMD_TX_PAUSE (0x2U)
-#define SRTM_AUDIO_CMD_TX_RESTART (0x3U)
-#define SRTM_AUDIO_CMD_TX_STOP (0x4U)
-#define SRTM_AUDIO_CMD_TX_CLOSE (0x5U)
-#define SRTM_AUDIO_CMD_TX_SET_PARAM (0x6U)
-#define SRTM_AUDIO_CMD_TX_SET_BUF (0x7U)
-#define SRTM_AUDIO_CMD_TX_SUSPEND (0x8U)
-#define SRTM_AUDIO_CMD_TX_RESUME (0x9U)
-#define SRTM_AUDIO_CMD_RX_OPEN (0xAU)
-#define SRTM_AUDIO_CMD_RX_START (0xBU)
-#define SRTM_AUDIO_CMD_RX_PAUSE (0xCU)
-#define SRTM_AUDIO_CMD_RX_RESTART (0xDU)
-#define SRTM_AUDIO_CMD_RX_STOP (0xEU)
-#define SRTM_AUDIO_CMD_RX_CLOSE (0xFU)
-#define SRTM_AUDIO_CMD_RX_SET_PARAM (0x10U)
-#define SRTM_AUDIO_CMD_RX_SET_BUF (0x11U)
-#define SRTM_AUDIO_CMD_RX_SUSPEND (0x12U)
-#define SRTM_AUDIO_CMD_RX_RESUME (0x13U)
-#define SRTM_AUDIO_CMD_SET_CODEC_REG (0x14U)
-#define SRTM_AUDIO_CMD_GET_CODEC_REG (0x15U)
+#define SRTM_AUDIO_CMD_TX_OPEN           (0x0U)
+#define SRTM_AUDIO_CMD_TX_START          (0x1U)
+#define SRTM_AUDIO_CMD_TX_PAUSE          (0x2U)
+#define SRTM_AUDIO_CMD_TX_RESTART        (0x3U)
+#define SRTM_AUDIO_CMD_TX_STOP           (0x4U)
+#define SRTM_AUDIO_CMD_TX_CLOSE          (0x5U)
+#define SRTM_AUDIO_CMD_TX_SET_PARAM      (0x6U)
+#define SRTM_AUDIO_CMD_TX_SET_BUF        (0x7U)
+#define SRTM_AUDIO_CMD_TX_SUSPEND        (0x8U)
+#define SRTM_AUDIO_CMD_TX_RESUME         (0x9U)
+#define SRTM_AUDIO_CMD_RX_OPEN           (0xAU)
+#define SRTM_AUDIO_CMD_RX_START          (0xBU)
+#define SRTM_AUDIO_CMD_RX_PAUSE          (0xCU)
+#define SRTM_AUDIO_CMD_RX_RESTART        (0xDU)
+#define SRTM_AUDIO_CMD_RX_STOP           (0xEU)
+#define SRTM_AUDIO_CMD_RX_CLOSE          (0xFU)
+#define SRTM_AUDIO_CMD_RX_SET_PARAM      (0x10U)
+#define SRTM_AUDIO_CMD_RX_SET_BUF        (0x11U)
+#define SRTM_AUDIO_CMD_RX_SUSPEND        (0x12U)
+#define SRTM_AUDIO_CMD_RX_RESUME         (0x13U)
+#define SRTM_AUDIO_CMD_SET_CODEC_REG     (0x14U)
+#define SRTM_AUDIO_CMD_GET_CODEC_REG     (0x15U)
 #define SRTM_AUDIO_CMD_TX_GET_BUF_OFFSET (0x16U)
 #define SRTM_AUDIO_CMD_RX_GET_BUF_OFFSET (0x17U)
 
@@ -69,8 +69,8 @@
 #define SRTM_AUDIO_SAMPLE_FORMAT_S24_LE (0x1U)
 
 /* Audio Service Channel identifier definition */
-#define SRTM_AUDIO_CHANNEL_LEFT (0x0U)
-#define SRTM_AUDIO_CHANNEL_RIGHT (0x1U)
+#define SRTM_AUDIO_CHANNEL_LEFT   (0x0U)
+#define SRTM_AUDIO_CHANNEL_RIGHT  (0x1U)
 #define SRTM_AUDIO_CHANNEL_STEREO (0x2U)
 
 /* Service handle */
@@ -370,7 +370,7 @@ static srtm_status_t SRTM_AudioService_Request(srtm_service_t service, srtm_requ
                         status = sai->setParam(sai, SRTM_AudioDirTx, audioReq->index, audioReq->format,
                                                audioReq->channels, audioReq->srate);
                     }
-                    status = (status == SRTM_Status_Success && codec && codec->setParam) ?
+                    status = ((status == SRTM_Status_Success) && codec && codec->setParam) ?
                                  codec->setParam(codec, audioReq->index, audioReq->format, audioReq->srate) :
                                  status;
                     audioRespBuf[1] =
@@ -516,7 +516,7 @@ static srtm_status_t SRTM_AudioService_Request(srtm_service_t service, srtm_requ
                         status = sai->setParam(sai, SRTM_AudioDirRx, audioReq->index, audioReq->format,
                                                audioReq->channels, audioReq->srate);
                     }
-                    status = (status == SRTM_Status_Success && codec && codec->setParam) ?
+                    status = ((status == SRTM_Status_Success) && codec && codec->setParam) ?
                                  codec->setParam(codec, audioReq->index, audioReq->format, audioReq->srate) :
                                  status;
                     audioRespBuf[1] =

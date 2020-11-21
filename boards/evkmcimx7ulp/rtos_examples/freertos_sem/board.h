@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -15,41 +15,44 @@
  * Definitions
  ******************************************************************************/
 /*! @brief The board name */
-#define BOARD_NAME "MCIMX7ULP-EVK"
+#define BOARD_NAME        "MCIMX7ULP-EVK"
 #define MANUFACTURER_NAME "NXP"
 
 /* The UART to use for debug messages. */
-#define BOARD_DEBUG_UART_TYPE kSerialPort_Uart
-#define BOARD_DEBUG_UART_BAUDRATE 115200u
-#define BOARD_DEBUG_UART_BASEADDR LPUART0_BASE
-#define BOARD_DEBUG_UART_INSTANCE 0U
-#define BOARD_DEBUG_UART_CLK_FREQ CLOCK_GetIpFreq(kCLOCK_Lpuart0)
+#define BOARD_DEBUG_UART_TYPE        kSerialPort_Uart
+#define BOARD_DEBUG_UART_BAUDRATE    115200u
+#define BOARD_DEBUG_UART_BASEADDR    LPUART0_BASE
+#define BOARD_DEBUG_UART_INSTANCE    0U
+#define BOARD_DEBUG_UART_CLK_FREQ    CLOCK_GetIpFreq(kCLOCK_Lpuart0)
 #define BOARD_DEBUG_UART_PCC_ADDRESS kCLOCK_Lpuart0
-#define BOARD_DEBUG_UART_CLKSRC kCLOCK_IpSrcSystem
-#define BOARD_UART_IRQ LPUART0_IRQn
-#define BOARD_UART_IRQ_HANDLER LPUART0_IRQHandler
+#define BOARD_DEBUG_UART_CLKSRC      kCLOCK_IpSrcSystem
+#define BOARD_UART_IRQ               LPUART0_IRQn
+#define BOARD_UART_IRQ_HANDLER       LPUART0_IRQHandler
 
 /* @Brief Board accelerator sensor configuration */
-#define BOARD_ACCEL_I2C_BASEADDR LPI2C3
+#define BOARD_ACCEL_I2C_BASEADDR   LPI2C3
 #define BOARD_ACCEL_I2C_CLOCK_FREQ CLOCK_GetIpFreq(kCLOCK_Lpi2c3)
 
-#define BOARD_CODEC_I2C_BASEADDR LPI2C0
+#define BOARD_CODEC_I2C_BASEADDR   LPI2C0
 #define BOARD_CODEC_I2C_CLOCK_FREQ CLOCK_GetIpFreq(kCLOCK_Lpi2c0)
-#define BOARD_CODEC_I2C_INSTANCE 0U
+#define BOARD_CODEC_I2C_INSTANCE   0U
 
-#define BOARD_VOLP_GPIO GPIOA
-#define BOARD_VOLP_PORT PORTA
-#define BOARD_VOLP_GPIO_PIN 3U
-#define BOARD_VOLP_IRQ PCTLA_IRQn
+#define BOARD_VOLP_GPIO        GPIOA
+#define BOARD_VOLP_PORT        PORTA
+#define BOARD_VOLP_GPIO_PIN    3U
+#define BOARD_VOLP_IRQ         PCTLA_IRQn
 #define BOARD_VOLP_IRQ_HANDLER PCTLA_IRQHandler
-#define BOARD_VOLP_NAME "VOL+"
+#define BOARD_VOLP_NAME        "VOL+"
 
-#define BOARD_VOLM_GPIO GPIOA
-#define BOARD_VOLM_PORT PORTA
-#define BOARD_VOLM_GPIO_PIN 13U
-#define BOARD_VOLM_IRQ PCTLA_IRQn
+#define BOARD_VOLM_GPIO        GPIOA
+#define BOARD_VOLM_PORT        PORTA
+#define BOARD_VOLM_GPIO_PIN    13U
+#define BOARD_VOLM_IRQ         PCTLA_IRQn
 #define BOARD_VOLM_IRQ_HANDLER PCTLA_IRQHandler
-#define BOARD_VOLM_NAME "VOL-"
+#define BOARD_VOLM_NAME        "VOL-"
+
+#define VDEV0_VRING_BASE (0x9FF00000U)
+#define VDEV1_VRING_BASE (0x9FF10000U)
 
 #if defined(__cplusplus)
 extern "C" {

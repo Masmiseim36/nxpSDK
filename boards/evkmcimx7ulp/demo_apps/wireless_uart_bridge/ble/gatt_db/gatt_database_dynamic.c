@@ -51,11 +51,11 @@
     }
 
 #define mGattDbDynamic_DIServiceManufNameInitValue MANUFACTURER_NAME
-#define mGattDbDynamic_DIServiceModelNbInitValue "Kinetis BLE"
-#define mGattDbDynamic_DIServiceSerialNoInitValue "BLESN01"
-#define mGattDbDynamic_DIServiceHwRevInitValue BOARD_NAME
-#define mGattDbDynamic_DIServiceFwRevInitValue "1.1.1"
-#define mGattDbDynamic_DIServiceSwRevInitValue "1.1.4"
+#define mGattDbDynamic_DIServiceModelNbInitValue   "Kinetis BLE"
+#define mGattDbDynamic_DIServiceSerialNoInitValue  "BLESN01"
+#define mGattDbDynamic_DIServiceHwRevInitValue     BOARD_NAME
+#define mGattDbDynamic_DIServiceFwRevInitValue     "1.1.1"
+#define mGattDbDynamic_DIServiceSwRevInitValue     "1.1.4"
 #define mGattDbDynamic_DIServiceSysIdInitValue         \
     {                                                  \
         0x00, 0x00, 0x00, 0xFE, 0xFF, 0x9F, 0x04, 0x00 \

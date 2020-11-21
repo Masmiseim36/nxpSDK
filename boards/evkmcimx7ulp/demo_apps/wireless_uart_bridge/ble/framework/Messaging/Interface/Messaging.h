@@ -24,7 +24,7 @@
 * Public type definitions
 *************************************************************************************
 ************************************************************************************/
-#define anchor_t list_t
+#define anchor_t   list_t
 #define msgQueue_t list_t
 
 /************************************************************************************
@@ -33,7 +33,7 @@
 *************************************************************************************
 ************************************************************************************/
 /* Put a message in a queue. */
-#define MSG_Queue(anchor, element) ListAddTailMsg((anchor), (element))
+#define MSG_Queue(anchor, element)     ListAddTailMsg((anchor), (element))
 #define MSG_QueueHead(anchor, element) ListAddHeadMsg((anchor), (element))
 
 /* Get a message from a queue. Returns NULL if no messages in queue. */
@@ -43,13 +43,13 @@
 /* TRUE if any pending messages, and FALSE otherwise. */
 #define MSG_Pending(anchor) ((anchor)->head != 0)
 
-#define MSG_InitQueue(anchor) ListInitMsg(anchor)
+#define MSG_InitQueue(anchor)    ListInitMsg(anchor)
 #define List_ClearAnchor(anchor) ListInitMsg(anchor)
 
-#define MSG_Alloc(element) MEM_BufferAlloc(element)
+#define MSG_Alloc(element)  MEM_BufferAlloc(element)
 #define MSG_AllocType(type) MEM_BufferAlloc(sizeof(type))
-#define MM_Free MEM_BufferFree
-#define MSG_Free(element) MEM_BufferFree(element)
+#define MM_Free             MEM_BufferFree
+#define MSG_Free(element)   MEM_BufferFree(element)
 #define MSG_FreeQueue(anchor)          \
     while (MSG_Pending(anchor))        \
     {                                  \

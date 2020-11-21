@@ -18,8 +18,8 @@
 #error "This RPMsg-Lite port requires RL_USE_ENVIRONMENT_CONTEXT set to 0"
 #endif
 
-#define APP_MU_IRQ_PRIORITY (3U)
-#define APP_MU_A7_SIDE_READY (0x1U)
+#define APP_MU_IRQ_PRIORITY        (3U)
+#define APP_MU_A7_SIDE_READY       (0x1U)
 #define APP_MU_A7_WAIT_INTERVAL_MS (10U)
 
 static int32_t isr_counter     = 0;

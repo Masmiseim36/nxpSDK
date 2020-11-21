@@ -8,8 +8,8 @@ The LPI2C master sends data to LPI2C slave. The slave will check the data it rec
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.40.2
-- GCC ARM Embedded  8.3.1
+- IAR embedded Workbench  8.50.1
+- GCC ARM Embedded  9.2.1
 
 Hardware requirements
 =====================

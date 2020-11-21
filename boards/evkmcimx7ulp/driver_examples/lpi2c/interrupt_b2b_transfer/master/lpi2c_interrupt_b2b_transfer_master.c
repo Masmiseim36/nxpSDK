@@ -17,14 +17,14 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_I2C_MASTER_BASE (LPI2C3_BASE)
+#define EXAMPLE_I2C_MASTER_BASE      (LPI2C3_BASE)
 #define LPI2C_MASTER_CLOCK_FREQUENCY CLOCK_GetIpFreq(kCLOCK_Lpi2c3)
 
 #define EXAMPLE_I2C_MASTER ((LPI2C_Type *)EXAMPLE_I2C_MASTER_BASE)
 
 #define I2C_MASTER_SLAVE_ADDR_7BIT 0x7EU
-#define I2C_BAUDRATE 100000U
-#define I2C_DATA_LENGTH 33U
+#define I2C_BAUDRATE               100000U
+#define I2C_DATA_LENGTH            33U
 
 /*******************************************************************************
  * Prototypes
@@ -45,10 +45,11 @@ volatile bool g_MasterCompletionFlag = false;
 
 static void lpi2c_master_callback(LPI2C_Type *base, lpi2c_master_handle_t *handle, status_t status, void *userData)
 {
-    /* Signal transfer success when received success status. */
-    if (status == kStatus_Success)
+    g_MasterCompletionFlag = true;
+    /* Display failure information when status is not success. */
+    if (status != kStatus_Success)
     {
-        g_MasterCompletionFlag = true;
+        PRINTF("Master transfer failed with status %d: \r\n", (uint32_t)status);
     }
 }
 
@@ -123,8 +124,7 @@ int main(void)
 
     /* Send master non-blocking data to slave */
     reVal = LPI2C_MasterTransferNonBlocking(EXAMPLE_I2C_MASTER, &g_m_handle, &masterXfer);
-    /*  Reset master completion flag to false. */
-    g_MasterCompletionFlag = false;
+
     if (reVal != kStatus_Success)
     {
         return -1;
@@ -152,8 +152,6 @@ int main(void)
     {
         return -1;
     }
-    /*  Reset master completion flag to false. */
-    g_MasterCompletionFlag = false;
 
     /*  Wait for transfer completed. */
     while (!g_MasterCompletionFlag)

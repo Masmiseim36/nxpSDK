@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -45,6 +45,7 @@
 #include "KeynetikPedometer.h"
 
 #include "app_srtm.h"
+#include "board.h"
 
 /*******************************************************************************
  * Definitions
@@ -66,7 +67,7 @@ enum
     APP_IO_NUM           = 7U
 };
 
-#define APP_INPUT_GPIO_START APP_INPUT_VOL_PLUS
+#define APP_INPUT_GPIO_START  APP_INPUT_VOL_PLUS
 #define APP_OUTPUT_GPIO_START APP_OUTPUT_WL_REG_ON
 
 typedef enum
@@ -1515,6 +1516,8 @@ static void APP_SRTM_Linkup(void)
 static void APP_SRTM_InitPeerCore(void)
 {
     heartBeat = false;
+
+    copyResourceTable();
 
     rpmsgHandle = rpmsg_lite_remote_init((void *)RPMSG_LITE_SRTM_SHMEM_BASE, RPMSG_LITE_SRTM_LINK_ID, RL_NO_FLAGS);
     assert(rpmsgHandle);

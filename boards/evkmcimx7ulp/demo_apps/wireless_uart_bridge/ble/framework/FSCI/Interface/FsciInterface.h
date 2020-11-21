@@ -94,24 +94,24 @@
 #define mFsciInvalidInterface_c (0xFF)
 
 /* Used for maintaining backward compatibillity */
-#define gFSCI_McpsSapId_c 1
-#define gFSCI_MlmeSapId_c 2
-#define gFSCI_AspSapId_c 3
-#define gFSCI_NldeSapId_c 4
-#define gFSCI_NlmeSapId_c 5
+#define gFSCI_McpsSapId_c  1
+#define gFSCI_MlmeSapId_c  2
+#define gFSCI_AspSapId_c   3
+#define gFSCI_NldeSapId_c  4
+#define gFSCI_NlmeSapId_c  5
 #define gFSCI_AspdeSapId_c 6
-#define gFSCI_AfdeSapId_c 7
+#define gFSCI_AfdeSapId_c  7
 #define gFSCI_ApsmeSapId_c 8
-#define gFSCI_ZdpSapId_c 9
+#define gFSCI_ZdpSapId_c   9
 
 /*
  * The Test Tool uses an Opcode Group to specify which SAP Handler a packet
  * in intended for or received from.
  */
 #define gFSCI_LoggingOpcodeGroup_c 0xB0 /* FSCI data logging utillity    */
-#define gFSCI_ReqOpcodeGroup_c 0xA3     /* FSCI utility Requests         */
-#define gFSCI_CnfOpcodeGroup_c 0xA4     /* FSCI utility Confirmations/Indications    */
-#define gFSCI_ReservedOpGroup_c 0x52
+#define gFSCI_ReqOpcodeGroup_c     0xA3 /* FSCI utility Requests         */
+#define gFSCI_CnfOpcodeGroup_c     0xA4 /* FSCI utility Confirmations/Indications    */
+#define gFSCI_ReservedOpGroup_c    0x52
 
 /*! *********************************************************************************
 *************************************************************************************

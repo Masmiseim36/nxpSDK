@@ -23,20 +23,20 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_PF1550_INTB_GPIO GPIOB
-#define DEMO_PF1550_INTB_PORT PORTB
-#define DEMO_PF1550_INTB_PIN (11U)
-#define DEMO_PF1550_INTB_HANDLER PCTLB_IRQHandler
-#define DEMO_PF1550_PORT_IRQ PCTLB_IRQn
-#define DEMO_PF1550_EWM_OUT_B_GPIO GPIOA
-#define DEMO_PF1550_EWM_OUT_B_PIN (22U)
-#define DEMO_BATT_ADC_EN_GPIO GPIOA
-#define DEMO_BATT_ADC_EN_PIN (12U)
-#define DEMO_LPADC_BASE ADC0
-#define DEMO_PF1550_LPI2C LPI2C3
+#define DEMO_PF1550_INTB_GPIO         GPIOB
+#define DEMO_PF1550_INTB_PORT         PORTB
+#define DEMO_PF1550_INTB_PIN          (11U)
+#define DEMO_PF1550_INTB_HANDLER      PCTLB_IRQHandler
+#define DEMO_PF1550_PORT_IRQ          PCTLB_IRQn
+#define DEMO_PF1550_EWM_OUT_B_GPIO    GPIOA
+#define DEMO_PF1550_EWM_OUT_B_PIN     (22U)
+#define DEMO_BATT_ADC_EN_GPIO         GPIOA
+#define DEMO_BATT_ADC_EN_PIN          (12U)
+#define DEMO_LPADC_BASE               ADC0
+#define DEMO_PF1550_LPI2C             LPI2C3
 #define DEMO_PF1550_LPI2C_CLKSRC_FREQ CLOCK_GetIpFreq(kCLOCK_Lpi2c3)
-#define DEMO_PF1550_LPI2C_BAUDRATE (100000U)
-#define LPIT_SOURCECLOCK CLOCK_GetIpFreq(kCLOCK_Lpit0)
+#define DEMO_PF1550_LPI2C_BAUDRATE    (100000U)
+#define LPIT_SOURCECLOCK              CLOCK_GetIpFreq(kCLOCK_Lpit0)
 
 /*******************************************************************************
  * Prototypes
@@ -86,11 +86,7 @@ void LPIT0_IRQHandler(void)
     /* Clear interrupt flag.*/
     LPIT_ClearStatusFlags(LPIT0, kLPIT_Channel0TimerFlag);
     lpitIntFlag = true;
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 static uint32_t DEMO_GetDemoToRun(void)

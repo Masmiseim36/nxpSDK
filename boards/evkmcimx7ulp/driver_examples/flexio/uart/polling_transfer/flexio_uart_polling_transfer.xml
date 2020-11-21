@@ -81,6 +81,9 @@
     <source path="boards/evkmcimx7ulp/driver_examples/flexio/uart/polling_transfer" target_path="doc" type="doc" toolchain="iar mdk mcuxpresso armgcc">
       <files mask="readme.txt"/>
     </source>
+    <source path="boards/evkmcimx7ulp/driver_examples/flexio/uart/polling_transfer" target_path="remoteproc" type="src">
+      <files mask="empty_rsc_table.c"/>
+    </source>
     <source path="boards/evkmcimx7ulp/driver_examples/flexio/uart/polling_transfer" target_path="source" type="src">
       <files mask="flexio_uart_polling_transfer.c"/>
     </source>

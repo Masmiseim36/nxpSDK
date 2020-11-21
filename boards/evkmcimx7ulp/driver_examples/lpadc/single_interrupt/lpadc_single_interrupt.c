@@ -17,10 +17,10 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_LPADC_BASE ADC1
-#define DEMO_LPADC_IRQn ADC1_IRQn
-#define DEMO_LPADC_USER_CHANNEL 6U
-#define DEMO_LPADC_USER_CMDID 15U
+#define DEMO_LPADC_BASE             ADC1
+#define DEMO_LPADC_IRQn             ADC1_IRQn
+#define DEMO_LPADC_USER_CHANNEL     6U
+#define DEMO_LPADC_USER_CMDID       15U
 #define DEMO_LPADC_IRQ_HANDLER_FUNC ADC1_IRQHandler
 
 
@@ -46,11 +46,7 @@ void DEMO_LPADC_IRQ_HANDLER_FUNC(void)
     {
         g_LpadcConversionCompletedFlag = true;
     }
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 /*!

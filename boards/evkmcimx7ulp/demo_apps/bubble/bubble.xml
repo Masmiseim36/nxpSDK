@@ -87,6 +87,9 @@
     <source path="boards/evkmcimx7ulp/demo_apps/bubble" target_path="evkmcimx7ulp/demo_apps/bubble" type="binary" exclude="true">
       <files mask="bubble.bin"/>
     </source>
+    <source path="boards/evkmcimx7ulp/demo_apps/bubble" target_path="remoteproc" type="src">
+      <files mask="empty_rsc_table.c"/>
+    </source>
     <source path="boards/evkmcimx7ulp/demo_apps/bubble" target_path="source" type="src">
       <files mask="bubble.c"/>
     </source>

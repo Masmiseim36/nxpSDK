@@ -1,8 +1,7 @@
 /*
  * Copyright (c) 2015-2016,, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
- *
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -24,13 +23,13 @@
  * Definitions
  ******************************************************************************/
 
-#define RPMSG_LITE_SHMEM_BASE (0x9FF10000U)
+#define RPMSG_LITE_SHMEM_BASE             (VDEV1_VRING_BASE)
 #define ERPC_TRANSPORT_RPMSG_LITE_LINK_ID (1U)
-#define RPMSG_LITE_NS_ANNOUNCE_STRING "rpmsg-virtual-tty-channel"
+#define RPMSG_LITE_NS_ANNOUNCE_STRING     "rpmsg-virtual-tty-channel"
 #define RPMSG_LITE_MASTER_IS_LINUX
 
-#define APP_TASK_STACK_SIZE 304
-#define APP_ERPC_READY_EVENT_DATA (1)
+#define APP_TASK_STACK_SIZE       (304U)
+#define APP_ERPC_READY_EVENT_DATA (1U)
 
 /*******************************************************************************
  * Prototypes
@@ -40,10 +39,10 @@
  * Code
  ******************************************************************************/
 
-TaskHandle_t app_task_handle = NULL;
+static TaskHandle_t app_task_handle = NULL;
 #ifdef MCMGR_USED
-uint32_t startupData;
-mcmgr_status_t mcmgrStatus;
+static uint32_t startupData;
+static mcmgr_status_t mcmgrStatus;
 #endif
 /*!
  * @brief erpcMatrixMultiply function implementation.
@@ -83,7 +82,7 @@ void erpcMatrixMultiply(Matrix matrix1, Matrix matrix2, Matrix result_matrix)
 static void SignalReady(void)
 {
     /* Signal the other core we are ready by triggering the event and passing the APP_ERPC_READY_EVENT_DATA */
-    MCMGR_TriggerEvent(kMCMGR_RemoteApplicationEvent, APP_ERPC_READY_EVENT_DATA);
+    (void)MCMGR_TriggerEvent(kMCMGR_RemoteApplicationEvent, APP_ERPC_READY_EVENT_DATA);
 }
 
 /*!
@@ -95,27 +94,27 @@ void SystemInitHook(void)
        function as close to the reset entry as possible to allow CoreUp event
        triggering. The SystemInitHook() weak function overloading is used in this
        application. */
-    MCMGR_EarlyInit();
+    (void)MCMGR_EarlyInit();
 }
-#endif
+#endif /* MCMGR_USED */
 
-void app_task(void *param)
+static void app_task(void *param)
 {
     /* RPMsg-Lite transport layer initialization */
     erpc_transport_t transport;
 
     /* Print the initial banner */
-    PRINTF("\r\neRPC Matrix Multiply demo started...\r\n");
+    (void)PRINTF("\r\neRPC Matrix Multiply demo started...\r\n");
 
 #ifdef MCMGR_USED
-    transport = erpc_transport_rpmsg_lite_rtos_remote_init(101, 100, (void *)startupData,
+    transport = erpc_transport_rpmsg_lite_rtos_remote_init(101U, 100U, (void *)(char *)startupData,
                                                            ERPC_TRANSPORT_RPMSG_LITE_LINK_ID, SignalReady, NULL);
 #elif defined(RPMSG_LITE_MASTER_IS_LINUX)
-    transport              = erpc_transport_rpmsg_lite_tty_rtos_remote_init(101, 1024, (void *)RPMSG_LITE_SHMEM_BASE,
+    transport              = erpc_transport_rpmsg_lite_tty_rtos_remote_init(101U, 1024U, (void *)RPMSG_LITE_SHMEM_BASE,
                                                                ERPC_TRANSPORT_RPMSG_LITE_LINK_ID, NULL,
                                                                RPMSG_LITE_NS_ANNOUNCE_STRING);
 #else
-    transport = erpc_transport_rpmsg_lite_rtos_remote_init(101, 100, (void *)RPMSG_LITE_SHMEM_BASE,
+    transport = erpc_transport_rpmsg_lite_rtos_remote_init(101U, 100U, (void *)RPMSG_LITE_SHMEM_BASE,
                                                            ERPC_TRANSPORT_RPMSG_LITE_LINK_ID, NULL, NULL);
 #endif
     /* MessageBufferFactory initialization */
@@ -128,13 +127,13 @@ void app_task(void *param)
 #endif
 
     /* eRPC server side initialization */
-    erpc_server_init(transport, message_buffer_factory);
+    (void)erpc_server_init(transport, message_buffer_factory);
 
     /* adding the service to the server */
     erpc_service_t service = create_MatrixMultiplyService_service();
     erpc_add_service_to_server(service);
 
-    PRINTF("\r\neRPC setup done, waiting for requests...\r\n");
+    (void)PRINTF("\r\neRPC setup done, waiting for requests...\r\n");
 
 #ifdef RPMSG_LITE_MASTER_IS_LINUX
     /* ignore first hello world message from RPMSG tty device */
@@ -145,7 +144,7 @@ void app_task(void *param)
     erpc_status_t status = erpc_server_run();
 
     /* handle error status */
-    if (status != kErpcStatus_Success)
+    if (status != (erpc_status_t)kErpcStatus_Success)
     {
         /* print error description */
         erpc_error_handler(status, 0);
@@ -161,7 +160,7 @@ void app_task(void *param)
         erpc_server_deinit();
     }
 
-    while (1)
+    for (;;)
     {
     }
 }
@@ -169,13 +168,13 @@ void app_task(void *param)
 /*!
  * @brief Main function
  */
-int main()
+int main(void)
 {
     CLOCK_EnableClock(kCLOCK_PctlA);
     CLOCK_EnableClock(kCLOCK_PctlB);
     CLOCK_EnableClock(kCLOCK_Rgpio2p0);
 
-    BOARD_InitPins_Core1();
+    BOARD_InitBootPins();
     BOARD_BootClockRUN();
     APP_SRTM_I2C_ReleaseBus();
     BOARD_I2C_ConfigurePins();
@@ -194,7 +193,7 @@ int main()
 #ifdef MCMGR_USED
 
     /* Initialize MCMGR before calling its API */
-    MCMGR_Init();
+    (void)MCMGR_Init();
 
     /* Get the startup data */
     do
@@ -203,7 +202,7 @@ int main()
     } while (mcmgrStatus != kStatus_MCMGR_Success);
 #endif
 
-    if (xTaskCreate(app_task, "APP_TASK", APP_TASK_STACK_SIZE, NULL, tskIDLE_PRIORITY + 1, &app_task_handle) != pdPASS)
+    if (xTaskCreate(app_task, "APP_TASK", APP_TASK_STACK_SIZE, NULL, tskIDLE_PRIORITY + 1U, &app_task_handle) != pdPASS)
     {
         /* Failed to create application task */
         return -1;

@@ -85,6 +85,9 @@
     <source path="boards/evkmcimx7ulp/demo_apps/hello_world" target_path="evkmcimx7ulp/demo_apps/hello_world" type="binary" exclude="true">
       <files mask="hello_world.bin"/>
     </source>
+    <source path="boards/evkmcimx7ulp/demo_apps/hello_world" target_path="remoteproc" type="src">
+      <files mask="empty_rsc_table.c"/>
+    </source>
     <source path="boards/evkmcimx7ulp/demo_apps/hello_world" target_path="source" type="src">
       <files mask="hello_world.c"/>
     </source>

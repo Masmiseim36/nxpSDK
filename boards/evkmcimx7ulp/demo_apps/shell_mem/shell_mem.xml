@@ -86,6 +86,9 @@
     <source path="boards/evkmcimx7ulp/demo_apps/shell_mem" target_path="evkmcimx7ulp/demo_apps/shell_mem" type="binary" exclude="true">
       <files mask="shell_mem.bin"/>
     </source>
+    <source path="boards/evkmcimx7ulp/demo_apps/shell_mem" target_path="remoteproc" type="src">
+      <files mask="empty_rsc_table.c"/>
+    </source>
     <source path="boards/evkmcimx7ulp/demo_apps/shell_mem" target_path="source" type="c_include">
       <files mask="app_flash.h"/>
     </source>

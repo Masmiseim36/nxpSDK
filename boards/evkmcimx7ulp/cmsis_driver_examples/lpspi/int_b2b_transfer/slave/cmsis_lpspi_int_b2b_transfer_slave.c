@@ -15,8 +15,8 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_LPSPI_SLAVE_IRQN (LPSPI1_IRQn)
-#define EXAMPLE_LPSPI_SLAVE_CLOCK_NAME (kCLOCK_Lpspi1)
+#define EXAMPLE_LPSPI_SLAVE_IRQN         (LPSPI1_IRQn)
+#define EXAMPLE_LPSPI_SLAVE_CLOCK_NAME   (kCLOCK_Lpspi1)
 #define EXAMPLE_LPSPI_SLAVE_CLOCK_SOURCE (kCLOCK_IpSrcFircAsync)
 
 #define DRIVER_SLAVE_SPI Driver_SPI1

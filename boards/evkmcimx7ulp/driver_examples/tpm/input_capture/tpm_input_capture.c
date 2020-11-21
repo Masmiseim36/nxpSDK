@@ -16,13 +16,13 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_TPM_BASEADDR TPM2
+#define DEMO_TPM_BASEADDR               TPM2
 #define BOARD_TPM_INPUT_CAPTURE_CHANNEL kTPM_Chnl_1
-#define TPM_INTERRUPT_NUMBER TPM2_IRQn
-#define TPM_INPUT_CAPTURE_HANDLER TPM2_IRQHandler
-#define TPM_CHANNEL_INTERRUPT_ENABLE kTPM_Chnl1InterruptEnable
-#define TPM_CHANNEL_FLAG kTPM_Chnl1Flag
-#define TPM_SOURCE_CLOCK CLOCK_GetIpFreq(kCLOCK_Tpm2)
+#define TPM_INTERRUPT_NUMBER            TPM2_IRQn
+#define TPM_INPUT_CAPTURE_HANDLER       TPM2_IRQHandler
+#define TPM_CHANNEL_INTERRUPT_ENABLE    kTPM_Chnl1InterruptEnable
+#define TPM_CHANNEL_FLAG                kTPM_Chnl1Flag
+#define TPM_SOURCE_CLOCK                CLOCK_GetIpFreq(kCLOCK_Tpm2)
 
 /*******************************************************************************
  * Prototypes

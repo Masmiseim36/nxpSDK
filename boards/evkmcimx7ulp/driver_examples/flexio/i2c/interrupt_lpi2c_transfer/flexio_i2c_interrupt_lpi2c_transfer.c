@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -21,18 +21,18 @@
  ******************************************************************************/
 #define BOARD_LPI2C_SLAVE_BASE LPI2C3
 #define BOARD_LPI2C_SLAVE_IRQn LPI2C3_IRQn
-#define BOARD_FLEXIO_BASE FLEXIO0
-#define LPI2C_CLOCK_FREQUENCY CLOCK_GetIpFreq(kCLOCK_Lpi2c3)
+#define BOARD_FLEXIO_BASE      FLEXIO0
+#define LPI2C_CLOCK_FREQUENCY  CLOCK_GetIpFreq(kCLOCK_Lpi2c3)
 #define FLEXIO_CLOCK_FREQUENCY CLOCK_GetIpFreq(kCLOCK_Flexio0)
-#define FLEXIO_I2C_SDA_PIN 1U
-#define FLEXIO_I2C_SCL_PIN 0U
+#define FLEXIO_I2C_SDA_PIN     1U
+#define FLEXIO_I2C_SCL_PIN     0U
 
 /* I2C Baudrate 400K */
 #define I2C_BAUDRATE (400000)
 /* I2C Slave Address */
 #define I2C_MASTER_SLAVE_ADDR_7BIT (0x7EU)
 /* The length of data */
-#define I2C_DATA_LENGTH (13) /* MAX is 256 */
+#define I2C_DATA_LENGTH (32U)
 
 /*******************************************************************************
  * Prototypes
@@ -149,6 +149,7 @@ int main(void)
     i2cDev.shifterIndex[1] = 1U;
     i2cDev.timerIndex[0]   = 0U;
     i2cDev.timerIndex[1]   = 1U;
+    i2cDev.timerIndex[2]   = 2U;
 
     /*
      * masterConfig.enableMaster = true;

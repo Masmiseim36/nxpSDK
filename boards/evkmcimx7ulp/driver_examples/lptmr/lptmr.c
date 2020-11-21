@@ -17,8 +17,8 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_LPTMR_BASE LPTMR0
-#define DEMO_LPTMR_IRQn LPTMR0_IRQn
+#define DEMO_LPTMR_BASE   LPTMR0
+#define DEMO_LPTMR_IRQn   LPTMR0_IRQn
 #define LPTMR_LED_HANDLER LPTMR0_IRQHandler
 /* Get source clock for LPTMR driver */
 #define LPTMR_SOURCE_CLOCK CLOCK_GetFreq(kCLOCK_LpoClk)

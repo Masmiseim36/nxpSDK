@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2019, 2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -22,13 +22,13 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define SW_GPIO BOARD_VOLP_GPIO
+#define SW_GPIO     BOARD_VOLP_GPIO
 #define SW_GPIO_PIN BOARD_VOLP_GPIO_PIN
-#define SW_NAME BOARD_VOLP_NAME
+#define SW_NAME     BOARD_VOLP_NAME
 /* GPIO port input high-logic level when SW is pressed */
 #define SW_GPIO_PRESSED_VALUE 1U
 
-#define WDOG_EWM_IRQn EWM_IRQn
+#define WDOG_EWM_IRQn       EWM_IRQn
 #define WDOG_EWM_IRQHandler EWM_IRQHandler
 
 /*******************************************************************************
@@ -79,11 +79,7 @@ void WDOG_EWM_IRQHandler(void)
 {
     EWM_DisableInterrupts(base, kEWM_InterruptEnable); /*!< de-assert interrupt request */
     ewmIsrFlag = true;
-    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-      exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 /*!
@@ -103,6 +99,10 @@ int main(void)
 
     /* PORT must be configured, otherwise GPIO cannot read GPIO value. */
     PORT_SetPinInterruptConfig(BOARD_VOLP_PORT, BOARD_VOLP_GPIO_PIN, kPORT_ActiveHighTriggerOutputEnable);
+
+    PRINTF("\r\nPress anykey to start the example...\r\n");
+    GETCHAR();
+
     gpio_configure();
 
     /* EWM peripheral driver test */

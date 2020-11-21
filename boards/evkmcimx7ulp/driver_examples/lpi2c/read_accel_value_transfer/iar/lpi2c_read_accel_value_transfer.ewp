@@ -318,19 +318,12 @@
           <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../devices</state>
           <state>$PROJ_DIR$/../../../../../../devices/MCIMX7U5/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MCIMX7U5/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MCIMX7U5/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MCIMX7U5/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MCIMX7U5</state>
           <state>$PROJ_DIR$/../../../../../../devices/MCIMX7U5/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MCIMX7U5/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MCIMX7U5/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MCIMX7U5/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MCIMX7U5/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MCIMX7U5/utilities</state>
         </option>
         <option>
@@ -1297,19 +1290,12 @@
           <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../devices</state>
           <state>$PROJ_DIR$/../../../../../../devices/MCIMX7U5/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MCIMX7U5/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MCIMX7U5/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MCIMX7U5/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MCIMX7U5</state>
           <state>$PROJ_DIR$/../../../../../../devices/MCIMX7U5/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MCIMX7U5/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MCIMX7U5/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MCIMX7U5/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MCIMX7U5/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MCIMX7U5/utilities</state>
         </option>
         <option>
@@ -2277,19 +2263,12 @@
           <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../devices</state>
           <state>$PROJ_DIR$/../../../../../../devices/MCIMX7U5/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MCIMX7U5/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MCIMX7U5/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MCIMX7U5/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MCIMX7U5</state>
           <state>$PROJ_DIR$/../../../../../../devices/MCIMX7U5/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MCIMX7U5/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MCIMX7U5/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MCIMX7U5/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MCIMX7U5/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MCIMX7U5/utilities</state>
         </option>
         <option>
@@ -3256,19 +3235,12 @@
           <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../devices</state>
           <state>$PROJ_DIR$/../../../../../../devices/MCIMX7U5/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MCIMX7U5/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MCIMX7U5/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MCIMX7U5/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MCIMX7U5</state>
           <state>$PROJ_DIR$/../../../../../../devices/MCIMX7U5/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MCIMX7U5/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MCIMX7U5/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MCIMX7U5/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MCIMX7U5/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MCIMX7U5/utilities</state>
         </option>
         <option>
@@ -3956,6 +3928,12 @@
     </file>
   </group>
   <group>
+    <name>remoteproc</name>
+    <file>
+      <name>$PROJ_DIR$/../empty_rsc_table.c</name>
+    </file>
+  </group>
+  <group>
     <name>drivers</name>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MCIMX7U5/drivers/fsl_port.h</name>
@@ -4087,6 +4065,9 @@
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_cm4.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/mpu_armv7.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_armcc.h</name>
     </file>
     <file>
@@ -4106,21 +4087,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_version.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_armv81mml.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_armv8mbl.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_armv8mml.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/mpu_armv7.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/mpu_armv8.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/arm_common_tables.h</name>

@@ -15,16 +15,16 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_LPSPI_MASTER_IRQN (LPSPI1_IRQn)
-#define EXAMPLE_LPSPI_MASTER_CLOCK_NAME (kCLOCK_Lpspi1)
+#define EXAMPLE_LPSPI_MASTER_IRQN         (LPSPI1_IRQn)
+#define EXAMPLE_LPSPI_MASTER_CLOCK_NAME   (kCLOCK_Lpspi1)
 #define EXAMPLE_LPSPI_MASTER_CLOCK_SOURCE (kCLOCK_IpSrcFircAsync)
 
-#define EXAMPLE_LPSPI_MASTER_DMA_BASEADDR DMA0
+#define EXAMPLE_LPSPI_MASTER_DMA_BASEADDR     DMA0
 #define EXAMPLE_LPSPI_MASTER_DMA_MUX_BASEADDR DMA_CH_MUX0
 
-#define DRIVER_MASTER_SPI Driver_SPI1
+#define DRIVER_MASTER_SPI         Driver_SPI1
 #define EXAMPLE_LPSPI_DEALY_COUNT 0xfffffU
-#define TRANSFER_SIZE 64U         /* Transfer dataSize */
+#define TRANSFER_SIZE     64U     /* Transfer dataSize */
 #define TRANSFER_BAUDRATE 500000U /* Transfer baudrate - 500k */
 
 /*******************************************************************************

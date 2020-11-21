@@ -27,15 +27,15 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define BOARD_SW_GPIO BOARD_VOLP_GPIO
-#define BOARD_SW_PORT BOARD_VOLP_PORT
-#define BOARD_SW_GPIO_PIN BOARD_VOLP_GPIO_PIN
-#define BOARD_SW_IRQ BOARD_VOLP_IRQ
+#define BOARD_SW_GPIO        BOARD_VOLP_GPIO
+#define BOARD_SW_PORT        BOARD_VOLP_PORT
+#define BOARD_SW_GPIO_PIN    BOARD_VOLP_GPIO_PIN
+#define BOARD_SW_IRQ         BOARD_VOLP_IRQ
 #define BOARD_SW_IRQ_HANDLER BOARD_VOLP_IRQ_HANDLER
-#define BOARD_SW_NAME BOARD_VOLP_NAME
+#define BOARD_SW_NAME        BOARD_VOLP_NAME
 /* @brief FreeRTOS tickless timer configuration. */
-#define TICKLESS_LPTMR_BASE_PTR LPTMR0  /*!< Tickless timer base address. */
-#define TICKLESS_LPTMR_IRQn LPTMR0_IRQn /*!< Tickless timer IRQ number. */
+#define TICKLESS_LPTMR_BASE_PTR LPTMR0      /*!< Tickless timer base address. */
+#define TICKLESS_LPTMR_IRQn     LPTMR0_IRQn /*!< Tickless timer IRQ number. */
 /* Task priorities. */
 /* clang-format off */
 #define tickless_task_PRIORITY   ( configMAX_PRIORITIES - 2 )
@@ -135,7 +135,7 @@ int main(void)
 #endif
     CLOCK_EnableClock(kCLOCK_PctlA);
     CLOCK_EnableClock(kCLOCK_Rgpio2p0);
-    BOARD_InitPins();
+    BOARD_InitBootPins();
     BOARD_BootClockRUN();
     BOARD_InitDebugConsole();
 

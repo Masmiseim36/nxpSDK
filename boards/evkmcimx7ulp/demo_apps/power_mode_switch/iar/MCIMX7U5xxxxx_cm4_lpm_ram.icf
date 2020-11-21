@@ -85,8 +85,10 @@ define block ZI        { zi };
 
 initialize by copy { readwrite, section .textrw };
 do not initialize  { section .noinit, section M4SuspendRam, section A7SuspendRam };
+keep{section .resource_table};
 
 place at address mem: m_interrupts_start    { readonly section .intvec };
+".resource_table": place at address mem: m_text_start {section .resource_table};
 place in TEXT_region                        { readonly };
 place in DATA_region                        { block RW };
 place in DATA_region                        { block ZI };

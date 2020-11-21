@@ -1,18 +1,18 @@
 /*
 ** ###################################################################
-**     Processors:          MCIMX7U3CVP05
-**                          MCIMX7U3DVK08
+**     Processors:          MCIMX7U3CVP06
+**                          MCIMX7U3DVK07
 **
 **     Compiler:            IAR ANSI C/C++ Compiler for ARM
 **     Reference manual:    IMX7ULPRM, Rev. 0, Nov. 2018
 **     Version:             rev. 7.0, 2018-11-05
-**     Build:               b181105
+**     Build:               b200331
 **
 **     Abstract:
 **         Linker file for the IAR ANSI C/C++ Compiler for ARM
 **
 **     Copyright 2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2018 NXP
+**     Copyright 2016-2020 NXP
 **     All rights reserved.
 **
 **     SPDX-License-Identifier: BSD-3-Clause
@@ -80,7 +80,10 @@ define block ZI        { zi };
 initialize by copy { readwrite, section .textrw };
 do not initialize  { section .noinit, section M4SuspendRam, section A7SuspendRam };
 
+keep{section .resource_table};
+
 place at address mem: m_interrupts_start    { readonly section .intvec };
+".resource_table": place at address mem: m_text_start {section .resource_table};
 place in TEXT_region                        { readonly };
 place in DATA_region                        { block RW };
 place in DATA_region                        { block ZI };

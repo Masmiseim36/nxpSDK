@@ -42,7 +42,7 @@
 
 /* Application Events */
 #define gAppEvtMsgFromHostStack_c (1 << 0)
-#define gAppEvtAppCallback_c (1 << 1)
+#define gAppEvtAppCallback_c      (1 << 1)
 
 #define POINTER_ON_BASE(base, pnt) (((uint8_t *)(base)) + (((uint32_t)(pnt)) - ((uint32_t)(base))))
 

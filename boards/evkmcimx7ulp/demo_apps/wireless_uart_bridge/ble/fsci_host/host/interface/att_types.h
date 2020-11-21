@@ -32,10 +32,10 @@
 #define gAttOffsetSize_d 2
 
 /* Macros used to compute maximum data size for various ATT payloads */
-#define gAttMaxDataSize_d(mtu) (mtu - gAttOpcodeSize_d)                                  /* 22 */
-#define gAttMaxReadDataSize_d(mtu) (gAttMaxDataSize_d(mtu))                              /* 22 */
-#define gAttMaxWriteDataSize_d(mtu) (gAttMaxDataSize_d(mtu) - gAttHandleSize_d)          /* 20 */
-#define gAttMaxNotifIndDataSize_d(mtu) (gAttMaxWriteDataSize_d(mtu))                     /* 20 */
+#define gAttMaxDataSize_d(mtu)          (mtu - gAttOpcodeSize_d)                         /* 22 */
+#define gAttMaxReadDataSize_d(mtu)      (gAttMaxDataSize_d(mtu))                         /* 22 */
+#define gAttMaxWriteDataSize_d(mtu)     (gAttMaxDataSize_d(mtu) - gAttHandleSize_d)      /* 20 */
+#define gAttMaxNotifIndDataSize_d(mtu)  (gAttMaxWriteDataSize_d(mtu))                    /* 20 */
 #define gAttMaxPrepWriteDataSize_d(mtu) (gAttMaxWriteDataSize_d(mtu) - gAttOffsetSize_d) /* 18 */
 
 #define gAttAuthSignatureSize 12

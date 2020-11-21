@@ -39,9 +39,9 @@
 #define gInvalidDeviceId_c (0xFF)
 
 /*! Boundary values for the Connection Parameters (Standard GAP). */
-#define gcConnectionIntervalMin_c (0x0006)
-#define gcConnectionIntervalMax_c (0x0C80)
-#define gcConnectionSlaveLatencyMax_c (0x01F3)
+#define gcConnectionIntervalMin_c           (0x0006)
+#define gcConnectionIntervalMax_c           (0x0C80)
+#define gcConnectionSlaveLatencyMax_c       (0x01F3)
 #define gcConnectionSupervisionTimeoutMin_c (0x000A)
 #define gcConnectionSupervisionTimeoutMax_c (0x0C80)
 

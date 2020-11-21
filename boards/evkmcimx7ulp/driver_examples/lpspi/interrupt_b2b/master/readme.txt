@@ -10,8 +10,8 @@ This example does not use the transactional API in LPSPI driver. It's a demonstr
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.40.2
-- GCC ARM Embedded  8.3.1
+- IAR embedded Workbench  8.50.1
+- GCC ARM Embedded  9.2.1
 
 Hardware requirements
 =====================

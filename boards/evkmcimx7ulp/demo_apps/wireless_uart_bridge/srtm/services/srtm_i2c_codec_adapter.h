@@ -10,7 +10,7 @@
 #define __SRTM_I2C_CODEC_ADAPTER_H__
 
 #include "srtm_audio_service.h"
-#include "fsl_codec_adapter.h"
+#include "fsl_codec_common.h"
 #include "fsl_codec_i2c.h"
 /*!
  * @addtogroup srtm_service

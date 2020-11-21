@@ -21,7 +21,7 @@
 *************************************************************************************
 ************************************************************************************/
 
-#define fsciBleGattClientHandleNoMemoryStatus() fsciBleGattClientHandleErrorStatus(gFsciOutOfMessages_c)
+#define fsciBleGattClientHandleNoMemoryStatus()      fsciBleGattClientHandleErrorStatus(gFsciOutOfMessages_c)
 #define fsciBleGattClientHandleInternalErrorStatus() fsciBleGattClientHandleErrorStatus(gFsciError_c)
 
 #ifndef mFsciGapMaximumActiveConnections_c

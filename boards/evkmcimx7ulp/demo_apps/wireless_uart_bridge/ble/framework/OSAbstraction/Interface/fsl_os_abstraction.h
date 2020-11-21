@@ -106,20 +106,20 @@ typedef enum osaStatus_tag
 #define USE_RTOS 0
 #endif
 
-#define OSA_PRIORITY_IDLE (6)
-#define OSA_PRIORITY_LOW (5)
-#define OSA_PRIORITY_BELOW_NORMAL (4)
-#define OSA_PRIORITY_NORMAL (3)
-#define OSA_PRIORITY_ABOVE_NORMAL (2)
-#define OSA_PRIORITY_HIGH (1)
-#define OSA_PRIORITY_REAL_TIME (0)
-#define OSA_TASK_PRIORITY_MAX (0)
-#define OSA_TASK_PRIORITY_MIN (15)
+#define OSA_PRIORITY_IDLE          (6)
+#define OSA_PRIORITY_LOW           (5)
+#define OSA_PRIORITY_BELOW_NORMAL  (4)
+#define OSA_PRIORITY_NORMAL        (3)
+#define OSA_PRIORITY_ABOVE_NORMAL  (2)
+#define OSA_PRIORITY_HIGH          (1)
+#define OSA_PRIORITY_REAL_TIME     (0)
+#define OSA_TASK_PRIORITY_MAX      (0)
+#define OSA_TASK_PRIORITY_MIN      (15)
 #define SIZE_IN_UINT32_UNITS(size) (((size) + sizeof(uint32_t) - 1) / sizeof(uint32_t))
 
 /*! @brief Constant to pass as timeout value in order to wait indefinitely. */
-#define osaWaitForever_c ((uint32_t)(-1))
-#define osaEventFlagsAll_c ((osaEventFlags_t)(0x00FFFFFF))
+#define osaWaitForever_c         ((uint32_t)(-1))
+#define osaEventFlagsAll_c       ((osaEventFlags_t)(0x00FFFFFF))
 #define osThreadStackArray(name) osThread_##name##_stack
 #define osThreadStackDef(name, stacksize, instances) \
     uint32_t osThreadStackArray(name)[SIZE_IN_UINT32_UNITS(stacksize) * (instances)];

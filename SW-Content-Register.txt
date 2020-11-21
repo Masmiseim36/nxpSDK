@@ -110,6 +110,17 @@ usb                        Name: USB
                            Location: middleware/usb                          
                            Origin: NXP (BSD-3-Clause)                        
 
+Pedometer_Library          Name: Pedometer Library                           
+                           Version: 1.0                                      
+                           Outgoing License: LA_OPT_NXP_Software_License     
+                           License File:                                     
+                           Format: binary library                            
+                           Description: Pedometer algorithm library for Arm  
+                           Cortex M0+ and M4 processors                      
+                           Location:                                         
+                           middleware/issdk/algorithms/pedometer/lib         
+                           Origin: KEYnetik, Inc                             
+
 issdk                      Name: ISSDK                                       
                            Version: 1.7                                      
                            Outgoing License: BSD-3-Clause                    

@@ -17,10 +17,10 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define LPI2C_CLOCK_FREQUENCY CLOCK_GetIpFreq(kCLOCK_Lpi2c3)
+#define LPI2C_CLOCK_FREQUENCY    CLOCK_GetIpFreq(kCLOCK_Lpi2c3)
 #define BOARD_ACCEL_I2C_BASEADDR LPI2C3
 #define MAX_ACCEL_AVG_COUNT 25U
-#define HWTIMER_PERIOD 10000U
+#define HWTIMER_PERIOD      10000U
 /* multiplicative conversion constants */
 #define DegToRad 0.017453292
 #define RadToDeg 57.295779

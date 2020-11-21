@@ -45,13 +45,13 @@ typedef uint8_t index_t;
 
 #if defined(__GNUC__)
 #define PACKED_STRUCT struct __attribute__((__packed__))
-#define PACKED_UNION union __attribute__((__packed__))
+#define PACKED_UNION  union __attribute__((__packed__))
 #elif defined(__IAR_SYSTEMS_ICC__)
 #define PACKED_STRUCT __packed struct
-#define PACKED_UNION __packed union
+#define PACKED_UNION  __packed union
 #else
 #define PACKED_STRUCT struct
-#define PACKED_UNION union
+#define PACKED_UNION  union
 #endif
 
 typedef unsigned char uintn8_t;
@@ -73,7 +73,7 @@ typedef unsigned char uchar_t;
 /* Compute the size of a string initialized with quotation marks */
 #define SizeOfString(string) (sizeof(string) - 1)
 
-#define GetRelAddr(strct, member) ((uint32_t) & (((strct *)(void *)0)->member))
+#define GetRelAddr(strct, member)      ((uint32_t) & (((strct *)(void *)0)->member))
 #define GetSizeOfMember(strct, member) sizeof(((strct *)(void *)0)->member)
 
 /* Type definitions for link configuration of instantiable layers  */
@@ -81,16 +81,16 @@ typedef unsigned char uchar_t;
 typedef uint32_t instanceId_t;
 
 /* Bit shift definitions */
-#define BIT0 0x01
-#define BIT1 0x02
-#define BIT2 0x04
-#define BIT3 0x08
-#define BIT4 0x10
-#define BIT5 0x20
-#define BIT6 0x40
-#define BIT7 0x80
-#define BIT8 0x100
-#define BIT9 0x200
+#define BIT0  0x01
+#define BIT1  0x02
+#define BIT2  0x04
+#define BIT3  0x08
+#define BIT4  0x10
+#define BIT5  0x20
+#define BIT6  0x40
+#define BIT7  0x80
+#define BIT8  0x100
+#define BIT9  0x200
 #define BIT10 0x400
 #define BIT11 0x800
 #define BIT12 0x1000
@@ -115,16 +115,16 @@ typedef uint32_t instanceId_t;
 #define BIT31 0x80000000
 
 /* Shift definitions */
-#define SHIFT0 (0)
-#define SHIFT1 (1)
-#define SHIFT2 (2)
-#define SHIFT3 (3)
-#define SHIFT4 (4)
-#define SHIFT5 (5)
-#define SHIFT6 (6)
-#define SHIFT7 (7)
-#define SHIFT8 (8)
-#define SHIFT9 (9)
+#define SHIFT0  (0)
+#define SHIFT1  (1)
+#define SHIFT2  (2)
+#define SHIFT3  (3)
+#define SHIFT4  (4)
+#define SHIFT5  (5)
+#define SHIFT6  (6)
+#define SHIFT7  (7)
+#define SHIFT8  (8)
+#define SHIFT9  (9)
 #define SHIFT10 (10)
 #define SHIFT11 (11)
 #define SHIFT12 (12)

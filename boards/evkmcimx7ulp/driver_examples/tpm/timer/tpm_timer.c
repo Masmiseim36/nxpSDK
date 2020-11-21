@@ -16,8 +16,8 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define BOARD_TPM TPM2
-#define TPM_SOURCE_CLOCK (CLOCK_GetIpFreq(kCLOCK_Tpm2) / 4)
+#define BOARD_TPM         TPM2
+#define TPM_SOURCE_CLOCK  (CLOCK_GetIpFreq(kCLOCK_Tpm2) / 4)
 #define BOARD_TPM_IRQ_NUM TPM2_IRQn
 #define BOARD_TPM_HANDLER TPM2_IRQHandler
 

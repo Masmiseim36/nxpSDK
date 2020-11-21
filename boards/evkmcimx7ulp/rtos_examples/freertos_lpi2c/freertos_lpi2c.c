@@ -84,7 +84,7 @@ SemaphoreHandle_t lpi2c_sem;
  * Definitions
  ******************************************************************************/
 /* Task priorities. */
-#define slave_task_PRIORITY (configMAX_PRIORITIES - 2)
+#define slave_task_PRIORITY  (configMAX_PRIORITIES - 2)
 #define master_task_PRIORITY (configMAX_PRIORITIES - 1)
 
 /*******************************************************************************
@@ -102,7 +102,7 @@ int main(void)
     uint32_t i = 0;
 
     /* Init board hardware. */
-    BOARD_InitPins();
+    BOARD_InitBootPins();
     BOARD_BootClockRUN();
     BOARD_InitDebugConsole();
 

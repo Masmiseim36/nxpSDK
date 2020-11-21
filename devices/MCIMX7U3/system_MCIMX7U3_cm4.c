@@ -1,7 +1,7 @@
 /*
 ** ###################################################################
-**     Processors:          MCIMX7U3CVP05
-**                          MCIMX7U3DVK08
+**     Processors:          MCIMX7U3CVP06
+**                          MCIMX7U3DVK07
 **
 **     Compilers:           GNU C Compiler
 **                          IAR ANSI C/C++ Compiler for ARM
@@ -9,7 +9,7 @@
 **
 **     Reference manual:    IMX7ULPRM, Rev. 0, Nov. 2018
 **     Version:             rev. 7.0, 2018-11-05
-**     Build:               b181105
+**     Build:               b200408
 **
 **     Abstract:
 **         Provides a system configuration function and a global variable that
@@ -17,7 +17,7 @@
 **         the oscillator (PLL) that is part of the microcontroller device.
 **
 **     Copyright 2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2018 NXP
+**     Copyright 2016-2020 NXP
 **     All rights reserved.
 **
 **     SPDX-License-Identifier: BSD-3-Clause
@@ -122,7 +122,7 @@ void SystemInit (void) {
     0x4770    /* BX  LR           */
   };
 #if (DISABLE_WDOG)
-  if (WDOG0->CS & WDOG_CS_EN_MASK)
+  if ((WDOG0->CS & WDOG_CS_EN_MASK) != 0U)
   {
     /* WDOG has timing requirement to unlock the operation window.
        When running in QSPI flash, it's possible to violate that timing
@@ -144,7 +144,7 @@ void SystemInit (void) {
   LMEM->PCCCR = LMEM_PCCCR_INVW1_MASK | LMEM_PCCCR_INVW0_MASK;
   LMEM->PCCCR |= LMEM_PCCCR_GO_MASK;
   /* Wait until the command completes */
-  while (LMEM->PCCCR & LMEM_PCCCR_GO_MASK)
+  while ((LMEM->PCCCR & LMEM_PCCCR_GO_MASK) != 0U)
   {}
   /* Enable code bus cache, enable write buffer */
   LMEM->PCCCR = (LMEM_PCCCR_ENWRBUF_MASK | LMEM_PCCCR_ENCACHE_MASK);
@@ -173,7 +173,7 @@ void SystemCoreClockUpdate (void) {
       break;
     /* Slow IRC */
     case SCG_CSR_SCS(2):
-      SCGOUTClock = ((0 == (SCG0->SIRCCFG & SCG_SIRCCFG_RANGE_MASK)) ? 4000000u : 16000000u);
+      SCGOUTClock = ((0u == (SCG0->SIRCCFG & SCG_SIRCCFG_RANGE_MASK)) ? 4000000u : 16000000u);
       break;
     /* Fast IRC */
     case SCG_CSR_SCS(3):
@@ -186,30 +186,34 @@ void SystemCoreClockUpdate (void) {
     /* System PLL */
     case SCG_CSR_SCS(6):
       /* System clock from SPLL. */
-      SCGOUTClock = (0 == (SCG0->SPLLCFG & SCG_SPLLCFG_SOURCE_MASK)) ? CPU_XTAL_SOSC_CLK_HZ :
+      SCGOUTClock = (0u == (SCG0->SPLLCFG & SCG_SPLLCFG_SOURCE_MASK)) ? CPU_XTAL_SOSC_CLK_HZ :
                     (48000000u + ((SCG0->FIRCCFG & SCG_FIRCCFG_RANGE_MASK) >> SCG_FIRCCFG_RANGE_SHIFT) * 4000000u);
-      SCGOUTClock /= ((SCG0->SPLLCFG & SCG_SPLLCFG_PREDIV_MASK) >> SCG_SPLLCFG_PREDIV_SHIFT) + 1;
+      SCGOUTClock /= ((SCG0->SPLLCFG & SCG_SPLLCFG_PREDIV_MASK) >> SCG_SPLLCFG_PREDIV_SHIFT) + 1u;
       SCGOUTClock *= spllMulti[((SCG0->SPLLCFG & SCG_SPLLCFG_MULT_MASK) >> SCG_SPLLCFG_MULT_SHIFT)];
       /* Is Core clock from PLL PFD? */
-      if (0 != (SCG0->SPLLCFG & SCG_SPLLCFG_PLLS_MASK))
+      if (0u != (SCG0->SPLLCFG & SCG_SPLLCFG_PLLS_MASK))
       {
         /* System clock from SPLL PFD. */
         switch (SCG0->SPLLCFG & SCG_SPLLCFG_PFDSEL_MASK)
         {
           case SCG_SPLLCFG_PFDSEL(0):
-            SCGOUTClock = ((uint64_t)SCGOUTClock * 18) / ((SCG0->SPLLPFD & SCG_SPLLPFD_PFD0_MASK) >> SCG_SPLLPFD_PFD0_SHIFT);
+            SCGOUTClock = (uint32_t)(((uint64_t)SCGOUTClock * 18u) /
+                                     ((SCG0->SPLLPFD & SCG_SPLLPFD_PFD0_MASK) >> SCG_SPLLPFD_PFD0_SHIFT));
             break;
           case SCG_SPLLCFG_PFDSEL(1):
-            SCGOUTClock = ((uint64_t)SCGOUTClock * 18) / ((SCG0->SPLLPFD & SCG_SPLLPFD_PFD1_MASK) >> SCG_SPLLPFD_PFD1_SHIFT);
+            SCGOUTClock = (uint32_t)(((uint64_t)SCGOUTClock * 18u) /
+                                     ((SCG0->SPLLPFD & SCG_SPLLPFD_PFD1_MASK) >> SCG_SPLLPFD_PFD1_SHIFT));
             break;
           case SCG_SPLLCFG_PFDSEL(2):
-            SCGOUTClock = ((uint64_t)SCGOUTClock * 18) / ((SCG0->SPLLPFD & SCG_SPLLPFD_PFD2_MASK) >> SCG_SPLLPFD_PFD2_SHIFT);
+            SCGOUTClock = (uint32_t)(((uint64_t)SCGOUTClock * 18u) /
+                                     ((SCG0->SPLLPFD & SCG_SPLLPFD_PFD2_MASK) >> SCG_SPLLPFD_PFD2_SHIFT));
             break;
           case SCG_SPLLCFG_PFDSEL(3):
-            SCGOUTClock = ((uint64_t)SCGOUTClock * 18) / ((SCG0->SPLLPFD & SCG_SPLLPFD_PFD3_MASK) >> SCG_SPLLPFD_PFD3_SHIFT);
+            SCGOUTClock = (uint32_t)(((uint64_t)SCGOUTClock * 18u) /
+                                     ((SCG0->SPLLPFD & SCG_SPLLPFD_PFD3_MASK) >> SCG_SPLLPFD_PFD3_SHIFT));
             break;
           default:
-            SCGOUTClock = 0;
+            SCGOUTClock = 0u;
             break;
         }
       }
@@ -217,19 +221,19 @@ void SystemCoreClockUpdate (void) {
     /* Auxiliary PLL */
     case SCG_CSR_SCS(5):
       /* System clock from APLL. */
-      SCGOUTClock = (0 == (SCG0->APLLCFG & SCG_APLLCFG_SOURCE_MASK)) ? CPU_XTAL_SOSC_CLK_HZ :
+      SCGOUTClock = (0u == (SCG0->APLLCFG & SCG_APLLCFG_SOURCE_MASK)) ? CPU_XTAL_SOSC_CLK_HZ :
                     (48000000u + ((SCG0->FIRCCFG & SCG_FIRCCFG_RANGE_MASK) >> SCG_FIRCCFG_RANGE_SHIFT) * 4000000u);
-      SCGOUTClock /= ((SCG0->APLLCFG & SCG_APLLCFG_PREDIV_MASK) >> SCG_APLLCFG_PREDIV_SHIFT) + 1;
+      SCGOUTClock /= ((SCG0->APLLCFG & SCG_APLLCFG_PREDIV_MASK) >> SCG_APLLCFG_PREDIV_SHIFT) + 1u;
       apllNum = SCG0->APLLNUM;
       apllDenom = SCG0->APLLDENOM;
-      apllTmp = (uint64_t)SCGOUTClock * ((uint64_t)apllNum) / ((uint64_t)apllDenom);
+      apllTmp = (uint32_t)((uint64_t)SCGOUTClock * ((uint64_t)apllNum) / ((uint64_t)apllDenom));
       SCGOUTClock = SCGOUTClock * ((SCG0->APLLCFG & SCG_APLLCFG_MULT_MASK) >> SCG_APLLCFG_MULT_SHIFT) + apllTmp;
       /* Is Core clock from PLL directly? */
-      if (0 == (SCG0->APLLCFG & SCG_APLLCFG_PLLS_MASK))
+      if (0u == (SCG0->APLLCFG & SCG_APLLCFG_PLLS_MASK))
       {
         /* System clock from APLL directly. */
-        SCGOUTClock /= (((SCG0->APLLCFG & SCG_APLLCFG_PLLPOSTDIV1_MASK) >> SCG_APLLCFG_PLLPOSTDIV1_SHIFT) + 1);
-        SCGOUTClock /= (((SCG0->APLLCFG & SCG_APLLCFG_PLLPOSTDIV2_MASK) >> SCG_APLLCFG_PLLPOSTDIV2_SHIFT) + 1);
+        SCGOUTClock /= (((SCG0->APLLCFG & SCG_APLLCFG_PLLPOSTDIV1_MASK) >> SCG_APLLCFG_PLLPOSTDIV1_SHIFT) + 1u);
+        SCGOUTClock /= (((SCG0->APLLCFG & SCG_APLLCFG_PLLPOSTDIV2_MASK) >> SCG_APLLCFG_PLLPOSTDIV2_SHIFT) + 1u);
       }
       else
       {
@@ -237,19 +241,23 @@ void SystemCoreClockUpdate (void) {
         switch (SCG0->APLLCFG & SCG_APLLCFG_PFDSEL_MASK)
         {
           case SCG_APLLCFG_PFDSEL(0):
-            SCGOUTClock = ((uint64_t)SCGOUTClock * 18) / ((SCG0->APLLPFD & SCG_APLLPFD_PFD0_MASK) >> SCG_APLLPFD_PFD0_SHIFT);
+            SCGOUTClock = (uint32_t)(((uint64_t)SCGOUTClock * 18u) /
+                                     ((SCG0->APLLPFD & SCG_APLLPFD_PFD0_MASK) >> SCG_APLLPFD_PFD0_SHIFT));
             break;
           case SCG_APLLCFG_PFDSEL(1):
-            SCGOUTClock = ((uint64_t)SCGOUTClock * 18) / ((SCG0->APLLPFD & SCG_APLLPFD_PFD1_MASK) >> SCG_APLLPFD_PFD1_SHIFT);
+            SCGOUTClock = (uint32_t)(((uint64_t)SCGOUTClock * 18u) /
+                                     ((SCG0->APLLPFD & SCG_APLLPFD_PFD1_MASK) >> SCG_APLLPFD_PFD1_SHIFT));
             break;
           case SCG_APLLCFG_PFDSEL(2):
-            SCGOUTClock = ((uint64_t)SCGOUTClock * 18) / ((SCG0->APLLPFD & SCG_APLLPFD_PFD2_MASK) >> SCG_APLLPFD_PFD2_SHIFT);
+            SCGOUTClock = (uint32_t)(((uint64_t)SCGOUTClock * 18u) /
+                                     ((SCG0->APLLPFD & SCG_APLLPFD_PFD2_MASK) >> SCG_APLLPFD_PFD2_SHIFT));
             break;
           case SCG_APLLCFG_PFDSEL(3):
-            SCGOUTClock = ((uint64_t)SCGOUTClock * 18) / ((SCG0->APLLPFD & SCG_APLLPFD_PFD3_MASK) >> SCG_APLLPFD_PFD3_SHIFT);
+            SCGOUTClock = (uint32_t)(((uint64_t)SCGOUTClock * 18u) /
+                                     ((SCG0->APLLPFD & SCG_APLLPFD_PFD3_MASK) >> SCG_APLLPFD_PFD3_SHIFT));
             break;
           default:
-            SCGOUTClock = 0;
+            SCGOUTClock = 0u;
             break;
         }
       }
@@ -260,7 +268,7 @@ void SystemCoreClockUpdate (void) {
       break;
   }
   /* Divide the SCG output clock to get the M4 Core clock. */
-  SCGOUTClock /= ((SCG0->CSR & SCG_CSR_DIVCORE_MASK) >> SCG_CSR_DIVCORE_SHIFT) + 1;
+  SCGOUTClock /= ((SCG0->CSR & SCG_CSR_DIVCORE_MASK) >> SCG_CSR_DIVCORE_SHIFT) + 1u;
   /* Update System Core Clock. */
   SystemCoreClock = SCGOUTClock;
 

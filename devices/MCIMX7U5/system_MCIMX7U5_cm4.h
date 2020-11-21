@@ -1,8 +1,8 @@
 /*
 ** ###################################################################
-**     Processors:          MCIMX7U5CVP05
-**                          MCIMX7U5DVK08
-**                          MCIMX7U5DVP08
+**     Processors:          MCIMX7U5CVP06
+**                          MCIMX7U5DVK07
+**                          MCIMX7U5DVP07
 **
 **     Compilers:           GNU C Compiler
 **                          IAR ANSI C/C++ Compiler for ARM
@@ -10,7 +10,7 @@
 **
 **     Reference manual:    IMX7ULPRM, Rev. 0, Nov. 2018
 **     Version:             rev. 7.0, 2018-11-05
-**     Build:               b181105
+**     Build:               b200408
 **
 **     Abstract:
 **         Provides a system configuration function and a global variable that
@@ -18,7 +18,7 @@
 **         the oscillator (PLL) that is part of the microcontroller device.
 **
 **     Copyright 2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2018 NXP
+**     Copyright 2016-2020 NXP
 **     All rights reserved.
 **
 **     SPDX-License-Identifier: BSD-3-Clause

@@ -121,7 +121,7 @@ static srtm_status_t SRTM_I2CCodecAdapter_GetReg(srtm_codec_adapter_t adapter, u
     }
     else
     {
-        status = CODEC_I2C_Receive(&(handle->config.i2cHandle), handle->config.slaveAddr, reg, handle->config.addrType,
+        status = CODEC_I2C_Receive(handle->config.i2cHandle, handle->config.slaveAddr, reg, handle->config.addrType,
                                    (void *)pRegVal, handle->config.regWidth);
     }
     return status == kStatus_Success ? SRTM_Status_Success : SRTM_Status_Error;

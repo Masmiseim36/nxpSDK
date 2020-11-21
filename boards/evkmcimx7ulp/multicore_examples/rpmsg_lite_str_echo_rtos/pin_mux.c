@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP
+ * Copyright 2019-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -13,11 +13,11 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v6.0
+product: Pins v7.0
 processor: MCIMX7U5xxxxx
 package_id: MCIMX7U5CVP05
 mcu_data: ksdk2_0
-processor_version: 6.0.1
+processor_version: 0.7.8
 board: MCIMX7ULP-EVK-REV-B
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
@@ -34,12 +34,13 @@ board: MCIMX7ULP-EVK-REV-B
  * END ****************************************************************************************************************/
 void BOARD_InitBootPins(void)
 {
+    BOARD_InitPins_Core1();
 }
 
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 BOARD_InitPins_Core1:
-- options: {callFromInitBoot: 'false', prefix: BOARD_, coreID: cm4}
+- options: {callFromInitBoot: 'true', prefix: BOARD_, coreID: cm4}
 - pin_list:
   - {pin_num: AG20, peripheral: PTA, signal: 'port, 25', pin_signal: PTA25, OBE: OBE_1_Enabled}
   - {pin_num: AB19, peripheral: LPUART0, signal: lpuart_rx, pin_signal: PTA19, PE: PE_1_pull_enabled, PS: PS_1_pull_up}

@@ -24,8 +24,8 @@
  * Definitions
  ******************************************************************************/
 
-#define RPMSG_LITE_SHMEM_BASE (0x9FF10000U)
-#define RPMSG_LITE_LINK_ID (1U)
+#define RPMSG_LITE_SHMEM_BASE         (VDEV1_VRING_BASE)
+#define RPMSG_LITE_LINK_ID            (1U)
 #define RPMSG_LITE_NS_ANNOUNCE_STRING "rpmsg-virtual-tty-channel"
 
 #define APP_TASK_STACK_SIZE (256)
@@ -44,13 +44,9 @@ static char app_buf[512]; /* Each RPMSG buffer can carry less than 512 payload *
  * Code
  ******************************************************************************/
 
-TaskHandle_t app_task_handle = NULL;
+static TaskHandle_t app_task_handle = NULL;
 
-void app_nameservice_isr_cb(uint32_t new_ept, const char *new_ept_name, uint32_t flags, void *user_data)
-{
-}
-
-void app_task(void *param)
+static void app_task(void *param)
 {
     volatile uint32_t remote_addr;
     struct rpmsg_lite_endpoint *volatile my_ept;
@@ -69,23 +65,22 @@ void app_task(void *param)
     uint32_t startupData;
 
     /* Get the startup data */
-    MCMGR_GetStartupData(kMCMGR_Core1, &startupData);
+    (void)MCMGR_GetStartupData(kMCMGR_Core1, &startupData);
 
     my_rpmsg = rpmsg_lite_remote_init((void *)startupData, RPMSG_LITE_LINK_ID, RL_NO_FLAGS);
 
     /* Signal the other core we are ready */
-    MCMGR_SignalReady(kMCMGR_Core1);
+    (void)MCMGR_SignalReady(kMCMGR_Core1);
 #else
     my_rpmsg = rpmsg_lite_remote_init((void *)RPMSG_LITE_SHMEM_BASE, RPMSG_LITE_LINK_ID, RL_NO_FLAGS);
 #endif /* MCMGR_USED */
 
-    while (!rpmsg_lite_is_link_up(my_rpmsg))
+    while (0 == rpmsg_lite_is_link_up(my_rpmsg))
         ;
 
     my_queue = rpmsg_queue_create(my_rpmsg);
     my_ept   = rpmsg_lite_create_ept(my_rpmsg, LOCAL_EPT_ADDR, rpmsg_queue_rx_cb, my_queue);
-    rpmsg_ns_bind(my_rpmsg, app_nameservice_isr_cb, NULL);
-    rpmsg_ns_announce(my_rpmsg, my_ept, RPMSG_LITE_NS_ANNOUNCE_STRING, RL_NS_CREATE);
+    (void)rpmsg_ns_announce(my_rpmsg, my_ept, RPMSG_LITE_NS_ANNOUNCE_STRING, RL_NS_CREATE);
 
     PRINTF("\r\nNameservice sent, ready for incoming messages...\r\n");
 
@@ -139,7 +134,7 @@ int main(void)
     CLOCK_EnableClock(kCLOCK_PctlB);
     CLOCK_EnableClock(kCLOCK_Rgpio2p0);
 
-    BOARD_InitPins_Core1();
+    BOARD_InitBootPins();
     BOARD_BootClockRUN();
     APP_SRTM_I2C_ReleaseBus();
     BOARD_I2C_ConfigurePins();
@@ -157,19 +152,19 @@ int main(void)
 
 #ifdef MCMGR_USED
     /* Initialize MCMGR before calling its API */
-    MCMGR_Init();
+    (void)MCMGR_Init();
 #endif /* MCMGR_USED */
 
     if (xTaskCreate(app_task, "APP_TASK", APP_TASK_STACK_SIZE, NULL, tskIDLE_PRIORITY + 1, &app_task_handle) != pdPASS)
     {
         PRINTF("\r\nFailed to create application task\r\n");
-        while (1)
+        for (;;)
             ;
     }
 
     vTaskStartScheduler();
 
     PRINTF("Failed to start FreeRTOS on core0.\n");
-    while (1)
+    for (;;)
         ;
 }

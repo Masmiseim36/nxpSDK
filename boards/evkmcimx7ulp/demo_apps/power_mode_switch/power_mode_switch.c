@@ -30,7 +30,7 @@
 /*******************************************************************************
  * Struct Definitions
  ******************************************************************************/
-#define APP_DEBUG_UART_BAUDRATE (115200U)                   /* Debug console baud rate. */
+#define APP_DEBUG_UART_BAUDRATE       (115200U)             /* Debug console baud rate. */
 #define APP_DEBUG_UART_DEFAULT_CLKSRC kCLOCK_IpSrcSircAsync /* SCG SIRC clock. */
 
 /* LPTMR0 is LLWU internal module 0. */
@@ -50,8 +50,8 @@
 
 #define APP_LPTMR1_IRQ_PRIO (5U)
 
-#define LLWU_WAKEUP_PIN_IDX (1U) /* LLWU_P1 used for VOL+ button */
-#define LLWU_WAKEUP_PIN_TYPE kLLWU_ExternalPinFallingEdge
+#define LLWU_WAKEUP_PIN_IDX    (1U) /* LLWU_P1 used for VOL+ button */
+#define LLWU_WAKEUP_PIN_TYPE   kLLWU_ExternalPinFallingEdge
 #define APP_WAKEUP_BUTTON_NAME "VOL+"
 
 typedef enum _app_wakeup_source

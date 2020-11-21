@@ -81,6 +81,9 @@
     <source path="boards/evkmcimx7ulp/driver_examples/edma/memory_to_memory" target_path="doc" type="doc" toolchain="iar mdk mcuxpresso armgcc">
       <files mask="readme.txt"/>
     </source>
+    <source path="boards/evkmcimx7ulp/driver_examples/edma/memory_to_memory" target_path="remoteproc" type="src">
+      <files mask="empty_rsc_table.c"/>
+    </source>
     <source path="boards/evkmcimx7ulp/driver_examples/edma/memory_to_memory" target_path="source" type="src">
       <files mask="edma_memory_to_memory.c"/>
     </source>

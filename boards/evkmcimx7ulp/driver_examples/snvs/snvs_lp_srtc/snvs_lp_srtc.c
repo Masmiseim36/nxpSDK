@@ -18,7 +18,7 @@
  * Definitions
  ******************************************************************************/
 #define EXAMPLE_SNVS_IRQHandler (SNVS_IRQHandler)
-#define EXAMPLE_SNVS_IRQn (SNVS_IRQn)
+#define EXAMPLE_SNVS_IRQn       (SNVS_IRQn)
 
 /*******************************************************************************
  * Prototypes
@@ -48,11 +48,7 @@ void EXAMPLE_SNVS_IRQHandler(void)
         /* Clear alarm flag */
         SNVS_HP_RTC_ClearStatusFlags(SNVS, kSNVS_RTC_AlarmInterruptFlag);
     }
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 int main(void)

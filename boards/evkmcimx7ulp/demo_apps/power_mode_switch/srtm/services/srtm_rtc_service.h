@@ -30,10 +30,10 @@
 #endif
 
 #define SRTM_RTC_ALARM_DISABLED (0x0U)
-#define SRTM_RTC_ALARM_ENABLED (0x1U)
+#define SRTM_RTC_ALARM_ENABLED  (0x1U)
 
 #define SRTM_RTC_ALARM_NOT_PENDING (0x0U)
-#define SRTM_RTC_ALARM_PENDING (0x1U)
+#define SRTM_RTC_ALARM_PENDING     (0x1U)
 
 /*! @brief SRTM RTC datetime structure */
 SRTM_PACKED_BEGIN struct _srtm_rtc_alarm

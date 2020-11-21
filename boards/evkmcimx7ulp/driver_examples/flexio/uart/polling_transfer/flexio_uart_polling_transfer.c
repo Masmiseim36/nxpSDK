@@ -14,9 +14,9 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define BOARD_FLEXIO_BASE FLEXIO0
-#define FLEXIO_UART_TX_PIN 1U
-#define FLEXIO_UART_RX_PIN 0U
+#define BOARD_FLEXIO_BASE      FLEXIO0
+#define FLEXIO_UART_TX_PIN     1U
+#define FLEXIO_UART_RX_PIN     0U
 #define FLEXIO_CLOCK_FREQUENCY CLOCK_GetIpFreq(kCLOCK_Flexio0)
 
 /*******************************************************************************

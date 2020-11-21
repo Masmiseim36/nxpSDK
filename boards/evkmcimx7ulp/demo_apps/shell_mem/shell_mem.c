@@ -22,7 +22,7 @@
  * Definitions
  ******************************************************************************/
 
-#define SHELL_Printf PRINTF
+#define SHELL_Printf        PRINTF
 #define APP_BYTES_EACH_LINE (16)
 
 typedef enum

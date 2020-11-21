@@ -16,11 +16,11 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define TPM_LED_ON_LEVEL kTPM_HighTrue
-#define BOARD_TPM_BASEADDR TPM2
-#define BOARD_FIRST_TPM_CHANNEL kTPM_Chnl_0
+#define TPM_LED_ON_LEVEL         kTPM_HighTrue
+#define BOARD_TPM_BASEADDR       TPM2
+#define BOARD_FIRST_TPM_CHANNEL  kTPM_Chnl_0
 #define BOARD_SECOND_TPM_CHANNEL kTPM_Chnl_1
-#define TPM_SOURCE_CLOCK CLOCK_GetIpFreq(kCLOCK_Tpm2)
+#define TPM_SOURCE_CLOCK         CLOCK_GetIpFreq(kCLOCK_Tpm2)
 
 /*******************************************************************************
  * Prototypes

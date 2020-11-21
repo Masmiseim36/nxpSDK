@@ -21,16 +21,16 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_PF1550_LPI2C_BASE LPI2C3
-#define DEMO_PF1550_LPI2C_IRQ LPI2C3_IRQn
-#define DEMO_PF1550_LPI2C_PRIO (5U)
+#define DEMO_PF1550_LPI2C_BASE        LPI2C3
+#define DEMO_PF1550_LPI2C_IRQ         LPI2C3_IRQn
+#define DEMO_PF1550_LPI2C_PRIO        (5U)
 #define DEMO_PF1550_LPI2C_CLKSRC_FREQ CLOCK_GetIpFreq(kCLOCK_Lpi2c3)
-#define DEMO_PF1550_LPI2C_BAUDRATE (400000U)
-#define DEMO_PF1550_LPI2C_SCL_GPIO GPIOB
-#define DEMO_PF1550_LPI2C_SCL_PIN (12U)
-#define DEMO_PF1550_LPI2C_SDA_GPIO GPIOB
-#define DEMO_PF1550_LPI2C_SDA_PIN (13U)
-#define DEMO_PF1550_LPI2C_DELAY (100U)
+#define DEMO_PF1550_LPI2C_BAUDRATE    (400000U)
+#define DEMO_PF1550_LPI2C_SCL_GPIO    GPIOB
+#define DEMO_PF1550_LPI2C_SCL_PIN     (12U)
+#define DEMO_PF1550_LPI2C_SDA_GPIO    GPIOB
+#define DEMO_PF1550_LPI2C_SDA_PIN     (13U)
+#define DEMO_PF1550_LPI2C_DELAY       (100U)
 
 /*******************************************************************************
  * Prototypes
@@ -464,7 +464,7 @@ int main(void)
 {
     lpi2c_master_config_t lpi2cMasterConfig;
 
-    BOARD_InitPins();
+    BOARD_InitBootPins();
     BOARD_BootClockRUN();
     BOARD_I2C_ReleaseBus();
     BOARD_I2C_ConfigurePins();

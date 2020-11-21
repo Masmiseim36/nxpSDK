@@ -13,9 +13,9 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define SYSTICK_BASE LPTMR0
-#define SYSTICK_IRQn LPTMR0_IRQn
-#define SYSTICK_HANDLER LPTMR0_IRQHandler
+#define SYSTICK_BASE       LPTMR0
+#define SYSTICK_IRQn       LPTMR0_IRQn
+#define SYSTICK_HANDLER    LPTMR0_IRQHandler
 #define SYSTICK_CLOCK_NAME kCLOCK_Lptmr0
 
 /* Power mode definition of low power management.

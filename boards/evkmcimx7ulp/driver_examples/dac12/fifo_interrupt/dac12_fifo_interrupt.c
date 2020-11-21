@@ -16,8 +16,8 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_DAC12_BASE DAC0
-#define DEMO_DAC12_IRQ_ID DAC0_IRQn
+#define DEMO_DAC12_BASE         DAC0
+#define DEMO_DAC12_IRQ_ID       DAC0_IRQn
 #define DEMO_DAC12_HANDLER_FUNC DAC0_IRQHandler
 
 #define DEMO_DAC_VALUE_ARRAY_SIZE 32U

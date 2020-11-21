@@ -116,7 +116,7 @@
 #define gSerialMgrInvalidIdx_c (0xFF)
 
 #define gSerialMgrBufferInUse_c (1 << 0)
-#define gSerialMgrSyncTx_c (1 << 1)
+#define gSerialMgrSyncTx_c      (1 << 1)
 
 /*! *********************************************************************************
 *************************************************************************************
@@ -161,11 +161,11 @@ typedef enum
 
 /* If you have to print a hex number you can choose between
 BigEndian=1/LittleEndian=0, newline, commas or spaces (between bytes) */
-#define gPrtHexNoFormat_c (0x00)
+#define gPrtHexNoFormat_c  (0x00)
 #define gPrtHexBigEndian_c (1 << 0)
-#define gPrtHexNewLine_c (1 << 1)
-#define gPrtHexCommas_c (1 << 2)
-#define gPrtHexSpaces_c (1 << 3)
+#define gPrtHexNewLine_c   (1 << 1)
+#define gPrtHexCommas_c    (1 << 2)
+#define gPrtHexSpaces_c    (1 << 3)
 
 /* Serial Manager callback type */
 typedef void (*pSerialCallBack_t)(void *param);

@@ -1,7 +1,7 @@
 Overview
 ========
 
-The lpdc_single_interrupt example shows how to use interrupt with LPADC driver.
+The lpadc_single_interrupt example shows how to use interrupt with LPADC driver.
 
 In this example, user should indicate a channel to provide a voltage signal (can be controlled by user) as the LPADC's
 sample input. When running the project, typing any key into debug console would trigger the conversion. ADC watermark 
@@ -12,8 +12,8 @@ be printed when the execution return to the main function.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.40.2
-- GCC ARM Embedded  8.3.1
+- IAR embedded Workbench  8.50.1
+- GCC ARM Embedded  9.2.1
 
 Hardware requirements
 =====================

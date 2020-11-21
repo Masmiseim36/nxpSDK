@@ -87,6 +87,9 @@
     <source path="boards/evkmcimx7ulp/demo_apps/ecompass" target_path="evkmcimx7ulp/demo_apps/ecompass" type="binary" exclude="true">
       <files mask="ecompass.bin"/>
     </source>
+    <source path="boards/evkmcimx7ulp/demo_apps/ecompass" target_path="remoteproc" type="src">
+      <files mask="empty_rsc_table.c"/>
+    </source>
     <source path="boards/evkmcimx7ulp/demo_apps/ecompass" target_path="source" type="src">
       <files mask="ecompass.c"/>
     </source>

@@ -329,9 +329,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, FNET_CFG_COMP_UV=1, CPU_MIMXRT1062DVL6A, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=0, USE_RTOS=1, MBEDTLS_CONFIG_FILE='\"aws_mbedtls_config.h\"', FNET_PORT_LWIP=1, FSL_RTOS_FREE_RTOS, SERIAL_PORT_TYPE_UART=1</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1062DVL6A, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=0, USE_RTOS=1, MBEDTLS_CONFIG_FILE='\"aws_mbedtls_config.h\"', DEMO_DEVICE_CONFIGURATION_ENET=1, FSL_RTOS_FREE_RTOS, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>../../../../../rtos/amazon-freertos/freertos_kernel/portable/GCC/ARM_CM4F;../../..;..;../ssl_server;../fnet_mdns;../config_files;../../../../../rtos/amazon-freertos/demos/include;../../../../../rtos/amazon-freertos/demos/dev_mode_key_provisioning/include;../../../../../CMSIS/Include;../../../../../devices;../../../../../rtos/amazon-freertos/demos/network_manager;../../../../../rtos/amazon-freertos/freertos_kernel/include;../../../../../rtos/amazon-freertos/libraries/abstractions/platform/freertos/include;../../../../../rtos/amazon-freertos/libraries/abstractions/platform/include;../../../../../rtos/amazon-freertos/libraries/c_sdk/aws/shadow/include;../../../../../rtos/amazon-freertos/libraries/c_sdk/aws/shadow/src;../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include;../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include/private;../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/include;../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/src;../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/serializer/include;../../../../../rtos/amazon-freertos/libraries/abstractions/secure_sockets/include;../../../../../rtos/amazon-freertos/libraries/freertos_plus/standard/crypto/include;../../../../../rtos/amazon-freertos/libraries/freertos_plus/standard/pkcs11/include;../../../../../rtos/amazon-freertos/libraries/freertos_plus/standard/utils/include;../../../../../rtos/amazon-freertos/libraries/freertos_plus/standard/tls/include;../../../../../rtos/amazon-freertos/libraries/abstractions/pkcs11/include;../../../../../rtos/amazon-freertos/libraries/abstractions/pkcs11/mbedtls;../../../../../rtos/amazon-freertos/libraries/3rdparty/pkcs11;../../../../../rtos/amazon-freertos/libraries/3rdparty/jsmn;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/port/ksdk;../../../../../components/phyksz8081;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062/drivers;../../../../../middleware/lwip/port;../../../../../middleware/lwip/src;../../../../../middleware/lwip/src/include;../../../../../rtos/amazon-freertos/vendors/nxp/mflash/mimxrt1062;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062;../../../../../devices/MIMXRT1062/utilities/str;../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../components/serial_manager;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../xip;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062/utilities</IncludePath>
+              <IncludePath>../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;../../..;..;../ssl_server;../config_files;../../../../../rtos/freertos/demos/dev_mode_key_provisioning/include;../../../../../CMSIS/Include;../../../../../devices;../../../../../rtos/freertos/demos/include;../../../../../rtos/freertos/demos/network_manager;../../../../../rtos/freertos/freertos_kernel/include;../../../../../rtos/freertos/libraries/abstractions/platform/freertos/include;../../../../../rtos/freertos/libraries/abstractions/platform/include;../../../../../rtos/freertos/libraries/c_sdk/aws/shadow/include;../../../../../rtos/freertos/libraries/c_sdk/aws/shadow/src;../../../../../rtos/freertos/libraries/c_sdk/standard/common/include;../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/private;../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/include;../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/src;../../../../../rtos/freertos/libraries/c_sdk/standard/serializer/include;../../../../../rtos/freertos/libraries/abstractions/secure_sockets/include;../../../../../rtos/freertos/libraries/freertos_plus/standard/crypto/include;../../../../../rtos/freertos/libraries/freertos_plus/standard/pkcs11/include;../../../../../rtos/freertos/libraries/freertos_plus/standard/utils/include;../../../../../rtos/freertos/libraries/freertos_plus/standard/tls/include;../../../../../rtos/freertos/libraries/abstractions/pkcs11/include;../../../../../rtos/freertos/libraries/abstractions/pkcs11/mbedtls;../../../../../rtos/freertos/libraries/3rdparty/pkcs11;../../../../../rtos/freertos/libraries/3rdparty/jsmn;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/port/ksdk;../../../../../components/phy/mdio/enet;../../../../../components/phy/device/phyksz8081;../../../../../devices/MIMXRT1062/drivers;../../../../../middleware/lwip/port;../../../../../middleware/lwip/src;../../../../../middleware/lwip/src/include;../../../../../devices/MIMXRT1062/utilities/str;../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../middleware/mflash/mimxrt1062;../../../../../middleware/lwip/src/include/lwip/apps;../../../../../devices/MIMXRT1062;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../components/phy;../../../../../devices/MIMXRT1062/utilities</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -365,73 +365,13 @@
             <ScatterFile>MIMXRT1062xxxxx_flexspi_nor.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --keep=*(.boot_hdr.ivt) --keep=*(.boot_hdr.boot_data) --keep=*(.boot_hdr.conf) --predefine="-DXIP_BOOT_HEADER_ENABLE=1" --predefine="-D__stack_size__=0x400" --predefine="-D__heap_size__=0x200"</Misc>
+            <Misc>--remove --predefine="-DXIP_BOOT_HEADER_ENABLE=1" --predefine="-D__stack_size__=0x400" --predefine="-D__heap_size__=0x200"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
         </TargetArmAds>
       </TargetOption>
       <Groups>
-        <Group>
-          <GroupName>amazon-freertos-config_files</GroupName>
-          <Files>
-            <File>
-              <FileName>aws_iot_network_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../config_files/aws_iot_network_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_bufferpool_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../config_files/aws_bufferpool_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_demo_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../config_files/aws_demo_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_mqtt_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../config_files/aws_mqtt_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_secure_sockets_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../config_files/aws_secure_sockets_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_shadow_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../config_files/aws_shadow_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_wifi_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../config_files/aws_wifi_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>FreeRTOSIPConfig.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../config_files/FreeRTOSIPConfig.h</FilePath>
-            </File>
-            <File>
-              <FileName>iot_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../config_files/iot_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>iot_mqtt_agent_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../config_files/iot_mqtt_agent_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>iot_pkcs11_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../config_files/iot_pkcs11_config.h</FilePath>
-            </File>
-          </Files>
-        </Group>
         <Group>
           <GroupName>source</GroupName>
           <Files>
@@ -441,14 +381,14 @@
               <FilePath>../aws_clientcredential.h</FilePath>
             </File>
             <File>
-              <FileName>device_configuration.c</FileName>
+              <FileName>device_configuration_lwip.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../device_configuration.c</FilePath>
+              <FilePath>../device_configuration_lwip.c</FilePath>
             </File>
             <File>
-              <FileName>device_configuration.h</FileName>
+              <FileName>device_configuration_lwip.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../device_configuration.h</FilePath>
+              <FilePath>../device_configuration_lwip.h</FilePath>
             </File>
             <File>
               <FileName>aws_shadow_lightbulb_on_off.c</FileName>
@@ -506,24 +446,84 @@
               <FilePath>../clock_config.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_phy.c</FileName>
+              <FileName>dcd.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../components/phyksz8081/fsl_phy.c</FilePath>
+              <FilePath>../dcd.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_phy.h</FileName>
+              <FileName>dcd.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../components/phyksz8081/fsl_phy.h</FilePath>
+              <FilePath>../dcd.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos:config_files</GroupName>
+          <GroupName>freertos:config_files</GroupName>
           <Files>
             <File>
               <FileName>FreeRTOSConfig.h</FileName>
               <FileType>5</FileType>
               <FilePath>../config_files/FreeRTOSConfig.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>freertos-config_files</GroupName>
+          <Files>
+            <File>
+              <FileName>aws_bufferpool_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../config_files/aws_bufferpool_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_demo_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../config_files/aws_demo_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_mqtt_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../config_files/aws_mqtt_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_secure_sockets_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../config_files/aws_secure_sockets_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_shadow_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../config_files/aws_shadow_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_wifi_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../config_files/aws_wifi_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>FreeRTOSIPConfig.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../config_files/FreeRTOSIPConfig.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_iot_network_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../config_files/aws_iot_network_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>iot_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../config_files/iot_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>iot_mqtt_agent_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../config_files/iot_mqtt_agent_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>iot_pkcs11_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../config_files/iot_pkcs11_config.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -593,57 +593,52 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>source-fnet_mdns</GroupName>
-          <Files>
-            <File>
-              <FileName>fnet_comp.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../fnet_mdns/fnet_comp.h</FilePath>
-            </File>
-            <File>
-              <FileName>fnet_mdns.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../fnet_mdns/fnet_mdns.c</FilePath>
-            </File>
-            <File>
-              <FileName>fnet_mdns.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../fnet_mdns/fnet_mdns.h</FilePath>
-            </File>
-            <File>
-              <FileName>fnet_mdns_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../fnet_mdns/fnet_mdns_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>fnet_mdns_port.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../fnet_mdns/fnet_mdns_port.h</FilePath>
-            </File>
-            <File>
-              <FileName>fnet_types.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../fnet_mdns/fnet_types.h</FilePath>
-            </File>
-            <File>
-              <FileName>fnet_user_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../fnet_mdns/fnet_user_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>port_lwip.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../fnet_mdns/port_lwip.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>doc</GroupName>
           <Files>
             <File>
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
               <FilePath>../readme.txt</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>mdio</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_enet_mdio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/phy/mdio/enet/fsl_enet_mdio.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_enet_mdio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/phy/mdio/enet/fsl_enet_mdio.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_mdio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/phy/fsl_mdio.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>phy</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_phyksz8081.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_phyksz8081.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_phy.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/phy/fsl_phy.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -776,11 +771,6 @@
               <FilePath>../../../../../middleware/lwip/port/sys_arch.c</FilePath>
             </File>
             <File>
-              <FileName>enet_ethernetif_kinetis.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lwip/port/enet_ethernetif_kinetis.c</FilePath>
-            </File>
-            <File>
               <FileName>enet_ethernetif.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/lwip/port/enet_ethernetif.c</FilePath>
@@ -789,6 +779,11 @@
               <FileName>enet_ethernetif.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/lwip/port/enet_ethernetif.h</FilePath>
+            </File>
+            <File>
+              <FileName>enet_ethernetif_kinetis.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lwip/port/enet_ethernetif_kinetis.c</FilePath>
             </File>
             <File>
               <FileName>enet_ethernetif_priv.h</FileName>
@@ -956,6 +951,11 @@
           <GroupName>lwip-src-core-ipv4</GroupName>
           <Files>
             <File>
+              <FileName>acd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lwip/src/core/ipv4/acd.c</FilePath>
+            </File>
+            <File>
               <FileName>autoip.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/lwip/src/core/ipv4/autoip.c</FilePath>
@@ -1100,6 +1100,11 @@
         <Group>
           <GroupName>lwip-src-include-lwip</GroupName>
           <Files>
+            <File>
+              <FileName>acd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lwip/src/include/lwip/acd.h</FilePath>
+            </File>
             <File>
               <FileName>altcp.h</FileName>
               <FileType>5</FileType>
@@ -1420,6 +1425,11 @@
         <Group>
           <GroupName>lwip-src-include-lwip-prot</GroupName>
           <Files>
+            <File>
+              <FileName>acd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lwip/src/include/lwip/prot/acd.h</FilePath>
+            </File>
             <File>
               <FileName>autoip.h</FileName>
               <FileType>5</FileType>
@@ -1903,912 +1913,1027 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-vendors-nxp-mflash-mimxrt1062</GroupName>
+          <GroupName>utilities</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_debug_console.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console_conf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/utilities/fsl_assert.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>mflash-mimxrt1062</GroupName>
           <Files>
             <File>
               <FileName>mflash_drv.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/vendors/nxp/mflash/mimxrt1062/mflash_drv.c</FilePath>
+              <FilePath>../../../../../middleware/mflash/mimxrt1062/mflash_drv.c</FilePath>
             </File>
             <File>
               <FileName>mflash_drv.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/vendors/nxp/mflash/mimxrt1062/mflash_drv.h</FilePath>
+              <FilePath>../../../../../middleware/mflash/mimxrt1062/mflash_drv.h</FilePath>
             </File>
             <File>
               <FileName>mflash_file.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/vendors/nxp/mflash/mimxrt1062/mflash_file.c</FilePath>
+              <FilePath>../../../../../middleware/mflash/mimxrt1062/mflash_file.c</FilePath>
             </File>
             <File>
               <FileName>mflash_file.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/vendors/nxp/mflash/mimxrt1062/mflash_file.h</FilePath>
+              <FilePath>../../../../../middleware/mflash/mimxrt1062/mflash_file.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-vendors-nxp-secure_sockets-lwip</GroupName>
+          <GroupName>freertos-vendors-nxp-secure_sockets-lwip</GroupName>
           <Files>
             <File>
               <FileName>iot_secure_sockets.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/vendors/nxp/secure_sockets/lwip/iot_secure_sockets.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/vendors/nxp/secure_sockets/lwip/iot_secure_sockets.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-demos-demo_runner</GroupName>
+          <GroupName>freertos-demos-demo_runner</GroupName>
           <Files>
             <File>
               <FileName>aws_demo.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/demos/demo_runner/aws_demo.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/demos/demo_runner/aws_demo.c</FilePath>
             </File>
             <File>
               <FileName>iot_demo_freertos.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/demos/demo_runner/iot_demo_freertos.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/demos/demo_runner/iot_demo_freertos.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-demos-include</GroupName>
+          <GroupName>freertos-demos-include</GroupName>
           <Files>
             <File>
               <FileName>aws_clientcredential.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/demos/include/aws_clientcredential.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/demos/include/aws_clientcredential.h</FilePath>
             </File>
             <File>
               <FileName>aws_clientcredential_keys.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/demos/include/aws_clientcredential_keys.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/demos/include/aws_clientcredential_keys.h</FilePath>
             </File>
             <File>
               <FileName>aws_demo.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/demos/include/aws_demo.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/demos/include/aws_demo.h</FilePath>
             </File>
             <File>
               <FileName>aws_iot_demo_network.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/demos/include/aws_iot_demo_network.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/demos/include/aws_iot_demo_network.h</FilePath>
             </File>
             <File>
               <FileName>aws_ota_codesigner_certificate.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/demos/include/aws_ota_codesigner_certificate.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/demos/include/aws_ota_codesigner_certificate.h</FilePath>
             </File>
             <File>
               <FileName>aws_wifi_connect_task.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/demos/include/aws_wifi_connect_task.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/demos/include/aws_wifi_connect_task.h</FilePath>
             </File>
             <File>
               <FileName>iot_ble_numericComparison.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/demos/include/iot_ble_numericComparison.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/demos/include/iot_ble_numericComparison.h</FilePath>
             </File>
             <File>
               <FileName>iot_config_common.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/demos/include/iot_config_common.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/demos/include/iot_config_common.h</FilePath>
             </File>
             <File>
               <FileName>iot_demo_logging.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/demos/include/iot_demo_logging.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/demos/include/iot_demo_logging.h</FilePath>
             </File>
             <File>
               <FileName>iot_demo_runner.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/demos/include/iot_demo_runner.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/demos/include/iot_demo_runner.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-demos-network_manager</GroupName>
+          <GroupName>freertos-demos-network_manager</GroupName>
           <Files>
             <File>
               <FileName>aws_iot_demo_network.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/demos/network_manager/aws_iot_demo_network.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/demos/network_manager/aws_iot_demo_network.c</FilePath>
             </File>
             <File>
               <FileName>aws_iot_network_manager.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/demos/network_manager/aws_iot_network_manager.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/demos/network_manager/aws_iot_network_manager.c</FilePath>
             </File>
             <File>
               <FileName>iot_network_manager_private.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/demos/network_manager/iot_network_manager_private.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/demos/network_manager/iot_network_manager_private.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-freertos_kernel</GroupName>
+          <GroupName>lwip-src-apps-mdns</GroupName>
           <Files>
+            <File>
+              <FileName>mdns.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lwip/src/apps/mdns/mdns.c</FilePath>
+            </File>
+            <File>
+              <FileName>mdns_domain.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lwip/src/apps/mdns/mdns_domain.c</FilePath>
+            </File>
+            <File>
+              <FileName>mdns_out.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lwip/src/apps/mdns/mdns_out.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lwip-src-include-lwip-apps</GroupName>
+          <Files>
+            <File>
+              <FileName>mdns.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lwip/src/include/lwip/apps/mdns.h</FilePath>
+            </File>
+            <File>
+              <FileName>mdns_domain.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lwip/src/include/lwip/apps/mdns_domain.h</FilePath>
+            </File>
+            <File>
+              <FileName>mdns_opts.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lwip/src/include/lwip/apps/mdns_opts.h</FilePath>
+            </File>
+            <File>
+              <FileName>mdns_out.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lwip/src/include/lwip/apps/mdns_out.h</FilePath>
+            </File>
+            <File>
+              <FileName>mdns_priv.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lwip/src/include/lwip/apps/mdns_priv.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>freertos-freertos_kernel</GroupName>
+          <Files>
+            <File>
+              <FileName>croutine.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/croutine.c</FilePath>
+            </File>
             <File>
               <FileName>event_groups.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/event_groups.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/event_groups.c</FilePath>
             </File>
             <File>
               <FileName>list.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/list.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/list.c</FilePath>
             </File>
             <File>
               <FileName>queue.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/queue.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/queue.c</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/stream_buffer.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/stream_buffer.c</FilePath>
             </File>
             <File>
               <FileName>tasks.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/tasks.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/tasks.c</FilePath>
             </File>
             <File>
               <FileName>timers.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/timers.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/timers.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-freertos_kernel-include</GroupName>
+          <GroupName>freertos-freertos_kernel-include</GroupName>
           <Files>
             <File>
               <FileName>FreeRTOS.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/include/FreeRTOS.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/FreeRTOS.h</FilePath>
+            </File>
+            <File>
+              <FileName>StackMacros.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</FilePath>
             </File>
             <File>
               <FileName>atomic.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/include/atomic.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/atomic.h</FilePath>
+            </File>
+            <File>
+              <FileName>croutine.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/croutine.h</FilePath>
             </File>
             <File>
               <FileName>deprecated_definitions.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/include/deprecated_definitions.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/deprecated_definitions.h</FilePath>
             </File>
             <File>
               <FileName>event_groups.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/include/event_groups.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/event_groups.h</FilePath>
             </File>
             <File>
               <FileName>list.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/include/list.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/list.h</FilePath>
             </File>
             <File>
               <FileName>message_buffer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/include/message_buffer.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/message_buffer.h</FilePath>
             </File>
             <File>
               <FileName>mpu_prototypes.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/include/mpu_prototypes.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/mpu_prototypes.h</FilePath>
             </File>
             <File>
               <FileName>mpu_wrappers.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/include/mpu_wrappers.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/mpu_wrappers.h</FilePath>
             </File>
             <File>
               <FileName>portable.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/include/portable.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/portable.h</FilePath>
             </File>
             <File>
               <FileName>projdefs.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/include/projdefs.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/projdefs.h</FilePath>
             </File>
             <File>
               <FileName>queue.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/include/queue.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/queue.h</FilePath>
             </File>
             <File>
               <FileName>semphr.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/include/semphr.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/semphr.h</FilePath>
             </File>
             <File>
               <FileName>stack_macros.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/include/stack_macros.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/stack_macros.h</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/include/stream_buffer.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/stream_buffer.h</FilePath>
             </File>
             <File>
               <FileName>task.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/include/task.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/task.h</FilePath>
             </File>
             <File>
               <FileName>timers.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/include/timers.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/timers.h</FilePath>
             </File>
             <File>
               <FileName>freertos_tasks_c_additions.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/include/freertos_tasks_c_additions.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/freertos_tasks_c_additions.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-freertos_kernel-portable-GCC-ARM_CM4F</GroupName>
+          <GroupName>freertos-freertos_kernel-portable-GCC-ARM_CM4F</GroupName>
           <Files>
             <File>
               <FileName>port.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/portable/GCC/ARM_CM4F/port.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F/port.c</FilePath>
             </File>
             <File>
               <FileName>portmacro.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/portable/GCC/ARM_CM4F/portmacro.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F/portmacro.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-freertos_kernel-portable-MemMang</GroupName>
+          <GroupName>freertos-freertos_kernel-portable-MemMang</GroupName>
           <Files>
             <File>
               <FileName>ReadMe.url</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/portable/MemMang/ReadMe.url</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/MemMang/ReadMe.url</FilePath>
             </File>
             <File>
               <FileName>heap_4.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/portable/MemMang/heap_4.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/MemMang/heap_4.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-freertos_kernel-portable</GroupName>
+          <GroupName>freertos-freertos_kernel-portable</GroupName>
           <Files>
             <File>
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/portable/readme.txt</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/readme.txt</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-libraries-abstractions-platform-freertos-include-platform</GroupName>
+          <GroupName>freertos-libraries-abstractions-platform-freertos-include-platform</GroupName>
           <Files>
             <File>
               <FileName>iot_network_ble.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/abstractions/platform/freertos/include/platform/iot_network_ble.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/abstractions/platform/freertos/include/platform/iot_network_ble.h</FilePath>
             </File>
             <File>
               <FileName>iot_network_freertos.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/abstractions/platform/freertos/include/platform/iot_network_freertos.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/abstractions/platform/freertos/include/platform/iot_network_freertos.h</FilePath>
             </File>
             <File>
               <FileName>iot_platform_types_freertos.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/abstractions/platform/freertos/include/platform/iot_platform_types_freertos.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/abstractions/platform/freertos/include/platform/iot_platform_types_freertos.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-libraries-abstractions-platform-freertos</GroupName>
+          <GroupName>freertos-libraries-abstractions-platform-freertos</GroupName>
           <Files>
             <File>
               <FileName>iot_clock_freertos.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/abstractions/platform/freertos/iot_clock_freertos.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/abstractions/platform/freertos/iot_clock_freertos.c</FilePath>
             </File>
             <File>
               <FileName>iot_metrics.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/abstractions/platform/freertos/iot_metrics.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/abstractions/platform/freertos/iot_metrics.c</FilePath>
             </File>
             <File>
               <FileName>iot_network_freertos.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/abstractions/platform/freertos/iot_network_freertos.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/abstractions/platform/freertos/iot_network_freertos.c</FilePath>
             </File>
             <File>
               <FileName>iot_threads_freertos.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/abstractions/platform/freertos/iot_threads_freertos.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/abstractions/platform/freertos/iot_threads_freertos.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-libraries-abstractions-platform-include-platform</GroupName>
+          <GroupName>freertos-libraries-abstractions-platform-include-platform</GroupName>
           <Files>
             <File>
               <FileName>iot_clock.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/abstractions/platform/include/platform/iot_clock.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/abstractions/platform/include/platform/iot_clock.h</FilePath>
             </File>
             <File>
               <FileName>iot_metrics.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/abstractions/platform/include/platform/iot_metrics.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/abstractions/platform/include/platform/iot_metrics.h</FilePath>
             </File>
             <File>
               <FileName>iot_network.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/abstractions/platform/include/platform/iot_network.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/abstractions/platform/include/platform/iot_network.h</FilePath>
             </File>
             <File>
               <FileName>iot_threads.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/abstractions/platform/include/platform/iot_threads.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/abstractions/platform/include/platform/iot_threads.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-libraries-abstractions-platform-include-types</GroupName>
+          <GroupName>freertos-libraries-abstractions-platform-include-types</GroupName>
           <Files>
             <File>
               <FileName>iot_platform_types.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/abstractions/platform/include/types/iot_platform_types.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/abstractions/platform/include/types/iot_platform_types.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-libraries-c_sdk-aws-shadow-include</GroupName>
+          <GroupName>freertos-libraries-c_sdk-aws-shadow-include</GroupName>
           <Files>
             <File>
               <FileName>aws_iot_shadow.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/aws/shadow/include/aws_iot_shadow.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/aws/shadow/include/aws_iot_shadow.h</FilePath>
             </File>
             <File>
               <FileName>aws_shadow.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/aws/shadow/include/aws_shadow.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/aws/shadow/include/aws_shadow.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-libraries-c_sdk-aws-shadow-include-types</GroupName>
+          <GroupName>freertos-libraries-c_sdk-aws-shadow-include-types</GroupName>
           <Files>
             <File>
               <FileName>aws_iot_shadow_types.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/aws/shadow/include/types/aws_iot_shadow_types.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/aws/shadow/include/types/aws_iot_shadow_types.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-libraries-c_sdk-aws-shadow-src</GroupName>
+          <GroupName>freertos-libraries-c_sdk-aws-shadow-src</GroupName>
           <Files>
             <File>
               <FileName>aws_iot_shadow_api.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/aws/shadow/src/aws_iot_shadow_api.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/aws/shadow/src/aws_iot_shadow_api.c</FilePath>
             </File>
             <File>
               <FileName>aws_iot_shadow_operation.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/aws/shadow/src/aws_iot_shadow_operation.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/aws/shadow/src/aws_iot_shadow_operation.c</FilePath>
             </File>
             <File>
               <FileName>aws_iot_shadow_parser.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/aws/shadow/src/aws_iot_shadow_parser.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/aws/shadow/src/aws_iot_shadow_parser.c</FilePath>
             </File>
             <File>
               <FileName>aws_iot_shadow_static_memory.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/aws/shadow/src/aws_iot_shadow_static_memory.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/aws/shadow/src/aws_iot_shadow_static_memory.c</FilePath>
             </File>
             <File>
               <FileName>aws_iot_shadow_subscription.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/aws/shadow/src/aws_iot_shadow_subscription.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/aws/shadow/src/aws_iot_shadow_subscription.c</FilePath>
             </File>
             <File>
               <FileName>aws_shadow.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/aws/shadow/src/aws_shadow.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/aws/shadow/src/aws_shadow.c</FilePath>
             </File>
             <File>
               <FileName>aws_shadow_config_defaults.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/aws/shadow/src/aws_shadow_config_defaults.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/aws/shadow/src/aws_shadow_config_defaults.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-libraries-c_sdk-aws-shadow-src-private</GroupName>
+          <GroupName>freertos-libraries-c_sdk-aws-shadow-src-private</GroupName>
           <Files>
             <File>
               <FileName>aws_iot_shadow_internal.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/aws/shadow/src/private/aws_iot_shadow_internal.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/aws/shadow/src/private/aws_iot_shadow_internal.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-libraries-c_sdk-standard-common-include</GroupName>
+          <GroupName>freertos-libraries-c_sdk-standard-common-include</GroupName>
           <Files>
             <File>
               <FileName>iot_appversion32.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include/iot_appversion32.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/iot_appversion32.h</FilePath>
             </File>
             <File>
               <FileName>iot_atomic.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include/iot_atomic.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/iot_atomic.h</FilePath>
             </File>
             <File>
               <FileName>iot_init.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include/iot_init.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/iot_init.h</FilePath>
             </File>
             <File>
               <FileName>iot_linear_containers.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include/iot_linear_containers.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/iot_linear_containers.h</FilePath>
             </File>
             <File>
               <FileName>iot_logging_setup.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include/iot_logging_setup.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/iot_logging_setup.h</FilePath>
             </File>
             <File>
               <FileName>iot_logging_task.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include/iot_logging_task.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/iot_logging_task.h</FilePath>
             </File>
             <File>
               <FileName>iot_taskpool.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include/iot_taskpool.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/iot_taskpool.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-libraries-c_sdk-standard-common-include-private</GroupName>
+          <GroupName>freertos-libraries-c_sdk-standard-common-include-private</GroupName>
           <Files>
             <File>
               <FileName>iot_default_root_certificates.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include/private/iot_default_root_certificates.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/private/iot_default_root_certificates.h</FilePath>
             </File>
             <File>
               <FileName>iot_doubly_linked_list.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include/private/iot_doubly_linked_list.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/private/iot_doubly_linked_list.h</FilePath>
             </File>
             <File>
               <FileName>iot_error.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include/private/iot_error.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/private/iot_error.h</FilePath>
             </File>
             <File>
               <FileName>iot_lib_init.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include/private/iot_lib_init.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/private/iot_lib_init.h</FilePath>
             </File>
             <File>
               <FileName>iot_logging.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include/private/iot_logging.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/private/iot_logging.h</FilePath>
             </File>
             <File>
               <FileName>iot_static_memory.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include/private/iot_static_memory.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/private/iot_static_memory.h</FilePath>
             </File>
             <File>
               <FileName>iot_taskpool_internal.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include/private/iot_taskpool_internal.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/private/iot_taskpool_internal.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-libraries-c_sdk-standard-common-include-types</GroupName>
+          <GroupName>freertos-libraries-c_sdk-standard-common-include-types</GroupName>
           <Files>
             <File>
               <FileName>iot_network_types.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include/types/iot_network_types.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/types/iot_network_types.h</FilePath>
             </File>
             <File>
               <FileName>iot_taskpool_types.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include/types/iot_taskpool_types.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/types/iot_taskpool_types.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-libraries-c_sdk-standard-common</GroupName>
+          <GroupName>freertos-libraries-c_sdk-standard-common</GroupName>
           <Files>
             <File>
               <FileName>iot_device_metrics.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/iot_device_metrics.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/common/iot_device_metrics.c</FilePath>
             </File>
             <File>
               <FileName>iot_init.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/iot_init.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/common/iot_init.c</FilePath>
             </File>
             <File>
               <FileName>iot_static_memory_common.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/iot_static_memory_common.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/common/iot_static_memory_common.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-libraries-c_sdk-standard-common-logging</GroupName>
+          <GroupName>freertos-libraries-c_sdk-standard-common-logging</GroupName>
           <Files>
             <File>
               <FileName>iot_logging.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/logging/iot_logging.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/common/logging/iot_logging.c</FilePath>
             </File>
             <File>
               <FileName>iot_logging_task_dynamic_buffers.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/logging/iot_logging_task_dynamic_buffers.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/common/logging/iot_logging_task_dynamic_buffers.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-libraries-c_sdk-standard-common-taskpool</GroupName>
+          <GroupName>freertos-libraries-c_sdk-standard-common-taskpool</GroupName>
           <Files>
             <File>
               <FileName>iot_taskpool.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/taskpool/iot_taskpool.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/common/taskpool/iot_taskpool.c</FilePath>
             </File>
             <File>
               <FileName>iot_taskpool_static_memory.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/taskpool/iot_taskpool_static_memory.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/common/taskpool/iot_taskpool_static_memory.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-libraries-c_sdk-standard-mqtt-include</GroupName>
+          <GroupName>freertos-libraries-c_sdk-standard-mqtt-include</GroupName>
           <Files>
             <File>
               <FileName>iot_mqtt.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/include/iot_mqtt.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/include/iot_mqtt.h</FilePath>
             </File>
             <File>
               <FileName>iot_mqtt_agent.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/include/iot_mqtt_agent.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/include/iot_mqtt_agent.h</FilePath>
             </File>
             <File>
               <FileName>iot_mqtt_agent_config_defaults.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/include/iot_mqtt_agent_config_defaults.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/include/iot_mqtt_agent_config_defaults.h</FilePath>
             </File>
             <File>
               <FileName>iot_mqtt_config_defaults.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/include/iot_mqtt_config_defaults.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/include/iot_mqtt_config_defaults.h</FilePath>
             </File>
             <File>
               <FileName>iot_mqtt_lib.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/include/iot_mqtt_lib.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/include/iot_mqtt_lib.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-libraries-c_sdk-standard-mqtt-include-types</GroupName>
+          <GroupName>freertos-libraries-c_sdk-standard-mqtt-include-types</GroupName>
           <Files>
             <File>
               <FileName>iot_mqtt_types.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/include/types/iot_mqtt_types.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/include/types/iot_mqtt_types.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-libraries-c_sdk-standard-mqtt-src</GroupName>
+          <GroupName>freertos-libraries-c_sdk-standard-mqtt-src</GroupName>
           <Files>
             <File>
               <FileName>iot_mqtt_agent.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/src/iot_mqtt_agent.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/src/iot_mqtt_agent.c</FilePath>
             </File>
             <File>
               <FileName>iot_mqtt_api.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/src/iot_mqtt_api.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/src/iot_mqtt_api.c</FilePath>
             </File>
             <File>
               <FileName>iot_mqtt_network.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/src/iot_mqtt_network.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/src/iot_mqtt_network.c</FilePath>
             </File>
             <File>
               <FileName>iot_mqtt_operation.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/src/iot_mqtt_operation.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/src/iot_mqtt_operation.c</FilePath>
             </File>
             <File>
               <FileName>iot_mqtt_serialize.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/src/iot_mqtt_serialize.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/src/iot_mqtt_serialize.c</FilePath>
             </File>
             <File>
               <FileName>iot_mqtt_static_memory.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/src/iot_mqtt_static_memory.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/src/iot_mqtt_static_memory.c</FilePath>
             </File>
             <File>
               <FileName>iot_mqtt_subscription.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/src/iot_mqtt_subscription.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/src/iot_mqtt_subscription.c</FilePath>
             </File>
             <File>
               <FileName>iot_mqtt_validate.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/src/iot_mqtt_validate.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/src/iot_mqtt_validate.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-libraries-c_sdk-standard-mqtt-src-private</GroupName>
+          <GroupName>freertos-libraries-c_sdk-standard-mqtt-src-private</GroupName>
           <Files>
             <File>
               <FileName>iot_mqtt_internal.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/src/private/iot_mqtt_internal.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/src/private/iot_mqtt_internal.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-libraries-c_sdk-standard-serializer-include</GroupName>
+          <GroupName>freertos-libraries-c_sdk-standard-serializer-include</GroupName>
           <Files>
             <File>
               <FileName>iot_json_utils.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/serializer/include/iot_json_utils.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/serializer/include/iot_json_utils.h</FilePath>
             </File>
             <File>
               <FileName>iot_serializer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/serializer/include/iot_serializer.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/serializer/include/iot_serializer.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-libraries-c_sdk-standard-serializer-src</GroupName>
+          <GroupName>freertos-libraries-c_sdk-standard-serializer-src</GroupName>
           <Files>
             <File>
               <FileName>iot_json_utils.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/serializer/src/iot_json_utils.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/serializer/src/iot_json_utils.c</FilePath>
             </File>
             <File>
               <FileName>iot_serializer_static_memory.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/serializer/src/iot_serializer_static_memory.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/serializer/src/iot_serializer_static_memory.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-libraries-c_sdk-standard-serializer-src-json</GroupName>
+          <GroupName>freertos-libraries-c_sdk-standard-serializer-src-json</GroupName>
           <Files>
             <File>
               <FileName>iot_serializer_json_decoder.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/serializer/src/json/iot_serializer_json_decoder.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/serializer/src/json/iot_serializer_json_decoder.c</FilePath>
             </File>
             <File>
               <FileName>iot_serializer_json_encoder.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/serializer/src/json/iot_serializer_json_encoder.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/serializer/src/json/iot_serializer_json_encoder.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-libraries-abstractions-secure_sockets-include</GroupName>
+          <GroupName>freertos-libraries-abstractions-secure_sockets-include</GroupName>
           <Files>
             <File>
               <FileName>iot_secure_sockets.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/abstractions/secure_sockets/include/iot_secure_sockets.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/abstractions/secure_sockets/include/iot_secure_sockets.h</FilePath>
             </File>
             <File>
               <FileName>iot_secure_sockets_config_defaults.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/abstractions/secure_sockets/include/iot_secure_sockets_config_defaults.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/abstractions/secure_sockets/include/iot_secure_sockets_config_defaults.h</FilePath>
             </File>
             <File>
               <FileName>iot_secure_sockets_wrapper_metrics.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/abstractions/secure_sockets/include/iot_secure_sockets_wrapper_metrics.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/abstractions/secure_sockets/include/iot_secure_sockets_wrapper_metrics.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-libraries-freertos_plus-standard-crypto-include</GroupName>
+          <GroupName>freertos-libraries-freertos_plus-standard-crypto-include</GroupName>
           <Files>
             <File>
               <FileName>iot_crypto.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/freertos_plus/standard/crypto/include/iot_crypto.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/freertos_plus/standard/crypto/include/iot_crypto.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-libraries-freertos_plus-standard-crypto-src</GroupName>
+          <GroupName>freertos-libraries-freertos_plus-standard-crypto-src</GroupName>
           <Files>
             <File>
               <FileName>iot_crypto.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/freertos_plus/standard/crypto/src/iot_crypto.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/freertos_plus/standard/crypto/src/iot_crypto.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-libraries-freertos_plus-standard-pkcs11-include</GroupName>
+          <GroupName>freertos-libraries-freertos_plus-standard-pkcs11-include</GroupName>
           <Files>
             <File>
               <FileName>iot_pkcs11.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/freertos_plus/standard/pkcs11/include/iot_pkcs11.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/freertos_plus/standard/pkcs11/include/iot_pkcs11.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-libraries-freertos_plus-standard-pkcs11-src</GroupName>
+          <GroupName>freertos-libraries-freertos_plus-standard-pkcs11-src</GroupName>
           <Files>
             <File>
               <FileName>iot_pkcs11.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/freertos_plus/standard/pkcs11/src/iot_pkcs11.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/freertos_plus/standard/pkcs11/src/iot_pkcs11.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-libraries-freertos_plus-standard-utils-include</GroupName>
+          <GroupName>freertos-libraries-freertos_plus-standard-utils-include</GroupName>
           <Files>
             <File>
               <FileName>iot_pki_utils.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/freertos_plus/standard/utils/include/iot_pki_utils.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/freertos_plus/standard/utils/include/iot_pki_utils.h</FilePath>
             </File>
             <File>
               <FileName>iot_system_init.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/freertos_plus/standard/utils/include/iot_system_init.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/freertos_plus/standard/utils/include/iot_system_init.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-libraries-freertos_plus-standard-utils-src</GroupName>
+          <GroupName>freertos-libraries-freertos_plus-standard-utils-src</GroupName>
           <Files>
             <File>
               <FileName>iot_pki_utils.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/freertos_plus/standard/utils/src/iot_pki_utils.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/freertos_plus/standard/utils/src/iot_pki_utils.c</FilePath>
             </File>
             <File>
               <FileName>iot_system_init.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/freertos_plus/standard/utils/src/iot_system_init.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/freertos_plus/standard/utils/src/iot_system_init.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-libraries-freertos_plus-standard-tls-include</GroupName>
+          <GroupName>freertos-libraries-freertos_plus-standard-tls-include</GroupName>
           <Files>
             <File>
               <FileName>iot_tls.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/freertos_plus/standard/tls/include/iot_tls.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/freertos_plus/standard/tls/include/iot_tls.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-libraries-freertos_plus-standard-tls-src</GroupName>
+          <GroupName>freertos-libraries-freertos_plus-standard-tls-src</GroupName>
           <Files>
             <File>
               <FileName>iot_tls.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/freertos_plus/standard/tls/src/iot_tls.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/freertos_plus/standard/tls/src/iot_tls.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-libraries-abstractions-pkcs11-include</GroupName>
+          <GroupName>freertos-libraries-abstractions-pkcs11-include</GroupName>
           <Files>
             <File>
               <FileName>iot_pkcs11_pal.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/abstractions/pkcs11/include/iot_pkcs11_pal.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/abstractions/pkcs11/include/iot_pkcs11_pal.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-libraries-abstractions-pkcs11-mbedtls</GroupName>
+          <GroupName>freertos-libraries-abstractions-pkcs11-mbedtls</GroupName>
           <Files>
             <File>
               <FileName>iot_pkcs11_mbedtls.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/abstractions/pkcs11/mbedtls/iot_pkcs11_mbedtls.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/abstractions/pkcs11/mbedtls/iot_pkcs11_mbedtls.c</FilePath>
             </File>
             <File>
               <FileName>threading_alt.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/abstractions/pkcs11/mbedtls/threading_alt.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/abstractions/pkcs11/mbedtls/threading_alt.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-libraries-3rdparty-pkcs11</GroupName>
+          <GroupName>freertos-libraries-3rdparty-pkcs11</GroupName>
           <Files>
+            <File>
+              <FileName>CONTRIBUTING.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/libraries/3rdparty/pkcs11/CONTRIBUTING.md</FilePath>
+            </File>
+            <File>
+              <FileName>LICENSE.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/libraries/3rdparty/pkcs11/LICENSE.md</FilePath>
+            </File>
+            <File>
+              <FileName>README.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/libraries/3rdparty/pkcs11/README.md</FilePath>
+            </File>
             <File>
               <FileName>pkcs11.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/3rdparty/pkcs11/pkcs11.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/3rdparty/pkcs11/pkcs11.h</FilePath>
             </File>
             <File>
               <FileName>pkcs11f.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/3rdparty/pkcs11/pkcs11f.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/3rdparty/pkcs11/pkcs11f.h</FilePath>
             </File>
             <File>
               <FileName>pkcs11t.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/3rdparty/pkcs11/pkcs11t.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/3rdparty/pkcs11/pkcs11t.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-libraries-3rdparty-jsmn</GroupName>
+          <GroupName>freertos-libraries-3rdparty-jsmn</GroupName>
           <Files>
             <File>
               <FileName>jsmn.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/3rdparty/jsmn/jsmn.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/3rdparty/jsmn/jsmn.c</FilePath>
             </File>
             <File>
               <FileName>jsmn.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/3rdparty/jsmn/jsmn.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/3rdparty/jsmn/jsmn.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-vendors-nxp-pkcs11-common</GroupName>
+          <GroupName>freertos-vendors-nxp-pkcs11-common</GroupName>
           <Files>
             <File>
               <FileName>iot_pkcs11_pal.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/vendors/nxp/pkcs11/common/iot_pkcs11_pal.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/vendors/nxp/pkcs11/common/iot_pkcs11_pal.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -3708,41 +3833,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>utilities</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_debug_console.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console_conf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_assert.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/utilities/fsl_assert.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>component-uart</GroupName>
           <Files>
             <File>
@@ -3806,9 +3896,9 @@
           <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_MIMXRT1062.s</FileName>
+              <FileName>startup_MIMXRT1062.S</FileName>
               <FileType>2</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/arm/startup_MIMXRT1062.s</FilePath>
+              <FilePath>../../../../../devices/MIMXRT1062/arm/startup_MIMXRT1062.S</FilePath>
             </File>
           </Files>
         </Group>
@@ -3835,16 +3925,6 @@
               <FileType>5</FileType>
               <FilePath>../../../xip/evkmimxrt1060_flexspi_nor_config.h</FilePath>
             </File>
-            <File>
-              <FileName>evkmimxrt1060_sdram_ini_dcd.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../xip/evkmimxrt1060_sdram_ini_dcd.c</FilePath>
-            </File>
-            <File>
-              <FileName>evkmimxrt1060_sdram_ini_dcd.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../xip/evkmimxrt1060_sdram_ini_dcd.h</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -3854,6 +3934,11 @@
               <FileName>core_cm7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_armcc.h</FileName>
@@ -3889,31 +3974,6 @@
               <FileName>cmsis_version.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv81mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_armv81mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mbl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
             </File>
             <File>
               <FileName>arm_common_tables.h</FileName>
@@ -4260,9 +4320,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, FNET_CFG_COMP_UV=1, CPU_MIMXRT1062DVL6A, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=0, USE_RTOS=1, MBEDTLS_CONFIG_FILE='\"aws_mbedtls_config.h\"', FNET_PORT_LWIP=1, FSL_RTOS_FREE_RTOS, SERIAL_PORT_TYPE_UART=1</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1062DVL6A, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=0, USE_RTOS=1, MBEDTLS_CONFIG_FILE='\"aws_mbedtls_config.h\"', DEMO_DEVICE_CONFIGURATION_ENET=1, FSL_RTOS_FREE_RTOS, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>../../../../../rtos/amazon-freertos/freertos_kernel/portable/GCC/ARM_CM4F;../../..;..;../ssl_server;../fnet_mdns;../config_files;../../../../../rtos/amazon-freertos/demos/include;../../../../../rtos/amazon-freertos/demos/dev_mode_key_provisioning/include;../../../../../CMSIS/Include;../../../../../devices;../../../../../rtos/amazon-freertos/demos/network_manager;../../../../../rtos/amazon-freertos/freertos_kernel/include;../../../../../rtos/amazon-freertos/libraries/abstractions/platform/freertos/include;../../../../../rtos/amazon-freertos/libraries/abstractions/platform/include;../../../../../rtos/amazon-freertos/libraries/c_sdk/aws/shadow/include;../../../../../rtos/amazon-freertos/libraries/c_sdk/aws/shadow/src;../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include;../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include/private;../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/include;../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/src;../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/serializer/include;../../../../../rtos/amazon-freertos/libraries/abstractions/secure_sockets/include;../../../../../rtos/amazon-freertos/libraries/freertos_plus/standard/crypto/include;../../../../../rtos/amazon-freertos/libraries/freertos_plus/standard/pkcs11/include;../../../../../rtos/amazon-freertos/libraries/freertos_plus/standard/utils/include;../../../../../rtos/amazon-freertos/libraries/freertos_plus/standard/tls/include;../../../../../rtos/amazon-freertos/libraries/abstractions/pkcs11/include;../../../../../rtos/amazon-freertos/libraries/abstractions/pkcs11/mbedtls;../../../../../rtos/amazon-freertos/libraries/3rdparty/pkcs11;../../../../../rtos/amazon-freertos/libraries/3rdparty/jsmn;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/port/ksdk;../../../../../components/phyksz8081;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062/drivers;../../../../../middleware/lwip/port;../../../../../middleware/lwip/src;../../../../../middleware/lwip/src/include;../../../../../rtos/amazon-freertos/vendors/nxp/mflash/mimxrt1062;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062;../../../../../devices/MIMXRT1062/utilities/str;../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../components/serial_manager;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../xip;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062/utilities</IncludePath>
+              <IncludePath>../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;../../..;..;../ssl_server;../config_files;../../../../../rtos/freertos/demos/dev_mode_key_provisioning/include;../../../../../CMSIS/Include;../../../../../devices;../../../../../rtos/freertos/demos/include;../../../../../rtos/freertos/demos/network_manager;../../../../../rtos/freertos/freertos_kernel/include;../../../../../rtos/freertos/libraries/abstractions/platform/freertos/include;../../../../../rtos/freertos/libraries/abstractions/platform/include;../../../../../rtos/freertos/libraries/c_sdk/aws/shadow/include;../../../../../rtos/freertos/libraries/c_sdk/aws/shadow/src;../../../../../rtos/freertos/libraries/c_sdk/standard/common/include;../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/private;../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/include;../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/src;../../../../../rtos/freertos/libraries/c_sdk/standard/serializer/include;../../../../../rtos/freertos/libraries/abstractions/secure_sockets/include;../../../../../rtos/freertos/libraries/freertos_plus/standard/crypto/include;../../../../../rtos/freertos/libraries/freertos_plus/standard/pkcs11/include;../../../../../rtos/freertos/libraries/freertos_plus/standard/utils/include;../../../../../rtos/freertos/libraries/freertos_plus/standard/tls/include;../../../../../rtos/freertos/libraries/abstractions/pkcs11/include;../../../../../rtos/freertos/libraries/abstractions/pkcs11/mbedtls;../../../../../rtos/freertos/libraries/3rdparty/pkcs11;../../../../../rtos/freertos/libraries/3rdparty/jsmn;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/port/ksdk;../../../../../components/phy/mdio/enet;../../../../../components/phy/device/phyksz8081;../../../../../devices/MIMXRT1062/drivers;../../../../../middleware/lwip/port;../../../../../middleware/lwip/src;../../../../../middleware/lwip/src/include;../../../../../devices/MIMXRT1062/utilities/str;../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../middleware/mflash/mimxrt1062;../../../../../middleware/lwip/src/include/lwip/apps;../../../../../devices/MIMXRT1062;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../components/phy;../../../../../devices/MIMXRT1062/utilities</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -4296,73 +4356,13 @@
             <ScatterFile>MIMXRT1062xxxxx_flexspi_nor.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --keep=*(.boot_hdr.ivt) --keep=*(.boot_hdr.boot_data) --keep=*(.boot_hdr.conf) --predefine="-DXIP_BOOT_HEADER_ENABLE=1" --predefine="-D__stack_size__=0x400" --predefine="-D__heap_size__=0x200"</Misc>
+            <Misc>--remove --predefine="-DXIP_BOOT_HEADER_ENABLE=1" --predefine="-D__stack_size__=0x400" --predefine="-D__heap_size__=0x200"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
         </TargetArmAds>
       </TargetOption>
       <Groups>
-        <Group>
-          <GroupName>amazon-freertos-config_files</GroupName>
-          <Files>
-            <File>
-              <FileName>aws_iot_network_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../config_files/aws_iot_network_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_bufferpool_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../config_files/aws_bufferpool_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_demo_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../config_files/aws_demo_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_mqtt_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../config_files/aws_mqtt_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_secure_sockets_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../config_files/aws_secure_sockets_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_shadow_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../config_files/aws_shadow_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>aws_wifi_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../config_files/aws_wifi_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>FreeRTOSIPConfig.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../config_files/FreeRTOSIPConfig.h</FilePath>
-            </File>
-            <File>
-              <FileName>iot_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../config_files/iot_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>iot_mqtt_agent_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../config_files/iot_mqtt_agent_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>iot_pkcs11_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../config_files/iot_pkcs11_config.h</FilePath>
-            </File>
-          </Files>
-        </Group>
         <Group>
           <GroupName>source</GroupName>
           <Files>
@@ -4372,14 +4372,14 @@
               <FilePath>../aws_clientcredential.h</FilePath>
             </File>
             <File>
-              <FileName>device_configuration.c</FileName>
+              <FileName>device_configuration_lwip.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../device_configuration.c</FilePath>
+              <FilePath>../device_configuration_lwip.c</FilePath>
             </File>
             <File>
-              <FileName>device_configuration.h</FileName>
+              <FileName>device_configuration_lwip.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../device_configuration.h</FilePath>
+              <FilePath>../device_configuration_lwip.h</FilePath>
             </File>
             <File>
               <FileName>aws_shadow_lightbulb_on_off.c</FileName>
@@ -4437,24 +4437,84 @@
               <FilePath>../clock_config.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_phy.c</FileName>
+              <FileName>dcd.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../components/phyksz8081/fsl_phy.c</FilePath>
+              <FilePath>../dcd.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_phy.h</FileName>
+              <FileName>dcd.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../components/phyksz8081/fsl_phy.h</FilePath>
+              <FilePath>../dcd.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos:config_files</GroupName>
+          <GroupName>freertos:config_files</GroupName>
           <Files>
             <File>
               <FileName>FreeRTOSConfig.h</FileName>
               <FileType>5</FileType>
               <FilePath>../config_files/FreeRTOSConfig.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>freertos-config_files</GroupName>
+          <Files>
+            <File>
+              <FileName>aws_bufferpool_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../config_files/aws_bufferpool_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_demo_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../config_files/aws_demo_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_mqtt_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../config_files/aws_mqtt_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_secure_sockets_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../config_files/aws_secure_sockets_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_shadow_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../config_files/aws_shadow_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_wifi_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../config_files/aws_wifi_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>FreeRTOSIPConfig.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../config_files/FreeRTOSIPConfig.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_iot_network_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../config_files/aws_iot_network_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>iot_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../config_files/iot_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>iot_mqtt_agent_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../config_files/iot_mqtt_agent_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>iot_pkcs11_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../config_files/iot_pkcs11_config.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4524,57 +4584,52 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>source-fnet_mdns</GroupName>
-          <Files>
-            <File>
-              <FileName>fnet_comp.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../fnet_mdns/fnet_comp.h</FilePath>
-            </File>
-            <File>
-              <FileName>fnet_mdns.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../fnet_mdns/fnet_mdns.c</FilePath>
-            </File>
-            <File>
-              <FileName>fnet_mdns.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../fnet_mdns/fnet_mdns.h</FilePath>
-            </File>
-            <File>
-              <FileName>fnet_mdns_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../fnet_mdns/fnet_mdns_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>fnet_mdns_port.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../fnet_mdns/fnet_mdns_port.h</FilePath>
-            </File>
-            <File>
-              <FileName>fnet_types.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../fnet_mdns/fnet_types.h</FilePath>
-            </File>
-            <File>
-              <FileName>fnet_user_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../fnet_mdns/fnet_user_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>port_lwip.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../fnet_mdns/port_lwip.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>doc</GroupName>
           <Files>
             <File>
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
               <FilePath>../readme.txt</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>mdio</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_enet_mdio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/phy/mdio/enet/fsl_enet_mdio.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_enet_mdio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/phy/mdio/enet/fsl_enet_mdio.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_mdio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/phy/fsl_mdio.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>phy</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_phyksz8081.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_phyksz8081.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_phy.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/phy/fsl_phy.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4707,11 +4762,6 @@
               <FilePath>../../../../../middleware/lwip/port/sys_arch.c</FilePath>
             </File>
             <File>
-              <FileName>enet_ethernetif_kinetis.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lwip/port/enet_ethernetif_kinetis.c</FilePath>
-            </File>
-            <File>
               <FileName>enet_ethernetif.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/lwip/port/enet_ethernetif.c</FilePath>
@@ -4720,6 +4770,11 @@
               <FileName>enet_ethernetif.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/lwip/port/enet_ethernetif.h</FilePath>
+            </File>
+            <File>
+              <FileName>enet_ethernetif_kinetis.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lwip/port/enet_ethernetif_kinetis.c</FilePath>
             </File>
             <File>
               <FileName>enet_ethernetif_priv.h</FileName>
@@ -4887,6 +4942,11 @@
           <GroupName>lwip-src-core-ipv4</GroupName>
           <Files>
             <File>
+              <FileName>acd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lwip/src/core/ipv4/acd.c</FilePath>
+            </File>
+            <File>
               <FileName>autoip.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/lwip/src/core/ipv4/autoip.c</FilePath>
@@ -5031,6 +5091,11 @@
         <Group>
           <GroupName>lwip-src-include-lwip</GroupName>
           <Files>
+            <File>
+              <FileName>acd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lwip/src/include/lwip/acd.h</FilePath>
+            </File>
             <File>
               <FileName>altcp.h</FileName>
               <FileType>5</FileType>
@@ -5351,6 +5416,11 @@
         <Group>
           <GroupName>lwip-src-include-lwip-prot</GroupName>
           <Files>
+            <File>
+              <FileName>acd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lwip/src/include/lwip/prot/acd.h</FilePath>
+            </File>
             <File>
               <FileName>autoip.h</FileName>
               <FileType>5</FileType>
@@ -5834,912 +5904,1027 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-vendors-nxp-mflash-mimxrt1062</GroupName>
+          <GroupName>utilities</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_debug_console.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console_conf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/utilities/fsl_assert.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>mflash-mimxrt1062</GroupName>
           <Files>
             <File>
               <FileName>mflash_drv.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/vendors/nxp/mflash/mimxrt1062/mflash_drv.c</FilePath>
+              <FilePath>../../../../../middleware/mflash/mimxrt1062/mflash_drv.c</FilePath>
             </File>
             <File>
               <FileName>mflash_drv.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/vendors/nxp/mflash/mimxrt1062/mflash_drv.h</FilePath>
+              <FilePath>../../../../../middleware/mflash/mimxrt1062/mflash_drv.h</FilePath>
             </File>
             <File>
               <FileName>mflash_file.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/vendors/nxp/mflash/mimxrt1062/mflash_file.c</FilePath>
+              <FilePath>../../../../../middleware/mflash/mimxrt1062/mflash_file.c</FilePath>
             </File>
             <File>
               <FileName>mflash_file.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/vendors/nxp/mflash/mimxrt1062/mflash_file.h</FilePath>
+              <FilePath>../../../../../middleware/mflash/mimxrt1062/mflash_file.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-vendors-nxp-secure_sockets-lwip</GroupName>
+          <GroupName>freertos-vendors-nxp-secure_sockets-lwip</GroupName>
           <Files>
             <File>
               <FileName>iot_secure_sockets.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/vendors/nxp/secure_sockets/lwip/iot_secure_sockets.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/vendors/nxp/secure_sockets/lwip/iot_secure_sockets.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-demos-demo_runner</GroupName>
+          <GroupName>freertos-demos-demo_runner</GroupName>
           <Files>
             <File>
               <FileName>aws_demo.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/demos/demo_runner/aws_demo.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/demos/demo_runner/aws_demo.c</FilePath>
             </File>
             <File>
               <FileName>iot_demo_freertos.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/demos/demo_runner/iot_demo_freertos.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/demos/demo_runner/iot_demo_freertos.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-demos-include</GroupName>
+          <GroupName>freertos-demos-include</GroupName>
           <Files>
             <File>
               <FileName>aws_clientcredential.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/demos/include/aws_clientcredential.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/demos/include/aws_clientcredential.h</FilePath>
             </File>
             <File>
               <FileName>aws_clientcredential_keys.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/demos/include/aws_clientcredential_keys.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/demos/include/aws_clientcredential_keys.h</FilePath>
             </File>
             <File>
               <FileName>aws_demo.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/demos/include/aws_demo.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/demos/include/aws_demo.h</FilePath>
             </File>
             <File>
               <FileName>aws_iot_demo_network.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/demos/include/aws_iot_demo_network.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/demos/include/aws_iot_demo_network.h</FilePath>
             </File>
             <File>
               <FileName>aws_ota_codesigner_certificate.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/demos/include/aws_ota_codesigner_certificate.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/demos/include/aws_ota_codesigner_certificate.h</FilePath>
             </File>
             <File>
               <FileName>aws_wifi_connect_task.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/demos/include/aws_wifi_connect_task.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/demos/include/aws_wifi_connect_task.h</FilePath>
             </File>
             <File>
               <FileName>iot_ble_numericComparison.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/demos/include/iot_ble_numericComparison.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/demos/include/iot_ble_numericComparison.h</FilePath>
             </File>
             <File>
               <FileName>iot_config_common.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/demos/include/iot_config_common.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/demos/include/iot_config_common.h</FilePath>
             </File>
             <File>
               <FileName>iot_demo_logging.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/demos/include/iot_demo_logging.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/demos/include/iot_demo_logging.h</FilePath>
             </File>
             <File>
               <FileName>iot_demo_runner.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/demos/include/iot_demo_runner.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/demos/include/iot_demo_runner.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-demos-network_manager</GroupName>
+          <GroupName>freertos-demos-network_manager</GroupName>
           <Files>
             <File>
               <FileName>aws_iot_demo_network.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/demos/network_manager/aws_iot_demo_network.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/demos/network_manager/aws_iot_demo_network.c</FilePath>
             </File>
             <File>
               <FileName>aws_iot_network_manager.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/demos/network_manager/aws_iot_network_manager.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/demos/network_manager/aws_iot_network_manager.c</FilePath>
             </File>
             <File>
               <FileName>iot_network_manager_private.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/demos/network_manager/iot_network_manager_private.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/demos/network_manager/iot_network_manager_private.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-freertos_kernel</GroupName>
+          <GroupName>lwip-src-apps-mdns</GroupName>
           <Files>
+            <File>
+              <FileName>mdns.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lwip/src/apps/mdns/mdns.c</FilePath>
+            </File>
+            <File>
+              <FileName>mdns_domain.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lwip/src/apps/mdns/mdns_domain.c</FilePath>
+            </File>
+            <File>
+              <FileName>mdns_out.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lwip/src/apps/mdns/mdns_out.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lwip-src-include-lwip-apps</GroupName>
+          <Files>
+            <File>
+              <FileName>mdns.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lwip/src/include/lwip/apps/mdns.h</FilePath>
+            </File>
+            <File>
+              <FileName>mdns_domain.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lwip/src/include/lwip/apps/mdns_domain.h</FilePath>
+            </File>
+            <File>
+              <FileName>mdns_opts.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lwip/src/include/lwip/apps/mdns_opts.h</FilePath>
+            </File>
+            <File>
+              <FileName>mdns_out.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lwip/src/include/lwip/apps/mdns_out.h</FilePath>
+            </File>
+            <File>
+              <FileName>mdns_priv.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lwip/src/include/lwip/apps/mdns_priv.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>freertos-freertos_kernel</GroupName>
+          <Files>
+            <File>
+              <FileName>croutine.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/croutine.c</FilePath>
+            </File>
             <File>
               <FileName>event_groups.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/event_groups.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/event_groups.c</FilePath>
             </File>
             <File>
               <FileName>list.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/list.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/list.c</FilePath>
             </File>
             <File>
               <FileName>queue.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/queue.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/queue.c</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/stream_buffer.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/stream_buffer.c</FilePath>
             </File>
             <File>
               <FileName>tasks.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/tasks.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/tasks.c</FilePath>
             </File>
             <File>
               <FileName>timers.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/timers.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/timers.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-freertos_kernel-include</GroupName>
+          <GroupName>freertos-freertos_kernel-include</GroupName>
           <Files>
             <File>
               <FileName>FreeRTOS.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/include/FreeRTOS.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/FreeRTOS.h</FilePath>
+            </File>
+            <File>
+              <FileName>StackMacros.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</FilePath>
             </File>
             <File>
               <FileName>atomic.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/include/atomic.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/atomic.h</FilePath>
+            </File>
+            <File>
+              <FileName>croutine.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/croutine.h</FilePath>
             </File>
             <File>
               <FileName>deprecated_definitions.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/include/deprecated_definitions.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/deprecated_definitions.h</FilePath>
             </File>
             <File>
               <FileName>event_groups.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/include/event_groups.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/event_groups.h</FilePath>
             </File>
             <File>
               <FileName>list.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/include/list.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/list.h</FilePath>
             </File>
             <File>
               <FileName>message_buffer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/include/message_buffer.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/message_buffer.h</FilePath>
             </File>
             <File>
               <FileName>mpu_prototypes.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/include/mpu_prototypes.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/mpu_prototypes.h</FilePath>
             </File>
             <File>
               <FileName>mpu_wrappers.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/include/mpu_wrappers.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/mpu_wrappers.h</FilePath>
             </File>
             <File>
               <FileName>portable.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/include/portable.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/portable.h</FilePath>
             </File>
             <File>
               <FileName>projdefs.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/include/projdefs.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/projdefs.h</FilePath>
             </File>
             <File>
               <FileName>queue.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/include/queue.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/queue.h</FilePath>
             </File>
             <File>
               <FileName>semphr.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/include/semphr.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/semphr.h</FilePath>
             </File>
             <File>
               <FileName>stack_macros.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/include/stack_macros.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/stack_macros.h</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/include/stream_buffer.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/stream_buffer.h</FilePath>
             </File>
             <File>
               <FileName>task.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/include/task.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/task.h</FilePath>
             </File>
             <File>
               <FileName>timers.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/include/timers.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/timers.h</FilePath>
             </File>
             <File>
               <FileName>freertos_tasks_c_additions.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/include/freertos_tasks_c_additions.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/freertos_tasks_c_additions.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-freertos_kernel-portable-GCC-ARM_CM4F</GroupName>
+          <GroupName>freertos-freertos_kernel-portable-GCC-ARM_CM4F</GroupName>
           <Files>
             <File>
               <FileName>port.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/portable/GCC/ARM_CM4F/port.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F/port.c</FilePath>
             </File>
             <File>
               <FileName>portmacro.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/portable/GCC/ARM_CM4F/portmacro.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F/portmacro.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-freertos_kernel-portable-MemMang</GroupName>
+          <GroupName>freertos-freertos_kernel-portable-MemMang</GroupName>
           <Files>
             <File>
               <FileName>ReadMe.url</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/portable/MemMang/ReadMe.url</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/MemMang/ReadMe.url</FilePath>
             </File>
             <File>
               <FileName>heap_4.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/portable/MemMang/heap_4.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/MemMang/heap_4.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-freertos_kernel-portable</GroupName>
+          <GroupName>freertos-freertos_kernel-portable</GroupName>
           <Files>
             <File>
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/portable/readme.txt</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/readme.txt</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-libraries-abstractions-platform-freertos-include-platform</GroupName>
+          <GroupName>freertos-libraries-abstractions-platform-freertos-include-platform</GroupName>
           <Files>
             <File>
               <FileName>iot_network_ble.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/abstractions/platform/freertos/include/platform/iot_network_ble.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/abstractions/platform/freertos/include/platform/iot_network_ble.h</FilePath>
             </File>
             <File>
               <FileName>iot_network_freertos.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/abstractions/platform/freertos/include/platform/iot_network_freertos.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/abstractions/platform/freertos/include/platform/iot_network_freertos.h</FilePath>
             </File>
             <File>
               <FileName>iot_platform_types_freertos.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/abstractions/platform/freertos/include/platform/iot_platform_types_freertos.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/abstractions/platform/freertos/include/platform/iot_platform_types_freertos.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-libraries-abstractions-platform-freertos</GroupName>
+          <GroupName>freertos-libraries-abstractions-platform-freertos</GroupName>
           <Files>
             <File>
               <FileName>iot_clock_freertos.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/abstractions/platform/freertos/iot_clock_freertos.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/abstractions/platform/freertos/iot_clock_freertos.c</FilePath>
             </File>
             <File>
               <FileName>iot_metrics.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/abstractions/platform/freertos/iot_metrics.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/abstractions/platform/freertos/iot_metrics.c</FilePath>
             </File>
             <File>
               <FileName>iot_network_freertos.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/abstractions/platform/freertos/iot_network_freertos.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/abstractions/platform/freertos/iot_network_freertos.c</FilePath>
             </File>
             <File>
               <FileName>iot_threads_freertos.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/abstractions/platform/freertos/iot_threads_freertos.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/abstractions/platform/freertos/iot_threads_freertos.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-libraries-abstractions-platform-include-platform</GroupName>
+          <GroupName>freertos-libraries-abstractions-platform-include-platform</GroupName>
           <Files>
             <File>
               <FileName>iot_clock.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/abstractions/platform/include/platform/iot_clock.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/abstractions/platform/include/platform/iot_clock.h</FilePath>
             </File>
             <File>
               <FileName>iot_metrics.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/abstractions/platform/include/platform/iot_metrics.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/abstractions/platform/include/platform/iot_metrics.h</FilePath>
             </File>
             <File>
               <FileName>iot_network.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/abstractions/platform/include/platform/iot_network.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/abstractions/platform/include/platform/iot_network.h</FilePath>
             </File>
             <File>
               <FileName>iot_threads.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/abstractions/platform/include/platform/iot_threads.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/abstractions/platform/include/platform/iot_threads.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-libraries-abstractions-platform-include-types</GroupName>
+          <GroupName>freertos-libraries-abstractions-platform-include-types</GroupName>
           <Files>
             <File>
               <FileName>iot_platform_types.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/abstractions/platform/include/types/iot_platform_types.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/abstractions/platform/include/types/iot_platform_types.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-libraries-c_sdk-aws-shadow-include</GroupName>
+          <GroupName>freertos-libraries-c_sdk-aws-shadow-include</GroupName>
           <Files>
             <File>
               <FileName>aws_iot_shadow.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/aws/shadow/include/aws_iot_shadow.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/aws/shadow/include/aws_iot_shadow.h</FilePath>
             </File>
             <File>
               <FileName>aws_shadow.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/aws/shadow/include/aws_shadow.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/aws/shadow/include/aws_shadow.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-libraries-c_sdk-aws-shadow-include-types</GroupName>
+          <GroupName>freertos-libraries-c_sdk-aws-shadow-include-types</GroupName>
           <Files>
             <File>
               <FileName>aws_iot_shadow_types.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/aws/shadow/include/types/aws_iot_shadow_types.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/aws/shadow/include/types/aws_iot_shadow_types.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-libraries-c_sdk-aws-shadow-src</GroupName>
+          <GroupName>freertos-libraries-c_sdk-aws-shadow-src</GroupName>
           <Files>
             <File>
               <FileName>aws_iot_shadow_api.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/aws/shadow/src/aws_iot_shadow_api.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/aws/shadow/src/aws_iot_shadow_api.c</FilePath>
             </File>
             <File>
               <FileName>aws_iot_shadow_operation.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/aws/shadow/src/aws_iot_shadow_operation.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/aws/shadow/src/aws_iot_shadow_operation.c</FilePath>
             </File>
             <File>
               <FileName>aws_iot_shadow_parser.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/aws/shadow/src/aws_iot_shadow_parser.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/aws/shadow/src/aws_iot_shadow_parser.c</FilePath>
             </File>
             <File>
               <FileName>aws_iot_shadow_static_memory.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/aws/shadow/src/aws_iot_shadow_static_memory.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/aws/shadow/src/aws_iot_shadow_static_memory.c</FilePath>
             </File>
             <File>
               <FileName>aws_iot_shadow_subscription.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/aws/shadow/src/aws_iot_shadow_subscription.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/aws/shadow/src/aws_iot_shadow_subscription.c</FilePath>
             </File>
             <File>
               <FileName>aws_shadow.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/aws/shadow/src/aws_shadow.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/aws/shadow/src/aws_shadow.c</FilePath>
             </File>
             <File>
               <FileName>aws_shadow_config_defaults.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/aws/shadow/src/aws_shadow_config_defaults.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/aws/shadow/src/aws_shadow_config_defaults.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-libraries-c_sdk-aws-shadow-src-private</GroupName>
+          <GroupName>freertos-libraries-c_sdk-aws-shadow-src-private</GroupName>
           <Files>
             <File>
               <FileName>aws_iot_shadow_internal.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/aws/shadow/src/private/aws_iot_shadow_internal.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/aws/shadow/src/private/aws_iot_shadow_internal.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-libraries-c_sdk-standard-common-include</GroupName>
+          <GroupName>freertos-libraries-c_sdk-standard-common-include</GroupName>
           <Files>
             <File>
               <FileName>iot_appversion32.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include/iot_appversion32.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/iot_appversion32.h</FilePath>
             </File>
             <File>
               <FileName>iot_atomic.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include/iot_atomic.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/iot_atomic.h</FilePath>
             </File>
             <File>
               <FileName>iot_init.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include/iot_init.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/iot_init.h</FilePath>
             </File>
             <File>
               <FileName>iot_linear_containers.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include/iot_linear_containers.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/iot_linear_containers.h</FilePath>
             </File>
             <File>
               <FileName>iot_logging_setup.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include/iot_logging_setup.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/iot_logging_setup.h</FilePath>
             </File>
             <File>
               <FileName>iot_logging_task.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include/iot_logging_task.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/iot_logging_task.h</FilePath>
             </File>
             <File>
               <FileName>iot_taskpool.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include/iot_taskpool.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/iot_taskpool.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-libraries-c_sdk-standard-common-include-private</GroupName>
+          <GroupName>freertos-libraries-c_sdk-standard-common-include-private</GroupName>
           <Files>
             <File>
               <FileName>iot_default_root_certificates.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include/private/iot_default_root_certificates.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/private/iot_default_root_certificates.h</FilePath>
             </File>
             <File>
               <FileName>iot_doubly_linked_list.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include/private/iot_doubly_linked_list.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/private/iot_doubly_linked_list.h</FilePath>
             </File>
             <File>
               <FileName>iot_error.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include/private/iot_error.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/private/iot_error.h</FilePath>
             </File>
             <File>
               <FileName>iot_lib_init.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include/private/iot_lib_init.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/private/iot_lib_init.h</FilePath>
             </File>
             <File>
               <FileName>iot_logging.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include/private/iot_logging.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/private/iot_logging.h</FilePath>
             </File>
             <File>
               <FileName>iot_static_memory.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include/private/iot_static_memory.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/private/iot_static_memory.h</FilePath>
             </File>
             <File>
               <FileName>iot_taskpool_internal.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include/private/iot_taskpool_internal.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/private/iot_taskpool_internal.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-libraries-c_sdk-standard-common-include-types</GroupName>
+          <GroupName>freertos-libraries-c_sdk-standard-common-include-types</GroupName>
           <Files>
             <File>
               <FileName>iot_network_types.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include/types/iot_network_types.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/types/iot_network_types.h</FilePath>
             </File>
             <File>
               <FileName>iot_taskpool_types.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include/types/iot_taskpool_types.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/types/iot_taskpool_types.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-libraries-c_sdk-standard-common</GroupName>
+          <GroupName>freertos-libraries-c_sdk-standard-common</GroupName>
           <Files>
             <File>
               <FileName>iot_device_metrics.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/iot_device_metrics.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/common/iot_device_metrics.c</FilePath>
             </File>
             <File>
               <FileName>iot_init.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/iot_init.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/common/iot_init.c</FilePath>
             </File>
             <File>
               <FileName>iot_static_memory_common.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/iot_static_memory_common.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/common/iot_static_memory_common.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-libraries-c_sdk-standard-common-logging</GroupName>
+          <GroupName>freertos-libraries-c_sdk-standard-common-logging</GroupName>
           <Files>
             <File>
               <FileName>iot_logging.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/logging/iot_logging.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/common/logging/iot_logging.c</FilePath>
             </File>
             <File>
               <FileName>iot_logging_task_dynamic_buffers.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/logging/iot_logging_task_dynamic_buffers.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/common/logging/iot_logging_task_dynamic_buffers.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-libraries-c_sdk-standard-common-taskpool</GroupName>
+          <GroupName>freertos-libraries-c_sdk-standard-common-taskpool</GroupName>
           <Files>
             <File>
               <FileName>iot_taskpool.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/taskpool/iot_taskpool.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/common/taskpool/iot_taskpool.c</FilePath>
             </File>
             <File>
               <FileName>iot_taskpool_static_memory.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/taskpool/iot_taskpool_static_memory.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/common/taskpool/iot_taskpool_static_memory.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-libraries-c_sdk-standard-mqtt-include</GroupName>
+          <GroupName>freertos-libraries-c_sdk-standard-mqtt-include</GroupName>
           <Files>
             <File>
               <FileName>iot_mqtt.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/include/iot_mqtt.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/include/iot_mqtt.h</FilePath>
             </File>
             <File>
               <FileName>iot_mqtt_agent.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/include/iot_mqtt_agent.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/include/iot_mqtt_agent.h</FilePath>
             </File>
             <File>
               <FileName>iot_mqtt_agent_config_defaults.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/include/iot_mqtt_agent_config_defaults.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/include/iot_mqtt_agent_config_defaults.h</FilePath>
             </File>
             <File>
               <FileName>iot_mqtt_config_defaults.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/include/iot_mqtt_config_defaults.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/include/iot_mqtt_config_defaults.h</FilePath>
             </File>
             <File>
               <FileName>iot_mqtt_lib.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/include/iot_mqtt_lib.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/include/iot_mqtt_lib.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-libraries-c_sdk-standard-mqtt-include-types</GroupName>
+          <GroupName>freertos-libraries-c_sdk-standard-mqtt-include-types</GroupName>
           <Files>
             <File>
               <FileName>iot_mqtt_types.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/include/types/iot_mqtt_types.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/include/types/iot_mqtt_types.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-libraries-c_sdk-standard-mqtt-src</GroupName>
+          <GroupName>freertos-libraries-c_sdk-standard-mqtt-src</GroupName>
           <Files>
             <File>
               <FileName>iot_mqtt_agent.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/src/iot_mqtt_agent.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/src/iot_mqtt_agent.c</FilePath>
             </File>
             <File>
               <FileName>iot_mqtt_api.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/src/iot_mqtt_api.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/src/iot_mqtt_api.c</FilePath>
             </File>
             <File>
               <FileName>iot_mqtt_network.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/src/iot_mqtt_network.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/src/iot_mqtt_network.c</FilePath>
             </File>
             <File>
               <FileName>iot_mqtt_operation.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/src/iot_mqtt_operation.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/src/iot_mqtt_operation.c</FilePath>
             </File>
             <File>
               <FileName>iot_mqtt_serialize.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/src/iot_mqtt_serialize.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/src/iot_mqtt_serialize.c</FilePath>
             </File>
             <File>
               <FileName>iot_mqtt_static_memory.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/src/iot_mqtt_static_memory.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/src/iot_mqtt_static_memory.c</FilePath>
             </File>
             <File>
               <FileName>iot_mqtt_subscription.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/src/iot_mqtt_subscription.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/src/iot_mqtt_subscription.c</FilePath>
             </File>
             <File>
               <FileName>iot_mqtt_validate.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/src/iot_mqtt_validate.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/src/iot_mqtt_validate.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-libraries-c_sdk-standard-mqtt-src-private</GroupName>
+          <GroupName>freertos-libraries-c_sdk-standard-mqtt-src-private</GroupName>
           <Files>
             <File>
               <FileName>iot_mqtt_internal.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/src/private/iot_mqtt_internal.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/src/private/iot_mqtt_internal.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-libraries-c_sdk-standard-serializer-include</GroupName>
+          <GroupName>freertos-libraries-c_sdk-standard-serializer-include</GroupName>
           <Files>
             <File>
               <FileName>iot_json_utils.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/serializer/include/iot_json_utils.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/serializer/include/iot_json_utils.h</FilePath>
             </File>
             <File>
               <FileName>iot_serializer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/serializer/include/iot_serializer.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/serializer/include/iot_serializer.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-libraries-c_sdk-standard-serializer-src</GroupName>
+          <GroupName>freertos-libraries-c_sdk-standard-serializer-src</GroupName>
           <Files>
             <File>
               <FileName>iot_json_utils.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/serializer/src/iot_json_utils.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/serializer/src/iot_json_utils.c</FilePath>
             </File>
             <File>
               <FileName>iot_serializer_static_memory.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/serializer/src/iot_serializer_static_memory.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/serializer/src/iot_serializer_static_memory.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-libraries-c_sdk-standard-serializer-src-json</GroupName>
+          <GroupName>freertos-libraries-c_sdk-standard-serializer-src-json</GroupName>
           <Files>
             <File>
               <FileName>iot_serializer_json_decoder.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/serializer/src/json/iot_serializer_json_decoder.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/serializer/src/json/iot_serializer_json_decoder.c</FilePath>
             </File>
             <File>
               <FileName>iot_serializer_json_encoder.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/serializer/src/json/iot_serializer_json_encoder.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/c_sdk/standard/serializer/src/json/iot_serializer_json_encoder.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-libraries-abstractions-secure_sockets-include</GroupName>
+          <GroupName>freertos-libraries-abstractions-secure_sockets-include</GroupName>
           <Files>
             <File>
               <FileName>iot_secure_sockets.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/abstractions/secure_sockets/include/iot_secure_sockets.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/abstractions/secure_sockets/include/iot_secure_sockets.h</FilePath>
             </File>
             <File>
               <FileName>iot_secure_sockets_config_defaults.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/abstractions/secure_sockets/include/iot_secure_sockets_config_defaults.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/abstractions/secure_sockets/include/iot_secure_sockets_config_defaults.h</FilePath>
             </File>
             <File>
               <FileName>iot_secure_sockets_wrapper_metrics.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/abstractions/secure_sockets/include/iot_secure_sockets_wrapper_metrics.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/abstractions/secure_sockets/include/iot_secure_sockets_wrapper_metrics.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-libraries-freertos_plus-standard-crypto-include</GroupName>
+          <GroupName>freertos-libraries-freertos_plus-standard-crypto-include</GroupName>
           <Files>
             <File>
               <FileName>iot_crypto.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/freertos_plus/standard/crypto/include/iot_crypto.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/freertos_plus/standard/crypto/include/iot_crypto.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-libraries-freertos_plus-standard-crypto-src</GroupName>
+          <GroupName>freertos-libraries-freertos_plus-standard-crypto-src</GroupName>
           <Files>
             <File>
               <FileName>iot_crypto.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/freertos_plus/standard/crypto/src/iot_crypto.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/freertos_plus/standard/crypto/src/iot_crypto.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-libraries-freertos_plus-standard-pkcs11-include</GroupName>
+          <GroupName>freertos-libraries-freertos_plus-standard-pkcs11-include</GroupName>
           <Files>
             <File>
               <FileName>iot_pkcs11.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/freertos_plus/standard/pkcs11/include/iot_pkcs11.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/freertos_plus/standard/pkcs11/include/iot_pkcs11.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-libraries-freertos_plus-standard-pkcs11-src</GroupName>
+          <GroupName>freertos-libraries-freertos_plus-standard-pkcs11-src</GroupName>
           <Files>
             <File>
               <FileName>iot_pkcs11.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/freertos_plus/standard/pkcs11/src/iot_pkcs11.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/freertos_plus/standard/pkcs11/src/iot_pkcs11.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-libraries-freertos_plus-standard-utils-include</GroupName>
+          <GroupName>freertos-libraries-freertos_plus-standard-utils-include</GroupName>
           <Files>
             <File>
               <FileName>iot_pki_utils.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/freertos_plus/standard/utils/include/iot_pki_utils.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/freertos_plus/standard/utils/include/iot_pki_utils.h</FilePath>
             </File>
             <File>
               <FileName>iot_system_init.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/freertos_plus/standard/utils/include/iot_system_init.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/freertos_plus/standard/utils/include/iot_system_init.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-libraries-freertos_plus-standard-utils-src</GroupName>
+          <GroupName>freertos-libraries-freertos_plus-standard-utils-src</GroupName>
           <Files>
             <File>
               <FileName>iot_pki_utils.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/freertos_plus/standard/utils/src/iot_pki_utils.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/freertos_plus/standard/utils/src/iot_pki_utils.c</FilePath>
             </File>
             <File>
               <FileName>iot_system_init.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/freertos_plus/standard/utils/src/iot_system_init.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/freertos_plus/standard/utils/src/iot_system_init.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-libraries-freertos_plus-standard-tls-include</GroupName>
+          <GroupName>freertos-libraries-freertos_plus-standard-tls-include</GroupName>
           <Files>
             <File>
               <FileName>iot_tls.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/freertos_plus/standard/tls/include/iot_tls.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/freertos_plus/standard/tls/include/iot_tls.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-libraries-freertos_plus-standard-tls-src</GroupName>
+          <GroupName>freertos-libraries-freertos_plus-standard-tls-src</GroupName>
           <Files>
             <File>
               <FileName>iot_tls.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/freertos_plus/standard/tls/src/iot_tls.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/freertos_plus/standard/tls/src/iot_tls.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-libraries-abstractions-pkcs11-include</GroupName>
+          <GroupName>freertos-libraries-abstractions-pkcs11-include</GroupName>
           <Files>
             <File>
               <FileName>iot_pkcs11_pal.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/abstractions/pkcs11/include/iot_pkcs11_pal.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/abstractions/pkcs11/include/iot_pkcs11_pal.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-libraries-abstractions-pkcs11-mbedtls</GroupName>
+          <GroupName>freertos-libraries-abstractions-pkcs11-mbedtls</GroupName>
           <Files>
             <File>
               <FileName>iot_pkcs11_mbedtls.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/abstractions/pkcs11/mbedtls/iot_pkcs11_mbedtls.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/abstractions/pkcs11/mbedtls/iot_pkcs11_mbedtls.c</FilePath>
             </File>
             <File>
               <FileName>threading_alt.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/abstractions/pkcs11/mbedtls/threading_alt.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/abstractions/pkcs11/mbedtls/threading_alt.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-libraries-3rdparty-pkcs11</GroupName>
+          <GroupName>freertos-libraries-3rdparty-pkcs11</GroupName>
           <Files>
+            <File>
+              <FileName>CONTRIBUTING.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/libraries/3rdparty/pkcs11/CONTRIBUTING.md</FilePath>
+            </File>
+            <File>
+              <FileName>LICENSE.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/libraries/3rdparty/pkcs11/LICENSE.md</FilePath>
+            </File>
+            <File>
+              <FileName>README.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/libraries/3rdparty/pkcs11/README.md</FilePath>
+            </File>
             <File>
               <FileName>pkcs11.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/3rdparty/pkcs11/pkcs11.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/3rdparty/pkcs11/pkcs11.h</FilePath>
             </File>
             <File>
               <FileName>pkcs11f.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/3rdparty/pkcs11/pkcs11f.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/3rdparty/pkcs11/pkcs11f.h</FilePath>
             </File>
             <File>
               <FileName>pkcs11t.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/3rdparty/pkcs11/pkcs11t.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/3rdparty/pkcs11/pkcs11t.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-libraries-3rdparty-jsmn</GroupName>
+          <GroupName>freertos-libraries-3rdparty-jsmn</GroupName>
           <Files>
             <File>
               <FileName>jsmn.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/3rdparty/jsmn/jsmn.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/3rdparty/jsmn/jsmn.c</FilePath>
             </File>
             <File>
               <FileName>jsmn.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/libraries/3rdparty/jsmn/jsmn.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/libraries/3rdparty/jsmn/jsmn.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-vendors-nxp-pkcs11-common</GroupName>
+          <GroupName>freertos-vendors-nxp-pkcs11-common</GroupName>
           <Files>
             <File>
               <FileName>iot_pkcs11_pal.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/vendors/nxp/pkcs11/common/iot_pkcs11_pal.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/vendors/nxp/pkcs11/common/iot_pkcs11_pal.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -7639,41 +7824,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>utilities</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_debug_console.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console_conf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_assert.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/utilities/fsl_assert.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>component-uart</GroupName>
           <Files>
             <File>
@@ -7737,9 +7887,9 @@
           <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_MIMXRT1062.s</FileName>
+              <FileName>startup_MIMXRT1062.S</FileName>
               <FileType>2</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/arm/startup_MIMXRT1062.s</FilePath>
+              <FilePath>../../../../../devices/MIMXRT1062/arm/startup_MIMXRT1062.S</FilePath>
             </File>
           </Files>
         </Group>
@@ -7766,16 +7916,6 @@
               <FileType>5</FileType>
               <FilePath>../../../xip/evkmimxrt1060_flexspi_nor_config.h</FilePath>
             </File>
-            <File>
-              <FileName>evkmimxrt1060_sdram_ini_dcd.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../xip/evkmimxrt1060_sdram_ini_dcd.c</FilePath>
-            </File>
-            <File>
-              <FileName>evkmimxrt1060_sdram_ini_dcd.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../xip/evkmimxrt1060_sdram_ini_dcd.h</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -7785,6 +7925,11 @@
               <FileName>core_cm7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_armcc.h</FileName>
@@ -7820,31 +7965,6 @@
               <FileName>cmsis_version.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv81mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_armv81mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mbl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
             </File>
             <File>
               <FileName>arm_common_tables.h</FileName>

@@ -330,7 +330,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>_DEBUG=1, DEBUG, CPU_MIMXRT1052DVL6B, USB_STACK_FREERTOS, USB_STACK_FREERTOS_HEAP_SIZE=32768, FSL_RTOS_FREE_RTOS, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>../../../../../../rtos/amazon-freertos/freertos_kernel/portable/GCC/ARM_CM4F;..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../rtos/amazon-freertos/freertos_kernel/include;../../../../../../middleware/usb;../../../../../../middleware/usb/include;../../../../../../middleware/usb/device;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../components/timer;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052/xip;../../../../xip;../../../../xip;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../components/serial_manager;../../../../../../components/osa;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052/utilities</IncludePath>
+              <IncludePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../middleware/usb;../../../../../../middleware/usb/include;../../../../../../middleware/usb/device;../../../../../../middleware/usb/phy;../../../../../../components/timer;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/xip;../../../../xip;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../components/osa;../../../../../../devices/MIMXRT1052/utilities</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -475,6 +475,16 @@
               <FileType>5</FileType>
               <FilePath>../pin_mux.h</FilePath>
             </File>
+            <File>
+              <FileName>dcd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../dcd.c</FilePath>
+            </File>
+            <File>
+              <FileName>dcd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../dcd.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -489,26 +499,6 @@
               <FileName>usb_device_ehci.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/usb/device/usb_device_ehci.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>usb-include</GroupName>
-          <Files>
-            <File>
-              <FileName>usb.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/include/usb.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_misc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/include/usb_misc.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_spec.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/include/usb_spec.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -623,202 +613,182 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-device-include</GroupName>
-          <Files>
-            <File>
-              <FileName>usb_device.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/device/usb_device.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>usb-device-source</GroupName>
-          <Files>
-            <File>
-              <FileName>usb_device_dci.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/usb/device/usb_device_dci.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device_dci.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/device/usb_device_dci.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device_ch9.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../usb_device_ch9.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device_ch9.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../usb_device_ch9.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>amazon-freertos-freertos_kernel-portable-MemMang</GroupName>
+          <GroupName>freertos-freertos_kernel-portable-MemMang</GroupName>
           <Files>
             <File>
               <FileName>heap_4.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/portable/MemMang/heap_4.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/MemMang/heap_4.c</FilePath>
             </File>
             <File>
               <FileName>ReadMe.url</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/portable/MemMang/ReadMe.url</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/MemMang/ReadMe.url</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-freertos_kernel</GroupName>
+          <GroupName>freertos-freertos_kernel</GroupName>
           <Files>
+            <File>
+              <FileName>croutine.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/croutine.c</FilePath>
+            </File>
             <File>
               <FileName>event_groups.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/event_groups.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/event_groups.c</FilePath>
             </File>
             <File>
               <FileName>list.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/list.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/list.c</FilePath>
             </File>
             <File>
               <FileName>queue.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/queue.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/queue.c</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/stream_buffer.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/stream_buffer.c</FilePath>
             </File>
             <File>
               <FileName>tasks.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/tasks.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/tasks.c</FilePath>
             </File>
             <File>
               <FileName>timers.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/timers.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/timers.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-freertos_kernel-include</GroupName>
+          <GroupName>freertos-freertos_kernel-include</GroupName>
           <Files>
             <File>
               <FileName>FreeRTOS.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/FreeRTOS.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/FreeRTOS.h</FilePath>
+            </File>
+            <File>
+              <FileName>StackMacros.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</FilePath>
             </File>
             <File>
               <FileName>atomic.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/atomic.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/atomic.h</FilePath>
+            </File>
+            <File>
+              <FileName>croutine.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/croutine.h</FilePath>
             </File>
             <File>
               <FileName>deprecated_definitions.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/deprecated_definitions.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/deprecated_definitions.h</FilePath>
             </File>
             <File>
               <FileName>event_groups.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/event_groups.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/event_groups.h</FilePath>
             </File>
             <File>
               <FileName>list.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/list.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/list.h</FilePath>
             </File>
             <File>
               <FileName>message_buffer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/message_buffer.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/message_buffer.h</FilePath>
             </File>
             <File>
               <FileName>mpu_prototypes.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/mpu_prototypes.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/mpu_prototypes.h</FilePath>
             </File>
             <File>
               <FileName>mpu_wrappers.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/mpu_wrappers.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/mpu_wrappers.h</FilePath>
             </File>
             <File>
               <FileName>portable.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/portable.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/portable.h</FilePath>
             </File>
             <File>
               <FileName>projdefs.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/projdefs.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/projdefs.h</FilePath>
             </File>
             <File>
               <FileName>queue.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/queue.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/queue.h</FilePath>
             </File>
             <File>
               <FileName>semphr.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/semphr.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/semphr.h</FilePath>
             </File>
             <File>
               <FileName>stack_macros.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/stack_macros.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/stack_macros.h</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/stream_buffer.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/stream_buffer.h</FilePath>
             </File>
             <File>
               <FileName>task.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/task.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/task.h</FilePath>
             </File>
             <File>
               <FileName>timers.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/timers.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/timers.h</FilePath>
             </File>
             <File>
               <FileName>freertos_tasks_c_additions.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/freertos_tasks_c_additions.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/freertos_tasks_c_additions.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-freertos_kernel-portable-GCC-ARM_CM4F</GroupName>
+          <GroupName>freertos-freertos_kernel-portable-GCC-ARM_CM4F</GroupName>
           <Files>
             <File>
               <FileName>port.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/portable/GCC/ARM_CM4F/port.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F/port.c</FilePath>
             </File>
             <File>
               <FileName>portmacro.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/portable/GCC/ARM_CM4F/portmacro.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F/portmacro.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-freertos_kernel-portable</GroupName>
+          <GroupName>freertos-freertos_kernel-portable</GroupName>
           <Files>
             <File>
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/portable/readme.txt</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/readme.txt</FilePath>
             </File>
           </Files>
         </Group>
@@ -834,6 +804,36 @@
               <FileName>usb_device_class.h</FileName>
               <FileType>5</FileType>
               <FilePath>../usb_device_class.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>usb-device-source</GroupName>
+          <Files>
+            <File>
+              <FileName>usb_device_ch9.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../usb_device_ch9.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device_ch9.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../usb_device_ch9.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device_dci.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/usb/device/usb_device_dci.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device_dci.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/device/usb_device_dci.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device_dci.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/device/usb_device_dci.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -886,9 +886,9 @@
           <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_MIMXRT1052.s</FileName>
+              <FileName>startup_MIMXRT1052.S</FileName>
               <FileType>2</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1052/arm/startup_MIMXRT1052.s</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1052/arm/startup_MIMXRT1052.S</FilePath>
             </File>
           </Files>
         </Group>
@@ -949,16 +949,6 @@
               <FileName>evkbimxrt1050_flexspi_nor_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../xip/evkbimxrt1050_flexspi_nor_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>evkbimxrt1050_sdram_ini_dcd.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../xip/evkbimxrt1050_sdram_ini_dcd.c</FilePath>
-            </File>
-            <File>
-              <FileName>evkbimxrt1050_sdram_ini_dcd.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../xip/evkbimxrt1050_sdram_ini_dcd.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1023,6 +1013,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>usb-device-include</GroupName>
+          <Files>
+            <File>
+              <FileName>usb_device.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/device/usb_device.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/device/usb_device.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>component/osa</GroupName>
           <Files>
             <File>
@@ -1048,12 +1053,37 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>usb-include</GroupName>
+          <Files>
+            <File>
+              <FileName>usb.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/include/usb.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_misc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/include/usb_misc.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_spec.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/include/usb_spec.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
               <FileName>core_cm7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_armcc.h</FileName>
@@ -1089,31 +1119,6 @@
               <FileName>cmsis_version.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv81mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv81mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mbl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
             </File>
             <File>
               <FileName>arm_common_tables.h</FileName>
@@ -1461,7 +1466,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1052DVL6B, USB_STACK_FREERTOS, USB_STACK_FREERTOS_HEAP_SIZE=32768, FSL_RTOS_FREE_RTOS, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>../../../../../../rtos/amazon-freertos/freertos_kernel/portable/GCC/ARM_CM4F;..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../rtos/amazon-freertos/freertos_kernel/include;../../../../../../middleware/usb;../../../../../../middleware/usb/include;../../../../../../middleware/usb/device;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../components/timer;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052/xip;../../../../xip;../../../../xip;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../components/serial_manager;../../../../../../components/osa;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052/utilities</IncludePath>
+              <IncludePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../middleware/usb;../../../../../../middleware/usb/include;../../../../../../middleware/usb/device;../../../../../../middleware/usb/phy;../../../../../../components/timer;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/xip;../../../../xip;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../components/osa;../../../../../../devices/MIMXRT1052/utilities</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1495,7 +1500,7 @@
             <ScatterFile>MIMXRT1052xxxxx_flexspi_nor.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --keep=*(.boot_hdr.ivt) --keep=*(.boot_hdr.boot_data) --keep=*(.boot_hdr.conf) --predefine="-DXIP_BOOT_HEADER_ENABLE=1" --predefine="-D__stack_size__=0x2000" --predefine="-D__heap_size__=0x2000"</Misc>
+            <Misc>--remove --predefine="-DXIP_BOOT_HEADER_ENABLE=1" --predefine="-D__stack_size__=0x2000" --predefine="-D__heap_size__=0x2000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -1606,6 +1611,16 @@
               <FileType>5</FileType>
               <FilePath>../pin_mux.h</FilePath>
             </File>
+            <File>
+              <FileName>dcd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../dcd.c</FilePath>
+            </File>
+            <File>
+              <FileName>dcd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../dcd.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1620,26 +1635,6 @@
               <FileName>usb_device_ehci.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/usb/device/usb_device_ehci.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>usb-include</GroupName>
-          <Files>
-            <File>
-              <FileName>usb.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/include/usb.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_misc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/include/usb_misc.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_spec.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/include/usb_spec.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1754,202 +1749,182 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-device-include</GroupName>
-          <Files>
-            <File>
-              <FileName>usb_device.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/device/usb_device.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>usb-device-source</GroupName>
-          <Files>
-            <File>
-              <FileName>usb_device_dci.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/usb/device/usb_device_dci.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device_dci.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/device/usb_device_dci.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device_ch9.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../usb_device_ch9.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device_ch9.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../usb_device_ch9.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>amazon-freertos-freertos_kernel-portable-MemMang</GroupName>
+          <GroupName>freertos-freertos_kernel-portable-MemMang</GroupName>
           <Files>
             <File>
               <FileName>heap_4.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/portable/MemMang/heap_4.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/MemMang/heap_4.c</FilePath>
             </File>
             <File>
               <FileName>ReadMe.url</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/portable/MemMang/ReadMe.url</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/MemMang/ReadMe.url</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-freertos_kernel</GroupName>
+          <GroupName>freertos-freertos_kernel</GroupName>
           <Files>
+            <File>
+              <FileName>croutine.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/croutine.c</FilePath>
+            </File>
             <File>
               <FileName>event_groups.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/event_groups.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/event_groups.c</FilePath>
             </File>
             <File>
               <FileName>list.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/list.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/list.c</FilePath>
             </File>
             <File>
               <FileName>queue.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/queue.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/queue.c</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/stream_buffer.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/stream_buffer.c</FilePath>
             </File>
             <File>
               <FileName>tasks.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/tasks.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/tasks.c</FilePath>
             </File>
             <File>
               <FileName>timers.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/timers.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/timers.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-freertos_kernel-include</GroupName>
+          <GroupName>freertos-freertos_kernel-include</GroupName>
           <Files>
             <File>
               <FileName>FreeRTOS.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/FreeRTOS.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/FreeRTOS.h</FilePath>
+            </File>
+            <File>
+              <FileName>StackMacros.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</FilePath>
             </File>
             <File>
               <FileName>atomic.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/atomic.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/atomic.h</FilePath>
+            </File>
+            <File>
+              <FileName>croutine.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/croutine.h</FilePath>
             </File>
             <File>
               <FileName>deprecated_definitions.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/deprecated_definitions.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/deprecated_definitions.h</FilePath>
             </File>
             <File>
               <FileName>event_groups.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/event_groups.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/event_groups.h</FilePath>
             </File>
             <File>
               <FileName>list.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/list.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/list.h</FilePath>
             </File>
             <File>
               <FileName>message_buffer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/message_buffer.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/message_buffer.h</FilePath>
             </File>
             <File>
               <FileName>mpu_prototypes.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/mpu_prototypes.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/mpu_prototypes.h</FilePath>
             </File>
             <File>
               <FileName>mpu_wrappers.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/mpu_wrappers.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/mpu_wrappers.h</FilePath>
             </File>
             <File>
               <FileName>portable.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/portable.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/portable.h</FilePath>
             </File>
             <File>
               <FileName>projdefs.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/projdefs.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/projdefs.h</FilePath>
             </File>
             <File>
               <FileName>queue.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/queue.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/queue.h</FilePath>
             </File>
             <File>
               <FileName>semphr.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/semphr.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/semphr.h</FilePath>
             </File>
             <File>
               <FileName>stack_macros.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/stack_macros.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/stack_macros.h</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/stream_buffer.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/stream_buffer.h</FilePath>
             </File>
             <File>
               <FileName>task.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/task.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/task.h</FilePath>
             </File>
             <File>
               <FileName>timers.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/timers.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/timers.h</FilePath>
             </File>
             <File>
               <FileName>freertos_tasks_c_additions.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/freertos_tasks_c_additions.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/freertos_tasks_c_additions.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-freertos_kernel-portable-GCC-ARM_CM4F</GroupName>
+          <GroupName>freertos-freertos_kernel-portable-GCC-ARM_CM4F</GroupName>
           <Files>
             <File>
               <FileName>port.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/portable/GCC/ARM_CM4F/port.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F/port.c</FilePath>
             </File>
             <File>
               <FileName>portmacro.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/portable/GCC/ARM_CM4F/portmacro.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F/portmacro.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-freertos_kernel-portable</GroupName>
+          <GroupName>freertos-freertos_kernel-portable</GroupName>
           <Files>
             <File>
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/portable/readme.txt</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/readme.txt</FilePath>
             </File>
           </Files>
         </Group>
@@ -1965,6 +1940,36 @@
               <FileName>usb_device_class.h</FileName>
               <FileType>5</FileType>
               <FilePath>../usb_device_class.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>usb-device-source</GroupName>
+          <Files>
+            <File>
+              <FileName>usb_device_ch9.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../usb_device_ch9.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device_ch9.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../usb_device_ch9.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device_dci.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/usb/device/usb_device_dci.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device_dci.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/device/usb_device_dci.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device_dci.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/device/usb_device_dci.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2017,9 +2022,9 @@
           <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_MIMXRT1052.s</FileName>
+              <FileName>startup_MIMXRT1052.S</FileName>
               <FileType>2</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1052/arm/startup_MIMXRT1052.s</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1052/arm/startup_MIMXRT1052.S</FilePath>
             </File>
           </Files>
         </Group>
@@ -2080,16 +2085,6 @@
               <FileName>evkbimxrt1050_flexspi_nor_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../xip/evkbimxrt1050_flexspi_nor_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>evkbimxrt1050_sdram_ini_dcd.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../xip/evkbimxrt1050_sdram_ini_dcd.c</FilePath>
-            </File>
-            <File>
-              <FileName>evkbimxrt1050_sdram_ini_dcd.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../xip/evkbimxrt1050_sdram_ini_dcd.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2154,6 +2149,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>usb-device-include</GroupName>
+          <Files>
+            <File>
+              <FileName>usb_device.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/device/usb_device.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/device/usb_device.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>component/osa</GroupName>
           <Files>
             <File>
@@ -2179,12 +2189,37 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>usb-include</GroupName>
+          <Files>
+            <File>
+              <FileName>usb.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/include/usb.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_misc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/include/usb_misc.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_spec.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/include/usb_spec.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
               <FileName>core_cm7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_armcc.h</FileName>
@@ -2220,31 +2255,6 @@
               <FileName>cmsis_version.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv81mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv81mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mbl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
             </File>
             <File>
               <FileName>arm_common_tables.h</FileName>
@@ -2592,7 +2602,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>DATA_SECTION_IS_CACHEABLE=1, SKIP_SYSCLK_INIT, DEBUG, CPU_MIMXRT1052DVL6B, USB_STACK_FREERTOS, USB_STACK_FREERTOS_HEAP_SIZE=32768, FSL_RTOS_FREE_RTOS, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>../../../../../../rtos/amazon-freertos/freertos_kernel/portable/GCC/ARM_CM4F;..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../rtos/amazon-freertos/freertos_kernel/include;../../../../../../middleware/usb;../../../../../../middleware/usb/include;../../../../../../middleware/usb/device;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../components/timer;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052/xip;../../../../xip;../../../../xip;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../components/serial_manager;../../../../../../components/osa;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052/utilities</IncludePath>
+              <IncludePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../middleware/usb;../../../../../../middleware/usb/include;../../../../../../middleware/usb/device;../../../../../../middleware/usb/phy;../../../../../../components/timer;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/xip;../../../../xip;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../components/osa;../../../../../../devices/MIMXRT1052/utilities</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2737,6 +2747,16 @@
               <FileType>5</FileType>
               <FilePath>../pin_mux.h</FilePath>
             </File>
+            <File>
+              <FileName>dcd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../dcd.c</FilePath>
+            </File>
+            <File>
+              <FileName>dcd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../dcd.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -2751,26 +2771,6 @@
               <FileName>usb_device_ehci.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/usb/device/usb_device_ehci.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>usb-include</GroupName>
-          <Files>
-            <File>
-              <FileName>usb.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/include/usb.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_misc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/include/usb_misc.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_spec.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/include/usb_spec.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2885,202 +2885,182 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-device-include</GroupName>
-          <Files>
-            <File>
-              <FileName>usb_device.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/device/usb_device.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>usb-device-source</GroupName>
-          <Files>
-            <File>
-              <FileName>usb_device_dci.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/usb/device/usb_device_dci.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device_dci.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/device/usb_device_dci.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device_ch9.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../usb_device_ch9.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device_ch9.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../usb_device_ch9.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>amazon-freertos-freertos_kernel-portable-MemMang</GroupName>
+          <GroupName>freertos-freertos_kernel-portable-MemMang</GroupName>
           <Files>
             <File>
               <FileName>heap_4.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/portable/MemMang/heap_4.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/MemMang/heap_4.c</FilePath>
             </File>
             <File>
               <FileName>ReadMe.url</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/portable/MemMang/ReadMe.url</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/MemMang/ReadMe.url</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-freertos_kernel</GroupName>
+          <GroupName>freertos-freertos_kernel</GroupName>
           <Files>
+            <File>
+              <FileName>croutine.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/croutine.c</FilePath>
+            </File>
             <File>
               <FileName>event_groups.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/event_groups.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/event_groups.c</FilePath>
             </File>
             <File>
               <FileName>list.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/list.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/list.c</FilePath>
             </File>
             <File>
               <FileName>queue.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/queue.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/queue.c</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/stream_buffer.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/stream_buffer.c</FilePath>
             </File>
             <File>
               <FileName>tasks.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/tasks.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/tasks.c</FilePath>
             </File>
             <File>
               <FileName>timers.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/timers.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/timers.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-freertos_kernel-include</GroupName>
+          <GroupName>freertos-freertos_kernel-include</GroupName>
           <Files>
             <File>
               <FileName>FreeRTOS.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/FreeRTOS.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/FreeRTOS.h</FilePath>
+            </File>
+            <File>
+              <FileName>StackMacros.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</FilePath>
             </File>
             <File>
               <FileName>atomic.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/atomic.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/atomic.h</FilePath>
+            </File>
+            <File>
+              <FileName>croutine.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/croutine.h</FilePath>
             </File>
             <File>
               <FileName>deprecated_definitions.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/deprecated_definitions.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/deprecated_definitions.h</FilePath>
             </File>
             <File>
               <FileName>event_groups.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/event_groups.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/event_groups.h</FilePath>
             </File>
             <File>
               <FileName>list.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/list.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/list.h</FilePath>
             </File>
             <File>
               <FileName>message_buffer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/message_buffer.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/message_buffer.h</FilePath>
             </File>
             <File>
               <FileName>mpu_prototypes.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/mpu_prototypes.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/mpu_prototypes.h</FilePath>
             </File>
             <File>
               <FileName>mpu_wrappers.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/mpu_wrappers.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/mpu_wrappers.h</FilePath>
             </File>
             <File>
               <FileName>portable.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/portable.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/portable.h</FilePath>
             </File>
             <File>
               <FileName>projdefs.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/projdefs.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/projdefs.h</FilePath>
             </File>
             <File>
               <FileName>queue.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/queue.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/queue.h</FilePath>
             </File>
             <File>
               <FileName>semphr.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/semphr.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/semphr.h</FilePath>
             </File>
             <File>
               <FileName>stack_macros.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/stack_macros.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/stack_macros.h</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/stream_buffer.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/stream_buffer.h</FilePath>
             </File>
             <File>
               <FileName>task.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/task.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/task.h</FilePath>
             </File>
             <File>
               <FileName>timers.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/timers.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/timers.h</FilePath>
             </File>
             <File>
               <FileName>freertos_tasks_c_additions.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/freertos_tasks_c_additions.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/freertos_tasks_c_additions.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-freertos_kernel-portable-GCC-ARM_CM4F</GroupName>
+          <GroupName>freertos-freertos_kernel-portable-GCC-ARM_CM4F</GroupName>
           <Files>
             <File>
               <FileName>port.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/portable/GCC/ARM_CM4F/port.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F/port.c</FilePath>
             </File>
             <File>
               <FileName>portmacro.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/portable/GCC/ARM_CM4F/portmacro.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F/portmacro.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-freertos_kernel-portable</GroupName>
+          <GroupName>freertos-freertos_kernel-portable</GroupName>
           <Files>
             <File>
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/portable/readme.txt</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/readme.txt</FilePath>
             </File>
           </Files>
         </Group>
@@ -3096,6 +3076,36 @@
               <FileName>usb_device_class.h</FileName>
               <FileType>5</FileType>
               <FilePath>../usb_device_class.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>usb-device-source</GroupName>
+          <Files>
+            <File>
+              <FileName>usb_device_ch9.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../usb_device_ch9.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device_ch9.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../usb_device_ch9.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device_dci.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/usb/device/usb_device_dci.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device_dci.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/device/usb_device_dci.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device_dci.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/device/usb_device_dci.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3148,9 +3158,9 @@
           <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_MIMXRT1052.s</FileName>
+              <FileName>startup_MIMXRT1052.S</FileName>
               <FileType>2</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1052/arm/startup_MIMXRT1052.s</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1052/arm/startup_MIMXRT1052.S</FilePath>
             </File>
           </Files>
         </Group>
@@ -3211,16 +3221,6 @@
               <FileName>evkbimxrt1050_flexspi_nor_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../xip/evkbimxrt1050_flexspi_nor_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>evkbimxrt1050_sdram_ini_dcd.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../xip/evkbimxrt1050_sdram_ini_dcd.c</FilePath>
-            </File>
-            <File>
-              <FileName>evkbimxrt1050_sdram_ini_dcd.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../xip/evkbimxrt1050_sdram_ini_dcd.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3285,6 +3285,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>usb-device-include</GroupName>
+          <Files>
+            <File>
+              <FileName>usb_device.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/device/usb_device.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/device/usb_device.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>component/osa</GroupName>
           <Files>
             <File>
@@ -3310,12 +3325,37 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>usb-include</GroupName>
+          <Files>
+            <File>
+              <FileName>usb.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/include/usb.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_misc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/include/usb_misc.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_spec.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/include/usb_spec.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
               <FileName>core_cm7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_armcc.h</FileName>
@@ -3351,31 +3391,6 @@
               <FileName>cmsis_version.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv81mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv81mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mbl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
             </File>
             <File>
               <FileName>arm_common_tables.h</FileName>
@@ -3723,7 +3738,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>_DEBUG=0, NDEBUG, CPU_MIMXRT1052DVL6B, USB_STACK_FREERTOS, USB_STACK_FREERTOS_HEAP_SIZE=32768, FSL_RTOS_FREE_RTOS, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>../../../../../../rtos/amazon-freertos/freertos_kernel/portable/GCC/ARM_CM4F;..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../rtos/amazon-freertos/freertos_kernel/include;../../../../../../middleware/usb;../../../../../../middleware/usb/include;../../../../../../middleware/usb/device;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../components/timer;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052/xip;../../../../xip;../../../../xip;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../components/serial_manager;../../../../../../components/osa;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052/utilities</IncludePath>
+              <IncludePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../middleware/usb;../../../../../../middleware/usb/include;../../../../../../middleware/usb/device;../../../../../../middleware/usb/phy;../../../../../../components/timer;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/xip;../../../../xip;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../components/osa;../../../../../../devices/MIMXRT1052/utilities</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3868,6 +3883,16 @@
               <FileType>5</FileType>
               <FilePath>../pin_mux.h</FilePath>
             </File>
+            <File>
+              <FileName>dcd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../dcd.c</FilePath>
+            </File>
+            <File>
+              <FileName>dcd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../dcd.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -3882,26 +3907,6 @@
               <FileName>usb_device_ehci.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/usb/device/usb_device_ehci.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>usb-include</GroupName>
-          <Files>
-            <File>
-              <FileName>usb.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/include/usb.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_misc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/include/usb_misc.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_spec.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/include/usb_spec.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4016,202 +4021,182 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-device-include</GroupName>
-          <Files>
-            <File>
-              <FileName>usb_device.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/device/usb_device.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>usb-device-source</GroupName>
-          <Files>
-            <File>
-              <FileName>usb_device_dci.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/usb/device/usb_device_dci.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device_dci.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/device/usb_device_dci.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device_ch9.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../usb_device_ch9.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device_ch9.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../usb_device_ch9.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>amazon-freertos-freertos_kernel-portable-MemMang</GroupName>
+          <GroupName>freertos-freertos_kernel-portable-MemMang</GroupName>
           <Files>
             <File>
               <FileName>heap_4.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/portable/MemMang/heap_4.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/MemMang/heap_4.c</FilePath>
             </File>
             <File>
               <FileName>ReadMe.url</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/portable/MemMang/ReadMe.url</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/MemMang/ReadMe.url</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-freertos_kernel</GroupName>
+          <GroupName>freertos-freertos_kernel</GroupName>
           <Files>
+            <File>
+              <FileName>croutine.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/croutine.c</FilePath>
+            </File>
             <File>
               <FileName>event_groups.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/event_groups.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/event_groups.c</FilePath>
             </File>
             <File>
               <FileName>list.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/list.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/list.c</FilePath>
             </File>
             <File>
               <FileName>queue.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/queue.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/queue.c</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/stream_buffer.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/stream_buffer.c</FilePath>
             </File>
             <File>
               <FileName>tasks.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/tasks.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/tasks.c</FilePath>
             </File>
             <File>
               <FileName>timers.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/timers.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/timers.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-freertos_kernel-include</GroupName>
+          <GroupName>freertos-freertos_kernel-include</GroupName>
           <Files>
             <File>
               <FileName>FreeRTOS.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/FreeRTOS.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/FreeRTOS.h</FilePath>
+            </File>
+            <File>
+              <FileName>StackMacros.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</FilePath>
             </File>
             <File>
               <FileName>atomic.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/atomic.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/atomic.h</FilePath>
+            </File>
+            <File>
+              <FileName>croutine.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/croutine.h</FilePath>
             </File>
             <File>
               <FileName>deprecated_definitions.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/deprecated_definitions.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/deprecated_definitions.h</FilePath>
             </File>
             <File>
               <FileName>event_groups.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/event_groups.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/event_groups.h</FilePath>
             </File>
             <File>
               <FileName>list.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/list.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/list.h</FilePath>
             </File>
             <File>
               <FileName>message_buffer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/message_buffer.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/message_buffer.h</FilePath>
             </File>
             <File>
               <FileName>mpu_prototypes.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/mpu_prototypes.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/mpu_prototypes.h</FilePath>
             </File>
             <File>
               <FileName>mpu_wrappers.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/mpu_wrappers.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/mpu_wrappers.h</FilePath>
             </File>
             <File>
               <FileName>portable.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/portable.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/portable.h</FilePath>
             </File>
             <File>
               <FileName>projdefs.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/projdefs.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/projdefs.h</FilePath>
             </File>
             <File>
               <FileName>queue.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/queue.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/queue.h</FilePath>
             </File>
             <File>
               <FileName>semphr.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/semphr.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/semphr.h</FilePath>
             </File>
             <File>
               <FileName>stack_macros.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/stack_macros.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/stack_macros.h</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/stream_buffer.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/stream_buffer.h</FilePath>
             </File>
             <File>
               <FileName>task.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/task.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/task.h</FilePath>
             </File>
             <File>
               <FileName>timers.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/timers.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/timers.h</FilePath>
             </File>
             <File>
               <FileName>freertos_tasks_c_additions.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/freertos_tasks_c_additions.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/freertos_tasks_c_additions.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-freertos_kernel-portable-GCC-ARM_CM4F</GroupName>
+          <GroupName>freertos-freertos_kernel-portable-GCC-ARM_CM4F</GroupName>
           <Files>
             <File>
               <FileName>port.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/portable/GCC/ARM_CM4F/port.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F/port.c</FilePath>
             </File>
             <File>
               <FileName>portmacro.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/portable/GCC/ARM_CM4F/portmacro.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F/portmacro.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-freertos_kernel-portable</GroupName>
+          <GroupName>freertos-freertos_kernel-portable</GroupName>
           <Files>
             <File>
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/portable/readme.txt</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/readme.txt</FilePath>
             </File>
           </Files>
         </Group>
@@ -4227,6 +4212,36 @@
               <FileName>usb_device_class.h</FileName>
               <FileType>5</FileType>
               <FilePath>../usb_device_class.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>usb-device-source</GroupName>
+          <Files>
+            <File>
+              <FileName>usb_device_ch9.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../usb_device_ch9.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device_ch9.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../usb_device_ch9.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device_dci.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/usb/device/usb_device_dci.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device_dci.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/device/usb_device_dci.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device_dci.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/device/usb_device_dci.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4279,9 +4294,9 @@
           <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_MIMXRT1052.s</FileName>
+              <FileName>startup_MIMXRT1052.S</FileName>
               <FileType>2</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1052/arm/startup_MIMXRT1052.s</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1052/arm/startup_MIMXRT1052.S</FilePath>
             </File>
           </Files>
         </Group>
@@ -4342,16 +4357,6 @@
               <FileName>evkbimxrt1050_flexspi_nor_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../xip/evkbimxrt1050_flexspi_nor_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>evkbimxrt1050_sdram_ini_dcd.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../xip/evkbimxrt1050_sdram_ini_dcd.c</FilePath>
-            </File>
-            <File>
-              <FileName>evkbimxrt1050_sdram_ini_dcd.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../xip/evkbimxrt1050_sdram_ini_dcd.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4416,6 +4421,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>usb-device-include</GroupName>
+          <Files>
+            <File>
+              <FileName>usb_device.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/device/usb_device.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/device/usb_device.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>component/osa</GroupName>
           <Files>
             <File>
@@ -4441,12 +4461,37 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>usb-include</GroupName>
+          <Files>
+            <File>
+              <FileName>usb.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/include/usb.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_misc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/include/usb_misc.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_spec.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/include/usb_spec.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
               <FileName>core_cm7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_armcc.h</FileName>
@@ -4482,31 +4527,6 @@
               <FileName>cmsis_version.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv81mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv81mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mbl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
             </File>
             <File>
               <FileName>arm_common_tables.h</FileName>
@@ -4854,7 +4874,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1052DVL6B, USB_STACK_FREERTOS, USB_STACK_FREERTOS_HEAP_SIZE=32768, FSL_RTOS_FREE_RTOS, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>../../../../../../rtos/amazon-freertos/freertos_kernel/portable/GCC/ARM_CM4F;..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../rtos/amazon-freertos/freertos_kernel/include;../../../../../../middleware/usb;../../../../../../middleware/usb/include;../../../../../../middleware/usb/device;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../components/timer;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052/xip;../../../../xip;../../../../xip;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../components/serial_manager;../../../../../../components/osa;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052/utilities</IncludePath>
+              <IncludePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../middleware/usb;../../../../../../middleware/usb/include;../../../../../../middleware/usb/device;../../../../../../middleware/usb/phy;../../../../../../components/timer;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/xip;../../../../xip;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../components/osa;../../../../../../devices/MIMXRT1052/utilities</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -4888,7 +4908,7 @@
             <ScatterFile>MIMXRT1052xxxxx_flexspi_nor.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --keep=*(.boot_hdr.ivt) --keep=*(.boot_hdr.boot_data) --keep=*(.boot_hdr.conf) --predefine="-DXIP_BOOT_HEADER_ENABLE=1" --predefine="-D__stack_size__=0x2000" --predefine="-D__heap_size__=0x2000"</Misc>
+            <Misc>--remove --predefine="-DXIP_BOOT_HEADER_ENABLE=1" --predefine="-D__stack_size__=0x2000" --predefine="-D__heap_size__=0x2000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -4999,6 +5019,16 @@
               <FileType>5</FileType>
               <FilePath>../pin_mux.h</FilePath>
             </File>
+            <File>
+              <FileName>dcd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../dcd.c</FilePath>
+            </File>
+            <File>
+              <FileName>dcd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../dcd.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -5013,26 +5043,6 @@
               <FileName>usb_device_ehci.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/usb/device/usb_device_ehci.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>usb-include</GroupName>
-          <Files>
-            <File>
-              <FileName>usb.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/include/usb.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_misc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/include/usb_misc.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_spec.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/include/usb_spec.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -5147,202 +5157,182 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-device-include</GroupName>
-          <Files>
-            <File>
-              <FileName>usb_device.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/device/usb_device.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>usb-device-source</GroupName>
-          <Files>
-            <File>
-              <FileName>usb_device_dci.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/usb/device/usb_device_dci.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device_dci.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/device/usb_device_dci.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device_ch9.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../usb_device_ch9.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device_ch9.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../usb_device_ch9.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>amazon-freertos-freertos_kernel-portable-MemMang</GroupName>
+          <GroupName>freertos-freertos_kernel-portable-MemMang</GroupName>
           <Files>
             <File>
               <FileName>heap_4.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/portable/MemMang/heap_4.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/MemMang/heap_4.c</FilePath>
             </File>
             <File>
               <FileName>ReadMe.url</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/portable/MemMang/ReadMe.url</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/MemMang/ReadMe.url</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-freertos_kernel</GroupName>
+          <GroupName>freertos-freertos_kernel</GroupName>
           <Files>
+            <File>
+              <FileName>croutine.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/croutine.c</FilePath>
+            </File>
             <File>
               <FileName>event_groups.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/event_groups.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/event_groups.c</FilePath>
             </File>
             <File>
               <FileName>list.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/list.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/list.c</FilePath>
             </File>
             <File>
               <FileName>queue.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/queue.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/queue.c</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/stream_buffer.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/stream_buffer.c</FilePath>
             </File>
             <File>
               <FileName>tasks.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/tasks.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/tasks.c</FilePath>
             </File>
             <File>
               <FileName>timers.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/timers.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/timers.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-freertos_kernel-include</GroupName>
+          <GroupName>freertos-freertos_kernel-include</GroupName>
           <Files>
             <File>
               <FileName>FreeRTOS.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/FreeRTOS.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/FreeRTOS.h</FilePath>
+            </File>
+            <File>
+              <FileName>StackMacros.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</FilePath>
             </File>
             <File>
               <FileName>atomic.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/atomic.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/atomic.h</FilePath>
+            </File>
+            <File>
+              <FileName>croutine.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/croutine.h</FilePath>
             </File>
             <File>
               <FileName>deprecated_definitions.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/deprecated_definitions.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/deprecated_definitions.h</FilePath>
             </File>
             <File>
               <FileName>event_groups.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/event_groups.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/event_groups.h</FilePath>
             </File>
             <File>
               <FileName>list.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/list.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/list.h</FilePath>
             </File>
             <File>
               <FileName>message_buffer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/message_buffer.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/message_buffer.h</FilePath>
             </File>
             <File>
               <FileName>mpu_prototypes.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/mpu_prototypes.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/mpu_prototypes.h</FilePath>
             </File>
             <File>
               <FileName>mpu_wrappers.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/mpu_wrappers.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/mpu_wrappers.h</FilePath>
             </File>
             <File>
               <FileName>portable.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/portable.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/portable.h</FilePath>
             </File>
             <File>
               <FileName>projdefs.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/projdefs.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/projdefs.h</FilePath>
             </File>
             <File>
               <FileName>queue.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/queue.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/queue.h</FilePath>
             </File>
             <File>
               <FileName>semphr.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/semphr.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/semphr.h</FilePath>
             </File>
             <File>
               <FileName>stack_macros.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/stack_macros.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/stack_macros.h</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/stream_buffer.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/stream_buffer.h</FilePath>
             </File>
             <File>
               <FileName>task.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/task.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/task.h</FilePath>
             </File>
             <File>
               <FileName>timers.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/timers.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/timers.h</FilePath>
             </File>
             <File>
               <FileName>freertos_tasks_c_additions.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/freertos_tasks_c_additions.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/freertos_tasks_c_additions.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-freertos_kernel-portable-GCC-ARM_CM4F</GroupName>
+          <GroupName>freertos-freertos_kernel-portable-GCC-ARM_CM4F</GroupName>
           <Files>
             <File>
               <FileName>port.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/portable/GCC/ARM_CM4F/port.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F/port.c</FilePath>
             </File>
             <File>
               <FileName>portmacro.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/portable/GCC/ARM_CM4F/portmacro.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F/portmacro.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-freertos_kernel-portable</GroupName>
+          <GroupName>freertos-freertos_kernel-portable</GroupName>
           <Files>
             <File>
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/portable/readme.txt</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/readme.txt</FilePath>
             </File>
           </Files>
         </Group>
@@ -5358,6 +5348,36 @@
               <FileName>usb_device_class.h</FileName>
               <FileType>5</FileType>
               <FilePath>../usb_device_class.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>usb-device-source</GroupName>
+          <Files>
+            <File>
+              <FileName>usb_device_ch9.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../usb_device_ch9.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device_ch9.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../usb_device_ch9.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device_dci.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/usb/device/usb_device_dci.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device_dci.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/device/usb_device_dci.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device_dci.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/device/usb_device_dci.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -5410,9 +5430,9 @@
           <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_MIMXRT1052.s</FileName>
+              <FileName>startup_MIMXRT1052.S</FileName>
               <FileType>2</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1052/arm/startup_MIMXRT1052.s</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1052/arm/startup_MIMXRT1052.S</FilePath>
             </File>
           </Files>
         </Group>
@@ -5473,16 +5493,6 @@
               <FileName>evkbimxrt1050_flexspi_nor_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../xip/evkbimxrt1050_flexspi_nor_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>evkbimxrt1050_sdram_ini_dcd.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../xip/evkbimxrt1050_sdram_ini_dcd.c</FilePath>
-            </File>
-            <File>
-              <FileName>evkbimxrt1050_sdram_ini_dcd.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../xip/evkbimxrt1050_sdram_ini_dcd.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -5547,6 +5557,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>usb-device-include</GroupName>
+          <Files>
+            <File>
+              <FileName>usb_device.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/device/usb_device.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/device/usb_device.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>component/osa</GroupName>
           <Files>
             <File>
@@ -5572,12 +5597,37 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>usb-include</GroupName>
+          <Files>
+            <File>
+              <FileName>usb.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/include/usb.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_misc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/include/usb_misc.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_spec.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/include/usb_spec.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
               <FileName>core_cm7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_armcc.h</FileName>
@@ -5613,31 +5663,6 @@
               <FileName>cmsis_version.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv81mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv81mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mbl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
             </File>
             <File>
               <FileName>arm_common_tables.h</FileName>
@@ -5985,7 +6010,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>DATA_SECTION_IS_CACHEABLE=1, SKIP_SYSCLK_INIT, NDEBUG, CPU_MIMXRT1052DVL6B, USB_STACK_FREERTOS, USB_STACK_FREERTOS_HEAP_SIZE=32768, FSL_RTOS_FREE_RTOS, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>../../../../../../rtos/amazon-freertos/freertos_kernel/portable/GCC/ARM_CM4F;..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../rtos/amazon-freertos/freertos_kernel/include;../../../../../../middleware/usb;../../../../../../middleware/usb/include;../../../../../../middleware/usb/device;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../components/timer;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052/xip;../../../../xip;../../../../xip;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../components/serial_manager;../../../../../../components/osa;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052/utilities</IncludePath>
+              <IncludePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../middleware/usb;../../../../../../middleware/usb/include;../../../../../../middleware/usb/device;../../../../../../middleware/usb/phy;../../../../../../components/timer;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/xip;../../../../xip;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../components/osa;../../../../../../devices/MIMXRT1052/utilities</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -6130,6 +6155,16 @@
               <FileType>5</FileType>
               <FilePath>../pin_mux.h</FilePath>
             </File>
+            <File>
+              <FileName>dcd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../dcd.c</FilePath>
+            </File>
+            <File>
+              <FileName>dcd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../dcd.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -6144,26 +6179,6 @@
               <FileName>usb_device_ehci.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/usb/device/usb_device_ehci.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>usb-include</GroupName>
-          <Files>
-            <File>
-              <FileName>usb.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/include/usb.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_misc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/include/usb_misc.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_spec.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/include/usb_spec.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -6278,202 +6293,182 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-device-include</GroupName>
-          <Files>
-            <File>
-              <FileName>usb_device.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/device/usb_device.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>usb-device-source</GroupName>
-          <Files>
-            <File>
-              <FileName>usb_device_dci.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/usb/device/usb_device_dci.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device_dci.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/usb/device/usb_device_dci.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device_ch9.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../usb_device_ch9.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device_ch9.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../usb_device_ch9.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>amazon-freertos-freertos_kernel-portable-MemMang</GroupName>
+          <GroupName>freertos-freertos_kernel-portable-MemMang</GroupName>
           <Files>
             <File>
               <FileName>heap_4.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/portable/MemMang/heap_4.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/MemMang/heap_4.c</FilePath>
             </File>
             <File>
               <FileName>ReadMe.url</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/portable/MemMang/ReadMe.url</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/MemMang/ReadMe.url</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-freertos_kernel</GroupName>
+          <GroupName>freertos-freertos_kernel</GroupName>
           <Files>
+            <File>
+              <FileName>croutine.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/croutine.c</FilePath>
+            </File>
             <File>
               <FileName>event_groups.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/event_groups.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/event_groups.c</FilePath>
             </File>
             <File>
               <FileName>list.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/list.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/list.c</FilePath>
             </File>
             <File>
               <FileName>queue.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/queue.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/queue.c</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/stream_buffer.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/stream_buffer.c</FilePath>
             </File>
             <File>
               <FileName>tasks.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/tasks.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/tasks.c</FilePath>
             </File>
             <File>
               <FileName>timers.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/timers.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/timers.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-freertos_kernel-include</GroupName>
+          <GroupName>freertos-freertos_kernel-include</GroupName>
           <Files>
             <File>
               <FileName>FreeRTOS.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/FreeRTOS.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/FreeRTOS.h</FilePath>
+            </File>
+            <File>
+              <FileName>StackMacros.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</FilePath>
             </File>
             <File>
               <FileName>atomic.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/atomic.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/atomic.h</FilePath>
+            </File>
+            <File>
+              <FileName>croutine.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/croutine.h</FilePath>
             </File>
             <File>
               <FileName>deprecated_definitions.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/deprecated_definitions.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/deprecated_definitions.h</FilePath>
             </File>
             <File>
               <FileName>event_groups.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/event_groups.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/event_groups.h</FilePath>
             </File>
             <File>
               <FileName>list.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/list.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/list.h</FilePath>
             </File>
             <File>
               <FileName>message_buffer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/message_buffer.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/message_buffer.h</FilePath>
             </File>
             <File>
               <FileName>mpu_prototypes.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/mpu_prototypes.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/mpu_prototypes.h</FilePath>
             </File>
             <File>
               <FileName>mpu_wrappers.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/mpu_wrappers.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/mpu_wrappers.h</FilePath>
             </File>
             <File>
               <FileName>portable.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/portable.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/portable.h</FilePath>
             </File>
             <File>
               <FileName>projdefs.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/projdefs.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/projdefs.h</FilePath>
             </File>
             <File>
               <FileName>queue.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/queue.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/queue.h</FilePath>
             </File>
             <File>
               <FileName>semphr.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/semphr.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/semphr.h</FilePath>
             </File>
             <File>
               <FileName>stack_macros.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/stack_macros.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/stack_macros.h</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/stream_buffer.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/stream_buffer.h</FilePath>
             </File>
             <File>
               <FileName>task.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/task.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/task.h</FilePath>
             </File>
             <File>
               <FileName>timers.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/timers.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/timers.h</FilePath>
             </File>
             <File>
               <FileName>freertos_tasks_c_additions.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/freertos_tasks_c_additions.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/freertos_tasks_c_additions.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-freertos_kernel-portable-GCC-ARM_CM4F</GroupName>
+          <GroupName>freertos-freertos_kernel-portable-GCC-ARM_CM4F</GroupName>
           <Files>
             <File>
               <FileName>port.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/portable/GCC/ARM_CM4F/port.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F/port.c</FilePath>
             </File>
             <File>
               <FileName>portmacro.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/portable/GCC/ARM_CM4F/portmacro.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F/portmacro.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-freertos_kernel-portable</GroupName>
+          <GroupName>freertos-freertos_kernel-portable</GroupName>
           <Files>
             <File>
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/portable/readme.txt</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/readme.txt</FilePath>
             </File>
           </Files>
         </Group>
@@ -6489,6 +6484,36 @@
               <FileName>usb_device_class.h</FileName>
               <FileType>5</FileType>
               <FilePath>../usb_device_class.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>usb-device-source</GroupName>
+          <Files>
+            <File>
+              <FileName>usb_device_ch9.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../usb_device_ch9.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device_ch9.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../usb_device_ch9.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device_dci.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/usb/device/usb_device_dci.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device_dci.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/device/usb_device_dci.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device_dci.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/device/usb_device_dci.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -6541,9 +6566,9 @@
           <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_MIMXRT1052.s</FileName>
+              <FileName>startup_MIMXRT1052.S</FileName>
               <FileType>2</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1052/arm/startup_MIMXRT1052.s</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1052/arm/startup_MIMXRT1052.S</FilePath>
             </File>
           </Files>
         </Group>
@@ -6604,16 +6629,6 @@
               <FileName>evkbimxrt1050_flexspi_nor_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../xip/evkbimxrt1050_flexspi_nor_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>evkbimxrt1050_sdram_ini_dcd.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../xip/evkbimxrt1050_sdram_ini_dcd.c</FilePath>
-            </File>
-            <File>
-              <FileName>evkbimxrt1050_sdram_ini_dcd.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../xip/evkbimxrt1050_sdram_ini_dcd.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -6678,6 +6693,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>usb-device-include</GroupName>
+          <Files>
+            <File>
+              <FileName>usb_device.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/device/usb_device.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/device/usb_device.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>component/osa</GroupName>
           <Files>
             <File>
@@ -6703,12 +6733,37 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>usb-include</GroupName>
+          <Files>
+            <File>
+              <FileName>usb.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/include/usb.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_misc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/include/usb_misc.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_spec.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/usb/include/usb_spec.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
               <FileName>core_cm7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_armcc.h</FileName>
@@ -6744,31 +6799,6 @@
               <FileName>cmsis_version.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv81mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv81mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mbl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
             </File>
             <File>
               <FileName>arm_common_tables.h</FileName>

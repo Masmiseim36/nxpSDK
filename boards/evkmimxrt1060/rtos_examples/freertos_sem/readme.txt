@@ -15,6 +15,7 @@ consumer and producer must be prepared to enable transaction.
 Toolchain supported
 ===================
 - IAR embedded Workbench  8.50.1
+- Keil MDK  5.30
 - GCC ARM Embedded  9.2.1
 - MCUXpresso  11.2.0
 

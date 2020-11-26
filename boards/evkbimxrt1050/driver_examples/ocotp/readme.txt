@@ -7,6 +7,7 @@ Consider of the feature of One-Time programable, this example will just print th
 Toolchain supported
 ===================
 - IAR embedded Workbench  8.50.1
+- Keil MDK  5.30
 - GCC ARM Embedded  9.2.1
 - MCUXpresso  11.2.0
 

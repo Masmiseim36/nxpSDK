@@ -214,9 +214,11 @@ SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DCPU_MIMXRT1062DVL6A")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DFSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1")
 
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DFSL_RTOS_FREE_RTOS")
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DSD_ENABLED")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DSERIAL_PORT_TYPE_UART=1")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DFSL_RTOS_FREE_RTOS")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -g")
 
@@ -256,9 +258,11 @@ SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DCPU_MIMXRT1062DVL6A")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DFSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1")
 
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DFSL_RTOS_FREE_RTOS")
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DSD_ENABLED")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DSERIAL_PORT_TYPE_UART=1")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DFSL_RTOS_FREE_RTOS")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -Os")
 
@@ -292,15 +296,19 @@ SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -std=gnu99")
 
 SET(CMAKE_C_FLAGS_SDRAM_DEBUG "${CMAKE_C_FLAGS_SDRAM_DEBUG} -DSKIP_SYSCLK_INIT")
 
+SET(CMAKE_C_FLAGS_SDRAM_DEBUG "${CMAKE_C_FLAGS_SDRAM_DEBUG} -DDATA_SECTION_IS_CACHEABLE=1")
+
 SET(CMAKE_C_FLAGS_SDRAM_DEBUG "${CMAKE_C_FLAGS_SDRAM_DEBUG} -DDEBUG")
 
 SET(CMAKE_C_FLAGS_SDRAM_DEBUG "${CMAKE_C_FLAGS_SDRAM_DEBUG} -DCPU_MIMXRT1062DVL6A")
 
 SET(CMAKE_C_FLAGS_SDRAM_DEBUG "${CMAKE_C_FLAGS_SDRAM_DEBUG} -DFSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1")
 
-SET(CMAKE_C_FLAGS_SDRAM_DEBUG "${CMAKE_C_FLAGS_SDRAM_DEBUG} -DFSL_RTOS_FREE_RTOS")
+SET(CMAKE_C_FLAGS_SDRAM_DEBUG "${CMAKE_C_FLAGS_SDRAM_DEBUG} -DSD_ENABLED")
 
 SET(CMAKE_C_FLAGS_SDRAM_DEBUG "${CMAKE_C_FLAGS_SDRAM_DEBUG} -DSERIAL_PORT_TYPE_UART=1")
+
+SET(CMAKE_C_FLAGS_SDRAM_DEBUG "${CMAKE_C_FLAGS_SDRAM_DEBUG} -DFSL_RTOS_FREE_RTOS")
 
 SET(CMAKE_C_FLAGS_SDRAM_DEBUG "${CMAKE_C_FLAGS_SDRAM_DEBUG} -g")
 
@@ -336,15 +344,19 @@ SET(CMAKE_C_FLAGS_SDRAM_DEBUG "${CMAKE_C_FLAGS_SDRAM_DEBUG} -std=gnu99")
 
 SET(CMAKE_C_FLAGS_SDRAM_RELEASE "${CMAKE_C_FLAGS_SDRAM_RELEASE} -DSKIP_SYSCLK_INIT")
 
+SET(CMAKE_C_FLAGS_SDRAM_RELEASE "${CMAKE_C_FLAGS_SDRAM_RELEASE} -DDATA_SECTION_IS_CACHEABLE=1")
+
 SET(CMAKE_C_FLAGS_SDRAM_RELEASE "${CMAKE_C_FLAGS_SDRAM_RELEASE} -DNDEBUG")
 
 SET(CMAKE_C_FLAGS_SDRAM_RELEASE "${CMAKE_C_FLAGS_SDRAM_RELEASE} -DCPU_MIMXRT1062DVL6A")
 
 SET(CMAKE_C_FLAGS_SDRAM_RELEASE "${CMAKE_C_FLAGS_SDRAM_RELEASE} -DFSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1")
 
-SET(CMAKE_C_FLAGS_SDRAM_RELEASE "${CMAKE_C_FLAGS_SDRAM_RELEASE} -DFSL_RTOS_FREE_RTOS")
+SET(CMAKE_C_FLAGS_SDRAM_RELEASE "${CMAKE_C_FLAGS_SDRAM_RELEASE} -DSD_ENABLED")
 
 SET(CMAKE_C_FLAGS_SDRAM_RELEASE "${CMAKE_C_FLAGS_SDRAM_RELEASE} -DSERIAL_PORT_TYPE_UART=1")
+
+SET(CMAKE_C_FLAGS_SDRAM_RELEASE "${CMAKE_C_FLAGS_SDRAM_RELEASE} -DFSL_RTOS_FREE_RTOS")
 
 SET(CMAKE_C_FLAGS_SDRAM_RELEASE "${CMAKE_C_FLAGS_SDRAM_RELEASE} -Os")
 
@@ -386,9 +398,11 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -DCPU_MI
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -DFSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1")
 
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -DFSL_RTOS_FREE_RTOS")
+SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -DSD_ENABLED")
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -DSERIAL_PORT_TYPE_UART=1")
+
+SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -DFSL_RTOS_FREE_RTOS")
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -g")
 
@@ -432,9 +446,11 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -DCP
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -DFSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1")
 
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -DFSL_RTOS_FREE_RTOS")
+SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -DSD_ENABLED")
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -DSERIAL_PORT_TYPE_UART=1")
+
+SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -DFSL_RTOS_FREE_RTOS")
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -Os")
 
@@ -994,7 +1010,7 @@ include_directories(${ProjDirPath}/..)
 
 include_directories(${ProjDirPath}/../../..)
 
-include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/portable/GCC/ARM_CM4F)
+include_directories(${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F)
 
 include_directories(${ProjDirPath}/..)
 
@@ -1004,11 +1020,15 @@ include_directories(${ProjDirPath}/../../../../../CMSIS/Include)
 
 include_directories(${ProjDirPath}/../../../../../devices)
 
-include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include)
+include_directories(${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/include)
 
 include_directories(${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers)
 
-include_directories(${ProjDirPath}/../../../../../middleware/sdmmc/port)
+include_directories(${ProjDirPath}/../../../../../middleware/sdmmc/sd)
+
+include_directories(${ProjDirPath}/../../../../../middleware/sdmmc/common)
+
+include_directories(${ProjDirPath}/../../../../../middleware/sdmmc/host/usdhc)
 
 include_directories(${ProjDirPath}/../../../../../middleware/fatfs/source)
 
@@ -1030,9 +1050,9 @@ include_directories(${ProjDirPath}/../../../../../devices/MIMXRT1062/xip)
 
 include_directories(${ProjDirPath}/../../../xip)
 
-include_directories(${ProjDirPath}/../../../../../middleware/sdmmc/inc)
+include_directories(${ProjDirPath}/../../../../../middleware/sdmmc/osa)
 
-include_directories(${ProjDirPath}/../../../../../middleware/sdmmc/src)
+include_directories(${ProjDirPath}/../../../../../components/osa)
 
 include_directories(${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities)
 
@@ -1041,16 +1061,25 @@ add_executable(sdcard_fatfs_freertos.elf
 "${ProjDirPath}/../ffconf.h"
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
+"${ProjDirPath}/../sdmmc_config.c"
+"${ProjDirPath}/../sdmmc_config.h"
 "${ProjDirPath}/../FreeRTOSConfig.h"
 "${ProjDirPath}/../board.c"
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../clock_config.c"
 "${ProjDirPath}/../clock_config.h"
+"${ProjDirPath}/../dcd.c"
+"${ProjDirPath}/../dcd.h"
 "${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers/fsl_usdhc.c"
 "${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers/fsl_usdhc.h"
-"${ProjDirPath}/../../../../../middleware/sdmmc/port/fsl_sdmmc_event.h"
-"${ProjDirPath}/../../../../../middleware/sdmmc/port/usdhc/freertos/fsl_sdmmc_event.c"
-"${ProjDirPath}/../../../../../middleware/sdmmc/port/usdhc/freertos/fsl_sdmmc_host.c"
+"${ProjDirPath}/../../../../../middleware/sdmmc/sd/fsl_sd.c"
+"${ProjDirPath}/../../../../../middleware/sdmmc/sd/fsl_sd.h"
+"${ProjDirPath}/../../../../../middleware/sdmmc/common/fsl_sdmmc_common.c"
+"${ProjDirPath}/../../../../../middleware/sdmmc/common/fsl_sdmmc_common.h"
+"${ProjDirPath}/../../../../../middleware/sdmmc/common/fsl_sdmmc_spec.h"
+"${ProjDirPath}/../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h"
+"${ProjDirPath}/../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h"
+"${ProjDirPath}/../../../../../middleware/sdmmc/host/usdhc/non_blocking/fsl_sdmmc_host.c"
 "${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers/fsl_cache.c"
 "${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers/fsl_cache.h"
 "${ProjDirPath}/../../../../../middleware/fatfs/source/diskio.c"
@@ -1061,32 +1090,7 @@ add_executable(sdcard_fatfs_freertos.elf
 "${ProjDirPath}/../../../../../middleware/fatfs/source/ffunicode.c"
 "${ProjDirPath}/../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.c"
 "${ProjDirPath}/../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/event_groups.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include/FreeRTOS.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include/atomic.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include/deprecated_definitions.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include/event_groups.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include/list.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include/message_buffer.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include/mpu_prototypes.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include/mpu_wrappers.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include/portable.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include/projdefs.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include/queue.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include/semphr.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include/stack_macros.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include/stream_buffer.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include/task.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include/timers.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/list.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/portable/GCC/ARM_CM4F/port.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/portable/GCC/ARM_CM4F/portmacro.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/portable/MemMang/ReadMe.url"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/queue.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/stream_buffer.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/tasks.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/timers.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/portable/MemMang/heap_4.c"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/portable/MemMang/heap_4.c"
 "${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers/fsl_clock.c"
 "${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers/fsl_clock.h"
 "${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers/fsl_common.c"
@@ -1121,9 +1125,8 @@ add_executable(sdcard_fatfs_freertos.elf
 "${ProjDirPath}/../../../../../devices/MIMXRT1062/xip/fsl_flexspi_nor_boot.h"
 "${ProjDirPath}/../../../xip/evkmimxrt1060_flexspi_nor_config.c"
 "${ProjDirPath}/../../../xip/evkmimxrt1060_flexspi_nor_config.h"
-"${ProjDirPath}/../../../xip/evkmimxrt1060_sdram_ini_dcd.c"
-"${ProjDirPath}/../../../xip/evkmimxrt1060_sdram_ini_dcd.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/core_cm7.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/mpu_armv7.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/cmsis_armcc.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/cmsis_armclang.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/cmsis_armclang_ltm.h"
@@ -1131,21 +1134,44 @@ add_executable(sdcard_fatfs_freertos.elf
 "${ProjDirPath}/../../../../../CMSIS/Include/cmsis_gcc.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/cmsis_iccarm.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/cmsis_version.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/core_armv81mml.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/core_armv8mbl.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/core_armv8mml.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/mpu_armv7.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/mpu_armv8.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/arm_common_tables.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/arm_const_structs.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/arm_math.h"
-"${ProjDirPath}/../../../../../middleware/sdmmc/inc/fsl_sd.h"
-"${ProjDirPath}/../../../../../middleware/sdmmc/inc/fsl_sdmmc_common.h"
-"${ProjDirPath}/../../../../../middleware/sdmmc/inc/fsl_sdmmc_host.h"
-"${ProjDirPath}/../../../../../middleware/sdmmc/src/fsl_sd.c"
-"${ProjDirPath}/../../../../../middleware/sdmmc/src/fsl_sdmmc_common.c"
-"${ProjDirPath}/../../../../../middleware/sdmmc/inc/fsl_sdmmc_spec.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include/freertos_tasks_c_additions.h"
+"${ProjDirPath}/../../../../../middleware/sdmmc/osa/fsl_sdmmc_osa.c"
+"${ProjDirPath}/../../../../../middleware/sdmmc/osa/fsl_sdmmc_osa.h"
+"${ProjDirPath}/../../../../../components/osa/fsl_os_abstraction.h"
+"${ProjDirPath}/../../../../../components/osa/fsl_os_abstraction_config.h"
+"${ProjDirPath}/../../../../../components/osa/fsl_os_abstraction_free_rtos.c"
+"${ProjDirPath}/../../../../../components/osa/fsl_os_abstraction_free_rtos.h"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/croutine.c"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/event_groups.c"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/include/FreeRTOS.h"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/include/atomic.h"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/include/croutine.h"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/include/deprecated_definitions.h"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/include/event_groups.h"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/include/list.h"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/include/message_buffer.h"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/include/mpu_prototypes.h"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/include/mpu_wrappers.h"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/include/portable.h"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/include/projdefs.h"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/include/queue.h"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/include/semphr.h"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/include/stack_macros.h"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/include/stream_buffer.h"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/include/task.h"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/include/timers.h"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/list.c"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F/port.c"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F/portmacro.h"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/portable/MemMang/ReadMe.url"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/queue.c"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/stream_buffer.c"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/tasks.c"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/timers.c"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/include/freertos_tasks_c_additions.h"
 "${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities/fsl_sbrk.c"
 )
 

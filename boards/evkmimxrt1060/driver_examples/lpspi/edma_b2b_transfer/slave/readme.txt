@@ -10,6 +10,7 @@ The file 'lpspi_edma_b2b_transfer_slave.c' includes the LPSPI slave code.
 Toolchain supported
 ===================
 - IAR embedded Workbench  8.50.1
+- Keil MDK  5.30
 - GCC ARM Embedded  9.2.1
 - MCUXpresso  11.2.0
 

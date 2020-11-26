@@ -70,7 +70,7 @@
       <OPTFL>
         <tvExp>0</tvExp>
         <tvExpOptDlg>0</tvExpOptDlg>
-        <IsCurrentTarget>0</IsCurrentTarget>
+        <IsCurrentTarget>1</IsCurrentTarget>
       </OPTFL>
       <CpuCode>8</CpuCode>
       <DebugOpt>
@@ -106,7 +106,7 @@
         <tDllPa/>
         <tDlgDll/>
         <tDlgPa/>
-        <tIfile>.\Debug_RAM.ini</tIfile>
+        <tIfile>Debug_RAM.ini</tIfile>
         <pMon>BIN\CMSIS_AGDI.dll</pMon>
       </DebugOpt>
       <TargetDriverDllRegistry>

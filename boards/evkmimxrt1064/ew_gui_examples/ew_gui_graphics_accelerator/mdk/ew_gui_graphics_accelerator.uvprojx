@@ -328,9 +328,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1064DVL6A, SKIP_SYSCLK_INIT, XIP_BOOT_HEADER_DCD_ENABLE=1, EW_MAX_SURFACE_CACHE_SIZE=0x200000, EW_MAX_GLYPH_SURFACE_WIDTH=256, EW_MAX_GLYPH_SURFACE_HEIGHT=256, EW_USE_DOUBLE_BUFFER=1, EW_CPU_LOAD_MEASURING=1, EW_FRAME_BUFFER_COLOR_FORMAT=EW_FRAME_BUFFER_COLOR_FORMAT_RGB565, EW_SURFACE_ROTATION=0, EW_USE_FREE_RTOS=0, SERIAL_PORT_TYPE_UART=1</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1064DVL6A, SKIP_SYSCLK_INIT, XIP_BOOT_HEADER_DCD_ENABLE=1, EW_USE_DOUBLE_BUFFER=1, EW_CPU_LOAD_MEASURING=1, EW_FRAME_BUFFER_COLOR_FORMAT=EW_FRAME_BUFFER_COLOR_FORMAT_RGB565, EW_SURFACE_ROTATION=0, EW_USE_FREE_RTOS=0, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../..;../../../../../CMSIS/Include;../../../../../devices;../GeneratedCode;../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RTE;../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565;../../../../../middleware/EmbeddedWizard/TargetSpecific/evkmimxrt1064;../../../../../middleware/EmbeddedWizard/ThirdParty/TLSF;../../../../../devices/MIMXRT1064/drivers;../../../../../devices/MIMXRT1064/drivers;../../../../../devices/MIMXRT1064/drivers;../../../../../devices/MIMXRT1064/drivers;../../../../../devices/MIMXRT1064/drivers;../../../../../components/ft5406_rt;../../../../../devices/MIMXRT1064/drivers;../../../../../devices/MIMXRT1064/drivers;../../../../../devices/MIMXRT1064;../../../../../devices/MIMXRT1064/utilities/str;../../../../../devices/MIMXRT1064/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../components/serial_manager;../../../../../devices/MIMXRT1064/drivers;../../../../../devices/MIMXRT1064/drivers;../../../../../devices/MIMXRT1064/drivers;../../../../../devices/MIMXRT1064/xip;../../../xip;../../../xip;../../../../../devices/MIMXRT1064/utilities</IncludePath>
+              <IncludePath>..;../../..;../../../../../CMSIS/Include;../../../../../devices;../GeneratedCode;../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RTE;../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565;../../../../../middleware/EmbeddedWizard/TargetSpecific/RT;../../../../../devices/MIMXRT1064/drivers;../../../../../components/ft5406_rt;../../../../../devices/MIMXRT1064;../../../../../devices/MIMXRT1064/utilities/str;../../../../../devices/MIMXRT1064/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1064/xip;../../../xip;../../../../../devices/MIMXRT1064/utilities</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -364,7 +364,7 @@
             <ScatterFile>MIMXRT1064xxxxx_flexspi_nor.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/libewgfx-m7-keil.lib ../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RTE/libewrte-m7-keil.lib --remove --keep=*(.boot_hdr.ivt) --keep=*(.boot_hdr.boot_data) --keep=*(.boot_hdr.conf) --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
+            <Misc>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/libewgfx-m7-keil.lib ../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RTE/libewrte-m7-keil.lib --remove --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -394,6 +394,26 @@
               <FileName>clock_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../clock_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>dcd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../dcd.c</FilePath>
+            </File>
+            <File>
+              <FileName>dcd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../dcd.h</FilePath>
+            </File>
+            <File>
+              <FileName>ewconfig.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../ewconfig.h</FilePath>
+            </File>
+            <File>
+              <FileName>ewdef.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../ewdef.h</FilePath>
             </File>
             <File>
               <FileName>pin_mux.c</FileName>
@@ -671,9 +691,89 @@
               <FilePath>../GeneratedCode/_AcceleratorAccelerator.h</FilePath>
             </File>
             <File>
+              <FileName>_AcceleratorFontLarge.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_AcceleratorFontLarge.h</FilePath>
+            </File>
+            <File>
+              <FileName>_AcceleratorFontMedium.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_AcceleratorFontMedium.h</FilePath>
+            </File>
+            <File>
+              <FileName>_AcceleratorFontSmall.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_AcceleratorFontSmall.h</FilePath>
+            </File>
+            <File>
               <FileName>_AcceleratorGraphicsFactory.h</FileName>
               <FileType>5</FileType>
               <FilePath>../GeneratedCode/_AcceleratorGraphicsFactory.h</FilePath>
+            </File>
+            <File>
+              <FileName>_AcceleratorImgBlend1.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_AcceleratorImgBlend1.h</FilePath>
+            </File>
+            <File>
+              <FileName>_AcceleratorImgBlend2.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_AcceleratorImgBlend2.h</FilePath>
+            </File>
+            <File>
+              <FileName>_AcceleratorImgBlend3.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_AcceleratorImgBlend3.h</FilePath>
+            </File>
+            <File>
+              <FileName>_AcceleratorImgBlend4.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_AcceleratorImgBlend4.h</FilePath>
+            </File>
+            <File>
+              <FileName>_AcceleratorImgBlend5.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_AcceleratorImgBlend5.h</FilePath>
+            </File>
+            <File>
+              <FileName>_AcceleratorImgBlend6.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_AcceleratorImgBlend6.h</FilePath>
+            </File>
+            <File>
+              <FileName>_AcceleratorImgBlend7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_AcceleratorImgBlend7.h</FilePath>
+            </File>
+            <File>
+              <FileName>_AcceleratorImgCopy1.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_AcceleratorImgCopy1.h</FilePath>
+            </File>
+            <File>
+              <FileName>_AcceleratorImgCopy2.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_AcceleratorImgCopy2.h</FilePath>
+            </File>
+            <File>
+              <FileName>_AcceleratorImgCopy3.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_AcceleratorImgCopy3.h</FilePath>
+            </File>
+            <File>
+              <FileName>_AcceleratorImgCopy4.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_AcceleratorImgCopy4.h</FilePath>
+            </File>
+            <File>
+              <FileName>_AcceleratorImgCopy5.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_AcceleratorImgCopy5.h</FilePath>
+            </File>
+            <File>
+              <FileName>_AcceleratorLogo.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_AcceleratorLogo.h</FilePath>
             </File>
             <File>
               <FileName>_ApplicationApplication.h</FileName>
@@ -816,6 +916,11 @@
               <FilePath>../GeneratedCode/_ResourcesFont.h</FilePath>
             </File>
             <File>
+              <FileName>_ResourcesFontMedium.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_ResourcesFontMedium.h</FilePath>
+            </File>
+            <File>
               <FileName>_TemplatesDeviceClass.h</FileName>
               <FileType>5</FileType>
               <FilePath>../GeneratedCode/_TemplatesDeviceClass.h</FilePath>
@@ -849,6 +954,16 @@
               <FileName>_WidgetSetPushButtonConfig.h</FileName>
               <FileType>5</FileType>
               <FilePath>../GeneratedCode/_WidgetSetPushButtonConfig.h</FilePath>
+            </File>
+            <File>
+              <FileName>_WidgetSetPushButtonMedium.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_WidgetSetPushButtonMedium.h</FilePath>
+            </File>
+            <File>
+              <FileName>_WidgetSetSwitchMedium.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_WidgetSetSwitchMedium.h</FilePath>
             </File>
             <File>
               <FileName>_WidgetSetToggleButton.h</FileName>
@@ -958,107 +1073,87 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>EmbeddedWizard-TargetSpecific-evkmimxrt1064</GroupName>
+          <GroupName>EmbeddedWizard-TargetSpecific-RT</GroupName>
           <Files>
             <File>
               <FileName>ew_bsp_clock.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/evkmimxrt1064/ew_bsp_clock.c</FilePath>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_clock.c</FilePath>
             </File>
             <File>
               <FileName>ew_bsp_clock.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/evkmimxrt1064/ew_bsp_clock.h</FilePath>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_clock.h</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_console.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_console.c</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_console.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_console.h</FilePath>
             </File>
             <File>
               <FileName>ew_bsp_display.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/evkmimxrt1064/ew_bsp_display.c</FilePath>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_display.c</FilePath>
             </File>
             <File>
               <FileName>ew_bsp_display.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/evkmimxrt1064/ew_bsp_display.h</FilePath>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_display.h</FilePath>
             </File>
             <File>
               <FileName>ew_bsp_event.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/evkmimxrt1064/ew_bsp_event.c</FilePath>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_event.c</FilePath>
             </File>
             <File>
               <FileName>ew_bsp_event.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/evkmimxrt1064/ew_bsp_event.h</FilePath>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_event.h</FilePath>
             </File>
             <File>
               <FileName>ew_bsp_graphics.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/evkmimxrt1064/ew_bsp_graphics.c</FilePath>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_graphics.c</FilePath>
             </File>
             <File>
               <FileName>ew_bsp_graphics.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/evkmimxrt1064/ew_bsp_graphics.h</FilePath>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_graphics.h</FilePath>
             </File>
             <File>
               <FileName>ew_bsp_inout.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/evkmimxrt1064/ew_bsp_inout.c</FilePath>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_inout.c</FilePath>
             </File>
             <File>
               <FileName>ew_bsp_inout.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/evkmimxrt1064/ew_bsp_inout.h</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_serial.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/evkmimxrt1064/ew_bsp_serial.c</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_serial.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/evkmimxrt1064/ew_bsp_serial.h</FilePath>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_inout.h</FilePath>
             </File>
             <File>
               <FileName>ew_bsp_system.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/evkmimxrt1064/ew_bsp_system.c</FilePath>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_system.c</FilePath>
             </File>
             <File>
               <FileName>ew_bsp_system.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/evkmimxrt1064/ew_bsp_system.h</FilePath>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_system.h</FilePath>
             </File>
             <File>
               <FileName>ew_bsp_touch.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/evkmimxrt1064/ew_bsp_touch.c</FilePath>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_touch.c</FilePath>
             </File>
             <File>
               <FileName>ew_bsp_touch.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/evkmimxrt1064/ew_bsp_touch.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>EmbeddedWizard-ThirdParty-TLSF</GroupName>
-          <Files>
-            <File>
-              <FileName>tlsf.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/ThirdParty/TLSF/tlsf.c</FilePath>
-            </File>
-            <File>
-              <FileName>tlsf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/ThirdParty/TLSF/tlsf.h</FilePath>
-            </File>
-            <File>
-              <FileName>tlsfbits.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/ThirdParty/TLSF/tlsfbits.h</FilePath>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_touch.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1191,9 +1286,9 @@
           <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_MIMXRT1064.s</FileName>
+              <FileName>startup_MIMXRT1064.S</FileName>
               <FileType>2</FileType>
-              <FilePath>../../../../../devices/MIMXRT1064/arm/startup_MIMXRT1064.s</FilePath>
+              <FilePath>../../../../../devices/MIMXRT1064/arm/startup_MIMXRT1064.S</FilePath>
             </File>
           </Files>
         </Group>
@@ -1220,16 +1315,6 @@
               <FileType>5</FileType>
               <FilePath>../../../xip/evkmimxrt1064_flexspi_nor_config.h</FilePath>
             </File>
-            <File>
-              <FileName>evkmimxrt1064_sdram_ini_dcd.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../xip/evkmimxrt1064_sdram_ini_dcd.c</FilePath>
-            </File>
-            <File>
-              <FileName>evkmimxrt1064_sdram_ini_dcd.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../xip/evkmimxrt1064_sdram_ini_dcd.h</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -1239,6 +1324,11 @@
               <FileName>core_cm7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_armcc.h</FileName>
@@ -1274,31 +1364,6 @@
               <FileName>cmsis_version.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv81mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_armv81mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mbl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
             </File>
             <File>
               <FileName>arm_common_tables.h</FileName>
@@ -1644,9 +1709,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1064DVL6A, SKIP_SYSCLK_INIT, XIP_BOOT_HEADER_DCD_ENABLE=1, EW_MAX_SURFACE_CACHE_SIZE=0x200000, EW_MAX_GLYPH_SURFACE_WIDTH=256, EW_MAX_GLYPH_SURFACE_HEIGHT=256, EW_USE_DOUBLE_BUFFER=1, EW_CPU_LOAD_MEASURING=1, EW_FRAME_BUFFER_COLOR_FORMAT=EW_FRAME_BUFFER_COLOR_FORMAT_RGB565, EW_SURFACE_ROTATION=0, EW_USE_FREE_RTOS=0, SERIAL_PORT_TYPE_UART=1</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1064DVL6A, SKIP_SYSCLK_INIT, XIP_BOOT_HEADER_DCD_ENABLE=1, EW_USE_DOUBLE_BUFFER=1, EW_CPU_LOAD_MEASURING=1, EW_FRAME_BUFFER_COLOR_FORMAT=EW_FRAME_BUFFER_COLOR_FORMAT_RGB565, EW_SURFACE_ROTATION=0, EW_USE_FREE_RTOS=0, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../..;../../../../../CMSIS/Include;../../../../../devices;../GeneratedCode;../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RTE;../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565;../../../../../middleware/EmbeddedWizard/TargetSpecific/evkmimxrt1064;../../../../../middleware/EmbeddedWizard/ThirdParty/TLSF;../../../../../devices/MIMXRT1064/drivers;../../../../../devices/MIMXRT1064/drivers;../../../../../devices/MIMXRT1064/drivers;../../../../../devices/MIMXRT1064/drivers;../../../../../devices/MIMXRT1064/drivers;../../../../../components/ft5406_rt;../../../../../devices/MIMXRT1064/drivers;../../../../../devices/MIMXRT1064/drivers;../../../../../devices/MIMXRT1064;../../../../../devices/MIMXRT1064/utilities/str;../../../../../devices/MIMXRT1064/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../components/serial_manager;../../../../../devices/MIMXRT1064/drivers;../../../../../devices/MIMXRT1064/drivers;../../../../../devices/MIMXRT1064/drivers;../../../../../devices/MIMXRT1064/xip;../../../xip;../../../xip;../../../../../devices/MIMXRT1064/utilities</IncludePath>
+              <IncludePath>..;../../..;../../../../../CMSIS/Include;../../../../../devices;../GeneratedCode;../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RTE;../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565;../../../../../middleware/EmbeddedWizard/TargetSpecific/RT;../../../../../devices/MIMXRT1064/drivers;../../../../../components/ft5406_rt;../../../../../devices/MIMXRT1064;../../../../../devices/MIMXRT1064/utilities/str;../../../../../devices/MIMXRT1064/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1064/xip;../../../xip;../../../../../devices/MIMXRT1064/utilities</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1680,7 +1745,7 @@
             <ScatterFile>MIMXRT1064xxxxx_flexspi_nor.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/libewgfx-m7-keil.lib ../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RTE/libewrte-m7-keil.lib --remove --keep=*(.boot_hdr.ivt) --keep=*(.boot_hdr.boot_data) --keep=*(.boot_hdr.conf) --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
+            <Misc>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/libewgfx-m7-keil.lib ../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RTE/libewrte-m7-keil.lib --remove --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -1710,6 +1775,26 @@
               <FileName>clock_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../clock_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>dcd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../dcd.c</FilePath>
+            </File>
+            <File>
+              <FileName>dcd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../dcd.h</FilePath>
+            </File>
+            <File>
+              <FileName>ewconfig.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../ewconfig.h</FilePath>
+            </File>
+            <File>
+              <FileName>ewdef.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../ewdef.h</FilePath>
             </File>
             <File>
               <FileName>pin_mux.c</FileName>
@@ -1987,9 +2072,89 @@
               <FilePath>../GeneratedCode/_AcceleratorAccelerator.h</FilePath>
             </File>
             <File>
+              <FileName>_AcceleratorFontLarge.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_AcceleratorFontLarge.h</FilePath>
+            </File>
+            <File>
+              <FileName>_AcceleratorFontMedium.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_AcceleratorFontMedium.h</FilePath>
+            </File>
+            <File>
+              <FileName>_AcceleratorFontSmall.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_AcceleratorFontSmall.h</FilePath>
+            </File>
+            <File>
               <FileName>_AcceleratorGraphicsFactory.h</FileName>
               <FileType>5</FileType>
               <FilePath>../GeneratedCode/_AcceleratorGraphicsFactory.h</FilePath>
+            </File>
+            <File>
+              <FileName>_AcceleratorImgBlend1.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_AcceleratorImgBlend1.h</FilePath>
+            </File>
+            <File>
+              <FileName>_AcceleratorImgBlend2.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_AcceleratorImgBlend2.h</FilePath>
+            </File>
+            <File>
+              <FileName>_AcceleratorImgBlend3.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_AcceleratorImgBlend3.h</FilePath>
+            </File>
+            <File>
+              <FileName>_AcceleratorImgBlend4.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_AcceleratorImgBlend4.h</FilePath>
+            </File>
+            <File>
+              <FileName>_AcceleratorImgBlend5.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_AcceleratorImgBlend5.h</FilePath>
+            </File>
+            <File>
+              <FileName>_AcceleratorImgBlend6.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_AcceleratorImgBlend6.h</FilePath>
+            </File>
+            <File>
+              <FileName>_AcceleratorImgBlend7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_AcceleratorImgBlend7.h</FilePath>
+            </File>
+            <File>
+              <FileName>_AcceleratorImgCopy1.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_AcceleratorImgCopy1.h</FilePath>
+            </File>
+            <File>
+              <FileName>_AcceleratorImgCopy2.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_AcceleratorImgCopy2.h</FilePath>
+            </File>
+            <File>
+              <FileName>_AcceleratorImgCopy3.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_AcceleratorImgCopy3.h</FilePath>
+            </File>
+            <File>
+              <FileName>_AcceleratorImgCopy4.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_AcceleratorImgCopy4.h</FilePath>
+            </File>
+            <File>
+              <FileName>_AcceleratorImgCopy5.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_AcceleratorImgCopy5.h</FilePath>
+            </File>
+            <File>
+              <FileName>_AcceleratorLogo.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_AcceleratorLogo.h</FilePath>
             </File>
             <File>
               <FileName>_ApplicationApplication.h</FileName>
@@ -2132,6 +2297,11 @@
               <FilePath>../GeneratedCode/_ResourcesFont.h</FilePath>
             </File>
             <File>
+              <FileName>_ResourcesFontMedium.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_ResourcesFontMedium.h</FilePath>
+            </File>
+            <File>
               <FileName>_TemplatesDeviceClass.h</FileName>
               <FileType>5</FileType>
               <FilePath>../GeneratedCode/_TemplatesDeviceClass.h</FilePath>
@@ -2165,6 +2335,16 @@
               <FileName>_WidgetSetPushButtonConfig.h</FileName>
               <FileType>5</FileType>
               <FilePath>../GeneratedCode/_WidgetSetPushButtonConfig.h</FilePath>
+            </File>
+            <File>
+              <FileName>_WidgetSetPushButtonMedium.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_WidgetSetPushButtonMedium.h</FilePath>
+            </File>
+            <File>
+              <FileName>_WidgetSetSwitchMedium.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_WidgetSetSwitchMedium.h</FilePath>
             </File>
             <File>
               <FileName>_WidgetSetToggleButton.h</FileName>
@@ -2274,107 +2454,87 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>EmbeddedWizard-TargetSpecific-evkmimxrt1064</GroupName>
+          <GroupName>EmbeddedWizard-TargetSpecific-RT</GroupName>
           <Files>
             <File>
               <FileName>ew_bsp_clock.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/evkmimxrt1064/ew_bsp_clock.c</FilePath>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_clock.c</FilePath>
             </File>
             <File>
               <FileName>ew_bsp_clock.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/evkmimxrt1064/ew_bsp_clock.h</FilePath>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_clock.h</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_console.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_console.c</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_console.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_console.h</FilePath>
             </File>
             <File>
               <FileName>ew_bsp_display.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/evkmimxrt1064/ew_bsp_display.c</FilePath>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_display.c</FilePath>
             </File>
             <File>
               <FileName>ew_bsp_display.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/evkmimxrt1064/ew_bsp_display.h</FilePath>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_display.h</FilePath>
             </File>
             <File>
               <FileName>ew_bsp_event.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/evkmimxrt1064/ew_bsp_event.c</FilePath>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_event.c</FilePath>
             </File>
             <File>
               <FileName>ew_bsp_event.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/evkmimxrt1064/ew_bsp_event.h</FilePath>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_event.h</FilePath>
             </File>
             <File>
               <FileName>ew_bsp_graphics.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/evkmimxrt1064/ew_bsp_graphics.c</FilePath>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_graphics.c</FilePath>
             </File>
             <File>
               <FileName>ew_bsp_graphics.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/evkmimxrt1064/ew_bsp_graphics.h</FilePath>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_graphics.h</FilePath>
             </File>
             <File>
               <FileName>ew_bsp_inout.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/evkmimxrt1064/ew_bsp_inout.c</FilePath>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_inout.c</FilePath>
             </File>
             <File>
               <FileName>ew_bsp_inout.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/evkmimxrt1064/ew_bsp_inout.h</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_serial.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/evkmimxrt1064/ew_bsp_serial.c</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_serial.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/evkmimxrt1064/ew_bsp_serial.h</FilePath>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_inout.h</FilePath>
             </File>
             <File>
               <FileName>ew_bsp_system.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/evkmimxrt1064/ew_bsp_system.c</FilePath>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_system.c</FilePath>
             </File>
             <File>
               <FileName>ew_bsp_system.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/evkmimxrt1064/ew_bsp_system.h</FilePath>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_system.h</FilePath>
             </File>
             <File>
               <FileName>ew_bsp_touch.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/evkmimxrt1064/ew_bsp_touch.c</FilePath>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_touch.c</FilePath>
             </File>
             <File>
               <FileName>ew_bsp_touch.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/evkmimxrt1064/ew_bsp_touch.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>EmbeddedWizard-ThirdParty-TLSF</GroupName>
-          <Files>
-            <File>
-              <FileName>tlsf.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/ThirdParty/TLSF/tlsf.c</FilePath>
-            </File>
-            <File>
-              <FileName>tlsf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/ThirdParty/TLSF/tlsf.h</FilePath>
-            </File>
-            <File>
-              <FileName>tlsfbits.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/ThirdParty/TLSF/tlsfbits.h</FilePath>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_touch.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2507,9 +2667,9 @@
           <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_MIMXRT1064.s</FileName>
+              <FileName>startup_MIMXRT1064.S</FileName>
               <FileType>2</FileType>
-              <FilePath>../../../../../devices/MIMXRT1064/arm/startup_MIMXRT1064.s</FilePath>
+              <FilePath>../../../../../devices/MIMXRT1064/arm/startup_MIMXRT1064.S</FilePath>
             </File>
           </Files>
         </Group>
@@ -2536,16 +2696,6 @@
               <FileType>5</FileType>
               <FilePath>../../../xip/evkmimxrt1064_flexspi_nor_config.h</FilePath>
             </File>
-            <File>
-              <FileName>evkmimxrt1064_sdram_ini_dcd.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../xip/evkmimxrt1064_sdram_ini_dcd.c</FilePath>
-            </File>
-            <File>
-              <FileName>evkmimxrt1064_sdram_ini_dcd.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../xip/evkmimxrt1064_sdram_ini_dcd.h</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -2555,6 +2705,11 @@
               <FileName>core_cm7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_armcc.h</FileName>
@@ -2590,31 +2745,6 @@
               <FileName>cmsis_version.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv81mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_armv81mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mbl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
             </File>
             <File>
               <FileName>arm_common_tables.h</FileName>

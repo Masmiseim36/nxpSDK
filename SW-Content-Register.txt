@@ -1,5 +1,5 @@
 Release Name: MCUXpresso Software Development Kit (SDK)
-Release Version: 2.8.5
+Release Version: 2.8.6
 Package License: LA_OPT_NXP_Software_License.txt - Production Use, Section 2.3 applies
 
 SDK_Peripheral_Driver      Name: SDK Peripheral Driver                       

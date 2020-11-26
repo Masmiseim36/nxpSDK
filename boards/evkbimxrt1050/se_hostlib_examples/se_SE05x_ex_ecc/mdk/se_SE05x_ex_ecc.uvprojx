@@ -328,9 +328,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1052DVL6B, SDK_DEBUGCONSOLE=1, SDK_DEBUGCONSOLE_UART, PHDRIVER_IMXRT1050RC663_BOARD, IMX_RT, MBEDTLS_CONFIG_FILE='\"a71ch_mbedtls_evkbimxrt1050_config.h\"', PRINTF_ADVANCED_ENABLE=1, MBEDTLS, SCP_MODE=C_MAC_C_ENC_R_MAC_R_ENC, SERIAL_PORT_TYPE_UART=1, T1oI2C, T1oI2C_UM1225_SE050, SSS_USE_FTR_FILE, NO_SECURE_CHANNEL_SUPPORT</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1052DVL6B, SDK_DEBUGCONSOLE=1, SDK_DEBUGCONSOLE_UART, PHDRIVER_IMXRT1050RC663_BOARD, IMX_RT, MBEDTLS_CONFIG_FILE='\"a71ch_mbedtls_evkbimxrt1050_config.h\"', PRINTF_ADVANCED_ENABLE=1, MBEDTLS, SCP_MODE=C_MAC_C_ENC_R_MAC_R_ENC, SERIAL_PORT_TYPE_UART=1, T1oI2C, T1oI2C_UM11225, SSS_USE_FTR_FILE, NO_SECURE_CHANNEL_SUPPORT</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../middleware/se_hostlib/sss/inc;../../../../../middleware/se_hostlib/sss/ex/inc;../../../../../middleware/se_hostlib/sss/port/ksdk;../../../../../middleware/mbedtls/include/mbedtls;../../../../../middleware/se_hostlib/hostlib/hostLib/se05x_03_xx_xx;../../mainA71CH;../../../../../middleware/se_hostlib/demos/ksdk/se050/default;../../../../../middleware/se_hostlib/sss/plugin/mbedtls;../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra;../../../../../middleware/se_hostlib/hostlib/hostLib/mbedtls/inc;../../../../../middleware/se_hostlib/demos/ksdk/common;../../../../../middleware/se_hostlib/demos/ksdk/common/boards/evkbimxrt1050/se_hostlib_examples/cloud_demo;../../..;../../../../../CMSIS/Include;../../../../../devices;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/port/ksdk;../../../../../devices/MIMXRT1052/drivers;../../../../../devices/MIMXRT1052/drivers;../../../../../devices/MIMXRT1052/drivers;../../../../../devices/MIMXRT1052/drivers;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/port/ksdk;../../../../../middleware/se_hostlib/sss/plugin/mbedtls;../../../../../devices/MIMXRT1052/drivers;../../../../../devices/MIMXRT1052/drivers;../../../../../devices/MIMXRT1052;../../../../../devices/MIMXRT1052/utilities/str;../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../components/serial_manager;../../../../../devices/MIMXRT1052/drivers;../../../../../devices/MIMXRT1052/drivers;../../../../../devices/MIMXRT1052/drivers;../../../../../devices/MIMXRT1052/xip;../../../xip;../../../xip;../../../../../middleware/se_hostlib;../../../../../middleware/se_hostlib/hostlib/hostLib/inc;../../../../../middleware/se_hostlib/platform;../../../../../middleware/se_hostlib/hostlib/hostLib/platform/inc;../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom;../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/T1oI2C;../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra;../../../../../devices/MIMXRT1052/utilities</IncludePath>
+              <IncludePath>..;../../../../../middleware/se_hostlib/sss/inc;../../../../../middleware/se_hostlib/sss/ex/inc;../../../../../middleware/se_hostlib/sss/port/ksdk;../../../../../middleware/mbedtls/include/mbedtls;../../../../../middleware/se_hostlib/hostlib/hostLib/se05x_03_xx_xx;../../mainA71CH;../../../../../middleware/se_hostlib/demos/ksdk/se050/default;../../../../../middleware/se_hostlib/sss/plugin/mbedtls;../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra;../../../../../middleware/se_hostlib/hostlib/hostLib/mbedtls/inc;../../../../../middleware/se_hostlib/demos/ksdk/common;../../../../../middleware/se_hostlib/demos/ksdk/common/boards/evkbimxrt1050/se_hostlib_examples/cloud_demo;../../..;../../../../../CMSIS/Include;../../../../../devices;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/port/ksdk;../../../../../devices/MIMXRT1052/drivers;../../../../../devices/MIMXRT1052;../../../../../devices/MIMXRT1052/utilities/str;../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1052/xip;../../../xip;../../../../../middleware/se_hostlib;../../../../../middleware/se_hostlib/hostlib/hostLib/inc;../../../../../middleware/se_hostlib/platform;../../../../../middleware/se_hostlib/hostlib/hostLib/platform/inc;../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom;../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/T1oI2C;../../../../../devices/MIMXRT1052/utilities</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -364,7 +364,7 @@
             <ScatterFile>MIMXRT1052xxxxx_flexspi_nor.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --keep=*(.boot_hdr.ivt) --keep=*(.boot_hdr.boot_data) --keep=*(.boot_hdr.conf) --predefine="-DXIP_BOOT_HEADER_ENABLE=1" --predefine="-D__stack_size__=0x2000" --predefine="-D__heap_size__=0x8000"</Misc>
+            <Misc>--remove --predefine="-DXIP_BOOT_HEADER_ENABLE=1" --predefine="-D__stack_size__=0x2000" --predefine="-D__heap_size__=0x8000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -404,6 +404,16 @@
               <FileName>clock_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../clock_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>dcd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../dcd.c</FilePath>
+            </File>
+            <File>
+              <FileName>dcd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../dcd.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -584,261 +594,6 @@
               <FileName>sss_mbedtls_x86_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/se_hostlib/sss/plugin/mbedtls/sss_mbedtls_x86_config.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>device</GroupName>
-          <Files>
-            <File>
-              <FileName>MIMXRT1052.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/MIMXRT1052.h</FilePath>
-            </File>
-            <File>
-              <FileName>MIMXRT1052_features.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/MIMXRT1052_features.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_device_registers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/fsl_device_registers.h</FilePath>
-            </File>
-            <File>
-              <FileName>system_MIMXRT1052.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/system_MIMXRT1052.c</FilePath>
-            </File>
-            <File>
-              <FileName>system_MIMXRT1052.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/system_MIMXRT1052.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>utilities</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_debug_console.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_debug_console.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_debug_console.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console_conf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_assert.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/utilities/fsl_assert.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component-uart</GroupName>
-          <Files>
-            <File>
-              <FileName>lpuart_adapter.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/uart/lpuart_adapter.c</FilePath>
-            </File>
-            <File>
-              <FileName>uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/uart/uart.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component-serial_manager</GroupName>
-          <Files>
-            <File>
-              <FileName>serial_manager.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>serial_manager.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_manager.h</FilePath>
-            </File>
-            <File>
-              <FileName>serial_port_internal.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_port_internal.h</FilePath>
-            </File>
-            <File>
-              <FileName>serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_port_uart.c</FilePath>
-            </File>
-            <File>
-              <FileName>serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_port_uart.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component-lists</GroupName>
-          <Files>
-            <File>
-              <FileName>generic_list.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/lists/generic_list.c</FilePath>
-            </File>
-            <File>
-              <FileName>generic_list.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/lists/generic_list.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>startup</GroupName>
-          <Files>
-            <File>
-              <FileName>startup_MIMXRT1052.s</FileName>
-              <FileType>2</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/arm/startup_MIMXRT1052.s</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>xip</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_flexspi_nor_boot.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/xip/fsl_flexspi_nor_boot.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_flexspi_nor_boot.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/xip/fsl_flexspi_nor_boot.h</FilePath>
-            </File>
-            <File>
-              <FileName>evkbimxrt1050_flexspi_nor_config.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../xip/evkbimxrt1050_flexspi_nor_config.c</FilePath>
-            </File>
-            <File>
-              <FileName>evkbimxrt1050_flexspi_nor_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../xip/evkbimxrt1050_flexspi_nor_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>evkbimxrt1050_sdram_ini_dcd.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../xip/evkbimxrt1050_sdram_ini_dcd.c</FilePath>
-            </File>
-            <File>
-              <FileName>evkbimxrt1050_sdram_ini_dcd.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../xip/evkbimxrt1050_sdram_ini_dcd.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>CMSIS</GroupName>
-          <Files>
-            <File>
-              <FileName>core_cm7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_cm7.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armclang.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armclang_ltm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_version.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv81mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_armv81mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mbl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_common_tables.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_const_structs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_math.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/arm_math.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1708,8 +1463,238 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>device</GroupName>
+          <Files>
+            <File>
+              <FileName>MIMXRT1052.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/MIMXRT1052.h</FilePath>
+            </File>
+            <File>
+              <FileName>MIMXRT1052_features.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/MIMXRT1052_features.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_device_registers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/fsl_device_registers.h</FilePath>
+            </File>
+            <File>
+              <FileName>system_MIMXRT1052.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/system_MIMXRT1052.c</FilePath>
+            </File>
+            <File>
+              <FileName>system_MIMXRT1052.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/system_MIMXRT1052.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>utilities</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_debug_console.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_debug_console.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_debug_console.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console_conf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/utilities/fsl_assert.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component-uart</GroupName>
+          <Files>
+            <File>
+              <FileName>lpuart_adapter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/uart/lpuart_adapter.c</FilePath>
+            </File>
+            <File>
+              <FileName>uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/uart/uart.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component-serial_manager</GroupName>
+          <Files>
+            <File>
+              <FileName>serial_manager.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/serial_manager/serial_manager.c</FilePath>
+            </File>
+            <File>
+              <FileName>serial_manager.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/serial_manager/serial_manager.h</FilePath>
+            </File>
+            <File>
+              <FileName>serial_port_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/serial_manager/serial_port_internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/serial_manager/serial_port_uart.c</FilePath>
+            </File>
+            <File>
+              <FileName>serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/serial_manager/serial_port_uart.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component-lists</GroupName>
+          <Files>
+            <File>
+              <FileName>generic_list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/lists/generic_list.c</FilePath>
+            </File>
+            <File>
+              <FileName>generic_list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/lists/generic_list.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>startup</GroupName>
+          <Files>
+            <File>
+              <FileName>startup_MIMXRT1052.S</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/arm/startup_MIMXRT1052.S</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>xip</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_flexspi_nor_boot.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/xip/fsl_flexspi_nor_boot.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_flexspi_nor_boot.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/xip/fsl_flexspi_nor_boot.h</FilePath>
+            </File>
+            <File>
+              <FileName>evkbimxrt1050_flexspi_nor_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../xip/evkbimxrt1050_flexspi_nor_config.c</FilePath>
+            </File>
+            <File>
+              <FileName>evkbimxrt1050_flexspi_nor_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../xip/evkbimxrt1050_flexspi_nor_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>CMSIS</GroupName>
+          <Files>
+            <File>
+              <FileName>core_cm7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang_ltm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_gcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_iccarm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_common_tables.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_const_structs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_math.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/arm_math.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>se_hostlib-hostlib-hostLib-inc</GroupName>
           <Files>
+            <File>
+              <FileName>Applet_SE050_Ver.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostlib/hostLib/inc/Applet_SE050_Ver.h</FilePath>
+            </File>
             <File>
               <FileName>HLSEAPI.h</FileName>
               <FileType>5</FileType>
@@ -1966,6 +1951,16 @@
               <FilePath>../../../../../middleware/se_hostlib/sss/inc/fsl_sss_keyid_map.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_sss_lpc55s_apis.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/sss/inc/fsl_sss_lpc55s_apis.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_sss_lpc55s_types.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/sss/inc/fsl_sss_lpc55s_types.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_sss_mbedtls_apis.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/se_hostlib/sss/inc/fsl_sss_mbedtls_apis.h</FilePath>
@@ -2021,6 +2016,16 @@
               <FilePath>../../../../../middleware/se_hostlib/sss/inc/fsl_sss_sscp_config.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_sss_user_apis.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/sss/inc/fsl_sss_user_apis.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_sss_user_types.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/sss/inc/fsl_sss_user_types.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_sss_util_asn1_der.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/se_hostlib/sss/inc/fsl_sss_util_asn1_der.h</FilePath>
@@ -2071,9 +2076,9 @@
               <FilePath>../../../../../middleware/se_hostlib/sss/src/se05x/fsl_sss_se05x_apis.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_sss_se05x_fastscp.c</FileName>
+              <FileName>fsl_sss_se05x_eckey.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/sss/src/se05x/fsl_sss_se05x_fastscp.c</FilePath>
+              <FilePath>../../../../../middleware/se_hostlib/sss/src/se05x/fsl_sss_se05x_eckey.c</FilePath>
             </File>
             <File>
               <FileName>fsl_sss_se05x_mw.c</FileName>
@@ -2406,6 +2411,16 @@
           <GroupName>se_hostlib-sss-ex-inc</GroupName>
           <Files>
             <File>
+              <FileName>ex_a71ch_scp03.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/sss/ex/inc/ex_a71ch_scp03.h</FilePath>
+            </File>
+            <File>
+              <FileName>ex_scp03_puf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/sss/ex/inc/ex_scp03_puf.h</FilePath>
+            </File>
+            <File>
               <FileName>ex_sss.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/se_hostlib/sss/ex/inc/ex_sss.h</FilePath>
@@ -2444,6 +2459,11 @@
               <FileName>ex_sss_main_inc_ksdk.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/se_hostlib/sss/ex/inc/ex_sss_main_inc_ksdk.h</FilePath>
+            </File>
+            <File>
+              <FileName>ex_sss_main_inc_linux.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/sss/ex/inc/ex_sss_main_inc_linux.h</FilePath>
             </File>
             <File>
               <FileName>ex_sss_main_inc_lpcxpresso55s.h</FileName>
@@ -2505,11 +2525,6 @@
         <Group>
           <GroupName>se_hostlib-hostlib-hostLib-se05x_03_xx_xx</GroupName>
           <Files>
-            <File>
-              <FileName>Applet_SE050_Ver.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostlib/hostLib/se05x_03_xx_xx/Applet_SE050_Ver.h</FilePath>
-            </File>
             <File>
               <FileName>se05x_APDU.c</FileName>
               <FileType>1</FileType>
@@ -2974,9 +2989,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1052DVL6B, SDK_DEBUGCONSOLE=1, SDK_DEBUGCONSOLE_UART, PHDRIVER_IMXRT1050RC663_BOARD, IMX_RT, MBEDTLS_CONFIG_FILE='\"a71ch_mbedtls_evkbimxrt1050_config.h\"', PRINTF_ADVANCED_ENABLE=1, MBEDTLS, SCP_MODE=C_MAC_C_ENC_R_MAC_R_ENC, SERIAL_PORT_TYPE_UART=1, T1oI2C, T1oI2C_UM1225_SE050, SSS_USE_FTR_FILE, NO_SECURE_CHANNEL_SUPPORT</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1052DVL6B, SDK_DEBUGCONSOLE=1, SDK_DEBUGCONSOLE_UART, PHDRIVER_IMXRT1050RC663_BOARD, IMX_RT, MBEDTLS_CONFIG_FILE='\"a71ch_mbedtls_evkbimxrt1050_config.h\"', PRINTF_ADVANCED_ENABLE=1, MBEDTLS, SCP_MODE=C_MAC_C_ENC_R_MAC_R_ENC, SERIAL_PORT_TYPE_UART=1, T1oI2C, T1oI2C_UM11225, SSS_USE_FTR_FILE, NO_SECURE_CHANNEL_SUPPORT</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../middleware/se_hostlib/sss/inc;../../../../../middleware/se_hostlib/sss/ex/inc;../../../../../middleware/se_hostlib/sss/port/ksdk;../../../../../middleware/mbedtls/include/mbedtls;../../../../../middleware/se_hostlib/hostlib/hostLib/se05x_03_xx_xx;../../mainA71CH;../../../../../middleware/se_hostlib/demos/ksdk/se050/default;../../../../../middleware/se_hostlib/sss/plugin/mbedtls;../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra;../../../../../middleware/se_hostlib/hostlib/hostLib/mbedtls/inc;../../../../../middleware/se_hostlib/demos/ksdk/common;../../../../../middleware/se_hostlib/demos/ksdk/common/boards/evkbimxrt1050/se_hostlib_examples/cloud_demo;../../..;../../../../../CMSIS/Include;../../../../../devices;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/port/ksdk;../../../../../devices/MIMXRT1052/drivers;../../../../../devices/MIMXRT1052/drivers;../../../../../devices/MIMXRT1052/drivers;../../../../../devices/MIMXRT1052/drivers;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/port/ksdk;../../../../../middleware/se_hostlib/sss/plugin/mbedtls;../../../../../devices/MIMXRT1052/drivers;../../../../../devices/MIMXRT1052/drivers;../../../../../devices/MIMXRT1052;../../../../../devices/MIMXRT1052/utilities/str;../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../components/serial_manager;../../../../../devices/MIMXRT1052/drivers;../../../../../devices/MIMXRT1052/drivers;../../../../../devices/MIMXRT1052/drivers;../../../../../devices/MIMXRT1052/xip;../../../xip;../../../xip;../../../../../middleware/se_hostlib;../../../../../middleware/se_hostlib/hostlib/hostLib/inc;../../../../../middleware/se_hostlib/platform;../../../../../middleware/se_hostlib/hostlib/hostLib/platform/inc;../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom;../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/T1oI2C;../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra;../../../../../devices/MIMXRT1052/utilities</IncludePath>
+              <IncludePath>..;../../../../../middleware/se_hostlib/sss/inc;../../../../../middleware/se_hostlib/sss/ex/inc;../../../../../middleware/se_hostlib/sss/port/ksdk;../../../../../middleware/mbedtls/include/mbedtls;../../../../../middleware/se_hostlib/hostlib/hostLib/se05x_03_xx_xx;../../mainA71CH;../../../../../middleware/se_hostlib/demos/ksdk/se050/default;../../../../../middleware/se_hostlib/sss/plugin/mbedtls;../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra;../../../../../middleware/se_hostlib/hostlib/hostLib/mbedtls/inc;../../../../../middleware/se_hostlib/demos/ksdk/common;../../../../../middleware/se_hostlib/demos/ksdk/common/boards/evkbimxrt1050/se_hostlib_examples/cloud_demo;../../..;../../../../../CMSIS/Include;../../../../../devices;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/port/ksdk;../../../../../devices/MIMXRT1052/drivers;../../../../../devices/MIMXRT1052;../../../../../devices/MIMXRT1052/utilities/str;../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1052/xip;../../../xip;../../../../../middleware/se_hostlib;../../../../../middleware/se_hostlib/hostlib/hostLib/inc;../../../../../middleware/se_hostlib/platform;../../../../../middleware/se_hostlib/hostlib/hostLib/platform/inc;../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom;../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/T1oI2C;../../../../../devices/MIMXRT1052/utilities</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3010,7 +3025,7 @@
             <ScatterFile>MIMXRT1052xxxxx_flexspi_nor.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --keep=*(.boot_hdr.ivt) --keep=*(.boot_hdr.boot_data) --keep=*(.boot_hdr.conf) --predefine="-DXIP_BOOT_HEADER_ENABLE=1" --predefine="-D__stack_size__=0x2000" --predefine="-D__heap_size__=0x8000"</Misc>
+            <Misc>--remove --predefine="-DXIP_BOOT_HEADER_ENABLE=1" --predefine="-D__stack_size__=0x2000" --predefine="-D__heap_size__=0x8000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -3050,6 +3065,16 @@
               <FileName>clock_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../clock_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>dcd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../dcd.c</FilePath>
+            </File>
+            <File>
+              <FileName>dcd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../dcd.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3230,261 +3255,6 @@
               <FileName>sss_mbedtls_x86_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/se_hostlib/sss/plugin/mbedtls/sss_mbedtls_x86_config.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>device</GroupName>
-          <Files>
-            <File>
-              <FileName>MIMXRT1052.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/MIMXRT1052.h</FilePath>
-            </File>
-            <File>
-              <FileName>MIMXRT1052_features.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/MIMXRT1052_features.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_device_registers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/fsl_device_registers.h</FilePath>
-            </File>
-            <File>
-              <FileName>system_MIMXRT1052.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/system_MIMXRT1052.c</FilePath>
-            </File>
-            <File>
-              <FileName>system_MIMXRT1052.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/system_MIMXRT1052.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>utilities</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_debug_console.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_debug_console.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_debug_console.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console_conf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_assert.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/utilities/fsl_assert.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component-uart</GroupName>
-          <Files>
-            <File>
-              <FileName>lpuart_adapter.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/uart/lpuart_adapter.c</FilePath>
-            </File>
-            <File>
-              <FileName>uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/uart/uart.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component-serial_manager</GroupName>
-          <Files>
-            <File>
-              <FileName>serial_manager.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>serial_manager.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_manager.h</FilePath>
-            </File>
-            <File>
-              <FileName>serial_port_internal.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_port_internal.h</FilePath>
-            </File>
-            <File>
-              <FileName>serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_port_uart.c</FilePath>
-            </File>
-            <File>
-              <FileName>serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_port_uart.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component-lists</GroupName>
-          <Files>
-            <File>
-              <FileName>generic_list.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/lists/generic_list.c</FilePath>
-            </File>
-            <File>
-              <FileName>generic_list.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/lists/generic_list.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>startup</GroupName>
-          <Files>
-            <File>
-              <FileName>startup_MIMXRT1052.s</FileName>
-              <FileType>2</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/arm/startup_MIMXRT1052.s</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>xip</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_flexspi_nor_boot.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/xip/fsl_flexspi_nor_boot.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_flexspi_nor_boot.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/xip/fsl_flexspi_nor_boot.h</FilePath>
-            </File>
-            <File>
-              <FileName>evkbimxrt1050_flexspi_nor_config.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../xip/evkbimxrt1050_flexspi_nor_config.c</FilePath>
-            </File>
-            <File>
-              <FileName>evkbimxrt1050_flexspi_nor_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../xip/evkbimxrt1050_flexspi_nor_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>evkbimxrt1050_sdram_ini_dcd.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../xip/evkbimxrt1050_sdram_ini_dcd.c</FilePath>
-            </File>
-            <File>
-              <FileName>evkbimxrt1050_sdram_ini_dcd.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../xip/evkbimxrt1050_sdram_ini_dcd.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>CMSIS</GroupName>
-          <Files>
-            <File>
-              <FileName>core_cm7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_cm7.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armclang.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armclang_ltm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_version.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv81mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_armv81mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mbl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_common_tables.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_const_structs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_math.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/arm_math.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4354,8 +4124,238 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>device</GroupName>
+          <Files>
+            <File>
+              <FileName>MIMXRT1052.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/MIMXRT1052.h</FilePath>
+            </File>
+            <File>
+              <FileName>MIMXRT1052_features.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/MIMXRT1052_features.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_device_registers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/fsl_device_registers.h</FilePath>
+            </File>
+            <File>
+              <FileName>system_MIMXRT1052.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/system_MIMXRT1052.c</FilePath>
+            </File>
+            <File>
+              <FileName>system_MIMXRT1052.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/system_MIMXRT1052.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>utilities</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_debug_console.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_debug_console.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_debug_console.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console_conf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/utilities/fsl_assert.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component-uart</GroupName>
+          <Files>
+            <File>
+              <FileName>lpuart_adapter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/uart/lpuart_adapter.c</FilePath>
+            </File>
+            <File>
+              <FileName>uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/uart/uart.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component-serial_manager</GroupName>
+          <Files>
+            <File>
+              <FileName>serial_manager.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/serial_manager/serial_manager.c</FilePath>
+            </File>
+            <File>
+              <FileName>serial_manager.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/serial_manager/serial_manager.h</FilePath>
+            </File>
+            <File>
+              <FileName>serial_port_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/serial_manager/serial_port_internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/serial_manager/serial_port_uart.c</FilePath>
+            </File>
+            <File>
+              <FileName>serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/serial_manager/serial_port_uart.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component-lists</GroupName>
+          <Files>
+            <File>
+              <FileName>generic_list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/lists/generic_list.c</FilePath>
+            </File>
+            <File>
+              <FileName>generic_list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/lists/generic_list.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>startup</GroupName>
+          <Files>
+            <File>
+              <FileName>startup_MIMXRT1052.S</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/arm/startup_MIMXRT1052.S</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>xip</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_flexspi_nor_boot.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/xip/fsl_flexspi_nor_boot.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_flexspi_nor_boot.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/xip/fsl_flexspi_nor_boot.h</FilePath>
+            </File>
+            <File>
+              <FileName>evkbimxrt1050_flexspi_nor_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../xip/evkbimxrt1050_flexspi_nor_config.c</FilePath>
+            </File>
+            <File>
+              <FileName>evkbimxrt1050_flexspi_nor_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../xip/evkbimxrt1050_flexspi_nor_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>CMSIS</GroupName>
+          <Files>
+            <File>
+              <FileName>core_cm7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang_ltm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_gcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_iccarm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_common_tables.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_const_structs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_math.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/arm_math.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>se_hostlib-hostlib-hostLib-inc</GroupName>
           <Files>
+            <File>
+              <FileName>Applet_SE050_Ver.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/hostlib/hostLib/inc/Applet_SE050_Ver.h</FilePath>
+            </File>
             <File>
               <FileName>HLSEAPI.h</FileName>
               <FileType>5</FileType>
@@ -4612,6 +4612,16 @@
               <FilePath>../../../../../middleware/se_hostlib/sss/inc/fsl_sss_keyid_map.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_sss_lpc55s_apis.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/sss/inc/fsl_sss_lpc55s_apis.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_sss_lpc55s_types.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/sss/inc/fsl_sss_lpc55s_types.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_sss_mbedtls_apis.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/se_hostlib/sss/inc/fsl_sss_mbedtls_apis.h</FilePath>
@@ -4667,6 +4677,16 @@
               <FilePath>../../../../../middleware/se_hostlib/sss/inc/fsl_sss_sscp_config.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_sss_user_apis.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/sss/inc/fsl_sss_user_apis.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_sss_user_types.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/sss/inc/fsl_sss_user_types.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_sss_util_asn1_der.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/se_hostlib/sss/inc/fsl_sss_util_asn1_der.h</FilePath>
@@ -4717,9 +4737,9 @@
               <FilePath>../../../../../middleware/se_hostlib/sss/src/se05x/fsl_sss_se05x_apis.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_sss_se05x_fastscp.c</FileName>
+              <FileName>fsl_sss_se05x_eckey.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/sss/src/se05x/fsl_sss_se05x_fastscp.c</FilePath>
+              <FilePath>../../../../../middleware/se_hostlib/sss/src/se05x/fsl_sss_se05x_eckey.c</FilePath>
             </File>
             <File>
               <FileName>fsl_sss_se05x_mw.c</FileName>
@@ -5052,6 +5072,16 @@
           <GroupName>se_hostlib-sss-ex-inc</GroupName>
           <Files>
             <File>
+              <FileName>ex_a71ch_scp03.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/sss/ex/inc/ex_a71ch_scp03.h</FilePath>
+            </File>
+            <File>
+              <FileName>ex_scp03_puf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/sss/ex/inc/ex_scp03_puf.h</FilePath>
+            </File>
+            <File>
               <FileName>ex_sss.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/se_hostlib/sss/ex/inc/ex_sss.h</FilePath>
@@ -5090,6 +5120,11 @@
               <FileName>ex_sss_main_inc_ksdk.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/se_hostlib/sss/ex/inc/ex_sss_main_inc_ksdk.h</FilePath>
+            </File>
+            <File>
+              <FileName>ex_sss_main_inc_linux.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/sss/ex/inc/ex_sss_main_inc_linux.h</FilePath>
             </File>
             <File>
               <FileName>ex_sss_main_inc_lpcxpresso55s.h</FileName>
@@ -5151,11 +5186,6 @@
         <Group>
           <GroupName>se_hostlib-hostlib-hostLib-se05x_03_xx_xx</GroupName>
           <Files>
-            <File>
-              <FileName>Applet_SE050_Ver.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/se_hostlib/hostlib/hostLib/se05x_03_xx_xx/Applet_SE050_Ver.h</FilePath>
-            </File>
             <File>
               <FileName>se05x_APDU.c</FileName>
               <FileType>1</FileType>

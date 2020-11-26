@@ -328,9 +328,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, SKIP_SYSCLK_INIT, DEBUG, CPU_MIMXRT1052DVL6B, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, PRINTF_ADVANCED_ENABLE=1, USE_RTOS=1, LWIP_DNS=1, LWIP_DHCP=1, MBEDTLS_CONFIG_FILE='\"nghttp2_mbedtls_config.h\"', HAVE_CONFIG_H, SERIAL_PORT_TYPE_UART=1, FSL_RTOS_FREE_RTOS</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1052DVL6B, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, PRINTF_ADVANCED_ENABLE=1, USE_RTOS=1, LWIP_DNS=1, LWIP_DHCP=1, MBEDTLS_CONFIG_FILE='\"nghttp2_mbedtls_config.h\"', HAVE_CONFIG_H, SERIAL_PORT_TYPE_UART=1, FSL_RTOS_FREE_RTOS</Define>
               <Undefine/>
-              <IncludePath>../../../../../../rtos/amazon-freertos/freertos_kernel/portable/GCC/ARM_CM4F;..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../middleware/mbedtls/include;../../../../../../middleware/mbedtls/port/ksdk;../../../../../../middleware/nghttp2/lib;../../../../../../middleware/nghttp2/lib/includes;../../../../../../rtos/amazon-freertos/freertos_kernel/include;../../../../../../components/phyksz8081;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052/drivers;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src;../../../../../../middleware/lwip/src/include;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052/xip;../../../../xip;../../../../xip;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052/utilities</IncludePath>
+              <IncludePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../middleware/mbedtls/include;../../../../../../middleware/mbedtls/port/ksdk;../../../../../../middleware/nghttp2/lib;../../../../../../middleware/nghttp2/lib/includes;../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../components/phy/mdio/enet;../../../../../../components/phy/device/phyksz8081;../../../../../../devices/MIMXRT1052/drivers;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src;../../../../../../middleware/lwip/src/include;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../devices/MIMXRT1052;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1052/xip;../../../../xip;../../../../../../components/phy;../../../../../../devices/MIMXRT1052/utilities</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -364,7 +364,7 @@
             <ScatterFile>MIMXRT1052xxxxx_flexspi_nor_sdram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --keep=*(.boot_hdr.ivt) --keep=*(.boot_hdr.boot_data) --keep=*(.boot_hdr.dcd_data) --keep=*(.boot_hdr.conf) --predefine="-DXIP_BOOT_HEADER_ENABLE=1" --predefine="-D__stack_size__=0x200" --predefine="-D__heap_size__=0x200"</Misc>
+            <Misc>--remove --predefine="-DXIP_BOOT_HEADER_ENABLE=1" --predefine="-D__stack_size__=0x200" --predefine="-D__heap_size__=0x200"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -451,14 +451,14 @@
               <FilePath>../clock_config.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_phy.c</FileName>
+              <FileName>dcd.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../components/phyksz8081/fsl_phy.c</FilePath>
+              <FilePath>../dcd.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_phy.h</FileName>
+              <FileName>dcd.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../components/phyksz8081/fsl_phy.h</FilePath>
+              <FilePath>../dcd.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -469,6 +469,46 @@
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
               <FilePath>../readme.txt</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>mdio</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_enet_mdio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/phy/mdio/enet/fsl_enet_mdio.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_enet_mdio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/phy/mdio/enet/fsl_enet_mdio.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_mdio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/phy/fsl_mdio.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>phy</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_phyksz8081.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_phyksz8081.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_phy.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/phy/fsl_phy.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -591,11 +631,6 @@
               <FilePath>../../../../../../middleware/lwip/port/sys_arch.c</FilePath>
             </File>
             <File>
-              <FileName>enet_ethernetif_kinetis.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/lwip/port/enet_ethernetif_kinetis.c</FilePath>
-            </File>
-            <File>
               <FileName>enet_ethernetif.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/lwip/port/enet_ethernetif.c</FilePath>
@@ -604,6 +639,11 @@
               <FileName>enet_ethernetif.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/lwip/port/enet_ethernetif.h</FilePath>
+            </File>
+            <File>
+              <FileName>enet_ethernetif_kinetis.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/lwip/port/enet_ethernetif_kinetis.c</FilePath>
             </File>
             <File>
               <FileName>enet_ethernetif_priv.h</FileName>
@@ -771,6 +811,11 @@
           <GroupName>lwip-src-core-ipv4</GroupName>
           <Files>
             <File>
+              <FileName>acd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/core/ipv4/acd.c</FilePath>
+            </File>
+            <File>
               <FileName>autoip.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/lwip/src/core/ipv4/autoip.c</FilePath>
@@ -915,6 +960,11 @@
         <Group>
           <GroupName>lwip-src-include-lwip</GroupName>
           <Files>
+            <File>
+              <FileName>acd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/lwip/acd.h</FilePath>
+            </File>
             <File>
               <FileName>altcp.h</FileName>
               <FileType>5</FileType>
@@ -1235,6 +1285,11 @@
         <Group>
           <GroupName>lwip-src-include-lwip-prot</GroupName>
           <Files>
+            <File>
+              <FileName>acd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/lwip/prot/acd.h</FilePath>
+            </File>
             <File>
               <FileName>autoip.h</FileName>
               <FileType>5</FileType>
@@ -1714,6 +1769,41 @@
               <FileName>vj.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/lwip/src/netif/ppp/vj.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>utilities</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_debug_console.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_debug_console.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_debug_console.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console_conf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1052/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1052/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1052/utilities/fsl_assert.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2583,17 +2673,17 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-freertos_kernel-portable-MemMang</GroupName>
+          <GroupName>freertos-freertos_kernel-portable-MemMang</GroupName>
           <Files>
             <File>
               <FileName>heap_4.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/portable/MemMang/heap_4.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/MemMang/heap_4.c</FilePath>
             </File>
             <File>
               <FileName>ReadMe.url</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/portable/MemMang/ReadMe.url</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/MemMang/ReadMe.url</FilePath>
             </File>
           </Files>
         </Group>
@@ -2868,41 +2958,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>utilities</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_debug_console.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_debug_console.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_debug_console.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console_conf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1052/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1052/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_assert.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1052/utilities/fsl_assert.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>component-uart</GroupName>
           <Files>
             <File>
@@ -2966,9 +3021,9 @@
           <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_MIMXRT1052.s</FileName>
+              <FileName>startup_MIMXRT1052.S</FileName>
               <FileType>2</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1052/arm/startup_MIMXRT1052.s</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1052/arm/startup_MIMXRT1052.S</FilePath>
             </File>
           </Files>
         </Group>
@@ -2995,16 +3050,6 @@
               <FileType>5</FileType>
               <FilePath>../../../../xip/evkbimxrt1050_flexspi_nor_config.h</FilePath>
             </File>
-            <File>
-              <FileName>evkbimxrt1050_sdram_ini_dcd.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../xip/evkbimxrt1050_sdram_ini_dcd.c</FilePath>
-            </File>
-            <File>
-              <FileName>evkbimxrt1050_sdram_ini_dcd.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../xip/evkbimxrt1050_sdram_ini_dcd.h</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -3014,6 +3059,11 @@
               <FileName>core_cm7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_armcc.h</FileName>
@@ -3051,31 +3101,6 @@
               <FilePath>../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
             </File>
             <File>
-              <FileName>core_armv81mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv81mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mbl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
-            </File>
-            <File>
               <FileName>arm_common_tables.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
@@ -3093,152 +3118,167 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-freertos_kernel</GroupName>
+          <GroupName>freertos-freertos_kernel</GroupName>
           <Files>
+            <File>
+              <FileName>croutine.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/croutine.c</FilePath>
+            </File>
             <File>
               <FileName>event_groups.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/event_groups.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/event_groups.c</FilePath>
             </File>
             <File>
               <FileName>list.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/list.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/list.c</FilePath>
             </File>
             <File>
               <FileName>queue.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/queue.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/queue.c</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/stream_buffer.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/stream_buffer.c</FilePath>
             </File>
             <File>
               <FileName>tasks.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/tasks.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/tasks.c</FilePath>
             </File>
             <File>
               <FileName>timers.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/timers.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/timers.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-freertos_kernel-include</GroupName>
+          <GroupName>freertos-freertos_kernel-include</GroupName>
           <Files>
             <File>
               <FileName>FreeRTOS.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/FreeRTOS.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/FreeRTOS.h</FilePath>
+            </File>
+            <File>
+              <FileName>StackMacros.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</FilePath>
             </File>
             <File>
               <FileName>atomic.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/atomic.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/atomic.h</FilePath>
+            </File>
+            <File>
+              <FileName>croutine.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/croutine.h</FilePath>
             </File>
             <File>
               <FileName>deprecated_definitions.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/deprecated_definitions.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/deprecated_definitions.h</FilePath>
             </File>
             <File>
               <FileName>event_groups.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/event_groups.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/event_groups.h</FilePath>
             </File>
             <File>
               <FileName>list.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/list.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/list.h</FilePath>
             </File>
             <File>
               <FileName>message_buffer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/message_buffer.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/message_buffer.h</FilePath>
             </File>
             <File>
               <FileName>mpu_prototypes.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/mpu_prototypes.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/mpu_prototypes.h</FilePath>
             </File>
             <File>
               <FileName>mpu_wrappers.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/mpu_wrappers.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/mpu_wrappers.h</FilePath>
             </File>
             <File>
               <FileName>portable.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/portable.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/portable.h</FilePath>
             </File>
             <File>
               <FileName>projdefs.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/projdefs.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/projdefs.h</FilePath>
             </File>
             <File>
               <FileName>queue.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/queue.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/queue.h</FilePath>
             </File>
             <File>
               <FileName>semphr.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/semphr.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/semphr.h</FilePath>
             </File>
             <File>
               <FileName>stack_macros.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/stack_macros.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/stack_macros.h</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/stream_buffer.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/stream_buffer.h</FilePath>
             </File>
             <File>
               <FileName>task.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/task.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/task.h</FilePath>
             </File>
             <File>
               <FileName>timers.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/timers.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/timers.h</FilePath>
             </File>
             <File>
               <FileName>freertos_tasks_c_additions.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/freertos_tasks_c_additions.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/freertos_tasks_c_additions.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-freertos_kernel-portable-GCC-ARM_CM4F</GroupName>
+          <GroupName>freertos-freertos_kernel-portable-GCC-ARM_CM4F</GroupName>
           <Files>
             <File>
               <FileName>port.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/portable/GCC/ARM_CM4F/port.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F/port.c</FilePath>
             </File>
             <File>
               <FileName>portmacro.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/portable/GCC/ARM_CM4F/portmacro.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F/portmacro.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-freertos_kernel-portable</GroupName>
+          <GroupName>freertos-freertos_kernel-portable</GroupName>
           <Files>
             <File>
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/portable/readme.txt</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/readme.txt</FilePath>
             </File>
           </Files>
         </Group>
@@ -3569,9 +3609,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>SKIP_SYSCLK_INIT, DEBUG, CPU_MIMXRT1052DVL6B, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, PRINTF_ADVANCED_ENABLE=1, USE_RTOS=1, LWIP_DNS=1, LWIP_DHCP=1, MBEDTLS_CONFIG_FILE='\"nghttp2_mbedtls_config.h\"', HAVE_CONFIG_H, SERIAL_PORT_TYPE_UART=1, FSL_RTOS_FREE_RTOS</Define>
+              <Define>SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1052DVL6B, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, PRINTF_ADVANCED_ENABLE=1, USE_RTOS=1, LWIP_DNS=1, LWIP_DHCP=1, MBEDTLS_CONFIG_FILE='\"nghttp2_mbedtls_config.h\"', HAVE_CONFIG_H, SERIAL_PORT_TYPE_UART=1, FSL_RTOS_FREE_RTOS</Define>
               <Undefine/>
-              <IncludePath>../../../../../../rtos/amazon-freertos/freertos_kernel/portable/GCC/ARM_CM4F;..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../middleware/mbedtls/include;../../../../../../middleware/mbedtls/port/ksdk;../../../../../../middleware/nghttp2/lib;../../../../../../middleware/nghttp2/lib/includes;../../../../../../rtos/amazon-freertos/freertos_kernel/include;../../../../../../components/phyksz8081;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052/drivers;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src;../../../../../../middleware/lwip/src/include;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052/xip;../../../../xip;../../../../xip;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052/utilities</IncludePath>
+              <IncludePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../middleware/mbedtls/include;../../../../../../middleware/mbedtls/port/ksdk;../../../../../../middleware/nghttp2/lib;../../../../../../middleware/nghttp2/lib/includes;../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../components/phy/mdio/enet;../../../../../../components/phy/device/phyksz8081;../../../../../../devices/MIMXRT1052/drivers;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src;../../../../../../middleware/lwip/src/include;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../devices/MIMXRT1052;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1052/xip;../../../../xip;../../../../../../components/phy;../../../../../../devices/MIMXRT1052/utilities</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3692,14 +3732,14 @@
               <FilePath>../clock_config.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_phy.c</FileName>
+              <FileName>dcd.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../components/phyksz8081/fsl_phy.c</FilePath>
+              <FilePath>../dcd.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_phy.h</FileName>
+              <FileName>dcd.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../components/phyksz8081/fsl_phy.h</FilePath>
+              <FilePath>../dcd.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3710,6 +3750,46 @@
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
               <FilePath>../readme.txt</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>mdio</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_enet_mdio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/phy/mdio/enet/fsl_enet_mdio.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_enet_mdio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/phy/mdio/enet/fsl_enet_mdio.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_mdio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/phy/fsl_mdio.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>phy</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_phyksz8081.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_phyksz8081.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_phy.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/phy/fsl_phy.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3832,11 +3912,6 @@
               <FilePath>../../../../../../middleware/lwip/port/sys_arch.c</FilePath>
             </File>
             <File>
-              <FileName>enet_ethernetif_kinetis.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/lwip/port/enet_ethernetif_kinetis.c</FilePath>
-            </File>
-            <File>
               <FileName>enet_ethernetif.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/lwip/port/enet_ethernetif.c</FilePath>
@@ -3845,6 +3920,11 @@
               <FileName>enet_ethernetif.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/lwip/port/enet_ethernetif.h</FilePath>
+            </File>
+            <File>
+              <FileName>enet_ethernetif_kinetis.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/lwip/port/enet_ethernetif_kinetis.c</FilePath>
             </File>
             <File>
               <FileName>enet_ethernetif_priv.h</FileName>
@@ -4012,6 +4092,11 @@
           <GroupName>lwip-src-core-ipv4</GroupName>
           <Files>
             <File>
+              <FileName>acd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/core/ipv4/acd.c</FilePath>
+            </File>
+            <File>
               <FileName>autoip.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/lwip/src/core/ipv4/autoip.c</FilePath>
@@ -4156,6 +4241,11 @@
         <Group>
           <GroupName>lwip-src-include-lwip</GroupName>
           <Files>
+            <File>
+              <FileName>acd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/lwip/acd.h</FilePath>
+            </File>
             <File>
               <FileName>altcp.h</FileName>
               <FileType>5</FileType>
@@ -4476,6 +4566,11 @@
         <Group>
           <GroupName>lwip-src-include-lwip-prot</GroupName>
           <Files>
+            <File>
+              <FileName>acd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/lwip/prot/acd.h</FilePath>
+            </File>
             <File>
               <FileName>autoip.h</FileName>
               <FileType>5</FileType>
@@ -4955,6 +5050,41 @@
               <FileName>vj.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/lwip/src/netif/ppp/vj.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>utilities</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_debug_console.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_debug_console.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_debug_console.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console_conf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1052/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1052/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1052/utilities/fsl_assert.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -5824,17 +5954,17 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-freertos_kernel-portable-MemMang</GroupName>
+          <GroupName>freertos-freertos_kernel-portable-MemMang</GroupName>
           <Files>
             <File>
               <FileName>heap_4.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/portable/MemMang/heap_4.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/MemMang/heap_4.c</FilePath>
             </File>
             <File>
               <FileName>ReadMe.url</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/portable/MemMang/ReadMe.url</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/MemMang/ReadMe.url</FilePath>
             </File>
           </Files>
         </Group>
@@ -6109,41 +6239,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>utilities</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_debug_console.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_debug_console.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_debug_console.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console_conf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1052/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1052/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_assert.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1052/utilities/fsl_assert.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>component-uart</GroupName>
           <Files>
             <File>
@@ -6207,9 +6302,9 @@
           <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_MIMXRT1052.s</FileName>
+              <FileName>startup_MIMXRT1052.S</FileName>
               <FileType>2</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1052/arm/startup_MIMXRT1052.s</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1052/arm/startup_MIMXRT1052.S</FilePath>
             </File>
           </Files>
         </Group>
@@ -6236,16 +6331,6 @@
               <FileType>5</FileType>
               <FilePath>../../../../xip/evkbimxrt1050_flexspi_nor_config.h</FilePath>
             </File>
-            <File>
-              <FileName>evkbimxrt1050_sdram_ini_dcd.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../xip/evkbimxrt1050_sdram_ini_dcd.c</FilePath>
-            </File>
-            <File>
-              <FileName>evkbimxrt1050_sdram_ini_dcd.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../xip/evkbimxrt1050_sdram_ini_dcd.h</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -6255,6 +6340,11 @@
               <FileName>core_cm7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_armcc.h</FileName>
@@ -6292,31 +6382,6 @@
               <FilePath>../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
             </File>
             <File>
-              <FileName>core_armv81mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv81mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mbl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
-            </File>
-            <File>
               <FileName>arm_common_tables.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
@@ -6334,152 +6399,167 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-freertos_kernel</GroupName>
+          <GroupName>freertos-freertos_kernel</GroupName>
           <Files>
+            <File>
+              <FileName>croutine.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/croutine.c</FilePath>
+            </File>
             <File>
               <FileName>event_groups.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/event_groups.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/event_groups.c</FilePath>
             </File>
             <File>
               <FileName>list.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/list.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/list.c</FilePath>
             </File>
             <File>
               <FileName>queue.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/queue.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/queue.c</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/stream_buffer.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/stream_buffer.c</FilePath>
             </File>
             <File>
               <FileName>tasks.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/tasks.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/tasks.c</FilePath>
             </File>
             <File>
               <FileName>timers.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/timers.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/timers.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-freertos_kernel-include</GroupName>
+          <GroupName>freertos-freertos_kernel-include</GroupName>
           <Files>
             <File>
               <FileName>FreeRTOS.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/FreeRTOS.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/FreeRTOS.h</FilePath>
+            </File>
+            <File>
+              <FileName>StackMacros.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</FilePath>
             </File>
             <File>
               <FileName>atomic.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/atomic.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/atomic.h</FilePath>
+            </File>
+            <File>
+              <FileName>croutine.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/croutine.h</FilePath>
             </File>
             <File>
               <FileName>deprecated_definitions.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/deprecated_definitions.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/deprecated_definitions.h</FilePath>
             </File>
             <File>
               <FileName>event_groups.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/event_groups.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/event_groups.h</FilePath>
             </File>
             <File>
               <FileName>list.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/list.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/list.h</FilePath>
             </File>
             <File>
               <FileName>message_buffer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/message_buffer.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/message_buffer.h</FilePath>
             </File>
             <File>
               <FileName>mpu_prototypes.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/mpu_prototypes.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/mpu_prototypes.h</FilePath>
             </File>
             <File>
               <FileName>mpu_wrappers.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/mpu_wrappers.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/mpu_wrappers.h</FilePath>
             </File>
             <File>
               <FileName>portable.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/portable.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/portable.h</FilePath>
             </File>
             <File>
               <FileName>projdefs.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/projdefs.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/projdefs.h</FilePath>
             </File>
             <File>
               <FileName>queue.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/queue.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/queue.h</FilePath>
             </File>
             <File>
               <FileName>semphr.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/semphr.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/semphr.h</FilePath>
             </File>
             <File>
               <FileName>stack_macros.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/stack_macros.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/stack_macros.h</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/stream_buffer.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/stream_buffer.h</FilePath>
             </File>
             <File>
               <FileName>task.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/task.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/task.h</FilePath>
             </File>
             <File>
               <FileName>timers.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/timers.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/timers.h</FilePath>
             </File>
             <File>
               <FileName>freertos_tasks_c_additions.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/freertos_tasks_c_additions.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/freertos_tasks_c_additions.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-freertos_kernel-portable-GCC-ARM_CM4F</GroupName>
+          <GroupName>freertos-freertos_kernel-portable-GCC-ARM_CM4F</GroupName>
           <Files>
             <File>
               <FileName>port.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/portable/GCC/ARM_CM4F/port.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F/port.c</FilePath>
             </File>
             <File>
               <FileName>portmacro.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/portable/GCC/ARM_CM4F/portmacro.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F/portmacro.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-freertos_kernel-portable</GroupName>
+          <GroupName>freertos-freertos_kernel-portable</GroupName>
           <Files>
             <File>
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/portable/readme.txt</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/readme.txt</FilePath>
             </File>
           </Files>
         </Group>
@@ -6810,9 +6890,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>SKIP_SYSCLK_INIT, NDEBUG, CPU_MIMXRT1052DVL6B, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, PRINTF_ADVANCED_ENABLE=1, USE_RTOS=1, LWIP_DNS=1, LWIP_DHCP=1, MBEDTLS_CONFIG_FILE='\"nghttp2_mbedtls_config.h\"', HAVE_CONFIG_H, SERIAL_PORT_TYPE_UART=1, FSL_RTOS_FREE_RTOS</Define>
+              <Define>SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, CPU_MIMXRT1052DVL6B, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, PRINTF_ADVANCED_ENABLE=1, USE_RTOS=1, LWIP_DNS=1, LWIP_DHCP=1, MBEDTLS_CONFIG_FILE='\"nghttp2_mbedtls_config.h\"', HAVE_CONFIG_H, SERIAL_PORT_TYPE_UART=1, FSL_RTOS_FREE_RTOS</Define>
               <Undefine/>
-              <IncludePath>../../../../../../rtos/amazon-freertos/freertos_kernel/portable/GCC/ARM_CM4F;..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../middleware/mbedtls/include;../../../../../../middleware/mbedtls/port/ksdk;../../../../../../middleware/nghttp2/lib;../../../../../../middleware/nghttp2/lib/includes;../../../../../../rtos/amazon-freertos/freertos_kernel/include;../../../../../../components/phyksz8081;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052/drivers;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src;../../../../../../middleware/lwip/src/include;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052/xip;../../../../xip;../../../../xip;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052/utilities</IncludePath>
+              <IncludePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../middleware/mbedtls/include;../../../../../../middleware/mbedtls/port/ksdk;../../../../../../middleware/nghttp2/lib;../../../../../../middleware/nghttp2/lib/includes;../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../components/phy/mdio/enet;../../../../../../components/phy/device/phyksz8081;../../../../../../devices/MIMXRT1052/drivers;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src;../../../../../../middleware/lwip/src/include;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../devices/MIMXRT1052;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1052/xip;../../../../xip;../../../../../../components/phy;../../../../../../devices/MIMXRT1052/utilities</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -6933,14 +7013,14 @@
               <FilePath>../clock_config.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_phy.c</FileName>
+              <FileName>dcd.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../components/phyksz8081/fsl_phy.c</FilePath>
+              <FilePath>../dcd.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_phy.h</FileName>
+              <FileName>dcd.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../components/phyksz8081/fsl_phy.h</FilePath>
+              <FilePath>../dcd.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -6951,6 +7031,46 @@
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
               <FilePath>../readme.txt</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>mdio</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_enet_mdio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/phy/mdio/enet/fsl_enet_mdio.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_enet_mdio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/phy/mdio/enet/fsl_enet_mdio.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_mdio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/phy/fsl_mdio.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>phy</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_phyksz8081.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_phyksz8081.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_phy.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/phy/fsl_phy.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -7073,11 +7193,6 @@
               <FilePath>../../../../../../middleware/lwip/port/sys_arch.c</FilePath>
             </File>
             <File>
-              <FileName>enet_ethernetif_kinetis.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/lwip/port/enet_ethernetif_kinetis.c</FilePath>
-            </File>
-            <File>
               <FileName>enet_ethernetif.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/lwip/port/enet_ethernetif.c</FilePath>
@@ -7086,6 +7201,11 @@
               <FileName>enet_ethernetif.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/lwip/port/enet_ethernetif.h</FilePath>
+            </File>
+            <File>
+              <FileName>enet_ethernetif_kinetis.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/lwip/port/enet_ethernetif_kinetis.c</FilePath>
             </File>
             <File>
               <FileName>enet_ethernetif_priv.h</FileName>
@@ -7253,6 +7373,11 @@
           <GroupName>lwip-src-core-ipv4</GroupName>
           <Files>
             <File>
+              <FileName>acd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/core/ipv4/acd.c</FilePath>
+            </File>
+            <File>
               <FileName>autoip.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/lwip/src/core/ipv4/autoip.c</FilePath>
@@ -7397,6 +7522,11 @@
         <Group>
           <GroupName>lwip-src-include-lwip</GroupName>
           <Files>
+            <File>
+              <FileName>acd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/lwip/acd.h</FilePath>
+            </File>
             <File>
               <FileName>altcp.h</FileName>
               <FileType>5</FileType>
@@ -7717,6 +7847,11 @@
         <Group>
           <GroupName>lwip-src-include-lwip-prot</GroupName>
           <Files>
+            <File>
+              <FileName>acd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/lwip/prot/acd.h</FilePath>
+            </File>
             <File>
               <FileName>autoip.h</FileName>
               <FileType>5</FileType>
@@ -8196,6 +8331,41 @@
               <FileName>vj.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/lwip/src/netif/ppp/vj.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>utilities</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_debug_console.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_debug_console.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_debug_console.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console_conf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1052/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1052/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1052/utilities/fsl_assert.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -9065,17 +9235,17 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-freertos_kernel-portable-MemMang</GroupName>
+          <GroupName>freertos-freertos_kernel-portable-MemMang</GroupName>
           <Files>
             <File>
               <FileName>heap_4.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/portable/MemMang/heap_4.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/MemMang/heap_4.c</FilePath>
             </File>
             <File>
               <FileName>ReadMe.url</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/portable/MemMang/ReadMe.url</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/MemMang/ReadMe.url</FilePath>
             </File>
           </Files>
         </Group>
@@ -9350,41 +9520,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>utilities</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_debug_console.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_debug_console.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_debug_console.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console_conf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1052/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1052/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_assert.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1052/utilities/fsl_assert.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>component-uart</GroupName>
           <Files>
             <File>
@@ -9448,9 +9583,9 @@
           <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_MIMXRT1052.s</FileName>
+              <FileName>startup_MIMXRT1052.S</FileName>
               <FileType>2</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1052/arm/startup_MIMXRT1052.s</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1052/arm/startup_MIMXRT1052.S</FilePath>
             </File>
           </Files>
         </Group>
@@ -9477,16 +9612,6 @@
               <FileType>5</FileType>
               <FilePath>../../../../xip/evkbimxrt1050_flexspi_nor_config.h</FilePath>
             </File>
-            <File>
-              <FileName>evkbimxrt1050_sdram_ini_dcd.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../xip/evkbimxrt1050_sdram_ini_dcd.c</FilePath>
-            </File>
-            <File>
-              <FileName>evkbimxrt1050_sdram_ini_dcd.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../xip/evkbimxrt1050_sdram_ini_dcd.h</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -9496,6 +9621,11 @@
               <FileName>core_cm7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_armcc.h</FileName>
@@ -9533,31 +9663,6 @@
               <FilePath>../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
             </File>
             <File>
-              <FileName>core_armv81mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv81mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mbl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
-            </File>
-            <File>
               <FileName>arm_common_tables.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
@@ -9575,152 +9680,167 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-freertos_kernel</GroupName>
+          <GroupName>freertos-freertos_kernel</GroupName>
           <Files>
+            <File>
+              <FileName>croutine.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/croutine.c</FilePath>
+            </File>
             <File>
               <FileName>event_groups.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/event_groups.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/event_groups.c</FilePath>
             </File>
             <File>
               <FileName>list.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/list.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/list.c</FilePath>
             </File>
             <File>
               <FileName>queue.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/queue.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/queue.c</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/stream_buffer.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/stream_buffer.c</FilePath>
             </File>
             <File>
               <FileName>tasks.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/tasks.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/tasks.c</FilePath>
             </File>
             <File>
               <FileName>timers.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/timers.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/timers.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-freertos_kernel-include</GroupName>
+          <GroupName>freertos-freertos_kernel-include</GroupName>
           <Files>
             <File>
               <FileName>FreeRTOS.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/FreeRTOS.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/FreeRTOS.h</FilePath>
+            </File>
+            <File>
+              <FileName>StackMacros.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</FilePath>
             </File>
             <File>
               <FileName>atomic.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/atomic.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/atomic.h</FilePath>
+            </File>
+            <File>
+              <FileName>croutine.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/croutine.h</FilePath>
             </File>
             <File>
               <FileName>deprecated_definitions.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/deprecated_definitions.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/deprecated_definitions.h</FilePath>
             </File>
             <File>
               <FileName>event_groups.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/event_groups.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/event_groups.h</FilePath>
             </File>
             <File>
               <FileName>list.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/list.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/list.h</FilePath>
             </File>
             <File>
               <FileName>message_buffer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/message_buffer.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/message_buffer.h</FilePath>
             </File>
             <File>
               <FileName>mpu_prototypes.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/mpu_prototypes.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/mpu_prototypes.h</FilePath>
             </File>
             <File>
               <FileName>mpu_wrappers.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/mpu_wrappers.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/mpu_wrappers.h</FilePath>
             </File>
             <File>
               <FileName>portable.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/portable.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/portable.h</FilePath>
             </File>
             <File>
               <FileName>projdefs.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/projdefs.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/projdefs.h</FilePath>
             </File>
             <File>
               <FileName>queue.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/queue.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/queue.h</FilePath>
             </File>
             <File>
               <FileName>semphr.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/semphr.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/semphr.h</FilePath>
             </File>
             <File>
               <FileName>stack_macros.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/stack_macros.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/stack_macros.h</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/stream_buffer.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/stream_buffer.h</FilePath>
             </File>
             <File>
               <FileName>task.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/task.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/task.h</FilePath>
             </File>
             <File>
               <FileName>timers.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/timers.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/timers.h</FilePath>
             </File>
             <File>
               <FileName>freertos_tasks_c_additions.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/freertos_tasks_c_additions.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/freertos_tasks_c_additions.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-freertos_kernel-portable-GCC-ARM_CM4F</GroupName>
+          <GroupName>freertos-freertos_kernel-portable-GCC-ARM_CM4F</GroupName>
           <Files>
             <File>
               <FileName>port.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/portable/GCC/ARM_CM4F/port.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F/port.c</FilePath>
             </File>
             <File>
               <FileName>portmacro.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/portable/GCC/ARM_CM4F/portmacro.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F/portmacro.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-freertos_kernel-portable</GroupName>
+          <GroupName>freertos-freertos_kernel-portable</GroupName>
           <Files>
             <File>
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/portable/readme.txt</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/readme.txt</FilePath>
             </File>
           </Files>
         </Group>
@@ -10051,9 +10171,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, SKIP_SYSCLK_INIT, NDEBUG, CPU_MIMXRT1052DVL6B, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, PRINTF_ADVANCED_ENABLE=1, USE_RTOS=1, LWIP_DNS=1, LWIP_DHCP=1, MBEDTLS_CONFIG_FILE='\"nghttp2_mbedtls_config.h\"', HAVE_CONFIG_H, SERIAL_PORT_TYPE_UART=1, FSL_RTOS_FREE_RTOS</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, CPU_MIMXRT1052DVL6B, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, PRINTF_ADVANCED_ENABLE=1, USE_RTOS=1, LWIP_DNS=1, LWIP_DHCP=1, MBEDTLS_CONFIG_FILE='\"nghttp2_mbedtls_config.h\"', HAVE_CONFIG_H, SERIAL_PORT_TYPE_UART=1, FSL_RTOS_FREE_RTOS</Define>
               <Undefine/>
-              <IncludePath>../../../../../../rtos/amazon-freertos/freertos_kernel/portable/GCC/ARM_CM4F;..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../middleware/mbedtls/include;../../../../../../middleware/mbedtls/port/ksdk;../../../../../../middleware/nghttp2/lib;../../../../../../middleware/nghttp2/lib/includes;../../../../../../rtos/amazon-freertos/freertos_kernel/include;../../../../../../components/phyksz8081;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052/drivers;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src;../../../../../../middleware/lwip/src/include;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052/xip;../../../../xip;../../../../xip;../../../../../../devices/MIMXRT1052/drivers;../../../../../../devices/MIMXRT1052/utilities</IncludePath>
+              <IncludePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../middleware/mbedtls/include;../../../../../../middleware/mbedtls/port/ksdk;../../../../../../middleware/nghttp2/lib;../../../../../../middleware/nghttp2/lib/includes;../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../components/phy/mdio/enet;../../../../../../components/phy/device/phyksz8081;../../../../../../devices/MIMXRT1052/drivers;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src;../../../../../../middleware/lwip/src/include;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../devices/MIMXRT1052;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1052/xip;../../../../xip;../../../../../../components/phy;../../../../../../devices/MIMXRT1052/utilities</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -10087,7 +10207,7 @@
             <ScatterFile>MIMXRT1052xxxxx_flexspi_nor_sdram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --keep=*(.boot_hdr.ivt) --keep=*(.boot_hdr.boot_data) --keep=*(.boot_hdr.dcd_data) --keep=*(.boot_hdr.conf) --predefine="-DXIP_BOOT_HEADER_ENABLE=1" --predefine="-D__stack_size__=0x200" --predefine="-D__heap_size__=0x200"</Misc>
+            <Misc>--remove --predefine="-DXIP_BOOT_HEADER_ENABLE=1" --predefine="-D__stack_size__=0x200" --predefine="-D__heap_size__=0x200"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -10174,14 +10294,14 @@
               <FilePath>../clock_config.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_phy.c</FileName>
+              <FileName>dcd.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../components/phyksz8081/fsl_phy.c</FilePath>
+              <FilePath>../dcd.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_phy.h</FileName>
+              <FileName>dcd.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../components/phyksz8081/fsl_phy.h</FilePath>
+              <FilePath>../dcd.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -10192,6 +10312,46 @@
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
               <FilePath>../readme.txt</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>mdio</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_enet_mdio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/phy/mdio/enet/fsl_enet_mdio.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_enet_mdio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/phy/mdio/enet/fsl_enet_mdio.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_mdio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/phy/fsl_mdio.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>phy</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_phyksz8081.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_phyksz8081.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_phy.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/phy/fsl_phy.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -10314,11 +10474,6 @@
               <FilePath>../../../../../../middleware/lwip/port/sys_arch.c</FilePath>
             </File>
             <File>
-              <FileName>enet_ethernetif_kinetis.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/lwip/port/enet_ethernetif_kinetis.c</FilePath>
-            </File>
-            <File>
               <FileName>enet_ethernetif.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/lwip/port/enet_ethernetif.c</FilePath>
@@ -10327,6 +10482,11 @@
               <FileName>enet_ethernetif.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/lwip/port/enet_ethernetif.h</FilePath>
+            </File>
+            <File>
+              <FileName>enet_ethernetif_kinetis.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/lwip/port/enet_ethernetif_kinetis.c</FilePath>
             </File>
             <File>
               <FileName>enet_ethernetif_priv.h</FileName>
@@ -10494,6 +10654,11 @@
           <GroupName>lwip-src-core-ipv4</GroupName>
           <Files>
             <File>
+              <FileName>acd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/core/ipv4/acd.c</FilePath>
+            </File>
+            <File>
               <FileName>autoip.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/lwip/src/core/ipv4/autoip.c</FilePath>
@@ -10638,6 +10803,11 @@
         <Group>
           <GroupName>lwip-src-include-lwip</GroupName>
           <Files>
+            <File>
+              <FileName>acd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/lwip/acd.h</FilePath>
+            </File>
             <File>
               <FileName>altcp.h</FileName>
               <FileType>5</FileType>
@@ -10958,6 +11128,11 @@
         <Group>
           <GroupName>lwip-src-include-lwip-prot</GroupName>
           <Files>
+            <File>
+              <FileName>acd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lwip/src/include/lwip/prot/acd.h</FilePath>
+            </File>
             <File>
               <FileName>autoip.h</FileName>
               <FileType>5</FileType>
@@ -11437,6 +11612,41 @@
               <FileName>vj.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/lwip/src/netif/ppp/vj.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>utilities</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_debug_console.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_debug_console.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_debug_console.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console_conf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1052/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1052/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1052/utilities/fsl_assert.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -12306,17 +12516,17 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-freertos_kernel-portable-MemMang</GroupName>
+          <GroupName>freertos-freertos_kernel-portable-MemMang</GroupName>
           <Files>
             <File>
               <FileName>heap_4.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/portable/MemMang/heap_4.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/MemMang/heap_4.c</FilePath>
             </File>
             <File>
               <FileName>ReadMe.url</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/portable/MemMang/ReadMe.url</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/MemMang/ReadMe.url</FilePath>
             </File>
           </Files>
         </Group>
@@ -12591,41 +12801,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>utilities</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_debug_console.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_debug_console.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_debug_console.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console_conf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1052/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1052/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_assert.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1052/utilities/fsl_assert.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>component-uart</GroupName>
           <Files>
             <File>
@@ -12689,9 +12864,9 @@
           <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_MIMXRT1052.s</FileName>
+              <FileName>startup_MIMXRT1052.S</FileName>
               <FileType>2</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1052/arm/startup_MIMXRT1052.s</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1052/arm/startup_MIMXRT1052.S</FilePath>
             </File>
           </Files>
         </Group>
@@ -12718,16 +12893,6 @@
               <FileType>5</FileType>
               <FilePath>../../../../xip/evkbimxrt1050_flexspi_nor_config.h</FilePath>
             </File>
-            <File>
-              <FileName>evkbimxrt1050_sdram_ini_dcd.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../xip/evkbimxrt1050_sdram_ini_dcd.c</FilePath>
-            </File>
-            <File>
-              <FileName>evkbimxrt1050_sdram_ini_dcd.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../xip/evkbimxrt1050_sdram_ini_dcd.h</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -12737,6 +12902,11 @@
               <FileName>core_cm7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_armcc.h</FileName>
@@ -12774,31 +12944,6 @@
               <FilePath>../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
             </File>
             <File>
-              <FileName>core_armv81mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv81mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mbl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
-            </File>
-            <File>
               <FileName>arm_common_tables.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
@@ -12816,152 +12961,167 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-freertos_kernel</GroupName>
+          <GroupName>freertos-freertos_kernel</GroupName>
           <Files>
+            <File>
+              <FileName>croutine.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/croutine.c</FilePath>
+            </File>
             <File>
               <FileName>event_groups.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/event_groups.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/event_groups.c</FilePath>
             </File>
             <File>
               <FileName>list.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/list.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/list.c</FilePath>
             </File>
             <File>
               <FileName>queue.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/queue.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/queue.c</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/stream_buffer.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/stream_buffer.c</FilePath>
             </File>
             <File>
               <FileName>tasks.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/tasks.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/tasks.c</FilePath>
             </File>
             <File>
               <FileName>timers.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/timers.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/timers.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-freertos_kernel-include</GroupName>
+          <GroupName>freertos-freertos_kernel-include</GroupName>
           <Files>
             <File>
               <FileName>FreeRTOS.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/FreeRTOS.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/FreeRTOS.h</FilePath>
+            </File>
+            <File>
+              <FileName>StackMacros.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</FilePath>
             </File>
             <File>
               <FileName>atomic.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/atomic.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/atomic.h</FilePath>
+            </File>
+            <File>
+              <FileName>croutine.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/croutine.h</FilePath>
             </File>
             <File>
               <FileName>deprecated_definitions.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/deprecated_definitions.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/deprecated_definitions.h</FilePath>
             </File>
             <File>
               <FileName>event_groups.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/event_groups.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/event_groups.h</FilePath>
             </File>
             <File>
               <FileName>list.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/list.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/list.h</FilePath>
             </File>
             <File>
               <FileName>message_buffer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/message_buffer.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/message_buffer.h</FilePath>
             </File>
             <File>
               <FileName>mpu_prototypes.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/mpu_prototypes.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/mpu_prototypes.h</FilePath>
             </File>
             <File>
               <FileName>mpu_wrappers.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/mpu_wrappers.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/mpu_wrappers.h</FilePath>
             </File>
             <File>
               <FileName>portable.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/portable.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/portable.h</FilePath>
             </File>
             <File>
               <FileName>projdefs.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/projdefs.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/projdefs.h</FilePath>
             </File>
             <File>
               <FileName>queue.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/queue.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/queue.h</FilePath>
             </File>
             <File>
               <FileName>semphr.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/semphr.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/semphr.h</FilePath>
             </File>
             <File>
               <FileName>stack_macros.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/stack_macros.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/stack_macros.h</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/stream_buffer.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/stream_buffer.h</FilePath>
             </File>
             <File>
               <FileName>task.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/task.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/task.h</FilePath>
             </File>
             <File>
               <FileName>timers.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/timers.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/timers.h</FilePath>
             </File>
             <File>
               <FileName>freertos_tasks_c_additions.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/freertos_tasks_c_additions.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/freertos_tasks_c_additions.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-freertos_kernel-portable-GCC-ARM_CM4F</GroupName>
+          <GroupName>freertos-freertos_kernel-portable-GCC-ARM_CM4F</GroupName>
           <Files>
             <File>
               <FileName>port.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/portable/GCC/ARM_CM4F/port.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F/port.c</FilePath>
             </File>
             <File>
               <FileName>portmacro.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/portable/GCC/ARM_CM4F/portmacro.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F/portmacro.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-freertos_kernel-portable</GroupName>
+          <GroupName>freertos-freertos_kernel-portable</GroupName>
           <Files>
             <File>
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/portable/readme.txt</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/readme.txt</FilePath>
             </File>
           </Files>
         </Group>

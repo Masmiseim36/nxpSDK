@@ -9,18 +9,19 @@
     <definition extID="component.serial_manager_uart.MIMXRT1062"/>
     <definition extID="device.MIMXRT1062_CMSIS.MIMXRT1062"/>
     <definition extID="device.MIMXRT1062_startup.MIMXRT1062"/>
-    <definition extID="middleware.amazon_freertos-kernel.MIMXRT1062"/>
-    <definition extID="middleware.amazon_freertos-kernel.extension.MIMXRT1062"/>
-    <definition extID="middleware.amazon_freertos-kernel.heap_4.MIMXRT1062"/>
     <definition extID="middleware.fatfs.MIMXRT1062"/>
     <definition extID="middleware.fatfs.usb.MIMXRT1062"/>
-    <definition extID="middleware.usb.device.MIMXRT1062"/>
+    <definition extID="middleware.freertos-kernel.MIMXRT1062"/>
+    <definition extID="middleware.freertos-kernel.extension.MIMXRT1062"/>
+    <definition extID="middleware.freertos-kernel.heap_4.MIMXRT1062"/>
+    <definition extID="middleware.usb.common_header.MIMXRT1062"/>
+    <definition extID="middleware.usb.device.common_header.MIMXRT1062"/>
+    <definition extID="middleware.usb.device.controller.driver.MIMXRT1062"/>
     <definition extID="middleware.usb.device_controller_ehci.MIMXRT1062"/>
-    <definition extID="middleware.usb.host.fatfs_ehci.MIMXRT1062"/>
-    <definition extID="middleware.usb.host.fatfs_hub.MIMXRT1062"/>
-    <definition extID="middleware.usb.host.fatfs_msd.MIMXRT1062"/>
-    <definition extID="middleware.usb.host.fatfs_phy.MIMXRT1062"/>
-    <definition extID="middleware.usb.host.fatfs_usb_stack.MIMXRT1062"/>
+    <definition extID="middleware.usb.host.common_header.MIMXRT1062"/>
+    <definition extID="middleware.usb.host.stack.MIMXRT1062"/>
+    <definition extID="middleware.usb.host_controller_ehci.MIMXRT1062"/>
+    <definition extID="middleware.usb.host_msd.MIMXRT1062"/>
     <definition extID="middleware.usb.phy.MIMXRT1062"/>
     <definition extID="platform.Include_common.MIMXRT1062"/>
     <definition extID="platform.Include_core_cm7.MIMXRT1062"/>
@@ -32,7 +33,6 @@
     <definition extID="platform.drivers.iomuxc.MIMXRT1062"/>
     <definition extID="platform.drivers.lpuart.MIMXRT1062"/>
     <definition extID="platform.drivers.xip_board.MIMXRT1062"/>
-    <definition extID="platform.drivers.xip_board_dcd.MIMXRT1062"/>
     <definition extID="platform.drivers.xip_device.MIMXRT1062"/>
     <definition extID="platform.utilities.assert.MIMXRT1062"/>
     <definition extID="platform.utilities.misc_utilities.MIMXRT1062"/>
@@ -43,7 +43,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkmimxrt1060_pin_detect_hid_msd_freertos" name="pin_detect_hid_msd_freertos" category="usb_examples" dependency="middleware.usb.host.fatfs_usb_stack.MIMXRT1062 component.osa.MIMXRT1062 middleware.usb.host.fatfs_ehci.MIMXRT1062 middleware.usb.device_controller_ehci.MIMXRT1062 platform.drivers.cache_armv7_m7.MIMXRT1062 middleware.amazon_freertos-kernel.heap_4.MIMXRT1062 middleware.amazon_freertos-kernel.MIMXRT1062 middleware.usb.device.MIMXRT1062 middleware.fatfs.MIMXRT1062 middleware.fatfs.usb.MIMXRT1062 platform.drivers.clock.MIMXRT1062 platform.drivers.common.MIMXRT1062 device.MIMXRT1062_CMSIS.MIMXRT1062 device.MIMXRT1062_startup.MIMXRT1062 platform.drivers.lpuart.MIMXRT1062 platform.drivers.iomuxc.MIMXRT1062 platform.utilities.assert.MIMXRT1062 platform.drivers.igpio.MIMXRT1062 platform.drivers.xip_device.MIMXRT1062 platform.drivers.xip_board.MIMXRT1062 platform.drivers.xip_board_dcd.MIMXRT1062 utility.debug_console.MIMXRT1062 component.lpuart_adapter.MIMXRT1062 component.serial_manager.MIMXRT1062 component.lists.MIMXRT1062 component.serial_manager_uart.MIMXRT1062 platform.Include_core_cm7.MIMXRT1062 platform.Include_common.MIMXRT1062 platform.Include_dsp.MIMXRT1062 middleware.usb.host.fatfs_phy.MIMXRT1062 middleware.usb.phy.MIMXRT1062 middleware.amazon_freertos-kernel.extension.MIMXRT1062 middleware.usb.host.fatfs_hub.MIMXRT1062 middleware.usb.host.fatfs_msd.MIMXRT1062 platform.utilities.misc_utilities.MIMXRT1062">
+  <example id="evkmimxrt1060_pin_detect_hid_msd_freertos" name="pin_detect_hid_msd_freertos" category="usb_examples" dependency="middleware.usb.host_controller_ehci.MIMXRT1062 middleware.usb.device_controller_ehci.MIMXRT1062 middleware.usb.phy.MIMXRT1062 platform.drivers.cache_armv7_m7.MIMXRT1062 middleware.freertos-kernel.heap_4.MIMXRT1062 middleware.freertos-kernel.MIMXRT1062 middleware.fatfs.MIMXRT1062 middleware.fatfs.usb.MIMXRT1062 platform.drivers.clock.MIMXRT1062 platform.drivers.common.MIMXRT1062 device.MIMXRT1062_CMSIS.MIMXRT1062 device.MIMXRT1062_startup.MIMXRT1062 platform.drivers.lpuart.MIMXRT1062 platform.drivers.iomuxc.MIMXRT1062 platform.utilities.assert.MIMXRT1062 platform.drivers.igpio.MIMXRT1062 platform.drivers.xip_device.MIMXRT1062 platform.drivers.xip_board.MIMXRT1062 utility.debug_console.MIMXRT1062 component.lpuart_adapter.MIMXRT1062 component.serial_manager.MIMXRT1062 component.lists.MIMXRT1062 component.serial_manager_uart.MIMXRT1062 middleware.usb.host.stack.MIMXRT1062 component.osa.MIMXRT1062 middleware.usb.device.controller.driver.MIMXRT1062 middleware.usb.common_header.MIMXRT1062 platform.Include_core_cm7.MIMXRT1062 platform.Include_common.MIMXRT1062 platform.Include_dsp.MIMXRT1062 middleware.usb.host.common_header.MIMXRT1062 middleware.usb.device.common_header.MIMXRT1062 middleware.freertos-kernel.extension.MIMXRT1062 middleware.usb.host_msd.MIMXRT1062 platform.utilities.misc_utilities.MIMXRT1062">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -127,12 +127,17 @@
     <source path="boards/evkmimxrt1060/usb_examples/usb_pin_detect_hid_msd/freertos" target_path="board" type="c_include">
       <files mask="board.h"/>
       <files mask="clock_config.h"/>
+      <files mask="dcd.h"/>
       <files mask="pin_mux.h"/>
     </source>
     <source path="boards/evkmimxrt1060/usb_examples/usb_pin_detect_hid_msd/freertos" target_path="board" type="src">
       <files mask="board.c"/>
       <files mask="clock_config.c"/>
+      <files mask="dcd.c"/>
       <files mask="pin_mux.c"/>
+    </source>
+    <source path="boards/evkmimxrt1060/usb_examples/usb_pin_detect_hid_msd/freertos" target_path="evkmimxrt1060/usb_examples/usb_pin_detect_hid_msd/freertos" type="doc" exclude="true">
+      <files mask="readme.pdf"/>
     </source>
     <source path="boards/evkmimxrt1060/usb_examples/usb_pin_detect_hid_msd/freertos" target_path="source" type="c_include">
       <files mask="FreeRTOSConfig.h"/>
@@ -169,9 +174,6 @@
     </source>
     <source path="boards/evkmimxrt1060/usb_examples/usb_pin_detect_hid_msd/freertos" target_path="usb/device/source" type="src">
       <files mask="usb_device_ch9.c"/>
-    </source>
-    <source path="boards/evkmimxrt1060/usb_examples/usb_pin_detect_hid_msd/freertos" target_path="usb/example/usb_pin_detect_hid_msd/freertos" type="doc" exclude="true">
-      <files mask="readme.pdf"/>
     </source>
   </example>
 </ksdk:examples>

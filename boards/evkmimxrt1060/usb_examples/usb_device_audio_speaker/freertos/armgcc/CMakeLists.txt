@@ -1134,7 +1134,7 @@ include_directories(${ProjDirPath}/../../../..)
 
 include_directories(${ProjDirPath}/..)
 
-include_directories(${ProjDirPath}/../../../../../../rtos/amazon-freertos/freertos_kernel/portable/GCC/ARM_CM4F)
+include_directories(${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F)
 
 include_directories(${ProjDirPath}/..)
 
@@ -1144,7 +1144,7 @@ include_directories(${ProjDirPath}/../../../../../../CMSIS/Include)
 
 include_directories(${ProjDirPath}/../../../../../../devices)
 
-include_directories(${ProjDirPath}/../../../../../../rtos/amazon-freertos/freertos_kernel/include)
+include_directories(${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/include)
 
 include_directories(${ProjDirPath}/../../../../../../middleware/usb)
 
@@ -1160,7 +1160,9 @@ include_directories(${ProjDirPath}/../../../../../../components/codec/wm8960)
 
 include_directories(${ProjDirPath}/../../../../../../components/codec)
 
-include_directories(${ProjDirPath}/../../../../../../components/codec/port)
+include_directories(${ProjDirPath}/../../../../../../components/codec/port/wm8960)
+
+include_directories(${ProjDirPath}/../../../../../../components/codec/i2c)
 
 include_directories(${ProjDirPath}/../../../../../../components/i2c)
 
@@ -1182,8 +1184,6 @@ include_directories(${ProjDirPath}/../../../../../../components/lists)
 
 include_directories(${ProjDirPath}/../../../../../../components/osa)
 
-include_directories(${ProjDirPath}/../../../../../../components/codec/i2c)
-
 include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT1062/utilities)
 
 add_executable(dev_audio_speaker_freertos.elf 
@@ -1199,11 +1199,10 @@ add_executable(dev_audio_speaker_freertos.elf
 "${ProjDirPath}/../clock_config.h"
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
+"${ProjDirPath}/../dcd.c"
+"${ProjDirPath}/../dcd.h"
 "${ProjDirPath}/../../../../../../middleware/usb/device/usb_device_ehci.c"
 "${ProjDirPath}/../../../../../../middleware/usb/device/usb_device_ehci.h"
-"${ProjDirPath}/../../../../../../middleware/usb/include/usb.h"
-"${ProjDirPath}/../../../../../../middleware/usb/include/usb_misc.h"
-"${ProjDirPath}/../../../../../../middleware/usb/include/usb_spec.h"
 "${ProjDirPath}/../../../../../../middleware/usb/phy/usb_phy.c"
 "${ProjDirPath}/../../../../../../middleware/usb/phy/usb_phy.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1062/drivers/fsl_cache.c"
@@ -1212,8 +1211,12 @@ add_executable(dev_audio_speaker_freertos.elf
 "${ProjDirPath}/../../../../../../components/codec/wm8960/fsl_wm8960.h"
 "${ProjDirPath}/../../../../../../components/codec/fsl_codec_common.c"
 "${ProjDirPath}/../../../../../../components/codec/fsl_codec_common.h"
-"${ProjDirPath}/../../../../../../components/codec/port/fsl_codec_adapter.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT1062/drivers/fsl_common.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT1062/drivers/fsl_common.h"
 "${ProjDirPath}/../../../../../../components/codec/port/wm8960/fsl_codec_adapter.c"
+"${ProjDirPath}/../../../../../../components/codec/port/wm8960/fsl_codec_adapter.h"
+"${ProjDirPath}/../../../../../../components/codec/i2c/fsl_codec_i2c.c"
+"${ProjDirPath}/../../../../../../components/codec/i2c/fsl_codec_i2c.h"
 "${ProjDirPath}/../../../../../../components/i2c/i2c.h"
 "${ProjDirPath}/../../../../../../components/i2c/lpi2c_adapter.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1062/drivers/fsl_lpi2c.c"
@@ -1226,45 +1229,43 @@ add_executable(dev_audio_speaker_freertos.elf
 "${ProjDirPath}/../../../../../../devices/MIMXRT1062/drivers/fsl_dmamux.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1062/drivers/fsl_edma.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1062/drivers/fsl_edma.h"
-"${ProjDirPath}/../../../../../../middleware/usb/device/usb_device.h"
-"${ProjDirPath}/../../../../../../middleware/usb/device/usb_device_dci.c"
-"${ProjDirPath}/../../../../../../middleware/usb/device/usb_device_dci.h"
-"${ProjDirPath}/../../../../../../rtos/amazon-freertos/freertos_kernel/portable/MemMang/heap_4.c"
-"${ProjDirPath}/../../../../../../rtos/amazon-freertos/freertos_kernel/event_groups.c"
-"${ProjDirPath}/../../../../../../rtos/amazon-freertos/freertos_kernel/include/FreeRTOS.h"
-"${ProjDirPath}/../../../../../../rtos/amazon-freertos/freertos_kernel/include/atomic.h"
-"${ProjDirPath}/../../../../../../rtos/amazon-freertos/freertos_kernel/include/deprecated_definitions.h"
-"${ProjDirPath}/../../../../../../rtos/amazon-freertos/freertos_kernel/include/event_groups.h"
-"${ProjDirPath}/../../../../../../rtos/amazon-freertos/freertos_kernel/include/list.h"
-"${ProjDirPath}/../../../../../../rtos/amazon-freertos/freertos_kernel/include/message_buffer.h"
-"${ProjDirPath}/../../../../../../rtos/amazon-freertos/freertos_kernel/include/mpu_prototypes.h"
-"${ProjDirPath}/../../../../../../rtos/amazon-freertos/freertos_kernel/include/mpu_wrappers.h"
-"${ProjDirPath}/../../../../../../rtos/amazon-freertos/freertos_kernel/include/portable.h"
-"${ProjDirPath}/../../../../../../rtos/amazon-freertos/freertos_kernel/include/projdefs.h"
-"${ProjDirPath}/../../../../../../rtos/amazon-freertos/freertos_kernel/include/queue.h"
-"${ProjDirPath}/../../../../../../rtos/amazon-freertos/freertos_kernel/include/semphr.h"
-"${ProjDirPath}/../../../../../../rtos/amazon-freertos/freertos_kernel/include/stack_macros.h"
-"${ProjDirPath}/../../../../../../rtos/amazon-freertos/freertos_kernel/include/stream_buffer.h"
-"${ProjDirPath}/../../../../../../rtos/amazon-freertos/freertos_kernel/include/task.h"
-"${ProjDirPath}/../../../../../../rtos/amazon-freertos/freertos_kernel/include/timers.h"
-"${ProjDirPath}/../../../../../../rtos/amazon-freertos/freertos_kernel/list.c"
-"${ProjDirPath}/../../../../../../rtos/amazon-freertos/freertos_kernel/portable/GCC/ARM_CM4F/port.c"
-"${ProjDirPath}/../../../../../../rtos/amazon-freertos/freertos_kernel/portable/GCC/ARM_CM4F/portmacro.h"
-"${ProjDirPath}/../../../../../../rtos/amazon-freertos/freertos_kernel/portable/MemMang/ReadMe.url"
-"${ProjDirPath}/../../../../../../rtos/amazon-freertos/freertos_kernel/queue.c"
-"${ProjDirPath}/../../../../../../rtos/amazon-freertos/freertos_kernel/stream_buffer.c"
-"${ProjDirPath}/../../../../../../rtos/amazon-freertos/freertos_kernel/tasks.c"
-"${ProjDirPath}/../../../../../../rtos/amazon-freertos/freertos_kernel/timers.c"
-"${ProjDirPath}/../usb_device_ch9.c"
-"${ProjDirPath}/../usb_device_ch9.h"
+"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/portable/MemMang/heap_4.c"
+"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/croutine.c"
+"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/event_groups.c"
+"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/include/FreeRTOS.h"
+"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h"
+"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/include/atomic.h"
+"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/include/croutine.h"
+"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/include/deprecated_definitions.h"
+"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/include/event_groups.h"
+"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/include/list.h"
+"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/include/message_buffer.h"
+"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/include/mpu_prototypes.h"
+"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/include/mpu_wrappers.h"
+"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/include/portable.h"
+"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/include/projdefs.h"
+"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/include/queue.h"
+"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/include/semphr.h"
+"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/include/stack_macros.h"
+"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/include/stream_buffer.h"
+"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/include/task.h"
+"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/include/timers.h"
+"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/list.c"
+"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F/port.c"
+"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F/portmacro.h"
+"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/portable/MemMang/ReadMe.url"
+"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/queue.c"
+"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/stream_buffer.c"
+"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/tasks.c"
+"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/timers.c"
 "${ProjDirPath}/../usb_device_class.c"
 "${ProjDirPath}/../usb_device_class.h"
+"${ProjDirPath}/../usb_device_ch9.c"
+"${ProjDirPath}/../usb_device_ch9.h"
 "${ProjDirPath}/../usb_device_audio.c"
 "${ProjDirPath}/../usb_device_audio.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1062/drivers/fsl_clock.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1062/drivers/fsl_clock.h"
-"${ProjDirPath}/../../../../../../devices/MIMXRT1062/drivers/fsl_common.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT1062/drivers/fsl_common.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1062/MIMXRT1062.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1062/MIMXRT1062_features.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1062/fsl_device_registers.h"
@@ -1281,8 +1282,6 @@ add_executable(dev_audio_speaker_freertos.elf
 "${ProjDirPath}/../../../../../../devices/MIMXRT1062/xip/fsl_flexspi_nor_boot.h"
 "${ProjDirPath}/../../../../xip/evkmimxrt1060_flexspi_nor_config.c"
 "${ProjDirPath}/../../../../xip/evkmimxrt1060_flexspi_nor_config.h"
-"${ProjDirPath}/../../../../xip/evkmimxrt1060_sdram_ini_dcd.c"
-"${ProjDirPath}/../../../../xip/evkmimxrt1060_sdram_ini_dcd.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console_conf.h"
@@ -1297,11 +1296,18 @@ add_executable(dev_audio_speaker_freertos.elf
 "${ProjDirPath}/../../../../../../components/lists/generic_list.h"
 "${ProjDirPath}/../../../../../../components/serial_manager/serial_port_uart.c"
 "${ProjDirPath}/../../../../../../components/serial_manager/serial_port_uart.h"
+"${ProjDirPath}/../../../../../../middleware/usb/device/usb_device.h"
+"${ProjDirPath}/../../../../../../middleware/usb/device/usb_device_dci.c"
+"${ProjDirPath}/../../../../../../middleware/usb/device/usb_device_dci.h"
 "${ProjDirPath}/../../../../../../components/osa/fsl_os_abstraction.h"
 "${ProjDirPath}/../../../../../../components/osa/fsl_os_abstraction_config.h"
 "${ProjDirPath}/../../../../../../components/osa/fsl_os_abstraction_free_rtos.c"
 "${ProjDirPath}/../../../../../../components/osa/fsl_os_abstraction_free_rtos.h"
+"${ProjDirPath}/../../../../../../middleware/usb/include/usb.h"
+"${ProjDirPath}/../../../../../../middleware/usb/include/usb_misc.h"
+"${ProjDirPath}/../../../../../../middleware/usb/include/usb_spec.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/core_cm7.h"
+"${ProjDirPath}/../../../../../../CMSIS/Include/mpu_armv7.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_armcc.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_armclang.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_armclang_ltm.h"
@@ -1309,17 +1315,12 @@ add_executable(dev_audio_speaker_freertos.elf
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_gcc.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_iccarm.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_version.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/core_armv81mml.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/core_armv8mbl.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/core_armv8mml.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/mpu_armv7.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/mpu_armv8.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/arm_common_tables.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/arm_const_structs.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/arm_math.h"
-"${ProjDirPath}/../../../../../../components/codec/i2c/fsl_codec_i2c.c"
-"${ProjDirPath}/../../../../../../components/codec/i2c/fsl_codec_i2c.h"
-"${ProjDirPath}/../../../../../../rtos/amazon-freertos/freertos_kernel/include/freertos_tasks_c_additions.h"
+"${ProjDirPath}/../../../../../../middleware/usb/device/usb_device.h"
+"${ProjDirPath}/../../../../../../middleware/usb/device/usb_device_dci.h"
+"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/include/freertos_tasks_c_additions.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1062/utilities/fsl_sbrk.c"
 )
 

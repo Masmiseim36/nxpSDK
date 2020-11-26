@@ -11,6 +11,7 @@ This example does not use the transactional API in LPSPI driver. It's a demonstr
 Toolchain supported
 ===================
 - IAR embedded Workbench  8.50.1
+- Keil MDK  5.30
 - GCC ARM Embedded  9.2.1
 - MCUXpresso  11.2.0
 

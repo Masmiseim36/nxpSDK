@@ -100,8 +100,6 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -DUSE_RT
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -DMBEDTLS_CONFIG_FILE='\"aws_mbedtls_config.h\"'")
 
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -DDEMO_NETWORK_TYPE=AWSIOT_NETWORK_TYPE_ETH")
-
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -DOTA_DEVEL_MODE=1")
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} -DFSL_RTOS_FREE_RTOS")
@@ -157,8 +155,6 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -DFS
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -DUSE_RTOS=1")
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -DMBEDTLS_CONFIG_FILE='\"aws_mbedtls_config.h\"'")
-
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -DDEMO_NETWORK_TYPE=AWSIOT_NETWORK_TYPE_ETH")
 
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE} -DOTA_DEVEL_MODE=1")
 
@@ -390,7 +386,7 @@ include_directories(${ProjDirPath}/..)
 
 include_directories(${ProjDirPath}/../config_files)
 
-include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/portable/GCC/ARM_CM4F)
+include_directories(${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F)
 
 include_directories(${ProjDirPath}/../../..)
 
@@ -406,61 +402,67 @@ include_directories(${ProjDirPath}/../../../../../CMSIS/Include)
 
 include_directories(${ProjDirPath}/../../../../../devices)
 
-include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/demos/include)
+include_directories(${ProjDirPath}/../../../../../rtos/freertos/demos/include)
 
-include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/demos/network_manager)
+include_directories(${ProjDirPath}/../../../../../rtos/freertos/demos/network_manager)
 
-include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/freertos_plus/aws/ota/src)
+include_directories(${ProjDirPath}/../../../../../rtos/freertos/libraries/freertos_plus/aws/ota/src)
 
-include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/freertos_plus/aws/ota/include)
+include_directories(${ProjDirPath}/../../../../../rtos/freertos/libraries/freertos_plus/aws/ota/include)
 
-include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/demos/dev_mode_key_provisioning/include)
+include_directories(${ProjDirPath}/../../../../../rtos/freertos/demos/dev_mode_key_provisioning/include)
 
-include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include)
+include_directories(${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/include)
 
-include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/abstractions/platform/freertos/include)
+include_directories(${ProjDirPath}/../../../../../rtos/freertos/libraries/abstractions/platform/freertos/include)
 
-include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/abstractions/platform/include)
+include_directories(${ProjDirPath}/../../../../../rtos/freertos/libraries/abstractions/platform/include)
 
-include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/aws/shadow/include)
+include_directories(${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/aws/shadow/include)
 
-include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/aws/shadow/src)
+include_directories(${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/aws/shadow/src)
 
-include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include)
+include_directories(${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/common/include)
 
-include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include/private)
+include_directories(${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/private)
 
-include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/include)
+include_directories(${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/include)
 
-include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/src)
+include_directories(${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/src)
 
-include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/serializer/include)
+include_directories(${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/serializer/include)
 
-include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/abstractions/secure_sockets/include)
+include_directories(${ProjDirPath}/../../../../../rtos/freertos/libraries/abstractions/secure_sockets/include)
 
-include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/freertos_plus/standard/crypto/include)
+include_directories(${ProjDirPath}/../../../../../rtos/freertos/libraries/freertos_plus/standard/crypto/include)
 
-include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/freertos_plus/standard/pkcs11/include)
+include_directories(${ProjDirPath}/../../../../../rtos/freertos/libraries/freertos_plus/standard/pkcs11/include)
 
-include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/freertos_plus/standard/utils/include)
+include_directories(${ProjDirPath}/../../../../../rtos/freertos/libraries/freertos_plus/standard/utils/include)
 
-include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/freertos_plus/standard/tls/include)
+include_directories(${ProjDirPath}/../../../../../rtos/freertos/libraries/freertos_plus/standard/tls/include)
 
-include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/abstractions/pkcs11/include)
+include_directories(${ProjDirPath}/../../../../../rtos/freertos/libraries/abstractions/pkcs11/include)
 
-include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/abstractions/pkcs11/mbedtls)
+include_directories(${ProjDirPath}/../../../../../rtos/freertos/libraries/abstractions/pkcs11/mbedtls)
 
-include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/3rdparty/pkcs11)
+include_directories(${ProjDirPath}/../../../../../rtos/freertos/libraries/3rdparty/pkcs11)
 
-include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/3rdparty/jsmn)
+include_directories(${ProjDirPath}/../../../../../rtos/freertos/libraries/3rdparty/jsmn)
 
 include_directories(${ProjDirPath}/../../../../../middleware/mbedtls/include)
 
 include_directories(${ProjDirPath}/../../../../../middleware/mbedtls/port/ksdk)
 
-include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/3rdparty/tinycbor)
+include_directories(${ProjDirPath}/../../../../../rtos/freertos/libraries/3rdparty/tinycbor)
 
-include_directories(${ProjDirPath}/../../../../../components/phyksz8081)
+include_directories(${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/https/include)
+
+include_directories(${ProjDirPath}/../../../../../rtos/freertos/libraries/3rdparty/http_parser)
+
+include_directories(${ProjDirPath}/../../../../../components/phy/mdio/enet)
+
+include_directories(${ProjDirPath}/../../../../../components/phy/device/phyksz8081)
 
 include_directories(${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers)
 
@@ -470,19 +472,21 @@ include_directories(${ProjDirPath}/../../../../../middleware/lwip/src)
 
 include_directories(${ProjDirPath}/../../../../../middleware/lwip/src/include)
 
-include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/vendors/nxp/mflash/mimxrt1062)
-
-include_directories(${ProjDirPath}/../../../../../devices/MIMXRT1062)
-
 include_directories(${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities/str)
 
 include_directories(${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities/debug_console)
+
+include_directories(${ProjDirPath}/../../../../../middleware/mflash/mimxrt1062)
+
+include_directories(${ProjDirPath}/../../../../../devices/MIMXRT1062)
 
 include_directories(${ProjDirPath}/../../../../../components/uart)
 
 include_directories(${ProjDirPath}/../../../../../components/serial_manager)
 
 include_directories(${ProjDirPath}/../../../../../components/lists)
+
+include_directories(${ProjDirPath}/../../../../../components/phy)
 
 include_directories(${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities)
 
@@ -491,20 +495,22 @@ add_executable(ota_demo_enet.elf
 "${ProjDirPath}/../config_files/FreeRTOSConfig.h"
 "${ProjDirPath}/../config_files/aws_bufferpool_config.h"
 "${ProjDirPath}/../config_files/aws_demo_config.h"
+"${ProjDirPath}/../config_files/aws_ggd_config.h"
 "${ProjDirPath}/../config_files/aws_mqtt_config.h"
 "${ProjDirPath}/../config_files/aws_ota_agent_config.h"
 "${ProjDirPath}/../config_files/aws_secure_sockets_config.h"
 "${ProjDirPath}/../config_files/aws_shadow_config.h"
 "${ProjDirPath}/../config_files/aws_wifi_config.h"
 "${ProjDirPath}/../config_files/FreeRTOSIPConfig.h"
-"${ProjDirPath}/../config_files/aws_iot_network_config.h"
 "${ProjDirPath}/../config_files/iot_config.h"
 "${ProjDirPath}/../config_files/iot_mqtt_agent_config.h"
 "${ProjDirPath}/../config_files/iot_pkcs11_config.h"
-"${ProjDirPath}/../main.c"
+"${ProjDirPath}/../config_files/aws_iot_network_config.h"
+"${ProjDirPath}/../main_enet.c"
 "${ProjDirPath}/../ota_bootloader_supp.c"
 "${ProjDirPath}/../ota_bootloader_supp.h"
 "${ProjDirPath}/../ota_bootloader_hdr.c"
+"${ProjDirPath}/../ota_bootloader_board.h"
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
 "${ProjDirPath}/../lwipopts.h"
@@ -512,8 +518,12 @@ add_executable(ota_demo_enet.elf
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../clock_config.c"
 "${ProjDirPath}/../clock_config.h"
-"${ProjDirPath}/../../../../../components/phyksz8081/fsl_phy.c"
-"${ProjDirPath}/../../../../../components/phyksz8081/fsl_phy.h"
+"${ProjDirPath}/../dcd.c"
+"${ProjDirPath}/../dcd.h"
+"${ProjDirPath}/../../../../../components/phy/mdio/enet/fsl_enet_mdio.c"
+"${ProjDirPath}/../../../../../components/phy/mdio/enet/fsl_enet_mdio.h"
+"${ProjDirPath}/../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.c"
+"${ProjDirPath}/../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.h"
 "${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers/fsl_trng.c"
 "${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers/fsl_trng.h"
 "${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers/fsl_dcp.c"
@@ -543,6 +553,7 @@ add_executable(ota_demo_enet.elf
 "${ProjDirPath}/../../../../../middleware/lwip/src/core/inet_chksum.c"
 "${ProjDirPath}/../../../../../middleware/lwip/src/core/init.c"
 "${ProjDirPath}/../../../../../middleware/lwip/src/core/ip.c"
+"${ProjDirPath}/../../../../../middleware/lwip/src/core/ipv4/acd.c"
 "${ProjDirPath}/../../../../../middleware/lwip/src/core/ipv4/autoip.c"
 "${ProjDirPath}/../../../../../middleware/lwip/src/core/ipv4/dhcp.c"
 "${ProjDirPath}/../../../../../middleware/lwip/src/core/ipv4/etharp.c"
@@ -577,6 +588,7 @@ add_executable(ota_demo_enet.elf
 "${ProjDirPath}/../../../../../middleware/lwip/src/include/compat/posix/netdb.h"
 "${ProjDirPath}/../../../../../middleware/lwip/src/include/compat/posix/sys/socket.h"
 "${ProjDirPath}/../../../../../middleware/lwip/src/include/compat/stdc/errno.h"
+"${ProjDirPath}/../../../../../middleware/lwip/src/include/lwip/acd.h"
 "${ProjDirPath}/../../../../../middleware/lwip/src/include/lwip/altcp.h"
 "${ProjDirPath}/../../../../../middleware/lwip/src/include/lwip/altcp_tcp.h"
 "${ProjDirPath}/../../../../../middleware/lwip/src/include/lwip/altcp_tls.h"
@@ -628,6 +640,7 @@ add_executable(ota_demo_enet.elf
 "${ProjDirPath}/../../../../../middleware/lwip/src/include/lwip/priv/sockets_priv.h"
 "${ProjDirPath}/../../../../../middleware/lwip/src/include/lwip/priv/tcp_priv.h"
 "${ProjDirPath}/../../../../../middleware/lwip/src/include/lwip/priv/tcpip_priv.h"
+"${ProjDirPath}/../../../../../middleware/lwip/src/include/lwip/prot/acd.h"
 "${ProjDirPath}/../../../../../middleware/lwip/src/include/lwip/prot/autoip.h"
 "${ProjDirPath}/../../../../../middleware/lwip/src/include/lwip/prot/dhcp.h"
 "${ProjDirPath}/../../../../../middleware/lwip/src/include/lwip/prot/dhcp6.h"
@@ -730,158 +743,177 @@ add_executable(ota_demo_enet.elf
 "${ProjDirPath}/../../../../../middleware/lwip/src/netif/ppp/vj.c"
 "${ProjDirPath}/../../../../../middleware/lwip/src/netif/slipif.c"
 "${ProjDirPath}/../../../../../middleware/lwip/src/netif/zepif.c"
+"${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console.c"
+"${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console.h"
+"${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console_conf.h"
+"${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c"
+"${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h"
+"${ProjDirPath}/../../../../../middleware/lwip/port/enet_ethernetif.c"
+"${ProjDirPath}/../../../../../middleware/lwip/port/enet_ethernetif.h"
 "${ProjDirPath}/../../../../../middleware/lwip/port/enet_ethernetif_kinetis.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/vendors/nxp/mflash/mimxrt1062/mflash_drv.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/vendors/nxp/mflash/mimxrt1062/mflash_drv.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/vendors/nxp/mflash/mimxrt1062/mflash_file.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/vendors/nxp/mflash/mimxrt1062/mflash_file.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/vendors/nxp/ota/evkmimxrt1060/aws_ota_pal.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/vendors/nxp/secure_sockets/lwip/iot_secure_sockets.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/demos/demo_runner/aws_demo.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/demos/demo_runner/iot_demo_freertos.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/demos/include/aws_clientcredential.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/demos/include/aws_clientcredential_keys.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/demos/include/aws_demo.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/demos/include/aws_iot_demo_network.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/demos/include/aws_ota_codesigner_certificate.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/demos/include/aws_wifi_connect_task.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/demos/include/iot_ble_numericComparison.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/demos/include/iot_config_common.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/demos/include/iot_demo_logging.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/demos/include/iot_demo_runner.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/demos/network_manager/aws_iot_demo_network.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/demos/network_manager/aws_iot_network_manager.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/demos/network_manager/iot_network_manager_private.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/demos/include/aws_application_version.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/demos/ota/aws_iot_ota_update_demo.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/freertos_plus/aws/ota/README.md"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/freertos_plus/aws/ota/include/aws_iot_ota_agent.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/freertos_plus/aws/ota/include/aws_ota_agent.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/freertos_plus/aws/ota/include/aws_ota_types.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/freertos_plus/aws/ota/src/aws_iot_ota_agent.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/freertos_plus/aws/ota/src/aws_ota_agent_internal.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/freertos_plus/aws/ota/src/aws_ota_cbor.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/freertos_plus/aws/ota/src/aws_ota_cbor.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/freertos_plus/aws/ota/src/aws_ota_cbor_internal.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/freertos_plus/aws/ota/src/aws_ota_pal.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/demos/dev_mode_key_provisioning/include/aws_dev_mode_key_provisioning.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/demos/dev_mode_key_provisioning/src/aws_dev_mode_key_provisioning.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/3rdparty/mbedtls/utils/mbedtls_utils.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/event_groups.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include/FreeRTOS.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include/atomic.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include/deprecated_definitions.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include/event_groups.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include/list.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include/message_buffer.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include/mpu_prototypes.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include/mpu_wrappers.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include/portable.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include/projdefs.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include/queue.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include/semphr.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include/stack_macros.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include/stream_buffer.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include/task.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include/timers.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/list.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/portable/GCC/ARM_CM4F/port.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/portable/GCC/ARM_CM4F/portmacro.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/portable/MemMang/ReadMe.url"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/queue.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/stream_buffer.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/tasks.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/timers.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/portable/MemMang/heap_4.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/abstractions/platform/freertos/include/platform/iot_network_ble.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/abstractions/platform/freertos/include/platform/iot_network_freertos.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/abstractions/platform/freertos/include/platform/iot_platform_types_freertos.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/abstractions/platform/freertos/iot_clock_freertos.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/abstractions/platform/freertos/iot_metrics.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/abstractions/platform/freertos/iot_network_freertos.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/abstractions/platform/freertos/iot_threads_freertos.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/abstractions/platform/include/platform/iot_clock.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/abstractions/platform/include/platform/iot_metrics.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/abstractions/platform/include/platform/iot_network.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/abstractions/platform/include/platform/iot_threads.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/abstractions/platform/include/types/iot_platform_types.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/aws/shadow/include/aws_iot_shadow.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/aws/shadow/include/aws_shadow.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/aws/shadow/include/types/aws_iot_shadow_types.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/aws/shadow/src/aws_iot_shadow_api.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/aws/shadow/src/aws_iot_shadow_operation.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/aws/shadow/src/aws_iot_shadow_parser.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/aws/shadow/src/aws_iot_shadow_static_memory.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/aws/shadow/src/aws_iot_shadow_subscription.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/aws/shadow/src/aws_shadow.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/aws/shadow/src/aws_shadow_config_defaults.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/aws/shadow/src/private/aws_iot_shadow_internal.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include/iot_appversion32.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include/iot_atomic.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include/iot_init.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include/iot_linear_containers.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include/iot_logging_setup.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include/iot_logging_task.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include/iot_taskpool.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include/private/iot_default_root_certificates.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include/private/iot_doubly_linked_list.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include/private/iot_error.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include/private/iot_lib_init.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include/private/iot_logging.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include/private/iot_static_memory.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include/private/iot_taskpool_internal.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include/types/iot_network_types.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/include/types/iot_taskpool_types.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/iot_device_metrics.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/iot_init.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/iot_static_memory_common.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/logging/iot_logging.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/logging/iot_logging_task_dynamic_buffers.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/taskpool/iot_taskpool.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/common/taskpool/iot_taskpool_static_memory.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/include/iot_mqtt.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/include/iot_mqtt_agent.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/include/iot_mqtt_agent_config_defaults.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/include/iot_mqtt_config_defaults.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/include/iot_mqtt_lib.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/include/types/iot_mqtt_types.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/src/iot_mqtt_agent.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/src/iot_mqtt_api.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/src/iot_mqtt_network.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/src/iot_mqtt_operation.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/src/iot_mqtt_serialize.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/src/iot_mqtt_static_memory.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/src/iot_mqtt_subscription.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/src/iot_mqtt_validate.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/mqtt/src/private/iot_mqtt_internal.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/serializer/include/iot_json_utils.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/serializer/include/iot_serializer.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/serializer/src/iot_json_utils.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/serializer/src/iot_serializer_static_memory.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/serializer/src/json/iot_serializer_json_decoder.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/c_sdk/standard/serializer/src/json/iot_serializer_json_encoder.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/abstractions/secure_sockets/include/iot_secure_sockets.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/abstractions/secure_sockets/include/iot_secure_sockets_config_defaults.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/abstractions/secure_sockets/include/iot_secure_sockets_wrapper_metrics.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/freertos_plus/standard/crypto/include/iot_crypto.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/freertos_plus/standard/crypto/src/iot_crypto.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/freertos_plus/standard/pkcs11/include/iot_pkcs11.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/freertos_plus/standard/pkcs11/src/iot_pkcs11.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/freertos_plus/standard/utils/include/iot_pki_utils.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/freertos_plus/standard/utils/include/iot_system_init.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/freertos_plus/standard/utils/src/iot_pki_utils.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/freertos_plus/standard/utils/src/iot_system_init.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/freertos_plus/standard/tls/include/iot_tls.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/freertos_plus/standard/tls/src/iot_tls.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/abstractions/pkcs11/include/iot_pkcs11_pal.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/abstractions/pkcs11/mbedtls/iot_pkcs11_mbedtls.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/abstractions/pkcs11/mbedtls/threading_alt.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/3rdparty/pkcs11/pkcs11.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/3rdparty/pkcs11/pkcs11f.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/3rdparty/pkcs11/pkcs11t.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/3rdparty/jsmn/jsmn.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/3rdparty/jsmn/jsmn.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/vendors/nxp/pkcs11/common/iot_pkcs11_pal.c"
+"${ProjDirPath}/../../../../../middleware/lwip/port/enet_ethernetif_priv.h"
+"${ProjDirPath}/../../../../../middleware/mflash/mimxrt1062/mflash_drv.c"
+"${ProjDirPath}/../../../../../middleware/mflash/mimxrt1062/mflash_drv.h"
+"${ProjDirPath}/../../../../../middleware/mflash/mimxrt1062/mflash_file.c"
+"${ProjDirPath}/../../../../../middleware/mflash/mimxrt1062/mflash_file.h"
+"${ProjDirPath}/../../../../../rtos/freertos/vendors/nxp/ota/evkmimxrt1060/aws_ota_pal.c"
+"${ProjDirPath}/../../../../../rtos/freertos/vendors/nxp/secure_sockets/lwip/iot_secure_sockets.c"
+"${ProjDirPath}/../../../../../rtos/freertos/demos/demo_runner/aws_demo.c"
+"${ProjDirPath}/../../../../../rtos/freertos/demos/demo_runner/iot_demo_freertos.c"
+"${ProjDirPath}/../../../../../rtos/freertos/demos/include/aws_clientcredential.h"
+"${ProjDirPath}/../../../../../rtos/freertos/demos/include/aws_clientcredential_keys.h"
+"${ProjDirPath}/../../../../../rtos/freertos/demos/include/aws_demo.h"
+"${ProjDirPath}/../../../../../rtos/freertos/demos/include/aws_iot_demo_network.h"
+"${ProjDirPath}/../../../../../rtos/freertos/demos/include/aws_ota_codesigner_certificate.h"
+"${ProjDirPath}/../../../../../rtos/freertos/demos/include/aws_wifi_connect_task.h"
+"${ProjDirPath}/../../../../../rtos/freertos/demos/include/iot_ble_numericComparison.h"
+"${ProjDirPath}/../../../../../rtos/freertos/demos/include/iot_config_common.h"
+"${ProjDirPath}/../../../../../rtos/freertos/demos/include/iot_demo_logging.h"
+"${ProjDirPath}/../../../../../rtos/freertos/demos/include/iot_demo_runner.h"
+"${ProjDirPath}/../../../../../rtos/freertos/demos/network_manager/aws_iot_demo_network.c"
+"${ProjDirPath}/../../../../../rtos/freertos/demos/network_manager/aws_iot_network_manager.c"
+"${ProjDirPath}/../../../../../rtos/freertos/demos/network_manager/iot_network_manager_private.h"
+"${ProjDirPath}/../../../../../rtos/freertos/demos/include/aws_application_version.h"
+"${ProjDirPath}/../../../../../rtos/freertos/demos/ota/aws_iot_ota_update_demo.c"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/freertos_plus/aws/ota/README.md"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/freertos_plus/aws/ota/include/aws_iot_ota_agent.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/freertos_plus/aws/ota/include/aws_iot_ota_types.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/freertos_plus/aws/ota/src/aws_iot_ota_agent.c"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/freertos_plus/aws/ota/src/aws_iot_ota_agent_internal.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/freertos_plus/aws/ota/src/aws_iot_ota_interface.c"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/freertos_plus/aws/ota/src/aws_iot_ota_interface.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/freertos_plus/aws/ota/src/aws_iot_ota_pal.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/freertos_plus/aws/ota/src/http/aws_iot_ota_http.c"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/freertos_plus/aws/ota/src/http/aws_iot_ota_http.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/freertos_plus/aws/ota/src/mqtt/aws_iot_ota_cbor.c"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/freertos_plus/aws/ota/src/mqtt/aws_iot_ota_cbor.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/freertos_plus/aws/ota/src/mqtt/aws_iot_ota_cbor_internal.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/freertos_plus/aws/ota/src/mqtt/aws_iot_ota_mqtt.c"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/freertos_plus/aws/ota/src/mqtt/aws_iot_ota_mqtt.h"
+"${ProjDirPath}/../../../../../rtos/freertos/demos/dev_mode_key_provisioning/include/aws_dev_mode_key_provisioning.h"
+"${ProjDirPath}/../../../../../rtos/freertos/demos/dev_mode_key_provisioning/src/aws_dev_mode_key_provisioning.c"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/3rdparty/mbedtls/utils/mbedtls_utils.c"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/croutine.c"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/event_groups.c"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/include/FreeRTOS.h"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/include/atomic.h"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/include/croutine.h"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/include/deprecated_definitions.h"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/include/event_groups.h"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/include/list.h"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/include/message_buffer.h"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/include/mpu_prototypes.h"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/include/mpu_wrappers.h"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/include/portable.h"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/include/projdefs.h"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/include/queue.h"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/include/semphr.h"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/include/stack_macros.h"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/include/stream_buffer.h"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/include/task.h"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/include/timers.h"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/list.c"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F/port.c"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F/portmacro.h"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/portable/MemMang/ReadMe.url"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/queue.c"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/stream_buffer.c"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/tasks.c"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/timers.c"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/portable/MemMang/heap_4.c"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/abstractions/platform/freertos/include/platform/iot_network_ble.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/abstractions/platform/freertos/include/platform/iot_network_freertos.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/abstractions/platform/freertos/include/platform/iot_platform_types_freertos.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/abstractions/platform/freertos/iot_clock_freertos.c"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/abstractions/platform/freertos/iot_metrics.c"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/abstractions/platform/freertos/iot_network_freertos.c"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/abstractions/platform/freertos/iot_threads_freertos.c"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/abstractions/platform/include/platform/iot_clock.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/abstractions/platform/include/platform/iot_metrics.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/abstractions/platform/include/platform/iot_network.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/abstractions/platform/include/platform/iot_threads.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/abstractions/platform/include/types/iot_platform_types.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/aws/shadow/include/aws_iot_shadow.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/aws/shadow/include/aws_shadow.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/aws/shadow/include/types/aws_iot_shadow_types.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/aws/shadow/src/aws_iot_shadow_api.c"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/aws/shadow/src/aws_iot_shadow_operation.c"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/aws/shadow/src/aws_iot_shadow_parser.c"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/aws/shadow/src/aws_iot_shadow_static_memory.c"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/aws/shadow/src/aws_iot_shadow_subscription.c"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/aws/shadow/src/aws_shadow.c"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/aws/shadow/src/aws_shadow_config_defaults.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/aws/shadow/src/private/aws_iot_shadow_internal.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/iot_appversion32.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/iot_atomic.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/iot_init.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/iot_linear_containers.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/iot_logging_setup.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/iot_logging_task.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/iot_taskpool.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/private/iot_default_root_certificates.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/private/iot_doubly_linked_list.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/private/iot_error.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/private/iot_lib_init.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/private/iot_logging.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/private/iot_static_memory.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/private/iot_taskpool_internal.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/types/iot_network_types.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/types/iot_taskpool_types.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/common/iot_device_metrics.c"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/common/iot_init.c"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/common/iot_static_memory_common.c"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/common/logging/iot_logging.c"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/common/logging/iot_logging_task_dynamic_buffers.c"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/common/taskpool/iot_taskpool.c"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/common/taskpool/iot_taskpool_static_memory.c"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/include/iot_mqtt.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/include/iot_mqtt_agent.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/include/iot_mqtt_agent_config_defaults.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/include/iot_mqtt_config_defaults.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/include/iot_mqtt_lib.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/include/types/iot_mqtt_types.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/src/iot_mqtt_agent.c"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/src/iot_mqtt_api.c"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/src/iot_mqtt_network.c"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/src/iot_mqtt_operation.c"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/src/iot_mqtt_serialize.c"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/src/iot_mqtt_static_memory.c"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/src/iot_mqtt_subscription.c"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/src/iot_mqtt_validate.c"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/src/private/iot_mqtt_internal.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/serializer/include/iot_json_utils.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/serializer/include/iot_serializer.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/serializer/src/iot_json_utils.c"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/serializer/src/iot_serializer_static_memory.c"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/serializer/src/json/iot_serializer_json_decoder.c"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/serializer/src/json/iot_serializer_json_encoder.c"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/abstractions/secure_sockets/include/iot_secure_sockets.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/abstractions/secure_sockets/include/iot_secure_sockets_config_defaults.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/abstractions/secure_sockets/include/iot_secure_sockets_wrapper_metrics.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/freertos_plus/standard/crypto/include/iot_crypto.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/freertos_plus/standard/crypto/src/iot_crypto.c"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/freertos_plus/standard/pkcs11/include/iot_pkcs11.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/freertos_plus/standard/pkcs11/src/iot_pkcs11.c"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/freertos_plus/standard/utils/include/iot_pki_utils.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/freertos_plus/standard/utils/include/iot_system_init.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/freertos_plus/standard/utils/src/iot_pki_utils.c"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/freertos_plus/standard/utils/src/iot_system_init.c"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/freertos_plus/standard/tls/include/iot_tls.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/freertos_plus/standard/tls/src/iot_tls.c"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/abstractions/pkcs11/include/iot_pkcs11_pal.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/abstractions/pkcs11/mbedtls/iot_pkcs11_mbedtls.c"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/abstractions/pkcs11/mbedtls/threading_alt.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/3rdparty/pkcs11/CONTRIBUTING.md"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/3rdparty/pkcs11/LICENSE.md"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/3rdparty/pkcs11/README.md"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/3rdparty/pkcs11/pkcs11.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/3rdparty/pkcs11/pkcs11f.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/3rdparty/pkcs11/pkcs11t.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/3rdparty/jsmn/jsmn.c"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/3rdparty/jsmn/jsmn.h"
+"${ProjDirPath}/../../../../../rtos/freertos/vendors/nxp/pkcs11/common/iot_pkcs11_pal.c"
 "${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/aes.h"
 "${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/aesni.h"
 "${ProjDirPath}/../../../../../middleware/mbedtls/include/mbedtls/arc4.h"
@@ -1059,11 +1091,6 @@ add_executable(ota_demo_enet.elf
 "${ProjDirPath}/../../../../../devices/MIMXRT1062/MIMXRT1062.h"
 "${ProjDirPath}/../../../../../devices/MIMXRT1062/MIMXRT1062_features.h"
 "${ProjDirPath}/../../../../../devices/MIMXRT1062/fsl_device_registers.h"
-"${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console.c"
-"${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console.h"
-"${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console_conf.h"
-"${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c"
-"${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h"
 "${ProjDirPath}/../../../../../components/uart/lpuart_adapter.c"
 "${ProjDirPath}/../../../../../components/uart/uart.h"
 "${ProjDirPath}/../../../../../components/serial_manager/serial_manager.c"
@@ -1082,9 +1109,9 @@ add_executable(ota_demo_enet.elf
 "${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities/fsl_assert.c"
 "${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers/fsl_gpio.c"
 "${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers/fsl_gpio.h"
-"${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers/fsl_enet.c"
-"${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers/fsl_enet.h"
+"${ProjDirPath}/../../../../../components/phy/fsl_mdio.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/core_cm7.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/mpu_armv7.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/cmsis_armcc.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/cmsis_armclang.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/cmsis_armclang_ltm.h"
@@ -1092,31 +1119,34 @@ add_executable(ota_demo_enet.elf
 "${ProjDirPath}/../../../../../CMSIS/Include/cmsis_gcc.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/cmsis_iccarm.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/cmsis_version.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/core_armv81mml.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/core_armv8mbl.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/core_armv8mml.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/mpu_armv7.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/mpu_armv8.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/arm_common_tables.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/arm_const_structs.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/arm_math.h"
-"${ProjDirPath}/../../../../../middleware/lwip/port/enet_ethernetif.c"
-"${ProjDirPath}/../../../../../middleware/lwip/port/enet_ethernetif.h"
-"${ProjDirPath}/../../../../../middleware/lwip/port/enet_ethernetif_priv.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/3rdparty/tinycbor/LICENSE"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/3rdparty/tinycbor/README.md"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/3rdparty/tinycbor/cbor.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/3rdparty/tinycbor/cborencoder.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/3rdparty/tinycbor/cborencoder_close_container_checked.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/3rdparty/tinycbor/cborerrorstrings.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/3rdparty/tinycbor/cborinternal_p.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/3rdparty/tinycbor/cborparser.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/3rdparty/tinycbor/cborparser_dup_string.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/3rdparty/tinycbor/cborvalidation.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/3rdparty/tinycbor/compilersupport_p.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/3rdparty/tinycbor/tinycbor-version.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/libraries/3rdparty/tinycbor/utf8_p.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include/freertos_tasks_c_additions.h"
+"${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers/fsl_enet.c"
+"${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers/fsl_enet.h"
+"${ProjDirPath}/../../../../../components/phy/fsl_phy.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/3rdparty/tinycbor/LICENSE"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/3rdparty/tinycbor/README.md"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/3rdparty/tinycbor/cbor.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/3rdparty/tinycbor/cborencoder.c"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/3rdparty/tinycbor/cborencoder_close_container_checked.c"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/3rdparty/tinycbor/cborerrorstrings.c"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/3rdparty/tinycbor/cborinternal_p.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/3rdparty/tinycbor/cborparser.c"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/3rdparty/tinycbor/cborparser_dup_string.c"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/3rdparty/tinycbor/cborvalidation.c"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/3rdparty/tinycbor/compilersupport_p.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/3rdparty/tinycbor/tinycbor-version.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/3rdparty/tinycbor/utf8_p.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/https/include/iot_https_client.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/https/include/iot_https_utils.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/https/include/types/iot_https_types.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/https/src/iot_https_client.c"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/https/src/iot_https_utils.c"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/c_sdk/standard/https/src/private/iot_https_internal.h"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/3rdparty/http_parser/http_parser.c"
+"${ProjDirPath}/../../../../../rtos/freertos/libraries/3rdparty/http_parser/http_parser.h"
+"${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel/include/freertos_tasks_c_additions.h"
 "${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities/fsl_sbrk.c"
 )
 

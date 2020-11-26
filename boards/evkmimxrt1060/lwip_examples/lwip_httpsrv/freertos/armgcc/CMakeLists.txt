@@ -382,7 +382,7 @@ include_directories(${ProjDirPath}/..)
 
 include_directories(${ProjDirPath}/../../../..)
 
-include_directories(${ProjDirPath}/../../../../../../rtos/amazon-freertos/freertos_kernel/portable/GCC/ARM_CM4F)
+include_directories(${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F)
 
 include_directories(${ProjDirPath}/..)
 
@@ -394,9 +394,11 @@ include_directories(${ProjDirPath}/../../../../../../CMSIS/Include)
 
 include_directories(${ProjDirPath}/../../../../../../devices)
 
-include_directories(${ProjDirPath}/../../../../../../rtos/amazon-freertos/freertos_kernel/include)
+include_directories(${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/include)
 
-include_directories(${ProjDirPath}/../../../../../../components/phyksz8081)
+include_directories(${ProjDirPath}/../../../../../../components/phy/mdio/enet)
+
+include_directories(${ProjDirPath}/../../../../../../components/phy/device/phyksz8081)
 
 include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT1062/drivers)
 
@@ -408,11 +410,11 @@ include_directories(${ProjDirPath}/../../../../../../middleware/lwip/src)
 
 include_directories(${ProjDirPath}/../../../../../../middleware/lwip/src/include)
 
-include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT1062)
-
 include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT1062/utilities/str)
 
 include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT1062/utilities/debug_console)
+
+include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT1062)
 
 include_directories(${ProjDirPath}/../../../../../../components/uart)
 
@@ -423,6 +425,8 @@ include_directories(${ProjDirPath}/../../../../../../components/lists)
 include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT1062/xip)
 
 include_directories(${ProjDirPath}/../../../../xip)
+
+include_directories(${ProjDirPath}/../../../../../../components/phy)
 
 include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT1062/utilities)
 
@@ -436,8 +440,12 @@ add_executable(lwip_httpsrv_freertos.elf
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../clock_config.c"
 "${ProjDirPath}/../clock_config.h"
-"${ProjDirPath}/../../../../../../components/phyksz8081/fsl_phy.c"
-"${ProjDirPath}/../../../../../../components/phyksz8081/fsl_phy.h"
+"${ProjDirPath}/../dcd.c"
+"${ProjDirPath}/../dcd.h"
+"${ProjDirPath}/../../../../../../components/phy/mdio/enet/fsl_enet_mdio.c"
+"${ProjDirPath}/../../../../../../components/phy/mdio/enet/fsl_enet_mdio.h"
+"${ProjDirPath}/../../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.c"
+"${ProjDirPath}/../../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1062/drivers/fsl_cache.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1062/drivers/fsl_cache.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv.c"
@@ -466,8 +474,12 @@ add_executable(lwip_httpsrv_freertos.elf
 "${ProjDirPath}/../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_ws_prv.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/apps/httpsrv/httpsrv_fs_data.c"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/apps/mdns/mdns.c"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/apps/mdns/mdns_domain.c"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/apps/mdns/mdns_out.c"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/apps/mdns.h"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/apps/mdns_domain.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/apps/mdns_opts.h"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/apps/mdns_out.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/apps/mdns_priv.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/port/arch/cc.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/port/arch/perf.h"
@@ -490,6 +502,7 @@ add_executable(lwip_httpsrv_freertos.elf
 "${ProjDirPath}/../../../../../../middleware/lwip/src/core/inet_chksum.c"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/core/init.c"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/core/ip.c"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/core/ipv4/acd.c"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/core/ipv4/autoip.c"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/core/ipv4/dhcp.c"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/core/ipv4/etharp.c"
@@ -524,6 +537,7 @@ add_executable(lwip_httpsrv_freertos.elf
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/compat/posix/netdb.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/compat/posix/sys/socket.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/compat/stdc/errno.h"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/acd.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/altcp.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/altcp_tcp.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/altcp_tls.h"
@@ -575,6 +589,7 @@ add_executable(lwip_httpsrv_freertos.elf
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/priv/sockets_priv.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/priv/tcp_priv.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/priv/tcpip_priv.h"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/prot/acd.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/prot/autoip.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/prot/dhcp.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/prot/dhcp6.h"
@@ -677,20 +692,23 @@ add_executable(lwip_httpsrv_freertos.elf
 "${ProjDirPath}/../../../../../../middleware/lwip/src/netif/ppp/vj.c"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/netif/slipif.c"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/netif/zepif.c"
-"${ProjDirPath}/../../../../../../middleware/lwip/port/enet_ethernetif_kinetis.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT1062/drivers/fsl_clock.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT1062/drivers/fsl_clock.h"
-"${ProjDirPath}/../../../../../../rtos/amazon-freertos/freertos_kernel/portable/MemMang/heap_3.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT1062/drivers/fsl_common.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT1062/drivers/fsl_common.h"
-"${ProjDirPath}/../../../../../../devices/MIMXRT1062/MIMXRT1062.h"
-"${ProjDirPath}/../../../../../../devices/MIMXRT1062/MIMXRT1062_features.h"
-"${ProjDirPath}/../../../../../../devices/MIMXRT1062/fsl_device_registers.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console_conf.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h"
+"${ProjDirPath}/../../../../../../middleware/lwip/port/enet_ethernetif.c"
+"${ProjDirPath}/../../../../../../middleware/lwip/port/enet_ethernetif.h"
+"${ProjDirPath}/../../../../../../middleware/lwip/port/enet_ethernetif_kinetis.c"
+"${ProjDirPath}/../../../../../../middleware/lwip/port/enet_ethernetif_priv.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT1062/drivers/fsl_clock.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT1062/drivers/fsl_clock.h"
+"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/portable/MemMang/heap_3.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT1062/drivers/fsl_common.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT1062/drivers/fsl_common.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT1062/MIMXRT1062.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT1062/MIMXRT1062_features.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT1062/fsl_device_registers.h"
 "${ProjDirPath}/../../../../../../components/uart/lpuart_adapter.c"
 "${ProjDirPath}/../../../../../../components/uart/uart.h"
 "${ProjDirPath}/../../../../../../components/serial_manager/serial_manager.c"
@@ -713,11 +731,9 @@ add_executable(lwip_httpsrv_freertos.elf
 "${ProjDirPath}/../../../../../../devices/MIMXRT1062/xip/fsl_flexspi_nor_boot.h"
 "${ProjDirPath}/../../../../xip/evkmimxrt1060_flexspi_nor_config.c"
 "${ProjDirPath}/../../../../xip/evkmimxrt1060_flexspi_nor_config.h"
-"${ProjDirPath}/../../../../xip/evkmimxrt1060_sdram_ini_dcd.c"
-"${ProjDirPath}/../../../../xip/evkmimxrt1060_sdram_ini_dcd.h"
-"${ProjDirPath}/../../../../../../devices/MIMXRT1062/drivers/fsl_enet.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT1062/drivers/fsl_enet.h"
+"${ProjDirPath}/../../../../../../components/phy/fsl_mdio.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/core_cm7.h"
+"${ProjDirPath}/../../../../../../CMSIS/Include/mpu_armv7.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_armcc.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_armclang.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_armclang_ltm.h"
@@ -725,43 +741,41 @@ add_executable(lwip_httpsrv_freertos.elf
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_gcc.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_iccarm.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_version.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/core_armv81mml.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/core_armv8mbl.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/core_armv8mml.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/mpu_armv7.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/mpu_armv8.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/arm_common_tables.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/arm_const_structs.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/arm_math.h"
-"${ProjDirPath}/../../../../../../middleware/lwip/port/enet_ethernetif.c"
-"${ProjDirPath}/../../../../../../middleware/lwip/port/enet_ethernetif.h"
-"${ProjDirPath}/../../../../../../middleware/lwip/port/enet_ethernetif_priv.h"
-"${ProjDirPath}/../../../../../../rtos/amazon-freertos/freertos_kernel/event_groups.c"
-"${ProjDirPath}/../../../../../../rtos/amazon-freertos/freertos_kernel/include/FreeRTOS.h"
-"${ProjDirPath}/../../../../../../rtos/amazon-freertos/freertos_kernel/include/atomic.h"
-"${ProjDirPath}/../../../../../../rtos/amazon-freertos/freertos_kernel/include/deprecated_definitions.h"
-"${ProjDirPath}/../../../../../../rtos/amazon-freertos/freertos_kernel/include/event_groups.h"
-"${ProjDirPath}/../../../../../../rtos/amazon-freertos/freertos_kernel/include/list.h"
-"${ProjDirPath}/../../../../../../rtos/amazon-freertos/freertos_kernel/include/message_buffer.h"
-"${ProjDirPath}/../../../../../../rtos/amazon-freertos/freertos_kernel/include/mpu_prototypes.h"
-"${ProjDirPath}/../../../../../../rtos/amazon-freertos/freertos_kernel/include/mpu_wrappers.h"
-"${ProjDirPath}/../../../../../../rtos/amazon-freertos/freertos_kernel/include/portable.h"
-"${ProjDirPath}/../../../../../../rtos/amazon-freertos/freertos_kernel/include/projdefs.h"
-"${ProjDirPath}/../../../../../../rtos/amazon-freertos/freertos_kernel/include/queue.h"
-"${ProjDirPath}/../../../../../../rtos/amazon-freertos/freertos_kernel/include/semphr.h"
-"${ProjDirPath}/../../../../../../rtos/amazon-freertos/freertos_kernel/include/stack_macros.h"
-"${ProjDirPath}/../../../../../../rtos/amazon-freertos/freertos_kernel/include/stream_buffer.h"
-"${ProjDirPath}/../../../../../../rtos/amazon-freertos/freertos_kernel/include/task.h"
-"${ProjDirPath}/../../../../../../rtos/amazon-freertos/freertos_kernel/include/timers.h"
-"${ProjDirPath}/../../../../../../rtos/amazon-freertos/freertos_kernel/list.c"
-"${ProjDirPath}/../../../../../../rtos/amazon-freertos/freertos_kernel/portable/GCC/ARM_CM4F/port.c"
-"${ProjDirPath}/../../../../../../rtos/amazon-freertos/freertos_kernel/portable/GCC/ARM_CM4F/portmacro.h"
-"${ProjDirPath}/../../../../../../rtos/amazon-freertos/freertos_kernel/portable/MemMang/ReadMe.url"
-"${ProjDirPath}/../../../../../../rtos/amazon-freertos/freertos_kernel/queue.c"
-"${ProjDirPath}/../../../../../../rtos/amazon-freertos/freertos_kernel/stream_buffer.c"
-"${ProjDirPath}/../../../../../../rtos/amazon-freertos/freertos_kernel/tasks.c"
-"${ProjDirPath}/../../../../../../rtos/amazon-freertos/freertos_kernel/timers.c"
-"${ProjDirPath}/../../../../../../rtos/amazon-freertos/freertos_kernel/include/freertos_tasks_c_additions.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT1062/drivers/fsl_enet.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT1062/drivers/fsl_enet.h"
+"${ProjDirPath}/../../../../../../components/phy/fsl_phy.h"
+"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/croutine.c"
+"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/event_groups.c"
+"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/include/FreeRTOS.h"
+"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h"
+"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/include/atomic.h"
+"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/include/croutine.h"
+"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/include/deprecated_definitions.h"
+"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/include/event_groups.h"
+"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/include/list.h"
+"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/include/message_buffer.h"
+"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/include/mpu_prototypes.h"
+"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/include/mpu_wrappers.h"
+"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/include/portable.h"
+"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/include/projdefs.h"
+"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/include/queue.h"
+"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/include/semphr.h"
+"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/include/stack_macros.h"
+"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/include/stream_buffer.h"
+"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/include/task.h"
+"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/include/timers.h"
+"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/list.c"
+"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F/port.c"
+"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F/portmacro.h"
+"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/portable/MemMang/ReadMe.url"
+"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/queue.c"
+"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/stream_buffer.c"
+"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/tasks.c"
+"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/timers.c"
+"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/include/freertos_tasks_c_additions.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT1062/utilities/fsl_sbrk.c"
 )
 

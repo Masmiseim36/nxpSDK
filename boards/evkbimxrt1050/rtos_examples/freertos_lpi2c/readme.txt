@@ -9,6 +9,7 @@ The LPI2C master sends data to LPI2C slave. The slave will check the data it rec
 Toolchain supported
 ===================
 - IAR embedded Workbench  8.50.1
+- Keil MDK  5.30
 - GCC ARM Embedded  9.2.1
 - MCUXpresso  11.2.0
 

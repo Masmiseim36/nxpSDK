@@ -328,9 +328,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, SKIP_SYSCLK_INIT, DEBUG, CPU_MIMXRT1052DVL6B, LV_CONF_INCLUDE_SIMPLE=1, SERIAL_PORT_TYPE_UART=1, FSL_RTOS_FREE_RTOS</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1052DVL6B, LV_CONF_INCLUDE_SIMPLE=1, SERIAL_PORT_TYPE_UART=1, FSL_RTOS_FREE_RTOS</Define>
               <Undefine/>
-              <IncludePath>../../../../../rtos/amazon-freertos/freertos_kernel/portable/GCC/ARM_CM4F;..;../..;../../..;../../../../../middleware/littlevgl;../../../../../CMSIS/Include;../../../../../devices;../../../../../rtos/amazon-freertos/freertos_kernel/include;../../../../../devices/MIMXRT1052/drivers;../../../../../devices/MIMXRT1052/drivers;../../../../../components/ft5406_rt;../../../../../devices/MIMXRT1052/drivers;../../../../../devices/MIMXRT1052/drivers;../../../../../devices/MIMXRT1052;../../../../../devices/MIMXRT1052/utilities/str;../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../components/serial_manager;../../../../../devices/MIMXRT1052/drivers;../../../../../devices/MIMXRT1052/drivers;../../../../../devices/MIMXRT1052/drivers;../../../../../devices/MIMXRT1052/xip;../../../xip;../../../xip;../../../../../devices/MIMXRT1052/utilities</IncludePath>
+              <IncludePath>../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;..;../..;../../..;../../../../../middleware/littlevgl;../../../../../CMSIS/Include;../../../../../devices;../../../../../rtos/freertos/freertos_kernel/include;../../../../../devices/MIMXRT1052/drivers;../../../../../components/ft5406_rt;../../../../../middleware/littlevgl/lvgl;../../../../../devices/MIMXRT1052;../../../../../devices/MIMXRT1052/utilities/str;../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1052/xip;../../../xip;../../../../../devices/MIMXRT1052/utilities</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -364,7 +364,7 @@
             <ScatterFile>MIMXRT1052xxxxx_flexspi_nor_sdram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --keep=*(.boot_hdr.ivt) --keep=*(.boot_hdr.boot_data) --keep=*(.boot_hdr.dcd_data) --keep=*(.boot_hdr.conf) --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
+            <Misc>--remove --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -440,25 +440,35 @@
               <FileType>1</FileType>
               <FilePath>../../littlevgl_support.c</FilePath>
             </File>
+            <File>
+              <FileName>dcd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../dcd.c</FilePath>
+            </File>
+            <File>
+              <FileName>dcd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../dcd.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>littlevgl-lv_examples/demo</GroupName>
+          <GroupName>littlevgl-lv_examples-lv_apps-demo</GroupName>
           <Files>
             <File>
               <FileName>demo.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_examples/demo/demo.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lv_examples/lv_apps/demo/demo.c</FilePath>
             </File>
             <File>
               <FileName>demo.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_examples/demo/demo.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lv_examples/lv_apps/demo/demo.h</FilePath>
             </File>
             <File>
               <FileName>img_bubble_pattern.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_examples/demo/img_bubble_pattern.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lv_examples/lv_apps/demo/img_bubble_pattern.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -494,6 +504,16 @@
               <FileName>fsl_lpi2c.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_lpi2c.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_pxp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_pxp.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_pxp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_pxp.h</FilePath>
             </File>
             <File>
               <FileName>fsl_common.c</FileName>
@@ -558,927 +578,937 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-freertos_kernel-portable-MemMang</GroupName>
+          <GroupName>freertos-freertos_kernel-portable-MemMang</GroupName>
           <Files>
             <File>
               <FileName>heap_4.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/portable/MemMang/heap_4.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/MemMang/heap_4.c</FilePath>
             </File>
             <File>
               <FileName>ReadMe.url</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/portable/MemMang/ReadMe.url</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/MemMang/ReadMe.url</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>littlevgl</GroupName>
+          <GroupName>littlevgl-lvgl</GroupName>
+          <Files>
+            <File>
+              <FileName>lvgl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/lvgl.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>littlevgl-lvgl-src</GroupName>
           <Files>
             <File>
               <FileName>lv_conf_checker.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_conf_checker.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_conf_checker.h</FilePath>
             </File>
             <File>
               <FileName>lv_version.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>lvgl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lvgl.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_version.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>littlevgl-lv_core</GroupName>
+          <GroupName>littlevgl-lvgl-src-lv_core</GroupName>
           <Files>
+            <File>
+              <FileName>lv_debug.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_core/lv_debug.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_debug.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_core/lv_debug.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_disp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_core/lv_disp.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_disp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_core/lv_disp.h</FilePath>
+            </File>
             <File>
               <FileName>lv_group.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_core/lv_group.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_core/lv_group.c</FilePath>
             </File>
             <File>
               <FileName>lv_group.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_core/lv_group.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_core/lv_group.h</FilePath>
             </File>
             <File>
               <FileName>lv_indev.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_core/lv_indev.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_core/lv_indev.c</FilePath>
             </File>
             <File>
               <FileName>lv_indev.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_core/lv_indev.h</FilePath>
-            </File>
-            <File>
-              <FileName>lv_lang.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_core/lv_lang.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_lang.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_core/lv_lang.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_core/lv_indev.h</FilePath>
             </File>
             <File>
               <FileName>lv_obj.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_core/lv_obj.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_core/lv_obj.c</FilePath>
             </File>
             <File>
               <FileName>lv_obj.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_core/lv_obj.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_core/lv_obj.h</FilePath>
             </File>
             <File>
               <FileName>lv_refr.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_core/lv_refr.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_core/lv_refr.c</FilePath>
             </File>
             <File>
               <FileName>lv_refr.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_core/lv_refr.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_core/lv_refr.h</FilePath>
             </File>
             <File>
               <FileName>lv_style.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_core/lv_style.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_core/lv_style.c</FilePath>
             </File>
             <File>
               <FileName>lv_style.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_core/lv_style.h</FilePath>
-            </File>
-            <File>
-              <FileName>lv_vdb.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_core/lv_vdb.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_vdb.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_core/lv_vdb.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_core/lv_style.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>littlevgl-lv_draw</GroupName>
+          <GroupName>littlevgl-lvgl-src-lv_draw</GroupName>
           <Files>
             <File>
               <FileName>lv_draw.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_draw/lv_draw.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_draw/lv_draw.c</FilePath>
             </File>
             <File>
               <FileName>lv_draw.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_draw/lv_draw.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_draw/lv_draw.h</FilePath>
             </File>
             <File>
               <FileName>lv_draw_arc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_draw/lv_draw_arc.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_draw/lv_draw_arc.c</FilePath>
             </File>
             <File>
               <FileName>lv_draw_arc.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_draw/lv_draw_arc.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_draw/lv_draw_arc.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_basic.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_draw/lv_draw_basic.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_basic.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_draw/lv_draw_basic.h</FilePath>
             </File>
             <File>
               <FileName>lv_draw_img.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_draw/lv_draw_img.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_draw/lv_draw_img.c</FilePath>
             </File>
             <File>
               <FileName>lv_draw_img.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_draw/lv_draw_img.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_draw/lv_draw_img.h</FilePath>
             </File>
             <File>
               <FileName>lv_draw_label.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_draw/lv_draw_label.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_draw/lv_draw_label.c</FilePath>
             </File>
             <File>
               <FileName>lv_draw_label.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_draw/lv_draw_label.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_draw/lv_draw_label.h</FilePath>
             </File>
             <File>
               <FileName>lv_draw_line.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_draw/lv_draw_line.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_draw/lv_draw_line.c</FilePath>
             </File>
             <File>
               <FileName>lv_draw_line.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_draw/lv_draw_line.h</FilePath>
-            </File>
-            <File>
-              <FileName>lv_draw_rbasic.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_draw/lv_draw_rbasic.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_draw_rbasic.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_draw/lv_draw_rbasic.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_draw/lv_draw_line.h</FilePath>
             </File>
             <File>
               <FileName>lv_draw_rect.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_draw/lv_draw_rect.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_draw/lv_draw_rect.c</FilePath>
             </File>
             <File>
               <FileName>lv_draw_rect.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_draw/lv_draw_rect.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_draw/lv_draw_rect.h</FilePath>
             </File>
             <File>
               <FileName>lv_draw_triangle.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_draw/lv_draw_triangle.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_draw/lv_draw_triangle.c</FilePath>
             </File>
             <File>
               <FileName>lv_draw_triangle.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_draw/lv_draw_triangle.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_draw/lv_draw_triangle.h</FilePath>
             </File>
             <File>
-              <FileName>lv_draw_vbasic.c</FileName>
+              <FileName>lv_img_cache.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_draw/lv_draw_vbasic.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_draw/lv_img_cache.c</FilePath>
             </File>
             <File>
-              <FileName>lv_draw_vbasic.h</FileName>
+              <FileName>lv_img_cache.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_draw/lv_draw_vbasic.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_draw/lv_img_cache.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_img_decoder.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_draw/lv_img_decoder.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_img_decoder.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_draw/lv_img_decoder.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>littlevgl-lv_fonts</GroupName>
+          <GroupName>littlevgl-lvgl-src-lv_font</GroupName>
           <Files>
-            <File>
-              <FileName>lv_font_builtin.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_fonts/lv_font_builtin.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_font_builtin.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_fonts/lv_font_builtin.h</FilePath>
-            </File>
-            <File>
-              <FileName>lv_font_dejavu_10.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_fonts/lv_font_dejavu_10.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_font_dejavu_10_cyrillic.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_fonts/lv_font_dejavu_10_cyrillic.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_font_dejavu_10_latin_sup.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_fonts/lv_font_dejavu_10_latin_sup.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_font_dejavu_20.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_fonts/lv_font_dejavu_20.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_font_dejavu_20_cyrillic.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_fonts/lv_font_dejavu_20_cyrillic.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_font_dejavu_20_latin_sup.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_fonts/lv_font_dejavu_20_latin_sup.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_font_dejavu_30.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_fonts/lv_font_dejavu_30.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_font_dejavu_30_cyrillic.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_fonts/lv_font_dejavu_30_cyrillic.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_font_dejavu_30_latin_sup.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_fonts/lv_font_dejavu_30_latin_sup.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_font_dejavu_40.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_fonts/lv_font_dejavu_40.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_font_dejavu_40_cyrillic.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_fonts/lv_font_dejavu_40_cyrillic.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_font_dejavu_40_latin_sup.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_fonts/lv_font_dejavu_40_latin_sup.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_font_monospace_8.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_fonts/lv_font_monospace_8.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_font_symbol_10.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_fonts/lv_font_symbol_10.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_font_symbol_20.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_fonts/lv_font_symbol_20.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_font_symbol_30.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_fonts/lv_font_symbol_30.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_font_symbol_40.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_fonts/lv_font_symbol_40.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>littlevgl-lv_hal</GroupName>
-          <Files>
-            <File>
-              <FileName>lv_hal.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_hal/lv_hal.h</FilePath>
-            </File>
-            <File>
-              <FileName>lv_hal_disp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_hal/lv_hal_disp.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_hal_disp.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_hal/lv_hal_disp.h</FilePath>
-            </File>
-            <File>
-              <FileName>lv_hal_indev.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_hal/lv_hal_indev.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_hal_indev.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_hal/lv_hal_indev.h</FilePath>
-            </File>
-            <File>
-              <FileName>lv_hal_tick.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_hal/lv_hal_tick.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_hal_tick.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_hal/lv_hal_tick.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>littlevgl-lv_misc</GroupName>
-          <Files>
-            <File>
-              <FileName>lv_anim.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_misc/lv_anim.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_anim.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_misc/lv_anim.h</FilePath>
-            </File>
-            <File>
-              <FileName>lv_area.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_misc/lv_area.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_area.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_misc/lv_area.h</FilePath>
-            </File>
-            <File>
-              <FileName>lv_circ.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_misc/lv_circ.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_circ.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_misc/lv_circ.h</FilePath>
-            </File>
-            <File>
-              <FileName>lv_color.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_misc/lv_color.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_color.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_misc/lv_color.h</FilePath>
-            </File>
             <File>
               <FileName>lv_font.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_misc/lv_font.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_font/lv_font.c</FilePath>
             </File>
             <File>
               <FileName>lv_font.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_misc/lv_font.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_font/lv_font.h</FilePath>
             </File>
             <File>
-              <FileName>lv_fs.c</FileName>
+              <FileName>lv_font_fmt_txt.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_misc/lv_fs.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_font/lv_font_fmt_txt.c</FilePath>
             </File>
             <File>
-              <FileName>lv_fs.h</FileName>
+              <FileName>lv_font_fmt_txt.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_misc/lv_fs.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_font/lv_font_fmt_txt.h</FilePath>
             </File>
             <File>
-              <FileName>lv_gc.c</FileName>
+              <FileName>lv_font_roboto_12.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_misc/lv_gc.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_font/lv_font_roboto_12.c</FilePath>
             </File>
             <File>
-              <FileName>lv_gc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_misc/lv_gc.h</FilePath>
-            </File>
-            <File>
-              <FileName>lv_ll.c</FileName>
+              <FileName>lv_font_roboto_12_subpx.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_misc/lv_ll.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_font/lv_font_roboto_12_subpx.c</FilePath>
             </File>
             <File>
-              <FileName>lv_ll.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_misc/lv_ll.h</FilePath>
-            </File>
-            <File>
-              <FileName>lv_log.c</FileName>
+              <FileName>lv_font_roboto_16.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_misc/lv_log.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_font/lv_font_roboto_16.c</FilePath>
             </File>
             <File>
-              <FileName>lv_log.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_misc/lv_log.h</FilePath>
-            </File>
-            <File>
-              <FileName>lv_math.c</FileName>
+              <FileName>lv_font_roboto_22.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_misc/lv_math.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_font/lv_font_roboto_22.c</FilePath>
             </File>
             <File>
-              <FileName>lv_math.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_misc/lv_math.h</FilePath>
-            </File>
-            <File>
-              <FileName>lv_mem.c</FileName>
+              <FileName>lv_font_roboto_28.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_misc/lv_mem.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_font/lv_font_roboto_28.c</FilePath>
             </File>
             <File>
-              <FileName>lv_mem.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_misc/lv_mem.h</FilePath>
+              <FileName>lv_font_roboto_28_compressed.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_font/lv_font_roboto_28_compressed.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_font_unscii_8.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_font/lv_font_unscii_8.c</FilePath>
             </File>
             <File>
               <FileName>lv_symbol_def.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_misc/lv_symbol_def.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_font/lv_symbol_def.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>littlevgl-lvgl-src-lv_hal</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_hal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_hal/lv_hal.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_hal_disp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_hal/lv_hal_disp.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_hal_disp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_hal/lv_hal_disp.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_hal_indev.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_hal/lv_hal_indev.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_hal_indev.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_hal/lv_hal_indev.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_hal_tick.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_hal/lv_hal_tick.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_hal_tick.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_hal/lv_hal_tick.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>littlevgl-lvgl-src-lv_misc</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_anim.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_misc/lv_anim.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_anim.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_misc/lv_anim.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_area.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_misc/lv_area.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_area.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_misc/lv_area.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_async.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_misc/lv_async.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_async.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_misc/lv_async.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_bidi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_misc/lv_bidi.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_bidi.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_misc/lv_bidi.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_circ.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_misc/lv_circ.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_circ.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_misc/lv_circ.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_color.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_misc/lv_color.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_color.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_misc/lv_color.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_fs.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_misc/lv_fs.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_fs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_misc/lv_fs.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_gc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_misc/lv_gc.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_gc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_misc/lv_gc.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_ll.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_misc/lv_ll.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_ll.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_misc/lv_ll.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_log.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_misc/lv_log.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_log.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_misc/lv_log.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_math.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_misc/lv_math.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_math.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_misc/lv_math.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_mem.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_misc/lv_mem.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_mem.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_misc/lv_mem.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_printf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_misc/lv_printf.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_printf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_misc/lv_printf.h</FilePath>
             </File>
             <File>
               <FileName>lv_task.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_misc/lv_task.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_misc/lv_task.c</FilePath>
             </File>
             <File>
               <FileName>lv_task.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_misc/lv_task.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_misc/lv_task.h</FilePath>
             </File>
             <File>
               <FileName>lv_templ.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_misc/lv_templ.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_misc/lv_templ.c</FilePath>
             </File>
             <File>
               <FileName>lv_templ.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_misc/lv_templ.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_misc/lv_templ.h</FilePath>
             </File>
             <File>
               <FileName>lv_txt.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_misc/lv_txt.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_misc/lv_txt.c</FilePath>
             </File>
             <File>
               <FileName>lv_txt.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_misc/lv_txt.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_misc/lv_txt.h</FilePath>
             </File>
             <File>
-              <FileName>lv_ufs.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_misc/lv_ufs.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_ufs.h</FileName>
+              <FileName>lv_types.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_misc/lv_ufs.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_misc/lv_types.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_utils.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_misc/lv_utils.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_utils.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_misc/lv_utils.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>littlevgl-lv_objx</GroupName>
+          <GroupName>littlevgl-lvgl-src-lv_objx</GroupName>
           <Files>
             <File>
               <FileName>lv_arc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_arc.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_arc.c</FilePath>
             </File>
             <File>
               <FileName>lv_arc.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_arc.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_arc.h</FilePath>
             </File>
             <File>
               <FileName>lv_bar.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_bar.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_bar.c</FilePath>
             </File>
             <File>
               <FileName>lv_bar.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_bar.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_bar.h</FilePath>
             </File>
             <File>
               <FileName>lv_btn.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_btn.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_btn.c</FilePath>
             </File>
             <File>
               <FileName>lv_btn.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_btn.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_btn.h</FilePath>
             </File>
             <File>
               <FileName>lv_btnm.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_btnm.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_btnm.c</FilePath>
             </File>
             <File>
               <FileName>lv_btnm.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_btnm.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_btnm.h</FilePath>
             </File>
             <File>
               <FileName>lv_calendar.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_calendar.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_calendar.c</FilePath>
             </File>
             <File>
               <FileName>lv_calendar.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_calendar.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_calendar.h</FilePath>
             </File>
             <File>
               <FileName>lv_canvas.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_canvas.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_canvas.c</FilePath>
             </File>
             <File>
               <FileName>lv_canvas.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_canvas.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_canvas.h</FilePath>
             </File>
             <File>
               <FileName>lv_cb.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_cb.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_cb.c</FilePath>
             </File>
             <File>
               <FileName>lv_cb.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_cb.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_cb.h</FilePath>
             </File>
             <File>
               <FileName>lv_chart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_chart.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_chart.c</FilePath>
             </File>
             <File>
               <FileName>lv_chart.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_chart.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_chart.h</FilePath>
             </File>
             <File>
               <FileName>lv_cont.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_cont.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_cont.c</FilePath>
             </File>
             <File>
               <FileName>lv_cont.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_cont.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_cont.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_cpicker.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_cpicker.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_cpicker.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_cpicker.h</FilePath>
             </File>
             <File>
               <FileName>lv_ddlist.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_ddlist.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_ddlist.c</FilePath>
             </File>
             <File>
               <FileName>lv_ddlist.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_ddlist.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_ddlist.h</FilePath>
             </File>
             <File>
               <FileName>lv_gauge.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_gauge.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_gauge.c</FilePath>
             </File>
             <File>
               <FileName>lv_gauge.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_gauge.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_gauge.h</FilePath>
             </File>
             <File>
               <FileName>lv_img.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_img.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_img.c</FilePath>
             </File>
             <File>
               <FileName>lv_img.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_img.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_img.h</FilePath>
             </File>
             <File>
               <FileName>lv_imgbtn.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_imgbtn.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_imgbtn.c</FilePath>
             </File>
             <File>
               <FileName>lv_imgbtn.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_imgbtn.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_imgbtn.h</FilePath>
             </File>
             <File>
               <FileName>lv_kb.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_kb.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_kb.c</FilePath>
             </File>
             <File>
               <FileName>lv_kb.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_kb.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_kb.h</FilePath>
             </File>
             <File>
               <FileName>lv_label.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_label.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_label.c</FilePath>
             </File>
             <File>
               <FileName>lv_label.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_label.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_label.h</FilePath>
             </File>
             <File>
               <FileName>lv_led.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_led.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_led.c</FilePath>
             </File>
             <File>
               <FileName>lv_led.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_led.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_led.h</FilePath>
             </File>
             <File>
               <FileName>lv_line.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_line.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_line.c</FilePath>
             </File>
             <File>
               <FileName>lv_line.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_line.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_line.h</FilePath>
             </File>
             <File>
               <FileName>lv_list.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_list.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_list.c</FilePath>
             </File>
             <File>
               <FileName>lv_list.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_list.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_list.h</FilePath>
             </File>
             <File>
               <FileName>lv_lmeter.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_lmeter.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_lmeter.c</FilePath>
             </File>
             <File>
               <FileName>lv_lmeter.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_lmeter.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_lmeter.h</FilePath>
             </File>
             <File>
               <FileName>lv_mbox.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_mbox.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_mbox.c</FilePath>
             </File>
             <File>
               <FileName>lv_mbox.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_mbox.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_mbox.h</FilePath>
             </File>
             <File>
               <FileName>lv_objx_templ.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_objx_templ.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_objx_templ.c</FilePath>
             </File>
             <File>
               <FileName>lv_objx_templ.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_objx_templ.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_objx_templ.h</FilePath>
             </File>
             <File>
               <FileName>lv_page.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_page.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_page.c</FilePath>
             </File>
             <File>
               <FileName>lv_page.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_page.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_page.h</FilePath>
             </File>
             <File>
               <FileName>lv_preload.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_preload.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_preload.c</FilePath>
             </File>
             <File>
               <FileName>lv_preload.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_preload.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_preload.h</FilePath>
             </File>
             <File>
               <FileName>lv_roller.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_roller.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_roller.c</FilePath>
             </File>
             <File>
               <FileName>lv_roller.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_roller.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_roller.h</FilePath>
             </File>
             <File>
               <FileName>lv_slider.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_slider.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_slider.c</FilePath>
             </File>
             <File>
               <FileName>lv_slider.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_slider.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_slider.h</FilePath>
             </File>
             <File>
               <FileName>lv_spinbox.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_spinbox.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_spinbox.c</FilePath>
             </File>
             <File>
               <FileName>lv_spinbox.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_spinbox.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_spinbox.h</FilePath>
             </File>
             <File>
               <FileName>lv_sw.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_sw.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_sw.c</FilePath>
             </File>
             <File>
               <FileName>lv_sw.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_sw.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_sw.h</FilePath>
             </File>
             <File>
               <FileName>lv_ta.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_ta.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_ta.c</FilePath>
             </File>
             <File>
               <FileName>lv_ta.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_ta.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_ta.h</FilePath>
             </File>
             <File>
               <FileName>lv_table.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_table.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_table.c</FilePath>
             </File>
             <File>
               <FileName>lv_table.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_table.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_table.h</FilePath>
             </File>
             <File>
               <FileName>lv_tabview.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_tabview.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_tabview.c</FilePath>
             </File>
             <File>
               <FileName>lv_tabview.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_tabview.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_tabview.h</FilePath>
             </File>
             <File>
               <FileName>lv_tileview.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_tileview.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_tileview.c</FilePath>
             </File>
             <File>
               <FileName>lv_tileview.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_tileview.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_tileview.h</FilePath>
             </File>
             <File>
               <FileName>lv_win.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_win.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_win.c</FilePath>
             </File>
             <File>
               <FileName>lv_win.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_win.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_win.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>littlevgl-lv_themes</GroupName>
+          <GroupName>littlevgl-lvgl-src-lv_themes</GroupName>
           <Files>
             <File>
               <FileName>lv_theme.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_themes/lv_theme.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_themes/lv_theme.c</FilePath>
             </File>
             <File>
               <FileName>lv_theme.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_themes/lv_theme.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_themes/lv_theme.h</FilePath>
             </File>
             <File>
               <FileName>lv_theme_alien.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_themes/lv_theme_alien.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_themes/lv_theme_alien.c</FilePath>
             </File>
             <File>
               <FileName>lv_theme_alien.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_themes/lv_theme_alien.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_themes/lv_theme_alien.h</FilePath>
             </File>
             <File>
               <FileName>lv_theme_default.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_themes/lv_theme_default.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_themes/lv_theme_default.c</FilePath>
             </File>
             <File>
               <FileName>lv_theme_default.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_themes/lv_theme_default.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_themes/lv_theme_default.h</FilePath>
             </File>
             <File>
               <FileName>lv_theme_material.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_themes/lv_theme_material.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_themes/lv_theme_material.c</FilePath>
             </File>
             <File>
               <FileName>lv_theme_material.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_themes/lv_theme_material.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_themes/lv_theme_material.h</FilePath>
             </File>
             <File>
               <FileName>lv_theme_mono.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_themes/lv_theme_mono.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_themes/lv_theme_mono.c</FilePath>
             </File>
             <File>
               <FileName>lv_theme_mono.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_themes/lv_theme_mono.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_themes/lv_theme_mono.h</FilePath>
             </File>
             <File>
               <FileName>lv_theme_nemo.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_themes/lv_theme_nemo.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_themes/lv_theme_nemo.c</FilePath>
             </File>
             <File>
               <FileName>lv_theme_nemo.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_themes/lv_theme_nemo.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_themes/lv_theme_nemo.h</FilePath>
             </File>
             <File>
               <FileName>lv_theme_night.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_themes/lv_theme_night.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_themes/lv_theme_night.c</FilePath>
             </File>
             <File>
               <FileName>lv_theme_night.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_themes/lv_theme_night.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_themes/lv_theme_night.h</FilePath>
             </File>
             <File>
               <FileName>lv_theme_templ.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_themes/lv_theme_templ.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_themes/lv_theme_templ.c</FilePath>
             </File>
             <File>
               <FileName>lv_theme_templ.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_themes/lv_theme_templ.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_themes/lv_theme_templ.h</FilePath>
             </File>
             <File>
               <FileName>lv_theme_zen.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_themes/lv_theme_zen.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_themes/lv_theme_zen.c</FilePath>
             </File>
             <File>
               <FileName>lv_theme_zen.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_themes/lv_theme_zen.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_themes/lv_theme_zen.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1611,9 +1641,9 @@
           <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_MIMXRT1052.s</FileName>
+              <FileName>startup_MIMXRT1052.S</FileName>
               <FileType>2</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/arm/startup_MIMXRT1052.s</FilePath>
+              <FilePath>../../../../../devices/MIMXRT1052/arm/startup_MIMXRT1052.S</FilePath>
             </File>
           </Files>
         </Group>
@@ -1640,16 +1670,6 @@
               <FileType>5</FileType>
               <FilePath>../../../xip/evkbimxrt1050_flexspi_nor_config.h</FilePath>
             </File>
-            <File>
-              <FileName>evkbimxrt1050_sdram_ini_dcd.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../xip/evkbimxrt1050_sdram_ini_dcd.c</FilePath>
-            </File>
-            <File>
-              <FileName>evkbimxrt1050_sdram_ini_dcd.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../xip/evkbimxrt1050_sdram_ini_dcd.h</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -1659,6 +1679,11 @@
               <FileName>core_cm7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_armcc.h</FileName>
@@ -1696,31 +1721,6 @@
               <FilePath>../../../../../CMSIS/Include/cmsis_version.h</FilePath>
             </File>
             <File>
-              <FileName>core_armv81mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_armv81mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mbl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
-            </File>
-            <File>
               <FileName>arm_common_tables.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
@@ -1738,152 +1738,167 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-freertos_kernel</GroupName>
+          <GroupName>freertos-freertos_kernel</GroupName>
           <Files>
+            <File>
+              <FileName>croutine.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/croutine.c</FilePath>
+            </File>
             <File>
               <FileName>event_groups.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/event_groups.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/event_groups.c</FilePath>
             </File>
             <File>
               <FileName>list.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/list.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/list.c</FilePath>
             </File>
             <File>
               <FileName>queue.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/queue.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/queue.c</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/stream_buffer.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/stream_buffer.c</FilePath>
             </File>
             <File>
               <FileName>tasks.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/tasks.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/tasks.c</FilePath>
             </File>
             <File>
               <FileName>timers.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/timers.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/timers.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-freertos_kernel-include</GroupName>
+          <GroupName>freertos-freertos_kernel-include</GroupName>
           <Files>
             <File>
               <FileName>FreeRTOS.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/include/FreeRTOS.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/FreeRTOS.h</FilePath>
+            </File>
+            <File>
+              <FileName>StackMacros.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</FilePath>
             </File>
             <File>
               <FileName>atomic.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/include/atomic.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/atomic.h</FilePath>
+            </File>
+            <File>
+              <FileName>croutine.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/croutine.h</FilePath>
             </File>
             <File>
               <FileName>deprecated_definitions.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/include/deprecated_definitions.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/deprecated_definitions.h</FilePath>
             </File>
             <File>
               <FileName>event_groups.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/include/event_groups.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/event_groups.h</FilePath>
             </File>
             <File>
               <FileName>list.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/include/list.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/list.h</FilePath>
             </File>
             <File>
               <FileName>message_buffer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/include/message_buffer.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/message_buffer.h</FilePath>
             </File>
             <File>
               <FileName>mpu_prototypes.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/include/mpu_prototypes.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/mpu_prototypes.h</FilePath>
             </File>
             <File>
               <FileName>mpu_wrappers.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/include/mpu_wrappers.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/mpu_wrappers.h</FilePath>
             </File>
             <File>
               <FileName>portable.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/include/portable.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/portable.h</FilePath>
             </File>
             <File>
               <FileName>projdefs.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/include/projdefs.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/projdefs.h</FilePath>
             </File>
             <File>
               <FileName>queue.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/include/queue.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/queue.h</FilePath>
             </File>
             <File>
               <FileName>semphr.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/include/semphr.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/semphr.h</FilePath>
             </File>
             <File>
               <FileName>stack_macros.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/include/stack_macros.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/stack_macros.h</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/include/stream_buffer.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/stream_buffer.h</FilePath>
             </File>
             <File>
               <FileName>task.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/include/task.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/task.h</FilePath>
             </File>
             <File>
               <FileName>timers.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/include/timers.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/timers.h</FilePath>
             </File>
             <File>
               <FileName>freertos_tasks_c_additions.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/include/freertos_tasks_c_additions.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/freertos_tasks_c_additions.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-freertos_kernel-portable-GCC-ARM_CM4F</GroupName>
+          <GroupName>freertos-freertos_kernel-portable-GCC-ARM_CM4F</GroupName>
           <Files>
             <File>
               <FileName>port.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/portable/GCC/ARM_CM4F/port.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F/port.c</FilePath>
             </File>
             <File>
               <FileName>portmacro.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/portable/GCC/ARM_CM4F/portmacro.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F/portmacro.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-freertos_kernel-portable</GroupName>
+          <GroupName>freertos-freertos_kernel-portable</GroupName>
           <Files>
             <File>
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/portable/readme.txt</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/readme.txt</FilePath>
             </File>
           </Files>
         </Group>
@@ -2214,9 +2229,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, SKIP_SYSCLK_INIT, NDEBUG, CPU_MIMXRT1052DVL6B, LV_CONF_INCLUDE_SIMPLE=1, SERIAL_PORT_TYPE_UART=1, FSL_RTOS_FREE_RTOS</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, CPU_MIMXRT1052DVL6B, LV_CONF_INCLUDE_SIMPLE=1, SERIAL_PORT_TYPE_UART=1, FSL_RTOS_FREE_RTOS</Define>
               <Undefine/>
-              <IncludePath>../../../../../rtos/amazon-freertos/freertos_kernel/portable/GCC/ARM_CM4F;..;../..;../../..;../../../../../middleware/littlevgl;../../../../../CMSIS/Include;../../../../../devices;../../../../../rtos/amazon-freertos/freertos_kernel/include;../../../../../devices/MIMXRT1052/drivers;../../../../../devices/MIMXRT1052/drivers;../../../../../components/ft5406_rt;../../../../../devices/MIMXRT1052/drivers;../../../../../devices/MIMXRT1052/drivers;../../../../../devices/MIMXRT1052;../../../../../devices/MIMXRT1052/utilities/str;../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../components/serial_manager;../../../../../devices/MIMXRT1052/drivers;../../../../../devices/MIMXRT1052/drivers;../../../../../devices/MIMXRT1052/drivers;../../../../../devices/MIMXRT1052/xip;../../../xip;../../../xip;../../../../../devices/MIMXRT1052/utilities</IncludePath>
+              <IncludePath>../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;..;../..;../../..;../../../../../middleware/littlevgl;../../../../../CMSIS/Include;../../../../../devices;../../../../../rtos/freertos/freertos_kernel/include;../../../../../devices/MIMXRT1052/drivers;../../../../../components/ft5406_rt;../../../../../middleware/littlevgl/lvgl;../../../../../devices/MIMXRT1052;../../../../../devices/MIMXRT1052/utilities/str;../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1052/xip;../../../xip;../../../../../devices/MIMXRT1052/utilities</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2250,7 +2265,7 @@
             <ScatterFile>MIMXRT1052xxxxx_flexspi_nor_sdram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --keep=*(.boot_hdr.ivt) --keep=*(.boot_hdr.boot_data) --keep=*(.boot_hdr.dcd_data) --keep=*(.boot_hdr.conf) --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
+            <Misc>--remove --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -2326,25 +2341,35 @@
               <FileType>1</FileType>
               <FilePath>../../littlevgl_support.c</FilePath>
             </File>
+            <File>
+              <FileName>dcd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../dcd.c</FilePath>
+            </File>
+            <File>
+              <FileName>dcd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../dcd.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>littlevgl-lv_examples/demo</GroupName>
+          <GroupName>littlevgl-lv_examples-lv_apps-demo</GroupName>
           <Files>
             <File>
               <FileName>demo.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_examples/demo/demo.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lv_examples/lv_apps/demo/demo.c</FilePath>
             </File>
             <File>
               <FileName>demo.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_examples/demo/demo.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lv_examples/lv_apps/demo/demo.h</FilePath>
             </File>
             <File>
               <FileName>img_bubble_pattern.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_examples/demo/img_bubble_pattern.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lv_examples/lv_apps/demo/img_bubble_pattern.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2380,6 +2405,16 @@
               <FileName>fsl_lpi2c.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_lpi2c.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_pxp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_pxp.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_pxp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/drivers/fsl_pxp.h</FilePath>
             </File>
             <File>
               <FileName>fsl_common.c</FileName>
@@ -2444,927 +2479,937 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-freertos_kernel-portable-MemMang</GroupName>
+          <GroupName>freertos-freertos_kernel-portable-MemMang</GroupName>
           <Files>
             <File>
               <FileName>heap_4.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/portable/MemMang/heap_4.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/MemMang/heap_4.c</FilePath>
             </File>
             <File>
               <FileName>ReadMe.url</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/portable/MemMang/ReadMe.url</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/MemMang/ReadMe.url</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>littlevgl</GroupName>
+          <GroupName>littlevgl-lvgl</GroupName>
+          <Files>
+            <File>
+              <FileName>lvgl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/lvgl.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>littlevgl-lvgl-src</GroupName>
           <Files>
             <File>
               <FileName>lv_conf_checker.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_conf_checker.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_conf_checker.h</FilePath>
             </File>
             <File>
               <FileName>lv_version.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>lvgl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lvgl.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_version.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>littlevgl-lv_core</GroupName>
+          <GroupName>littlevgl-lvgl-src-lv_core</GroupName>
           <Files>
+            <File>
+              <FileName>lv_debug.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_core/lv_debug.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_debug.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_core/lv_debug.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_disp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_core/lv_disp.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_disp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_core/lv_disp.h</FilePath>
+            </File>
             <File>
               <FileName>lv_group.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_core/lv_group.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_core/lv_group.c</FilePath>
             </File>
             <File>
               <FileName>lv_group.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_core/lv_group.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_core/lv_group.h</FilePath>
             </File>
             <File>
               <FileName>lv_indev.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_core/lv_indev.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_core/lv_indev.c</FilePath>
             </File>
             <File>
               <FileName>lv_indev.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_core/lv_indev.h</FilePath>
-            </File>
-            <File>
-              <FileName>lv_lang.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_core/lv_lang.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_lang.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_core/lv_lang.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_core/lv_indev.h</FilePath>
             </File>
             <File>
               <FileName>lv_obj.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_core/lv_obj.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_core/lv_obj.c</FilePath>
             </File>
             <File>
               <FileName>lv_obj.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_core/lv_obj.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_core/lv_obj.h</FilePath>
             </File>
             <File>
               <FileName>lv_refr.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_core/lv_refr.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_core/lv_refr.c</FilePath>
             </File>
             <File>
               <FileName>lv_refr.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_core/lv_refr.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_core/lv_refr.h</FilePath>
             </File>
             <File>
               <FileName>lv_style.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_core/lv_style.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_core/lv_style.c</FilePath>
             </File>
             <File>
               <FileName>lv_style.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_core/lv_style.h</FilePath>
-            </File>
-            <File>
-              <FileName>lv_vdb.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_core/lv_vdb.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_vdb.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_core/lv_vdb.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_core/lv_style.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>littlevgl-lv_draw</GroupName>
+          <GroupName>littlevgl-lvgl-src-lv_draw</GroupName>
           <Files>
             <File>
               <FileName>lv_draw.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_draw/lv_draw.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_draw/lv_draw.c</FilePath>
             </File>
             <File>
               <FileName>lv_draw.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_draw/lv_draw.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_draw/lv_draw.h</FilePath>
             </File>
             <File>
               <FileName>lv_draw_arc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_draw/lv_draw_arc.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_draw/lv_draw_arc.c</FilePath>
             </File>
             <File>
               <FileName>lv_draw_arc.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_draw/lv_draw_arc.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_draw/lv_draw_arc.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_basic.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_draw/lv_draw_basic.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_basic.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_draw/lv_draw_basic.h</FilePath>
             </File>
             <File>
               <FileName>lv_draw_img.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_draw/lv_draw_img.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_draw/lv_draw_img.c</FilePath>
             </File>
             <File>
               <FileName>lv_draw_img.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_draw/lv_draw_img.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_draw/lv_draw_img.h</FilePath>
             </File>
             <File>
               <FileName>lv_draw_label.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_draw/lv_draw_label.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_draw/lv_draw_label.c</FilePath>
             </File>
             <File>
               <FileName>lv_draw_label.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_draw/lv_draw_label.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_draw/lv_draw_label.h</FilePath>
             </File>
             <File>
               <FileName>lv_draw_line.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_draw/lv_draw_line.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_draw/lv_draw_line.c</FilePath>
             </File>
             <File>
               <FileName>lv_draw_line.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_draw/lv_draw_line.h</FilePath>
-            </File>
-            <File>
-              <FileName>lv_draw_rbasic.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_draw/lv_draw_rbasic.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_draw_rbasic.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_draw/lv_draw_rbasic.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_draw/lv_draw_line.h</FilePath>
             </File>
             <File>
               <FileName>lv_draw_rect.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_draw/lv_draw_rect.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_draw/lv_draw_rect.c</FilePath>
             </File>
             <File>
               <FileName>lv_draw_rect.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_draw/lv_draw_rect.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_draw/lv_draw_rect.h</FilePath>
             </File>
             <File>
               <FileName>lv_draw_triangle.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_draw/lv_draw_triangle.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_draw/lv_draw_triangle.c</FilePath>
             </File>
             <File>
               <FileName>lv_draw_triangle.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_draw/lv_draw_triangle.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_draw/lv_draw_triangle.h</FilePath>
             </File>
             <File>
-              <FileName>lv_draw_vbasic.c</FileName>
+              <FileName>lv_img_cache.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_draw/lv_draw_vbasic.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_draw/lv_img_cache.c</FilePath>
             </File>
             <File>
-              <FileName>lv_draw_vbasic.h</FileName>
+              <FileName>lv_img_cache.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_draw/lv_draw_vbasic.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_draw/lv_img_cache.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_img_decoder.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_draw/lv_img_decoder.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_img_decoder.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_draw/lv_img_decoder.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>littlevgl-lv_fonts</GroupName>
+          <GroupName>littlevgl-lvgl-src-lv_font</GroupName>
           <Files>
-            <File>
-              <FileName>lv_font_builtin.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_fonts/lv_font_builtin.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_font_builtin.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_fonts/lv_font_builtin.h</FilePath>
-            </File>
-            <File>
-              <FileName>lv_font_dejavu_10.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_fonts/lv_font_dejavu_10.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_font_dejavu_10_cyrillic.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_fonts/lv_font_dejavu_10_cyrillic.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_font_dejavu_10_latin_sup.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_fonts/lv_font_dejavu_10_latin_sup.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_font_dejavu_20.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_fonts/lv_font_dejavu_20.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_font_dejavu_20_cyrillic.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_fonts/lv_font_dejavu_20_cyrillic.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_font_dejavu_20_latin_sup.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_fonts/lv_font_dejavu_20_latin_sup.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_font_dejavu_30.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_fonts/lv_font_dejavu_30.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_font_dejavu_30_cyrillic.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_fonts/lv_font_dejavu_30_cyrillic.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_font_dejavu_30_latin_sup.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_fonts/lv_font_dejavu_30_latin_sup.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_font_dejavu_40.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_fonts/lv_font_dejavu_40.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_font_dejavu_40_cyrillic.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_fonts/lv_font_dejavu_40_cyrillic.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_font_dejavu_40_latin_sup.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_fonts/lv_font_dejavu_40_latin_sup.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_font_monospace_8.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_fonts/lv_font_monospace_8.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_font_symbol_10.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_fonts/lv_font_symbol_10.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_font_symbol_20.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_fonts/lv_font_symbol_20.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_font_symbol_30.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_fonts/lv_font_symbol_30.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_font_symbol_40.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_fonts/lv_font_symbol_40.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>littlevgl-lv_hal</GroupName>
-          <Files>
-            <File>
-              <FileName>lv_hal.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_hal/lv_hal.h</FilePath>
-            </File>
-            <File>
-              <FileName>lv_hal_disp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_hal/lv_hal_disp.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_hal_disp.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_hal/lv_hal_disp.h</FilePath>
-            </File>
-            <File>
-              <FileName>lv_hal_indev.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_hal/lv_hal_indev.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_hal_indev.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_hal/lv_hal_indev.h</FilePath>
-            </File>
-            <File>
-              <FileName>lv_hal_tick.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_hal/lv_hal_tick.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_hal_tick.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_hal/lv_hal_tick.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>littlevgl-lv_misc</GroupName>
-          <Files>
-            <File>
-              <FileName>lv_anim.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_misc/lv_anim.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_anim.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_misc/lv_anim.h</FilePath>
-            </File>
-            <File>
-              <FileName>lv_area.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_misc/lv_area.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_area.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_misc/lv_area.h</FilePath>
-            </File>
-            <File>
-              <FileName>lv_circ.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_misc/lv_circ.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_circ.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_misc/lv_circ.h</FilePath>
-            </File>
-            <File>
-              <FileName>lv_color.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_misc/lv_color.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_color.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_misc/lv_color.h</FilePath>
-            </File>
             <File>
               <FileName>lv_font.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_misc/lv_font.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_font/lv_font.c</FilePath>
             </File>
             <File>
               <FileName>lv_font.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_misc/lv_font.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_font/lv_font.h</FilePath>
             </File>
             <File>
-              <FileName>lv_fs.c</FileName>
+              <FileName>lv_font_fmt_txt.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_misc/lv_fs.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_font/lv_font_fmt_txt.c</FilePath>
             </File>
             <File>
-              <FileName>lv_fs.h</FileName>
+              <FileName>lv_font_fmt_txt.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_misc/lv_fs.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_font/lv_font_fmt_txt.h</FilePath>
             </File>
             <File>
-              <FileName>lv_gc.c</FileName>
+              <FileName>lv_font_roboto_12.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_misc/lv_gc.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_font/lv_font_roboto_12.c</FilePath>
             </File>
             <File>
-              <FileName>lv_gc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_misc/lv_gc.h</FilePath>
-            </File>
-            <File>
-              <FileName>lv_ll.c</FileName>
+              <FileName>lv_font_roboto_12_subpx.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_misc/lv_ll.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_font/lv_font_roboto_12_subpx.c</FilePath>
             </File>
             <File>
-              <FileName>lv_ll.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_misc/lv_ll.h</FilePath>
-            </File>
-            <File>
-              <FileName>lv_log.c</FileName>
+              <FileName>lv_font_roboto_16.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_misc/lv_log.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_font/lv_font_roboto_16.c</FilePath>
             </File>
             <File>
-              <FileName>lv_log.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_misc/lv_log.h</FilePath>
-            </File>
-            <File>
-              <FileName>lv_math.c</FileName>
+              <FileName>lv_font_roboto_22.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_misc/lv_math.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_font/lv_font_roboto_22.c</FilePath>
             </File>
             <File>
-              <FileName>lv_math.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_misc/lv_math.h</FilePath>
-            </File>
-            <File>
-              <FileName>lv_mem.c</FileName>
+              <FileName>lv_font_roboto_28.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_misc/lv_mem.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_font/lv_font_roboto_28.c</FilePath>
             </File>
             <File>
-              <FileName>lv_mem.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_misc/lv_mem.h</FilePath>
+              <FileName>lv_font_roboto_28_compressed.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_font/lv_font_roboto_28_compressed.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_font_unscii_8.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_font/lv_font_unscii_8.c</FilePath>
             </File>
             <File>
               <FileName>lv_symbol_def.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_misc/lv_symbol_def.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_font/lv_symbol_def.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>littlevgl-lvgl-src-lv_hal</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_hal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_hal/lv_hal.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_hal_disp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_hal/lv_hal_disp.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_hal_disp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_hal/lv_hal_disp.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_hal_indev.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_hal/lv_hal_indev.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_hal_indev.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_hal/lv_hal_indev.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_hal_tick.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_hal/lv_hal_tick.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_hal_tick.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_hal/lv_hal_tick.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>littlevgl-lvgl-src-lv_misc</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_anim.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_misc/lv_anim.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_anim.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_misc/lv_anim.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_area.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_misc/lv_area.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_area.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_misc/lv_area.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_async.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_misc/lv_async.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_async.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_misc/lv_async.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_bidi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_misc/lv_bidi.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_bidi.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_misc/lv_bidi.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_circ.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_misc/lv_circ.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_circ.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_misc/lv_circ.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_color.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_misc/lv_color.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_color.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_misc/lv_color.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_fs.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_misc/lv_fs.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_fs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_misc/lv_fs.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_gc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_misc/lv_gc.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_gc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_misc/lv_gc.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_ll.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_misc/lv_ll.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_ll.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_misc/lv_ll.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_log.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_misc/lv_log.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_log.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_misc/lv_log.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_math.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_misc/lv_math.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_math.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_misc/lv_math.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_mem.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_misc/lv_mem.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_mem.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_misc/lv_mem.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_printf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_misc/lv_printf.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_printf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_misc/lv_printf.h</FilePath>
             </File>
             <File>
               <FileName>lv_task.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_misc/lv_task.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_misc/lv_task.c</FilePath>
             </File>
             <File>
               <FileName>lv_task.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_misc/lv_task.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_misc/lv_task.h</FilePath>
             </File>
             <File>
               <FileName>lv_templ.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_misc/lv_templ.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_misc/lv_templ.c</FilePath>
             </File>
             <File>
               <FileName>lv_templ.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_misc/lv_templ.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_misc/lv_templ.h</FilePath>
             </File>
             <File>
               <FileName>lv_txt.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_misc/lv_txt.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_misc/lv_txt.c</FilePath>
             </File>
             <File>
               <FileName>lv_txt.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_misc/lv_txt.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_misc/lv_txt.h</FilePath>
             </File>
             <File>
-              <FileName>lv_ufs.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_misc/lv_ufs.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_ufs.h</FileName>
+              <FileName>lv_types.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_misc/lv_ufs.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_misc/lv_types.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_utils.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_misc/lv_utils.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_utils.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_misc/lv_utils.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>littlevgl-lv_objx</GroupName>
+          <GroupName>littlevgl-lvgl-src-lv_objx</GroupName>
           <Files>
             <File>
               <FileName>lv_arc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_arc.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_arc.c</FilePath>
             </File>
             <File>
               <FileName>lv_arc.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_arc.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_arc.h</FilePath>
             </File>
             <File>
               <FileName>lv_bar.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_bar.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_bar.c</FilePath>
             </File>
             <File>
               <FileName>lv_bar.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_bar.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_bar.h</FilePath>
             </File>
             <File>
               <FileName>lv_btn.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_btn.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_btn.c</FilePath>
             </File>
             <File>
               <FileName>lv_btn.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_btn.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_btn.h</FilePath>
             </File>
             <File>
               <FileName>lv_btnm.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_btnm.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_btnm.c</FilePath>
             </File>
             <File>
               <FileName>lv_btnm.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_btnm.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_btnm.h</FilePath>
             </File>
             <File>
               <FileName>lv_calendar.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_calendar.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_calendar.c</FilePath>
             </File>
             <File>
               <FileName>lv_calendar.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_calendar.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_calendar.h</FilePath>
             </File>
             <File>
               <FileName>lv_canvas.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_canvas.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_canvas.c</FilePath>
             </File>
             <File>
               <FileName>lv_canvas.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_canvas.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_canvas.h</FilePath>
             </File>
             <File>
               <FileName>lv_cb.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_cb.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_cb.c</FilePath>
             </File>
             <File>
               <FileName>lv_cb.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_cb.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_cb.h</FilePath>
             </File>
             <File>
               <FileName>lv_chart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_chart.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_chart.c</FilePath>
             </File>
             <File>
               <FileName>lv_chart.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_chart.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_chart.h</FilePath>
             </File>
             <File>
               <FileName>lv_cont.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_cont.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_cont.c</FilePath>
             </File>
             <File>
               <FileName>lv_cont.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_cont.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_cont.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_cpicker.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_cpicker.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_cpicker.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_cpicker.h</FilePath>
             </File>
             <File>
               <FileName>lv_ddlist.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_ddlist.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_ddlist.c</FilePath>
             </File>
             <File>
               <FileName>lv_ddlist.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_ddlist.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_ddlist.h</FilePath>
             </File>
             <File>
               <FileName>lv_gauge.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_gauge.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_gauge.c</FilePath>
             </File>
             <File>
               <FileName>lv_gauge.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_gauge.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_gauge.h</FilePath>
             </File>
             <File>
               <FileName>lv_img.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_img.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_img.c</FilePath>
             </File>
             <File>
               <FileName>lv_img.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_img.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_img.h</FilePath>
             </File>
             <File>
               <FileName>lv_imgbtn.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_imgbtn.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_imgbtn.c</FilePath>
             </File>
             <File>
               <FileName>lv_imgbtn.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_imgbtn.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_imgbtn.h</FilePath>
             </File>
             <File>
               <FileName>lv_kb.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_kb.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_kb.c</FilePath>
             </File>
             <File>
               <FileName>lv_kb.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_kb.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_kb.h</FilePath>
             </File>
             <File>
               <FileName>lv_label.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_label.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_label.c</FilePath>
             </File>
             <File>
               <FileName>lv_label.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_label.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_label.h</FilePath>
             </File>
             <File>
               <FileName>lv_led.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_led.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_led.c</FilePath>
             </File>
             <File>
               <FileName>lv_led.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_led.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_led.h</FilePath>
             </File>
             <File>
               <FileName>lv_line.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_line.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_line.c</FilePath>
             </File>
             <File>
               <FileName>lv_line.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_line.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_line.h</FilePath>
             </File>
             <File>
               <FileName>lv_list.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_list.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_list.c</FilePath>
             </File>
             <File>
               <FileName>lv_list.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_list.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_list.h</FilePath>
             </File>
             <File>
               <FileName>lv_lmeter.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_lmeter.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_lmeter.c</FilePath>
             </File>
             <File>
               <FileName>lv_lmeter.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_lmeter.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_lmeter.h</FilePath>
             </File>
             <File>
               <FileName>lv_mbox.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_mbox.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_mbox.c</FilePath>
             </File>
             <File>
               <FileName>lv_mbox.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_mbox.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_mbox.h</FilePath>
             </File>
             <File>
               <FileName>lv_objx_templ.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_objx_templ.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_objx_templ.c</FilePath>
             </File>
             <File>
               <FileName>lv_objx_templ.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_objx_templ.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_objx_templ.h</FilePath>
             </File>
             <File>
               <FileName>lv_page.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_page.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_page.c</FilePath>
             </File>
             <File>
               <FileName>lv_page.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_page.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_page.h</FilePath>
             </File>
             <File>
               <FileName>lv_preload.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_preload.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_preload.c</FilePath>
             </File>
             <File>
               <FileName>lv_preload.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_preload.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_preload.h</FilePath>
             </File>
             <File>
               <FileName>lv_roller.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_roller.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_roller.c</FilePath>
             </File>
             <File>
               <FileName>lv_roller.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_roller.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_roller.h</FilePath>
             </File>
             <File>
               <FileName>lv_slider.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_slider.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_slider.c</FilePath>
             </File>
             <File>
               <FileName>lv_slider.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_slider.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_slider.h</FilePath>
             </File>
             <File>
               <FileName>lv_spinbox.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_spinbox.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_spinbox.c</FilePath>
             </File>
             <File>
               <FileName>lv_spinbox.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_spinbox.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_spinbox.h</FilePath>
             </File>
             <File>
               <FileName>lv_sw.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_sw.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_sw.c</FilePath>
             </File>
             <File>
               <FileName>lv_sw.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_sw.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_sw.h</FilePath>
             </File>
             <File>
               <FileName>lv_ta.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_ta.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_ta.c</FilePath>
             </File>
             <File>
               <FileName>lv_ta.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_ta.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_ta.h</FilePath>
             </File>
             <File>
               <FileName>lv_table.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_table.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_table.c</FilePath>
             </File>
             <File>
               <FileName>lv_table.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_table.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_table.h</FilePath>
             </File>
             <File>
               <FileName>lv_tabview.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_tabview.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_tabview.c</FilePath>
             </File>
             <File>
               <FileName>lv_tabview.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_tabview.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_tabview.h</FilePath>
             </File>
             <File>
               <FileName>lv_tileview.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_tileview.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_tileview.c</FilePath>
             </File>
             <File>
               <FileName>lv_tileview.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_tileview.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_tileview.h</FilePath>
             </File>
             <File>
               <FileName>lv_win.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_win.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_win.c</FilePath>
             </File>
             <File>
               <FileName>lv_win.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_objx/lv_win.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_objx/lv_win.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>littlevgl-lv_themes</GroupName>
+          <GroupName>littlevgl-lvgl-src-lv_themes</GroupName>
           <Files>
             <File>
               <FileName>lv_theme.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_themes/lv_theme.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_themes/lv_theme.c</FilePath>
             </File>
             <File>
               <FileName>lv_theme.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_themes/lv_theme.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_themes/lv_theme.h</FilePath>
             </File>
             <File>
               <FileName>lv_theme_alien.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_themes/lv_theme_alien.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_themes/lv_theme_alien.c</FilePath>
             </File>
             <File>
               <FileName>lv_theme_alien.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_themes/lv_theme_alien.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_themes/lv_theme_alien.h</FilePath>
             </File>
             <File>
               <FileName>lv_theme_default.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_themes/lv_theme_default.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_themes/lv_theme_default.c</FilePath>
             </File>
             <File>
               <FileName>lv_theme_default.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_themes/lv_theme_default.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_themes/lv_theme_default.h</FilePath>
             </File>
             <File>
               <FileName>lv_theme_material.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_themes/lv_theme_material.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_themes/lv_theme_material.c</FilePath>
             </File>
             <File>
               <FileName>lv_theme_material.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_themes/lv_theme_material.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_themes/lv_theme_material.h</FilePath>
             </File>
             <File>
               <FileName>lv_theme_mono.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_themes/lv_theme_mono.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_themes/lv_theme_mono.c</FilePath>
             </File>
             <File>
               <FileName>lv_theme_mono.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_themes/lv_theme_mono.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_themes/lv_theme_mono.h</FilePath>
             </File>
             <File>
               <FileName>lv_theme_nemo.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_themes/lv_theme_nemo.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_themes/lv_theme_nemo.c</FilePath>
             </File>
             <File>
               <FileName>lv_theme_nemo.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_themes/lv_theme_nemo.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_themes/lv_theme_nemo.h</FilePath>
             </File>
             <File>
               <FileName>lv_theme_night.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_themes/lv_theme_night.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_themes/lv_theme_night.c</FilePath>
             </File>
             <File>
               <FileName>lv_theme_night.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_themes/lv_theme_night.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_themes/lv_theme_night.h</FilePath>
             </File>
             <File>
               <FileName>lv_theme_templ.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_themes/lv_theme_templ.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_themes/lv_theme_templ.c</FilePath>
             </File>
             <File>
               <FileName>lv_theme_templ.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_themes/lv_theme_templ.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_themes/lv_theme_templ.h</FilePath>
             </File>
             <File>
               <FileName>lv_theme_zen.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_themes/lv_theme_zen.c</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_themes/lv_theme_zen.c</FilePath>
             </File>
             <File>
               <FileName>lv_theme_zen.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lv_themes/lv_theme_zen.h</FilePath>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_themes/lv_theme_zen.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3497,9 +3542,9 @@
           <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_MIMXRT1052.s</FileName>
+              <FileName>startup_MIMXRT1052.S</FileName>
               <FileType>2</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/arm/startup_MIMXRT1052.s</FilePath>
+              <FilePath>../../../../../devices/MIMXRT1052/arm/startup_MIMXRT1052.S</FilePath>
             </File>
           </Files>
         </Group>
@@ -3526,16 +3571,6 @@
               <FileType>5</FileType>
               <FilePath>../../../xip/evkbimxrt1050_flexspi_nor_config.h</FilePath>
             </File>
-            <File>
-              <FileName>evkbimxrt1050_sdram_ini_dcd.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../xip/evkbimxrt1050_sdram_ini_dcd.c</FilePath>
-            </File>
-            <File>
-              <FileName>evkbimxrt1050_sdram_ini_dcd.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../xip/evkbimxrt1050_sdram_ini_dcd.h</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -3545,6 +3580,11 @@
               <FileName>core_cm7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_armcc.h</FileName>
@@ -3582,31 +3622,6 @@
               <FilePath>../../../../../CMSIS/Include/cmsis_version.h</FilePath>
             </File>
             <File>
-              <FileName>core_armv81mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_armv81mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mbl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
-            </File>
-            <File>
               <FileName>arm_common_tables.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
@@ -3624,152 +3639,167 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-freertos_kernel</GroupName>
+          <GroupName>freertos-freertos_kernel</GroupName>
           <Files>
+            <File>
+              <FileName>croutine.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/croutine.c</FilePath>
+            </File>
             <File>
               <FileName>event_groups.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/event_groups.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/event_groups.c</FilePath>
             </File>
             <File>
               <FileName>list.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/list.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/list.c</FilePath>
             </File>
             <File>
               <FileName>queue.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/queue.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/queue.c</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/stream_buffer.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/stream_buffer.c</FilePath>
             </File>
             <File>
               <FileName>tasks.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/tasks.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/tasks.c</FilePath>
             </File>
             <File>
               <FileName>timers.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/timers.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/timers.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-freertos_kernel-include</GroupName>
+          <GroupName>freertos-freertos_kernel-include</GroupName>
           <Files>
             <File>
               <FileName>FreeRTOS.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/include/FreeRTOS.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/FreeRTOS.h</FilePath>
+            </File>
+            <File>
+              <FileName>StackMacros.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</FilePath>
             </File>
             <File>
               <FileName>atomic.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/include/atomic.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/atomic.h</FilePath>
+            </File>
+            <File>
+              <FileName>croutine.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/croutine.h</FilePath>
             </File>
             <File>
               <FileName>deprecated_definitions.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/include/deprecated_definitions.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/deprecated_definitions.h</FilePath>
             </File>
             <File>
               <FileName>event_groups.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/include/event_groups.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/event_groups.h</FilePath>
             </File>
             <File>
               <FileName>list.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/include/list.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/list.h</FilePath>
             </File>
             <File>
               <FileName>message_buffer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/include/message_buffer.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/message_buffer.h</FilePath>
             </File>
             <File>
               <FileName>mpu_prototypes.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/include/mpu_prototypes.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/mpu_prototypes.h</FilePath>
             </File>
             <File>
               <FileName>mpu_wrappers.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/include/mpu_wrappers.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/mpu_wrappers.h</FilePath>
             </File>
             <File>
               <FileName>portable.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/include/portable.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/portable.h</FilePath>
             </File>
             <File>
               <FileName>projdefs.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/include/projdefs.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/projdefs.h</FilePath>
             </File>
             <File>
               <FileName>queue.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/include/queue.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/queue.h</FilePath>
             </File>
             <File>
               <FileName>semphr.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/include/semphr.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/semphr.h</FilePath>
             </File>
             <File>
               <FileName>stack_macros.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/include/stack_macros.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/stack_macros.h</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/include/stream_buffer.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/stream_buffer.h</FilePath>
             </File>
             <File>
               <FileName>task.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/include/task.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/task.h</FilePath>
             </File>
             <File>
               <FileName>timers.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/include/timers.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/timers.h</FilePath>
             </File>
             <File>
               <FileName>freertos_tasks_c_additions.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/include/freertos_tasks_c_additions.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/freertos_tasks_c_additions.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-freertos_kernel-portable-GCC-ARM_CM4F</GroupName>
+          <GroupName>freertos-freertos_kernel-portable-GCC-ARM_CM4F</GroupName>
           <Files>
             <File>
               <FileName>port.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/portable/GCC/ARM_CM4F/port.c</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F/port.c</FilePath>
             </File>
             <File>
               <FileName>portmacro.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/portable/GCC/ARM_CM4F/portmacro.h</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F/portmacro.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-freertos_kernel-portable</GroupName>
+          <GroupName>freertos-freertos_kernel-portable</GroupName>
           <Files>
             <File>
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/amazon-freertos/freertos_kernel/portable/readme.txt</FilePath>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/readme.txt</FilePath>
             </File>
           </Files>
         </Group>

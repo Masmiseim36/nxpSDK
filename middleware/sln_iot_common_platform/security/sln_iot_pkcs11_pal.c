@@ -1,7 +1,7 @@
 /*
  * Amazon FreeRTOS PKCS #11 PAL for LPC54018 IoT Module V1.0.3
  * Copyright (C) 2017 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
- * Copyright 2018-2019 NXP
+ * Copyright 2018-2020 NXP
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -32,6 +32,9 @@
  * file deviates from the FreeRTOS style standard for some function names and
  * data types in order to maintain compliance with the PKCS#11 standard.
  */
+
+/* Board includes */
+#include "board.h"
 
 /* FreeRTOS includes. */
 #include "FreeRTOS.h"

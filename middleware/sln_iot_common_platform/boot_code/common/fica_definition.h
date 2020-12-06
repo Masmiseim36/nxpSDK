@@ -84,6 +84,9 @@ typedef enum _fica_img_type
 #define FICA_IMG_APP_A_ADDR 0x00300000
 #define FICA_IMG_APP_B_ADDR 0x00D00000
 
+// The ResetISR address is placed on the index 1 of the vector table
+#define APPLICATION_RESET_ISR_ADDRESS (SCB->VTOR + 0x4)
+
 #define FICA_IMG_BOOTSTRAP_SIZE 0x00040000  // 0.25 MB
 #define FICA_IMG_BOOTLOADER_SIZE 0x001C0000 // 1.75 MB
 #define FICA_IMG_RESERVED_SIZE 0x00100000   // 1 MB

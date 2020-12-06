@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -8,8 +8,6 @@
 
 #include "fsl_debug_console.h"
 #include "fsl_flexspi.h"
-
-#include "app.h"
 #include "board.h"
 #include "clock_config.h"
 #include "flexspi_hyper_flash_ops.h"
@@ -27,9 +25,6 @@
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-
-extern flexspi_device_config_t deviceconfig;
-extern const uint32_t customLUT[CUSTOM_LUT_LENGTH];
 
 /*******************************************************************************
  * Code
@@ -351,7 +346,7 @@ status_t flexspi_nor_read_vcr(FLEXSPI_Type *base, uint32_t *vcr)
 status_t flexspi_nor_write_vcr(FLEXSPI_Type *base, uint32_t *vcr)
 {
     status_t status;
-    uint32_t data;
+    uint8_t data[4] = {0x00, 0x38, 0x00, 0x00};
 
     status = flexspi_nor_write_enable(base, 0);
 
@@ -360,9 +355,7 @@ status_t flexspi_nor_write_vcr(FLEXSPI_Type *base, uint32_t *vcr)
         return status;
     }
 
-    data = 0x3800;
-
-    status = flexspi_nor_hyperbus_write(base, 0x555, &data, 2);
+    status = flexspi_nor_hyperbus_write(base, 0x555, (uint32_t *)data, 2);
 
     if (status != kStatus_Success)
     {
@@ -388,9 +381,9 @@ status_t flexspi_nor_hyperflash_cfi(FLEXSPI_Type *base)
     status_t status;
     uint32_t buffer[2];
     uint32_t cfibuffer[32];
-    uint32_t data = 0x9800;
+    uint8_t data[4] = {0x00, 0x98, 0x00, 0x00};
     int i;
-    status = flexspi_nor_hyperbus_write(base, 0x555, &data, 2);
+    status = flexspi_nor_hyperbus_write(base, 0x555, (uint32_t *)data, 2);
     if (status != kStatus_Success)
     {
         return status;
@@ -425,8 +418,9 @@ status_t flexspi_nor_hyperflash_cfi(FLEXSPI_Type *base)
     }
 
     // ASO Exit
-    data   = 0xF000;
-    status = flexspi_nor_hyperbus_write(base, 0x0, &data, 2);
+    data[0] = 0x00;
+    data[1] = 0xF0;
+    status = flexspi_nor_hyperbus_write(base, 0x0, (uint32_t *)data, 2);
     if (status != kStatus_Success)
     {
         // PRINTF("Can not exit the ASO\r\n");
@@ -449,12 +443,12 @@ status_t flexspi_nor_hyperflash_id(FLEXSPI_Type *base, uint8_t *pid)
     status_t status;
     uint32_t buffer[2];
     uint32_t cfibuffer[32];
-    uint32_t data = 0x9800;
+    uint8_t data[4] = {0x00, 0x98, 0x00, 0x00};
     int i;
 
     *pid = 0;
 
-    status = flexspi_nor_hyperbus_write(base, 0x555, &data, 2);
+    status = flexspi_nor_hyperbus_write(base, 0x555, (uint32_t *)data, 2);
     if (status != kStatus_Success)
     {
         return status;
@@ -489,8 +483,9 @@ status_t flexspi_nor_hyperflash_id(FLEXSPI_Type *base, uint8_t *pid)
     }
 
     // ASO Exit
-    data   = 0xF000;
-    status = flexspi_nor_hyperbus_write(base, 0x0, &data, 2);
+    data[0] = 0x00;
+    data[1] = 0xF0;
+    status = flexspi_nor_hyperbus_write(base, 0x0, (uint32_t *)data, 2);
     if (status != kStatus_Success)
     {
         // PRINTF("Can not exit the ASO\r\n");

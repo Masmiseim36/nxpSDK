@@ -12,17 +12,17 @@
 
 #include "aisv2.h"
 
-#define AIS_APP_TIMER_INTERVAL_MSEC (30000U)              /* Update internal timer every 30 seconds */
-#define AIS_APP_TIME_SYNC_INTERVAL_SEC (30U)              /* Re-sync time every 30 sec */
-#define AIS_APP_TIMER_SYNC_CLOCK_TIMEOUT_MSEC (10000U)    /* Timeout for receiving sync clock directive is 10 seconds */
-#define AIS_APP_MQTT_DISCONNECT_TIMEOUT_MSEC (30000U)     /* Timeout for MQTT Disconnect is 30 seconds */
-#define AIS_APP_MQTT_RECONNECT_TIMEOUT_MSEC (90000U)      /* Timeout for MQTT Reconnect is 90 seconds */
-#define AIS_APP_MQTT_AIS_CONNECT_TIMEOUT_MSEC (60000U)    /* Timeout for AIS Connection events is 60 seconds */
+#define AIS_APP_TIMER_INTERVAL_MSEC              (30000U) /* Update internal timer every 30 seconds */
+#define AIS_APP_TIME_SYNC_INTERVAL_SEC           (30U)    /* Re-sync time every 30 sec */
+#define AIS_APP_TIMER_SYNC_CLOCK_TIMEOUT_MSEC    (10000U) /* Timeout for receiving sync clock directive is 10 seconds */
+#define AIS_APP_MQTT_DISCONNECT_TIMEOUT_MSEC     (30000U) /* Timeout for MQTT Disconnect is 30 seconds */
+#define AIS_APP_MQTT_RECONNECT_TIMEOUT_MSEC      (90000U) /* Timeout for MQTT Reconnect is 90 seconds */
+#define AIS_APP_MQTT_AIS_CONNECT_TIMEOUT_MSEC    (60000U) /* Timeout for AIS Connection events is 60 seconds */
 #define AIS_APP_MQTT_OTA_DISCONNECT_TIMEOUT_MSEC (30000U) /* Timeout for OTA MQTT Disconnection is 30 seconds */
-#define AIS_APP_MQTT_OTA_CONNECT_TIMEOUT_MSEC (60000U)    /* Timeout for OTA MQTT Connection is 60 seconds */
-#define AIS_APP_TIMER_INTERVAL_SEC (30U)
-#define AIS_APP_THINK_STATE_TIMEOUT_MSEC (10000U)
-#define AIS_APP_MIC_PUBLISHING_HEAP_THRESHOLD (81920U) /* Stop Mic Publishing when heap below this threshold */
+#define AIS_APP_MQTT_OTA_CONNECT_TIMEOUT_MSEC    (60000U) /* Timeout for OTA MQTT Connection is 60 seconds */
+#define AIS_APP_TIMER_INTERVAL_SEC               (30U)
+#define AIS_APP_THINK_STATE_TIMEOUT_MSEC         (10000U)
+#define AIS_APP_MIC_PUBLISHING_HEAP_THRESHOLD    (81920U) /* Stop Mic Publishing when heap below this threshold */
 
 /** @brief These are the app notifications types
  *
@@ -76,8 +76,7 @@ typedef struct
 
     bool syncClockReceived; /**< Tells if we receive a sync clock */
 
-    TickType_t expectedTickTime; /**< Saves the expected time to send microphone data to the service so we respect the
-                                    minimum delay between packets */
+    TickType_t previousTickTime; /**< Saves the previous time that microphone data was sent to the service */
     int32_t volume;              /**< Saves the current volume of the device */
     uint32_t alertVolume;        /**< Saves the current alert volume */
 } ais_app_data_t;

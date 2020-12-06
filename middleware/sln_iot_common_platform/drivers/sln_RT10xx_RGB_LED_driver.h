@@ -1,10 +1,9 @@
 /*
- * Copyright 2019 NXP.
- * This software is owned or controlled by NXP and may only be used strictly in accordance with the
- * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
- * activating and/or otherwise using the software, you are agreeing that you have read, and that you
- * agree to comply with and are bound by, such license terms. If you do not agree to be bound by the
- * applicable license terms, then you may not retain, install, activate or otherwise use the software.
+ * Copyright 2019-2020 NXP
+ * All rights reserved.
+ *
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #ifndef _SLN_RT10XX_LED_H_
@@ -15,8 +14,6 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-
-#define BLINK_RATE 50
 
 /*! @brief LED Brightness */
 typedef enum
@@ -44,6 +41,9 @@ typedef enum _rgb_led_color
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
+#if defined(__cplusplus)
+extern "C" {
+#endif
 
 /*!
  * @brief Set RGB color from enum
@@ -72,12 +72,6 @@ void RGB_LED_SetBrightnessColor(rgb_led_brightness_t brightness, rgbLedColor_t c
 void RGB_LED_Blink(uint8_t brightness, uint8_t color, uint32_t blinkrate, uint32_t *blinkcount, bool *blinktoggle);
 
 /*!
- * @brief Rapidly blink LED through blue and red
- *
- */
-void RapidBlinkLED(void);
-
-/*!
  * @brief Blink red led function, called when MSD / OTA fails
  *
  */
@@ -90,4 +84,7 @@ void ErrorBlinkLED(void);
  */
 status_t RGB_LED_Init(void);
 
+#if defined(__cplusplus)
+}
+#endif
 #endif

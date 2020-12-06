@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP.
+ * Copyright 2019-2020 NXP.
  * This software is owned or controlled by NXP and may only be used strictly in accordance with the
  * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
  * activating and/or otherwise using the software, you are agreeing that you have read, and that you
@@ -16,6 +16,9 @@
 #include "netif/ethernet.h"
 
 #if USE_ETHERNET_CONNECTION
+#include "fsl_phydp83848.h"
+#include "fsl_enet_mdio.h"
+
 #include "enet_ethernetif.h"
 #elif USE_WIFI_CONNECTION
 #include "lwip/opt.h"
@@ -29,7 +32,7 @@
 #include "wifi_credentials.h"
 
 #define AP_SECURITY WICED_SECURITY_WPA2_AES_PSK
-#define AP_CHANNEL (1)
+#define AP_CHANNEL  (1)
 
 __attribute__((weak)) void APP_Wifi_UX_Callback(network_wifi_conn_state_t state)
 {
@@ -39,6 +42,26 @@ __attribute__((weak)) void APP_Wifi_UX_Callback(network_wifi_conn_state_t state)
 #else
 /* should never happen */
 #endif
+
+#if USE_ETHERNET_CONNECTION
+/* MAC address configuration. */
+#define configMAC_ADDR                     \
+    {                                      \
+        0x00, 0x04, 0x9F, 0x05, 0x1C, 0x81 \
+    }
+
+/* MDIO operations. */
+#define EXAMPLE_MDIO_OPS enet_ops
+
+/* Address of PHY interface. */
+#define EXAMPLE_PHY_ADDRESS BOARD_ENET0_PHY_ADDRESS
+
+/* PHY operations. */
+#define EXAMPLE_PHY_OPS phydp83848_ops
+
+static mdio_handle_t mdioHandle = {.ops = &EXAMPLE_MDIO_OPS};
+static phy_handle_t phyHandle   = {.phyAddr = EXAMPLE_PHY_ADDRESS, .mdioHandle = &mdioHandle, .ops = &EXAMPLE_PHY_OPS};
+#endif /* USE_ETHERNET_CONNECTION */
 
 static struct netif ip_netif;
 static bool s_connectState                  = false;
@@ -59,6 +82,11 @@ TickType_t get_mqtt_connection_backoff(uint32_t retry_attempts, uint32_t base_de
 void APP_Connect_Update_Handler_Set(connection_update_fn *func)
 {
     update_link_cb = func;
+}
+
+ip_addr_t get_ipaddress(void)
+{
+    return ip_netif.ip_addr;
 }
 
 bool get_connect_state(void)
@@ -124,9 +152,8 @@ void APP_NETWORK_Init(bool use_dhcp)
     ip4_addr_t ipaddr, netmask, gw, dnsserver;
     struct dhcp *dhcp;
     ethernetif_config_t enet_config = {
-        .phyAddress = BOARD_ENET0_PHY_ADDRESS,
-        .clockName  = kCLOCK_CoreSysClk,
-        .macAddress = {0x00, 0x04, 0x9F, 0x05, 0x1C, 0x81},
+        .phyHandle  = &phyHandle,
+        .macAddress = configMAC_ADDR,
     };
 
     if (use_dhcp)
@@ -151,6 +178,11 @@ void APP_NETWORK_Init(bool use_dhcp)
     vTaskDelay(100);
 
     tcpip_init(NULL, NULL);
+
+    if(enet_config.phyHandle->mdioHandle->resource.csrClock_Hz == 0U)
+    {
+        enet_config.phyHandle->mdioHandle->resource.csrClock_Hz = CLOCK_GetPllFreq(kCLOCK_PllEnet);
+    }
 
     netif_add(&ip_netif, &ipaddr, &netmask, &gw, &enet_config, ethernetif0_init, tcpip_input);
     netif_set_default(&ip_netif);
@@ -318,7 +350,7 @@ static wwd_result_t wifi_if_add(bool use_dhcp)
         {
             vTaskDelay(1000);
 
-            if ((bool) WICED_FALSE == s_connectState)
+            if ((bool)WICED_FALSE == s_connectState)
             {
                 configPRINTF(("Link loss while waiting for DHCP bound, aborting ...\r\n"));
                 err = WWD_WLAN_WLAN_DOWN;
@@ -453,6 +485,9 @@ void APP_NETWORK_Uninit()
 {
     wifi_network_leave();
     netif_remove(&ip_netif);
+    /* We removed the interface from netif_list, it is safe to fill the struct with 0 */
+    memset(&ip_netif, 0, sizeof(ip_netif));
+    s_connectState = (bool)WICED_FALSE;
 }
 
 status_t APP_NETWORK_Wifi_StartAP(wiced_ssid_t ap_ssid, char *ap_passwd)

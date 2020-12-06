@@ -72,7 +72,7 @@ bool IotSdk_Init( void )
 {
     IOT_FUNCTION_ENTRY( bool, true );
     IotTaskPoolError_t taskPoolStatus = IOT_TASKPOOL_SUCCESS;
-    IotTaskPoolInfo_t taskPoolInfo = IOT_TASKPOOL_INFO_INITIALIZER_LARGE;
+    IotTaskPoolInfo_t taskPoolInfo = IOT_TASKPOOL_INFO_INITIALIZER_SMALL;
 
     /* Initialize the mutex for generic atomic operations if needed. */
     #if IOT_ATOMIC_GENERIC == 1

@@ -32,9 +32,9 @@
 /*! @brief Ring buffer size (Unit: Byte). */
 #define DEMO_RING_BUFFER_SIZE 2048
 
-#define DEMO_SERIAL_PORT LPUART6
+#define DEMO_SERIAL_PORT          LPUART6
 #define DEMO_SERIAL_PORT_CLK_FREQ BOARD_DebugConsoleSrcFreq()
-#define DEMO_SERIAL_PORT_IRQn BOARD_UART_IRQ
+#define DEMO_SERIAL_PORT_IRQn     BOARD_UART_IRQ
 /*! @brief Task stack size. */
 #define WIFICARD_TASK_STACK_SIZE (6144 / sizeof(portSTACK_TYPE))
 /*! @brief Task stack priority. */
@@ -128,14 +128,6 @@ int serial_port_init(void)
     }
 
     return 0;
-}
-static void BOARD_USDHCClockConfiguration(void)
-{
-    /*configure system pll PFD0 fractional divider to 18*/
-    CLOCK_InitSysPfd(kCLOCK_Pfd0, 0x12U);
-    /* Configure USDHC clock source and divider */
-    CLOCK_SetDiv(kCLOCK_Usdhc1Div, 0U);
-    CLOCK_SetMux(kCLOCK_Usdhc1Mux, 1U);
 }
 
 /* The function sets the cacheable memory to shareable, this suggestion is referred from chapter 2.2.1 Memory regions,
@@ -260,8 +252,7 @@ int main(void)
     BOARD_ConfigMPU();
     BOARD_ConfigUSBMPU();
     BOARD_InitBootPins();
-    BOARD_BootClockRUN();
-    BOARD_USDHCClockConfiguration();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
 
     tcpip_init(NULL, NULL);

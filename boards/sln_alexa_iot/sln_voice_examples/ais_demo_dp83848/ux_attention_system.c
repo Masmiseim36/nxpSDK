@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 NXP.
+ * Copyright 2018-2020 NXP.
  * This software is owned or controlled by NXP and may only be used strictly in accordance with the
  * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
  * activating and/or otherwise using the software, you are agreeing that you have read, and that you
@@ -28,7 +28,7 @@
  ******************************************************************************/
 
 #define PIT_LED_HANDLER PIT_IRQHandler
-#define PIT_IRQ_ID PIT_IRQn
+#define PIT_IRQ_ID      PIT_IRQn
 
 #if configMAX_SYSCALL_INTERRUPT_PRIORITY > 0
 #define PIT_IRQ_PRIORITY (configMAX_SYSCALL_INTERRUPT_PRIORITY - 1)
@@ -40,9 +40,9 @@
 #define PIT_SOURCE_CLOCK CLOCK_GetFreq(kCLOCK_OscClk)
 
 /*! @brief uvoice UX Attention Task settings */
-#define UX_ATT_TASK_NAME "ux_attention_task"
-#define UX_ATT_TASK_STACK 256U
-#define UX_ATT_TASK_PRIORITY (configTIMER_TASK_PRIORITY - 1)
+#define UX_ATT_TASK_NAME     "ux_attention_task"
+#define UX_ATT_TASK_STACK    256U
+#define UX_ATT_TASK_PRIORITY (configTIMER_TASK_PRIORITY - 2)
 
 static TimerHandle_t s_speakingAlertTimerHandle;
 #define UX_ALERT_SPEAKING_INTERVAL_MSEC 10000
@@ -125,9 +125,9 @@ void ux_speaking_alert_timer_cb(TimerHandle_t xTimer)
 
 void ux_attention_task(void *pvParameters)
 {
-    bool speakingState = false;
-    prevState          = uxIdle;
-    ux_attention_states_t uxState;
+    bool speakingState            = false;
+    prevState                     = uxIdle;
+    ux_attention_states_t uxState = uxNull;
 
     while (1)
     {

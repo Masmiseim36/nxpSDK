@@ -86,13 +86,12 @@ static void SLN_UART_COMMS_ServerTask(void *args)
     assert(NULL != descriptor);
     configPRINTF(("[%s] Starting UART Connection handler processor\r\n", __FUNCTION__));
 
+    /* Let the user know we are in OTW mode */
+    RGB_LED_SetColor(LED_COLOR_BLUE);
+
     for (;;)
     {
-        /* Let the user know we are in OTW mode */
-        RGB_LED_SetColor(LED_COLOR_BLUE);
         SLN_UART_COMMS_Read(descriptor->context.sUartContext.portbase);
-
-        vTaskDelay(100);
     }
     vTaskDelete(NULL);
 }

@@ -20,63 +20,178 @@
 #define AMZ_WW_MODEL_FILE_NAME "amz_ww_model.dat"
 #define AMZ_WW_MODEL_LENGTH 6
 
-#define LIGHTEN_MODEL_de_DE
-#define LIGHTEN_MODEL_en_AU
-//#define LIGHTEN_MODEL_en_GB
-#define LIGHTEN_MODEL_en_IN
-//#define LIGHTEN_MODEL_en_US
-#define LIGHTEN_MODEL_es_ES
-#define LIGHTEN_MODEL_fr_CA
-//#define LIGHTEN_MODEL_fr_FR
-#define LIGHTEN_MODEL_it_IT
-#define LIGHTEN_MODEL_ja_JP
+#define AMZ_WW_NUMBER_OF_WW_MODELS 3
+
+#define AMZN_MODEL_SUPPORTED_LOCALES \
+				"\t\t\t\ten-US\r\n" \
+				"\t\t\t\tes-ES\r\n" \
+				"\t\t\t\tfr-FR\r\n" \
+
+/* Wake Word Model Support Definitions */
+#define AMZN_MODEL_WR_250k_en_US_alexa
+#define AMZN_MODEL_U_250k_es_ES_alexa
+#define AMZN_MODEL_WR_250k_fr_FR_alexa
 
 #define MAX_SIZE_CMD 5
 
 #define AMZ_WW_SELFWAKE_DELAY_MS (500)
 
+typedef struct _amzn_ww_model_map
+{
+    char *model;
+    const char *locale;
+} amzn_ww_model_map;
+
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-extern const char prlBinaryModelData_deDE[];
-extern const char prlBinaryModelData_deDE_50KB[];
-extern const char prlBinaryModelData_enAU[];
-extern const char prlBinaryModelData_enAU_50KB[];
-extern const char prlBinaryModelData_enGB[];
-extern const char prlBinaryModelData_enGB_50KB[];
-extern const char prlBinaryModelData_enIN[];
-extern const char prlBinaryModelData_enIN_50KB[];
-extern const char prlBinaryModelData_enUS[];
-extern const char prlBinaryModelData_enUS_50KB[];
-extern const char prlBinaryModelData_esES[];
-extern const char prlBinaryModelData_esES_50KB[];
-extern const char prlBinaryModelData_frCA[];
-extern const char prlBinaryModelData_frCA_50KB[];
-extern const char prlBinaryModelData_frFR[];
-extern const char prlBinaryModelData_frFR_50KB[];
-extern const char prlBinaryModelData_itIT[];
-extern const char prlBinaryModelData_itIT_50KB[];
-extern const char prlBinaryModelData_jaJP[];
-extern const char prlBinaryModelData_jaJP_50KB[];
+/* Wake Word Model Externs */
+#ifdef AMZN_MODEL_U_1S_50k_de_DE_alexa
+extern const char U_1S_50k_de_DE_alexa[];
+#endif
+#ifdef AMZN_MODEL_WS_250k_de_DE_alexa
+extern const char WS_250k_de_DE_alexa[];
+#endif
+#ifdef AMZN_MODEL_U_1S_50k_en_AU_alexa
+extern const char U_1S_50k_en_AU_alexa[];
+#endif
+#ifdef AMZN_MODEL_WR_250k_en_AU_alexa
+extern const char WR_250k_en_AU_alexa[];
+#endif
+#ifdef AMZN_MODEL_U_1S_50k_en_CA_alexa
+extern const char U_1S_50k_en_CA_alexa[];
+#endif
+#ifdef AMZN_MODEL_U_1S_50k_en_GB_alexa
+extern const char U_1S_50k_en_GB_alexa[];
+#endif
+#ifdef AMZN_MODEL_WS_250k_en_GB_alexa
+extern const char WS_250k_en_GB_alexa[];
+#endif
+#ifdef AMZN_MODEL_U_1S_50k_en_IN_alexa
+extern const char U_1S_50k_en_IN_alexa[];
+#endif
+#ifdef AMZN_MODEL_WS_250k_en_IN_alexa
+extern const char WS_250k_en_IN_alexa[];
+#endif
+#ifdef AMZN_MODEL_D_en_US_alexa
+extern const char D_en_US_alexa[];
+#endif
+#ifdef AMZN_MODEL_U_1S_50k_en_US_alexa
+extern const char U_1S_50k_en_US_alexa[];
+#endif
+#ifdef AMZN_MODEL_WR_250k_en_US_alexa
+extern const char WR_250k_en_US_alexa[];
+#endif
+#ifdef AMZN_MODEL_D_es_ES_alexa
+extern const char D_es_ES_alexa[];
+#endif
+#ifdef AMZN_MODEL_U_1S_50k_es_ES_alexa
+extern const char U_1S_50k_es_ES_alexa[];
+#endif
+#ifdef AMZN_MODEL_U_250k_es_ES_alexa
+extern const char U_250k_es_ES_alexa[];
+#endif
+#ifdef AMZN_MODEL_U_1S_50k_es_MX_alexa
+extern const char U_1S_50k_es_MX_alexa[];
+#endif
+#ifdef AMZN_MODEL_U_1S_50k_fr_CA_alexa
+extern const char U_1S_50k_fr_CA_alexa[];
+#endif
+#ifdef AMZN_MODEL_WR_250k_fr_CA_alexa
+extern const char WR_250k_fr_CA_alexa[];
+#endif
+#ifdef AMZN_MODEL_U_1S_50k_fr_FR_alexa
+extern const char U_1S_50k_fr_FR_alexa[];
+#endif
+#ifdef AMZN_MODEL_WR_250k_fr_FR_alexa
+extern const char WR_250k_fr_FR_alexa[];
+#endif
+#ifdef AMZN_MODEL_U_1S_50k_it_IT_alexa
+extern const char U_1S_50k_it_IT_alexa[];
+#endif
+#ifdef AMZN_MODEL_WS_250k_it_IT_alexa
+extern const char WS_250k_it_IT_alexa[];
+#endif
+#ifdef AMZN_MODEL_U_1S_50k_ja_JP_alexa
+extern const char U_1S_50k_ja_JP_alexa[];
+#endif
+#ifdef AMZN_MODEL_WS_250k_ja_JP_alexa
+extern const char WS_250k_ja_JP_alexa[];
+#endif
 
-extern int prlBinaryModeldeDELen;
-extern int prlBinaryModeldeDE50KBLen;
-extern int prlBinaryModelenAULen;
-extern int prlBinaryModelenAU50KBLen;
-extern int prlBinaryModelenGBLen;
-extern int prlBinaryModelenGB50KBLen;
-extern int prlBinaryModelenINLen;
-extern int prlBinaryModelenIN50KBLen;
-extern int prlBinaryModelenUSLen;
-extern int prlBinaryModelenUS50KBLen;
-extern int prlBinaryModelesESLen;
-extern int prlBinaryModelesES50KBLen;
-extern int prlBinaryModelfrFRLen;
-extern int prlBinaryModelfrFR50KBLen;
-extern int prlBinaryModelitITLen;
-extern int prlBinaryModelitIT50KBLen;
-extern int prlBinaryModeljaJPLen;
-extern int prlBinaryModeljaJP50KBLen;
+/* Wake Word Model Externs Length */
+#ifdef AMZN_MODEL_U_1S_50k_de_DE_alexa
+extern int U_1S_50k_de_DE_alexaLen;
+#endif
+#ifdef AMZN_MODEL_WS_250k_de_DE_alexa
+extern int WS_250k_de_DE_alexaLen;
+#endif
+#ifdef AMZN_MODEL_U_1S_50k_en_AU_alexa
+extern int U_1S_50k_en_AU_alexaLen;
+#endif
+#ifdef AMZN_MODEL_WR_250k_en_AU_alexa
+extern int WR_250k_en_AU_alexaLen;
+#endif
+#ifdef AMZN_MODEL_U_1S_50k_en_CA_alexa
+extern int U_1S_50k_en_CA_alexaLen;
+#endif
+#ifdef AMZN_MODEL_U_1S_50k_en_GB_alexa
+extern int U_1S_50k_en_GB_alexaLen;
+#endif
+#ifdef AMZN_MODEL_WS_250k_en_GB_alexa
+extern int WS_250k_en_GB_alexaLen;
+#endif
+#ifdef AMZN_MODEL_U_1S_50k_en_IN_alexa
+extern int U_1S_50k_en_IN_alexaLen;
+#endif
+#ifdef AMZN_MODEL_WS_250k_en_IN_alexa
+extern int WS_250k_en_IN_alexaLen;
+#endif
+#ifdef AMZN_MODEL_D_en_US_alexa
+extern int D_en_US_alexaLen;
+#endif
+#ifdef AMZN_MODEL_U_1S_50k_en_US_alexa
+extern int U_1S_50k_en_US_alexaLen;
+#endif
+#ifdef AMZN_MODEL_WR_250k_en_US_alexa
+extern int WR_250k_en_US_alexaLen;
+#endif
+#ifdef AMZN_MODEL_D_es_ES_alexa
+extern int D_es_ES_alexaLen;
+#endif
+#ifdef AMZN_MODEL_U_1S_50k_es_ES_alexa
+extern int U_1S_50k_es_ES_alexaLen;
+#endif
+#ifdef AMZN_MODEL_U_250k_es_ES_alexa
+extern int U_250k_es_ES_alexaLen;
+#endif
+#ifdef AMZN_MODEL_U_1S_50k_es_MX_alexa
+extern int U_1S_50k_es_MX_alexaLen;
+#endif
+#ifdef AMZN_MODEL_U_1S_50k_fr_CA_alexa
+extern int U_1S_50k_fr_CA_alexaLen;
+#endif
+#ifdef AMZN_MODEL_WR_250k_fr_CA_alexa
+extern int WR_250k_fr_CA_alexaLen;
+#endif
+#ifdef AMZN_MODEL_U_1S_50k_fr_FR_alexa
+extern int U_1S_50k_fr_FR_alexaLen;
+#endif
+#ifdef AMZN_MODEL_WR_250k_fr_FR_alexa
+extern int WR_250k_fr_FR_alexaLen;
+#endif
+#ifdef AMZN_MODEL_U_1S_50k_it_IT_alexa
+extern int U_1S_50k_it_IT_alexaLen;
+#endif
+#ifdef AMZN_MODEL_WS_250k_it_IT_alexa
+extern int WS_250k_it_IT_alexaLen;
+#endif
+#ifdef AMZN_MODEL_U_1S_50k_ja_JP_alexa
+extern int U_1S_50k_ja_JP_alexaLen;
+#endif
+#ifdef AMZN_MODEL_WS_250k_ja_JP_alexa
+extern int WS_250k_ja_JP_alexaLen;
+#endif
 
 struct ww_model_cmd
 {
@@ -186,3 +301,4 @@ uint32_t SLN_AMAZON_WAKE_GetModelLocaleSize();
 /*******************************************************************************
  * API
  ******************************************************************************/
+

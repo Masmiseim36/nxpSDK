@@ -17,8 +17,8 @@
 #define DEFAULT_USB_LOGGING_VAL (0) // By default and factory new, the realtime logging isn't enabled.
 #define DEFAULT_AUDIO_AMP_CAL_STATE_VAL \
     (0) // By default and factory new, the amplifier isn't calibrated. This forces calibration
-#define DEFAULT_MIC_MUTE_STATE_VAL (0) // By default, the mic isn't muted
-#define DEFAULT_STREAM_VOLUME_VAL (-1) // This is an invalid default value to force using cloud volume on factory new
+#define DEFAULT_MIC_MUTE_STATE_VAL (0)  // By default, the mic isn't muted
+#define DEFAULT_STREAM_VOLUME_VAL  (-1) // This is an invalid default value to force using cloud volume on factory new
 #define DEFAULT_ALERT_VOLUME_VAL \
     (6) // This is to ensure that going offline before first interaction with service doesn't effect volume
 

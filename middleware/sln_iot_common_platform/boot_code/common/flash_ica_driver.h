@@ -289,6 +289,12 @@ int32_t FICA_read_hyper_flash_id(uint8_t *pid);
 int32_t FICA_GetImgTypeFromAddr(uint32_t appaddr, int32_t *imgtype);
 
 /*!
+ * @brief Reads the current image type based on ResetISR address
+ *
+ */
+int32_t FICA_GetImgTypeFromResetISRAddr(int32_t *imgType);
+
+/*!
  * @brief Verifies the image certificate
  *
  */

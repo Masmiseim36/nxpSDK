@@ -30,8 +30,8 @@ uint32_t InstallIRQHandler(IRQn_Type irq, uint32_t irqHandler)
     extern uint32_t Image$$VECTOR_RAM$$Base[];
     extern uint32_t Image$$RW_m_data$$Base[];
 
-#define __VECTOR_TABLE Image$$VECTOR_ROM$$Base
-#define __VECTOR_RAM Image$$VECTOR_RAM$$Base
+#define __VECTOR_TABLE          Image$$VECTOR_ROM$$Base
+#define __VECTOR_RAM            Image$$VECTOR_RAM$$Base
 #define __RAM_VECTOR_TABLE_SIZE (((uint32_t)Image$$RW_m_data$$Base - (uint32_t)Image$$VECTOR_RAM$$Base))
 #elif defined(__ICCARM__)
     extern uint32_t __RAM_VECTOR_TABLE_SIZE[];
@@ -64,12 +64,7 @@ uint32_t InstallIRQHandler(IRQn_Type irq, uint32_t irqHandler)
     __VECTOR_RAM[irq + 16] = irqHandler;
 
     EnableGlobalIRQ(irqMaskValue);
-
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 
     return ret;
 }
@@ -164,6 +159,42 @@ void SDK_Free(void *ptr)
  *
  * @param count  Counts of loop needed for dalay.
  */
+#if defined(SDK_DELAY_USE_DWT) && defined(DWT)
+void enableCpuCycleCounter(void)
+{
+    /* Make sure the DWT trace fucntion is enabled. */
+    if (CoreDebug_DEMCR_TRCENA_Msk != (CoreDebug_DEMCR_TRCENA_Msk & CoreDebug->DEMCR))
+    {
+        CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;
+    }
+
+    /* CYCCNT not supported on this device. */
+    assert(DWT_CTRL_NOCYCCNT_Msk != (DWT->CTRL & DWT_CTRL_NOCYCCNT_Msk));
+
+    /* Read CYCCNT directly if CYCCENT has already been enabled, otherwise enable CYCCENT first. */
+    if (DWT_CTRL_CYCCNTENA_Msk != (DWT_CTRL_CYCCNTENA_Msk & DWT->CTRL))
+    {
+        DWT->CTRL |= DWT_CTRL_CYCCNTENA_Msk;
+    }
+}
+
+uint32_t getCpuCycleCount(void)
+{
+    return DWT->CYCCNT;
+}
+#elif defined __XCC__
+extern uint32_t xthal_get_ccount(void);
+void enableCpuCycleCounter(void)
+{
+    /* do nothing */
+}
+
+uint32_t getCpuCycleCount(void)
+{
+    return xthal_get_ccount();
+}
+#endif
+
 #ifndef __XCC__
 #if (!defined(SDK_DELAY_USE_DWT)) || (!defined(DWT))
 #if defined(__CC_ARM) /* This macro is arm v5 specific */
@@ -196,7 +227,7 @@ static void DelayLoop(uint32_t count)
 }
 #endif /* defined(__CC_ARM) */
 #endif /* (!defined(SDK_DELAY_USE_DWT)) || (!defined(DWT)) */
-
+#endif /* __XCC__ */
 /*!
  * @brief Delay at least for some time.
  *  Please note that, if not uses DWT, this API will use while loop for delay, different run-time environments have
@@ -213,36 +244,23 @@ void SDK_DelayAtLeastUs(uint32_t delay_us, uint32_t coreClock_Hz)
     uint64_t count = USEC_TO_COUNT(delay_us, coreClock_Hz);
     assert(count <= UINT32_MAX);
 
-#if defined(SDK_DELAY_USE_DWT) && defined(DWT) /* Use DWT for better accuracy */
-    /* Make sure the DWT trace fucntion is enabled. */
-    if (CoreDebug_DEMCR_TRCENA_Msk != (CoreDebug_DEMCR_TRCENA_Msk & CoreDebug->DEMCR))
-    {
-        CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;
-    }
+#if defined(SDK_DELAY_USE_DWT) && defined(DWT) || (defined __XCC__) /* Use DWT for better accuracy */
 
-    /* CYCCNT not supported on this device. */
-    assert(DWT_CTRL_NOCYCCNT_Msk != (DWT->CTRL & DWT_CTRL_NOCYCCNT_Msk));
-
-    /* Read CYCCNT directly if CYCCENT has already been enabled, otherwise enable CYCCENT first. */
-    if (DWT_CTRL_CYCCNTENA_Msk != (DWT_CTRL_CYCCNTENA_Msk & DWT->CTRL))
-    {
-        DWT->CTRL |= DWT_CTRL_CYCCNTENA_Msk;
-    }
-
+    enableCpuCycleCounter();
     /* Calculate the count ticks. */
-    count += DWT->CYCCNT;
+    count += getCpuCycleCount();
 
     if (count > UINT32_MAX)
     {
         count -= UINT32_MAX;
         /* Wait for cyccnt overflow. */
-        while (count < DWT->CYCCNT)
+        while (count < getCpuCycleCount())
         {
         }
     }
 
     /* Wait for cyccnt reach count value. */
-    while (count > DWT->CYCCNT)
+    while (count > getCpuCycleCount())
     {
     }
 #else
@@ -258,6 +276,5 @@ void SDK_DelayAtLeastUs(uint32_t delay_us, uint32_t coreClock_Hz)
     count = count / 4U;
 #endif
     DelayLoop((uint32_t)count);
-#endif /* defined(SDK_DELAY_USE_DWT) && defined(DWT) */
+#endif /* defined(SDK_DELAY_USE_DWT) && defined(DWT) || (defined __XCC__) */
 }
-#endif /* __XCC__ */

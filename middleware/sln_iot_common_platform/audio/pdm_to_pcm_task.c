@@ -1,13 +1,11 @@
 /*
- * Copyright 2018 NXP.
+ * Copyright 2018-2020 NXP.
  * This software is owned or controlled by NXP and may only be used strictly in accordance with the
  * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
  * activating and/or otherwise using the software, you are agreeing that you have read, and that you
  * agree to comply with and are bound by, such license terms. If you do not agree to be bound by the
  * applicable license terms, then you may not retain, install, activate or otherwise use the software.
  */
-
-#include "pdm_to_pcm_task.h"
 
 /* FreeRTOS kernel includes. */
 #include "FreeRTOS.h"
@@ -16,14 +14,18 @@
 #include "task.h"
 #include "timers.h"
 
-/* Freescale includes. */
+/* NXP includes. */
 #include "board.h"
-
+#include "pdm_to_pcm_task.h"
 #include "pdm_pcm_definitions.h"
 #include "sln_pdm_mic.h"
 
+#if defined(SLN_DSP_TOOLBOX_LIB)
+#include "sln_dsp_toolbox.h"
+#else
 #define SLN_DSP
 #include "sln_intelligence_toolbox.h"
+#endif
 
 /*******************************************************************************
  * Definitions
@@ -80,6 +82,10 @@ static EventGroupHandle_t s_PdmDmaEventGroup;
 __attribute__((aligned(2))) static pcmPingPong_t s_pcmStream;
 static int16_t s_ampOutput[PCM_SINGLE_CH_SMPL_COUNT * 2];
 uint8_t *dspMemPool = NULL;
+
+bool g_micsOn            = false;
+bool g_decimationStarted = false;
+
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -140,9 +146,11 @@ status_t pcm_to_pcm_set_config(pcm_pcm_task_config_t *config)
             status = kStatus_InvalidArgument;
         }
 
-        s_config.feedbackInit   = config->feedbackInit;
-        s_config.processingTask = config->processingTask;
-        s_config.thisTask       = config->thisTask;
+        s_config.feedbackInit    = config->feedbackInit;
+        s_config.feedbackEnable  = config->feedbackEnable;
+        s_config.feedbackDisable = config->feedbackDisable;
+        s_config.processingTask  = config->processingTask;
+        s_config.thisTask        = config->thisTask;
     }
 
     return status;
@@ -342,6 +350,9 @@ void pdm_to_pcm_task(void *pvParameters)
         configPRINTF(("ERROR [%d]: DSP Toolbox initialization has failed!\r\n", dspStatus));
     }
 
+    g_micsOn            = true;
+    g_decimationStarted = true;
+
     for (;;)
     {
         preProcessEvents = xEventGroupWaitBits(s_PdmDmaEventGroup, 0x00FFFFFF, pdTRUE, pdFALSE, portMAX_DELAY);
@@ -474,5 +485,71 @@ void pdm_to_pcm_task(void *pvParameters)
 
             postProcessEvents &= ~(EVT_PONG_MASK);
         }
+    }
+}
+
+void pdm_to_pcm_mics_off(void)
+{
+    /* Do nothing if already off or decimation not started */
+    if ((true == g_micsOn) && (true == g_decimationStarted))
+    {
+#if SAI1_CH_COUNT
+        PDM_MIC_StopMic(&g_pdmMicSai1Handle);
+#endif
+
+#if USE_SAI2_MIC
+        PDM_MIC_StopMic(&g_pdmMicSai2Handle);
+#endif
+
+#if SAI1_CH_COUNT
+        g_pdmMicSai1Handle.pingPongTracker = 0;
+#endif
+
+#if USE_SAI2_MIC
+        g_pdmMicSai2Handle.pingPongTracker = 0;
+#endif
+
+        memset(s_pcmStream, 0, sizeof(pcmPingPong_t));
+
+        /* amplifier loopback */
+        if (NULL != s_config.feedbackDisable)
+        {
+            s_config.feedbackDisable();
+        }
+
+        /* update flag */
+        g_micsOn = false;
+    }
+}
+
+void pdm_to_pcm_mics_on(void)
+{
+    /* Do nothing if already on or decimation not started */
+    if ((false == g_micsOn) && (true == g_decimationStarted))
+    {
+#if SAI1_CH_COUNT
+        PDM_MIC_ConfigMic(&g_pdmMicSai1Handle);
+#endif
+
+#if USE_SAI2_MIC
+        PDM_MIC_ConfigMic(&g_pdmMicSai2Handle);
+#endif
+
+#if USE_SAI1_RX_DATA0_MIC || USE_SAI1_RX_DATA1_MIC
+        PDM_MIC_StartMic(&g_pdmMicSai1Handle);
+#endif
+
+#if USE_SAI2_MIC
+        PDM_MIC_StartMic(&g_pdmMicSai2Handle);
+#endif
+
+        /* amplifier loopback */
+        if (NULL != s_config.feedbackEnable)
+        {
+            s_config.feedbackEnable();
+        }
+
+        /* update flag */
+        g_micsOn = true;
     }
 }

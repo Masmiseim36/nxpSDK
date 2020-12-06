@@ -82,7 +82,7 @@
 /******************************************************************************
  *                                Constants
  ******************************************************************************/
-#define ERR_CMD_OK 0
+#define ERR_CMD_OK  0
 #define ERR_UNKNOWN 1
 
 #ifndef BLE_LTK_FILE
@@ -266,6 +266,14 @@ const uint8_t ble_gatt_database[] = {
 /******************************************************************************
  *                          Function Definitions
  ******************************************************************************/
+ 
+ /*
+ * Some of the variables below are currently unused. This may change when print macro are enabled.
+ */
+#if defined(__GNUC__)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-but-set-variable"
+
 /*
  *  Entry point to the application. Set device configuration and start BT
  *  stack initialization.  The actual application initialization will happen
@@ -522,6 +530,7 @@ static wiced_result_t hello_sensor_management_callback(wiced_bt_management_evt_t
  * Check if client has registered for notification/indication
  * and send message if appropriate
  */
+ #if 0
 static void hello_sensor_send_message(void)
 {
     WPRINT_BT_APP_INFO(("%s: Client's Characteristic configuration:%d\r\n", __func__,
@@ -533,6 +542,7 @@ static void hello_sensor_send_message(void)
         return;
     }
 }
+#endif
 
 /*
  * Find attribute description by handle
@@ -1004,3 +1014,6 @@ void ble_server_get_char_wifi_str(char *val)
     memcpy(val, commissioning_char_wifi.val, commissioning_char_wifi.val_len);
     val[commissioning_char_wifi.val_len] = '\0';
 }
+
+#pragma GCC diagnostic pop
+#endif /* GNUC pragma for Unused Variables */

@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -123,6 +123,12 @@ static status_t FLEXIO_I2C_MasterTransferInitStateMachine(FLEXIO_I2C_Type *base,
         return kStatus_InvalidArgument;
     }
 
+    /* Configure timer1 disable condition. */
+    uint32_t tmpConfig = base->flexioBase->TIMCFG[base->timerIndex[1]];
+    tmpConfig &= ~FLEXIO_TIMCFG_TIMDIS_MASK;
+    tmpConfig |= FLEXIO_TIMCFG_TIMDIS(kFLEXIO_TimerDisableOnPreTimerDisable);
+    base->flexioBase->TIMCFG[base->timerIndex[1]] = tmpConfig;
+
 #if I2C_RETRY_TIMES
     uint32_t waitTimes = I2C_RETRY_TIMES;
     while ((0U == (FLEXIO_GetShifterStatusFlags(base->flexioBase) & (1UL << base->shifterIndex[0]))) &&
@@ -163,6 +169,9 @@ static status_t FLEXIO_I2C_MasterTransferRunStateMachine(FLEXIO_I2C_Type *base,
             (void)FLEXIO_I2C_MasterReadByte(base);
 
             FLEXIO_I2C_MasterAbortStop(base);
+
+            /* Delay one clk cycle to ensure the bus is idle. */
+            SDK_DelayAtLeastUs(1000000UL / base->baudrate, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
 
             handle->state = (uint8_t)kFLEXIO_I2C_Idle;
 
@@ -451,8 +460,8 @@ static void FLEXIO_I2C_MasterTransferComplete(FLEXIO_I2C_Type *base,
  * Check the FLEXIO pin status to see whether either of SDA and SCL pin is pulled down.
  *
  * param base Pointer to FLEXIO_I2C_Type structure..
- * retval #kStatus_Success
- * retval #kStatus_FLEXIO_I2C_Busy
+ * retval kStatus_Success
+ * retval kStatus_FLEXIO_I2C_Busy
  */
 status_t FLEXIO_I2C_CheckForBusyBus(FLEXIO_I2C_Type *base)
 {
@@ -501,7 +510,7 @@ status_t FLEXIO_I2C_CheckForBusyBus(FLEXIO_I2C_Type *base)
 */
 status_t FLEXIO_I2C_MasterInit(FLEXIO_I2C_Type *base, flexio_i2c_master_config_t *masterConfig, uint32_t srcClock_Hz)
 {
-    assert(base && masterConfig);
+    assert((base != NULL) && (masterConfig != NULL));
 
     flexio_shifter_config_t shifterConfig;
     flexio_timer_config_t timerConfig;
@@ -557,12 +566,14 @@ status_t FLEXIO_I2C_MasterInit(FLEXIO_I2C_Type *base, flexio_i2c_master_config_t
     timerConfig.timerDecrement  = kFLEXIO_TimerDecSrcOnFlexIOClockShiftTimerOutput;
     timerConfig.timerReset      = kFLEXIO_TimerResetOnTimerPinEqualToTimerOutput;
     timerConfig.timerDisable    = kFLEXIO_TimerDisableOnPreTimerDisable;
-    timerConfig.timerEnable     = kFLEXIO_TimerEnableOnPrevTimerEnable;
-    timerConfig.timerStop       = kFLEXIO_TimerStopBitEnableOnTimerDisable;
-    timerConfig.timerStart      = kFLEXIO_TimerStartBitEnabled;
+    timerConfig.timerEnable     = kFLEXIO_TimerEnableOnTriggerHigh;
+    timerConfig.timerStop       = kFLEXIO_TimerStopBitDisabled;
+    timerConfig.timerStart      = kFLEXIO_TimerStartBitDisabled;
 
     /* Set TIMCMP = (baud rate divider / 2) - 1. */
-    timerDiv = (srcClock_Hz / masterConfig->baudRate_Bps) / 2U - 1U;
+    timerDiv = (uint16_t)(srcClock_Hz / masterConfig->baudRate_Bps) / 2U - 1U;
+    /* Calculate and assign the actual baudrate. */
+    base->baudrate = srcClock_Hz / (2U * ((uint32_t)timerDiv + 1U));
 
     timerConfig.timerCompare = timerDiv;
 
@@ -581,8 +592,8 @@ status_t FLEXIO_I2C_MasterInit(FLEXIO_I2C_Type *base, flexio_i2c_master_config_t
     timerConfig.timerReset      = kFLEXIO_TimerResetNever;
     timerConfig.timerDisable    = kFLEXIO_TimerDisableOnTimerCompare;
     timerConfig.timerEnable     = kFLEXIO_TimerEnableOnTriggerHigh;
-    timerConfig.timerStop       = kFLEXIO_TimerStopBitEnableOnTimerDisable;
-    timerConfig.timerStart      = kFLEXIO_TimerStartBitEnabled;
+    timerConfig.timerStop       = kFLEXIO_TimerStopBitDisabled;
+    timerConfig.timerStart      = kFLEXIO_TimerStartBitDisabled;
 
     /* Set TIMCMP when confinguring transfer bytes. */
     FLEXIO_SetTimerConfig(base->flexioBase, base->timerIndex[0], &timerConfig);
@@ -669,7 +680,7 @@ void FLEXIO_I2C_MasterDeinit(FLEXIO_I2C_Type *base)
 */
 void FLEXIO_I2C_MasterGetDefaultConfig(flexio_i2c_master_config_t *masterConfig)
 {
-    assert(masterConfig);
+    assert(masterConfig != NULL);
 
     /* Initializes the configure structure to zero. */
     (void)memset(masterConfig, 0, sizeof(*masterConfig));
@@ -785,9 +796,12 @@ void FLEXIO_I2C_MasterSetBaudRate(FLEXIO_I2C_Type *base, uint32_t baudRate_Bps, 
     FLEXIO_Type *flexioBase = base->flexioBase;
 
     /* Set TIMCMP = (baud rate divider / 2) - 1.*/
-    timerDiv = (srcClock_Hz / baudRate_Bps) / 2U - 1U;
+    timerDiv = (uint16_t)((srcClock_Hz / baudRate_Bps) / 2U - 1U);
 
     flexioBase->TIMCMP[base->timerIndex[1]] = timerDiv;
+
+    /* Calculate and assign the actual baudrate. */
+    base->baudrate = srcClock_Hz / (2U * ((uint32_t)timerDiv + 1U));
 }
 
 /*!
@@ -812,7 +826,7 @@ status_t FLEXIO_I2C_MasterSetTransferCount(FLEXIO_I2C_Type *base, uint16_t count
     uint32_t timerConfig    = 0U;
     FLEXIO_Type *flexioBase = base->flexioBase;
 
-    flexioBase->TIMCMP[base->timerIndex[0]] = count * 18U + 1U;
+    flexioBase->TIMCMP[base->timerIndex[0]] = (uint32_t)count * 18U + 1U;
     timerConfig                             = flexioBase->TIMCFG[base->timerIndex[0]];
     timerConfig &= ~FLEXIO_TIMCFG_TIMDIS_MASK;
     timerConfig |= FLEXIO_TIMCFG_TIMDIS(kFLEXIO_TimerDisableOnTimerCompare);
@@ -878,10 +892,17 @@ void FLEXIO_I2C_MasterAbortStop(FLEXIO_I2C_Type *base)
     uint32_t tmpConfig;
 
     /* Prepare abort stop. */
+    /* Disable timer 0. */
     tmpConfig = base->flexioBase->TIMCFG[base->timerIndex[0]];
     tmpConfig &= ~FLEXIO_TIMCFG_TIMDIS_MASK;
     tmpConfig |= FLEXIO_TIMCFG_TIMDIS(kFLEXIO_TimerDisableOnPinBothEdge);
     base->flexioBase->TIMCFG[base->timerIndex[0]] = tmpConfig;
+
+    /* Disable timer 1. */
+    tmpConfig = base->flexioBase->TIMCFG[base->timerIndex[1]];
+    tmpConfig &= ~FLEXIO_TIMCFG_TIMDIS_MASK;
+    tmpConfig |= FLEXIO_TIMCFG_TIMDIS(kFLEXIO_TimerDisableOnPinBothEdge);
+    base->flexioBase->TIMCFG[base->timerIndex[1]] = tmpConfig;
 }
 
 /*!
@@ -921,8 +942,8 @@ void FLEXIO_I2C_MasterEnableAck(FLEXIO_I2C_Type *base, bool enable)
  */
 status_t FLEXIO_I2C_MasterWriteBlocking(FLEXIO_I2C_Type *base, const uint8_t *txBuff, uint8_t txSize)
 {
-    assert(txBuff);
-    assert(txSize);
+    assert(txBuff != NULL);
+    assert(txSize != 0U);
 
     uint32_t status;
 #if I2C_RETRY_TIMES
@@ -972,8 +993,8 @@ status_t FLEXIO_I2C_MasterWriteBlocking(FLEXIO_I2C_Type *base, const uint8_t *tx
  */
 status_t FLEXIO_I2C_MasterReadBlocking(FLEXIO_I2C_Type *base, uint8_t *rxBuff, uint8_t rxSize)
 {
-    assert(rxBuff);
-    assert(rxSize);
+    assert(rxBuff != NULL);
+    assert(rxSize != 0U);
 
 #if I2C_RETRY_TIMES
     uint32_t waitTimes = I2C_RETRY_TIMES;
@@ -1014,7 +1035,7 @@ status_t FLEXIO_I2C_MasterReadBlocking(FLEXIO_I2C_Type *base, uint8_t *rxBuff, u
  */
 status_t FLEXIO_I2C_MasterTransferBlocking(FLEXIO_I2C_Type *base, flexio_i2c_master_transfer_t *xfer)
 {
-    assert(xfer);
+    assert(xfer != NULL);
 
 #if defined(FSL_FEATURE_FLEXIO_HAS_PIN_STATUS) && FSL_FEATURE_FLEXIO_HAS_PIN_STATUS
     /* Return an error if the bus is already in use not by us.*/
@@ -1069,7 +1090,7 @@ status_t FLEXIO_I2C_MasterTransferBlocking(FLEXIO_I2C_Type *base, flexio_i2c_mas
 
     /* Timer disable on timer compare, wait until bit clock TSF set, which means timer disable and stop has been sent.
      */
-    while (0U == (FLEXIO_GetTimerStatusFlags(base->flexioBase) & (1UL << base->timerIndex[0])))
+    while (0U == (FLEXIO_GetTimerStatusFlags(base->flexioBase) & (1UL << base->timerIndex[1])))
     {
     }
 
@@ -1091,7 +1112,7 @@ status_t FLEXIO_I2C_MasterTransferCreateHandle(FLEXIO_I2C_Type *base,
                                                flexio_i2c_master_transfer_callback_t callback,
                                                void *userData)
 {
-    assert(handle);
+    assert(handle != NULL);
 
     IRQn_Type flexio_irqs[] = FLEXIO_IRQS;
 
@@ -1114,7 +1135,7 @@ status_t FLEXIO_I2C_MasterTransferCreateHandle(FLEXIO_I2C_Type *base,
  * brief Performs a master interrupt non-blocking transfer on the I2C bus.
  *
  * note The API returns immediately after the transfer initiates.
- * Call FLEXIO_I2C_MasterGetTransferCount to poll the transfer status to check whether
+ * Call FLEXIO_I2C_MasterTransferGetCount to poll the transfer status to check whether
  * the transfer is finished. If the return status is not kStatus_FLEXIO_I2C_Busy, the transfer
  * is finished.
  *
@@ -1128,8 +1149,8 @@ status_t FLEXIO_I2C_MasterTransferNonBlocking(FLEXIO_I2C_Type *base,
                                               flexio_i2c_master_handle_t *handle,
                                               flexio_i2c_master_transfer_t *xfer)
 {
-    assert(handle);
-    assert(xfer);
+    assert(handle != NULL);
+    assert(xfer != NULL);
 
     status_t result = kStatus_Success;
 
@@ -1174,7 +1195,7 @@ status_t FLEXIO_I2C_MasterTransferNonBlocking(FLEXIO_I2C_Type *base,
  */
 void FLEXIO_I2C_MasterTransferAbort(FLEXIO_I2C_Type *base, flexio_i2c_master_handle_t *handle)
 {
-    assert(handle);
+    assert(handle != NULL);
 
     /* Disable interrupts. */
     FLEXIO_I2C_MasterDisableInterrupts(
@@ -1191,6 +1212,7 @@ void FLEXIO_I2C_MasterTransferAbort(FLEXIO_I2C_Type *base, flexio_i2c_master_han
  * param handle Pointer to flexio_i2c_master_handle_t structure which stores the transfer state.
  * param count Number of bytes transferred so far by the non-blocking transaction.
  * retval kStatus_InvalidArgument count is Invalid.
+ * retval kStatus_NoTransferInProgress There is not a non-blocking transaction currently in progress.
  * retval kStatus_Success Successfully return the count.
  */
 status_t FLEXIO_I2C_MasterTransferGetCount(FLEXIO_I2C_Type *base, flexio_i2c_master_handle_t *handle, size_t *count)
@@ -1198,6 +1220,13 @@ status_t FLEXIO_I2C_MasterTransferGetCount(FLEXIO_I2C_Type *base, flexio_i2c_mas
     if (NULL == count)
     {
         return kStatus_InvalidArgument;
+    }
+
+    /* Catch when there is not an active transfer. */
+    if (handle->state == (uint8_t)kFLEXIO_I2C_Idle)
+    {
+        *count = 0;
+        return kStatus_NoTransferInProgress;
     }
 
     *count = handle->transferSize - handle->transfer.dataSize;

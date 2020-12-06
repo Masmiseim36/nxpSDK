@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP.
+ * Copyright 2019-2020 NXP.
  * This software is owned or controlled by NXP and may only be used strictly in accordance with the
  * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
  * activating and/or otherwise using the software, you are agreeing that you have read, and that you
@@ -10,8 +10,9 @@
 #include <time.h>
 
 /* Board includes */
-#include "board.h"
 #include "pin_mux.h"
+#include "board.h"
+#include "clock_config.h"
 
 /* FreeRTOS kernel includes */
 #include "FreeRTOS.h"
@@ -30,7 +31,6 @@
 
 /* AIS includes */
 #include "aisv2.h"
-#include "aisv2_app.h"
 #include "ais_streamer.h"
 
 /* Driver includes */
@@ -123,6 +123,7 @@ void offline_audio_task(void *arg);
  * Variables
  ******************************************************************************/
 
+
 const uint64_t kEpochDayZero = 3752179200ULL; // 11/26/2018 0:00:00
 
 volatile uint32_t aisAlertCount = 0U;
@@ -167,9 +168,23 @@ extern int RunShadowDemo(bool awsIotMqttMode,
                   void *pNetworkCredentialInfo,
                   const IotNetworkInterface_t *pNetworkInterface);
 
+__attribute__((section(".ocram_non_cacheable_data"))) StackType_t shell_task_stack_buffer[ 512 ];
+__attribute__((section(".ocram_non_cacheable_data"))) StaticTask_t sln_shell_task_buffer;
+
+__attribute__((section(".ocram_non_cacheable_data"))) StackType_t ota_task_stack_buffer[ 384 ];
+__attribute__((section(".ocram_non_cacheable_data"))) StaticTask_t ota_task_buffer;
+
+__attribute__((section(".ocram_non_cacheable_data"))) StackType_t button_task_stack_buffer[ 1024 ];
+__attribute__((section(".ocram_non_cacheable_data"))) StaticTask_t button_task_buffer;
+
 /*******************************************************************************
  * Code
  ******************************************************************************/
+
+void SysTick_DelayTicks(uint32_t n)
+{
+    vTaskDelay(n);
+}
 
 /* Callback for any streamer error to send app notification
  * This is here to ensure there isn't tight coupling in the streamer module */
@@ -702,12 +717,17 @@ void appTask(void *arg)
     // Set loopback event bit for AMP
     SLN_AMP_SetLoopBackEventBits(pdm_to_pcm_get_amp_loopback_event());
 
+    // Set default sound playback for amp audio
+    SLN_AMP_SetDefaultAudioData((uint8_t*)_med_ui_wakesound_wav, sizeof(_med_ui_wakesound_wav));
+
     // Set PDM to PCM config
-    pcm_pcm_task_config_t config;
+    pcm_pcm_task_config_t config = {NULL};
     config.thisTask = &xPdmToPcmTaskHandle;
     config.processingTask = &xAudioProcessingTaskHandle;
     config.feedbackInit = SLN_AMP_Read;
     config.feedbackBuffer = (int16_t *)SLN_AMP_GetLoopBackBuffer();
+    config.feedbackEnable = SLN_AMP_LoopbackEnable;
+    config.feedbackDisable = SLN_AMP_LoopbackDisable;
 
     pcm_to_pcm_set_config(&config);
 
@@ -1165,8 +1185,9 @@ int32_t SaveVolumeToFlash(ais_app_data_t *appData)
 
 void vProcessVolume(ais_app_data_t *appData, ais_app_volume_direction_t direction)
 {
-    int32_t status = SLN_FLASH_MGMT_OK;
+    int32_t status             = SLN_FLASH_MGMT_OK;
     reconnectState_t currState = reconnection_task_get_state();
+    uint64_t offset;
 
     if (kInitState != currState)
     {
@@ -1191,7 +1212,15 @@ void vProcessVolume(ais_app_data_t *appData, ais_app_volume_direction_t directio
 
             if ((kStartState == currState) || (kLinkUp == currState))
             {
-                AIS_EventVolumeChanged(&aisHandle, appData->volume, appData->speakerOffsetWritten);
+                offset = appData->speakerOffsetWritten - STREAMER_GetQueuedNotBlocking(aisHandle.audioPlayer);
+                /* To be sure offset does not equal speakerOffsetWritten when speaker is open.
+                 * Otherwise device will receive Exception signal from cloud side.
+                 */
+                if ((offset == appData->speakerOffsetWritten) && (offset > 0))
+                {
+                    offset--;
+                }
+                AIS_EventVolumeChanged(&aisHandle, appData->volume, offset);
             }
         }
         else
@@ -1438,21 +1467,25 @@ void main(void)
     /* Enable additional fault handlers */
     SCB->SHCSR |= (SCB_SHCSR_BUSFAULTENA_Msk | /*SCB_SHCSR_USGFAULTENA_Msk |*/ SCB_SHCSR_MEMFAULTENA_Msk);
 
+    /* Init board hardware */
     /* Relocate Vector Table */
 #if RELOCATE_VECTOR_TABLE
     BOARD_RelocateVectorTableToRam();
 #endif
 
-    /* Init board hardware. */
     BOARD_ConfigMPU();
     BOARD_InitBootPins();
     BOARD_BootClockRUN();
-    //BOARD_ClockConfig_FLASH();
 
+    /* Setup Crypto HW */
     CRYPTO_InitHardware();
 
     /* Initialize Flash to allow writing */
     SLN_Flash_Init();
+
+    /* Set flash management callbacks */
+    sln_flash_mgmt_cbs_t flash_mgmt_cbs = {pdm_to_pcm_mics_off, pdm_to_pcm_mics_on};
+    SLN_FLASH_MGMT_SetCbs(&flash_mgmt_cbs);
 
     /* Initialize flash management */
     SLN_FLASH_MGMT_Init((sln_flash_entry_t *)g_fileTable , false);
@@ -1506,13 +1539,13 @@ void main(void)
 
     xLoggingTaskInitialize(LOGGING_STACK_SIZE, tskIDLE_PRIORITY + 1, LOGGING_QUEUE_LENGTH);
 
-    xTaskCreate(appTask, "APP_Task", 1024, NULL, configTIMER_TASK_PRIORITY - 1, &appTaskHandle);
+    xTaskCreate(appTask, "APP_Task", 1024, NULL, configTIMER_TASK_PRIORITY - 2, &appTaskHandle);
 
-    xTaskCreate(sln_shell_task, "Shell_Task", 512, NULL, tskIDLE_PRIORITY + 1, NULL);
+    xTaskCreateStatic( sln_shell_task, "Shell_Task", 512, NULL, tskIDLE_PRIORITY + 1, shell_task_stack_buffer, &sln_shell_task_buffer );
 
-    xTaskCreate(button_task, "Button_Task", 1024, NULL, configMAX_PRIORITIES - 1, NULL);
+    xTaskCreateStatic( button_task, "Button_Task", 1024, NULL, configMAX_PRIORITIES - 1, button_task_stack_buffer, &button_task_buffer );
 
-    xTaskCreate(ota_task, "OTA_Task", 384, NULL, tskIDLE_PRIORITY + 1, NULL);
+    xTaskCreateStatic( ota_task, "OTA_Task", 384, NULL, tskIDLE_PRIORITY + 1, ota_task_stack_buffer, &ota_task_buffer );
 
     /* Run RTOS */
     vTaskStartScheduler();

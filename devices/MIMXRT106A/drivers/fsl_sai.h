@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -22,7 +22,7 @@
 
 /*! @name Driver version */
 /*@{*/
-#define FSL_SAI_DRIVER_VERSION (MAKE_VERSION(2, 3, 0)) /*!< Version 2.3.0 */
+#define FSL_SAI_DRIVER_VERSION (MAKE_VERSION(2, 3, 1)) /*!< Version 2.3.1 */
 /*@}*/
 
 /*! @brief _sai_status_t, SAI return status.*/
@@ -502,8 +502,9 @@ void SAI_RxInit(I2S_Type *base, const sai_config_t *config);
 
 /*!
  * @brief  Sets the SAI Tx configuration structure to default values.
- * @deprecated Do not use this function.  It has been superceded by @ref
- * SAI_GetClassicI2SConfig/SAI_GetLeftJustifiedConfig/SAI_GetRightJustifiedConfig/SAI_GetDSPConfig/SAI_GetTDMConfig
+ * @deprecated Do not use this function.  It has been superceded by
+ * @ref SAI_GetClassicI2SConfig, @ref SAI_GetLeftJustifiedConfig , @ref SAI_GetRightJustifiedConfig, @ref
+ SAI_GetDSPConfig, @ref SAI_GetTDMConfig
  *
  * This API initializes the configuration structure for use in SAI_TxConfig().
  * The initialized structure can remain unchanged in SAI_TxConfig(), or it can be modified
@@ -520,8 +521,9 @@ void SAI_TxGetDefaultConfig(sai_config_t *config);
 
 /*!
  * @brief  Sets the SAI Rx configuration structure to default values.
- * @deprecated Do not use this function.  It has been superceded by @ref
- * SAI_GetClassicI2SConfig/SAI_GetLeftJustifiedConfig/SAI_GetRightJustifiedConfig/SAI_GetDSPConfig/SAI_GetTDMConfig
+ * @deprecated Do not use this function.  It has been superceded by
+ * @ref SAI_GetClassicI2SConfig, @ref SAI_GetLeftJustifiedConfig , @ref SAI_GetRightJustifiedConfig, @ref
+ SAI_GetDSPConfig, @ref SAI_GetTDMConfig
  *
  * This API initializes the configuration structure for use in SAI_RxConfig().
  * The initialized structure can remain unchanged in SAI_RxConfig() or it can be modified
@@ -673,10 +675,10 @@ static inline void SAI_TxSetFrameSyncDirection(I2S_Type *base, sai_master_slave_
  * @brief Transmitter bit clock rate configurations.
  *
  * @param base SAI base pointer.
- * @param sourceClockHz, bit clock source frequency.
- * @param sampleRate audio data sample rate.
- * @param bitWidth, audio data bitWidth.
- * @param channelNumbers, audio channel numbers.
+ * @param sourceClockHz Bit clock source frequency.
+ * @param sampleRate Audio data sample rate.
+ * @param bitWidth Audio data bitWidth.
+ * @param channelNumbers Audio channel numbers.
  */
 void SAI_TxSetBitClockRate(
     I2S_Type *base, uint32_t sourceClockHz, uint32_t sampleRate, uint32_t bitWidth, uint32_t channelNumbers);
@@ -685,10 +687,10 @@ void SAI_TxSetBitClockRate(
  * @brief Receiver bit clock rate configurations.
  *
  * @param base SAI base pointer.
- * @param sourceClockHz, bit clock source frequency.
- * @param sampleRate audio data sample rate.
- * @param bitWidth, audio data bitWidth.
- * @param channelNumbers, audio channel numbers.
+ * @param sourceClockHz Bit clock source frequency.
+ * @param sampleRate Audio data sample rate.
+ * @param bitWidth Audio data bitWidth.
+ * @param channelNumbers Audio channel numbers.
  */
 void SAI_RxSetBitClockRate(
     I2S_Type *base, uint32_t sourceClockHz, uint32_t sampleRate, uint32_t bitWidth, uint32_t channelNumbers);
@@ -979,7 +981,7 @@ void SAI_RxSetDataOrder(I2S_Type *base, sai_data_order_t order);
  * @brief Set the Tx data order.
  *
  * @param base SAI base pointer
- * @param order Data order MSB or LSB
+ * @param polarity
  */
 void SAI_TxSetBitClockPolarity(I2S_Type *base, sai_clock_polarity_t polarity);
 
@@ -987,7 +989,7 @@ void SAI_TxSetBitClockPolarity(I2S_Type *base, sai_clock_polarity_t polarity);
  * @brief Set the Rx data order.
  *
  * @param base SAI base pointer
- * @param order Data order MSB or LSB
+ * @param polarity
  */
 void SAI_RxSetBitClockPolarity(I2S_Type *base, sai_clock_polarity_t polarity);
 
@@ -995,7 +997,7 @@ void SAI_RxSetBitClockPolarity(I2S_Type *base, sai_clock_polarity_t polarity);
  * @brief Set the Tx data order.
  *
  * @param base SAI base pointer
- * @param order Data order MSB or LSB
+ * @param polarity
  */
 void SAI_TxSetFrameSyncPolarity(I2S_Type *base, sai_clock_polarity_t polarity);
 
@@ -1003,7 +1005,7 @@ void SAI_TxSetFrameSyncPolarity(I2S_Type *base, sai_clock_polarity_t polarity);
  * @brief Set the Rx data order.
  *
  * @param base SAI base pointer
- * @param order Data order MSB or LSB
+ * @param polarity
  */
 void SAI_RxSetFrameSyncPolarity(I2S_Type *base, sai_clock_polarity_t polarity);
 
@@ -1403,7 +1405,7 @@ void SAI_TransferRxSetConfig(I2S_Type *base, sai_handle_t *handle, sai_transceiv
 
 /*!
  * @brief Configures the SAI Tx audio format.
- * @deprecated Do not use this function.  It has been superceded by @ref SAI_TxSetTransferConfig
+ * @deprecated Do not use this function.  It has been superceded by @ref SAI_TransferTxSetConfig
  *
  * The audio format can be changed at run-time. This function configures the sample rate and audio data
  * format to be transferred.
@@ -1424,7 +1426,7 @@ status_t SAI_TransferTxSetFormat(I2S_Type *base,
 
 /*!
  * @brief Configures the SAI Rx audio format.
- * @deprecated Do not use this function.  It has been superceded by @ref SAI_RxSetTransferConfig
+ * @deprecated Do not use this function.  It has been superceded by @ref SAI_TransferRxSetConfig
  *
  * The audio format can be changed at run-time. This function configures the sample rate and audio data
  * format to be transferred.

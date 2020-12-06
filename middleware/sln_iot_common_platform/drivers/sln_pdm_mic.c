@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 NXP.
+ * Copyright 2018, 2020 NXP.
  * This software is owned or controlled by NXP and may only be used strictly in accordance with the
  * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
  * activating and/or otherwise using the software, you are agreeing that you have read, and that you
@@ -11,6 +11,7 @@
 #include <limits.h>
 #include "fsl_dmamux.h"
 #include "fsl_sai.h"
+
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -278,12 +279,48 @@ pdm_mic_status_t PDM_MIC_ConfigMic(pdm_mic_handle_t *handle)
 
 void PDM_MIC_StartMic(pdm_mic_handle_t *handle)
 {
+    if (handle->config->sai == SAI1)
+    {
+        CLOCK_EnableClock(kCLOCK_Sai1);
+    }
+    else if (handle->config->sai == SAI2)
+    {
+        CLOCK_EnableClock(kCLOCK_Sai2);
+    }
+    else if (handle->config->sai == SAI3)
+    {
+        CLOCK_EnableClock(kCLOCK_Sai3);
+    }
+
     handle->config->sai->RCSR = ((handle->config->sai->RCSR & 0xFFE3FFFFU) | I2S_RCSR_RE_MASK);
     handle->config->sai->RCSR = ((handle->config->sai->RCSR & 0xFFE3FFFFU) | kSAI_FIFOErrorFlag);
 }
 
 void PDM_MIC_StopMic(pdm_mic_handle_t *handle)
 {
-    handle->config->sai->RCSR = ((handle->config->sai->RCSR & 0xFFE3FFFFU) | 0x0);
-    handle->config->sai->RCSR = ((handle->config->sai->RCSR & 0xFFE3FFFFU) | kSAI_FIFOErrorFlag);
+    NVIC_DisableIRQ(handle->dmaIrqNum);
+    DMAMUX_DisableChannel(DMAMUX, handle->dmaChannel);
+
+    handle->config->sai->RCSR = ((handle->config->sai->RCSR & 0xFFE3FFFFU) & ~(I2S_RCSR_RE_MASK | I2S_RCSR_BCE_MASK));
+    /* RE(Receiver Enable) bit and BCE(Bit Clock Enable) bit will be actually written to the RCSR register
+     * at the end of the current frame. We should wait for the write to be done, because the following
+     * reads of this register could use the old values.
+     */
+    while ((handle->config->sai->RCSR & (I2S_RCSR_RE_MASK | I2S_RCSR_BCE_MASK)) != 0)
+        ;
+
+    handle->config->sai->RCSR = ((handle->config->sai->RCSR & 0xFFE3FFFFU) | kSAI_FIFOErrorFlag | I2S_RCSR_FR_MASK);
+
+    if (handle->config->sai == SAI1)
+    {
+        CLOCK_DisableClock(kCLOCK_Sai1);
+    }
+    else if (handle->config->sai == SAI2)
+    {
+        CLOCK_DisableClock(kCLOCK_Sai2);
+    }
+    else if (handle->config->sai == SAI3)
+    {
+        CLOCK_DisableClock(kCLOCK_Sai3);
+    }
 }

@@ -23,6 +23,10 @@
  * http://www.FreeRTOS.org
  */
 
+/*
+ * Copyright 2020 NXP.
+ */
+
 /**
  * @file aws_iot_demo_shadow.c
  * @brief Demonstrates usage of the Thing Shadow library.
@@ -66,7 +70,6 @@
 /* Mqtt connection wrapper */
 #include "iot_mqtt_agent.h"
 #include "mqtt_connection.h"
-
 
 /**
  * @cond DOXYGEN_IGNORE
@@ -415,10 +418,10 @@ static int _initializeDemo(void)
     AwsIotShadowError_t shadowInitStatus = AWS_IOT_SHADOW_SUCCESS;
 
     /* Flags to track cleanup on error. */
-    bool mqttInitialized                 = false;
+    bool mqttInitialized = false;
 
 #if !defined(SHADOW_SHARED_MQTT_CONNECTION)
-    IotMqttError_t mqttInitStatus        = IOT_MQTT_SUCCESS;
+    IotMqttError_t mqttInitStatus = IOT_MQTT_SUCCESS;
     /* Initialize the MQTT library. */
     mqttInitStatus = IotMqtt_Init();
 
@@ -637,6 +640,7 @@ static void _clearShadowDocument(IotMqttConnection_t mqttConnection,
  * @return `EXIT_SUCCESS` if all Shadow updates were sent; `EXIT_FAILURE`
  * otherwise.
  */
+#if !defined(SHADOW_SHARED_MQTT_CONNECTION)
 static int _sendShadowUpdates(IotSemaphore_t *pDeltaSemaphore,
                               IotMqttConnection_t mqttConnection,
                               const char *const pThingName,
@@ -723,7 +727,7 @@ static int _sendShadowUpdates(IotSemaphore_t *pDeltaSemaphore,
 
     return status;
 }
-
+#endif /* !defined(SHADOW_SHARED_MQTT_CONNECTION) */
 /*-----------------------------------------------------------*/
 
 /**
@@ -759,7 +763,9 @@ int RunShadowDemo(bool awsIotMqttMode,
     IotSemaphore_t deltaSemaphore;
 
     /* Flags for tracking which cleanup functions must be called. */
-    bool librariesInitialized = false;
+#if !defined(SHADOW_SHARED_MQTT_CONNECTION)
+    bool librariesInitialized  = false;
+#endif
     bool connectionEstablished = false;
     bool deltaSemaphoreCreated = false;
 
@@ -794,10 +800,10 @@ int RunShadowDemo(bool awsIotMqttMode,
 
     if (status == EXIT_SUCCESS)
     {
+#if !defined(SHADOW_SHARED_MQTT_CONNECTION)
         /* Mark the libraries as initialized. */
         librariesInitialized = true;
 
-#if !defined(SHADOW_SHARED_MQTT_CONNECTION)
         /* Establish a new MQTT connection. */
         status = _establishMqttConnection(pIdentifier, pNetworkServerInfo, pNetworkCredentialInfo, pNetworkInterface,
                                           &mqttConnection);

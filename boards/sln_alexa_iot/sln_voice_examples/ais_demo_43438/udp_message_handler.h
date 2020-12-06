@@ -28,11 +28,11 @@
 
 #define MAX_MESSAGE_LEN 512
 
-#define STATUS_REGISTERING_REQUEST_STRING "registering request"
+#define STATUS_REGISTERING_REQUEST_STRING  "registering request"
 #define STATUS_REGISTERING_RESPONSE_STRING "registering response"
-#define STATUS_MQTT_SUBSCRIBED_STRING "mqtt subscribed"
-#define STATUS_CONNECTION_COMPLETE_STRING "connection complete"
-#define STATUS_CONNECTION_ERROR_STRING "error in connection"
+#define STATUS_MQTT_SUBSCRIBED_STRING      "mqtt subscribed"
+#define STATUS_CONNECTION_COMPLETE_STRING  "connection complete"
+#define STATUS_CONNECTION_ERROR_STRING     "error in connection"
 
 typedef struct lwa_auth_data
 {

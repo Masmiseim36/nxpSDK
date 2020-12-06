@@ -1,13 +1,11 @@
 /*
- * Copyright 2018-2019 NXP.
+ * Copyright 2018-2020 NXP.
  * This software is owned or controlled by NXP and may only be used strictly in accordance with the
  * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
  * activating and/or otherwise using the software, you are agreeing that you have read, and that you
  * agree to comply with and are bound by, such license terms. If you do not agree to be bound by the
  * applicable license terms, then you may not retain, install, activate or otherwise use the software.
  */
-
-#include "app.h"
 
 #include "FreeRTOS.h"
 #include "semphr.h"
@@ -16,16 +14,17 @@
 #include "sln_encrypt.h"
 #include "sln_flash.h"
 #include "sln_flash_mgmt.h"
+#if defined(FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL) && FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL
+#include "fsl_cache.h"
+#endif
 
-#define MAP_SIZE (FLASH_PAGE_SIZE)
-#define MAX_MAP_ENTRIES (FLASH_PAGE_SIZE)
-#define GC_THRESHOLD (MAX_MAP_ENTRIES / 2)
+#define GC_THRESHOLD (SLN_FLASH_MAX_MAP_ENTRIES / 2)
 
 static SemaphoreHandle_t s_fileLock;
 
-sln_flash_entry_t *s_flashEntries = NULL;
-uint32_t s_fileCount              = 0;
-uint32_t *s_flashCrcList          = NULL;
+static sln_flash_entry_t *s_flashEntries = NULL;
+static uint32_t s_fileCount              = 0;
+static uint32_t *s_flashCrcList          = NULL;
 
 static sln_encrypt_ctx_t s_flashMgmtEncCtx = {
     .key = {0x2c, 0x7d, 0x13, 0x18, 0x26, 0xb0, 0xd0, 0xaa, 0xab, 0xf7, 0x16, 0x88, 0x09, 0xcf, 0x4f, 0x3e},
@@ -37,6 +36,8 @@ static sln_encrypt_ctx_t s_flashMgmtEncCtx = {
     .handle.keySlot    = kDCP_KeySlot1,
     .handle.swapConfig = kDCP_NoSwap,
 };
+
+static sln_flash_mgmt_cbs_t s_flashMgmtCbs = {NULL};
 
 /*! @brief Structure to hold file meta data during operations */
 typedef struct _file_meta
@@ -86,7 +87,7 @@ static int32_t get_file_info_from_name(file_meta_t *meta, const char *fileName)
         else
         {
             // Set file header address to first potential address (just after sector map)
-            meta->fileHeadAddr = meta->fileBaseAddr + MAP_SIZE;
+            meta->fileHeadAddr = meta->fileBaseAddr + SLN_FLASH_MAP_SIZE;
         }
     }
 
@@ -146,13 +147,13 @@ static int32_t get_sector_file_map(file_meta_t *meta, sln_flash_map_t *flashMap)
     else
     {
         // Set initial value of mapIdx to check for bad entry
-        meta->mapIdx = MAX_MAP_ENTRIES;
+        meta->mapIdx = SLN_FLASH_MAX_MAP_ENTRIES;
 
         // Read out flash map into RAM
         SLN_Read_Flash_At_Address(meta->fileBaseAddr, (uint8_t *)flashMap, sizeof(sln_flash_map_t));
 
         // Iterate through the map until we find a FREE or CURRENT marker
-        for (uint32_t idx = 0; idx < (MAX_MAP_ENTRIES - 1); idx++)
+        for (uint32_t idx = 0; idx < SLN_FLASH_MAX_MAP_ENTRIES; idx++)
         {
             if (flashMap->map[idx] == SLN_FLASH_MGMT_MAP_CURRENT || flashMap->map[idx] == SLN_FLASH_MGMT_MAP_FREE)
             {
@@ -161,7 +162,7 @@ static int32_t get_sector_file_map(file_meta_t *meta, sln_flash_map_t *flashMap)
             }
         }
 
-        if (MAX_MAP_ENTRIES == meta->mapIdx)
+        if (SLN_FLASH_MAX_MAP_ENTRIES == meta->mapIdx)
         {
             // No Current or Free marker found
             ret = SLN_FLASH_MGMT_ENOENTRY3;
@@ -252,10 +253,16 @@ static int32_t get_file_data(file_meta_t *meta, uint8_t *data)
     if (meta->useEncryption)
     {
         meta->fileDataAddr = SLN_Flash_Get_Read_Address(meta->fileDataAddr);
-
+#if defined(SLN_ENABLE_DRIVER_CACHE_CONTROL) && SLN_ENABLE_DRIVER_CACHE_CONTROL
+        DCACHE_CleanByRange((uint32_t)data, meta->dataPlainLen);
+#endif
+        // Decrypt the message and store it in data
         ret = SLN_Decrypt_AES_CBC_PKCS7(&s_flashMgmtEncCtx, (uint8_t *)meta->fileDataAddr, meta->dataCryptLen, data,
                                         (size_t *)&(meta->dataPlainLen));
 
+#if defined(SLN_ENABLE_DRIVER_CACHE_CONTROL) && SLN_ENABLE_DRIVER_CACHE_CONTROL
+        DCACHE_InvalidateByRange((uint32_t)data, meta->dataPlainLen);
+#endif
         if (SLN_FLASH_MGMT_OK != ret)
         {
             ret = SLN_FLASH_MGMT_EENCRYPT;
@@ -276,10 +283,16 @@ static int32_t set_file_data(file_meta_t *meta, uint8_t *flashFile, uint8_t *dat
 
     if (meta->useEncryption)
     {
+#if defined(SLN_ENABLE_DRIVER_CACHE_CONTROL) && SLN_ENABLE_DRIVER_CACHE_CONTROL
+        DCACHE_CleanByRange((uint32_t)(flashFile + sizeof(sln_file_header_t)), meta->dataCryptLen);
+#endif
         // Encrypt the message and store it in flashFile
         ret = SLN_Encrypt_AES_CBC_PKCS7(&s_flashMgmtEncCtx, data, meta->dataPlainLen,
                                         flashFile + sizeof(sln_file_header_t), meta->dataCryptLen);
 
+#if defined(SLN_ENABLE_DRIVER_CACHE_CONTROL) && SLN_ENABLE_DRIVER_CACHE_CONTROL
+        DCACHE_InvalidateByRange((uint32_t)(flashFile + sizeof(sln_file_header_t)), meta->dataCryptLen);
+#endif
         if (ret != kStatus_Success)
         {
             ret = SLN_FLASH_MGMT_EENCRYPT;
@@ -351,7 +364,7 @@ static int32_t init_ram_crc_mirror(uint32_t flashEntryIdx)
 
             meta.fileBaseAddr = s_flashEntries[meta.flashTableIdx].address;
 
-            meta.fileHeadAddr = meta.fileBaseAddr + MAP_SIZE;
+            meta.fileHeadAddr = meta.fileBaseAddr + SLN_FLASH_MAP_SIZE;
 
             // Get current flash address from map
             currMap = (sln_flash_map_t *)pvPortMalloc(sizeof(sln_flash_map_t));
@@ -446,7 +459,7 @@ static int32_t garbage_collector(uint32_t flashEntryIdx)
         goto exit;
     }
 
-    fileHeadAddr = fileBaseAddr + MAP_SIZE;
+    fileHeadAddr = fileBaseAddr + SLN_FLASH_MAP_SIZE;
 
     // Get current flash address from map
     currMap = (sln_flash_map_t *)pvPortMalloc(sizeof(sln_flash_map_t));
@@ -457,7 +470,7 @@ static int32_t garbage_collector(uint32_t flashEntryIdx)
     }
 
     SLN_Read_Flash_At_Address(fileBaseAddr, (uint8_t *)currMap, sizeof(sln_flash_map_t));
-    for (mapIdx = 0; mapIdx < (MAX_MAP_ENTRIES - 1); mapIdx++)
+    for (mapIdx = 0; mapIdx < SLN_FLASH_MAX_MAP_ENTRIES; mapIdx++)
     {
         if (currMap->map[mapIdx] == SLN_FLASH_MGMT_MAP_CURRENT || currMap->map[mapIdx] == SLN_FLASH_MGMT_MAP_FREE)
         {
@@ -465,7 +478,8 @@ static int32_t garbage_collector(uint32_t flashEntryIdx)
         }
     }
 
-    if (currMap->map[mapIdx] != SLN_FLASH_MGMT_MAP_CURRENT && mapIdx > GC_THRESHOLD)
+    if ((SLN_FLASH_MAX_MAP_ENTRIES <= mapIdx) ||
+        ((SLN_FLASH_MGMT_MAP_CURRENT != currMap->map[mapIdx]) && (GC_THRESHOLD < mapIdx)))
     {
         // Something wrong as there is no current file saved but the
         // GC threshold exceeded. Erase the sector and exit.
@@ -696,7 +710,7 @@ int32_t SLN_FLASH_MGMT_Save(const char *name, uint8_t *data, uint32_t len)
                 goto exit;
             }
 
-            if (flashMap->map[meta->mapIdx] == SLN_FLASH_MGMT_MAP_CURRENT)
+            if ((flashMap->map[meta->mapIdx] == SLN_FLASH_MGMT_MAP_CURRENT) && (SLN_FLASH_MGMT_ENOENTRY3 != ret))
             {
                 // Invalidate current file from flash
                 sln_file_header_t currHdr;
@@ -715,7 +729,7 @@ int32_t SLN_FLASH_MGMT_Save(const char *name, uint8_t *data, uint32_t len)
 
                     meta->mapIdx++;
 
-                    if (meta->mapIdx > MAX_MAP_ENTRIES)
+                    if (meta->mapIdx >= SLN_FLASH_MAX_MAP_ENTRIES)
                     {
                         ret = SLN_FLASH_MGMT_EOVERFLOW;
                         goto exit;
@@ -724,7 +738,7 @@ int32_t SLN_FLASH_MGMT_Save(const char *name, uint8_t *data, uint32_t len)
             }
 
             // Check if the saved file fits in the sector
-            if (meta->mapIdx + meta->pageCount > MAX_MAP_ENTRIES)
+            if (meta->mapIdx + meta->pageCount > SLN_FLASH_MAX_MAP_ENTRIES)
             {
                 ret = SLN_FLASH_MGMT_EOVERFLOW2;
                 goto exit;
@@ -1253,7 +1267,19 @@ int32_t SLN_FLASH_MGMT_Erase(const char *name)
         goto exit;
     }
 
+    if (NULL != s_flashMgmtCbs.pre_sector_erase_cb)
+    {
+        configPRINTF(("Erasing file %s ... \r\n", name));
+        s_flashMgmtCbs.pre_sector_erase_cb();
+    }
+
     ret = SLN_Erase_Sector(fileBaseAddr);
+
+    if (NULL != s_flashMgmtCbs.post_sector_erase_cb)
+    {
+        configPRINTF(("Erase operation for file %s finished, return code %d\r\n", name, ret));
+        s_flashMgmtCbs.post_sector_erase_cb();
+    }
 
 exit:
     return ret;
@@ -1307,6 +1333,23 @@ int32_t SLN_FLASH_MGMT_Deinit(sln_flash_entry_t *flashEntries, uint8_t erase)
     s_fileLock = NULL;
 
     SLN_Encrypt_Deinit_Slot(&s_flashMgmtEncCtx);
+
+    return ret;
+}
+
+int32_t SLN_FLASH_MGMT_SetCbs(sln_flash_mgmt_cbs_t *cbs)
+{
+    int32_t ret = SLN_FLASH_MGMT_OK;
+
+    if (NULL == cbs)
+    {
+        ret = SLN_FLASH_MGMT_EINVAL;
+    }
+    else
+    {
+        s_flashMgmtCbs.pre_sector_erase_cb  = cbs->pre_sector_erase_cb;
+        s_flashMgmtCbs.post_sector_erase_cb = cbs->post_sector_erase_cb;
+    }
 
     return ret;
 }

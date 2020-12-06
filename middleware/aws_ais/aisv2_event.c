@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 NXP. 
+ * Copyright 2018 NXP.
  * This software is owned or controlled by NXP and may only be used strictly in accordance with the
  * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
  * activating and/or otherwise using the software, you are agreeing that you have read, and that you
@@ -12,15 +12,14 @@
 
 /* Forward function declarations for AIS-private JSON functions. */
 cJSON *JSON_BuildHeader(ais_handle_t *handle, const char *name, const char **id);
-const char* JSON_BuildEvent(ais_handle_t *handle, const char *name, ais_json_t *jsonObj, bool addPayload);
-cJSON* JSON_BuildCapabilitySpeaker(ais_handle_t *handle);
-cJSON* JSON_BuildCapabilityMicrophone(void);
-cJSON* JSON_BuildCapabilityAlerts(ais_handle_t *handle);
-cJSON* JSON_BuildCapabilityClock(void);
-cJSON* JSON_BuildCapabilitySystem(ais_handle_t *handle);
+const char *JSON_BuildEvent(ais_handle_t *handle, const char *name, ais_json_t *jsonObj, bool addPayload);
+cJSON *JSON_BuildCapabilitySpeaker(ais_handle_t *handle);
+cJSON *JSON_BuildCapabilityMicrophone(void);
+cJSON *JSON_BuildCapabilityAlerts(ais_handle_t *handle);
+cJSON *JSON_BuildCapabilityClock(void);
+cJSON *JSON_BuildCapabilitySystem(ais_handle_t *handle);
 
 status_t AIS_PublishJSON(ais_handle_t *handle, aisTopic_t topic, cJSON *json, bool encrypt);
-
 
 /*! @brief Map a profile enumeration to corresponding string. */
 static const char *_ais_map_asr_profile(ais_asr_profile_t profile)
@@ -77,8 +76,8 @@ static const char *_ais_map_buffer_state(ais_buffer_state_t state)
 {
     switch (state)
     {
-    	case AIS_BUFFER_STATE_GOOD:
-			return AIS_EVENT_BUFFER_GOOD;
+        case AIS_BUFFER_STATE_GOOD:
+            return AIS_EVENT_BUFFER_GOOD;
         case AIS_BUFFER_STATE_OVERRUN:
             return AIS_EVENT_BUFFER_OVERRUN;
         case AIS_BUFFER_STATE_OVERRUN_WARNING:
@@ -98,14 +97,11 @@ status_t AIS_PublishConnect(ais_handle_t *handle)
     const char *id;
 
     json = cJSON_CreateObject();
-    cJSON_AddItemToObject(json, "header",
-                          JSON_BuildHeader(handle, "Connect", &id));
+    cJSON_AddItemToObject(json, "header", JSON_BuildHeader(handle, "Connect", &id));
     payload = cJSON_CreateObject();
     cJSON_AddItemToObject(json, "payload", payload);
-    cJSON_AddItemToObject(payload, "awsAccountId",
-                          cJSON_CreateString(handle->config->awsAccountId));
-    cJSON_AddItemToObject(payload, "clientId",
-                          cJSON_CreateString(handle->config->awsClientId));
+    cJSON_AddItemToObject(payload, "awsAccountId", cJSON_CreateString(handle->config->awsAccountId));
+    cJSON_AddItemToObject(payload, "clientId", cJSON_CreateString(handle->config->awsClientId));
 
     configPRINTF(("[AIS %s] Publishing Connect\r\n", id));
 
@@ -118,8 +114,7 @@ status_t AIS_PublishDisconnect(ais_handle_t *handle, const char *code)
     const char *id;
 
     json = cJSON_CreateObject();
-    cJSON_AddItemToObject(json, "header",
-                          JSON_BuildHeader(handle, "Disconnect", &id));
+    cJSON_AddItemToObject(json, "header", JSON_BuildHeader(handle, "Disconnect", &id));
     payload = cJSON_CreateObject();
     cJSON_AddItemToObject(json, "payload", payload);
     cJSON_AddItemToObject(payload, "code", cJSON_CreateString(code));
@@ -135,8 +130,7 @@ status_t AIS_PublishCapabilities(ais_handle_t *handle)
     const char *id;
 
     json = cJSON_CreateObject();
-    cJSON_AddItemToObject(json, "header",
-                          JSON_BuildHeader(handle, "Publish", &id));
+    cJSON_AddItemToObject(json, "header", JSON_BuildHeader(handle, "Publish", &id));
     payload = cJSON_CreateObject();
     cJSON_AddItemToObject(json, "payload", payload);
 
@@ -154,18 +148,14 @@ status_t AIS_PublishCapabilities(ais_handle_t *handle)
     return AIS_SendJSONToPublishing(handle, AIS_TOPIC_CAPABILITIES_PUBLISH, json, true);
 }
 
-status_t AIS_EventSecretRotated(ais_handle_t *handle,
-                           uint32_t eventSequenceNumber,
-                           uint32_t micSequenceNumber)
+status_t AIS_EventSecretRotated(ais_handle_t *handle, uint32_t eventSequenceNumber, uint32_t micSequenceNumber)
 {
     ais_json_t json;
     const char *id;
 
     id = JSON_BuildEvent(handle, AIS_EVENT_SECRET_ROTATED, &json, true);
-    cJSON_AddItemToObject(json.payload, "eventSequenceNumber",
-                          cJSON_CreateNumber(eventSequenceNumber));
-    cJSON_AddItemToObject(json.payload, "microphoneSequenceNumber",
-                          cJSON_CreateNumber(micSequenceNumber));
+    cJSON_AddItemToObject(json.payload, "eventSequenceNumber", cJSON_CreateNumber(eventSequenceNumber));
+    cJSON_AddItemToObject(json.payload, "microphoneSequenceNumber", cJSON_CreateNumber(micSequenceNumber));
 
     configPRINTF(("[AIS %s] Publishing SecretRotated\r\n", id));
 
@@ -178,11 +168,9 @@ status_t AIS_EventButtonCommandIssued(ais_handle_t *handle, ais_button_cmd_t cmd
     const char *id;
 
     id = JSON_BuildEvent(handle, AIS_EVENT_BUTTON_CMD_ISSUED, &json, true);
-    cJSON_AddItemToObject(json.payload, "command",
-                          cJSON_CreateString(_ais_map_button_cmd(cmd)));
+    cJSON_AddItemToObject(json.payload, "command", cJSON_CreateString(_ais_map_button_cmd(cmd)));
 
-    configPRINTF(("[AIS %s] Publishing ButtonCommandIssued: %s\r\n",
-                  id, _ais_map_button_cmd(cmd)));
+    configPRINTF(("[AIS %s] Publishing ButtonCommandIssued: %s\r\n", id, _ais_map_button_cmd(cmd)));
 
     return AIS_SendJSONToPublishing(handle, AIS_TOPIC_EVENT, json.json, true);
 }
@@ -200,7 +188,6 @@ status_t AIS_EventSpeakerOpened(ais_handle_t *handle, uint64_t offset)
     return AIS_SendJSONToPublishing(handle, AIS_TOPIC_EVENT, json.json, true);
 }
 
-
 status_t AIS_EventSpeakerClosed(ais_handle_t *handle, uint64_t offset)
 {
     ais_json_t json;
@@ -211,8 +198,8 @@ status_t AIS_EventSpeakerClosed(ais_handle_t *handle, uint64_t offset)
 
     configPRINTF(("[AIS %s] Publishing SpeakerClosed, offset: %d\r\n", id, offset));
 
-	/* Stop sequence timer for stream buffer */
-	handle->seqTimerSpeaker = 0;
+    /* Stop sequence timer for stream buffer */
+    handle->seqTimerSpeaker = 0;
 
     return AIS_SendJSONToPublishing(handle, AIS_TOPIC_EVENT, json.json, true);
 }
@@ -225,8 +212,7 @@ status_t AIS_EventSpeakerMarkerEncountered(ais_handle_t *handle, uint32_t marker
     id = JSON_BuildEvent(handle, AIS_EVENT_SPEAKER_MARKER_ENCOUNTERED, &json, true);
     cJSON_AddItemToObject(json.payload, "marker", cJSON_CreateNumber(marker));
 
-    configPRINTF(("[AIS %s] Publishing SpeakerMarkerEncountered, marker: %d\r\n",
-                  id, marker));
+    configPRINTF(("[AIS %s] Publishing SpeakerMarkerEncountered, marker: %d\r\n", id, marker));
 
     return AIS_SendJSONToPublishing(handle, AIS_TOPIC_EVENT, json.json, true);
 }
@@ -242,11 +228,9 @@ status_t AIS_EventMicrophoneOpened(ais_handle_t *handle, ais_mic_open_t *mic)
 
     id = JSON_BuildEvent(handle, AIS_EVENT_MICROPHONE_OPENED, &json, true);
 
-    cJSON_AddItemToObject(json.payload, "profile",
-                          cJSON_CreateString(_ais_map_asr_profile(mic->asr_profile)));
+    cJSON_AddItemToObject(json.payload, "profile", cJSON_CreateString(_ais_map_asr_profile(mic->asr_profile)));
     /* NOTE: offset should be first byte of pre-roll if using wakeword initiator */
-    cJSON_AddItemToObject(json.payload, "offset",
-                          cJSON_CreateNumber(handle->micStream.audio.audioData.offset));
+    cJSON_AddItemToObject(json.payload, "offset", cJSON_CreateNumber(handle->micStream.audio.audioData.offset));
 
     init = cJSON_CreateObject();
     cJSON_AddItemToObject(json.payload, "initiator", init);
@@ -315,8 +299,8 @@ status_t AIS_EventOpenMicrophoneTimedOut(ais_handle_t *handle)
 }
 
 status_t AIS_EventBufferStateChanged(ais_handle_t *handle,
-		                             ais_buffer_state_t old_state,
-		                             ais_buffer_state_t new_state,
+                                     ais_buffer_state_t old_state,
+                                     ais_buffer_state_t new_state,
                                      uint32_t sequence)
 {
     ais_json_t json;
@@ -324,20 +308,16 @@ status_t AIS_EventBufferStateChanged(ais_handle_t *handle,
     const char *id;
 
     id = JSON_BuildEvent(handle, AIS_EVENT_BUFFER_STATE_CHANGED, &json, true);
-    cJSON_AddItemToObject(json.payload, "state",
-                          cJSON_CreateString(_ais_map_buffer_state(new_state)));
+    cJSON_AddItemToObject(json.payload, "state", cJSON_CreateString(_ais_map_buffer_state(new_state)));
 
     message = cJSON_CreateObject();
     cJSON_AddItemToObject(json.payload, "message", message);
     cJSON_AddItemToObject(message, "topic", cJSON_CreateString("SPEAKER"));
     cJSON_AddItemToObject(message, "sequenceNumber", cJSON_CreateNumber(sequence));
 
-    configPRINTF(("[AIS %s] Publishing BufferStateChanged, old state: %s, new state: %s, seq: %d, buffered: %d\r\n",
-                  id,
-				  _ais_map_buffer_state(old_state),
-				  _ais_map_buffer_state(new_state),
-				  sequence,
-				  STREAMER_GetQueued(handle->audioPlayer)));
+    configPRINTF(("[AIS %s] Publishing BufferStateChanged, old state: %s, new state: %s, seq: %d, buffered: %d\r\n", id,
+                  _ais_map_buffer_state(old_state), _ais_map_buffer_state(new_state), sequence,
+                  STREAMER_GetQueued(handle->audioPlayer)));
 
     return AIS_SendJSONToPublishing(handle, AIS_TOPIC_EVENT, json.json, true);
 }
@@ -452,9 +432,9 @@ status_t AIS_EventSynchronizeState(ais_handle_t *handle, int32_t volume, const c
     if (volume >= 0)
     {
         configPRINTF(("[AIS %s] Setting last local volume %d\r\n", id, volume));
-	    speaker = cJSON_CreateObject();
-	    cJSON_AddItemToObject(json.payload, "speaker", speaker);
-	    cJSON_AddItemToObject(speaker, "volume", cJSON_CreateNumber(volume));
+        speaker = cJSON_CreateObject();
+        cJSON_AddItemToObject(json.payload, "speaker", speaker);
+        cJSON_AddItemToObject(speaker, "volume", cJSON_CreateNumber(volume));
     }
     else
     {
@@ -475,7 +455,8 @@ status_t AIS_EventSynchronizeState(ais_handle_t *handle, int32_t volume, const c
     cJSON_AddItemToObject(alerts, "offlineAlertsDeleted", alertsArray);
 #endif
 
-    for (int i = 0; i < alertCount; i++) {
+    for (int i = 0; i < alertCount; i++)
+    {
         cJSON_AddItemToArray(alertsArray, cJSON_CreateString(alertTokens[i]));
     }
 
@@ -483,7 +464,7 @@ status_t AIS_EventSynchronizeState(ais_handle_t *handle, int32_t volume, const c
     return AIS_SendJSONToPublishing(handle, AIS_TOPIC_EVENT, json.json, true);
 }
 
-status_t AIS_EventExceptionEncountered(ais_handle_t *handle, const char * description)
+status_t AIS_EventExceptionEncountered(ais_handle_t *handle, const char *description)
 {
     ais_json_t json;
     cJSON *error;

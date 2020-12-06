@@ -51,10 +51,10 @@
  * in the "username" field of MQTT connect messages.
  */
 /** @{ */
-#define mqttconfigMETRIC_SDK "SDK=AmazonFreeRTOS"                    /**< The SDK used by this device. */
-#define mqttconfigMETRIC_VERSION "Version=" tskKERNEL_VERSION_NUMBER /**< The version number of this SDK. */
-#define mqttconfigMETRIC_PLATFORM "Platform=NXPLPC54018"             /**< The platform that this SDK is running on. */
-                                                                     /** @} */
+#define mqttconfigMETRIC_SDK      "SDK=AmazonFreeRTOS"                /**< The SDK used by this device. */
+#define mqttconfigMETRIC_VERSION  "Version=" tskKERNEL_VERSION_NUMBER /**< The version number of this SDK. */
+#define mqttconfigMETRIC_PLATFORM "Platform=NXPLPC54018"              /**< The platform that this SDK is running on. */
+                                                                      /** @} */
 
 /**
  * @brief The maximum time interval in seconds allowed to elapse between 2 consecutive
@@ -99,7 +99,7 @@
  */
 /** @{ */
 #define mqttconfigMQTT_TASK_STACK_DEPTH (1536)
-#define mqttconfigMQTT_TASK_PRIORITY (tskIDLE_PRIORITY + 2)
+#define mqttconfigMQTT_TASK_PRIORITY    (tskIDLE_PRIORITY + 2)
 /** @} */
 
 /**

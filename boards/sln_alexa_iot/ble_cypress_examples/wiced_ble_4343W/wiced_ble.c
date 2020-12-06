@@ -26,7 +26,7 @@
 
 #define AP_SSID "nxp"
 #define AP_PASS "NXP0123456789"
-#define AP_SEC WICED_SECURITY_WPA2_MIXED_PSK
+#define AP_SEC  WICED_SECURITY_WPA2_MIXED_PSK
 
 /*******************************************************************************
  * Prototypes
@@ -44,14 +44,6 @@ extern void add_wlan_interface(void);
 /*******************************************************************************
  * Code
  ******************************************************************************/
-static void BOARD_USDHCClockConfiguration(void)
-{
-    /*configure system pll PFD0 fractional divider to 18*/
-    CLOCK_InitSysPfd(kCLOCK_Pfd0, 0x12U);
-    /* Configure USDHC clock source and divider */
-    CLOCK_SetDiv(kCLOCK_Usdhc1Div, 0U);
-    CLOCK_SetMux(kCLOCK_Usdhc1Mux, 1U);
-}
 
 /* The function sets the cacheable memory to shareable, this suggestion is referred from chapter 2.2.1 Memory regions,
  * types and attributes in Cortex-M7 Devices, Generic User Guide */
@@ -230,8 +222,7 @@ int main(void)
 
     BOARD_ConfigMPU();
     BOARD_ConfigUSBMPU();
-    BOARD_BootClockRUN();
-    BOARD_USDHCClockConfiguration();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
 
     PRINTF("\r\n************************************************\r\n");

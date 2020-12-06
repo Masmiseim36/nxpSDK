@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 NXP.
+ * Copyright 2018-2020 NXP.
  * This software is owned or controlled by NXP and may only be used strictly in accordance with the
  * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
  * activating and/or otherwise using the software, you are agreeing that you have read, and that you
@@ -11,6 +11,7 @@
 #include "semphr.h"
 #include "task.h"
 
+#include "board.h"
 #include "audio_samples.h"
 #include "sln_amplifier.h"
 #include "sln_flash.h"
@@ -40,7 +41,7 @@ volatile static uint32_t s_aisAlertCount                                        
 __attribute__((section(".ocram_non_cacheable_data"))) static ais_alert_t s_aisAlerts[AIS_APP_MAX_ALERT_COUNT] = {0};
 
 // Must be higher priority than AIS_Task
-#define AIS_ALERT_TASK_PRIORITY (configTIMER_TASK_PRIORITY - 1)
+#define AIS_ALERT_TASK_PRIORITY (configTIMER_TASK_PRIORITY - 2)
 
 static int32_t ais_alert_get_flash_slot_state(ais_alert_t *alertSlot)
 {

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 NXP.
+ * Copyright 2018-2020 NXP.
  * This software is owned or controlled by NXP and may only be used strictly in accordance with the
  * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
  * activating and/or otherwise using the software, you are agreeing that you have read, and that you
@@ -16,7 +16,7 @@
 #include "task.h"
 #include "fsl_common.h"
 /*!
- * @addtogroup
+ * @addtogroup pdm_to_pcm_task
  * @{
  */
 
@@ -41,6 +41,8 @@ typedef struct __pdm_pcm_task_config
     TaskHandle_t *processingTask;
     int32_t (*feedbackInit)(void);
     int16_t *feedbackBuffer;
+    void (*feedbackEnable)(void);
+    void (*feedbackDisable)(void);
 } pcm_pcm_task_config_t;
 
 /*******************************************************************************
@@ -74,7 +76,7 @@ pcm_pcm_task_config_t *pcm_to_pcm_get_config(void);
 /*!
  * @brief Sets task handle for PDM to PCM task
  *
- * @param *handler Reference to task handle
+ * @param *handle Reference to task handle
  */
 void pdm_to_pcm_set_task_handle(TaskHandle_t *handle);
 
@@ -102,7 +104,7 @@ EventGroupHandle_t pdm_to_pcm_get_event_group(void);
 /*!
  * @brief Set buffer for amp loopback
  *
- * @param Reference to buffer
+ * @param **buf Reference to buffer for amp loopback
  */
 void pdm_to_pcm_set_amp_loopback_buffer(uint8_t **buf);
 
@@ -142,6 +144,16 @@ void pdm_to_pcm_stream_formatter(int16_t *pcmBuffer, pdm_pcm_input_event_t micEv
  * @param u8Gain The gain shift in all microphones
  */
 int32_t pdm_to_pcm_set_gain(uint8_t u8Gain);
+
+/*!
+ * @brief Turns microphones off by disabling DMA / SAI interfaces settings
+ */
+void pdm_to_pcm_mics_off(void);
+
+/*!
+ * @brief Turns microphones on by enabling DMA / SAI interfaces settings
+ */
+void pdm_to_pcm_mics_on(void);
 
 #if defined(__cplusplus)
 }

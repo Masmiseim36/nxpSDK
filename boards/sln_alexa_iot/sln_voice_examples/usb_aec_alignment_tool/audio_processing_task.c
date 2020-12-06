@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 NXP.
+ * Copyright 2018-2020 NXP.
  * This software is owned or controlled by NXP and may only be used strictly in accordance with the
  * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
  * activating and/or otherwise using the software, you are agreeing that you have read, and that you
@@ -27,21 +27,26 @@
 /* Amazon includes */
 #include "amazon_wake_word.h"
 
+#if defined(SLN_AFE_LIB)
+#include "sln_dsp_toolbox.h"
+#include "sln_afe.h"
+#else
 #define SLN_Voice
 #include "sln_intelligence_toolbox.h"
+#endif
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 #define RUN_GENERATED_TEST (0U)
-#define BUFFER_SIZE (PCM_SAMPLE_COUNT * 3)
-#define BUFFER_NUM (4)
+#define BUFFER_SIZE        (PCM_SAMPLE_COUNT * 3)
+#define BUFFER_NUM         (4)
 
-#define AUDIO_QUEUE_NUM_ITEMS 30U
-#define AUDIO_QUEUE_WATERMARK 15U
+#define AUDIO_QUEUE_NUM_ITEMS      30U
+#define AUDIO_QUEUE_WATERMARK      15U
 #define AUDIO_QUEUE_ITEM_LEN_BYTES (PCM_SAMPLE_SIZE_BYTES * PCM_SINGLE_CH_SMPL_COUNT)
-#define AUDIO_QUEUE_WTRMRK_BYTES (AUDIO_QUEUE_WATERMARK * AUDIO_QUEUE_ITEM_LEN_BYTES)
-#define AUDIO_QUEUE_LENGTH_BYTES (AUDIO_QUEUE_NUM_ITEMS * AUDIO_QUEUE_ITEM_LEN_BYTES)
+#define AUDIO_QUEUE_WTRMRK_BYTES   (AUDIO_QUEUE_WATERMARK * AUDIO_QUEUE_ITEM_LEN_BYTES)
+#define AUDIO_QUEUE_LENGTH_BYTES   (AUDIO_QUEUE_NUM_ITEMS * AUDIO_QUEUE_ITEM_LEN_BYTES)
 
 #define USB_BUFFER_OUTPUT_VCOM_SIZE \
     ((PCM_SAMPLE_COUNT * PCM_SAMPLE_SIZE_BYTES) + (PCM_SINGLE_CH_SMPL_COUNT * PCM_SAMPLE_SIZE_BYTES * 2))
@@ -56,6 +61,11 @@ static TaskHandle_t s_appTask;
 
 static SemaphoreHandle_t s_pushCtr;
 
+#if defined(SLN_AFE_LIB)
+static uint8_t *s_afe_mem_pool;
+static uint8_t s_afeAudioOut[PCM_SINGLE_CH_SMPL_COUNT * PCM_SAMPLE_SIZE_BYTES] __attribute__((aligned(4)));
+#endif
+
 SDK_ALIGN(uint8_t __attribute__((section(".data.$SRAM_DTC"))) g_externallyAllocatedMem[(173 * 1024)], 8);
 
 uint8_t u8Count        = 0;
@@ -66,8 +76,6 @@ static TaskHandle_t s_thisTaskHandle                    = NULL;
 static audio_processing_states_t s_audioProcessingState = kWaiting;
 static pcmPingPong_t *s_micInputStream;
 static int16_t *s_ampInputStream;
-static uint32_t s_numItems    = 0;
-static uint32_t s_waterMark   = 0;
 static uint32_t s_outputIndex = 0;
 __attribute__((section(".ocram_data"))) static uint8_t s_outputStream[AUDIO_QUEUE_LENGTH_BYTES];
 /*******************************************************************************
@@ -93,42 +101,6 @@ size_t strnlen(const char *ptr, size_t max)
     return (size_t)(p - ptr);
 }
 #endif
-
-/*! @brief Called by task to push data */
-static int32_t audio_processing_push_mic_data(uint8_t **data, uint32_t *size)
-{
-    if (AUDIO_QUEUE_ITEM_LEN_BYTES < *size)
-    {
-        return -2;
-    }
-
-    memcpy(&s_outputStream[s_numItems * AUDIO_QUEUE_ITEM_LEN_BYTES], *data, *size);
-
-    s_numItems++;
-    s_waterMark++;
-
-    if (AUDIO_QUEUE_WATERMARK == s_waterMark)
-    {
-        s_waterMark = 0;
-
-        if (AUDIO_QUEUE_WATERMARK == s_numItems)
-        {
-            xSemaphoreGive(s_pushCtr);
-            s_outputIndex = 0;
-        }
-
-        if (AUDIO_QUEUE_NUM_ITEMS == s_numItems)
-        {
-            s_numItems    = 0;
-            s_outputIndex = AUDIO_QUEUE_WTRMRK_BYTES;
-            xSemaphoreGive(s_pushCtr);
-        }
-    }
-
-    *size = 0;
-
-    return 0;
-}
 
 void audio_processing_set_task_handle(TaskHandle_t *handle)
 {
@@ -215,15 +187,31 @@ void audio_processing_task(void *pvParameters)
 
     s_pushCtr = xSemaphoreCreateCounting(2, 0);
 
+#if !defined(SLN_AFE_LIB)
     uint32_t reqSize = SLN_Voice_Req_Mem_Size();
 
     assert(sizeof(g_externallyAllocatedMem) >= reqSize);
+#endif
 
+#if defined(SLN_AFE_LIB)
+    afeConfig.postProcessedGain = 0x0600;
+    afeConfig.numberOfMics      = PDM_MIC_COUNT;
+    afeConfig.afeMemBlock       = g_externallyAllocatedMem;
+    afeConfig.afeMemBlockSize   = sizeof(g_externallyAllocatedMem);
+
+    cleanAudioBuff = &s_afeAudioOut[0];
+
+    status = SLN_AFE_Init(&s_afe_mem_pool, pvPortMalloc, &afeConfig);
+
+    if (status != kAfeSuccess)
+#else
     afeConfig.u16PostProcessedGain = 0x0600;
     afeConfig.u8NumberOfMics       = PDM_MIC_COUNT;
 
     status = SLN_Voice_Init(g_externallyAllocatedMem, &afeConfig);
+
     if (status != 1)
+#endif
     {
         // Should not get here, should output some error
         // while(1);
@@ -254,12 +242,17 @@ void audio_processing_task(void *pvParameters)
 
         // Process microphone streams
         int16_t *pcmIn = (int16_t *)((*s_micInputStream)[pingPongIdx]);
+#if defined(SLN_AFE_LIB)
+        SLN_AFE_Process_Audio(&s_afe_mem_pool, pcmIn, &s_ampInputStream[pingPongAmpIdx * PCM_SINGLE_CH_SMPL_COUNT],
+                              cleanAudioBuff);
+
+        SLN_AMAZON_WAKE_ProcessWakeWord(cleanAudioBuff, 320);
+#else
         SLN_Voice_Process_Audio(g_externallyAllocatedMem, pcmIn,
                                 &s_ampInputStream[pingPongAmpIdx * PCM_SINGLE_CH_SMPL_COUNT], &cleanAudioBuff, NULL,
                                 NULL);
-
-        // Pass output of AFE to wake word
         SLN_AMAZON_WAKE_ProcessWakeWord((int16_t *)cleanAudioBuff, 320);
+#endif
         taskNotification &= ~currentEvent;
 
         if (u8StartCapture)

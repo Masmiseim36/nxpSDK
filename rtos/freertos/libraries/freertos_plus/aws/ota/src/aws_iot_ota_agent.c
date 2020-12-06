@@ -259,6 +259,7 @@ static OTA_Err_t prvRequestDataHandler( OTA_EventData_t * pxEventData );
 static OTA_Err_t prvShutdownHandler( OTA_EventData_t * pxEventData );
 static OTA_Err_t prvCloseFileHandler( OTA_EventData_t * pxEventData );
 static OTA_Err_t prvUserAbortHandler( OTA_EventData_t * pxEventData );
+static OTA_Err_t prvJobNotificationHandler( OTA_EventData_t * pxEventData );
 
 /* OTA default callback initializer. */
 
@@ -300,23 +301,24 @@ static OTA_AgentContext_t xOTA_Agent =
 
 OTAStateTableEntry_t OTATransitionTable[] =
 {
-    /*STATE ,                              EVENT ,                               ACTION ,               NEXT STATE                         */
-    { eOTA_AgentState_Ready,               eOTA_AgentEvent_Start,               prvStartHandler,       eOTA_AgentState_RequestingJob       },
-    { eOTA_AgentState_RequestingJob,       eOTA_AgentEvent_RequestJobDocument,  prvRequestJobHandler,  eOTA_AgentState_WaitingForJob       },
-    { eOTA_AgentState_RequestingJob,       eOTA_AgentEvent_RequestTimer,        prvRequestJobHandler,  eOTA_AgentState_WaitingForJob       },
-    { eOTA_AgentState_WaitingForJob,       eOTA_AgentEvent_ReceivedJobDocument, prvProcessJobHandler,  eOTA_AgentState_CreatingFile        },
-    { eOTA_AgentState_CreatingFile,        eOTA_AgentEvent_StartSelfTest,       prvInSelfTestHandler,  eOTA_AgentState_WaitingForJob       },
-    { eOTA_AgentState_CreatingFile,        eOTA_AgentEvent_CreateFile,          prvInitFileHandler,    eOTA_AgentState_RequestingFileBlock },
-    { eOTA_AgentState_CreatingFile,        eOTA_AgentEvent_RequestTimer,        prvInitFileHandler,    eOTA_AgentState_RequestingFileBlock },
-    { eOTA_AgentState_RequestingFileBlock, eOTA_AgentEvent_RequestFileBlock,    prvRequestDataHandler, eOTA_AgentState_WaitingForFileBlock },
-    { eOTA_AgentState_RequestingFileBlock, eOTA_AgentEvent_RequestTimer,        prvRequestDataHandler, eOTA_AgentState_WaitingForFileBlock },
-    { eOTA_AgentState_WaitingForFileBlock, eOTA_AgentEvent_ReceivedFileBlock,   prvProcessDataHandler, eOTA_AgentState_WaitingForFileBlock },
-    { eOTA_AgentState_WaitingForFileBlock, eOTA_AgentEvent_RequestTimer,        prvRequestDataHandler, eOTA_AgentState_WaitingForFileBlock },
-    { eOTA_AgentState_WaitingForFileBlock, eOTA_AgentEvent_RequestFileBlock,    prvRequestDataHandler, eOTA_AgentState_WaitingForFileBlock },
-    { eOTA_AgentState_WaitingForFileBlock, eOTA_AgentEvent_RequestJobDocument,  prvRequestJobHandler,  eOTA_AgentState_WaitingForJob       },
-    { eOTA_AgentState_WaitingForFileBlock, eOTA_AgentEvent_CloseFile,           prvCloseFileHandler,   eOTA_AgentState_WaitingForJob       },
-    { eOTA_AgentState_All,                 eOTA_AgentEvent_UserAbort,           prvUserAbortHandler,   eOTA_AgentState_WaitingForJob       },
-    { eOTA_AgentState_All,                 eOTA_AgentEvent_Shutdown,            prvShutdownHandler,    eOTA_AgentState_ShuttingDown        },
+    /*STATE ,                              EVENT ,                               ACTION ,                   NEXT STATE                         */
+    { eOTA_AgentState_Ready,               eOTA_AgentEvent_Start,               prvStartHandler,           eOTA_AgentState_RequestingJob       },
+    { eOTA_AgentState_RequestingJob,       eOTA_AgentEvent_RequestJobDocument,  prvRequestJobHandler,      eOTA_AgentState_WaitingForJob       },
+    { eOTA_AgentState_RequestingJob,       eOTA_AgentEvent_RequestTimer,        prvRequestJobHandler,      eOTA_AgentState_WaitingForJob       },
+    { eOTA_AgentState_WaitingForJob,       eOTA_AgentEvent_ReceivedJobDocument, prvProcessJobHandler,      eOTA_AgentState_CreatingFile        },
+    { eOTA_AgentState_CreatingFile,        eOTA_AgentEvent_StartSelfTest,       prvInSelfTestHandler,      eOTA_AgentState_WaitingForJob       },
+    { eOTA_AgentState_CreatingFile,        eOTA_AgentEvent_CreateFile,          prvInitFileHandler,        eOTA_AgentState_RequestingFileBlock },
+    { eOTA_AgentState_CreatingFile,        eOTA_AgentEvent_RequestTimer,        prvInitFileHandler,        eOTA_AgentState_RequestingFileBlock },
+    { eOTA_AgentState_RequestingFileBlock, eOTA_AgentEvent_RequestFileBlock,    prvRequestDataHandler,     eOTA_AgentState_WaitingForFileBlock },
+    { eOTA_AgentState_RequestingFileBlock, eOTA_AgentEvent_RequestTimer,        prvRequestDataHandler,     eOTA_AgentState_WaitingForFileBlock },
+    { eOTA_AgentState_WaitingForFileBlock, eOTA_AgentEvent_ReceivedFileBlock,   prvProcessDataHandler,     eOTA_AgentState_WaitingForFileBlock },
+    { eOTA_AgentState_WaitingForFileBlock, eOTA_AgentEvent_RequestTimer,        prvRequestDataHandler,     eOTA_AgentState_WaitingForFileBlock },
+    { eOTA_AgentState_WaitingForFileBlock, eOTA_AgentEvent_RequestFileBlock,    prvRequestDataHandler,     eOTA_AgentState_WaitingForFileBlock },
+    { eOTA_AgentState_WaitingForFileBlock, eOTA_AgentEvent_RequestJobDocument,  prvRequestJobHandler,      eOTA_AgentState_WaitingForJob       },
+    { eOTA_AgentState_WaitingForFileBlock, eOTA_AgentEvent_ReceivedJobDocument, prvJobNotificationHandler, eOTA_AgentState_RequestingJob       },
+    { eOTA_AgentState_WaitingForFileBlock, eOTA_AgentEvent_CloseFile,           prvCloseFileHandler,       eOTA_AgentState_WaitingForJob       },
+    { eOTA_AgentState_All,                 eOTA_AgentEvent_UserAbort,           prvUserAbortHandler,       eOTA_AgentState_WaitingForJob       },
+    { eOTA_AgentState_All,                 eOTA_AgentEvent_Shutdown,            prvShutdownHandler,        eOTA_AgentState_ShuttingDown        },
 };
 
 const char * pcOTA_AgentState_Strings[ eOTA_AgentState_All ] =
@@ -1122,6 +1124,34 @@ static OTA_Err_t prvShutdownHandler( OTA_EventData_t * pxEventData )
     vTaskDelete( NULL );
 
     return kOTA_Err_None;
+}
+
+static OTA_Err_t prvJobNotificationHandler( OTA_EventData_t * pxEventData )
+{
+    ( void ) pxEventData;
+    OTA_Err_t xErr = kOTA_Err_Uninitialized;
+    OTA_EventMsg_t xEventMsg = { 0 };
+
+    /*  We receieved job notification so stop the data request timer. */
+    prvStopRequestTimer();
+
+    /* Abort the current job. */
+    ( void ) xOTA_Agent.xPALCallbacks.xSetPlatformImageState( xOTA_Agent.ulServerFileID, eOTA_ImageState_Aborted );
+    ( void ) prvOTA_Close( &xOTA_Agent.pxOTA_Files[ xOTA_Agent.ulFileIndex ] );
+
+    /* Free the active job name as its no longer required. */
+    if( xOTA_Agent.pcOTA_Singleton_ActiveJobName != NULL )
+    {
+        vPortFree( xOTA_Agent.pcOTA_Singleton_ActiveJobName );
+        xOTA_Agent.pcOTA_Singleton_ActiveJobName = NULL;
+    }
+
+    /*
+     * Send signal to request next OTA job document from service.
+     */
+    xEventMsg.xEventId = eOTA_AgentEvent_RequestJobDocument;
+
+    return OTA_SignalEvent( &xEventMsg ) ? kOTA_Err_None : kOTA_Err_EventQueueSendFailed;
 }
 
 /*

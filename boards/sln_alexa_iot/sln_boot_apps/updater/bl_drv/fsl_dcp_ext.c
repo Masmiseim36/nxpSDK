@@ -1,9 +1,10 @@
 /*
- * Copyright 2016-2018 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
+ 
 #include "fsl_device_registers.h"
 #include <stdint.h>
 #include "fsl_dcp.h"
@@ -179,7 +180,7 @@ static void dcp_enable(void)
 #else
     dcp_config_t defaultConfig;
     DCP_GetDefaultConfig(&defaultConfig);
-    DCP_Init(NXP_DCP, &defaultConfig);
+    DCP_Init((DCP_Type *)NXP_DCP, &defaultConfig);
 #endif
 }
 

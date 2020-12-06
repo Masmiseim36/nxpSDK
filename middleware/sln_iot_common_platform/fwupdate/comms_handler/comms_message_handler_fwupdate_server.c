@@ -363,7 +363,7 @@ static sln_comms_message_status processFwUpdateActivateImgReq(void *clientInstan
     sln_comms_message_status status = kComms_Success;
     int32_t fica_status             = SLN_FLASH_NO_ERROR;
 
-    /* Set the FwUpdate bit in the flash memory */
+    /* Clear the bit and enable the FWUPDATE */
     fica_status = FICA_clr_comm_flag(FICA_COMM_FWUPDATE_BIT);
 
     if (SLN_FLASH_NO_ERROR != fica_status)

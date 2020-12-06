@@ -1,0 +1,3 @@
+<#if memory.name=="SRAM_OC_NON_CACHEABLE">
+	*memp.o(.bss*)
+</#if>

@@ -1,1 +1,1 @@
-        *(EXCLUDE_FILE(*flexspi_hyper_flash_ops.o *fsl_flexspi.o *sln_flash.o) .text*)
+        *(EXCLUDE_FILE(*flexspi_hyper_flash_ops.o *fsl_flexspi.o *sln_flash.o *pdm_to_pcm_task.o *audio_processing_task.o *fsl_sai.o *fsl_sai_edma.o *fsl_edma.o *sln_pdm_mic.o *libsln_afe.a: *libsln_dsp_toolbox.a:) .text*)

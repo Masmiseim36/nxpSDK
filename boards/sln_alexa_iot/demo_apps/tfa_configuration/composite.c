@@ -74,10 +74,10 @@
      (DEMO_SAI_CLOCK_SOURCE_PRE_DIVIDER + 1U))
 
 /* DMA */
-#define EXAMPLE_DMAMUX DMAMUX
-#define EXAMPLE_DMA DMA0
-#define EXAMPLE_TX_CHANNEL (0U)
-#define EXAMPLE_RX_CHANNEL (1U)
+#define EXAMPLE_DMAMUX        DMAMUX
+#define EXAMPLE_DMA           DMA0
+#define EXAMPLE_TX_CHANNEL    (0U)
+#define EXAMPLE_RX_CHANNEL    (1U)
 #define EXAMPLE_SAI_TX_SOURCE kDmaRequestMuxSai1Tx
 #define EXAMPLE_SAI_RX_SOURCE kDmaRequestMuxSai1Rx
 

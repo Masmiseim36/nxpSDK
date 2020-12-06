@@ -31,22 +31,22 @@
  * Definitions
  ******************************************************************************/
 #if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0)
-#define CONTROLLER_ID kUSB_ControllerEhci0
+#define CONTROLLER_ID  kUSB_ControllerEhci0
 #define DATA_BUFF_SIZE HS_CDC_VCOM_BULK_OUT_PACKET_SIZE
 #endif
 #if defined(USB_DEVICE_CONFIG_KHCI) && (USB_DEVICE_CONFIG_KHCI > 0)
-#define CONTROLLER_ID kUSB_ControllerKhci0
+#define CONTROLLER_ID  kUSB_ControllerKhci0
 #define DATA_BUFF_SIZE FS_CDC_VCOM_BULK_OUT_PACKET_SIZE
 
 #endif
 #if defined(USB_DEVICE_CONFIG_LPCIP3511FS) && (USB_DEVICE_CONFIG_LPCIP3511FS > 0U)
-#define CONTROLLER_ID kUSB_ControllerLpcIp3511Fs0
+#define CONTROLLER_ID  kUSB_ControllerLpcIp3511Fs0
 #define DATA_BUFF_SIZE FS_CDC_VCOM_BULK_OUT_PACKET_SIZE
 
 #endif
 
 #if defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U)
-#define CONTROLLER_ID kUSB_ControllerLpcIp3511Hs0
+#define CONTROLLER_ID  kUSB_ControllerLpcIp3511Hs0
 #define DATA_BUFF_SIZE HS_CDC_VCOM_BULK_OUT_PACKET_SIZE
 #endif
 
@@ -57,20 +57,20 @@
 #endif
 
 /* Currently configured line coding */
-#define LINE_CODING_SIZE (0x07)
-#define LINE_CODING_DTERATE (2048000)
+#define LINE_CODING_SIZE       (0x07)
+#define LINE_CODING_DTERATE    (2048000)
 #define LINE_CODING_CHARFORMAT (0x00)
 #define LINE_CODING_PARITYTYPE (0x00)
-#define LINE_CODING_DATABITS (0x08)
+#define LINE_CODING_DATABITS   (0x08)
 
 /* Communications feature */
 #define COMM_FEATURE_DATA_SIZE (0x02)
-#define STATUS_ABSTRACT_STATE (0x0000)
-#define COUNTRY_SETTING (0x0000)
+#define STATUS_ABSTRACT_STATE  (0x0000)
+#define COUNTRY_SETTING        (0x0000)
 
 /* Notification of serial state */
-#define NOTIF_PACKET_SIZE (0x08)
-#define UART_BITMAP_SIZE (0x02)
+#define NOTIF_PACKET_SIZE  (0x08)
+#define UART_BITMAP_SIZE   (0x02)
 #define NOTIF_REQUEST_TYPE (0xA1)
 
 /* Define the types for application */

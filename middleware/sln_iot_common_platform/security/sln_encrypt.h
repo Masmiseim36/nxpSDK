@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP.
+ * Copyright 2019-2020 NXP.
  * This software is owned or controlled by NXP and may only be used strictly in accordance with the
  * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
  * activating and/or otherwise using the software, you are agreeing that you have read, and that you
@@ -86,7 +86,7 @@ int32_t SLN_Encrypt_Deinit_Slot(sln_encrypt_ctx_t *ctx);
  * @param in          Pointer to the plain (unencrypted) buffer
  * @param inSize      Size of the input buffer
  * @param out         Pointer to the cypher (encrypted) buffer.
- * @param outSsize    The size of the output buffer. MUST be a multiple of 16-bytes.
+ * @param outSize    The size of the output buffer. MUST be a multiple of 16-bytes.
  *
  * @returns 0 in case of success or a negative value in case of error
  */
@@ -100,7 +100,7 @@ int32_t SLN_Encrypt_AES_CBC_PKCS7(
  * @param in          Pointer to the cypher (encrypted) buffer.
  * @param inSize      The size of the input buffer. MUST be a multiple of 16-bytes.
  * @param out         Pointer to the plain (unencrypted) buffer
- * @param outSsize    Ouput pointer updated with plaintext length (decoded from PKCS#7 padding)
+ * @param outSize    Ouput pointer updated with plaintext length (decoded from PKCS#7 padding)
  *
  * @returns 0 in case of success or a negative value in case of error
  */

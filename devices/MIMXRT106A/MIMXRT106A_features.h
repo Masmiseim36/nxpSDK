@@ -1,13 +1,13 @@
 /*
 ** ###################################################################
 **     Version:             rev. 1.0, 2018-11-16
-**     Build:               b191210
+**     Build:               b200211
 **
 **     Abstract:
 **         Chip specific module features.
 **
 **     Copyright 2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2019 NXP
+**     Copyright 2016-2020 NXP
 **     All rights reserved.
 **
 **     SPDX-License-Identifier: BSD-3-Clause
@@ -486,7 +486,12 @@
 
 /* OCOTP module features */
 
-/* No feature definitions */
+/* @brief Has timing control, (register TIMING). */
+#define FSL_FEATURE_OCOTP_HAS_TIMING_CTRL (1)
+/* @brief Support lock eFuse word write lock, (CTRL[WORDLOCK]). */
+#define FSL_FEATURE_OCOTP_HAS_WORDLOCK (0)
+/* @brief Has status register. (Register HW_OCOTP_OUT_STATUS0). */
+#define FSL_FEATURE_OCOTP_HAS_STATUS (0)
 
 /* PIT module features */
 
@@ -508,24 +513,12 @@
 
 /* PWM module features */
 
-/* @brief Number of each EflexPWM module channels (outputs). */
-#define FSL_FEATURE_PWM_CHANNEL_COUNT (12U)
-/* @brief Number of EflexPWM module A channels (outputs). */
-#define FSL_FEATURE_PWM_CHANNELA_COUNT (4U)
-/* @brief Number of EflexPWM module B channels (outputs). */
-#define FSL_FEATURE_PWM_CHANNELB_COUNT (4U)
-/* @brief Number of EflexPWM module X channels (outputs). */
-#define FSL_FEATURE_PWM_CHANNELX_COUNT (4U)
-/* @brief Number of each EflexPWM module compare channels interrupts. */
-#define FSL_FEATURE_PWM_CMP_INT_HANDLER_COUNT (4U)
-/* @brief Number of each EflexPWM module reload channels interrupts. */
-#define FSL_FEATURE_PWM_RELOAD_INT_HANDLER_COUNT (4U)
-/* @brief Number of each EflexPWM module capture channels interrupts. */
-#define FSL_FEATURE_PWM_CAP_INT_HANDLER_COUNT (1U)
-/* @brief Number of each EflexPWM module reload error channels interrupts. */
-#define FSL_FEATURE_PWM_RERR_INT_HANDLER_COUNT (1U)
-/* @brief Number of each EflexPWM module fault channels interrupts. */
-#define FSL_FEATURE_PWM_FAULT_INT_HANDLER_COUNT (1U)
+/* @brief If EflexPWM has module A channels (outputs). */
+#define FSL_FEATURE_PWM_HAS_CHANNELA (1)
+/* @brief If EflexPWM has module B channels (outputs). */
+#define FSL_FEATURE_PWM_HAS_CHANNELB (1)
+/* @brief If EflexPWM has module X channels (outputs). */
+#define FSL_FEATURE_PWM_HAS_CHANNELX (1)
 /* @brief Number of submodules in each EflexPWM module. */
 #define FSL_FEATURE_PWM_SUBMODULE_COUNT (4U)
 

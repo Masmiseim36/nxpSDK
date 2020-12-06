@@ -1,7 +1,7 @@
 //*****************************************************************************
 // MIMXRT106A startup code for use with MCUXpresso IDE
 //
-// Version : 130120
+// Version : 310320
 //*****************************************************************************
 //
 // Copyright 2016-2020 NXP
@@ -63,7 +63,11 @@ extern void SystemInit(void);
      void ResetISR(void);
 WEAK void NMI_Handler(void);
 WEAK void HardFault_Handler(void);
+WEAK void MemManage_Handler(void);
+WEAK void BusFault_Handler(void);
+WEAK void UsageFault_Handler(void);
 WEAK void SVC_Handler(void);
+WEAK void DebugMon_Handler(void);
 WEAK void PendSV_Handler(void);
 WEAK void SysTick_Handler(void);
 WEAK void IntDefaultHandler(void);
@@ -483,15 +487,15 @@ void (* const g_pfnVectors[])(void) = {
     ResetISR,                          // The reset handler
     NMI_Handler,                       // The NMI handler
     HardFault_Handler,                 // The hard fault handler
-    0,                                 // Reserved
-    0,                                 // Reserved
-    0,                                 // Reserved
+    MemManage_Handler,                 // The MPU fault handler
+    BusFault_Handler,                  // The bus fault handler
+    UsageFault_Handler,                // The usage fault handler
     0,                                 // Reserved
     0,                                 // Reserved
     0,                                 // Reserved
     0,                                 // Reserved
     SVC_Handler,                       // SVCall handler
-    0,                                 // Reserved
+    DebugMon_Handler,                  // Debug monitor handler
     0,                                 // Reserved
     PendSV_Handler,                    // The PendSV handler
     SysTick_Handler,                   // The SysTick handler
@@ -806,16 +810,19 @@ void ResetISR(void) {
 
     // Subtract this space used from the intended new stack location so when the code will reference
     // local parameters (above sp) the access is still valid.
-    volatile register unsigned int vNewStackTop = (unsigned int)&_vStackTop - vOldStackUsed;
+    volatile unsigned int vCompilerStackTop = (unsigned int)&_vStackTop;
+    volatile register unsigned int vNewStackTop = vCompilerStackTop - vOldStackUsed;
     __DSB();
     __ISB();
 
     // Copy contents of old stack before setting new SP
     volatile register unsigned char *oldStackData = (unsigned char *)(vOldStackTop - 1);
-    volatile register unsigned char *newStackData = (unsigned char *)(_vStackTop - 1);
+    volatile register unsigned char *newStackData = (unsigned char *)(vCompilerStackTop - 1);
     for (unsigned int i = 0; i < vOldStackUsed; i++)
     {
-        *newStackData-- = *oldStackData--;
+        *newStackData = *oldStackData;
+        newStackData--;
+        oldStackData--;
     }
 
     // Set the new stack location from the register where the vNewStackTop content was saved
@@ -920,7 +927,23 @@ WEAK_AV void HardFault_Handler(void)
 { while(1) {}
 }
 
+WEAK_AV void MemManage_Handler(void)
+{ while(1) {}
+}
+
+WEAK_AV void BusFault_Handler(void)
+{ while(1) {}
+}
+
+WEAK_AV void UsageFault_Handler(void)
+{ while(1) {}
+}
+
 WEAK_AV void SVC_Handler(void)
+{ while(1) {}
+}
+
+WEAK_AV void DebugMon_Handler(void)
 { while(1) {}
 }
 

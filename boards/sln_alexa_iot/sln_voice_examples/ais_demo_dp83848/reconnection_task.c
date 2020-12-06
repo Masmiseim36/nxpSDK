@@ -38,9 +38,9 @@
 
 #include "sln_flash_mgmt.h"
 
-#define RECONNECTION_TASK_NAME "reconnection_task"
-#define RECONNECTION_TASK_STACK 1024U
-#define RECONNECTION_TASK_PRIORITY (configMAX_PRIORITIES - 3)
+#define RECONNECTION_TASK_NAME     "reconnection_task"
+#define RECONNECTION_TASK_STACK    (1280U) /* 5KB */
+#define RECONNECTION_TASK_PRIORITY (configTIMER_TASK_PRIORITY - 1)
 
 #if (defined(AIS_SPEC_REV_325) && (AIS_SPEC_REV_325 == 1))
 #define RECONNECTION_EVENT_MASK                                                                                    \
@@ -203,15 +203,30 @@ static void reconnect_state_machine(uint32_t *reconnectState)
             reconnect_interaction_ux();
 
             /* Block here to wait for link to re-establish. */
-            if (APP_NETWORK_Re_Link())
-            {
-                *reconnectState = kLinkLoss;
-                configPRINTF(("...link re-establishing failed!\r\n"));
-            }
-            else
+            connectStatus = APP_NETWORK_Re_Link();
+
+            /* Handle return code */
+            if (kStatus_Success == connectStatus)
             {
                 *reconnectState = kMqttReconnect;
                 configPRINTF(("...link re-established!\r\n"));
+            }
+#if USE_WIFI_CONNECTION
+            else if (WIFI_CONNECT_WRONG_CRED == connectStatus)
+            {
+                /*
+                    End application developer can use this return state to
+                    trigger alternative application response to missing or
+                    incorrect WiFi credentials.
+                 */
+                *reconnectState = kLinkLoss;
+                configPRINTF(("...missing or incorrect credentials!\r\n"));
+            }
+#endif
+            else
+            {
+                *reconnectState = kLinkLoss;
+                configPRINTF(("...link re-establishing failed!\r\n"));
             }
 
             break;

@@ -35,7 +35,7 @@
  * @brief Number of jsmn tokens to use in parsing.  Each jsmn token contains 4 ints.
  * Ensure that the number of tokens does not overflow the calling task's stack,
  * but is also sufficient to parse the largest expected JSON documents. */
-#define shadowconfigJSON_JSMN_TOKENS             ( 64 )
+#define shadowconfigJSON_JSMN_TOKENS (64)
 
 /**
  * @brief Maximum number of Shadow Clients.
@@ -47,7 +47,7 @@
  *
  * @note Should be less than 256.
  */
-#define shadowconfigMAX_CLIENTS                  ( 1 )
+#define shadowconfigMAX_CLIENTS (1)
 
 /**
  * @brief Shadow debug message setting.
@@ -56,7 +56,7 @@
  * it to @c 1 to enable debug messages. Ensure that the macro @c configPRINTF
  * is available if debugging is enabled.
  */
-#define shadowconfigENABLE_DEBUG_LOGS            ( 1 )
+#define shadowconfigENABLE_DEBUG_LOGS (1)
 
 /**
  * @brief Number of unique Things for which user notify callbacks can be
@@ -67,7 +67,7 @@
  *
  * @note Should be less than 256.
  */
-#define shadowconfigMAX_THINGS_WITH_CALLBACKS    ( 1 )
+#define shadowconfigMAX_THINGS_WITH_CALLBACKS (1)
 
 /**
  * @brief Time (in milliseconds) a Shadow Client may block during cleanup @b IF
@@ -88,6 +88,6 @@
  * @warning If cleanup doesn't fully complete, users may be billed for MQTT
  * messages on topics that weren't properly cleaned up!
  */
-#define shadowconfigCLEANUP_TIME_MS              ( 5000UL )
+#define shadowconfigCLEANUP_TIME_MS (5000UL)
 
 #endif /* _AWS_SHADOW_CONFIG_H_ */

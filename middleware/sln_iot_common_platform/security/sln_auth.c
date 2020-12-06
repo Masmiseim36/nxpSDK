@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 NXP.
+ * Copyright 2018-2020 NXP.
  * This software is owned or controlled by NXP and may only be used strictly in accordance with the
  * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
  * activating and/or otherwise using the software, you are agreeing that you have read, and that you
@@ -11,7 +11,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "app.h"
+#include "board.h"
 #include "pin_mux.h"
 #include "clock_config.h"
 
@@ -72,7 +72,7 @@ static bool is_buffer_empty(uint8_t *buf, uint32_t len)
     return isEmpty;
 }
 
-__attribute__((section(".data.$SRAM_OC_NON_CACHEABLE"))) static int32_t write_to_nvm(uint32_t address,
+__attribute__((section(".ramfunc.$SRAM_ITC"))) static int32_t write_to_nvm(uint32_t address,
                                                                                      uint8_t *buf,
                                                                                      uint32_t len)
 {

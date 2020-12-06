@@ -26,8 +26,13 @@
 #include "network_connection.h"
 
 #include "ais_continuous_utterance.h"
+#if defined(SLN_AFE_LIB)
+#include "sln_dsp_toolbox.h"
+#include "sln_afe.h"
+#else
 #define SLN_Voice
 #include "sln_intelligence_toolbox.h"
+#endif
 
 #include "sln_flash_mgmt.h"
 #include "sln_cfg_file.h"
@@ -40,14 +45,14 @@ extern uint32_t SLN_AMAZON_WAKE_ProcessWakeWord(int16_t *pi16AudioBuff, uint16_t
  * Definitions
  ******************************************************************************/
 #define RUN_GENERATED_TEST (0U)
-#define BUFFER_SIZE (PCM_SAMPLE_COUNT * 3)
-#define BUFFER_NUM (4)
+#define BUFFER_SIZE        (PCM_SAMPLE_COUNT * 3)
+#define BUFFER_NUM         (4)
 
-#define AUDIO_QUEUE_NUM_ITEMS 75U
-#define AUDIO_QUEUE_WATERMARK 15U
+#define AUDIO_QUEUE_NUM_ITEMS      75U
+#define AUDIO_QUEUE_WATERMARK      15U
 #define AUDIO_QUEUE_ITEM_LEN_BYTES (PCM_SAMPLE_SIZE_BYTES * PCM_SINGLE_CH_SMPL_COUNT)
-#define AUDIO_QUEUE_WTRMRK_BYTES (AUDIO_QUEUE_WATERMARK * AUDIO_QUEUE_ITEM_LEN_BYTES)
-#define AUDIO_QUEUE_LENGTH_BYTES (AUDIO_QUEUE_NUM_ITEMS * AUDIO_QUEUE_ITEM_LEN_BYTES)
+#define AUDIO_QUEUE_WTRMRK_BYTES   (AUDIO_QUEUE_WATERMARK * AUDIO_QUEUE_ITEM_LEN_BYTES)
+#define AUDIO_QUEUE_LENGTH_BYTES   (AUDIO_QUEUE_NUM_ITEMS * AUDIO_QUEUE_ITEM_LEN_BYTES)
 
 /*******************************************************************************
  * Global Vars
@@ -56,6 +61,11 @@ extern uint32_t SLN_AMAZON_WAKE_ProcessWakeWord(int16_t *pi16AudioBuff, uint16_t
 static TaskHandle_t s_appTask;
 
 static SemaphoreHandle_t s_pushCtr;
+
+#if defined(SLN_AFE_LIB)
+static uint8_t *s_afe_mem_pool;
+static uint8_t s_afeAudioOut[PCM_SINGLE_CH_SMPL_COUNT * PCM_SAMPLE_SIZE_BYTES] __attribute__((aligned(4)));
+#endif
 
 SDK_ALIGN(uint8_t __attribute__((section(".ocram_cacheable_data"))) g_w8ExternallyAllocatedMem[(173 * 1024)], 8);
 
@@ -326,24 +336,40 @@ void audio_processing_task(void *pvParameters)
 
     s_pushCtr = xSemaphoreCreateCounting(2, 0);
 
+#if !defined(SLN_AFE_LIB)
     uint32_t reqSize = SLN_Voice_Req_Mem_Size();
 
     assert(sizeof(g_w8ExternallyAllocatedMem) >= reqSize);
+#endif
 
     /* Make sure we memset the buffer to zero */
     audio_processing_reset_mic_capture_buffers();
 
+#if defined(SLN_AFE_LIB)
+    afeConfig.postProcessedGain = 0x0600;
+    afeConfig.numberOfMics      = PDM_MIC_COUNT;
+    afeConfig.afeMemBlock       = g_w8ExternallyAllocatedMem;
+    afeConfig.afeMemBlockSize   = sizeof(g_w8ExternallyAllocatedMem);
+
+    pu8CleanAudioBuff = &s_afeAudioOut[0];
+
+    status = SLN_AFE_Init(&s_afe_mem_pool, pvPortMalloc, &afeConfig);
+
+    if (status != kAfeSuccess)
+#else
     afeConfig.u16PostProcessedGain = 0x0600;
     afeConfig.u8NumberOfMics       = PDM_MIC_COUNT;
 
     status = SLN_Voice_Init(g_w8ExternallyAllocatedMem, &afeConfig);
 
     if (status != 1)
+#endif
     {
         // Should not get here, should output some error
         while (1)
             ;
     }
+
     SLN_AMAZON_WAKE_Initialize();
     SLN_AMAZON_WAKE_SetWakeupDetectedParams(&u8WakeWordActive, &wwLen);
 
@@ -368,10 +394,17 @@ void audio_processing_task(void *pvParameters)
         }
 
         int16_t *pcmIn = (int16_t *)((*s_micInputStream)[pingPongIdx]);
+#if defined(SLN_AFE_LIB)
+        SLN_AFE_Process_Audio(&s_afe_mem_pool, pcmIn, &s_ampInputStream[pingPongAmpIdx * PCM_SINGLE_CH_SMPL_COUNT],
+                              pu8CleanAudioBuff);
+
+        SLN_AMAZON_WAKE_ProcessWakeWord(pu8CleanAudioBuff, 320);
+#else
         SLN_Voice_Process_Audio(g_w8ExternallyAllocatedMem, pcmIn,
                                 &s_ampInputStream[pingPongAmpIdx * PCM_SINGLE_CH_SMPL_COUNT], &pu8CleanAudioBuff, NULL,
                                 NULL);
         SLN_AMAZON_WAKE_ProcessWakeWord((int16_t *)pu8CleanAudioBuff, 320);
+#endif
         taskNotification &= ~currentEvent;
 
         // If devices is muted, then skip over state machine

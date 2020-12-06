@@ -13,11 +13,11 @@
 #include "sln_flash_mgmt.h"
 
 /*! Addresses for files */
-#define SLN_FLASH_TBL_RES RESERVED
-#define SLN_FLASH_TBL_STR(x) #x
-#define SLN_FLASH_TBL_PRINT(x) SLN_FLASH_TBL_STR(x)
+#define SLN_FLASH_TBL_RES           RESERVED
+#define SLN_FLASH_TBL_STR(x)        #x
+#define SLN_FLASH_TBL_PRINT(x)      SLN_FLASH_TBL_STR(x)
 #define SLN_FLASH_TBL_CAT_OUT(a, b) a##b
-#define SLN_FLASH_TBL_CAT(a, b) SLN_FLASH_TBL_CAT_OUT(a, b)
+#define SLN_FLASH_TBL_CAT(a, b)     SLN_FLASH_TBL_CAT_OUT(a, b)
 
 #define SLN_FLASH_INDEX 0
 

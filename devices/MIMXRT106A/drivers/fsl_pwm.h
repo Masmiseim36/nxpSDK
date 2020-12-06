@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -21,7 +21,7 @@
 
 /*! @name Driver version */
 /*@{*/
-#define FSL_PWM_DRIVER_VERSION (MAKE_VERSION(2, 2, 0)) /*!< Version 2.2.0 */
+#define FSL_PWM_DRIVER_VERSION (MAKE_VERSION(2, 2, 1)) /*!< Version 2.2.1 */
 /*@}*/
 
 /*! Number of bits per submodule for software output control */
@@ -140,6 +140,22 @@ typedef enum _pwm_fault_input
     kPWM_Fault_3       /*!< Fault 3 input pin */
 } pwm_fault_input_t;
 
+/*! @brief List of PWM fault disable mapping selections */
+typedef enum _pwm_fault_disable
+{
+    kPWM_FaultDisable_0 = (1U << 0), /*!< Fault 0 disable mapping */
+    kPWM_FaultDisable_1 = (1U << 1), /*!< Fault 1 disable mapping */
+    kPWM_FaultDisable_2 = (1U << 2), /*!< Fault 2 disable mapping */
+    kPWM_FaultDisable_3 = (1U << 3)  /*!< Fault 3 disable mapping */
+} pwm_fault_disable_t;
+
+/*! @brief List of PWM fault channels */
+typedef enum _pwm_fault_channels
+{
+    kPWM_faultchannel_0 = 0U,
+    kPWM_faultchannel_1
+} pwm_fault_channels_t;
+
 /*! @brief PWM capture edge select */
 typedef enum _pwm_input_capture_edge
 {
@@ -230,6 +246,33 @@ typedef enum _pwm_status_flags
     kPWM_Fault2Flag      = (1U << 18), /*!< PWM fault 2 flag */
     kPWM_Fault3Flag      = (1U << 19)  /*!< PWM fault 3 flag */
 } pwm_status_flags_t;
+
+/*! @brief List of PWM DMA options */
+typedef enum _pwm_dma_enable
+{
+    kPWM_CaptureX0DMAEnable = (1U << 0), /*!< PWM capture X0 DMA */
+    kPWM_CaptureX1DMAEnable = (1U << 1), /*!< PWM capture X1 DMA */
+    kPWM_CaptureB0DMAEnable = (1U << 2), /*!< PWM capture B0 DMA */
+    kPWM_CaptureB1DMAEnable = (1U << 3), /*!< PWM capture B1 DMA */
+    kPWM_CaptureA0DMAEnable = (1U << 4), /*!< PWM capture A0 DMA */
+    kPWM_CaptureA1DMAEnable = (1U << 5)  /*!< PWM capture A1 DMA */
+} pwm_dma_enable_t;
+
+/*! @brief List of PWM capture DMA enable source select */
+typedef enum _pwm_dma_source_select
+{
+    kPWM_DMARequestDisable = 0U, /*!< Read DMA requests disabled */
+    kPWM_DMAWatermarksEnable,    /*!< Exceeding a FIFO watermark sets the DMA read request */
+    kPWM_DMALocalSync,           /*!< A local sync (VAL1 matches counter) sets the read DMA request */
+    kPWM_DMALocalReload          /*!< A local reload (STS[RF] being set) sets the read DMA request */
+} pwm_dma_source_select_t;
+
+/*! @brief PWM FIFO Watermark AND Control */
+typedef enum _pwm_watermark_control
+{
+    kPWM_FIFOWatermarksOR = 0U, /*!< Selected FIFO watermarks are OR'ed together */
+    kPWM_FIFOWatermarksAND      /*!< Selected FIFO watermarks are AND'ed together */
+} pwm_watermark_control_t;
 
 /*! @brief PWM operation mode */
 typedef enum _pwm_mode
@@ -479,11 +522,8 @@ void PWM_UpdatePwmDutycycle(PWM_Type *base,
  *                          0=inactive signal(0% duty cycle)...
  *                          65535=active signal (100% duty cycle)
  */
-void PWM_UpdatePwmDutycycleHighAccuracy(PWM_Type *base,
-                                        pwm_submodule_t subModule,
-                                        pwm_channels_t pwmSignal,
-                                        pwm_mode_t currPwmMode,
-                                        uint16_t dutyCycle);
+void PWM_UpdatePwmDutycycleHighAccuracy(
+    PWM_Type *base, pwm_submodule_t subModule, pwm_channels_t pwmSignal, pwm_mode_t currPwmMode, uint16_t dutyCycle);
 
 /*! @}*/
 
@@ -521,6 +561,20 @@ void PWM_SetupFaultInputFilter(PWM_Type *base, const pwm_fault_input_filter_para
  * @param faultParams Pointer to the PWM fault config structure
  */
 void PWM_SetupFaults(PWM_Type *base, pwm_fault_input_t faultNum, const pwm_fault_param_t *faultParams);
+
+/*!
+ * @brief  Fill in the PWM fault config struct with the default settings
+ *
+ * The default values are:
+ * @code
+ *   config->faultClearingMode = kPWM_Automatic;
+ *   config->faultLevel = false;
+ *   config->enableCombinationalPath = true;
+ *   config->recoverMode = kPWM_NoRecovery;
+ * @endcode
+ * @param config Pointer to user's PWM fault config structure.
+ */
+void PWM_FaultDefaultConfig(pwm_fault_param_t *config);
 
 /*!
  * @brief Selects the signal to output on a PWM pin when a FORCE_OUT signal is asserted.
@@ -573,6 +627,99 @@ void PWM_DisableInterrupts(PWM_Type *base, pwm_submodule_t subModule, uint32_t m
  *         enumeration ::pwm_interrupt_enable_t
  */
 uint32_t PWM_GetEnabledInterrupts(PWM_Type *base, pwm_submodule_t subModule);
+
+/*! @}*/
+
+/*!
+ * @name DMA Interface
+ * @{
+ */
+
+/*!
+ * @brief Capture DMA Enable Source Select.
+ *
+ * @param base                  PWM peripheral base address
+ * @param subModule             PWM submodule to configure
+ * @param pwm_watermark_control PWM FIFO watermark and control
+ */
+static inline void PWM_DMAFIFOWatermarkControl(PWM_Type *base,
+                                               pwm_submodule_t subModule,
+                                               pwm_watermark_control_t pwm_watermark_control)
+{
+    uint16_t reg = base->SM[subModule].DMAEN;
+    if (pwm_watermark_control == kPWM_FIFOWatermarksOR)
+    {
+        reg &= ~((uint16_t)PWM_DMAEN_FAND_MASK);
+    }
+    else
+    {
+        reg |= ((uint16_t)PWM_DMAEN_FAND_MASK);
+    }
+    base->SM[subModule].DMAEN = reg;
+}
+
+/*!
+ * @brief Capture DMA Enable Source Select.
+ *
+ * @param base                  PWM peripheral base address
+ * @param subModule             PWM submodule to configure
+ * @param pwm_dma_source_select PWM capture DMA enable source select
+ */
+static inline void PWM_DMACaptureSourceSelect(PWM_Type *base,
+                                              pwm_submodule_t subModule,
+                                              pwm_dma_source_select_t pwm_dma_source_select)
+{
+    uint16_t reg = base->SM[subModule].DMAEN;
+
+    reg &= ~((uint16_t)PWM_DMAEN_CAPTDE_MASK);
+    reg |= (((uint16_t)pwm_dma_source_select << (uint16_t)PWM_DMAEN_CAPTDE_SHIFT) & (uint16_t)PWM_DMAEN_CAPTDE_MASK);
+
+    base->SM[subModule].DMAEN = reg;
+}
+
+/*!
+ * @brief Enables or disables the selected PWM DMA Capture read request.
+ *
+ * @param base      PWM peripheral base address
+ * @param subModule PWM submodule to configure
+ * @param mask      The DMA to enable or disable. This is a logical OR of members of the
+ *                  enumeration ::pwm_dma_enable_t
+ * @param activate  true: Enable DMA read request; false: Disable DMA read request
+ */
+static inline void PWM_EnableDMACapture(PWM_Type *base, pwm_submodule_t subModule, uint16_t mask, bool activate)
+{
+    uint16_t reg = base->SM[subModule].DMAEN;
+    if (activate)
+    {
+        reg |= (uint16_t)(mask);
+    }
+    else
+    {
+        reg &= ~((uint16_t)(mask));
+    }
+    base->SM[subModule].DMAEN = reg;
+}
+
+/*!
+ * @brief Enables or disables the PWM DMA write request.
+ *
+ * @param base      PWM peripheral base address
+ * @param subModule PWM submodule to configure
+ * @param activate  true: Enable DMA write request; false: Disable DMA write request
+ */
+static inline void PWM_EnableDMAWrite(PWM_Type *base, pwm_submodule_t subModule, bool activate)
+{
+    uint16_t reg = base->SM[subModule].DMAEN;
+    if (activate)
+    {
+        reg |= ((uint16_t)PWM_DMAEN_VALDE_MASK);
+    }
+    else
+    {
+        reg &= ~((uint16_t)PWM_DMAEN_VALDE_MASK);
+    }
+    base->SM[subModule].DMAEN = reg;
+}
 
 /*! @}*/
 
@@ -786,6 +933,49 @@ static inline void PWM_SetPwmFaultState(PWM_Type *base,
             break;
     }
     base->SM[subModule].OCTRL = reg;
+}
+
+/*!
+ * @brief Set PWM fault disable mapping
+ *
+ * Each of the four bits of this read/write field is one-to-one associated
+ * with the four FAULTx inputs of fault channel 0/1. The PWM output will be turned
+ * off if there is a logic 1 on an FAULTx input and a 1 in the corresponding
+ * bit of this field. A reset sets all bits in this field.
+ *
+ * @param base               PWM peripheral base address
+ * @param subModule          PWM submodule to configure
+ * @param pwmChannel         PWM channel to configure
+ * @param pwm_fault_channels PWM fault channel to configure
+ * @param value              Fault disable mapping mask value
+ *                           enumeration ::pwm_fault_disable_t
+ */
+static inline void PWM_SetupFaultDisableMap(PWM_Type *base,
+                                            pwm_submodule_t subModule,
+                                            pwm_channels_t pwmChannel,
+                                            pwm_fault_channels_t pwm_fault_channels,
+                                            uint16_t value)
+{
+    uint16_t reg = base->SM[subModule].DISMAP[pwm_fault_channels];
+    switch (pwmChannel)
+    {
+        case kPWM_PwmA:
+            reg &= ~((uint16_t)PWM_DISMAP_DIS0A_MASK);
+            reg |= (((uint16_t)(value) << (uint16_t)PWM_DISMAP_DIS0A_SHIFT) & (uint16_t)PWM_DISMAP_DIS0A_MASK);
+            break;
+        case kPWM_PwmB:
+            reg &= ~((uint16_t)PWM_DISMAP_DIS0B_MASK);
+            reg |= (((uint16_t)(value) << (uint16_t)PWM_DISMAP_DIS0B_SHIFT) & (uint16_t)PWM_DISMAP_DIS0B_MASK);
+            break;
+        case kPWM_PwmX:
+            reg &= ~((uint16_t)PWM_DISMAP_DIS0X_MASK);
+            reg |= (((uint16_t)(value) << (uint16_t)PWM_DISMAP_DIS0X_SHIFT) & (uint16_t)PWM_DISMAP_DIS0X_MASK);
+            break;
+        default:
+            assert(false);
+            break;
+    }
+    base->SM[subModule].DISMAP[pwm_fault_channels] = reg;
 }
 
 #if defined(__cplusplus)

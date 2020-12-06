@@ -23,6 +23,10 @@
  * http://www.FreeRTOS.org
  */
 
+/*
+ * Copyright 2020 NXP.
+ */
+
 /**
  * @file iot_demo_freertos.c
  * @brief Generic demo runner for C SDK libraries on Amazon FreeRTOS.
@@ -253,6 +257,9 @@ static int _initialize(demoContext_t *pContext)
 /**
  * @brief Clean up the common libraries and the MQTT library.
  */
+#if defined(__GNUC__)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-function"
 static void _cleanup(void)
 {
     /* Remove network manager subscription */
@@ -260,6 +267,8 @@ static void _cleanup(void)
     IotSemaphore_Destroy(&demoNetworkSemaphore);
     IotSdk_Cleanup();
 }
+#pragma GCC diagnostic pop
+#endif
 
 /*-----------------------------------------------------------*/
 void runDemoTask(void *pArgument)

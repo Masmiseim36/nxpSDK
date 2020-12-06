@@ -8,10 +8,13 @@
     <definition extID="component.serial_manager.MIMXRT106A"/>
     <definition extID="component.serial_manager_uart.MIMXRT106A"/>
     <definition extID="component.serial_manager_usb_cdc.MIMXRT106A"/>
-    <definition extID="component.serial_manager_usb_cdc_device_config.sln_alexa_iot.MIMXRT106A"/>
     <definition extID="device.MIMXRT106A_CMSIS.MIMXRT106A"/>
     <definition extID="middleware.baremetal.MIMXRT106A"/>
-    <definition extID="middleware.usb.device.MIMXRT106A"/>
+    <definition extID="middleware.usb.common_header.MIMXRT106A"/>
+    <definition extID="middleware.usb.device.cdc.external.MIMXRT106A"/>
+    <definition extID="middleware.usb.device.common_header.MIMXRT106A"/>
+    <definition extID="middleware.usb.device.controller.driver.MIMXRT106A"/>
+    <definition extID="middleware.usb.device.stack.external.MIMXRT106A"/>
     <definition extID="middleware.usb.device_controller_ehci.MIMXRT106A"/>
     <definition extID="middleware.usb.phy.MIMXRT106A"/>
     <definition extID="platform.Include_common.MIMXRT106A"/>
@@ -29,7 +32,6 @@
     <definition extID="platform.drivers.lpuart.MIMXRT106A"/>
     <definition extID="platform.drivers.trng.MIMXRT106A"/>
     <definition extID="platform.drivers.xip_board.MIMXRT106A"/>
-    <definition extID="platform.drivers.xip_board_dcd.MIMXRT106A"/>
     <definition extID="platform.drivers.xip_device.MIMXRT106A"/>
     <definition extID="platform.utilities.assert.MIMXRT106A"/>
     <definition extID="platform.utilities.misc_utilities.MIMXRT106A"/>
@@ -41,7 +43,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="sln_alexa_iot_hello_world_virtual_com" name="hello_world_virtual_com" category="demo_apps" dependency="component.serial_manager.MIMXRT106A platform.drivers.common.MIMXRT106A component.lists.MIMXRT106A component.serial_manager_usb_cdc.MIMXRT106A component.serial_manager_usb_cdc_device_config.sln_alexa_iot.MIMXRT106A middleware.usb.phy.MIMXRT106A middleware.usb.device_controller_ehci.MIMXRT106A platform.drivers.cache_armv7_m7.MIMXRT106A middleware.usb.device.MIMXRT106A platform.drivers.clock.MIMXRT106A device.MIMXRT106A_CMSIS.MIMXRT106A utility.debug_console.MIMXRT106A component.lpuart_adapter.MIMXRT106A component.serial_manager_uart.MIMXRT106A platform.drivers.lpuart.MIMXRT106A platform.devices.MIMXRT106A_startup.MIMXRT106A platform.drivers.iomuxc.MIMXRT106A platform.utilities.assert.MIMXRT106A platform.drivers.igpio.MIMXRT106A platform.drivers.xip_device.MIMXRT106A platform.drivers.xip_board.MIMXRT106A platform.drivers.xip_board_dcd.MIMXRT106A platform.drivers.dcp.MIMXRT106A platform.drivers.trng.MIMXRT106A platform.drivers.flexram.MIMXRT106A platform.drivers.flexspi.MIMXRT106A platform.Include_core_cm7.MIMXRT106A platform.Include_common.MIMXRT106A platform.Include_dsp.MIMXRT106A component.osa.MIMXRT106A platform.utilities.misc_utilities.MIMXRT106A middleware.baremetal.MIMXRT106A">
+  <example id="sln_alexa_iot_hello_world_virtual_com" name="hello_world_virtual_com" category="demo_apps" dependency="component.serial_manager.MIMXRT106A platform.drivers.common.MIMXRT106A component.lists.MIMXRT106A component.serial_manager_usb_cdc.MIMXRT106A middleware.usb.device.controller.driver.MIMXRT106A component.osa.MIMXRT106A middleware.usb.device_controller_ehci.MIMXRT106A platform.drivers.cache_armv7_m7.MIMXRT106A platform.drivers.clock.MIMXRT106A device.MIMXRT106A_CMSIS.MIMXRT106A utility.debug_console.MIMXRT106A component.lpuart_adapter.MIMXRT106A component.serial_manager_uart.MIMXRT106A platform.drivers.lpuart.MIMXRT106A platform.devices.MIMXRT106A_startup.MIMXRT106A platform.drivers.iomuxc.MIMXRT106A platform.utilities.assert.MIMXRT106A platform.drivers.igpio.MIMXRT106A platform.drivers.xip_device.MIMXRT106A platform.drivers.xip_board.MIMXRT106A platform.drivers.dcp.MIMXRT106A platform.drivers.trng.MIMXRT106A platform.drivers.flexram.MIMXRT106A platform.drivers.flexspi.MIMXRT106A platform.Include_core_cm7.MIMXRT106A platform.Include_common.MIMXRT106A platform.Include_dsp.MIMXRT106A middleware.usb.device.cdc.external.MIMXRT106A middleware.usb.device.stack.external.MIMXRT106A middleware.usb.phy.MIMXRT106A middleware.usb.common_header.MIMXRT106A middleware.usb.device.common_header.MIMXRT106A platform.utilities.misc_utilities.MIMXRT106A middleware.baremetal.MIMXRT106A">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -79,8 +81,12 @@
           <value>DEBUG_CONSOLE_IO_USBCDC=1</value>
           <value>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</value>
           <value>SERIAL_PORT_TYPE_USBCDC=1</value>
+          <value>PRINTF_FLOAT_ENABLE=0</value>
+          <value>SCANF_FLOAT_ENABLE=0</value>
+          <value>PRINTF_ADVANCED_ENABLE=0</value>
+          <value>SCANF_ADVANCED_ENABLE=0</value>
           <value>CONFIG_FLEXRAM_AT_STARTUP=1</value>
-          <value>SERIAL_PORT_TYPE_USBCDC=1</value>
+          <value>USB_DEVICE_CONFIG_CDC_ACM=1</value>
           <value>SERIAL_PORT_TYPE_UART=1</value>
         </option>
         <option id="gnu.c.compiler.option.optimization.flags" type="string">
@@ -122,10 +128,15 @@
     <source path="boards/sln_alexa_iot/demo_apps/hello_world_virtual_com" target_path="board" type="c_include">
       <files mask="board.h"/>
       <files mask="clock_config.h"/>
+      <files mask="dcd.h"/>
     </source>
     <source path="boards/sln_alexa_iot/demo_apps/hello_world_virtual_com" target_path="board" type="src">
       <files mask="board.c"/>
       <files mask="clock_config.c"/>
+      <files mask="dcd.c"/>
+    </source>
+    <source path="boards/sln_alexa_iot/demo_apps/hello_world_virtual_com" target_path="component/serial_manager/usb_cdc_adapter" type="c_include">
+      <files mask="usb_device_config.h"/>
     </source>
     <source path="boards/sln_alexa_iot/demo_apps/hello_world_virtual_com" target_path="doc" type="doc" toolchain="iar mdk mcuxpresso armgcc">
       <files mask="readme.txt"/>

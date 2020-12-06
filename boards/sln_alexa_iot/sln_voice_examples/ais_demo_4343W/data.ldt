@@ -2,4 +2,12 @@
         *flexspi_hyper_flash_ops.o(.text*)
         *fsl_flexspi.o(.text*)
         *sln_flash.o(.text*)
+        *pdm_to_pcm_task.o(.text*)
+        *audio_processing_task.o(.text*)
+        *fsl_sai.o(.text*)
+        *fsl_sai_edma.o(.text*)
+        *fsl_edma.o(.text*)
+        *sln_pdm_mic.o(.text*)
+        *libsln_afe.a:(.text*)
+        *libsln_dsp_toolbox.a:(.text*)
 </#if>

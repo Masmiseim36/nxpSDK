@@ -55,7 +55,7 @@ extern void sln_shell_trace_free(void *ptr, size_t size);
 #define configCPU_CLOCK_HZ                      (SystemCoreClock)
 #define configTICK_RATE_HZ                      ((TickType_t)1000)
 //#define configMAX_PRIORITIES                    18
-#define configMAX_PRIORITIES                    8
+#define configMAX_PRIORITIES                    9
 #define configMINIMAL_STACK_SIZE                ((unsigned short)90)
 #define configMAX_TASK_NAME_LEN                 20
 #define configUSE_16_BIT_TICKS                  0
@@ -74,7 +74,7 @@ extern void sln_shell_trace_free(void *ptr, size_t size);
 /* Memory allocation related definitions. */
 #define configSUPPORT_STATIC_ALLOCATION         1
 #define configSUPPORT_DYNAMIC_ALLOCATION        1
-#define configTOTAL_HEAP_SIZE                   ((size_t) (365 * 1024))
+#define configTOTAL_HEAP_SIZE                   ((size_t) (349 * 1024))
 #define configAPPLICATION_ALLOCATED_HEAP        0
 
 #define configCHECK_FOR_STACK_OVERFLOW          2
@@ -113,7 +113,7 @@ extern uint32_t PERF_GetTimer(void);
 #define configUSE_TIMERS                        1
 //#define configTIMER_TASK_PRIORITY               (configMAX_PRIORITIES - 1)
 #define configTIMER_TASK_PRIORITY               (configMAX_PRIORITIES - 3)
-#define configTIMER_QUEUE_LENGTH                10
+#define configTIMER_QUEUE_LENGTH                20
 //#define configTIMER_TASK_STACK_DEPTH            (configMINIMAL_STACK_SIZE * 2)
 #define configTIMER_TASK_STACK_DEPTH            (configMINIMAL_STACK_SIZE * 4)
 

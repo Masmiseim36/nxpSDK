@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP
+ * Copyright 2019-2020 NXP
  * All rights reserved.
  *
  *
@@ -134,7 +134,7 @@ int32_t FICA_app_program_ext_init(int32_t newimgtype)
     return status;
 }
 
-__attribute__((section(".data.$SRAM_OC_NON_CACHEABLE"))) int32_t FICA_app_program_ext_abs(uint32_t offset,
+__attribute__((section(".ramfunc.$SRAM_OC_NON_CACHEABLE"))) int32_t FICA_app_program_ext_abs(uint32_t offset,
                                                                                           uint8_t *bufptr,
                                                                                           uint32_t writelen)
 {
@@ -304,7 +304,7 @@ int32_t FICA_app_program_ext_finalize()
     return status;
 }
 
-__attribute__((section(".data.$SRAM_OC_NON_CACHEABLE"))) int32_t FICA_app_program_ext_set_reset_vector(void)
+__attribute__((section(".ramfunc.$SRAM_OC_NON_CACHEABLE"))) int32_t FICA_app_program_ext_set_reset_vector(void)
 {
     int32_t status = SLN_FLASH_NO_ERROR;
     bool commflag  = false;
@@ -355,7 +355,7 @@ __attribute__((section(".data.$SRAM_OC_NON_CACHEABLE"))) int32_t FICA_app_progra
     return status;
 }
 
-__attribute__((section(".data.$SRAM_OC_NON_CACHEABLE"))) int32_t FICA_Erase_Bank(uint32_t startaddr, uint32_t banksize)
+__attribute__((section(".ramfunc.$SRAM_OC_NON_CACHEABLE"))) int32_t FICA_Erase_Bank(uint32_t startaddr, uint32_t banksize)
 {
     // Erase all sectors in this bank
     for (uint32_t runaddr = startaddr; runaddr < (startaddr + banksize); runaddr += EXT_FLASH_ERASE_PAGE)
@@ -762,7 +762,7 @@ int32_t FICA_clear_buf(uint8_t *pbuf, uint8_t initval, uint32_t len)
     return status;
 }
 
-__attribute__((section(".data.$SRAM_OC_NON_CACHEABLE"))) int32_t FICA_read_db(void)
+__attribute__((section(".ramfunc.$SRAM_OC_NON_CACHEABLE"))) int32_t FICA_read_db(void)
 {
     uint8_t *bufptr = s_appImgBuffer;
 
@@ -775,7 +775,7 @@ __attribute__((section(".data.$SRAM_OC_NON_CACHEABLE"))) int32_t FICA_read_db(vo
     return (SLN_FLASH_NO_ERROR);
 }
 
-__attribute__((section(".data.$SRAM_OC_NON_CACHEABLE"))) int32_t FICA_write_db(void)
+__attribute__((section(".ramfunc.$SRAM_OC_NON_CACHEABLE"))) int32_t FICA_write_db(void)
 {
     int32_t status  = SLN_FLASH_NO_ERROR;
     uint8_t *bufptr = (uint8_t *)&s_fica;
@@ -826,7 +826,7 @@ __attribute__((section(".data.$SRAM_OC_NON_CACHEABLE"))) int32_t FICA_write_db(v
     return status;
 }
 
-__attribute__((section(".data.$SRAM_OC_NON_CACHEABLE"))) int32_t FICA_write_buf(uint32_t offset,
+__attribute__((section(".ramfunc.$SRAM_OC_NON_CACHEABLE"))) int32_t FICA_write_buf(uint32_t offset,
                                                                                 uint32_t len,
                                                                                 void *buf)
 {
@@ -845,7 +845,7 @@ __attribute__((section(".data.$SRAM_OC_NON_CACHEABLE"))) int32_t FICA_write_buf(
     return (SLN_FLASH_NO_ERROR);
 }
 
-__attribute__((section(".data.$SRAM_OC_NON_CACHEABLE"))) int32_t FICA_write_full_page(uint32_t offset,
+__attribute__((section(".ramfunc.$SRAM_OC_NON_CACHEABLE"))) int32_t FICA_write_full_page(uint32_t offset,
                                                                                       uint32_t progpagesize,
                                                                                       uint32_t erasepagersize,
                                                                                       uint32_t *pdatabuf)
@@ -873,7 +873,7 @@ __attribute__((section(".data.$SRAM_OC_NON_CACHEABLE"))) int32_t FICA_write_full
     return (SLN_FLASH_NO_ERROR);
 }
 
-__attribute__((section(".data.$SRAM_OC_NON_CACHEABLE"))) int32_t FICA_read_buf(uint32_t offset, uint32_t len, void *buf)
+__attribute__((section(".ramfunc.$SRAM_OC_NON_CACHEABLE"))) int32_t FICA_read_buf(uint32_t offset, uint32_t len, void *buf)
 {
     uint8_t *pbuf = (uint8_t *)buf;
 
@@ -1162,7 +1162,7 @@ int32_t FICA_verify_ext_flash(void)
     return (SLN_FLASH_NO_ERROR);
 }
 
-__attribute__((section(".data.$SRAM_OC_NON_CACHEABLE"))) int32_t FICA_read_hyper_flash_id(uint8_t *pid)
+__attribute__((section(".ramfunc.$SRAM_OC_NON_CACHEABLE"))) int32_t FICA_read_hyper_flash_id(uint8_t *pid)
 {
     uint8_t id;
     int32_t ret = SLN_FLASH_NO_ERROR;
@@ -1375,6 +1375,62 @@ int32_t FICA_GetImgTypeFromAddr(uint32_t appaddr, int32_t *imgtype)
         return (SLN_FLASH_ERROR);
 
     return (SLN_FLASH_NO_ERROR);
+}
+
+int32_t FICA_GetImgTypeFromResetISRAddr(int32_t *imgType)
+{
+    int32_t status           = SLN_FLASH_NO_ERROR;
+    int32_t resetIsrOffset   = 0;
+    uint32_t resetISRAddress = 0;
+
+    if (imgType == NULL)
+    {
+        status = SLN_FLASH_ERROR;
+    }
+    else
+    {
+        // Extract the ResetISR address from the vector table
+        resetISRAddress = *((uint32_t *)APPLICATION_RESET_ISR_ADDRESS);
+        resetISRAddress = resetISRAddress - FlexSPI_AMBA_BASE;
+
+        // Find the image type given the ResetISR address
+        status = SLN_FLASH_ERROR;
+
+        // Check if Bootloader
+        if (status == SLN_FLASH_ERROR)
+        {
+            resetIsrOffset = resetISRAddress - FICA_IMG_BOOTLOADER_ADDR;
+            if ((resetIsrOffset >= 0) && (resetIsrOffset < FICA_IMG_BOOTLOADER_SIZE))
+            {
+                *imgType = FICA_IMG_TYPE_BOOTLOADER;
+                status   = SLN_FLASH_NO_ERROR;
+            }
+        }
+
+        // Check if Bank A
+        if (status == SLN_FLASH_ERROR)
+        {
+            resetIsrOffset = resetISRAddress - FICA_IMG_APP_A_ADDR;
+            if ((resetIsrOffset >= 0) && (resetIsrOffset < FICA_IMG_APP_A_SIZE))
+            {
+                *imgType = FICA_IMG_TYPE_APP_A;
+                status   = SLN_FLASH_NO_ERROR;
+            }
+        }
+
+        // Check if Bank B
+        if (status == SLN_FLASH_ERROR)
+        {
+            resetIsrOffset = resetISRAddress - FICA_IMG_APP_B_ADDR;
+            if ((resetIsrOffset >= 0) && (resetIsrOffset < FICA_IMG_APP_B_SIZE))
+            {
+                *imgType = FICA_IMG_TYPE_APP_B;
+                status   = SLN_FLASH_NO_ERROR;
+            }
+        }
+    }
+
+    return status;
 }
 
 bool FICA_is_OTA_FlashBitCleared()

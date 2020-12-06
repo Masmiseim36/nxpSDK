@@ -1,14 +1,26 @@
 /*
- * Copyright 2018-2020 NXP.
- * This software is owned or controlled by NXP and may only be used strictly in accordance with the
- * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
- * activating and/or otherwise using the software, you are agreeing that you have read, and that you
- * agree to comply with and are bound by, such license terms. If you do not agree to be bound by the
- * applicable license terms, then you may not retain, install, activate or otherwise use the software.
- */
 
+Copyright 2019 NXP.
+
+NXP Confidential. This software is owned or controlled by NXP and may only be
+used strictly in accordance with the applicable license terms.  By expressly
+accepting such terms or by downloading, installing, activating and/or
+otherwise using the software, you are agreeing that you have read, and that
+you agree to comply with and are bound by, such license terms.  If you do not
+agree to be bound by the applicable license terms, then you may not retain,
+install, activate or otherwise use the software.
+
+
+
+
+
+
+
+Created on 16:26 8-11-2019
+
+*/
 #define MAKE_TFA9XXX_HEADER_VERSION(major, minor, bugfix) (((major) << 16) | ((minor) << 8) | (bugfix))
-#define FSL_TFA9XXX_HEADER_VERSION (MAKE_TFA9XXX_HEADER_VERSION(8, 1, 2))
+#define FSL_TFA9XXX_HEADER_VERSION                        (MAKE_TFA9XXX_HEADER_VERSION(8, 1, 2))
 
 #ifndef __tfa_config_TFA9894N2A1_48kHz_h__
 #define __tfa_config_TFA9894N2A1_48kHz_h__

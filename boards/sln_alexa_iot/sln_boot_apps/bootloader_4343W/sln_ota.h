@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP.
+ * Copyright 2019-2020 NXP.
  * This software is owned or controlled by NXP and may only be used strictly in accordance with the
  * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
  * activating and/or otherwise using the software, you are agreeing that you have read, and that you
@@ -33,9 +33,9 @@
 #include AWS_LOGGING_INCLUDE
 #include AWS_MQTT_AGENT_INCLUDE
 #include "aws_clientcredential.h"
-#include "aws_ota_agent.h"
+#include "aws_iot_ota_agent.h"
 #include "aws_application_version.h"
-#include "aws_ota_pal.h"
+#include "aws_iot_ota_pal.h"
 #include "aws_demo.h"
 #include "iot_network_types.h"
 
@@ -82,5 +82,7 @@ void otaPalOtaDoneTaskSet(TaskHandle_t handle);
  *        and restores PRDB context (if eXIP is used)
  */
 void selfTestCleanup(void);
+
+void Run_OTA_Task(void);
 
 #endif /* SLN_OTA_H_ */

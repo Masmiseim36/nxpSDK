@@ -47,6 +47,7 @@ typedef enum _sln_comms_message_fwupdate_common_type
 {
     kCommsFwUpdateStart = 0,
     kCommsFwUpdateState,
+    kCommsFwUpdateClean,
 } sln_comms_message_fwupdate_common_type;
 
 /**

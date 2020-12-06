@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP.
+ * Copyright 2019-2020 NXP.
  * This software is owned or controlled by NXP and may only be used strictly in accordance with the
  * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
  * activating and/or otherwise using the software, you are agreeing that you have read, and that you
@@ -25,6 +25,14 @@ MQTTAgentHandle_t APP_MQTT_Getv2Handle();
  * @return MQTTAgentHandle_t the MQTT handler
  */
 MQTTAgentHandle_t APP_MQTT_GetHandle();
+
+/**
+ * @brief Depending on the SDK version, this function returns
+ *        the global MQTT handler or MQTT v2 connection handler.
+ *
+ * @return MQTTAgentHandle_t the MQTT OTA compatible handler
+ */
+MQTTAgentHandle_t APP_MQTT_GetOtaHandle();
 
 /**
  * @brief This function initializes the MQTT handler and connects to the broker

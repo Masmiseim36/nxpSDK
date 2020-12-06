@@ -21,35 +21,47 @@ import serial
 import libscrc
 
 FWUPDATE_ENABLE_SIGNATURE = 0
+MAX_TIMES_TO_START = 3
+
+BLOCK_SIZE = 4096
+
 
 def print_usage():
     #fwupdate.py OTW A bundle.BankA_RVDISP.bin BankA_RVDISP.bin.sha256.txt
     print("Usage:")
-    print("       fwupdate.py method bank appFile appSignFile")
+    print("       fwupdate.py device method bank appFile appSignFile")
     print("")
+    print("       device: The target device, the sln_local_iot or sln_vizn_iot board <local/vizn>")
     print("       method: Firmware update method <OTA/OTW>")
     print("       bank: The flash bank <A/B>")
     print("       appFile: File to update")
-    print("       appSignFile: File signature or None if not used")
+    print("       appSignFile: File signature or None if not used", flush=True)
 
-if (len(sys.argv) != 4 and len(sys.argv) != 5):
+if (len(sys.argv) != 5 and len(sys.argv) != 6):
     print_usage()
     sys.exit(1)
 else:
-    FWUPDATE_METHOD = sys.argv[1]
+    FWUPDATE_ENTER_OTW_MODE = sys.argv[1]
+    if (FWUPDATE_ENTER_OTW_MODE == "local") : FWUPDATE_ENTER_OTW_MODE = 0
+    elif (FWUPDATE_ENTER_OTW_MODE == "vizn") : FWUPDATE_ENTER_OTW_MODE = 1
+    else: FWUPDATE_ENTER_OTW_MODE = -1
 
-    APP_BANK = sys.argv[2]
+    FWUPDATE_METHOD = sys.argv[2]
+
+    APP_BANK = sys.argv[3]
     if (APP_BANK == "A"): APP_BANK = 1
     elif (APP_BANK == "B"): APP_BANK = 2
     else: APP_BANK = 0
 
-    APP_IMAGE = sys.argv[3]
+    APP_IMAGE = sys.argv[4]
 
-    if ((len(sys.argv) == 5) and (sys.argv[4] != "None")):
-        APP_SIGNATURE = sys.argv[4]
+    if ((len(sys.argv) == 6) and (sys.argv[5] != "None")):
+        APP_SIGNATURE = sys.argv[5]
         FWUPDATE_ENABLE_SIGNATURE = 1
 
-    if (((FWUPDATE_METHOD != "OTW") and (FWUPDATE_METHOD != "OTA")) or ((APP_BANK != 1) and (APP_BANK != 2))):
+    if (((FWUPDATE_METHOD != "OTW") and (FWUPDATE_METHOD != "OTA"))
+            or ((APP_BANK != 1) and (APP_BANK != 2))
+            or ((FWUPDATE_ENTER_OTW_MODE != 0) and (FWUPDATE_ENTER_OTW_MODE != 1))):
         print_usage()
         sys.exit(1)
 
@@ -57,9 +69,10 @@ if FWUPDATE_METHOD == "OTA":
     IP_ADDRESS='192.168.1.190'
     PORT=8889
 elif FWUPDATE_METHOD == "OTW":
+    # If working on Windows, change this to the appropriate COM
     COM_PORT='/dev/ttyUSB0'
 else:
-    print("Unsupported FWUPDATE method")
+    print("Unsupported FWUPDATE method", flush=True)
     print_usage()
     sys.exit(1)
 
@@ -68,7 +81,7 @@ APP_IMAGE_LEN = os.path.getsize(APP_IMAGE)
 
 def unit_test_get_audio_state(server_socket):
 
-    print("unit_test_get_ais_state")
+    print("unit_test_get_ais_state", flush=True)
 
     message = b'{"messageType":0, "ais_message":{"messageType":0}}'
     number_of_bytes = len(message)
@@ -82,14 +95,14 @@ def unit_test_get_audio_state(server_socket):
     json_recv = json.loads(data)
     
     if json_recv["error"]:
-        print(str(json_recv["status"]))
+        print(str(json_recv["status"]), flush=True)
     
-    print(str(json_recv["error"]))
+    print(str(json_recv["error"]), flush=True)
 
 
 def unit_test_get_registration_state(server_socket):
 
-    print("unit_test_get_registration_state")
+    print("unit_test_get_registration_state", flush=True)
 
     message = b'{"messageType":0, "ais_message":{"messageType":1}}'
     number_of_bytes = len(message)
@@ -103,14 +116,14 @@ def unit_test_get_registration_state(server_socket):
     json_recv = json.loads(data)
     
     if json_recv["error"]:
-        print(str(json_recv["status"]))
+        print(str(json_recv["status"]), flush=True)
     
-    print(str(json_recv["error"]))
+    print(str(json_recv["error"]), flush=True)
 
 
 def unit_test_get_attention_state(server_socket):
 
-    print("unit_test_get_attention_state")
+    print("unit_test_get_attention_state", flush=True)
 
     message = b'{"messageType":0, "ais_message":{"messageType":2}}'
     number_of_bytes = len(message)
@@ -124,12 +137,13 @@ def unit_test_get_attention_state(server_socket):
     json_recv = json.loads(data)
     
     if json_recv["error"]:
-        print(str(json_recv["status"]))
+        print(str(json_recv["status"]), flush=True)
     
-    print(str(json_recv["error"]))
+    print(str(json_recv["error"]), flush=True)
 
-def unit_test_fwupdate_start_req(connection):
-    print("unit_test_fwupdate_start_req")
+def unit_test_fwupdate_clean_req(connection):
+    print("unit_test_fwupdate_clean_req", flush=True)
+    time.sleep(0.1)
 
     if FWUPDATE_METHOD == "OTA":
         connection_write = connection.sendall
@@ -149,11 +163,7 @@ def unit_test_fwupdate_start_req(connection):
         "fwupdate_message": {
             "messageType":0,
             "fwupdate_common_message": {
-                "messageType":0,
-                "job_id": "Test_FwUpdate",
-                "app_bank_type":APP_BANK,
-                "signature": signature.decode('utf-8'),
-                "image_size": APP_IMAGE_LEN,
+                "messageType":2,
             }
         }
     }
@@ -161,7 +171,6 @@ def unit_test_fwupdate_start_req(connection):
     json_string = json.dumps(data)
     message = bytes(json_string, encoding='utf-8')
 
-    #message = b'{"messageType":1, "ota_message":{"messageType":0, "ota_common_message":{"messageType":0, "job_id":"Test_OTA", "app_bank_type":2, "signature":"' + str(signature) + '", "image_size":' + AIS_DEMO_LEN + '}}}'
     number_of_bytes = len(message)
 
     connection_write(number_of_bytes.to_bytes(4, byteorder="little"))
@@ -171,15 +180,78 @@ def unit_test_fwupdate_start_req(connection):
     data = connection_read(size)
 
     json_recv = json.loads(data)
-    
-    print(str(json_recv["error"]))
-    if(json_recv["error"] != 0):
-        print("ERROR received: "+str(json_recv["error"]))
+
+    print(str(json_recv["error"]), flush=True)
+    if json_recv["error"] != 0:
+        print("ERROR received: " + str(json_recv["error"]), flush=True)
         sys.exit(1)
+
+def unit_test_fwupdate_start_req(connection):
+    print("unit_test_fwupdate_start_req", flush=True)
+    status = -1
+    start_tries = 0
+
+    if FWUPDATE_METHOD == "OTA":
+        connection_write = connection.sendall
+        connection_read = connection.recv
+    elif FWUPDATE_METHOD == "OTW":
+        connection_write = connection.write
+        connection_read = connection.read
+
+    signature = bytearray()
+
+    if FWUPDATE_ENABLE_SIGNATURE:
+        with open(APP_SIGNATURE, "rb") as sig:
+            signature = sig.read()
+
+    data_out = {
+        "messageType":1,
+        "fwupdate_message": {
+            "messageType":0,
+            "fwupdate_common_message": {
+                "messageType":0,
+                "job_id": "Test_FwUpdate",
+                "app_bank_type":APP_BANK,
+                "signature": signature.decode('utf-8'),
+                "image_size": APP_IMAGE_LEN,
+            }
+        }
+    }
+
+    json_string = json.dumps(data_out)
+    message = bytes(json_string, encoding='utf-8')
+    number_of_bytes = len(message)
+
+    while status != 0:
+        if start_tries == MAX_TIMES_TO_START:
+            print("ERROR Could not connect because of another session", flush=True)
+            sys.exit(1)
+        else:
+            start_tries = start_tries + 1
+
+        print("Sending Start Request", flush=True)
+        time.sleep(0.1)
+
+        connection_write(number_of_bytes.to_bytes(4, byteorder="little"))
+        connection_write(message)
+
+        size = int.from_bytes(connection_read(4), "little")
+        data = connection_read(size)
+        json_recv = json.loads(data)
+
+        status = json_recv["error"]
+        print(str(json_recv["error"]), flush=True)
+        if json_recv["error"] != 0:
+            if json_recv["error"] != 4:
+                print("ERROR received: " + str(json_recv["error"]), flush=True)
+                sys.exit(1)
+            else:
+                print("Another session already started, need to stop it.", flush=True)
+                unit_test_fwupdate_clean_req(connection)
 
 
 def unit_test_fwupdate_block_transfer(connection):
-    print("unit_test_fwupdate_block_transfer")
+    print("unit_test_fwupdate_block_transfer", flush=True)
 
     if FWUPDATE_METHOD == "OTA":
         connection_write = connection.sendall
@@ -192,10 +264,8 @@ def unit_test_fwupdate_block_transfer(connection):
 
     with open(APP_IMAGE, "rb") as f:
         offset = 0
-        time.sleep(2)
-        block += f.read(4800)
+        block += f.read(BLOCK_SIZE)
 
-        
         #my_json_string = '{"messageType":1, "ota_message":{"messageType":1, "ota_server_message":{"messageType":0, "block":"' + base64.encodebytes(block).decode("utf-8").replace('\n', '') + '", "block_size":' + str(len(base64.encodebytes(block).decode("utf-8").replace('\n', ''))) + '}}}'
 
         #message = bytes(my_json_string, encoding='utf-8')
@@ -232,13 +302,15 @@ def unit_test_fwupdate_block_transfer(connection):
             while ((len(message) % 4 != 0) or (len(message) % 64 == 0)):
                 message += b'\x00'
             # Append MPEG2 CRC32 to the message
-            crc32 = libscrc.mpeg2(message);
+            crc32 = libscrc.mpeg2(message)
             message += crc32.to_bytes(4, byteorder='big')
 
             #print('0x', hex(crc32))
             #print(json_string)
             number_of_bytes = len(message)
-            
+
+            # Add delay because the transmission should not start before the board is ready to receive
+            time.sleep(0.1)
             connection_write(number_of_bytes.to_bytes(4, byteorder="little"))
             connection_write(message)
             
@@ -247,24 +319,24 @@ def unit_test_fwupdate_block_transfer(connection):
 
             json_recv = json.loads(data)
             
-            print(str(json_recv["error"]))
+            print(str(json_recv["error"]), flush=True)
             if(json_recv["error"] != 0):
-                print("ERROR received: "+str(json_recv["error"]))
+                print("ERROR received: "+str(json_recv["error"]), flush=True)
                 sys.exit(1)
 
-            time.sleep(0.1)
+
             offset += len(block)
             block = bytearray()
-            block += f.read(4800)
+            block += f.read(BLOCK_SIZE)
 
             progress = (offset * 100)/APP_IMAGE_LEN
-            print("Firmware Update Progress (" + str(round(progress, 2)) + "%): " + str(offset) + "/" + str(APP_IMAGE_LEN))
+            print("Firmware Update Progress (" + str(round(progress, 2)) + "%): " + str(offset) + "/" + str(APP_IMAGE_LEN), flush=True)
 
         f.close()
             
     
 def unit_test_fwupdate_complete(connection):
-    print("unit_test_fwupdate_complete_req")
+    print("unit_test_fwupdate_complete_req", flush=True)
 
     if FWUPDATE_METHOD == "OTA":
         connection_write = connection.sendall
@@ -285,7 +357,7 @@ def unit_test_fwupdate_complete(connection):
     
     json_string = json.dumps(data)
     message = bytes(json_string, encoding='utf-8')
-    print(json_string)
+    print(json_string, flush=True)
     number_of_bytes = len(message)
     
     connection_write(number_of_bytes.to_bytes(4, byteorder="little"))
@@ -295,14 +367,14 @@ def unit_test_fwupdate_complete(connection):
     data = connection_read(size)
 
     json_recv = json.loads(data)
-    
-    print(str(json_recv["error"]))
+
+    print(str(json_recv["error"]), flush=True)
     if(json_recv["error"] != 0):
-        print("ERROR received: "+str(json_recv["error"]))
+        print("ERROR received: "+str(json_recv["error"]), flush=True)
         sys.exit(1)
 
 def unit_test_fwupdate_self_test_start(connection):
-    print("unit_test_fwupdate_self_test_start")
+    print("unit_test_fwupdate_self_test_start", flush=True)
 
     if FWUPDATE_METHOD == "OTA":
         connection_write = connection.sendall
@@ -323,7 +395,7 @@ def unit_test_fwupdate_self_test_start(connection):
 
     json_string = json.dumps(data)
     message = bytes(json_string, encoding='utf-8')
-    print(json_string)
+    print(json_string, flush=True)
     number_of_bytes = len(message)
     
     connection_write(number_of_bytes.to_bytes(4, byteorder="little"))
@@ -334,13 +406,13 @@ def unit_test_fwupdate_self_test_start(connection):
 
     json_recv = json.loads(data)
     
-    print(str(json_recv["error"]))
+    print(str(json_recv["error"]), flush=True)
     if(json_recv["error"] != 0):
-        print("ERROR received: "+str(json_recv["error"]))
+        print("ERROR received: "+str(json_recv["error"]), flush=True)
         sys.exit(1)
 
 def unit_test_fwupdate_activate_img(connection):
-    print("unit_test_fwupdate_activate_img")
+    print("unit_test_fwupdate_activate_img", flush=True)
     
     if FWUPDATE_METHOD == "OTA":
         connection_write = connection.sendall
@@ -361,7 +433,7 @@ def unit_test_fwupdate_activate_img(connection):
 
     json_string = json.dumps(data)
     message = bytes(json_string, encoding='utf-8')
-    print(json_string)
+    print(json_string, flush=True)
     number_of_bytes = len(message)
     
     connection_write(number_of_bytes.to_bytes(4, byteorder="little"))
@@ -372,9 +444,9 @@ def unit_test_fwupdate_activate_img(connection):
 
     json_recv = json.loads(data)
     
-    print(str(json_recv["error"]))
+    print(str(json_recv["error"]), flush=True)
     if(json_recv["error"] != 0):
-        print("ERROR received: "+str(json_recv["error"]))
+        print("ERROR received: "+str(json_recv["error"]), flush=True)
         sys.exit(1)
 
 def unit_test_launch_ota():
@@ -441,35 +513,40 @@ def unit_test_launch_ota():
         server_socket.close
 
 def unit_test_launch_otw():
-    print("Start OTW ...")
+    print("Start OTW ...", flush=True)
     connected = False
     while not connected:
-        #time.sleep(1)
         connected = True
-        print("Attempt to connect ...")
+        print("Attempt to connect ...", flush=True)
         try:
             serial_conn = serial.Serial(COM_PORT, 115200, parity=serial.PARITY_NONE)
 
         except Exception as e:
-            print(e)
+            print(e, flush=True)
+            time.sleep(1)
             connected = False
 
-    print("Connected to " + COM_PORT)
+    print("Connected to " + COM_PORT, flush=True)
 
     try:
-        #Trigger the OTW from the main app
+        # Trigger the OTW from the main app
         serial_conn.reset_output_buffer()
         serial_conn.reset_input_buffer()
-        serial_conn.write(bytes("clear\0\r\n", encoding='utf-8'))
-        time.sleep(1)
-        serial_conn.write(bytes("updateotw\0\r\n", encoding='utf-8'))
-        time.sleep(4)
-        serial_conn.reset_input_buffer()
+
+        # Tell the board to enter OTW mode
+        if (FWUPDATE_ENTER_OTW_MODE == 1):
+            print('Sending "updateotw" command to the board', flush=True)
+            serial_conn.write(bytes("clear\0\r\n", encoding='utf-8'))
+            time.sleep(1)
+            serial_conn.write(bytes("updateotw\0\r\n", encoding='utf-8'))
+            time.sleep(4)
+            serial_conn.reset_input_buffer()
 
         # Start OTW
         unit_test_fwupdate_start_req(serial_conn)
 
         # Transfer the firmware
+        time.sleep(1)
         unit_test_fwupdate_block_transfer(serial_conn)
 
         # Stop the fw transfer
@@ -480,13 +557,13 @@ def unit_test_launch_otw():
         time.sleep(1)
         unit_test_fwupdate_activate_img(serial_conn)
 
-        # Validate ant run the firmware
+        # Validate and run the firmware
         time.sleep(4)
         serial_conn.reset_input_buffer()
         serial_conn.reset_output_buffer()
         unit_test_fwupdate_self_test_start(serial_conn)
 
-        print("Firmware Update succeeded")
+        print("Firmware Update succeeded", flush=True)
     finally:
         print("\r\n")
         serial_conn.close

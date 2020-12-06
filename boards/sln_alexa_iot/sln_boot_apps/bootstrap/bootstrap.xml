@@ -7,17 +7,20 @@
     <definition extID="component.serial_manager.MIMXRT106A"/>
     <definition extID="component.serial_manager_uart.MIMXRT106A"/>
     <definition extID="device.MIMXRT106A_CMSIS.MIMXRT106A"/>
-    <definition extID="middleware.amazon_freertos-kernel.MIMXRT106A"/>
-    <definition extID="middleware.amazon_freertos-kernel.extension.MIMXRT106A"/>
-    <definition extID="middleware.amazon_freertos-kernel.heap_4.MIMXRT106A"/>
+    <definition extID="middleware.freertos-kernel.MIMXRT106A"/>
+    <definition extID="middleware.freertos-kernel.extension.MIMXRT106A"/>
+    <definition extID="middleware.freertos-kernel.heap_4.MIMXRT106A"/>
     <definition extID="middleware.mbedtls.MIMXRT106A"/>
+    <definition extID="middleware.mbedtls.port.ksdk.MIMXRT106A"/>
     <definition extID="middleware.sln_iot_common_platform.fica_definition.MIMXRT106A"/>
     <definition extID="middleware.sln_iot_common_platform.flexspi_hyperflash.MIMXRT106A"/>
+    <definition extID="middleware.sln_iot_common_platform.flexspi_hyperflash.config_is26kl256s.MIMXRT106A"/>
     <definition extID="middleware.sln_iot_common_platform.sln_auth.MIMXRT106A"/>
     <definition extID="middleware.sln_iot_common_platform.sln_encrypt.MIMXRT106A"/>
     <definition extID="middleware.sln_iot_common_platform.sln_flash.MIMXRT106A"/>
     <definition extID="middleware.sln_iot_common_platform.sln_flash_mgmt.MIMXRT106A"/>
     <definition extID="middleware.sln_iot_common_platform.sln_rgb_led.MIMXRT106A"/>
+    <definition extID="middleware.sln_iot_common_platform.sln_rgb_led_pwm.MIMXRT106A"/>
     <definition extID="platform.Include_common.MIMXRT106A"/>
     <definition extID="platform.Include_core_cm7.MIMXRT106A"/>
     <definition extID="platform.Include_dsp.MIMXRT106A"/>
@@ -37,7 +40,6 @@
     <definition extID="platform.drivers.trng.MIMXRT106A"/>
     <definition extID="platform.drivers.xbara.MIMXRT106A"/>
     <definition extID="platform.drivers.xip_board.MIMXRT106A"/>
-    <definition extID="platform.drivers.xip_board_dcd.MIMXRT106A"/>
     <definition extID="platform.drivers.xip_device.MIMXRT106A"/>
     <definition extID="platform.utilities.assert.MIMXRT106A"/>
     <definition extID="platform.utilities.misc_utilities.MIMXRT106A"/>
@@ -47,7 +49,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="sln_alexa_iot_bootstrap" name="bootstrap" category="sln_boot_apps" dependency="utility.debug_console.MIMXRT106A platform.drivers.lpi2c.MIMXRT106A platform.drivers.clock.MIMXRT106A platform.drivers.pwm.MIMXRT106A platform.drivers.pit.MIMXRT106A platform.drivers.gpt.MIMXRT106A middleware.amazon_freertos-kernel.MIMXRT106A middleware.amazon_freertos-kernel.heap_4.MIMXRT106A middleware.mbedtls.MIMXRT106A middleware.sln_iot_common_platform.flexspi_hyperflash.MIMXRT106A middleware.sln_iot_common_platform.sln_flash_mgmt.MIMXRT106A middleware.sln_iot_common_platform.sln_encrypt.MIMXRT106A middleware.sln_iot_common_platform.sln_auth.MIMXRT106A middleware.sln_iot_common_platform.fica_definition.MIMXRT106A middleware.sln_iot_common_platform.sln_flash.MIMXRT106A middleware.sln_iot_common_platform.sln_rgb_led.MIMXRT106A platform.drivers.common.MIMXRT106A device.MIMXRT106A_CMSIS.MIMXRT106A component.lpuart_adapter.MIMXRT106A component.serial_manager.MIMXRT106A component.lists.MIMXRT106A component.serial_manager_uart.MIMXRT106A platform.drivers.lpuart.MIMXRT106A platform.devices.MIMXRT106A_startup.MIMXRT106A platform.drivers.iomuxc.MIMXRT106A platform.utilities.assert.MIMXRT106A platform.drivers.igpio.MIMXRT106A platform.drivers.xip_device.MIMXRT106A platform.drivers.xip_board.MIMXRT106A platform.drivers.xip_board_dcd.MIMXRT106A platform.drivers.dcp.MIMXRT106A platform.drivers.trng.MIMXRT106A platform.drivers.flexram.MIMXRT106A platform.drivers.flexspi.MIMXRT106A platform.Include_core_cm7.MIMXRT106A platform.Include_common.MIMXRT106A platform.Include_dsp.MIMXRT106A middleware.amazon_freertos-kernel.extension.MIMXRT106A platform.drivers.xbara.MIMXRT106A platform.utilities.misc_utilities.MIMXRT106A">
+  <example id="sln_alexa_iot_bootstrap" name="bootstrap" category="sln_boot_apps" dependency="utility.debug_console.MIMXRT106A middleware.sln_iot_common_platform.flexspi_hyperflash.config_is26kl256s.MIMXRT106A middleware.sln_iot_common_platform.sln_rgb_led_pwm.MIMXRT106A platform.drivers.lpi2c.MIMXRT106A platform.drivers.clock.MIMXRT106A platform.drivers.pwm.MIMXRT106A platform.drivers.pit.MIMXRT106A platform.drivers.gpt.MIMXRT106A middleware.freertos-kernel.MIMXRT106A middleware.freertos-kernel.heap_4.MIMXRT106A middleware.mbedtls.MIMXRT106A middleware.mbedtls.port.ksdk.MIMXRT106A middleware.sln_iot_common_platform.flexspi_hyperflash.MIMXRT106A middleware.sln_iot_common_platform.sln_flash_mgmt.MIMXRT106A middleware.sln_iot_common_platform.sln_encrypt.MIMXRT106A middleware.sln_iot_common_platform.sln_auth.MIMXRT106A middleware.sln_iot_common_platform.fica_definition.MIMXRT106A middleware.sln_iot_common_platform.sln_flash.MIMXRT106A middleware.sln_iot_common_platform.sln_rgb_led.MIMXRT106A platform.drivers.common.MIMXRT106A device.MIMXRT106A_CMSIS.MIMXRT106A component.lpuart_adapter.MIMXRT106A component.serial_manager.MIMXRT106A component.lists.MIMXRT106A component.serial_manager_uart.MIMXRT106A platform.drivers.lpuart.MIMXRT106A platform.devices.MIMXRT106A_startup.MIMXRT106A platform.drivers.iomuxc.MIMXRT106A platform.utilities.assert.MIMXRT106A platform.drivers.igpio.MIMXRT106A platform.drivers.xip_device.MIMXRT106A platform.drivers.xip_board.MIMXRT106A platform.drivers.dcp.MIMXRT106A platform.drivers.trng.MIMXRT106A platform.drivers.flexram.MIMXRT106A platform.drivers.flexspi.MIMXRT106A platform.Include_core_cm7.MIMXRT106A platform.Include_common.MIMXRT106A platform.Include_dsp.MIMXRT106A platform.drivers.xbara.MIMXRT106A middleware.freertos-kernel.extension.MIMXRT106A platform.utilities.misc_utilities.MIMXRT106A">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -100,6 +102,7 @@
           <value>CR_INTEGER_PRINTF</value>
           <value>USE_RTOS=1</value>
           <value>MBEDTLS_CONFIG_FILE='"bootstrap_mbedtls_config.h"'</value>
+          <value>SDK_2_8</value>
           <value>CONFIG_FLEXRAM_AT_STARTUP=1</value>
           <value>FSL_RTOS_FREE_RTOS</value>
           <value>SERIAL_PORT_TYPE_UART=1</value>
@@ -165,11 +168,13 @@
     <source path="boards/sln_alexa_iot/sln_boot_apps/bootstrap" target_path="board" type="c_include">
       <files mask="board.h"/>
       <files mask="clock_config.h"/>
+      <files mask="dcd.h"/>
       <files mask="pin_mux.h"/>
     </source>
     <source path="boards/sln_alexa_iot/sln_boot_apps/bootstrap" target_path="board" type="src">
       <files mask="board.c"/>
       <files mask="clock_config.c"/>
+      <files mask="dcd.c"/>
       <files mask="pin_mux.c"/>
     </source>
     <source path="boards/sln_alexa_iot/sln_boot_apps/bootstrap" target_path="doc" type="doc" toolchain="mcuxpresso">
@@ -180,12 +185,10 @@
     </source>
     <source path="boards/sln_alexa_iot/sln_boot_apps/bootstrap" target_path="source" type="c_include">
       <files mask="FreeRTOSConfig.h"/>
-      <files mask="app.h"/>
       <files mask="bootstrap_mbedtls_config.h"/>
       <files mask="fusemap.h"/>
     </source>
     <source path="boards/sln_alexa_iot/sln_boot_apps/bootstrap" target_path="source" type="src">
-      <files mask="hardware_init.c"/>
       <files mask="main.c"/>
       <files mask="os_hooks.c"/>
     </source>

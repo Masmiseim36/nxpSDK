@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 NXP
+ * Copyright 2017-2020 NXP
  * All rights reserved.
  *
  *
@@ -182,6 +182,13 @@ typedef enum _pxp_ps_pixel_format
     kPXP_PsPixelFormatYVU422    = 0x1E, /*!< 16-bit pixels (3-plane) */
     kPXP_PsPixelFormatYVU420    = 0x1F, /*!< 16-bit pixels (3-plane) */
 } pxp_ps_pixel_format_t;
+
+/*! @brief PXP process surface buffer YUV format. */
+typedef enum _pxp_ps_yuv_format
+{
+    kPXP_PsYUVFormatYUV = 0U, /*!< YUV format.   */
+    kPXP_PsYUVFormatYCbCr,    /*!< YCbCr format. */
+} pxp_ps_yuv_format_t;
 
 /*! @brief PXP process surface buffer configuration. */
 typedef struct _pxp_ps_buffer_config
@@ -473,6 +480,40 @@ typedef struct
     uint32_t dstGlobalAlpha : 8; /*!< Destination layer (or PS, s0) global alpha value, 0~255. */
     uint32_t srcGlobalAlpha : 8; /*!< Source layer (or AS, s1) global alpha value, 0~255. */
 } pxp_porter_duff_config_t;
+
+/*! @brief PXP Porter Duff blend mode. Note: don't change the enum item value */
+typedef enum _pxp_porter_duff_blend_mode
+{
+    kPXP_PorterDuffSrc = 0, /*!< Source Only */
+    kPXP_PorterDuffAtop,    /*!< Source Atop */
+    kPXP_PorterDuffOver,    /*!< Source Over */
+    kPXP_PorterDuffIn,      /*!< Source In. */
+    kPXP_PorterDuffOut,     /*!< Source Out. */
+    kPXP_PorterDuffDst,     /*!< Destination Only. */
+    kPXP_PorterDuffDstAtop, /*!< Destination Atop. */
+    kPXP_PorterDuffDstOver, /*!< Destination Over. */
+    kPXP_PorterDuffDstIn,   /*!< Destination In. */
+    kPXP_PorterDuffDstOut,  /*!< Destination Out. */
+    kPXP_PorterDuffXor,     /*!< XOR. */
+    kPXP_PorterDuffClear,   /*!< Clear. */
+    kPXP_PorterDuffMax,
+} pxp_porter_duff_blend_mode_t;
+
+/*! @brief PXP Porter Duff blend mode. Note: don't change the enum item value */
+typedef struct _pxp_pic_copy_config
+{
+    uint32_t srcPicBaseAddr;           /*!< Source picture base address. */
+    uint16_t srcPitchBytes;            /*!< Pitch of the source buffer. */
+    uint16_t srcOffsetX;               /*!< Copy position in source picture. */
+    uint16_t srcOffsetY;               /*!< Copy position in source picture. */
+    uint32_t destPicBaseAddr;          /*!< Destination picture base address. */
+    uint16_t destPitchBytes;           /*!< Pitch of the destination buffer. */
+    uint16_t destOffsetX;              /*!< Copy position in destination picture. */
+    uint16_t destOffsetY;              /*!< Copy position in destination picture. */
+    uint16_t width;                    /*!< Pixel number each line to copy. */
+    uint16_t height;                   /*!< Lines to copy. */
+    pxp_as_pixel_format_t pixelFormat; /*!< Buffer pixel format. */
+} pxp_pic_copy_config_t;
 
 /*******************************************************************************
  * API
@@ -852,6 +893,29 @@ void PXP_SetProcessSurfacePosition(
  * @param colorKeyHigh Color key high range.
  */
 void PXP_SetProcessSurfaceColorKey(PXP_Type *base, uint32_t colorKeyLow, uint32_t colorKeyHigh);
+
+/*!
+ * @brief Set the process surface input pixel format YUV or YCbCr.
+ *
+ * If process surface input pixel format is YUV and CSC1 is not enabled,
+ * in other words, the process surface output pixel format is also YUV,
+ * then this function should be called to set whether input pixel format
+ * is YUV or YCbCr.
+ *
+ * @param base PXP peripheral base address.
+ * @param format The YUV format.
+ */
+static inline void PXP_SetProcessSurfaceYUVFormat(PXP_Type *base, pxp_ps_yuv_format_t format)
+{
+    if (kPXP_PsYUVFormatYUV == format)
+    {
+        base->CSC1_COEF0 &= ~PXP_CSC1_COEF0_YCBCR_MODE_MASK;
+    }
+    else
+    {
+        base->CSC1_COEF0 |= PXP_CSC1_COEF0_YCBCR_MODE_MASK;
+    }
+}
 /* @} */
 
 /*!
@@ -1274,6 +1338,94 @@ void PXP_EnableDither(PXP_Type *base, bool enable);
  * @param config Pointer to the configuration.
  */
 void PXP_SetPorterDuffConfig(PXP_Type *base, const pxp_porter_duff_config_t *config);
+
+/*!
+ * @brief Get the Porter Duff configuration by blend mode.
+ *
+ * @param mode The blend mode.
+ * @param config Pointer to the configuration.
+ * @retval kStatus_Success Successfully get the configuratoin.
+ * @retval kStatus_InvalidArgument The blend mode not supported.
+ */
+status_t PXP_GetPorterDuffConfig(pxp_porter_duff_blend_mode_t mode, pxp_porter_duff_config_t *config);
+
+/* @} */
+
+/*!
+ * @name Buffer copy
+ * @{
+ */
+
+/*!
+ * @brief Copy picture from one buffer to another buffer.
+ *
+ * This function copies a rectangle from one buffer to another buffer.
+ *
+ * @verbatim
+                      Source buffer:
+   srcPicBaseAddr
+   +-----------------------------------------------------------+
+   |                                                           |
+   |  (srcOffsetX, srcOffsetY)                                 |
+   |           +-------------------+                           |
+   |           |                   |                           |
+   |           |                   |                           |
+   |           |                   | height                    |
+   |           |                   |                           |
+   |           |                   |                           |
+   |           +-------------------+                           |
+   |                 width                                     |
+   |                                                           |
+   |                       srcPicthBytes                       |
+   +-----------------------------------------------------------+
+
+                     Destination buffer:
+   destPicBaseAddr
+   +-------------------------------------------+
+   |                                           |
+   |                                           |
+   |                                           |
+   |  (destOffsetX, destOffsetY)               |
+   |       +-------------------+               |
+   |       |                   |               |
+   |       |                   |               |
+   |       |                   | height        |
+   |       |                   |               |
+   |       |                   |               |
+   |       +-------------------+               |
+   |             width                         |
+   |                                           |
+   |                                           |
+   |                                           |
+   |                  destPicthBytes           |
+   +-------------------------------------------+
+   @endverbatim
+ *
+ * @note This function resets the old PXP settings, which means the settings
+ * like rotate, flip, will be reseted to disabled status.
+ *
+ * @param base PXP peripheral base address.
+ * @param config Pointer to the picture copy configuration structure.
+ * @retval kStatus_Success Successfully started the copy process.
+ * @retval kStatus_InvalidArgument Invalid argument.
+ */
+status_t PXP_StartPictureCopy(PXP_Type *base, const pxp_pic_copy_config_t *config);
+
+/*!
+ * @brief Copy continous memory.
+ *
+ * @note The copy size should be 512 byte aligned.
+ * @note This function resets the old PXP settings, which means the settings
+ * like rotate, flip, will be reseted to disabled status.
+ *
+ * @param base PXP peripheral base address.
+ * @param srcAddr Source memory address.
+ * @param destAddr Destination memory address.
+ * @param size How many bytes to copy, should be 512 byte aligned.
+ * @retval kStatus_Success Successfully started the copy process.
+ * @retval kStatus_InvalidArgument Invalid argument.
+ */
+status_t PXP_StartMemCopy(PXP_Type *base, uint32_t srcAddr, uint32_t destAddr, uint32_t size);
 
 /* @} */
 

@@ -1200,3 +1200,85 @@ MCMGR                      Name: MCMGR
                            Description: Multicore manager                    
                            Location: middleware/multicore/mcmgr              
                            Origin: NXP (BSD-3-Clause)                        
+
+sln_afe                    Name: Solutions AFE                               
+                           Version: 1.0.0                                    
+                           Outgoing License: Proprietary. See                
+                           LA_OPT_NXP_Software_License RTAudio.txt.          
+                           License File: LA_OPT_NXP_Software_License         
+                           RTAudio.txt                                       
+                           Format: Binary                                    
+                           Description: Audio Front End for i.MX RT based IoT
+                           Solutions                                         
+                           Location: middleware/mcu_voice_libs_public/afe    
+                           Origin: NXP                                       
+
+sln_dsp_toolbox            Name: Solutions Audio DSP Toolbox                 
+                           Version: 1.0.0                                    
+                           Outgoing License: Proprietary. See                
+                           LA_OPT_NXP_Software_License RTAudio.txt.          
+                           License File: LA_OPT_NXP_Software_License         
+                           RTAudio.txt                                       
+                           Format: Binary                                    
+                           Description: Audio DSP Library for i.MX RT based  
+                           IoT Solutions                                     
+                           Location: middleware/mcu_voice_libs_public/dsp    
+                           Origin: NXP                                       
+
+avs_aws_iot                Name: NXP AVS Integration for AWS IoT             
+                           Version: 1.0.0                                    
+                           Outgoing License: Proprietary. See                
+                           LA_OPT_NXP_Software_License RTAudio.txt           
+                           License File: LA_OPT_NXP_Software_License         
+                           RTAudio.txt                                       
+                           Format: Source                                    
+                           Description: AVS Integration for AWS IoT Middlware
+                           Location: middleware/aws_ais                      
+                           Origin: NXP                                       
+
+sln_iot_common_platform    Name: IoT Solutions Common Platform               
+                           Version: 1.0.1                                    
+                           Outgoing License: Apache 2.0, BSD-3, MIT, &       
+                           Proprietary. See LA_OPT_NXP_Software_License      
+                           RTAudio.txt                                       
+                           License File: LA_OPT_NXP_Software_License         
+                           RTAudio.txt                                       
+                           Format: Source                                    
+                           Description: Common code for IoT Solutions        
+                           Location: middleware/sln_iot_platform             
+                           Origin: NXP                                       
+
+alexa_ux_audio             Name: Alexa UX Audio                              
+                           Version: 1.0.0                                    
+                           Outgoing License: BSD-3 & Amazon Program Materials
+                           License Agreement, see Appendix A - Amazon in     
+                           LA_OPT_NXP_Software_License RTAudio.txt.          
+                           License File: LA_OPT_NXP_Software_License         
+                           RTAudio.txt                                       
+                           Format: Source                                    
+                           Description: Alexa UX Audio Files from AVS Sound  
+                           Library                                           
+                           Location: middleware/alexa_ux_audio               
+                           Origin: Amazon/NXP                                
+
+amzn_ww                    Name: Amazon Wake Word Engine                     
+                           Version: 2.3.2                                    
+                           Outgoing License: Proprietary. See                
+                           LA_OPT_NXP_Software_License RTAudio.txt.          
+                           License File: LA_OPT_NXP_Software_License         
+                           RTAudio.txt                                       
+                           Format: Source                                    
+                           Description: Amazon Wake Word Engine              
+                           Location: middleware/amzn_ww                      
+                           Origin: Amazon                                    
+
+audio_streamer             Name: Audio Streamer                              
+                           Version: 1.0.0                                    
+                           Outgoing License: Proprietary. See                
+                           LA_OPT_NXP_Software_License RTAudio.txt.          
+                           License File: LA_OPT_NXP_Software_License         
+                           RTAudio.txt                                       
+                           Format: Source                                    
+                           Description: MCU Audio Streamer Framework         
+                           Location: middleware/audio_streamer               
+                           Origin: NXP                                       

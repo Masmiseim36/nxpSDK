@@ -9,7 +9,7 @@
 **
 **     Reference manual:    IMXRT1060RM Rev.1, 12/2018 | IMXRT1060SRM Rev.3
 **     Version:             rev. 1.2, 2019-04-29
-**     Build:               b200113
+**     Build:               b200211
 **
 **     Abstract:
 **         CMSIS Peripheral Access Layer for MIMXRT106A
@@ -3135,24 +3135,24 @@ typedef struct {
 
 /** BEE - Register Layout Typedef */
 typedef struct {
-  __IO uint32_t CTRL;                              /**< BEE Control Register, offset: 0x0 */
-  __IO uint32_t ADDR_OFFSET0;                      /**< , offset: 0x4 */
-  __IO uint32_t ADDR_OFFSET1;                      /**< , offset: 0x8 */
-  __IO uint32_t AES_KEY0_W0;                       /**< , offset: 0xC */
-  __IO uint32_t AES_KEY0_W1;                       /**< , offset: 0x10 */
-  __IO uint32_t AES_KEY0_W2;                       /**< , offset: 0x14 */
-  __IO uint32_t AES_KEY0_W3;                       /**< , offset: 0x18 */
-  __IO uint32_t STATUS;                            /**< , offset: 0x1C */
-  __O  uint32_t CTR_NONCE0_W0;                     /**< , offset: 0x20 */
-  __O  uint32_t CTR_NONCE0_W1;                     /**< , offset: 0x24 */
-  __O  uint32_t CTR_NONCE0_W2;                     /**< , offset: 0x28 */
-  __O  uint32_t CTR_NONCE0_W3;                     /**< , offset: 0x2C */
-  __O  uint32_t CTR_NONCE1_W0;                     /**< , offset: 0x30 */
-  __O  uint32_t CTR_NONCE1_W1;                     /**< , offset: 0x34 */
-  __O  uint32_t CTR_NONCE1_W2;                     /**< , offset: 0x38 */
-  __O  uint32_t CTR_NONCE1_W3;                     /**< , offset: 0x3C */
-  __IO uint32_t REGION1_TOP;                       /**< , offset: 0x40 */
-  __IO uint32_t REGION1_BOT;                       /**< , offset: 0x44 */
+  __IO uint32_t CTRL;                              /**< Control Register, offset: 0x0 */
+  __IO uint32_t ADDR_OFFSET0;                      /**< Offset region 0 Register, offset: 0x4 */
+  __IO uint32_t ADDR_OFFSET1;                      /**< Offset region 1 Register, offset: 0x8 */
+  __IO uint32_t AES_KEY0_W0;                       /**< AES Key 0 Register, offset: 0xC */
+  __IO uint32_t AES_KEY0_W1;                       /**< AES Key 1 Register, offset: 0x10 */
+  __IO uint32_t AES_KEY0_W2;                       /**< AES Key 2 Register, offset: 0x14 */
+  __IO uint32_t AES_KEY0_W3;                       /**< AES Key 3 Register, offset: 0x18 */
+  __IO uint32_t STATUS;                            /**< Status Register, offset: 0x1C */
+  __O  uint32_t CTR_NONCE0_W0;                     /**< NONCE00 Register, offset: 0x20 */
+  __O  uint32_t CTR_NONCE0_W1;                     /**< NONCE01 Register, offset: 0x24 */
+  __O  uint32_t CTR_NONCE0_W2;                     /**< NONCE02 Register, offset: 0x28 */
+  __O  uint32_t CTR_NONCE0_W3;                     /**< NONCE03 Register, offset: 0x2C */
+  __O  uint32_t CTR_NONCE1_W0;                     /**< NONCE10 Register, offset: 0x30 */
+  __O  uint32_t CTR_NONCE1_W1;                     /**< NONCE11 Register, offset: 0x34 */
+  __O  uint32_t CTR_NONCE1_W2;                     /**< NONCE12 Register, offset: 0x38 */
+  __O  uint32_t CTR_NONCE1_W3;                     /**< NONCE13 Register, offset: 0x3C */
+  __IO uint32_t REGION1_TOP;                       /**< Region1 Top Address Register, offset: 0x40 */
+  __IO uint32_t REGION1_BOT;                       /**< Region1 Bottom Address Register, offset: 0x44 */
 } BEE_Type;
 
 /* ----------------------------------------------------------------------------
@@ -3164,7 +3164,7 @@ typedef struct {
  * @{
  */
 
-/*! @name CTRL - BEE Control Register */
+/*! @name CTRL - Control Register */
 /*! @{ */
 #define BEE_CTRL_BEE_ENABLE_MASK                 (0x1U)
 #define BEE_CTRL_BEE_ENABLE_SHIFT                (0U)
@@ -3265,7 +3265,7 @@ typedef struct {
 #define BEE_CTRL_REGION1_KEY_LOCK(x)             (((uint32_t)(((uint32_t)(x)) << BEE_CTRL_REGION1_KEY_LOCK_SHIFT)) & BEE_CTRL_REGION1_KEY_LOCK_MASK)
 /*! @} */
 
-/*! @name ADDR_OFFSET0 -  */
+/*! @name ADDR_OFFSET0 - Offset region 0 Register */
 /*! @{ */
 #define BEE_ADDR_OFFSET0_ADDR_OFFSET0_MASK       (0xFFFFU)
 #define BEE_ADDR_OFFSET0_ADDR_OFFSET0_SHIFT      (0U)
@@ -3275,7 +3275,7 @@ typedef struct {
 #define BEE_ADDR_OFFSET0_ADDR_OFFSET0_LOCK(x)    (((uint32_t)(((uint32_t)(x)) << BEE_ADDR_OFFSET0_ADDR_OFFSET0_LOCK_SHIFT)) & BEE_ADDR_OFFSET0_ADDR_OFFSET0_LOCK_MASK)
 /*! @} */
 
-/*! @name ADDR_OFFSET1 -  */
+/*! @name ADDR_OFFSET1 - Offset region 1 Register */
 /*! @{ */
 #define BEE_ADDR_OFFSET1_ADDR_OFFSET1_MASK       (0xFFFFU)
 #define BEE_ADDR_OFFSET1_ADDR_OFFSET1_SHIFT      (0U)
@@ -3285,7 +3285,7 @@ typedef struct {
 #define BEE_ADDR_OFFSET1_ADDR_OFFSET1_LOCK(x)    (((uint32_t)(((uint32_t)(x)) << BEE_ADDR_OFFSET1_ADDR_OFFSET1_LOCK_SHIFT)) & BEE_ADDR_OFFSET1_ADDR_OFFSET1_LOCK_MASK)
 /*! @} */
 
-/*! @name AES_KEY0_W0 -  */
+/*! @name AES_KEY0_W0 - AES Key 0 Register */
 /*! @{ */
 #define BEE_AES_KEY0_W0_KEY0_MASK                (0xFFFFFFFFU)
 #define BEE_AES_KEY0_W0_KEY0_SHIFT               (0U)
@@ -3294,7 +3294,7 @@ typedef struct {
 #define BEE_AES_KEY0_W0_KEY0(x)                  (((uint32_t)(((uint32_t)(x)) << BEE_AES_KEY0_W0_KEY0_SHIFT)) & BEE_AES_KEY0_W0_KEY0_MASK)
 /*! @} */
 
-/*! @name AES_KEY0_W1 -  */
+/*! @name AES_KEY0_W1 - AES Key 1 Register */
 /*! @{ */
 #define BEE_AES_KEY0_W1_KEY1_MASK                (0xFFFFFFFFU)
 #define BEE_AES_KEY0_W1_KEY1_SHIFT               (0U)
@@ -3303,7 +3303,7 @@ typedef struct {
 #define BEE_AES_KEY0_W1_KEY1(x)                  (((uint32_t)(((uint32_t)(x)) << BEE_AES_KEY0_W1_KEY1_SHIFT)) & BEE_AES_KEY0_W1_KEY1_MASK)
 /*! @} */
 
-/*! @name AES_KEY0_W2 -  */
+/*! @name AES_KEY0_W2 - AES Key 2 Register */
 /*! @{ */
 #define BEE_AES_KEY0_W2_KEY2_MASK                (0xFFFFFFFFU)
 #define BEE_AES_KEY0_W2_KEY2_SHIFT               (0U)
@@ -3312,7 +3312,7 @@ typedef struct {
 #define BEE_AES_KEY0_W2_KEY2(x)                  (((uint32_t)(((uint32_t)(x)) << BEE_AES_KEY0_W2_KEY2_SHIFT)) & BEE_AES_KEY0_W2_KEY2_MASK)
 /*! @} */
 
-/*! @name AES_KEY0_W3 -  */
+/*! @name AES_KEY0_W3 - AES Key 3 Register */
 /*! @{ */
 #define BEE_AES_KEY0_W3_KEY3_MASK                (0xFFFFFFFFU)
 #define BEE_AES_KEY0_W3_KEY3_SHIFT               (0U)
@@ -3321,7 +3321,7 @@ typedef struct {
 #define BEE_AES_KEY0_W3_KEY3(x)                  (((uint32_t)(((uint32_t)(x)) << BEE_AES_KEY0_W3_KEY3_SHIFT)) & BEE_AES_KEY0_W3_KEY3_MASK)
 /*! @} */
 
-/*! @name STATUS -  */
+/*! @name STATUS - Status Register */
 /*! @{ */
 #define BEE_STATUS_IRQ_VEC_MASK                  (0xFFU)
 #define BEE_STATUS_IRQ_VEC_SHIFT                 (0U)
@@ -3331,63 +3331,63 @@ typedef struct {
 #define BEE_STATUS_BEE_IDLE(x)                   (((uint32_t)(((uint32_t)(x)) << BEE_STATUS_BEE_IDLE_SHIFT)) & BEE_STATUS_BEE_IDLE_MASK)
 /*! @} */
 
-/*! @name CTR_NONCE0_W0 -  */
+/*! @name CTR_NONCE0_W0 - NONCE00 Register */
 /*! @{ */
 #define BEE_CTR_NONCE0_W0_NONCE00_MASK           (0xFFFFFFFFU)
 #define BEE_CTR_NONCE0_W0_NONCE00_SHIFT          (0U)
 #define BEE_CTR_NONCE0_W0_NONCE00(x)             (((uint32_t)(((uint32_t)(x)) << BEE_CTR_NONCE0_W0_NONCE00_SHIFT)) & BEE_CTR_NONCE0_W0_NONCE00_MASK)
 /*! @} */
 
-/*! @name CTR_NONCE0_W1 -  */
+/*! @name CTR_NONCE0_W1 - NONCE01 Register */
 /*! @{ */
 #define BEE_CTR_NONCE0_W1_NONCE01_MASK           (0xFFFFFFFFU)
 #define BEE_CTR_NONCE0_W1_NONCE01_SHIFT          (0U)
 #define BEE_CTR_NONCE0_W1_NONCE01(x)             (((uint32_t)(((uint32_t)(x)) << BEE_CTR_NONCE0_W1_NONCE01_SHIFT)) & BEE_CTR_NONCE0_W1_NONCE01_MASK)
 /*! @} */
 
-/*! @name CTR_NONCE0_W2 -  */
+/*! @name CTR_NONCE0_W2 - NONCE02 Register */
 /*! @{ */
 #define BEE_CTR_NONCE0_W2_NONCE02_MASK           (0xFFFFFFFFU)
 #define BEE_CTR_NONCE0_W2_NONCE02_SHIFT          (0U)
 #define BEE_CTR_NONCE0_W2_NONCE02(x)             (((uint32_t)(((uint32_t)(x)) << BEE_CTR_NONCE0_W2_NONCE02_SHIFT)) & BEE_CTR_NONCE0_W2_NONCE02_MASK)
 /*! @} */
 
-/*! @name CTR_NONCE0_W3 -  */
+/*! @name CTR_NONCE0_W3 - NONCE03 Register */
 /*! @{ */
 #define BEE_CTR_NONCE0_W3_NONCE03_MASK           (0xFFFFFFFFU)
 #define BEE_CTR_NONCE0_W3_NONCE03_SHIFT          (0U)
 #define BEE_CTR_NONCE0_W3_NONCE03(x)             (((uint32_t)(((uint32_t)(x)) << BEE_CTR_NONCE0_W3_NONCE03_SHIFT)) & BEE_CTR_NONCE0_W3_NONCE03_MASK)
 /*! @} */
 
-/*! @name CTR_NONCE1_W0 -  */
+/*! @name CTR_NONCE1_W0 - NONCE10 Register */
 /*! @{ */
 #define BEE_CTR_NONCE1_W0_NONCE10_MASK           (0xFFFFFFFFU)
 #define BEE_CTR_NONCE1_W0_NONCE10_SHIFT          (0U)
 #define BEE_CTR_NONCE1_W0_NONCE10(x)             (((uint32_t)(((uint32_t)(x)) << BEE_CTR_NONCE1_W0_NONCE10_SHIFT)) & BEE_CTR_NONCE1_W0_NONCE10_MASK)
 /*! @} */
 
-/*! @name CTR_NONCE1_W1 -  */
+/*! @name CTR_NONCE1_W1 - NONCE11 Register */
 /*! @{ */
 #define BEE_CTR_NONCE1_W1_NONCE11_MASK           (0xFFFFFFFFU)
 #define BEE_CTR_NONCE1_W1_NONCE11_SHIFT          (0U)
 #define BEE_CTR_NONCE1_W1_NONCE11(x)             (((uint32_t)(((uint32_t)(x)) << BEE_CTR_NONCE1_W1_NONCE11_SHIFT)) & BEE_CTR_NONCE1_W1_NONCE11_MASK)
 /*! @} */
 
-/*! @name CTR_NONCE1_W2 -  */
+/*! @name CTR_NONCE1_W2 - NONCE12 Register */
 /*! @{ */
 #define BEE_CTR_NONCE1_W2_NONCE12_MASK           (0xFFFFFFFFU)
 #define BEE_CTR_NONCE1_W2_NONCE12_SHIFT          (0U)
 #define BEE_CTR_NONCE1_W2_NONCE12(x)             (((uint32_t)(((uint32_t)(x)) << BEE_CTR_NONCE1_W2_NONCE12_SHIFT)) & BEE_CTR_NONCE1_W2_NONCE12_MASK)
 /*! @} */
 
-/*! @name CTR_NONCE1_W3 -  */
+/*! @name CTR_NONCE1_W3 - NONCE13 Register */
 /*! @{ */
 #define BEE_CTR_NONCE1_W3_NONCE13_MASK           (0xFFFFFFFFU)
 #define BEE_CTR_NONCE1_W3_NONCE13_SHIFT          (0U)
 #define BEE_CTR_NONCE1_W3_NONCE13(x)             (((uint32_t)(((uint32_t)(x)) << BEE_CTR_NONCE1_W3_NONCE13_SHIFT)) & BEE_CTR_NONCE1_W3_NONCE13_MASK)
 /*! @} */
 
-/*! @name REGION1_TOP -  */
+/*! @name REGION1_TOP - Region1 Top Address Register */
 /*! @{ */
 #define BEE_REGION1_TOP_REGION1_TOP_MASK         (0xFFFFFFFFU)
 #define BEE_REGION1_TOP_REGION1_TOP_SHIFT        (0U)
@@ -3396,7 +3396,7 @@ typedef struct {
 #define BEE_REGION1_TOP_REGION1_TOP(x)           (((uint32_t)(((uint32_t)(x)) << BEE_REGION1_TOP_REGION1_TOP_SHIFT)) & BEE_REGION1_TOP_REGION1_TOP_MASK)
 /*! @} */
 
-/*! @name REGION1_BOT -  */
+/*! @name REGION1_BOT - Region1 Bottom Address Register */
 /*! @{ */
 #define BEE_REGION1_BOT_REGION1_BOT_MASK         (0xFFFFFFFFU)
 #define BEE_REGION1_BOT_REGION1_BOT_SHIFT        (0U)
@@ -40930,9 +40930,9 @@ typedef struct {
 
 /** TSC - Register Layout Typedef */
 typedef struct {
-  __IO uint32_t BASIC_SETTING;                     /**< , offset: 0x0 */
+  __IO uint32_t BASIC_SETTING;                     /**< Basic Setting, offset: 0x0 */
        uint8_t RESERVED_0[12];
-  __IO uint32_t PRE_CHARGE_TIME;                   /**< , offset: 0x10 */
+  __IO uint32_t PRE_CHARGE_TIME;                   /**< Pre-charge Time, offset: 0x10 */
        uint8_t RESERVED_1[12];
   __IO uint32_t FLOW_CONTROL;                      /**< Flow Control, offset: 0x20 */
        uint8_t RESERVED_2[12];
@@ -40944,9 +40944,9 @@ typedef struct {
        uint8_t RESERVED_5[12];
   __IO uint32_t INT_STATUS;                        /**< Intterrupt Status, offset: 0x60 */
        uint8_t RESERVED_6[12];
-  __IO uint32_t DEBUG_MODE;                        /**< , offset: 0x70 */
+  __IO uint32_t DEBUG_MODE;                        /**< Debug Mode Register, offset: 0x70 */
        uint8_t RESERVED_7[12];
-  __IO uint32_t DEBUG_MODE2;                       /**< , offset: 0x80 */
+  __IO uint32_t DEBUG_MODE2;                       /**< Debug Mode Register 2, offset: 0x80 */
 } TSC_Type;
 
 /* ----------------------------------------------------------------------------
@@ -40958,7 +40958,7 @@ typedef struct {
  * @{
  */
 
-/*! @name BASIC_SETTING -  */
+/*! @name BASIC_SETTING - Basic Setting */
 /*! @{ */
 #define TSC_BASIC_SETTING_AUTO_MEASURE_MASK      (0x1U)
 #define TSC_BASIC_SETTING_AUTO_MEASURE_SHIFT     (0U)
@@ -40967,13 +40967,13 @@ typedef struct {
  *  0b1..Auto Measure
  */
 #define TSC_BASIC_SETTING_AUTO_MEASURE(x)        (((uint32_t)(((uint32_t)(x)) << TSC_BASIC_SETTING_AUTO_MEASURE_SHIFT)) & TSC_BASIC_SETTING_AUTO_MEASURE_MASK)
-#define TSC_BASIC_SETTING_4_5_WIRE_MASK          (0x10U)
-#define TSC_BASIC_SETTING_4_5_WIRE_SHIFT         (4U)
-/*! 4_5_WIRE - 4/5 Wire detection
+#define TSC_BASIC_SETTING_WIRE_4_5_MASK          (0x10U)
+#define TSC_BASIC_SETTING_WIRE_4_5_SHIFT         (4U)
+/*! WIRE_4_5 - 4/5 Wire detection
  *  0b0..4-Wire Detection Mode
  *  0b1..5-Wire Detection Mode
  */
-#define TSC_BASIC_SETTING_4_5_WIRE(x)            (((uint32_t)(((uint32_t)(x)) << TSC_BASIC_SETTING_4_5_WIRE_SHIFT)) & TSC_BASIC_SETTING_4_5_WIRE_MASK)
+#define TSC_BASIC_SETTING_WIRE_4_5(x)            (((uint32_t)(((uint32_t)(x)) << TSC_BASIC_SETTING_WIRE_4_5_SHIFT)) & TSC_BASIC_SETTING_WIRE_4_5_MASK)
 #define TSC_BASIC_SETTING_MEASURE_DELAY_TIME_MASK (0xFFFFFF00U)
 #define TSC_BASIC_SETTING_MEASURE_DELAY_TIME_SHIFT (8U)
 /*! MEASURE_DELAY_TIME - Measure Delay Time
@@ -40981,7 +40981,7 @@ typedef struct {
 #define TSC_BASIC_SETTING_MEASURE_DELAY_TIME(x)  (((uint32_t)(((uint32_t)(x)) << TSC_BASIC_SETTING_MEASURE_DELAY_TIME_SHIFT)) & TSC_BASIC_SETTING_MEASURE_DELAY_TIME_MASK)
 /*! @} */
 
-/*! @name PRE_CHARGE_TIME -  */
+/*! @name PRE_CHARGE_TIME - Pre-charge Time */
 /*! @{ */
 #define TSC_PRE_CHARGE_TIME_PRE_CHARGE_TIME_MASK (0xFFFFFFFFU)
 #define TSC_PRE_CHARGE_TIME_PRE_CHARGE_TIME_SHIFT (0U)
@@ -41126,7 +41126,7 @@ typedef struct {
 #define TSC_INT_STATUS_IDLE_SW(x)                (((uint32_t)(((uint32_t)(x)) << TSC_INT_STATUS_IDLE_SW_SHIFT)) & TSC_INT_STATUS_IDLE_SW_MASK)
 /*! @} */
 
-/*! @name DEBUG_MODE -  */
+/*! @name DEBUG_MODE - Debug Mode Register */
 /*! @{ */
 #define TSC_DEBUG_MODE_ADC_CONV_VALUE_MASK       (0xFFFU)
 #define TSC_DEBUG_MODE_ADC_CONV_VALUE_SHIFT      (0U)
@@ -41173,7 +41173,7 @@ typedef struct {
 #define TSC_DEBUG_MODE_DEBUG_EN(x)               (((uint32_t)(((uint32_t)(x)) << TSC_DEBUG_MODE_DEBUG_EN_SHIFT)) & TSC_DEBUG_MODE_DEBUG_EN_MASK)
 /*! @} */
 
-/*! @name DEBUG_MODE2 -  */
+/*! @name DEBUG_MODE2 - Debug Mode Register 2 */
 /*! @{ */
 #define TSC_DEBUG_MODE2_XPUL_PULL_DOWN_MASK      (0x1U)
 #define TSC_DEBUG_MODE2_XPUL_PULL_DOWN_SHIFT     (0U)
@@ -41356,9 +41356,9 @@ typedef struct {
 /** Interrupt vectors for the TSC peripheral type */
 #define TSC_IRQS                                 { TSC_DIG_IRQn }
 /* Backward compatibility */
-#define TSC_BASIC_SETTING__4_5_WIRE_MASK          TSC_BASIC_SETTING_4_5_WIRE_MASK
-#define TSC_BASIC_SETTING__4_5_WIRE_SHIFT         TSC_BASIC_SETTING_4_5_WIRE_SHIFT
-#define TSC_BASIC_SETTING__4_5_WIRE(x)            TSC_BASIC_SETTING_4_5_WIRE(x)
+#define TSC_BASIC_SETTING__4_5_WIRE_MASK          TSC_BASIC_SETTING_WIRE_4_5_MASK
+#define TSC_BASIC_SETTING__4_5_WIRE_SHIFT         TSC_BASIC_SETTING_WIRE_4_5_SHIFT
+#define TSC_BASIC_SETTING__4_5_WIRE(x)            TSC_BASIC_SETTING_WIRE_4_5(x)
 
 
 /*!
@@ -48566,3 +48566,4 @@ typedef struct {
 
 
 #endif  /* _MIMXRT106A_H_ */
+

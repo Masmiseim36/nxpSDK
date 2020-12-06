@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -62,5 +62,7 @@ typedef struct _usb_msc_struct
 } usb_msc_struct_t;
 
 void USB_DeviceApplicationInit();
+
+int USB_MSC_Init(void);
 
 #endif

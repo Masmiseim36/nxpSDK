@@ -57,7 +57,7 @@ usb_device_interfaces_struct_t g_UsbDeviceMscInterfaces[USB_MSC_INTERFACE_COUNT]
         USB_MSC_PROTOCOL,        /*msc protocol code */
         USB_MSC_INTERFACE_INDEX, /* The interface number of the msc */
         g_UsbDeviceMscInterface, /* Interfaces handle */
-        sizeof(g_UsbDeviceMscInterface) / sizeof(usb_device_interfaces_struct_t),
+        sizeof(g_UsbDeviceMscInterface) / sizeof(usb_device_interface_struct_t),
     },
 };
 

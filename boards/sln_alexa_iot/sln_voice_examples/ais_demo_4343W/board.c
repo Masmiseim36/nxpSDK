@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP
+ * Copyright 2019-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -8,10 +8,25 @@
 #include "board.h"
 #include "fsl_common.h"
 #include "fsl_debug_console.h"
+
 #if defined(SDK_I2C_BASED_COMPONENT_USED) && SDK_I2C_BASED_COMPONENT_USED
 #include "fsl_lpi2c.h"
 #endif /* SDK_I2C_BASED_COMPONENT_USED */
+
 #include "fsl_iomuxc.h"
+
+#if defined(SDK_SAI_BASED_COMPONENT_USED) && SDK_SAI_BASED_COMPONENT_USED
+#include "pdm_pcm_definitions.h"
+#include "sln_cfg_file.h"
+#include "fsl_codec_common.h"
+#include "fsl_codec_adapter.h"
+#include "fsl_tfa9xxx.h"
+#if defined(USE_TFA9894_PUI) && USE_TFA9894_PUI
+#include "tfa_config_TFA9894N2A1_48kHz_PUI.h"
+#else
+#include "tfa_config_TFA9894N2.h"
+#endif
+#endif /* SDK_SAI_BASED_COMPONENT_USED */
 
 /*******************************************************************************
  * Variables
@@ -26,28 +41,50 @@ extern void __top_SRAM_OC_NON_CACHEABLE(void);
 extern void __base_SRAM_OC_CACHEABLE(void);
 extern void __top_SRAM_OC_CACHEABLE(void);
 
-__attribute__((section(".vectorTableRam"), aligned(0x100))) uint32_t g_vectorTable[256] = {0};
+__attribute__((section(".vectorTableRam"), aligned(0x400))) uint32_t g_vectorTable[256] = {0};
 
 #if defined(__CC_ARM) || defined(__ARMCC_VERSION)
-    extern uint32_t __Vectors[];
-    extern uint32_t Image$$ARM_LIB_STACK$$ZI$$Limit;
+extern uint32_t __Vectors[];
+extern uint32_t Image$$ARM_LIB_STACK$$ZI$$Limit;
 #define __VECTOR_TABLE __Vectors
-#define __StackTop Image$$ARM_LIB_STACK$$ZI$$Limit
+#define __StackTop     Image$$ARM_LIB_STACK$$ZI$$Limit
 #elif defined(__MCUXPRESSO)
-    extern uint32_t __Vectors[];
-    extern void _vStackTop(void);
+extern uint32_t __Vectors[];
+extern void _vStackTop(void);
 #define __VECTOR_TABLE __Vectors
-#define __StackTop _vStackTop
+#define __StackTop     _vStackTop
 #elif defined(__ICCARM__)
-    extern uint32_t __vector_table[];
-    extern uint32_t CSTACK$$Limit;
+extern uint32_t __vector_table[];
+extern uint32_t CSTACK$$Limit;
 #define __VECTOR_TABLE __vector_table
-#define __StackTop CSTACK$$Limit
+#define __StackTop     CSTACK$$Limit
 #elif defined(__GNUC__)
-    extern uint32_t __StackTop;
-    extern uint32_t __Vectors[];
+extern uint32_t __StackTop;
+extern uint32_t __Vectors[];
 #define __VECTOR_TABLE __Vectors
 #endif
+
+#if defined(SDK_I2C_BASED_COMPONENT_USED) && SDK_I2C_BASED_COMPONENT_USED
+#if defined(FSL_FEATURE_SOC_LPI2C_COUNT) && (FSL_FEATURE_SOC_LPI2C_COUNT)
+lpi2c_master_handle_t g_i2cHandle = {0};
+#endif
+#endif
+
+#if defined(SDK_SAI_BASED_COMPONENT_USED) && SDK_SAI_BASED_COMPONENT_USED
+AT_NONCACHEABLE_SECTION_ALIGN(static uint8_t dummy_txbuffer[32], 32);
+AT_NONCACHEABLE_SECTION_ALIGN(static uint8_t dummy_rxbuffer[32], 32);
+
+tfa9xxx_config_t tfa9xxxConfig = {
+    .i2cConfig    = {.codecI2CInstance = BOARD_CODEC_I2C_INSTANCE, .codecI2CSourceClock = 10000000U},
+    .slaveAddress = TFA9XXX_I2C_ADDR_0,
+    .protocol     = kTFA9XXX_BusI2S,
+    .format       = {.sampleRate = kTFA9XXX_AudioSampleRate48KHz, .bitWidth = kTFA9XXX_AudioBitWidth16bit},
+    .tfaContainer = tfa_container_bin,
+    .deviceIndex  = 0,
+};
+
+codec_config_t boardCodecConfig = {.codecDevType = kCODEC_TFA9XXX, .codecDevConfig = &tfa9xxxConfig};
+#endif /* SDK_SAI_BASED_COMPONENT_USED */
 
 /*******************************************************************************
  * Code
@@ -117,17 +154,18 @@ void BOARD_LPI2C_Init(LPI2C_Type *base, uint32_t clkSrc_Hz)
     lpi2c_master_config_t lpi2cConfig = {0};
 
     /*
-     * lpi2cConfig.debugEnable = false;
-     * lpi2cConfig.ignoreAck = false;
-     * lpi2cConfig.pinConfig = kLPI2C_2PinOpenDrain;
-     * lpi2cConfig.baudRate_Hz = 100000U;
-     * lpi2cConfig.busIdleTimeout_ns = 0;
-     * lpi2cConfig.pinLowTimeout_ns = 0;
-     * lpi2cConfig.sdaGlitchFilterWidth_ns = 0;
-     * lpi2cConfig.sclGlitchFilterWidth_ns = 0;
+     * i2cConfig.debugEnable = false;
+     * i2cConfig.ignoreAck = false;
+     * i2cConfig.pinConfig = kLPI2C_2PinOpenDrain;
+     * i2cConfig.baudRate_Hz = 100000U;
+     * i2cConfig.busIdleTimeout_ns = 0;
+     * i2cConfig.pinLowTimeout_ns = 0;
+     * i2cConfig.sdaGlitchFilterWidth_ns = 0;
+     * i2cConfig.sclGlitchFilterWidth_ns = 0;
      */
     LPI2C_MasterGetDefaultConfig(&lpi2cConfig);
-    LPI2C_MasterInit(base, &lpi2cConfig, clkSrc_Hz);
+    LPI2C_MasterInit(base, &lpi2cConfig, BOARD_CODEC_I2C_CLOCK_FREQ);
+    LPI2C_MasterTransferCreateHandle(base, &g_i2cHandle, NULL, NULL);
 }
 
 status_t BOARD_LPI2C_Send(LPI2C_Type *base,
@@ -295,7 +333,12 @@ status_t BOARD_Accel_I2C_Receive(
 
 void BOARD_Codec_I2C_Init(void)
 {
+    CLOCK_SetMux(kCLOCK_Lpi2cMux, BOARD_CODEC_I2C_CLOCK_SOURCE_SELECT);
+    CLOCK_SetDiv(kCLOCK_Lpi2cDiv, BOARD_CODEC_I2C_CLOCK_SOURCE_DIVIDER);
     BOARD_LPI2C_Init(BOARD_CODEC_I2C_BASEADDR, BOARD_CODEC_I2C_CLOCK_FREQ);
+#if defined(FSL_RTOS_FREE_RTOS)
+    NVIC_SetPriority(BOARD_CODEC_I2C_IRQN, configMAX_SYSCALL_INTERRUPT_PRIORITY - 1);
+#endif
 }
 
 status_t BOARD_Codec_I2C_Send(
@@ -347,6 +390,186 @@ status_t BOARD_Camera_I2C_ReceiveSCCB(
 }
 #endif /* SDK_I2C_BASED_COMPONENT_USED */
 
+#if defined(SDK_SAI_BASED_COMPONENT_USED) && SDK_SAI_BASED_COMPONENT_USED
+void BOARD_SAI_Enable_Mclk_Output(I2S_Type *base, bool enable)
+{
+    uint32_t mclk_dir_mask = 0;
+
+    if (SAI1 == base)
+        mclk_dir_mask = IOMUXC_GPR_GPR1_SAI1_MCLK_DIR_MASK;
+    else if (SAI2 == base)
+        mclk_dir_mask = IOMUXC_GPR_GPR1_SAI2_MCLK_DIR_MASK;
+    else if (SAI3 == base)
+        mclk_dir_mask = IOMUXC_GPR_GPR1_SAI3_MCLK_DIR_MASK;
+    else
+        return;
+
+    if (enable)
+    {
+        IOMUXC_GPR->GPR1 |= mclk_dir_mask;
+    }
+    else
+    {
+        IOMUXC_GPR->GPR1 &= (~mclk_dir_mask);
+    }
+}
+
+void BOARD_SAI_Init(sai_init_handle_t saiInitHandle)
+{
+    sai_config_t saiConfig = {0};
+    sai_transfer_t txfer;
+    sai_transfer_t rxfer;
+
+    sai_transfer_format_t saiAmpFormat = {0};
+
+#if USE_ALEXA_SOUND_PROMPT || USE_TFA9894 /* We can only use 48KHz right now due to limitations of TFA9894 */
+    saiAmpFormat.bitWidth      = kSAI_WordWidth16bits;
+    saiAmpFormat.sampleRate_Hz = kSAI_SampleRate48KHz;
+#elif USE_16BIT_PCM
+    saiAmpFormat.bitWidth      = kSAI_WordWidth16bits;
+    saiAmpFormat.sampleRate_Hz = kSAI_SampleRate16KHz;
+#elif USE_32BIT_PCM
+    saiAmpFormat.bitWidth      = kSAI_WordWidth32bits;
+    saiAmpFormat.sampleRate_Hz = kSAI_SampleRate16KHz;
+#endif
+    saiAmpFormat.channel            = 0U;
+    saiAmpFormat.protocol           = kSAI_BusLeftJustified;
+    saiAmpFormat.isFrameSyncCompact = true;
+    saiAmpFormat.stereo             = kSAI_MonoLeft;
+#if defined(FSL_FEATURE_SAI_FIFO_COUNT) && (FSL_FEATURE_SAI_FIFO_COUNT > 1)
+    saiAmpFormat.watermark = FSL_FEATURE_SAI_FIFO_COUNT / 2U;
+#endif
+
+    /*Clock setting for SAI1*/
+    CLOCK_SetMux(kCLOCK_Sai3Mux, BOARD_AMP_SAI_CLOCK_SOURCE_SELECT);
+    CLOCK_SetDiv(kCLOCK_Sai3PreDiv, BOARD_AMP_SAI_CLOCK_SOURCE_PRE_DIVIDER);
+    CLOCK_SetDiv(kCLOCK_Sai3Div, BOARD_AMP_SAI_CLOCK_SOURCE_DIVIDER);
+
+    BOARD_SAI_Enable_Mclk_Output(BOARD_AMP_SAI, true);
+
+    EDMA_CreateHandle(saiInitHandle.amp_dma_tx_handle, DMA0, BOARD_AMP_SAI_EDMA_TX_CH);
+    EDMA_CreateHandle(saiInitHandle.amp_dma_rx_handle, DMA0, BOARD_AMP_SAI_EDMA_RX_CH);
+    DMAMUX_SetSource(DMAMUX, BOARD_AMP_SAI_EDMA_TX_CH, (uint8_t)BOARD_AMP_SAI_EDMA_TX_REQ);
+    DMAMUX_SetSource(DMAMUX, BOARD_AMP_SAI_EDMA_RX_CH, (uint8_t)BOARD_AMP_SAI_EDMA_RX_REQ);
+    DMAMUX_EnableChannel(DMAMUX, BOARD_AMP_SAI_EDMA_TX_CH);
+    DMAMUX_EnableChannel(DMAMUX, BOARD_AMP_SAI_EDMA_RX_CH);
+
+    /* Initialize SAI Tx */
+    SAI_TxGetDefaultConfig(&saiConfig);
+    saiConfig.protocol = kSAI_BusI2S;
+    SAI_TxInit(BOARD_AMP_SAI, &saiConfig);
+
+    //    /* Initialize SAI Rx */
+    SAI_RxGetDefaultConfig(&saiConfig);
+    saiConfig.protocol = kSAI_BusI2S;
+    SAI_RxInit(BOARD_AMP_SAI, &saiConfig);
+
+    SAI_TransferTxCreateHandleEDMA(BOARD_AMP_SAI, saiInitHandle.amp_sai_tx_handle, saiInitHandle.sai_tx_callback, NULL,
+                                   saiInitHandle.amp_dma_tx_handle);
+    SAI_TransferRxCreateHandleEDMA(BOARD_AMP_SAI, saiInitHandle.amp_sai_rx_handle, saiInitHandle.sai_rx_callback, NULL,
+                                   saiInitHandle.amp_dma_rx_handle);
+
+    SAI_TransferTxSetFormatEDMA(BOARD_AMP_SAI, saiInitHandle.amp_sai_tx_handle, &saiAmpFormat, BOARD_AMP_SAI_CLK_FREQ,
+                                BOARD_AMP_SAI_CLK_FREQ);
+    SAI_TransferRxSetFormatEDMA(BOARD_AMP_SAI, saiInitHandle.amp_sai_rx_handle, &saiAmpFormat, BOARD_AMP_SAI_CLK_FREQ,
+                                BOARD_AMP_SAI_CLK_FREQ);
+
+    /* Force bit clock to override standard enablement */
+    SAI_TxSetBitClockRate(BOARD_AMP_SAI, BOARD_AMP_SAI_CLK_FREQ, saiAmpFormat.sampleRate_Hz, saiAmpFormat.bitWidth, 2U);
+    SAI_RxSetBitClockRate(BOARD_AMP_SAI, BOARD_AMP_SAI_CLK_FREQ, saiAmpFormat.sampleRate_Hz, saiAmpFormat.bitWidth, 2U);
+
+    /* Enable interrupt to handle FIFO error */
+    SAI_TxEnableInterrupts(BOARD_AMP_SAI, kSAI_FIFOErrorInterruptEnable);
+    SAI_RxEnableInterrupts(BOARD_AMP_SAI, kSAI_FIFOErrorInterruptEnable);
+
+    NVIC_SetPriority(BOARD_AMP_SAI_EDMA_TX_IRQ, configMAX_SYSCALL_INTERRUPT_PRIORITY - 1);
+    NVIC_SetPriority(BOARD_AMP_SAI_EDMA_RX_IRQ, configMAX_SYSCALL_INTERRUPT_PRIORITY - 1);
+
+    EnableIRQ(BOARD_AMP_SAI_TX_IRQ);
+    EnableIRQ(BOARD_AMP_SAI_RX_IRQ);
+
+    memset(dummy_txbuffer, 0, 32);
+    txfer.dataSize = 32;
+    txfer.data     = dummy_txbuffer;
+    SAI_TransferSendEDMA(BOARD_AMP_SAI, saiInitHandle.amp_sai_tx_handle, &txfer);
+
+    rxfer.dataSize = 32;
+    rxfer.data     = dummy_rxbuffer;
+    SAI_TransferReceiveEDMA(BOARD_AMP_SAI, saiInitHandle.amp_sai_rx_handle, &rxfer);
+}
+
+// read bit in flash to know TFA has been calibrated
+void BOARD_Get_Calibration_State(uint8_t *cur_state)
+{
+    status_t ret;
+    uint32_t len      = 0;
+    sln_dev_cfg_t cfg = DEFAULT_CFG_VALUES;
+
+    ret = SLN_FLASH_MGMT_Read(DEVICE_CONFIG_FILE_NAME, (uint8_t *)&cfg, &len);
+    if (kStatus_Success != ret)
+    {
+        configPRINTF(("Warning, unknown calibration state! %d\r\n", ret));
+        *cur_state = 0; // FIXME: calibrate or do not calibrate? What's the risk?
+    }
+    else
+    {
+        *cur_state = cfg.audio_amp_calibration_state;
+    }
+}
+
+// write bit in flash to set TFA calibration state
+void BOARD_Set_Calibration_State(uint8_t new_state)
+{
+    status_t ret;
+    uint32_t len      = 0;
+    sln_dev_cfg_t cfg = DEFAULT_CFG_VALUES;
+
+    ret = SLN_FLASH_MGMT_Read(DEVICE_CONFIG_FILE_NAME, (uint8_t *)&cfg, &len);
+
+    /* If this is a new file, then carry on and save the file */
+    if (SLN_FLASH_MGMT_ENOENTRY2 == ret)
+    {
+        len = sizeof(sln_dev_cfg_t);
+    }
+    else if (SLN_FLASH_MGMT_OK != ret)
+    {
+        configPRINTF(("Warning, unknown calibration state! %d\r\n", ret));
+        return;
+    }
+
+    /* If we got here, then we are ready to set the calibrated bit */
+    if (cfg.audio_amp_calibration_state != new_state)
+    {
+        /* update bit in flash */
+        cfg.audio_amp_calibration_state = new_state;
+        ret                             = SLN_FLASH_MGMT_Save(DEVICE_CONFIG_FILE_NAME, (uint8_t *)&cfg, len);
+        if (kStatus_Success != ret)
+        {
+            configPRINTF(("Warning, unknown new calibration state! %d\r\n", ret));
+            return;
+        }
+    }
+}
+
+extern void SAI_UserTxIRQHandler(void);
+extern void SAI_UserRxIRQHandler(void);
+void BOARD_AMP_SAI_Tx_IRQ_Handler(void)
+{
+    if (BOARD_AMP_SAI->TCSR & kSAI_FIFOErrorFlag)
+    {
+        SAI_UserTxIRQHandler();
+    }
+}
+
+void BOARD_AMP_SAI_Rx_IRQ_Handler(void)
+{
+    if (BOARD_AMP_SAI->RCSR & kSAI_FIFOErrorFlag)
+    {
+        SAI_UserRxIRQHandler();
+    }
+}
+#endif
+
 /* MPU configuration. */
 void BOARD_ConfigMPU(void)
 {
@@ -391,19 +614,20 @@ void BOARD_ConfigMPU(void)
      *  TypeExtField  IsShareable  IsCacheable  IsBufferable   Memory Attribtue    Shareability        Cache
      *     0             x           0           0             Strongly Ordered    shareable
      *     0             x           0           1              Device             shareable
-     *     0             0           1           0              Normal             not shareable   Outer and inner write through no write allocate
-     *     0             0           1           1              Normal             not shareable   Outer and inner write back no write allocate
-     *     0             1           1           0              Normal             shareable       Outer and inner write through no write allocate
-     *     0             1           1           1              Normal             shareable       Outer and inner write back no write allocate
-     *     1             0           0           0              Normal             not shareable   outer and inner noncache
-     *     1             1           0           0              Normal             shareable       outer and inner noncache
-     *     1             0           1           1              Normal             not shareable   outer and inner write back write/read acllocate
-     *     1             1           1           1              Normal             shareable       outer and inner write back write/read acllocate
-     *     2             x           0           0              Device              not shareable
-     *  Above are normal use settings, if your want to see more details or want to config different inner/outter cache policy.
-     *  please refer to Table 4-55 /4-56 in arm cortex-M7 generic user guide <dui0646b_cortex_m7_dgug.pdf>
-     * param SubRegionDisable  Sub-region disable field. 0=sub-region is enabled, 1=sub-region is disabled.
-     * param Size              Region size of the region to be configured. use ARM_MPU_REGION_SIZE_xxx MACRO in core_cm7.h.
+     *     0             0           1           0              Normal             not shareable   Outer and inner write
+     * through no write allocate 0             0           1           1              Normal             not shareable
+     * Outer and inner write back no write allocate 0             1           1           0              Normal
+     * shareable       Outer and inner write through no write allocate 0             1           1           1 Normal
+     * shareable       Outer and inner write back no write allocate 1             0           0           0 Normal not
+     * shareable   outer and inner noncache 1             1           0           0              Normal shareable outer
+     * and inner noncache 1             0           1           1              Normal             not shareable   outer
+     * and inner write back write/read acllocate 1             1           1           1              Normal shareable
+     * outer and inner write back write/read acllocate 2             x           0           0              Device not
+     * shareable Above are normal use settings, if your want to see more details or want to config different
+     * inner/outter cache policy. please refer to Table 4-55 /4-56 in arm cortex-M7 generic user guide
+     * <dui0646b_cortex_m7_dgug.pdf> param SubRegionDisable  Sub-region disable field. 0=sub-region is enabled,
+     * 1=sub-region is disabled. param Size              Region size of the region to be configured. use
+     * ARM_MPU_REGION_SIZE_xxx MACRO in core_cm7.h.
      */
 
     /* Region 0 setting: Memory with Device type, not shareable, non-cacheable. */
@@ -494,11 +718,10 @@ void BOARD_ConfigMPU(void)
     SCB_EnableICache();
 }
 
-static const clock_arm_pll_config_t armPllConfig_BOARD_BoostClock =
-    {
-        .loopDivider = 100,                       /* PLL loop divider, Fout = Fin * 50 */
-        .src = 0,                                 /* Bypass clock source, 0 - OSC 24M, 1 - CLK1_P and CLK1_N */
-    };
+static const clock_arm_pll_config_t armPllConfig_BOARD_BoostClock = {
+    .loopDivider = 100, /* PLL loop divider, Fout = Fin * 50 */
+    .src         = 0,   /* Bypass clock source, 0 - OSC 24M, 1 - CLK1_P and CLK1_N */
+};
 static bool clockBoost = false;
 
 void BOARD_BoostClock(void)
@@ -544,7 +767,6 @@ void BOARD_RevertClock(void)
     }
 }
 
-
 void BOARD_RelocateVectorTableToRam(void)
 {
     uint32_t n;
@@ -560,11 +782,11 @@ void BOARD_RelocateVectorTableToRam(void)
     {
         g_vectorTable[n] = __VECTOR_TABLE[n];
     }
-    
+
     /* Set application defined stack pointer */
     volatile unsigned int vStackTop = (unsigned int)&__StackTop;
-    g_vectorTable[0] = vStackTop;
-    
+    g_vectorTable[0]                = vStackTop;
+
     /* Point the VTOR to the position of vector table */
     SCB->VTOR = (uint32_t)g_vectorTable;
     __DSB();
@@ -574,3 +796,30 @@ void BOARD_RelocateVectorTableToRam(void)
 
     EnableGlobalIRQ(irqMaskValue);
 }
+
+uint8_t BUTTON_MSDPressed(void)
+{
+    /* Check if USB MSD Mode button (SW2) is pushed */
+    /* SW2 is connected to GND and uses external pull-up resistor */
+    if (0 == GPIO_PinRead(SW2_GPIO, SW2_GPIO_PIN))
+        return 1;
+
+    return 0;
+}
+
+uint8_t BUTTON_OTWPressed(void)
+{
+    /* Check if OTW Mode button (SW1) is pushed */
+    /* SW1 is connected to GND and uses external pull-up resistor */
+    if (0 == GPIO_PinRead(SW1_GPIO, SW1_GPIO_PIN))
+        return 1;
+
+    return 0;
+}
+
+#if defined(SDK_SAI_BASED_COMPONENT_USED) && SDK_SAI_BASED_COMPONENT_USED
+void *BOARD_GetBoardCodecConfig(void)
+{
+    return (void *)&boardCodecConfig;
+}
+#endif

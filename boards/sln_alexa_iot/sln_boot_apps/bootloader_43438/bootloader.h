@@ -17,7 +17,7 @@
 
 /* Type definitions for Bootloader Main */
 #if BOOTLOADER_AWS_IOT_OTA_ENABLED
-#include "aws_ota_types.h"
+#include "aws_iot_ota_types.h"
 #else
 #include "flash_ica_driver.h"
 #endif

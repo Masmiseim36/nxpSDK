@@ -7,38 +7,13 @@
  * applicable license terms, then you may not retain, install, activate or otherwise use the software.
  */
 
-/*
-Amazon FreeRTOS OTA Agent V0.9.5
-Copyright (C) 2017 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of
-this software and associated documentation files (the "Software"), to deal in
-the Software without restriction, including without limitation the rights to
-use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
-the Software, and to permit persons to whom the Software is furnished to do so,
-subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
-FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
-COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
-IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
- http://aws.amazon.com/freertos
- http://www.FreeRTOS.org
-*/
-
 /* Standard library includes. */
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
 
-#include "app.h"
+/* Board includes */
 #include "board.h"
 
 /* OTA check includes. */
@@ -52,15 +27,15 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "cJSON.h"
 
 /* General constants. */
-#define OTA_PUBLISH_WAIT_TICKS pdMS_TO_TICKS(10000UL)
-#define OTA_SUBSCRIBE_WAIT_TICKS pdMS_TO_TICKS(30000UL)
+#define OTA_PUBLISH_WAIT_TICKS     pdMS_TO_TICKS(10000UL)
+#define OTA_SUBSCRIBE_WAIT_TICKS   pdMS_TO_TICKS(30000UL)
 #define OTA_UNSUBSCRIBE_WAIT_TICKS pdMS_TO_TICKS(10000UL)
-#define OTA_MAX_TOPIC_LEN 256U /* Max length of a dynamically generated topic string (usually on the stack). */
-#define OTA_MAX_MSG_LEN 512U
-#define U32_MAX_PLACES 10U /* Maximum number of output digits of an unsigned long value. */
-#define OTA_MAX_JOBID_LEN 100U
-#define OTA_MAX_FILEPATH_LEN 10U
-#define OTA_STATUS_MSG_MAX_SIZE 128U /* Max length of a job status message to the service. */
+#define OTA_MAX_TOPIC_LEN          mqttconfigSUBSCRIPTION_MANAGER_MAX_TOPIC_LENGTH /* Max length of a dynamically generated topic string (usually on the stack). */
+#define OTA_MAX_MSG_LEN            512U
+#define U32_MAX_PLACES             10U /* Maximum number of output digits of an unsigned long value. */
+#define OTA_MAX_JOBID_LEN          100U
+#define OTA_MAX_FILEPATH_LEN       10U
+#define OTA_STATUS_MSG_MAX_SIZE    128U /* Max length of a job status message to the service. */
 
 /* Topic strings used by the OTA process. */
 /* These first few are topic extensions to the dynamic base topic that includes the Thing name. */

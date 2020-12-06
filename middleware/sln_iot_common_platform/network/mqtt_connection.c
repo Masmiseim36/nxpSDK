@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP.
+ * Copyright 2019-2020 NXP.
  * This software is owned or controlled by NXP and may only be used strictly in accordance with the
  * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
  * activating and/or otherwise using the software, you are agreeing that you have read, and that you
@@ -38,6 +38,15 @@ MQTTAgentHandle_t APP_MQTT_Getv2Handle()
 MQTTAgentHandle_t APP_MQTT_GetHandle()
 {
     return mqttHandle;
+}
+
+MQTTAgentHandle_t APP_MQTT_GetOtaHandle()
+{
+#ifdef SDK_2_8
+    return APP_MQTT_GetHandle();
+#else
+    return APP_MQTT_Getv2Handle();
+#endif
 }
 
 MQTTAgentReturnCode_t APP_MQTT_Connect(MQTTAgentCallback_t callback)

@@ -33,7 +33,7 @@
 
 /*! @name Pin function ID */
 /*@{*/
-/*! @brief The pin function ID is a tuple of <muxRegister muxMode inputRegister inputDaisy configRegister> */
+/*! @brief The pin function ID is a tuple of \<muxRegister muxMode inputRegister inputDaisy configRegister\> */
 #define IOMUXC_SNVS_WAKEUP_GPIO5_IO00 0x400A8000U, 0x5U, 0, 0, 0x400A8018U
 #define IOMUXC_SNVS_WAKEUP_NMI_GLUE_NMI 0x400A8000U, 0x7U, 0x401F8568U, 0x1U, 0x400A8018U
 

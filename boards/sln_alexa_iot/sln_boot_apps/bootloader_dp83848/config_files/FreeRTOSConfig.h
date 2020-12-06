@@ -43,7 +43,7 @@
 #if defined( __ICCARM__ ) || defined( __ARMCC_VERSION ) || defined( __GNUC__)
     #include <stdint.h>
     extern uint32_t SystemCoreClock;
-//    extern int DbgConsole_Printf( const char *fmt_s, ... );
+    extern int DbgConsole_Printf( const char *fmt_s, ... );
     extern int log_shell_printf( const char *fmt_s, ... );
     extern void vLoggingPrintf( const char *pcFormat, ... );
     extern void sln_shell_trace_malloc(void *ptr, size_t size);

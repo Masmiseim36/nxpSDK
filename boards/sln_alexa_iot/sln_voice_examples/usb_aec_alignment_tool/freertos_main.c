@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 NXP.
+ * Copyright 2018-2020 NXP.
  * This software is owned or controlled by NXP and may only be used strictly in accordance with the
  * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
  * activating and/or otherwise using the software, you are agreeing that you have read, and that you
@@ -7,6 +7,7 @@
  * applicable license terms, then you may not retain, install, activate or otherwise use the software.d
  */
 
+#include "pin_mux.h"
 #include "board.h"
 #include "clock_config.h"
 #include "fsl_device_registers.h"
@@ -27,6 +28,7 @@
 
 #include "sln_flash.h"
 #include "audio_processing_task.h"
+#include "audio_samples.h"
 
 /* Crypto includes */
 #include "ksdk_mbedtls.h"
@@ -48,12 +50,19 @@ extern uint8_t USB_EnterLowpowerMode(void);
 #endif
 #include "freertos_main.h"
 #include "pin_mux.h"
+
+#include "sln_flash_mgmt.h"
+#include "sln_cfg_file.h"
+#include "sln_file_table.h"
+/* FreeRTOS kernel includes */
+#include "FreeRTOS.h"
+#include "task.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 
 /* Task priorities. */
-#define pdm_to_pcm_task_PRIORITY (configMAX_PRIORITIES - 2)
+#define pdm_to_pcm_task_PRIORITY       (configMAX_PRIORITIES - 2)
 #define audio_processing_task_PRIORITY (configMAX_PRIORITIES - 1)
 
 /*******************************************************************************
@@ -71,6 +80,9 @@ void BOARD_DbgConsole_Init(void);
 usb_status_t USB_DeviceCdcVcomCallback(class_handle_t handle, uint32_t event, void *param);
 usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *param);
 
+#if (defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U))
+extern void USB_DeviceEhciIsrFunction(void *deviceHandle);
+#endif
 /*******************************************************************************
  * Variables
  ******************************************************************************/
@@ -137,6 +149,11 @@ volatile static uint8_t s_comOpen            = 0;
 /*******************************************************************************
  * Code
  ******************************************************************************/
+
+void SysTick_DelayTicks(uint32_t n)
+{
+    vTaskDelay(n);
+}
 #if (defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U))
 void USB_OTG1_IRQHandler(void)
 {
@@ -588,6 +605,8 @@ void appTask(void *arg)
     int16_t *ampBuf = pdm_to_pcm_get_amp_output();
     audio_processing_set_amp_input_buffer(&ampBuf);
 
+    audio_processing_set_task_handle(&xAudioProcessingTaskHandle);
+
     // Create audio processing task
     if (xTaskCreate(audio_processing_task, "Audio_processing_task", 1536U, NULL, audio_processing_task_PRIORITY,
                     &xAudioProcessingTaskHandle) != pdPASS)
@@ -597,20 +616,22 @@ void appTask(void *arg)
             ;
     }
 
-    audio_processing_set_task_handle(&xAudioProcessingTaskHandle);
+    // Set loopback event bit for AMP
+    SLN_AMP_SetLoopBackEventBits(pdm_to_pcm_get_amp_loopback_event());
+
+    // Set default sound playback for amp audio
+    SLN_AMP_SetDefaultAudioData((uint8_t *)_med_ui_wakesound_wav, sizeof(_med_ui_wakesound_wav));
 
     // Set PDM to PCM config
     pcm_pcm_task_config_t config;
-    config.thisTask       = &xPdmToPcmTaskHandle;
-    config.processingTask = &xAudioProcessingTaskHandle;
-    config.feedbackInit   = SLN_AMP_Read;
-    config.feedbackBuffer = (int16_t *)SLN_AMP_GetLoopBackBuffer();
+    config.thisTask        = &xPdmToPcmTaskHandle;
+    config.processingTask  = &xAudioProcessingTaskHandle;
+    config.feedbackInit    = SLN_AMP_Read;
+    config.feedbackBuffer  = (int16_t *)SLN_AMP_GetLoopBackBuffer();
+    config.feedbackEnable  = SLN_AMP_LoopbackEnable;
+    config.feedbackDisable = SLN_AMP_LoopbackDisable;
 
     pcm_to_pcm_set_config(&config);
-
-    // Set loopback event bit for AMP
-    EventBits_t loopBackEvent = pdm_to_pcm_get_amp_loopback_event();
-    SLN_AMP_SetLoopBackEventBits(loopBackEvent);
 
     // Create pdm to pcm task
     if (xTaskCreate(pdm_to_pcm_task, "pdm_to_pcm_task", 1024U, NULL, pdm_to_pcm_task_PRIORITY, &xPdmToPcmTaskHandle) !=
@@ -620,8 +641,6 @@ void appTask(void *arg)
         while (1)
             ;
     }
-
-    pdm_to_pcm_set_task_handle(&xPdmToPcmTaskHandle);
 
     // Pass loopback event group to AMP
     EventGroupHandle_t ampLoopBackEventGroup = NULL;
@@ -771,6 +790,7 @@ int main(void)
 void main(void)
 #endif
 {
+    /* Init board hardware */
     /* Relocate Vector Table */
 #if RELOCATE_VECTOR_TABLE
     BOARD_RelocateVectorTableToRam();
@@ -781,10 +801,18 @@ void main(void)
     BOARD_BootClockRUN();
     BOARD_InitDebugConsole();
 
+    /* Setup Crypto HW */
     CRYPTO_InitHardware();
 
     /* Initialize Flash to allow writing */
     SLN_Flash_Init();
+
+    /* Initialize flash management */
+    SLN_FLASH_MGMT_Init((sln_flash_entry_t *)g_fileTable, false);
+
+    /* Set flash management callbacks */
+    sln_flash_mgmt_cbs_t flash_mgmt_cbs = {pdm_to_pcm_mics_off, pdm_to_pcm_mics_on};
+    SLN_FLASH_MGMT_SetCbs(&flash_mgmt_cbs);
 
     gpio_pin_config_t led_config = {kGPIO_DigitalOutput, 0, kGPIO_NoIntmode};
 

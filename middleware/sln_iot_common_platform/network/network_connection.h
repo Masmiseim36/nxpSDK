@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP.
+ * Copyright 2019-2020 NXP.
  * This software is owned or controlled by NXP and may only be used strictly in accordance with the
  * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
  * activating and/or otherwise using the software, you are agreeing that you have read, and that you
@@ -22,14 +22,16 @@
 #include "board.h"
 #include "FreeRTOS.h"
 
+#include "lwip/ip_addr.h"
+
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 
 /* Provisioning Method (for WiFi SSID and password) */
 #define PROVISIONING_USE_USB_CDC 0
-#define PROVISIONING_USE_WIFI 1
-#define PROVISIONING_USE_BLE 2
+#define PROVISIONING_USE_WIFI    1
+#define PROVISIONING_USE_BLE     2
 
 #ifndef PROVISIONING_METHOD
 #define PROVISIONING_METHOD PROVISIONING_USE_WIFI
@@ -215,6 +217,13 @@ void APP_NETWORK_Uninit(void);
  * @return  false if not connected to the network
  */
 bool get_connect_state(void);
+
+/**
+ * @brief This function gets the ip address of the wifi connection
+ *
+ * @return the ipaddress. 0 if the board is not connected.
+ */
+ip_addr_t get_ipaddress(void);
 
 /*!
  * @brief Generates an incremental backoff delay between MQTT connections

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 NXP.
+ * Copyright 2018-2020 NXP.
  * This software is owned or controlled by NXP and may only be used strictly in accordance with the
  * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
  * activating and/or otherwise using the software, you are agreeing that you have read, and that you
@@ -609,7 +609,7 @@ static uint8_t hello_response_create(void *buffer, uint16_t buffer_len)
         goto end;
     }
 
-    APP_GetUniqueID(&serialNumber, false);
+    APP_GetUniqueID(&serialNumber, true);
     dsn = cJSON_CreateString(serialNumber);
     if (dsn == NULL)
     {
@@ -690,7 +690,7 @@ static uint8_t confirmation_response_create(void *buffer, uint16_t buffer_len)
         goto end;
     }
 
-    APP_GetUniqueID(&serialNumber, false);
+    APP_GetUniqueID(&serialNumber, true);
     dsn = cJSON_CreateString(serialNumber);
     if (dsn == NULL)
     {
@@ -728,6 +728,7 @@ end:
     return ret;
 }
 
+#if USE_WIFI_CONNECTION
 /**
  * @brief Creates an AP Mode response in the form of a JSON string:
  *        {​"metadata": "metadata",​ "DSN": "<Device Serial Number>"​}
@@ -759,7 +760,7 @@ static uint8_t apmode_response_create(void *buffer, uint16_t buffer_len)
     }
     cJSON_AddItemToObject(json, "metadata", state);
 
-    APP_GetUniqueID(&serialNumber, false);
+    APP_GetUniqueID(&serialNumber, true);
     dsn = cJSON_CreateString(serialNumber);
     if (dsn == NULL)
     {
@@ -789,6 +790,7 @@ end:
     vPortFree(serialNumber);
     return ret;
 }
+#endif /* USE_WIFI_CONNECTION */
 
 uint8_t status_message_create(void *buffer, uint16_t buffer_len, app_status_event_t status)
 {

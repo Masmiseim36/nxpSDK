@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 NXP
+ * Copyright 2017-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -320,8 +320,8 @@ static status_t bl_nor_encrypt_region_info_load_from_offset(uint32_t offset, ima
                 img_gen_ctx->encrypt_enabled[i] = true;
             }
 
-            prot_region_block_info_t plain_block_info;
-            prot_region_block_info_t enc_block_info;
+            prot_region_block_info_t plain_block_info = {0};
+            prot_region_block_info_t enc_block_info = {0};
             dcp_aes_set_key(&dcp_ctx, img_gen_ctx->bee_key_sel[i], 128);
             uint32_t kib_addr  = offset + KIB_ADDR(i);
             uint32_t prdb_addr = offset + PRDB_ADDR(i);
@@ -643,7 +643,7 @@ status_t bl_nor_encrypt_get_config_block(uint32_t index, uint32_t **start, uint3
         dcp_aes_ecb_crypt(&dcp_ctx, kAesMode_Encrypt, (uint8_t *)&plain_block_info->kib,
                           (uint8_t *)&enc_block_info->kib, sizeof(key_info_block_t));
 
-        *start = (uint32_t)enc_block_info;
+        *start = (uint32_t *)enc_block_info;
         *bytes = sizeof(*enc_block_info);
 
         status = kStatus_Success;
@@ -775,8 +775,8 @@ static status_t bl_nor_decrypt_data_with_img_ctx(uint32_t addr,
         dcp_aes_set_key(&dcp_ctx, key_sel, 128);
 
         prot_region_block_info_t *plain_block_info = &img_gen_ctx->plain_block_info[bee_region_index];
-        uint8_t *temp                              = (uint8_t *)(plain_block_info->prdb.encrypt_region.counter);
 #if 0
+        uint8_t *temp                              = (uint8_t *)(plain_block_info->prdb.encrypt_region.counter);
         for (uint32_t idx = 0; idx < 16; idx++)
         {
             configPRINT_STRING("%02X", temp[idx]);
@@ -988,7 +988,7 @@ status_t bl_nor_encrypt_split_prdb(void)
         DEBUG_LOG(("SUCCESS: Encrypt ctx1...\r\n"));
 
         // Get encrypted config
-        bl_nor_encrypt_get_config_block(kHabApplication, (uint32_t *)&ctx1, &cryptoLen);
+        bl_nor_encrypt_get_config_block(kHabApplication, &ctx1, &cryptoLen);
 
         if (NULL == ctx1)
         {

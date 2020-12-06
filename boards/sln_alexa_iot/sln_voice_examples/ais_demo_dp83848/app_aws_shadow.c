@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP.
+ * Copyright 2019-2020 NXP.
  * This software is owned or controlled by NXP and may only be used strictly in accordance with the
  * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
  * activating and/or otherwise using the software, you are agreeing that you have read, and that you
@@ -29,9 +29,9 @@
  * Definitions
  ******************************************************************************/
 
-#define shadowDemoTIMEOUT pdMS_TO_TICKS(30000UL)
+#define shadowDemoTIMEOUT         pdMS_TO_TICKS(30000UL)
 #define SHADOW_UPDATE_INTERVAL_MS (3000)
-#define SHADOW_DEMO_LEDS (1)
+#define SHADOW_DEMO_LEDS          (1)
 
 /*******************************************************************************
  * Declarations
@@ -45,17 +45,15 @@ char *shadowThingName = NULL;
  * Function Prototypes
  ******************************************************************************/
 
-
 /*******************************************************************************
  * Public Functions
  ******************************************************************************/
-
 
 BaseType_t APP_AWS_ShadowUpdate(cJSON *payload)
 {
     cJSON *json = NULL, *state = NULL;
     char *jsonString = NULL;
-    ShadowOperationParams_t xShadowUpdateParams;
+    ShadowOperationParams_t xShadowUpdateParams = {0};
     BaseType_t status = eShadowSuccess;
 
     json  = cJSON_CreateObject();
@@ -100,9 +98,9 @@ BaseType_t APP_AWS_ShadowUpdate(cJSON *payload)
     return status;
 }
 
-BaseType_t ProcessUpdatedShadowDocument (   const char *const pcThingName,
-                                            const char *const pcUpdateDocument,
-                                            uint32_t ulDocumentLength)
+BaseType_t ProcessUpdatedShadowDocument(const char *const pcThingName,
+                                        const char *const pcUpdateDocument,
+                                        uint32_t ulDocumentLength)
 {
     cJSON *monitor_json = NULL, *brightness = NULL, *desired = NULL, *current = NULL, *state = NULL;
     int32_t success = pdTRUE;

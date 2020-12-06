@@ -13,9 +13,10 @@
 #ifndef __LWIPOPTS_H__
 #define __LWIPOPTS_H__
 
-#include "network_connection.h"
-
+#ifndef USE_RTOS
 #define USE_RTOS 1
+#endif
+
 #if USE_RTOS
 
 /* ---------- Network Interfaces options ---------- */
@@ -40,6 +41,8 @@
  * allocation and deallocation.
  */
 #define SYS_LIGHTWEIGHT_PROT 1
+
+#define LWIP_SUPPORT_CUSTOM_PBUF 1
 
 /**
  * NO_SYS==0: Use RTOS
@@ -70,7 +73,7 @@
 /**
  * NO_SYS==1: Bare metal lwIP
  */
-#define NO_SYS 1
+#define NO_SYS       1
 /**
  * LWIP_NETCONN==0: Disable Netconn API (require to use api_lib.c)
  */
@@ -78,7 +81,7 @@
 /**
  * LWIP_SOCKET==0: Disable Socket API (require to use sockets.c)
  */
-#define LWIP_SOCKET 0
+#define LWIP_SOCKET  0
 
 #endif
 /* ---------- Memory options ---------- */
@@ -141,12 +144,10 @@
 /* Default value is defined in lwip\src\include\lwip\opt.h as
  * LWIP_MEM_ALIGN_SIZE(TCP_MSS+40+PBUF_LINK_ENCAPSULATION_HLEN+PBUF_LINK_HLEN)*/
 
-#if USE_WIFI_CONNECTION || USE_ETHERNET_CONNECTION
-#define MAX_BUS_HEADER_LENGTH (12)
+#define MAX_BUS_HEADER_LENGTH   (12)
 #define MAX_SDPCM_HEADER_LENGTH (18)
-#define WICED_ETHERNET_SIZE (14)
-#define PBUF_LINK_HLEN (MAX_BUS_HEADER_LENGTH + MAX_SDPCM_HEADER_LENGTH + WICED_ETHERNET_SIZE)
-#endif /* USE_WIFI_CONNECTION */
+#define WICED_ETHERNET_SIZE     (14)
+#define PBUF_LINK_HLEN          (MAX_BUS_HEADER_LENGTH + MAX_SDPCM_HEADER_LENGTH + WICED_ETHERNET_SIZE)
 
 /* ---------- TCP options ---------- */
 #ifndef LWIP_TCP
@@ -212,19 +213,12 @@
 
 /* ---------- Statistics options ---------- */
 #ifndef LWIP_STATS
-#if USE_WIFI_CONNECTION
-#define LWIP_STATS 1
-#else
 #define LWIP_STATS 0
-#endif /* USE_WIFI_CONNECTION */
 #endif /* LWIP_STATS */
 #ifndef LWIP_PROVIDE_ERRNO
 #define LWIP_PROVIDE_ERRNO 1
 #endif
 
-#if USE_WIFI_CONNECTION
-#define MEMP_STATS 1
-#endif /* USE_WIFI_CONNECTION */
 /*
    --------------------------------------
    ---------- Checksum options ----------
@@ -253,13 +247,13 @@ Some MCU allow computing and verifying the IP, UDP, TCP and ICMP checksums by ha
 #define CHECKSUM_CHECK_TCP 0
 #else
 /* CHECKSUM_GEN_IP==1: Generate checksums in software for outgoing IP packets.*/
-#define CHECKSUM_GEN_IP 1
+#define CHECKSUM_GEN_IP    1
 /* CHECKSUM_GEN_UDP==1: Generate checksums in software for outgoing UDP packets.*/
-#define CHECKSUM_GEN_UDP 1
+#define CHECKSUM_GEN_UDP   1
 /* CHECKSUM_GEN_TCP==1: Generate checksums in software for outgoing TCP packets.*/
-#define CHECKSUM_GEN_TCP 1
+#define CHECKSUM_GEN_TCP   1
 /* CHECKSUM_CHECK_IP==1: Check checksums in software for incoming IP packets.*/
-#define CHECKSUM_CHECK_IP 1
+#define CHECKSUM_CHECK_IP  1
 /* CHECKSUM_CHECK_UDP==1: Check checksums in software for incoming UDP packets.*/
 #define CHECKSUM_CHECK_UDP 1
 /* CHECKSUM_CHECK_TCP==1: Check checksums in software for incoming TCP packets.*/
@@ -293,9 +287,9 @@ Some MCU allow computing and verifying the IP, UDP, TCP and ICMP checksums by ha
 #define LWIP_DEBUG
 
 #ifdef LWIP_DEBUG
-#define U8_F "c"
-#define S8_F "c"
-#define X8_F "02x"
+#define U8_F  "c"
+#define S8_F  "c"
+#define X8_F  "02x"
 #define U16_F "u"
 #define S16_F "d"
 #define X16_F "x"
@@ -305,9 +299,9 @@ Some MCU allow computing and verifying the IP, UDP, TCP and ICMP checksums by ha
 #define SZT_F "u"
 #endif
 
-#define TCPIP_MBOX_SIZE 32
+#define TCPIP_MBOX_SIZE        32
 #define TCPIP_THREAD_STACKSIZE 1024
-#define TCPIP_THREAD_PRIO 3
+#define TCPIP_THREAD_PRIO      3
 
 /**
  * DEFAULT_RAW_RECVMBOX_SIZE: The mailbox size for the incoming packets on a

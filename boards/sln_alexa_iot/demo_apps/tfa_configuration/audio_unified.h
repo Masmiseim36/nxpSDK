@@ -10,20 +10,20 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define AUDIO_SAMPLING_RATE_KHZ (48)
-#define AUDIO_SAMPLING_RATE_16KHZ (16)
-#define AUDIO_SAMPLING_RATE (AUDIO_SAMPLING_RATE_KHZ * 1000)
+#define AUDIO_SAMPLING_RATE_KHZ                 (48)
+#define AUDIO_SAMPLING_RATE_16KHZ               (16)
+#define AUDIO_SAMPLING_RATE                     (AUDIO_SAMPLING_RATE_KHZ * 1000)
 #define AUDIO_RECORDER_DATA_WHOLE_BUFFER_LENGTH (16 * 2)
-#define AUDIO_SPEAKER_DATA_WHOLE_BUFFER_LENGTH (16 * 2)
-#define AUDIO_BUFFER_UPPER_LIMIT(x) (((x)*5) / 8)
-#define AUDIO_BUFFER_LOWER_LIMIT(x) (((x)*3) / 8)
-#define AUDIO_CALCULATE_Ff_INTERVAL (1024)
-#define TSAMFREQ2BYTES(f) (f & 0xFFU), ((f >> 8U) & 0xFFU), ((f >> 16U) & 0xFFU)
-#define TSAMFREQ2BYTESHS(f) (f & 0xFFU), ((f >> 8U) & 0xFFU), ((f >> 16U) & 0xFFU), ((f >> 24U) & 0xFFU)
-#define AUDIO_ADJUST_MIN_STEP (0x10)
+#define AUDIO_SPEAKER_DATA_WHOLE_BUFFER_LENGTH  (16 * 2)
+#define AUDIO_BUFFER_UPPER_LIMIT(x)             (((x)*5) / 8)
+#define AUDIO_BUFFER_LOWER_LIMIT(x)             (((x)*3) / 8)
+#define AUDIO_CALCULATE_Ff_INTERVAL             (1024)
+#define TSAMFREQ2BYTES(f)                       (f & 0xFFU), ((f >> 8U) & 0xFFU), ((f >> 16U) & 0xFFU)
+#define TSAMFREQ2BYTESHS(f)                     (f & 0xFFU), ((f >> 8U) & 0xFFU), ((f >> 16U) & 0xFFU), ((f >> 24U) & 0xFFU)
+#define AUDIO_ADJUST_MIN_STEP                   (0x10)
 
-#define MUTE_CODEC_TASK (1UL << 0U)
-#define UNMUTE_CODEC_TASK (1UL << 1U)
+#define MUTE_CODEC_TASK    (1UL << 0U)
+#define UNMUTE_CODEC_TASK  (1UL << 1U)
 #define VOLUME_CHANGE_TASK (1UL << 2U)
 
 typedef struct _usb_audio_composite_struct

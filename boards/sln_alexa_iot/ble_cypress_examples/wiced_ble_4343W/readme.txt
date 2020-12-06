@@ -6,8 +6,8 @@ The demo configures the wifi driver to use STA mode and advertises via BLE.
 
 Toolchain supported
 ===================
-- GCC ARM Embedded  8.3.1
-- MCUXpresso  11.1.0
+- GCC ARM Embedded  9.2.1
+- MCUXpresso  11.2.0
 
 Hardware requirements
 =====================

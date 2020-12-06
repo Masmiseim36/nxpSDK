@@ -40,6 +40,7 @@ static sln_comms_message_status processFwUpdateCommonReq(void *clientInstance, c
 static sln_comms_message_status handleClientFwUpdateStartReq(void *clientInstance, cJSON *json);
 static sln_comms_message_status processFwUpdateStartReq(void *clientInstance, cJSON *json);
 static sln_comms_message_status processFwUpdateStateReq(void *clientInstance, cJSON *json);
+static sln_comms_message_status processFwUpdateCleanReq(void *clientInstance, cJSON *json);
 
 /*******************************************************************************
  * Public Functions
@@ -126,6 +127,10 @@ static sln_comms_message_status processFwUpdateCommonReq(void *clientInstance, c
             case kCommsFwUpdateState:
                 status = processFwUpdateStateReq(clientInstance, messageContents);
                 break;
+
+            case kCommsFwUpdateClean:
+                status = processFwUpdateCleanReq(clientInstance, messageContents);
+                break;
         }
     }
 
@@ -187,8 +192,8 @@ static sln_comms_message_status handleClientFwUpdateStartReq(void *clientInstanc
 
     if (kComms_Success == status)
     {
-        /* Set the FwUpdate bit in the flash memory */
-        fica_status = FICA_set_comm_flag(FICA_COMM_FWUPDATE_BIT);
+        /* Clear the bit and enable the FWUPDATE */
+        fica_status = FICA_clr_comm_flag(FICA_COMM_FWUPDATE_BIT);
         if (fica_status == SLN_FLASH_NO_ERROR)
         {
             configPRINTF(("Success: Cleared FWUPDATE bit in FICA\r\n"));
@@ -260,6 +265,10 @@ static sln_comms_message_status processFwUpdateStartReq(void *clientInstance, cJ
         if (NULL == currentFwUpdateJob)
         {
             status = kComms_FailedProcessing;
+        }
+        else
+        {
+            memset(currentFwUpdateJob, 0, sizeof(sln_comms_fwupdate_job_desc));
         }
     }
 
@@ -394,9 +403,9 @@ static sln_comms_message_status processFwUpdateStartReq(void *clientInstance, cJ
      */
     if (kComms_Success == status)
     {
-        int32_t imageType          = FICA_IMG_TYPE_NONE;
-        uint32_t currentImgAddress = SCB->VTOR - FlexSPI_AMBA_BASE;
-        fica_status                = FICA_GetImgTypeFromAddr(currentImgAddress, &imageType);
+        int32_t imageType = FICA_IMG_TYPE_NONE;
+
+        fica_status = FICA_GetImgTypeFromResetISRAddr(&imageType);
 
         if (SLN_FLASH_NO_ERROR != fica_status)
         {
@@ -452,6 +461,58 @@ static sln_comms_message_status processFwUpdateStartReq(void *clientInstance, cJ
         {
             configPRINTF(("Failed to send comms message\r\n"));
             vPortFree(currentFwUpdateJob);
+        }
+    }
+
+    return status;
+}
+
+/**
+ * @brief Process the incoming Generate FwUpdate clean request.
+ *        Frees the current context in order to prepare for a new connection.
+ *
+ * @param clientInstance: The client instance data (received data and connection context)
+ * @param json: Incoming payload to be processed
+ *
+ * @return          sln_comms_message_status
+ */
+static sln_comms_message_status processFwUpdateCleanReq(void *clientInstance, cJSON *json)
+{
+    cJSON *jsonMessage, *jsonFwUpdateCleanStatus;
+    sln_comms_message_status status = kComms_Success;
+
+    if (kComms_Success == status)
+    {
+        /* Free the existing FwUpdate descriptor */
+        if (currentFwUpdateJob != NULL)
+        {
+            if (currentFwUpdateJob->jobId != NULL)
+            {
+                vPortFree(currentFwUpdateJob->jobId);
+                currentFwUpdateJob->jobId = NULL;
+            }
+            vPortFree(currentFwUpdateJob);
+            currentFwUpdateJob = NULL;
+        }
+    }
+
+    if (kComms_Success == status)
+    {
+        jsonMessage = cJSON_CreateObject();
+
+        /* Send response */
+        jsonFwUpdateCleanStatus = cJSON_CreateNumber(status);
+
+        cJSON_AddItemToObject(jsonMessage, "error", jsonFwUpdateCleanStatus);
+
+        status = SLN_COMMS_MESSAGE_Send(clientInstance, jsonMessage);
+
+        /* Free the memory */
+        cJSON_Delete(jsonMessage);
+
+        if (kComms_Success != status)
+        {
+            configPRINTF(("Failed to send comms message\r\n"));
         }
     }
 

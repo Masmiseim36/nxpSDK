@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 NXP.
+ * Copyright 2018-2020 NXP.
  * This software is owned or controlled by NXP and may only be used strictly in accordance with the
  * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
  * activating and/or otherwise using the software, you are agreeing that you have read, and that you
@@ -44,7 +44,7 @@ void streamer_pcm_start(pcm_rtos_t *pcm)
 void streamer_pcm_clean(pcm_rtos_t *pcm)
 {
     /* Stop playback. This will flush the SAI transmit buffers. */
-    SAI_TransferTerminateSendEDMA(DEMO_SAI_OUT, SLN_AMP_GetAmpTxHandler());
+    SAI_TransferTerminateSendEDMA(BOARD_AMP_SAI, SLN_AMP_GetAmpTxHandler());
 
     configPRINTF(("SAI DMA transfer aborted, emptyBlock=%d\r\n", pcm->emptyBlock));
 
@@ -114,6 +114,12 @@ int streamer_pcm_write(pcm_rtos_t *pcm, uint8_t *data, uint32_t size)
     return 0;
 }
 
+/*
+ * Some of the functions below are currently unused. This may change in later iterations.
+ */
+#if defined(__GNUC__)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-function"
 /*! @brief Map an integer sample rate (Hz) to internal SAI enum */
 static sai_sample_rate_t _pcm_map_sample_rate(uint32_t sample_rate)
 {
@@ -161,15 +167,22 @@ static sai_mono_stereo_t _pcm_map_channels(uint8_t num_channels)
     else
         return kSAI_MonoRight;
 }
+#pragma GCC diagnostic pop
+#endif /* GNUC pragma for Unused Functions */
 
 int streamer_pcm_setparams(pcm_rtos_t *pcm, uint32_t sample_rate, uint32_t bit_width, uint8_t num_channels)
 {
-    // TODO
-    pcm->sample_rate  = sample_rate;
-    pcm->bit_width    = bit_width;
-    pcm->num_channels = num_channels;
+    int ret = 1;
 
-    return 0;
+    if (NULL != pcm)
+    {
+        pcm->sample_rate  = sample_rate;
+        pcm->bit_width    = bit_width;
+        pcm->num_channels = num_channels;
+        ret               = 0;
+    }
+
+    return ret;
 }
 
 void streamer_pcm_getparams(pcm_rtos_t *pcm, uint32_t *sample_rate, uint32_t *bit_width, uint8_t *num_channels)
@@ -187,7 +200,6 @@ void streamer_pcm_getparams(pcm_rtos_t *pcm, uint32_t *sample_rate, uint32_t *bi
 
 int streamer_pcm_mute(pcm_rtos_t *pcm, bool mute)
 {
-    // TODO
     SLN_AMP_SetVolume(0);
     return 0;
 }

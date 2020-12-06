@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 NXP. 
+ * Copyright 2018 NXP.
  * This software is owned or controlled by NXP and may only be used strictly in accordance with the
  * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
  * activating and/or otherwise using the software, you are agreeing that you have read, and that you
@@ -19,27 +19,28 @@
  ******************************************************************************/
 
 /*! @brief AIS network audio buffer size */
-#define AWS_AUDIO_BUFFER_SIZE                 (60 * 1024)
-#define AWS_AUDIO_START_THRESHOLD             (5 * 1024)
-#define AWS_AUDIO_BUFFER_UNDERRUN_THRESHOLD   (3 * 1024)
-#define AWS_AUDIO_BUFFER_OVERRUN_THRESHOLD    (30 * 1024)
+#define AWS_AUDIO_BUFFER_SIZE (60 * 1024)
+#define AWS_AUDIO_START_THRESHOLD (5 * 1024)
+#define AWS_AUDIO_BUFFER_UNDERRUN_THRESHOLD (3 * 1024)
+#define AWS_AUDIO_BUFFER_OVERRUN_THRESHOLD (30 * 1024)
 
 typedef void (*tvStreamerErrorCallback)();
 
 /*! @brief AIS Streamer decoder algorithm values */
-typedef enum {
+typedef enum
+{
     AIS_DECODER_OPUS,
     AIS_DECODER_MP3
 } streamer_decoder_t;
 
 /*! @brief AIS Streamer interface structure */
-typedef struct _streamer_handle_t {
+typedef struct _streamer_handle_t
+{
     STREAMER_T *streamer;
     bool audioPlaying;
     bool eos;
     tvStreamerErrorCallback pvExceptionCallback;
 } streamer_handle_t;
-
 
 /*******************************************************************************
  * API
@@ -195,4 +196,3 @@ void STREAMER_MutexUnlock(void);
 #endif
 
 #endif
-

@@ -49,7 +49,7 @@ typedef enum __mic_mute_mode
 } mic_mute_mode_t;
 
 #define AUDIO_PROCESSING_NOT_LISTENING_MASK (kIdle | kReconnect | kMicStopRecording | kMicStop)
-#define AUDIO_PROCESSING_IS_LISTENING_MASK (kWakeWordDetected | kMicRecording | kMicKeepOpen | kMicCloudWakeVerifier)
+#define AUDIO_PROCESSING_IS_LISTENING_MASK  (kWakeWordDetected | kMicRecording | kMicKeepOpen | kMicCloudWakeVerifier)
 
 /*******************************************************************************
  * API

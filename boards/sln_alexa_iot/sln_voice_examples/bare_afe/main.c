@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP.
+ * Copyright 2019-2020 NXP.
  * This software is owned or controlled by NXP and may only be used strictly in accordance with the
  * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
  * activating and/or otherwise using the software, you are agreeing that you have read, and that you
@@ -10,9 +10,11 @@
 #include <time.h>
 
 /* Board includes */
-#include "board.h"
-#include "fsl_debug_console.h"
 #include "pin_mux.h"
+#include "board.h"
+#include "clock_config.h"
+
+#include "fsl_debug_console.h"
 
 /* FreeRTOS kernel includes */
 #include "FreeRTOS.h"
@@ -40,10 +42,17 @@
 #include "pdm_to_pcm_task.h"
 #include "sln_amplifier.h"
 
+#include "sln_flash_mgmt.h"
+#include "sln_cfg_file.h"
+#include "sln_file_table.h"
+/*******************************************************************************
+ * Prototypes
+ ******************************************************************************/
+
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define pdm_to_pcm_task_PRIORITY (configMAX_PRIORITIES - 2)
+#define pdm_to_pcm_task_PRIORITY       (configMAX_PRIORITIES - 2)
 #define audio_processing_task_PRIORITY (configMAX_PRIORITIES - 1)
 
 /*******************************************************************************
@@ -59,6 +68,11 @@ uint8_t isRecording;
 /*******************************************************************************
  * Code
  ******************************************************************************/
+
+void SysTick_DelayTicks(uint32_t n)
+{
+    vTaskDelay(n);
+}
 void appTask(void *arg)
 {
     amplifier_status_t ret;
@@ -90,18 +104,22 @@ void appTask(void *arg)
             ;
     }
 
+    // Set loopback event bit for AMP
+    SLN_AMP_SetLoopBackEventBits(pdm_to_pcm_get_amp_loopback_event());
+
+    // Set default sound playback for amp audio
+    SLN_AMP_SetDefaultAudioData((uint8_t *)_med_ui_wakesound_wav, sizeof(_med_ui_wakesound_wav));
+
     // Set PDM to PCM config
     pcm_pcm_task_config_t config;
-    config.thisTask       = &xPdmToPcmTaskHandle;
-    config.processingTask = &xAudioProcessingTaskHandle;
-    config.feedbackInit   = SLN_AMP_Read;
-    config.feedbackBuffer = (int16_t *)SLN_AMP_GetLoopBackBuffer();
+    config.thisTask        = &xPdmToPcmTaskHandle;
+    config.processingTask  = &xAudioProcessingTaskHandle;
+    config.feedbackInit    = SLN_AMP_Read;
+    config.feedbackBuffer  = (int16_t *)SLN_AMP_GetLoopBackBuffer();
+    config.feedbackEnable  = SLN_AMP_LoopbackEnable;
+    config.feedbackDisable = SLN_AMP_LoopbackDisable;
 
     pcm_to_pcm_set_config(&config);
-
-    // Set loopback event bit for AMP
-    EventBits_t loopBackEvent = pdm_to_pcm_get_amp_loopback_event();
-    SLN_AMP_SetLoopBackEventBits(loopBackEvent);
 
     // Create pdm to pcm task
     if (xTaskCreate(pdm_to_pcm_task, "pdm_to_pcm_task", 1024U, NULL, pdm_to_pcm_task_PRIORITY, &xPdmToPcmTaskHandle) !=
@@ -151,28 +169,33 @@ void appTask(void *arg)
     }
 }
 
-/*!
- * @brief Main function
- */
 void main(void)
 {
     /* Enable additional fault handlers */
     SCB->SHCSR |= (SCB_SHCSR_BUSFAULTENA_Msk | /*SCB_SHCSR_USGFAULTENA_Msk |*/ SCB_SHCSR_MEMFAULTENA_Msk);
 
+    /* Init board hardware */
     /* Relocate Vector Table */
 #if RELOCATE_VECTOR_TABLE
     BOARD_RelocateVectorTableToRam();
 #endif
 
-    /* Init board hardware. */
     BOARD_ConfigMPU();
     BOARD_InitBootPins();
     BOARD_BootClockRUN();
 
+    /* Setup Crypto HW */
     CRYPTO_InitHardware();
 
     /* Initialize Flash to allow writing */
     SLN_Flash_Init();
+
+    /* Initialize flash management */
+    SLN_FLASH_MGMT_Init((sln_flash_entry_t *)g_fileTable, false);
+
+    /* Set flash management callbacks */
+    sln_flash_mgmt_cbs_t flash_mgmt_cbs = {pdm_to_pcm_mics_off, pdm_to_pcm_mics_on};
+    SLN_FLASH_MGMT_SetCbs(&flash_mgmt_cbs);
 
     /*
      * AUDIO PLL setting: Frequency = Fref * (DIV_SELECT + NUM / DENOM)
@@ -225,5 +248,6 @@ void main(void)
 
     /* Should not reach this statement */
     while (1)
-        ;
+    {
+    }
 }

@@ -18,15 +18,15 @@
 #include "sln_RT10xx_RGB_LED_driver.h"
 
 /*! @brief AIS internal task settings */
-#define AISV2_TASK_NAME "AIS_Task"
+#define AISV2_TASK_NAME       "AIS_Task"
 #define AISV2_TASK_STACK_SIZE 1024
-#define AISV2_TASK_PRIORITY tskIDLE_PRIORITY
+#define AISV2_TASK_PRIORITY   tskIDLE_PRIORITY
 
-#define AISV2_PUBLISH_TASK_NAME "AIS_Publish_Task"
+#define AISV2_PUBLISH_TASK_NAME       "AIS_Publish_Task"
 #define AISV2_PUBLISH_TASK_STACK_SIZE 1024
-#define AISV2_PUBLISH_TASK_PRIORITY configTIMER_TASK_PRIORITY - 1
+#define AISV2_PUBLISH_TASK_PRIORITY   configTIMER_TASK_PRIORITY - 2
 
-#define AIS_TX_MIC_BUFFER_SIZE (AIS_MIC_PACKET_SIZE + sizeof(binaryStream_t))
+#define AIS_TX_MIC_BUFFER_SIZE  (AIS_MIC_PACKET_SIZE + sizeof(binaryStream_t))
 #define AIS_TX_JSON_BUFFER_SIZE (2048)
 
 static uint8_t s_publishMicErrCount = 0;
@@ -251,7 +251,7 @@ static void AIS_StateMicrophone(ais_handle_t *handle)
     /* Fill buffer with mic data to send to AIS.
      * Application responsible to returning from this call with mic data pointer
      * and size set. */
-    micData = (uint8_t *)&(stream->audio.audioData.data);
+    micData = (uint8_t *)(handle->msgMicBuffer + offsetof(binaryStream_t, audio.audioData.data));
     if (kStatus_Success == AIS_AppCallback_Microphone(&micData, &size))
     {
         /* Send mic data to AIS service. */

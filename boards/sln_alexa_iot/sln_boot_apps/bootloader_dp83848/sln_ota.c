@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP.
+ * Copyright 2019-2020 NXP.
  * This software is owned or controlled by NXP and may only be used strictly in accordance with the
  * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
  * activating and/or otherwise using the software, you are agreeing that you have read, and that you
@@ -11,6 +11,9 @@
 
 #include "device_utils.h"
 #include "mqtt_connection.h"
+
+#define OTA_AGENT_SHUTDOWN_RETRY  60
+#define APP_NETWORK_RE_LINK_RETRY 10
 
 /* Declare the firmware version structure for all to see. */
 AppVersion32_t xAppFirmwareVersion = {
@@ -40,6 +43,9 @@ typedef enum __reconnect_event
 static reconnectState_t s_reconnectState = kReconnectIdle;
 
 /* Remove the trailing '=' sign from the thing name */
+#if defined(__GNUC__)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-function"
 static void remove_equal_sign(char *my_string)
 {
     const char equal = '='; // character to search
@@ -51,13 +57,17 @@ static void remove_equal_sign(char *my_string)
         *found = '\0';
     }
 }
+#pragma GCC diagnostic pop
+#endif
 
 void reconnectTask(void *arg)
 {
     EventBits_t reconnectionEventBits;
+    uint8_t retries                    = 0;
     s_reconnectionEventGroup           = xEventGroupCreate();
     MQTTAgentReturnCode_t mqttReturned = eMQTTAgentSuccess;
-    OTA_State_t ota_ret                = eOTA_AgentState_Unknown;
+    OTA_State_t ota_ret                = eOTA_AgentState_NoTransition;
+    status_t wifi_ret                  = kStatus_Success;
 
     if (s_reconnectionEventGroup == NULL)
     {
@@ -75,13 +85,58 @@ void reconnectTask(void *arg)
         {
             s_reconnectState = kReconnectBusy;
 
-            /* Turn off ota agent now */
-            OTA_AgentShutdown(10);
+            /* Turn off OTA agent now */
+            OTA_AgentShutdown(1000);
+            for (retries = 0; retries < OTA_AGENT_SHUTDOWN_RETRY; retries++)
+            {
+                /* If the agent is in a blocking state, like eOTA_AgentState_RequestingJob,
+                 * it will not be able to process the shutdown command until the timeout
+                 * for the respective state will trigger.
+                 * For example, for eOTA_AgentState_RequestingJob timeout is 30 seconds.
+                 */
+                ota_ret = OTA_GetAgentState();
+                if (ota_ret == eOTA_AgentState_Stopped)
+                {
+                    break;
+                }
+                else
+                {
+                    configPRINTF(("OTA_Agent is not stopped. Current state: %d. Retries: %d. Checking again.\r\n",
+                                  ota_ret, retries));
+                    vTaskDelay(1000);
+                }
+            }
+            if (ota_ret != eOTA_AgentState_Stopped)
+            {
+                configPRINTF(("OTA_AgentShutdown failed, resetting the board.\r\n"));
+                vTaskDelay(2000);
+                NVIC_SystemReset();
+            }
 
             /* MQTT connection clean-up */
             APP_MQTT_Disconnect(false);
 
-            APP_NETWORK_Re_Link();
+            for (retries = 0; retries < APP_NETWORK_RE_LINK_RETRY; retries++)
+            {
+                configPRINTF(("Waiting for link to re-establish...\r\n"));
+
+                wifi_ret = APP_NETWORK_Re_Link();
+                if (wifi_ret == kStatus_Success)
+                {
+                    configPRINTF(("...link re-established!\r\n"));
+                    break;
+                }
+                else
+                {
+                    configPRINTF(("...link re-establishing failed!\r\n"));
+                }
+            }
+            if (wifi_ret != kStatus_Success)
+            {
+                configPRINTF(("APP_NETWORK_Re_Link failed, resetting the board.\r\n"));
+                vTaskDelay(2000);
+                NVIC_SystemReset();
+            }
 
             vTaskDelay(2000);
 
@@ -98,6 +153,12 @@ void reconnectTask(void *arg)
             {
                 /* link loss, stop current iteration here, wait for a new connection */
                 configPRINTF(("APP_MQTT_Connect failed, link loss during connection.\r\n"));
+
+                /* The reconnection process is in kReconnectBusy state so WiFi link loss event
+                 * was probably triggered but ignored.
+                 * Force a new reconnection process.
+                 */
+                xEventGroupSetBits(s_reconnectionEventGroup, kReconnectNetworkLoss);
                 continue;
             }
             else
@@ -106,7 +167,7 @@ void reconnectTask(void *arg)
             }
 
             /* OTA agent initialization */
-            ota_ret = OTA_AgentInit(APP_MQTT_Getv2Handle(), (const uint8_t *)alexaCLIENT_ID, SLN_OTA_CompleteCallback,
+            ota_ret = OTA_AgentInit(APP_MQTT_GetOtaHandle(), (const uint8_t *)alexaCLIENT_ID, SLN_OTA_CompleteCallback,
                                     (TickType_t)~0);
 
             if (ota_ret != eOTA_AgentState_Ready)
@@ -121,7 +182,26 @@ void reconnectTask(void *arg)
                 {
                     /* link loss during OTA_AgentInit */
                     configPRINTF(("OTA_AgentInit failed, link loss during connection.\r\n"));
+
+                    /* The reconnection process is in kReconnectBusy state so WiFi link loss event
+                     * was probably triggered but ignored.
+                     * Force a new reconnection process.
+                     */
+                    xEventGroupSetBits(s_reconnectionEventGroup, kReconnectNetworkLoss);
+                    continue;
                 }
+            }
+
+            if (get_connect_state() == false)
+            {
+                configPRINTF(("Link lost during reconnection, trying again.\r\n"));
+
+                /* The reconnection process is in kReconnectBusy state so WiFi link loss event
+                 * was probably triggered but ignored.
+                 * Force a new reconnection process.
+                 */
+                xEventGroupSetBits(s_reconnectionEventGroup, kReconnectNetworkLoss);
+                continue;
             }
 
             s_reconnectState = kReconnectReady;
@@ -422,7 +502,11 @@ int otaAppInitTask(bool awsIotMqttMode,
         goto exit;
     }
 
-    xTaskCreate(reconnectTask, "Reconnect_task", 1024, NULL, configMAX_PRIORITIES - 1, NULL);
+#if USE_ETHERNET_CONNECTION
+    APP_NETWORK_Init(true); // start Ethernet with DHCP
+#endif
+
+    xTaskCreate(reconnectTask, "Reconnect_task", 1400, NULL, configMAX_PRIORITIES - 1, NULL);
 
     /* Create a task for getting signaled when OTA finishes and a reset is needed */
     xTaskCreate(otaDoneTask, "ota_done_task", 1024, NULL, tskIDLE_PRIORITY + 1, &otaDoneTaskHandle);
@@ -451,14 +535,14 @@ int otaAppInitTask(bool awsIotMqttMode,
         /* mqtt connect succeeded */
     }
 
-    OTA_State_t eState = eOTA_AgentState_Unknown;
+    OTA_State_t eState = eOTA_AgentState_NoTransition;
 
     /* OTA agent initialization */
-    eState = OTA_AgentInit(APP_MQTT_Getv2Handle(), (const uint8_t *)alexaCLIENT_ID, SLN_OTA_CompleteCallback,
+    eState = OTA_AgentInit(APP_MQTT_GetOtaHandle(), (const uint8_t *)alexaCLIENT_ID, SLN_OTA_CompleteCallback,
                            (TickType_t)~0);
     for (;;)
     {
-        while ((eState = OTA_GetAgentState()) != eOTA_AgentState_NotReady)
+        while ((eState = OTA_GetAgentState()) != eOTA_AgentState_Init)
         {
             /* Wait forever for OTA traffic but allow other tasks to run
                and output statistics from time to time. */

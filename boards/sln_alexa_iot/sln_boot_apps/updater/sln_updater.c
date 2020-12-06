@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP.
+ * Copyright 2019-2020 NXP.
  * This software is owned or controlled by NXP and may only be used strictly in accordance with the
  * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
  * activating and/or otherwise using the software, you are agreeing that you have read, and that you
@@ -8,6 +8,11 @@
  */
 
 #include "sln_updater.h"
+#include "fusemap.h"
+
+#define OPEN_BOOT    0x01
+#define SECURE_BOOT1 0x02
+#define SECURE_BOOT2 0x03
 
 /*! @brief Symbol defined in ld script, it will point to image end address */
 extern uint32_t _image_end;
@@ -27,6 +32,9 @@ static uint8_t s_temp_cert[MAX_CERT_LEN] = {0};
 /*! @brief Flags if we're running in encrypted XIP mode */
 static bool s_is_enc_xip = false;
 
+/*! @brief Flags if we're running in secure boot mode */
+static bool s_is_secure = false;
+
 /*! @brief Will be used for writing updates in flash chunk by chunk */
 static uint8_t s_flash_page[EXT_FLASH_PROGRAM_PAGE] = {0};
 
@@ -34,7 +42,9 @@ status_t upd_bundle_meta_get(bundle_meta_t *bundle_meta)
 {
     DEFINE_UPDATER_METHOD_NAME("upd_bundle_meta_get");
 
-    status_t ret = kStatus_Success;
+    status_t ret         = kStatus_Success;
+    uint32_t secure_mode = 0;
+    uint32_t end_addr    = 0;
 
     if (NULL == bundle_meta)
     {
@@ -48,9 +58,33 @@ status_t upd_bundle_meta_get(bundle_meta_t *bundle_meta)
         s_is_enc_xip = bl_nor_encrypt_has_encrypted_region();
     }
 
+    /* Is this Secure boot? */
     if (kStatus_Success == ret)
     {
-        uint32_t end_addr = (uint32_t)&_image_end;
+        secure_mode = ROM_OCOTP_SEC_CONFIG_VALUE();
+        /*
+         * 0x00: reserved
+         * 0x01: open     - OPEN_BOOT
+         * 0x1x: closed   - SECURE_BOOT
+         */
+        if (secure_mode == OPEN_BOOT)
+        {
+            s_is_secure = false;
+        }
+        else if ((secure_mode == SECURE_BOOT1) || (secure_mode == SECURE_BOOT2))
+        {
+            s_is_secure = true;
+        }
+        else
+        {
+            configPRINTF(("Could not be determined if the board is secure or not\r\n "));
+            ret = kStatus_Fail;
+        }
+    }
+
+    if (kStatus_Success == ret)
+    {
+        end_addr = (uint32_t)&_image_end;
         /* Fetch bundle metadata from flash */
         ret = SLN_Read_Flash_At_Address(end_addr & 0x0FFFFFFF, (uint8_t *)bundle_meta, sizeof(bundle_meta_t));
 
@@ -641,31 +675,41 @@ static status_t upd_module_verify_signature(mod_meta_t *mod_meta, void *mod_addr
                         fica_img_type = FICA_IMG_TYPE_NONE;
                 }
 
-                /* Image length and image address must be taken from FICA table,
-                 * a padding certificate must also be taken into consideration */
-                image_start = SLN_Flash_Get_Read_Address(s_fica_table.records[fica_img_type].imgAddr);
-                image_len   = s_fica_table.records[fica_img_type].imgLen - MAX_CERT_LEN;
-
-                if (strncmp((const char *)(image_start + image_len), "-----BEGIN CERTIFICATE-----",
-                            strlen("-----BEGIN CERTIFICATE-----")))
+                if (FICA_IMG_TYPE_NONE != fica_img_type)
                 {
-                    /* No certificate at end, we can use entire image length (factory application load) */
-                    image_len = s_fica_table.records[fica_img_type].imgLen;
+                    /* Image length and image address must be taken from FICA table,
+                     * a padding certificate must also be taken into consideration */
+                    image_start = SLN_Flash_Get_Read_Address(s_fica_table.records[fica_img_type].imgAddr);
+                    image_len   = s_fica_table.records[fica_img_type].imgLen - MAX_CERT_LEN;
+
+                    if (strncmp((const char *)(image_start + image_len), "-----BEGIN CERTIFICATE-----",
+                                strlen("-----BEGIN CERTIFICATE-----")))
+                    {
+                        /* No certificate at end, we can use entire image length (factory application load) */
+                        image_len = s_fica_table.records[fica_img_type].imgLen;
+                    }
+                }
+                else
+                {
+                    sln_auth_ret = SLN_AUTH_ERR;
                 }
             }
 
             /* Signature validation */
-            if (s_is_enc_xip && ((UPD_MOD_TYPE_CERT_APP_A == mod_meta->upd_mod_type) ||
-                                 (UPD_MOD_TYPE_CERT_APP_B == mod_meta->upd_mod_type)))
+            if (SLN_AUTH_OK == sln_auth_ret)
             {
-                /* Special handling of APP certificate update for EXIP */
-                sln_auth_ret = SLN_AUTH_Verify_Signature_Encrypted(vf_pem, (uint8_t *)(image_start & 0x0FFFFFFF),
-                                                                   image_len, mod_meta->modPkiSig);
-            }
-            else
-            {
-                sln_auth_ret =
-                    SLN_AUTH_Verify_Signature(vf_pem, (uint8_t *)image_start, image_len, mod_meta->modPkiSig);
+                if (s_is_enc_xip && ((UPD_MOD_TYPE_CERT_APP_A == mod_meta->upd_mod_type) ||
+                                     (UPD_MOD_TYPE_CERT_APP_B == mod_meta->upd_mod_type)))
+                {
+                    /* Special handling of APP certificate update for EXIP */
+                    sln_auth_ret = SLN_AUTH_Verify_Signature_Encrypted(vf_pem, (uint8_t *)(image_start & 0x0FFFFFFF),
+                                                                       image_len, mod_meta->modPkiSig);
+                }
+                else
+                {
+                    sln_auth_ret =
+                        SLN_AUTH_Verify_Signature(vf_pem, (uint8_t *)image_start, image_len, mod_meta->modPkiSig);
+                }
             }
 
             if (SLN_AUTH_OK != sln_auth_ret)
@@ -1396,12 +1440,12 @@ static status_t upd_mod_update_app(mod_meta_t *mod_meta, void *mod_addr)
     /* Destination bank erase phase */
     /*------------------------------*/
 
-    /* In case of bootstrap update when running EXIP:
+    /* In case of bootstrap update when running on secure boot:
      * Backing up first 0x1000 bytes from flash is a must.
      * That area contains the flash configuration settings
      * (which are not a part of the received bootstrap image!)
-     * and the crypto contexts. Losing any of these would brick the device! */
-    if ((kStatus_Success == ret) && s_is_enc_xip && ((UPD_MOD_TYPE_BOOTSTRAP == mod_meta->upd_mod_type)))
+     * and the crypto contexts (for EXIP). Losing any of these would brick the device! */
+    if ((kStatus_Success == ret) && s_is_secure && ((UPD_MOD_TYPE_BOOTSTRAP == mod_meta->upd_mod_type)))
     {
         ret = SLN_Read_Flash_At_Address(0x0, boot_header, 0x1000);
     }
@@ -1423,8 +1467,8 @@ static status_t upd_mod_update_app(mod_meta_t *mod_meta, void *mod_addr)
     }
 
     /* Restoring first 0x1000 bytes in case of
-     * bootstrap update when running EXIP: */
-    if ((kStatus_Success == ret) && s_is_enc_xip && (UPD_MOD_TYPE_BOOTSTRAP == mod_meta->upd_mod_type))
+     * bootstrap update when running on secure boot: */
+    if ((kStatus_Success == ret) && s_is_secure && (UPD_MOD_TYPE_BOOTSTRAP == mod_meta->upd_mod_type))
     {
         uint32_t boot_header_written  = 0;
         uint32_t boot_header_to_write = 0x1000;

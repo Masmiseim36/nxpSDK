@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 NXP. 
+ * Copyright 2018 NXP.
  * This software is owned or controlled by NXP and may only be used strictly in accordance with the
  * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
  * activating and/or otherwise using the software, you are agreeing that you have read, and that you
@@ -17,7 +17,8 @@
 
 static const char *_ais_map_speaker_bitrate(ais_speaker_bitrate_t type)
 {
-    switch (type) {
+    switch (type)
+    {
         case AIS_SPEAKER_BITRATE_CONSTANT:
             return AIS_CAP_SPEAKER_BITRATE_CONSTANT;
         case AIS_SPEAKER_BITRATE_VARIABLE:
@@ -29,7 +30,8 @@ static const char *_ais_map_speaker_bitrate(ais_speaker_bitrate_t type)
 
 static const char *_ais_map_speaker_decoder(ais_speaker_decoder_t decoder)
 {
-    switch (decoder) {
+    switch (decoder)
+    {
         case AIS_SPEAKER_DECODER_OPUS:
             return AIS_CAP_SPEAKER_DECODER_OPUS;
         case AIS_SPEAKER_DECODER_MP3:
@@ -57,7 +59,7 @@ cJSON *JSON_BuildHeader(ais_handle_t *handle, const char *name, const char **id)
     uint8_t messageId[17];
 
     _build_uuid(handle, messageId);
-    jsonId = cJSON_CreateString((char*) messageId);
+    jsonId = cJSON_CreateString((char *)messageId);
 
     header = cJSON_CreateObject();
     cJSON_AddItemToObject(header, "name", cJSON_CreateString(name));
@@ -68,8 +70,7 @@ cJSON *JSON_BuildHeader(ais_handle_t *handle, const char *name, const char **id)
     return header;
 }
 
-const char* JSON_BuildEvent(ais_handle_t *handle, const char *name,
-                            ais_json_t *jsonObj, bool addPayload)
+const char *JSON_BuildEvent(ais_handle_t *handle, const char *name, ais_json_t *jsonObj, bool addPayload)
 {
     cJSON *json, *events, *event;
     const char *id;
@@ -86,19 +87,22 @@ const char* JSON_BuildEvent(ais_handle_t *handle, const char *name,
 
     jsonObj->json = json;
 
-    if (addPayload) {
+    if (addPayload)
+    {
         cJSON *payload = cJSON_CreateObject();
         cJSON_AddItemToObject(event, "payload", payload);
 
         jsonObj->payload = payload;
-    } else {
+    }
+    else
+    {
         jsonObj->payload = NULL;
     }
 
     return id;
 }
 
-cJSON* JSON_BuildCapability(const char *name)
+cJSON *JSON_BuildCapability(const char *name)
 {
     cJSON *cap = cJSON_CreateObject();
 
@@ -110,7 +114,7 @@ cJSON* JSON_BuildCapability(const char *name)
     return cap;
 }
 
-cJSON* JSON_BuildCapabilitySpeaker(ais_handle_t *handle)
+cJSON *JSON_BuildCapabilitySpeaker(ais_handle_t *handle)
 {
     cJSON *cap = JSON_BuildCapability("Speaker");
 
@@ -121,27 +125,24 @@ cJSON* JSON_BuildCapabilitySpeaker(ais_handle_t *handle)
     cJSON_AddItemToObject(audbuf, "sizeInBytes", cJSON_CreateNumber(AWS_AUDIO_BUFFER_SIZE));
     cJSON *reporting = cJSON_CreateObject();
     cJSON_AddItemToObject(audbuf, "reporting", reporting);
-    cJSON_AddItemToObject(reporting, "overrunWarningThreshold",
-                          cJSON_CreateNumber(AWS_AUDIO_BUFFER_OVERRUN_THRESHOLD));
+    cJSON_AddItemToObject(reporting, "overrunWarningThreshold", cJSON_CreateNumber(AWS_AUDIO_BUFFER_OVERRUN_THRESHOLD));
     cJSON_AddItemToObject(reporting, "underrunWarningThreshold",
                           cJSON_CreateNumber(AWS_AUDIO_BUFFER_UNDERRUN_THRESHOLD));
     cJSON *audcodec = cJSON_CreateObject();
     cJSON_AddItemToObject(config, "audioDecoder", audcodec);
-    cJSON_AddItemToObject(audcodec, "format", cJSON_CreateString(
-        _ais_map_speaker_decoder(handle->config->speakerDecoder)));
-    cJSON_AddItemToObject(audcodec, "numberOfChannels",
-                          cJSON_CreateNumber(handle->config->speakerChannels));
+    cJSON_AddItemToObject(audcodec, "format",
+                          cJSON_CreateString(_ais_map_speaker_decoder(handle->config->speakerDecoder)));
+    cJSON_AddItemToObject(audcodec, "numberOfChannels", cJSON_CreateNumber(handle->config->speakerChannels));
     cJSON *bitrate = cJSON_CreateObject();
     cJSON_AddItemToObject(audcodec, "bitrate", bitrate);
-    cJSON_AddItemToObject(bitrate, "type", cJSON_CreateString(
-        _ais_map_speaker_bitrate(handle->config->speakerBitrateType)));
-    cJSON_AddItemToObject(bitrate, "bitsPerSecond",
-                          cJSON_CreateNumber(handle->config->speakerBitrate));
+    cJSON_AddItemToObject(bitrate, "type",
+                          cJSON_CreateString(_ais_map_speaker_bitrate(handle->config->speakerBitrateType)));
+    cJSON_AddItemToObject(bitrate, "bitsPerSecond", cJSON_CreateNumber(handle->config->speakerBitrate));
 
     return cap;
 }
 
-cJSON* JSON_BuildCapabilityMicrophone(void)
+cJSON *JSON_BuildCapabilityMicrophone(void)
 {
     cJSON *cap = JSON_BuildCapability("Microphone");
 
@@ -149,54 +150,49 @@ cJSON* JSON_BuildCapabilityMicrophone(void)
     cJSON_AddItemToObject(cap, "configurations", config);
     cJSON *audcodec = cJSON_CreateObject();
     cJSON_AddItemToObject(config, "audioEncoder", audcodec);
-    cJSON_AddItemToObject(audcodec, "format",
-                          cJSON_CreateString("AUDIO_L16_RATE_16000_CHANNELS_1"));
+    cJSON_AddItemToObject(audcodec, "format", cJSON_CreateString("AUDIO_L16_RATE_16000_CHANNELS_1"));
 
     return cap;
 }
 
-cJSON* JSON_BuildCapabilityAlerts(ais_handle_t *handle)
+cJSON *JSON_BuildCapabilityAlerts(ais_handle_t *handle)
 {
     cJSON *cap = JSON_BuildCapability("Alerts");
 
     cJSON *config = cJSON_CreateObject();
     cJSON_AddItemToObject(cap, "configurations", config);
-    cJSON_AddItemToObject(config, "maxAlertCount",
-                          cJSON_CreateNumber(handle->config->maxAlertCount));
+    cJSON_AddItemToObject(config, "maxAlertCount", cJSON_CreateNumber(handle->config->maxAlertCount));
 
     return cap;
 }
 
-cJSON* JSON_BuildCapabilityClock(void)
+cJSON *JSON_BuildCapabilityClock(void)
 {
     return JSON_BuildCapability("Clock");
 }
 
-cJSON* JSON_BuildCapabilitySystem(ais_handle_t *handle)
+cJSON *JSON_BuildCapabilitySystem(ais_handle_t *handle)
 {
     cJSON *cap = JSON_BuildCapability("System");
 
     cJSON *config = cJSON_CreateObject();
     cJSON_AddItemToObject(cap, "configurations", config);
-    cJSON_AddItemToObject(config, "firmwareVersion",
-                          cJSON_CreateString(handle->config->firmwareVersion));
-    cJSON_AddItemToObject(config, "locale",
-                          cJSON_CreateString(handle->config->locale));
+    cJSON_AddItemToObject(config, "firmwareVersion", cJSON_CreateString(handle->config->firmwareVersion));
+    cJSON_AddItemToObject(config, "locale", cJSON_CreateString(handle->config->locale));
     cJSON *mqtt = cJSON_CreateObject();
     cJSON_AddItemToObject(config, "mqtt", mqtt);
     cJSON *message = cJSON_CreateObject();
     cJSON_AddItemToObject(mqtt, "message", message);
-    cJSON_AddItemToObject(message, "maxSizeInBytes",
-                          cJSON_CreateNumber(AIS_MQTT_MAX_RX_SIZE));
+    cJSON_AddItemToObject(message, "maxSizeInBytes", cJSON_CreateNumber(AIS_MQTT_MAX_RX_SIZE));
 
     return cap;
 }
 
-cJSON* JSON_BuildRegistration(ais_handle_t *handle, const char *clientKey)
+cJSON *JSON_BuildRegistration(ais_handle_t *handle, const char *clientKey)
 {
     cJSON *json, *authentication, *encryption, *iot;
 
-    json = cJSON_CreateObject();
+    json           = cJSON_CreateObject();
     authentication = cJSON_CreateObject();
     cJSON_AddItemToObject(authentication, "token", cJSON_CreateString(handle->config->awsAuthToken));
     cJSON_AddItemToObject(authentication, "clientId", cJSON_CreateString(handle->config->awsAuthClientId));

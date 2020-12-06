@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -8,6 +8,8 @@
 
 #ifndef _FLEXSPI_HYPER_FLASH_OPS_H_
 #define _FLEXSPI_HYPER_FLASH_OPS_H_
+
+#include "sln_flash_config.h"
 
 /*******************************************************************************
  * Definitions

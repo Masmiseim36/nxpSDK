@@ -67,6 +67,13 @@ typedef enum
 /* Wake word model information */
 tsWakeWordAttributes sWakeWordAttr = {0};
 
+/* Wake Word Model Map Table */
+static amzn_ww_model_map ww_model_map[AMZ_WW_NUMBER_OF_WW_MODELS] =    {
+                                                                       { "en-US", WR_250k_en_US_alexa },
+                                                                       { "es-ES", U_250k_es_ES_alexa },
+                                                                       { "fr-FR", WR_250k_fr_FR_alexa },
+                                                                       };
+
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -182,76 +189,396 @@ void SLN_AMAZON_WAKE_SetWakeupDetectedParams(uint8_t *pu8Wake, uint16_t *pu16WWL
     pu8WakeupDetected = pu8Wake;
     pu8WakeupSize     = pu16WWLen;
 }
+
+/* Function to check if wake word locale is supported */
 uint32_t SLN_AMAZON_WAKE_IsWakeWordSupported(char *lang_code)
 {
-    if (lang_code == NULL)
-    {
-        return WW_MODEL_NULL;
-    }
-#ifndef LIGHTEN_MODEL_de_DE
-    if (0 == strcmp(lang_code, "de-DE"))
-    {
-        return WW_MODEL_SUCCESS;
-    }
+	if (lang_code == NULL)
+	{
+		return WW_MODEL_NULL;
+	}
+#ifdef AMZN_MODEL_U_1S_50k_de_DE_alexa
+	if (0 == strcmp(lang_code, "de-DE"))
+	{
+		return WW_MODEL_SUCCESS;
+	}
 #endif
-#ifndef LIGHTEN_MODEL_en_AU
-    if (0 == strcmp(lang_code, "en-AU"))
-    {
-        return WW_MODEL_SUCCESS;
-    }
+#ifdef AMZN_MODEL_WS_250k_de_DE_alexa
+	if (0 == strcmp(lang_code, "de-DE"))
+	{
+		return WW_MODEL_SUCCESS;
+	}
 #endif
-#ifndef LIGHTEN_MODEL_en_GB
-    if (0 == strcmp(lang_code, "en-GB"))
-    {
-        return WW_MODEL_SUCCESS;
-    }
+#ifdef AMZN_MODEL_U_1S_50k_en_AU_alexa
+	if (0 == strcmp(lang_code, "en-AU"))
+	{
+		return WW_MODEL_SUCCESS;
+	}
 #endif
-#ifndef LIGHTEN_MODEL_en_IN
-    if (0 == strcmp(lang_code, "en-IN"))
-    {
-        return WW_MODEL_SUCCESS;
-    }
+#ifdef AMZN_MODEL_WR_250k_en_AU_alexa
+	if (0 == strcmp(lang_code, "en-AU"))
+	{
+		return WW_MODEL_SUCCESS;
+	}
 #endif
-#ifndef LIGHTEN_MODEL_en_US
-    if (0 == strcmp(lang_code, "en-US"))
-    {
-        return WW_MODEL_SUCCESS;
-    }
+#ifdef AMZN_MODEL_U_1S_50k_en_CA_alexa
+	if (0 == strcmp(lang_code, "en-CA"))
+	{
+		return WW_MODEL_SUCCESS;
+	}
 #endif
-#ifndef LIGHTEN_MODEL_es_ES
-    if (0 == strcmp(lang_code, "es-ES"))
-    {
-        return WW_MODEL_SUCCESS;
-    }
+#ifdef AMZN_MODEL_U_1S_50k_en_GB_alexa
+	if (0 == strcmp(lang_code, "en-GB"))
+	{
+		return WW_MODEL_SUCCESS;
+	}
 #endif
-#ifndef LIGHTEN_MODEL_fr_CA
-    if (0 == strcmp(lang_code, "fr-CA"))
-    {
-        return WW_MODEL_SUCCESS;
-    }
+#ifdef AMZN_MODEL_WS_250k_en_GB_alexa
+	if (0 == strcmp(lang_code, "en-GB"))
+	{
+		return WW_MODEL_SUCCESS;
+	}
 #endif
-#ifndef LIGHTEN_MODEL_fr_FR
-    if (0 == strcmp(lang_code, "fr-FR"))
-    {
-        return WW_MODEL_SUCCESS;
-    }
+#ifdef AMZN_MODEL_U_1S_50k_en_IN_alexa
+	if (0 == strcmp(lang_code, "en-IN"))
+	{
+		return WW_MODEL_SUCCESS;
+	}
 #endif
-#ifndef LIGHTEN_MODEL_it_IT
-    if (0 == strcmp(lang_code, "it-IT"))
-    {
-        return WW_MODEL_SUCCESS;
-    }
+#ifdef AMZN_MODEL_WS_250k_en_IN_alexa
+	if (0 == strcmp(lang_code, "en-IN"))
+	{
+		return WW_MODEL_SUCCESS;
+	}
 #endif
-#ifndef LIGHTEN_MODEL_ja_JP
-    if (0 == strcmp(lang_code, "ja-JP"))
-    {
-        return WW_MODEL_SUCCESS;
-    }
+#ifdef AMZN_MODEL_D_en_US_alexa
+	if (0 == strcmp(lang_code, "en-US"))
+	{
+		return WW_MODEL_SUCCESS;
+	}
 #endif
-
-    /* Reaching here means model us not supported */
-    return WW_MODEL_NOT_SUPPORTED;
+#ifdef AMZN_MODEL_U_1S_50k_en_US_alexa
+	if (0 == strcmp(lang_code, "en-US"))
+	{
+		return WW_MODEL_SUCCESS;
+	}
+#endif
+#ifdef AMZN_MODEL_WR_250k_en_US_alexa
+	if (0 == strcmp(lang_code, "en-US"))
+	{
+		return WW_MODEL_SUCCESS;
+	}
+#endif
+#ifdef AMZN_MODEL_D_es_ES_alexa
+	if (0 == strcmp(lang_code, "es-ES"))
+	{
+		return WW_MODEL_SUCCESS;
+	}
+#endif
+#ifdef AMZN_MODEL_U_1S_50k_es_ES_alexa
+	if (0 == strcmp(lang_code, "es-ES"))
+	{
+		return WW_MODEL_SUCCESS;
+	}
+#endif
+#ifdef AMZN_MODEL_U_250k_es_ES_alexa
+	if (0 == strcmp(lang_code, "es-ES"))
+	{
+		return WW_MODEL_SUCCESS;
+	}
+#endif
+#ifdef AMZN_MODEL_U_1S_50k_es_MX_alexa
+	if (0 == strcmp(lang_code, "es-MX"))
+	{
+		return WW_MODEL_SUCCESS;
+	}
+#endif
+#ifdef AMZN_MODEL_U_1S_50k_fr_CA_alexa
+	if (0 == strcmp(lang_code, "fr-CA"))
+	{
+		return WW_MODEL_SUCCESS;
+	}
+#endif
+#ifdef AMZN_MODEL_WR_250k_fr_CA_alexa
+	if (0 == strcmp(lang_code, "fr-CA"))
+	{
+		return WW_MODEL_SUCCESS;
+	}
+#endif
+#ifdef AMZN_MODEL_U_1S_50k_fr_FR_alexa
+	if (0 == strcmp(lang_code, "fr-FR"))
+	{
+		return WW_MODEL_SUCCESS;
+	}
+#endif
+#ifdef AMZN_MODEL_WR_250k_fr_FR_alexa
+	if (0 == strcmp(lang_code, "fr-FR"))
+	{
+		return WW_MODEL_SUCCESS;
+	}
+#endif
+#ifdef AMZN_MODEL_U_1S_50k_it_IT_alexa
+	if (0 == strcmp(lang_code, "it-IT"))
+	{
+		return WW_MODEL_SUCCESS;
+	}
+#endif
+#ifdef AMZN_MODEL_WS_250k_it_IT_alexa
+	if (0 == strcmp(lang_code, "it-IT"))
+	{
+		return WW_MODEL_SUCCESS;
+	}
+#endif
+#ifdef AMZN_MODEL_U_1S_50k_ja_JP_alexa
+	if (0 == strcmp(lang_code, "ja-JP"))
+	{
+		return WW_MODEL_SUCCESS;
+	}
+#endif
+#ifdef AMZN_MODEL_WS_250k_ja_JP_alexa
+	if (0 == strcmp(lang_code, "ja-JP"))
+	{
+		return WW_MODEL_SUCCESS;
+	}
+#endif
+	/* Reaching here means model us not supported */
+	return WW_MODEL_NOT_SUPPORTED;
 }
+
+/* Function to assign the model that is requested */
+static void getWakeWordModelFromLocale(teAmazonWakeWordModelType modelType)
+{
+	if (0 == strcmp((char *)sWakeWordAttr.ww_model, "de-DE"))
+	{
+#ifdef AMZN_MODEL_U_1S_50k_de_DE_alexa
+		if (modelType == E_AMAZON_WAKE_WORD_MODEL_50KB)
+		{
+			config.sizeofModel =
+				U_1S_50k_de_DE_alexaLen; // example value, will be the size of the binary model byte array
+			config.model = &U_1S_50k_de_DE_alexa; // pointer to model in memory
+		}
+#endif
+#ifdef AMZN_MODEL_WS_250k_de_DE_alexa
+		if (modelType == E_AMAZON_WAKE_WORD_MODEL_250KB)
+		{
+			config.sizeofModel =
+				WS_250k_de_DE_alexaLen; // example value, will be the size of the binary model byte array
+			config.model = &WS_250k_de_DE_alexa; // pointer to model in memory
+		}
+#endif
+	}
+	if (0 == strcmp((char *)sWakeWordAttr.ww_model, "en-AU"))
+	{
+#ifdef AMZN_MODEL_U_1S_50k_en_AU_alexa
+		if (modelType == E_AMAZON_WAKE_WORD_MODEL_50KB)
+		{
+			config.sizeofModel =
+				U_1S_50k_en_AU_alexaLen; // example value, will be the size of the binary model byte array
+			config.model = &U_1S_50k_en_AU_alexa; // pointer to model in memory
+		}
+#endif
+#ifdef AMZN_MODEL_WR_250k_en_AU_alexa
+		if (modelType == E_AMAZON_WAKE_WORD_MODEL_250KB)
+		{
+			config.sizeofModel =
+				WR_250k_en_AU_alexaLen; // example value, will be the size of the binary model byte array
+			config.model = &WR_250k_en_AU_alexa; // pointer to model in memory
+		}
+#endif
+	}
+	if (0 == strcmp((char *)sWakeWordAttr.ww_model, "en-CA"))
+	{
+#ifdef AMZN_MODEL_U_1S_50k_en_CA_alexa
+		if (modelType == E_AMAZON_WAKE_WORD_MODEL_50KB)
+		{
+			config.sizeofModel =
+				U_1S_50k_en_CA_alexaLen; // example value, will be the size of the binary model byte array
+			config.model = &U_1S_50k_en_CA_alexa; // pointer to model in memory
+		}
+#endif
+	}
+	if (0 == strcmp((char *)sWakeWordAttr.ww_model, "en-GB"))
+	{
+#ifdef AMZN_MODEL_U_1S_50k_en_GB_alexa
+		if (modelType == E_AMAZON_WAKE_WORD_MODEL_50KB)
+		{
+			config.sizeofModel =
+				U_1S_50k_en_GB_alexaLen; // example value, will be the size of the binary model byte array
+			config.model = &U_1S_50k_en_GB_alexa; // pointer to model in memory
+		}
+#endif
+#ifdef AMZN_MODEL_WS_250k_en_GB_alexa
+		if (modelType == E_AMAZON_WAKE_WORD_MODEL_250KB)
+		{
+			config.sizeofModel =
+				WS_250k_en_GB_alexaLen; // example value, will be the size of the binary model byte array
+			config.model = &WS_250k_en_GB_alexa; // pointer to model in memory
+		}
+#endif
+	}
+	if (0 == strcmp((char *)sWakeWordAttr.ww_model, "en-IN"))
+	{
+#ifdef AMZN_MODEL_U_1S_50k_en_IN_alexa
+		if (modelType == E_AMAZON_WAKE_WORD_MODEL_50KB)
+		{
+			config.sizeofModel =
+				U_1S_50k_en_IN_alexaLen; // example value, will be the size of the binary model byte array
+			config.model = &U_1S_50k_en_IN_alexa; // pointer to model in memory
+		}
+#endif
+#ifdef AMZN_MODEL_WS_250k_en_IN_alexa
+		if (modelType == E_AMAZON_WAKE_WORD_MODEL_250KB)
+		{
+			config.sizeofModel =
+				WS_250k_en_IN_alexaLen; // example value, will be the size of the binary model byte array
+			config.model = &WS_250k_en_IN_alexa; // pointer to model in memory
+		}
+#endif
+	}
+	if (0 == strcmp((char *)sWakeWordAttr.ww_model, "en-US"))
+	{
+#ifdef AMZN_MODEL_D_en_US_alexa
+		if (modelType == E_AMAZON_WAKE_WORD_MODEL_250KB)
+		{
+			config.sizeofModel =
+				D_en_US_alexaLen; // example value, will be the size of the binary model byte array
+			config.model = &D_en_US_alexa; // pointer to model in memory
+		}
+#endif
+#ifdef AMZN_MODEL_U_1S_50k_en_US_alexa
+		if (modelType == E_AMAZON_WAKE_WORD_MODEL_50KB)
+		{
+			config.sizeofModel =
+				U_1S_50k_en_US_alexaLen; // example value, will be the size of the binary model byte array
+			config.model = &U_1S_50k_en_US_alexa; // pointer to model in memory
+		}
+#endif
+#ifdef AMZN_MODEL_WR_250k_en_US_alexa
+		if (modelType == E_AMAZON_WAKE_WORD_MODEL_250KB)
+		{
+			config.sizeofModel =
+				WR_250k_en_US_alexaLen; // example value, will be the size of the binary model byte array
+			config.model = &WR_250k_en_US_alexa; // pointer to model in memory
+		}
+#endif
+	}
+	if (0 == strcmp((char *)sWakeWordAttr.ww_model, "es-ES"))
+	{
+#ifdef AMZN_MODEL_D_es_ES_alexa
+		if (modelType == E_AMAZON_WAKE_WORD_MODEL_250KB)
+		{
+			config.sizeofModel =
+				D_es_ES_alexaLen; // example value, will be the size of the binary model byte array
+			config.model = &D_es_ES_alexa; // pointer to model in memory
+		}
+#endif
+#ifdef AMZN_MODEL_U_1S_50k_es_ES_alexa
+		if (modelType == E_AMAZON_WAKE_WORD_MODEL_50KB)
+		{
+			config.sizeofModel =
+				U_1S_50k_es_ES_alexaLen; // example value, will be the size of the binary model byte array
+			config.model = &U_1S_50k_es_ES_alexa; // pointer to model in memory
+		}
+#endif
+#ifdef AMZN_MODEL_U_250k_es_ES_alexa
+		if (modelType == E_AMAZON_WAKE_WORD_MODEL_250KB)
+		{
+			config.sizeofModel =
+				U_250k_es_ES_alexaLen; // example value, will be the size of the binary model byte array
+			config.model = &U_250k_es_ES_alexa; // pointer to model in memory
+		}
+#endif
+	}
+	if (0 == strcmp((char *)sWakeWordAttr.ww_model, "es-MX"))
+	{
+#ifdef AMZN_MODEL_U_1S_50k_es_MX_alexa
+		if (modelType == E_AMAZON_WAKE_WORD_MODEL_50KB)
+		{
+			config.sizeofModel =
+				U_1S_50k_es_MX_alexaLen; // example value, will be the size of the binary model byte array
+			config.model = &U_1S_50k_es_MX_alexa; // pointer to model in memory
+		}
+#endif
+	}
+	if (0 == strcmp((char *)sWakeWordAttr.ww_model, "fr-CA"))
+	{
+#ifdef AMZN_MODEL_U_1S_50k_fr_CA_alexa
+		if (modelType == E_AMAZON_WAKE_WORD_MODEL_50KB)
+		{
+			config.sizeofModel =
+				U_1S_50k_fr_CA_alexaLen; // example value, will be the size of the binary model byte array
+			config.model = &U_1S_50k_fr_CA_alexa; // pointer to model in memory
+		}
+#endif
+#ifdef AMZN_MODEL_WR_250k_fr_CA_alexa
+		if (modelType == E_AMAZON_WAKE_WORD_MODEL_250KB)
+		{
+			config.sizeofModel =
+				WR_250k_fr_CA_alexaLen; // example value, will be the size of the binary model byte array
+			config.model = &WR_250k_fr_CA_alexa; // pointer to model in memory
+		}
+#endif
+	}
+	if (0 == strcmp((char *)sWakeWordAttr.ww_model, "fr-FR"))
+	{
+#ifdef AMZN_MODEL_U_1S_50k_fr_FR_alexa
+		if (modelType == E_AMAZON_WAKE_WORD_MODEL_50KB)
+		{
+			config.sizeofModel =
+				U_1S_50k_fr_FR_alexaLen; // example value, will be the size of the binary model byte array
+			config.model = &U_1S_50k_fr_FR_alexa; // pointer to model in memory
+		}
+#endif
+#ifdef AMZN_MODEL_WR_250k_fr_FR_alexa
+		if (modelType == E_AMAZON_WAKE_WORD_MODEL_250KB)
+		{
+			config.sizeofModel =
+				WR_250k_fr_FR_alexaLen; // example value, will be the size of the binary model byte array
+			config.model = &WR_250k_fr_FR_alexa; // pointer to model in memory
+		}
+#endif
+	}
+	if (0 == strcmp((char *)sWakeWordAttr.ww_model, "it-IT"))
+	{
+#ifdef AMZN_MODEL_U_1S_50k_it_IT_alexa
+		if (modelType == E_AMAZON_WAKE_WORD_MODEL_50KB)
+		{
+			config.sizeofModel =
+				U_1S_50k_it_IT_alexaLen; // example value, will be the size of the binary model byte array
+			config.model = &U_1S_50k_it_IT_alexa; // pointer to model in memory
+		}
+#endif
+#ifdef AMZN_MODEL_WS_250k_it_IT_alexa
+		if (modelType == E_AMAZON_WAKE_WORD_MODEL_250KB)
+		{
+			config.sizeofModel =
+				WS_250k_it_IT_alexaLen; // example value, will be the size of the binary model byte array
+			config.model = &WS_250k_it_IT_alexa; // pointer to model in memory
+		}
+#endif
+	}
+	if (0 == strcmp((char *)sWakeWordAttr.ww_model, "ja-JP"))
+	{
+#ifdef AMZN_MODEL_U_1S_50k_ja_JP_alexa
+		if (modelType == E_AMAZON_WAKE_WORD_MODEL_50KB)
+		{
+			config.sizeofModel =
+				U_1S_50k_ja_JP_alexaLen; // example value, will be the size of the binary model byte array
+			config.model = &U_1S_50k_ja_JP_alexa; // pointer to model in memory
+		}
+#endif
+#ifdef AMZN_MODEL_WS_250k_ja_JP_alexa
+		if (modelType == E_AMAZON_WAKE_WORD_MODEL_250KB)
+		{
+			config.sizeofModel =
+				WS_250k_ja_JP_alexaLen; // example value, will be the size of the binary model byte array
+			config.model = &WS_250k_ja_JP_alexa; // pointer to model in memory
+		}
+#endif
+	}
+}
+/* Function to assign the model that is requested */
+
 static void loadModel(PryonLiteDecoderConfig *config, teAmazonWakeWordModelType modelType)
 {
     // In order to detect keywords, the decoder uses a model which defines the parameters,
@@ -267,197 +594,8 @@ static void loadModel(PryonLiteDecoderConfig *config, teAmazonWakeWordModelType 
     {
         SLN_AMAZON_WAKE_GetModelLocale(NULL);
     }
-    if (0 == strcmp((char *)sWakeWordAttr.ww_model, "de-DE"))
-    {
-        if (modelType == E_AMAZON_WAKE_WORD_MODEL_50KB)
-        {
-            config->sizeofModel =
-                prlBinaryModeldeDE50KBLen; // example value, will be the size of the binary model byte array
-            config->model = &prlBinaryModelData_deDE_50KB; // pointer to model in memory
-        }
-        else if (modelType == E_AMAZON_WAKE_WORD_MODEL_150KB)
-        {
-            /* Not implemented yet */
-        }
-        else if (modelType == E_AMAZON_WAKE_WORD_MODEL_250KB)
-        {
-            config->sizeofModel =
-                prlBinaryModeldeDELen;                // example value, will be the size of the binary model byte array
-            config->model = &prlBinaryModelData_deDE; // pointer to model in memory
-        }
-    }
-    else if (0 == strcmp((char *)sWakeWordAttr.ww_model, "en-AU"))
-    {
-        if (modelType == E_AMAZON_WAKE_WORD_MODEL_50KB)
-        {
-            config->sizeofModel =
-                prlBinaryModelenAU50KBLen; // example value, will be the size of the binary model byte array
-            config->model = &prlBinaryModelData_enAU_50KB; // pointer to model in memory
-        }
-        else if (modelType == E_AMAZON_WAKE_WORD_MODEL_150KB)
-        {
-            /* Not implemented yet */
-        }
-        else if (modelType == E_AMAZON_WAKE_WORD_MODEL_250KB)
-        {
-            config->sizeofModel =
-                prlBinaryModelenAULen;                // example value, will be the size of the binary model byte array
-            config->model = &prlBinaryModelData_enAU; // pointer to model in memory
-        }
-    }
-    else if (0 == strcmp((char *)sWakeWordAttr.ww_model, "en-GB"))
-    {
-        if (modelType == E_AMAZON_WAKE_WORD_MODEL_50KB)
-        {
-            config->sizeofModel =
-                prlBinaryModelenGB50KBLen; // example value, will be the size of the binary model byte array
-            config->model = &prlBinaryModelData_enGB_50KB; // pointer to model in memory
-        }
-        else if (modelType == E_AMAZON_WAKE_WORD_MODEL_150KB)
-        {
-            /* Not implemented yet */
-        }
-        else if (modelType == E_AMAZON_WAKE_WORD_MODEL_250KB)
-        {
-            config->sizeofModel =
-                prlBinaryModelenGBLen;                // example value, will be the size of the binary model byte array
-            config->model = &prlBinaryModelData_enGB; // pointer to model in memory
-        }
-    }
-    else if (0 == strcmp((char *)sWakeWordAttr.ww_model, "en-IN"))
-    {
-        if (modelType == E_AMAZON_WAKE_WORD_MODEL_50KB)
-        {
-            config->sizeofModel =
-                prlBinaryModelenIN50KBLen; // example value, will be the size of the binary model byte array
-            config->model = &prlBinaryModelData_enIN_50KB; // pointer to model in memory
-        }
-        else if (modelType == E_AMAZON_WAKE_WORD_MODEL_150KB)
-        {
-            /* Not implemented yet */
-        }
-        else if (modelType == E_AMAZON_WAKE_WORD_MODEL_250KB)
-        {
-            config->sizeofModel =
-                prlBinaryModelenINLen;                // example value, will be the size of the binary model byte array
-            config->model = &prlBinaryModelData_enIN; // pointer to model in memory
-        }
-    }
-    else if (0 == strcmp((char *)sWakeWordAttr.ww_model, "en-US"))
-    {
-        if (modelType == E_AMAZON_WAKE_WORD_MODEL_50KB)
-        {
-            config->sizeofModel =
-                prlBinaryModelenUS50KBLen; // example value, will be the size of the binary model byte array
-            config->model = &prlBinaryModelData_enUS_50KB; // pointer to model in memory
-        }
-        else if (modelType == E_AMAZON_WAKE_WORD_MODEL_150KB)
-        {
-            /* Not implemented yet */
-        }
-        else if (modelType == E_AMAZON_WAKE_WORD_MODEL_250KB)
-        {
-            config->sizeofModel =
-                prlBinaryModelenUSLen;                // example value, will be the size of the binary model byte array
-            config->model = &prlBinaryModelData_enUS; // pointer to model in memory
-        }
-    }
-    else if (0 == strcmp((char *)sWakeWordAttr.ww_model, "es-ES"))
-    {
-        if (modelType == E_AMAZON_WAKE_WORD_MODEL_50KB)
-        {
-            config->sizeofModel =
-                prlBinaryModelesES50KBLen; // example value, will be the size of the binary model byte array
-            config->model = &prlBinaryModelData_esES_50KB; // pointer to model in memory
-        }
-        else if (modelType == E_AMAZON_WAKE_WORD_MODEL_150KB)
-        {
-            /* Not implemented yet */
-        }
-        else if (modelType == E_AMAZON_WAKE_WORD_MODEL_250KB)
-        {
-            config->sizeofModel =
-                prlBinaryModelesESLen;                // example value, will be the size of the binary model byte array
-            config->model = &prlBinaryModelData_esES; // pointer to model in memory
-        }
-    }
-    else if (0 == strcmp((char *)sWakeWordAttr.ww_model, "fr-FR"))
-    {
-        if (modelType == E_AMAZON_WAKE_WORD_MODEL_50KB)
-        {
-            config->sizeofModel =
-                prlBinaryModelfrFR50KBLen; // example value, will be the size of the binary model byte array
-            config->model = &prlBinaryModelData_frFR_50KB; // pointer to model in memory
-        }
-        else if (modelType == E_AMAZON_WAKE_WORD_MODEL_150KB)
-        {
-            /* Not implemented yet */
-        }
-        else if (modelType == E_AMAZON_WAKE_WORD_MODEL_250KB)
-        {
-            config->sizeofModel =
-                prlBinaryModelfrFRLen;                // example value, will be the size of the binary model byte array
-            config->model = &prlBinaryModelData_frFR; // pointer to model in memory
-        }
-    }
-    else if (0 == strcmp((char *)sWakeWordAttr.ww_model, "it-IT"))
-    {
-        if (modelType == E_AMAZON_WAKE_WORD_MODEL_50KB)
-        {
-            config->sizeofModel =
-                prlBinaryModelitIT50KBLen; // example value, will be the size of the binary model byte array
-            config->model = &prlBinaryModelData_itIT_50KB; // pointer to model in memory
-        }
-        else if (modelType == E_AMAZON_WAKE_WORD_MODEL_150KB)
-        {
-            /* Not implemented yet */
-        }
-        else if (modelType == E_AMAZON_WAKE_WORD_MODEL_250KB)
-        {
-            config->sizeofModel =
-                prlBinaryModelitITLen;                // example value, will be the size of the binary model byte array
-            config->model = &prlBinaryModelData_itIT; // pointer to model in memory
-        }
-    }
-    else if (0 == strcmp((char *)sWakeWordAttr.ww_model, "ja-JP"))
-    {
-        if (modelType == E_AMAZON_WAKE_WORD_MODEL_50KB)
-        {
-            config->sizeofModel =
-                prlBinaryModeljaJP50KBLen; // example value, will be the size of the binary model byte array
-            config->model = &prlBinaryModelData_jaJP_50KB; // pointer to model in memory
-        }
-        else if (modelType == E_AMAZON_WAKE_WORD_MODEL_150KB)
-        {
-            /* Not implemented yet */
-        }
-        else if (modelType == E_AMAZON_WAKE_WORD_MODEL_250KB)
-        {
-            config->sizeofModel =
-                prlBinaryModeljaJPLen;                // example value, will be the size of the binary model byte array
-            config->model = &prlBinaryModelData_jaJP; // pointer to model in memory
-        }
-    }
-    else
-    {
-        if (modelType == E_AMAZON_WAKE_WORD_MODEL_50KB)
-        {
-            config->sizeofModel =
-                prlBinaryModelenUS50KBLen; // example value, will be the size of the binary model byte array
-            config->model = &prlBinaryModelData_enUS_50KB; // pointer to model in memory
-        }
-        else if (modelType == E_AMAZON_WAKE_WORD_MODEL_150KB)
-        {
-            /* Not implemented yet */
-        }
-        else if (modelType == E_AMAZON_WAKE_WORD_MODEL_250KB)
-        {
-            config->sizeofModel =
-                prlBinaryModelenUSLen;                // example value, will be the size of the binary model byte array
-            config->model = &prlBinaryModelData_enUS; // pointer to model in memory
-        }
-        configPRINTF(("\r\n WW model not recognized, loading default one: en-US\r\n"));
-    }
+
+    getWakeWordModelFromLocale(modelType);
 }
 
 // keyword detection callback

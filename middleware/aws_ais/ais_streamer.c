@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 NXP. 
+ * Copyright 2018 NXP.
  * This software is owned or controlled by NXP and may only be used strictly in accordance with the
  * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
  * activating and/or otherwise using the software, you are agreeing that you have read, and that you
@@ -70,7 +70,7 @@ static void STREAMER_MessageTask(void *arg)
 
                 if (handle->pvExceptionCallback != NULL)
                 {
-                	handle->pvExceptionCallback();
+                    handle->pvExceptionCallback();
                 }
 
                 break;
@@ -229,11 +229,11 @@ status_t STREAMER_Create(streamer_handle_t *handle, streamer_decoder_t decoder)
 
     /* Create streamer */
     strcpy(params.out_mq_name, APP_STREAMER_MSG_QUEUE);
-    params.stack_size = STREAMER_TASK_STACK_SIZE;
+    params.stack_size    = STREAMER_TASK_STACK_SIZE;
     params.pipeline_type = STREAM_PIPELINE_NETBUF;
-    params.task_name = STREAMER_TASK_NAME;
-    params.in_dev_name = "";
-    params.out_dev_name = "";
+    params.task_name     = STREAMER_TASK_NAME;
+    params.in_dev_name   = "";
+    params.out_dev_name  = "";
 
     handle->streamer = streamer_create(&params);
     if (!handle->streamer)
@@ -242,23 +242,28 @@ status_t STREAMER_Create(streamer_handle_t *handle, streamer_decoder_t decoder)
     }
 
     prop.prop = PROP_NETBUFSRC_SET_CALLBACK;
-    prop.val = (uintptr_t)STREAMER_Read;
+    prop.val  = (uintptr_t)STREAMER_Read;
 
     streamer_set_property(handle->streamer, prop, true);
 
     prop.prop = PROP_DECODER_DECODER_TYPE;
-    if (decoder == AIS_DECODER_OPUS) {
+    if (decoder == AIS_DECODER_OPUS)
+    {
         prop.val = DECODER_TYPE_OPUS;
-    } else if (decoder == AIS_DECODER_MP3) {
+    }
+    else if (decoder == AIS_DECODER_MP3)
+    {
         prop.val = DECODER_TYPE_MP3;
-    } else {
+    }
+    else
+    {
         return kStatus_Fail;
     }
 
     streamer_set_property(handle->streamer, prop, true);
 
     handle->audioPlaying = false;
-    handle->eos = false;
+    handle->eos          = false;
 
     return kStatus_Success;
 }

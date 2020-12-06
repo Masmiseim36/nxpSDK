@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP
+ * Copyright 2019-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -13,6 +13,12 @@
 #include "fsl_common.h"
 #include "fsl_gpio.h"
 #include "fsl_iomuxc.h"
+
+#if defined(SDK_SAI_BASED_COMPONENT_USED) && SDK_SAI_BASED_COMPONENT_USED
+#include "fsl_sai.h"
+#include "fsl_sai_edma.h"
+#include "fsl_dmamux.h"
+#endif /* SDK_SAI_BASED_COMPONENT_USED */
 
 /*******************************************************************************
  * Definitions
@@ -60,27 +66,33 @@
     (CLOCK_GetFreq(kCLOCK_AudioPllClk) / (BOARD_AMP_SAI_CLOCK_SOURCE_DIVIDER + 1U) / \
      (BOARD_AMP_SAI_CLOCK_SOURCE_PRE_DIVIDER + 1U))
 
-#define BOARD_AMP_SAI_IRQ SAI3_IRQn
-#define BOARD_AMP_SAI_TX_IRQ SAI3_TX_IRQn
-#define BOARD_AMP_SAI_RX_IRQ SAI3_RX_IRQn
-#define BOARD_AMP_SAI_UserIRQHandler SAI3_TX_IRQHandler
-#define BOARD_AMP_SAI_TX_SOURCE kDmaRequestMuxSai3Tx
+#define BOARD_AMP_SAI_TX_IRQ         SAI3_TX_IRQn
+#define BOARD_AMP_SAI_RX_IRQ         SAI3_RX_IRQn
+#define BOARD_AMP_SAI_Tx_IRQ_Handler SAI3_TX_IRQHandler
+#define BOARD_AMP_SAI_Rx_IRQ_Handler SAI3_RX_IRQHandler
+
+#define BOARD_AMP_SAI_EDMA_TX_CH  2U
+#define BOARD_AMP_SAI_EDMA_RX_CH  3U
+#define BOARD_AMP_SAI_EDMA_TX_REQ kDmaRequestMuxSai3Tx
+#define BOARD_AMP_SAI_EDMA_RX_REQ kDmaRequestMuxSai3Rx
+#define BOARD_AMP_SAI_EDMA_TX_IRQ DMA2_DMA18_IRQn
+#define BOARD_AMP_SAI_EDMA_RX_IRQ DMA3_DMA19_IRQn
 
 /* TFA9894 */
-#define TFA_LEFT_AMP 0x34
-#define TFA_RIGHT_AMP 0x35
+#define TFA_LEFT_AMP   0x34
+#define TFA_RIGHT_AMP  0x35
 #define NUM_TFA_DEVICE (1) /* Mono: 1 Stereo: 2 */
 
 #define SAMPLE_RATE (kSAI_SampleRate48KHz)
 
 /* The UART to use for debug messages. */
-#define BOARD_DEBUG_UART_TYPE kSerialPort_Uart
+#define BOARD_DEBUG_UART_TYPE     kSerialPort_Uart
 #define BOARD_DEBUG_UART_BASEADDR (uint32_t) LPUART6
 #define BOARD_DEBUG_UART_INSTANCE 6U
 
 #define BOARD_DEBUG_UART_CLK_FREQ BOARD_DebugConsoleSrcFreq()
 
-#define BOARD_UART_IRQ LPUART6_IRQn
+#define BOARD_UART_IRQ         LPUART6_IRQn
 #define BOARD_UART_IRQ_HANDLER LPUART6_IRQHandler
 
 #ifndef BOARD_DEBUG_UART_BAUDRATE
@@ -88,19 +100,19 @@
 #endif /* BOARD_DEBUG_UART_BAUDRATE */
 
 /*! @brief The USER_LED used for board */
-#define LOGIC_LED_ON (0U)
+#define LOGIC_LED_ON  (0U)
 #define LOGIC_LED_OFF (1U)
 
-#define RGB_LED_RED_PIN_GPIO GPIO4
+#define RGB_LED_RED_PIN_GPIO   GPIO4
 #define RGB_LED_GREEN_PIN_GPIO GPIO4
-#define RGB_LED_BLUE_PIN_GPIO GPIO1
+#define RGB_LED_BLUE_PIN_GPIO  GPIO1
 
-#define RGB_LED_RED_PIN 6
+#define RGB_LED_RED_PIN   6
 #define RGB_LED_GREEN_PIN 8
-#define RGB_LED_BLUE_PIN 0
+#define RGB_LED_BLUE_PIN  0
 
 /*! @brief The USER_LED used for board */
-#define LOGIC_LED_ON (0U)
+#define LOGIC_LED_ON  (0U)
 #define LOGIC_LED_OFF (1U)
 #ifndef BOARD_USER_LED_GPIO
 #define BOARD_USER_LED_GPIO RGB_LED_RED_PIN_GPIO
@@ -120,38 +132,38 @@
                   0x1 ^ GPIO_PinRead(BOARD_USER_LED_GPIO, BOARD_USER_LED_GPIO_PIN)) /*!< Toggle target USER_LED */
 
 /*! @brief Define the port interrupt number for the board switches */
-#define SW1_GPIO GPIO2
-#define SW2_GPIO GPIO2
+#define SW1_GPIO     GPIO2
+#define SW2_GPIO     GPIO2
 #define SW1_GPIO_PIN 4
 #define SW2_GPIO_PIN 9
 
-#define BOARD_USER_BUTTON_IRQ GPIO2_Combined_0_15_IRQn
+#define BOARD_USER_BUTTON_IRQ         GPIO2_Combined_0_15_IRQn
 #define BOARD_USER_BUTTON_IRQ_HANDLER GPIO2_Combined_0_15_IRQHandler
 
 /*! @brief The hyper flash size */
-#define BOARD_FLASH_SIZE (0x4000000U)
+#define BOARD_FLASH_SIZE (0x2000000U)
 
 /*! @brief The ENET PHY address. */
 #define BOARD_ENET0_PHY_ADDRESS (0x01U) /* Phy address of enet port 0. */
 
-/* USB PHY condfiguration */
-#define BOARD_USB_PHY_D_CAL (0x0CU)
+/* USB PHY configuration */
+#define BOARD_USB_PHY_D_CAL     (0x0CU)
 #define BOARD_USB_PHY_TXCAL45DP (0x06U)
 #define BOARD_USB_PHY_TXCAL45DM (0x06U)
 
-#define BOARD_ARDUINO_INT_IRQ (GPIO1_INT3_IRQn)
-#define BOARD_ARDUINO_I2C_IRQ (LPI2C1_IRQn)
-#define BOARD_ARDUINO_I2C_INDEX (1)
-#define BOARD_USDHC1_BASEADDR USDHC1
-#define BOARD_USDHC2_BASEADDR USDHC2
-#define BOARD_USDHC_CD_GPIO_BASE GPIO2
-#define BOARD_USDHC_CD_GPIO_PIN 28
-#define BOARD_USDHC_CD_PORT_IRQ GPIO2_Combined_16_31_IRQn
+#define BOARD_ARDUINO_INT_IRQ           (GPIO1_INT3_IRQn)
+#define BOARD_ARDUINO_I2C_IRQ           (LPI2C1_IRQn)
+#define BOARD_ARDUINO_I2C_INDEX         (1)
+#define BOARD_USDHC1_BASEADDR           USDHC1
+#define BOARD_USDHC2_BASEADDR           USDHC2
+#define BOARD_USDHC_CD_GPIO_BASE        GPIO2
+#define BOARD_USDHC_CD_GPIO_PIN         28
+#define BOARD_USDHC_CD_PORT_IRQ         GPIO2_Combined_16_31_IRQn
 #define BOARD_USDHC_CD_PORT_IRQ_HANDLER GPIO2_Combined_16_31_IRQHandler
 
 #define BOARD_USDHC_CD_STATUS() (GPIO_PinRead(BOARD_USDHC_CD_GPIO_BASE, BOARD_USDHC_CD_GPIO_PIN))
 
-#define BOARD_USDHC_CD_INTERRUPT_STATUS() (GPIO_PortGetInterruptFlags(BOARD_USDHC_CD_GPIO_BASE))
+#define BOARD_USDHC_CD_INTERRUPT_STATUS()    (GPIO_PortGetInterruptFlags(BOARD_USDHC_CD_GPIO_BASE))
 #define BOARD_USDHC_CD_CLEAR_INTERRUPT(flag) (GPIO_PortClearInterruptFlags(BOARD_USDHC_CD_GPIO_BASE, flag))
 
 #define BOARD_USDHC_CD_GPIO_INIT()                                                          \
@@ -165,25 +177,25 @@
         GPIO_PortEnableInterrupts(BOARD_USDHC_CD_GPIO_BASE, 1U << BOARD_USDHC_CD_GPIO_PIN); \
         GPIO_PortClearInterruptFlags(BOARD_USDHC_CD_GPIO_BASE, ~0);                         \
     }
-#define BOARD_HAS_SDCARD (1U)
-#define BOARD_SD_POWER_RESET_GPIO (GPIO5)
+#define BOARD_HAS_SDCARD              (1U)
+#define BOARD_SD_POWER_RESET_GPIO     (GPIO5)
 #define BOARD_SD_POWER_RESET_GPIO_PIN (1U)
 
 /* @brief Wifi WL_REG_ON Pins*/
 #define BOARD_INITPINS_WL_REG_ON_GPIO GPIO5 // former BOARD_WL_REG_ON_port
-#define BOARD_INITPINS_WL_REG_ON_PIN 1U     // former BOARD_WL_REG_ON_pin
+#define BOARD_INITPINS_WL_REG_ON_PIN  1U    // former BOARD_WL_REG_ON_pin
 
-#define BOARD_WL_OOB_IRQ_port GPIO5
-#define BOARD_WL_OOB_IRQ_pin 0U
-#define BOARD_WL_OOB_IRQ GPIO5_Combined_0_15_IRQn
+#define BOARD_WL_OOB_IRQ_port    GPIO5
+#define BOARD_WL_OOB_IRQ_pin     0U
+#define BOARD_WL_OOB_IRQ         GPIO5_Combined_0_15_IRQn
 #define BOARD_WL_OOB_IRQ_Handler GPIO5_Combined_0_15_IRQHandler
 
 /* @brief BLE PWR Pins*/
 #define BOARD_INITPINS_BT_REG_ON_GPIO GPIO2 // former  BOARD_BT_REG_ON_port
-#define BOARD_INITPINS_BT_REG_ON_PIN 30U    // former  BOARD_BT_REG_ON_pin
+#define BOARD_INITPINS_BT_REG_ON_PIN  30U   // former  BOARD_BT_REG_ON_pin
 
 #define BOARD_BT_HOST_WAKE_port GPIO2
-#define BOARD_BT_HOST_WAKE_pin 31U
+#define BOARD_BT_HOST_WAKE_pin  31U
 
 #define BOARD_USDHC_CARD_INSERT_CD_LEVEL (0U)
 
@@ -218,13 +230,13 @@
 
 #define BOARD_SD_HOST_BASEADDR BOARD_USDHC1_BASEADDR
 #define BOARD_SD_HOST_CLK_FREQ BOARD_USDHC1_CLK_FREQ
-#define BOARD_SD_HOST_IRQ USDHC1_IRQn
+#define BOARD_SD_HOST_IRQ      USDHC1_IRQn
 
 #define BOARD_MMC_HOST_BASEADDR BOARD_USDHC2_BASEADDR
 #define BOARD_MMC_HOST_CLK_FREQ BOARD_USDHC2_CLK_FREQ
-#define BOARD_MMC_HOST_IRQ USDHC2_IRQn
-#define BOARD_MMC_VCCQ_SUPPLY kMMC_VoltageWindow170to195
-#define BOARD_MMC_VCC_SUPPLY kMMC_VoltageWindows270to360
+#define BOARD_MMC_HOST_IRQ      USDHC2_IRQn
+#define BOARD_MMC_VCCQ_SUPPLY   kMMC_VoltageWindow170to195
+#define BOARD_MMC_VCC_SUPPLY    kMMC_VoltageWindows270to360
 /* we are using the BB SD socket to DEMO the MMC example,but the
  * SD socket provide 4bit bus only, so we define this macro to avoid
  * 8bit data bus test
@@ -232,7 +244,7 @@
 #define BOARD_MMC_SUPPORT_8BIT_BUS (1U)
 
 #define BOARD_SD_HOST_SUPPORT_SDR104_FREQ (200000000U)
-#define BOARD_SD_HOST_SUPPORT_HS200_FREQ (180000000U)
+#define BOARD_SD_HOST_SUPPORT_HS200_FREQ  (180000000U)
 /* define for SD/MMC config IO driver strength dynamic */
 #define BOARD_SD_Pin_Config(speed, strength)                                                      \
     {                                                                                             \
@@ -321,20 +333,20 @@
     }
 
 /*! @brief The WIFI-QCA shield pin. */
-#define BOARD_INITGT202SHIELD_PWRON_GPIO GPIO1                    /*!< GPIO device name: GPIO */
-#define BOARD_INITGT202SHIELD_PWRON_PORT 1U                       /*!< PORT device index: 1 */
-#define BOARD_INITGT202SHIELD_PWRON_GPIO_PIN 3U                   /*!< PIO4 pin index: 3 */
-#define BOARD_INITGT202SHIELD_PWRON_PIN_NAME GPIO1_3              /*!< Pin name */
-#define BOARD_INITGT202SHIELD_PWRON_LABEL "PWRON"                 /*!< Label */
-#define BOARD_INITGT202SHIELD_PWRON_NAME "PWRON"                  /*!< Identifier name */
+#define BOARD_INITGT202SHIELD_PWRON_GPIO      GPIO1               /*!< GPIO device name: GPIO */
+#define BOARD_INITGT202SHIELD_PWRON_PORT      1U                  /*!< PORT device index: 1 */
+#define BOARD_INITGT202SHIELD_PWRON_GPIO_PIN  3U                  /*!< PIO4 pin index: 3 */
+#define BOARD_INITGT202SHIELD_PWRON_PIN_NAME  GPIO1_3             /*!< Pin name */
+#define BOARD_INITGT202SHIELD_PWRON_LABEL     "PWRON"             /*!< Label */
+#define BOARD_INITGT202SHIELD_PWRON_NAME      "PWRON"             /*!< Identifier name */
 #define BOARD_INITGT202SHIELD_PWRON_DIRECTION kGPIO_DigitalOutput /*!< Direction */
 
-#define BOARD_INITGT202SHIELD_IRQ_GPIO GPIO1                   /*!< GPIO device name: GPIO */
-#define BOARD_INITGT202SHIELD_IRQ_PORT 1U                      /*!< PORT device index: 1 */
-#define BOARD_INITGT202SHIELD_IRQ_GPIO_PIN 19U                 /*!< PIO1 pin index: 19 */
-#define BOARD_INITGT202SHIELD_IRQ_PIN_NAME GPIO1_19            /*!< Pin name */
-#define BOARD_INITGT202SHIELD_IRQ_LABEL "IRQ"                  /*!< Label */
-#define BOARD_INITGT202SHIELD_IRQ_NAME "IRQ"                   /*!< Identifier name */
+#define BOARD_INITGT202SHIELD_IRQ_GPIO      GPIO1              /*!< GPIO device name: GPIO */
+#define BOARD_INITGT202SHIELD_IRQ_PORT      1U                 /*!< PORT device index: 1 */
+#define BOARD_INITGT202SHIELD_IRQ_GPIO_PIN  19U                /*!< PIO1 pin index: 19 */
+#define BOARD_INITGT202SHIELD_IRQ_PIN_NAME  GPIO1_19           /*!< Pin name */
+#define BOARD_INITGT202SHIELD_IRQ_LABEL     "IRQ"              /*!< Label */
+#define BOARD_INITGT202SHIELD_IRQ_NAME      "IRQ"              /*!< Identifier name */
 #define BOARD_INITGT202SHIELD_IRQ_DIRECTION kGPIO_DigitalInput /*!< Direction */
 
 /* @Brief Board accelerator sensor configuration */
@@ -343,26 +355,41 @@
 #define BOARD_ACCEL_I2C_CLOCK_SOURCE_SELECT (0U)
 /* Clock divider for LPI2C clock source */
 #define BOARD_ACCEL_I2C_CLOCK_SOURCE_DIVIDER (5U)
-#define BOARD_ACCEL_I2C_CLOCK_FREQ (CLOCK_GetFreq(kCLOCK_Usb1PllClk) / 8 / (BOARD_ACCEL_I2C_CLOCK_SOURCE_DIVIDER + 1U))
+#define BOARD_ACCEL_I2C_CLOCK_FREQ           (CLOCK_GetFreq(kCLOCK_Usb1PllClk) / 8 / (BOARD_ACCEL_I2C_CLOCK_SOURCE_DIVIDER + 1U))
 
-#define BOARD_CODEC_I2C_BASEADDR LPI2C1
-#define BOARD_CODEC_I2C_INSTANCE 1U
-#define BOARD_CODEC_I2C_CLOCK_SOURCE_SELECT (0U)
+#define BOARD_CODEC_I2C_BASEADDR             LPI2C1
+#define BOARD_CODEC_I2C_INSTANCE             1U
+#define BOARD_CODEC_I2C_IRQN                 LPI2C1_IRQn
+#define BOARD_CODEC_I2C_CLOCK_SOURCE_SELECT  (0U)
 #define BOARD_CODEC_I2C_CLOCK_SOURCE_DIVIDER (5U)
 #define BOARD_CODEC_I2C_CLOCK_FREQ \
     ((CLOCK_GetFreq(kCLOCK_Usb1PllClk) / 8) / (BOARD_CODEC_I2C_CLOCK_SOURCE_DIVIDER + 1U))
 
 /* @Brief Board CAMERA configuration */
-#define BOARD_CAMERA_I2C_BASEADDR LPI2C1
+#define BOARD_CAMERA_I2C_BASEADDR             LPI2C1
 #define BOARD_CAMERA_I2C_CLOCK_SOURCE_DIVIDER (5U)
-#define BOARD_CAMERA_I2C_CLOCK_SOURCE_SELECT (0U) /* Select USB1 PLL (480 MHz) as LPI2C's clock source */
+#define BOARD_CAMERA_I2C_CLOCK_SOURCE_SELECT  (0U) /* Select USB1 PLL (480 MHz) as LPI2C's clock source */
 #define BOARD_CAMERA_I2C_CLOCK_FREQ \
     (CLOCK_GetFreq(kCLOCK_Usb1PllClk) / 8 / (BOARD_CAMERA_I2C_CLOCK_SOURCE_DIVIDER + 1U))
 /* @Brief Board Bluetooth HCI UART configuration */
-#define BOARD_BT_UART_BASEADDR LPUART1
-#define BOARD_BT_UART_CLK_FREQ BOARD_DebugConsoleSrcFreq()
-#define BOARD_BT_UART_IRQ LPUART1_IRQn
+#define BOARD_BT_UART_BASEADDR    LPUART1
+#define BOARD_BT_UART_CLK_FREQ    BOARD_DebugConsoleSrcFreq()
+#define BOARD_BT_UART_IRQ         LPUART1_IRQn
 #define BOARD_BT_UART_IRQ_HANDLER LPUART1_IRQHandler
+
+#if defined(SDK_SAI_BASED_COMPONENT_USED) && SDK_SAI_BASED_COMPONENT_USED
+
+typedef struct
+{
+    edma_handle_t *amp_dma_tx_handle;
+    edma_handle_t *amp_dma_rx_handle;
+    sai_edma_handle_t *amp_sai_tx_handle;
+    sai_edma_handle_t *amp_sai_rx_handle;
+    sai_edma_callback_t sai_tx_callback;
+    sai_edma_callback_t sai_rx_callback;
+} sai_init_handle_t;
+
+#endif /* SDK_SAI_BASED_COMPONENT_USED */
 
 #if defined(__cplusplus)
 extern "C" {
@@ -376,6 +403,8 @@ uint32_t BOARD_DebugConsoleSrcFreq(void);
 void BOARD_RelocateVectorTableToRam(void);
 
 void BOARD_InitDebugConsole(void);
+
+void *BOARD_GetBoardCodecConfig(void);
 
 /*!
  * @brief Boost ARM core clock PLL1@600MHz
@@ -434,6 +463,13 @@ status_t BOARD_Camera_I2C_SendSCCB(
 status_t BOARD_Camera_I2C_ReceiveSCCB(
     uint8_t deviceAddress, uint32_t subAddress, uint8_t subAddressSize, uint8_t *rxBuff, uint8_t rxBuffSize);
 #endif /* SDK_I2C_BASED_COMPONENT_USED */
+
+#if defined(SDK_SAI_BASED_COMPONENT_USED) && SDK_SAI_BASED_COMPONENT_USED
+void BOARD_SAI_Init(sai_init_handle_t saiInitHandle);
+void BOARD_Get_Calibration_State(uint8_t *cur_state);
+void BOARD_Set_Calibration_State(uint8_t new_state);
+#endif
+
 #if defined(__cplusplus)
 }
 #endif /* __cplusplus */

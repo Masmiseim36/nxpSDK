@@ -177,8 +177,8 @@
  * \def MBEDTLS_FREESCALE_FREERTOS_CALLOC_ALT
  *
  * Enable implementation for FreeRTOS's pvPortCalloc() in ksdk_mbedtls.c module.
- * You can comment this macro if you provide your own alternate implementation. 
- * 
+ * You can comment this macro if you provide your own alternate implementation.
+ *
  */
 #if USE_RTOS && defined(FSL_RTOS_FREE_RTOS)
 //#define MBEDTLS_FREESCALE_FREERTOS_CALLOC_ALT
@@ -2063,9 +2063,8 @@ void *pvPortCalloc(size_t num, size_t size); /*Calloc for HEAP3.*/
 #define MBEDTLS_CTR_DRBG_C
 #elif defined(MBEDTLS_AES_ALT_NO_256)
 /* This macros will add support for CTR_DRBG using AES-128 for crypto engines
- * without AES-256 capability. Please note, that selftest will not pass when
- * this option is enabled, since AES-256 is required by the specification of CTR_DRBG. */
-#define MBEDTLS_CTR_DRBG_KEYSIZE            16 /**< The key size used by the cipher. */
+ * without AES-256 capability.  */
+#define MBEDTLS_CTR_DRBG_USE_128_BIT_KEY
 #define MBEDTLS_CTR_DRBG_C
 #endif
 

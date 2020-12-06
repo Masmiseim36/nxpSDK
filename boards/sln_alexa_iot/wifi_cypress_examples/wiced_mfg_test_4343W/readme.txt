@@ -17,8 +17,8 @@ More details about this Test Application can be found in WICED Studio from Cypre
 
 Toolchain supported
 ===================
-- GCC ARM Embedded  8.3.1
-- MCUXpresso  11.1.0
+- GCC ARM Embedded  9.2.1
+- MCUXpresso  11.2.0
 
 Hardware requirements
 =====================

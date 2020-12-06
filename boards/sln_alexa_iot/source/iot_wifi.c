@@ -23,6 +23,10 @@
  * http://www.FreeRTOS.org
  */
 
+/*
+ * Copyright 2020 NXP
+ */
+
 /**
  * @file iot_wifi.c
  * @brief Wi-Fi Interface.
@@ -81,6 +85,13 @@ extern err_t dns_gethostbyname(const char *hostname, ip_addr_t *addr, dns_found_
 static SemaphoreHandle_t g_api_mutex = NULL;
 static SemaphoreHandle_t g_api_sema  = NULL;
 
+/*
+ * Some of the variables below are currently unused. This may change in later iterations.
+ */
+#if defined(__GNUC__)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-variable"
+
 /* DNS result IP */
 static ip_addr_t g_host_ip = {0};
 
@@ -101,6 +112,16 @@ static struct netif fsl_netif0;
 
 /* Temporary SSID */
 static wiced_ssid_t ssid = {0};
+
+#pragma GCC diagnostic pop
+#endif /* GNUC pragma for Unused Variables */
+
+/*
+ * Some of the functions below are currently unused. This may change in later iterations.
+ */
+#if defined(__GNUC__)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-function"
 
 static int wifi_is_enabled(void)
 {
@@ -155,6 +176,9 @@ static WIFISecurity_t conv_security_from_wiced(wiced_security_t api_sec)
             return eWiFiSecurityNotSupported;
     }
 }
+
+#pragma GCC diagnostic pop
+#endif /* GNUC pragma for Unused Functions */
 
 void wiced_scan_results_handler(wiced_scan_result_t **result_ptr, void *user_data, wiced_scan_status_t status)
 {
@@ -223,6 +247,16 @@ WIFIReturnCode_t WIFI_ConnectAP(const WIFINetworkParams_t *const pxNetworkParams
 
     /* Connect to WiFi network */
     status = APP_NETWORK_Wifi_Connect(true, true);
+
+    if (0 != status)
+    {
+        if (status == WWD_WLAN_WLAN_DOWN)
+        {
+            APP_NETWORK_Uninit();
+        }
+
+        result = eWiFiFailure;
+    }
 
     return result;
 }

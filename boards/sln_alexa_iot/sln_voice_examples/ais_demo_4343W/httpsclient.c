@@ -1,25 +1,10 @@
 /*
- * Copyright 2018-2020 NXP.
+ * Copyright 2018 NXP.
  * This software is owned or controlled by NXP and may only be used strictly in accordance with the
  * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
  * activating and/or otherwise using the software, you are agreeing that you have read, and that you
  * agree to comply with and are bound by, such license terms. If you do not agree to be bound by the
  * applicable license terms, then you may not retain, install, activate or otherwise use the software.
- */
-
-/*
- * Copyright 2010-2015 Amazon.com, Inc. or its affiliates. All Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License").
- * You may not use this file except in compliance with the License.
- * A copy of the License is located at
- *
- *  http://aws.amazon.com/apache2.0
- *
- * or in the "license" file accompanying this file. This file is distributed
- * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
- * express or implied. See the License for the specific language governing
- * permissions and limitations under the License.
  */
 
 /*******************************************************************************
@@ -49,7 +34,7 @@
  ******************************************************************************/
 /* This is the value used for ssl read timeout */
 #define IOT_SSL_READ_TIMEOUT 100
-#define DEBUG_LEVEL 0
+#define DEBUG_LEVEL          0
 
 /*******************************************************************************
  * Prototypes

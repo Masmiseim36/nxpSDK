@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 NXP.
+ * Copyright 2018-2020 NXP.
  * This software is owned or controlled by NXP and may only be used strictly in accordance with the
  * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
  * activating and/or otherwise using the software, you are agreeing that you have read, and that you
@@ -113,7 +113,7 @@ static status_t AIS_SendRegistration(char *httpRequest, uint32_t requestLen, uin
                               SOCKETS_SO_ALPN_PROTOCOLS, ppcAlpns, sizeof(ppcAlpns) / sizeof(ppcAlpns[0]));
 
     ret |= SOCKETS_SetSockOpt(socket, 0, /* Level - Unused. */
-                              SOCKETS_SO_SERVER_NAME_INDICATION, AIS_REG_GATEWAY, (size_t)1 + sizeof(AIS_REG_GATEWAY));
+                              SOCKETS_SO_SERVER_NAME_INDICATION, AIS_REG_GATEWAY, sizeof(AIS_REG_GATEWAY));
 
     if (ret == SOCKETS_ERROR_NONE)
     {

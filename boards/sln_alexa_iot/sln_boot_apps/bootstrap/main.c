@@ -1,16 +1,16 @@
 /*
- * Copyright 2019 NXP.
+ * Copyright 2019-2020 NXP.
  * This software is owned or controlled by NXP and may only be used strictly in accordance with the
  * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
  * activating and/or otherwise using the software, you are agreeing that you have read, and that you
  * agree to comply with and are bound by, such license terms. If you do not agree to be bound by the
- * applicable license terms, then you may not retain, install, activate or otherwise use the software.d
+ * applicable license terms, then you may not retain, install, activate or otherwise use the software.
  */
 
 /* Board includes */
-#include "app.h"
-#include "board.h"
 #include "pin_mux.h"
+#include "board.h"
+#include "clock_config.h"
 #include "fsl_common.h"
 #include "fsl_debug_console.h"
 
@@ -57,7 +57,7 @@ typedef enum _security_violation
     SEC_JTAG_VIOLATION,
     SEC_WDOG_VIOLATION,
     SEC_GPIO_VIOLATION,
-    SEC_UNKOWN_VIOLATION,
+    SEC_UNKNOWN_VIOLATION,
 } security_violation_t;
 
 const char *kViolationStr[] = {"No security violation.", "ERROR: JTAG active violation!",
@@ -82,6 +82,10 @@ typedef enum _bootstrap_status
 } bootstrap_status_t;
 
 typedef void (*app_entry_t)(void);
+
+/*******************************************************************************
+ * Prototypes
+ ******************************************************************************/
 
 /*******************************************************************************
  * Variables
@@ -133,7 +137,7 @@ static void print_security_violation(uint32_t status)
     }
 }
 
-__attribute__((section(".data.$SRAM_DTC"))) static int32_t read_entry_point(uint32_t address, uint32_t *data)
+__attribute__((section(".ramfunc.$SRAM_ITC"))) static int32_t read_entry_point(uint32_t address, uint32_t *data)
 {
     *data = *((uint32_t *)(address));
 
@@ -515,9 +519,8 @@ void bootstrap_task(void *arg)
     }
 
     PRINTF("\r\n");
-#endif
-
     vTaskDelay(100);
+#endif
 
     // Will take check_prdb status and perform restore if needed
     status = restore_prdb(status);
@@ -600,6 +603,8 @@ int main(void)
 {
     uint32_t isSecurityViolation = 0;
 
+    /* Init board hardware */
+    /* Relocate Vector Table */
 #if RELOCATE_VECTOR_TABLE
     BOARD_RelocateVectorTableToRam();
 #endif
@@ -607,9 +612,9 @@ int main(void)
     BOARD_ConfigMPU();
     BOARD_InitBootPins();
     BOARD_BootClockRUN();
-    BOARD_InitWifi();
     BOARD_InitDebugConsole();
 
+    /* Setup Crypto HW */
     CRYPTO_InitHardware();
 
     /* Initialize Flash to allow writing */
@@ -625,7 +630,7 @@ int main(void)
 
     print_security_violation(isSecurityViolation);
 
-    /* Setup task for playing offline audio */
+    /* Setup bootstrap task */
     if (xTaskCreate(bootstrap_task, "Bootstrap_Task", 512, NULL, configMAX_PRIORITIES - 1, NULL) != pdPASS)
     {
         PRINTF("ERROR: Unable to create bootstrap_task.\r\n");

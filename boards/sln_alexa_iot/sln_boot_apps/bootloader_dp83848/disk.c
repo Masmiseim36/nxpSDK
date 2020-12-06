@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 - 2017 NXP
+ * Copyright 2016 - 2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -46,7 +46,6 @@
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-void BOARD_InitHardware(void);
 void USB_DeviceClockInit(void);
 void USB_DeviceIsrEnable(void);
 #if USB_DEVICE_CONFIG_USE_TASK
@@ -156,6 +155,9 @@ usb_status_t USB_DeviceMscCallback(class_handle_t handle, uint32_t event, void *
     usb_device_lba_information_struct_t *lbaInformationStructure;
     usb_device_lba_app_struct_t *lbaData;
     usb_device_ufi_app_struct_t *ufi;
+#if defined(USB_MSC_READ_RESONSE) && USB_MSC_READ_RESONSE
+    usb_device_capacity_information_struct_t *capacityInformation;
+#endif
 
     switch (event)
     {
@@ -220,6 +222,20 @@ usb_status_t USB_DeviceMscCallback(class_handle_t handle, uint32_t event, void *
             break;
         case kUSB_DeviceMscEventRemovalRequest:
             break;
+#if defined(USB_MSC_READ_RESONSE) && USB_MSC_READ_RESONSE
+        case kUSB_DeviceMscEventRequestSense:
+            break;
+        case kUSB_DeviceMscEventReadCapacity:
+            capacityInformation                         = (usb_device_capacity_information_struct_t *)param;
+            capacityInformation->lengthOfEachLba        = LENGTH_OF_EACH_LBA;
+            capacityInformation->totalLbaNumberSupports = TOTAL_LOGICAL_ADDRESS_BLOCKS_NORMAL;
+            break;
+        case kUSB_DeviceMscEventReadFormatCapacity:
+            capacityInformation                         = (usb_device_capacity_information_struct_t *)param;
+            capacityInformation->lengthOfEachLba        = LENGTH_OF_EACH_LBA;
+            capacityInformation->totalLbaNumberSupports = TOTAL_LOGICAL_ADDRESS_BLOCKS_NORMAL;
+            break;
+#endif
         default:
             break;
     }
@@ -386,6 +402,12 @@ void USB_DeviceApplicationInit()
     }
 
     USB_DeviceIsrEnable();
+
+#if defined(USB_MSC_FORCE_DELAY) && USB_MSC_FORCE_DELAY
+    /*Add one delay here to make the DP pull down long enough to allow host to detect the previous disconnection.*/
+    SDK_DelayAtLeastUs(5000, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
+#endif
+
     USB_DeviceRun(g_msc.deviceHandle);
 }
 

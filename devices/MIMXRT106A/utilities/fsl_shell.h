@@ -193,14 +193,14 @@ _Pragma("diag_suppress=Pm120")
     /*!
      * @brief Registers the shell command
      *
-     * This function is used to register the shell command by using the command configuration #shell_command_config_t.
+     * This function is used to register the shell command by using the command configuration shell_command_config_t.
      * This is a example,
      * @code
      * SHELL_COMMAND_DEFINE(exit, "\r\n\"exit\": Exit program\r\n", SHELL_ExitCommand, 0);
      * SHELL_RegisterCommand(s_shellHandle, SHELL_COMMAND(exit));
      * @endcode
      * @param shellHandle The shell module handle pointer.
-     * @param command  The command element.
+     * @param shellCommand  The command element.
      * @retval kStatus_SHELL_Success Successfully register the command.
      * @retval kStatus_SHELL_Error An error occurred.
      */
@@ -211,7 +211,7 @@ _Pragma("diag_suppress=Pm120")
      *
      * This function is used to unregister the shell command.
      *
-     * @param command The command element.
+     * @param shellCommand The command element.
      * @retval kStatus_SHELL_Success Successfully unregister the command.
      */
     shell_status_t SHELL_UnregisterCommand(shell_command_t * shellCommand);

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 NXP.
+ * Copyright 2018-2020 NXP.
  * This software is owned or controlled by NXP and may only be used strictly in accordance with the
  * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
  * activating and/or otherwise using the software, you are agreeing that you have read, and that you
@@ -28,7 +28,7 @@
  * Prototypes
  ******************************************************************************/
 extern void *pvPortCalloc(size_t nmemb, size_t xSize);
-//extern shell_command_t g_shellCommandexit;
+// extern shell_command_t g_shellCommandexit;
 
 #if USE_WIFI_CONNECTION
 static shell_status_t sln_print_handler(shell_handle_t shellHandle, int32_t argc, char **argv);
@@ -36,7 +36,9 @@ static shell_status_t sln_erase_handler(shell_handle_t shellHandle, int32_t argc
 static shell_status_t sln_setup_handler(shell_handle_t shellHandle, int32_t argc, char **argv);
 #endif
 static shell_status_t sln_reset_handler(shell_handle_t shellHandle, int32_t argc, char **argv);
+#if 0
 static shell_status_t sln_exit_handler(shell_handle_t shellHandle, int32_t argc, char **argv);
+#endif
 static shell_status_t sln_mem_view_handler(shell_handle_t shellHandle, int32_t argc, char **argv);
 static shell_status_t sln_enable_heap_trace_handler(shell_handle_t shellHandle, int32_t argc, char **argv);
 static shell_status_t sln_disable_heap_trace_handler(shell_handle_t shellHandle, int32_t argc, char **argv);
@@ -140,47 +142,7 @@ SHELL_COMMAND_DEFINE(ww_model,
                      "               ww_model set en-US      set the language model setting\r\n"
                      "               ww_model show           show current language model setting\r\n"
                      "\r\n"
-                     "         Language list:\r\n"
-#ifndef LIGHTEN_MODEL_de_DE
-                     "               de-DE\r\n"
-#endif
-
-#ifndef LIGHTEN_MODEL_en_AU
-                     "               en-AU\r\n"
-#endif
-
-#ifndef LIGHTEN_MODEL_en_GB
-                     "               en-GB\r\n"
-#endif
-
-#ifndef LIGHTEN_MODEL_en_IN
-                     "               en-IN\r\n"
-#endif
-
-#ifndef LIGHTEN_MODEL_en_US
-                     "               en-US\r\n"
-#endif
-
-#ifndef LIGHTEN_MODEL_es_ES
-                     "               es-ES\r\n"
-#endif
-
-#ifndef LIGHTEN_MODEL_fr_CA
-                     "               fr-CA\r\n"
-#endif
-
-#ifndef LIGHTEN_MODEL_fr_FR
-                     "               fr-FR\r\n"
-#endif
-
-#ifndef LIGHTEN_MODEL_it_IT
-                     "               it-IT\r\n"
-#endif
-
-#ifndef LIGHTEN_MODEL_ja_JP
-                     "               ja-JP\r\n"
-#endif
-                     ,
+                     "         Language list:\r\n" AMZN_MODEL_SUPPORTED_LOCALES,
                      sln_ww_model_handler,
                      SHELL_IGNORE_PARAMETER_COUNT);
 
@@ -385,7 +347,7 @@ static shell_status_t sln_reset_handler(shell_handle_t shellHandle, int32_t argc
 
     return kStatus_SHELL_Success;
 }
-
+#if 0
 static shell_status_t sln_exit_handler(shell_handle_t shellHandle, int32_t argc, char **argv)
 {
     BaseType_t xHigherPriorityTaskWoken = pdFALSE;
@@ -393,7 +355,7 @@ static shell_status_t sln_exit_handler(shell_handle_t shellHandle, int32_t argc,
 
     return kStatus_SHELL_Success;
 }
-
+#endif
 static shell_status_t sln_mem_view_handler(shell_handle_t shellHandle, int32_t argc, char **argv)
 {
     BaseType_t xHigherPriorityTaskWoken = pdFALSE;
@@ -598,8 +560,8 @@ int sln_shell_init(void)
     SHELL_RegisterCommand(s_shellHandle, SHELL_COMMAND(ww_model));
 
     /* unregister default exit to use our own */
-    //extern shell_command_t g_shellCommandexit;
-    //SHELL_UnregisterCommand(SHELL_COMMAND(exit));
+    // extern shell_command_t g_shellCommandexit;
+    // SHELL_UnregisterCommand(SHELL_COMMAND(exit));
 
     /* TODO do not register any exit command - it'll break the logging */
     //    SHELL_RegisterCommand(s_shellHandle, &g_shellCommandOverrideExit);
@@ -614,7 +576,7 @@ void sln_shell_task(void *arg)
 {
     volatile EventBits_t shellEvents = 0U;
     status_t status                  = 0;
-    //extern shell_command_t g_shellCommandexit;
+    // extern shell_command_t g_shellCommandexit;
 
     SHELL_Printf(s_shellHandle, "Howdy! Type \"help\" to see what this shell can do!\r\n");
     SHELL_Printf(s_shellHandle, "SHELL>> ");
@@ -826,7 +788,7 @@ void sln_shell_task(void *arg)
         {
             /* needed this hook from breaking the while loop. will now call the
              * default exit function, which forces read and write handles closing */
-            //g_shellCommandexit.pFuncCallBack(s_shellHandle, 0, NULL);
+            // g_shellCommandexit.pFuncCallBack(s_shellHandle, 0, NULL);
             break;
         }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP.
+ * Copyright 2019-2020 NXP.
  * This software is owned or controlled by NXP and may only be used strictly in accordance with the
  * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
  * activating and/or otherwise using the software, you are agreeing that you have read, and that you
@@ -10,6 +10,7 @@
 /* Board includes */
 #include "board.h"
 #include "pin_mux.h"
+#include "device_utils.h"
 
 /* FreeRTOS kernel includes */
 #include "FreeRTOS.h"
@@ -44,6 +45,8 @@
 
 #if BOOTLOADER_AWS_IOT_OTA_ENABLED
 #include "sln_ota.h"
+#else
+#include "aws_application_version.h"
 #endif
 
 #include "nor_encrypt_bee.h"
@@ -61,14 +64,16 @@
  * Definitions
  ******************************************************************************/
 
-#define PRESSED 0
 #define SET_THUMB_ADDRESS(x) (x | 0x1)
 
 #define DEBUG_LOG_DELAY_MS(x) vTaskDelay(portTICK_PERIOD_MS *x)
 
 // Set Temporary Stack Top to end of first block of OC RAM
-extern void __base_SRAM_OC_NON_CACHEABLE(void);
-#define TEMP_STACK_TOP (__base_SRAM_OC_NON_CACHEABLE + 0x8000)
+#if (defined(MIMXRT106A_SERIES) || defined(MIMXRT106L_SERIES) || defined(MIMXRT106F_SERIES))
+#define TEMP_STACK_TOP (0x20208000)
+#else
+#error "TEMP_STACK_TOP is not defined for this device!"
+#endif
 
 // typedef for function used to do the jump to the application
 typedef void (*app_entry_t)(void);
@@ -78,6 +83,20 @@ typedef void (*app_entry_t)(void);
  ******************************************************************************/
 app_entry_t appEntry = 0;
 
+#if (defined(APP_MAJ_VER) && defined(APP_MIN_VER) && defined(APP_BLD_VER))
+static AppVersion32_t localAppFirmwareVersion = {
+    .u.x.ucMajor = APP_MAJ_VER,
+    .u.x.ucMinor = APP_MIN_VER,
+    .u.x.usBuild = APP_BLD_VER,
+};
+#else
+static AppVersion32_t localAppFirmwareVersion = {
+    .u.x.ucMajor = 0,
+    .u.x.ucMinor = 0,
+    .u.x.usBuild = 0,
+};
+#warning "No build version defined for this application!"
+#endif
 /*******************************************************************************
  * Code
  ******************************************************************************/
@@ -315,7 +334,7 @@ void CheckForMSDMode()
     USB_MSC_Init();
 #else
     // Check if USB MSD Mode button is pushed
-    if (PRESSED == GPIO_PinRead(SW2_GPIO, SW2_GPIO_PIN))
+    if (BUTTON_MSDPressed())
     {
 
 #if ENABLE_UNSIGNED_USB_MSD
@@ -375,7 +394,7 @@ static void CheckForFwUpdateOTW()
 
     if (SLN_FLASH_NO_ERROR == status)
     {
-        if ((otwFlag == 0) || (PRESSED == GPIO_PinRead(SW1_GPIO, SW1_GPIO_PIN)))
+        if ((otwFlag == 0) || BUTTON_OTWPressed())
         {
             // Set the bit and disable the FWUPDATE
             status = FICA_set_comm_flag(FICA_COMM_FWUPDATE_BIT);
@@ -398,7 +417,10 @@ void BootloaderMain(void *args)
     volatile bool isWait = false; // Boolean to force entry into wait states
     status_t status      = kStatus_Success;
 
-    RapidBlinkLED();
+    configPRINTF(("\r\n\r\n*** BOOTLOADER v%d.%d.%d ***\r\n\r\n", localAppFirmwareVersion.u.x.ucMajor,
+           localAppFirmwareVersion.u.x.ucMinor, localAppFirmwareVersion.u.x.usBuild));
+
+    RGB_LED_SetBrightnessColor(LED_BRIGHT_MEDIUM, LED_COLOR_WHITE);
 
     // Hold execution here. This is useful for attaching debugger during encrypted XIP.
     while (isWait)
@@ -538,6 +560,8 @@ void BootloaderMain(void *args)
     }
 
     configPRINTF(("Jumping to main application...\r\n"));
+
+    RGB_LED_SetBrightnessColor(LED_BRIGHT_MEDIUM, LED_COLOR_OFF);
 
     // Launch the target application
     jumpToMainAppTask();

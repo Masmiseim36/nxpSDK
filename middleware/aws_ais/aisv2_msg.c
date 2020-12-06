@@ -606,11 +606,14 @@ MQTTBool_t AIS_CallbackSpeaker(void *pvUserData, const MQTTPublishData_t *const 
     ais_handle_t *handle = (ais_handle_t *)pvUserData;
     commonHeader_t *header;
     status_t ret        = kStatus_Success;
-    uint32_t dataLength = 0;
-    uint32_t encLength  = 0;
-    uint32_t dataOffset = (sizeof(commonHeader_t) - sizeof(plainTextHeader_t));
+    int32_t dataLength = 0;
+    int32_t encLength  = 0;
+    int32_t dataOffset = (sizeof(commonHeader_t) - sizeof(plainTextHeader_t));
     char *dataOut;
     bool queueSeq = false;
+
+    /* Sanity check to make sure plainTextHeader_t is not larger in size that commonHeader_t */
+    assert(dataOffset >= 0);
 
     if (handle->pendDisconnect || (reconnection_task_get_state() != kStartState))
     {
@@ -631,10 +634,14 @@ MQTTBool_t AIS_CallbackSpeaker(void *pvUserData, const MQTTPublishData_t *const 
          pxPublishParameters->ulDataLength, header->sequence, handle->topicSequence[AIS_TOPIC_SPEAKER],
          STREAMER_GetQueuedNotBlocking(handle->audioPlayer)));
 
-    if (encLength)
+    if (encLength > 0)
     {
         ret = AIS_Crypt(handle, handle->topicSecret[AIS_TOPIC_SPEAKER], (uint8_t *)dataOut, (uint8_t *)dataOut,
-                        encLength, header->iv, header->mac, AIS_CRYPT_DECRYPT);
+                        (uint32_t)encLength, header->iv, header->mac, AIS_CRYPT_DECRYPT);
+    }
+    else
+    {
+        ret = kStatus_InvalidArgument;
     }
 
     if (ret != kStatus_Success)
@@ -668,6 +675,13 @@ MQTTBool_t AIS_CallbackSpeaker(void *pvUserData, const MQTTPublishData_t *const 
     dataOut += dataOffset;
     dataLength = encLength - dataOffset;
 
+    if (dataLength < 0)
+    {
+        configPRINTF(
+            ("[AIS] ERROR: Data Offset greater than message length, Data Offset: %d, Encrypted Length: %d", dataOffset, encLength));
+        return eMQTTFalse;
+    }
+
     /* reset overrun sequence */
     if (appData.overrunSequence == header->sequence && appData.overrunSequence != 0)
     {
@@ -697,7 +711,7 @@ MQTTBool_t AIS_CallbackSpeaker(void *pvUserData, const MQTTPublishData_t *const 
             configPRINTF(("[AIS WARN] Out of sequence speaker message: %d\r\n", header->sequence));
             queueSeq = true;
         }
-        else if (AIS_ProcessSpeaker(handle, dataOut, dataLength))
+        else if (AIS_ProcessSpeaker(handle, dataOut, (uint32_t)dataLength))
         {
             /* Sequence sent to the speaker for processing */
             handle->topicSequence[AIS_TOPIC_SPEAKER]++;
@@ -719,7 +733,7 @@ MQTTBool_t AIS_CallbackSpeaker(void *pvUserData, const MQTTPublishData_t *const 
 
     if (queueSeq)
     {
-        AIS_QueueSequence(handle, AIS_TOPIC_SPEAKER, dataOut, header->sequence, dataLength);
+        AIS_QueueSequence(handle, AIS_TOPIC_SPEAKER, dataOut, header->sequence, (uint32_t)dataLength);
     }
 
     /* Return false to indicate we do not take ownership of the MQTT buffer.

@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP
+ * Copyright 2019-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -20,7 +20,7 @@
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "fsl_tfa9xxx.h"
-
+#include "fsl_codec_common.h"
 #include "stdio.h"
 #include "stdlib.h"
 
@@ -1107,15 +1107,15 @@ usb_status_t USB_DeviceAudioProcessTerminalRequest(uint32_t audioCommand, uint32
             break;
         case USB_DEVICE_AUDIO_SET_CUR_DELAY_CONTROL:
             g_deviceComposite->audioUnified.curDelay[0] = **(buffer);
-            g_deviceComposite->audioUnified.curDelay[1] = **(buffer + 1);
+            g_deviceComposite->audioUnified.curDelay[1] = *((*buffer) + 1);
             break;
         case USB_DEVICE_AUDIO_SET_CUR_SAMPLING_FREQ_CONTROL:
             g_deviceComposite->audioUnified.curSamplingFrequency[0] = **(buffer);
-            g_deviceComposite->audioUnified.curSamplingFrequency[1] = **(buffer + 1);
+            g_deviceComposite->audioUnified.curSamplingFrequency[1] = *((*buffer) + 1);
             break;
         case USB_DEVICE_AUDIO_SET_MIN_VOLUME_CONTROL:
             g_deviceComposite->audioUnified.minVolume[0] = **(buffer);
-            g_deviceComposite->audioUnified.minVolume[1] = **(buffer + 1);
+            g_deviceComposite->audioUnified.minVolume[1] = *((*buffer) + 1);
             break;
         case USB_DEVICE_AUDIO_SET_MIN_BASS_CONTROL:
             g_deviceComposite->audioUnified.minBass = **(buffer);
@@ -1128,15 +1128,15 @@ usb_status_t USB_DeviceAudioProcessTerminalRequest(uint32_t audioCommand, uint32
             break;
         case USB_DEVICE_AUDIO_SET_MIN_DELAY_CONTROL:
             g_deviceComposite->audioUnified.minDelay[0] = **(buffer);
-            g_deviceComposite->audioUnified.minDelay[1] = **(buffer + 1);
+            g_deviceComposite->audioUnified.minDelay[1] = *((*buffer) + 1);
             break;
         case USB_DEVICE_AUDIO_SET_MIN_SAMPLING_FREQ_CONTROL:
             g_deviceComposite->audioUnified.minSamplingFrequency[0] = **(buffer);
-            g_deviceComposite->audioUnified.minSamplingFrequency[1] = **(buffer + 1);
+            g_deviceComposite->audioUnified.minSamplingFrequency[1] = *((*buffer) + 1);
             break;
         case USB_DEVICE_AUDIO_SET_MAX_VOLUME_CONTROL:
             g_deviceComposite->audioUnified.maxVolume[0] = **(buffer);
-            g_deviceComposite->audioUnified.maxVolume[1] = **(buffer + 1);
+            g_deviceComposite->audioUnified.maxVolume[1] = *((*buffer) + 1);
             break;
         case USB_DEVICE_AUDIO_SET_MAX_BASS_CONTROL:
             g_deviceComposite->audioUnified.maxBass = **(buffer);
@@ -1149,15 +1149,15 @@ usb_status_t USB_DeviceAudioProcessTerminalRequest(uint32_t audioCommand, uint32
             break;
         case USB_DEVICE_AUDIO_SET_MAX_DELAY_CONTROL:
             g_deviceComposite->audioUnified.maxDelay[0] = **(buffer);
-            g_deviceComposite->audioUnified.maxDelay[1] = **(buffer + 1);
+            g_deviceComposite->audioUnified.maxDelay[1] = *((*buffer) + 1);
             break;
         case USB_DEVICE_AUDIO_SET_MAX_SAMPLING_FREQ_CONTROL:
             g_deviceComposite->audioUnified.maxSamplingFrequency[0] = **(buffer);
-            g_deviceComposite->audioUnified.maxSamplingFrequency[1] = **(buffer + 1);
+            g_deviceComposite->audioUnified.maxSamplingFrequency[1] = *((*buffer) + 1);
             break;
         case USB_DEVICE_AUDIO_SET_RES_VOLUME_CONTROL:
             g_deviceComposite->audioUnified.resVolume[0] = **(buffer);
-            g_deviceComposite->audioUnified.resVolume[1] = **(buffer + 1);
+            g_deviceComposite->audioUnified.resVolume[1] = *((*buffer) + 1);
             break;
         case USB_DEVICE_AUDIO_SET_RES_BASS_CONTROL:
             g_deviceComposite->audioUnified.resBass = **(buffer);
@@ -1170,11 +1170,11 @@ usb_status_t USB_DeviceAudioProcessTerminalRequest(uint32_t audioCommand, uint32
             break;
         case USB_DEVICE_AUDIO_SET_RES_DELAY_CONTROL:
             g_deviceComposite->audioUnified.resDelay[0] = **(buffer);
-            g_deviceComposite->audioUnified.resDelay[1] = **(buffer + 1);
+            g_deviceComposite->audioUnified.resDelay[1] = *((*buffer) + 1);
             break;
         case USB_DEVICE_AUDIO_SET_RES_SAMPLING_FREQ_CONTROL:
             g_deviceComposite->audioUnified.resSamplingFrequency[0] = **(buffer);
-            g_deviceComposite->audioUnified.resSamplingFrequency[1] = **(buffer + 1);
+            g_deviceComposite->audioUnified.resSamplingFrequency[1] = *((*buffer) + 1);
             break;
         default:
             error = kStatus_USB_InvalidRequest;

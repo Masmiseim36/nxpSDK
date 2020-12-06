@@ -25,14 +25,14 @@
  * Definitions
  ******************************************************************************/
 /* Buttons related GPIOs */
-#define SW_COUNT 2
-#define GPIO_IRQHandler BOARD_USER_BUTTON_IRQ_HANDLER
-#define PRESSED 0
-#define RELEASED 1
-#define BIT_PRESS_1 (1 << 0)
-#define BIT_RELEASE_1 (1 << 1)
-#define BIT_PRESS_2 (1 << 2)
-#define BIT_RELEASE_2 (1 << 3)
+#define SW_COUNT         2
+#define GPIO_IRQHandler  BOARD_USER_BUTTON_IRQ_HANDLER
+#define PRESSED          0
+#define RELEASED         1
+#define BIT_PRESS_1      (1 << 0)
+#define BIT_RELEASE_1    (1 << 1)
+#define BIT_PRESS_2      (1 << 2)
+#define BIT_RELEASE_2    (1 << 3)
 #define DEBOUNCE_TIME_US 50000
 
 /*******************************************************************************

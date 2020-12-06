@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP.
+ * Copyright 2019-2020 NXP.
  * This software is owned or controlled by NXP and may only be used strictly in accordance with the
  * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
  * activating and/or otherwise using the software, you are agreeing that you have read, and that you
@@ -33,8 +33,7 @@
  */
 
 #include <stdint.h>
-
-#include "app.h"
+#include "sln_flash_config.h"
 
 #define SLN_FLASH_MGMT_BASE_ADDR (0x1700000)
 #define SLN_FLASH_MGMT_LAST_ADDR (0x1F40000)
@@ -43,13 +42,15 @@
 #define SLN_FLASH_MGMT_FILE_ADDR(x) (SLN_FLASH_MGMT_BASE_ADDR + (x * SLN_FLASH_MGMT_SECTOR_SIZE))
 
 #define SLN_FLASH_MGMT_FILE_NAME_LEN (30U)
+#define SLN_FLASH_MAP_SIZE (FLASH_PAGE_SIZE)
+#define SLN_FLASH_MAX_MAP_ENTRIES (FLASH_PAGE_SIZE - 1)
 
 #define SLN_FLASH_MGMT_MAP_OLD (0x00)
 #define SLN_FLASH_MGMT_MAP_CURRENT (0xAA)
 #define SLN_FLASH_MGMT_MAP_FREE (0xFF)
 
 /**
- * @Brief Returns codes of the flash management functions
+ * @brief Returns codes of the flash management functions
  */
 typedef enum _sln_flash_mgmt_status
 {
@@ -86,7 +87,7 @@ typedef struct _sln_flash_entry
 
 typedef struct _sln_flash_map
 {
-    uint8_t map[FLASH_PAGE_SIZE - 1];
+    uint8_t map[SLN_FLASH_MAX_MAP_ENTRIES];
     uint8_t reserved;
 } sln_flash_map_t;
 
@@ -107,6 +108,12 @@ typedef struct _sln_file_header
     uint32_t extSizeBytes : 10; /*! Bits 23:14 for extended file size */
     uint32_t crc : 32;          /*! 32 bits of CRC */
 } sln_file_header_t;
+
+typedef struct
+{
+    void (*pre_sector_erase_cb)(void);  /*! Callback to be called before erasing a sector */
+    void (*post_sector_erase_cb)(void); /*! Callback to be called after erasing a sector */
+} sln_flash_mgmt_cbs_t;
 
 #if defined(__cplusplus)
 extern "C" {
@@ -212,7 +219,7 @@ int32_t SLN_FLASH_MGMT_ReadDataPtr(const char *name, const uint8_t **data, uint3
  *
  * @param name String name of entry/file to erase
  *
- * @retuns Status of the erase
+ * @returns Status of the erase
  */
 int32_t SLN_FLASH_MGMT_Erase(const char *name);
 
@@ -225,6 +232,15 @@ int32_t SLN_FLASH_MGMT_Erase(const char *name);
  * @returns Status of de-initialization
  */
 int32_t SLN_FLASH_MGMT_Deinit(sln_flash_entry_t *flashEntries, uint8_t erase);
+
+/*!
+ * @brief Set the flash mgmt callbacks
+ *
+ * @param *cbs Pointer to a sln_flash_mgmt_cbs_t structure
+ *
+ * @returns SLN_FLASH_MGMT_OK on success, an error code otherwise
+ */
+int32_t SLN_FLASH_MGMT_SetCbs(sln_flash_mgmt_cbs_t *cbs);
 
 #if defined(__cplusplus)
 }

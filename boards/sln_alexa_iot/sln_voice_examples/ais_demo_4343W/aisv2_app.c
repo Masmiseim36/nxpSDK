@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 NXP.
+ * Copyright 2018-2020 NXP.
  * This software is owned or controlled by NXP and may only be used strictly in accordance with the
  * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
  * activating and/or otherwise using the software, you are agreeing that you have read, and that you
@@ -30,6 +30,8 @@ const char *ais_state_str[] = {"AIS_STATE_IDLE", "AIS_STATE_THINKING", "AIS_STAT
                                "AIS_STATE_INVALID"};
 
 const uint64_t kEpochAdjust = 2208988800ULL;
+
+#define TICK_THRESHOLD (portTICK_PERIOD_MS * 50)
 
 #include "audio_processing_task.h"
 #include "limits.h"
@@ -94,7 +96,10 @@ uint32_t AIS_AppCallback_Microphone(uint8_t **data, uint32_t *size)
 {
     uint32_t ret = kStatus_NoTransferInProgress;
 
-    if (appData.expectedTickTime < xTaskGetTickCount())
+    // Get diff between current tick and previous tick; treated as signed to account for overflow
+    int32_t diff = (int32_t)xTaskGetTickCount() - (int32_t)appData.previousTickTime;
+
+    if (TICK_THRESHOLD <= diff)
     {
         if (kMicCloudWakeVerifier == audio_processing_get_state())
         {
@@ -106,7 +111,9 @@ uint32_t AIS_AppCallback_Microphone(uint8_t **data, uint32_t *size)
             /* Needs to be an if else or the last of the wake word will be overwritten */
             ret = audio_processing_get_output_buffer(data, size);
         }
-        appData.expectedTickTime = xTaskGetTickCount() + (portTICK_PERIOD_MS * 50);
+
+        // Store this publish time
+        appData.previousTickTime = xTaskGetTickCount();
     }
 
     return ret;
@@ -393,17 +400,24 @@ void AIS_AppCallback_SpeakerOverflow(ais_handle_t *handle, uint32_t sequence)
 {
     streamer_handle_t *streamer = (streamer_handle_t *)handle->audioPlayer;
 
-    configPRINTF(("[AIS App] Speaker overflow detected, sequence: %d\r\n", sequence));
-
-    /* send the overrun message directly from here */
-    /* Need to send Overflow regardless of the previous state. This is a critical point */
-    AIS_EventBufferStateChanged(handle, appData.speakerBufferState, AIS_BUFFER_STATE_OVERRUN, sequence);
-
     AIS_State_Lock(handle);
 
-    appData.prevSpeakerBufferState = appData.speakerBufferState;
-    appData.speakerBufferState     = AIS_BUFFER_STATE_OVERRUN;
-    appData.overrunSequence        = sequence;
+    configPRINTF(("[AIS App] Speaker overflow detected, sequence: %d\r\n", sequence));
+
+    /* Do not send an OVERRUN event if we're still receiving speaker messages after the speaker was closed */
+    if (appData.speakerOpen == true)
+    {
+        /* Need to send Overflow regardless of the previous state. This is a critical point */
+        AIS_EventBufferStateChanged(handle, appData.speakerBufferState, AIS_BUFFER_STATE_OVERRUN, sequence);
+
+        appData.prevSpeakerBufferState = appData.speakerBufferState;
+        appData.speakerBufferState     = AIS_BUFFER_STATE_OVERRUN;
+        appData.overrunSequence        = sequence;
+    }
+    else
+    {
+        handle->topicSequence[AIS_TOPIC_SPEAKER]++;
+    }
 
     if (!STREAMER_IsPlaying(streamer))
     {

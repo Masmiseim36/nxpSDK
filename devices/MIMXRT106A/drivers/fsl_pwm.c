@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -55,7 +55,8 @@ static inline uint16_t PWM_GetComplementU16(uint16_t value)
 
 static inline uint16_t dutyCycleToReloadValue(uint8_t dutyCyclePercent)
 {
-    return 65535U * dutyCyclePercent / 100U;
+    /* Rounding calculations to improve the accuracy of reloadValue */
+    return ((65535U * dutyCyclePercent) + 50U) / 100U;
 }
 
 static uint32_t PWM_GetInstance(PWM_Type *base)
@@ -313,7 +314,8 @@ status_t PWM_SetupPwm(PWM_Type *base,
                     /* Indicates the center value */
                     base->SM[subModule].VAL0 = 0;
                     /* Indicates the end of the PWM period */
-                    base->SM[subModule].VAL1 = modulo;
+                    /* The change during the end to start of the PWM period requires a count time */
+                    base->SM[subModule].VAL1 = modulo - 1U;
                 }
 
                 /* Setup the PWM dutycycle */
@@ -337,7 +339,8 @@ status_t PWM_SetupPwm(PWM_Type *base,
                     /* Indicates the center value */
                     base->SM[subModule].VAL0 = (pulseCnt / 2U);
                     /* Indicates the end of the PWM period */
-                    base->SM[subModule].VAL1 = pulseCnt;
+                    /* The change during the end to start of the PWM period requires a count time */
+                    base->SM[subModule].VAL1 = pulseCnt - 1U;
                 }
 
                 /* Setup the PWM dutycycle */
@@ -362,7 +365,8 @@ status_t PWM_SetupPwm(PWM_Type *base,
                     /* Indicates the center value */
                     base->SM[subModule].VAL0 = 0;
                     /* Indicates the end of the PWM period */
-                    base->SM[subModule].VAL1 = modulo;
+                    /* The change during the end to start of the PWM period requires a count time */
+                    base->SM[subModule].VAL1 = modulo - 1U;
                 }
 
                 /* Setup the PWM dutycycle */
@@ -386,7 +390,8 @@ status_t PWM_SetupPwm(PWM_Type *base,
                     /* Indicates the center value */
                     base->SM[subModule].VAL0 = (pulseCnt / 2U);
                     /* Indicates the end of the PWM period */
-                    base->SM[subModule].VAL1 = pulseCnt;
+                    /* The change during the end to start of the PWM period requires a count time */
+                    base->SM[subModule].VAL1 = pulseCnt - 1U;
                 }
 
                 /* Setup the PWM dutycycle */
@@ -506,13 +511,9 @@ void PWM_UpdatePwmDutycycle(PWM_Type *base,
  *                          0=inactive signal(0% duty cycle)...
  *                          65535=active signal (100% duty cycle)
  */
-void PWM_UpdatePwmDutycycleHighAccuracy(PWM_Type *base,
-                                        pwm_submodule_t subModule,
-                                        pwm_channels_t pwmSignal,
-                                        pwm_mode_t currPwmMode,
-                                        uint16_t dutyCycle)
+void PWM_UpdatePwmDutycycleHighAccuracy(
+    PWM_Type *base, pwm_submodule_t subModule, pwm_channels_t pwmSignal, pwm_mode_t currPwmMode, uint16_t dutyCycle)
 {
-    assert(dutyCycle <= 65535U);
     assert((uint16_t)pwmSignal < 2U);
     uint16_t pulseCnt = 0, pwmHighPulse = 0;
     uint16_t modulo = 0;
@@ -520,7 +521,7 @@ void PWM_UpdatePwmDutycycleHighAccuracy(PWM_Type *base,
     switch (currPwmMode)
     {
         case kPWM_SignedCenterAligned:
-            modulo   = base->SM[subModule].VAL1;
+            modulo   = base->SM[subModule].VAL1 + 1U;
             pulseCnt = modulo * 2U;
             /* Calculate pulse width */
             pwmHighPulse = (pulseCnt * dutyCycle) / 65535U;
@@ -538,7 +539,7 @@ void PWM_UpdatePwmDutycycleHighAccuracy(PWM_Type *base,
             }
             break;
         case kPWM_CenterAligned:
-            pulseCnt = base->SM[subModule].VAL1;
+            pulseCnt = base->SM[subModule].VAL1 + 1U;
             /* Calculate pulse width */
             pwmHighPulse = (pulseCnt * dutyCycle) / 65535U;
 
@@ -555,7 +556,7 @@ void PWM_UpdatePwmDutycycleHighAccuracy(PWM_Type *base,
             }
             break;
         case kPWM_SignedEdgeAligned:
-            modulo   = base->SM[subModule].VAL1;
+            modulo   = base->SM[subModule].VAL1 + 1U;
             pulseCnt = modulo * 2U;
             /* Calculate pulse width */
             pwmHighPulse = (pulseCnt * dutyCycle) / 65535U;
@@ -573,7 +574,7 @@ void PWM_UpdatePwmDutycycleHighAccuracy(PWM_Type *base,
             }
             break;
         case kPWM_EdgeAligned:
-            pulseCnt = base->SM[subModule].VAL1;
+            pulseCnt = base->SM[subModule].VAL1 + 1U;
             /* Calculate pulse width */
             pwmHighPulse = (pulseCnt * dutyCycle) / 65535U;
 
@@ -786,6 +787,35 @@ void PWM_SetupFaults(PWM_Type *base, pwm_fault_input_t faultNum, const pwm_fault
             break;
     }
     base->FSTS = reg;
+}
+
+/*!
+ * brief  Fill in the PWM fault config struct with the default settings
+ *
+ * The default values are:
+ * code
+ *   config->faultClearingMode = kPWM_Automatic;
+ *   config->faultLevel = false;
+ *   config->enableCombinationalPath = true;
+ *   config->recoverMode = kPWM_NoRecovery;
+ * endcode
+ * param config Pointer to user's PWM fault config structure.
+ */
+void PWM_FaultDefaultConfig(pwm_fault_param_t *config)
+{
+    assert(config);
+
+    /* Initializes the configure structure to zero. */
+    (void)memset(config, 0, sizeof(*config));
+
+    /* PWM uses automatic fault clear mode */
+    config->faultClearingMode = kPWM_Automatic;
+    /* PWM fault level is set to logic 0 */
+    config->faultLevel = false;
+    /* Combinational Path from fault input is enabled */
+    config->enableCombinationalPath = true;
+    /* PWM output will stay inactive when recovering from a fault */
+    config->recoverMode = kPWM_NoRecovery;
 }
 
 /*!

@@ -189,7 +189,7 @@ static uint8_t  mpSendOnBleDataBuffer[mAppUartBufferSize_c] = {0};
 static uint16_t mOnBleDataBufferIndex = 0;
 
 /* Local Buffer Size */
-static uint16_t mAppUartBufferSize = mAppUartBufferSize_c; 
+static uint16_t mAppUartBufferSize = mAppUartBufferSize_c;
 
 static uint8_t mDevRandomAddress[] = {0x00,0x01,0x02,0x03,0x04,0x05};
 
@@ -245,7 +245,7 @@ void main_task (uint32_t parameter)
 #if (cPWR_UsePowerDownMode)
         PWR_Init();
         PWR_DisallowDeviceToSleep();
-#endif   
+#endif
         /* Initialize ble and peripheral drivers specific to the ble application */
         BleApp_Init();
 
@@ -268,7 +268,7 @@ void main_task (uint32_t parameter)
         ZTIMER_vTask();
 
         APP_taskCoordinator();
-        
+
         BleApp_Thread(0);
 
         app_zb_shell_task();
@@ -479,24 +479,24 @@ void BleApp_Init(void)
     RNG_GetRandomNo(&pseudoRNGSeed[3]);
     RNG_GetRandomNo(&pseudoRNGSeed[4]);
     RNG_SetPseudoRandomNoSeed((uint8_t*)pseudoRNGSeed);
-   
-        
+
+
 #if !gUseHciTransportDownward_d
-    pfBLE_SignalFromISR = BLE_SignalFromISRCallback;        
+    pfBLE_SignalFromISR = BLE_SignalFromISRCallback;
 #endif /* !gUseHciTransportDownward_d */
-    
+
     /* Prepare application input queue.*/
     MSG_InitQueue(&mHostAppInputQueue);
-    
+
     /* Prepare callback input queue.*/
     MSG_InitQueue(&mAppCbInputQueue);
-    
+
     /* BLE Host Stack Init */
     if (Ble_Initialize(App_GenericCallback) != gBleSuccess_c)
     {
         panic(0,0,0,0);
         return;
-    }   
+    }
 }
 
 /*! *********************************************************************************
@@ -523,10 +523,10 @@ void BleApp_Start (gapRole_t mGapRole)
         default:
             break;
     }
-    
-#if (cPWR_UsePowerDownMode)    
+
+#if (cPWR_UsePowerDownMode)
     PWR_ChangeDeepSleepMode(1); /* MCU=LLS3, LL=DSM, wakeup on GPIO/LL */
-#endif  
+#endif
 
 }
 
@@ -534,9 +534,9 @@ void BleApp_Start (gapRole_t mGapRole)
 /* Called by BLE when a connect is received */
 static void BLE_SignalFromISRCallback(void)
 {
-#if (cPWR_UsePowerDownMode)  
-    PWR_DisallowDeviceToSleep();  
-#endif    
+#if (cPWR_UsePowerDownMode)
+    PWR_DisallowDeviceToSleep();
+#endif
 }
 #endif
 
@@ -550,7 +550,7 @@ static void BleApp_Config()
 {
     /* Perform common configurations */
     BleConnManager_GapPeripheralConfig();
-    
+
     /* Register for callbacks*/
     App_RegisterGattServerCallback(BleApp_GattServerCallback);
     App_RegisterGattClientProcedureCallback(BleApp_GattClientCallback);
@@ -563,7 +563,7 @@ static void BleApp_Config()
     mAdvState.advOn = FALSE;
     mPeerInformation.appState = mAppIdle_c;
     mScanningOn = FALSE;
-    
+
     mGapRole = gGapPeripheral_c;
 
     /* Start services */
@@ -572,13 +572,13 @@ static void BleApp_Config()
     /* Allocate application timer */
     mBleAppTimerId = TMR_AllocateTimer();
     mUartStreamFlushTimerId = TMR_AllocateTimer();
-    
+
     if((gTmrInvalidTimerID_c == mBleAppTimerId)||
        (gTmrInvalidTimerID_c == mUartStreamFlushTimerId))
     {
         panic(0, 0, 0, 0);
     }
-#if (cPWR_UsePowerDownMode)   
+#if (cPWR_UsePowerDownMode)
     PWR_AllowDeviceToSleep();
 #endif
 }
@@ -592,32 +592,32 @@ void BleApp_GenericCallback (gapGenericEvent_t* pGenericEvent)
 {
     /* Call BLE Conn Manager */
     BleConnManager_GenericEvent(pGenericEvent);
-    
+
     switch (pGenericEvent->eventType)
     {
-        case gInitializationComplete_c:    
+        case gInitializationComplete_c:
             BleApp_Config();
             BleApp_Start(mGapRole);
-            break;  
+            break;
         case gPublicAddressRead_c:
             /* generate and set random static address */
             BleApp_GenerateAndSetRandomAddress();
-            break; 
+            break;
         case gRandomAddressSet_c:
-#if gAppUsePairing_d            
+#if gAppUsePairing_d
             gSmpKeys.addressType = gBleAddrTypeRandom_c;
             gSmpKeys.aAddress = mDevRandomAddress;
-#endif 
-            break; 
+#endif
+            break;
         case gAdvertisingParametersSetupComplete_c:
             App_StartAdvertising(BleApp_AdvertisingCallback, BleApp_ConnectionCallback);
-            break;         
-        
+            break;
+
         case gAdvertisingSetupFailed_c:
         case gInternalError_c:
             //panic(0,0,0,0);
             break;
-        default: 
+        default:
             break;
     }
 }
@@ -645,34 +645,34 @@ static void BleApp_ScanningCallback (gapScanningEvent_t* pScanningEvent)
         case gDeviceScanned_c:
         {
             if (BleApp_CheckScanEvent(&pScanningEvent->eventData.scannedDevice))
-            {        
+            {
                 gConnReqParams.peerAddressType = pScanningEvent->eventData.scannedDevice.addressType;
-                FLib_MemCpy(gConnReqParams.peerAddress, 
+                FLib_MemCpy(gConnReqParams.peerAddress,
                             pScanningEvent->eventData.scannedDevice.aAddress,
                             sizeof(bleDeviceAddress_t));
-                
+
                 Gap_StopScanning();
                 App_Connect(&gConnReqParams, BleApp_ConnectionCallback);
             }
-        }        
+        }
         break;
-        
+
         case gScanStateChanged_c:
         {
             mScanningOn = !mScanningOn;
-            
+
             /* Node starts scanning */
             if (mScanningOn)
-            { 
+            {
                 /* Start advertising timer */
-                TMR_StartLowPowerTimer(mBleAppTimerId, 
+                TMR_StartLowPowerTimer(mBleAppTimerId,
                            gTmrLowPowerSecondTimer_c,
                            TmrSeconds(gScanningTime_c),
-                           ScaningTimerCallback, NULL);  
+                           ScaningTimerCallback, NULL);
             }
             /* Node is not scanning */
             else
-            {                
+            {
                 TMR_StopTimer(mBleAppTimerId);
             }
         }
@@ -701,13 +701,13 @@ static void BleApp_AdvertisingCallback (gapAdvertisingEvent_t* pAdvertisingEvent
             mAdvState.advOn = !mAdvState.advOn;
         }
         break;
-        
+
     case gAdvertisingCommandFailed_c:
         {
             panic(0,0,0,0);
         }
         break;
-        
+
     default:
         break;
     }
@@ -733,13 +733,12 @@ static void BleApp_ConnectionCallback (deviceId_t peerDeviceId, gapConnectionEve
             /* Subscribe client*/
             Wus_Subscribe(peerDeviceId);
             /* Stop Advertising Timer*/
-            mAdvState.advOn = FALSE;
             TMR_StopTimer(mBleAppTimerId);
-            
-#if gAppUsePairing_d           
-#if gAppUseBonding_d            
+
+#if gAppUsePairing_d
+#if gAppUseBonding_d
             Gap_CheckIfBonded(peerDeviceId, &mPeerInformation.isBonded);
-            
+
             if ((mPeerInformation.isBonded) &&
                 (gBleSuccess_c == Gap_LoadCustomPeerInformation(peerDeviceId,
                     (void*) &mPeerInformation.clientInfo, 0, sizeof (wucConfig_t))))
@@ -750,18 +749,18 @@ static void BleApp_ConnectionCallback (deviceId_t peerDeviceId, gapConnectionEve
                 Gap_EncryptLink(peerDeviceId);
             }
             else
-#endif /* gAppUseBonding_d*/ 
+#endif /* gAppUseBonding_d*/
             {
                 if (mGapRole == gGapCentral_c)
                 {
 //                    Gap_Pair(peerDeviceId, &gPairingParameters);
                 }
             }
-#endif /* gAppUsePairing_d */            
+#endif /* gAppUsePairing_d */
             BleApp_StateMachineHandler(mPeerInformation.deviceId, mAppEvt_PeerConnected_c);
 #if (cPWR_UsePowerDownMode)
             PWR_ChangeDeepSleepMode(1);
-            PWR_AllowDeviceToSleep();    
+            PWR_AllowDeviceToSleep();
 #endif
 
         }
@@ -780,7 +779,7 @@ static void BleApp_ConnectionCallback (deviceId_t peerDeviceId, gapConnectionEve
         }
         break;
 
-#if gAppUsePairing_d		
+#if gAppUsePairing_d
         case gConnEvtPairingComplete_c:
         {
             if (pConnectionEvent->eventData.pairingCompleteEvent.pairingSuccessful)
@@ -794,7 +793,7 @@ static void BleApp_ConnectionCallback (deviceId_t peerDeviceId, gapConnectionEve
     default:
         break;
     }
-    
+
     /* Connection Manager to handle Host Stack interactions */
     if (mGapRole == gGapCentral_c)
     {
@@ -816,8 +815,8 @@ static void BleApp_ServiceDiscoveryCallback(deviceId_t peerDeviceId, servDiscEve
             if(pEvent->eventData.pService->uuidType == gBleUuidType128_c)
             {
                 if( FLib_MemCmp((void*)&uuid_service_wireless_uart, (void*)&pEvent->eventData.pService->uuid, sizeof(bleUuid_t)))
-                { 
-                    BleApp_StoreServiceHandles(peerDeviceId, pEvent->eventData.pService); 
+                {
+                    BleApp_StoreServiceHandles(peerDeviceId, pEvent->eventData.pService);
                 }
             }
         }
@@ -855,13 +854,13 @@ static void BleApp_GattClientCallback(
     gattProcedureResult_t   procedureResult,
     bleResult_t             error
 )
-{  
+{
     if (procedureResult == gGattProcError_c)
-    {    
+    {
         BleApp_StateMachineHandler(serverDeviceId, mAppEvt_GattProcError_c);
     }
     else if (procedureResult == gGattProcSuccess_c)
-    {        
+    {
     	BleApp_StateMachineHandler(serverDeviceId, mAppEvt_GattProcComplete_c);
     }
 
@@ -898,9 +897,9 @@ static void BleApp_GattServerCallback (
 }
 
 /*! *********************************************************************************
-* \brief        
+* \brief
 *
-* \param[in]    
+* \param[in]
 ********************************************************************************** */
 static bool_t MatchDataInAdvElementList (gapAdStructure_t *pElement, void *pData, uint8_t iDataLen)
 {
@@ -976,15 +975,15 @@ static void BleApp_StoreServiceHandles (deviceId_t peerDeviceId, gattService_t *
 static void BleApp_SendUartStream(deviceId_t deviceId, uint8_t *pRecvStream, uint16_t streamSize)
 {
     gattCharacteristic_t characteristic;
-        
+
     characteristic.value.handle = mPeerInformation.clientInfo.hUartStream;
 
     GattClient_WriteCharacteristicValue(deviceId, &characteristic,
                                         streamSize, pRecvStream, TRUE,
-                                        FALSE, FALSE, NULL); 
+                                        FALSE, FALSE, NULL);
 }
 /*! *********************************************************************************
-* \brief        
+* \brief
 *
 * \param[in]    deviceId    Device Id.
 ********************************************************************************** */
@@ -1009,17 +1008,17 @@ void BleApp_StateMachineHandler(deviceId_t peerDeviceId, uint8_t event)
             {
                 /* Moving to Service Discovery State*/
                 mPeerInformation.appState = mAppServiceDisc_c;
-                              
+
                 Gatt_GetMtu(peerDeviceId, &mAppUartBufferSize);
-                
+
                 mAppUartBufferSize = gAttMaxWriteDataSize_d(mAppUartBufferSize);
                 /* Start Service Discovery*/
-//                BleServDisc_FindService(peerDeviceId, 
+//                BleServDisc_FindService(peerDeviceId,
 //                                        gBleUuidType128_c,
 //                                        (bleUuid_t*) &uuid_service_wireless_uart);
                 BleServDisc_Start(peerDeviceId);
             }
-            else if (event == mAppEvt_GattProcError_c) 
+            else if (event == mAppEvt_GattProcError_c)
             {
                 Gap_Disconnect(peerDeviceId);
             }
@@ -1029,7 +1028,7 @@ void BleApp_StateMachineHandler(deviceId_t peerDeviceId, uint8_t event)
         case mAppServiceDisc_c:
         {
             if (event == mAppEvt_ServiceDiscoveryComplete_c)
-            {            	
+            {
                 /* Moving to Running State*/
                 mPeerInformation.appState = mAppRunning_c;
             }
@@ -1056,7 +1055,7 @@ void BleApp_StateMachineHandler(deviceId_t peerDeviceId, uint8_t event)
 uint32_t Serial_CustomSendData(uint8_t *pData, uint32_t size)
 {
     TMR_StopTimer(mUartStreamFlushTimerId);
-    
+
     if (mPeerInformation.appState == mAppRunning_c)
     {
         /* Cache the data before sending through ble */
@@ -1103,7 +1102,7 @@ static void ScaningTimerCallback (void * pParam)
 {
     /* Stop scanning and start advertising */
     Gap_StopScanning();
-    
+
     mGapRole = gGapPeripheral_c;
     gPairingParameters.localIoCapabilities = gIoDisplayOnly_c;
     BleApp_Advertise();
@@ -1124,7 +1123,7 @@ static void BleApp_FlushUartStream(void *pParam)
     OSA_InterruptEnable();
 }
 /*! *********************************************************************************
-* \brief        
+* \brief
 *
 * \param[in]    deviceId    Device Id.
 ********************************************************************************** */
@@ -1133,11 +1132,11 @@ void BleApp_SerialSyncWrite(uint8_t *pBuf, uint16_t bufLen)
     if (mPeerInformation.appState != mAppRunning_c)
     {
         return;
-    } 
+    }
     BleApp_SendUartStream(mPeerInformation.deviceId, pBuf, bufLen);
 }
 /*! *********************************************************************************
-* \brief        
+* \brief
 *
 * \param[in]    deviceId    Device Id.
 ********************************************************************************** */
@@ -1147,7 +1146,7 @@ static void BleApp_ReceivedUartStream(uint8_t *pStream, uint16_t streamLength)
 }
 
 /*! *********************************************************************************
-* \brief        
+* \brief
 *
 * \param[in]    deviceId    Device Id.
 ********************************************************************************** */
@@ -1168,16 +1167,16 @@ static void BleApp_GenerateAndSetRandomAddress(void)
     /* dev addr from UID here */
     uint32_t gaUniqueId[4];
     uint8_t len;
-    
+
     BOARD_GetMCUUid((uint8_t *)gaUniqueId, &len);
     sha1Context_t mCtx;
     SHA1_Hash(&mCtx, (uint8_t*)gaUniqueId, sizeof(gaUniqueId));
     FLib_MemCpy(mDevRandomAddress, (uint8_t*)(&mCtx.hash), sizeof(mDevRandomAddress));
-    
+
     /* Set random static bits */
     mDevRandomAddress[5] |= 0xC0;
     bleResult_t res = Gap_SetRandomAddress(mDevRandomAddress);
-    
+
     if(res != gBleSuccess_c)
     {
         panic(0,0,0,0);
@@ -1189,11 +1188,11 @@ static void App_Idle(void)
 #if (cPWR_UsePowerDownMode)
     PWRLib_WakeupReason_t wakeupReason;
 #endif
-    
+
 #if gNvStorageIncluded_d
         NvIdle();
 #endif
-    
+
 #if (cPWR_UsePowerDownMode)
     if( PWR_CheckIfDeviceCanGoToSleep() )
     {
@@ -1204,19 +1203,19 @@ static void App_Idle(void)
         FSCI_SendWakeUpIndication();
 #endif
 
-#if gKBD_KeysCount_c > 0      
+#if gKBD_KeysCount_c > 0
         /* Woke up on Keyboard Press */
         if(wakeupReason.Bits.FromKeyBoard)
         {
             KBD_SwitchPressedOnWakeUp();
             //PWR_DisallowDeviceToSleep();
         }
-#endif   
+#endif
     }
     else
     {
         /* Enter MCU Sleep */
-        PWR_EnterSleep(); 
+        PWR_EnterSleep();
     }
 #endif /* cPWR_UsePowerDownMode */
 }

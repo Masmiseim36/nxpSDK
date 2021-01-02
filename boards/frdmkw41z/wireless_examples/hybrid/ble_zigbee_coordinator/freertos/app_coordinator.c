@@ -141,7 +141,7 @@ PUBLIC void APP_vInitialiseCoordinator(void)
 #endif
     /* Initialise ZBPro stack */
     ZPS_eAplAfInit();
-    
+
     if(eNodeState != E_RUNNING)
     {
       BDB_vNfSetPanID((uint16) RND_u32GetRand ( 1, 0xfff0 ));
@@ -432,7 +432,7 @@ PUBLIC void APP_taskCoordinator(void)
         }
 
     }
-#if !cPWR_UsePowerDownMode 
+#if !cPWR_UsePowerDownMode
     APP_vSetLedState(TRUE == sBDB.sAttrib.bbdbNodeIsOnANetwork);
 #endif
 }
@@ -510,7 +510,6 @@ PRIVATE void vAppHandleZdoEvents( BDB_tsZpsAfEvent *psZpsAfEvent)
             break;
 
         case ZPS_EVENT_APS_DATA_ACK:
-            break;
             break;
 
         case ZPS_EVENT_NWK_STARTED:

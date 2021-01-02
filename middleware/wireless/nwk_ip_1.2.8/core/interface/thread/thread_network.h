@@ -489,6 +489,16 @@ thrStatus_t THR_RouterLinkSync(instanceId_t thrInstID, bool_t bOnReset);
 thrStatus_t THR_ChildUpdateToParent(instanceId_t thrInstID);
 
 /*!*************************************************************************************************
+\fn     thrStatus_t THR_ChildUpdateKeepAlive(instanceId_t thrInstID)
+\brief  This function is used to send a Child Update Keep Alive message from a child to its parent.
+
+\param  [in]    thrInstID   Thread instance id.
+
+\return         thrStatus_t status
+***************************************************************************************************/
+thrStatus_t THR_ChildUpdateKeepAlive(instanceId_t thrInstID);
+
+/*!*************************************************************************************************
 \fn     thrStatus_t THR_SolicitGlobalAddress(instanceId_t thrInstID)
 \brief  This function solicits a global address from a DHCPv6 server.
 

@@ -18,7 +18,7 @@ gUseBootloaderLink_d = DEFINED(gUseBootloaderLink_d) ? gUseBootloaderLink_d : 0;
 gUseNVMLink_d  = DEFINED(gUseNVMLink_d) ? gUseNVMLink_d : 1;
 
 
-gNVMSectorCountLink_d = DEFINED(gNVMSectorCountLink_d) ? gNVMSectorCountLink_d : 22;
+gNVMSectorCountLink_d = DEFINED(gNVMSectorCountLink_d) ? gNVMSectorCountLink_d : 18;
 
 /*
 /* By default, the internal storage is not used. */
@@ -327,7 +327,7 @@ SECTIONS
   {
     FILL(0xFFFFFFFF);
     . = ORIGIN(NVM_region) + LENGTH(NVM_region) - 1;
-    BYTE(0xFF)
+    BYTE(0xFF);
   } > NVM_region
   ASSERT(__StackLimit >= __HeapLimit, "region m_data overflowed with stack and heap")
 }

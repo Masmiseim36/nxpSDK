@@ -340,22 +340,22 @@
           <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.8/FunctionLib</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.8/Lists</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.8/SecLib</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/host/interface</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/host/config</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/application/common</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/controller/interface</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/hci_transport/interface</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/application/common/gatt_db</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/application/common/gatt_db/macros</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/profiles/ipsp</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/host/interface</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/host/config</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/application/common</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/controller/interface</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/hci_transport/interface</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/application/common/gatt_db</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/application/common/gatt_db/macros</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/profiles/ipsp</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/wireless/nwk_ip_1.2.8/core/interface/modules</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/wireless/nwk_ip_1.2.8/core/interface</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/wireless/nwk_ip_1.2.8/base/interface</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/application/common/nwk_ip</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/application/common/nwk_ip/app_echo_udp</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/application/common/nwk_ip/app_coap</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/application/common/nwk_ip/app_sockets</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/application/common/nwk_ip/shell_ip</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/application/common/nwk_ip</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/application/common/nwk_ip/app_echo_udp</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/application/common/nwk_ip/app_coap</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/application/common/nwk_ip/app_sockets</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/application/common/nwk_ip/shell_ip</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.8/MWSCoexistence/Interface</state>
           <state>$PROJ_DIR$/../..</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MKW41Z4/drivers</state>
@@ -826,8 +826,8 @@
         </option>
         <option>
           <name>IlinkAdditionalLibs</name>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/host/lib/lib_ble_4-2_host_peripheral_cm0p.a</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/controller/lib/lib_ble_kw41z_controller.a</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/host/lib/lib_ble_4-2_host_peripheral_cm0p.a</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/controller/lib/lib_ble_kw41z_controller.a</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.8/SecLib/lib_crypto_m0.a</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/wireless/nwk_ip_1.2.8/core/lib/ble/lib_ble_ipv6_cm0p.a</state>
         </option>
@@ -1356,22 +1356,22 @@
           <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.8/FunctionLib</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.8/Lists</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.8/SecLib</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/host/interface</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/host/config</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/application/common</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/controller/interface</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/hci_transport/interface</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/application/common/gatt_db</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/application/common/gatt_db/macros</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/profiles/ipsp</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/host/interface</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/host/config</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/application/common</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/controller/interface</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/hci_transport/interface</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/application/common/gatt_db</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/application/common/gatt_db/macros</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/profiles/ipsp</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/wireless/nwk_ip_1.2.8/core/interface/modules</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/wireless/nwk_ip_1.2.8/core/interface</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/wireless/nwk_ip_1.2.8/base/interface</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/application/common/nwk_ip</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/application/common/nwk_ip/app_echo_udp</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/application/common/nwk_ip/app_coap</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/application/common/nwk_ip/app_sockets</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/application/common/nwk_ip/shell_ip</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/application/common/nwk_ip</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/application/common/nwk_ip/app_echo_udp</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/application/common/nwk_ip/app_coap</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/application/common/nwk_ip/app_sockets</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/application/common/nwk_ip/shell_ip</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.8/MWSCoexistence/Interface</state>
           <state>$PROJ_DIR$/../..</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MKW41Z4/drivers</state>
@@ -1841,8 +1841,8 @@
         </option>
         <option>
           <name>IlinkAdditionalLibs</name>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/host/lib/lib_ble_4-2_host_peripheral_cm0p.a</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/controller/lib/lib_ble_kw41z_controller.a</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/host/lib/lib_ble_4-2_host_peripheral_cm0p.a</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/controller/lib/lib_ble_kw41z_controller.a</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.3.8/SecLib/lib_crypto_m0.a</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/wireless/nwk_ip_1.2.8/core/lib/ble/lib_ble_ipv6_cm0p.a</state>
         </option>
@@ -2526,128 +2526,128 @@
     <group>
       <name>common</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/application/common/ble_host_tasks.c</name>
+        <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/application/common/ble_host_tasks.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/application/common/ble_host_task_config.h</name>
+        <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/application/common/ble_host_task_config.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/application/common/ble_conn_manager.c</name>
+        <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/application/common/ble_conn_manager.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/application/common/ble_conn_manager.h</name>
+        <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/application/common/ble_conn_manager.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/application/common/ble_controller_task.c</name>
+        <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/application/common/ble_controller_task.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/application/common/ble_controller_task_config.h</name>
+        <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/application/common/ble_controller_task_config.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/application/common/ApplMain.c</name>
+        <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/application/common/ApplMain.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/application/common/ApplMain.h</name>
+        <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/application/common/ApplMain.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/application/common/ble_init.c</name>
+        <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/application/common/ble_init.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/application/common/ble_init.h</name>
+        <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/application/common/ble_init.h</name>
       </file>
       <group>
         <name>gatt_db</name>
         <group>
           <name>macros</name>
           <file>
-            <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/application/common/gatt_db/macros/gatt_alloc_x.h</name>
+            <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/application/common/gatt_db/macros/gatt_alloc_x.h</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/application/common/gatt_db/macros/gatt_db_macros.h</name>
+            <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/application/common/gatt_db/macros/gatt_db_macros.h</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/application/common/gatt_db/macros/gatt_db_x_macros.h</name>
+            <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/application/common/gatt_db/macros/gatt_db_x_macros.h</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/application/common/gatt_db/macros/gatt_decl_x.h</name>
+            <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/application/common/gatt_db/macros/gatt_decl_x.h</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/application/common/gatt_db/macros/gatt_enum_x.h</name>
+            <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/application/common/gatt_db/macros/gatt_enum_x.h</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/application/common/gatt_db/macros/gatt_init_x.h</name>
+            <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/application/common/gatt_db/macros/gatt_init_x.h</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/application/common/gatt_db/macros/gatt_size_x.h</name>
+            <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/application/common/gatt_db/macros/gatt_size_x.h</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/application/common/gatt_db/macros/gatt_uuid_decl_x.h</name>
+            <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/application/common/gatt_db/macros/gatt_uuid_decl_x.h</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/application/common/gatt_db/macros/gatt_uuid_def_x.h</name>
+            <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/application/common/gatt_db/macros/gatt_uuid_def_x.h</name>
           </file>
         </group>
         <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/application/common/gatt_db/gatt_database.c</name>
+          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/application/common/gatt_db/gatt_database.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/application/common/gatt_db/gatt_db_handles.h</name>
+          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/application/common/gatt_db/gatt_db_handles.h</name>
         </file>
       </group>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/application/common/ieee11073.h</name>
+        <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/application/common/ieee11073.h</name>
       </file>
       <group>
         <name>nwk_ip</name>
         <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/application/common/nwk_ip/nwk_ip_init.c</name>
+          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/application/common/nwk_ip/nwk_ip_init.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/application/common/nwk_ip/nwk_ip_init.h</name>
+          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/application/common/nwk_ip/nwk_ip_init.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/application/common/nwk_ip/nwk_ip_manager.c</name>
+          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/application/common/nwk_ip/nwk_ip_manager.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/application/common/nwk_ip/nwk_ip_manager.h</name>
+          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/application/common/nwk_ip/nwk_ip_manager.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/application/common/nwk_ip/nwk_ip_globals.c</name>
+          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/application/common/nwk_ip/nwk_ip_globals.c</name>
         </file>
         <group>
           <name>shell_ip</name>
           <file>
-            <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/application/common/nwk_ip/shell_ip/shell_nwk_ip.c</name>
+            <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/application/common/nwk_ip/shell_ip/shell_nwk_ip.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/application/common/nwk_ip/shell_ip/shell_nwk_ip.h</name>
+            <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/application/common/nwk_ip/shell_ip/shell_nwk_ip.h</name>
           </file>
         </group>
         <group>
           <name>app_echo_udp</name>
           <file>
-            <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/application/common/nwk_ip/app_echo_udp/app_echo_udp.c</name>
+            <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/application/common/nwk_ip/app_echo_udp/app_echo_udp.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/application/common/nwk_ip/app_echo_udp/app_echo_udp.h</name>
+            <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/application/common/nwk_ip/app_echo_udp/app_echo_udp.h</name>
           </file>
         </group>
         <group>
           <name>app_sockets</name>
           <file>
-            <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/application/common/nwk_ip/app_sockets/app_sockets.c</name>
+            <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/application/common/nwk_ip/app_sockets/app_sockets.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/application/common/nwk_ip/app_sockets/app_sockets.h</name>
+            <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/application/common/nwk_ip/app_sockets/app_sockets.h</name>
           </file>
         </group>
         <group>
           <name>app_coap</name>
           <file>
-            <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/application/common/nwk_ip/app_coap/app_coap.c</name>
+            <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/application/common/nwk_ip/app_coap/app_coap.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/application/common/nwk_ip/app_coap/app_coap.h</name>
+            <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/application/common/nwk_ip/app_coap/app_coap.h</name>
           </file>
         </group>
       </group>
@@ -2708,88 +2708,88 @@
       <group>
         <name>interface</name>
         <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/host/interface/att_callbacks.h</name>
+          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/host/interface/att_callbacks.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/host/interface/att_errors.h</name>
+          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/host/interface/att_errors.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/host/interface/att_interface.h</name>
+          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/host/interface/att_interface.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/host/interface/att_params.h</name>
+          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/host/interface/att_params.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/host/interface/att_types.h</name>
+          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/host/interface/att_types.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/host/interface/ble_constants.h</name>
+          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/host/interface/ble_constants.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/host/interface/ble_general.h</name>
+          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/host/interface/ble_general.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/host/interface/ble_host_tasks.h</name>
+          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/host/interface/ble_host_tasks.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/host/interface/ble_sig_defines.h</name>
+          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/host/interface/ble_sig_defines.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/host/interface/ble_utils.h</name>
+          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/host/interface/ble_utils.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/host/interface/gap_interface.h</name>
+          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/host/interface/gap_interface.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/host/interface/gap_types.h</name>
+          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/host/interface/gap_types.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/host/interface/gatt_client_interface.h</name>
+          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/host/interface/gatt_client_interface.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/host/interface/gatt_database.h</name>
+          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/host/interface/gatt_database.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/host/interface/gatt_db_app_interface.h</name>
+          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/host/interface/gatt_db_app_interface.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/host/interface/gatt_db_dynamic.h</name>
+          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/host/interface/gatt_db_dynamic.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/host/interface/gatt_interface.h</name>
+          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/host/interface/gatt_interface.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/host/interface/gatt_server_interface.h</name>
+          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/host/interface/gatt_server_interface.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/host/interface/gatt_types.h</name>
+          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/host/interface/gatt_types.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/host/interface/hci_interface.h</name>
+          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/host/interface/hci_interface.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/host/interface/hci_types.h</name>
+          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/host/interface/hci_types.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/host/interface/l2ca_cb_interface.h</name>
+          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/host/interface/l2ca_cb_interface.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/host/interface/l2ca_interface.h</name>
+          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/host/interface/l2ca_interface.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/host/interface/l2ca_types.h</name>
+          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/host/interface/l2ca_types.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/host/interface/vendor_debug_commands.h</name>
+          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/host/interface/vendor_debug_commands.h</name>
         </file>
       </group>
       <group>
         <name>config</name>
         <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/host/config/ble_config.h</name>
+          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/host/config/ble_config.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/host/config/ble_globals.c</name>
+          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/host/config/ble_globals.c</name>
         </file>
       </group>
     </group>
@@ -2798,7 +2798,7 @@
       <group>
         <name>interface</name>
         <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/controller/interface/controller_interface.h</name>
+          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/controller/interface/controller_interface.h</name>
         </file>
       </group>
     </group>
@@ -2807,13 +2807,13 @@
       <group>
         <name>interface</name>
         <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/hci_transport/interface/hci_transport.h</name>
+          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/hci_transport/interface/hci_transport.h</name>
         </file>
       </group>
       <group>
         <name>source</name>
         <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/hci_transport/source/hcit_serial_interface.c</name>
+          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/hci_transport/source/hcit_serial_interface.c</name>
         </file>
       </group>
     </group>
@@ -2822,10 +2822,10 @@
       <group>
         <name>ipsp</name>
         <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/profiles/ipsp/ips_profile.c</name>
+          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/profiles/ipsp/ips_profile.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.8/profiles/ipsp/ipsp_interface.h</name>
+          <name>$PROJ_DIR$/../../../../../../../middleware/wireless/bluetooth_1.2.9/profiles/ipsp/ipsp_interface.h</name>
         </file>
       </group>
     </group>

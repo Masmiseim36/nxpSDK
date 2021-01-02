@@ -4,9 +4,9 @@
 ********************************************************************************** */
 /*!
 * Copyright (c) 2015, Freescale Semiconductor, Inc.
-* Copyright 2016-2017 NXP
+* Copyright 2016-2020 NXP
 * All rights reserved.
-* 
+*
 * file
 *
 * This file is the source file for the Temperature Sensor application
@@ -86,7 +86,6 @@ static tmsConfig_t tmsServiceConfig = {service_temperature, 0};
 /* Application specific data*/
 static tmrTimerID_t appTimerId;
 
-static bool_t   mSendDataAfterEncStart = FALSE;
 /************************************************************************************
 *************************************************************************************
 * Private functions prototypes
@@ -108,6 +107,9 @@ static void DisconnectTimerCallback(void* );
 static void BleApp_Advertise(void);
 static void BleApp_SendTemperature(void);
 
+#if cPWR_UsePowerDownMode
+static void SleepTimeoutSequence(void);
+#endif
 /************************************************************************************
 *************************************************************************************
 * Public functions
@@ -131,19 +133,17 @@ void BleApp_Init(void)
 void BleApp_Start(void)
 {
     Led1On();
-    
+
     if (mPeerDeviceId == gInvalidDeviceId_c)
     {
         /* Device is not connected and not advertising*/
         if (!mAdvState.advOn)
         {
+#if cPWR_UsePowerDownMode
+            (void)PWR_ChangeDeepSleepMode(1);
+#endif
             BleApp_Advertise();
         }
-        
-#if (cPWR_UsePowerDownMode)    
-        PWR_ChangeDeepSleepMode(1);
-        PWR_AllowDeviceToSleep();    
-#endif           
     }
     else
     {
@@ -170,22 +170,22 @@ void BleApp_GenericCallback (gapGenericEvent_t* pGenericEvent)
 {
     /* Call BLE Conn Manager */
     BleConnManager_GenericEvent(pGenericEvent);
-    
+
     switch (pGenericEvent->eventType)
     {
-        case gInitializationComplete_c:    
+        case gInitializationComplete_c:
         {
             BleApp_Config();
         }
-        break;    
-        
+        break;
+
         case gAdvertisingParametersSetupComplete_c:
         {
             App_StartAdvertising(BleApp_AdvertisingCallback, BleApp_ConnectionCallback);
         }
-        break;         
+        break;
 
-        default: 
+        default:
             break;
     }
 }
@@ -214,18 +214,17 @@ static void BleApp_Config()
     /* Start services */
     tmsServiceConfig.initialTemperature = 100 * BOARD_GetTemperature();
     Tms_Start(&tmsServiceConfig);
-    
+
     basServiceConfig.batteryLevel = BOARD_GetBatteryLevel();
     Bas_Start(&basServiceConfig);
     Dis_Start(&disServiceConfig);
 
     /* Allocate aplication timer */
     appTimerId = TMR_AllocateTimer();
-    
-#if (cPWR_UsePowerDownMode)    
-    PWR_ChangeDeepSleepMode(3);
-    PWR_AllowDeviceToSleep();    
-#endif    
+
+#if (cPWR_UsePowerDownMode)
+    PWR_AllowDeviceToSleep();
+#endif
 }
 
 /*! *********************************************************************************
@@ -256,21 +255,19 @@ static void BleApp_AdvertisingCallback (gapAdvertisingEvent_t* pAdvertisingEvent
             if(!mAdvState.advOn)
             {
                 Led1Off();
-                PWR_ChangeDeepSleepMode(3);
-                PWR_SetDeepSleepTimeInMs(cPWR_DeepSleepDurationMs);
-                PWR_AllowDeviceToSleep();    
-            }  
+                SleepTimeoutSequence();
+            }
             else
             {
                 /* Start advertising timer */
-                TMR_StartLowPowerTimer(appTimerId, 
+                TMR_StartLowPowerTimer(appTimerId,
                            gTmrLowPowerSecondTimer_c,
                            TmrSeconds(gAdvTime_c),
                            AdvertisingTimerCallback, NULL);
 
                 Led1On();
             }
-#else    
+#else
             LED_StopFlashingAllLeds();
             Led1Flashing();
 
@@ -280,7 +277,7 @@ static void BleApp_AdvertisingCallback (gapAdvertisingEvent_t* pAdvertisingEvent
                 Led3Flashing();
                 Led4Flashing();
             }
-#endif  
+#endif
         }
         break;
 
@@ -304,77 +301,58 @@ static void BleApp_AdvertisingCallback (gapAdvertisingEvent_t* pAdvertisingEvent
 ********************************************************************************** */
 static void BleApp_ConnectionCallback (deviceId_t peerDeviceId, gapConnectionEvent_t* pConnectionEvent)
 {
-	/* Connection Manager to handle Host Stack interactions */
-	BleConnManager_GapPeripheralEvent(peerDeviceId, pConnectionEvent);
+    /* Connection Manager to handle Host Stack interactions */
+    BleConnManager_GapPeripheralEvent(peerDeviceId, pConnectionEvent);
 
     switch (pConnectionEvent->eventType)
     {
         case gConnEvtConnected_c:
         {
-            bool_t isBonded = FALSE ;
-            
-#if gAppUseBonding_d    
-            
-            mSendDataAfterEncStart = FALSE;
-            if (gBleSuccess_c == Gap_CheckIfBonded(peerDeviceId, &isBonded) &&
-                TRUE == isBonded) 
-            {
-                /* Send temperature data after encryption is started */
-                mSendDataAfterEncStart = TRUE;
-            }   
-#endif  
-            
             /* Advertising stops when connected */
             mAdvState.advOn = FALSE;
-            TMR_StopTimer(appTimerId);         
-            
+            TMR_StopTimer(appTimerId);
+
             /* Subscribe client*/
             mPeerDeviceId = peerDeviceId;
-            Bas_Subscribe(peerDeviceId);        
+            Bas_Subscribe(peerDeviceId);
             Tms_Subscribe(peerDeviceId);
 
             /* UI */
             Led1On();
-            
-#if (cPWR_UsePowerDownMode)             
+
+#if (cPWR_UsePowerDownMode)
             PWR_ChangeDeepSleepMode(1);
-            PWR_AllowDeviceToSleep();                
+            PWR_AllowDeviceToSleep();
 #else
             LED_StopFlashingAllLeds();
-            
+
 #endif
         }
         break;
-        
+
         case gConnEvtDisconnected_c:
         {
             /* Unsubscribe client */
             mPeerDeviceId = gInvalidDeviceId_c;
             Bas_Unsubscribe();
             Tms_Unsubscribe();
-            
+
 #if (cPWR_UsePowerDownMode)
             /* UI */
             Led1Off();
-            
+
             /* Go to sleep */
-            PWR_ChangeDeepSleepMode(3);
-            PWR_SetDeepSleepTimeInMs(cPWR_DeepSleepDurationMs);
-            PWR_AllowDeviceToSleep();
+            SleepTimeoutSequence();
 #else
             /* restart advertising*/
             BleApp_Start();
-#endif             
+#endif
         }
         break;
         case gConnEvtEncryptionChanged_c:
         {
-            if (mSendDataAfterEncStart)
-            {
-                BleApp_SendTemperature();
-            }
         }
-        break;        
+        break;
     default:
         break;
     }
@@ -437,24 +415,27 @@ static void DisconnectTimerCallback(void* pParam)
 static void BleApp_SendTemperature(void)
 {
     TMR_StopTimer(appTimerId);
-    
+
     /* Update with initial temperature */
-    Tms_RecordTemperatureMeasurement(service_temperature, 
-                                     BOARD_GetTemperature() * 100);  
-    
-#if (cPWR_UsePowerDownMode)    
-        
+    Tms_RecordTemperatureMeasurement(service_temperature,
+                                     BOARD_GetTemperature() * 100);
+
+#if (cPWR_UsePowerDownMode)
+
     /* Start Sleep After Data timer */
-    TMR_StartLowPowerTimer(appTimerId, 
+    TMR_StartLowPowerTimer(appTimerId,
                            gTmrLowPowerSecondTimer_c,
                            TmrSeconds(gGoToSleepAfterDataTime_c),
-                           DisconnectTimerCallback, NULL);    
-    
-    /* Go to sleep */
-    PWR_SetDeepSleepTimeInMs(TmrSeconds(gGoToSleepAfterDataTime_c));
-#endif    
-        
+                           DisconnectTimerCallback, NULL);
+#endif
 }
+
+#if (cPWR_UsePowerDownMode)
+static void SleepTimeoutSequence(void)
+{
+    (void)PWR_ChangeDeepSleepMode(cPWR_DeepSleepMode);
+}
+#endif
 
 /*! *********************************************************************************
 * @}

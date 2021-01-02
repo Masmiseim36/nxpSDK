@@ -142,7 +142,7 @@ PUBLIC void APP_vInitialiseCoordinator(void)
 
     /* Initialise ZBPro stack */
     ZPS_eAplAfInit();
-    
+
     if(sNodeState.eNodeState != E_RUNNING)
     {
         BDB_vNfSetPanID ((uint16) RND_u32GetRand ( 1, 0xfff0 ));
@@ -458,7 +458,6 @@ PRIVATE void vAppHandleZdoEvents( BDB_tsZpsAfEvent *psZpsAfEvent)
             break;
 
         case ZPS_EVENT_APS_DATA_ACK:
-            break;
             break;
 
         case ZPS_EVENT_NWK_STARTED:

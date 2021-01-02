@@ -37,8 +37,8 @@ Public macros
 
 #define gIpVerMajor_c   1
 #define gIpVerMinor_c   1
-#define gIpVerPatch_c   1
-#define gIpBuildNo_c    35
+#define gIpVerPatch_c   2
+#define gIpBuildNo_c    36
 
 #define gIpModuleId_c   (0xCE)
 #define QU(x) #x

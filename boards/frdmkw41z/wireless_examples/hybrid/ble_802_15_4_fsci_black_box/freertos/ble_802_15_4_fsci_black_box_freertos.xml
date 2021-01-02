@@ -180,13 +180,13 @@
     <source path="devices/MKW41Z4/gcc" target_path="startup" type="src" toolchain="mcuxpresso">
       <files mask="startup_MKW41Z4.S"/>
     </source>
-    <source path="middleware/wireless/bluetooth_1.2.8/host/interface" target_path="bluetooth/host/interface" type="c_include">
+    <source path="middleware/wireless/bluetooth_1.2.9/host/interface" target_path="bluetooth/host/interface" type="c_include">
       <files mask="fsci_ble_interface.h"/>
     </source>
-    <source path="middleware/wireless/bluetooth_1.2.8/controller/lib" type="lib" method="copy" toolchain="mcuxpresso">
+    <source path="middleware/wireless/bluetooth_1.2.9/controller/lib" type="lib" method="copy" toolchain="mcuxpresso">
       <files mask="lib_ble_kw41z_controller.a"/>
     </source>
-    <source path="middleware/wireless/bluetooth_1.2.8/host/lib" type="lib" method="copy" toolchain="mcuxpresso">
+    <source path="middleware/wireless/bluetooth_1.2.9/host/lib" type="lib" method="copy" toolchain="mcuxpresso">
       <files mask="lib_ble_4-2_host_fsci_cm0p.a"/>
     </source>
     <source path="middleware/wireless/framework_5.3.8/SecLib" type="lib" method="copy" toolchain="mcuxpresso">
@@ -198,10 +198,10 @@
     <source path="devices/MKW41Z4/iar" target_path="startup" type="src" toolchain="iar">
       <files mask="startup_MKW41Z4.s"/>
     </source>
-    <source path="middleware/wireless/bluetooth_1.2.8/controller/lib" type="lib" method="copy" toolchain="iar">
+    <source path="middleware/wireless/bluetooth_1.2.9/controller/lib" type="lib" method="copy" toolchain="iar">
       <files mask="lib_ble_kw41z_controller.a"/>
     </source>
-    <source path="middleware/wireless/bluetooth_1.2.8/host/lib" type="lib" method="copy" toolchain="iar">
+    <source path="middleware/wireless/bluetooth_1.2.9/host/lib" type="lib" method="copy" toolchain="iar">
       <files mask="lib_ble_4-2_host_fsci_cm0p.a"/>
     </source>
     <source path="middleware/wireless/framework_5.3.8/SecLib" type="lib" method="copy" toolchain="iar">

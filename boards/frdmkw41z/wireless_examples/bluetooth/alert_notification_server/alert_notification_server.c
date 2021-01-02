@@ -73,10 +73,6 @@ typedef struct appPeerInfo_tag
 ************************************************************************************/
 static appPeerInfo_t mPeerInformation;
 
-#if gAppUseBonding_d
-static bool_t mRestoringBondedLink = FALSE;
-#endif
-
 static bool_t   mScanningOn = FALSE;
 
 /* Service Data*/
@@ -350,7 +346,6 @@ static void BleApp_ConnectionCallback (deviceId_t peerDeviceId, gapConnectionEve
             
             if (mPeerInformation.isBonded)
             {              
-                mRestoringBondedLink = TRUE;
                 /* Restored custom connection information. Encrypt link */
                 Gap_EncryptLink(peerDeviceId);
                 

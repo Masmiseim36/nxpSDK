@@ -791,8 +791,8 @@ static int8_t SHELL_EpidReq(uint8_t argc, char *argv[])
 
 /*!*************************************************************************************************
 \private
-\fn     static int8_t SHELL_ExtendedAddrReq(uint8_t argc, char *argv[])
-\brief  Get/Set device /IEEE address.
+\fn     static int8_t SHELL_ShortAddrReq(uint8_t argc, char *argv[])
+\brief  Get/Set device Short Network address.
 
 \param  [in]    argc      Number of arguments the command was called with
 \param  [in]    argv      Pointer to a list of pointers to the arguments

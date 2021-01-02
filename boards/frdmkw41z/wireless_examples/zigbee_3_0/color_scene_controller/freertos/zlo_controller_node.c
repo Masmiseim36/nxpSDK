@@ -1551,6 +1551,7 @@ PUBLIC void APP_vFactoryResetRecords( void)
     /* clear out the stack */
     ZPS_vDefaultStack();
     (void)ZPS_eAplAibSetApsUseExtendedPanId(ZPS_APS_AIB_INIT_USE_EXTENDED_PANID);
+    ZPS_vSetKeys();
 
     /* clear out the application */
     sZllState.eNodeState = E_REMOTE_STARTUP;

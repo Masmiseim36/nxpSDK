@@ -1795,6 +1795,7 @@ PUBLIC void APP_vFactoryResetRecords( void)
     /* clear out the stack */
     ZPS_vDefaultStack();
     (void)ZPS_eAplAibSetApsUseExtendedPanId(ZPS_APS_AIB_INIT_USE_EXTENDED_PANID);
+    ZPS_vSetKeys();
     /* clear out the application */
     DBG_vPrintf(TRACE_SWITCH_NODE, "vFactoryResetRecords: eNodeState = E_STARTUP\r\n");
     sDeviceDesc.eNodeState = E_STARTUP;

@@ -98,7 +98,7 @@
   <source path="devices/MKW41Z4" target_path="devices" type="src">
     <files mask="system_MKW41Z4.c"/>
   </source>
-  <source path="middleware/wireless/bluetooth_1.2.8/application/common/gatt_db/macros" target_path="wireless/bluetooth/application/common/gatt_db/macros" type="c_include">
+  <source path="middleware/wireless/bluetooth_1.2.9/application/common/gatt_db/macros" target_path="wireless/bluetooth/application/common/gatt_db/macros" type="c_include">
     <files mask="gatt_alloc_x.h"/>
     <files mask="gatt_db_macros.h"/>
     <files mask="gatt_db_x_macros.h"/>
@@ -109,53 +109,53 @@
     <files mask="gatt_uuid_decl_x.h"/>
     <files mask="gatt_uuid_def_x.h"/>
   </source>
-  <source path="middleware/wireless/bluetooth_1.2.8/application/common/gatt_db" target_path="wireless/bluetooth/application/common/gatt_db" type="c_include">
+  <source path="middleware/wireless/bluetooth_1.2.9/application/common/gatt_db" target_path="wireless/bluetooth/application/common/gatt_db" type="c_include">
     <files mask="gatt_db_handles.h"/>
   </source>
-  <source path="middleware/wireless/bluetooth_1.2.8/application/common/gatt_db" target_path="wireless/bluetooth/application/common/gatt_db" type="src">
+  <source path="middleware/wireless/bluetooth_1.2.9/application/common/gatt_db" target_path="wireless/bluetooth/application/common/gatt_db" type="src">
     <files mask="gatt_database.c"/>
   </source>
-  <source path="middleware/wireless/bluetooth_1.2.8/application/common/hybrid" target_path="wireless/bluetooth/application/common/hybrid" type="c_include">
+  <source path="middleware/wireless/bluetooth_1.2.9/application/common/hybrid" target_path="wireless/bluetooth/application/common/hybrid" type="c_include">
     <files mask="ApplMain.h"/>
     <files mask="ble_init.h"/>
   </source>
-  <source path="middleware/wireless/bluetooth_1.2.8/application/common/hybrid" target_path="wireless/bluetooth/application/common/hybrid" type="src">
+  <source path="middleware/wireless/bluetooth_1.2.9/application/common/hybrid" target_path="wireless/bluetooth/application/common/hybrid" type="src">
     <files mask="ApplMain.c"/>
     <files mask="ble_init.c"/>
   </source>
-  <source path="middleware/wireless/bluetooth_1.2.8/application/common" target_path="wireless/bluetooth/application/common" type="c_include">
+  <source path="middleware/wireless/bluetooth_1.2.9/application/common" target_path="wireless/bluetooth/application/common" type="c_include">
     <files mask="ble_conn_manager.h"/>
     <files mask="ble_controller_task_config.h"/>
     <files mask="ble_host_task_config.h"/>
     <files mask="ieee11073.h"/>
   </source>
-  <source path="middleware/wireless/bluetooth_1.2.8/application/common" target_path="wireless/bluetooth/application/common" type="src">
+  <source path="middleware/wireless/bluetooth_1.2.9/application/common" target_path="wireless/bluetooth/application/common" type="src">
     <files mask="ble_conn_manager.c"/>
     <files mask="ble_controller_task.c"/>
     <files mask="ble_host_tasks.c"/>
   </source>
-  <source path="middleware/wireless/bluetooth_1.2.8/controller/interface" target_path="wireless/bluetooth/controller/interface" type="c_include">
+  <source path="middleware/wireless/bluetooth_1.2.9/controller/interface" target_path="wireless/bluetooth/controller/interface" type="c_include">
     <files mask="controller_interface.h"/>
   </source>
-  <source path="middleware/wireless/bluetooth_1.2.8/controller/lib" target_path="wireless/bluetooth/controller/lib" type="lib" compiler="gcc">
+  <source path="middleware/wireless/bluetooth_1.2.9/controller/lib" target_path="wireless/bluetooth/controller/lib" type="lib" compiler="gcc">
     <files mask="lib_ble_kw41z_controller.a"/>
   </source>
-  <source path="middleware/wireless/bluetooth_1.2.8/controller/lib" target_path="wireless/bluetooth/controller/lib" type="lib" compiler="iar">
+  <source path="middleware/wireless/bluetooth_1.2.9/controller/lib" target_path="wireless/bluetooth/controller/lib" type="lib" compiler="iar">
     <files mask="lib_ble_kw41z_controller.a"/>
   </source>
-  <source path="middleware/wireless/bluetooth_1.2.8/hci_transport/interface" target_path="wireless/bluetooth/hci_transport/interface" type="c_include">
+  <source path="middleware/wireless/bluetooth_1.2.9/hci_transport/interface" target_path="wireless/bluetooth/hci_transport/interface" type="c_include">
     <files mask="hci_transport.h"/>
   </source>
-  <source path="middleware/wireless/bluetooth_1.2.8/hci_transport/source" target_path="wireless/bluetooth/hci_transport/source" type="src">
+  <source path="middleware/wireless/bluetooth_1.2.9/hci_transport/source" target_path="wireless/bluetooth/hci_transport/source" type="src">
     <files mask="hcit_serial_interface.c"/>
   </source>
-  <source path="middleware/wireless/bluetooth_1.2.8/host/config" target_path="wireless/bluetooth/host/config" type="c_include">
+  <source path="middleware/wireless/bluetooth_1.2.9/host/config" target_path="wireless/bluetooth/host/config" type="c_include">
     <files mask="ble_config.h"/>
   </source>
-  <source path="middleware/wireless/bluetooth_1.2.8/host/config" target_path="wireless/bluetooth/host/config" type="src">
+  <source path="middleware/wireless/bluetooth_1.2.9/host/config" target_path="wireless/bluetooth/host/config" type="src">
     <files mask="ble_globals.c"/>
   </source>
-  <source path="middleware/wireless/bluetooth_1.2.8/host/interface" target_path="wireless/bluetooth/host/interface" type="c_include">
+  <source path="middleware/wireless/bluetooth_1.2.9/host/interface" target_path="wireless/bluetooth/host/interface" type="c_include">
     <files mask="att_callbacks.h"/>
     <files mask="att_errors.h"/>
     <files mask="att_interface.h"/>
@@ -183,10 +183,10 @@
     <files mask="l2ca_types.h"/>
     <files mask="vendor_debug_commands.h"/>
   </source>
-  <source path="middleware/wireless/bluetooth_1.2.8/host/lib" target_path="wireless/bluetooth/host/lib" type="lib" compiler="gcc">
+  <source path="middleware/wireless/bluetooth_1.2.9/host/lib" target_path="wireless/bluetooth/host/lib" type="lib" compiler="gcc">
     <files mask="lib_ble_4-2_host_fsci_cm0p.a"/>
   </source>
-  <source path="middleware/wireless/bluetooth_1.2.8/host/lib" target_path="wireless/bluetooth/host/lib" type="lib" compiler="iar">
+  <source path="middleware/wireless/bluetooth_1.2.9/host/lib" target_path="wireless/bluetooth/host/lib" type="lib" compiler="iar">
     <files mask="lib_ble_4-2_host_fsci_cm0p.a"/>
   </source>
   <source path="middleware/wireless/framework_5.3.8/Common" target_path="wireless/framework/Common" type="c_include">

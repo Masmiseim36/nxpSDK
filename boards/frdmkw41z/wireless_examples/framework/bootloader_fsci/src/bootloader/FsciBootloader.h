@@ -31,7 +31,7 @@
 /* Bootloader version  */
 #define gBootloaderVerMajor_c   5
 #define gBootloaderVerMinor_c   3
-#define gBootloaderVerPatch_c   7
+#define gBootloaderVerPatch_c   8
 #define gBootloaderBuildNo_c    0
 #define gBootloaderModuleId_c   0xAA
 

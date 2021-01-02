@@ -415,7 +415,7 @@ static void APP_InitCoapDemo
                                      {APP_CoapSinkCb, (coapUriPath_t *)&gAPP_SINK_URI_PATH}};
     /* Register Services in COAP */
     sockaddrStorage_t coapParams = {0};
-    
+
     NWKU_SetSockAddrInfo(&coapParams, NULL, AF_INET6, COAP_DEFAULT_PORT, gNoIPv6FlowInfo_c, gIpIfSlp0_c);
 
     mAppCoapInstId = COAP_CreateInstance(NULL, &coapParams, (coapRegCbParams_t *)cbParams,
@@ -1205,7 +1205,7 @@ static void APP_SendResyncToParent
     void
 )
 {
-    THR_ChildUpdateToParent(mThrInstanceId);
+    THR_ChildUpdateKeepAlive(mThrInstanceId);
 }
 
 static void APP_StartSedResyncTimer
@@ -1222,7 +1222,7 @@ static void APP_StartSedResyncTimer
     if(gAppSedResyncTimer != gTmrInvalidTimerID_c)
     {
         /* start the timer */
-        TMR_StartLowPowerTimer(gAppSedResyncTimer, gTmrIntervalTimer_c, SED_RESYNC_TO_PARENT_TIMEOUT, 
+        TMR_StartLowPowerTimer(gAppSedResyncTimer, gTmrIntervalTimer_c, SED_RESYNC_TO_PARENT_TIMEOUT,
                                APP_SendResyncToParent, NULL);
     }
 }

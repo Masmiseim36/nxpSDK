@@ -101,10 +101,6 @@ typedef struct appPeerInfo_tag
 static deviceId_t		mPeerDeviceId;
 static appPeerInfo_t	mPeerProxyInformation;
 
-#if gAppUseBonding_d
-static bool_t mRestoringBondedLink = FALSE;
-#endif
-
 /* Scan State */
 static bool_t   mScanningOn = FALSE;
 static gapScannedDevice_t	*mpScannedDevice = NULL;
@@ -937,7 +933,6 @@ void BleApp_StateMachineHandler(deviceId_t peerDeviceId, uint8_t event)
                     (gBleSuccess_c == Gap_LoadCustomPeerInformation(peerDeviceId,
                         (void*) &mPeerProxyInformation.customInfo, 0, sizeof (appCustomInfo_t))))
                 {
-                    mRestoringBondedLink = TRUE;
                     /* Restored custom connection information. Encrypt link */
                     Gap_EncryptLink(peerDeviceId);
                 }

@@ -762,7 +762,6 @@ static resultType_t MCPS_NWK_SapHandlerCB
     mcpsGenericMsg_t *pMcpsMessage;
     pMcpsMessage = MEM_BufferAlloc(sizeof(mcpsGenericMsg_t));
 
-
     if (pMcpsMessage)
     {
         pMcpsMessage->pMsg = pMsg;
@@ -773,6 +772,10 @@ static resultType_t MCPS_NWK_SapHandlerCB
             MEM_BufferFree(pMsg);
             MEM_BufferFree(pMcpsMessage);
         }
+    }
+    else
+    {
+        MEM_BufferFree(pMsg);
     }
 
     return gSuccess_c;
@@ -1015,14 +1018,14 @@ static void MAC_McpsDataCnfCB
     instanceId_t instanceId
 )
 {
-    macAbsMcpsDataCnf_t macAbsMcpsDataCnf;
+    macAbsMcpsDataCnf_t macAbsMcpsDataCnf = {0};
     macAbsMcpsDataCnf.instanceId  = instanceId;
     macAbsMcpsDataCnf.msduHandle  = pMsg->msgData.dataCnf.msduHandle;
     macAbsMcpsDataCnf.status      = (macAbsResultType_t)pMsg->msgData.dataCnf.status;
     macAbsMcpsDataCnf.timestamp   = pMsg->msgData.dataCnf.timestamp;
 
     /* Reuse MAC buffer */
-    FLib_MemCpy((void*)pMsg,&macAbsMcpsDataCnf,sizeof(macAbsMcpsDataCnf_t));
+    FLib_MemCpy((void*)pMsg, &macAbsMcpsDataCnf, sizeof(macAbsMcpsDataCnf_t));
 
     if (mMacCallbackFunctions.mcpsDataCnf)
     {

@@ -104,10 +104,6 @@ typedef struct advState_tag
 static appPeerInfo_t mPeerInformation;
 static gapRole_t mGapRole;
 
-#if gAppUseBonding_d
-static bool_t mRestoringBondedLink = FALSE;
-#endif
-
 /* Adv Parmeters */
 static advState_t mAdvState;
 static bool_t   mScanningOn = FALSE;
@@ -493,7 +489,6 @@ static void BleApp_ConnectionCallback (deviceId_t peerDeviceId, gapConnectionEve
                 (gBleSuccess_c == Gap_LoadCustomPeerInformation(peerDeviceId,
                     (void*) &mPeerInformation.clientInfo, 0, sizeof (wucConfig_t))))
             {
-                mRestoringBondedLink = TRUE;
                 /* Restored custom connection information. Encrypt link */
                 Gap_EncryptLink(peerDeviceId);
             }

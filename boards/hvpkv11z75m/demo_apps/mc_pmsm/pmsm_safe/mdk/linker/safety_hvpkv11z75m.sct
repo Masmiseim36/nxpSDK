@@ -1,0 +1,125 @@
+#!armclang --target=arm-arm-none-eabi -mcpu=cortex-m0plus -E -x c
+
+;/*
+; * Copyright 2020 NXP.
+; * All rights reserved.
+; *
+; * SPDX-License-Identifier: BSD-3-Clause
+; */
+
+#include "linker_config.h"
+
+; The load region for safety-related ROM data and code
+; Contains following execution regions:
+; - Interrupt vector table
+; - Flash configuration table
+; - Safety-related code and RO data
+LOAD_REGION_1 (__ROM_start__)
+{
+    ; Interrupt vector table
+    ; - Load and execution addresses are the same
+    ER_FS_INTVEC (m_intvec_table_start) NOCOMPRESS (__size_intvec_table__)
+    {
+        *(.intvec, +FIRST)
+    }
+
+    ; FLASH configuration table
+    ; - Load and execution addresses are the same
+    ER_FS_FLSH_CFG (m_flash_config_start) FIXED (__size_flash_cfg_table__)
+    {
+        *(.flshcfg)
+    }
+
+    ; PC register test object
+    ; - Load and execution addresses are the same
+    ER_FS_PCOBJ (m_fs_pc_tst_obj_start) FIXED (__size_fs_pc_tst_obj__)
+    {
+        iec60730b_cm0_pc_object.o        (+TEXT)
+    }
+
+    ; Safety-related code and RO data region
+    ; - Load and execution addresses are the same
+    ER_FS_ROM (m_flash_start) FIXED
+    {
+        ; List of all the safety-related modules.
+        startup_mdk.o                    (+TEXT)
+        safety_periph_init.o             (+TEXT)
+        mcdrv_periph_init.o              (+TEXT)
+        main.o                           (+TEXT)
+        safety_routines.o                (+TEXT)
+        iec60730b_clock.o                (+TEXT)
+        iec60730b_cm0_pc.o               (+TEXT)
+        iec60730b_cm0_ram.o              (+TEXT)
+        iec60730b_cm0_reg.o              (+TEXT)
+        iec60730b_cm0_stack.o            (+TEXT)
+        iec60730b_wdog.o                 (+TEXT)
+        iec60730b_cm0_flash.o            (+TEXT)
+        m1_state_machine.o               (+TEXT)
+        mcdrv_adc_adc16.o                (+TEXT)
+        mcdrv_pwm3ph_ftm.o               (+TEXT)
+        mcdrv_gpio.o                     (+TEXT)
+        AMCLIB_PMSMBemfObsrvDQ_A32_Asm.o (+TEXT)
+        AMCLIB_TrackObsrv_F32_Asm.o      (+TEXT)
+        GDFLIB_FilterIIR1_F32_Asm.o      (+TEXT)
+        GMCLIB_ElimDcBusRip_F16_Asm.o    (+TEXT)
+        GMCLIB_Svm_F16_Asm.o             (+TEXT)
+        GFLIB_AtanYX_F32_Asm.o           (+TEXT)
+        GFLIB_Atan_F32_Asm.o             (+TEXT)
+        GFLIB_SinCos_A32_Asm.o           (+TEXT)
+    }
+}
+
+; The load region for RW data
+; No compression is allowed
+; Contains following execution regions:
+; - Stack (the region is defined as empty)
+; - Safety related RW data
+; - Non-safety RW data
+LOAD_REGION_2 (+0)
+{
+    ; The stack section.
+    ; - This section must remain empty
+    ; - This section is safety related as well
+    ARM_LIB_STACK (m_stack_start) EMPTY -(__size_cstack__){}
+
+    ; The safety-related RW data region
+    ER_FS_RAM (m_data_start) NOCOMPRESS
+    {
+        *(.safety_ram)
+        gflib_sincos_a32.o (+DATA)
+        gflib_sqrt_f16.o   (+DATA)
+        gflib_atan_f32.o   (+DATA)
+    }
+
+    ; The end of safety-checked FLASH and RAM is here.
+    ; - Only non-safety load and execution regions can be placed below.
+
+    ; The non-safety RW data section
+    ER_RWRAM (+0) NOCOMPRESS
+    {
+        .ANY (+RW +ZI)
+    }
+}
+
+; The load region for non-safety code and RO data region
+; Contains following execution regions:
+; - Non-safety code and RO data region
+; - Safety-flash CRC
+LOAD_REGION_3 (+0)
+{
+    ; Non-safety code and RO data region
+    ER_ROM (+0) FIXED
+    {
+        .ANY (+TEXT)
+        *(.tsacode)
+        *(.tsadata)
+        *(.tsaentry)
+    }
+
+    ; Safety-flash CRC region
+    ER_CRC (m_fs_flash_crc_start) FIXED (__size_flash_crc__)
+    {
+        *(.flshcrc)
+    }
+}
+

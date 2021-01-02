@@ -324,25 +324,25 @@ include_directories(${ProjDirPath}/../../../../../../middleware/motor_control/pm
 
 include_directories(${ProjDirPath}/../../../../../../devices/MKV11Z7/drivers)
 
-include_directories(${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/AMCLIB)
+include_directories(${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/AMCLIB)
 
-include_directories(${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/AMCLIB/Include)
+include_directories(${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/AMCLIB/Include)
 
-include_directories(${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/GDFLIB)
+include_directories(${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/GDFLIB)
 
-include_directories(${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/GDFLIB/Include)
+include_directories(${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/GDFLIB/Include)
 
-include_directories(${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/GFLIB)
+include_directories(${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/GFLIB)
 
-include_directories(${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/GFLIB/Include)
+include_directories(${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/GFLIB/Include)
 
-include_directories(${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/GMCLIB)
+include_directories(${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/GMCLIB)
 
-include_directories(${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/GMCLIB/Include)
+include_directories(${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/GMCLIB/Include)
 
-include_directories(${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB)
+include_directories(${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB)
 
-include_directories(${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include)
+include_directories(${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include)
 
 include_directories(${ProjDirPath}/../../../../../../middleware/motor_control/pmsm/pmsm_frac)
 
@@ -402,192 +402,192 @@ add_executable(mc_pmsm.elf
 "${ProjDirPath}/../../../../../../devices/MKV11Z7/drivers/fsl_dmamux.h"
 "${ProjDirPath}/../../../../../../devices/MKV11Z7/drivers/fsl_clock.c"
 "${ProjDirPath}/../../../../../../devices/MKV11Z7/drivers/fsl_clock.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/AMCLIB/Include/AMCLIB_AngleTrackObsrv_F32.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/AMCLIB/Include/AMCLIB_CtrlFluxWkng_A32.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/AMCLIB/Include/AMCLIB_PMSMBemfObsrvABHw_A32.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/AMCLIB/Include/AMCLIB_PMSMBemfObsrvAB_A32.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/AMCLIB/Include/AMCLIB_PMSMBemfObsrvDQHw_A32.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/AMCLIB/Include/AMCLIB_PMSMBemfObsrvDQ_A32.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/AMCLIB/Include/AMCLIB_TrackObsrv_F32.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/AMCLIB/Include/amclib.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/AMCLIB/Include/amclib_types.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/GDFLIB/Include/GDFLIB_FilterExp_F32.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/GDFLIB/Include/GDFLIB_FilterIIR1_F32.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/GDFLIB/Include/GDFLIB_FilterIIR2_F32.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/GDFLIB/Include/GDFLIB_FilterMA_A32.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/GDFLIB/Include/GDFLIB_FilterMA_A32_Asmi.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/GDFLIB/Include/gdflib.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/GDFLIB/Include/gdflib_types.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/GFLIB/Include/GFLIB_AtanYXHw_F32.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/GFLIB/Include/GFLIB_AtanYX_F32.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/GFLIB/Include/GFLIB_Atan_F32.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/GFLIB/Include/GFLIB_CtrlBetaIPp_A32.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/GFLIB/Include/GFLIB_CtrlPIp_A32.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/GFLIB/Include/GFLIB_DFlexRampHw_A32.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/GFLIB/Include/GFLIB_DFlexRamp_A32.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/GFLIB/Include/GFLIB_DRamp_F16.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/GFLIB/Include/GFLIB_DRamp_F32.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/GFLIB/Include/GFLIB_FlexRampHw_A32.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/GFLIB/Include/GFLIB_FlexRamp_A32.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/GFLIB/Include/GFLIB_Hyst_F16_Asmi.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/GFLIB/Include/GFLIB_Integrator_A32.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/GFLIB/Include/GFLIB_Limit_F16.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/GFLIB/Include/GFLIB_Limit_F32.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/GFLIB/Include/GFLIB_LowerLimit_F16.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/GFLIB/Include/GFLIB_LowerLimit_F32.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/GFLIB/Include/GFLIB_LutPer_F16_Asmi.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/GFLIB/Include/GFLIB_LutPer_F32.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/GFLIB/Include/GFLIB_Lut_F16_Asmi.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/GFLIB/Include/GFLIB_Lut_F32.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/GFLIB/Include/GFLIB_Ramp_F16.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/GFLIB/Include/GFLIB_Ramp_F16_Asmi.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/GFLIB/Include/GFLIB_Ramp_F32.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/GFLIB/Include/GFLIB_Ramp_F32_Asmi.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/GFLIB/Include/GFLIB_SinCos_A32.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/GFLIB/Include/GFLIB_SqrtHw_F16.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/GFLIB/Include/GFLIB_SqrtHw_F16_Asmi.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/GFLIB/Include/GFLIB_SqrtHw_F32.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/GFLIB/Include/GFLIB_SqrtHw_F32_Asmi.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/GFLIB/Include/GFLIB_Sqrt_F16.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/GFLIB/Include/GFLIB_Sqrt_F32.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/GFLIB/Include/GFLIB_UpperLimit_F16.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/GFLIB/Include/GFLIB_UpperLimit_F32.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/GFLIB/Include/GFLIB_VectorLimit1Hw_F16.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/GFLIB/Include/GFLIB_VectorLimit1_F16.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/GFLIB/Include/gflib.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/GFLIB/Include/gflib_types.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/GMCLIB/Include/GMCLIB_Clark_F16_Asmi.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/GMCLIB/Include/GMCLIB_Decoupling_A32.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/GMCLIB/Include/GMCLIB_ElimDcBusRipHw_A32.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/GMCLIB/Include/GMCLIB_ElimDcBusRipHw_F16.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/GMCLIB/Include/GMCLIB_ElimDcBusRip_A32.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/GMCLIB/Include/GMCLIB_ElimDcBusRip_F16.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/GMCLIB/Include/GMCLIB_Park_F16_Asmi.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/GMCLIB/Include/GMCLIB_Svm_F16.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/GMCLIB/Include/gmclib.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/GMCLIB/Include/gmclib_types.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_Abs_F16.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_Abs_F16_Asmi.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_Abs_F32.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_Abs_F32_Asmi.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_Add4_F16.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_Add4_F16_Asmi.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_Add4_F32.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_Add4_F32_Asmi.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_Add_A32.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_Add_A32_Asmi.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_Add_F16.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_Add_F16_Asmi.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_Add_F32.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_Add_F32_Asmi.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_BiShift_F16.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_BiShift_F16_Asmi.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_BiShift_F32.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_BiShift_F32_Asmi.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_Clb_F16_Asmi.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_Clb_F32.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_Clb_F32_Asmi.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_Conv_F32.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_Div1Q_A32_Asm.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_Div1Q_F16_Asm.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_Div1Q_F32_Asm.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_DivHw1Q_A32_Asm.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_DivHw1Q_F16_Asm.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_DivHw1Q_F32_Asm.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_DivHw_A32_Asm.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_DivHw_F16_Asm.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_DivHw_F32.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_DivHw_F32_Asm.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_Div_A32_Asm.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_Div_F16_Asm.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_Div_F32_Asm.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_Log2_U16_Asmi.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_MMDVSQ.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_Mac4Rnd_F16.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_Mac4Rnd_F16_Asmi.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_Mac4Rnd_F32_Asm.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_Mac4_F32.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_MacRnd_A32.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_MacRnd_A32_Asmi.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_MacRnd_F16.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_MacRnd_F16_Asmi.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_MacRnd_F32.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_MacRnd_F32_Asmi.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_Mac_A32.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_Mac_F16.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_Mac_F16_Asmi.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_Mac_F32.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_Mac_F32_Asmi.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_MnacRnd_A32.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_MnacRnd_A32_Asmi.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_MnacRnd_F16.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_MnacRnd_F16_Asmi.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_MnacRnd_F32.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_MnacRnd_F32_Asmi.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_Mnac_A32.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_Mnac_F16.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_Mnac_F16_Asmi.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_Mnac_F32.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_Mnac_F32_Asmi.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_Msu4Rnd_F16.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_Msu4Rnd_F16_Asmi.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_Msu4Rnd_F32_Asm.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_Msu4_F32.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_MsuRnd_A32.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_MsuRnd_A32_Asmi.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_MsuRnd_F16.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_MsuRnd_F16_Asmi.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_MsuRnd_F32.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_MsuRnd_F32_Asmi.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_Msu_A32.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_Msu_F16.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_Msu_F16_Asmi.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_Msu_F32.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_Msu_F32_Asmi.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_MulRnd_A32.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_MulRnd_A32_Asmi.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_MulRnd_F16.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_MulRnd_F16_Asmi.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_MulRnd_F32.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_MulRnd_F32_Asmi.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_Mul_A32.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_Mul_A32_Asmi.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_Mul_F16.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_Mul_F16_Asmi.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_Mul_F32.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_Mul_F32_Asmi.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_Neg_F16.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_Neg_F16_Asmi.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_Neg_F32.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_Neg_F32_Asmi.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_Rcp1Q_A32_Asm.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_RcpHw1Q_A32_Asmi.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_RcpHw_A32_Asm.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_Rcp_A32_Asm.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_Rnd_F32.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_Rnd_F32_Asmi.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_Sat_A32.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_Sat_A32_Asmi.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_Shift_F16.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_Shift_F16_Asmi.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_Shift_F32.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_Shift_F32_Asmi.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_Sign_F16_Asmi.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_Sign_F32_Asmi.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_Sub4_F16.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_Sub4_F16_Asmi.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_Sub4_F32.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_Sub4_F32_Asmi.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_Sub_A32.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_Sub_A32_Asmi.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_Sub_F16.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_Sub_F16_Asmi.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_Sub_F32.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/MLIB_Sub_F32_Asmi.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/RTCESL_cfg.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/asm_mac.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/mlib.h"
-"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/Include/mlib_types.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/AMCLIB/Include/AMCLIB_AngleTrackObsrv_F32.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/AMCLIB/Include/AMCLIB_CtrlFluxWkng_A32.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/AMCLIB/Include/AMCLIB_PMSMBemfObsrvABHw_A32.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/AMCLIB/Include/AMCLIB_PMSMBemfObsrvAB_A32.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/AMCLIB/Include/AMCLIB_PMSMBemfObsrvDQHw_A32.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/AMCLIB/Include/AMCLIB_PMSMBemfObsrvDQ_A32.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/AMCLIB/Include/AMCLIB_TrackObsrv_F32.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/AMCLIB/Include/amclib.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/AMCLIB/Include/amclib_types.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/GDFLIB/Include/GDFLIB_FilterExp_F32.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/GDFLIB/Include/GDFLIB_FilterIIR1_F32.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/GDFLIB/Include/GDFLIB_FilterIIR2_F32.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/GDFLIB/Include/GDFLIB_FilterMA_A32.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/GDFLIB/Include/GDFLIB_FilterMA_A32_Asmi.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/GDFLIB/Include/gdflib.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/GDFLIB/Include/gdflib_types.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/GFLIB/Include/GFLIB_AtanYXHw_F32.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/GFLIB/Include/GFLIB_AtanYX_F32.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/GFLIB/Include/GFLIB_Atan_F32.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/GFLIB/Include/GFLIB_CtrlBetaIPp_A32.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/GFLIB/Include/GFLIB_CtrlPIp_A32.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/GFLIB/Include/GFLIB_DFlexRampHw_A32.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/GFLIB/Include/GFLIB_DFlexRamp_A32.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/GFLIB/Include/GFLIB_DRamp_F16.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/GFLIB/Include/GFLIB_DRamp_F32.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/GFLIB/Include/GFLIB_FlexRampHw_A32.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/GFLIB/Include/GFLIB_FlexRamp_A32.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/GFLIB/Include/GFLIB_Hyst_F16_Asmi.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/GFLIB/Include/GFLIB_Integrator_A32.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/GFLIB/Include/GFLIB_Limit_F16.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/GFLIB/Include/GFLIB_Limit_F32.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/GFLIB/Include/GFLIB_LowerLimit_F16.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/GFLIB/Include/GFLIB_LowerLimit_F32.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/GFLIB/Include/GFLIB_LutPer_F16_Asmi.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/GFLIB/Include/GFLIB_LutPer_F32.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/GFLIB/Include/GFLIB_Lut_F16_Asmi.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/GFLIB/Include/GFLIB_Lut_F32.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/GFLIB/Include/GFLIB_Ramp_F16.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/GFLIB/Include/GFLIB_Ramp_F16_Asmi.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/GFLIB/Include/GFLIB_Ramp_F32.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/GFLIB/Include/GFLIB_Ramp_F32_Asmi.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/GFLIB/Include/GFLIB_SinCos_A32.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/GFLIB/Include/GFLIB_SqrtHw_F16.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/GFLIB/Include/GFLIB_SqrtHw_F16_Asmi.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/GFLIB/Include/GFLIB_SqrtHw_F32.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/GFLIB/Include/GFLIB_SqrtHw_F32_Asmi.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/GFLIB/Include/GFLIB_Sqrt_F16.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/GFLIB/Include/GFLIB_Sqrt_F32.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/GFLIB/Include/GFLIB_UpperLimit_F16.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/GFLIB/Include/GFLIB_UpperLimit_F32.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/GFLIB/Include/GFLIB_VectorLimit1Hw_F16.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/GFLIB/Include/GFLIB_VectorLimit1_F16.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/GFLIB/Include/gflib.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/GFLIB/Include/gflib_types.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/GMCLIB/Include/GMCLIB_Clark_F16_Asmi.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/GMCLIB/Include/GMCLIB_Decoupling_A32.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/GMCLIB/Include/GMCLIB_ElimDcBusRipHw_A32.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/GMCLIB/Include/GMCLIB_ElimDcBusRipHw_F16.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/GMCLIB/Include/GMCLIB_ElimDcBusRip_A32.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/GMCLIB/Include/GMCLIB_ElimDcBusRip_F16.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/GMCLIB/Include/GMCLIB_Park_F16_Asmi.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/GMCLIB/Include/GMCLIB_Svm_F16.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/GMCLIB/Include/gmclib.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/GMCLIB/Include/gmclib_types.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_Abs_F16.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_Abs_F16_Asmi.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_Abs_F32.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_Abs_F32_Asmi.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_Add4_F16.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_Add4_F16_Asmi.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_Add4_F32.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_Add4_F32_Asmi.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_Add_A32.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_Add_A32_Asmi.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_Add_F16.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_Add_F16_Asmi.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_Add_F32.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_Add_F32_Asmi.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_BiShift_F16.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_BiShift_F16_Asmi.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_BiShift_F32.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_BiShift_F32_Asmi.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_Clb_F16_Asmi.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_Clb_F32.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_Clb_F32_Asmi.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_Conv_F32.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_Div1Q_A32_Asm.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_Div1Q_F16_Asm.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_Div1Q_F32_Asm.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_DivHw1Q_A32_Asm.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_DivHw1Q_F16_Asm.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_DivHw1Q_F32_Asm.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_DivHw_A32_Asm.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_DivHw_F16_Asm.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_DivHw_F32.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_DivHw_F32_Asm.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_Div_A32_Asm.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_Div_F16_Asm.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_Div_F32_Asm.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_Log2_U16_Asmi.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_MMDVSQ.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_Mac4Rnd_F16.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_Mac4Rnd_F16_Asmi.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_Mac4Rnd_F32_Asm.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_Mac4_F32.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_MacRnd_A32.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_MacRnd_A32_Asmi.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_MacRnd_F16.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_MacRnd_F16_Asmi.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_MacRnd_F32.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_MacRnd_F32_Asmi.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_Mac_A32.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_Mac_F16.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_Mac_F16_Asmi.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_Mac_F32.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_Mac_F32_Asmi.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_MnacRnd_A32.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_MnacRnd_A32_Asmi.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_MnacRnd_F16.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_MnacRnd_F16_Asmi.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_MnacRnd_F32.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_MnacRnd_F32_Asmi.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_Mnac_A32.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_Mnac_F16.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_Mnac_F16_Asmi.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_Mnac_F32.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_Mnac_F32_Asmi.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_Msu4Rnd_F16.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_Msu4Rnd_F16_Asmi.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_Msu4Rnd_F32_Asm.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_Msu4_F32.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_MsuRnd_A32.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_MsuRnd_A32_Asmi.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_MsuRnd_F16.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_MsuRnd_F16_Asmi.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_MsuRnd_F32.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_MsuRnd_F32_Asmi.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_Msu_A32.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_Msu_F16.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_Msu_F16_Asmi.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_Msu_F32.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_Msu_F32_Asmi.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_MulRnd_A32.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_MulRnd_A32_Asmi.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_MulRnd_F16.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_MulRnd_F16_Asmi.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_MulRnd_F32.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_MulRnd_F32_Asmi.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_Mul_A32.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_Mul_A32_Asmi.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_Mul_F16.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_Mul_F16_Asmi.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_Mul_F32.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_Mul_F32_Asmi.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_Neg_F16.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_Neg_F16_Asmi.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_Neg_F32.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_Neg_F32_Asmi.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_Rcp1Q_A32_Asm.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_RcpHw1Q_A32_Asmi.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_RcpHw_A32_Asm.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_Rcp_A32_Asm.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_Rnd_F32.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_Rnd_F32_Asmi.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_Sat_A32.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_Sat_A32_Asmi.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_Shift_F16.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_Shift_F16_Asmi.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_Shift_F32.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_Shift_F32_Asmi.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_Sign_F16_Asmi.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_Sign_F32_Asmi.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_Sub4_F16.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_Sub4_F16_Asmi.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_Sub4_F32.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_Sub4_F32_Asmi.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_Sub_A32.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_Sub_A32_Asmi.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_Sub_F16.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_Sub_F16_Asmi.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_Sub_F32.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/MLIB_Sub_F32_Asmi.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/RTCESL_cfg.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/asm_mac.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/mlib.h"
+"${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/Include/mlib_types.h"
 "${ProjDirPath}/../../../../../../middleware/motor_control/pmsm/pmsm_frac/fm_tsa_pmsm.c"
 "${ProjDirPath}/../../../../../../middleware/motor_control/pmsm/pmsm_frac/fm_tsa_pmsm.h"
 "${ProjDirPath}/../../../../../../middleware/motor_control/pmsm/pmsm_frac/mc_algorithms/pmsm_control.c"
@@ -682,6 +682,7 @@ add_executable(mc_pmsm.elf
 "${ProjDirPath}/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_usb.h"
 "${ProjDirPath}/../../../../../../middleware/freemaster/src/platforms/gen32le/freemaster_gen32le.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/core_cm0plus.h"
+"${ProjDirPath}/../../../../../../CMSIS/Include/mpu_armv7.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_armcc.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_armclang.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_armclang_ltm.h"
@@ -689,11 +690,6 @@ add_executable(mc_pmsm.elf
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_gcc.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_iccarm.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_version.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/core_armv81mml.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/core_armv8mbl.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/core_armv8mml.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/mpu_armv7.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/mpu_armv8.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/arm_common_tables.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/arm_const_structs.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/arm_math.h"
@@ -722,45 +718,45 @@ target_link_libraries(mc_pmsm.elf optimized gcc)
 
 target_link_libraries(mc_pmsm.elf optimized nosys)
 
-link_directories(${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/AMCLIB)
+link_directories(${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/AMCLIB)
 
-target_link_libraries(mc_pmsm.elf debug ${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/AMCLIB/libAMCLIB.a)
+target_link_libraries(mc_pmsm.elf debug ${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/AMCLIB/libAMCLIB.a)
 
-link_directories(${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/GDFLIB)
+link_directories(${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/GDFLIB)
 
-target_link_libraries(mc_pmsm.elf debug ${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/GDFLIB/libGDFLIB.a)
+target_link_libraries(mc_pmsm.elf debug ${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/GDFLIB/libGDFLIB.a)
 
-link_directories(${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/GFLIB)
+link_directories(${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/GFLIB)
 
-target_link_libraries(mc_pmsm.elf debug ${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/GFLIB/libGFLIB.a)
+target_link_libraries(mc_pmsm.elf debug ${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/GFLIB/libGFLIB.a)
 
-link_directories(${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/GMCLIB)
+link_directories(${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/GMCLIB)
 
-target_link_libraries(mc_pmsm.elf debug ${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/GMCLIB/libGMCLIB.a)
+target_link_libraries(mc_pmsm.elf debug ${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/GMCLIB/libGMCLIB.a)
 
-link_directories(${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB)
+link_directories(${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB)
 
-target_link_libraries(mc_pmsm.elf debug ${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/libMLIB.a)
+target_link_libraries(mc_pmsm.elf debug ${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/libMLIB.a)
 
-link_directories(${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/AMCLIB)
+link_directories(${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/AMCLIB)
 
-target_link_libraries(mc_pmsm.elf optimized ${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/AMCLIB/libAMCLIB.a)
+target_link_libraries(mc_pmsm.elf optimized ${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/AMCLIB/libAMCLIB.a)
 
-link_directories(${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/GDFLIB)
+link_directories(${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/GDFLIB)
 
-target_link_libraries(mc_pmsm.elf optimized ${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/GDFLIB/libGDFLIB.a)
+target_link_libraries(mc_pmsm.elf optimized ${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/GDFLIB/libGDFLIB.a)
 
-link_directories(${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/GFLIB)
+link_directories(${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/GFLIB)
 
-target_link_libraries(mc_pmsm.elf optimized ${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/GFLIB/libGFLIB.a)
+target_link_libraries(mc_pmsm.elf optimized ${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/GFLIB/libGFLIB.a)
 
-link_directories(${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/GMCLIB)
+link_directories(${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/GMCLIB)
 
-target_link_libraries(mc_pmsm.elf optimized ${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/GMCLIB/libGMCLIB.a)
+target_link_libraries(mc_pmsm.elf optimized ${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/GMCLIB/libGMCLIB.a)
 
-link_directories(${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB)
+link_directories(${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB)
 
-target_link_libraries(mc_pmsm.elf optimized ${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5_MCUX/MLIB/libMLIB.a)
+target_link_libraries(mc_pmsm.elf optimized ${ProjDirPath}/../../../../../../middleware/rtcesl/CM0_RTCESL_4.5.1_MCUX/MLIB/libMLIB.a)
 
 TARGET_LINK_LIBRARIES(mc_pmsm.elf -Wl,--end-group)
 

@@ -264,10 +264,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Xlinker")
 
 SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Map=output.map")
 
-SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Xlinker")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} --defsym=__ram_vector_table__=1")
-
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -g")
 
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -mcpu=cortex-m0plus")
@@ -314,9 +310,9 @@ SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Xlinker")
 
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Map=output.map")
 
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Xlinker")
+include_directories(${ProjDirPath}/../../../../../middleware/mcu-boot/src/startup)
 
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} --defsym=__ram_vector_table__=1")
+include_directories(${ProjDirPath}/../../../../../middleware/mcu-boot/src/startup)
 
 include_directories(${ProjDirPath}/../../../../../CMSIS/Include)
 
@@ -324,11 +320,25 @@ include_directories(${ProjDirPath}/../../../../../middleware/mcu-boot/src)
 
 include_directories(${ProjDirPath}/../../../../../middleware/mcu-boot/src/bootloader)
 
+include_directories(${ProjDirPath}/../../../../../middleware/mcu-boot/src/autobaud)
+
+include_directories(${ProjDirPath}/../../../../../middleware/mcu-boot/src/crc)
+
 include_directories(${ProjDirPath}/../../../../../middleware/mcu-boot/src/include)
 
 include_directories(${ProjDirPath}/../../../../../middleware/mcu-boot/src/startup)
 
 include_directories(${ProjDirPath}/../../../../../middleware/mcu-boot/src/utilities)
+
+include_directories(${ProjDirPath}/../../../../../middleware/mcu-boot/src/memory)
+
+include_directories(${ProjDirPath}/../../../../../middleware/mcu-boot/src/memory/src)
+
+include_directories(${ProjDirPath}/../../../../../middleware/mcu-boot/src/packet)
+
+include_directories(${ProjDirPath}/../../../../../middleware/mcu-boot/src/property)
+
+include_directories(${ProjDirPath}/../../../../../middleware/mcu-boot/src/sbloader)
 
 include_directories(${ProjDirPath}/../../../../../middleware/mcu-boot/src/drivers)
 
@@ -338,9 +348,11 @@ include_directories(${ProjDirPath}/../../../../../middleware/mcu-boot/src/driver
 
 include_directories(${ProjDirPath}/../../../../../middleware/mcu-boot/src/drivers/smc)
 
-include_directories(${ProjDirPath}/../../../../../middleware/mcu-boot/targets/MKV11Z7/src)
+include_directories(${ProjDirPath}/../../../../../middleware/mcu-boot/src/security)
 
-include_directories(${ProjDirPath}/../../../../../middleware/mcu-boot/src/autobaud)
+include_directories(${ProjDirPath}/../../../../../middleware/mcu-boot/src/bm_usb)
+
+include_directories(${ProjDirPath}/../../../../../middleware/mcu-boot/targets/MKV11Z7/src)
 
 include_directories(${ProjDirPath}/../../../../../devices/MKV11Z7)
 
@@ -353,6 +365,8 @@ include_directories(${ProjDirPath}/../../../../../components/osa)
 include_directories(${ProjDirPath}/../../../../../components/lists)
 
 add_executable(freedom_bootloader.elf 
+"${ProjDirPath}/../pin_mux.c"
+"${ProjDirPath}/../pin_mux.h"
 "${ProjDirPath}/../../../../../devices/MKV11Z7/drivers/fsl_clock.c"
 "${ProjDirPath}/../../../../../devices/MKV11Z7/drivers/fsl_clock.h"
 "${ProjDirPath}/../../../../../devices/MKV11Z7/drivers/fsl_flash.h"
@@ -413,8 +427,6 @@ add_executable(freedom_bootloader.elf
 "${ProjDirPath}/../../../../../middleware/mcu-boot/src/crc/src/crc32.c"
 "${ProjDirPath}/../../../../../middleware/mcu-boot/src/include/bootloader_common.h"
 "${ProjDirPath}/../../../../../middleware/mcu-boot/src/memory/memory.h"
-"${ProjDirPath}/../../../../../middleware/mcu-boot/src/memory/src/device_memory.c"
-"${ProjDirPath}/../../../../../middleware/mcu-boot/src/memory/src/device_memory.h"
 "${ProjDirPath}/../../../../../middleware/mcu-boot/src/memory/src/memory.c"
 "${ProjDirPath}/../../../../../middleware/mcu-boot/src/memory/src/normal_memory.c"
 "${ProjDirPath}/../../../../../middleware/mcu-boot/src/memory/src/normal_memory.h"
@@ -448,11 +460,11 @@ add_executable(freedom_bootloader.elf
 "${ProjDirPath}/../../../../../middleware/mcu-boot/src/bootloader/src/i2c_peripheral_interface.c"
 "${ProjDirPath}/../../../../../middleware/mcu-boot/src/bootloader/src/uart_peripheral_interface.c"
 "${ProjDirPath}/../../../../../middleware/mcu-boot/src/memory/src/sram_init_cm0plus.c"
+"${ProjDirPath}/../../../../../middleware/mcu-boot/targets/MKV11Z7/src/bl_clock_config_MKV11Z7.c"
+"${ProjDirPath}/../../../../../middleware/mcu-boot/targets/MKV11Z7/src/bl_peripherals_MKV11Z7.c"
 "${ProjDirPath}/../../../../../middleware/mcu-boot/targets/MKV11Z7/src/bootloader_config.h"
-"${ProjDirPath}/../../../../../middleware/mcu-boot/targets/MKV11Z7/src/clock_config_MKV11Z7.c"
 "${ProjDirPath}/../../../../../middleware/mcu-boot/targets/MKV11Z7/src/hardware_init_MKV11Z7.c"
 "${ProjDirPath}/../../../../../middleware/mcu-boot/targets/MKV11Z7/src/memory_map_MKV11Z7.c"
-"${ProjDirPath}/../../../../../middleware/mcu-boot/targets/MKV11Z7/src/peripherals_MKV11Z7.c"
 "${ProjDirPath}/../../../../../middleware/mcu-boot/targets/MKV11Z7/src/peripherals_pinmux.h"
 "${ProjDirPath}/../../../../../middleware/mcu-boot/targets/MKV11Z7/src/target_config.h"
 "${ProjDirPath}/../../../../../middleware/mcu-boot/targets/common/src/bl_dspi_irq_config_common.c"
@@ -470,6 +482,7 @@ add_executable(freedom_bootloader.elf
 "${ProjDirPath}/../../../../../devices/MKV11Z7/drivers/fsl_common.c"
 "${ProjDirPath}/../../../../../devices/MKV11Z7/drivers/fsl_common.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/core_cm0plus.h"
+"${ProjDirPath}/../../../../../CMSIS/Include/mpu_armv7.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/cmsis_armcc.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/cmsis_armclang.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/cmsis_armclang_ltm.h"
@@ -477,11 +490,6 @@ add_executable(freedom_bootloader.elf
 "${ProjDirPath}/../../../../../CMSIS/Include/cmsis_gcc.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/cmsis_iccarm.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/cmsis_version.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/core_armv81mml.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/core_armv8mbl.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/core_armv8mml.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/mpu_armv7.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/mpu_armv8.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/arm_common_tables.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/arm_const_structs.h"
 "${ProjDirPath}/../../../../../CMSIS/Include/arm_math.h"

@@ -316,10 +316,17 @@ include_directories(${ProjDirPath}/../../../../../../middleware/mcu-boot/apps/le
 
 include_directories(${ProjDirPath}/..)
 
+include_directories(${ProjDirPath}/../../../../../../devices/MKV11Z7/drivers)
+
 add_executable(led_demo_freedom_0000.elf 
+"${ProjDirPath}/../pin_mux.c"
+"${ProjDirPath}/../pin_mux.h"
 "${ProjDirPath}/../main.c"
 "${ProjDirPath}/../../../../../../middleware/mcu-boot/apps/led_demo/src/milliseconds_delay.h"
 "${ProjDirPath}/../../../../../../middleware/mcu-boot/apps/led_demo/src/milliseconds_delay.c"
+"${ProjDirPath}/../../../../../../devices/MKV11Z7/drivers/fsl_port.h"
+"${ProjDirPath}/../../../../../../devices/MKV11Z7/drivers/fsl_gpio.c"
+"${ProjDirPath}/../../../../../../devices/MKV11Z7/drivers/fsl_gpio.h"
 "${ProjDirPath}/../../../../../../devices/MKV11Z7/MKV11Z7.h"
 "${ProjDirPath}/../../../../../../devices/MKV11Z7/MKV11Z7_features.h"
 "${ProjDirPath}/../../../../../../devices/MKV11Z7/fsl_device_registers.h"
@@ -328,7 +335,12 @@ add_executable(led_demo_freedom_0000.elf
 "${ProjDirPath}/../../../../../../middleware/mcu-boot/targets/MKV11Z7/src/startup/gcc/startup_MKV11Z7.S"
 "${ProjDirPath}/../../../../../../middleware/mcu-boot/src/include/bootloader_core.h"
 "${ProjDirPath}/../../../../../../middleware/mcu-boot/src/startup/startup.c"
+"${ProjDirPath}/../../../../../../devices/MKV11Z7/drivers/fsl_common.c"
+"${ProjDirPath}/../../../../../../devices/MKV11Z7/drivers/fsl_common.h"
+"${ProjDirPath}/../../../../../../devices/MKV11Z7/drivers/fsl_clock.c"
+"${ProjDirPath}/../../../../../../devices/MKV11Z7/drivers/fsl_clock.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/core_cm0plus.h"
+"${ProjDirPath}/../../../../../../CMSIS/Include/mpu_armv7.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_armcc.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_armclang.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_armclang_ltm.h"
@@ -336,11 +348,6 @@ add_executable(led_demo_freedom_0000.elf
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_gcc.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_iccarm.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_version.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/core_armv81mml.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/core_armv8mbl.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/core_armv8mml.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/mpu_armv7.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/mpu_armv8.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/arm_common_tables.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/arm_const_structs.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/arm_math.h"

@@ -42,6 +42,7 @@ SECTIONS
   .interrupts :
   {
     __VECTOR_TABLE = .;
+    __Vectors = .;
     . = ALIGN(4);
     KEEP(*(.isr_vector))     /* Startup code */
     KEEP(*(.BootloaderConfig)) /* Bootloader Configuration Area (BCA) */

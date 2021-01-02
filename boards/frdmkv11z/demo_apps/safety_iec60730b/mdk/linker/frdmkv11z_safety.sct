@@ -1,0 +1,56 @@
+#!armclang --target=arm-arm-none-eabi -mcpu=cortex-m0plus -E -x c 
+
+;/*
+; * Copyright 2019 NXP.
+; * All rights reserved.
+; *
+; * SPDX-License-Identifier: BSD-3-Clause
+; */
+
+; *************************************************************
+; *** Scatter-Loading Description File                      ***
+; *************************************************************
+#include "linker_config.h"
+
+LR_IROM1 __ROM_start__ m_flash_end + 1  {    ; load region size_region
+  
+    ER_IROM1 0x0 NOCOMPRESS 0x400 {  ; load address = execution address
+        * (section_ivt,+FIRST)
+    }
+    
+    ER_IROM2 0x400 FIXED 0x10 {  ; load address = execution address
+        * (.FlashConfig)
+    }
+
+	ER_IROM3 m_flash_config_end m_flash_end + 1{  ; load address = execution address
+        * (InRoot$$Sections)
+        .ANY (+RO)
+    }
+
+  SafetyRam_region m_safety_ram_start NOCOMPRESS SAFETY_RAM_SIZE{
+  main.o (.safety_ram)
+  safety_test_items.o (.data)
+  }
+  
+  RW_IRAM1 __RAM_start__ m_data_size  {  ; RW data
+   .ANY (+RW +ZI)
+  }
+  
+    ARM_LIB_HEAP +0 EMPTY 0x0 {    ; Heap region growing up
+    }
+
+  ARM_LIB_STACK __BOOT_STACK_ADDRESS EMPTY -__size_cstack__{ ; Stack region growing down
+  }
+  
+
+}
+
+LR_IROM2 __PC_test_start__ __PC_test_size{
+
+  RW_PCTEST __PC_test_start__ __PC_test_size {
+
+        iec60730b_pc_object.o 
+
+  }
+
+}

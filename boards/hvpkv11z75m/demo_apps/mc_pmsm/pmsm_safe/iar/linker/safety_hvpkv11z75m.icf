@@ -1,0 +1,290 @@
+/*
+ * ###################################################################
+ *     Processors:          MKV11Z128xxx7
+ *
+ *
+ *     Compiler:            IAR ANSI C/C++ Compiler for ARM
+ *     Version:             KV11P64M75RM
+ *     Build:
+ *
+ *     Abstract:
+ *         Linker file for the IAR ANSI C/C++ Compiler for ARM
+ *
+ *     Copyright 2020 NXP.
+ *     All rights reserved.
+ *
+ *     SPDX-License-Identifier: BSD-3-Clause
+ *
+ *     http:  www.nxp.com
+ *
+ * ###################################################################
+ */
+
+/*#####################    RAM memory organization    #########################
+
+                           ____________________ ___ [__RAM_end__]
+                         0|                    |   ^
+                         0|   RAM Test Backup  |   | [__size_fs_ram_tst_bckp__]
+  [m_fs_ram_tst_bckp]___ 0|____________________| __v
+         [m_data_end]    0|                    |
+                         0|                    |
+                         0|                    |
+                         0|   Non-safety Data  |
+                         0|                    |
+                         0|                    |
+                         0|____________________|
+                         #|                    |
+                         #|                    |
+                         #|     Safety RAM     |
+                         #|   (.safety_ram)    |
+                         #|                    |
+       [m_data_start]___ #|____________________| __
+                         #|                    |   ^
+                         #|  Safety Error Code |   | [0x04]
+    [m_fs_error_code]___ #|____________________| __v
+                         #|                    |   ^
+                         #|    PC Test Flag    |   | [0x04]
+   [m_fs_pc_tst_flag]___ #|____________________| __v
+                         #|                    |   ^
+                         #|   WDOG Test Data   |   | [__size_fs_wdog_tst_data__]
+ [m_fs_wdog_tst_bckp]___ #|____________________| __v
+  [m_fs_stack_tst_p4]    #|                    |   ^
+                         #| Stack Test Pattern |   | [__size_fs_stack_tst_p__]
+  [m_fs_stack_tst_p3]___ #|____________________| __v
+      [m_stack_start]    #|                    |   ^
+                         #|                    |   |
+                         #|                    |   |
+                         #|       STACK        |   | [__size_cstack__]
+                         #|                    |   |
+                         #|                    |   |
+                         #|                    |   |
+                     ___ #|____________________| __v
+  [m_fs_stack_tst_p2]    #|                    |   ^
+                         #| Stack Test Pattern |   | [__size_fs_stack_tst_p__]
+  [m_fs_stack_tst_p1]___ #|____________________| __v___[__RAM_start__]
+                         ^
+                         |
+           Checked by safety RAM test (#-Runtime; -No)
+
+
+
+ #####################   FLASH memory organization    #########################
+
+   [m_fs_flash_crc_end]___ ____________________ ___ __[__ROM_end__]
+                          0|                    |   ^
+                          0| Safety region CRC  |   | [__size_flash_crc__]
+ [m_fs_flash_crc_start]___0|____________________| __v
+          [m_flash_end]   0|                    |
+                          0|                    |
+                          0|                    |
+                          0|                    |
+                          0|                    |
+                          0|  Non-safety FLASH  |
+                          0|                    |
+                          0|                    |
+                          0|                    |
+                          0|                    |
+                          0|                    |
+                          0|____________________|
+                          #|                    |
+                          #|  Safety RAM init   |
+                          #|____________________|
+                          #|                    |
+                          #|                    |
+                          #|                    |
+                          #|    Safety FLASH    |
+                          #|                    |
+                          #|                    |
+                          #|                    |
+        [m_flash_start]___#|____________________| __
+  [m_fs_pc_tst_obj_end]   #|                    |   ^
+                          #|   PC test object   |   | [__size_fs_pc_tst_obj__]
+[m_fs_pc_tst_obj_start]___#|____________________| __v
+   [m_flash_config_end]   #|                    |   ^
+                          #|    FLASH Config    |   | [0x10]
+ [m_flash_config_start]___#|____________________| __v
+   [m_intvec_table_end]   #|                    |   ^
+                          #|                    |   |
+                          #|    Vector table    |   | [0x400]
+                          #|     (.intvec)      |   |
+ [m_intvec_table_start]___#|____________________|___v__[__ROM_start__]
+                          ^
+                          |
+    Checked by safety FLASH test (0-No; #-Runtime)
+
+
+*/
+/******************************************************************************/
+/**********************     USER CONFIGURATION PART    ************************/
+/******************************************************************************/
+/* FLASH memory boundaries. */
+define exported symbol __ROM_start__             = 0x00000000;
+define exported symbol __ROM_end__               = 0x00017FFF;
+
+/* RAM memory boundaries. */
+define exported symbol __RAM_start__             = 0x1FFFF000;
+define exported symbol __RAM_end__               = 0x20002FFF;
+
+/* Sizes of objects in RAM. */
+define          symbol __size_cstack__           = 0x300;  /* Stack size. */
+define exported symbol __size_fs_ram_tst_bckp__  = 0x20;   /* Safety RAM test backup size. */
+define exported symbol __size_fs_wdog_tst_data__ = 0x20;   /* Safety WDOG test data size. */
+define exported symbol __size_fs_stack_tst_p__   = 0x10;   /* Safety stack test pattern. */
+
+/* Sizes of objects in FLASH. */
+define exported symbol __size_fs_pc_tst_obj__    = 0x20;
+define          symbol __size_intvec_table__     = 0x400;
+define          symbol __size_flash_cfg_table__  = 0x10;
+define exported symbol __size_flash_crc__        = 0x10;
+
+/******************************************************************************/
+/*******************************     SYMBOLS     ******************************/
+/******************************************************************************/
+/* Assemble RAM addresses. */
+define exported symbol m_fs_stack_tst_p1      = __RAM_start__;
+define exported symbol m_fs_stack_tst_p2      = m_fs_stack_tst_p1  + __size_fs_stack_tst_p__ - 0x4;
+define exported symbol m_stack_start          = m_fs_stack_tst_p2  + __size_cstack__ + 0x4;
+define exported symbol m_fs_stack_tst_p3      = m_stack_start      + 0x4;
+define exported symbol m_fs_stack_tst_p4      = m_fs_stack_tst_p3  + __size_fs_stack_tst_p__ - 0x4;
+define exported symbol m_fs_wdog_tst_bckp     = m_fs_stack_tst_p4  + 0x4;
+define exported symbol m_fs_pc_tst_flag       = m_fs_wdog_tst_bckp + __size_fs_wdog_tst_data__;
+define exported symbol m_fs_error_code        = m_fs_pc_tst_flag   + 0x4;
+define exported symbol m_data_start           = m_fs_error_code    + 0x4;
+
+define exported symbol m_fs_ram_tst_bckp      = __RAM_end__ - __size_fs_ram_tst_bckp__ + 0x1;
+define exported symbol m_data_end             = m_fs_ram_tst_bckp  - 0x1;
+
+/* Assemble FLASH addresses. */
+define exported symbol m_intvec_table_start   = __ROM_start__;
+define exported symbol m_intvec_table_end     = m_intvec_table_start  + __size_intvec_table__ - 0x1;
+define exported symbol m_flash_config_start   = m_intvec_table_end    + 0x1;
+define exported symbol m_flash_config_end     = m_flash_config_start  + __size_flash_cfg_table__ - 0x1;
+define exported symbol m_fs_pc_tst_obj_start  = m_flash_config_end    + 0x1;
+define exported symbol m_fs_pc_tst_obj_end    = m_fs_pc_tst_obj_start + __size_fs_pc_tst_obj__ - 0x1;
+define exported symbol m_flash_start          = m_fs_pc_tst_obj_end   + 0x1;
+
+define exported symbol m_fs_flash_crc_end     = __ROM_end__;
+define exported symbol m_fs_flash_crc_start   = m_fs_flash_crc_end    - __size_flash_crc__ + 0x1;
+define exported symbol m_flash_end            = m_fs_flash_crc_start - 0x1;
+
+
+/******************************************************************************/
+/*******************************     REGIONS     ******************************/
+/******************************************************************************/
+define memory mem with size = 4G;
+
+define region RAM_region     = mem:[from m_data_start           to m_data_end];
+
+define region INTVEC_region  = mem:[from m_intvec_table_start   to m_intvec_table_end];
+define region FLSHCFG_region = mem:[from m_flash_config_start   to m_flash_config_end];
+define region PCOBJ_region   = mem:[from m_fs_pc_tst_obj_start  to m_fs_pc_tst_obj_end];
+define region ROM_region     = mem:[from m_flash_start          to m_flash_end];
+define region CRC_region     = mem:[from m_fs_flash_crc_start   to m_fs_flash_crc_end];
+
+
+/******************************************************************************/
+/************************     SECTIONS & BLOCKS    ****************************/
+/******************************************************************************/
+initialize manually { readwrite };
+initialize manually { section .data };
+initialize manually { section .safety_ram };
+do not initialize   { section .noinit };
+
+place at address mem: 0x00000000  { readonly section .intvec };
+
+/* Safety-related RAM. */
+define block BLCK_SAFETY_RAM with fixed order
+{
+    section .safety_ram,
+    section .data       object  GFLIB_AtanYX_F32_Asm.o,
+    section .data       object  GFLIB_Atan_F32_Asm.o,
+    section .data       object  GFLIB_SinCos_A32_Asm.o,
+    section .data       object  GFLIB_SinCos_F32_Asm.o
+};
+
+
+/* The FLASH memory block. */
+define block BLCK_FLASH with fixed order
+{
+    /* Safety-related memory starts below. */
+    section .text         object  vectors_iar.o         ,
+    section .rodata       object  vectors_iar.o         ,
+
+    section .text         object  startup_iar.o         ,
+    section .rodata       object  startup_iar.o         ,
+
+    section .text         object  safety_periph_init.o  ,
+    section .rodata       object  safety_periph_init.o  ,
+
+    section .text         object  mcdrv_periph_init.o   ,
+    section .rodata       object  mcdrv_periph_init.o   ,
+
+    section .text         object  main.o                ,
+    section .rodata       object  main.o                ,
+
+    section .text         object  safety_routines.o     ,
+    section .rodata       object  safety_routines.o     ,
+
+    section .text         object  iec60730b_clock.o     ,
+    section .rodata       object  iec60730b_clock.o     ,
+    section .text         object  iec60730b_cm0_pc.o    ,
+    section .rodata       object  iec60730b_cm0_pc.o    ,
+    section .text         object  iec60730b_cm0_ram.o   ,
+    section .rodata       object  iec60730b_cm0_ram.o   ,
+    section .text         object  iec60730b_cm0_reg.o   ,
+    section .rodata       object  iec60730b_cm0_reg.o   ,
+    section .text         object  iec60730b_cm0_stack.o ,
+    section .rodata       object  iec60730b_cm0_stack.o ,
+    section .text         object  iec60730b_wdog.o      ,
+    section .rodata       object  iec60730b_wdog.o      ,
+    section .text         object  iec60730b_cm0_flash.o ,
+    section .rodata       object  iec60730b_cm0_flash.o ,
+
+    section .text         object  m1_state_machine.o    ,
+    section .rodata       object  m1_state_machine.o    ,
+
+    section .text         object  mcdrv_adc_adc16.o     ,
+    section .rodata       object  mcdrv_adc_adc16.o     ,
+
+    section .text         object  mcdrv_pwm3ph_ftm.o    ,
+    section .rodata       object  mcdrv_pwm3ph_ftm.o    ,
+
+    section .text         object  mcdrv_gpio.o          ,
+    section .rodata       object  mcdrv_gpio.o          ,
+
+    section .text         object  AMCLIB_PMSMBemfObsrvDQ_A32_Asm.o,
+    section .rodata       object  AMCLIB_PMSMBemfObsrvDQ_A32_Asm.o,
+    section .text         object  AMCLIB_TrackObsrv_F32_Asm.o,
+    section .rodata       object  AMCLIB_TrackObsrv_F32_Asm.o,
+    section .text         object  GDFLIB_FilterIIR1_F32_Asm.o,
+    section .rodata       object  GDFLIB_FilterIIR1_F32_Asm.o,
+    section .text         object  GMCLIB_ElimDcBusRip_F16_Asm.o,
+    section .rodata       object  GMCLIB_ElimDcBusRip_F16_Asm.o,
+    section .text         object  GMCLIB_Svm_F16_Asm.o,
+    section .rodata       object  GMCLIB_Svm_F16_Asm.o,
+    section .text         object  GFLIB_AtanYX_F32_Asm.o,
+    section .rodata       object  GFLIB_AtanYX_F32_Asm.o,
+    section .text         object  GFLIB_Atan_F32_Asm.o,
+    section .rodata       object  GFLIB_Atan_F32_Asm.o,
+    section .text         object  GFLIB_SinCos_A32_Asm.o,
+    section .rodata       object  GFLIB_SinCos_A32_Asm.o,
+
+    readonly section .safety_ram_init,
+
+    readonly section m_safety_flash_end,
+
+    /* Non-safety memory starts below. */
+    readonly,
+    readonly section .tsaentry,
+    readonly section .tsadata,
+    readonly section .tsacode
+};
+
+place in INTVEC_region     { section .intvec };
+place in FLSHCFG_region    { section .flshcfg };
+place in PCOBJ_region      { readonly section .text  object iec60730b_cm0_pc_object.o };
+place in ROM_region        { block BLCK_FLASH };
+place in CRC_region        { section .checksum };
+place in RAM_region        { block BLCK_SAFETY_RAM };
+place in RAM_region        { readwrite };
+
